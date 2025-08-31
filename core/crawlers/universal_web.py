@@ -1,5 +1,4 @@
-"""
-Universal Web Crawler Engine
+"""Universal Web Crawler Engine
 ===========================
 
 Advanced generic web crawler for monitoring content across any website.
@@ -14,7 +13,6 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
-
 import asyncio
 import logging
 import re
@@ -48,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebsiteData:
-    """Comprehensive website content metadata structure."""
-    
+    """Comprehensive website content metadata structure."""    
     url: str
     title: str
     content: str
@@ -82,8 +79,7 @@ class WebsiteData:
 
 @dataclass
 class CrawlingTarget:
-    """Configuration for website crawling targets."""
-    
+    """Configuration for website crawling targets."""    
     domain: str
     start_urls: List[str]
     allowed_patterns: List[str]
@@ -104,15 +100,12 @@ class CrawlingTarget:
     similarity_threshold: float = 0.8
 
 class ContentExtractor:
-    """Advanced content extraction from web pages."""
-    
+    """Advanced content extraction from web pages."""    
     def __init__(self):
-        """Initialize content extractor with multiple extraction methods."""
-        self.session = aiohttp.ClientSession()
+        """Initialize content extractor with multiple extraction methods."""        self.session = aiohttp.ClientSession()
     
     async def extract_article_content(self, url: str) -> Optional[WebsiteData]:
-        """Extract article content using newspaper3k and custom methods."""
-        try:
+        """Extract article content using newspaper3k and custom methods."""        try:
             # Use newspaper3k for article extraction
             article = Article(url)
             article.download()
@@ -168,8 +161,7 @@ class ContentExtractor:
             return None
     
     async def _get_response_metadata(self, url: str) -> Dict[str, Any]:
-        """Get HTTP response metadata."""
-        try:
+        """Get HTTP response metadata."""        try:
             start_time = datetime.now()
             
             async with self.session.head(url) as response:
@@ -193,8 +185,7 @@ class ContentExtractor:
             return {}
     
     async def _extract_videos(self, url: str) -> List[str]:
-        """Extract video URLs from page."""
-        try:
+        """Extract video URLs from page."""        try:
             async with self.session.get(url) as response:
                 html = await response.text()
                 soup = BeautifulSoup(html, 'html.parser')
@@ -226,8 +217,7 @@ class ContentExtractor:
             return []
     
     async def _calculate_structure_hash(self, url: str) -> str:
-        """Calculate hash of page structure for change detection."""
-        try:
+        """Calculate hash of page structure for change detection."""        try:
             async with self.session.get(url) as response:
                 html = await response.text()
                 soup = BeautifulSoup(html, 'html.parser')
@@ -250,8 +240,7 @@ class ContentExtractor:
             return ""
     
     def _extract_keywords(self, text: str, max_keywords: int = 20) -> List[str]:
-        """Extract important keywords from text content."""
-        try:
+        """Extract important keywords from text content."""        try:
             # Simple keyword extraction (could be enhanced with NLP)
             words = re.findall(r'\b\w{4,}\b', text.lower())
             
@@ -278,21 +267,17 @@ class ContentExtractor:
             return []
     
     async def close(self):
-        """Close session."""
-        if self.session:
+        """Close session."""        if self.session:
             await self.session.close()
 
 class ScrapyWebCrawler:
-    """Scrapy-based web crawler for large-scale crawling."""
-    
+    """Scrapy-based web crawler for large-scale crawling."""    
     def __init__(self, target: CrawlingTarget):
-        """Initialize Scrapy crawler."""
-        self.target = target
+        """Initialize Scrapy crawler."""        self.target = target
         self.results = []
         
     def create_spider(self):
-        """Create Scrapy spider for the target."""
-        
+        """Create Scrapy spider for the target."""        
         class WebSpider(scrapy.Spider):
             name = 'web_crawler'
             allowed_domains = [self.target.domain]
@@ -323,8 +308,7 @@ class ScrapyWebCrawler:
                         yield response.follow(link, self.parse)
             
             def _should_follow_link(self, link):
-                """Check if link should be followed based on patterns."""
-                if not link:
+                """Check if link should be followed based on patterns."""                if not link:
                     return False
                 
                 # Check allowed patterns
@@ -342,8 +326,7 @@ class ScrapyWebCrawler:
         return WebSpider
     
     async def crawl(self) -> List[Dict[str, Any]]:
-        """Run Scrapy crawler and return results."""
-        try:
+        """Run Scrapy crawler and return results."""        try:
             process = CrawlerProcess(get_project_settings())
             spider_class = self.create_spider()
             
@@ -361,11 +344,9 @@ class ScrapyWebCrawler:
             return []
 
 class UniversalWebCrawler(BaseCrawler):
-    """Universal web crawler with comprehensive monitoring capabilities."""
-    
+    """Universal web crawler with comprehensive monitoring capabilities."""    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize universal web crawler."""
-        super().__init__(config)
+        """Initialize universal web crawler."""        super().__init__(config)
         self.content_extractor = ContentExtractor()
         self.proxy_manager = config.get('proxy_manager')
         self.platform = 'web'
@@ -381,12 +362,10 @@ class UniversalWebCrawler(BaseCrawler):
         self.crawling_targets: List[CrawlingTarget] = []
     
     def add_crawling_target(self, target: CrawlingTarget):
-        """Add a new crawling target."""
-        self.crawling_targets.append(target)
+        """Add a new crawling target."""        self.crawling_targets.append(target)
     
     async def crawl_url(self, url: str) -> Optional[CrawlResult]:
-        """Crawl a specific URL and extract content."""
-        await self.rate_limiter.acquire()
+        """Crawl a specific URL and extract content."""        await self.rate_limiter.acquire()
         
         try:
             if url in self.crawled_urls:
@@ -446,8 +425,7 @@ class UniversalWebCrawler(BaseCrawler):
             return None
     
     async def crawl_domain(self, target: CrawlingTarget) -> List[CrawlResult]:
-        """Crawl an entire domain based on target configuration."""
-        try:
+        """Crawl an entire domain based on target configuration."""        try:
             results = []
             
             # Use Scrapy for large-scale crawling
@@ -471,8 +449,7 @@ class UniversalWebCrawler(BaseCrawler):
             return []
     
     async def monitor_websites(self) -> List[CrawlResult]:
-        """Monitor all configured crawling targets for changes."""
-        try:
+        """Monitor all configured crawling targets for changes."""        try:
             all_results = []
             
             for target in self.crawling_targets:
@@ -497,8 +474,7 @@ class UniversalWebCrawler(BaseCrawler):
         domains: List[str],
         similarity_threshold: float = 0.8
     ) -> List[CrawlResult]:
-        """Search for similar content across specified domains."""
-        try:
+        """Search for similar content across specified domains."""        try:
             results = []
             reference_keywords = self.content_extractor._extract_keywords(reference_content)
             
@@ -535,8 +511,7 @@ class UniversalWebCrawler(BaseCrawler):
             return []
     
     async def _search_domain(self, domain: str, query: str) -> List[str]:
-        """Search within a specific domain using search engines."""
-        try:
+        """Search within a specific domain using search engines."""        try:
             # Use Google search with site: operator
             search_query = f"site:{domain} {query}"
             
@@ -549,8 +524,7 @@ class UniversalWebCrawler(BaseCrawler):
             return []
     
     def _calculate_content_similarity(self, content1: str, content2: str) -> float:
-        """Calculate similarity between two content strings."""
-        try:
+        """Calculate similarity between two content strings."""        try:
             # Simple Jaccard similarity (could be enhanced with NLP)
             words1 = set(content1.lower().split())
             words2 = set(content2.lower().split())
@@ -570,6 +544,5 @@ class UniversalWebCrawler(BaseCrawler):
             return 0.0
     
     async def cleanup(self):
-        """Clean up resources."""
-        if self.content_extractor:
+        """Clean up resources."""        if self.content_extractor:
             await self.content_extractor.close()

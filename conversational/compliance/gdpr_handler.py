@@ -1,5 +1,4 @@
-"""
-GDPR Handler - Advanced GDPR Compliance Management System
+"""GDPR Handler - Advanced GDPR Compliance Management System
 
 This module provides comprehensive GDPR compliance management for conversational AI,
 including data privacy protection, consent management, and right to be forgotten implementation.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import re
 import logging
 import hashlib
@@ -23,8 +21,7 @@ from ..ml.pii_detector import PIIDetector
 
 
 class DataProcessingPurpose(Enum):
-    """GDPR data processing purposes"""
-    CONVERSATIONAL_AI = "conversational_ai"
+    """GDPR data processing purposes"""    CONVERSATIONAL_AI = "conversational_ai"
     USER_ANALYTICS = "user_analytics"
     PERSONALIZATION = "personalization"
     SECURITY_MONITORING = "security_monitoring"
@@ -34,8 +31,7 @@ class DataProcessingPurpose(Enum):
 
 
 class PIICategory(Enum):
-    """Categories of Personally Identifiable Information"""
-    NAME = "name"
+    """Categories of Personally Identifiable Information"""    NAME = "name"
     EMAIL = "email"
     PHONE = "phone"
     ADDRESS = "address"
@@ -49,8 +45,7 @@ class PIICategory(Enum):
 
 
 class ConsentStatus(Enum):
-    """Consent status for data processing"""
-    GRANTED = "granted"
+    """Consent status for data processing"""    GRANTED = "granted"
     WITHDRAWN = "withdrawn"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -58,8 +53,7 @@ class ConsentStatus(Enum):
 
 
 class DataSubjectRights(Enum):
-    """GDPR data subject rights"""
-    ACCESS = "access"
+    """GDPR data subject rights"""    ACCESS = "access"
     RECTIFICATION = "rectification"
     ERASURE = "erasure"
     PORTABILITY = "portability"
@@ -70,8 +64,7 @@ class DataSubjectRights(Enum):
 
 @dataclass
 class PIIDetection:
-    """PII detection result structure"""
-    category: PIICategory
+    """PII detection result structure"""    category: PIICategory
     value: str
     confidence_score: float
     location: str
@@ -83,8 +76,7 @@ class PIIDetection:
 
 @dataclass
 class ConsentRecord:
-    """Consent record structure"""
-    user_id: int
+    """Consent record structure"""    user_id: int
     purpose: DataProcessingPurpose
     status: ConsentStatus
     granted_at: Optional[datetime]
@@ -98,8 +90,7 @@ class ConsentRecord:
 
 @dataclass
 class GDPRComplianceResult:
-    """GDPR compliance assessment result"""
-    is_compliant: bool
+    """GDPR compliance assessment result"""    is_compliant: bool
     pii_detected: List[PIIDetection]
     consent_requirements: List[ConsentRecord]
     violations: List[Dict[str, Any]]
@@ -112,13 +103,11 @@ class GDPRComplianceResult:
 
 
 class GDPRHandler:
-    """
-    Advanced GDPR compliance management system.
+    """    Advanced GDPR compliance management system.
     
     Provides comprehensive GDPR compliance for conversational AI including
     PII detection, consent management, data subject rights, and privacy protection.
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -141,8 +130,7 @@ class GDPRHandler:
         self.logger.info("GDPRHandler initialized with privacy protection systems")
     
     def _load_pii_patterns(self) -> Dict[PIICategory, List[Dict[str, Any]]]:
-        """Load PII detection patterns"""
-        return {
+        """Load PII detection patterns"""        return {
             PIICategory.EMAIL: [
                 {
                     "pattern": r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b",
@@ -222,8 +210,7 @@ class GDPRHandler:
         }
     
     def _load_lawful_basis_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load GDPR lawful basis rules"""
-        return {
+        """Load GDPR lawful basis rules"""        return {
             "consent": {
                 "requires_explicit_consent": True,
                 "can_be_withdrawn": True,
@@ -264,8 +251,7 @@ class GDPRHandler:
         }
     
     def _load_retention_policies(self) -> Dict[DataProcessingPurpose, Dict[str, Any]]:
-        """Load data retention policies by purpose"""
-        return {
+        """Load data retention policies by purpose"""        return {
             DataProcessingPurpose.CONVERSATIONAL_AI: {
                 "retention_period_days": 365,
                 "auto_deletion": True,
@@ -305,8 +291,7 @@ class GDPRHandler:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """
-        Comprehensive GDPR privacy compliance validation.
+        """        Comprehensive GDPR privacy compliance validation.
         
         Args:
             user_id: User identifier
@@ -316,8 +301,7 @@ class GDPRHandler:
             
         Returns:
             Dict containing GDPR compliance assessment
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.debug(f"Starting GDPR compliance validation for user {user_id}")
@@ -416,8 +400,7 @@ class GDPRHandler:
             }
     
     async def _detect_pii(self, content: str) -> List[PIIDetection]:
-        """Detect personally identifiable information in content"""
-        detections = []
+        """Detect personally identifiable information in content"""        detections = []
         
         # Pattern-based PII detection
         for category, patterns in self.pii_patterns.items():
@@ -465,8 +448,7 @@ class GDPRHandler:
         return detections
     
     def _mask_pii(self, value: str, category: PIICategory) -> str:
-        """Mask PII value for logging and storage"""
-        if category == PIICategory.EMAIL:
+        """Mask PII value for logging and storage"""        if category == PIICategory.EMAIL:
             local, domain = value.split('@')
             return f"{local[:2]}***@{domain}"
         elif category == PIICategory.PHONE:
@@ -479,8 +461,7 @@ class GDPRHandler:
             return f"{value[:2]}***{value[-2:]}" if len(value) > 4 else "***"
     
     def _get_retention_period(self, category: PIICategory) -> Optional[int]:
-        """Get retention period for PII category"""
-        retention_map = {
+        """Get retention period for PII category"""        retention_map = {
             PIICategory.HEALTH: 2555,  # 7 years for health data
             PIICategory.FINANCIAL: 2555,  # 7 years for financial data
             PIICategory.SPECIAL_CATEGORY: 1095,  # 3 years for special categories
@@ -499,8 +480,7 @@ class GDPRHandler:
         pii_detections: List[PIIDetection],
         conversation_data: Dict[str, Any]
     ) -> List[ConsentRecord]:
-        """Check consent requirements for detected PII"""
-        consent_requirements = []
+        """Check consent requirements for detected PII"""        consent_requirements = []
         
         # Load user's current consent status
         user_consents = await self._load_user_consents(user_id)
@@ -541,14 +521,12 @@ class GDPRHandler:
         return consent_requirements
     
     async def _load_user_consents(self, user_id: int) -> Dict[str, ConsentRecord]:
-        """Load user's consent records"""
-        if user_id in self.consent_cache:
+        """Load user's consent records"""        if user_id in self.consent_cache:
             return self.consent_cache[user_id]
         
         try:
             consents_data = await self.db_manager.fetch_all(
-                """
-                SELECT * FROM user_consents 
+                """                SELECT * FROM user_consents 
                 WHERE user_id = $1 AND (expires_at IS NULL OR expires_at > $2)
                 """,
                 user_id,
@@ -584,8 +562,7 @@ class GDPRHandler:
         conversation_data: Dict[str, Any],
         user_id: Optional[int]
     ) -> Dict[str, Any]:
-        """Assess lawful basis for data processing"""
-        assessment = {
+        """Assess lawful basis for data processing"""        assessment = {
             "primary_basis": "legitimate_interests",
             "alternative_bases": [],
             "special_category_basis": None,
@@ -629,8 +606,7 @@ class GDPRHandler:
         pii_detections: List[PIIDetection],
         user_id: Optional[int]
     ) -> List[DataSubjectRights]:
-        """Determine applicable data subject rights"""
-        applicable_rights = []
+        """Determine applicable data subject rights"""        applicable_rights = []
         
         if pii_detections and user_id:
             # Basic rights always applicable when processing personal data
@@ -655,8 +631,7 @@ class GDPRHandler:
         pii_detections: List[PIIDetection],
         conversation_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess data retention requirements"""
-        retention_assessment = {
+        """Assess data retention requirements"""        retention_assessment = {
             "recommended_retention_days": 365,
             "automatic_deletion_recommended": True,
             "anonymization_timeline": 90,
@@ -689,8 +664,7 @@ class GDPRHandler:
         conversation_data: Dict[str, Any],
         user_id: Optional[int]
     ) -> List[str]:
-        """Check for cross-border data transfer issues"""
-        transfer_issues = []
+        """Check for cross-border data transfer issues"""        transfer_issues = []
         
         # Check user location vs processing location
         user_location = conversation_data.get("user_location", {})
@@ -722,8 +696,7 @@ class GDPRHandler:
         return transfer_issues
     
     def _identify_violations(self, result: GDPRComplianceResult) -> List[Dict[str, Any]]:
-        """Identify GDPR violations from assessment"""
-        violations = []
+        """Identify GDPR violations from assessment"""        violations = []
         
         # Check for processing without lawful basis
         if result.pii_detected and not result.lawful_basis_assessment.get("primary_basis"):
@@ -774,8 +747,7 @@ class GDPRHandler:
         return violations
     
     def _generate_privacy_recommendations(self, result: GDPRComplianceResult) -> List[str]:
-        """Generate privacy compliance recommendations"""
-        recommendations = []
+        """Generate privacy compliance recommendations"""        recommendations = []
         
         if result.pii_detected:
             recommendations.append("Implement data minimization principles")
@@ -810,15 +782,12 @@ class GDPRHandler:
         result: GDPRComplianceResult,
         user_id: Optional[int]
     ) -> None:
-        """Store GDPR assessment results"""
-        try:
-            query = """
-                INSERT INTO gdpr_assessments 
+        """Store GDPR assessment results"""        try:
+            query = """                INSERT INTO gdpr_assessments 
                 (user_id, is_compliant, pii_count, violations_count, 
                  processing_time_ms, assessment_data, created_at)
                 VALUES ($1, $2, $3, $4, $5, $6, $7)
-            """
-            
+            """            
             assessment_data = {
                 "pii_categories": [pii.category.value for pii in result.pii_detected],
                 "consent_requirements": [req.purpose.value for req in result.consent_requirements],
@@ -848,8 +817,7 @@ class GDPRHandler:
         request_type: DataSubjectRights,
         details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process data subject rights requests"""
-        try:
+        """Process data subject rights requests"""        try:
             self.logger.info(f"Processing {request_type.value} request for user {user_id}")
             
             if request_type == DataSubjectRights.ACCESS:
@@ -878,12 +846,10 @@ class GDPRHandler:
             }
     
     async def _process_access_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
-        """Process data access request (Article 15)"""
-        try:
+        """Process data access request (Article 15)"""        try:
             # Gather all personal data for the user
             user_data = await self.db_manager.fetch_all(
-                """
-                SELECT table_name, column_name, data_value
+                """                SELECT table_name, column_name, data_value
                 FROM user_personal_data_view 
                 WHERE user_id = $1
                 """,
@@ -922,12 +888,10 @@ class GDPRHandler:
             return {"success": False, "message": str(e)}
     
     async def _process_erasure_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
-        """Process data erasure request (Article 17)"""
-        try:
+        """Process data erasure request (Article 17)"""        try:
             # Check if erasure is legally permissible
             legal_obligations = await self.db_manager.fetch_all(
-                """
-                SELECT purpose, legal_basis, retention_required_until
+                """                SELECT purpose, legal_basis, retention_required_until
                 FROM data_processing_records 
                 WHERE user_id = $1 AND retention_required_until > $2
                 """,
@@ -961,8 +925,7 @@ class GDPRHandler:
             
             # Log erasure for audit trail
             await self.db_manager.execute(
-                """
-                INSERT INTO data_erasure_log 
+                """                INSERT INTO data_erasure_log 
                 (user_id, erasure_date, erasure_scope, legal_basis)
                 VALUES ($1, $2, $3, $4)
                 """,
@@ -983,8 +946,7 @@ class GDPRHandler:
             return {"success": False, "message": str(e)}
     
     async def _process_portability_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
-        """Process data portability request (Article 20)"""
-        try:
+        """Process data portability request (Article 20)"""        try:
             # Export data in machine-readable format
             portable_data = await self._generate_portable_data_export(user_id)
             
@@ -1000,23 +962,19 @@ class GDPRHandler:
             return {"success": False, "message": str(e)}
     
     async def _process_rectification_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
-        """Process data rectification request (Article 16)"""
-        # Implementation for data correction
+        """Process data rectification request (Article 16)"""        # Implementation for data correction
         return {"success": True, "message": "Rectification request processed"}
     
     async def _process_restriction_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
-        """Process processing restriction request (Article 18)"""
-        # Implementation for processing restriction
+        """Process processing restriction request (Article 18)"""        # Implementation for processing restriction
         return {"success": True, "message": "Processing restriction applied"}
     
     async def _process_objection_request(self, user_id: int, details: Dict[str, Any]) -> Dict[str, Any]:
-        """Process objection to processing request (Article 21)"""
-        # Implementation for processing objection
+        """Process objection to processing request (Article 21)"""        # Implementation for processing objection
         return {"success": True, "message": "Objection to processing recorded"}
     
     async def _generate_portable_data_export(self, user_id: int) -> Dict[str, Any]:
-        """Generate machine-readable data export for portability"""
-        # Implementation for structured data export
+        """Generate machine-readable data export for portability"""        # Implementation for structured data export
         return {
             "user_id": user_id,
             "export_date": datetime.now().isoformat(),
@@ -1030,8 +988,7 @@ class GDPRHandler:
         purpose: DataProcessingPurpose,
         consent_evidence: Dict[str, Any]
     ) -> bool:
-        """Grant user consent for specific processing purpose"""
-        try:
+        """Grant user consent for specific processing purpose"""        try:
             consent_record = ConsentRecord(
                 user_id=user_id,
                 purpose=purpose,
@@ -1046,8 +1003,7 @@ class GDPRHandler:
             )
             
             await self.db_manager.execute(
-                """
-                INSERT INTO user_consents 
+                """                INSERT INTO user_consents 
                 (user_id, purpose, status, granted_at, granularity, legal_basis, 
                  consent_evidence, processing_details, created_at)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
@@ -1070,11 +1026,9 @@ class GDPRHandler:
             return False
     
     async def withdraw_consent(self, user_id: int, purpose: DataProcessingPurpose) -> bool:
-        """Withdraw user consent for specific processing purpose"""
-        try:
+        """Withdraw user consent for specific processing purpose"""        try:
             await self.db_manager.execute(
-                """
-                UPDATE user_consents 
+                """                UPDATE user_consents 
                 SET status = $1, withdrawn_at = $2, updated_at = $3
                 WHERE user_id = $4 AND purpose = $5
                 """,
@@ -1098,11 +1052,9 @@ class GDPRHandler:
             return False
     
     async def get_gdpr_compliance_metrics(self, days: int = 30) -> Dict[str, Any]:
-        """Get GDPR compliance metrics and statistics"""
-        try:
+        """Get GDPR compliance metrics and statistics"""        try:
             # Overall compliance metrics
-            compliance_query = """
-                SELECT 
+            compliance_query = """                SELECT 
                     is_compliant,
                     COUNT(*) as count,
                     AVG(pii_count) as avg_pii_count,
@@ -1110,24 +1062,21 @@ class GDPRHandler:
                 FROM gdpr_assessments 
                 WHERE created_at >= $1
                 GROUP BY is_compliant
-            """
-            
+            """            
             compliance_stats = await self.db_manager.fetch_all(
                 compliance_query,
                 datetime.now() - timedelta(days=days)
             )
             
             # Data subject requests metrics
-            dsr_query = """
-                SELECT 
+            dsr_query = """                SELECT 
                     request_type,
                     status,
                     COUNT(*) as count
                 FROM data_subject_requests 
                 WHERE created_at >= $1
                 GROUP BY request_type, status
-            """
-            
+            """            
             dsr_stats = await self.db_manager.fetch_all(
                 dsr_query,
                 datetime.now() - timedelta(days=days)

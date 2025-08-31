@@ -1,5 +1,4 @@
-"""
-⚓ Helm Chart Manager - IA-Influencer-Agent Infrastructure
+"""⚓ Helm Chart Manager - IA-Influencer-Agent Infrastructure
 ===========================================================
 Expert: DevOps Engineer + Kubernetes Specialist + Helm Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional Helm chart management and Kubernetes deployment automation.
 Includes chart templating, dependency management, and release lifecycle.
 """
-
 import os
 import yaml
 import json
@@ -32,8 +30,7 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ReleaseStatus(Enum):
-    """Helm release status"""
-    UNKNOWN = "unknown"
+    """Helm release status"""    UNKNOWN = "unknown"
     DEPLOYED = "deployed"
     UNINSTALLED = "uninstalled"
     SUPERSEDED = "superseded"
@@ -44,14 +41,12 @@ class ReleaseStatus(Enum):
     PENDING_ROLLBACK = "pending-rollback"
 
 class ChartVersion(Enum):
-    """Chart API versions"""
-    V1 = "v1"
+    """Chart API versions"""    V1 = "v1"
     V2 = "v2"
 
 @dataclass
 class HelmChart:
-    """Helm chart configuration"""
-    name: str
+    """Helm chart configuration"""    name: str
     version: str
     app_version: str
     description: str
@@ -68,8 +63,7 @@ class HelmChart:
 
 @dataclass
 class HelmRelease:
-    """Helm release information"""
-    name: str
+    """Helm release information"""    name: str
     namespace: str
     chart: str
     version: str
@@ -82,8 +76,7 @@ class HelmRelease:
 
 @dataclass
 class HelmRepository:
-    """Helm repository configuration"""
-    name: str
+    """Helm repository configuration"""    name: str
     url: str
     username: Optional[str] = None
     password: Optional[str] = None
@@ -94,8 +87,7 @@ class HelmRepository:
 
 @dataclass
 class DeploymentConfig:
-    """Deployment configuration"""
-    release_name: str
+    """Deployment configuration"""    release_name: str
     namespace: str
     chart_path: str
     values: Dict[str, Any] = field(default_factory=dict)
@@ -108,8 +100,7 @@ class DeploymentConfig:
     create_namespace: bool = True
 
 class HelmChartManager:
-    """Professional Helm chart manager"""
-    
+    """Professional Helm chart manager"""    
     def __init__(self, charts_path: str = "/app/charts", config_path: str = "/app/config/helm"):
         self.charts_path = Path(charts_path)
         self.config_path = Path(config_path)
@@ -121,8 +112,7 @@ class HelmChartManager:
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
     async def initialize(self) -> bool:
-        """Initialize Helm chart manager"""
-        try:
+        """Initialize Helm chart manager"""        try:
             # Check Helm installation
             if not await self._check_helm_installation():
                 self.logger.error("❌ Helm is not installed or not accessible")
@@ -156,8 +146,7 @@ class HelmChartManager:
             return False
     
     async def _check_helm_installation(self) -> bool:
-        """Check if Helm is installed"""
-        try:
+        """Check if Helm is installed"""        try:
             result = subprocess.run(
                 ["helm", "version", "--short"],
                 capture_output=True,
@@ -177,8 +166,7 @@ class HelmChartManager:
             return False
     
     async def _load_repositories(self) -> None:
-        """Load existing Helm repositories"""
-        try:
+        """Load existing Helm repositories"""        try:
             repo_file = self.config_path / "repositories.yml"
             if repo_file.exists():
                 with open(repo_file, 'r') as f:
@@ -192,8 +180,7 @@ class HelmChartManager:
             self.logger.warning(f"⚠️ Error loading repositories: {e}")
     
     async def _setup_default_repositories(self) -> None:
-        """Setup default Helm repositories"""
-        try:
+        """Setup default Helm repositories"""        try:
             default_repos = [
                 HelmRepository(
                     name="bitnami",
@@ -239,8 +226,7 @@ class HelmChartManager:
             self.logger.error(f"❌ Error setting up default repositories: {e}")
     
     async def _save_repositories(self) -> None:
-        """Save repositories configuration"""
-        try:
+        """Save repositories configuration"""        try:
             repo_file = self.config_path / "repositories.yml"
             repos_data = {
                 "repositories": [asdict(repo) for repo in self.repositories.values()]
@@ -253,8 +239,7 @@ class HelmChartManager:
             self.logger.error(f"❌ Error saving repositories: {e}")
     
     async def _load_charts(self) -> None:
-        """Load existing charts"""
-        try:
+        """Load existing charts"""        try:
             chart_dirs = [d for d in self.charts_path.iterdir() if d.is_dir()]
             
             for chart_dir in chart_dirs:
@@ -286,8 +271,7 @@ class HelmChartManager:
             self.logger.warning(f"⚠️ Error loading charts: {e}")
     
     async def _create_default_charts(self) -> None:
-        """Create default charts for IA-Influencer platform"""
-        try:
+        """Create default charts for IA-Influencer platform"""        try:
             # Web API Chart
             web_api_chart = await self._create_web_api_chart()
             if web_api_chart:
@@ -312,8 +296,7 @@ class HelmChartManager:
             self.logger.error(f"❌ Error creating default charts: {e}")
     
     async def _create_web_api_chart(self) -> Optional[HelmChart]:
-        """Create Web API Helm chart"""
-        try:
+        """Create Web API Helm chart"""        try:
             chart_name = "ia-influencer-web-api"
             chart_path = self.charts_path / chart_name
             
@@ -492,8 +475,7 @@ class HelmChartManager:
             return None
     
     async def _create_ai_engine_chart(self) -> Optional[HelmChart]:
-        """Create AI Engine Helm chart"""
-        try:
+        """Create AI Engine Helm chart"""        try:
             chart_name = "ia-influencer-ai-engine"
             chart_path = self.charts_path / chart_name
             
@@ -586,8 +568,7 @@ class HelmChartManager:
             return None
     
     async def _create_database_chart(self) -> Optional[HelmChart]:
-        """Create Database Helm chart"""
-        try:
+        """Create Database Helm chart"""        try:
             chart_name = "ia-influencer-database"
             chart_path = self.charts_path / chart_name
             
@@ -685,8 +666,7 @@ class HelmChartManager:
             return None
     
     async def _create_platform_chart(self) -> Optional[HelmChart]:
-        """Create umbrella platform chart"""
-        try:
+        """Create umbrella platform chart"""        try:
             chart_name = "ia-influencer-platform"
             chart_path = self.charts_path / chart_name
             
@@ -771,8 +751,7 @@ class HelmChartManager:
             return None
     
     async def _create_deployment_template(self, templates_path: Path, chart_name: str, app_type: str) -> None:
-        """Create deployment template"""
-        try:
+        """Create deployment template"""        try:
             deployment_template = f"""apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -854,8 +833,7 @@ spec:
       tolerations:
         {{{{- toYaml . | nindent 8 }}}}
       {{{{- end }}}}
-"""
-            
+"""            
             with open(templates_path / "deployment.yaml", 'w') as f:
                 f.write(deployment_template)
                 
@@ -863,8 +841,7 @@ spec:
             self.logger.error(f"❌ Error creating deployment template: {e}")
     
     async def _create_service_template(self, templates_path: Path, chart_name: str) -> None:
-        """Create service template"""
-        try:
+        """Create service template"""        try:
             service_template = f"""apiVersion: v1
 kind: Service
 metadata:
@@ -880,8 +857,7 @@ spec:
       name: http
   selector:
     {{{{- include "{chart_name}.selectorLabels" . | nindent 4 }}}}
-"""
-            
+"""            
             with open(templates_path / "service.yaml", 'w') as f:
                 f.write(service_template)
                 
@@ -889,8 +865,7 @@ spec:
             self.logger.error(f"❌ Error creating service template: {e}")
     
     async def _create_ingress_template(self, templates_path: Path, chart_name: str) -> None:
-        """Create ingress template"""
-        try:
+        """Create ingress template"""        try:
             ingress_template = f"""{{{{- if .Values.ingress.enabled -}}}}
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -939,8 +914,7 @@ spec:
           {{{{- end }}}}
     {{{{- end }}}}
 {{{{- end }}}}
-"""
-            
+"""            
             with open(templates_path / "ingress.yaml", 'w') as f:
                 f.write(ingress_template)
                 
@@ -948,8 +922,7 @@ spec:
             self.logger.error(f"❌ Error creating ingress template: {e}")
     
     async def _create_hpa_template(self, templates_path: Path, chart_name: str) -> None:
-        """Create HPA template"""
-        try:
+        """Create HPA template"""        try:
             hpa_template = f"""{{{{- if .Values.autoscaling.enabled }}}}
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
@@ -982,8 +955,7 @@ spec:
           averageUtilization: {{{{ .Values.autoscaling.targetMemoryUtilizationPercentage }}}}
     {{{{- end }}}}
 {{{{- end }}}}
-"""
-            
+"""            
             with open(templates_path / "hpa.yaml", 'w') as f:
                 f.write(hpa_template)
                 
@@ -991,8 +963,7 @@ spec:
             self.logger.error(f"❌ Error creating HPA template: {e}")
     
     async def _create_configmap_template(self, templates_path: Path, chart_name: str) -> None:
-        """Create ConfigMap template"""
-        try:
+        """Create ConfigMap template"""        try:
             configmap_template = f"""{{{{- if .Values.configMap.create }}}}
 apiVersion: v1
 kind: ConfigMap
@@ -1006,8 +977,7 @@ data:
     {{{{ $value | nindent 4 }}}}
   {{{{- end }}}}
 {{{{- end }}}}
-"""
-            
+"""            
             with open(templates_path / "configmap.yaml", 'w') as f:
                 f.write(configmap_template)
                 
@@ -1015,8 +985,7 @@ data:
             self.logger.error(f"❌ Error creating ConfigMap template: {e}")
     
     async def _create_secret_template(self, templates_path: Path, chart_name: str) -> None:
-        """Create Secret template"""
-        try:
+        """Create Secret template"""        try:
             secret_template = f"""{{{{- if .Values.secrets.create }}}}
 apiVersion: v1
 kind: Secret
@@ -1030,8 +999,7 @@ data:
   {{{{ $key }}}}: {{{{ $value }}}}
   {{{{- end }}}}
 {{{{- end }}}}
-"""
-            
+"""            
             with open(templates_path / "secret.yaml", 'w') as f:
                 f.write(secret_template)
                 
@@ -1039,8 +1007,7 @@ data:
             self.logger.error(f"❌ Error creating Secret template: {e}")
     
     async def _create_serviceaccount_template(self, templates_path: Path, chart_name: str) -> None:
-        """Create ServiceAccount template"""
-        try:
+        """Create ServiceAccount template"""        try:
             serviceaccount_template = f"""{{{{- if .Values.serviceAccount.create -}}}}
 apiVersion: v1
 kind: ServiceAccount
@@ -1053,8 +1020,7 @@ metadata:
     {{{{- toYaml . | nindent 4 }}}}
   {{{{- end }}}}
 {{{{- end }}}}
-"""
-            
+"""            
             with open(templates_path / "serviceaccount.yaml", 'w') as f:
                 f.write(serviceaccount_template)
                 
@@ -1062,8 +1028,7 @@ metadata:
             self.logger.error(f"❌ Error creating ServiceAccount template: {e}")
     
     async def _create_pvc_template(self, templates_path: Path, chart_name: str) -> None:
-        """Create PVC template"""
-        try:
+        """Create PVC template"""        try:
             pvc_template = f"""{{{{- if .Values.persistence.enabled }}}}
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -1081,8 +1046,7 @@ spec:
     requests:
       storage: {{{{ .Values.persistence.size }}}}
 {{{{- end }}}}
-"""
-            
+"""            
             with open(templates_path / "pvc.yaml", 'w') as f:
                 f.write(pvc_template)
                 
@@ -1090,8 +1054,7 @@ spec:
             self.logger.error(f"❌ Error creating PVC template: {e}")
     
     async def _load_releases(self) -> None:
-        """Load existing Helm releases"""
-        try:
+        """Load existing Helm releases"""        try:
             result = subprocess.run(
                 ["helm", "list", "--all-namespaces", "--output", "json"],
                 capture_output=True,
@@ -1120,8 +1083,7 @@ spec:
             self.logger.warning(f"⚠️ Error loading releases: {e}")
     
     async def add_repository(self, repository: HelmRepository) -> bool:
-        """Add Helm repository"""
-        try:
+        """Add Helm repository"""        try:
             cmd = ["helm", "repo", "add", repository.name, repository.url]
             
             if repository.username and repository.password:
@@ -1159,8 +1121,7 @@ spec:
             return False
     
     async def update_repository(self, repo_name: str = None) -> bool:
-        """Update Helm repositories"""
-        try:
+        """Update Helm repositories"""        try:
             if repo_name:
                 cmd = ["helm", "repo", "update", repo_name]
             else:
@@ -1180,8 +1141,7 @@ spec:
             return False
     
     async def install_release(self, config: DeploymentConfig) -> bool:
-        """Install Helm release"""
-        try:
+        """Install Helm release"""        try:
             cmd = [
                 "helm", "install", config.release_name, config.chart_path,
                 "--namespace", config.namespace
@@ -1228,8 +1188,7 @@ spec:
             return False
     
     async def upgrade_release(self, config: DeploymentConfig) -> bool:
-        """Upgrade Helm release"""
-        try:
+        """Upgrade Helm release"""        try:
             cmd = [
                 "helm", "upgrade", config.release_name, config.chart_path,
                 "--namespace", config.namespace
@@ -1273,8 +1232,7 @@ spec:
             return False
     
     async def uninstall_release(self, release_name: str, namespace: str, keep_history: bool = False) -> bool:
-        """Uninstall Helm release"""
-        try:
+        """Uninstall Helm release"""        try:
             cmd = ["helm", "uninstall", release_name, "--namespace", namespace]
             
             if keep_history:
@@ -1300,8 +1258,7 @@ spec:
             return False
     
     async def rollback_release(self, release_name: str, namespace: str, revision: int = None) -> bool:
-        """Rollback Helm release"""
-        try:
+        """Rollback Helm release"""        try:
             cmd = ["helm", "rollback", release_name, "--namespace", namespace]
             
             if revision:
@@ -1322,8 +1279,7 @@ spec:
             return False
     
     async def get_release_values(self, release_name: str, namespace: str) -> Dict[str, Any]:
-        """Get release values"""
-        try:
+        """Get release values"""        try:
             result = subprocess.run([
                 "helm", "get", "values", release_name,
                 "--namespace", namespace,
@@ -1341,8 +1297,7 @@ spec:
             return {}
     
     async def get_release_manifest(self, release_name: str, namespace: str) -> str:
-        """Get release manifest"""
-        try:
+        """Get release manifest"""        try:
             result = subprocess.run([
                 "helm", "get", "manifest", release_name,
                 "--namespace", namespace
@@ -1359,8 +1314,7 @@ spec:
             return ""
     
     async def template_chart(self, chart_path: str, values: Dict[str, Any] = None) -> str:
-        """Template chart without installing"""
-        try:
+        """Template chart without installing"""        try:
             cmd = ["helm", "template", chart_path]
             
             # Add values from dict
@@ -1382,8 +1336,7 @@ spec:
             return ""
     
     async def validate_chart(self, chart_path: str) -> Tuple[bool, List[str]]:
-        """Validate Helm chart"""
-        try:
+        """Validate Helm chart"""        try:
             errors = []
             
             # Lint chart
@@ -1406,8 +1359,7 @@ spec:
             return False, [str(e)]
     
     async def package_chart(self, chart_path: str, destination: str = None) -> str:
-        """Package Helm chart"""
-        try:
+        """Package Helm chart"""        try:
             cmd = ["helm", "package", chart_path]
             
             if destination:
@@ -1431,8 +1383,7 @@ spec:
             return ""
     
     async def search_charts(self, keyword: str, repository: str = None) -> List[Dict[str, Any]]:
-        """Search for charts"""
-        try:
+        """Search for charts"""        try:
             cmd = ["helm", "search", "repo", keyword, "--output", "json"]
             
             if repository:
@@ -1451,8 +1402,7 @@ spec:
             return []
     
     async def get_chart_history(self, release_name: str, namespace: str) -> List[Dict[str, Any]]:
-        """Get release history"""
-        try:
+        """Get release history"""        try:
             result = subprocess.run([
                 "helm", "history", release_name,
                 "--namespace", namespace,

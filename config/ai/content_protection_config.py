@@ -1,5 +1,4 @@
-"""
-Content Protection AI Configuration for IA-Influencer Agent Platform
+"""Content Protection AI Configuration for IA-Influencer Agent Platform
 ====================================================================
 
 Professional content protection and rights management AI configuration.
@@ -16,7 +15,6 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -25,8 +23,7 @@ import os
 
 
 class ProtectionLevel(str, Enum):
-    """Content protection security levels."""
-    
+    """Content protection security levels."""    
     BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
@@ -35,8 +32,7 @@ class ProtectionLevel(str, Enum):
 
 
 class MonitoringScope(str, Enum):
-    """Monitoring scope for content protection."""
-    
+    """Monitoring scope for content protection."""    
     PLATFORM_SPECIFIC = "platform_specific"
     CROSS_PLATFORM = "cross_platform"
     GLOBAL_WEB = "global_web"
@@ -45,8 +41,7 @@ class MonitoringScope(str, Enum):
 
 
 class ActionType(str, Enum):
-    """Automated protection actions."""
-    
+    """Automated protection actions."""    
     MONITOR_ONLY = "monitor_only"
     NOTIFY_OWNER = "notify_owner"
     SEND_TAKEDOWN = "send_takedown"
@@ -56,8 +51,7 @@ class ActionType(str, Enum):
 
 
 class PlatformType(str, Enum):
-    """Supported platforms for content monitoring."""
-    
+    """Supported platforms for content monitoring."""    
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -73,8 +67,7 @@ class PlatformType(str, Enum):
 
 @dataclass
 class ProtectionRule:
-    """Content protection rule configuration."""
-    
+    """Content protection rule configuration."""    
     rule_id: str
     rule_name: str
     protection_level: ProtectionLevel
@@ -90,13 +83,11 @@ class ProtectionRule:
 
 
 class ContentProtectionConfig(BaseSettings):
-    """
-    Professional Content Protection AI Configuration.
+    """    Professional Content Protection AI Configuration.
     
     Manages comprehensive content protection including monitoring,
     detection, and automated response systems for rights management.
-    """
-    
+    """    
     # Core Protection Configuration
     PROTECTION_STORAGE_PATH: str = "/data/protection"
     MONITORING_INTERVAL_SECONDS: int = 3600  # 1 hour
@@ -244,8 +235,7 @@ class ContentProtectionConfig(BaseSettings):
         content_type: str, 
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> ProtectionRule:
-        """Get protection rule for content type and level."""
-        
+        """Get protection rule for content type and level."""        
         if protection_level == ProtectionLevel.ENTERPRISE:
             return ProtectionRule(
                 rule_id=f"enterprise_{content_type}",
@@ -300,8 +290,7 @@ class ContentProtectionConfig(BaseSettings):
             )
     
     def get_platform_config(self, platform: PlatformType) -> Dict[str, Any]:
-        """Get platform-specific configuration."""
-        
+        """Get platform-specific configuration."""        
         platform_configs = {
             PlatformType.YOUTUBE: {
                 "api_enabled": self.YOUTUBE_API_ENABLED,

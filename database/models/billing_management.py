@@ -1,5 +1,4 @@
-"""
-Billing Management Database Model
+"""Billing Management Database Model
 
 Enterprise-grade SQLAlchemy model for comprehensive billing management,
 invoice generation, payment processing, and financial compliance.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -39,8 +37,7 @@ Base = declarative_base()
 
 
 class BillingStatus(Enum):
-    """Billing status enumeration"""
-    ACTIVE = "active"
+    """Billing status enumeration"""    ACTIVE = "active"
     SUSPENDED = "suspended"
     CANCELLED = "cancelled"
     PENDING_SETUP = "pending_setup"
@@ -52,8 +49,7 @@ class BillingStatus(Enum):
 
 
 class InvoiceStatus(Enum):
-    """Invoice status enumeration"""
-    DRAFT = "draft"
+    """Invoice status enumeration"""    DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
     PAID = "paid"
@@ -66,8 +62,7 @@ class InvoiceStatus(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment status enumeration"""
-    PENDING = "pending"
+    """Payment status enumeration"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -79,8 +74,7 @@ class PaymentStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Payment method enumeration"""
-    CREDIT_CARD = "credit_card"
+    """Payment method enumeration"""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
@@ -95,8 +89,7 @@ class PaymentMethod(Enum):
 
 
 class Currency(Enum):
-    """Currency enumeration"""
-    USD = "USD"
+    """Currency enumeration"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -114,8 +107,7 @@ class Currency(Enum):
 
 
 class BillingCycle(Enum):
-    """Billing cycle enumeration"""
-    MONTHLY = "monthly"
+    """Billing cycle enumeration"""    MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     SEMI_ANNUALLY = "semi_annually"
     ANNUALLY = "annually"
@@ -127,8 +119,7 @@ class BillingCycle(Enum):
 
 
 class InvoiceType(Enum):
-    """Invoice type enumeration"""
-    SUBSCRIPTION = "subscription"
+    """Invoice type enumeration"""    SUBSCRIPTION = "subscription"
     USAGE = "usage"
     ONE_TIME = "one_time"
     CREDIT = "credit"
@@ -140,8 +131,7 @@ class InvoiceType(Enum):
 
 
 class TaxType(Enum):
-    """Tax type enumeration"""
-    VAT = "vat"
+    """Tax type enumeration"""    VAT = "vat"
     GST = "gst"
     SALES_TAX = "sales_tax"
     WITHHOLDING_TAX = "withholding_tax"
@@ -151,8 +141,7 @@ class TaxType(Enum):
 
 
 class DiscountType(Enum):
-    """Discount type enumeration"""
-    PERCENTAGE = "percentage"
+    """Discount type enumeration"""    PERCENTAGE = "percentage"
     FIXED_AMOUNT = "fixed_amount"
     FREE_TRIAL = "free_trial"
     PROMOTIONAL = "promotional"
@@ -163,8 +152,7 @@ class DiscountType(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Compliance standard enumeration"""
-    PCI_DSS = "pci_dss"
+    """Compliance standard enumeration"""    PCI_DSS = "pci_dss"
     SOX = "sox"
     GDPR = "gdpr"
     CCPA = "ccpa"
@@ -175,13 +163,11 @@ class ComplianceStandard(Enum):
 
 
 class BillingManagement(Base):
-    """
-    Enterprise Billing Management Model
+    """    Enterprise Billing Management Model
     
     Comprehensive billing management with subscription handling,
     invoice generation, payment processing, and compliance tracking.
-    """
-    __tablename__ = 'billing_management'
+    """    __tablename__ = 'billing_management'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -335,8 +321,7 @@ class BillingManagement(Base):
         currency: Currency = Currency.USD,
         **kwargs
     ) -> 'BillingManagement':
-        """Create a new billing account"""
-        billing_id = f"bill_{uuid.uuid4().hex[:12]}"
+        """Create a new billing account"""        billing_id = f"bill_{uuid.uuid4().hex[:12]}"
         
         return cls(
             billing_id=billing_id,
@@ -347,8 +332,7 @@ class BillingManagement(Base):
         )
     
     def calculate_total_amount(self) -> Decimal:
-        """Calculate total billing amount"""
-        subtotal = self.base_amount + self.recurring_amount + self.usage_amount + self.overage_charges
+        """Calculate total billing amount"""        subtotal = self.base_amount + self.recurring_amount + self.usage_amount + self.overage_charges
         discounted_amount = subtotal - self.discount_amount
         total_with_tax = discounted_amount + self.tax_amount
         
@@ -356,8 +340,7 @@ class BillingManagement(Base):
         return total_with_tax
     
     def apply_discount(self, discount_amount: Decimal, discount_type: DiscountType, reason: str = None) -> None:
-        """Apply discount to billing"""
-        self.discount_amount += discount_amount
+        """Apply discount to billing"""        self.discount_amount += discount_amount
         
         if not self.active_discounts:
             self.active_discounts = []
@@ -377,8 +360,7 @@ class BillingManagement(Base):
         self.calculate_total_amount()
     
     def calculate_tax(self, tax_rate: Decimal = None) -> Decimal:
-        """Calculate tax amount"""
-        if self.tax_exempt:
+        """Calculate tax amount"""        if self.tax_exempt:
             self.tax_amount = Decimal('0.00')
             return self.tax_amount
         
@@ -391,8 +373,7 @@ class BillingManagement(Base):
         return self.tax_amount
     
     def update_usage(self, usage_data: Dict[str, Any]) -> None:
-        """Update usage data and calculate charges"""
-        if not self.current_usage:
+        """Update usage data and calculate charges"""        if not self.current_usage:
             self.current_usage = {}
         
         self.current_usage.update(usage_data)
@@ -407,8 +388,7 @@ class BillingManagement(Base):
         self.calculate_total_amount()
     
     def process_payment(self, amount: Decimal, payment_method: PaymentMethod) -> bool:
-        """Process payment (simplified)"""
-        # This would integrate with actual payment processors
+        """Process payment (simplified)"""        # This would integrate with actual payment processors
         try:
             self.total_paid += amount
             self.total_outstanding -= amount
@@ -426,14 +406,12 @@ class BillingManagement(Base):
             return False
     
     def is_overdue(self) -> bool:
-        """Check if billing is overdue"""
-        if self.next_billing_date and self.total_outstanding > Decimal('0.00'):
+        """Check if billing is overdue"""        if self.next_billing_date and self.total_outstanding > Decimal('0.00'):
             return datetime.now(timezone.utc) > self.next_billing_date
         return False
     
     def calculate_next_billing_date(self) -> datetime:
-        """Calculate next billing date"""
-        if not self.last_billing_date:
+        """Calculate next billing date"""        if not self.last_billing_date:
             self.last_billing_date = datetime.now(timezone.utc)
         
         if self.billing_cycle == BillingCycle.MONTHLY:
@@ -448,8 +426,7 @@ class BillingManagement(Base):
         return self.next_billing_date
     
     def suspend_billing(self, reason: str = None) -> None:
-        """Suspend billing account"""
-        self.status = BillingStatus.SUSPENDED
+        """Suspend billing account"""        self.status = BillingStatus.SUSPENDED
         self.updated_at = datetime.now(timezone.utc)
         
         if not self.metadata:
@@ -461,8 +438,7 @@ class BillingManagement(Base):
         }
     
     def reactivate_billing(self) -> None:
-        """Reactivate suspended billing"""
-        self.status = BillingStatus.ACTIVE
+        """Reactivate suspended billing"""        self.status = BillingStatus.ACTIVE
         self.updated_at = datetime.now(timezone.utc)
         
         if not self.metadata:
@@ -473,8 +449,7 @@ class BillingManagement(Base):
         }
     
     def get_billing_summary(self) -> Dict[str, Any]:
-        """Get comprehensive billing summary"""
-        return {
+        """Get comprehensive billing summary"""        return {
             'account_info': {
                 'billing_id': self.billing_id,
                 'customer_id': str(self.customer_id),
@@ -520,12 +495,10 @@ class BillingManagement(Base):
 
 
 class BillingInvoice(Base):
-    """
-    Billing Invoice Model
+    """    Billing Invoice Model
     
     Manages individual invoices with line items and payment tracking.
-    """
-    __tablename__ = 'billing_invoices'
+    """    __tablename__ = 'billing_invoices'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -587,8 +560,7 @@ class BillingInvoice(Base):
         return f"<BillingInvoice(invoice_number={self.invoice_number}, status={self.status.value}, total={self.total_amount})>"
     
     def calculate_totals(self) -> None:
-        """Calculate invoice totals from line items"""
-        if not self.line_items:
+        """Calculate invoice totals from line items"""        if not self.line_items:
             return
         
         subtotal = Decimal('0.00')
@@ -601,8 +573,7 @@ class BillingInvoice(Base):
         self.outstanding_amount = self.total_amount - self.paid_amount
     
     def mark_as_paid(self, payment_amount: Decimal = None) -> None:
-        """Mark invoice as paid"""
-        if payment_amount is None:
+        """Mark invoice as paid"""        if payment_amount is None:
             payment_amount = self.outstanding_amount
         
         self.paid_amount += payment_amount

@@ -1,5 +1,4 @@
-"""
-📊 Monitoring Service - IA-Influencer-Agent  
+"""📊 Monitoring Service - IA-Influencer-Agent  
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
@@ -15,7 +14,6 @@ Advanced real-time monitoring system for content protection.
 Provides comprehensive surveillance, alerting, and analytics
 for multi-platform content piracy detection.
 """
-
 from typing import Dict, List, Optional, Any, Union, Callable
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -41,8 +39,7 @@ logger = logging.getLogger(__name__)
 # =============== ENUMS & CONFIGURATION ===============
 
 class MonitoringStatus(Enum):
-    """Monitoring service operational status"""
-    ACTIVE = "active"
+    """Monitoring service operational status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     MONITORING = "monitoring"
     ALERTING = "alerting"
@@ -51,8 +48,7 @@ class MonitoringStatus(Enum):
     MAINTENANCE = "maintenance"
 
 class AlertSeverity(IntEnum):
-    """Alert severity levels"""
-    INFO = 1
+    """Alert severity levels"""    INFO = 1
     LOW = 2
     MEDIUM = 3
     HIGH = 4
@@ -60,8 +56,7 @@ class AlertSeverity(IntEnum):
     EMERGENCY = 6
 
 class AlertType(Enum):
-    """Types of alerts"""
-    PIRACY_DETECTED = "piracy_detected"
+    """Types of alerts"""    PIRACY_DETECTED = "piracy_detected"
     HIGH_SIMILARITY_MATCH = "high_similarity_match"
     MASSIVE_INFRINGEMENT = "massive_infringement"
     PLATFORM_UNAVAILABLE = "platform_unavailable"
@@ -73,8 +68,7 @@ class AlertType(Enum):
     TAKEDOWN_FAILURE = "takedown_failure"
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""
-    EMAIL = "email"
+    """Notification delivery channels"""    EMAIL = "email"
     WEBHOOK = "webhook"
     SMS = "sms"
     SLACK = "slack"
@@ -83,8 +77,7 @@ class NotificationChannel(Enum):
     DASHBOARD = "dashboard"
 
 class MetricType(Enum):
-    """Types of monitoring metrics"""
-    COUNTER = "counter"
+    """Types of monitoring metrics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -92,8 +85,7 @@ class MetricType(Enum):
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for monitoring service"""
-    enabled: bool = True
+    """Configuration for monitoring service"""    enabled: bool = True
     check_interval_seconds: int = 60
     alert_batch_size: int = 100
     max_concurrent_checks: int = 50
@@ -111,8 +103,7 @@ class MonitoringConfig:
 
 @dataclass
 class Alert:
-    """Monitoring alert with comprehensive details"""
-    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Monitoring alert with comprehensive details"""    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     alert_type: AlertType = AlertType.PIRACY_DETECTED
     severity: AlertSeverity = AlertSeverity.MEDIUM
     title: str = ""
@@ -132,8 +123,7 @@ class Alert:
 
 @dataclass
 class MonitoringMetrics:
-    """System monitoring metrics"""
-    metrics_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """System monitoring metrics"""    metrics_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     # Performance metrics
@@ -166,33 +156,27 @@ class MonitoringMetrics:
 # =============== CORE INTERFACES ===============
 
 class IMonitoringService(ABC):
-    """Interface for monitoring service"""
-    
+    """Interface for monitoring service"""    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize monitoring service"""
-        pass
+        """Initialize monitoring service"""        pass
     
     @abstractmethod
     async def send_alert(self, alert: Alert) -> bool:
-        """Send alert through configured channels"""
-        pass
+        """Send alert through configured channels"""        pass
     
     @abstractmethod
     async def collect_metrics(self) -> MonitoringMetrics:
-        """Collect current system metrics"""
-        pass
+        """Collect current system metrics"""        pass
     
     @abstractmethod
     async def check_system_health(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check"""
-        pass
+        """Perform comprehensive system health check"""        pass
 
 # =============== ALERT MANAGEMENT SYSTEM ===============
 
 class AlertManager:
-    """Advanced alert management and routing system"""
-    
+    """Advanced alert management and routing system"""    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AlertManager")
@@ -201,8 +185,7 @@ class AlertManager:
         self.notification_queue: asyncio.Queue = asyncio.Queue()
         
     async def process_alert(self, alert: Alert) -> bool:
-        """Process and route alert to appropriate channels"""
-        try:
+        """Process and route alert to appropriate channels"""        try:
             # Store alert
             self.active_alerts[alert.alert_id] = alert
             self.alert_history.append(alert)
@@ -230,8 +213,7 @@ class AlertManager:
             return False
     
     async def _send_notification(self, alert: Alert, channel: NotificationChannel) -> bool:
-        """Send notification through specific channel"""
-        try:
+        """Send notification through specific channel"""        try:
             if channel == NotificationChannel.EMAIL:
                 return await self._send_email_alert(alert)
             elif channel == NotificationChannel.WEBHOOK:
@@ -249,8 +231,7 @@ class AlertManager:
             return False
     
     async def _send_email_alert(self, alert: Alert) -> bool:
-        """Send email alert"""
-        try:
+        """Send email alert"""        try:
             if not self.config.email_enabled or not self.config.smtp_username:
                 return False
             
@@ -277,8 +258,7 @@ class AlertManager:
             return False
     
     async def _send_webhook_alert(self, alert: Alert) -> bool:
-        """Send webhook alert"""
-        try:
+        """Send webhook alert"""        try:
             if not self.config.webhook_enabled or not self.config.webhook_urls:
                 return False
             
@@ -312,8 +292,7 @@ class AlertManager:
             return False
     
     async def _send_slack_alert(self, alert: Alert) -> bool:
-        """Send Slack alert (placeholder)"""
-        try:
+        """Send Slack alert (placeholder)"""        try:
             # Slack integration would go here
             return True
             
@@ -322,8 +301,7 @@ class AlertManager:
             return False
     
     async def _send_discord_alert(self, alert: Alert) -> bool:
-        """Send Discord alert (placeholder)"""
-        try:
+        """Send Discord alert (placeholder)"""        try:
             # Discord integration would go here
             return True
             
@@ -332,8 +310,7 @@ class AlertManager:
             return False
     
     def _get_notification_channels(self, severity: AlertSeverity) -> List[NotificationChannel]:
-        """Determine notification channels based on alert severity"""
-        channels = []
+        """Determine notification channels based on alert severity"""        channels = []
         
         if severity >= AlertSeverity.CRITICAL:
             channels.extend([
@@ -359,8 +336,7 @@ class AlertManager:
         return channels
     
     def _generate_email_html(self, alert: Alert) -> str:
-        """Generate HTML email body for alert"""
-        severity_color = {
+        """Generate HTML email body for alert"""        severity_color = {
             AlertSeverity.INFO: "#17a2b8",
             AlertSeverity.LOW: "#28a745", 
             AlertSeverity.MEDIUM: "#ffc107",
@@ -371,8 +347,7 @@ class AlertManager:
         
         color = severity_color.get(alert.severity, "#6c757d")
         
-        html = f"""
-        <html>
+        html = f"""        <html>
         <body style="font-family: Arial, sans-serif; margin: 0; padding: 20px; background-color: #f8f9fa;">
             <div style="max-width: 600px; margin: 0 auto; background-color: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
                 <div style="background-color: {color}; color: white; padding: 20px; border-radius: 8px 8px 0 0;">
@@ -392,28 +367,22 @@ class AlertManager:
                     <p style="background-color: #f8f9fa; padding: 15px; border-radius: 4px; border-left: 4px solid {color};">
                         {alert.message}
                     </p>
-        """
-        
+        """        
         if alert.evidence_urls:
-            html += """
-                    <h3 style="color: #333;">Evidence</h3>
+            html += """                    <h3 style="color: #333;">Evidence</h3>
                     <ul>
-            """
-            for url in alert.evidence_urls[:5]:  # Limit to 5 URLs
+            """            for url in alert.evidence_urls[:5]:  # Limit to 5 URLs
                 html += f'<li><a href="{url}" target="_blank">{url}</a></li>'
             html += "</ul>"
         
         if alert.recommended_actions:
-            html += """
-                    <h3 style="color: #333;">Recommended Actions</h3>
+            html += """                    <h3 style="color: #333;">Recommended Actions</h3>
                     <ul>
-            """
-            for action in alert.recommended_actions:
+            """            for action in alert.recommended_actions:
                 html += f"<li>{action}</li>"
             html += "</ul>"
         
-        html += """
-                </div>
+        html += """                </div>
                 
                 <div style="background-color: #f8f9fa; padding: 15px; border-radius: 0 0 8px 8px; text-align: center; color: #6c757d;">
                     <p style="margin: 0;">IA-Influencer-Agent Protection System</p>
@@ -422,15 +391,13 @@ class AlertManager:
             </div>
         </body>
         </html>
-        """
-        
+        """        
         return html
 
 # =============== METRICS COLLECTION SYSTEM ===============
 
 class MetricsCollector:
-    """Advanced metrics collection and analysis system"""
-    
+    """Advanced metrics collection and analysis system"""    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
@@ -438,8 +405,7 @@ class MetricsCollector:
         self.current_metrics = MonitoringMetrics()
         
     async def collect_system_metrics(self) -> MonitoringMetrics:
-        """Collect comprehensive system metrics"""
-        metrics = MonitoringMetrics()
+        """Collect comprehensive system metrics"""        metrics = MonitoringMetrics()
         
         try:
             # Collect performance metrics
@@ -469,8 +435,7 @@ class MetricsCollector:
         return metrics
     
     async def _collect_performance_metrics(self, metrics: MonitoringMetrics) -> MonitoringMetrics:
-        """Collect performance-related metrics"""
-        try:
+        """Collect performance-related metrics"""        try:
             # These would be populated from actual system data
             metrics.total_scans_today = self._get_daily_scan_count()
             metrics.successful_scans = self._get_successful_scan_count()
@@ -483,8 +448,7 @@ class MetricsCollector:
         return metrics
     
     async def _collect_detection_metrics(self, metrics: MonitoringMetrics) -> MonitoringMetrics:
-        """Collect detection-related metrics"""
-        try:
+        """Collect detection-related metrics"""        try:
             metrics.total_violations_detected = self._get_total_violations()
             metrics.high_severity_violations = self._get_high_severity_violations()
             metrics.new_violations_today = self._get_new_violations_today()
@@ -496,8 +460,7 @@ class MetricsCollector:
         return metrics
     
     async def _collect_platform_metrics(self, metrics: MonitoringMetrics) -> MonitoringMetrics:
-        """Collect platform-specific metrics"""
-        try:
+        """Collect platform-specific metrics"""        try:
             platforms = ['youtube', 'instagram', 'tiktok', 'spotify']
             
             for platform in platforms:
@@ -514,8 +477,7 @@ class MetricsCollector:
         return metrics
     
     async def _collect_resource_metrics(self, metrics: MonitoringMetrics) -> MonitoringMetrics:
-        """Collect system resource metrics"""
-        try:
+        """Collect system resource metrics"""        try:
             import psutil
             
             metrics.cpu_usage_percent = psutil.cpu_percent(interval=1)
@@ -539,8 +501,7 @@ class MetricsCollector:
         return metrics
     
     async def _check_platform_availability(self, platform: str) -> float:
-        """Check platform availability"""
-        try:
+        """Check platform availability"""        try:
             platform_urls = {
                 'youtube': 'https://www.youtube.com',
                 'instagram': 'https://www.instagram.com',
@@ -560,8 +521,7 @@ class MetricsCollector:
             return 0.0
     
     async def _check_platform_response_time(self, platform: str) -> float:
-        """Check platform response time"""
-        try:
+        """Check platform response time"""        try:
             platform_urls = {
                 'youtube': 'https://www.youtube.com',
                 'instagram': 'https://www.instagram.com',
@@ -582,47 +542,37 @@ class MetricsCollector:
             return 0.0
     
     def _get_daily_scan_count(self) -> int:
-        """Get daily scan count (placeholder)"""
-        return 150  # Mock data
+        """Get daily scan count (placeholder)"""        return 150  # Mock data
     
     def _get_successful_scan_count(self) -> int:
-        """Get successful scan count (placeholder)"""
-        return 142  # Mock data
+        """Get successful scan count (placeholder)"""        return 142  # Mock data
     
     def _get_failed_scan_count(self) -> int:
-        """Get failed scan count (placeholder)"""
-        return 8  # Mock data
+        """Get failed scan count (placeholder)"""        return 8  # Mock data
     
     def _calculate_average_scan_time(self) -> float:
-        """Calculate average scan time (placeholder)"""
-        return 2500.0  # Mock data in milliseconds
+        """Calculate average scan time (placeholder)"""        return 2500.0  # Mock data in milliseconds
     
     def _get_total_violations(self) -> int:
-        """Get total violations detected (placeholder)"""
-        return 23  # Mock data
+        """Get total violations detected (placeholder)"""        return 23  # Mock data
     
     def _get_high_severity_violations(self) -> int:
-        """Get high severity violations (placeholder)"""
-        return 5  # Mock data
+        """Get high severity violations (placeholder)"""        return 5  # Mock data
     
     def _get_new_violations_today(self) -> int:
-        """Get new violations today (placeholder)"""
-        return 7  # Mock data
+        """Get new violations today (placeholder)"""        return 7  # Mock data
     
     def _get_resolved_violations_today(self) -> int:
-        """Get resolved violations today (placeholder)"""
-        return 12  # Mock data
+        """Get resolved violations today (placeholder)"""        return 12  # Mock data
     
     def _cleanup_old_metrics(self) -> None:
-        """Remove old metrics beyond retention period"""
-        cutoff_date = datetime.now(timezone.utc) - timedelta(days=self.config.retention_days)
+        """Remove old metrics beyond retention period"""        cutoff_date = datetime.now(timezone.utc) - timedelta(days=self.config.retention_days)
         self.metrics_history = [m for m in self.metrics_history if m.timestamp > cutoff_date]
 
 # =============== MAIN SERVICE IMPLEMENTATION ===============
 
 class MonitoringService(IMonitoringService):
-    """Professional monitoring service implementation"""
-    
+    """Professional monitoring service implementation"""    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.status = MonitoringStatus.INACTIVE
@@ -637,8 +587,7 @@ class MonitoringService(IMonitoringService):
         self.health_check_task: Optional[asyncio.Task] = None
         
     async def initialize(self) -> bool:
-        """Initialize monitoring service"""
-        try:
+        """Initialize monitoring service"""        try:
             self.logger.info("🚀 Initializing Monitoring Service")
             
             # Start background monitoring tasks
@@ -654,8 +603,7 @@ class MonitoringService(IMonitoringService):
             return False
     
     async def send_alert(self, alert: Alert) -> bool:
-        """Send alert through configured channels"""
-        try:
+        """Send alert through configured channels"""        try:
             self.status = MonitoringStatus.ALERTING
             
             success = await self.alert_manager.process_alert(alert)
@@ -669,8 +617,7 @@ class MonitoringService(IMonitoringService):
             return False
     
     async def collect_metrics(self) -> MonitoringMetrics:
-        """Collect current system metrics"""
-        try:
+        """Collect current system metrics"""        try:
             metrics = await self.metrics_collector.collect_system_metrics()
             return metrics
             
@@ -679,8 +626,7 @@ class MonitoringService(IMonitoringService):
             return MonitoringMetrics()
     
     async def check_system_health(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check"""
-        health_status = {
+        """Perform comprehensive system health check"""        health_status = {
             'overall_status': 'healthy',
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'components': {},
@@ -733,8 +679,7 @@ class MonitoringService(IMonitoringService):
     # =============== PRIVATE HELPER METHODS ===============
     
     async def _start_monitoring_tasks(self) -> None:
-        """Start background monitoring tasks"""
-        # Start periodic monitoring
+        """Start background monitoring tasks"""        # Start periodic monitoring
         self.monitoring_task = asyncio.create_task(self._monitoring_loop())
         
         # Start health check task
@@ -743,8 +688,7 @@ class MonitoringService(IMonitoringService):
         self.logger.info("Background monitoring tasks started")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
-        while self.status != MonitoringStatus.INACTIVE:
+        """Main monitoring loop"""        while self.status != MonitoringStatus.INACTIVE:
             try:
                 # Collect metrics
                 metrics = await self.collect_metrics()
@@ -760,8 +704,7 @@ class MonitoringService(IMonitoringService):
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _health_check_loop(self) -> None:
-        """Periodic health check loop"""
-        while self.status != MonitoringStatus.INACTIVE:
+        """Periodic health check loop"""        while self.status != MonitoringStatus.INACTIVE:
             try:
                 health = await self.check_system_health()
                 
@@ -784,8 +727,7 @@ class MonitoringService(IMonitoringService):
                 await asyncio.sleep(300)
     
     async def _check_component_health(self, component_name: str) -> Dict[str, Any]:
-        """Check health of individual component"""
-        health_info = {
+        """Check health of individual component"""        health_info = {
             'healthy': True,
             'status': 'operational',
             'last_check': datetime.now(timezone.utc).isoformat(),
@@ -818,8 +760,7 @@ class MonitoringService(IMonitoringService):
         return health_info
     
     async def _check_alert_conditions(self, metrics: MonitoringMetrics) -> None:
-        """Check metrics for alert conditions"""
-        try:
+        """Check metrics for alert conditions"""        try:
             # Check system resource alerts
             if metrics.cpu_usage_percent > 90:
                 await self._create_resource_alert("High CPU Usage", metrics.cpu_usage_percent, "CPU")
@@ -854,8 +795,7 @@ class MonitoringService(IMonitoringService):
             self.logger.error(f"Alert condition check failed: {e}")
     
     async def _create_resource_alert(self, title: str, usage: float, resource_type: str) -> None:
-        """Create resource usage alert"""
-        alert = Alert(
+        """Create resource usage alert"""        alert = Alert(
             alert_type=AlertType.SYSTEM_ERROR,
             severity=AlertSeverity.HIGH if usage > 95 else AlertSeverity.MEDIUM,
             title=title,
@@ -872,12 +812,10 @@ class MonitoringService(IMonitoringService):
 # =============== FACTORY & UTILITIES ===============
 
 class MonitoringServiceFactory:
-    """Factory for creating monitoring service instances"""
-    
+    """Factory for creating monitoring service instances"""    
     @staticmethod
     def create_service(config: Optional[MonitoringConfig] = None) -> MonitoringService:
-        """Create configured monitoring service"""
-        if config is None:
+        """Create configured monitoring service"""        if config is None:
             config = MonitoringConfig()
         
         return MonitoringService(config)
@@ -888,8 +826,7 @@ class MonitoringServiceFactory:
         email_enabled: bool = True,
         **kwargs
     ) -> MonitoringConfig:
-        """Create monitoring configuration"""
-        return MonitoringConfig(
+        """Create monitoring configuration"""        return MonitoringConfig(
             check_interval_seconds=check_interval_seconds,
             email_enabled=email_enabled,
             **kwargs
@@ -897,13 +834,11 @@ class MonitoringServiceFactory:
 
 
 def format_alert_for_display(alert: Alert) -> str:
-    """Format alert for display purposes"""
-    return f"[{alert.severity.name}] {alert.title} - {alert.message}"
+    """Format alert for display purposes"""    return f"[{alert.severity.name}] {alert.title} - {alert.message}"
 
 
 def calculate_uptime_percentage(total_checks: int, successful_checks: int) -> float:
-    """Calculate uptime percentage"""
-    if total_checks == 0:
+    """Calculate uptime percentage"""    if total_checks == 0:
         return 0.0
     return (successful_checks / total_checks) * 100.0
 

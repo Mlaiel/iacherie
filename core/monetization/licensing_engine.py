@@ -1,11 +1,9 @@
-"""
-Advanced Licensing Engine
+"""Advanced Licensing Engine
 Automated content licensing, rights management, and legal compliance
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,8 +22,7 @@ from ...ai.content_analysis import ContentAnalyzer
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
-    EXCLUSIVE = "exclusive"
+    """Types of content licenses"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
@@ -38,8 +35,7 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License agreement status"""
-    DRAFT = "draft"
+    """License agreement status"""    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -49,8 +45,7 @@ class LicenseStatus(Enum):
 
 
 class UsageRights(Enum):
-    """Content usage rights"""
-    COMMERCIAL = "commercial"
+    """Content usage rights"""    COMMERCIAL = "commercial"
     NON_COMMERCIAL = "non_commercial"
     BROADCAST = "broadcast"
     STREAMING = "streaming"
@@ -63,8 +58,7 @@ class UsageRights(Enum):
 
 
 class Territory(Enum):
-    """Geographic territories"""
-    WORLDWIDE = "worldwide"
+    """Geographic territories"""    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -75,8 +69,7 @@ class Territory(Enum):
 
 @dataclass
 class LicenseTerms:
-    """License agreement terms"""
-    license_type: LicenseType
+    """License agreement terms"""    license_type: LicenseType
     usage_rights: List[UsageRights]
     territory: Territory
     duration_months: Optional[int]  # None for perpetual
@@ -91,8 +84,7 @@ class LicenseTerms:
     custom_terms: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Validate license terms"""
-        if self.price < 0:
+        """Validate license terms"""        if self.price < 0:
             raise ValueError("License price cannot be negative")
         if self.royalty_rate and (self.royalty_rate < 0 or self.royalty_rate > 100):
             raise ValueError("Royalty rate must be between 0 and 100 percent")
@@ -100,8 +92,7 @@ class LicenseTerms:
 
 @dataclass
 class LicenseeInfo:
-    """Information about license purchaser"""
-    name: str
+    """Information about license purchaser"""    name: str
     email: str
     company: Optional[str] = None
     address: str = ""
@@ -112,14 +103,12 @@ class LicenseeInfo:
     intended_use: str = ""
     
     def validate(self) -> bool:
-        """Validate licensee information"""
-        required_fields = [self.name, self.email, self.intended_use]
+        """Validate licensee information"""        required_fields = [self.name, self.email, self.intended_use]
         return all(field.strip() for field in required_fields)
 
 
 class LicenseRequest(BaseModel):
-    """License request data model"""
-    content_id: str
+    """License request data model"""    content_id: str
     licensee_info: Dict[str, Any]
     license_terms: Dict[str, Any]
     usage_description: str
@@ -136,8 +125,7 @@ class LicenseRequest(BaseModel):
 
 
 class LicenseAgreementResponse(BaseModel):
-    """License agreement response"""
-    license_id: str
+    """License agreement response"""    license_id: str
     status: LicenseStatus
     agreement_url: Optional[str] = None
     payment_url: Optional[str] = None
@@ -148,8 +136,7 @@ class LicenseAgreementResponse(BaseModel):
 
 
 class LicensingEngine:
-    """Advanced content licensing and rights management engine"""
-    
+    """Advanced content licensing and rights management engine"""    
     def __init__(
         self,
         signature_manager: DigitalSignatureManager,
@@ -163,8 +150,7 @@ class LicensingEngine:
         self.pricing_rules = self._initialize_pricing_rules()
         
     def _initialize_pricing_rules(self) -> Dict[str, Any]:
-        """Initialize dynamic pricing rules"""
-        return {
+        """Initialize dynamic pricing rules"""        return {
             "base_prices": {
                 LicenseType.NON_EXCLUSIVE: {
                     UsageRights.COMMERCIAL: Decimal("500.00"),
@@ -206,8 +192,7 @@ class LicensingEngine:
         license_request: LicenseRequest,
         session: AsyncSession
     ) -> LicenseAgreementResponse:
-        """Create automated license offer based on request"""
-        try:
+        """Create automated license offer based on request"""        try:
             # Validate content exists and is available for licensing
             content = await self._get_content(content_id, session)
             if not content:
@@ -260,8 +245,7 @@ class LicensingEngine:
         license_request: LicenseRequest,
         content_analysis: Dict[str, Any]
     ) -> LicenseTerms:
-        """Generate optimized license terms using AI analysis"""
-        
+        """Generate optimized license terms using AI analysis"""        
         # Extract request parameters
         licensee_info = LicenseeInfo(**license_request.licensee_info)
         requested_terms = license_request.license_terms
@@ -316,8 +300,7 @@ class LicensingEngine:
         territory: Territory,
         content_analysis: Dict[str, Any]
     ) -> Decimal:
-        """Calculate dynamic pricing based on multiple factors"""
-        
+        """Calculate dynamic pricing based on multiple factors"""        
         # Get base price for primary usage right
         primary_right = usage_rights[0] if usage_rights else UsageRights.COMMERCIAL
         base_prices = self.pricing_rules["base_prices"].get(license_type, {})
@@ -350,8 +333,7 @@ class LicensingEngine:
         license_type: LicenseType,
         usage_rights: List[UsageRights]
     ) -> Optional[Decimal]:
-        """Calculate ongoing royalty rate if applicable"""
-        if license_type == LicenseType.EXCLUSIVE:
+        """Calculate ongoing royalty rate if applicable"""        if license_type == LicenseType.EXCLUSIVE:
             return None  # No ongoing royalties for exclusive licenses
         
         if UsageRights.COMMERCIAL in usage_rights:
@@ -367,8 +349,7 @@ class LicensingEngine:
         usage_rights: List[UsageRights],
         content_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate license restrictions based on terms and content"""
-        restrictions = []
+        """Generate license restrictions based on terms and content"""        restrictions = []
         
         # Standard restrictions
         if license_type == LicenseType.NON_EXCLUSIVE:
@@ -398,8 +379,7 @@ class LicensingEngine:
         license_terms: LicenseTerms,
         session: AsyncSession
     ) -> LicenseAgreement:
-        """Create license agreement record"""
-        
+        """Create license agreement record"""        
         licensee_info = LicenseeInfo(**license_request.licensee_info)
         
         agreement = LicenseAgreement(
@@ -429,8 +409,7 @@ class LicensingEngine:
         return agreement
     
     def _generate_terms_hash(self, license_terms: LicenseTerms) -> str:
-        """Generate hash of license terms for integrity verification"""
-        import hashlib
+        """Generate hash of license terms for integrity verification"""        import hashlib
         import json
         
         terms_dict = {
@@ -451,8 +430,7 @@ class LicensingEngine:
         license_agreement: LicenseAgreement,
         license_terms: LicenseTerms
     ) -> str:
-        """Create payment link for license purchase"""
-        # Integration with payment processor
+        """Create payment link for license purchase"""        # Integration with payment processor
         # This would typically integrate with Stripe, PayPal, etc.
         
         payment_data = {
@@ -468,8 +446,7 @@ class LicensingEngine:
         return f"https://payments.example.com/checkout/{license_agreement.id}"
     
     def _create_terms_summary(self, license_terms: LicenseTerms) -> Dict[str, Any]:
-        """Create human-readable terms summary"""
-        return {
+        """Create human-readable terms summary"""        return {
             "license_type": license_terms.license_type.value.replace("_", " ").title(),
             "usage_rights": [right.value.replace("_", " ").title() for right in license_terms.usage_rights],
             "territory": license_terms.territory.value.replace("_", " ").title(),
@@ -486,8 +463,7 @@ class LicensingEngine:
         approver_signature: str,
         session: AsyncSession
     ) -> bool:
-        """Approve and activate license agreement"""
-        try:
+        """Approve and activate license agreement"""        try:
             # Get license agreement
             agreement = await session.get(LicenseAgreement, license_id)
             if not agreement:
@@ -530,8 +506,7 @@ class LicensingEngine:
         reason: str,
         session: AsyncSession
     ) -> bool:
-        """Revoke active license agreement"""
-        try:
+        """Revoke active license agreement"""        try:
             agreement = await session.get(LicenseAgreement, license_id)
             if not agreement or agreement.status != LicenseStatus.ACTIVE.value:
                 return False
@@ -557,8 +532,7 @@ class LicensingEngine:
         license_id: str,
         session: AsyncSession
     ) -> Optional[Dict[str, Any]]:
-        """Get current license status and details"""
-        try:
+        """Get current license status and details"""        try:
             agreement = await session.get(LicenseAgreement, license_id)
             if not agreement:
                 return None
@@ -583,24 +557,20 @@ class LicensingEngine:
             return None
     
     async def _get_content(self, content_id: str, session: AsyncSession) -> Optional[Content]:
-        """Get content by ID"""
-        return await session.get(Content, content_id)
+        """Get content by ID"""        return await session.get(Content, content_id)
     
     async def _send_license_confirmation(self, agreement: LicenseAgreement) -> None:
-        """Send license confirmation notifications"""
-        # Send email to licensee and licensor
+        """Send license confirmation notifications"""        # Send email to licensee and licensor
         # Implementation would use email service
         self.logger.info(f"License confirmation sent for {agreement.id}")
     
     async def _send_license_termination(self, agreement: LicenseAgreement, reason: str) -> None:
-        """Send license termination notifications"""
-        # Send termination notice
+        """Send license termination notifications"""        # Send termination notice
         self.logger.info(f"License termination notice sent for {agreement.id}: {reason}")
 
 
 class LicenseManager:
-    """High-level license management interface"""
-    
+    """High-level license management interface"""    
     def __init__(self, licensing_engine: LicensingEngine):
         self.licensing_engine = licensing_engine
         self.logger = logging.getLogger(__name__)
@@ -613,8 +583,7 @@ class LicenseManager:
         licensee_email: str,
         session: AsyncSession
     ) -> Optional[str]:
-        """Create instant license for simple use cases"""
-        try:
+        """Create instant license for simple use cases"""        try:
             # Create simplified license request
             license_request = LicenseRequest(
                 content_id=content_id,
@@ -648,8 +617,7 @@ class LicenseManager:
         session: AsyncSession,
         status_filter: Optional[LicenseStatus] = None
     ) -> List[Dict[str, Any]]:
-        """Get all licenses for a user (as licensor or licensee)"""
-        try:
+        """Get all licenses for a user (as licensor or licensee)"""        try:
             # Build query
             query = select(LicenseAgreement).where(
                 (LicenseAgreement.licensor_id == user_id) |
@@ -685,8 +653,7 @@ class LicenseManager:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Calculate licensing revenue for user"""
-        try:
+        """Calculate licensing revenue for user"""        try:
             # Get active licenses in date range
             result = await session.execute(
                 select(LicenseAgreement).where(

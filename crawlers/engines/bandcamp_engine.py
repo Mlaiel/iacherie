@@ -1,5 +1,4 @@
-"""
-Bandcamp Crawling Engine
+"""Bandcamp Crawling Engine
 ========================
 
 Advanced Bandcamp crawler for independent music discovery and artist analytics.
@@ -13,7 +12,6 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -50,8 +48,7 @@ settings = get_settings()
 
 @dataclass
 class BandcampTrack:
-    """Bandcamp track data structure"""
-    id: str
+    """Bandcamp track data structure"""    id: str
     title: str
     artist_name: str
     artist_url: str
@@ -73,8 +70,7 @@ class BandcampTrack:
 
 @dataclass
 class BandcampAlbum:
-    """Bandcamp album data structure"""
-    id: str
+    """Bandcamp album data structure"""    id: str
     title: str
     artist_name: str
     artist_url: str
@@ -96,8 +92,7 @@ class BandcampAlbum:
 
 @dataclass
 class BandcampArtist:
-    """Bandcamp artist data structure"""
-    id: str
+    """Bandcamp artist data structure"""    id: str
     name: str
     url: str
     bio: Optional[str]
@@ -114,8 +109,7 @@ class BandcampArtist:
 
 
 class BandcampCrawlerEngine(BaseCrawlerEngine):
-    """
-    Professional Bandcamp crawler engine for independent music data extraction.
+    """    Professional Bandcamp crawler engine for independent music data extraction.
     
     Features:
     - Artist and album discovery
@@ -124,11 +118,9 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
     - Independent music monitoring
     - Advanced web scraping
     - Content protection monitoring
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Bandcamp crawler engine"""
-        super().__init__(platform="bandcamp", config=config)
+        """Initialize Bandcamp crawler engine"""        super().__init__(platform="bandcamp", config=config)
         
         # Rate limiting (more conservative for web scraping)
         self.rate_limiter = RateLimiter(
@@ -154,8 +146,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         logger.info("Bandcamp crawler engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""
-        try:
+        """Initialize the crawler engine"""        try:
             await self._create_session()
             self._setup_selenium()
             logger.info("Bandcamp engine initialized successfully")
@@ -164,8 +155,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _create_session(self) -> None:
-        """Create HTTP session with proper headers"""
-        headers = {
+        """Create HTTP session with proper headers"""        headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -182,8 +172,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _setup_selenium(self) -> None:
-        """Setup Selenium WebDriver for dynamic content"""
-        try:
+        """Setup Selenium WebDriver for dynamic content"""        try:
             options = webdriver.ChromeOptions()
             options.add_argument('--headless')
             options.add_argument('--no-sandbox')
@@ -203,8 +192,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         location: Optional[str] = None,
         sort: str = "pop"
     ) -> List[Dict[str, Any]]:
-        """
-        Search for music on Bandcamp
+        """        Search for music on Bandcamp
         
         Args:
             query: Search query
@@ -214,8 +202,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of search results
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -263,16 +250,14 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Music search failed: {e}")
     
     async def get_artist_info(self, artist_url: str) -> Optional[BandcampArtist]:
-        """
-        Get detailed information about an artist
+        """        Get detailed information about an artist
         
         Args:
             artist_url: Bandcamp artist URL
             
         Returns:
             Artist information or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -304,16 +289,14 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Artist info retrieval failed: {e}")
     
     async def get_album_info(self, album_url: str) -> Optional[BandcampAlbum]:
-        """
-        Get detailed information about an album
+        """        Get detailed information about an album
         
         Args:
             album_url: Bandcamp album URL
             
         Returns:
             Album information or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -345,16 +328,14 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Album info retrieval failed: {e}")
     
     async def get_track_info(self, track_url: str) -> Optional[BandcampTrack]:
-        """
-        Get detailed information about a track
+        """        Get detailed information about a track
         
         Args:
             track_url: Bandcamp track URL
             
         Returns:
             Track information or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -386,8 +367,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Track info retrieval failed: {e}")
     
     def _parse_search_result(self, result_element) -> Optional[Dict[str, Any]]:
-        """Parse a search result element"""
-        try:
+        """Parse a search result element"""        try:
             result_type = "unknown"
             
             # Determine result type
@@ -420,8 +400,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             return None
     
     def _parse_artist_page(self, soup: BeautifulSoup, url: str) -> BandcampArtist:
-        """Parse artist page data"""
-        try:
+        """Parse artist page data"""        try:
             # Extract artist name
             name_elem = soup.find('p', id='band-name-location')
             name = name_elem.find('span', class_='title').get_text(strip=True) if name_elem else ''
@@ -474,8 +453,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Artist page parsing failed: {e}")
     
     def _parse_album_page(self, soup: BeautifulSoup, url: str) -> BandcampAlbum:
-        """Parse album page data"""
-        try:
+        """Parse album page data"""        try:
             # Extract album title
             title_elem = soup.find('h2', class_='trackTitle')
             title = title_elem.get_text(strip=True) if title_elem else ''
@@ -538,8 +516,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Album page parsing failed: {e}")
     
     def _parse_track_page(self, soup: BeautifulSoup, url: str) -> BandcampTrack:
-        """Parse track page data"""
-        try:
+        """Parse track page data"""        try:
             # Extract track title
             title_elem = soup.find('h2', class_='trackTitle')
             title = title_elem.get_text(strip=True) if title_elem else ''
@@ -593,34 +570,29 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Track page parsing failed: {e}")
     
     def _extract_artist_name(self, element) -> str:
-        """Extract artist name from search result"""
-        artist_elem = element.find('div', class_='subhead')
+        """Extract artist name from search result"""        artist_elem = element.find('div', class_='subhead')
         return artist_elem.get_text(strip=True) if artist_elem else ''
     
     def _extract_location(self, element) -> Optional[str]:
-        """Extract location from search result"""
-        location_elem = element.find('div', class_='geo')
+        """Extract location from search result"""        location_elem = element.find('div', class_='geo')
         return location_elem.get_text(strip=True) if location_elem else None
     
     def _extract_tags(self, element) -> List[str]:
-        """Extract tags from search result"""
-        tags = []
+        """Extract tags from search result"""        tags = []
         tag_elements = element.find_all('div', class_='tag')
         for tag in tag_elements:
             tags.append(tag.get_text(strip=True))
         return tags
     
     def _extract_page_tags(self, soup: BeautifulSoup) -> List[str]:
-        """Extract tags from page"""
-        tags = []
+        """Extract tags from page"""        tags = []
         tag_elements = soup.find_all('a', class_='tag')
         for tag in tag_elements:
             tags.append(tag.get_text(strip=True))
         return tags
     
     def _extract_social_links(self, soup: BeautifulSoup) -> Dict[str, str]:
-        """Extract social media links"""
-        social_links = {}
+        """Extract social media links"""        social_links = {}
         social_section = soup.find('div', id='bio-links')
         if social_section:
             links = social_section.find_all('a')
@@ -632,8 +604,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         return social_links
     
     def _extract_price(self, price_elem) -> Optional[float]:
-        """Extract price from price element"""
-        if not price_elem:
+        """Extract price from price element"""        if not price_elem:
             return None
         
         price_text = price_elem.get_text(strip=True)
@@ -651,8 +622,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
         genre: str,
         location: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Monitor new independent releases in specific genre/location
+        """        Monitor new independent releases in specific genre/location
         
         Args:
             genre: Music genre to monitor
@@ -660,8 +630,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of new releases
-        """
-        try:
+        """        try:
             # Search for recent releases
             results = await self.search_music(
                 query=genre,
@@ -691,8 +660,7 @@ class BandcampCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Independent release monitoring failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
-        try:
+        """Clean up resources"""        try:
             if self.session:
                 await self.session.close()
             if self.driver:

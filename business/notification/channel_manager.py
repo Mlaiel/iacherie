@@ -1,5 +1,4 @@
-"""
-Channel Manager - Advanced Multi-Channel Delivery Management
+"""Channel Manager - Advanced Multi-Channel Delivery Management
 
 Enterprise-grade channel management system for IA Influencer Agent notifications.
 Handles intelligent channel selection, delivery optimization, performance monitoring,
@@ -25,7 +24,6 @@ Key Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -50,8 +48,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DeliveryResult:
-    """Result of notification delivery attempt."""
-    channel: str
+    """Result of notification delivery attempt."""    channel: str
     success: bool
     delivery_time: float
     message: str
@@ -63,8 +60,7 @@ class DeliveryResult:
 
 
 class ChannelProvider(ABC):
-    """Abstract base class for channel providers."""
-    
+    """Abstract base class for channel providers."""    
     def __init__(self, config: ChannelConfig):
         self.config = config
         self.name = self.__class__.__name__
@@ -85,17 +81,14 @@ class ChannelProvider(ABC):
         template: NotificationTemplate,
         content: Dict[str, Any]
     ) -> DeliveryResult:
-        """Send notification through this provider."""
-        pass
+        """Send notification through this provider."""        pass
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check provider health status."""
-        pass
+        """Check provider health status."""        pass
     
     async def update_metrics(self, result: DeliveryResult):
-        """Update provider performance metrics."""
-        self.performance_metrics["total_sent"] += 1
+        """Update provider performance metrics."""        self.performance_metrics["total_sent"] += 1
         
         if result.success:
             self.performance_metrics["successful_deliveries"] += 1
@@ -116,16 +109,14 @@ class ChannelProvider(ABC):
 
 
 class EmailProvider(ChannelProvider):
-    """Email notification provider."""
-    
+    """Email notification provider."""    
     async def send_notification(
         self,
         request: NotificationRequest,
         template: NotificationTemplate,
         content: Dict[str, Any]
     ) -> DeliveryResult:
-        """Send email notification."""
-        start_time = datetime.now(timezone.utc)
+        """Send email notification."""        start_time = datetime.now(timezone.utc)
         
         try:
             # Prepare email content
@@ -175,8 +166,7 @@ class EmailProvider(ChannelProvider):
             return result
     
     async def _send_via_provider(self, content: Dict[str, Any]):
-        """Send email via configured provider."""
-        if self.config.provider == "sendgrid":
+        """Send email via configured provider."""        if self.config.provider == "sendgrid":
             await self._send_via_sendgrid(content)
         elif self.config.provider == "mailgun":
             await self._send_via_mailgun(content)
@@ -186,8 +176,7 @@ class EmailProvider(ChannelProvider):
             await self._send_via_smtp(content)
     
     async def _send_via_sendgrid(self, content: Dict[str, Any]):
-        """Send via SendGrid API."""
-        headers = {
+        """Send via SendGrid API."""        headers = {
             "Authorization": f"Bearer {self.config.api_key}",
             "Content-Type": "application/json"
         }
@@ -221,23 +210,19 @@ class EmailProvider(ChannelProvider):
                     raise Exception(f"SendGrid API error: {response.status}")
     
     async def _send_via_mailgun(self, content: Dict[str, Any]):
-        """Send via Mailgun API."""
-        # Implementation for Mailgun
+        """Send via Mailgun API."""        # Implementation for Mailgun
         pass
     
     async def _send_via_aws_ses(self, content: Dict[str, Any]):
-        """Send via AWS SES."""
-        # Implementation for AWS SES
+        """Send via AWS SES."""        # Implementation for AWS SES
         pass
     
     async def _send_via_smtp(self, content: Dict[str, Any]):
-        """Send via SMTP."""
-        # Implementation for SMTP
+        """Send via SMTP."""        # Implementation for SMTP
         pass
     
     async def health_check(self) -> bool:
-        """Check email provider health."""
-        try:
+        """Check email provider health."""        try:
             # Perform health check based on provider
             if self.config.provider == "sendgrid":
                 headers = {"Authorization": f"Bearer {self.config.api_key}"}
@@ -261,16 +246,14 @@ class EmailProvider(ChannelProvider):
 
 
 class SMSProvider(ChannelProvider):
-    """SMS notification provider."""
-    
+    """SMS notification provider."""    
     async def send_notification(
         self,
         request: NotificationRequest,
         template: NotificationTemplate,
         content: Dict[str, Any]
     ) -> DeliveryResult:
-        """Send SMS notification."""
-        start_time = datetime.now(timezone.utc)
+        """Send SMS notification."""        start_time = datetime.now(timezone.utc)
         
         try:
             # Prepare SMS content (truncate to SMS limits)
@@ -316,8 +299,7 @@ class SMSProvider(ChannelProvider):
             return result
     
     async def _send_via_provider(self, content: Dict[str, Any]):
-        """Send SMS via configured provider."""
-        if self.config.provider == "twilio":
+        """Send SMS via configured provider."""        if self.config.provider == "twilio":
             await self._send_via_twilio(content)
         elif self.config.provider == "aws_sns":
             await self._send_via_aws_sns(content)
@@ -325,8 +307,7 @@ class SMSProvider(ChannelProvider):
             await self._send_via_nexmo(content)
     
     async def _send_via_twilio(self, content: Dict[str, Any]):
-        """Send via Twilio API."""
-        import base64
+        """Send via Twilio API."""        import base64
         
         auth_string = f"{self.config.api_key}:{self.config.api_secret}"
         auth_bytes = auth_string.encode('ascii')
@@ -354,18 +335,15 @@ class SMSProvider(ChannelProvider):
                     raise Exception(f"Twilio API error: {response.status}")
     
     async def _send_via_aws_sns(self, content: Dict[str, Any]):
-        """Send via AWS SNS."""
-        # Implementation for AWS SNS
+        """Send via AWS SNS."""        # Implementation for AWS SNS
         pass
     
     async def _send_via_nexmo(self, content: Dict[str, Any]):
-        """Send via Nexmo/Vonage API."""
-        # Implementation for Nexmo
+        """Send via Nexmo/Vonage API."""        # Implementation for Nexmo
         pass
     
     async def health_check(self) -> bool:
-        """Check SMS provider health."""
-        try:
+        """Check SMS provider health."""        try:
             if self.config.provider == "twilio":
                 # Check Twilio account status
                 import base64
@@ -395,16 +373,14 @@ class SMSProvider(ChannelProvider):
 
 
 class PushProvider(ChannelProvider):
-    """Push notification provider."""
-    
+    """Push notification provider."""    
     async def send_notification(
         self,
         request: NotificationRequest,
         template: NotificationTemplate,
         content: Dict[str, Any]
     ) -> DeliveryResult:
-        """Send push notification."""
-        start_time = datetime.now(timezone.utc)
+        """Send push notification."""        start_time = datetime.now(timezone.utc)
         
         try:
             push_content = {
@@ -458,8 +434,7 @@ class PushProvider(ChannelProvider):
             return result
     
     async def _send_via_provider(self, content: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Send push notification via configured provider."""
-        if self.config.provider == "fcm":
+        """Send push notification via configured provider."""        if self.config.provider == "fcm":
             return await self._send_via_fcm(content)
         elif self.config.provider == "apns":
             return await self._send_via_apns(content)
@@ -467,8 +442,7 @@ class PushProvider(ChannelProvider):
             return [{"success": False, "error": "Unknown push provider"}]
     
     async def _send_via_fcm(self, content: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Send via Firebase Cloud Messaging."""
-        headers = {
+        """Send via Firebase Cloud Messaging."""        headers = {
             "Authorization": f"key={self.config.api_key}",
             "Content-Type": "application/json"
         }
@@ -504,8 +478,7 @@ class PushProvider(ChannelProvider):
         return results
     
     async def _send_via_apns(self, content: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Send via Apple Push Notification Service."""
-        # Implementation for APNS
+        """Send via Apple Push Notification Service."""        # Implementation for APNS
         results = []
         for token in content["tokens"]:
             # Simulate APNS delivery
@@ -513,8 +486,7 @@ class PushProvider(ChannelProvider):
         return results
     
     async def health_check(self) -> bool:
-        """Check push provider health."""
-        try:
+        """Check push provider health."""        try:
             if self.config.provider == "fcm":
                 # Simple health check for FCM
                 headers = {"Authorization": f"key={self.config.api_key}"}
@@ -534,16 +506,14 @@ class PushProvider(ChannelProvider):
 
 
 class WebhookProvider(ChannelProvider):
-    """Webhook notification provider."""
-    
+    """Webhook notification provider."""    
     async def send_notification(
         self,
         request: NotificationRequest,
         template: NotificationTemplate,
         content: Dict[str, Any]
     ) -> DeliveryResult:
-        """Send webhook notification."""
-        start_time = datetime.now(timezone.utc)
+        """Send webhook notification."""        start_time = datetime.now(timezone.utc)
         
         try:
             webhook_payload = {
@@ -615,8 +585,7 @@ class WebhookProvider(ChannelProvider):
             return result
     
     def _generate_signature(self, payload: Dict[str, Any]) -> str:
-        """Generate webhook signature for verification."""
-        import hmac
+        """Generate webhook signature for verification."""        import hmac
         import hashlib
         
         secret = self.config.api_secret or "default_secret"
@@ -630,28 +599,23 @@ class WebhookProvider(ChannelProvider):
         return f"sha256={signature}"
     
     async def health_check(self) -> bool:
-        """Check webhook provider health."""
-        self.health_status = "healthy"
+        """Check webhook provider health."""        self.health_status = "healthy"
         self.last_health_check = datetime.now(timezone.utc)
         return True
 
 
 class ChannelManager:
-    """
-    Advanced multi-channel delivery management system.
+    """    Advanced multi-channel delivery management system.
     
     Provides intelligent channel selection, delivery optimization,
     performance monitoring, and failover mechanisms.
-    """
-    
+    """    
     def __init__(self, config: NotificationConfig):
-        """
-        Initialize channel manager with configuration.
+        """        Initialize channel manager with configuration.
         
         Args:
             config: Notification system configuration
-        """
-        self.config = config
+        """        self.config = config
         self.channels: Dict[str, NotificationChannel] = {}
         self.providers: Dict[str, ChannelProvider] = {}
         self.rate_limiters: Dict[str, Dict[str, Any]] = {}
@@ -674,8 +638,7 @@ class ChannelManager:
         logger.info(f"ChannelManager initialized with {len(self.channels)} channels")
     
     def _initialize_channels(self):
-        """Initialize channel configurations."""
-        for channel_name, channel_config in self.config.channels.items():
+        """Initialize channel configurations."""        for channel_name, channel_config in self.config.channels.items():
             if channel_config.enabled:
                 channel = NotificationChannel(
                     channel_id=channel_name,
@@ -693,8 +656,7 @@ class ChannelManager:
                 self.channels[channel_name] = channel
     
     def _initialize_providers(self):
-        """Initialize channel providers."""
-        for channel_name, channel_config in self.config.channels.items():
+        """Initialize channel providers."""        for channel_name, channel_config in self.config.channels.items():
             if channel_config.enabled:
                 if channel_name == "email":
                     self.providers[channel_name] = EmailProvider(channel_config)
@@ -707,8 +669,7 @@ class ChannelManager:
                 # Add more provider types as needed
     
     def _initialize_rate_limiters(self):
-        """Initialize rate limiting for each channel."""
-        for channel_name in self.channels.keys():
+        """Initialize rate limiting for each channel."""        for channel_name in self.channels.keys():
             self.rate_limiters[channel_name] = {
                 "tokens": self.channels[channel_name].rate_limits.get("per_minute", 100),
                 "last_refill": datetime.now(timezone.utc),
@@ -720,8 +681,7 @@ class ChannelManager:
         request: NotificationRequest,
         max_channels: Optional[int] = None
     ) -> List[str]:
-        """
-        Select optimal channels for notification delivery.
+        """        Select optimal channels for notification delivery.
         
         Args:
             request: Notification request
@@ -729,8 +689,7 @@ class ChannelManager:
         
         Returns:
             List of optimal channel names
-        """
-        try:
+        """        try:
             # Get user preferences if available
             user_preferences = request.recipient.preferences or {}
             
@@ -767,8 +726,7 @@ class ChannelManager:
     def _is_channel_suitable_for_recipient(
         self, channel: str, recipient
     ) -> bool:
-        """Check if channel is suitable for recipient."""
-        if channel == "email":
+        """Check if channel is suitable for recipient."""        if channel == "email":
             return bool(recipient.email)
         elif channel == "sms":
             return bool(recipient.phone)
@@ -782,8 +740,7 @@ class ChannelManager:
     async def _apply_intelligent_selection(
         self, available_channels: List[str], request: NotificationRequest
     ) -> List[str]:
-        """Apply intelligent channel selection based on performance and business rules."""
-        try:
+        """Apply intelligent channel selection based on performance and business rules."""        try:
             scored_channels = []
             
             for channel in available_channels:
@@ -802,8 +759,7 @@ class ChannelManager:
     async def _calculate_channel_score(
         self, channel: str, request: NotificationRequest
     ) -> float:
-        """Calculate channel suitability score."""
-        try:
+        """Calculate channel suitability score."""        try:
             channel_obj = self.channels[channel]
             provider = self.providers.get(channel)
             
@@ -850,8 +806,7 @@ class ChannelManager:
         template: NotificationTemplate,
         channels: List[str]
     ) -> List[DeliveryResult]:
-        """
-        Deliver notification to multiple channels.
+        """        Deliver notification to multiple channels.
         
         Args:
             request: Notification request
@@ -860,8 +815,7 @@ class ChannelManager:
         
         Returns:
             List of delivery results
-        """
-        try:
+        """        try:
             delivery_tasks = []
             
             for channel in channels:
@@ -923,8 +877,7 @@ class ChannelManager:
         template: NotificationTemplate,
         channel: str
     ) -> DeliveryResult:
-        """Deliver notification to specific channel."""
-        try:
+        """Deliver notification to specific channel."""        try:
             provider = self.providers[channel]
             
             # Get channel-specific template content
@@ -959,8 +912,7 @@ class ChannelManager:
             )
     
     async def _check_rate_limit(self, channel: str) -> bool:
-        """Check if channel is within rate limits."""
-        try:
+        """Check if channel is within rate limits."""        try:
             limiter = self.rate_limiters[channel]
             now = datetime.now(timezone.utc)
             
@@ -986,8 +938,7 @@ class ChannelManager:
             return True  # Allow delivery if rate limit check fails
     
     async def _create_rate_limited_result(self, channel: str) -> DeliveryResult:
-        """Create result for rate-limited delivery."""
-        return DeliveryResult(
+        """Create result for rate-limited delivery."""        return DeliveryResult(
             channel=channel,
             success=False,
             delivery_time=0.0,
@@ -996,8 +947,7 @@ class ChannelManager:
         )
     
     async def _update_delivery_metrics(self, results: List[DeliveryResult]):
-        """Update overall delivery performance metrics."""
-        try:
+        """Update overall delivery performance metrics."""        try:
             for result in results:
                 self.performance_metrics["total_deliveries"] += 1
                 
@@ -1043,8 +993,7 @@ class ChannelManager:
             logger.error(f"Failed to update delivery metrics: {e}")
     
     async def optimize_channels(self, optimization_config: Dict[str, Any]) -> bool:
-        """Optimize channel performance based on analytics."""
-        try:
+        """Optimize channel performance based on analytics."""        try:
             # Optimize rate limits based on performance
             if "rate_limit_optimization" in optimization_config:
                 await self._optimize_rate_limits()
@@ -1065,8 +1014,7 @@ class ChannelManager:
             return False
     
     async def _optimize_rate_limits(self):
-        """Optimize rate limits based on performance."""
-        for channel_name, channel in self.channels.items():
+        """Optimize rate limits based on performance."""        for channel_name, channel in self.channels.items():
             success_rate = channel.get_success_rate()
             
             # Increase rate limit for high-performing channels
@@ -1082,8 +1030,7 @@ class ChannelManager:
                 self.rate_limiters[channel_name]["max_tokens"] = int(new_limit)
     
     async def _optimize_providers(self):
-        """Optimize provider configurations."""
-        for channel_name, provider in self.providers.items():
+        """Optimize provider configurations."""        for channel_name, provider in self.providers.items():
             # Adjust timeouts based on performance
             if provider.performance_metrics["average_delivery_time"] > 10:
                 provider.config.timeout = min(provider.config.timeout * 1.2, 60)
@@ -1091,8 +1038,7 @@ class ChannelManager:
                 provider.config.timeout = max(provider.config.timeout * 0.8, 5)
     
     async def _update_channel_health(self):
-        """Update channel health status."""
-        health_tasks = [
+        """Update channel health status."""        health_tasks = [
             provider.health_check()
             for provider in self.providers.values()
         ]
@@ -1108,8 +1054,7 @@ class ChannelManager:
                 provider.health_status = "healthy"
     
     async def get_channel_status(self) -> Dict[str, Any]:
-        """Get comprehensive channel status."""
-        try:
+        """Get comprehensive channel status."""        try:
             status = {
                 "total_channels": len(self.channels),
                 "enabled_channels": len([c for c in self.channels.values() if c.is_enabled]),
@@ -1148,9 +1093,7 @@ class ChannelManager:
             return {"error": str(e)}
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for all channels."""
-        return self.performance_metrics.copy()
+        """Get performance metrics for all channels."""        return self.performance_metrics.copy()
     
     def get_channel_costs(self) -> Dict[str, float]:
-        """Get cost breakdown by channel."""
-        return self.performance_metrics.get("cost_tracking", {}).copy()
+        """Get cost breakdown by channel."""        return self.performance_metrics.get("cost_tracking", {}).copy()

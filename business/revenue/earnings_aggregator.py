@@ -1,5 +1,4 @@
-"""
-🚀 Earnings Aggregator - Ultra-Advanced Multi-Source Revenue Aggregation
+"""🚀 Earnings Aggregator - Ultra-Advanced Multi-Source Revenue Aggregation
 ========================================================================
 
 Industrial-grade earnings aggregation system that consolidates revenue
@@ -18,7 +17,6 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Earnings Aggregation
 ==============================================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class AggregationType(Enum):
-    """Aggregation types"""
-    DAILY = "daily"
+    """Aggregation types"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -46,8 +43,7 @@ class AggregationType(Enum):
 
 @dataclass
 class EarningsAggregate:
-    """Earnings aggregate data"""
-    aggregate_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Earnings aggregate data"""    aggregate_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     aggregation_type: AggregationType = AggregationType.DAILY
     period_start: datetime = field(default_factory=datetime.utcnow)
@@ -60,8 +56,7 @@ class EarningsAggregate:
 
 
 class EarningsAggregator:
-    """
-    Ultra-advanced earnings aggregation system
+    """    Ultra-advanced earnings aggregation system
     
     Features:
     - Multi-platform revenue consolidation
@@ -72,8 +67,7 @@ class EarningsAggregator:
     - Data quality validation
     - Reconciliation and audit trails
     - Automated reporting generation
-    """
-    
+    """    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -83,8 +77,7 @@ class EarningsAggregator:
         self.metrics = metrics_collector
         
     async def initialize(self):
-        """Initialize earnings aggregator"""
-        try:
+        """Initialize earnings aggregator"""        try:
             logger.info("Earnings aggregator initialized successfully")
             
         except Exception as e:
@@ -95,8 +88,7 @@ class EarningsAggregator:
                                creator_id: str,
                                aggregation_type: AggregationType,
                                date_range: Tuple[datetime, datetime]) -> EarningsAggregate:
-        """Aggregate earnings for specified period"""
-        try:
+        """Aggregate earnings for specified period"""        try:
             # Implementation would aggregate earnings from all sources
             aggregate = EarningsAggregate(
                 creator_id=creator_id,
@@ -112,8 +104,7 @@ class EarningsAggregator:
             raise
 
     async def cleanup(self):
-        """Cleanup aggregator resources"""
-        try:
+        """Cleanup aggregator resources"""        try:
             logger.info("Earnings aggregator cleanup completed")
             
         except Exception as e:

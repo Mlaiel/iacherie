@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Helm Package Manager
+"""IA Influencer Agent - Helm Package Manager
 Enterprise Helm chart management and application deployment
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +11,6 @@ Features:
 - Repository management and chart distribution
 - Values templating and environment configuration
 """
-
 import asyncio
 import logging
 import os
@@ -31,10 +29,8 @@ from .base_manager import BaseDeploymentManager
 
 # Mock metrics collector for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""
-    def __init__(self):
-        """Initialize Helm metrics collector with chart monitoring capabilities"""
-        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+    """Mock metrics collector."""    def __init__(self):
+        """Initialize Helm metrics collector with chart monitoring capabilities"""        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.helm_metrics = ['chart_deployments', 'release_status', 'upgrade_success_rate']
         self.chart_repositories = ['stable', 'bitnami', 'prometheus-community']
         self.monitoring_hooks = ['pre-install', 'post-install', 'pre-upgrade', 'post-upgrade']
@@ -45,8 +41,7 @@ class MetricsCollector:
 
 
 class ReleaseStatus(Enum):
-    """Helm release status."""
-    DEPLOYED = "deployed"
+    """Helm release status."""    DEPLOYED = "deployed"
     FAILED = "failed"
     PENDING_INSTALL = "pending-install"
     PENDING_UPGRADE = "pending-upgrade"
@@ -56,15 +51,13 @@ class ReleaseStatus(Enum):
 
 
 class ChartType(Enum):
-    """Helm chart types."""
-    APPLICATION = "application"
+    """Helm chart types."""    APPLICATION = "application"
     LIBRARY = "library"
 
 
 @dataclass
 class HelmChart:
-    """Helm chart configuration."""
-    name: str
+    """Helm chart configuration."""    name: str
     version: str
     app_version: str
     description: str
@@ -76,8 +69,7 @@ class HelmChart:
 
 @dataclass
 class HelmRelease:
-    """Helm release information."""
-    name: str
+    """Helm release information."""    name: str
     namespace: str
     chart: str
     chart_version: str
@@ -90,8 +82,7 @@ class HelmRelease:
 
 @dataclass
 class HelmRepository:
-    """Helm repository configuration."""
-    name: str
+    """Helm repository configuration."""    name: str
     url: str
     username: Optional[str] = None
     password: Optional[str] = None
@@ -101,13 +92,11 @@ class HelmRepository:
 
 
 class HelmManager(BaseDeploymentManager):
-    """
-    Enterprise Helm package manager.
+    """    Enterprise Helm package manager.
     
     Manages Helm charts, releases, and repositories for the
     IA Influencer Agent platform with enterprise features.
     """
-
     def __init__(
         self,
         helm_binary: str = "helm",
@@ -130,8 +119,7 @@ class HelmManager(BaseDeploymentManager):
         self._verify_helm_installation()
 
     def _verify_helm_installation(self) -> None:
-        """Verify Helm is installed and accessible."""
-        try:
+        """Verify Helm is installed and accessible."""        try:
             result = self._run_helm_command(["version", "--short"])
             self.logger.info(f"Helm version: {result.strip()}")
         except Exception as e:
@@ -144,8 +132,7 @@ class HelmManager(BaseDeploymentManager):
         namespace: Optional[str] = None,
         timeout: int = 300
     ) -> str:
-        """
-        Run Helm command and return output.
+        """        Run Helm command and return output.
         
         Args:
             args: Helm command arguments
@@ -154,8 +141,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             Command output
-        """
-        cmd = [self.helm_binary] + args
+        """        cmd = [self.helm_binary] + args
         
         if namespace:
             cmd.extend(["--namespace", namespace])
@@ -185,16 +171,14 @@ class HelmManager(BaseDeploymentManager):
             raise
 
     async def add_repository(self, repository: HelmRepository) -> bool:
-        """
-        Add Helm repository.
+        """        Add Helm repository.
         
         Args:
             repository: Repository configuration
             
         Returns:
             True if repository added successfully, False otherwise
-        """
-        try:
+        """        try:
             cmd = ["repo", "add", repository.name, repository.url]
             
             if repository.username and repository.password:
@@ -224,13 +208,11 @@ class HelmManager(BaseDeploymentManager):
             return False
 
     async def update_repositories(self) -> bool:
-        """
-        Update all Helm repositories.
+        """        Update all Helm repositories.
         
         Returns:
             True if update successful, False otherwise
-        """
-        try:
+        """        try:
             self._run_helm_command(["repo", "update"])
             self.logger.info("Repositories updated successfully")
             return True
@@ -240,8 +222,7 @@ class HelmManager(BaseDeploymentManager):
             return False
 
     async def search_charts(self, keyword: str, repo: Optional[str] = None) -> List[Dict[str, str]]:
-        """
-        Search for Helm charts.
+        """        Search for Helm charts.
         
         Args:
             keyword: Search keyword
@@ -249,8 +230,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             List of chart information
-        """
-        try:
+        """        try:
             cmd = ["search", "repo", keyword]
             if repo:
                 cmd = ["search", "repo", f"{repo}/{keyword}"]
@@ -286,8 +266,7 @@ class HelmManager(BaseDeploymentManager):
         wait: bool = True,
         timeout: str = "5m"
     ) -> bool:
-        """
-        Install Helm chart.
+        """        Install Helm chart.
         
         Args:
             release_name: Name for the release
@@ -301,8 +280,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             True if installation successful, False otherwise
-        """
-        try:
+        """        try:
             namespace = namespace or self.default_namespace
             
             cmd = ["install", release_name, chart]
@@ -359,8 +337,7 @@ class HelmManager(BaseDeploymentManager):
         wait: bool = True,
         timeout: str = "5m"
     ) -> bool:
-        """
-        Upgrade Helm release.
+        """        Upgrade Helm release.
         
         Args:
             release_name: Name of the release
@@ -373,8 +350,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             True if upgrade successful, False otherwise
-        """
-        try:
+        """        try:
             namespace = namespace or self.default_namespace
             
             cmd = ["upgrade", release_name, chart]
@@ -426,8 +402,7 @@ class HelmManager(BaseDeploymentManager):
         wait: bool = True,
         timeout: str = "5m"
     ) -> bool:
-        """
-        Rollback Helm release.
+        """        Rollback Helm release.
         
         Args:
             release_name: Name of the release
@@ -438,8 +413,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             True if rollback successful, False otherwise
-        """
-        try:
+        """        try:
             namespace = namespace or self.default_namespace
             
             cmd = ["rollback", release_name]
@@ -478,8 +452,7 @@ class HelmManager(BaseDeploymentManager):
         wait: bool = True,
         timeout: str = "5m"
     ) -> bool:
-        """
-        Uninstall Helm release.
+        """        Uninstall Helm release.
         
         Args:
             release_name: Name of the release
@@ -490,8 +463,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             True if uninstallation successful, False otherwise
-        """
-        try:
+        """        try:
             namespace = namespace or self.default_namespace
             
             cmd = ["uninstall", release_name]
@@ -523,8 +495,7 @@ class HelmManager(BaseDeploymentManager):
             return False
 
     async def get_release_info(self, release_name: str, namespace: Optional[str] = None) -> Optional[HelmRelease]:
-        """
-        Get Helm release information.
+        """        Get Helm release information.
         
         Args:
             release_name: Name of the release
@@ -532,8 +503,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             Release information or None if not found
-        """
-        try:
+        """        try:
             namespace = namespace or self.default_namespace
             
             cmd = ["get", "all", release_name, "--output", "json"]
@@ -558,16 +528,14 @@ class HelmManager(BaseDeploymentManager):
             return None
 
     async def list_releases(self, namespace: Optional[str] = None) -> List[HelmRelease]:
-        """
-        List all Helm releases.
+        """        List all Helm releases.
         
         Args:
             namespace: Target namespace (all namespaces if None)
             
         Returns:
             List of releases
-        """
-        try:
+        """        try:
             cmd = ["list", "--output", "json"]
             
             if namespace:
@@ -602,8 +570,7 @@ class HelmManager(BaseDeploymentManager):
             return []
 
     async def get_release_history(self, release_name: str, namespace: Optional[str] = None) -> List[Dict[str, Any]]:
-        """
-        Get release history.
+        """        Get release history.
         
         Args:
             release_name: Name of the release
@@ -611,8 +578,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             List of release revisions
-        """
-        try:
+        """        try:
             namespace = namespace or self.default_namespace
             
             cmd = ["history", release_name, "--output", "json"]
@@ -639,8 +605,7 @@ class HelmManager(BaseDeploymentManager):
             return []
 
     async def create_chart(self, chart_config: HelmChart, output_dir: str) -> bool:
-        """
-        Create new Helm chart.
+        """        Create new Helm chart.
         
         Args:
             chart_config: Chart configuration
@@ -648,8 +613,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             True if chart created successfully, False otherwise
-        """
-        try:
+        """        try:
             chart_dir = Path(output_dir) / chart_config.name
             
             # Create chart structure
@@ -688,8 +652,7 @@ class HelmManager(BaseDeploymentManager):
             return False
 
     async def package_chart(self, chart_path: str, output_dir: str) -> Optional[str]:
-        """
-        Package Helm chart.
+        """        Package Helm chart.
         
         Args:
             chart_path: Path to the chart directory
@@ -697,8 +660,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             Path to the packaged chart or None if failed
-        """
-        try:
+        """        try:
             cmd = ["package", chart_path, "--destination", output_dir]
             
             output = self._run_helm_command(cmd)
@@ -718,16 +680,14 @@ class HelmManager(BaseDeploymentManager):
             return None
 
     async def lint_chart(self, chart_path: str) -> Dict[str, Any]:
-        """
-        Lint Helm chart.
+        """        Lint Helm chart.
         
         Args:
             chart_path: Path to the chart directory
             
         Returns:
             Lint results
-        """
-        try:
+        """        try:
             cmd = ["lint", chart_path, "--output", "json"]
             
             output = self._run_helm_command(cmd)
@@ -749,8 +709,7 @@ class HelmManager(BaseDeploymentManager):
         name: Optional[str] = None,
         namespace: Optional[str] = None
     ) -> str:
-        """
-        Render chart templates locally.
+        """        Render chart templates locally.
         
         Args:
             chart: Chart name or path
@@ -760,8 +719,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             Rendered templates
-        """
-        try:
+        """        try:
             cmd = ["template"]
             
             if name:
@@ -794,8 +752,7 @@ class HelmManager(BaseDeploymentManager):
             return ""
 
     async def get_values(self, release_name: str, namespace: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get values for a release.
+        """        Get values for a release.
         
         Args:
             release_name: Name of the release
@@ -803,8 +760,7 @@ class HelmManager(BaseDeploymentManager):
             
         Returns:
             Release values
-        """
-        try:
+        """        try:
             namespace = namespace or self.default_namespace
             
             cmd = ["get", "values", release_name, "--output", "json"]
@@ -820,16 +776,14 @@ class HelmManager(BaseDeploymentManager):
             return {}
 
     async def validate_dependencies(self, chart_path: str) -> bool:
-        """
-        Validate chart dependencies.
+        """        Validate chart dependencies.
         
         Args:
             chart_path: Path to the chart directory
             
         Returns:
             True if dependencies are valid, False otherwise
-        """
-        try:
+        """        try:
             cmd = ["dependency", "build", chart_path]
             self._run_helm_command(cmd)
             
@@ -841,16 +795,14 @@ class HelmManager(BaseDeploymentManager):
             return False
 
     async def cleanup_releases(self, max_age_days: int = 30) -> bool:
-        """
-        Clean up old failed releases.
+        """        Clean up old failed releases.
         
         Args:
             max_age_days: Maximum age in days for failed releases
             
         Returns:
             True if cleanup successful, False otherwise
-        """
-        try:
+        """        try:
             releases = await self.list_releases()
             
             for release in releases:

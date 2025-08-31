@@ -1,8 +1,6 @@
-"""
-Performance Analytics and Reporting System
+"""Performance Analytics and Reporting System
 Advanced analytics for copyright enforcement performance monitoring
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -22,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
-    COUNT = "count"
+    """Types of performance metrics"""    COUNT = "count"
     RATE = "rate"
     PERCENTAGE = "percentage"
     DURATION = "duration"
@@ -32,8 +29,7 @@ class MetricType(Enum):
 
 
 class TimePeriod(Enum):
-    """Time periods for analytics"""
-    HOUR = "hour"
+    """Time periods for analytics"""    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -42,8 +38,7 @@ class TimePeriod(Enum):
 
 
 class ReportFormat(Enum):
-    """Report output formats"""
-    JSON = "json"
+    """Report output formats"""    JSON = "json"
     CSV = "csv"
     PDF = "pdf"
     HTML = "html"
@@ -52,8 +47,7 @@ class ReportFormat(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Definition of a performance metric"""
-    id: str
+    """Definition of a performance metric"""    id: str
     name: str
     description: str
     metric_type: MetricType
@@ -82,8 +76,7 @@ class MetricDefinition:
 
 @dataclass
 class MetricValue:
-    """A calculated metric value"""
-    metric_id: str
+    """A calculated metric value"""    metric_id: str
     timestamp: datetime
     value: float
     period: TimePeriod
@@ -93,15 +86,13 @@ class MetricValue:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def format_value(self, metric_def: MetricDefinition) -> str:
-        """Format value according to metric definition"""
-        formatted_value = round(self.value, metric_def.decimal_places)
+        """Format value according to metric definition"""        formatted_value = round(self.value, metric_def.decimal_places)
         return metric_def.format_string.format(value=formatted_value, unit=metric_def.unit)
 
 
 @dataclass
 class PerformanceReport:
-    """Complete performance report"""
-    id: str
+    """Complete performance report"""    id: str
     title: str
     description: str
     report_type: str
@@ -123,21 +114,17 @@ class PerformanceReport:
     format: ReportFormat = ReportFormat.JSON
     
     def add_metric(self, metric: MetricValue):
-        """Add metric to report"""
-        self.metrics.append(metric)
+        """Add metric to report"""        self.metrics.append(metric)
     
     def add_insight(self, insight: str):
-        """Add insight to report"""
-        self.insights.append(insight)
+        """Add insight to report"""        self.insights.append(insight)
     
     def add_recommendation(self, recommendation: str):
-        """Add recommendation to report"""
-        self.recommendations.append(recommendation)
+        """Add recommendation to report"""        self.recommendations.append(recommendation)
 
 
 class PerformanceAnalytics:
-    """Advanced performance analytics engine"""
-    
+    """Advanced performance analytics engine"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.metric_definitions: Dict[str, MetricDefinition] = {}
@@ -155,8 +142,7 @@ class PerformanceAnalytics:
         logger.info("Performance analytics engine initialized")
     
     def _setup_default_metrics(self):
-        """Setup default performance metrics"""
-        default_metrics = [
+        """Setup default performance metrics"""        default_metrics = [
             # Content Detection Metrics
             MetricDefinition(
                 id="total_violations_detected",
@@ -381,8 +367,7 @@ class PerformanceAnalytics:
         end_date: datetime,
         period: TimePeriod = TimePeriod.DAY
     ) -> List[MetricValue]:
-        """Calculate metric values for time period"""
-        try:
+        """Calculate metric values for time period"""        try:
             metric_def = self.metric_definitions.get(metric_id)
             if not metric_def or not metric_def.enabled:
                 logger.error(f"Metric definition not found or disabled: {metric_id}")
@@ -438,8 +423,7 @@ class PerformanceAnalytics:
         end_date: datetime,
         period: TimePeriod
     ) -> List[Tuple[datetime, datetime]]:
-        """Generate time buckets for metric calculation"""
-        buckets = []
+        """Generate time buckets for metric calculation"""        buckets = []
         current = start_date
         
         while current < end_date:
@@ -472,8 +456,7 @@ class PerformanceAnalytics:
         end_time: datetime,
         period: TimePeriod
     ) -> Optional[MetricValue]:
-        """Calculate metric value for specific time period"""
-        try:
+        """Calculate metric value for specific time period"""        try:
             # Get raw data based on data source
             raw_data = await self._get_raw_data(
                 metric_def.data_source,
@@ -524,8 +507,7 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get raw data from data source"""
-        try:
+        """Get raw data from data source"""        try:
             # In real implementation, would query actual databases
             # For now, simulate with empty data
             
@@ -553,8 +535,7 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get enforcement cases data"""
-        # Simulate with sample data
+        """Get enforcement cases data"""        # Simulate with sample data
         sample_data = []
         return sample_data
     
@@ -564,8 +545,7 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get legal documents data"""
-        # Simulate with sample data
+        """Get legal documents data"""        # Simulate with sample data
         sample_data = []
         return sample_data
     
@@ -575,8 +555,7 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get escalations data"""
-        # Simulate with sample data
+        """Get escalations data"""        # Simulate with sample data
         sample_data = []
         return sample_data
     
@@ -586,8 +565,7 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get evidence packages data"""
-        # Simulate with sample data
+        """Get evidence packages data"""        # Simulate with sample data
         sample_data = []
         return sample_data
     
@@ -597,14 +575,12 @@ class PerformanceAnalytics:
         end_time: datetime,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get content matches data"""
-        # Simulate with sample data
+        """Get content matches data"""        # Simulate with sample data
         sample_data = []
         return sample_data
     
     def _apply_aggregation(self, data: List[Dict[str, Any]], method: str) -> float:
-        """Apply aggregation method to data"""
-        try:
+        """Apply aggregation method to data"""        try:
             if not data:
                 return 0.0
             
@@ -640,8 +616,7 @@ class PerformanceAnalytics:
             return 0.0
     
     def _perform_complex_calculation(self, data: List[Dict[str, Any]]) -> float:
-        """Perform complex calculations for special metrics"""
-        # Example: ROI calculation
+        """Perform complex calculations for special metrics"""        # Example: ROI calculation
         try:
             revenue_protected = sum(item.get('revenue_protected', 0) for item in data)
             enforcement_cost = sum(item.get('enforcement_cost', 0) for item in data)
@@ -661,8 +636,7 @@ class PerformanceAnalytics:
         data: List[Dict[str, Any]],
         metric_def: MetricDefinition
     ) -> Dict[str, float]:
-        """Calculate breakdown of metric by category"""
-        try:
+        """Calculate breakdown of metric by category"""        try:
             breakdown = {}
             
             # Group by common breakdown categories
@@ -679,8 +653,7 @@ class PerformanceAnalytics:
             return {}
     
     def _get_cached_values(self, cache_key: str) -> Optional[List[MetricValue]]:
-        """Get cached metric values"""
-        try:
+        """Get cached metric values"""        try:
             # Simple in-memory cache
             # In real implementation, would use Redis or similar
             return None
@@ -689,8 +662,7 @@ class PerformanceAnalytics:
             return None
     
     def _cache_values(self, cache_key: str, values: List[MetricValue]):
-        """Cache metric values"""
-        try:
+        """Cache metric values"""        try:
             # Simple in-memory cache
             # In real implementation, would use Redis or similar
             pass
@@ -705,8 +677,7 @@ class PerformanceAnalytics:
         metrics: Optional[List[str]] = None,
         period: TimePeriod = TimePeriod.DAY
     ) -> PerformanceReport:
-        """Generate comprehensive performance report"""
-        try:
+        """Generate comprehensive performance report"""        try:
             report_id = f"PERF-{report_type}-{int(datetime.utcnow().timestamp())}"
             
             report = PerformanceReport(
@@ -754,8 +725,7 @@ class PerformanceAnalytics:
             raise
     
     async def _generate_insights(self, metrics: List[MetricValue]) -> List[str]:
-        """Generate insights from metric data"""
-        insights = []
+        """Generate insights from metric data"""        insights = []
         
         try:
             # Group metrics by category
@@ -809,8 +779,7 @@ class PerformanceAnalytics:
         return insights
     
     async def _generate_recommendations(self, metrics: List[MetricValue]) -> List[str]:
-        """Generate recommendations based on metric data"""
-        recommendations = []
+        """Generate recommendations based on metric data"""        recommendations = []
         
         try:
             # Analyze metric trends and thresholds
@@ -853,8 +822,7 @@ class PerformanceAnalytics:
         return recommendations
     
     async def _generate_charts_data(self, metrics: List[MetricValue]) -> List[Dict[str, Any]]:
-        """Generate chart data for visualization"""
-        charts = []
+        """Generate chart data for visualization"""        charts = []
         
         try:
             # Group metrics by metric type for different chart types
@@ -904,8 +872,7 @@ class PerformanceAnalytics:
         format: ReportFormat,
         output_path: Optional[str] = None
     ) -> str:
-        """Export report to specified format"""
-        try:
+        """Export report to specified format"""        try:
             if not output_path:
                 output_path = f"reports/{report.id}.{format.value}"
             
@@ -927,8 +894,7 @@ class PerformanceAnalytics:
             raise
     
     async def _export_json(self, report: PerformanceReport, output_path: str) -> str:
-        """Export report as JSON"""
-        try:
+        """Export report as JSON"""        try:
             # Convert to JSON-serializable format
             report_data = {
                 'id': report.id,
@@ -968,8 +934,7 @@ class PerformanceAnalytics:
             raise
     
     async def _export_csv(self, report: PerformanceReport, output_path: str) -> str:
-        """Export report as CSV"""
-        try:
+        """Export report as CSV"""        try:
             # Create DataFrame from metrics
             rows = []
             for metric in report.metrics:
@@ -996,10 +961,8 @@ class PerformanceAnalytics:
             raise
     
     async def _export_html(self, report: PerformanceReport, output_path: str) -> str:
-        """Export report as HTML"""
-        try:
-            html_content = f"""
-            <!DOCTYPE html>
+        """Export report as HTML"""        try:
+            html_content = f"""            <!DOCTYPE html>
             <html>
             <head>
                 <title>{report.title}</title>
@@ -1020,21 +983,18 @@ class PerformanceAnalytics:
                 </div>
                 
                 <h2>Key Metrics</h2>
-            """
-            
+            """            
             # Add metrics
             for metric in report.metrics[:10]:  # Limit to first 10 for HTML
                 metric_def = self.metric_definitions.get(metric.metric_id)
                 if metric_def:
                     formatted_value = metric.format_value(metric_def)
-                    html_content += f"""
-                    <div class="metric">
+                    html_content += f"""                    <div class="metric">
                         <h3>{metric_def.name}</h3>
                         <p><strong>Value:</strong> {formatted_value}</p>
                         <p><strong>Description:</strong> {metric_def.description}</p>
                     </div>
-                    """
-            
+                    """            
             # Add insights
             if report.insights:
                 html_content += '<div class="insights"><h2>Key Insights</h2><ul>'
@@ -1049,11 +1009,9 @@ class PerformanceAnalytics:
                     html_content += f'<li>{recommendation}</li>'
                 html_content += '</ul></div>'
             
-            html_content += """
-            </body>
+            html_content += """            </body>
             </html>
-            """
-            
+            """            
             with open(output_path, 'w') as f:
                 f.write(html_content)
             
@@ -1065,21 +1023,18 @@ class PerformanceAnalytics:
             raise
     
     async def _export_pdf(self, report: PerformanceReport, output_path: str) -> str:
-        """Export report as PDF"""
-        try:
+        """Export report as PDF"""        try:
             # In real implementation, would use libraries like reportlab or weasyprint
             # For now, create a simple text file with PDF extension
             
-            text_content = f"""
-            {report.title}
+            text_content = f"""            {report.title}
             {report.description}
             
             Period: {report.start_date.date()} to {report.end_date.date()}
             Generated: {report.generated_at.isoformat()}
             
             KEY METRICS:
-            """
-            
+            """            
             for metric in report.metrics[:10]:
                 metric_def = self.metric_definitions.get(metric.metric_id)
                 if metric_def:
@@ -1107,8 +1062,7 @@ class PerformanceAnalytics:
             raise
     
     async def _export_excel(self, report: PerformanceReport, output_path: str) -> str:
-        """Export report as Excel file"""
-        try:
+        """Export report as Excel file"""        try:
             # Create workbook with multiple sheets
             with pd.ExcelWriter(output_path, engine='openpyxl') as writer:
                 # Metrics sheet
@@ -1150,8 +1104,7 @@ class PerformanceAnalytics:
             raise
     
     async def get_analytics_dashboard_data(self) -> Dict[str, Any]:
-        """Get data for analytics dashboard"""
-        try:
+        """Get data for analytics dashboard"""        try:
             # Calculate key metrics for dashboard
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=7)  # Last 7 days
@@ -1198,8 +1151,7 @@ class PerformanceAnalytics:
             return {}
     
     def _calculate_trend(self, values: List[MetricValue]) -> str:
-        """Calculate trend direction from metric values"""
-        try:
+        """Calculate trend direction from metric values"""        try:
             if len(values) < 2:
                 return 'stable'
             
@@ -1218,8 +1170,7 @@ class PerformanceAnalytics:
             return 'stable'
     
     async def _get_platform_breakdown(self) -> Dict[str, float]:
-        """Get breakdown by platform"""
-        try:
+        """Get breakdown by platform"""        try:
             # In real implementation, would query actual data
             return {
                 'youtube': 45.2,
@@ -1232,8 +1183,7 @@ class PerformanceAnalytics:
             return {}
     
     async def _get_recent_alerts(self) -> List[Dict[str, Any]]:
-        """Get recent performance alerts"""
-        try:
+        """Get recent performance alerts"""        try:
             # In real implementation, would check metrics against thresholds
             return [
                 {
@@ -1252,8 +1202,7 @@ performance_analytics = PerformanceAnalytics()
 
 
 async def get_performance_analytics() -> PerformanceAnalytics:
-    """Get the global performance analytics instance"""
-    return performance_analytics
+    """Get the global performance analytics instance"""    return performance_analytics
 
 
 __all__ = [

@@ -1,5 +1,4 @@
-"""
-Session Manager Module
+"""Session Manager Module
 ======================
 
 Professional session management for web crawling with persistent state.
@@ -12,7 +11,6 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
-
 import asyncio
 import aiohttp
 import logging
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SessionState:
-    """Session state information."""
-    session_id: str
+    """Session state information."""    session_id: str
     user_agent: str
     proxy: Optional[Dict] = None
     cookies: Dict[str, Any] = None
@@ -50,8 +47,7 @@ class SessionState:
 
 @dataclass
 class SessionMetrics:
-    """Session performance metrics."""
-    total_requests: int = 0
+    """Session performance metrics."""    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     average_response_time: float = 0.0
@@ -61,8 +57,7 @@ class SessionMetrics:
     success_rate: float = 1.0
 
 class SessionManager:
-    """
-    Professional session management system.
+    """    Professional session management system.
     
     Features:
     - Persistent session state
@@ -75,16 +70,14 @@ class SessionManager:
     - State persistence
     - Anti-detection measures
     - Session recovery
-    """
-    
+    """    
     def __init__(
         self,
         proxy_manager: Optional[ProxyManager] = None,
         user_agent_rotator: Optional[UserAgentRotator] = None,
         rate_limiter: Optional[RateLimiter] = None
     ):
-        """Initialize session manager."""
-        self.proxy_manager = proxy_manager or ProxyManager()
+        """Initialize session manager."""        self.proxy_manager = proxy_manager or ProxyManager()
         self.user_agent_rotator = user_agent_rotator or UserAgentRotator()
         self.rate_limiter = rate_limiter
         
@@ -118,8 +111,7 @@ class SessionManager:
         country: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> str:
-        """
-        Create a new session with specified configuration.
+        """        Create a new session with specified configuration.
         
         Args:
             platform: Target platform name
@@ -130,8 +122,7 @@ class SessionManager:
             
         Returns:
             Session ID
-        """
-        if not session_id:
+        """        if not session_id:
             session_id = f"session_{uuid.uuid4().hex[:8]}_{int(time.time())}"
         
         # Check session limits
@@ -201,8 +192,7 @@ class SessionManager:
         return session_id
     
     async def get_session(self, session_id: str) -> Optional[aiohttp.ClientSession]:
-        """Get session by ID."""
-        if session_id not in self.sessions:
+        """Get session by ID."""        if session_id not in self.sessions:
             return None
         
         session_state = self.session_states.get(session_id)
@@ -226,8 +216,7 @@ class SessionManager:
         url: str,
         **kwargs
     ) -> Optional[aiohttp.ClientResponse]:
-        """
-        Make HTTP request using managed session.
+        """        Make HTTP request using managed session.
         
         Args:
             session_id: Session identifier
@@ -237,8 +226,7 @@ class SessionManager:
             
         Returns:
             aiohttp.ClientResponse or None
-        """
-        session = await self.get_session(session_id)
+        """        session = await self.get_session(session_id)
         if not session:
             logger.warning(f"Session {session_id} not found or expired")
             return None
@@ -292,8 +280,7 @@ class SessionManager:
             return None
     
     def _proxy_to_dict(self, proxy: ProxyInfo) -> Dict:
-        """Convert ProxyInfo to dictionary."""
-        return {
+        """Convert ProxyInfo to dictionary."""        return {
             'host': proxy.host,
             'port': proxy.port,
             'username': proxy.username,
@@ -302,8 +289,7 @@ class SessionManager:
         }
     
     def _dict_to_proxy(self, proxy_dict: Dict) -> ProxyInfo:
-        """Convert dictionary to ProxyInfo."""
-        return ProxyInfo(
+        """Convert dictionary to ProxyInfo."""        return ProxyInfo(
             host=proxy_dict['host'],
             port=proxy_dict['port'],
             username=proxy_dict.get('username'),
@@ -312,8 +298,7 @@ class SessionManager:
         )
     
     def _build_proxy_url(self, proxy_dict: Dict) -> str:
-        """Build proxy URL for aiohttp."""
-        username = proxy_dict.get('username')
+        """Build proxy URL for aiohttp."""        username = proxy_dict.get('username')
         password = proxy_dict.get('password')
         protocol = proxy_dict.get('protocol', 'http')
         host = proxy_dict['host']
@@ -331,8 +316,7 @@ class SessionManager:
         response_time: float,
         data_size: int
     ) -> None:
-        """Update session metrics."""
-        state = self.session_states[session_id]
+        """Update session metrics."""        state = self.session_states[session_id]
         metrics = self.session_metrics[session_id]
         
         # Update state
@@ -375,8 +359,7 @@ class SessionManager:
         session_id: str,
         session: aiohttp.ClientSession
     ) -> None:
-        """Update session cookies."""
-        state = self.session_states[session_id]
+        """Update session cookies."""        state = self.session_states[session_id]
         
         # Extract cookies
         cookies = {}
@@ -397,8 +380,7 @@ class SessionManager:
         metrics.cookies_collected = len(cookies)
     
     def _is_session_expired(self, session_state: SessionState) -> bool:
-        """Check if session is expired."""
-        if not session_state.last_used:
+        """Check if session is expired."""        if not session_state.last_used:
             return True
         
         age = datetime.now() - session_state.last_used
@@ -414,8 +396,7 @@ class SessionManager:
         return False
     
     async def close_session(self, session_id: str) -> None:
-        """Close and cleanup session."""
-        if session_id in self.sessions:
+        """Close and cleanup session."""        if session_id in self.sessions:
             session = self.sessions[session_id]
             await session.close()
             del self.sessions[session_id]
@@ -428,8 +409,7 @@ class SessionManager:
         logger.info(f"Closed session {session_id}")
     
     async def _cleanup_oldest_session(self) -> None:
-        """Cleanup oldest session to make room for new ones."""
-        if not self.session_states:
+        """Cleanup oldest session to make room for new ones."""        if not self.session_states:
             return
         
         # Find oldest session
@@ -441,8 +421,7 @@ class SessionManager:
         await self.close_session(oldest_session_id)
     
     async def _session_cleanup_task(self) -> None:
-        """Background task to cleanup expired sessions."""
-        while True:
+        """Background task to cleanup expired sessions."""        while True:
             try:
                 await asyncio.sleep(self.session_cleanup_interval)
                 
@@ -461,8 +440,7 @@ class SessionManager:
                 logger.error(f"Session cleanup error: {e}")
     
     def _save_session_state(self, session_id: str) -> None:
-        """Save session state to disk."""
-        try:
+        """Save session state to disk."""        try:
             state = self.session_states.get(session_id)
             metrics = self.session_metrics.get(session_id)
             
@@ -480,8 +458,7 @@ class SessionManager:
             logger.error(f"Failed to save session state {session_id}: {e}")
     
     def _load_session_states(self) -> None:
-        """Load session states from disk."""
-        try:
+        """Load session states from disk."""        try:
             for file_path in self.session_data_dir.glob("session_*.json"):
                 try:
                     with open(file_path, 'r') as f:
@@ -515,8 +492,7 @@ class SessionManager:
             logger.error(f"Failed to load session states: {e}")
     
     async def get_session_statistics(self) -> Dict:
-        """Get comprehensive session statistics."""
-        active_sessions = len([s for s in self.session_states.values() if s.is_active])
+        """Get comprehensive session statistics."""        active_sessions = len([s for s in self.session_states.values() if s.is_active])
         total_requests = sum(m.total_requests for m in self.session_metrics.values())
         total_success = sum(m.successful_requests for m in self.session_metrics.values())
         
@@ -551,8 +527,7 @@ class SessionManager:
         return stats
     
     async def rotate_session_proxy(self, session_id: str, country: Optional[str] = None) -> bool:
-        """Rotate proxy for existing session."""
-        if session_id not in self.session_states:
+        """Rotate proxy for existing session."""        if session_id not in self.session_states:
             return False
         
         state = self.session_states[session_id]
@@ -573,8 +548,7 @@ class SessionManager:
         return False
     
     async def rotate_session_user_agent(self, session_id: str, mobile: Optional[bool] = None) -> bool:
-        """Rotate user agent for existing session."""
-        if session_id not in self.session_states:
+        """Rotate user agent for existing session."""        if session_id not in self.session_states:
             return False
         
         state = self.session_states[session_id]
@@ -599,8 +573,7 @@ class SessionManager:
         return True
     
     async def close_all_sessions(self) -> None:
-        """Close all active sessions."""
-        session_ids = list(self.sessions.keys())
+        """Close all active sessions."""        session_ids = list(self.sessions.keys())
         
         for session_id in session_ids:
             await self.close_session(session_id)
@@ -608,13 +581,11 @@ class SessionManager:
         logger.info(f"Closed all {len(session_ids)} sessions")
     
     def get_session_cookies(self, session_id: str) -> Optional[Dict]:
-        """Get cookies for a session."""
-        state = self.session_states.get(session_id)
+        """Get cookies for a session."""        state = self.session_states.get(session_id)
         return state.cookies if state else None
     
     def set_session_cookies(self, session_id: str, cookies: Dict) -> bool:
-        """Set cookies for a session."""
-        if session_id not in self.session_states:
+        """Set cookies for a session."""        if session_id not in self.session_states:
             return False
         
         state = self.session_states[session_id]

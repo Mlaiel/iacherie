@@ -1,5 +1,4 @@
-"""
-Legal Research - Advanced Legal Research & Analysis Engine
+"""Legal Research - Advanced Legal Research & Analysis Engine
 
 Comprehensive legal research capabilities including case law analysis, statutory
 interpretation, and legal precedent research for content creators.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import json
@@ -53,30 +51,26 @@ from ...models.legal_models import CaseResult, StatutoryReference, LegalPreceden
 logger = logging.getLogger(__name__)
 
 class ResearchScope(Enum):
-    """Legal research scope levels"""
-    NARROW = "narrow"        # Specific legal issue
+    """Legal research scope levels"""    NARROW = "narrow"        # Specific legal issue
     FOCUSED = "focused"      # Specific legal area
     BROAD = "broad"         # Multiple legal areas
     COMPREHENSIVE = "comprehensive"  # Full legal landscape
 
 class ResearchDepth(Enum):
-    """Research depth levels"""
-    SURFACE = "surface"      # Basic overview
+    """Research depth levels"""    SURFACE = "surface"      # Basic overview
     STANDARD = "standard"    # Standard research depth
     DETAILED = "detailed"    # Detailed analysis
     EXHAUSTIVE = "exhaustive" # Complete research
 
 class CaseRelevance(Enum):
-    """Case relevance levels"""
-    HIGHLY_RELEVANT = "highly_relevant"
+    """Case relevance levels"""    HIGHLY_RELEVANT = "highly_relevant"
     MODERATELY_RELEVANT = "moderately_relevant"
     SOMEWHAT_RELEVANT = "somewhat_relevant"
     TANGENTIALLY_RELEVANT = "tangentially_relevant"
 
 @dataclass
 class ResearchQuery:
-    """Legal research query structure"""
-    query_text: str
+    """Legal research query structure"""    query_text: str
     legal_areas: List[str]
     jurisdictions: List[str]
     scope: ResearchScope
@@ -87,8 +81,7 @@ class ResearchQuery:
 
 @dataclass
 class ResearchResult:
-    """Legal research result structure"""
-    research_id: str
+    """Legal research result structure"""    research_id: str
     query: ResearchQuery
     case_law: List[Dict[str, Any]]
     statutes: List[Dict[str, Any]]
@@ -101,8 +94,7 @@ class ResearchResult:
     research_time: float
 
 class LegalResearch:
-    """
-    Advanced Legal Research Engine
+    """    Advanced Legal Research Engine
     
     Comprehensive legal research capabilities including:
     - Case law research and analysis
@@ -111,8 +103,7 @@ class LegalResearch:
     - Citation network analysis
     - AI-powered legal reasoning
     - Multi-jurisdiction research
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.ai_processor = AIProcessor(config.get('ai_config', {}))
@@ -139,8 +130,7 @@ class LegalResearch:
         logger.info("Legal Research Engine initialized successfully")
     
     def _initialize_research_systems(self):
-        """Initialize legal research systems and databases"""
-        try:
+        """Initialize legal research systems and databases"""        try:
             # Setup research databases
             self._setup_research_databases()
             
@@ -160,8 +150,7 @@ class LegalResearch:
             raise ResearchError(f"Research initialization error: {e}")
     
     def _setup_research_databases(self):
-        """Setup connections to legal research databases"""
-        try:
+        """Setup connections to legal research databases"""        try:
             # Setup Elasticsearch for full-text search
             if self.config.get('elasticsearch_enabled', False):
                 self.elasticsearch_client = elasticsearch.Elasticsearch(
@@ -196,8 +185,7 @@ class LegalResearch:
             logger.error(f"Research database setup failed: {e}")
     
     def _setup_ai_research_models(self):
-        """Setup AI models for legal research enhancement"""
-        try:
+        """Setup AI models for legal research enhancement"""        try:
             # Legal reasoning model
             self.legal_reasoner = self.ai_processor.load_model(
                 "legal_reasoning_model",
@@ -233,8 +221,7 @@ class LegalResearch:
             self.citation_analyzer = None
     
     def _load_research_mappings(self):
-        """Load jurisdiction and legal area mappings"""
-        self.jurisdiction_mappings = {
+        """Load jurisdiction and legal area mappings"""        self.jurisdiction_mappings = {
             'us_federal': {
                 'courts': ['Supreme Court', 'Circuit Courts', 'District Courts'],
                 'databases': ['case.law', 'courtlistener', 'justia'],
@@ -296,8 +283,7 @@ class LegalResearch:
         }
     
     def _setup_search_indexes(self):
-        """Setup search indexes for efficient legal research"""
-        try:
+        """Setup search indexes for efficient legal research"""        try:
             # Create indexes for different legal content types
             if self.elasticsearch_client:
                 index_configs = {
@@ -339,16 +325,14 @@ class LegalResearch:
             logger.error(f"Search index setup failed: {e}")
     
     async def conduct_research(self, query: ResearchQuery) -> ResearchResult:
-        """
-        Conduct comprehensive legal research based on query
+        """        Conduct comprehensive legal research based on query
         
         Args:
             query: Research query with parameters and requirements
             
         Returns:
             Comprehensive research results with analysis
-        """
-        try:
+        """        try:
             start_time = datetime.now(timezone.utc)
             research_id = f"research_{start_time.strftime('%Y%m%d_%H%M%S')}"
             
@@ -410,8 +394,7 @@ class LegalResearch:
             raise ResearchError(f"Research execution error: {e}")
     
     def _validate_research_query(self, query: ResearchQuery):
-        """Validate research query parameters"""
-        if not query.query_text or len(query.query_text.strip()) < 3:
+        """Validate research query parameters"""        if not query.query_text or len(query.query_text.strip()) < 3:
             raise QueryError("Research query text must be at least 3 characters")
         
         if not query.legal_areas:
@@ -426,8 +409,7 @@ class LegalResearch:
                 logger.warning(f"Unknown jurisdiction: {jurisdiction}")
     
     async def _expand_research_query(self, query: ResearchQuery) -> Dict[str, Any]:
-        """Expand and enhance research query using AI"""
-        try:
+        """Expand and enhance research query using AI"""        try:
             expanded_query = {
                 'original_query': query.query_text,
                 'expanded_terms': [],
@@ -468,16 +450,14 @@ class LegalResearch:
             return {'original_query': query.query_text, 'expanded_terms': []}
     
     def _get_domain_specific_terms(self, legal_areas: List[str]) -> List[str]:
-        """Get domain-specific search terms for legal areas"""
-        terms = []
+        """Get domain-specific search terms for legal areas"""        terms = []
         for area in legal_areas:
             if area in self.legal_area_mappings:
                 terms.extend(self.legal_area_mappings[area]['keywords'])
         return list(set(terms))  # Remove duplicates
     
     async def _research_case_law(self, expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Research case law using multiple databases and sources"""
-        case_results = []
+        """Research case law using multiple databases and sources"""        case_results = []
         
         try:
             # Search local case database if available
@@ -516,8 +496,7 @@ class LegalResearch:
             return []
     
     async def _search_elasticsearch_cases(self, expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Search cases using Elasticsearch"""
-        try:
+        """Search cases using Elasticsearch"""        try:
             search_body = {
                 'query': {
                     'bool': {
@@ -565,14 +544,12 @@ class LegalResearch:
             return []
     
     async def _search_case_database(self, database_url: str, expanded_query: Dict[str, Any], jurisdiction: str) -> List[Dict[str, Any]]:
-        """Search external case law database"""
-        # Implementation would depend on specific database APIs
+        """Search external case law database"""        # Implementation would depend on specific database APIs
         # For now, return mock results
         return []
     
     async def _rank_case_results(self, cases: List[Dict[str, Any]], expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Rank case results by relevance using AI or traditional methods"""
-        try:
+        """Rank case results by relevance using AI or traditional methods"""        try:
             if self.relevance_scorer and cases:
                 # Use AI relevance scoring
                 scored_cases = []
@@ -593,8 +570,7 @@ class LegalResearch:
             return cases  # Return original order on failure
     
     def _rank_cases_traditional(self, cases: List[Dict[str, Any]], expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Traditional case ranking using keyword matching and precedential value"""
-        for case in cases:
+        """Traditional case ranking using keyword matching and precedential value"""        for case in cases:
             score = 0
             
             # Keyword matching score
@@ -625,8 +601,7 @@ class LegalResearch:
         return cases
     
     async def _calculate_ai_relevance(self, case: Dict[str, Any], expanded_query: Dict[str, Any]) -> float:
-        """Calculate AI-based relevance score for case"""
-        try:
+        """Calculate AI-based relevance score for case"""        try:
             relevance_input = {
                 'case_title': case.get('title', ''),
                 'case_content': case.get('content', '')[:2000],  # Limit content length
@@ -646,8 +621,7 @@ class LegalResearch:
             return 0.5  # Default neutral relevance
     
     async def _research_statutes(self, expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Research relevant statutes and legislation"""
-        statute_results = []
+        """Research relevant statutes and legislation"""        statute_results = []
         
         try:
             # Search statute databases
@@ -676,13 +650,11 @@ class LegalResearch:
             return []
     
     async def _search_statute_database(self, database_url: str, expanded_query: Dict[str, Any], jurisdiction: str) -> List[Dict[str, Any]]:
-        """Search external statute database"""
-        # Implementation would depend on specific database APIs
+        """Search external statute database"""        # Implementation would depend on specific database APIs
         return []
     
     async def _search_elasticsearch_statutes(self, expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Search statutes using Elasticsearch"""
-        try:
+        """Search statutes using Elasticsearch"""        try:
             search_body = {
                 'query': {
                     'bool': {
@@ -728,8 +700,7 @@ class LegalResearch:
             return []
     
     def _deduplicate_statutes(self, statutes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate statutes based on citation or title"""
-        seen_citations = set()
+        """Remove duplicate statutes based on citation or title"""        seen_citations = set()
         seen_titles = set()
         unique_statutes = []
         
@@ -747,8 +718,7 @@ class LegalResearch:
         return unique_statutes
     
     def _rank_statutes(self, statutes: List[Dict[str, Any]], expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Rank statutes by relevance"""
-        for statute in statutes:
+        """Rank statutes by relevance"""        for statute in statutes:
             score = 0
             
             # Title matching gets higher weight
@@ -780,20 +750,17 @@ class LegalResearch:
         return statutes
     
     async def _research_regulations(self, expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Research relevant regulations"""
-        # Similar implementation to statutes research
+        """Research relevant regulations"""        # Similar implementation to statutes research
         return []
     
     async def _research_secondary_sources(self, expanded_query: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Research secondary legal sources"""
-        # Implementation for law reviews, treatises, etc.
+        """Research secondary legal sources"""        # Implementation for law reviews, treatises, etc.
         return []
     
     async def _analyze_research_results(self, cases: List[Dict[str, Any]], statutes: List[Dict[str, Any]], 
                                       regulations: List[Dict[str, Any]], secondary: List[Dict[str, Any]], 
                                       expanded_query: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze and synthesize research results"""
-        try:
+        """Analyze and synthesize research results"""        try:
             analysis = {
                 'key_findings': [],
                 'legal_principles': [],
@@ -834,8 +801,7 @@ class LegalResearch:
             return {'error': str(e)}
     
     async def _extract_case_findings(self, cases: List[Dict[str, Any]]) -> List[str]:
-        """Extract key findings from case law"""
-        findings = []
+        """Extract key findings from case law"""        findings = []
         for case in cases[:10]:  # Analyze top 10 cases
             # Extract key holdings and rationales
             if case.get('content'):
@@ -857,8 +823,7 @@ class LegalResearch:
         return findings[:5]  # Return top 5 findings
     
     async def _extract_legal_principles(self, cases: List[Dict[str, Any]]) -> List[str]:
-        """Extract legal principles from cases"""
-        principles = []
+        """Extract legal principles from cases"""        principles = []
         
         # Common legal principle indicators
         principle_patterns = [
@@ -877,8 +842,7 @@ class LegalResearch:
         return list(set(principles))[:10]  # Return unique principles
     
     async def _build_precedent_hierarchy(self, cases: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Build precedent hierarchy from cases"""
-        hierarchy = []
+        """Build precedent hierarchy from cases"""        hierarchy = []
         
         # Group cases by court level and precedential value
         court_levels = {
@@ -913,8 +877,7 @@ class LegalResearch:
         return hierarchy[:15]  # Return top 15 precedents
     
     async def _analyze_statutory_framework(self, statutes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Analyze statutory framework"""
-        framework = []
+        """Analyze statutory framework"""        framework = []
         
         for statute in statutes[:10]:
             framework_item = {
@@ -929,8 +892,7 @@ class LegalResearch:
         return framework
     
     def _extract_key_provisions(self, statute: Dict[str, Any]) -> List[str]:
-        """Extract key provisions from statute"""
-        provisions = []
+        """Extract key provisions from statute"""        provisions = []
         content = statute.get('content', '')
         
         # Look for section headers and key provisions
@@ -945,8 +907,7 @@ class LegalResearch:
     
     async def _build_citation_network(self, cases: List[Dict[str, Any]], statutes: List[Dict[str, Any]], 
                                     regulations: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Build citation network from research results"""
-        network = {
+        """Build citation network from research results"""        network = {
             'nodes': [],
             'edges': [],
             'clusters': {},
@@ -997,8 +958,7 @@ class LegalResearch:
     
     async def _generate_research_summary(self, analysis: Dict[str, Any], cases: List[Dict[str, Any]], 
                                        statutes: List[Dict[str, Any]]) -> str:
-        """Generate comprehensive research summary"""
-        try:
+        """Generate comprehensive research summary"""        try:
             summary_parts = []
             
             # Summary header
@@ -1046,8 +1006,7 @@ class LegalResearch:
     
     def _calculate_research_confidence(self, cases: List[Dict[str, Any]], statutes: List[Dict[str, Any]], 
                                      analysis: Dict[str, Any]) -> float:
-        """Calculate confidence score for research results"""
-        confidence_factors = []
+        """Calculate confidence score for research results"""        confidence_factors = []
         
         # Number of relevant cases found
         if cases:
@@ -1081,8 +1040,7 @@ class LegalResearch:
         return round(min(overall_confidence, 1.0), 2)
     
     async def _store_research_results(self, result: ResearchResult):
-        """Store research results for future reference"""
-        try:
+        """Store research results for future reference"""        try:
             # Store in database for future reference and caching
             with get_db_session() as db:
                 research_record = {
@@ -1104,10 +1062,8 @@ class LegalResearch:
 
 
 class CaseLawAnalyzer:
-    """
-    Specialized analyzer for case law research and precedent analysis
-    """
-    
+    """    Specialized analyzer for case law research and precedent analysis
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.legal_research = LegalResearch(config)
@@ -1115,8 +1071,7 @@ class CaseLawAnalyzer:
         self._initialize_case_analysis()
     
     def _initialize_case_analysis(self):
-        """Initialize case law analysis systems"""
-        try:
+        """Initialize case law analysis systems"""        try:
             # Setup specialized precedent analysis
             logger.info("Case Law Analyzer initialized successfully")
             
@@ -1124,8 +1079,7 @@ class CaseLawAnalyzer:
             logger.error(f"Case Law Analyzer initialization failed: {e}")
     
     async def analyze_precedent_impact(self, case_citation: str, legal_area: str) -> Dict[str, Any]:
-        """
-        Analyze the precedential impact of a specific case
+        """        Analyze the precedential impact of a specific case
         
         Args:
             case_citation: Citation of the case to analyze
@@ -1133,8 +1087,7 @@ class CaseLawAnalyzer:
             
         Returns:
             Analysis of precedential impact and influence
-        """
-        try:
+        """        try:
             impact_analysis = {
                 'case_citation': case_citation,
                 'precedential_strength': 0.0,
@@ -1165,13 +1118,11 @@ class CaseLawAnalyzer:
             return {'error': str(e), 'case_citation': case_citation}
     
     async def _find_citing_cases(self, case_citation: str) -> List[Dict[str, Any]]:
-        """Find cases that cite the given case"""
-        # Implementation would search legal databases for cases citing the given case
+        """Find cases that cite the given case"""        # Implementation would search legal databases for cases citing the given case
         return []
     
     def _calculate_precedential_strength(self, case_citation: str, citing_cases: List[Dict[str, Any]]) -> float:
-        """Calculate precedential strength based on citations and treatment"""
-        strength = 0.0
+        """Calculate precedential strength based on citations and treatment"""        strength = 0.0
         
         # Base strength from number of citations
         citation_count = len(citing_cases)
@@ -1200,8 +1151,7 @@ class CaseLawAnalyzer:
     
     async def _analyze_legal_influence(self, case_citation: str, citing_cases: List[Dict[str, Any]], 
                                      legal_area: str) -> Dict[str, Any]:
-        """Analyze the legal influence of a case over time"""
-        influence = {
+        """Analyze the legal influence of a case over time"""        influence = {
             'temporal_influence': {},
             'doctrinal_areas': [],
             'geographic_spread': {},
@@ -1257,16 +1207,14 @@ class CaseLawAnalyzer:
         self,
         query: ResearchQuery
     ) -> ResearchResult:
-        """
-        Conduct comprehensive legal research
+        """        Conduct comprehensive legal research
         
         Args:
             query: Research query parameters
             
         Returns:
             Complete research results
-        """
-        start_time = datetime.now(timezone.utc)
+        """        start_time = datetime.now(timezone.utc)
         
         try:
             # Validate research query
@@ -1330,8 +1278,7 @@ class CaseLawAnalyzer:
         jurisdiction: str,
         case_limit: int = 50
     ) -> Dict[str, Any]:
-        """
-        Analyze case precedents for specific legal issue
+        """        Analyze case precedents for specific legal issue
         
         Args:
             legal_issue: Legal issue to research
@@ -1340,8 +1287,7 @@ class CaseLawAnalyzer:
             
         Returns:
             Precedent analysis results
-        """
-        try:
+        """        try:
             # Search for relevant cases
             relevant_cases = await self._search_relevant_cases(
                 legal_issue, jurisdiction, case_limit
@@ -1392,8 +1338,7 @@ class CaseLawAnalyzer:
         legal_area: str,
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """
-        Research statutory framework for legal area
+        """        Research statutory framework for legal area
         
         Args:
             legal_area: Legal area to research
@@ -1401,8 +1346,7 @@ class CaseLawAnalyzer:
             
         Returns:
             Statutory framework analysis
-        """
-        try:
+        """        try:
             # Search relevant statutes
             relevant_statutes = await self._search_relevant_statutes(
                 legal_area, jurisdiction
@@ -1455,8 +1399,7 @@ class CaseLawAnalyzer:
         memo_purpose: str,
         target_audience: str = "legal_professional"
     ) -> str:
-        """
-        Generate legal memorandum from research results
+        """        Generate legal memorandum from research results
         
         Args:
             research_results: Research results to summarize
@@ -1465,8 +1408,7 @@ class CaseLawAnalyzer:
             
         Returns:
             Formatted legal memorandum
-        """
-        try:
+        """        try:
             # Structure memorandum sections
             memo_sections = await self._structure_memorandum_sections(
                 research_results, memo_purpose
@@ -1519,8 +1461,7 @@ class CaseLawAnalyzer:
 
     # Private helper methods
     async def _validate_research_query(self, query: ResearchQuery):
-        """Validate research query parameters"""
-        if not query.query_text:
+        """Validate research query parameters"""        if not query.query_text:
             raise QueryError("Research query text is required")
         if not query.legal_areas:
             raise QueryError("At least one legal area must be specified")
@@ -1528,8 +1469,7 @@ class CaseLawAnalyzer:
             raise QueryError("At least one jurisdiction must be specified")
 
     async def _research_case_law(self, query: ResearchQuery) -> List[Dict[str, Any]]:
-        """Research case law for query"""
-        try:
+        """Research case law for query"""        try:
             # Build case law search query
             search_params = await self._build_case_search_params(query)
             
@@ -1556,8 +1496,7 @@ class CaseLawAnalyzer:
             return []
 
     async def _research_statutes(self, query: ResearchQuery) -> List[Dict[str, Any]]:
-        """Research statutes for query"""
-        try:
+        """Research statutes for query"""        try:
             # Build statutory search query
             search_params = await self._build_statutory_search_params(query)
             
@@ -1584,8 +1523,7 @@ class CaseLawAnalyzer:
         statutes: List[Dict[str, Any]],
         regulations: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Perform comprehensive legal analysis"""
-        
+        """Perform comprehensive legal analysis"""        
         # AI-powered legal analysis
         analysis_prompt = self._build_analysis_prompt(query, cases, statutes)
         
@@ -1621,13 +1559,11 @@ class CaseLawAnalyzer:
         cases: List[Dict[str, Any]],
         statutes: List[Dict[str, Any]]
     ) -> str:
-        """Build AI prompt for legal analysis"""
-        
+        """Build AI prompt for legal analysis"""        
         case_summaries = [case.get('summary', '') for case in cases[:10]]
         statute_summaries = [statute.get('summary', '') for statute in statutes[:5]]
         
-        return f"""
-        Perform comprehensive legal analysis for the following research query:
+        return f"""        Perform comprehensive legal analysis for the following research query:
         
         Query: {query.query_text}
         Legal Areas: {query.legal_areas}
@@ -1646,10 +1582,8 @@ class CaseLawAnalyzer:
         - Strategic recommendations
         - Conflicting authorities analysis
         """
-
     def _get_case_limit_for_scope(self, scope: ResearchScope) -> int:
-        """Get case limit based on research scope"""
-        scope_limits = {
+        """Get case limit based on research scope"""        scope_limits = {
             ResearchScope.NARROW: 25,
             ResearchScope.FOCUSED: 50,
             ResearchScope.BROAD: 100,
@@ -1658,12 +1592,10 @@ class CaseLawAnalyzer:
         return scope_limits.get(scope, 50)
 
 class CaseLawAnalyzer:
-    """
-    Specialized Case Law Analysis System
+    """    Specialized Case Law Analysis System
     
     Advanced case law analysis with precedent identification and legal principle extraction
-    """
-    
+    """    
     def __init__(self):
         self.legal_research = LegalResearch()
         self.precedent_database = {}
@@ -1674,8 +1606,7 @@ class CaseLawAnalyzer:
         leading_case: Dict[str, Any],
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Analyze line of cases following a leading case"""
-        
+        """Analyze line of cases following a leading case"""        
         try:
             # Identify citing cases
             citing_cases = await self._find_citing_cases(leading_case, jurisdiction)
@@ -1714,8 +1645,7 @@ class CaseLawAnalyzer:
         leading_case: Dict[str, Any],
         jurisdiction: str
     ) -> List[Dict[str, Any]]:
-        """Find cases that cite the leading case"""
-        
+        """Find cases that cite the leading case"""        
         case_citation = leading_case.get('citation', '')
         if not case_citation:
             return []
@@ -1729,8 +1659,7 @@ class CaseLawAnalyzer:
         return citing_cases
 
     def _calculate_predictive_strength(self, stability_analysis: Dict[str, Any]) -> float:
-        """Calculate predictive strength of case line"""
-        
+        """Calculate predictive strength of case line"""        
         stability_score = stability_analysis.get('stability_score', 0.5)
         consistency_score = stability_analysis.get('consistency_score', 0.5)
         authority_level = stability_analysis.get('authority_level', 0.5)

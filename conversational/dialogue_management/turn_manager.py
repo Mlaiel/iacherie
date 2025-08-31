@@ -1,5 +1,4 @@
-"""
-Turn Manager - Advanced Conversation Turn Management
+"""Turn Manager - Advanced Conversation Turn Management
 
 Enterprise-grade turn management system for multi-party conversations,
 handling turn-taking protocols, speaker identification, context preservation,
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -32,8 +30,7 @@ from backend.services.notification.real_time_service import RealTimeNotification
 logger = logging.getLogger(__name__)
 
 class TurnType(Enum):
-    """Types of conversation turns"""
-    USER_MESSAGE = "user_message"
+    """Types of conversation turns"""    USER_MESSAGE = "user_message"
     AGENT_RESPONSE = "agent_response"
     SYSTEM_NOTIFICATION = "system_notification"
     WORKFLOW_ACTION = "workflow_action"
@@ -44,16 +41,14 @@ class TurnType(Enum):
     ESCALATION_REQUEST = "escalation_request"
 
 class TurnPriority(Enum):
-    """Priority levels for turns"""
-    LOW = 1
+    """Priority levels for turns"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
     CRITICAL = 5
 
 class TurnStatus(Enum):
-    """Status of conversation turns"""
-    PENDING = "pending"
+    """Status of conversation turns"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -61,8 +56,7 @@ class TurnStatus(Enum):
     ESCALATED = "escalated"
 
 class SpeakerRole(Enum):
-    """Roles for conversation speakers"""
-    PRIMARY_CREATOR = "primary_creator"
+    """Roles for conversation speakers"""    PRIMARY_CREATOR = "primary_creator"
     COLLABORATING_CREATOR = "collaborating_creator"
     AI_ASSISTANT = "ai_assistant"
     HUMAN_AGENT = "human_agent"
@@ -72,8 +66,7 @@ class SpeakerRole(Enum):
 
 @dataclass
 class ConversationTurn:
-    """Individual conversation turn with comprehensive metadata"""
-    turn_id: str
+    """Individual conversation turn with comprehensive metadata"""    turn_id: str
     conversation_id: str
     speaker_id: str
     speaker_role: SpeakerRole
@@ -117,8 +110,7 @@ class ConversationTurn:
 
 @dataclass
 class TurnSequence:
-    """Sequence of related conversation turns"""
-    sequence_id: str
+    """Sequence of related conversation turns"""    sequence_id: str
     conversation_id: str
     sequence_type: str  # workflow, negotiation, support, collaboration
     turns: List[str] = field(default_factory=list)  # turn_ids
@@ -140,8 +132,7 @@ class TurnSequence:
 
 @dataclass
 class TurnQueue:
-    """Queue for managing conversation turns"""
-    queue_id: str
+    """Queue for managing conversation turns"""    queue_id: str
     conversation_id: str
     pending_turns: deque = field(default_factory=deque)
     processing_turns: Dict[str, ConversationTurn] = field(default_factory=dict)
@@ -158,8 +149,7 @@ class TurnQueue:
     success_rate: float = 100.0
 
 class TurnManager:
-    """
-    Enterprise turn management system for IA Influencer conversations.
+    """    Enterprise turn management system for IA Influencer conversations.
     
     Manages complex multi-party conversation flows with intelligent turn routing,
     priority handling, and business workflow integration.
@@ -171,8 +161,7 @@ class TurnManager:
     - Real-time turn synchronization
     - Performance optimization
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: aioredis.Redis,
@@ -213,8 +202,7 @@ class TurnManager:
         logger.info("TurnManager initialized for enterprise conversation management")
 
     def _initialize_turn_processors(self):
-        """Initialize turn processors for different turn types"""
-        
+        """Initialize turn processors for different turn types"""        
         self.turn_processors = {
             TurnType.USER_MESSAGE: self._process_user_message,
             TurnType.AGENT_RESPONSE: self._process_agent_response,
@@ -238,8 +226,7 @@ class TurnManager:
         business_context: Dict[str, Any] = None,
         scheduled_at: Optional[datetime] = None
     ) -> str:
-        """
-        Create new conversation turn
+        """        Create new conversation turn
         
         Args:
             conversation_id: ID of the conversation
@@ -253,8 +240,7 @@ class TurnManager:
             
         Returns:
             Turn ID
-        """
-        turn_id = str(uuid.uuid4())
+        """        turn_id = str(uuid.uuid4())
         
         # Create turn object
         turn = ConversationTurn(
@@ -297,8 +283,7 @@ class TurnManager:
         return turn_id
 
     async def _analyze_turn_content(self, turn: ConversationTurn):
-        """Analyze turn content for business intelligence"""
-        
+        """Analyze turn content for business intelligence"""        
         try:
             # Sentiment analysis
             sentiment_result = await self.nlp_service.analyze_sentiment(turn.content)
@@ -327,8 +312,7 @@ class TurnManager:
             logger.error(f"Error analyzing turn content: {str(e)}")
 
     def _count_business_keywords(self, content: str) -> int:
-        """Count business-relevant keywords in content"""
-        business_keywords = [
+        """Count business-relevant keywords in content"""        business_keywords = [
             'collaboration', 'partnership', 'revenue', 'monetization',
             'copyright', 'protection', 'licensing', 'distribution',
             'spotify', 'youtube', 'instagram', 'tiktok',
@@ -339,8 +323,7 @@ class TurnManager:
         return sum(1 for keyword in business_keywords if keyword in content_lower)
 
     def _detect_urgency_indicators(self, content: str) -> int:
-        """Detect urgency indicators in content"""
-        urgency_indicators = [
+        """Detect urgency indicators in content"""        urgency_indicators = [
             'urgent', 'asap', 'immediately', 'critical', 'emergency',
             'deadline', 'time-sensitive', 'priority', 'rush'
         ]
@@ -349,8 +332,7 @@ class TurnManager:
         return sum(1 for indicator in urgency_indicators if indicator in content_lower)
 
     def _calculate_engagement_score(self, features: Dict[str, Any]) -> float:
-        """Calculate engagement score based on content features"""
-        score = 0.0
+        """Calculate engagement score based on content features"""        score = 0.0
         
         # Base score from content length
         if features['content_length'] > 50:
@@ -370,8 +352,7 @@ class TurnManager:
         return min(score, 1.0)
 
     def _calculate_business_value_score(self, turn: ConversationTurn) -> float:
-        """Calculate business value score for turn"""
-        score = 0.0
+        """Calculate business value score for turn"""        score = 0.0
         
         # Revenue impact
         if turn.revenue_impact:
@@ -409,8 +390,7 @@ class TurnManager:
         return min(score, 1.0)
 
     async def _get_or_create_queue(self, conversation_id: str) -> TurnQueue:
-        """Get existing queue or create new one for conversation"""
-        
+        """Get existing queue or create new one for conversation"""        
         if conversation_id not in self.active_queues:
             queue_id = str(uuid.uuid4())
             queue = TurnQueue(
@@ -425,8 +405,7 @@ class TurnManager:
         return self.active_queues[conversation_id]
 
     async def _process_turn_queues(self):
-        """Background task to process turn queues"""
-        
+        """Background task to process turn queues"""        
         while True:
             try:
                 # Process all active queues
@@ -441,8 +420,7 @@ class TurnManager:
                 await asyncio.sleep(5)
 
     async def _process_queue(self, queue: TurnQueue):
-        """Process turns in a specific queue"""
-        
+        """Process turns in a specific queue"""        
         # Check if we can process more turns
         if len(queue.processing_turns) >= queue.max_concurrent_turns:
             return
@@ -468,8 +446,7 @@ class TurnManager:
             await self._start_turn_processing(queue, turn)
 
     async def _start_turn_processing(self, queue: TurnQueue, turn: ConversationTurn):
-        """Start processing a specific turn"""
-        
+        """Start processing a specific turn"""        
         turn.status = TurnStatus.PROCESSING
         turn.processed_at = datetime.now(timezone.utc)
         queue.processing_turns[turn.turn_id] = turn
@@ -478,8 +455,7 @@ class TurnManager:
         asyncio.create_task(self._process_turn(queue, turn))
 
     async def _process_turn(self, queue: TurnQueue, turn: ConversationTurn):
-        """Process individual turn"""
-        
+        """Process individual turn"""        
         async with self.processing_semaphore:
             start_time = datetime.now(timezone.utc)
             
@@ -516,8 +492,7 @@ class TurnManager:
                 await self._persist_turn(turn)
 
     async def _handle_turn_error(self, queue: TurnQueue, turn: ConversationTurn, error_message: str):
-        """Handle turn processing error"""
-        
+        """Handle turn processing error"""        
         turn.error_message = error_message
         turn.retry_count += 1
         
@@ -544,8 +519,7 @@ class TurnManager:
         await self._update_processing_metrics(0, False)
 
     async def _escalate_failed_turn(self, turn: ConversationTurn):
-        """Escalate failed critical turn"""
-        
+        """Escalate failed critical turn"""        
         escalation_data = {
             "turn_id": turn.turn_id,
             "conversation_id": turn.conversation_id,
@@ -566,8 +540,7 @@ class TurnManager:
 
     # Turn processors
     async def _process_user_message(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Process user message turn"""
-        
+        """Process user message turn"""        
         # Extract entities and intents
         analysis_result = await self.nlp_service.analyze_message(turn.content)
         
@@ -595,8 +568,7 @@ class TurnManager:
         return {"analysis_result": analysis_result}
 
     async def _process_agent_response(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Process AI agent response turn"""
-        
+        """Process AI agent response turn"""        
         # Send response to user
         await self.notification_service.send_notification(
             user_id=turn.speaker_id,
@@ -611,8 +583,7 @@ class TurnManager:
         return {"response_sent": True}
 
     async def _process_system_notification(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Process system notification turn"""
-        
+        """Process system notification turn"""        
         # Broadcast system notification
         await self.notification_service.broadcast_notification(
             conversation_id=turn.conversation_id,
@@ -626,8 +597,7 @@ class TurnManager:
         return {"notification_sent": True}
 
     async def _process_workflow_action(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Process workflow action turn"""
-        
+        """Process workflow action turn"""        
         workflow_type = turn.workflow_context.get('workflow_type')
         action = turn.workflow_context.get('action')
         
@@ -644,8 +614,7 @@ class TurnManager:
         return result
 
     async def _process_collaboration_invite(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Process collaboration invitation turn"""
-        
+        """Process collaboration invitation turn"""        
         collaboration_data = turn.collaboration_data
         invited_user_id = collaboration_data.get('invited_user_id')
         
@@ -667,8 +636,7 @@ class TurnManager:
         return {"error": "No invited user specified"}
 
     async def _process_content_upload(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Process content upload turn"""
-        
+        """Process content upload turn"""        
         content_info = turn.metadata.get('content_info', {})
         
         # Trigger content processing workflow
@@ -681,8 +649,7 @@ class TurnManager:
         return {"processing_job_id": processing_job_id}
 
     async def _process_revenue_proposal(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Process revenue sharing proposal turn"""
-        
+        """Process revenue sharing proposal turn"""        
         proposal_data = turn.collaboration_data.get('revenue_proposal', {})
         target_user_ids = turn.awaiting_user_ids
         
@@ -702,8 +669,7 @@ class TurnManager:
         return {"proposal_sent": True, "recipients": list(target_user_ids)}
 
     async def _process_agreement_confirmation(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Process agreement confirmation turn"""
-        
+        """Process agreement confirmation turn"""        
         agreement_data = turn.collaboration_data.get('agreement', {})
         
         # Create formal agreement record
@@ -729,8 +695,7 @@ class TurnManager:
         return {"agreement_id": agreement_id, "participants_notified": len(all_participants)}
 
     async def _process_escalation_request(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Process escalation request turn"""
-        
+        """Process escalation request turn"""        
         escalation_data = {
             "conversation_id": turn.conversation_id,
             "requester_id": turn.speaker_id,
@@ -756,24 +721,20 @@ class TurnManager:
 
     # Workflow execution methods
     async def _execute_protection_workflow(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Execute content protection workflow"""
-        # Implementation for content protection workflow
+        """Execute content protection workflow"""        # Implementation for content protection workflow
         return {"workflow": "content_protection", "status": "executed"}
 
     async def _execute_collaboration_workflow(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Execute collaboration workflow"""
-        # Implementation for collaboration workflow
+        """Execute collaboration workflow"""        # Implementation for collaboration workflow
         return {"workflow": "collaboration", "status": "executed"}
 
     async def _execute_monetization_workflow(self, turn: ConversationTurn) -> Dict[str, Any]:
-        """Execute monetization workflow"""
-        # Implementation for monetization workflow
+        """Execute monetization workflow"""        # Implementation for monetization workflow
         return {"workflow": "monetization", "status": "executed"}
 
     # Helper methods
     async def _update_speaker_context(self, speaker_id: str, context_update: Dict[str, Any]):
-        """Update speaker context with new information"""
-        
+        """Update speaker context with new information"""        
         if speaker_id not in self.speaker_contexts:
             self.speaker_contexts[speaker_id] = {}
         
@@ -781,8 +742,7 @@ class TurnManager:
         self.speaker_contexts[speaker_id]['last_updated'] = datetime.now(timezone.utc).isoformat()
 
     async def _update_processing_metrics(self, processing_time: float, success: bool):
-        """Update processing performance metrics"""
-        
+        """Update processing performance metrics"""        
         self.metrics['turns_processed'] += 1
         
         if success:
@@ -799,8 +759,7 @@ class TurnManager:
         self.metrics['success_rate'] = (success_count / self.metrics['turns_processed']) * 100.0
 
     async def _cleanup_expired_turns(self):
-        """Background task to cleanup expired turns"""
-        
+        """Background task to cleanup expired turns"""        
         while True:
             try:
                 current_time = datetime.now(timezone.utc)
@@ -824,8 +783,7 @@ class TurnManager:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
 
     async def _handle_expired_turn(self, queue: TurnQueue, turn: ConversationTurn):
-        """Handle expired turn"""
-        
+        """Handle expired turn"""        
         turn.status = TurnStatus.CANCELLED
         turn.error_message = "Turn expired due to timeout"
         queue.pending_turns.remove(turn)
@@ -842,8 +800,7 @@ class TurnManager:
         )
 
     async def _persist_turn(self, turn: ConversationTurn):
-        """Persist turn to Redis"""
-        
+        """Persist turn to Redis"""        
         try:
             turn_data = {
                 "turn_id": turn.turn_id,
@@ -878,8 +835,7 @@ class TurnManager:
             logger.error(f"Error persisting turn {turn.turn_id}: {str(e)}")
 
     async def _persist_queue(self, queue: TurnQueue):
-        """Persist queue to Redis"""
-        
+        """Persist queue to Redis"""        
         try:
             queue_data = {
                 "queue_id": queue.queue_id,
@@ -902,8 +858,7 @@ class TurnManager:
             logger.error(f"Error persisting queue {queue.queue_id}: {str(e)}")
 
     async def _update_queue_metrics(self, queue: TurnQueue):
-        """Update queue performance metrics"""
-        
+        """Update queue performance metrics"""        
         if queue.total_processed > 0:
             # Calculate success rate
             completed_successfully = len([
@@ -917,8 +872,7 @@ class TurnManager:
 
     # Public API methods
     async def get_turn_status(self, turn_id: str) -> Dict[str, Any]:
-        """Get status of specific turn"""
-        
+        """Get status of specific turn"""        
         try:
             turn_data = await self.redis_client.get(f"turn:{turn_id}")
             if turn_data:
@@ -930,8 +884,7 @@ class TurnManager:
             return {"error": str(e)}
 
     async def get_conversation_turns(self, conversation_id: str, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get recent turns for conversation"""
-        
+        """Get recent turns for conversation"""        
         # Get queue for conversation
         queue = self.active_queues.get(conversation_id)
         if not queue:
@@ -947,8 +900,7 @@ class TurnManager:
         return turn_data
 
     async def cancel_turn(self, turn_id: str, reason: str = "user_cancelled") -> bool:
-        """Cancel pending turn"""
-        
+        """Cancel pending turn"""        
         # Find turn in queues
         for queue in self.active_queues.values():
             # Check pending turns
@@ -972,8 +924,7 @@ class TurnManager:
         return False
 
     def get_queue_metrics(self, conversation_id: str) -> Dict[str, Any]:
-        """Get metrics for conversation queue"""
-        
+        """Get metrics for conversation queue"""        
         queue = self.active_queues.get(conversation_id)
         if not queue:
             return {"error": "Queue not found"}
@@ -991,8 +942,7 @@ class TurnManager:
         }
 
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get overall system metrics"""
-        
+        """Get overall system metrics"""        
         return {
             "global_metrics": self.metrics,
             "active_queues": len(self.active_queues),

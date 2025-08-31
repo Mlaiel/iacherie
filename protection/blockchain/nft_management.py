@@ -1,5 +1,4 @@
-"""
-NFT (Non-Fungible Token) Management for Content Protection
+"""NFT (Non-Fungible Token) Management for Content Protection
 Professional implementation of NFT minting, marketplace integration, and royalty management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,7 +19,6 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, AsyncGenerator
@@ -53,16 +51,14 @@ logger = logging.getLogger(__name__)
 
 
 class NFTStandard(Enum):
-    """NFT standards supported"""
-    ERC721 = "erc721"
+    """NFT standards supported"""    ERC721 = "erc721"
     ERC1155 = "erc1155"
     ERC998 = "erc998"  # Composable NFTs
     ERC2981 = "erc2981"  # NFT Royalty Standard
 
 
 class NFTMarketplace(Enum):
-    """Supported NFT marketplaces"""
-    OPENSEA = "opensea"
+    """Supported NFT marketplaces"""    OPENSEA = "opensea"
     RARIBLE = "rarible"
     FOUNDATION = "foundation"
     SUPERRARE = "superrare"
@@ -72,8 +68,7 @@ class NFTMarketplace(Enum):
 
 
 class ContentType(Enum):
-    """Types of content that can be minted as NFTs"""
-    AUDIO = "audio"
+    """Types of content that can be minted as NFTs"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -82,8 +77,7 @@ class ContentType(Enum):
 
 
 class RoyaltyType(Enum):
-    """Types of royalty mechanisms"""
-    PERCENTAGE = "percentage"  # Percentage of sale price
+    """Types of royalty mechanisms"""    PERCENTAGE = "percentage"  # Percentage of sale price
     FIXED_AMOUNT = "fixed_amount"  # Fixed amount per sale
     TIERED = "tiered"  # Different rates based on sale price
     DECLINING = "declining"  # Decreasing over time
@@ -91,8 +85,7 @@ class RoyaltyType(Enum):
 
 @dataclass
 class NFTMetadata:
-    """Comprehensive NFT metadata"""
-    name: str
+    """Comprehensive NFT metadata"""    name: str
     description: str
     content_type: ContentType
     creator_address: str
@@ -125,8 +118,7 @@ class NFTMetadata:
     version: str = "1.0"
     
     def to_json_metadata(self) -> Dict[str, Any]:
-        """Convert to standard NFT JSON metadata format"""
-        metadata = {
+        """Convert to standard NFT JSON metadata format"""        metadata = {
             "name": self.name,
             "description": self.description,
             "image": self.image_url,
@@ -167,8 +159,7 @@ class NFTMetadata:
 
 @dataclass
 class RoyaltyInfo:
-    """NFT royalty configuration"""
-    recipient_address: str
+    """NFT royalty configuration"""    recipient_address: str
     royalty_type: RoyaltyType
     rate_percentage: Decimal = Decimal('0')  # For percentage royalties
     fixed_amount_wei: int = 0  # For fixed amount royalties
@@ -185,8 +176,7 @@ class RoyaltyInfo:
     splits: List[Dict[str, Any]] = field(default_factory=list)  # Multiple recipients
     
     def calculate_royalty(self, sale_price_wei: int, sale_date: datetime) -> int:
-        """Calculate royalty amount for a sale"""
-        if self.royalty_type == RoyaltyType.PERCENTAGE:
+        """Calculate royalty amount for a sale"""        if self.royalty_type == RoyaltyType.PERCENTAGE:
             return int(sale_price_wei * float(self.rate_percentage) / 100)
         
         elif self.royalty_type == RoyaltyType.FIXED_AMOUNT:
@@ -201,8 +191,7 @@ class RoyaltyInfo:
         return 0
     
     def _calculate_tiered_royalty(self, sale_price_wei: int) -> int:
-        """Calculate tiered royalty based on sale price"""
-        sale_price_eth = sale_price_wei / 10**18
+        """Calculate tiered royalty based on sale price"""        sale_price_eth = sale_price_wei / 10**18
         
         for tier in sorted(self.tiers, key=lambda x: x['threshold'], reverse=True):
             if sale_price_eth >= tier['threshold']:
@@ -211,8 +200,7 @@ class RoyaltyInfo:
         return 0
     
     def _calculate_declining_royalty(self, sale_price_wei: int, sale_date: datetime) -> int:
-        """Calculate declining royalty based on time since minting"""
-        # Simplified - would track actual minting date
+        """Calculate declining royalty based on time since minting"""        # Simplified - would track actual minting date
         years_elapsed = Decimal('0')  # Calculate based on actual dates
         
         current_rate = max(
@@ -225,8 +213,7 @@ class RoyaltyInfo:
 
 @dataclass
 class NFTContract:
-    """NFT smart contract representation"""
-    contract_address: str
+    """NFT smart contract representation"""    contract_address: str
     standard: NFTStandard
     name: str
     symbol: str
@@ -250,8 +237,7 @@ class NFTContract:
 
 
 class NFTMinter:
-    """Professional NFT minting service"""
-    
+    """Professional NFT minting service"""    
     def __init__(self, web3_client: Web3, private_key: str, config: Dict[str, Any]):
         self.w3 = web3_client
         self.private_key = private_key
@@ -279,8 +265,7 @@ class NFTMinter:
         royalty_recipient: Optional[str] = None,
         royalty_percentage: Decimal = Decimal('10')
     ) -> NFTContract:
-        """Deploy a new NFT contract"""
-        try:
+        """Deploy a new NFT contract"""        try:
             # Get contract bytecode and ABI based on standard
             bytecode, abi = self._get_contract_artifacts(standard)
             
@@ -354,8 +339,7 @@ class NFTMinter:
         metadata: NFTMetadata,
         content_file: Optional[bytes] = None
     ) -> Tuple[str, int]:
-        """Mint a new NFT"""
-        try:
+        """Mint a new NFT"""        try:
             contract = self.contracts.get(contract_address)
             if not contract:
                 raise ValueError(f"Contract not found: {contract_address}")
@@ -420,8 +404,7 @@ class NFTMinter:
             raise
     
     async def _upload_to_ipfs(self, content: bytes, filename: str) -> str:
-        """Upload content to IPFS via Pinata"""
-        try:
+        """Upload content to IPFS via Pinata"""        try:
             if not self.pinata_api_key or not self.pinata_secret:
                 raise Exception("Pinata credentials not configured")
             
@@ -461,8 +444,7 @@ class NFTMinter:
             raise
     
     async def _get_next_token_id(self, contract: Contract) -> int:
-        """Get the next available token ID"""
-        try:
+        """Get the next available token ID"""        try:
             # Try different methods to get next token ID
             if hasattr(contract.functions, 'totalSupply'):
                 return contract.functions.totalSupply().call() + 1
@@ -480,8 +462,7 @@ class NFTMinter:
         token_id: int,
         royalty_info: RoyaltyInfo
     ) -> str:
-        """Set royalties for an NFT (ERC2981 standard)"""
-        try:
+        """Set royalties for an NFT (ERC2981 standard)"""        try:
             contract = self.contracts.get(contract_address)
             if not contract:
                 raise ValueError(f"Contract not found: {contract_address}")
@@ -523,8 +504,7 @@ class NFTMinter:
             raise
     
     def _get_contract_artifacts(self, standard: NFTStandard) -> Tuple[str, List[Dict[str, Any]]]:
-        """Get contract bytecode and ABI for NFT standard"""
-        # In production, load from compiled contract artifacts
+        """Get contract bytecode and ABI for NFT standard"""        # In production, load from compiled contract artifacts
         
         if standard == NFTStandard.ERC721:
             return self._get_erc721_artifacts()
@@ -536,8 +516,7 @@ class NFTMinter:
             raise ValueError(f"Unsupported NFT standard: {standard}")
     
     def _get_erc721_artifacts(self) -> Tuple[str, List[Dict[str, Any]]]:
-        """Get ERC721 contract artifacts"""
-        bytecode = "0x608060405234801561001057600080fd5b50..."  # Placeholder
+        """Get ERC721 contract artifacts"""        bytecode = "0x608060405234801561001057600080fd5b50..."  # Placeholder
         abi = [
             {
                 "inputs": [{"name": "name", "type": "string"}, {"name": "symbol", "type": "string"}],
@@ -555,29 +534,25 @@ class NFTMinter:
         return bytecode, abi
     
     def _get_erc1155_artifacts(self) -> Tuple[str, List[Dict[str, Any]]]:
-        """Get ERC1155 contract artifacts"""
-        bytecode = "0x608060405234801561001057600080fd5b50..."  # Placeholder
+        """Get ERC1155 contract artifacts"""        bytecode = "0x608060405234801561001057600080fd5b50..."  # Placeholder
         abi = []  # Placeholder
         return bytecode, abi
     
     def _get_erc2981_artifacts(self) -> Tuple[str, List[Dict[str, Any]]]:
-        """Get ERC2981 (with royalties) contract artifacts"""
-        bytecode = "0x608060405234801561001057600080fd5b50..."  # Placeholder
+        """Get ERC2981 (with royalties) contract artifacts"""        bytecode = "0x608060405234801561001057600080fd5b50..."  # Placeholder
         abi = []  # Placeholder
         return bytecode, abi
 
 
 class MarketplaceIntegration:
-    """Integration with major NFT marketplaces"""
-    
+    """Integration with major NFT marketplaces"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.marketplace_apis: Dict[NFTMarketplace, Dict[str, str]] = {}
         self._initialize_marketplace_configs()
     
     def _initialize_marketplace_configs(self):
-        """Initialize marketplace API configurations"""
-        self.marketplace_apis = {
+        """Initialize marketplace API configurations"""        self.marketplace_apis = {
             NFTMarketplace.OPENSEA: {
                 'api_url': 'https://api.opensea.io/api/v1',
                 'testnet_url': 'https://testnets-api.opensea.io/api/v1',
@@ -598,8 +573,7 @@ class MarketplaceIntegration:
         price_eth: Decimal,
         duration_days: int = 7
     ) -> bool:
-        """List NFT for sale on marketplace"""
-        try:
+        """List NFT for sale on marketplace"""        try:
             if marketplace == NFTMarketplace.OPENSEA:
                 return await self._list_on_opensea(contract_address, token_id, price_eth, duration_days)
             elif marketplace == NFTMarketplace.RARIBLE:
@@ -619,8 +593,7 @@ class MarketplaceIntegration:
         price_eth: Decimal,
         duration_days: int
     ) -> bool:
-        """List NFT on OpenSea"""
-        # In production, implement OpenSea Seaport protocol integration
+        """List NFT on OpenSea"""        # In production, implement OpenSea Seaport protocol integration
         logger.info(f"Mock listing on OpenSea: {contract_address}#{token_id} for {price_eth} ETH")
         return True
     
@@ -631,8 +604,7 @@ class MarketplaceIntegration:
         price_eth: Decimal,
         duration_days: int
     ) -> bool:
-        """List NFT on Rarible"""
-        # In production, implement Rarible Protocol integration
+        """List NFT on Rarible"""        # In production, implement Rarible Protocol integration
         logger.info(f"Mock listing on Rarible: {contract_address}#{token_id} for {price_eth} ETH")
         return True
 

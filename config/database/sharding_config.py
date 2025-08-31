@@ -1,5 +1,4 @@
-"""
-Database Sharding Configuration Module for IA-Influencer Agent Platform
+"""Database Sharding Configuration Module for IA-Influencer Agent Platform
 ======================================================================
 
 Professional database sharding configuration for horizontal scaling,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import logging
 import hashlib
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class ShardingStrategy(Enum):
-    """Database sharding strategies"""
-    HASH_BASED = "hash_based"
+    """Database sharding strategies"""    HASH_BASED = "hash_based"
     RANGE_BASED = "range_based"
     DIRECTORY_BASED = "directory_based"
     GEOGRAPHIC = "geographic"
@@ -44,8 +41,7 @@ class ShardingStrategy(Enum):
 
 
 class ShardingKey(Enum):
-    """Keys used for sharding decisions"""
-    USER_ID = "user_id"
+    """Keys used for sharding decisions"""    USER_ID = "user_id"
     TENANT_ID = "tenant_id"
     CONTENT_ID = "content_id"
     TIMESTAMP = "timestamp"
@@ -54,8 +50,7 @@ class ShardingKey(Enum):
 
 
 class DataType(Enum):
-    """Data types for different sharding strategies"""
-    USER_DATA = "user_data"
+    """Data types for different sharding strategies"""    USER_DATA = "user_data"
     CONTENT_DATA = "content_data"
     ANALYTICS_DATA = "analytics_data"
     PROTECTION_DATA = "protection_data"
@@ -65,8 +60,7 @@ class DataType(Enum):
 
 @dataclass
 class ShardConfig:
-    """Configuration for individual shard"""
-    shard_id: str
+    """Configuration for individual shard"""    shard_id: str
     shard_name: str
     database_url: str
     weight: float = 1.0  # Load balancing weight
@@ -87,8 +81,7 @@ class ShardConfig:
 
 @dataclass
 class ShardingRule:
-    """Rules for data distribution across shards"""
-    rule_id: str
+    """Rules for data distribution across shards"""    rule_id: str
     data_type: DataType
     sharding_strategy: ShardingStrategy
     sharding_key: ShardingKey
@@ -99,8 +92,7 @@ class ShardingRule:
 
 @dataclass
 class DatabaseShardingConfig:
-    """Professional database sharding configuration"""
-    # Global sharding settings
+    """Professional database sharding configuration"""    # Global sharding settings
     sharding_enabled: bool = True
     default_strategy: ShardingStrategy = ShardingStrategy.HASH_BASED
     default_sharding_key: ShardingKey = ShardingKey.USER_ID
@@ -136,8 +128,7 @@ class DatabaseShardingConfig:
 
 
 class ShardingManager:
-    """Professional database sharding management system"""
-    
+    """Professional database sharding management system"""    
     def __init__(self, config: DatabaseShardingConfig):
         self.config = config
         self.shard_connections: Dict[str, Any] = {}
@@ -146,8 +137,7 @@ class ShardingManager:
         self.performance_stats: Dict[str, Dict] = {}
         
     async def initialize(self) -> bool:
-        """Initialize sharding manager and connections"""
-        try:
+        """Initialize sharding manager and connections"""        try:
             # Initialize connections to all shards
             for shard_id, shard_config in self.config.shards.items():
                 if await self._initialize_shard_connection(shard_id, shard_config):
@@ -173,8 +163,7 @@ class ShardingManager:
         shard_id: str,
         shard_config: ShardConfig
     ) -> bool:
-        """Initialize connection to specific shard"""
-        try:
+        """Initialize connection to specific shard"""        try:
             # Create connection pool for PostgreSQL shards
             if "postgresql" in shard_config.database_url:
                 pool = await asyncpg.create_pool(
@@ -200,8 +189,7 @@ class ShardingManager:
         data_type: DataType,
         key_value: Any
     ) -> Optional[str]:
-        """Determine which shard should handle the data"""
-        try:
+        """Determine which shard should handle the data"""        try:
             # Check cache first
             cache_key = f"{data_type.value}:{sharding_key}:{key_value}"
             if cache_key in self.routing_cache:
@@ -230,8 +218,7 @@ class ShardingManager:
             return None
             
     def _apply_default_sharding(self, key_value: Any) -> str:
-        """Apply default hash-based sharding"""
-        # Get active shards
+        """Apply default hash-based sharding"""        # Get active shards
         active_shards = [
             shard_id for shard_id, config in self.config.shards.items()
             if config.is_active
@@ -247,8 +234,7 @@ class ShardingManager:
         return active_shards[shard_index]
         
     def _apply_sharding_rule(self, rule: ShardingRule, key_value: Any) -> str:
-        """Apply specific sharding rule"""
-        if rule.sharding_strategy == ShardingStrategy.HASH_BASED:
+        """Apply specific sharding rule"""        if rule.sharding_strategy == ShardingStrategy.HASH_BASED:
             return self._hash_based_sharding(rule.target_shards, key_value)
         elif rule.sharding_strategy == ShardingStrategy.RANGE_BASED:
             return self._range_based_sharding(rule.target_shards, key_value)
@@ -259,8 +245,7 @@ class ShardingManager:
             return self._apply_default_sharding(key_value)
             
     def _hash_based_sharding(self, target_shards: List[str], key_value: Any) -> str:
-        """Hash-based sharding across target shards"""
-        active_targets = [
+        """Hash-based sharding across target shards"""        active_targets = [
             shard_id for shard_id in target_shards
             if shard_id in self.config.shards and self.config.shards[shard_id].is_active
         ]
@@ -271,8 +256,7 @@ class ShardingManager:
         return active_targets[shard_index]
         
     def _range_based_sharding(self, target_shards: List[str], key_value: Any) -> str:
-        """Range-based sharding"""
-        for shard_id in target_shards:
+        """Range-based sharding"""        for shard_id in target_shards:
             shard_config = self.config.shards.get(shard_id)
             if (shard_config and shard_config.is_active and
                 shard_config.range_start is not None and
@@ -290,8 +274,7 @@ class ShardingManager:
         raise RuntimeError("No suitable shard found for range-based sharding")
         
     def _tenant_based_sharding(self, target_shards: List[str], key_value: Any) -> str:
-        """Tenant-based sharding"""
-        # Find shard that handles this tenant
+        """Tenant-based sharding"""        # Find shard that handles this tenant
         for shard_id in target_shards:
             shard_config = self.config.shards.get(shard_id)
             if (shard_config and shard_config.is_active and
@@ -309,8 +292,7 @@ class ShardingManager:
         data_type: DataType = DataType.USER_DATA,
         key_value: Optional[Any] = None
     ) -> List[Dict[str, Any]]:
-        """Execute query on appropriate shard"""
-        try:
+        """Execute query on appropriate shard"""        try:
             # Determine target shard
             if sharding_key and key_value is not None:
                 shard_id = self.get_shard_for_key(sharding_key, data_type, key_value)
@@ -344,8 +326,7 @@ class ShardingManager:
         query: str,
         params: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Execute query on specific shard"""
-        if shard_id not in self.shard_connections:
+        """Execute query on specific shard"""        if shard_id not in self.shard_connections:
             raise RuntimeError(f"No connection to shard {shard_id}")
             
         pool = self.shard_connections[shard_id]
@@ -373,8 +354,7 @@ class ShardingManager:
         params: Optional[Dict[str, Any]] = None,
         target_shards: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Execute query across multiple shards and merge results"""
-        if not self.config.enable_cross_shard_queries:
+        """Execute query across multiple shards and merge results"""        if not self.config.enable_cross_shard_queries:
             raise RuntimeError("Cross-shard queries are disabled")
             
         try:
@@ -412,8 +392,7 @@ class ShardingManager:
             return []
             
     def _record_query_performance(self, shard_id: str, execution_time_ms: float):
-        """Record query performance metrics"""
-        if shard_id not in self.performance_stats:
+        """Record query performance metrics"""        if shard_id not in self.performance_stats:
             self.performance_stats[shard_id] = {
                 "query_count": 0,
                 "total_time_ms": 0,
@@ -430,8 +409,7 @@ class ShardingManager:
             stats["slow_queries"] += 1
             
     async def _monitor_shard_health(self):
-        """Monitor health of all shards"""
-        while True:
+        """Monitor health of all shards"""        while True:
             try:
                 for shard_id, pool in self.shard_connections.items():
                     try:
@@ -449,8 +427,7 @@ class ShardingManager:
                 await asyncio.sleep(self.config.health_check_interval)
                 
     async def get_sharding_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive sharding statistics"""
-        try:
+        """Get comprehensive sharding statistics"""        try:
             total_shards = len(self.config.shards)
             active_shards = sum(1 for config in self.config.shards.values() if config.is_active)
             healthy_shards = sum(1 for health in self.shard_health.values() if health)
@@ -488,8 +465,7 @@ class ShardingManager:
             return {"error": str(e)}
             
     async def close(self):
-        """Close all shard connections"""
-        try:
+        """Close all shard connections"""        try:
             for shard_id, pool in self.shard_connections.items():
                 if hasattr(pool, 'close'):
                     await pool.close()
@@ -506,8 +482,7 @@ def create_sharding_config(
     environment: str = "development",
     custom_settings: Optional[Dict[str, Any]] = None
 ) -> DatabaseShardingConfig:
-    """Factory function to create sharding configuration"""
-    
+    """Factory function to create sharding configuration"""    
     # Environment-specific shard configurations
     if environment == "development":
         shards = {

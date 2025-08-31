@@ -1,5 +1,4 @@
-"""
-🔒 Advanced Security & Authentication System
+"""🔒 Advanced Security & Authentication System
 ============================================
 
 Enterprise-grade security system with multi-factor authentication,
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
-
 import asyncio
 import logging
 import hashlib
@@ -61,16 +59,14 @@ from .models import ContentType
 logger = logging.getLogger(__name__)
 
 class SecurityLevel(str, Enum):
-    """Security levels."""
-    PUBLIC = "public"
+    """Security levels."""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     SECRET = "secret"
     TOP_SECRET = "top_secret"
 
 class AuthenticationMethod(str, Enum):
-    """Authentication methods."""
-    PASSWORD = "password"
+    """Authentication methods."""    PASSWORD = "password"
     API_KEY = "api_key"
     JWT_TOKEN = "jwt_token"
     OAUTH2 = "oauth2"
@@ -78,23 +74,20 @@ class AuthenticationMethod(str, Enum):
     CERTIFICATE = "certificate"
 
 class PermissionLevel(str, Enum):
-    """Permission levels."""
-    READ = "read"
+    """Permission levels."""    READ = "read"
     WRITE = "write"
     ADMIN = "admin"
     SUPER_ADMIN = "super_admin"
 
 class ThreatLevel(str, Enum):
-    """Threat severity levels."""
-    LOW = "low"
+    """Threat severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class User:
-    """User model with security attributes."""
-    id: str
+    """User model with security attributes."""    id: str
     username: str
     email: str
     password_hash: str
@@ -111,8 +104,7 @@ class User:
 
 @dataclass
 class SecurityEvent:
-    """Security event for audit logging."""
-    id: str
+    """Security event for audit logging."""    id: str
     event_type: str
     user_id: Optional[str]
     ip_address: str
@@ -124,8 +116,7 @@ class SecurityEvent:
 
 @dataclass
 class AccessToken:
-    """Access token with metadata."""
-    token: str
+    """Access token with metadata."""    token: str
     user_id: str
     permissions: List[PermissionLevel]
     expires_at: datetime
@@ -133,8 +124,7 @@ class AccessToken:
     last_used: Optional[datetime] = None
 
 class EncryptionManager:
-    """Advanced encryption and key management."""
-    
+    """Advanced encryption and key management."""    
     def __init__(self, master_key: Optional[str] = None):
         if not CRYPTO_AVAILABLE:
             raise ImportError("Cryptography library not available")
@@ -157,21 +147,18 @@ class EncryptionManager:
         logger.info("Encryption manager initialized")
     
     def encrypt_data(self, data: Union[str, bytes]) -> str:
-        """Encrypt data using symmetric encryption."""
-        if isinstance(data, str):
+        """Encrypt data using symmetric encryption."""        if isinstance(data, str):
             data = data.encode()
         
         encrypted = self.fernet.encrypt(data)
         return encrypted.decode()
     
     def decrypt_data(self, encrypted_data: str) -> str:
-        """Decrypt data using symmetric encryption."""
-        decrypted = self.fernet.decrypt(encrypted_data.encode())
+        """Decrypt data using symmetric encryption."""        decrypted = self.fernet.decrypt(encrypted_data.encode())
         return decrypted.decode()
     
     def encrypt_large_data(self, data: bytes) -> bytes:
-        """Encrypt large data using asymmetric encryption."""
-        # For large data, use hybrid encryption
+        """Encrypt large data using asymmetric encryption."""        # For large data, use hybrid encryption
         # Generate symmetric key for this data
         data_key = Fernet.generate_key()
         data_fernet = Fernet(data_key)
@@ -193,8 +180,7 @@ class EncryptionManager:
         return encrypted_key + b"::::" + encrypted_data
     
     def decrypt_large_data(self, encrypted_data: bytes) -> bytes:
-        """Decrypt large data using asymmetric encryption."""
-        # Split encrypted key and data
+        """Decrypt large data using asymmetric encryption."""        # Split encrypted key and data
         encrypted_key, encrypted_content = encrypted_data.split(b"::::", 1)
         
         # Decrypt symmetric key with private key
@@ -212,8 +198,7 @@ class EncryptionManager:
         return data_fernet.decrypt(encrypted_content)
     
     def hash_password(self, password: str) -> str:
-        """Hash password using bcrypt."""
-        if not MFA_AVAILABLE:
+        """Hash password using bcrypt."""        if not MFA_AVAILABLE:
             # Fallback to hashlib
             salt = secrets.token_hex(16)
             return hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000).hex() + ":" + salt
@@ -221,8 +206,7 @@ class EncryptionManager:
         return bcrypt.hashpw(password.encode(), bcrypt.gensalt()).decode()
     
     def verify_password(self, password: str, password_hash: str) -> bool:
-        """Verify password against hash."""
-        if not MFA_AVAILABLE:
+        """Verify password against hash."""        if not MFA_AVAILABLE:
             # Fallback verification
             if ":" in password_hash:
                 hash_part, salt = password_hash.split(":", 1)
@@ -236,16 +220,13 @@ class EncryptionManager:
             return False
     
     def generate_api_key(self) -> str:
-        """Generate secure API key."""
-        return secrets.token_urlsafe(32)
+        """Generate secure API key."""        return secrets.token_urlsafe(32)
     
     def generate_session_token(self) -> str:
-        """Generate secure session token."""
-        return secrets.token_urlsafe(64)
+        """Generate secure session token."""        return secrets.token_urlsafe(64)
 
 class MFAManager:
-    """Multi-Factor Authentication manager."""
-    
+    """Multi-Factor Authentication manager."""    
     def __init__(self):
         if not MFA_AVAILABLE:
             logger.warning("MFA libraries not available - MFA disabled")
@@ -256,15 +237,13 @@ class MFAManager:
         logger.info("MFA manager initialized")
     
     def generate_secret(self) -> str:
-        """Generate TOTP secret for user."""
-        if not self.available:
+        """Generate TOTP secret for user."""        if not self.available:
             return ""
         
         return pyotp.random_base32()
     
     def generate_qr_code(self, user_email: str, secret: str, service_name: str = "FingerPrint Pro") -> bytes:
-        """Generate QR code for TOTP setup."""
-        if not self.available:
+        """Generate QR code for TOTP setup."""        if not self.available:
             return b""
         
         totp = pyotp.TOTP(secret)
@@ -286,20 +265,17 @@ class MFAManager:
         return img_buffer.getvalue()
     
     def verify_totp(self, secret: str, token: str) -> bool:
-        """Verify TOTP token."""
-        if not self.available:
+        """Verify TOTP token."""        if not self.available:
             return False
         
         totp = pyotp.TOTP(secret)
         return totp.verify(token, valid_window=1)
     
     def generate_backup_codes(self, count: int = 10) -> List[str]:
-        """Generate backup codes for account recovery."""
-        return [secrets.token_hex(4) for _ in range(count)]
+        """Generate backup codes for account recovery."""        return [secrets.token_hex(4) for _ in range(count)]
 
 class JWTManager:
-    """JWT token management."""
-    
+    """JWT token management."""    
     def __init__(self, secret_key: str, algorithm: str = "HS256"):
         self.secret_key = secret_key
         self.algorithm = algorithm
@@ -309,8 +285,7 @@ class JWTManager:
     
     def create_token(self, user_id: str, permissions: List[PermissionLevel], 
                     expires_delta: Optional[timedelta] = None) -> str:
-        """Create JWT token."""
-        
+        """Create JWT token."""        
         expires_delta = expires_delta or self.default_expiry
         expire = datetime.utcnow() + expires_delta
         
@@ -325,8 +300,7 @@ class JWTManager:
         return jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
     
     def verify_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Verify and decode JWT token."""
-        try:
+        """Verify and decode JWT token."""        try:
             payload = jwt.decode(
                 token, 
                 self.secret_key, 
@@ -341,8 +315,7 @@ class JWTManager:
             return None
     
     def refresh_token(self, token: str) -> Optional[str]:
-        """Refresh JWT token if valid and not expired."""
-        payload = self.verify_token(token)
+        """Refresh JWT token if valid and not expired."""        payload = self.verify_token(token)
         if not payload:
             return None
         
@@ -353,8 +326,7 @@ class JWTManager:
         )
 
 class AccessControlManager:
-    """Role-based access control."""
-    
+    """Role-based access control."""    
     def __init__(self):
         # Define permission hierarchy
         self.permission_hierarchy = {
@@ -379,8 +351,7 @@ class AccessControlManager:
     
     def check_permission(self, user_permissions: List[PermissionLevel], 
                         required_permission: str) -> bool:
-        """Check if user has required permission for resource."""
-        
+        """Check if user has required permission for resource."""        
         if required_permission not in self.resource_permissions:
             logger.warning(f"Unknown permission: {required_permission}")
             return False
@@ -400,8 +371,7 @@ class AccessControlManager:
         return False
     
     def get_user_permissions(self, user: User) -> List[PermissionLevel]:
-        """Get effective permissions for user."""
-        permissions = set(user.permissions)
+        """Get effective permissions for user."""        permissions = set(user.permissions)
         
         # Add inherited permissions
         for perm in user.permissions:
@@ -411,8 +381,7 @@ class AccessControlManager:
         return list(permissions)
 
 class ThreatDetectionSystem:
-    """Advanced threat detection and response."""
-    
+    """Advanced threat detection and response."""    
     def __init__(self, redis_client=None):
         self.redis_client = redis_client
         
@@ -438,8 +407,7 @@ class ThreatDetectionSystem:
         logger.info("Threat detection system initialized")
     
     def check_rate_limit(self, identifier: str, action: str) -> bool:
-        """Check if request exceeds rate limit."""
-        if not self.redis_client:
+        """Check if request exceeds rate limit."""        if not self.redis_client:
             return True  # No rate limiting without Redis
         
         if action not in self.rate_limits:
@@ -469,8 +437,7 @@ class ThreatDetectionSystem:
             return True  # Fail open
     
     def detect_suspicious_activity(self, request_data: Dict[str, Any]) -> Tuple[bool, ThreatLevel, str]:
-        """Detect suspicious activity in request."""
-        
+        """Detect suspicious activity in request."""        
         ip_address = request_data.get("ip_address", "")
         user_agent = request_data.get("user_agent", "")
         request_path = request_data.get("path", "")
@@ -510,8 +477,7 @@ class ThreatDetectionSystem:
         return False, ThreatLevel.LOW, "No threats detected"
     
     def _is_suspicious_user_agent(self, user_agent: str) -> bool:
-        """Check if user agent is suspicious."""
-        suspicious_agents = [
+        """Check if user agent is suspicious."""        suspicious_agents = [
             "curl", "wget", "python-requests", "bot", "crawler", 
             "scanner", "sqlmap", "nikto"
         ]
@@ -520,8 +486,7 @@ class ThreatDetectionSystem:
         return any(agent in user_agent_lower for agent in suspicious_agents)
     
     def _is_suspicious_location(self, ip_address: str) -> bool:
-        """Check if IP location is suspicious (simplified)."""
-        try:
+        """Check if IP location is suspicious (simplified)."""        try:
             ip = ipaddress.ip_address(ip_address)
             
             # Check for private/local IPs
@@ -537,8 +502,7 @@ class ThreatDetectionSystem:
         return False
     
     def _calculate_threat_severity(self, threats: List[str]) -> ThreatLevel:
-        """Calculate overall threat severity."""
-        if len(threats) >= 3:
+        """Calculate overall threat severity."""        if len(threats) >= 3:
             return ThreatLevel.CRITICAL
         elif len(threats) == 2:
             return ThreatLevel.HIGH
@@ -548,8 +512,7 @@ class ThreatDetectionSystem:
             return ThreatLevel.LOW
     
     def add_suspicious_ip(self, ip_address: str, score_increment: int = 10):
-        """Add IP to suspicious list."""
-        if ip_address in self.suspicious_ips:
+        """Add IP to suspicious list."""        if ip_address in self.suspicious_ips:
             self.suspicious_ips[ip_address] += score_increment
         else:
             self.suspicious_ips[ip_address] = score_increment
@@ -560,13 +523,11 @@ class ThreatDetectionSystem:
             logger.warning(f"Blocked IP due to high suspicious score: {ip_address}")
     
     def block_ip(self, ip_address: str, reason: str):
-        """Manually block IP address."""
-        self.blocked_ips.add(ip_address)
+        """Manually block IP address."""        self.blocked_ips.add(ip_address)
         logger.warning(f"Manually blocked IP {ip_address}: {reason}")
 
 class SecurityAuditLogger:
-    """Security event audit logging."""
-    
+    """Security event audit logging."""    
     def __init__(self, log_file: str = "security_audit.log"):
         self.log_file = Path(log_file)
         self.log_file.parent.mkdir(parents=True, exist_ok=True)
@@ -584,8 +545,7 @@ class SecurityAuditLogger:
         logger.info(f"Security audit logger initialized: {self.log_file}")
     
     def log_event(self, event: SecurityEvent):
-        """Log security event."""
-        
+        """Log security event."""        
         event_data = {
             "id": event.id,
             "type": event.event_type,
@@ -612,8 +572,7 @@ class SecurityAuditLogger:
     
     def log_authentication(self, user_id: str, success: bool, ip_address: str, 
                           user_agent: str, method: AuthenticationMethod):
-        """Log authentication attempt."""
-        
+        """Log authentication attempt."""        
         event = SecurityEvent(
             id=secrets.token_hex(8),
             event_type="authentication",
@@ -632,8 +591,7 @@ class SecurityAuditLogger:
     
     def log_access_attempt(self, user_id: str, resource: str, success: bool, 
                           ip_address: str, user_agent: str):
-        """Log resource access attempt."""
-        
+        """Log resource access attempt."""        
         event = SecurityEvent(
             id=secrets.token_hex(8),
             event_type="access_attempt",
@@ -652,8 +610,7 @@ class SecurityAuditLogger:
     
     def log_threat_detection(self, threat_level: ThreatLevel, description: str, 
                            ip_address: str, user_agent: str, details: Dict[str, Any]):
-        """Log threat detection."""
-        
+        """Log threat detection."""        
         event = SecurityEvent(
             id=secrets.token_hex(8),
             event_type="threat_detection",
@@ -671,8 +628,7 @@ class SecurityAuditLogger:
         self.log_event(event)
 
 class SecurityManager:
-    """
-    Master security management system.
+    """    Master security management system.
     
     Features:
     - Multi-factor authentication (TOTP, backup codes)
@@ -684,8 +640,7 @@ class SecurityManager:
     - Comprehensive security audit logging
     - IP reputation and geolocation analysis
     - Session management and security
-    """
-    
+    """    
     def __init__(self, 
                  master_key: Optional[str] = None,
                  jwt_secret: Optional[str] = None,
@@ -709,8 +664,7 @@ class SecurityManager:
     async def authenticate_user(self, username: str, password: str, 
                                ip_address: str, user_agent: str,
                                totp_token: Optional[str] = None) -> Optional[AccessToken]:
-        """Authenticate user with optional MFA."""
-        
+        """Authenticate user with optional MFA."""        
         # Check rate limiting
         if not self.threat_detection.check_rate_limit(ip_address, "login_attempts"):
             self.audit_logger.log_authentication(
@@ -783,8 +737,7 @@ class SecurityManager:
         return access_token
     
     async def verify_access_token(self, token: str) -> Optional[AccessToken]:
-        """Verify and return access token if valid."""
-        
+        """Verify and return access token if valid."""        
         # Check if token is blocked
         if token in self.blocked_tokens:
             return None
@@ -813,8 +766,7 @@ class SecurityManager:
     
     async def check_permissions(self, token: str, resource: str, 
                                ip_address: str, user_agent: str) -> bool:
-        """Check if user has permissions for resource."""
-        
+        """Check if user has permissions for resource."""        
         access_token = await self.verify_access_token(token)
         if not access_token:
             return False
@@ -833,8 +785,7 @@ class SecurityManager:
         return has_permission
     
     async def enable_mfa(self, user_id: str) -> Tuple[str, bytes]:
-        """Enable MFA for user and return secret and QR code."""
-        
+        """Enable MFA for user and return secret and QR code."""        
         user = self.users.get(user_id)
         if not user:
             raise ValueError("User not found")
@@ -849,8 +800,7 @@ class SecurityManager:
         return secret, qr_code
     
     async def verify_mfa_setup(self, user_id: str, totp_token: str) -> bool:
-        """Verify MFA setup and enable it."""
-        
+        """Verify MFA setup and enable it."""        
         user = self.users.get(user_id)
         if not user or not user.mfa_secret:
             return False
@@ -863,8 +813,7 @@ class SecurityManager:
         return False
     
     async def analyze_security_threat(self, request_data: Dict[str, Any]) -> SecurityEvent:
-        """Analyze request for security threats."""
-        
+        """Analyze request for security threats."""        
         is_threat, threat_level, description = self.threat_detection.detect_suspicious_activity(request_data)
         
         if is_threat:
@@ -895,8 +844,7 @@ class SecurityManager:
     
     def create_user(self, username: str, email: str, password: str, 
                    permissions: List[PermissionLevel] = None) -> User:
-        """Create new user account."""
-        
+        """Create new user account."""        
         if username in self.users:
             raise ValueError("Username already exists")
         
@@ -916,16 +864,14 @@ class SecurityManager:
         return user
     
     def revoke_token(self, token: str):
-        """Revoke access token."""
-        self.blocked_tokens.add(token)
+        """Revoke access token."""        self.blocked_tokens.add(token)
         if token in self.active_sessions:
             del self.active_sessions[token]
         
         logger.info("Access token revoked")
     
     def get_security_summary(self) -> Dict[str, Any]:
-        """Get security system summary."""
-        
+        """Get security system summary."""        
         return {
             "users": {
                 "total": len(self.users),

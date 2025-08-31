@@ -1,5 +1,4 @@
-"""
-Crisis Manager Agent
+"""Crisis Manager Agent
 
 AI-powered crisis management and reputation protection agent for influencers.
 
@@ -12,7 +11,6 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -28,8 +26,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class CrisisType(Enum):
-    """Types of crisis situations"""
-    REPUTATION_DAMAGE = "reputation_damage"
+    """Types of crisis situations"""    REPUTATION_DAMAGE = "reputation_damage"
     CONTENT_CONTROVERSY = "content_controversy"
     PLATFORM_VIOLATION = "platform_violation"
     LEGAL_ISSUE = "legal_issue"
@@ -39,16 +36,14 @@ class CrisisType(Enum):
     AUDIENCE_BACKLASH = "audience_backlash"
 
 class CrisisSeverity(Enum):
-    """Crisis severity levels"""
-    LOW = "low"
+    """Crisis severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class ResponseStrategy(Enum):
-    """Crisis response strategies"""
-    ACKNOWLEDGE_APOLOGIZE = "acknowledge_apologize"
+    """Crisis response strategies"""    ACKNOWLEDGE_APOLOGIZE = "acknowledge_apologize"
     CLARIFY_EDUCATE = "clarify_educate"
     REDIRECT_FOCUS = "redirect_focus"
     SILENCE_MONITOR = "silence_monitor"
@@ -58,8 +53,7 @@ class ResponseStrategy(Enum):
 
 @dataclass
 class CrisisEvent:
-    """Crisis event data"""
-    crisis_id: str
+    """Crisis event data"""    crisis_id: str
     crisis_type: CrisisType
     severity: CrisisSeverity
     description: str
@@ -74,8 +68,7 @@ class CrisisEvent:
 
 @dataclass
 class CrisisResponse:
-    """Crisis response plan"""
-    crisis_id: str
+    """Crisis response plan"""    crisis_id: str
     strategy: ResponseStrategy
     immediate_actions: List[str]
     communication_plan: Dict[str, Any]
@@ -86,8 +79,7 @@ class CrisisResponse:
     
 @dataclass
 class ResponseAction:
-    """Individual response action"""
-    action_id: str
+    """Individual response action"""    action_id: str
     action_type: str
     description: str
     platform: str
@@ -96,8 +88,7 @@ class ResponseAction:
     result: Optional[str] = None
 
 class CrisisManagerAgent(BaseAIAgent):
-    """AI agent for crisis management and reputation protection"""
-    
+    """AI agent for crisis management and reputation protection"""    
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
         self.name = "CrisisManagerAgent"
@@ -123,8 +114,7 @@ class CrisisManagerAgent(BaseAIAgent):
         logger.info("Crisis Manager Agent initialized successfully")
     
     async def monitor_for_crises(self) -> List[CrisisEvent]:
-        """Monitor social media and online presence for potential crises"""
-        try:
+        """Monitor social media and online presence for potential crises"""        try:
             detected_crises = []
             
             # Simulate crisis detection
@@ -156,8 +146,7 @@ class CrisisManagerAgent(BaseAIAgent):
             return []
     
     async def create_response_plan(self, crisis: CrisisEvent) -> CrisisResponse:
-        """Create a comprehensive crisis response plan"""
-        try:
+        """Create a comprehensive crisis response plan"""        try:
             # Analyze crisis and determine strategy
             strategy = await self._determine_response_strategy(crisis)
             
@@ -182,8 +171,7 @@ class CrisisManagerAgent(BaseAIAgent):
             return None
     
     async def execute_response(self, crisis_id: str) -> bool:
-        """Execute the crisis response plan"""
-        try:
+        """Execute the crisis response plan"""        try:
             if crisis_id not in self.response_plans:
                 logger.error(f"No response plan found for crisis {crisis_id}")
                 return False
@@ -214,8 +202,7 @@ class CrisisManagerAgent(BaseAIAgent):
             return False
     
     async def _analyze_platform_sentiment(self, platform: str) -> Dict[str, Any]:
-        """Analyze sentiment and threat level on a platform"""
-        # Simulate sentiment analysis
+        """Analyze sentiment and threat level on a platform"""        # Simulate sentiment analysis
         import random
         
         threat_level = random.uniform(0.0, 1.0)
@@ -231,8 +218,7 @@ class CrisisManagerAgent(BaseAIAgent):
         }
     
     def _determine_severity(self, indicators: Dict[str, Any]) -> CrisisSeverity:
-        """Determine crisis severity based on indicators"""
-        threat_level = indicators.get("threat_level", 0)
+        """Determine crisis severity based on indicators"""        threat_level = indicators.get("threat_level", 0)
         
         if threat_level >= 0.9:
             return CrisisSeverity.EMERGENCY
@@ -246,8 +232,7 @@ class CrisisManagerAgent(BaseAIAgent):
             return CrisisSeverity.LOW
     
     async def _determine_response_strategy(self, crisis: CrisisEvent) -> ResponseStrategy:
-        """Determine the best response strategy for the crisis"""
-        if crisis.crisis_type == CrisisType.CONTENT_CONTROVERSY:
+        """Determine the best response strategy for the crisis"""        if crisis.crisis_type == CrisisType.CONTENT_CONTROVERSY:
             return ResponseStrategy.ACKNOWLEDGE_APOLOGIZE
         elif crisis.crisis_type == CrisisType.PLATFORM_VIOLATION:
             return ResponseStrategy.CLARIFY_EDUCATE
@@ -257,8 +242,7 @@ class CrisisManagerAgent(BaseAIAgent):
             return ResponseStrategy.COMMUNITY_ENGAGEMENT
     
     async def _generate_immediate_actions(self, crisis: CrisisEvent, strategy: ResponseStrategy) -> List[str]:
-        """Generate list of immediate actions to take"""
-        actions = []
+        """Generate list of immediate actions to take"""        actions = []
         
         if strategy == ResponseStrategy.ACKNOWLEDGE_APOLOGIZE:
             actions.extend([
@@ -285,8 +269,7 @@ class CrisisManagerAgent(BaseAIAgent):
         return actions
     
     async def _create_communication_plan(self, crisis: CrisisEvent, strategy: ResponseStrategy) -> Dict[str, Any]:
-        """Create detailed communication plan"""
-        return {
+        """Create detailed communication plan"""        return {
             "primary_message": f"Response to {crisis.crisis_type.value}",
             "tone": "authentic" if strategy == ResponseStrategy.ACKNOWLEDGE_APOLOGIZE else "informative",
             "channels": crisis.affected_platforms,
@@ -301,8 +284,7 @@ class CrisisManagerAgent(BaseAIAgent):
         }
     
     def _create_response_timeline(self) -> Dict[str, datetime]:
-        """Create response timeline with key milestones"""
-        now = datetime.now()
+        """Create response timeline with key milestones"""        now = datetime.now()
         return {
             "immediate_response": now + timedelta(minutes=30),
             "detailed_statement": now + timedelta(hours=2),
@@ -312,8 +294,7 @@ class CrisisManagerAgent(BaseAIAgent):
         }
     
     def _identify_stakeholders(self, crisis: CrisisEvent) -> List[str]:
-        """Identify key stakeholders who need to be informed"""
-        stakeholders = ["content_team", "legal_team", "pr_team"]
+        """Identify key stakeholders who need to be informed"""        stakeholders = ["content_team", "legal_team", "pr_team"]
         
         if crisis.severity in [CrisisSeverity.CRITICAL, CrisisSeverity.EMERGENCY]:
             stakeholders.extend(["management", "partners", "sponsors"])
@@ -321,8 +302,7 @@ class CrisisManagerAgent(BaseAIAgent):
         return stakeholders
     
     def _define_success_metrics(self, crisis: CrisisEvent) -> List[str]:
-        """Define metrics to measure crisis response success"""
-        return [
+        """Define metrics to measure crisis response success"""        return [
             "sentiment_recovery",
             "engagement_normalization",
             "follower_retention",
@@ -332,8 +312,7 @@ class CrisisManagerAgent(BaseAIAgent):
         ]
     
     async def _execute_action(self, action: ResponseAction) -> bool:
-        """Execute a specific response action"""
-        try:
+        """Execute a specific response action"""        try:
             # Simulate action execution
             await asyncio.sleep(0.1)  # Simulate processing time
             action.completed = True
@@ -346,8 +325,7 @@ class CrisisManagerAgent(BaseAIAgent):
             return False
     
     async def _execute_communication_plan(self, comm_plan: Dict[str, Any]) -> bool:
-        """Execute the communication plan"""
-        try:
+        """Execute the communication plan"""        try:
             # Simulate communication execution
             logger.info(f"Executing communication plan: {comm_plan['primary_message']}")
             await asyncio.sleep(0.2)  # Simulate processing time
@@ -358,8 +336,7 @@ class CrisisManagerAgent(BaseAIAgent):
             return False
     
     def _load_response_templates(self) -> Dict[str, str]:
-        """Load pre-defined response templates"""
-        return {
+        """Load pre-defined response templates"""        return {
             "apology": "We sincerely apologize for the recent situation...",
             "clarification": "We want to clarify the recent misunderstanding...",
             "update": "Update on the current situation...",
@@ -367,8 +344,7 @@ class CrisisManagerAgent(BaseAIAgent):
         }
     
     async def get_crisis_status(self, crisis_id: str) -> Optional[Dict[str, Any]]:
-        """Get current status of a crisis"""
-        if crisis_id not in self.active_crises:
+        """Get current status of a crisis"""        if crisis_id not in self.active_crises:
             return None
         
         crisis = self.active_crises[crisis_id]

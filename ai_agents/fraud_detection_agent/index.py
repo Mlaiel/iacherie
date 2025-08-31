@@ -1,5 +1,4 @@
-"""
-Fraud Detection Agent - Main Entry Point and API Interface
+"""Fraud Detection Agent - Main Entry Point and API Interface
 
 Central index file providing unified API access to all fraud detection
 capabilities with enterprise-grade routing and request handling.
@@ -7,7 +6,6 @@ capabilities with enterprise-grade routing and request handling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 import json
@@ -100,8 +98,7 @@ fraud_detection_agent: Optional[FraudDetectionAgent] = None
 metrics_collector = MetricsCollector("fraud_detection")
 
 class AnalysisType(str, Enum):
-    """Types of fraud analysis available"""
-    COMPREHENSIVE = "comprehensive"
+    """Types of fraud analysis available"""    COMPREHENSIVE = "comprehensive"
     BEHAVIORAL = "behavioral"
     PATTERN = "pattern"
     REVENUE = "revenue"
@@ -110,16 +107,14 @@ class AnalysisType(str, Enum):
     THREAT_INTELLIGENCE = "threat_intelligence"
 
 class RiskLevel(str, Enum):
-    """Risk assessment levels"""
-    GREEN = "GREEN"
+    """Risk assessment levels"""    GREEN = "GREEN"
     YELLOW = "YELLOW"
     ORANGE = "ORANGE"
     RED = "RED"
 
 # Request/Response Models
 class GeolocationData(BaseModel):
-    """Geolocation information"""
-    ip_address: str = Field(..., description="IP address of the user")
+    """Geolocation information"""    ip_address: str = Field(..., description="IP address of the user")
     country_code: Optional[str] = Field(None, description="ISO country code")
     country: Optional[str] = Field(None, description="Country name")
     city: Optional[str] = Field(None, description="City name")
@@ -128,8 +123,7 @@ class GeolocationData(BaseModel):
     timezone: Optional[str] = Field(None, description="Timezone identifier")
 
 class SessionData(BaseModel):
-    """User session information"""
-    ip_address: str = Field(..., description="User IP address")
+    """User session information"""    ip_address: str = Field(..., description="User IP address")
     user_agent: str = Field(..., description="User agent string")
     geolocation: GeolocationData = Field(..., description="Geolocation data")
     device_fingerprint: str = Field(..., description="Device fingerprint hash")
@@ -137,8 +131,7 @@ class SessionData(BaseModel):
     referrer: Optional[str] = Field(None, description="HTTP referrer")
 
 class ContentData(BaseModel):
-    """Content information for deepfake analysis"""
-    content_type: str = Field(..., description="Type of content (video, audio, image, text)")
+    """Content information for deepfake analysis"""    content_type: str = Field(..., description="Type of content (video, audio, image, text)")
     content_url: Optional[str] = Field(None, description="URL to content")
     content_base64: Optional[str] = Field(None, description="Base64 encoded content")
     metadata: Dict[str, Any] = Field(default_factory=dict, description="Content metadata")
@@ -151,8 +144,7 @@ class ContentData(BaseModel):
         return v
 
 class TransactionData(BaseModel):
-    """Financial transaction information"""
-    amount: float = Field(..., description="Transaction amount")
+    """Financial transaction information"""    amount: float = Field(..., description="Transaction amount")
     currency: str = Field(..., description="Currency code (ISO 4217)")
     payment_method: str = Field(..., description="Payment method used")
     transaction_id: Optional[str] = Field(None, description="Transaction identifier")
@@ -160,16 +152,14 @@ class TransactionData(BaseModel):
     timestamp: Optional[datetime] = Field(None, description="Transaction timestamp")
 
 class BehavioralData(BaseModel):
-    """Behavioral analysis data"""
-    mouse_movements: Optional[List[Dict[str, float]]] = Field(None, description="Mouse movement data")
+    """Behavioral analysis data"""    mouse_movements: Optional[List[Dict[str, float]]] = Field(None, description="Mouse movement data")
     keystrokes: Optional[List[Dict[str, Any]]] = Field(None, description="Keystroke timing data")
     scroll_patterns: Optional[List[Dict[str, float]]] = Field(None, description="Scroll behavior data")
     click_patterns: Optional[List[Dict[str, Any]]] = Field(None, description="Click behavior data")
     session_duration: Optional[int] = Field(None, description="Session duration in seconds")
 
 class FraudAnalysisRequest(BaseModel):
-    """Comprehensive fraud analysis request"""
-    user_id: str = Field(..., description="Unique user identifier")
+    """Comprehensive fraud analysis request"""    user_id: str = Field(..., description="Unique user identifier")
     analysis_type: AnalysisType = Field(AnalysisType.COMPREHENSIVE, description="Type of analysis to perform")
     session_data: SessionData = Field(..., description="User session information")
     content_data: Optional[ContentData] = Field(None, description="Content for analysis")
@@ -179,8 +169,7 @@ class FraudAnalysisRequest(BaseModel):
     additional_context: Dict[str, Any] = Field(default_factory=dict, description="Additional context data")
 
 class FraudIndicator(BaseModel):
-    """Individual fraud indicator"""
-    indicator_type: str = Field(..., description="Type of fraud indicator")
+    """Individual fraud indicator"""    indicator_type: str = Field(..., description="Type of fraud indicator")
     severity: str = Field(..., description="Severity level (LOW, MEDIUM, HIGH, CRITICAL)")
     confidence: float = Field(..., description="Confidence score (0.0 to 1.0)")
     description: str = Field(..., description="Human-readable description")
@@ -188,8 +177,7 @@ class FraudIndicator(BaseModel):
     recommended_action: Optional[str] = Field(None, description="Recommended action")
 
 class FraudAnalysisResponse(BaseModel):
-    """Comprehensive fraud analysis response"""
-    user_id: str = Field(..., description="User identifier")
+    """Comprehensive fraud analysis response"""    user_id: str = Field(..., description="User identifier")
     analysis_id: str = Field(..., description="Unique analysis identifier")
     timestamp: datetime = Field(..., description="Analysis timestamp")
     fraud_score: float = Field(..., description="Overall fraud score (0.0 to 1.0)")
@@ -200,16 +188,14 @@ class FraudAnalysisResponse(BaseModel):
     processing_time_ms: int = Field(..., description="Analysis processing time in milliseconds")
 
 class HealthCheckResponse(BaseModel):
-    """Health check response"""
-    status: str = Field(..., description="Service status")
+    """Health check response"""    status: str = Field(..., description="Service status")
     timestamp: datetime = Field(..., description="Check timestamp")
     version: str = Field(..., description="Service version")
     components: Dict[str, str] = Field(..., description="Component status")
 
 @app.on_event("startup")
 async def startup_event():
-    """Initialize fraud detection system on startup"""
-    global fraud_detection_agent
+    """Initialize fraud detection system on startup"""    global fraud_detection_agent
     
     try:
         # Initialize Redis client
@@ -235,8 +221,7 @@ async def startup_event():
 
 @app.on_event("shutdown")
 async def shutdown_event():
-    """Clean up resources on shutdown"""
-    global fraud_detection_agent
+    """Clean up resources on shutdown"""    global fraud_detection_agent
     
     try:
         if fraud_detection_agent:
@@ -252,8 +237,7 @@ async def shutdown_event():
 # Health check endpoint
 @app.get("/fraud/health", response_model=HealthCheckResponse)
 async def health_check():
-    """Health check endpoint"""
-    try:
+    """Health check endpoint"""    try:
         components = {
             "fraud_agent": "healthy" if fraud_detection_agent else "unhealthy",
             "redis": "healthy",  # Would check actual Redis connection
@@ -282,8 +266,7 @@ async def analyze_fraud(
     token: HTTPAuthorizationCredentials = Depends(security),
     current_user: Dict[str, Any] = Depends(get_current_user)
 ):
-    """
-    Comprehensive fraud analysis endpoint
+    """    Comprehensive fraud analysis endpoint
     
     Performs multi-layered fraud detection analysis including:
     - Behavioral pattern analysis
@@ -292,8 +275,7 @@ async def analyze_fraud(
     - AI-generated content detection
     - Statistical anomaly detection
     - Threat intelligence assessment
-    """
-    if not fraud_detection_agent:
+    """    if not fraud_detection_agent:
         raise HTTPException(status_code=503, detail="Fraud detection service unavailable")
     
     start_time = datetime.now()
@@ -447,10 +429,8 @@ async def analyze_fraud_batch(
     token: HTTPAuthorizationCredentials = Depends(security),
     current_user: Dict[str, Any] = Depends(get_current_user)
 ):
-    """
-    Batch fraud analysis endpoint for processing multiple requests
-    """
-    if not fraud_detection_agent:
+    """    Batch fraud analysis endpoint for processing multiple requests
+    """    if not fraud_detection_agent:
         raise HTTPException(status_code=503, detail="Fraud detection service unavailable")
         
     if len(requests) > 100:  # Limit batch size
@@ -496,8 +476,7 @@ async def analyze_fraud_batch(
         raise HTTPException(status_code=500, detail=f"Batch analysis failed: {str(e)}")
 
 async def analyze_fraud_single(request: FraudAnalysisRequest) -> Dict[str, Any]:
-    """Process a single fraud analysis request (internal helper)"""
-    try:
+    """Process a single fraud analysis request (internal helper)"""    try:
         # Similar logic to main analyze_fraud endpoint but simplified for batch processing
         session_dict = request.session_data.dict()
         
@@ -530,8 +509,7 @@ async def get_fraud_statistics(
     token: HTTPAuthorizationCredentials = Depends(security),
     current_user: Dict[str, Any] = Depends(get_current_user)
 ):
-    """Get fraud detection statistics"""
-    try:
+    """Get fraud detection statistics"""    try:
         await verify_api_token(token.credentials)
         
         # Get statistics from various components
@@ -558,8 +536,7 @@ async def _post_analysis_tasks(
     analysis_result: Dict[str, Any],
     risk_level: RiskLevel
 ):
-    """Background tasks to run after fraud analysis"""
-    try:
+    """Background tasks to run after fraud analysis"""    try:
         # Update user risk profile
         await _update_user_risk_profile(user_id, analysis_result, risk_level)
         
@@ -577,8 +554,7 @@ async def _post_analysis_tasks(
         logger.error(f"Post-analysis tasks failed for {analysis_id}: {str(e)}")
 
 async def _update_user_risk_profile(user_id: str, analysis_result: Dict[str, Any], risk_level: RiskLevel):
-    """Update user risk profile based on analysis"""
-    try:
+    """Update user risk profile based on analysis"""    try:
         logger.info(f"Updating risk profile for user {user_id} with risk level {risk_level.value}")
         
         # Extract risk factors from analysis
@@ -627,8 +603,7 @@ async def _update_user_risk_profile(user_id: str, analysis_result: Dict[str, Any
         raise
 
 def _generate_risk_mitigation_recommendations(risk_level: RiskLevel, risk_factors: Dict[str, Any]) -> List[str]:
-    """Generate recommendations based on risk level and factors"""
-    recommendations = []
+    """Generate recommendations based on risk level and factors"""    recommendations = []
     
     if risk_level == RiskLevel.CRITICAL:
         recommendations.extend([
@@ -666,8 +641,7 @@ def _generate_risk_mitigation_recommendations(risk_level: RiskLevel, risk_factor
     return recommendations
 
 async def _send_fraud_alert(analysis_id: str, user_id: str, analysis_result: Dict[str, Any], risk_level: RiskLevel):
-    """Send fraud alert to security team"""
-    try:
+    """Send fraud alert to security team"""    try:
         logger.info(f"Sending fraud alert for analysis {analysis_id}, user {user_id}, risk level {risk_level.value}")
         
         # Prepare alert data
@@ -727,8 +701,7 @@ async def _send_fraud_alert(analysis_id: str, user_id: str, analysis_result: Dic
         raise
 
 def _generate_alert_summary(analysis_result: Dict[str, Any], risk_level: RiskLevel) -> str:
-    """Generate human-readable alert summary"""
-    risk_score = analysis_result.get('risk_score', 0.0)
+    """Generate human-readable alert summary"""    risk_score = analysis_result.get('risk_score', 0.0)
     primary_factors = []
     
     risk_factors = analysis_result.get('risk_factors', {})
@@ -757,33 +730,27 @@ def _generate_alert_summary(analysis_result: Dict[str, Any], risk_level: RiskLev
         return f"LOW fraud risk detected (score: {risk_score:.2f}). Standard monitoring continues."
 
 async def _send_email_alert(alert_data: Dict[str, Any]):
-    """Send email alert to security team"""
-    # Simulate email sending
+    """Send email alert to security team"""    # Simulate email sending
     logger.debug(f"Email alert sent for {alert_data['alert_id']}")
 
 async def _send_slack_alert(alert_data: Dict[str, Any]):
-    """Send Slack alert to security channel"""
-    # Simulate Slack notification
+    """Send Slack alert to security channel"""    # Simulate Slack notification
     logger.debug(f"Slack alert sent for {alert_data['alert_id']}")
 
 async def _send_sms_alert(alert_data: Dict[str, Any]):
-    """Send SMS alert for critical cases"""
-    # Simulate SMS sending
+    """Send SMS alert for critical cases"""    # Simulate SMS sending
     logger.debug(f"SMS alert sent for {alert_data['alert_id']}")
 
 async def _create_dashboard_alert(alert_data: Dict[str, Any]):
-    """Create dashboard alert notification"""
-    # Simulate dashboard notification creation
+    """Create dashboard alert notification"""    # Simulate dashboard notification creation
     logger.debug(f"Dashboard alert created for {alert_data['alert_id']}")
 
 async def _log_fraud_alert(alert_data: Dict[str, Any]):
-    """Log fraud alert for audit trail"""
-    # Simulate audit log entry
+    """Log fraud alert for audit trail"""    # Simulate audit log entry
     logger.debug(f"Fraud alert logged: {alert_data['alert_id']}")
 
 async def _update_detection_models(analysis_result: Dict[str, Any]):
-    """Update fraud detection models with new patterns"""
-    try:
+    """Update fraud detection models with new patterns"""    try:
         logger.info("Updating fraud detection models with new patterns")
         
         # Extract patterns from analysis
@@ -858,8 +825,7 @@ async def _update_detection_models(analysis_result: Dict[str, Any]):
         raise
 
 async def _trigger_model_retraining(model_updates: Dict[str, Any]):
-    """Trigger full model retraining with new patterns"""
-    logger.info("Initiating full model retraining process")
+    """Trigger full model retraining with new patterns"""    logger.info("Initiating full model retraining process")
     
     # Simulate ML pipeline trigger
     training_job = {
@@ -874,8 +840,7 @@ async def _trigger_model_retraining(model_updates: Dict[str, Any]):
     logger.info(f"Model retraining job queued: {training_job['job_id']}")
 
 async def _apply_incremental_updates(model_updates: Dict[str, Any]):
-    """Apply incremental updates to existing models"""
-    logger.info("Applying incremental model updates")
+    """Apply incremental updates to existing models"""    logger.info("Applying incremental model updates")
     
     # Simulate incremental learning
     for model_name, updates in model_updates.items():
@@ -884,8 +849,7 @@ async def _apply_incremental_updates(model_updates: Dict[str, Any]):
     logger.info("Incremental model updates completed")
 
 async def _archive_analysis_results(analysis_id: str, user_id: str, analysis_result: Dict[str, Any]):
-    """Archive analysis results for future reference"""
-    try:
+    """Archive analysis results for future reference"""    try:
         logger.info(f"Archiving analysis results for {analysis_id}")
         
         # Prepare archive data
@@ -988,8 +952,7 @@ async def _archive_analysis_results(analysis_id: str, user_id: str, analysis_res
         raise
 
 def _calculate_checksum(data: Dict[str, Any]) -> str:
-    """Calculate checksum for data integrity verification"""
-    import hashlib
+    """Calculate checksum for data integrity verification"""    import hashlib
     data_string = json.dumps(data, sort_keys=True)
     return hashlib.sha256(data_string.encode('utf-8')).hexdigest()
 
@@ -998,8 +961,7 @@ if settings.ENVIRONMENT == "development":
     
     @app.get("/fraud/debug/models")
     async def debug_models():
-        """Debug endpoint to check model status"""
-        return {
+        """Debug endpoint to check model status"""        return {
             "behavioral_model": await fraud_detection_agent.behavioral_analyzer.get_model_status(),
             "pattern_model": await fraud_detection_agent.pattern_detector.get_model_status(),
             "deepfake_model": await fraud_detection_agent.deepfake_detector.get_model_status(),
@@ -1008,8 +970,7 @@ if settings.ENVIRONMENT == "development":
     
     @app.post("/fraud/debug/simulate")
     async def debug_simulate_fraud(fraud_type: str = "behavioral"):
-        """Debug endpoint to simulate fraud scenarios"""
-        try:
+        """Debug endpoint to simulate fraud scenarios"""        try:
             # Simulate different types of fraud for testing
             simulation_data = {
                 "behavioral": {
@@ -1036,8 +997,7 @@ if settings.ENVIRONMENT == "development":
 
 # Main entry point
 def main():
-    """Main entry point for running the fraud detection service"""
-    uvicorn.run(
+    """Main entry point for running the fraud detection service"""    uvicorn.run(
         "index:app",
         host=settings.HOST,
         port=settings.FRAUD_DETECTION_PORT,

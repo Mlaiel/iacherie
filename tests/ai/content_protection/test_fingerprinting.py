@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Tests Ultra-Industriels Avancés pour le Module Content Fingerprinting
+"""Tests Ultra-Industriels Avancés pour le Module Content Fingerprinting
 
 🚨 AVERTISSEMENT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie.
@@ -33,7 +30,6 @@ IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
 """
-
 import pytest
 import sys
 import os
@@ -103,8 +99,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerprintTestResult:
-    """Comprehensive fingerprint test result"""
-    success: bool
+    """Comprehensive fingerprint test result"""    success: bool
     fingerprint_id: str
     algorithm_used: str
     processing_time: float
@@ -114,8 +109,7 @@ class FingerprintTestResult:
 
 
 class TestContentFingerprintingUltraIndustrial:
-    """
-    Ultra-Industrial Grade Test Suite for Content Fingerprinting
+    """    Ultra-Industrial Grade Test Suite for Content Fingerprinting
     
     Tests réels et industriels couvrant:
     - Génération de fingerprints multi-modaux en temps réel
@@ -125,10 +119,8 @@ class TestContentFingerprintingUltraIndustrial:
     - Résistance aux attaques adversariales
     - Intégration blockchain pour l'immutabilité
     """
-
     def _create_valid_wav_audio(self) -> bytes:
-        """Create a valid WAV audio file in memory"""
-        import struct
+        """Create a valid WAV audio file in memory"""        import struct
         import math
         
         # WAV file parameters
@@ -177,8 +169,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.fixture
     def advanced_fingerprinter_config(self):
-        """Configuration ultra-avancée pour le fingerprinter"""
-        return {
+        """Configuration ultra-avancée pour le fingerprinter"""        return {
             'algorithms': {
                 'audio_spectral': {
                     'enabled': True,
@@ -239,19 +230,16 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.fixture
     def enterprise_fingerprinter(self, advanced_fingerprinter_config):
-        """Create enterprise-grade fingerprinter instance"""
-        fingerprinter = ContentFingerprinter(advanced_fingerprinter_config)
+        """Create enterprise-grade fingerprinter instance"""        fingerprinter = ContentFingerprinter(advanced_fingerprinter_config)
         return fingerprinter
 
     @pytest.fixture
     def fingerprinter(self, advanced_fingerprinter_config):
-        """Create standard fingerprinter instance for basic tests"""
-        return ContentFingerprinter(advanced_fingerprinter_config)
+        """Create standard fingerprinter instance for basic tests"""        return ContentFingerprinter(advanced_fingerprinter_config)
 
     @pytest.fixture
     def sample_image_data(self):
-        """Generate sample image data for testing"""
-        # Create a simple test image
+        """Generate sample image data for testing"""        # Create a simple test image
         from PIL import Image
         import io
         
@@ -272,13 +260,11 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.fixture
     def sample_text_data(self):
-        """Generate sample text data for testing"""
-        return "This is a comprehensive text sample for testing fingerprinting algorithms. It contains various linguistic patterns, semantic content, and structural elements that can be analyzed for unique fingerprint generation by Fahed Mlaiel's advanced AI system."
+        """Generate sample text data for testing"""        return "This is a comprehensive text sample for testing fingerprinting algorithms. It contains various linguistic patterns, semantic content, and structural elements that can be analyzed for unique fingerprint generation by Fahed Mlaiel's advanced AI system."
 
     @pytest.fixture
     def sample_audio_data(self):
-        """Generate sample audio data for testing"""
-        import numpy as np
+        """Generate sample audio data for testing"""        import numpy as np
         
         # Generate a synthetic audio signal (sine wave)
         sample_rate = 44100
@@ -294,8 +280,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.fixture
     def professional_audio_samples(self):
-        """Generate professional-grade audio samples for comprehensive testing"""
-        samples = {}
+        """Generate professional-grade audio samples for comprehensive testing"""        samples = {}
         
         # Professional music with real WAV format
         samples['professional_music'] = {
@@ -315,8 +300,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.fixture
     def professional_image_samples(self):
-        """Generate professional-grade image samples"""
-        samples = {}
+        """Generate professional-grade image samples"""        samples = {}
         
         # High-resolution digital art
         width, height = 2048, 2048
@@ -374,11 +358,9 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.fixture
     def professional_text_samples(self):
-        """Generate professional text samples for testing"""
-        return {
+        """Generate professional text samples for testing"""        return {
             'research_paper': {
-                'content': """
-                Advanced AI-Powered Content Protection: A Revolutionary Approach to Digital Rights Management
+                'content': """                Advanced AI-Powered Content Protection: A Revolutionary Approach to Digital Rights Management
                 
                 Abstract: This paper presents a groundbreaking methodology for content protection utilizing 
                 artificial intelligence, blockchain technology, and advanced cryptographic techniques. 
@@ -412,8 +394,7 @@ class TestContentFingerprintingUltraIndustrial:
                 }
             },
             'creative_writing': {
-                'content': """
-                The Digital Guardian: A Tale of AI and Protection
+                'content': """                The Digital Guardian: A Tale of AI and Protection
                 
                 In the vast expanse of the digital realm, where bits and bytes dance in endless streams,
                 there existed a guardian unlike any other. This guardian was not born of flesh and blood,
@@ -438,8 +419,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_ultra_advanced_audio_fingerprinting(self, enterprise_fingerprinter, professional_audio_samples):
-        """Test ultra-advanced audio fingerprinting with real algorithms"""
-        logger.info("Testing ultra-advanced audio fingerprinting")
+        """Test ultra-advanced audio fingerprinting with real algorithms"""        logger.info("Testing ultra-advanced audio fingerprinting")
         
         await enterprise_fingerprinter.initialize()
         
@@ -492,8 +472,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_ultra_advanced_image_fingerprinting(self, enterprise_fingerprinter, professional_image_samples):
-        """Test ultra-advanced image fingerprinting with multiple algorithms"""
-        logger.info("Testing ultra-advanced image fingerprinting")
+        """Test ultra-advanced image fingerprinting with multiple algorithms"""        logger.info("Testing ultra-advanced image fingerprinting")
         
         await enterprise_fingerprinter.initialize()
         
@@ -534,8 +513,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_semantic_text_fingerprinting_advanced(self, enterprise_fingerprinter, professional_text_samples):
-        """Test semantic text fingerprinting with AI models"""
-        logger.info("Testing semantic text fingerprinting")
+        """Test semantic text fingerprinting with AI models"""        logger.info("Testing semantic text fingerprinting")
         
         await enterprise_fingerprinter.initialize()
         
@@ -574,8 +552,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_image_fingerprint_generation(self, fingerprinter, sample_image_data, sample_content_metadata):
-        """Test image fingerprint generation with perceptual hashing"""
-        
+        """Test image fingerprint generation with perceptual hashing"""        
         result = await fingerprinter.generate_image_fingerprint(
             sample_image_data,
             algorithm=FingerprintAlgorithm.PERCEPTUAL_HASH,
@@ -611,8 +588,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_text_fingerprint_generation(self, fingerprinter, sample_text_data, sample_content_metadata):
-        """Test text fingerprint generation with semantic hashing"""
-        
+        """Test text fingerprint generation with semantic hashing"""        
         result = await fingerprinter.generate_text_fingerprint(
             sample_text_data,
             algorithm=FingerprintAlgorithm.SEMANTIC_HASH,
@@ -639,8 +615,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_video_fingerprint_generation(self, fingerprinter, sample_content_metadata):
-        """Test video fingerprint generation"""
-        
+        """Test video fingerprint generation"""        
         # Generate sample video frames
         frames = []
         for i in range(30):  # 30 frames
@@ -680,8 +655,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_composite_fingerprint_generation(self, fingerprinter, sample_content_metadata):
-        """Test composite fingerprint generation for multimedia content"""
-        
+        """Test composite fingerprint generation for multimedia content"""        
         # Create composite content with audio, video, and text
         composite_data = {
             'audio': {
@@ -717,8 +691,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_fingerprint_robustness(self, fingerprinter, sample_audio_data, sample_content_metadata):
-        """Test fingerprint robustness against common modifications"""
-        
+        """Test fingerprint robustness against common modifications"""        
         # Generate original fingerprint
         original_result = await fingerprinter.generate_audio_fingerprint(
             sample_audio_data,
@@ -777,8 +750,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_fingerprint_storage_retrieval(self, fingerprinter, sample_audio_data, sample_content_metadata):
-        """Test fingerprint storage and retrieval"""
-        
+        """Test fingerprint storage and retrieval"""        
         # Generate fingerprint
         result = await fingerprinter.generate_audio_fingerprint(
             sample_audio_data,
@@ -821,8 +793,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_fingerprint_update_versioning(self, fingerprinter, sample_audio_data, sample_content_metadata):
-        """Test fingerprint update and versioning"""
-        
+        """Test fingerprint update and versioning"""        
         # Generate initial fingerprint
         initial_result = await fingerprinter.generate_audio_fingerprint(
             sample_audio_data,
@@ -868,8 +839,7 @@ class TestContentFingerprintingUltraIndustrial:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_fingerprint_generation_performance(self, fingerprinter, sample_content_metadata):
-        """Test fingerprint generation performance under load"""
-        
+        """Test fingerprint generation performance under load"""        
         import time
         
         # Generate multiple simple test samples
@@ -910,8 +880,7 @@ class TestContentFingerprintingUltraIndustrial:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, fingerprinter):
-        """Test error handling for invalid inputs"""
-        
+        """Test error handling for invalid inputs"""        
         # Test with invalid audio content
         try:
             result = await fingerprinter.create_fingerprint(
@@ -961,16 +930,13 @@ class TestContentFingerprintingUltraIndustrial:
 
 class TestFingerprintMatcher:
     """Comprehensive tests for FingerprintMatcher class"""
-
     @pytest.fixture
     def matcher(self, test_config):
-        """Create FingerprintMatcher instance for testing"""
-        return FingerprintMatcher(test_config.get('fingerprint_matching', {}))
+        """Create FingerprintMatcher instance for testing"""        return FingerprintMatcher(test_config.get('fingerprint_matching', {}))
 
     @pytest.fixture
     def sample_fingerprints(self):
-        """Generate sample fingerprints for testing"""
-        fingerprints = []
+        """Generate sample fingerprints for testing"""        fingerprints = []
         
         for i in range(5):
             fingerprint = FingerprintResult(
@@ -989,8 +955,7 @@ class TestFingerprintMatcher:
 
     @pytest.mark.asyncio
     async def test_exact_match_detection(self, matcher, sample_fingerprints):
-        """Test exact fingerprint matching"""
-        
+        """Test exact fingerprint matching"""        
         # Store fingerprints in matcher database
         for fp in sample_fingerprints:
             await matcher.store_fingerprint(fp)
@@ -1013,8 +978,7 @@ class TestFingerprintMatcher:
 
     @pytest.mark.asyncio
     async def test_similarity_matching(self, matcher, sample_fingerprints):
-        """Test similarity-based matching with various thresholds"""
-        
+        """Test similarity-based matching with various thresholds"""        
         # Store fingerprints
         for fp in sample_fingerprints:
             await matcher.store_fingerprint(fp)
@@ -1051,8 +1015,7 @@ class TestFingerprintMatcher:
 
     @pytest.mark.asyncio
     async def test_cross_content_type_matching(self, matcher):
-        """Test matching across different content types"""
-        
+        """Test matching across different content types"""        
         # Create fingerprints of different content types
         fingerprints = [
             FingerprintResult(
@@ -1116,8 +1079,7 @@ class TestFingerprintMatcher:
 
     @pytest.mark.asyncio
     async def test_batch_matching(self, matcher, sample_fingerprints):
-        """Test batch matching operations"""
-        
+        """Test batch matching operations"""        
         # Store reference fingerprints
         for fp in sample_fingerprints:
             await matcher.store_fingerprint(fp)
@@ -1157,8 +1119,7 @@ class TestFingerprintMatcher:
 
     @pytest.mark.asyncio
     async def test_advanced_similarity_algorithms(self, matcher):
-        """Test advanced similarity calculation algorithms"""
-        
+        """Test advanced similarity calculation algorithms"""        
         # Create test fingerprints with known similarity patterns
         base_hash = "abcdef123456"
         
@@ -1204,8 +1165,7 @@ class TestFingerprintMatcher:
 
     @pytest.mark.asyncio
     async def test_fuzzy_matching(self, matcher):
-        """Test fuzzy matching capabilities"""
-        
+        """Test fuzzy matching capabilities"""        
         # Create base fingerprint
         base_fp = FingerprintResult(
             fingerprint_id="base_fp_001",
@@ -1275,8 +1235,7 @@ class TestFingerprintMatcher:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_matching_performance_scalability(self, matcher):
-        """Test matching performance with large fingerprint databases"""
-        
+        """Test matching performance with large fingerprint databases"""        
         # Generate large number of fingerprints
         large_fingerprint_count = 1000
         fingerprints = []
@@ -1332,8 +1291,7 @@ class TestFingerprintMatcher:
 
     @pytest.mark.asyncio
     async def test_match_result_ranking(self, matcher, sample_fingerprints):
-        """Test match result ranking and scoring"""
-        
+        """Test match result ranking and scoring"""        
         # Store fingerprints
         for fp in sample_fingerprints:
             await matcher.store_fingerprint(fp)
@@ -1373,8 +1331,7 @@ class TestFingerprintMatcher:
 
     @pytest.mark.asyncio
     async def test_database_operations(self, matcher, sample_fingerprints):
-        """Test database storage and retrieval operations"""
-        
+        """Test database storage and retrieval operations"""        
         # Test individual storage
         fp = sample_fingerprints[0]
         storage_result = await matcher.store_fingerprint(fp)
@@ -1414,11 +1371,9 @@ class TestFingerprintMatcher:
 @pytest.mark.integration
 class TestFingerprintingIntegration:
     """Integration tests for fingerprinting system"""
-
     @pytest.mark.asyncio
     async def test_end_to_end_fingerprinting_workflow(self, test_config, sample_content_metadata, test_temp_directory):
-        """Test complete fingerprinting workflow from content to matching"""
-        
+        """Test complete fingerprinting workflow from content to matching"""        
         fingerprinter = ContentFingerprinter(test_config.get('fingerprinting', {}))
         matcher = FingerprintMatcher(test_config.get('fingerprint_matching', {}))
         

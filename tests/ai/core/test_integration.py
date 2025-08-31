@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive AI Core Integration Tests
+"""Comprehensive AI Core Integration Tests
 
 Ultra-advanced enterprise-grade integration test suite for complete AI core system
 workflow validation and end-to-end business logic testing.
@@ -37,7 +34,6 @@ Team Expertise:
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
-
 import pytest
 import sys
 import os
@@ -67,11 +63,9 @@ from ai.core.performance import PerformanceMonitor
 
 
 class TestCompleteWorkflowIntegration:
-    """Integration tests for complete AI core workflow"""
-    
+    """Integration tests for complete AI core workflow"""    
     def setup_method(self):
-        """Setup integration test environment"""
-        self.config = CoreConfig(
+        """Setup integration test environment"""        self.config = CoreConfig(
             environment="integration_test",
             debug_mode=True,
             enable_content_protection=True,
@@ -85,8 +79,7 @@ class TestCompleteWorkflowIntegration:
         self.performance_monitor = PerformanceMonitor()
     
     def test_full_business_workflow_integration(self):
-        """Test complete business workflow integration"""
-        # Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
+        """Test complete business workflow integration"""        # Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
         
         # Mock content data for different creator types
         test_contents = {
@@ -180,8 +173,7 @@ class TestCompleteWorkflowIntegration:
         print("✓ Complete business workflow integration validated for all creator types")
     
     def _simulate_upload_stage(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate upload validation stage"""
-        try:
+        """Simulate upload validation stage"""        try:
             # Validate file format
             supported_formats = [".mp3", ".wav", ".jpg", ".png", ".mp4", ".md", ".txt"]
             format_valid = content_data["format"] in supported_formats
@@ -205,8 +197,7 @@ class TestCompleteWorkflowIntegration:
             return {"success": False, "error": str(e)}
     
     def _simulate_ai_analysis_stage(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate AI analysis stage"""
-        try:
+        """Simulate AI analysis stage"""        try:
             # Simulate AI processing time
             time.sleep(0.1)
             
@@ -237,8 +228,7 @@ class TestCompleteWorkflowIntegration:
             return {"success": False, "error": str(e)}
     
     def _simulate_protection_stage(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate content protection stage"""
-        try:
+        """Simulate content protection stage"""        try:
             # Apply protection based on content type
             protection_methods = []
             
@@ -265,8 +255,7 @@ class TestCompleteWorkflowIntegration:
             return {"success": False, "error": str(e)}
     
     def _simulate_seo_stage(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate SEO enhancement stage"""
-        try:
+        """Simulate SEO enhancement stage"""        try:
             # Generate SEO enhancements
             seo_enhancements = {
                 "tags": [],
@@ -302,8 +291,7 @@ class TestCompleteWorkflowIntegration:
             return {"success": False, "error": str(e)}
     
     def _simulate_collaboration_stage(self, creator_type: str, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate collaboration matching stage"""
-        try:
+        """Simulate collaboration matching stage"""        try:
             # Find potential collaborators based on creator type and content
             collaborator_matches = []
             
@@ -332,8 +320,7 @@ class TestCompleteWorkflowIntegration:
             return {"success": False, "error": str(e)}
     
     def _simulate_distribution_stage(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate distribution preparation stage"""
-        try:
+        """Simulate distribution preparation stage"""        try:
             # Determine distribution channels
             distribution_channels = []
             
@@ -364,11 +351,9 @@ class TestCompleteWorkflowIntegration:
 
 
 class TestConcurrentWorkflowIntegration:
-    """Integration tests for concurrent workflow processing"""
-    
+    """Integration tests for concurrent workflow processing"""    
     def setup_method(self):
-        """Setup concurrent testing environment"""
-        self.config = CoreConfig(
+        """Setup concurrent testing environment"""        self.config = CoreConfig(
             pipeline=PipelineConfig(
                 max_concurrent_pipelines=20,
                 enable_parallel_processing=True
@@ -376,8 +361,7 @@ class TestConcurrentWorkflowIntegration:
         )
     
     def test_concurrent_pipeline_processing(self):
-        """Test concurrent pipeline processing"""
-        import threading
+        """Test concurrent pipeline processing"""        import threading
         import queue
         
         # Prepare multiple content items
@@ -463,11 +447,9 @@ class TestConcurrentWorkflowIntegration:
     
     @pytest.mark.asyncio
     async def test_async_workflow_integration(self):
-        """Test asynchronous workflow integration"""
-        
+        """Test asynchronous workflow integration"""        
         async def process_content_async(content_id: int, content_data: Dict[str, Any]) -> Dict[str, Any]:
-            """Async content processing simulation"""
-            start_time = time.time()
+            """Async content processing simulation"""            start_time = time.time()
             
             # Simulate async AI processing
             await asyncio.sleep(0.05)
@@ -521,16 +503,13 @@ class TestConcurrentWorkflowIntegration:
 
 
 class TestSystemLoadIntegration:
-    """Integration tests for system load and stress testing"""
-    
+    """Integration tests for system load and stress testing"""    
     def test_high_load_workflow_integration(self):
-        """Test workflow integration under high load"""
-        from concurrent.futures import ThreadPoolExecutor, as_completed
+        """Test workflow integration under high load"""        from concurrent.futures import ThreadPoolExecutor, as_completed
         import statistics
         
         def process_high_load_content(content_id: int) -> Dict[str, Any]:
-            """Process content under high load conditions"""
-            start_time = time.time()
+            """Process content under high load conditions"""            start_time = time.time()
             
             try:
                 # Simulate resource-intensive operations
@@ -631,8 +610,7 @@ class TestSystemLoadIntegration:
             print(f"  - Failed items: {len(failed_results)}")
     
     def test_resource_management_integration(self):
-        """Test resource management during integration workflows"""
-        import psutil
+        """Test resource management during integration workflows"""        import psutil
         import gc
         
         # Measure initial resource usage
@@ -700,14 +678,11 @@ class TestSystemLoadIntegration:
 
 
 class TestErrorHandlingIntegration:
-    """Integration tests for error handling across the system"""
-    
+    """Integration tests for error handling across the system"""    
     def test_graceful_error_handling_integration(self):
-        """Test graceful error handling throughout the workflow"""
-        
+        """Test graceful error handling throughout the workflow"""        
         def simulate_workflow_with_errors(error_stage: str = None):
-            """Simulate workflow with potential errors at different stages"""
-            try:
+            """Simulate workflow with potential errors at different stages"""            try:
                 stages = ["upload", "validation", "ai_analysis", "protection", "seo", "distribution"]
                 completed_stages = []
                 
@@ -757,8 +732,7 @@ class TestErrorHandlingIntegration:
             print(f"✓ Error handling validated for {error_stage} stage")
     
     def test_system_recovery_integration(self):
-        """Test system recovery after errors"""
-        config_manager = ConfigManager()
+        """Test system recovery after errors"""        config_manager = ConfigManager()
         
         # Test config system recovery
         try:
@@ -782,16 +756,14 @@ class TestErrorHandlingIntegration:
             pytest.fail(f"System recovery test failed: {e}")
     
     def test_concurrent_error_handling_integration(self):
-        """Test error handling in concurrent operations"""
-        import threading
+        """Test error handling in concurrent operations"""        import threading
         import queue
         
         error_queue = queue.Queue()
         success_queue = queue.Queue()
         
         def worker_with_potential_errors(worker_id: int):
-            """Worker that may encounter errors"""
-            try:
+            """Worker that may encounter errors"""            try:
                 # Simulate random errors (50% chance)
                 if worker_id % 2 == 0:
                     raise Exception(f"Simulated error in worker {worker_id}")

@@ -1,5 +1,4 @@
-"""
-Performance Testing & Load Optimization Engine - IA Influencer Agent Platform
+"""Performance Testing & Load Optimization Engine - IA Influencer Agent Platform
 ============================================================================
 
 Industrial-grade performance testing system for load optimization, stress testing,
@@ -16,7 +15,6 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
-
 import asyncio
 import json
 import logging
@@ -52,8 +50,7 @@ settings = get_settings()
 
 @dataclass
 class TestConfiguration:
-    """Configuration for performance tests."""
-    test_type: str
+    """Configuration for performance tests."""    test_type: str
     duration_seconds: int
     concurrent_users: int
     ramp_up_duration: int
@@ -65,8 +62,7 @@ class TestConfiguration:
 
 @dataclass
 class LoadTestMetrics:
-    """Metrics collected during load testing."""
-    timestamp: datetime
+    """Metrics collected during load testing."""    timestamp: datetime
     response_time_ms: float
     throughput_rps: float
     error_rate: float
@@ -77,8 +73,7 @@ class LoadTestMetrics:
 
 
 class PerformanceTestEngine:
-    """Industrial performance testing and optimization engine."""
-    
+    """Industrial performance testing and optimization engine."""    
     def __init__(self):
         self.db = get_database()
         self.monitoring_service = MonitoringService()
@@ -188,8 +183,7 @@ class PerformanceTestEngine:
         test_config: TestConfiguration,
         project_id: Optional[UUID] = None
     ) -> Dict[str, Any]:
-        """
-        Execute comprehensive performance test suite.
+        """        Execute comprehensive performance test suite.
         
         Args:
             test_config: Test configuration parameters
@@ -197,8 +191,7 @@ class PerformanceTestEngine:
             
         Returns:
             Detailed performance test results and analysis
-        """
-        try:
+        """        try:
             test_id = uuid4()
             test_start_time = datetime.utcnow()
             
@@ -374,8 +367,7 @@ class PerformanceTestEngine:
         monitoring_config: Dict[str, Any],
         project_id: Optional[UUID] = None
     ) -> Dict[str, Any]:
-        """
-        Run continuous performance monitoring with alerting.
+        """        Run continuous performance monitoring with alerting.
         
         Args:
             monitoring_config: Monitoring configuration
@@ -383,8 +375,7 @@ class PerformanceTestEngine:
             
         Returns:
             Monitoring session details and real-time metrics access
-        """
-        try:
+        """        try:
             monitoring_id = uuid4()
             start_time = datetime.utcnow()
             
@@ -448,8 +439,7 @@ class PerformanceTestEngine:
         optimization_request: Dict[str, Any],
         project_id: Optional[UUID] = None
     ) -> Dict[str, Any]:
-        """
-        Execute automated system performance optimization.
+        """        Execute automated system performance optimization.
         
         Args:
             optimization_request: Optimization parameters and targets
@@ -457,8 +447,7 @@ class PerformanceTestEngine:
             
         Returns:
             Optimization results and applied changes
-        """
-        try:
+        """        try:
             optimization_id = uuid4()
             start_time = datetime.utcnow()
             
@@ -569,8 +558,7 @@ class PerformanceTestEngine:
         test_config: TestConfiguration,
         test_id: UUID
     ) -> Dict[str, Any]:
-        """Execute load test with specified configuration."""
-        try:
+        """Execute load test with specified configuration."""        try:
             results = {
                 'total_requests': 0,
                 'successful_requests': 0,
@@ -644,8 +632,7 @@ class PerformanceTestEngine:
         start_delay: float,
         duration: int
     ) -> Dict[str, Any]:
-        """Simulate individual user load."""
-        import requests
+        """Simulate individual user load."""        import requests
         import random
         
         user_results = {
@@ -719,8 +706,7 @@ class PerformanceTestEngine:
         return user_results
     
     async def _capture_baseline_metrics(self) -> Dict[str, Any]:
-        """Capture system baseline metrics before testing."""
-        try:
+        """Capture system baseline metrics before testing."""        try:
             return {
                 'cpu_usage': psutil.cpu_percent(interval=1),
                 'memory_usage': psutil.virtual_memory().percent,
@@ -736,16 +722,14 @@ class PerformanceTestEngine:
             return {}
     
     async def _capture_final_metrics(self) -> Dict[str, Any]:
-        """Capture system metrics after testing."""
-        return await self._capture_baseline_metrics()
+        """Capture system metrics after testing."""        return await self._capture_baseline_metrics()
     
     async def _monitor_system_resources(
         self,
         test_id: UUID,
         monitoring_interval: int
     ):
-        """Monitor system resources during test execution."""
-        try:
+        """Monitor system resources during test execution."""        try:
             while test_id in self.active_tests and self.active_tests[test_id]['status'] == 'running':
                 metrics = {
                     'timestamp': datetime.utcnow(),
@@ -775,8 +759,7 @@ class PerformanceTestEngine:
         final_metrics: Dict[str, Any],
         test_config: TestConfiguration
     ) -> Dict[str, Any]:
-        """Analyze performance test results."""
-        try:
+        """Analyze performance test results."""        try:
             response_times = load_results['response_times']
             
             if not response_times:
@@ -815,8 +798,7 @@ class PerformanceTestEngine:
             return self._get_default_analysis()
     
     def _get_default_analysis(self) -> Dict[str, Any]:
-        """Return default analysis when data is insufficient."""
-        return {
+        """Return default analysis when data is insufficient."""        return {
             'avg_response_time': 0.0,
             'median_response_time': 0.0,
             'p95_response_time': 0.0,
@@ -836,8 +818,7 @@ class PerformanceTestEngine:
         }
     
     def _rate_performance(self, value: float, metric_type: str) -> str:
-        """Rate performance based on benchmarks."""
-        benchmarks = self.performance_benchmarks.get(metric_type, {})
+        """Rate performance based on benchmarks."""        benchmarks = self.performance_benchmarks.get(metric_type, {})
         
         if not benchmarks:
             return 'unknown'

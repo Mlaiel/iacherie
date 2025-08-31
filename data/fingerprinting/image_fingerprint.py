@@ -1,5 +1,4 @@
-"""
-Image Fingerprinter Implementation
+"""Image Fingerprinter Implementation
 ==================================
 
 Professional image fingerprinting system for visual content protection and similarity detection.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import cv2
 import numpy as np
@@ -66,8 +64,7 @@ except ImportError:
 
 
 class ImageFingerprintType(Enum):
-    """Types of image fingerprints"""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Types of image fingerprints"""    PERCEPTUAL_HASH = "perceptual_hash"
     FEATURE_DESCRIPTOR = "feature_descriptor"
     COLOR_HISTOGRAM = "color_histogram"
     EDGE_DESCRIPTOR = "edge_descriptor"
@@ -78,8 +75,7 @@ class ImageFingerprintType(Enum):
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint data structure"""
-    image_id: str
+    """Image fingerprint data structure"""    image_id: str
     fingerprint_type: ImageFingerprintType
     fingerprint_data: Union[str, np.ndarray, List[float]]
     image_dimensions: Tuple[int, int]
@@ -91,8 +87,7 @@ class ImageFingerprint:
 
 @dataclass
 class ImageMatchResult:
-    """Image similarity match result"""
-    query_image_id: str
+    """Image similarity match result"""    query_image_id: str
     matched_image_id: str
     similarity_score: float
     fingerprint_type: ImageFingerprintType
@@ -103,8 +98,7 @@ class ImageMatchResult:
 
 
 class ImageFingerprinter:
-    """
-    Professional image fingerprinting system for content protection.
+    """    Professional image fingerprinting system for content protection.
     
     Features:
     - Multiple fingerprinting algorithms
@@ -115,21 +109,18 @@ class ImageFingerprinter:
     - Transformation detection
     - Batch processing capabilities
     - GPU acceleration support
-    """
-    
+    """    
     def __init__(self, 
                  max_workers: int = 4,
                  gpu_acceleration: bool = True,
                  cache_embeddings: bool = True):
-        """
-        Initialize image fingerprinter.
+        """        Initialize image fingerprinter.
         
         Args:
             max_workers: Maximum worker threads
             gpu_acceleration: Enable GPU acceleration if available
             cache_embeddings: Cache computed embeddings
-        """
-        self.max_workers = max_workers
+        """        self.max_workers = max_workers
         self.gpu_acceleration = gpu_acceleration and TORCH_AVAILABLE
         self.cache_embeddings = cache_embeddings
         self.logger = logging.getLogger(__name__)
@@ -154,8 +145,7 @@ class ImageFingerprinter:
             self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for feature extraction"""
-        try:
+        """Initialize AI models for feature extraction"""        try:
             if TORCH_AVAILABLE:
                 # Load ResNet for feature extraction
                 self.feature_extractor = resnet50(pretrained=True)
@@ -196,8 +186,7 @@ class ImageFingerprinter:
                                 image_data: Union[str, np.ndarray, bytes],
                                 image_id: str,
                                 fingerprint_types: List[ImageFingerprintType] = None) -> List[ImageFingerprint]:
-        """
-        Extract image fingerprints using multiple algorithms.
+        """        Extract image fingerprints using multiple algorithms.
         
         Args:
             image_data: Image data (file path, numpy array, or bytes)
@@ -206,8 +195,7 @@ class ImageFingerprinter:
             
         Returns:
             List of image fingerprints
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             if fingerprint_types is None:
@@ -254,8 +242,7 @@ class ImageFingerprinter:
     async def compare_fingerprints(self, 
                                  fingerprint1: ImageFingerprint,
                                  fingerprint2: ImageFingerprint) -> ImageMatchResult:
-        """
-        Compare two image fingerprints for similarity.
+        """        Compare two image fingerprints for similarity.
         
         Args:
             fingerprint1: First image fingerprint
@@ -263,8 +250,7 @@ class ImageFingerprinter:
             
         Returns:
             Image match result with similarity metrics
-        """
-        try:
+        """        try:
             if fingerprint1.fingerprint_type != fingerprint2.fingerprint_type:
                 raise ValueError("Cannot compare different fingerprint types")
             
@@ -335,8 +321,7 @@ class ImageFingerprinter:
                                 query_fingerprint: ImageFingerprint,
                                 candidate_fingerprints: List[ImageFingerprint],
                                 similarity_threshold: float = 0.8) -> List[ImageMatchResult]:
-        """
-        Find similar images from a list of candidates.
+        """        Find similar images from a list of candidates.
         
         Args:
             query_fingerprint: Query image fingerprint
@@ -345,8 +330,7 @@ class ImageFingerprinter:
             
         Returns:
             List of matching image results sorted by similarity
-        """
-        try:
+        """        try:
             # Filter candidates by fingerprint type
             compatible_candidates = [
                 fp for fp in candidate_fingerprints 
@@ -382,8 +366,7 @@ class ImageFingerprinter:
     async def extract_batch_fingerprints(self, 
                                        image_batch: List[Tuple[Union[str, np.ndarray, bytes], str]],
                                        fingerprint_types: List[ImageFingerprintType] = None) -> Dict[str, List[ImageFingerprint]]:
-        """
-        Extract fingerprints for a batch of images efficiently.
+        """        Extract fingerprints for a batch of images efficiently.
         
         Args:
             image_batch: List of tuples (image_data, image_id)
@@ -391,8 +374,7 @@ class ImageFingerprinter:
             
         Returns:
             Dictionary mapping image_id to list of fingerprints
-        """
-        try:
+        """        try:
             # Process images in parallel
             extraction_tasks = []
             for image_data, image_id in image_batch:
@@ -423,8 +405,7 @@ class ImageFingerprinter:
     # Private helper methods
     
     async def _load_image(self, image_data: Union[str, np.ndarray, bytes]) -> Optional[np.ndarray]:
-        """Load image from various input formats"""
-        try:
+        """Load image from various input formats"""        try:
             if isinstance(image_data, str):
                 # File path
                 image = cv2.imread(image_data)
@@ -464,8 +445,7 @@ class ImageFingerprinter:
                                         image: np.ndarray,
                                         image_id: str,
                                         fingerprint_type: ImageFingerprintType) -> ImageFingerprint:
-        """Extract single type of fingerprint"""
-        try:
+        """Extract single type of fingerprint"""        try:
             if fingerprint_type == ImageFingerprintType.PERCEPTUAL_HASH:
                 fingerprint_data = await self._extract_perceptual_hash(image)
             elif fingerprint_type == ImageFingerprintType.COLOR_HISTOGRAM:
@@ -496,8 +476,7 @@ class ImageFingerprinter:
             raise
     
     async def _extract_perceptual_hash(self, image: np.ndarray) -> str:
-        """Extract perceptual hash"""
-        try:
+        """Extract perceptual hash"""        try:
             if IMAGEHASH_AVAILABLE:
                 # Convert to PIL Image
                 pil_image = Image.fromarray(image)
@@ -523,8 +502,7 @@ class ImageFingerprinter:
             return ""
     
     async def _extract_color_histogram(self, image: np.ndarray) -> np.ndarray:
-        """Extract color histogram"""
-        try:
+        """Extract color histogram"""        try:
             # Convert to HSV for better color representation
             hsv_image = cv2.cvtColor(image, cv2.COLOR_RGB2HSV)
             
@@ -544,8 +522,7 @@ class ImageFingerprinter:
             return np.array([])
     
     async def _extract_edge_descriptor(self, image: np.ndarray) -> np.ndarray:
-        """Extract edge-based descriptor"""
-        try:
+        """Extract edge-based descriptor"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
             # Apply multiple edge detection methods
@@ -584,8 +561,7 @@ class ImageFingerprinter:
             return np.array([])
     
     async def _extract_texture_descriptor(self, image: np.ndarray) -> np.ndarray:
-        """Extract texture-based descriptor"""
-        try:
+        """Extract texture-based descriptor"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             features = []
             
@@ -629,8 +605,7 @@ class ImageFingerprinter:
             return np.array([])
     
     async def _extract_feature_descriptor(self, image: np.ndarray) -> np.ndarray:
-        """Extract deep learning feature descriptor"""
-        try:
+        """Extract deep learning feature descriptor"""        try:
             if not self.feature_extractor:
                 raise ValueError("Feature extractor not available")
             
@@ -656,8 +631,7 @@ class ImageFingerprinter:
             return np.array([])
     
     async def _extract_clip_embedding(self, image: np.ndarray) -> np.ndarray:
-        """Extract CLIP embedding"""
-        try:
+        """Extract CLIP embedding"""        try:
             if not self.clip_model:
                 raise ValueError("CLIP model not available")
             
@@ -684,8 +658,7 @@ class ImageFingerprinter:
             return np.array([])
     
     async def _extract_structural_hash(self, image: np.ndarray) -> str:
-        """Extract structural hash based on image structure"""
-        try:
+        """Extract structural hash based on image structure"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
             
             # Resize to standard size
@@ -715,8 +688,7 @@ class ImageFingerprinter:
             return ""
     
     async def _compare_perceptual_hashes(self, hash1: str, hash2: str) -> float:
-        """Compare perceptual hashes"""
-        try:
+        """Compare perceptual hashes"""        try:
             if IMAGEHASH_AVAILABLE and ':' in hash1 and ':' in hash2:
                 # Parse combined hashes
                 h1_parts = hash1.split(':')
@@ -740,8 +712,7 @@ class ImageFingerprinter:
             return 0.0
     
     async def _compare_color_histograms(self, hist1: np.ndarray, hist2: np.ndarray) -> float:
-        """Compare color histograms"""
-        try:
+        """Compare color histograms"""        try:
             if len(hist1) == 0 or len(hist2) == 0:
                 return 0.0
             
@@ -763,8 +734,7 @@ class ImageFingerprinter:
             return 0.0
     
     async def _compare_edge_descriptors(self, desc1: np.ndarray, desc2: np.ndarray) -> float:
-        """Compare edge descriptors"""
-        try:
+        """Compare edge descriptors"""        try:
             if len(desc1) == 0 or len(desc2) == 0:
                 return 0.0
             
@@ -783,8 +753,7 @@ class ImageFingerprinter:
             return 0.0
     
     async def _compare_feature_descriptors(self, desc1: np.ndarray, desc2: np.ndarray) -> float:
-        """Compare deep learning feature descriptors"""
-        try:
+        """Compare deep learning feature descriptors"""        try:
             if len(desc1) == 0 or len(desc2) == 0:
                 return 0.0
             
@@ -797,8 +766,7 @@ class ImageFingerprinter:
             return 0.0
     
     async def _compare_clip_embeddings(self, emb1: np.ndarray, emb2: np.ndarray) -> float:
-        """Compare CLIP embeddings"""
-        try:
+        """Compare CLIP embeddings"""        try:
             if len(emb1) == 0 or len(emb2) == 0:
                 return 0.0
             
@@ -814,8 +782,7 @@ class ImageFingerprinter:
                                     similarity_score: float,
                                     fingerprint1: ImageFingerprint,
                                     fingerprint2: ImageFingerprint) -> Dict[str, float]:
-        """Calculate confidence metrics for the match"""
-        try:
+        """Calculate confidence metrics for the match"""        try:
             w1, h1 = fingerprint1.image_dimensions
             w2, h2 = fingerprint2.image_dimensions
             
@@ -844,8 +811,7 @@ class ImageFingerprinter:
     def _assess_fingerprint_quality(self, 
                                   fingerprint1: ImageFingerprint,
                                   fingerprint2: ImageFingerprint) -> float:
-        """Assess quality of fingerprints for comparison"""
-        try:
+        """Assess quality of fingerprints for comparison"""        try:
             quality_score = 1.0
             
             # Check if fingerprint data is valid
@@ -882,8 +848,7 @@ class ImageFingerprinter:
                               fingerprint1: ImageFingerprint,
                               fingerprint2: ImageFingerprint,
                               similarity_score: float) -> Dict[str, Any]:
-        """Detect possible transformations between images"""
-        try:
+        """Detect possible transformations between images"""        try:
             w1, h1 = fingerprint1.image_dimensions
             w2, h2 = fingerprint2.image_dimensions
             
@@ -925,8 +890,7 @@ class ImageFingerprinter:
             return {}
     
     def _identify_match_regions(self, similarity_score: float) -> List[Dict[str, Any]]:
-        """Identify match regions (simplified for images)"""
-        try:
+        """Identify match regions (simplified for images)"""        try:
             if similarity_score < 0.5:
                 return []
             
@@ -945,8 +909,7 @@ class ImageFingerprinter:
             return []
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get fingerprinter statistics"""
-        avg_processing_time = (self.total_processing_time / self.processing_count 
+        """Get fingerprinter statistics"""        avg_processing_time = (self.total_processing_time / self.processing_count 
                              if self.processing_count > 0 else 0.0)
         
         return {
@@ -962,8 +925,7 @@ class ImageFingerprinter:
         }
     
     async def close(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if self.thread_pool:
                 self.thread_pool.shutdown(wait=True)
             

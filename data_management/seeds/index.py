@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""
-Seeds Index Manager - Central orchestration for all data management seeds
+"""Seeds Index Manager - Central orchestration for all data management seeds
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 
 This module provides centralized management and orchestration for all seed data
 initialization across the IA Influencer Agent platform.
 """
-
 from typing import Dict, List, Any, Optional, Union
 import asyncio
 import logging
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class SeedsOrchestrator:
-    """
-    Enterprise-grade seeds orchestrator for comprehensive data management initialization.
+    """    Enterprise-grade seeds orchestrator for comprehensive data management initialization.
     
     Handles:
     - Centralized seed data coordination across all modules
@@ -43,11 +40,9 @@ class SeedsOrchestrator:
     - Seed data validation and integrity checks
     - Export and import capabilities for seed data
     - Environment-specific configuration management
-    """
-    
+    """    
     def __init__(self):
-        """Initialize seeds orchestrator with all managers."""
-        self.managers = {
+        """Initialize seeds orchestrator with all managers."""        self.managers = {
             'user_seeds': UserSeedsManager(),
             'content_seeds': ContentSeedsManager(),
             'platform_seeds': PlatformSeedsManager(),
@@ -77,8 +72,7 @@ class SeedsOrchestrator:
     async def initialize_all(self, 
                            parallel: bool = True,
                            validate: bool = True) -> Dict[str, Any]:
-        """
-        Initialize all seed data with dependency management.
+        """        Initialize all seed data with dependency management.
         
         Args:
             parallel: Whether to run independent seeds in parallel
@@ -86,8 +80,7 @@ class SeedsOrchestrator:
             
         Returns:
             Comprehensive initialization results
-        """
-        logger.info("🚀 Starting comprehensive seeds initialization...")
+        """        logger.info("🚀 Starting comprehensive seeds initialization...")
         start_time = datetime.now(timezone.utc)
         
         results = {}
@@ -129,8 +122,7 @@ class SeedsOrchestrator:
             raise
     
     async def initialize_module(self, module_name: str) -> Dict[str, Any]:
-        """Initialize a specific seed module."""
-        if module_name not in self.managers:
+        """Initialize a specific seed module."""        if module_name not in self.managers:
             raise ValueError(f"Unknown module: {module_name}")
         
         logger.info(f"Initializing {module_name}...")
@@ -145,8 +137,7 @@ class SeedsOrchestrator:
             raise
     
     async def export_seeds(self, output_path: Path) -> Dict[str, Any]:
-        """Export all seed data to files."""
-        logger.info(f"Exporting seeds data to {output_path}")
+        """Export all seed data to files."""        logger.info(f"Exporting seeds data to {output_path}")
         output_path.mkdir(parents=True, exist_ok=True)
         
         export_results = {}
@@ -177,8 +168,7 @@ class SeedsOrchestrator:
         return export_results
     
     async def import_seeds(self, input_path: Path) -> Dict[str, Any]:
-        """Import seed data from files."""
-        logger.info(f"Importing seeds data from {input_path}")
+        """Import seed data from files."""        logger.info(f"Importing seeds data from {input_path}")
         
         import_results = {}
         
@@ -240,8 +230,7 @@ class SeedsOrchestrator:
         return import_results
     
     def _calculate_initialization_order(self) -> List[List[str]]:
-        """Calculate initialization order based on dependencies."""
-        batches = []
+        """Calculate initialization order based on dependencies."""        batches = []
         remaining = set(self.managers.keys())
         initialized = set()
         
@@ -264,8 +253,7 @@ class SeedsOrchestrator:
         return batches
     
     async def _initialize_batch_parallel(self, batch: List[str]) -> Dict[str, Any]:
-        """Initialize a batch of modules in parallel."""
-        tasks = []
+        """Initialize a batch of modules in parallel."""        tasks = []
         for module_name in batch:
             task = asyncio.create_task(
                 self.managers[module_name].initialize(),
@@ -285,8 +273,7 @@ class SeedsOrchestrator:
         return results
     
     async def _initialize_batch_sequential(self, batch: List[str]) -> Dict[str, Any]:
-        """Initialize a batch of modules sequentially."""
-        results = {}
+        """Initialize a batch of modules sequentially."""        results = {}
         for module_name in batch:
             try:
                 result = await self.managers[module_name].initialize()
@@ -299,8 +286,7 @@ class SeedsOrchestrator:
         return results
     
     async def _validate_all_seeds(self) -> Dict[str, Any]:
-        """Validate all initialized seed data."""
-        validation_results = {}
+        """Validate all initialized seed data."""        validation_results = {}
         
         for module_name, manager in self.managers.items():
             try:
@@ -321,8 +307,7 @@ class SeedsOrchestrator:
         return validation_results
     
     async def _rollback_initialization(self, initialized: set):
-        """Rollback partial initialization on failure."""
-        logger.warning("Rolling back partial initialization...")
+        """Rollback partial initialization on failure."""        logger.warning("Rolling back partial initialization...")
         
         for module_name in initialized:
             try:
@@ -334,8 +319,7 @@ class SeedsOrchestrator:
                 logger.error(f"Failed to rollback {module_name}: {str(e)}")
     
     def _generate_summary(self, results: Dict[str, Any], duration: float) -> Dict[str, Any]:
-        """Generate comprehensive initialization summary."""
-        successful_modules = []
+        """Generate comprehensive initialization summary."""        successful_modules = []
         failed_modules = []
         total_records = 0
         
@@ -370,13 +354,11 @@ seeds_orchestrator = SeedsOrchestrator()
 
 
 async def initialize_all_seeds(**kwargs) -> Dict[str, Any]:
-    """Convenience function to initialize all seeds."""
-    return await seeds_orchestrator.initialize_all(**kwargs)
+    """Convenience function to initialize all seeds."""    return await seeds_orchestrator.initialize_all(**kwargs)
 
 
 async def initialize_seed_module(module_name: str) -> Dict[str, Any]:
-    """Convenience function to initialize a specific seed module."""
-    return await seeds_orchestrator.initialize_module(module_name)
+    """Convenience function to initialize a specific seed module."""    return await seeds_orchestrator.initialize_module(module_name)
 
 
 if __name__ == "__main__":

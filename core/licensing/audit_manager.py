@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - License Audit & Logging Manager
+"""IA Influencer Agent - License Audit & Logging Manager
 ==================================================
 
 Gestionnaire d'audit et de logs avancé pour la traçabilité complète du système de licensing.
@@ -15,7 +14,6 @@ Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
 """
-
 from typing import Dict, Any, List, Optional
 import logging
 import json
@@ -28,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class AuditEventType(Enum):
-    """Types d'événements d'audit."""
-    LICENSE_CREATION = "license_creation"
+    """Types d'événements d'audit."""    LICENSE_CREATION = "license_creation"
     LICENSE_MODIFICATION = "license_modification"
     LICENSE_ACTIVATION = "license_activation"
     LICENSE_TERMINATION = "license_termination"
@@ -44,8 +41,7 @@ class AuditEventType(Enum):
 
 
 class AuditSeverity(Enum):
-    """Niveaux de sévérité d'audit."""
-    INFO = "info"
+    """Niveaux de sévérité d'audit."""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -53,8 +49,7 @@ class AuditSeverity(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Standards de conformité supportés."""
-    GDPR = "gdpr"
+    """Standards de conformité supportés."""    GDPR = "gdpr"
     CCPA = "ccpa"
     SOX = "sox"
     PCI_DSS = "pci_dss"
@@ -63,21 +58,17 @@ class ComplianceStandard(Enum):
 
 
 class LicenseAuditManager:
-    """
-    Gestionnaire d'audit et de logs avancé pour l'IA Influencer Agent.
+    """    Gestionnaire d'audit et de logs avancé pour l'IA Influencer Agent.
     
     Fournit une traçabilité complète, des rapports de conformité
     et une surveillance en temps réel de toutes les activités du système.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialise le gestionnaire d'audit.
+        """        Initialise le gestionnaire d'audit.
         
         Args:
             config: Configuration du gestionnaire
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.audit_events = []
         self.security_events = []
         self.compliance_logs = {}
@@ -88,8 +79,7 @@ class LicenseAuditManager:
         logger.info("LicenseAuditManager initialized")
     
     async def initialize(self):
-        """Initialise le gestionnaire d'audit."""
-        try:
+        """Initialise le gestionnaire d'audit."""        try:
             await self._setup_audit_rules()
             await self._setup_retention_policies()
             await self._setup_compliance_monitoring()
@@ -101,8 +91,7 @@ class LicenseAuditManager:
             raise
     
     async def _setup_audit_rules(self):
-        """Configure les règles d'audit."""
-        self.audit_rules = {
+        """Configure les règles d'audit."""        self.audit_rules = {
             "mandatory_events": [
                 AuditEventType.LICENSE_CREATION,
                 AuditEventType.LICENSE_TERMINATION,
@@ -134,8 +123,7 @@ class LicenseAuditManager:
         }
     
     async def _setup_retention_policies(self):
-        """Configure les politiques de rétention."""
-        self.retention_policies = {
+        """Configure les politiques de rétention."""        self.retention_policies = {
             AuditEventType.LICENSE_CREATION: {
                 "retention_period": timedelta(days=2555),  # 7 ans
                 "archive_after": timedelta(days=1095),     # 3 ans
@@ -169,8 +157,7 @@ class LicenseAuditManager:
         }
     
     async def _setup_compliance_monitoring(self):
-        """Configure la surveillance de conformité."""
-        self.compliance_logs = {
+        """Configure la surveillance de conformité."""        self.compliance_logs = {
             ComplianceStandard.GDPR: {
                 "monitored_events": [
                     AuditEventType.DATA_EXPORT,
@@ -213,8 +200,7 @@ class LicenseAuditManager:
         }
     
     async def _start_audit_processors(self):
-        """Démarre les processeurs d'audit."""
-        asyncio.create_task(self._audit_event_processor())
+        """Démarre les processeurs d'audit."""        asyncio.create_task(self._audit_event_processor())
         asyncio.create_task(self._compliance_monitor())
         asyncio.create_task(self._security_monitor())
         asyncio.create_task(self._retention_manager())
@@ -226,8 +212,7 @@ class LicenseAuditManager:
                             action: str,
                             details: Dict[str, Any] = None,
                             severity: AuditSeverity = AuditSeverity.INFO) -> str:
-        """
-        Enregistre un événement d'audit.
+        """        Enregistre un événement d'audit.
         
         Args:
             event_type: Type d'événement
@@ -239,8 +224,7 @@ class LicenseAuditManager:
             
         Returns:
             str: ID de l'événement d'audit
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             await self.initialize()
         
         # Génération de l'ID d'audit
@@ -292,16 +276,14 @@ class LicenseAuditManager:
         return audit_id
     
     async def _get_compliance_flags(self, event_type: AuditEventType) -> List[str]:
-        """
-        Récupère les flags de conformité pour un type d'événement.
+        """        Récupère les flags de conformité pour un type d'événement.
         
         Args:
             event_type: Type d'événement
             
         Returns:
             Liste des standards de conformité applicables
-        """
-        compliance_flags = []
+        """        compliance_flags = []
         
         for standard, config in self.compliance_logs.items():
             if event_type in config.get("monitored_events", []):
@@ -310,16 +292,14 @@ class LicenseAuditManager:
         return compliance_flags
     
     async def _calculate_risk_score(self, audit_event: Dict[str, Any]) -> int:
-        """
-        Calcule le score de risque d'un événement.
+        """        Calcule le score de risque d'un événement.
         
         Args:
             audit_event: Événement d'audit
             
         Returns:
             int: Score de risque (0-100)
-        """
-        base_score = 10
+        """        base_score = 10
         
         # Facteurs de risque
         severity_multipliers = {
@@ -348,16 +328,14 @@ class LicenseAuditManager:
         return min(int(risk_score), 100)
     
     async def _encrypt_audit_event(self, audit_event: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Chiffre un événement d'audit sensible.
+        """        Chiffre un événement d'audit sensible.
         
         Args:
             audit_event: Événement à chiffrer
             
         Returns:
             Dict: Événement chiffré
-        """
-        # Ici on implémenterait le chiffrement réel
+        """        # Ici on implémenterait le chiffrement réel
         # Pour l'instant, marquons juste comme chiffré
         audit_event["encrypted"] = True
         audit_event["encryption_algorithm"] = "AES-256-GCM"
@@ -366,16 +344,14 @@ class LicenseAuditManager:
         return audit_event
     
     async def _calculate_checksum(self, audit_event: Dict[str, Any]) -> str:
-        """
-        Calcule le checksum d'un événement d'audit.
+        """        Calcule le checksum d'un événement d'audit.
         
         Args:
             audit_event: Événement d'audit
             
         Returns:
             str: Checksum
-        """
-        # Création d'une chaîne déterministe pour le hash
+        """        # Création d'une chaîne déterministe pour le hash
         event_copy = audit_event.copy()
         event_copy.pop("checksum", None)  # Retirer le checksum existant
         
@@ -383,13 +359,11 @@ class LicenseAuditManager:
         return hashlib.sha256(event_string.encode()).hexdigest()
     
     async def _handle_immediate_alert(self, audit_event: Dict[str, Any]):
-        """
-        Gère les alertes immédiates pour événements critiques.
+        """        Gère les alertes immédiates pour événements critiques.
         
         Args:
             audit_event: Événement d'audit
-        """
-        alert_data = {
+        """        alert_data = {
             "alert_id": f"ALR-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}",
             "audit_event_id": audit_event["audit_id"],
             "event_type": audit_event["event_type"],
@@ -405,13 +379,11 @@ class LicenseAuditManager:
         logger.critical(f"IMMEDIATE ALERT: {alert_data}")
     
     async def _check_compliance_requirements(self, audit_event: Dict[str, Any]):
-        """
-        Vérifie les exigences de conformité pour un événement.
+        """        Vérifie les exigences de conformité pour un événement.
         
         Args:
             audit_event: Événement d'audit
-        """
-        event_type = AuditEventType(audit_event["event_type"])
+        """        event_type = AuditEventType(audit_event["event_type"])
         
         for standard, config in self.compliance_logs.items():
             if event_type in config.get("monitored_events", []):
@@ -434,8 +406,7 @@ class LicenseAuditManager:
                                   end_date: datetime,
                                   event_types: List[AuditEventType] = None,
                                   user_id: str = None) -> Dict[str, Any]:
-        """
-        Génère un rapport d'audit.
+        """        Génère un rapport d'audit.
         
         Args:
             start_date: Date de début
@@ -445,8 +416,7 @@ class LicenseAuditManager:
             
         Returns:
             Dict contenant le rapport d'audit
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             await self.initialize()
         
         # Filtrage des événements
@@ -530,16 +500,14 @@ class LicenseAuditManager:
         return report
     
     async def _generate_recommendations(self, stats: Dict[str, Any]) -> List[str]:
-        """
-        Génère des recommandations basées sur les statistiques.
+        """        Génère des recommandations basées sur les statistiques.
         
         Args:
             stats: Statistiques d'audit
             
         Returns:
             Liste de recommandations
-        """
-        recommendations = []
+        """        recommendations = []
         
         # Analyse des risques élevés
         risk_dist = stats.get("risk_distribution", {})
@@ -573,8 +541,7 @@ class LicenseAuditManager:
         return recommendations
     
     async def _audit_event_processor(self):
-        """Processeur d'événements d'audit en arrière-plan."""
-        while True:
+        """Processeur d'événements d'audit en arrière-plan."""        while True:
             try:
                 # Ici on traiterait les événements en batch
                 await asyncio.sleep(60)  # Traitement chaque minute
@@ -583,8 +550,7 @@ class LicenseAuditManager:
                 await asyncio.sleep(60)
     
     async def _compliance_monitor(self):
-        """Surveillance de conformité en arrière-plan."""
-        while True:
+        """Surveillance de conformité en arrière-plan."""        while True:
             try:
                 # Ici on vérifierait la conformité périodiquement
                 await asyncio.sleep(3600)  # Vérification chaque heure
@@ -593,8 +559,7 @@ class LicenseAuditManager:
                 await asyncio.sleep(300)
     
     async def _security_monitor(self):
-        """Surveillance de sécurité en arrière-plan."""
-        while True:
+        """Surveillance de sécurité en arrière-plan."""        while True:
             try:
                 # Ici on surveillerait les patterns de sécurité
                 await asyncio.sleep(300)  # Surveillance toutes les 5 minutes
@@ -603,8 +568,7 @@ class LicenseAuditManager:
                 await asyncio.sleep(60)
     
     async def _retention_manager(self):
-        """Gestionnaire de rétention en arrière-plan."""
-        while True:
+        """Gestionnaire de rétention en arrière-plan."""        while True:
             try:
                 await self._cleanup_expired_events()
                 await asyncio.sleep(86400)  # Nettoyage quotidien
@@ -613,8 +577,7 @@ class LicenseAuditManager:
                 await asyncio.sleep(3600)
     
     async def _cleanup_expired_events(self):
-        """Nettoie les événements expirés."""
-        current_time = datetime.utcnow()
+        """Nettoie les événements expirés."""        current_time = datetime.utcnow()
         events_to_remove = []
         
         for i, event in enumerate(self.audit_events):
@@ -633,13 +596,11 @@ class LicenseAuditManager:
             logger.info(f"Audit event {removed_event['audit_id']} removed due to retention policy")
     
     async def verify_audit_integrity(self) -> Dict[str, Any]:
-        """
-        Vérifie l'intégrité des logs d'audit.
+        """        Vérifie l'intégrité des logs d'audit.
         
         Returns:
             Dict contenant les résultats de vérification
-        """
-        integrity_results = {
+        """        integrity_results = {
             "total_events": len(self.audit_events),
             "checksum_verified": 0,
             "checksum_failed": 0,

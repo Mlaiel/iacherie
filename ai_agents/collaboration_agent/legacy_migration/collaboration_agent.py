@@ -1,5 +1,4 @@
-"""
-Collaboration Agent - Ultra-Advanced AI-Powered Creator Ecosystem & Partnership Orchestration
+"""Collaboration Agent - Ultra-Advanced AI-Powered Creator Ecosystem & Partnership Orchestration
 
 Core agent responsible for intelligent creator matching, automated collaboration workflows,
 multi-format content synchronization, and AI-driven partnership success optimization.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 import asyncio
 import logging
 import time
@@ -45,8 +43,7 @@ from ...database.session import get_async_session
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of collaboration opportunities"""
-    MUSIC_COLLABORATION = "music_collaboration"
+    """Types of collaboration opportunities"""    MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration" 
     CONTENT_SERIES = "content_series"
     CROSS_PROMOTION = "cross_promotion"
@@ -57,8 +54,7 @@ class CollaborationType(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for matching analysis"""
-    user_id: str
+    """Creator profile for matching analysis"""    user_id: str
     name: str
     content_types: List[str]
     genres: List[str]
@@ -73,8 +69,7 @@ class CreatorProfile:
 
 @dataclass
 class MatchResult:
-    """Result of creator matching"""
-    creator_a_id: str
+    """Result of creator matching"""    creator_a_id: str
     creator_b_id: str
     compatibility_score: float
     collaboration_type: str
@@ -84,8 +79,7 @@ class MatchResult:
     recommended_timeline: Dict[str, Any]
 
 class CollaborationAgent(BaseAgent):
-    """
-    Advanced collaboration orchestration agent with AI-powered matching.
+    """    Advanced collaboration orchestration agent with AI-powered matching.
     
     Capabilities:
     - Intelligent creator matching based on multiple factors
@@ -94,8 +88,7 @@ class CollaborationAgent(BaseAgent):
     - Success prediction and optimization
     - Real-time project coordination
     - Performance tracking and analytics
-    """
-    
+    """    
     def __init__(self, agent_id: str = "collaboration_agent", config: Dict[str, Any] = None):
         super().__init__(agent_id, config)
         
@@ -125,8 +118,7 @@ class CollaborationAgent(BaseAgent):
         }
     
     async def initialize(self):
-        """Initialize AI models and components"""
-        try:
+        """Initialize AI models and components"""        try:
             # Initialize similarity models
             self.content_similarity_model = ContentSimilarityModel()
             await self.content_similarity_model.load_model()
@@ -150,8 +142,7 @@ class CollaborationAgent(BaseAgent):
             raise CollaborationError(f"Initialization failed: {e}")
     
     async def process(self, request: Dict[str, Any]) -> AgentResponse:
-        """
-        Process collaboration requests.
+        """        Process collaboration requests.
         
         Args:
             request: Dictionary containing:
@@ -163,8 +154,7 @@ class CollaborationAgent(BaseAgent):
         
         Returns:
             AgentResponse with collaboration results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             action = request.get('action', 'find_matches')
@@ -208,8 +198,7 @@ class CollaborationAgent(BaseAgent):
             )
     
     async def _find_collaboration_matches(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Find potential collaboration matches for a creator"""
-        
+        """Find potential collaboration matches for a creator"""        
         user_id = request.get('user_id')
         collaboration_type = request.get('collaboration_type', 'general')
         preferences = request.get('preferences', {})
@@ -251,8 +240,7 @@ class CollaborationAgent(BaseAgent):
             raise CollaborationError(f"Match finding failed: {e}")
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Get comprehensive creator profile for matching analysis"""
-        
+        """Get comprehensive creator profile for matching analysis"""        
         # Check cache first
         cache_key = f"creator_profile:{creator_id}"
         cached_profile = self.creator_profiles_cache.get(cache_key)
@@ -302,8 +290,7 @@ class CollaborationAgent(BaseAgent):
         preferences: Dict[str, Any],
         filters: Dict[str, Any]
     ) -> List[CreatorProfile]:
-        """Find creators compatible with the given profile"""
-        
+        """Find creators compatible with the given profile"""        
         try:
             async with get_async_session() as session:
                 # Build query based on filters
@@ -337,8 +324,7 @@ class CollaborationAgent(BaseAgent):
             return []
 
     async def _creator_to_profile(self, creator) -> Optional[CreatorProfile]:
-        """Convert database creator to profile"""
-        try:
+        """Convert database creator to profile"""        try:
             return CreatorProfile(
                 user_id=creator.id,
                 name=getattr(creator, 'name', '') or getattr(creator, 'username', ''),
@@ -363,8 +349,7 @@ class CollaborationAgent(BaseAgent):
         candidates: List[CreatorProfile],
         collaboration_type: str
     ) -> List[MatchResult]:
-        """Rank collaboration candidates by compatibility"""
-        
+        """Rank collaboration candidates by compatibility"""        
         matches = []
         
         for candidate in candidates:
@@ -402,8 +387,7 @@ class CollaborationAgent(BaseAgent):
         profile_b: CreatorProfile,
         collaboration_type: str
     ) -> float:
-        """Calculate overall compatibility score between two creators"""
-        
+        """Calculate overall compatibility score between two creators"""        
         try:
             scores = {}
             
@@ -465,8 +449,7 @@ class CollaborationAgent(BaseAgent):
         profile_a: CreatorProfile,
         profile_b: CreatorProfile
     ) -> List[str]:
-        """Generate reasons why creators are compatible"""
-        
+        """Generate reasons why creators are compatible"""        
         reasons = []
         
         # Content type overlap
@@ -496,8 +479,7 @@ class CollaborationAgent(BaseAgent):
         profile_a: CreatorProfile,
         profile_b: CreatorProfile
     ) -> List[str]:
-        """Suggest potential collaboration projects"""
-        
+        """Suggest potential collaboration projects"""        
         projects = []
         
         # Based on shared content types
@@ -526,8 +508,7 @@ class CollaborationAgent(BaseAgent):
         return projects[:5]  # Limit to top 5 suggestions
 
     async def _suggest_timeline(self, collaboration_type: str) -> Dict[str, Any]:
-        """Suggest timeline for collaboration"""
-        
+        """Suggest timeline for collaboration"""        
         base_timelines = {
             'music_collaboration': {'planning': 14, 'execution': 60, 'review': 14},
             'video_collaboration': {'planning': 7, 'execution': 30, 'review': 7},
@@ -552,16 +533,14 @@ class CollaborationAgent(BaseAgent):
 
 
 class StyleCompatibilityAnalyzer:
-    """Advanced style compatibility analysis system for creator matching"""
-    
+    """Advanced style compatibility analysis system for creator matching"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.style_models = {}
         self.compatibility_cache = {}
     
     async def initialize(self):
-        """Initialize style analysis models"""
-        try:
+        """Initialize style analysis models"""        try:
             # Placeholder for model initialization
             self.style_models = {
                 'visual': None,  # Would load actual models in production
@@ -578,16 +557,14 @@ class StyleCompatibilityAnalyzer:
 
 
 class AudienceOverlapAnalyzer:
-    """Sophisticated audience overlap and demographic analysis system"""
-    
+    """Sophisticated audience overlap and demographic analysis system"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.audience_models = {}
         self.demographic_processor = None
     
     async def initialize(self):
-        """Initialize audience analysis components"""
-        try:
+        """Initialize audience analysis components"""        try:
             # Placeholder for model initialization
             self.audience_models = {
                 'demographic': None,
@@ -604,16 +581,14 @@ class AudienceOverlapAnalyzer:
 
 
 class CollaborationSuccessPredictor:
-    """Advanced machine learning system for predicting collaboration success"""
-    
+    """Advanced machine learning system for predicting collaboration success"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.prediction_models = {}
         self.feature_extractors = {}
     
     async def initialize(self):
-        """Initialize success prediction models"""
-        try:
+        """Initialize success prediction models"""        try:
             # Placeholder for model initialization
             self.prediction_models = {
                 'general': None,
@@ -654,8 +629,7 @@ class CollaborationSuccessPredictor:
         }
     
     async def _analyze_creator_compatibility(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze compatibility between two specific creators"""
-        
+        """Analyze compatibility between two specific creators"""        
         creator_a_id = request.get('creator_a_id')
         creator_b_id = request.get('creator_b_id')
         collaboration_type = request.get('collaboration_type', 'general')
@@ -693,8 +667,7 @@ class CollaborationSuccessPredictor:
         }
     
     async def _create_collaboration_project(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a new collaboration project"""
-        
+        """Create a new collaboration project"""        
         project_data = request.get('project_data', {})
         collaborators = request.get('collaborators', [])
         
@@ -727,8 +700,7 @@ class CollaborationSuccessPredictor:
         }
     
     async def _manage_collaboration_workflow(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Manage ongoing collaboration workflow"""
-        
+        """Manage ongoing collaboration workflow"""        
         project_id = request.get('project_id')
         action = request.get('workflow_action', 'get_status')
         
@@ -750,8 +722,7 @@ class CollaborationSuccessPredictor:
             raise ValidationError(f"Unknown workflow action: {action}")
     
     async def _track_collaboration_progress(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Track progress of collaboration projects"""
-        
+        """Track progress of collaboration projects"""        
         project_id = request.get('project_id')
         user_id = request.get('user_id')
         
@@ -763,8 +734,7 @@ class CollaborationSuccessPredictor:
             return await self._get_global_collaboration_analytics()
     
     async def _get_collaboration_recommendations(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Get AI-powered collaboration recommendations"""
-        
+        """Get AI-powered collaboration recommendations"""        
         user_id = request.get('user_id')
         recommendation_type = request.get('type', 'general')
         
@@ -780,8 +750,7 @@ class CollaborationSuccessPredictor:
             return await self._get_general_recommendations(creator_profile)
     
     async def _get_creator_profile(self, user_id: str) -> CreatorProfile:
-        """Get comprehensive creator profile for matching"""
-        
+        """Get comprehensive creator profile for matching"""        
         # Check cache first
         if user_id in self.creator_profiles_cache:
             cached_profile = self.creator_profiles_cache[user_id]
@@ -828,8 +797,7 @@ class CollaborationSuccessPredictor:
             raise CollaborationError(f"Profile retrieval failed: {e}")
     
     async def _get_creator_embeddings(self, user_id: str) -> List[float]:
-        """Get or generate creator content embeddings"""
-        
+        """Get or generate creator content embeddings"""        
         if user_id in self.embedding_cache:
             return self.embedding_cache[user_id]
         
@@ -858,8 +826,7 @@ class CollaborationSuccessPredictor:
         collaboration_type: str,
         filters: Dict[str, Any]
     ) -> List[CreatorProfile]:
-        """Get candidate creators for matching"""
-        
+        """Get candidate creators for matching"""        
         try:
             from ...database.queries import find_potential_collaborators
             
@@ -914,8 +881,7 @@ class CollaborationSuccessPredictor:
         creator_b: CreatorProfile,
         collaboration_type: str
     ) -> MatchResult:
-        """Calculate comprehensive compatibility score between creators"""
-        
+        """Calculate comprehensive compatibility score between creators"""        
         scores = {}
         match_reasons = []
         
@@ -1007,8 +973,7 @@ class CollaborationSuccessPredictor:
         embeddings_a: List[float], 
         embeddings_b: List[float]
     ) -> float:
-        """Calculate cosine similarity between content embeddings"""
-        
+        """Calculate cosine similarity between content embeddings"""        
         try:
             import numpy as np
             from sklearn.metrics.pairwise import cosine_similarity
@@ -1028,8 +993,7 @@ class CollaborationSuccessPredictor:
         creator_a: CreatorProfile, 
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate score based on collaboration history"""
-        
+        """Calculate score based on collaboration history"""        
         # Check if they've collaborated before
         common_collaborations = set(creator_a.collaboration_history) & set(creator_b.collaboration_history)
         
@@ -1049,8 +1013,7 @@ class CollaborationSuccessPredictor:
         creator_a: CreatorProfile, 
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate availability compatibility score"""
-        
+        """Calculate availability compatibility score"""        
         # Simple timezone and schedule overlap calculation
         # This could be much more sophisticated
         
@@ -1081,8 +1044,7 @@ class CollaborationSuccessPredictor:
         schedule_a: List[int], 
         schedule_b: List[int]
     ) -> float:
-        """Calculate schedule overlap between two creators"""
-        
+        """Calculate schedule overlap between two creators"""        
         if not schedule_a or not schedule_b:
             return 0.5
         
@@ -1101,8 +1063,7 @@ class CollaborationSuccessPredictor:
         collaboration_type: str,
         compatibility_score: float
     ) -> List[str]:
-        """Generate potential collaboration project ideas"""
-        
+        """Generate potential collaboration project ideas"""        
         projects = []
         
         # Find common content types and genres
@@ -1148,8 +1109,7 @@ class CollaborationSuccessPredictor:
         creator_b: CreatorProfile,
         collaboration_type: str
     ) -> Dict[str, Any]:
-        """Generate recommended timeline for collaboration"""
-        
+        """Generate recommended timeline for collaboration"""        
         base_timeline = {
             'planning_phase': '1-2 weeks',
             'content_creation': '2-4 weeks',
@@ -1178,8 +1138,7 @@ class CollaborationSuccessPredictor:
         return base_timeline
     
     def _get_compatibility_rating(self, score: float) -> str:
-        """Get human-readable compatibility rating"""
-        if score >= 0.8:
+        """Get human-readable compatibility rating"""        if score >= 0.8:
             return "Excellent Match"
         elif score >= 0.6:
             return "Good Match"
@@ -1192,19 +1151,16 @@ class CollaborationSuccessPredictor:
 
 
 class StyleCompatibilityAnalyzer:
-    """Analyzes creative style compatibility between creators"""
-    
+    """Analyzes creative style compatibility between creators"""    
     async def initialize(self):
-        """Initialize style analysis models"""
-        pass
+        """Initialize style analysis models"""        pass
     
     async def analyze_compatibility(
         self, 
         creator_a: CreatorProfile, 
         creator_b: CreatorProfile
     ) -> float:
-        """Analyze style compatibility between two creators"""
-        
+        """Analyze style compatibility between two creators"""        
         # Analyze style tags overlap
         tags_a = set(creator_a.style_tags)
         tags_b = set(creator_b.style_tags)
@@ -1228,19 +1184,16 @@ class StyleCompatibilityAnalyzer:
 
 
 class AudienceOverlapAnalyzer:
-    """Analyzes audience compatibility and overlap potential"""
-    
+    """Analyzes audience compatibility and overlap potential"""    
     async def initialize(self):
-        """Initialize audience analysis models"""
-        pass
+        """Initialize audience analysis models"""        pass
     
     async def calculate_overlap(
         self, 
         creator_a: CreatorProfile, 
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate beneficial audience overlap score"""
-        
+        """Calculate beneficial audience overlap score"""        
         # Get audience metrics
         metrics_a = creator_a.social_metrics
         metrics_b = creator_b.social_metrics
@@ -1266,8 +1219,7 @@ class AudienceOverlapAnalyzer:
         metrics_a: Dict[str, Any], 
         metrics_b: Dict[str, Any]
     ) -> float:
-        """Calculate demographics compatibility"""
-        
+        """Calculate demographics compatibility"""        
         # This would analyze actual demographic data
         # For now, return a placeholder based on available data
         
@@ -1285,11 +1237,9 @@ class AudienceOverlapAnalyzer:
 
 
 class CollaborationSuccessPredictor:
-    """Predicts collaboration success probability using ML"""
-    
+    """Predicts collaboration success probability using ML"""    
     async def initialize(self):
-        """Initialize success prediction models"""
-        pass
+        """Initialize success prediction models"""        pass
     
     async def predict_success(
         self,
@@ -1297,8 +1247,7 @@ class CollaborationSuccessPredictor:
         creator_b: CreatorProfile,
         collaboration_type: str
     ) -> float:
-        """Predict collaboration success probability"""
-        
+        """Predict collaboration success probability"""        
         # This would use a trained ML model
         # For now, use heuristic-based prediction
         

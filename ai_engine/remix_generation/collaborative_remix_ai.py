@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Collaborative Remix AI
+"""IA-Influencer-Agent Collaborative Remix AI
 ================================================================================
 Module: ai_engine/remix_generation/collaborative_remix_ai.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -19,7 +18,6 @@ MISSION: Système IA collaboratif ultra-avancé pour remixes en temps réel
 TECHNOLOGIES: Real-time collaboration, Conflict resolution, Version control, AI coordination
 LOGIQUE MÉTIER: Multi-users → Real-time editing → AI suggestions → Conflict resolution → Synchronized output
 """
-
 import asyncio
 import logging
 import json
@@ -36,8 +34,7 @@ from concurrent.futures import ThreadPoolExecutor
 logger = logging.getLogger(__name__)
 
 class CollaborationAction(Enum):
-    """Types of collaboration actions"""
-    JOIN_SESSION = "join_session"
+    """Types of collaboration actions"""    JOIN_SESSION = "join_session"
     LEAVE_SESSION = "leave_session"
     EDIT_AUDIO = "edit_audio"
     ADD_TRACK = "add_track"
@@ -50,15 +47,13 @@ class CollaborationAction(Enum):
     APPROVE_CHANGE = "approve_change"
 
 class CollaborationRole(Enum):
-    """User roles in collaboration"""
-    OWNER = "owner"
+    """User roles in collaboration"""    OWNER = "owner"
     COLLABORATOR = "collaborator"
     REVIEWER = "reviewer"
     OBSERVER = "observer"
 
 class ConflictResolutionMode(Enum):
-    """Conflict resolution strategies"""
-    DEMOCRACY = "democracy"  # Majority vote
+    """Conflict resolution strategies"""    DEMOCRACY = "democracy"  # Majority vote
     HIERARCHY = "hierarchy"  # Role-based priority
     AI_MEDIATED = "ai_mediated"  # AI decides
     OWNER_DECIDES = "owner_decides"  # Owner has final say
@@ -66,8 +61,7 @@ class ConflictResolutionMode(Enum):
 
 @dataclass
 class CollaborationUser:
-    """User in collaboration session"""
-    user_id: str
+    """User in collaboration session"""    user_id: str
     username: str
     role: CollaborationRole
     join_time: datetime
@@ -78,8 +72,7 @@ class CollaborationUser:
 
 @dataclass
 class CollaborationEdit:
-    """Single edit action in collaboration"""
-    edit_id: str
+    """Single edit action in collaboration"""    edit_id: str
     user_id: str
     action: CollaborationAction
     timestamp: datetime
@@ -92,8 +85,7 @@ class CollaborationEdit:
 
 @dataclass
 class CollaborationSession:
-    """Collaboration session data"""
-    session_id: str
+    """Collaboration session data"""    session_id: str
     project_name: str
     owner_id: str
     created_at: datetime
@@ -106,11 +98,9 @@ class CollaborationSession:
     is_active: bool = True
 
 class RealTimeCollaborationHandler:
-    """
-    Handles real-time collaboration features including WebSocket connections,
+    """    Handles real-time collaboration features including WebSocket connections,
     live editing synchronization, and conflict detection.
-    """
-    
+    """    
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         self.logger = logger
         self.redis_client = redis_client or redis.Redis(host='localhost', port=6379, db=0)
@@ -124,8 +114,7 @@ class RealTimeCollaborationHandler:
         
     async def join_session(self, session_id: str, user: CollaborationUser, 
                           websocket: websockets.WebSocketServerProtocol) -> bool:
-        """
-        Add user to collaboration session with real-time connection.
+        """        Add user to collaboration session with real-time connection.
         
         Args:
             session_id: Session identifier
@@ -134,8 +123,7 @@ class RealTimeCollaborationHandler:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if session_id not in self.websocket_connections:
                 self.websocket_connections[session_id] = {}
                 self.session_locks[session_id] = asyncio.Lock()
@@ -165,8 +153,7 @@ class RealTimeCollaborationHandler:
             return False
     
     async def leave_session(self, session_id: str, user_id: str) -> bool:
-        """
-        Remove user from collaboration session.
+        """        Remove user from collaboration session.
         
         Args:
             session_id: Session identifier
@@ -174,8 +161,7 @@ class RealTimeCollaborationHandler:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if session_id in self.websocket_connections:
                 if user_id in self.websocket_connections[session_id]:
                     # Close WebSocket connection
@@ -206,8 +192,7 @@ class RealTimeCollaborationHandler:
             return False
     
     async def broadcast_edit(self, session_id: str, edit: CollaborationEdit) -> bool:
-        """
-        Broadcast edit to all users in session.
+        """        Broadcast edit to all users in session.
         
         Args:
             session_id: Session identifier
@@ -215,8 +200,7 @@ class RealTimeCollaborationHandler:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if session_id not in self.websocket_connections:
                 return False
             
@@ -251,8 +235,7 @@ class RealTimeCollaborationHandler:
     
     async def _send_session_state(self, websocket: websockets.WebSocketServerProtocol, 
                                  session_id: str):
-        """Send current session state to user"""
-        try:
+        """Send current session state to user"""        try:
             session_data = await self._get_session_data(session_id)
             
             state_message = {
@@ -267,8 +250,7 @@ class RealTimeCollaborationHandler:
             self.logger.error(f"❌ Failed to send session state: {e}")
     
     async def _broadcast_user_join(self, session_id: str, user: CollaborationUser):
-        """Broadcast user join event"""
-        try:
+        """Broadcast user join event"""        try:
             join_message = {
                 "type": "user_joined",
                 "user_id": user.user_id,
@@ -288,8 +270,7 @@ class RealTimeCollaborationHandler:
             self.logger.error(f"❌ Failed to broadcast user join: {e}")
     
     async def _broadcast_user_leave(self, session_id: str, user_id: str):
-        """Broadcast user leave event"""
-        try:
+        """Broadcast user leave event"""        try:
             leave_message = {
                 "type": "user_left",
                 "user_id": user_id,
@@ -307,8 +288,7 @@ class RealTimeCollaborationHandler:
             self.logger.error(f"❌ Failed to broadcast user leave: {e}")
     
     async def _send_error(self, websocket: websockets.WebSocketServerProtocol, error_message: str):
-        """Send error message to user"""
-        try:
+        """Send error message to user"""        try:
             error_msg = {
                 "type": "error",
                 "message": error_message,
@@ -319,22 +299,19 @@ class RealTimeCollaborationHandler:
             pass
     
     async def _store_user_session(self, user_id: str, session_id: str):
-        """Store user session mapping in Redis"""
-        try:
+        """Store user session mapping in Redis"""        try:
             await self.redis_client.set(f"user_session:{user_id}", session_id, ex=3600)
         except Exception as e:
             self.logger.error(f"❌ Failed to store user session: {e}")
     
     async def _remove_user_session(self, user_id: str):
-        """Remove user session mapping from Redis"""
-        try:
+        """Remove user session mapping from Redis"""        try:
             await self.redis_client.delete(f"user_session:{user_id}")
         except Exception as e:
             self.logger.error(f"❌ Failed to remove user session: {e}")
     
     async def _store_edit(self, session_id: str, edit: CollaborationEdit):
-        """Store edit in Redis"""
-        try:
+        """Store edit in Redis"""        try:
             edit_data = {
                 "edit_id": edit.edit_id,
                 "user_id": edit.user_id,
@@ -356,8 +333,7 @@ class RealTimeCollaborationHandler:
             self.logger.error(f"❌ Failed to store edit: {e}")
     
     async def _get_session_data(self, session_id: str) -> Dict[str, Any]:
-        """Get session data from Redis"""
-        try:
+        """Get session data from Redis"""        try:
             # Get recent edits
             edits_data = await self.redis_client.lrange(f"session_edits:{session_id}", 0, 50)
             edits = [json.loads(edit) for edit in edits_data]
@@ -376,10 +352,8 @@ class RealTimeCollaborationHandler:
             return {}
 
 class CollaborativeEditTracker:
-    """
-    Tracks and manages edit operations with conflict detection and resolution.
-    """
-    
+    """    Tracks and manages edit operations with conflict detection and resolution.
+    """    
     def __init__(self):
         self.logger = logger
         self.edit_history: Dict[str, List[CollaborationEdit]] = {}
@@ -387,8 +361,7 @@ class CollaborativeEditTracker:
         self.merge_engine = IntelligentMergeEngine()
         
     async def track_edit(self, session_id: str, edit: CollaborationEdit) -> Dict[str, Any]:
-        """
-        Track new edit and detect conflicts.
+        """        Track new edit and detect conflicts.
         
         Args:
             session_id: Session identifier
@@ -396,8 +369,7 @@ class CollaborativeEditTracker:
             
         Returns:
             Tracking result with conflict information
-        """
-        try:
+        """        try:
             if session_id not in self.edit_history:
                 self.edit_history[session_id] = []
             
@@ -433,8 +405,7 @@ class CollaborativeEditTracker:
     
     async def resolve_conflicts(self, session_id: str, resolution_mode: ConflictResolutionMode,
                               conflict_edit_ids: List[str]) -> Dict[str, Any]:
-        """
-        Resolve conflicts between edits.
+        """        Resolve conflicts between edits.
         
         Args:
             session_id: Session identifier
@@ -443,8 +414,7 @@ class CollaborativeEditTracker:
             
         Returns:
             Resolution result
-        """
-        try:
+        """        try:
             edits = self.edit_history.get(session_id, [])
             conflicting_edits = [e for e in edits if e.edit_id in conflict_edit_ids]
             
@@ -474,8 +444,7 @@ class CollaborativeEditTracker:
             return {"resolution_success": False, "error": str(e)}
     
     async def _resolve_by_voting(self, edits: List[CollaborationEdit]) -> Dict[str, Any]:
-        """Resolve conflicts by majority vote"""
-        approved_edits = []
+        """Resolve conflicts by majority vote"""        approved_edits = []
         rejected_edits = []
         
         for edit in edits:
@@ -495,8 +464,7 @@ class CollaborativeEditTracker:
         }
     
     async def _resolve_by_hierarchy(self, edits: List[CollaborationEdit]) -> Dict[str, Any]:
-        """Resolve conflicts by user role hierarchy"""
-        # Simplified hierarchy resolution
+        """Resolve conflicts by user role hierarchy"""        # Simplified hierarchy resolution
         # In production, would check user roles
         approved_edits = [edits[0].edit_id] if edits else []
         rejected_edits = [e.edit_id for e in edits[1:]]
@@ -509,8 +477,7 @@ class CollaborativeEditTracker:
         }
     
     async def _resolve_by_owner(self, edits: List[CollaborationEdit]) -> Dict[str, Any]:
-        """Resolve conflicts by owner decision"""
-        # Owner decides resolution
+        """Resolve conflicts by owner decision"""        # Owner decides resolution
         # In production, would wait for owner input
         approved_edits = [edits[0].edit_id] if edits else []
         rejected_edits = [e.edit_id for e in edits[1:]]
@@ -523,17 +490,14 @@ class CollaborativeEditTracker:
         }
 
 class ConflictDetector:
-    """
-    Detects conflicts between collaborative edits.
-    """
-    
+    """    Detects conflicts between collaborative edits.
+    """    
     def __init__(self):
         self.logger = logger
     
     async def detect_conflicts(self, new_edit: CollaborationEdit, 
                              existing_edits: List[CollaborationEdit]) -> List[CollaborationEdit]:
-        """
-        Detect conflicts between new edit and existing edits.
+        """        Detect conflicts between new edit and existing edits.
         
         Args:
             new_edit: New edit to check
@@ -541,8 +505,7 @@ class ConflictDetector:
             
         Returns:
             List of conflicting edits
-        """
-        conflicts = []
+        """        conflicts = []
         
         for edit in existing_edits:
             if await self._edits_conflict(new_edit, edit):
@@ -552,8 +515,7 @@ class ConflictDetector:
     
     async def _edits_conflict(self, edit1: CollaborationEdit, 
                             edit2: CollaborationEdit) -> bool:
-        """Check if two edits conflict"""
-        # Same audio segment
+        """Check if two edits conflict"""        # Same audio segment
         if edit1.audio_segment_id == edit2.audio_segment_id:
             # Temporal overlap check
             if await self._temporal_overlap(edit1, edit2):
@@ -567,15 +529,13 @@ class ConflictDetector:
     
     async def _temporal_overlap(self, edit1: CollaborationEdit, 
                               edit2: CollaborationEdit) -> bool:
-        """Check for temporal overlap between edits"""
-        # Simplified temporal overlap check
+        """Check for temporal overlap between edits"""        # Simplified temporal overlap check
         time_diff = abs((edit1.timestamp - edit2.timestamp).total_seconds())
         return time_diff < 30  # 30 second overlap threshold
     
     async def _action_conflict(self, edit1: CollaborationEdit, 
                              edit2: CollaborationEdit) -> bool:
-        """Check for action-based conflicts"""
-        conflicting_actions = {
+        """Check for action-based conflicts"""        conflicting_actions = {
             (CollaborationAction.REMOVE_TRACK, CollaborationAction.EDIT_AUDIO),
             (CollaborationAction.CHANGE_TEMPO, CollaborationAction.ADJUST_TIMING),
         }
@@ -583,10 +543,8 @@ class ConflictDetector:
         return (edit1.action, edit2.action) in conflicting_actions
 
 class IntelligentMergeEngine:
-    """
-    AI-powered intelligent merge engine for resolving conflicts.
-    """
-    
+    """    AI-powered intelligent merge engine for resolving conflicts.
+    """    
     def __init__(self):
         self.logger = logger
         self.merge_strategies = {
@@ -596,16 +554,14 @@ class IntelligentMergeEngine:
         }
     
     async def resolve_conflicts(self, conflicting_edits: List[CollaborationEdit]) -> Dict[str, Any]:
-        """
-        Intelligently resolve conflicts using AI.
+        """        Intelligently resolve conflicts using AI.
         
         Args:
             conflicting_edits: List of conflicting edits
             
         Returns:
             Resolution result
-        """
-        try:
+        """        try:
             # Analyze conflict types
             conflict_analysis = await self._analyze_conflicts(conflicting_edits)
             
@@ -627,16 +583,14 @@ class IntelligentMergeEngine:
             return {"resolution_success": False, "error": str(e)}
     
     async def _analyze_conflicts(self, edits: List[CollaborationEdit]) -> Dict[str, Any]:
-        """Analyze the nature of conflicts"""
-        return {
+        """Analyze the nature of conflicts"""        return {
             "conflict_type": "temporal",
             "severity": "medium",
             "edit_count": len(edits)
         }
     
     async def _select_merge_strategy(self, analysis: Dict[str, Any]) -> str:
-        """Select appropriate merge strategy"""
-        if analysis.get("conflict_type") == "temporal":
+        """Select appropriate merge strategy"""        if analysis.get("conflict_type") == "temporal":
             return "temporal"
         elif analysis.get("edit_count", 0) > 3:
             return "feature"
@@ -644,34 +598,29 @@ class IntelligentMergeEngine:
             return "semantic"
     
     async def _merge_temporal(self, edits: List[CollaborationEdit]) -> Dict[str, Any]:
-        """Merge edits based on temporal ordering"""
-        return {
+        """Merge edits based on temporal ordering"""        return {
             "merged_edit_id": str(uuid.uuid4()),
             "component_edits": [e.edit_id for e in edits],
             "merge_type": "temporal"
         }
     
     async def _merge_feature(self, edits: List[CollaborationEdit]) -> Dict[str, Any]:
-        """Merge edits based on feature importance"""
-        return {
+        """Merge edits based on feature importance"""        return {
             "merged_edit_id": str(uuid.uuid4()),
             "component_edits": [e.edit_id for e in edits],
             "merge_type": "feature"
         }
     
     async def _merge_semantic(self, edits: List[CollaborationEdit]) -> Dict[str, Any]:
-        """Merge edits based on semantic similarity"""
-        return {
+        """Merge edits based on semantic similarity"""        return {
             "merged_edit_id": str(uuid.uuid4()),
             "component_edits": [e.edit_id for e in edits],
             "merge_type": "semantic"
         }
 
 class RemixCollaborationManager:
-    """
-    High-level manager for remix collaboration sessions.
-    """
-    
+    """    High-level manager for remix collaboration sessions.
+    """    
     def __init__(self):
         self.logger = logger
         self.sessions: Dict[str, CollaborationSession] = {}
@@ -680,8 +629,7 @@ class RemixCollaborationManager:
         
     async def create_session(self, project_name: str, owner_id: str, 
                            settings: Optional[Dict[str, Any]] = None) -> str:
-        """
-        Create new collaboration session.
+        """        Create new collaboration session.
         
         Args:
             project_name: Name of the project
@@ -690,8 +638,7 @@ class RemixCollaborationManager:
             
         Returns:
             Session ID
-        """
-        try:
+        """        try:
             session_id = str(uuid.uuid4())
             
             session = CollaborationSession(
@@ -713,8 +660,7 @@ class RemixCollaborationManager:
             raise
     
     async def join_session(self, session_id: str, user: CollaborationUser) -> bool:
-        """Add user to collaboration session"""
-        try:
+        """Add user to collaboration session"""        try:
             if session_id not in self.sessions:
                 return False
             
@@ -730,8 +676,7 @@ class RemixCollaborationManager:
             return False
     
     async def submit_edit(self, session_id: str, edit: CollaborationEdit) -> Dict[str, Any]:
-        """
-        Submit edit to collaboration session.
+        """        Submit edit to collaboration session.
         
         Args:
             session_id: Session identifier
@@ -739,8 +684,7 @@ class RemixCollaborationManager:
             
         Returns:
             Submission result
-        """
-        try:
+        """        try:
             if session_id not in self.sessions:
                 return {"success": False, "error": "Session not found"}
             
@@ -766,11 +710,9 @@ class RemixCollaborationManager:
             return {"success": False, "error": str(e)}
 
 class CollaborativeRemixEngine:
-    """
-    Main engine for collaborative remix operations.
+    """    Main engine for collaborative remix operations.
     Orchestrates all collaboration components.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logger
         self.collaboration_manager = RemixCollaborationManager()
@@ -785,8 +727,7 @@ class CollaborativeRemixEngine:
         }
     
     async def initialize_system(self) -> bool:
-        """Initialize the collaborative remix system"""
-        try:
+        """Initialize the collaborative remix system"""        try:
             self.logger.info("🚀 Initializing Collaborative Remix Engine")
             
             # System initialization logic
@@ -800,8 +741,7 @@ class CollaborativeRemixEngine:
             return False
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        return {
+        """Get comprehensive system status"""        return {
             "system_status": "operational",
             "metrics": self.metrics,
             "active_sessions": len(self.collaboration_manager.sessions),

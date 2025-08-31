@@ -1,5 +1,4 @@
-"""
-Blockchain & NFT Schemas for IA Influencer Agent Platform
+"""Blockchain & NFT Schemas for IA Influencer Agent Platform
 Comprehensive blockchain integration, NFT management, and crypto monetization schemas
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -8,7 +7,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
-
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Union
@@ -20,8 +18,7 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class BlockchainNetwork(UUIDSchema, TimestampSchema):
-    """Blockchain network configuration schema."""
-    
+    """Blockchain network configuration schema."""    
     network_name: str = Field(description="Blockchain network name")
     network_type: str = Field(description="Type of blockchain network")
     blockchain_protocol: str = Field(description="Blockchain protocol used")
@@ -70,8 +67,7 @@ class BlockchainNetwork(UUIDSchema, TimestampSchema):
     
     @validator('network_type')
     def validate_network_type(cls, v):
-        """Validate network type."""
-        allowed_types = {
+        """Validate network type."""        allowed_types = {
             "mainnet", "testnet", "private", "consortium", "sidechain",
             "layer2", "rollup", "state_channel", "plasma"
         }
@@ -81,8 +77,7 @@ class BlockchainNetwork(UUIDSchema, TimestampSchema):
 
 
 class SmartContract(UUIDSchema, TimestampSchema, AuditSchema):
-    """Smart contract configuration and management schema."""
-    
+    """Smart contract configuration and management schema."""    
     contract_name: str = Field(description="Smart contract name")
     contract_type: str = Field(description="Type of smart contract")
     blockchain_network_id: UUID = Field(description="Associated blockchain network")
@@ -136,8 +131,7 @@ class SmartContract(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('contract_type')
     def validate_contract_type(cls, v):
-        """Validate contract type."""
-        allowed_types = {
+        """Validate contract type."""        allowed_types = {
             "nft_contract", "token_contract", "marketplace", "royalty_splitter",
             "auction", "staking", "governance", "oracle", "bridge", "vault"
         }
@@ -147,8 +141,7 @@ class SmartContract(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class NFTCollection(UUIDSchema, TimestampSchema, AuditSchema):
-    """NFT collection management schema."""
-    
+    """NFT collection management schema."""    
     creator_id: UUID = Field(description="Creator of the NFT collection")
     collection_name: str = Field(description="NFT collection name")
     collection_symbol: str = Field(description="Collection symbol/ticker")
@@ -210,16 +203,14 @@ class NFTCollection(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('token_standard')
     def validate_token_standard(cls, v):
-        """Validate token standard."""
-        allowed_standards = {"ERC-721", "ERC-1155", "BEP-721", "SPL", "TRC-721"}
+        """Validate token standard."""        allowed_standards = {"ERC-721", "ERC-1155", "BEP-721", "SPL", "TRC-721"}
         if v not in allowed_standards:
             raise ValueError(f'Token standard must be one of: {", ".join(allowed_standards)}')
         return v
 
 
 class NFTToken(UUIDSchema, TimestampSchema):
-    """Individual NFT token schema."""
-    
+    """Individual NFT token schema."""    
     collection_id: UUID = Field(description="Parent collection")
     token_id: str = Field(description="Unique token ID within collection")
     token_name: str = Field(description="Individual token name")
@@ -280,8 +271,7 @@ class NFTToken(UUIDSchema, TimestampSchema):
 
 
 class CryptoWallet(UUIDSchema, TimestampSchema, AuditSchema):
-    """Cryptocurrency wallet management schema."""
-    
+    """Cryptocurrency wallet management schema."""    
     owner_id: UUID = Field(description="Wallet owner")
     wallet_name: str = Field(description="Wallet display name")
     wallet_type: str = Field(description="Type of wallet")
@@ -334,8 +324,7 @@ class CryptoWallet(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('wallet_type')
     def validate_wallet_type(cls, v):
-        """Validate wallet type."""
-        allowed_types = {
+        """Validate wallet type."""        allowed_types = {
             "hot_wallet", "cold_wallet", "hardware_wallet", "multisig_wallet",
             "smart_contract_wallet", "custodial_wallet", "non_custodial_wallet"
         }
@@ -345,8 +334,7 @@ class CryptoWallet(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class BlockchainTransaction(UUIDSchema, TimestampSchema):
-    """Blockchain transaction tracking schema."""
-    
+    """Blockchain transaction tracking schema."""    
     transaction_hash: str = Field(description="Transaction hash")
     blockchain_network: str = Field(description="Blockchain network")
     transaction_type: str = Field(description="Type of transaction")
@@ -398,8 +386,7 @@ class BlockchainTransaction(UUIDSchema, TimestampSchema):
     
     @validator('transaction_type')
     def validate_transaction_type(cls, v):
-        """Validate transaction type."""
-        allowed_types = {
+        """Validate transaction type."""        allowed_types = {
             "transfer", "nft_mint", "nft_transfer", "contract_deployment",
             "contract_interaction", "token_approval", "staking", "unstaking",
             "swap", "liquidity_provision", "governance_vote", "royalty_payment"
@@ -410,8 +397,7 @@ class BlockchainTransaction(UUIDSchema, TimestampSchema):
 
 
 class CryptoPayment(UUIDSchema, TimestampSchema):
-    """Cryptocurrency payment processing schema."""
-    
+    """Cryptocurrency payment processing schema."""    
     payment_id: str = Field(description="Unique payment identifier")
     payer_id: UUID = Field(description="Payer user ID")
     recipient_id: UUID = Field(description="Recipient user ID")
@@ -466,8 +452,7 @@ class CryptoPayment(UUIDSchema, TimestampSchema):
     
     @validator('payment_status')
     def validate_payment_status(cls, v):
-        """Validate payment status."""
-        allowed_statuses = {
+        """Validate payment status."""        allowed_statuses = {
             "pending", "processing", "confirmed", "completed", "failed",
             "cancelled", "expired", "refunded", "partially_refunded"
         }
@@ -477,8 +462,7 @@ class CryptoPayment(UUIDSchema, TimestampSchema):
 
 
 class DeFiIntegration(UUIDSchema, TimestampSchema):
-    """DeFi protocol integration schema."""
-    
+    """DeFi protocol integration schema."""    
     protocol_name: str = Field(description="DeFi protocol name")
     protocol_type: str = Field(description="Type of DeFi protocol")
     integration_type: str = Field(description="Integration approach")
@@ -515,8 +499,7 @@ class DeFiIntegration(UUIDSchema, TimestampSchema):
     
     @validator('protocol_type')
     def validate_protocol_type(cls, v):
-        """Validate protocol type."""
-        allowed_types = {
+        """Validate protocol type."""        allowed_types = {
             "dex", "lending", "staking", "yield_farming", "liquidity_mining",
             "governance", "insurance", "derivatives", "synthetic_assets", "bridge"
         }

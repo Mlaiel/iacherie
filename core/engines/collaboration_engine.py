@@ -1,5 +1,4 @@
-"""
-Collaboration Engine - IA-Influencer-Agent
+"""Collaboration Engine - IA-Influencer-Agent
 ================================================================================
 
 Module: backend/core/engines/collaboration_engine.py
@@ -16,7 +15,6 @@ redistribution without explicit written permission from Fahed Mlaiel is
 strictly prohibited and will result in legal action.
 ================================================================================
 """
-
 import logging
 import asyncio
 import json
@@ -42,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(str, Enum):
-    """Types of content creators"""
-    MUSICIAN = "musician"
+    """Types of content creators"""    MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
     VIDEO_CREATOR = "video_creator"
@@ -56,8 +53,7 @@ class CreatorType(str, Enum):
 
 
 class CollaborationType(str, Enum):
-    """Types of collaboration"""
-    FEATURE = "feature"  # Featured in content
+    """Types of collaboration"""    FEATURE = "feature"  # Featured in content
     REMIX = "remix"  # Remix/adaptation
     DUET = "duet"  # Joint creation
     PROMOTION = "promotion"  # Cross-promotion
@@ -68,8 +64,7 @@ class CollaborationType(str, Enum):
 
 
 class CollaborationStatus(str, Enum):
-    """Collaboration request status"""
-    PENDING = "pending"
+    """Collaboration request status"""    PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
     IN_PROGRESS = "in_progress"
@@ -78,8 +73,7 @@ class CollaborationStatus(str, Enum):
 
 
 class Genre(str, Enum):
-    """Content genres"""
-    POP = "pop"
+    """Content genres"""    POP = "pop"
     ROCK = "rock"
     HIP_HOP = "hip_hop"
     ELECTRONIC = "electronic"
@@ -101,8 +95,7 @@ class Genre(str, Enum):
 
 @dataclass
 class CreatorMetrics:
-    """Creator performance metrics"""
-    total_followers: int
+    """Creator performance metrics"""    total_followers: int
     engagement_rate: float
     average_views: int
     growth_rate: float
@@ -114,8 +107,7 @@ class CreatorMetrics:
 
 @dataclass
 class CollaborationMatch:
-    """AI-generated collaboration match"""
-    creator_id: str
+    """AI-generated collaboration match"""    creator_id: str
     target_creator_id: str
     compatibility_score: float
     collaboration_types: List[CollaborationType]
@@ -129,8 +121,7 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal details"""
-    proposal_id: str
+    """Collaboration proposal details"""    proposal_id: str
     initiator_id: str
     target_id: str
     collaboration_type: CollaborationType
@@ -144,8 +135,7 @@ class CollaborationProposal:
 
 
 class CollaborationEngine:
-    """
-    Enterprise collaboration engine for content creators
+    """    Enterprise collaboration engine for content creators
     
     Features:
     - AI-powered creator matching
@@ -154,8 +144,7 @@ class CollaborationEngine:
     - Project management tools
     - Revenue optimization
     - Cross-platform analytics
-    """
-    
+    """    
     def __init__(
         self,
         redis_manager: RedisManager,
@@ -201,8 +190,7 @@ class CollaborationEngine:
         max_followers: int = None,
         target_regions: List[str] = None
     ) -> List[CollaborationMatch]:
-        """
-        Find AI-powered collaboration matches for a creator
+        """        Find AI-powered collaboration matches for a creator
         
         Args:
             creator_id: Creator looking for collaborations
@@ -214,8 +202,7 @@ class CollaborationEngine:
             
         Returns:
             List of ranked collaboration matches
-        """
-        try:
+        """        try:
             # Get creator profile and metrics
             creator_profile = await self._get_creator_profile(creator_id)
             if not creator_profile:
@@ -283,8 +270,7 @@ class CollaborationEngine:
         candidate_profile: Dict[str, Any],
         collaboration_types: List[CollaborationType] = None
     ) -> Dict[str, Any]:
-        """Calculate compatibility score between two creators"""
-        try:
+        """Calculate compatibility score between two creators"""        try:
             compatibility_scores = {}
             
             # Genre similarity
@@ -354,8 +340,7 @@ class CollaborationEngine:
             return {"score": 0.0, "breakdown": {}, "reasons": []}
 
     async def _calculate_audience_overlap(self, creator1_id: str, creator2_id: str) -> float:
-        """Calculate audience overlap between two creators"""
-        try:
+        """Calculate audience overlap between two creators"""        try:
             # Get audience data for both creators
             creator1_audience = await self._get_creator_audience_data(creator1_id)
             creator2_audience = await self._get_creator_audience_data(creator2_id)
@@ -403,8 +388,7 @@ class CollaborationEngine:
         dist1: Dict[str, float],
         dist2: Dict[str, float]
     ) -> float:
-        """Calculate overlap between two demographic distributions"""
-        if not dist1 or not dist2:
+        """Calculate overlap between two demographic distributions"""        if not dist1 or not dist2:
             return 0.0
         
         # Calculate intersection over union
@@ -424,8 +408,7 @@ class CollaborationEngine:
         creator2_id: str,
         collaboration_types: List[CollaborationType] = None
     ) -> float:
-        """Analyze collaboration history compatibility"""
-        try:
+        """Analyze collaboration history compatibility"""        try:
             # Get historical collaboration data
             creator1_history = await self._get_collaboration_history(creator1_id)
             creator2_history = await self._get_collaboration_history(creator2_id)
@@ -479,8 +462,7 @@ class CollaborationEngine:
         creator_profile: Dict[str, Any],
         candidate_profile: Dict[str, Any]
     ) -> float:
-        """Calculate content quality alignment score"""
-        try:
+        """Calculate content quality alignment score"""        try:
             creator_quality = creator_profile.get("content_quality_score", 0.5)
             candidate_quality = candidate_profile.get("content_quality_score", 0.5)
             
@@ -499,8 +481,7 @@ class CollaborationEngine:
         creator_profile: Dict[str, Any],
         candidate_profile: Dict[str, Any]
     ) -> float:
-        """Calculate brand alignment score"""
-        try:
+        """Calculate brand alignment score"""        try:
             creator_brand = creator_profile.get("brand_keywords", [])
             candidate_brand = candidate_profile.get("brand_keywords", [])
             
@@ -520,8 +501,7 @@ class CollaborationEngine:
             return 0.5
 
     def _generate_compatibility_reasons(self, scores: Dict[str, float]) -> List[str]:
-        """Generate human-readable compatibility reasons"""
-        reasons = []
+        """Generate human-readable compatibility reasons"""        reasons = []
         
         if scores.get("genre_similarity", 0) > 0.7:
             reasons.append("Strong genre compatibility")
@@ -555,8 +535,7 @@ class CollaborationEngine:
         compatibility_data: Dict[str, Any],
         collaboration_types: List[CollaborationType] = None
     ) -> CollaborationMatch:
-        """Create collaboration match object"""
-        try:
+        """Create collaboration match object"""        try:
             candidate_id = candidate_profile["creator_id"]
             
             # Predict success probability
@@ -615,8 +594,7 @@ class CollaborationEngine:
         deliverables: List[str] = None,
         requirements: Dict[str, Any] = None
     ) -> str:
-        """
-        Create new collaboration proposal
+        """        Create new collaboration proposal
         
         Args:
             initiator_id: Creator initiating collaboration
@@ -632,8 +610,7 @@ class CollaborationEngine:
             
         Returns:
             Proposal ID
-        """
-        try:
+        """        try:
             proposal_id = hashlib.sha256(
                 f"{initiator_id}_{target_id}_{datetime.now().isoformat()}".encode()
             ).hexdigest()[:16]
@@ -683,8 +660,7 @@ class CollaborationEngine:
         response: str,  # "accept", "decline", "counter"
         counter_terms: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Respond to collaboration proposal
+        """        Respond to collaboration proposal
         
         Args:
             proposal_id: Proposal identifier
@@ -694,8 +670,7 @@ class CollaborationEngine:
             
         Returns:
             Response result
-        """
-        try:
+        """        try:
             # Get proposal details
             proposal = await self._get_collaboration_proposal(proposal_id)
             if not proposal:
@@ -735,8 +710,7 @@ class CollaborationEngine:
         completion_percentage: float,
         notes: str = None
     ) -> Dict[str, Any]:
-        """
-        Track collaboration project progress
+        """        Track collaboration project progress
         
         Args:
             collaboration_id: Active collaboration ID
@@ -746,8 +720,7 @@ class CollaborationEngine:
             
         Returns:
             Progress tracking result
-        """
-        try:
+        """        try:
             progress_data = {
                 "collaboration_id": collaboration_id,
                 "milestone": milestone,
@@ -784,8 +757,7 @@ class CollaborationEngine:
         period_start: datetime = None,
         period_end: datetime = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive collaboration analytics
+        """        Get comprehensive collaboration analytics
         
         Args:
             creator_id: Creator identifier
@@ -794,8 +766,7 @@ class CollaborationEngine:
             
         Returns:
             Collaboration analytics data
-        """
-        try:
+        """        try:
             if not period_end:
                 period_end = datetime.now()
             if not period_start:
@@ -881,8 +852,7 @@ class CollaborationEngine:
 
     # Helper methods for data persistence and external integrations
     async def _get_creator_profile(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator profile from database"""
-        # Implementation depends on your database layer
+        """Get creator profile from database"""        # Implementation depends on your database layer
         return {}
 
     async def _get_collaboration_candidates(
@@ -894,23 +864,19 @@ class CollaborationEngine:
         max_followers: int,
         target_regions: List[str]
     ) -> List[Dict[str, Any]]:
-        """Get potential collaboration candidates"""
-        # Implementation depends on your database layer
+        """Get potential collaboration candidates"""        # Implementation depends on your database layer
         return []
 
     async def _get_creator_audience_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator audience demographics"""
-        # Implementation depends on your analytics system
+        """Get creator audience demographics"""        # Implementation depends on your analytics system
         return {}
 
     async def _get_collaboration_history(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get creator's collaboration history"""
-        # Implementation depends on your database layer
+        """Get creator's collaboration history"""        # Implementation depends on your database layer
         return []
 
     async def _get_creator_followers(self, creator_id: str) -> int:
-        """Get creator's total follower count"""
-        # Implementation depends on your database layer
+        """Get creator's total follower count"""        # Implementation depends on your database layer
         return 0
 
     async def _estimate_collaboration_revenue(
@@ -919,18 +885,15 @@ class CollaborationEngine:
         creator2_id: str,
         collaboration_types: List[CollaborationType]
     ) -> float:
-        """Estimate potential revenue from collaboration"""
-        # Implementation for revenue estimation
+        """Estimate potential revenue from collaboration"""        # Implementation for revenue estimation
         return 0.0
 
     async def _calculate_optimal_timing(self, creator1_id: str, creator2_id: str) -> datetime:
-        """Calculate optimal timing for collaboration"""
-        # Implementation for timing optimization
+        """Calculate optimal timing for collaboration"""        # Implementation for timing optimization
         return datetime.now() + timedelta(weeks=2)
 
     async def _get_cached_matches(self, cache_key: str) -> List[CollaborationMatch]:
-        """Get cached collaboration matches"""
-        try:
+        """Get cached collaboration matches"""        try:
             cached_data = await self.redis_manager.get(cache_key)
             if cached_data:
                 data = json.loads(cached_data)
@@ -940,8 +903,7 @@ class CollaborationEngine:
             return None
 
     async def _cache_matches(self, cache_key: str, matches: List[CollaborationMatch]):
-        """Cache collaboration matches"""
-        try:
+        """Cache collaboration matches"""        try:
             data = [asdict(match) for match in matches]
             # Convert datetime objects to strings
             for match_data in data:
@@ -952,28 +914,23 @@ class CollaborationEngine:
             logger.warning(f"Failed to cache matches: {e}")
 
     async def _store_collaboration_proposal(self, proposal: CollaborationProposal):
-        """Store collaboration proposal in database"""
-        # Implementation depends on your database layer
+        """Store collaboration proposal in database"""        # Implementation depends on your database layer
         pass
 
     async def _send_collaboration_notification(self, proposal: CollaborationProposal):
-        """Send notification about new collaboration proposal"""
-        # Implementation depends on your notification system
+        """Send notification about new collaboration proposal"""        # Implementation depends on your notification system
         pass
 
     async def _get_collaboration_proposal(self, proposal_id: str) -> Dict[str, Any]:
-        """Get collaboration proposal from database"""
-        # Implementation depends on your database layer
+        """Get collaboration proposal from database"""        # Implementation depends on your database layer
         return {}
 
     async def _accept_collaboration(self, proposal: Dict[str, Any]) -> Dict[str, Any]:
-        """Accept collaboration proposal"""
-        # Implementation for accepting collaboration
+        """Accept collaboration proposal"""        # Implementation for accepting collaboration
         return {"status": "accepted"}
 
     async def _decline_collaboration(self, proposal: Dict[str, Any]) -> Dict[str, Any]:
-        """Decline collaboration proposal"""
-        # Implementation for declining collaboration
+        """Decline collaboration proposal"""        # Implementation for declining collaboration
         return {"status": "declined"}
 
     async def _counter_proposal(
@@ -981,18 +938,15 @@ class CollaborationEngine:
         proposal: Dict[str, Any],
         counter_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create counter-proposal"""
-        # Implementation for counter-proposal
+        """Create counter-proposal"""        # Implementation for counter-proposal
         return {"status": "counter_proposal_created"}
 
     async def _store_progress_update(self, progress_data: Dict[str, Any]):
-        """Store collaboration progress update"""
-        # Implementation depends on your database layer
+        """Store collaboration progress update"""        # Implementation depends on your database layer
         pass
 
     async def _complete_collaboration(self, collaboration_id: str):
-        """Mark collaboration as completed"""
-        # Implementation depends on your database layer
+        """Mark collaboration as completed"""        # Implementation depends on your database layer
         pass
 
     async def _get_creator_collaborations(
@@ -1001,6 +955,5 @@ class CollaborationEngine:
         period_start: datetime,
         period_end: datetime
     ) -> List[Dict[str, Any]]:
-        """Get creator's collaboration history"""
-        # Implementation depends on your database layer
+        """Get creator's collaboration history"""        # Implementation depends on your database layer
         return []

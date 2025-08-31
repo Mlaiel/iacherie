@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Pipeline Security Management System
+"""IA Influencer Agent - Pipeline Security Management System
 Enterprise-Grade Security Scanning and Compliance for CI/CD Pipelines
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -18,7 +17,6 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
-
 import asyncio
 import logging
 import json
@@ -34,8 +32,7 @@ import yaml
 import re
 
 class ScanType(Enum):
-    """Security scan types"""
-    CODE_SECURITY = "code_security"
+    """Security scan types"""    CODE_SECURITY = "code_security"
     DEPENDENCY_SCAN = "dependency_scan"
     CONTAINER_SCAN = "container_scan"
     INFRASTRUCTURE_SCAN = "infrastructure_scan"
@@ -43,16 +40,14 @@ class ScanType(Enum):
     COMPLIANCE_CHECK = "compliance_check"
 
 class SeverityLevel(Enum):
-    """Vulnerability severity levels"""
-    CRITICAL = "critical"
+    """Vulnerability severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class ComplianceStandard(Enum):
-    """Compliance standards"""
-    GDPR = "gdpr"
+    """Compliance standards"""    GDPR = "gdpr"
     SOC2 = "soc2"
     ISO27001 = "iso27001"
     PCI_DSS = "pci_dss"
@@ -61,8 +56,7 @@ class ComplianceStandard(Enum):
 
 @dataclass
 class Vulnerability:
-    """Vulnerability information"""
-    id: str
+    """Vulnerability information"""    id: str
     title: str
     description: str
     severity: SeverityLevel
@@ -79,8 +73,7 @@ class Vulnerability:
 
 @dataclass
 class ScanResult:
-    """Security scan result"""
-    scan_type: ScanType
+    """Security scan result"""    scan_type: ScanType
     scan_id: str
     timestamp: datetime
     status: str
@@ -94,8 +87,7 @@ class ScanResult:
 
 @dataclass
 class SecurityPolicy:
-    """Security policy definition"""
-    name: str
+    """Security policy definition"""    name: str
     description: str
     enabled: bool
     severity_threshold: SeverityLevel
@@ -108,15 +100,13 @@ class SecurityPolicy:
             self.exclusions = []
 
 class CodeSecurityScanner:
-    """Code security vulnerability scanner"""
-    
+    """Code security vulnerability scanner"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def scan_code(self, code_path: Path, 
                        scan_config: Optional[Dict[str, Any]] = None) -> ScanResult:
-        """Scan code for security vulnerabilities"""
-        scan_id = self._generate_scan_id("code_security")
+        """Scan code for security vulnerabilities"""        scan_id = self._generate_scan_id("code_security")
         vulnerabilities = []
         
         try:
@@ -158,8 +148,7 @@ class CodeSecurityScanner:
             )
             
     async def _run_bandit_scan(self, code_path: Path) -> List[Vulnerability]:
-        """Run Bandit security scanner"""
-        vulnerabilities = []
+        """Run Bandit security scanner"""        vulnerabilities = []
         
         try:
             with tempfile.NamedTemporaryFile(mode='w', suffix='.json', delete=False) as f:
@@ -204,8 +193,7 @@ class CodeSecurityScanner:
         return vulnerabilities
         
     async def _run_semgrep_scan(self, code_path: Path) -> List[Vulnerability]:
-        """Run Semgrep security scanner"""
-        vulnerabilities = []
+        """Run Semgrep security scanner"""        vulnerabilities = []
         
         try:
             cmd = [
@@ -242,8 +230,7 @@ class CodeSecurityScanner:
         return vulnerabilities
         
     async def _run_custom_patterns(self, code_path: Path) -> List[Vulnerability]:
-        """Run custom security pattern matching"""
-        vulnerabilities = []
+        """Run custom security pattern matching"""        vulnerabilities = []
         
         # Define custom security patterns
         patterns = {
@@ -294,8 +281,7 @@ class CodeSecurityScanner:
         return vulnerabilities
         
     def _map_bandit_severity(self, severity: str) -> SeverityLevel:
-        """Map Bandit severity to internal severity"""
-        mapping = {
+        """Map Bandit severity to internal severity"""        mapping = {
             'HIGH': SeverityLevel.HIGH,
             'MEDIUM': SeverityLevel.MEDIUM,
             'LOW': SeverityLevel.LOW
@@ -303,8 +289,7 @@ class CodeSecurityScanner:
         return mapping.get(severity.upper(), SeverityLevel.MEDIUM)
         
     def _map_semgrep_severity(self, severity: str) -> SeverityLevel:
-        """Map Semgrep severity to internal severity"""
-        mapping = {
+        """Map Semgrep severity to internal severity"""        mapping = {
             'ERROR': SeverityLevel.HIGH,
             'WARNING': SeverityLevel.MEDIUM,
             'INFO': SeverityLevel.LOW
@@ -312,13 +297,11 @@ class CodeSecurityScanner:
         return mapping.get(severity.upper(), SeverityLevel.MEDIUM)
         
     def _generate_scan_id(self, scan_type: str) -> str:
-        """Generate unique scan ID"""
-        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+        """Generate unique scan ID"""        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"{scan_type}_{timestamp}"
         
     def _generate_summary(self, vulnerabilities: List[Vulnerability]) -> Dict[str, int]:
-        """Generate vulnerability summary by severity"""
-        summary = {severity.value: 0 for severity in SeverityLevel}
+        """Generate vulnerability summary by severity"""        summary = {severity.value: 0 for severity in SeverityLevel}
         
         for vuln in vulnerabilities:
             summary[vuln.severity.value] += 1
@@ -326,15 +309,13 @@ class CodeSecurityScanner:
         return summary
 
 class DependencyScanner:
-    """Dependency vulnerability scanner"""
-    
+    """Dependency vulnerability scanner"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def scan_dependencies(self, project_path: Path,
                               scan_config: Optional[Dict[str, Any]] = None) -> ScanResult:
-        """Scan project dependencies for vulnerabilities"""
-        scan_id = self._generate_scan_id("dependency_scan")
+        """Scan project dependencies for vulnerabilities"""        scan_id = self._generate_scan_id("dependency_scan")
         vulnerabilities = []
         
         try:
@@ -374,8 +355,7 @@ class DependencyScanner:
             )
             
     async def _scan_python_dependencies(self, project_path: Path) -> List[Vulnerability]:
-        """Scan Python dependencies using Safety"""
-        vulnerabilities = []
+        """Scan Python dependencies using Safety"""        vulnerabilities = []
         
         try:
             cmd = ["safety", "check", "--json", "--file", str(project_path / "requirements.txt")]
@@ -410,8 +390,7 @@ class DependencyScanner:
         return vulnerabilities
         
     async def _scan_nodejs_dependencies(self, project_path: Path) -> List[Vulnerability]:
-        """Scan Node.js dependencies using npm audit"""
-        vulnerabilities = []
+        """Scan Node.js dependencies using npm audit"""        vulnerabilities = []
         
         try:
             cmd = ["npm", "audit", "--json"]
@@ -447,8 +426,7 @@ class DependencyScanner:
         return vulnerabilities
         
     def _map_npm_severity(self, severity: str) -> SeverityLevel:
-        """Map npm audit severity to internal severity"""
-        mapping = {
+        """Map npm audit severity to internal severity"""        mapping = {
             'critical': SeverityLevel.CRITICAL,
             'high': SeverityLevel.HIGH,
             'moderate': SeverityLevel.MEDIUM,
@@ -458,13 +436,11 @@ class DependencyScanner:
         return mapping.get(severity.lower(), SeverityLevel.MEDIUM)
         
     def _generate_scan_id(self, scan_type: str) -> str:
-        """Generate unique scan ID"""
-        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+        """Generate unique scan ID"""        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"{scan_type}_{timestamp}"
         
     def _generate_summary(self, vulnerabilities: List[Vulnerability]) -> Dict[str, int]:
-        """Generate vulnerability summary by severity"""
-        summary = {severity.value: 0 for severity in SeverityLevel}
+        """Generate vulnerability summary by severity"""        summary = {severity.value: 0 for severity in SeverityLevel}
         
         for vuln in vulnerabilities:
             summary[vuln.severity.value] += 1
@@ -472,15 +448,13 @@ class DependencyScanner:
         return summary
 
 class ContainerScanner:
-    """Container image vulnerability scanner"""
-    
+    """Container image vulnerability scanner"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
     async def scan_container(self, image_name: str,
                            scan_config: Optional[Dict[str, Any]] = None) -> ScanResult:
-        """Scan container image for vulnerabilities"""
-        scan_id = self._generate_scan_id("container_scan")
+        """Scan container image for vulnerabilities"""        scan_id = self._generate_scan_id("container_scan")
         vulnerabilities = []
         
         try:
@@ -514,8 +488,7 @@ class ContainerScanner:
             )
             
     async def _scan_with_trivy(self, image_name: str) -> List[Vulnerability]:
-        """Scan container with Trivy"""
-        vulnerabilities = []
+        """Scan container with Trivy"""        vulnerabilities = []
         
         try:
             cmd = ["trivy", "image", "--format", "json", image_name]
@@ -551,8 +524,7 @@ class ContainerScanner:
         return vulnerabilities
         
     def _map_trivy_severity(self, severity: str) -> SeverityLevel:
-        """Map Trivy severity to internal severity"""
-        mapping = {
+        """Map Trivy severity to internal severity"""        mapping = {
             'CRITICAL': SeverityLevel.CRITICAL,
             'HIGH': SeverityLevel.HIGH,
             'MEDIUM': SeverityLevel.MEDIUM,
@@ -562,13 +534,11 @@ class ContainerScanner:
         return mapping.get(severity.upper(), SeverityLevel.MEDIUM)
         
     def _generate_scan_id(self, scan_type: str) -> str:
-        """Generate unique scan ID"""
-        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+        """Generate unique scan ID"""        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"{scan_type}_{timestamp}"
         
     def _generate_summary(self, vulnerabilities: List[Vulnerability]) -> Dict[str, int]:
-        """Generate vulnerability summary by severity"""
-        summary = {severity.value: 0 for severity in SeverityLevel}
+        """Generate vulnerability summary by severity"""        summary = {severity.value: 0 for severity in SeverityLevel}
         
         for vuln in vulnerabilities:
             summary[vuln.severity.value] += 1
@@ -576,8 +546,7 @@ class ContainerScanner:
         return summary
 
 class SecurityPolicyManager:
-    """Security policy management and enforcement"""
-    
+    """Security policy management and enforcement"""    
     def __init__(self, policies_dir: Optional[Path] = None):
         self.policies_dir = policies_dir or Path(__file__).parent / "security_policies"
         self.policies_dir.mkdir(parents=True, exist_ok=True)
@@ -588,8 +557,7 @@ class SecurityPolicyManager:
         self._load_policies()
         
     def _load_policies(self):
-        """Load security policies from configuration files"""
-        # Create default policies if they don't exist
+        """Load security policies from configuration files"""        # Create default policies if they don't exist
         self._create_default_policies()
         
         # Load policies from files
@@ -619,8 +587,7 @@ class SecurityPolicyManager:
                 self.logger.error(f"Failed to load policy {policy_file}: {str(e)}")
                 
     def _create_default_policies(self):
-        """Create default security policies"""
-        default_policies = {
+        """Create default security policies"""        default_policies = {
             'development': {
                 'name': 'development',
                 'description': 'Development environment security policy',
@@ -677,8 +644,7 @@ class SecurityPolicyManager:
                 
     def evaluate_scan_results(self, scan_results: List[ScanResult], 
                             policy_name: str) -> Tuple[bool, Dict[str, Any]]:
-        """Evaluate scan results against security policy"""
-        if policy_name not in self.policies:
+        """Evaluate scan results against security policy"""        if policy_name not in self.policies:
             raise ValueError(f"Security policy not found: {policy_name}")
             
         policy = self.policies[policy_name]
@@ -748,8 +714,7 @@ class SecurityPolicyManager:
         return evaluation_result["compliance_check"], evaluation_result
 
 class PipelineSecurityManager:
-    """
-    Comprehensive Pipeline Security Management System
+    """    Comprehensive Pipeline Security Management System
     
     Provides enterprise-grade security scanning and compliance management with:
     - Multi-layer security scanning (code, dependencies, containers, infrastructure)
@@ -757,8 +722,7 @@ class PipelineSecurityManager:
     - Security policy enforcement
     - Compliance validation
     - Integration with security tools and platforms
-    """
-    
+    """    
     def __init__(self, policies_dir: Optional[Path] = None):
         self.logger = logging.getLogger(__name__)
         
@@ -777,8 +741,7 @@ class PipelineSecurityManager:
                                             project_path: Path,
                                             image_name: Optional[str] = None,
                                             policy_name: str = "development") -> Dict[str, Any]:
-        """Run comprehensive security scan across all layers"""
-        scan_results = []
+        """Run comprehensive security scan across all layers"""        scan_results = []
         
         try:
             self.logger.info("Starting comprehensive security scan")
@@ -833,8 +796,7 @@ class PipelineSecurityManager:
             }
             
     def _generate_recommendations(self, scan_results: List[ScanResult]) -> List[str]:
-        """Generate security recommendations based on scan results"""
-        recommendations = []
+        """Generate security recommendations based on scan results"""        recommendations = []
         
         for result in scan_results:
             if result.vulnerabilities:
@@ -867,8 +829,7 @@ class PipelineSecurityManager:
         
     def get_scan_history(self, scan_type: Optional[ScanType] = None,
                         days: int = 30) -> List[ScanResult]:
-        """Get scan history filtered by type and time range"""
-        cutoff_date = datetime.utcnow() - timedelta(days=days)
+        """Get scan history filtered by type and time range"""        cutoff_date = datetime.utcnow() - timedelta(days=days)
         
         filtered_results = [
             result for result in self.scan_history
@@ -885,8 +846,7 @@ class PipelineSecurityManager:
         
     def generate_security_report(self, environment: str = "all",
                                days: int = 30) -> Dict[str, Any]:
-        """Generate comprehensive security report"""
-        scan_history = self.get_scan_history(days=days)
+        """Generate comprehensive security report"""        scan_history = self.get_scan_history(days=days)
         
         # Aggregate statistics
         total_scans = len(scan_history)
@@ -928,8 +888,7 @@ class PipelineSecurityManager:
         
     def _get_top_vulnerabilities(self, scan_results: List[ScanResult], 
                                 limit: int = 10) -> List[Dict[str, Any]]:
-        """Get top vulnerabilities by severity and frequency"""
-        vulnerability_counts = {}
+        """Get top vulnerabilities by severity and frequency"""        vulnerability_counts = {}
         
         for result in scan_results:
             for vuln in result.vulnerabilities:

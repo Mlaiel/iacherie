@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Content Models Tests - Enterprise Grade Test Suite
+"""Content Models Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for content analysis models including text, image, audio,
 video processing, content protection, SEO optimization, and multimodal AI.
@@ -26,7 +23,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
-
 import pytest
 import sys
 import os
@@ -54,11 +50,9 @@ from ai.ml.content_models import (
 
 
 class TestContentMetadata:
-    """Tests for content metadata handling"""
-    
+    """Tests for content metadata handling"""    
     def test_init_content_metadata(self):
-        """Test content metadata initialization"""
-        metadata = ContentMetadata(
+        """Test content metadata initialization"""        metadata = ContentMetadata(
             content_id="test_001",
             content_type=ContentType.TEXT,
             category=ContentCategory.BLOG,
@@ -80,8 +74,7 @@ class TestContentMetadata:
         assert isinstance(metadata.created_at, datetime)
 
     def test_metadata_serialization(self, sample_content_metadata):
-        """Test metadata serialization and deserialization"""
-        # Convert to dict
+        """Test metadata serialization and deserialization"""        # Convert to dict
         metadata_dict = {
             "content_id": sample_content_metadata.content_id,
             "content_type": sample_content_metadata.content_type.value,
@@ -100,8 +93,7 @@ class TestContentMetadata:
         assert metadata_dict["category"] == "blog"
 
     def test_metadata_validation(self):
-        """Test content metadata validation"""
-        # Valid metadata
+        """Test content metadata validation"""        # Valid metadata
         valid_metadata = ContentMetadata(
             content_id="valid_001",
             content_type=ContentType.IMAGE,
@@ -117,11 +109,9 @@ class TestContentMetadata:
 
 
 class TestTextContentModel:
-    """Tests for text content analysis model"""
-    
+    """Tests for text content analysis model"""    
     def test_init_text_model(self):
-        """Test text content model initialization"""
-        model = TextContentModel(
+        """Test text content model initialization"""        model = TextContentModel(
             model_name="bert-base-uncased",
             max_length=512,
             enable_sentiment_analysis=True,
@@ -134,8 +124,7 @@ class TestTextContentModel:
         assert model.enable_topic_classification
 
     def test_text_preprocessing(self, sample_text_data):
-        """Test text preprocessing functionality"""
-        model = TextContentModel()
+        """Test text preprocessing functionality"""        model = TextContentModel()
         
         # Test single text preprocessing
         text = sample_text_data[0]
@@ -149,8 +138,7 @@ class TestTextContentModel:
         assert len(batch_processed) == len(sample_text_data)
 
     def test_text_tokenization(self, sample_text_data):
-        """Test text tokenization"""
-        model = TextContentModel()
+        """Test text tokenization"""        model = TextContentModel()
         
         text = sample_text_data[0]
         tokens = model.tokenize_text(text)
@@ -161,8 +149,7 @@ class TestTextContentModel:
         assert isinstance(tokens["attention_mask"], torch.Tensor)
 
     def test_text_feature_extraction(self, sample_text_data):
-        """Test text feature extraction"""
-        model = TextContentModel()
+        """Test text feature extraction"""        model = TextContentModel()
         
         # Mock the model loading for testing
         with patch.object(model, '_load_model') as mock_load:
@@ -177,8 +164,7 @@ class TestTextContentModel:
             assert len(features.shape) >= 2
 
     def test_sentiment_analysis(self, sample_text_data):
-        """Test sentiment analysis functionality"""
-        model = TextContentModel(enable_sentiment_analysis=True)
+        """Test sentiment analysis functionality"""        model = TextContentModel(enable_sentiment_analysis=True)
         
         # Mock sentiment analysis
         with patch.object(model, 'analyze_sentiment') as mock_sentiment:
@@ -197,8 +183,7 @@ class TestTextContentModel:
             assert sentiment_result["label"] in ["POSITIVE", "NEGATIVE", "NEUTRAL"]
 
     def test_topic_classification(self, sample_text_data):
-        """Test topic classification"""
-        model = TextContentModel(enable_topic_classification=True)
+        """Test topic classification"""        model = TextContentModel(enable_topic_classification=True)
         
         with patch.object(model, 'classify_topic') as mock_classify:
             mock_classify.return_value = {
@@ -215,8 +200,7 @@ class TestTextContentModel:
             assert "sub_topics" in topic_result
 
     def test_named_entity_recognition(self, sample_text_data):
-        """Test named entity recognition"""
-        model = TextContentModel(enable_ner=True)
+        """Test named entity recognition"""        model = TextContentModel(enable_ner=True)
         
         with patch.object(model, 'extract_entities') as mock_ner:
             mock_ner.return_value = [
@@ -234,8 +218,7 @@ class TestTextContentModel:
             assert all("label" in entity for entity in entities)
 
     def test_text_summarization(self, sample_text_data):
-        """Test text summarization"""
-        model = TextContentModel(enable_summarization=True)
+        """Test text summarization"""        model = TextContentModel(enable_summarization=True)
         
         long_text = " ".join(sample_text_data * 10)  # Create longer text
         
@@ -254,8 +237,7 @@ class TestTextContentModel:
             assert len(summary_result["summary"]) < len(long_text)
 
     def test_text_quality_assessment(self, sample_text_data):
-        """Test text quality assessment"""
-        model = TextContentModel()
+        """Test text quality assessment"""        model = TextContentModel()
         
         text = sample_text_data[0]
         quality_score = model.assess_text_quality(text)
@@ -269,11 +251,9 @@ class TestTextContentModel:
 
 
 class TestImageContentModel:
-    """Tests for image content analysis model"""
-    
+    """Tests for image content analysis model"""    
     def test_init_image_model(self):
-        """Test image content model initialization"""
-        model = ImageContentModel(
+        """Test image content model initialization"""        model = ImageContentModel(
             model_name="resnet50",
             input_size=(224, 224),
             enable_object_detection=True,
@@ -286,8 +266,7 @@ class TestImageContentModel:
         assert model.enable_scene_analysis
 
     def test_image_preprocessing(self, sample_image_data):
-        """Test image preprocessing"""
-        model = ImageContentModel()
+        """Test image preprocessing"""        model = ImageContentModel()
         
         processed_image = model.preprocess_image(sample_image_data)
         
@@ -296,8 +275,7 @@ class TestImageContentModel:
         assert processed_image.shape[1] == processed_image.shape[2]  # Square image
 
     def test_image_feature_extraction(self, sample_image_data):
-        """Test image feature extraction"""
-        model = ImageContentModel()
+        """Test image feature extraction"""        model = ImageContentModel()
         
         with patch.object(model, '_load_model') as mock_load:
             mock_model = Mock()
@@ -310,8 +288,7 @@ class TestImageContentModel:
             assert len(features.shape) >= 1
 
     def test_object_detection(self, sample_image_data):
-        """Test object detection functionality"""
-        model = ImageContentModel(enable_object_detection=True)
+        """Test object detection functionality"""        model = ImageContentModel(enable_object_detection=True)
         
         with patch.object(model, 'detect_objects') as mock_detect:
             mock_detect.return_value = [
@@ -336,8 +313,7 @@ class TestImageContentModel:
             assert all("bbox" in obj for obj in objects)
 
     def test_scene_analysis(self, sample_image_data):
-        """Test scene analysis"""
-        model = ImageContentModel(enable_scene_analysis=True)
+        """Test scene analysis"""        model = ImageContentModel(enable_scene_analysis=True)
         
         with patch.object(model, 'analyze_scene') as mock_scene:
             mock_scene.return_value = {
@@ -356,8 +332,7 @@ class TestImageContentModel:
             assert "confidence" in scene_result
 
     def test_aesthetic_scoring(self, sample_image_data):
-        """Test aesthetic quality scoring"""
-        model = ImageContentModel(enable_aesthetic_scoring=True)
+        """Test aesthetic quality scoring"""        model = ImageContentModel(enable_aesthetic_scoring=True)
         
         aesthetic_score = model.calculate_aesthetic_score(sample_image_data)
         
@@ -369,8 +344,7 @@ class TestImageContentModel:
         assert 0 <= aesthetic_score["overall_score"] <= 1
 
     def test_face_detection(self, sample_image_data):
-        """Test face detection functionality"""
-        model = ImageContentModel(enable_face_detection=True)
+        """Test face detection functionality"""        model = ImageContentModel(enable_face_detection=True)
         
         with patch.object(model, 'detect_faces') as mock_faces:
             mock_faces.return_value = [
@@ -394,8 +368,7 @@ class TestImageContentModel:
                 assert "confidence" in faces[0]
 
     def test_image_captioning(self, sample_image_data):
-        """Test automatic image captioning"""
-        model = ImageContentModel(enable_captioning=True)
+        """Test automatic image captioning"""        model = ImageContentModel(enable_captioning=True)
         
         with patch.object(model, 'generate_caption') as mock_caption:
             mock_caption.return_value = {
@@ -415,11 +388,9 @@ class TestImageContentModel:
 
 
 class TestAudioContentModel:
-    """Tests for audio content analysis model"""
-    
+    """Tests for audio content analysis model"""    
     def test_init_audio_model(self):
-        """Test audio content model initialization"""
-        model = AudioContentModel(
+        """Test audio content model initialization"""        model = AudioContentModel(
             sample_rate=22050,
             n_fft=2048,
             hop_length=512,
@@ -434,8 +405,7 @@ class TestAudioContentModel:
         assert model.enable_speech_recognition
 
     def test_audio_preprocessing(self, sample_audio_data):
-        """Test audio preprocessing"""
-        model = AudioContentModel()
+        """Test audio preprocessing"""        model = AudioContentModel()
         
         audio_array, sample_rate = sample_audio_data
         processed_audio = model.preprocess_audio(audio_array, sample_rate)
@@ -444,8 +414,7 @@ class TestAudioContentModel:
         assert processed_audio.ndim == 1  # Mono audio
 
     def test_audio_feature_extraction(self, sample_audio_data):
-        """Test audio feature extraction"""
-        model = AudioContentModel()
+        """Test audio feature extraction"""        model = AudioContentModel()
         
         audio_array, sample_rate = sample_audio_data
         features = model.extract_audio_features(audio_array, sample_rate)
@@ -457,8 +426,7 @@ class TestAudioContentModel:
         assert "tempo" in features
 
     def test_music_genre_classification(self, sample_audio_data):
-        """Test music genre classification"""
-        model = AudioContentModel(enable_music_analysis=True)
+        """Test music genre classification"""        model = AudioContentModel(enable_music_analysis=True)
         
         with patch.object(model, 'classify_music_genre') as mock_genre:
             mock_genre.return_value = {
@@ -481,8 +449,7 @@ class TestAudioContentModel:
             assert "probabilities" in genre_result
 
     def test_speech_recognition(self, sample_audio_data):
-        """Test speech recognition functionality"""
-        model = AudioContentModel(enable_speech_recognition=True)
+        """Test speech recognition functionality"""        model = AudioContentModel(enable_speech_recognition=True)
         
         with patch.object(model, 'transcribe_speech') as mock_transcribe:
             mock_transcribe.return_value = {
@@ -504,8 +471,7 @@ class TestAudioContentModel:
             assert "language" in transcription_result
 
     def test_audio_emotion_detection(self, sample_audio_data):
-        """Test emotion detection in audio"""
-        model = AudioContentModel(enable_emotion_detection=True)
+        """Test emotion detection in audio"""        model = AudioContentModel(enable_emotion_detection=True)
         
         with patch.object(model, 'detect_emotion') as mock_emotion:
             mock_emotion.return_value = {
@@ -527,8 +493,7 @@ class TestAudioContentModel:
             assert "emotion_scores" in emotion_result
 
     def test_audio_quality_assessment(self, sample_audio_data):
-        """Test audio quality assessment"""
-        model = AudioContentModel()
+        """Test audio quality assessment"""        model = AudioContentModel()
         
         audio_array, sample_rate = sample_audio_data
         quality_metrics = model.assess_audio_quality(audio_array, sample_rate)
@@ -541,8 +506,7 @@ class TestAudioContentModel:
         assert 0 <= quality_metrics["overall_quality"] <= 1
 
     def test_music_tempo_analysis(self, sample_audio_data):
-        """Test music tempo analysis"""
-        model = AudioContentModel(enable_music_analysis=True)
+        """Test music tempo analysis"""        model = AudioContentModel(enable_music_analysis=True)
         
         audio_array, sample_rate = sample_audio_data
         tempo_info = model.analyze_tempo(audio_array, sample_rate)
@@ -555,11 +519,9 @@ class TestAudioContentModel:
 
 
 class TestVideoContentModel:
-    """Tests for video content analysis model"""
-    
+    """Tests for video content analysis model"""    
     def test_init_video_model(self):
-        """Test video content model initialization"""
-        model = VideoContentModel(
+        """Test video content model initialization"""        model = VideoContentModel(
             frame_rate=30,
             frame_size=(224, 224),
             enable_action_recognition=True,
@@ -572,8 +534,7 @@ class TestVideoContentModel:
         assert model.enable_object_tracking
 
     def test_video_frame_extraction(self):
-        """Test video frame extraction"""
-        model = VideoContentModel()
+        """Test video frame extraction"""        model = VideoContentModel()
         
         # Mock video frames
         with patch.object(model, 'extract_frames') as mock_extract:
@@ -588,8 +549,7 @@ class TestVideoContentModel:
             assert frames[0].shape == (224, 224, 3)
 
     def test_action_recognition(self):
-        """Test action recognition in video"""
-        model = VideoContentModel(enable_action_recognition=True)
+        """Test action recognition in video"""        model = VideoContentModel(enable_action_recognition=True)
         
         with patch.object(model, 'recognize_actions') as mock_actions:
             mock_actions.return_value = [
@@ -618,8 +578,7 @@ class TestVideoContentModel:
             assert all("confidence" in action for action in actions)
 
     def test_object_tracking(self):
-        """Test object tracking across video frames"""
-        model = VideoContentModel(enable_object_tracking=True)
+        """Test object tracking across video frames"""        model = VideoContentModel(enable_object_tracking=True)
         
         with patch.object(model, 'track_objects') as mock_tracking:
             mock_tracking.return_value = {
@@ -642,8 +601,7 @@ class TestVideoContentModel:
             assert "track_2" in tracking_results
 
     def test_video_summarization(self):
-        """Test video summarization and key frame extraction"""
-        model = VideoContentModel(enable_summarization=True)
+        """Test video summarization and key frame extraction"""        model = VideoContentModel(enable_summarization=True)
         
         with patch.object(model, 'summarize_video') as mock_summarize:
             mock_summarize.return_value = {
@@ -662,8 +620,7 @@ class TestVideoContentModel:
             assert "scene_changes" in summary_result
 
     def test_video_quality_metrics(self):
-        """Test video quality assessment"""
-        model = VideoContentModel()
+        """Test video quality assessment"""        model = VideoContentModel()
         
         # Mock video quality assessment
         video_frames = [np.random.randint(0, 255, (224, 224, 3)) for _ in range(30)]
@@ -679,11 +636,9 @@ class TestVideoContentModel:
 
 
 class TestMultiModalContentModel:
-    """Tests for multimodal content analysis"""
-    
+    """Tests for multimodal content analysis"""    
     def test_init_multimodal_model(self):
-        """Test multimodal model initialization"""
-        model = MultiModalContentModel(
+        """Test multimodal model initialization"""        model = MultiModalContentModel(
             enable_cross_modal_attention=True,
             fusion_strategy="late_fusion",
             modalities=["text", "image", "audio"]
@@ -696,8 +651,7 @@ class TestMultiModalContentModel:
         assert "audio" in model.modalities
 
     def test_multimodal_feature_fusion(self, sample_multimodal_data):
-        """Test multimodal feature fusion"""
-        model = MultiModalContentModel()
+        """Test multimodal feature fusion"""        model = MultiModalContentModel()
         
         # Mock individual feature extractors
         text_features = torch.randn(1, 768)
@@ -714,8 +668,7 @@ class TestMultiModalContentModel:
         assert len(fused_features.shape) == 2  # Batch x Features
 
     def test_cross_modal_similarity(self, sample_multimodal_data):
-        """Test cross-modal similarity computation"""
-        model = MultiModalContentModel(enable_cross_modal_attention=True)
+        """Test cross-modal similarity computation"""        model = MultiModalContentModel(enable_cross_modal_attention=True)
         
         with patch.object(model, 'compute_cross_modal_similarity') as mock_similarity:
             mock_similarity.return_value = {
@@ -733,8 +686,7 @@ class TestMultiModalContentModel:
             assert "overall_coherence" in similarity_scores
 
     def test_multimodal_content_generation(self):
-        """Test multimodal content generation"""
-        model = MultiModalContentModel(enable_content_generation=True)
+        """Test multimodal content generation"""        model = MultiModalContentModel(enable_content_generation=True)
         
         with patch.object(model, 'generate_multimodal_content') as mock_generate:
             mock_generate.return_value = {
@@ -754,11 +706,9 @@ class TestMultiModalContentModel:
 
 
 class TestContentAnalysisEngine:
-    """Tests for comprehensive content analysis engine"""
-    
+    """Tests for comprehensive content analysis engine"""    
     def test_init_analysis_engine(self):
-        """Test content analysis engine initialization"""
-        engine = ContentAnalysisEngine(
+        """Test content analysis engine initialization"""        engine = ContentAnalysisEngine(
             enable_all_modalities=True,
             quality_threshold=0.8,
             enable_real_time_analysis=True
@@ -769,8 +719,7 @@ class TestContentAnalysisEngine:
         assert engine.enable_real_time_analysis
 
     def test_comprehensive_content_analysis(self, sample_multimodal_data):
-        """Test comprehensive content analysis"""
-        engine = ContentAnalysisEngine()
+        """Test comprehensive content analysis"""        engine = ContentAnalysisEngine()
         
         with patch.object(engine, 'analyze_content') as mock_analyze:
             mock_analyze.return_value = {
@@ -794,8 +743,7 @@ class TestContentAnalysisEngine:
 
     @pytest.mark.asyncio
     async def test_real_time_content_analysis(self, sample_text_data):
-        """Test real-time content analysis"""
-        engine = ContentAnalysisEngine(enable_real_time_analysis=True)
+        """Test real-time content analysis"""        engine = ContentAnalysisEngine(enable_real_time_analysis=True)
         
         # Mock real-time analysis
         async def mock_analyze_realtime(content):
@@ -817,11 +765,9 @@ class TestContentAnalysisEngine:
 
 
 class TestContentProtectionModel:
-    """Tests for content protection and rights management"""
-    
+    """Tests for content protection and rights management"""    
     def test_init_protection_model(self):
-        """Test content protection model initialization"""
-        model = ContentProtectionModel(
+        """Test content protection model initialization"""        model = ContentProtectionModel(
             enable_watermarking=True,
             enable_fingerprinting=True,
             protection_level="high"
@@ -832,8 +778,7 @@ class TestContentProtectionModel:
         assert model.protection_level == "high"
 
     def test_content_fingerprinting(self, sample_image_data):
-        """Test content fingerprinting"""
-        model = ContentProtectionModel(enable_fingerprinting=True)
+        """Test content fingerprinting"""        model = ContentProtectionModel(enable_fingerprinting=True)
         
         fingerprint = model.generate_fingerprint(sample_image_data, content_type="image")
         
@@ -844,8 +789,7 @@ class TestContentProtectionModel:
         assert len(fingerprint["fingerprint_hash"]) > 0
 
     def test_watermark_embedding(self, sample_image_data):
-        """Test watermark embedding"""
-        model = ContentProtectionModel(enable_watermarking=True)
+        """Test watermark embedding"""        model = ContentProtectionModel(enable_watermarking=True)
         
         watermark_data = {
             "creator_id": "creator_001",
@@ -863,8 +807,7 @@ class TestContentProtectionModel:
         assert watermarked_content.size == sample_image_data.size
 
     def test_watermark_detection(self, sample_image_data):
-        """Test watermark detection"""
-        model = ContentProtectionModel(enable_watermarking=True)
+        """Test watermark detection"""        model = ContentProtectionModel(enable_watermarking=True)
         
         with patch.object(model, 'detect_watermark') as mock_detect:
             mock_detect.return_value = {
@@ -881,8 +824,7 @@ class TestContentProtectionModel:
             assert detection_result["watermark_detected"] is True
 
     def test_copyright_verification(self):
-        """Test copyright verification"""
-        model = ContentProtectionModel()
+        """Test copyright verification"""        model = ContentProtectionModel()
         
         content_hash = "abc123def456"
         
@@ -901,8 +843,7 @@ class TestContentProtectionModel:
             assert "copyright_status" in verification_result
 
     def test_plagiarism_detection(self, sample_text_data):
-        """Test plagiarism detection"""
-        model = ContentProtectionModel(enable_plagiarism_detection=True)
+        """Test plagiarism detection"""        model = ContentProtectionModel(enable_plagiarism_detection=True)
         
         with patch.object(model, 'detect_plagiarism') as mock_plagiarism:
             mock_plagiarism.return_value = {
@@ -921,11 +862,9 @@ class TestContentProtectionModel:
 
 
 class TestContentSEOOptimizer:
-    """Tests for content SEO optimization"""
-    
+    """Tests for content SEO optimization"""    
     def test_init_seo_optimizer(self):
-        """Test SEO optimizer initialization"""
-        optimizer = ContentSEOOptimizer(
+        """Test SEO optimizer initialization"""        optimizer = ContentSEOOptimizer(
             target_languages=["en", "fr", "de"],
             enable_keyword_optimization=True,
             enable_meta_generation=True
@@ -936,8 +875,7 @@ class TestContentSEOOptimizer:
         assert optimizer.enable_meta_generation
 
     def test_keyword_extraction(self, sample_text_data):
-        """Test keyword extraction and optimization"""
-        optimizer = ContentSEOOptimizer()
+        """Test keyword extraction and optimization"""        optimizer = ContentSEOOptimizer()
         
         text = " ".join(sample_text_data)
         keywords = optimizer.extract_keywords(text, max_keywords=10)
@@ -949,8 +887,7 @@ class TestContentSEOOptimizer:
         assert all("score" in kw for kw in keywords)
 
     def test_meta_description_generation(self, sample_text_data):
-        """Test meta description generation"""
-        optimizer = ContentSEOOptimizer(enable_meta_generation=True)
+        """Test meta description generation"""        optimizer = ContentSEOOptimizer(enable_meta_generation=True)
         
         with patch.object(optimizer, 'generate_meta_description') as mock_meta:
             mock_meta.return_value = {
@@ -968,8 +905,7 @@ class TestContentSEOOptimizer:
             assert meta_result["length"] <= 160  # SEO best practice
 
     def test_title_optimization(self, sample_text_data):
-        """Test title optimization for SEO"""
-        optimizer = ContentSEOOptimizer()
+        """Test title optimization for SEO"""        optimizer = ContentSEOOptimizer()
         
         original_title = "My Blog Post"
         optimized_title = optimizer.optimize_title(
@@ -984,8 +920,7 @@ class TestContentSEOOptimizer:
         assert "keyword_integration" in optimized_title
 
     def test_content_structure_analysis(self, sample_text_data):
-        """Test content structure analysis for SEO"""
-        optimizer = ContentSEOOptimizer()
+        """Test content structure analysis for SEO"""        optimizer = ContentSEOOptimizer()
         
         long_content = "\n\n".join(sample_text_data * 5)
         structure_analysis = optimizer.analyze_content_structure(long_content)
@@ -998,11 +933,9 @@ class TestContentSEOOptimizer:
 
 
 class TestContentMonetizationAnalyzer:
-    """Tests for content monetization analysis"""
-    
+    """Tests for content monetization analysis"""    
     def test_init_monetization_analyzer(self):
-        """Test monetization analyzer initialization"""
-        analyzer = ContentMonetizationAnalyzer(
+        """Test monetization analyzer initialization"""        analyzer = ContentMonetizationAnalyzer(
             enable_revenue_prediction=True,
             enable_audience_targeting=True
         )
@@ -1011,8 +944,7 @@ class TestContentMonetizationAnalyzer:
         assert analyzer.enable_audience_targeting
 
     def test_monetization_potential_assessment(self, sample_multimodal_data):
-        """Test monetization potential assessment"""
-        analyzer = ContentMonetizationAnalyzer()
+        """Test monetization potential assessment"""        analyzer = ContentMonetizationAnalyzer()
         
         with patch.object(analyzer, 'assess_monetization_potential') as mock_assess:
             mock_assess.return_value = {
@@ -1030,8 +962,7 @@ class TestContentMonetizationAnalyzer:
             assert "recommended_strategies" in assessment
 
     def test_audience_targeting_analysis(self, sample_content_metadata):
-        """Test audience targeting analysis"""
-        analyzer = ContentMonetizationAnalyzer(enable_audience_targeting=True)
+        """Test audience targeting analysis"""        analyzer = ContentMonetizationAnalyzer(enable_audience_targeting=True)
         
         with patch.object(analyzer, 'analyze_target_audience') as mock_audience:
             mock_audience.return_value = {
@@ -1057,12 +988,10 @@ class TestContentMonetizationAnalyzer:
 
 @pytest.mark.integration
 class TestContentModelsIntegration:
-    """Integration tests for content models"""
-    
+    """Integration tests for content models"""    
     @pytest.mark.slow
     def test_end_to_end_content_pipeline(self, sample_multimodal_data, temp_dir):
-        """Test end-to-end content analysis pipeline"""
-        # Initialize all components
+        """Test end-to-end content analysis pipeline"""        # Initialize all components
         analysis_engine = ContentAnalysisEngine(enable_all_modalities=True)
         protection_model = ContentProtectionModel(enable_watermarking=True)
         seo_optimizer = ContentSEOOptimizer(enable_keyword_optimization=True)
@@ -1099,8 +1028,7 @@ class TestContentModelsIntegration:
                 assert monetization_result["monetization_score"] > 0.7
 
     def test_content_workflow_integration(self, sample_content_metadata):
-        """Test integrated content workflow"""
-        # Simulate a complete content processing workflow
+        """Test integrated content workflow"""        # Simulate a complete content processing workflow
         workflow_steps = [
             "content_ingestion",
             "quality_assessment",

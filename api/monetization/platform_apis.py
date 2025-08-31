@@ -1,5 +1,4 @@
-"""
-Multi-platform API integration engine for revenue data collection.
+"""Multi-platform API integration engine for revenue data collection.
 
 This module provides comprehensive integration with major content platforms
 to collect real-time revenue, engagement, and analytics data for creators.
@@ -22,7 +21,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 import asyncio
 import aiohttp
 import logging
@@ -48,8 +46,7 @@ from ..core.exceptions import PlatformAPIException, AuthenticationException
 
 
 class PlatformType(Enum):
-    """Supported content platforms."""
-    SPOTIFY = "spotify"
+    """Supported content platforms."""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -64,8 +61,7 @@ class PlatformType(Enum):
 
 
 class DataType(Enum):
-    """Types of data collected from platforms."""
-    REVENUE = "revenue"
+    """Types of data collected from platforms."""    REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     ANALYTICS = "analytics"
     AUDIENCE = "audience"
@@ -74,8 +70,7 @@ class DataType(Enum):
 
 
 class AuthMethod(Enum):
-    """Platform authentication methods."""
-    OAUTH2 = "oauth2"
+    """Platform authentication methods."""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     BEARER_TOKEN = "bearer_token"
     BASIC_AUTH = "basic_auth"
@@ -84,8 +79,7 @@ class AuthMethod(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials and configuration."""
-    platform: PlatformType
+    """Platform API credentials and configuration."""    platform: PlatformType
     auth_method: AuthMethod
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -103,8 +97,7 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformData:
-    """Standardized platform data structure."""
-    platform: PlatformType
+    """Standardized platform data structure."""    platform: PlatformType
     creator_id: str
     data_type: DataType
     timestamp: datetime
@@ -116,8 +109,7 @@ class PlatformData:
 
 @dataclass
 class APICallResult:
-    """Result of platform API call."""
-    platform: PlatformType
+    """Result of platform API call."""    platform: PlatformType
     endpoint: str
     success: bool
     status_code: int
@@ -129,13 +121,11 @@ class APICallResult:
 
 
 class PlatformAPIManager:
-    """
-    Comprehensive platform API integration and data management system.
+    """    Comprehensive platform API integration and data management system.
     
     Provides unified interface for collecting revenue, engagement, and analytics
     data from major content platforms with robust error handling and rate limiting.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger("monetization.platform_apis")
@@ -162,8 +152,7 @@ class PlatformAPIManager:
         self.logger.info("PlatformAPIManager initialized successfully")
     
     async def _initialize_session(self):
-        """Initialize aiohttp session with proper configuration."""
-        try:
+        """Initialize aiohttp session with proper configuration."""        try:
             connector = aiohttp.TCPConnector(
                 limit=100,
                 limit_per_host=10,
@@ -188,8 +177,7 @@ class PlatformAPIManager:
             raise PlatformAPIException(f"Session initialization error: {e}")
     
     def _initialize_platform_configs(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize platform-specific configurations."""
-        return {
+        """Initialize platform-specific configurations."""        return {
             PlatformType.SPOTIFY: {
                 "base_url": "https://api.spotify.com/v1",
                 "auth_url": "https://accounts.spotify.com/api/token",
@@ -251,8 +239,7 @@ class PlatformAPIManager:
         creator_id: str,
         credentials: PlatformCredentials
     ) -> bool:
-        """
-        Register and validate platform credentials for creator.
+        """        Register and validate platform credentials for creator.
         
         Args:
             creator_id: Unique creator identifier
@@ -260,8 +247,7 @@ class PlatformAPIManager:
             
         Returns:
             Success status of credential registration
-        """
-        try:
+        """        try:
             self.logger.info(f"Registering {credentials.platform.value} credentials for creator: {creator_id}")
             
             # Validate credentials
@@ -291,8 +277,7 @@ class PlatformAPIManager:
             raise PlatformAPIException(f"Credential registration error: {e}")
     
     async def _validate_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Validate platform credentials by making test API call."""
-        try:
+        """Validate platform credentials by making test API call."""        try:
             platform_config = self.platform_configs.get(credentials.platform)
             if not platform_config:
                 return False
@@ -314,8 +299,7 @@ class PlatformAPIManager:
             return False
     
     def _get_test_endpoint(self, platform: PlatformType) -> str:
-        """Get test endpoint for credential validation."""
-        test_endpoints = {
+        """Get test endpoint for credential validation."""        test_endpoints = {
             PlatformType.SPOTIFY: "/me",
             PlatformType.YOUTUBE: "/channels?part=snippet&mine=true",
             PlatformType.INSTAGRAM: "/me?fields=id,username",
@@ -327,8 +311,7 @@ class PlatformAPIManager:
         return test_endpoints.get(platform, "/")
     
     async def _build_auth_headers(self, credentials: PlatformCredentials) -> Dict[str, str]:
-        """Build authentication headers for API requests."""
-        headers = {}
+        """Build authentication headers for API requests."""        headers = {}
         
         if credentials.auth_method == AuthMethod.OAUTH2:
             if credentials.access_token:
@@ -350,16 +333,13 @@ class PlatformAPIManager:
         return headers
     
     async def _encrypt_credentials(self, credentials: PlatformCredentials) -> PlatformCredentials:
-        """Encrypt sensitive credential data."""
-        # In production, use proper encryption (AES, etc.)
+        """Encrypt sensitive credential data."""        # In production, use proper encryption (AES, etc.)
         # For now, return as-is (implement proper encryption)
         return credentials
     
     async def _store_credentials(self, creator_id: str, credentials: PlatformCredentials):
-        """Store encrypted credentials in database."""
-        try:
-            query = """
-            INSERT INTO platform_credentials (
+        """Store encrypted credentials in database."""        try:
+            query = """            INSERT INTO platform_credentials (
                 creator_id, platform, auth_method, client_id, client_secret,
                 api_key, access_token, refresh_token, token_expires_at,
                 scopes, rate_limit_per_minute, rate_limit_per_day,
@@ -371,8 +351,7 @@ class PlatformAPIManager:
                 token_expires_at = $9, scopes = $10, rate_limit_per_minute = $11,
                 rate_limit_per_day = $12, custom_headers = $13, base_url = $14,
                 updated_at = $16
-            """
-            
+            """            
             await self.db.execute(
                 query,
                 creator_id,
@@ -398,8 +377,7 @@ class PlatformAPIManager:
             raise PlatformAPIException(f"Credential storage error: {e}")
     
     async def _initialize_rate_limiting(self, creator_id: str, platform: PlatformType):
-        """Initialize rate limiting for creator-platform combination."""
-        rate_key = f"rate_limit:{creator_id}:{platform.value}"
+        """Initialize rate limiting for creator-platform combination."""        rate_key = f"rate_limit:{creator_id}:{platform.value}"
         platform_config = self.platform_configs.get(platform, {})
         
         self.rate_limits[rate_key] = {
@@ -418,8 +396,7 @@ class PlatformAPIManager:
         data_types: List[DataType],
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[PlatformType, List[PlatformData]]:
-        """
-        Collect data from multiple platforms simultaneously.
+        """        Collect data from multiple platforms simultaneously.
         
         Args:
             creator_id: Unique creator identifier
@@ -429,8 +406,7 @@ class PlatformAPIManager:
             
         Returns:
             Dictionary of platform data organized by platform
-        """
-        try:
+        """        try:
             self.logger.info(f"Collecting data for creator: {creator_id} from {len(platforms)} platforms")
             
             # Prepare collection tasks
@@ -474,8 +450,7 @@ class PlatformAPIManager:
         data_type: DataType,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> List[PlatformData]:
-        """Collect data from a single platform with retry logic."""
-        try:
+        """Collect data from a single platform with retry logic."""        try:
             # Get credentials
             credentials = await self._get_credentials(creator_id, platform)
             if not credentials:
@@ -514,8 +489,7 @@ class PlatformAPIManager:
         creator_id: str,
         platform: PlatformType
     ) -> Optional[PlatformCredentials]:
-        """Get cached or retrieve platform credentials."""
-        cache_key = f"credentials:{creator_id}:{platform.value}"
+        """Get cached or retrieve platform credentials."""        cache_key = f"credentials:{creator_id}:{platform.value}"
         
         # Check cache first
         if cache_key in self.credentials_cache:
@@ -523,11 +497,9 @@ class PlatformAPIManager:
         
         # Retrieve from database
         try:
-            query = """
-            SELECT * FROM platform_credentials 
+            query = """            SELECT * FROM platform_credentials 
             WHERE creator_id = $1 AND platform = $2
-            """
-            
+            """            
             result = await self.db.fetchrow(query, creator_id, platform.value)
             
             if not result:
@@ -559,8 +531,7 @@ class PlatformAPIManager:
             return None
     
     async def _check_rate_limit(self, creator_id: str, platform: PlatformType):
-        """Check and enforce rate limits."""
-        rate_key = f"rate_limit:{creator_id}:{platform.value}"
+        """Check and enforce rate limits."""        rate_key = f"rate_limit:{creator_id}:{platform.value}"
         
         if rate_key not in self.rate_limits:
             await self._initialize_rate_limiting(creator_id, platform)
@@ -586,8 +557,7 @@ class PlatformAPIManager:
             raise PlatformAPIException(f"Daily rate limit exceeded for {platform.value}")
     
     async def _refresh_token_if_needed(self, credentials: PlatformCredentials):
-        """Refresh access token if it's expired or close to expiring."""
-        if not credentials.refresh_token:
+        """Refresh access token if it's expired or close to expiring."""        if not credentials.refresh_token:
             return
         
         if credentials.token_expires_at:
@@ -600,8 +570,7 @@ class PlatformAPIManager:
         await self._refresh_access_token(credentials)
     
     async def _refresh_access_token(self, credentials: PlatformCredentials):
-        """Refresh OAuth2 access token."""
-        try:
+        """Refresh OAuth2 access token."""        try:
             platform_config = self.platform_configs.get(credentials.platform)
             if not platform_config or not platform_config.get("auth_url"):
                 return
@@ -647,8 +616,7 @@ class PlatformAPIManager:
         platform: PlatformType,
         data_type: DataType
     ) -> Optional[callable]:
-        """Get appropriate data collector method for platform and data type."""
-        collectors = {
+        """Get appropriate data collector method for platform and data type."""        collectors = {
             (PlatformType.SPOTIFY, DataType.REVENUE): self._collect_spotify_revenue,
             (PlatformType.SPOTIFY, DataType.ANALYTICS): self._collect_spotify_analytics,
             (PlatformType.YOUTUBE, DataType.REVENUE): self._collect_youtube_revenue,
@@ -667,8 +635,7 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect Spotify revenue data."""
-        try:
+        """Collect Spotify revenue data."""        try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.SPOTIFY]["base_url"]
             
@@ -703,8 +670,7 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect Spotify analytics data."""
-        try:
+        """Collect Spotify analytics data."""        try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.SPOTIFY]["base_url"]
             
@@ -739,8 +705,7 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect YouTube revenue data."""
-        try:
+        """Collect YouTube revenue data."""        try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.YOUTUBE]["base_url"]
             
@@ -777,8 +742,7 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect YouTube analytics data."""
-        try:
+        """Collect YouTube analytics data."""        try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.YOUTUBE]["base_url"]
             
@@ -822,8 +786,7 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect Instagram engagement data."""
-        try:
+        """Collect Instagram engagement data."""        try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.INSTAGRAM]["base_url"]
             
@@ -855,8 +818,7 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect TikTok analytics data."""
-        try:
+        """Collect TikTok analytics data."""        try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.TIKTOK]["base_url"]
             
@@ -887,8 +849,7 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect Twitch revenue data."""
-        try:
+        """Collect Twitch revenue data."""        try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.TWITCH]["base_url"]
             
@@ -918,8 +879,7 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect Patreon revenue data."""
-        try:
+        """Collect Patreon revenue data."""        try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.PATREON]["base_url"]
             
@@ -946,8 +906,7 @@ class PlatformAPIManager:
         credentials: PlatformCredentials,
         date_range: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect SoundCloud analytics data."""
-        try:
+        """Collect SoundCloud analytics data."""        try:
             headers = await self._build_auth_headers(credentials)
             base_url = credentials.base_url or self.platform_configs[PlatformType.SOUNDCLOUD]["base_url"]
             
@@ -979,8 +938,7 @@ class PlatformAPIManager:
         data_type: DataType,
         raw_data: Dict[str, Any]
     ) -> List[PlatformData]:
-        """Process and standardize raw platform data."""
-        try:
+        """Process and standardize raw platform data."""        try:
             processed_data_list = []
             
             # Platform-specific processing
@@ -1032,8 +990,7 @@ class PlatformAPIManager:
         raw_data: Dict[str, Any],
         data_type: DataType
     ) -> Dict[str, Any]:
-        """Process Spotify-specific data."""
-        processed = {
+        """Process Spotify-specific data."""        processed = {
             "total_tracks": 0,
             "total_plays": 0,
             "estimated_revenue": Decimal("0.00"),
@@ -1066,8 +1023,7 @@ class PlatformAPIManager:
         raw_data: Dict[str, Any],
         data_type: DataType
     ) -> Dict[str, Any]:
-        """Process YouTube-specific data."""
-        processed = {
+        """Process YouTube-specific data."""        processed = {
             "total_views": 0,
             "total_revenue": Decimal("0.00"),
             "subscriber_count": 0,
@@ -1103,8 +1059,7 @@ class PlatformAPIManager:
         raw_data: Dict[str, Any],
         data_type: DataType
     ) -> Dict[str, Any]:
-        """Process Instagram-specific data."""
-        processed = {
+        """Process Instagram-specific data."""        processed = {
             "followers_count": 0,
             "media_count": 0,
             "total_likes": 0,
@@ -1142,8 +1097,7 @@ class PlatformAPIManager:
         raw_data: Dict[str, Any],
         data_type: DataType
     ) -> Dict[str, Any]:
-        """Process TikTok-specific data."""
-        processed = {
+        """Process TikTok-specific data."""        processed = {
             "followers_count": 0,
             "video_count": 0,
             "total_views": 0,
@@ -1183,8 +1137,7 @@ class PlatformAPIManager:
         processed_data: Dict[str, Any],
         data_type: DataType
     ) -> Dict[str, Union[int, float, Decimal]]:
-        """Calculate standardized metrics from processed data."""
-        metrics = {}
+        """Calculate standardized metrics from processed data."""        metrics = {}
         
         try:
             # Common metrics calculation
@@ -1230,8 +1183,7 @@ class PlatformAPIManager:
             return {}
     
     async def _execute_with_rate_limiting(self, tasks: List) -> List:
-        """Execute tasks with proper rate limiting and error handling."""
-        results = []
+        """Execute tasks with proper rate limiting and error handling."""        results = []
         
         # Group tasks by platform to manage rate limits
         platform_tasks = {}
@@ -1258,8 +1210,7 @@ class PlatformAPIManager:
         return results
     
     async def _execute_platform_tasks(self, tasks: List) -> List:
-        """Execute tasks for a single platform with rate limiting."""
-        results = []
+        """Execute tasks for a single platform with rate limiting."""        results = []
         
         for task in tasks:
             try:
@@ -1276,8 +1227,7 @@ class PlatformAPIManager:
         return results
     
     async def _update_rate_limit_counters(self, creator_id: str, platform: PlatformType):
-        """Update rate limit counters after successful API call."""
-        rate_key = f"rate_limit:{creator_id}:{platform.value}"
+        """Update rate limit counters after successful API call."""        rate_key = f"rate_limit:{creator_id}:{platform.value}"
         
         if rate_key in self.rate_limits:
             self.rate_limits[rate_key]["current_minute"] += 1
@@ -1288,17 +1238,14 @@ class PlatformAPIManager:
         creator_id: str,
         platform_data: Dict[PlatformType, List[PlatformData]]
     ):
-        """Store collected platform data in database."""
-        try:
+        """Store collected platform data in database."""        try:
             for platform, data_list in platform_data.items():
                 for data in data_list:
-                    query = """
-                    INSERT INTO platform_data_collection (
+                    query = """                    INSERT INTO platform_data_collection (
                         creator_id, platform, data_type, timestamp,
                         raw_data, processed_data, metrics, metadata
                     ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-                    """
-                    
+                    """                    
                     await self.db.execute(
                         query,
                         creator_id,
@@ -1321,8 +1268,7 @@ class PlatformAPIManager:
         creator_id: str,
         days: int = 30
     ) -> Dict[str, Dict[str, Any]]:
-        """
-        Get summary of platform performance and revenue data.
+        """        Get summary of platform performance and revenue data.
         
         Args:
             creator_id: Unique creator identifier
@@ -1330,13 +1276,11 @@ class PlatformAPIManager:
             
         Returns:
             Dictionary of platform summaries with key metrics
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days)
             
-            query = """
-            SELECT 
+            query = """            SELECT 
                 platform,
                 data_type,
                 COUNT(*) as data_points,
@@ -1348,8 +1292,7 @@ class PlatformAPIManager:
             WHERE creator_id = $1 
             AND timestamp BETWEEN $2 AND $3
             GROUP BY platform, data_type
-            """
-            
+            """            
             results = await self.db.fetch(query, creator_id, start_date, end_date)
             
             # Organize results by platform
@@ -1381,8 +1324,7 @@ class PlatformAPIManager:
             return {}
     
     async def close(self):
-        """Close HTTP session and cleanup resources."""
-        try:
+        """Close HTTP session and cleanup resources."""        try:
             if self.session:
                 await self.session.close()
             
@@ -1398,5 +1340,4 @@ class PlatformAPIManager:
 
 # Factory function for easy instantiation
 def create_platform_api_manager(config: Optional[Dict[str, Any]] = None) -> PlatformAPIManager:
-    """Create and return configured platform API manager instance."""
-    return PlatformAPIManager(config)
+    """Create and return configured platform API manager instance."""    return PlatformAPIManager(config)

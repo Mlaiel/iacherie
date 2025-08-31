@@ -10,8 +10,7 @@ This module defines the foundational interfaces for:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent - Industrial Content Protection Platform
 © 2025 - All rights reserved. Unauthorized use, copying, or distribution prohibited.
-"""
-from .content_interfaces import (
+"""from .content_interfaces import (
     ContentProcessorInterface,
     ContentProtectionInterface,
     ContentFingerprinterInterface,

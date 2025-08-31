@@ -1,5 +1,4 @@
-"""
-Takedown Manager Repository
+"""Takedown Manager Repository
 
 Ultra-advanced DMCA and legal takedown management system with automated
 processing, multi-jurisdiction support, and comprehensive tracking.
@@ -17,7 +16,6 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
-
 import asyncio
 import json
 import logging
@@ -46,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class TakedownStatus(Enum):
-    """Takedown request status types"""
-    DRAFT = "draft"
+    """Takedown request status types"""    DRAFT = "draft"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
     PROCESSING = "processing"
@@ -60,8 +57,7 @@ class TakedownStatus(Enum):
 
 
 class TakedownType(Enum):
-    """Types of takedown requests"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of takedown requests"""    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     PLATFORM_REPORT = "platform_report"
     COURT_ORDER = "court_order"
@@ -71,8 +67,7 @@ class TakedownType(Enum):
 
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions for takedown requests"""
-    US_FEDERAL = "us_federal"
+    """Legal jurisdictions for takedown requests"""    US_FEDERAL = "us_federal"
     EU_GDPR = "eu_gdpr"
     UK_COPYRIGHT = "uk_copyright"
     CANADA_COPYRIGHT = "canada_copyright"
@@ -81,21 +76,18 @@ class LegalJurisdiction(Enum):
 
 
 class TakedownManagerError(Exception):
-    """Custom exception for takedown manager operations"""
-    pass
+    """Custom exception for takedown manager operations"""    pass
 
 
 class TakedownManagerRepository:
-    """
-    Ultra-advanced takedown manager with enterprise features:
+    """    Ultra-advanced takedown manager with enterprise features:
     - Automated DMCA and legal takedown processing
     - Multi-jurisdiction legal compliance
     - Platform-specific takedown workflows
     - AI-powered legal document generation
     - Real-time tracking and escalation
     - Success rate optimization and analytics
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -144,8 +136,7 @@ class TakedownManagerRepository:
         copyright_owner: Dict[str, Any],
         auto_submit: bool = False
     ) -> TakedownRequest:
-        """
-        Create comprehensive takedown request with legal validation
+        """        Create comprehensive takedown request with legal validation
         
         Args:
             violation_id: Associated violation report ID
@@ -160,8 +151,7 @@ class TakedownManagerRepository:
             
         Raises:
             TakedownManagerError: If creation fails
-        """
-        try:
+        """        try:
             # Validate takedown data
             await self._validate_takedown_data(infringing_content, copyright_owner)
             
@@ -243,8 +233,7 @@ class TakedownManagerRepository:
         submission_method: str = "automated",
         submitted_by: Optional[str] = None
     ) -> TakedownRequest:
-        """
-        Submit takedown request to target platform
+        """        Submit takedown request to target platform
         
         Args:
             takedown_id: Takedown request identifier
@@ -253,8 +242,7 @@ class TakedownManagerRepository:
             
         Returns:
             Updated TakedownRequest record
-        """
-        try:
+        """        try:
             takedown = await self.db_session.query(TakedownRequest).filter(
                 TakedownRequest.takedown_id == takedown_id
             ).first()
@@ -315,8 +303,7 @@ class TakedownManagerRepository:
         platform_response: Optional[Dict[str, Any]] = None,
         compliance_data: Optional[Dict[str, Any]] = None
     ) -> TakedownRequest:
-        """
-        Update takedown status with platform response tracking
+        """        Update takedown status with platform response tracking
         
         Args:
             takedown_id: Takedown request identifier
@@ -326,8 +313,7 @@ class TakedownManagerRepository:
             
         Returns:
             Updated TakedownRequest record
-        """
-        try:
+        """        try:
             takedown = await self.db_session.query(TakedownRequest).filter(
                 TakedownRequest.takedown_id == takedown_id
             ).first()
@@ -406,8 +392,7 @@ class TakedownManagerRepository:
         response_data: Dict[str, Any],
         response_source: str = "email"
     ) -> TakedownResponse:
-        """
-        Process and analyze platform response to takedown request
+        """        Process and analyze platform response to takedown request
         
         Args:
             takedown_id: Takedown request identifier
@@ -416,8 +401,7 @@ class TakedownManagerRepository:
             
         Returns:
             Created TakedownResponse record
-        """
-        try:
+        """        try:
             takedown = await self.db_session.query(TakedownRequest).filter(
                 TakedownRequest.takedown_id == takedown_id
             ).first()
@@ -475,8 +459,7 @@ class TakedownManagerRepository:
         escalation_reason: str,
         legal_counsel: Optional[Dict[str, Any]] = None
     ) -> LegalAction:
-        """
-        Initiate legal escalation for failed takedown requests
+        """        Initiate legal escalation for failed takedown requests
         
         Args:
             takedown_id: Takedown request identifier
@@ -485,8 +468,7 @@ class TakedownManagerRepository:
             
         Returns:
             Created LegalAction record
-        """
-        try:
+        """        try:
             takedown = await self.db_session.query(TakedownRequest).filter(
                 TakedownRequest.takedown_id == takedown_id
             ).first()
@@ -549,8 +531,7 @@ class TakedownManagerRepository:
         analysis_period_days: int = 30,
         platform_filter: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive takedown analytics and success metrics
+        """        Generate comprehensive takedown analytics and success metrics
         
         Args:
             analysis_period_days: Period for analysis
@@ -558,8 +539,7 @@ class TakedownManagerRepository:
             
         Returns:
             Comprehensive analytics data
-        """
-        try:
+        """        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=analysis_period_days)
             
             # Build base query
@@ -661,8 +641,7 @@ class TakedownManagerRepository:
         infringing_content: Dict[str, Any],
         copyright_owner: Dict[str, Any]
     ) -> None:
-        """Validate takedown request data"""
-        required_content_fields = ["url", "description", "platform"]
+        """Validate takedown request data"""        required_content_fields = ["url", "description", "platform"]
         required_owner_fields = ["name", "email", "ownership_basis"]
         
         for field in required_content_fields:
@@ -678,8 +657,7 @@ class TakedownManagerRepository:
         platform: str,
         copyright_owner: Dict[str, Any]
     ) -> LegalJurisdiction:
-        """Determine appropriate legal jurisdiction"""
-        # Platform-based jurisdiction mapping
+        """Determine appropriate legal jurisdiction"""        # Platform-based jurisdiction mapping
         platform_jurisdictions = {
             "youtube": LegalJurisdiction.US_FEDERAL,
             "facebook": LegalJurisdiction.US_FEDERAL,
@@ -701,8 +679,7 @@ class TakedownManagerRepository:
         return platform_jurisdictions.get(platform.lower(), LegalJurisdiction.INTERNATIONAL)
     
     async def _generate_takedown_id(self, takedown_type: TakedownType, platform: str) -> str:
-        """Generate unique takedown identifier"""
-        import hashlib
+        """Generate unique takedown identifier"""        import hashlib
         
         timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         type_prefix = takedown_type.value[:4].upper()
@@ -714,8 +691,7 @@ class TakedownManagerRepository:
         return f"{type_prefix}-{platform_prefix}-{timestamp}-{hash_suffix}"
     
     async def _get_platform_contact(self, platform: str) -> Optional[PlatformContact]:
-        """Get platform contact information"""
-        # Check cache first
+        """Get platform contact information"""        # Check cache first
         if platform in self.platform_contacts_cache:
             return self.platform_contacts_cache[platform]
         
@@ -737,8 +713,7 @@ class TakedownManagerRepository:
         infringing_content: Dict[str, Any],
         copyright_owner: Dict[str, Any]
     ) -> str:
-        """Generate legal document for takedown request"""
-        template_key = f"{takedown_type.value}_{jurisdiction.value}"
+        """Generate legal document for takedown request"""        template_key = f"{takedown_type.value}_{jurisdiction.value}"
         
         # Get template from cache or load
         if template_key not in self.template_cache:
@@ -761,8 +736,7 @@ class TakedownManagerRepository:
         takedown_type: TakedownType,
         jurisdiction: LegalJurisdiction
     ) -> str:
-        """Determine legal basis for takedown request"""
-        legal_bases = {
+        """Determine legal basis for takedown request"""        legal_bases = {
             TakedownType.DMCA_TAKEDOWN: "Digital Millennium Copyright Act (DMCA)",
             TakedownType.CEASE_DESIST: "Copyright infringement under applicable law",
             TakedownType.TRADEMARK_CLAIM: "Trademark infringement",
@@ -772,8 +746,7 @@ class TakedownManagerRepository:
         return legal_bases.get(takedown_type, "Applicable intellectual property law")
     
     async def _get_evidence_requirements(self, takedown_type: TakedownType) -> List[str]:
-        """Get evidence requirements for takedown type"""
-        requirements = {
+        """Get evidence requirements for takedown type"""        requirements = {
             TakedownType.DMCA_TAKEDOWN: [
                 "proof_of_ownership",
                 "infringing_url",
@@ -790,8 +763,7 @@ class TakedownManagerRepository:
         return requirements.get(takedown_type, ["basic_evidence"])
     
     async def _estimate_processing_time(self, platform: str) -> int:
-        """Estimate processing time in hours for platform"""
-        platform_times = {
+        """Estimate processing time in hours for platform"""        platform_times = {
             "youtube": 24,
             "facebook": 48,
             "instagram": 48,
@@ -802,13 +774,11 @@ class TakedownManagerRepository:
         return platform_times.get(platform.lower(), 168)  # Default 1 week
     
     async def _schedule_followup_reminders(self, takedown: TakedownRequest) -> None:
-        """Schedule follow-up reminders for takedown request"""
-        # Implementation would integrate with task scheduler
+        """Schedule follow-up reminders for takedown request"""        # Implementation would integrate with task scheduler
         pass
     
     async def _prepare_submission_data(self, takedown: TakedownRequest) -> Dict[str, Any]:
-        """Prepare data for takedown submission"""
-        return {
+        """Prepare data for takedown submission"""        return {
             "takedown_id": takedown.takedown_id,
             "legal_document": takedown.legal_document,
             "platform": takedown.target_platform,
@@ -821,8 +791,7 @@ class TakedownManagerRepository:
         method: str,
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Submit takedown via specified method"""
-        if method == "api":
+        """Submit takedown via specified method"""        if method == "api":
             return await self.platform_api_manager.submit_takedown(takedown.target_platform, data)
         elif method == "email":
             return await self._submit_via_email(takedown, data)
@@ -830,13 +799,11 @@ class TakedownManagerRepository:
             return {"status": "submitted", "method": method}
     
     async def _submit_via_email(self, takedown: TakedownRequest, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown via email"""
-        # Implementation would send email to platform
+        """Submit takedown via email"""        # Implementation would send email to platform
         return {"status": "email_sent", "timestamp": datetime.now(timezone.utc).isoformat()}
     
     async def _send_submission_notifications(self, takedown: TakedownRequest) -> None:
-        """Send notifications for takedown submission"""
-        try:
+        """Send notifications for takedown submission"""        try:
             notification_data = {
                 "takedown_id": takedown.takedown_id,
                 "platform": takedown.target_platform,
@@ -849,8 +816,7 @@ class TakedownManagerRepository:
             logger.warning(f"Submission notification failed: {e}")
     
     async def _schedule_response_tracking(self, takedown: TakedownRequest) -> None:
-        """Schedule response tracking for takedown request"""
-        # Implementation would set up monitoring for platform response
+        """Schedule response tracking for takedown request"""        # Implementation would set up monitoring for platform response
         pass
     
     async def _send_status_update_notifications(
@@ -859,8 +825,7 @@ class TakedownManagerRepository:
         old_status: str,
         new_status: str
     ) -> None:
-        """Send notifications for status updates"""
-        try:
+        """Send notifications for status updates"""        try:
             notification_data = {
                 "takedown_id": takedown.takedown_id,
                 "old_status": old_status,
@@ -874,8 +839,7 @@ class TakedownManagerRepository:
             logger.warning(f"Status update notification failed: {e}")
     
     async def _analyze_platform_response(self, response_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze platform response content"""
-        # AI-powered response analysis would go here
+        """Analyze platform response content"""        # AI-powered response analysis would go here
         response_text = response_data.get("content", "").lower()
         
         if "removed" in response_text or "complied" in response_text:
@@ -898,8 +862,7 @@ class TakedownManagerRepository:
             }
     
     async def _determine_status_from_response(self, analysis: Dict[str, Any]) -> Optional[TakedownStatus]:
-        """Determine takedown status from response analysis"""
-        compliance_status = analysis.get("compliance_status")
+        """Determine takedown status from response analysis"""        compliance_status = analysis.get("compliance_status")
         
         if compliance_status == "complied":
             return TakedownStatus.COMPLIED
@@ -915,8 +878,7 @@ class TakedownManagerRepository:
         takedown: TakedownRequest,
         response: TakedownResponse
     ) -> None:
-        """Trigger follow-up actions based on response"""
-        # Implementation for automated follow-up actions
+        """Trigger follow-up actions based on response"""        # Implementation for automated follow-up actions
         pass
     
     async def _handle_takedown_rejection(
@@ -924,8 +886,7 @@ class TakedownManagerRepository:
         takedown: TakedownRequest,
         rejection_data: Optional[Dict[str, Any]]
     ) -> None:
-        """Handle takedown rejection"""
-        # Implementation for rejection handling (appeals, escalation, etc.)
+        """Handle takedown rejection"""        # Implementation for rejection handling (appeals, escalation, etc.)
         pass
     
     async def _create_compliance_record(
@@ -933,8 +894,7 @@ class TakedownManagerRepository:
         takedown: TakedownRequest,
         compliance_data: Dict[str, Any]
     ) -> ComplianceRecord:
-        """Create compliance record for successful takedown"""
-        record = ComplianceRecord(
+        """Create compliance record for successful takedown"""        record = ComplianceRecord(
             id=uuid4(),
             takedown_id=takedown.id,
             compliance_type="content_removal",
@@ -949,12 +909,10 @@ class TakedownManagerRepository:
     # Additional helper methods for legal escalation and analytics...
     
     async def _validate_escalation_eligibility(self, takedown: TakedownRequest) -> bool:
-        """Validate if takedown is eligible for legal escalation"""
-        return takedown.status in [TakedownStatus.REJECTED.value, TakedownStatus.EXPIRED.value]
+        """Validate if takedown is eligible for legal escalation"""        return takedown.status in [TakedownStatus.REJECTED.value, TakedownStatus.EXPIRED.value]
     
     async def _generate_case_number(self, takedown: TakedownRequest) -> str:
-        """Generate legal case number"""
-        timestamp = datetime.now().strftime("%Y%m%d")
+        """Generate legal case number"""        timestamp = datetime.now().strftime("%Y%m%d")
         return f"LEGAL-{timestamp}-{takedown.takedown_id[-6:]}"
     
     async def _prepare_legal_documentation(
@@ -962,8 +920,7 @@ class TakedownManagerRepository:
         takedown: TakedownRequest,
         escalation_reason: str
     ) -> Dict[str, Any]:
-        """Prepare legal documentation for escalation"""
-        return {
+        """Prepare legal documentation for escalation"""        return {
             "original_takedown": takedown.takedown_id,
             "escalation_reason": escalation_reason,
             "evidence_package": "compiled",
@@ -971,13 +928,11 @@ class TakedownManagerRepository:
         }
     
     async def _count_prior_attempts(self, takedown: TakedownRequest) -> int:
-        """Count prior takedown attempts for same content"""
-        # Implementation would count related takedowns
+        """Count prior takedown attempts for same content"""        # Implementation would count related takedowns
         return 1
     
     async def _estimate_legal_costs(self, takedown: TakedownRequest) -> float:
-        """Estimate legal costs for escalation"""
-        base_costs = {
+        """Estimate legal costs for escalation"""        base_costs = {
             "civil_litigation": 5000.0,
             "cease_desist": 1000.0,
             "court_filing": 2500.0
@@ -990,8 +945,7 @@ class TakedownManagerRepository:
         takedown: TakedownRequest,
         legal_action: LegalAction
     ) -> None:
-        """Send legal escalation notifications"""
-        try:
+        """Send legal escalation notifications"""        try:
             notification_data = {
                 "takedown_id": takedown.takedown_id,
                 "case_number": legal_action.case_number,
@@ -1004,13 +958,11 @@ class TakedownManagerRepository:
             logger.warning(f"Legal escalation notification failed: {e}")
     
     async def _analyze_takedown_trends(self, takedowns: List[TakedownRequest]) -> Dict[str, Any]:
-        """Analyze trends in takedown data"""
-        # Implementation for trend analysis
+        """Analyze trends in takedown data"""        # Implementation for trend analysis
         return {"trend": "stable", "insights": []}
     
     async def _generate_takedown_recommendations(self, platform_stats: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on platform statistics"""
-        recommendations = []
+        """Generate recommendations based on platform statistics"""        recommendations = []
         
         for platform, stats in platform_stats.items():
             if stats["success_rate"] < 50:

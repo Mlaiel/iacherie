@@ -1,5 +1,4 @@
-"""
-Payment Processing Database Migration Scripts
+"""Payment Processing Database Migration Scripts
 
 Advanced database migration utilities for payment processing schema management,
 version control, and data migration operations.
@@ -13,7 +12,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, Any, List, Optional, Callable
 from sqlalchemy import (
     text, MetaData, Table, Column, Integer, String, DateTime,
@@ -30,13 +28,11 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationError(Exception):
-    """Exception for migration-related errors"""
-    pass
+    """Exception for migration-related errors"""    pass
 
 
 class Migration:
-    """Base class for database migrations"""
-    
+    """Base class for database migrations"""    
     def __init__(self, version: str, description: str):
         self.version = version
         self.description = description
@@ -44,22 +40,18 @@ class Migration:
         self.checksum = self._calculate_checksum()
     
     def up(self, engine) -> None:
-        """Apply migration (must be implemented by subclasses)"""
-        pass
+        """Apply migration (must be implemented by subclasses)"""        pass
     
     def down(self, engine) -> None:
-        """Rollback migration (must be implemented by subclasses)"""
-        pass
+        """Rollback migration (must be implemented by subclasses)"""        pass
     
     def _calculate_checksum(self) -> str:
-        """Calculate migration checksum"""
-        content = f"{self.version}:{self.description}:{self.__class__.__name__}"
+        """Calculate migration checksum"""        content = f"{self.version}:{self.description}:{self.__class__.__name__}"
         return hashlib.md5(content.encode('utf-8')).hexdigest()
 
 
 class MigrationManager:
-    """Manager for database migration operations"""
-    
+    """Manager for database migration operations"""    
     def __init__(self, engine, migration_table: str = "payment_migrations"):
         self.engine = engine
         self.migration_table = migration_table
@@ -67,9 +59,7 @@ class MigrationManager:
         self._ensure_migration_table()
     
     def _ensure_migration_table(self):
-        """Ensure migration tracking table exists"""
-        create_sql = f"""
-        CREATE TABLE IF NOT EXISTS {self.migration_table} (
+        """Ensure migration tracking table exists"""        create_sql = f"""        CREATE TABLE IF NOT EXISTS {self.migration_table} (
             id SERIAL PRIMARY KEY,
             version VARCHAR(50) NOT NULL UNIQUE,
             description TEXT NOT NULL,
@@ -79,28 +69,24 @@ class MigrationManager:
             execution_time_ms INTEGER,
             rollback_sql TEXT
         )
-        """
-        
+        """        
         with self.engine.connect() as conn:
             conn.execute(text(create_sql))
             conn.commit()
     
     def register_migration(self, migration: Migration):
-        """Register a migration"""
-        self.migrations.append(migration)
+        """Register a migration"""        self.migrations.append(migration)
         logger.info(f"Registered migration {migration.version}: {migration.description}")
     
     def get_applied_migrations(self) -> List[Dict[str, Any]]:
-        """Get list of applied migrations"""
-        query = f"SELECT * FROM {self.migration_table} ORDER BY applied_at"
+        """Get list of applied migrations"""        query = f"SELECT * FROM {self.migration_table} ORDER BY applied_at"
         
         with self.engine.connect() as conn:
             result = conn.execute(text(query))
             return [dict(row._mapping) for row in result]
     
     def get_pending_migrations(self) -> List[Migration]:
-        """Get list of pending migrations"""
-        applied_versions = {
+        """Get list of pending migrations"""        applied_versions = {
             row['version'] for row in self.get_applied_migrations()
         }
         
@@ -110,8 +96,7 @@ class MigrationManager:
         ]
     
     def apply_migration(self, migration: Migration) -> bool:
-        """Apply a single migration"""
-        try:
+        """Apply a single migration"""        try:
             start_time = datetime.utcnow()
             
             # Execute migration
@@ -120,12 +105,10 @@ class MigrationManager:
             execution_time = (datetime.utcnow() - start_time).total_seconds() * 1000
             
             # Record migration
-            insert_sql = f"""
-            INSERT INTO {self.migration_table} 
+            insert_sql = f"""            INSERT INTO {self.migration_table} 
             (version, description, checksum, execution_time_ms)
             VALUES (%(version)s, %(description)s, %(checksum)s, %(execution_time)s)
-            """
-            
+            """            
             with self.engine.connect() as conn:
                 conn.execute(text(insert_sql), {
                     'version': migration.version,
@@ -143,8 +126,7 @@ class MigrationManager:
             raise MigrationError(f"Migration {migration.version} failed: {str(e)}")
     
     def rollback_migration(self, migration: Migration) -> bool:
-        """Rollback a single migration"""
-        try:
+        """Rollback a single migration"""        try:
             # Execute rollback
             migration.down(self.engine)
             
@@ -163,8 +145,7 @@ class MigrationManager:
             raise MigrationError(f"Rollback {migration.version} failed: {str(e)}")
     
     def migrate_up(self, target_version: Optional[str] = None) -> int:
-        """Apply all pending migrations up to target version"""
-        pending = self.get_pending_migrations()
+        """Apply all pending migrations up to target version"""        pending = self.get_pending_migrations()
         
         if target_version:
             pending = [m for m in pending if m.version <= target_version]
@@ -178,8 +159,7 @@ class MigrationManager:
         return applied_count
     
     def migrate_down(self, target_version: str) -> int:
-        """Rollback migrations down to target version"""
-        applied = self.get_applied_migrations()
+        """Rollback migrations down to target version"""        applied = self.get_applied_migrations()
         to_rollback = [
             row for row in applied
             if row['version'] > target_version
@@ -205,14 +185,12 @@ class MigrationManager:
 
 # Specific migrations for payment processing
 class CreatePaymentTransactionsMigration(Migration):
-    """Migration to create payment_transactions table"""
-    
+    """Migration to create payment_transactions table"""    
     def __init__(self):
         super().__init__("001", "Create payment_transactions table")
     
     def up(self, engine):
-        sql = """
-        CREATE TABLE IF NOT EXISTS payment_transactions (
+        sql = """        CREATE TABLE IF NOT EXISTS payment_transactions (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id INTEGER NOT NULL,
             payment_method_id UUID,
@@ -247,8 +225,7 @@ class CreatePaymentTransactionsMigration(Migration):
         CREATE INDEX idx_payment_transactions_created_at ON payment_transactions(created_at);
         CREATE INDEX idx_payment_transactions_external_id ON payment_transactions(external_transaction_id);
         CREATE INDEX idx_payment_transactions_user_status ON payment_transactions(user_id, status);
-        """
-        
+        """        
         with engine.connect() as conn:
             conn.execute(text(sql))
             conn.commit()
@@ -262,14 +239,12 @@ class CreatePaymentTransactionsMigration(Migration):
 
 
 class CreatePaymentMethodsMigration(Migration):
-    """Migration to create payment_methods table"""
-    
+    """Migration to create payment_methods table"""    
     def __init__(self):
         super().__init__("002", "Create payment_methods table")
     
     def up(self, engine):
-        sql = """
-        CREATE TABLE IF NOT EXISTS payment_methods (
+        sql = """        CREATE TABLE IF NOT EXISTS payment_methods (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id INTEGER NOT NULL,
             method_type VARCHAR(50) NOT NULL,
@@ -301,8 +276,7 @@ class CreatePaymentMethodsMigration(Migration):
         CREATE INDEX idx_payment_methods_user_id ON payment_methods(user_id);
         CREATE INDEX idx_payment_methods_user_active ON payment_methods(user_id, is_active);
         CREATE INDEX idx_payment_methods_user_default ON payment_methods(user_id, is_default);
-        """
-        
+        """        
         with engine.connect() as conn:
             conn.execute(text(sql))
             conn.commit()
@@ -316,14 +290,12 @@ class CreatePaymentMethodsMigration(Migration):
 
 
 class CreateBillingRecordsMigration(Migration):
-    """Migration to create billing_records table"""
-    
+    """Migration to create billing_records table"""    
     def __init__(self):
         super().__init__("003", "Create billing_records table")
     
     def up(self, engine):
-        sql = """
-        CREATE TABLE IF NOT EXISTS billing_records (
+        sql = """        CREATE TABLE IF NOT EXISTS billing_records (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id INTEGER NOT NULL,
             transaction_id UUID,
@@ -354,8 +326,7 @@ class CreateBillingRecordsMigration(Migration):
         CREATE INDEX idx_billing_records_user_status ON billing_records(user_id, status);
         CREATE INDEX idx_billing_records_due_date ON billing_records(due_date);
         CREATE INDEX idx_billing_records_period ON billing_records(billing_period_start, billing_period_end);
-        """
-        
+        """        
         with engine.connect() as conn:
             conn.execute(text(sql))
             conn.commit()
@@ -369,14 +340,12 @@ class CreateBillingRecordsMigration(Migration):
 
 
 class CreateFinancialRecordsMigration(Migration):
-    """Migration to create financial_records table"""
-    
+    """Migration to create financial_records table"""    
     def __init__(self):
         super().__init__("004", "Create financial_records table")
     
     def up(self, engine):
-        sql = """
-        CREATE TABLE IF NOT EXISTS financial_records (
+        sql = """        CREATE TABLE IF NOT EXISTS financial_records (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id INTEGER NOT NULL,
             record_type VARCHAR(50) NOT NULL,
@@ -410,8 +379,7 @@ class CreateFinancialRecordsMigration(Migration):
         CREATE INDEX idx_financial_records_period ON financial_records(accounting_period);
         CREATE INDEX idx_financial_records_transaction_date ON financial_records(transaction_date);
         CREATE INDEX idx_financial_records_content ON financial_records(content_id);
-        """
-        
+        """        
         with engine.connect() as conn:
             conn.execute(text(sql))
             conn.commit()
@@ -425,14 +393,12 @@ class CreateFinancialRecordsMigration(Migration):
 
 
 class CreateAutomatedPayoutsMigration(Migration):
-    """Migration to create automated_payouts table"""
-    
+    """Migration to create automated_payouts table"""    
     def __init__(self):
         super().__init__("005", "Create automated_payouts table")
     
     def up(self, engine):
-        sql = """
-        CREATE TABLE IF NOT EXISTS automated_payouts (
+        sql = """        CREATE TABLE IF NOT EXISTS automated_payouts (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             user_id INTEGER NOT NULL,
             payment_method_id UUID NOT NULL,
@@ -469,8 +435,7 @@ class CreateAutomatedPayoutsMigration(Migration):
         CREATE INDEX idx_automated_payouts_user_status ON automated_payouts(user_id, status);
         CREATE INDEX idx_automated_payouts_scheduled ON automated_payouts(scheduled_at);
         CREATE INDEX idx_automated_payouts_period ON automated_payouts(period_start, period_end);
-        """
-        
+        """        
         with engine.connect() as conn:
             conn.execute(text(sql))
             conn.commit()
@@ -484,14 +449,12 @@ class CreateAutomatedPayoutsMigration(Migration):
 
 
 class AddForeignKeysMigration(Migration):
-    """Migration to add foreign key constraints"""
-    
+    """Migration to add foreign key constraints"""    
     def __init__(self):
         super().__init__("006", "Add foreign key constraints")
     
     def up(self, engine):
-        sql = """
-        -- Add foreign key from payment_transactions to payment_methods
+        sql = """        -- Add foreign key from payment_transactions to payment_methods
         ALTER TABLE payment_transactions 
         ADD CONSTRAINT fk_payment_transactions_payment_method 
         FOREIGN KEY (payment_method_id) REFERENCES payment_methods(id);
@@ -505,33 +468,28 @@ class AddForeignKeysMigration(Migration):
         ALTER TABLE automated_payouts 
         ADD CONSTRAINT fk_automated_payouts_payment_method 
         FOREIGN KEY (payment_method_id) REFERENCES payment_methods(id);
-        """
-        
+        """        
         with engine.connect() as conn:
             conn.execute(text(sql))
             conn.commit()
     
     def down(self, engine):
-        sql = """
-        ALTER TABLE payment_transactions DROP CONSTRAINT IF EXISTS fk_payment_transactions_payment_method;
+        sql = """        ALTER TABLE payment_transactions DROP CONSTRAINT IF EXISTS fk_payment_transactions_payment_method;
         ALTER TABLE billing_records DROP CONSTRAINT IF EXISTS fk_billing_records_transaction;
         ALTER TABLE automated_payouts DROP CONSTRAINT IF EXISTS fk_automated_payouts_payment_method;
-        """
-        
+        """        
         with engine.connect() as conn:
             conn.execute(text(sql))
             conn.commit()
 
 
 class AddUpdateTriggersMigration(Migration):
-    """Migration to add update timestamp triggers"""
-    
+    """Migration to add update timestamp triggers"""    
     def __init__(self):
         super().__init__("007", "Add update timestamp triggers")
     
     def up(self, engine):
-        sql = """
-        -- Create trigger function for updating timestamp
+        sql = """        -- Create trigger function for updating timestamp
         CREATE OR REPLACE FUNCTION update_updated_at_column()
         RETURNS TRIGGER AS $$
         BEGIN
@@ -560,30 +518,26 @@ class AddUpdateTriggersMigration(Migration):
         CREATE TRIGGER update_automated_payouts_updated_at 
             BEFORE UPDATE ON automated_payouts 
             FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-        """
-        
+        """        
         with engine.connect() as conn:
             conn.execute(text(sql))
             conn.commit()
     
     def down(self, engine):
-        sql = """
-        DROP TRIGGER IF EXISTS update_payment_transactions_updated_at ON payment_transactions;
+        sql = """        DROP TRIGGER IF EXISTS update_payment_transactions_updated_at ON payment_transactions;
         DROP TRIGGER IF EXISTS update_payment_methods_updated_at ON payment_methods;
         DROP TRIGGER IF EXISTS update_billing_records_updated_at ON billing_records;
         DROP TRIGGER IF EXISTS update_financial_records_updated_at ON financial_records;
         DROP TRIGGER IF EXISTS update_automated_payouts_updated_at ON automated_payouts;
         DROP FUNCTION IF EXISTS update_updated_at_column();
-        """
-        
+        """        
         with engine.connect() as conn:
             conn.execute(text(sql))
             conn.commit()
 
 
 def create_migration_manager(engine) -> MigrationManager:
-    """Create and configure migration manager with all migrations"""
-    manager = MigrationManager(engine)
+    """Create and configure migration manager with all migrations"""    manager = MigrationManager(engine)
     
     # Register all migrations in order
     manager.register_migration(CreatePaymentTransactionsMigration())
@@ -598,12 +552,10 @@ def create_migration_manager(engine) -> MigrationManager:
 
 
 def run_migrations(engine, target_version: Optional[str] = None) -> int:
-    """Run all pending migrations"""
-    manager = create_migration_manager(engine)
+    """Run all pending migrations"""    manager = create_migration_manager(engine)
     return manager.migrate_up(target_version)
 
 
 def rollback_migrations(engine, target_version: str) -> int:
-    """Rollback migrations to target version"""
-    manager = create_migration_manager(engine)
+    """Rollback migrations to target version"""    manager = create_migration_manager(engine)
     return manager.migrate_down(target_version)

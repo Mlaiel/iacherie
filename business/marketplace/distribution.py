@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Marketplace Distribution System
+"""IA Influencer Agent - Marketplace Distribution System
 Enterprise-grade distribution engine for multi-platform content delivery.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,8 +24,7 @@ from ...integrations.platform_apis import PlatformAPIManager
 
 
 class DistributionPlatform(Enum):
-    """Distribution platform enumeration."""
-    YOUTUBE = "youtube"
+    """Distribution platform enumeration."""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -40,8 +37,7 @@ class DistributionPlatform(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format enumeration."""
-    VIDEO_SHORT = "video_short"
+    """Content format enumeration."""    VIDEO_SHORT = "video_short"
     VIDEO_LONG = "video_long"
     IMAGE = "image"
     AUDIO = "audio"
@@ -53,8 +49,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class DistributionStrategy:
-    """Distribution strategy configuration."""
-    platforms: List[DistributionPlatform]
+    """Distribution strategy configuration."""    platforms: List[DistributionPlatform]
     scheduling: Dict[str, Any]
     optimization_goals: List[str]
     target_audience: Dict[str, Any]
@@ -64,8 +59,7 @@ class DistributionStrategy:
 
 @dataclass
 class ContentDistributionRequest:
-    """Content distribution request structure."""
-    content_id: str
+    """Content distribution request structure."""    content_id: str
     creator_id: str
     content_format: ContentFormat
     strategy: DistributionStrategy
@@ -75,11 +69,9 @@ class ContentDistributionRequest:
 
 
 class PlatformDistribution:
-    """
-    Enterprise platform distribution system.
+    """    Enterprise platform distribution system.
     Manages content distribution across multiple social media platforms.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -97,16 +89,14 @@ class PlatformDistribution:
         self,
         distribution_request: ContentDistributionRequest
     ) -> Dict[str, Any]:
-        """
-        Distribute content across multiple platforms with optimization.
+        """        Distribute content across multiple platforms with optimization.
         
         Args:
             distribution_request: Distribution request with strategy
             
         Returns:
             Distribution results and tracking information
-        """
-        try:
+        """        try:
             distribution_id = f"dist_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{distribution_request.content_id}"
             
             # Get content data and analyze
@@ -160,8 +150,7 @@ class PlatformDistribution:
         creator_profile: Dict[str, Any],
         campaign_goals: List[str]
     ) -> Dict[str, Any]:
-        """
-        Generate optimal distribution strategy based on content and goals.
+        """        Generate optimal distribution strategy based on content and goals.
         
         Args:
             content_id: Content identifier
@@ -170,8 +159,7 @@ class PlatformDistribution:
             
         Returns:
             Optimized distribution strategy
-        """
-        try:
+        """        try:
             cache_key = f"strategy:{content_id}:{hash(str(creator_profile))}:{hash(str(campaign_goals))}"
             
             # Check cache
@@ -236,8 +224,7 @@ class PlatformDistribution:
         distribution_id: str,
         real_time: bool = False
     ) -> Dict[str, Any]:
-        """
-        Monitor performance of content distribution across platforms.
+        """        Monitor performance of content distribution across platforms.
         
         Args:
             distribution_id: Distribution identifier
@@ -245,8 +232,7 @@ class PlatformDistribution:
             
         Returns:
             Performance metrics and analytics
-        """
-        try:
+        """        try:
             cache_key = f"performance:{distribution_id}:{'realtime' if real_time else 'cached'}"
             
             # Check cache for non-real-time requests
@@ -305,8 +291,7 @@ class PlatformDistribution:
         content_data: Dict[str, Any],
         distribution_request: ContentDistributionRequest
     ) -> Dict[str, Dict[str, Any]]:
-        """Optimize content for each target platform."""
-        optimized_content = {}
+        """Optimize content for each target platform."""        optimized_content = {}
         
         for platform in distribution_request.strategy.platforms:
             # Get platform-specific requirements
@@ -343,8 +328,7 @@ class PlatformDistribution:
         optimized_content: Dict[str, Dict[str, Any]],
         distribution_request: ContentDistributionRequest
     ) -> Dict[str, Dict[str, Any]]:
-        """Execute content distribution across multiple platforms."""
-        distribution_results = {}
+        """Execute content distribution across multiple platforms."""        distribution_results = {}
         
         # Execute distributions in parallel for efficiency
         distribution_tasks = []
@@ -383,8 +367,7 @@ class PlatformDistribution:
         content_config: Dict[str, Any],
         distribution_request: ContentDistributionRequest
     ) -> Dict[str, Any]:
-        """Distribute content to specific platform."""
-        # Use platform API manager to post content
+        """Distribute content to specific platform."""        # Use platform API manager to post content
         result = await self.platform_manager.post_content(
             platform=platform.value,
             content=content_config['content'],
@@ -401,8 +384,7 @@ class PlatformDistribution:
         distribution_id: str,
         distribution_results: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Set up tracking for distributed content."""
-        tracking_config = {
+        """Set up tracking for distributed content."""        tracking_config = {
             'distribution_id': distribution_id,
             'tracked_posts': {},
             'tracking_enabled': True,
@@ -431,8 +413,7 @@ class PlatformDistribution:
         distribution_request: ContentDistributionRequest,
         distribution_results: Dict[str, Dict[str, Any]]
     ) -> None:
-        """Log distribution activity for analytics and auditing."""
-        activity_log = {
+        """Log distribution activity for analytics and auditing."""        activity_log = {
             'distribution_id': distribution_id,
             'content_id': distribution_request.content_id,
             'creator_id': distribution_request.creator_id,
@@ -447,11 +428,9 @@ class PlatformDistribution:
 
 
 class ContentDistribution:
-    """
-    Enterprise content distribution orchestrator.
+    """    Enterprise content distribution orchestrator.
     Coordinates content flow from creation to multi-platform delivery.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -468,8 +447,7 @@ class ContentDistribution:
         content_pipeline: List[Dict[str, Any]],
         global_strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Orchestrate distribution of multiple content pieces.
+        """        Orchestrate distribution of multiple content pieces.
         
         Args:
             content_pipeline: List of content distribution requests
@@ -477,8 +455,7 @@ class ContentDistribution:
             
         Returns:
             Orchestration results and status
-        """
-        try:
+        """        try:
             orchestration_id = f"orch_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Prioritize content based on strategy
@@ -521,8 +498,7 @@ class ContentDistribution:
         distribution_schedule: Dict[str, Any],
         creator_id: str
     ) -> Dict[str, Any]:
-        """
-        Schedule content distribution for optimal timing.
+        """        Schedule content distribution for optimal timing.
         
         Args:
             content_id: Content identifier
@@ -531,8 +507,7 @@ class ContentDistribution:
             
         Returns:
             Scheduling results
-        """
-        try:
+        """        try:
             schedule_id = f"sched_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{content_id}"
             
             # Validate schedule configuration
@@ -576,8 +551,7 @@ class ContentDistribution:
         content_pipeline: List[Dict[str, Any]],
         global_strategy: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Prioritize content in the distribution pipeline."""
-        # Calculate priority scores for each content
+        """Prioritize content in the distribution pipeline."""        # Calculate priority scores for each content
         for content_item in content_pipeline:
             priority_score = await self._calculate_content_priority(
                 content_item, global_strategy
@@ -598,8 +572,7 @@ class ContentDistribution:
         prioritized_pipeline: List[Dict[str, Any]],
         global_strategy: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Execute content distribution in optimized batches."""
-        batch_size = global_strategy.get('batch_size', 5)
+        """Execute content distribution in optimized batches."""        batch_size = global_strategy.get('batch_size', 5)
         batch_results = []
         
         # Process content in batches
@@ -620,8 +593,7 @@ class ContentDistribution:
         self,
         content_batch: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Execute distribution for a batch of content."""
-        batch_tasks = []
+        """Execute distribution for a batch of content."""        batch_tasks = []
         
         # Create distribution tasks for each content in batch
         for content_item in content_batch:
@@ -646,11 +618,9 @@ class ContentDistribution:
 
 
 class AnalyticsDistribution:
-    """
-    Enterprise analytics distribution system.
+    """    Enterprise analytics distribution system.
     Distributes performance analytics and insights across platforms and stakeholders.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -665,8 +635,7 @@ class AnalyticsDistribution:
         report_data: Dict[str, Any],
         distribution_targets: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """
-        Distribute performance reports to various stakeholders.
+        """        Distribute performance reports to various stakeholders.
         
         Args:
             report_data: Performance report data
@@ -674,8 +643,7 @@ class AnalyticsDistribution:
             
         Returns:
             Distribution results
-        """
-        try:
+        """        try:
             distribution_id = f"analytics_dist_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Format reports for different audiences
@@ -706,16 +674,14 @@ class AnalyticsDistribution:
         self,
         reporting_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Set up automated performance reporting and distribution.
+        """        Set up automated performance reporting and distribution.
         
         Args:
             reporting_config: Automated reporting configuration
             
         Returns:
             Automation setup results
-        """
-        try:
+        """        try:
             automation_id = f"auto_report_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Validate reporting configuration

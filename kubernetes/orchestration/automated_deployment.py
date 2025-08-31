@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Automated Deployment Pipeline
+"""IA Influencer Agent - Automated Deployment Pipeline
 Enterprise CI/CD and automated deployment management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +11,6 @@ Features:
 - Multi-environment deployment coordination
 - Integration with version control and artifact repositories
 """
-
 import asyncio
 import logging
 import json
@@ -31,10 +29,8 @@ from .base_manager import BaseDeploymentManager
 
 # Mock classes for standalone operation
 class MetricsCollector:
-    """Mock metrics collector."""
-    def __init__(self):
-        """Initialize automated deployment metrics collector"""
-        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+    """Mock metrics collector."""    def __init__(self):
+        """Initialize automated deployment metrics collector"""        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.deployment_metrics = ['deployment_duration', 'success_rate', 'rollback_frequency']
         self.pipeline_metrics = ['build_time', 'test_duration', 'deployment_frequency']
         self.quality_gates = ['unit_tests', 'integration_tests', 'security_scans', 'performance_tests']
@@ -48,8 +44,7 @@ from .load_balancer import LoadBalancerManager
 
 
 class DeploymentPipelineStatus(Enum):
-    """Deployment pipeline status."""
-    PENDING = "pending"
+    """Deployment pipeline status."""    PENDING = "pending"
     RUNNING = "running"
     SUCCESS = "success"
     FAILED = "failed"
@@ -58,8 +53,7 @@ class DeploymentPipelineStatus(Enum):
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategies."""
-    ROLLING_UPDATE = "rolling_update"
+    """Deployment strategies."""    ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     RECREATE = "recreate"
@@ -67,8 +61,7 @@ class DeploymentStrategy(Enum):
 
 
 class PipelineStage(Enum):
-    """Pipeline stages."""
-    BUILD = "build"
+    """Pipeline stages."""    BUILD = "build"
     TEST = "test"
     SECURITY_SCAN = "security_scan"
     DEPLOY_DEV = "deploy_dev"
@@ -81,8 +74,7 @@ class PipelineStage(Enum):
 
 
 class Environment(Enum):
-    """Deployment environments."""
-    DEVELOPMENT = "development"
+    """Deployment environments."""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -91,8 +83,7 @@ class Environment(Enum):
 
 @dataclass
 class DeploymentTarget:
-    """Deployment target configuration."""
-    environment: Environment
+    """Deployment target configuration."""    environment: Environment
     cluster_name: str
     namespace: str
     replicas: int
@@ -104,8 +95,7 @@ class DeploymentTarget:
 
 @dataclass
 class PipelineStep:
-    """Pipeline step configuration."""
-    name: str
+    """Pipeline step configuration."""    name: str
     stage: PipelineStage
     command: List[str]
     working_directory: str
@@ -117,8 +107,7 @@ class PipelineStep:
 
 @dataclass
 class DeploymentPipelineConfig:
-    """Deployment pipeline configuration."""
-    name: str
+    """Deployment pipeline configuration."""    name: str
     version: str
     repository_url: str
     branch: str
@@ -133,8 +122,7 @@ class DeploymentPipelineConfig:
 
 @dataclass
 class DeploymentExecution:
-    """Deployment execution information."""
-    id: str
+    """Deployment execution information."""    id: str
     pipeline_name: str
     version: str
     status: DeploymentPipelineStatus
@@ -149,14 +137,12 @@ class DeploymentExecution:
 
 
 class AutomatedDeploymentManager(BaseDeploymentManager):
-    """
-    Enterprise automated deployment management.
+    """    Enterprise automated deployment management.
     
     Manages complete CI/CD pipelines with multiple deployment strategies,
     automated testing, and rollback capabilities for the IA Influencer
     Agent platform.
     """
-
     def __init__(
         self,
         kubernetes_manager: Optional[KubernetesManager] = None,
@@ -195,8 +181,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         )
 
     def _get_platform_services(self) -> Dict[str, Dict[str, Any]]:
-        """Get IA Influencer Agent platform services configuration."""
-        return {
+        """Get IA Influencer Agent platform services configuration."""        return {
             "api-gateway": {
                 "image": "ia-influencer/api-gateway",
                 "port": 8000,
@@ -298,16 +283,14 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         }
 
     async def create_pipeline(self, config: DeploymentPipelineConfig) -> bool:
-        """
-        Create deployment pipeline.
+        """        Create deployment pipeline.
         
         Args:
             config: Pipeline configuration
             
         Returns:
             True if pipeline created successfully, False otherwise
-        """
-        try:
+        """        try:
             # Validate pipeline configuration
             if not self._validate_pipeline_config(config):
                 return False
@@ -333,8 +316,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     def _validate_pipeline_config(self, config: DeploymentPipelineConfig) -> bool:
-        """Validate pipeline configuration."""
-        if not config.name or not config.version:
+        """Validate pipeline configuration."""        if not config.name or not config.version:
             self.logger.error("Pipeline name and version are required")
             return False
         
@@ -353,8 +335,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         return True
 
     def _validate_deployment_target(self, target: DeploymentTarget) -> bool:
-        """Validate deployment target configuration."""
-        if not target.cluster_name or not target.namespace:
+        """Validate deployment target configuration."""        if not target.cluster_name or not target.namespace:
             self.logger.error("Target cluster name and namespace are required")
             return False
         
@@ -371,8 +352,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         triggered_by: str,
         target_environments: Optional[List[Environment]] = None
     ) -> Optional[str]:
-        """
-        Execute deployment pipeline.
+        """        Execute deployment pipeline.
         
         Args:
             pipeline_name: Pipeline name
@@ -382,8 +362,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             
         Returns:
             Execution ID if started successfully, None otherwise
-        """
-        try:
+        """        try:
             if pipeline_name not in self.pipelines:
                 self.logger.error(f"Pipeline '{pipeline_name}' not found")
                 return None
@@ -429,8 +408,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return None
 
     def _generate_execution_id(self, pipeline_name: str, commit_hash: str) -> str:
-        """Generate unique execution ID."""
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique execution ID."""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         hash_input = f"{pipeline_name}-{commit_hash}-{timestamp}"
         hash_suffix = hashlib.md5(hash_input.encode()).hexdigest()[:8]
         return f"{pipeline_name}-{timestamp}-{hash_suffix}"
@@ -441,8 +419,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         config: DeploymentPipelineConfig,
         targets: List[DeploymentTarget]
     ) -> None:
-        """Execute pipeline asynchronously."""
-        execution = self.executions[execution_id]
+        """Execute pipeline asynchronously."""        execution = self.executions[execution_id]
         
         try:
             execution.status = DeploymentPipelineStatus.RUNNING
@@ -503,8 +480,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             self.logger.error(f"Pipeline execution '{execution_id}' failed: {e}")
 
     async def _execute_pipeline_step(self, execution_id: str, step: PipelineStep) -> bool:
-        """Execute individual pipeline step."""
-        try:
+        """Execute individual pipeline step."""        try:
             execution = self.executions[execution_id]
             
             self.logger.info(f"Executing step '{step.name}' for execution '{execution_id}'")
@@ -529,8 +505,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     async def _execute_build_step(self, execution_id: str, step: PipelineStep) -> bool:
-        """Execute build step."""
-        try:
+        """Execute build step."""        try:
             execution = self.executions[execution_id]
             config = self.pipelines[execution.pipeline_name]
             
@@ -568,8 +543,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     async def _execute_test_step(self, execution_id: str, step: PipelineStep) -> bool:
-        """Execute test step."""
-        try:
+        """Execute test step."""        try:
             execution = self.executions[execution_id]
             
             # Simulate test execution
@@ -590,8 +564,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     async def _execute_security_scan_step(self, execution_id: str, step: PipelineStep) -> bool:
-        """Execute security scan step."""
-        try:
+        """Execute security scan step."""        try:
             execution = self.executions[execution_id]
             
             # Get image from artifacts
@@ -621,8 +594,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     async def _execute_deploy_step(self, execution_id: str, step: PipelineStep) -> bool:
-        """Execute deployment step."""
-        try:
+        """Execute deployment step."""        try:
             execution = self.executions[execution_id]
             execution.logs.append(f"Deployment step '{step.name}' will be handled in main deployment phase")
             return True
@@ -632,8 +604,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     async def _execute_generic_step(self, execution_id: str, step: PipelineStep) -> bool:
-        """Execute generic step."""
-        try:
+        """Execute generic step."""        try:
             execution = self.executions[execution_id]
             
             # Simulate command execution
@@ -653,8 +624,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         config: DeploymentPipelineConfig,
         targets: List[DeploymentTarget]
     ) -> bool:
-        """Execute deployment to targets."""
-        try:
+        """Execute deployment to targets."""        try:
             execution = self.executions[execution_id]
             
             # Deploy based on strategy
@@ -677,8 +647,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         config: DeploymentPipelineConfig,
         targets: List[DeploymentTarget]
     ) -> bool:
-        """Execute rolling update deployment."""
-        try:
+        """Execute rolling update deployment."""        try:
             execution = self.executions[execution_id]
             execution.logs.append("Starting rolling deployment")
             
@@ -713,8 +682,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         config: DeploymentPipelineConfig,
         targets: List[DeploymentTarget]
     ) -> bool:
-        """Execute blue-green deployment."""
-        try:
+        """Execute blue-green deployment."""        try:
             execution = self.executions[execution_id]
             execution.logs.append("Starting blue-green deployment")
             
@@ -752,8 +720,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         config: DeploymentPipelineConfig,
         targets: List[DeploymentTarget]
     ) -> bool:
-        """Execute canary deployment."""
-        try:
+        """Execute canary deployment."""        try:
             execution = self.executions[execution_id]
             execution.logs.append("Starting canary deployment")
             
@@ -805,8 +772,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         config: DeploymentPipelineConfig,
         targets: List[DeploymentTarget]
     ) -> bool:
-        """Execute standard deployment."""
-        try:
+        """Execute standard deployment."""        try:
             execution = self.executions[execution_id]
             execution.logs.append("Starting standard deployment")
             
@@ -832,8 +798,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         config: DeploymentPipelineConfig,
         target: DeploymentTarget
     ) -> bool:
-        """Deploy to specific target environment."""
-        try:
+        """Deploy to specific target environment."""        try:
             execution = self.executions[execution_id]
             
             # Get image from artifacts
@@ -887,8 +852,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     async def _verify_deployment_health(self, execution_id: str, target: DeploymentTarget) -> bool:
-        """Verify deployment health."""
-        try:
+        """Verify deployment health."""        try:
             execution = self.executions[execution_id]
             execution.logs.append(f"Verifying deployment health for {target.environment.value}")
             
@@ -911,8 +875,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
 
     # Blue-Green deployment methods
     async def _deploy_to_green_environment(self, execution_id: str, config: DeploymentPipelineConfig, target: DeploymentTarget) -> bool:
-        """Deploy to green environment."""
-        execution = self.executions[execution_id]
+        """Deploy to green environment."""        execution = self.executions[execution_id]
         execution.logs.append(f"Deploying to green environment for {target.environment.value}")
         
         # Deploy to green namespace
@@ -930,8 +893,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         return await self._deploy_to_target(execution_id, config, green_target)
 
     async def _verify_green_environment_health(self, execution_id: str, target: DeploymentTarget) -> bool:
-        """Verify green environment health."""
-        green_target = DeploymentTarget(
+        """Verify green environment health."""        green_target = DeploymentTarget(
             environment=target.environment,
             cluster_name=target.cluster_name,
             namespace=f"{target.namespace}-green",
@@ -945,8 +907,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         return await self._verify_deployment_health(execution_id, green_target)
 
     async def _switch_traffic_to_green(self, execution_id: str, target: DeploymentTarget) -> bool:
-        """Switch traffic from blue to green."""
-        execution = self.executions[execution_id]
+        """Switch traffic from blue to green."""        execution = self.executions[execution_id]
         execution.logs.append(f"Switching traffic to green environment for {target.environment.value}")
         
         # Update load balancer or ingress configuration
@@ -957,8 +918,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         return True
 
     async def _cleanup_blue_environment(self, execution_id: str, target: DeploymentTarget) -> None:
-        """Cleanup blue environment after successful green deployment."""
-        execution = self.executions[execution_id]
+        """Cleanup blue environment after successful green deployment."""        execution = self.executions[execution_id]
         execution.logs.append(f"Cleaning up blue environment for {target.environment.value}")
         
         # Delete blue environment resources
@@ -968,8 +928,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
 
     # Canary deployment methods
     async def _deploy_canary_version(self, execution_id: str, config: DeploymentPipelineConfig, target: DeploymentTarget, traffic_percentage: int) -> bool:
-        """Deploy canary version with specified traffic percentage."""
-        execution = self.executions[execution_id]
+        """Deploy canary version with specified traffic percentage."""        execution = self.executions[execution_id]
         execution.logs.append(f"Deploying canary version with {traffic_percentage}% traffic")
         
         # Deploy canary alongside existing version
@@ -987,8 +946,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         return await self._deploy_to_target(execution_id, config, canary_target)
 
     async def _verify_canary_metrics(self, execution_id: str, target: DeploymentTarget) -> bool:
-        """Verify canary deployment metrics."""
-        execution = self.executions[execution_id]
+        """Verify canary deployment metrics."""        execution = self.executions[execution_id]
         execution.logs.append("Verifying canary metrics...")
         
         # Check error rates, response times, etc.
@@ -1004,8 +962,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     async def _update_canary_traffic(self, execution_id: str, target: DeploymentTarget, percentage: int) -> bool:
-        """Update traffic percentage to canary."""
-        execution = self.executions[execution_id]
+        """Update traffic percentage to canary."""        execution = self.executions[execution_id]
         execution.logs.append(f"Updating canary traffic to {percentage}%")
         
         # Update traffic routing configuration
@@ -1014,8 +971,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         return True
 
     async def _rollback_canary(self, execution_id: str, target: DeploymentTarget) -> None:
-        """Rollback canary deployment."""
-        execution = self.executions[execution_id]
+        """Rollback canary deployment."""        execution = self.executions[execution_id]
         execution.logs.append("Rolling back canary deployment")
         
         # Remove canary deployment and restore 100% traffic to stable version
@@ -1024,8 +980,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         execution.logs.append("Canary rollback completed")
 
     async def _complete_canary_deployment(self, execution_id: str, target: DeploymentTarget) -> None:
-        """Complete canary deployment by promoting to stable."""
-        execution = self.executions[execution_id]
+        """Complete canary deployment by promoting to stable."""        execution = self.executions[execution_id]
         execution.logs.append("Promoting canary to stable version")
         
         # Replace stable version with canary version
@@ -1034,8 +989,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         execution.logs.append("Canary promoted to stable version")
 
     async def _send_execution_notifications(self, execution_id: str, config: DeploymentPipelineConfig) -> None:
-        """Send notifications about execution completion."""
-        try:
+        """Send notifications about execution completion."""        try:
             execution = self.executions[execution_id]
             notifications = config.notifications
             
@@ -1049,38 +1003,32 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             self.logger.error(f"Failed to send notifications for execution '{execution_id}': {e}")
 
     async def _send_slack_notification(self, execution: DeploymentExecution, slack_config: Dict[str, Any]) -> None:
-        """Send Slack notification."""
-        # Implementation would send actual Slack message
+        """Send Slack notification."""        # Implementation would send actual Slack message
         self.logger.info(f"Slack notification sent for execution '{execution.id}': {execution.status.value}")
 
     async def _send_email_notification(self, execution: DeploymentExecution, email_config: Dict[str, Any]) -> None:
-        """Send email notification."""
-        # Implementation would send actual email
+        """Send email notification."""        # Implementation would send actual email
         self.logger.info(f"Email notification sent for execution '{execution.id}': {execution.status.value}")
 
     async def get_execution_status(self, execution_id: str) -> Optional[DeploymentExecution]:
-        """
-        Get execution status.
+        """        Get execution status.
         
         Args:
             execution_id: Execution identifier
             
         Returns:
             Execution information or None if not found
-        """
-        return self.executions.get(execution_id)
+        """        return self.executions.get(execution_id)
 
     async def cancel_execution(self, execution_id: str) -> bool:
-        """
-        Cancel running execution.
+        """        Cancel running execution.
         
         Args:
             execution_id: Execution identifier
             
         Returns:
             True if cancellation successful, False otherwise
-        """
-        try:
+        """        try:
             if execution_id not in self.executions:
                 self.logger.error(f"Execution '{execution_id}' not found")
                 return False
@@ -1102,8 +1050,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     async def rollback_deployment(self, environment: str, target_version: Optional[str] = None) -> bool:
-        """
-        Rollback deployment to previous version.
+        """        Rollback deployment to previous version.
         
         Args:
             environment: Target environment
@@ -1111,8 +1058,7 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             
         Returns:
             True if rollback successful, False otherwise
-        """
-        try:
+        """        try:
             # Find previous successful deployment
             if environment not in self.active_deployments:
                 self.logger.error(f"No active deployment found for environment '{environment}'")
@@ -1157,16 +1103,14 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
             return False
 
     async def list_executions(self, pipeline_name: Optional[str] = None) -> List[DeploymentExecution]:
-        """
-        List deployment executions.
+        """        List deployment executions.
         
         Args:
             pipeline_name: Optional filter by pipeline name
             
         Returns:
             List of executions
-        """
-        executions = list(self.executions.values()) + self.execution_history
+        """        executions = list(self.executions.values()) + self.execution_history
         
         if pipeline_name:
             executions = [e for e in executions if e.pipeline_name == pipeline_name]
@@ -1174,13 +1118,11 @@ class AutomatedDeploymentManager(BaseDeploymentManager):
         return sorted(executions, key=lambda e: e.started_at, reverse=True)
 
     async def cleanup(self) -> bool:
-        """
-        Cleanup automated deployment manager.
+        """        Cleanup automated deployment manager.
         
         Returns:
             True if cleanup successful, False otherwise
-        """
-        try:
+        """        try:
             # Cancel all running executions
             for execution_id, execution in self.executions.items():
                 if execution.status == DeploymentPipelineStatus.RUNNING:

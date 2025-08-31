@@ -3,8 +3,7 @@ Professional foundation with comprehensive business logic support.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
-"""
-# Core configuration and database
+"""# Core configuration and database
 from .config import settings
 from .db import SessionLocal, get_db
 from .logging import configure_logging

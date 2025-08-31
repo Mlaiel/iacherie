@@ -1,5 +1,4 @@
-"""
-Database Security Monitor - Advanced Database Security Intelligence
+"""Database Security Monitor - Advanced Database Security Intelligence
 
 Comprehensive database security monitoring with AI-powered threat detection, access pattern analysis,
 and real-time security event correlation for the IA Influencer Agent platform.
@@ -14,7 +13,6 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
-
 import asyncio
 import hashlib
 import ipaddress
@@ -42,8 +40,7 @@ from ...monitoring.notifications import SecurityNotificationManager
 
 
 class SecurityThreatLevel(Enum):
-    """Security threat severity levels"""
-    INFO = "info"
+    """Security threat severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -52,8 +49,7 @@ class SecurityThreatLevel(Enum):
 
 
 class AccessType(Enum):
-    """Database access types"""
-    SELECT = "select"
+    """Database access types"""    SELECT = "select"
     INSERT = "insert"
     UPDATE = "update"
     DELETE = "delete"
@@ -64,8 +60,7 @@ class AccessType(Enum):
 
 @dataclass
 class SecurityEvent:
-    """Database security event record"""
-    event_id: str
+    """Database security event record"""    event_id: str
     timestamp: datetime
     event_type: str
     threat_level: SecurityThreatLevel
@@ -80,8 +75,7 @@ class SecurityEvent:
     risk_score: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = {
+        """Convert to dictionary"""        data = {
             'event_id': self.event_id,
             'timestamp': self.timestamp.isoformat(),
             'event_type': self.event_type,
@@ -101,8 +95,7 @@ class SecurityEvent:
 
 @dataclass
 class AccessPattern:
-    """User access pattern analysis"""
-    username: str
+    """User access pattern analysis"""    username: str
     ip_addresses: Set[str]
     access_times: List[datetime]
     query_patterns: List[str]
@@ -112,8 +105,7 @@ class AccessPattern:
     is_suspicious: bool = False
     
     def calculate_risk_score(self) -> float:
-        """Calculate risk score based on patterns"""
-        risk_factors = 0.0
+        """Calculate risk score based on patterns"""        risk_factors = 0.0
         
         # Multiple IPs
         if len(self.ip_addresses) > 5:
@@ -139,8 +131,7 @@ class AccessPattern:
 
 @dataclass
 class ThreatDetectionResult:
-    """Threat detection analysis result"""
-    threat_detected: bool
+    """Threat detection analysis result"""    threat_detected: bool
     threat_type: str
     confidence: float
     risk_score: float
@@ -150,8 +141,7 @@ class ThreatDetectionResult:
 
 
 class DatabaseSecurityMonitor:
-    """Advanced database security monitoring system"""
-    
+    """Advanced database security monitoring system"""    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -176,8 +166,7 @@ class DatabaseSecurityMonitor:
         self._monitoring_task = None
         
     def _load_geoip_database(self):
-        """Load GeoIP database for location tracking"""
-        try:
+        """Load GeoIP database for location tracking"""        try:
             # Use MaxMind GeoLite2 database
             self.geoip_db = geoip2.database.Reader('data/GeoLite2-City.mmdb')
             self.logger.info("GeoIP database loaded successfully")
@@ -185,8 +174,7 @@ class DatabaseSecurityMonitor:
             self.logger.warning(f"Failed to load GeoIP database: {e}")
     
     async def start_monitoring(self, interval: int = 30):
-        """Start continuous security monitoring"""
-        if self._monitoring_active:
+        """Start continuous security monitoring"""        if self._monitoring_active:
             self.logger.warning("Security monitoring already active")
             return
             
@@ -197,8 +185,7 @@ class DatabaseSecurityMonitor:
         self.logger.info("Database security monitoring started")
         
     async def stop_monitoring(self):
-        """Stop security monitoring"""
-        self._monitoring_active = False
+        """Stop security monitoring"""        self._monitoring_active = False
         if self._monitoring_task:
             self._monitoring_task.cancel()
             try:
@@ -208,8 +195,7 @@ class DatabaseSecurityMonitor:
         self.logger.info("Database security monitoring stopped")
         
     async def _monitoring_loop(self, interval: int):
-        """Main monitoring loop"""
-        while self._monitoring_active:
+        """Main monitoring loop"""        while self._monitoring_active:
             try:
                 await self._collect_security_events()
                 await self._analyze_access_patterns()
@@ -221,12 +207,10 @@ class DatabaseSecurityMonitor:
                 await asyncio.sleep(interval)
                 
     async def _collect_security_events(self):
-        """Collect database security events"""
-        try:
+        """Collect database security events"""        try:
             async with get_database_session() as session:
                 # Query PostgreSQL logs for security events
-                log_query = text("""
-                    SELECT 
+                log_query = text("""                    SELECT 
                         log_time,
                         user_name,
                         database_name,
@@ -272,8 +256,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to collect security events: {e}")
             
     async def _process_security_event(self, event_data):
-        """Process individual security event"""
-        try:
+        """Process individual security event"""        try:
             # Extract IP address from connection info
             source_ip = self._extract_ip_from_connection(
                 event_data.connection_from or ""
@@ -329,8 +312,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to process security event: {e}")
             
     def _extract_ip_from_connection(self, connection_info: str) -> str:
-        """Extract IP address from connection string"""
-        try:
+        """Extract IP address from connection string"""        try:
             # Format: "192.168.1.100:12345" or "[::1]:12345"
             if ':' in connection_info:
                 ip_part = connection_info.split(':')[0]
@@ -342,8 +324,7 @@ class DatabaseSecurityMonitor:
             return "unknown"
             
     def _determine_access_type(self, command_tag: str) -> AccessType:
-        """Determine access type from command tag"""
-        command_tag = command_tag.upper()
+        """Determine access type from command tag"""        command_tag = command_tag.upper()
         
         if command_tag in ['SELECT', 'SHOW']:
             return AccessType.SELECT
@@ -361,8 +342,7 @@ class DatabaseSecurityMonitor:
             return AccessType.SYSTEM
             
     def _calculate_threat_level(self, event_data) -> SecurityThreatLevel:
-        """Calculate threat level for event"""
-        # Failed authentication
+        """Calculate threat level for event"""        # Failed authentication
         if event_data.message and 'authentication failed' in event_data.message.lower():
             return SecurityThreatLevel.HIGH
             
@@ -385,8 +365,7 @@ class DatabaseSecurityMonitor:
         return SecurityThreatLevel.INFO
         
     def _get_geolocation(self, ip_address: str) -> Optional[Dict[str, str]]:
-        """Get geolocation for IP address"""
-        if not self.geoip_db or ip_address == "unknown":
+        """Get geolocation for IP address"""        if not self.geoip_db or ip_address == "unknown":
             return None
             
         try:
@@ -407,8 +386,7 @@ class DatabaseSecurityMonitor:
             return None
             
     async def _calculate_risk_score(self, event: SecurityEvent) -> float:
-        """Calculate risk score for security event"""
-        risk_score = 0.0
+        """Calculate risk score for security event"""        risk_score = 0.0
         
         # Base score by threat level
         threat_scores = {
@@ -440,8 +418,7 @@ class DatabaseSecurityMonitor:
         return min(risk_score, 1.0)
         
     async def _is_suspicious_query(self, query: str) -> bool:
-        """Check if query contains suspicious patterns"""
-        if not query:
+        """Check if query contains suspicious patterns"""        if not query:
             return False
             
         suspicious_patterns = [
@@ -464,8 +441,7 @@ class DatabaseSecurityMonitor:
         return False
         
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if IP address is suspicious"""
-        if ip_address == "unknown":
+        """Check if IP address is suspicious"""        if ip_address == "unknown":
             return True
             
         # Check against known threat lists (would integrate with external services)
@@ -491,8 +467,7 @@ class DatabaseSecurityMonitor:
         return False
         
     async def _store_security_event(self, event: SecurityEvent):
-        """Store security event for analysis"""
-        try:
+        """Store security event for analysis"""        try:
             # Store in Redis for real-time access
             await self.cache.set(
                 f"security_event:{event.event_id}",
@@ -515,8 +490,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to store security event: {e}")
             
     async def _update_access_patterns(self, event: SecurityEvent):
-        """Update user access patterns"""
-        try:
+        """Update user access patterns"""        try:
             pattern_key = f"access_pattern:{event.username}"
             
             # Get existing pattern or create new
@@ -577,8 +551,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to update access patterns: {e}")
             
     def _extract_table_names(self, query: str) -> Set[str]:
-        """Extract table names from SQL query"""
-        if not query:
+        """Extract table names from SQL query"""        if not query:
             return set()
             
         tables = set()
@@ -600,8 +573,7 @@ class DatabaseSecurityMonitor:
         return tables
         
     async def _analyze_access_patterns(self):
-        """Analyze access patterns for anomalies"""
-        try:
+        """Analyze access patterns for anomalies"""        try:
             for username, pattern in self.access_patterns.items():
                 if pattern.is_suspicious:
                     # Create security event for suspicious pattern
@@ -611,8 +583,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to analyze access patterns: {e}")
             
     async def _create_pattern_alert(self, pattern: AccessPattern):
-        """Create alert for suspicious access pattern"""
-        try:
+        """Create alert for suspicious access pattern"""        try:
             alert_data = {
                 'type': 'suspicious_access_pattern',
                 'username': pattern.username,
@@ -647,8 +618,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to create pattern alert: {e}")
             
     async def _detect_threats(self):
-        """Run AI-powered threat detection"""
-        try:
+        """Run AI-powered threat detection"""        try:
             # Get recent security events
             recent_events = await self._get_recent_events(hours=1)
             
@@ -665,8 +635,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Threat detection failed: {e}")
             
     async def _get_recent_events(self, hours: int = 1) -> List[SecurityEvent]:
-        """Get recent security events"""
-        try:
+        """Get recent security events"""        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             cutoff_timestamp = cutoff_time.timestamp()
             
@@ -690,8 +659,7 @@ class DatabaseSecurityMonitor:
             return []
             
     async def _handle_detected_threat(self, threat_result: ThreatDetectionResult):
-        """Handle detected security threat"""
-        try:
+        """Handle detected security threat"""        try:
             # Log the threat
             self.logger.critical(
                 f"Security threat detected: {threat_result.threat_type} "
@@ -721,8 +689,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to handle detected threat: {e}")
             
     async def _execute_automated_response(self, threat_result: ThreatDetectionResult):
-        """Execute automated response to security threat"""
-        try:
+        """Execute automated response to security threat"""        try:
             # This would implement automated response actions
             # such as blocking IPs, disabling accounts, etc.
             self.logger.info("Executing automated security response")
@@ -739,8 +706,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to execute automated response: {e}")
             
     async def _block_ip_address(self, ip_address: str):
-        """Block suspicious IP address"""
-        try:
+        """Block suspicious IP address"""        try:
             self.blocked_ips.add(ip_address)
             await self.cache.sadd("blocked_ips", ip_address)
             self.logger.warning(f"Blocked IP address: {ip_address}")
@@ -748,16 +714,14 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to block IP {ip_address}: {e}")
             
     async def _disable_user_account(self, username: str):
-        """Disable suspicious user account"""
-        try:
+        """Disable suspicious user account"""        try:
             # This would integrate with user management system
             self.logger.warning(f"Would disable user account: {username}")
         except Exception as e:
             self.logger.error(f"Failed to disable user {username}: {e}")
             
     async def _handle_immediate_threat(self, event: SecurityEvent):
-        """Handle immediate high-priority threats"""
-        try:
+        """Handle immediate high-priority threats"""        try:
             await self.notification_manager.send_security_alert(
                 severity=event.threat_level.value.upper(),
                 title=f'Immediate Database Security Alert',
@@ -769,8 +733,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to handle immediate threat: {e}")
             
     async def _cleanup_old_data(self):
-        """Cleanup old security monitoring data"""
-        try:
+        """Cleanup old security monitoring data"""        try:
             # Remove events older than 30 days
             cutoff_time = datetime.utcnow() - timedelta(days=30)
             cutoff_timestamp = cutoff_time.timestamp()
@@ -787,8 +750,7 @@ class DatabaseSecurityMonitor:
             self.logger.error(f"Failed to cleanup old data: {e}")
             
     async def get_security_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get security monitoring summary"""
-        try:
+        """Get security monitoring summary"""        try:
             events = await self._get_recent_events(hours)
             
             # Calculate statistics
@@ -826,36 +788,30 @@ class DatabaseSecurityMonitor:
 
 
 class AccessPatternAnalyzer:
-    """Advanced access pattern analysis engine"""
-    
+    """Advanced access pattern analysis engine"""    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def analyze_user_behavior(self, username: str) -> Dict[str, Any]:
-        """Analyze user behavior patterns"""
-        # Implementation for detailed user behavior analysis
+        """Analyze user behavior patterns"""        # Implementation for detailed user behavior analysis
         pass
         
     async def detect_anomalies(self, patterns: List[AccessPattern]) -> List[Dict]:
-        """Detect anomalies in access patterns"""
-        # Implementation for anomaly detection
+        """Detect anomalies in access patterns"""        # Implementation for anomaly detection
         pass
 
 
 class ThreatDetector:
-    """AI-powered threat detection engine"""
-    
+    """AI-powered threat detection engine"""    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
         
     async def analyze_events(self, events: List[Dict]) -> ThreatDetectionResult:
-        """Analyze security events for threats"""
-        # Implementation for AI threat detection
+        """Analyze security events for threats"""        # Implementation for AI threat detection
         pass
         
     async def correlate_events(self, events: List[Dict]) -> List[Dict]:
-        """Correlate related security events"""
-        # Implementation for event correlation
+        """Correlate related security events"""        # Implementation for event correlation
         pass

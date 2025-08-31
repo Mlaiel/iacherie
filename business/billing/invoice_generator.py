@@ -1,5 +1,4 @@
-"""
-Invoice Generator Engine - Automated billing and invoice generation system
+"""Invoice Generator Engine - Automated billing and invoice generation system
 ==========================================================================
 
 Advanced invoice generation system with AI-powered billing automation,
@@ -8,7 +7,6 @@ multi-currency support, and compliance with international tax regulations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,8 +23,7 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class InvoiceStatus(Enum):
-    """Invoice status types"""
-    DRAFT = "draft"
+    """Invoice status types"""    DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
     PAID = "paid"
@@ -35,8 +32,7 @@ class InvoiceStatus(Enum):
     REFUNDED = "refunded"
 
 class InvoiceType(Enum):
-    """Invoice types"""
-    STANDARD = "standard"
+    """Invoice types"""    STANDARD = "standard"
     RECURRING = "recurring"
     COMMISSION = "commission"
     ROYALTY = "royalty"
@@ -45,8 +41,7 @@ class InvoiceType(Enum):
 
 @dataclass
 class InvoiceLineItem:
-    """Individual line item on invoice"""
-    description: str
+    """Individual line item on invoice"""    description: str
     quantity: Decimal
     unit_price: Decimal
     tax_rate: Decimal
@@ -56,8 +51,7 @@ class InvoiceLineItem:
 
 @dataclass
 class InvoiceData:
-    """Invoice data structure"""
-    invoice_id: str
+    """Invoice data structure"""    invoice_id: str
     customer_id: str
     invoice_number: str
     invoice_type: InvoiceType
@@ -73,18 +67,15 @@ class InvoiceData:
     notes: Optional[str] = None
 
 class InvoiceGeneratorEngine:
-    """
-    Advanced invoice generation system with AI-powered billing automation
+    """    Advanced invoice generation system with AI-powered billing automation
     for multi-format content creators and monetization platforms.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize invoice generator engine"""
-        try:
+        """Initialize invoice generator engine"""        try:
             await self._setup_database_tables()
             await self._load_tax_configurations()
             logger.info("Invoice Generator Engine initialized successfully")
@@ -93,10 +84,8 @@ class InvoiceGeneratorEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for invoice management"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS invoices (
+        """Setup database tables for invoice management"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS invoices (
                     id SERIAL PRIMARY KEY,
                     invoice_id VARCHAR(100) UNIQUE NOT NULL,
                     invoice_number VARCHAR(50) UNIQUE NOT NULL,
@@ -119,8 +108,7 @@ class InvoiceGeneratorEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS invoice_line_items (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS invoice_line_items (
                     id SERIAL PRIMARY KEY,
                     invoice_id VARCHAR(100) REFERENCES invoices(invoice_id),
                     description TEXT NOT NULL,
@@ -135,8 +123,7 @@ class InvoiceGeneratorEngine:
             """)
 
     async def _load_tax_configurations(self) -> None:
-        """Load tax configurations from database"""
-        try:
+        """Load tax configurations from database"""        try:
             # Cache tax rates by country/region
             tax_rates = {
                 'US': 0.0875,  # Average US sales tax
@@ -161,8 +148,7 @@ class InvoiceGeneratorEngine:
     async def generate_invoice(self, customer_id: str, invoice_type: InvoiceType,
                              line_items: List[Dict[str, Any]], 
                              payment_terms: str = "Net 30") -> InvoiceData:
-        """Generate new invoice with automatic calculations"""
-        try:
+        """Generate new invoice with automatic calculations"""        try:
             # Generate unique invoice number
             invoice_number = await self._generate_invoice_number(invoice_type)
             invoice_id = f"inv_{customer_id}_{int(datetime.now().timestamp())}"
@@ -219,8 +205,7 @@ class InvoiceGeneratorEngine:
             raise HTTPException(status_code=500, detail="Invoice generation failed")
 
     async def _generate_invoice_number(self, invoice_type: InvoiceType) -> str:
-        """Generate unique invoice number"""
-        try:
+        """Generate unique invoice number"""        try:
             # Get current year and month
             now = datetime.now()
             prefix = {
@@ -244,11 +229,9 @@ class InvoiceGeneratorEngine:
             raise
 
     async def _get_customer_data(self, customer_id: str) -> Dict[str, Any]:
-        """Get customer data for tax and billing purposes"""
-        try:
+        """Get customer data for tax and billing purposes"""        try:
             async with self.db_pool.acquire() as conn:
-                customer = await conn.fetchrow("""
-                    SELECT 
+                customer = await conn.fetchrow("""                    SELECT 
                         customer_id,
                         country_code,
                         tax_region,
@@ -262,8 +245,7 @@ class InvoiceGeneratorEngine:
                 
                 if not customer:
                     # Create default customer profile
-                    await conn.execute("""
-                        INSERT INTO customers 
+                    await conn.execute("""                        INSERT INTO customers 
                         (customer_id, country_code, tax_region, currency)
                         VALUES ($1, 'US', 'US', 'USD')
                     """, customer_id)
@@ -287,8 +269,7 @@ class InvoiceGeneratorEngine:
             }
 
     async def _process_line_item(self, item_data: Dict[str, Any], tax_region: str) -> InvoiceLineItem:
-        """Process individual line item with tax calculations"""
-        try:
+        """Process individual line item with tax calculations"""        try:
             quantity = Decimal(str(item_data['quantity']))
             unit_price = Decimal(str(item_data['unit_price']))
             tax_rate = await self._get_tax_rate(tax_region)
@@ -311,8 +292,7 @@ class InvoiceGeneratorEngine:
             raise
 
     async def _get_tax_rate(self, tax_region: str) -> float:
-        """Get tax rate for specific region"""
-        try:
+        """Get tax rate for specific region"""        try:
             cached_rate = self.redis.get(f"tax_rate_{tax_region}")
             if cached_rate:
                 return float(cached_rate)
@@ -325,8 +305,7 @@ class InvoiceGeneratorEngine:
             return 0.0
 
     def _calculate_due_date(self, payment_terms: str) -> datetime.date:
-        """Calculate due date based on payment terms"""
-        now = datetime.now().date()
+        """Calculate due date based on payment terms"""        now = datetime.now().date()
         
         if payment_terms == "Net 30":
             return now + timedelta(days=30)
@@ -340,12 +319,10 @@ class InvoiceGeneratorEngine:
             return now + timedelta(days=30)  # Default to Net 30
 
     async def _store_invoice(self, invoice_data: InvoiceData) -> None:
-        """Store invoice and line items in database"""
-        try:
+        """Store invoice and line items in database"""        try:
             async with self.db_pool.acquire() as conn:
                 # Insert main invoice record
-                await conn.execute("""
-                    INSERT INTO invoices 
+                await conn.execute("""                    INSERT INTO invoices 
                     (invoice_id, invoice_number, customer_id, invoice_type, status,
                      issue_date, due_date, currency, subtotal, tax_amount, total_amount,
                      payment_terms, notes)
@@ -368,8 +345,7 @@ class InvoiceGeneratorEngine:
                 
                 # Insert line items
                 for item in invoice_data.line_items:
-                    await conn.execute("""
-                        INSERT INTO invoice_line_items 
+                    await conn.execute("""                        INSERT INTO invoice_line_items 
                         (invoice_id, description, quantity, unit_price, tax_rate,
                          total, category, content_id)
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -389,8 +365,7 @@ class InvoiceGeneratorEngine:
             raise
 
     async def _generate_invoice_pdf(self, invoice_data: InvoiceData) -> str:
-        """Generate PDF invoice document"""
-        try:
+        """Generate PDF invoice document"""        try:
             # This would integrate with a PDF generation service
             # For now, return placeholder path
             pdf_path = f"/invoices/{invoice_data.invoice_number}.pdf"
@@ -409,8 +384,7 @@ class InvoiceGeneratorEngine:
             return ""
 
     async def _send_invoice_notification(self, invoice_data: InvoiceData) -> None:
-        """Send invoice notification to customer"""
-        try:
+        """Send invoice notification to customer"""        try:
             # This would integrate with notification service
             notification_data = {
                 'customer_id': invoice_data.customer_id,
@@ -427,20 +401,17 @@ class InvoiceGeneratorEngine:
             logger.error(f"Failed to send invoice notification: {e}")
 
     async def get_invoice_by_id(self, invoice_id: str) -> Optional[InvoiceData]:
-        """Get invoice by ID"""
-        try:
+        """Get invoice by ID"""        try:
             async with self.db_pool.acquire() as conn:
                 # Get main invoice data
-                invoice_row = await conn.fetchrow("""
-                    SELECT * FROM invoices WHERE invoice_id = $1
+                invoice_row = await conn.fetchrow("""                    SELECT * FROM invoices WHERE invoice_id = $1
                 """, invoice_id)
                 
                 if not invoice_row:
                     return None
                 
                 # Get line items
-                line_items_rows = await conn.fetch("""
-                    SELECT * FROM invoice_line_items 
+                line_items_rows = await conn.fetch("""                    SELECT * FROM invoice_line_items 
                     WHERE invoice_id = $1 
                     ORDER BY id
                 """, invoice_id)
@@ -481,19 +452,16 @@ class InvoiceGeneratorEngine:
             return None
 
     async def update_invoice_status(self, invoice_id: str, status: InvoiceStatus) -> bool:
-        """Update invoice status"""
-        try:
+        """Update invoice status"""        try:
             async with self.db_pool.acquire() as conn:
-                result = await conn.execute("""
-                    UPDATE invoices 
+                result = await conn.execute("""                    UPDATE invoices 
                     SET status = $1, updated_at = NOW()
                     WHERE invoice_id = $2
                 """, status.value, invoice_id)
                 
                 # Mark as paid if status is PAID
                 if status == InvoiceStatus.PAID:
-                    await conn.execute("""
-                        UPDATE invoices 
+                    await conn.execute("""                        UPDATE invoices 
                         SET paid_at = NOW()
                         WHERE invoice_id = $1
                     """, invoice_id)
@@ -505,11 +473,9 @@ class InvoiceGeneratorEngine:
             return False
 
     async def get_overdue_invoices(self) -> List[InvoiceData]:
-        """Get all overdue invoices"""
-        try:
+        """Get all overdue invoices"""        try:
             async with self.db_pool.acquire() as conn:
-                overdue_rows = await conn.fetch("""
-                    SELECT invoice_id FROM invoices 
+                overdue_rows = await conn.fetch("""                    SELECT invoice_id FROM invoices 
                     WHERE status IN ('sent', 'pending') 
                     AND due_date < CURRENT_DATE
                 """)
@@ -530,12 +496,10 @@ class InvoiceGeneratorEngine:
             return []
 
     async def get_billing_dashboard_data(self, customer_id: str) -> Dict[str, Any]:
-        """Get comprehensive billing dashboard data"""
-        try:
+        """Get comprehensive billing dashboard data"""        try:
             async with self.db_pool.acquire() as conn:
                 # Get invoice summary
-                summary = await conn.fetchrow("""
-                    SELECT 
+                summary = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as total_invoices,
                         COALESCE(SUM(CASE WHEN status = 'paid' THEN total_amount ELSE 0 END), 0) as paid_amount,
                         COALESCE(SUM(CASE WHEN status IN ('sent', 'pending') THEN total_amount ELSE 0 END), 0) as pending_amount,
@@ -546,8 +510,7 @@ class InvoiceGeneratorEngine:
                 """, customer_id)
                 
                 # Get recent invoices
-                recent_invoices = await conn.fetch("""
-                    SELECT invoice_id, invoice_number, status, total_amount, due_date
+                recent_invoices = await conn.fetch("""                    SELECT invoice_id, invoice_number, status, total_amount, due_date
                     FROM invoices 
                     WHERE customer_id = $1
                     ORDER BY issue_date DESC 
@@ -555,8 +518,7 @@ class InvoiceGeneratorEngine:
                 """, customer_id)
                 
                 # Get monthly billing trends
-                monthly_trends = await conn.fetch("""
-                    SELECT 
+                monthly_trends = await conn.fetch("""                    SELECT 
                         DATE_TRUNC('month', issue_date) as month,
                         COUNT(*) as invoice_count,
                         SUM(total_amount) as total_billed

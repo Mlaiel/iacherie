@@ -1,5 +1,4 @@
-"""
-AI Agents Memory System
+"""AI Agents Memory System
 
 Advanced memory management system for AI agents to store, retrieve, and process information.
 
@@ -12,7 +11,6 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from enum import Enum
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -28,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class MemoryType(Enum):
-    """Types of memory storage."""
-    SHORT_TERM = "short_term"
+    """Types of memory storage."""    SHORT_TERM = "short_term"
     LONG_TERM = "long_term"
     WORKING = "working"
     EPISODIC = "episodic"
@@ -38,8 +35,7 @@ class MemoryType(Enum):
 
 
 class MemoryImportance(Enum):
-    """Memory importance levels."""
-    CRITICAL = 5
+    """Memory importance levels."""    CRITICAL = 5
     HIGH = 4
     MEDIUM = 3
     LOW = 2
@@ -48,8 +44,7 @@ class MemoryImportance(Enum):
 
 @dataclass
 class MemoryItem:
-    """A single memory item."""
-    id: str
+    """A single memory item."""    id: str
     content: Any
     memory_type: MemoryType
     importance: MemoryImportance
@@ -64,8 +59,7 @@ class MemoryItem:
 
 @dataclass
 class MemoryQuery:
-    """Query for memory retrieval."""
-    content: Optional[str] = None
+    """Query for memory retrieval."""    content: Optional[str] = None
     memory_type: Optional[MemoryType] = None
     importance_min: Optional[MemoryImportance] = None
     tags: List[str] = field(default_factory=list)
@@ -75,15 +69,13 @@ class MemoryQuery:
 
 
 class MemoryManager:
-    """Advanced memory management system for AI agents."""
-    
+    """Advanced memory management system for AI agents."""    
     def __init__(self, 
                  max_short_term: int = 100,
                  max_working: int = 50,
                  max_long_term: int = 10000,
                  decay_factor: float = 0.95):
-        """Initialize the memory manager."""
-        self.max_short_term = max_short_term
+        """Initialize the memory manager."""        self.max_short_term = max_short_term
         self.max_working = max_working
         self.max_long_term = max_long_term
         self.decay_factor = decay_factor
@@ -104,8 +96,7 @@ class MemoryManager:
                     tags: List[str] = None,
                     context: Dict[str, Any] = None,
                     expiry: Optional[datetime] = None) -> str:
-        """Store a new memory item."""
-        try:
+        """Store a new memory item."""        try:
             # Generate unique ID
             content_str = json.dumps(content, sort_keys=True, default=str)
             memory_id = hashlib.md5(f"{content_str}{time.time()}".encode()).hexdigest()
@@ -142,8 +133,7 @@ class MemoryManager:
             return ""
     
     def retrieve_memory(self, memory_id: str) -> Optional[MemoryItem]:
-        """Retrieve a specific memory by ID."""
-        try:
+        """Retrieve a specific memory by ID."""        try:
             if memory_id in self.memories:
                 memory_item = self.memories[memory_id]
                 
@@ -162,8 +152,7 @@ class MemoryManager:
             return None
     
     def search_memories(self, query: MemoryQuery) -> List[MemoryItem]:
-        """Search for memories matching the query."""
-        try:
+        """Search for memories matching the query."""        try:
             matching_memories = []
             
             # Get candidate memory IDs
@@ -242,8 +231,7 @@ class MemoryManager:
                      importance: Optional[MemoryImportance] = None,
                      tags: Optional[List[str]] = None,
                      context: Optional[Dict[str, Any]] = None) -> bool:
-        """Update an existing memory item."""
-        try:
+        """Update an existing memory item."""        try:
             if memory_id not in self.memories:
                 logger.warning(f"Memory {memory_id} not found for update")
                 return False
@@ -286,8 +274,7 @@ class MemoryManager:
             return False
     
     def delete_memory(self, memory_id: str) -> bool:
-        """Delete a memory item."""
-        try:
+        """Delete a memory item."""        try:
             if memory_id not in self.memories:
                 logger.warning(f"Memory {memory_id} not found for deletion")
                 return False
@@ -315,8 +302,7 @@ class MemoryManager:
             return False
     
     def _cleanup_memory(self, memory_type: MemoryType):
-        """Clean up memory based on type limits."""
-        try:
+        """Clean up memory based on type limits."""        try:
             memory_ids = self.memory_index[memory_type]
             
             # Check limits
@@ -360,8 +346,7 @@ class MemoryManager:
             logger.error(f"Failed to cleanup {memory_type.value} memory: {e}")
     
     def consolidate_memories(self):
-        """Consolidate short-term memories into long-term storage."""
-        try:
+        """Consolidate short-term memories into long-term storage."""        try:
             short_term_ids = self.memory_index[MemoryType.SHORT_TERM].copy()
             consolidated_count = 0
             
@@ -395,8 +380,7 @@ class MemoryManager:
             logger.error(f"Failed to consolidate memories: {e}")
     
     def get_memory_stats(self) -> Dict[str, Any]:
-        """Get memory system statistics."""
-        try:
+        """Get memory system statistics."""        try:
             stats = {
                 'total_memories': len(self.memories),
                 'by_type': {},
@@ -440,8 +424,7 @@ class MemoryManager:
             return {}
     
     def clear_expired_memories(self):
-        """Clear all expired memories."""
-        try:
+        """Clear all expired memories."""        try:
             current_time = datetime.now()
             expired_ids = []
             
@@ -459,19 +442,16 @@ class MemoryManager:
 
 
 class WorkingMemory:
-    """Working memory for active processing."""
-    
+    """Working memory for active processing."""    
     def __init__(self, capacity: int = 7):
-        """Initialize working memory with limited capacity."""
-        self.capacity = capacity
+        """Initialize working memory with limited capacity."""        self.capacity = capacity
         self.items: List[MemoryItem] = []
         self.memory_manager = MemoryManager()
         
         logger.info(f"Working memory initialized with capacity {capacity}")
     
     def add_item(self, content: Any, importance: MemoryImportance = MemoryImportance.HIGH) -> str:
-        """Add item to working memory."""
-        # Store in memory manager first
+        """Add item to working memory."""        # Store in memory manager first
         memory_id = self.memory_manager.store_memory(
             content=content,
             memory_type=MemoryType.WORKING,
@@ -494,12 +474,10 @@ class WorkingMemory:
         return memory_id
     
     def get_current_context(self) -> List[Any]:
-        """Get current working memory context."""
-        return [item.content for item in self.items]
+        """Get current working memory context."""        return [item.content for item in self.items]
     
     def clear(self):
-        """Clear working memory."""
-        self.items.clear()
+        """Clear working memory."""        self.items.clear()
         logger.info("Working memory cleared")
 
 

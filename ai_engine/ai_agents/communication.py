@@ -1,5 +1,4 @@
-"""
-Agent Communication Hub
+"""Agent Communication Hub
 
 Central communication system for AI agents enabling secure, efficient,
 and coordinated inter-agent messaging and collaboration.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
-
 import asyncio
 import json
 import uuid
@@ -26,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class MessageType(Enum):
-    """Types of messages between agents"""
-    # Task coordination
+    """Types of messages between agents"""    # Task coordination
     TASK_REQUEST = "task_request"
     TASK_RESPONSE = "task_response"
     TASK_UPDATE = "task_update"
@@ -65,8 +62,7 @@ class MessageType(Enum):
 
 
 class MessagePriority(Enum):
-    """Message priority levels"""
-    LOW = 1
+    """Message priority levels"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
@@ -74,8 +70,7 @@ class MessagePriority(Enum):
 
 
 class MessageStatus(Enum):
-    """Message delivery status"""
-    PENDING = "pending"
+    """Message delivery status"""    PENDING = "pending"
     DELIVERED = "delivered"
     ACKNOWLEDGED = "acknowledged"
     PROCESSED = "processed"
@@ -85,8 +80,7 @@ class MessageStatus(Enum):
 
 @dataclass
 class AgentMessage:
-    """Message between agents"""
-    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Message between agents"""    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     sender_id: str = ""
     recipient_id: str = ""
     message_type: MessageType = MessageType.NOTIFICATION
@@ -111,14 +105,12 @@ class AgentMessage:
     
     @property
     def is_expired(self) -> bool:
-        """Check if message has expired"""
-        if self.expires_at is None:
+        """Check if message has expired"""        if self.expires_at is None:
             return False
         return datetime.utcnow() > self.expires_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert message to dictionary"""
-        data = asdict(self)
+        """Convert message to dictionary"""        data = asdict(self)
         # Convert datetime objects to ISO format
         data["created_at"] = self.created_at.isoformat()
         if self.expires_at:
@@ -131,8 +123,7 @@ class AgentMessage:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> "AgentMessage":
-        """Create message from dictionary"""
-        # Convert ISO format back to datetime
+        """Create message from dictionary"""        # Convert ISO format back to datetime
         if "created_at" in data:
             data["created_at"] = datetime.fromisoformat(data["created_at"])
         if "expires_at" in data and data["expires_at"]:
@@ -151,8 +142,7 @@ class AgentMessage:
 
 @dataclass
 class MessageHandler:
-    """Handler for specific message types"""
-    message_type: MessageType
+    """Handler for specific message types"""    message_type: MessageType
     handler_func: Callable[[AgentMessage], Any]
     agent_id: str
     is_async: bool = True
@@ -161,8 +151,7 @@ class MessageHandler:
 
 @dataclass
 class Conversation:
-    """Conversation thread between agents"""
-    conversation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Conversation thread between agents"""    conversation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     participants: Set[str] = field(default_factory=set)
     created_at: datetime = field(default_factory=datetime.utcnow)
     last_activity: datetime = field(default_factory=datetime.utcnow)
@@ -173,8 +162,7 @@ class Conversation:
 
 
 class AgentCommunicationHub:
-    """
-    Central communication hub for AI agents
+    """    Central communication hub for AI agents
     
     Features:
     - Message routing and delivery
@@ -184,8 +172,7 @@ class AgentCommunicationHub:
     - Delivery confirmation and retry
     - Security and encryption
     - Performance monitoring
-    """
-    
+    """    
     def __init__(self):
         # Message storage and routing
         self.messages: Dict[str, AgentMessage] = {}
@@ -219,8 +206,7 @@ class AgentCommunicationHub:
         self._background_tasks: List[asyncio.Task] = []
     
     async def initialize(self) -> None:
-        """Initialize the communication hub"""
-        try:
+        """Initialize the communication hub"""        try:
             # Start background tasks
             self._background_tasks.extend([
                 asyncio.create_task(self._message_processor()),
@@ -236,15 +222,13 @@ class AgentCommunicationHub:
             raise
     
     async def register_agent(self, agent_id: str) -> None:
-        """Register an agent with the communication hub"""
-        if agent_id not in self.agent_queues:
+        """Register an agent with the communication hub"""        if agent_id not in self.agent_queues:
             self.agent_queues[agent_id] = asyncio.PriorityQueue(maxsize=self.max_queue_size)
             self.message_handlers[agent_id] = []
             logger.info(f"Agent {agent_id} registered with communication hub")
     
     async def unregister_agent(self, agent_id: str) -> None:
-        """Unregister an agent from the communication hub"""
-        if agent_id in self.agent_queues:
+        """Unregister an agent from the communication hub"""        if agent_id in self.agent_queues:
             # Clear remaining messages
             queue = self.agent_queues[agent_id]
             while not queue.empty():
@@ -258,8 +242,7 @@ class AgentCommunicationHub:
             logger.info(f"Agent {agent_id} unregistered from communication hub")
     
     async def send_message(self, message: AgentMessage) -> bool:
-        """Send a message to an agent"""
-        try:
+        """Send a message to an agent"""        try:
             # Validate message
             if not self._validate_message(message):
                 logger.error(f"Invalid message: {message.message_id}")
@@ -310,8 +293,7 @@ class AgentCommunicationHub:
             return False
     
     async def receive_message(self, agent_id: str, timeout: float = 1.0) -> Optional[AgentMessage]:
-        """Receive a message for an agent"""
-        if agent_id not in self.agent_queues:
+        """Receive a message for an agent"""        if agent_id not in self.agent_queues:
             return None
         
         try:
@@ -359,8 +341,7 @@ class AgentCommunicationHub:
             return None
     
     async def register_handler(self, agent_id: str, handler: MessageHandler) -> None:
-        """Register a message handler for an agent"""
-        if agent_id not in self.message_handlers:
+        """Register a message handler for an agent"""        if agent_id not in self.message_handlers:
             await self.register_agent(agent_id)
         
         # Insert handler in priority order
@@ -380,8 +361,7 @@ class AgentCommunicationHub:
     
     async def reply_to_message(self, original_message: AgentMessage, reply_content: Dict[str, Any], 
                               message_type: MessageType = MessageType.TASK_RESPONSE) -> bool:
-        """Reply to a message"""
-        reply = AgentMessage(
+        """Reply to a message"""        reply = AgentMessage(
             sender_id=original_message.recipient_id,
             recipient_id=original_message.sender_id,
             message_type=message_type,
@@ -396,8 +376,7 @@ class AgentCommunicationHub:
     
     async def broadcast_message(self, sender_id: str, message_type: MessageType, 
                                content: Dict[str, Any], exclude_agents: List[str] = None) -> List[str]:
-        """Broadcast a message to all registered agents"""
-        exclude_agents = exclude_agents or []
+        """Broadcast a message to all registered agents"""        exclude_agents = exclude_agents or []
         exclude_agents.append(sender_id)  # Don't send to sender
         
         successful_sends = []
@@ -418,8 +397,7 @@ class AgentCommunicationHub:
         return successful_sends
     
     async def create_conversation(self, subject: str, participants: List[str]) -> str:
-        """Create a new conversation thread"""
-        conversation = Conversation(
+        """Create a new conversation thread"""        conversation = Conversation(
             participants=set(participants),
             subject=subject
         )
@@ -446,8 +424,7 @@ class AgentCommunicationHub:
         return conversation.conversation_id
     
     async def get_conversation_history(self, conversation_id: str) -> List[AgentMessage]:
-        """Get message history for a conversation"""
-        conversation = self.conversations.get(conversation_id)
+        """Get message history for a conversation"""        conversation = self.conversations.get(conversation_id)
         if not conversation:
             return []
         
@@ -462,8 +439,7 @@ class AgentCommunicationHub:
         return messages
     
     async def get_agent_statistics(self, agent_id: str) -> Dict[str, Any]:
-        """Get communication statistics for an agent"""
-        sent_count = len([m for m in self.messages.values() if m.sender_id == agent_id])
+        """Get communication statistics for an agent"""        sent_count = len([m for m in self.messages.values() if m.sender_id == agent_id])
         received_count = len([m for m in self.messages.values() if m.recipient_id == agent_id])
         
         return {
@@ -478,8 +454,7 @@ class AgentCommunicationHub:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown the communication hub"""
-        logger.info("Shutting down Agent Communication Hub")
+        """Shutdown the communication hub"""        logger.info("Shutting down Agent Communication Hub")
         
         # Signal shutdown
         self._shutdown_event.set()
@@ -501,8 +476,7 @@ class AgentCommunicationHub:
     
     # Background task methods
     async def _message_processor(self) -> None:
-        """Background task to process messages"""
-        while not self._shutdown_event.is_set():
+        """Background task to process messages"""        while not self._shutdown_event.is_set():
             try:
                 # Process message handlers for each agent
                 for agent_id in list(self.agent_queues.keys()):
@@ -514,8 +488,7 @@ class AgentCommunicationHub:
             await asyncio.sleep(0.1)  # Process every 100ms
     
     async def _process_agent_handlers(self, agent_id: str) -> None:
-        """Process message handlers for a specific agent"""
-        try:
+        """Process message handlers for a specific agent"""        try:
             # Get message without blocking
             message = await self.receive_message(agent_id, timeout=0.01)
             if not message:

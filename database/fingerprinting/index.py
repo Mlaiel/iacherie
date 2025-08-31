@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Enterprise Fingerprinting Database Module - Main Index
+"""Enterprise Fingerprinting Database Module - Main Index
 
 Ultra-advanced database management system for content fingerprinting with industrial-strength
 optimization, multi-modal vector storage, and comprehensive security.
@@ -33,7 +32,6 @@ Development Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: Infrastructure automation and monitoring
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
@@ -113,8 +111,7 @@ logger = logging.getLogger(__name__)
 
 
 class EnterpriseFingerprintingService:
-    """
-    Ultra-Advanced Enterprise Fingerprinting Service
+    """    Ultra-Advanced Enterprise Fingerprinting Service
     
     Complete fingerprinting solution providing:
     - Multi-modal content processing
@@ -122,8 +119,7 @@ class EnterpriseFingerprintingService:
     - Real-time indexing and search
     - Enterprise security and compliance
     - Comprehensive analytics and monitoring
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -156,8 +152,7 @@ class EnterpriseFingerprintingService:
         }
     
     async def initialize(self, config: Optional[Dict[str, Any]] = None) -> bool:
-        """Initialize all fingerprinting service components"""
-        try:
+        """Initialize all fingerprinting service components"""        try:
             self.logger.info("Initializing Enterprise Fingerprinting Service...")
             
             # Initialize storage manager
@@ -247,8 +242,7 @@ class EnterpriseFingerprintingService:
     
     @asynccontextmanager
     async def get_service_context(self):
-        """Get service context with proper initialization check"""
-        if not self.is_initialized:
+        """Get service context with proper initialization check"""        if not self.is_initialized:
             await self.initialize()
         
         try:
@@ -267,8 +261,7 @@ class EnterpriseFingerprintingService:
         vector_data: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Store content fingerprint with full indexing"""
-        async with self.get_service_context():
+        """Store content fingerprint with full indexing"""        async with self.get_service_context():
             # Store in database
             fingerprint_id = await self.storage_manager.store_fingerprint(
                 content_id=content_id,
@@ -298,8 +291,7 @@ class EnterpriseFingerprintingService:
         content_type: str,
         search_types: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Search for similar content across all indexes"""
-        async with self.get_service_context():
+        """Search for similar content across all indexes"""        async with self.get_service_context():
             results = await self.index_manager.search_fingerprints(
                 query=query,
                 content_type=content_type,
@@ -312,8 +304,7 @@ class EnterpriseFingerprintingService:
         self,
         query: MatchQuery
     ) -> List[MatchResult]:
-        """Perform comprehensive fingerprint matching"""
-        async with self.get_service_context():
+        """Perform comprehensive fingerprint matching"""        async with self.get_service_context():
             matches = await self.matching_engine.match_fingerprints(query)
             
             # Update service statistics
@@ -326,8 +317,7 @@ class EnterpriseFingerprintingService:
         fingerprint_id: str,
         include_vectors: bool = False
     ) -> Optional[Dict[str, Any]]:
-        """Retrieve fingerprint data"""
-        async with self.get_service_context():
+        """Retrieve fingerprint data"""        async with self.get_service_context():
             return await self.storage_manager.retrieve_fingerprint(
                 fingerprint_id=fingerprint_id,
                 include_vectors=include_vectors
@@ -338,8 +328,7 @@ class EnterpriseFingerprintingService:
         fingerprint_id: str,
         content_type: str
     ) -> bool:
-        """Delete fingerprint from all systems"""
-        async with self.get_service_context():
+        """Delete fingerprint from all systems"""        async with self.get_service_context():
             # Remove from indexes
             await self.index_manager.remove_fingerprint(
                 fingerprint_id=fingerprint_id,
@@ -355,8 +344,7 @@ class EnterpriseFingerprintingService:
             return success
     
     async def get_comprehensive_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive service statistics"""
-        async with self.get_service_context():
+        """Get comprehensive service statistics"""        async with self.get_service_context():
             storage_stats = await self.storage_manager.get_storage_statistics()
             index_stats = await self.index_manager.get_comprehensive_statistics()
             
@@ -370,8 +358,7 @@ class EnterpriseFingerprintingService:
             }
     
     async def run_maintenance(self) -> Dict[str, bool]:
-        """Run comprehensive maintenance operations"""
-        async with self.get_service_context():
+        """Run comprehensive maintenance operations"""        async with self.get_service_context():
             results = {}
             
             # Run cleanup
@@ -392,8 +379,7 @@ class EnterpriseFingerprintingService:
             return results
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check of all components"""
-        health_status = {
+        """Comprehensive health check of all components"""        health_status = {
             'service_initialized': self.is_initialized,
             'storage_healthy': False,
             'index_healthy': False,

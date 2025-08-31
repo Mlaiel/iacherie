@@ -28,8 +28,7 @@ MODULES PROFESSIONNELS:
 - FileManager: Multi-format file processing & validation
 - VersionManager: Git-like version control for content
 - BackupManager: Multi-tier backup & disaster recovery
-"""
-from .storage_manager import StorageManager
+"""from .storage_manager import StorageManager
 from .file_manager import (
     FileManager, 
     ContentType, 

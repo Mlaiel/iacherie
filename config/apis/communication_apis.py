@@ -1,20 +1,17 @@
-"""
-Communication APIs Configuration - Email, SMS & Notification Services
+"""Communication APIs Configuration - Email, SMS & Notification Services
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module configures communication APIs for email delivery, SMS messaging,
 push notifications, and other communication channels for user engagement.
 """
-
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class CommunicationServiceType(Enum):
-    """Communication service types"""
-    EMAIL_DELIVERY = "email_delivery"
+    """Communication service types"""    EMAIL_DELIVERY = "email_delivery"
     SMS_MESSAGING = "sms_messaging"
     PUSH_NOTIFICATIONS = "push_notifications"
     IN_APP_MESSAGING = "in_app_messaging"
@@ -22,16 +19,14 @@ class CommunicationServiceType(Enum):
     CHATBOT = "chatbot"
 
 class MessagePriority(Enum):
-    """Message priority levels"""
-    LOW = "low"
+    """Message priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 @dataclass
 class CommunicationAPIConfig:
-    """Configuration class for communication APIs"""
-    service_name: str
+    """Configuration class for communication APIs"""    service_name: str
     service_type: CommunicationServiceType
     base_url: str
     api_version: str
@@ -84,8 +79,7 @@ class CommunicationAPIConfig:
     environments: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     
     def get_environment_config(self, environment: str = "production") -> Dict[str, Any]:
-        """Get configuration for specific environment"""
-        base_config = self.__dict__.copy()
+        """Get configuration for specific environment"""        base_config = self.__dict__.copy()
         env_config = self.environments.get(environment, {})
         base_config.update(env_config)
         return base_config
@@ -373,32 +367,25 @@ COMMUNICATION_CONFIGS: Dict[str, CommunicationAPIConfig] = {
 }
 
 def get_communication_config(service: str) -> Optional[CommunicationAPIConfig]:
-    """Get communication service configuration by name"""
-    return COMMUNICATION_CONFIGS.get(service.lower())
+    """Get communication service configuration by name"""    return COMMUNICATION_CONFIGS.get(service.lower())
 
 def get_services_by_type(service_type: CommunicationServiceType) -> List[CommunicationAPIConfig]:
-    """Get all communication services of specific type"""
-    return [config for config in COMMUNICATION_CONFIGS.values() 
+    """Get all communication services of specific type"""    return [config for config in COMMUNICATION_CONFIGS.values() 
             if config.service_type == service_type]
 
 def get_email_services() -> List[CommunicationAPIConfig]:
-    """Get all email delivery services"""
-    return get_services_by_type(CommunicationServiceType.EMAIL_DELIVERY)
+    """Get all email delivery services"""    return get_services_by_type(CommunicationServiceType.EMAIL_DELIVERY)
 
 def get_sms_services() -> List[CommunicationAPIConfig]:
-    """Get all SMS messaging services"""
-    return get_services_by_type(CommunicationServiceType.SMS_MESSAGING)
+    """Get all SMS messaging services"""    return get_services_by_type(CommunicationServiceType.SMS_MESSAGING)
 
 def get_push_notification_services() -> List[CommunicationAPIConfig]:
-    """Get all push notification services"""
-    return get_services_by_type(CommunicationServiceType.PUSH_NOTIFICATIONS)
+    """Get all push notification services"""    return get_services_by_type(CommunicationServiceType.PUSH_NOTIFICATIONS)
 
 def get_services_with_templating() -> List[CommunicationAPIConfig]:
-    """Get services that support message templating"""
-    return [config for config in COMMUNICATION_CONFIGS.values() 
+    """Get services that support message templating"""    return [config for config in COMMUNICATION_CONFIGS.values() 
             if config.supports_templating]
 
 def get_services_with_analytics() -> List[CommunicationAPIConfig]:
-    """Get services that support analytics tracking"""
-    return [config for config in COMMUNICATION_CONFIGS.values() 
+    """Get services that support analytics tracking"""    return [config for config in COMMUNICATION_CONFIGS.values() 
             if config.supports_analytics]

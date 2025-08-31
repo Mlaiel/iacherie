@@ -1,5 +1,4 @@
-"""
-Integration Hub - Universal Platform Integration Manager
+"""Integration Hub - Universal Platform Integration Manager
 
 Central hub for managing all platform integrations, API connections,
 authentication flows, and data synchronization across multiple platforms.
@@ -7,7 +6,6 @@ authentication flows, and data synchronization across multiple platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -33,16 +31,14 @@ from ...utils.encryption_utils import encrypt_sensitive_data, decrypt_sensitive_
 logger = get_logger(__name__)
 
 class IntegrationType(Enum):
-    """Integration types"""
-    OAUTH2 = "oauth2"
+    """Integration types"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     WEBHOOK = "webhook"
     RSS_FEED = "rss_feed"
     CUSTOM = "custom"
 
 class PlatformCategory(Enum):
-    """Platform categories"""
-    SOCIAL_MEDIA = "social_media"
+    """Platform categories"""    SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     BLOG_PLATFORM = "blog_platform"
@@ -52,8 +48,7 @@ class PlatformCategory(Enum):
 
 @dataclass
 class PlatformInfo:
-    """Platform information structure"""
-    platform_id: str
+    """Platform information structure"""    platform_id: str
     name: str
     category: PlatformCategory
     integration_type: IntegrationType
@@ -66,8 +61,7 @@ class PlatformInfo:
 
 @dataclass
 class IntegrationResult:
-    """Integration operation result"""
-    success: bool
+    """Integration operation result"""    success: bool
     platform_id: str
     integration_id: Optional[str] = None
     access_token: Optional[str] = None
@@ -77,8 +71,7 @@ class IntegrationResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class IntegrationHub:
-    """
-    Universal platform integration manager
+    """    Universal platform integration manager
     
     Features:
     - Multi-platform OAuth2 authentication
@@ -88,8 +81,7 @@ class IntegrationHub:
     - Token refresh automation
     - Integration health monitoring
     - Cross-platform data synchronization
-    """
-    
+    """    
     def __init__(self):
         self.oauth_manager = OAuthManager()
         self.webhook_handler = WebhookHandler()
@@ -107,13 +99,11 @@ class IntegrationHub:
         self.http_clients = {}
         
     async def initialize(self) -> bool:
-        """
-        Initialize integration hub
+        """        Initialize integration hub
         
         Returns:
             bool: Initialization success status
-        """
-        try:
+        """        try:
             logger.info("Initializing Integration Hub...")
             
             # Initialize OAuth manager
@@ -143,8 +133,7 @@ class IntegrationHub:
         integration_config: Dict[str, Any],
         session: AsyncSession
     ) -> IntegrationResult:
-        """
-        Initiate integration with a platform
+        """        Initiate integration with a platform
         
         Args:
             user_id: User ID
@@ -154,8 +143,7 @@ class IntegrationHub:
             
         Returns:
             IntegrationResult with integration status
-        """
-        try:
+        """        try:
             platform_info = self.platform_configs.get(platform_id)
             if not platform_info:
                 raise HTTPException(status_code=400, detail=f"Unsupported platform: {platform_id}")
@@ -217,8 +205,7 @@ class IntegrationHub:
         state: Optional[str] = None,
         session: AsyncSession = None
     ) -> IntegrationResult:
-        """
-        Complete OAuth2 integration flow
+        """        Complete OAuth2 integration flow
         
         Args:
             user_id: User ID
@@ -229,8 +216,7 @@ class IntegrationHub:
             
         Returns:
             IntegrationResult with final integration status
-        """
-        try:
+        """        try:
             platform_info = self.platform_configs.get(platform_id)
             if not platform_info:
                 raise HTTPException(status_code=400, detail=f"Unsupported platform: {platform_id}")
@@ -292,8 +278,7 @@ class IntegrationHub:
         platform_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Revoke platform integration
+        """        Revoke platform integration
         
         Args:
             user_id: User ID
@@ -302,8 +287,7 @@ class IntegrationHub:
             
         Returns:
             Dict containing revocation status
-        """
-        try:
+        """        try:
             # Get existing integration
             integration = await self._get_existing_integration(user_id, platform_id, session)
             
@@ -350,8 +334,7 @@ class IntegrationHub:
         platform_id: Optional[str] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Get integration status for user
+        """        Get integration status for user
         
         Args:
             user_id: User ID
@@ -360,8 +343,7 @@ class IntegrationHub:
             
         Returns:
             Dict containing integration status information
-        """
-        try:
+        """        try:
             if platform_id:
                 # Get specific platform integration
                 integration = await self._get_existing_integration(user_id, platform_id, session)
@@ -416,8 +398,7 @@ class IntegrationHub:
         platform_id: str,
         session: AsyncSession
     ) -> IntegrationResult:
-        """
-        Refresh platform access token
+        """        Refresh platform access token
         
         Args:
             user_id: User ID
@@ -426,8 +407,7 @@ class IntegrationHub:
             
         Returns:
             IntegrationResult with updated token information
-        """
-        try:
+        """        try:
             # Get existing integration
             integration = await self._get_existing_integration(user_id, platform_id, session)
             
@@ -487,8 +467,7 @@ class IntegrationHub:
         data_types: List[str],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Synchronize data from platform
+        """        Synchronize data from platform
         
         Args:
             user_id: User ID
@@ -498,8 +477,7 @@ class IntegrationHub:
             
         Returns:
             Dict containing sync results
-        """
-        try:
+        """        try:
             # Get active integration
             integration = await self._get_active_integration(user_id, platform_id, session)
             
@@ -545,8 +523,7 @@ class IntegrationHub:
             raise HTTPException(status_code=500, detail=f"Sync failed: {str(e)}")
     
     def _initialize_platform_configs(self) -> Dict[str, PlatformInfo]:
-        """Initialize platform configurations"""
-        return {
+        """Initialize platform configurations"""        return {
             'youtube': PlatformInfo(
                 platform_id='youtube',
                 name='YouTube',
@@ -610,8 +587,7 @@ class IntegrationHub:
         }
     
     async def _initialize_http_clients(self):
-        """Initialize HTTP clients for different platforms"""
-        for platform_id, config in self.platform_configs.items():
+        """Initialize HTTP clients for different platforms"""        for platform_id, config in self.platform_configs.items():
             self.http_clients[platform_id] = httpx.AsyncClient(
                 base_url=config.base_url,
                 timeout=30.0,
@@ -624,8 +600,7 @@ class IntegrationHub:
         platform_info: PlatformInfo,
         config: Dict[str, Any]
     ) -> IntegrationResult:
-        """Initiate OAuth2 integration"""
-        oauth_url = await self.oauth_manager.generate_oauth_url(
+        """Initiate OAuth2 integration"""        oauth_url = await self.oauth_manager.generate_oauth_url(
             platform_id=platform_info.platform_id,
             user_id=user_id,
             scopes=config.get('scopes', platform_info.oauth_config.get('scope', '').split(' '))
@@ -647,8 +622,7 @@ class IntegrationHub:
         platform_info: PlatformInfo,
         config: Dict[str, Any]
     ) -> IntegrationResult:
-        """Initiate API key integration"""
-        api_key = config.get('api_key')
+        """Initiate API key integration"""        api_key = config.get('api_key')
         if not api_key:
             return IntegrationResult(
                 success=False,
@@ -679,8 +653,7 @@ class IntegrationHub:
         platform_info: PlatformInfo,
         config: Dict[str, Any]
     ) -> IntegrationResult:
-        """Initiate webhook integration"""
-        webhook_url = config.get('webhook_url')
+        """Initiate webhook integration"""        webhook_url = config.get('webhook_url')
         if not webhook_url:
             return IntegrationResult(
                 success=False,
@@ -711,8 +684,7 @@ class IntegrationHub:
         platform_id: str, 
         session: AsyncSession
     ) -> Optional[PlatformIntegration]:
-        """Get existing integration from database"""
-        result = await session.execute(
+        """Get existing integration from database"""        result = await session.execute(
             select(PlatformIntegration).where(
                 and_(
                     PlatformIntegration.user_id == user_id,
@@ -728,8 +700,7 @@ class IntegrationHub:
         platform_id: str, 
         session: AsyncSession
     ) -> Optional[PlatformIntegration]:
-        """Get active integration from database"""
-        result = await session.execute(
+        """Get active integration from database"""        result = await session.execute(
             select(PlatformIntegration).where(
                 and_(
                     PlatformIntegration.user_id == user_id,
@@ -747,8 +718,7 @@ class IntegrationHub:
         result: IntegrationResult,
         session: AsyncSession
     ):
-        """Store integration in database"""
-        integration = PlatformIntegration(
+        """Store integration in database"""        integration = PlatformIntegration(
             user_id=user_id,
             platform_id=platform_id,
             integration_type=self.platform_configs[platform_id].integration_type.value,
@@ -765,8 +735,7 @@ class IntegrationHub:
         await session.refresh(integration)
     
     async def _monitor_integrations(self):
-        """Monitor integration health"""
-        while True:
+        """Monitor integration health"""        while True:
             try:
                 logger.info("Running integration health check")
                 # Implementation for integration monitoring
@@ -777,8 +746,7 @@ class IntegrationHub:
                 await asyncio.sleep(3600)
     
     async def _refresh_tokens_periodically(self):
-        """Periodically refresh expiring tokens"""
-        while True:
+        """Periodically refresh expiring tokens"""        while True:
             try:
                 # Implementation for automatic token refresh
                 await asyncio.sleep(1800)  # Check every 30 minutes

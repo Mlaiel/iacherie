@@ -1,5 +1,4 @@
-"""
-Intelligent Alerting System
+"""Intelligent Alerting System
 
 Advanced alerting system for the IA Influencer platform providing intelligent
 notifications, ML-based anomaly detection, and adaptive alert management.
@@ -13,7 +12,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import asyncio
 import time
 import json
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    LOW = "low"
+    """Alert severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -43,8 +40,7 @@ class AlertSeverity(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert status states"""
-    ACTIVE = "active"
+    """Alert status states"""    ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
     SUPPRESSED = "suppressed"
@@ -52,8 +48,7 @@ class AlertStatus(Enum):
 
 
 class AlertChannel(Enum):
-    """Alert delivery channels"""
-    EMAIL = "email"
+    """Alert delivery channels"""    EMAIL = "email"
     SMS = "sms"
     SLACK = "slack"
     WEBHOOK = "webhook"
@@ -63,8 +58,7 @@ class AlertChannel(Enum):
 
 
 class AlertCategory(Enum):
-    """Alert categories"""
-    SYSTEM = "system"
+    """Alert categories"""    SYSTEM = "system"
     SECURITY = "security"
     PERFORMANCE = "performance"
     BUSINESS = "business"
@@ -76,8 +70,7 @@ class AlertCategory(Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
-    rule_id: str
+    """Alert rule configuration"""    rule_id: str
     name: str
     description: str
     category: AlertCategory
@@ -98,8 +91,7 @@ class AlertRule:
     updated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'rule_id': self.rule_id,
             'name': self.name,
             'description': self.description,
@@ -124,8 +116,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance"""
-    alert_id: str
+    """Alert instance"""    alert_id: str
     rule_id: str
     title: str
     description: str
@@ -147,8 +138,7 @@ class Alert:
     notification_count: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'alert_id': self.alert_id,
             'rule_id': self.rule_id,
             'title': self.title,
@@ -173,8 +163,7 @@ class Alert:
 
 
 class AlertEvaluator:
-    """
-    Alert rule evaluator for checking conditions and triggering alerts
+    """    Alert rule evaluator for checking conditions and triggering alerts
     
     Features:
     - Real-time condition evaluation
@@ -182,11 +171,9 @@ class AlertEvaluator:
     - Time-based aggregation
     - Anomaly detection integration
     - Context-aware alerting
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize alert evaluator"""
-        self.config = config or {}
+        """Initialize alert evaluator"""        self.config = config or {}
         
         # Rule storage
         self.alert_rules: Dict[str, AlertRule] = {}
@@ -207,8 +194,7 @@ class AlertEvaluator:
         self.evaluation_task = None
     
     def add_rule(self, rule: AlertRule):
-        """Add alert rule"""
-        try:
+        """Add alert rule"""        try:
             with self._lock:
                 self.alert_rules[rule.rule_id] = rule
                 self.rule_states[rule.rule_id] = {
@@ -225,8 +211,7 @@ class AlertEvaluator:
             logger.error(f"Failed to add alert rule {rule.rule_id}: {str(e)}")
     
     def remove_rule(self, rule_id: str):
-        """Remove alert rule"""
-        try:
+        """Remove alert rule"""        try:
             with self._lock:
                 if rule_id in self.alert_rules:
                     del self.alert_rules[rule_id]
@@ -239,8 +224,7 @@ class AlertEvaluator:
             logger.error(f"Failed to remove alert rule {rule_id}: {str(e)}")
     
     def update_rule(self, rule: AlertRule):
-        """Update existing alert rule"""
-        try:
+        """Update existing alert rule"""        try:
             with self._lock:
                 if rule.rule_id in self.alert_rules:
                     rule.updated_at = datetime.now(timezone.utc)
@@ -253,8 +237,7 @@ class AlertEvaluator:
             logger.error(f"Failed to update alert rule {rule.rule_id}: {str(e)}")
     
     async def start_evaluation(self):
-        """Start rule evaluation"""
-        try:
+        """Start rule evaluation"""        try:
             logger.info("Starting alert rule evaluation")
             self.is_evaluating = True
             self.evaluation_task = asyncio.create_task(self._evaluation_loop())
@@ -263,8 +246,7 @@ class AlertEvaluator:
             logger.error(f"Failed to start evaluation: {str(e)}")
     
     async def stop_evaluation(self):
-        """Stop rule evaluation"""
-        try:
+        """Stop rule evaluation"""        try:
             logger.info("Stopping alert rule evaluation")
             self.is_evaluating = False
             
@@ -279,8 +261,7 @@ class AlertEvaluator:
             logger.error(f"Failed to stop evaluation: {str(e)}")
     
     async def _evaluation_loop(self):
-        """Main evaluation loop"""
-        while self.is_evaluating:
+        """Main evaluation loop"""        while self.is_evaluating:
             try:
                 # Evaluate all active rules
                 await self._evaluate_all_rules()
@@ -298,8 +279,7 @@ class AlertEvaluator:
                 await asyncio.sleep(5)  # Brief pause on error
     
     async def _evaluate_all_rules(self):
-        """Evaluate all alert rules"""
-        try:
+        """Evaluate all alert rules"""        try:
             current_time = datetime.now(timezone.utc)
             
             for rule_id, rule in self.alert_rules.items():
@@ -325,8 +305,7 @@ class AlertEvaluator:
             logger.error(f"Failed to evaluate all rules: {str(e)}")
     
     async def _evaluate_rule(self, rule: AlertRule, rule_state: Dict[str, Any], current_time: datetime):
-        """Evaluate a specific rule"""
-        try:
+        """Evaluate a specific rule"""        try:
             # Get relevant data
             condition_data = await self._get_condition_data(rule, current_time)
             
@@ -358,8 +337,7 @@ class AlertEvaluator:
             logger.error(f"Failed to evaluate rule {rule.rule_id}: {str(e)}")
     
     async def _get_condition_data(self, rule: AlertRule, current_time: datetime) -> Optional[Dict[str, Any]]:
-        """Get data for condition evaluation"""
-        try:
+        """Get data for condition evaluation"""        try:
             # Parse condition to extract metric name
             metric_name = self._extract_metric_name(rule.condition)
             
@@ -396,8 +374,7 @@ class AlertEvaluator:
             return None
     
     def _extract_metric_name(self, condition: str) -> Optional[str]:
-        """Extract metric name from condition string"""
-        try:
+        """Extract metric name from condition string"""        try:
             # Simple extraction - in production this would be more sophisticated
             # Expected format: "metric_name > threshold" or "avg(metric_name) > threshold"
             
@@ -420,8 +397,7 @@ class AlertEvaluator:
             return None
     
     def _evaluate_condition(self, rule: AlertRule, condition_data: Dict[str, Any]) -> bool:
-        """Evaluate rule condition against data"""
-        try:
+        """Evaluate rule condition against data"""        try:
             # Determine value to compare based on condition
             condition_lower = rule.condition.lower()
             
@@ -460,8 +436,7 @@ class AlertEvaluator:
             return False
     
     def _should_trigger_alert(self, rule: AlertRule, rule_state: Dict[str, Any]) -> bool:
-        """Determine if alert should be triggered"""
-        try:
+        """Determine if alert should be triggered"""        try:
             # Simple trigger logic - condition met at least once
             # In production, this could be more sophisticated (e.g., multiple consecutive evaluations)
             return rule_state['condition_met_count'] >= 1
@@ -471,8 +446,7 @@ class AlertEvaluator:
             return False
     
     async def _trigger_alert(self, rule: AlertRule, condition_data: Dict[str, Any], current_time: datetime):
-        """Trigger an alert"""
-        try:
+        """Trigger an alert"""        try:
             alert_id = f"alert_{rule.rule_id}_{int(current_time.timestamp())}"
             
             # Create alert
@@ -503,8 +477,7 @@ class AlertEvaluator:
     
     def ingest_metric_data(self, metric_name: str, value: Union[int, float], 
                           timestamp: Optional[datetime] = None):
-        """Ingest metric data for evaluation"""
-        try:
+        """Ingest metric data for evaluation"""        try:
             if timestamp is None:
                 timestamp = datetime.now(timezone.utc)
             
@@ -520,8 +493,7 @@ class AlertEvaluator:
             logger.error(f"Failed to ingest metric data for {metric_name}: {str(e)}")
     
     async def _cleanup_old_data(self):
-        """Clean up old data from buffers"""
-        try:
+        """Clean up old data from buffers"""        try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(seconds=self.max_data_age)
             
             for metric_name in list(self.data_buffer.keys()):
@@ -540,8 +512,7 @@ class AlertEvaluator:
 
 
 class AlertManager:
-    """
-    Central alert management system
+    """    Central alert management system
     
     Features:
     - Alert lifecycle management
@@ -549,11 +520,9 @@ class AlertManager:
     - Escalation handling
     - Alert suppression
     - Acknowledgment tracking
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize alert manager"""
-        self.config = config or {}
+        """Initialize alert manager"""        self.config = config or {}
         
         # Alert storage
         self.active_alerts: Dict[str, Alert] = {}
@@ -581,8 +550,7 @@ class AlertManager:
         self._lock = threading.Lock()
     
     async def start(self):
-        """Start alert manager"""
-        try:
+        """Start alert manager"""        try:
             logger.info("Starting Alert Manager")
             
             # Start alert evaluator
@@ -600,8 +568,7 @@ class AlertManager:
             logger.error(f"Failed to start Alert Manager: {str(e)}")
     
     async def stop(self):
-        """Stop alert manager"""
-        try:
+        """Stop alert manager"""        try:
             logger.info("Stopping Alert Manager")
             
             # Stop evaluator
@@ -624,8 +591,7 @@ class AlertManager:
             logger.error(f"Failed to stop Alert Manager: {str(e)}")
     
     async def _start_notification_workers(self):
-        """Start notification worker tasks"""
-        try:
+        """Start notification worker tasks"""        try:
             num_workers = self.config.get('notification_workers', 3)
             
             for i in range(num_workers):
@@ -638,8 +604,7 @@ class AlertManager:
             logger.error(f"Failed to start notification workers: {str(e)}")
     
     async def _stop_notification_workers(self):
-        """Stop notification worker tasks"""
-        try:
+        """Stop notification worker tasks"""        try:
             for worker in self.notification_workers:
                 worker.cancel()
             
@@ -654,8 +619,7 @@ class AlertManager:
             logger.error(f"Failed to stop notification workers: {str(e)}")
     
     async def _notification_worker(self, worker_id: str):
-        """Notification worker task"""
-        logger.info(f"Notification worker {worker_id} started")
+        """Notification worker task"""        logger.info(f"Notification worker {worker_id} started")
         
         try:
             while True:
@@ -678,8 +642,7 @@ class AlertManager:
             logger.error(f"Error in notification worker {worker_id}: {str(e)}")
     
     async def _process_notification(self, notification: Dict[str, Any]):
-        """Process a single notification"""
-        try:
+        """Process a single notification"""        try:
             alert = notification['alert']
             channel = notification['channel']
             recipients = notification['recipients']
@@ -698,8 +661,7 @@ class AlertManager:
             logger.error(f"Failed to process notification: {str(e)}")
     
     async def _send_email_notification(self, alert: Alert, recipients: List[str]):
-        """Send email notification"""
-        try:
+        """Send email notification"""        try:
             email_config = self.notification_channels[AlertChannel.EMAIL]
             
             if not email_config:
@@ -719,8 +681,7 @@ class AlertManager:
             # Create email content
             subject = f"[{alert.severity.value.upper()}] {alert.title}"
             
-            body = f"""
-Alert Details:
+            body = f"""Alert Details:
 - ID: {alert.alert_id}
 - Severity: {alert.severity.value.upper()}
 - Category: {alert.category.value}
@@ -736,8 +697,7 @@ Threshold: {alert.threshold_value}
 Affected Components: {', '.join(alert.affected_components) if alert.affected_components else 'N/A'}
 
 This alert was generated by the IA Influencer Platform monitoring system.
-"""
-            
+"""            
             # Send to each recipient
             for recipient in recipients:
                 try:
@@ -761,8 +721,7 @@ This alert was generated by the IA Influencer Platform monitoring system.
             alert.delivery_status[AlertChannel.EMAIL] = f"failed: {str(e)}"
     
     async def _send_slack_notification(self, alert: Alert, channels: List[str]):
-        """Send Slack notification"""
-        try:
+        """Send Slack notification"""        try:
             slack_config = self.notification_channels[AlertChannel.SLACK]
             webhook_url = slack_config.get('webhook_url')
             
@@ -811,8 +770,7 @@ This alert was generated by the IA Influencer Platform monitoring system.
             alert.delivery_status[AlertChannel.SLACK] = f"failed: {str(e)}"
     
     async def _send_webhook_notification(self, alert: Alert, webhooks: List[str]):
-        """Send webhook notification"""
-        try:
+        """Send webhook notification"""        try:
             payload = {
                 "event": "alert_triggered",
                 "alert": alert.to_dict(),
@@ -833,8 +791,7 @@ This alert was generated by the IA Influencer Platform monitoring system.
             alert.delivery_status[AlertChannel.WEBHOOK] = f"failed: {str(e)}"
     
     def create_alert(self, alert: Alert):
-        """Create and manage a new alert"""
-        try:
+        """Create and manage a new alert"""        try:
             with self._lock:
                 # Add to active alerts
                 self.active_alerts[alert.alert_id] = alert
@@ -855,8 +812,7 @@ This alert was generated by the IA Influencer Platform monitoring system.
             logger.error(f"Failed to create alert {alert.alert_id}: {str(e)}")
     
     async def _queue_alert_notifications(self, alert: Alert):
-        """Queue alert notifications for delivery"""
-        try:
+        """Queue alert notifications for delivery"""        try:
             # Get alert rule to determine channels and recipients
             rule = self.evaluator.alert_rules.get(alert.rule_id)
             
@@ -878,8 +834,7 @@ This alert was generated by the IA Influencer Platform monitoring system.
             logger.error(f"Failed to queue notifications for alert {alert.alert_id}: {str(e)}")
     
     def acknowledge_alert(self, alert_id: str, acknowledged_by: str):
-        """Acknowledge an alert"""
-        try:
+        """Acknowledge an alert"""        try:
             with self._lock:
                 if alert_id in self.active_alerts:
                     alert = self.active_alerts[alert_id]
@@ -895,8 +850,7 @@ This alert was generated by the IA Influencer Platform monitoring system.
             logger.error(f"Failed to acknowledge alert {alert_id}: {str(e)}")
     
     def resolve_alert(self, alert_id: str, resolved_by: str):
-        """Resolve an alert"""
-        try:
+        """Resolve an alert"""        try:
             with self._lock:
                 if alert_id in self.active_alerts:
                     alert = self.active_alerts[alert_id]
@@ -915,8 +869,7 @@ This alert was generated by the IA Influencer Platform monitoring system.
             logger.error(f"Failed to resolve alert {alert_id}: {str(e)}")
     
     def get_active_alerts(self, filters: Optional[Dict[str, Any]] = None) -> List[Alert]:
-        """Get active alerts with optional filtering"""
-        try:
+        """Get active alerts with optional filtering"""        try:
             alerts = list(self.active_alerts.values())
             
             if not filters:
@@ -946,8 +899,7 @@ This alert was generated by the IA Influencer Platform monitoring system.
             return []
     
     async def _cleanup_loop(self):
-        """Cleanup loop for old alerts and maintenance"""
-        while True:
+        """Cleanup loop for old alerts and maintenance"""        while True:
             try:
                 await self._cleanup_expired_alerts()
                 await asyncio.sleep(300)  # Run every 5 minutes
@@ -959,8 +911,7 @@ This alert was generated by the IA Influencer Platform monitoring system.
                 await asyncio.sleep(60)
     
     async def _cleanup_expired_alerts(self):
-        """Clean up expired alerts"""
-        try:
+        """Clean up expired alerts"""        try:
             current_time = datetime.now(timezone.utc)
             expired_alert_ids = []
             
@@ -986,12 +937,10 @@ This alert was generated by the IA Influencer Platform monitoring system.
 
 # Pre-configured alert rules for common scenarios
 class StandardAlertRules:
-    """Standard alert rules for common monitoring scenarios"""
-    
+    """Standard alert rules for common monitoring scenarios"""    
     @staticmethod
     def high_error_rate_rule() -> AlertRule:
-        """High error rate alert rule"""
-        return AlertRule(
+        """High error rate alert rule"""        return AlertRule(
             rule_id="high_error_rate",
             name="High Error Rate",
             description="Error rate exceeds acceptable threshold",
@@ -1009,8 +958,7 @@ class StandardAlertRules:
     
     @staticmethod
     def high_response_time_rule() -> AlertRule:
-        """High response time alert rule"""
-        return AlertRule(
+        """High response time alert rule"""        return AlertRule(
             rule_id="high_response_time",
             name="High Response Time",
             description="API response time exceeds threshold",
@@ -1027,8 +975,7 @@ class StandardAlertRules:
     
     @staticmethod
     def security_breach_rule() -> AlertRule:
-        """Security breach alert rule"""
-        return AlertRule(
+        """Security breach alert rule"""        return AlertRule(
             rule_id="security_breach",
             name="Security Breach Detected",
             description="Potential security breach detected",
@@ -1046,8 +993,7 @@ class StandardAlertRules:
     
     @staticmethod
     def low_content_protection_score_rule() -> AlertRule:
-        """Low content protection score alert rule"""
-        return AlertRule(
+        """Low content protection score alert rule"""        return AlertRule(
             rule_id="low_protection_score",
             name="Low Content Protection Score",
             description="Content protection score is below acceptable level",
@@ -1064,8 +1010,7 @@ class StandardAlertRules:
     
     @staticmethod
     def ai_model_degradation_rule() -> AlertRule:
-        """AI model performance degradation alert rule"""
-        return AlertRule(
+        """AI model performance degradation alert rule"""        return AlertRule(
             rule_id="ai_model_degradation",
             name="AI Model Performance Degradation",
             description="AI model accuracy has degraded significantly",
@@ -1083,8 +1028,7 @@ class StandardAlertRules:
 
 # Integration with analytics for intelligent alerting
 class IntelligentAlerting:
-    """
-    Intelligent alerting system that uses analytics to improve alert quality
+    """    Intelligent alerting system that uses analytics to improve alert quality
     
     Features:
     - ML-based anomaly detection
@@ -1092,11 +1036,9 @@ class IntelligentAlerting:
     - Context-aware alerting
     - Alert fatigue reduction
     - Predictive alerting
-    """
-    
+    """    
     def __init__(self, alert_manager: AlertManager, analytics_engine: Any):
-        """Initialize intelligent alerting"""
-        self.alert_manager = alert_manager
+        """Initialize intelligent alerting"""        self.alert_manager = alert_manager
         self.analytics_engine = analytics_engine
         
         # Intelligence configuration
@@ -1109,8 +1051,7 @@ class IntelligentAlerting:
         self.alert_patterns: Dict[str, List[Dict[str, Any]]] = defaultdict(list)
     
     async def analyze_and_alert(self, metric_name: str, value: float):
-        """Analyze metric and trigger intelligent alerts"""
-        try:
+        """Analyze metric and trigger intelligent alerts"""        try:
             # Update baselines
             await self._update_baseline(metric_name, value)
             
@@ -1125,8 +1066,7 @@ class IntelligentAlerting:
             logger.error(f"Failed to analyze metric {metric_name}: {str(e)}")
     
     async def _update_baseline(self, metric_name: str, value: float):
-        """Update baseline statistics for metric"""
-        try:
+        """Update baseline statistics for metric"""        try:
             baseline = self.metric_baselines[metric_name]
             
             # Initialize if first time
@@ -1160,8 +1100,7 @@ class IntelligentAlerting:
             logger.error(f"Failed to update baseline for {metric_name}: {str(e)}")
     
     async def _calculate_anomaly_score(self, metric_name: str, value: float) -> float:
-        """Calculate anomaly score for value"""
-        try:
+        """Calculate anomaly score for value"""        try:
             baseline = self.metric_baselines.get(metric_name, {})
             
             if not baseline or baseline['count'] < 10:
@@ -1183,8 +1122,7 @@ class IntelligentAlerting:
             return 0.0
     
     async def _create_intelligent_alert(self, metric_name: str, value: float, anomaly_score: float):
-        """Create an intelligent alert based on anomaly detection"""
-        try:
+        """Create an intelligent alert based on anomaly detection"""        try:
             severity = AlertSeverity.LOW
             if anomaly_score > 4.0:
                 severity = AlertSeverity.CRITICAL

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -83,16 +81,13 @@ except ImportError as e:
         pass
 
 class TestObjectDetector(unittest.TestCase):
-    """Test suite for ObjectDetector class"""
-    
+    """Test suite for ObjectDetector class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.detector = ObjectDetector()
+        """Set up test fixtures"""        self.detector = ObjectDetector()
         self.test_image = self._create_test_image_with_objects()
     
     def _create_test_image_with_objects(self) -> np.ndarray:
-        """Create a test image with recognizable objects"""
-        # Create a 640x480 RGB image
+        """Create a test image with recognizable objects"""        # Create a 640x480 RGB image
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Add some geometric shapes that could represent objects
@@ -112,12 +107,10 @@ class TestObjectDetector(unittest.TestCase):
         return image
     
     def test_detector_initialization(self):
-        """Test ObjectDetector initialization"""
-        self.assertIsInstance(self.detector, ObjectDetector)
+        """Test ObjectDetector initialization"""        self.assertIsInstance(self.detector, ObjectDetector)
     
     def test_detect_objects_basic(self):
-        """Test basic object detection"""
-        try:
+        """Test basic object detection"""        try:
             detections = self.detector.detect_objects(self.test_image)
             self.assertIsInstance(detections, list)
             
@@ -134,8 +127,7 @@ class TestObjectDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_detect_objects_with_confidence_threshold(self):
-        """Test object detection with confidence threshold"""
-        try:
+        """Test object detection with confidence threshold"""        try:
             # Test with different confidence thresholds
             detections_low = self.detector.detect_objects(self.test_image, confidence_threshold=0.1)
             detections_high = self.detector.detect_objects(self.test_image, confidence_threshold=0.8)
@@ -148,8 +140,7 @@ class TestObjectDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_detect_custom_classes(self):
-        """Test detection of custom object classes"""
-        try:
+        """Test detection of custom object classes"""        try:
             custom_classes = ['person', 'car', 'book']
             detections = self.detector.detect_custom(self.test_image, classes=custom_classes)
             self.assertIsInstance(detections, list)
@@ -163,8 +154,7 @@ class TestObjectDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_batch_detection(self):
-        """Test batch object detection"""
-        try:
+        """Test batch object detection"""        try:
             # Create multiple test images
             images = [self.test_image for _ in range(3)]
             batch_results = self.detector.batch_detect(images)
@@ -179,8 +169,7 @@ class TestObjectDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_detection_performance(self):
-        """Test detection performance benchmarks"""
-        try:
+        """Test detection performance benchmarks"""        try:
             start_time = time.time()
             detections = self.detector.detect_objects(self.test_image)
             end_time = time.time()
@@ -195,16 +184,13 @@ class TestObjectDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
 
 class TestFaceDetector(unittest.TestCase):
-    """Test suite for FaceDetector class"""
-    
+    """Test suite for FaceDetector class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.detector = FaceDetector()
+        """Set up test fixtures"""        self.detector = FaceDetector()
         self.test_image = self._create_test_image_with_faces()
     
     def _create_test_image_with_faces(self) -> np.ndarray:
-        """Create a test image with face-like structures"""
-        # Create a simple face representation
+        """Create a test image with face-like structures"""        # Create a simple face representation
         image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Draw a simple face
@@ -226,12 +212,10 @@ class TestFaceDetector(unittest.TestCase):
         return image
     
     def test_detector_initialization(self):
-        """Test FaceDetector initialization"""
-        self.assertIsInstance(self.detector, FaceDetector)
+        """Test FaceDetector initialization"""        self.assertIsInstance(self.detector, FaceDetector)
     
     def test_detect_faces_basic(self):
-        """Test basic face detection"""
-        try:
+        """Test basic face detection"""        try:
             detections = self.detector.detect_faces(self.test_image)
             self.assertIsInstance(detections, list)
             
@@ -250,8 +234,7 @@ class TestFaceDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_analyze_emotion(self):
-        """Test emotion analysis from face region"""
-        try:
+        """Test emotion analysis from face region"""        try:
             # Extract face region
             face_region = self.test_image[140:340, 220:420]  # Crop around the face
             
@@ -266,8 +249,7 @@ class TestFaceDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_estimate_age_gender(self):
-        """Test age and gender estimation"""
-        try:
+        """Test age and gender estimation"""        try:
             face_region = self.test_image[140:340, 220:420]
             
             demographics = self.detector.estimate_age_gender(face_region)
@@ -284,8 +266,7 @@ class TestFaceDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_face_landmarks_detection(self):
-        """Test facial landmarks detection"""
-        try:
+        """Test facial landmarks detection"""        try:
             detections = self.detector.detect_faces(self.test_image)
             
             for detection in detections:
@@ -303,8 +284,7 @@ class TestFaceDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_multiple_faces_detection(self):
-        """Test detection of multiple faces"""
-        try:
+        """Test detection of multiple faces"""        try:
             # Create image with multiple faces
             multi_face_image = self._create_test_image_with_multiple_faces()
             
@@ -318,8 +298,7 @@ class TestFaceDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def _create_test_image_with_multiple_faces(self) -> np.ndarray:
-        """Create test image with multiple face-like structures"""
-        image = np.zeros((480, 640, 3), dtype=np.uint8)
+        """Create test image with multiple face-like structures"""        image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Draw two simple faces
         centers = [(200, 200), (440, 280)]
@@ -341,16 +320,13 @@ class TestFaceDetector(unittest.TestCase):
         return image
 
 class TestTextDetector(unittest.TestCase):
-    """Test suite for TextDetector class"""
-    
+    """Test suite for TextDetector class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.detector = TextDetector()
+        """Set up test fixtures"""        self.detector = TextDetector()
         self.test_image = self._create_test_image_with_text()
     
     def _create_test_image_with_text(self) -> np.ndarray:
-        """Create a test image with text"""
-        image = np.zeros((480, 640, 3), dtype=np.uint8)
+        """Create a test image with text"""        image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Add white background for better text visibility
         image.fill(255)
@@ -364,12 +340,10 @@ class TestTextDetector(unittest.TestCase):
         return image
     
     def test_detector_initialization(self):
-        """Test TextDetector initialization"""
-        self.assertIsInstance(self.detector, TextDetector)
+        """Test TextDetector initialization"""        self.assertIsInstance(self.detector, TextDetector)
     
     def test_detect_text_basic(self):
-        """Test basic text detection"""
-        try:
+        """Test basic text detection"""        try:
             detections = self.detector.detect_text(self.test_image)
             self.assertIsInstance(detections, list)
             
@@ -387,8 +361,7 @@ class TestTextDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or OCR engine error: {e}")
     
     def test_extract_text_content(self):
-        """Test text content extraction"""
-        try:
+        """Test text content extraction"""        try:
             text_content = self.detector.extract_text(self.test_image)
             self.assertIsInstance(text_content, str)
             
@@ -405,8 +378,7 @@ class TestTextDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or OCR engine error: {e}")
     
     def test_detect_with_language_hint(self):
-        """Test text detection with language hints"""
-        try:
+        """Test text detection with language hints"""        try:
             detections_en = self.detector.detect_text(self.test_image, language='en')
             detections_auto = self.detector.detect_text(self.test_image, language='auto')
             
@@ -417,8 +389,7 @@ class TestTextDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or OCR engine error: {e}")
     
     def test_handwriting_detection(self):
-        """Test handwriting text detection"""
-        try:
+        """Test handwriting text detection"""        try:
             # Create an image with handwriting-style text
             handwriting_image = self._create_handwriting_test_image()
             
@@ -429,8 +400,7 @@ class TestTextDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def _create_handwriting_test_image(self) -> np.ndarray:
-        """Create test image simulating handwriting"""
-        image = np.ones((480, 640, 3), dtype=np.uint8) * 255
+        """Create test image simulating handwriting"""        image = np.ones((480, 640, 3), dtype=np.uint8) * 255
         
         # Simulate handwriting with italic font
         cv2.putText(image, "Handwritten text", (50, 200), 
@@ -441,8 +411,7 @@ class TestTextDetector(unittest.TestCase):
         return image
     
     def test_text_region_analysis(self):
-        """Test text region analysis and layout detection"""
-        try:
+        """Test text region analysis and layout detection"""        try:
             regions = self.detector.analyze_text_layout(self.test_image)
             self.assertIsInstance(regions, list)
             
@@ -456,16 +425,13 @@ class TestTextDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
 
 class TestGestureDetector(unittest.TestCase):
-    """Test suite for GestureDetector class"""
-    
+    """Test suite for GestureDetector class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.detector = GestureDetector()
+        """Set up test fixtures"""        self.detector = GestureDetector()
         self.test_image = self._create_test_image_with_gestures()
     
     def _create_test_image_with_gestures(self) -> np.ndarray:
-        """Create test image with gesture-like shapes"""
-        image = np.zeros((480, 640, 3), dtype=np.uint8)
+        """Create test image with gesture-like shapes"""        image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Simulate a hand gesture with simple shapes
         # Palm
@@ -480,12 +446,10 @@ class TestGestureDetector(unittest.TestCase):
         return image
     
     def test_detector_initialization(self):
-        """Test GestureDetector initialization"""
-        self.assertIsInstance(self.detector, GestureDetector)
+        """Test GestureDetector initialization"""        self.assertIsInstance(self.detector, GestureDetector)
     
     def test_detect_gestures_basic(self):
-        """Test basic gesture detection"""
-        try:
+        """Test basic gesture detection"""        try:
             detections = self.detector.detect_gestures(self.test_image)
             self.assertIsInstance(detections, list)
             
@@ -502,8 +466,7 @@ class TestGestureDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_hand_landmark_detection(self):
-        """Test hand landmark detection"""
-        try:
+        """Test hand landmark detection"""        try:
             landmarks = self.detector.detect_hand_landmarks(self.test_image)
             self.assertIsInstance(landmarks, (list, dict))
             
@@ -515,8 +478,7 @@ class TestGestureDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_pose_detection(self):
-        """Test pose detection"""
-        try:
+        """Test pose detection"""        try:
             pose_image = self._create_test_pose_image()
             pose_landmarks = self.detector.detect_pose(pose_image)
             self.assertIsInstance(pose_landmarks, (list, dict))
@@ -525,8 +487,7 @@ class TestGestureDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def _create_test_pose_image(self) -> np.ndarray:
-        """Create test image with pose-like structure"""
-        image = np.zeros((480, 640, 3), dtype=np.uint8)
+        """Create test image with pose-like structure"""        image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Simple stick figure
         # Head
@@ -546,8 +507,7 @@ class TestGestureDetector(unittest.TestCase):
         return image
     
     def test_gesture_classification(self):
-        """Test gesture classification"""
-        try:
+        """Test gesture classification"""        try:
             classification = self.detector.classify_gesture(self.test_image)
             self.assertIsNotNone(classification)
             
@@ -559,11 +519,9 @@ class TestGestureDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
 
 class TestSceneDetector(unittest.TestCase):
-    """Test suite for SceneDetector class"""
-    
+    """Test suite for SceneDetector class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.detector = SceneDetector()
+        """Set up test fixtures"""        self.detector = SceneDetector()
         self.test_images = {
             'indoor': self._create_indoor_scene(),
             'outdoor': self._create_outdoor_scene(),
@@ -571,8 +529,7 @@ class TestSceneDetector(unittest.TestCase):
         }
     
     def _create_indoor_scene(self) -> np.ndarray:
-        """Create test image representing indoor scene"""
-        image = np.zeros((480, 640, 3), dtype=np.uint8)
+        """Create test image representing indoor scene"""        image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Floor
         cv2.rectangle(image, (0, 350), (640, 480), (139, 69, 19), -1)
@@ -592,8 +549,7 @@ class TestSceneDetector(unittest.TestCase):
         return image
     
     def _create_outdoor_scene(self) -> np.ndarray:
-        """Create test image representing outdoor scene"""
-        image = np.zeros((480, 640, 3), dtype=np.uint8)
+        """Create test image representing outdoor scene"""        image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Sky
         cv2.rectangle(image, (0, 0), (640, 200), (135, 206, 250), -1)
@@ -611,8 +567,7 @@ class TestSceneDetector(unittest.TestCase):
         return image
     
     def _create_office_scene(self) -> np.ndarray:
-        """Create test image representing office scene"""
-        image = np.zeros((480, 640, 3), dtype=np.uint8)
+        """Create test image representing office scene"""        image = np.zeros((480, 640, 3), dtype=np.uint8)
         
         # Background
         image[:] = (240, 240, 240)
@@ -630,12 +585,10 @@ class TestSceneDetector(unittest.TestCase):
         return image
     
     def test_detector_initialization(self):
-        """Test SceneDetector initialization"""
-        self.assertIsInstance(self.detector, SceneDetector)
+        """Test SceneDetector initialization"""        self.assertIsInstance(self.detector, SceneDetector)
     
     def test_classify_scene_basic(self):
-        """Test basic scene classification"""
-        try:
+        """Test basic scene classification"""        try:
             for scene_type, image in self.test_images.items():
                 classification = self.detector.classify_scene(image)
                 self.assertIsNotNone(classification)
@@ -650,8 +603,7 @@ class TestSceneDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_detect_scene_elements(self):
-        """Test detection of scene elements"""
-        try:
+        """Test detection of scene elements"""        try:
             for scene_type, image in self.test_images.items():
                 elements = self.detector.detect_scene_elements(image)
                 self.assertIsInstance(elements, list)
@@ -666,8 +618,7 @@ class TestSceneDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_analyze_scene_context(self):
-        """Test scene context analysis"""
-        try:
+        """Test scene context analysis"""        try:
             context = self.detector.analyze_context(self.test_images['indoor'])
             self.assertIsNotNone(context)
             
@@ -679,8 +630,7 @@ class TestSceneDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_lighting_analysis(self):
-        """Test lighting condition analysis"""
-        try:
+        """Test lighting condition analysis"""        try:
             lighting = self.detector.analyze_lighting(self.test_images['outdoor'])
             self.assertIsNotNone(lighting)
             
@@ -695,11 +645,9 @@ class TestSceneDetector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
 
 class TestDetectionIntegration(unittest.TestCase):
-    """Test suite for detection module integration"""
-    
+    """Test suite for detection module integration"""    
     def setUp(self):
-        """Set up integration test fixtures"""
-        self.object_detector = ObjectDetector()
+        """Set up integration test fixtures"""        self.object_detector = ObjectDetector()
         self.face_detector = FaceDetector()
         self.text_detector = TextDetector()
         self.gesture_detector = GestureDetector()
@@ -708,8 +656,7 @@ class TestDetectionIntegration(unittest.TestCase):
         self.complex_test_image = self._create_complex_test_image()
     
     def _create_complex_test_image(self) -> np.ndarray:
-        """Create complex test image with multiple detection targets"""
-        image = np.ones((480, 640, 3), dtype=np.uint8) * 255
+        """Create complex test image with multiple detection targets"""        image = np.ones((480, 640, 3), dtype=np.uint8) * 255
         
         # Add a face
         cv2.ellipse(image, (150, 150), (40, 50), 0, 0, 360, (220, 180, 160), -1)
@@ -729,8 +676,7 @@ class TestDetectionIntegration(unittest.TestCase):
         return image
     
     def test_comprehensive_detection_pipeline(self):
-        """Test comprehensive detection pipeline"""
-        try:
+        """Test comprehensive detection pipeline"""        try:
             # Run all detectors on the same image
             object_results = self.object_detector.detect_objects(self.complex_test_image)
             face_results = self.face_detector.detect_faces(self.complex_test_image)
@@ -749,8 +695,7 @@ class TestDetectionIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_detection_consistency(self):
-        """Test consistency across multiple runs"""
-        try:
+        """Test consistency across multiple runs"""        try:
             # Run the same detection multiple times
             results1 = self.object_detector.detect_objects(self.complex_test_image)
             results2 = self.object_detector.detect_objects(self.complex_test_image)
@@ -764,8 +709,7 @@ class TestDetectionIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or model error: {e}")
     
     def test_performance_integration(self):
-        """Test performance of integrated detection pipeline"""
-        try:
+        """Test performance of integrated detection pipeline"""        try:
             start_time = time.time()
             
             # Run all detections

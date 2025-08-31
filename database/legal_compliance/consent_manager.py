@@ -1,5 +1,4 @@
-"""
-Consent Manager - GDPR and Privacy Consent Management
+"""Consent Manager - GDPR and Privacy Consent Management
 
 Advanced consent management system providing granular consent tracking,
 withdrawal processing, and compliance verification for the IA Influencer Agent platform.
@@ -7,7 +6,6 @@ withdrawal processing, and compliance verification for the IA Influencer Agent p
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -21,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class ConsentType(Enum):
-    """Types of consent that can be managed."""
-    ESSENTIAL = "essential"  # Required for basic functionality
+    """Types of consent that can be managed."""    ESSENTIAL = "essential"  # Required for basic functionality
     FUNCTIONAL = "functional"  # For enhanced functionality
     ANALYTICS = "analytics"  # For analytics and performance
     MARKETING = "marketing"  # For marketing communications
@@ -35,8 +32,7 @@ class ConsentType(Enum):
 
 
 class ConsentStatus(Enum):
-    """Consent status values."""
-    GRANTED = "granted"
+    """Consent status values."""    GRANTED = "granted"
     DENIED = "denied"
     WITHDRAWN = "withdrawn"
     EXPIRED = "expired"
@@ -45,8 +41,7 @@ class ConsentStatus(Enum):
 
 
 class ConsentMethod(Enum):
-    """Method by which consent was obtained."""
-    EXPLICIT = "explicit"  # Clear affirmative action
+    """Method by which consent was obtained."""    EXPLICIT = "explicit"  # Clear affirmative action
     IMPLIED = "implied"  # Implied from behavior
     OPT_IN = "opt_in"  # Active opt-in
     OPT_OUT = "opt_out"  # Default with opt-out option
@@ -56,8 +51,7 @@ class ConsentMethod(Enum):
 
 
 class DataCategory(Enum):
-    """Categories of data for consent management."""
-    PERSONAL_IDENTIFIERS = "personal_identifiers"
+    """Categories of data for consent management."""    PERSONAL_IDENTIFIERS = "personal_identifiers"
     CONTACT_INFORMATION = "contact_information"
     DEMOGRAPHIC_DATA = "demographic_data"
     BEHAVIORAL_DATA = "behavioral_data"
@@ -73,8 +67,7 @@ class DataCategory(Enum):
 
 @dataclass
 class ConsentPurpose:
-    """Specific purpose for data processing consent."""
-    purpose_id: str
+    """Specific purpose for data processing consent."""    purpose_id: str
     name: str
     description: str
     data_categories: List[DataCategory]
@@ -86,8 +79,7 @@ class ConsentPurpose:
 
 @dataclass
 class ConsentRecord:
-    """Individual consent record."""
-    consent_id: str
+    """Individual consent record."""    consent_id: str
     user_id: str
     consent_type: ConsentType
     purpose: ConsentPurpose
@@ -105,8 +97,7 @@ class ConsentRecord:
 
 @dataclass
 class ConsentWithdrawal:
-    """Consent withdrawal request."""
-    withdrawal_id: str
+    """Consent withdrawal request."""    withdrawal_id: str
     consent_id: str
     user_id: str
     requested_at: datetime
@@ -119,21 +110,17 @@ class ConsentWithdrawal:
 
 
 class ConsentManager:
-    """
-    Comprehensive consent management system for GDPR compliance.
+    """    Comprehensive consent management system for GDPR compliance.
     
     Manages granular consent collection, tracking, withdrawal,
     and automated compliance verification across all data processing activities.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the Consent Manager.
+        """        Initialize the Consent Manager.
         
         Args:
             config: Configuration dictionary with consent settings
-        """
-        self.config = config
+        """        self.config = config
         self.consent_config = config.get("consent", {})
         
         # Consent data storage
@@ -155,8 +142,7 @@ class ConsentManager:
         logger.info("Consent Manager initialized successfully")
     
     def _initialize_consent_purposes(self) -> None:
-        """Initialize predefined consent purposes."""
-        default_purposes = [
+        """Initialize predefined consent purposes."""        default_purposes = [
             ConsentPurpose(
                 purpose_id="essential_services",
                 name="Essential Services",
@@ -229,8 +215,7 @@ class ConsentManager:
         evidence: Optional[Dict[str, Any]] = None,
         custom_expiry: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Collect and record user consent for a specific purpose.
+        """        Collect and record user consent for a specific purpose.
         
         Args:
             user_id: ID of the user providing consent
@@ -244,8 +229,7 @@ class ConsentManager:
             
         Returns:
             Consent collection results
-        """
-        try:
+        """        try:
             if purpose_id not in self.consent_purposes:
                 raise ValueError(f"Unknown consent purpose: {purpose_id}")
             
@@ -325,8 +309,7 @@ class ConsentManager:
         reason: Optional[str] = None,
         evidence: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Process consent withdrawal request.
+        """        Process consent withdrawal request.
         
         Args:
             user_id: ID of the user withdrawing consent
@@ -337,8 +320,7 @@ class ConsentManager:
             
         Returns:
             Withdrawal processing results
-        """
-        try:
+        """        try:
             if consent_id not in self.consent_records:
                 raise ValueError(f"Consent record {consent_id} not found")
             
@@ -404,8 +386,7 @@ class ConsentManager:
         purpose_id: Optional[str] = None,
         consent_type: Optional[ConsentType] = None
     ) -> Dict[str, Any]:
-        """
-        Check current consent status for user and purpose.
+        """        Check current consent status for user and purpose.
         
         Args:
             user_id: ID of the user
@@ -414,8 +395,7 @@ class ConsentManager:
             
         Returns:
             Current consent status
-        """
-        try:
+        """        try:
             if user_id not in self.user_consents:
                 return {
                     "user_id": user_id,
@@ -503,16 +483,14 @@ class ConsentManager:
             raise
     
     async def refresh_expired_consents(self, user_id: str) -> Dict[str, Any]:
-        """
-        Identify and handle expired consents for a user.
+        """        Identify and handle expired consents for a user.
         
         Args:
             user_id: ID of the user
             
         Returns:
             Refresh results
-        """
-        try:
+        """        try:
             if user_id not in self.user_consents:
                 return {"user_id": user_id, "expired_consents": [], "actions_taken": []}
             
@@ -560,8 +538,7 @@ class ConsentManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive consent report.
+        """        Generate comprehensive consent report.
         
         Args:
             user_id: Optional user to report on
@@ -571,8 +548,7 @@ class ConsentManager:
             
         Returns:
             Comprehensive consent report
-        """
-        try:
+        """        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -631,16 +607,14 @@ class ConsentManager:
             raise
     
     async def export_user_consents(self, user_id: str) -> Dict[str, Any]:
-        """
-        Export all consent data for a specific user (GDPR Article 20).
+        """        Export all consent data for a specific user (GDPR Article 20).
         
         Args:
             user_id: ID of the user
             
         Returns:
             Complete consent data export
-        """
-        try:
+        """        try:
             if user_id not in self.user_consents:
                 return {
                     "user_id": user_id,
@@ -707,8 +681,7 @@ class ConsentManager:
     
     # Private helper methods
     async def _check_consent_conflicts(self, user_id: str, purpose_id: str) -> List[str]:
-        """Check for and resolve consent conflicts."""
-        conflicts = []
+        """Check for and resolve consent conflicts."""        conflicts = []
         
         if user_id in self.user_consents:
             for consent_id in self.user_consents[user_id]:
@@ -723,13 +696,11 @@ class ConsentManager:
         return conflicts
     
     def _requires_data_deletion(self, consent: ConsentRecord) -> bool:
-        """Determine if consent withdrawal requires data deletion."""
-        # Required if consent was the only legal basis for processing
+        """Determine if consent withdrawal requires data deletion."""        # Required if consent was the only legal basis for processing
         return consent.purpose.legal_basis == "consent"
     
     async def _process_withdrawal(self, withdrawal: ConsentWithdrawal) -> None:
-        """Process withdrawal actions."""
-        withdrawal.processed_at = datetime.utcnow()
+        """Process withdrawal actions."""        withdrawal.processed_at = datetime.utcnow()
         withdrawal.status = "processed"
         
         # Trigger data deletion if required
@@ -738,14 +709,12 @@ class ConsentManager:
             logger.info(f"Data deletion triggered for withdrawal {withdrawal.withdrawal_id}")
     
     def _is_consent_expired(self, consent: ConsentRecord) -> bool:
-        """Check if consent has expired."""
-        if not consent.expires_at:
+        """Check if consent has expired."""        if not consent.expires_at:
             return False
         return datetime.utcnow() > consent.expires_at
     
     def _get_required_purposes(self) -> List[Dict[str, str]]:
-        """Get list of required consent purposes."""
-        return [
+        """Get list of required consent purposes."""        return [
             {
                 "purpose_id": purpose.purpose_id,
                 "purpose_name": purpose.name,
@@ -760,8 +729,7 @@ class ConsentManager:
         current_consents: List[Dict[str, Any]], 
         missing_required: List[Dict[str, Any]]
     ) -> float:
-        """Calculate compliance score based on consent status."""
-        if not self.consent_purposes:
+        """Calculate compliance score based on consent status."""        if not self.consent_purposes:
             return 1.0
         
         total_purposes = len(self.consent_purposes)
@@ -775,8 +743,7 @@ class ConsentManager:
         return min(1.0, score)
     
     def _generate_consent_statistics(self, consents: List[ConsentRecord]) -> Dict[str, Any]:
-        """Generate statistical analysis of consents."""
-        if not consents:
+        """Generate statistical analysis of consents."""        if not consents:
             return {
                 "active_count": 0,
                 "withdrawn_count": 0,
@@ -812,8 +779,7 @@ class ConsentManager:
         }
     
     def _analyze_compliance_trends(self, consents: List[ConsentRecord]) -> Dict[str, Any]:
-        """Analyze compliance trends over time."""
-        # Group consents by month
+        """Analyze compliance trends over time."""        # Group consents by month
         monthly_data = {}
         for consent in consents:
             if consent.granted_at:
@@ -836,8 +802,7 @@ class ConsentManager:
         }
     
     def _analyze_purpose_distribution(self, consents: List[ConsentRecord]) -> Dict[str, Any]:
-        """Analyze distribution of consents by purpose."""
-        purpose_stats = {}
+        """Analyze distribution of consents by purpose."""        purpose_stats = {}
         
         for consent in consents:
             purpose_id = consent.purpose.purpose_id
@@ -862,8 +827,7 @@ class ConsentManager:
         stats: Dict[str, Any], 
         compliance_analysis: Dict[str, Any]
     ) -> List[str]:
-        """Generate recommendations based on consent analysis."""
-        recommendations = []
+        """Generate recommendations based on consent analysis."""        recommendations = []
         
         withdrawal_rate = (stats["withdrawn_count"] / 
                           max(1, stats["active_count"] + stats["withdrawn_count"]))

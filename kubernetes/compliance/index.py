@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Compliance Module Index
+"""IA Influencer Agent - Compliance Module Index
 Main entry point for compliance system initialization and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ This module provides the main entry point for the compliance system,
 handling initialization, configuration, and orchestration of all
 compliance components.
 """
-
 import asyncio
 import json
 import logging
@@ -46,11 +44,9 @@ logger = get_logger(__name__)
 
 
 class ComplianceSystemManager:
-    """
-    Main compliance system manager orchestrating all compliance components
+    """    Main compliance system manager orchestrating all compliance components
     and providing unified access to compliance functionality.
     """
-
     def __init__(self):
         self.initialized = False
         self.components = {}
@@ -59,13 +55,11 @@ class ComplianceSystemManager:
         self.health_checks = {}
 
     async def initialize(self) -> bool:
-        """
-        Initialize the complete compliance system
+        """        Initialize the complete compliance system
         
         Returns:
             bool: Initialization success status
-        """
-        try:
+        """        try:
             logger.info("🚀 Initializing IA Influencer Agent Compliance System...")
             self.startup_time = datetime.now()
 
@@ -101,8 +95,7 @@ class ComplianceSystemManager:
             return False
 
     async def _initialize_core_components(self) -> None:
-        """Initialize all core compliance components"""
-        try:
+        """Initialize all core compliance components"""        try:
             logger.info("🔧 Initializing core compliance components...")
 
             # Audit logging system
@@ -164,8 +157,7 @@ class ComplianceSystemManager:
             raise
 
     async def _setup_component_integrations(self) -> None:
-        """Setup integrations between compliance components"""
-        try:
+        """Setup integrations between compliance components"""        try:
             logger.info("🔗 Setting up component integrations...")
 
             # Connect audit logger to all components
@@ -191,8 +183,7 @@ class ComplianceSystemManager:
             raise
 
     async def _perform_health_checks(self) -> None:
-        """Perform health checks on all components"""
-        try:
+        """Perform health checks on all components"""        try:
             logger.info("🏥 Performing system health checks...")
 
             for component_name, component in self.components.items():
@@ -223,8 +214,7 @@ class ComplianceSystemManager:
             raise
 
     async def _load_system_configuration(self) -> None:
-        """Load system configuration and policies"""
-        try:
+        """Load system configuration and policies"""        try:
             logger.info("📋 Loading system configuration...")
 
             # Load compliance policies
@@ -246,8 +236,7 @@ class ComplianceSystemManager:
             raise
 
     async def _start_monitoring_services(self) -> None:
-        """Start background monitoring services"""
-        try:
+        """Start background monitoring services"""        try:
             logger.info("📊 Starting monitoring services...")
 
             # Start compliance monitoring
@@ -267,13 +256,11 @@ class ComplianceSystemManager:
             raise
 
     async def get_system_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system status
+        """        Get comprehensive system status
         
         Returns:
             Dict[str, Any]: System status information
-        """
-        try:
+        """        try:
             uptime = None
             if self.startup_time:
                 uptime = (datetime.now() - self.startup_time).total_seconds()
@@ -298,13 +285,11 @@ class ComplianceSystemManager:
             return {"error": str(e)}
 
     async def shutdown(self) -> bool:
-        """
-        Gracefully shutdown the compliance system
+        """        Gracefully shutdown the compliance system
         
         Returns:
             bool: Shutdown success status
-        """
-        try:
+        """        try:
             logger.info("🛑 Shutting down compliance system...")
 
             # Stop monitoring services
@@ -327,25 +312,21 @@ class ComplianceSystemManager:
             return False
 
     def get_component(self, component_name: str) -> Optional[Any]:
-        """
-        Get a specific compliance component
+        """        Get a specific compliance component
         
         Args:
             component_name: Name of the component to retrieve
             
         Returns:
             Optional[Any]: The component instance or None
-        """
-        return self.components.get(component_name)
+        """        return self.components.get(component_name)
 
     def list_components(self) -> List[str]:
-        """
-        List all available compliance components
+        """        List all available compliance components
         
         Returns:
             List[str]: List of component names
-        """
-        return list(self.components.keys())
+        """        return list(self.components.keys())
 
 
 # Global compliance system instance
@@ -353,30 +334,25 @@ compliance_system = ComplianceSystemManager()
 
 
 async def initialize_compliance_system() -> bool:
-    """
-    Initialize the global compliance system
+    """    Initialize the global compliance system
     
     Returns:
         bool: Initialization success status
-    """
-    return await compliance_system.initialize()
+    """    return await compliance_system.initialize()
 
 
 async def get_compliance_system() -> ComplianceSystemManager:
-    """
-    Get the global compliance system instance
+    """    Get the global compliance system instance
     
     Returns:
         ComplianceSystemManager: The global compliance system
-    """
-    if not compliance_system.initialized:
+    """    if not compliance_system.initialized:
         await initialize_compliance_system()
     return compliance_system
 
 
 async def main():
-    """Main entry point for compliance system"""
-    try:
+    """Main entry point for compliance system"""    try:
         print("🚀 Starting IA Influencer Agent Compliance System...")
         print(f"👨‍💻 Created by: Fahed Mlaiel <mlaiel@live.de>")
         print(f"⚠️ All rights reserved - Unauthorized use prohibited")

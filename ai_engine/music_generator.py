@@ -1,11 +1,9 @@
-"""
-Music Generator
+"""Music Generator
 AI-powered music composition and generation system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime
@@ -18,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MusicGenerationParams:
-    """Music generation parameters"""
-    genre: str
+    """Music generation parameters"""    genre: str
     tempo: int  # BPM
     key: str
     time_signature: str
@@ -32,8 +29,7 @@ class MusicGenerationParams:
 
 @dataclass
 class GeneratedMusic:
-    """Generated music result"""
-    music_id: str
+    """Generated music result"""    music_id: str
     file_path: str
     parameters: MusicGenerationParams
     quality_score: float
@@ -43,8 +39,7 @@ class GeneratedMusic:
 
 
 class MusicGenerator:
-    """AI-powered music composition and generation engine"""
-    
+    """AI-powered music composition and generation engine"""    
     def __init__(self):
         self.generation_history = {}
         self.style_models = {}
@@ -55,8 +50,7 @@ class MusicGenerator:
         params: MusicGenerationParams,
         user_id: str
     ) -> GeneratedMusic:
-        """Generate a complete musical composition"""
-        try:
+        """Generate a complete musical composition"""        try:
             start_time = datetime.now()
             
             logger.info(f"Generating {params.genre} composition for user {user_id}")
@@ -108,8 +102,7 @@ class MusicGenerator:
         length_bars: int = 8,
         style_reference: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Generate a melody based on specified parameters"""
-        try:
+        """Generate a melody based on specified parameters"""        try:
             logger.info(f"Generating {length_bars}-bar melody in {key} {genre}")
             
             # Simulate melody generation
@@ -151,8 +144,7 @@ class MusicGenerator:
         melody_data: Dict[str, Any],
         harmonic_complexity: float = 0.7
     ) -> Dict[str, Any]:
-        """Generate harmonic progression for a given melody"""
-        try:
+        """Generate harmonic progression for a given melody"""        try:
             key = melody_data.get("key", "C")
             genre = melody_data.get("genre", "pop")
             length_bars = melody_data.get("length_bars", 8)
@@ -189,8 +181,7 @@ class MusicGenerator:
         time_signature: str = "4/4",
         complexity: float = 0.6
     ) -> Dict[str, Any]:
-        """Create rhythm patterns for different instruments"""
-        try:
+        """Create rhythm patterns for different instruments"""        try:
             logger.info(f"Creating rhythm pattern for {genre} at {tempo} BPM")
             
             # Generate drum patterns
@@ -227,8 +218,7 @@ class MusicGenerator:
         target_style: str,
         adaptation_strength: float = 0.8
     ) -> GeneratedMusic:
-        """Adapt existing music to a different style"""
-        try:
+        """Adapt existing music to a different style"""        try:
             source_music = self.generation_history.get(source_music_id)
             if not source_music:
                 raise ValueError(f"Source music not found: {source_music_id}")
@@ -265,8 +255,7 @@ class MusicGenerator:
         user_contributions: List[Dict[str, Any]],
         target_params: MusicGenerationParams
     ) -> GeneratedMusic:
-        """Generate music collaboratively from multiple user contributions"""
-        try:
+        """Generate music collaboratively from multiple user contributions"""        try:
             logger.info(f"Generating collaborative music from {len(user_contributions)} contributions")
             
             # Analyze contributions
@@ -299,8 +288,7 @@ class MusicGenerator:
             raise
     
     def _initialize_style_models(self):
-        """Initialize style-specific generation models"""
-        try:
+        """Initialize style-specific generation models"""        try:
             self.style_models = {
                 "electronic": {
                     "tempo_range": (120, 140),
@@ -332,8 +320,7 @@ class MusicGenerator:
             logger.error(f"Error initializing style models: {str(e)}")
     
     async def _generate_melody(self, params: MusicGenerationParams) -> Dict[str, Any]:
-        """Generate melody component"""
-        try:
+        """Generate melody component"""        try:
             # Simulate advanced melody generation
             await asyncio.sleep(0.5)
             
@@ -354,8 +341,7 @@ class MusicGenerator:
         params: MusicGenerationParams,
         melody: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate harmony component"""
-        try:
+        """Generate harmony component"""        try:
             await asyncio.sleep(0.5)
             
             return {
@@ -370,8 +356,7 @@ class MusicGenerator:
             return {}
     
     async def _generate_rhythm(self, params: MusicGenerationParams) -> Dict[str, Any]:
-        """Generate rhythm component"""
-        try:
+        """Generate rhythm component"""        try:
             await asyncio.sleep(0.3)
             
             return {
@@ -392,8 +377,7 @@ class MusicGenerator:
         harmony: Dict,
         rhythm: Dict
     ) -> Dict[str, Any]:
-        """Create musical arrangement from components"""
-        try:
+        """Create musical arrangement from components"""        try:
             await asyncio.sleep(1.0)
             
             return {
@@ -412,8 +396,7 @@ class MusicGenerator:
         arrangement: Dict[str, Any],
         params: MusicGenerationParams
     ) -> str:
-        """Synthesize final audio file"""
-        try:
+        """Synthesize final audio file"""        try:
             # Simulate audio synthesis
             await asyncio.sleep(2.0)
             
@@ -427,8 +410,7 @@ class MusicGenerator:
             return ""
     
     def _get_scale_notes(self, key: str, genre: str) -> List[str]:
-        """Get scale notes for key and genre"""
-        try:
+        """Get scale notes for key and genre"""        try:
             # Simplified scale generation
             major_scale = ["C", "D", "E", "F", "G", "A", "B"]
             # In production, this would handle all keys and modes
@@ -445,8 +427,7 @@ class MusicGenerator:
         bar: int,
         beat: int
     ) -> str:
-        """Select appropriate melodic note"""
-        try:
+        """Select appropriate melodic note"""        try:
             # Simplified note selection
             return scale_notes[beat % len(scale_notes)]
             
@@ -455,8 +436,7 @@ class MusicGenerator:
             return "C"
     
     def _get_style_characteristics(self, genre: str) -> Dict[str, Any]:
-        """Get style characteristics for genre"""
-        try:
+        """Get style characteristics for genre"""        try:
             return self.style_models.get(genre, {})
             
         except Exception as e:

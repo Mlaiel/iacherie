@@ -1,5 +1,4 @@
-"""
-TikTok Crawler
+"""TikTok Crawler
 ==============
 
 Enterprise-grade TikTok content crawler with ultra-advanced monitoring capabilities.
@@ -22,7 +21,6 @@ Features:
 - Multi-region content discovery and monitoring
 - Comprehensive metadata extraction and analysis
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator, Tuple
@@ -64,8 +62,7 @@ settings = get_settings()
 
 @dataclass
 class TikTokVideo:
-    """Enhanced TikTok video data structure with fingerprinting."""
-    video_id: str
+    """Enhanced TikTok video data structure with fingerprinting."""    video_id: str
     username: str
     user_id: str
     display_name: str
@@ -109,8 +106,7 @@ class TikTokVideo:
 
 @dataclass
 class TikTokUser:
-    """Enhanced TikTok user data structure."""
-    user_id: str
+    """Enhanced TikTok user data structure."""    user_id: str
     username: str
     display_name: str
     biography: str
@@ -138,8 +134,7 @@ class TikTokUser:
 
 @dataclass
 class TikTokHashtag:
-    """Enhanced TikTok hashtag data structure."""
-    hashtag_id: str
+    """Enhanced TikTok hashtag data structure."""    hashtag_id: str
     name: str
     view_count: int
     video_count: int
@@ -157,8 +152,7 @@ class TikTokHashtag:
 
 @dataclass
 class TikTokSound:
-    """Enhanced TikTok sound/music data structure."""
-    sound_id: str
+    """Enhanced TikTok sound/music data structure."""    sound_id: str
     title: str
     author: str
     artist: Optional[str]
@@ -182,8 +176,7 @@ class TikTokSound:
 
 @dataclass
 class TikTokTrend:
-    """TikTok trend analysis data structure."""
-    trend_id: str
+    """TikTok trend analysis data structure."""    trend_id: str
     trend_type: str  # hashtag, sound, effect, challenge
     name: str
     description: str
@@ -201,8 +194,7 @@ class TikTokTrend:
 
 @dataclass
 class ContentViolation:
-    """Content violation detection result."""
-    violation_id: str
+    """Content violation detection result."""    violation_id: str
     video_id: str
     violation_type: str  # copyright, trademark, content_policy
     confidence_score: float
@@ -215,8 +207,7 @@ class ContentViolation:
     is_trending: bool
 
 class TikTokCrawler:
-    """
-    Professional TikTok crawler implementation.
+    """    Professional TikTok crawler implementation.
     
     Features:
     - TikTok Research API integration
@@ -227,11 +218,9 @@ class TikTokCrawler:
     - Engagement rate calculations
     - Real-time feed monitoring
     - Multi-region content discovery
-    """
-    
+    """    
     def __init__(self):
-        """Initialize TikTok crawler."""
-        self.api_key = settings.TIKTOK_API_KEY
+        """Initialize TikTok crawler."""        self.api_key = settings.TIKTOK_API_KEY
         self.client_key = settings.TIKTOK_CLIENT_KEY
         self.client_secret = settings.TIKTOK_CLIENT_SECRET
         self.rate_limiter = TikTokRateLimiter()
@@ -260,13 +249,11 @@ class TikTokCrawler:
         }
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        self.session = aiohttp.ClientSession(headers=self.api_headers)
+        """Async context manager entry."""        self.session = aiohttp.ClientSession(headers=self.api_headers)
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
+        """Async context manager exit."""        if self.session:
             await self.session.close()
     
     async def search_videos(
@@ -277,8 +264,7 @@ class TikTokCrawler:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[TikTokVideo]:
-        """
-        Search TikTok videos with advanced filtering.
+        """        Search TikTok videos with advanced filtering.
         
         Args:
             query: Search query (keywords, hashtags, usernames)
@@ -289,8 +275,7 @@ class TikTokCrawler:
             
         Returns:
             List of TikTok video objects
-        """
-        try:
+        """        try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
             
@@ -304,8 +289,7 @@ class TikTokCrawler:
             return []
     
     async def _check_api_access(self) -> bool:
-        """Check if TikTok API access is available."""
-        try:
+        """Check if TikTok API access is available."""        try:
             # Test API endpoint
             url = f"{self.api_base_url}/v2/research/video/query/"
             async with self.session.post(url, json={}) as response:
@@ -321,8 +305,7 @@ class TikTokCrawler:
         start_date: Optional[datetime],
         end_date: Optional[datetime]
     ) -> List[TikTokVideo]:
-        """Search videos using TikTok Research API."""
-        try:
+        """Search videos using TikTok Research API."""        try:
             url = f"{self.api_base_url}/v2/research/video/query/"
             
             # Build query parameters
@@ -414,8 +397,7 @@ class TikTokCrawler:
             return []
     
     def _parse_api_video_data(self, video_data: dict) -> Optional[TikTokVideo]:
-        """Parse TikTok API video data."""
-        try:
+        """Parse TikTok API video data."""        try:
             # Extract basic info
             video_id = video_data.get("id", "")
             username = video_data.get("username", "")
@@ -483,8 +465,7 @@ class TikTokCrawler:
             return None
     
     async def _search_videos_scraping(self, query: str, max_results: int, region: str) -> List[TikTokVideo]:
-        """Search videos using web scraping as fallback."""
-        try:
+        """Search videos using web scraping as fallback."""        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
             
@@ -537,8 +518,7 @@ class TikTokCrawler:
             return []
     
     async def _extract_video_from_element(self, driver, element) -> Optional[TikTokVideo]:
-        """Extract video data from DOM element."""
-        try:
+        """Extract video data from DOM element."""        try:
             # Extract video link
             video_link = element.find_element(By.CSS_SELECTOR, "a").get_attribute("href")
             video_id = video_link.split("/")[-1] if video_link else ""
@@ -586,8 +566,7 @@ class TikTokCrawler:
             return None
     
     async def get_trending_hashtags(self, region: str = 'US', count: int = 50) -> List[TikTokHashtag]:
-        """Get trending hashtags for specific region."""
-        try:
+        """Get trending hashtags for specific region."""        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.api_key:
@@ -600,8 +579,7 @@ class TikTokCrawler:
             return []
     
     async def _get_trending_hashtags_api(self, region: str, count: int) -> List[TikTokHashtag]:
-        """Get trending hashtags using API."""
-        try:
+        """Get trending hashtags using API."""        try:
             url = f"{self.api_base_url}/v2/research/trending/hashtag/"
             
             params = {
@@ -635,8 +613,7 @@ class TikTokCrawler:
             return []
     
     async def _get_trending_hashtags_scraping(self, region: str, count: int) -> List[TikTokHashtag]:
-        """Get trending hashtags using scraping."""
-        try:
+        """Get trending hashtags using scraping."""        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/trending")
             
@@ -670,8 +647,7 @@ class TikTokCrawler:
             return []
     
     async def get_user_profile(self, username: str) -> Optional[TikTokUser]:
-        """Get user profile information."""
-        try:
+        """Get user profile information."""        try:
             await self.rate_limiter.wait_if_needed()
             
             if self.api_key:
@@ -684,8 +660,7 @@ class TikTokCrawler:
             return None
     
     async def _get_user_profile_scraping(self, username: str) -> Optional[TikTokUser]:
-        """Get user profile using web scraping."""
-        try:
+        """Get user profile using web scraping."""        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(f"{self.web_base_url}/@{username}")
             
@@ -743,8 +718,7 @@ class TikTokCrawler:
             return None
     
     def _parse_count(self, count_text: str) -> int:
-        """Parse count string (e.g., '1.2M', '500K') to integer."""
-        try:
+        """Parse count string (e.g., '1.2M', '500K') to integer."""        try:
             count_text = count_text.upper().replace(',', '')
             
             if 'M' in count_text:
@@ -761,8 +735,7 @@ class TikTokCrawler:
         hashtag: str,
         check_interval: int = 300
     ) -> AsyncGenerator[List[TikTokVideo], None]:
-        """Monitor hashtag for new videos."""
-        last_check = datetime.now()
+        """Monitor hashtag for new videos."""        last_check = datetime.now()
         seen_videos = set()
         
         while True:
@@ -792,8 +765,7 @@ class TikTokCrawler:
                 await asyncio.sleep(60)
     
     async def analyze_video_performance(self, video: TikTokVideo) -> Dict:
-        """Analyze video performance metrics."""
-        try:
+        """Analyze video performance metrics."""        try:
             total_engagement = video.like_count + video.comment_count + video.share_count
             
             # Calculate engagement rate (assuming some reach estimation)
@@ -838,8 +810,7 @@ class TikTokCrawler:
         reference_video: TikTokVideo,
         similarity_threshold: float = 0.7
     ) -> List[Dict]:
-        """Detect videos similar to reference video."""
-        try:
+        """Detect videos similar to reference video."""        try:
             similar_videos = []
             
             # Search using video hashtags
@@ -876,8 +847,7 @@ class TikTokCrawler:
             return []
     
     def _calculate_video_similarity(self, video1: TikTokVideo, video2: TikTokVideo) -> float:
-        """Calculate similarity score between two videos."""
-        # Description similarity
+        """Calculate similarity score between two videos."""        # Description similarity
         desc1_words = set(video1.description.lower().split())
         desc2_words = set(video2.description.lower().split())
         desc_similarity = len(desc1_words & desc2_words) / len(desc1_words | desc2_words) if desc1_words | desc2_words else 0
@@ -923,8 +893,7 @@ class TikTokCrawler:
         return similarity
     
     def _get_video_match_factors(self, video1: TikTokVideo, video2: TikTokVideo) -> List[str]:
-        """Get factors that contribute to video similarity."""
-        factors = []
+        """Get factors that contribute to video similarity."""        factors = []
         
         if video1.username == video2.username:
             factors.append('same_user')

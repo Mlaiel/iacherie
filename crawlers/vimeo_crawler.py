@@ -1,10 +1,8 @@
-"""
-Vimeo Content Crawler
+"""Vimeo Content Crawler
 Advanced industrial-grade Vimeo crawler for video content protection and analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
 """
-
 import asyncio
 import json
 import re
@@ -28,8 +26,7 @@ settings = get_settings()
 
 
 class VimeoVideo(BaseModel):
-    """Vimeo Video data model"""
-    video_id: str
+    """Vimeo Video data model"""    video_id: str
     title: str
     description: str
     duration: int  # in seconds
@@ -55,8 +52,7 @@ class VimeoVideo(BaseModel):
 
 
 class VimeoChannel(BaseModel):
-    """Vimeo Channel/User data model"""
-    user_id: str
+    """Vimeo Channel/User data model"""    user_id: str
     name: str
     bio: str
     location: Optional[str] = None
@@ -73,8 +69,7 @@ class VimeoChannel(BaseModel):
 
 
 class VimeoAlbum(BaseModel):
-    """Vimeo Album/Showcase data model"""
-    album_id: str
+    """Vimeo Album/Showcase data model"""    album_id: str
     title: str
     description: str
     video_count: int
@@ -87,8 +82,7 @@ class VimeoAlbum(BaseModel):
 
 
 class VimeoCrawler(BaseCrawler):
-    """
-    Advanced Vimeo crawler for comprehensive video content monitoring
+    """    Advanced Vimeo crawler for comprehensive video content monitoring
     
     Features:
     - Video content analysis with AI-powered categorization
@@ -99,8 +93,7 @@ class VimeoCrawler(BaseCrawler):
     - Engagement metrics and trend analysis
     - Live stream monitoring
     - API rate limiting with exponential backoff
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.platform = "vimeo"
@@ -117,8 +110,7 @@ class VimeoCrawler(BaseCrawler):
         }
         
     async def authenticate(self, access_token: str) -> bool:
-        """Authenticate with Vimeo API using OAuth2"""
-        try:
+        """Authenticate with Vimeo API using OAuth2"""        try:
             self.session_headers['Authorization'] = f'Bearer {access_token}'
             
             async with aiohttp.ClientSession(headers=self.session_headers) as session:
@@ -143,8 +135,7 @@ class VimeoCrawler(BaseCrawler):
         limit: int = 100,
         filters: Optional[Dict] = None
     ) -> List[Dict]:
-        """
-        Search Vimeo videos with advanced filtering
+        """        Search Vimeo videos with advanced filtering
         
         Args:
             query: Search query
@@ -155,8 +146,7 @@ class VimeoCrawler(BaseCrawler):
             
         Returns:
             List of matching videos
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             search_params = {
@@ -212,8 +202,7 @@ class VimeoCrawler(BaseCrawler):
             return []
     
     async def get_video_details(self, video_id: str) -> Optional[VimeoVideo]:
-        """Get detailed information about a specific video"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific video"""        await self.rate_limiter.wait()
         
         try:
             # Clean video ID (remove /videos/ prefix if present)
@@ -239,8 +228,7 @@ class VimeoCrawler(BaseCrawler):
             return None
     
     async def get_user_profile(self, user_id: str) -> Optional[VimeoChannel]:
-        """Get detailed user profile information"""
-        await self.rate_limiter.wait()
+        """Get detailed user profile information"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/users/{user_id}"
@@ -262,8 +250,7 @@ class VimeoCrawler(BaseCrawler):
             return None
     
     async def get_user_videos(self, user_id: str, limit: int = 100) -> List[VimeoVideo]:
-        """Get all videos from a specific user"""
-        await self.rate_limiter.wait()
+        """Get all videos from a specific user"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/users/{user_id}/videos"
@@ -315,8 +302,7 @@ class VimeoCrawler(BaseCrawler):
         protected_content: Dict,
         similarity_threshold: float = 0.8
     ) -> List[ContentMatch]:
-        """
-        Monitor Vimeo for potential copyright infringement
+        """        Monitor Vimeo for potential copyright infringement
         
         Args:
             protected_content: Content to protect
@@ -324,8 +310,7 @@ class VimeoCrawler(BaseCrawler):
             
         Returns:
             List of potential copyright matches
-        """
-        matches = []
+        """        matches = []
         
         try:
             # Generate search queries from protected content
@@ -370,16 +355,14 @@ class VimeoCrawler(BaseCrawler):
             return []
     
     async def analyze_video_performance(self, video_id: str) -> Dict[str, Any]:
-        """
-        Analyze video performance metrics and engagement
+        """        Analyze video performance metrics and engagement
         
         Args:
             video_id: Vimeo video ID
             
         Returns:
             Comprehensive performance analysis
-        """
-        try:
+        """        try:
             video = await self.get_video_details(video_id)
             if not video:
                 return {}
@@ -428,8 +411,7 @@ class VimeoCrawler(BaseCrawler):
         time_period: str = "week",
         limit: int = 50
     ) -> List[VimeoVideo]:
-        """
-        Get trending videos on Vimeo
+        """        Get trending videos on Vimeo
         
         Args:
             category: Video category filter
@@ -438,8 +420,7 @@ class VimeoCrawler(BaseCrawler):
             
         Returns:
             List of trending videos
-        """
-        try:
+        """        try:
             # Vimeo doesn't have a direct trending API, so we'll use popular/staff picks
             endpoint = f"{self.api_base}/channels/staffpicks/videos"
             params = {
@@ -472,8 +453,7 @@ class VimeoCrawler(BaseCrawler):
             return []
     
     async def bulk_video_analysis(self, video_ids: List[str]) -> List[Dict[str, Any]]:
-        """Analyze multiple videos in bulk for efficiency"""
-        results = []
+        """Analyze multiple videos in bulk for efficiency"""        results = []
         
         # Process videos in batches to respect rate limits
         batch_size = 10
@@ -495,8 +475,7 @@ class VimeoCrawler(BaseCrawler):
         return results
     
     async def _parse_video_data(self, video_data: Dict) -> Optional[VimeoVideo]:
-        """Parse Vimeo API video data into VimeoVideo model"""
-        try:
+        """Parse Vimeo API video data into VimeoVideo model"""        try:
             # Extract video ID from URI
             video_id = video_data.get('uri', '').split('/')[-1]
             
@@ -563,8 +542,7 @@ class VimeoCrawler(BaseCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict) -> Optional[VimeoChannel]:
-        """Parse Vimeo API user data into VimeoChannel model"""
-        try:
+        """Parse Vimeo API user data into VimeoChannel model"""        try:
             user_id = user_data.get('uri', '').split('/')[-1]
             
             # Parse metadata
@@ -606,8 +584,7 @@ class VimeoCrawler(BaseCrawler):
             return None
     
     def _generate_search_queries(self, protected_content: Dict) -> List[str]:
-        """Generate search queries for content protection"""
-        queries = []
+        """Generate search queries for content protection"""        queries = []
         
         if 'title' in protected_content:
             queries.append(protected_content['title'])
@@ -628,8 +605,7 @@ class VimeoCrawler(BaseCrawler):
         protected_content: Dict,
         video: VimeoVideo
     ) -> float:
-        """Calculate similarity between protected content and Vimeo video"""
-        from difflib import SequenceMatcher
+        """Calculate similarity between protected content and Vimeo video"""        from difflib import SequenceMatcher
         
         similarity_scores = []
         
@@ -663,8 +639,7 @@ class VimeoCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _calculate_virality_score(self, video: VimeoVideo) -> float:
-        """Calculate video virality score"""
-        days_since_upload = (datetime.utcnow() - video.created_at).days
+        """Calculate video virality score"""        days_since_upload = (datetime.utcnow() - video.created_at).days
         if days_since_upload == 0:
             days_since_upload = 1
         
@@ -674,8 +649,7 @@ class VimeoCrawler(BaseCrawler):
         return min(views_per_day * engagement_ratio * 100, 1000)
     
     def _categorize_duration(self, duration: int) -> str:
-        """Categorize video duration"""
-        if duration < 60:
+        """Categorize video duration"""        if duration < 60:
             return "short"
         elif duration < 300:
             return "medium"
@@ -685,8 +659,7 @@ class VimeoCrawler(BaseCrawler):
             return "extended"
     
     def _analyze_title_optimization(self, title: str) -> float:
-        """Analyze title optimization score"""
-        if not title:
+        """Analyze title optimization score"""        if not title:
             return 0.0
         
         score = 0.0
@@ -713,8 +686,7 @@ class VimeoCrawler(BaseCrawler):
         return min(score, 1.0)
     
     def _analyze_description_quality(self, description: str) -> float:
-        """Analyze description quality score"""
-        if not description:
+        """Analyze description quality score"""        if not description:
             return 0.0
         
         score = 0.0
@@ -740,8 +712,7 @@ class VimeoCrawler(BaseCrawler):
         return min(score, 1.0)
     
     def _categorize_performance(self, video: VimeoVideo) -> str:
-        """Categorize video performance level"""
-        views = video.view_count
+        """Categorize video performance level"""        views = video.view_count
         engagement = video.like_count + video.comment_count
         
         if views > 100000 and engagement > 1000:
@@ -754,8 +725,7 @@ class VimeoCrawler(BaseCrawler):
             return "low"
     
     def _generate_optimization_suggestions(self, video: VimeoVideo) -> List[str]:
-        """Generate optimization suggestions for video"""
-        suggestions = []
+        """Generate optimization suggestions for video"""        suggestions = []
         
         if len(video.title) < 30:
             suggestions.append("Consider expanding the title for better SEO")

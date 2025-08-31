@@ -1,5 +1,4 @@
-"""
-License Management Configuration Module
+"""License Management Configuration Module
 =====================================
 
 Professional licensing and rights management configuration for content monetization.
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -26,8 +24,7 @@ from datetime import datetime, timedelta
 
 
 class LicenseType(str, Enum):
-    """Content license types."""
-    SYNC_RIGHTS = "sync_rights"
+    """Content license types."""    SYNC_RIGHTS = "sync_rights"
     MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     MASTER_USE = "master_use"
@@ -44,8 +41,7 @@ class LicenseType(str, Enum):
 
 
 class LicenseScope(str, Enum):
-    """License scope and territory."""
-    WORLDWIDE = "worldwide"
+    """License scope and territory."""    WORLDWIDE = "worldwide"
     REGIONAL = "regional"
     NATIONAL = "national"
     LOCAL = "local"
@@ -57,8 +53,7 @@ class LicenseScope(str, Enum):
 
 
 class RoyaltyType(str, Enum):
-    """Royalty distribution types."""
-    PERFORMANCE_ROYALTY = "performance_royalty"
+    """Royalty distribution types."""    PERFORMANCE_ROYALTY = "performance_royalty"
     MECHANICAL_ROYALTY = "mechanical_royalty"
     SYNC_ROYALTY = "sync_royalty"
     NEIGHBORING_RIGHTS = "neighboring_rights"
@@ -68,8 +63,7 @@ class RoyaltyType(str, Enum):
 
 
 class LicenseStatus(str, Enum):
-    """License agreement status."""
-    DRAFT = "draft"
+    """License agreement status."""    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -79,8 +73,7 @@ class LicenseStatus(str, Enum):
 
 
 class RightsOrganization(str, Enum):
-    """Rights management organizations."""
-    GEMA = "gema"  # Germany
+    """Rights management organizations."""    GEMA = "gema"  # Germany
     BMI = "bmi"  # USA
     ASCAP = "ascap"  # USA
     SESAC = "sesac"  # USA
@@ -94,8 +87,7 @@ class RightsOrganization(str, Enum):
 
 @dataclass
 class RoyaltySplit:
-    """Royalty split configuration for stakeholders."""
-    stakeholder_id: str
+    """Royalty split configuration for stakeholders."""    stakeholder_id: str
     stakeholder_name: str
     role: str  # writer, composer, publisher, performer, producer
     percentage: Decimal
@@ -107,8 +99,7 @@ class RoyaltySplit:
 
 @dataclass
 class LicenseTerms:
-    """License agreement terms and conditions."""
-    license_type: LicenseType
+    """License agreement terms and conditions."""    license_type: LicenseType
     scope: LicenseScope
     territory: List[str]  # Country codes
     duration_months: int
@@ -123,8 +114,7 @@ class LicenseTerms:
 
 @dataclass
 class LicensingRate:
-    """Licensing rate configuration."""
-    license_type: LicenseType
+    """Licensing rate configuration."""    license_type: LicenseType
     base_rate: Decimal
     currency: str = "EUR"
     rate_type: str = "fixed"  # fixed, percentage, per_use, per_stream
@@ -137,8 +127,7 @@ class LicensingRate:
 
 @dataclass
 class ContentRightsMetadata:
-    """Content rights and ownership metadata."""
-    content_id: str
+    """Content rights and ownership metadata."""    content_id: str
     title: str
     creators: List[Dict[str, Any]]  # name, role, percentage, PRO membership
     publishers: List[Dict[str, Any]]  # name, percentage, territory
@@ -154,8 +143,7 @@ class ContentRightsMetadata:
 
 @dataclass
 class LicenseAgreement:
-    """Complete license agreement configuration."""
-    agreement_id: str
+    """Complete license agreement configuration."""    agreement_id: str
     content_metadata: ContentRightsMetadata
     licensee_id: str
     licensee_name: str
@@ -194,14 +182,11 @@ class LicenseAgreement:
 
 
 class LicenseManagementConfig:
-    """
-    Professional license management configuration.
+    """    Professional license management configuration.
     Handles automated licensing, rights clearance, and royalty distribution.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize license management configuration."""
-        
+        """Initialize license management configuration."""        
         # Database Configuration
         self.LICENSING_DB_URL = os.getenv(
             "LICENSING_DB_URL",
@@ -290,8 +275,7 @@ class LicenseManagementConfig:
         }
     
     def _initialize_pro_integrations(self) -> Dict[RightsOrganization, Dict[str, Any]]:
-        """Initialize Performing Rights Organizations integrations."""
-        return {
+        """Initialize Performing Rights Organizations integrations."""        return {
             RightsOrganization.GEMA: {
                 "name": "GEMA",
                 "country": "DE",
@@ -345,8 +329,7 @@ class LicenseManagementConfig:
         }
     
     def _initialize_default_rates(self) -> Dict[LicenseType, LicensingRate]:
-        """Initialize default licensing rates."""
-        return {
+        """Initialize default licensing rates."""        return {
             LicenseType.SYNC_RIGHTS: LicensingRate(
                 license_type=LicenseType.SYNC_RIGHTS,
                 base_rate=Decimal("500.00"),
@@ -412,12 +395,10 @@ class LicenseManagementConfig:
         }
     
     def get_pro_integration(self, organization: RightsOrganization) -> Optional[Dict[str, Any]]:
-        """Get configuration for a specific PRO integration."""
-        return self.PRO_INTEGRATIONS.get(organization)
+        """Get configuration for a specific PRO integration."""        return self.PRO_INTEGRATIONS.get(organization)
     
     def get_default_rate(self, license_type: LicenseType) -> Optional[LicensingRate]:
-        """Get default licensing rate for a license type."""
-        return self.DEFAULT_LICENSING_RATES.get(license_type)
+        """Get default licensing rate for a license type."""        return self.DEFAULT_LICENSING_RATES.get(license_type)
     
     def calculate_license_fee(
         self,
@@ -426,8 +407,7 @@ class LicenseManagementConfig:
         territory: str = "DE",
         custom_rates: Optional[LicensingRate] = None
     ) -> Decimal:
-        """Calculate license fee based on usage data and rates."""
-        
+        """Calculate license fee based on usage data and rates."""        
         rate_config = custom_rates or self.get_default_rate(license_type)
         if not rate_config:
             return Decimal("0.00")
@@ -478,8 +458,7 @@ class LicenseManagementConfig:
         return total_fee.quantize(Decimal("0.01"))  # Round to 2 decimal places
     
     def validate_license_agreement(self, agreement: LicenseAgreement) -> Dict[str, Any]:
-        """Validate a license agreement for completeness and compliance."""
-        
+        """Validate a license agreement for completeness and compliance."""        
         validation_result = {
             "valid": True,
             "errors": [],
@@ -530,8 +509,7 @@ class LicenseManagementConfig:
         return validation_result
     
     def get_automated_licensing_eligibility(self, agreement: LicenseAgreement) -> Dict[str, Any]:
-        """Determine if an agreement is eligible for automated processing."""
-        
+        """Determine if an agreement is eligible for automated processing."""        
         eligibility = {
             "eligible": True,
             "reasons": [],

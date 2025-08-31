@@ -1,5 +1,4 @@
-"""
-Policy Engine Module - Advanced policy evaluation and enforcement engine.
+"""Policy Engine Module - Advanced policy evaluation and enforcement engine.
 
 Provides comprehensive policy management, evaluation, and enforcement
 for content protection, compliance, and business rules.
@@ -7,7 +6,6 @@ for content protection, compliance, and business rules.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -25,8 +23,7 @@ logger = get_logger(__name__)
 
 
 class PolicyType(str, Enum):
-    """Types of policies."""
-    CONTENT_PROTECTION = "content_protection"
+    """Types of policies."""    CONTENT_PROTECTION = "content_protection"
     ACCESS_CONTROL = "access_control"
     USAGE_RESTRICTION = "usage_restriction"
     COMPLIANCE = "compliance"
@@ -37,8 +34,7 @@ class PolicyType(str, Enum):
 
 
 class PolicyScope(str, Enum):
-    """Policy application scope."""
-    GLOBAL = "global"
+    """Policy application scope."""    GLOBAL = "global"
     USER = "user"
     CONTENT = "content"
     PLATFORM = "platform"
@@ -47,8 +43,7 @@ class PolicyScope(str, Enum):
 
 
 class PolicyStatus(str, Enum):
-    """Policy status states."""
-    ACTIVE = "active"
+    """Policy status states."""    ACTIVE = "active"
     INACTIVE = "inactive"
     DRAFT = "draft"
     DEPRECATED = "deprecated"
@@ -56,8 +51,7 @@ class PolicyStatus(str, Enum):
 
 
 class PolicyEffect(str, Enum):
-    """Policy enforcement effects."""
-    ALLOW = "allow"
+    """Policy enforcement effects."""    ALLOW = "allow"
     DENY = "deny"
     REQUIRE = "require"
     WARN = "warn"
@@ -66,8 +60,7 @@ class PolicyEffect(str, Enum):
 
 
 class ConditionOperator(str, Enum):
-    """Condition operators for policy rules."""
-    EQUALS = "equals"
+    """Condition operators for policy rules."""    EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     CONTAINS = "contains"
     NOT_CONTAINS = "not_contains"
@@ -82,8 +75,7 @@ class ConditionOperator(str, Enum):
 
 @dataclass
 class PolicyCondition:
-    """Individual policy condition."""
-    field: str
+    """Individual policy condition."""    field: str
     operator: ConditionOperator
     value: Any
     case_sensitive: bool = True
@@ -91,8 +83,7 @@ class PolicyCondition:
 
 @dataclass
 class PolicyRule:
-    """Individual policy rule."""
-    rule_id: str
+    """Individual policy rule."""    rule_id: str
     name: str
     description: str
     conditions: List[PolicyCondition]
@@ -104,8 +95,7 @@ class PolicyRule:
 
 @dataclass
 class Policy:
-    """Complete policy definition."""
-    policy_id: str
+    """Complete policy definition."""    policy_id: str
     name: str
     description: str
     policy_type: PolicyType
@@ -125,8 +115,7 @@ class Policy:
 
 @dataclass
 class PolicyEvaluationContext:
-    """Context for policy evaluation."""
-    user_id: Optional[str]
+    """Context for policy evaluation."""    user_id: Optional[str]
     content_id: Optional[str]
     platform: Optional[str]
     jurisdiction: Optional[str]
@@ -138,8 +127,7 @@ class PolicyEvaluationContext:
 
 @dataclass
 class PolicyEvaluationResult:
-    """Result of policy evaluation."""
-    policy_id: str
+    """Result of policy evaluation."""    policy_id: str
     rule_id: Optional[str]
     effect: PolicyEffect
     matched: bool
@@ -151,8 +139,7 @@ class PolicyEvaluationResult:
 
 @dataclass
 class PolicyDecision:
-    """Final policy decision."""
-    decision: PolicyEffect
+    """Final policy decision."""    decision: PolicyEffect
     applicable_policies: List[str]
     evaluation_results: List[PolicyEvaluationResult]
     primary_reason: str
@@ -163,8 +150,7 @@ class PolicyDecision:
 
 
 class PolicyEngine:
-    """
-    Advanced policy evaluation and enforcement engine.
+    """    Advanced policy evaluation and enforcement engine.
     
     Provides comprehensive policy management including:
     - Dynamic policy evaluation and enforcement
@@ -174,7 +160,6 @@ class PolicyEngine:
     - Performance optimization and caching
     - Comprehensive audit and compliance
     """
-
     def __init__(self):
         self.policies = {}
         self.policy_hierarchy = {}
@@ -191,8 +176,7 @@ class PolicyEngine:
         context: PolicyEvaluationContext,
         policy_types: Optional[List[PolicyType]] = None
     ) -> PolicyDecision:
-        """
-        Evaluate all applicable policies for given context.
+        """        Evaluate all applicable policies for given context.
         
         Args:
             context: Evaluation context
@@ -200,8 +184,7 @@ class PolicyEngine:
             
         Returns:
             PolicyDecision with final determination
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             logger.info(f"Evaluating policies for context: {context.request_type}")
@@ -286,8 +269,7 @@ class PolicyEngine:
         policy_data: Dict[str, Any],
         created_by: str
     ) -> str:
-        """
-        Create a new policy.
+        """        Create a new policy.
         
         Args:
             policy_data: Policy configuration data
@@ -295,8 +277,7 @@ class PolicyEngine:
             
         Returns:
             Policy ID
-        """
-        try:
+        """        try:
             policy_id = f"policy_{int(datetime.utcnow().timestamp() * 1000)}"
             
             # Validate policy data
@@ -354,8 +335,7 @@ class PolicyEngine:
         updates: Dict[str, Any],
         updated_by: str
     ) -> bool:
-        """
-        Update an existing policy.
+        """        Update an existing policy.
         
         Args:
             policy_id: Policy identifier
@@ -364,8 +344,7 @@ class PolicyEngine:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             policy = self.policies.get(policy_id)
             if not policy:
                 logger.warning(f"Policy {policy_id} not found for update")
@@ -418,8 +397,7 @@ class PolicyEngine:
         policy_id: str,
         deleted_by: str
     ) -> bool:
-        """
-        Delete a policy.
+        """        Delete a policy.
         
         Args:
             policy_id: Policy identifier
@@ -427,8 +405,7 @@ class PolicyEngine:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             policy = self.policies.get(policy_id)
             if not policy:
                 logger.warning(f"Policy {policy_id} not found for deletion")
@@ -461,16 +438,14 @@ class PolicyEngine:
         self,
         policy_id: str
     ) -> Optional[Dict[str, Any]]:
-        """
-        Get comprehensive policy summary.
+        """        Get comprehensive policy summary.
         
         Args:
             policy_id: Policy identifier
             
         Returns:
             Policy summary data
-        """
-        try:
+        """        try:
             policy = self.policies.get(policy_id)
             if not policy:
                 return None
@@ -513,8 +488,7 @@ class PolicyEngine:
         policy_id: str,
         test_contexts: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """
-        Test policy against multiple contexts.
+        """        Test policy against multiple contexts.
         
         Args:
             policy_id: Policy to test
@@ -522,8 +496,7 @@ class PolicyEngine:
             
         Returns:
             Test results
-        """
-        try:
+        """        try:
             policy = self.policies.get(policy_id)
             if not policy:
                 logger.warning(f"Policy {policy_id} not found for testing")
@@ -574,16 +547,14 @@ class PolicyEngine:
         self,
         scope_filter: Optional[PolicyScope] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Identify potential policy conflicts.
+        """        Identify potential policy conflicts.
         
         Args:
             scope_filter: Filter by policy scope
             
         Returns:
             List of potential conflicts
-        """
-        try:
+        """        try:
             conflicts = []
             
             # Get policies to analyze
@@ -611,8 +582,7 @@ class PolicyEngine:
     # Private helper methods
     
     async def _initialize_policy_engine(self):
-        """Initialize policy engine components."""
-        try:
+        """Initialize policy engine components."""        try:
             # Load existing policies
             await self._load_policies()
             
@@ -636,8 +606,7 @@ class PolicyEngine:
         context: PolicyEvaluationContext,
         policy_types: Optional[List[PolicyType]]
     ) -> List[Policy]:
-        """Get policies applicable to the given context."""
-        try:
+        """Get policies applicable to the given context."""        try:
             applicable_policies = []
             
             for policy in self.policies.values():
@@ -669,8 +638,7 @@ class PolicyEngine:
         policy: Policy,
         context: PolicyEvaluationContext
     ) -> bool:
-        """Check if policy is applicable to context."""
-        try:
+        """Check if policy is applicable to context."""        try:
             if policy.scope == PolicyScope.GLOBAL:
                 return True
             elif policy.scope == PolicyScope.USER and context.user_id:
@@ -693,8 +661,7 @@ class PolicyEngine:
         policy: Policy,
         context: PolicyEvaluationContext
     ) -> PolicyEvaluationResult:
-        """Evaluate a single policy against context."""
-        try:
+        """Evaluate a single policy against context."""        try:
             start_time = datetime.utcnow()
             
             # Check cache first
@@ -763,8 +730,7 @@ class PolicyEngine:
         rule: PolicyRule,
         context: PolicyEvaluationContext
     ) -> bool:
-        """Evaluate a single rule against context."""
-        try:
+        """Evaluate a single rule against context."""        try:
             condition_results = []
             
             # Evaluate each condition
@@ -792,8 +758,7 @@ class PolicyEngine:
         condition: PolicyCondition,
         context: PolicyEvaluationContext
     ) -> bool:
-        """Evaluate a single condition."""
-        try:
+        """Evaluate a single condition."""        try:
             # Get field value from context
             field_value = await self._get_context_field_value(condition.field, context)
             
@@ -842,8 +807,7 @@ class PolicyEngine:
         field: str,
         context: PolicyEvaluationContext
     ) -> Any:
-        """Get field value from evaluation context."""
-        try:
+        """Get field value from evaluation context."""        try:
             # Handle dot notation for nested fields
             if "." in field:
                 parts = field.split(".")
@@ -876,8 +840,7 @@ class PolicyEngine:
         evaluation_results: List[PolicyEvaluationResult],
         context: PolicyEvaluationContext
     ) -> PolicyEffect:
-        """Resolve conflicts between policy evaluation results."""
-        try:
+        """Resolve conflicts between policy evaluation results."""        try:
             # Filter matched results
             matched_results = [r for r in evaluation_results if r.matched]
             
@@ -917,15 +880,13 @@ class PolicyEngine:
     # Additional helper methods (simplified implementations)
     
     async def _validate_policy_data(self, policy_data: Dict[str, Any]):
-        """Validate policy data structure."""
-        required_fields = ["name", "policy_type", "rules"]
+        """Validate policy data structure."""        required_fields = ["name", "policy_type", "rules"]
         for field in required_fields:
             if field not in policy_data:
                 raise ValueError(f"Missing required field: {field}")
     
     async def _parse_policy_rule(self, rule_data: Dict[str, Any]) -> PolicyRule:
-        """Parse rule data into PolicyRule object."""
-        conditions = []
+        """Parse rule data into PolicyRule object."""        conditions = []
         for cond_data in rule_data.get("conditions", []):
             condition = PolicyCondition(
                 field=cond_data["field"],
@@ -947,45 +908,37 @@ class PolicyEngine:
         )
     
     async def _update_policy_hierarchy(self, policy: Policy):
-        """Update policy hierarchy for efficient lookup."""
-        logger.info(f"Updated policy hierarchy for {policy.policy_id}")
+        """Update policy hierarchy for efficient lookup."""        logger.info(f"Updated policy hierarchy for {policy.policy_id}")
     
     async def _cache_policy(self, policy: Policy):
-        """Cache policy data."""
-        try:
+        """Cache policy data."""        try:
             cache_key = f"policy:{policy.policy_id}"
             await cache_manager.set(cache_key, policy.__dict__, ttl=self.cache_ttl)
         except Exception as e:
             logger.warning(f"Failed to cache policy: {str(e)}")
     
     async def _validate_policy(self, policy: Policy):
-        """Validate policy configuration."""
-        if not policy.name or not policy.rules:
+        """Validate policy configuration."""        if not policy.name or not policy.rules:
             raise ValueError("Invalid policy configuration")
     
     async def _clear_evaluation_cache(self, policy_id: str):
-        """Clear evaluation cache for policy."""
-        logger.info(f"Cleared evaluation cache for policy {policy_id}")
+        """Clear evaluation cache for policy."""        logger.info(f"Cleared evaluation cache for policy {policy_id}")
     
     async def _remove_from_policy_hierarchy(self, policy_id: str):
-        """Remove policy from hierarchy."""
-        logger.info(f"Removed policy {policy_id} from hierarchy")
+        """Remove policy from hierarchy."""        logger.info(f"Removed policy {policy_id} from hierarchy")
     
     async def _get_policy_evaluation_stats(self, policy_id: str) -> Dict[str, Any]:
-        """Get evaluation statistics for policy."""
-        return {
+        """Get evaluation statistics for policy."""        return {
             "total_evaluations": 100,
             "matches": 25,
             "avg_evaluation_time": 0.05
         }
     
     async def _get_related_policies(self, policy_id: str) -> List[str]:
-        """Get related policies."""
-        return []
+        """Get related policies."""        return []
     
     async def _detect_policy_conflict(self, policy1: Policy, policy2: Policy) -> Optional[Dict[str, Any]]:
-        """Detect conflict between two policies."""
-        # Simplified conflict detection
+        """Detect conflict between two policies."""        # Simplified conflict detection
         if (policy1.scope == policy2.scope and 
             policy1.policy_type == policy2.policy_type and
             policy1.priority == policy2.priority):
@@ -998,24 +951,19 @@ class PolicyEngine:
         return None
     
     async def _load_policies(self):
-        """Load existing policies from storage."""
-        logger.info("Loading existing policies")
+        """Load existing policies from storage."""        logger.info("Loading existing policies")
     
     async def _load_policy_templates(self):
-        """Load policy templates."""
-        logger.info("Loading policy templates")
+        """Load policy templates."""        logger.info("Loading policy templates")
     
     async def _initialize_custom_functions(self):
-        """Initialize custom evaluation functions."""
-        logger.info("Initializing custom functions")
+        """Initialize custom evaluation functions."""        logger.info("Initializing custom functions")
     
     async def _get_evaluation_cache_key(self, policy_id: str, context: PolicyEvaluationContext) -> str:
-        """Generate cache key for evaluation."""
-        return f"eval:{policy_id}:{hash(str(context.__dict__))}"
+        """Generate cache key for evaluation."""        return f"eval:{policy_id}:{hash(str(context.__dict__))}"
     
     async def _get_cached_evaluation(self, cache_key: str) -> Optional[PolicyEvaluationResult]:
-        """Get cached evaluation result."""
-        try:
+        """Get cached evaluation result."""        try:
             cached_data = await cache_manager.get(cache_key)
             if cached_data:
                 # Reconstruct PolicyEvaluationResult from cached data
@@ -1025,15 +973,13 @@ class PolicyEngine:
         return None
     
     async def _cache_evaluation_result(self, cache_key: str, result: PolicyEvaluationResult):
-        """Cache evaluation result."""
-        try:
+        """Cache evaluation result."""        try:
             await cache_manager.set(cache_key, result.__dict__, ttl=self.cache_ttl)
         except Exception as e:
             logger.warning(f"Failed to cache evaluation result: {str(e)}")
     
     async def _evaluate_complex_logic(self, logic_expression: str, condition_results: List[bool]) -> bool:
-        """Evaluate complex logic expression."""
-        try:
+        """Evaluate complex logic expression."""        try:
             # Simple implementation - replace with proper expression parser
             expression = logic_expression.upper()
             for i, result in enumerate(condition_results):
@@ -1051,8 +997,7 @@ class PolicyEngine:
         final_decision: PolicyEffect,
         context: PolicyEvaluationContext
     ) -> List[str]:
-        """Generate additional actions based on evaluation."""
-        actions = []
+        """Generate additional actions based on evaluation."""        actions = []
         
         if final_decision == PolicyEffect.ESCALATE:
             actions.append("escalate_to_admin")
@@ -1070,8 +1015,7 @@ class PolicyEngine:
         evaluation_results: List[PolicyEvaluationResult],
         final_decision: PolicyEffect
     ) -> float:
-        """Calculate confidence score for decision."""
-        if not evaluation_results:
+        """Calculate confidence score for decision."""        if not evaluation_results:
             return 1.0
         
         matched_results = [r for r in evaluation_results if r.matched]
@@ -1087,8 +1031,7 @@ class PolicyEngine:
         evaluation_results: List[PolicyEvaluationResult],
         final_decision: PolicyEffect
     ) -> str:
-        """Generate primary reason for decision."""
-        matched_results = [r for r in evaluation_results if r.matched]
+        """Generate primary reason for decision."""        matched_results = [r for r in evaluation_results if r.matched]
         
         if not matched_results:
             return "No applicable policies matched"
@@ -1097,22 +1040,19 @@ class PolicyEngine:
         return matched_results[0].reason
     
     async def _cache_policy_decision(self, context: PolicyEvaluationContext, decision: PolicyDecision):
-        """Cache policy decision."""
-        try:
+        """Cache policy decision."""        try:
             cache_key = f"decision:{hash(str(context.__dict__))}"
             await cache_manager.set(cache_key, decision.__dict__, ttl=300)  # 5 minutes
         except Exception as e:
             logger.warning(f"Failed to cache policy decision: {str(e)}")
     
     async def _log_policy_decision(self, decision: PolicyDecision):
-        """Log policy decision for audit."""
-        logger.info(f"Policy decision: {decision.decision.value} - {decision.primary_reason}")
+        """Log policy decision for audit."""        logger.info(f"Policy decision: {decision.decision.value} - {decision.primary_reason}")
     
     # Background tasks
     
     async def _policy_monitor_task(self):
-        """Background task for monitoring policies."""
-        while True:
+        """Background task for monitoring policies."""        while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 # Monitor for expired policies, conflicts, etc.
@@ -1122,8 +1062,7 @@ class PolicyEngine:
                 await asyncio.sleep(300)
     
     async def _cache_cleanup_task(self):
-        """Background task for cache cleanup."""
-        while True:
+        """Background task for cache cleanup."""        while True:
             try:
                 await asyncio.sleep(3600)  # Cleanup every hour
                 # Clean up old cached evaluations

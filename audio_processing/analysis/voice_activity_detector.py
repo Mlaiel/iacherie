@@ -1,5 +1,4 @@
-"""
-🗣️ Voice Activity Detector - Advanced Speech/Voice Detection System
+"""🗣️ Voice Activity Detector - Advanced Speech/Voice Detection System
 
 Professional voice activity detection engine for speech/music discrimination,
 vocal segment identification, and voice quality analysis.
@@ -7,7 +6,6 @@ vocal segment identification, and voice quality analysis.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple
@@ -17,16 +15,14 @@ import librosa
 
 @dataclass
 class VoiceSegment:
-    """Voice activity segment"""
-    start_time: float
+    """Voice activity segment"""    start_time: float
     end_time: float
     confidence: float
     voice_type: str  # 'speech', 'singing', 'unknown'
 
 
 class VoiceActivityDetector:
-    """Professional voice activity detection engine"""
-    
+    """Professional voice activity detection engine"""    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -35,8 +31,7 @@ class VoiceActivityDetector:
     
     async def detect_voice_activity(self, 
                                    audio_data: np.ndarray) -> List[VoiceSegment]:
-        """Detect voice activity segments"""
-        try:
+        """Detect voice activity segments"""        try:
             segments = []
             
             # Simple VAD based on spectral features

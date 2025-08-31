@@ -1,5 +1,4 @@
-"""
-Licensing Monetization Notifications Manager
+"""Licensing Monetization Notifications Manager
 
 Gestionnaire spécialisé pour les notifications liées au système de licensing
 et de monétisation automatisée du contenu protégé.
@@ -21,7 +20,6 @@ Toute utilisation, copie, modification, distribution ou tentative de reverse eng
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Optional, Any, Union
 import asyncio
 import logging
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class LicensingEventType(Enum):
-    """Types d'événements de licensing et monétisation"""
-    LICENSE_GRANTED = "license_granted"
+    """Types d'événements de licensing et monétisation"""    LICENSE_GRANTED = "license_granted"
     ROYALTY_PAYMENT = "royalty_payment"
     REVENUE_MILESTONE = "revenue_milestone"
     LICENSE_EXPIRED = "license_expired"
@@ -54,8 +51,7 @@ class LicensingEventType(Enum):
 
 
 class RevenueSource(Enum):
-    """Sources de revenus"""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Sources de revenus"""    STREAMING_ROYALTIES = "streaming_royalties"
     SYNC_LICENSING = "sync_licensing"
     COMMERCIAL_USE = "commercial_use"
     EDUCATIONAL_LICENSE = "educational_license"
@@ -68,8 +64,7 @@ class RevenueSource(Enum):
 
 
 class PaymentStatus(Enum):
-    """Statuts de paiement"""
-    PENDING = "pending"
+    """Statuts de paiement"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -80,8 +75,7 @@ class PaymentStatus(Enum):
 
 @dataclass
 class LicensingNotificationData:
-    """Structure des données de notification de licensing"""
-    content_id: str
+    """Structure des données de notification de licensing"""    content_id: str
     user_id: str
     license_id: Optional[str]
     revenue_source: RevenueSource
@@ -99,23 +93,19 @@ class LicensingNotificationData:
 
 
 class LicensingMonetizationManager:
-    """
-    Gestionnaire de notifications pour le licensing et la monétisation.
+    """    Gestionnaire de notifications pour le licensing et la monétisation.
     
     Ce gestionnaire orchestre les notifications liées aux revenus,
     aux licences, aux paiements et aux opportunités de monétisation.
-    """
-    
+    """    
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis, config: Dict[str, Any]):
-        """
-        Initialise le gestionnaire de licensing et monétisation.
+        """        Initialise le gestionnaire de licensing et monétisation.
         
         Args:
             db_pool: Pool de connexions PostgreSQL
             redis_client: Client Redis pour cache et queues
             config: Configuration du gestionnaire
-        """
-        self.db_pool = db_pool
+        """        self.db_pool = db_pool
         self.redis = redis_client
         self.config = config
         
@@ -147,8 +137,7 @@ class LicensingMonetizationManager:
         notification_data: LicensingNotificationData,
         notification_channels: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Traite une notification d'événement de licensing/monétisation.
+        """        Traite une notification d'événement de licensing/monétisation.
         
         Args:
             event_type: Type d'événement
@@ -157,8 +146,7 @@ class LicensingMonetizationManager:
             
         Returns:
             Résultat du traitement
-        """
-        try:
+        """        try:
             # Channels par défaut si non spécifiés
             if notification_channels is None:
                 notification_channels = self._get_default_channels(event_type, notification_data.amount)
@@ -214,8 +202,7 @@ class LicensingMonetizationManager:
         event_type: LicensingEventType, 
         data: LicensingNotificationData
     ) -> Dict[str, Any]:
-        """Prépare les données du message selon le type d'événement de licensing"""
-        
+        """Prépare les données du message selon le type d'événement de licensing"""        
         base_data = {
             "content_id": data.content_id,
             "license_id": data.license_id,
@@ -402,10 +389,8 @@ class LicensingMonetizationManager:
         data: LicensingNotificationData,
         message_data: Dict[str, Any]
     ) -> str:
-        """Stocke la notification de licensing en base de données"""
-        
-        query = """
-        INSERT INTO licensing_monetization_notifications (
+        """Stocke la notification de licensing en base de données"""        
+        query = """        INSERT INTO licensing_monetization_notifications (
             user_id, content_id, license_id, event_type, revenue_source,
             amount, currency, licensee_info, contract_details, payment_details,
             payment_status, license_duration, territory, usage_rights,
@@ -413,8 +398,7 @@ class LicensingMonetizationManager:
             category, action_required, created_at
         ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, NOW())
         RETURNING id
-        """
-        
+        """        
         async with self.db_pool.acquire() as conn:
             notification_id = await conn.fetchval(
                 query,
@@ -447,8 +431,7 @@ class LicensingMonetizationManager:
         event_type: LicensingEventType,
         data: LicensingNotificationData
     ):
-        """Traitement spécialisé selon le type d'événement de licensing"""
-        
+        """Traitement spécialisé selon le type d'événement de licensing"""        
         try:
             if event_type == LicensingEventType.LICENSE_GRANTED:
                 await self._process_new_license(data)
@@ -472,8 +455,7 @@ class LicensingMonetizationManager:
             logger.error(f"Erreur traitement spécialisé licensing {event_type.value}: {str(e)}")
 
     async def _process_new_license(self, data: LicensingNotificationData):
-        """Traite une nouvelle licence"""
-        
+        """Traite une nouvelle licence"""        
         # Mettre à jour le statut du contenu
         await self._update_content_licensing_status(data.content_id, "licensed")
         
@@ -485,8 +467,7 @@ class LicensingMonetizationManager:
         await self._start_royalty_tracking(data)
 
     async def _process_royalty_payment(self, data: LicensingNotificationData):
-        """Traite un paiement de royalties"""
-        
+        """Traite un paiement de royalties"""        
         # Mettre à jour le total des revenus
         await self._update_revenue_totals(data)
         
@@ -497,8 +478,7 @@ class LicensingMonetizationManager:
         await self._generate_tax_documents_if_needed(data)
 
     async def _celebrate_milestone(self, data: LicensingNotificationData):
-        """Célèbre une étape de revenus"""
-        
+        """Célèbre une étape de revenus"""        
         # Créer du contenu de célébration
         celebration_content = await self._create_celebration_content(data)
         
@@ -507,8 +487,7 @@ class LicensingMonetizationManager:
             await self._share_milestone_achievement(data, celebration_content)
 
     async def _handle_payment_failure(self, data: LicensingNotificationData):
-        """Gère un échec de paiement"""
-        
+        """Gère un échec de paiement"""        
         # Programmer une nouvelle tentative
         await self._schedule_payment_retry(data)
         
@@ -519,8 +498,7 @@ class LicensingMonetizationManager:
         await self._create_payment_support_ticket(data)
 
     async def _get_default_channels(self, event_type: LicensingEventType, amount: Decimal) -> List[str]:
-        """Retourne les canaux par défaut selon le type d'événement et le montant"""
-        
+        """Retourne les canaux par défaut selon le type d'événement et le montant"""        
         # Montants élevés = plus de canaux
         if amount > 10000:
             high_value_channels = ["email", "push", "sms", "dashboard", "websocket"]
@@ -542,22 +520,19 @@ class LicensingMonetizationManager:
             return standard_channels
 
     def _get_milestone_reached(self, amount: Decimal) -> int:
-        """Détermine quelle étape de revenus a été atteinte"""
-        for milestone in sorted(self.revenue_milestones, reverse=True):
+        """Détermine quelle étape de revenus a été atteinte"""        for milestone in sorted(self.revenue_milestones, reverse=True):
             if amount >= milestone:
                 return milestone
         return 0
 
     def _get_next_milestone(self, current_milestone: int) -> Optional[int]:
-        """Retourne la prochaine étape de revenus"""
-        for milestone in self.revenue_milestones:
+        """Retourne la prochaine étape de revenus"""        for milestone in self.revenue_milestones:
             if milestone > current_milestone:
                 return milestone
         return None
 
     async def _get_reinvestment_suggestions(self, amount: Decimal) -> List[str]:
-        """Retourne des suggestions de réinvestissement"""
-        
+        """Retourne des suggestions de réinvestissement"""        
         suggestions = []
         
         if amount > 10000:
@@ -584,12 +559,10 @@ class LicensingMonetizationManager:
         return suggestions
 
     async def get_financial_dashboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Récupère les données du tableau de bord financier"""
-        
+        """Récupère les données du tableau de bord financier"""        
         # Statistiques financières récentes
         async with self.db_pool.acquire() as conn:
-            financial_stats = await conn.fetchrow("""
-            SELECT 
+            financial_stats = await conn.fetchrow("""            SELECT 
                 COUNT(*) as total_transactions,
                 SUM(CAST(amount AS DECIMAL)) as total_revenue,
                 COUNT(DISTINCT revenue_source) as revenue_streams,
@@ -601,8 +574,7 @@ class LicensingMonetizationManager:
             """, user_id)
             
             # Revenus par source
-            revenue_by_source = await conn.fetch("""
-            SELECT revenue_source, SUM(CAST(amount AS DECIMAL)) as total_amount, COUNT(*) as transaction_count
+            revenue_by_source = await conn.fetch("""            SELECT revenue_source, SUM(CAST(amount AS DECIMAL)) as total_amount, COUNT(*) as transaction_count
             FROM licensing_monetization_notifications
             WHERE user_id = $1 AND event_type IN ('royalty_payment', 'license_granted')
                 AND created_at >= NOW() - INTERVAL '30 days'
@@ -623,15 +595,13 @@ class LicensingMonetizationManager:
         }
 
     async def get_licensing_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques système de licensing"""
-        
+        """Retourne les métriques système de licensing"""        
         # Métriques Redis temps réel
         redis_metrics = await self.redis.hgetall("licensing:metrics")
         
         # Métriques base de données
         async with self.db_pool.acquire() as conn:
-            db_metrics = await conn.fetchrow("""
-            SELECT 
+            db_metrics = await conn.fetchrow("""            SELECT 
                 COUNT(*) as total_notifications,
                 COUNT(DISTINCT user_id) as active_users,
                 SUM(CAST(amount AS DECIMAL)) as total_revenue_volume,
@@ -652,8 +622,7 @@ class LicensingMonetizationManager:
         }
 
     async def _process_automatic_payments(self, data: LicensingNotificationData):
-        """Traite les paiements automatiques si le seuil est atteint"""
-        
+        """Traite les paiements automatiques si le seuil est atteint"""        
         # Vérifier le solde total de l'utilisateur
         user_balance = await self._get_user_balance(data.user_id)
         
@@ -666,8 +635,7 @@ class LicensingMonetizationManager:
         message_data: Dict[str, Any],
         notification_data: LicensingNotificationData
     ):
-        """Met en cache les données financières pour accès rapide"""
-        
+        """Met en cache les données financières pour accès rapide"""        
         cache_data = {
             "notification_id": notification_id,
             "amount": str(notification_data.amount),
@@ -692,8 +660,7 @@ class LicensingMonetizationManager:
         await self.redis.ltrim(f"licensing:recent_revenue:{notification_data.user_id}", 0, 49)
 
     async def _update_licensing_metrics(self, event_type: LicensingEventType, data: LicensingNotificationData):
-        """Met à jour les métriques de licensing"""
-        
+        """Met à jour les métriques de licensing"""        
         # Incrémenter compteurs Redis
         await self.redis.hincrby("licensing:metrics", f"event:{event_type.value}", 1)
         await self.redis.hincrby("licensing:metrics", f"revenue_source:{data.revenue_source.value}", 1)
@@ -705,68 +672,52 @@ class LicensingMonetizationManager:
 
     # Méthodes de traitement spécialisé (stubs pour intégration future)
     async def _update_content_licensing_status(self, content_id: str, status: str):
-        """Met à jour le statut de licensing du contenu"""
-        pass
+        """Met à jour le statut de licensing du contenu"""        pass
 
     async def _schedule_renewal_reminders(self, data: LicensingNotificationData):
-        """Programme les rappels de renouvellement"""
-        pass
+        """Programme les rappels de renouvellement"""        pass
 
     async def _start_royalty_tracking(self, data: LicensingNotificationData):
-        """Démarre le tracking des royalties"""
-        pass
+        """Démarre le tracking des royalties"""        pass
 
     async def _update_revenue_totals(self, data: LicensingNotificationData):
-        """Met à jour les totaux de revenus"""
-        pass
+        """Met à jour les totaux de revenus"""        pass
 
     async def _check_revenue_milestones(self, data: LicensingNotificationData):
-        """Vérifie les étapes de revenus"""
-        pass
+        """Vérifie les étapes de revenus"""        pass
 
     async def _generate_tax_documents_if_needed(self, data: LicensingNotificationData):
-        """Génère les documents fiscaux si nécessaire"""
-        pass
+        """Génère les documents fiscaux si nécessaire"""        pass
 
     async def _create_celebration_content(self, data: LicensingNotificationData) -> Dict[str, Any]:
-        """Crée du contenu de célébration"""
-        return {"type": "milestone_celebration", "content": "Congratulations!"}
+        """Crée du contenu de célébration"""        return {"type": "milestone_celebration", "content": "Congratulations!"}
 
     async def _share_milestone_achievement(self, data: LicensingNotificationData, content: Dict[str, Any]):
-        """Partage l'achievement sur les réseaux sociaux"""
-        pass
+        """Partage l'achievement sur les réseaux sociaux"""        pass
 
     async def _schedule_payment_retry(self, data: LicensingNotificationData):
-        """Programme une nouvelle tentative de paiement"""
-        pass
+        """Programme une nouvelle tentative de paiement"""        pass
 
     async def _notify_payment_service(self, data: LicensingNotificationData):
-        """Notifie le service de paiement"""
-        pass
+        """Notifie le service de paiement"""        pass
 
     async def _create_payment_support_ticket(self, data: LicensingNotificationData):
-        """Crée un ticket de support pour paiement"""
-        pass
+        """Crée un ticket de support pour paiement"""        pass
 
     async def _evaluate_opportunity(self, data: LicensingNotificationData):
-        """Évalue une opportunité de monétisation"""
-        pass
+        """Évalue une opportunité de monétisation"""        pass
 
     async def _enforce_license_violation(self, data: LicensingNotificationData):
-        """Fait appliquer une violation de licence"""
-        pass
+        """Fait appliquer une violation de licence"""        pass
 
     async def _get_user_balance(self, user_id: str) -> Decimal:
-        """Récupère le solde de l'utilisateur"""
-        return Decimal("0.00")  # Stub
+        """Récupère le solde de l'utilisateur"""        return Decimal("0.00")  # Stub
 
     async def _initiate_automatic_payment(self, user_id: str, amount: Decimal):
-        """Initie un paiement automatique"""
-        pass
+        """Initie un paiement automatique"""        pass
 
     async def _get_milestone_progress(self, user_id: str) -> Dict[str, Any]:
-        """Récupère le progrès vers les étapes"""
-        return {"current_revenue": "0", "next_milestone": 100}
+        """Récupère le progrès vers les étapes"""        return {"current_revenue": "0", "next_milestone": 100}
 
     # Méthodes de notification (stubs pour intégration)
     async def _send_notifications(
@@ -775,8 +726,7 @@ class LicensingMonetizationManager:
         message_data: Dict[str, Any],
         channels: List[str]
     ) -> Dict[str, Any]:
-        """Envoie les notifications sur les canaux spécifiés"""
-        
+        """Envoie les notifications sur les canaux spécifiés"""        
         delivery_results = {}
         
         for channel in channels:

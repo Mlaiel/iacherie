@@ -1,5 +1,4 @@
-"""
-Patreon Platform Integration
+"""Patreon Platform Integration
 
 Patreon API integration for creator membership platform.
 
@@ -7,7 +6,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -24,25 +22,21 @@ logger = logging.getLogger(__name__)
 
 
 class PatreonPlatform(PlatformBase):
-    """Patreon platform integration"""
-    
+    """Patreon platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize Patreon platform"""
-        super().__init__(config)
+        """Initialize Patreon platform"""        super().__init__(config)
         self.api_base = "https://www.patreon.com/api/oauth2/v2"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Patreon OAuth2"""
-        try:
+        """Authenticate with Patreon OAuth2"""        try:
             access_token = self.config.credentials.get('access_token')
             
             if access_token:
@@ -83,8 +77,7 @@ class PatreonPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Patreon token"""
-        try:
+        """Refresh Patreon token"""        try:
             refresh_token = self.config.credentials.get('refresh_token')
             client_id = self.config.credentials.get('client_id')
             client_secret = self.config.credentials.get('client_secret')
@@ -117,8 +110,7 @@ class PatreonPlatform(PlatformBase):
             return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Patreon API"""
-        try:
+        """Make authenticated request to Patreon API"""        try:
             session = await self._get_session()
             
             headers = kwargs.get('headers', {})
@@ -161,8 +153,7 @@ class PatreonPlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Create Patreon post"""
-        try:
+        """Create Patreon post"""        try:
             # Get campaign ID first
             campaign_id = await self._get_campaign_id()
             if not campaign_id:
@@ -243,8 +234,7 @@ class PatreonPlatform(PlatformBase):
             )
     
     async def _get_campaign_id(self) -> Optional[str]:
-        """Get user's campaign ID"""
-        try:
+        """Get user's campaign ID"""        try:
             user_id = self.config.credentials.get('user_id')
             if not user_id:
                 return None
@@ -269,8 +259,7 @@ class PatreonPlatform(PlatformBase):
     
     async def get_analytics(self, content_id: str, start_date: datetime, 
                            end_date: datetime) -> AnalyticsData:
-        """Get Patreon post analytics"""
-        try:
+        """Get Patreon post analytics"""        try:
             params = {
                 'fields[post]': 'like_count,comment_count,published_at,title,content',
                 'include': 'user,campaign'
@@ -307,8 +296,7 @@ class PatreonPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Patreon (limited API support)"""
-        try:
+        """Search content on Patreon (limited API support)"""        try:
             # Patreon doesn't have a public search API
             logger.warning("Patreon doesn't support content search via API")
             return []
@@ -318,8 +306,7 @@ class PatreonPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's Patreon posts"""
-        try:
+        """Get user's Patreon posts"""        try:
             campaign_id = await self._get_campaign_id()
             if not campaign_id:
                 return []
@@ -356,8 +343,7 @@ class PatreonPlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Patreon post"""
-        try:
+        """Delete Patreon post"""        try:
             result = await self._make_request('DELETE', f'/posts/{content_id}')
             return result is not None
                 
@@ -366,8 +352,7 @@ class PatreonPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update Patreon post"""
-        try:
+        """Update Patreon post"""        try:
             update_data = {
                 'data': {
                     'type': 'post',
@@ -392,8 +377,7 @@ class PatreonPlatform(PlatformBase):
             return False
     
     async def get_patrons(self, campaign_id: str = None) -> List[Dict[str, Any]]:
-        """Get campaign patrons"""
-        try:
+        """Get campaign patrons"""        try:
             target_campaign_id = campaign_id or await self._get_campaign_id()
             if not target_campaign_id:
                 return []
@@ -441,8 +425,7 @@ class PatreonPlatform(PlatformBase):
             return []
     
     async def get_campaign_info(self, campaign_id: str = None) -> Optional[Dict[str, Any]]:
-        """Get campaign information"""
-        try:
+        """Get campaign information"""        try:
             target_campaign_id = campaign_id or await self._get_campaign_id()
             if not target_campaign_id:
                 return None
@@ -476,8 +459,7 @@ class PatreonPlatform(PlatformBase):
             return None
     
     async def get_tiers(self, campaign_id: str = None) -> List[Dict[str, Any]]:
-        """Get campaign tiers"""
-        try:
+        """Get campaign tiers"""        try:
             target_campaign_id = campaign_id or await self._get_campaign_id()
             if not target_campaign_id:
                 return []
@@ -514,6 +496,5 @@ class PatreonPlatform(PlatformBase):
             return []
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

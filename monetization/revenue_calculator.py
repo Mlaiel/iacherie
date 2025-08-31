@@ -1,11 +1,9 @@
-"""
-Revenue Calculator
+"""Revenue Calculator
 Automated revenue calculation for different platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime, timedelta
@@ -18,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueData:
-    """Revenue data structure"""
-    platform: str
+    """Revenue data structure"""    platform: str
     content_id: str
     views: int
     engagement_rate: float
@@ -30,8 +27,7 @@ class RevenueData:
 
 
 class RevenueCalculator:
-    """Automated revenue calculation engine"""
-    
+    """Automated revenue calculation engine"""    
     # Platform-specific CPM and conversion rates
     PLATFORM_RATES = {
         "youtube": {
@@ -75,8 +71,7 @@ class RevenueCalculator:
         subscriber_count: int,
         country: str = "US"
     ) -> float:
-        """Calculate YouTube revenue based on views and engagement"""
-        try:
+        """Calculate YouTube revenue based on views and engagement"""        try:
             if subscriber_count < self.PLATFORM_RATES["youtube"]["monetization_threshold"]:
                 return 0.0
                 
@@ -108,8 +103,7 @@ class RevenueCalculator:
         story_views: int,
         follower_count: int
     ) -> float:
-        """Calculate Instagram revenue from impressions and engagement"""
-        try:
+        """Calculate Instagram revenue from impressions and engagement"""        try:
             if follower_count < self.PLATFORM_RATES["instagram"]["monetization_threshold"]:
                 return 0.0
                 
@@ -139,8 +133,7 @@ class RevenueCalculator:
         follower_count: int,
         in_creator_fund: bool = True
     ) -> float:
-        """Calculate TikTok revenue from Creator Fund and engagement"""
-        try:
+        """Calculate TikTok revenue from Creator Fund and engagement"""        try:
             if follower_count < self.PLATFORM_RATES["tiktok"]["monetization_threshold"]:
                 return 0.0
                 
@@ -170,8 +163,7 @@ class RevenueCalculator:
         premium_streams: int,
         country_distribution: Dict[str, int]
     ) -> float:
-        """Calculate Spotify revenue from streams"""
-        try:
+        """Calculate Spotify revenue from streams"""        try:
             base_rate = self.PLATFORM_RATES["spotify"]["per_stream"]
             
             # Premium streams earn more
@@ -197,8 +189,7 @@ class RevenueCalculator:
         historical_data: List[RevenueData],
         forecast_days: int = 30
     ) -> List[float]:
-        """ML-based revenue prediction (simplified implementation)"""
-        try:
+        """ML-based revenue prediction (simplified implementation)"""        try:
             if not historical_data:
                 return [0.0] * forecast_days
                 
@@ -238,8 +229,7 @@ class RevenueCalculator:
         content_id: str,
         platform_data: Dict[str, Dict]
     ) -> Dict[str, float]:
-        """Calculate total revenue across all platforms"""
-        try:
+        """Calculate total revenue across all platforms"""        try:
             revenues = {}
             
             for platform, data in platform_data.items():
@@ -289,8 +279,7 @@ class RevenueCalculator:
             return {"total": 0.0}
     
     def _get_country_cpm_multiplier(self, country: str) -> float:
-        """Get CPM multiplier based on country"""
-        multipliers = {
+        """Get CPM multiplier based on country"""        multipliers = {
             "US": 1.0,
             "CA": 0.9,
             "GB": 0.8,
@@ -305,8 +294,7 @@ class RevenueCalculator:
         return multipliers.get(country, multipliers["default"])
     
     async def get_real_time_revenue(self, content_id: str) -> Dict[str, float]:
-        """Get real-time revenue estimates"""
-        try:
+        """Get real-time revenue estimates"""        try:
             # This would integrate with platform APIs for real-time data
             # For now, return cached/estimated values
             

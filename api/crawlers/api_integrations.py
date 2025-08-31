@@ -1,5 +1,4 @@
-"""
-Professional API integration system for content platform monitoring.
+"""Professional API integration system for content platform monitoring.
 
 This module implements comprehensive API integrations for major content platforms
 including YouTube, Instagram, TikTok, Twitter, and Spotify with advanced
@@ -24,7 +23,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 from typing import Dict, Any, List, Optional, Union, Set, Tuple, AsyncIterator, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -78,8 +76,7 @@ from ..utils.cache_manager import CacheManager
 
 
 class APIProvider(Enum):
-    """API service providers."""
-    YOUTUBE_DATA_API = "youtube_data_api"
+    """API service providers."""    YOUTUBE_DATA_API = "youtube_data_api"
     INSTAGRAM_BASIC_DISPLAY = "instagram_basic_display"
     INSTAGRAM_BUSINESS = "instagram_business"
     TWITTER_API_V2 = "twitter_api_v2"
@@ -94,8 +91,7 @@ class APIProvider(Enum):
 
 
 class AuthenticationType(Enum):
-    """API authentication types."""
-    API_KEY = "api_key"
+    """API authentication types."""    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
     CLIENT_CREDENTIALS = "client_credentials"
@@ -105,8 +101,7 @@ class AuthenticationType(Enum):
 
 
 class DataFormat(Enum):
-    """API response data formats."""
-    JSON = "json"
+    """API response data formats."""    JSON = "json"
     XML = "xml"
     CSV = "csv"
     PROTOBUF = "protobuf"
@@ -115,8 +110,7 @@ class DataFormat(Enum):
 
 @dataclass
 class APICredentials:
-    """API authentication credentials."""
-    provider: APIProvider
+    """API authentication credentials."""    provider: APIProvider
     auth_type: AuthenticationType
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -137,8 +131,7 @@ class APICredentials:
 
 @dataclass
 class APIRequest:
-    """API request configuration."""
-    request_id: str
+    """API request configuration."""    request_id: str
     provider: APIProvider
     endpoint: str
     method: str = "GET"
@@ -155,8 +148,7 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """API response wrapper."""
-    request_id: str
+    """API response wrapper."""    request_id: str
     provider: APIProvider
     status_code: int
     headers: Dict[str, str]
@@ -174,8 +166,7 @@ class APIResponse:
 
 @dataclass
 class NormalizedContent:
-    """Normalized content across platforms."""
-    content_id: str
+    """Normalized content across platforms."""    content_id: str
     platform: str
     content_type: str  # post, video, image, story, etc.
     title: str = ""
@@ -206,8 +197,7 @@ class NormalizedContent:
 
 
 class APIIntegrationEngine:
-    """
-    Advanced API integration engine for content platform monitoring.
+    """    Advanced API integration engine for content platform monitoring.
     
     Features:
     - Multi-platform API management
@@ -216,8 +206,7 @@ class APIIntegrationEngine:
     - Response caching and optimization
     - Data normalization across platforms
     - Error handling and retry mechanisms
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("api.integration")
@@ -251,8 +240,7 @@ class APIIntegrationEngine:
         self._setup_platform_clients()
     
     def _setup_platform_clients(self):
-        """Initialize platform-specific API clients."""
-        try:
+        """Initialize platform-specific API clients."""        try:
             # YouTube Data API
             if self.config.get("youtube_credentials"):
                 self.credentials[APIProvider.YOUTUBE_DATA_API] = APICredentials(
@@ -295,8 +283,7 @@ class APIIntegrationEngine:
         provider: APIProvider,
         credentials: APICredentials
     ) -> bool:
-        """Authenticate with a platform API."""
-        try:
+        """Authenticate with a platform API."""        try:
             self.logger.info(f"Authenticating with {provider.value}")
             
             if provider == APIProvider.YOUTUBE_DATA_API:
@@ -318,8 +305,7 @@ class APIIntegrationEngine:
             return False
     
     async def _auth_youtube(self, credentials: APICredentials) -> bool:
-        """Authenticate with YouTube Data API."""
-        try:
+        """Authenticate with YouTube Data API."""        try:
             # Test API key with a simple request
             test_url = "https://www.googleapis.com/youtube/v3/search"
             params = {
@@ -344,8 +330,7 @@ class APIIntegrationEngine:
             return False
     
     async def _auth_instagram(self, credentials: APICredentials) -> bool:
-        """Authenticate with Instagram Business API."""
-        try:
+        """Authenticate with Instagram Business API."""        try:
             if credentials.auth_type == AuthenticationType.OAUTH2:
                 # Use existing access token or initiate OAuth flow
                 if credentials.access_token:
@@ -381,8 +366,7 @@ class APIIntegrationEngine:
             return False
     
     async def _auth_twitter(self, credentials: APICredentials) -> bool:
-        """Authenticate with Twitter API v2."""
-        try:
+        """Authenticate with Twitter API v2."""        try:
             if credentials.bearer_token:
                 # Test bearer token
                 test_url = "https://api.twitter.com/2/users/me"
@@ -409,8 +393,7 @@ class APIIntegrationEngine:
             return False
     
     async def _auth_spotify(self, credentials: APICredentials) -> bool:
-        """Authenticate with Spotify Web API."""
-        try:
+        """Authenticate with Spotify Web API."""        try:
             if credentials.client_id and credentials.client_secret:
                 # Use client credentials flow
                 client_credentials_manager = SpotifyClientCredentials(
@@ -442,8 +425,7 @@ class APIIntegrationEngine:
             return False
     
     async def _auth_tiktok(self, credentials: APICredentials) -> bool:
-        """Authenticate with TikTok Business API."""
-        try:
+        """Authenticate with TikTok Business API."""        try:
             # TikTok Business API authentication
             if credentials.access_token:
                 # Test access token
@@ -469,8 +451,7 @@ class APIIntegrationEngine:
         self,
         request: APIRequest
     ) -> APIResponse:
-        """Make an API request with rate limiting and caching."""
-        try:
+        """Make an API request with rate limiting and caching."""        try:
             start_time = time.time()
             
             # Check cache first
@@ -548,13 +529,11 @@ class APIIntegrationEngine:
             )
     
     def _generate_cache_key(self, request: APIRequest) -> str:
-        """Generate cache key for API request."""
-        key_data = f"{request.provider.value}_{request.endpoint}_{hash(str(request.parameters))}"
+        """Generate cache key for API request."""        key_data = f"{request.provider.value}_{request.endpoint}_{hash(str(request.parameters))}"
         return hashlib.sha256(key_data.encode()).hexdigest()[:16]
     
     def _build_request_url(self, request: APIRequest) -> str:
-        """Build complete request URL."""
-        if request.provider == APIProvider.YOUTUBE_DATA_API:
+        """Build complete request URL."""        if request.provider == APIProvider.YOUTUBE_DATA_API:
             base_url = "https://www.googleapis.com/youtube/v3"
         elif request.provider == APIProvider.INSTAGRAM_BUSINESS:
             base_url = "https://graph.instagram.com"
@@ -574,8 +553,7 @@ class APIIntegrationEngine:
         request: APIRequest,
         credentials: APICredentials
     ) -> Dict[str, str]:
-        """Build request headers with authentication."""
-        headers = {
+        """Build request headers with authentication."""        headers = {
             "User-Agent": "IA-Influencer-Bot/1.0",
             "Accept": "application/json",
             "Content-Type": "application/json"
@@ -603,8 +581,7 @@ class APIIntegrationEngine:
         url: str,
         **kwargs
     ) -> aiohttp.ClientResponse:
-        """Execute HTTP request with retry logic."""
-        async with aiohttp.ClientSession() as session:
+        """Execute HTTP request with retry logic."""        async with aiohttp.ClientSession() as session:
             for attempt in range(kwargs.get("retry_attempts", 3)):
                 try:
                     async with session.request(method, url, **kwargs) as response:
@@ -620,8 +597,7 @@ class APIIntegrationEngine:
         response: aiohttp.ClientResponse,
         start_time: float
     ) -> APIResponse:
-        """Process API response."""
-        try:
+        """Process API response."""        try:
             # Read response data
             response_text = await response.text()
             
@@ -662,8 +638,7 @@ class APIIntegrationEngine:
             raise APIException(f"Response processing failed: {e}")
     
     def _update_average_response_time(self, response_time: float):
-        """Update average response time metric."""
-        current_avg = self.metrics["average_response_time"]
+        """Update average response time metric."""        current_avg = self.metrics["average_response_time"]
         total_requests = self.metrics["total_requests"]
         
         if total_requests == 1:
@@ -680,8 +655,7 @@ class APIIntegrationEngine:
         max_results: int = 50,
         order: str = "relevance"
     ) -> List[NormalizedContent]:
-        """Search YouTube videos and return normalized content."""
-        try:
+        """Search YouTube videos and return normalized content."""        try:
             request = APIRequest(
                 request_id=str(uuid.uuid4()),
                 provider=APIProvider.YOUTUBE_DATA_API,
@@ -713,8 +687,7 @@ class APIIntegrationEngine:
             raise APIException(f"YouTube search failed: {e}")
     
     def _normalize_youtube_video(self, video_data: Dict[str, Any]) -> NormalizedContent:
-        """Normalize YouTube video data."""
-        snippet = video_data.get("snippet", {})
+        """Normalize YouTube video data."""        snippet = video_data.get("snippet", {})
         
         return NormalizedContent(
             content_id=video_data.get("id", {}).get("videoId", ""),
@@ -734,8 +707,7 @@ class APIIntegrationEngine:
         user_id: str,
         limit: int = 25
     ) -> List[NormalizedContent]:
-        """Get Instagram posts for a user."""
-        try:
+        """Get Instagram posts for a user."""        try:
             if APIProvider.INSTAGRAM_BUSINESS not in self.platform_clients:
                 raise APIException("Instagram client not authenticated")
             
@@ -754,8 +726,7 @@ class APIIntegrationEngine:
             raise APIException(f"Instagram posts fetch failed: {e}")
     
     def _normalize_instagram_post(self, post_data) -> NormalizedContent:
-        """Normalize Instagram post data."""
-        return NormalizedContent(
+        """Normalize Instagram post data."""        return NormalizedContent(
             content_id=post_data.pk,
             platform="instagram",
             content_type="post",
@@ -777,8 +748,7 @@ class APIIntegrationEngine:
         query: str,
         max_results: int = 100
     ) -> List[NormalizedContent]:
-        """Search Twitter tweets and return normalized content."""
-        try:
+        """Search Twitter tweets and return normalized content."""        try:
             if APIProvider.TWITTER_API_V2 not in self.platform_clients:
                 raise APIException("Twitter client not authenticated")
             
@@ -811,8 +781,7 @@ class APIIntegrationEngine:
             raise APIException(f"Twitter search failed: {e}")
     
     def _normalize_twitter_tweet(self, tweet_data, author_data) -> NormalizedContent:
-        """Normalize Twitter tweet data."""
-        # Extract hashtags and mentions
+        """Normalize Twitter tweet data."""        # Extract hashtags and mentions
         hashtags = []
         mentions = []
         
@@ -850,8 +819,7 @@ class APIIntegrationEngine:
         limit: int = 50,
         market: str = "US"
     ) -> List[NormalizedContent]:
-        """Search Spotify tracks and return normalized content."""
-        try:
+        """Search Spotify tracks and return normalized content."""        try:
             if APIProvider.SPOTIFY_WEB_API not in self.platform_clients:
                 raise APIException("Spotify client not authenticated")
             
@@ -870,8 +838,7 @@ class APIIntegrationEngine:
             raise APIException(f"Spotify search failed: {e}")
     
     def _normalize_spotify_track(self, track_data: Dict[str, Any]) -> NormalizedContent:
-        """Normalize Spotify track data."""
-        artists = track_data.get("artists", [])
+        """Normalize Spotify track data."""        artists = track_data.get("artists", [])
         artist_names = [artist["name"] for artist in artists]
         
         return NormalizedContent(
@@ -897,8 +864,7 @@ class APIIntegrationEngine:
         requests: List[APIRequest],
         max_concurrent: int = 10
     ) -> List[APIResponse]:
-        """Execute multiple API requests concurrently."""
-        try:
+        """Execute multiple API requests concurrently."""        try:
             semaphore = asyncio.Semaphore(max_concurrent)
             
             async def request_with_semaphore(request):
@@ -923,8 +889,7 @@ class APIIntegrationEngine:
             raise APIException(f"Batch requests failed: {e}")
     
     def get_api_metrics(self) -> Dict[str, Any]:
-        """Get API integration performance metrics."""
-        success_rate = 0.0
+        """Get API integration performance metrics."""        success_rate = 0.0
         if self.metrics["total_requests"] > 0:
             success_rate = (
                 self.metrics["successful_requests"] / self.metrics["total_requests"]
@@ -938,8 +903,7 @@ class APIIntegrationEngine:
         }
     
     async def refresh_access_tokens(self):
-        """Refresh expired access tokens for OAuth providers."""
-        try:
+        """Refresh expired access tokens for OAuth providers."""        try:
             for provider, credentials in self.credentials.items():
                 if (credentials.expires_at and 
                     credentials.expires_at < datetime.utcnow() + timedelta(minutes=5)):
@@ -951,8 +915,7 @@ class APIIntegrationEngine:
             self.logger.error(f"Token refresh failed: {e}")
     
     async def _refresh_token(self, provider: APIProvider, credentials: APICredentials):
-        """Refresh access token for a specific provider."""
-        try:
+        """Refresh access token for a specific provider."""        try:
             if credentials.refresh_token and credentials.client_id and credentials.client_secret:
                 # Standard OAuth2 refresh flow
                 token_url = self._get_token_url(provider)
@@ -986,8 +949,7 @@ class APIIntegrationEngine:
             self.logger.error(f"Token refresh error for {provider.value}: {e}")
     
     def _get_token_url(self, provider: APIProvider) -> str:
-        """Get OAuth2 token endpoint URL for provider."""
-        token_urls = {
+        """Get OAuth2 token endpoint URL for provider."""        token_urls = {
             APIProvider.INSTAGRAM_BUSINESS: "https://api.instagram.com/oauth/access_token",
             APIProvider.TWITTER_API_V2: "https://api.twitter.com/2/oauth2/token",
             APIProvider.SPOTIFY_WEB_API: "https://accounts.spotify.com/api/token"
@@ -997,15 +959,13 @@ class APIIntegrationEngine:
 
 
 class APIDataNormalizer:
-    """Normalize data across different API providers."""
-    
+    """Normalize data across different API providers."""    
     @staticmethod
     def normalize_engagement_metrics(
         platform: str,
         raw_metrics: Dict[str, Any]
     ) -> Dict[str, int]:
-        """Normalize engagement metrics across platforms."""
-        normalized = {
+        """Normalize engagement metrics across platforms."""        normalized = {
             "likes": 0,
             "comments": 0,
             "shares": 0,
@@ -1042,8 +1002,7 @@ class APIDataNormalizer:
         platform: str,
         raw_metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Normalize content metadata across platforms."""
-        normalized = {
+        """Normalize content metadata across platforms."""        normalized = {
             "content_type": "unknown",
             "duration": None,
             "quality": None,

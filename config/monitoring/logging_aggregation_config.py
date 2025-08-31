@@ -1,5 +1,4 @@
-"""
-Logging Aggregation Configuration Module for IA-Influencer Agent Platform
+"""Logging Aggregation Configuration Module for IA-Influencer Agent Platform
 ==========================================================================
 
 Professional centralized logging configuration with structured logging,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -25,8 +23,7 @@ import json
 
 
 class LogLevel(Enum):
-    """Log levels"""
-    DEBUG = "DEBUG"
+    """Log levels"""    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -34,15 +31,13 @@ class LogLevel(Enum):
 
 
 class LogFormat(Enum):
-    """Log output formats"""
-    JSON = "json"
+    """Log output formats"""    JSON = "json"
     TEXT = "text"
     LOGFMT = "logfmt"
 
 
 class LogDestination(Enum):
-    """Log destinations"""
-    CONSOLE = "console"
+    """Log destinations"""    CONSOLE = "console"
     FILE = "file"
     ELASTICSEARCH = "elasticsearch"
     FLUENTD = "fluentd"
@@ -52,8 +47,7 @@ class LogDestination(Enum):
 
 @dataclass
 class LoggerConfig:
-    """Individual logger configuration"""
-    name: str
+    """Individual logger configuration"""    name: str
     level: LogLevel
     handlers: List[str] = field(default_factory=list)
     propagate: bool = True
@@ -62,8 +56,7 @@ class LoggerConfig:
 
 @dataclass
 class HandlerConfig:
-    """Log handler configuration"""
-    name: str
+    """Log handler configuration"""    name: str
     handler_type: str
     level: LogLevel
     formatter: str
@@ -73,8 +66,7 @@ class HandlerConfig:
 
 @dataclass
 class FormatterConfig:
-    """Log formatter configuration"""
-    name: str
+    """Log formatter configuration"""    name: str
     format_type: LogFormat
     format_string: Optional[str] = None
     date_format: Optional[str] = None
@@ -82,8 +74,7 @@ class FormatterConfig:
 
 
 class LoggingAggregationConfig:
-    """Professional logging aggregation configuration for IA-Influencer platform"""
-    
+    """Professional logging aggregation configuration for IA-Influencer platform"""    
     def __init__(self):
         self.log_level = LogLevel(os.getenv("LOG_LEVEL", "INFO"))
         self.log_format = LogFormat(os.getenv("LOG_FORMAT", "json"))
@@ -101,8 +92,7 @@ class LoggingAggregationConfig:
         self.environment = os.getenv("ENVIRONMENT", "production")
     
     def get_formatters(self) -> Dict[str, FormatterConfig]:
-        """Get log formatter configurations"""
-        return {
+        """Get log formatter configurations"""        return {
             "json": FormatterConfig(
                 name="json",
                 format_type=LogFormat.JSON,
@@ -133,8 +123,7 @@ class LoggingAggregationConfig:
         }
     
     def get_handlers(self) -> Dict[str, HandlerConfig]:
-        """Get log handler configurations"""
-        handlers = {}
+        """Get log handler configurations"""        handlers = {}
         
         # Console handler
         handlers["console"] = HandlerConfig(
@@ -265,8 +254,7 @@ class LoggingAggregationConfig:
         return handlers
     
     def get_loggers(self) -> Dict[str, LoggerConfig]:
-        """Get logger configurations"""
-        return {
+        """Get logger configurations"""        return {
             "root": LoggerConfig(
                 name="root",
                 level=self.log_level,
@@ -333,8 +321,7 @@ class LoggingAggregationConfig:
         }
     
     def get_log_filters(self) -> Dict[str, Dict[str, Any]]:
-        """Get log filtering configuration"""
-        return {
+        """Get log filtering configuration"""        return {
             "security_filter": {
                 "type": "SecurityLogFilter",
                 "config": {
@@ -372,8 +359,7 @@ class LoggingAggregationConfig:
         }
     
     def get_structured_logging_config(self) -> Dict[str, Any]:
-        """Get structured logging configuration"""
-        return {
+        """Get structured logging configuration"""        return {
             "default_fields": {
                 "service": self.service_name,
                 "environment": self.environment,
@@ -403,8 +389,7 @@ class LoggingAggregationConfig:
         }
     
     def get_log_sampling_config(self) -> Dict[str, Any]:
-        """Get log sampling configuration for high-volume scenarios"""
-        return {
+        """Get log sampling configuration for high-volume scenarios"""        return {
             "enabled": True,
             "default_sample_rate": 1.0,
             "level_based_sampling": {
@@ -430,8 +415,7 @@ class LoggingAggregationConfig:
         }
     
     def get_elasticsearch_mapping(self) -> Dict[str, Any]:
-        """Get Elasticsearch index mapping for logs"""
-        return {
+        """Get Elasticsearch index mapping for logs"""        return {
             "mappings": {
                 "properties": {
                     "@timestamp": {"type": "date"},
@@ -489,8 +473,7 @@ class LoggingAggregationConfig:
         }
     
     def get_log_retention_policy(self) -> Dict[str, Any]:
-        """Get log retention and archival policy"""
-        return {
+        """Get log retention and archival policy"""        return {
             "retention_periods": {
                 "debug_logs": "7d",
                 "info_logs": "30d",
@@ -515,8 +498,7 @@ class LoggingAggregationConfig:
         }
     
     def _parse_file_size(self, size_str: str) -> int:
-        """Parse file size string to bytes"""
-        size_str = size_str.upper()
+        """Parse file size string to bytes"""        size_str = size_str.upper()
         if size_str.endswith('KB'):
             return int(size_str[:-2]) * 1024
         elif size_str.endswith('MB'):
@@ -527,8 +509,7 @@ class LoggingAggregationConfig:
             return int(size_str)
     
     def get_complete_logging_config(self) -> Dict[str, Any]:
-        """Get complete logging configuration"""
-        return {
+        """Get complete logging configuration"""        return {
             "version": 1,
             "disable_existing_loggers": False,
             "formatters": {
@@ -563,15 +544,13 @@ class LoggingAggregationConfig:
         }
     
     def _get_formatter_class(self, format_type: LogFormat) -> str:
-        """Get formatter class name"""
-        if format_type == LogFormat.JSON:
+        """Get formatter class name"""        if format_type == LogFormat.JSON:
             return "pythonjsonlogger.jsonlogger.JsonFormatter"
         else:
             return "logging.Formatter"
     
     def _get_handler_class(self, handler_type: str) -> str:
-        """Get handler class name"""
-        handler_classes = {
+        """Get handler class name"""        handler_classes = {
             "StreamHandler": "logging.StreamHandler",
             "RotatingFileHandler": "logging.handlers.RotatingFileHandler",
             "TimedRotatingFileHandler": "logging.handlers.TimedRotatingFileHandler",

@@ -26,8 +26,7 @@ Contact: mlaiel@live.de for authorized licensing only.
 All concepts, algorithms, business logic, and implementations are protected
 by intellectual property laws. Unauthorized access or use will be prosecuted
 to the full extent of the law.
-"""
-import pytest
+"""import pytest
 import asyncio
 import logging
 import warnings

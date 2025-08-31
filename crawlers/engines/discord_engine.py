@@ -1,5 +1,4 @@
-"""
-Discord Crawling Engine
+"""Discord Crawling Engine
 ======================
 
 Advanced Discord crawler for community monitoring and content protection.
@@ -22,7 +21,6 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
@@ -59,8 +57,7 @@ settings = get_settings()
 
 @dataclass
 class DiscordMessageData:
-    """Discord message data structure"""
-    message_id: str
+    """Discord message data structure"""    message_id: str
     channel_id: str
     guild_id: str
     author_id: str
@@ -90,8 +87,7 @@ class DiscordMessageData:
 
 @dataclass
 class DiscordChannelData:
-    """Discord channel data structure"""
-    channel_id: str
+    """Discord channel data structure"""    channel_id: str
     guild_id: str
     name: str
     type: str  # text, voice, category, news, etc.
@@ -118,8 +114,7 @@ class DiscordChannelData:
 
 @dataclass
 class DiscordServerData:
-    """Discord server (guild) data structure"""
-    guild_id: str
+    """Discord server (guild) data structure"""    guild_id: str
     name: str
     icon: Optional[str]
     icon_hash: Optional[str]
@@ -164,8 +159,7 @@ class DiscordServerData:
 
 
 class DiscordCrawlerEngine(BaseCrawlerEngine):
-    """
-    Advanced Discord crawler engine for community monitoring.
+    """    Advanced Discord crawler engine for community monitoring.
     
     Features:
     - Discord Bot API integration
@@ -177,15 +171,13 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
     - Reaction and engagement tracking
     - Permission-aware data collection
     """
-
     def __init__(self, 
                  bot_token: Optional[str] = None,
                  user_token: Optional[str] = None,
                  use_bot: bool = True,
                  intents: Optional[discord.Intents] = None,
                  rate_limit_config: Optional[Dict] = None):
-        """
-        Initialize Discord crawler engine.
+        """        Initialize Discord crawler engine.
         
         Args:
             bot_token: Discord bot token
@@ -193,8 +185,7 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
             use_bot: Whether to use bot or user token
             intents: Discord intents configuration
             rate_limit_config: Rate limiting configuration
-        """
-        super().__init__()
+        """        super().__init__()
         
         # Authentication
         self.bot_token = bot_token or settings.DISCORD_BOT_TOKEN
@@ -230,8 +221,7 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
         )
 
     async def authenticate(self) -> bool:
-        """Authenticate with Discord API"""
-        try:
+        """Authenticate with Discord API"""        try:
             if self.use_bot and self.bot_token:
                 self.bot = commands.Bot(
                     command_prefix='!',
@@ -262,16 +252,14 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
             return False
 
     async def get_guild_info(self, guild_id: int) -> DiscordServerData:
-        """
-        Get Discord guild (server) information.
+        """        Get Discord guild (server) information.
         
         Args:
             guild_id: Discord guild ID
         
         Returns:
             DiscordServerData object
-        """
-        cache_key = f"guild_info_{guild_id}"
+        """        cache_key = f"guild_info_{guild_id}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return DiscordServerData(**cached_result)
@@ -393,8 +381,7 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
                                  limit: int = 100,
                                  before: Optional[datetime] = None,
                                  after: Optional[datetime] = None) -> List[DiscordMessageData]:
-        """
-        Get messages from a Discord channel.
+        """        Get messages from a Discord channel.
         
         Args:
             channel_id: Discord channel ID
@@ -404,8 +391,7 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of DiscordMessageData objects
-        """
-        cache_key = f"channel_messages_{channel_id}_{limit}_{before}_{after}"
+        """        cache_key = f"channel_messages_{channel_id}_{limit}_{before}_{after}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [DiscordMessageData(**msg) for msg in cached_result]
@@ -451,8 +437,7 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
                             channel_id: Optional[int] = None,
                             author_id: Optional[int] = None,
                             limit: int = 100) -> List[DiscordMessageData]:
-        """
-        Search for Discord messages by query.
+        """        Search for Discord messages by query.
         
         Args:
             guild_id: Discord guild ID
@@ -463,8 +448,7 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of DiscordMessageData objects
-        """
-        # Note: Discord doesn't have a built-in search API
+        """        # Note: Discord doesn't have a built-in search API
         # This implementation searches through recent messages
         
         messages = []
@@ -523,8 +507,7 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
                                    guild_ids: List[int],
                                    keywords: List[str],
                                    check_interval: int = 60) -> AsyncGenerator[Dict[str, Any], None]:
-        """
-        Monitor Discord servers for content matches.
+        """        Monitor Discord servers for content matches.
         
         Args:
             guild_ids: List of Discord guild IDs to monitor
@@ -533,8 +516,7 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
         
         Yields:
             Dictionary containing monitoring results
-        """
-        logger.info(f"Starting Discord content monitoring for {len(guild_ids)} servers")
+        """        logger.info(f"Starting Discord content monitoring for {len(guild_ids)} servers")
         
         last_check = {}
         
@@ -593,8 +575,7 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
             await asyncio.sleep(check_interval)
 
     async def _process_message_data(self, message) -> Optional[DiscordMessageData]:
-        """Process Discord message into DiscordMessageData object"""
-        try:
+        """Process Discord message into DiscordMessageData object"""        try:
             return DiscordMessageData(
                 message_id=str(message.id),
                 channel_id=str(message.channel.id),
@@ -652,15 +633,13 @@ class DiscordCrawlerEngine(BaseCrawlerEngine):
             return None
 
     async def close(self):
-        """Close Discord client connections"""
-        if self.bot:
+        """Close Discord client connections"""        if self.bot:
             await self.bot.close()
         if self.client:
             await self.client.close()
 
     def __del__(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if self.bot or self.client:
                 asyncio.create_task(self.close())
         except:

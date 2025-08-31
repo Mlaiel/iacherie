@@ -1,5 +1,4 @@
-"""
-Performance Analytics - Ultra-Advanced Support Performance Monitoring System
+"""Performance Analytics - Ultra-Advanced Support Performance Monitoring System
 
 Enterprise-grade performance analytics providing comprehensive metrics, insights,
 and optimization recommendations for customer support operations.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -40,8 +38,7 @@ from sqlalchemy import select, func
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Types of performance metrics"""
-    RESPONSE_TIME = "response_time"
+    """Types of performance metrics"""    RESPONSE_TIME = "response_time"
     RESOLUTION_TIME = "resolution_time"
     SATISFACTION_RATING = "satisfaction_rating"
     CONVERSATION_LENGTH = "conversation_length"
@@ -53,8 +50,7 @@ class MetricType(Enum):
     ISSUE_COMPLEXITY = "issue_complexity"
 
 class TimeInterval(Enum):
-    """Time interval for analytics"""
-    HOUR = "hour"
+    """Time interval for analytics"""    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -63,8 +59,7 @@ class TimeInterval(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data point"""
-    metric_type: MetricType
+    """Performance metric data point"""    metric_type: MetricType
     value: float
     timestamp: datetime
     
@@ -80,8 +75,7 @@ class PerformanceMetric:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    report_id: str
+    """Comprehensive analytics report"""    report_id: str
     title: str
     time_period: Tuple[datetime, datetime]
     generated_at: datetime
@@ -103,8 +97,7 @@ class AnalyticsReport:
     benchmark_comparison: Optional[Dict[str, float]] = None
 
 class SupportAnalytics:
-    """Ultra-advanced support performance analytics system"""
-    
+    """Ultra-advanced support performance analytics system"""    
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis_client = redis_client
         self.db_session = db_session
@@ -130,8 +123,7 @@ class SupportAnalytics:
         asyncio.create_task(self._start_real_time_processing())
     
     async def record_metric(self, metric: PerformanceMetric):
-        """Record a new performance metric"""
-        try:
+        """Record a new performance metric"""        try:
             # Add to real-time storage
             self.real_time_metrics[metric.metric_type].append(metric)
             
@@ -149,8 +141,7 @@ class SupportAnalytics:
         metric_types: List[MetricType],
         time_window: int = 3600  # Last hour by default
     ) -> Dict[MetricType, List[PerformanceMetric]]:
-        """Get real-time metrics for specified types and time window"""
-        current_time = datetime.now(timezone.utc)
+        """Get real-time metrics for specified types and time window"""        current_time = datetime.now(timezone.utc)
         cutoff_time = current_time - timedelta(seconds=time_window)
         
         result = {}
@@ -174,8 +165,7 @@ class SupportAnalytics:
         include_recommendations: bool = True,
         include_visualizations: bool = True
     ) -> AnalyticsReport:
-        """Generate comprehensive performance report"""
-        try:
+        """Generate comprehensive performance report"""        try:
             report_id = f"perf_report_{int(datetime.now().timestamp())}"
             
             # Initialize report
@@ -239,8 +229,7 @@ class SupportAnalytics:
         agent_id: str,
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """Get detailed performance analysis for specific agent"""
-        try:
+        """Get detailed performance analysis for specific agent"""        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period
             
@@ -336,8 +325,7 @@ class SupportAnalytics:
             return {}
     
     async def get_knowledge_base_analytics(self) -> Dict[str, Any]:
-        """Get analytics on knowledge base effectiveness"""
-        try:
+        """Get analytics on knowledge base effectiveness"""        try:
             # Get knowledge base metrics from last 30 days
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(days=30)
@@ -433,8 +421,7 @@ class SupportAnalytics:
         self,
         time_period: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """Get customer satisfaction insights and trends"""
-        try:
+        """Get customer satisfaction insights and trends"""        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - time_period
             
@@ -542,8 +529,7 @@ class SupportAnalytics:
         start_time: datetime,
         end_time: datetime
     ) -> Dict[MetricType, List[PerformanceMetric]]:
-        """Collect all metrics for a specific time period"""
-        metrics = {metric_type: [] for metric_type in MetricType}
+        """Collect all metrics for a specific time period"""        metrics = {metric_type: [] for metric_type in MetricType}
         
         try:
             # Check real-time storage first
@@ -580,8 +566,7 @@ class SupportAnalytics:
         self,
         period_metrics: Dict[MetricType, List[PerformanceMetric]]
     ) -> Dict[str, float]:
-        """Calculate summary metrics from period data"""
-        summary = {}
+        """Calculate summary metrics from period data"""        summary = {}
         
         for metric_type, metrics in period_metrics.items():
             if not metrics:
@@ -611,8 +596,7 @@ class SupportAnalytics:
         start_time: datetime,
         end_time: datetime
     ) -> Dict[str, Any]:
-        """Analyze trends in the metrics"""
-        trends = {}
+        """Analyze trends in the metrics"""        trends = {}
         
         for metric_type, metrics in period_metrics.items():
             if len(metrics) < 5:  # Need minimum data points for trend analysis
@@ -646,8 +630,7 @@ class SupportAnalytics:
         return trends
     
     def _calculate_trend_strength(self, slope: float, values: List[float]) -> str:
-        """Calculate trend strength based on slope and variance"""
-        if len(values) < 2:
+        """Calculate trend strength based on slope and variance"""        if len(values) < 2:
             return "insufficient_data"
         
         std_dev = statistics.stdev(values)
@@ -672,8 +655,7 @@ class SupportAnalytics:
         slope: float, 
         intercept: float
     ) -> float:
-        """Calculate R-squared for linear regression"""
-        y_mean = statistics.mean(y)
+        """Calculate R-squared for linear regression"""        y_mean = statistics.mean(y)
         ss_tot = sum((yi - y_mean) ** 2 for yi in y)
         ss_res = sum((yi - (slope * xi + intercept)) ** 2 for xi, yi in zip(x, y))
         
@@ -684,8 +666,7 @@ class SupportAnalytics:
         summary_metrics: Dict[str, float],
         trends: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable recommendations based on metrics and trends"""
-        recommendations = []
+        """Generate actionable recommendations based on metrics and trends"""        recommendations = []
         
         # Response time recommendations
         avg_response_time = summary_metrics.get("response_time_avg", 0)
@@ -740,8 +721,7 @@ class SupportAnalytics:
         self,
         period_metrics: Dict[MetricType, List[PerformanceMetric]]
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in the metrics"""
-        anomalies = []
+        """Detect anomalies in the metrics"""        anomalies = []
         
         for metric_type, metrics in period_metrics.items():
             if len(metrics) < 10:  # Need sufficient data for anomaly detection
@@ -773,8 +753,7 @@ class SupportAnalytics:
         self,
         period_metrics: Dict[MetricType, List[PerformanceMetric]]
     ) -> Dict[str, Any]:
-        """Create visualization data for the metrics"""
-        charts = {}
+        """Create visualization data for the metrics"""        charts = {}
         
         try:
             # Time series charts for key metrics
@@ -832,8 +811,7 @@ class SupportAnalytics:
         current_metrics: Dict[str, float],
         previous_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Compare current metrics with previous period"""
-        comparison = {}
+        """Compare current metrics with previous period"""        comparison = {}
         
         for metric_name, current_value in current_metrics.items():
             if metric_name in previous_metrics:
@@ -851,8 +829,7 @@ class SupportAnalytics:
         self,
         metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Compare metrics with established benchmarks"""
-        comparison = {}
+        """Compare metrics with established benchmarks"""        comparison = {}
         
         for metric_type, benchmarks in self.benchmarks.items():
             metric_key = f"{metric_type.value}_avg"
@@ -879,8 +856,7 @@ class SupportAnalytics:
         start_time: datetime,
         end_time: datetime
     ) -> Dict[MetricType, List[PerformanceMetric]]:
-        """Collect metrics specific to an agent"""
-        agent_metrics = {metric_type: [] for metric_type in MetricType}
+        """Collect metrics specific to an agent"""        agent_metrics = {metric_type: [] for metric_type in MetricType}
         
         # Filter metrics by agent_id
         all_metrics = await self._collect_period_metrics(start_time, end_time)
@@ -896,8 +872,7 @@ class SupportAnalytics:
         start_time: datetime,
         end_time: datetime
     ) -> List[PerformanceMetric]:
-        """Collect knowledge base related metrics"""
-        # This would collect metrics related to knowledge base usage
+        """Collect knowledge base related metrics"""        # This would collect metrics related to knowledge base usage
         # For now, return empty list - in real implementation would query actual data
         return []
     
@@ -905,8 +880,7 @@ class SupportAnalytics:
         self,
         performance_metrics: Dict[str, Dict[str, Any]]
     ) -> Tuple[List[str], List[str]]:
-        """Identify agent strengths and improvement areas"""
-        strengths = []
+        """Identify agent strengths and improvement areas"""        strengths = []
         improvements = []
         
         for metric_name, data in performance_metrics.items():
@@ -924,8 +898,7 @@ class SupportAnalytics:
         agent_id: str,
         agent_metrics: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate agent ranking compared to team"""
-        # This would compare against all agents in the system
+        """Calculate agent ranking compared to team"""        # This would compare against all agents in the system
         # For now, return placeholder data
         return {
             "overall_ranking": "top_25_percent",
@@ -934,8 +907,7 @@ class SupportAnalytics:
         }
     
     async def _store_metric_in_redis(self, metric: PerformanceMetric):
-        """Store metric in Redis for persistence"""
-        try:
+        """Store metric in Redis for persistence"""        try:
             metric_data = {
                 "metric_type": metric.metric_type.value,
                 "value": metric.value,
@@ -963,8 +935,7 @@ class SupportAnalytics:
         start_time: datetime,
         end_time: datetime
     ) -> Dict[MetricType, List[PerformanceMetric]]:
-        """Load metrics from Redis for specified time period"""
-        metrics = {metric_type: [] for metric_type in MetricType}
+        """Load metrics from Redis for specified time period"""        metrics = {metric_type: [] for metric_type in MetricType}
         
         try:
             # Generate day keys for the period
@@ -1015,8 +986,7 @@ class SupportAnalytics:
             return metrics
     
     async def _update_aggregated_stats(self, metric: PerformanceMetric):
-        """Update aggregated statistics with new metric"""
-        try:
+        """Update aggregated statistics with new metric"""        try:
             metric_type = metric.metric_type.value
             
             # Update hourly aggregations
@@ -1044,8 +1014,7 @@ class SupportAnalytics:
             logger.error(f"Failed to update aggregated stats: {str(e)}")
     
     async def _cache_report(self, report: AnalyticsReport):
-        """Cache the generated report"""
-        try:
+        """Cache the generated report"""        try:
             report_data = {
                 "report_id": report.report_id,
                 "title": report.title,
@@ -1070,8 +1039,7 @@ class SupportAnalytics:
             logger.error(f"Failed to cache report: {str(e)}")
     
     async def _start_real_time_processing(self):
-        """Start background task for real-time metric processing"""
-        while True:
+        """Start background task for real-time metric processing"""        while True:
             try:
                 # Process any pending aggregations
                 await asyncio.sleep(60)  # Process every minute

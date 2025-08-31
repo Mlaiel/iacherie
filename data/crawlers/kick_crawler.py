@@ -1,5 +1,4 @@
-"""
-Kick Crawler Implementation
+"""Kick Crawler Implementation
 ===========================
 
 Advanced Kick platform crawler for gaming and live streaming content monitoring.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import json
 import logging
@@ -41,8 +39,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class KickStream:
-    """Kick stream information"""
-    stream_id: str
+    """Kick stream information"""    stream_id: str
     channel_id: str
     channel_name: str
     streamer_username: str
@@ -76,8 +73,7 @@ class KickStream:
 
 @dataclass
 class KickUser:
-    """Kick user information"""
-    user_id: str
+    """Kick user information"""    user_id: str
     username: str
     display_name: str
     bio: str
@@ -108,8 +104,7 @@ class KickUser:
 
 @dataclass
 class KickClip:
-    """Kick clip information"""
-    clip_id: str
+    """Kick clip information"""    clip_id: str
     title: str
     channel_id: str
     channel_name: str
@@ -132,8 +127,7 @@ class KickClip:
 
 @dataclass
 class KickChatMessage:
-    """Kick chat message information"""
-    message_id: str
+    """Kick chat message information"""    message_id: str
     channel_id: str
     user_id: str
     username: str
@@ -156,8 +150,7 @@ class KickChatMessage:
 
 @dataclass
 class KickCategory:
-    """Kick category information"""
-    category_id: str
+    """Kick category information"""    category_id: str
     name: str
     slug: str
     description: str
@@ -175,8 +168,7 @@ class KickCategory:
 
 
 class KickCrawler(PlatformCrawler):
-    """
-    Advanced Kick crawler for gaming and live streaming content monitoring.
+    """    Advanced Kick crawler for gaming and live streaming content monitoring.
     
     Features:
     - Live stream monitoring
@@ -189,8 +181,7 @@ class KickCrawler(PlatformCrawler):
     - Community engagement analysis
     - Real-time alerts
     - Gaming trend analysis
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None):
         super().__init__(config, vector_matcher)
         self.platform_name = "kick"
@@ -222,8 +213,7 @@ class KickCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Kick-specific headers"""
-        self.session_headers.update({
+        """Setup Kick-specific headers"""        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -236,8 +226,7 @@ class KickCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "streams", 
                            max_results: int = 50, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """
-        Search for content on Kick.
+        """        Search for content on Kick.
         
         Args:
             query: Search query
@@ -247,8 +236,7 @@ class KickCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -266,8 +254,7 @@ class KickCrawler(PlatformCrawler):
             return []
     
     async def _crawl_streams(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Kick streams"""
-        try:
+        """Crawl Kick streams"""        try:
             results = []
             
             # Mock stream data
@@ -313,8 +300,7 @@ class KickCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Kick users"""
-        try:
+        """Crawl Kick users"""        try:
             results = []
             
             # Mock user data
@@ -358,8 +344,7 @@ class KickCrawler(PlatformCrawler):
             return []
     
     async def _crawl_clips(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Kick clips"""
-        try:
+        """Crawl Kick clips"""        try:
             results = []
             
             # Mock clip data
@@ -403,8 +388,7 @@ class KickCrawler(PlatformCrawler):
             return []
     
     async def _crawl_chat(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Kick chat messages"""
-        try:
+        """Crawl Kick chat messages"""        try:
             results = []
             
             # Mock chat data
@@ -446,8 +430,7 @@ class KickCrawler(PlatformCrawler):
             return []
     
     async def _crawl_categories(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl Kick categories"""
-        try:
+        """Crawl Kick categories"""        try:
             results = []
             
             # Mock category data
@@ -488,8 +471,7 @@ class KickCrawler(PlatformCrawler):
             return []
     
     async def _crawl_live_streams(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl live Kick streams"""
-        try:
+        """Crawl live Kick streams"""        try:
             results = []
             
             # Get live streams
@@ -524,8 +506,7 @@ class KickCrawler(PlatformCrawler):
             return []
     
     async def _crawl_trending(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """Crawl trending Kick content"""
-        try:
+        """Crawl trending Kick content"""        try:
             results = []
             
             # Get trending content
@@ -556,8 +537,7 @@ class KickCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[CrawlerResult]:
-        """General Kick search"""
-        try:
+        """General Kick search"""        try:
             results = []
             
             # Search across different content types
@@ -578,8 +558,7 @@ class KickCrawler(PlatformCrawler):
     # Mock data generators (for demonstration)
     
     async def _get_mock_streams(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock stream data"""
-        streams = []
+        """Generate mock stream data"""        streams = []
         games = ['Fortnite', 'Valorant', 'League of Legends', 'Call of Duty', 'Minecraft', 'GTA V']
         
         for i in range(min(max_results, 20)):
@@ -610,8 +589,7 @@ class KickCrawler(PlatformCrawler):
         return streams
     
     async def _get_mock_users(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock user data"""
-        users = []
+        """Generate mock user data"""        users = []
         
         for i in range(min(max_results, 15)):
             created_at = datetime.utcnow() - timedelta(days=random.randint(30, 1095))
@@ -639,8 +617,7 @@ class KickCrawler(PlatformCrawler):
         return users
     
     async def _get_mock_clips(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock clip data"""
-        clips = []
+        """Generate mock clip data"""        clips = []
         
         for i in range(min(max_results, 25)):
             created_at = datetime.utcnow() - timedelta(hours=random.randint(1, 168))
@@ -666,8 +643,7 @@ class KickCrawler(PlatformCrawler):
         return clips
     
     async def _get_mock_chat_messages(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock chat message data"""
-        messages = []
+        """Generate mock chat message data"""        messages = []
         
         for i in range(min(max_results, 50)):
             timestamp = datetime.utcnow() - timedelta(minutes=random.randint(1, 60))
@@ -691,8 +667,7 @@ class KickCrawler(PlatformCrawler):
         return messages
     
     async def _get_mock_categories(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Generate mock category data"""
-        categories = []
+        """Generate mock category data"""        categories = []
         game_categories = [
             'Action', 'Adventure', 'RPG', 'Strategy', 'Sports', 'Racing',
             'Shooter', 'Battle Royale', 'MOBA', 'MMO', 'Indie', 'Simulation'
@@ -716,15 +691,13 @@ class KickCrawler(PlatformCrawler):
         return categories
     
     async def _get_live_streams(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get live stream data"""
-        streams = await self._get_mock_streams(query, max_results)
+        """Get live stream data"""        streams = await self._get_mock_streams(query, max_results)
         # Filter for live streams
         live_streams = [stream for stream in streams if stream.get('is_live', False)]
         return live_streams[:max_results]
     
     async def _get_trending_content(self, query: str, max_results: int, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Get trending content"""
-        content = []
+        """Get trending content"""        content = []
         
         for i in range(min(max_results, 10)):
             content.append({
@@ -740,8 +713,7 @@ class KickCrawler(PlatformCrawler):
     # Parser methods
     
     async def _parse_stream_data(self, stream_data: Dict[str, Any]) -> Optional[KickStream]:
-        """Parse stream data"""
-        try:
+        """Parse stream data"""        try:
             started_at = datetime.fromisoformat(stream_data.get('started_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             stream = KickStream(
@@ -784,8 +756,7 @@ class KickCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[KickUser]:
-        """Parse user data"""
-        try:
+        """Parse user data"""        try:
             created_at = datetime.fromisoformat(user_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             user = KickUser(
@@ -825,8 +796,7 @@ class KickCrawler(PlatformCrawler):
             return None
     
     async def _parse_clip_data(self, clip_data: Dict[str, Any]) -> Optional[KickClip]:
-        """Parse clip data"""
-        try:
+        """Parse clip data"""        try:
             created_at = datetime.fromisoformat(clip_data.get('created_at', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             clip = KickClip(
@@ -858,8 +828,7 @@ class KickCrawler(PlatformCrawler):
             return None
     
     async def _parse_chat_message_data(self, message_data: Dict[str, Any]) -> Optional[KickChatMessage]:
-        """Parse chat message data"""
-        try:
+        """Parse chat message data"""        try:
             timestamp = datetime.fromisoformat(message_data.get('timestamp', datetime.utcnow().isoformat()).replace('Z', '+00:00'))
             
             message = KickChatMessage(
@@ -891,8 +860,7 @@ class KickCrawler(PlatformCrawler):
             return None
     
     async def _parse_category_data(self, category_data: Dict[str, Any]) -> Optional[KickCategory]:
-        """Parse category data"""
-        try:
+        """Parse category data"""        try:
             category = KickCategory(
                 category_id=category_data.get('id', ''),
                 name=category_data.get('name', ''),
@@ -918,8 +886,7 @@ class KickCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -935,8 +902,7 @@ class KickCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Kick content"""
-        try:
+        """Extract metadata from Kick content"""        try:
             # Parse Kick URL
             parsed_url = urlparse(url)
             
@@ -979,8 +945,7 @@ class KickCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Kick platform information"""
-        return {
+        """Get Kick platform information"""        return {
             'platform_name': 'Kick',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

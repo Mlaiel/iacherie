@@ -1,5 +1,4 @@
-"""
-🚀 Revenue Optimizer - AI-Powered Revenue Optimization Engine
+"""🚀 Revenue Optimizer - AI-Powered Revenue Optimization Engine
 ============================================================
 
 Ultra-advanced revenue optimization system using machine learning
@@ -18,7 +17,6 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Optimization
 ===============================================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Revenue optimization types"""
-    PLATFORM_DIVERSIFICATION = "platform_diversification"
+    """Revenue optimization types"""    PLATFORM_DIVERSIFICATION = "platform_diversification"
     PRICING_OPTIMIZATION = "pricing_optimization"
     CONTENT_TIMING = "content_timing"
     AUDIENCE_TARGETING = "audience_targeting"
@@ -48,8 +45,7 @@ class OptimizationType(Enum):
 
 @dataclass
 class OptimizationRecommendation:
-    """Revenue optimization recommendation"""
-    recommendation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue optimization recommendation"""    recommendation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     optimization_type: OptimizationType = OptimizationType.PLATFORM_DIVERSIFICATION
     title: str = ""
@@ -64,8 +60,7 @@ class OptimizationRecommendation:
 
 
 class RevenueOptimizer:
-    """
-    AI-powered revenue optimization system
+    """    AI-powered revenue optimization system
     
     Features:
     - Platform diversification recommendations
@@ -76,8 +71,7 @@ class RevenueOptimizer:
     - Revenue stream maximization
     - Performance gap analysis
     - Automated A/B testing suggestions
-    """
-    
+    """    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -88,8 +82,7 @@ class RevenueOptimizer:
         self.optimization_engine = OptimizationEngine()
         
     async def initialize(self):
-        """Initialize revenue optimizer"""
-        try:
+        """Initialize revenue optimizer"""        try:
             await self.optimization_engine.initialize()
             logger.info("Revenue optimizer initialized successfully")
             
@@ -100,8 +93,7 @@ class RevenueOptimizer:
     async def generate_optimization_recommendations(self,
                                                   creator_id: str,
                                                   focus_areas: Optional[List[OptimizationType]] = None) -> List[OptimizationRecommendation]:
-        """Generate AI-powered revenue optimization recommendations"""
-        try:
+        """Generate AI-powered revenue optimization recommendations"""        try:
             recommendations = []
             
             # Analyze creator's current performance
@@ -130,8 +122,7 @@ class RevenueOptimizer:
             return []
 
     async def cleanup(self):
-        """Cleanup optimizer resources"""
-        try:
+        """Cleanup optimizer resources"""        try:
             await self.optimization_engine.cleanup()
             logger.info("Revenue optimizer cleanup completed")
             

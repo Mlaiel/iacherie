@@ -1,5 +1,4 @@
-"""
-Platform Monitor - Multi-Platform Intelligence Engine  
+"""Platform Monitor - Multi-Platform Intelligence Engine  
 =====================================================
 
 Professional platform monitoring and status tracking for IA-Influencer-Agent platform.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 import aiohttp
@@ -41,8 +39,7 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Platform types for monitoring."""
-    SOCIAL_MEDIA = "social_media"
+    """Platform types for monitoring."""    SOCIAL_MEDIA = "social_media"
     STREAMING = "streaming"
     CONTENT_SHARING = "content_sharing"
     PAYMENT_GATEWAY = "payment_gateway"
@@ -52,8 +49,7 @@ class PlatformType(Enum):
     MESSAGING = "messaging"
 
 class PlatformStatus(Enum):
-    """Platform operational status."""
-    OPERATIONAL = "operational"
+    """Platform operational status."""    OPERATIONAL = "operational"
     DEGRADED = "degraded"
     PARTIAL_OUTAGE = "partial_outage"
     MAJOR_OUTAGE = "major_outage"
@@ -61,15 +57,13 @@ class PlatformStatus(Enum):
     UNKNOWN = "unknown"
 
 class ServiceHealth(Enum):
-    """Service health status."""
-    HEALTHY = "healthy"
+    """Service health status."""    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     DOWN = "down"
 
 class APIEndpointStatus(Enum):
-    """API endpoint status."""
-    AVAILABLE = "available"
+    """API endpoint status."""    AVAILABLE = "available"
     SLOW = "slow"
     TIMEOUT = "timeout"
     ERROR = "error"
@@ -77,8 +71,7 @@ class APIEndpointStatus(Enum):
 
 @dataclass
 class PlatformInfo:
-    """Platform information and configuration."""
-    platform_id: str
+    """Platform information and configuration."""    platform_id: str
     name: str
     platform_type: PlatformType
     api_base_url: str
@@ -92,8 +85,7 @@ class PlatformInfo:
 
 @dataclass
 class PlatformHealthCheck:
-    """Platform health check result."""
-    platform_id: str
+    """Platform health check result."""    platform_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     status: PlatformStatus = PlatformStatus.UNKNOWN
     response_time: float = 0.0
@@ -106,8 +98,7 @@ class PlatformHealthCheck:
 
 @dataclass
 class PlatformIncident:
-    """Platform incident record."""
-    incident_id: str
+    """Platform incident record."""    incident_id: str
     platform_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     incident_type: str = ""
@@ -120,11 +111,9 @@ class PlatformIncident:
     impact: Dict[str, Any] = field(default_factory=dict)
 
 class PlatformMonitor(MonitorEngine):
-    """
-    Advanced platform monitoring engine.
+    """    Advanced platform monitoring engine.
     Monitors platform availability, API health, and service status across multiple platforms.
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfiguration):
         super().__init__(config)
         self.platforms: Dict[str, PlatformInfo] = {}
@@ -138,8 +127,7 @@ class PlatformMonitor(MonitorEngine):
         self._initialize_thresholds()
     
     def _initialize_platforms(self) -> None:
-        """Initialize platform configurations."""
-        self.platforms = {
+        """Initialize platform configurations."""        self.platforms = {
             "spotify": PlatformInfo(
                 platform_id="spotify",
                 name="Spotify",
@@ -193,8 +181,7 @@ class PlatformMonitor(MonitorEngine):
         }
     
     def _initialize_thresholds(self) -> None:
-        """Initialize response time thresholds for platforms."""
-        self.response_time_thresholds = {
+        """Initialize response time thresholds for platforms."""        self.response_time_thresholds = {
             "spotify": 2.0,     # 2 seconds
             "youtube": 3.0,     # 3 seconds
             "instagram": 2.5,   # 2.5 seconds
@@ -204,8 +191,7 @@ class PlatformMonitor(MonitorEngine):
         }
     
     async def initialize(self) -> bool:
-        """Initialize platform monitoring engine."""
-        try:
+        """Initialize platform monitoring engine."""        try:
             logger.info("Initializing platform monitor...")
             
             # Initialize HTTP session
@@ -227,8 +213,7 @@ class PlatformMonitor(MonitorEngine):
             return False
     
     async def start_monitoring(self, targets: List[Any]) -> bool:
-        """Start platform monitoring operations."""
-        try:
+        """Start platform monitoring operations."""        try:
             logger.info("Starting platform monitoring...")
             
             # Start monitoring tasks for each platform
@@ -254,8 +239,7 @@ class PlatformMonitor(MonitorEngine):
             return False
     
     async def stop_monitoring(self) -> bool:
-        """Stop platform monitoring operations."""
-        try:
+        """Stop platform monitoring operations."""        try:
             # Close HTTP session
             if hasattr(self, 'session'):
                 await self.session.close()
@@ -267,8 +251,7 @@ class PlatformMonitor(MonitorEngine):
             return False
     
     async def collect_metrics(self) -> Any:
-        """Collect platform monitoring metrics."""
-        from .monitor_engine import MonitoringMetrics
+        """Collect platform monitoring metrics."""        from .monitor_engine import MonitoringMetrics
         
         # Calculate platform health metrics
         platform_health_summary = {}
@@ -304,13 +287,11 @@ class PlatformMonitor(MonitorEngine):
         return metrics
     
     async def process_events(self, events: List[Any]) -> None:
-        """Process platform events."""
-        for event in events:
+        """Process platform events."""        for event in events:
             await self._process_platform_event(event)
     
     async def _process_platform_event(self, event: Dict[str, Any]) -> None:
-        """Process individual platform event."""
-        try:
+        """Process individual platform event."""        try:
             event_type = event.get("type", "")
             platform_id = event.get("platform_id", "")
             
@@ -327,8 +308,7 @@ class PlatformMonitor(MonitorEngine):
             logger.error(f"Failed to process platform event: {e}")
     
     async def _monitor_platform(self, platform_id: str) -> None:
-        """Monitor individual platform health."""
-        platform = self.platforms[platform_id]
+        """Monitor individual platform health."""        platform = self.platforms[platform_id]
         
         while True:
             try:
@@ -349,8 +329,7 @@ class PlatformMonitor(MonitorEngine):
                 await asyncio.sleep(600)  # Wait 10 minutes on error
     
     async def _perform_platform_health_check(self, platform: PlatformInfo) -> PlatformHealthCheck:
-        """Perform comprehensive health check for platform."""
-        start_time = time.time()
+        """Perform comprehensive health check for platform."""        start_time = time.time()
         health_check = PlatformHealthCheck(platform_id=platform.platform_id)
         
         try:
@@ -409,8 +388,7 @@ class PlatformMonitor(MonitorEngine):
         return health_check
     
     async def _check_api_endpoint(self, platform: PlatformInfo, endpoint: str) -> APIEndpointStatus:
-        """Check individual API endpoint status."""
-        try:
+        """Check individual API endpoint status."""        try:
             endpoint_url = f"{platform.api_base_url}{endpoint}"
             start_time = time.time()
             
@@ -434,8 +412,7 @@ class PlatformMonitor(MonitorEngine):
             return APIEndpointStatus.UNAVAILABLE
     
     async def _analyze_platform_health(self, platform_id: str, health_check: PlatformHealthCheck) -> None:
-        """Analyze platform health and trigger alerts if needed."""
-        try:
+        """Analyze platform health and trigger alerts if needed."""        try:
             # Check for status changes
             recent_checks = list(self.platform_health[platform_id])[-5:]  # Last 5 checks
             
@@ -486,8 +463,7 @@ class PlatformMonitor(MonitorEngine):
         previous_status: PlatformStatus, 
         current_status: PlatformStatus
     ) -> None:
-        """Handle platform status changes."""
-        platform_name = self.platforms[platform_id].name
+        """Handle platform status changes."""        platform_name = self.platforms[platform_id].name
         
         # Determine severity
         severity = "info"
@@ -514,8 +490,7 @@ class PlatformMonitor(MonitorEngine):
             await self._resolve_platform_incidents(platform_id)
     
     async def _create_platform_incident(self, platform_id: str, status: PlatformStatus) -> None:
-        """Create platform incident record."""
-        incident_id = f"incident_{platform_id}_{datetime.utcnow().timestamp()}"
+        """Create platform incident record."""        incident_id = f"incident_{platform_id}_{datetime.utcnow().timestamp()}"
         platform_name = self.platforms[platform_id].name
         
         incident = PlatformIncident(
@@ -533,8 +508,7 @@ class PlatformMonitor(MonitorEngine):
         logger.error(f"Platform incident created: {incident_id} - {platform_name} {status.value}")
     
     async def _resolve_platform_incidents(self, platform_id: str) -> None:
-        """Resolve platform incidents for specific platform."""
-        resolved_incidents = []
+        """Resolve platform incidents for specific platform."""        resolved_incidents = []
         
         for incident_id, incident in self.active_incidents.items():
             if incident.platform_id == platform_id and incident.status != "resolved":
@@ -551,16 +525,14 @@ class PlatformMonitor(MonitorEngine):
             logger.info(f"Resolved {len(resolved_incidents)} incidents for {platform_name}")
     
     async def _process_api_error_event(self, event: Dict[str, Any], platform_id: str) -> None:
-        """Process API error event."""
-        error_code = event.get("error_code", "unknown")
+        """Process API error event."""        error_code = event.get("error_code", "unknown")
         error_message = event.get("error_message", "")
         
         # Log API error
         logger.warning(f"API error for {platform_id}: {error_code} - {error_message}")
     
     async def _process_rate_limit_event(self, event: Dict[str, Any], platform_id: str) -> None:
-        """Process rate limit event."""
-        remaining_quota = event.get("remaining_quota", 0)
+        """Process rate limit event."""        remaining_quota = event.get("remaining_quota", 0)
         reset_time = event.get("reset_time")
         
         # Update API quota tracking
@@ -574,19 +546,16 @@ class PlatformMonitor(MonitorEngine):
         })
     
     async def _process_outage_event(self, event: Dict[str, Any], platform_id: str) -> None:
-        """Process platform outage event."""
-        await self._create_platform_incident(platform_id, PlatformStatus.MAJOR_OUTAGE)
+        """Process platform outage event."""        await self._create_platform_incident(platform_id, PlatformStatus.MAJOR_OUTAGE)
     
     async def _process_quota_exceeded_event(self, event: Dict[str, Any], platform_id: str) -> None:
-        """Process API quota exceeded event."""
-        await self.trigger_alert("api_quota_exceeded", {
+        """Process API quota exceeded event."""        await self.trigger_alert("api_quota_exceeded", {
             "platform_id": platform_id,
             "severity": "critical"
         })
     
     async def _get_api_quota_summary(self) -> Dict[str, Any]:
-        """Get API quota usage summary."""
-        quota_summary = {}
+        """Get API quota usage summary."""        quota_summary = {}
         
         for platform_id, quota_info in self.api_quotas.items():
             if quota_info:
@@ -602,13 +571,11 @@ class PlatformMonitor(MonitorEngine):
         return quota_summary
     
     async def _load_api_credentials(self) -> None:
-        """Load API credentials for platforms."""
-        # Implementation would load API credentials from secure storage
+        """Load API credentials for platforms."""        # Implementation would load API credentials from secure storage
         pass
     
     async def _monitor_api_quotas(self) -> None:
-        """Monitor API quota usage across platforms."""
-        while True:
+        """Monitor API quota usage across platforms."""        while True:
             try:
                 # Check API quota usage
                 await asyncio.sleep(1800)  # Check every 30 minutes
@@ -618,8 +585,7 @@ class PlatformMonitor(MonitorEngine):
                 await asyncio.sleep(3600)
     
     async def _check_platform_status_pages(self) -> None:
-        """Check platform status pages for incident updates."""
-        while True:
+        """Check platform status pages for incident updates."""        while True:
             try:
                 # Check platform status pages
                 await asyncio.sleep(600)  # Check every 10 minutes
@@ -629,8 +595,7 @@ class PlatformMonitor(MonitorEngine):
                 await asyncio.sleep(1200)
     
     async def _analyze_platform_trends(self) -> None:
-        """Analyze platform performance trends."""
-        while True:
+        """Analyze platform performance trends."""        while True:
             try:
                 # Analyze trends
                 await asyncio.sleep(3600)  # Analyze every hour
@@ -640,8 +605,7 @@ class PlatformMonitor(MonitorEngine):
                 await asyncio.sleep(1800)
     
     async def _detect_platform_incidents(self) -> None:
-        """Detect and manage platform incidents."""
-        while True:
+        """Detect and manage platform incidents."""        while True:
             try:
                 # Detect incidents
                 await asyncio.sleep(300)  # Check every 5 minutes

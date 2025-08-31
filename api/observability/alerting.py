@@ -1,5 +1,4 @@
-"""
-Enterprise Alerting System
+"""Enterprise Alerting System
 
 Comprehensive alerting infrastructure for real-time monitoring and notification
 of critical events in the IA Influencer content protection platform.
@@ -11,7 +10,6 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, copying, or implementation without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
-
 import asyncio
 import json
 import logging
@@ -26,24 +24,21 @@ from email.mime.multipart import MimeMultipart
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    INFO = "info"
+    """Alert severity levels."""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class AlertState(Enum):
-    """Alert lifecycle states."""
-    TRIGGERED = "triggered"
+    """Alert lifecycle states."""    TRIGGERED = "triggered"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
     SUPPRESSED = "suppressed"
 
 
 class NotificationChannel(Enum):
-    """Available notification channels."""
-    EMAIL = "email"
+    """Available notification channels."""    EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -52,8 +47,7 @@ class NotificationChannel(Enum):
 
 @dataclass
 class Alert:
-    """Represents an alert instance."""
-    id: str
+    """Represents an alert instance."""    id: str
     rule_name: str
     severity: AlertSeverity
     message: str
@@ -70,8 +64,7 @@ class Alert:
     suppressed_until: Optional[datetime] = None
 
     def to_dict(self) -> Dict:
-        """Convert alert to dictionary."""
-        data = asdict(self)
+        """Convert alert to dictionary."""        data = asdict(self)
         # Convert enums and datetime objects
         data['severity'] = self.severity.value
         data['state'] = self.state.value
@@ -87,8 +80,7 @@ class Alert:
 
 @dataclass
 class AlertRule:
-    """Defines conditions for triggering alerts."""
-    name: str
+    """Defines conditions for triggering alerts."""    name: str
     condition: Callable[[Dict], bool]
     severity: AlertSeverity
     message_template: str
@@ -103,15 +95,13 @@ class AlertRule:
 
 
 class RuleEngine:
-    """Evaluates alert rules against metrics and events."""
-    
+    """Evaluates alert rules against metrics and events."""    
     def __init__(self):
         self.rules: Dict[str, AlertRule] = {}
         self.rule_states: Dict[str, Dict] = {}
         
     def register_rule(self, rule: AlertRule):
-        """Register an alert rule."""
-        self.rules[rule.name] = rule
+        """Register an alert rule."""        self.rules[rule.name] = rule
         self.rule_states[rule.name] = {
             'last_triggered': None,
             'last_notification': None,
@@ -120,8 +110,7 @@ class RuleEngine:
         }
         
     def evaluate_rules(self, metrics: Dict, events: List[Dict]) -> List[Alert]:
-        """Evaluate all rules against current metrics and events."""
-        triggered_alerts = []
+        """Evaluate all rules against current metrics and events."""        triggered_alerts = []
         
         for rule_name, rule in self.rules.items():
             if not rule.enabled:
@@ -141,8 +130,7 @@ class RuleEngine:
         return triggered_alerts
     
     def _create_alert_from_rule(self, rule: AlertRule) -> Alert:
-        """Create an alert instance from a rule."""
-        alert_id = f"{rule.name}_{int(datetime.utcnow().timestamp())}"
+        """Create an alert instance from a rule."""        alert_id = f"{rule.name}_{int(datetime.utcnow().timestamp())}"
         
         return Alert(
             id=alert_id,
@@ -157,8 +145,7 @@ class RuleEngine:
         )
     
     def _should_trigger_alert(self, rule_name: str, alert: Alert) -> bool:
-        """Check if alert should be triggered based on cooldown and limits."""
-        rule = self.rules[rule_name]
+        """Check if alert should be triggered based on cooldown and limits."""        rule = self.rules[rule_name]
         state = self.rule_states[rule_name]
         now = datetime.utcnow()
         
@@ -175,8 +162,7 @@ class RuleEngine:
         return True
     
     def _update_rule_state(self, rule_name: str, alert_id: str):
-        """Update rule state after triggering."""
-        self.rule_states[rule_name].update({
+        """Update rule state after triggering."""        self.rule_states[rule_name].update({
             'last_triggered': datetime.utcnow(),
             'notification_count': self.rule_states[rule_name]['notification_count'] + 1,
             'active_alert_id': alert_id
@@ -184,15 +170,13 @@ class RuleEngine:
 
 
 class NotificationService:
-    """Handles alert notifications across multiple channels."""
-    
+    """Handles alert notifications across multiple channels."""    
     def __init__(self, config: Dict[str, Dict]):
         self.config = config
         self.notification_history: List[Dict] = []
         
     async def send_notification(self, alert: Alert, channels: List[NotificationChannel]):
-        """Send alert notification through specified channels."""
-        tasks = []
+        """Send alert notification through specified channels."""        tasks = []
         
         for channel in channels:
             if channel in self.config:
@@ -213,8 +197,7 @@ class NotificationService:
             self._log_notification_results(alert, results)
     
     async def _send_email_notification(self, alert: Alert):
-        """Send email notification."""
-        try:
+        """Send email notification."""        try:
             config = self.config[NotificationChannel.EMAIL]
             
             msg = MimeMultipart()
@@ -234,8 +217,7 @@ class NotificationService:
             self._record_notification(alert, NotificationChannel.EMAIL, f"failed: {e}")
     
     async def _send_slack_notification(self, alert: Alert):
-        """Send Slack notification."""
-        try:
+        """Send Slack notification."""        try:
             # Mock Slack API call
             await asyncio.sleep(0.1)
             self._record_notification(alert, NotificationChannel.SLACK, "success")
@@ -244,8 +226,7 @@ class NotificationService:
             self._record_notification(alert, NotificationChannel.SLACK, f"failed: {e}")
     
     async def _send_webhook_notification(self, alert: Alert):
-        """Send webhook notification."""
-        try:
+        """Send webhook notification."""        try:
             # Mock webhook call
             await asyncio.sleep(0.1)
             self._record_notification(alert, NotificationChannel.WEBHOOK, "success")
@@ -254,8 +235,7 @@ class NotificationService:
             self._record_notification(alert, NotificationChannel.WEBHOOK, f"failed: {e}")
     
     async def _send_sms_notification(self, alert: Alert):
-        """Send SMS notification."""
-        try:
+        """Send SMS notification."""        try:
             # Mock SMS service call
             await asyncio.sleep(0.1)
             self._record_notification(alert, NotificationChannel.SMS, "success")
@@ -264,8 +244,7 @@ class NotificationService:
             self._record_notification(alert, NotificationChannel.SMS, f"failed: {e}")
     
     async def _send_dashboard_notification(self, alert: Alert):
-        """Send dashboard notification."""
-        try:
+        """Send dashboard notification."""        try:
             # Mock dashboard update
             await asyncio.sleep(0.05)
             self._record_notification(alert, NotificationChannel.DASHBOARD, "success")
@@ -274,8 +253,7 @@ class NotificationService:
             self._record_notification(alert, NotificationChannel.DASHBOARD, f"failed: {e}")
     
     def _format_alert_for_email(self, alert: Alert) -> str:
-        """Format alert for email body."""
-        severity_colors = {
+        """Format alert for email body."""        severity_colors = {
             AlertSeverity.INFO: "#36A2EB",
             AlertSeverity.WARNING: "#FFCE56", 
             AlertSeverity.CRITICAL: "#FF6384",
@@ -284,8 +262,7 @@ class NotificationService:
         
         color = severity_colors.get(alert.severity, "#000000")
         
-        return f"""
-        <html>
+        return f"""        <html>
         <body>
             <div style="border-left: 4px solid {color}; padding-left: 20px;">
                 <h2 style="color: {color};">[{alert.severity.value.upper()}] Alert Triggered</h2>
@@ -306,11 +283,9 @@ class NotificationService:
             </div>
         </body>
         </html>
-        """
-    
+        """    
     def _record_notification(self, alert: Alert, channel: NotificationChannel, result: str):
-        """Record notification attempt."""
-        self.notification_history.append({
+        """Record notification attempt."""        self.notification_history.append({
             'alert_id': alert.id,
             'channel': channel.value,
             'result': result,
@@ -318,15 +293,13 @@ class NotificationService:
         })
     
     def _log_notification_results(self, alert: Alert, results: List):
-        """Log notification results."""
-        for i, result in enumerate(results):
+        """Log notification results."""        for i, result in enumerate(results):
             if isinstance(result, Exception):
                 logging.error(f"Notification failed for alert {alert.id}: {result}")
 
 
 class AlertManager:
-    """Centralized alert management system."""
-    
+    """Centralized alert management system."""    
     def __init__(self, notification_config: Dict[str, Dict]):
         self.rule_engine = RuleEngine()
         self.notification_service = NotificationService(notification_config)
@@ -339,8 +312,7 @@ class AlertManager:
         self._register_default_rules()
     
     def _register_default_rules(self):
-        """Register default alert rules for the platform."""
-        
+        """Register default alert rules for the platform."""        
         # Content upload failure rate
         self.rule_engine.register_rule(AlertRule(
             name="content_upload_failure_rate_high",
@@ -394,8 +366,7 @@ class AlertManager:
         ))
     
     async def process_metrics(self, metrics: Dict):
-        """Process incoming metrics for alert evaluation."""
-        # Store metrics for rule evaluation
+        """Process incoming metrics for alert evaluation."""        # Store metrics for rule evaluation
         timestamp = datetime.utcnow()
         for metric_name, value in metrics.items():
             self.metrics_buffer[metric_name].append({
@@ -412,8 +383,7 @@ class AlertManager:
             ]
     
     async def process_event(self, event: Dict):
-        """Process incoming event for alert evaluation."""
-        event['timestamp'] = datetime.utcnow()
+        """Process incoming event for alert evaluation."""        event['timestamp'] = datetime.utcnow()
         self.events_buffer.append(event)
         
         # Keep only recent events (last hour)
@@ -424,8 +394,7 @@ class AlertManager:
         ]
     
     async def evaluate_and_trigger_alerts(self):
-        """Evaluate rules and trigger alerts."""
-        # Prepare current metrics summary
+        """Evaluate rules and trigger alerts."""        # Prepare current metrics summary
         current_metrics = {}
         for metric_name, values in self.metrics_buffer.items():
             if values:
@@ -446,8 +415,7 @@ class AlertManager:
             await self._handle_triggered_alert(alert)
     
     async def _handle_triggered_alert(self, alert: Alert):
-        """Handle a triggered alert."""
-        # Store alert
+        """Handle a triggered alert."""        # Store alert
         self.active_alerts[alert.id] = alert
         self.alert_history.append(alert)
         
@@ -458,8 +426,7 @@ class AlertManager:
         logging.info(f"Alert triggered: {alert.id} - {alert.message}")
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an active alert."""
-        if alert_id in self.active_alerts:
+        """Acknowledge an active alert."""        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.state = AlertState.ACKNOWLEDGED
             alert.acknowledged_at = datetime.utcnow()
@@ -468,8 +435,7 @@ class AlertManager:
         return False
     
     async def resolve_alert(self, alert_id: str, resolved_by: str) -> bool:
-        """Resolve an active alert."""
-        if alert_id in self.active_alerts:
+        """Resolve an active alert."""        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.state = AlertState.RESOLVED
             alert.resolved_at = datetime.utcnow()
@@ -481,8 +447,7 @@ class AlertManager:
         return False
     
     def get_active_alerts(self, severity_filter: Optional[AlertSeverity] = None) -> List[Alert]:
-        """Get list of active alerts."""
-        alerts = list(self.active_alerts.values())
+        """Get list of active alerts."""        alerts = list(self.active_alerts.values())
         
         if severity_filter:
             alerts = [a for a in alerts if a.severity == severity_filter]
@@ -490,8 +455,7 @@ class AlertManager:
         return sorted(alerts, key=lambda a: a.triggered_at, reverse=True)
     
     def get_alert_summary(self) -> Dict:
-        """Get summary of alert status."""
-        active_by_severity = defaultdict(int)
+        """Get summary of alert status."""        active_by_severity = defaultdict(int)
         for alert in self.active_alerts.values():
             active_by_severity[alert.severity.value] += 1
             

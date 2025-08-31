@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -83,23 +81,19 @@ except ImportError as e:
         pass
 
 class TestContentProtector(unittest.TestCase):
-    """Test suite for ContentProtector class"""
-    
+    """Test suite for ContentProtector class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.protector = ContentProtector()
+        """Set up test fixtures"""        self.protector = ContentProtector()
         self.test_image = self._create_test_image()
         self.test_video_path = self._create_test_video()
         self.protection_settings = self._create_protection_settings()
     
     def tearDown(self):
-        """Clean up test fixtures"""
-        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
+        """Clean up test fixtures"""        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for protection"""
-        image = np.zeros((300, 400, 3), dtype=np.uint8)
+        """Create a test image for protection"""        image = np.zeros((300, 400, 3), dtype=np.uint8)
         
         # Add some content worth protecting
         cv2.rectangle(image, (50, 50), (200, 150), (100, 150, 200), -1)
@@ -113,8 +107,7 @@ class TestContentProtector(unittest.TestCase):
         return image
     
     def _create_test_video(self) -> str:
-        """Create a test video file"""
-        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
+        """Create a test video file"""        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
         temp_path = temp_file.name
         temp_file.close()
         
@@ -131,8 +124,7 @@ class TestContentProtector(unittest.TestCase):
         return temp_path
     
     def _create_protection_settings(self):
-        """Create protection settings for testing"""
-        try:
+        """Create protection settings for testing"""        try:
             return ProtectionSettings(
                 watermark_text="© 2024 Fahed Mlaiel",
                 watermark_opacity=0.3,
@@ -152,12 +144,10 @@ class TestContentProtector(unittest.TestCase):
             }
     
     def test_protector_initialization(self):
-        """Test ContentProtector initialization"""
-        self.assertIsInstance(self.protector, ContentProtector)
+        """Test ContentProtector initialization"""        self.assertIsInstance(self.protector, ContentProtector)
     
     def test_protect_content_basic(self):
-        """Test basic content protection"""
-        try:
+        """Test basic content protection"""        try:
             protected_content = self.protector.protect_content(
                 self.test_image,
                 settings=self.protection_settings
@@ -176,8 +166,7 @@ class TestContentProtector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_multi_layer_protection(self):
-        """Test multi-layer protection system"""
-        try:
+        """Test multi-layer protection system"""        try:
             # Apply multiple protection layers
             protection_layers = ['watermark', 'fingerprint', 'encryption']
             
@@ -198,8 +187,7 @@ class TestContentProtector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_protection_verification(self):
-        """Test protection verification"""
-        try:
+        """Test protection verification"""        try:
             # First protect the content
             protected_content = self.protector.protect_content(
                 self.test_image,
@@ -222,12 +210,10 @@ class TestContentProtector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def _calculate_image_hash(self, image: np.ndarray) -> str:
-        """Calculate hash of image for verification"""
-        return hashlib.md5(image.tobytes()).hexdigest()
+        """Calculate hash of image for verification"""        return hashlib.md5(image.tobytes()).hexdigest()
     
     def test_tamper_detection(self):
-        """Test tamper detection capabilities"""
-        try:
+        """Test tamper detection capabilities"""        try:
             # Protect the image
             protected_content = self.protector.protect_content(
                 self.test_image,
@@ -254,17 +240,14 @@ class TestContentProtector(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestWatermarkGenerator(unittest.TestCase):
-    """Test suite for WatermarkGenerator class"""
-    
+    """Test suite for WatermarkGenerator class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.generator = WatermarkGenerator()
+        """Set up test fixtures"""        self.generator = WatermarkGenerator()
         self.test_image = self._create_test_image()
         self.watermark_settings = self._create_watermark_settings()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for watermarking"""
-        image = np.ones((200, 300, 3), dtype=np.uint8) * 128  # Gray background
+        """Create a test image for watermarking"""        image = np.ones((200, 300, 3), dtype=np.uint8) * 128  # Gray background
         
         # Add some content
         cv2.rectangle(image, (50, 50), (150, 100), (200, 150, 100), -1)
@@ -273,8 +256,7 @@ class TestWatermarkGenerator(unittest.TestCase):
         return image
     
     def _create_watermark_settings(self):
-        """Create watermark settings for testing"""
-        try:
+        """Create watermark settings for testing"""        try:
             return WatermarkSettings(
                 text="© Fahed Mlaiel",
                 opacity=0.5,
@@ -294,12 +276,10 @@ class TestWatermarkGenerator(unittest.TestCase):
             }
     
     def test_generator_initialization(self):
-        """Test WatermarkGenerator initialization"""
-        self.assertIsInstance(self.generator, WatermarkGenerator)
+        """Test WatermarkGenerator initialization"""        self.assertIsInstance(self.generator, WatermarkGenerator)
     
     def test_text_watermark_generation(self):
-        """Test text watermark generation"""
-        try:
+        """Test text watermark generation"""        try:
             watermarked = self.generator.add_text_watermark(
                 self.test_image,
                 text="© Test Watermark",
@@ -317,8 +297,7 @@ class TestWatermarkGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_image_watermark_generation(self):
-        """Test image watermark generation"""
-        try:
+        """Test image watermark generation"""        try:
             # Create a small logo-like watermark
             logo = np.zeros((50, 100, 3), dtype=np.uint8)
             cv2.rectangle(logo, (10, 10), (40, 40), (255, 255, 255), -1)
@@ -338,8 +317,7 @@ class TestWatermarkGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_invisible_watermark(self):
-        """Test invisible/steganographic watermark"""
-        try:
+        """Test invisible/steganographic watermark"""        try:
             # Add invisible watermark
             watermarked = self.generator.add_invisible_watermark(
                 self.test_image,
@@ -367,8 +345,7 @@ class TestWatermarkGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_frequency_domain_watermark(self):
-        """Test frequency domain watermarking (DCT/DWT)"""
-        try:
+        """Test frequency domain watermarking (DCT/DWT)"""        try:
             watermarked = self.generator.add_frequency_watermark(
                 self.test_image,
                 watermark_data="frequency_domain_watermark",
@@ -391,8 +368,7 @@ class TestWatermarkGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_watermark_robustness(self):
-        """Test watermark robustness against attacks"""
-        try:
+        """Test watermark robustness against attacks"""        try:
             # Add robust watermark
             watermarked = self.generator.add_text_watermark(
                 self.test_image,
@@ -428,8 +404,7 @@ class TestWatermarkGenerator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def _simulate_jpeg_compression(self, image: np.ndarray) -> np.ndarray:
-        """Simulate JPEG compression"""
-        temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
+        """Simulate JPEG compression"""        temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
         temp_path = temp_file.name
         temp_file.close()
         
@@ -442,28 +417,23 @@ class TestWatermarkGenerator(unittest.TestCase):
                 os.remove(temp_path)
     
     def _add_noise(self, image: np.ndarray) -> np.ndarray:
-        """Add Gaussian noise"""
-        noise = np.random.normal(0, 10, image.shape).astype(np.int16)
+        """Add Gaussian noise"""        noise = np.random.normal(0, 10, image.shape).astype(np.int16)
         return np.clip(image.astype(np.int16) + noise, 0, 255).astype(np.uint8)
     
     def _rotate_image(self, image: np.ndarray, angle: float) -> np.ndarray:
-        """Rotate image by given angle"""
-        center = (image.shape[1] // 2, image.shape[0] // 2)
+        """Rotate image by given angle"""        center = (image.shape[1] // 2, image.shape[0] // 2)
         rotation_matrix = cv2.getRotationMatrix2D(center, angle, 1.0)
         return cv2.warpAffine(image, rotation_matrix, (image.shape[1], image.shape[0]))
 
 class TestFingerprintExtractor(unittest.TestCase):
-    """Test suite for FingerprintExtractor class"""
-    
+    """Test suite for FingerprintExtractor class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.extractor = FingerprintExtractor()
+        """Set up test fixtures"""        self.extractor = FingerprintExtractor()
         self.test_image = self._create_test_image()
         self.test_images = [self._create_test_image() for _ in range(5)]
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for fingerprinting"""
-        image = np.random.randint(0, 255, (150, 200, 3), dtype=np.uint8)
+        """Create a test image for fingerprinting"""        image = np.random.randint(0, 255, (150, 200, 3), dtype=np.uint8)
         
         # Add some deterministic patterns
         cv2.rectangle(image, (30, 30), (80, 80), (100, 150, 200), -1)
@@ -473,12 +443,10 @@ class TestFingerprintExtractor(unittest.TestCase):
         return image
     
     def test_extractor_initialization(self):
-        """Test FingerprintExtractor initialization"""
-        self.assertIsInstance(self.extractor, FingerprintExtractor)
+        """Test FingerprintExtractor initialization"""        self.assertIsInstance(self.extractor, FingerprintExtractor)
     
     def test_perceptual_hash_extraction(self):
-        """Test perceptual hash extraction"""
-        try:
+        """Test perceptual hash extraction"""        try:
             phash = self.extractor.extract_perceptual_hash(self.test_image)
             
             self.assertIsNotNone(phash)
@@ -493,8 +461,7 @@ class TestFingerprintExtractor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_difference_hash_extraction(self):
-        """Test difference hash extraction"""
-        try:
+        """Test difference hash extraction"""        try:
             dhash = self.extractor.extract_difference_hash(self.test_image)
             
             self.assertIsNotNone(dhash)
@@ -513,8 +480,7 @@ class TestFingerprintExtractor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_wavelet_hash_extraction(self):
-        """Test wavelet-based hash extraction"""
-        try:
+        """Test wavelet-based hash extraction"""        try:
             whash = self.extractor.extract_wavelet_hash(self.test_image)
             
             self.assertIsNotNone(whash)
@@ -524,8 +490,7 @@ class TestFingerprintExtractor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_color_histogram_fingerprint(self):
-        """Test color histogram fingerprint"""
-        try:
+        """Test color histogram fingerprint"""        try:
             histogram_fp = self.extractor.extract_color_histogram_fingerprint(self.test_image)
             
             self.assertIsNotNone(histogram_fp)
@@ -540,8 +505,7 @@ class TestFingerprintExtractor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_texture_fingerprint(self):
-        """Test texture-based fingerprint"""
-        try:
+        """Test texture-based fingerprint"""        try:
             texture_fp = self.extractor.extract_texture_fingerprint(self.test_image)
             
             self.assertIsNotNone(texture_fp)
@@ -551,8 +515,7 @@ class TestFingerprintExtractor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_edge_fingerprint(self):
-        """Test edge-based fingerprint"""
-        try:
+        """Test edge-based fingerprint"""        try:
             edge_fp = self.extractor.extract_edge_fingerprint(self.test_image)
             
             self.assertIsNotNone(edge_fp)
@@ -562,8 +525,7 @@ class TestFingerprintExtractor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_comprehensive_fingerprint(self):
-        """Test comprehensive fingerprint combining multiple methods"""
-        try:
+        """Test comprehensive fingerprint combining multiple methods"""        try:
             comprehensive_fp = self.extractor.extract_comprehensive_fingerprint(self.test_image)
             
             self.assertIsNotNone(comprehensive_fp)
@@ -579,8 +541,7 @@ class TestFingerprintExtractor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_fingerprint_comparison(self):
-        """Test fingerprint comparison and similarity"""
-        try:
+        """Test fingerprint comparison and similarity"""        try:
             # Extract fingerprints from multiple images
             fingerprints = []
             for img in self.test_images:
@@ -604,17 +565,14 @@ class TestFingerprintExtractor(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestCopyrightValidator(unittest.TestCase):
-    """Test suite for CopyrightValidator class"""
-    
+    """Test suite for CopyrightValidator class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.validator = CopyrightValidator()
+        """Set up test fixtures"""        self.validator = CopyrightValidator()
         self.test_image = self._create_test_image()
         self.copyright_database = self._create_mock_copyright_database()
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for copyright validation"""
-        image = np.zeros((200, 300, 3), dtype=np.uint8)
+        """Create a test image for copyright validation"""        image = np.zeros((200, 300, 3), dtype=np.uint8)
         
         # Add copyright notice
         cv2.putText(image, "© 2024 Fahed Mlaiel", (10, 180), 
@@ -627,8 +585,7 @@ class TestCopyrightValidator(unittest.TestCase):
         return image
     
     def _create_mock_copyright_database(self) -> Dict[str, Any]:
-        """Create mock copyright database"""
-        return {
+        """Create mock copyright database"""        return {
             'registered_works': [
                 {
                     'id': 'work_001',
@@ -648,12 +605,10 @@ class TestCopyrightValidator(unittest.TestCase):
         }
     
     def test_validator_initialization(self):
-        """Test CopyrightValidator initialization"""
-        self.assertIsInstance(self.validator, CopyrightValidator)
+        """Test CopyrightValidator initialization"""        self.assertIsInstance(self.validator, CopyrightValidator)
     
     def test_copyright_notice_detection(self):
-        """Test copyright notice detection in images"""
-        try:
+        """Test copyright notice detection in images"""        try:
             copyright_info = self.validator.detect_copyright_notice(self.test_image)
             
             self.assertIsNotNone(copyright_info)
@@ -668,8 +623,7 @@ class TestCopyrightValidator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or OCR error: {e}")
     
     def test_ownership_validation(self):
-        """Test ownership validation"""
-        try:
+        """Test ownership validation"""        try:
             validation_result = self.validator.validate_ownership(
                 self.test_image,
                 claimed_owner="Fahed Mlaiel",
@@ -689,8 +643,7 @@ class TestCopyrightValidator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_plagiarism_detection(self):
-        """Test plagiarism detection"""
-        try:
+        """Test plagiarism detection"""        try:
             # Create a modified version of the test image
             modified_image = self.test_image.copy()
             modified_image[100:150, 100:150] = [255, 0, 0]  # Add red square
@@ -712,8 +665,7 @@ class TestCopyrightValidator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_license_validation(self):
-        """Test license validation"""
-        try:
+        """Test license validation"""        try:
             license_info = {
                 'type': 'Creative Commons',
                 'permissions': ['commercial_use', 'modification'],
@@ -739,8 +691,7 @@ class TestCopyrightValidator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_dmca_compliance_check(self):
-        """Test DMCA compliance checking"""
-        try:
+        """Test DMCA compliance checking"""        try:
             dmca_result = self.validator.check_dmca_compliance(
                 self.test_image,
                 platform='web',
@@ -760,22 +711,18 @@ class TestCopyrightValidator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
 
 class TestIntegrityValidator(unittest.TestCase):
-    """Test suite for IntegrityValidator class"""
-    
+    """Test suite for IntegrityValidator class"""    
     def setUp(self):
-        """Set up test fixtures"""
-        self.validator = IntegrityValidator()
+        """Set up test fixtures"""        self.validator = IntegrityValidator()
         self.test_image = self._create_test_image()
         self.test_video_path = self._create_test_video()
     
     def tearDown(self):
-        """Clean up test fixtures"""
-        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
+        """Clean up test fixtures"""        if hasattr(self, 'test_video_path') and os.path.exists(self.test_video_path):
             os.remove(self.test_video_path)
     
     def _create_test_image(self) -> np.ndarray:
-        """Create a test image for integrity validation"""
-        image = np.zeros((200, 300, 3), dtype=np.uint8)
+        """Create a test image for integrity validation"""        image = np.zeros((200, 300, 3), dtype=np.uint8)
         
         # Add some deterministic content
         cv2.rectangle(image, (50, 50), (150, 120), (100, 150, 200), -1)
@@ -785,8 +732,7 @@ class TestIntegrityValidator(unittest.TestCase):
         return image
     
     def _create_test_video(self) -> str:
-        """Create a test video file"""
-        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
+        """Create a test video file"""        temp_file = tempfile.NamedTemporaryFile(suffix='.mp4', delete=False)
         temp_path = temp_file.name
         temp_file.close()
         
@@ -802,12 +748,10 @@ class TestIntegrityValidator(unittest.TestCase):
         return temp_path
     
     def test_validator_initialization(self):
-        """Test IntegrityValidator initialization"""
-        self.assertIsInstance(self.validator, IntegrityValidator)
+        """Test IntegrityValidator initialization"""        self.assertIsInstance(self.validator, IntegrityValidator)
     
     def test_image_integrity_validation(self):
-        """Test image integrity validation"""
-        try:
+        """Test image integrity validation"""        try:
             # Calculate original hash
             original_hash = self.validator.calculate_image_hash(self.test_image)
             
@@ -829,8 +773,7 @@ class TestIntegrityValidator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_tampering_detection(self):
-        """Test tampering detection"""
-        try:
+        """Test tampering detection"""        try:
             # Create tampered version
             tampered_image = self.test_image.copy()
             cv2.rectangle(tampered_image, (100, 100), (130, 130), (255, 0, 0), -1)  # Add red square
@@ -857,8 +800,7 @@ class TestIntegrityValidator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_metadata_integrity(self):
-        """Test metadata integrity validation"""
-        try:
+        """Test metadata integrity validation"""        try:
             # Save image with metadata
             temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
             temp_path = temp_file.name
@@ -881,8 +823,7 @@ class TestIntegrityValidator(unittest.TestCase):
                 os.remove(temp_path)
     
     def test_video_integrity_validation(self):
-        """Test video integrity validation"""
-        try:
+        """Test video integrity validation"""        try:
             integrity_result = self.validator.validate_video_integrity(self.test_video_path)
             
             self.assertIsNotNone(integrity_result)
@@ -897,8 +838,7 @@ class TestIntegrityValidator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_blockchain_verification(self):
-        """Test blockchain-based verification"""
-        try:
+        """Test blockchain-based verification"""        try:
             # Mock blockchain verification
             blockchain_result = self.validator.verify_blockchain_integrity(
                 content_hash=self.validator.calculate_image_hash(self.test_image),
@@ -918,11 +858,9 @@ class TestIntegrityValidator(unittest.TestCase):
             self.skipTest(f"Skipping due to import or blockchain error: {e}")
 
 class TestProtectionIntegration(unittest.TestCase):
-    """Test suite for protection integration and workflows"""
-    
+    """Test suite for protection integration and workflows"""    
     def setUp(self):
-        """Set up integration test fixtures"""
-        self.content_protector = ContentProtector()
+        """Set up integration test fixtures"""        self.content_protector = ContentProtector()
         self.watermark_generator = WatermarkGenerator()
         self.fingerprint_extractor = FingerprintExtractor()
         self.copyright_validator = CopyrightValidator()
@@ -931,8 +869,7 @@ class TestProtectionIntegration(unittest.TestCase):
         self.test_image = self._create_comprehensive_test_image()
     
     def _create_comprehensive_test_image(self) -> np.ndarray:
-        """Create comprehensive test image for integration testing"""
-        image = np.zeros((300, 400, 3), dtype=np.uint8)
+        """Create comprehensive test image for integration testing"""        image = np.zeros((300, 400, 3), dtype=np.uint8)
         
         # Add rich content worth protecting
         cv2.rectangle(image, (50, 50), (200, 150), (100, 150, 200), -1)
@@ -949,8 +886,7 @@ class TestProtectionIntegration(unittest.TestCase):
         return image
     
     def test_complete_protection_workflow(self):
-        """Test complete protection workflow"""
-        try:
+        """Test complete protection workflow"""        try:
             # Step 1: Extract original fingerprint
             original_fingerprint = self.fingerprint_extractor.extract_perceptual_hash(self.test_image)
             
@@ -994,8 +930,7 @@ class TestProtectionIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_protection_verification_workflow(self):
-        """Test protection verification workflow"""
-        try:
+        """Test protection verification workflow"""        try:
             # Protect the content
             protected_content = self.content_protector.protect_content(
                 self.test_image,
@@ -1032,8 +967,7 @@ class TestProtectionIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def test_attack_resistance_workflow(self):
-        """Test protection resistance against various attacks"""
-        try:
+        """Test protection resistance against various attacks"""        try:
             # Apply robust protection
             protected_content = self.content_protector.protect_content(
                 self.test_image,
@@ -1066,16 +1000,14 @@ class TestProtectionIntegration(unittest.TestCase):
             self.skipTest(f"Skipping due to import or algorithm error: {e}")
     
     def _add_noise_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Simulate noise attack"""
-        try:
+        """Simulate noise attack"""        try:
             noise = np.random.normal(0, 15, image.shape).astype(np.int16)
             return np.clip(image.astype(np.int16) + noise, 0, 255).astype(np.uint8)
         except:
             return None
     
     def _compression_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Simulate compression attack"""
-        try:
+        """Simulate compression attack"""        try:
             temp_file = tempfile.NamedTemporaryFile(suffix='.jpg', delete=False)
             temp_path = temp_file.name
             temp_file.close()
@@ -1089,8 +1021,7 @@ class TestProtectionIntegration(unittest.TestCase):
             return None
     
     def _crop_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Simulate cropping attack"""
-        try:
+        """Simulate cropping attack"""        try:
             h, w = image.shape[:2]
             crop_h, crop_w = int(h * 0.8), int(w * 0.8)
             start_h, start_w = (h - crop_h) // 2, (w - crop_w) // 2
@@ -1100,16 +1031,14 @@ class TestProtectionIntegration(unittest.TestCase):
             return None
     
     def _brightness_attack(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Simulate brightness adjustment attack"""
-        try:
+        """Simulate brightness adjustment attack"""        try:
             bright_image = image.astype(np.float32) * 1.3
             return np.clip(bright_image, 0, 255).astype(np.uint8)
         except:
             return None
     
     def test_performance_integration(self):
-        """Test performance of integrated protection system"""
-        try:
+        """Test performance of integrated protection system"""        try:
             start_time = time.time()
             
             # Run complete protection workflow

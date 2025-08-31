@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Monitoring Integration Example
+"""IA Influencer Agent Monitoring Integration Example
 
 Complete integration example showing how to use all monitoring components
 together for the IA Influencer Agent + Content Protection Platform.
@@ -14,7 +13,6 @@ Toute utilisation, modification ou distribution non autorisée de ce code est st
 Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute violation sera poursuivie selon les lois en vigueur.
 """
-
 import asyncio
 import json
 from datetime import datetime
@@ -33,14 +31,12 @@ from ...core.config import Settings
 
 
 class IAInfluencerMonitoringIntegration:
-    """
-    Complete integration of all monitoring components for IA Influencer Agent platform.
+    """    Complete integration of all monitoring components for IA Influencer Agent platform.
     
     This class demonstrates how to set up and use the comprehensive monitoring system
     for multi-format content creators including real-time analytics, AI insights,
     and business intelligence.
-    """
-    
+    """    
     def __init__(self, settings: Settings, profile: MonitoringProfile = MonitoringProfile.PRODUCTION):
         self.settings = settings
         self.config = get_monitoring_config(profile)
@@ -60,8 +56,7 @@ class IAInfluencerMonitoringIntegration:
         print(f"🤖 AI Insights: {'Enabled' if self.config['database_performance']['ai_analysis_enabled'] else 'Disabled'}")
     
     async def start_comprehensive_monitoring(self) -> None:
-        """Start comprehensive monitoring for the IA Influencer Agent platform"""
-        try:
+        """Start comprehensive monitoring for the IA Influencer Agent platform"""        try:
             print("🚀 Starting IA Influencer Agent Monitoring System...")
             
             # Start core database monitoring
@@ -90,8 +85,7 @@ class IAInfluencerMonitoringIntegration:
             raise
     
     async def demonstrate_content_processing_monitoring(self) -> None:
-        """Demonstrate content processing pipeline monitoring"""
-        try:
+        """Demonstrate content processing pipeline monitoring"""        try:
             print("\n🎵 Demonstrating Content Processing Monitoring...")
             
             # Simulate processing different content types
@@ -182,8 +176,7 @@ class IAInfluencerMonitoringIntegration:
             print(f"❌ Error in content processing demonstration: {e}")
     
     async def demonstrate_monetization_monitoring(self) -> None:
-        """Demonstrate monetization performance monitoring"""
-        try:
+        """Demonstrate monetization performance monitoring"""        try:
             print("\n💰 Demonstrating Monetization Monitoring...")
             
             # Simulate revenue events
@@ -248,8 +241,7 @@ class IAInfluencerMonitoringIntegration:
             print(f"❌ Error in monetization demonstration: {e}")
     
     async def demonstrate_ai_insights(self) -> None:
-        """Demonstrate AI-powered insights and recommendations"""
-        try:
+        """Demonstrate AI-powered insights and recommendations"""        try:
             print("\n🤖 Demonstrating AI Insights...")
             
             # Get AI performance predictions
@@ -268,8 +260,7 @@ class IAInfluencerMonitoringIntegration:
             print(f"❌ Error in AI insights demonstration: {e}")
     
     async def demonstrate_real_time_dashboard(self) -> None:
-        """Demonstrate real-time monitoring dashboard data"""
-        try:
+        """Demonstrate real-time monitoring dashboard data"""        try:
             print("\n📊 Real-Time Dashboard Data...")
             
             # Get performance summary
@@ -296,8 +287,7 @@ class IAInfluencerMonitoringIntegration:
             print(f"❌ Error in dashboard demonstration: {e}")
     
     async def run_complete_demonstration(self) -> None:
-        """Run complete demonstration of the IA Influencer Agent monitoring system"""
-        try:
+        """Run complete demonstration of the IA Influencer Agent monitoring system"""        try:
             print("🎬 Starting Complete IA Influencer Agent Monitoring Demonstration")
             print("=" * 80)
             
@@ -324,8 +314,7 @@ class IAInfluencerMonitoringIntegration:
             raise
     
     async def stop_all_monitoring(self) -> None:
-        """Stop all monitoring systems"""
-        try:
+        """Stop all monitoring systems"""        try:
             await self.performance_monitor.stop_monitoring()
             await self.orchestrator.stop_monitoring()
             await self.alert_manager.stop_alert_processing()
@@ -336,8 +325,7 @@ class IAInfluencerMonitoringIntegration:
 
 
 async def main():
-    """Main demonstration function"""
-    # This would normally come from your application settings
+    """Main demonstration function"""    # This would normally come from your application settings
     class MockSettings:
         def __init__(self):
             self.database_url = "postgresql://user:pass@localhost/ia_influencer"

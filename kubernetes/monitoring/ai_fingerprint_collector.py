@@ -1,5 +1,4 @@
-"""
-AI Fingerprinting Metrics Collector for IA Influencer Agent Platform
+"""AI Fingerprinting Metrics Collector for IA Influencer Agent Platform
 ===================================================================
 
 Specialized metrics collection system for AI fingerprinting operations,
@@ -21,7 +20,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
-
 import asyncio
 import time
 import logging
@@ -41,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Types of content fingerprinting"""
-    AUDIO = "audio"
+    """Types of content fingerprinting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -50,8 +47,7 @@ class FingerprintType(Enum):
 
 
 class ModelType(Enum):
-    """AI model types for fingerprinting"""
-    CHROMAPRINT = "chromaprint"
+    """AI model types for fingerprinting"""    CHROMAPRINT = "chromaprint"
     PERCEPTUAL_HASH = "perceptual_hash"
     NEURAL_FINGERPRINT = "neural_fingerprint"
     TRANSFORMER_EMBEDDING = "transformer_embedding"
@@ -60,8 +56,7 @@ class ModelType(Enum):
 
 
 class MetricCategory(Enum):
-    """Categories of fingerprinting metrics"""
-    PERFORMANCE = "performance"
+    """Categories of fingerprinting metrics"""    PERFORMANCE = "performance"
     ACCURACY = "accuracy"
     EFFICIENCY = "efficiency"
     SCALABILITY = "scalability"
@@ -71,8 +66,7 @@ class MetricCategory(Enum):
 
 @dataclass
 class FingerprintMetric:
-    """Individual fingerprinting metric"""
-    name: str
+    """Individual fingerprinting metric"""    name: str
     value: Union[int, float]
     category: MetricCategory
     fingerprint_type: FingerprintType
@@ -86,8 +80,7 @@ class FingerprintMetric:
 
 @dataclass
 class ModelPerformanceMetrics:
-    """Comprehensive model performance metrics"""
-    model_id: str
+    """Comprehensive model performance metrics"""    model_id: str
     model_type: ModelType
     fingerprint_type: FingerprintType
     accuracy: float
@@ -106,8 +99,7 @@ class ModelPerformanceMetrics:
 
 @dataclass
 class ContentProtectionMetrics:
-    """Content protection effectiveness metrics"""
-    protection_id: str
+    """Content protection effectiveness metrics"""    protection_id: str
     content_type: FingerprintType
     detection_accuracy: float
     detection_speed_ms: float
@@ -122,8 +114,7 @@ class ContentProtectionMetrics:
 
 @dataclass
 class FingerpringingBatchMetrics:
-    """Batch processing metrics for fingerprinting operations"""
-    batch_id: str
+    """Batch processing metrics for fingerprinting operations"""    batch_id: str
     batch_size: int
     processing_time_seconds: float
     successful_fingerprints: int
@@ -134,14 +125,12 @@ class FingerpringingBatchMetrics:
 
 
 class AIFingerprintMetricsCollector:
-    """
-    Specialized metrics collector for AI fingerprinting and content protection.
+    """    Specialized metrics collector for AI fingerprinting and content protection.
     
     Provides comprehensive monitoring of AI model performance, fingerprinting
     effectiveness, and content protection metrics with real-time optimization
     recommendations.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -177,8 +166,7 @@ class AIFingerprintMetricsCollector:
         logger.info("AI Fingerprint Metrics Collector initialized")
     
     async def start_collection(self):
-        """Start metrics collection"""
-        if self._running:
+        """Start metrics collection"""        if self._running:
             logger.warning("Metrics collection already running")
             return
         
@@ -187,8 +175,7 @@ class AIFingerprintMetricsCollector:
         logger.info("AI fingerprint metrics collection started")
     
     async def stop_collection(self):
-        """Stop metrics collection"""
-        self._running = False
+        """Stop metrics collection"""        self._running = False
         if self._collection_task:
             self._collection_task.cancel()
             try:
@@ -201,8 +188,7 @@ class AIFingerprintMetricsCollector:
         logger.info("AI fingerprint metrics collection stopped")
     
     async def _collection_loop(self):
-        """Main collection loop"""
-        while self._running:
+        """Main collection loop"""        while self._running:
             try:
                 # Process buffered metrics
                 await self._process_buffered_metrics()
@@ -237,8 +223,7 @@ class AIFingerprintMetricsCollector:
         content_size_bytes: int = 0,
         metadata: Dict[str, Any] = None
     ):
-        """Record a fingerprinting operation"""
-        
+        """Record a fingerprinting operation"""        
         metric = FingerprintMetric(
             name="fingerprint_operation",
             value=1 if success else 0,
@@ -281,8 +266,7 @@ class AIFingerprintMetricsCollector:
             await self._store_realtime_metric(metric)
     
     async def record_model_performance(self, metrics: ModelPerformanceMetrics):
-        """Record AI model performance metrics"""
-        
+        """Record AI model performance metrics"""        
         self._model_metrics[metrics.model_id] = metrics
         
         # Update performance history
@@ -322,8 +306,7 @@ class AIFingerprintMetricsCollector:
         await self._check_model_performance_degradation(metrics)
     
     async def record_content_protection(self, metrics: ContentProtectionMetrics):
-        """Record content protection effectiveness metrics"""
-        
+        """Record content protection effectiveness metrics"""        
         self._protection_metrics[metrics.protection_id] = metrics
         
         # Store in Redis
@@ -345,8 +328,7 @@ class AIFingerprintMetricsCollector:
             )
     
     async def record_batch_processing(self, metrics: FingerpringingBatchMetrics):
-        """Record batch processing metrics"""
-        
+        """Record batch processing metrics"""        
         self._batch_metrics.append(metrics)
         
         # Store in Redis
@@ -369,8 +351,7 @@ class AIFingerprintMetricsCollector:
             await self.redis_client.ltrim("fingerprint_batch_metrics", 0, 999)
     
     async def _store_realtime_metric(self, metric: FingerprintMetric):
-        """Store metric in Redis for real-time access"""
-        try:
+        """Store metric in Redis for real-time access"""        try:
             # Store individual metric
             await self.redis_client.lpush(
                 f"fingerprint_metrics:{metric.fingerprint_type.value}:{metric.model_type.value}",
@@ -401,8 +382,7 @@ class AIFingerprintMetricsCollector:
             logger.error(f"Error storing realtime metric: {e}")
     
     async def _process_buffered_metrics(self):
-        """Process buffered metrics"""
-        if not self._metrics_buffer:
+        """Process buffered metrics"""        if not self._metrics_buffer:
             return
         
         try:
@@ -421,12 +401,10 @@ class AIFingerprintMetricsCollector:
             logger.error(f"Error processing buffered metrics: {e}")
     
     async def _store_metrics_in_database(self, metrics: List[FingerprintMetric]):
-        """Store metrics in database"""
-        try:
+        """Store metrics in database"""        try:
             async with self.db_engine.begin() as conn:
                 for metric in metrics:
-                    await conn.execute(text("""
-                        INSERT INTO fingerprint_metrics 
+                    await conn.execute(text("""                        INSERT INTO fingerprint_metrics 
                         (name, value, category, fingerprint_type, model_type, timestamp, metadata, confidence_score, units)
                         VALUES (:name, :value, :category, :fingerprint_type, :model_type, :timestamp, :metadata, :confidence_score, :units)
                     """), {
@@ -445,8 +423,7 @@ class AIFingerprintMetricsCollector:
             logger.error(f"Error storing metrics in database: {e}")
     
     async def _collect_realtime_metrics(self):
-        """Collect real-time system metrics"""
-        try:
+        """Collect real-time system metrics"""        try:
             # System resource metrics
             import psutil
             
@@ -471,8 +448,7 @@ class AIFingerprintMetricsCollector:
             logger.error(f"Error collecting realtime metrics: {e}")
     
     async def _update_metric_aggregations(self, metrics: List[FingerprintMetric]):
-        """Update metric aggregations"""
-        try:
+        """Update metric aggregations"""        try:
             if not self.redis_client:
                 return
             
@@ -503,8 +479,7 @@ class AIFingerprintMetricsCollector:
             logger.error(f"Error updating metric aggregations: {e}")
     
     async def _check_model_performance_degradation(self, metrics: ModelPerformanceMetrics):
-        """Check for model performance degradation"""
-        try:
+        """Check for model performance degradation"""        try:
             model_id = metrics.model_id
             baseline_key = f"baseline:{model_id}"
             
@@ -544,8 +519,7 @@ class AIFingerprintMetricsCollector:
             logger.error(f"Error checking performance degradation: {e}")
     
     async def _update_performance_baselines(self):
-        """Update performance baselines"""
-        try:
+        """Update performance baselines"""        try:
             for model_id, metrics in self._model_metrics.items():
                 # Update baseline if model is performing well
                 if metrics.accuracy > 0.9 and metrics.error_rate < 0.05:
@@ -560,8 +534,7 @@ class AIFingerprintMetricsCollector:
             logger.error(f"Error updating performance baselines: {e}")
     
     async def _generate_optimization_recommendations(self):
-        """Generate optimization recommendations"""
-        try:
+        """Generate optimization recommendations"""        try:
             recommendations = []
             
             # Check fingerprinting performance
@@ -621,15 +594,13 @@ class AIFingerprintMetricsCollector:
             logger.error(f"Error generating optimization recommendations: {e}")
     
     async def _cleanup_old_metrics(self):
-        """Cleanup old metrics beyond retention period"""
-        try:
+        """Cleanup old metrics beyond retention period"""        try:
             cutoff_date = datetime.utcnow() - timedelta(days=self.retention_days)
             
             # Cleanup database metrics
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    await conn.execute(text("""
-                        DELETE FROM fingerprint_metrics 
+                    await conn.execute(text("""                        DELETE FROM fingerprint_metrics 
                         WHERE timestamp < :cutoff_date
                     """), {"cutoff_date": cutoff_date})
             
@@ -642,20 +613,17 @@ class AIFingerprintMetricsCollector:
             logger.error(f"Error cleaning up old metrics: {e}")
     
     async def _flush_metrics(self):
-        """Flush remaining metrics on shutdown"""
-        if self._metrics_buffer:
+        """Flush remaining metrics on shutdown"""        if self._metrics_buffer:
             await self._process_buffered_metrics()
     
     async def get_fingerprint_stats(self, fingerprint_type: FingerprintType = None) -> Dict[str, Any]:
-        """Get fingerprinting statistics"""
-        if fingerprint_type:
+        """Get fingerprinting statistics"""        if fingerprint_type:
             return self._fingerprint_stats.get(fingerprint_type, {})
         else:
             return dict(self._fingerprint_stats)
     
     async def get_model_performance(self, model_id: str = None) -> Dict[str, Any]:
-        """Get model performance metrics"""
-        if model_id:
+        """Get model performance metrics"""        if model_id:
             metrics = self._model_metrics.get(model_id)
             return metrics.__dict__ if metrics else {}
         else:
@@ -665,12 +633,10 @@ class AIFingerprintMetricsCollector:
             }
     
     async def get_optimization_recommendations(self) -> List[Dict[str, Any]]:
-        """Get current optimization recommendations"""
-        return self._optimization_recommendations.copy()
+        """Get current optimization recommendations"""        return self._optimization_recommendations.copy()
     
     async def get_protection_effectiveness(self) -> Dict[str, Any]:
-        """Get content protection effectiveness summary"""
-        if not self._protection_metrics:
+        """Get content protection effectiveness summary"""        if not self._protection_metrics:
             return {}
         
         total_accuracy = sum(m.detection_accuracy for m in self._protection_metrics.values())
@@ -692,8 +658,7 @@ class AIFingerprintMetricsCollector:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for the metrics collector"""
-        return {
+        """Health check for the metrics collector"""        return {
             "healthy": self._running,
             "buffered_metrics": len(self._metrics_buffer),
             "tracked_models": len(self._model_metrics),

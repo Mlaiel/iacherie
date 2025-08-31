@@ -1,5 +1,4 @@
-"""
-Audience Engagement Events Module
+"""Audience Engagement Events Module
 
 Advanced audience engagement tracking and analysis for multi-format content creators.
 Provides real-time engagement monitoring, audience segmentation, and interaction prediction.
@@ -13,7 +12,6 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import json
 import numpy as np
@@ -41,8 +39,7 @@ logger = get_logger(__name__)
 
 
 class EngagementType(Enum):
-    """Types of audience engagement"""
-    LIKE = "like"
+    """Types of audience engagement"""    LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
     SAVE = "save"
@@ -57,8 +54,7 @@ class EngagementType(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platforms for engagement tracking"""
-    SPOTIFY = "spotify"
+    """Supported platforms for engagement tracking"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -72,8 +68,7 @@ class PlatformType(Enum):
 
 @dataclass
 class EngagementEvent(BaseEvent):
-    """Represents an audience engagement event"""
-    user_id: str
+    """Represents an audience engagement event"""    user_id: str
     creator_id: str
     content_id: str
     platform: PlatformType
@@ -89,8 +84,7 @@ class EngagementEvent(BaseEvent):
     campaign_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert engagement event to dictionary"""
-        return {
+        """Convert engagement event to dictionary"""        return {
             **asdict(self),
             'platform': self.platform.value,
             'engagement_type': self.engagement_type.value,
@@ -100,8 +94,7 @@ class EngagementEvent(BaseEvent):
 
 @dataclass
 class AudienceSegment:
-    """Represents an audience segment"""
-    segment_id: str
+    """Represents an audience segment"""    segment_id: str
     segment_name: str
     criteria: Dict[str, Any]
     size: int
@@ -114,8 +107,7 @@ class AudienceSegment:
 
 
 class AudienceEngagementEventHandler(BaseEventHandler):
-    """Handles audience engagement events with advanced processing"""
-    
+    """Handles audience engagement events with advanced processing"""    
     def __init__(self):
         super().__init__()
         self.cache_manager = CacheManager()
@@ -126,8 +118,7 @@ class AudienceEngagementEventHandler(BaseEventHandler):
         self.prediction_engine = EngagementPredictionEngine()
         
     async def handle(self, event: EngagementEvent) -> Dict[str, Any]:
-        """Process engagement event with comprehensive analysis"""
-        try:
+        """Process engagement event with comprehensive analysis"""        try:
             # Validate event data
             await self._validate_event(event)
             
@@ -172,8 +163,7 @@ class AudienceEngagementEventHandler(BaseEventHandler):
             raise
     
     async def _validate_event(self, event: EngagementEvent) -> None:
-        """Validate engagement event data"""
-        required_fields = ['user_id', 'creator_id', 'content_id', 'platform', 'engagement_type']
+        """Validate engagement event data"""        required_fields = ['user_id', 'creator_id', 'content_id', 'platform', 'engagement_type']
         for field in required_fields:
             if not getattr(event, field):
                 raise ValueError(f"Missing required field: {field}")
@@ -186,11 +176,9 @@ class AudienceEngagementEventHandler(BaseEventHandler):
             raise ValueError(f"Invalid engagement type: {event.engagement_type}")
     
     async def _store_engagement_data(self, event: EngagementEvent) -> None:
-        """Store engagement data in database"""
-        async with self.db_manager.get_session() as session:
+        """Store engagement data in database"""        async with self.db_manager.get_session() as session:
             await session.execute(
-                """
-                INSERT INTO engagement_events 
+                """                INSERT INTO engagement_events 
                 (event_id, user_id, creator_id, content_id, platform, engagement_type, 
                  engagement_value, timestamp, user_demographics, content_metadata, 
                  session_context, device_info, location_data, referrer_source, campaign_id)
@@ -207,8 +195,7 @@ class AudienceEngagementEventHandler(BaseEventHandler):
             )
     
     async def _calculate_engagement_quality(self, event: EngagementEvent) -> float:
-        """Calculate engagement quality score based on multiple factors"""
-        base_score = self._get_base_engagement_score(event.engagement_type)
+        """Calculate engagement quality score based on multiple factors"""        base_score = self._get_base_engagement_score(event.engagement_type)
         
         # Context multipliers
         time_multiplier = self._calculate_time_multiplier(event.timestamp)
@@ -224,8 +211,7 @@ class AudienceEngagementEventHandler(BaseEventHandler):
         return min(quality_score, 100.0)  # Cap at 100
     
     def _get_base_engagement_score(self, engagement_type: EngagementType) -> float:
-        """Get base score for engagement type"""
-        scores = {
+        """Get base score for engagement type"""        scores = {
             EngagementType.VIEW: 1.0,
             EngagementType.LIKE: 2.0,
             EngagementType.COMMENT: 5.0,
@@ -240,8 +226,7 @@ class AudienceEngagementEventHandler(BaseEventHandler):
         return scores.get(engagement_type, 1.0)
     
     async def _check_engagement_alerts(self, event: EngagementEvent, metrics: Dict[str, Any]) -> None:
-        """Check if engagement alerts should be triggered"""
-        # Viral content detection
+        """Check if engagement alerts should be triggered"""        # Viral content detection
         if metrics.get('engagement_rate', 0) > 0.15:  # 15% engagement rate
             await self._trigger_viral_alert(event, metrics)
         
@@ -255,16 +240,14 @@ class AudienceEngagementEventHandler(BaseEventHandler):
 
 
 class AudienceEngagementTracker:
-    """Tracks and calculates audience engagement metrics"""
-    
+    """Tracks and calculates audience engagement metrics"""    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
         self.metrics_calculator = MetricsCalculator()
     
     async def track_engagement(self, event: EngagementEvent) -> Dict[str, Any]:
-        """Track comprehensive engagement metrics"""
-        # Calculate real-time engagement rate
+        """Track comprehensive engagement metrics"""        # Calculate real-time engagement rate
         engagement_rate = await self._calculate_engagement_rate(event)
         
         # Calculate reach and impressions
@@ -293,8 +276,7 @@ class AudienceEngagementTracker:
         }
     
     async def _calculate_engagement_rate(self, event: EngagementEvent) -> Dict[str, float]:
-        """Calculate various engagement rates"""
-        # Get content views in last 24 hours
+        """Calculate various engagement rates"""        # Get content views in last 24 hours
         views = await self._get_content_views(event.content_id, hours=24)
         engagements = await self._get_content_engagements(event.content_id, hours=24)
         
@@ -307,16 +289,14 @@ class AudienceEngagementTracker:
 
 
 class AudienceInteractionAnalyzer:
-    """Analyzes audience interaction patterns and behavior"""
-    
+    """Analyzes audience interaction patterns and behavior"""    
     def __init__(self):
         self.sentiment_analyzer = SentimentAnalyzer()
         self.nlp_pipeline = pipeline("text-classification", 
                                    model="cardiffnlp/twitter-roberta-base-sentiment-latest")
     
     async def analyze_interaction(self, event: EngagementEvent) -> Dict[str, Any]:
-        """Analyze interaction patterns and extract insights"""
-        # Analyze user journey
+        """Analyze interaction patterns and extract insights"""        # Analyze user journey
         user_journey = await self._analyze_user_journey(event.user_id)
         
         # Analyze interaction timing patterns
@@ -344,16 +324,14 @@ class AudienceInteractionAnalyzer:
 
 
 class AudienceSegmentationEngine:
-    """Advanced audience segmentation using ML algorithms"""
-    
+    """Advanced audience segmentation using ML algorithms"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.scaler = StandardScaler()
         self.kmeans = KMeans(n_clusters=8, random_state=42)
         
     async def update_segments(self, event: EngagementEvent) -> Dict[str, Any]:
-        """Update audience segments based on new engagement data"""
-        # Get user engagement history
+        """Update audience segments based on new engagement data"""        # Get user engagement history
         user_history = await self._get_user_engagement_history(event.user_id)
         
         # Update user feature vector
@@ -377,8 +355,7 @@ class AudienceSegmentationEngine:
         }
     
     async def _calculate_user_features(self, user_id: str, history: List[Dict]) -> np.ndarray:
-        """Calculate user feature vector for segmentation"""
-        if not history:
+        """Calculate user feature vector for segmentation"""        if not history:
             return np.zeros(20)  # Default feature vector
         
         features = []
@@ -402,15 +379,13 @@ class AudienceSegmentationEngine:
 
 
 class EngagementPredictionEngine:
-    """Predicts future engagement using advanced ML models"""
-    
+    """Predicts future engagement using advanced ML models"""    
     def __init__(self):
         self.engagement_predictor = EngagementPredictor()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         
     async def predict_future_engagement(self, event: EngagementEvent) -> Dict[str, Any]:
-        """Predict future engagement patterns"""
-        # Get user engagement history
+        """Predict future engagement patterns"""        # Get user engagement history
         user_history = await self._get_user_engagement_sequence(event.user_id)
         
         # Get content performance history
@@ -443,8 +418,7 @@ class EngagementPredictionEngine:
     
     async def _predict_next_engagement(self, user_history: List[Dict], 
                                      content_history: List[Dict]) -> float:
-        """Predict probability of next engagement"""
-        try:
+        """Predict probability of next engagement"""        try:
             # Prepare input features
             user_features = self._prepare_user_features(user_history)
             content_features = self._prepare_content_features(content_history)

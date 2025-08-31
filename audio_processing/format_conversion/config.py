@@ -1,5 +1,4 @@
-"""
-Configuration - Professional Audio Format Conversion Configuration
+"""Configuration - Professional Audio Format Conversion Configuration
 
 Centralized configuration management for audio format conversion operations.
 Provides format-specific settings, quality presets, and system configuration.
@@ -7,7 +6,6 @@ Provides format-specific settings, quality presets, and system configuration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import os
 from pathlib import Path
 from typing import Dict, List, Optional, Any, Union
@@ -21,16 +19,14 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingMode(Enum):
-    """Processing mode for audio conversion"""
-    SINGLE_THREADED = "single"
+    """Processing mode for audio conversion"""    SINGLE_THREADED = "single"
     MULTI_THREADED = "multi"
     PARALLEL_BATCH = "batch"
     REAL_TIME = "realtime"
 
 
 class CompressionMode(Enum):
-    """Compression mode for lossy formats"""
-    CBR = "constant_bitrate"      # Constant Bitrate
+    """Compression mode for lossy formats"""    CBR = "constant_bitrate"      # Constant Bitrate
     VBR = "variable_bitrate"      # Variable Bitrate
     ABR = "average_bitrate"       # Average Bitrate
     CVBR = "constrained_variable" # Constrained Variable Bitrate
@@ -38,13 +34,11 @@ class CompressionMode(Enum):
 
 @dataclass
 class FormatProfile:
-    """
-    Format-specific configuration profile
+    """    Format-specific configuration profile
     
     Contains all settings and constraints for a specific audio format
     including quality presets, technical limitations, and optimization parameters.
-    """
-    format: AudioFormat
+    """    format: AudioFormat
     supported_sample_rates: List[int]
     supported_channels: List[int]
     supported_bit_depths: List[int]
@@ -59,13 +53,11 @@ class FormatProfile:
     format_specific_options: Dict[str, Any] = field(default_factory=dict)
     
     def get_quality_preset(self, quality: QualityLevel) -> Dict[str, Any]:
-        """Get quality preset for specified level"""
-        return self.quality_presets.get(quality, {})
+        """Get quality preset for specified level"""        return self.quality_presets.get(quality, {})
     
     def validate_parameters(self, sample_rate: int, channels: int, 
                           bit_depth: Optional[int] = None) -> List[str]:
-        """Validate format parameters and return issues"""
-        issues = []
+        """Validate format parameters and return issues"""        issues = []
         
         if sample_rate not in self.supported_sample_rates:
             issues.append(f"Sample rate {sample_rate} not supported for {self.format.value}")
@@ -81,12 +73,10 @@ class FormatProfile:
 
 @dataclass
 class QualityPreset:
-    """
-    Quality preset configuration
+    """    Quality preset configuration
     
     Defines parameter sets for different quality levels across all formats.
-    """
-    name: str
+    """    name: str
     description: str
     target_quality: float  # 0.0-1.0
     bitrate_multiplier: float
@@ -96,13 +86,11 @@ class QualityPreset:
 
 @dataclass
 class ConversionConfig:
-    """
-    Main conversion configuration
+    """    Main conversion configuration
     
     Central configuration object containing all settings for audio format conversion
     operations including format profiles, quality presets, and system parameters.
-    """
-    # Temporary file settings
+    """    # Temporary file settings
     temp_directory: Optional[Path] = None
     clean_temp_files: bool = True
     temp_file_prefix: str = "audioconv_"
@@ -139,8 +127,7 @@ class ConversionConfig:
     quality_presets: Dict[str, QualityPreset] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Initialize configuration after creation"""
-        if not self.temp_directory:
+        """Initialize configuration after creation"""        if not self.temp_directory:
             self.temp_directory = Path.cwd() / "temp"
         
         if not self.format_profiles:
@@ -150,8 +137,7 @@ class ConversionConfig:
             self._initialize_quality_presets()
     
     def _initialize_format_profiles(self):
-        """Initialize default format profiles"""
-        
+        """Initialize default format profiles"""        
         # WAV Profile (Uncompressed PCM)
         self.format_profiles[AudioFormat.WAV] = FormatProfile(
             format=AudioFormat.WAV,
@@ -320,8 +306,7 @@ class ConversionConfig:
         )
     
     def _initialize_quality_presets(self):
-        """Initialize quality presets"""
-        
+        """Initialize quality presets"""        
         self.quality_presets["audiophile"] = QualityPreset(
             name="Audiophile",
             description="Maximum quality for critical listening",
@@ -406,16 +391,13 @@ class ConversionConfig:
         )
     
     def get_format_profile(self, format: AudioFormat) -> Optional[FormatProfile]:
-        """Get format profile for specified format"""
-        return self.format_profiles.get(format)
+        """Get format profile for specified format"""        return self.format_profiles.get(format)
     
     def get_quality_preset(self, preset_name: str) -> Optional[QualityPreset]:
-        """Get quality preset by name"""
-        return self.quality_presets.get(preset_name)
+        """Get quality preset by name"""        return self.quality_presets.get(preset_name)
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return issues"""
-        issues = []
+        """Validate configuration and return issues"""        issues = []
         
         # Validate temp directory
         if self.temp_directory and not self.temp_directory.parent.exists():
@@ -441,8 +423,7 @@ class ConversionConfig:
         return issues
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        return {
+        """Convert configuration to dictionary"""        return {
             'temp_directory': str(self.temp_directory) if self.temp_directory else None,
             'clean_temp_files': self.clean_temp_files,
             'processing_mode': self.processing_mode.value,
@@ -464,8 +445,7 @@ class ConversionConfig:
     
     @classmethod
     def from_environment(cls) -> 'ConversionConfig':
-        """Create configuration from environment variables"""
-        config = cls()
+        """Create configuration from environment variables"""        config = cls()
         
         # Override with environment variables
         if temp_dir := os.getenv('AUDIO_CONV_TEMP_DIR'):

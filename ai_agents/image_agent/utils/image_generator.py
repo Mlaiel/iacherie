@@ -1,5 +1,4 @@
-"""
-AI Image Generator - Advanced Image Generation & Synthesis System
+"""AI Image Generator - Advanced Image Generation & Synthesis System
 
 Industrial-grade AI-powered image generation, style transfer, and creative synthesis
 system for visual content creators and digital artists.
@@ -12,7 +11,6 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import time
@@ -55,8 +53,7 @@ logger = logging.getLogger(__name__)
 
 
 class GenerationModel(Enum):
-    """Available AI generation models"""
-    STABLE_DIFFUSION_V1_5 = "stable_diffusion_v1_5"
+    """Available AI generation models"""    STABLE_DIFFUSION_V1_5 = "stable_diffusion_v1_5"
     STABLE_DIFFUSION_V2_1 = "stable_diffusion_v2_1" 
     STABLE_DIFFUSION_XL = "stable_diffusion_xl"
     DALL_E_MINI = "dalle_mini"
@@ -65,8 +62,7 @@ class GenerationModel(Enum):
 
 
 class StyleTransferModel(Enum):
-    """Style transfer model types"""
-    NEURAL_STYLE_TRANSFER = "neural_style_transfer"
+    """Style transfer model types"""    NEURAL_STYLE_TRANSFER = "neural_style_transfer"
     FAST_NEURAL_STYLE = "fast_neural_style"
     CYCLEGAN = "cyclegan"
     STYLEGAN = "stylegan"
@@ -74,8 +70,7 @@ class StyleTransferModel(Enum):
 
 
 class GenerationType(Enum):
-    """Types of image generation"""
-    TEXT_TO_IMAGE = "text_to_image"
+    """Types of image generation"""    TEXT_TO_IMAGE = "text_to_image"
     IMAGE_TO_IMAGE = "image_to_image"
     STYLE_TRANSFER = "style_transfer"
     INPAINTING = "inpainting"
@@ -86,8 +81,7 @@ class GenerationType(Enum):
 
 
 class QualityPreset(Enum):
-    """Generation quality presets"""
-    DRAFT = "draft"
+    """Generation quality presets"""    DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
     PROFESSIONAL = "professional"
@@ -96,8 +90,7 @@ class QualityPreset(Enum):
 
 @dataclass
 class GenerationParams:
-    """AI generation parameters"""
-    model: GenerationModel = GenerationModel.STABLE_DIFFUSION_V2_1
+    """AI generation parameters"""    model: GenerationModel = GenerationModel.STABLE_DIFFUSION_V2_1
     quality_preset: QualityPreset = QualityPreset.STANDARD
     width: int = 512
     height: int = 512
@@ -115,8 +108,7 @@ class GenerationParams:
 
 @dataclass
 class StyleTransferParams:
-    """Style transfer parameters"""
-    model: StyleTransferModel = StyleTransferModel.NEURAL_STYLE_TRANSFER
+    """Style transfer parameters"""    model: StyleTransferModel = StyleTransferModel.NEURAL_STYLE_TRANSFER
     style_strength: float = 1.0
     content_strength: float = 1.0
     preserve_original_colors: bool = False
@@ -128,8 +120,7 @@ class StyleTransferParams:
 
 @dataclass
 class GenerationResult:
-    """AI generation result"""
-    success: bool
+    """AI generation result"""    success: bool
     generation_time: float
     generated_images: List[Image.Image] = field(default_factory=list)
     generation_params: Optional[GenerationParams] = None
@@ -142,8 +133,7 @@ class GenerationResult:
 
 
 class AIImageGenerator:
-    """
-    Advanced AI Image Generation Engine
+    """    Advanced AI Image Generation Engine
     
     Provides comprehensive AI-powered image generation capabilities including:
     - Text-to-image generation using state-of-the-art models
@@ -151,8 +141,7 @@ class AIImageGenerator:
     - Creative synthesis and artistic generation  
     - Style transfer and artistic effects
     - Super-resolution and image enhancement
-    """
-    
+    """    
     def __init__(
         self,
         enable_gpu: bool = True,
@@ -160,16 +149,14 @@ class AIImageGenerator:
         safety_filtering: bool = True,
         creative_mode: bool = True
     ):
-        """
-        Initialize AI Image Generator
+        """        Initialize AI Image Generator
         
         Args:
             enable_gpu: Enable GPU acceleration for generation
             model_cache_size: Number of models to keep cached
             safety_filtering: Enable content safety filtering
             creative_mode: Enable advanced creative features
-        """
-        self.enable_gpu = enable_gpu and torch.cuda.is_available()
+        """        self.enable_gpu = enable_gpu and torch.cuda.is_available()
         self.model_cache_size = model_cache_size
         self.safety_filtering = safety_filtering
         self.creative_mode = creative_mode
@@ -212,8 +199,7 @@ class AIImageGenerator:
         params: Optional[GenerationParams] = None,
         save_path: Optional[Union[str, Path]] = None
     ) -> GenerationResult:
-        """
-        Generate image from text prompt using AI models
+        """        Generate image from text prompt using AI models
         
         Args:
             prompt: Text description of desired image
@@ -223,8 +209,7 @@ class AIImageGenerator:
             
         Returns:
             GenerationResult with generated images and metadata
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         generation_id = f"txt2img_{uuid.uuid4().hex[:8]}"
         
         try:
@@ -350,8 +335,7 @@ class AIImageGenerator:
         params: Optional[GenerationParams] = None,
         save_path: Optional[Union[str, Path]] = None
     ) -> GenerationResult:
-        """
-        Generate image variations based on source image and prompt
+        """        Generate image variations based on source image and prompt
         
         Args:
             source_image: Source image for transformation
@@ -362,8 +346,7 @@ class AIImageGenerator:
             
         Returns:
             GenerationResult with generated images and metadata
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         generation_id = f"img2img_{uuid.uuid4().hex[:8]}"
         
         try:
@@ -499,8 +482,7 @@ class AIImageGenerator:
             )
 
     async def _load_model(self, model_type: GenerationModel) -> Any:
-        """Load and cache AI generation model"""
-        try:
+        """Load and cache AI generation model"""        try:
             model_key = model_type.value
             
             # Return cached model if available
@@ -552,8 +534,7 @@ class AIImageGenerator:
             raise ProcessingError(f"Failed to load model {model_type.value}: {str(e)}")
 
     async def _load_img2img_model(self, model_type: GenerationModel) -> Any:
-        """Load image-to-image generation model"""
-        try:
+        """Load image-to-image generation model"""        try:
             model_key = f"{model_type.value}_img2img"
             
             if model_key in self.loaded_models:
@@ -589,8 +570,7 @@ class AIImageGenerator:
             raise ProcessingError(f"Failed to load img2img model: {str(e)}")
 
     def _get_model_id(self, model_type: GenerationModel) -> str:
-        """Get HuggingFace model ID for given model type"""
-        model_ids = {
+        """Get HuggingFace model ID for given model type"""        model_ids = {
             GenerationModel.STABLE_DIFFUSION_V1_5: "runwayml/stable-diffusion-v1-5",
             GenerationModel.STABLE_DIFFUSION_V2_1: "stabilityai/stable-diffusion-2-1",
             GenerationModel.STABLE_DIFFUSION_XL: "stabilityai/stable-diffusion-xl-base-1.0",
@@ -599,8 +579,7 @@ class AIImageGenerator:
         return model_ids.get(model_type, "stabilityai/stable-diffusion-2-1")
 
     async def _enhance_prompt(self, prompt: str) -> str:
-        """Enhance prompt for better generation results"""
-        try:
+        """Enhance prompt for better generation results"""        try:
             # Basic prompt enhancement rules
             enhanced = prompt.strip()
             
@@ -633,8 +612,7 @@ class AIImageGenerator:
         prompt: str, 
         negative_prompt: str
     ) -> Dict[str, Any]:
-        """Prepare keyword arguments for generation"""
-        kwargs = {
+        """Prepare keyword arguments for generation"""        kwargs = {
             "prompt": prompt,
             "negative_prompt": negative_prompt,
             "height": params.height,
@@ -651,8 +629,7 @@ class AIImageGenerator:
         return kwargs
 
     def _tensor_to_pil(self, tensor: torch.Tensor) -> Image.Image:
-        """Convert PyTorch tensor to PIL Image"""
-        try:
+        """Convert PyTorch tensor to PIL Image"""        try:
             # Denormalize tensor (assuming range [-1, 1])
             tensor = (tensor + 1.0) / 2.0
             tensor = torch.clamp(tensor, 0.0, 1.0)
@@ -679,8 +656,7 @@ class AIImageGenerator:
         prompt: str,
         source_image: Optional[Image.Image] = None
     ) -> float:
-        """Assess quality of generated image"""
-        try:
+        """Assess quality of generated image"""        try:
             quality_score = 0.0
             
             # Technical quality assessment
@@ -739,8 +715,7 @@ class AIImageGenerator:
         base_path: Union[str, Path],
         generation_id: str
     ) -> None:
-        """Save generated images to specified path"""
-        try:
+        """Save generated images to specified path"""        try:
             base_path = Path(base_path)
             base_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -774,8 +749,7 @@ class AIImageGenerator:
         quality_score: float, 
         success: bool
     ) -> None:
-        """Update generation statistics"""
-        self.generation_stats["total_generations"] += 1
+        """Update generation statistics"""        self.generation_stats["total_generations"] += 1
         
         if success:
             self.generation_stats["successful_generations"] += 1
@@ -800,8 +774,7 @@ class AIImageGenerator:
             self.generation_stats["quality_distribution"][quality_range] += 1
 
     async def get_generation_stats(self) -> Dict[str, Any]:
-        """Get comprehensive generation statistics"""
-        try:
+        """Get comprehensive generation statistics"""        try:
             stats = self.generation_stats.copy()
             
             # Add success rate
@@ -825,8 +798,7 @@ class AIImageGenerator:
             return {"error": str(e)}
 
     async def clear_model_cache(self) -> None:
-        """Clear all cached models to free memory"""
-        try:
+        """Clear all cached models to free memory"""        try:
             self.loaded_models.clear()
             if torch.cuda.is_available():
                 torch.cuda.empty_cache()
@@ -838,16 +810,13 @@ class AIImageGenerator:
 
 
 class ImageSynthesizer:
-    """
-    Advanced Image Synthesis and Style Transfer System
+    """    Advanced Image Synthesis and Style Transfer System
     
     Specialized in artistic image transformation, neural style transfer,
     and creative image synthesis techniques.
-    """
-    
+    """    
     def __init__(self, enable_gpu: bool = True):
-        """Initialize Image Synthesizer"""
-        self.enable_gpu = enable_gpu and torch.cuda.is_available()
+        """Initialize Image Synthesizer"""        self.enable_gpu = enable_gpu and torch.cuda.is_available()
         self.device = torch.device("cuda" if self.enable_gpu else "cpu")
         
         # Style transfer models cache
@@ -862,8 +831,7 @@ class ImageSynthesizer:
         params: Optional[StyleTransferParams] = None,
         save_path: Optional[Union[str, Path]] = None
     ) -> GenerationResult:
-        """
-        Perform neural style transfer between content and style images
+        """        Perform neural style transfer between content and style images
         
         Args:
             content_image: Source content image
@@ -873,8 +841,7 @@ class ImageSynthesizer:
             
         Returns:
             GenerationResult with stylized image
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             params = params or StyleTransferParams()
@@ -919,8 +886,7 @@ class ImageSynthesizer:
             )
 
     async def _load_image_for_style_transfer(self, image_input: Union[str, Path, Image.Image]) -> Image.Image:
-        """Load and prepare image for style transfer"""
-        if isinstance(image_input, (str, Path)):
+        """Load and prepare image for style transfer"""        if isinstance(image_input, (str, Path)):
             image = Image.open(image_input)
         else:
             image = image_input.copy()
@@ -944,8 +910,7 @@ class ImageSynthesizer:
         style_image: Image.Image, 
         params: StyleTransferParams
     ) -> Image.Image:
-        """Perform high-quality neural style transfer (slower but better quality)"""
-        try:
+        """Perform high-quality neural style transfer (slower but better quality)"""        try:
             # This is a simplified implementation
             # In practice, this would use VGG19 or similar pre-trained networks
             # for feature extraction and optimization
@@ -1004,14 +969,12 @@ class ImageSynthesizer:
         style_image: Image.Image, 
         params: StyleTransferParams
     ) -> Image.Image:
-        """Fast neural style transfer using pre-trained models"""
-        # Placeholder for fast style transfer implementation
+        """Fast neural style transfer using pre-trained models"""        # Placeholder for fast style transfer implementation
         # This would use pre-trained fast neural style models
         return await self._neural_style_transfer_slow(content_image, style_image, params)
 
     async def _save_stylized_image(self, image: Image.Image, save_path: Union[str, Path]) -> None:
-        """Save stylized image"""
-        save_path = Path(save_path)
+        """Save stylized image"""        save_path = Path(save_path)
         save_path.parent.mkdir(parents=True, exist_ok=True)
         
         if save_path.suffix.lower() in ['.jpg', '.jpeg']:
@@ -1029,8 +992,7 @@ class ImageSynthesizer:
         num_variations: int = 3,
         creativity_level: float = 0.7
     ) -> List[Image.Image]:
-        """Create artistic variations of source image"""
-        try:
+        """Create artistic variations of source image"""        try:
             # Load source image
             if isinstance(source_image, (str, Path)):
                 source = Image.open(source_image)
@@ -1060,8 +1022,7 @@ class ImageSynthesizer:
             return [source_image] if isinstance(source_image, Image.Image) else [Image.open(source_image)]
 
     async def _apply_oil_painting_effect(self, image: Image.Image, intensity: float) -> Image.Image:
-        """Apply oil painting artistic effect"""
-        # Convert to numpy for processing
+        """Apply oil painting artistic effect"""        # Convert to numpy for processing
         img_array = np.array(image)
         
         # Apply multiple bilateral filters for oil painting effect
@@ -1079,8 +1040,7 @@ class ImageSynthesizer:
         return result
 
     async def _apply_watercolor_effect(self, image: Image.Image, intensity: float) -> Image.Image:
-        """Apply watercolor artistic effect"""
-        img_array = np.array(image)
+        """Apply watercolor artistic effect"""        img_array = np.array(image)
         
         # Edge-preserving smoothing
         filtered = cv2.edgePreservingFilter(img_array, flags=1, sigma_s=50, sigma_r=0.4)
@@ -1099,8 +1059,7 @@ class ImageSynthesizer:
         return Image.fromarray(result)
 
     async def _apply_abstract_effect(self, image: Image.Image, intensity: float) -> Image.Image:
-        """Apply abstract artistic effect"""
-        img_array = np.array(image)
+        """Apply abstract artistic effect"""        img_array = np.array(image)
         
         # Quantize colors for abstract look
         data = img_array.reshape((-1, 3))

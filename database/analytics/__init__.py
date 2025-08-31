@@ -22,8 +22,7 @@ Specialties of Project Team:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-# Import all analytics modules
+"""# Import all analytics modules
 from .performance_tracker import (
     PerformanceTracker, 
     MetricsCollector,

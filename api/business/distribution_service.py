@@ -1,5 +1,4 @@
-"""
-Distribution business service for IA Influencer Agent platform.
+"""Distribution business service for IA Influencer Agent platform.
 
 This service handles multi-platform content distribution, scheduling,
 and cross-platform synchronization for maximum reach and engagement.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -42,8 +40,7 @@ from ..utils.analytics_tracker import AnalyticsTracker
 logger = logging.getLogger(__name__)
 
 class DistributionStatus(Enum):
-    """Distribution status enumeration."""
-    PENDING = "pending"
+    """Distribution status enumeration."""    PENDING = "pending"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
@@ -52,8 +49,7 @@ class DistributionStatus(Enum):
     DRAFT = "draft"
 
 class PlatformType(Enum):
-    """Supported platform types."""
-    YOUTUBE = "youtube"
+    """Supported platform types."""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -65,8 +61,7 @@ class PlatformType(Enum):
     PINTEREST = "pinterest"
 
 class ContentAdaptationType(Enum):
-    """Content adaptation types for different platforms."""
-    FORMAT_CONVERSION = "format_conversion"
+    """Content adaptation types for different platforms."""    FORMAT_CONVERSION = "format_conversion"
     RESOLUTION_OPTIMIZATION = "resolution_optimization"
     DURATION_ADJUSTMENT = "duration_adjustment"
     ASPECT_RATIO_CHANGE = "aspect_ratio_change"
@@ -76,8 +71,7 @@ class ContentAdaptationType(Enum):
 
 @dataclass
 class DistributionTarget:
-    """Distribution target configuration."""
-    platform: PlatformType
+    """Distribution target configuration."""    platform: PlatformType
     account_id: str
     publish_time: datetime
     adaptation_settings: Dict[str, Any]
@@ -86,8 +80,7 @@ class DistributionTarget:
 
 @dataclass
 class DistributionResult:
-    """Distribution operation result."""
-    platform: PlatformType
+    """Distribution operation result."""    platform: PlatformType
     status: DistributionStatus
     platform_post_id: Optional[str]
     published_url: Optional[str]
@@ -97,21 +90,18 @@ class DistributionResult:
 
 @dataclass
 class CrossPlatformStrategy:
-    """Cross-platform distribution strategy."""
-    primary_platform: PlatformType
+    """Cross-platform distribution strategy."""    primary_platform: PlatformType
     secondary_platforms: List[PlatformType]
     staggered_release: bool = True
     time_intervals: Dict[PlatformType, int] = None  # minutes between releases
     content_variations: Dict[PlatformType, Dict[str, Any]] = None
 
 class DistributionService:
-    """
-    Comprehensive multi-platform content distribution service.
+    """    Comprehensive multi-platform content distribution service.
     
     Handles intelligent content distribution across social media platforms,
     streaming services, and content networks with optimal timing and formatting.
-    """
-    
+    """    
     def __init__(self):
         self.platform_distributors = {
             PlatformType.YOUTUBE: YouTubeDistributor(),
@@ -136,8 +126,7 @@ class DistributionService:
         strategy: Optional[CrossPlatformStrategy] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Create comprehensive distribution plan for content.
+        """        Create comprehensive distribution plan for content.
         
         Args:
             content_id: Content identifier
@@ -147,8 +136,7 @@ class DistributionService:
             
         Returns:
             Distribution plan with scheduling and optimization details
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -208,8 +196,7 @@ class DistributionService:
         dry_run: bool = False,
         db: Session = None
     ) -> Dict[str, List[DistributionResult]]:
-        """
-        Execute distribution plan across all target platforms.
+        """        Execute distribution plan across all target platforms.
         
         Args:
             plan_id: Distribution plan identifier
@@ -218,8 +205,7 @@ class DistributionService:
             
         Returns:
             Distribution results for all platforms
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -289,8 +275,7 @@ class DistributionService:
         duration: timedelta,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Schedule recurring content distribution.
+        """        Schedule recurring content distribution.
         
         Args:
             content_template_id: Template for content generation
@@ -301,8 +286,7 @@ class DistributionService:
             
         Returns:
             Recurring distribution configuration
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -362,8 +346,7 @@ class DistributionService:
         target_audience: Dict[str, Any],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Optimize posting times across platforms based on audience behavior.
+        """        Optimize posting times across platforms based on audience behavior.
         
         Args:
             user_id: User identifier
@@ -374,8 +357,7 @@ class DistributionService:
             
         Returns:
             Optimized timing recommendations
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -440,8 +422,7 @@ class DistributionService:
         time_period: int = 7,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Track and analyze distribution performance across platforms.
+        """        Track and analyze distribution performance across platforms.
         
         Args:
             plan_id: Distribution plan identifier
@@ -450,8 +431,7 @@ class DistributionService:
             
         Returns:
             Comprehensive distribution performance analytics
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -532,8 +512,7 @@ class DistributionService:
         sync_settings: Dict[str, Any],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Synchronize content updates and interactions across platforms.
+        """        Synchronize content updates and interactions across platforms.
         
         Args:
             content_id: Content identifier
@@ -543,8 +522,7 @@ class DistributionService:
             
         Returns:
             Synchronization results and status
-        """
-        if db is None:
+        """        if db is None:
             db = next(get_db())
         
         try:
@@ -629,8 +607,7 @@ class DistributionService:
         content: Content,
         targets: List[DistributionTarget]
     ) -> Dict[str, Any]:
-        """Analyze content suitability for different platforms."""
-        suitability_analysis = {}
+        """Analyze content suitability for different platforms."""        suitability_analysis = {}
         
         for target in targets:
             platform = target.platform
@@ -674,8 +651,7 @@ class DistributionService:
         targets: List[DistributionTarget],
         strategy: Optional[CrossPlatformStrategy]
     ) -> List[Dict[str, Any]]:
-        """Optimize publishing schedule for maximum engagement."""
-        optimized_schedule = []
+        """Optimize publishing schedule for maximum engagement."""        optimized_schedule = []
         
         if strategy and strategy.staggered_release:
             # Implement staggered release strategy

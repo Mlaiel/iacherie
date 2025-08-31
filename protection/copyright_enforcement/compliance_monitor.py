@@ -1,5 +1,4 @@
-"""
-Compliance Monitor and Policy Enforcement System
+"""Compliance Monitor and Policy Enforcement System
 
 Advanced compliance monitoring, policy enforcement automation,
 and regulatory audit tracking for copyright enforcement operations.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(str, Enum):
-    """Supported compliance frameworks"""
-    DMCA = "dmca"
+    """Supported compliance frameworks"""    DMCA = "dmca"
     GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
@@ -44,8 +41,7 @@ class ComplianceFramework(str, Enum):
 
 
 class ComplianceStatus(str, Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
@@ -54,8 +50,7 @@ class ComplianceStatus(str, Enum):
 
 
 class AuditLevel(str, Enum):
-    """Audit logging levels"""
-    INFO = "info"
+    """Audit logging levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -63,8 +58,7 @@ class AuditLevel(str, Enum):
 
 
 class PolicySeverity(str, Enum):
-    """Policy violation severity"""
-    LOW = "low"
+    """Policy violation severity"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -73,8 +67,7 @@ class PolicySeverity(str, Enum):
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule definition"""
-    rule_id: str
+    """Individual compliance rule definition"""    rule_id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -89,8 +82,7 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceCheckResult:
-    """Result of compliance check"""
-    rule_id: str
+    """Result of compliance check"""    rule_id: str
     status: ComplianceStatus
     score: float  # 0-100
     findings: List[str]
@@ -101,8 +93,7 @@ class ComplianceCheckResult:
 
 
 class ComplianceMonitor:
-    """Advanced compliance monitoring system"""
-    
+    """Advanced compliance monitoring system"""    
     def __init__(self):
         self.settings = get_settings()
         self.notification_service = NotificationService()
@@ -110,8 +101,7 @@ class ComplianceMonitor:
         self.compliance_rules = self._load_compliance_rules()
     
     def _load_compliance_rules(self) -> Dict[str, ComplianceRule]:
-        """Load compliance rules for all frameworks"""
-        rules = {}
+        """Load compliance rules for all frameworks"""        rules = {}
         
         # DMCA Compliance Rules
         rules["dmca_response_time"] = ComplianceRule(
@@ -224,15 +214,13 @@ class ComplianceMonitor:
         rule_id: Optional[str] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Run comprehensive compliance check
+        """        Run comprehensive compliance check
         
         Args:
             framework: Specific framework to check (optional)
             rule_id: Specific rule to check (optional)
             session: Database session
-        """
-        try:
+        """        try:
             check_results = []
             overall_status = ComplianceStatus.COMPLIANT
             
@@ -296,8 +284,7 @@ class ComplianceMonitor:
         self,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Monitor ongoing compliance across all frameworks"""
-        try:
+        """Monitor ongoing compliance across all frameworks"""        try:
             monitoring_results = {
                 "monitoring_timestamp": datetime.utcnow().isoformat(),
                 "framework_status": {},
@@ -340,8 +327,7 @@ class ComplianceMonitor:
         period_end: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""
-        try:
+        """Generate comprehensive compliance report"""        try:
             report_id = generate_compliance_report_id(framework.value, period_start)
             
             # Get compliance records for period
@@ -404,8 +390,7 @@ class ComplianceMonitor:
         framework: Optional[ComplianceFramework],
         rule_id: Optional[str]
     ) -> List[ComplianceRule]:
-        """Get rules to check based on filters"""
-        if rule_id:
+        """Get rules to check based on filters"""        if rule_id:
             return [self.compliance_rules[rule_id]] if rule_id in self.compliance_rules else []
         elif framework:
             return [rule for rule in self.compliance_rules.values() if rule.framework == framework]
@@ -417,8 +402,7 @@ class ComplianceMonitor:
         rule: ComplianceRule,
         session: AsyncSession
     ) -> ComplianceCheckResult:
-        """Execute individual compliance check"""
-        try:
+        """Execute individual compliance check"""        try:
             # Get the check function
             check_function = getattr(self, rule.check_function)
             
@@ -448,8 +432,7 @@ class ComplianceMonitor:
         rule: ComplianceRule,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Check DMCA response time compliance"""
-        try:
+        """Check DMCA response time compliance"""        try:
             # Query DMCA notices from last 30 days
             thirty_days_ago = datetime.utcnow() - timedelta(days=30)
             
@@ -500,8 +483,7 @@ class ComplianceMonitor:
         rule: ComplianceRule,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Check DMCA documentation compliance"""
-        try:
+        """Check DMCA documentation compliance"""        try:
             # Simulate documentation check
             total_notices = 100
             properly_documented = 95
@@ -542,8 +524,7 @@ class ComplianceMonitor:
         rule: ComplianceRule,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Check GDPR data retention compliance"""
-        try:
+        """Check GDPR data retention compliance"""        try:
             # Simulate data retention check
             expired_records = 5
             total_records = 1000
@@ -582,8 +563,7 @@ class ComplianceMonitor:
         rule: ComplianceRule,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Check GDPR consent tracking compliance"""
-        try:
+        """Check GDPR consent tracking compliance"""        try:
             # Simulate consent tracking check
             total_consents = 500
             tracked_consents = 485
@@ -624,8 +604,7 @@ class ComplianceMonitor:
         rule: ComplianceRule,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Check CCPA disclosure time compliance"""
-        try:
+        """Check CCPA disclosure time compliance"""        try:
             # Simulate CCPA disclosure check
             disclosure_requests = [
                 {"request_id": "1", "response_days": 30},
@@ -671,8 +650,7 @@ class ComplianceMonitor:
         rule: ComplianceRule,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Check copyright evidence preservation compliance"""
-        try:
+        """Check copyright evidence preservation compliance"""        try:
             # Simulate evidence preservation check
             total_evidence_items = 200
             properly_preserved = 198
@@ -707,8 +685,7 @@ class ComplianceMonitor:
             raise
     
     def _calculate_next_check_time(self, frequency: str) -> datetime:
-        """Calculate next check time based on frequency"""
-        now = datetime.utcnow()
+        """Calculate next check time based on frequency"""        now = datetime.utcnow()
         
         frequency_map = {
             "daily": timedelta(days=1),
@@ -721,8 +698,7 @@ class ComplianceMonitor:
         return now + frequency_map.get(frequency, timedelta(days=1))
     
     def _calculate_compliance_score(self, check_results: List[ComplianceCheckResult]) -> float:
-        """Calculate overall compliance score"""
-        if not check_results:
+        """Calculate overall compliance score"""        if not check_results:
             return 0.0
         
         total_score = sum(result.score for result in check_results)
@@ -736,8 +712,7 @@ class ComplianceMonitor:
         check_results: List[ComplianceCheckResult],
         session: AsyncSession
     ) -> str:
-        """Store compliance record in database"""
-        try:
+        """Store compliance record in database"""        try:
             compliance_record = ComplianceRecord(
                 framework=framework.value if framework else "all",
                 status=status.value,
@@ -757,8 +732,7 @@ class ComplianceMonitor:
             raise
     
     def _serialize_check_result(self, result: ComplianceCheckResult) -> Dict[str, Any]:
-        """Serialize compliance check result"""
-        return {
+        """Serialize compliance check result"""        return {
             "rule_id": result.rule_id,
             "status": result.status.value,
             "score": result.score,
@@ -770,8 +744,7 @@ class ComplianceMonitor:
         }
     
     async def _handle_compliance_violations(self, check_results: List[ComplianceCheckResult]) -> None:
-        """Handle compliance violations with notifications"""
-        try:
+        """Handle compliance violations with notifications"""        try:
             critical_violations = [
                 r for r in check_results 
                 if r.status == ComplianceStatus.NON_COMPLIANT and r.score < 50
@@ -794,8 +767,7 @@ class ComplianceMonitor:
             logger.error(f"Compliance violation handling failed: {str(e)}")
     
     def _generate_compliance_recommendations(self, check_results: List[ComplianceCheckResult]) -> List[str]:
-        """Generate overall compliance recommendations"""
-        all_recommendations = []
+        """Generate overall compliance recommendations"""        all_recommendations = []
         
         for result in check_results:
             if result.status != ComplianceStatus.COMPLIANT:
@@ -807,8 +779,7 @@ class ComplianceMonitor:
         return unique_recommendations[:10]  # Top 10 recommendations
     
     async def _identify_trending_violations(self, session: AsyncSession) -> List[Dict[str, Any]]:
-        """Identify trending compliance violations"""
-        # This would implement actual trending analysis
+        """Identify trending compliance violations"""        # This would implement actual trending analysis
         return [
             {
                 "violation_type": "dmca_response_delay",
@@ -819,8 +790,7 @@ class ComplianceMonitor:
         ]
     
     async def _generate_compliance_alerts(self, session: AsyncSession) -> List[Dict[str, Any]]:
-        """Generate compliance alerts"""
-        return [
+        """Generate compliance alerts"""        return [
             {
                 "alert_type": "regulatory_deadline",
                 "description": "GDPR audit deadline approaching",
@@ -830,8 +800,7 @@ class ComplianceMonitor:
         ]
     
     async def _track_remediation_progress(self, session: AsyncSession) -> Dict[str, Any]:
-        """Track remediation progress"""
-        return {
+        """Track remediation progress"""        return {
             "total_violations": 10,
             "resolved_violations": 8,
             "in_progress": 2,
@@ -846,8 +815,7 @@ class ComplianceMonitor:
         end_date: datetime,
         session: AsyncSession
     ) -> List[ComplianceRecord]:
-        """Get compliance records for period"""
-        result = await session.execute(
+        """Get compliance records for period"""        result = await session.execute(
             select(ComplianceRecord)
             .where(
                 and_(
@@ -866,8 +834,7 @@ class ComplianceMonitor:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Calculate compliance metrics for period"""
-        if not records:
+        """Calculate compliance metrics for period"""        if not records:
             return {
                 "overall_compliance": 0.0,
                 "compliance_trend": "insufficient_data",
@@ -901,8 +868,7 @@ class ComplianceMonitor:
         framework: ComplianceFramework,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate trend analysis"""
-        return {
+        """Generate trend analysis"""        return {
             "score_trend": [
                 {"date": r.created_at.isoformat(), "score": r.compliance_score}
                 for r in records[-30:]  # Last 30 records
@@ -925,8 +891,7 @@ class ComplianceMonitor:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Get detailed violation analysis"""
-        return {
+        """Get detailed violation analysis"""        return {
             "total_violations": 25,
             "resolved_violations": 20,
             "pending_violations": 5,
@@ -945,8 +910,7 @@ class ComplianceMonitor:
         trends: Dict[str, Any],
         violations: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate strategic recommendations"""
-        recommendations = []
+        """Generate strategic recommendations"""        recommendations = []
         
         if metrics["overall_compliance"] < 90:
             recommendations.append({
@@ -971,14 +935,12 @@ class ComplianceMonitor:
         return recommendations
     
     async def _store_compliance_report(self, report: Dict[str, Any], session: AsyncSession) -> None:
-        """Store compliance report"""
-        # This would store the report in a reports table
+        """Store compliance report"""        # This would store the report in a reports table
         logger.info(f"Stored compliance report {report['report_id']}")
 
 
 class PolicyEnforcer:
-    """Automated policy enforcement system"""
-    
+    """Automated policy enforcement system"""    
     def __init__(self):
         self.settings = get_settings()
         self.compliance_monitor = ComplianceMonitor()
@@ -990,8 +952,7 @@ class PolicyEnforcer:
         policy_framework: ComplianceFramework,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Enforce policy compliance for specific entity"""
-        try:
+        """Enforce policy compliance for specific entity"""        try:
             # Check current compliance status
             compliance_check = await self.compliance_monitor.run_compliance_check(
                 policy_framework, None, session
@@ -1027,8 +988,7 @@ class PolicyEnforcer:
         entity_id: str,
         compliance_check: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify violations specific to entity"""
-        violations = []
+        """Identify violations specific to entity"""        violations = []
         
         for check_result in compliance_check.get("check_results", []):
             if check_result["status"] == "non_compliant":
@@ -1050,8 +1010,7 @@ class PolicyEnforcer:
         entity_id: str,
         session: AsyncSession
     ) -> List[Dict[str, Any]]:
-        """Apply enforcement actions for violations"""
-        enforcement_results = []
+        """Apply enforcement actions for violations"""        enforcement_results = []
         
         for violation in violations:
             try:
@@ -1081,8 +1040,7 @@ class PolicyEnforcer:
         return enforcement_results
     
     def _determine_enforcement_action(self, violation: Dict[str, Any]) -> str:
-        """Determine appropriate enforcement action"""
-        violation_score = violation["violation_score"]
+        """Determine appropriate enforcement action"""        violation_score = violation["violation_score"]
         
         if violation_score >= 80:
             return "immediate_suspension"
@@ -1101,8 +1059,7 @@ class PolicyEnforcer:
         entity_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Execute specific enforcement action"""
-        if action == "immediate_suspension":
+        """Execute specific enforcement action"""        if action == "immediate_suspension":
             return await self._suspend_entity(entity_type, entity_id, violation, session)
         elif action == "mandatory_remediation":
             return await self._require_remediation(entity_type, entity_id, violation, session)
@@ -1120,8 +1077,7 @@ class PolicyEnforcer:
         violation: Dict[str, Any],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Suspend entity for severe violations"""
-        # Implementation would suspend the entity
+        """Suspend entity for severe violations"""        # Implementation would suspend the entity
         return {
             "success": True,
             "action": "entity_suspended",
@@ -1136,8 +1092,7 @@ class PolicyEnforcer:
         violation: Dict[str, Any],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Require mandatory remediation"""
-        return {
+        """Require mandatory remediation"""        return {
             "success": True,
             "action": "remediation_required",
             "deadline": (datetime.utcnow() + timedelta(days=30)).isoformat(),
@@ -1151,8 +1106,7 @@ class PolicyEnforcer:
         violation: Dict[str, Any],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Issue warning with deadline"""
-        return {
+        """Issue warning with deadline"""        return {
             "success": True,
             "action": "warning_issued",
             "deadline": (datetime.utcnow() + timedelta(days=14)).isoformat(),
@@ -1166,8 +1120,7 @@ class PolicyEnforcer:
         violation: Dict[str, Any],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Send advisory notice"""
-        return {
+        """Send advisory notice"""        return {
             "success": True,
             "action": "advisory_sent",
             "advisory_type": "compliance_improvement",
@@ -1176,8 +1129,7 @@ class PolicyEnforcer:
 
 
 class AuditTracker:
-    """Comprehensive audit trail and logging system"""
-    
+    """Comprehensive audit trail and logging system"""    
     def __init__(self):
         self.settings = get_settings()
     
@@ -1192,8 +1144,7 @@ class AuditTracker:
         session: AsyncSession,
         level: AuditLevel = AuditLevel.INFO
     ) -> str:
-        """Log audit event with full details"""
-        try:
+        """Log audit event with full details"""        try:
             audit_log = AuditLog(
                 event_type=event_type,
                 entity_type=entity_type,
@@ -1228,8 +1179,7 @@ class AuditTracker:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate comprehensive audit trail"""
-        try:
+        """Generate comprehensive audit trail"""        try:
             # Get audit logs for entity
             result = await session.execute(
                 select(AuditLog)
@@ -1266,8 +1216,7 @@ class AuditTracker:
             return {"error": str(e)}
     
     def _serialize_audit_log(self, audit_log: AuditLog) -> Dict[str, Any]:
-        """Serialize audit log for output"""
-        return {
+        """Serialize audit log for output"""        return {
             "id": str(audit_log.id),
             "event_type": audit_log.event_type,
             "action": audit_log.action,
@@ -1278,8 +1227,7 @@ class AuditTracker:
         }
     
     def _generate_audit_summary(self, audit_logs: List[AuditLog]) -> Dict[str, Any]:
-        """Generate summary of audit events"""
-        event_types = {}
+        """Generate summary of audit events"""        event_types = {}
         levels = {}
         users = set()
         
@@ -1297,8 +1245,7 @@ class AuditTracker:
         }
     
     async def _log_to_file(self, audit_log: AuditLog) -> None:
-        """Log audit event to file system"""
-        try:
+        """Log audit event to file system"""        try:
             log_entry = {
                 "timestamp": audit_log.timestamp.isoformat(),
                 "level": audit_log.level,

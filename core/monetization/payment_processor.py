@@ -1,11 +1,9 @@
-"""
-Enterprise Payment Processing System
+"""Enterprise Payment Processing System
 Multi-gateway payment handling with advanced security and compliance
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,8 +25,7 @@ from ...core.exceptions import PaymentError, ValidationError
 
 
 class PaymentGateway(Enum):
-    """Supported payment gateways"""
-    STRIPE = "stripe"
+    """Supported payment gateways"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -36,8 +33,7 @@ class PaymentGateway(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -46,8 +42,7 @@ class PaymentStatus(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies"""
-    EUR = "EUR"
+    """Supported currencies"""    EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
     CAD = "CAD"
@@ -57,8 +52,7 @@ class Currency(Enum):
 
 @dataclass
 class PaymentConfig:
-    """Payment gateway configuration"""
-    gateway: PaymentGateway
+    """Payment gateway configuration"""    gateway: PaymentGateway
     api_key: str
     secret_key: str
     webhook_secret: str
@@ -68,14 +62,12 @@ class PaymentConfig:
     fixed_fee: Decimal = Decimal("0.30")
     
     def __post_init__(self):
-        """Validate configuration after initialization"""
-        if not self.api_key or not self.secret_key:
+        """Validate configuration after initialization"""        if not self.api_key or not self.secret_key:
             raise ValidationError("API key and secret key are required")
 
 
 class PaymentRequest(BaseModel):
-    """Payment request data model"""
-    user_id: int
+    """Payment request data model"""    user_id: int
     amount: Decimal = Field(..., gt=0, description="Payment amount")
     currency: Currency = Currency.EUR
     gateway: PaymentGateway = PaymentGateway.STRIPE
@@ -94,8 +86,7 @@ class PaymentRequest(BaseModel):
 
 
 class PaymentResponse(BaseModel):
-    """Payment response data model"""
-    payment_id: str
+    """Payment response data model"""    payment_id: str
     status: PaymentStatus
     gateway_transaction_id: Optional[str] = None
     amount: Decimal
@@ -108,8 +99,7 @@ class PaymentResponse(BaseModel):
 
 
 class PaymentProcessor:
-    """Advanced payment processing engine with multi-gateway support"""
-    
+    """Advanced payment processing engine with multi-gateway support"""    
     def __init__(self, encryption_manager: EncryptionManager):
         self.encryption_manager = encryption_manager
         self.logger = logging.getLogger(__name__)
@@ -117,8 +107,7 @@ class PaymentProcessor:
         self.gateway_clients: Dict[PaymentGateway, Any] = {}
         
     def configure_gateway(self, config: PaymentConfig) -> None:
-        """Configure payment gateway"""
-        try:
+        """Configure payment gateway"""        try:
             self.gateway_configs[config.gateway] = config
             
             # Initialize gateway client
@@ -143,8 +132,7 @@ class PaymentProcessor:
         request: PaymentRequest,
         session: AsyncSession
     ) -> PaymentResponse:
-        """Process payment through specified gateway"""
-        try:
+        """Process payment through specified gateway"""        try:
             # Validate gateway configuration
             if request.gateway not in self.gateway_configs:
                 raise PaymentError(f"Gateway {request.gateway.value} not configured")
@@ -192,8 +180,7 @@ class PaymentProcessor:
         request: PaymentRequest, 
         config: PaymentConfig
     ) -> Dict[str, Any]:
-        """Process payment through Stripe"""
-        try:
+        """Process payment through Stripe"""        try:
             # Create Stripe transfer
             transfer = stripe.Transfer.create(
                 amount=int(request.amount * 100),  # Convert to cents
@@ -217,8 +204,7 @@ class PaymentProcessor:
         request: PaymentRequest, 
         config: PaymentConfig
     ) -> Dict[str, Any]:
-        """Process payment through Wise (formerly TransferWise)"""
-        try:
+        """Process payment through Wise (formerly TransferWise)"""        try:
             wise_client = self.gateway_clients[PaymentGateway.WISE]
             
             # Create recipient
@@ -250,8 +236,7 @@ class PaymentProcessor:
         request: PaymentRequest, 
         config: PaymentConfig
     ) -> Dict[str, Any]:
-        """Process payment through PayPal"""
-        try:
+        """Process payment through PayPal"""        try:
             # PayPal payout implementation
             payout_data = {
                 "sender_batch_header": {
@@ -281,8 +266,7 @@ class PaymentProcessor:
             raise PaymentError(f"PayPal payment failed: {str(e)}")
     
     def _calculate_fees(self, amount: Decimal, config: PaymentConfig) -> Decimal:
-        """Calculate payment processing fees"""
-        percentage_fee = amount * (config.fee_percentage / 100)
+        """Calculate payment processing fees"""        percentage_fee = amount * (config.fee_percentage / 100)
         total_fee = percentage_fee + config.fixed_fee
         return min(total_fee, amount * Decimal("0.05"))  # Cap at 5%
     
@@ -294,8 +278,7 @@ class PaymentProcessor:
         net_amount: Decimal,
         session: AsyncSession
     ) -> Payment:
-        """Store payment record in database"""
-        payment = Payment(
+        """Store payment record in database"""        payment = Payment(
             user_id=request.user_id,
             gateway=request.gateway.value,
             amount=request.amount,
@@ -320,8 +303,7 @@ class PaymentProcessor:
         signature: str, 
         gateway: PaymentGateway
     ) -> bool:
-        """Verify webhook signature for security"""
-        try:
+        """Verify webhook signature for security"""        try:
             config = self.gateway_configs.get(gateway)
             if not config:
                 return False
@@ -344,8 +326,7 @@ class PaymentProcessor:
         payment_id: str, 
         session: AsyncSession
     ) -> Optional[PaymentResponse]:
-        """Get payment status by ID"""
-        try:
+        """Get payment status by ID"""        try:
             payment = await session.get(Payment, payment_id)
             if not payment:
                 return None
@@ -370,8 +351,7 @@ class PaymentProcessor:
         payment_id: str, 
         session: AsyncSession
     ) -> bool:
-        """Cancel pending payment"""
-        try:
+        """Cancel pending payment"""        try:
             payment = await session.get(Payment, payment_id)
             if not payment or payment.status != PaymentStatus.PENDING.value:
                 return False
@@ -393,8 +373,7 @@ class PaymentProcessor:
 
 
 class PaymentWebhookHandler:
-    """Handle payment gateway webhooks"""
-    
+    """Handle payment gateway webhooks"""    
     def __init__(self, payment_processor: PaymentProcessor):
         self.payment_processor = payment_processor
         self.logger = logging.getLogger(__name__)
@@ -405,8 +384,7 @@ class PaymentWebhookHandler:
         signature: str,
         session: AsyncSession
     ) -> bool:
-        """Handle Stripe webhook events"""
-        try:
+        """Handle Stripe webhook events"""        try:
             if not await self.payment_processor.verify_webhook(
                 payload, signature, PaymentGateway.STRIPE
             ):
@@ -435,8 +413,7 @@ class PaymentWebhookHandler:
         status: str,
         session: AsyncSession
     ) -> None:
-        """Update payment status from webhook"""
-        try:
+        """Update payment status from webhook"""        try:
             # Find payment by transaction ID
             from sqlalchemy import select
             result = await session.execute(

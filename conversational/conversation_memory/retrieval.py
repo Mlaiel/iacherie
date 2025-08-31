@@ -1,5 +1,4 @@
-"""
-Conversation Memory Retrieval Systems - Intelligent Conversation Search
+"""Conversation Memory Retrieval Systems - Intelligent Conversation Search
 
 Advanced retrieval systems for conversation memory including semantic search,
 contextual retrieval, and content-aware search specialized for multi-format
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -50,8 +48,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SearchQuery:
-    """Structured search query for conversation retrieval"""
-    text_query: Optional[str] = None
+    """Structured search query for conversation retrieval"""    text_query: Optional[str] = None
     user_id: Optional[str] = None
     content_types: Optional[List[str]] = None
     date_range: Optional[Tuple[datetime, datetime]] = None
@@ -64,8 +61,7 @@ class SearchQuery:
     offset: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for caching"""
-        return {
+        """Convert to dictionary for caching"""        return {
             "text_query": self.text_query,
             "user_id": self.user_id,
             "content_types": self.content_types,
@@ -82,8 +78,7 @@ class SearchQuery:
 
 @dataclass
 class SearchResult:
-    """Search result with conversation and relevance information"""
-    conversation: ConversationRecord
+    """Search result with conversation and relevance information"""    conversation: ConversationRecord
     relevance_score: float
     similarity_score: Optional[float] = None
     context_matches: List[str] = field(default_factory=list)
@@ -91,8 +86,7 @@ class SearchResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for API responses"""
-        return {
+        """Convert to dictionary for API responses"""        return {
             "conversation": self.conversation.to_dict(),
             "relevance_score": self.relevance_score,
             "similarity_score": self.similarity_score,
@@ -103,12 +97,10 @@ class SearchResult:
 
 
 class RetrievalInterface(ABC):
-    """Abstract interface for retrieval systems"""
-    
+    """Abstract interface for retrieval systems"""    
     @abstractmethod
     async def search(self, query: SearchQuery) -> List[SearchResult]:
-        """Search conversations based on query"""
-        pass
+        """Search conversations based on query"""        pass
     
     @abstractmethod
     async def get_related_conversations(
@@ -116,18 +108,15 @@ class RetrievalInterface(ABC):
         conversation_id: str,
         limit: int = 10
     ) -> List[ConversationRecord]:
-        """Get conversations related to a specific conversation"""
-        pass
+        """Get conversations related to a specific conversation"""        pass
 
 
 class ConversationRetriever(RetrievalInterface):
-    """
-    Main conversation retrieval system
+    """    Main conversation retrieval system
     
     Orchestrates different retrieval strategies and combines results
     for optimal conversation search experience.
-    """
-    
+    """    
     def __init__(self):
         self.long_term_memory = LongTermMemory()
         self.short_term_memory = ShortTermMemory()
@@ -144,8 +133,7 @@ class ConversationRetriever(RetrievalInterface):
         logger.info("ConversationRetriever initialized")
     
     async def initialize(self):
-        """Initialize retrieval components"""
-        try:
+        """Initialize retrieval components"""        try:
             await asyncio.gather(
                 self.long_term_memory.initialize(),
                 self.short_term_memory.initialize(),
@@ -163,16 +151,14 @@ class ConversationRetriever(RetrievalInterface):
             raise
     
     async def search(self, query: SearchQuery) -> List[SearchResult]:
-        """
-        Comprehensive conversation search with multiple strategies
+        """        Comprehensive conversation search with multiple strategies
         
         Args:
             query: Search query parameters
             
         Returns:
             Ranked list of search results
-        """
-        try:
+        """        try:
             # Check cache first
             cache_key = f"search:{hash(str(query.to_dict()))}"
             cached_results = await self.cache_manager.get(cache_key)
@@ -241,8 +227,7 @@ class ConversationRetriever(RetrievalInterface):
         conversation_id: str,
         limit: int = 10
     ) -> List[ConversationRecord]:
-        """
-        Get conversations related to a specific conversation
+        """        Get conversations related to a specific conversation
         
         Args:
             conversation_id: Source conversation identifier
@@ -250,8 +235,7 @@ class ConversationRetriever(RetrievalInterface):
             
         Returns:
             List of related conversations
-        """
-        try:
+        """        try:
             # Get source conversation
             source_conversation = await self.long_term_memory.get(conversation_id)
             
@@ -294,8 +278,7 @@ class ConversationRetriever(RetrievalInterface):
         results: List[SearchResult],
         query: SearchQuery
     ) -> List[SearchResult]:
-        """Combine results from different strategies and rank them"""
-        
+        """Combine results from different strategies and rank them"""        
         # Remove duplicates by conversation_id
         seen_conversations = set()
         unique_results = []
@@ -317,8 +300,7 @@ class ConversationRetriever(RetrievalInterface):
         return unique_results
     
     def _calculate_final_score(self, result: SearchResult, query: SearchQuery) -> float:
-        """Calculate final ranking score for a search result"""
-        
+        """Calculate final ranking score for a search result"""        
         # Base relevance score
         score = result.relevance_score
         
@@ -349,8 +331,7 @@ class ConversationRetriever(RetrievalInterface):
         return min(score, 1.0)  # Cap at 1.0
     
     def _extract_conversation_text(self, conversation: ConversationRecord) -> str:
-        """Extract text content from conversation for analysis"""
-        text_parts = []
+        """Extract text content from conversation for analysis"""        text_parts = []
         
         if conversation.conversation_data:
             if "messages" in conversation.conversation_data:
@@ -364,8 +345,7 @@ class ConversationRetriever(RetrievalInterface):
         return " ".join(text_parts)
     
     def _is_collaboration_conversation(self, conversation: ConversationRecord) -> bool:
-        """Check if conversation is collaboration-related"""
-        collaboration_keywords = [
+        """Check if conversation is collaboration-related"""        collaboration_keywords = [
             "collaboration", "collaborate", "partner", "team", "together",
             "joint", "cooperation", "alliance", "partnership"
         ]
@@ -374,8 +354,7 @@ class ConversationRetriever(RetrievalInterface):
         return any(keyword in text for keyword in collaboration_keywords)
     
     def _is_protection_conversation(self, conversation: ConversationRecord) -> bool:
-        """Check if conversation is protection-related"""
-        protection_keywords = [
+        """Check if conversation is protection-related"""        protection_keywords = [
             "copyright", "protection", "stolen", "unauthorized", "dmca",
             "piracy", "infringement", "rights", "legal", "violation"
         ]
@@ -385,13 +364,11 @@ class ConversationRetriever(RetrievalInterface):
 
 
 class SemanticSearch:
-    """
-    Semantic search using vector embeddings
+    """    Semantic search using vector embeddings
     
     Provides semantic similarity search for conversations using
     pre-trained language models and vector similarity.
-    """
-    
+    """    
     def __init__(self):
         self.vector_store = VectorStore()
         self.embedding_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -400,8 +377,7 @@ class SemanticSearch:
         logger.info("SemanticSearch initialized")
     
     async def initialize(self):
-        """Initialize semantic search components"""
-        try:
+        """Initialize semantic search components"""        try:
             await self.vector_store.initialize()
             logger.info("SemanticSearch components initialized")
             
@@ -410,16 +386,14 @@ class SemanticSearch:
             raise
     
     async def search(self, query: SearchQuery) -> List[SearchResult]:
-        """
-        Perform semantic search using embeddings
+        """        Perform semantic search using embeddings
         
         Args:
             query: Search query parameters
             
         Returns:
             List of semantically similar conversations
-        """
-        try:
+        """        try:
             if not query.text_query:
                 return []
             
@@ -468,8 +442,7 @@ class SemanticSearch:
         self,
         vector_result: Dict[str, Any]
     ) -> Optional[ConversationRecord]:
-        """Get full conversation record from vector search result"""
-        try:
+        """Get full conversation record from vector search result"""        try:
             conversation_id = vector_result["conversation_id"]
             
             # Try to get from storage
@@ -487,8 +460,7 @@ class SemanticSearch:
         conversation: ConversationRecord,
         query: SearchQuery
     ) -> bool:
-        """Check if conversation matches query filters"""
-        
+        """Check if conversation matches query filters"""        
         # Content type filter
         if query.content_types:
             if conversation.content_type not in query.content_types:
@@ -518,8 +490,7 @@ class SemanticSearch:
         conversation: ConversationRecord,
         query_text: str
     ) -> List[str]:
-        """Extract context matches for highlighting"""
-        
+        """Extract context matches for highlighting"""        
         matches = []
         query_words = query_text.lower().split()
         
@@ -548,8 +519,7 @@ class SemanticSearch:
         conversation: ConversationRecord,
         query_text: str
     ) -> List[str]:
-        """Generate highlighted snippets"""
-        
+        """Generate highlighted snippets"""        
         highlights = []
         query_words = set(query_text.lower().split())
         
@@ -584,13 +554,11 @@ class SemanticSearch:
 
 
 class ContextualRetriever:
-    """
-    Context-aware conversation retrieval
+    """    Context-aware conversation retrieval
     
     Retrieves conversations based on contextual understanding
     including conversation context, user patterns, and temporal factors.
-    """
-    
+    """    
     def __init__(self):
         self.long_term_memory = LongTermMemory()
         self.metrics = MetricsCollector("contextual_retriever")
@@ -598,8 +566,7 @@ class ContextualRetriever:
         logger.info("ContextualRetriever initialized")
     
     async def initialize(self):
-        """Initialize contextual retrieval components"""
-        try:
+        """Initialize contextual retrieval components"""        try:
             await self.long_term_memory.initialize()
             logger.info("ContextualRetriever initialized")
             
@@ -608,16 +575,14 @@ class ContextualRetriever:
             raise
     
     async def search(self, query: SearchQuery) -> List[SearchResult]:
-        """
-        Perform context-aware search
+        """        Perform context-aware search
         
         Args:
             query: Search query parameters
             
         Returns:
             List of contextually relevant conversations
-        """
-        try:
+        """        try:
             # Build database query
             db_query = {
                 "user_id": query.user_id,
@@ -675,8 +640,7 @@ class ContextualRetriever:
         conversation: ConversationRecord,
         query: SearchQuery
     ) -> float:
-        """Calculate contextual relevance score"""
-        
+        """Calculate contextual relevance score"""        
         score = 0.5  # Base score
         
         # Content type matching
@@ -712,8 +676,7 @@ class ContextualRetriever:
         return max(0, min(score, 1.0))
     
     def _has_collaboration_context(self, conversation: ConversationRecord) -> bool:
-        """Check if conversation has collaboration context"""
-        if conversation.context and isinstance(conversation.context, CollaborationContext):
+        """Check if conversation has collaboration context"""        if conversation.context and isinstance(conversation.context, CollaborationContext):
             return True
         
         # Check metadata for collaboration indicators
@@ -724,8 +687,7 @@ class ContextualRetriever:
         return False
     
     def _has_protection_context(self, conversation: ConversationRecord) -> bool:
-        """Check if conversation has protection context"""
-        if conversation.context and isinstance(conversation.context, ProtectionContext):
+        """Check if conversation has protection context"""        if conversation.context and isinstance(conversation.context, ProtectionContext):
             return True
         
         # Check metadata for protection flags
@@ -740,8 +702,7 @@ class ContextualRetriever:
         conversation: ConversationRecord,
         query: SearchQuery
     ) -> List[str]:
-        """Identify context-specific matches"""
-        
+        """Identify context-specific matches"""        
         matches = []
         
         # Context type matches
@@ -765,13 +726,11 @@ class ContextualRetriever:
 
 
 class ContentAwareRetriever:
-    """
-    Content-type aware conversation retrieval
+    """    Content-type aware conversation retrieval
     
     Specializes in retrieving conversations based on content creation
     specializations (music, blog, photography, video, etc.).
-    """
-    
+    """    
     def __init__(self):
         self.long_term_memory = LongTermMemory()
         self.metrics = MetricsCollector("content_aware_retriever")
@@ -803,8 +762,7 @@ class ContentAwareRetriever:
         logger.info("ContentAwareRetriever initialized")
     
     async def initialize(self):
-        """Initialize content-aware retrieval components"""
-        try:
+        """Initialize content-aware retrieval components"""        try:
             await self.long_term_memory.initialize()
             logger.info("ContentAwareRetriever initialized")
             
@@ -813,16 +771,14 @@ class ContentAwareRetriever:
             raise
     
     async def search(self, query: SearchQuery) -> List[SearchResult]:
-        """
-        Perform content-aware search
+        """        Perform content-aware search
         
         Args:
             query: Search query parameters
             
         Returns:
             List of content-relevant conversations
-        """
-        try:
+        """        try:
             search_results = []
             
             # Search for each content type
@@ -858,8 +814,7 @@ class ContentAwareRetriever:
         content_type: str,
         query: SearchQuery
     ) -> List[SearchResult]:
-        """Search conversations for a specific content type"""
-        
+        """Search conversations for a specific content type"""        
         # Build database query
         db_query = {
             "content_type": content_type,
@@ -903,8 +858,7 @@ class ContentAwareRetriever:
         content_type: str,
         query: SearchQuery
     ) -> float:
-        """Calculate content-specific relevance score"""
-        
+        """Calculate content-specific relevance score"""        
         score = 0.5  # Base score
         
         # Exact content type match
@@ -951,8 +905,7 @@ class ContentAwareRetriever:
         content_type: str,
         query: SearchQuery
     ) -> List[str]:
-        """Extract content-specific matches"""
-        
+        """Extract content-specific matches"""        
         matches = []
         
         # Content type match
@@ -991,8 +944,7 @@ class ContentAwareRetriever:
         return matches
     
     def _extract_conversation_text(self, conversation: ConversationRecord) -> str:
-        """Extract text content from conversation"""
-        text_parts = []
+        """Extract text content from conversation"""        text_parts = []
         
         if conversation.conversation_data and "messages" in conversation.conversation_data:
             for message in conversation.conversation_data["messages"]:
@@ -1006,13 +958,11 @@ class ContentAwareRetriever:
 
 
 class CollaborationMemoryRetriever:
-    """
-    Specialized retrieval for collaboration-related conversations
+    """    Specialized retrieval for collaboration-related conversations
     
     Focuses on retrieving conversations related to collaboration
     opportunities, partner matching, and joint content creation.
-    """
-    
+    """    
     def __init__(self):
         self.long_term_memory = LongTermMemory()
         self.metrics = MetricsCollector("collaboration_retriever")
@@ -1020,8 +970,7 @@ class CollaborationMemoryRetriever:
         logger.info("CollaborationMemoryRetriever initialized")
     
     async def initialize(self):
-        """Initialize collaboration retrieval components"""
-        try:
+        """Initialize collaboration retrieval components"""        try:
             await self.long_term_memory.initialize()
             logger.info("CollaborationMemoryRetriever initialized")
             
@@ -1030,16 +979,14 @@ class CollaborationMemoryRetriever:
             raise
     
     async def search(self, query: SearchQuery) -> List[SearchResult]:
-        """
-        Search for collaboration-related conversations
+        """        Search for collaboration-related conversations
         
         Args:
             query: Search query parameters
             
         Returns:
             List of collaboration-relevant conversations
-        """
-        try:
+        """        try:
             # Build query for collaboration conversations
             db_query = {
                 "user_id": query.user_id,
@@ -1084,8 +1031,7 @@ class CollaborationMemoryRetriever:
             return []
     
     def _is_collaboration_conversation(self, conversation: ConversationRecord) -> bool:
-        """Check if conversation is collaboration-related"""
-        
+        """Check if conversation is collaboration-related"""        
         # Check context
         if conversation.context and isinstance(conversation.context, CollaborationContext):
             return True
@@ -1111,8 +1057,7 @@ class CollaborationMemoryRetriever:
         conversation: ConversationRecord,
         query: SearchQuery
     ) -> float:
-        """Calculate collaboration-specific relevance score"""
-        
+        """Calculate collaboration-specific relevance score"""        
         score = 0.5  # Base score
         
         # Strong boost for collaboration context
@@ -1156,8 +1101,7 @@ class CollaborationMemoryRetriever:
         conversation: ConversationRecord,
         query: SearchQuery
     ) -> List[str]:
-        """Extract collaboration-specific matches"""
-        
+        """Extract collaboration-specific matches"""        
         matches = []
         
         # Context information
@@ -1181,8 +1125,7 @@ class CollaborationMemoryRetriever:
         return matches
     
     def _extract_conversation_text(self, conversation: ConversationRecord) -> str:
-        """Extract text content from conversation"""
-        text_parts = []
+        """Extract text content from conversation"""        text_parts = []
         
         if conversation.conversation_data and "messages" in conversation.conversation_data:
             for message in conversation.conversation_data["messages"]:

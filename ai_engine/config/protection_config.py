@@ -1,5 +1,4 @@
-"""
-Content Protection Configuration Module
+"""Content Protection Configuration Module
 
 Advanced copyright protection, watermarking, and rights management system
 for multi-format content creators (musicians, bloggers, photographers, influencers, comedians).
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -26,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
@@ -35,8 +32,7 @@ class ProtectionLevel(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types for protection"""
-    TEXT = "text"
+    """Supported content types for protection"""    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -46,8 +42,7 @@ class ContentType(Enum):
 
 
 class WatermarkType(Enum):
-    """Types of watermarks"""
-    VISIBLE = "visible"
+    """Types of watermarks"""    VISIBLE = "visible"
     INVISIBLE = "invisible"
     STEGANOGRAPHIC = "steganographic"
     DIGITAL_SIGNATURE = "digital_signature"
@@ -55,8 +50,7 @@ class WatermarkType(Enum):
 
 
 class DetectionMethod(Enum):
-    """Copyright detection methods"""
-    HASH_MATCHING = "hash_matching"
+    """Copyright detection methods"""    HASH_MATCHING = "hash_matching"
     PERCEPTUAL_HASHING = "perceptual_hashing"
     FINGERPRINTING = "fingerprinting"
     NEURAL_MATCHING = "neural_matching"
@@ -65,8 +59,7 @@ class DetectionMethod(Enum):
 
 
 class LicenseType(Enum):
-    """Content license types"""
-    ALL_RIGHTS_RESERVED = "all_rights_reserved"
+    """Content license types"""    ALL_RIGHTS_RESERVED = "all_rights_reserved"
     CREATIVE_COMMONS_BY = "cc_by"
     CREATIVE_COMMONS_BY_SA = "cc_by_sa"
     CREATIVE_COMMONS_BY_NC = "cc_by_nc"
@@ -79,8 +72,7 @@ class LicenseType(Enum):
 
 @dataclass
 class WatermarkConfig:
-    """Watermark configuration"""
-    enabled: bool = True
+    """Watermark configuration"""    enabled: bool = True
     watermark_type: WatermarkType = WatermarkType.INVISIBLE
     intensity: float = 0.3  # 0.0 to 1.0
     position: str = "bottom_right"  # For visible watermarks
@@ -102,8 +94,7 @@ class WatermarkConfig:
     scale_factor: float = 1.0
     
     def validate(self) -> List[str]:
-        """Validate watermark configuration"""
-        issues = []
+        """Validate watermark configuration"""        issues = []
         if not 0.0 <= self.intensity <= 1.0:
             issues.append("Intensity must be between 0.0 and 1.0")
         if not 0.0 <= self.opacity <= 1.0:
@@ -115,8 +106,7 @@ class WatermarkConfig:
 
 @dataclass
 class CopyrightDetectionConfig:
-    """Copyright detection configuration"""
-    enabled: bool = True
+    """Copyright detection configuration"""    enabled: bool = True
     detection_methods: List[DetectionMethod] = field(default_factory=lambda: [
         DetectionMethod.PERCEPTUAL_HASHING,
         DetectionMethod.NEURAL_MATCHING,
@@ -157,8 +147,7 @@ class CopyrightDetectionConfig:
 
 @dataclass
 class RightsManagementConfig:
-    """Rights management configuration"""
-    enabled: bool = True
+    """Rights management configuration"""    enabled: bool = True
     default_license: LicenseType = LicenseType.ALL_RIGHTS_RESERVED
     
     # Creator information
@@ -198,8 +187,7 @@ class RightsManagementConfig:
 
 @dataclass
 class AntiPiracyConfig:
-    """Anti-piracy configuration"""
-    enabled: bool = True
+    """Anti-piracy configuration"""    enabled: bool = True
     
     # Detection strategies
     web_crawling_enabled: bool = True
@@ -235,8 +223,7 @@ class AntiPiracyConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Legal compliance configuration"""
-    enabled: bool = True
+    """Legal compliance configuration"""    enabled: bool = True
     
     # Jurisdictions
     primary_jurisdiction: str = "DE"  # Germany
@@ -268,8 +255,7 @@ class ComplianceConfig:
 
 @dataclass
 class ProtectionConfig:
-    """Main content protection configuration"""
-    
+    """Main content protection configuration"""    
     # Core protection settings
     protection_level: ProtectionLevel = ProtectionLevel.ENTERPRISE
     enabled_content_types: List[ContentType] = field(default_factory=lambda: [
@@ -305,15 +291,13 @@ class ProtectionConfig:
     incident_response_plan: str = "auto_block_and_notify"
 
     def __post_init__(self):
-        """Initialize default configurations"""
-        if not self.api_endpoints:
+        """Initialize default configurations"""        if not self.api_endpoints:
             self._setup_default_api_endpoints()
         if not self.webhook_urls:
             self._setup_default_webhooks()
 
     def _setup_default_api_endpoints(self):
-        """Setup default API endpoints"""
-        self.api_endpoints = {
+        """Setup default API endpoints"""        self.api_endpoints = {
             "copyright_check": "https://api.ia-influencer.com/v1/protection/copyright/check",
             "watermark_apply": "https://api.ia-influencer.com/v1/protection/watermark/apply",
             "rights_register": "https://api.ia-influencer.com/v1/protection/rights/register",
@@ -322,8 +306,7 @@ class ProtectionConfig:
         }
 
     def _setup_default_webhooks(self):
-        """Setup default webhook URLs"""
-        self.webhook_urls = {
+        """Setup default webhook URLs"""        self.webhook_urls = {
             "copyright_violation": "https://api.ia-influencer.com/webhooks/copyright_violation",
             "piracy_detected": "https://api.ia-influencer.com/webhooks/piracy_detected",
             "rights_claimed": "https://api.ia-influencer.com/webhooks/rights_claimed",
@@ -331,8 +314,7 @@ class ProtectionConfig:
         }
 
     def generate_content_fingerprint(self, content: Union[str, bytes], content_type: ContentType) -> str:
-        """Generate unique fingerprint for content"""
-        if isinstance(content, str):
+        """Generate unique fingerprint for content"""        if isinstance(content, str):
             content = content.encode('utf-8')
         
         # Create multi-hash fingerprint
@@ -347,8 +329,7 @@ class ProtectionConfig:
         return hashlib.sha256(fingerprint_data.encode()).hexdigest()
 
     def register_content(self, content_id: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Register content for protection"""
-        registration_record = {
+        """Register content for protection"""        registration_record = {
             "content_id": content_id,
             "creator_id": self.rights_management.creator_id,
             "creator_name": self.rights_management.creator_name,
@@ -369,8 +350,7 @@ class ProtectionConfig:
         return registration_record
 
     def check_usage_rights(self, content_id: str, requester_id: str, usage_type: str) -> Dict[str, Any]:
-        """Check if usage is allowed for specific content"""
-        # This would integrate with the rights management database
+        """Check if usage is allowed for specific content"""        # This would integrate with the rights management database
         usage_check_result = {
             "content_id": content_id,
             "requester_id": requester_id,
@@ -394,8 +374,7 @@ class ProtectionConfig:
         return usage_check_result
 
     def validate_configuration(self) -> List[str]:
-        """Validate protection configuration"""
-        issues = []
+        """Validate protection configuration"""        issues = []
         
         # Validate watermark configuration
         issues.extend(self.watermark.validate())
@@ -418,8 +397,7 @@ class ProtectionConfig:
         return issues
 
     def get_protection_summary(self) -> Dict[str, Any]:
-        """Get summary of protection configuration"""
-        return {
+        """Get summary of protection configuration"""        return {
             "protection_level": self.protection_level.value,
             "enabled_content_types": [ct.value for ct in self.enabled_content_types],
             "watermark_enabled": self.watermark.enabled,
@@ -441,8 +419,7 @@ class ProtectionConfig:
 
     @classmethod
     def from_env(cls) -> 'ProtectionConfig':
-        """Create configuration from environment variables"""
-        config = cls()
+        """Create configuration from environment variables"""        config = cls()
         
         # Load basic settings
         config.protection_level = ProtectionLevel(os.getenv("PROTECTION_LEVEL", "enterprise"))
@@ -470,8 +447,7 @@ class ProtectionConfig:
         return config
 
     def save_to_file(self, config_file: str):
-        """Save configuration to JSON file"""
-        try:
+        """Save configuration to JSON file"""        try:
             data = asdict(self)
             # Convert enums to strings for JSON serialization
             self._convert_enums_to_strings(data)
@@ -485,8 +461,7 @@ class ProtectionConfig:
             logger.error(f"Failed to save configuration to file {config_file}: {e}")
 
     def _convert_enums_to_strings(self, data: Dict[str, Any]):
-        """Convert enum values to strings for JSON serialization"""
-        if isinstance(data, dict):
+        """Convert enum values to strings for JSON serialization"""        if isinstance(data, dict):
             for key, value in data.items():
                 if hasattr(value, 'value'):  # Enum
                     data[key] = value.value
@@ -497,8 +472,7 @@ class ProtectionConfig:
 
     @classmethod
     def load_from_file(cls, config_file: str) -> 'ProtectionConfig':
-        """Load configuration from JSON file"""
-        try:
+        """Load configuration from JSON file"""        try:
             with open(config_file, 'r') as f:
                 data = json.load(f)
             

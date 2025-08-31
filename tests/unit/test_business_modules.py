@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit Tests for Business Logic Modules
+"""Unit Tests for Business Logic Modules
 ====================================
 
 Comprehensive unit tests for all business logic modules including:
@@ -28,7 +25,6 @@ Comprehensive unit tests for all business logic modules including:
 Author: Copilot Assistant for Fahed Mlaiel
 Purpose: Ensure business logic reliability and quality
 """
-
 import pytest
 import sys
 import os
@@ -48,12 +44,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestRevenueEngine:
-    """Unit tests for revenue management and optimization"""
-    
+    """Unit tests for revenue management and optimization"""    
     @pytest.fixture
     def mock_revenue_engine(self):
-        """Mock revenue engine for testing"""
-        return Mock(
+        """Mock revenue engine for testing"""        return Mock(
             calculate_revenue=Mock(return_value=Decimal('1250.75')),
             optimize_revenue=Mock(return_value={'optimized': True, 'increase': 15.5}),
             forecast_revenue=Mock(return_value={'next_month': Decimal('1500.00')}),
@@ -62,8 +56,7 @@ class TestRevenueEngine:
         )
     
     def test_revenue_calculation(self, mock_revenue_engine):
-        """Test revenue calculation for content creators"""
-        # Test data
+        """Test revenue calculation for content creators"""        # Test data
         revenue_data = {
             'streaming_royalties': Decimal('800.50'),
             'licensing_fees': Decimal('300.25'),
@@ -78,8 +71,7 @@ class TestRevenueEngine:
         mock_revenue_engine.calculate_revenue.assert_called_once_with(revenue_data)
         
     def test_revenue_optimization(self, mock_revenue_engine):
-        """Test revenue optimization algorithms"""
-        optimization_params = {
+        """Test revenue optimization algorithms"""        optimization_params = {
             'target_increase': 20.0,
             'time_period': 'monthly',
             'focus_areas': ['streaming', 'partnerships']
@@ -91,8 +83,7 @@ class TestRevenueEngine:
         assert result['increase'] == 15.5
         
     def test_revenue_forecasting(self, mock_revenue_engine):
-        """Test revenue forecasting functionality"""
-        forecast_params = {
+        """Test revenue forecasting functionality"""        forecast_params = {
             'historical_data': [1000, 1100, 1200, 1250],
             'periods_ahead': 1
         }
@@ -104,12 +95,10 @@ class TestRevenueEngine:
 
 
 class TestCreatorManagement:
-    """Unit tests for creator profile and content management"""
-    
+    """Unit tests for creator profile and content management"""    
     @pytest.fixture
     def mock_creator_manager(self):
-        """Mock creator management system"""
-        return Mock(
+        """Mock creator management system"""        return Mock(
             create_creator_profile=Mock(return_value={'creator_id': 'cr_123', 'status': 'active'}),
             update_creator_profile=Mock(return_value=True),
             get_creator_analytics=Mock(return_value={'views': 10000, 'engagement': 8.5}),
@@ -118,8 +107,7 @@ class TestCreatorManagement:
         )
     
     def test_creator_profile_creation(self, mock_creator_manager):
-        """Test creator profile creation"""
-        creator_data = {
+        """Test creator profile creation"""        creator_data = {
             'name': 'Test Creator',
             'type': 'musician',
             'email': 'creator@test.com',
@@ -133,8 +121,7 @@ class TestCreatorManagement:
         mock_creator_manager.create_creator_profile.assert_called_once_with(creator_data)
         
     def test_creator_analytics(self, mock_creator_manager):
-        """Test creator analytics generation"""
-        creator_id = 'cr_123'
+        """Test creator analytics generation"""        creator_id = 'cr_123'
         analytics_params = {
             'time_period': '30_days',
             'metrics': ['views', 'engagement', 'revenue']
@@ -146,8 +133,7 @@ class TestCreatorManagement:
         assert analytics['engagement'] == 8.5
         
     def test_content_validation(self, mock_creator_manager):
-        """Test content validation for creators"""
-        content_data = {
+        """Test content validation for creators"""        content_data = {
             'content_type': 'audio',
             'file_size': 5000000,
             'duration': 180,
@@ -161,12 +147,10 @@ class TestCreatorManagement:
 
 
 class TestCollaborationSystem:
-    """Unit tests for creator collaboration functionality"""
-    
+    """Unit tests for creator collaboration functionality"""    
     @pytest.fixture
     def mock_collaboration_system(self):
-        """Mock collaboration management system"""
-        return Mock(
+        """Mock collaboration management system"""        return Mock(
             find_collaboration_matches=Mock(return_value=[
                 {'creator_id': 'cr_456', 'compatibility': 88.5},
                 {'creator_id': 'cr_789', 'compatibility': 82.3}
@@ -178,8 +162,7 @@ class TestCollaborationSystem:
         )
     
     def test_collaboration_matching(self, mock_collaboration_system):
-        """Test finding compatible creators for collaboration"""
-        creator_profile = {
+        """Test finding compatible creators for collaboration"""        creator_profile = {
             'creator_id': 'cr_123',
             'genre': 'pop',
             'style': 'upbeat',
@@ -193,8 +176,7 @@ class TestCollaborationSystem:
         assert matches[0]['compatibility'] == 88.5
         
     def test_collaboration_proposal(self, mock_collaboration_system):
-        """Test collaboration proposal creation"""
-        proposal_data = {
+        """Test collaboration proposal creation"""        proposal_data = {
             'initiator_id': 'cr_123',
             'target_id': 'cr_456',
             'project_type': 'song_collaboration',
@@ -206,8 +188,7 @@ class TestCollaborationSystem:
         assert result['proposal_id'] == 'cp_123'
         
     def test_collaboration_revenue_calculation(self, mock_collaboration_system):
-        """Test revenue calculation for collaborations"""
-        collaboration_data = {
+        """Test revenue calculation for collaborations"""        collaboration_data = {
             'total_revenue': Decimal('1500.00'),
             'split_percentage': [50, 50],
             'participant_id': 'cr_123'
@@ -219,12 +200,10 @@ class TestCollaborationSystem:
 
 
 class TestContentManagement:
-    """Unit tests for content management and protection"""
-    
+    """Unit tests for content management and protection"""    
     @pytest.fixture
     def mock_content_manager(self):
-        """Mock content management system"""
-        return Mock(
+        """Mock content management system"""        return Mock(
             upload_content=Mock(return_value={'content_id': 'ct_123', 'status': 'uploaded'}),
             process_content=Mock(return_value={'processed': True, 'fingerprint': 'fp_abc123'}),
             protect_content=Mock(return_value={'protected': True, 'protection_level': 'high'}),
@@ -233,8 +212,7 @@ class TestContentManagement:
         )
     
     def test_content_upload(self, mock_content_manager):
-        """Test content upload functionality"""
-        content_data = {
+        """Test content upload functionality"""        content_data = {
             'file_path': '/tmp/test_audio.mp3',
             'content_type': 'audio',
             'metadata': {'title': 'Test Song', 'artist': 'Test Creator'}
@@ -246,8 +224,7 @@ class TestContentManagement:
         assert result['status'] == 'uploaded'
         
     def test_content_processing(self, mock_content_manager):
-        """Test content processing and fingerprinting"""
-        content_id = 'ct_123'
+        """Test content processing and fingerprinting"""        content_id = 'ct_123'
         processing_options = {
             'generate_fingerprint': True,
             'extract_metadata': True,
@@ -260,8 +237,7 @@ class TestContentManagement:
         assert result['fingerprint'] == 'fp_abc123'
         
     def test_content_protection(self, mock_content_manager):
-        """Test content protection mechanisms"""
-        content_id = 'ct_123'
+        """Test content protection mechanisms"""        content_id = 'ct_123'
         protection_settings = {
             'watermarking': True,
             'encryption_level': 'high',
@@ -275,12 +251,10 @@ class TestContentManagement:
 
 
 class TestAnalyticsSystem:
-    """Unit tests for analytics and reporting functionality"""
-    
+    """Unit tests for analytics and reporting functionality"""    
     @pytest.fixture
     def mock_analytics_system(self):
-        """Mock analytics system"""
-        return Mock(
+        """Mock analytics system"""        return Mock(
             generate_creator_report=Mock(return_value={
                 'total_views': 50000,
                 'total_revenue': Decimal('2500.00'),
@@ -299,8 +273,7 @@ class TestAnalyticsSystem:
         )
     
     def test_creator_report_generation(self, mock_analytics_system):
-        """Test comprehensive creator report generation"""
-        creator_id = 'cr_123'
+        """Test comprehensive creator report generation"""        creator_id = 'cr_123'
         report_params = {
             'time_period': '30_days',
             'include_financials': True,
@@ -315,8 +288,7 @@ class TestAnalyticsSystem:
         assert len(report['top_content']) == 2
         
     def test_platform_performance_tracking(self, mock_analytics_system):
-        """Test platform-specific performance tracking"""
-        creator_id = 'cr_123'
+        """Test platform-specific performance tracking"""        creator_id = 'cr_123'
         platforms = ['spotify', 'youtube']
         
         performance = mock_analytics_system.track_platform_performance(creator_id, platforms)
@@ -327,8 +299,7 @@ class TestAnalyticsSystem:
         assert performance['youtube']['views'] == 20000
         
     def test_roi_calculation(self, mock_analytics_system):
-        """Test return on investment calculations"""
-        investment_data = {
+        """Test return on investment calculations"""        investment_data = {
             'initial_investment': Decimal('1000.00'),
             'current_revenue': Decimal('2855.00'),
             'time_period': 'quarterly'
@@ -340,12 +311,10 @@ class TestAnalyticsSystem:
 
 
 class TestBusinessIntegration:
-    """Integration tests for business modules working together"""
-    
+    """Integration tests for business modules working together"""    
     @pytest.fixture
     def mock_business_system(self):
-        """Mock integrated business system"""
-        return Mock(
+        """Mock integrated business system"""        return Mock(
             process_creator_workflow=AsyncMock(return_value={
                 'workflow_id': 'wf_123',
                 'status': 'completed',
@@ -365,8 +334,7 @@ class TestBusinessIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_creator_workflow(self, mock_business_system):
-        """Test complete creator workflow from upload to monetization"""
-        workflow_data = {
+        """Test complete creator workflow from upload to monetization"""        workflow_data = {
             'creator_id': 'cr_123',
             'content_data': {'type': 'audio', 'title': 'Test Song'},
             'monetization_preferences': {'platforms': ['all'], 'revenue_split': [100]}
@@ -380,8 +348,7 @@ class TestBusinessIntegration:
         
     @pytest.mark.asyncio
     async def test_collaboration_lifecycle_management(self, mock_business_system):
-        """Test full collaboration lifecycle management"""
-        collaboration_data = {
+        """Test full collaboration lifecycle management"""        collaboration_data = {
             'initiator_id': 'cr_123',
             'participants': ['cr_456'],
             'project_type': 'song_collaboration',
@@ -396,8 +363,7 @@ class TestBusinessIntegration:
         
     @pytest.mark.asyncio
     async def test_content_monetization_management(self, mock_business_system):
-        """Test comprehensive content monetization management"""
-        monetization_data = {
+        """Test comprehensive content monetization management"""        monetization_data = {
             'content_id': 'ct_123',
             'creator_id': 'cr_123',
             'platforms': ['spotify', 'youtube', 'apple_music'],

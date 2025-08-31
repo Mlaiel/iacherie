@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced Template Engine Tests
+"""Advanced Template Engine Tests
 Ultra-professional test suite for the Template Engine system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -26,7 +23,6 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
-
 import pytest
 import sys
 import os
@@ -47,20 +43,17 @@ from ai.prompts.template_engine import (
 
 
 class TestTemplateEngine:
-    """Ultra-comprehensive test suite for TemplateEngine"""
-    
+    """Ultra-comprehensive test suite for TemplateEngine"""    
     @pytest.fixture
     async def template_engine(self):
-        """Create a fresh TemplateEngine instance for each test"""
-        engine = TemplateEngine()
+        """Create a fresh TemplateEngine instance for each test"""        engine = TemplateEngine()
         await engine.initialize()
         yield engine
         await engine.cleanup()
     
     @pytest.fixture
     def sample_template_variables(self):
-        """Create sample template variables for testing"""
-        return [
+        """Create sample template variables for testing"""        return [
             TemplateVariable(
                 name="user_name",
                 var_type=VariableType.STRING,
@@ -101,8 +94,7 @@ class TestTemplateEngine:
     
     @pytest.fixture
     def sample_template_data(self):
-        """Sample data for template processing"""
-        return {
+        """Sample data for template processing"""        return {
             "user_name": "Fahed Mlaiel",
             "age": 30,
             "email": "mlaiel@live.de",
@@ -116,8 +108,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_template_engine_initialization(self, template_engine):
-        """Test TemplateEngine initialization"""
-        assert template_engine is not None
+        """Test TemplateEngine initialization"""        assert template_engine is not None
         assert hasattr(template_engine, 'processor')
         assert hasattr(template_engine, 'variable_resolver')
         assert hasattr(template_engine, 'conditional_processor')
@@ -129,8 +120,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_template_engine_configuration(self, template_engine):
-        """Test TemplateEngine configuration"""
-        config = await template_engine.get_configuration()
+        """Test TemplateEngine configuration"""        config = await template_engine.get_configuration()
         assert config is not None
         assert "variable_syntax" in config
         assert "conditional_syntax" in config
@@ -147,8 +137,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_variable_validation_success(self, template_engine, sample_template_variables):
-        """Test successful variable validation"""
-        test_values = {
+        """Test successful variable validation"""        test_values = {
             "user_name": "Fahed Mlaiel",
             "age": 30,
             "email": "mlaiel@live.de",
@@ -166,8 +155,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_variable_validation_type_errors(self, template_engine):
-        """Test variable validation with type errors"""
-        string_var = TemplateVariable(
+        """Test variable validation with type errors"""        string_var = TemplateVariable(
             name="test_string",
             var_type=VariableType.STRING,
             required=True
@@ -191,8 +179,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_variable_validation_length_constraints(self, template_engine):
-        """Test variable validation with length constraints"""
-        string_var = TemplateVariable(
+        """Test variable validation with length constraints"""        string_var = TemplateVariable(
             name="constrained_string",
             var_type=VariableType.STRING,
             required=True,
@@ -216,8 +203,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_variable_validation_pattern_matching(self, template_engine):
-        """Test variable validation with pattern matching"""
-        email_var = TemplateVariable(
+        """Test variable validation with pattern matching"""        email_var = TemplateVariable(
             name="email",
             var_type=VariableType.EMAIL,
             required=True,
@@ -237,8 +223,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_simple_variable_substitution(self, template_engine, sample_template_data):
-        """Test simple variable substitution in templates"""
-        template = "Hello {{user_name}}, welcome to our platform!"
+        """Test simple variable substitution in templates"""        template = "Hello {{user_name}}, welcome to our platform!"
         
         result = await template_engine.process_template(
             template=template,
@@ -250,16 +235,13 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_multiple_variable_substitution(self, template_engine, sample_template_data):
-        """Test multiple variable substitution"""
-        template = """
-        Dear {{user_name}},
+        """Test multiple variable substitution"""        template = """        Dear {{user_name}},
         
         Your email {{email}} has been verified.
         Age: {{age}}
         Premium Status: {{is_premium}}
         Country: {{country}}
-        """
-        
+        """        
         result = await template_engine.process_template(
             template=template,
             variables=sample_template_data
@@ -275,8 +257,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_missing_variable_handling(self, template_engine):
-        """Test handling of missing variables"""
-        template = "Hello {{user_name}}, your score is {{missing_variable}}"
+        """Test handling of missing variables"""        template = "Hello {{user_name}}, your score is {{missing_variable}}"
         variables = {"user_name": "Fahed"}
         
         # Test with strict mode (should fail)
@@ -303,14 +284,11 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_conditional_if_statement(self, template_engine, sample_template_data):
-        """Test conditional if statements in templates"""
-        template = """
-        Welcome {{user_name}}!
+        """Test conditional if statements in templates"""        template = """        Welcome {{user_name}}!
         {% if is_premium %}
         You have premium access to all features.
         {% endif %}
-        """
-        
+        """        
         result = await template_engine.process_template(
             template=template,
             variables=sample_template_data
@@ -323,15 +301,12 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_conditional_if_else_statement(self, template_engine):
-        """Test conditional if-else statements"""
-        template = """
-        {% if is_premium %}
+        """Test conditional if-else statements"""        template = """        {% if is_premium %}
         Premium user detected.
         {% else %}
         Standard user detected.
         {% endif %}
-        """
-        
+        """        
         # Test with premium user
         premium_data = {"is_premium": True}
         result = await template_engine.process_template(
@@ -356,17 +331,14 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_complex_conditional_expressions(self, template_engine):
-        """Test complex conditional expressions"""
-        template = """
-        {% if age >= 18 and country == "Germany" %}
+        """Test complex conditional expressions"""        template = """        {% if age >= 18 and country == "Germany" %}
         You can access all content in Germany.
         {% elif age >= 18 %}
         You can access age-appropriate content.
         {% else %}
         Parental guidance required.
         {% endif %}
-        """
-        
+        """        
         # Test German adult
         german_adult = {"age": 25, "country": "Germany"}
         result = await template_engine.process_template(template=template, variables=german_adult)
@@ -389,14 +361,11 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_simple_loop_processing(self, template_engine, sample_template_data):
-        """Test simple loop processing"""
-        template = """
-        Your preferences:
+        """Test simple loop processing"""        template = """        Your preferences:
         {% for preference in preferences %}
         - {{preference}}
         {% endfor %}
-        """
-        
+        """        
         result = await template_engine.process_template(
             template=template,
             variables=sample_template_data
@@ -410,13 +379,10 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_loop_with_index(self, template_engine):
-        """Test loop processing with index"""
-        template = """
-        {% for item in items %}
+        """Test loop processing with index"""        template = """        {% for item in items %}
         {{loop.index}}: {{item}}
         {% endfor %}
-        """
-        
+        """        
         variables = {"items": ["First", "Second", "Third"]}
         result = await template_engine.process_template(
             template=template,
@@ -431,16 +397,13 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_nested_loop_processing(self, template_engine):
-        """Test nested loop processing"""
-        template = """
-        {% for category in categories %}
+        """Test nested loop processing"""        template = """        {% for category in categories %}
         Category: {{category.name}}
         {% for item in category.items %}
           - {{item}}
         {% endfor %}
         {% endfor %}
-        """
-        
+        """        
         variables = {
             "categories": [
                 {"name": "Music", "items": ["Guitar", "Piano", "Drums"]},
@@ -464,9 +427,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_multilanguage_template_processing(self, template_engine):
-        """Test multilanguage template processing"""
-        template = """
-        {% lang en %}
+        """Test multilanguage template processing"""        template = """        {% lang en %}
         Welcome {{user_name}}!
         {% endlang %}
         {% lang de %}
@@ -475,8 +436,7 @@ class TestTemplateEngine:
         {% lang fr %}
         Bienvenue {{user_name}}!
         {% endlang %}
-        """
-        
+        """        
         variables = {"user_name": "Fahed", "language": "de"}
         
         result = await template_engine.process_template(
@@ -493,16 +453,13 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_multilanguage_with_fallback(self, template_engine):
-        """Test multilanguage processing with fallback"""
-        template = """
-        {% lang en %}
+        """Test multilanguage processing with fallback"""        template = """        {% lang en %}
         Default English content for {{user_name}}
         {% endlang %}
         {% lang de %}
         German content for {{user_name}}
         {% endlang %}
-        """
-        
+        """        
         variables = {"user_name": "Fahed"}
         
         # Test with unsupported language (should fallback to English)
@@ -521,9 +478,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_template_inheritance(self, template_engine):
-        """Test template inheritance functionality"""
-        base_template = """
-        <!DOCTYPE html>
+        """Test template inheritance functionality"""        base_template = """        <!DOCTYPE html>
         <html>
         <head>
             <title>{% block title %}Default Title{% endblock %}</title>
@@ -532,17 +487,14 @@ class TestTemplateEngine:
             {% block content %}{% endblock %}
         </body>
         </html>
-        """
-        
-        child_template = """
-        {% extends "base" %}
+        """        
+        child_template = """        {% extends "base" %}
         {% block title %}{{page_title}}{% endblock %}
         {% block content %}
         <h1>Welcome {{user_name}}</h1>
         <p>{{content_text}}</p>
         {% endblock %}
-        """
-        
+        """        
         # Register base template
         await template_engine.register_template("base", base_template)
         
@@ -565,9 +517,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_template_macros(self, template_engine):
-        """Test template macros functionality"""
-        template = """
-        {% macro render_user_card(user) %}
+        """Test template macros functionality"""        template = """        {% macro render_user_card(user) %}
         <div class="user-card">
             <h3>{{user.name}}</h3>
             <p>{{user.email}}</p>
@@ -580,8 +530,7 @@ class TestTemplateEngine:
         {% for user in users %}
         {{render_user_card(user)}}
         {% endfor %}
-        """
-        
+        """        
         variables = {
             "users": [
                 {"name": "Fahed Mlaiel", "email": "mlaiel@live.de", "is_premium": True},
@@ -606,8 +555,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_template_security_xss_prevention(self, template_engine):
-        """Test XSS prevention in templates"""
-        template = "Hello {{user_input}}!"
+        """Test XSS prevention in templates"""        template = "Hello {{user_input}}!"
         
         # Test with potentially malicious input
         malicious_variables = {
@@ -627,8 +575,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_template_security_injection_prevention(self, template_engine):
-        """Test injection attack prevention"""
-        template = "User data: {{user_data}}"
+        """Test injection attack prevention"""        template = "User data: {{user_data}}"
         
         # Test with template injection attempt
         injection_variables = {
@@ -650,8 +597,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_template_caching_performance(self, template_engine):
-        """Test template caching for performance"""
-        template = "Welcome {{user_name}} to {{platform_name}}!"
+        """Test template caching for performance"""        template = "Welcome {{user_name}} to {{platform_name}}!"
         variables = {"user_name": "Fahed", "platform_name": "AI Music Platform"}
         
         # First execution (should cache)
@@ -681,8 +627,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_large_template_processing(self, template_engine):
-        """Test processing of large templates"""
-        # Create a large template with many variables
+        """Test processing of large templates"""        # Create a large template with many variables
         template_parts = []
         variables = {}
         
@@ -710,8 +655,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_malformed_template_syntax_error(self, template_engine):
-        """Test error handling for malformed template syntax"""
-        malformed_templates = [
+        """Test error handling for malformed template syntax"""        malformed_templates = [
             "{{unclosed_variable",
             "{% if condition %}{% endif %}}",  # Extra closing
             "{% for item in items %}{% endloop %}",  # Wrong closing tag
@@ -729,8 +673,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_circular_template_dependency_error(self, template_engine):
-        """Test error handling for circular template dependencies"""
-        template_a = "{% extends 'template_b' %} Content A"
+        """Test error handling for circular template dependencies"""        template_a = "{% extends 'template_b' %} Content A"
         template_b = "{% extends 'template_a' %} Content B"
         
         await template_engine.register_template("template_a", template_a)
@@ -748,9 +691,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_comprehensive_template_integration(self, template_engine):
-        """Test comprehensive template with all features"""
-        complex_template = """
-        {% lang en %}
+        """Test comprehensive template with all features"""        complex_template = """        {% lang en %}
         # Welcome to AI Music Platform, {{user_name}}!
         
         {% if is_premium %}
@@ -795,8 +736,7 @@ class TestTemplateEngine:
         ---
         Generated at: {{current_timestamp}}
         {% endlang %}
-        """
-        
+        """        
         comprehensive_variables = {
             "user_name": "Fahed Mlaiel",
             "is_premium": True,

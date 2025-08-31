@@ -1,5 +1,4 @@
-"""
-Main Marketplace Agent Module
+"""Main Marketplace Agent Module
 
 Enterprise-grade marketplace agent providing comprehensive content marketplace
 management, creator collaboration orchestration, and AI-powered monetization.
@@ -7,7 +6,6 @@ management, creator collaboration orchestration, and AI-powered monetization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -28,16 +26,14 @@ from .distribution_manager import DistributionManager
 
 
 class MarketplaceStatus(Enum):
-    """Marketplace operational status enumeration."""
-    ACTIVE = "active"
+    """Marketplace operational status enumeration."""    ACTIVE = "active"
     MAINTENANCE = "maintenance"
     SUSPENDED = "suspended"
     UPGRADING = "upgrading"
 
 
 class ContentType(Enum):
-    """Supported content types for marketplace."""
-    AUDIO = "audio"
+    """Supported content types for marketplace."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -47,8 +43,7 @@ class ContentType(Enum):
 
 
 class PriceModel(Enum):
-    """Available pricing models for marketplace listings."""
-    FIXED = "fixed"
+    """Available pricing models for marketplace listings."""    FIXED = "fixed"
     AUCTION = "auction"
     SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"
@@ -58,8 +53,7 @@ class PriceModel(Enum):
 
 @dataclass
 class MarketplaceConfig:
-    """Configuration for marketplace agent operations."""
-    max_concurrent_transactions: int = 1000
+    """Configuration for marketplace agent operations."""    max_concurrent_transactions: int = 1000
     default_commission_rate: float = 0.15
     escrow_hold_duration: int = 72  # hours
     auto_approval_threshold: float = 0.95
@@ -73,8 +67,7 @@ class MarketplaceConfig:
 
 @dataclass
 class MarketplaceListing:
-    """Marketplace listing data structure."""
-    id: Optional[int] = None
+    """Marketplace listing data structure."""    id: Optional[int] = None
     creator_id: int = 0
     title: str = ""
     description: str = ""
@@ -96,8 +89,7 @@ class MarketplaceListing:
 
 @dataclass
 class CollaborationRequest:
-    """Collaboration request data structure."""
-    id: Optional[int] = None
+    """Collaboration request data structure."""    id: Optional[int] = None
     requester_id: int = 0
     target_creator_id: int = 0
     project_title: str = ""
@@ -112,8 +104,7 @@ class CollaborationRequest:
 
 @dataclass
 class MarketplaceTransaction:
-    """Marketplace transaction data structure."""
-    id: Optional[int] = None
+    """Marketplace transaction data structure."""    id: Optional[int] = None
     buyer_id: int = 0
     seller_id: int = 0
     listing_id: int = 0
@@ -129,8 +120,7 @@ class MarketplaceTransaction:
 
 
 class MarketplaceAgent(BaseAgent):
-    """
-    Enterprise Marketplace Agent for Content Commerce & Creator Collaboration.
+    """    Enterprise Marketplace Agent for Content Commerce & Creator Collaboration.
     
     Provides comprehensive marketplace functionality including:
     - Intelligent content listing and discovery
@@ -140,15 +130,12 @@ class MarketplaceAgent(BaseAgent):
     - Advanced analytics and insights
     - Multi-platform distribution
     """
-
     def __init__(self, config: Optional[MarketplaceConfig] = None):
-        """
-        Initialize marketplace agent with configuration.
+        """        Initialize marketplace agent with configuration.
         
         Args:
             config: Marketplace configuration settings
-        """
-        super().__init__("marketplace_agent")
+        """        super().__init__("marketplace_agent")
         self.config = config or MarketplaceConfig()
         
         # Initialize core components
@@ -162,8 +149,7 @@ class MarketplaceAgent(BaseAgent):
         self.logger.info("Marketplace agent initialized successfully")
 
     def _initialize_components(self) -> None:
-        """Initialize all marketplace agent components."""
-        try:
+        """Initialize all marketplace agent components."""        try:
             self.listing_manager = ListingManager(self.config)
             self.collaboration_orchestrator = CollaborationOrchestrator(self.config)
             self.marketplace_analytics = MarketplaceAnalytics(self.config)
@@ -180,8 +166,7 @@ class MarketplaceAgent(BaseAgent):
             raise
 
     def _initialize_metrics(self) -> Dict[str, Any]:
-        """Initialize marketplace metrics tracking."""
-        return {
+        """Initialize marketplace metrics tracking."""        return {
             "total_listings": 0,
             "active_listings": 0,
             "total_transactions": 0,
@@ -203,8 +188,7 @@ class MarketplaceAgent(BaseAgent):
         base_price: float,
         **kwargs
     ) -> MarketplaceListing:
-        """
-        Create a new marketplace listing with AI-powered optimization.
+        """        Create a new marketplace listing with AI-powered optimization.
         
         Args:
             creator_id: ID of the content creator
@@ -217,8 +201,7 @@ class MarketplaceAgent(BaseAgent):
             
         Returns:
             Created marketplace listing
-        """
-        try:
+        """        try:
             # Create listing object
             listing = MarketplaceListing(
                 creator_id=creator_id,
@@ -263,8 +246,7 @@ class MarketplaceAgent(BaseAgent):
         limit: int = 20,
         offset: int = 0
     ) -> Dict[str, Any]:
-        """
-        Advanced marketplace search with AI-powered recommendations.
+        """        Advanced marketplace search with AI-powered recommendations.
         
         Args:
             query: Search query string
@@ -274,8 +256,7 @@ class MarketplaceAgent(BaseAgent):
             
         Returns:
             Search results with metadata
-        """
-        try:
+        """        try:
             # Perform intelligent search
             search_results = await self.listing_manager.search_listings(
                 query=query,
@@ -307,8 +288,7 @@ class MarketplaceAgent(BaseAgent):
         project_description: str,
         **kwargs
     ) -> CollaborationRequest:
-        """
-        Initiate a collaboration request between creators.
+        """        Initiate a collaboration request between creators.
         
         Args:
             requester_id: ID of the collaboration requester
@@ -318,8 +298,7 @@ class MarketplaceAgent(BaseAgent):
             
         Returns:
             Created collaboration request
-        """
-        try:
+        """        try:
             # Create collaboration request
             collaboration = CollaborationRequest(
                 requester_id=requester_id,
@@ -362,8 +341,7 @@ class MarketplaceAgent(BaseAgent):
         amount: float,
         payment_method: str
     ) -> MarketplaceTransaction:
-        """
-        Process a marketplace transaction with security validation.
+        """        Process a marketplace transaction with security validation.
         
         Args:
             buyer_id: ID of the buyer
@@ -374,8 +352,7 @@ class MarketplaceAgent(BaseAgent):
             
         Returns:
             Processed transaction
-        """
-        try:
+        """        try:
             # Create transaction object
             transaction = MarketplaceTransaction(
                 buyer_id=buyer_id,
@@ -427,8 +404,7 @@ class MarketplaceAgent(BaseAgent):
         creator_id: Optional[int] = None,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive marketplace analytics and insights.
+        """        Generate comprehensive marketplace analytics and insights.
         
         Args:
             time_range: Analytics time range (e.g., "7d", "30d", "90d")
@@ -437,8 +413,7 @@ class MarketplaceAgent(BaseAgent):
             
         Returns:
             Comprehensive analytics data
-        """
-        try:
+        """        try:
             # Generate core analytics
             analytics = await self.marketplace_analytics.generate_analytics(
                 time_range=time_range,
@@ -471,8 +446,7 @@ class MarketplaceAgent(BaseAgent):
         content_type: Optional[ContentType] = None,
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """
-        Get personalized content recommendations for a user.
+        """        Get personalized content recommendations for a user.
         
         Args:
             user_id: ID of the user requesting recommendations
@@ -481,8 +455,7 @@ class MarketplaceAgent(BaseAgent):
             
         Returns:
             List of personalized recommendations
-        """
-        try:
+        """        try:
             if not self.config.recommendation_engine_enabled:
                 return []
 
@@ -509,8 +482,7 @@ class MarketplaceAgent(BaseAgent):
         listing_id: int,
         market_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        AI-powered pricing optimization for marketplace listings.
+        """        AI-powered pricing optimization for marketplace listings.
         
         Args:
             listing_id: ID of the listing to optimize
@@ -518,8 +490,7 @@ class MarketplaceAgent(BaseAgent):
             
         Returns:
             Pricing optimization recommendations
-        """
-        try:
+        """        try:
             # Get current listing
             listing = await self.listing_manager.get_listing(listing_id)
             if not listing:
@@ -547,8 +518,7 @@ class MarketplaceAgent(BaseAgent):
         target_platforms: List[str],
         distribution_settings: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Distribute marketplace content to multiple platforms.
+        """        Distribute marketplace content to multiple platforms.
         
         Args:
             listing_id: ID of the listing to distribute
@@ -557,8 +527,7 @@ class MarketplaceAgent(BaseAgent):
             
         Returns:
             Distribution results and status
-        """
-        try:
+        """        try:
             # Get listing details
             listing = await self.listing_manager.get_listing(listing_id)
             if not listing:
@@ -583,8 +552,7 @@ class MarketplaceAgent(BaseAgent):
             raise
 
     async def _get_marketplace_health(self) -> Dict[str, Any]:
-        """Get marketplace health metrics."""
-        try:
+        """Get marketplace health metrics."""        try:
             uptime = (datetime.utcnow() - self.startup_time).total_seconds() / 3600  # hours
             
             return {
@@ -602,15 +570,13 @@ class MarketplaceAgent(BaseAgent):
             return {"status": "error", "error": str(e)}
 
     async def _calculate_success_rate(self) -> float:
-        """Calculate transaction success rate."""
-        try:
+        """Calculate transaction success rate."""        try:
             return await self.transaction_processor.get_success_rate()
         except Exception:
             return 0.0
 
     async def _calculate_avg_response_time(self) -> float:
-        """Calculate average API response time."""
-        try:
+        """Calculate average API response time."""        try:
             return await self.marketplace_analytics.get_average_response_time()
         except Exception:
             return 0.0
@@ -619,16 +585,14 @@ class MarketplaceAgent(BaseAgent):
         self,
         collaboration: CollaborationRequest
     ) -> None:
-        """Send collaboration notification to target creator."""
-        try:
+        """Send collaboration notification to target creator."""        try:
             # Implementation would integrate with notification service
             self.logger.info(f"Collaboration notification sent for: {collaboration.id}")
         except Exception as e:
             self.logger.error(f"Failed to send collaboration notification: {e}")
 
     def get_agent_status(self) -> Dict[str, Any]:
-        """Get current agent status and metrics."""
-        return {
+        """Get current agent status and metrics."""        return {
             "agent_name": self.name,
             "status": self.status.value,
             "uptime": (datetime.utcnow() - self.startup_time).total_seconds(),
@@ -643,8 +607,7 @@ class MarketplaceAgent(BaseAgent):
         }
 
     async def shutdown(self) -> None:
-        """Gracefully shutdown the marketplace agent."""
-        try:
+        """Gracefully shutdown the marketplace agent."""        try:
             self.logger.info("Shutting down marketplace agent...")
             self.status = MarketplaceStatus.MAINTENANCE
             

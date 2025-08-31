@@ -1,5 +1,4 @@
-"""
-🎮 Gamification Database Module - IA Influencer Agent Platform Enterprise
+"""🎮 Gamification Database Module - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/database/gamification/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -22,7 +21,6 @@ GAMIFICATION DATABASE ARCHITECTURE:
 Achievement Tracking → Challenge Management → Leaderboard Systems → 
 Reward Distribution → Progress Analytics → Engagement Optimization
 """
-
 from .achievement_repository import AchievementRepository
 from .challenge_repository import ChallengeRepository
 from .leaderboard_repository import LeaderboardRepository

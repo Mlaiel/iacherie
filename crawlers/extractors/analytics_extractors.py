@@ -1,5 +1,4 @@
-"""
-Analytics Extractors - Industrial IA Analytics and Insights System
+"""Analytics Extractors - Industrial IA Analytics and Insights System
 =================================================================
 
 Ultra-advanced professional analytics extractors for content performance and business intelligence.
@@ -29,7 +28,6 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -85,8 +83,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsType(Enum):
-    """Types of analytics"""
-    PERFORMANCE = "performance"
+    """Types of analytics"""    PERFORMANCE = "performance"
     AUDIENCE = "audience"
     ENGAGEMENT = "engagement"
     REVENUE = "revenue"
@@ -99,8 +96,7 @@ class AnalyticsType(Enum):
 
 
 class InsightLevel(Enum):
-    """Insight complexity levels"""
-    BASIC = "basic"
+    """Insight complexity levels"""    BASIC = "basic"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
@@ -108,8 +104,7 @@ class InsightLevel(Enum):
 
 
 class PredictionHorizon(Enum):
-    """Prediction time horizons"""
-    NEXT_HOUR = "next_hour"
+    """Prediction time horizons"""    NEXT_HOUR = "next_hour"
     NEXT_DAY = "next_day"
     NEXT_WEEK = "next_week"
     NEXT_MONTH = "next_month"
@@ -119,8 +114,7 @@ class PredictionHorizon(Enum):
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics extraction configuration"""
-    
+    """Analytics extraction configuration"""    
     config_id: str
     user_id: str
     analytics_types: List[AnalyticsType] = field(default_factory=list)
@@ -158,8 +152,7 @@ class AnalyticsConfig:
 
 @dataclass
 class PerformanceMetrics:
-    """Content performance metrics"""
-    
+    """Content performance metrics"""    
     # Basic metrics
     views: int = 0
     likes: int = 0
@@ -196,8 +189,7 @@ class PerformanceMetrics:
 
 @dataclass
 class AudienceInsights:
-    """Audience analysis insights"""
-    
+    """Audience analysis insights"""    
     # Demographics
     age_distribution: Dict[str, float] = field(default_factory=dict)
     gender_distribution: Dict[str, float] = field(default_factory=dict)
@@ -226,8 +218,7 @@ class AudienceInsights:
 
 @dataclass
 class PredictiveInsights:
-    """AI-powered predictive insights"""
-    
+    """AI-powered predictive insights"""    
     # Performance predictions
     predicted_views: Dict[str, int] = field(default_factory=dict)
     predicted_engagement: Dict[str, float] = field(default_factory=dict)
@@ -254,8 +245,7 @@ class PredictiveInsights:
 
 
 class PerformanceAnalyticsExtractor(BaseExtractor):
-    """Advanced performance analytics extractor with AI insights"""
-    
+    """Advanced performance analytics extractor with AI insights"""    
     def __init__(self):
         super().__init__("PerformanceAnalyticsExtractor")
         self.ml_models = {}
@@ -265,8 +255,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
         self._initialize_analytics_models()
     
     def _initialize_analytics_models(self):
-        """Initialize ML models for analytics"""
-        try:
+        """Initialize ML models for analytics"""        try:
             if HAS_ML_LIBS:
                 # Performance prediction models
                 self.ml_models = {
@@ -294,8 +283,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
             self.logger.error(f"Failed to initialize analytics models: {e}")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for performance analytics"""
-        return any([
+        """Check if request is for performance analytics"""        return any([
             "performance" in request.extraction_types,
             "analytics" in request.extraction_types,
             "insights" in request.extraction_types,
@@ -303,8 +291,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
         ])
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Perform performance analytics extraction"""
-        start_time = datetime.utcnow()
+        """Perform performance analytics extraction"""        start_time = datetime.utcnow()
         
         try:
             # Parse analytics configuration
@@ -366,8 +353,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
             )
     
     async def _parse_analytics_config(self, request: ExtractionRequest) -> AnalyticsConfig:
-        """Parse analytics configuration from request"""
-        config_data = request.metadata.get('analytics_config', {})
+        """Parse analytics configuration from request"""        config_data = request.metadata.get('analytics_config', {})
         
         return AnalyticsConfig(
             config_id=f"analytics_{request.request_id}",
@@ -380,8 +366,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
         )
     
     async def _collect_performance_data(self, config: AnalyticsConfig) -> List[Dict[str, Any]]:
-        """Collect performance data from various sources"""
-        data = []
+        """Collect performance data from various sources"""        data = []
         
         try:
             # Collect data from each platform
@@ -399,8 +384,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
             return []
     
     async def _calculate_basic_metrics(self, raw_data: List[Dict[str, Any]]) -> PerformanceMetrics:
-        """Calculate basic performance metrics"""
-        if not raw_data:
+        """Calculate basic performance metrics"""        if not raw_data:
             return PerformanceMetrics()
         
         try:
@@ -435,8 +419,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
             return PerformanceMetrics()
     
     async def _perform_advanced_analytics(self, raw_data: List[Dict[str, Any]], config: AnalyticsConfig) -> Dict[str, Any]:
-        """Perform advanced analytics and insights"""
-        insights = {}
+        """Perform advanced analytics and insights"""        insights = {}
         
         try:
             df = pd.DataFrame(raw_data)
@@ -463,8 +446,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
             return {}
     
     async def _generate_predictions(self, raw_data: List[Dict[str, Any]], config: AnalyticsConfig) -> PredictiveInsights:
-        """Generate AI-powered predictions"""
-        predictions = PredictiveInsights()
+        """Generate AI-powered predictions"""        predictions = PredictiveInsights()
         
         try:
             if not HAS_ML_LIBS or not config.include_predictions:
@@ -497,8 +479,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
             return predictions
     
     async def _detect_anomalies(self, raw_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect anomalies in performance data"""
-        anomalies = []
+        """Detect anomalies in performance data"""        anomalies = []
         
         try:
             if not raw_data:
@@ -520,8 +501,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
     
     async def _generate_recommendations(self, metrics: PerformanceMetrics, insights: Dict[str, Any], 
                                      predictions: PredictiveInsights) -> List[Dict[str, Any]]:
-        """Generate AI-powered recommendations"""
-        recommendations = []
+        """Generate AI-powered recommendations"""        recommendations = []
         
         try:
             # Performance-based recommendations
@@ -590,8 +570,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
             return []
     
     def _calculate_analytics_quality_score(self, metrics: PerformanceMetrics, insights: Dict[str, Any]) -> float:
-        """Calculate quality score for analytics extraction"""
-        base_score = 0.7
+        """Calculate quality score for analytics extraction"""        base_score = 0.7
         
         # Data completeness bonus
         if metrics.views > 0:
@@ -609,8 +588,7 @@ class PerformanceAnalyticsExtractor(BaseExtractor):
 
 
 class AudienceAnalyticsExtractor(BaseExtractor):
-    """Advanced audience analytics and segmentation extractor"""
-    
+    """Advanced audience analytics and segmentation extractor"""    
     def __init__(self):
         super().__init__("AudienceAnalyticsExtractor")
         self.segmentation_models = {}
@@ -619,8 +597,7 @@ class AudienceAnalyticsExtractor(BaseExtractor):
         self._initialize_audience_models()
     
     def _initialize_audience_models(self):
-        """Initialize models for audience analysis"""
-        try:
+        """Initialize models for audience analysis"""        try:
             if HAS_ML_LIBS:
                 self.segmentation_models = {
                     'demographic': KMeans(n_clusters=5, random_state=42),
@@ -640,8 +617,7 @@ class AudienceAnalyticsExtractor(BaseExtractor):
             self.logger.error(f"Failed to initialize audience models: {e}")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request is for audience analytics"""
-        return any([
+        """Check if request is for audience analytics"""        return any([
             "audience" in request.extraction_types,
             "segmentation" in request.extraction_types,
             "demographics" in request.extraction_types,
@@ -649,8 +625,7 @@ class AudienceAnalyticsExtractor(BaseExtractor):
         ])
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Perform audience analytics extraction"""
-        start_time = datetime.utcnow()
+        """Perform audience analytics extraction"""        start_time = datetime.utcnow()
         
         try:
             # Collect audience data
@@ -711,8 +686,7 @@ class AudienceAnalyticsExtractor(BaseExtractor):
             )
     
     def _calculate_audience_quality_score(self, insights: AudienceInsights) -> float:
-        """Calculate quality score for audience analytics"""
-        base_score = 0.6
+        """Calculate quality score for audience analytics"""        base_score = 0.6
         
         # Demographics completeness
         if insights.age_distribution:
@@ -733,8 +707,7 @@ class AudienceAnalyticsExtractor(BaseExtractor):
 
 # Factory function for analytics extractors
 def create_analytics_extractor_suite() -> Dict[str, BaseExtractor]:
-    """Create a complete suite of analytics extractors"""
-    return {
+    """Create a complete suite of analytics extractors"""    return {
         'performance_analytics': PerformanceAnalyticsExtractor(),
         'audience_analytics': AudienceAnalyticsExtractor()
     }

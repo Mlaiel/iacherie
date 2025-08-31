@@ -1,5 +1,4 @@
-"""
-Licensing Database Module Index
+"""Licensing Database Module Index
 
 Enterprise-grade centralized entry point for all licensing database modules.
 Provides unified interface for license management, copyright protection,
@@ -13,7 +12,6 @@ ANY unauthorized use, copying, or theft without explicit written authorization i
 and subject to immediate legal prosecution under German law.
 Contact: mlaiel@live.de for ANY authorization requests.
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timezone, timedelta
 from sqlalchemy.orm import Session
@@ -61,8 +59,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class LicensePackageRequest:
-    """Complete license package request specification"""
-    licensor_id: str
+    """Complete license package request specification"""    licensor_id: str
     licensee_id: str
     content_id: str
     content_metadata: Dict[str, Any]
@@ -78,8 +75,7 @@ class LicensePackageRequest:
 
 @dataclass
 class LicensePackageResult:
-    """Complete license package creation result"""
-    success: bool
+    """Complete license package creation result"""    success: bool
     package_id: str
     copyright_registration: Optional[Dict[str, Any]] = None
     license_agreement: Optional[Dict[str, Any]] = None
@@ -91,20 +87,17 @@ class LicensePackageResult:
     warnings: List[str] = None
 
 class ComprehensiveLicensingManager:
-    """
-    Enterprise-grade comprehensive licensing management system.
+    """    Enterprise-grade comprehensive licensing management system.
     Orchestrates all licensing operations with AI-powered automation,
     blockchain integration, and advanced compliance monitoring.
-    """
-    
+    """    
     def __init__(self, 
                  session: Session = None,
                  cache_manager: CacheManager = None,
                  rights_analyzer: RightsAnalyzer = None,
                  blockchain_service: BlockchainService = None,
                  payment_processor: PaymentProcessor = None):
-        """Initialize the comprehensive licensing manager"""
-        self.session = session or get_database_session()
+        """Initialize the comprehensive licensing manager"""        self.session = session or get_database_session()
         self.cache = cache_manager or CacheManager()
         self.rights_analyzer = rights_analyzer or RightsAnalyzer()
         self.blockchain = blockchain_service or BlockchainService()
@@ -151,16 +144,14 @@ class ComprehensiveLicensingManager:
     
     async def create_complete_license_package(self, 
                                             request: LicensePackageRequest) -> LicensePackageResult:
-        """
-        Create a complete licensing package with all components.
+        """        Create a complete licensing package with all components.
         
         Args:
             request: Complete license package request specification
             
         Returns:
             Comprehensive license package result
-        """
-        package_id = f"pkg_{uuid4().hex[:12]}"
+        """        package_id = f"pkg_{uuid4().hex[:12]}"
         result = LicensePackageResult(success=False, package_id=package_id, errors=[], warnings=[])
         
         try:
@@ -225,8 +216,7 @@ class ComprehensiveLicensingManager:
                                               requester_id: str,
                                               requested_rights: Dict[str, Any],
                                               commercial_terms: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Process an incoming content licensing request with AI-powered analysis.
+        """        Process an incoming content licensing request with AI-powered analysis.
         
         Args:
             content_id: ID of the content to be licensed
@@ -236,8 +226,7 @@ class ComprehensiveLicensingManager:
             
         Returns:
             Processing result with recommendations and next steps
-        """
-        try:
+        """        try:
             # AI-powered content and rights analysis
             content_analysis = await self.rights_analyzer.analyze_content_licensing_potential(
                 content_id, requested_rights
@@ -292,8 +281,7 @@ class ComprehensiveLicensingManager:
                                                  content_id: str = None,
                                                  rights_holder_id: str = None,
                                                  time_range: Tuple[datetime, datetime] = None) -> Dict[str, Any]:
-        """
-        Generate a comprehensive rights and licensing report.
+        """        Generate a comprehensive rights and licensing report.
         
         Args:
             content_id: Specific content ID to report on
@@ -302,8 +290,7 @@ class ComprehensiveLicensingManager:
             
         Returns:
             Comprehensive rights report
-        """
-        try:
+        """        try:
             # Parallel data collection
             tasks = []
             
@@ -389,8 +376,7 @@ class ComprehensiveLicensingManager:
     async def monitor_rights_violations(self,
                                       real_time: bool = True,
                                       auto_enforcement: bool = False) -> Dict[str, Any]:
-        """
-        Monitor for rights violations across all platforms and content.
+        """        Monitor for rights violations across all platforms and content.
         
         Args:
             real_time: Enable real-time monitoring
@@ -398,8 +384,7 @@ class ComprehensiveLicensingManager:
             
         Returns:
             Violation monitoring results
-        """
-        try:
+        """        try:
             monitoring_results = {
                 'monitoring_session_id': f"mon_{uuid4().hex[:12]}",
                 'started_at': datetime.now(timezone.utc).isoformat(),
@@ -473,8 +458,7 @@ class ComprehensiveLicensingManager:
     # Private helper methods
     
     async def _handle_copyright_registration(self, request: LicensePackageRequest, result: LicensePackageResult) -> bool:
-        """Handle copyright registration step"""
-        try:
+        """Handle copyright registration step"""        try:
             registration = await self.copyright_service.register_copyright(
                 content_id=request.content_id,
                 creator_id=request.licensor_id,
@@ -499,8 +483,7 @@ class ComprehensiveLicensingManager:
             return False
     
     async def _handle_license_agreement(self, request: LicensePackageRequest, result: LicensePackageResult) -> bool:
-        """Handle license agreement creation step"""
-        try:
+        """Handle license agreement creation step"""        try:
             agreement_data = {
                 'licensor_id': request.licensor_id,
                 'licensee_id': request.licensee_id,
@@ -530,8 +513,7 @@ class ComprehensiveLicensingManager:
             return False
     
     async def _handle_usage_rights(self, request: LicensePackageRequest, result: LicensePackageResult) -> bool:
-        """Handle usage rights creation step"""
-        try:
+        """Handle usage rights creation step"""        try:
             grants = []
             for usage_type in request.usage_types:
                 grant_data = {
@@ -562,8 +544,7 @@ class ComprehensiveLicensingManager:
             return False
     
     async def _handle_royalty_setup(self, request: LicensePackageRequest, result: LicensePackageResult) -> bool:
-        """Handle royalty distribution setup step"""
-        try:
+        """Handle royalty distribution setup step"""        try:
             if request.commercial_terms.get('royalty_rate') or request.commercial_terms.get('revenue_share'):
                 # Setup will be handled when revenue is generated
                 pass
@@ -574,8 +555,7 @@ class ComprehensiveLicensingManager:
             return False
     
     async def _handle_automation_setup(self, request: LicensePackageRequest, result: LicensePackageResult) -> bool:
-        """Handle automation setup step"""
-        try:
+        """Handle automation setup step"""        try:
             # Create automation template and rules
             return True
             
@@ -584,8 +564,7 @@ class ComprehensiveLicensingManager:
             return False
     
     async def _handle_blockchain_recording(self, request: LicensePackageRequest, result: LicensePackageResult) -> bool:
-        """Handle blockchain recording step"""
-        try:
+        """Handle blockchain recording step"""        try:
             # Record on blockchain if service is available
             if self.blockchain:
                 record = await self.blockchain.record_license_agreement({
@@ -603,8 +582,7 @@ class ComprehensiveLicensingManager:
             return False
     
     async def _validate_package_compliance(self, request: LicensePackageRequest, result: LicensePackageResult) -> bool:
-        """Validate overall package compliance"""
-        try:
+        """Validate overall package compliance"""        try:
             # Comprehensive compliance validation
             return True
             
@@ -613,8 +591,7 @@ class ComprehensiveLicensingManager:
             return False
     
     async def _assess_compliance_status(self, copyright_data: Dict, license_data: Dict, usage_data: Dict) -> Dict[str, Any]:
-        """Assess overall compliance status"""
-        try:
+        """Assess overall compliance status"""        try:
             return {
                 'overall_score': 0.95,
                 'copyright_compliance': 'excellent',
@@ -629,8 +606,7 @@ class ComprehensiveLicensingManager:
             return {'overall_score': 0.0, 'status': 'unknown'}
     
     async def _execute_enforcement_action(self, violation: RightsViolation) -> Dict[str, Any]:
-        """Execute automated enforcement action"""
-        try:
+        """Execute automated enforcement action"""        try:
             return {
                 'action_id': f"enf_{uuid4().hex[:8]}",
                 'violation_id': violation.violation_id,
@@ -646,12 +622,10 @@ class ComprehensiveLicensingManager:
 # Convenience factory functions
 
 def create_licensing_manager(session: Session = None) -> ComprehensiveLicensingManager:
-    """Create a comprehensive licensing manager instance"""
-    return ComprehensiveLicensingManager(session=session)
+    """Create a comprehensive licensing manager instance"""    return ComprehensiveLicensingManager(session=session)
 
 async def quick_license_validation(content_id: str, user_id: str, usage_type: str) -> Dict[str, Any]:
-    """Quick license validation for common use cases"""
-    manager = create_licensing_manager()
+    """Quick license validation for common use cases"""    manager = create_licensing_manager()
     usage_context = UsageContext(
         user_id=user_id,
         content_id=content_id,
@@ -667,8 +641,7 @@ async def create_standard_license_package(
     usage_types: List[str],
     duration_months: int = 12
 ) -> LicensePackageResult:
-    """Create a standard license package with common settings"""
-    manager = create_licensing_manager()
+    """Create a standard license package with common settings"""    manager = create_licensing_manager()
     
     request = LicensePackageRequest(
         licensor_id=licensor_id,
@@ -705,8 +678,7 @@ async def create_standard_license_package(
         pricing_strategy: PricingStrategy,
         automation_enabled: bool = True
     ) -> Dict[str, Any]:
-        """
-        Crée un package complet de licence incluant tous les aspects.
+        """        Crée un package complet de licence incluant tous les aspects.
         
         Args:
             licensor_id: ID du concédant
@@ -720,8 +692,7 @@ async def create_standard_license_package(
             
         Returns:
             Dict contenant tous les éléments créés
-        """
-        
+        """        
         try:
             self.logger.info(f"Création package licence complet pour contenu {content_id}")
             
@@ -838,8 +809,7 @@ async def create_standard_license_package(
         period_start,
         period_end
     ) -> Dict[str, Any]:
-        """
-        Traite les revenus et distribue automatiquement les royalties.
+        """        Traite les revenus et distribue automatiquement les royalties.
         
         Args:
             content_id: ID du contenu
@@ -849,8 +819,7 @@ async def create_standard_license_package(
             
         Returns:
             Dict avec les résultats de distribution
-        """
-        
+        """        
         try:
             # Recherche des accords de licence actifs
             active_agreements = self.db.query(LicenseAgreement).filter(
@@ -931,8 +900,7 @@ async def create_standard_license_package(
         content_id: int,
         violation_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Détecte et gère automatiquement les violations.
+        """        Détecte et gère automatiquement les violations.
         
         Args:
             content_id: ID du contenu
@@ -940,8 +908,7 @@ async def create_standard_license_package(
             
         Returns:
             Dict avec les actions prises
-        """
-        
+        """        
         try:
             # Détection de violation de copyright
             copyright_violation = self.copyright_manager.report_violation(
@@ -998,8 +965,7 @@ async def create_standard_license_package(
         end_date,
         content_ids: Optional[List[int]] = None
     ) -> Dict[str, Any]:
-        """
-        Génère un rapport complet incluant tous les aspects licensing.
+        """        Génère un rapport complet incluant tous les aspects licensing.
         
         Args:
             user_id: ID de l'utilisateur
@@ -1009,8 +975,7 @@ async def create_standard_license_package(
             
         Returns:
             Rapport complet
-        """
-        
+        """        
         try:
             # Rapport des licences
             license_report = self.license_manager.generate_license_report(user_id)
@@ -1073,13 +1038,11 @@ async def create_standard_license_package(
             raise
 
     def get_system_health_status(self) -> Dict[str, Any]:
-        """
-        Retourne le statut de santé du système de licensing.
+        """        Retourne le statut de santé du système de licensing.
         
         Returns:
             Statut de santé avec métriques
-        """
-        
+        """        
         try:
             # Vérifications de base
             pending_requests = self.db.query(AutomatedLicenseRequest).filter(
@@ -1144,8 +1107,7 @@ async def create_standard_license_package(
         revenue_report: Dict,
         automation_analytics: Dict
     ) -> List[str]:
-        """
-        Génère des recommandations basées sur l'analyse complète.
+        """        Génère des recommandations basées sur l'analyse complète.
         
         Args:
             license_report: Rapport des licences
@@ -1154,8 +1116,7 @@ async def create_standard_license_package(
             
         Returns:
             Liste de recommandations
-        """
-        
+        """        
         recommendations = []
         
         # Recommandations basées sur les licences

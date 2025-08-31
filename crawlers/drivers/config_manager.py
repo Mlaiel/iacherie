@@ -1,5 +1,4 @@
-"""
-Enterprise Configuration Manager
+"""Enterprise Configuration Manager
 ===============================
 
 Advanced configuration management system for centralized control of all driver components.
@@ -20,7 +19,6 @@ Professional Development Team Specialties:
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
 """
-
 import os
 import json
 import yaml
@@ -36,16 +34,14 @@ from cryptography.fernet import Fernet
 
 
 class Environment(Enum):
-    """Environment types"""
-    DEVELOPMENT = "development"
+    """Environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class ConfigSource(Enum):
-    """Configuration sources"""
-    FILE = "file"
+    """Configuration sources"""    FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
     VAULT = "vault"
@@ -54,8 +50,7 @@ class ConfigSource(Enum):
 
 @dataclass
 class ProxyConfig:
-    """Proxy configuration"""
-    enabled: bool = False
+    """Proxy configuration"""    enabled: bool = False
     proxies: List[str] = field(default_factory=list)
     rotation_interval: int = 300  # seconds
     health_check_interval: int = 60
@@ -65,8 +60,7 @@ class ProxyConfig:
 
 @dataclass
 class BrowserConfig:
-    """Browser configuration"""
-    default_browser: str = "chrome"
+    """Browser configuration"""    default_browser: str = "chrome"
     headless: bool = True
     window_size: tuple = (1920, 1080)
     max_sessions: int = 5
@@ -79,8 +73,7 @@ class BrowserConfig:
 
 @dataclass
 class APIConfig:
-    """API configuration"""
-    base_urls: Dict[str, str] = field(default_factory=dict)
+    """API configuration"""    base_urls: Dict[str, str] = field(default_factory=dict)
     authentication: Dict[str, Dict[str, str]] = field(default_factory=dict)
     rate_limits: Dict[str, Dict[str, int]] = field(default_factory=dict)
     timeouts: Dict[str, int] = field(default_factory=lambda: {"default": 30})
@@ -91,8 +84,7 @@ class APIConfig:
 
 @dataclass
 class ConnectionConfig:
-    """Connection pool configuration"""
-    max_connections_total: int = 100
+    """Connection pool configuration"""    max_connections_total: int = 100
     max_connections_per_host: int = 20
     connection_timeout: int = 10
     read_timeout: int = 30
@@ -104,8 +96,7 @@ class ConnectionConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    enable_encryption: bool = True
+    """Security configuration"""    enable_encryption: bool = True
     encryption_key: Optional[str] = None
     enable_ssl_verification: bool = True
     certificate_path: Optional[str] = None
@@ -116,8 +107,7 @@ class SecurityConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring configuration"""
-    enable_metrics: bool = True
+    """Monitoring configuration"""    enable_metrics: bool = True
     metrics_interval: int = 60
     enable_health_checks: bool = True
     health_check_interval: int = 30
@@ -129,8 +119,7 @@ class MonitoringConfig:
 
 @dataclass
 class DriversConfiguration:
-    """Complete drivers configuration"""
-    environment: Environment = Environment.DEVELOPMENT
+    """Complete drivers configuration"""    environment: Environment = Environment.DEVELOPMENT
     proxy: ProxyConfig = field(default_factory=ProxyConfig)
     browser: BrowserConfig = field(default_factory=BrowserConfig)
     api: APIConfig = field(default_factory=APIConfig)
@@ -144,8 +133,7 @@ class DriversConfiguration:
 
 
 class ConfigurationManager:
-    """
-    Enterprise configuration management system.
+    """    Enterprise configuration management system.
     
     Features:
     - Environment-aware configuration loading
@@ -154,8 +142,7 @@ class ConfigurationManager:
     - Encrypted sensitive data storage
     - Hot reloading and change detection
     - Configuration versioning and rollback
-    """
-    
+    """    
     def __init__(
         self,
         config_dir: Optional[str] = None,
@@ -185,8 +172,7 @@ class ConfigurationManager:
         self.config_dir.mkdir(parents=True, exist_ok=True)
     
     def load_configuration(self, force_reload: bool = False) -> DriversConfiguration:
-        """Load configuration from all sources"""
-        if self.current_config and not force_reload:
+        """Load configuration from all sources"""        if self.current_config and not force_reload:
             return self.current_config
         
         try:
@@ -221,8 +207,7 @@ class ConfigurationManager:
             raise
     
     def save_configuration(self, config: DriversConfiguration) -> bool:
-        """Save configuration to file"""
-        try:
+        """Save configuration to file"""        try:
             config_file = self.config_dir / f"drivers_{self.environment.value}.yaml"
             
             # Convert to dictionary
@@ -244,33 +229,27 @@ class ConfigurationManager:
             return False
     
     def get_proxy_config(self) -> ProxyConfig:
-        """Get proxy configuration"""
-        config = self.load_configuration()
+        """Get proxy configuration"""        config = self.load_configuration()
         return config.proxy
     
     def get_browser_config(self) -> BrowserConfig:
-        """Get browser configuration"""
-        config = self.load_configuration()
+        """Get browser configuration"""        config = self.load_configuration()
         return config.browser
     
     def get_api_config(self) -> APIConfig:
-        """Get API configuration"""
-        config = self.load_configuration()
+        """Get API configuration"""        config = self.load_configuration()
         return config.api
     
     def get_connection_config(self) -> ConnectionConfig:
-        """Get connection configuration"""
-        config = self.load_configuration()
+        """Get connection configuration"""        config = self.load_configuration()
         return config.connection
     
     def get_security_config(self) -> SecurityConfig:
-        """Get security configuration"""
-        config = self.load_configuration()
+        """Get security configuration"""        config = self.load_configuration()
         return config.security
     
     def get_monitoring_config(self) -> MonitoringConfig:
-        """Get monitoring configuration"""
-        config = self.load_configuration()
+        """Get monitoring configuration"""        config = self.load_configuration()
         return config.monitoring
     
     def update_configuration(
@@ -278,8 +257,7 @@ class ConfigurationManager:
         section: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update specific configuration section"""
-        try:
+        """Update specific configuration section"""        try:
             config = self.load_configuration()
             
             if hasattr(config, section):
@@ -303,8 +281,7 @@ class ConfigurationManager:
             return False
     
     def rollback_configuration(self, steps: int = 1) -> bool:
-        """Rollback configuration to previous version"""
-        try:
+        """Rollback configuration to previous version"""        try:
             if len(self.config_history) < steps:
                 self.logger.warning("Not enough configuration history for rollback")
                 return False
@@ -323,8 +300,7 @@ class ConfigurationManager:
             return False
     
     def validate_configuration_file(self, file_path: str) -> bool:
-        """Validate configuration file"""
-        try:
+        """Validate configuration file"""        try:
             with open(file_path, 'r') as f:
                 if file_path.endswith('.yaml') or file_path.endswith('.yml'):
                     config_data = yaml.safe_load(f)
@@ -346,8 +322,7 @@ class ConfigurationManager:
             return False
     
     def get_configuration_status(self) -> Dict[str, Any]:
-        """Get configuration status information"""
-        return {
+        """Get configuration status information"""        return {
             'environment': self.environment.value,
             'config_loaded': self.current_config is not None,
             'last_reload': self.last_reload,
@@ -358,8 +333,7 @@ class ConfigurationManager:
         }
     
     def _detect_environment(self) -> Environment:
-        """Detect current environment"""
-        env = os.getenv('DRIVERS_ENV', 'development').lower()
+        """Detect current environment"""        env = os.getenv('DRIVERS_ENV', 'development').lower()
         
         env_mapping = {
             'dev': Environment.DEVELOPMENT,
@@ -375,8 +349,7 @@ class ConfigurationManager:
         return env_mapping.get(env, Environment.DEVELOPMENT)
     
     def _load_from_files(self):
-        """Load configuration from files"""
-        # Try environment-specific file first
+        """Load configuration from files"""        # Try environment-specific file first
         env_file = self.config_dir / f"drivers_{self.environment.value}.yaml"
         if env_file.exists():
             with open(env_file, 'r') as f:
@@ -393,8 +366,7 @@ class ConfigurationManager:
                 self.config_sources[ConfigSource.FILE] = config_data
     
     def _load_from_environment(self):
-        """Load configuration from environment variables"""
-        env_config = {}
+        """Load configuration from environment variables"""        env_config = {}
         
         # Browser configuration
         browser_config = {}
@@ -425,8 +397,7 @@ class ConfigurationManager:
             self.config_sources[ConfigSource.ENVIRONMENT] = env_config
     
     def _load_from_defaults(self):
-        """Load default configuration"""
-        default_config = {
+        """Load default configuration"""        default_config = {
             'environment': self.environment.value,
             'proxy': {
                 'enabled': False,
@@ -484,8 +455,7 @@ class ConfigurationManager:
         self.config_sources[ConfigSource.DEFAULT] = default_config
     
     def _merge_configurations(self) -> DriversConfiguration:
-        """Merge configurations from all sources"""
-        # Start with defaults
+        """Merge configurations from all sources"""        # Start with defaults
         merged = self.config_sources.get(ConfigSource.DEFAULT, {}).copy()
         
         # Override with file configuration
@@ -500,8 +470,7 @@ class ConfigurationManager:
         return self._dict_to_config(merged)
     
     def _deep_merge(self, base: Dict, override: Dict) -> Dict:
-        """Deep merge two dictionaries"""
-        result = base.copy()
+        """Deep merge two dictionaries"""        result = base.copy()
         
         for key, value in override.items():
             if key in result and isinstance(result[key], dict) and isinstance(value, dict):
@@ -512,8 +481,7 @@ class ConfigurationManager:
         return result
     
     def _dict_to_config(self, config_dict: Dict) -> DriversConfiguration:
-        """Convert dictionary to DriversConfiguration object"""
-        return DriversConfiguration(
+        """Convert dictionary to DriversConfiguration object"""        return DriversConfiguration(
             environment=Environment(config_dict.get('environment', 'development')),
             proxy=ProxyConfig(**config_dict.get('proxy', {})),
             browser=BrowserConfig(**config_dict.get('browser', {})),
@@ -525,8 +493,7 @@ class ConfigurationManager:
         )
     
     def _config_to_dict(self, config: DriversConfiguration) -> Dict:
-        """Convert DriversConfiguration object to dictionary"""
-        return {
+        """Convert DriversConfiguration object to dictionary"""        return {
             'environment': config.environment.value,
             'proxy': {
                 'enabled': config.proxy.enabled,
@@ -591,8 +558,7 @@ class ConfigurationManager:
         }
     
     def _validate_configuration(self, config: DriversConfiguration) -> DriversConfiguration:
-        """Validate configuration"""
-        # Basic validation
+        """Validate configuration"""        # Basic validation
         if config.browser.max_sessions <= 0:
             raise ValueError("Browser max_sessions must be greater than 0")
         
@@ -605,13 +571,11 @@ class ConfigurationManager:
         return config
     
     def _calculate_checksum(self, config: DriversConfiguration) -> str:
-        """Calculate configuration checksum"""
-        config_str = json.dumps(self._config_to_dict(config), sort_keys=True)
+        """Calculate configuration checksum"""        config_str = json.dumps(self._config_to_dict(config), sort_keys=True)
         return hashlib.sha256(config_str.encode()).hexdigest()
     
     def _load_or_generate_encryption_key(self) -> bytes:
-        """Load or generate encryption key"""
-        key_file = self.config_dir / ".encryption_key"
+        """Load or generate encryption key"""        key_file = self.config_dir / ".encryption_key"
         
         if key_file.exists():
             with open(key_file, 'rb') as f:
@@ -624,8 +588,7 @@ class ConfigurationManager:
             return key
     
     def _encrypt_sensitive_data(self, config_dict: Dict) -> Dict:
-        """Encrypt sensitive configuration data"""
-        if not self.cipher_suite:
+        """Encrypt sensitive configuration data"""        if not self.cipher_suite:
             return config_dict
         
         sensitive_fields = [
@@ -661,8 +624,7 @@ class ConfigurationManager:
         return config_dict
     
     def _decrypt_sensitive_data(self, config_dict: Dict) -> Dict:
-        """Decrypt sensitive configuration data"""
-        if not self.cipher_suite:
+        """Decrypt sensitive configuration data"""        if not self.cipher_suite:
             return config_dict
         
         sensitive_fields = [
@@ -711,8 +673,7 @@ def get_config_manager(
     config_dir: Optional[str] = None,
     environment: Optional[Environment] = None
 ) -> ConfigurationManager:
-    """Get singleton configuration manager instance"""
-    global _config_manager_instance
+    """Get singleton configuration manager instance"""    global _config_manager_instance
     
     if _config_manager_instance is None:
         _config_manager_instance = ConfigurationManager(
@@ -724,5 +685,4 @@ def get_config_manager(
 
 
 def load_drivers_config() -> DriversConfiguration:
-    """Load drivers configuration using singleton manager"""
-    return get_config_manager().load_configuration()
+    """Load drivers configuration using singleton manager"""    return get_config_manager().load_configuration()

@@ -1,5 +1,4 @@
-"""
-Growth Hacker Agent
+"""Growth Hacker Agent
 
 AI-powered growth hacking and audience expansion agent for influencers.
 
@@ -12,7 +11,6 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -28,8 +26,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class GrowthStrategy(Enum):
-    """Growth hacking strategies"""
-    VIRAL_CONTENT = "viral_content"
+    """Growth hacking strategies"""    VIRAL_CONTENT = "viral_content"
     COLLABORATION_NETWORK = "collaboration_network"
     TREND_HIJACKING = "trend_hijacking"
     AUDIENCE_SEGMENTATION = "audience_segmentation"
@@ -39,8 +36,7 @@ class GrowthStrategy(Enum):
     GAMIFICATION = "gamification"
 
 class GrowthMetric(Enum):
-    """Key growth metrics to track"""
-    FOLLOWER_COUNT = "follower_count"
+    """Key growth metrics to track"""    FOLLOWER_COUNT = "follower_count"
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     IMPRESSIONS = "impressions"
@@ -50,8 +46,7 @@ class GrowthMetric(Enum):
     TIME_TO_GROWTH = "time_to_growth"
 
 class GrowthPhase(Enum):
-    """Growth phases"""
-    DISCOVERY = "discovery"
+    """Growth phases"""    DISCOVERY = "discovery"
     VALIDATION = "validation"
     SCALING = "scaling"
     OPTIMIZATION = "optimization"
@@ -59,8 +54,7 @@ class GrowthPhase(Enum):
 
 @dataclass
 class GrowthExperiment:
-    """Growth hacking experiment"""
-    experiment_id: str
+    """Growth hacking experiment"""    experiment_id: str
     name: str
     strategy: GrowthStrategy
     hypothesis: str
@@ -75,8 +69,7 @@ class GrowthExperiment:
     
 @dataclass
 class GrowthOpportunity:
-    """Identified growth opportunity"""
-    opportunity_id: str
+    """Identified growth opportunity"""    opportunity_id: str
     opportunity_type: str
     description: str
     potential_impact: float
@@ -88,8 +81,7 @@ class GrowthOpportunity:
 
 @dataclass
 class AudienceSegment:
-    """Audience segment for targeted growth"""
-    segment_id: str
+    """Audience segment for targeted growth"""    segment_id: str
     name: str
     demographics: Dict[str, Any]
     interests: List[str]
@@ -99,8 +91,7 @@ class AudienceSegment:
     conversion_potential: float
 
 class GrowthHackerAgent(BaseAIAgent):
-    """AI agent for growth hacking and rapid audience expansion"""
-    
+    """AI agent for growth hacking and rapid audience expansion"""    
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
         self.name = "GrowthHackerAgent"
@@ -125,8 +116,7 @@ class GrowthHackerAgent(BaseAIAgent):
         logger.info("Growth Hacker Agent initialized successfully")
     
     async def analyze_growth_potential(self, platforms: List[str]) -> List[GrowthOpportunity]:
-        """Analyze current state and identify growth opportunities"""
-        try:
+        """Analyze current state and identify growth opportunities"""        try:
             opportunities = []
             
             for platform in platforms:
@@ -154,8 +144,7 @@ class GrowthHackerAgent(BaseAIAgent):
             return []
     
     async def design_growth_experiment(self, opportunity: GrowthOpportunity) -> GrowthExperiment:
-        """Design a growth experiment based on an opportunity"""
-        try:
+        """Design a growth experiment based on an opportunity"""        try:
             experiment = GrowthExperiment(
                 experiment_id=f"exp_{opportunity.opportunity_id}_{datetime.now().timestamp()}",
                 name=f"Growth Experiment: {opportunity.opportunity_type}",
@@ -175,8 +164,7 @@ class GrowthHackerAgent(BaseAIAgent):
             return None
     
     async def execute_growth_strategy(self, experiment: GrowthExperiment) -> bool:
-        """Execute a growth hacking strategy"""
-        try:
+        """Execute a growth hacking strategy"""        try:
             # Start experiment
             experiment.start_date = datetime.now()
             experiment.end_date = experiment.start_date + timedelta(days=experiment.duration_days)
@@ -204,8 +192,7 @@ class GrowthHackerAgent(BaseAIAgent):
             return False
     
     async def optimize_content_virality(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for viral potential"""
-        try:
+        """Optimize content for viral potential"""        try:
             optimization_suggestions = {
                 "title_optimization": await self._optimize_title_for_virality(content_data.get("title", "")),
                 "hashtag_strategy": await self._generate_viral_hashtags(content_data),
@@ -228,8 +215,7 @@ class GrowthHackerAgent(BaseAIAgent):
             return {}
     
     async def segment_audience_for_growth(self, platform: str) -> List[AudienceSegment]:
-        """Segment audience to identify high-growth potential groups"""
-        try:
+        """Segment audience to identify high-growth potential groups"""        try:
             # Get audience data
             audience_data = await self._get_audience_data(platform)
             
@@ -253,8 +239,7 @@ class GrowthHackerAgent(BaseAIAgent):
             return []
     
     async def track_growth_metrics(self, experiment_id: str) -> Dict[str, Any]:
-        """Track and analyze growth metrics for an active experiment"""
-        try:
+        """Track and analyze growth metrics for an active experiment"""        try:
             if experiment_id not in self.active_experiments:
                 return {"error": "Experiment not found"}
             
@@ -285,8 +270,7 @@ class GrowthHackerAgent(BaseAIAgent):
     
     # Strategy execution methods
     async def _execute_viral_content_strategy(self, experiment: GrowthExperiment):
-        """Execute viral content strategy"""
-        viral_tactics = [
+        """Execute viral content strategy"""        viral_tactics = [
             "Create trending topic content",
             "Use viral content formulas",
             "Implement engagement hooks",
@@ -298,8 +282,7 @@ class GrowthHackerAgent(BaseAIAgent):
             await self._execute_tactic(experiment, tactic)
     
     async def _execute_collaboration_strategy(self, experiment: GrowthExperiment):
-        """Execute collaboration network strategy"""
-        collaboration_tactics = [
+        """Execute collaboration network strategy"""        collaboration_tactics = [
             "Identify potential collaborators",
             "Reach out to micro-influencers",
             "Create collaboration content",
@@ -311,8 +294,7 @@ class GrowthHackerAgent(BaseAIAgent):
             await self._execute_tactic(experiment, tactic)
     
     async def _execute_trend_hijacking_strategy(self, experiment: GrowthExperiment):
-        """Execute trend hijacking strategy"""
-        trend_tactics = [
+        """Execute trend hijacking strategy"""        trend_tactics = [
             "Monitor trending topics",
             "Create timely content",
             "Use trending hashtags strategically",
@@ -324,8 +306,7 @@ class GrowthHackerAgent(BaseAIAgent):
             await self._execute_tactic(experiment, tactic)
     
     async def _execute_segmentation_strategy(self, experiment: GrowthExperiment):
-        """Execute audience segmentation strategy"""
-        segmentation_tactics = [
+        """Execute audience segmentation strategy"""        segmentation_tactics = [
             "Create segment-specific content",
             "Personalize messaging",
             "Use targeted hashtags",
@@ -337,8 +318,7 @@ class GrowthHackerAgent(BaseAIAgent):
             await self._execute_tactic(experiment, tactic)
     
     async def _execute_adaptive_strategy(self, experiment: GrowthExperiment):
-        """Execute adaptive growth strategy based on data-driven insights"""
-        # Analyze current performance metrics
+        """Execute adaptive growth strategy based on data-driven insights"""        # Analyze current performance metrics
         current_metrics = await self._analyze_current_performance(experiment.creator_id)
         
         # Determine optimal tactics based on performance gaps
@@ -373,8 +353,7 @@ class GrowthHackerAgent(BaseAIAgent):
             await self._execute_tactic(experiment, tactic)
             
     async def _analyze_current_performance(self, creator_id: str) -> Dict[str, float]:
-        """Analyze current performance metrics for adaptive strategy selection"""
-        # In production, this would connect to analytics systems
+        """Analyze current performance metrics for adaptive strategy selection"""        # In production, this would connect to analytics systems
         return {
             'engagement_rate': 0.025,  # Example metrics
             'reach_growth': 0.08,
@@ -384,15 +363,13 @@ class GrowthHackerAgent(BaseAIAgent):
         }
     
     async def _execute_tactic(self, experiment: GrowthExperiment, tactic: str):
-        """Execute a specific growth tactic"""
-        # Simulate tactic execution
+        """Execute a specific growth tactic"""        # Simulate tactic execution
         await asyncio.sleep(0.1)
         logger.info(f"Executing tactic for {experiment.experiment_id}: {tactic}")
     
     # Helper methods
     async def _get_platform_metrics(self, platform: str) -> Dict[str, Any]:
-        """Get current metrics for a platform"""
-        # Simulate metrics retrieval
+        """Get current metrics for a platform"""        # Simulate metrics retrieval
         import random
         return {
             "followers": random.randint(1000, 100000),
@@ -402,8 +379,7 @@ class GrowthHackerAgent(BaseAIAgent):
         }
     
     async def _identify_platform_opportunities(self, platform: str, metrics: Dict[str, Any]) -> List[GrowthOpportunity]:
-        """Identify growth opportunities for a specific platform"""
-        opportunities = []
+        """Identify growth opportunities for a specific platform"""        opportunities = []
         
         if metrics["engagement_rate"] < 0.05:
             opportunities.append(GrowthOpportunity(
@@ -434,8 +410,7 @@ class GrowthHackerAgent(BaseAIAgent):
         return opportunities
     
     async def _identify_cross_platform_opportunities(self, platforms: List[str]) -> List[GrowthOpportunity]:
-        """Identify cross-platform growth opportunities"""
-        if len(platforms) > 1:
+        """Identify cross-platform growth opportunities"""        if len(platforms) > 1:
             return [GrowthOpportunity(
                 opportunity_id="cross_platform_sync",
                 opportunity_type="Cross-Platform Synergy",
@@ -450,8 +425,7 @@ class GrowthHackerAgent(BaseAIAgent):
         return []
     
     def _initialize_viral_formulas(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize viral content formulas"""
-        return {
+        """Initialize viral content formulas"""        return {
             "emotional_hook": {
                 "pattern": "emotion + story + call_to_action",
                 "emotions": ["surprise", "joy", "anger", "fear", "sadness"],
@@ -470,8 +444,7 @@ class GrowthHackerAgent(BaseAIAgent):
         }
     
     def _load_growth_playbooks(self) -> Dict[str, List[str]]:
-        """Load growth hacking playbooks"""
-        return {
+        """Load growth hacking playbooks"""        return {
             "startup_growth": [
                 "Build MVP audience",
                 "Create buzz and anticipation",
@@ -496,8 +469,7 @@ class GrowthHackerAgent(BaseAIAgent):
         }
     
     async def _optimize_title_for_virality(self, title: str) -> Dict[str, Any]:
-        """Optimize title for viral potential"""
-        return {
+        """Optimize title for viral potential"""        return {
             "original_title": title,
             "optimized_title": f"🔥 {title} - You Won't Believe What Happened Next!",
             "viral_score_improvement": 0.3,
@@ -505,15 +477,13 @@ class GrowthHackerAgent(BaseAIAgent):
         }
     
     async def _generate_viral_hashtags(self, content_data: Dict[str, Any]) -> List[str]:
-        """Generate hashtags optimized for virality"""
-        return [
+        """Generate hashtags optimized for virality"""        return [
             "#viral", "#trending", "#fyp", "#foryou", "#amazing",
             "#mustwatch", "#incredible", "#mindblowing", "#gamechanging"
         ]
     
     async def _calculate_viral_potential(self, content_data: Dict[str, Any], optimizations: Dict[str, Any]) -> float:
-        """Calculate viral potential score"""
-        # Simulate viral potential calculation
+        """Calculate viral potential score"""        # Simulate viral potential calculation
         import random
         base_score = random.uniform(0.3, 0.8)
         optimization_bonus = sum([0.1 for _ in optimizations if optimizations])

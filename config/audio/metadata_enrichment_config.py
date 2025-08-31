@@ -1,5 +1,4 @@
-"""
-Metadata Enrichment Configuration Module for IA-Influencer Agent Platform
+"""Metadata Enrichment Configuration Module for IA-Influencer Agent Platform
 =========================================================================
 
 Advanced metadata enrichment and SEO optimization configuration for content creators.
@@ -19,7 +18,6 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class TaggingStrategy(Enum):
-    """Automated tagging strategies"""
-    AI_CONTENT_ANALYSIS = "ai_content_analysis"
+    """Automated tagging strategies"""    AI_CONTENT_ANALYSIS = "ai_content_analysis"
     ACOUSTIC_FINGERPRINTING = "acoustic_fingerprinting"
     GENRE_CLASSIFICATION = "genre_classification"
     MOOD_DETECTION = "mood_detection"
@@ -45,8 +42,7 @@ class TaggingStrategy(Enum):
 
 
 class SEOOptimizationLevel(Enum):
-    """SEO optimization levels"""
-    BASIC = "basic"
+    """SEO optimization levels"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -54,8 +50,7 @@ class SEOOptimizationLevel(Enum):
 
 
 class ContentClassificationType(Enum):
-    """Content classification types"""
-    GENRE_CLASSIFICATION = "genre_classification"
+    """Content classification types"""    GENRE_CLASSIFICATION = "genre_classification"
     MOOD_CLASSIFICATION = "mood_classification"
     ENERGY_LEVEL = "energy_level"
     TEMPO_CLASSIFICATION = "tempo_classification"
@@ -68,8 +63,7 @@ class ContentClassificationType(Enum):
 
 
 class AnalyticsProvider(Enum):
-    """Analytics and tracking providers"""
-    GOOGLE_ANALYTICS = "google_analytics"
+    """Analytics and tracking providers"""    GOOGLE_ANALYTICS = "google_analytics"
     SPOTIFY_ANALYTICS = "spotify_analytics"
     YOUTUBE_ANALYTICS = "youtube_analytics"
     SOCIAL_MEDIA_INSIGHTS = "social_media_insights"
@@ -79,8 +73,7 @@ class AnalyticsProvider(Enum):
 
 @dataclass
 class TaggingConfig:
-    """Configuration for automated tagging"""
-    enabled_strategies: List[TaggingStrategy] = field(
+    """Configuration for automated tagging"""    enabled_strategies: List[TaggingStrategy] = field(
         default_factory=lambda: [
             TaggingStrategy.AI_CONTENT_ANALYSIS,
             TaggingStrategy.GENRE_CLASSIFICATION,
@@ -156,8 +149,7 @@ class TaggingConfig:
 
 @dataclass
 class SEOOptimizationConfig:
-    """Configuration for SEO optimization"""
-    optimization_level: SEOOptimizationLevel = SEOOptimizationLevel.PROFESSIONAL
+    """Configuration for SEO optimization"""    optimization_level: SEOOptimizationLevel = SEOOptimizationLevel.PROFESSIONAL
     
     # Title optimization
     title_optimization_config: Dict[str, Any] = field(default_factory=lambda: {
@@ -229,8 +221,7 @@ class SEOOptimizationConfig:
 
 @dataclass
 class ContentClassificationConfig:
-    """Configuration for content classification"""
-    enabled_classifications: List[ContentClassificationType] = field(
+    """Configuration for content classification"""    enabled_classifications: List[ContentClassificationType] = field(
         default_factory=lambda: [
             ContentClassificationType.GENRE_CLASSIFICATION,
             ContentClassificationType.MOOD_CLASSIFICATION,
@@ -283,8 +274,7 @@ class ContentClassificationConfig:
 
 @dataclass
 class AnalyticsTagConfig:
-    """Configuration for analytics tagging"""
-    enabled_providers: List[AnalyticsProvider] = field(
+    """Configuration for analytics tagging"""    enabled_providers: List[AnalyticsProvider] = field(
         default_factory=lambda: [
             AnalyticsProvider.GOOGLE_ANALYTICS,
             AnalyticsProvider.SPOTIFY_ANALYTICS,
@@ -338,8 +328,7 @@ class AnalyticsTagConfig:
 
 @dataclass
 class MetadataEnrichmentConfig:
-    """Master configuration for metadata enrichment"""
-    
+    """Master configuration for metadata enrichment"""    
     # Core configurations
     tagging_config: TaggingConfig = field(default_factory=TaggingConfig)
     seo_optimization_config: SEOOptimizationConfig = field(default_factory=SEOOptimizationConfig)
@@ -391,8 +380,7 @@ def enrich_audio_metadata(
     config: MetadataEnrichmentConfig,
     custom_parameters: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """
-    Enrich audio metadata using AI and external APIs
+    """    Enrich audio metadata using AI and external APIs
     
     Args:
         audio_content: Audio content to analyze
@@ -401,8 +389,7 @@ def enrich_audio_metadata(
         
     Returns:
         Dictionary containing enriched metadata
-    """
-    try:
+    """    try:
         enriched_metadata = {
             "content_id": str(uuid.uuid4()),
             "timestamp": datetime.utcnow().isoformat(),
@@ -433,21 +420,18 @@ DEFAULT_METADATA_ENRICHMENT_CONFIG = MetadataEnrichmentConfig()
 
 # Export configuration getter
 def get_metadata_enrichment_config() -> MetadataEnrichmentConfig:
-    """Get default metadata enrichment configuration"""
-    return DEFAULT_METADATA_ENRICHMENT_CONFIG
+    """Get default metadata enrichment configuration"""    return DEFAULT_METADATA_ENRICHMENT_CONFIG
 
 
 def validate_metadata_enrichment_config(config: MetadataEnrichmentConfig) -> bool:
-    """
-    Validate metadata enrichment configuration
+    """    Validate metadata enrichment configuration
     
     Args:
         config: Configuration to validate
         
     Returns:
         True if configuration is valid, False otherwise
-    """
-    try:
+    """    try:
         # Validate tagging configuration
         if not config.tagging_config.enabled_strategies:
             logger.warning("No tagging strategies enabled")

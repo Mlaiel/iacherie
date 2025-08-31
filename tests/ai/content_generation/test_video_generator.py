@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Video Generator Tests
+"""Video Generator Tests
 
 Comprehensive tests for the VideoGenerator class that handles
 AI-powered video content creation and editing.
@@ -26,7 +23,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -54,18 +50,15 @@ from ai.content_generation.content_models import ContentType, Platform
 
 
 class TestVideoGenerator:
-    """Test suite for VideoGenerator"""
-    
+    """Test suite for VideoGenerator"""    
     @pytest.fixture
     def generator(self):
-        """Create a video generator instance"""
-        config = {'test': 'value'}  # Minimal config for testing
+        """Create a video generator instance"""        config = {'test': 'value'}  # Minimal config for testing
         return VideoContentGenerator(config)
     
     @pytest.fixture
     def sample_script(self):
-        """Create sample video script"""
-        return {
+        """Create sample video script"""        return {
             "title": "AI Technology Explained",
             "duration": 60,
             "scenes": [
@@ -95,8 +88,7 @@ class TestVideoGenerator:
     
     @pytest.fixture
     def video_config(self):
-        """Create sample video configuration"""
-        return VideoConfig(
+        """Create sample video configuration"""        return VideoConfig(
             resolution="1920x1080",
             fps=30,
             quality=VideoQuality.HIGH,
@@ -107,8 +99,7 @@ class TestVideoGenerator:
         )
     
     def test_generator_initialization(self, generator):
-        """Test video generator initialization"""
-        assert generator is not None
+        """Test video generator initialization"""        assert generator is not None
         assert hasattr(generator, 'supported_formats')
         assert hasattr(generator, 'supported_resolutions')
         assert hasattr(generator, 'max_duration')
@@ -116,8 +107,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_script_to_video_generation(self, generator, sample_script, video_config):
-        """Test generating video from script"""
-        with patch.object(generator, '_render_video') as mock_render:
+        """Test generating video from script"""        with patch.object(generator, '_render_video') as mock_render:
             mock_render.return_value = {
                 "success": True,
                 "video_path": "/tmp/generated_video.mp4",
@@ -140,8 +130,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_ai_visual_generation(self, generator):
-        """Test AI-powered visual generation"""
-        scene_description = "A futuristic cityscape with flying cars and neon lights"
+        """Test AI-powered visual generation"""        scene_description = "A futuristic cityscape with flying cars and neon lights"
         
         with patch.object(generator, '_generate_ai_visuals') as mock_visuals:
             mock_visuals.return_value = {
@@ -167,8 +156,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_template_based_video_creation(self, generator):
-        """Test template-based video creation"""
-        template_id = "social_media_promo"
+        """Test template-based video creation"""        template_id = "social_media_promo"
         content_data = {
             "title": "New Product Launch",
             "subtitle": "Revolutionary AI Technology",
@@ -199,8 +187,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_multi_platform_optimization(self, generator, video_config):
-        """Test multi-platform video optimization"""
-        base_video = "/tmp/master_video.mp4"
+        """Test multi-platform video optimization"""        base_video = "/tmp/master_video.mp4"
         platforms = [Platform.YOUTUBE, Platform.INSTAGRAM, Platform.TIKTOK, Platform.LINKEDIN]
         
         with patch.object(generator, '_optimize_for_platform') as mock_optimize:
@@ -235,8 +222,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_real_time_video_effects(self, generator):
-        """Test real-time video effects application"""
-        video_path = "/tmp/source_video.mp4"
+        """Test real-time video effects application"""        video_path = "/tmp/source_video.mp4"
         effects = [
             {"type": "color_grading", "intensity": 0.7, "style": "cinematic"},
             {"type": "motion_blur", "strength": 0.5},
@@ -265,8 +251,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_automatic_scene_detection(self, generator):
-        """Test automatic scene detection and segmentation"""
-        video_path = "/tmp/long_video.mp4"
+        """Test automatic scene detection and segmentation"""        video_path = "/tmp/long_video.mp4"
         
         with patch.object(generator, '_detect_scenes') as mock_detection:
             mock_detection.return_value = {
@@ -292,8 +277,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_audio_video_synchronization(self, generator):
-        """Test audio-video synchronization"""
-        video_path = "/tmp/video_track.mp4"
+        """Test audio-video synchronization"""        video_path = "/tmp/video_track.mp4"
         audio_path = "/tmp/audio_track.wav"
         
         with patch.object(generator, '_synchronize_audio') as mock_sync:
@@ -318,8 +302,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_batch_video_processing(self, generator, video_config):
-        """Test batch video processing"""
-        video_jobs = [
+        """Test batch video processing"""        video_jobs = [
             {"id": "job_001", "script": {"title": "Video 1"}, "template": "template_a"},
             {"id": "job_002", "script": {"title": "Video 2"}, "template": "template_b"},
             {"id": "job_003", "script": {"title": "Video 3"}, "template": "template_c"}
@@ -346,8 +329,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_live_streaming_preparation(self, generator):
-        """Test live streaming preparation"""
-        video_content = {
+        """Test live streaming preparation"""        video_content = {
             "intro_video": "/tmp/intro.mp4",
             "main_content": "/tmp/presentation.mp4",
             "outro_video": "/tmp/outro.mp4",
@@ -383,8 +365,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_ai_content_analysis(self, generator):
-        """Test AI-powered content analysis"""
-        video_path = "/tmp/analysis_video.mp4"
+        """Test AI-powered content analysis"""        video_path = "/tmp/analysis_video.mp4"
         
         with patch.object(generator, '_analyze_content') as mock_analysis:
             mock_analysis.return_value = {
@@ -416,8 +397,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_subtitle_generation(self, generator):
-        """Test automatic subtitle generation"""
-        video_path = "/tmp/subtitle_video.mp4"
+        """Test automatic subtitle generation"""        video_path = "/tmp/subtitle_video.mp4"
         
         with patch.object(generator, '_generate_subtitles') as mock_subtitles:
             mock_subtitles.return_value = {
@@ -446,8 +426,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_thumbnail_generation(self, generator):
-        """Test automatic thumbnail generation"""
-        video_path = "/tmp/thumbnail_video.mp4"
+        """Test automatic thumbnail generation"""        video_path = "/tmp/thumbnail_video.mp4"
         
         with patch.object(generator, '_generate_thumbnails') as mock_thumbnails:
             mock_thumbnails.return_value = {
@@ -474,8 +453,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_video_compression_optimization(self, generator):
-        """Test intelligent video compression"""
-        video_path = "/tmp/large_video.mp4"
+        """Test intelligent video compression"""        video_path = "/tmp/large_video.mp4"
         
         with patch.object(generator, '_optimize_compression') as mock_compression:
             mock_compression.return_value = {
@@ -501,8 +479,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_interactive_video_elements(self, generator):
-        """Test interactive video elements creation"""
-        video_path = "/tmp/interactive_video.mp4"
+        """Test interactive video elements creation"""        video_path = "/tmp/interactive_video.mp4"
         
         interactive_elements = [
             {
@@ -542,8 +519,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_error_handling_and_recovery(self, generator, video_config):
-        """Test error handling and recovery mechanisms"""
-        invalid_script = {"title": "Test", "scenes": []}  # Invalid empty scenes
+        """Test error handling and recovery mechanisms"""        invalid_script = {"title": "Test", "scenes": []}  # Invalid empty scenes
         
         with patch.object(generator, '_render_video') as mock_render:
             # Test rendering failure with recovery
@@ -569,8 +545,7 @@ class TestVideoGenerator:
     
     @pytest.mark.asyncio
     async def test_performance_monitoring(self, generator, video_config):
-        """Test performance monitoring and optimization"""
-        script = {"title": "Performance Test", "scenes": [{"id": "test", "duration": 10}]}
+        """Test performance monitoring and optimization"""        script = {"title": "Performance Test", "scenes": [{"id": "test", "duration": 10}]}
         
         with patch.object(generator, '_render_video') as mock_render:
             mock_render.return_value = {
@@ -597,11 +572,9 @@ class TestVideoGenerator:
 
 
 class TestVideoConfig:
-    """Test suite for VideoConfig model"""
-    
+    """Test suite for VideoConfig model"""    
     def test_video_config_creation(self):
-        """Test video configuration creation"""
-        config = VideoConfig(
+        """Test video configuration creation"""        config = VideoConfig(
             resolution="1920x1080",
             fps=30,
             quality=VideoQuality.HIGH,
@@ -620,8 +593,7 @@ class TestVideoConfig:
         assert config.aspect_ratio == "16:9"
     
     def test_video_config_validation(self):
-        """Test video configuration validation"""
-        # Test invalid resolution
+        """Test video configuration validation"""        # Test invalid resolution
         with pytest.raises(Exception):  # Adjust based on actual validation
             VideoConfig(
                 resolution="invalid_resolution",
@@ -632,25 +604,21 @@ class TestVideoConfig:
 
 
 class TestVideoEnums:
-    """Test suite for video-related enums"""
-    
+    """Test suite for video-related enums"""    
     def test_video_format_enum(self):
-        """Test VideoFormat enum values"""
-        assert VideoFormat.MP4.value == "mp4"
+        """Test VideoFormat enum values"""        assert VideoFormat.MP4.value == "mp4"
         assert VideoFormat.AVI.value == "avi"
         assert VideoFormat.MOV.value == "mov"
         assert VideoFormat.WEBM.value == "webm"
     
     def test_video_quality_enum(self):
-        """Test VideoQuality enum values"""
-        assert VideoQuality.LOW.value == "low"
+        """Test VideoQuality enum values"""        assert VideoQuality.LOW.value == "low"
         assert VideoQuality.MEDIUM.value == "medium"
         assert VideoQuality.HIGH.value == "high"
         assert VideoQuality.ULTRA.value == "ultra"
     
     def test_video_style_enum(self):
-        """Test VideoStyle enum values"""
-        assert VideoStyle.PROFESSIONAL.value == "professional"
+        """Test VideoStyle enum values"""        assert VideoStyle.PROFESSIONAL.value == "professional"
         assert VideoStyle.CASUAL.value == "casual"
         assert VideoStyle.CINEMATIC.value == "cinematic"
         assert VideoStyle.ANIMATED.value == "animated"

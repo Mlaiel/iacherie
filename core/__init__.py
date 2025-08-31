@@ -21,8 +21,7 @@ Monétisation avancée
 
 MISSION: Moteur fondamental de la plateforme IA-Influencer-Agent pour créateurs
 ARCHITECTURE: 22 modules core enterprise-grade pour production industrielle
-"""
-__version__ = "3.0.0"
+"""__version__ = "3.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "Copyright 2025 Fahed Mlaiel. All rights reserved."
@@ -474,8 +473,7 @@ __all__ = [item for item in __all__ if item is not None]
 
 # Module initialization
 def _initialize_core_logging():
-    """Initialize core module logging"""
-    try:
+    """Initialize core module logging"""    try:
         logging.basicConfig(
             level=logging.INFO,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
@@ -530,14 +528,11 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 Pour toute demande de licence ou autorisation: mlaiel@live.de
 
 © 2025 Fahed Mlaiel. Tous droits réservés.
-"""
-def get_legal_notice() -> str:
-    """Retourne l'avertissement légal"""
-    return LEGAL_NOTICE
+"""def get_legal_notice() -> str:
+    """Retourne l'avertissement légal"""    return LEGAL_NOTICE
 
 def get_module_metadata() -> Dict[str, Any]:
-    """Retourne les métadonnées complètes du module"""
-    return MODULE_METADATA.copy()
+    """Retourne les métadonnées complètes du module"""    return MODULE_METADATA.copy()
 
 # Core validation system
 from .validation import (

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Test Suite for Transformer Models
+"""Comprehensive Test Suite for Transformer Models
 
 Ultra-advanced industrial-grade tests for all transformer architectures,
 covering multimodal transformers, attention mechanisms, positional encodings,
@@ -42,7 +39,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -76,8 +72,7 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def transformer_config():
-    """Basic transformer configuration for testing"""
-    return TransformerConfig(
+    """Basic transformer configuration for testing"""    return TransformerConfig(
         input_dim=512,
         hidden_dims=[512, 256],
         output_dim=128,
@@ -96,8 +91,7 @@ def transformer_config():
 
 @pytest.fixture
 def multimodal_config():
-    """Multimodal transformer configuration"""
-    return TransformerConfig(
+    """Multimodal transformer configuration"""    return TransformerConfig(
         input_dim=512,
         hidden_dims=[512, 256],
         output_dim=128,
@@ -115,8 +109,7 @@ def multimodal_config():
 
 @pytest.fixture
 def sample_sequences():
-    """Generate sample sequence data for testing"""
-    torch.manual_seed(42)
+    """Generate sample sequence data for testing"""    torch.manual_seed(42)
     np.random.seed(42)
     
     return {
@@ -133,11 +126,9 @@ def sample_sequences():
 
 
 class TestTransformerConfig:
-    """Test TransformerConfig functionality"""
-    
+    """Test TransformerConfig functionality"""    
     def test_config_creation(self):
-        """Test transformer config creation with defaults"""
-        config = TransformerConfig(
+        """Test transformer config creation with defaults"""        config = TransformerConfig(
             input_dim=512,
             hidden_dims=[256],
             output_dim=128,
@@ -154,8 +145,7 @@ class TestTransformerConfig:
         assert config.use_flash_attention is True
     
     def test_multimodal_config(self):
-        """Test multimodal transformer configuration"""
-        config = TransformerConfig(
+        """Test multimodal transformer configuration"""        config = TransformerConfig(
             input_dim=512,
             hidden_dims=[256],
             output_dim=128,
@@ -170,15 +160,13 @@ class TestTransformerConfig:
         assert config.transformer_type == TransformerType.MULTIMODAL
     
     def test_transformer_type_enum(self):
-        """Test TransformerType enum values"""
-        assert TransformerType.ENCODER_ONLY.value == "encoder_only"
+        """Test TransformerType enum values"""        assert TransformerType.ENCODER_ONLY.value == "encoder_only"
         assert TransformerType.DECODER_ONLY.value == "decoder_only"
         assert TransformerType.ENCODER_DECODER.value == "encoder_decoder"
         assert TransformerType.MULTIMODAL.value == "multimodal"
     
     def test_config_validation(self):
-        """Test configuration parameter validation"""
-        config = TransformerConfig(
+        """Test configuration parameter validation"""        config = TransformerConfig(
             input_dim=768,
             hidden_dims=[512, 256],
             output_dim=128,
@@ -198,11 +186,9 @@ class TestTransformerConfig:
 
 
 class TestPositionalEncoding:
-    """Test positional encoding implementations"""
-    
+    """Test positional encoding implementations"""    
     def test_sinusoidal_positional_encoding(self):
-        """Test sinusoidal positional encoding"""
-        d_model = 512
+        """Test sinusoidal positional encoding"""        d_model = 512
         max_len = 1000
         
         pe = PositionalEncoding(d_model, max_len)
@@ -228,8 +214,7 @@ class TestPositionalEncoding:
         assert odd_dims.shape[1] == d_model // 2
     
     def test_rotary_positional_embedding(self):
-        """Test Rotary Position Embedding (RoPE)"""
-        dim = 64
+        """Test Rotary Position Embedding (RoPE)"""        dim = 64
         max_pos = 512
         
         rope = RotaryPositionalEmbedding(dim, max_pos)
@@ -252,8 +237,7 @@ class TestPositionalEncoding:
         assert torch.all(sin_emb >= -1) and torch.all(sin_emb <= 1)
     
     def test_positional_encoding_consistency(self):
-        """Test consistency of positional encodings"""
-        d_model = 512
+        """Test consistency of positional encodings"""        d_model = 512
         pe = PositionalEncoding(d_model, 1000)
         
         # Same input should give same output
@@ -275,11 +259,9 @@ class TestPositionalEncoding:
 
 
 class TestMultiHeadAttention:
-    """Test multi-head attention mechanism"""
-    
+    """Test multi-head attention mechanism"""    
     def test_attention_initialization(self):
-        """Test attention layer initialization"""
-        d_model = 512
+        """Test attention layer initialization"""        d_model = 512
         num_heads = 8
         
         attn = MultiHeadAttention(d_model, num_heads)
@@ -295,8 +277,7 @@ class TestMultiHeadAttention:
         assert hasattr(attn, 'w_o')
     
     def test_self_attention(self, sample_sequences):
-        """Test self-attention computation"""
-        d_model = 512
+        """Test self-attention computation"""        d_model = 512
         num_heads = 8
         
         attn = MultiHeadAttention(d_model, num_heads, use_flash_attention=False)
@@ -313,8 +294,7 @@ class TestMultiHeadAttention:
         assert not torch.allclose(output, input_seq, atol=1e-3)
     
     def test_cross_attention(self, sample_sequences):
-        """Test cross-attention between different sequences"""
-        d_model = 512
+        """Test cross-attention between different sequences"""        d_model = 512
         num_heads = 8
         
         attn = MultiHeadAttention(d_model, num_heads, use_flash_attention=False)
@@ -328,8 +308,7 @@ class TestMultiHeadAttention:
         assert torch.isfinite(output).all()
     
     def test_attention_with_mask(self, sample_sequences):
-        """Test attention with attention mask"""
-        d_model = 512
+        """Test attention with attention mask"""        d_model = 512
         num_heads = 8
         
         attn = MultiHeadAttention(d_model, num_heads, use_flash_attention=False)
@@ -347,8 +326,7 @@ class TestMultiHeadAttention:
         assert torch.isfinite(output).all()
     
     def test_causal_attention(self, sample_sequences):
-        """Test causal (masked) attention"""
-        d_model = 512
+        """Test causal (masked) attention"""        d_model = 512
         num_heads = 8
         seq_len = 256
         
@@ -368,8 +346,7 @@ class TestMultiHeadAttention:
     @pytest.mark.skipif(not hasattr(F, 'scaled_dot_product_attention'), 
                        reason="PyTorch version doesn't support flash attention")
     def test_flash_attention(self, sample_sequences):
-        """Test flash attention optimization"""
-        d_model = 512
+        """Test flash attention optimization"""        d_model = 512
         num_heads = 8
         
         # Test with flash attention enabled
@@ -386,8 +363,7 @@ class TestMultiHeadAttention:
         assert torch.allclose(output_flash, output_standard, atol=1e-2)
     
     def test_attention_gradients(self, sample_sequences):
-        """Test attention gradient computation"""
-        d_model = 512
+        """Test attention gradient computation"""        d_model = 512
         num_heads = 8
         
         attn = MultiHeadAttention(d_model, num_heads)
@@ -410,11 +386,9 @@ class TestMultiHeadAttention:
 
 
 class TestFeedForward:
-    """Test feed-forward network component"""
-    
+    """Test feed-forward network component"""    
     def test_feedforward_initialization(self):
-        """Test feed-forward layer initialization"""
-        d_model = 512
+        """Test feed-forward layer initialization"""        d_model = 512
         d_ff = 2048
         
         ff = FeedForward(d_model, d_ff)
@@ -430,8 +404,7 @@ class TestFeedForward:
         assert ff.linear2.out_features == d_model
     
     def test_feedforward_forward(self, sample_sequences):
-        """Test feed-forward computation"""
-        d_model = 512
+        """Test feed-forward computation"""        d_model = 512
         d_ff = 2048
         
         ff = FeedForward(d_model, d_ff)
@@ -447,8 +420,7 @@ class TestFeedForward:
         assert not torch.allclose(output, input_seq, atol=1e-3)
     
     def test_feedforward_activation(self, sample_sequences):
-        """Test different activation functions"""
-        d_model = 512
+        """Test different activation functions"""        d_model = 512
         d_ff = 2048
         
         # Test GELU activation (default)
@@ -462,8 +434,7 @@ class TestFeedForward:
         assert torch.isfinite(output_gelu).all()
     
     def test_feedforward_dropout(self, sample_sequences):
-        """Test dropout behavior in feed-forward"""
-        d_model = 512
+        """Test dropout behavior in feed-forward"""        d_model = 512
         d_ff = 2048
         dropout_rate = 0.5
         
@@ -488,11 +459,9 @@ class TestFeedForward:
 
 
 class TestTransformerLayer:
-    """Test complete transformer layer"""
-    
+    """Test complete transformer layer"""    
     def test_layer_initialization(self):
-        """Test transformer layer initialization"""
-        d_model = 512
+        """Test transformer layer initialization"""        d_model = 512
         num_heads = 8
         d_ff = 2048
         
@@ -506,8 +475,7 @@ class TestTransformerLayer:
         assert isinstance(layer.norm2, nn.LayerNorm)
     
     def test_layer_forward(self, sample_sequences):
-        """Test transformer layer forward pass"""
-        d_model = 512
+        """Test transformer layer forward pass"""        d_model = 512
         num_heads = 8
         d_ff = 2048
         
@@ -520,8 +488,7 @@ class TestTransformerLayer:
         assert torch.isfinite(output).all()
     
     def test_layer_residual_connections(self, sample_sequences):
-        """Test residual connections in transformer layer"""
-        d_model = 512
+        """Test residual connections in transformer layer"""        d_model = 512
         num_heads = 8
         d_ff = 2048
         
@@ -539,8 +506,7 @@ class TestTransformerLayer:
                 assert torch.isfinite(output).all()
     
     def test_layer_normalization(self, sample_sequences):
-        """Test layer normalization behavior"""
-        d_model = 512
+        """Test layer normalization behavior"""        d_model = 512
         num_heads = 8
         d_ff = 2048
         
@@ -560,11 +526,9 @@ class TestTransformerLayer:
 
 
 class TestContentTransformer:
-    """Test ContentTransformer implementation"""
-    
+    """Test ContentTransformer implementation"""    
     def test_content_transformer_initialization(self, transformer_config):
-        """Test ContentTransformer initialization"""
-        transformer = ContentTransformer(transformer_config)
+        """Test ContentTransformer initialization"""        transformer = ContentTransformer(transformer_config)
         
         assert transformer.config == transformer_config
         assert hasattr(transformer, 'embedding')
@@ -576,8 +540,7 @@ class TestContentTransformer:
         assert len(transformer.transformer_layers) == transformer_config.num_layers
     
     def test_content_transformer_forward(self, transformer_config, sample_sequences):
-        """Test ContentTransformer forward pass"""
-        transformer = ContentTransformer(transformer_config)
+        """Test ContentTransformer forward pass"""        transformer = ContentTransformer(transformer_config)
         
         # Create input with correct input dimension
         batch_size = 4
@@ -592,8 +555,7 @@ class TestContentTransformer:
         assert torch.isfinite(output).all()
     
     def test_content_analysis(self, transformer_config):
-        """Test content analysis functionality"""
-        transformer = ContentTransformer(transformer_config)
+        """Test content analysis functionality"""        transformer = ContentTransformer(transformer_config)
         transformer.eval()
         
         # Mock content input
@@ -611,11 +573,9 @@ class TestContentTransformer:
 
 
 class TestMultiModalTransformer:
-    """Test MultiModalTransformer implementation"""
-    
+    """Test MultiModalTransformer implementation"""    
     def test_multimodal_initialization(self, multimodal_config):
-        """Test multimodal transformer initialization"""
-        transformer = MultiModalTransformer(multimodal_config)
+        """Test multimodal transformer initialization"""        transformer = MultiModalTransformer(multimodal_config)
         
         assert transformer.config == multimodal_config
         assert hasattr(transformer, 'modality_embeddings')
@@ -626,8 +586,7 @@ class TestMultiModalTransformer:
             assert modality in transformer.modality_embeddings
     
     def test_multimodal_forward(self, multimodal_config, sample_sequences):
-        """Test multimodal forward pass"""
-        transformer = MultiModalTransformer(multimodal_config)
+        """Test multimodal forward pass"""        transformer = MultiModalTransformer(multimodal_config)
         
         # Create multimodal input
         multimodal_input = {
@@ -644,8 +603,7 @@ class TestMultiModalTransformer:
         assert output.shape[-1] == multimodal_config.output_dim
     
     def test_cross_modal_attention(self, multimodal_config, sample_sequences):
-        """Test cross-modal attention mechanisms"""
-        transformer = MultiModalTransformer(multimodal_config)
+        """Test cross-modal attention mechanisms"""        transformer = MultiModalTransformer(multimodal_config)
         
         # Test with subset of modalities
         partial_input = {
@@ -660,11 +618,9 @@ class TestMultiModalTransformer:
 
 
 class TestSpecializedTransformers:
-    """Test specialized transformer implementations"""
-    
+    """Test specialized transformer implementations"""    
     def test_audio_transformer(self, transformer_config):
-        """Test AudioTransformer specific functionality"""
-        transformer = AudioTransformer(transformer_config)
+        """Test AudioTransformer specific functionality"""        transformer = AudioTransformer(transformer_config)
         
         # Audio-specific input (e.g., mel spectrograms)
         audio_input = torch.randn(4, 1024, transformer_config.input_dim)  # [batch, time_steps, features]
@@ -676,8 +632,7 @@ class TestSpecializedTransformers:
         assert torch.isfinite(output).all()
     
     def test_video_transformer(self, transformer_config):
-        """Test VideoTransformer specific functionality"""
-        transformer = VideoTransformer(transformer_config)
+        """Test VideoTransformer specific functionality"""        transformer = VideoTransformer(transformer_config)
         
         # Video input (frame sequence)
         video_input = torch.randn(2, 100, transformer_config.input_dim)  # [batch, frames, features]
@@ -689,8 +644,7 @@ class TestSpecializedTransformers:
         assert torch.isfinite(output).all()
     
     def test_text_transformer(self, transformer_config):
-        """Test TextTransformer specific functionality"""
-        transformer = TextTransformer(transformer_config)
+        """Test TextTransformer specific functionality"""        transformer = TextTransformer(transformer_config)
         
         # Text input (token embeddings)
         text_input = torch.randn(8, 256, transformer_config.input_dim)  # [batch, tokens, embed_dim]
@@ -703,8 +657,7 @@ class TestSpecializedTransformers:
         assert torch.isfinite(output).all()
     
     def test_creator_personality_transformer(self, transformer_config):
-        """Test CreatorPersonalityTransformer functionality"""
-        transformer = CreatorPersonalityTransformer(transformer_config)
+        """Test CreatorPersonalityTransformer functionality"""        transformer = CreatorPersonalityTransformer(transformer_config)
         
         # Creator content history input
         creator_input = torch.randn(1, 500, transformer_config.input_dim)  # [1, content_history, features]
@@ -717,11 +670,9 @@ class TestSpecializedTransformers:
 
 
 class TestTransformerPerformance:
-    """Performance tests for transformer models"""
-    
+    """Performance tests for transformer models"""    
     def test_attention_scalability(self, transformer_config):
-        """Test attention computation scalability"""
-        d_model = 512
+        """Test attention computation scalability"""        d_model = 512
         num_heads = 8
         
         attn = MultiHeadAttention(d_model, num_heads)
@@ -754,8 +705,7 @@ class TestTransformerPerformance:
             assert ratio < 8  # Should not grow too quickly
     
     def test_transformer_memory_efficiency(self, transformer_config):
-        """Test memory efficiency of transformer"""
-        transformer = ContentTransformer(transformer_config)
+        """Test memory efficiency of transformer"""        transformer = ContentTransformer(transformer_config)
         
         # Test different batch sizes
         batch_sizes = [1, 4, 8, 16]
@@ -792,8 +742,7 @@ class TestTransformerPerformance:
     
     @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA not available")
     def test_gpu_acceleration(self, transformer_config):
-        """Test GPU acceleration effectiveness"""
-        transformer = ContentTransformer(transformer_config)
+        """Test GPU acceleration effectiveness"""        transformer = ContentTransformer(transformer_config)
         input_tensor = torch.randn(8, 256, transformer_config.input_dim)
         
         # CPU timing
@@ -828,11 +777,9 @@ class TestTransformerPerformance:
 
 
 class TestTransformerRobustness:
-    """Robustness and edge case tests"""
-    
+    """Robustness and edge case tests"""    
     def test_variable_sequence_lengths(self, transformer_config):
-        """Test handling of variable sequence lengths"""
-        transformer = ContentTransformer(transformer_config)
+        """Test handling of variable sequence lengths"""        transformer = ContentTransformer(transformer_config)
         
         # Test different sequence lengths
         sequence_lengths = [1, 16, 64, 128, 256, 512, 1024]
@@ -848,8 +795,7 @@ class TestTransformerRobustness:
             assert torch.isfinite(output).all()
     
     def test_extreme_values(self, transformer_config):
-        """Test behavior with extreme input values"""
-        transformer = ContentTransformer(transformer_config)
+        """Test behavior with extreme input values"""        transformer = ContentTransformer(transformer_config)
         batch_size = 4
         seq_len = 64
         
@@ -869,8 +815,7 @@ class TestTransformerRobustness:
         assert torch.isfinite(output_zero).all()
     
     def test_attention_mask_edge_cases(self):
-        """Test attention with edge case masks"""
-        d_model = 512
+        """Test attention with edge case masks"""        d_model = 512
         num_heads = 8
         seq_len = 64
         
@@ -893,8 +838,7 @@ class TestTransformerRobustness:
         assert torch.isfinite(output_random).all()
     
     def test_gradient_stability(self, transformer_config, sample_sequences):
-        """Test gradient stability during training"""
-        transformer = ContentTransformer(transformer_config)
+        """Test gradient stability during training"""        transformer = ContentTransformer(transformer_config)
         optimizer = torch.optim.Adam(transformer.parameters(), lr=0.001)
         
         input_seq = sample_sequences["text"][:4, :128, :]
@@ -933,11 +877,9 @@ class TestTransformerRobustness:
 
 
 class TestTransformerIntegration:
-    """Integration tests for transformer components"""
-    
+    """Integration tests for transformer components"""    
     def test_end_to_end_content_processing(self, transformer_config):
-        """Test complete content processing pipeline"""
-        transformer = ContentTransformer(transformer_config)
+        """Test complete content processing pipeline"""        transformer = ContentTransformer(transformer_config)
         transformer.eval()
         
         # Simulate content processing workflow
@@ -962,8 +904,7 @@ class TestTransformerIntegration:
         assert torch.isfinite(predictions).all()
     
     def test_multimodal_fusion(self, multimodal_config, sample_sequences):
-        """Test multimodal fusion capabilities"""
-        transformer = MultiModalTransformer(multimodal_config)
+        """Test multimodal fusion capabilities"""        transformer = MultiModalTransformer(multimodal_config)
         
         # Test fusion with different modality combinations
         modality_combinations = [
@@ -988,8 +929,7 @@ class TestTransformerIntegration:
                 assert output.shape[-1] == multimodal_config.output_dim
     
     def test_transfer_learning_compatibility(self, transformer_config):
-        """Test transformer compatibility with transfer learning"""
-        transformer = ContentTransformer(transformer_config)
+        """Test transformer compatibility with transfer learning"""        transformer = ContentTransformer(transformer_config)
         
         # Simulate pre-trained weights
         pretrained_state = transformer.state_dict()

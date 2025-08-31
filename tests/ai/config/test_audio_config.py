@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Comprehensive Tests for Audio Configuration
+"""Comprehensive Tests for Audio Configuration
 
 Expert Team Specifications:
 - Lead Dev + AI Architect: Fahed Mlaiel
@@ -37,7 +36,6 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test suite for AudioConfig module ensuring 100% audio quality,
 processing reliability, and professional mastering for musicians and content creators.
 """
-
 import pytest
 import sys
 import os
@@ -69,20 +67,17 @@ except ImportError as e:
     pytest.skip("AudioConfig module not available", allow_module_level=True)
 
 class TestAudioConfig:
-    """Tests complets pour la configuration audio."""
-    
+    """Tests complets pour la configuration audio."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.config = AudioConfig()
+        """Configuration avant chaque test."""        self.config = AudioConfig()
         self.test_env = test_environment
         self.sample_audio_data = self._generate_sample_audio_data()
         self.test_audio_files = self._create_test_audio_files()
         logger.info("TestAudioConfig setup completed")
     
     def _generate_sample_audio_data(self) -> Dict[str, Any]:
-        """Génère des données audio de test."""
-        # Générer une sinusoïde de 440Hz (La) pendant 1 seconde
+        """Génère des données audio de test."""        # Générer une sinusoïde de 440Hz (La) pendant 1 seconde
         sample_rate = 44100
         duration = 1.0
         frequency = 440.0
@@ -120,8 +115,7 @@ class TestAudioConfig:
         }
     
     def _create_test_audio_files(self) -> Dict[str, str]:
-        """Crée des fichiers audio de test temporaires."""
-        test_files = {}
+        """Crée des fichiers audio de test temporaires."""        test_files = {}
         
         # Créer un fichier WAV de test
         with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as wav_file:
@@ -143,8 +137,7 @@ class TestAudioConfig:
     
     @pytest_marks["unit"]
     def test_config_initialization(self):
-        """Test l'initialisation de base de la configuration audio."""
-        assert self.config is not None
+        """Test l'initialisation de base de la configuration audio."""        assert self.config is not None
         assert hasattr(self.config, 'audio_processor')
         assert hasattr(self.config, 'quality_analyzer')
         assert hasattr(self.config, 'mastering_engine')
@@ -155,8 +148,7 @@ class TestAudioConfig:
     
     @pytest_marks["unit"]
     def test_audio_quality_analysis(self):
-        """Test l'analyse de qualité audio."""
-        audio_data = self.sample_audio_data["raw_audio"]
+        """Test l'analyse de qualité audio."""        audio_data = self.sample_audio_data["raw_audio"]
         
         # Analyse de qualité basique
         quality_analysis = self.config.analyze_audio_quality(
@@ -204,8 +196,7 @@ class TestAudioConfig:
     
     @pytest_marks["unit"]
     def test_audio_processing_pipeline(self):
-        """Test le pipeline de traitement audio."""
-        audio_data = self.sample_audio_data["stereo_audio"]
+        """Test le pipeline de traitement audio."""        audio_data = self.sample_audio_data["stereo_audio"]
         
         # Configuration du pipeline de traitement
         processing_pipeline = self.config.create_processing_pipeline([
@@ -241,8 +232,7 @@ class TestAudioConfig:
     
     @pytest_marks["business_logic"]
     def test_musician_specific_processing(self):
-        """Test le traitement spécifique pour musiciens."""
-        # Test traitement pour musicien électronique
+        """Test le traitement spécifique pour musiciens."""        # Test traitement pour musicien électronique
         electronic_music_data = {
             "signal": self.sample_audio_data["stereo_audio"]["signal"],
             "sample_rate": 44100,
@@ -298,8 +288,7 @@ class TestAudioConfig:
     
     @pytest_marks["performance"]
     def test_realtime_audio_processing(self):
-        """Test le traitement audio en temps réel."""
-        # Configuration du processeur temps réel
+        """Test le traitement audio en temps réel."""        # Configuration du processeur temps réel
         realtime_config = {
             "buffer_size": 512,  # samples
             "sample_rate": 44100,
@@ -345,8 +334,7 @@ class TestAudioConfig:
     
     @pytest_marks["unit"]
     def test_format_conversion_accuracy(self):
-        """Test la précision de conversion de formats audio."""
-        source_audio = self.sample_audio_data["high_quality"]
+        """Test la précision de conversion de formats audio."""        source_audio = self.sample_audio_data["high_quality"]
         
         # Test conversion vers différents formats
         conversion_targets = [
@@ -390,8 +378,7 @@ class TestAudioConfig:
     
     @pytest_marks["unit"]
     def test_mastering_engine_functionality(self):
-        """Test la fonctionnalité du moteur de mastering."""
-        audio_data = self.sample_audio_data["stereo_audio"]
+        """Test la fonctionnalité du moteur de mastering."""        audio_data = self.sample_audio_data["stereo_audio"]
         
         # Test mastering pour streaming
         streaming_master = self.config.create_streaming_master(
@@ -444,8 +431,7 @@ class TestAudioConfig:
     
     @pytest_marks["integration"]
     async def test_audio_ai_integration(self):
-        """Test l'intégration avec l'IA audio."""
-        audio_data = self.sample_audio_data["raw_audio"]
+        """Test l'intégration avec l'IA audio."""        audio_data = self.sample_audio_data["raw_audio"]
         
         # Test analyse IA du contenu audio
         with patch.object(self.config, '_call_audio_ai_service') as mock_ai:
@@ -504,8 +490,7 @@ class TestAudioConfig:
     
     @pytest_marks["security"]
     def test_audio_security_validation(self):
-        """Test la validation de sécurité audio."""
-        # Test détection de contenu malveillant
+        """Test la validation de sécurité audio."""        # Test détection de contenu malveillant
         suspicious_audio = np.random.random(44100) * 2.0  # Volume très élevé
         
         security_check = self.config.validate_audio_security(
@@ -547,8 +532,7 @@ class TestAudioConfig:
     
     @pytest_marks["performance"]
     def test_batch_audio_processing(self):
-        """Test le traitement audio en lot."""
-        # Créer un lot de fichiers audio de test
+        """Test le traitement audio en lot."""        # Créer un lot de fichiers audio de test
         audio_batch = []
         for i in range(20):
             audio_item = {
@@ -589,8 +573,7 @@ class TestAudioConfig:
     
     @pytest_marks["unit"]
     def test_audio_metrics_calculation(self):
-        """Test le calcul des métriques audio."""
-        audio_data = self.sample_audio_data["stereo_audio"]
+        """Test le calcul des métriques audio."""        audio_data = self.sample_audio_data["stereo_audio"]
         
         # Calcul des métriques complètes
         audio_metrics = self.config.calculate_comprehensive_metrics(
@@ -630,8 +613,7 @@ class TestAudioConfig:
     
     @pytest_marks["business_logic"]
     def test_platform_specific_optimization(self):
-        """Test l'optimisation spécifique par plateforme."""
-        audio_data = self.sample_audio_data["stereo_audio"]
+        """Test l'optimisation spécifique par plateforme."""        audio_data = self.sample_audio_data["stereo_audio"]
         
         # Optimisation pour Spotify
         spotify_optimization = self.config.optimize_for_platform(
@@ -685,17 +667,14 @@ class TestAudioConfig:
         logger.info("Platform specific optimization test passed")
 
 class TestAudioProcessor:
-    """Tests spécifiques pour le processeur audio."""
-    
+    """Tests spécifiques pour le processeur audio."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.audio_processor = AudioProcessor()
+        """Configuration avant chaque test."""        self.audio_processor = AudioProcessor()
     
     @pytest_marks["unit"]
     def test_audio_effects_chain(self):
-        """Test la chaîne d'effets audio."""
-        test_signal = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
+        """Test la chaîne d'effets audio."""        test_signal = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
         
         # Test EQ paramétrique
         eq_result = self.audio_processor.apply_parametric_eq(
@@ -724,17 +703,14 @@ class TestAudioProcessor:
         assert "gain_reduction_applied" in compressor_result
 
 class TestQualityAnalyzer:
-    """Tests spécifiques pour l'analyseur de qualité."""
-    
+    """Tests spécifiques pour l'analyseur de qualité."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.quality_analyzer = QualityAnalyzer()
+        """Configuration avant chaque test."""        self.quality_analyzer = QualityAnalyzer()
     
     @pytest_marks["unit"]
     def test_quality_scoring_algorithm(self):
-        """Test l'algorithme de scoring de qualité."""
-        # Signal de haute qualité
+        """Test l'algorithme de scoring de qualité."""        # Signal de haute qualité
         high_quality_signal = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100))
         
         quality_score = self.quality_analyzer.calculate_quality_score(
@@ -757,13 +733,11 @@ class TestQualityAnalyzer:
         assert degraded_score < quality_score  # Score plus bas pour signal dégradé
 
 class TestAudioPerformance:
-    """Tests de performance pour les fonctionnalités audio."""
-    
+    """Tests de performance pour les fonctionnalités audio."""    
     @pytest_marks["performance"]
     @pytest.mark.slow
     def test_large_file_processing(self):
-        """Test de traitement de gros fichiers audio."""
-        config = AudioConfig()
+        """Test de traitement de gros fichiers audio."""        config = AudioConfig()
         
         # Simuler un fichier audio de 5 minutes en stéréo
         duration = 300  # 5 minutes
@@ -793,8 +767,7 @@ class TestAudioPerformance:
 
 # Configuration pytest pour les tests audio
 def pytest_configure(config):
-    """Configuration pytest pour les tests audio."""
-    config.addinivalue_line(
+    """Configuration pytest pour les tests audio."""    config.addinivalue_line(
         "markers", "audio_quality: Audio quality analysis tests"
     )
     config.addinivalue_line(

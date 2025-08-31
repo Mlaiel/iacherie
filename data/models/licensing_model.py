@@ -1,5 +1,4 @@
-"""
-Licensing Data Model
+"""Licensing Data Model
 ===================
 
 Professional licensing data model for content rights and legal agreements.
@@ -14,7 +13,6 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from datetime import datetime, date
 from typing import Optional, Dict, List, Any
 from decimal import Decimal
@@ -30,8 +28,7 @@ Base = declarative_base()
 
 
 class LicenseType(Enum):
-    """License type enumeration"""
-    EXCLUSIVE = "exclusive"
+    """License type enumeration"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
@@ -49,8 +46,7 @@ class LicenseType(Enum):
 
 
 class LicenseCategory(Enum):
-    """License category enumeration"""
-    MUSIC = "music"
+    """License category enumeration"""    MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -63,8 +59,7 @@ class LicenseCategory(Enum):
 
 
 class UsageType(Enum):
-    """Usage type enumeration"""
-    COMMERCIAL = "commercial"
+    """Usage type enumeration"""    COMMERCIAL = "commercial"
     EDITORIAL = "editorial"
     PERSONAL = "personal"
     EDUCATIONAL = "educational"
@@ -79,8 +74,7 @@ class UsageType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License status enumeration"""
-    DRAFT = "draft"
+    """License status enumeration"""    DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -93,8 +87,7 @@ class LicenseStatus(Enum):
 
 
 class PaymentStructure(Enum):
-    """Payment structure enumeration"""
-    ONE_TIME = "one_time"
+    """Payment structure enumeration"""    ONE_TIME = "one_time"
     ROYALTY = "royalty"
     SUBSCRIPTION = "subscription"
     PER_USE = "per_use"
@@ -105,13 +98,11 @@ class PaymentStructure(Enum):
 
 
 class LicensingModel(Base):
-    """
-    Professional licensing data model for IA Influencer Agent platform.
+    """    Professional licensing data model for IA Influencer Agent platform.
     
     Comprehensive licensing management with contracts, usage tracking,
     royalty calculations, and legal compliance for content rights.
-    """
-    
+    """    
     __tablename__ = "licensing"
     
     # Primary identification
@@ -306,8 +297,7 @@ class LicensingModel(Base):
         return f"<LicensingModel(id='{self.id}', number='{self.license_number}', type='{self.license_type}')>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary representation"""
-        return {
+        """Convert model to dictionary representation"""        return {
             'id': self.id,
             'user_id': self.user_id,
             'content_id': self.content_id,
@@ -358,15 +348,13 @@ class LicensingModel(Base):
     
     @property
     def is_active(self) -> bool:
-        """Check if license is currently active"""
-        return (self.status == LicenseStatus.ACTIVE.value and
+        """Check if license is currently active"""        return (self.status == LicenseStatus.ACTIVE.value and
                 not self.is_deleted and
                 self.is_within_validity_period)
     
     @property
     def is_within_validity_period(self) -> bool:
-        """Check if current date is within license validity period"""
-        today = date.today()
+        """Check if current date is within license validity period"""        today = date.today()
         
         # Check start date
         if self.license_start_date and today < self.license_start_date:
@@ -380,15 +368,13 @@ class LicensingModel(Base):
     
     @property
     def is_expired(self) -> bool:
-        """Check if license has expired"""
-        if not self.license_end_date:
+        """Check if license has expired"""        if not self.license_end_date:
             return False  # Perpetual license
         return date.today() > self.license_end_date
     
     @property
     def days_until_expiry(self) -> Optional[int]:
-        """Calculate days until license expires"""
-        if not self.license_end_date:
+        """Calculate days until license expires"""        if not self.license_end_date:
             return None  # Perpetual license
         
         delta = self.license_end_date - date.today()
@@ -396,42 +382,36 @@ class LicensingModel(Base):
     
     @property
     def is_renewable(self) -> bool:
-        """Check if license can be renewed"""
-        return self.renewal_option and not self.is_deleted
+        """Check if license can be renewed"""        return self.renewal_option and not self.is_deleted
     
     @property
     def usage_percentage(self) -> float:
-        """Calculate usage as percentage of limit"""
-        if not self.usage_limit_quantity or self.usage_limit_quantity <= 0:
+        """Calculate usage as percentage of limit"""        if not self.usage_limit_quantity or self.usage_limit_quantity <= 0:
             return 0.0
         
         return (self.current_usage_count / self.usage_limit_quantity) * 100
     
     @property
     def is_usage_exceeded(self) -> bool:
-        """Check if usage limit has been exceeded"""
-        if not self.usage_limit_quantity:
+        """Check if usage limit has been exceeded"""        if not self.usage_limit_quantity:
             return False
         return self.current_usage_count > self.usage_limit_quantity
     
     @property
     def royalty_rate_formatted(self) -> str:
-        """Get formatted royalty rate"""
-        if self.royalty_rate:
+        """Get formatted royalty rate"""        if self.royalty_rate:
             return f"{self.royalty_rate:.2f}%"
         return "0%"
     
     @property
     def license_fee_formatted(self) -> str:
-        """Get formatted license fee"""
-        if self.license_fee:
+        """Get formatted license fee"""        if self.license_fee:
             return f"{self.currency} {self.license_fee:,.2f}"
         return f"{self.currency} 0.00"
     
     @property
     def outstanding_balance(self) -> Decimal:
-        """Calculate outstanding balance"""
-        balance = Decimal('0')
+        """Calculate outstanding balance"""        balance = Decimal('0')
         
         if self.royalties_outstanding:
             balance += self.royalties_outstanding
@@ -445,8 +425,7 @@ class LicensingModel(Base):
     
     @property
     def contract_status(self) -> str:
-        """Get contract status description"""
-        if not self.signed_at:
+        """Get contract status description"""        if not self.signed_at:
             return "Unsigned"
         elif not self.activated_at:
             return "Signed, Pending Activation"
@@ -458,8 +437,7 @@ class LicensingModel(Base):
             return self.status.title()
     
     def generate_license_number(self) -> str:
-        """Generate unique license number"""
-        import time
+        """Generate unique license number"""        import time
         timestamp = int(time.time())
         category_code = self.license_category[:3].upper() if self.license_category else "GEN"
         type_code = self.license_type[:3].upper() if self.license_type else "STD"
@@ -469,8 +447,7 @@ class LicensingModel(Base):
         return self.license_number
     
     def sign_license(self, signature_data: Dict[str, Any]):
-        """Record license signing"""
-        self.signed_at = datetime.utcnow()
+        """Record license signing"""        self.signed_at = datetime.utcnow()
         self.status = LicenseStatus.PENDING.value
         
         # Store signature data
@@ -487,8 +464,7 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def activate_license(self):
-        """Activate signed license"""
-        if not self.signed_at:
+        """Activate signed license"""        if not self.signed_at:
             raise ValueError("License must be signed before activation")
         
         self.activated_at = datetime.utcnow()
@@ -508,8 +484,7 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def record_usage(self, usage_count: int = 1, usage_details: Dict[str, Any] = None):
-        """Record content usage"""
-        self.current_usage_count += usage_count
+        """Record content usage"""        self.current_usage_count += usage_count
         
         # Update usage statistics
         if not self.usage_statistics:
@@ -544,8 +519,7 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def calculate_royalties(self, revenue: Decimal, period_start: date, period_end: date):
-        """Calculate royalties for a period"""
-        if not self.royalty_rate or self.royalty_rate <= 0:
+        """Calculate royalties for a period"""        if not self.royalty_rate or self.royalty_rate <= 0:
             return Decimal('0')
         
         royalty_amount = (revenue * self.royalty_rate) / 100
@@ -576,8 +550,7 @@ class LicensingModel(Base):
         return royalty_amount
     
     def process_payment(self, amount: Decimal, payment_type: str = "royalty", payment_reference: str = None):
-        """Process payment for license"""
-        self.last_payment_at = datetime.utcnow()
+        """Process payment for license"""        self.last_payment_at = datetime.utcnow()
         
         if payment_type == "royalty":
             # Deduct from outstanding royalties
@@ -620,8 +593,7 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def renew_license(self, new_end_date: date, terms_changes: Dict[str, Any] = None):
-        """Renew expired or expiring license"""
-        if not self.renewal_option:
+        """Renew expired or expiring license"""        if not self.renewal_option:
             raise ValueError("License is not renewable")
         
         old_end_date = self.license_end_date
@@ -650,8 +622,7 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def terminate_license(self, reason: str, effective_date: date = None):
-        """Terminate license"""
-        self.status = LicenseStatus.TERMINATED.value
+        """Terminate license"""        self.status = LicenseStatus.TERMINATED.value
         
         if effective_date:
             self.license_end_date = effective_date
@@ -672,8 +643,7 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def amend_license(self, amendments: Dict[str, Any], amendment_reason: str = None):
-        """Add amendment to license"""
-        # Apply amendments
+        """Add amendment to license"""        # Apply amendments
         for key, value in amendments.items():
             if hasattr(self, key):
                 old_value = getattr(self, key)
@@ -701,8 +671,7 @@ class LicensingModel(Base):
         self.updated_at = datetime.utcnow()
     
     def check_compliance(self) -> Dict[str, Any]:
-        """Check license compliance"""
-        compliance_issues = []
+        """Check license compliance"""        compliance_issues = []
         compliance_score = 100
         
         # Check usage limits
@@ -745,15 +714,13 @@ class LicensingModel(Base):
         return compliance_result
     
     def soft_delete(self):
-        """Soft delete license"""
-        self.is_deleted = True
+        """Soft delete license"""        self.is_deleted = True
         self.deleted_at = datetime.utcnow()
         self.status = LicenseStatus.TERMINATED.value
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted license"""
-        self.is_deleted = False
+        """Restore soft-deleted license"""        self.is_deleted = False
         self.deleted_at = None
         
         # Restore appropriate status

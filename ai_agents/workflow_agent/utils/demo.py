@@ -1,5 +1,4 @@
-"""
-IA-Influencer Agent - Workflow Agent Demo
+"""IA-Influencer Agent - Workflow Agent Demo
 
 Demonstration script showing how to use the Workflow Agent module for various use cases.
 
@@ -13,7 +12,6 @@ Any violation will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 async def demo_basic_setup():
-    """Demonstrate basic workflow agent setup."""
-    print("\n" + "="*60)
+    """Demonstrate basic workflow agent setup."""    print("\n" + "="*60)
     print("🚀 DEMO: Basic Workflow Agent Setup")
     print("="*60)
     
@@ -68,8 +65,7 @@ async def demo_basic_setup():
 
 
 async def demo_template_recommendations():
-    """Demonstrate template recommendations based on user profile."""
-    print("\n" + "="*60)
+    """Demonstrate template recommendations based on user profile."""    print("\n" + "="*60)
     print("📋 DEMO: Template Recommendations")
     print("="*60)
     
@@ -117,8 +113,7 @@ async def demo_template_recommendations():
 
 
 async def demo_simple_workflow_creation():
-    """Demonstrate creating and executing a simple workflow."""
-    print("\n" + "="*60)
+    """Demonstrate creating and executing a simple workflow."""    print("\n" + "="*60)
     print("⚡ DEMO: Simple Workflow Creation & Execution")
     print("="*60)
     
@@ -197,8 +192,7 @@ async def demo_simple_workflow_creation():
 
 
 async def demo_music_release_workflow():
-    """Demonstrate creating a complete music release workflow."""
-    print("\n" + "="*60)
+    """Demonstrate creating a complete music release workflow."""    print("\n" + "="*60)
     print("🎵 DEMO: Music Release Workflow")
     print("="*60)
     
@@ -258,8 +252,7 @@ async def demo_music_release_workflow():
 
 
 async def demo_bulk_workflow_execution():
-    """Demonstrate bulk workflow execution and monitoring."""
-    print("\n" + "="*60)
+    """Demonstrate bulk workflow execution and monitoring."""    print("\n" + "="*60)
     print("⚡ DEMO: Bulk Workflow Execution & Monitoring")
     print("="*60)
     
@@ -330,8 +323,7 @@ async def demo_bulk_workflow_execution():
 
 
 async def demo_advanced_scheduling():
-    """Demonstrate advanced workflow scheduling features."""
-    print("\n" + "="*60)
+    """Demonstrate advanced workflow scheduling features."""    print("\n" + "="*60)
     print("⏰ DEMO: Advanced Workflow Scheduling")
     print("="*60)
     
@@ -411,8 +403,7 @@ async def demo_advanced_scheduling():
 
 
 async def demo_content_publishing_workflow():
-    """Demonstrate content publishing workflow creation."""
-    print("\n" + "="*60)
+    """Demonstrate content publishing workflow creation."""    print("\n" + "="*60)
     print("📢 DEMO: Content Publishing Workflow")
     print("="*60)
     
@@ -489,8 +480,7 @@ async def demo_content_publishing_workflow():
 
 
 async def run_all_demos():
-    """Run all demonstration functions."""
-    print("🎭" + "="*59)
+    """Run all demonstration functions."""    print("🎭" + "="*59)
     print("    IA-INFLUENCER AGENT - WORKFLOW MODULE DEMO")
     print("🎭" + "="*59)
     print(f"Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")

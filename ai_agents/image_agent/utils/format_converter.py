@@ -1,5 +1,4 @@
-"""
-Format Converter - Advanced Image Format Conversion & Optimization Engine
+"""Format Converter - Advanced Image Format Conversion & Optimization Engine
 
 Industrial-grade image format conversion, optimization, and compression system
 for web delivery, storage optimization, and cross-platform compatibility.
@@ -12,7 +11,6 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import time
@@ -52,8 +50,7 @@ register_heif_opener()
 
 
 class ImageFormat(Enum):
-    """Supported image formats"""
-    JPEG = "jpeg"
+    """Supported image formats"""    JPEG = "jpeg"
     JPG = "jpg"
     PNG = "png"
     WEBP = "webp"
@@ -71,8 +68,7 @@ class ImageFormat(Enum):
 
 
 class OptimizationLevel(Enum):
-    """Optimization levels for different use cases"""
-    MINIMAL = "minimal"           # Preserve maximum quality
+    """Optimization levels for different use cases"""    MINIMAL = "minimal"           # Preserve maximum quality
     BALANCED = "balanced"         # Balance quality and size
     WEB_OPTIMIZED = "web_optimized"   # Optimized for web delivery
     STORAGE = "storage"          # Maximum compression for storage
@@ -81,8 +77,7 @@ class OptimizationLevel(Enum):
 
 
 class CompressionMethod(Enum):
-    """Compression methods"""
-    LOSSLESS = "lossless"
+    """Compression methods"""    LOSSLESS = "lossless"
     LOSSY = "lossy"
     HYBRID = "hybrid"
     PROGRESSIVE = "progressive"
@@ -91,8 +86,7 @@ class CompressionMethod(Enum):
 
 @dataclass
 class ConversionParams:
-    """Image format conversion parameters"""
-    target_format: ImageFormat
+    """Image format conversion parameters"""    target_format: ImageFormat
     optimization_level: OptimizationLevel = OptimizationLevel.BALANCED
     compression_method: CompressionMethod = CompressionMethod.ADAPTIVE
     quality: Optional[int] = None
@@ -108,8 +102,7 @@ class ConversionParams:
 
 @dataclass
 class OptimizationResult:
-    """Optimization result metrics"""
-    original_format: str
+    """Optimization result metrics"""    original_format: str
     target_format: str
     original_size: int  # File size in bytes
     optimized_size: int  # File size in bytes
@@ -126,8 +119,7 @@ class OptimizationResult:
 
 @dataclass
 class FormatInfo:
-    """Information about image format capabilities"""
-    supports_transparency: bool
+    """Information about image format capabilities"""    supports_transparency: bool
     supports_animation: bool
     supports_metadata: bool
     supports_progressive: bool
@@ -138,8 +130,7 @@ class FormatInfo:
 
 
 class ImageFormatConverter:
-    """
-    Advanced Image Format Conversion Engine
+    """    Advanced Image Format Conversion Engine
     
     Provides comprehensive image format conversion capabilities including:
     - Universal format support (JPEG, PNG, WebP, AVIF, HEIC, etc.)
@@ -148,23 +139,20 @@ class ImageFormatConverter:
     - Metadata and transparency handling
     - Batch conversion support
     - Format recommendation system
-    """
-    
+    """    
     def __init__(
         self,
         default_optimization: OptimizationLevel = OptimizationLevel.BALANCED,
         enable_modern_formats: bool = True,
         preserve_original: bool = True
     ):
-        """
-        Initialize Format Converter
+        """        Initialize Format Converter
         
         Args:
             default_optimization: Default optimization level
             enable_modern_formats: Enable modern formats like WebP, AVIF
             preserve_original: Keep original files during conversion
-        """
-        self.default_optimization = default_optimization
+        """        self.default_optimization = default_optimization
         self.enable_modern_formats = enable_modern_formats
         self.preserve_original = preserve_original
         
@@ -190,8 +178,7 @@ class ImageFormatConverter:
         logger.info(f"ImageFormatConverter initialized - Modern formats: {enable_modern_formats}")
 
     def _initialize_format_info(self) -> Dict[ImageFormat, FormatInfo]:
-        """Initialize format information database"""
-        return {
+        """Initialize format information database"""        return {
             ImageFormat.JPEG: FormatInfo(
                 supports_transparency=False,
                 supports_animation=False,
@@ -280,8 +267,7 @@ class ImageFormatConverter:
         target_path: Union[str, Path],
         params: Optional[ConversionParams] = None
     ) -> OptimizationResult:
-        """
-        Convert image to target format with optimization
+        """        Convert image to target format with optimization
         
         Args:
             source_path: Path to source image
@@ -290,8 +276,7 @@ class ImageFormatConverter:
             
         Returns:
             OptimizationResult with conversion metrics
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         conversion_id = f"convert_{uuid.uuid4().hex[:8]}"
         
         try:
@@ -381,8 +366,7 @@ class ImageFormatConverter:
         source_image: Image.Image, 
         params: ConversionParams
     ) -> Image.Image:
-        """Perform the actual image conversion"""
-        try:
+        """Perform the actual image conversion"""        try:
             # Work with a copy
             converted_image = source_image.copy()
             
@@ -410,8 +394,7 @@ class ImageFormatConverter:
             return source_image
 
     async def _resize_image(self, image: Image.Image, params: ConversionParams) -> Image.Image:
-        """Resize image according to maximum dimensions"""
-        try:
+        """Resize image according to maximum dimensions"""        try:
             current_width, current_height = image.size
             
             # Calculate new dimensions
@@ -451,8 +434,7 @@ class ImageFormatConverter:
         image: Image.Image, 
         params: ConversionParams
     ) -> Image.Image:
-        """Apply optimization-specific adjustments"""
-        try:
+        """Apply optimization-specific adjustments"""        try:
             if params.optimization_level == OptimizationLevel.THUMBNAIL:
                 # Reduce colors for thumbnails
                 if image.mode == 'RGB':
@@ -485,8 +467,7 @@ class ImageFormatConverter:
         target_path: Path, 
         params: ConversionParams
     ) -> None:
-        """Save converted image with format-specific optimizations"""
-        try:
+        """Save converted image with format-specific optimizations"""        try:
             # Prepare save parameters
             save_kwargs = {
                 'optimize': params.optimize
@@ -579,8 +560,7 @@ class ImageFormatConverter:
         target_size: int,
         tolerance: float = 0.1
     ) -> None:
-        """Save image iteratively adjusting quality to meet target file size"""
-        try:
+        """Save image iteratively adjusting quality to meet target file size"""        try:
             if 'quality' not in save_kwargs:
                 # Can't adjust quality for lossless formats
                 image.save(target_path, **save_kwargs)
@@ -628,8 +608,7 @@ class ImageFormatConverter:
             image.save(target_path, **save_kwargs)
 
     async def _determine_jpeg_quality(self, params: ConversionParams) -> int:
-        """Determine optimal JPEG quality based on optimization level"""
-        if params.quality is not None:
+        """Determine optimal JPEG quality based on optimization level"""        if params.quality is not None:
             return max(1, min(100, params.quality))
         
         quality_map = {
@@ -644,8 +623,7 @@ class ImageFormatConverter:
         return quality_map.get(params.optimization_level, 85)
 
     async def _determine_png_compression(self, params: ConversionParams) -> int:
-        """Determine PNG compression level (0-9)"""
-        compression_map = {
+        """Determine PNG compression level (0-9)"""        compression_map = {
             OptimizationLevel.MINIMAL: 1,
             OptimizationLevel.BALANCED: 6,
             OptimizationLevel.WEB_OPTIMIZED: 6,
@@ -657,8 +635,7 @@ class ImageFormatConverter:
         return compression_map.get(params.optimization_level, 6)
 
     async def _determine_webp_quality(self, params: ConversionParams) -> int:
-        """Determine WebP quality"""
-        if params.quality is not None:
+        """Determine WebP quality"""        if params.quality is not None:
             return max(0, min(100, params.quality))
         
         quality_map = {
@@ -673,8 +650,7 @@ class ImageFormatConverter:
         return quality_map.get(params.optimization_level, 80)
 
     async def _determine_avif_quality(self, params: ConversionParams) -> int:
-        """Determine AVIF quality (0-63)"""
-        if params.quality is not None:
+        """Determine AVIF quality (0-63)"""        if params.quality is not None:
             return max(0, min(63, params.quality))
         
         quality_map = {
@@ -693,8 +669,7 @@ class ImageFormatConverter:
         image: Image.Image, 
         optimization_level: OptimizationLevel
     ) -> ImageFormat:
-        """Auto-detect best format for given image and optimization level"""
-        try:
+        """Auto-detect best format for given image and optimization level"""        try:
             # Analyze image characteristics
             has_transparency = image.mode in ['RGBA', 'LA'] or 'transparency' in image.info
             is_photo = await self._is_photographic_image(image)
@@ -734,8 +709,7 @@ class ImageFormatConverter:
             return ImageFormat.JPEG
 
     async def _is_photographic_image(self, image: Image.Image) -> bool:
-        """Determine if image is photographic (vs graphic/drawing)"""
-        try:
+        """Determine if image is photographic (vs graphic/drawing)"""        try:
             # Convert to grayscale for analysis
             if image.mode != 'L':
                 gray = image.convert('L')
@@ -769,8 +743,7 @@ class ImageFormatConverter:
         converted: Image.Image,
         params: ConversionParams
     ) -> float:
-        """Estimate quality retention after conversion"""
-        try:
+        """Estimate quality retention after conversion"""        try:
             # If formats are the same and lossless, retention is 100%
             if (params.target_format.value == original.format.lower() and 
                 params.compression_method == CompressionMethod.LOSSLESS):
@@ -799,8 +772,7 @@ class ImageFormatConverter:
             return 0.75
 
     async def _get_applied_optimizations(self, params: ConversionParams) -> List[str]:
-        """Get list of applied optimizations"""
-        optimizations = []
+        """Get list of applied optimizations"""        optimizations = []
         
         optimizations.append(f"format_conversion_to_{params.target_format.value}")
         optimizations.append(f"optimization_level_{params.optimization_level.value}")
@@ -824,8 +796,7 @@ class ImageFormatConverter:
         params: ConversionParams,
         preserve_structure: bool = True
     ) -> List[OptimizationResult]:
-        """
-        Convert multiple images in batch
+        """        Convert multiple images in batch
         
         Args:
             source_paths: List of source image paths
@@ -835,8 +806,7 @@ class ImageFormatConverter:
             
         Returns:
             List of OptimizationResult for each conversion
-        """
-        try:
+        """        try:
             target_dir = Path(target_directory)
             target_dir.mkdir(parents=True, exist_ok=True)
             
@@ -896,8 +866,7 @@ class ImageFormatConverter:
         compression_ratio: float,
         success: bool
     ) -> None:
-        """Update conversion statistics"""
-        self.conversion_stats["total_conversions"] += 1
+        """Update conversion statistics"""        self.conversion_stats["total_conversions"] += 1
         
         if success:
             self.conversion_stats["successful_conversions"] += 1
@@ -928,8 +897,7 @@ class ImageFormatConverter:
             self.conversion_stats["optimization_levels"][opt_key] += 1
 
     async def get_format_info(self, format_type: ImageFormat) -> FormatInfo:
-        """Get detailed information about image format"""
-        return self.format_info.get(format_type, FormatInfo(
+        """Get detailed information about image format"""        return self.format_info.get(format_type, FormatInfo(
             supports_transparency=False,
             supports_animation=False,
             supports_metadata=False,
@@ -946,8 +914,7 @@ class ImageFormatConverter:
         use_case: str,
         target_size_kb: Optional[int] = None
     ) -> Dict[str, Any]:
-        """
-        Recommend optimal format for specific use case
+        """        Recommend optimal format for specific use case
         
         Args:
             image_path: Path to image for analysis
@@ -956,8 +923,7 @@ class ImageFormatConverter:
             
         Returns:
             Dictionary with format recommendation and reasoning
-        """
-        try:
+        """        try:
             with Image.open(image_path) as image:
                 has_transparency = image.mode in ['RGBA', 'LA'] or 'transparency' in image.info
                 is_photo = await self._is_photographic_image(image)
@@ -1064,8 +1030,7 @@ class ImageFormatConverter:
             }
 
     async def get_conversion_stats(self) -> Dict[str, Any]:
-        """Get comprehensive conversion statistics"""
-        try:
+        """Get comprehensive conversion statistics"""        try:
             stats = self.conversion_stats.copy()
             
             # Add success rate
@@ -1093,16 +1058,13 @@ class ImageFormatConverter:
 
 
 class OptimizationEngine:
-    """
-    Advanced Image Optimization Engine
+    """    Advanced Image Optimization Engine
     
     Specialized in intelligent image optimization for various use cases,
     including web delivery, storage efficiency, and quality preservation.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize Optimization Engine"""
-        self.converter = ImageFormatConverter()
+        """Initialize Optimization Engine"""        self.converter = ImageFormatConverter()
         
         logger.info("OptimizationEngine initialized")
 
@@ -1112,8 +1074,7 @@ class OptimizationEngine:
         target_directory: Union[str, Path],
         generate_variants: bool = True
     ) -> Dict[str, OptimizationResult]:
-        """
-        Optimize image for web delivery with multiple variants
+        """        Optimize image for web delivery with multiple variants
         
         Args:
             source_path: Source image path
@@ -1122,8 +1083,7 @@ class OptimizationEngine:
             
         Returns:
             Dictionary of optimization results by format
-        """
-        try:
+        """        try:
             source_path = Path(source_path)
             target_dir = Path(target_directory)
             target_dir.mkdir(parents=True, exist_ok=True)
@@ -1186,8 +1146,7 @@ class OptimizationEngine:
         target_path: Union[str, Path],
         preserve_quality: bool = False
     ) -> OptimizationResult:
-        """
-        Optimize image for storage with maximum compression
+        """        Optimize image for storage with maximum compression
         
         Args:
             source_path: Source image path
@@ -1196,8 +1155,7 @@ class OptimizationEngine:
             
         Returns:
             OptimizationResult with compression metrics
-        """
-        try:
+        """        try:
             optimization_level = OptimizationLevel.MINIMAL if preserve_quality else OptimizationLevel.STORAGE
             
             # Use AVIF for best compression, fallback to WebP
@@ -1222,8 +1180,7 @@ class OptimizationEngine:
         target_directory: Union[str, Path],
         breakpoints: Optional[List[int]] = None
     ) -> Dict[str, List[OptimizationResult]]:
-        """
-        Create responsive image variants for different screen sizes
+        """        Create responsive image variants for different screen sizes
         
         Args:
             source_path: Source image path
@@ -1232,8 +1189,7 @@ class OptimizationEngine:
             
         Returns:
             Dictionary of results organized by format and size
-        """
-        try:
+        """        try:
             source_path = Path(source_path)
             target_dir = Path(target_directory)
             target_dir.mkdir(parents=True, exist_ok=True)
@@ -1276,16 +1232,14 @@ class OptimizationEngine:
         self, 
         image_path: Union[str, Path]
     ) -> Dict[str, Any]:
-        """
-        Analyze potential optimization benefits for an image
+        """        Analyze potential optimization benefits for an image
         
         Args:
             image_path: Path to image for analysis
             
         Returns:
             Analysis results with optimization recommendations
-        """
-        try:
+        """        try:
             with Image.open(image_path) as image:
                 current_size = Path(image_path).stat().st_size
                 

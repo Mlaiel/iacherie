@@ -1,5 +1,4 @@
-"""
-AI Core Module Setup and Installation
+"""AI Core Module Setup and Installation
 
 Provides setup utilities for the AI core module including:
 - Dependency installation
@@ -11,7 +10,6 @@ Provides setup utilities for the AI core module including:
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import os
 import sys
 import json
@@ -30,13 +28,11 @@ logger = logging.getLogger(__name__)
 
 
 class SetupError(BaseAIException):
-    """Exception raised during module setup"""
-    pass
+    """Exception raised during module setup"""    pass
 
 
 class ModuleSetup:
-    """
-    AI Core Module Setup Manager
+    """    AI Core Module Setup Manager
     
     Handles complete module setup including:
     - Environment validation
@@ -44,16 +40,14 @@ class ModuleSetup:
     - Configuration initialization
     - Model preparation
     - System validation
-    """
-    
+    """    
     def __init__(self, setup_config: Optional[Dict[str, Any]] = None):
         self.setup_config = setup_config or {}
         self.setup_log = []
         self.config_manager = ConfigManager()
         
     def log_step(self, message: str, level: str = "INFO"):
-        """Log setup step"""
-        timestamp = datetime.now().isoformat()
+        """Log setup step"""        timestamp = datetime.now().isoformat()
         log_entry = {
             "timestamp": timestamp,
             "level": level,
@@ -69,8 +63,7 @@ class ModuleSetup:
             logger.info(message)
             
     def check_system_requirements(self) -> bool:
-        """Check system requirements for AI core module"""
-        self.log_step("Checking system requirements...")
+        """Check system requirements for AI core module"""        self.log_step("Checking system requirements...")
         
         try:
             # Check Python version
@@ -122,8 +115,7 @@ class ModuleSetup:
             return False
             
     def install_dependencies(self) -> bool:
-        """Install required dependencies"""
-        self.log_step("Installing dependencies...")
+        """Install required dependencies"""        self.log_step("Installing dependencies...")
         
         # Core dependencies
         core_deps = [
@@ -182,8 +174,7 @@ class ModuleSetup:
             return False
             
     def setup_configuration(self, config_path: Optional[str] = None) -> bool:
-        """Setup initial configuration"""
-        self.log_step("Setting up configuration...")
+        """Setup initial configuration"""        self.log_step("Setting up configuration...")
         
         try:
             # Create default configuration
@@ -219,8 +210,7 @@ class ModuleSetup:
             return False
             
     def create_directories(self) -> bool:
-        """Create necessary directories"""
-        self.log_step("Creating directories...")
+        """Create necessary directories"""        self.log_step("Creating directories...")
         
         directories = [
             "models",
@@ -247,8 +237,7 @@ class ModuleSetup:
             return False
             
     def download_default_models(self) -> bool:
-        """Download default AI models"""
-        self.log_step("Downloading default models...")
+        """Download default AI models"""        self.log_step("Downloading default models...")
         
         # Default models to download
         models = [
@@ -294,8 +283,7 @@ class ModuleSetup:
             return False
             
     def validate_installation(self) -> bool:
-        """Validate the installation"""
-        self.log_step("Validating installation...")
+        """Validate the installation"""        self.log_step("Validating installation...")
         
         try:
             # Test imports
@@ -326,8 +314,7 @@ class ModuleSetup:
             return False
             
     def run_setup(self, config_path: Optional[str] = None) -> bool:
-        """Run complete setup process"""
-        self.log_step("Starting AI Core Module setup...")
+        """Run complete setup process"""        self.log_step("Starting AI Core Module setup...")
         
         setup_steps = [
             ("System Requirements", self.check_system_requirements),
@@ -351,12 +338,10 @@ class ModuleSetup:
         return True
         
     def get_setup_log(self) -> List[Dict[str, Any]]:
-        """Get setup log entries"""
-        return self.setup_log
+        """Get setup log entries"""        return self.setup_log
         
     def save_setup_log(self, log_path: str) -> bool:
-        """Save setup log to file"""
-        try:
+        """Save setup log to file"""        try:
             log_path = Path(log_path)
             log_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -373,8 +358,7 @@ class ModuleSetup:
 def setup_ai_core(config: Optional[Dict[str, Any]] = None, 
                   config_path: Optional[str] = None,
                   log_path: Optional[str] = None) -> bool:
-    """
-    Quick setup function for AI Core module
+    """    Quick setup function for AI Core module
     
     Args:
         config: Setup configuration
@@ -383,8 +367,7 @@ def setup_ai_core(config: Optional[Dict[str, Any]] = None,
         
     Returns:
         True if setup successful
-    """
-    setup_manager = ModuleSetup(config)
+    """    setup_manager = ModuleSetup(config)
     
     # Run setup
     success = setup_manager.run_setup(config_path)
@@ -397,8 +380,7 @@ def setup_ai_core(config: Optional[Dict[str, Any]] = None,
 
 
 def quick_setup() -> bool:
-    """Quick setup with default configuration"""
-    return setup_ai_core(
+    """Quick setup with default configuration"""    return setup_ai_core(
         config={"environment": "development", "debug_mode": True},
         config_path="config/ai_core.json",
         log_path="logs/setup.json"
@@ -406,8 +388,7 @@ def quick_setup() -> bool:
 
 
 def production_setup() -> bool:
-    """Production setup with optimized configuration"""
-    return setup_ai_core(
+    """Production setup with optimized configuration"""    return setup_ai_core(
         config={"environment": "production", "debug_mode": False},
         config_path="config/ai_core_production.json",
         log_path="logs/production_setup.json"

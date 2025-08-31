@@ -1,11 +1,9 @@
-"""
-Ainflue Platform Main Entry Point
+"""Ainflue Platform Main Entry Point
 Run the complete AI-powered content protection and monetization platform.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import sys
 import importlib.util
@@ -111,8 +109,7 @@ import uvicorn
 
 
 async def initialize_platform():
-    """Initialize the platform on first run"""
-    try:
+    """Initialize the platform on first run"""    try:
         logger.info("Initializing Ainflue platform...")
         
         # Create database tables if available
@@ -130,8 +127,7 @@ async def initialize_platform():
 
 
 def main():
-    """Main entry point"""
-    logger.info("Starting Ainflue AI Platform")
+    """Main entry point"""    logger.info("Starting Ainflue AI Platform")
     logger.info(f"Environment: {settings.app.environment}")
     logger.info(f"Debug mode: {settings.app.debug}")
     

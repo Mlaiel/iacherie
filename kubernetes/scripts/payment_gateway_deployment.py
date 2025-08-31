@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Payment Gateway Deployment Manager
+"""IA Influencer Agent - Payment Gateway Deployment Manager
 Enterprise-grade payment system deployment and integration management for
 revenue tracking, automated payouts, multi-currency support, and global transactions.
 
@@ -27,7 +26,6 @@ and international copyright laws.
 
 Specialization: Financial Technology Integration & Payment Systems Architecture
 """
-
 import asyncio
 import logging
 import json
@@ -60,8 +58,7 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers."""
-    STRIPE = "stripe"
+    """Supported payment providers."""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     ADYEN = "adyen"
@@ -72,8 +69,7 @@ class PaymentProvider(Enum):
 
 
 class PaymentMethod(Enum):
-    """Supported payment methods."""
-    CREDIT_CARD = "credit_card"
+    """Supported payment methods."""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
     DIGITAL_WALLET = "digital_wallet"
@@ -84,8 +80,7 @@ class PaymentMethod(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies."""
-    USD = "USD"
+    """Supported currencies."""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -96,8 +91,7 @@ class Currency(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Financial compliance standards."""
-    PCI_DSS = "pci_dss"
+    """Financial compliance standards."""    PCI_DSS = "pci_dss"
     SOX = "sox"
     GDPR = "gdpr"
     PSD2 = "psd2"
@@ -108,8 +102,7 @@ class ComplianceStandard(Enum):
 
 @dataclass
 class PaymentGatewayConfig:
-    """Configuration for payment gateway deployment."""
-    gateway_name: str
+    """Configuration for payment gateway deployment."""    gateway_name: str
     provider: PaymentProvider
     environment: str  # sandbox, production
     supported_currencies: List[Currency]
@@ -123,8 +116,7 @@ class PaymentGatewayConfig:
 
 @dataclass
 class PayoutConfig:
-    """Configuration for automated payouts."""
-    schedule: str  # daily, weekly, monthly
+    """Configuration for automated payouts."""    schedule: str  # daily, weekly, monthly
     minimum_amount: Decimal
     fee_percentage: Decimal
     currency: Currency
@@ -133,8 +125,7 @@ class PayoutConfig:
 
 
 class PaymentGatewayDeploymentManager:
-    """
-    Enterprise-grade payment gateway deployment and management system.
+    """    Enterprise-grade payment gateway deployment and management system.
     
     Features:
     - Multi-provider payment gateway integration
@@ -146,10 +137,8 @@ class PaymentGatewayDeploymentManager:
     - Compliance and regulatory adherence
     - Advanced security measures
     """
-
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the payment gateway deployment manager."""
-        self.config = self._load_config(config_path)
+        """Initialize the payment gateway deployment manager."""        self.config = self._load_config(config_path)
         self.docker_client = docker.from_env()
         self.k8s_client = self._initialize_kubernetes()
         self.payment_gateways = {}
@@ -162,8 +151,7 @@ class PaymentGatewayDeploymentManager:
         logger.info("Payment Gateway Deployment Manager initialized successfully")
 
     def _load_config(self, config_path: Optional[str]) -> Dict[str, Any]:
-        """Load payment gateway configuration."""
-        default_config = {
+        """Load payment gateway configuration."""        default_config = {
             "security": {
                 "encryption_algorithm": "AES-256-GCM",
                 "key_rotation_days": 90,
@@ -212,8 +200,7 @@ class PaymentGatewayDeploymentManager:
         return default_config
 
     def _initialize_kubernetes(self) -> client.ApiClient:
-        """Initialize Kubernetes client."""
-        try:
+        """Initialize Kubernetes client."""        try:
             config.load_incluster_config()
         except:
             try:
@@ -225,8 +212,7 @@ class PaymentGatewayDeploymentManager:
         return client.ApiClient()
 
     def _initialize_payment_providers(self) -> None:
-        """Initialize payment provider clients."""
-        # Initialize Stripe
+        """Initialize payment provider clients."""        # Initialize Stripe
         if 'stripe' in self.config.get('providers', {}):
             stripe.api_key = self.config['providers']['stripe'].get('secret_key')
         
@@ -238,8 +224,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         payout_config: Optional[PayoutConfig] = None
     ) -> str:
-        """
-        Deploy a payment gateway with enterprise-grade security and compliance.
+        """        Deploy a payment gateway with enterprise-grade security and compliance.
         
         Args:
             gateway_config: Payment gateway configuration
@@ -247,8 +232,7 @@ class PaymentGatewayDeploymentManager:
             
         Returns:
             Deployment ID
-        """
-        deployment_id = f"{gateway_config.gateway_name}-{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        """        deployment_id = f"{gateway_config.gateway_name}-{datetime.now().strftime('%Y%m%d%H%M%S')}"
         
         try:
             logger.info(f"Starting payment gateway deployment: {deployment_id}")
@@ -304,8 +288,7 @@ class PaymentGatewayDeploymentManager:
             raise
 
     async def _validate_gateway_config(self, gateway_config: PaymentGatewayConfig) -> None:
-        """Validate payment gateway configuration."""
-        if not gateway_config.api_credentials:
+        """Validate payment gateway configuration."""        if not gateway_config.api_credentials:
             raise ValueError("API credentials are required")
         
         # Validate provider-specific requirements
@@ -325,8 +308,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Deploy secure payment infrastructure."""
-        if not self.k8s_client:
+        """Deploy secure payment infrastructure."""        if not self.k8s_client:
             return await self._deploy_payment_infrastructure_local(gateway_config, deployment_id)
         
         # Create namespace for payment services
@@ -508,8 +490,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Deploy payment infrastructure locally using Docker."""
-        container_name = f"payment-gateway-{deployment_id}"
+        """Deploy payment infrastructure locally using Docker."""        container_name = f"payment-gateway-{deployment_id}"
         
         # Create Docker network for isolation
         try:
@@ -547,8 +528,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Setup PCI DSS compliance measures."""
-        compliance_config = {
+        """Setup PCI DSS compliance measures."""        compliance_config = {
             "deployment_id": deployment_id,
             "pci_level": self.config['compliance']['pci_dss_level'],
             "requirements": {
@@ -603,8 +583,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Configure payment provider integration."""
-        provider_config = {
+        """Configure payment provider integration."""        provider_config = {
             "provider": gateway_config.provider.value,
             "environment": gateway_config.environment,
             "supported_currencies": [c.value for c in gateway_config.supported_currencies],
@@ -626,8 +605,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Configure Stripe payment integration."""
-        stripe.api_key = gateway_config.api_credentials['secret_key']
+        """Configure Stripe payment integration."""        stripe.api_key = gateway_config.api_credentials['secret_key']
         
         # Configure webhooks
         webhook_endpoint = await self._create_stripe_webhook_endpoint(gateway_config, deployment_id)
@@ -653,8 +631,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Configure PayPal payment integration."""
-        # PayPal configuration implementation
+        """Configure PayPal payment integration."""        # PayPal configuration implementation
         return {
             "client_id": gateway_config.api_credentials.get('client_id'),
             "environment": gateway_config.environment
@@ -665,8 +642,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Configure Wise payment integration."""
-        # Wise configuration implementation
+        """Configure Wise payment integration."""        # Wise configuration implementation
         return {
             "api_token": gateway_config.api_credentials.get('api_token'),
             "profile_id": gateway_config.api_credentials.get('profile_id')
@@ -677,8 +653,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Create Stripe webhook endpoint."""
-        webhook_url = f"https://payments.ia-influencer.com/webhooks/stripe/{deployment_id}"
+        """Create Stripe webhook endpoint."""        webhook_url = f"https://payments.ia-influencer.com/webhooks/stripe/{deployment_id}"
         
         webhook_endpoint = stripe.WebhookEndpoint.create(
             url=webhook_url,
@@ -705,8 +680,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Setup fraud detection and prevention."""
-        fraud_config = {
+        """Setup fraud detection and prevention."""        fraud_config = {
             "deployment_id": deployment_id,
             "enabled": self.config['fraud_detection']['enabled'],
             "risk_scoring": self.config['fraud_detection']['risk_scoring'],
@@ -731,8 +705,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Configure webhook handling."""
-        webhook_config = {
+        """Configure webhook handling."""        webhook_config = {
             "deployment_id": deployment_id,
             "endpoints": [],
             "signature_validation": self.config['security']['webhook_signature_validation'],
@@ -755,8 +728,7 @@ class PaymentGatewayDeploymentManager:
         gateway_config: PaymentGatewayConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Setup payment monitoring and alerting."""
-        monitoring_config = {
+        """Setup payment monitoring and alerting."""        monitoring_config = {
             "deployment_id": deployment_id,
             "real_time_alerts": self.config['monitoring']['real_time_alerts'],
             "transaction_monitoring": self.config['monitoring']['transaction_monitoring'],
@@ -779,8 +751,7 @@ class PaymentGatewayDeploymentManager:
         payout_config: PayoutConfig,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """Configure automated payout system."""
-        payout_result = {
+        """Configure automated payout system."""        payout_result = {
             "deployment_id": deployment_id,
             "schedule": payout_config.schedule,
             "minimum_amount": str(payout_config.minimum_amount),
@@ -799,8 +770,7 @@ class PaymentGatewayDeploymentManager:
         return payout_result
 
     async def _deploy_network_policies(self, deployment_id: str) -> None:
-        """Deploy Kubernetes network policies for PCI compliance."""
-        network_policy = {
+        """Deploy Kubernetes network policies for PCI compliance."""        network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
             "metadata": {
@@ -844,48 +814,39 @@ class PaymentGatewayDeploymentManager:
         )
 
     async def _setup_data_encryption(self, deployment_id: str) -> None:
-        """Setup data encryption for PCI compliance."""
-        # Implementation for data encryption setup
+        """Setup data encryption for PCI compliance."""        # Implementation for data encryption setup
         logger.info(f"Data encryption configured for: {deployment_id}")
 
     async def _configure_access_controls(self, deployment_id: str) -> None:
-        """Configure access controls for PCI compliance."""
-        # Implementation for access control configuration
+        """Configure access controls for PCI compliance."""        # Implementation for access control configuration
         logger.info(f"Access controls configured for: {deployment_id}")
 
     async def _deploy_fraud_detection_service(self, deployment_id: str) -> None:
-        """Deploy fraud detection service."""
-        # Implementation for fraud detection service deployment
+        """Deploy fraud detection service."""        # Implementation for fraud detection service deployment
         logger.info(f"Fraud detection service deployed for: {deployment_id}")
 
     async def _configure_risk_rules(self, deployment_id: str, gateway_config: PaymentGatewayConfig) -> None:
-        """Configure fraud detection risk rules."""
-        # Implementation for risk rules configuration
+        """Configure fraud detection risk rules."""        # Implementation for risk rules configuration
         logger.info(f"Risk rules configured for: {deployment_id}")
 
     async def _deploy_webhook_handler(self, deployment_id: str) -> None:
-        """Deploy webhook handler service."""
-        # Implementation for webhook handler deployment
+        """Deploy webhook handler service."""        # Implementation for webhook handler deployment
         logger.info(f"Webhook handler deployed for: {deployment_id}")
 
     async def _setup_prometheus_monitoring(self, deployment_id: str) -> None:
-        """Setup Prometheus monitoring for payments."""
-        # Implementation for Prometheus monitoring setup
+        """Setup Prometheus monitoring for payments."""        # Implementation for Prometheus monitoring setup
         logger.info(f"Prometheus monitoring configured for: {deployment_id}")
 
     async def _configure_payment_alerts(self, deployment_id: str) -> None:
-        """Configure payment alerting rules."""
-        # Implementation for payment alerts configuration
+        """Configure payment alerting rules."""        # Implementation for payment alerts configuration
         logger.info(f"Payment alerts configured for: {deployment_id}")
 
     async def _deploy_payout_scheduler(self, deployment_id: str, payout_config: PayoutConfig) -> None:
-        """Deploy automated payout scheduler."""
-        # Implementation for payout scheduler deployment
+        """Deploy automated payout scheduler."""        # Implementation for payout scheduler deployment
         logger.info(f"Payout scheduler deployed for: {deployment_id}")
 
     async def _configure_tax_compliance(self, deployment_id: str, payout_config: PayoutConfig) -> None:
-        """Configure tax compliance for payouts."""
-        # Implementation for tax compliance configuration
+        """Configure tax compliance for payouts."""        # Implementation for tax compliance configuration
         logger.info(f"Tax compliance configured for: {deployment_id}")
 
     def _record_payment_deployment(
@@ -895,8 +856,7 @@ class PaymentGatewayDeploymentManager:
         payout_config: Optional[PayoutConfig],
         result: Dict[str, Any]
     ) -> None:
-        """Record payment gateway deployment."""
-        deployment_record = {
+        """Record payment gateway deployment."""        deployment_record = {
             "deployment_id": deployment_id,
             "gateway_config": gateway_config.__dict__,
             "payout_config": payout_config.__dict__ if payout_config else None,
@@ -909,8 +869,7 @@ class PaymentGatewayDeploymentManager:
         logger.info(f"Payment gateway deployment recorded: {deployment_id}")
 
     async def _cleanup_failed_payment_deployment(self, deployment_id: str) -> None:
-        """Cleanup failed payment gateway deployment."""
-        try:
+        """Cleanup failed payment gateway deployment."""        try:
             if self.k8s_client:
                 apps_v1 = client.AppsV1Api(self.k8s_client)
                 core_v1 = client.CoreV1Api(self.k8s_client)
@@ -952,8 +911,7 @@ class PaymentGatewayDeploymentManager:
         customer_info: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Process a payment through the deployed gateway."""
-        try:
+        """Process a payment through the deployed gateway."""        try:
             if deployment_id not in self.active_deployments:
                 raise ValueError(f"Payment gateway not found: {deployment_id}")
             
@@ -993,8 +951,7 @@ class PaymentGatewayDeploymentManager:
         metadata: Optional[Dict[str, Any]],
         transaction_id: str
     ) -> Dict[str, Any]:
-        """Process payment through Stripe."""
-        try:
+        """Process payment through Stripe."""        try:
             payment_intent = stripe.PaymentIntent.create(
                 amount=int(amount * 100),  # Stripe expects amount in cents
                 currency=currency.value.lower(),
@@ -1028,8 +985,7 @@ class PaymentGatewayDeploymentManager:
         metadata: Optional[Dict[str, Any]],
         transaction_id: str
     ) -> Dict[str, Any]:
-        """Process payment through PayPal."""
-        # PayPal payment processing implementation
+        """Process payment through PayPal."""        # PayPal payment processing implementation
         return {
             "transaction_id": transaction_id,
             "status": "pending",
@@ -1038,8 +994,7 @@ class PaymentGatewayDeploymentManager:
         }
 
     def _log_transaction(self, deployment_id: str, transaction_id: str, result: Dict[str, Any]) -> None:
-        """Log transaction for audit and compliance."""
-        transaction_log = {
+        """Log transaction for audit and compliance."""        transaction_log = {
             "deployment_id": deployment_id,
             "transaction_id": transaction_id,
             "timestamp": datetime.now().isoformat(),
@@ -1051,19 +1006,16 @@ class PaymentGatewayDeploymentManager:
         logger.info(f"Transaction logged: {transaction_id}")
 
     def get_deployment_status(self, deployment_id: str) -> Dict[str, Any]:
-        """Get payment gateway deployment status."""
-        if deployment_id not in self.active_deployments:
+        """Get payment gateway deployment status."""        if deployment_id not in self.active_deployments:
             return {"status": "not_found"}
         
         return self.active_deployments[deployment_id]
 
     def list_active_deployments(self) -> List[Dict[str, Any]]:
-        """List all active payment gateway deployments."""
-        return list(self.active_deployments.values())
+        """List all active payment gateway deployments."""        return list(self.active_deployments.values())
 
     def get_transaction_logs(self, deployment_id: str) -> List[Dict[str, Any]]:
-        """Get transaction logs for a deployment."""
-        return [
+        """Get transaction logs for a deployment."""        return [
             log for log in self.transaction_logs
             if log['deployment_id'] == deployment_id
         ]
@@ -1071,8 +1023,7 @@ class PaymentGatewayDeploymentManager:
 
 # Factory functions for common payment gateway configurations
 def create_stripe_gateway_config() -> PaymentGatewayConfig:
-    """Create Stripe payment gateway configuration."""
-    return PaymentGatewayConfig(
+    """Create Stripe payment gateway configuration."""    return PaymentGatewayConfig(
         gateway_name="stripe-main",
         provider=PaymentProvider.STRIPE,
         environment="production",
@@ -1098,8 +1049,7 @@ def create_stripe_gateway_config() -> PaymentGatewayConfig:
 
 
 def create_paypal_gateway_config() -> PaymentGatewayConfig:
-    """Create PayPal payment gateway configuration."""
-    return PaymentGatewayConfig(
+    """Create PayPal payment gateway configuration."""    return PaymentGatewayConfig(
         gateway_name="paypal-main",
         provider=PaymentProvider.PAYPAL,
         environment="production",
@@ -1113,8 +1063,7 @@ def create_paypal_gateway_config() -> PaymentGatewayConfig:
 
 
 def create_standard_payout_config() -> PayoutConfig:
-    """Create standard payout configuration."""
-    return PayoutConfig(
+    """Create standard payout configuration."""    return PayoutConfig(
         schedule="weekly",
         minimum_amount=Decimal("50.00"),
         fee_percentage=Decimal("2.9"),
@@ -1126,8 +1075,7 @@ def create_standard_payout_config() -> PayoutConfig:
 # Main execution
 if __name__ == "__main__":
     async def main():
-        """Main execution function."""
-        # Initialize payment gateway deployment manager
+        """Main execution function."""        # Initialize payment gateway deployment manager
         manager = PaymentGatewayDeploymentManager()
         
         # Example: Deploy Stripe payment gateway

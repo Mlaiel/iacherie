@@ -1,5 +1,4 @@
-"""
-Moderation Agent - Ultra-Advanced AI Content Safety System
+"""Moderation Agent - Ultra-Advanced AI Content Safety System
 
 Enterprise-grade content moderation agent providing comprehensive safety filtering 
 and automated compliance enforcement across multiple formats.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from setuptools import setup, find_packages
 import os
 

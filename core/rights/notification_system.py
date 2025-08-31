@@ -1,5 +1,4 @@
-"""
-Enterprise Real-Time Notification & Alert System
+"""Enterprise Real-Time Notification & Alert System
 ===============================================
 
 Comprehensive notification system for real-time alerts, violation notifications,
@@ -12,7 +11,6 @@ Enterprise Content Protection Platform - Notification Core
 This is proprietary software owned by Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
-
 import asyncio
 import logging
 import json
@@ -41,8 +39,7 @@ settings = get_settings()
 
 
 class NotificationType(str, Enum):
-    """Types of notifications."""
-    VIOLATION_DETECTED = "violation_detected"
+    """Types of notifications."""    VIOLATION_DETECTED = "violation_detected"
     DMCA_SENT = "dmca_sent"
     COMPLIANCE_UPDATE = "compliance_update"
     REVENUE_ALERT = "revenue_alert"
@@ -55,8 +52,7 @@ class NotificationType(str, Enum):
 
 
 class NotificationChannel(str, Enum):
-    """Notification delivery channels."""
-    EMAIL = "email"
+    """Notification delivery channels."""    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     WEBHOOK = "webhook"
@@ -68,8 +64,7 @@ class NotificationChannel(str, Enum):
 
 
 class NotificationPriority(str, Enum):
-    """Notification priority levels."""
-    LOW = "low"
+    """Notification priority levels."""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -77,8 +72,7 @@ class NotificationPriority(str, Enum):
 
 
 class NotificationStatus(str, Enum):
-    """Notification delivery status."""
-    PENDING = "pending"
+    """Notification delivery status."""    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     READ = "read"
@@ -88,8 +82,7 @@ class NotificationStatus(str, Enum):
 
 @dataclass
 class NotificationData:
-    """Notification data structure."""
-    notification_id: str
+    """Notification data structure."""    notification_id: str
     user_id: str
     type: NotificationType
     priority: NotificationPriority
@@ -107,8 +100,7 @@ class NotificationData:
 
 @dataclass
 class NotificationTemplate:
-    """Notification template structure."""
-    template_id: str
+    """Notification template structure."""    template_id: str
     type: NotificationType
     title_template: str
     message_template: str
@@ -118,8 +110,7 @@ class NotificationTemplate:
 
 
 class EmailNotificationHandler:
-    """Email notification handler."""
-    
+    """Email notification handler."""    
     def __init__(self):
         self.smtp_host = settings.SMTP_HOST
         self.smtp_port = settings.SMTP_PORT
@@ -128,8 +119,7 @@ class EmailNotificationHandler:
         self.smtp_use_tls = settings.SMTP_USE_TLS
     
     async def send_notification(self, notification: NotificationData, recipient: str) -> bool:
-        """Send email notification."""
-        try:
+        """Send email notification."""        try:
             # Create email message
             msg = MIMEMultipart()
             msg['From'] = self.smtp_username
@@ -156,8 +146,7 @@ class EmailNotificationHandler:
             return False
     
     def _create_html_content(self, notification: NotificationData) -> str:
-        """Create HTML email content."""
-        priority_colors = {
+        """Create HTML email content."""        priority_colors = {
             NotificationPriority.LOW: "#28a745",
             NotificationPriority.NORMAL: "#007bff",
             NotificationPriority.HIGH: "#fd7e14",
@@ -167,8 +156,7 @@ class EmailNotificationHandler:
         
         color = priority_colors.get(notification.priority, "#007bff")
         
-        html = f"""
-        <!DOCTYPE html>
+        html = f"""        <!DOCTYPE html>
         <html>
         <head>
             <meta charset="utf-8">
@@ -208,12 +196,10 @@ class EmailNotificationHandler:
             </div>
         </body>
         </html>
-        """
-        return html
+        """        return html
     
     def _format_notification_data(self, data: Dict[str, Any]) -> str:
-        """Format notification data as HTML table."""
-        if not data:
+        """Format notification data as HTML table."""        if not data:
             return ""
         
         html = '<table class="data-table">'
@@ -227,8 +213,7 @@ class EmailNotificationHandler:
 
 
 class SMSNotificationHandler:
-    """SMS notification handler using Twilio."""
-    
+    """SMS notification handler using Twilio."""    
     def __init__(self):
         self.account_sid = settings.TWILIO_ACCOUNT_SID
         self.auth_token = settings.TWILIO_AUTH_TOKEN
@@ -236,8 +221,7 @@ class SMSNotificationHandler:
         self.client = TwilioClient(self.account_sid, self.auth_token)
     
     async def send_notification(self, notification: NotificationData, recipient: str) -> bool:
-        """Send SMS notification."""
-        try:
+        """Send SMS notification."""        try:
             # Format message for SMS
             sms_message = self._format_sms_message(notification)
             
@@ -256,8 +240,7 @@ class SMSNotificationHandler:
             return False
     
     def _format_sms_message(self, notification: NotificationData) -> str:
-        """Format notification for SMS."""
-        priority_emoji = {
+        """Format notification for SMS."""        priority_emoji = {
             NotificationPriority.LOW: "ℹ️",
             NotificationPriority.NORMAL: "📢",
             NotificationPriority.HIGH: "⚠️",
@@ -285,8 +268,7 @@ class SMSNotificationHandler:
 
 
 class PushNotificationHandler:
-    """Push notification handler using Firebase."""
-    
+    """Push notification handler using Firebase."""    
     def __init__(self):
         # Initialize Firebase Admin SDK
         if not firebase_admin._apps:
@@ -294,8 +276,7 @@ class PushNotificationHandler:
             firebase_admin.initialize_app(cred)
     
     async def send_notification(self, notification: NotificationData, device_token: str) -> bool:
-        """Send push notification."""
-        try:
+        """Send push notification."""        try:
             # Create push notification message
             message = messaging.Message(
                 notification=messaging.Notification(
@@ -337,8 +318,7 @@ class PushNotificationHandler:
             return False
     
     def _prepare_push_data(self, notification: NotificationData) -> Dict[str, str]:
-        """Prepare data for push notification."""
-        data = {
+        """Prepare data for push notification."""        data = {
             'notification_id': notification.notification_id,
             'type': notification.type,
             'priority': notification.priority,
@@ -353,19 +333,16 @@ class PushNotificationHandler:
 
 
 class WebhookNotificationHandler:
-    """Webhook notification handler."""
-    
+    """Webhook notification handler."""    
     def __init__(self):
         self.session = None
     
     async def setup_session(self):
-        """Setup HTTP session."""
-        if not self.session:
+        """Setup HTTP session."""        if not self.session:
             self.session = aiohttp.ClientSession()
     
     async def send_notification(self, notification: NotificationData, webhook_url: str) -> bool:
-        """Send webhook notification."""
-        await self.setup_session()
+        """Send webhook notification."""        await self.setup_session()
         
         try:
             payload = {
@@ -403,20 +380,17 @@ class WebhookNotificationHandler:
             return False
     
     async def cleanup_session(self):
-        """Cleanup session."""
-        if self.session:
+        """Cleanup session."""        if self.session:
             await self.session.close()
 
 
 class SlackNotificationHandler:
-    """Slack notification handler."""
-    
+    """Slack notification handler."""    
     def __init__(self):
         self.client = AsyncWebClient(token=settings.SLACK_BOT_TOKEN)
     
     async def send_notification(self, notification: NotificationData, channel: str) -> bool:
-        """Send Slack notification."""
-        try:
+        """Send Slack notification."""        try:
             # Create Slack message blocks
             blocks = self._create_slack_blocks(notification)
             
@@ -438,8 +412,7 @@ class SlackNotificationHandler:
             return False
     
     def _create_slack_blocks(self, notification: NotificationData) -> List[Dict]:
-        """Create Slack message blocks."""
-        priority_colors = {
+        """Create Slack message blocks."""        priority_colors = {
             NotificationPriority.LOW: "#28a745",
             NotificationPriority.NORMAL: "#007bff",
             NotificationPriority.HIGH: "#fd7e14",
@@ -493,15 +466,13 @@ class SlackNotificationHandler:
 
 
 class WebSocketNotificationHandler:
-    """WebSocket real-time notification handler."""
-    
+    """WebSocket real-time notification handler."""    
     def __init__(self):
         self.connections: Dict[str, websockets.WebSocketServerProtocol] = {}
         self.user_connections: Dict[str, List[str]] = {}
     
     async def register_connection(self, user_id: str, websocket: websockets.WebSocketServerProtocol):
-        """Register WebSocket connection for user."""
-        connection_id = f"{user_id}_{id(websocket)}"
+        """Register WebSocket connection for user."""        connection_id = f"{user_id}_{id(websocket)}"
         self.connections[connection_id] = websocket
         
         if user_id not in self.user_connections:
@@ -511,8 +482,7 @@ class WebSocketNotificationHandler:
         logger.info(f"WebSocket connection registered for user {user_id}")
     
     async def unregister_connection(self, user_id: str, websocket: websockets.WebSocketServerProtocol):
-        """Unregister WebSocket connection."""
-        connection_id = f"{user_id}_{id(websocket)}"
+        """Unregister WebSocket connection."""        connection_id = f"{user_id}_{id(websocket)}"
         
         if connection_id in self.connections:
             del self.connections[connection_id]
@@ -529,8 +499,7 @@ class WebSocketNotificationHandler:
         logger.info(f"WebSocket connection unregistered for user {user_id}")
     
     async def send_notification(self, notification: NotificationData) -> bool:
-        """Send WebSocket notification to user."""
-        user_id = notification.user_id
+        """Send WebSocket notification to user."""        user_id = notification.user_id
         
         if user_id not in self.user_connections:
             return False
@@ -567,8 +536,7 @@ class WebSocketNotificationHandler:
 
 
 class NotificationEngine:
-    """Central notification management engine."""
-    
+    """Central notification management engine."""    
     def __init__(self):
         self.handlers = self._initialize_handlers()
         self.templates = self._load_templates()
@@ -576,8 +544,7 @@ class NotificationEngine:
         self.processing_task = None
     
     def _initialize_handlers(self) -> Dict[NotificationChannel, Any]:
-        """Initialize notification handlers."""
-        return {
+        """Initialize notification handlers."""        return {
             NotificationChannel.EMAIL: EmailNotificationHandler(),
             NotificationChannel.SMS: SMSNotificationHandler(),
             NotificationChannel.PUSH: PushNotificationHandler(),
@@ -587,8 +554,7 @@ class NotificationEngine:
         }
     
     def _load_templates(self) -> Dict[NotificationType, NotificationTemplate]:
-        """Load notification templates."""
-        return {
+        """Load notification templates."""        return {
             NotificationType.VIOLATION_DETECTED: NotificationTemplate(
                 template_id="violation_detected",
                 type=NotificationType.VIOLATION_DETECTED,
@@ -619,14 +585,12 @@ class NotificationEngine:
         }
     
     async def start_processing(self):
-        """Start notification processing task."""
-        if not self.processing_task or self.processing_task.done():
+        """Start notification processing task."""        if not self.processing_task or self.processing_task.done():
             self.processing_task = asyncio.create_task(self._process_notifications())
             logger.info("Notification processing started")
     
     async def stop_processing(self):
-        """Stop notification processing task."""
-        if self.processing_task and not self.processing_task.done():
+        """Stop notification processing task."""        if self.processing_task and not self.processing_task.done():
             self.processing_task.cancel()
             try:
                 await self.processing_task
@@ -635,8 +599,7 @@ class NotificationEngine:
             logger.info("Notification processing stopped")
     
     async def _process_notifications(self):
-        """Process notifications from queue."""
-        while True:
+        """Process notifications from queue."""        while True:
             try:
                 notification = await self.notification_queue.get()
                 await self._send_notification(notification)
@@ -655,8 +618,7 @@ class NotificationEngine:
         channels: List[NotificationChannel] = None,
         priority: NotificationPriority = None
     ) -> str:
-        """Send notification using template."""
-        
+        """Send notification using template."""        
         # Get template
         template = self.templates.get(notification_type)
         if not template:
@@ -691,8 +653,7 @@ class NotificationEngine:
         return notification.notification_id
     
     async def _send_notification(self, notification: NotificationData):
-        """Send notification through all specified channels."""
-        
+        """Send notification through all specified channels."""        
         # Get user preferences
         user_preferences = await self._get_user_preferences(notification.user_id)
         
@@ -718,8 +679,7 @@ class NotificationEngine:
         channel: NotificationChannel,
         user_preferences: Dict[str, Any]
     ) -> bool:
-        """Send notification to specific channel."""
-        
+        """Send notification to specific channel."""        
         handler = self.handlers.get(channel)
         if not handler:
             logger.error(f"No handler for channel: {channel}")
@@ -766,8 +726,7 @@ class NotificationEngine:
         notification: NotificationData,
         user_preferences: Dict[str, Any]
     ) -> bool:
-        """Check if notification should be sent to channel."""
-        
+        """Check if notification should be sent to channel."""        
         # Check if channel is enabled for user
         if not user_preferences.get(f"{channel}_enabled", True):
             return False
@@ -798,8 +757,7 @@ class NotificationEngine:
         return True
     
     def _render_template(self, template: str, data: Dict[str, Any]) -> str:
-        """Render notification template with data."""
-        try:
+        """Render notification template with data."""        try:
             # Simple template rendering (could use Jinja2 for more complex templates)
             result = template
             for key, value in data.items():
@@ -810,13 +768,11 @@ class NotificationEngine:
             return template
     
     def _generate_notification_id(self) -> str:
-        """Generate unique notification ID."""
-        import uuid
+        """Generate unique notification ID."""        import uuid
         return str(uuid.uuid4())[:16]
     
     async def _get_user_preferences(self, user_id: str) -> Dict[str, Any]:
-        """Get user notification preferences."""
-        # Implementation would fetch from database
+        """Get user notification preferences."""        # Implementation would fetch from database
         # For now, return defaults
         return {
             'email': f"user_{user_id}@example.com",
@@ -843,8 +799,7 @@ class NotificationEngine:
         channel: NotificationChannel, 
         status: str
     ):
-        """Log notification delivery status."""
-        log_entry = {
+        """Log notification delivery status."""        log_entry = {
             'notification_id': notification.notification_id,
             'user_id': notification.user_id,
             'channel': channel,
@@ -862,8 +817,7 @@ class NotificationEngine:
         user_id: str = None,
         date_range: Tuple[datetime, datetime] = None
     ) -> Dict[str, Any]:
-        """Get notification delivery statistics."""
-        
+        """Get notification delivery statistics."""        
         stats = {
             'total_sent': 0,
             'delivery_rate': 0.0,
@@ -877,8 +831,7 @@ class NotificationEngine:
         return stats
     
     async def cleanup(self):
-        """Cleanup resources."""
-        await self.stop_processing()
+        """Cleanup resources."""        await self.stop_processing()
         
         # Cleanup handlers
         webhook_handler = self.handlers.get(NotificationChannel.WEBHOOK)

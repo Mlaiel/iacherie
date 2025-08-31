@@ -1,5 +1,4 @@
-"""
-AI Core Configuration Module
+"""AI Core Configuration Module
 
 Centralized configuration management for the IA-Influencer-Agent AI system.
 Enterprise-grade configuration with environment-specific settings, security policies,
@@ -11,7 +10,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 This configuration system contains sensitive business logic and security parameters.
 """
-
 import os
 import json
 from typing import Dict, Any, Optional, List, Union, Callable
@@ -24,16 +22,14 @@ logger = logging.getLogger(__name__)
 
 
 class Environment(Enum):
-    """Deployment environments"""
-    DEVELOPMENT = "development"
+    """Deployment environments"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class SecurityLevel(Enum):
-    """Security configuration levels"""
-    BASIC = "basic"
+    """Security configuration levels"""    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     MAXIMUM = "maximum"
@@ -41,8 +37,7 @@ class SecurityLevel(Enum):
 
 @dataclass
 class AIEngineConfig:
-    """Configuration for AI Engine Manager"""
-    max_concurrent_models: int = 5
+    """Configuration for AI Engine Manager"""    max_concurrent_models: int = 5
     auto_cleanup_interval: int = 300
     memory_threshold_gb: float = 8.0
     default_device: str = "auto"
@@ -54,8 +49,7 @@ class AIEngineConfig:
     model_repository_path: str = "./models"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "max_concurrent_models": self.max_concurrent_models,
             "auto_cleanup_interval": self.auto_cleanup_interval,
             "memory_threshold_gb": self.memory_threshold_gb,
@@ -71,8 +65,7 @@ class AIEngineConfig:
 
 @dataclass
 class ValidationConfig:
-    """Configuration for Content Validator"""
-    enable_security_validation: bool = True
+    """Configuration for Content Validator"""    enable_security_validation: bool = True
     enable_quality_analysis: bool = True
     enable_seo_validation: bool = True
     enable_audio_validation: bool = True
@@ -86,8 +79,7 @@ class ValidationConfig:
     ])
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "enable_security_validation": self.enable_security_validation,
             "enable_quality_analysis": self.enable_quality_analysis,
             "enable_seo_validation": self.enable_seo_validation,
@@ -103,8 +95,7 @@ class ValidationConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for Performance Monitor"""
-    monitoring_interval: int = 30
+    """Configuration for Performance Monitor"""    monitoring_interval: int = 30
     history_size: int = 1000
     enable_auto_optimization: bool = True
     enable_predictions: bool = True
@@ -118,8 +109,7 @@ class PerformanceConfig:
     response_time_critical: float = 5.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "monitoring_interval": self.monitoring_interval,
             "history_size": self.history_size,
             "enable_auto_optimization": self.enable_auto_optimization,
@@ -137,8 +127,7 @@ class PerformanceConfig:
 
 @dataclass
 class MetricsConfig:
-    """Configuration for Metrics Collector"""
-    max_entries: int = 10000
+    """Configuration for Metrics Collector"""    max_entries: int = 10000
     auto_flush_interval: int = 300
     enable_system_metrics: bool = True
     enable_business_metrics: bool = True
@@ -148,8 +137,7 @@ class MetricsConfig:
     prometheus_port: int = 9090
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "max_entries": self.max_entries,
             "auto_flush_interval": self.auto_flush_interval,
             "enable_system_metrics": self.enable_system_metrics,
@@ -163,8 +151,7 @@ class MetricsConfig:
 
 @dataclass
 class PipelineConfig:
-    """Configuration for Content Processing Pipeline"""
-    max_concurrent_pipelines: int = 10
+    """Configuration for Content Processing Pipeline"""    max_concurrent_pipelines: int = 10
     stage_timeout_seconds: int = 300
     enable_stage_caching: bool = True
     enable_parallel_processing: bool = True
@@ -176,8 +163,7 @@ class PipelineConfig:
     ])
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "max_concurrent_pipelines": self.max_concurrent_pipelines,
             "stage_timeout_seconds": self.stage_timeout_seconds,
             "enable_stage_caching": self.enable_stage_caching,
@@ -191,8 +177,7 @@ class PipelineConfig:
 
 @dataclass
 class CoreConfig:
-    """Master configuration for AI Core module"""
-    environment: str = "development"
+    """Master configuration for AI Core module"""    environment: str = "development"
     debug_mode: bool = False
     log_level: str = "INFO"
     enable_detailed_logging: bool = True
@@ -216,8 +201,7 @@ class CoreConfig:
     enable_content_protection: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert complete configuration to dictionary"""
-        return {
+        """Convert complete configuration to dictionary"""        return {
             "environment": self.environment,
             "debug_mode": self.debug_mode,
             "log_level": self.log_level,
@@ -238,8 +222,7 @@ class CoreConfig:
         
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'CoreConfig':
-        """Create configuration from dictionary"""
-        config = cls()
+        """Create configuration from dictionary"""        config = cls()
         
         # Update basic settings
         for key in ["environment", "debug_mode", "log_level", "enable_detailed_logging"]:
@@ -283,8 +266,7 @@ class CoreConfig:
 
 
 class ConfigManager:
-    """
-    Configuration manager for AI Core module
+    """    Configuration manager for AI Core module
     
     Features:
     - Environment-based configuration
@@ -292,16 +274,14 @@ class ConfigManager:
     - Hot reload capability
     - Default fallbacks
     - Configuration export/import
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path
         self._config: Optional[CoreConfig] = None
         self._watchers: List[Callable] = []
         
     def load_config(self, config_path: Optional[str] = None) -> CoreConfig:
-        """Load configuration from file or environment"""
-        config_path = config_path or self.config_path
+        """Load configuration from file or environment"""        config_path = config_path or self.config_path
         
         # Start with default configuration
         config = CoreConfig()
@@ -329,8 +309,7 @@ class ConfigManager:
         return config
         
     def _load_from_environment(self, config: CoreConfig):
-        """Load configuration from environment variables"""
-        # Basic settings
+        """Load configuration from environment variables"""        # Basic settings
         config.environment = os.getenv("AI_ENVIRONMENT", config.environment)
         config.debug_mode = os.getenv("AI_DEBUG", str(config.debug_mode)).lower() == "true"
         config.log_level = os.getenv("AI_LOG_LEVEL", config.log_level)
@@ -363,8 +342,7 @@ class ConfigManager:
         config.enable_content_protection = os.getenv("AI_ENABLE_PROTECTION", "true").lower() == "true"
         
     def _load_from_file(self, config: CoreConfig, config_path: str):
-        """Load configuration from JSON file"""
-        try:
+        """Load configuration from JSON file"""        try:
             with open(config_path, 'r') as f:
                 data = json.load(f)
                 
@@ -380,8 +358,7 @@ class ConfigManager:
             logger.error(f"Failed to load config from {config_path}: {e}")
             
     def _validate_config(self, config: CoreConfig):
-        """Validate configuration values"""
-        errors = []
+        """Validate configuration values"""        errors = []
         
         # Validate AI Engine config
         if config.ai_engine.max_concurrent_models < 1:
@@ -403,14 +380,12 @@ class ConfigManager:
             raise ValueError(f"Configuration validation failed: {'; '.join(errors)}")
             
     def get_config(self) -> CoreConfig:
-        """Get current configuration"""
-        if self._config is None:
+        """Get current configuration"""        if self._config is None:
             return self.load_config()
         return self._config
         
     def save_config(self, config_path: Optional[str] = None) -> bool:
-        """Save current configuration to file"""
-        if self._config is None:
+        """Save current configuration to file"""        if self._config is None:
             logger.error("No configuration loaded to save")
             return False
             
@@ -436,16 +411,13 @@ class ConfigManager:
             return False
             
     def add_config_watcher(self, callback: Callable[[CoreConfig], None]):
-        """Add callback to be called when configuration changes"""
-        self._watchers.append(callback)
+        """Add callback to be called when configuration changes"""        self._watchers.append(callback)
         
     def reload_config(self) -> CoreConfig:
-        """Reload configuration from source"""
-        return self.load_config()
+        """Reload configuration from source"""        return self.load_config()
         
     def update_config(self, updates: Dict[str, Any]) -> bool:
-        """Update configuration with new values"""
-        if self._config is None:
+        """Update configuration with new values"""        if self._config is None:
             self.load_config()
             
         try:
@@ -480,21 +452,16 @@ config_manager = ConfigManager()
 
 # Convenience functions
 def get_config() -> CoreConfig:
-    """Get current AI core configuration"""
-    return config_manager.get_config()
+    """Get current AI core configuration"""    return config_manager.get_config()
 
 def load_config(config_path: Optional[str] = None) -> CoreConfig:
-    """Load AI core configuration"""
-    return config_manager.load_config(config_path)
+    """Load AI core configuration"""    return config_manager.load_config(config_path)
 
 def save_config(config_path: Optional[str] = None) -> bool:
-    """Save current AI core configuration"""
-    return config_manager.save_config(config_path)
+    """Save current AI core configuration"""    return config_manager.save_config(config_path)
 
 def update_config(updates: Dict[str, Any]) -> bool:
-    """Update AI core configuration"""
-    return config_manager.update_config(updates)
+    """Update AI core configuration"""    return config_manager.update_config(updates)
 
 def add_config_watcher(callback: Callable[[CoreConfig], None]):
-    """Add configuration change watcher"""
-    config_manager.add_config_watcher(callback)
+    """Add configuration change watcher"""    config_manager.add_config_watcher(callback)

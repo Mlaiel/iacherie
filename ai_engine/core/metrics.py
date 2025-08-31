@@ -1,5 +1,4 @@
-"""
-Advanced Metrics Collection Module
+"""Advanced Metrics Collection Module
 
 Enterprise-grade metrics collection, analysis and monitoring for industrial AI content platform.
 Supports multi-format content creators (musicians, bloggers, photographers, influencers, comedians).
@@ -9,7 +8,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
-
 import time
 import threading
 import asyncio
@@ -32,8 +30,7 @@ except ImportError:
     psutil = None
 
 def utc_now():
-    """Get current UTC datetime in a timezone-aware manner"""
-    return datetime.now(timezone.utc)
+    """Get current UTC datetime in a timezone-aware manner"""    return datetime.now(timezone.utc)
 
 logger = logging.getLogger(__name__)
 
@@ -41,8 +38,7 @@ T = TypeVar('T')
 
 
 class MetricType(Enum):
-    """Advanced metric types for comprehensive monitoring"""
-    COUNTER = "counter"
+    """Advanced metric types for comprehensive monitoring"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
@@ -54,16 +50,14 @@ class MetricType(Enum):
 
 
 class MetricPriority(Enum):
-    """Metric priority levels for alerting and monitoring"""
-    LOW = 1
+    """Metric priority levels for alerting and monitoring"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
 
 
 class AggregationType(Enum):
-    """Types of metric aggregation"""
-    SUM = "sum"
+    """Types of metric aggregation"""    SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
     MAX = "max"
@@ -76,8 +70,7 @@ class AggregationType(Enum):
 
 @dataclass
 class MetricEntry:
-    """Advanced metric entry with comprehensive metadata"""
-    name: str
+    """Advanced metric entry with comprehensive metadata"""    name: str
     value: Union[int, float, bool, str]
     metric_type: MetricType
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -89,8 +82,7 @@ class MetricEntry:
     session_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric entry to dictionary for serialization"""
-        return {
+        """Convert metric entry to dictionary for serialization"""        return {
             "name": self.name,
             "value": self.value,
             "metric_type": self.metric_type.value,
@@ -106,8 +98,7 @@ class MetricEntry:
 
 @dataclass
 class PerformanceSnapshot:
-    """System performance snapshot"""
-    cpu_percent: float
+    """System performance snapshot"""    cpu_percent: float
     memory_percent: float
     disk_usage_percent: float
     network_io: Dict[str, int]
@@ -115,8 +106,7 @@ class PerformanceSnapshot:
     
     @classmethod
     def capture(cls) -> 'PerformanceSnapshot':
-        """Capture current system performance"""
-        if psutil is None:
+        """Capture current system performance"""        if psutil is None:
             # Return mock values when psutil is not available
             return cls(
                 cpu_percent=0.0,
@@ -134,8 +124,7 @@ class PerformanceSnapshot:
 
 
 class TimerContext:
-    """Context manager for timing operations with advanced features"""
-    
+    """Context manager for timing operations with advanced features"""    
     def __init__(
         self,
         collector: 'MetricsCollector',
@@ -192,23 +181,20 @@ class TimerContext:
 
 
 class MetricsAggregator:
-    """Advanced metrics aggregation engine"""
-    
+    """Advanced metrics aggregation engine"""    
     def __init__(self, window_size: int = 1000):
         self.window_size = window_size
         self.data: Dict[str, deque] = defaultdict(lambda: deque(maxlen=window_size))
         
     def add_value(self, metric_name: str, value: float):
-        """Add value to aggregation window"""
-        self.data[metric_name].append(value)
+        """Add value to aggregation window"""        self.data[metric_name].append(value)
         
     def get_aggregation(
         self,
         metric_name: str,
         aggregation_type: AggregationType
     ) -> Optional[float]:
-        """Get aggregated value for metric"""
-        values = list(self.data.get(metric_name, []))
+        """Get aggregated value for metric"""        values = list(self.data.get(metric_name, []))
         if not values:
             return None
             
@@ -234,8 +220,7 @@ class MetricsAggregator:
         return None
         
     def _percentile(self, values: List[float], percentile: int) -> float:
-        """Calculate percentile value"""
-        if not values:
+        """Calculate percentile value"""        if not values:
             return 0
         sorted_values = sorted(values)
         index = int((percentile / 100) * len(sorted_values))
@@ -243,8 +228,7 @@ class MetricsAggregator:
 
 
 class BusinessMetricsTracker:
-    """Specialized tracker for business-critical metrics"""
-    
+    """Specialized tracker for business-critical metrics"""    
     def __init__(self):
         self.user_engagement = MetricsAggregator()
         self.content_metrics = MetricsAggregator()
@@ -258,8 +242,7 @@ class BusinessMetricsTracker:
         content_type: Optional[str] = None,
         value: float = 1.0
     ):
-        """Track user engagement actions"""
-        metric_name = f"user_action_{action}"
+        """Track user engagement actions"""        metric_name = f"user_action_{action}"
         self.user_engagement.add_value(metric_name, value)
         
     def track_content_quality(
@@ -268,8 +251,7 @@ class BusinessMetricsTracker:
         quality_score: float,
         content_type: str
     ):
-        """Track content quality metrics"""
-        metric_name = f"content_quality_{content_type}"
+        """Track content quality metrics"""        metric_name = f"content_quality_{content_type}"
         self.content_metrics.add_value(metric_name, quality_score)
         
     def track_revenue_event(
@@ -278,8 +260,7 @@ class BusinessMetricsTracker:
         amount: float,
         currency: str = "USD"
     ):
-        """Track revenue-related events"""
-        metric_name = f"revenue_{event_type}_{currency}"
+        """Track revenue-related events"""        metric_name = f"revenue_{event_type}_{currency}"
         self.revenue_metrics.add_value(metric_name, amount)
         
     def track_protection_event(
@@ -288,14 +269,12 @@ class BusinessMetricsTracker:
         content_id: str,
         confidence_score: float
     ):
-        """Track content protection events"""
-        metric_name = f"protection_{event_type}"
+        """Track content protection events"""        metric_name = f"protection_{event_type}"
         self.protection_metrics.add_value(metric_name, confidence_score)
 
 
 class MetricsCollector:
-    """
-    Enterprise-grade metrics collection and monitoring system
+    """    Enterprise-grade metrics collection and monitoring system
     
     Features:
     - Real-time metric collection
@@ -304,8 +283,7 @@ class MetricsCollector:
     - Business metrics tracking
     - Alert threshold management
     - Multi-threaded collection
-    """
-    
+    """    
     def __init__(
         self,
         max_entries: int = 10000,
@@ -346,8 +324,7 @@ class MetricsCollector:
             self._start_system_monitoring()
             
     def _start_system_monitoring(self):
-        """Start background system monitoring"""
-        if self._background_thread is None:
+        """Start background system monitoring"""        if self._background_thread is None:
             self._background_thread = threading.Thread(
                 target=self._background_monitor,
                 daemon=True
@@ -355,8 +332,7 @@ class MetricsCollector:
             self._background_thread.start()
             
     def _background_monitor(self):
-        """Background thread for system monitoring"""
-        while not self._stop_event.wait(30):  # Check every 30 seconds
+        """Background thread for system monitoring"""        while not self._stop_event.wait(30):  # Check every 30 seconds
             try:
                 # Capture system performance
                 snapshot = PerformanceSnapshot.capture()
@@ -381,8 +357,7 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         priority: MetricPriority = MetricPriority.MEDIUM
     ) -> None:
-        """Increment a counter metric with advanced features"""
-        with self._lock:
+        """Increment a counter metric with advanced features"""        with self._lock:
             self.counters[name] += value
             
             entry = MetricEntry(
@@ -404,8 +379,7 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         priority: MetricPriority = MetricPriority.MEDIUM
     ) -> None:
-        """Record a gauge metric"""
-        with self._lock:
+        """Record a gauge metric"""        with self._lock:
             self.gauges[name] = value
             
             entry = MetricEntry(
@@ -430,8 +404,7 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         bucket_size: int = 1000
     ) -> None:
-        """Record a histogram value"""
-        with self._lock:
+        """Record a histogram value"""        with self._lock:
             if len(self.histograms[name]) >= bucket_size:
                 self.histograms[name] = self.histograms[name][-bucket_size//2:]
                 
@@ -452,8 +425,7 @@ class MetricsCollector:
         tags: Optional[Dict[str, str]] = None,
         priority: MetricPriority = MetricPriority.MEDIUM
     ) -> None:
-        """Record a timer duration"""
-        with self._lock:
+        """Record a timer duration"""        with self._lock:
             self.timers[name].append(duration)
             
             entry = MetricEntry(
@@ -474,8 +446,7 @@ class MetricsCollector:
         events: int = 1,
         window_seconds: int = 60
     ) -> None:
-        """Record rate metrics (events per time window)"""
-        with self._lock:
+        """Record rate metrics (events per time window)"""        with self._lock:
             current_time = time.time()
             self.rates[name].append((current_time, events))
             
@@ -503,8 +474,7 @@ class MetricsCollector:
         threshold_critical: Optional[float] = None,
         auto_gc: bool = False
     ) -> TimerContext:
-        """Create a timer context manager"""
-        return TimerContext(
+        """Create a timer context manager"""        return TimerContext(
             self,
             name,
             tags,
@@ -519,19 +489,16 @@ class MetricsCollector:
         warning_threshold: Optional[float] = None,
         critical_threshold: Optional[float] = None
     ):
-        """Set alert thresholds for a metric"""
-        self.alert_thresholds[metric_name] = {
+        """Set alert thresholds for a metric"""        self.alert_thresholds[metric_name] = {
             "warning": warning_threshold,
             "critical": critical_threshold
         }
         
     def add_alert_callback(self, callback: Callable):
-        """Add callback for alert notifications"""
-        self.alert_callbacks.append(callback)
+        """Add callback for alert notifications"""        self.alert_callbacks.append(callback)
         
     def _check_alert_threshold(self, metric_name: str, value: float):
-        """Check if metric value exceeds alert thresholds"""
-        thresholds = self.alert_thresholds.get(metric_name)
+        """Check if metric value exceeds alert thresholds"""        thresholds = self.alert_thresholds.get(metric_name)
         if not thresholds:
             return
             
@@ -557,8 +524,7 @@ class MetricsCollector:
                     logger.error(f"Error in alert callback: {e}")
                     
     def get_metric_summary(self, metric_name: str) -> Dict[str, Any]:
-        """Get comprehensive summary for a metric"""
-        summary = {"name": metric_name, "data": {}}
+        """Get comprehensive summary for a metric"""        summary = {"name": metric_name, "data": {}}
         
         # Counter data
         if metric_name in self.counters:
@@ -598,8 +564,7 @@ class MetricsCollector:
         return summary
         
     def get_system_health(self) -> Dict[str, Any]:
-        """Get comprehensive system health metrics"""
-        with self._lock:
+        """Get comprehensive system health metrics"""        with self._lock:
             uptime = time.time() - self.start_time
             
             health = {
@@ -634,8 +599,7 @@ class MetricsCollector:
             return health
             
     def flush_metrics(self, export_format: str = "json") -> Optional[str]:
-        """Flush collected metrics and optionally export"""
-        with self._lock:
+        """Flush collected metrics and optionally export"""        with self._lock:
             if export_format == "json":
                 export_data = {
                     "timestamp": utc_now().isoformat(),
@@ -654,8 +618,7 @@ class MetricsCollector:
         return None
         
     def stop(self):
-        """Stop background monitoring"""
-        self._stop_event.set()
+        """Stop background monitoring"""        self._stop_event.set()
         if self._background_thread:
             self._background_thread.join(timeout=5)
 
@@ -670,16 +633,14 @@ def track_execution_time(
     threshold_warning: Optional[float] = None,
     threshold_critical: Optional[float] = None
 ):
-    """
-    Decorator to automatically track function execution time
+    """    Decorator to automatically track function execution time
     
     Args:
         metric_name: Name for the metric (defaults to function name)
         tags: Additional tags for the metric
         threshold_warning: Warning threshold in seconds
         threshold_critical: Critical threshold in seconds
-    """
-    def decorator(func: Callable[..., T]) -> Callable[..., T]:
+    """    def decorator(func: Callable[..., T]) -> Callable[..., T]:
         @wraps(func)
         def wrapper(*args, **kwargs) -> T:
             name = metric_name or f"function.{func.__name__}.execution_time"
@@ -713,15 +674,13 @@ def track_business_metric(
     value: Union[int, float] = 1,
     tags: Optional[Dict[str, str]] = None
 ):
-    """
-    Decorator to track business metrics
+    """    Decorator to track business metrics
     
     Args:
         metric_type: Type of business metric
         value: Metric value
         tags: Additional tags
-    """
-    def decorator(func: Callable[..., T]) -> Callable[..., T]:
+    """    def decorator(func: Callable[..., T]) -> Callable[..., T]:
         @wraps(func)
         def wrapper(*args, **kwargs) -> T:
             result = func(*args, **kwargs)
@@ -742,8 +701,7 @@ def track_business_metric(
 
 @contextmanager
 def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
-    """Context manager to capture and track errors"""
-    try:
+    """Context manager to capture and track errors"""    try:
         yield
     except Exception as e:
         error_tags = tags or {}
@@ -768,8 +726,7 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         self.metrics.append(entry)
     
     def set_gauge(self, name: str, value: float, tags: Optional[Dict[str, str]] = None) -> None:
-        """Set a gauge metric"""
-        self.gauges[name] = value
+        """Set a gauge metric"""        self.gauges[name] = value
         
         entry = MetricEntry(
             name=name,
@@ -780,8 +737,7 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         self.metrics.append(entry)
     
     def record_histogram(self, name: str, value: float, tags: Optional[Dict[str, str]] = None) -> None:
-        """Record a histogram value"""
-        if name not in self.histograms:
+        """Record a histogram value"""        if name not in self.histograms:
             self.histograms[name] = []
         
         self.histograms[name].append(value)
@@ -795,8 +751,7 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         self.metrics.append(entry)
     
     def record_timer(self, name: str, duration: float, tags: Optional[Dict[str, str]] = None) -> None:
-        """Record a timer value"""
-        if name not in self.timers:
+        """Record a timer value"""        if name not in self.timers:
             self.timers[name] = []
         
         self.timers[name].append(duration)
@@ -810,16 +765,13 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         self.metrics.append(entry)
     
     def get_counter(self, name: str) -> int:
-        """Get current counter value"""
-        return self.counters.get(name, 0)
+        """Get current counter value"""        return self.counters.get(name, 0)
     
     def get_gauge(self, name: str) -> Optional[float]:
-        """Get current gauge value"""
-        return self.gauges.get(name)
+        """Get current gauge value"""        return self.gauges.get(name)
     
     def get_histogram_stats(self, name: str) -> Optional[Dict[str, float]]:
-        """Get histogram statistics"""
-        if name not in self.histograms or not self.histograms[name]:
+        """Get histogram statistics"""        if name not in self.histograms or not self.histograms[name]:
             return None
         
         values = self.histograms[name]
@@ -835,12 +787,10 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         }
     
     def get_timer_stats(self, name: str) -> Optional[Dict[str, float]]:
-        """Get timer statistics"""
-        return self.get_histogram_stats(name)  # Same statistics as histogram
+        """Get timer statistics"""        return self.get_histogram_stats(name)  # Same statistics as histogram
     
     def get_all_metrics(self) -> Dict[str, Any]:
-        """Get all current metrics"""
-        return {
+        """Get all current metrics"""        return {
             "counters": dict(self.counters),
             "gauges": dict(self.gauges),
             "histograms": {name: self.get_histogram_stats(name) for name in self.histograms},
@@ -850,17 +800,14 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         }
     
     def get_metrics_by_timeframe(self, minutes: int = 5) -> List[MetricEntry]:
-        """Get metrics from the last N minutes"""
-        cutoff_time = datetime.now() - timedelta(minutes=minutes)
+        """Get metrics from the last N minutes"""        cutoff_time = datetime.now() - timedelta(minutes=minutes)
         return [m for m in self.metrics if m.timestamp >= cutoff_time]
     
     def get_metrics_by_type(self, metric_type: MetricType) -> List[MetricEntry]:
-        """Get metrics by type"""
-        return [m for m in self.metrics if m.metric_type == metric_type]
+        """Get metrics by type"""        return [m for m in self.metrics if m.metric_type == metric_type]
     
     def clear_metrics(self) -> None:
-        """Clear all metrics"""
-        self.metrics.clear()
+        """Clear all metrics"""        self.metrics.clear()
         self.counters.clear()
         self.gauges.clear()
         self.histograms.clear()
@@ -868,8 +815,7 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
         self.start_time = time.time()
     
     def export_metrics(self, format_type: str = "dict") -> Union[Dict[str, Any], str]:
-        """Export metrics in specified format"""
-        if format_type == "dict":
+        """Export metrics in specified format"""        if format_type == "dict":
             return self.get_all_metrics()
         elif format_type == "prometheus":
             return self._export_prometheus()
@@ -877,8 +823,7 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
             raise ValueError(f"Unsupported format: {format_type}")
     
     def _export_prometheus(self) -> str:
-        """Export metrics in Prometheus format"""
-        lines = []
+        """Export metrics in Prometheus format"""        lines = []
         
         # Counters
         for name, value in self.counters.items():
@@ -901,8 +846,7 @@ def capture_errors(metric_name: str, tags: Optional[Dict[str, str]] = None):
 
 
 class TimerContext:
-    """Context manager for timing operations"""
-    
+    """Context manager for timing operations"""    
     def __init__(self, metrics_collector: MetricsCollector, name: str, tags: Optional[Dict[str, str]] = None):
         self.metrics_collector = metrics_collector
         self.name = name

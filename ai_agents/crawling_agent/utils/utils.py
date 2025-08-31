@@ -1,5 +1,4 @@
-"""
-Crawling Agent Utilities - Advanced Helper Functions & Tools
+"""Crawling Agent Utilities - Advanced Helper Functions & Tools
 
 Comprehensive utility collection for URL processing, content analysis,
 performance optimization, and common crawling operations.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import hashlib
@@ -51,16 +49,12 @@ logger = logging.getLogger(__name__)
 
 
 class URLProcessor:
-    """
-    Advanced URL processing and normalization utilities
-    """
-    
+    """    Advanced URL processing and normalization utilities
+    """    
     @staticmethod
     def normalize_url(url: str) -> str:
-        """
-        Normalize URL by removing unnecessary parameters and fragments
-        """
-        try:
+        """        Normalize URL by removing unnecessary parameters and fragments
+        """        try:
             parsed = urlparse(url.strip())
             
             # Remove fragment
@@ -96,10 +90,8 @@ class URLProcessor:
     
     @staticmethod
     def extract_domain_info(url: str) -> Dict[str, str]:
-        """
-        Extract comprehensive domain information
-        """
-        try:
+        """        Extract comprehensive domain information
+        """        try:
             parsed = urlparse(url)
             extracted = tldextract.extract(url)
             
@@ -121,8 +113,7 @@ class URLProcessor:
     
     @staticmethod
     def _is_ip_address(address: str) -> bool:
-        """Check if address is IP address"""
-        import ipaddress
+        """Check if address is IP address"""        import ipaddress
         try:
             ipaddress.ip_address(address.split(':')[0])
             return True
@@ -131,10 +122,8 @@ class URLProcessor:
     
     @staticmethod
     def is_valid_url(url: str) -> bool:
-        """
-        Validate URL format and structure
-        """
-        try:
+        """        Validate URL format and structure
+        """        try:
             parsed = urlparse(url)
             return all([
                 parsed.scheme in ['http', 'https'],
@@ -146,10 +135,8 @@ class URLProcessor:
     
     @staticmethod
     def generate_url_variations(url: str) -> List[str]:
-        """
-        Generate common URL variations for comprehensive crawling
-        """
-        variations = [url]
+        """        Generate common URL variations for comprehensive crawling
+        """        variations = [url]
         parsed = urlparse(url)
         
         # Protocol variations
@@ -176,16 +163,12 @@ class URLProcessor:
 
 
 class ContentAnalyzer:
-    """
-    Advanced content analysis utilities
-    """
-    
+    """    Advanced content analysis utilities
+    """    
     @staticmethod
     def extract_text_statistics(text: str) -> Dict[str, Any]:
-        """
-        Extract comprehensive text statistics
-        """
-        if not text:
+        """        Extract comprehensive text statistics
+        """        if not text:
             return {}
         
         words = text.split()
@@ -209,10 +192,8 @@ class ContentAnalyzer:
     
     @staticmethod
     def detect_content_language(text: str) -> Dict[str, Any]:
-        """
-        Detect content language with confidence score
-        """
-        try:
+        """        Detect content language with confidence score
+        """        try:
             if not text.strip():
                 return {'language': 'unknown', 'confidence': 0.0}
             
@@ -237,10 +218,8 @@ class ContentAnalyzer:
     
     @staticmethod
     def extract_keywords(text: str, top_n: int = 20) -> List[Dict[str, Any]]:
-        """
-        Extract keywords from text using multiple methods
-        """
-        if not text:
+        """        Extract keywords from text using multiple methods
+        """        if not text:
             return []
         
         # Simple frequency-based extraction
@@ -274,10 +253,8 @@ class ContentAnalyzer:
     
     @staticmethod
     def extract_entities(text: str) -> Dict[str, List[str]]:
-        """
-        Extract named entities from text (simple regex-based approach)
-        """
-        entities = {
+        """        Extract named entities from text (simple regex-based approach)
+        """        entities = {
             'emails': [],
             'urls': [],
             'phone_numbers': [],
@@ -315,10 +292,8 @@ class ContentAnalyzer:
     
     @staticmethod
     def calculate_readability_score(text: str) -> Dict[str, float]:
-        """
-        Calculate multiple readability scores
-        """
-        if not text:
+        """        Calculate multiple readability scores
+        """        if not text:
             return {}
         
         words = text.split()
@@ -358,16 +333,12 @@ class ContentAnalyzer:
 
 
 class HTMLProcessor:
-    """
-    Advanced HTML processing utilities
-    """
-    
+    """    Advanced HTML processing utilities
+    """    
     @staticmethod
     def extract_clean_text(html: str) -> str:
-        """
-        Extract clean text from HTML content
-        """
-        try:
+        """        Extract clean text from HTML content
+        """        try:
             soup = BeautifulSoup(html, 'html.parser')
             
             # Remove script and style elements
@@ -390,10 +361,8 @@ class HTMLProcessor:
     
     @staticmethod
     def extract_metadata(html: str) -> Dict[str, Any]:
-        """
-        Extract comprehensive metadata from HTML
-        """
-        try:
+        """        Extract comprehensive metadata from HTML
+        """        try:
             soup = BeautifulSoup(html, 'html.parser')
             metadata = {}
             
@@ -483,10 +452,8 @@ class HTMLProcessor:
     
     @staticmethod
     def extract_images(html: str, base_url: str = "") -> List[Dict[str, Any]]:
-        """
-        Extract image information from HTML
-        """
-        try:
+        """        Extract image information from HTML
+        """        try:
             soup = BeautifulSoup(html, 'html.parser')
             images = []
             
@@ -519,19 +486,15 @@ class HTMLProcessor:
 
 
 class PerformanceOptimizer:
-    """
-    Performance optimization utilities
-    """
-    
+    """    Performance optimization utilities
+    """    
     @staticmethod
     async def batch_process(items: List[Any], 
                           process_func: callable, 
                           batch_size: int = 10,
                           max_concurrent: int = 5) -> List[Any]:
-        """
-        Process items in batches with concurrency control
-        """
-        results = []
+        """        Process items in batches with concurrency control
+        """        results = []
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def process_item(item):
@@ -553,10 +516,8 @@ class PerformanceOptimizer:
     
     @staticmethod
     def create_content_hash(content: str, algorithm: str = 'sha256') -> str:
-        """
-        Create hash of content for caching and deduplication
-        """
-        if algorithm == 'md5':
+        """        Create hash of content for caching and deduplication
+        """        if algorithm == 'md5':
             hasher = hashlib.md5()
         elif algorithm == 'sha1':
             hasher = hashlib.sha1()
@@ -570,10 +531,8 @@ class PerformanceOptimizer:
     
     @staticmethod
     def compress_content(content: str, method: str = 'gzip') -> bytes:
-        """
-        Compress content for efficient storage
-        """
-        import gzip
+        """        Compress content for efficient storage
+        """        import gzip
         import zlib
         
         if method == 'gzip':
@@ -585,10 +544,8 @@ class PerformanceOptimizer:
     
     @staticmethod
     def decompress_content(compressed_data: bytes, method: str = 'gzip') -> str:
-        """
-        Decompress content
-        """
-        import gzip
+        """        Decompress content
+        """        import gzip
         import zlib
         
         try:
@@ -604,20 +561,16 @@ class PerformanceOptimizer:
 
 
 class RobotsChecker:
-    """
-    Robots.txt compliance checker
-    """
-    
+    """    Robots.txt compliance checker
+    """    
     def __init__(self, user_agent: str = "*"):
         self.user_agent = user_agent
         self._cache = {}
         self._cache_ttl = 3600  # 1 hour
     
     async def can_fetch(self, url: str) -> bool:
-        """
-        Check if URL can be fetched according to robots.txt
-        """
-        try:
+        """        Check if URL can be fetched according to robots.txt
+        """        try:
             parsed_url = urlparse(url)
             robots_url = f"{parsed_url.scheme}://{parsed_url.netloc}/robots.txt"
             
@@ -644,10 +597,8 @@ class RobotsChecker:
             return True  # Default to allowing if check fails
     
     async def _fetch_robots(self, robots_url: str) -> Optional[RobotFileParser]:
-        """
-        Fetch and parse robots.txt
-        """
-        try:
+        """        Fetch and parse robots.txt
+        """        try:
             rp = RobotFileParser()
             rp.set_url(robots_url)
             
@@ -671,10 +622,8 @@ class RobotsChecker:
 
 
 class UserAgentRotator:
-    """
-    User agent rotation utility
-    """
-    
+    """    User agent rotation utility
+    """    
     def __init__(self):
         self.user_agents = [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -687,26 +636,21 @@ class UserAgentRotator:
         self.current_index = 0
     
     def get_random_user_agent(self) -> str:
-        """Get random user agent string"""
-        return random.choice(self.user_agents)
+        """Get random user agent string"""        return random.choice(self.user_agents)
     
     def get_next_user_agent(self) -> str:
-        """Get next user agent in rotation"""
-        ua = self.user_agents[self.current_index]
+        """Get next user agent in rotation"""        ua = self.user_agents[self.current_index]
         self.current_index = (self.current_index + 1) % len(self.user_agents)
         return ua
     
     def add_user_agent(self, user_agent: str) -> None:
-        """Add custom user agent to rotation"""
-        if user_agent not in self.user_agents:
+        """Add custom user agent to rotation"""        if user_agent not in self.user_agents:
             self.user_agents.append(user_agent)
 
 
 def create_fingerprint(data: Union[str, dict]) -> str:
-    """
-    Create unique fingerprint for data
-    """
-    if isinstance(data, dict):
+    """    Create unique fingerprint for data
+    """    if isinstance(data, dict):
         # Sort dictionary keys for consistent hashing
         sorted_data = json.dumps(data, sort_keys=True)
     else:
@@ -716,10 +660,8 @@ def create_fingerprint(data: Union[str, dict]) -> str:
 
 
 def sanitize_filename(filename: str, max_length: int = 255) -> str:
-    """
-    Sanitize filename for safe storage
-    """
-    # Remove or replace invalid characters
+    """    Sanitize filename for safe storage
+    """    # Remove or replace invalid characters
     invalid_chars = '<>:"/\\|?*'
     for char in invalid_chars:
         filename = filename.replace(char, '_')
@@ -737,10 +679,8 @@ def sanitize_filename(filename: str, max_length: int = 255) -> str:
 
 
 def calculate_similarity_score(text1: str, text2: str) -> float:
-    """
-    Calculate simple similarity score between two texts
-    """
-    if not text1 or not text2:
+    """    Calculate simple similarity score between two texts
+    """    if not text1 or not text2:
         return 0.0
     
     # Simple Jaccard similarity
@@ -760,10 +700,8 @@ async def retry_with_backoff(func: callable,
                            max_retries: int = 3,
                            base_delay: float = 1.0,
                            max_delay: float = 60.0) -> Any:
-    """
-    Retry function with exponential backoff
-    """
-    for attempt in range(max_retries):
+    """    Retry function with exponential backoff
+    """    for attempt in range(max_retries):
         try:
             return await func()
         except Exception as e:
@@ -776,10 +714,8 @@ async def retry_with_backoff(func: callable,
 
 
 def format_bytes(bytes_count: int) -> str:
-    """
-    Format bytes into human readable format
-    """
-    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
+    """    Format bytes into human readable format
+    """    for unit in ['B', 'KB', 'MB', 'GB', 'TB']:
         if bytes_count < 1024.0:
             return f"{bytes_count:.1f} {unit}"
         bytes_count /= 1024.0
@@ -787,10 +723,8 @@ def format_bytes(bytes_count: int) -> str:
 
 
 def format_duration(seconds: float) -> str:
-    """
-    Format duration in seconds to human readable format
-    """
-    if seconds < 60:
+    """    Format duration in seconds to human readable format
+    """    if seconds < 60:
         return f"{seconds:.1f}s"
     elif seconds < 3600:
         minutes = seconds / 60

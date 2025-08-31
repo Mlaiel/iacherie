@@ -1,5 +1,4 @@
-"""
-Inference Engines - AI Engines Database Module
+"""Inference Engines - AI Engines Database Module
 
 This module provides comprehensive inference engine capabilities for the IA Influencer
 Agent platform, including real-time and batch inference, model serving infrastructure,
@@ -21,7 +20,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Any, Optional, Union, Callable, AsyncGenerator
 import json
 import logging
@@ -42,23 +40,20 @@ import tensorflow as tf
 logger = logging.getLogger(__name__)
 
 class InferenceMode(str, Enum):
-    """Inference mode enumeration."""
-    REALTIME = "realtime"
+    """Inference mode enumeration."""    REALTIME = "realtime"
     BATCH = "batch"
     STREAMING = "streaming"
     DISTRIBUTED = "distributed"
 
 class InferenceStatus(str, Enum):
-    """Inference job status enumeration."""
-    PENDING = "pending"
+    """Inference job status enumeration."""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
     CANCELLED = "cancelled"
 
 class ModelFramework(str, Enum):
-    """Supported inference frameworks."""
-    PYTORCH = "pytorch"
+    """Supported inference frameworks."""    PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     ONNX = "onnx"
     HUGGINGFACE = "huggingface"
@@ -66,8 +61,7 @@ class ModelFramework(str, Enum):
 
 @dataclass
 class InferenceRequest:
-    """Inference request structure."""
-    request_id: str
+    """Inference request structure."""    request_id: str
     model_id: str
     input_data: Any
     mode: InferenceMode
@@ -78,8 +72,7 @@ class InferenceRequest:
 
 @dataclass
 class InferenceResult:
-    """Inference result structure."""
-    request_id: str
+    """Inference result structure."""    request_id: str
     model_id: str
     output_data: Any
     confidence: Optional[float]
@@ -90,8 +83,7 @@ class InferenceResult:
     metadata: Dict[str, Any]
 
 class InferenceEndpoint(BaseModel):
-    """Inference endpoint configuration."""
-    endpoint_id: str = Field(..., min_length=1)
+    """Inference endpoint configuration."""    endpoint_id: str = Field(..., min_length=1)
     model_id: str = Field(..., min_length=1)
     url: str = Field(..., min_length=1)
     framework: ModelFramework
@@ -104,8 +96,7 @@ class InferenceEndpoint(BaseModel):
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class BatchInferenceJob(BaseModel):
-    """Batch inference job configuration."""
-    job_id: str = Field(..., min_length=1)
+    """Batch inference job configuration."""    job_id: str = Field(..., min_length=1)
     model_id: str = Field(..., min_length=1)
     input_source: str = Field(..., min_length=1)
     output_destination: str = Field(..., min_length=1)
@@ -116,29 +107,24 @@ class BatchInferenceJob(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class InferenceEngineManager:
-    """
-    Central inference engine manager.
+    """    Central inference engine manager.
     
     Orchestrates all inference operations including real-time, batch,
     and streaming inference across multiple models and frameworks.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the inference engine manager."""
-        self.endpoints = {}
+        """Initialize the inference engine manager."""        self.endpoints = {}
         self.active_jobs = {}
         self.performance_metrics = {}
         self.thread_pool = ThreadPoolExecutor(max_workers=10)
         self.initialized = False
         
     async def initialize(self) -> Dict[str, Any]:
-        """
-        Initialize the inference engine manager.
+        """        Initialize the inference engine manager.
         
         Returns:
             Dict[str, Any]: Initialization status
-        """
-        try:
+        """        try:
             # Initialize framework adapters
             await self._initialize_frameworks()
             
@@ -167,16 +153,14 @@ class InferenceEngineManager:
             }
     
     async def register_endpoint(self, endpoint: InferenceEndpoint) -> Dict[str, Any]:
-        """
-        Register a new inference endpoint.
+        """        Register a new inference endpoint.
         
         Args:
             endpoint: Endpoint configuration
             
         Returns:
             Dict[str, Any]: Registration result
-        """
-        try:
+        """        try:
             # Validate endpoint
             validation_result = await self._validate_endpoint(endpoint)
             if not validation_result["valid"]:
@@ -214,16 +198,14 @@ class InferenceEngineManager:
             }
     
     async def inference(self, request: InferenceRequest) -> InferenceResult:
-        """
-        Process inference request.
+        """        Process inference request.
         
         Args:
             request: Inference request
             
         Returns:
             InferenceResult: Inference result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Find appropriate endpoint
@@ -274,16 +256,14 @@ class InferenceEngineManager:
             )
     
     async def create_batch_job(self, job_config: BatchInferenceJob) -> Dict[str, Any]:
-        """
-        Create a batch inference job.
+        """        Create a batch inference job.
         
         Args:
             job_config: Batch job configuration
             
         Returns:
             Dict[str, Any]: Job creation result
-        """
-        try:
+        """        try:
             # Validate job configuration
             if job_config.job_id in self.active_jobs:
                 return {
@@ -325,16 +305,14 @@ class InferenceEngineManager:
             }
     
     async def get_job_status(self, job_id: str) -> Dict[str, Any]:
-        """
-        Get batch job status.
+        """        Get batch job status.
         
         Args:
             job_id: Job identifier
             
         Returns:
             Dict[str, Any]: Job status
-        """
-        try:
+        """        try:
             if job_id not in self.active_jobs:
                 return {
                     "status": "error",
@@ -365,16 +343,14 @@ class InferenceEngineManager:
             }
     
     async def get_endpoint_metrics(self, endpoint_id: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get endpoint performance metrics.
+        """        Get endpoint performance metrics.
         
         Args:
             endpoint_id: Specific endpoint ID, or None for all endpoints
             
         Returns:
             Dict[str, Any]: Performance metrics
-        """
-        try:
+        """        try:
             if endpoint_id:
                 if endpoint_id not in self.performance_metrics:
                     return {
@@ -402,17 +378,14 @@ class InferenceEngineManager:
             }
     
     async def get_active_endpoints_count(self) -> int:
-        """Get number of active inference endpoints."""
-        return len([ep for ep in self.endpoints.values() if ep.is_active])
+        """Get number of active inference endpoints."""        return len([ep for ep in self.endpoints.values() if ep.is_active])
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check on inference engines.
+        """        Perform health check on inference engines.
         
         Returns:
             Dict[str, Any]: Health status
-        """
-        try:
+        """        try:
             if not self.initialized:
                 return {
                     "status": "unhealthy",
@@ -449,18 +422,15 @@ class InferenceEngineManager:
     # Private helper methods
     
     async def _initialize_frameworks(self):
-        """Initialize ML framework adapters."""
-        logger.info("Initializing ML framework adapters")
+        """Initialize ML framework adapters."""        logger.info("Initializing ML framework adapters")
         # Framework-specific initialization would go here
     
     async def _load_endpoints(self):
-        """Load existing endpoints from storage."""
-        logger.info("Loading inference endpoints")
+        """Load existing endpoints from storage."""        logger.info("Loading inference endpoints")
         # Database loading would go here
     
     async def _validate_endpoint(self, endpoint: InferenceEndpoint) -> Dict[str, Any]:
-        """Validate endpoint configuration."""
-        try:
+        """Validate endpoint configuration."""        try:
             # Perform health check on endpoint
             if endpoint.health_check_url:
                 async with aiohttp.ClientSession() as session:
@@ -478,8 +448,7 @@ class InferenceEngineManager:
             return {"valid": False, "error": str(e)}
     
     async def _find_best_endpoint(self, model_id: str, mode: InferenceMode) -> Optional[InferenceEndpoint]:
-        """Find the best endpoint for a model and inference mode."""
-        candidates = []
+        """Find the best endpoint for a model and inference mode."""        candidates = []
         
         for endpoint in self.endpoints.values():
             if (endpoint.model_id == model_id and 
@@ -498,8 +467,7 @@ class InferenceEngineManager:
     
     async def _realtime_inference(self, endpoint: InferenceEndpoint, 
                                 request: InferenceRequest) -> InferenceResult:
-        """Process real-time inference request."""
-        start_time = time.time()
+        """Process real-time inference request."""        start_time = time.time()
         
         try:
             # Simulate inference call to endpoint
@@ -531,8 +499,7 @@ class InferenceEngineManager:
     
     async def _batch_inference(self, endpoint: InferenceEndpoint,
                              request: InferenceRequest) -> InferenceResult:
-        """Process batch inference request."""
-        start_time = time.time()
+        """Process batch inference request."""        start_time = time.time()
         
         try:
             # Simulate batch processing
@@ -562,8 +529,7 @@ class InferenceEngineManager:
     
     async def _streaming_inference(self, endpoint: InferenceEndpoint,
                                  request: InferenceRequest) -> InferenceResult:
-        """Process streaming inference request."""
-        start_time = time.time()
+        """Process streaming inference request."""        start_time = time.time()
         
         try:
             # Simulate streaming processing
@@ -592,8 +558,7 @@ class InferenceEngineManager:
             raise Exception(f"Streaming inference failed: {str(e)}")
     
     async def _process_batch_job(self, job_id: str):
-        """Process a batch job asynchronously."""
-        try:
+        """Process a batch job asynchronously."""        try:
             job_record = self.active_jobs[job_id]
             job_record["status"] = InferenceStatus.RUNNING
             job_record["started_at"] = datetime.utcnow()
@@ -621,8 +586,7 @@ class InferenceEngineManager:
             logger.error(f"Batch job {job_id} failed: {str(e)}")
     
     async def _update_endpoint_metrics(self, endpoint_id: str, success: bool, latency_ms: float):
-        """Update endpoint performance metrics."""
-        if endpoint_id in self.performance_metrics:
+        """Update endpoint performance metrics."""        if endpoint_id in self.performance_metrics:
             metrics = self.performance_metrics[endpoint_id]
             metrics["total_requests"] += 1
             
@@ -640,8 +604,7 @@ class InferenceEngineManager:
                                             (1 - alpha) * metrics["average_latency"])
     
     async def _monitor_endpoints(self):
-        """Background endpoint monitoring."""
-        while True:
+        """Background endpoint monitoring."""        while True:
             try:
                 for endpoint_id, endpoint in self.endpoints.items():
                     if endpoint.health_check_url:
@@ -656,8 +619,7 @@ class InferenceEngineManager:
                 await asyncio.sleep(60)
     
     async def _check_endpoint_health(self, endpoint: InferenceEndpoint) -> bool:
-        """Check individual endpoint health."""
-        try:
+        """Check individual endpoint health."""        try:
             if not endpoint.health_check_url:
                 return True  # Assume healthy if no health check URL
             
@@ -671,22 +633,18 @@ class InferenceEngineManager:
             return False
 
 class ModelServingInfrastructure:
-    """
-    Production model serving infrastructure.
+    """    Production model serving infrastructure.
     
     Provides high-availability, scalable model serving with load balancing,
     auto-scaling, and performance optimization.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the serving infrastructure."""
-        self.serving_pools = {}
+        """Initialize the serving infrastructure."""        self.serving_pools = {}
         self.load_balancer = LoadBalancer()
         self.auto_scaler = AutoScaler()
         
     async def deploy_model(self, model_id: str, deployment_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Deploy a model to serving infrastructure.
+        """        Deploy a model to serving infrastructure.
         
         Args:
             model_id: Model identifier
@@ -694,8 +652,7 @@ class ModelServingInfrastructure:
             
         Returns:
             Dict[str, Any]: Deployment result
-        """
-        try:
+        """        try:
             # Create serving pool
             pool_config = {
                 "model_id": model_id,
@@ -732,21 +689,17 @@ class ModelServingInfrastructure:
             }
 
 class InferenceEndpointRegistry:
-    """
-    Inference endpoint registry and management.
+    """    Inference endpoint registry and management.
     
     Maintains a registry of all inference endpoints with health monitoring,
     load balancing, and automatic failover capabilities.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the endpoint registry."""
-        self.endpoints_registry = {}
+        """Initialize the endpoint registry."""        self.endpoints_registry = {}
         self.health_monitor = HealthMonitor()
         
     async def register_endpoint(self, endpoint_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Register a new inference endpoint."""
-        endpoint_id = endpoint_config["endpoint_id"]
+        """Register a new inference endpoint."""        endpoint_id = endpoint_config["endpoint_id"]
         self.endpoints_registry[endpoint_id] = {
             **endpoint_config,
             "registered_at": datetime.utcnow(),
@@ -763,23 +716,19 @@ class InferenceEndpointRegistry:
         }
 
 class RealTimeInferenceEngine:
-    """
-    Real-time inference engine with sub-100ms latency.
+    """    Real-time inference engine with sub-100ms latency.
     
     Optimized for low-latency inference with request caching,
     model warming, and efficient resource utilization.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the real-time inference engine."""
-        self.model_cache = {}
+        """Initialize the real-time inference engine."""        self.model_cache = {}
         self.request_cache = {}
         self.warmup_scheduler = WarmupScheduler()
         
     async def predict(self, model_id: str, input_data: Any, 
                      cache_key: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Perform real-time prediction with caching.
+        """        Perform real-time prediction with caching.
         
         Args:
             model_id: Model identifier
@@ -788,8 +737,7 @@ class RealTimeInferenceEngine:
             
         Returns:
             Dict[str, Any]: Prediction result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Check cache first
@@ -831,42 +779,35 @@ class RealTimeInferenceEngine:
             }
     
     async def _load_model(self, model_id: str):
-        """Load model into cache."""
-        # Mock model loading
+        """Load model into cache."""        # Mock model loading
         self.model_cache[model_id] = {"model_id": model_id, "loaded_at": datetime.utcnow()}
         logger.info(f"Loaded model {model_id} into cache")
     
     async def _run_inference(self, model: Dict[str, Any], input_data: Any) -> Any:
-        """Run inference on loaded model."""
-        # Mock inference
+        """Run inference on loaded model."""        # Mock inference
         await asyncio.sleep(0.01)  # Simulate 10ms inference time
         return {"result": "mock_prediction", "input_shape": str(type(input_data))}
 
 class BatchInferenceEngine:
-    """
-    Batch inference engine for high-throughput processing.
+    """    Batch inference engine for high-throughput processing.
     
     Optimized for processing large batches of data with parallel processing,
     resource optimization, and progress tracking.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the batch inference engine."""
-        self.job_queue = asyncio.Queue()
+        """Initialize the batch inference engine."""        self.job_queue = asyncio.Queue()
         self.worker_pool = []
         self.active_jobs = {}
         
     async def submit_batch_job(self, job_config: Dict[str, Any]) -> str:
-        """
-        Submit a batch inference job.
+        """        Submit a batch inference job.
         
         Args:
             job_config: Batch job configuration
             
         Returns:
             str: Job ID
-        """
-        job_id = str(uuid.uuid4())
+        """        job_id = str(uuid.uuid4())
         
         job_record = {
             "job_id": job_id,
@@ -883,8 +824,7 @@ class BatchInferenceEngine:
         return job_id
     
     async def get_job_status(self, job_id: str) -> Dict[str, Any]:
-        """Get batch job status and progress."""
-        if job_id in self.active_jobs:
+        """Get batch job status and progress."""        if job_id in self.active_jobs:
             return self.active_jobs[job_id]
         else:
             return {"error": "Job not found"}
@@ -892,45 +832,37 @@ class BatchInferenceEngine:
 # Helper classes
 
 class LoadBalancer:
-    """Load balancer for inference endpoints."""
-    
+    """Load balancer for inference endpoints."""    
     def __init__(self):
         self.pools = {}
     
     async def add_pool(self, pool_id: str, pool_config: Dict[str, Any]):
-        """Add a serving pool to load balancer."""
-        self.pools[pool_id] = pool_config
+        """Add a serving pool to load balancer."""        self.pools[pool_id] = pool_config
         logger.info(f"Added pool {pool_id} to load balancer")
 
 class AutoScaler:
-    """Auto-scaler for serving infrastructure."""
-    
+    """Auto-scaler for serving infrastructure."""    
     def __init__(self):
         self.monitored_pools = {}
     
     async def monitor_pool(self, pool_id: str):
-        """Start monitoring a pool for auto-scaling."""
-        self.monitored_pools[pool_id] = {"monitoring": True}
+        """Start monitoring a pool for auto-scaling."""        self.monitored_pools[pool_id] = {"monitoring": True}
         logger.info(f"Started auto-scaling monitoring for pool {pool_id}")
 
 class HealthMonitor:
-    """Health monitor for inference endpoints."""
-    
+    """Health monitor for inference endpoints."""    
     def __init__(self):
         self.monitored_endpoints = {}
     
     async def start_monitoring(self, endpoint_id: str, config: Dict[str, Any]):
-        """Start monitoring an endpoint."""
-        self.monitored_endpoints[endpoint_id] = config
+        """Start monitoring an endpoint."""        self.monitored_endpoints[endpoint_id] = config
         logger.info(f"Started health monitoring for endpoint {endpoint_id}")
 
 class WarmupScheduler:
-    """Model warmup scheduler for reducing cold start latency."""
-    
+    """Model warmup scheduler for reducing cold start latency."""    
     def __init__(self):
         self.warmup_schedule = {}
     
     async def schedule_warmup(self, model_id: str, warmup_time: datetime):
-        """Schedule model warmup."""
-        self.warmup_schedule[model_id] = warmup_time
+        """Schedule model warmup."""        self.warmup_schedule[model_id] = warmup_time
         logger.info(f"Scheduled warmup for model {model_id}")

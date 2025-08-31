@@ -1,9 +1,7 @@
-"""
-Rights Tracking Data Models - Enterprise Database Schema
+"""Rights Tracking Data Models - Enterprise Database Schema
 Modèles de données avancés pour la gestion des droits d'auteur
 Système professionnel avec validation, sécurité et performance optimisées
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -28,8 +26,7 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Types de contenu supportés"""
-    AUDIO = "audio"
+    """Types de contenu supportés"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -42,16 +39,14 @@ class ContentType(Enum):
 
 
 class RightScope(Enum):
-    """Portée des droits"""
-    EXCLUSIVE = "exclusive"
+    """Portée des droits"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SOLE = "sole"
     CO_EXCLUSIVE = "co_exclusive"
 
 
 class LicenseScope(Enum):
-    """Portée des licences"""
-    COMMERCIAL = "commercial"
+    """Portée des licences"""    COMMERCIAL = "commercial"
     NON_COMMERCIAL = "non_commercial"
     EDUCATIONAL = "educational"
     RESEARCH = "research"
@@ -60,8 +55,7 @@ class LicenseScope(Enum):
 
 
 class RevenueSplitType(Enum):
-    """Types de partage de revenus"""
-    EQUAL = "equal"
+    """Types de partage de revenus"""    EQUAL = "equal"
     PROPORTIONAL = "proportional"
     CUSTOM = "custom"
     PERFORMANCE_BASED = "performance_based"
@@ -73,8 +67,7 @@ class RevenueSplitType(Enum):
 # =============================================================================
 
 class ContentMetadata(Base):
-    """Métadonnées complètes du contenu"""
-    __tablename__ = 'content_metadata'
+    """Métadonnées complètes du contenu"""    __tablename__ = 'content_metadata'
     
     # Clé primaire
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -131,8 +124,7 @@ class ContentMetadata(Base):
 
 
 class RightsHolder(Base):
-    """Détenteurs de droits avec informations complètes"""
-    __tablename__ = 'rights_holders'
+    """Détenteurs de droits avec informations complètes"""    __tablename__ = 'rights_holders'
     
     # Clé primaire
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -214,8 +206,7 @@ class RightsHolder(Base):
 
 
 class RightsRecord(Base):
-    """Enregistrement complet des droits d'auteur"""
-    __tablename__ = 'rights_records'
+    """Enregistrement complet des droits d'auteur"""    __tablename__ = 'rights_records'
     
     # Clé primaire
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -297,8 +288,7 @@ class RightsRecord(Base):
 
 
 class CoHolderAssociation(Base):
-    """Association des co-détenteurs avec parts"""
-    __tablename__ = 'co_holder_associations'
+    """Association des co-détenteurs avec parts"""    __tablename__ = 'co_holder_associations'
     
     # Clé primaire composée
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -336,8 +326,7 @@ class CoHolderAssociation(Base):
 
 
 class LicenseAgreement(Base):
-    """Accords de licence complets"""
-    __tablename__ = 'license_agreements'
+    """Accords de licence complets"""    __tablename__ = 'license_agreements'
     
     # Clé primaire
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -426,8 +415,7 @@ class LicenseAgreement(Base):
 
 
 class UsageEvent(Base):
-    """Événements d'utilisation détaillés"""
-    __tablename__ = 'usage_events'
+    """Événements d'utilisation détaillés"""    __tablename__ = 'usage_events'
     
     # Clé primaire
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -515,8 +503,7 @@ class UsageEvent(Base):
 
 
 class UsageReport(Base):
-    """Rapports d'utilisation détaillés"""
-    __tablename__ = 'usage_reports'
+    """Rapports d'utilisation détaillés"""    __tablename__ = 'usage_reports'
     
     # Clé primaire
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -588,8 +575,7 @@ class UsageReport(Base):
 
 
 class RoyaltyCalculation(Base):
-    """Calculs de redevances détaillés"""
-    __tablename__ = 'royalty_calculations'
+    """Calculs de redevances détaillés"""    __tablename__ = 'royalty_calculations'
     
     # Clé primaire
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -659,8 +645,7 @@ class RoyaltyCalculation(Base):
 
 
 class PaymentInstruction(Base):
-    """Instructions de paiement"""
-    __tablename__ = 'payment_instructions'
+    """Instructions de paiement"""    __tablename__ = 'payment_instructions'
     
     # Clé primaire
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -724,8 +709,7 @@ class PaymentInstruction(Base):
 
 
 class TerritorialRights(Base):
-    """Droits territoriaux détaillés"""
-    __tablename__ = 'territorial_rights'
+    """Droits territoriaux détaillés"""    __tablename__ = 'territorial_rights'
     
     # Clé primaire
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -788,8 +772,7 @@ class TerritorialRights(Base):
 # =============================================================================
 
 class ContentMetadataSchema(BaseModel):
-    """Schema Pydantic pour ContentMetadata"""
-    content_id: str
+    """Schema Pydantic pour ContentMetadata"""    content_id: str
     title: str
     content_type: ContentType
     original_filename: Optional[str] = None
@@ -829,8 +812,7 @@ class ContentMetadataSchema(BaseModel):
 
 
 class RightsHolderSchema(BaseModel):
-    """Schema Pydantic pour RightsHolder"""
-    holder_id: str
+    """Schema Pydantic pour RightsHolder"""    holder_id: str
     holder_type: str
     legal_name: str
     display_name: Optional[str] = None
@@ -896,8 +878,7 @@ class RightsHolderSchema(BaseModel):
 
 
 class RightsRecordSchema(BaseModel):
-    """Schema Pydantic pour RightsRecord"""
-    record_id: str
+    """Schema Pydantic pour RightsRecord"""    record_id: str
     content_id: str
     primary_holder_id: str
     
@@ -960,8 +941,7 @@ class RightsRecordSchema(BaseModel):
 
 
 class LicenseAgreementSchema(BaseModel):
-    """Schema Pydantic pour LicenseAgreement"""
-    license_id: str
+    """Schema Pydantic pour LicenseAgreement"""    license_id: str
     rights_record_id: str
     licensor_id: str
     licensee_id: str
@@ -1041,38 +1021,30 @@ class LicenseAgreementSchema(BaseModel):
 # =============================================================================
 
 def generate_content_id() -> str:
-    """Génère un ID unique pour le contenu"""
-    return f"CNT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+    """Génère un ID unique pour le contenu"""    return f"CNT-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def generate_holder_id() -> str:
-    """Génère un ID unique pour le détenteur"""
-    return f"HLD-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+    """Génère un ID unique pour le détenteur"""    return f"HLD-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def generate_rights_record_id() -> str:
-    """Génère un ID unique pour l'enregistrement de droits"""
-    return f"RR-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+    """Génère un ID unique pour l'enregistrement de droits"""    return f"RR-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def generate_license_id() -> str:
-    """Génère un ID unique pour la licence"""
-    return f"LIC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+    """Génère un ID unique pour la licence"""    return f"LIC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def generate_usage_event_id() -> str:
-    """Génère un ID unique pour l'événement d'utilisation"""
-    return f"USE-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+    """Génère un ID unique pour l'événement d'utilisation"""    return f"USE-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
 
 def calculate_content_hash(content_data: bytes) -> Tuple[str, str]:
-    """Calcule les hashes MD5 et SHA256 du contenu"""
-    md5_hash = hashlib.md5(content_data).hexdigest()
+    """Calcule les hashes MD5 et SHA256 du contenu"""    md5_hash = hashlib.md5(content_data).hexdigest()
     sha256_hash = hashlib.sha256(content_data).hexdigest()
     return md5_hash, sha256_hash
 
 def validate_percentage(value: float) -> bool:
-    """Valide qu'un pourcentage est entre 0 et 1"""
-    return 0.0 <= value <= 1.0
+    """Valide qu'un pourcentage est entre 0 et 1"""    return 0.0 <= value <= 1.0
 
 def validate_currency_code(currency: str) -> bool:
-    """Valide un code de devise ISO 4217"""
-    iso_currencies = {
+    """Valide un code de devise ISO 4217"""    iso_currencies = {
         'USD', 'EUR', 'GBP', 'JPY', 'CAD', 'AUD', 'CHF', 'CNY', 
         'SEK', 'NOK', 'DKK', 'PLN', 'CZK', 'HUF', 'BRL', 'MXN',
         'KRW', 'SGD', 'HKD', 'NZD', 'THB', 'MYR', 'PHP', 'IDR'
@@ -1080,13 +1052,11 @@ def validate_currency_code(currency: str) -> bool:
     return currency.upper() in iso_currencies
 
 def validate_country_code(country: str) -> bool:
-    """Valide un code pays ISO 3166-1 alpha-2"""
-    # Validation basique - en production, utiliser une liste complète
+    """Valide un code pays ISO 3166-1 alpha-2"""    # Validation basique - en production, utiliser une liste complète
     return len(country) == 2 and country.isalpha()
 
 def validate_email_format(email: str) -> bool:
-    """Validation basique du format email"""
-    import re
+    """Validation basique du format email"""    import re
     pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
     return re.match(pattern, email) is not None
 

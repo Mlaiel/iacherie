@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Compliance and Regulatory Management System
+"""Ultra-Advanced Compliance and Regulatory Management System
 
 Revolutionary compliance management and regulatory oversight system specifically
 designed for the IA Influencer Agent platform. Ensures comprehensive adherence
@@ -21,7 +20,6 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
-
 from typing import List, Dict, Any, Optional, Union
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -39,8 +37,7 @@ Base = declarative_base()
 
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks supported."""
-    
+    """Compliance frameworks supported."""    
     GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
     PCI_DSS = "pci_dss"  # Payment Card Industry Data Security Standard
@@ -56,8 +53,7 @@ class ComplianceFramework(Enum):
 
 
 class ComplianceEventType(Enum):
-    """Types of compliance events."""
-    
+    """Types of compliance events."""    
     # Data Protection Events
     DATA_SUBJECT_REQUEST = "data_subject_request"
     DATA_PORTABILITY_REQUEST = "data_portability_request"
@@ -97,8 +93,7 @@ class ComplianceEventType(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status types."""
-    
+    """Compliance status types."""    
     COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     UNDER_REVIEW = "under_review"
@@ -108,8 +103,7 @@ class ComplianceStatus(Enum):
 
 
 class ComplianceRiskLevel(Enum):
-    """Risk levels for compliance events."""
-    
+    """Risk levels for compliance events."""    
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -118,8 +112,7 @@ class ComplianceRiskLevel(Enum):
 
 
 class DataCategory(Enum):
-    """Categories of data for compliance tracking."""
-    
+    """Categories of data for compliance tracking."""    
     PERSONAL_IDENTIFIABLE = "pii"
     SENSITIVE_PERSONAL = "spi"
     FINANCIAL = "financial"
@@ -134,8 +127,7 @@ class DataCategory(Enum):
 
 @dataclass
 class ComplianceContext:
-    """Context information for compliance events."""
-    
+    """Context information for compliance events."""    
     framework: ComplianceFramework
     jurisdiction: str
     data_categories: List[DataCategory]
@@ -148,8 +140,7 @@ class ComplianceContext:
 
 
 class ComplianceTrackingLog(Base):
-    """Compliance tracking log model."""
-    
+    """Compliance tracking log model."""    
     __tablename__ = "compliance_tracking_logs"
     
     # Primary identifiers
@@ -256,8 +247,7 @@ class ComplianceTrackingLog(Base):
     )
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert model to dictionary."""
-        result = {
+        """Convert model to dictionary."""        result = {
             "id": str(self.id),
             "tracking_id": self.tracking_id,
             "compliance_case_id": self.compliance_case_id,
@@ -330,17 +320,14 @@ class ComplianceTrackingLog(Base):
 
 
 class ComplianceTracker:
-    """Enterprise compliance tracking system."""
-    
+    """Enterprise compliance tracking system."""    
     def __init__(self, db_session, service_name: str = "ia_influencer_agent"):
-        """
-        Initialize compliance tracker.
+        """        Initialize compliance tracker.
         
         Args:
             db_session: Database session
             service_name: Name of the service
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.service_name = service_name
         self.logger = logging.getLogger(f"{__name__}.{service_name}")
     
@@ -366,8 +353,7 @@ class ComplianceTracker:
         automated_response: Optional[List[str]] = None,
         compliance_case_id: Optional[str] = None
     ) -> str:
-        """
-        Track a compliance event.
+        """        Track a compliance event.
         
         Args:
             framework: Compliance framework
@@ -392,8 +378,7 @@ class ComplianceTracker:
             
         Returns:
             str: Generated tracking ID
-        """
-        try:
+        """        try:
             tracking_id = f"comp_{uuid.uuid4().hex[:16]}"
             
             # Generate case ID if not provided
@@ -483,8 +468,7 @@ class ComplianceTracker:
         user_id: Optional[str] = None,
         data_volume: Optional[int] = None
     ) -> str:
-        """Track GDPR data subject request."""
-        return self.track_compliance_event(
+        """Track GDPR data subject request."""        return self.track_compliance_event(
             framework=ComplianceFramework.GDPR,
             event_type=ComplianceEventType.DATA_SUBJECT_REQUEST,
             event_name=f"GDPR Data Subject {request_type.title()} Request",
@@ -512,8 +496,7 @@ class ComplianceTracker:
         encryption_status: bool = False,
         risk_assessment: str = "high"
     ) -> str:
-        """Track data breach for compliance."""
-        risk_level = ComplianceRiskLevel.CRITICAL if not encryption_status else ComplianceRiskLevel.HIGH
+        """Track data breach for compliance."""        risk_level = ComplianceRiskLevel.CRITICAL if not encryption_status else ComplianceRiskLevel.HIGH
         
         return self.track_compliance_event(
             framework=framework,
@@ -538,8 +521,7 @@ class ComplianceTracker:
         claimed_work: str,
         user_id: Optional[str] = None
     ) -> str:
-        """Track DMCA takedown request."""
-        return self.track_compliance_event(
+        """Track DMCA takedown request."""        return self.track_compliance_event(
             framework=ComplianceFramework.DMCA,
             event_type=ComplianceEventType.DMCA_TAKEDOWN_REQUEST,
             event_name="DMCA Takedown Request",
@@ -562,8 +544,7 @@ class ComplianceTracker:
         card_data_involved: bool,
         user_id: Optional[str] = None
     ) -> str:
-        """Track PCI DSS compliance violation."""
-        risk_level = ComplianceRiskLevel.CRITICAL if card_data_involved else ComplianceRiskLevel.HIGH
+        """Track PCI DSS compliance violation."""        risk_level = ComplianceRiskLevel.CRITICAL if card_data_involved else ComplianceRiskLevel.HIGH
         
         return self.track_compliance_event(
             framework=ComplianceFramework.PCI_DSS,
@@ -591,8 +572,7 @@ class ComplianceTracker:
         notification_sent: bool = False,
         approval_required: bool = False
     ) -> bool:
-        """
-        Update compliance tracking status.
+        """        Update compliance tracking status.
         
         Args:
             tracking_id: Tracking ID to update
@@ -605,8 +585,7 @@ class ComplianceTracker:
             
         Returns:
             bool: True if successfully updated
-        """
-        try:
+        """        try:
             compliance_log = self.db_session.query(ComplianceTrackingLog).filter_by(tracking_id=tracking_id).first()
             
             if compliance_log:
@@ -649,8 +628,7 @@ class ComplianceTracker:
         framework: Optional[ComplianceFramework] = None,
         days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Get compliance dashboard summary.
+        """        Get compliance dashboard summary.
         
         Args:
             framework: Specific framework to analyze
@@ -658,8 +636,7 @@ class ComplianceTracker:
             
         Returns:
             Dict[str, Any]: Compliance dashboard data
-        """
-        try:
+        """        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=days)
             
             query = self.db_session.query(ComplianceTrackingLog).filter(
@@ -732,16 +709,14 @@ class ComplianceTracker:
             return {"error": str(e)}
     
     def get_upcoming_deadlines(self, days: int = 7) -> List[Dict[str, Any]]:
-        """
-        Get upcoming compliance deadlines.
+        """        Get upcoming compliance deadlines.
         
         Args:
             days: Number of days ahead to look for deadlines
             
         Returns:
             List[Dict[str, Any]]: List of upcoming deadlines
-        """
-        try:
+        """        try:
             end_date = datetime.now(timezone.utc) + timedelta(days=days)
             
             upcoming = self.db_session.query(ComplianceTrackingLog).filter(
@@ -762,8 +737,7 @@ class ComplianceTracker:
 
 
 def create_compliance_tracker(db_session, service_name: str = "ia_influencer_agent") -> ComplianceTracker:
-    """
-    Factory function to create compliance tracker.
+    """    Factory function to create compliance tracker.
     
     Args:
         db_session: Database session
@@ -771,8 +745,7 @@ def create_compliance_tracker(db_session, service_name: str = "ia_influencer_age
         
     Returns:
         ComplianceTracker: Configured compliance tracker
-    """
-    return ComplianceTracker(db_session, service_name)
+    """    return ComplianceTracker(db_session, service_name)
 
 
 # Export main classes and functions

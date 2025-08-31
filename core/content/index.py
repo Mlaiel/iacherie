@@ -1,5 +1,4 @@
-"""
-Content Management Index - Unified Entry Point
+"""Content Management Index - Unified Entry Point
 ==============================================
 
 This module provides the main entry point and unified interface for the
@@ -8,7 +7,6 @@ IA Influencer Agent content management system.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -33,8 +31,7 @@ from .synchronizer import ContentSynchronizer
 
 @dataclass
 class ContentSystemStatus:
-    """Content management system status container"""
-    system_health: str
+    """Content management system status container"""    system_health: str
     active_processes: int
     content_count: int
     sync_status: Dict[str, Any]
@@ -43,8 +40,7 @@ class ContentSystemStatus:
 
 
 class ContentManagementSystem:
-    """
-    Unified Content Management System Interface
+    """    Unified Content Management System Interface
     
     This class provides a single entry point to access all content management
     functionality including processing, validation, analysis, optimization,
@@ -53,8 +49,7 @@ class ContentManagementSystem:
     
     It serves as the main orchestrator and facade for the entire content
     management subsystem of the IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
@@ -82,8 +77,7 @@ class ContentManagementSystem:
         content_data: Dict[str, Any],
         workflow_config: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Execute complete content processing workflow
+        """        Execute complete content processing workflow
         
         This method orchestrates the entire content lifecycle from upload
         to distribution and monitoring according to the business logic flow:
@@ -95,8 +89,7 @@ class ContentManagementSystem:
             
         Returns:
             Complete workflow result with all processing steps
-        """
-        workflow_start = datetime.utcnow()
+        """        workflow_start = datetime.utcnow()
         workflow_id = content_data.get("id", "unknown")
         
         try:
@@ -217,8 +210,7 @@ class ContentManagementSystem:
         filters: Dict[str, Any] = None,
         sort_options: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Unified content search interface
+        """        Unified content search interface
         
         Args:
             query: Search query string
@@ -227,8 +219,7 @@ class ContentManagementSystem:
             
         Returns:
             Search results with content matches and metadata
-        """
-        try:
+        """        try:
             # Use the indexer for intelligent search
             search_result = await self.indexer.search_content(
                 query=query,
@@ -254,8 +245,7 @@ class ContentManagementSystem:
         platform_filter: List[str] = None,
         force_sync: bool = False
     ) -> Dict[str, Any]:
-        """
-        Synchronize content across all configured platforms
+        """        Synchronize content across all configured platforms
         
         Args:
             platform_filter: List of specific platforms to sync
@@ -263,8 +253,7 @@ class ContentManagementSystem:
             
         Returns:
             Platform synchronization results
-        """
-        try:
+        """        try:
             self.logger.info("Starting platform synchronization")
             
             # Use aggregator for pulling content from platforms
@@ -303,8 +292,7 @@ class ContentManagementSystem:
         content_id: str = None,
         time_range: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive content analytics
+        """        Get comprehensive content analytics
         
         Args:
             content_id: Specific content ID (None for global analytics)
@@ -312,8 +300,7 @@ class ContentManagementSystem:
             
         Returns:
             Content analytics and performance metrics
-        """
-        try:
+        """        try:
             if content_id:
                 # Get analytics for specific content
                 analytics_result = await self.tracker.get_content_analytics(content_id, time_range)
@@ -339,8 +326,7 @@ class ContentManagementSystem:
         target_platforms: List[str],
         custom_specs: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Transform content for multiple target platforms
+        """        Transform content for multiple target platforms
         
         Args:
             content_id: Content identifier
@@ -349,8 +335,7 @@ class ContentManagementSystem:
             
         Returns:
             Multi-platform transformation results
-        """
-        try:
+        """        try:
             transformation_results = {}
             
             for platform in target_platforms:
@@ -384,16 +369,14 @@ class ContentManagementSystem:
             }
 
     async def get_system_status(self, force_refresh: bool = False) -> ContentSystemStatus:
-        """
-        Get comprehensive system status and health metrics
+        """        Get comprehensive system status and health metrics
         
         Args:
             force_refresh: Force refresh of status data
             
         Returns:
             System status information
-        """
-        try:
+        """        try:
             # Check if we need to refresh status data
             if (force_refresh or not self._system_status or 
                 not self._status_last_updated or 
@@ -446,13 +429,11 @@ class ContentManagementSystem:
             )
 
     async def shutdown_system(self) -> Dict[str, Any]:
-        """
-        Gracefully shutdown the content management system
+        """        Gracefully shutdown the content management system
         
         Returns:
             Shutdown status and cleanup results
-        """
-        try:
+        """        try:
             self.logger.info("Initiating content management system shutdown")
             
             shutdown_results = {
@@ -494,8 +475,7 @@ class ContentManagementSystem:
     # Helper methods
     
     async def _get_total_content_count(self) -> int:
-        """Get total content count from database"""
-        try:
+        """Get total content count from database"""        try:
             # This would query the database for total content count
             return 0  # Placeholder
         except Exception:
@@ -504,16 +484,14 @@ class ContentManagementSystem:
 
 # Convenience function for easy system initialization
 async def create_content_system(db_session: AsyncSession) -> ContentManagementSystem:
-    """
-    Create and initialize the content management system
+    """    Create and initialize the content management system
     
     Args:
         db_session: Database session
         
     Returns:
         Initialized content management system
-    """
-    system = ContentManagementSystem(db_session)
+    """    system = ContentManagementSystem(db_session)
     
     # Perform any necessary initialization
     # await system._initialize_components()

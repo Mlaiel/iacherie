@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Notification Channels System
+"""IA-Influencer-Agent - Notification Channels System
 Module: backend/core/events/notification_channels.py
 Architecture: Multi-Channel Notification Delivery
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -11,7 +10,6 @@ Description:
     Système de canaux de notification multi-plateformes pour la distribution
     temps réel des notifications dans la plateforme IA-Influencer-Agent.
 """
-
 from typing import Any, Dict, List, Optional, Union, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class ChannelType(Enum):
-    """Types de canaux de notification"""
-    EMAIL = "email"
+    """Types de canaux de notification"""    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     WEBSOCKET = "websocket"
@@ -49,16 +46,14 @@ class ChannelType(Enum):
 
 
 class NotificationPriority(Enum):
-    """Priorité des notifications"""
-    LOW = "low"
+    """Priorité des notifications"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 
 class DeliveryStatus(Enum):
-    """Statut de livraison"""
-    PENDING = "pending"
+    """Statut de livraison"""    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -68,8 +63,7 @@ class DeliveryStatus(Enum):
 
 @dataclass
 class NotificationMessage:
-    """Message de notification"""
-    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Message de notification"""    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     recipient: str = ""
     subject: str = ""
     content: str = ""
@@ -115,10 +109,8 @@ class NotificationMessage:
 
 
 class NotificationChannel(ABC):
-    """
-    Classe de base pour les canaux de notification
-    """
-    
+    """    Classe de base pour les canaux de notification
+    """    
     def __init__(
         self,
         channel_id: str,
@@ -145,17 +137,14 @@ class NotificationChannel(ABC):
     
     @abstractmethod
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie une notification"""
-        pass
+        """Envoie une notification"""        pass
     
     @abstractmethod
     async def validate_config(self) -> bool:
-        """Valide la configuration du canal"""
-        pass
+        """Valide la configuration du canal"""        pass
     
     def can_send(self) -> bool:
-        """Vérifie si le canal peut envoyer (rate limiting)"""
-        if not self.enabled:
+        """Vérifie si le canal peut envoyer (rate limiting)"""        if not self.enabled:
             return False
         
         now = datetime.now(timezone.utc)
@@ -168,12 +157,10 @@ class NotificationChannel(ABC):
         return self.rate_counter < self.rate_limit
     
     def _increment_counter(self):
-        """Incrémente le compteur de rate limiting"""
-        self.rate_counter += 1
+        """Incrémente le compteur de rate limiting"""        self.rate_counter += 1
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du canal"""
-        return {
+        """Retourne les statistiques du canal"""        return {
             "channel_id": self.channel_id,
             "channel_type": self.channel_type.value,
             "enabled": self.enabled,
@@ -184,8 +171,7 @@ class NotificationChannel(ABC):
 
 
 class EmailChannel(NotificationChannel):
-    """Canal de notification par email"""
-    
+    """Canal de notification par email"""    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, ChannelType.EMAIL, config)
         
@@ -200,8 +186,7 @@ class EmailChannel(NotificationChannel):
         self.use_ssl = config.get("use_ssl", False)
     
     async def validate_config(self) -> bool:
-        """Valide la configuration SMTP"""
-        try:
+        """Valide la configuration SMTP"""        try:
             if self.use_ssl:
                 server = smtplib.SMTP_SSL(self.smtp_host, self.smtp_port)
             else:
@@ -220,8 +205,7 @@ class EmailChannel(NotificationChannel):
             return False
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie un email"""
-        if not self.can_send():
+        """Envoie un email"""        if not self.can_send():
             logger.warning("Email rate limit exceeded for channel %s", self.channel_id)
             return False
         
@@ -287,8 +271,7 @@ class EmailChannel(NotificationChannel):
 
 
 class WebSocketChannel(NotificationChannel):
-    """Canal de notification par WebSocket"""
-    
+    """Canal de notification par WebSocket"""    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, ChannelType.WEBSOCKET, config)
         
@@ -305,8 +288,7 @@ class WebSocketChannel(NotificationChannel):
         self.server = None
     
     async def start_server(self):
-        """Démarre le serveur WebSocket"""
-        try:
+        """Démarre le serveur WebSocket"""        try:
             self.server = await websockets.serve(
                 self.handle_connection,
                 self.host,
@@ -319,15 +301,13 @@ class WebSocketChannel(NotificationChannel):
             raise
     
     async def stop_server(self):
-        """Arrête le serveur WebSocket"""
-        if self.server:
+        """Arrête le serveur WebSocket"""        if self.server:
             self.server.close()
             await self.server.wait_closed()
             logger.info("WebSocket server stopped")
     
     async def handle_connection(self, websocket, path):
-        """Gère une nouvelle connexion WebSocket"""
-        connection_id = str(uuid.uuid4())
+        """Gère une nouvelle connexion WebSocket"""        connection_id = str(uuid.uuid4())
         self.connections[connection_id] = websocket
         
         try:
@@ -375,8 +355,7 @@ class WebSocketChannel(NotificationChannel):
             self._cleanup_connection(connection_id)
     
     def _cleanup_connection(self, connection_id: str):
-        """Nettoie une connexion fermée"""
-        if connection_id in self.connections:
+        """Nettoie une connexion fermée"""        if connection_id in self.connections:
             del self.connections[connection_id]
         
         # Nettoyage des associations utilisateur
@@ -384,13 +363,11 @@ class WebSocketChannel(NotificationChannel):
             connections.discard(connection_id)
     
     async def validate_config(self) -> bool:
-        """Valide la configuration WebSocket"""
-        # Vérification basique de la configuration
+        """Valide la configuration WebSocket"""        # Vérification basique de la configuration
         return isinstance(self.port, int) and 1 <= self.port <= 65535
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie une notification WebSocket"""
-        if not self.can_send():
+        """Envoie une notification WebSocket"""        if not self.can_send():
             return False
         
         try:
@@ -455,8 +432,7 @@ class WebSocketChannel(NotificationChannel):
 
 
 class PushNotificationChannel(NotificationChannel):
-    """Canal de notifications push (Firebase)"""
-    
+    """Canal de notifications push (Firebase)"""    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, ChannelType.PUSH, config)
         
@@ -468,8 +444,7 @@ class PushNotificationChannel(NotificationChannel):
         self._initialize_firebase()
     
     def _initialize_firebase(self):
-        """Initialise Firebase Admin SDK"""
-        try:
+        """Initialise Firebase Admin SDK"""        try:
             if not firebase_admin._apps:
                 if self.service_account_path:
                     cred = firebase_admin.credentials.Certificate(self.service_account_path)
@@ -484,8 +459,7 @@ class PushNotificationChannel(NotificationChannel):
             logger.error("Failed to initialize Firebase: %s", e)
     
     async def validate_config(self) -> bool:
-        """Valide la configuration Firebase"""
-        try:
+        """Valide la configuration Firebase"""        try:
             # Test simple d'accès à Firebase
             if firebase_admin._apps:
                 return True
@@ -496,8 +470,7 @@ class PushNotificationChannel(NotificationChannel):
             return False
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie une notification push"""
-        if not self.can_send():
+        """Envoie une notification push"""        if not self.can_send():
             return False
         
         try:
@@ -535,8 +508,7 @@ class PushNotificationChannel(NotificationChannel):
 
 
 class SlackChannel(NotificationChannel):
-    """Canal de notification Slack"""
-    
+    """Canal de notification Slack"""    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, ChannelType.SLACK, config)
         
@@ -548,8 +520,7 @@ class SlackChannel(NotificationChannel):
         self.icon_emoji = config.get("icon_emoji", ":robot_face:")
     
     async def validate_config(self) -> bool:
-        """Valide la configuration Slack"""
-        if not self.webhook_url and not self.bot_token:
+        """Valide la configuration Slack"""        if not self.webhook_url and not self.bot_token:
             return False
         
         try:
@@ -567,8 +538,7 @@ class SlackChannel(NotificationChannel):
             return False
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie une notification Slack"""
-        if not self.can_send():
+        """Envoie une notification Slack"""        if not self.can_send():
             return False
         
         try:
@@ -614,8 +584,7 @@ class SlackChannel(NotificationChannel):
             return False
     
     def _get_color_for_priority(self, priority: NotificationPriority) -> str:
-        """Retourne la couleur Slack selon la priorité"""
-        color_map = {
+        """Retourne la couleur Slack selon la priorité"""        color_map = {
             NotificationPriority.LOW: "#36a64f",      # Vert
             NotificationPriority.NORMAL: "#ffaa00",   # Orange
             NotificationPriority.HIGH: "#ff6600",     # Orange foncé
@@ -625,8 +594,7 @@ class SlackChannel(NotificationChannel):
 
 
 class TelegramChannel(NotificationChannel):
-    """Canal de notification Telegram"""
-    
+    """Canal de notification Telegram"""    
     def __init__(self, channel_id: str, config: Dict[str, Any]):
         super().__init__(channel_id, ChannelType.TELEGRAM, config)
         
@@ -635,8 +603,7 @@ class TelegramChannel(NotificationChannel):
         self.base_url = f"https://api.telegram.org/bot{self.bot_token}"
     
     async def validate_config(self) -> bool:
-        """Valide la configuration Telegram"""
-        if not self.bot_token:
+        """Valide la configuration Telegram"""        if not self.bot_token:
             return False
         
         try:
@@ -650,8 +617,7 @@ class TelegramChannel(NotificationChannel):
             return False
     
     async def send(self, message: NotificationMessage) -> bool:
-        """Envoie une notification Telegram"""
-        if not self.can_send():
+        """Envoie une notification Telegram"""        if not self.can_send():
             return False
         
         try:
@@ -710,8 +676,7 @@ def create_channel(
     channel_id: str,
     config: Dict[str, Any]
 ) -> NotificationChannel:
-    """Factory pour créer un canal de notification"""
-    channel_class = CHANNEL_CLASSES.get(channel_type)
+    """Factory pour créer un canal de notification"""    channel_class = CHANNEL_CLASSES.get(channel_type)
     
     if not channel_class:
         raise ValueError(f"Unsupported channel type: {channel_type}")

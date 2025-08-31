@@ -1,5 +1,4 @@
-"""
-🔄 Business Workflow Configuration Manager - IA-Influencer-Agent
+"""🔄 Business Workflow Configuration Manager - IA-Influencer-Agent
 ================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -18,7 +17,6 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → IA protection & rights → SEO pro → Collaboration matching → Multi-platform distribution.
 ================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union, Tuple
@@ -34,8 +32,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types of content creators supported"""
-    MUSICIAN = "musician"
+    """Types of content creators supported"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -47,8 +44,7 @@ class CreatorType(Enum):
     VOICE_ACTOR = "voice_actor"
 
 class ContentFormat(Enum):
-    """Multi-format content types"""
-    AUDIO = "audio"
+    """Multi-format content types"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -60,8 +56,7 @@ class ContentFormat(Enum):
     LIVE_CONTENT = "live_content"
 
 class WorkflowStage(Enum):
-    """Workflow stages in content creator journey"""
-    UPLOAD = "upload"
+    """Workflow stages in content creator journey"""    UPLOAD = "upload"
     AI_PROCESSING = "ai_processing"
     PROTECTION_ANALYSIS = "protection_analysis"
     RIGHTS_MANAGEMENT = "rights_management"
@@ -73,8 +68,7 @@ class WorkflowStage(Enum):
     MONETIZATION = "monetization"
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
-    PENDING = "pending"
+    """Workflow execution status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -83,16 +77,14 @@ class WorkflowStatus(Enum):
     CANCELLED = "cancelled"
 
 class OptimizationLevel(Enum):
-    """SEO and optimization levels"""
-    BASIC = "basic"
+    """SEO and optimization levels"""    BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     CUSTOM = "custom"
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
-    FEATURED_ARTIST = "featured_artist"
+    """Types of collaborations"""    FEATURED_ARTIST = "featured_artist"
     REMIX = "remix"
     DUET = "duet"
     INTERVIEW = "interview"
@@ -103,8 +95,7 @@ class CollaborationType(Enum):
 
 @dataclass
 class UploadConfiguration:
-    """Configuration for content upload stage"""
-    enabled: bool = True
+    """Configuration for content upload stage"""    enabled: bool = True
     
     # Supported formats
     supported_audio_formats: List[str] = field(default_factory=lambda: [
@@ -144,8 +135,7 @@ class UploadConfiguration:
 
 @dataclass
 class AIProcessingConfiguration:
-    """Configuration for AI processing stage"""
-    enabled: bool = True
+    """Configuration for AI processing stage"""    enabled: bool = True
     
     # Processing modes
     real_time_processing: bool = True
@@ -172,8 +162,7 @@ class AIProcessingConfiguration:
 
 @dataclass
 class ProtectionConfiguration:
-    """Configuration for content protection stage"""
-    enabled: bool = True
+    """Configuration for content protection stage"""    enabled: bool = True
     
     # Protection mechanisms
     fingerprint_protection: bool = True
@@ -201,8 +190,7 @@ class ProtectionConfiguration:
 
 @dataclass
 class SEOOptimizationConfiguration:
-    """Configuration for SEO optimization stage"""
-    enabled: bool = True
+    """Configuration for SEO optimization stage"""    enabled: bool = True
     
     # SEO features
     keyword_optimization: bool = True
@@ -231,8 +219,7 @@ class SEOOptimizationConfiguration:
 
 @dataclass
 class CollaborationConfiguration:
-    """Configuration for collaboration matching stage"""
-    enabled: bool = True
+    """Configuration for collaboration matching stage"""    enabled: bool = True
     
     # Matching algorithms
     style_matching: bool = True
@@ -262,8 +249,7 @@ class CollaborationConfiguration:
 
 @dataclass
 class DistributionConfiguration:
-    """Configuration for multi-platform distribution stage"""
-    enabled: bool = True
+    """Configuration for multi-platform distribution stage"""    enabled: bool = True
     
     # Distribution features
     simultaneous_distribution: bool = True
@@ -291,8 +277,7 @@ class DistributionConfiguration:
 
 @dataclass
 class WorkflowConfiguration:
-    """Master workflow configuration"""
-    # Stage configurations
+    """Master workflow configuration"""    # Stage configurations
     upload_config: UploadConfiguration = field(default_factory=UploadConfiguration)
     ai_processing_config: AIProcessingConfiguration = field(default_factory=AIProcessingConfiguration)
     protection_config: ProtectionConfiguration = field(default_factory=ProtectionConfiguration)
@@ -336,8 +321,7 @@ class WorkflowConfiguration:
     contact_email: str = "mlaiel@live.de"
 
 class BusinessWorkflowConfigManager:
-    """
-    Enterprise-grade business workflow configuration manager.
+    """    Enterprise-grade business workflow configuration manager.
     
     Manages the complete content creator journey workflow:
     1. Upload multi-format content
@@ -347,11 +331,9 @@ class BusinessWorkflowConfigManager:
     5. Collaboration matching
     6. Multi-platform distribution
     7. Monitoring and monetization
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize business workflow configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize business workflow configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
         self.config_path = config_path or os.getenv(
@@ -376,8 +358,7 @@ class BusinessWorkflowConfigManager:
         self.logger.info("Business workflow configuration manager initialized")
     
     def _initialize_creator_workflows(self) -> None:
-        """Initialize creator-specific workflow configurations"""
-        
+        """Initialize creator-specific workflow configurations"""        
         # Musician workflow specialization
         musician_config = {
             "priority_stages": [
@@ -484,8 +465,7 @@ class BusinessWorkflowConfigManager:
         }
     
     def _load_configuration(self) -> bool:
-        """Load configuration from file"""
-        try:
+        """Load configuration from file"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
@@ -505,8 +485,7 @@ class BusinessWorkflowConfigManager:
             return False
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]) -> None:
-        """Update configuration from dictionary"""
-        for key, value in config_data.items():
+        """Update configuration from dictionary"""        for key, value in config_data.items():
             if hasattr(self._config, key):
                 setattr(self._config, key, value)
         
@@ -514,8 +493,7 @@ class BusinessWorkflowConfigManager:
         self.last_updated = datetime.now()
     
     def get_workflow_for_creator(self, creator_type: CreatorType) -> Dict[str, Any]:
-        """Get optimized workflow configuration for specific creator type"""
-        
+        """Get optimized workflow configuration for specific creator type"""        
         base_workflow = {
             "stages": [stage.value for stage in WorkflowStage],
             "upload_config": self._config.upload_config,
@@ -536,8 +514,7 @@ class BusinessWorkflowConfigManager:
         return base_workflow
     
     def validate_workflow_configuration(self) -> List[str]:
-        """Validate workflow configuration"""
-        errors = []
+        """Validate workflow configuration"""        errors = []
         
         try:
             # Validate upload configuration
@@ -576,8 +553,7 @@ class BusinessWorkflowConfigManager:
             return [error_msg]
     
     def enable_stage(self, stage: WorkflowStage) -> bool:
-        """Enable specific workflow stage"""
-        try:
+        """Enable specific workflow stage"""        try:
             stage_config_map = {
                 WorkflowStage.UPLOAD: self._config.upload_config,
                 WorkflowStage.AI_PROCESSING: self._config.ai_processing_config,
@@ -601,8 +577,7 @@ class BusinessWorkflowConfigManager:
             return False
     
     def disable_stage(self, stage: WorkflowStage) -> bool:
-        """Disable specific workflow stage"""
-        try:
+        """Disable specific workflow stage"""        try:
             stage_config_map = {
                 WorkflowStage.UPLOAD: self._config.upload_config,
                 WorkflowStage.AI_PROCESSING: self._config.ai_processing_config,
@@ -626,8 +601,7 @@ class BusinessWorkflowConfigManager:
             return False
     
     def get_workflow_status(self) -> Dict[str, Any]:
-        """Get workflow configuration status"""
-        return {
+        """Get workflow configuration status"""        return {
             "workflow_enabled": self._config.workflow_enabled,
             "stages_enabled": {
                 "upload": self._config.upload_config.enabled,
@@ -650,8 +624,7 @@ class BusinessWorkflowConfigManager:
         }
     
     def get_configuration_status(self) -> Dict[str, Any]:
-        """Get configuration status and metadata"""
-        return self.get_workflow_status()
+        """Get configuration status and metadata"""        return self.get_workflow_status()
 
 # Global instance
 business_workflow_config_manager = BusinessWorkflowConfigManager()

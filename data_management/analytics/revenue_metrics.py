@@ -1,5 +1,4 @@
-"""
-Revenue Metrics Collector - Advanced Financial Analytics
+"""Revenue Metrics Collector - Advanced Financial Analytics
 =======================================================
 
 Comprehensive revenue tracking and financial performance analytics
@@ -16,7 +15,6 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
-
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -38,8 +36,7 @@ from ...models.protection import ProtectionEvent
 
 
 class RevenueCategory(Enum):
-    """Revenue analytics categories."""
-    TOTAL_REVENUE = "total_revenue"
+    """Revenue analytics categories."""    TOTAL_REVENUE = "total_revenue"
     CONTENT_REVENUE = "content_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
     COMMISSION_REVENUE = "commission_revenue"
@@ -48,8 +45,7 @@ class RevenueCategory(Enum):
 
 
 class RevenueSource(Enum):
-    """Revenue source types."""
-    CONTENT_LICENSING = "content_licensing"
+    """Revenue source types."""    CONTENT_LICENSING = "content_licensing"
     SUBSCRIPTION_FEES = "subscription_fees"
     PLATFORM_COMMISSION = "platform_commission"
     PROTECTION_SERVICES = "protection_services"
@@ -59,8 +55,7 @@ class RevenueSource(Enum):
 
 @dataclass
 class RevenueMetric:
-    """Structured revenue metric data."""
-    metric_name: str
+    """Structured revenue metric data."""    metric_name: str
     value: Decimal
     category: RevenueCategory
     source: Optional[RevenueSource]
@@ -73,8 +68,7 @@ class RevenueMetric:
 
 @dataclass
 class FinancialProfile:
-    """Comprehensive financial performance profile."""
-    entity_id: str  # User ID or Content ID
+    """Comprehensive financial performance profile."""    entity_id: str  # User ID or Content ID
     entity_type: str  # 'user' or 'content'
     total_revenue: Decimal
     monthly_recurring_revenue: Decimal
@@ -88,13 +82,11 @@ class FinancialProfile:
 
 
 class RevenueMetricsCollector:
-    """
-    Advanced revenue analytics and financial intelligence system.
+    """    Advanced revenue analytics and financial intelligence system.
     
     Provides comprehensive insights into financial performance,
     monetization effectiveness, and revenue optimization opportunities.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._exchange_rates = {"EUR": 1.0, "USD": 0.85, "GBP": 1.15}
@@ -107,8 +99,7 @@ class RevenueMetricsCollector:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[RevenueMetric]:
-        """
-        Collect comprehensive revenue metrics.
+        """        Collect comprehensive revenue metrics.
         
         Args:
             user_id: Specific user to analyze
@@ -118,8 +109,7 @@ class RevenueMetricsCollector:
             
         Returns:
             List of revenue metrics
-        """
-        if not start_date:
+        """        if not start_date:
             start_date = datetime.now() - timedelta(days=30)
         if not end_date:
             end_date = datetime.now()
@@ -171,8 +161,7 @@ class RevenueMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueMetric]:
-        """Collect total revenue metrics across all sources."""
-        
+        """Collect total revenue metrics across all sources."""        
         async with get_database_session() as session:
             # Total revenue query
             base_query = select(
@@ -295,8 +284,7 @@ class RevenueMetricsCollector:
         end_date: datetime,
         session: AsyncSession
     ) -> float:
-        """Calculate revenue growth rate compared to previous period."""
-        
+        """Calculate revenue growth rate compared to previous period."""        
         period_length = end_date - start_date
         previous_start = start_date - period_length
         previous_end = start_date
@@ -339,8 +327,7 @@ class RevenueMetricsCollector:
         return growth_rate
         
     def _calculate_revenue_volatility(self, daily_revenues: List[Dict]) -> float:
-        """Calculate revenue volatility (standard deviation)."""
-        
+        """Calculate revenue volatility (standard deviation)."""        
         if len(daily_revenues) < 2:
             return 0.0
             
@@ -362,8 +349,7 @@ class RevenueMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueMetric]:
-        """Collect content-specific revenue metrics."""
-        
+        """Collect content-specific revenue metrics."""        
         async with get_database_session() as session:
             # Content revenue query
             content_query = select(
@@ -448,8 +434,7 @@ class RevenueMetricsCollector:
         views: int,
         revenue_events: int
     ) -> float:
-        """Calculate content revenue performance score."""
-        
+        """Calculate content revenue performance score."""        
         if views == 0:
             return 0.0
             
@@ -473,8 +458,7 @@ class RevenueMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueMetric]:
-        """Collect subscription revenue metrics."""
-        
+        """Collect subscription revenue metrics."""        
         async with get_database_session() as session:
             # Subscription revenue query
             subscription_query = select(
@@ -559,8 +543,7 @@ class RevenueMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueMetric]:
-        """Collect platform commission metrics."""
-        
+        """Collect platform commission metrics."""        
         async with get_database_session() as session:
             # Commission revenue query
             commission_query = select(
@@ -631,8 +614,7 @@ class RevenueMetricsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueMetric]:
-        """Collect payment processing analytics."""
-        
+        """Collect payment processing analytics."""        
         async with get_database_session() as session:
             # Payment analytics query
             payment_query = select(
@@ -732,8 +714,7 @@ class RevenueMetricsCollector:
         entity_ids: Optional[List[str]] = None,
         entity_type: str = "user"
     ) -> List[FinancialProfile]:
-        """Generate comprehensive financial performance profiles."""
-        
+        """Generate comprehensive financial performance profiles."""        
         try:
             # Collect revenue metrics
             revenue_metrics = await self.collect_revenue_metrics()
@@ -786,22 +767,19 @@ class RevenueMetricsCollector:
             raise
             
     def _extract_total_revenue(self, metrics: List[RevenueMetric]) -> Decimal:
-        """Extract total revenue from metrics."""
-        for metric in metrics:
+        """Extract total revenue from metrics."""        for metric in metrics:
             if metric.metric_name == "total_revenue":
                 return metric.value
         return Decimal('0')
         
     def _extract_mrr(self, metrics: List[RevenueMetric]) -> Decimal:
-        """Extract monthly recurring revenue from metrics."""
-        for metric in metrics:
+        """Extract monthly recurring revenue from metrics."""        for metric in metrics:
             if metric.metric_name == "monthly_recurring_revenue":
                 return metric.value
         return Decimal('0')
         
     def _calculate_average_order_value(self, metrics: List[RevenueMetric]) -> Decimal:
-        """Calculate average order value from metrics."""
-        total_revenue = Decimal('0')
+        """Calculate average order value from metrics."""        total_revenue = Decimal('0')
         total_events = 0
         
         for metric in metrics:
@@ -816,15 +794,13 @@ class RevenueMetricsCollector:
         return Decimal('0')
         
     def _extract_growth_rate(self, metrics: List[RevenueMetric]) -> float:
-        """Extract revenue growth rate from metrics."""
-        for metric in metrics:
+        """Extract revenue growth rate from metrics."""        for metric in metrics:
             if metric.metric_name == "revenue_growth_rate":
                 return float(metric.value)
         return 0.0
         
     def _calculate_profitability_score(self, metrics: List[RevenueMetric]) -> float:
-        """Calculate profitability score from metrics."""
-        total_revenue = Decimal('0')
+        """Calculate profitability score from metrics."""        total_revenue = Decimal('0')
         total_fees = Decimal('0')
         
         for metric in metrics:
@@ -841,8 +817,7 @@ class RevenueMetricsCollector:
         return 0.0
         
     def _extract_revenue_sources(self, metrics: List[RevenueMetric]) -> Dict[str, Decimal]:
-        """Extract revenue breakdown by source."""
-        sources = {}
+        """Extract revenue breakdown by source."""        sources = {}
         
         for metric in metrics:
             if metric.source and metric.metric_name.startswith("revenue_from_"):
@@ -851,8 +826,7 @@ class RevenueMetricsCollector:
         return sources
         
     def _extract_payment_success_rate(self, metrics: List[RevenueMetric]) -> float:
-        """Extract payment success rate from metrics."""
-        for metric in metrics:
+        """Extract payment success rate from metrics."""        for metric in metrics:
             if metric.metric_name == "payment_success_rate":
                 return float(metric.value)
         return 100.0  # Default to 100% if no payment data
@@ -863,8 +837,7 @@ class RevenueMetricsCollector:
         entity_type: str,
         metrics: List[RevenueMetric]
     ) -> Decimal:
-        """Forecast future revenue based on historical trends."""
-        
+        """Forecast future revenue based on historical trends."""        
         # Simple linear projection based on growth rate
         # In production, this would use more sophisticated ML models
         

@@ -1,5 +1,4 @@
-"""
-Audio Fingerprinting Events - Industrial Grade Fingerprinting & Copyright Protection
+"""Audio Fingerprinting Events - Industrial Grade Fingerprinting & Copyright Protection
 =================================================================================
 
 This module handles all events related to audio fingerprinting, copyright detection,
@@ -8,7 +7,6 @@ and content protection for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -19,8 +17,7 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class FingerprintingMethod(Enum):
-    """Audio fingerprinting methods"""
-    CHROMAPRINT = "chromaprint"
+    """Audio fingerprinting methods"""    CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     SPECTRAL_HASH = "spectral_hash"
     MFCC = "mfcc"
@@ -30,8 +27,7 @@ class FingerprintingMethod(Enum):
 
 
 class MatchConfidence(Enum):
-    """Confidence levels for audio matches"""
-    PERFECT = "perfect"  # 95-100%
+    """Confidence levels for audio matches"""    PERFECT = "perfect"  # 95-100%
     HIGH = "high"        # 85-94%
     MEDIUM = "medium"    # 70-84%
     LOW = "low"          # 50-69%
@@ -39,8 +35,7 @@ class MatchConfidence(Enum):
 
 
 class ViolationType(Enum):
-    """Types of copyright violations"""
-    EXACT_COPY = "exact_copy"
+    """Types of copyright violations"""    EXACT_COPY = "exact_copy"
     SUBSTANTIAL_SIMILARITY = "substantial_similarity"
     REMIX_UNAUTHORIZED = "remix_unauthorized"
     SAMPLE_UNAUTHORIZED = "sample_unauthorized"
@@ -50,13 +45,11 @@ class ViolationType(Enum):
 
 @dataclass
 class AudioFingerprintingStartedEvent(BaseEvent):
-    """
-    Event triggered when audio fingerprinting process begins.
+    """    Event triggered when audio fingerprinting process begins.
     
     Initializes comprehensive audio fingerprinting including multiple
     algorithms and cross-validation techniques.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     fingerprinting_id: UUID
     filename: str
@@ -91,12 +84,10 @@ class AudioFingerprintingStartedEvent(BaseEvent):
 
 @dataclass
 class AudioFingerprintingProgressEvent(BaseEvent):
-    """
-    Event triggered during fingerprinting progress updates.
+    """    Event triggered during fingerprinting progress updates.
     
     Provides real-time feedback about fingerprinting pipeline progress.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     fingerprinting_id: UUID
     current_method: FingerprintingMethod
@@ -127,12 +118,10 @@ class AudioFingerprintingProgressEvent(BaseEvent):
 
 @dataclass
 class AudioFingerprintingCompletedEvent(BaseEvent):
-    """
-    Event triggered when audio fingerprinting is successfully completed.
+    """    Event triggered when audio fingerprinting is successfully completed.
     
     Contains comprehensive fingerprinting results and generated signatures.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     fingerprinting_id: UUID
     fingerprint_signatures: Dict[str, str]  # method -> signature
@@ -167,12 +156,10 @@ class AudioFingerprintingCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioFingerprintingFailedEvent(BaseEvent):
-    """
-    Event triggered when audio fingerprinting fails.
+    """    Event triggered when audio fingerprinting fails.
     
     Contains detailed error information and recovery options.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     fingerprinting_id: UUID
     failed_method: FingerprintingMethod
@@ -207,12 +194,10 @@ class AudioFingerprintingFailedEvent(BaseEvent):
 
 @dataclass
 class AudioMatchFoundEvent(BaseEvent):
-    """
-    Event triggered when a potential audio match is detected.
+    """    Event triggered when a potential audio match is detected.
     
     Contains detailed information about the match and similarity metrics.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     match_id: UUID
     matched_file_id: UUID
@@ -250,12 +235,10 @@ class AudioMatchFoundEvent(BaseEvent):
 
 @dataclass
 class AudioCopyrightViolationEvent(BaseEvent):
-    """
-    Event triggered when a copyright violation is detected.
+    """    Event triggered when a copyright violation is detected.
     
     Contains comprehensive violation analysis and recommended actions.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     violation_id: UUID
     original_file_id: UUID
@@ -296,12 +279,10 @@ class AudioCopyrightViolationEvent(BaseEvent):
 
 @dataclass
 class AudioSimilarityAnalysisEvent(BaseEvent):
-    """
-    Event triggered during advanced similarity analysis.
+    """    Event triggered during advanced similarity analysis.
     
     Provides detailed comparison metrics beyond basic fingerprinting.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     analysis_id: UUID
     comparison_file_id: UUID
@@ -337,12 +318,10 @@ class AudioSimilarityAnalysisEvent(BaseEvent):
 
 @dataclass
 class AudioFingerprintDatabaseUpdatedEvent(BaseEvent):
-    """
-    Event triggered when fingerprint database is updated.
+    """    Event triggered when fingerprint database is updated.
     
     Tracks database maintenance and indexing operations.
-    """
-    database_name: str
+    """    database_name: str
     update_type: str  # insert, update, delete, rebuild
     records_affected: int
     total_records: int
@@ -373,12 +352,10 @@ class AudioFingerprintDatabaseUpdatedEvent(BaseEvent):
 
 @dataclass
 class AudioFingerprintSearchEvent(BaseEvent):
-    """
-    Event triggered during fingerprint search operations.
+    """    Event triggered during fingerprint search operations.
     
     Tracks search performance and results.
-    """
-    user_id: Optional[UUID]
+    """    user_id: Optional[UUID]
     search_id: UUID
     query_fingerprint: str
     search_databases: List[str]

@@ -1,5 +1,4 @@
-"""
-Backend Manager - Multi-Backend Storage System
+"""Backend Manager - Multi-Backend Storage System
 
 Advanced storage backend management supporting AWS S3, MinIO, Google Cloud Storage,
 local filesystem, and other cloud storage providers with intelligent failover.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
 """
-
 import asyncio
 import logging
 import aiofiles
@@ -56,8 +54,7 @@ from ...monitoring.metrics import MetricsCollector
 logger = logging.getLogger(__name__)
 
 class StorageBackend(str, Enum):
-    """Supported storage backends"""
-    LOCAL = "local"
+    """Supported storage backends"""    LOCAL = "local"
     S3 = "s3"
     MINIO = "minio" 
     GOOGLE_CLOUD = "gcs"
@@ -66,16 +63,14 @@ class StorageBackend(str, Enum):
     FTP = "ftp"
 
 class BackendStatus(str, Enum):
-    """Backend operational status"""
-    HEALTHY = "healthy"
+    """Backend operational status"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     OFFLINE = "offline"
 
 @dataclass
 class StorageConfig:
-    """Storage backend configuration"""
-    backend_type: StorageBackend
+    """Storage backend configuration"""    backend_type: StorageBackend
     enabled: bool = True
     priority: int = 1
     max_file_size: int = 5 * 1024 * 1024 * 1024  # 5GB
@@ -87,8 +82,7 @@ class StorageConfig:
 
 @dataclass
 class BackendHealth:
-    """Backend health information"""
-    backend: StorageBackend
+    """Backend health information"""    backend: StorageBackend
     status: BackendStatus
     response_time: float
     available_space: Optional[int]
@@ -97,11 +91,9 @@ class BackendHealth:
     error_message: Optional[str] = None
 
 class BackendManager:
-    """
-    Enterprise multi-backend storage management system with intelligent 
+    """    Enterprise multi-backend storage management system with intelligent 
     backend selection, health monitoring, and automatic failover.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.backends: Dict[StorageBackend, Any] = {}
@@ -127,8 +119,7 @@ class BackendManager:
         logger.info("BackendManager initialized")
     
     async def _initialize_backends(self):
-        """Initialize all configured storage backends"""
-        for backend_name, backend_config in self.config.items():
+        """Initialize all configured storage backends"""        for backend_name, backend_config in self.config.items():
             try:
                 backend_type = StorageBackend(backend_name)
                 
@@ -164,8 +155,7 @@ class BackendManager:
         backend_type: StorageBackend, 
         config: StorageConfig
     ) -> Optional[Any]:
-        """Initialize specific backend client"""
-        try:
+        """Initialize specific backend client"""        try:
             if backend_type == StorageBackend.LOCAL:
                 return await self._initialize_local_backend(config)
             
@@ -190,8 +180,7 @@ class BackendManager:
             return None
     
     async def _initialize_local_backend(self, config: StorageConfig) -> Dict[str, Any]:
-        """Initialize local filesystem backend"""
-        base_path = Path(config.settings.get('base_path', '/storage/local'))
+        """Initialize local filesystem backend"""        base_path = Path(config.settings.get('base_path', '/storage/local'))
         base_path.mkdir(parents=True, exist_ok=True)
         
         return {
@@ -201,8 +190,7 @@ class BackendManager:
         }
     
     async def _initialize_s3_backend(self, config: StorageConfig) -> Dict[str, Any]:
-        """Initialize AWS S3 backend"""
-        credentials = config.credentials
+        """Initialize AWS S3 backend"""        credentials = config.credentials
         settings = config.settings
         
         session = boto3.Session(
@@ -224,8 +212,7 @@ class BackendManager:
         }
     
     async def _initialize_minio_backend(self, config: StorageConfig) -> Dict[str, Any]:
-        """Initialize MinIO backend"""
-        credentials = config.credentials
+        """Initialize MinIO backend"""        credentials = config.credentials
         settings = config.settings
         
         minio_client = minio.Minio(
@@ -248,8 +235,7 @@ class BackendManager:
         }
     
     async def _initialize_gcs_backend(self, config: StorageConfig) -> Dict[str, Any]:
-        """Initialize Google Cloud Storage backend"""
-        credentials_path = config.credentials.get('service_account_path')
+        """Initialize Google Cloud Storage backend"""        credentials_path = config.credentials.get('service_account_path')
         bucket_name = config.settings.get('bucket')
         
         if credentials_path:
@@ -267,8 +253,7 @@ class BackendManager:
         }
     
     async def _initialize_azure_backend(self, config: StorageConfig) -> Dict[str, Any]:
-        """Initialize Azure Blob Storage backend"""
-        connection_string = config.credentials.get('connection_string')
+        """Initialize Azure Blob Storage backend"""        connection_string = config.credentials.get('connection_string')
         container_name = config.settings.get('container', 'content-storage')
         
         blob_service_client = azure_blob.BlobServiceClient.from_connection_string(
@@ -296,8 +281,7 @@ class BackendManager:
         metadata: Optional[Dict[str, Any]] = None,
         access_level: str = "private"
     ) -> str:
-        """
-        Store file in specified backend
+        """        Store file in specified backend
         
         Args:
             backend: Target storage backend
@@ -308,8 +292,7 @@ class BackendManager:
             
         Returns:
             URL to stored file
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             if backend not in self.backends:
@@ -369,8 +352,7 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str] = None
     ) -> Union[str, bytes]:
-        """
-        Retrieve file from backend
+        """        Retrieve file from backend
         
         Args:
             backend: Source storage backend
@@ -379,8 +361,7 @@ class BackendManager:
             
         Returns:
             Local file path or file content
-        """
-        try:
+        """        try:
             if backend not in self.backends:
                 raise StorageError(f"Backend {backend} not available")
             
@@ -409,8 +390,7 @@ class BackendManager:
             raise StorageError(f"Retrieval failed from {backend}: {e}")
     
     async def delete_file(self, backend: StorageBackend, file_path: str) -> bool:
-        """
-        Delete file from backend
+        """        Delete file from backend
         
         Args:
             backend: Storage backend
@@ -418,8 +398,7 @@ class BackendManager:
             
         Returns:
             True if deletion successful
-        """
-        try:
+        """        try:
             if backend not in self.backends:
                 raise StorageError(f"Backend {backend} not available")
             
@@ -448,8 +427,7 @@ class BackendManager:
             return False
     
     async def health_check(self) -> Dict[StorageBackend, BackendHealth]:
-        """Perform health check on all backends"""
-        health_results = {}
+        """Perform health check on all backends"""        health_results = {}
         
         for backend_type in self.backends:
             try:
@@ -476,8 +454,7 @@ class BackendManager:
         file_type: str,
         access_pattern: str = "read_write"
     ) -> StorageBackend:
-        """
-        Select best backend based on file characteristics and access pattern
+        """        Select best backend based on file characteristics and access pattern
         
         Args:
             file_size: Size of file in bytes
@@ -486,8 +463,7 @@ class BackendManager:
             
         Returns:
             Best backend for the file
-        """
-        available_backends = []
+        """        available_backends = []
         
         for backend_type, health in self.backend_health.items():
             config = self.backend_configs[backend_type]
@@ -517,8 +493,7 @@ class BackendManager:
         return available_backends[0][0]
     
     async def get_backend_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive backend statistics"""
-        stats = {
+        """Get comprehensive backend statistics"""        stats = {
             'total_backends': len(self.backends),
             'healthy_backends': sum(
                 1 for h in self.backend_health.values() 
@@ -547,8 +522,7 @@ class BackendManager:
         target_path: str,
         metadata: Optional[Dict[str, Any]]
     ) -> str:
-        """Store file in local filesystem"""
-        base_path = backend_client['base_path']
+        """Store file in local filesystem"""        base_path = backend_client['base_path']
         full_target_path = base_path / target_path
         full_target_path.parent.mkdir(parents=True, exist_ok=True)
         
@@ -570,8 +544,7 @@ class BackendManager:
         metadata: Optional[Dict[str, Any]],
         access_level: str
     ) -> str:
-        """Store file in AWS S3"""
-        s3_client = backend_client['client']
+        """Store file in AWS S3"""        s3_client = backend_client['client']
         bucket = backend_client['bucket']
         
         extra_args = {}
@@ -610,8 +583,7 @@ class BackendManager:
         target_path: str,
         metadata: Optional[Dict[str, Any]]
     ) -> str:
-        """Store file in MinIO"""
-        minio_client = backend_client['client']
+        """Store file in MinIO"""        minio_client = backend_client['client']
         bucket = backend_client['bucket']
         
         content_type = mimetypes.guess_type(str(source_path))[0] or 'application/octet-stream'
@@ -649,8 +621,7 @@ class BackendManager:
         metadata: Optional[Dict[str, Any]],
         access_level: str
     ) -> str:
-        """Store file in Google Cloud Storage"""
-        bucket = backend_client['bucket']
+        """Store file in Google Cloud Storage"""        bucket = backend_client['bucket']
         blob = bucket.blob(target_path)
         
         if metadata:
@@ -682,8 +653,7 @@ class BackendManager:
         metadata: Optional[Dict[str, Any]],
         access_level: str
     ) -> str:
-        """Store file in Azure Blob Storage"""
-        blob_service_client = backend_client['client']
+        """Store file in Azure Blob Storage"""        blob_service_client = backend_client['client']
         container = backend_client['container']
         
         blob_client = blob_service_client.get_blob_client(
@@ -719,8 +689,7 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str]
     ) -> str:
-        """Retrieve file from local filesystem"""
-        base_path = backend_client['base_path']
+        """Retrieve file from local filesystem"""        base_path = backend_client['base_path']
         full_file_path = base_path / file_path
         
         if not full_file_path.exists():
@@ -738,8 +707,7 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str]
     ) -> Union[str, bytes]:
-        """Retrieve file from AWS S3"""
-        s3_client = backend_client['client']
+        """Retrieve file from AWS S3"""        s3_client = backend_client['client']
         bucket = backend_client['bucket']
         
         if local_path:
@@ -766,8 +734,7 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str]
     ) -> Union[str, bytes]:
-        """Retrieve file from MinIO"""
-        minio_client = backend_client['client']
+        """Retrieve file from MinIO"""        minio_client = backend_client['client']
         bucket = backend_client['bucket']
         
         if local_path:
@@ -794,8 +761,7 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str]
     ) -> Union[str, bytes]:
-        """Retrieve file from Google Cloud Storage"""
-        bucket = backend_client['bucket']
+        """Retrieve file from Google Cloud Storage"""        bucket = backend_client['bucket']
         blob = bucket.blob(file_path)
         
         if local_path:
@@ -817,8 +783,7 @@ class BackendManager:
         file_path: str,
         local_path: Optional[str]
     ) -> Union[str, bytes]:
-        """Retrieve file from Azure Blob Storage"""
-        blob_service_client = backend_client['client']
+        """Retrieve file from Azure Blob Storage"""        blob_service_client = backend_client['client']
         container = backend_client['container']
         
         blob_client = blob_service_client.get_blob_client(
@@ -844,8 +809,7 @@ class BackendManager:
     # Backend-specific deletion implementations
     
     async def _delete_local(self, backend_client: Dict[str, Any], file_path: str) -> bool:
-        """Delete file from local filesystem"""
-        try:
+        """Delete file from local filesystem"""        try:
             base_path = backend_client['base_path']
             full_file_path = base_path / file_path
             
@@ -860,8 +824,7 @@ class BackendManager:
             return False
     
     async def _delete_s3(self, backend_client: Dict[str, Any], file_path: str) -> bool:
-        """Delete file from AWS S3"""
-        try:
+        """Delete file from AWS S3"""        try:
             s3_client = backend_client['client']
             bucket = backend_client['bucket']
             
@@ -878,8 +841,7 @@ class BackendManager:
             return False
     
     async def _delete_minio(self, backend_client: Dict[str, Any], file_path: str) -> bool:
-        """Delete file from MinIO"""
-        try:
+        """Delete file from MinIO"""        try:
             minio_client = backend_client['client']
             bucket = backend_client['bucket']
             
@@ -896,8 +858,7 @@ class BackendManager:
             return False
     
     async def _delete_gcs(self, backend_client: Dict[str, Any], file_path: str) -> bool:
-        """Delete file from Google Cloud Storage"""
-        try:
+        """Delete file from Google Cloud Storage"""        try:
             bucket = backend_client['bucket']
             blob = bucket.blob(file_path)
             
@@ -912,8 +873,7 @@ class BackendManager:
             return False
     
     async def _delete_azure(self, backend_client: Dict[str, Any], file_path: str) -> bool:
-        """Delete file from Azure Blob Storage"""
-        try:
+        """Delete file from Azure Blob Storage"""        try:
             blob_service_client = backend_client['client']
             container = backend_client['container']
             
@@ -935,8 +895,7 @@ class BackendManager:
     # Utility methods
     
     async def _validate_file(self, file_path: Union[str, Path, BinaryIO], config: StorageConfig):
-        """Validate file against backend configuration"""
-        if isinstance(file_path, (str, Path)):
+        """Validate file against backend configuration"""        if isinstance(file_path, (str, Path)):
             file_size = Path(file_path).stat().st_size
         else:
             # For file objects, we need to read to get size
@@ -949,8 +908,7 @@ class BackendManager:
             raise ValidationError(f"File size {file_size} exceeds limit {config.max_file_size}")
     
     async def _encrypt_file(self, file_path: Union[str, Path]) -> str:
-        """Encrypt file and return encrypted file path"""
-        if isinstance(file_path, (str, Path)):
+        """Encrypt file and return encrypted file path"""        if isinstance(file_path, (str, Path)):
             encrypted_path = f"{file_path}.encrypted"
             await self.encryption_manager.encrypt_file(file_path, encrypted_path)
             return encrypted_path
@@ -973,8 +931,7 @@ class BackendManager:
             return encrypted_path
     
     async def _test_s3_connection(self, s3_client, bucket: str):
-        """Test S3 connection and bucket access"""
-        try:
+        """Test S3 connection and bucket access"""        try:
             await asyncio.get_event_loop().run_in_executor(
                 None,
                 s3_client.head_bucket,
@@ -984,8 +941,7 @@ class BackendManager:
             raise AuthenticationError(f"S3 connection failed: {e}")
     
     async def _check_backend_health(self, backend: StorageBackend) -> BackendHealth:
-        """Check health of specific backend"""
-        start_time = datetime.utcnow()
+        """Check health of specific backend"""        start_time = datetime.utcnow()
         
         try:
             backend_client = self.backends[backend]
@@ -1046,8 +1002,7 @@ class BackendManager:
             )
     
     async def _check_local_space(self, backend_client: Dict[str, Any]) -> int:
-        """Check available space in local filesystem"""
-        base_path = backend_client['base_path']
+        """Check available space in local filesystem"""        base_path = backend_client['base_path']
         stat = shutil.disk_usage(base_path)
         return stat.free
     
@@ -1057,8 +1012,7 @@ class BackendManager:
         success: bool, 
         response_time: float
     ):
-        """Update performance statistics"""
-        self.performance_stats['total_operations'] += 1
+        """Update performance statistics"""        self.performance_stats['total_operations'] += 1
         self.performance_stats['backend_usage'][backend] += 1
         
         if success:
@@ -1074,8 +1028,7 @@ class BackendManager:
         )
     
     async def cleanup(self):
-        """Cleanup backend manager resources"""
-        try:
+        """Cleanup backend manager resources"""        try:
             # Close all backend connections
             for backend_type, backend_client in self.backends.items():
                 try:

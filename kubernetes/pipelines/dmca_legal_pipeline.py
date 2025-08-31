@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Automated DMCA and Legal Pipeline System
+"""IA Influencer Agent - Automated DMCA and Legal Pipeline System
 Enterprise-Grade Automated Legal Response and Takedown Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -29,7 +28,6 @@ Legal Frameworks Supported:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
-
 import asyncio
 import logging
 import json
@@ -48,8 +46,7 @@ import aiofiles
 import aiohttp
 
 class LegalFramework(Enum):
-    """Legal framework types"""
-    DMCA_USA = "dmca_usa"
+    """Legal framework types"""    DMCA_USA = "dmca_usa"
     COPYRIGHT_DIRECTIVE_EU = "copyright_directive_eu"
     COPYRIGHT_ACT_CANADA = "copyright_act_canada"
     COPYRIGHT_ACT_AUSTRALIA = "copyright_act_australia"
@@ -57,8 +54,7 @@ class LegalFramework(Enum):
     PLATFORM_SPECIFIC = "platform_specific"
 
 class TakedownStatus(Enum):
-    """Takedown request status"""
-    DRAFT = "draft"
+    """Takedown request status"""    DRAFT = "draft"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
     PROCESSING = "processing"
@@ -69,8 +65,7 @@ class TakedownStatus(Enum):
     RESOLVED = "resolved"
 
 class ViolationType(Enum):
-    """Content violation types"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Content violation types"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     DERIVATIVE_WORK = "derivative_work"
@@ -78,8 +73,7 @@ class ViolationType(Enum):
     COMMERCIAL_USE = "commercial_use"
 
 class PlatformEndpoint(Enum):
-    """Platform takedown endpoints"""
-    YOUTUBE_COPYRIGHT = "youtube_copyright"
+    """Platform takedown endpoints"""    YOUTUBE_COPYRIGHT = "youtube_copyright"
     INSTAGRAM_COPYRIGHT = "instagram_copyright"
     TIKTOK_COPYRIGHT = "tiktok_copyright"
     TWITTER_COPYRIGHT = "twitter_copyright"
@@ -89,8 +83,7 @@ class PlatformEndpoint(Enum):
 
 @dataclass
 class CopyrightOwner:
-    """Copyright owner information"""
-    name: str
+    """Copyright owner information"""    name: str
     email: str
     phone: str
     address: str
@@ -101,8 +94,7 @@ class CopyrightOwner:
     
 @dataclass
 class InfringementEvidence:
-    """Copyright infringement evidence"""
-    original_work_url: str
+    """Copyright infringement evidence"""    original_work_url: str
     original_work_title: str
     original_creation_date: datetime
     copyright_registration: Optional[str] = None
@@ -118,8 +110,7 @@ class InfringementEvidence:
 
 @dataclass
 class InfringingContent:
-    """Infringing content information"""
-    platform: str
+    """Infringing content information"""    platform: str
     infringing_url: str
     content_title: str
     content_description: str
@@ -136,8 +127,7 @@ class InfringingContent:
 
 @dataclass
 class TakedownRequest:
-    """DMCA takedown request"""
-    request_id: str
+    """DMCA takedown request"""    request_id: str
     legal_framework: LegalFramework
     violation_type: ViolationType
     copyright_owner: CopyrightOwner
@@ -159,8 +149,7 @@ class TakedownRequest:
 
 @dataclass
 class LegalTemplate:
-    """Legal document template"""
-    template_id: str
+    """Legal document template"""    template_id: str
     name: str
     legal_framework: LegalFramework
     platform: str
@@ -175,8 +164,7 @@ class LegalTemplate:
             self.last_updated = datetime.utcnow()
 
 class DMCATemplateGenerator:
-    """DMCA takedown notice template generator"""
-    
+    """DMCA takedown notice template generator"""    
     def __init__(self, templates_dir: Optional[Path] = None):
         self.templates_dir = templates_dir or Path(__file__).parent / "legal_templates"
         self.templates_dir.mkdir(exist_ok=True)
@@ -192,8 +180,7 @@ class DMCATemplateGenerator:
         self._create_default_templates()
         
     def _create_default_templates(self):
-        """Create default legal templates"""
-        templates = {
+        """Create default legal templates"""        templates = {
             "dmca_standard.html": self._get_dmca_standard_template(),
             "dmca_youtube.html": self._get_dmca_youtube_template(),
             "dmca_instagram.html": self._get_dmca_instagram_template(),
@@ -209,9 +196,7 @@ class DMCATemplateGenerator:
                     f.write(content)
                     
     def _get_dmca_standard_template(self) -> str:
-        """Standard DMCA takedown notice template"""
-        return """
-<!DOCTYPE html>
+        """Standard DMCA takedown notice template"""        return """<!DOCTYPE html>
 <html>
 <head>
     <title>DMCA Takedown Notice</title>
@@ -300,12 +285,9 @@ class DMCATemplateGenerator:
     </div>
 </body>
 </html>
-        """
-        
+        """        
     def _get_dmca_youtube_template(self) -> str:
-        """YouTube-specific DMCA template"""
-        return """
-DMCA TAKEDOWN NOTICE - YOUTUBE COPYRIGHT INFRINGEMENT
+        """YouTube-specific DMCA template"""        return """DMCA TAKEDOWN NOTICE - YOUTUBE COPYRIGHT INFRINGEMENT
 
 To: YouTube Legal Department (copyright@youtube.com)
 Date: {{ current_date }}
@@ -344,12 +326,9 @@ Please remove or disable access to the infringing material identified above.
 
 Electronic Signature: {{ owner.name }}
 Date: {{ current_date }}
-        """
-        
+        """        
     def _get_dmca_instagram_template(self) -> str:
-        """Instagram-specific DMCA template"""
-        return """
-INTELLECTUAL PROPERTY INFRINGEMENT REPORT - INSTAGRAM
+        """Instagram-specific DMCA template"""        return """INTELLECTUAL PROPERTY INFRINGEMENT REPORT - INSTAGRAM
 
 To: Instagram Legal Team
 Platform: Instagram
@@ -386,12 +365,9 @@ Contact for Questions: {{ owner.email }}
 
 Signature: {{ owner.name }}
 Date: {{ current_date }}
-        """
-        
+        """        
     def _get_dmca_tiktok_template(self) -> str:
-        """TikTok-specific DMCA template"""
-        return """
-COPYRIGHT INFRINGEMENT NOTIFICATION - TIKTOK
+        """TikTok-specific DMCA template"""        return """COPYRIGHT INFRINGEMENT NOTIFICATION - TIKTOK
 
 To: TikTok Legal Department
 Subject: Copyright Infringement Report
@@ -428,12 +404,9 @@ Remove or disable access to the infringing content
 
 Digital Signature: {{ owner.name }}
 Date: {{ current_date }}
-        """
-        
+        """        
     def _get_copyright_eu_template(self) -> str:
-        """EU Copyright Directive template"""
-        return """
-NOTICE OF COPYRIGHT INFRINGEMENT - EU COPYRIGHT DIRECTIVE
+        """EU Copyright Directive template"""        return """NOTICE OF COPYRIGHT INFRINGEMENT - EU COPYRIGHT DIRECTIVE
 
 To: Platform Legal Department
 Subject: Copyright Infringement Under EU Copyright Directive
@@ -476,12 +449,9 @@ I confirm the accuracy of this notification and my authority to act on behalf of
 
 Signature: {{ owner.name }}
 Date: {{ current_date }}
-        """
-        
+        """        
     def _get_counter_notice_template(self) -> str:
-        """Counter-notice response template"""
-        return """
-DMCA COUNTER-NOTIFICATION RESPONSE
+        """Counter-notice response template"""        return """DMCA COUNTER-NOTIFICATION RESPONSE
 
 To: {{ platform_name }} Legal Department
 Date: {{ current_date }}
@@ -518,11 +488,9 @@ CONTACT INFORMATION:
 
 Signature: {{ owner.name }}
 Date: {{ current_date }}
-        """
-        
+        """        
     async def generate_takedown_notice(self, request: TakedownRequest) -> str:
-        """Generate takedown notice from template"""
-        try:
+        """Generate takedown notice from template"""        try:
             # Select appropriate template
             template_name = self._get_template_name(request.legal_framework, request.infringing_content.platform)
             template = self.jinja_env.get_template(template_name)
@@ -549,8 +517,7 @@ Date: {{ current_date }}
             raise
             
     def _get_template_name(self, framework: LegalFramework, platform: str) -> str:
-        """Get appropriate template name based on framework and platform"""
-        platform_lower = platform.lower()
+        """Get appropriate template name based on framework and platform"""        platform_lower = platform.lower()
         
         if framework == LegalFramework.DMCA_USA:
             if 'youtube' in platform_lower:
@@ -567,8 +534,7 @@ Date: {{ current_date }}
             return 'dmca_standard.html'
 
 class PlatformSubmissionManager:
-    """Platform-specific takedown submission manager"""
-    
+    """Platform-specific takedown submission manager"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(f"{__name__}.SubmissionManager")
@@ -603,8 +569,7 @@ class PlatformSubmissionManager:
         
     async def submit_takedown_request(self, request: TakedownRequest, 
                                     notice_content: str) -> Dict[str, Any]:
-        """Submit takedown request to appropriate platform"""
-        platform = request.infringing_content.platform.lower()
+        """Submit takedown request to appropriate platform"""        platform = request.infringing_content.platform.lower()
         
         if platform in self.platform_configs:
             platform_config = self.platform_configs[platform]
@@ -622,8 +587,7 @@ class PlatformSubmissionManager:
         
     async def _submit_via_email(self, request: TakedownRequest, notice_content: str, 
                               platform_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown notice via email"""
-        try:
+        """Submit takedown notice via email"""        try:
             # Configure email
             smtp_server = self.config.get('smtp_server', 'smtp.gmail.com')
             smtp_port = self.config.get('smtp_port', 587)
@@ -672,8 +636,7 @@ class PlatformSubmissionManager:
             }
             
     async def _attach_evidence_file(self, msg: MIMEMultipart, file_path: str):
-        """Attach evidence file to email"""
-        try:
+        """Attach evidence file to email"""        try:
             async with aiofiles.open(file_path, 'rb') as f:
                 file_data = await f.read()
                 
@@ -690,8 +653,7 @@ class PlatformSubmissionManager:
             
     async def _submit_via_web_form(self, request: TakedownRequest, notice_content: str,
                                  platform_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown notice via web form (automated)"""
-        try:
+        """Submit takedown notice via web form (automated)"""        try:
             # This would require selenium automation for each platform's specific form
             # Implementation would be platform-specific
             
@@ -712,8 +674,7 @@ class PlatformSubmissionManager:
             
     async def _submit_via_api(self, request: TakedownRequest, notice_content: str,
                             platform_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown notice via platform API"""
-        try:
+        """Submit takedown notice via platform API"""        try:
             # Implementation would be platform-specific API integration
             # Most platforms don't provide public APIs for DMCA submissions
             
@@ -733,8 +694,7 @@ class PlatformSubmissionManager:
             
     async def _submit_generic_email(self, request: TakedownRequest, 
                                   notice_content: str) -> Dict[str, Any]:
-        """Submit via generic email when platform-specific method not available"""
-        # Fallback email submission logic
+        """Submit via generic email when platform-specific method not available"""        # Fallback email submission logic
         return {
             'success': False,
             'method': 'generic',
@@ -743,8 +703,7 @@ class PlatformSubmissionManager:
         }
 
 class DMCALegalPipelineManager:
-    """
-    Enterprise DMCA and Legal Pipeline Manager
+    """    Enterprise DMCA and Legal Pipeline Manager
     
     Provides comprehensive automated legal response capabilities for:
     - DMCA takedown notice generation and submission
@@ -753,8 +712,7 @@ class DMCALegalPipelineManager:
     - Response tracking and follow-up automation
     - Counter-notice handling and dispute resolution
     - Legal template management and customization
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -784,8 +742,7 @@ class DMCALegalPipelineManager:
                                     infringing_content: InfringingContent,
                                     legal_framework: LegalFramework = LegalFramework.DMCA_USA,
                                     violation_type: ViolationType = ViolationType.COPYRIGHT_INFRINGEMENT) -> str:
-        """Create new DMCA takedown request"""
-        
+        """Create new DMCA takedown request"""        
         request_id = f"dmca_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{hashlib.md5(infringing_content.infringing_url.encode()).hexdigest()[:8]}"
         
         request = TakedownRequest(
@@ -807,8 +764,7 @@ class DMCALegalPipelineManager:
         
     async def generate_and_submit_takedown(self, request_id: str, 
                                          auto_submit: bool = False) -> Dict[str, Any]:
-        """Generate takedown notice and optionally submit it"""
-        if request_id not in self.active_requests:
+        """Generate takedown notice and optionally submit it"""        if request_id not in self.active_requests:
             raise ValueError(f"Request not found: {request_id}")
             
         request = self.active_requests[request_id]
@@ -845,8 +801,7 @@ class DMCALegalPipelineManager:
             raise
             
     async def track_request_status(self, request_id: str) -> Dict[str, Any]:
-        """Track status of takedown request"""
-        if request_id not in self.active_requests:
+        """Track status of takedown request"""        if request_id not in self.active_requests:
             # Check completed requests
             for completed_request in self.completed_requests:
                 if completed_request.request_id == request_id:
@@ -874,8 +829,7 @@ class DMCALegalPipelineManager:
     async def update_request_status(self, request_id: str, status: TakedownStatus,
                                   platform_response: Optional[str] = None,
                                   tracking_number: Optional[str] = None):
-        """Update status of takedown request"""
-        if request_id not in self.active_requests:
+        """Update status of takedown request"""        if request_id not in self.active_requests:
             raise ValueError(f"Request not found: {request_id}")
             
         request = self.active_requests[request_id]
@@ -903,8 +857,7 @@ class DMCALegalPipelineManager:
         self.logger.info(f"Updated request {request_id} status: {old_status.value} -> {status.value}")
         
     async def handle_counter_notice(self, request_id: str, counter_notice_data: Dict[str, Any]) -> str:
-        """Handle counter-notice received for takedown request"""
-        if request_id not in self.active_requests:
+        """Handle counter-notice received for takedown request"""        if request_id not in self.active_requests:
             raise ValueError(f"Request not found: {request_id}")
             
         request = self.active_requests[request_id]
@@ -930,8 +883,7 @@ class DMCALegalPipelineManager:
         return response_content
         
     async def generate_legal_report(self, time_period: timedelta = None) -> Dict[str, Any]:
-        """Generate comprehensive legal activity report"""
-        if time_period is None:
+        """Generate comprehensive legal activity report"""        if time_period is None:
             time_period = timedelta(days=30)
             
         cutoff_date = datetime.utcnow() - time_period
@@ -980,8 +932,7 @@ class DMCALegalPipelineManager:
         }
         
     def get_system_capabilities(self) -> Dict[str, Any]:
-        """Get legal system capabilities and configuration"""
-        return {
+        """Get legal system capabilities and configuration"""        return {
             'supported_frameworks': [framework.value for framework in LegalFramework],
             'supported_platforms': list(self.submission_manager.platform_configs.keys()),
             'template_languages': ['en'],  # Can be extended
@@ -994,5 +945,4 @@ class DMCALegalPipelineManager:
 dmca_legal_pipeline_manager = DMCALegalPipelineManager()
 
 def get_dmca_pipeline_manager() -> DMCALegalPipelineManager:
-    """Get global DMCA legal pipeline manager instance"""
-    return dmca_legal_pipeline_manager
+    """Get global DMCA legal pipeline manager instance"""    return dmca_legal_pipeline_manager

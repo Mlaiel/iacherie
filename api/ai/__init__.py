@@ -10,8 +10,7 @@ permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will re
 in legal action.
 
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-# Optional imports to handle missing dependencies gracefully
+"""# Optional imports to handle missing dependencies gracefully
 try:
     from .nlp import TextAnalyzer
 except ImportError:

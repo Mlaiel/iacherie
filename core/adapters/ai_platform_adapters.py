@@ -1,5 +1,4 @@
-"""
-AI Platform Adapters - Enterprise AI Service Integration
+"""AI Platform Adapters - Enterprise AI Service Integration
 
 This module provides comprehensive adapter infrastructure for integrating with
 external AI platforms and services including OpenAI, Anthropic, Hugging Face,
@@ -18,7 +17,6 @@ Features:
 - Failover and redundancy management
 - Real-time performance monitoring
 """
-
 import asyncio
 import logging
 from abc import abstractmethod
@@ -42,8 +40,7 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class AIProvider(Enum):
-    """Supported AI service providers."""
-    OPENAI = "openai"
+    """Supported AI service providers."""    OPENAI = "openai"
     ANTHROPIC = "anthropic"
     HUGGING_FACE = "hugging_face"
     AZURE_OPENAI = "azure_openai"
@@ -53,8 +50,7 @@ class AIProvider(Enum):
     CUSTOM = "custom"
 
 class AIModelType(Enum):
-    """AI model categories."""
-    TEXT_GENERATION = "text_generation"
+    """AI model categories."""    TEXT_GENERATION = "text_generation"
     CODE_GENERATION = "code_generation"
     CHAT_COMPLETION = "chat_completion"
     EMBEDDINGS = "embeddings"
@@ -67,8 +63,7 @@ class AIModelType(Enum):
 
 @dataclass
 class AIModelConfig:
-    """Configuration for AI model usage."""
-    provider: AIProvider
+    """Configuration for AI model usage."""    provider: AIProvider
     model_name: str
     model_type: AIModelType
     max_tokens: int = 2048
@@ -83,8 +78,7 @@ class AIModelConfig:
 
 @dataclass
 class AIRequest:
-    """Standardized AI request structure."""
-    prompt: str
+    """Standardized AI request structure."""    prompt: str
     model_type: AIModelType
     max_tokens: Optional[int] = None
     temperature: Optional[float] = None
@@ -95,8 +89,7 @@ class AIRequest:
 
 @dataclass
 class AIResponse:
-    """Standardized AI response structure."""
-    content: str
+    """Standardized AI response structure."""    content: str
     provider: AIProvider
     model_name: str
     usage_tokens: int
@@ -107,8 +100,7 @@ class AIResponse:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class BaseAIAdapter(BasePlatformAdapter):
-    """Base class for AI platform adapters."""
-    
+    """Base class for AI platform adapters."""    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(
             platform_name="ai_platform",
@@ -127,22 +119,18 @@ class BaseAIAdapter(BasePlatformAdapter):
         
     @abstractmethod
     async def generate_text(self, request: AIRequest) -> AIResponse:
-        """Generate text using AI model."""
-        pass
+        """Generate text using AI model."""        pass
     
     @abstractmethod
     async def chat_completion(self, messages: List[Dict[str, str]], **kwargs) -> AIResponse:
-        """Chat completion using conversational AI."""
-        pass
+        """Chat completion using conversational AI."""        pass
     
     @abstractmethod
     async def generate_embeddings(self, texts: List[str]) -> List[List[float]]:
-        """Generate embeddings for texts."""
-        pass
+        """Generate embeddings for texts."""        pass
     
     async def estimate_cost(self, request: AIRequest) -> float:
-        """Estimate cost for AI request."""
-        model_config = self.models_config.get(request.model_type.value)
+        """Estimate cost for AI request."""        model_config = self.models_config.get(request.model_type.value)
         if not model_config:
             return 0.0
         
@@ -153,8 +141,7 @@ class BaseAIAdapter(BasePlatformAdapter):
         return estimated_tokens * model_config.cost_per_token
     
     async def track_usage(self, response: AIResponse):
-        """Track usage statistics."""
-        today = datetime.utcnow().date().isoformat()
+        """Track usage statistics."""        today = datetime.utcnow().date().isoformat()
         if today not in self.usage_tracker:
             self.usage_tracker[today] = {
                 'requests': 0,
@@ -173,8 +160,7 @@ class BaseAIAdapter(BasePlatformAdapter):
         )
 
 class OpenAIAdapter(BaseAIAdapter):
-    """OpenAI API adapter implementation."""
-    
+    """OpenAI API adapter implementation."""    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(credentials, config)
         self.client = openai.AsyncOpenAI(api_key=credentials.api_key)
@@ -204,8 +190,7 @@ class OpenAIAdapter(BaseAIAdapter):
     
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def generate_text(self, request: AIRequest) -> AIResponse:
-        """Generate text using OpenAI models."""
-        start_time = datetime.utcnow()
+        """Generate text using OpenAI models."""        start_time = datetime.utcnow()
         
         try:
             model_config = self.models_config[request.model_type.value]
@@ -245,8 +230,7 @@ class OpenAIAdapter(BaseAIAdapter):
     
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def chat_completion(self, messages: List[Dict[str, str]], **kwargs) -> AIResponse:
-        """Chat completion using OpenAI models."""
-        start_time = datetime.utcnow()
+        """Chat completion using OpenAI models."""        start_time = datetime.utcnow()
         
         try:
             model_config = self.models_config[AIModelType.CHAT_COMPLETION.value]
@@ -286,8 +270,7 @@ class OpenAIAdapter(BaseAIAdapter):
     
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def generate_embeddings(self, texts: List[str]) -> List[List[float]]:
-        """Generate embeddings using OpenAI models."""
-        try:
+        """Generate embeddings using OpenAI models."""        try:
             response = await self.client.embeddings.create(
                 model="text-embedding-ada-002",
                 input=texts
@@ -300,8 +283,7 @@ class OpenAIAdapter(BaseAIAdapter):
             raise PlatformError(f"OpenAI API error: {str(e)}")
 
 class AnthropicAdapter(BaseAIAdapter):
-    """Anthropic Claude API adapter implementation."""
-    
+    """Anthropic Claude API adapter implementation."""    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(credentials, config)
         self.client = anthropic.AsyncAnthropic(api_key=credentials.api_key)
@@ -324,8 +306,7 @@ class AnthropicAdapter(BaseAIAdapter):
     
     @retry(stop=stop_after_attempt(3), wait=wait_exponential(multiplier=1, min=4, max=10))
     async def generate_text(self, request: AIRequest) -> AIResponse:
-        """Generate text using Anthropic models."""
-        start_time = datetime.utcnow()
+        """Generate text using Anthropic models."""        start_time = datetime.utcnow()
         
         try:
             model_config = self.models_config[request.model_type.value]
@@ -363,8 +344,7 @@ class AnthropicAdapter(BaseAIAdapter):
             raise PlatformError(f"Anthropic API error: {str(e)}")
     
     async def chat_completion(self, messages: List[Dict[str, str]], **kwargs) -> AIResponse:
-        """Chat completion using Anthropic models."""
-        # Convert messages to Anthropic format
+        """Chat completion using Anthropic models."""        # Convert messages to Anthropic format
         anthropic_messages = []
         for msg in messages:
             anthropic_messages.append({
@@ -408,8 +388,7 @@ class AnthropicAdapter(BaseAIAdapter):
             raise PlatformError(f"Anthropic API error: {str(e)}")
     
     async def generate_embeddings(self, texts: List[str]) -> List[List[float]]:
-        """Anthropic doesn't provide embeddings API - fallback to other providers."""
-        # Since Anthropic doesn't provide embeddings, we'll use a simple fallback
+        """Anthropic doesn't provide embeddings API - fallback to other providers."""        # Since Anthropic doesn't provide embeddings, we'll use a simple fallback
         # In production, this would delegate to a different embeddings provider
         logger.warning("Anthropic doesn't provide embeddings API, returning empty embeddings")
         
@@ -418,8 +397,7 @@ class AnthropicAdapter(BaseAIAdapter):
         return [[0.0] * embedding_dimension for _ in texts]
 
 class HuggingFaceAdapter(BaseAIAdapter):
-    """Hugging Face API adapter implementation."""
-    
+    """Hugging Face API adapter implementation."""    
     def __init__(self, credentials: AdapterCredentials, config: Dict[str, Any]):
         super().__init__(credentials, config)
         self.api_token = credentials.api_key
@@ -449,8 +427,7 @@ class HuggingFaceAdapter(BaseAIAdapter):
         }
     
     async def generate_text(self, request: AIRequest) -> AIResponse:
-        """Generate text using Hugging Face models."""
-        start_time = datetime.utcnow()
+        """Generate text using Hugging Face models."""        start_time = datetime.utcnow()
         
         try:
             model_config = self.models_config[request.model_type.value]
@@ -496,8 +473,7 @@ class HuggingFaceAdapter(BaseAIAdapter):
             raise PlatformError(f"Hugging Face API error: {str(e)}")
     
     async def chat_completion(self, messages: List[Dict[str, str]], **kwargs) -> AIResponse:
-        """Chat completion using Hugging Face models."""
-        # Convert messages to a single prompt
+        """Chat completion using Hugging Face models."""        # Convert messages to a single prompt
         prompt = ""
         for msg in messages:
             prompt += f"{msg['role']}: {msg['content']}\n"
@@ -512,8 +488,7 @@ class HuggingFaceAdapter(BaseAIAdapter):
         return await self.generate_text(request)
     
     async def generate_embeddings(self, texts: List[str]) -> List[List[float]]:
-        """Generate embeddings using Hugging Face models."""
-        try:
+        """Generate embeddings using Hugging Face models."""        try:
             model_config = self.models_config[AIModelType.EMBEDDINGS.value]
             
             headers = {"Authorization": f"Bearer {self.api_token}"}
@@ -542,8 +517,7 @@ class HuggingFaceAdapter(BaseAIAdapter):
             raise PlatformError(f"Hugging Face API error: {str(e)}")
 
 class AIAdapterFactory:
-    """Factory for creating AI platform adapters."""
-    
+    """Factory for creating AI platform adapters."""    
     _adapters = {
         AIProvider.OPENAI: OpenAIAdapter,
         AIProvider.ANTHROPIC: AnthropicAdapter,
@@ -557,8 +531,7 @@ class AIAdapterFactory:
         credentials: AdapterCredentials, 
         config: Dict[str, Any]
     ) -> BaseAIAdapter:
-        """Create an AI adapter instance."""
-        adapter_class = cls._adapters.get(provider)
+        """Create an AI adapter instance."""        adapter_class = cls._adapters.get(provider)
         if not adapter_class:
             raise ValueError(f"Unsupported AI provider: {provider}")
         
@@ -566,25 +539,21 @@ class AIAdapterFactory:
     
     @classmethod
     def get_supported_providers(cls) -> List[AIProvider]:
-        """Get list of supported AI providers."""
-        return list(cls._adapters.keys())
+        """Get list of supported AI providers."""        return list(cls._adapters.keys())
 
 class AIAdapterManager:
-    """Manager for AI adapter instances and intelligent routing."""
-    
+    """Manager for AI adapter instances and intelligent routing."""    
     def __init__(self):
         self.adapters: Dict[AIProvider, BaseAIAdapter] = {}
         self.default_provider = AIProvider.OPENAI
         self.fallback_providers = [AIProvider.ANTHROPIC, AIProvider.HUGGING_FACE]
     
     def register_adapter(self, provider: AIProvider, adapter: BaseAIAdapter):
-        """Register an AI adapter."""
-        self.adapters[provider] = adapter
+        """Register an AI adapter."""        self.adapters[provider] = adapter
         logger.info(f"Registered AI adapter for provider: {provider.value}")
     
     async def select_best_provider(self, request: AIRequest) -> AIProvider:
-        """Select the best provider based on request requirements and current load."""
-        # Check if specific provider is requested
+        """Select the best provider based on request requirements and current load."""        # Check if specific provider is requested
         if hasattr(request, 'preferred_provider') and request.preferred_provider in self.adapters:
             return request.preferred_provider
         
@@ -605,8 +574,7 @@ class AIAdapterManager:
         return available_providers[0][0]
     
     async def process_request(self, request: AIRequest) -> AIResponse:
-        """Process AI request with intelligent provider selection and fallback."""
-        provider = await self.select_best_provider(request)
+        """Process AI request with intelligent provider selection and fallback."""        provider = await self.select_best_provider(request)
         
         try:
             adapter = self.adapters[provider]
@@ -638,8 +606,7 @@ class AIAdapterManager:
             raise PlatformError(f"All AI providers failed for request: {str(e)}")
     
     async def get_usage_statistics(self) -> Dict[str, Any]:
-        """Get usage statistics across all providers."""
-        stats = {}
+        """Get usage statistics across all providers."""        stats = {}
         for provider, adapter in self.adapters.items():
             stats[provider.value] = {
                 'usage_tracker': adapter.usage_tracker,

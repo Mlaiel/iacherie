@@ -1,5 +1,4 @@
-"""
-Licensing Engine - Automated License Management and Enforcement
+"""Licensing Engine - Automated License Management and Enforcement
 
 Comprehensive licensing system for content rights management, automated license generation,
 terms enforcement, and revenue tracking for the IA Influencer Agent platform.
@@ -7,7 +6,6 @@ terms enforcement, and revenue tracking for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -22,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """Types of content licenses."""
-    ROYALTY_FREE = "royalty_free"
+    """Types of content licenses."""    ROYALTY_FREE = "royalty_free"
     RIGHTS_MANAGED = "rights_managed"
     CREATIVE_COMMONS = "creative_commons"
     EXCLUSIVE = "exclusive"
@@ -34,8 +31,7 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License status enumeration."""
-    ACTIVE = "active"
+    """License status enumeration."""    ACTIVE = "active"
     EXPIRED = "expired"
     SUSPENDED = "suspended"
     REVOKED = "revoked"
@@ -44,8 +40,7 @@ class LicenseStatus(Enum):
 
 
 class UsageType(Enum):
-    """Types of content usage."""
-    COMMERCIAL = "commercial"
+    """Types of content usage."""    COMMERCIAL = "commercial"
     EDITORIAL = "editorial"
     EDUCATIONAL = "educational"
     PERSONAL = "personal"
@@ -56,8 +51,7 @@ class UsageType(Enum):
 
 
 class LicenseScope(Enum):
-    """Geographic scope of license."""
-    WORLDWIDE = "worldwide"
+    """Geographic scope of license."""    WORLDWIDE = "worldwide"
     REGIONAL = "regional"
     NATIONAL = "national"
     LOCAL = "local"
@@ -66,8 +60,7 @@ class LicenseScope(Enum):
 
 @dataclass
 class LicenseTerms:
-    """License terms and conditions."""
-    usage_types: List[UsageType]
+    """License terms and conditions."""    usage_types: List[UsageType]
     geographic_scope: LicenseScope
     duration_days: Optional[int]
     max_uses: Optional[int]
@@ -83,8 +76,7 @@ class LicenseTerms:
 
 @dataclass
 class PricingModel:
-    """License pricing configuration."""
-    base_price: Decimal
+    """License pricing configuration."""    base_price: Decimal
     currency: str
     pricing_type: str  # fixed, tier, usage_based, revenue_share
     usage_tiers: Optional[Dict[str, Decimal]]
@@ -95,8 +87,7 @@ class PricingModel:
 
 @dataclass
 class License:
-    """License record structure."""
-    license_id: str
+    """License record structure."""    license_id: str
     content_id: str
     licensor_id: str
     licensee_id: str
@@ -116,8 +107,7 @@ class License:
 
 @dataclass
 class LicenseUsage:
-    """License usage tracking."""
-    usage_id: str
+    """License usage tracking."""    usage_id: str
     license_id: str
     user_id: str
     usage_type: UsageType
@@ -130,21 +120,17 @@ class LicenseUsage:
 
 
 class LicensingEngine:
-    """
-    Comprehensive licensing engine for content rights management.
+    """    Comprehensive licensing engine for content rights management.
     
     Handles license generation, enforcement, usage tracking,
     and automated revenue distribution.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the Licensing Engine.
+        """        Initialize the Licensing Engine.
         
         Args:
             config: Configuration dictionary with database connections
-        """
-        self.config = config
+        """        self.config = config
         self.db_config = config.get("database", {})
         self.licensing_config = config.get("licensing", {})
         
@@ -173,8 +159,7 @@ class LicensingEngine:
         duration_days: Optional[int] = None,
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Create a new content license with specified terms.
+        """        Create a new content license with specified terms.
         
         Args:
             content_id: ID of content being licensed
@@ -188,8 +173,7 @@ class LicensingEngine:
             
         Returns:
             License creation results
-        """
-        try:
+        """        try:
             # Generate unique license ID
             license_id = f"lic_{uuid.uuid4().hex[:12]}"
             
@@ -277,8 +261,7 @@ class LicensingEngine:
         usage_type: str = "commercial",
         platform: str = "web"
     ) -> Dict[str, Any]:
-        """
-        Verify licensing status for content usage.
+        """        Verify licensing status for content usage.
         
         Args:
             content_id: ID of content to check
@@ -288,8 +271,7 @@ class LicensingEngine:
             
         Returns:
             Licensing verification results
-        """
-        try:
+        """        try:
             verification_result = {
                 "content_id": content_id,
                 "user_id": user_id,
@@ -367,8 +349,7 @@ class LicensingEngine:
         revenue_generated: Optional[float] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Track content usage under a license.
+        """        Track content usage under a license.
         
         Args:
             license_id: ID of license being used
@@ -382,8 +363,7 @@ class LicensingEngine:
             
         Returns:
             Usage tracking results
-        """
-        try:
+        """        try:
             # Verify license exists and is valid
             if license_id not in self.licenses:
                 raise ValueError(f"License {license_id} not found")
@@ -471,8 +451,7 @@ class LicensingEngine:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Get licensing summary for reporting.
+        """        Get licensing summary for reporting.
         
         Args:
             user_id: Optional user ID to filter by
@@ -481,8 +460,7 @@ class LicensingEngine:
             
         Returns:
             Licensing summary
-        """
-        try:
+        """        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -586,8 +564,7 @@ class LicensingEngine:
         revoked_by: str,
         immediate: bool = False
     ) -> Dict[str, Any]:
-        """
-        Revoke a license with specified reason.
+        """        Revoke a license with specified reason.
         
         Args:
             license_id: ID of license to revoke
@@ -597,8 +574,7 @@ class LicensingEngine:
             
         Returns:
             License revocation results
-        """
-        try:
+        """        try:
             if license_id not in self.licenses:
                 raise ValueError(f"License {license_id} not found")
             
@@ -646,8 +622,7 @@ class LicensingEngine:
     
     # Private helper methods
     def _initialize_license_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize default license templates."""
-        return {
+        """Initialize default license templates."""        return {
             "royalty_free": {
                 "terms": {
                     "attribution_required": False,
@@ -694,8 +669,7 @@ class LicensingEngine:
         terms: Dict[str, Any], 
         custom_terms: Optional[Dict[str, Any]]
     ) -> LicenseTerms:
-        """Parse license terms from configuration."""
-        # Merge custom terms with defaults
+        """Parse license terms from configuration."""        # Merge custom terms with defaults
         final_terms = {**terms}
         if custom_terms:
             final_terms.update(custom_terms)
@@ -716,8 +690,7 @@ class LicensingEngine:
         )
     
     def _parse_pricing_model(self, pricing: Dict[str, Any]) -> PricingModel:
-        """Parse pricing model from configuration."""
-        return PricingModel(
+        """Parse pricing model from configuration."""        return PricingModel(
             base_price=Decimal(str(pricing.get("base_price", "0.00"))),
             currency=pricing.get("currency", "EUR"),
             pricing_type=pricing.get("pricing_type", "fixed"),
@@ -728,8 +701,7 @@ class LicensingEngine:
         )
     
     def _generate_terms_summary(self, terms: LicenseTerms) -> Dict[str, Any]:
-        """Generate human-readable terms summary."""
-        return {
+        """Generate human-readable terms summary."""        return {
             "usage_types": [ut.value for ut in terms.usage_types],
             "geographic_scope": terms.geographic_scope.value,
             "duration": f"{terms.duration_days} days" if terms.duration_days else "Unlimited",
@@ -740,8 +712,7 @@ class LicensingEngine:
         }
     
     async def _find_user_licenses(self, content_id: str, user_id: str) -> List[License]:
-        """Find active licenses for user and content."""
-        user_licenses = []
+        """Find active licenses for user and content."""        user_licenses = []
         
         for license_record in self.licenses.values():
             if (license_record.content_id == content_id and 
@@ -751,8 +722,7 @@ class LicensingEngine:
         return user_licenses
     
     def _is_license_valid(self, license_record: License) -> bool:
-        """Check if license is currently valid."""
-        # Check status
+        """Check if license is currently valid."""        # Check status
         if license_record.status != LicenseStatus.ACTIVE:
             return False
         
@@ -779,8 +749,7 @@ class LicensingEngine:
         usage_type: str,
         platform: str
     ) -> Dict[str, Any]:
-        """Check if usage is permitted under available licenses."""
-        usage_permitted = False
+        """Check if usage is permitted under available licenses."""        usage_permitted = False
         restrictions = []
         
         for license_record in licenses:
@@ -810,16 +779,14 @@ class LicensingEngine:
         }
     
     async def _check_public_domain_status(self, content_id: str) -> Dict[str, Any]:
-        """Check if content is in public domain."""
-        # Placeholder for public domain checking logic
+        """Check if content is in public domain."""        # Placeholder for public domain checking logic
         return {
             "is_public_domain": False,
             "restrictions": []
         }
     
     async def _check_usage_limits(self, license_record: License) -> Dict[str, Any]:
-        """Check usage limits for license."""
-        limits_status = {
+        """Check usage limits for license."""        limits_status = {
             "within_limits": True,
             "approaching_limit": False,
             "limit_exceeded": False,
@@ -856,8 +823,7 @@ class LicensingEngine:
         start_date: datetime,
         end_date: datetime
     ) -> List[License]:
-        """Filter licenses by criteria."""
-        filtered = []
+        """Filter licenses by criteria."""        filtered = []
         
         for license_record in self.licenses.values():
             # Filter by user (as licensor or licensee)
@@ -882,8 +848,7 @@ class LicensingEngine:
         start_date: datetime,
         end_date: datetime
     ) -> List[LicenseUsage]:
-        """Filter usage records by criteria."""
-        filtered = []
+        """Filter usage records by criteria."""        filtered = []
         
         for usage_record in self.usage_records.values():
             # Filter by user
@@ -905,8 +870,7 @@ class LicensingEngine:
         license_record: License, 
         licensee_id: str
     ) -> Dict[str, Any]:
-        """Process payment for license."""
-        if license_record.pricing.base_price > 0:
+        """Process payment for license."""        if license_record.pricing.base_price > 0:
             return {
                 "payment_required": True,
                 "status": "pending",
@@ -916,16 +880,14 @@ class LicensingEngine:
         return {"payment_required": False, "status": "completed"}
     
     async def _setup_usage_monitoring(self, license_record: License) -> None:
-        """Set up usage monitoring for license."""
-        logger.info(f"Setting up usage monitoring for license {license_record.license_id}")
+        """Set up usage monitoring for license."""        logger.info(f"Setting up usage monitoring for license {license_record.license_id}")
     
     async def _process_revenue_sharing(
         self, 
         license_record: License, 
         revenue: Decimal
     ) -> Dict[str, Any]:
-        """Process revenue sharing for license usage."""
-        if license_record.pricing.revenue_share_percentage:
+        """Process revenue sharing for license usage."""        if license_record.pricing.revenue_share_percentage:
             share_amount = revenue * Decimal(str(license_record.pricing.revenue_share_percentage / 100))
             return {
                 "revenue_shared": True,
@@ -936,18 +898,14 @@ class LicensingEngine:
         return {"revenue_shared": False}
     
     async def _notify_license_revocation(self, license_record: License, reason: str) -> None:
-        """Notify licensee of license revocation."""
-        logger.info(f"Notifying licensee {license_record.licensee_id} of license revocation")
+        """Notify licensee of license revocation."""        logger.info(f"Notifying licensee {license_record.licensee_id} of license revocation")
     
     # Logging methods
     async def _log_license_creation(self, license_record: License, result: Dict[str, Any]) -> None:
-        """Log license creation."""
-        logger.info(f"License created: {license_record.license_id} for content {license_record.content_id}")
+        """Log license creation."""        logger.info(f"License created: {license_record.license_id} for content {license_record.content_id}")
     
     async def _log_usage_tracking(self, usage_record: LicenseUsage, result: Dict[str, Any]) -> None:
-        """Log usage tracking."""
-        logger.info(f"Usage tracked: {usage_record.usage_id} for license {usage_record.license_id}")
+        """Log usage tracking."""        logger.info(f"Usage tracked: {usage_record.usage_id} for license {usage_record.license_id}")
     
     async def _log_license_revocation(self, license_record: License, result: Dict[str, Any]) -> None:
-        """Log license revocation."""
-        logger.info(f"License revoked: {license_record.license_id} - Reason: {result['reason']}")
+        """Log license revocation."""        logger.info(f"License revoked: {license_record.license_id} - Reason: {result['reason']}")

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-💰 REVENUE OPTIMIZATION ENGINE - ENTERPRISE AI-POWERED MONETIZATION SYSTEM
+"""💰 REVENUE OPTIMIZATION ENGINE - ENTERPRISE AI-POWERED MONETIZATION SYSTEM
 ============================================================================
 
 Ultra-advanced revenue optimization and monetization intelligence system for
@@ -51,7 +50,6 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import json
 import logging
@@ -106,8 +104,7 @@ from backend.utils.exceptions import (
 logger = logging.getLogger(__name__)
 
 class RevenueStream(Enum):
-    """Types de flux de revenus."""
-    ADVERTISING = "advertising"
+    """Types de flux de revenus."""    ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     MERCHANDISE = "merchandise"
     SUBSCRIPTION = "subscription"
@@ -119,8 +116,7 @@ class RevenueStream(Enum):
     ROYALTIES = "royalties"
 
 class OptimizationGoal(Enum):
-    """Objectifs d'optimisation."""
-    MAXIMIZE_REVENUE = "maximize_revenue"
+    """Objectifs d'optimisation."""    MAXIMIZE_REVENUE = "maximize_revenue"
     IMPROVE_ROI = "improve_roi"
     AUDIENCE_GROWTH = "audience_growth"
     ENGAGEMENT_QUALITY = "engagement_quality"
@@ -128,16 +124,14 @@ class OptimizationGoal(Enum):
     LONG_TERM_VALUE = "long_term_value"
 
 class AudienceSegment(Enum):
-    """Segments d'audience par valeur."""
-    HIGH_VALUE = "high_value"        # Top 10% spenders
+    """Segments d'audience par valeur."""    HIGH_VALUE = "high_value"        # Top 10% spenders
     MEDIUM_VALUE = "medium_value"    # 20-90% spenders
     LOW_VALUE = "low_value"          # Bottom 20% spenders
     POTENTIAL_HIGH = "potential_high" # Growth potential
     CHURNING = "churning"            # At risk of leaving
 
 class RevenueOptimizationEngine:
-    """
-    💰 MOTEUR D'OPTIMISATION DES REVENUS ULTRA-AVANCÉ
+    """    💰 MOTEUR D'OPTIMISATION DES REVENUS ULTRA-AVANCÉ
     
     Système d'intelligence artificielle pour maximiser les revenus
     des créateurs de contenu à travers l'analyse prédictive et
@@ -150,11 +144,9 @@ class RevenueOptimizationEngine:
     - Multi-plateforme : 15+ revenue sources intégrées
     - ROI Intelligence : Investment recommendation engine
     - Automation : Automated revenue stream management
-    """
-    
+    """    
     def __init__(self):
-        """Initialisation du moteur d'optimisation des revenus."""
-        self.settings = get_settings()
+        """Initialisation du moteur d'optimisation des revenus."""        self.settings = get_settings()
         self.redis_client = None
         self.elasticsearch_client = None
         self.metrics = get_metrics_collector()
@@ -207,8 +199,7 @@ class RevenueOptimizationEngine:
         self._initialize_ml_models()
     
     async def initialize(self):
-        """Initialisation asynchrone des connexions et modèles."""
-        try:
+        """Initialisation asynchrone des connexions et modèles."""        try:
             # Database connections
             self.redis_client = await get_redis_client()
             self.elasticsearch_client = AsyncElasticsearch([
@@ -229,8 +220,7 @@ class RevenueOptimizationEngine:
             raise RevenueOptimizationError(f"Initialization failed: {e}")
     
     def _initialize_ml_models(self):
-        """Initialisation des modèles ML pour l'optimisation."""
-        try:
+        """Initialisation des modèles ML pour l'optimisation."""        try:
             # Revenue Prediction Model (XGBoost)
             self.models['revenue_predictor'] = xgb.XGBRegressor(
                 n_estimators=100,
@@ -274,8 +264,7 @@ class RevenueOptimizationEngine:
         platform: str,
         timeframe: str = '30d'
     ) -> Dict[str, Any]:
-        """
-        💰 ANALYSE DU POTENTIEL DE REVENUS
+        """        💰 ANALYSE DU POTENTIEL DE REVENUS
         
         Analyse complète du potentiel de génération de revenus
         pour un contenu spécifique sur une plateforme donnée.
@@ -288,8 +277,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             Dict contenant l'analyse détaillée du potentiel
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Get user historical performance
@@ -363,8 +351,7 @@ class RevenueOptimizationEngine:
         platform: str,
         timeframe: str
     ) -> pd.DataFrame:
-        """Récupère les données historiques de performance."""
-        try:
+        """Récupère les données historiques de performance."""        try:
             # Calculate time range
             days = {'7d': 7, '30d': 30, '90d': 90, '365d': 365}.get(timeframe, 30)
             start_date = datetime.utcnow() - timedelta(days=days)
@@ -417,8 +404,7 @@ class RevenueOptimizationEngine:
             return self._generate_baseline_data(platform)
     
     def _extract_content_features(self, content_data: Dict[str, Any], platform: str) -> Dict[str, Any]:
-        """Extrait les caractéristiques du contenu pour l'analyse."""
-        features = {
+        """Extrait les caractéristiques du contenu pour l'analyse."""        features = {
             'content_type': content_data.get('type', 'unknown'),
             'duration': content_data.get('duration', 0),
             'quality_score': content_data.get('quality_score', 0.5),
@@ -439,8 +425,7 @@ class RevenueOptimizationEngine:
         content_features: Dict[str, Any],
         platform: str
     ) -> Dict[str, Any]:
-        """Prédit le potentiel de revenus utilisant les modèles ML."""
-        try:
+        """Prédit le potentiel de revenus utilisant les modèles ML."""        try:
             # Prepare feature matrix
             feature_matrix = self._prepare_feature_matrix(historical_data, content_features, platform)
             
@@ -498,8 +483,7 @@ class RevenueOptimizationEngine:
         content_features: Dict[str, Any],
         platform: str
     ) -> np.ndarray:
-        """Prépare la matrice de caractéristiques pour le ML."""
-        features = []
+        """Prépare la matrice de caractéristiques pour le ML."""        features = []
         
         for _, row in historical_data.iterrows():
             feature_vector = [
@@ -519,8 +503,7 @@ class RevenueOptimizationEngine:
         return np.array(features)
     
     async def _analyze_audience_value(self, user_id: int, platform: str) -> Dict[str, Any]:
-        """Analyse la valeur et segmentation de l'audience."""
-        try:
+        """Analyse la valeur et segmentation de l'audience."""        try:
             # Get audience data
             audience_query = {
                 "query": {
@@ -602,8 +585,7 @@ class RevenueOptimizationEngine:
         audience_analysis: Dict[str, Any],
         platform: str
     ) -> List[Dict[str, Any]]:
-        """Génère des recommandations d'optimisation personnalisées."""
-        recommendations = []
+        """Génère des recommandations d'optimisation personnalisées."""        recommendations = []
         
         try:
             # Content optimization recommendations
@@ -676,8 +658,7 @@ class RevenueOptimizationEngine:
         revenue_prediction: Dict[str, Any],
         audience_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Génère des recommandations spécifiques à la plateforme."""
-        recommendations = []
+        """Génère des recommandations spécifiques à la plateforme."""        recommendations = []
         
         if platform == 'youtube':
             recommendations.append({
@@ -731,8 +712,7 @@ class RevenueOptimizationEngine:
         revenue_prediction: Dict[str, Any],
         production_cost: float
     ) -> Dict[str, Any]:
-        """Calcule les projections de ROI."""
-        predicted_revenue = revenue_prediction.get('revenue_30d', 0)
+        """Calcule les projections de ROI."""        predicted_revenue = revenue_prediction.get('revenue_30d', 0)
         
         if production_cost <= 0:
             production_cost = predicted_revenue * 0.3  # Assume 30% cost ratio
@@ -755,13 +735,11 @@ class RevenueOptimizationEngine:
         current_price: float,
         target_audience: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        💲 OPTIMISATION STRATÉGIQUE DES PRIX
+        """        💲 OPTIMISATION STRATÉGIQUE DES PRIX
         
         Optimise les prix des produits/services en fonction de l'audience
         et des performances du marché.
-        """
-        try:
+        """        try:
             # Get market data for similar products
             market_data = await self._get_market_pricing_data(product_type)
             
@@ -813,13 +791,11 @@ class RevenueOptimizationEngine:
         platform: str,
         forecast_period: int = 90  # days
     ) -> Dict[str, Any]:
-        """
-        📊 PRÉVISION AVANCÉE DES REVENUS
+        """        📊 PRÉVISION AVANCÉE DES REVENUS
         
         Génère des prévisions de revenus détaillées utilisant
         l'analyse de séries temporelles et le machine learning.
-        """
-        try:
+        """        try:
             # Get comprehensive historical data
             historical_data = await self._get_comprehensive_historical_data(
                 user_id, platform, forecast_period * 2
@@ -870,8 +846,7 @@ class RevenueOptimizationEngine:
             raise PredictionError(f"Revenue forecasting failed: {e}")
     
     def _apply_prophet_forecasting(self, historical_data: pd.DataFrame, periods: int) -> pd.DataFrame:
-        """Applique Prophet pour les prévisions de séries temporelles."""
-        try:
+        """Applique Prophet pour les prévisions de séries temporelles."""        try:
             # Prepare data for Prophet
             prophet_data = historical_data[['timestamp', 'revenue']].rename(
                 columns={'timestamp': 'ds', 'revenue': 'y'}
@@ -907,13 +882,11 @@ class RevenueOptimizationEngine:
         target_revenue: float,
         timeframe_months: int = 12
     ) -> Dict[str, Any]:
-        """
-        🗺️ CRÉATION DE ROADMAP DE MONÉTISATION
+        """        🗺️ CRÉATION DE ROADMAP DE MONÉTISATION
         
         Crée un plan détaillé pour atteindre les objectifs de revenus
         avec des étapes concrètes et des jalons mesurables.
-        """
-        try:
+        """        try:
             # Analyze current performance
             current_performance = await self._analyze_current_monetization(user_id)
             
@@ -966,8 +939,7 @@ class RevenueOptimizationEngine:
     
     # Helper methods for calculations and analysis
     def _calculate_seasonal_relevance(self, content_data: Dict[str, Any]) -> float:
-        """Calcule la pertinence saisonnière du contenu."""
-        current_month = datetime.utcnow().month
+        """Calcule la pertinence saisonnière du contenu."""        current_month = datetime.utcnow().month
         content_tags = content_data.get('hashtags', [])
         
         seasonal_keywords = {
@@ -987,8 +959,7 @@ class RevenueOptimizationEngine:
         return min(relevance_score, 1.0)
     
     def _analyze_hashtag_performance(self, hashtags: List[str]) -> float:
-        """Analyse la performance des hashtags."""
-        if not hashtags:
+        """Analyse la performance des hashtags."""        if not hashtags:
             return 0.3
         
         # Simplified hashtag performance analysis
@@ -1005,8 +976,7 @@ class RevenueOptimizationEngine:
         return min(performance_score / len(hashtags), 1.0)
     
     def _calculate_optimal_time_score(self, posting_time: Optional[str]) -> float:
-        """Calcule le score du timing de publication."""
-        if not posting_time:
+        """Calcule le score du timing de publication."""        if not posting_time:
             return 0.5
         
         try:
@@ -1025,8 +995,7 @@ class RevenueOptimizationEngine:
             return 0.5
     
     def _assess_competition_level(self, content_data: Dict[str, Any], platform: str) -> float:
-        """Évalue le niveau de concurrence."""
-        # Simplified competition assessment
+        """Évalue le niveau de concurrence."""        # Simplified competition assessment
         content_type = content_data.get('type', 'unknown')
         
         competition_levels = {
@@ -1040,8 +1009,7 @@ class RevenueOptimizationEngine:
         return competition_levels.get(content_type, 0.6)
     
     def _calculate_viral_potential(self, content_data: Dict[str, Any]) -> float:
-        """Calcule le potentiel viral du contenu."""
-        factors = [
+        """Calcule le potentiel viral du contenu."""        factors = [
             content_data.get('trending_score', 0) * 0.3,
             content_data.get('quality_score', 0.5) * 0.2,
             (1 - self._assess_competition_level(content_data, '')) * 0.2,
@@ -1051,8 +1019,7 @@ class RevenueOptimizationEngine:
         return sum(factors)
     
     def _assess_monetization_readiness(self, content_data: Dict[str, Any], platform: str) -> float:
-        """Évalue la maturité de monétisation du contenu."""
-        readiness_factors = [
+        """Évalue la maturité de monétisation du contenu."""        readiness_factors = [
             content_data.get('quality_score', 0.5) * 0.4,
             (content_data.get('duration', 0) > 30) * 0.2,  # Sufficient duration
             bool(content_data.get('call_to_action')) * 0.2,
@@ -1065,16 +1032,13 @@ class RevenueOptimizationEngine:
     # (Implementation continues with remaining utility methods)
     
     async def _load_historical_data(self):
-        """Charge les données historiques pour l'entraînement."""
-        logger.info("Loading historical data for model training")
+        """Charge les données historiques pour l'entraînement."""        logger.info("Loading historical data for model training")
     
     async def _start_revenue_tracking(self):
-        """Démarre le suivi des revenus en temps réel."""
-        logger.info("Starting real-time revenue tracking")
+        """Démarre le suivi des revenus en temps réel."""        logger.info("Starting real-time revenue tracking")
     
     def _generate_baseline_data(self, platform: str) -> pd.DataFrame:
-        """Génère des données de base pour nouveaux utilisateurs."""
-        dates = pd.date_range(start='2024-01-01', periods=30, freq='D')
+        """Génère des données de base pour nouveaux utilisateurs."""        dates = pd.date_range(start='2024-01-01', periods=30, freq='D')
         return pd.DataFrame({
             'timestamp': dates,
             'views': np.random.randint(100, 1000, 30),
@@ -1088,8 +1052,7 @@ class RevenueOptimizationEngine:
     
     # Storage methods
     async def _store_revenue_analysis(self, analysis: Dict[str, Any]):
-        """Stocke l'analyse de revenus."""
-        try:
+        """Stocke l'analyse de revenus."""        try:
             await self.elasticsearch_client.index(
                 index="revenue_analyses",
                 id=str(uuid.uuid4()),
@@ -1099,8 +1062,7 @@ class RevenueOptimizationEngine:
             logger.error(f"❌ Failed to store revenue analysis: {e}")
     
     async def _store_pricing_analysis(self, user_id: int, pricing: Dict[str, Any]):
-        """Stocke l'analyse de prix."""
-        try:
+        """Stocke l'analyse de prix."""        try:
             await self.elasticsearch_client.index(
                 index="pricing_analyses",
                 id=f"{user_id}_{int(time.time())}",
@@ -1110,8 +1072,7 @@ class RevenueOptimizationEngine:
             logger.error(f"❌ Failed to store pricing analysis: {e}")
     
     async def _store_revenue_forecast(self, forecast: Dict[str, Any]):
-        """Stocke les prévisions de revenus."""
-        try:
+        """Stocke les prévisions de revenus."""        try:
             await self.elasticsearch_client.index(
                 index="revenue_forecasts",
                 id=str(uuid.uuid4()),
@@ -1121,8 +1082,7 @@ class RevenueOptimizationEngine:
             logger.error(f"❌ Failed to store revenue forecast: {e}")
     
     async def _store_monetization_roadmap(self, roadmap: Dict[str, Any]):
-        """Stocke la roadmap de monétisation."""
-        try:
+        """Stocke la roadmap de monétisation."""        try:
             await self.elasticsearch_client.index(
                 index="monetization_roadmaps",
                 id=f"{roadmap['user_id']}_{int(time.time())}",
@@ -1133,8 +1093,7 @@ class RevenueOptimizationEngine:
     
     # Placeholder methods for complex calculations
     def _calculate_baseline_prediction(self, features: Dict[str, Any], platform: str) -> Dict[str, Any]:
-        """Calcul de prédiction de base."""
-        base_revenue = self.platform_configs.get(platform, {}).get('rpm_baseline', 2.0) * 100
+        """Calcul de prédiction de base."""        base_revenue = self.platform_configs.get(platform, {}).get('rpm_baseline', 2.0) * 100
         return {
             'revenue_30d': base_revenue,
             'revenue_90d': base_revenue * 3,
@@ -1146,8 +1105,7 @@ class RevenueOptimizationEngine:
         }
     
     def _calculate_growth_factor(self, data: pd.DataFrame) -> float:
-        """Calcule le facteur de croissance."""
-        if len(data) < 7:
+        """Calcule le facteur de croissance."""        if len(data) < 7:
             return 1.0
         
         recent_avg = data['revenue'].tail(7).mean()
@@ -1158,8 +1116,7 @@ class RevenueOptimizationEngine:
         return 1.0
     
     def _calculate_prediction_confidence(self, data: pd.DataFrame) -> float:
-        """Calcule la confiance de prédiction."""
-        if len(data) < 10:
+        """Calcule la confiance de prédiction."""        if len(data) < 10:
             return 0.6
         
         variance = data['revenue'].var()
@@ -1173,23 +1130,20 @@ class RevenueOptimizationEngine:
         return 0.6
     
     def _identify_peak_period(self, data: pd.DataFrame) -> str:
-        """Identifie la période de pic."""
-        if len(data) < 7:
+        """Identifie la période de pic."""        if len(data) < 7:
             return 'afternoon'
         
         # Simplified peak identification
         return 'afternoon'  # Would implement actual time analysis
     
     def _get_model_accuracy(self) -> float:
-        """Retourne la précision du modèle."""
-        return 0.92  # Would calculate from actual model performance
+        """Retourne la précision du modèle."""        return 0.92  # Would calculate from actual model performance
     
     # Continue with remaining helper methods...
 
 # Factory function
 async def create_revenue_optimization_engine() -> RevenueOptimizationEngine:
-    """Factory pour créer et initialiser le moteur d'optimisation des revenus."""
-    engine = RevenueOptimizationEngine()
+    """Factory pour créer et initialiser le moteur d'optimisation des revenus."""    engine = RevenueOptimizationEngine()
     await engine.initialize()
     return engine
 

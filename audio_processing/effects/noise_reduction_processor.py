@@ -1,5 +1,4 @@
-"""
-🔇 Noise Reduction Processor - Professional Noise Suppression Engine
+"""🔇 Noise Reduction Processor - Professional Noise Suppression Engine
 
 Professional-grade noise reduction with spectral gating, Wiener filtering,
 adaptive algorithms, multi-band processing, and AI-assisted noise profiling.
@@ -8,7 +7,6 @@ Supports real-time processing with multiple algorithm implementations.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import numpy as np
 import logging
 from typing import Optional, Tuple, Dict, List, Any
@@ -21,8 +19,7 @@ import threading
 
 
 class NoiseReductionType(Enum):
-    """Noise reduction algorithm types"""
-    SPECTRAL_GATE = "spectral_gate"
+    """Noise reduction algorithm types"""    SPECTRAL_GATE = "spectral_gate"
     WIENER_FILTER = "wiener_filter"
     ADAPTIVE = "adaptive"
     MULTI_BAND = "multi_band"
@@ -31,8 +28,7 @@ class NoiseReductionType(Enum):
 
 
 class NoiseType(Enum):
-    """Common noise types"""
-    BROADBAND = "broadband"
+    """Common noise types"""    BROADBAND = "broadband"
     NARROWBAND = "narrowband"
     IMPULSIVE = "impulsive"
     PERIODIC = "periodic"
@@ -43,8 +39,7 @@ class NoiseType(Enum):
 
 @dataclass
 class NoiseProfile:
-    """Noise profile data structure"""
-    frequency_response: np.ndarray
+    """Noise profile data structure"""    frequency_response: np.ndarray
     magnitude_profile: np.ndarray
     phase_profile: np.ndarray
     noise_type: NoiseType
@@ -53,8 +48,7 @@ class NoiseProfile:
     sample_rate: int
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for serialization"""
-        return {
+        """Convert to dictionary for serialization"""        return {
             'frequency_response': self.frequency_response.tolist(),
             'magnitude_profile': self.magnitude_profile.tolist(),
             'phase_profile': self.phase_profile.tolist(),
@@ -67,8 +61,7 @@ class NoiseProfile:
 
 @dataclass
 class NoiseReductionParams:
-    """Noise reduction parameters"""
-    algorithm: NoiseReductionType = NoiseReductionType.SPECTRAL_GATE
+    """Noise reduction parameters"""    algorithm: NoiseReductionType = NoiseReductionType.SPECTRAL_GATE
     reduction_amount: float = 12.0  # dB
     noise_floor_offset: float = 6.0  # dB above noise floor
     attack_time: float = 0.01  # seconds
@@ -80,8 +73,7 @@ class NoiseReductionParams:
 
 
 class SpectralGate:
-    """Professional spectral gating noise reduction"""
-    
+    """Professional spectral gating noise reduction"""    
     def __init__(self, frame_size: int, sample_rate: int):
         self.frame_size = frame_size
         self.sample_rate = sample_rate
@@ -90,8 +82,7 @@ class SpectralGate:
         
     def process(self, magnitude_spectrum: np.ndarray, noise_profile: np.ndarray,
                 reduction_amount: float, noise_floor_offset: float) -> np.ndarray:
-        """Apply spectral gating"""
-        # Calculate gate threshold
+        """Apply spectral gating"""        # Calculate gate threshold
         gate_threshold = noise_profile * np.power(10, noise_floor_offset / 20)
         
         # Calculate gate function
@@ -106,8 +97,7 @@ class SpectralGate:
 
 
 class WienerFilter:
-    """Wiener filter for noise reduction"""
-    
+    """Wiener filter for noise reduction"""    
     def __init__(self, frame_size: int, sample_rate: int):
         self.frame_size = frame_size
         self.sample_rate = sample_rate
@@ -117,8 +107,7 @@ class WienerFilter:
         
     def process(self, magnitude_spectrum: np.ndarray, noise_profile: np.ndarray,
                 signal_estimation: Optional[np.ndarray] = None) -> np.ndarray:
-        """Apply Wiener filtering"""
-        # Update signal power estimation
+        """Apply Wiener filtering"""        # Update signal power estimation
         signal_power = magnitude_spectrum ** 2
         self.signal_power_history = self.alpha * self.signal_power_history + \
                                    (1 - self.alpha) * signal_power
@@ -139,8 +128,7 @@ class WienerFilter:
 
 
 class AdaptiveNoiseReducer:
-    """Adaptive noise reduction with learning capabilities"""
-    
+    """Adaptive noise reduction with learning capabilities"""    
     def __init__(self, frame_size: int, sample_rate: int):
         self.frame_size = frame_size
         self.sample_rate = sample_rate
@@ -150,14 +138,12 @@ class AdaptiveNoiseReducer:
         self.vad_threshold = 0.1  # Voice activity detection
         
     def voice_activity_detection(self, magnitude_spectrum: np.ndarray) -> bool:
-        """Simple voice activity detection"""
-        energy = np.sum(magnitude_spectrum ** 2)
+        """Simple voice activity detection"""        energy = np.sum(magnitude_spectrum ** 2)
         noise_energy = np.sum(self.noise_estimate ** 2)
         return energy > noise_energy * (1 + self.vad_threshold)
     
     def adapt_noise_profile(self, magnitude_spectrum: np.ndarray):
-        """Adapt noise profile based on current frame"""
-        if not self.voice_activity_detection(magnitude_spectrum):
+        """Adapt noise profile based on current frame"""        if not self.voice_activity_detection(magnitude_spectrum):
             # Update noise estimate during non-speech periods
             self.noise_estimate = (1 - self.adaptation_rate) * self.noise_estimate + \
                                  self.adaptation_rate * magnitude_spectrum
@@ -167,8 +153,7 @@ class AdaptiveNoiseReducer:
                                   self.adaptation_rate * magnitude_spectrum
     
     def process(self, magnitude_spectrum: np.ndarray) -> np.ndarray:
-        """Process with adaptive algorithm"""
-        self.adapt_noise_profile(magnitude_spectrum)
+        """Process with adaptive algorithm"""        self.adapt_noise_profile(magnitude_spectrum)
         
         # Calculate adaptive gain
         snr = (self.signal_estimate + 1e-10) / (self.noise_estimate + 1e-10)
@@ -181,8 +166,7 @@ class AdaptiveNoiseReducer:
 
 
 class MultiBandNoiseReducer:
-    """Multi-band noise reduction processor"""
-    
+    """Multi-band noise reduction processor"""    
     def __init__(self, frame_size: int, sample_rate: int, num_bands: int = 8):
         self.frame_size = frame_size
         self.sample_rate = sample_rate
@@ -197,8 +181,7 @@ class MultiBandNoiseReducer:
         self.band_gates = [SpectralGate(frame_size, sample_rate) for _ in range(num_bands)]
         
     def _calculate_band_indices(self) -> List[Tuple[int, int]]:
-        """Calculate frequency bin indices for each band"""
-        indices = []
+        """Calculate frequency bin indices for each band"""        indices = []
         freq_bins = np.fft.fftfreq(self.frame_size, 1/self.sample_rate)[:self.frame_size//2 + 1]
         
         for i in range(self.num_bands):
@@ -212,8 +195,7 @@ class MultiBandNoiseReducer:
     
     def process(self, magnitude_spectrum: np.ndarray, noise_profile: np.ndarray,
                 params: NoiseReductionParams) -> np.ndarray:
-        """Process with multi-band approach"""
-        gain = np.ones_like(magnitude_spectrum)
+        """Process with multi-band approach"""        gain = np.ones_like(magnitude_spectrum)
         
         for band_idx, (start_idx, end_idx) in enumerate(self.band_indices):
             if end_idx > start_idx:
@@ -234,16 +216,14 @@ class MultiBandNoiseReducer:
 
 
 class NoiseAnalyzer:
-    """AI-assisted noise analysis and profiling"""
-    
+    """AI-assisted noise analysis and profiling"""    
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
         self.analysis_history = []
         self.max_history = 100
         
     def analyze_noise_characteristics(self, magnitude_spectrum: np.ndarray) -> Dict[str, float]:
-        """Analyze noise characteristics"""
-        # Spectral features
+        """Analyze noise characteristics"""        # Spectral features
         spectral_centroid = np.sum(magnitude_spectrum * np.arange(len(magnitude_spectrum))) / \
                            (np.sum(magnitude_spectrum) + 1e-10)
         spectral_spread = np.sqrt(np.sum(magnitude_spectrum * 
@@ -263,8 +243,7 @@ class NoiseAnalyzer:
         }
     
     def classify_noise_type(self, features: Dict[str, float]) -> NoiseType:
-        """Classify noise type based on features"""
-        if features['spectral_flatness'] > 0.8:
+        """Classify noise type based on features"""        if features['spectral_flatness'] > 0.8:
             return NoiseType.BROADBAND
         elif features['spectral_spread'] < 100:
             return NoiseType.NARROWBAND
@@ -274,8 +253,7 @@ class NoiseAnalyzer:
             return NoiseType.AMBIENT
     
     def recommend_parameters(self, noise_type: NoiseType) -> NoiseReductionParams:
-        """Recommend optimal parameters based on noise type"""
-        params = NoiseReductionParams()
+        """Recommend optimal parameters based on noise type"""        params = NoiseReductionParams()
         
         if noise_type == NoiseType.BROADBAND:
             params.algorithm = NoiseReductionType.WIENER_FILTER
@@ -295,8 +273,7 @@ class NoiseAnalyzer:
 
 
 class NoiseReductionProcessor:
-    """Professional noise reduction processor with multiple algorithms"""
-    
+    """Professional noise reduction processor with multiple algorithms"""    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -324,8 +301,7 @@ class NoiseReductionProcessor:
         self.is_processing = False
         
     def _init_processors(self):
-        """Initialize processing components"""
-        try:
+        """Initialize processing components"""        try:
             self.spectral_gate = SpectralGate(self.frame_size, self.sample_rate)
             self.wiener_filter = WienerFilter(self.frame_size, self.sample_rate)
             self.adaptive_reducer = AdaptiveNoiseReducer(self.frame_size, self.sample_rate)
@@ -341,8 +317,7 @@ class NoiseReductionProcessor:
     def learn_noise_profile(self, audio_data: np.ndarray, 
                            noise_start: float = 0.0, 
                            noise_duration: float = 1.0) -> NoiseProfile:
-        """Learn noise profile from audio segment"""
-        try:
+        """Learn noise profile from audio segment"""        try:
             # Extract noise segment
             start_sample = int(noise_start * self.sample_rate)
             duration_samples = int(noise_duration * self.sample_rate)
@@ -406,15 +381,13 @@ class NoiseReductionProcessor:
             raise
     
     def update_parameters(self, **kwargs):
-        """Update processing parameters"""
-        for key, value in kwargs.items():
+        """Update processing parameters"""        for key, value in kwargs.items():
             if hasattr(self.params, key):
                 setattr(self.params, key, value)
                 self.logger.debug(f"Updated parameter {key} = {value}")
     
     def process_frame(self, audio_frame: np.ndarray) -> np.ndarray:
-        """Process single audio frame"""
-        if self.noise_profile is None:
+        """Process single audio frame"""        if self.noise_profile is None:
             self.logger.warning("No noise profile available, returning original frame")
             return audio_frame
         
@@ -490,8 +463,7 @@ class NoiseReductionProcessor:
             return audio_frame
     
     def process_audio(self, audio_data: np.ndarray) -> np.ndarray:
-        """Process complete audio with overlap-add"""
-        if not self.noise_profile_learned:
+        """Process complete audio with overlap-add"""        if not self.noise_profile_learned:
             self.logger.warning("No noise profile learned, attempting auto-learn from first second")
             self.learn_noise_profile(audio_data, 0.0, min(1.0, len(audio_data)/self.sample_rate))
         
@@ -524,8 +496,7 @@ class NoiseReductionProcessor:
                 self.is_processing = False
     
     def process_realtime(self, audio_frame: np.ndarray) -> np.ndarray:
-        """Real-time processing with minimal latency"""
-        if self.processing_lock.locked():
+        """Real-time processing with minimal latency"""        if self.processing_lock.locked():
             return audio_frame  # Skip if busy
         
         try:
@@ -546,8 +517,7 @@ class NoiseReductionProcessor:
             return audio_frame
     
     def get_noise_reduction_info(self) -> Dict[str, Any]:
-        """Get current noise reduction information"""
-        info = {
+        """Get current noise reduction information"""        info = {
             'algorithm': self.params.algorithm.value,
             'reduction_amount': self.params.reduction_amount,
             'noise_floor_offset': self.params.noise_floor_offset,
@@ -568,8 +538,7 @@ class NoiseReductionProcessor:
         return info
     
     def save_noise_profile(self, filepath: str):
-        """Save noise profile to file"""
-        if self.noise_profile is None:
+        """Save noise profile to file"""        if self.noise_profile is None:
             raise ValueError("No noise profile to save")
         
         try:
@@ -583,8 +552,7 @@ class NoiseReductionProcessor:
             raise
     
     def load_noise_profile(self, filepath: str):
-        """Load noise profile from file"""
-        try:
+        """Load noise profile from file"""        try:
             import json
             with open(filepath, 'r') as f:
                 data = json.load(f)
@@ -607,8 +575,7 @@ class NoiseReductionProcessor:
             raise
     
     def reset(self):
-        """Reset processor state"""
-        self.noise_profile = None
+        """Reset processor state"""        self.noise_profile = None
         self.noise_profile_learned = False
         self.learning_frames = 0
         self.overlap_buffer.fill(0)
@@ -619,8 +586,7 @@ class NoiseReductionProcessor:
         self.logger.info("Noise reduction processor reset")
     
     def __del__(self):
-        """Cleanup"""
-        if hasattr(self, 'processing_lock'):
+        """Cleanup"""        if hasattr(self, 'processing_lock'):
             with self.processing_lock:
                 pass  # Ensure any ongoing processing completes
         self.adaptation_rate = 0.01
@@ -628,8 +594,7 @@ class NoiseReductionProcessor:
         self.logger.info("NoiseReductionProcessor initialized")
     
     def _init_buffers(self):
-        """Initialize processing buffers"""
-        self.input_buffer = np.zeros(self.frame_size * 2)
+        """Initialize processing buffers"""        self.input_buffer = np.zeros(self.frame_size * 2)
         self.output_buffer = np.zeros(self.frame_size * 2)
         self.overlap_buffer = np.zeros(self.frame_size)
         
@@ -644,8 +609,7 @@ class NoiseReductionProcessor:
         self.prev_gains = np.ones(self.frame_size // 2 + 1)
     
     def learn_noise_profile(self, noise_sample: np.ndarray) -> bool:
-        """Learn noise profile from noise-only audio sample"""
-        try:
+        """Learn noise profile from noise-only audio sample"""        try:
             if len(noise_sample) < self.frame_size:
                 self.logger.warning("Noise sample too short for reliable profiling")
                 return False
@@ -684,8 +648,7 @@ class NoiseReductionProcessor:
             return False
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply noise reduction processing"""
-        try:
+        """Apply noise reduction processing"""        try:
             if not self.noise_profile_learned:
                 self.logger.warning("No noise profile available, using adaptive mode")
                 return self._adaptive_noise_reduction(audio_data)
@@ -706,8 +669,7 @@ class NoiseReductionProcessor:
             return audio_data
     
     def _spectral_gate_reduction(self, audio_data: np.ndarray) -> np.ndarray:
-        """Spectral gating noise reduction"""
-        processed_audio = np.zeros_like(audio_data)
+        """Spectral gating noise reduction"""        processed_audio = np.zeros_like(audio_data)
         
         # Process in overlapping frames
         num_frames = (len(audio_data) - self.frame_size) // self.hop_size + 1
@@ -764,8 +726,7 @@ class NoiseReductionProcessor:
         return processed_audio
     
     def _wiener_filter_reduction(self, audio_data: np.ndarray) -> np.ndarray:
-        """Wiener filter based noise reduction"""
-        processed_audio = np.zeros_like(audio_data)
+        """Wiener filter based noise reduction"""        processed_audio = np.zeros_like(audio_data)
         num_frames = (len(audio_data) - self.frame_size) // self.hop_size + 1
         
         for frame_idx in range(num_frames):
@@ -804,8 +765,7 @@ class NoiseReductionProcessor:
         return processed_audio
     
     def _adaptive_noise_reduction(self, audio_data: np.ndarray) -> np.ndarray:
-        """Adaptive noise reduction without prior noise profile"""
-        processed_audio = np.zeros_like(audio_data)
+        """Adaptive noise reduction without prior noise profile"""        processed_audio = np.zeros_like(audio_data)
         num_frames = (len(audio_data) - self.frame_size) // self.hop_size + 1
         
         # Initialize adaptive noise estimate
@@ -856,8 +816,7 @@ class NoiseReductionProcessor:
         return processed_audio
     
     def _multiband_noise_reduction(self, audio_data: np.ndarray) -> np.ndarray:
-        """Multi-band noise reduction with frequency-dependent processing"""
-        # Define frequency bands
+        """Multi-band noise reduction with frequency-dependent processing"""        # Define frequency bands
         band_edges = [0, 200, 1000, 4000, 8000, self.sample_rate // 2]
         
         # Apply different reduction amounts per band
@@ -920,8 +879,7 @@ class NoiseReductionProcessor:
         return processed_audio
     
     def _smooth_gains(self, gains: np.ndarray) -> np.ndarray:
-        """Smooth gain changes to avoid artifacts"""
-        smoothed_gains = np.zeros_like(gains)
+        """Smooth gain changes to avoid artifacts"""        smoothed_gains = np.zeros_like(gains)
         
         for i in range(len(gains)):
             if gains[i] < self.prev_gains[i]:
@@ -939,8 +897,7 @@ class NoiseReductionProcessor:
     def set_parameters(self, reduction_amount: float = None,
                       noise_floor_offset: float = None,
                       attack_time: float = None, release_time: float = None):
-        """Set noise reduction parameters"""
-        if reduction_amount is not None:
+        """Set noise reduction parameters"""        if reduction_amount is not None:
             self.reduction_amount = max(0.0, min(40.0, reduction_amount))
         if noise_floor_offset is not None:
             self.noise_floor_offset = max(0.0, min(20.0, noise_floor_offset))
@@ -954,8 +911,7 @@ class NoiseReductionProcessor:
         self.logger.debug(f"Noise reduction parameters updated")
     
     def get_noise_profile_stats(self) -> dict:
-        """Get statistics about the current noise profile"""
-        if self.noise_profile is None:
+        """Get statistics about the current noise profile"""        if self.noise_profile is None:
             return {"status": "No noise profile available"}
         
         freqs = np.fft.rfftfreq(self.frame_size, 1/self.sample_rate)

@@ -1,6 +1,5 @@
 #!/bin/bash
-"""
-AI Agents Architecture Modernization Script
+"""AI Agents Architecture Modernization Script
 Transforms ALL amateur-named modules to ultra-advanced enterprise architecture
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -8,7 +7,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 ⚠️ WARNING: This script will restructure the entire ai_agents directory
 """
-
 import os
 import shutil
 import logging
@@ -20,16 +18,14 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 class ArchitectureModernizer:
-    """Ultra-advanced architecture modernization system"""
-    
+    """Ultra-advanced architecture modernization system"""    
     def __init__(self, base_path: str = "/workspaces/Ainflue/ai_agents"):
         self.base_path = Path(base_path)
         self.modules_to_refactor = []
         self.excluded_modules = ["distribution_agent"]  # Already refactored
         
     def analyze_modules(self) -> List[Dict]:
-        """Analyze all modules for amateur naming patterns"""
-        amateur_modules = []
+        """Analyze all modules for amateur naming patterns"""        amateur_modules = []
         
         for module_dir in self.base_path.iterdir():
             if not module_dir.is_dir() or module_dir.name.startswith('.'):
@@ -52,8 +48,7 @@ class ArchitectureModernizer:
         return amateur_modules
     
     def create_enterprise_structure(self, module_path: Path, module_name: str):
-        """Create enterprise directory structure"""
-        # Create core directories
+        """Create enterprise directory structure"""        # Create core directories
         (module_path / "core").mkdir(exist_ok=True)
         (module_path / "intelligence").mkdir(exist_ok=True)  
         (module_path / "adapters").mkdir(exist_ok=True)
@@ -62,14 +57,12 @@ class ArchitectureModernizer:
         logger.info(f"Created enterprise structure for {module_name}")
     
     def generate_manager_file(self, module_path: Path, module_name: str):
-        """Generate professional manager.py file"""
-        
+        """Generate professional manager.py file"""        
         # Extract base name (remove _agent suffix)
         base_name = module_name.replace('_agent', '')
         class_name = ''.join(word.capitalize() for word in base_name.split('_'))
         
-        manager_content = f'''"""
-{class_name} Manager - Ultra-Advanced Enterprise Management System
+        manager_content = f'''"""{class_name} Manager - Ultra-Advanced Enterprise Management System
 
 Unified interface for the entire {base_name} system providing comprehensive
 control, monitoring, and optimization capabilities.
@@ -82,7 +75,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -98,15 +90,13 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class {class_name}SystemStatus:
-    """Overall {base_name} system status"""
-    is_healthy: bool = True
+    """Overall {base_name} system status"""    is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
     last_updated: datetime = None
 
 class {class_name}Manager(BaseAgent):
-    """
-    Master {class_name} Manager
+    """    Master {class_name} Manager
     
     Unified interface for the entire {base_name} system providing:
     - Single point of control for all {base_name} operations
@@ -115,8 +105,7 @@ class {class_name}Manager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -129,8 +118,7 @@ class {class_name}Manager(BaseAgent):
         logger.info("{class_name}Manager initialized")
 
     async def start(self) -> None:
-        """Start the complete {base_name} system"""
-        if self.is_running:
+        """Start the complete {base_name} system"""        if self.is_running:
             logger.warning("{class_name} system is already running")
             return
         
@@ -145,8 +133,7 @@ class {class_name}Manager(BaseAgent):
             raise
 
     async def get_system_status(self) -> {class_name}SystemStatus:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             return {class_name}SystemStatus(
                 is_healthy=self.is_running,
                 active_operations=0,  # Implementation specific
@@ -158,15 +145,13 @@ class {class_name}Manager(BaseAgent):
             return {class_name}SystemStatus(is_healthy=False)
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire {base_name} system"""
-        logger.info("Shutting down {class_name} System...")
+        """Graceful shutdown of the entire {base_name} system"""        logger.info("Shutting down {class_name} System...")
         self.is_running = False
         await self.engine.shutdown()
         logger.info("{class_name} System shutdown complete")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""
-        try:
+        """Base agent interface implementation"""        try:
             # Implementation specific to {base_name} operations
             result = await self.engine.process(data)
             return AgentResponse(success=True, data=result)
@@ -182,13 +167,11 @@ class {class_name}Manager(BaseAgent):
         logger.info(f"Generated manager.py for {module_name}")
     
     def generate_core_engine(self, module_path: Path, module_name: str):
-        """Generate core engine file"""
-        
+        """Generate core engine file"""        
         base_name = module_name.replace('_agent', '')
         class_name = ''.join(word.capitalize() for word in base_name.split('_'))
         
-        engine_content = f'''"""
-{class_name} Engine - Ultra-Advanced Processing Engine
+        engine_content = f'''"""{class_name} Engine - Ultra-Advanced Processing Engine
 
 Core processing engine for {base_name} operations with intelligent
 optimization and comprehensive functionality.
@@ -196,7 +179,6 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -207,24 +189,21 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class {class_name}Job:
-    """Job configuration for {base_name} operations"""
-    job_id: str
+    """Job configuration for {base_name} operations"""    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class {class_name}Result:
-    """Result of {base_name} operations"""
-    job_id: str
+    """Result of {base_name} operations"""    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class {class_name}Engine:
-    """
-    Ultra-Advanced {class_name} Processing Engine
+    """    Ultra-Advanced {class_name} Processing Engine
     
     Provides enterprise-grade {base_name} processing with:
     - High-performance operation handling
@@ -232,8 +211,7 @@ class {class_name}Engine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {{}}
         self.is_running = False
@@ -242,8 +220,7 @@ class {class_name}Engine:
         logger.info("{class_name}Engine initialized")
 
     async def start(self) -> None:
-        """Start the {base_name} processing engine"""
-        try:
+        """Start the {base_name} processing engine"""        try:
             self.is_running = True
             logger.info("{class_name}Engine started successfully")
         except Exception as e:
@@ -251,8 +228,7 @@ class {class_name}Engine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> {class_name}Result:
-        """Process {base_name} operation"""
-        try:
+        """Process {base_name} operation"""        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -279,8 +255,7 @@ class {class_name}Engine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""
-        self.is_running = False
+        """Graceful shutdown of the processing engine"""        self.is_running = False
         logger.info("{class_name}Engine shutdown complete")
 '''
         
@@ -292,13 +267,11 @@ class {class_name}Engine:
         logger.info(f"Generated core engine for {module_name}")
     
     def update_init_file(self, module_path: Path, module_name: str):
-        """Update __init__.py with new professional imports"""
-        
+        """Update __init__.py with new professional imports"""        
         base_name = module_name.replace('_agent', '')
         class_name = ''.join(word.capitalize() for word in base_name.split('_'))
         
-        init_content = f'''"""
-{class_name} Agent - Ultra-Advanced Enterprise System
+        init_content = f'''"""{class_name} Agent - Ultra-Advanced Enterprise System
 
 This module provides enterprise-grade {base_name} capabilities with
 intelligent optimization and comprehensive functionality.
@@ -311,7 +284,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 # Master Manager
 from .manager import (
     {class_name}Manager,
@@ -350,8 +322,7 @@ __all__ = [
         logger.info(f"Updated __init__.py for {module_name}")
     
     def create_init_files(self, module_path: Path):
-        """Create __init__.py files for subdirectories"""
-        subdirs = ['core', 'intelligence', 'adapters']
+        """Create __init__.py files for subdirectories"""        subdirs = ['core', 'intelligence', 'adapters']
         
         for subdir in subdirs:
             subdir_path = module_path / subdir
@@ -362,8 +333,7 @@ __all__ = [
                         f.write('"""Sub-module initialization"""\\n')
     
     def migrate_legacy_files(self, module_path: Path, module_name: str):
-        """Move legacy files to migration directory"""
-        legacy_dir = module_path / "legacy_migration"
+        """Move legacy files to migration directory"""        legacy_dir = module_path / "legacy_migration"
         main_file = module_path / f"{module_name}.py"
         
         if main_file.exists():
@@ -372,8 +342,7 @@ __all__ = [
             logger.info(f"Moved {module_name}.py to legacy_migration/")
     
     def run_full_modernization(self):
-        """Execute complete modernization process"""
-        logger.info("🚀 Starting AI Agents Architecture Modernization...")
+        """Execute complete modernization process"""        logger.info("🚀 Starting AI Agents Architecture Modernization...")
         
         # Analyze all modules
         amateur_modules = self.analyze_modules()

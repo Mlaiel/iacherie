@@ -1,5 +1,4 @@
-"""
-Predictive Analytics Engine
+"""Predictive Analytics Engine
 ==========================
 
 Advanced predictive analytics and machine learning for content performance forecasting.
@@ -12,7 +11,6 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -46,8 +44,7 @@ warnings.filterwarnings('ignore')
 
 
 class PredictionType(Enum):
-    """Types of predictions"""
-    CONTENT_PERFORMANCE = "content_performance"
+    """Types of predictions"""    CONTENT_PERFORMANCE = "content_performance"
     AUDIENCE_GROWTH = "audience_growth"
     REVENUE_FORECAST = "revenue_forecast"
     ENGAGEMENT_TRENDS = "engagement_trends"
@@ -58,8 +55,7 @@ class PredictionType(Enum):
 
 
 class ModelType(Enum):
-    """Machine learning model types"""
-    RANDOM_FOREST = "random_forest"
+    """Machine learning model types"""    RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     NEURAL_NETWORK = "neural_network"
     LSTM = "lstm"
@@ -68,8 +64,7 @@ class ModelType(Enum):
 
 
 class PredictionConfidence(Enum):
-    """Prediction confidence levels"""
-    LOW = "low"
+    """Prediction confidence levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     VERY_HIGH = "very_high"
@@ -77,8 +72,7 @@ class PredictionConfidence(Enum):
 
 @dataclass
 class PredictionResult:
-    """Prediction result data structure"""
-    prediction_id: str
+    """Prediction result data structure"""    prediction_id: str
     user_id: str
     prediction_type: PredictionType
     model_type: ModelType
@@ -94,8 +88,7 @@ class PredictionResult:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
-    trend_id: str
+    """Trend analysis result"""    trend_id: str
     metric_name: str
     trend_direction: str  # "increasing", "decreasing", "stable", "volatile"
     trend_strength: float
@@ -108,8 +101,7 @@ class TrendAnalysis:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendation"""
-    optimization_id: str
+    """Content optimization recommendation"""    optimization_id: str
     content_type: str
     recommended_changes: List[Dict]
     expected_improvement: float
@@ -121,8 +113,7 @@ class ContentOptimization:
 
 @dataclass
 class AudienceInsight:
-    """Predictive audience insight"""
-    insight_id: str
+    """Predictive audience insight"""    insight_id: str
     insight_type: str
     description: str
     target_segments: List[str]
@@ -133,22 +124,18 @@ class AudienceInsight:
 
 
 class PredictiveAnalytics:
-    """
-    Professional predictive analytics engine for AI-powered content optimization.
+    """    Professional predictive analytics engine for AI-powered content optimization.
     
     Uses advanced machine learning algorithms to predict content performance,
     audience behavior, revenue trends, and provide optimization recommendations.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """
-        Initialize PredictiveAnalytics engine.
+        """        Initialize PredictiveAnalytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         self.cache_ttl = 7200  # 2 hours cache for predictions
@@ -183,8 +170,7 @@ class PredictiveAnalytics:
     async def predict_content_performance(self, user_id: str, content_data: Dict[str, Any],
                                         prediction_horizon: timedelta = timedelta(days=7)
                                         ) -> PredictionResult:
-        """
-        Predict content performance using machine learning models.
+        """        Predict content performance using machine learning models.
         
         Args:
             user_id: User identifier
@@ -193,8 +179,7 @@ class PredictiveAnalytics:
             
         Returns:
             Content performance prediction
-        """
-        try:
+        """        try:
             cache_key = f"content_prediction:{user_id}:{hash(str(content_data))}:{prediction_horizon.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -265,8 +250,7 @@ class PredictiveAnalytics:
     async def forecast_audience_growth(self, user_id: str,
                                      forecast_days: int = 30
                                      ) -> PredictionResult:
-        """
-        Forecast audience growth using time series analysis.
+        """        Forecast audience growth using time series analysis.
         
         Args:
             user_id: User identifier
@@ -274,8 +258,7 @@ class PredictiveAnalytics:
             
         Returns:
             Audience growth forecast
-        """
-        try:
+        """        try:
             cache_key = f"audience_forecast:{user_id}:{forecast_days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -337,8 +320,7 @@ class PredictiveAnalytics:
     
     async def predict_viral_potential(self, user_id: str, content_data: Dict[str, Any]
                                     ) -> PredictionResult:
-        """
-        Predict viral potential of content using advanced ML algorithms.
+        """        Predict viral potential of content using advanced ML algorithms.
         
         Args:
             user_id: User identifier
@@ -346,8 +328,7 @@ class PredictiveAnalytics:
             
         Returns:
             Viral potential prediction
-        """
-        try:
+        """        try:
             cache_key = f"viral_prediction:{user_id}:{hash(str(content_data))}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -407,8 +388,7 @@ class PredictiveAnalytics:
                                    metric: str = "engagement_rate",
                                    time_period: timedelta = timedelta(days=90)
                                    ) -> TrendAnalysis:
-        """
-        Analyze content trends and patterns using advanced statistical methods.
+        """        Analyze content trends and patterns using advanced statistical methods.
         
         Args:
             user_id: User identifier
@@ -417,8 +397,7 @@ class PredictiveAnalytics:
             
         Returns:
             Comprehensive trend analysis
-        """
-        try:
+        """        try:
             cache_key = f"trend_analysis:{user_id}:{metric}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -480,8 +459,7 @@ class PredictiveAnalytics:
     async def generate_optimization_recommendations(self, user_id: str,
                                                   content_type: str = "all"
                                                   ) -> List[ContentOptimization]:
-        """
-        Generate AI-powered content optimization recommendations.
+        """        Generate AI-powered content optimization recommendations.
         
         Args:
             user_id: User identifier
@@ -489,8 +467,7 @@ class PredictiveAnalytics:
             
         Returns:
             List of optimization recommendations
-        """
-        try:
+        """        try:
             cache_key = f"optimization_recs:{user_id}:{content_type}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -542,16 +519,14 @@ class PredictiveAnalytics:
             return []
     
     async def predict_churn_risk(self, user_id: str) -> Dict[str, Any]:
-        """
-        Predict audience churn risk using machine learning.
+        """        Predict audience churn risk using machine learning.
         
         Args:
             user_id: User identifier
             
         Returns:
             Churn risk analysis and predictions
-        """
-        try:
+        """        try:
             cache_key = f"churn_prediction:{user_id}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -606,10 +581,8 @@ class PredictiveAnalytics:
             return {"error": str(e)}
     
     async def _get_historical_performance_data(self, user_id: str) -> List[Dict]:
-        """Get historical content performance data."""
-        try:
-            query = text("""
-                SELECT 
+        """Get historical content performance data."""        try:
+            query = text("""                SELECT 
                     c.id as content_id,
                     c.content_type,
                     c.title,
@@ -660,8 +633,7 @@ class PredictiveAnalytics:
             return []
     
     def _prepare_content_features(self, historical_data: List[Dict], content_data: Dict) -> Tuple[np.ndarray, np.ndarray]:
-        """Prepare features for content performance prediction."""
-        try:
+        """Prepare features for content performance prediction."""        try:
             df = pd.DataFrame(historical_data)
             
             # Create feature matrix
@@ -690,8 +662,7 @@ class PredictiveAnalytics:
             return np.array([]), np.array([])
     
     def _extract_content_features(self, content_data: Dict) -> List[float]:
-        """Extract features from new content data."""
-        try:
+        """Extract features from new content data."""        try:
             return [
                 len(content_data.get('title', '')) / 10,
                 content_data.get('duration', 0) / 3600,
@@ -709,8 +680,7 @@ class PredictiveAnalytics:
     async def _get_or_train_model(self, user_id: str, prediction_type: PredictionType,
                                  features: np.ndarray, target: np.ndarray,
                                  model_type: ModelType) -> Any:
-        """Get existing model or train new one."""
-        try:
+        """Get existing model or train new one."""        try:
             model_key = f"{user_id}_{prediction_type.value}_{model_type.value}"
             
             # Try to load existing model
@@ -771,8 +741,7 @@ class PredictiveAnalytics:
             return fallback_model
     
     def _create_fallback_prediction(self, user_id: str, prediction_type: PredictionType) -> PredictionResult:
-        """Create fallback prediction when insufficient data."""
-        fallback_values = {
+        """Create fallback prediction when insufficient data."""        fallback_values = {
             PredictionType.CONTENT_PERFORMANCE: 5.0,  # 5% engagement rate
             PredictionType.AUDIENCE_GROWTH: 100.0,    # 100 new followers
             PredictionType.VIRAL_POTENTIAL: 2.0,      # 2% viral chance
@@ -795,8 +764,7 @@ class PredictiveAnalytics:
         )
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict]:
-        """Get cached result from Redis."""
-        try:
+        """Get cached result from Redis."""        try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
@@ -806,8 +774,7 @@ class PredictiveAnalytics:
             return None
     
     async def _cache_result(self, cache_key: str, data: Dict, ttl: int = None) -> None:
-        """Cache result in Redis."""
-        try:
+        """Cache result in Redis."""        try:
             cache_ttl = ttl or self.cache_ttl
             self.redis_client.setex(
                 cache_key,
@@ -819,15 +786,13 @@ class PredictiveAnalytics:
 
 
 class EnsembleModel:
-    """Ensemble model combining multiple ML algorithms."""
-    
+    """Ensemble model combining multiple ML algorithms."""    
     def __init__(self, models: List[Any], scaler: Optional[StandardScaler] = None):
         self.models = models
         self.scaler = scaler
         
     def predict(self, X):
-        """Make ensemble prediction."""
-        predictions = []
+        """Make ensemble prediction."""        predictions = []
         
         for i, model in enumerate(self.models):
             if i == 2 and self.scaler:  # Neural network needs scaling
@@ -841,8 +806,7 @@ class EnsembleModel:
         return np.mean(predictions, axis=0)
     
     def predict_proba(self, X):
-        """Make probability predictions for classification."""
-        if hasattr(self.models[0], 'predict_proba'):
+        """Make probability predictions for classification."""        if hasattr(self.models[0], 'predict_proba'):
             predictions = []
             for model in self.models:
                 pred = model.predict_proba(X)

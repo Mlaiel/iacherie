@@ -1,5 +1,4 @@
-"""
-Model Trainer - Advanced ML Model Training & Pipeline Management System
+"""Model Trainer - Advanced ML Model Training & Pipeline Management System
 
 Industrial-grade model training orchestrator providing automated training workflows,
 hyperparameter optimization, cross-validation, and comprehensive model evaluation
@@ -15,7 +14,6 @@ is strictly PROHIBITED and will result in legal action.
 
 ALL RIGHTS RESERVED - FAHED MLAIEL ©2025
 """
-
 import asyncio
 import logging
 import time
@@ -96,8 +94,7 @@ from ...utils.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class TrainingStatus(Enum):
-    """Training job status enumeration"""
-    QUEUED = "queued"
+    """Training job status enumeration"""    QUEUED = "queued"
     PREPARING = "preparing"
     TRAINING = "training"
     VALIDATING = "validating"
@@ -108,16 +105,14 @@ class TrainingStatus(Enum):
     PAUSED = "paused"
 
 class OptimizationMethod(Enum):
-    """Hyperparameter optimization methods"""
-    GRID_SEARCH = "grid_search"
+    """Hyperparameter optimization methods"""    GRID_SEARCH = "grid_search"
     RANDOM_SEARCH = "random_search"
     BAYESIAN = "bayesian"
     OPTUNA = "optuna"
     GENETIC = "genetic"
 
 class ValidationStrategy(Enum):
-    """Model validation strategies"""
-    TRAIN_TEST_SPLIT = "train_test_split"
+    """Model validation strategies"""    TRAIN_TEST_SPLIT = "train_test_split"
     K_FOLD_CV = "k_fold_cv"
     STRATIFIED_K_FOLD = "stratified_k_fold"
     TIME_SERIES_SPLIT = "time_series_split"
@@ -125,8 +120,7 @@ class ValidationStrategy(Enum):
 
 @dataclass
 class TrainingConfig:
-    """Comprehensive training configuration"""
-    job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive training configuration"""    job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     model_name: str = ""
     model_type: str = "classifier"
     framework: str = "sklearn"
@@ -183,8 +177,7 @@ class TrainingConfig:
 
 @dataclass
 class TrainingMetrics:
-    """Training performance and evaluation metrics"""
-    training_accuracy: float = 0.0
+    """Training performance and evaluation metrics"""    training_accuracy: float = 0.0
     validation_accuracy: float = 0.0
     test_accuracy: float = 0.0
     training_loss: float = 0.0
@@ -223,8 +216,7 @@ class TrainingMetrics:
 
 @dataclass
 class TrainingResult:
-    """Complete training job result"""
-    job_id: str
+    """Complete training job result"""    job_id: str
     status: TrainingStatus
     model_name: str
     model_version: str
@@ -257,8 +249,7 @@ class TrainingResult:
     mlflow_experiment_id: Optional[str] = None
 
 class ModelTrainer:
-    """
-    Ultra-Advanced Model Training Orchestrator
+    """    Ultra-Advanced Model Training Orchestrator
     
     Comprehensive training system providing:
     - Multi-framework model training (TensorFlow, PyTorch, scikit-learn)
@@ -267,8 +258,7 @@ class ModelTrainer:
     - Real-time training monitoring and resource management
     - MLOps integration with experiment tracking
     - Production-ready model pipelines and versioning
-    """
-    
+    """    
     # Prometheus metrics
     TRAINING_JOBS_TOTAL = Counter('model_trainer_jobs_total', 'Total training jobs', ['status', 'framework'])
     TRAINING_DURATION = Histogram('model_trainer_duration_seconds', 'Training duration', ['framework', 'algorithm'])
@@ -312,8 +302,7 @@ class ModelTrainer:
         logger.info(f"ModelTrainer initialized: {self.trainer_id}")
         
     async def initialize(self) -> bool:
-        """Initialize the model trainer"""
-        try:
+        """Initialize the model trainer"""        try:
             # Setup MLflow if enabled
             if self.mlflow_enabled:
                 await self._setup_mlflow()
@@ -339,8 +328,7 @@ class ModelTrainer:
                          training_data: pd.DataFrame,
                          config: TrainingConfig,
                          async_execution: bool = False) -> Union[TrainingResult, str]:
-        """
-        Train a machine learning model with comprehensive pipeline
+        """        Train a machine learning model with comprehensive pipeline
         
         Args:
             training_data: Input training dataset
@@ -349,8 +337,7 @@ class ModelTrainer:
             
         Returns:
             TrainingResult: Complete training results or job_id if async
-        """
-        job_id = config.job_id
+        """        job_id = config.job_id
         
         try:
             logger.info(f"Starting training job: {job_id} ({config.model_name})")
@@ -418,16 +405,14 @@ class ModelTrainer:
                                      training_data: pd.DataFrame,
                                      config: TrainingConfig,
                                      optimization_trials: int = 100) -> Dict[str, Any]:
-        """
-        Advanced hyperparameter optimization using multiple algorithms
+        """        Advanced hyperparameter optimization using multiple algorithms
         
         Supports:
         - Grid Search for exhaustive parameter exploration
         - Random Search for efficient parameter sampling
         - Bayesian Optimization for intelligent parameter selection
         - Optuna for advanced optimization algorithms
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             logger.info(f"Starting hyperparameter optimization: {config.optimization_method.value}")
@@ -483,10 +468,8 @@ class ModelTrainer:
                                  training_data: pd.DataFrame,
                                  config: TrainingConfig,
                                  cv_folds: int = 5) -> Dict[str, Any]:
-        """
-        Comprehensive cross-validation with multiple strategies
-        """
-        try:
+        """        Comprehensive cross-validation with multiple strategies
+        """        try:
             logger.info(f"Starting cross-validation: {config.validation_strategy.value}")
             
             # Prepare data
@@ -534,10 +517,8 @@ class ModelTrainer:
                            model: Any,
                            test_data: pd.DataFrame,
                            config: TrainingConfig) -> Dict[str, Any]:
-        """
-        Comprehensive model evaluation with multiple metrics
-        """
-        try:
+        """        Comprehensive model evaluation with multiple metrics
+        """        try:
             logger.info("Starting comprehensive model evaluation")
             
             # Prepare test data
@@ -604,8 +585,7 @@ class ModelTrainer:
             raise TrainingError(f"Model evaluation failed: {str(e)}")
 
     async def get_training_status(self, job_id: str) -> Dict[str, Any]:
-        """Get comprehensive training job status"""
-        if job_id in self.active_jobs:
+        """Get comprehensive training job status"""        if job_id in self.active_jobs:
             config = self.active_jobs[job_id]
             return {
                 "job_id": job_id,
@@ -631,8 +611,7 @@ class ModelTrainer:
             return {"job_id": job_id, "status": "not_found"}
 
     async def cancel_training_job(self, job_id: str) -> bool:
-        """Cancel an active training job"""
-        if job_id in self.active_jobs:
+        """Cancel an active training job"""        if job_id in self.active_jobs:
             # Mark for cancellation - actual cancellation depends on training stage
             config = self.active_jobs[job_id]
             logger.info(f"Cancellation requested for training job: {job_id}")
@@ -660,8 +639,7 @@ class ModelTrainer:
     async def _execute_training_job(self, 
                                   training_data: pd.DataFrame, 
                                   config: TrainingConfig) -> TrainingResult:
-        """Execute complete training pipeline"""
-        start_time = datetime.utcnow()
+        """Execute complete training pipeline"""        start_time = datetime.utcnow()
         job_id = config.job_id
         
         try:
@@ -808,8 +786,7 @@ class ModelTrainer:
                 mlflow.end_run()
 
     def _initialize_algorithm_registry(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize algorithm registry with supported algorithms"""
-        return {
+        """Initialize algorithm registry with supported algorithms"""        return {
             "random_forest": {
                 "class": RandomForestClassifier,
                 "regressor_class": RandomForestRegressor,
@@ -861,8 +838,7 @@ class ModelTrainer:
         }
 
     def _get_algorithm_instance(self, config: TrainingConfig, params: Dict[str, Any] = None):
-        """Get algorithm instance with parameters"""
-        algorithm_info = self.algorithm_registry.get(config.algorithm)
+        """Get algorithm instance with parameters"""        algorithm_info = self.algorithm_registry.get(config.algorithm)
         if not algorithm_info:
             raise ValueError(f"Unsupported algorithm: {config.algorithm}")
         
@@ -886,8 +862,7 @@ class ModelTrainer:
         return algorithm_class(**final_params)
 
     def _prepare_data_for_training(self, data: pd.DataFrame, config: TrainingConfig) -> Tuple[pd.DataFrame, pd.Series]:
-        """Prepare data for training with preprocessing"""
-        # Extract features and target
+        """Prepare data for training with preprocessing"""        # Extract features and target
         X = data[config.feature_columns].copy()
         y = data[config.target_column].copy()
         
@@ -908,8 +883,7 @@ class ModelTrainer:
         return X, y
 
     async def _validate_training_config(self, config: TrainingConfig, data: pd.DataFrame) -> Dict[str, Any]:
-        """Validate training configuration"""
-        errors = []
+        """Validate training configuration"""        errors = []
         
         if not config.model_name:
             errors.append("Model name is required")
@@ -933,8 +907,7 @@ class ModelTrainer:
         return {"valid": len(errors) == 0, "errors": errors}
 
     async def _setup_mlflow(self):
-        """Setup MLflow tracking"""
-        try:
+        """Setup MLflow tracking"""        try:
             mlflow.set_tracking_uri(self.mlflow_tracking_uri)
             mlflow.set_experiment(self.mlflow_experiment_name)
             logger.info(f"MLflow tracking setup: {self.mlflow_tracking_uri}")
@@ -943,8 +916,7 @@ class ModelTrainer:
             self.mlflow_enabled = False
 
     async def _grid_search_optimization(self, X_train, X_val, y_train, y_val, config: TrainingConfig) -> Dict[str, Any]:
-        """Grid search hyperparameter optimization"""
-        algorithm = self._get_algorithm_instance(config)
+        """Grid search hyperparameter optimization"""        algorithm = self._get_algorithm_instance(config)
         
         grid_search = GridSearchCV(
             algorithm,
@@ -959,8 +931,7 @@ class ModelTrainer:
         return grid_search.best_params_
 
     async def _random_search_optimization(self, X_train, X_val, y_train, y_val, config: TrainingConfig, n_iterations: int) -> Dict[str, Any]:
-        """Random search hyperparameter optimization"""
-        algorithm = self._get_algorithm_instance(config)
+        """Random search hyperparameter optimization"""        algorithm = self._get_algorithm_instance(config)
         
         random_search = RandomizedSearchCV(
             algorithm,
@@ -977,8 +948,7 @@ class ModelTrainer:
         return random_search.best_params_
 
     async def _optuna_optimization(self, X_train, X_val, y_train, y_val, config: TrainingConfig, n_trials: int) -> Dict[str, Any]:
-        """Optuna-based hyperparameter optimization"""
-        def objective(trial: Trial) -> float:
+        """Optuna-based hyperparameter optimization"""        def objective(trial: Trial) -> float:
             # Define hyperparameter suggestions based on algorithm
             params = {}
             algorithm_info = self.algorithm_registry[config.algorithm]
@@ -1010,8 +980,7 @@ class ModelTrainer:
         return study.best_params
 
     async def _save_trained_model(self, model: Any, config: TrainingConfig, result: TrainingResult) -> Optional[str]:
-        """Save trained model to disk"""
-        try:
+        """Save trained model to disk"""        try:
             models_dir = Path(self.config.get('models_directory', 'models'))
             models_dir.mkdir(exist_ok=True)
             
@@ -1028,8 +997,7 @@ class ModelTrainer:
             return None
 
     async def _process_training_queue(self):
-        """Background training job processor"""
-        while True:
+        """Background training job processor"""        while True:
             try:
                 job_data = await self.job_queue.get()
                 
@@ -1077,8 +1045,7 @@ class ModelTrainer:
                 await asyncio.sleep(5)
 
     async def _monitor_training_jobs(self):
-        """Background training job monitoring"""
-        while True:
+        """Background training job monitoring"""        while True:
             try:
                 # Update active jobs count
                 self.ACTIVE_TRAINING_JOBS.set(len(self.active_jobs))
@@ -1100,10 +1067,8 @@ class ModelTrainer:
 
 
 class TrainingPipeline:
-    """
-    Advanced Training Pipeline for End-to-End ML Workflows
-    """
-    
+    """    Advanced Training Pipeline for End-to-End ML Workflows
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.model_trainer = ModelTrainer(config)
@@ -1119,14 +1084,12 @@ class TrainingPipeline:
         logger.info(f"TrainingPipeline initialized: {self.pipeline_id}")
     
     async def initialize(self) -> bool:
-        """Initialize training pipeline"""
-        return await self.model_trainer.initialize()
+        """Initialize training pipeline"""        return await self.model_trainer.initialize()
     
     async def run_pipeline(self, 
                          data_source: Union[str, pd.DataFrame],
                          pipeline_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute complete training pipeline"""
-        try:
+        """Execute complete training pipeline"""        try:
             logger.info(f"Starting training pipeline: {self.pipeline_id}")
             
             # Load data

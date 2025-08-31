@@ -1,5 +1,4 @@
-"""
-Collaboration AI Configuration for IA-Influencer Agent Platform
+"""Collaboration AI Configuration for IA-Influencer Agent Platform
 ===============================================================
 
 Professional collaboration matching and management AI configuration.
@@ -16,7 +15,6 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -25,8 +23,7 @@ import os
 
 
 class CollaborationType(str, Enum):
-    """Types of collaborations supported."""
-    
+    """Types of collaborations supported."""    
     MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     PODCAST_COLLABORATION = "podcast_collaboration"
@@ -40,8 +37,7 @@ class CollaborationType(str, Enum):
 
 
 class CollaborationStatus(str, Enum):
-    """Collaboration request statuses."""
-    
+    """Collaboration request statuses."""    
     PENDING = "pending"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
@@ -52,8 +48,7 @@ class CollaborationStatus(str, Enum):
 
 
 class MatchingCriteria(str, Enum):
-    """Criteria for collaboration matching."""
-    
+    """Criteria for collaboration matching."""    
     GENRE_SIMILARITY = "genre_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     ENGAGEMENT_COMPATIBILITY = "engagement_compatibility"
@@ -65,8 +60,7 @@ class MatchingCriteria(str, Enum):
 
 
 class CreatorTier(str, Enum):
-    """Creator tier classifications."""
-    
+    """Creator tier classifications."""    
     EMERGING = "emerging"  # < 10K followers
     RISING = "rising"      # 10K - 100K followers
     ESTABLISHED = "established"  # 100K - 1M followers
@@ -76,8 +70,7 @@ class CreatorTier(str, Enum):
 
 @dataclass
 class CollaborationMatch:
-    """Collaboration match configuration."""
-    
+    """Collaboration match configuration."""    
     match_id: str
     creator_1_id: str
     creator_2_id: str
@@ -94,13 +87,11 @@ class CollaborationMatch:
 
 
 class CollaborationConfig(BaseSettings):
-    """
-    Professional Collaboration AI Configuration.
+    """    Professional Collaboration AI Configuration.
     
     Manages AI-powered collaboration matching, recommendation,
     and project management for content creators and influencers.
-    """
-    
+    """    
     # Core Collaboration Configuration
     COLLABORATION_STORAGE_PATH: str = "/data/collaborations"
     MATCHING_ALGORITHM: str = "advanced_neural_matching"
@@ -252,8 +243,7 @@ class CollaborationConfig(BaseSettings):
         creator_2_data: Dict[str, Any],
         collaboration_type: CollaborationType
     ) -> CollaborationMatch:
-        """Generate collaboration match recommendation."""
-        
+        """Generate collaboration match recommendation."""        
         # Calculate compatibility scores
         compatibility_scores = {
             "genre_similarity": self._calculate_genre_similarity(creator_1_data, creator_2_data),
@@ -305,8 +295,7 @@ class CollaborationConfig(BaseSettings):
         )
     
     def _calculate_genre_similarity(self, creator_1: Dict, creator_2: Dict) -> float:
-        """Calculate genre/content similarity score."""
-        # Simplified implementation - would use ML model in production
+        """Calculate genre/content similarity score."""        # Simplified implementation - would use ML model in production
         genres_1 = set(creator_1.get("genres", []))
         genres_2 = set(creator_2.get("genres", []))
         
@@ -319,8 +308,7 @@ class CollaborationConfig(BaseSettings):
         return intersection / union if union > 0 else 0.0
     
     def _calculate_audience_overlap(self, creator_1: Dict, creator_2: Dict) -> float:
-        """Calculate audience overlap score."""
-        # Simplified implementation - would analyze actual audience data
+        """Calculate audience overlap score."""        # Simplified implementation - would analyze actual audience data
         demographics_1 = creator_1.get("audience_demographics", {})
         demographics_2 = creator_2.get("audience_demographics", {})
         
@@ -329,8 +317,7 @@ class CollaborationConfig(BaseSettings):
         return min(overlap_score, 1.0)
     
     def _calculate_engagement_compatibility(self, creator_1: Dict, creator_2: Dict) -> float:
-        """Calculate engagement rate compatibility."""
-        engagement_1 = creator_1.get("engagement_rate", 0)
+        """Calculate engagement rate compatibility."""        engagement_1 = creator_1.get("engagement_rate", 0)
         engagement_2 = creator_2.get("engagement_rate", 0)
         
         if engagement_1 == 0 or engagement_2 == 0:
@@ -341,8 +328,7 @@ class CollaborationConfig(BaseSettings):
         return ratio
     
     def _calculate_geographic_proximity(self, creator_1: Dict, creator_2: Dict) -> float:
-        """Calculate geographic proximity score."""
-        # Simplified implementation - would use actual coordinates
+        """Calculate geographic proximity score."""        # Simplified implementation - would use actual coordinates
         location_1 = creator_1.get("location", {})
         location_2 = creator_2.get("location", {})
         
@@ -356,8 +342,7 @@ class CollaborationConfig(BaseSettings):
         return max(0, 1 - (distance_km / max_distance))
     
     def _calculate_career_stage_compatibility(self, creator_1: Dict, creator_2: Dict) -> float:
-        """Calculate career stage compatibility."""
-        followers_1 = creator_1.get("followers", 0)
+        """Calculate career stage compatibility."""        followers_1 = creator_1.get("followers", 0)
         followers_2 = creator_2.get("followers", 0)
         
         tier_1 = self._get_creator_tier(followers_1)
@@ -384,8 +369,7 @@ class CollaborationConfig(BaseSettings):
             return 0.3
     
     def _calculate_brand_alignment(self, creator_1: Dict, creator_2: Dict) -> float:
-        """Calculate brand alignment score."""
-        # Simplified implementation - would analyze brand values, content style, etc.
+        """Calculate brand alignment score."""        # Simplified implementation - would analyze brand values, content style, etc.
         brand_score = 0.75  # Mock score
         return brand_score
     
@@ -395,8 +379,7 @@ class CollaborationConfig(BaseSettings):
         estimated_engagement: float, 
         collaboration_type: CollaborationType
     ) -> float:
-        """Calculate estimated revenue potential."""
-        
+        """Calculate estimated revenue potential."""        
         # Base calculation: reach * engagement * type multiplier
         type_multipliers = {
             CollaborationType.MUSIC_COLLABORATION: 1.2,
@@ -419,8 +402,7 @@ class CollaborationConfig(BaseSettings):
         creator_2: Dict, 
         collaboration_type: CollaborationType
     ) -> Dict[str, Any]:
-        """Generate suggested collaboration terms."""
-        
+        """Generate suggested collaboration terms."""        
         return {
             "revenue_split": self.DEFAULT_REVENUE_SPLIT,
             "content_ownership": "shared",
@@ -436,8 +418,7 @@ class CollaborationConfig(BaseSettings):
         }
     
     def _assess_collaboration_risks(self, creator_1: Dict, creator_2: Dict) -> Dict[str, float]:
-        """Assess potential collaboration risks."""
-        
+        """Assess potential collaboration risks."""        
         return {
             "brand_safety_risk": 0.1,  # Low risk
             "content_quality_risk": 0.15,
@@ -448,8 +429,7 @@ class CollaborationConfig(BaseSettings):
         }
     
     def _estimate_timeline(self, collaboration_type: CollaborationType) -> int:
-        """Estimate collaboration timeline in days."""
-        
+        """Estimate collaboration timeline in days."""        
         timelines = {
             CollaborationType.MUSIC_COLLABORATION: 30,
             CollaborationType.VIDEO_COLLABORATION: 21,
@@ -462,8 +442,7 @@ class CollaborationConfig(BaseSettings):
         return timelines.get(collaboration_type, 21)
     
     def _get_collaboration_deliverables(self, collaboration_type: CollaborationType) -> List[str]:
-        """Get expected deliverables for collaboration type."""
-        
+        """Get expected deliverables for collaboration type."""        
         deliverables = {
             CollaborationType.MUSIC_COLLABORATION: [
                 "Co-written song/track",
@@ -488,8 +467,7 @@ class CollaborationConfig(BaseSettings):
         return deliverables.get(collaboration_type, ["Joint content creation"])
     
     def _get_creator_tier(self, followers: int) -> CreatorTier:
-        """Determine creator tier based on follower count."""
-        
+        """Determine creator tier based on follower count."""        
         if followers >= self.INFLUENTIAL_FOLLOWER_THRESHOLD:
             return CreatorTier.CELEBRITY
         elif followers >= self.ESTABLISHED_FOLLOWER_THRESHOLD:

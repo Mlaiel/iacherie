@@ -1,5 +1,4 @@
-"""
-Index Optimizer Module
+"""Index Optimizer Module
 
 Advanced database index management and optimization system for maximum query performance,
 including automated index creation, usage analysis, and intelligent recommendations.
@@ -7,7 +6,6 @@ including automated index creation, usage analysis, and intelligent recommendati
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import re
 from datetime import datetime, timedelta
@@ -28,8 +26,7 @@ logger = get_logger(__name__)
 
 
 class IndexType(Enum):
-    """Database index types"""
-    BTREE = "btree"
+    """Database index types"""    BTREE = "btree"
     HASH = "hash"
     GIN = "gin"
     GIST = "gist"
@@ -41,8 +38,7 @@ class IndexType(Enum):
 
 
 class IndexStrategy(Enum):
-    """Index optimization strategies"""
-    PERFORMANCE = "performance"
+    """Index optimization strategies"""    PERFORMANCE = "performance"
     STORAGE = "storage"
     BALANCED = "balanced"
     WRITE_HEAVY = "write_heavy"
@@ -50,8 +46,7 @@ class IndexStrategy(Enum):
 
 
 class IndexPriority(Enum):
-    """Index creation priorities"""
-    CRITICAL = "critical"
+    """Index creation priorities"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -59,8 +54,7 @@ class IndexPriority(Enum):
 
 @dataclass
 class IndexConfig:
-    """Index optimization configuration"""
-    strategy: IndexStrategy = IndexStrategy.BALANCED
+    """Index optimization configuration"""    strategy: IndexStrategy = IndexStrategy.BALANCED
     auto_create: bool = True
     auto_drop: bool = False
     analysis_interval: int = 3600  # seconds
@@ -84,8 +78,7 @@ class IndexConfig:
 
 @dataclass
 class IndexMetrics:
-    """Index performance metrics"""
-    total_indexes: int = 0
+    """Index performance metrics"""    total_indexes: int = 0
     used_indexes: int = 0
     unused_indexes: int = 0
     duplicate_indexes: int = 0
@@ -97,23 +90,20 @@ class IndexMetrics:
     
     @property
     def usage_efficiency(self) -> float:
-        """Calculate index usage efficiency"""
-        if self.total_indexes == 0:
+        """Calculate index usage efficiency"""        if self.total_indexes == 0:
             return 0.0
         return self.used_indexes / self.total_indexes
     
     @property
     def space_efficiency(self) -> float:
-        """Calculate space efficiency"""
-        if self.total_size_mb == 0:
+        """Calculate space efficiency"""        if self.total_size_mb == 0:
             return 100.0
         return (1 - (self.unused_indexes * 100 / self.total_indexes)) if self.total_indexes > 0 else 0.0
 
 
 @dataclass
 class IndexInfo:
-    """Database index information"""
-    name: str
+    """Database index information"""    name: str
     table_name: str
     columns: List[str]
     index_type: IndexType
@@ -129,15 +119,13 @@ class IndexInfo:
     
     @property
     def scan_ratio(self) -> float:
-        """Calculate index scan ratio"""
-        if self.tuple_read == 0:
+        """Calculate index scan ratio"""        if self.tuple_read == 0:
             return 0.0
         return self.tuple_fetch / self.tuple_read
     
     @property
     def usage_score(self) -> float:
-        """Calculate usage score (0-100)"""
-        score = 0.0
+        """Calculate usage score (0-100)"""        score = 0.0
         
         # Scan frequency (40%)
         if self.scan_count > 0:
@@ -167,8 +155,7 @@ class IndexInfo:
 
 @dataclass
 class QueryPattern:
-    """Query pattern for index analysis"""
-    pattern: str
+    """Query pattern for index analysis"""    pattern: str
     count: int
     avg_duration: float
     max_duration: float
@@ -180,8 +167,7 @@ class QueryPattern:
     
     @property
     def priority_score(self) -> float:
-        """Calculate query pattern priority for indexing"""
-        score = 0.0
+        """Calculate query pattern priority for indexing"""        score = 0.0
         
         # Frequency (40%)
         score += min(40, self.count / 100 * 40)
@@ -201,8 +187,7 @@ class QueryPattern:
 
 @dataclass
 class IndexRecommendation:
-    """Index creation recommendation"""
-    table_name: str
+    """Index creation recommendation"""    table_name: str
     columns: List[str]
     index_type: IndexType
     priority: IndexPriority
@@ -213,23 +198,20 @@ class IndexRecommendation:
     
     @property
     def cost_benefit_ratio(self) -> float:
-        """Calculate cost-benefit ratio"""
-        if self.estimated_cost == 0:
+        """Calculate cost-benefit ratio"""        if self.estimated_cost == 0:
             return float('inf')
         return self.estimated_benefit / self.estimated_cost
 
 
 class QueryAnalyzer:
-    """Analyzes queries to identify indexing opportunities"""
-    
+    """Analyzes queries to identify indexing opportunities"""    
     def __init__(self, config: IndexConfig):
         self.config = config
         self._query_patterns: Dict[str, QueryPattern] = {}
         self._table_columns: Dict[str, Set[str]] = defaultdict(set)
         
     def analyze_query(self, query: str, duration: float) -> None:
-        """Analyze a query for indexing opportunities"""
-        try:
+        """Analyze a query for indexing opportunities"""        try:
             # Normalize query
             normalized = self._normalize_query(query)
             pattern_key = self._generate_pattern_key(normalized)
@@ -269,8 +251,7 @@ class QueryAnalyzer:
             logger.warning(f"Query analysis failed: {e}")
     
     def _normalize_query(self, query: str) -> str:
-        """Normalize query for pattern matching"""
-        # Convert to lowercase
+        """Normalize query for pattern matching"""        # Convert to lowercase
         normalized = query.lower().strip()
         
         # Replace literals with placeholders
@@ -284,12 +265,10 @@ class QueryAnalyzer:
         return normalized
     
     def _generate_pattern_key(self, normalized_query: str) -> str:
-        """Generate a unique key for query pattern"""
-        return hashlib.md5(normalized_query.encode()).hexdigest()
+        """Generate a unique key for query pattern"""        return hashlib.md5(normalized_query.encode()).hexdigest()
     
     def _extract_tables(self, query: str) -> Set[str]:
-        """Extract table names from query"""
-        tables = set()
+        """Extract table names from query"""        tables = set()
         
         # FROM clause
         from_match = re.search(r'from\s+(\w+)', query)
@@ -316,8 +295,7 @@ class QueryAnalyzer:
         return tables
     
     def _extract_columns(self, query: str) -> Set[str]:
-        """Extract column names from query"""
-        columns = set()
+        """Extract column names from query"""        columns = set()
         
         # WHERE conditions
         where_matches = re.findall(r'where.*?(\w+)\s*[=<>!]', query)
@@ -343,8 +321,7 @@ class QueryAnalyzer:
         return columns
     
     def _extract_where_conditions(self, query: str) -> List[str]:
-        """Extract WHERE conditions"""
-        where_match = re.search(r'where\s+(.*?)(?:\s+order\s+by|\s+group\s+by|\s+limit|$)', query)
+        """Extract WHERE conditions"""        where_match = re.search(r'where\s+(.*?)(?:\s+order\s+by|\s+group\s+by|\s+limit|$)', query)
         if where_match:
             where_clause = where_match.group(1)
             # Split by AND/OR and clean up
@@ -353,8 +330,7 @@ class QueryAnalyzer:
         return []
     
     def _extract_order_by(self, query: str) -> List[str]:
-        """Extract ORDER BY columns"""
-        order_match = re.search(r'order\s+by\s+(.*?)(?:\s+limit|$)', query)
+        """Extract ORDER BY columns"""        order_match = re.search(r'order\s+by\s+(.*?)(?:\s+limit|$)', query)
         if order_match:
             order_clause = order_match.group(1)
             columns = re.findall(r'(\w+)', order_clause)
@@ -362,13 +338,11 @@ class QueryAnalyzer:
         return []
     
     def _extract_joins(self, query: str) -> List[str]:
-        """Extract JOIN conditions"""
-        join_matches = re.findall(r'join\s+\w+\s+on\s+(.*?)(?:\s+join|\s+where|\s+order|\s+group|$)', query)
+        """Extract JOIN conditions"""        join_matches = re.findall(r'join\s+\w+\s+on\s+(.*?)(?:\s+join|\s+where|\s+order|\s+group|$)', query)
         return [join.strip() for join in join_matches]
     
     def get_recommendations(self) -> List[IndexRecommendation]:
-        """Generate index recommendations based on query analysis"""
-        recommendations = []
+        """Generate index recommendations based on query analysis"""        recommendations = []
         
         for pattern in self._query_patterns.values():
             if pattern.count < self.config.min_query_count:
@@ -386,8 +360,7 @@ class QueryAnalyzer:
         return recommendations
     
     def _analyze_pattern_for_indexes(self, pattern: QueryPattern) -> List[IndexRecommendation]:
-        """Analyze a query pattern for index opportunities"""
-        recommendations = []
+        """Analyze a query pattern for index opportunities"""        recommendations = []
         
         for table in pattern.tables_used:
             # WHERE clause indexes
@@ -411,8 +384,7 @@ class QueryAnalyzer:
         return recommendations
     
     def _create_where_index_recommendation(self, table: str, pattern: QueryPattern) -> Optional[IndexRecommendation]:
-        """Create index recommendation for WHERE conditions"""
-        # Extract columns from WHERE conditions
+        """Create index recommendation for WHERE conditions"""        # Extract columns from WHERE conditions
         where_columns = []
         for condition in pattern.where_conditions:
             cols = re.findall(r'\b(\w+)\s*[=<>!]', condition)
@@ -440,8 +412,7 @@ class QueryAnalyzer:
         )
     
     def _create_order_by_index_recommendation(self, table: str, pattern: QueryPattern) -> Optional[IndexRecommendation]:
-        """Create index recommendation for ORDER BY"""
-        if not pattern.order_by_columns:
+        """Create index recommendation for ORDER BY"""        if not pattern.order_by_columns:
             return None
         
         index_columns = pattern.order_by_columns[:self.config.max_index_columns]
@@ -462,8 +433,7 @@ class QueryAnalyzer:
         )
     
     def _create_join_index_recommendation(self, table: str, pattern: QueryPattern) -> Optional[IndexRecommendation]:
-        """Create index recommendation for JOINs"""
-        # Extract join columns (simplified)
+        """Create index recommendation for JOINs"""        # Extract join columns (simplified)
         join_columns = []
         for join_condition in pattern.join_conditions:
             cols = re.findall(r'\b(\w+)\s*=\s*\w+\.(\w+)', join_condition)
@@ -490,8 +460,7 @@ class QueryAnalyzer:
         )
     
     def _calculate_priority(self, pattern: QueryPattern) -> IndexPriority:
-        """Calculate recommendation priority"""
-        score = pattern.priority_score
+        """Calculate recommendation priority"""        score = pattern.priority_score
         
         if score >= 80:
             return IndexPriority.CRITICAL
@@ -504,8 +473,7 @@ class QueryAnalyzer:
 
 
 class IndexOptimizer:
-    """Advanced database index optimizer"""
-    
+    """Advanced database index optimizer"""    
     def __init__(self, config: IndexConfig):
         self.config = config
         self.metrics = IndexMetrics()
@@ -520,8 +488,7 @@ class IndexOptimizer:
         self._last_analysis = datetime.now()
         
     async def analyze_indexes(self, engine: AsyncEngine) -> None:
-        """Analyze existing indexes and their usage"""
-        try:
+        """Analyze existing indexes and their usage"""        try:
             logger.info("Starting index analysis")
             
             async with engine.begin() as conn:
@@ -545,10 +512,8 @@ class IndexOptimizer:
             raise
     
     async def _collect_index_info(self, conn) -> None:
-        """Collect index information from database"""
-        # PostgreSQL-specific query
-        query = text("""
-            SELECT 
+        """Collect index information from database"""        # PostgreSQL-specific query
+        query = text("""            SELECT 
                 schemaname,
                 tablename,
                 indexname,
@@ -568,9 +533,7 @@ class IndexOptimizer:
                 self._existing_indexes[index_info.name] = index_info
     
     async def _collect_usage_stats(self, conn) -> None:
-        """Collect index usage statistics"""
-        query = text("""
-            SELECT 
+        """Collect index usage statistics"""        query = text("""            SELECT 
                 schemaname,
                 tablename,
                 indexname,
@@ -592,8 +555,7 @@ class IndexOptimizer:
                 index_info.tuple_fetch = row.idx_tup_fetch or 0
     
     def _parse_index_definition(self, row) -> Optional[IndexInfo]:
-        """Parse index definition from database row"""
-        try:
+        """Parse index definition from database row"""        try:
             index_def = row.indexdef
             index_name = row.indexname
             table_name = row.tablename
@@ -642,8 +604,7 @@ class IndexOptimizer:
             return None
     
     def _extract_index_columns(self, index_def: str) -> List[str]:
-        """Extract column names from index definition"""
-        # Find the column list in parentheses
+        """Extract column names from index definition"""        # Find the column list in parentheses
         match = re.search(r'\(([^)]+)\)', index_def)
         if not match:
             return []
@@ -662,8 +623,7 @@ class IndexOptimizer:
         return columns
     
     async def _detect_duplicate_indexes(self) -> None:
-        """Detect duplicate or redundant indexes"""
-        duplicates = 0
+        """Detect duplicate or redundant indexes"""        duplicates = 0
         
         # Group indexes by table
         table_indexes = defaultdict(list)
@@ -685,8 +645,7 @@ class IndexOptimizer:
         self.metrics.duplicate_indexes = duplicates
     
     def _update_metrics(self) -> None:
-        """Update index metrics"""
-        total_indexes = len(self._existing_indexes)
+        """Update index metrics"""        total_indexes = len(self._existing_indexes)
         used_indexes = sum(1 for idx in self._existing_indexes.values() if idx.scan_count > 0)
         unused_indexes = total_indexes - used_indexes
         total_size = sum(idx.size_mb for idx in self._existing_indexes.values())
@@ -713,8 +672,7 @@ class IndexOptimizer:
             self._send_metrics()
     
     async def generate_recommendations(self) -> List[IndexRecommendation]:
-        """Generate index optimization recommendations"""
-        recommendations = []
+        """Generate index optimization recommendations"""        recommendations = []
         
         # Query-based recommendations
         query_recs = self.query_analyzer.get_recommendations()
@@ -731,8 +689,7 @@ class IndexOptimizer:
         return recommendations
     
     def _generate_usage_recommendations(self) -> List[IndexRecommendation]:
-        """Generate recommendations based on index usage patterns"""
-        recommendations = []
+        """Generate recommendations based on index usage patterns"""        recommendations = []
         
         for index_info in self._existing_indexes.values():
             # Recommend dropping unused indexes
@@ -755,8 +712,7 @@ class IndexOptimizer:
         return recommendations
     
     def _deduplicate_recommendations(self, recommendations: List[IndexRecommendation]) -> List[IndexRecommendation]:
-        """Remove duplicate recommendations"""
-        seen = set()
+        """Remove duplicate recommendations"""        seen = set()
         unique_recs = []
         
         for rec in recommendations:
@@ -768,8 +724,7 @@ class IndexOptimizer:
         return unique_recs
     
     async def create_index(self, engine: AsyncEngine, recommendation: IndexRecommendation) -> bool:
-        """Create an index based on recommendation"""
-        try:
+        """Create an index based on recommendation"""        try:
             if not self.config.auto_create:
                 logger.info(f"Auto-create disabled, skipping index creation: {recommendation.table_name}.{recommendation.columns}")
                 return False
@@ -800,8 +755,7 @@ class IndexOptimizer:
             return False
     
     async def drop_index(self, engine: AsyncEngine, index_name: str) -> bool:
-        """Drop an unused index"""
-        try:
+        """Drop an unused index"""        try:
             if not self.config.auto_drop:
                 logger.info(f"Auto-drop disabled, skipping index drop: {index_name}")
                 return False
@@ -824,8 +778,7 @@ class IndexOptimizer:
             return False
     
     def _generate_index_name(self, recommendation: IndexRecommendation) -> str:
-        """Generate a unique index name"""
-        table = recommendation.table_name
+        """Generate a unique index name"""        table = recommendation.table_name
         columns = "_".join(recommendation.columns[:3])  # Limit length
         suffix = recommendation.index_type.value
         
@@ -841,8 +794,7 @@ class IndexOptimizer:
         return index_name
     
     def _generate_create_index_sql(self, index_name: str, recommendation: IndexRecommendation) -> str:
-        """Generate CREATE INDEX SQL statement"""
-        table = recommendation.table_name
+        """Generate CREATE INDEX SQL statement"""        table = recommendation.table_name
         columns = ", ".join(recommendation.columns)
         index_type = recommendation.index_type.value.upper()
         
@@ -856,12 +808,10 @@ class IndexOptimizer:
         return sql
     
     def add_query_for_analysis(self, query: str, duration: float) -> None:
-        """Add a query for analysis"""
-        self.query_analyzer.analyze_query(query, duration)
+        """Add a query for analysis"""        self.query_analyzer.analyze_query(query, duration)
     
     def _send_metrics(self) -> None:
-        """Send metrics to monitoring system"""
-        self.metrics_collector.gauge("database_indexes_total", self.metrics.total_indexes)
+        """Send metrics to monitoring system"""        self.metrics_collector.gauge("database_indexes_total", self.metrics.total_indexes)
         self.metrics_collector.gauge("database_indexes_used", self.metrics.used_indexes)
         self.metrics_collector.gauge("database_indexes_unused", self.metrics.unused_indexes)
         self.metrics_collector.gauge("database_indexes_duplicate", self.metrics.duplicate_indexes)
@@ -870,8 +820,7 @@ class IndexOptimizer:
         self.metrics_collector.gauge("database_index_hit_ratio", self.metrics.index_hit_ratio)
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get comprehensive index statistics"""
-        return {
+        """Get comprehensive index statistics"""        return {
             "total_indexes": self.metrics.total_indexes,
             "used_indexes": self.metrics.used_indexes,
             "unused_indexes": self.metrics.unused_indexes,
@@ -892,8 +841,7 @@ _index_optimizer: Optional[IndexOptimizer] = None
 
 
 def get_index_optimizer(config: Optional[IndexConfig] = None) -> IndexOptimizer:
-    """Get global index optimizer instance"""
-    global _index_optimizer
+    """Get global index optimizer instance"""    global _index_optimizer
     
     if _index_optimizer is None:
         _index_optimizer = IndexOptimizer(config or IndexConfig())
@@ -902,13 +850,10 @@ def get_index_optimizer(config: Optional[IndexConfig] = None) -> IndexOptimizer:
 
 
 class IndexAnalyzer:
-    """Helper class for index analysis"""
-    
+    """Helper class for index analysis"""    
     @staticmethod
     async def analyze_table_indexes(engine: AsyncEngine, table_name: str) -> Dict[str, Any]:
-        """Analyze indexes for a specific table"""
-        query = text("""
-            SELECT 
+        """Analyze indexes for a specific table"""        query = text("""            SELECT 
                 indexname,
                 indexdef,
                 idx_scan,
@@ -943,8 +888,7 @@ class IndexAnalyzer:
 
 
 class ContentProtectionIndexOptimizer:
-    """Specialized index optimizer for content protection and fingerprinting"""
-    
+    """Specialized index optimizer for content protection and fingerprinting"""    
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
         self.content_indexes = [
@@ -1003,8 +947,7 @@ class ContentProtectionIndexOptimizer:
         ]
     
     async def optimize_content_protection_indexes(self, engine: AsyncEngine) -> List[str]:
-        """Create optimized indexes for content protection operations"""
-        created_indexes = []
+        """Create optimized indexes for content protection operations"""        created_indexes = []
         
         for recommendation in self.content_indexes:
             success = await self.base_optimizer.create_index(engine, recommendation)
@@ -1017,24 +960,19 @@ class ContentProtectionIndexOptimizer:
         return created_indexes
     
     async def _create_vector_search_indexes(self, engine: AsyncEngine) -> None:
-        """Create specialized indexes for vector similarity search"""
-        try:
+        """Create specialized indexes for vector similarity search"""        try:
             async with engine.begin() as conn:
                 # Create GiST index for vector similarity if using pgvector
-                vector_index_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_fingerprints_vector_embedding
+                vector_index_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_fingerprints_vector_embedding
                 ON content_fingerprints USING ivfflat (vector_embedding vector_cosine_ops)
                 WITH (lists = 100)
-                """
-                await conn.execute(text(vector_index_sql))
+                """                await conn.execute(text(vector_index_sql))
                 
                 # Create partial index for active fingerprints
-                active_fingerprints_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_fingerprints_active
+                active_fingerprints_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_fingerprints_active
                 ON content_fingerprints (user_id, created_at)
                 WHERE metadata->>'status' = 'active'
-                """
-                await conn.execute(text(active_fingerprints_sql))
+                """                await conn.execute(text(active_fingerprints_sql))
                 
                 logger.info("Successfully created vector search indexes")
                 
@@ -1043,8 +981,7 @@ class ContentProtectionIndexOptimizer:
 
 
 class MonetizationIndexOptimizer:
-    """Specialized index optimizer for monetization and revenue tracking"""
-    
+    """Specialized index optimizer for monetization and revenue tracking"""    
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
         self.monetization_indexes = [
@@ -1088,8 +1025,7 @@ class MonetizationIndexOptimizer:
         ]
     
     async def optimize_monetization_indexes(self, engine: AsyncEngine) -> List[str]:
-        """Create optimized indexes for monetization operations"""
-        created_indexes = []
+        """Create optimized indexes for monetization operations"""        created_indexes = []
         
         for recommendation in self.monetization_indexes:
             success = await self.base_optimizer.create_index(engine, recommendation)
@@ -1102,25 +1038,20 @@ class MonetizationIndexOptimizer:
         return created_indexes
     
     async def _create_aggregation_indexes(self, engine: AsyncEngine) -> None:
-        """Create specialized indexes for revenue aggregation"""
-        try:
+        """Create specialized indexes for revenue aggregation"""        try:
             async with engine.begin() as conn:
                 # Create partial index for recent revenue data
-                recent_revenue_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_revenue_tracking_recent
+                recent_revenue_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_revenue_tracking_recent
                 ON revenue_tracking (user_id, revenue_amount)
                 WHERE created_at >= NOW() - INTERVAL '30 days'
-                """
-                await conn.execute(text(recent_revenue_sql))
+                """                await conn.execute(text(recent_revenue_sql))
                 
                 # Create expression index for revenue calculations
-                revenue_total_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_revenue_tracking_total
+                revenue_total_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_revenue_tracking_total
                 ON revenue_tracking (user_id, (revenue_amount * CASE WHEN currency = 'USD' THEN 1.0 
                                                                    WHEN currency = 'EUR' THEN 1.1 
                                                                    ELSE 1.0 END))
-                """
-                await conn.execute(text(revenue_total_sql))
+                """                await conn.execute(text(revenue_total_sql))
                 
                 logger.info("Successfully created aggregation indexes")
                 
@@ -1129,8 +1060,7 @@ class MonetizationIndexOptimizer:
 
 
 class MultimediaIndexOptimizer:
-    """Specialized index optimizer for multimedia content operations"""
-    
+    """Specialized index optimizer for multimedia content operations"""    
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
         self.multimedia_indexes = [
@@ -1174,8 +1104,7 @@ class MultimediaIndexOptimizer:
         ]
     
     async def optimize_multimedia_indexes(self, engine: AsyncEngine) -> List[str]:
-        """Create optimized indexes for multimedia operations"""
-        created_indexes = []
+        """Create optimized indexes for multimedia operations"""        created_indexes = []
         
         for recommendation in self.multimedia_indexes:
             success = await self.base_optimizer.create_index(engine, recommendation)
@@ -1188,30 +1117,23 @@ class MultimediaIndexOptimizer:
         return created_indexes
     
     async def _create_multimedia_specific_indexes(self, engine: AsyncEngine) -> None:
-        """Create multimedia-specific specialized indexes"""
-        try:
+        """Create multimedia-specific specialized indexes"""        try:
             async with engine.begin() as conn:
                 # Create GIN index for metadata search
-                metadata_search_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_metadata_search
+                metadata_search_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_metadata_search
                 ON content_metadata USING GIN (metadata)
-                """
-                await conn.execute(text(metadata_search_sql))
+                """                await conn.execute(text(metadata_search_sql))
                 
                 # Create partial indexes for different content types
-                audio_content_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_metadata_audio
+                audio_content_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_metadata_audio
                 ON content_metadata (user_id, duration, quality)
                 WHERE content_type = 'audio'
-                """
-                await conn.execute(text(audio_content_sql))
+                """                await conn.execute(text(audio_content_sql))
                 
-                video_content_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_metadata_video
+                video_content_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_content_metadata_video
                 ON content_metadata (user_id, file_size, format)
                 WHERE content_type = 'video'
-                """
-                await conn.execute(text(video_content_sql))
+                """                await conn.execute(text(video_content_sql))
                 
                 logger.info("Successfully created multimedia-specific indexes")
                 
@@ -1220,39 +1142,31 @@ class MultimediaIndexOptimizer:
 
 
 class AIProcessingIndexOptimizer:
-    """Specialized index optimizer for AI processing operations"""
-    
+    """Specialized index optimizer for AI processing operations"""    
     def __init__(self, base_optimizer: IndexOptimizer):
         self.base_optimizer = base_optimizer
     
     async def optimize_ai_processing_indexes(self, engine: AsyncEngine) -> List[str]:
-        """Create optimized indexes for AI processing operations"""
-        created_indexes = []
+        """Create optimized indexes for AI processing operations"""        created_indexes = []
         
         try:
             async with engine.begin() as conn:
                 # Create indexes for ML model tracking
-                model_tracking_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_ml_models_version_status
+                model_tracking_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_ml_models_version_status
                 ON ml_models (model_version, status, created_at)
-                """
-                await conn.execute(text(model_tracking_sql))
+                """                await conn.execute(text(model_tracking_sql))
                 created_indexes.append("ml_models.model_version_status")
                 
                 # Create indexes for inference logging
-                inference_log_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_inference_logs_model_timestamp
+                inference_log_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_inference_logs_model_timestamp
                 ON inference_logs (model_id, timestamp DESC)
-                """
-                await conn.execute(text(inference_log_sql))
+                """                await conn.execute(text(inference_log_sql))
                 created_indexes.append("inference_logs.model_timestamp")
                 
                 # Create indexes for feature store
-                features_sql = """
-                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_feature_store_entity_timestamp
+                features_sql = """                CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_feature_store_entity_timestamp
                 ON feature_store (entity_id, feature_timestamp DESC)
-                """
-                await conn.execute(text(features_sql))
+                """                await conn.execute(text(features_sql))
                 created_indexes.append("feature_store.entity_timestamp")
                 
                 logger.info("Successfully created AI processing indexes")

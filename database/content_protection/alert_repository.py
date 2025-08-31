@@ -1,5 +1,4 @@
-"""
-Protection Alert Repository
+"""Protection Alert Repository
 
 Enterprise-grade alert management system for content protection violations
 with real-time monitoring, advanced analytics, and automated response capabilities.
@@ -17,7 +16,6 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
-
 import asyncio
 import json
 import logging
@@ -47,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class AlertPriority(Enum):
-    """Alert priority levels"""
-    LOW = "low"
+    """Alert priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -56,8 +53,7 @@ class AlertPriority(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert status types"""
-    PENDING = "pending"
+    """Alert status types"""    PENDING = "pending"
     INVESTIGATING = "investigating"
     ESCALATED = "escalated"
     RESOLVED = "resolved"
@@ -66,8 +62,7 @@ class AlertStatus(Enum):
 
 
 class AlertCategory(Enum):
-    """Alert categories"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Alert categories"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     CONTENT_MANIPULATION = "content_manipulation"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -76,21 +71,18 @@ class AlertCategory(Enum):
 
 
 class ProtectionAlertRepositoryError(Exception):
-    """Custom exception for alert repository operations"""
-    pass
+    """Custom exception for alert repository operations"""    pass
 
 
 class ProtectionAlertRepository:
-    """
-    Ultra-advanced protection alert repository with enterprise features:
+    """    Ultra-advanced protection alert repository with enterprise features:
     - Real-time alert processing and intelligent routing
     - Advanced alert correlation and pattern recognition
     - Automated escalation and response workflows
     - Multi-channel notification system
     - Comprehensive analytics and reporting
     - Integration with legal action systems
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -138,8 +130,7 @@ class ProtectionAlertRepository:
         alert_priority: AlertPriority = AlertPriority.MEDIUM,
         auto_escalate: bool = True
     ) -> ProtectionAlert:
-        """
-        Create new protection alert with intelligent categorization
+        """        Create new protection alert with intelligent categorization
         
         Args:
             fingerprint_id: Associated content fingerprint ID
@@ -152,8 +143,7 @@ class ProtectionAlertRepository:
             
         Raises:
             ProtectionAlertRepositoryError: If creation fails
-        """
-        try:
+        """        try:
             # Validate detection data
             await self._validate_detection_data(detection_data)
             
@@ -228,8 +218,7 @@ class ProtectionAlertRepository:
         limit: int = 100,
         offset: int = 0
     ) -> List[ProtectionAlert]:
-        """
-        Retrieve pending alerts with advanced filtering
+        """        Retrieve pending alerts with advanced filtering
         
         Args:
             priority_filter: Filter by alert priorities
@@ -240,8 +229,7 @@ class ProtectionAlertRepository:
             
         Returns:
             List of ProtectionAlert records
-        """
-        try:
+        """        try:
             query = self.db_session.query(ProtectionAlert).filter(
                 ProtectionAlert.status == AlertStatus.PENDING.value
             )
@@ -295,8 +283,7 @@ class ProtectionAlertRepository:
         resolution_data: Optional[Dict[str, Any]] = None,
         analyst_id: Optional[str] = None
     ) -> ProtectionAlert:
-        """
-        Update alert status with comprehensive audit trail
+        """        Update alert status with comprehensive audit trail
         
         Args:
             alert_id: Alert identifier
@@ -306,8 +293,7 @@ class ProtectionAlertRepository:
             
         Returns:
             Updated ProtectionAlert record
-        """
-        try:
+        """        try:
             alert = await self.db_session.get(ProtectionAlert, alert_id)
             
             if not alert:
@@ -373,8 +359,7 @@ class ProtectionAlertRepository:
         escalated_by: Optional[str] = None,
         escalation_data: Optional[Dict[str, Any]] = None
     ) -> AlertEscalation:
-        """
-        Escalate alert with detailed reasoning and tracking
+        """        Escalate alert with detailed reasoning and tracking
         
         Args:
             alert_id: Alert identifier
@@ -384,8 +369,7 @@ class ProtectionAlertRepository:
             
         Returns:
             Created AlertEscalation record
-        """
-        try:
+        """        try:
             alert = await self.db_session.get(ProtectionAlert, alert_id)
             
             if not alert:
@@ -442,8 +426,7 @@ class ProtectionAlertRepository:
         action_data: Optional[Dict[str, Any]] = None,
         analyst_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Process multiple alerts in batch for efficiency
+        """        Process multiple alerts in batch for efficiency
         
         Args:
             alert_ids: List of alert identifiers
@@ -453,8 +436,7 @@ class ProtectionAlertRepository:
             
         Returns:
             Batch processing results
-        """
-        try:
+        """        try:
             results = {
                 "processed": 0,
                 "failed": 0,
@@ -514,8 +496,7 @@ class ProtectionAlertRepository:
         time_range_days: int = 30,
         group_by: str = "day"
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive alert analytics and insights
+        """        Generate comprehensive alert analytics and insights
         
         Args:
             time_range_days: Number of days to analyze
@@ -523,8 +504,7 @@ class ProtectionAlertRepository:
             
         Returns:
             Comprehensive analytics data
-        """
-        try:
+        """        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=time_range_days)
             
             # Basic alert counts
@@ -613,8 +593,7 @@ class ProtectionAlertRepository:
         lookback_days: int = 7,
         min_pattern_size: int = 3
     ) -> List[Dict[str, Any]]:
-        """
-        Identify patterns and trends in alert data for proactive protection
+        """        Identify patterns and trends in alert data for proactive protection
         
         Args:
             lookback_days: Days to analyze for patterns
@@ -622,8 +601,7 @@ class ProtectionAlertRepository:
             
         Returns:
             List of identified patterns with details
-        """
-        try:
+        """        try:
             start_date = datetime.now(timezone.utc) - timedelta(days=lookback_days)
             
             # Get recent alerts
@@ -695,8 +673,7 @@ class ProtectionAlertRepository:
     # Private helper methods
     
     async def _validate_detection_data(self, detection_data: Dict[str, Any]) -> None:
-        """Validate detection data structure"""
-        required_fields = ["detected_url", "platform", "similarity_score"]
+        """Validate detection data structure"""        required_fields = ["detected_url", "platform", "similarity_score"]
         
         for field in required_fields:
             if field not in detection_data:
@@ -706,8 +683,7 @@ class ProtectionAlertRepository:
             raise ProtectionAlertRepositoryError("Similarity score must be between 0.0 and 1.0")
     
     async def _categorize_alert(self, detection_data: Dict[str, Any]) -> AlertCategory:
-        """Determine alert category based on detection data"""
-        detection_method = detection_data.get("detection_method", "").lower()
+        """Determine alert category based on detection data"""        detection_method = detection_data.get("detection_method", "").lower()
         platform = detection_data.get("platform", "").lower()
         
         # AI-based categorization logic
@@ -727,8 +703,7 @@ class ProtectionAlertRepository:
         fingerprint_id: UUID,
         detection_data: Dict[str, Any]
     ) -> List[ProtectionAlert]:
-        """Find alerts correlated with current detection"""
-        correlation_window = datetime.now(timezone.utc) - timedelta(hours=self.correlation_window_hours)
+        """Find alerts correlated with current detection"""        correlation_window = datetime.now(timezone.utc) - timedelta(hours=self.correlation_window_hours)
         
         # Find alerts with same fingerprint
         same_content = await self.db_session.query(ProtectionAlert).filter(
@@ -760,8 +735,7 @@ class ProtectionAlertRepository:
         base_priority: AlertPriority,
         correlations: List[ProtectionAlert]
     ) -> AlertPriority:
-        """Adjust alert priority based on correlations"""
-        if len(correlations) > 5:
+        """Adjust alert priority based on correlations"""        if len(correlations) > 5:
             return AlertPriority.CRITICAL
         elif len(correlations) > 2:
             return AlertPriority.HIGH
@@ -769,8 +743,7 @@ class ProtectionAlertRepository:
             return base_priority
     
     async def _should_auto_escalate(self, alert: ProtectionAlert) -> bool:
-        """Determine if alert should be automatically escalated"""
-        if alert.alert_priority in [AlertPriority.CRITICAL.value, AlertPriority.EMERGENCY.value]:
+        """Determine if alert should be automatically escalated"""        if alert.alert_priority in [AlertPriority.CRITICAL.value, AlertPriority.EMERGENCY.value]:
             return True
         
         if alert.similarity_score >= self.escalation_thresholds["high_similarity"]:
@@ -782,8 +755,7 @@ class ProtectionAlertRepository:
         return False
     
     async def _send_alert_notifications(self, alert: ProtectionAlert) -> None:
-        """Send notifications for new alert"""
-        try:
+        """Send notifications for new alert"""        try:
             notification_data = {
                 "alert_id": str(alert.id),
                 "priority": alert.alert_priority,
@@ -803,8 +775,7 @@ class ProtectionAlertRepository:
         old_status: str,
         new_status: str
     ) -> None:
-        """Send notifications for status updates"""
-        try:
+        """Send notifications for status updates"""        try:
             notification_data = {
                 "alert_id": str(alert.id),
                 "old_status": old_status,
@@ -822,8 +793,7 @@ class ProtectionAlertRepository:
         alert: ProtectionAlert,
         escalation: AlertEscalation
     ) -> None:
-        """Send notifications for alert escalation"""
-        try:
+        """Send notifications for alert escalation"""        try:
             notification_data = {
                 "alert_id": str(alert.id),
                 "escalation_id": str(escalation.id),
@@ -837,13 +807,11 @@ class ProtectionAlertRepository:
             logger.warning(f"Escalation notification failed: {e}")
     
     async def _determine_escalation_level(self, alert: ProtectionAlert) -> int:
-        """Determine escalation level based on alert properties"""
-        current_escalations = len(alert.metadata.get("escalations", []))
+        """Determine escalation level based on alert properties"""        current_escalations = len(alert.metadata.get("escalations", []))
         return current_escalations + 1
     
     async def _increase_priority(self, current_priority: str) -> str:
-        """Increase alert priority level"""
-        priority_levels = [
+        """Increase alert priority level"""        priority_levels = [
             AlertPriority.LOW.value,
             AlertPriority.MEDIUM.value,
             AlertPriority.HIGH.value,
@@ -861,8 +829,7 @@ class ProtectionAlertRepository:
         return current_priority
     
     async def _calculate_escalation_rate(self) -> float:
-        """Calculate current escalation rate"""
-        try:
+        """Calculate current escalation rate"""        try:
             total_alerts = await self.db_session.query(ProtectionAlert).count()
             escalated_alerts = await self.db_session.query(ProtectionAlert).filter(
                 ProtectionAlert.status == AlertStatus.ESCALATED.value
@@ -878,8 +845,7 @@ class ProtectionAlertRepository:
         start_date: datetime,
         group_by: str
     ) -> List[Dict[str, Any]]:
-        """Generate time series data for analytics"""
-        try:
+        """Generate time series data for analytics"""        try:
             time_format = {
                 "hour": "%Y-%m-%d %H:00:00",
                 "day": "%Y-%m-%d",

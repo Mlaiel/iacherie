@@ -1,5 +1,4 @@
 """Email notification service using SendGrid or SMTP."""
-
 import os
 from typing import Dict, List, Optional
 from datetime import datetime
@@ -30,8 +29,7 @@ class EmailNotifier:
                         content_type: str = "html",
                         from_email: Optional[str] = None,
                         attachments: Optional[List[Dict]] = None) -> Dict:
-        """Send an email using the configured provider."""
-        
+        """Send an email using the configured provider."""        
         if self.provider == "sendgrid" and self.sendgrid_api_key:
             return await self._send_via_sendgrid(to_email, subject, content, content_type, from_email, attachments)
         else:
@@ -40,8 +38,7 @@ class EmailNotifier:
     async def _send_via_smtp(self, to_email: str, subject: str, content: str, 
                            content_type: str, from_email: Optional[str], 
                            attachments: Optional[List[Dict]]) -> Dict:
-        """Send email via SMTP."""
-        try:
+        """Send email via SMTP."""        try:
             sender_email = from_email or self.default_sender
             
             # Create message
@@ -89,8 +86,7 @@ class EmailNotifier:
     async def _send_via_sendgrid(self, to_email: str, subject: str, content: str,
                                content_type: str, from_email: Optional[str],
                                attachments: Optional[List[Dict]]) -> Dict:
-        """Send email via SendGrid API."""
-        try:
+        """Send email via SendGrid API."""        try:
             import sendgrid
             from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType
             
@@ -134,8 +130,7 @@ class EmailNotifier:
             }
 
     def _add_attachment(self, msg: MIMEMultipart, attachment_info: Dict):
-        """Add attachment to email message."""
-        try:
+        """Add attachment to email message."""        try:
             filename = attachment_info.get("filename", "attachment")
             content = attachment_info.get("content", "")
             mime_type = attachment_info.get("type", "application/octet-stream")
@@ -154,11 +149,9 @@ class EmailNotifier:
             print(f"Failed to add attachment {attachment_info.get('filename', 'unknown')}: {e}")
 
     async def send_welcome_email(self, user_email: str, user_name: str) -> Dict:
-        """Send welcome email to new user."""
-        subject = "Welcome to IA Influencer Agent!"
+        """Send welcome email to new user."""        subject = "Welcome to IA Influencer Agent!"
         
-        content = f"""
-        <html>
+        content = f"""        <html>
         <body>
             <h2>Welcome, {user_name}!</h2>
             <p>Thank you for joining IA Influencer Agent - the revolutionary AI platform for content creators.</p>
@@ -181,16 +174,13 @@ class EmailNotifier:
             <p><small>Copyright © 2025 Fahed Mlaiel. All rights reserved.</small></p>
         </body>
         </html>
-        """
-        
+        """        
         return await self.send_email(user_email, subject, content, "html")
 
     async def send_content_processed_email(self, user_email: str, content_info: Dict) -> Dict:
-        """Send notification when content processing is complete."""
-        subject = f"Content Processing Complete: {content_info.get('title', 'Your Content')}"
+        """Send notification when content processing is complete."""        subject = f"Content Processing Complete: {content_info.get('title', 'Your Content')}"
         
-        content = f"""
-        <html>
+        content = f"""        <html>
         <body>
             <h2>Content Processing Complete! ✅</h2>
             <p>Your content "<strong>{content_info.get('title', 'Unknown')}</strong>" has been successfully processed.</p>
@@ -209,16 +199,13 @@ class EmailNotifier:
             The IA Influencer Agent Team</p>
         </body>
         </html>
-        """
-        
+        """        
         return await self.send_email(user_email, subject, content, "html")
 
     async def send_protection_alert_email(self, user_email: str, alert_info: Dict) -> Dict:
-        """Send alert when content protection issue is detected."""
-        subject = f"🚨 Content Protection Alert: {alert_info.get('content_title', 'Your Content')}"
+        """Send alert when content protection issue is detected."""        subject = f"🚨 Content Protection Alert: {alert_info.get('content_title', 'Your Content')}"
         
-        content = f"""
-        <html>
+        content = f"""        <html>
         <body>
             <h2 style="color: #ff6b6b;">🚨 Content Protection Alert</h2>
             <p>We've detected potential unauthorized use of your content:</p>
@@ -244,16 +231,13 @@ class EmailNotifier:
             The IA Influencer Agent Protection Team</p>
         </body>
         </html>
-        """
-        
+        """        
         return await self.send_email(user_email, subject, content, "html")
 
     async def send_collaboration_opportunity_email(self, user_email: str, opportunity_info: Dict) -> Dict:
-        """Send notification about new collaboration opportunity."""
-        subject = f"🤝 New Collaboration Opportunity: {opportunity_info.get('partner_name', 'Creator')}"
+        """Send notification about new collaboration opportunity."""        subject = f"🤝 New Collaboration Opportunity: {opportunity_info.get('partner_name', 'Creator')}"
         
-        content = f"""
-        <html>
+        content = f"""        <html>
         <body>
             <h2>🤝 New Collaboration Opportunity!</h2>
             <p>We've found a great collaboration match for you:</p>
@@ -276,6 +260,5 @@ class EmailNotifier:
             The IA Influencer Agent Collaboration Team</p>
         </body>
         </html>
-        """
-        
+        """        
         return await self.send_email(user_email, subject, content, "html")

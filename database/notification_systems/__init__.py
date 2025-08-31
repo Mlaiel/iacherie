@@ -20,8 +20,7 @@ Ce code constitue la propriété intellectuelle exclusive de Fahed Mlaiel.
 Toute utilisation, copie, modification, distribution ou tentative de reverse engineering
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
-"""
-from typing import List, Dict, Any, Optional, Union, Callable
+"""from typing import List, Dict, Any, Optional, Union, Callable
 import logging
 import asyncio
 from datetime import datetime, timedelta

@@ -1,5 +1,4 @@
-"""
-Deployment Automation Index - IA Influencer Agent Platform
+"""Deployment Automation Index - IA Influencer Agent Platform
 
 Central index and orchestration entry point for the deployment automation
 module supporting the complete IA Influencer Agent ecosystem including
@@ -19,7 +18,6 @@ Copyright: All rights reserved - Unauthorized use prohibited
 Unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international copyright laws.
 """
-
 import asyncio
 import logging
 from datetime import datetime
@@ -41,8 +39,7 @@ from .deployment_recorder import DeploymentRecorder
 
 @dataclass
 class DeploymentRequest:
-    """Unified deployment request for IA Influencer Agent platform"""
-    deployment_type: str  # creator_onboarding, content_protection, monetization, etc.
+    """Unified deployment request for IA Influencer Agent platform"""    deployment_type: str  # creator_onboarding, content_protection, monetization, etc.
     creator_type: Optional[str] = None  # musician, video_creator, photographer, etc.
     creator_tier: str = "standard"  # basic, standard, premium, enterprise
     environment: str = "production"
@@ -53,14 +50,12 @@ class DeploymentRequest:
 
 
 class AutomationOrchestrator:
-    """
-    Main orchestration interface for IA Influencer Agent deployment automation.
+    """    Main orchestration interface for IA Influencer Agent deployment automation.
     
     This class provides high-level interfaces for deploying and managing
     the complete creator ecosystem including AI processing, content protection,
     and monetization services.
     """
-
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -115,13 +110,11 @@ class AutomationOrchestrator:
         self,
         request: DeploymentRequest
     ) -> Dict[str, Any]:
-        """
-        Deploy complete ecosystem for a specific creator type.
+        """        Deploy complete ecosystem for a specific creator type.
         
         This is the main entry point for onboarding new creators with
         all necessary AI processing, content protection, and monetization services.
-        """
-        self.logger.info(f"Starting creator ecosystem deployment: {request.deployment_type}")
+        """        self.logger.info(f"Starting creator ecosystem deployment: {request.deployment_type}")
         
         try:
             # Validate request
@@ -176,10 +169,8 @@ class AutomationOrchestrator:
         environment: str,
         gpu_required: bool = True
     ) -> Dict[str, Any]:
-        """
-        Deploy AI models for content processing and protection.
-        """
-        self.logger.info(f"Deploying AI models: {model_types}")
+        """        Deploy AI models for content processing and protection.
+        """        self.logger.info(f"Deploying AI models: {model_types}")
         
         # Execute AI model deployment pipeline
         pipeline_id = await self.pipeline_executor.execute_pipeline(
@@ -205,10 +196,8 @@ class AutomationOrchestrator:
         content_types: List[str],
         protection_level: str = "standard"
     ) -> Dict[str, Any]:
-        """
-        Set up content protection for a specific creator.
-        """
-        self.logger.info(f"Setting up content protection for creator: {creator_id}")
+        """        Set up content protection for a specific creator.
+        """        self.logger.info(f"Setting up content protection for creator: {creator_id}")
         
         # Configure protection services
         protection_config = await self.configuration_manager.create_protection_configuration(
@@ -237,10 +226,8 @@ class AutomationOrchestrator:
         content_id: str,
         estimated_traffic_multiplier: float = 5.0
     ) -> Dict[str, Any]:
-        """
-        Rapidly scale infrastructure for viral content protection.
-        """
-        self.logger.info(f"Scaling for viral content: {content_id} (multiplier: {estimated_traffic_multiplier}x)")
+        """        Rapidly scale infrastructure for viral content protection.
+        """        self.logger.info(f"Scaling for viral content: {content_id} (multiplier: {estimated_traffic_multiplier}x)")
         
         # Trigger predictive scaling
         scaling_result = await self.scaling_controller.trigger_viral_content_scaling(
@@ -260,10 +247,8 @@ class AutomationOrchestrator:
         self,
         deployment_id: str
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive status of deployment or workflow.
-        """
-        # Check if it's a workflow or pipeline
+        """        Get comprehensive status of deployment or workflow.
+        """        # Check if it's a workflow or pipeline
         workflow_status = await self.workflow_orchestrator.get_workflow_status(deployment_id)
         if workflow_status:
             return {
@@ -287,10 +272,8 @@ class AutomationOrchestrator:
         deployment_id: str,
         reason: str
     ) -> Dict[str, Any]:
-        """
-        Emergency rollback for failed deployments.
-        """
-        self.logger.warning(f"Emergency rollback triggered: {deployment_id} - {reason}")
+        """        Emergency rollback for failed deployments.
+        """        self.logger.warning(f"Emergency rollback triggered: {deployment_id} - {reason}")
         
         rollback_result = await self.rollback_manager.emergency_rollback(
             deployment_id=deployment_id,
@@ -311,8 +294,7 @@ class AutomationOrchestrator:
         self,
         request: DeploymentRequest
     ) -> Dict[str, Any]:
-        """Validate deployment request parameters"""
-        if request.deployment_type == "creator_onboarding":
+        """Validate deployment request parameters"""        if request.deployment_type == "creator_onboarding":
             if not request.creator_type:
                 return {"valid": False, "error": "Creator type required for onboarding"}
             
@@ -325,16 +307,14 @@ class AutomationOrchestrator:
         self,
         workflow_id: str
     ) -> Dict[str, Any]:
-        """Monitor workflow execution progress"""
-        # This would implement real-time monitoring
+        """Monitor workflow execution progress"""        # This would implement real-time monitoring
         return {"phase": "executing", "progress": "50%", "estimated_completion": "15 minutes"}
 
     def _get_deployed_services(
         self,
         request: DeploymentRequest
     ) -> List[str]:
-        """Get list of services that will be deployed"""
-        if request.creator_type and request.creator_type in self.creator_workflows:
+        """Get list of services that will be deployed"""        if request.creator_type and request.creator_type in self.creator_workflows:
             return self.creator_workflows[request.creator_type]["required_services"]
         return []
 
@@ -342,8 +322,7 @@ class AutomationOrchestrator:
         self,
         request: DeploymentRequest
     ) -> str:
-        """Estimate deployment completion time"""
-        base_times = {
+        """Estimate deployment completion time"""        base_times = {
             "creator_onboarding": 20,  # minutes
             "content_protection": 15,
             "monetization": 10
@@ -364,8 +343,7 @@ class AutomationOrchestrator:
 
 # Factory function for easy initialization
 def create_automation_orchestrator(config: Dict[str, Any]) -> AutomationOrchestrator:
-    """Create and initialize the automation orchestrator"""
-    return AutomationOrchestrator(config)
+    """Create and initialize the automation orchestrator"""    return AutomationOrchestrator(config)
 
 
 # Main interfaces for external use

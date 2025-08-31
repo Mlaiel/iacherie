@@ -1,5 +1,4 @@
-"""
-Database Connection Pool Manager
+"""Database Connection Pool Manager
 Advanced connection pooling and load balancing for high availability
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,7 +10,6 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 import time
 import threading
 from typing import Dict, List, Optional, Any, Callable
@@ -32,8 +30,7 @@ from backend.core.monitoring import MetricsCollector
 
 @dataclass
 class DatabaseEndpoint:
-    """Database endpoint configuration"""
-    endpoint_id: str
+    """Database endpoint configuration"""    endpoint_id: str
     host: str
     port: int
     database: str
@@ -49,8 +46,7 @@ class DatabaseEndpoint:
 
 @dataclass
 class ConnectionPoolStats:
-    """Connection pool statistics"""
-    pool_id: str
+    """Connection pool statistics"""    pool_id: str
     total_connections: int
     active_connections: int
     idle_connections: int
@@ -63,8 +59,7 @@ class ConnectionPoolStats:
 
 
 class ConnectionPoolManager:
-    """
-    Advanced database connection pool manager with features:
+    """    Advanced database connection pool manager with features:
     - Multiple database endpoint support
     - Load balancing across read replicas
     - Automatic failover and failback
@@ -72,8 +67,7 @@ class ConnectionPoolManager:
     - Dynamic pool sizing
     - Connection leak detection
     - Performance metrics and monitoring
-    """
-    
+    """    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.config = get_database_settings()
@@ -103,8 +97,7 @@ class ConnectionPoolManager:
         self._initialize_pools()
     
     def _initialize_pools(self) -> None:
-        """Initialize connection pools"""
-        try:
+        """Initialize connection pools"""        try:
             # Add primary database endpoint
             primary_endpoint = DatabaseEndpoint(
                 endpoint_id="primary",
@@ -148,8 +141,7 @@ class ConnectionPoolManager:
             raise
     
     def add_endpoint(self, endpoint: DatabaseEndpoint) -> bool:
-        """Add database endpoint and create connection pool"""
-        try:
+        """Add database endpoint and create connection pool"""        try:
             self.endpoints[endpoint.endpoint_id] = endpoint
             
             # Create synchronous connection pool
@@ -211,8 +203,7 @@ class ConnectionPoolManager:
             return False
     
     def remove_endpoint(self, endpoint_id: str) -> bool:
-        """Remove database endpoint and close connections"""
-        try:
+        """Remove database endpoint and close connections"""        try:
             if endpoint_id not in self.endpoints:
                 return False
             
@@ -248,8 +239,7 @@ class ConnectionPoolManager:
             return False
     
     def _test_endpoint_connection(self, endpoint: DatabaseEndpoint) -> bool:
-        """Test connection to database endpoint"""
-        try:
+        """Test connection to database endpoint"""        try:
             connection = psycopg2.connect(
                 host=endpoint.host,
                 port=endpoint.port,
@@ -275,8 +265,7 @@ class ConnectionPoolManager:
     
     @contextmanager
     def get_connection(self, read_only: bool = False):
-        """Get database connection with automatic load balancing"""
-        endpoint_id = None
+        """Get database connection with automatic load balancing"""        endpoint_id = None
         connection = None
         start_time = time.time()
         
@@ -331,8 +320,7 @@ class ConnectionPoolManager:
                     self.logger.error(f"Failed to return connection: {e}")
     
     def _select_endpoint(self, read_only: bool = False) -> Optional[str]:
-        """Select appropriate database endpoint based on load balancing strategy"""
-        try:
+        """Select appropriate database endpoint based on load balancing strategy"""        try:
             available_endpoints = [
                 endpoint_id for endpoint_id, endpoint in self.endpoints.items()
                 if endpoint.is_active and endpoint.consecutive_failures < 3
@@ -364,8 +352,7 @@ class ConnectionPoolManager:
             return None
     
     def _load_balance_endpoints(self, endpoint_ids: List[str]) -> str:
-        """Load balance among available endpoints"""
-        try:
+        """Load balance among available endpoints"""        try:
             # Strategy: Weighted random based on priority and current load
             weights = []
             
@@ -400,8 +387,7 @@ class ConnectionPoolManager:
             return endpoint_ids[0] if endpoint_ids else None
     
     async def get_async_connection(self, read_only: bool = False):
-        """Get asynchronous database connection"""
-        try:
+        """Get asynchronous database connection"""        try:
             endpoint_id = self._select_endpoint(read_only)
             
             if not endpoint_id:
@@ -421,8 +407,7 @@ class ConnectionPoolManager:
             raise
     
     async def _create_async_pool(self, endpoint_id: str) -> None:
-        """Create asynchronous connection pool"""
-        try:
+        """Create asynchronous connection pool"""        try:
             endpoint = self.endpoints[endpoint_id]
             
             pool = await asyncpg.create_pool(
@@ -446,8 +431,7 @@ class ConnectionPoolManager:
             raise
     
     def get_sqlalchemy_engine(self, read_only: bool = False):
-        """Get SQLAlchemy engine"""
-        try:
+        """Get SQLAlchemy engine"""        try:
             endpoint_id = self._select_endpoint(read_only)
             
             if not endpoint_id:
@@ -460,8 +444,7 @@ class ConnectionPoolManager:
             raise
     
     def _update_pool_stats(self, endpoint_id: str, operation: str) -> None:
-        """Update connection pool statistics"""
-        try:
+        """Update connection pool statistics"""        try:
             if endpoint_id not in self.pool_stats:
                 return
             
@@ -492,8 +475,7 @@ class ConnectionPoolManager:
             self.logger.error(f"Failed to update pool stats: {e}")
     
     def _record_connection_time(self, endpoint_id: str, connection_time: float) -> None:
-        """Record connection acquisition time"""
-        try:
+        """Record connection acquisition time"""        try:
             if endpoint_id in self.pool_stats:
                 stats = self.pool_stats[endpoint_id]
                 
@@ -515,8 +497,7 @@ class ConnectionPoolManager:
             self.logger.error(f"Failed to record connection time: {e}")
     
     def start_monitoring(self) -> None:
-        """Start connection pool monitoring"""
-        if self.is_monitoring:
+        """Start connection pool monitoring"""        if self.is_monitoring:
             return
         
         self.is_monitoring = True
@@ -529,16 +510,14 @@ class ConnectionPoolManager:
         self.logger.info("Started connection pool monitoring")
     
     def stop_monitoring(self) -> None:
-        """Stop connection pool monitoring"""
-        self.is_monitoring = False
+        """Stop connection pool monitoring"""        self.is_monitoring = False
         if self.monitor_thread:
             self.monitor_thread.join(timeout=10)
         
         self.logger.info("Stopped connection pool monitoring")
     
     def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
-        while self.is_monitoring:
+        """Main monitoring loop"""        while self.is_monitoring:
             try:
                 # Check endpoint health
                 self._check_endpoint_health()
@@ -559,8 +538,7 @@ class ConnectionPoolManager:
                 time.sleep(self.health_check_interval)
     
     def _check_endpoint_health(self) -> None:
-        """Check health of all endpoints"""
-        for endpoint_id, endpoint in self.endpoints.items():
+        """Check health of all endpoints"""        for endpoint_id, endpoint in self.endpoints.items():
             try:
                 is_healthy = self._test_endpoint_connection(endpoint)
                 
@@ -580,16 +558,14 @@ class ConnectionPoolManager:
                 self.logger.error(f"Health check failed for {endpoint_id}: {e}")
     
     def _update_all_pool_stats(self) -> None:
-        """Update statistics for all connection pools"""
-        for endpoint_id in self.endpoints:
+        """Update statistics for all connection pools"""        for endpoint_id in self.endpoints:
             try:
                 self._collect_pool_metrics(endpoint_id)
             except Exception as e:
                 self.logger.error(f"Failed to update stats for {endpoint_id}: {e}")
     
     def _collect_pool_metrics(self, endpoint_id: str) -> None:
-        """Collect detailed metrics for a connection pool"""
-        try:
+        """Collect detailed metrics for a connection pool"""        try:
             stats = self.pool_stats[endpoint_id]
             
             # Count active connections for this endpoint
@@ -623,8 +599,7 @@ class ConnectionPoolManager:
             self.logger.error(f"Failed to collect metrics for {endpoint_id}: {e}")
     
     def _check_failover_conditions(self) -> None:
-        """Check if failover is needed"""
-        if self.failover_in_progress:
+        """Check if failover is needed"""        if self.failover_in_progress:
             return
         
         # Check if primary is down
@@ -635,8 +610,7 @@ class ConnectionPoolManager:
             self._initiate_failover()
     
     def _initiate_failover(self) -> None:
-        """Initiate failover to read replica"""
-        try:
+        """Initiate failover to read replica"""        try:
             self.failover_in_progress = True
             self.logger.critical("Initiating database failover")
             
@@ -665,8 +639,7 @@ class ConnectionPoolManager:
             self.failover_in_progress = False
     
     def _select_failover_target(self) -> Optional[str]:
-        """Select best replica for failover"""
-        try:
+        """Select best replica for failover"""        try:
             available_replicas = [
                 endpoint_id for endpoint_id in self.read_replicas
                 if (endpoint_id in self.endpoints and 
@@ -689,8 +662,7 @@ class ConnectionPoolManager:
             return None
     
     def _cleanup_stale_connections(self) -> None:
-        """Clean up stale connection tracking"""
-        try:
+        """Clean up stale connection tracking"""        try:
             stale_threshold = datetime.now() - timedelta(hours=1)
             
             stale_connections = [
@@ -706,8 +678,7 @@ class ConnectionPoolManager:
             self.logger.error(f"Connection cleanup failed: {e}")
     
     def get_pool_status(self) -> Dict[str, Any]:
-        """Get comprehensive pool status"""
-        try:
+        """Get comprehensive pool status"""        try:
             status = {
                 'timestamp': datetime.now().isoformat(),
                 'total_endpoints': len(self.endpoints),
@@ -740,8 +711,7 @@ class ConnectionPoolManager:
             return {'error': str(e)}
     
     def close_all_pools(self) -> None:
-        """Close all connection pools"""
-        try:
+        """Close all connection pools"""        try:
             # Stop monitoring
             self.stop_monitoring()
             
@@ -768,8 +738,7 @@ class ConnectionPoolManager:
 _pool_manager = None
 
 def get_pool_manager() -> ConnectionPoolManager:
-    """Get connection pool manager singleton instance"""
-    global _pool_manager
+    """Get connection pool manager singleton instance"""    global _pool_manager
     if _pool_manager is None:
         _pool_manager = ConnectionPoolManager()
     return _pool_manager

@@ -1,5 +1,4 @@
-"""
-Load Balancer Configuration for IA-Influencer Agent Platform
+"""Load Balancer Configuration for IA-Influencer Agent Platform
 ===========================================================
 
 Professional load balancing configuration management for microservices.
@@ -15,7 +14,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import random
 import time
@@ -29,8 +27,7 @@ from collections import defaultdict
 
 
 class LoadBalancingStrategy(str, Enum):
-    """Load balancing strategy types."""
-    ROUND_ROBIN = "round_robin"
+    """Load balancing strategy types."""    ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_LEAST_CONNECTIONS = "weighted_least_connections"
@@ -43,8 +40,7 @@ class LoadBalancingStrategy(str, Enum):
 
 
 class HealthStatus(str, Enum):
-    """Health status for backend servers."""
-    HEALTHY = "healthy"
+    """Health status for backend servers."""    HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
     MAINTENANCE = "maintenance"
@@ -52,8 +48,7 @@ class HealthStatus(str, Enum):
 
 @dataclass
 class BackendServer:
-    """Backend server configuration."""
-    id: str
+    """Backend server configuration."""    id: str
     host: str
     port: int
     weight: int = 100
@@ -66,13 +61,11 @@ class BackendServer:
     
     @property
     def endpoint(self) -> str:
-        """Get server endpoint."""
-        return f"{self.host}:{self.port}"
+        """Get server endpoint."""        return f"{self.host}:{self.port}"
     
     @property
     def is_available(self) -> bool:
-        """Check if server is available for requests."""
-        return (
+        """Check if server is available for requests."""        return (
             self.health_status == HealthStatus.HEALTHY and
             self.current_connections < self.max_connections
         )
@@ -80,8 +73,7 @@ class BackendServer:
 
 @dataclass
 class UpstreamConfig:
-    """Upstream configuration for a group of backend servers."""
-    name: str
+    """Upstream configuration for a group of backend servers."""    name: str
     servers: List[BackendServer]
     strategy: LoadBalancingStrategy = LoadBalancingStrategy.ROUND_ROBIN
     health_check_enabled: bool = True
@@ -94,11 +86,9 @@ class UpstreamConfig:
 
 
 class LoadBalancerConfig(BaseSettings):
-    """
-    Centralized load balancer configuration for microservices architecture.
+    """    Centralized load balancer configuration for microservices architecture.
     Supports multiple load balancing strategies and health checking.
-    """
-    
+    """    
     # Global load balancing settings
     default_strategy: LoadBalancingStrategy = Field(
         LoadBalancingStrategy.ROUND_ROBIN, 
@@ -156,10 +146,8 @@ class LoadBalancerConfig(BaseSettings):
 
 
 class LoadBalancer:
-    """
-    Production-ready load balancer implementation with multiple strategies.
-    """
-    
+    """    Production-ready load balancer implementation with multiple strategies.
+    """    
     def __init__(self, config: LoadBalancerConfig):
         self.config = config
         self.upstreams: Dict[str, UpstreamConfig] = {}
@@ -169,19 +157,16 @@ class LoadBalancer:
         self._lock = threading.Lock()
     
     def add_upstream(self, upstream: UpstreamConfig):
-        """Add upstream configuration."""
-        with self._lock:
+        """Add upstream configuration."""        with self._lock:
             self.upstreams[upstream.name] = upstream
     
     def remove_upstream(self, name: str):
-        """Remove upstream configuration."""
-        with self._lock:
+        """Remove upstream configuration."""        with self._lock:
             if name in self.upstreams:
                 del self.upstreams[name]
     
     def get_upstream(self, name: str) -> Optional[UpstreamConfig]:
-        """Get upstream configuration."""
-        return self.upstreams.get(name)
+        """Get upstream configuration."""        return self.upstreams.get(name)
     
     def select_server(
         self, 
@@ -189,10 +174,8 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> Optional[BackendServer]:
-        """
-        Select backend server using configured load balancing strategy.
-        """
-        upstream = self.get_upstream(upstream_name)
+        """        Select backend server using configured load balancing strategy.
+        """        upstream = self.get_upstream(upstream_name)
         if not upstream:
             return None
         
@@ -217,8 +200,7 @@ class LoadBalancer:
         return strategy_method(upstream_name, healthy_servers, client_ip, session_id)
     
     def _get_strategy_method(self, strategy: LoadBalancingStrategy) -> Callable:
-        """Get load balancing strategy method."""
-        strategy_map = {
+        """Get load balancing strategy method."""        strategy_map = {
             LoadBalancingStrategy.ROUND_ROBIN: self._round_robin,
             LoadBalancingStrategy.WEIGHTED_ROUND_ROBIN: self._weighted_round_robin,
             LoadBalancingStrategy.LEAST_CONNECTIONS: self._least_connections,
@@ -239,8 +221,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """Round robin load balancing."""
-        with self._lock:
+        """Round robin load balancing."""        with self._lock:
             counter = self.counters[upstream_name]
             server = servers[counter % len(servers)]
             self.counters[upstream_name] = (counter + 1) % len(servers)
@@ -253,8 +234,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """Weighted round robin load balancing."""
-        total_weight = sum(server.weight for server in servers)
+        """Weighted round robin load balancing."""        total_weight = sum(server.weight for server in servers)
         with self._lock:
             counter = self.counters[upstream_name]
             current_weight = counter % total_weight
@@ -275,8 +255,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """Least connections load balancing."""
-        return min(servers, key=lambda s: s.current_connections)
+        """Least connections load balancing."""        return min(servers, key=lambda s: s.current_connections)
     
     def _weighted_least_connections(
         self, 
@@ -285,8 +264,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """Weighted least connections load balancing."""
-        return min(
+        """Weighted least connections load balancing."""        return min(
             servers, 
             key=lambda s: s.current_connections / (s.weight or 1)
         )
@@ -298,8 +276,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """IP hash load balancing."""
-        if not client_ip:
+        """IP hash load balancing."""        if not client_ip:
             return self._round_robin(upstream_name, servers)
         
         hash_value = int(hashlib.md5(client_ip.encode()).hexdigest(), 16)
@@ -312,8 +289,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """Random load balancing."""
-        return random.choice(servers)
+        """Random load balancing."""        return random.choice(servers)
     
     def _weighted_random(
         self, 
@@ -322,8 +298,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """Weighted random load balancing."""
-        total_weight = sum(server.weight for server in servers)
+        """Weighted random load balancing."""        total_weight = sum(server.weight for server in servers)
         random_weight = random.randint(1, total_weight)
         
         accumulated_weight = 0
@@ -341,8 +316,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """Consistent hash load balancing."""
-        key = session_id or client_ip or str(time.time())
+        """Consistent hash load balancing."""        key = session_id or client_ip or str(time.time())
         if not key:
             return self._round_robin(upstream_name, servers)
         
@@ -356,8 +330,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """Least response time load balancing."""
-        return min(servers, key=lambda s: s.response_time)
+        """Least response time load balancing."""        return min(servers, key=lambda s: s.response_time)
     
     def _health_based(
         self, 
@@ -366,8 +339,7 @@ class LoadBalancer:
         client_ip: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> BackendServer:
-        """Health-based load balancing (prefer healthiest servers)."""
-        healthy_servers = [s for s in servers if s.health_status == HealthStatus.HEALTHY]
+        """Health-based load balancing (prefer healthiest servers)."""        healthy_servers = [s for s in servers if s.health_status == HealthStatus.HEALTHY]
         if healthy_servers:
             return self._least_response_time(upstream_name, healthy_servers)
         return servers[0]  # Fallback to any available server
@@ -378,16 +350,14 @@ class LoadBalancer:
         response_time: float, 
         success: bool
     ):
-        """Update server statistics after request."""
-        server.response_time = (server.response_time + response_time) / 2
+        """Update server statistics after request."""        server.response_time = (server.response_time + response_time) / 2
         if success:
             server.health_status = HealthStatus.HEALTHY
         else:
             server.health_status = HealthStatus.DEGRADED
     
     def check_rate_limit(self, client_ip: str) -> bool:
-        """Check if client is within rate limits."""
-        if not self.config.rate_limiting_enabled:
+        """Check if client is within rate limits."""        if not self.config.rate_limiting_enabled:
             return True
         
         now = time.time()

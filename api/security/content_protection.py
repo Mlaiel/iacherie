@@ -1,5 +1,4 @@
-"""
-Enterprise Content Protection Security Module
+"""Enterprise Content Protection Security Module
 Advanced content security, rights management and IP protection for IA Influencer Agent
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -29,7 +28,6 @@ Violators will face:
 
 Contact: mlaiel@live.de for any authorization requests.
 """
-
 import hashlib
 import hmac
 import secrets
@@ -60,8 +58,7 @@ settings = get_settings()
 
 
 class ContentType(Enum):
-    """Content types for protection"""
-    AUDIO = "audio"
+    """Content types for protection"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -71,8 +68,7 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Protection levels"""
-    BASIC = "basic"
+    """Protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -80,8 +76,7 @@ class ProtectionLevel(Enum):
 
 
 class FingerprintType(Enum):
-    """Fingerprint types"""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Fingerprint types"""    PERCEPTUAL_HASH = "perceptual_hash"
     CRYPTOGRAPHIC_HASH = "cryptographic_hash"
     AI_EMBEDDING = "ai_embedding"
     SPECTRAL_FINGERPRINT = "spectral_fingerprint"
@@ -90,8 +85,7 @@ class FingerprintType(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
-    LOW = "low"
+    """Threat severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -100,8 +94,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Enterprise content fingerprint with multi-modal identification"""
-    fingerprint_id: str = field(default_factory=lambda: secrets.token_hex(16))
+    """Enterprise content fingerprint with multi-modal identification"""    fingerprint_id: str = field(default_factory=lambda: secrets.token_hex(16))
     content_id: str = ""
     content_type: ContentType = ContentType.UNKNOWN
     fingerprint_type: FingerprintType = FingerprintType.PERCEPTUAL_HASH
@@ -127,8 +120,7 @@ class ContentFingerprint:
     expires_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "fingerprint_id": self.fingerprint_id,
             "content_id": self.content_id,
             "content_type": self.content_type.value,
@@ -150,8 +142,7 @@ class ContentFingerprint:
 
 @dataclass
 class SecurityThreat:
-    """Security threat detection and analysis"""
-    threat_id: str = field(default_factory=lambda: secrets.token_hex(12))
+    """Security threat detection and analysis"""    threat_id: str = field(default_factory=lambda: secrets.token_hex(12))
     threat_type: str = "unauthorized_use"
     threat_level: ThreatLevel = ThreatLevel.MEDIUM
     
@@ -172,8 +163,7 @@ class SecurityThreat:
     status: str = "detected"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "threat_id": self.threat_id,
             "threat_type": self.threat_type,
             "threat_level": self.threat_level.value,
@@ -191,8 +181,7 @@ class SecurityThreat:
 
 
 class ContentProtectionManager:
-    """Enterprise content protection and security manager"""
-    
+    """Enterprise content protection and security manager"""    
     def __init__(self):
         self.cache = CacheManager()
         self.fingerprints: Dict[str, ContentFingerprint] = {}
@@ -200,8 +189,7 @@ class ContentProtectionManager:
         self._setup_protection_algorithms()
     
     def _setup_protection_algorithms(self):
-        """Initialize protection algorithms and systems"""
-        self.hash_algorithms = {
+        """Initialize protection algorithms and systems"""        self.hash_algorithms = {
             'sha256': hashlib.sha256,
             'sha512': hashlib.sha512,
             'blake2b': hashlib.blake2b,
@@ -210,8 +198,7 @@ class ContentProtectionManager:
         self.protection_keys = self._generate_protection_keys()
     
     def _generate_protection_keys(self) -> Dict[str, bytes]:
-        """Generate cryptographic keys for content protection"""
-        keys = {}
+        """Generate cryptographic keys for content protection"""        keys = {}
         for key_type in ['fingerprint', 'watermark', 'signature']:
             keys[key_type] = secrets.token_bytes(32)
         return keys
@@ -223,8 +210,7 @@ class ContentProtectionManager:
         creator_id: str,
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> ContentFingerprint:
-        """Generate comprehensive content fingerprint"""
-        try:
+        """Generate comprehensive content fingerprint"""        try:
             # Convert content to bytes
             if isinstance(content_data, str):
                 content_bytes = content_data.encode('utf-8')
@@ -297,8 +283,7 @@ class ContentProtectionManager:
         content_bytes: bytes,
         content_type: ContentType
     ) -> Optional[List[float]]:
-        """Extract perceptual features for similarity matching"""
-        try:
+        """Extract perceptual features for similarity matching"""        try:
             # Basic feature extraction based on content type
             if content_type == ContentType.TEXT:
                 # Simple text features
@@ -344,8 +329,7 @@ class ContentProtectionManager:
         source_url: Optional[str] = None,
         platform: Optional[str] = None
     ) -> List[SecurityThreat]:
-        """Detect security threats and unauthorized usage"""
-        threats = []
+        """Detect security threats and unauthorized usage"""        threats = []
         
         try:
             # Check for similar content in database
@@ -396,8 +380,7 @@ class ContentProtectionManager:
         self,
         target_fingerprint: ContentFingerprint
     ) -> List[ContentFingerprint]:
-        """Find similar fingerprints in the database"""
-        similar_fingerprints = []
+        """Find similar fingerprints in the database"""        similar_fingerprints = []
         
         try:
             # In production, this would use vector similarity search
@@ -425,8 +408,7 @@ class ContentProtectionManager:
         vector1: List[float],
         vector2: List[float]
     ) -> float:
-        """Calculate similarity between feature vectors"""
-        try:
+        """Calculate similarity between feature vectors"""        try:
             if len(vector1) != len(vector2):
                 return 0.0
             
@@ -451,8 +433,7 @@ class ContentProtectionManager:
         content_metadata: Dict[str, Any],
         protection_level: ProtectionLevel = ProtectionLevel.PREMIUM
     ) -> Dict[str, Any]:
-        """Comprehensive intellectual property protection"""
-        try:
+        """Comprehensive intellectual property protection"""        try:
             # Determine content type
             content_type = self._detect_content_type(content_data, content_metadata)
             
@@ -496,8 +477,7 @@ class ContentProtectionManager:
         content_data: Union[bytes, str, Path],
         metadata: Dict[str, Any]
     ) -> ContentType:
-        """Detect content type from data and metadata"""
-        try:
+        """Detect content type from data and metadata"""        try:
             # Check metadata first
             if 'content_type' in metadata:
                 content_type_str = metadata['content_type'].lower()
@@ -536,8 +516,7 @@ class ContentProtectionManager:
         creator_id: str,
         fingerprint_id: str
     ) -> Dict[str, Any]:
-        """Apply digital watermark to content"""
-        try:
+        """Apply digital watermark to content"""        try:
             # Generate watermark signature
             watermark_signature = hmac.new(
                 self.protection_keys['watermark'],
@@ -568,8 +547,7 @@ class ContentProtectionManager:
         creator_id: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate legal documentation for IP protection"""
-        try:
+        """Generate legal documentation for IP protection"""        try:
             legal_docs = {
                 "copyright_certificate": {
                     "certificate_id": secrets.token_hex(12),
@@ -608,8 +586,7 @@ class ContentProtectionManager:
         self,
         fingerprint: ContentFingerprint
     ) -> Dict[str, Any]:
-        """Set up automated content monitoring"""
-        try:
+        """Set up automated content monitoring"""        try:
             monitoring_config = {
                 "monitoring_id": secrets.token_hex(8),
                 "content_id": fingerprint.content_id,
@@ -638,8 +615,7 @@ class ContentProtectionManager:
             return {}
     
     async def get_protection_status(self, content_id: str) -> Dict[str, Any]:
-        """Get comprehensive protection status for content"""
-        try:
+        """Get comprehensive protection status for content"""        try:
             # Find fingerprint for content
             fingerprint = None
             for fp in self.fingerprints.values():
@@ -679,8 +655,7 @@ class ContentProtectionManager:
         creator_id: str,
         date_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Generate comprehensive protection report"""
-        try:
+        """Generate comprehensive protection report"""        try:
             start_date, end_date = date_range
             
             # Filter fingerprints for creator and date range
@@ -748,8 +723,7 @@ async def protect_content(
     content_metadata: Dict[str, Any],
     protection_level: ProtectionLevel = ProtectionLevel.PREMIUM
 ) -> Dict[str, Any]:
-    """Protect content with comprehensive IP protection"""
-    return await protection_manager.protect_intellectual_property(
+    """Protect content with comprehensive IP protection"""    return await protection_manager.protect_intellectual_property(
         content_data, creator_id, content_metadata, protection_level
     )
 
@@ -758,14 +732,12 @@ async def detect_threats(
     source_url: Optional[str] = None,
     platform: Optional[str] = None
 ) -> List[SecurityThreat]:
-    """Detect threats for protected content"""
-    return await protection_manager.detect_content_threats(
+    """Detect threats for protected content"""    return await protection_manager.detect_content_threats(
         content_fingerprint, source_url, platform
     )
 
 async def get_content_status(content_id: str) -> Dict[str, Any]:
-    """Get protection status for content"""
-    return await protection_manager.get_protection_status(content_id)
+    """Get protection status for content"""    return await protection_manager.get_protection_status(content_id)
 
 async def generate_fingerprint(
     content_data: Union[bytes, str, Path],
@@ -773,7 +745,6 @@ async def generate_fingerprint(
     creator_id: str,
     protection_level: ProtectionLevel = ProtectionLevel.STANDARD
 ) -> ContentFingerprint:
-    """Generate content fingerprint"""
-    return await protection_manager.generate_content_fingerprint(
+    """Generate content fingerprint"""    return await protection_manager.generate_content_fingerprint(
         content_data, content_type, creator_id, protection_level
     )

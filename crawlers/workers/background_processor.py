@@ -1,5 +1,4 @@
-"""
-Background Processor Engine - IA-Influencer-Agent
+"""Background Processor Engine - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/workers/background_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Background job → Intelligent routing → ML-optimized batch processing → 
 Resource-aware execution → Result aggregation → Real-time monitoring → Auto-notification
 """
-
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple, Generic, TypeVar
 import logging
 import asyncio
@@ -57,8 +55,7 @@ T = TypeVar('T')
 
 
 class ProcessorType(Enum):
-    """Advanced background processor types"""
-    BATCH_CRAWLER = "batch_crawler"
+    """Advanced background processor types"""    BATCH_CRAWLER = "batch_crawler"
     CONTENT_ANALYZER = "content_analyzer"
     FINGERPRINT_GENERATOR = "fingerprint_generator"
     SURVEILLANCE_MONITOR = "surveillance_monitor"
@@ -73,8 +70,7 @@ class ProcessorType(Enum):
 
 
 class JobStatus(Enum):
-    """Comprehensive job status states"""
-    PENDING = "pending"
+    """Comprehensive job status states"""    PENDING = "pending"
     SCHEDULED = "scheduled"
     QUEUED = "queued"
     RUNNING = "running"
@@ -88,8 +84,7 @@ class JobStatus(Enum):
 
 
 class ProcessingMode(Enum):
-    """Advanced processing modes"""
-    SEQUENTIAL = "sequential"
+    """Advanced processing modes"""    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     BATCH = "batch"
     STREAM = "stream"
@@ -100,8 +95,7 @@ class ProcessingMode(Enum):
 
 
 class ProcessorStatus(Enum):
-    """Background processor status"""
-    IDLE = "idle"
+    """Background processor status"""    IDLE = "idle"
     ACTIVE = "active"
     BUSY = "busy"
     OVERLOADED = "overloaded"
@@ -112,8 +106,7 @@ class ProcessorStatus(Enum):
 
 @dataclass
 class ProcessorConfig:
-    """Background processor configuration"""
-    processor_id: str
+    """Background processor configuration"""    processor_id: str
     processor_type: ProcessorType
     max_concurrent_jobs: int = 10
     max_batch_size: int = 100
@@ -131,8 +124,7 @@ class ProcessorConfig:
 
 @dataclass
 class BackgroundJob:
-    """Enhanced background job definition"""
-    job_id: str
+    """Enhanced background job definition"""    job_id: str
     job_type: ProcessorType
     payload: Dict[str, Any]
     priority: TaskPriority
@@ -157,8 +149,7 @@ class BackgroundJob:
 
 @dataclass
 class JobExecution:
-    """Comprehensive job execution tracking"""
-    job: BackgroundJob
+    """Comprehensive job execution tracking"""    job: BackgroundJob
     status: JobStatus
     processor_id: str
     worker_id: Optional[str] = None
@@ -178,8 +169,7 @@ class JobExecution:
 
 @dataclass
 class ProcessorMetrics:
-    """Background processor performance metrics"""
-    processor_id: str
+    """Background processor performance metrics"""    processor_id: str
     total_jobs_processed: int = 0
     successful_jobs: int = 0
     failed_jobs: int = 0
@@ -201,8 +191,7 @@ class ProcessorMetrics:
 
 @dataclass
 class ProcessorConfig:
-    """Processor configuration"""
-    processor_type: ProcessorType
+    """Processor configuration"""    processor_type: ProcessorType
     max_concurrent_jobs: int = 5
     max_batch_size: int = 100
     processing_timeout: int = 3600
@@ -213,8 +202,7 @@ class ProcessorConfig:
 
 
 class BackgroundProcessor:
-    """
-    High-performance background processor for asynchronous task execution
+    """    High-performance background processor for asynchronous task execution
     
     Features:
     - Multi-type job processing
@@ -224,7 +212,6 @@ class BackgroundProcessor:
     - Intelligent retry mechanisms
     - Real-time status reporting
     """
-
     def __init__(self, config: ProcessorConfig):
         self.config = config
         self.processor_type = config.processor_type
@@ -274,8 +261,7 @@ class BackgroundProcessor:
         }
 
     async def start(self) -> bool:
-        """Start the background processor"""
-        try:
+        """Start the background processor"""        try:
             logger.info(f"🚀 Starting background processor: {self.processor_id}")
             
             # Initialize components
@@ -294,8 +280,7 @@ class BackgroundProcessor:
             return False
 
     async def stop(self) -> None:
-        """Gracefully stop the background processor"""
-        try:
+        """Gracefully stop the background processor"""        try:
             logger.info(f"🛑 Stopping background processor: {self.processor_id}")
             
             self.is_running = False
@@ -323,8 +308,7 @@ class BackgroundProcessor:
             logger.error(f"❌ Error stopping background processor {self.processor_id}: {e}")
 
     async def submit_job(self, job: BackgroundJob) -> bool:
-        """Submit a background job for processing"""
-        try:
+        """Submit a background job for processing"""        try:
             # Validate job
             if not await self._validate_job(job):
                 logger.warning(f"❌ Invalid job rejected: {job.job_id}")
@@ -349,8 +333,7 @@ class BackgroundProcessor:
             return False
 
     async def get_job_status(self, job_id: str) -> Dict[str, Any]:
-        """Get job status and progress"""
-        try:
+        """Get job status and progress"""        try:
             # Check active jobs
             if job_id in self.active_jobs:
                 execution = self.active_jobs[job_id]
@@ -398,8 +381,7 @@ class BackgroundProcessor:
             return {'job_id': job_id, 'status': 'error', 'error': str(e)}
 
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel a running or pending job"""
-        try:
+        """Cancel a running or pending job"""        try:
             # Check if job is active
             if job_id in self.active_jobs:
                 execution = self.active_jobs[job_id]
@@ -438,8 +420,7 @@ class BackgroundProcessor:
             return False
 
     async def get_processor_status(self) -> Dict[str, Any]:
-        """Get comprehensive processor status"""
-        try:
+        """Get comprehensive processor status"""        try:
             return {
                 'processor_id': self.processor_id,
                 'processor_type': self.processor_type.value,
@@ -457,8 +438,7 @@ class BackgroundProcessor:
             return {'error': str(e)}
 
     async def _initialize_components(self) -> None:
-        """Initialize processor components"""
-        try:
+        """Initialize processor components"""        try:
             # Initialize queue manager
             await self.queue_manager.initialize_queue_system()
             
@@ -472,8 +452,7 @@ class BackgroundProcessor:
             raise
 
     async def _start_background_tasks(self) -> None:
-        """Start background processor tasks"""
-        try:
+        """Start background processor tasks"""        try:
             # Job processor
             job_processor = asyncio.create_task(self._job_processor())
             self.background_tasks.add(job_processor)
@@ -497,8 +476,7 @@ class BackgroundProcessor:
             raise
 
     async def _job_processor(self) -> None:
-        """Main job processing loop"""
-        while not self.shutdown_event.is_set():
+        """Main job processing loop"""        while not self.shutdown_event.is_set():
             try:
                 # Get next job from queue
                 priority, timestamp, job = await asyncio.wait_for(
@@ -516,8 +494,7 @@ class BackgroundProcessor:
                 await asyncio.sleep(5)
 
     async def _execute_job(self, job: BackgroundJob) -> None:
-        """Execute a background job"""
-        execution = JobExecution(
+        """Execute a background job"""        execution = JobExecution(
             job=job,
             status=JobStatus.PENDING,
             started_at=datetime.utcnow()
@@ -596,8 +573,7 @@ class BackgroundProcessor:
                 self.processing_stats['total_jobs_processed'] += 1
 
     async def _handle_batch_crawler(self, job: BackgroundJob, execution: JobExecution) -> Dict[str, Any]:
-        """Handle batch crawler job"""
-        try:
+        """Handle batch crawler job"""        try:
             urls = job.payload.get('urls', [])
             execution.total_items = len(urls)
             
@@ -633,8 +609,7 @@ class BackgroundProcessor:
             raise
 
     async def _handle_content_analyzer(self, job: BackgroundJob, execution: JobExecution) -> Dict[str, Any]:
-        """Handle content analyzer job"""
-        try:
+        """Handle content analyzer job"""        try:
             content_items = job.payload.get('content_items', [])
             execution.total_items = len(content_items)
             
@@ -667,8 +642,7 @@ class BackgroundProcessor:
             raise
 
     async def _handle_fingerprint_generator(self, job: BackgroundJob, execution: JobExecution) -> Dict[str, Any]:
-        """Handle fingerprint generator job"""
-        try:
+        """Handle fingerprint generator job"""        try:
             media_items = job.payload.get('media_items', [])
             execution.total_items = len(media_items)
             
@@ -701,8 +675,7 @@ class BackgroundProcessor:
             raise
 
     async def _handle_surveillance_monitor(self, job: BackgroundJob, execution: JobExecution) -> Dict[str, Any]:
-        """Handle surveillance monitor job"""
-        try:
+        """Handle surveillance monitor job"""        try:
             surveillance_targets = job.payload.get('targets', [])
             execution.total_items = len(surveillance_targets)
             
@@ -736,8 +709,7 @@ class BackgroundProcessor:
             raise
 
     async def _handle_report_generator(self, job: BackgroundJob, execution: JobExecution) -> Dict[str, Any]:
-        """Handle report generator job"""
-        try:
+        """Handle report generator job"""        try:
             report_config = job.payload.get('report_config', {})
             data_sources = job.payload.get('data_sources', [])
             
@@ -773,8 +745,7 @@ class BackgroundProcessor:
             raise
 
     async def _handle_data_aggregator(self, job: BackgroundJob, execution: JobExecution) -> Dict[str, Any]:
-        """Handle data aggregator job"""
-        try:
+        """Handle data aggregator job"""        try:
             data_sets = job.payload.get('data_sets', [])
             aggregation_rules = job.payload.get('aggregation_rules', {})
             
@@ -804,8 +775,7 @@ class BackgroundProcessor:
             raise
 
     async def _handle_cleanup_processor(self, job: BackgroundJob, execution: JobExecution) -> Dict[str, Any]:
-        """Handle cleanup processor job"""
-        try:
+        """Handle cleanup processor job"""        try:
             cleanup_targets = job.payload.get('cleanup_targets', [])
             cleanup_rules = job.payload.get('cleanup_rules', {})
             
@@ -835,8 +805,7 @@ class BackgroundProcessor:
             raise
 
     async def _process_url_batch(self, urls: List[str], job: BackgroundJob) -> List[Dict[str, Any]]:
-        """Process a batch of URLs"""
-        try:
+        """Process a batch of URLs"""        try:
             # Implementation would use the crawler engine
             results = []
             
@@ -870,8 +839,7 @@ class BackgroundProcessor:
             return []
 
     async def _analyze_content_item(self, content: Dict[str, Any], job: BackgroundJob) -> Dict[str, Any]:
-        """Analyze a single content item"""
-        try:
+        """Analyze a single content item"""        try:
             # Simulate content analysis
             await asyncio.sleep(0.05)  # Simulate processing time
             
@@ -889,8 +857,7 @@ class BackgroundProcessor:
             return {'error': str(e)}
 
     async def _generate_media_fingerprint(self, media_item: Dict[str, Any], job: BackgroundJob) -> Dict[str, Any]:
-        """Generate fingerprint for media item"""
-        try:
+        """Generate fingerprint for media item"""        try:
             # Simulate fingerprint generation
             await asyncio.sleep(0.2)  # Simulate processing time
             
@@ -907,8 +874,7 @@ class BackgroundProcessor:
             return {'error': str(e)}
 
     async def _monitor_surveillance_target(self, target: Dict[str, Any], job: BackgroundJob) -> Dict[str, Any]:
-        """Monitor a surveillance target"""
-        try:
+        """Monitor a surveillance target"""        try:
             # Simulate surveillance monitoring
             await asyncio.sleep(0.3)  # Simulate processing time
             
@@ -925,8 +891,7 @@ class BackgroundProcessor:
             return {'error': str(e)}
 
     async def _collect_report_data(self, data_sources: List[Dict[str, Any]], execution: JobExecution) -> Dict[str, Any]:
-        """Collect data for report generation"""
-        try:
+        """Collect data for report generation"""        try:
             collected_data = {}
             
             for source in data_sources:
@@ -945,8 +910,7 @@ class BackgroundProcessor:
             return {}
 
     async def _process_report_data(self, data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process collected data for report"""
-        try:
+        """Process collected data for report"""        try:
             # Simulate data processing
             await asyncio.sleep(0.5)
             
@@ -960,8 +924,7 @@ class BackgroundProcessor:
             return {}
 
     async def _generate_report(self, data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate report from processed data"""
-        try:
+        """Generate report from processed data"""        try:
             # Simulate report generation
             await asyncio.sleep(1.0)
             
@@ -978,8 +941,7 @@ class BackgroundProcessor:
             return {}
 
     async def _format_report(self, report: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Format report according to configuration"""
-        try:
+        """Format report according to configuration"""        try:
             # Simulate report formatting
             await asyncio.sleep(0.2)
             
@@ -994,8 +956,7 @@ class BackgroundProcessor:
             return {}
 
     async def _aggregate_data_set(self, data_set: Dict[str, Any], rules: Dict[str, Any]) -> Dict[str, Any]:
-        """Aggregate a data set according to rules"""
-        try:
+        """Aggregate a data set according to rules"""        try:
             # Simulate data aggregation
             await asyncio.sleep(0.1)
             
@@ -1011,8 +972,7 @@ class BackgroundProcessor:
             return {}
 
     async def _cleanup_target(self, target: Dict[str, Any], rules: Dict[str, Any]) -> Dict[str, Any]:
-        """Clean up a target according to rules"""
-        try:
+        """Clean up a target according to rules"""        try:
             # Simulate cleanup
             await asyncio.sleep(0.05)
             
@@ -1028,8 +988,7 @@ class BackgroundProcessor:
             return {}
 
     async def _retry_job(self, job: BackgroundJob) -> None:
-        """Retry a failed job"""
-        try:
+        """Retry a failed job"""        try:
             job.retry_count += 1
             
             # Calculate backoff delay
@@ -1044,14 +1003,12 @@ class BackgroundProcessor:
             logger.error(f"❌ Failed to schedule retry for job {job.job_id}: {e}")
 
     async def _delayed_retry(self, job: BackgroundJob, delay: float) -> None:
-        """Execute delayed job retry"""
-        await asyncio.sleep(delay)
+        """Execute delayed job retry"""        await asyncio.sleep(delay)
         priority_value = self._get_priority_value(job.priority)
         await self.job_queue.put((priority_value, time.time(), job))
 
     async def _send_completion_notification(self, execution: JobExecution) -> None:
-        """Send job completion notification"""
-        try:
+        """Send job completion notification"""        try:
             notification_data = {
                 'job_id': execution.job.job_id,
                 'status': execution.status.value,
@@ -1066,8 +1023,7 @@ class BackgroundProcessor:
             logger.error(f"❌ Failed to send completion notification: {e}")
 
     async def _validate_job(self, job: BackgroundJob) -> bool:
-        """Validate job before processing"""
-        try:
+        """Validate job before processing"""        try:
             # Basic validation
             if not job.job_id or not job.job_type:
                 return False
@@ -1087,8 +1043,7 @@ class BackgroundProcessor:
             return False
 
     async def _schedule_future_job(self, job: BackgroundJob) -> None:
-        """Schedule job for future execution"""
-        try:
+        """Schedule job for future execution"""        try:
             # Implementation would use a scheduler
             delay = (job.scheduled_time - datetime.utcnow()).total_seconds()
             asyncio.create_task(self._delayed_submit(job, delay))
@@ -1097,14 +1052,12 @@ class BackgroundProcessor:
             logger.error(f"❌ Failed to schedule future job: {e}")
 
     async def _delayed_submit(self, job: BackgroundJob, delay: float) -> None:
-        """Submit job after delay"""
-        await asyncio.sleep(delay)
+        """Submit job after delay"""        await asyncio.sleep(delay)
         priority_value = self._get_priority_value(job.priority)
         await self.job_queue.put((priority_value, time.time(), job))
 
     def _get_priority_value(self, priority: TaskPriority) -> int:
-        """Convert priority enum to integer value"""
-        priority_values = {
+        """Convert priority enum to integer value"""        priority_values = {
             TaskPriority.CRITICAL: 1,
             TaskPriority.HIGH: 2,
             TaskPriority.MEDIUM: 3,
@@ -1114,8 +1067,7 @@ class BackgroundProcessor:
         return priority_values.get(priority, 3)
 
     async def _estimate_completion_time(self, execution: JobExecution) -> Optional[str]:
-        """Estimate job completion time"""
-        try:
+        """Estimate job completion time"""        try:
             if execution.progress <= 0:
                 return None
             
@@ -1131,8 +1083,7 @@ class BackgroundProcessor:
             return None
 
     async def _get_resource_usage(self) -> Dict[str, Any]:
-        """Get current resource usage"""
-        try:
+        """Get current resource usage"""        try:
             # Implementation would use system monitoring
             return {
                 'cpu_percent': 45.0,
@@ -1146,8 +1097,7 @@ class BackgroundProcessor:
             return {}
 
     async def _get_job_distribution(self) -> Dict[str, Any]:
-        """Get job type distribution"""
-        try:
+        """Get job type distribution"""        try:
             distribution = defaultdict(int)
             
             # Count active jobs by type
@@ -1161,8 +1111,7 @@ class BackgroundProcessor:
             return {}
 
     async def _statistics_updater(self) -> None:
-        """Update processing statistics"""
-        while not self.shutdown_event.is_set():
+        """Update processing statistics"""        while not self.shutdown_event.is_set():
             try:
                 # Calculate current load
                 self.processing_stats['current_load'] = len(self.active_jobs) / self.max_concurrent_jobs
@@ -1185,8 +1134,7 @@ class BackgroundProcessor:
                 await asyncio.sleep(60)
 
     async def _resource_monitor(self) -> None:
-        """Monitor resource usage"""
-        while not self.shutdown_event.is_set():
+        """Monitor resource usage"""        while not self.shutdown_event.is_set():
             try:
                 # Monitor resource usage for active jobs
                 for job_id, execution in self.active_jobs.items():
@@ -1200,8 +1148,7 @@ class BackgroundProcessor:
                 await asyncio.sleep(120)
 
     async def _cleanup_task(self) -> None:
-        """Periodic cleanup of old data"""
-        while not self.shutdown_event.is_set():
+        """Periodic cleanup of old data"""        while not self.shutdown_event.is_set():
             try:
                 # Clean up old completed jobs
                 current_time = datetime.utcnow()
@@ -1243,6 +1190,5 @@ class BackgroundProcessor:
                 await asyncio.sleep(1800)
 
     async def _wait_for_active_jobs(self) -> None:
-        """Wait for all active jobs to complete"""
-        while self.active_jobs:
+        """Wait for all active jobs to complete"""        while self.active_jobs:
             await asyncio.sleep(1)

@@ -1,5 +1,4 @@
-"""
-Royalty Distribution and Revenue Management Module
+"""Royalty Distribution and Revenue Management Module
 
 Enterprise-grade automated royalty distribution system using smart contracts
 for transparent and efficient revenue sharing among content creators, 
@@ -26,7 +25,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -44,8 +42,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 class RoyaltyType(Enum):
-    """Types of royalty payments."""
-    STREAMING = "streaming"
+    """Types of royalty payments."""    STREAMING = "streaming"
     DOWNLOAD = "download"
     LICENSING = "licensing"
     SYNC_RIGHTS = "sync_rights"
@@ -55,8 +52,7 @@ class RoyaltyType(Enum):
     COLLABORATION = "collaboration"
 
 class PaymentCurrency(Enum):
-    """Supported payment currencies."""
-    ETH = "ETH"
+    """Supported payment currencies."""    ETH = "ETH"
     MATIC = "MATIC"
     BNB = "BNB"
     USDC = "USDC"
@@ -64,8 +60,7 @@ class PaymentCurrency(Enum):
     DAI = "DAI"
 
 class PaymentStatus(Enum):
-    """Payment processing status."""
-    PENDING = "pending"
+    """Payment processing status."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -74,8 +69,7 @@ class PaymentStatus(Enum):
 
 @dataclass
 class RoyaltyRecipient:
-    """Individual or entity entitled to royalty payments."""
-    recipient_id: str
+    """Individual or entity entitled to royalty payments."""    recipient_id: str
     name: str
     wallet_address: str
     percentage: Decimal
@@ -88,8 +82,7 @@ class RoyaltyRecipient:
 
 @dataclass
 class RoyaltyContract:
-    """Smart contract configuration for royalty distribution."""
-    contract_id: str
+    """Smart contract configuration for royalty distribution."""    contract_id: str
     content_id: str
     content_title: str
     creator_address: str
@@ -104,8 +97,7 @@ class RoyaltyContract:
 
 @dataclass
 class RoyaltyPayment:
-    """Individual royalty payment record."""
-    payment_id: str
+    """Individual royalty payment record."""    payment_id: str
     contract_id: str
     recipient_id: str
     royalty_type: RoyaltyType
@@ -121,8 +113,7 @@ class RoyaltyPayment:
 
 @dataclass
 class RevenueReport:
-    """Revenue and royalty distribution report."""
-    report_id: str
+    """Revenue and royalty distribution report."""    report_id: str
     contract_id: str
     period_start: datetime
     period_end: datetime
@@ -134,19 +125,15 @@ class RevenueReport:
     generation_date: datetime
 
 class RoyaltyDistributor:
-    """
-    Enterprise royalty distribution system with automated payments,
+    """    Enterprise royalty distribution system with automated payments,
     multi-currency support, and comprehensive reporting.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize royalty distributor.
+        """        Initialize royalty distributor.
         
         Args:
             config: Configuration including blockchain settings, payment thresholds
-        """
-        self.config = config
+        """        self.config = config
         self.contracts: Dict[str, RoyaltyContract] = {}
         self.payment_history: List[RoyaltyPayment] = []
         self.pending_payments: List[RoyaltyPayment] = []
@@ -154,8 +141,7 @@ class RoyaltyDistributor:
         self._initialize_blockchain_connections()
     
     def _initialize_blockchain_connections(self) -> None:
-        """Initialize connections to supported blockchain networks."""
-        networks = self.config.get("supported_networks", [])
+        """Initialize connections to supported blockchain networks."""        networks = self.config.get("supported_networks", [])
         
         for network in networks:
             try:
@@ -177,8 +163,7 @@ class RoyaltyDistributor:
         effective_date: Optional[datetime] = None,
         expiration_date: Optional[datetime] = None
     ) -> RoyaltyContract:
-        """
-        Create a new royalty distribution contract.
+        """        Create a new royalty distribution contract.
         
         Args:
             content_id: Unique identifier for the content
@@ -190,8 +175,7 @@ class RoyaltyDistributor:
             
         Returns:
             Created royalty contract
-        """
-        try:
+        """        try:
             # Validate recipient percentages
             total_percentage = sum(r.percentage for r in recipients)
             if total_percentage != Decimal("100"):
@@ -234,16 +218,14 @@ class RoyaltyDistributor:
         self, 
         contract: RoyaltyContract
     ) -> str:
-        """
-        Deploy smart contract for automated royalty distribution.
+        """        Deploy smart contract for automated royalty distribution.
         
         Args:
             contract: Royalty contract to deploy
             
         Returns:
             Deployed contract address
-        """
-        try:
+        """        try:
             # Select blockchain network
             network = self.config.get("default_network", "polygon_mainnet")
             w3 = self.web3_instances.get(network)
@@ -306,8 +288,7 @@ class RoyaltyDistributor:
             raise
     
     def _get_royalty_contract_abi(self) -> List[Dict[str, Any]]:
-        """Get ABI for royalty distribution smart contract."""
-        # Mock ABI - in production, load from compiled contract
+        """Get ABI for royalty distribution smart contract."""        # Mock ABI - in production, load from compiled contract
         return [
             {
                 "inputs": [
@@ -328,8 +309,7 @@ class RoyaltyDistributor:
         ]
     
     def _get_royalty_contract_bytecode(self) -> str:
-        """Get bytecode for royalty distribution smart contract."""
-        # Mock bytecode - in production, load from compiled contract
+        """Get bytecode for royalty distribution smart contract."""        # Mock bytecode - in production, load from compiled contract
         return "0x608060405234801561001057600080fd5b50"
     
     async def process_royalty_payment(
@@ -340,8 +320,7 @@ class RoyaltyDistributor:
         royalty_type: RoyaltyType,
         source_transaction: Optional[str] = None
     ) -> List[RoyaltyPayment]:
-        """
-        Process royalty distribution for a specific revenue event.
+        """        Process royalty distribution for a specific revenue event.
         
         Args:
             contract_id: ID of the royalty contract
@@ -352,8 +331,7 @@ class RoyaltyDistributor:
             
         Returns:
             List of processed royalty payments
-        """
-        try:
+        """        try:
             contract = self.contracts.get(contract_id)
             if not contract:
                 raise ValueError(f"Royalty contract {contract_id} not found")
@@ -416,8 +394,7 @@ class RoyaltyDistributor:
             raise
     
     async def _process_pending_payments(self) -> None:
-        """Process all pending royalty payments."""
-        batch_size = self.config.get("payment_batch_size", 10)
+        """Process all pending royalty payments."""        batch_size = self.config.get("payment_batch_size", 10)
         
         # Group payments by currency and network for efficient processing
         payment_groups = self._group_payments_for_processing(self.pending_payments)
@@ -445,8 +422,7 @@ class RoyaltyDistributor:
         self, 
         payments: List[RoyaltyPayment]
     ) -> Dict[Tuple[str, PaymentCurrency], List[RoyaltyPayment]]:
-        """Group payments by network and currency for efficient batch processing."""
-        groups = {}
+        """Group payments by network and currency for efficient batch processing."""        groups = {}
         
         for payment in payments:
             if payment.status != PaymentStatus.PENDING:
@@ -464,8 +440,7 @@ class RoyaltyDistributor:
         return groups
     
     def _get_best_network_for_currency(self, currency: PaymentCurrency) -> str:
-        """Determine the best blockchain network for a specific currency."""
-        currency_networks = {
+        """Determine the best blockchain network for a specific currency."""        currency_networks = {
             PaymentCurrency.ETH: "ethereum_mainnet",
             PaymentCurrency.MATIC: "polygon_mainnet",
             PaymentCurrency.BNB: "bsc_mainnet",
@@ -482,8 +457,7 @@ class RoyaltyDistributor:
         network: str,
         currency: PaymentCurrency
     ) -> None:
-        """Process a batch of payments on a specific network."""
-        try:
+        """Process a batch of payments on a specific network."""        try:
             w3 = self.web3_instances.get(network)
             if not w3:
                 raise ValueError(f"No connection to {network}")
@@ -545,8 +519,7 @@ class RoyaltyDistributor:
         recipient_address: str,
         amount: Decimal
     ) -> str:
-        """Send native cryptocurrency payment (ETH, MATIC, BNB)."""
-        try:
+        """Send native cryptocurrency payment (ETH, MATIC, BNB)."""        try:
             # Convert amount to wei
             amount_wei = w3.to_wei(float(amount), 'ether')
             
@@ -587,8 +560,7 @@ class RoyaltyDistributor:
         amount: Decimal,
         token_address: str
     ) -> str:
-        """Send ERC-20 token payment."""
-        try:
+        """Send ERC-20 token payment."""        try:
             # Load ERC-20 contract ABI
             erc20_abi = self._get_erc20_abi()
             
@@ -636,8 +608,7 @@ class RoyaltyDistributor:
             raise
     
     def _get_token_address(self, currency: PaymentCurrency, network: str) -> str:
-        """Get token contract address for a specific currency and network."""
-        token_addresses = {
+        """Get token contract address for a specific currency and network."""        token_addresses = {
             "ethereum_mainnet": {
                 PaymentCurrency.USDC: "0xA0b86a33E6441fd7d4B3ac6e17B7a7b6Ff70F0c7",
                 PaymentCurrency.USDT: "0xdAC17F958D2ee523a2206206994597C13D831ec7",
@@ -663,8 +634,7 @@ class RoyaltyDistributor:
         return token_address
     
     def _get_erc20_abi(self) -> List[Dict[str, Any]]:
-        """Get standard ERC-20 token ABI."""
-        return [
+        """Get standard ERC-20 token ABI."""        return [
             {
                 "constant": True,
                 "inputs": [],
@@ -685,8 +655,7 @@ class RoyaltyDistributor:
         ]
     
     def get_contract_by_content_id(self, content_id: str) -> Optional[RoyaltyContract]:
-        """Get royalty contract by content ID."""
-        for contract in self.contracts.values():
+        """Get royalty contract by content ID."""        for contract in self.contracts.values():
             if contract.content_id == content_id:
                 return contract
         return None
@@ -698,8 +667,7 @@ class RoyaltyDistributor:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[RoyaltyPayment]:
-        """
-        Get payment history with optional filters.
+        """        Get payment history with optional filters.
         
         Args:
             contract_id: Filter by contract ID
@@ -709,8 +677,7 @@ class RoyaltyDistributor:
             
         Returns:
             Filtered list of payments
-        """
-        payments = self.payment_history.copy()
+        """        payments = self.payment_history.copy()
         
         if contract_id:
             payments = [p for p in payments if p.contract_id == contract_id]
@@ -732,8 +699,7 @@ class RoyaltyDistributor:
         start_date: datetime,
         end_date: datetime
     ) -> RevenueReport:
-        """
-        Generate comprehensive revenue and distribution report.
+        """        Generate comprehensive revenue and distribution report.
         
         Args:
             contract_id: Contract to report on
@@ -742,8 +708,7 @@ class RoyaltyDistributor:
             
         Returns:
             Revenue report
-        """
-        try:
+        """        try:
             contract = self.contracts.get(contract_id)
             if not contract:
                 raise ValueError(f"Contract {contract_id} not found")

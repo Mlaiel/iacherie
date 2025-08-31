@@ -1,5 +1,4 @@
-"""
-Versioning Manager Module - Advanced Content Version Control System
+"""Versioning Manager Module - Advanced Content Version Control System
 
 Enterprise-grade content versioning system providing automated version tracking,
 rollback capabilities, delta compression, and collaborative editing support.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import uuid
 import hashlib
@@ -35,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class VersionType(Enum):
-    """Content version types"""
-    MAJOR = "major"
+    """Content version types"""    MAJOR = "major"
     MINOR = "minor"
     PATCH = "patch"
     DRAFT = "draft"
@@ -45,8 +42,7 @@ class VersionType(Enum):
 
 
 class VersionStatus(Enum):
-    """Version status"""
-    ACTIVE = "active"
+    """Version status"""    ACTIVE = "active"
     DEPRECATED = "deprecated"
     ARCHIVED = "archived"
     DELETED = "deleted"
@@ -54,8 +50,7 @@ class VersionStatus(Enum):
 
 
 class ChangeType(Enum):
-    """Change types for version tracking"""
-    CONTENT_UPDATE = "content_update"
+    """Change types for version tracking"""    CONTENT_UPDATE = "content_update"
     METADATA_UPDATE = "metadata_update"
     STRUCTURE_CHANGE = "structure_change"
     OPTIMIZATION = "optimization"
@@ -66,8 +61,7 @@ class ChangeType(Enum):
 
 
 class MergeStrategy(Enum):
-    """Version merge strategies"""
-    AUTOMATIC = "automatic"
+    """Version merge strategies"""    AUTOMATIC = "automatic"
     MANUAL = "manual"
     THREE_WAY = "three_way"
     OVERWRITE = "overwrite"
@@ -77,8 +71,7 @@ class MergeStrategy(Enum):
 
 @dataclass
 class VersionDelta:
-    """Version change delta"""
-    delta_id: str
+    """Version change delta"""    delta_id: str
     from_version: str
     to_version: str
     change_type: ChangeType
@@ -93,8 +86,7 @@ class VersionDelta:
 
 @dataclass
 class ContentVersion:
-    """Content version representation"""
-    version_id: str
+    """Content version representation"""    version_id: str
     content_id: str
     version_number: str
     version_type: VersionType
@@ -121,8 +113,7 @@ class ContentVersion:
 
 @dataclass
 class VersionBranch:
-    """Version branch representation"""
-    branch_id: str
+    """Version branch representation"""    branch_id: str
     content_id: str
     branch_name: str
     description: str
@@ -137,8 +128,7 @@ class VersionBranch:
 
 @dataclass
 class VersionConflict:
-    """Version merge conflict"""
-    conflict_id: str
+    """Version merge conflict"""    conflict_id: str
     branch_a: str
     branch_b: str
     field_path: str
@@ -152,8 +142,7 @@ class VersionConflict:
 
 @dataclass
 class VersionSnapshot:
-    """Version snapshot for backup/restore"""
-    snapshot_id: str
+    """Version snapshot for backup/restore"""    snapshot_id: str
     content_id: str
     version_id: str
     snapshot_type: str
@@ -166,8 +155,7 @@ class VersionSnapshot:
 
 
 class VersioningManager:
-    """Advanced content versioning and collaboration system"""
-    
+    """Advanced content versioning and collaboration system"""    
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
         self.event_emitter = event_emitter
@@ -189,8 +177,7 @@ class VersioningManager:
         branch_name: Optional[str] = None,
         tag: Optional[str] = None
     ) -> ContentVersion:
-        """Create a new content version"""
-        try:
+        """Create a new content version"""        try:
             # Get current version if not specified
             if not parent_version:
                 current_version = await self.get_current_version(content_id)
@@ -274,8 +261,7 @@ class VersioningManager:
             raise BusinessLogicError(f"Failed to create version: {e}")
     
     async def get_version(self, version_id: str) -> Optional[ContentVersion]:
-        """Get specific version by ID"""
-        try:
+        """Get specific version by ID"""        try:
             # Check cache first
             cached_version = await self.cache_manager.get(f"version:{version_id}")
             if cached_version:
@@ -298,8 +284,7 @@ class VersioningManager:
             return None
     
     async def get_current_version(self, content_id: str) -> Optional[ContentVersion]:
-        """Get current active version for content"""
-        try:
+        """Get current active version for content"""        try:
             # Check cache first
             cached_current = await self.cache_manager.get(f"current_version:{content_id}")
             if cached_current:
@@ -329,8 +314,7 @@ class VersioningManager:
         limit: int = 50,
         offset: int = 0
     ) -> List[ContentVersion]:
-        """List versions for content"""
-        try:
+        """List versions for content"""        try:
             return await self._fetch_versions_from_db(
                 content_id, branch_name, limit, offset
             )
@@ -346,8 +330,7 @@ class VersioningManager:
         user_id: str,
         create_revert_version: bool = True
     ) -> Optional[ContentVersion]:
-        """Revert content to a specific version"""
-        try:
+        """Revert content to a specific version"""        try:
             target_version = await self.get_version(target_version_id)
             if not target_version:
                 raise ValidationError(f"Target version {target_version_id} not found")
@@ -397,8 +380,7 @@ class VersioningManager:
         version_a_id: str,
         version_b_id: str
     ) -> Dict[str, Any]:
-        """Compare two versions and return differences"""
-        try:
+        """Compare two versions and return differences"""        try:
             version_a = await self.get_version(version_a_id)
             version_b = await self.get_version(version_b_id)
             
@@ -452,8 +434,7 @@ class VersioningManager:
         auto_merge: bool = False,
         merge_strategy: MergeStrategy = MergeStrategy.MANUAL
     ) -> VersionBranch:
-        """Create a new version branch"""
-        try:
+        """Create a new version branch"""        try:
             # Validate branch name
             if await self._branch_exists(content_id, branch_name):
                 raise ValidationError(f"Branch '{branch_name}' already exists")
@@ -508,8 +489,7 @@ class VersioningManager:
         merge_strategy: Optional[MergeStrategy] = None,
         resolve_conflicts: Optional[Dict[str, Any]] = None
     ) -> ContentVersion:
-        """Merge one branch into another"""
-        try:
+        """Merge one branch into another"""        try:
             # Get branches
             source_br = await self._get_branch(content_id, source_branch)
             target_br = await self._get_branch(content_id, target_branch)
@@ -584,8 +564,7 @@ class VersioningManager:
         snapshot_type: str = "backup",
         expires_after: Optional[timedelta] = None
     ) -> VersionSnapshot:
-        """Create a snapshot backup of a version"""
-        try:
+        """Create a snapshot backup of a version"""        try:
             version = await self.get_version(version_id)
             if not version or version.content_id != content_id:
                 raise ValidationError("Invalid version for snapshot")
@@ -637,8 +616,7 @@ class VersioningManager:
         user_id: str,
         create_new_version: bool = True
     ) -> Optional[ContentVersion]:
-        """Restore content from a snapshot"""
-        try:
+        """Restore content from a snapshot"""        try:
             # Load snapshot
             snapshot_data = await self._load_snapshot(snapshot_id)
             if not snapshot_data:
@@ -692,8 +670,7 @@ class VersioningManager:
         include_branches: bool = True,
         max_depth: int = 100
     ) -> Dict[str, Any]:
-        """Get complete version history with branch visualization"""
-        try:
+        """Get complete version history with branch visualization"""        try:
             versions = await self.list_versions(content_id, limit=max_depth)
             branches = await self._get_content_branches(content_id) if include_branches else []
             
@@ -722,26 +699,22 @@ class VersioningManager:
             return {}
     
     def _calculate_hash(self, data: Any) -> str:
-        """Calculate hash for data"""
-        content_str = json.dumps(data, sort_keys=True, default=str)
+        """Calculate hash for data"""        content_str = json.dumps(data, sort_keys=True, default=str)
         return hashlib.sha256(content_str.encode()).hexdigest()
     
     def _calculate_size(self, content_data: Dict[str, Any], metadata: Dict[str, Any]) -> int:
-        """Calculate total size of content and metadata"""
-        content_str = json.dumps(content_data, default=str)
+        """Calculate total size of content and metadata"""        content_str = json.dumps(content_data, default=str)
         metadata_str = json.dumps(metadata, default=str)
         return len(content_str.encode()) + len(metadata_str.encode())
     
     def _extract_file_references(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Extract file references from content data"""
-        file_refs = []
+        """Extract file references from content data"""        file_refs = []
         # This would contain logic to extract file references
         # Placeholder implementation
         return file_refs
     
     def _compare_data(self, data_a: Dict[str, Any], data_b: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Compare two data structures and return differences"""
-        differences = []
+        """Compare two data structures and return differences"""        differences = []
         
         # Simple diff implementation - would be more sophisticated in real system
         all_keys = set(data_a.keys()) | set(data_b.keys())
@@ -770,8 +743,7 @@ class VersioningManager:
         return differences
     
     def _calculate_similarity(self, version_a: ContentVersion, version_b: ContentVersion) -> float:
-        """Calculate similarity score between two versions"""
-        # Simple similarity calculation - would be more sophisticated
+        """Calculate similarity score between two versions"""        # Simple similarity calculation - would be more sophisticated
         if version_a.content_hash == version_b.content_hash:
             return 1.0
         
@@ -785,8 +757,7 @@ class VersioningManager:
         return max(0.0, 1.0 - (size_diff / max_size))
     
     def _build_version_tree(self, versions: List[ContentVersion]) -> Dict[str, Any]:
-        """Build version tree structure"""
-        tree = {}
+        """Build version tree structure"""        tree = {}
         version_map = {v.version_id: v for v in versions}
         
         for version in versions:
@@ -811,8 +782,7 @@ class VersioningManager:
         return tree
     
     def _calculate_size_progression(self, versions: List[ContentVersion]) -> List[Dict[str, Any]]:
-        """Calculate size changes over time"""
-        progression = []
+        """Calculate size changes over time"""        progression = []
         sorted_versions = sorted(versions, key=lambda v: v.created_at)
         
         for version in sorted_versions:
@@ -825,8 +795,7 @@ class VersioningManager:
         return progression
     
     def _get_most_active_contributor(self, versions: List[ContentVersion]) -> Dict[str, Any]:
-        """Get most active contributor statistics"""
-        contributor_stats = {}
+        """Get most active contributor statistics"""        contributor_stats = {}
         
         for version in versions:
             if version.created_by not in contributor_stats:
@@ -852,8 +821,7 @@ class VersioningManager:
         }
     
     def _build_creation_timeline(self, versions: List[ContentVersion]) -> List[Dict[str, Any]]:
-        """Build version creation timeline"""
-        timeline = []
+        """Build version creation timeline"""        timeline = []
         sorted_versions = sorted(versions, key=lambda v: v.created_at)
         
         for version in sorted_versions:
@@ -876,8 +844,7 @@ class VersioningManager:
         parent_version: Optional[str],
         branch_name: Optional[str]
     ) -> str:
-        """Generate next version number"""
-        # Placeholder implementation
+        """Generate next version number"""        # Placeholder implementation
         if parent_version:
             parent = await self.get_version(parent_version)
             if parent and parent.version_number:
@@ -897,8 +864,7 @@ class VersioningManager:
         from_version: ContentVersion,
         to_version: ContentVersion
     ) -> VersionDelta:
-        """Create delta between two versions"""
-        field_changes = self._compare_data(
+        """Create delta between two versions"""        field_changes = self._compare_data(
             from_version.content_data, to_version.content_data
         )
         
@@ -926,28 +892,23 @@ class VersioningManager:
         )
     
     async def _store_version(self, version: ContentVersion) -> None:
-        """Store version in database"""
-        # Placeholder implementation
+        """Store version in database"""        # Placeholder implementation
         pass
     
     async def _load_version_from_db(self, version_id: str) -> Optional[ContentVersion]:
-        """Load version from database"""
-        # Placeholder implementation
+        """Load version from database"""        # Placeholder implementation
         return None
     
     async def _update_current_version(self, content_id: str, version_id: str) -> None:
-        """Update current version pointer"""
-        # Placeholder implementation
+        """Update current version pointer"""        # Placeholder implementation
         pass
     
     async def _mark_version_non_current(self, version_id: str) -> None:
-        """Mark version as non-current"""
-        # Placeholder implementation
+        """Mark version as non-current"""        # Placeholder implementation
         pass
     
     async def _get_current_version_id_from_db(self, content_id: str) -> Optional[str]:
-        """Get current version ID from database"""
-        # Placeholder implementation
+        """Get current version ID from database"""        # Placeholder implementation
         return None
     
     async def _fetch_versions_from_db(
@@ -957,38 +918,31 @@ class VersioningManager:
         limit: int,
         offset: int
     ) -> List[ContentVersion]:
-        """Fetch versions from database"""
-        # Placeholder implementation
+        """Fetch versions from database"""        # Placeholder implementation
         return []
     
     async def _cleanup_old_versions(self, content_id: str) -> None:
-        """Clean up old versions based on retention policy"""
-        # Placeholder implementation
+        """Clean up old versions based on retention policy"""        # Placeholder implementation
         pass
     
     async def _branch_exists(self, content_id: str, branch_name: str) -> bool:
-        """Check if branch exists"""
-        # Placeholder implementation
+        """Check if branch exists"""        # Placeholder implementation
         return False
     
     async def _store_branch_in_db(self, branch: VersionBranch) -> None:
-        """Store branch in database"""
-        # Placeholder implementation
+        """Store branch in database"""        # Placeholder implementation
         pass
     
     async def _get_branch(self, content_id: str, branch_name: str) -> Optional[VersionBranch]:
-        """Get branch by name"""
-        # Placeholder implementation
+        """Get branch by name"""        # Placeholder implementation
         return None
     
     async def _update_branch_in_db(self, branch: VersionBranch) -> None:
-        """Update branch in database"""
-        # Placeholder implementation
+        """Update branch in database"""        # Placeholder implementation
         pass
     
     async def _get_content_branches(self, content_id: str) -> List[VersionBranch]:
-        """Get all branches for content"""
-        # Placeholder implementation
+        """Get all branches for content"""        # Placeholder implementation
         return []
     
     async def _detect_merge_conflicts(
@@ -996,8 +950,7 @@ class VersioningManager:
         source_version: ContentVersion,
         target_version: ContentVersion
     ) -> List[VersionConflict]:
-        """Detect merge conflicts between versions"""
-        # Placeholder implementation
+        """Detect merge conflicts between versions"""        # Placeholder implementation
         return []
     
     async def _resolve_conflicts(
@@ -1007,8 +960,7 @@ class VersioningManager:
         conflicts: List[VersionConflict],
         resolutions: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve merge conflicts"""
-        # Placeholder implementation
+        """Resolve merge conflicts"""        # Placeholder implementation
         return {
             "content": source_version.content_data,
             "metadata": source_version.metadata
@@ -1020,8 +972,7 @@ class VersioningManager:
         target_version: ContentVersion,
         strategy: MergeStrategy
     ) -> Dict[str, Any]:
-        """Perform automatic merge"""
-        # Placeholder implementation based on strategy
+        """Perform automatic merge"""        # Placeholder implementation based on strategy
         if strategy == MergeStrategy.PRESERVE_LOCAL:
             return {
                 "content": target_version.content_data,
@@ -1034,16 +985,13 @@ class VersioningManager:
             }
     
     async def _store_snapshot(self, snapshot: VersionSnapshot, data: bytes) -> None:
-        """Store snapshot data"""
-        # Placeholder implementation
+        """Store snapshot data"""        # Placeholder implementation
         pass
     
     async def _load_snapshot(self, snapshot_id: str) -> Optional[bytes]:
-        """Load snapshot data"""
-        # Placeholder implementation
+        """Load snapshot data"""        # Placeholder implementation
         return None
     
     async def _update_version_in_db(self, version: ContentVersion) -> None:
-        """Update version in database"""
-        # Placeholder implementation
+        """Update version in database"""        # Placeholder implementation
         pass

@@ -1,5 +1,4 @@
-"""
-Security Monitoring Module
+"""Security Monitoring Module
 Advanced threat detection and security monitoring for IA Influencer Agent
 
 Features:
@@ -20,7 +19,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
-
 import asyncio
 import json
 import time
@@ -52,8 +50,7 @@ from backend.core.logging import SecurityLogger
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels with numeric priority"""
-    INFO = 0
+    """Threat severity levels with numeric priority"""    INFO = 0
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -62,8 +59,7 @@ class ThreatLevel(Enum):
 
 
 class EventType(Enum):
-    """Security event types for comprehensive monitoring"""
-    # Authentication Events
+    """Security event types for comprehensive monitoring"""    # Authentication Events
     LOGIN_SUCCESS = "login_success"
     LOGIN_FAILURE = "login_failure"
     LOGIN_BRUTE_FORCE = "login_brute_force"
@@ -119,8 +115,7 @@ class EventType(Enum):
 
 @dataclass
 class SecurityEvent:
-    """Security event data structure"""
-    event_id: str
+    """Security event data structure"""    event_id: str
     event_type: EventType
     threat_level: ThreatLevel
     source_ip: str
@@ -137,8 +132,7 @@ class SecurityEvent:
 
 @dataclass
 class ThreatIndicator:
-    """Threat indicator for detection rules"""
-    indicator_type: str
+    """Threat indicator for detection rules"""    indicator_type: str
     value: str
     threat_level: ThreatLevel
     description: str
@@ -148,15 +142,13 @@ class ThreatIndicator:
 
 
 class AuditLogger:
-    """Comprehensive audit logging system"""
-    
+    """Comprehensive audit logging system"""    
     def __init__(self):
         self.logger = SecurityLogger("AuditLogger")
         self.cache = CacheManager()
         
     async def log_security_event(self, event: SecurityEvent):
-        """Log security event with full context"""
-        try:
+        """Log security event with full context"""        try:
             # Enhance event with additional context
             enhanced_event = await self._enhance_event(event)
             
@@ -179,8 +171,7 @@ class AuditLogger:
             self.logger.error(f"Failed to log security event: {str(e)}")
     
     async def _enhance_event(self, event: SecurityEvent) -> SecurityEvent:
-        """Enhance event with additional context"""
-        try:
+        """Enhance event with additional context"""        try:
             # Add geolocation data
             if event.source_ip and not event.location:
                 event.location = await self._get_ip_geolocation(event.source_ip)
@@ -197,8 +188,7 @@ class AuditLogger:
             return event
     
     async def _get_ip_geolocation(self, ip_address: str) -> Optional[Dict[str, str]]:
-        """Get geolocation for IP address"""
-        try:
+        """Get geolocation for IP address"""        try:
             # Check cache first
             cache_key = f"geoip:{ip_address}"
             cached_location = await self.cache.get(cache_key)
@@ -229,8 +219,7 @@ class AuditLogger:
             return None
     
     async def _check_threat_intelligence(self, ip_address: str) -> Optional[Dict[str, Any]]:
-        """Check IP against threat intelligence feeds"""
-        try:
+        """Check IP against threat intelligence feeds"""        try:
             # Check cache for known threats
             cache_key = f"threat_intel:{ip_address}"
             cached_threat = await self.cache.get(cache_key)
@@ -250,13 +239,11 @@ class AuditLogger:
             return None
     
     async def _store_audit_log(self, event: SecurityEvent):
-        """Store audit log in database"""
-        # Implementation depends on your audit log model
+        """Store audit log in database"""        # Implementation depends on your audit log model
         pass
     
     async def _update_security_metrics(self, event: SecurityEvent):
-        """Update real-time security metrics"""
-        try:
+        """Update real-time security metrics"""        try:
             # Update event counters
             date_key = event.timestamp.strftime("%Y-%m-%d")
             hour_key = event.timestamp.strftime("%Y-%m-%d:%H")
@@ -282,8 +269,7 @@ class AuditLogger:
             self.logger.error(f"Security metrics update failed: {str(e)}")
     
     async def _trigger_security_alert(self, event: SecurityEvent):
-        """Trigger security alert for high-severity events"""
-        try:
+        """Trigger security alert for high-severity events"""        try:
             alert_data = {
                 "event_id": event.event_id,
                 "event_type": event.event_type.value,
@@ -302,14 +288,12 @@ class AuditLogger:
             self.logger.error(f"Security alert failed: {str(e)}")
     
     async def _send_alert(self, alert_data: Dict[str, Any]):
-        """Send security alert to notification system"""
-        # Implementation depends on your notification system
+        """Send security alert to notification system"""        # Implementation depends on your notification system
         pass
 
 
 class ThreatDetector:
-    """Advanced threat detection engine"""
-    
+    """Advanced threat detection engine"""    
     def __init__(self, audit_logger: AuditLogger):
         self.audit_logger = audit_logger
         self.logger = SecurityLogger("ThreatDetector")
@@ -327,8 +311,7 @@ class ThreatDetector:
         })
     
     def _initialize_detection_rules(self) -> Dict[str, Callable]:
-        """Initialize threat detection rules"""
-        return {
+        """Initialize threat detection rules"""        return {
             "brute_force_detection": self._detect_brute_force,
             "unusual_location": self._detect_unusual_location,
             "unusual_time": self._detect_unusual_time,
@@ -338,8 +321,7 @@ class ThreatDetector:
         }
     
     async def analyze_request(self, request: Request, user_id: Optional[str] = None) -> List[SecurityEvent]:
-        """Analyze incoming request for threats"""
-        events = []
+        """Analyze incoming request for threats"""        events = []
         
         try:
             # Extract request details
@@ -368,8 +350,7 @@ class ThreatDetector:
             return []
     
     def _get_client_ip(self, request: Request) -> str:
-        """Extract client IP from request"""
-        # Check for forwarded headers
+        """Extract client IP from request"""        # Check for forwarded headers
         forwarded_for = request.headers.get("x-forwarded-for")
         if forwarded_for:
             return forwarded_for.split(",")[0].strip()
@@ -388,8 +369,7 @@ class ThreatDetector:
         source_ip: str, 
         user_agent: str
     ) -> List[SecurityEvent]:
-        """Detect brute force attacks"""
-        events = []
+        """Detect brute force attacks"""        events = []
         
         try:
             # Check failed login attempts from IP
@@ -435,8 +415,7 @@ class ThreatDetector:
         source_ip: str, 
         user_agent: str
     ) -> List[SecurityEvent]:
-        """Detect logins from unusual locations"""
-        events = []
+        """Detect logins from unusual locations"""        events = []
         
         try:
             if not user_id:
@@ -489,8 +468,7 @@ class ThreatDetector:
         source_ip: str, 
         user_agent: str
     ) -> List[SecurityEvent]:
-        """Detect logins at unusual times"""
-        events = []
+        """Detect logins at unusual times"""        events = []
         
         try:
             if not user_id:
@@ -545,8 +523,7 @@ class ThreatDetector:
         source_ip: str, 
         user_agent: str
     ) -> List[SecurityEvent]:
-        """Detect API abuse patterns"""
-        events = []
+        """Detect API abuse patterns"""        events = []
         
         try:
             # Track API calls per IP
@@ -591,8 +568,7 @@ class ThreatDetector:
         source_ip: str, 
         user_agent: str
     ) -> List[SecurityEvent]:
-        """Detect privilege escalation attempts"""
-        events = []
+        """Detect privilege escalation attempts"""        events = []
         
         try:
             # Check for admin endpoints accessed by non-admin users
@@ -631,8 +607,7 @@ class ThreatDetector:
         source_ip: str, 
         user_agent: str
     ) -> List[SecurityEvent]:
-        """Detect suspicious file uploads"""
-        events = []
+        """Detect suspicious file uploads"""        events = []
         
         try:
             if request.method == "POST" and "/upload" in str(request.url.path):
@@ -668,15 +643,13 @@ class ThreatDetector:
 
 
 class SecurityMetrics:
-    """Security metrics collection and analysis"""
-    
+    """Security metrics collection and analysis"""    
     def __init__(self):
         self.logger = SecurityLogger("SecurityMetrics")
         self.cache = CacheManager()
     
     async def get_security_dashboard_data(self) -> Dict[str, Any]:
-        """Get comprehensive security dashboard data"""
-        try:
+        """Get comprehensive security dashboard data"""        try:
             current_date = datetime.utcnow().strftime("%Y-%m-%d")
             current_hour = datetime.utcnow().strftime("%Y-%m-%d:%H")
             
@@ -709,8 +682,7 @@ class SecurityMetrics:
             return {}
     
     async def _get_daily_metrics(self, date: str) -> Dict[str, int]:
-        """Get daily security metrics"""
-        daily_key = f"security_metrics:daily:{date}"
+        """Get daily security metrics"""        daily_key = f"security_metrics:daily:{date}"
         
         metrics = {}
         event_types = [e.value for e in EventType]
@@ -724,8 +696,7 @@ class SecurityMetrics:
         return metrics
     
     async def _get_hourly_trends(self) -> List[Dict[str, Any]]:
-        """Get hourly trends for last 24 hours"""
-        trends = []
+        """Get hourly trends for last 24 hours"""        trends = []
         
         for i in range(24):
             hour_time = datetime.utcnow() - timedelta(hours=i)
@@ -743,8 +714,7 @@ class SecurityMetrics:
         return list(reversed(trends))
     
     async def _get_top_threats(self, date: str) -> List[Dict[str, Any]]:
-        """Get top threat types for the day"""
-        daily_key = f"security_metrics:daily:{date}"
+        """Get top threat types for the day"""        daily_key = f"security_metrics:daily:{date}"
         
         threats = []
         for event_type in EventType:
@@ -761,14 +731,12 @@ class SecurityMetrics:
         return threats[:10]  # Top 10
     
     async def _get_geographic_distribution(self, date: str) -> List[Dict[str, Any]]:
-        """Get geographic distribution of threats"""
-        # This would require storing geo data with events
+        """Get geographic distribution of threats"""        # This would require storing geo data with events
         # Placeholder implementation
         return []
     
     async def _get_threat_level_distribution(self, date: str) -> Dict[str, int]:
-        """Get threat level distribution"""
-        daily_key = f"security_metrics:daily:{date}"
+        """Get threat level distribution"""        daily_key = f"security_metrics:daily:{date}"
         
         distribution = {}
         for level in ThreatLevel:
@@ -779,8 +747,7 @@ class SecurityMetrics:
 
 
 class IntrusionDetection:
-    """Intrusion Detection System (IDS)"""
-    
+    """Intrusion Detection System (IDS)"""    
     def __init__(self, threat_detector: ThreatDetector):
         self.threat_detector = threat_detector
         self.logger = SecurityLogger("IntrusionDetection")
@@ -790,8 +757,7 @@ class IntrusionDetection:
         self.attack_signatures = self._load_attack_signatures()
     
     def _load_attack_signatures(self) -> Dict[str, List[str]]:
-        """Load attack signatures for detection"""
-        return {
+        """Load attack signatures for detection"""        return {
             "sql_injection": [
                 "union select", "drop table", "delete from", "insert into",
                 "update set", "' or '1'='1", "'; drop", "or 1=1",
@@ -812,8 +778,7 @@ class IntrusionDetection:
         }
     
     async def analyze_request_for_attacks(self, request: Request) -> List[SecurityEvent]:
-        """Analyze request for known attack patterns"""
-        events = []
+        """Analyze request for known attack patterns"""        events = []
         
         try:
             # Get request details
@@ -862,8 +827,7 @@ class IntrusionDetection:
         context: str,
         location: str
     ) -> SecurityEvent:
-        """Create security event for detected attack"""
-        event_type_map = {
+        """Create security event for detected attack"""        event_type_map = {
             "sql_injection": EventType.SQL_INJECTION,
             "xss": EventType.XSS_ATTEMPT,
             "path_traversal": EventType.UNAUTHORIZED_ACCESS,
@@ -889,8 +853,7 @@ class IntrusionDetection:
 
 
 class SecurityMonitor:
-    """Main security monitoring orchestrator"""
-    
+    """Main security monitoring orchestrator"""    
     def __init__(self):
         self.audit_logger = AuditLogger()
         self.threat_detector = ThreatDetector(self.audit_logger)
@@ -910,8 +873,7 @@ class SecurityMonitor:
         response: Response,
         user_id: Optional[str] = None
     ):
-        """Monitor incoming request for security threats"""
-        try:
+        """Monitor incoming request for security threats"""        try:
             # Run threat detection
             threat_events = await self.threat_detector.analyze_request(request, user_id)
             
@@ -935,8 +897,7 @@ class SecurityMonitor:
         request: Request, 
         response: Response
     ):
-        """Handle high-severity threats"""
-        try:
+        """Handle high-severity threats"""        try:
             # Log additional context
             self.logger.warning(f"High threat detected: {event.description}")
             
@@ -956,8 +917,7 @@ class SecurityMonitor:
         request: Request, 
         response: Response
     ):
-        """Handle critical threats"""
-        try:
+        """Handle critical threats"""        try:
             # Log critical alert
             self.logger.critical(f"Critical threat detected: {event.description}")
             
@@ -974,23 +934,19 @@ class SecurityMonitor:
             self.logger.error(f"Critical threat handling failed: {str(e)}")
     
     async def _apply_rate_limiting(self, ip_address: str):
-        """Apply rate limiting to IP address"""
-        cache_key = f"rate_limit:{ip_address}"
+        """Apply rate limiting to IP address"""        cache_key = f"rate_limit:{ip_address}"
         await self.threat_detector.cache.set(cache_key, True, expire=300)  # 5 minutes
     
     async def _block_ip_temporarily(self, ip_address: str):
-        """Temporarily block IP address"""
-        cache_key = f"blocked_ip:{ip_address}"
+        """Temporarily block IP address"""        cache_key = f"blocked_ip:{ip_address}"
         await self.threat_detector.cache.set(cache_key, True, expire=3600)  # 1 hour
     
     async def _send_critical_alert(self, event: SecurityEvent):
-        """Send critical security alert"""
-        # Implementation depends on your notification system
+        """Send critical security alert"""        # Implementation depends on your notification system
         pass
     
     async def get_security_status(self) -> Dict[str, Any]:
-        """Get current security status"""
-        try:
+        """Get current security status"""        try:
             dashboard_data = await self.security_metrics.get_security_dashboard_data()
             
             return {

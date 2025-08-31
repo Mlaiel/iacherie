@@ -1,5 +1,4 @@
-"""
-Web Extractors - Industrial IA Web Content Processing System
+"""Web Extractors - Industrial IA Web Content Processing System
 ===========================================================
 
 Ultra-advanced professional web content extractors for HTML, web pages, and online resources.
@@ -29,7 +28,6 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
-
 import asyncio
 import logging
 import re
@@ -95,8 +93,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebMetadata:
-    """Web content metadata container"""
-    
+    """Web content metadata container"""    
     url: Optional[str] = None
     canonical_url: Optional[str] = None
     title: Optional[str] = None
@@ -118,8 +115,7 @@ class WebMetadata:
 
 @dataclass
 class LinkData:
-    """Link metadata container"""
-    
+    """Link metadata container"""    
     url: str
     text: Optional[str] = None
     title: Optional[str] = None
@@ -132,8 +128,7 @@ class LinkData:
 
 
 class BaseWebExtractor(BaseExtractor):
-    """Base class for web content extractors"""
-    
+    """Base class for web content extractors"""    
     def __init__(self, name: str):
         super().__init__(name)
         self.session_timeout = 30
@@ -141,8 +136,7 @@ class BaseWebExtractor(BaseExtractor):
         self.user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
         
     async def create_session(self) -> Optional[aiohttp.ClientSession]:
-        """Create HTTP session with proper configuration"""
-        if not HAS_AIOHTTP:
+        """Create HTTP session with proper configuration"""        if not HAS_AIOHTTP:
             return None
         
         connector = aiohttp.TCPConnector(
@@ -171,8 +165,7 @@ class BaseWebExtractor(BaseExtractor):
         )
     
     async def fetch_content(self, url: str, session: aiohttp.ClientSession) -> Tuple[str, Dict[str, Any]]:
-        """Fetch web content with metadata"""
-        try:
+        """Fetch web content with metadata"""        try:
             async with session.get(url) as response:
                 if response.status >= 400:
                     raise aiohttp.ClientError(f"HTTP {response.status}: {response.reason}")
@@ -197,14 +190,12 @@ class BaseWebExtractor(BaseExtractor):
 
 
 class HTMLExtractor(BaseWebExtractor):
-    """Advanced HTML content extractor"""
-    
+    """Advanced HTML content extractor"""    
     def __init__(self):
         super().__init__("HTMLExtractor")
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains HTML content"""
-        if request.source_url:
+        """Check if request contains HTML content"""        if request.source_url:
             return True  # Can try to fetch any URL
         
         if request.source_data:
@@ -217,8 +208,7 @@ class HTMLExtractor(BaseWebExtractor):
         return False
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract HTML content and metadata"""
-        try:
+        """Extract HTML content and metadata"""        try:
             content = ""
             fetch_metadata = {}
             
@@ -278,8 +268,7 @@ class HTMLExtractor(BaseWebExtractor):
             )
     
     async def _process_html(self, soup: BeautifulSoup, content: str, url: Optional[str]) -> Dict[str, Any]:
-        """Process HTML content comprehensively"""
-        result = {
+        """Process HTML content comprehensively"""        result = {
             'type': 'html',
             'url': url,
             'raw_html': content,
@@ -316,8 +305,7 @@ class HTMLExtractor(BaseWebExtractor):
         return result
     
     async def _extract_html_structure(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract HTML document structure"""
-        return {
+        """Extract HTML document structure"""        return {
             'doctype': self._extract_doctype(soup),
             'html_tag': soup.html.attrs if soup.html else {},
             'head_tags': len(soup.head.find_all() if soup.head else []),
@@ -329,15 +317,13 @@ class HTMLExtractor(BaseWebExtractor):
         }
     
     def _extract_doctype(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract DOCTYPE declaration"""
-        for item in soup.contents:
+        """Extract DOCTYPE declaration"""        for item in soup.contents:
             if isinstance(item, bs4.Doctype):
                 return str(item)
         return None
     
     def _calculate_nesting_depth(self, soup: BeautifulSoup, max_depth: int = 20) -> int:
-        """Calculate maximum nesting depth of HTML elements"""
-        def get_depth(element, current_depth=0):
+        """Calculate maximum nesting depth of HTML elements"""        def get_depth(element, current_depth=0):
             if current_depth > max_depth:
                 return current_depth
             
@@ -349,8 +335,7 @@ class HTMLExtractor(BaseWebExtractor):
         return get_depth(soup)
     
     async def _extract_text_content(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract and analyze text content"""
-        # Get clean text
+        """Extract and analyze text content"""        # Get clean text
         text = soup.get_text(separator=' ', strip=True)
         
         # Extract specific text elements
@@ -379,8 +364,7 @@ class HTMLExtractor(BaseWebExtractor):
         }
     
     async def _extract_meta_tags(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract meta tags and document metadata"""
-        meta_data = {
+        """Extract meta tags and document metadata"""        meta_data = {
             'title': soup.title.string if soup.title else None,
             'meta_tags': {},
             'og_tags': {},
@@ -413,8 +397,7 @@ class HTMLExtractor(BaseWebExtractor):
         return meta_data
     
     async def _extract_links(self, soup: BeautifulSoup, base_url: Optional[str]) -> List[LinkData]:
-        """Extract and analyze all links"""
-        links = []
+        """Extract and analyze all links"""        links = []
         
         for link in soup.find_all('a', href=True):
             href = link['href']
@@ -448,8 +431,7 @@ class HTMLExtractor(BaseWebExtractor):
         return links
     
     async def _extract_media_elements(self, soup: BeautifulSoup, base_url: Optional[str]) -> Dict[str, List[Dict[str, Any]]]:
-        """Extract media elements (images, videos, audio)"""
-        media = {
+        """Extract media elements (images, videos, audio)"""        media = {
             'images': [],
             'videos': [],
             'audio': [],
@@ -528,8 +510,7 @@ class HTMLExtractor(BaseWebExtractor):
         return media
     
     async def _extract_forms(self, soup: BeautifulSoup) -> List[Dict[str, Any]]:
-        """Extract form information"""
-        forms = []
+        """Extract form information"""        forms = []
         
         for form in soup.find_all('form'):
             form_data = {
@@ -581,8 +562,7 @@ class HTMLExtractor(BaseWebExtractor):
         return forms
     
     async def _extract_structured_data(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract structured data (JSON-LD, microdata, etc.)"""
-        structured_data = {
+        """Extract structured data (JSON-LD, microdata, etc.)"""        structured_data = {
             'json_ld': [],
             'microdata': [],
             'rdfa': []
@@ -614,8 +594,7 @@ class HTMLExtractor(BaseWebExtractor):
         return structured_data
     
     async def _analyze_performance(self, soup: BeautifulSoup, content: str) -> Dict[str, Any]:
-        """Analyze page performance metrics"""
-        # Count external resources
+        """Analyze page performance metrics"""        # Count external resources
         external_scripts = len([script for script in soup.find_all('script', src=True) 
                                if script.get('src') and 'http' in script.get('src')])
         
@@ -642,8 +621,7 @@ class HTMLExtractor(BaseWebExtractor):
         }
     
     def _calculate_performance_score(self, html_size: int, total_elements: int, external_resources: int) -> float:
-        """Calculate simple performance score (0-100)"""
-        score = 100
+        """Calculate simple performance score (0-100)"""        score = 100
         
         # Deduct for large HTML size
         if html_size > 100000:  # 100KB
@@ -660,8 +638,7 @@ class HTMLExtractor(BaseWebExtractor):
         return max(0, score)
     
     async def _analyze_seo(self, soup: BeautifulSoup, content: str) -> Dict[str, Any]:
-        """Analyze SEO factors"""
-        seo_analysis = {
+        """Analyze SEO factors"""        seo_analysis = {
             'title_length': 0,
             'meta_description_length': 0,
             'has_h1': False,
@@ -704,8 +681,7 @@ class HTMLExtractor(BaseWebExtractor):
         return seo_analysis
     
     def _calculate_seo_score(self, analysis: Dict[str, Any]) -> float:
-        """Calculate SEO score (0-100)"""
-        score = 0
+        """Calculate SEO score (0-100)"""        score = 0
         
         # Title (20 points)
         title_length = analysis['title_length']
@@ -742,8 +718,7 @@ class HTMLExtractor(BaseWebExtractor):
         return score
     
     async def _extract_web_metadata(self, soup: BeautifulSoup, url: Optional[str]) -> WebMetadata:
-        """Extract web-specific metadata"""
-        meta_tags = {}
+        """Extract web-specific metadata"""        meta_tags = {}
         for meta in soup.find_all('meta'):
             name = meta.get('name') or meta.get('property')
             content = meta.get('content')
@@ -777,26 +752,22 @@ class HTMLExtractor(BaseWebExtractor):
         )
     
     def _extract_canonical_url(self, soup: BeautifulSoup) -> Optional[str]:
-        """Extract canonical URL"""
-        canonical = soup.find('link', rel='canonical')
+        """Extract canonical URL"""        canonical = soup.find('link', rel='canonical')
         return canonical.get('href') if canonical else None
 
 
 class ArticleExtractor(BaseWebExtractor):
-    """Specialized article content extractor"""
-    
+    """Specialized article content extractor"""    
     def __init__(self):
         super().__init__("ArticleExtractor")
         
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains article content"""
-        # This would typically be used as a secondary extractor
+        """Check if request contains article content"""        # This would typically be used as a secondary extractor
         # after HTML extraction to clean up article content
         return request.source_url is not None
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract clean article content"""
-        try:
+        """Extract clean article content"""        try:
             if not request.source_url:
                 return ExtractionResult(
                     request_id=request.request_id,
@@ -838,8 +809,7 @@ class ArticleExtractor(BaseWebExtractor):
             )
     
     async def _extract_article_content(self, html: str, url: str) -> Dict[str, Any]:
-        """Extract clean article content using multiple methods"""
-        result = {
+        """Extract clean article content using multiple methods"""        result = {
             'type': 'article',
             'url': url,
             'extraction_methods': {}
@@ -892,8 +862,7 @@ class ArticleExtractor(BaseWebExtractor):
         return result
     
     async def _custom_article_extraction(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Custom article extraction logic"""
-        # Remove script and style elements
+        """Custom article extraction logic"""        # Remove script and style elements
         for script in soup(["script", "style"]):
             script.decompose()
         
@@ -943,8 +912,7 @@ class ArticleExtractor(BaseWebExtractor):
         }
     
     async def _combine_extraction_results(self, methods: Dict[str, Dict]) -> Dict[str, Any]:
-        """Combine results from different extraction methods"""
-        combined = {
+        """Combine results from different extraction methods"""        combined = {
             'title': None,
             'content': None,
             'author': None,
@@ -1005,35 +973,30 @@ class ArticleExtractor(BaseWebExtractor):
 
 # Web Extractor Factory
 class WebExtractorFactory:
-    """Factory for creating web extractors"""
-    
+    """Factory for creating web extractors"""    
     _extractors: List[BaseWebExtractor] = []
     
     @classmethod
     def register_extractor(cls, extractor: BaseWebExtractor):
-        """Register a web extractor"""
-        cls._extractors.append(extractor)
+        """Register a web extractor"""        cls._extractors.append(extractor)
     
     @classmethod
     def get_extractor(cls, request: ExtractionRequest) -> Optional[BaseWebExtractor]:
-        """Get appropriate extractor for request"""
-        for extractor in cls._extractors:
+        """Get appropriate extractor for request"""        for extractor in cls._extractors:
             if asyncio.run(extractor.can_handle(request)):
                 return extractor
         return None
     
     @classmethod
     def get_extractors_for_url(cls, url: str) -> List[BaseWebExtractor]:
-        """Get all extractors that can handle URL"""
-        request = ExtractionRequest(source_url=url)
+        """Get all extractors that can handle URL"""        request = ExtractionRequest(source_url=url)
         return [extractor for extractor in cls._extractors 
                 if asyncio.run(extractor.can_handle(request))]
 
 
 # Register default extractors
 def register_default_web_extractors():
-    """Register all default web extractors"""
-    factory = WebExtractorFactory
+    """Register all default web extractors"""    factory = WebExtractorFactory
     
     factory.register_extractor(HTMLExtractor())
     factory.register_extractor(ArticleExtractor())

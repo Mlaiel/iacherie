@@ -1,5 +1,4 @@
-"""
-Revenue Analytics Engine
+"""Revenue Analytics Engine
 =======================
 
 Advanced revenue tracking, analysis, and optimization for multi-platform monetization.
@@ -12,7 +11,6 @@ WARNING: This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,8 +31,7 @@ from sklearn.preprocessing import PolynomialFeatures
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""
-    ADVERTISING = "advertising"
+    """Revenue stream types"""    ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     SPONSORSHIP = "sponsorship"
     LICENSING = "licensing"
@@ -47,8 +44,7 @@ class RevenueStream(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment status enumeration"""
-    PENDING = "pending"
+    """Payment status enumeration"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -57,8 +53,7 @@ class PaymentStatus(Enum):
 
 
 class RevenueCategory(Enum):
-    """Revenue category classification"""
-    DIRECT = "direct"
+    """Revenue category classification"""    DIRECT = "direct"
     INDIRECT = "indirect"
     RECURRING = "recurring"
     ONE_TIME = "one_time"
@@ -67,8 +62,7 @@ class RevenueCategory(Enum):
 
 @dataclass
 class RevenueMetric:
-    """Individual revenue metric"""
-    metric_id: str
+    """Individual revenue metric"""    metric_id: str
     user_id: str
     platform: str
     revenue_stream: RevenueStream
@@ -83,8 +77,7 @@ class RevenueMetric:
 
 @dataclass
 class RevenueBreakdown:
-    """Detailed revenue breakdown"""
-    total_revenue: Decimal
+    """Detailed revenue breakdown"""    total_revenue: Decimal
     platform_breakdown: Dict[str, Decimal]
     stream_breakdown: Dict[str, Decimal]
     currency_breakdown: Dict[str, Decimal]
@@ -95,8 +88,7 @@ class RevenueBreakdown:
 
 @dataclass
 class RevenueForecast:
-    """Revenue forecast data"""
-    forecast_period: str
+    """Revenue forecast data"""    forecast_period: str
     predicted_revenue: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
     growth_projection: float
@@ -107,8 +99,7 @@ class RevenueForecast:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization insights"""
-    current_efficiency: float
+    """Revenue optimization insights"""    current_efficiency: float
     optimization_potential: Decimal
     priority_actions: List[Dict]
     expected_improvement: float
@@ -117,22 +108,18 @@ class RevenueOptimization:
 
 
 class RevenueAnalytics:
-    """
-    Professional revenue analytics engine for multi-platform monetization.
+    """    Professional revenue analytics engine for multi-platform monetization.
     
     Provides comprehensive revenue tracking, forecasting, optimization insights,
     and automated financial reporting for content creators and influencers.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """
-        Initialize RevenueAnalytics engine.
+        """        Initialize RevenueAnalytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
         self.cache_ttl = 1800  # 30 minutes cache for revenue data
@@ -141,8 +128,7 @@ class RevenueAnalytics:
                                     time_period: timedelta = timedelta(days=30),
                                     currency: str = "EUR"
                                     ) -> RevenueBreakdown:
-        """
-        Calculate comprehensive revenue breakdown for user.
+        """        Calculate comprehensive revenue breakdown for user.
         
         Args:
             user_id: User identifier
@@ -151,8 +137,7 @@ class RevenueAnalytics:
             
         Returns:
             Comprehensive revenue breakdown
-        """
-        try:
+        """        try:
             cache_key = f"revenue_total:{user_id}:{time_period.days}:{currency}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -163,8 +148,7 @@ class RevenueAnalytics:
             start_date = end_date - time_period
             
             # Get total revenue data
-            query = text("""
-                SELECT 
+            query = text("""                SELECT 
                     SUM(CASE WHEN rm.currency = :currency THEN rm.amount 
                              ELSE rm.amount * er.exchange_rate END) as total_revenue,
                     rm.platform,
@@ -272,8 +256,7 @@ class RevenueAnalytics:
                                       forecast_days: int = 90,
                                       currency: str = "EUR"
                                       ) -> RevenueForecast:
-        """
-        Generate revenue forecast using machine learning algorithms.
+        """        Generate revenue forecast using machine learning algorithms.
         
         Args:
             user_id: User identifier
@@ -282,8 +265,7 @@ class RevenueAnalytics:
             
         Returns:
             Revenue forecast with confidence intervals
-        """
-        try:
+        """        try:
             cache_key = f"revenue_forecast:{user_id}:{forecast_days}:{currency}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -294,8 +276,7 @@ class RevenueAnalytics:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=365)
             
-            query = text("""
-                SELECT 
+            query = text("""                SELECT 
                     DATE(rm.created_at) as revenue_date,
                     SUM(CASE WHEN rm.currency = :currency THEN rm.amount 
                              ELSE rm.amount * COALESCE(er.exchange_rate, 1) END) as daily_revenue
@@ -451,8 +432,7 @@ class RevenueAnalytics:
     async def analyze_revenue_optimization(self, user_id: str,
                                          time_period: timedelta = timedelta(days=90)
                                          ) -> RevenueOptimization:
-        """
-        Analyze revenue optimization opportunities.
+        """        Analyze revenue optimization opportunities.
         
         Args:
             user_id: User identifier
@@ -460,8 +440,7 @@ class RevenueAnalytics:
             
         Returns:
             Revenue optimization insights and recommendations
-        """
-        try:
+        """        try:
             cache_key = f"revenue_optimization:{user_id}:{time_period.days}"
             cached_result = await self._get_cached_result(cache_key)
             
@@ -506,8 +485,7 @@ class RevenueAnalytics:
     async def track_payment_status(self, user_id: str,
                                  payment_ids: Optional[List[str]] = None
                                  ) -> Dict[str, Any]:
-        """
-        Track payment status and processing information.
+        """        Track payment status and processing information.
         
         Args:
             user_id: User identifier
@@ -515,8 +493,7 @@ class RevenueAnalytics:
             
         Returns:
             Payment status information
-        """
-        try:
+        """        try:
             query_conditions = "WHERE rm.user_id = :user_id"
             query_params = {"user_id": user_id}
             
@@ -524,8 +501,7 @@ class RevenueAnalytics:
                 query_conditions += " AND rm.payment_id = ANY(:payment_ids)"
                 query_params["payment_ids"] = payment_ids
             
-            query = text(f"""
-                SELECT 
+            query = text(f"""                SELECT 
                     rm.payment_id,
                     rm.amount,
                     rm.currency,
@@ -601,8 +577,7 @@ class RevenueAnalytics:
             return {"error": str(e)}
     
     async def _calculate_revenue_growth(self, user_id: str, time_period: timedelta, currency: str) -> Dict[str, float]:
-        """Calculate revenue growth metrics."""
-        try:
+        """Calculate revenue growth metrics."""        try:
             # Get current period revenue
             current_end = datetime.utcnow()
             current_start = current_end - time_period
@@ -612,8 +587,7 @@ class RevenueAnalytics:
             previous_start = previous_end - time_period
             
             # Current period query
-            current_query = text("""
-                SELECT SUM(CASE WHEN rm.currency = :currency THEN rm.amount 
+            current_query = text("""                SELECT SUM(CASE WHEN rm.currency = :currency THEN rm.amount 
                                ELSE rm.amount * COALESCE(er.exchange_rate, 1) END) as revenue
                 FROM revenue_metrics rm
                 LEFT JOIN exchange_rates er ON rm.currency = er.from_currency 
@@ -669,11 +643,9 @@ class RevenueAnalytics:
             return {}
     
     async def _identify_revenue_drivers(self, user_id: str) -> List[str]:
-        """Identify key revenue drivers for forecasting."""
-        try:
+        """Identify key revenue drivers for forecasting."""        try:
             # Analyze revenue by stream and platform to identify top drivers
-            query = text("""
-                SELECT 
+            query = text("""                SELECT 
                     revenue_stream,
                     platform,
                     SUM(amount) as total_revenue,
@@ -702,8 +674,7 @@ class RevenueAnalytics:
             return ["Content performance", "Audience engagement", "Platform algorithms"]
     
     async def _identify_risk_factors(self, user_id: str, df: pd.DataFrame) -> List[str]:
-        """Identify revenue risk factors."""
-        try:
+        """Identify revenue risk factors."""        try:
             risk_factors = []
             
             # Check revenue volatility
@@ -718,8 +689,7 @@ class RevenueAnalytics:
                     risk_factors.append("Recent declining revenue trend")
             
             # Check platform concentration
-            query = text("""
-                SELECT platform, SUM(amount) as revenue
+            query = text("""                SELECT platform, SUM(amount) as revenue
                 FROM revenue_metrics
                 WHERE user_id = :user_id AND created_at >= NOW() - INTERVAL '30 days'
                 GROUP BY platform
@@ -742,8 +712,7 @@ class RevenueAnalytics:
             return ["Market volatility", "Platform policy changes"]
     
     async def _generate_revenue_recommendations(self, user_id: str, predictions: np.ndarray, df: pd.DataFrame) -> List[str]:
-        """Generate revenue optimization recommendations."""
-        try:
+        """Generate revenue optimization recommendations."""        try:
             recommendations = []
             
             # Analyze prediction trends
@@ -771,8 +740,7 @@ class RevenueAnalytics:
             return ["Monitor revenue trends regularly", "Diversify income sources"]
     
     async def _calculate_revenue_efficiency(self, user_id: str, time_period: timedelta) -> float:
-        """Calculate revenue efficiency score."""
-        try:
+        """Calculate revenue efficiency score."""        try:
             # This is a simplified efficiency calculation
             # In practice, this would consider costs, time investment, etc.
             revenue_breakdown = await self.calculate_total_revenue(user_id, time_period)
@@ -796,8 +764,7 @@ class RevenueAnalytics:
             return 0.0
     
     async def _calculate_optimization_potential(self, user_id: str, time_period: timedelta) -> Decimal:
-        """Calculate potential revenue optimization amount."""
-        try:
+        """Calculate potential revenue optimization amount."""        try:
             current_revenue = await self.calculate_total_revenue(user_id, time_period)
             current_efficiency = await self._calculate_revenue_efficiency(user_id, time_period)
             
@@ -814,8 +781,7 @@ class RevenueAnalytics:
             return Decimal('0')
     
     async def _identify_priority_actions(self, user_id: str, current_metrics: RevenueBreakdown) -> List[Dict]:
-        """Identify priority actions for revenue optimization."""
-        try:
+        """Identify priority actions for revenue optimization."""        try:
             actions = []
             
             # Platform diversification
@@ -853,8 +819,7 @@ class RevenueAnalytics:
             return []
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict]:
-        """Get cached result from Redis."""
-        try:
+        """Get cached result from Redis."""        try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
@@ -864,8 +829,7 @@ class RevenueAnalytics:
             return None
     
     async def _cache_result(self, cache_key: str, data: Dict, ttl: int = None) -> None:
-        """Cache result in Redis."""
-        try:
+        """Cache result in Redis."""        try:
             cache_ttl = ttl or self.cache_ttl
             self.redis_client.setex(
                 cache_key,

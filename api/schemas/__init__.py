@@ -24,8 +24,7 @@ Architecture Overview:
 ├── AI & Machine Learning
 ├── Blockchain & NFT Integration
 └── Admin & System Management
-"""
-# Foundation schemas
+"""# Foundation schemas
 from .base import (
     BaseSchema, TimestampSchema, UUIDSchema, AuditSchema,
     PaginatedResponse, ApiResponse, ValidationError

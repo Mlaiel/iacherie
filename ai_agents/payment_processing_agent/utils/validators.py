@@ -1,5 +1,4 @@
-"""
-Payment Validation Engine - Industrial Security & Compliance
+"""Payment Validation Engine - Industrial Security & Compliance
 
 Comprehensive validation system for payment data, fraud detection,
 compliance checks, and security verification.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import re
 import logging
 from decimal import Decimal, InvalidOperation
@@ -40,16 +38,13 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentValidator:
-    """
-    Industrial payment validation engine with comprehensive security checks.
+    """    Industrial payment validation engine with comprehensive security checks.
     
     Validates payment data, performs compliance checks, fraud detection,
     and ensures data integrity for all payment operations.
     """
-
     def __init__(self, config: Optional[PaymentConfig] = None):
-        """Initialize validator with configuration"""
-        self.config = config or PaymentConfig()
+        """Initialize validator with configuration"""        self.config = config or PaymentConfig()
         
         # Validation patterns
         self.patterns = {
@@ -87,8 +82,7 @@ class PaymentValidator:
         payment_method: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive payment transaction validation.
+        """        Comprehensive payment transaction validation.
         
         Args:
             creator_id: Creator account identifier
@@ -102,8 +96,7 @@ class PaymentValidator:
             
         Raises:
             ValidationError: If validation fails
-        """
-        try:
+        """        try:
             validation_result = {
                 "valid": True,
                 "warnings": [],
@@ -160,8 +153,7 @@ class PaymentValidator:
         amount: Union[Decimal, float, str],
         currency: str
     ) -> bool:
-        """
-        Validate revenue processing request.
+        """        Validate revenue processing request.
         
         Args:
             creator_id: Creator account identifier
@@ -174,8 +166,7 @@ class PaymentValidator:
             
         Raises:
             ValidationError: If validation fails
-        """
-        try:
+        """        try:
             # Basic validation
             await self._validate_creator_id(creator_id)
             await self._validate_content_id(content_id)
@@ -204,8 +195,7 @@ class PaymentValidator:
         currency: str,
         payment_method: str
     ) -> Dict[str, Any]:
-        """
-        Validate payout request with comprehensive checks.
+        """        Validate payout request with comprehensive checks.
         
         Args:
             creator_id: Creator account identifier
@@ -218,8 +208,7 @@ class PaymentValidator:
             
         Raises:
             ValidationError: If validation fails
-        """
-        try:
+        """        try:
             validation_result = {
                 "valid": True,
                 "available_balance": Decimal("0.00"),
@@ -278,8 +267,7 @@ class PaymentValidator:
         secret: str,
         provider: str = "stripe"
     ) -> bool:
-        """
-        Validate webhook signature for security.
+        """        Validate webhook signature for security.
         
         Args:
             payload: Webhook payload
@@ -292,8 +280,7 @@ class PaymentValidator:
             
         Raises:
             ValidationError: If signature validation fails
-        """
-        try:
+        """        try:
             if provider == "stripe":
                 return self._validate_stripe_signature(payload, signature, secret)
             elif provider == "wise":
@@ -314,8 +301,7 @@ class PaymentValidator:
         amount: Decimal,
         currency: str
     ) -> Dict[str, Any]:
-        """
-        Validate compliance status for transaction.
+        """        Validate compliance status for transaction.
         
         Args:
             creator_id: Creator account identifier
@@ -328,8 +314,7 @@ class PaymentValidator:
             
         Raises:
             ComplianceError: If compliance check fails
-        """
-        try:
+        """        try:
             compliance_result = {
                 "compliant": True,
                 "required_actions": [],
@@ -376,8 +361,7 @@ class PaymentValidator:
 
     # Private validation methods
     async def _validate_creator_id(self, creator_id: str):
-        """Validate creator ID format and existence"""
-        if not creator_id or not isinstance(creator_id, str):
+        """Validate creator ID format and existence"""        if not creator_id or not isinstance(creator_id, str):
             raise ValidationError("Creator ID is required", field="creator_id")
         
         if not self.patterns["creator_id"].match(creator_id):
@@ -387,16 +371,14 @@ class PaymentValidator:
             raise ValidationError("Creator ID too long (max 50 characters)", field="creator_id")
 
     async def _validate_content_id(self, content_id: str):
-        """Validate content ID format"""
-        if not content_id or not isinstance(content_id, str):
+        """Validate content ID format"""        if not content_id or not isinstance(content_id, str):
             raise ValidationError("Content ID is required", field="content_id")
         
         if len(content_id) > 255:
             raise ValidationError("Content ID too long (max 255 characters)", field="content_id")
 
     async def _validate_amount(self, amount: Union[Decimal, float, str], currency: str) -> Decimal:
-        """Validate and normalize amount"""
-        try:
+        """Validate and normalize amount"""        try:
             if isinstance(amount, str):
                 amount = Decimal(amount)
             elif isinstance(amount, float):
@@ -422,8 +404,7 @@ class PaymentValidator:
             raise ValidationError(f"Invalid amount: {str(e)}", field="amount")
 
     async def _validate_currency(self, currency: str):
-        """Validate currency code"""
-        if not currency or not isinstance(currency, str):
+        """Validate currency code"""        if not currency or not isinstance(currency, str):
             raise ValidationError("Currency is required", field="currency")
         
         if len(currency) != 3:
@@ -433,8 +414,7 @@ class PaymentValidator:
             raise ValidationError(f"Currency {currency} not supported", field="currency")
 
     async def _validate_payment_method(self, creator_id: str, method_id: str) -> Dict[str, Any]:
-        """Validate payment method exists and is active"""
-        # This would query the database for the payment method
+        """Validate payment method exists and is active"""        # This would query the database for the payment method
         # For now, return mock validation
         return {
             "valid": True,
@@ -443,8 +423,7 @@ class PaymentValidator:
         }
 
     async def _validate_amount_limits(self, creator_id: str, amount: Decimal, currency: str):
-        """Validate transaction amount against user limits"""
-        # Check daily limits
+        """Validate transaction amount against user limits"""        # Check daily limits
         daily_total = await self._get_daily_transaction_total(creator_id, currency)
         if daily_total + amount > self.config.daily_transaction_limit:
             raise ValidationError("Daily transaction limit exceeded")
@@ -455,8 +434,7 @@ class PaymentValidator:
             raise ValidationError("Monthly transaction limit exceeded")
 
     async def _validate_transaction_frequency(self, creator_id: str, amount: Decimal):
-        """Validate transaction frequency for fraud detection"""
-        # Check recent transaction count
+        """Validate transaction frequency for fraud detection"""        # Check recent transaction count
         recent_count = await self._get_recent_transaction_count(creator_id, hours=1)
         if recent_count > 10:  # Max 10 transactions per hour
             raise ValidationError("Transaction frequency limit exceeded")
@@ -469,8 +447,7 @@ class PaymentValidator:
         payment_method: Optional[str],
         metadata: Optional[Dict[str, Any]]
     ) -> float:
-        """Calculate fraud risk score"""
-        risk_score = 0.0
+        """Calculate fraud risk score"""        risk_score = 0.0
         
         # Amount anomaly detection
         avg_amount = await self._get_average_transaction_amount(creator_id, currency)
@@ -495,8 +472,7 @@ class PaymentValidator:
         amount: Decimal,
         currency: str
     ) -> List[str]:
-        """Check compliance flags"""
-        flags = []
+        """Check compliance flags"""        flags = []
         
         # Large transaction flag
         if amount > Decimal("10000.00"):
@@ -509,8 +485,7 @@ class PaymentValidator:
         return flags
 
     def _validate_stripe_signature(self, payload: str, signature: str, secret: str) -> bool:
-        """Validate Stripe webhook signature"""
-        try:
+        """Validate Stripe webhook signature"""        try:
             elements = signature.split(',')
             timestamp = None
             v1_signature = None
@@ -543,8 +518,7 @@ class PaymentValidator:
             return False
 
     def _validate_wise_signature(self, payload: str, signature: str, secret: str) -> bool:
-        """Validate Wise webhook signature"""
-        try:
+        """Validate Wise webhook signature"""        try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
                 payload.encode('utf-8'),
@@ -558,8 +532,7 @@ class PaymentValidator:
             return False
 
     def _validate_paypal_signature(self, payload: str, signature: str, secret: str) -> bool:
-        """Validate PayPal webhook signature"""
-        try:
+        """Validate PayPal webhook signature"""        try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
                 payload.encode('utf-8'),
@@ -572,8 +545,7 @@ class PaymentValidator:
             return False
 
     def _validate_generic_signature(self, payload: str, signature: str, secret: str) -> bool:
-        """Validate generic HMAC signature"""
-        try:
+        """Validate generic HMAC signature"""        try:
             expected_signature = hmac.new(
                 secret.encode('utf-8'),
                 payload.encode('utf-8'),
@@ -587,55 +559,43 @@ class PaymentValidator:
 
     # Helper methods (would integrate with database and external services)
     async def _check_duplicate_revenue(self, creator_id: str, content_id: str, amount: Decimal):
-        """Check for duplicate revenue entries"""
-        # Would query database for recent matching entries
+        """Check for duplicate revenue entries"""        # Would query database for recent matching entries
         pass
 
     async def _get_available_balance(self, creator_id: str, currency: str) -> Decimal:
-        """Get creator's available balance"""
-        # Would calculate from database
+        """Get creator's available balance"""        # Would calculate from database
         return Decimal("1000.00")  # Mock value
 
     async def _calculate_payout_fees(self, amount: Decimal, payment_method: str) -> Decimal:
-        """Calculate payout fees"""
-        # Would calculate based on payment method and provider
+        """Calculate payout fees"""        # Would calculate based on payment method and provider
         return amount * Decimal("0.01")  # 1% fee
 
     async def _validate_kyc_status(self, creator_id: str):
-        """Validate KYC status for high-value transactions"""
-        # Would check KYC status in database
+        """Validate KYC status for high-value transactions"""        # Would check KYC status in database
         pass
 
     async def _check_kyc_status(self, creator_id: str) -> Dict[str, Any]:
-        """Check KYC verification status"""
-        # Would query KYC service/database
+        """Check KYC verification status"""        # Would query KYC service/database
         return {"verified": True, "status": "approved"}
 
     async def _perform_aml_screening(self, creator_id: str) -> Dict[str, Any]:
-        """Perform AML screening"""
-        # Would integrate with AML service
+        """Perform AML screening"""        # Would integrate with AML service
         return {"flagged": False, "flags": []}
 
     async def _check_tax_reporting_status(self, creator_id: str) -> Dict[str, Any]:
-        """Check tax reporting compliance"""
-        return {"compliant": True}
+        """Check tax reporting compliance"""        return {"compliant": True}
 
     async def _get_daily_transaction_total(self, creator_id: str, currency: str) -> Decimal:
-        """Get daily transaction total"""
-        return Decimal("0.00")
+        """Get daily transaction total"""        return Decimal("0.00")
 
     async def _get_monthly_transaction_total(self, creator_id: str, currency: str) -> Decimal:
-        """Get monthly transaction total"""
-        return Decimal("0.00")
+        """Get monthly transaction total"""        return Decimal("0.00")
 
     async def _get_recent_transaction_count(self, creator_id: str, hours: int) -> int:
-        """Get recent transaction count"""
-        return 0
+        """Get recent transaction count"""        return 0
 
     async def _get_average_transaction_amount(self, creator_id: str, currency: str) -> Decimal:
-        """Get average transaction amount"""
-        return Decimal("100.00")
+        """Get average transaction amount"""        return Decimal("100.00")
 
     async def _get_account_age_days(self, creator_id: str) -> int:
-        """Get account age in days"""
-        return 365  # Mock value
+        """Get account age in days"""        return 365  # Mock value

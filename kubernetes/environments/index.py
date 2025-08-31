@@ -1,5 +1,4 @@
-"""
-Deployment Environments Index - IA Influencer Agent
+"""Deployment Environments Index - IA Influencer Agent
 ===================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -16,7 +15,6 @@ Central index for deployment environment management.
 Provides unified access to all environment managers and configurations.
 ===================================================
 """
-
 import os
 import logging
 from typing import Dict, Any, List, Optional, Type, Union
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Environment type enumeration"""
-    DEVELOPMENT = "development"
+    """Environment type enumeration"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -62,8 +59,7 @@ class EnvironmentType(Enum):
 
 
 class EnvironmentManagerFactory:
-    """Factory for creating environment managers"""
-    
+    """Factory for creating environment managers"""    
     _managers = {
         EnvironmentType.DEVELOPMENT: DevelopmentEnvironmentManager,
         EnvironmentType.STAGING: StagingEnvironmentManager,
@@ -84,8 +80,7 @@ class EnvironmentManagerFactory:
     
     @classmethod
     def create_manager(cls, environment_type: EnvironmentType, config_path: Optional[str] = None):
-        """Create environment manager instance"""
-        if environment_type not in cls._managers:
+        """Create environment manager instance"""        if environment_type not in cls._managers:
             raise ValueError(f"Unsupported environment type: {environment_type}")
         
         manager_class = cls._managers[environment_type]
@@ -93,13 +88,11 @@ class EnvironmentManagerFactory:
     
     @classmethod
     def get_available_environments(cls) -> List[str]:
-        """Get list of available environment types"""
-        return [env.value for env in EnvironmentType]
+        """Get list of available environment types"""        return [env.value for env in EnvironmentType]
 
 
 class EnvironmentCoordinator:
-    """
-    Coordinates multiple environment managers for complex deployments.
+    """    Coordinates multiple environment managers for complex deployments.
     
     Features:
     - Multi-environment orchestration
@@ -108,8 +101,7 @@ class EnvironmentCoordinator:
     - Health monitoring across environments
     - Compliance checking across all environments
     - Resource optimization across environments
-    """
-    
+    """    
     def __init__(self):
         self.active_managers: Dict[EnvironmentType, Any] = {}
         self.environment_configs: Dict[EnvironmentType, Dict] = {}
@@ -119,8 +111,7 @@ class EnvironmentCoordinator:
     
     def register_environment(self, environment_type: EnvironmentType, 
                            config_path: Optional[str] = None) -> bool:
-        """Register an environment manager"""
-        try:
+        """Register an environment manager"""        try:
             manager = EnvironmentManagerFactory.create_manager(environment_type, config_path)
             config = manager.load_configuration()
             
@@ -135,8 +126,7 @@ class EnvironmentCoordinator:
             return False
     
     def setup_multi_environment_deployment(self, environments: List[EnvironmentType]) -> Dict[str, Any]:
-        """Setup multi-environment deployment"""
-        try:
+        """Setup multi-environment deployment"""        try:
             setup_results = {}
             
             # Register all environments
@@ -176,8 +166,7 @@ class EnvironmentCoordinator:
             return {}
     
     def get_global_health_status(self) -> Dict[str, Any]:
-        """Get health status across all environments"""
-        try:
+        """Get health status across all environments"""        try:
             global_status = {
                 'overall_status': 'healthy',
                 'environment_count': len(self.active_managers),
@@ -215,8 +204,7 @@ class EnvironmentCoordinator:
             return {'overall_status': 'error', 'error': str(e)}
     
     def validate_compliance_across_environments(self) -> Dict[str, Any]:
-        """Validate compliance across all environments"""
-        try:
+        """Validate compliance across all environments"""        try:
             compliance_status = {
                 'overall_compliance': True,
                 'compliance_score': 0.0,
@@ -261,8 +249,7 @@ class EnvironmentCoordinator:
             return {'overall_compliance': False, 'error': str(e)}
     
     def optimize_resource_allocation(self) -> Dict[str, Any]:
-        """Optimize resource allocation across environments"""
-        try:
+        """Optimize resource allocation across environments"""        try:
             optimization_results = {
                 'recommendations': [],
                 'resource_distribution': {},
@@ -297,8 +284,7 @@ class EnvironmentCoordinator:
             return {}
     
     def generate_deployment_summary(self) -> Dict[str, Any]:
-        """Generate comprehensive deployment summary"""
-        try:
+        """Generate comprehensive deployment summary"""        try:
             summary = {
                 'deployment_info': {
                     'total_environments': len(self.active_managers),
@@ -336,8 +322,7 @@ class EnvironmentCoordinator:
     
     # Private helper methods
     def _setup_environment_dependencies(self, environments: List[EnvironmentType]):
-        """Setup environment dependencies"""
-        # Define common dependency relationships
+        """Setup environment dependencies"""        # Define common dependency relationships
         dependencies = {
             EnvironmentType.KUBERNETES: [EnvironmentType.DOCKER],
             EnvironmentType.CLOUD: [EnvironmentType.NETWORKING, EnvironmentType.SECURITY],
@@ -355,8 +340,7 @@ class EnvironmentCoordinator:
                 ]
     
     def _calculate_initialization_order(self, environments: List[EnvironmentType]) -> List[EnvironmentType]:
-        """Calculate environment initialization order based on dependencies"""
-        # Simple topological sort
+        """Calculate environment initialization order based on dependencies"""        # Simple topological sort
         visited = set()
         result = []
         
@@ -379,8 +363,7 @@ class EnvironmentCoordinator:
         return result
     
     def _validate_cross_environment_compatibility(self) -> Dict[str, Any]:
-        """Validate compatibility across environments"""
-        compatibility_result = {
+        """Validate compatibility across environments"""        compatibility_result = {
             'compatible': True,
             'issues': [],
             'warnings': []
@@ -394,16 +377,14 @@ class EnvironmentCoordinator:
         return compatibility_result
     
     def _generate_compliance_recommendations(self) -> List[str]:
-        """Generate compliance recommendations"""
-        return [
+        """Generate compliance recommendations"""        return [
             "Ensure all environments have consistent security policies",
             "Regular compliance audits across all environments",
             "Implement unified logging and monitoring"
         ]
     
     def _analyze_resource_distribution(self, resource_usage: Dict) -> Dict[str, Any]:
-        """Analyze resource distribution across environments"""
-        return {
+        """Analyze resource distribution across environments"""        return {
             'cpu_distribution': {},
             'memory_distribution': {},
             'storage_distribution': {},
@@ -411,16 +392,14 @@ class EnvironmentCoordinator:
         }
     
     def _generate_optimization_recommendations(self, resource_usage: Dict) -> List[str]:
-        """Generate resource optimization recommendations"""
-        return [
+        """Generate resource optimization recommendations"""        return [
             "Consider auto-scaling for production environment",
             "Optimize container resource limits",
             "Implement resource monitoring and alerting"
         ]
     
     def _analyze_cost_optimization(self, resource_usage: Dict) -> Dict[str, Any]:
-        """Analyze cost optimization opportunities"""
-        return {
+        """Analyze cost optimization opportunities"""        return {
             'potential_savings': '15%',
             'recommendations': [
                 "Use spot instances for non-critical workloads",
@@ -429,8 +408,7 @@ class EnvironmentCoordinator:
         }
     
     def _analyze_performance_optimization(self, resource_usage: Dict) -> Dict[str, Any]:
-        """Analyze performance optimization opportunities"""
-        return {
+        """Analyze performance optimization opportunities"""        return {
             'performance_score': 85,
             'bottlenecks': [],
             'recommendations': [
@@ -440,15 +418,13 @@ class EnvironmentCoordinator:
         }
     
     def _get_current_timestamp(self) -> str:
-        """Get current timestamp"""
-        from datetime import datetime
+        """Get current timestamp"""        from datetime import datetime
         return datetime.now().isoformat()
 
 
 # Convenience functions for quick environment access
 def get_environment_manager(environment_type: str, config_path: Optional[str] = None):
-    """Get environment manager by type string"""
-    try:
+    """Get environment manager by type string"""    try:
         env_type = EnvironmentType(environment_type.lower())
         return EnvironmentManagerFactory.create_manager(env_type, config_path)
     except ValueError:
@@ -456,34 +432,28 @@ def get_environment_manager(environment_type: str, config_path: Optional[str] = 
 
 
 def create_development_environment(config_path: Optional[str] = None):
-    """Create development environment manager"""
-    return DevelopmentEnvironmentManager(config_path)
+    """Create development environment manager"""    return DevelopmentEnvironmentManager(config_path)
 
 
 def create_production_environment(config_path: Optional[str] = None):
-    """Create production environment manager"""
-    return ProductionEnvironmentManager(config_path)
+    """Create production environment manager"""    return ProductionEnvironmentManager(config_path)
 
 
 def create_staging_environment(config_path: Optional[str] = None):
-    """Create staging environment manager"""
-    return StagingEnvironmentManager(config_path)
+    """Create staging environment manager"""    return StagingEnvironmentManager(config_path)
 
 
 def create_kubernetes_environment(config_path: Optional[str] = None):
-    """Create Kubernetes environment manager"""
-    return KubernetesEnvironmentManager(config_path)
+    """Create Kubernetes environment manager"""    return KubernetesEnvironmentManager(config_path)
 
 
 def create_compliance_environment(config_path: Optional[str] = None):
-    """Create compliance environment manager"""
-    return ComplianceEnvironmentManager(config_path)
+    """Create compliance environment manager"""    return ComplianceEnvironmentManager(config_path)
 
 
 # Environment validation utilities
 def validate_environment_configuration(environment_type: str, config: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate environment configuration"""
-    validation_result = {
+    """Validate environment configuration"""    validation_result = {
         'valid': True,
         'errors': [],
         'warnings': [],

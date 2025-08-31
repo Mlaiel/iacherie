@@ -1,5 +1,4 @@
-"""
-🚀 Pricing Recommendations Engine - AI-Powered Dynamic Pricing Recommendations
+"""🚀 Pricing Recommendations Engine - AI-Powered Dynamic Pricing Recommendations
 ============================================================================
 
 Advanced AI-driven recommendation system for optimal pricing strategies.
@@ -33,7 +32,6 @@ Email: mlaiel@live.de
 All usage must be pre-approved in writing.
 ============================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -58,8 +56,7 @@ logger = logging.getLogger(__name__)
 
 
 class RecommendationType(Enum):
-    """Types of pricing recommendations"""
-    IMMEDIATE_PRICE_ADJUSTMENT = "immediate_price_adjustment"
+    """Types of pricing recommendations"""    IMMEDIATE_PRICE_ADJUSTMENT = "immediate_price_adjustment"
     TIER_UPGRADE_SUGGESTION = "tier_upgrade_suggestion"
     PLATFORM_OPTIMIZATION = "platform_optimization"
     MARKET_OPPORTUNITY = "market_opportunity"
@@ -70,8 +67,7 @@ class RecommendationType(Enum):
 
 
 class RecommendationPriority(Enum):
-    """Recommendation priority levels"""
-    CRITICAL = "critical"
+    """Recommendation priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -80,8 +76,7 @@ class RecommendationPriority(Enum):
 
 @dataclass
 class PricingRecommendation:
-    """Individual pricing recommendation"""
-    id: str
+    """Individual pricing recommendation"""    id: str
     type: RecommendationType
     priority: RecommendationPriority
     title: str
@@ -99,8 +94,7 @@ class PricingRecommendation:
 
 @dataclass
 class RecommendationSuite:
-    """Complete set of recommendations for a creator"""
-    creator_id: str
+    """Complete set of recommendations for a creator"""    creator_id: str
     generated_at: datetime
     recommendations: List[PricingRecommendation]
     summary: Dict[str, Any]
@@ -109,8 +103,7 @@ class RecommendationSuite:
 
 
 class PricingRecommendationEngine:
-    """
-    AI-powered pricing recommendation system
+    """    AI-powered pricing recommendation system
     
     Features:
     - Real-time market analysis
@@ -119,8 +112,7 @@ class PricingRecommendationEngine:
     - Tier upgrade suggestions
     - Risk assessment and mitigation
     - Seasonal adjustment recommendations
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -142,8 +134,7 @@ class PricingRecommendationEngine:
         content_type: Optional[str] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> RecommendationSuite:
-        """Generate comprehensive pricing recommendations"""
-        
+        """Generate comprehensive pricing recommendations"""        
         try:
             # Get creator's current pricing data
             creator_data = await self._get_creator_pricing_data(creator_id)
@@ -235,8 +226,7 @@ class PricingRecommendationEngine:
         base_price: Decimal,
         market_factors: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get real-time price suggestion for immediate content pricing"""
-        
+        """Get real-time price suggestion for immediate content pricing"""        
         try:
             # Use ML model for instant prediction
             prediction = await self.ml_model.predict_optimal_price(
@@ -283,8 +273,7 @@ class PricingRecommendationEngine:
         creator_id: str,
         timeframe_days: int = 30
     ) -> Dict[str, Any]:
-        """Analyze pricing opportunities and market gaps"""
-        
+        """Analyze pricing opportunities and market gaps"""        
         try:
             # Get creator's performance history
             performance_metrics = await self.analytics_engine.get_pricing_performance_metrics(
@@ -378,8 +367,7 @@ class PricingRecommendationEngine:
     
     # Helper methods for recommendation generation
     async def _get_creator_pricing_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive creator pricing data"""
-        
+        """Get comprehensive creator pricing data"""        
         async with self.db_manager.get_session() as session:
             # Get recent pricing calculations
             recent_calculations = session.query(PricingCalculation).filter(
@@ -405,8 +393,7 @@ class PricingRecommendationEngine:
         creator_id: str,
         platform: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Gather comprehensive market intelligence"""
-        
+        """Gather comprehensive market intelligence"""        
         # Mock implementation - replace with real market data collection
         return {
             'market_trends': {
@@ -438,8 +425,7 @@ class PricingRecommendationEngine:
         market_data: Dict[str, Any],
         performance_data: Any
     ) -> List[PricingRecommendation]:
-        """Generate price adjustment recommendations"""
-        
+        """Generate price adjustment recommendations"""        
         recommendations = []
         
         # Check for underpriced content based on performance
@@ -497,8 +483,7 @@ class PricingRecommendationEngine:
         creator_data: Dict[str, Any],
         performance_data: Any
     ) -> List[PricingRecommendation]:
-        """Generate tier upgrade/downgrade recommendations"""
-        
+        """Generate tier upgrade/downgrade recommendations"""        
         recommendations = []
         current_tier = creator_data.get('current_tier', 'starter')
         
@@ -540,8 +525,7 @@ class PricingRecommendationEngine:
         market_data: Dict[str, Any],
         performance_data: Any
     ) -> List[PricingRecommendation]:
-        """Generate platform-specific recommendations"""
-        
+        """Generate platform-specific recommendations"""        
         recommendations = []
         platform_intelligence = market_data.get('platform_intelligence', {})
         
@@ -583,8 +567,7 @@ class PricingRecommendationEngine:
         market_data: Dict[str, Any],
         content_type: Optional[str]
     ) -> List[PricingRecommendation]:
-        """Generate market opportunity recommendations"""
-        
+        """Generate market opportunity recommendations"""        
         recommendations = []
         
         # Seasonal opportunity
@@ -619,8 +602,7 @@ class PricingRecommendationEngine:
         creator_data: Dict[str, Any],
         market_data: Dict[str, Any]
     ) -> List[PricingRecommendation]:
-        """Generate risk mitigation recommendations"""
-        
+        """Generate risk mitigation recommendations"""        
         recommendations = []
         
         # Platform concentration risk
@@ -667,8 +649,7 @@ class PricingRecommendationEngine:
         creator_data: Dict[str, Any],
         market_data: Dict[str, Any]
     ) -> List[PricingRecommendation]:
-        """Generate seasonal adjustment recommendations"""
-        
+        """Generate seasonal adjustment recommendations"""        
         recommendations = []
         seasonal_factors = market_data.get('seasonal_factors', {})
         upcoming_events = seasonal_factors.get('upcoming_events', [])
@@ -702,8 +683,7 @@ class PricingRecommendationEngine:
         self,
         recommendations: List[PricingRecommendation]
     ) -> Dict[str, Decimal]:
-        """Calculate projected benefits from all recommendations"""
-        
+        """Calculate projected benefits from all recommendations"""        
         total_roi = sum(rec.expected_roi for rec in recommendations)
         immediate_roi = sum(
             rec.expected_roi for rec in recommendations 
@@ -726,8 +706,7 @@ class PricingRecommendationEngine:
         recommendations: List[PricingRecommendation],
         projected_benefits: Dict[str, Decimal]
     ) -> Dict[str, Any]:
-        """Generate summary of recommendations"""
-        
+        """Generate summary of recommendations"""        
         return {
             'total_recommendations': len(recommendations),
             'critical_actions': len([r for r in recommendations if r.priority == RecommendationPriority.CRITICAL]),
@@ -749,8 +728,7 @@ class PricingRecommendationEngine:
         content_type: str,
         market_factors: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get real-time market context for pricing"""
-        
+        """Get real-time market context for pricing"""        
         return {
             'platform_demand': 'high',
             'content_type_popularity': 85,
@@ -766,8 +744,7 @@ class PricingRecommendationEngine:
         suggested_price: Decimal,
         market_factors: Dict[str, Any]
     ) -> Decimal:
-        """Estimate revenue impact of price change"""
-        
+        """Estimate revenue impact of price change"""        
         price_change_percent = ((suggested_price - base_price) / base_price) * 100
         
         # Simple elasticity model (mock implementation)
@@ -781,8 +758,7 @@ class PricingRecommendationEngine:
         return revenue_impact
         
     async def _identify_market_gaps(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Identify market gaps and opportunities"""
-        
+        """Identify market gaps and opportunities"""        
         # Mock implementation
         return [
             {
@@ -797,8 +773,7 @@ class PricingRecommendationEngine:
         ]
         
     async def _find_underpriced_content(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Find underpriced content opportunities"""
-        
+        """Find underpriced content opportunities"""        
         # Mock implementation
         return [
             {
@@ -811,8 +786,7 @@ class PricingRecommendationEngine:
         ]
         
     async def _identify_growth_platforms(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Identify platforms with growth potential"""
-        
+        """Identify platforms with growth potential"""        
         # Mock implementation
         return [
             {

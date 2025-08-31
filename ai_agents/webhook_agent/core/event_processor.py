@@ -1,5 +1,4 @@
-"""
-Event Processor - Advanced Webhook Event Processing Engine
+"""Event Processor - Advanced Webhook Event Processing Engine
 
 Industrial-grade event processing system for real-time webhook event handling,
 transformation, routing, and business logic execution across platform integrations.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
-
 import asyncio
 import json
 import logging
@@ -49,8 +47,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class EventProcessingLogModel(Base):
-    """Database model for event processing logs"""
-    __tablename__ = "webhook_event_processing_logs"
+    """Database model for event processing logs"""    __tablename__ = "webhook_event_processing_logs"
     
     log_id = Column(String, primary_key=True)
     event_id = Column(String, nullable=False)
@@ -65,8 +62,7 @@ class EventProcessingLogModel(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
 
 class ProcessingStatus(Enum):
-    """Event processing status"""
-    PENDING = "pending"
+    """Event processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -74,8 +70,7 @@ class ProcessingStatus(Enum):
     DISCARDED = "discarded"
 
 class ProcessingStage(Enum):
-    """Event processing stages"""
-    VALIDATION = "validation"
+    """Event processing stages"""    VALIDATION = "validation"
     TRANSFORMATION = "transformation"
     ROUTING = "routing"
     BUSINESS_LOGIC = "business_logic"
@@ -84,8 +79,7 @@ class ProcessingStage(Enum):
 
 @dataclass
 class ProcessingResult:
-    """Event processing result"""
-    event_id: str
+    """Event processing result"""    event_id: str
     status: ProcessingStatus
     processing_time_ms: float
     processed_data: Dict[str, Any] = field(default_factory=dict)
@@ -96,8 +90,7 @@ class ProcessingResult:
 
 @dataclass
 class ProcessingRule:
-    """Event processing rule configuration"""
-    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Event processing rule configuration"""    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event_type: str = None
     platform: str = None
     conditions: Dict[str, Any] = field(default_factory=dict)
@@ -108,8 +101,7 @@ class ProcessingRule:
 
 @dataclass
 class ProcessingMetrics:
-    """Event processing metrics"""
-    total_events: int = 0
+    """Event processing metrics"""    total_events: int = 0
     successful_events: int = 0
     failed_events: int = 0
     average_processing_time: float = 0.0
@@ -118,13 +110,11 @@ class ProcessingMetrics:
     processing_stages_time: Dict[str, float] = field(default_factory=dict)
 
 class EventProcessor:
-    """
-    Industrial-grade webhook event processing engine
+    """    Industrial-grade webhook event processing engine
     
     Provides comprehensive event processing including validation, transformation,
     routing, business logic execution, and notification handling.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.db_session = get_db_session()
@@ -157,8 +147,7 @@ class EventProcessor:
         logger.info("EventProcessor initialized")
 
     async def initialize(self) -> None:
-        """Initialize event processor with required services"""
-        try:
+        """Initialize event processor with required services"""        try:
             # Initialize Redis connection
             self._redis_client = await aioredis.from_url(
                 self.config.get('redis_url', 'redis://localhost:6379'),
@@ -178,16 +167,14 @@ class EventProcessor:
             raise ProcessingError(f"Initialization failed: {str(e)}")
 
     async def process_event(self, webhook_event: Any) -> ProcessingResult:
-        """
-        Process webhook event through complete pipeline
+        """        Process webhook event through complete pipeline
         
         Args:
             webhook_event: WebhookEvent object to process
             
         Returns:
             ProcessingResult with processing details
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         processing_result = ProcessingResult(
             event_id=webhook_event.event_id,
             status=ProcessingStatus.PROCESSING,
@@ -255,8 +242,7 @@ class EventProcessor:
         actions: List[Dict[str, Any]],
         priority: int = 100
     ) -> str:
-        """Add new event processing rule"""
-        try:
+        """Add new event processing rule"""        try:
             rule = ProcessingRule(
                 event_type=event_type,
                 platform=platform,
@@ -283,8 +269,7 @@ class EventProcessor:
             raise ProcessingError(f"Rule addition failed: {str(e)}")
 
     async def remove_processing_rule(self, rule_id: str) -> Dict[str, Any]:
-        """Remove processing rule"""
-        try:
+        """Remove processing rule"""        try:
             if rule_id in self._processing_rules:
                 rule = self._processing_rules[rule_id]
                 rule.active = False
@@ -310,8 +295,7 @@ class EventProcessor:
         event_type: str,
         handler: Callable[[Any, ProcessingResult], Any]
     ) -> None:
-        """Register custom event handler"""
-        if event_type not in self._event_handlers:
+        """Register custom event handler"""        if event_type not in self._event_handlers:
             self._event_handlers[event_type] = []
         
         self._event_handlers[event_type].append(handler)
@@ -321,8 +305,7 @@ class EventProcessor:
         self,
         time_range: str = "24h"
     ) -> Dict[str, Any]:
-        """Get event processing metrics and analytics"""
-        try:
+        """Get event processing metrics and analytics"""        try:
             metrics_data = {
                 'time_range': time_range,
                 'total_events': self._metrics.total_events,
@@ -349,8 +332,7 @@ class EventProcessor:
             raise ProcessingError(f"Metrics retrieval failed: {str(e)}")
 
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for event processor"""
-        return {
+        """Comprehensive health check for event processor"""        return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
             'processing_rules': len(self._processing_rules),
@@ -361,8 +343,7 @@ class EventProcessor:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of event processor"""
-        try:
+        """Graceful shutdown of event processor"""        try:
             logger.info("Shutting down EventProcessor")
             
             # Cancel processing tasks
@@ -385,8 +366,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> None:
-        """Validation stage processing"""
-        stage_start = time.time()
+        """Validation stage processing"""        stage_start = time.time()
         
         try:
             # Validate event structure
@@ -421,8 +401,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> None:
-        """Transformation stage processing"""
-        stage_start = time.time()
+        """Transformation stage processing"""        stage_start = time.time()
         
         try:
             # Apply transformation rules
@@ -452,8 +431,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> None:
-        """Routing stage processing"""
-        stage_start = time.time()
+        """Routing stage processing"""        stage_start = time.time()
         
         try:
             # Find applicable processing rules
@@ -488,8 +466,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> None:
-        """Business logic stage processing"""
-        stage_start = time.time()
+        """Business logic stage processing"""        stage_start = time.time()
         
         try:
             event_type = webhook_event.event_type.value if hasattr(webhook_event.event_type, 'value') else str(webhook_event.event_type)
@@ -534,8 +511,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> None:
-        """Notification stage processing"""
-        stage_start = time.time()
+        """Notification stage processing"""        stage_start = time.time()
         
         try:
             # Determine notifications to send
@@ -565,8 +541,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> None:
-        """Completion stage processing"""
-        stage_start = time.time()
+        """Completion stage processing"""        stage_start = time.time()
         
         try:
             # Update event status
@@ -596,8 +571,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> Dict[str, Any]:
-        """Process copyright match events"""
-        try:
+        """Process copyright match events"""        try:
             payload = webhook_event.payload
             
             # Extract match details
@@ -638,8 +612,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> Dict[str, Any]:
-        """Process takedown request events"""
-        try:
+        """Process takedown request events"""        try:
             payload = webhook_event.payload
             
             # Extract request details
@@ -675,8 +648,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> Dict[str, Any]:
-        """Process content removal events"""
-        try:
+        """Process content removal events"""        try:
             payload = webhook_event.payload
             
             # Extract removal details
@@ -714,8 +686,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> Dict[str, Any]:
-        """Process revenue notification events"""
-        try:
+        """Process revenue notification events"""        try:
             payload = webhook_event.payload
             
             # Extract revenue details
@@ -753,8 +724,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> Dict[str, Any]:
-        """Process licensing request events"""
-        try:
+        """Process licensing request events"""        try:
             payload = webhook_event.payload
             
             # Extract licensing details
@@ -793,8 +763,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> Dict[str, Any]:
-        """Process monitoring alert events"""
-        try:
+        """Process monitoring alert events"""        try:
             payload = webhook_event.payload
             
             # Extract alert details
@@ -833,8 +802,7 @@ class EventProcessor:
     # Private methods - Utility functions
     
     async def _validate_platform_specific_data(self, webhook_event: Any) -> None:
-        """Validate platform-specific data requirements"""
-        platform = webhook_event.platform.lower()
+        """Validate platform-specific data requirements"""        platform = webhook_event.platform.lower()
         payload = webhook_event.payload
         
         if platform == 'youtube':
@@ -851,32 +819,28 @@ class EventProcessor:
                 raise ValidationError(f"Missing required field for {platform}: {field}")
 
     async def _apply_transformation_rules(self, webhook_event: Any) -> Dict[str, Any]:
-        """Apply transformation rules to event data"""
-        # Implementation would apply configured transformation rules
+        """Apply transformation rules to event data"""        # Implementation would apply configured transformation rules
         return {
             'transformed_at': datetime.now(timezone.utc).isoformat(),
             'transformation_applied': True
         }
 
     async def _normalize_event_data(self, webhook_event: Any) -> Dict[str, Any]:
-        """Normalize event data to standard format"""
-        # Implementation would normalize data formats
+        """Normalize event data to standard format"""        # Implementation would normalize data formats
         return {
             'normalized_at': datetime.now(timezone.utc).isoformat(),
             'normalization_applied': True
         }
 
     async def _enrich_event_data(self, webhook_event: Any) -> Dict[str, Any]:
-        """Enrich event data with additional context"""
-        # Implementation would add contextual information
+        """Enrich event data with additional context"""        # Implementation would add contextual information
         return {
             'enriched_at': datetime.now(timezone.utc).isoformat(),
             'enrichment_applied': True
         }
 
     async def _find_applicable_rules(self, webhook_event: Any) -> List[ProcessingRule]:
-        """Find processing rules applicable to the event"""
-        applicable_rules = []
+        """Find processing rules applicable to the event"""        applicable_rules = []
         
         event_type = webhook_event.event_type.value if hasattr(webhook_event.event_type, 'value') else str(webhook_event.event_type)
         
@@ -895,8 +859,7 @@ class EventProcessor:
         webhook_event: Any,
         rule: ProcessingRule
     ) -> bool:
-        """Evaluate if rule conditions are met"""
-        # Implementation would evaluate rule conditions against event data
+        """Evaluate if rule conditions are met"""        # Implementation would evaluate rule conditions against event data
         return True  # Simplified for now
 
     async def _execute_action(
@@ -905,8 +868,7 @@ class EventProcessor:
         action: Dict[str, Any],
         processing_result: ProcessingResult
     ) -> bool:
-        """Execute processing action"""
-        try:
+        """Execute processing action"""        try:
             action_type = action.get('type')
             action_params = action.get('parameters', {})
             
@@ -924,8 +886,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> List[Dict[str, Any]]:
-        """Determine what notifications to send"""
-        notifications = []
+        """Determine what notifications to send"""        notifications = []
         
         # Based on event type and processing results
         event_type = webhook_event.event_type.value if hasattr(webhook_event.event_type, 'value') else str(webhook_event.event_type)
@@ -941,8 +902,7 @@ class EventProcessor:
         return notifications
 
     async def _send_notification(self, notification: Dict[str, Any]) -> Dict[str, Any]:
-        """Send notification"""
-        # Implementation would send actual notifications
+        """Send notification"""        # Implementation would send actual notifications
         return {'success': True, 'notification_id': str(uuid.uuid4())}
 
     async def _update_processing_metrics(
@@ -951,8 +911,7 @@ class EventProcessor:
         processing_result: ProcessingResult,
         success: bool
     ) -> None:
-        """Update processing metrics"""
-        self._metrics.total_events += 1
+        """Update processing metrics"""        self._metrics.total_events += 1
         
         if success:
             self._metrics.successful_events += 1
@@ -974,13 +933,11 @@ class EventProcessor:
             self._metrics.average_processing_time = total_time / self._metrics.total_events
 
     async def _load_processing_rules(self) -> None:
-        """Load processing rules from storage"""
-        # Implementation would load rules from database
+        """Load processing rules from storage"""        # Implementation would load rules from database
         pass
 
     async def _validate_processing_rule(self, rule: ProcessingRule) -> Dict[str, Any]:
-        """Validate processing rule configuration"""
-        if not rule.event_type:
+        """Validate processing rule configuration"""        if not rule.event_type:
             return {'valid': False, 'reason': 'Event type is required'}
         
         if not rule.actions:
@@ -989,13 +946,11 @@ class EventProcessor:
         return {'valid': True}
 
     async def _store_processing_rule(self, rule: ProcessingRule) -> None:
-        """Store processing rule in database"""
-        # Implementation would store rule in database
+        """Store processing rule in database"""        # Implementation would store rule in database
         pass
 
     async def _update_processing_rule(self, rule: ProcessingRule) -> None:
-        """Update processing rule in database"""
-        # Implementation would update rule in database
+        """Update processing rule in database"""        # Implementation would update rule in database
         pass
 
     async def _log_processing_result(
@@ -1003,8 +958,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> None:
-        """Log processing result to database"""
-        try:
+        """Log processing result to database"""        try:
             log_entry = EventProcessingLogModel(
                 log_id=str(uuid.uuid4()),
                 event_id=webhook_event.event_id,
@@ -1029,8 +983,7 @@ class EventProcessor:
         processing_result: ProcessingResult,
         error: Exception
     ) -> None:
-        """Log processing error to database"""
-        try:
+        """Log processing error to database"""        try:
             log_entry = EventProcessingLogModel(
                 log_id=str(uuid.uuid4()),
                 event_id=webhook_event.event_id,
@@ -1054,8 +1007,7 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> None:
-        """Schedule event processing retry"""
-        processing_result.retry_count += 1
+        """Schedule event processing retry"""        processing_result.retry_count += 1
         
         # Calculate retry delay (exponential backoff)
         retry_delay = min(300, 2 ** processing_result.retry_count)  # Max 5 minutes
@@ -1064,8 +1016,7 @@ class EventProcessor:
         logger.info(f"Scheduling retry for event {webhook_event.event_id} in {retry_delay} seconds")
 
     async def _start_background_processing(self) -> None:
-        """Start background processing tasks"""
-        # Background processing task would be implemented here
+        """Start background processing tasks"""        # Background processing task would be implemented here
         pass
 
     async def _store_processing_result(
@@ -1073,18 +1024,15 @@ class EventProcessor:
         webhook_event: Any,
         processing_result: ProcessingResult
     ) -> None:
-        """Store processing result"""
-        # Implementation would store results
+        """Store processing result"""        # Implementation would store results
         pass
 
     async def _cleanup_processing_data(self, webhook_event: Any) -> None:
-        """Clean up temporary processing data"""
-        # Implementation would clean up temporary data
+        """Clean up temporary processing data"""        # Implementation would clean up temporary data
         pass
 
     async def _schedule_takedown_tracking(self, request_id: str, platform: str) -> None:
-        """Schedule takedown request tracking"""
-        # Implementation would schedule tracking
+        """Schedule takedown request tracking"""        # Implementation would schedule tracking
         pass
 
     async def _calculate_protection_effectiveness(
@@ -1092,8 +1040,7 @@ class EventProcessor:
         content_id: str,
         platform: str
     ) -> float:
-        """Calculate protection effectiveness score"""
-        # Implementation would calculate effectiveness
+        """Calculate protection effectiveness score"""        # Implementation would calculate effectiveness
         return 0.95
 
     async def _calculate_revenue_metrics(
@@ -1102,8 +1049,7 @@ class EventProcessor:
         platform: str,
         amount: float
     ) -> Dict[str, Any]:
-        """Calculate revenue metrics"""
-        # Implementation would calculate metrics
+        """Calculate revenue metrics"""        # Implementation would calculate metrics
         return {
             'total_recovered': amount,
             'efficiency_score': 0.92
@@ -1115,8 +1061,7 @@ class EventProcessor:
         license_type: str,
         requester_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Determine licensing approval workflow"""
-        # Implementation would determine workflow
+        """Determine licensing approval workflow"""        # Implementation would determine workflow
         return {
             'workflow_type': 'standard_review',
             'estimated_time_days': 3

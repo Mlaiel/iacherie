@@ -32,8 +32,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This revolutionary content surveillance platform is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution
 under German and International Law. Contact: mlaiel@live.de for legal authorization.
-"""
-from .web_crawler_intelligence import (
+"""from .web_crawler_intelligence import (
     WebCrawlerIntelligence,
     CrawlRequest,
     ContentMatch,

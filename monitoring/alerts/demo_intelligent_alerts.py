@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-🚨 Intelligent Alert System Demo
+"""🚨 Intelligent Alert System Demo
 ===============================
 
 Demonstration script showing the capabilities of the unified intelligent alert system
@@ -11,7 +10,6 @@ for the Ainflue platform. This script demonstrates all three alert categories:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -56,8 +54,7 @@ except ImportError as e:
 
 
 async def demonstrate_business_alerts():
-    """Demonstrate business alert capabilities"""
-    print("\n🏢 === BUSINESS ALERTS DEMONSTRATION ===")
+    """Demonstrate business alert capabilities"""    print("\n🏢 === BUSINESS ALERTS DEMONSTRATION ===")
     
     # Simulate normal business metrics
     normal_metrics = BusinessMetrics(
@@ -110,8 +107,7 @@ async def demonstrate_business_alerts():
 
 
 async def demonstrate_technical_alerts():
-    """Demonstrate technical alert capabilities"""
-    print("\n🔧 === TECHNICAL ALERTS DEMONSTRATION ===")
+    """Demonstrate technical alert capabilities"""    print("\n🔧 === TECHNICAL ALERTS DEMONSTRATION ===")
     
     # Simulate normal technical metrics
     normal_metrics = TechnicalMetrics(
@@ -183,8 +179,7 @@ async def demonstrate_technical_alerts():
 
 
 async def demonstrate_ai_alerts():
-    """Demonstrate AI/ML alert capabilities"""
-    print("\n🤖 === AI/ML ALERTS DEMONSTRATION ===")
+    """Demonstrate AI/ML alert capabilities"""    print("\n🤖 === AI/ML ALERTS DEMONSTRATION ===")
     
     # Simulate normal AI model metrics
     normal_metrics = ModelMetrics(
@@ -274,8 +269,7 @@ async def demonstrate_ai_alerts():
 
 
 async def demonstrate_unified_coordination():
-    """Demonstrate unified alert coordination and correlation"""
-    print("\n🎯 === UNIFIED ALERT COORDINATION ===")
+    """Demonstrate unified alert coordination and correlation"""    print("\n🎯 === UNIFIED ALERT COORDINATION ===")
     
     # Simulate a complex scenario with issues across all categories
     business_metrics = BusinessMetrics(
@@ -381,8 +375,7 @@ async def demonstrate_unified_coordination():
 
 
 async def demonstrate_alert_management():
-    """Demonstrate alert acknowledgment and resolution"""
-    print("\n🔧 === ALERT MANAGEMENT DEMONSTRATION ===")
+    """Demonstrate alert acknowledgment and resolution"""    print("\n🔧 === ALERT MANAGEMENT DEMONSTRATION ===")
     
     # Get current active alerts
     active_alerts = await alert_coordinator.get_active_alerts()
@@ -413,8 +406,7 @@ async def demonstrate_alert_management():
 
 
 async def main():
-    """Main demonstration function"""
-    print("🚨 INTELLIGENT ALERT SYSTEM DEMONSTRATION")
+    """Main demonstration function"""    print("🚨 INTELLIGENT ALERT SYSTEM DEMONSTRATION")
     print("=" * 50)
     print("Demonstrating comprehensive alert management for the Ainflue platform")
     print("Categories: Business, Technical, AI/ML")

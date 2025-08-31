@@ -1,5 +1,4 @@
-"""
-Business Intelligence AI Models for IA Influencer Agent Platform
+"""Business Intelligence AI Models for IA Influencer Agent Platform
 Enterprise-grade analytics, trend prediction, and monetization optimization models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
-
 import numpy as np
 import pandas as pd
 from sklearn.cluster import KMeans
@@ -34,8 +32,7 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class CreatorType(Enum):
-    """Creator type classifications"""
-    MUSICIAN = "musician"
+    """Creator type classifications"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -48,8 +45,7 @@ class CreatorType(Enum):
 
 
 class PlatformType(Enum):
-    """Social media platforms"""
-    SPOTIFY = "spotify"
+    """Social media platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -62,8 +58,7 @@ class PlatformType(Enum):
 
 
 class TrendScope(Enum):
-    """Trend analysis scope"""
-    GLOBAL = "global"
+    """Trend analysis scope"""    GLOBAL = "global"
     REGIONAL = "regional"
     LOCAL = "local"
     NICHE = "niche"
@@ -71,8 +66,7 @@ class TrendScope(Enum):
 
 
 class CollaborationFit(Enum):
-    """Collaboration compatibility levels"""
-    PERFECT = "perfect"
+    """Collaboration compatibility levels"""    PERFECT = "perfect"
     EXCELLENT = "excellent"
     GOOD = "good"
     MODERATE = "moderate"
@@ -81,8 +75,7 @@ class CollaborationFit(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""
-    creator_id: str
+    """Comprehensive creator profile"""    creator_id: str
     creator_type: CreatorType
     platforms: List[PlatformType]
     audience_size: Dict[str, int]
@@ -100,8 +93,7 @@ class CreatorProfile:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
-    trend_id: str
+    """Trend analysis results"""    trend_id: str
     trend_name: str
     scope: TrendScope
     platforms: List[PlatformType]
@@ -120,8 +112,7 @@ class TrendAnalysis:
 
 @dataclass
 class CollaborationMatch:
-    """Creator collaboration match"""
-    primary_creator_id: str
+    """Creator collaboration match"""    primary_creator_id: str
     secondary_creator_id: str
     fit_score: CollaborationFit
     compatibility_score: float
@@ -138,8 +129,7 @@ class CollaborationMatch:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendations"""
-    creator_id: str
+    """Revenue optimization recommendations"""    creator_id: str
     current_revenue: float
     potential_revenue: float
     optimization_strategies: List[Dict[str, Any]]
@@ -152,8 +142,7 @@ class RevenueOptimization:
 
 
 class TrendPredictor(BaseAIModel):
-    """Advanced trend prediction and analysis system"""
-    
+    """Advanced trend prediction and analysis system"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.trend_model = None
@@ -162,8 +151,7 @@ class TrendPredictor(BaseAIModel):
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize trend prediction models"""
-        try:
+        """Initialize trend prediction models"""        try:
             # Initialize trend prediction neural network
             self.trend_model = self._build_trend_prediction_model()
             
@@ -171,8 +159,7 @@ class TrendPredictor(BaseAIModel):
             self.logger.error(f"Failed to initialize trend models: {e}")
     
     def _build_trend_prediction_model(self):
-        """Build neural network for trend prediction"""
-        class TrendNet(nn.Module):
+        """Build neural network for trend prediction"""        class TrendNet(nn.Module):
             def __init__(self, input_size=50, hidden_size=128, output_size=10):
                 super(TrendNet, self).__init__()
                 self.fc1 = nn.Linear(input_size, hidden_size)
@@ -192,8 +179,7 @@ class TrendPredictor(BaseAIModel):
         return TrendNet()
     
     async def process(self, trend_data: Dict[str, Any], **kwargs) -> ProcessingResult:
-        """Analyze trends and predict future patterns"""
-        try:
+        """Analyze trends and predict future patterns"""        try:
             start_time = datetime.now()
             
             # Extract trend features
@@ -256,8 +242,7 @@ class TrendPredictor(BaseAIModel):
             )
     
     async def _extract_trend_features(self, trend_data: Dict[str, Any]) -> np.ndarray:
-        """Extract features for trend analysis"""
-        features = []
+        """Extract features for trend analysis"""        features = []
         
         # Platform presence (binary features)
         all_platforms = [p.value for p in PlatformType]
@@ -309,8 +294,7 @@ class TrendPredictor(BaseAIModel):
         return np.array(features, dtype=np.float32)
     
     async def _predict_momentum(self, features: np.ndarray) -> float:
-        """Predict trend momentum using ML model"""
-        try:
+        """Predict trend momentum using ML model"""        try:
             if self.trend_model is not None:
                 # Use neural network for prediction
                 with torch.no_grad():
@@ -327,8 +311,7 @@ class TrendPredictor(BaseAIModel):
             return self._calculate_momentum_fallback(features)
     
     def _calculate_momentum_fallback(self, features: np.ndarray) -> float:
-        """Fallback momentum calculation"""
-        # Simple weighted sum of key features
+        """Fallback momentum calculation"""        # Simple weighted sum of key features
         engagement_features = features[10:15]  # Engagement metrics
         temporal_features = features[15:18]    # Temporal features
         content_features = features[18:21]     # Content features
@@ -342,8 +325,7 @@ class TrendPredictor(BaseAIModel):
         return min(max(momentum, 0.0), 1.0)
     
     async def _calculate_growth_rate(self, trend_data: Dict[str, Any]) -> float:
-        """Calculate trend growth rate"""
-        historical_data = trend_data.get('historical_metrics', [])
+        """Calculate trend growth rate"""        historical_data = trend_data.get('historical_metrics', [])
         
         if len(historical_data) < 2:
             return 0.5  # Default growth rate
@@ -358,8 +340,7 @@ class TrendPredictor(BaseAIModel):
         return 0.0
     
     async def _predict_trend_lifecycle(self, features: np.ndarray) -> Tuple[datetime, int]:
-        """Predict when trend will peak and how long it will last"""
-        # Extract temporal and momentum indicators
+        """Predict when trend will peak and how long it will last"""        # Extract temporal and momentum indicators
         momentum_indicators = features[15:18]
         content_quality = features[18:21]
         
@@ -382,8 +363,7 @@ class TrendPredictor(BaseAIModel):
         return peak_date, duration
     
     async def _assess_opportunity(self, features: np.ndarray) -> float:
-        """Assess opportunity score for creators"""
-        # Consider multiple factors
+        """Assess opportunity score for creators"""        # Consider multiple factors
         platform_diversity = np.sum(features[:10]) / 10  # Platform presence
         engagement_strength = np.mean(features[10:15])   # Engagement metrics
         content_quality = np.mean(features[18:21])       # Content quality
@@ -399,8 +379,7 @@ class TrendPredictor(BaseAIModel):
         return min(max(opportunity, 0.0), 1.0)
     
     async def _assess_competition(self, trend_data: Dict[str, Any]) -> float:
-        """Assess competition level for the trend"""
-        competitor_data = trend_data.get('competitors', {})
+        """Assess competition level for the trend"""        competitor_data = trend_data.get('competitors', {})
         
         # Factors indicating high competition
         num_creators = competitor_data.get('active_creators', 10)
@@ -420,8 +399,7 @@ class TrendPredictor(BaseAIModel):
         return min(max(competition_level, 0.0), 1.0)
     
     async def _assess_monetization_potential(self, features: np.ndarray) -> float:
-        """Assess monetization potential of the trend"""
-        # Factors affecting monetization
+        """Assess monetization potential of the trend"""        # Factors affecting monetization
         engagement_quality = np.mean(features[10:15])
         audience_diversity = np.mean(features[21:24])
         platform_diversity = np.sum(features[:10]) / 10
@@ -438,8 +416,7 @@ class TrendPredictor(BaseAIModel):
     async def _generate_trend_recommendations(self, features: np.ndarray, 
                                             momentum_score: float, 
                                             opportunity_score: float) -> Dict[str, List[str]]:
-        """Generate actionable recommendations"""
-        recommendations = {
+        """Generate actionable recommendations"""        recommendations = {
             'actions': [],
             'content': []
         }
@@ -480,8 +457,7 @@ class TrendPredictor(BaseAIModel):
         return recommendations
     
     def _get_platform_content_suggestions(self, platform: PlatformType) -> List[str]:
-        """Get content suggestions for specific platform"""
-        suggestions = {
+        """Get content suggestions for specific platform"""        suggestions = {
             PlatformType.YOUTUBE: [
                 "Create comprehensive tutorial videos",
                 "Develop series content for sustained engagement",
@@ -507,8 +483,7 @@ class TrendPredictor(BaseAIModel):
         return suggestions.get(platform, ["Create platform-optimized content"])
     
     async def validate_connection(self) -> bool:
-        """Validate trend prediction capabilities"""
-        try:
+        """Validate trend prediction capabilities"""        try:
             test_data = {
                 'id': 'test_trend',
                 'name': 'Test Trend',
@@ -525,8 +500,7 @@ class TrendPredictor(BaseAIModel):
 
 
 class CollaborationMatcher(BaseAIModel):
-    """Advanced creator collaboration matching system"""
-    
+    """Advanced creator collaboration matching system"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.matching_model = None
@@ -534,8 +508,7 @@ class CollaborationMatcher(BaseAIModel):
         self._initialize_matching_system()
     
     def _initialize_matching_system(self):
-        """Initialize collaboration matching system"""
-        try:
+        """Initialize collaboration matching system"""        try:
             # Initialize clustering model for creator similarity
             self.clustering_model = KMeans(n_clusters=10, random_state=42)
             
@@ -546,8 +519,7 @@ class CollaborationMatcher(BaseAIModel):
             self.logger.error(f"Failed to initialize matching system: {e}")
     
     async def process(self, creator_profiles: List[CreatorProfile], **kwargs) -> ProcessingResult:
-        """Find optimal collaboration matches between creators"""
-        try:
+        """Find optimal collaboration matches between creators"""        try:
             start_time = datetime.now()
             
             if len(creator_profiles) < 2:
@@ -582,8 +554,7 @@ class CollaborationMatcher(BaseAIModel):
             )
     
     async def _generate_creator_embeddings(self, profiles: List[CreatorProfile]) -> Dict[str, np.ndarray]:
-        """Generate embeddings for creator profiles"""
-        embeddings = {}
+        """Generate embeddings for creator profiles"""        embeddings = {}
         
         for profile in profiles:
             # Extract numerical features
@@ -627,8 +598,7 @@ class CollaborationMatcher(BaseAIModel):
     
     async def _find_collaboration_matches(self, profiles: List[CreatorProfile], 
                                         embeddings: Dict[str, np.ndarray]) -> List[CollaborationMatch]:
-        """Find potential collaboration matches"""
-        matches = []
+        """Find potential collaboration matches"""        matches = []
         
         for i, profile1 in enumerate(profiles):
             for j, profile2 in enumerate(profiles[i+1:], i+1):
@@ -660,8 +630,7 @@ class CollaborationMatcher(BaseAIModel):
     
     async def _calculate_compatibility(self, profile1: CreatorProfile, profile2: CreatorProfile,
                                      embeddings: Dict[str, np.ndarray]) -> Dict[str, Any]:
-        """Calculate detailed compatibility between two creators"""
-        
+        """Calculate detailed compatibility between two creators"""        
         emb1 = embeddings[profile1.creator_id]
         emb2 = embeddings[profile2.creator_id]
         
@@ -732,8 +701,7 @@ class CollaborationMatcher(BaseAIModel):
         }
     
     def _identify_complementary_strengths(self, profile1: CreatorProfile, profile2: CreatorProfile) -> List[str]:
-        """Identify complementary strengths between creators"""
-        strengths = []
+        """Identify complementary strengths between creators"""        strengths = []
         
         # Different creator types can complement each other
         if profile1.creator_type != profile2.creator_type:
@@ -768,8 +736,7 @@ class CollaborationMatcher(BaseAIModel):
         return strengths[:5]  # Limit to top 5 strengths
     
     def _determine_collaboration_type(self, profile1: CreatorProfile, profile2: CreatorProfile) -> str:
-        """Determine the best type of collaboration"""
-        
+        """Determine the best type of collaboration"""        
         # Similar creator types suggest content collaboration
         if profile1.creator_type == profile2.creator_type:
             return "content_collaboration"
@@ -794,8 +761,7 @@ class CollaborationMatcher(BaseAIModel):
     
     def _generate_content_suggestions(self, profile1: CreatorProfile, profile2: CreatorProfile,
                                     common_categories: set) -> List[str]:
-        """Generate content collaboration suggestions"""
-        suggestions = []
+        """Generate content collaboration suggestions"""        suggestions = []
         
         # Based on common categories
         for category in common_categories:
@@ -824,8 +790,7 @@ class CollaborationMatcher(BaseAIModel):
         return list(set(suggestions))[:8]  # Remove duplicates and limit to 8
     
     def _recommend_timeline(self, compatibility_score: float) -> str:
-        """Recommend collaboration timeline based on compatibility"""
-        if compatibility_score > 0.8:
+        """Recommend collaboration timeline based on compatibility"""        if compatibility_score > 0.8:
             return "immediate_start"
         elif compatibility_score > 0.6:
             return "within_2_weeks"
@@ -835,8 +800,7 @@ class CollaborationMatcher(BaseAIModel):
             return "requires_relationship_building"
     
     def _determine_fit_level(self, score: float) -> CollaborationFit:
-        """Determine fit level from compatibility score"""
-        if score >= 0.9:
+        """Determine fit level from compatibility score"""        if score >= 0.9:
             return CollaborationFit.PERFECT
         elif score >= 0.8:
             return CollaborationFit.EXCELLENT
@@ -848,8 +812,7 @@ class CollaborationMatcher(BaseAIModel):
             return CollaborationFit.POOR
     
     async def _rank_matches(self, matches: List[CollaborationMatch]) -> List[CollaborationMatch]:
-        """Rank matches by overall potential"""
-        # Sort by combination of compatibility score and revenue potential
+        """Rank matches by overall potential"""        # Sort by combination of compatibility score and revenue potential
         ranked_matches = sorted(
             matches,
             key=lambda m: (m.compatibility_score * 0.6 + m.revenue_potential * 0.4),
@@ -859,8 +822,7 @@ class CollaborationMatcher(BaseAIModel):
         return ranked_matches[:20]  # Return top 20 matches
     
     async def validate_connection(self) -> bool:
-        """Validate collaboration matching capabilities"""
-        try:
+        """Validate collaboration matching capabilities"""        try:
             # Create test profiles
             test_profile1 = CreatorProfile(
                 creator_id="test_1",

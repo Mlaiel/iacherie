@@ -1,5 +1,4 @@
-"""
-Replication Health Monitor - IA Influencer Agent Platform
+"""Replication Health Monitor - IA Influencer Agent Platform
 
 Comprehensive health monitoring and alerting system for database replication.
 Tracks performance metrics, detects issues, and triggers automated recovery
@@ -8,7 +7,6 @@ for the content creator platform's multi-database infrastructure.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Callable
@@ -20,16 +18,14 @@ import json
 
 
 class HealthStatus(Enum):
-    """Health status levels"""
-    HEALTHY = "healthy"
+    """Health status levels"""    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -37,8 +33,7 @@ class AlertSeverity(Enum):
 
 @dataclass
 class HealthMetric:
-    """Health metric data point"""
-    name: str
+    """Health metric data point"""    name: str
     value: float
     unit: str
     timestamp: datetime
@@ -49,8 +44,7 @@ class HealthMetric:
 
 @dataclass
 class HealthAlert:
-    """Health alert record"""
-    id: str
+    """Health alert record"""    id: str
     severity: AlertSeverity
     component: str
     message: str
@@ -65,8 +59,7 @@ class HealthAlert:
 
 @dataclass
 class ComponentHealth:
-    """Component health status"""
-    component_name: str
+    """Component health status"""    component_name: str
     status: HealthStatus
     last_check: datetime
     metrics: Dict[str, HealthMetric]
@@ -76,17 +69,14 @@ class ComponentHealth:
 
 
 class ReplicationHealthMonitor:
-    """
-    Comprehensive health monitoring system for database replication.
+    """    Comprehensive health monitoring system for database replication.
     
     Monitors performance metrics, detects anomalies, generates alerts,
     and provides health dashboards for the content creator platform's
     replication infrastructure.
-    """
-    
+    """    
     def __init__(self, config):
-        """Initialize health monitor"""
-        self.config = config
+        """Initialize health monitor"""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.ReplicationHealthMonitor")
         
         # Component registry
@@ -142,13 +132,11 @@ class ReplicationHealthMonitor:
         self.logger.info("ReplicationHealthMonitor initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize health monitor.
+        """        Initialize health monitor.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing replication health monitor...")
             
             # Initialize component health tracking
@@ -162,14 +150,12 @@ class ReplicationHealthMonitor:
             return False
     
     def register_handler(self, database_type: str, handler: Any) -> None:
-        """
-        Register database handler for monitoring.
+        """        Register database handler for monitoring.
         
         Args:
             database_type: Type of database
             handler: Handler instance
-        """
-        self.handlers[database_type] = handler
+        """        self.handlers[database_type] = handler
         
         # Initialize component health
         self.components[database_type] = ComponentHealth(
@@ -183,18 +169,15 @@ class ReplicationHealthMonitor:
         self.logger.debug(f"Registered handler for monitoring: {database_type}")
     
     def register_alert_callback(self, callback: Callable[[HealthAlert], None]) -> None:
-        """
-        Register callback for alert notifications.
+        """        Register callback for alert notifications.
         
         Args:
             callback: Alert callback function
-        """
-        self.alert_callbacks.append(callback)
+        """        self.alert_callbacks.append(callback)
         self.logger.debug("Alert callback registered")
     
     async def _initialize_component_tracking(self) -> None:
-        """Initialize health tracking for all components"""
-        # Default components to monitor
+        """Initialize health tracking for all components"""        # Default components to monitor
         default_components = ["postgresql", "redis", "mongodb", "elasticsearch", "vector_store"]
         
         for component in default_components:
@@ -210,8 +193,7 @@ class ReplicationHealthMonitor:
         self.logger.debug(f"Initialized tracking for {len(self.components)} components")
     
     async def start_monitoring(self) -> None:
-        """Start health monitoring"""
-        if self.is_monitoring:
+        """Start health monitoring"""        if self.is_monitoring:
             self.logger.warning("Health monitoring is already running")
             return
         
@@ -231,8 +213,7 @@ class ReplicationHealthMonitor:
         self.logger.info("Health monitoring started")
     
     async def _health_check_loop(self) -> None:
-        """Main health check loop"""
-        while self.is_monitoring:
+        """Main health check loop"""        while self.is_monitoring:
             try:
                 await self._perform_health_checks()
                 await asyncio.sleep(self.monitoring_interval)
@@ -242,8 +223,7 @@ class ReplicationHealthMonitor:
                 await asyncio.sleep(30)
     
     async def _alert_processing_loop(self) -> None:
-        """Alert processing and notification loop"""
-        while self.is_monitoring:
+        """Alert processing and notification loop"""        while self.is_monitoring:
             try:
                 await self._process_alerts()
                 await asyncio.sleep(5)  # Check alerts every 5 seconds
@@ -253,8 +233,7 @@ class ReplicationHealthMonitor:
                 await asyncio.sleep(10)
     
     async def _metrics_collection_loop(self) -> None:
-        """Metrics collection loop"""
-        while self.is_monitoring:
+        """Metrics collection loop"""        while self.is_monitoring:
             try:
                 await self._collect_detailed_metrics()
                 await asyncio.sleep(self.config.get("metrics_collection_interval", 60))
@@ -264,8 +243,7 @@ class ReplicationHealthMonitor:
                 await asyncio.sleep(30)
     
     async def _uptime_calculation_loop(self) -> None:
-        """Uptime calculation loop"""
-        while self.is_monitoring:
+        """Uptime calculation loop"""        while self.is_monitoring:
             try:
                 await self._calculate_uptime_percentages()
                 await asyncio.sleep(300)  # Calculate every 5 minutes
@@ -275,8 +253,7 @@ class ReplicationHealthMonitor:
                 await asyncio.sleep(60)
     
     async def _perform_health_checks(self) -> None:
-        """Perform health checks on all components"""
-        for component_name, component in self.components.items():
+        """Perform health checks on all components"""        for component_name, component in self.components.items():
             try:
                 self.health_statistics["total_checks"] += 1
                 
@@ -313,8 +290,7 @@ class ReplicationHealthMonitor:
             component.last_check = datetime.utcnow()
     
     async def _update_component_health(self, component_name: str, health_result: Dict[str, Any]) -> None:
-        """Update component health based on check result"""
-        component = self.components[component_name]
+        """Update component health based on check result"""        component = self.components[component_name]
         
         # Update overall status
         if health_result.get("healthy", False):
@@ -354,8 +330,7 @@ class ReplicationHealthMonitor:
             await self._check_metric_thresholds(component_name, metric)
     
     async def _check_metric_thresholds(self, component_name: str, metric: HealthMetric) -> None:
-        """Check if metric violates thresholds and generate alerts"""
-        if metric.threshold_critical and metric.value >= metric.threshold_critical:
+        """Check if metric violates thresholds and generate alerts"""        if metric.threshold_critical and metric.value >= metric.threshold_critical:
             await self._generate_alert(
                 component_name,
                 AlertSeverity.CRITICAL,
@@ -384,8 +359,7 @@ class ReplicationHealthMonitor:
         threshold_value: float,
         metadata: Dict[str, Any] = None
     ) -> None:
-        """Generate health alert"""
-        try:
+        """Generate health alert"""        try:
             alert = HealthAlert(
                 id=f"alert_{component}_{metric_name}_{int(datetime.utcnow().timestamp())}",
                 severity=severity,
@@ -429,8 +403,7 @@ class ReplicationHealthMonitor:
             self.logger.error(f"Error generating alert: {e}")
     
     async def _process_alerts(self) -> None:
-        """Process and resolve alerts"""
-        for alert in self.active_alerts.copy():
+        """Process and resolve alerts"""        for alert in self.active_alerts.copy():
             try:
                 # Check if alert should be auto-resolved
                 if await self._should_resolve_alert(alert):
@@ -440,8 +413,7 @@ class ReplicationHealthMonitor:
                 self.logger.error(f"Error processing alert {alert.id}: {e}")
     
     async def _should_resolve_alert(self, alert: HealthAlert) -> bool:
-        """Check if alert should be automatically resolved"""
-        try:
+        """Check if alert should be automatically resolved"""        try:
             component = self.components.get(alert.component)
             if not component:
                 return False
@@ -464,8 +436,7 @@ class ReplicationHealthMonitor:
             return False
     
     async def _resolve_alert(self, alert: HealthAlert) -> None:
-        """Resolve alert"""
-        try:
+        """Resolve alert"""        try:
             alert.resolved = True
             alert.resolution_time = datetime.utcnow()
             
@@ -481,8 +452,7 @@ class ReplicationHealthMonitor:
             self.logger.error(f"Error resolving alert {alert.id}: {e}")
     
     async def _collect_detailed_metrics(self) -> None:
-        """Collect detailed metrics from all handlers"""
-        for component_name, handler in self.handlers.items():
+        """Collect detailed metrics from all handlers"""        for component_name, handler in self.handlers.items():
             try:
                 metrics = await handler.get_replication_metrics()
                 
@@ -501,8 +471,7 @@ class ReplicationHealthMonitor:
                 self.logger.error(f"Error collecting detailed metrics for {component_name}: {e}")
     
     async def _calculate_uptime_percentages(self) -> None:
-        """Calculate uptime percentages for components"""
-        window = timedelta(hours=24)  # 24-hour window
+        """Calculate uptime percentages for components"""        window = timedelta(hours=24)  # 24-hour window
         current_time = datetime.utcnow()
         
         for component in self.components.values():
@@ -524,13 +493,11 @@ class ReplicationHealthMonitor:
                 self.logger.error(f"Error calculating uptime for {component.component_name}: {e}")
     
     async def check_all_connections(self) -> bool:
-        """
-        Check all database connections.
+        """        Check all database connections.
         
         Returns:
             bool: True if all connections are healthy
-        """
-        try:
+        """        try:
             all_healthy = True
             
             for component_name, handler in self.handlers.items():
@@ -551,13 +518,11 @@ class ReplicationHealthMonitor:
             return False
     
     async def comprehensive_health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check.
+        """        Perform comprehensive health check.
         
         Returns:
             Dict containing health status for all components
-        """
-        health_status = {}
+        """        health_status = {}
         
         for component_name, component in self.components.items():
             try:
@@ -595,13 +560,11 @@ class ReplicationHealthMonitor:
         return health_status
     
     async def get_overall_health(self) -> Dict[str, Any]:
-        """
-        Get overall system health summary.
+        """        Get overall system health summary.
         
         Returns:
             Dict containing overall health information
-        """
-        try:
+        """        try:
             healthy_components = sum(1 for c in self.components.values() if c.status == HealthStatus.HEALTHY)
             total_components = len(self.components)
             
@@ -635,16 +598,14 @@ class ReplicationHealthMonitor:
             }
     
     async def get_component_health(self, component_name: str) -> Dict[str, Any]:
-        """
-        Get detailed health information for specific component.
+        """        Get detailed health information for specific component.
         
         Args:
             component_name: Name of component
             
         Returns:
             Dict containing component health details
-        """
-        component = self.components.get(component_name)
+        """        component = self.components.get(component_name)
         if not component:
             return {"error": f"Component {component_name} not found"}
         
@@ -678,8 +639,7 @@ class ReplicationHealthMonitor:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown health monitor"""
-        try:
+        """Shutdown health monitor"""        try:
             self.logger.info("Shutting down health monitor...")
             
             self.is_monitoring = False

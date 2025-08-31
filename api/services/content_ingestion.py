@@ -1,5 +1,4 @@
-"""
-Enterprise Content Ingestion Service - Multi-Format Media Processing
+"""Enterprise Content Ingestion Service - Multi-Format Media Processing
 Handles upload, validation, storage, and initial AI processing for all content types
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import uuid
 import asyncio
@@ -40,11 +38,9 @@ logger = logging.getLogger(__name__)
 
 
 class ContentIngestionService:
-    """
-    Professional content ingestion service supporting multi-format uploads
+    """    Professional content ingestion service supporting multi-format uploads
     with enterprise-grade validation, storage, and AI processing pipeline
-    """
-    
+    """    
     SUPPORTED_FORMATS = {
         'audio': ['.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a', '.wma'],
         'video': ['.mp4', '.avi', '.mov', '.mkv', '.webm', '.flv', '.wmv'],
@@ -74,8 +70,7 @@ class ContentIngestionService:
         self.content_moderation_enabled = True
 
     def _detect_content_type(self, file_path: Path) -> str:
-        """Detect content type using file magic and extension validation"""
-        try:
+        """Detect content type using file magic and extension validation"""        try:
             mime_type = magic.from_file(str(file_path), mime=True)
             extension = file_path.suffix.lower()
             
@@ -95,8 +90,7 @@ class ContentIngestionService:
             raise ContentValidationError(f"Failed to detect content type: {str(e)}")
 
     def _validate_file_security(self, file_path: Path, content_type: str) -> bool:
-        """Enterprise security validation including virus scanning"""
-        try:
+        """Enterprise security validation including virus scanning"""        try:
             # Check file size limits
             file_size = file_path.stat().st_size
             if file_size > self.MAX_FILE_SIZES.get(content_type, 0):
@@ -117,8 +111,7 @@ class ContentIngestionService:
             raise ContentValidationError(f"Security validation failed: {str(e)}")
 
     async def _extract_content_metadata(self, file_path: Path, content_type: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from content files"""
-        metadata = {
+        """Extract comprehensive metadata from content files"""        metadata = {
             'file_size': file_path.stat().st_size,
             'created_at': datetime.now().isoformat(),
             'mime_type': magic.from_file(str(file_path), mime=True),
@@ -142,8 +135,7 @@ class ContentIngestionService:
         return metadata
 
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract audio-specific metadata using librosa"""
-        try:
+        """Extract audio-specific metadata using librosa"""        try:
             y, sr = librosa.load(str(file_path))
             duration = len(y) / sr
             
@@ -165,8 +157,7 @@ class ContentIngestionService:
             return {'audio_metadata_error': str(e)}
 
     async def _extract_video_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract video-specific metadata using moviepy"""
-        try:
+        """Extract video-specific metadata using moviepy"""        try:
             with VideoFileClip(str(file_path)) as clip:
                 return {
                     'duration': float(clip.duration),
@@ -181,8 +172,7 @@ class ContentIngestionService:
             return {'video_metadata_error': str(e)}
 
     async def _extract_image_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract image-specific metadata using PIL"""
-        try:
+        """Extract image-specific metadata using PIL"""        try:
             with Image.open(file_path) as img:
                 return {
                     'width': img.width,
@@ -197,8 +187,7 @@ class ContentIngestionService:
             return {'image_metadata_error': str(e)}
 
     async def _extract_text_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract text-specific metadata"""
-        try:
+        """Extract text-specific metadata"""        try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
                 content = await f.read()
                 
@@ -217,16 +206,14 @@ class ContentIngestionService:
             return {'text_metadata_error': str(e)}
 
     def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file for integrity verification"""
-        hash_sha256 = hashlib.sha256()
+        """Calculate SHA-256 hash of file for integrity verification"""        hash_sha256 = hashlib.sha256()
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_sha256.update(chunk)
         return hash_sha256.hexdigest()
 
     def _reserve_storage_path(self, creator_email: str, filename: str, content_type: str) -> Path:
-        """Generate secure storage path with proper organization"""
-        ext = Path(filename).suffix
+        """Generate secure storage path with proper organization"""        ext = Path(filename).suffix
         unique_id = f"{uuid.uuid4().hex}{ext}"
         safe_email = creator_email.replace("@", "_").replace(".", "_")
         
@@ -238,8 +225,7 @@ class ContentIngestionService:
         return storage_path
 
     async def _generate_content_fingerprint(self, file_path: Path, content_type: str) -> Optional[str]:
-        """Generate AI fingerprint for content protection"""
-        try:
+        """Generate AI fingerprint for content protection"""        try:
             if content_type == 'audio':
                 return await self.audio_engine.generate_fingerprint(str(file_path))
             elif content_type == 'video':
@@ -261,10 +247,8 @@ class ContentIngestionService:
         data: bytes, 
         metadata: Optional[Dict] = None
     ) -> Tuple[Creator, ContentAsset]:
-        """
-        Enterprise upload persistence with comprehensive processing pipeline
-        """
-        try:
+        """        Enterprise upload persistence with comprehensive processing pipeline
+        """        try:
             # Create temporary file for processing
             temp_path = Path(f"/tmp/{uuid.uuid4().hex}_{filename}")
             
@@ -342,8 +326,7 @@ class ContentIngestionService:
         db: Session, 
         uploads: List[Dict[str, Any]]
     ) -> List[Tuple[Creator, ContentAsset]]:
-        """Process multiple uploads in parallel with proper error handling"""
-        results = []
+        """Process multiple uploads in parallel with proper error handling"""        results = []
         
         async def process_single_upload(upload_data):
             try:
@@ -376,8 +359,7 @@ class ContentIngestionService:
         return successful_results
 
     def get_storage_stats(self) -> Dict[str, Any]:
-        """Get comprehensive storage statistics"""
-        stats = {
+        """Get comprehensive storage statistics"""        stats = {
             'total_files': 0,
             'total_size': 0,
             'by_type': {},

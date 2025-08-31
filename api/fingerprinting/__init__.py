@@ -20,8 +20,7 @@ Project Team Specialties:
 Contact: mlaiel@live.de
 
 Advanced content fingerprinting and protection system for multi-format content
-"""
-# Core fingerprinting processors
+"""# Core fingerprinting processors
 from .audio_processor import AudioFingerprintProcessor, AudioFingerprint
 from .video_processor import VideoFingerprintProcessor, VideoFingerprint
 from .image_processor import ImageFingerprintProcessor, ImageFingerprint

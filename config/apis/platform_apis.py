@@ -1,36 +1,31 @@
-"""
-Platform APIs Configuration - Social Media & Streaming Platform Integration
+"""Platform APIs Configuration - Social Media & Streaming Platform Integration
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module configures all external platform APIs including Spotify, YouTube, Instagram,
 TikTok, Twitter/X, and other social media platforms for content distribution and analytics.
 """
-
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class PlatformType(Enum):
-    """Platform type enumeration"""
-    MUSIC_STREAMING = "music_streaming"
+    """Platform type enumeration"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
     PROFESSIONAL = "professional"
     MESSAGING = "messaging"
 
 class AuthenticationType(Enum):
-    """API authentication types"""
-    OAUTH2 = "oauth2"
+    """API authentication types"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BEARER_TOKEN = "bearer_token"
 
 @dataclass
 class PlatformAPIConfig:
-    """Configuration class for platform APIs"""
-    platform_name: str
+    """Configuration class for platform APIs"""    platform_name: str
     platform_type: PlatformType
     base_url: str
     auth_url: str
@@ -69,8 +64,7 @@ class PlatformAPIConfig:
     environments: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     
     def get_environment_config(self, environment: str = "production") -> Dict[str, Any]:
-        """Get configuration for specific environment"""
-        base_config = self.__dict__.copy()
+        """Get configuration for specific environment"""        base_config = self.__dict__.copy()
         env_config = self.environments.get(environment, {})
         base_config.update(env_config)
         return base_config
@@ -341,10 +335,8 @@ PLATFORM_CONFIGS: Dict[str, PlatformAPIConfig] = {
 }
 
 def get_platform_config(platform: str) -> Optional[PlatformAPIConfig]:
-    """Get platform configuration by name"""
-    return PLATFORM_CONFIGS.get(platform.lower())
+    """Get platform configuration by name"""    return PLATFORM_CONFIGS.get(platform.lower())
 
 def get_platforms_by_type(platform_type: PlatformType) -> List[PlatformAPIConfig]:
-    """Get all platforms of specific type"""
-    return [config for config in PLATFORM_CONFIGS.values() 
+    """Get all platforms of specific type"""    return [config for config in PLATFORM_CONFIGS.values() 
             if config.platform_type == platform_type]

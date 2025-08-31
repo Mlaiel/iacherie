@@ -23,8 +23,7 @@ Contact: mlaiel@live.de
 - Audio Processing Expert: Fahed Mlaiel
 - DevOps Engineer: Fahed Mlaiel
 - IA Prompt Engineer: Fahed Mlaiel
-"""
-# Core content models
+"""# Core content models
 from .content_models import (
     ContentStatus,
     ContentType,

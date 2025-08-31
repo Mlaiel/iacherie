@@ -1,5 +1,4 @@
-"""
-Real-Time Data Synchronization System
+"""Real-Time Data Synchronization System
 Enterprise-grade real-time data sync with conflict resolution
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use without explicit written permission from Fahed Mlaiel
 is strictly prohibited and may result in legal action.
 """
-
 import asyncio
 import json
 import time
@@ -31,8 +29,7 @@ from ..security.encryption import EncryptionService
 
 
 class SyncOperation(Enum):
-    """Synchronization operation types"""
-    CREATE = "create"
+    """Synchronization operation types"""    CREATE = "create"
     UPDATE = "update"
     DELETE = "delete"
     BULK_UPDATE = "bulk_update"
@@ -40,8 +37,7 @@ class SyncOperation(Enum):
 
 
 class ConflictResolutionStrategy(Enum):
-    """Conflict resolution strategies"""
-    LAST_WRITE_WINS = "last_write_wins"
+    """Conflict resolution strategies"""    LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MERGE_FIELDS = "merge_fields"
     CUSTOM_RESOLVER = "custom_resolver"
@@ -50,8 +46,7 @@ class ConflictResolutionStrategy(Enum):
 
 
 class SyncStatus(Enum):
-    """Synchronization status"""
-    PENDING = "pending"
+    """Synchronization status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -60,8 +55,7 @@ class SyncStatus(Enum):
 
 
 class SyncDirection(Enum):
-    """Synchronization direction"""
-    BIDIRECTIONAL = "bidirectional"
+    """Synchronization direction"""    BIDIRECTIONAL = "bidirectional"
     PUSH_ONLY = "push_only"
     PULL_ONLY = "pull_only"
     MASTER_SLAVE = "master_slave"
@@ -69,8 +63,7 @@ class SyncDirection(Enum):
 
 @dataclass
 class SyncChange:
-    """Represents a synchronization change"""
-    id: str
+    """Represents a synchronization change"""    id: str
     operation: SyncOperation
     entity_type: str
     entity_id: str
@@ -86,14 +79,12 @@ class SyncChange:
     
     @property
     def is_expired(self) -> bool:
-        """Check if change is expired"""
-        return datetime.utcnow() > self.timestamp + timedelta(hours=24)
+        """Check if change is expired"""        return datetime.utcnow() > self.timestamp + timedelta(hours=24)
 
 
 @dataclass
 class SyncConflict:
-    """Represents a synchronization conflict"""
-    id: str
+    """Represents a synchronization conflict"""    id: str
     entity_type: str
     entity_id: str
     local_change: SyncChange
@@ -105,8 +96,7 @@ class SyncConflict:
     resolution_data: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert conflict to dictionary"""
-        return {
+        """Convert conflict to dictionary"""        return {
             "id": self.id,
             "entity_type": self.entity_type,
             "entity_id": self.entity_id,
@@ -130,8 +120,7 @@ class SyncConflict:
 
 @dataclass
 class SyncNode:
-    """Represents a synchronization node"""
-    id: str
+    """Represents a synchronization node"""    id: str
     name: str
     endpoint: str
     is_master: bool
@@ -145,11 +134,9 @@ class SyncNode:
 
 
 class RealtimeSyncManager:
-    """
-    Advanced real-time data synchronization system with conflict resolution,
+    """    Advanced real-time data synchronization system with conflict resolution,
     multi-node support, and intelligent routing
-    """
-    
+    """    
     def __init__(
         self,
         node_id: str,
@@ -197,8 +184,7 @@ class RealtimeSyncManager:
         asyncio.create_task(self._initialize_sync_manager())
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default synchronization configuration"""
-        return {
+        """Get default synchronization configuration"""        return {
             "websocket_port": 8765,
             "sync_interval": 5,  # seconds
             "heartbeat_interval": 30,  # seconds
@@ -214,8 +200,7 @@ class RealtimeSyncManager:
         }
     
     async def _initialize_sync_manager(self):
-        """Initialize synchronization manager"""
-        try:
+        """Initialize synchronization manager"""        try:
             # Start WebSocket server
             await self._start_websocket_server()
             
@@ -231,8 +216,7 @@ class RealtimeSyncManager:
             raise SyncException(f"Sync manager initialization failed: {e}")
     
     async def _start_websocket_server(self):
-        """Start WebSocket server for real-time communication"""
-        try:
+        """Start WebSocket server for real-time communication"""        try:
             self.websocket_server = await websockets.serve(
                 self._handle_websocket_connection,
                 "0.0.0.0",
@@ -250,8 +234,7 @@ class RealtimeSyncManager:
         websocket: websockets.WebSocketServerProtocol,
         path: str
     ):
-        """Handle incoming WebSocket connections"""
-        client_id = None
+        """Handle incoming WebSocket connections"""        client_id = None
         try:
             async for message in websocket:
                 data = json.loads(message)
@@ -293,8 +276,7 @@ class RealtimeSyncManager:
         node: SyncNode,
         connect_immediately: bool = True
     ) -> bool:
-        """Add a synchronization node"""
-        try:
+        """Add a synchronization node"""        try:
             async with self._lock:
                 self.sync_nodes[node.id] = node
                 
@@ -309,8 +291,7 @@ class RealtimeSyncManager:
             return False
     
     async def _connect_to_node(self, node: SyncNode):
-        """Connect to a remote sync node"""
-        try:
+        """Connect to a remote sync node"""        try:
             if node.id in self.client_connections:
                 return  # Already connected
             
@@ -352,8 +333,7 @@ class RealtimeSyncManager:
             node.is_online = False
     
     async def _listen_to_node(self, node_id: str, websocket: websockets.WebSocketClientProtocol):
-        """Listen for messages from a remote node"""
-        try:
+        """Listen for messages from a remote node"""        try:
             async for message in websocket:
                 data = json.loads(message)
                 message_type = data.get("type")
@@ -382,8 +362,7 @@ class RealtimeSyncManager:
         target_nodes: Optional[List[str]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Queue a change for synchronization"""
-        try:
+        """Queue a change for synchronization"""        try:
             # Generate change ID
             change_id = f"{self.node_id}_{entity_type}_{entity_id}_{int(time.time() * 1000)}"
             
@@ -417,8 +396,7 @@ class RealtimeSyncManager:
             raise SyncException(f"Failed to queue change: {e}")
     
     async def _sync_change(self, change: SyncChange):
-        """Synchronize a single change to target nodes"""
-        try:
+        """Synchronize a single change to target nodes"""        try:
             change_data = {
                 "type": "sync_change",
                 "change": {
@@ -471,8 +449,7 @@ class RealtimeSyncManager:
                 self.sync_metrics["sync_failures"] += 1
     
     async def _send_to_node(self, node_id: str, data: Dict[str, Any]):
-        """Send data to a specific node"""
-        try:
+        """Send data to a specific node"""        try:
             # Try WebSocket connection first
             if node_id in self.websocket_connections:
                 await self.websocket_connections[node_id].send(json.dumps(data))
@@ -492,8 +469,7 @@ class RealtimeSyncManager:
             raise
     
     async def _handle_incoming_change(self, data: Dict[str, Any], source_node: str):
-        """Handle incoming synchronization change"""
-        try:
+        """Handle incoming synchronization change"""        try:
             change_data = data.get("change", {})
             
             # Decrypt data if needed
@@ -541,8 +517,7 @@ class RealtimeSyncManager:
             self.logger.error(f"Failed to handle incoming change: {e}")
     
     async def _detect_conflict(self, remote_change: SyncChange) -> Optional[SyncConflict]:
-        """Detect conflicts between remote and local changes"""
-        try:
+        """Detect conflicts between remote and local changes"""        try:
             # Check if we have a local change for the same entity
             local_changes = [
                 change for change in self.pending_changes.values()
@@ -587,8 +562,7 @@ class RealtimeSyncManager:
         local_change: SyncChange,
         remote_change: SyncChange
     ) -> Optional[str]:
-        """Determine the type of conflict between changes"""
-        if local_change.operation != remote_change.operation:
+        """Determine the type of conflict between changes"""        if local_change.operation != remote_change.operation:
             return "operation_conflict"
         
         if local_change.version != remote_change.version:
@@ -600,8 +574,7 @@ class RealtimeSyncManager:
         return None
     
     async def _handle_conflict(self, conflict: SyncConflict):
-        """Handle synchronization conflict"""
-        try:
+        """Handle synchronization conflict"""        try:
             async with self._lock:
                 self.conflicts[conflict.id] = conflict
                 self.sync_metrics["conflicts_detected"] += 1
@@ -624,8 +597,7 @@ class RealtimeSyncManager:
             self.logger.error(f"Failed to handle conflict {conflict.id}: {e}")
     
     async def _resolve_conflict_automatically(self, conflict: SyncConflict) -> bool:
-        """Attempt to resolve conflict automatically"""
-        try:
+        """Attempt to resolve conflict automatically"""        try:
             strategy = conflict.resolution_strategy
             
             if strategy == ConflictResolutionStrategy.LAST_WRITE_WINS:
@@ -698,8 +670,7 @@ class RealtimeSyncManager:
         local_data: Dict[str, Any],
         remote_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Attempt to merge change data"""
-        try:
+        """Attempt to merge change data"""        try:
             merged = local_data.copy()
             
             for key, value in remote_data.items():
@@ -723,8 +694,7 @@ class RealtimeSyncManager:
             return None
     
     async def _apply_change(self, change: SyncChange):
-        """Apply synchronization change to local data"""
-        try:
+        """Apply synchronization change to local data"""        try:
             # Notify change listeners
             await self._notify_change_listeners(change)
             
@@ -739,8 +709,7 @@ class RealtimeSyncManager:
             raise
     
     async def _notify_change_listeners(self, change: SyncChange):
-        """Notify registered change listeners"""
-        try:
+        """Notify registered change listeners"""        try:
             listeners = self.change_listeners.get(change.entity_type, [])
             listeners.extend(self.change_listeners.get("*", []))  # Global listeners
             
@@ -757,8 +726,7 @@ class RealtimeSyncManager:
             self.logger.error(f"Failed to notify change listeners: {e}")
     
     async def _notify_conflict_listeners(self, conflict: SyncConflict):
-        """Notify registered conflict listeners"""
-        try:
+        """Notify registered conflict listeners"""        try:
             listeners = self.change_listeners.get(f"conflict_{conflict.entity_type}", [])
             listeners.extend(self.change_listeners.get("conflict_*", []))  # Global conflict listeners
             
@@ -779,24 +747,21 @@ class RealtimeSyncManager:
         entity_type: str,
         listener: Callable[[SyncChange], None]
     ):
-        """Register a listener for entity changes"""
-        self.change_listeners[entity_type].append(listener)
+        """Register a listener for entity changes"""        self.change_listeners[entity_type].append(listener)
     
     def register_conflict_resolver(
         self,
         entity_type: str,
         resolver: Callable[[SyncConflict], Optional[Dict[str, Any]]]
     ):
-        """Register a custom conflict resolver"""
-        self.conflict_resolvers[entity_type] = resolver
+        """Register a custom conflict resolver"""        self.conflict_resolvers[entity_type] = resolver
     
     async def resolve_conflict_manually(
         self,
         conflict_id: str,
         resolution_data: Dict[str, Any]
     ) -> bool:
-        """Manually resolve a conflict"""
-        try:
+        """Manually resolve a conflict"""        try:
             if conflict_id not in self.conflicts:
                 return False
             
@@ -837,8 +802,7 @@ class RealtimeSyncManager:
             return False
     
     async def get_sync_status(self) -> Dict[str, Any]:
-        """Get comprehensive synchronization status"""
-        return {
+        """Get comprehensive synchronization status"""        return {
             "node_id": self.node_id,
             "metrics": self.sync_metrics,
             "nodes": {
@@ -857,24 +821,20 @@ class RealtimeSyncManager:
         }
     
     def _calculate_checksum(self, data: Dict[str, Any]) -> str:
-        """Calculate checksum for data"""
-        import hashlib
+        """Calculate checksum for data"""        import hashlib
         data_str = json.dumps(data, sort_keys=True)
         return hashlib.sha256(data_str.encode()).hexdigest()
     
     def _verify_checksum(self, data: Dict[str, Any], expected_checksum: str) -> bool:
-        """Verify data checksum"""
-        return self._calculate_checksum(data) == expected_checksum
+        """Verify data checksum"""        return self._calculate_checksum(data) == expected_checksum
     
     async def _get_entity_version(self, entity_type: str, entity_id: str) -> int:
-        """Get current version of an entity"""
-        # This would typically query the database
+        """Get current version of an entity"""        # This would typically query the database
         # For now, return a simple timestamp-based version
         return int(time.time() * 1000)
     
     async def _periodic_sync(self):
-        """Periodic synchronization of pending changes"""
-        while True:
+        """Periodic synchronization of pending changes"""        while True:
             try:
                 await asyncio.sleep(self.config["sync_interval"])
                 
@@ -893,8 +853,7 @@ class RealtimeSyncManager:
                 self.logger.error(f"Error in periodic sync: {e}")
     
     async def _periodic_heartbeat(self):
-        """Send periodic heartbeats to connected nodes"""
-        while True:
+        """Send periodic heartbeats to connected nodes"""        while True:
             try:
                 await asyncio.sleep(self.config["heartbeat_interval"])
                 
@@ -933,8 +892,7 @@ class RealtimeSyncManager:
                 self.logger.error(f"Error in periodic heartbeat: {e}")
     
     async def _periodic_cleanup(self):
-        """Periodic cleanup of expired data"""
-        while True:
+        """Periodic cleanup of expired data"""        while True:
             try:
                 await asyncio.sleep(self.config["cleanup_interval"])
                 
@@ -965,8 +923,7 @@ class RealtimeSyncManager:
                 self.logger.error(f"Error in periodic cleanup: {e}")
     
     async def close(self):
-        """Close sync manager and cleanup resources"""
-        # Cancel background tasks
+        """Close sync manager and cleanup resources"""        # Cancel background tasks
         for task in [self._sync_task, self._heartbeat_task, self._cleanup_task]:
             if task and not task.done():
                 task.cancel()
@@ -1000,8 +957,7 @@ async def get_sync_manager(
     encryption_service: Optional[EncryptionService] = None,
     metrics_collector: Optional[MetricsCollector] = None
 ) -> RealtimeSyncManager:
-    """Get or create sync manager instance"""
-    global _sync_manager
+    """Get or create sync manager instance"""    global _sync_manager
     
     if _sync_manager is None:
         _sync_manager = RealtimeSyncManager(
@@ -1021,8 +977,7 @@ async def sync_context(
     encryption_service: Optional[EncryptionService] = None,
     metrics_collector: Optional[MetricsCollector] = None
 ):
-    """Context manager for sync operations"""
-    sync_manager = await get_sync_manager(node_id, config, encryption_service, metrics_collector)
+    """Context manager for sync operations"""    sync_manager = await get_sync_manager(node_id, config, encryption_service, metrics_collector)
     try:
         yield sync_manager
     finally:

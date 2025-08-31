@@ -1,12 +1,10 @@
-"""
-Security Module - AI/ML security, adversarial defense, and model protection
+"""Security Module - AI/ML security, adversarial defense, and model protection
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive security capabilities for AI/ML systems including
 adversarial defense, model watermarking, and security monitoring.
 """
-
 import logging
 import json
 import os
@@ -24,8 +22,7 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class ThreatType(Enum):
-    """Types of AI/ML security threats"""
-    ADVERSARIAL_EXAMPLE = "adversarial_example"
+    """Types of AI/ML security threats"""    ADVERSARIAL_EXAMPLE = "adversarial_example"
     MODEL_INVERSION = "model_inversion"
     MEMBERSHIP_INFERENCE = "membership_inference"
     MODEL_EXTRACTION = "model_extraction"
@@ -34,8 +31,7 @@ class ThreatType(Enum):
     BACKDOOR_ATTACK = "backdoor_attack"
 
 class DefenseType(Enum):
-    """Types of defense mechanisms"""
-    ADVERSARIAL_TRAINING = "adversarial_training"
+    """Types of defense mechanisms"""    ADVERSARIAL_TRAINING = "adversarial_training"
     GRADIENT_MASKING = "gradient_masking"
     INPUT_PREPROCESSING = "input_preprocessing"
     DETECTION_SYSTEM = "detection_system"
@@ -43,16 +39,14 @@ class DefenseType(Enum):
     RANDOMIZED_SMOOTHING = "randomized_smoothing"
 
 class SecurityLevel(Enum):
-    """Security protection levels"""
-    BASIC = "basic"
+    """Security protection levels"""    BASIC = "basic"
     ENHANCED = "enhanced"
     MAXIMUM = "maximum"
     MILITARY_GRADE = "military_grade"
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    security_level: SecurityLevel
+    """Security configuration"""    security_level: SecurityLevel
     enabled_defenses: List[DefenseType]
     threat_monitoring: bool = True
     watermarking_enabled: bool = True
@@ -61,8 +55,7 @@ class SecurityConfig:
 
 @dataclass
 class ThreatDetection:
-    """Threat detection result"""
-    threat_type: ThreatType
+    """Threat detection result"""    threat_type: ThreatType
     confidence: float
     severity: str
     detected_at: datetime
@@ -70,8 +63,7 @@ class ThreatDetection:
     mitigation_applied: bool
 
 class ModelSecurity:
-    """Main model security orchestrator"""
-    
+    """Main model security orchestrator"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -89,8 +81,7 @@ class ModelSecurity:
         self.logger.info("ModelSecurity initialized successfully")
     
     def secure_model(self, model: Any) -> Dict[str, Any]:
-        """Apply comprehensive security measures to model"""
-        try:
+        """Apply comprehensive security measures to model"""        try:
             self.logger.info("Applying security measures to model")
             
             security_result = {
@@ -140,8 +131,7 @@ class ModelSecurity:
             return {"model_secured": False, "error": str(e)}
     
     def validate_model_integrity(self, model: Any) -> Dict[str, Any]:
-        """Validate model integrity and detect tampering"""
-        try:
+        """Validate model integrity and detect tampering"""        try:
             self.logger.info("Validating model integrity")
             
             # Check watermark
@@ -173,8 +163,7 @@ class ModelSecurity:
             return {"integrity_valid": False, "error": str(e)}
     
     def detect_adversarial_input(self, input_data: Any) -> Dict[str, Any]:
-        """Detect adversarial inputs"""
-        try:
+        """Detect adversarial inputs"""        try:
             self.logger.info("Detecting adversarial inputs")
             
             # Statistical analysis
@@ -208,8 +197,7 @@ class ModelSecurity:
             return {"is_adversarial": False, "error": str(e)}
     
     def _apply_input_preprocessing(self, model: Any) -> Dict[str, Any]:
-        """Apply input preprocessing defenses"""
-        preprocessing_config = {
+        """Apply input preprocessing defenses"""        preprocessing_config = {
             "gaussian_noise": True,
             "median_filtering": True,
             "jpeg_compression": True,
@@ -223,8 +211,7 @@ class ModelSecurity:
         }
     
     def _deploy_detection_system(self, model: Any) -> Dict[str, Any]:
-        """Deploy adversarial detection system"""
-        detection_config = {
+        """Deploy adversarial detection system"""        detection_config = {
             "statistical_tests": True,
             "reconstruction_error": True,
             "activation_analysis": True,
@@ -239,14 +226,12 @@ class ModelSecurity:
         }
     
     def _calculate_model_hash(self, model: Any) -> str:
-        """Calculate model hash for integrity verification"""
-        # Simplified hash calculation
+        """Calculate model hash for integrity verification"""        # Simplified hash calculation
         model_str = str(model) if hasattr(model, '__str__') else "model_data"
         return hashlib.sha256(model_str.encode()).hexdigest()[:16]
     
     def _detect_model_anomalies(self, model: Any) -> List[Dict[str, Any]]:
-        """Detect model anomalies"""
-        anomalies = []
+        """Detect model anomalies"""        anomalies = []
         
         # Simulate anomaly detection
         anomaly_checks = [
@@ -263,8 +248,7 @@ class ModelSecurity:
         return anomalies
     
     def _statistical_analysis(self, input_data: Any) -> float:
-        """Perform statistical analysis for adversarial detection"""
-        # Simplified statistical analysis
+        """Perform statistical analysis for adversarial detection"""        # Simplified statistical analysis
         if isinstance(input_data, np.ndarray):
             # Check for unusual statistical properties
             std_dev = np.std(input_data)
@@ -277,8 +261,7 @@ class ModelSecurity:
         return np.random.random() * 0.3  # Low score for non-array data
     
     def _feature_analysis(self, input_data: Any) -> float:
-        """Perform feature analysis for adversarial detection"""
-        # Simplified feature analysis
+        """Perform feature analysis for adversarial detection"""        # Simplified feature analysis
         if isinstance(input_data, np.ndarray):
             # Check for unusual feature patterns
             feature_variance = np.var(input_data)
@@ -291,8 +274,7 @@ class ModelSecurity:
         return np.random.random() * 0.4  # Moderate score for non-array data
     
     def _log_security_event(self, event_type: str, details: Dict[str, Any]):
-        """Log security event"""
-        event = {
+        """Log security event"""        event = {
             "event_type": event_type,
             "timestamp": datetime.utcnow().isoformat(),
             "details": details,
@@ -303,8 +285,7 @@ class ModelSecurity:
         self.logger.warning(f"Security event logged: {event_type}")
     
     def get_security_status(self) -> Dict[str, Any]:
-        """Get current security status"""
-        return {
+        """Get current security status"""        return {
             "security_level": self.config.security_level.value,
             "active_defenses": [d.value for d in self.config.enabled_defenses],
             "security_events_count": len(self.security_events),
@@ -315,8 +296,7 @@ class ModelSecurity:
         }
 
 class AdversarialDefense:
-    """Adversarial attack defense mechanisms"""
-    
+    """Adversarial attack defense mechanisms"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -329,8 +309,7 @@ class AdversarialDefense:
         self.logger.info("AdversarialDefense initialized successfully")
     
     def apply_adversarial_training(self, model: Any) -> Dict[str, Any]:
-        """Apply adversarial training to improve model robustness"""
-        try:
+        """Apply adversarial training to improve model robustness"""        try:
             self.logger.info("Applying adversarial training")
             
             # Simulate adversarial training process
@@ -352,8 +331,7 @@ class AdversarialDefense:
             return {"adversarial_training_applied": False, "error": str(e)}
     
     def apply_gradient_masking(self, model: Any) -> Dict[str, Any]:
-        """Apply gradient masking defense"""
-        try:
+        """Apply gradient masking defense"""        try:
             self.logger.info("Applying gradient masking")
             
             masking_result = {
@@ -372,8 +350,7 @@ class AdversarialDefense:
             return {"gradient_masking_applied": False, "error": str(e)}
     
     def apply_randomized_smoothing(self, model: Any, noise_std: float = 0.25) -> Dict[str, Any]:
-        """Apply randomized smoothing defense"""
-        try:
+        """Apply randomized smoothing defense"""        try:
             self.logger.info("Applying randomized smoothing")
             
             smoothing_result = {
@@ -393,8 +370,7 @@ class AdversarialDefense:
             return {"randomized_smoothing_applied": False, "error": str(e)}
     
     def generate_adversarial_examples(self, data: Any, labels: Any = None, attack_type: str = "FGSM") -> Dict[str, Any]:
-        """Generate adversarial examples for testing"""
-        try:
+        """Generate adversarial examples for testing"""        try:
             self.logger.info(f"Generating adversarial examples using {attack_type}")
             
             attack_results = {
@@ -427,8 +403,7 @@ class AdversarialDefense:
             return {"examples_generated": 0, "error": str(e)}
 
 class ModelWatermarking:
-    """Model watermarking for intellectual property protection"""
-    
+    """Model watermarking for intellectual property protection"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -440,8 +415,7 @@ class ModelWatermarking:
         self.logger.info("ModelWatermarking initialized successfully")
     
     def embed_watermark(self, model: Any) -> Dict[str, Any]:
-        """Embed watermark in model"""
-        try:
+        """Embed watermark in model"""        try:
             self.logger.info("Embedding watermark in model")
             
             # Simulate watermark embedding
@@ -462,8 +436,7 @@ class ModelWatermarking:
             return {"watermark_embedded": False, "error": str(e)}
     
     def verify_watermark(self, model: Any) -> bool:
-        """Verify watermark presence in model"""
-        try:
+        """Verify watermark presence in model"""        try:
             self.logger.info("Verifying watermark in model")
             
             # Simulate watermark verification
@@ -481,8 +454,7 @@ class ModelWatermarking:
             return False
     
     def extract_watermark(self, model: Any) -> Dict[str, Any]:
-        """Extract watermark information from model"""
-        try:
+        """Extract watermark information from model"""        try:
             self.logger.info("Extracting watermark from model")
             
             extraction_result = {
@@ -502,8 +474,7 @@ class ModelWatermarking:
             return {"watermark_extracted": False, "error": str(e)}
 
 class ThreatMonitor:
-    """Real-time threat monitoring and detection"""
-    
+    """Real-time threat monitoring and detection"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -516,8 +487,7 @@ class ThreatMonitor:
         self.logger.info("ThreatMonitor initialized successfully")
     
     def enable_monitoring(self) -> Dict[str, Any]:
-        """Enable real-time threat monitoring"""
-        try:
+        """Enable real-time threat monitoring"""        try:
             self.logger.info("Enabling threat monitoring")
             
             self.monitoring_active = True
@@ -543,8 +513,7 @@ class ThreatMonitor:
             return {"monitoring_enabled": False, "error": str(e)}
     
     def detect_threats(self, input_data: Any, model_output: Any) -> List[ThreatDetection]:
-        """Detect threats in real-time"""
-        try:
+        """Detect threats in real-time"""        try:
             if not self.monitoring_active:
                 return []
             
@@ -581,8 +550,7 @@ class ThreatMonitor:
             return []
     
     def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get monitoring status and statistics"""
-        return {
+        """Get monitoring status and statistics"""        return {
             "monitoring_active": self.monitoring_active,
             "total_threats_detected": len(self.threat_detections),
             "threat_types_seen": list(set(t.threat_type.value for t in self.threat_detections)),

@@ -1,12 +1,10 @@
-"""
-Security Configuration - IA Influencer Agent Platform
+"""Security Configuration - IA Influencer Agent Platform
 Enterprise-grade security configuration for authentication, encryption, and protection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import os
 import secrets
 from typing import Dict, List, Optional, Any, Union
@@ -20,8 +18,7 @@ from passlib.context import CryptContext
 
 
 class AuthenticationMethod(Enum):
-    """Supported authentication methods"""
-    JWT = "jwt"
+    """Supported authentication methods"""    JWT = "jwt"
     OAUTH2 = "oauth2"
     API_KEY = "api_key"
     BASIC = "basic"
@@ -29,8 +26,7 @@ class AuthenticationMethod(Enum):
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""
-    AES_256 = "aes_256"
+    """Supported encryption algorithms"""    AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
     FERNET = "fernet"
@@ -38,8 +34,7 @@ class EncryptionAlgorithm(Enum):
 
 @dataclass
 class SecurityConfig:
-    """Comprehensive security configuration"""
-    
+    """Comprehensive security configuration"""    
     # Application Secrets
     secret_key: str = field(default_factory=lambda: os.getenv("SECRET_KEY", secrets.token_hex(32)))
     jwt_secret_key: str = field(default_factory=lambda: os.getenv("JWT_SECRET_KEY", secrets.token_hex(32)))
@@ -207,14 +202,12 @@ class SecurityConfig:
         os.getenv("ANOMALY_DETECTION_ENABLED", "false").lower() == "true")
     
     def __post_init__(self):
-        """Validate and set up security configuration"""
-        self._validate_configuration()
+        """Validate and set up security configuration"""        self._validate_configuration()
         self._setup_password_context()
         self._setup_encryption()
     
     def _validate_configuration(self):
-        """Validate security configuration parameters"""
-        if self.jwt_access_token_expire_minutes <= 0:
+        """Validate security configuration parameters"""        if self.jwt_access_token_expire_minutes <= 0:
             raise ValueError("JWT access token expiration must be positive")
         
         if self.jwt_refresh_token_expire_days <= 0:
@@ -230,8 +223,7 @@ class SecurityConfig:
             raise ValueError("Secret key should be at least 32 characters")
     
     def _setup_password_context(self):
-        """Set up password hashing context"""
-        schemes = [self.password_hash_algorithm]
+        """Set up password hashing context"""        schemes = [self.password_hash_algorithm]
         if self.password_hash_algorithm not in ["bcrypt", "pbkdf2_sha256", "argon2"]:
             schemes = ["bcrypt"]  # fallback to bcrypt
         
@@ -246,8 +238,7 @@ class SecurityConfig:
         )
     
     def _setup_encryption(self):
-        """Set up encryption context"""
-        if self.encryption_algorithm == EncryptionAlgorithm.FERNET:
+        """Set up encryption context"""        if self.encryption_algorithm == EncryptionAlgorithm.FERNET:
             # Ensure the encryption key is properly formatted for Fernet
             try:
                 key_bytes = self.encryption_key.encode() if isinstance(self.encryption_key, str) else self.encryption_key
@@ -259,43 +250,35 @@ class SecurityConfig:
     
     @property
     def jwt_access_token_expire_delta(self) -> timedelta:
-        """Get JWT access token expiration as timedelta"""
-        return timedelta(minutes=self.jwt_access_token_expire_minutes)
+        """Get JWT access token expiration as timedelta"""        return timedelta(minutes=self.jwt_access_token_expire_minutes)
     
     @property
     def jwt_refresh_token_expire_delta(self) -> timedelta:
-        """Get JWT refresh token expiration as timedelta"""
-        return timedelta(days=self.jwt_refresh_token_expire_days)
+        """Get JWT refresh token expiration as timedelta"""        return timedelta(days=self.jwt_refresh_token_expire_days)
     
     @property
     def session_timeout_delta(self) -> timedelta:
-        """Get session timeout as timedelta"""
-        return timedelta(minutes=self.session_timeout_minutes)
+        """Get session timeout as timedelta"""        return timedelta(minutes=self.session_timeout_minutes)
     
     @property
     def login_lockout_delta(self) -> timedelta:
-        """Get login lockout duration as timedelta"""
-        return timedelta(minutes=self.login_lockout_duration_minutes)
+        """Get login lockout duration as timedelta"""        return timedelta(minutes=self.login_lockout_duration_minutes)
     
     def hash_password(self, password: str) -> str:
-        """Hash a password using configured algorithm"""
-        return self.password_context.hash(password)
+        """Hash a password using configured algorithm"""        return self.password_context.hash(password)
     
     def verify_password(self, password: str, hashed: str) -> bool:
-        """Verify a password against its hash"""
-        return self.password_context.verify(password, hashed)
+        """Verify a password against its hash"""        return self.password_context.verify(password, hashed)
     
     def encrypt_data(self, data: str) -> str:
-        """
-        Encrypt sensitive data using the configured encryption algorithm.
+        """        Encrypt sensitive data using the configured encryption algorithm.
         
         Args:
             data: Plain text data to encrypt
             
         Returns:
             str: Encrypted data as string
-        """
-        try:
+        """        try:
             if self.encryption_algorithm == EncryptionAlgorithm.FERNET:
                 return self.cipher_suite.encrypt(data.encode()).decode()
             elif self.encryption_algorithm == EncryptionAlgorithm.AES_256:
@@ -313,16 +296,14 @@ class SecurityConfig:
             raise ValueError(f"Failed to encrypt data: {str(e)}")
     
     def decrypt_data(self, encrypted_data: str) -> str:
-        """
-        Decrypt data using the configured encryption algorithm.
+        """        Decrypt data using the configured encryption algorithm.
         
         Args:
             encrypted_data: Encrypted data to decrypt
             
         Returns:
             str: Decrypted plain text data
-        """
-        try:
+        """        try:
             if self.encryption_algorithm == EncryptionAlgorithm.FERNET:
                 return self.cipher_suite.decrypt(encrypted_data.encode()).decode()
             elif self.encryption_algorithm == EncryptionAlgorithm.AES_256:
@@ -340,8 +321,7 @@ class SecurityConfig:
             raise ValueError(f"Failed to decrypt data: {str(e)}")
     
     def _encrypt_aes_256(self, data: str) -> str:
-        """Encrypt data using AES-256"""
-        try:
+        """Encrypt data using AES-256"""        try:
             from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
             from cryptography.hazmat.backends import default_backend
             import base64
@@ -369,8 +349,7 @@ class SecurityConfig:
             return self.cipher_suite.encrypt(data.encode()).decode()
     
     def _decrypt_aes_256(self, encrypted_data: str) -> str:
-        """Decrypt data using AES-256"""
-        try:
+        """Decrypt data using AES-256"""        try:
             from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
             from cryptography.hazmat.backends import default_backend
             import base64
@@ -400,8 +379,7 @@ class SecurityConfig:
             return self.cipher_suite.decrypt(encrypted_data.encode()).decode()
     
     def _encrypt_rsa(self, data: str, key_size: int) -> str:
-        """Encrypt data using RSA"""
-        try:
+        """Encrypt data using RSA"""        try:
             from cryptography.hazmat.primitives.asymmetric import rsa, padding
             from cryptography.hazmat.primitives import hashes, serialization
             import base64
@@ -455,8 +433,7 @@ class SecurityConfig:
             return self._encrypt_aes_256(data)
     
     def _decrypt_rsa(self, encrypted_data: str, key_size: int) -> str:
-        """Decrypt data using RSA"""
-        try:
+        """Decrypt data using RSA"""        try:
             from cryptography.hazmat.primitives.asymmetric import padding
             from cryptography.hazmat.primitives import hashes, serialization
             import base64
@@ -494,29 +471,24 @@ class SecurityConfig:
             return self._decrypt_aes_256(encrypted_data)
     
     def generate_api_key(self) -> str:
-        """Generate a new API key"""
-        return secrets.token_urlsafe(self.api_key_length)
+        """Generate a new API key"""        return secrets.token_urlsafe(self.api_key_length)
     
     def generate_csrf_token(self) -> str:
-        """Generate CSRF token"""
-        return secrets.token_urlsafe(32)
+        """Generate CSRF token"""        return secrets.token_urlsafe(32)
     
     def create_hmac_signature(self, data: str) -> str:
-        """Create HMAC signature for data integrity"""
-        return hmac.new(
+        """Create HMAC signature for data integrity"""        return hmac.new(
             self.secret_key.encode(),
             data.encode(),
             hashlib.sha256
         ).hexdigest()
     
     def verify_hmac_signature(self, data: str, signature: str) -> bool:
-        """Verify HMAC signature"""
-        expected_signature = self.create_hmac_signature(data)
+        """Verify HMAC signature"""        expected_signature = self.create_hmac_signature(data)
         return hmac.compare_digest(signature, expected_signature)
     
     def validate_password_strength(self, password: str) -> Dict[str, bool]:
-        """Validate password against security requirements"""
-        validations = {
+        """Validate password against security requirements"""        validations = {
             'min_length': len(password) >= self.password_min_length,
             'has_uppercase': any(c.isupper() for c in password) if self.password_require_uppercase else True,
             'has_lowercase': any(c.islower() for c in password) if self.password_require_lowercase else True,
@@ -527,13 +499,11 @@ class SecurityConfig:
         return validations
     
     def is_password_valid(self, password: str) -> bool:
-        """Check if password meets all security requirements"""
-        validations = self.validate_password_strength(password)
+        """Check if password meets all security requirements"""        validations = self.validate_password_strength(password)
         return all(validations.values())
     
     def get_csp_header(self) -> str:
-        """Generate Content Security Policy header"""
-        if not self.csp_enabled:
+        """Generate Content Security Policy header"""        if not self.csp_enabled:
             return ""
         
         policies = [
@@ -550,8 +520,7 @@ class SecurityConfig:
         return "; ".join(policies)
     
     def get_security_headers(self) -> Dict[str, str]:
-        """Get recommended security headers"""
-        headers = {
+        """Get recommended security headers"""        headers = {
             "X-Content-Type-Options": "nosniff",
             "X-Frame-Options": "DENY",
             "X-XSS-Protection": "1; mode=block",
@@ -565,12 +534,10 @@ class SecurityConfig:
         return headers
     
     def is_file_type_allowed(self, content_type: str) -> bool:
-        """Check if file type is allowed for upload"""
-        return content_type in self.allowed_file_types
+        """Check if file type is allowed for upload"""        return content_type in self.allowed_file_types
     
     def get_oauth_config(self, provider: str) -> Optional[Dict[str, str]]:
-        """Get OAuth configuration for specific provider"""
-        oauth_configs = {
+        """Get OAuth configuration for specific provider"""        oauth_configs = {
             "google": {
                 "client_id": self.google_oauth_client_id,
                 "client_secret": self.google_oauth_client_secret

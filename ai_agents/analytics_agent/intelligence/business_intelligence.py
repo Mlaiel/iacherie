@@ -1,5 +1,4 @@
-"""
-Analytics Agent - Business Intelligence Module
+"""Analytics Agent - Business Intelligence Module
 Enterprise business analytics and KPI tracking for IA Influencer Agent
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,7 +8,6 @@ WARNING: This code and concept are protected intellectual property of Fahed Mlai
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum
@@ -19,8 +17,7 @@ import numpy as np
 from abc import ABC, abstractmethod
 
 class KPICategory(Enum):
-    """Key Performance Indicator categories"""
-    REVENUE = "revenue"
+    """Key Performance Indicator categories"""    REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     GROWTH = "growth"
     RETENTION = "retention"
@@ -28,8 +25,7 @@ class KPICategory(Enum):
     CONVERSION = "conversion"
 
 class RevenueStream(Enum):
-    """Revenue stream types"""
-    SUBSCRIPTION = "subscription"
+    """Revenue stream types"""    SUBSCRIPTION = "subscription"
     SPONSORED_CONTENT = "sponsored_content"
     DIGITAL_SALES = "digital_sales"
     STREAMING_ROYALTIES = "streaming_royalties"
@@ -39,8 +35,7 @@ class RevenueStream(Enum):
 
 @dataclass
 class BusinessKPI:
-    """Business Key Performance Indicator data model"""
-    kpi_id: str
+    """Business Key Performance Indicator data model"""    kpi_id: str
     category: KPICategory
     name: str
     current_value: float
@@ -54,8 +49,7 @@ class BusinessKPI:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue tracking and analysis data model"""
-    period: str
+    """Revenue tracking and analysis data model"""    period: str
     total_revenue: float
     revenue_streams: Dict[RevenueStream, float]
     monthly_recurring_revenue: float
@@ -68,8 +62,7 @@ class RevenueMetrics:
 
 @dataclass
 class UserEngagementMetrics:
-    """User engagement business metrics"""
-    active_users_daily: int
+    """User engagement business metrics"""    active_users_daily: int
     active_users_monthly: int
     session_duration_avg: float
     content_consumption_rate: float
@@ -81,8 +74,7 @@ class UserEngagementMetrics:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class BusinessIntelligenceEngine:
-    """Enterprise business intelligence and analytics engine"""
-    
+    """Enterprise business intelligence and analytics engine"""    
     def __init__(self):
         self.kpis: List[BusinessKPI] = []
         self.revenue_history: List[RevenueMetrics] = []
@@ -90,8 +82,7 @@ class BusinessIntelligenceEngine:
         self.forecasting_models = {}
     
     def calculate_business_health_score(self) -> Dict[str, Any]:
-        """Calculate comprehensive business health score"""
-        if not self.kpis:
+        """Calculate comprehensive business health score"""        if not self.kpis:
             return {"health_score": 0, "status": "no_data"}
         
         category_scores = {}
@@ -141,8 +132,7 @@ class BusinessIntelligenceEngine:
         }
     
     def analyze_revenue_performance(self, period_months: int = 12) -> Dict[str, Any]:
-        """Comprehensive revenue performance analysis"""
-        recent_revenue = [r for r in self.revenue_history 
+        """Comprehensive revenue performance analysis"""        recent_revenue = [r for r in self.revenue_history 
                          if (datetime.now() - r.timestamp).days <= period_months * 30]
         
         if not recent_revenue:
@@ -177,8 +167,7 @@ class BusinessIntelligenceEngine:
         }
     
     def analyze_user_engagement_trends(self, period_days: int = 90) -> Dict[str, Any]:
-        """Analyze user engagement trends and patterns"""
-        recent_engagement = [e for e in self.engagement_history 
+        """Analyze user engagement trends and patterns"""        recent_engagement = [e for e in self.engagement_history 
                            if (datetime.now() - e.timestamp).days <= period_days]
         
         if not recent_engagement:
@@ -221,8 +210,7 @@ class BusinessIntelligenceEngine:
         }
     
     def generate_executive_dashboard(self) -> Dict[str, Any]:
-        """Generate comprehensive executive dashboard data"""
-        business_health = self.calculate_business_health_score()
+        """Generate comprehensive executive dashboard data"""        business_health = self.calculate_business_health_score()
         revenue_analysis = self.analyze_revenue_performance()
         engagement_analysis = self.analyze_user_engagement_trends()
         
@@ -263,8 +251,7 @@ class BusinessIntelligenceEngine:
         }
     
     def _calculate_category_score(self, category_kpis: List[BusinessKPI]) -> float:
-        """Calculate performance score for KPI category"""
-        if not category_kpis:
+        """Calculate performance score for KPI category"""        if not category_kpis:
             return 0
         
         scores = []
@@ -281,8 +268,7 @@ class BusinessIntelligenceEngine:
         return np.mean(scores)
     
     def _generate_health_recommendations(self, category_scores: Dict[str, float]) -> List[str]:
-        """Generate business health improvement recommendations"""
-        recommendations = []
+        """Generate business health improvement recommendations"""        recommendations = []
         
         for category, score in category_scores.items():
             if score < 50:
@@ -305,8 +291,7 @@ class BusinessIntelligenceEngine:
         return recommendations
     
     def _identify_risk_factors(self) -> List[Dict[str, Any]]:
-        """Identify potential business risk factors"""
-        risks = []
+        """Identify potential business risk factors"""        risks = []
         
         # Revenue concentration risk
         revenue_streams = self._get_latest_revenue_streams()
@@ -341,8 +326,7 @@ class BusinessIntelligenceEngine:
         return risks
     
     def _identify_growth_opportunities(self) -> List[Dict[str, Any]]:
-        """Identify business growth opportunities"""
-        opportunities = [
+        """Identify business growth opportunities"""        opportunities = [
             {
                 "opportunity": "AI Content Protection Market",
                 "potential": "High",
@@ -372,8 +356,7 @@ class BusinessIntelligenceEngine:
         return opportunities
     
     def _calculate_revenue_trend(self, revenue_data: List[RevenueMetrics]) -> Dict[str, float]:
-        """Calculate revenue trend analysis"""
-        if len(revenue_data) < 2:
+        """Calculate revenue trend analysis"""        if len(revenue_data) < 2:
             return {"growth_rate": 0, "trend": "stable"}
         
         sorted_data = sorted(revenue_data, key=lambda x: x.timestamp)
@@ -395,8 +378,7 @@ class BusinessIntelligenceEngine:
         return {"growth_rate": growth_rate, "trend": trend}
     
     def _analyze_revenue_streams(self, revenue_data: List[RevenueMetrics]) -> Dict[str, Any]:
-        """Analyze revenue stream performance"""
-        if not revenue_data:
+        """Analyze revenue stream performance"""        if not revenue_data:
             return {}
         
         # Aggregate revenue by stream
@@ -420,8 +402,7 @@ class BusinessIntelligenceEngine:
         return stream_analysis
     
     def _forecast_revenue(self, revenue_data: List[RevenueMetrics], months_ahead: int = 6) -> Dict[str, Any]:
-        """Forecast revenue using trend analysis"""
-        if len(revenue_data) < 3:
+        """Forecast revenue using trend analysis"""        if len(revenue_data) < 3:
             return {"forecast": [], "confidence": "low"}
         
         # Extract revenue values and timestamps
@@ -450,8 +431,7 @@ class BusinessIntelligenceEngine:
         }
     
     def _identify_seasonal_patterns(self, revenue_data: List[RevenueMetrics]) -> Dict[str, Any]:
-        """Identify seasonal patterns in revenue"""
-        if len(revenue_data) < 12:
+        """Identify seasonal patterns in revenue"""        if len(revenue_data) < 12:
             return {"patterns": "insufficient_data"}
         
         # Group by month
@@ -478,8 +458,7 @@ class BusinessIntelligenceEngine:
         }
     
     def _identify_revenue_optimization_opportunities(self, revenue_data: List[RevenueMetrics]) -> List[str]:
-        """Identify revenue optimization opportunities"""
-        opportunities = []
+        """Identify revenue optimization opportunities"""        opportunities = []
         
         if not revenue_data:
             return opportunities
@@ -513,8 +492,7 @@ class BusinessIntelligenceEngine:
         return opportunities
     
     def _calculate_metric_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for a metric"""
-        if len(values) < 2:
+        """Calculate trend direction for a metric"""        if len(values) < 2:
             return "stable"
         
         recent_avg = np.mean(values[-3:]) if len(values) >= 3 else values[-1]
@@ -528,8 +506,7 @@ class BusinessIntelligenceEngine:
             return "stable"
     
     def _analyze_feature_adoption(self, engagement_data: List[UserEngagementMetrics]) -> Dict[str, Any]:
-        """Analyze feature adoption patterns"""
-        if not engagement_data:
+        """Analyze feature adoption patterns"""        if not engagement_data:
             return {}
         
         # Get latest feature adoption data
@@ -547,8 +524,7 @@ class BusinessIntelligenceEngine:
         return adoption_analysis
     
     def _generate_user_behavior_insights(self, engagement_data: List[UserEngagementMetrics]) -> List[str]:
-        """Generate user behavior insights"""
-        if not engagement_data:
+        """Generate user behavior insights"""        if not engagement_data:
             return []
         
         latest_data = engagement_data[-1]
@@ -576,8 +552,7 @@ class BusinessIntelligenceEngine:
         return insights
     
     def _generate_engagement_optimization_recommendations(self, engagement_data: List[UserEngagementMetrics]) -> List[str]:
-        """Generate engagement optimization recommendations"""
-        recommendations = []
+        """Generate engagement optimization recommendations"""        recommendations = []
         
         if not engagement_data:
             return recommendations
@@ -611,8 +586,7 @@ class BusinessIntelligenceEngine:
         return recommendations
     
     def _extract_key_metrics(self) -> Dict[str, float]:
-        """Extract key business metrics summary"""
-        key_metrics = {}
+        """Extract key business metrics summary"""        key_metrics = {}
         
         # Get latest revenue data
         if self.revenue_history:
@@ -638,8 +612,7 @@ class BusinessIntelligenceEngine:
         return key_metrics
     
     def _analyze_growth_metrics(self) -> Dict[str, Any]:
-        """Analyze growth metrics and trends"""
-        growth_analysis = {
+        """Analyze growth metrics and trends"""        growth_analysis = {
             "user_growth_rate": self._calculate_user_growth_rate(),
             "revenue_growth_rate": self._calculate_revenue_growth_rate(),
             "market_expansion": self._analyze_market_expansion(),
@@ -649,8 +622,7 @@ class BusinessIntelligenceEngine:
         return growth_analysis
     
     def _calculate_user_growth_rate(self) -> float:
-        """Calculate user growth rate"""
-        if len(self.engagement_history) < 2:
+        """Calculate user growth rate"""        if len(self.engagement_history) < 2:
             return 0.0
         
         current_users = self.engagement_history[-1].active_users_monthly
@@ -662,8 +634,7 @@ class BusinessIntelligenceEngine:
         return (current_users - previous_users) / previous_users
     
     def _calculate_revenue_growth_rate(self) -> float:
-        """Calculate revenue growth rate"""
-        if len(self.revenue_history) < 2:
+        """Calculate revenue growth rate"""        if len(self.revenue_history) < 2:
             return 0.0
         
         current_revenue = self.revenue_history[-1].total_revenue
@@ -675,14 +646,12 @@ class BusinessIntelligenceEngine:
         return (current_revenue - previous_revenue) / previous_revenue
     
     def _get_latest_revenue_streams(self) -> Dict[RevenueStream, float]:
-        """Get latest revenue streams data"""
-        if not self.revenue_history:
+        """Get latest revenue streams data"""        if not self.revenue_history:
             return {}
         return self.revenue_history[-1].revenue_streams
     
     def _calculate_stream_growth(self, amounts: List[float]) -> str:
-        """Calculate growth trend for revenue stream"""
-        if len(amounts) < 2:
+        """Calculate growth trend for revenue stream"""        if len(amounts) < 2:
             return "stable"
         
         recent = np.mean(amounts[-2:])
@@ -696,8 +665,7 @@ class BusinessIntelligenceEngine:
             return "stable"
     
     def _generate_seasonal_recommendations(self, peak_months: List[int], low_months: List[int]) -> List[str]:
-        """Generate seasonal optimization recommendations"""
-        recommendations = []
+        """Generate seasonal optimization recommendations"""        recommendations = []
         
         if peak_months:
             peak_names = [datetime(2024, month, 1).strftime('%B') for month in peak_months]
@@ -710,8 +678,7 @@ class BusinessIntelligenceEngine:
         return recommendations
     
     def _analyze_competitive_position(self) -> Dict[str, Any]:
-        """Analyze competitive market position"""
-        return {
+        """Analyze competitive market position"""        return {
             "market_position": "emerging_leader",
             "competitive_advantages": [
                 "AI-powered content protection",
@@ -727,8 +694,7 @@ class BusinessIntelligenceEngine:
         }
     
     def _generate_strategic_recommendations(self) -> List[str]:
-        """Generate strategic business recommendations"""
-        return [
+        """Generate strategic business recommendations"""        return [
             "Accelerate AI content protection development to maintain competitive advantage",
             "Expand international markets with localized creator support",
             "Develop B2B partnerships with major content platforms",
@@ -738,8 +704,7 @@ class BusinessIntelligenceEngine:
         ]
     
     def _identify_key_achievements(self) -> List[str]:
-        """Identify key business achievements"""
-        achievements = []
+        """Identify key business achievements"""        achievements = []
         
         if self.revenue_history:
             latest_revenue = self.revenue_history[-1]
@@ -764,8 +729,7 @@ class BusinessIntelligenceEngine:
         return achievements
     
     def _identify_priority_actions(self) -> List[str]:
-        """Identify priority business actions"""
-        return [
+        """Identify priority business actions"""        return [
             "Optimize user acquisition cost and improve conversion funnel",
             "Expand content protection AI capabilities for competitive differentiation",
             "Implement enterprise analytics dashboard for creators",
@@ -774,8 +738,7 @@ class BusinessIntelligenceEngine:
         ]
     
     def _analyze_market_expansion(self) -> Dict[str, Any]:
-        """Analyze market expansion opportunities"""
-        return {
+        """Analyze market expansion opportunities"""        return {
             "target_markets": ["EU", "APAC", "Latin America"],
             "expansion_readiness": "medium",
             "localization_requirements": [
@@ -791,8 +754,7 @@ class BusinessIntelligenceEngine:
         }
     
     def _calculate_growth_efficiency(self) -> Dict[str, float]:
-        """Calculate growth efficiency metrics"""
-        return {
+        """Calculate growth efficiency metrics"""        return {
             "customer_acquisition_cost": 25.0,
             "payback_period_months": 8.5,
             "growth_rate_efficiency": 0.75,
@@ -800,8 +762,7 @@ class BusinessIntelligenceEngine:
         }
     
     def _assess_business_risks(self) -> Dict[str, Any]:
-        """Assess comprehensive business risks"""
-        return {
+        """Assess comprehensive business risks"""        return {
             "overall_risk_level": "medium",
             "key_risks": [
                 {
@@ -828,13 +789,11 @@ class BusinessIntelligenceEngine:
 
 
 class EnterpriseKPIManager:
-    """
-    Enterprise KPI Management and Monitoring System
+    """    Enterprise KPI Management and Monitoring System
     
     Provides comprehensive KPI tracking, alerting, and optimization
     for business performance monitoring and decision making.
-    """
-    
+    """    
     def __init__(self):
         self.kpi_definitions: Dict[str, Dict[str, Any]] = {}
         self.kpi_history: Dict[str, List[BusinessKPI]] = {}
@@ -845,8 +804,7 @@ class EnterpriseKPIManager:
         self._initialize_default_kpis()
     
     def _initialize_default_kpis(self):
-        """Initialize default KPI definitions"""
-        self.kpi_definitions = {
+        """Initialize default KPI definitions"""        self.kpi_definitions = {
             "monthly_recurring_revenue": {
                 "category": KPICategory.REVENUE,
                 "unit": "USD",
@@ -906,8 +864,7 @@ class EnterpriseKPIManager:
         }
     
     def track_kpi(self, kpi_name: str, current_value: float, target_value: float = None) -> Dict[str, Any]:
-        """Track and analyze a specific KPI"""
-        if kpi_name not in self.kpi_definitions:
+        """Track and analyze a specific KPI"""        if kpi_name not in self.kpi_definitions:
             return {"error": f"KPI '{kpi_name}' not defined"}
         
         kpi_def = self.kpi_definitions[kpi_name]
@@ -950,8 +907,7 @@ class EnterpriseKPIManager:
         }
     
     def generate_kpi_dashboard(self, timeframe_days: int = 30) -> Dict[str, Any]:
-        """Generate comprehensive KPI dashboard"""
-        dashboard_data = {
+        """Generate comprehensive KPI dashboard"""        dashboard_data = {
             "summary": self._generate_kpi_summary(),
             "performance_overview": self._generate_performance_overview(timeframe_days),
             "trend_analysis": self._generate_trend_analysis(timeframe_days),
@@ -964,8 +920,7 @@ class EnterpriseKPIManager:
         return dashboard_data
     
     def create_automated_report(self, report_config: Dict[str, Any]) -> str:
-        """Create automated KPI report"""
-        report_id = f"report_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """Create automated KPI report"""        report_id = f"report_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
         report = {
             "report_id": report_id,
@@ -980,8 +935,7 @@ class EnterpriseKPIManager:
         return report_id
     
     def _calculate_trend_direction(self, current: float, previous: float) -> str:
-        """Calculate trend direction between values"""
-        if previous == 0:
+        """Calculate trend direction between values"""        if previous == 0:
             return "stable" if current == 0 else "up"
         
         change_ratio = (current - previous) / previous
@@ -994,8 +948,7 @@ class EnterpriseKPIManager:
             return "stable"
     
     def _calculate_performance_status(self, current: float, target: float) -> str:
-        """Calculate performance status against target"""
-        if target == 0:
+        """Calculate performance status against target"""        if target == 0:
             return "on_track"
         
         performance_ratio = current / target
@@ -1010,8 +963,7 @@ class EnterpriseKPIManager:
             return "critical"
     
     def _analyze_kpi_performance(self, kpi_name: str, kpi_record: BusinessKPI) -> Dict[str, Any]:
-        """Analyze KPI performance and generate insights"""
-        kpi_history = self.kpi_history.get(kpi_name, [])
+        """Analyze KPI performance and generate insights"""        kpi_history = self.kpi_history.get(kpi_name, [])
         
         analysis = {
             "current_performance": kpi_record.performance_status,
@@ -1025,8 +977,7 @@ class EnterpriseKPIManager:
         return analysis
     
     def _check_kpi_alerts(self, kpi_name: str, kpi_record: BusinessKPI) -> List[Dict[str, Any]]:
-        """Check for KPI alerts and warnings"""
-        alerts = []
+        """Check for KPI alerts and warnings"""        alerts = []
         
         # Performance threshold alerts
         if kpi_record.performance_status == "critical":
@@ -1056,8 +1007,7 @@ class EnterpriseKPIManager:
         return alerts
     
     def _generate_kpi_recommendations(self, kpi_name: str, kpi_record: BusinessKPI) -> List[str]:
-        """Generate specific recommendations for KPI improvement"""
-        recommendations = []
+        """Generate specific recommendations for KPI improvement"""        recommendations = []
         
         # Category-specific recommendations
         if kpi_record.category == KPICategory.REVENUE:
@@ -1101,8 +1051,7 @@ class EnterpriseKPIManager:
         return recommendations
     
     def _generate_kpi_summary(self) -> Dict[str, Any]:
-        """Generate KPI summary overview"""
-        total_kpis = len(self.kpi_definitions)
+        """Generate KPI summary overview"""        total_kpis = len(self.kpi_definitions)
         tracked_kpis = len(self.kpi_history)
         
         # Calculate overall performance
@@ -1122,8 +1071,7 @@ class EnterpriseKPIManager:
         }
     
     def _generate_performance_overview(self, timeframe_days: int) -> Dict[str, Any]:
-        """Generate performance overview for timeframe"""
-        cutoff_date = datetime.now() - timedelta(days=timeframe_days)
+        """Generate performance overview for timeframe"""        cutoff_date = datetime.now() - timedelta(days=timeframe_days)
         
         performance_overview = {}
         
@@ -1143,8 +1091,7 @@ class EnterpriseKPIManager:
         return performance_overview
     
     def _generate_trend_analysis(self, timeframe_days: int) -> Dict[str, Any]:
-        """Generate trend analysis for all KPIs"""
-        cutoff_date = datetime.now() - timedelta(days=timeframe_days)
+        """Generate trend analysis for all KPIs"""        cutoff_date = datetime.now() - timedelta(days=timeframe_days)
         
         trend_analysis = {
             "improving_kpis": [],
@@ -1172,8 +1119,7 @@ class EnterpriseKPIManager:
         return trend_analysis
     
     def _analyze_category_performance(self) -> Dict[str, Dict[str, Any]]:
-        """Analyze performance by KPI category"""
-        category_performance = {}
+        """Analyze performance by KPI category"""        category_performance = {}
         
         for category in KPICategory:
             category_kpis = [name for name, definition in self.kpi_definitions.items() 
@@ -1205,8 +1151,7 @@ class EnterpriseKPIManager:
         return category_performance
     
     def _compile_all_alerts(self) -> List[Dict[str, Any]]:
-        """Compile all active alerts across KPIs"""
-        all_alerts = []
+        """Compile all active alerts across KPIs"""        all_alerts = []
         
         for kpi_name, history in self.kpi_history.items():
             if history:
@@ -1224,8 +1169,7 @@ class EnterpriseKPIManager:
         return all_alerts
     
     def _identify_improvement_opportunities(self) -> List[Dict[str, Any]]:
-        """Identify improvement opportunities across all KPIs"""
-        opportunities = []
+        """Identify improvement opportunities across all KPIs"""        opportunities = []
         
         # Find underperforming KPIs
         for kpi_name, history in self.kpi_history.items():
@@ -1249,8 +1193,7 @@ class EnterpriseKPIManager:
         return opportunities
     
     def _generate_predictive_insights(self) -> Dict[str, Any]:
-        """Generate predictive insights based on KPI trends"""
-        predictions = {}
+        """Generate predictive insights based on KPI trends"""        predictions = {}
         
         for kpi_name, history in self.kpi_history.items():
             if len(history) >= 3:
@@ -1273,8 +1216,7 @@ class EnterpriseKPIManager:
     # Helper methods for detailed analysis
     
     def _detailed_trend_analysis(self, kpi_history: List[BusinessKPI]) -> Dict[str, Any]:
-        """Perform detailed trend analysis on KPI history"""
-        if len(kpi_history) < 2:
+        """Perform detailed trend analysis on KPI history"""        if len(kpi_history) < 2:
             return {"trend": "insufficient_data"}
         
         values = [kpi.current_value for kpi in kpi_history]
@@ -1292,8 +1234,7 @@ class EnterpriseKPIManager:
         }
     
     def _compare_with_history(self, current_kpi: BusinessKPI, history: List[BusinessKPI]) -> Dict[str, Any]:
-        """Compare current KPI with historical performance"""
-        if len(history) < 2:
+        """Compare current KPI with historical performance"""        if len(history) < 2:
             return {"comparison": "insufficient_history"}
         
         historical_values = [kpi.current_value for kpi in history[:-1]]  # Exclude current
@@ -1308,8 +1249,7 @@ class EnterpriseKPIManager:
         }
     
     def _compare_with_benchmark(self, kpi_name: str, kpi_record: BusinessKPI) -> Dict[str, Any]:
-        """Compare KPI with industry benchmark"""
-        kpi_def = self.kpi_definitions.get(kpi_name, {})
+        """Compare KPI with industry benchmark"""        kpi_def = self.kpi_definitions.get(kpi_name, {})
         benchmark = kpi_def.get("benchmark", 0)
         
         if benchmark == 0:
@@ -1322,8 +1262,7 @@ class EnterpriseKPIManager:
         }
     
     def _analyze_kpi_volatility(self, history: List[BusinessKPI]) -> Dict[str, Any]:
-        """Analyze KPI volatility and stability"""
-        if len(history) < 3:
+        """Analyze KPI volatility and stability"""        if len(history) < 3:
             return {"volatility": "insufficient_data"}
         
         values = [kpi.current_value for kpi in history]
@@ -1341,8 +1280,7 @@ class EnterpriseKPIManager:
         }
     
     def _analyze_kpi_seasonality(self, history: List[BusinessKPI]) -> Dict[str, Any]:
-        """Analyze seasonal patterns in KPI"""
-        if len(history) < 12:
+        """Analyze seasonal patterns in KPI"""        if len(history) < 12:
             return {"seasonality": "insufficient_data"}
         
         # Group by month
@@ -1372,8 +1310,7 @@ class EnterpriseKPIManager:
         }
     
     def _calculate_overall_kpi_health(self) -> float:
-        """Calculate overall KPI health score"""
-        if not self.kpi_history:
+        """Calculate overall KPI health score"""        if not self.kpi_history:
             return 0.0
         
         status_scores = {"exceeding": 100, "on_track": 80, "below_target": 60, "critical": 20}
@@ -1389,8 +1326,7 @@ class EnterpriseKPIManager:
         return total_score / total_kpis if total_kpis > 0 else 0.0
     
     def _calculate_period_change(self, kpi_history: List[BusinessKPI]) -> float:
-        """Calculate change over period"""
-        if len(kpi_history) < 2:
+        """Calculate change over period"""        if len(kpi_history) < 2:
             return 0.0
         
         start_value = kpi_history[0].current_value
@@ -1402,8 +1338,7 @@ class EnterpriseKPIManager:
         return (end_value - start_value) / start_value
     
     def _calculate_period_volatility(self, kpi_history: List[BusinessKPI]) -> float:
-        """Calculate volatility over period"""
-        if len(kpi_history) < 2:
+        """Calculate volatility over period"""        if len(kpi_history) < 2:
             return 0.0
         
         values = [kpi.current_value for kpi in kpi_history]
@@ -1415,8 +1350,7 @@ class EnterpriseKPIManager:
         return np.std(values) / mean_value
     
     def _analyze_detailed_trend(self, kpi_history: List[BusinessKPI]) -> str:
-        """Analyze detailed trend direction"""
-        if len(kpi_history) < 3:
+        """Analyze detailed trend direction"""        if len(kpi_history) < 3:
             return "stable"
         
         values = [kpi.current_value for kpi in kpi_history]
@@ -1437,8 +1371,7 @@ class EnterpriseKPIManager:
             return "stable"
     
     def _calculate_max_drawdown(self, values: List[float]) -> float:
-        """Calculate maximum drawdown"""
-        if not values:
+        """Calculate maximum drawdown"""        if not values:
             return 0.0
         
         peak = values[0]
@@ -1454,8 +1387,7 @@ class EnterpriseKPIManager:
         return max_drawdown
     
     def _estimate_improvement_impact(self, kpi_name: str, improvement_potential: float) -> str:
-        """Estimate impact of KPI improvement"""
-        kpi_def = self.kpi_definitions.get(kpi_name, {})
+        """Estimate impact of KPI improvement"""        kpi_def = self.kpi_definitions.get(kpi_name, {})
         category = kpi_def.get("category")
         
         # High impact categories
@@ -1486,8 +1418,7 @@ class EnterpriseKPIManager:
                 return "low"
     
     def _assess_kpi_risk(self, kpi_name: str, predicted_value: float, target_value: float) -> str:
-        """Assess risk level for predicted KPI performance"""
-        if target_value == 0:
+        """Assess risk level for predicted KPI performance"""        if target_value == 0:
             return "unknown"
         
         performance_ratio = predicted_value / target_value
@@ -1500,8 +1431,7 @@ class EnterpriseKPIManager:
             return "low"
     
     def _compile_report_data(self, report_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Compile data for automated report"""
-        timeframe = report_config.get("timeframe_days", 30)
+        """Compile data for automated report"""        timeframe = report_config.get("timeframe_days", 30)
         included_kpis = report_config.get("kpis", list(self.kpi_history.keys()))
         
         report_data = {}
@@ -1523,8 +1453,7 @@ class EnterpriseKPIManager:
         return report_data
     
     def _generate_automated_insights(self, report_config: Dict[str, Any]) -> List[str]:
-        """Generate automated insights for report"""
-        insights = []
+        """Generate automated insights for report"""        insights = []
         
         report_data = self._compile_report_data(report_config)
         
@@ -1551,8 +1480,7 @@ class EnterpriseKPIManager:
         return insights
     
     def _generate_automated_recommendations(self, report_config: Dict[str, Any]) -> List[str]:
-        """Generate automated recommendations for report"""
-        recommendations = []
+        """Generate automated recommendations for report"""        recommendations = []
         
         report_data = self._compile_report_data(report_config)
         

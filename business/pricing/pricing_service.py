@@ -1,5 +1,4 @@
-"""
-🚀 Pricing Service - Industrial-Grade Pricing Management API
+"""🚀 Pricing Service - Industrial-Grade Pricing Management API
 ==========================================================
 
 High-level pricing service orchestrating all pricing operations.
@@ -37,7 +36,6 @@ API Request → Authentication → Input Validation → Pricing Calculation →
 ML Optimization → Market Analysis → Result Caching → Response Generation
 ==========================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -71,8 +69,7 @@ logger = logging.getLogger(__name__)
 
 
 class PricingRequest(BaseModel):
-    """Request model for pricing calculations"""
-    content_id: str = Field(..., description="Content identifier")
+    """Request model for pricing calculations"""    content_id: str = Field(..., description="Content identifier")
     content_type: ContentType = Field(..., description="Type of content")
     platform: str = Field(..., description="Target platform")
     base_price: Decimal = Field(..., gt=0, description="Base price")
@@ -92,8 +89,7 @@ class PricingRequest(BaseModel):
 
 
 class PricingResponse(BaseModel):
-    """Response model for pricing calculations"""
-    content_id: str
+    """Response model for pricing calculations"""    content_id: str
     calculation_id: str
     base_price: Decimal
     optimized_price: Decimal
@@ -107,16 +103,14 @@ class PricingResponse(BaseModel):
 
 
 class TierRecommendationRequest(BaseModel):
-    """Request model for tier recommendations"""
-    usage_pattern: Dict[str, Any] = Field(..., description="Historical usage data")
+    """Request model for tier recommendations"""    usage_pattern: Dict[str, Any] = Field(..., description="Historical usage data")
     content_types: List[ContentType] = Field(..., description="Content types produced")
     target_revenue: Optional[Decimal] = Field(None, description="Revenue goal")
     current_challenges: List[str] = Field(default_factory=list, description="Current limitations")
 
 
 class TierRecommendationResponse(BaseModel):
-    """Response model for tier recommendations"""
-    recommended_tier: str
+    """Response model for tier recommendations"""    recommended_tier: str
     current_tier: str
     upgrade_benefits: List[str]
     cost_analysis: Dict[str, Any]
@@ -125,15 +119,13 @@ class TierRecommendationResponse(BaseModel):
 
 
 class BulkPricingRequest(BaseModel):
-    """Request model for bulk pricing calculations"""
-    pricing_requests: List[PricingRequest] = Field(..., max_items=100)
+    """Request model for bulk pricing calculations"""    pricing_requests: List[PricingRequest] = Field(..., max_items=100)
     priority: str = Field(default="normal", description="Processing priority")
     callback_url: Optional[str] = Field(None, description="Callback URL for results")
 
 
 class PricingService:
-    """
-    Industrial-grade pricing service for content creators
+    """    Industrial-grade pricing service for content creators
     
     Features:
     - Real-time pricing optimization
@@ -142,8 +134,7 @@ class PricingService:
     - Tier management
     - Usage analytics
     - Market intelligence integration
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -166,8 +157,7 @@ class PricingService:
         creator_id: str,
         request: PricingRequest
     ) -> PricingResponse:
-        """
-        Calculate optimal pricing for content
+        """        Calculate optimal pricing for content
         
         Args:
             creator_id: Creator identifier
@@ -175,8 +165,7 @@ class PricingService:
             
         Returns:
             PricingResponse with optimization results
-        """
-        try:
+        """        try:
             # Validate creator permissions
             await self._validate_creator_access(creator_id, request.content_id)
             
@@ -258,8 +247,7 @@ class PricingService:
         creator_id: str,
         request: TierRecommendationRequest
     ) -> TierRecommendationResponse:
-        """
-        Recommend optimal tier for creator
+        """        Recommend optimal tier for creator
         
         Args:
             creator_id: Creator identifier
@@ -267,8 +255,7 @@ class PricingService:
             
         Returns:
             TierRecommendationResponse with recommendation
-        """
-        try:
+        """        try:
             # Get current tier
             current_tier_config = await self._get_current_tier(creator_id)
             
@@ -335,8 +322,7 @@ class PricingService:
         creator_id: str,
         request: BulkPricingRequest
     ) -> Dict[str, Any]:
-        """
-        Calculate pricing for multiple items in bulk
+        """        Calculate pricing for multiple items in bulk
         
         Args:
             creator_id: Creator identifier
@@ -344,8 +330,7 @@ class PricingService:
             
         Returns:
             Bulk pricing results
-        """
-        try:
+        """        try:
             # Validate bulk request size
             if len(request.pricing_requests) > 100:
                 raise ValidationError("Maximum 100 items per bulk request")
@@ -414,8 +399,7 @@ class PricingService:
         content_id: Optional[str] = None,
         days: int = 30
     ) -> Dict[str, Any]:
-        """Get pricing calculation history"""
-        
+        """Get pricing calculation history"""        
         try:
             async with self.db_manager.get_session() as session:
                 query = session.query(PricingCalculation).filter(
@@ -465,8 +449,7 @@ class PricingService:
         creator_id: str,
         metric: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get usage analytics for tier management"""
-        
+        """Get usage analytics for tier management"""        
         try:
             async with self.db_manager.get_session() as session:
                 # Get current subscription
@@ -533,14 +516,12 @@ class PricingService:
     
     # Private helper methods
     async def _validate_creator_access(self, creator_id: str, content_id: str):
-        """Validate creator has access to content"""
-        # This would typically check content ownership
+        """Validate creator has access to content"""        # This would typically check content ownership
         # Mock implementation for now
         pass
     
     async def _validate_pricing_request(self, request: PricingRequest):
-        """Validate pricing request parameters"""
-        
+        """Validate pricing request parameters"""        
         # Validate content exists and is accessible
         if not await self.content_validator.validate_content_exists(request.content_id):
             raise ValidationError(f"Content {request.content_id} not found")
@@ -560,8 +541,7 @@ class PricingService:
         pricing_model: PricingModel,
         metrics: PricingMetrics
     ) -> uuid.UUID:
-        """Store pricing calculation in database"""
-        
+        """Store pricing calculation in database"""        
         try:
             async with self.db_manager.get_session() as session:
                 calculation = PricingCalculation(
@@ -614,8 +594,7 @@ class PricingService:
         pricing_model: PricingModel,
         metrics: PricingMetrics
     ) -> List[str]:
-        """Generate pricing recommendations based on metrics"""
-        
+        """Generate pricing recommendations based on metrics"""        
         recommendations = []
         
         # Confidence-based recommendations
@@ -645,8 +624,7 @@ class PricingService:
         return recommendations
     
     async def _get_current_tier(self, creator_id: str) -> TierConfiguration:
-        """Get creator's current tier configuration"""
-        
+        """Get creator's current tier configuration"""        
         # Mock implementation - replace with actual database query
         current_tier = await self.tier_manager._get_creator_tier(creator_id)
         return self.tier_manager.tier_configs[current_tier]
@@ -658,8 +636,7 @@ class PricingService:
         recommended_tier: TierConfiguration,
         target_revenue: Optional[Decimal]
     ) -> Dict[str, Any]:
-        """Calculate ROI projection for tier upgrade"""
-        
+        """Calculate ROI projection for tier upgrade"""        
         if recommended_tier.tier_name == current_tier.tier_name:
             return {'message': 'No tier change recommended'}
         
@@ -688,8 +665,7 @@ class PricingService:
         current_tier: TierConfiguration,
         recommended_tier: TierConfiguration
     ) -> List[str]:
-        """Generate list of upgrade benefits"""
-        
+        """Generate list of upgrade benefits"""        
         benefits = []
         
         # New features
@@ -720,8 +696,7 @@ class PricingService:
         usage_pattern: Dict[str, Any],
         cost_analysis: Dict[str, Any]
     ):
-        """Store tier recommendation in database"""
-        
+        """Store tier recommendation in database"""        
         try:
             async with self.db_manager.get_session() as session:
                 recommendation = TierUpgrade(
@@ -746,8 +721,7 @@ class PricingService:
         content_id: str,
         metrics: PricingMetrics
     ) -> uuid.UUID:
-        """Store bulk pricing result"""
-        
+        """Store bulk pricing result"""        
         # Simplified version of _store_pricing_calculation for bulk operations
         return uuid.uuid4()  # Mock implementation
     
@@ -759,8 +733,7 @@ class PricingService:
         action: str,
         data: Dict[str, Any]
     ):
-        """Log pricing audit trail"""
-        
+        """Log pricing audit trail"""        
         try:
             async with self.db_manager.get_session() as session:
                 audit_log = PricingAuditLog(
@@ -779,8 +752,7 @@ class PricingService:
             logger.warning(f"Audit logging failed: {e}")
     
     def _extract_pricing_factors(self, metrics: PricingMetrics) -> Dict[str, Any]:
-        """Extract pricing factors for response"""
-        
+        """Extract pricing factors for response"""        
         return {
             'market_demand_score': metrics.market_demand_score,
             'competition_density': metrics.competition_density,

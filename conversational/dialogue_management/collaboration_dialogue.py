@@ -1,5 +1,4 @@
-"""
-Enterprise Collaboration Dialogue Manager - Advanced Creator Partnership System
+"""Enterprise Collaboration Dialogue Manager - Advanced Creator Partnership System
 
 Sophisticated collaboration dialogue management system with comprehensive creator partnership
 facilitation, intelligent matching algorithms, project coordination, and collaborative
@@ -66,7 +65,6 @@ For licensing inquiries or authorized usage: mlaiel@live.de
 Creator verification and partnership compliance required before access.
 All collaboration activities and partnerships are monitored for compliance and security.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -89,8 +87,7 @@ from .content_creator_flows import CreatorProfile, Platform, ContentFormat
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of creator collaborations"""
-    MUSIC_FEATURE = "music_feature"
+    """Types of creator collaborations"""    MUSIC_FEATURE = "music_feature"
     VIDEO_COLLABORATION = "video_collaboration"
     PODCAST_GUEST = "podcast_guest"
     CONTENT_SERIES = "content_series"
@@ -102,8 +99,7 @@ class CollaborationType(Enum):
     COMPILATION_PROJECT = "compilation_project"
 
 class CollaborationStyle(Enum):
-    """Collaboration styles and preferences"""
-    CREATIVE_PARTNER = "creative_partner"
+    """Collaboration styles and preferences"""    CREATIVE_PARTNER = "creative_partner"
     TECHNICAL_CONTRIBUTOR = "technical_contributor"
     PROMOTIONAL_PARTNER = "promotional_partner"
     GUEST_CONTRIBUTOR = "guest_contributor"
@@ -112,8 +108,7 @@ class CollaborationStyle(Enum):
     NETWORK_BUILDER = "network_builder"
 
 class CollaborationStage(Enum):
-    """Stages of collaboration process"""
-    DISCOVERY = "discovery"
+    """Stages of collaboration process"""    DISCOVERY = "discovery"
     MATCHING = "matching"
     INITIAL_CONTACT = "initial_contact"
     NEGOTIATION = "negotiation"
@@ -124,16 +119,14 @@ class CollaborationStage(Enum):
     EVALUATION = "evaluation"
 
 class CollaborationPriority(Enum):
-    """Priority levels for collaborations"""
-    EXPLORATORY = "exploratory"
+    """Priority levels for collaborations"""    EXPLORATORY = "exploratory"
     INTERESTED = "interested"
     COMMITTED = "committed"
     URGENT = "urgent"
 
 @dataclass
 class CollaborationPreferences:
-    """Creator collaboration preferences"""
-    preferred_types: List[CollaborationType] = field(default_factory=list)
+    """Creator collaboration preferences"""    preferred_types: List[CollaborationType] = field(default_factory=list)
     collaboration_styles: List[CollaborationStyle] = field(default_factory=list)
     content_formats: List[ContentFormat] = field(default_factory=list)
     platforms: List[Platform] = field(default_factory=list)
@@ -156,8 +149,7 @@ class CollaborationPreferences:
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity definition"""
-    opportunity_id: str
+    """Collaboration opportunity definition"""    opportunity_id: str
     requesting_creator_id: str
     collaboration_type: CollaborationType
     title: str
@@ -179,8 +171,7 @@ class CollaborationOpportunity:
     compatibility_requirements: Dict[str, Any] = field(default_factory=dict)
 
 class CollaborationDialogueHandler:
-    """Specialized dialogue handler for collaboration conversations"""
-    
+    """Specialized dialogue handler for collaboration conversations"""    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -201,8 +192,7 @@ class CollaborationDialogueHandler:
         self.collaboration_flows = self._initialize_collaboration_flows()
         
     def _initialize_collaboration_flows(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize collaboration conversation flows"""
-        return {
+        """Initialize collaboration conversation flows"""        return {
             "collaboration_discovery_flow": {
                 "name": "Collaboration Discovery & Matching",
                 "description": "Discover collaboration opportunities and find compatible creators",
@@ -450,8 +440,7 @@ class CollaborationDialogueHandler:
         user_message: str,
         flow_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Handle collaboration-focused conversation"""
-        try:
+        """Handle collaboration-focused conversation"""        try:
             # Determine conversation flow if not specified
             if not flow_id:
                 flow_id = await self._determine_collaboration_flow(
@@ -506,8 +495,7 @@ class CollaborationDialogueHandler:
         creator_profile: CreatorProfile,
         context: Dict[str, Any]
     ) -> str:
-        """Determine appropriate collaboration flow based on message and context"""
-        # AI analysis of user intent
+        """Determine appropriate collaboration flow based on message and context"""        # AI analysis of user intent
         intent_analysis = await self.ai_service.analyze_collaboration_intent(
             user_message, creator_profile, context
         )
@@ -533,8 +521,7 @@ class CollaborationDialogueHandler:
         conversation_state: Dict[str, Any],
         flow_id: str
     ) -> Dict[str, Any]:
-        """Process user message within collaboration flow context"""
-        flow_definition = self.collaboration_flows[flow_id]
+        """Process user message within collaboration flow context"""        flow_definition = self.collaboration_flows[flow_id]
         current_step_index = conversation_state.get("current_step", 0)
         
         if current_step_index >= len(flow_definition["conversation_steps"]):
@@ -580,8 +567,7 @@ class CollaborationDialogueHandler:
         step_definition: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Extract collaboration-relevant data from user message"""
-        # Use AI to extract structured data
+        """Extract collaboration-relevant data from user message"""        # Use AI to extract structured data
         extraction_result = await self.ai_service.extract_collaboration_data(
             user_message,
             step_definition.get("data_collection", []),
@@ -596,8 +582,7 @@ class CollaborationDialogueHandler:
         conversation_state: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Generate response for current conversation step"""
-        step_type = step_definition.get("step")
+        """Generate response for current conversation step"""        step_type = step_definition.get("step")
         collected_data = conversation_state.get("collected_data", {})
         
         # Generate AI-powered personalized response
@@ -630,8 +615,7 @@ class CollaborationDialogueHandler:
         collected_data: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
-        """Generate collaboration matches based on collected preferences"""
-        # Use AI matching service to find compatible creators
+        """Generate collaboration matches based on collected preferences"""        # Use AI matching service to find compatible creators
         matches = await self.matching_service.find_collaboration_matches(
             creator_profile,
             collected_data
@@ -652,8 +636,7 @@ class CollaborationDialogueHandler:
         collected_data: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
-        """Enhance collaboration opportunities with AI optimization"""
-        opportunities = []
+        """Enhance collaboration opportunities with AI optimization"""        opportunities = []
         
         # Generate optimized opportunity postings
         opportunity_suggestions = await self.ai_service.generate_opportunity_suggestions(
@@ -674,8 +657,7 @@ class CollaborationDialogueHandler:
         collected_data: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Perform AI analysis for collaboration insights"""
-        analysis_results = {}
+        """Perform AI analysis for collaboration insights"""        analysis_results = {}
         
         for analysis_type in analysis_types:
             if analysis_type == "creator_compatibility":
@@ -698,8 +680,7 @@ class CollaborationDialogueHandler:
         creator_profile: CreatorProfile,
         conversation_state: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate final comprehensive collaboration recommendations"""
-        collected_data = conversation_state.get("collected_data", {})
+        """Generate final comprehensive collaboration recommendations"""        collected_data = conversation_state.get("collected_data", {})
         
         # Generate comprehensive collaboration strategy
         strategy = await self.ai_service.generate_collaboration_strategy(
@@ -721,8 +702,7 @@ class CollaborationDialogueHandler:
         response: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Update conversation state after processing"""
-        # Advance to next step if not final response
+        """Update conversation state after processing"""        # Advance to next step if not final response
         if response.get("type") != "final_recommendations":
             current_state["current_step"] = current_state.get("current_step", 0) + 1
         
@@ -741,8 +721,7 @@ class CollaborationDialogueHandler:
         creator2_id: str,
         collaboration_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Facilitate introduction between creators"""
-        # Create introduction message
+        """Facilitate introduction between creators"""        # Create introduction message
         introduction = await self.ai_service.generate_creator_introduction(
             creator1_id, creator2_id, collaboration_context
         )
@@ -767,8 +746,7 @@ class CollaborationDialogueHandler:
         self,
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Get comprehensive collaboration insights for creator"""
-        # Analyze collaboration history
+        """Get comprehensive collaboration insights for creator"""        # Analyze collaboration history
         collaboration_history = await self.project_service.get_collaboration_history(
             creator_profile.creator_id
         )
@@ -794,5 +772,4 @@ class CollaborationDialogueHandler:
         self,
         creator_profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
-        """Get collaboration improvement recommendations"""
-        return await self.ai_service.generate_collaboration_improvements(creator_profile)
+        """Get collaboration improvement recommendations"""        return await self.ai_service.generate_collaboration_improvements(creator_profile)

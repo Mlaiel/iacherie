@@ -1,5 +1,4 @@
-"""
-Content Creator Business Flows - Specialized Dialogue Flows for Creators
+"""Content Creator Business Flows - Specialized Dialogue Flows for Creators
 
 Enterprise dialogue flows specifically designed for content creators across different 
 platforms (Spotify, YouTube, Instagram, TikTok) with integrated protection, 
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -39,8 +37,7 @@ from .state_manager import StateManager
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types of content creators"""
-    MUSICIAN = "musician"
+    """Types of content creators"""    MUSICIAN = "musician"
     PODCASTER = "podcaster"
     VIDEO_CREATOR = "video_creator"
     PHOTOGRAPHER = "photographer"
@@ -52,8 +49,7 @@ class CreatorType(Enum):
     LIFESTYLE = "lifestyle"
 
 class ContentFormat(Enum):
-    """Content formats supported"""
-    AUDIO = "audio"
+    """Content formats supported"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -63,8 +59,7 @@ class ContentFormat(Enum):
     LONG_FORM = "long_form"
 
 class Platform(Enum):
-    """Supported platforms"""
-    SPOTIFY = "spotify"
+    """Supported platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -74,8 +69,7 @@ class Platform(Enum):
     TWITCH = "twitch"
 
 class BusinessObjective(Enum):
-    """Business objectives for creators"""
-    CONTENT_PROTECTION = "content_protection"
+    """Business objectives for creators"""    CONTENT_PROTECTION = "content_protection"
     REVENUE_MAXIMIZATION = "revenue_maximization"
     AUDIENCE_GROWTH = "audience_growth"
     COLLABORATION_EXPANSION = "collaboration_expansion"
@@ -86,8 +80,7 @@ class BusinessObjective(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""
-    creator_id: str
+    """Comprehensive creator profile"""    creator_id: str
     creator_type: CreatorType
     primary_platforms: List[Platform]
     content_formats: List[ContentFormat]
@@ -105,8 +98,7 @@ class CreatorProfile:
     protection_preferences: Dict[str, Any] = field(default_factory=dict)
 
 class ContentCreatorFlowManager:
-    """Specialized flow manager for content creators"""
-    
+    """Specialized flow manager for content creators"""    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -131,8 +123,7 @@ class ContentCreatorFlowManager:
         self.creator_flows = self._initialize_creator_flows()
         
     def _initialize_creator_flows(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize predefined creator workflow flows"""
-        return {
+        """Initialize predefined creator workflow flows"""        return {
             "content_upload_protection_flow": {
                 "flow_id": "content_upload_protection",
                 "name": "Content Upload with AI Protection",
@@ -369,8 +360,7 @@ class ContentCreatorFlowManager:
         context: Dict[str, Any],
         **kwargs
     ) -> Dict[str, Any]:
-        """Execute a specific creator workflow flow"""
-        try:
+        """Execute a specific creator workflow flow"""        try:
             if flow_id not in self.creator_flows:
                 raise ValueError(f"Unknown creator flow: {flow_id}")
             
@@ -451,8 +441,7 @@ class ContentCreatorFlowManager:
         flow_definition: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> bool:
-        """Validate if creator is eligible for the flow"""
-        target_creators = flow_definition.get("target_creators", [])
+        """Validate if creator is eligible for the flow"""        target_creators = flow_definition.get("target_creators", [])
         
         if target_creators == "all":
             return True
@@ -469,8 +458,7 @@ class ContentCreatorFlowManager:
         context: Dict[str, Any],
         **kwargs
     ) -> Dict[str, Any]:
-        """Execute a single flow step"""
-        step_type = step["type"]
+        """Execute a single flow step"""        step_type = step["type"]
         step_handlers = {
             "file_upload": self._handle_file_upload_step,
             "ai_analysis": self._handle_ai_analysis_step,
@@ -515,8 +503,7 @@ class ContentCreatorFlowManager:
         context: Dict[str, Any],
         **kwargs
     ) -> Dict[str, Any]:
-        """Handle file upload step"""
-        # Implementation for file upload handling
+        """Handle file upload step"""        # Implementation for file upload handling
         return {
             "success": True,
             "uploaded_files": [],
@@ -533,8 +520,7 @@ class ContentCreatorFlowManager:
         context: Dict[str, Any],
         **kwargs
     ) -> Dict[str, Any]:
-        """Handle AI analysis step"""
-        # Implementation for AI content analysis
+        """Handle AI analysis step"""        # Implementation for AI content analysis
         return {
             "success": True,
             "analysis_results": {},
@@ -552,8 +538,7 @@ class ContentCreatorFlowManager:
         context: Dict[str, Any],
         **kwargs
     ) -> Dict[str, Any]:
-        """Handle protection configuration step"""
-        # Implementation for protection setup
+        """Handle protection configuration step"""        # Implementation for protection setup
         return {
             "success": True,
             "protection_configured": True,
@@ -573,8 +558,7 @@ class ContentCreatorFlowManager:
         flow_execution: Dict[str, Any],
         flow_definition: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate business impact of flow execution"""
-        return {
+        """Calculate business impact of flow execution"""        return {
             "estimated_revenue_impact": flow_definition.get("business_value", 0) * 100,
             "time_saved_hours": flow_definition.get("estimated_duration", 0) / 60,
             "automation_efficiency": 0.85,
@@ -582,16 +566,14 @@ class ContentCreatorFlowManager:
         }
 
     async def _store_flow_execution(self, flow_execution: Dict[str, Any]) -> None:
-        """Store flow execution results"""
-        # Implementation for storing execution results in database
+        """Store flow execution results"""        # Implementation for storing execution results in database
         pass
 
     def _suggest_alternative_flows(
         self,
         creator_profile: CreatorProfile
     ) -> List[str]:
-        """Suggest alternative flows for creator"""
-        suggestions = []
+        """Suggest alternative flows for creator"""        suggestions = []
         for flow_id, flow_def in self.creator_flows.items():
             if self._validate_creator_eligibility(flow_def, creator_profile):
                 suggestions.append(flow_id)
@@ -602,8 +584,7 @@ class ContentCreatorFlowManager:
         creator_profile: CreatorProfile,
         business_priorities: List[BusinessObjective]
     ) -> List[Dict[str, Any]]:
-        """Get recommended flows based on creator profile and priorities"""
-        recommendations = []
+        """Get recommended flows based on creator profile and priorities"""        recommendations = []
         
         for flow_id, flow_def in self.creator_flows.items():
             if self._validate_creator_eligibility(flow_def, creator_profile):
@@ -630,8 +611,7 @@ class ContentCreatorFlowManager:
         creator_profile: CreatorProfile,
         business_priorities: List[BusinessObjective]
     ) -> float:
-        """Calculate relevance score for a flow"""
-        base_score = flow_def.get("business_value", 0) / 10.0
+        """Calculate relevance score for a flow"""        base_score = flow_def.get("business_value", 0) / 10.0
         
         # Adjust based on creator type match
         target_creators = flow_def.get("target_creators", [])
@@ -646,8 +626,7 @@ class ContentCreatorFlowManager:
         return min(base_score, 1.0)
 
     def _extract_flow_objectives(self, flow_def: Dict[str, Any]) -> List[BusinessObjective]:
-        """Extract business objectives from flow definition"""
-        # This would analyze the flow to determine its primary business objectives
+        """Extract business objectives from flow definition"""        # This would analyze the flow to determine its primary business objectives
         flow_id = flow_def["flow_id"]
         
         objectives_map = {
@@ -661,8 +640,7 @@ class ContentCreatorFlowManager:
         return objectives_map.get(flow_id, [])
 
     def _get_priority_from_score(self, score: float) -> str:
-        """Convert relevance score to priority level"""
-        if score >= 0.9:
+        """Convert relevance score to priority level"""        if score >= 0.9:
             return "critical"
         elif score >= 0.8:
             return "high"

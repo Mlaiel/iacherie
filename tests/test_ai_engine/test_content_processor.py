@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,13 +12,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test suite for Content Processor module.
+"""Test suite for Content Processor module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
@@ -31,10 +27,8 @@ import json
 
 class TestContentProcessor(unittest.TestCase):
     """Test suite for ContentProcessor class"""
-
     def setUp(self):
-        """Set up test fixtures"""
-        self.processor = None  # Will be mocked
+        """Set up test fixtures"""        self.processor = None  # Will be mocked
         self.sample_content = {
             "content_id": "content_123",
             "type": "audio",
@@ -48,8 +42,7 @@ class TestContentProcessor(unittest.TestCase):
         }
 
     def test_content_metadata_extraction(self):
-        """Test content metadata extraction"""
-        audio_file = {
+        """Test content metadata extraction"""        audio_file = {
             "path": "/uploads/test.mp3",
             "size": 5242880,  # 5MB
             "format": "mp3"
@@ -82,8 +75,7 @@ class TestContentProcessor(unittest.TestCase):
         self.assertIsInstance(extracted_metadata["channels"], int)
 
     def test_audio_fingerprint_generation(self):
-        """Test audio fingerprint generation"""
-        audio_content = {
+        """Test audio fingerprint generation"""        audio_content = {
             "file_path": "/uploads/audio.mp3",
             "duration": 180,
             "sample_rate": 44100
@@ -117,8 +109,7 @@ class TestContentProcessor(unittest.TestCase):
         self.assertIn("_", fingerprint["key"])  # Key format like "C_major"
 
     def test_content_similarity_calculation(self):
-        """Test content similarity calculation"""
-        fingerprint1 = {
+        """Test content similarity calculation"""        fingerprint1 = {
             "spectral_hash": "a1b2c3d4e5f6",
             "chromagram_features": [0.1, 0.2, 0.15, 0.3, 0.25, 0.18, 0.22, 0.12, 0.28, 0.19, 0.16, 0.24],
             "tempo": 120.5,
@@ -174,8 +165,7 @@ class TestContentProcessor(unittest.TestCase):
         self.assertGreater(overall_similarity, 0.8)   # Overall high similarity
 
     def test_content_quality_assessment(self):
-        """Test content quality assessment"""
-        audio_features = {
+        """Test content quality assessment"""        audio_features = {
             "bitrate": 320,
             "sample_rate": 44100,
             "dynamic_range": 12.5,  # dB
@@ -245,8 +235,7 @@ class TestContentProcessor(unittest.TestCase):
         self.assertAlmostEqual(overall_quality, 0.85, places=2)
 
     def test_content_genre_classification(self):
-        """Test content genre classification"""
-        audio_features = {
+        """Test content genre classification"""        audio_features = {
             "tempo": 128,
             "key": "F_minor",
             "energy": 0.8,
@@ -321,8 +310,7 @@ class TestContentProcessor(unittest.TestCase):
         self.assertEqual(predicted_genre[0], "electronic")   # Should classify as electronic
 
     def test_content_enhancement_pipeline(self):
-        """Test content enhancement pipeline"""
-        input_audio = {
+        """Test content enhancement pipeline"""        input_audio = {
             "file_path": "/uploads/raw_audio.wav",
             "current_quality": {
                 "bitrate": 192,
@@ -397,8 +385,7 @@ class TestContentProcessor(unittest.TestCase):
         self.assertEqual(enhancement_steps[0]["step"], "noise_reduction")
 
     def test_batch_content_processing(self):
-        """Test batch content processing capabilities"""
-        content_batch = [
+        """Test batch content processing capabilities"""        content_batch = [
             {"id": "content_1", "type": "audio", "path": "/uploads/song1.mp3", "priority": "high"},
             {"id": "content_2", "type": "audio", "path": "/uploads/song2.mp3", "priority": "medium"},
             {"id": "content_3", "type": "video", "path": "/uploads/video1.mp4", "priority": "low"},

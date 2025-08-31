@@ -1,5 +1,4 @@
-"""
-Advanced Crawling Agent - Industrial Web Surveillance & Content Discovery System
+"""Advanced Crawling Agent - Industrial Web Surveillance & Content Discovery System
 
 Enterprise-grade web crawling engine with multi-platform monitoring, content detection,
 and real-time surveillance capabilities for content protection and collaboration matching.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import time
@@ -82,8 +80,7 @@ from ...utils.user_agent_rotator import UserAgentRotator
 logger = logging.getLogger(__name__)
 
 class CrawlingStrategy(Enum):
-    """Web crawling execution strategies"""
-    BREADTH_FIRST = "breadth_first"
+    """Web crawling execution strategies"""    BREADTH_FIRST = "breadth_first"
     DEPTH_FIRST = "depth_first"
     FOCUSED = "focused"
     ADAPTIVE = "adaptive"
@@ -91,8 +88,7 @@ class CrawlingStrategy(Enum):
     AGGRESSIVE = "aggressive"
 
 class ContentType(Enum):
-    """Monitored content types for crawling"""
-    TEXT = "text"
+    """Monitored content types for crawling"""    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -102,8 +98,7 @@ class ContentType(Enum):
     NEWS = "news"
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    SOCIAL_MEDIA = "social_media"
+    """Supported platform types"""    SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     BLOG = "blog"
@@ -114,8 +109,7 @@ class PlatformType(Enum):
 
 @dataclass
 class CrawlingConfig:
-    """Advanced crawling configuration"""
-    max_depth: int = 3
+    """Advanced crawling configuration"""    max_depth: int = 3
     max_pages: int = 1000
     max_concurrent: int = 10
     delay_seconds: float = 1.0
@@ -130,8 +124,7 @@ class CrawlingConfig:
     
 @dataclass
 class CrawledContent:
-    """Comprehensive crawled content structure"""
-    url: str
+    """Comprehensive crawled content structure"""    url: str
     title: str
     content: str
     content_type: ContentType
@@ -154,8 +147,7 @@ class CrawledContent:
 
 @dataclass
 class SurveillanceTarget:
-    """Content surveillance target definition"""
-    target_id: str
+    """Content surveillance target definition"""    target_id: str
     user_id: str
     content_fingerprint: str
     search_keywords: List[str]
@@ -167,13 +159,11 @@ class SurveillanceTarget:
     last_scan: Optional[datetime] = None
 
 class CrawlingAgent(BaseAgent):
-    """
-    Advanced Web Crawling Agent for Content Discovery & Surveillance
+    """    Advanced Web Crawling Agent for Content Discovery & Surveillance
     
     Handles multi-platform crawling, content detection, similarity matching,
     and real-time monitoring for content protection and collaboration opportunities.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict] = None):
         super().__init__("crawling_agent", config or {})
         
@@ -207,8 +197,7 @@ class CrawlingAgent(BaseAgent):
         logger.info("Advanced Crawling Agent initialized successfully")
 
     async def initialize(self) -> None:
-        """Initialize crawling agent with all required components"""
-        await super().initialize()
+        """Initialize crawling agent with all required components"""        await super().initialize()
         
         try:
             # Initialize HTTP session with advanced configuration
@@ -244,8 +233,7 @@ class CrawlingAgent(BaseAgent):
             raise CrawlingError(f"Initialization failed: {str(e)}")
 
     async def _setup_selenium_driver(self) -> None:
-        """Setup Selenium WebDriver with stealth configuration"""
-        chrome_options = Options()
+        """Setup Selenium WebDriver with stealth configuration"""        chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -264,8 +252,7 @@ class CrawlingAgent(BaseAgent):
         self.selenium_driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
 
     async def process_request(self, request: AgentRequest) -> AgentResponse:
-        """Process crawling requests with comprehensive error handling"""
-        start_time = time.time()
+        """Process crawling requests with comprehensive error handling"""        start_time = time.time()
         
         try:
             action = request.action.lower()
@@ -319,8 +306,7 @@ class CrawlingAgent(BaseAgent):
             )
 
     async def _crawl_website(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Advanced website crawling with content extraction and analysis"""
-        url = data.get('url')
+        """Advanced website crawling with content extraction and analysis"""        url = data.get('url')
         max_depth = data.get('max_depth', self.crawler_config.max_depth)
         content_types = data.get('content_types', ['text', 'image'])
         
@@ -375,8 +361,7 @@ class CrawlingAgent(BaseAgent):
         }
 
     async def _crawl_single_page(self, url: str, content_types: List[str]) -> Optional[CrawledContent]:
-        """Crawl and extract content from a single web page"""
-        try:
+        """Crawl and extract content from a single web page"""        try:
             headers = {
                 'User-Agent': self.user_agent_rotator.get_random_agent(),
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -456,8 +441,7 @@ class CrawlingAgent(BaseAgent):
             return None
 
     def _extract_main_content(self, soup: BeautifulSoup) -> str:
-        """Extract main content from HTML using advanced heuristics"""
-        # Remove unwanted elements
+        """Extract main content from HTML using advanced heuristics"""        # Remove unwanted elements
         for element in soup(['script', 'style', 'nav', 'footer', 'header', 'sidebar']):
             element.decompose()
         
@@ -480,8 +464,7 @@ class CrawlingAgent(BaseAgent):
         return soup.get_text(strip=True, separator=' ')
 
     def _extract_metadata(self, soup: BeautifulSoup, headers: Dict) -> Dict[str, Any]:
-        """Extract comprehensive metadata from page"""
-        metadata = {}
+        """Extract comprehensive metadata from page"""        metadata = {}
         
         # Meta tags
         for meta in soup.find_all('meta'):
@@ -512,8 +495,7 @@ class CrawlingAgent(BaseAgent):
         return metadata
 
     def _extract_links(self, soup: BeautifulSoup, base_url: str) -> List[str]:
-        """Extract and normalize all links from page"""
-        links = []
+        """Extract and normalize all links from page"""        links = []
         for link in soup.find_all('a', href=True):
             href = link['href']
             absolute_url = urljoin(base_url, href)
@@ -522,8 +504,7 @@ class CrawlingAgent(BaseAgent):
         return list(set(links))  # Remove duplicates
 
     def _extract_images(self, soup: BeautifulSoup, base_url: str) -> List[str]:
-        """Extract and normalize image URLs"""
-        images = []
+        """Extract and normalize image URLs"""        images = []
         for img in soup.find_all('img', src=True):
             src = img['src']
             absolute_url = urljoin(base_url, src)
@@ -532,8 +513,7 @@ class CrawlingAgent(BaseAgent):
         return list(set(images))
 
     def _extract_tags(self, soup: BeautifulSoup) -> List[str]:
-        """Extract content tags and keywords"""
-        tags = []
+        """Extract content tags and keywords"""        tags = []
         
         # Meta keywords
         keywords_meta = soup.find('meta', attrs={'name': 'keywords'})
@@ -548,8 +528,7 @@ class CrawlingAgent(BaseAgent):
         return list(set(tags))[:20]  # Limit and deduplicate
 
     def _detect_platform_type(self, url: str, soup: BeautifulSoup) -> PlatformType:
-        """Detect platform type based on URL and content analysis"""
-        domain = urlparse(url).netloc.lower()
+        """Detect platform type based on URL and content analysis"""        domain = urlparse(url).netloc.lower()
         
         # Social media platforms
         social_domains = ['twitter.com', 'facebook.com', 'instagram.com', 'linkedin.com', 
@@ -580,16 +559,14 @@ class CrawlingAgent(BaseAgent):
         return PlatformType.GENERIC_WEB
 
     def _analyze_sentiment(self, text: str) -> float:
-        """Analyze content sentiment using TextBlob"""
-        try:
+        """Analyze content sentiment using TextBlob"""        try:
             blob = TextBlob(text)
             return blob.sentiment.polarity
         except:
             return 0.0
 
     def _calculate_quality_score(self, soup: BeautifulSoup, content: str) -> float:
-        """Calculate content quality score based on various factors"""
-        score = 0.0
+        """Calculate content quality score based on various factors"""        score = 0.0
         
         # Content length factor
         if len(content) > 500:
@@ -628,24 +605,21 @@ class CrawlingAgent(BaseAgent):
         return min(score, 1.0)
 
     def _detect_language(self, text: str) -> str:
-        """Detect content language"""
-        try:
+        """Detect content language"""        try:
             blob = TextBlob(text)
             return blob.detect_language()
         except:
             return 'en'  # Default to English
 
     def _is_valid_url(self, url: str) -> bool:
-        """Validate URL format and accessibility"""
-        try:
+        """Validate URL format and accessibility"""        try:
             parsed = urlparse(url)
             return bool(parsed.scheme and parsed.netloc)
         except:
             return False
 
     async def _monitor_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Monitor specific content across platforms for violations or mentions"""
-        content_fingerprint = data.get('content_fingerprint')
+        """Monitor specific content across platforms for violations or mentions"""        content_fingerprint = data.get('content_fingerprint')
         search_keywords = data.get('keywords', [])
         platforms = data.get('platforms', [])
         
@@ -675,8 +649,7 @@ class CrawlingAgent(BaseAgent):
         }
 
     async def _monitor_platform(self, platform: str, fingerprint: str, keywords: List[str]) -> List[Dict]:
-        """Monitor specific platform for content matches"""
-        results = []
+        """Monitor specific platform for content matches"""        results = []
         
         # Platform-specific monitoring logic
         if platform.lower() == 'twitter':
@@ -691,27 +664,23 @@ class CrawlingAgent(BaseAgent):
         return results
 
     async def _monitor_twitter(self, keywords: List[str]) -> List[Dict]:
-        """Monitor Twitter for keyword matches"""
-        results = []
+        """Monitor Twitter for keyword matches"""        results = []
         # Implementation would use Twitter API v2
         # This is a placeholder for the actual implementation
         return results
 
     async def _monitor_instagram(self, keywords: List[str]) -> List[Dict]:
-        """Monitor Instagram for content matches"""
-        results = []
+        """Monitor Instagram for content matches"""        results = []
         # Implementation would use Instagram API or web scraping
         return results
 
     async def _monitor_youtube(self, keywords: List[str]) -> List[Dict]:
-        """Monitor YouTube for content matches"""
-        results = []
+        """Monitor YouTube for content matches"""        results = []
         # Implementation would use YouTube Data API
         return results
 
     async def _monitor_generic_web(self, keywords: List[str]) -> List[Dict]:
-        """Monitor generic web for keyword matches"""
-        results = []
+        """Monitor generic web for keyword matches"""        results = []
         
         # Use search engines to find content
         search_queries = [' '.join(keywords[i:i+3]) for i in range(0, len(keywords), 3)]
@@ -727,8 +696,7 @@ class CrawlingAgent(BaseAgent):
         return results
 
     async def _search_engine_query(self, query: str) -> List[Dict]:
-        """Perform search engine query for content discovery"""
-        results = []
+        """Perform search engine query for content discovery"""        results = []
         
         # This would integrate with search APIs (Google Custom Search, Bing, etc.)
         # Placeholder implementation
@@ -765,8 +733,7 @@ class CrawlingAgent(BaseAgent):
         return results
 
     async def _analyze_monitoring_results(self, results: List[Dict], fingerprint: str) -> List[Dict]:
-        """Analyze monitoring results for potential content violations"""
-        violations = []
+        """Analyze monitoring results for potential content violations"""        violations = []
         
         for result in results:
             try:
@@ -794,8 +761,7 @@ class CrawlingAgent(BaseAgent):
         return violations
 
     async def _search_similar_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Search for similar content across platforms"""
-        reference_content = data.get('content')
+        """Search for similar content across platforms"""        reference_content = data.get('content')
         content_type = data.get('content_type', 'text')
         search_platforms = data.get('platforms', ['generic'])
         similarity_threshold = data.get('threshold', 0.7)
@@ -831,8 +797,7 @@ class CrawlingAgent(BaseAgent):
 
     async def _platform_similarity_search(self, platform: str, content: str, 
                                         fingerprint: str, threshold: float) -> List[Dict]:
-        """Search for similar content on specific platform"""
-        results = []
+        """Search for similar content on specific platform"""        results = []
         
         # Extract key phrases for search
         key_phrases = self._extract_key_phrases(content)
@@ -863,8 +828,7 @@ class CrawlingAgent(BaseAgent):
         return results
 
     def _extract_key_phrases(self, content: str) -> List[str]:
-        """Extract key phrases from content for search"""
-        # Simple implementation - can be enhanced with NLP
+        """Extract key phrases from content for search"""        # Simple implementation - can be enhanced with NLP
         sentences = content.split('.')[:10]  # First 10 sentences
         phrases = []
         
@@ -876,8 +840,7 @@ class CrawlingAgent(BaseAgent):
         return phrases
 
     async def _platform_search(self, platform: str, query: str) -> List[Dict]:
-        """Search specific platform for content"""
-        results = []
+        """Search specific platform for content"""        results = []
         
         if platform == 'generic':
             results = await self._search_engine_query(query)
@@ -886,8 +849,7 @@ class CrawlingAgent(BaseAgent):
         return results
 
     async def _platform_scan(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive platform scanning for content discovery"""
-        platforms = data.get('platforms', [])
+        """Comprehensive platform scanning for content discovery"""        platforms = data.get('platforms', [])
         scan_type = data.get('scan_type', 'content_discovery')
         filters = data.get('filters', {})
         
@@ -909,8 +871,7 @@ class CrawlingAgent(BaseAgent):
         }
 
     async def _scan_single_platform(self, platform: str, scan_type: str, filters: Dict) -> Dict:
-        """Scan single platform for content"""
-        results = []
+        """Scan single platform for content"""        results = []
         
         # Platform-specific scanning logic
         if platform.lower() == 'youtube':
@@ -928,26 +889,22 @@ class CrawlingAgent(BaseAgent):
         }
 
     async def _scan_youtube(self, scan_type: str, filters: Dict) -> List[Dict]:
-        """Scan YouTube for content based on filters"""
-        results = []
+        """Scan YouTube for content based on filters"""        results = []
         # Implementation would use YouTube Data API
         return results
 
     async def _scan_instagram(self, scan_type: str, filters: Dict) -> List[Dict]:
-        """Scan Instagram for content based on filters"""
-        results = []
+        """Scan Instagram for content based on filters"""        results = []
         # Implementation would use Instagram API or web scraping
         return results
 
     async def _scan_twitter(self, scan_type: str, filters: Dict) -> List[Dict]:
-        """Scan Twitter for content based on filters"""
-        results = []
+        """Scan Twitter for content based on filters"""        results = []
         # Implementation would use Twitter API v2
         return results
 
     async def _setup_surveillance(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup automated surveillance for content protection"""
-        user_id = data.get('user_id')
+        """Setup automated surveillance for content protection"""        user_id = data.get('user_id')
         content_fingerprint = data.get('content_fingerprint')
         keywords = data.get('keywords', [])
         platforms = data.get('platforms', [])
@@ -982,8 +939,7 @@ class CrawlingAgent(BaseAgent):
         }
 
     async def _bulk_crawl(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform bulk crawling operation across multiple URLs"""
-        urls = data.get('urls', [])
+        """Perform bulk crawling operation across multiple URLs"""        urls = data.get('urls', [])
         max_concurrent = data.get('max_concurrent', self.crawler_config.max_concurrent)
         content_types = data.get('content_types', ['text'])
         
@@ -1020,8 +976,7 @@ class CrawlingAgent(BaseAgent):
         }
 
     async def _real_time_monitor(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Setup real-time monitoring for immediate alerts"""
-        monitoring_config = data.get('config', {})
+        """Setup real-time monitoring for immediate alerts"""        monitoring_config = data.get('config', {})
         duration_seconds = data.get('duration', 3600)  # 1 hour default
         
         # Start real-time monitoring task
@@ -1038,8 +993,7 @@ class CrawlingAgent(BaseAgent):
         }
 
     async def _execute_real_time_monitoring(self, config: Dict, duration: int) -> None:
-        """Execute real-time monitoring for specified duration"""
-        end_time = datetime.now() + timedelta(seconds=duration)
+        """Execute real-time monitoring for specified duration"""        end_time = datetime.now() + timedelta(seconds=duration)
         
         while datetime.now() < end_time:
             try:
@@ -1057,8 +1011,7 @@ class CrawlingAgent(BaseAgent):
                 await asyncio.sleep(30)  # Brief pause before retry
 
     async def _monitoring_cycle(self, config: Dict) -> List[Dict]:
-        """Perform single monitoring cycle"""
-        results = []
+        """Perform single monitoring cycle"""        results = []
         
         # Check each surveillance target
         for target in self.surveillance_targets.values():
@@ -1072,8 +1025,7 @@ class CrawlingAgent(BaseAgent):
         return results
 
     async def _check_surveillance_target(self, target: SurveillanceTarget) -> List[Dict]:
-        """Check specific surveillance target for matches"""
-        results = []
+        """Check specific surveillance target for matches"""        results = []
         
         # Check if enough time has passed since last scan
         if target.last_scan:
@@ -1106,8 +1058,7 @@ class CrawlingAgent(BaseAgent):
         return results
 
     async def _process_monitoring_results(self, results: List[Dict]) -> None:
-        """Process monitoring results and trigger alerts"""
-        for result in results:
+        """Process monitoring results and trigger alerts"""        for result in results:
             try:
                 # Determine alert level
                 similarity_score = result.get('similarity_score', 0)
@@ -1125,8 +1076,7 @@ class CrawlingAgent(BaseAgent):
                 logger.error(f"Failed to process monitoring result: {str(e)}")
 
     async def _analyze_crawled_content(self, content_items: List[CrawledContent]) -> Dict[str, Any]:
-        """Analyze crawled content for patterns and insights"""
-        if not content_items:
+        """Analyze crawled content for patterns and insights"""        if not content_items:
             return {}
         
         analysis = {
@@ -1164,8 +1114,7 @@ class CrawlingAgent(BaseAgent):
         return analysis
 
     def _serialize_crawled_content(self, content: CrawledContent) -> Dict[str, Any]:
-        """Serialize CrawledContent object to dictionary"""
-        return {
+        """Serialize CrawledContent object to dictionary"""        return {
             'url': content.url,
             'title': content.title,
             'content': content.content[:1000],  # Truncate for response size
@@ -1187,8 +1136,7 @@ class CrawlingAgent(BaseAgent):
         }
 
     async def _load_surveillance_targets(self) -> None:
-        """Load surveillance targets from database"""
-        try:
+        """Load surveillance targets from database"""        try:
             # Implementation would load from database
             # This is a placeholder
             pass
@@ -1196,8 +1144,7 @@ class CrawlingAgent(BaseAgent):
             logger.error(f"Failed to load surveillance targets: {str(e)}")
 
     async def _save_surveillance_target(self, target: SurveillanceTarget) -> None:
-        """Save surveillance target to database"""
-        try:
+        """Save surveillance target to database"""        try:
             # Implementation would save to database
             # This is a placeholder
             pass
@@ -1205,16 +1152,14 @@ class CrawlingAgent(BaseAgent):
             logger.error(f"Failed to save surveillance target: {str(e)}")
 
     async def _update_surveillance_target(self, target: SurveillanceTarget) -> None:
-        """Update surveillance target in database"""
-        try:
+        """Update surveillance target in database"""        try:
             # Implementation would update database record
             pass
         except Exception as e:
             logger.error(f"Failed to update surveillance target: {str(e)}")
 
     async def _background_surveillance(self) -> None:
-        """Background task for continuous surveillance"""
-        while True:
+        """Background task for continuous surveillance"""        while True:
             try:
                 if self.surveillance_targets:
                     results = await self._monitoring_cycle({})
@@ -1227,8 +1172,7 @@ class CrawlingAgent(BaseAgent):
                 await asyncio.sleep(60)
 
     async def _queue_processor(self) -> None:
-        """Process crawling queue in background"""
-        while True:
+        """Process crawling queue in background"""        while True:
             try:
                 # Process queued crawling requests
                 if not self.crawling_queue.empty():
@@ -1242,8 +1186,7 @@ class CrawlingAgent(BaseAgent):
                 await asyncio.sleep(5)
 
     async def _process_queued_request(self, request: Dict) -> None:
-        """Process queued crawling request"""
-        try:
+        """Process queued crawling request"""        try:
             # Process based on request type
             request_type = request.get('type')
             
@@ -1258,8 +1201,7 @@ class CrawlingAgent(BaseAgent):
             logger.error(f"Failed to process queued request: {str(e)}")
 
     async def shutdown(self) -> None:
-        """Gracefully shutdown crawling agent"""
-        logger.info("Shutting down Crawling Agent...")
+        """Gracefully shutdown crawling agent"""        logger.info("Shutting down Crawling Agent...")
         
         # Close HTTP session
         if self.session:
@@ -1278,47 +1220,39 @@ class CrawlingAgent(BaseAgent):
 
 
 class CrawlingAgentManager:
-    """
-    Manager class for coordinating multiple crawling agents and operations
-    """
-    
+    """    Manager class for coordinating multiple crawling agents and operations
+    """    
     def __init__(self):
         self.agents: Dict[str, CrawlingAgent] = {}
         self.load_balancer = LoadBalancer()
         self.task_scheduler = TaskScheduler()
         
     async def create_agent(self, agent_id: str, config: Dict) -> CrawlingAgent:
-        """Create and initialize new crawling agent"""
-        agent = CrawlingAgent(config)
+        """Create and initialize new crawling agent"""        agent = CrawlingAgent(config)
         await agent.initialize()
         self.agents[agent_id] = agent
         return agent
     
     async def get_agent(self, agent_id: str) -> Optional[CrawlingAgent]:
-        """Get existing crawling agent"""
-        return self.agents.get(agent_id)
+        """Get existing crawling agent"""        return self.agents.get(agent_id)
     
     async def distribute_request(self, request: AgentRequest) -> AgentResponse:
-        """Distribute request to best available agent"""
-        agent = await self.load_balancer.select_agent(self.agents.values())
+        """Distribute request to best available agent"""        agent = await self.load_balancer.select_agent(self.agents.values())
         if agent:
             return await agent.process_request(request)
         else:
             raise CrawlingError("No available agents to process request")
     
     async def shutdown_all(self) -> None:
-        """Shutdown all managed agents"""
-        for agent in self.agents.values():
+        """Shutdown all managed agents"""        for agent in self.agents.values():
             await agent.shutdown()
         self.agents.clear()
 
 
 class LoadBalancer:
-    """Simple load balancer for crawling agents"""
-    
+    """Simple load balancer for crawling agents"""    
     async def select_agent(self, agents) -> Optional[CrawlingAgent]:
-        """Select best agent based on current load"""
-        available_agents = [agent for agent in agents if agent.status == BaseAgent.AgentStatus.ACTIVE]
+        """Select best agent based on current load"""        available_agents = [agent for agent in agents if agent.status == BaseAgent.AgentStatus.ACTIVE]
         
         if not available_agents:
             return None
@@ -1328,15 +1262,12 @@ class LoadBalancer:
 
 
 class TaskScheduler:
-    """Task scheduler for crawling operations"""
-    
+    """Task scheduler for crawling operations"""    
     def __init__(self):
         self.scheduled_tasks: Dict[str, Dict] = {}
     
     async def schedule_task(self, task_id: str, task_config: Dict) -> None:
-        """Schedule recurring crawling task"""
-        self.scheduled_tasks[task_id] = task_config
+        """Schedule recurring crawling task"""        self.scheduled_tasks[task_id] = task_config
     
     async def cancel_task(self, task_id: str) -> None:
-        """Cancel scheduled task"""
-        self.scheduled_tasks.pop(task_id, None)
+        """Cancel scheduled task"""        self.scheduled_tasks.pop(task_id, None)

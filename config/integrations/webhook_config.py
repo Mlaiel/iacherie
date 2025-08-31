@@ -1,5 +1,4 @@
-"""
-Webhook Configuration Module for IA-Influencer Agent Platform
+"""Webhook Configuration Module for IA-Influencer Agent Platform
 =============================================================
 
 Professional webhook configuration for real-time notifications and events.
@@ -15,7 +14,6 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, Any, Optional, List, Union, Callable
 from pydantic import BaseSettings, Field, validator, HttpUrl
@@ -27,8 +25,7 @@ import json
 
 
 class WebhookProvider(str, Enum):
-    """Supported webhook providers."""
-    SPOTIFY = "spotify"
+    """Supported webhook providers."""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -52,8 +49,7 @@ class WebhookProvider(str, Enum):
 
 
 class WebhookEvent(str, Enum):
-    """Supported webhook event types."""
-    # Content events
+    """Supported webhook event types."""    # Content events
     CONTENT_UPLOADED = "content.uploaded"
     CONTENT_MATCHED = "content.matched"
     CONTENT_CLAIMED = "content.claimed"
@@ -91,8 +87,7 @@ class WebhookEvent(str, Enum):
 
 @dataclass
 class WebhookSecurity:
-    """Webhook security configuration."""
-    secret_key: str
+    """Webhook security configuration."""    secret_key: str
     verify_signature: bool = True
     signature_header: str = "X-Webhook-Signature"
     timestamp_header: str = "X-Webhook-Timestamp"
@@ -102,8 +97,7 @@ class WebhookSecurity:
 
 @dataclass
 class WebhookRetry:
-    """Webhook retry configuration."""
-    max_attempts: int = 5
+    """Webhook retry configuration."""    max_attempts: int = 5
     initial_delay: float = 1.0
     max_delay: float = 300.0
     backoff_factor: float = 2.0
@@ -111,8 +105,7 @@ class WebhookRetry:
 
 
 class WebhookConfig(BaseSettings):
-    """Webhook configuration for external service integrations."""
-    
+    """Webhook configuration for external service integrations."""    
     # Base webhook settings
     webhook_base_url: HttpUrl = Field(..., env="WEBHOOK_BASE_URL")
     webhook_secret_key: str = Field(..., env="WEBHOOK_SECRET_KEY")
@@ -235,8 +228,7 @@ class WebhookConfig(BaseSettings):
 
 
 class WebhookEndpoints:
-    """Webhook endpoints configuration."""
-    
+    """Webhook endpoints configuration."""    
     ENDPOINTS = {
         WebhookProvider.SPOTIFY: {
             "subscription": "/webhooks/spotify/subscription",
@@ -275,20 +267,17 @@ class WebhookEndpoints:
     
     @classmethod
     def get_endpoints(cls, provider: WebhookProvider) -> Dict[str, str]:
-        """Get webhook endpoints for a specific provider."""
-        return cls.ENDPOINTS.get(provider, {})
+        """Get webhook endpoints for a specific provider."""        return cls.ENDPOINTS.get(provider, {})
 
 
 class WebhookManager:
-    """Webhook manager for handling external service notifications."""
-    
+    """Webhook manager for handling external service notifications."""    
     def __init__(self, config: WebhookConfig):
         self.config = config
         self.handlers: Dict[str, Callable] = {}
         
     def get_security_config(self, provider: WebhookProvider) -> WebhookSecurity:
-        """Get security configuration for a specific provider."""
-        secret_attr = f"{provider}_webhook_secret"
+        """Get security configuration for a specific provider."""        secret_attr = f"{provider}_webhook_secret"
         secret_key = getattr(self.config, secret_attr, "")
         
         return WebhookSecurity(
@@ -298,8 +287,7 @@ class WebhookManager:
         )
     
     def get_retry_config(self) -> WebhookRetry:
-        """Get retry configuration for webhook delivery."""
-        return WebhookRetry(
+        """Get retry configuration for webhook delivery."""        return WebhookRetry(
             max_attempts=self.config.webhook_retry_attempts,
             initial_delay=self.config.webhook_retry_delay,
             timeout_seconds=self.config.webhook_timeout
@@ -312,8 +300,7 @@ class WebhookManager:
         secret: str,
         algorithm: str = "sha256"
     ) -> bool:
-        """Verify webhook signature."""
-        if not self.config.webhook_signature_required:
+        """Verify webhook signature."""        if not self.config.webhook_signature_required:
             return True
             
         expected_signature = hmac.new(
@@ -329,16 +316,13 @@ class WebhookManager:
         return hmac.compare_digest(expected_signature, signature)
     
     def register_handler(self, event_type: str, handler: Callable):
-        """Register a webhook event handler."""
-        self.handlers[event_type] = handler
+        """Register a webhook event handler."""        self.handlers[event_type] = handler
     
     def get_handler(self, event_type: str) -> Optional[Callable]:
-        """Get webhook event handler."""
-        return self.handlers.get(event_type)
+        """Get webhook event handler."""        return self.handlers.get(event_type)
     
     def get_provider_config(self, provider: WebhookProvider) -> Dict[str, Any]:
-        """Get complete webhook configuration for a specific provider."""
-        enabled_attr = f"{provider}_webhook_enabled"
+        """Get complete webhook configuration for a specific provider."""        enabled_attr = f"{provider}_webhook_enabled"
         endpoint_attr = f"{provider}_webhook_endpoint"
         events_attr = f"{provider}_webhook_events"
         
@@ -352,8 +336,7 @@ class WebhookManager:
         }
     
     def validate_webhook_payload(self, payload: dict, provider: WebhookProvider) -> bool:
-        """Validate webhook payload structure."""
-        required_fields = ["type", "data", "timestamp"]
+        """Validate webhook payload structure."""        required_fields = ["type", "data", "timestamp"]
         
         # Provider-specific validations
         if provider == WebhookProvider.STRIPE:
@@ -366,8 +349,7 @@ class WebhookManager:
         return all(field in payload for field in required_fields)
     
     def format_webhook_url(self, provider: WebhookProvider, endpoint: str = "") -> str:
-        """Format complete webhook URL."""
-        base_url = str(self.config.webhook_base_url).rstrip("/")
+        """Format complete webhook URL."""        base_url = str(self.config.webhook_base_url).rstrip("/")
         provider_endpoint = getattr(self.config, f"{provider}_webhook_endpoint", "")
         
         if endpoint:

@@ -1,11 +1,9 @@
-"""
-Fingerprint Cache for IA Influencer Agent Platform
+"""Fingerprint Cache for IA Influencer Agent Platform
 Specialized caching for AI fingerprinting and content similarity detection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 import json
@@ -23,8 +21,7 @@ from .memory_cache import MemoryCache
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of fingerprints"""
-    AUDIO_CHROMAPRINT = "audio_chromaprint"
+    """Types of fingerprints"""    AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_PERCEPTUAL = "video_perceptual"
     VIDEO_FRAME = "video_frame"
@@ -34,8 +31,7 @@ class FingerprintType(Enum):
     TEXT_SYNTACTIC = "text_syntactic"
 
 class MatchConfidence(Enum):
-    """Match confidence levels"""
-    EXACT = "exact"        # 95-100%
+    """Match confidence levels"""    EXACT = "exact"        # 95-100%
     HIGH = "high"          # 85-95%
     MEDIUM = "medium"      # 70-85%
     LOW = "low"           # 50-70%
@@ -43,8 +39,7 @@ class MatchConfidence(Enum):
 
 @dataclass
 class FingerprintData:
-    """Fingerprint data structure"""
-    content_id: str
+    """Fingerprint data structure"""    content_id: str
     fingerprint_type: FingerprintType
     fingerprint_hash: str
     vector_data: np.ndarray
@@ -75,8 +70,7 @@ class FingerprintData:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result"""
-    target_content_id: str
+    """Similarity match result"""    target_content_id: str
     query_content_id: str
     similarity_score: float
     confidence_level: MatchConfidence
@@ -89,19 +83,16 @@ class SimilarityMatch:
     processing_time: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['confidence_level'] = self.confidence_level.value
         data['fingerprint_type'] = self.fingerprint_type.value
         data['matched_at'] = self.matched_at.isoformat()
         return data
 
 class FingerprintCache:
-    """
-    Advanced fingerprint cache for AI-powered content identification
+    """    Advanced fingerprint cache for AI-powered content identification
     Handles storage and similarity search for multiple fingerprint types
-    """
-    
+    """    
     def __init__(self,
                  redis_config: RedisConfig,
                  vector_cache: Optional[VectorCache] = None,
@@ -210,12 +201,10 @@ class FingerprintCache:
         logger.info("FingerprintCache initialized")
     
     async def initialize(self):
-        """Initialize cache connections"""
-        await self.redis_cache.connect()
+        """Initialize cache connections"""        await self.redis_cache.connect()
     
     def _get_config(self, fingerprint_type: FingerprintType) -> Dict[str, Any]:
-        """Get configuration for fingerprint type"""
-        return self.type_configs.get(fingerprint_type, {
+        """Get configuration for fingerprint type"""        return self.type_configs.get(fingerprint_type, {
             'dimension': 512,
             'similarity_threshold': self.similarity_threshold,
             'algorithm': 'default',
@@ -223,8 +212,7 @@ class FingerprintCache:
         })
     
     def _calculate_confidence(self, similarity_score: float) -> MatchConfidence:
-        """Calculate confidence level from similarity score"""
-        if similarity_score >= 0.95:
+        """Calculate confidence level from similarity score"""        if similarity_score >= 0.95:
             return MatchConfidence.EXACT
         elif similarity_score >= 0.85:
             return MatchConfidence.HIGH
@@ -245,8 +233,7 @@ class FingerprintCache:
                               duration: Optional[float] = None,
                               dimensions: Optional[Tuple[int, int]] = None,
                               quality_score: float = 0.0) -> bool:
-        """Store fingerprint data"""
-        
+        """Store fingerprint data"""        
         try:
             import time
             start_time = time.time()
@@ -346,8 +333,7 @@ class FingerprintCache:
     async def get_fingerprint(self,
                             content_id: str,
                             fingerprint_type: FingerprintType) -> Optional[FingerprintData]:
-        """Get fingerprint data"""
-        
+        """Get fingerprint data"""        
         # Try memory cache first
         cache_key = f"fp:{content_id}:{fingerprint_type.value}"
         cached_fp = self.memory_cache.get(cache_key)
@@ -402,8 +388,7 @@ class FingerprintCache:
                                  content_type: Optional[str] = None,
                                  top_k: int = 10,
                                  min_similarity: Optional[float] = None) -> List[SimilarityMatch]:
-        """Find similar content using fingerprint vectors"""
-        
+        """Find similar content using fingerprint vectors"""        
         try:
             import time
             start_time = time.time()
@@ -472,8 +457,7 @@ class FingerprintCache:
     
     async def find_exact_matches(self,
                                fingerprint_hash: str) -> List[str]:
-        """Find exact matches by fingerprint hash"""
-        
+        """Find exact matches by fingerprint hash"""        
         try:
             hash_key = f"{self.HASH_PREFIX}:{fingerprint_hash}"
             content_id = await self.redis_cache.get(hash_key)
@@ -491,8 +475,7 @@ class FingerprintCache:
                                match: SimilarityMatch,
                                verified: bool = False,
                                false_positive: bool = False) -> bool:
-        """Store similarity match result for analysis"""
-        
+        """Store similarity match result for analysis"""        
         try:
             match_key = f"{self.MATCHES_PREFIX}:{match.target_content_id}:{match.query_content_id}"
             
@@ -521,8 +504,7 @@ class FingerprintCache:
             return False
     
     async def get_content_fingerprints(self, content_id: str) -> List[FingerprintType]:
-        """Get all fingerprint types available for content"""
-        
+        """Get all fingerprint types available for content"""        
         content_key = f"{self.CONTENT_PREFIX}:{content_id}"
         fingerprint_data = await self.redis_cache.get(content_key)
         
@@ -535,8 +517,7 @@ class FingerprintCache:
     async def delete_fingerprint(self,
                                content_id: str,
                                fingerprint_type: FingerprintType) -> bool:
-        """Delete fingerprint data"""
-        
+        """Delete fingerprint data"""        
         try:
             # Get fingerprint first to get hash
             fingerprint = await self.get_fingerprint(content_id, fingerprint_type)
@@ -569,8 +550,7 @@ class FingerprintCache:
             return False
     
     async def delete_content_fingerprints(self, content_id: str) -> int:
-        """Delete all fingerprints for content"""
-        
+        """Delete all fingerprints for content"""        
         fingerprint_types = await self.get_content_fingerprints(content_id)
         deleted_count = 0
         
@@ -583,8 +563,7 @@ class FingerprintCache:
     async def _update_content_fingerprints(self,
                                          content_id: str,
                                          fingerprint_type: FingerprintType):
-        """Update list of fingerprints for content"""
-        
+        """Update list of fingerprints for content"""        
         content_key = f"{self.CONTENT_PREFIX}:{content_id}"
         fingerprint_data = await self.redis_cache.get(content_key)
         
@@ -605,8 +584,7 @@ class FingerprintCache:
     async def _remove_content_fingerprint(self,
                                         content_id: str,
                                         fingerprint_type: FingerprintType):
-        """Remove fingerprint type from content list"""
-        
+        """Remove fingerprint type from content list"""        
         content_key = f"{self.CONTENT_PREFIX}:{content_id}"
         fingerprint_data = await self.redis_cache.get(content_key)
         
@@ -625,8 +603,7 @@ class FingerprintCache:
                     await self.redis_cache.delete(content_key)
     
     async def get_fingerprint_stats(self) -> Dict[str, Any]:
-        """Get fingerprint statistics"""
-        
+        """Get fingerprint statistics"""        
         # Count fingerprints by type
         type_counts = {}
         for fp_type in FingerprintType:
@@ -654,8 +631,7 @@ class FingerprintCache:
         }
     
     async def optimize_cache(self):
-        """Optimize fingerprint cache performance"""
-        
+        """Optimize fingerprint cache performance"""        
         try:
             # Rebuild vector index if using FAISS
             if hasattr(self.vector_cache, 'rebuild_index'):
@@ -679,8 +655,7 @@ class FingerprintCache:
             logger.error(f"Failed to optimize cache: {e}")
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""
-        redis_stats = await self.redis_cache.get_stats()
+        """Get comprehensive cache statistics"""        redis_stats = await self.redis_cache.get_stats()
         memory_stats = self.memory_cache.get_stats()
         fingerprint_stats = await self.get_fingerprint_stats()
         
@@ -697,17 +672,14 @@ class FingerprintCache:
         }
     
     async def close(self):
-        """Close cache connections"""
-        await self.redis_cache.close()
+        """Close cache connections"""        await self.redis_cache.close()
         self.memory_cache.close()
         if self.vector_cache:
             self.vector_cache.clear()
 
 class SimilarityCache(FingerprintCache):
-    """
-    Specialized cache for similarity search results and duplicate detection
-    """
-    
+    """    Specialized cache for similarity search results and duplicate detection
+    """    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
@@ -720,8 +692,7 @@ class SimilarityCache(FingerprintCache):
                                   group_id: str,
                                   content_ids: List[str],
                                   similarity_scores: List[float]) -> bool:
-        """Store group of duplicate content"""
-        
+        """Store group of duplicate content"""        
         try:
             duplicate_key = f"{self.DUPLICATE_PREFIX}:{group_id}"
             
@@ -751,8 +722,7 @@ class SimilarityCache(FingerprintCache):
             return False
     
     async def get_duplicate_group(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get duplicate group for content"""
-        
+        """Get duplicate group for content"""        
         content_key = f"{self.DUPLICATE_PREFIX}:content:{content_id}"
         group_id = await self.redis_cache.get(content_key)
         
@@ -769,8 +739,7 @@ class SimilarityCache(FingerprintCache):
                                  query_hash: str,
                                  results: List[SimilarityMatch],
                                  ttl: int = 3600) -> bool:
-        """Cache similarity search results"""
-        
+        """Cache similarity search results"""        
         try:
             search_key = f"{self.SEARCH_RESULTS_PREFIX}:{query_hash}"
             
@@ -790,8 +759,7 @@ class SimilarityCache(FingerprintCache):
             return False
     
     async def get_cached_search_results(self, query_hash: str) -> Optional[List[SimilarityMatch]]:
-        """Get cached similarity search results"""
-        
+        """Get cached similarity search results"""        
         search_key = f"{self.SEARCH_RESULTS_PREFIX}:{query_hash}"
         results_data = await self.redis_cache.get(search_key)
         

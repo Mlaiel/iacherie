@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,14 +12,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test New Crawlers
+"""Test New Crawlers
 Basic tests for the newly added crawler modules.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -39,11 +35,9 @@ from crawlers import (
 
 class TestNewCrawlers:
     """Test cases for new crawler modules"""
-
     @pytest.mark.asyncio
     async def test_spotify_crawler(self):
-        """Test Spotify crawler basic functionality"""
-        async with SpotifyCrawler() as crawler:
+        """Test Spotify crawler basic functionality"""        async with SpotifyCrawler() as crawler:
             results = await crawler.search_tracks(
                 content_id="test_content",
                 fingerprint="test_fingerprint",
@@ -60,8 +54,7 @@ class TestNewCrawlers:
 
     @pytest.mark.asyncio
     async def test_apple_music_crawler(self):
-        """Test Apple Music crawler basic functionality"""
-        async with AppleMusicCrawler() as crawler:
+        """Test Apple Music crawler basic functionality"""        async with AppleMusicCrawler() as crawler:
             results = await crawler.search_tracks(
                 content_id="test_content",
                 fingerprint="test_fingerprint",
@@ -77,8 +70,7 @@ class TestNewCrawlers:
 
     @pytest.mark.asyncio
     async def test_soundcloud_crawler(self):
-        """Test SoundCloud crawler basic functionality"""
-        async with SoundCloudCrawler() as crawler:
+        """Test SoundCloud crawler basic functionality"""        async with SoundCloudCrawler() as crawler:
             results = await crawler.search_tracks(
                 content_id="test_content",
                 fingerprint="test_fingerprint",
@@ -94,8 +86,7 @@ class TestNewCrawlers:
 
     @pytest.mark.asyncio
     async def test_bereal_crawler(self):
-        """Test BeReal crawler basic functionality"""
-        async with BeRealCrawler() as crawler:
+        """Test BeReal crawler basic functionality"""        async with BeRealCrawler() as crawler:
             results = await crawler.search_content(
                 content_id="test_content",
                 fingerprint="test_fingerprint",
@@ -111,8 +102,7 @@ class TestNewCrawlers:
 
     @pytest.mark.asyncio
     async def test_twitch_crawler_streams(self):
-        """Test Twitch crawler stream search functionality"""
-        async with TwitchCrawler() as crawler:
+        """Test Twitch crawler stream search functionality"""        async with TwitchCrawler() as crawler:
             results = await crawler.search_streams(
                 content_id="test_content",
                 fingerprint="test_fingerprint",
@@ -128,8 +118,7 @@ class TestNewCrawlers:
 
     @pytest.mark.asyncio
     async def test_reddit_crawler(self):
-        """Test Reddit crawler basic functionality"""
-        async with RedditCrawler() as crawler:
+        """Test Reddit crawler basic functionality"""        async with RedditCrawler() as crawler:
             results = await crawler.search_content(
                 content_id="test_content",
                 fingerprint="test_fingerprint",
@@ -145,8 +134,7 @@ class TestNewCrawlers:
 
     @pytest.mark.asyncio
     async def test_facebook_crawler(self):
-        """Test Facebook crawler basic functionality"""
-        async with FacebookCrawler() as crawler:
+        """Test Facebook crawler basic functionality"""        async with FacebookCrawler() as crawler:
             results = await crawler.search_content(
                 content_id="test_content",
                 fingerprint="test_fingerprint",
@@ -166,8 +154,7 @@ if __name__ == "__main__":
     import asyncio
     
     async def run_simple_tests():
-        """Run simple tests without pytest"""
-        print("Testing new crawlers...")
+        """Run simple tests without pytest"""        print("Testing new crawlers...")
         
         # Test Spotify
         async with SpotifyCrawler() as crawler:

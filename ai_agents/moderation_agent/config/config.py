@@ -1,5 +1,4 @@
-"""
-Moderation Agent Configuration
+"""Moderation Agent Configuration
 
 Enterprise-grade configuration for ultra-advanced content moderation system.
 Provides comprehensive safety filtering and automated compliance enforcement.
@@ -11,21 +10,18 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This configuration and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 from typing import Dict, Any, List
 from enum import Enum
 import os
 
 class ModerationLevel(Enum):
-    """Content moderation strictness levels"""
-    PERMISSIVE = "permissive"
+    """Content moderation strictness levels"""    PERMISSIVE = "permissive"
     STANDARD = "standard"
     STRICT = "strict"
     ULTRA_STRICT = "ultra_strict"
 
 class RegionalCompliance(Enum):
-    """Regional compliance frameworks"""
-    GDPR_EU = "gdpr_eu"
+    """Regional compliance frameworks"""    GDPR_EU = "gdpr_eu"
     COPPA_US = "coppa_us"
     PIPEDA_CA = "pipeda_ca"
     LGPD_BR = "lgpd_br"
@@ -286,16 +282,14 @@ DEFAULT_MODERATION_CONFIG = {
 }
 
 def get_moderation_config(level: ModerationLevel = ModerationLevel.STANDARD) -> Dict[str, Any]:
-    """
-    Get moderation configuration based on strictness level
+    """    Get moderation configuration based on strictness level
     
     Args:
         level: Moderation strictness level
         
     Returns:
         Configuration dictionary
-    """
-    config = DEFAULT_MODERATION_CONFIG.copy()
+    """    config = DEFAULT_MODERATION_CONFIG.copy()
     
     if level == ModerationLevel.PERMISSIVE:
         # More lenient thresholds
@@ -340,16 +334,14 @@ def get_moderation_config(level: ModerationLevel = ModerationLevel.STANDARD) -> 
     return config
 
 def get_regional_config(regions: List[RegionalCompliance]) -> Dict[str, Any]:
-    """
-    Get configuration adapted for specific regional compliance requirements
+    """    Get configuration adapted for specific regional compliance requirements
     
     Args:
         regions: List of regional compliance frameworks
         
     Returns:
         Regional configuration adjustments
-    """
-    regional_config = {}
+    """    regional_config = {}
     
     if RegionalCompliance.GDPR_EU in regions:
         regional_config.update({
@@ -419,16 +411,14 @@ PRODUCTION_CONFIG_OVERRIDES = {
 }
 
 def get_environment_config(environment: str = "development") -> Dict[str, Any]:
-    """
-    Get environment-specific configuration
+    """    Get environment-specific configuration
     
     Args:
         environment: Environment name (development, staging, production)
         
     Returns:
         Environment configuration overrides
-    """
-    if environment == "production":
+    """    if environment == "production":
         return PRODUCTION_CONFIG_OVERRIDES
     elif environment == "development":
         return DEVELOPMENT_CONFIG_OVERRIDES

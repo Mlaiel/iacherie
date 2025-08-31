@@ -1,5 +1,4 @@
-"""
-🔍 Piracy Detection Core Engine
+"""🔍 Piracy Detection Core Engine
 ==============================
 
 Advanced AI-powered content piracy detection with multi-modal analysis.
@@ -14,7 +13,6 @@ This module implements the core piracy detection engine with support for:
 - Cross-platform content scanning
 - Automated confidence scoring
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -26,8 +24,7 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Types of piracy violations."""
-    EXACT_COPY = "exact_copy"
+    """Types of piracy violations."""    EXACT_COPY = "exact_copy"
     MODIFIED_COPY = "modified_copy"
     PARTIAL_USE = "partial_use"
     UNAUTHORIZED_REMIX = "unauthorized_remix"
@@ -37,8 +34,7 @@ class ViolationType(Enum):
 
 @dataclass
 class DetectionResult:
-    """Result of piracy detection analysis."""
-    violation_id: str
+    """Result of piracy detection analysis."""    violation_id: str
     content_id: str
     platform: str
     violation_type: ViolationType
@@ -59,8 +55,7 @@ class DetectionResult:
     
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure."""
-    fingerprint_id: str
+    """Content fingerprint data structure."""    fingerprint_id: str
     content_id: str
     fingerprint_type: str
     hash_values: Dict[str, str]
@@ -70,8 +65,7 @@ class ContentFingerprint:
     quality_metrics: Dict[str, float]
     
 class PiracyDetector:
-    """
-    Advanced AI-powered piracy detection engine with multi-modal analysis.
+    """    Advanced AI-powered piracy detection engine with multi-modal analysis.
     
     This class provides comprehensive piracy detection capabilities including:
     - Real-time content monitoring across 500+ platforms
@@ -79,11 +73,9 @@ class PiracyDetector:
     - Advanced similarity matching with 95%+ accuracy
     - Automated violation classification and severity assessment
     - Cross-platform content surveillance and tracking
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the piracy detection engine."""
-        self.config = config or {}
+        """Initialize the piracy detection engine."""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Core detection components
@@ -132,21 +124,17 @@ class PiracyDetector:
     ai_analysis: Dict[str, Any]
 
 class PiracyDetector:
-    """
-    Core piracy detection engine with advanced AI algorithms.
+    """    Core piracy detection engine with advanced AI algorithms.
     
     Provides comprehensive content analysis and violation detection
     across multiple platforms and content types.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Piracy Detector.
+        """        Initialize the Piracy Detector.
         
         Args:
             config: Detection configuration parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         
         # Detection parameters
@@ -173,13 +161,11 @@ class PiracyDetector:
         logger.info("Piracy Detector initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize detector components and AI models.
+        """        Initialize detector components and AI models.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing Piracy Detector components...")
             
             # Initialize fingerprinting service
@@ -211,8 +197,7 @@ class PiracyDetector:
             return False
     
     async def _initialize_ai_classifier(self) -> None:
-        """Initialize AI classifier for violation type detection."""
-        # Placeholder for AI model initialization
+        """Initialize AI classifier for violation type detection."""        # Placeholder for AI model initialization
         # In production, this would load trained models for violation classification
         self.ai_classifier = {
             'model_version': '2.0.0',
@@ -222,8 +207,7 @@ class PiracyDetector:
         logger.info("AI classifier initialized")
     
     async def _initialize_content_analyzer(self) -> None:
-        """Initialize content analysis components."""
-        # Placeholder for content analysis initialization
+        """Initialize content analysis components."""        # Placeholder for content analysis initialization
         # In production, this would initialize various content analysis tools
         self.content_analyzer = {
             'audio_analyzer': True,
@@ -234,8 +218,7 @@ class PiracyDetector:
         logger.info("Content analyzer initialized")
     
     async def detect_violations(self, content_id: str, platforms: Optional[List[str]] = None) -> Dict[str, Any]:
-        """
-        Detect potential violations for given content across platforms.
+        """        Detect potential violations for given content across platforms.
         
         Args:
             content_id: Unique identifier for the protected content
@@ -243,8 +226,7 @@ class PiracyDetector:
             
         Returns:
             Dict containing detection results and violation details
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Detector not initialized")
         
         logger.info(f"Starting violation detection for content: {content_id}")
@@ -305,16 +287,14 @@ class PiracyDetector:
             raise
     
     async def _get_content_fingerprint(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Get or generate fingerprint for content.
+        """        Get or generate fingerprint for content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Content fingerprint data
-        """
-        try:
+        """        try:
             # Check cache first
             if content_id in self.detection_cache:
                 cached_fingerprint = self.detection_cache[content_id]
@@ -334,8 +314,7 @@ class PiracyDetector:
             return None
     
     def _is_fingerprint_valid(self, fingerprint: Dict[str, Any]) -> bool:
-        """Check if cached fingerprint is still valid."""
-        if not fingerprint:
+        """Check if cached fingerprint is still valid."""        if not fingerprint:
             return False
         
         # Check if fingerprint is not too old (24 hours)
@@ -351,8 +330,7 @@ class PiracyDetector:
         return True
     
     def _get_default_platforms(self) -> List[str]:
-        """Get default list of platforms to scan."""
-        return [
+        """Get default list of platforms to scan."""        return [
             'youtube',
             'instagram',
             'tiktok',
@@ -366,8 +344,7 @@ class PiracyDetector:
         ]
     
     async def _detect_on_platform(self, content_id: str, fingerprint: Dict[str, Any], platform: str) -> Optional[Dict[str, Any]]:
-        """
-        Perform detection on a specific platform.
+        """        Perform detection on a specific platform.
         
         Args:
             content_id: Content identifier
@@ -376,8 +353,7 @@ class PiracyDetector:
             
         Returns:
             Detection results for the platform
-        """
-        try:
+        """        try:
             logger.info(f"Scanning platform: {platform} for content: {content_id}")
             
             # Get platform-specific scanner
@@ -410,8 +386,7 @@ class PiracyDetector:
             return None
     
     async def _get_platform_scanner(self, platform: str):
-        """Get scanner instance for specific platform."""
-        # Import platform scanner
+        """Get scanner instance for specific platform."""        # Import platform scanner
         from .scanner import PlatformScanner
         scanner = PlatformScanner(platform, self.config.get('scanner', {}))
         await scanner.initialize()
@@ -419,8 +394,7 @@ class PiracyDetector:
     
     async def _analyze_potential_violation(self, content_id: str, fingerprint: Dict[str, Any], 
                                          scan_item: Dict[str, Any], platform: str) -> Optional[DetectionResult]:
-        """
-        Analyze a potential violation using AI and fingerprint matching.
+        """        Analyze a potential violation using AI and fingerprint matching.
         
         Args:
             content_id: Original content ID
@@ -430,8 +404,7 @@ class PiracyDetector:
             
         Returns:
             DetectionResult if violation detected, None otherwise
-        """
-        try:
+        """        try:
             # Calculate similarity score
             similarity_score = await self._calculate_similarity(fingerprint, scan_item)
             
@@ -476,8 +449,7 @@ class PiracyDetector:
             return None
     
     async def _calculate_similarity(self, fingerprint: Dict[str, Any], scan_item: Dict[str, Any]) -> float:
-        """
-        Calculate similarity score between original content and scanned item.
+        """        Calculate similarity score between original content and scanned item.
         
         Args:
             fingerprint: Original content fingerprint
@@ -485,8 +457,7 @@ class PiracyDetector:
             
         Returns:
             Similarity score (0.0 to 1.0)
-        """
-        try:
+        """        try:
             # Use vector matcher for similarity calculation
             if self.vector_matcher:
                 similarity = await self.vector_matcher.calculate_similarity(
@@ -503,14 +474,12 @@ class PiracyDetector:
             return 0.0
     
     def _basic_similarity_calculation(self, fingerprint: Dict[str, Any], scan_item: Dict[str, Any]) -> float:
-        """Basic similarity calculation fallback."""
-        # Simple implementation for demonstration
+        """Basic similarity calculation fallback."""        # Simple implementation for demonstration
         # In production, this would use advanced algorithms
         return 0.5  # Placeholder
     
     async def _classify_violation(self, fingerprint: Dict[str, Any], scan_item: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Classify the type of violation using AI.
+        """        Classify the type of violation using AI.
         
         Args:
             fingerprint: Original content fingerprint
@@ -518,8 +487,7 @@ class PiracyDetector:
             
         Returns:
             AI classification results
-        """
-        try:
+        """        try:
             # Simulate AI classification
             # In production, this would use trained ML models
             classification_result = {
@@ -548,8 +516,7 @@ class PiracyDetector:
             }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the detector."""
-        logger.info("Shutting down Piracy Detector...")
+        """Gracefully shutdown the detector."""        logger.info("Shutting down Piracy Detector...")
         
         if self.fingerprint_service:
             await self.fingerprint_service.shutdown()

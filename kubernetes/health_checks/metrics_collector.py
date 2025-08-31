@@ -1,5 +1,4 @@
-"""
-Health Metrics Collection and Analytics Service
+"""Health Metrics Collection and Analytics Service
 Advanced metrics collection, aggregation, and performance analytics
 
 This module provides comprehensive metrics collection for:
@@ -18,7 +17,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
-
 import asyncio
 import time
 import json
@@ -38,8 +36,7 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class HealthMetric:
-    """Individual health metric data point"""
-    metric_name: str
+    """Individual health metric data point"""    metric_name: str
     service_name: str
     value: float
     unit: str
@@ -50,8 +47,7 @@ class HealthMetric:
 
 @dataclass
 class AggregatedMetrics:
-    """Aggregated metrics for a time period"""
-    service_name: str
+    """Aggregated metrics for a time period"""    service_name: str
     metric_name: str
     time_period_minutes: int
     count: int
@@ -67,8 +63,7 @@ class AggregatedMetrics:
 
 @dataclass
 class HealthTrend:
-    """Health trend analysis result"""
-    service_name: str
+    """Health trend analysis result"""    service_name: str
     metric_name: str
     trend_direction: str  # "improving", "degrading", "stable"
     trend_strength: float  # 0.0 to 1.0
@@ -79,21 +74,17 @@ class HealthTrend:
 
 
 class HealthMetricsCollector:
-    """
-    Advanced health metrics collection and analytics system
+    """    Advanced health metrics collection and analytics system
     
     Collects, aggregates, and analyzes health metrics from all platform
     components with real-time analytics and predictive capabilities.
     """
-
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize health metrics collector
+        """        Initialize health metrics collector
         
         Args:
             config: Metrics collection configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Metrics configuration
@@ -124,13 +115,11 @@ class HealthMetricsCollector:
         self._metric_thresholds = self.metrics_config.get("thresholds", {})
 
     async def collect_health_metrics(self, health_results: List[HealthCheckResult]):
-        """
-        Collect metrics from health check results
+        """        Collect metrics from health check results
         
         Args:
             health_results: List of health check results to extract metrics from
-        """
-        collection_time = datetime.utcnow()
+        """        collection_time = datetime.utcnow()
         
         for result in health_results:
             try:
@@ -167,8 +156,7 @@ class HealthMetricsCollector:
                 self.logger.error(f"Failed to collect metrics from {result.service}: {str(e)}")
 
     def _status_to_numeric(self, status: HealthStatus) -> float:
-        """Convert health status to numeric value for trend analysis"""
-        status_mapping = {
+        """Convert health status to numeric value for trend analysis"""        status_mapping = {
             HealthStatus.HEALTHY: 100.0,
             HealthStatus.DEGRADED: 75.0,
             HealthStatus.UNHEALTHY: 50.0,
@@ -177,8 +165,7 @@ class HealthMetricsCollector:
         return status_mapping.get(status, 0.0)
 
     def _extract_detailed_metrics(self, result: HealthCheckResult) -> List[HealthMetric]:
-        """Extract detailed metrics from health check result details"""
-        metrics = []
+        """Extract detailed metrics from health check result details"""        metrics = []
         details = result.details
         
         if not details:
@@ -224,8 +211,7 @@ class HealthMetricsCollector:
         return metrics
 
     def _extract_nested_metrics(self, service_name: str, prefix: str, data: Dict[str, Any], timestamp: datetime) -> List[HealthMetric]:
-        """Extract metrics from nested data structures"""
-        metrics = []
+        """Extract metrics from nested data structures"""        metrics = []
         
         for key, value in data.items():
             if isinstance(value, (int, float)):
@@ -252,8 +238,7 @@ class HealthMetricsCollector:
         return metrics
 
     async def _store_metric(self, metric: HealthMetric):
-        """Store metric in memory and check thresholds"""
-        try:
+        """Store metric in memory and check thresholds"""        try:
             # Check threshold breaches
             threshold_key = f"{metric.service_name}.{metric.metric_name}"
             if threshold_key in self._metric_thresholds:
@@ -274,8 +259,7 @@ class HealthMetricsCollector:
             self.logger.error(f"Failed to store metric {metric.metric_name}: {str(e)}")
 
     def _check_threshold(self, value: float, threshold: Dict[str, Any]) -> bool:
-        """Check if metric value breaches configured threshold"""
-        threshold_type = threshold.get("type", "upper")
+        """Check if metric value breaches configured threshold"""        threshold_type = threshold.get("type", "upper")
         threshold_value = threshold.get("value", 0.0)
         
         if threshold_type == "upper":
@@ -290,8 +274,7 @@ class HealthMetricsCollector:
         return False
 
     async def _detect_anomaly(self, metric: HealthMetric):
-        """Detect anomalies in metric values using statistical analysis"""
-        try:
+        """Detect anomalies in metric values using statistical analysis"""        try:
             service_metric_key = f"{metric.service_name}.{metric.metric_name}"
             
             # Get historical values for this metric
@@ -327,8 +310,7 @@ class HealthMetricsCollector:
             self.logger.error(f"Anomaly detection failed for {metric.metric_name}: {str(e)}")
 
     async def _handle_anomaly(self, metric: HealthMetric, historical_values: List[float]):
-        """Handle detected anomaly"""
-        mean_val = statistics.mean(historical_values)
+        """Handle detected anomaly"""        mean_val = statistics.mean(historical_values)
         std_val = statistics.stdev(historical_values) if len(historical_values) > 1 else 0
         
         self.logger.warning(
@@ -347,16 +329,14 @@ class HealthMetricsCollector:
         }
 
     async def aggregate_metrics(self, interval_minutes: int = 5) -> List[AggregatedMetrics]:
-        """
-        Aggregate metrics for specified time interval
+        """        Aggregate metrics for specified time interval
         
         Args:
             interval_minutes: Aggregation interval in minutes
             
         Returns:
             List[AggregatedMetrics]: Aggregated metrics for the interval
-        """
-        try:
+        """        try:
             current_time = datetime.utcnow()
             interval_start = current_time - timedelta(minutes=interval_minutes)
             
@@ -407,8 +387,7 @@ class HealthMetricsCollector:
 
     async def analyze_health_trends(self, service_name: str, metric_name: str, 
                                   hours: int = 24) -> HealthTrend:
-        """
-        Analyze health trends for specific service and metric
+        """        Analyze health trends for specific service and metric
         
         Args:
             service_name: Name of service to analyze
@@ -417,8 +396,7 @@ class HealthMetricsCollector:
             
         Returns:
             HealthTrend: Trend analysis result
-        """
-        try:
+        """        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
             # Collect historical data
@@ -500,16 +478,14 @@ class HealthMetricsCollector:
             )
 
     async def get_metrics_summary(self, time_range_hours: int = 1) -> Dict[str, Any]:
-        """
-        Get comprehensive metrics summary
+        """        Get comprehensive metrics summary
         
         Args:
             time_range_hours: Time range for summary in hours
             
         Returns:
             Dict[str, Any]: Metrics summary with statistics and insights
-        """
-        try:
+        """        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=time_range_hours)
             
             # Filter recent metrics
@@ -590,13 +566,11 @@ class HealthMetricsCollector:
             }
 
     async def export_prometheus_metrics(self) -> str:
-        """
-        Export metrics in Prometheus format
+        """        Export metrics in Prometheus format
         
         Returns:
             str: Metrics in Prometheus exposition format
-        """
-        try:
+        """        try:
             prometheus_output = []
             current_time = int(datetime.utcnow().timestamp() * 1000)
             
@@ -630,8 +604,7 @@ class HealthMetricsCollector:
             return f"# Error exporting metrics: {str(e)}\n"
 
     async def cleanup_old_metrics(self):
-        """Clean up old metrics based on retention policies"""
-        try:
+        """Clean up old metrics based on retention policies"""        try:
             current_time = datetime.utcnow()
             raw_cutoff = current_time - timedelta(hours=self.raw_metrics_retention_hours)
             
@@ -661,8 +634,7 @@ class HealthMetricsCollector:
             self.logger.error(f"Failed to cleanup old metrics: {str(e)}")
 
     def get_current_metrics_stats(self) -> Dict[str, Any]:
-        """Get current metrics collection statistics"""
-        return {
+        """Get current metrics collection statistics"""        return {
             "total_raw_metrics": len(self._raw_metrics),
             "unique_services": len(self._service_metrics),
             "unique_metric_types": len(set(m.metric_name for m in self._raw_metrics)),

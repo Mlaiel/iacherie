@@ -1,5 +1,4 @@
-"""
-Metadata Processor Module - IA-Influencer-Agent Platform
+"""Metadata Processor Module - IA-Influencer-Agent Platform
 
 Industrial-grade metadata extraction, management, and enrichment engine.
 Comprehensive metadata handling for all content types with AI-powered analysis.
@@ -14,7 +13,6 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
-
 import asyncio
 import logging
 import json
@@ -76,8 +74,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetadataType(str, Enum):
-    """Types of metadata"""
-    TECHNICAL = "technical"
+    """Types of metadata"""    TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     ADMINISTRATIVE = "administrative"
     STRUCTURAL = "structural"
@@ -90,8 +87,7 @@ class MetadataType(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Content format types"""
-    IMAGE_JPEG = "image/jpeg"
+    """Content format types"""    IMAGE_JPEG = "image/jpeg"
     IMAGE_PNG = "image/png"
     IMAGE_GIF = "image/gif"
     IMAGE_WEBP = "image/webp"
@@ -112,8 +108,7 @@ class ContentFormat(str, Enum):
 
 
 class MetadataSchema(str, Enum):
-    """Metadata schema standards"""
-    DUBLIN_CORE = "dublin_core"
+    """Metadata schema standards"""    DUBLIN_CORE = "dublin_core"
     EXIF = "exif"
     IPTC = "iptc"
     XMP = "xmp"
@@ -125,8 +120,7 @@ class MetadataSchema(str, Enum):
 
 @dataclass
 class MetadataProcessingConfig:
-    """Configuration for metadata processing"""
-    # Extraction settings
+    """Configuration for metadata processing"""    # Extraction settings
     extract_technical_metadata: bool = True
     extract_descriptive_metadata: bool = True
     extract_embedded_metadata: bool = True
@@ -175,8 +169,7 @@ class MetadataProcessingConfig:
 
 @dataclass
 class TechnicalMetadata:
-    """Technical metadata for content"""
-    # File properties
+    """Technical metadata for content"""    # File properties
     filename: Optional[str] = None
     file_size: Optional[int] = None
     file_format: Optional[str] = None
@@ -209,8 +202,7 @@ class TechnicalMetadata:
 
 @dataclass
 class DescriptiveMetadata:
-    """Descriptive metadata for content"""
-    # Basic description
+    """Descriptive metadata for content"""    # Basic description
     title: Optional[str] = None
     description: Optional[str] = None
     keywords: List[str] = field(default_factory=list)
@@ -247,8 +239,7 @@ class DescriptiveMetadata:
 
 @dataclass
 class AdministrativeMetadata:
-    """Administrative metadata for content"""
-    # Content management
+    """Administrative metadata for content"""    # Content management
     content_id: Optional[str] = None
     version: Optional[str] = None
     status: Optional[str] = None
@@ -280,8 +271,7 @@ class AdministrativeMetadata:
 
 @dataclass
 class StructuralMetadata:
-    """Structural metadata for content"""
-    # Content structure
+    """Structural metadata for content"""    # Content structure
     components: List[Dict[str, Any]] = field(default_factory=list)
     relationships: List[Dict[str, Any]] = field(default_factory=list)
     hierarchy: Optional[Dict[str, Any]] = None
@@ -304,8 +294,7 @@ class StructuralMetadata:
 
 @dataclass
 class PreservationMetadata:
-    """Preservation metadata for content"""
-    # Preservation information
+    """Preservation metadata for content"""    # Preservation information
     preservation_level: Optional[str] = None
     preservation_actions: List[Dict[str, Any]] = field(default_factory=list)
     risk_assessment: Optional[Dict[str, Any]] = None
@@ -328,8 +317,7 @@ class PreservationMetadata:
 
 @dataclass
 class ContextualMetadata:
-    """Contextual metadata for content"""
-    # Temporal context
+    """Contextual metadata for content"""    # Temporal context
     creation_context: Optional[Dict[str, Any]] = None
     publication_context: Optional[Dict[str, Any]] = None
     usage_context: Optional[Dict[str, Any]] = None
@@ -351,8 +339,7 @@ class ContextualMetadata:
 
 @dataclass
 class ContentMetadata:
-    """Complete metadata package for content"""
-    # Metadata components
+    """Complete metadata package for content"""    # Metadata components
     technical: TechnicalMetadata = field(default_factory=TechnicalMetadata)
     descriptive: DescriptiveMetadata = field(default_factory=DescriptiveMetadata)
     administrative: AdministrativeMetadata = field(default_factory=AdministrativeMetadata)
@@ -377,13 +364,11 @@ class ContentMetadata:
 
 
 class MetadataProcessor:
-    """
-    📊 ENTERPRISE METADATA PROCESSOR
+    """    📊 ENTERPRISE METADATA PROCESSOR
     
     Industrial-grade metadata extraction, management, and enrichment engine
     with comprehensive support for all content types and AI-powered analysis.
-    """
-    
+    """    
     def __init__(
         self,
         db_session,
@@ -427,8 +412,7 @@ class MetadataProcessor:
             self.logger.warning("AI metadata enrichment libraries not available")
     
     async def initialize(self) -> bool:
-        """Initialize the metadata processor"""
-        try:
+        """Initialize the metadata processor"""        try:
             # Initialize AI models
             await self._initialize_ai_models()
             
@@ -452,8 +436,7 @@ class MetadataProcessor:
         content_type: Optional[str] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Extract comprehensive metadata from content
+        """        Extract comprehensive metadata from content
         
         Args:
             content: Content to analyze (file path, bytes, or Path object)
@@ -462,8 +445,7 @@ class MetadataProcessor:
             
         Returns:
             Extracted metadata result
-        """
-        try:
+        """        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -567,8 +549,7 @@ class MetadataProcessor:
         content: Optional[Union[str, bytes, Path]] = None,
         enrichment_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Enrich existing metadata with additional information
+        """        Enrich existing metadata with additional information
         
         Args:
             existing_metadata: Existing metadata to enrich
@@ -577,8 +558,7 @@ class MetadataProcessor:
             
         Returns:
             Enriched metadata
-        """
-        try:
+        """        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -642,8 +622,7 @@ class MetadataProcessor:
         query: Dict[str, Any],
         search_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Search content by metadata criteria
+        """        Search content by metadata criteria
         
         Args:
             query: Metadata search query
@@ -651,8 +630,7 @@ class MetadataProcessor:
             
         Returns:
             Search results
-        """
-        try:
+        """        try:
             search_options = search_options or {}
             
             # Build search query based on metadata fields
@@ -673,8 +651,7 @@ class MetadataProcessor:
             }
     
     async def _detect_content_type(self, content: Union[str, bytes, Path]) -> str:
-        """Detect content type from content"""
-        try:
+        """Detect content type from content"""        try:
             if isinstance(content, (str, Path)):
                 # File path - use file extension
                 file_path = Path(content)
@@ -714,8 +691,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         content_type: str
     ) -> TechnicalMetadata:
-        """Extract technical metadata"""
-        try:
+        """Extract technical metadata"""        try:
             metadata = TechnicalMetadata()
             
             # Basic file information
@@ -756,8 +732,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         metadata: TechnicalMetadata
     ):
-        """Extract image technical metadata"""
-        try:
+        """Extract image technical metadata"""        try:
             if not IMAGE_METADATA_AVAILABLE:
                 return
             
@@ -791,8 +766,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         metadata: TechnicalMetadata
     ):
-        """Extract video technical metadata"""
-        try:
+        """Extract video technical metadata"""        try:
             if not VIDEO_METADATA_AVAILABLE:
                 return
             
@@ -818,8 +792,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         metadata: TechnicalMetadata
     ):
-        """Extract audio technical metadata"""
-        try:
+        """Extract audio technical metadata"""        try:
             if not AUDIO_METADATA_AVAILABLE:
                 return
             
@@ -842,8 +815,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         content_type: str
     ) -> DescriptiveMetadata:
-        """Extract descriptive metadata"""
-        try:
+        """Extract descriptive metadata"""        try:
             metadata = DescriptiveMetadata()
             
             # Content-specific descriptive extraction
@@ -867,8 +839,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         metadata: DescriptiveMetadata
     ):
-        """Extract text descriptive metadata"""
-        try:
+        """Extract text descriptive metadata"""        try:
             # Get text content
             if isinstance(content, bytes):
                 text = content.decode('utf-8', errors='ignore')
@@ -906,8 +877,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         metadata: DescriptiveMetadata
     ):
-        """Extract image descriptive metadata"""
-        try:
+        """Extract image descriptive metadata"""        try:
             if not IMAGE_METADATA_AVAILABLE:
                 return
             
@@ -923,8 +893,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         metadata: DescriptiveMetadata
     ):
-        """Extract video descriptive metadata"""
-        try:
+        """Extract video descriptive metadata"""        try:
             # Video content analysis would be implemented here
             metadata.scene_description = "Video content analysis would be performed here"
             
@@ -936,8 +905,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         metadata: DescriptiveMetadata
     ):
-        """Extract audio descriptive metadata"""
-        try:
+        """Extract audio descriptive metadata"""        try:
             if not AUDIO_METADATA_AVAILABLE:
                 return
             
@@ -952,8 +920,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract embedded metadata from content"""
-        try:
+        """Extract embedded metadata from content"""        try:
             embedded_metadata = {}
             
             if content_type.startswith('image/') and IMAGE_METADATA_AVAILABLE:
@@ -973,8 +940,7 @@ class MetadataProcessor:
         self,
         content: Union[str, bytes, Path]
     ) -> Dict[str, Any]:
-        """Extract EXIF and other embedded image metadata"""
-        try:
+        """Extract EXIF and other embedded image metadata"""        try:
             embedded = {}
             
             # Open image
@@ -1005,8 +971,7 @@ class MetadataProcessor:
         self,
         content: Union[str, bytes, Path]
     ) -> Dict[str, Any]:
-        """Extract ID3 and other embedded audio metadata"""
-        try:
+        """Extract ID3 and other embedded audio metadata"""        try:
             embedded = {}
             
             if isinstance(content, (str, Path)):
@@ -1029,8 +994,7 @@ class MetadataProcessor:
         self,
         content: Union[str, bytes, Path]
     ) -> Dict[str, Any]:
-        """Extract embedded video metadata"""
-        try:
+        """Extract embedded video metadata"""        try:
             embedded = {}
             
             # Video metadata extraction would be implemented here
@@ -1048,8 +1012,7 @@ class MetadataProcessor:
         content: Union[str, bytes, Path],
         content_type: str
     ):
-        """Enrich metadata with AI-powered analysis"""
-        try:
+        """Enrich metadata with AI-powered analysis"""        try:
             if not AI_METADATA_AVAILABLE:
                 return
             
@@ -1074,8 +1037,7 @@ class MetadataProcessor:
         metadata: ContentMetadata,
         content: Union[str, bytes, Path]
     ):
-        """Generate AI-powered content description"""
-        try:
+        """Generate AI-powered content description"""        try:
             # AI description would be implemented here
             # Using vision models for images/videos, NLP for text, etc.
             pass
@@ -1084,8 +1046,7 @@ class MetadataProcessor:
             self.logger.error(f"AI content description failed: {e}")
     
     async def _extract_keywords_ai(self, metadata: ContentMetadata):
-        """Extract keywords using AI"""
-        try:
+        """Extract keywords using AI"""        try:
             # AI keyword extraction would be implemented here
             pass
             
@@ -1093,8 +1054,7 @@ class MetadataProcessor:
             self.logger.error(f"AI keyword extraction failed: {e}")
     
     async def _analyze_sentiment_ai(self, metadata: ContentMetadata):
-        """Analyze sentiment using AI"""
-        try:
+        """Analyze sentiment using AI"""        try:
             # AI sentiment analysis would be implemented here
             pass
             
@@ -1102,8 +1062,7 @@ class MetadataProcessor:
             self.logger.error(f"AI sentiment analysis failed: {e}")
     
     async def _extract_entities_ai(self, metadata: ContentMetadata):
-        """Extract entities using AI"""
-        try:
+        """Extract entities using AI"""        try:
             # AI entity extraction would be implemented here
             pass
             
@@ -1111,8 +1070,7 @@ class MetadataProcessor:
             self.logger.error(f"AI entity extraction failed: {e}")
     
     async def _extract_topics_ai(self, metadata: ContentMetadata):
-        """Extract topics using AI"""
-        try:
+        """Extract topics using AI"""        try:
             # AI topic modeling would be implemented here
             pass
             
@@ -1120,8 +1078,7 @@ class MetadataProcessor:
             self.logger.error(f"AI topic extraction failed: {e}")
     
     async def _enrich_geographic_data(self, metadata: ContentMetadata):
-        """Enrich geographic metadata"""
-        try:
+        """Enrich geographic metadata"""        try:
             # Geographic enrichment would be implemented here
             pass
             
@@ -1129,8 +1086,7 @@ class MetadataProcessor:
             self.logger.error(f"Geographic enrichment failed: {e}")
     
     async def _enrich_temporal_data(self, metadata: ContentMetadata):
-        """Enrich temporal metadata"""
-        try:
+        """Enrich temporal metadata"""        try:
             # Temporal enrichment would be implemented here
             pass
             
@@ -1138,8 +1094,7 @@ class MetadataProcessor:
             self.logger.error(f"Temporal enrichment failed: {e}")
     
     async def _enrich_semantic_data(self, metadata: ContentMetadata):
-        """Enrich semantic metadata"""
-        try:
+        """Enrich semantic metadata"""        try:
             # Semantic enrichment would be implemented here
             pass
             
@@ -1151,8 +1106,7 @@ class MetadataProcessor:
         metadata: ContentMetadata,
         results: List[Any]
     ):
-        """Process metadata extraction results"""
-        try:
+        """Process metadata extraction results"""        try:
             for result in results:
                 if isinstance(result, Exception):
                     self.logger.warning(f"Extraction task failed: {result}")
@@ -1169,8 +1123,7 @@ class MetadataProcessor:
             self.logger.error(f"Extraction results processing failed: {e}")
     
     async def _validate_metadata(self, metadata: ContentMetadata):
-        """Validate metadata quality and consistency"""
-        try:
+        """Validate metadata quality and consistency"""        try:
             # Metadata validation would be implemented here
             pass
             
@@ -1178,8 +1131,7 @@ class MetadataProcessor:
             self.logger.error(f"Metadata validation failed: {e}")
     
     async def _normalize_metadata(self, metadata: ContentMetadata):
-        """Normalize metadata values"""
-        try:
+        """Normalize metadata values"""        try:
             # Metadata normalization would be implemented here
             pass
             
@@ -1187,8 +1139,7 @@ class MetadataProcessor:
             self.logger.error(f"Metadata normalization failed: {e}")
     
     async def _calculate_metadata_quality(self, metadata: ContentMetadata):
-        """Calculate metadata quality scores"""
-        try:
+        """Calculate metadata quality scores"""        try:
             # Quality calculation would be implemented here
             metadata.completeness_score = 0.8
             metadata.accuracy_score = 0.9
@@ -1207,8 +1158,7 @@ class MetadataProcessor:
         metadata: ContentMetadata,
         schema: MetadataSchema
     ) -> Dict[str, Any]:
-        """Convert metadata to specified schema"""
-        try:
+        """Convert metadata to specified schema"""        try:
             if schema == MetadataSchema.DUBLIN_CORE:
                 return await self._convert_to_dublin_core(metadata)
             elif schema == MetadataSchema.CUSTOM:
@@ -1221,8 +1171,7 @@ class MetadataProcessor:
             return asdict(metadata)
     
     async def _convert_to_dublin_core(self, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Convert to Dublin Core schema"""
-        try:
+        """Convert to Dublin Core schema"""        try:
             dublin_core = {
                 "title": metadata.descriptive.title,
                 "description": metadata.descriptive.description,
@@ -1243,8 +1192,7 @@ class MetadataProcessor:
             return {}
     
     async def _get_content_bytes(self, content: Union[str, bytes, Path]) -> Optional[bytes]:
-        """Get content as bytes"""
-        try:
+        """Get content as bytes"""        try:
             if isinstance(content, bytes):
                 return content
             elif isinstance(content, (str, Path)):
@@ -1263,8 +1211,7 @@ class MetadataProcessor:
         content_type: str,
         options: Dict[str, Any]
     ) -> str:
-        """Generate cache key for metadata"""
-        try:
+        """Generate cache key for metadata"""        try:
             # Create hash of content and options
             content_str = str(content) if not isinstance(content, bytes) else str(len(content))
             options_str = json.dumps(options, sort_keys=True)
@@ -1277,8 +1224,7 @@ class MetadataProcessor:
             return f"metadata_{time.time()}"
     
     async def _store_metadata(self, metadata: ContentMetadata, content_type: str):
-        """Store metadata in database"""
-        try:
+        """Store metadata in database"""        try:
             # Database storage would be implemented here
             pass
             
@@ -1290,8 +1236,7 @@ class MetadataProcessor:
         query: Dict[str, Any],
         options: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Execute metadata search query"""
-        try:
+        """Execute metadata search query"""        try:
             # Search implementation would be here
             return []
             
@@ -1300,8 +1245,7 @@ class MetadataProcessor:
             return []
     
     async def _initialize_ai_models(self):
-        """Initialize AI models for metadata enrichment"""
-        try:
+        """Initialize AI models for metadata enrichment"""        try:
             if not AI_METADATA_AVAILABLE:
                 return
             
@@ -1311,8 +1255,7 @@ class MetadataProcessor:
             self.logger.error(f"AI models initialization failed: {e}")
     
     async def _initialize_extractors(self):
-        """Initialize metadata extractors"""
-        try:
+        """Initialize metadata extractors"""        try:
             # Extractor initialization would be implemented here
             pass
             
@@ -1320,8 +1263,7 @@ class MetadataProcessor:
             self.logger.error(f"Extractors initialization failed: {e}")
     
     async def _load_schema_mappings(self):
-        """Load schema mapping configurations"""
-        try:
+        """Load schema mapping configurations"""        try:
             # Schema mappings loading would be implemented here
             pass
             
@@ -1329,8 +1271,7 @@ class MetadataProcessor:
             self.logger.error(f"Schema mappings loading failed: {e}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the metadata processor"""
-        health_status = {
+        """Perform health check on the metadata processor"""        health_status = {
             "status": "healthy" if self._initialized else "not_initialized",
             "image_metadata_available": IMAGE_METADATA_AVAILABLE,
             "audio_metadata_available": AUDIO_METADATA_AVAILABLE,
@@ -1346,8 +1287,7 @@ class MetadataProcessor:
         return health_status
     
     async def shutdown(self):
-        """Gracefully shutdown the metadata processor"""
-        try:
+        """Gracefully shutdown the metadata processor"""        try:
             # Clear cache
             self._metadata_cache.clear()
             
@@ -1366,8 +1306,7 @@ async def create_metadata_processor(
     redis_client,
     config: Optional[Dict[str, Any]] = None
 ) -> MetadataProcessor:
-    """
-    Factory function to create and initialize a metadata processor
+    """    Factory function to create and initialize a metadata processor
     
     Args:
         db_session: Database session
@@ -1376,8 +1315,7 @@ async def create_metadata_processor(
         
     Returns:
         Initialized MetadataProcessor instance
-    """
-    # Create config from dict if provided
+    """    # Create config from dict if provided
     processor_config = None
     if config:
         processor_config = MetadataProcessingConfig(**{

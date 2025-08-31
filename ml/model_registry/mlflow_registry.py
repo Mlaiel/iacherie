@@ -1,5 +1,4 @@
-"""
-🚀 MLflow Model Registry - IA Influencer Agent Platform Enterprise
+"""🚀 MLflow Model Registry - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/ml/model_registry/mlflow_registry.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Gestion complète du cycle de vie des modèles ML
 - Model promotion et deployment
 - Rollback et A/B testing support
 """
-
 import asyncio
 import logging
 import time
@@ -44,23 +42,20 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class ModelStage(Enum):
-    """Stades du cycle de vie d'un modèle"""
-    NONE = "None"
+    """Stades du cycle de vie d'un modèle"""    NONE = "None"
     STAGING = "Staging"
     PRODUCTION = "Production"
     ARCHIVED = "Archived"
 
 class RegistryStatus(Enum):
-    """Statut des opérations registry"""
-    SUCCESS = "success"
+    """Statut des opérations registry"""    SUCCESS = "success"
     FAILED = "failed"
     PENDING = "pending"
     IN_PROGRESS = "in_progress"
 
 @dataclass
 class ModelMetadata:
-    """Métadonnées d'un modèle"""
-    name: str
+    """Métadonnées d'un modèle"""    name: str
     version: str
     stage: ModelStage
     description: Optional[str] = None
@@ -74,8 +69,7 @@ class ModelMetadata:
 
 @dataclass
 class ModelRegistryConfig:
-    """Configuration du model registry"""
-    tracking_uri: str = "sqlite:///mlflow.db"
+    """Configuration du model registry"""    tracking_uri: str = "sqlite:///mlflow.db"
     artifact_root: str = "./mlruns"
     experiment_name: str = "Default"
     enable_auto_versioning: bool = True
@@ -85,8 +79,7 @@ class ModelRegistryConfig:
 
 @dataclass
 class DeploymentInfo:
-    """Informations de déploiement"""
-    model_name: str
+    """Informations de déploiement"""    model_name: str
     version: str
     stage: ModelStage
     endpoint_url: Optional[str] = None
@@ -95,8 +88,7 @@ class DeploymentInfo:
     performance_metrics: Dict[str, float] = field(default_factory=dict)
 
 class MLflowModelRegistry:
-    """Registre de modèles MLflow Enterprise"""
-    
+    """Registre de modèles MLflow Enterprise"""    
     def __init__(self, config: ModelRegistryConfig):
         self.config = config
         self.client = None
@@ -110,8 +102,7 @@ class MLflowModelRegistry:
         self.deployment_cache: Dict[str, DeploymentInfo] = {}
     
     def _initialize_mlflow(self):
-        """Initialise la connexion MLflow"""
-        try:
+        """Initialise la connexion MLflow"""        try:
             # Configuration MLflow
             mlflow.set_tracking_uri(self.config.tracking_uri)
             
@@ -146,8 +137,7 @@ class MLflowModelRegistry:
                            tags: Optional[Dict[str, str]] = None,
                            metrics: Optional[Dict[str, float]] = None,
                            params: Optional[Dict[str, Any]] = None) -> str:
-        """Enregistre un nouveau modèle dans le registry"""
-        
+        """Enregistre un nouveau modèle dans le registry"""        
         try:
             # Démarrer un run MLflow si nécessaire
             if run_id is None:
@@ -201,8 +191,7 @@ class MLflowModelRegistry:
                         model_name: str,
                         metrics: Optional[Dict[str, float]] = None,
                         params: Optional[Dict[str, Any]] = None) -> str:
-        """Log un modèle dans MLflow"""
-        
+        """Log un modèle dans MLflow"""        
         try:
             # Déterminer le type de modèle et le logger approprié
             model_type = type(model).__module__
@@ -234,8 +223,7 @@ class MLflowModelRegistry:
             raise
     
     async def _validate_model(self, model_name: str, version: str) -> bool:
-        """Valide un modèle enregistré"""
-        
+        """Valide un modèle enregistré"""        
         try:
             # Charger le modèle pour validation
             model_uri = f"models:/{model_name}/{version}"
@@ -268,8 +256,7 @@ class MLflowModelRegistry:
                           model_name: str,
                           version: str,
                           stage: ModelStage) -> bool:
-        """Promeut un modèle vers un nouveau stade"""
-        
+        """Promeut un modèle vers un nouveau stade"""        
         try:
             # Vérifier que le modèle existe
             model_version = self.client.get_model_version(model_name, version)
@@ -313,8 +300,7 @@ class MLflowModelRegistry:
             return False
     
     async def _archive_production_models(self, model_name: str):
-        """Archive les modèles actuellement en production"""
-        
+        """Archive les modèles actuellement en production"""        
         try:
             # Récupérer les modèles en production
             production_models = self.client.get_latest_versions(
@@ -338,8 +324,7 @@ class MLflowModelRegistry:
                        model_name: str, 
                        version: Optional[str] = None,
                        stage: Optional[ModelStage] = None) -> Optional[Any]:
-        """Récupère un modèle du registry"""
-        
+        """Récupère un modèle du registry"""        
         try:
             # Déterminer l'URI du modèle
             if version:
@@ -372,8 +357,7 @@ class MLflowModelRegistry:
     async def get_model_metadata(self,
                                model_name: str,
                                version: Optional[str] = None) -> Optional[ModelMetadata]:
-        """Récupère les métadonnées d'un modèle"""
-        
+        """Récupère les métadonnées d'un modèle"""        
         try:
             if version:
                 model_version = self.client.get_model_version(model_name, version)
@@ -408,8 +392,7 @@ class MLflowModelRegistry:
             return None
     
     async def list_models(self) -> List[str]:
-        """Liste tous les modèles dans le registry"""
-        
+        """Liste tous les modèles dans le registry"""        
         try:
             registered_models = self.client.list_registered_models()
             return [model.name for model in registered_models]
@@ -419,8 +402,7 @@ class MLflowModelRegistry:
             return []
     
     async def list_model_versions(self, model_name: str) -> List[ModelMetadata]:
-        """Liste toutes les versions d'un modèle"""
-        
+        """Liste toutes les versions d'un modèle"""        
         try:
             model_versions = self.client.search_model_versions(f"name='{model_name}'")
             
@@ -437,8 +419,7 @@ class MLflowModelRegistry:
             return []
     
     async def delete_model_version(self, model_name: str, version: str) -> bool:
-        """Supprime une version spécifique d'un modèle"""
-        
+        """Supprime une version spécifique d'un modèle"""        
         try:
             self.client.delete_model_version(model_name, version)
             
@@ -457,8 +438,7 @@ class MLflowModelRegistry:
     async def compare_models(self,
                            model_specs: List[Tuple[str, str]],
                            metrics: List[str] = None) -> pd.DataFrame:
-        """Compare plusieurs modèles"""
-        
+        """Compare plusieurs modèles"""        
         try:
             if metrics is None:
                 metrics = ['accuracy', 'precision', 'recall', 'f1_score']
@@ -488,8 +468,7 @@ class MLflowModelRegistry:
             return pd.DataFrame()
     
     async def rollback_to_version(self, model_name: str, version: str) -> bool:
-        """Rollback vers une version spécifique en production"""
-        
+        """Rollback vers une version spécifique en production"""        
         try:
             # Vérifier que la version existe
             model_version = self.client.get_model_version(model_name, version)
@@ -521,8 +500,7 @@ class MLflowModelRegistry:
             return False
     
     async def cleanup_old_versions(self, days_old: int = None) -> int:
-        """Nettoie les anciennes versions de modèles"""
-        
+        """Nettoie les anciennes versions de modèles"""        
         if days_old is None:
             days_old = self.config.retention_days
         
@@ -560,8 +538,7 @@ class MLflowModelRegistry:
             return 0
     
     async def export_model_metadata(self, filepath: str) -> bool:
-        """Exporte les métadonnées de tous les modèles"""
-        
+        """Exporte les métadonnées de tous les modèles"""        
         try:
             all_metadata = []
             models = await self.list_models()
@@ -597,12 +574,10 @@ class MLflowModelRegistry:
 
 # Factory pour créer des registry spécialisés
 class ModelRegistryFactory:
-    """Factory pour créer des registres spécialisés"""
-    
+    """Factory pour créer des registres spécialisés"""    
     @staticmethod
     def create_local_registry(experiment_name: str = "Local_ML_Experiments") -> MLflowModelRegistry:
-        """Registry local pour développement"""
-        config = ModelRegistryConfig(
+        """Registry local pour développement"""        config = ModelRegistryConfig(
             tracking_uri="sqlite:///local_mlflow.db",
             artifact_root="./local_mlruns",
             experiment_name=experiment_name
@@ -612,8 +587,7 @@ class ModelRegistryFactory:
     @staticmethod
     def create_production_registry(tracking_uri: str, 
                                  artifact_root: str) -> MLflowModelRegistry:
-        """Registry pour production"""
-        config = ModelRegistryConfig(
+        """Registry pour production"""        config = ModelRegistryConfig(
             tracking_uri=tracking_uri,
             artifact_root=artifact_root,
             experiment_name="Production_ML_Models",
@@ -626,8 +600,7 @@ class ModelRegistryFactory:
 
 # Exemple d'utilisation
 async def example_usage():
-    """Exemple d'utilisation du model registry"""
-    
+    """Exemple d'utilisation du model registry"""    
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.datasets import make_classification
     from sklearn.metrics import accuracy_score

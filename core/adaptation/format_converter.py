@@ -1,5 +1,4 @@
-"""
-Enterprise Format Converter - Ultra-Advanced Multi-Format Content Transformation Engine
+"""Enterprise Format Converter - Ultra-Advanced Multi-Format Content Transformation Engine
 
 Revolutionary format conversion system providing industrial-strength transformation capabilities
 with AI-powered optimization, zero quality loss, and real-time processing for all creator types.
@@ -27,7 +26,6 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
-
 import asyncio
 import logging
 import tempfile
@@ -66,8 +64,7 @@ from .exceptions import ConversionError, UnsupportedFormatError, QualityValidati
 
 
 class ConversionQuality(str, Enum):
-    """Advanced conversion quality presets with AI enhancement"""
-    LOSSLESS = "lossless"              # Perfect quality preservation
+    """Advanced conversion quality presets with AI enhancement"""    LOSSLESS = "lossless"              # Perfect quality preservation
     ULTRA_HIGH = "ultra_high"          # Professional broadcast quality
     HIGH = "high"                      # Social media premium
     STANDARD = "standard"              # General purpose
@@ -81,8 +78,7 @@ class ConversionQuality(str, Enum):
 
 
 class ConversionProfile(str, Enum):
-    """Creator-specific conversion profiles"""
-    MUSICIAN = "musician"
+    """Creator-specific conversion profiles"""    MUSICIAN = "musician"
     PHOTOGRAPHER = "photographer"
     VIDEOGRAPHER = "videographer"
     BLOGGER = "blogger"
@@ -95,8 +91,7 @@ class ConversionProfile(str, Enum):
 
 
 class PlatformOptimization(str, Enum):
-    """Platform-specific optimization presets"""
-    YOUTUBE = "youtube"
+    """Platform-specific optimization presets"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -111,8 +106,7 @@ class PlatformOptimization(str, Enum):
 
 
 class ProcessingMode(str, Enum):
-    """Processing mode configurations"""
-    REAL_TIME = "real_time"
+    """Processing mode configurations"""    REAL_TIME = "real_time"
     BATCH = "batch"
     PRIORITY = "priority"
     BACKGROUND = "background"
@@ -122,8 +116,7 @@ class ProcessingMode(str, Enum):
 
 @dataclass
 class ConversionParams:
-    """Enterprise-grade conversion parameters with comprehensive configuration"""
-    target_format: str
+    """Enterprise-grade conversion parameters with comprehensive configuration"""    target_format: str
     quality: ConversionQuality
     conversion_profile: ConversionProfile
     platform_optimization: Optional[PlatformOptimization] = None
@@ -145,15 +138,13 @@ class ConversionParams:
     
     @property
     def cache_key(self) -> str:
-        """Generate cache key for conversion parameters"""
-        params_str = json.dumps(self.__dict__, sort_keys=True, default=str)
+        """Generate cache key for conversion parameters"""        params_str = json.dumps(self.__dict__, sort_keys=True, default=str)
         return hashlib.md5(params_str.encode()).hexdigest()
 
 
 @dataclass
 class QualityAnalysis:
-    """Comprehensive quality analysis metrics"""
-    technical_score: float
+    """Comprehensive quality analysis metrics"""    technical_score: float
     visual_quality: float
     audio_quality: float
     compression_efficiency: float
@@ -167,8 +158,7 @@ class QualityAnalysis:
 
 @dataclass
 class ConversionResult:
-    """Comprehensive result of format conversion process with analytics"""
-    conversion_id: str
+    """Comprehensive result of format conversion process with analytics"""    conversion_id: str
     success: bool
     output_path: str
     output_format: str
@@ -189,8 +179,7 @@ class ConversionResult:
 
 
 class FormatConverter:
-    """
-    Ultra-Advanced Enterprise Format Conversion Engine
+    """    Ultra-Advanced Enterprise Format Conversion Engine
     
     Revolutionary format transformation system providing industrial-strength conversion
     capabilities with AI-powered optimization, zero quality loss, and real-time processing.
@@ -210,8 +199,7 @@ class FormatConverter:
     - Video: MP4, AVI, MOV, WEBM, MKV, FLV, M4V, WMV, MTS
     - Image: JPEG, PNG, WEBP, GIF, SVG, TIFF, BMP, HEIC, RAW
     - Text: TXT, MD, HTML, JSON, XML, DOCX, PDF, RTF, EPUB
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -291,8 +279,7 @@ class FormatConverter:
         output_path: str,
         params: ConversionParams
     ) -> ConversionResult:
-        """
-        Convert audio file to target format with specified parameters
+        """        Convert audio file to target format with specified parameters
         
         Args:
             input_path: Path to source audio file
@@ -301,8 +288,7 @@ class FormatConverter:
             
         Returns:
             ConversionResult: Conversion results and metadata
-        """
-        start_time = asyncio.get_event_loop().time()
+        """        start_time = asyncio.get_event_loop().time()
         
         try:
             # Load audio file
@@ -386,8 +372,7 @@ class FormatConverter:
         output_path: str,
         params: ConversionParams
     ) -> ConversionResult:
-        """
-        Convert video file to target format with specified parameters
+        """        Convert video file to target format with specified parameters
         
         Args:
             input_path: Path to source video file
@@ -396,8 +381,7 @@ class FormatConverter:
             
         Returns:
             ConversionResult: Conversion results and metadata
-        """
-        start_time = asyncio.get_event_loop().time()
+        """        start_time = asyncio.get_event_loop().time()
         
         try:
             # Get original file size
@@ -505,8 +489,7 @@ class FormatConverter:
         output_path: str,
         params: ConversionParams
     ) -> ConversionResult:
-        """
-        Convert image file to target format with specified parameters
+        """        Convert image file to target format with specified parameters
         
         Args:
             input_path: Path to source image file
@@ -515,8 +498,7 @@ class FormatConverter:
             
         Returns:
             ConversionResult: Conversion results and metadata
-        """
-        start_time = asyncio.get_event_loop().time()
+        """        start_time = asyncio.get_event_loop().time()
         
         try:
             # Load image
@@ -615,8 +597,7 @@ class FormatConverter:
         conversion_tasks: List[Tuple[str, str, ConversionParams]],
         max_concurrent: int = 3
     ) -> List[ConversionResult]:
-        """
-        Perform batch format conversion with concurrency control
+        """        Perform batch format conversion with concurrency control
         
         Args:
             conversion_tasks: List of (input_path, output_path, params) tuples
@@ -624,8 +605,7 @@ class FormatConverter:
             
         Returns:
             List[ConversionResult]: Results for all conversions
-        """
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def convert_with_semaphore(task):
             async with semaphore:
@@ -669,8 +649,7 @@ class FormatConverter:
         return processed_results
     
     async def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get list of supported input and output formats"""
-        return {
+        """Get list of supported input and output formats"""        return {
             'audio': {
                 'input': ['mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a', 'wma'],
                 'output': ['mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a']
@@ -690,8 +669,7 @@ class FormatConverter:
         original_path: str,
         converted_path: str
     ) -> float:
-        """Analyze audio quality preservation"""
-        try:
+        """Analyze audio quality preservation"""        try:
             # Load both audio files
             original = AudioSegment.from_file(original_path)
             converted = AudioSegment.from_file(converted_path)
@@ -718,8 +696,7 @@ class FormatConverter:
         original_path: str,
         converted_path: str
     ) -> float:
-        """Analyze video quality preservation"""
-        try:
+        """Analyze video quality preservation"""        try:
             # Get video info
             original_probe = ffmpeg.probe(original_path)
             converted_probe = ffmpeg.probe(converted_path)
@@ -748,8 +725,7 @@ class FormatConverter:
         original_path: str,
         converted_path: str
     ) -> float:
-        """Analyze image quality preservation using structural similarity"""
-        try:
+        """Analyze image quality preservation using structural similarity"""        try:
             # Load images
             original = cv2.imread(original_path)
             converted = cv2.imread(converted_path)
@@ -784,8 +760,7 @@ class FormatConverter:
             return 0.8  # Default quality score
     
     def __del__(self):
-        """Cleanup temporary directory"""
-        try:
+        """Cleanup temporary directory"""        try:
             import shutil
             if hasattr(self, 'temp_dir') and os.path.exists(self.temp_dir):
                 shutil.rmtree(self.temp_dir)

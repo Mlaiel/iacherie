@@ -22,8 +22,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 • Security Specialist: Multi-Layer Protection Systems
 • Microservices Architect: Scalable Service Architecture
 • IA Prompt Engineer: Advanced AI Integration
-"""
-# Import all data models
+"""# Import all data models
 from .content_model import ContentModel, ContentType, ContentStatus, ContentVisibility
 from .user_model import UserModel, UserType, UserStatus, SubscriptionTier
 from .fingerprint_model import FingerprintModel, FingerprintType, FingerprintAlgorithm, FingerprintStatus, MatchConfidenceLevel

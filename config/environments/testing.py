@@ -1,5 +1,4 @@
-"""
-🔧 Testing Environment Configuration - IA-Influencer-Agent
+"""🔧 Testing Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + DBA + Security
@@ -15,7 +14,6 @@ Contact: mlaiel@live.de
 Configuration environnement testing pour tests automatisés.
 ==================================================================
 """
-
 import os
 import tempfile
 from typing import Dict, Any, List, Optional
@@ -33,11 +31,9 @@ from .base import (
 
 
 class TestingConfigManager(BaseEnvironmentConfigManager):
-    """
-    Configuration manager pour l'environnement de testing.
+    """    Configuration manager pour l'environnement de testing.
     Optimisé pour tests automatisés, données temporaires, mocks.
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             environment=EnvironmentType.TESTING,
@@ -50,8 +46,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
         )
         
     def load_environment_specific_config(self) -> None:
-        """Charge la configuration spécifique aux tests"""
-        
+        """Charge la configuration spécifique aux tests"""        
         # Configuration Base de Données Test (SQLite in-memory par défaut)
         test_db_url = os.getenv("TEST_DATABASE_URL")
         if test_db_url and test_db_url.startswith("postgresql://"):
@@ -146,8 +141,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
         )
         
     def validate_configuration(self) -> bool:
-        """Valide la configuration test (vérifications minimales)"""
-        try:
+        """Valide la configuration test (vérifications minimales)"""        try:
             # Vérifications de base pour tests
             assert self.database_config is not None, "Configuration base de données requise"
             assert self.redis_config is not None, "Configuration Redis requise"
@@ -165,8 +159,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
             return False
             
     def get_testing_features(self) -> Dict[str, Any]:
-        """Retourne les fonctionnalités spécifiques aux tests"""
-        return {
+        """Retourne les fonctionnalités spécifiques aux tests"""        return {
             "hot_reload": False,
             "debug_mode": True,
             "detailed_logging": True,
@@ -184,8 +177,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_mock_settings(self) -> Dict[str, Any]:
-        """Configuration des mocks pour tests"""
-        return {
+        """Configuration des mocks pour tests"""        return {
             "mock_spotify_api": True,
             "mock_youtube_api": True,
             "mock_instagram_api": True,
@@ -201,8 +193,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_test_database_settings(self) -> Dict[str, Any]:
-        """Paramètres base de données spécifiques aux tests"""
-        return {
+        """Paramètres base de données spécifiques aux tests"""        return {
             "in_memory_database": True,
             "auto_create_tables": True,
             "auto_drop_tables": True,
@@ -214,8 +205,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_performance_settings(self) -> Dict[str, Any]:
-        """Paramètres de performance pour tests rapides"""
-        return {
+        """Paramètres de performance pour tests rapides"""        return {
             "async_mode": True,
             "parallel_execution": True,
             "cache_disabled": True,
@@ -227,8 +217,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_test_data_settings(self) -> Dict[str, Any]:
-        """Configuration des données de test"""
-        return {
+        """Configuration des données de test"""        return {
             "factory_enabled": True,
             "faker_enabled": True,
             "fixtures_enabled": True,
@@ -240,8 +229,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def create_test_directories(self) -> None:
-        """Crée les répertoires temporaires pour tests"""
-        import os
+        """Crée les répertoires temporaires pour tests"""        import os
         from pathlib import Path
         
         directories = [
@@ -257,8 +245,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
             Path(directory).mkdir(parents=True, exist_ok=True)
             
     def cleanup_test_environment(self) -> None:
-        """Nettoie l'environnement de test"""
-        import shutil
+        """Nettoie l'environnement de test"""        import shutil
         from pathlib import Path
         
         cleanup_paths = [
@@ -272,8 +259,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
                 shutil.rmtree(path, ignore_errors=True)
                 
     def get_test_urls(self) -> Dict[str, str]:
-        """URLs utiles pour tests"""
-        return {
+        """URLs utiles pour tests"""        return {
             "api_base": f"http://{self.host}:{self.port}",
             "health_check": f"http://{self.host}:{self.port}/health",
             "test_runner": f"http://{self.host}:{self.port}/test",
@@ -281,8 +267,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
         }
         
     def export_to_dict(self) -> Dict[str, Any]:
-        """Exporte la configuration test complète"""
-        base_config = super().export_to_dict()
+        """Exporte la configuration test complète"""        base_config = super().export_to_dict()
         base_config.update({
             "testing_features": self.get_testing_features(),
             "mock_settings": self.get_mock_settings(),
@@ -297,8 +282,7 @@ class TestingConfigManager(BaseEnvironmentConfigManager):
 
 # Fonction utilitaire pour configuration test
 def create_testing_config() -> TestingConfigManager:
-    """Crée et initialise la configuration test"""
-    config = TestingConfigManager()
+    """Crée et initialise la configuration test"""    config = TestingConfigManager()
     config.initialize_configuration()
     config.create_test_directories()
     return config
@@ -306,8 +290,7 @@ def create_testing_config() -> TestingConfigManager:
 
 # Context manager pour tests isolés
 class TestEnvironmentContext:
-    """Context manager pour environnement de test isolé"""
-    
+    """Context manager pour environnement de test isolé"""    
     def __init__(self):
         self.config = None
         

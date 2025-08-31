@@ -1,5 +1,4 @@
-"""
-Resource Coordinator - Enterprise Resource Management & Allocation System
+"""Resource Coordinator - Enterprise Resource Management & Allocation System
 
 Advanced resource coordination system providing intelligent resource allocation,
 monitoring, and optimization for the IA-Influencer-Agent platform.
@@ -15,7 +14,6 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Resource Discovery → Allocation → Monitoring → Optimization → Cleanup → Reporting
 """
-
 import asyncio
 import uuid
 import psutil
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class ResourceType(Enum):
-    """Types of resources managed by the system"""
-    CPU = "cpu"
+    """Types of resources managed by the system"""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -47,8 +44,7 @@ class ResourceType(Enum):
 
 
 class AllocationStrategy(Enum):
-    """Resource allocation strategies"""
-    FIRST_FIT = "first_fit"
+    """Resource allocation strategies"""    FIRST_FIT = "first_fit"
     BEST_FIT = "best_fit"
     WORST_FIT = "worst_fit"
     ROUND_ROBIN = "round_robin"
@@ -59,8 +55,7 @@ class AllocationStrategy(Enum):
 
 
 class ResourceStatus(Enum):
-    """Resource status states"""
-    AVAILABLE = "available"
+    """Resource status states"""    AVAILABLE = "available"
     ALLOCATED = "allocated"
     RESERVED = "reserved"
     UNAVAILABLE = "unavailable"
@@ -70,8 +65,7 @@ class ResourceStatus(Enum):
 
 
 class AllocationPriority(Enum):
-    """Resource allocation priority levels"""
-    CRITICAL = 1
+    """Resource allocation priority levels"""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -80,8 +74,7 @@ class AllocationPriority(Enum):
 
 @dataclass
 class ResourceCapacity:
-    """Resource capacity definition"""
-    total: float
+    """Resource capacity definition"""    total: float
     available: float
     allocated: float
     reserved: float
@@ -89,16 +82,14 @@ class ResourceCapacity:
     
     @property
     def utilization_percentage(self) -> float:
-        """Calculate resource utilization percentage"""
-        if self.total == 0:
+        """Calculate resource utilization percentage"""        if self.total == 0:
             return 0.0
         return (self.allocated / self.total) * 100
 
 
 @dataclass
 class ResourceRequirement:
-    """Resource requirement specification"""
-    resource_type: ResourceType
+    """Resource requirement specification"""    resource_type: ResourceType
     amount: float
     priority: AllocationPriority
     duration_seconds: Optional[int] = None
@@ -108,8 +99,7 @@ class ResourceRequirement:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation record"""
-    allocation_id: str
+    """Resource allocation record"""    allocation_id: str
     resource_id: str
     consumer_id: str
     resource_type: ResourceType
@@ -122,8 +112,7 @@ class ResourceAllocation:
 
 @dataclass
 class ResourceInstance:
-    """Individual resource instance"""
-    resource_id: str
+    """Individual resource instance"""    resource_id: str
     resource_type: ResourceType
     name: str
     capacity: ResourceCapacity
@@ -136,8 +125,7 @@ class ResourceInstance:
 
 
 class ResourceCoordinator:
-    """Enterprise resource management and allocation coordination system"""
-    
+    """Enterprise resource management and allocation coordination system"""    
     def __init__(self, monitoring_interval: int = 30):
         self.monitoring_interval = monitoring_interval
         
@@ -182,8 +170,7 @@ class ResourceCoordinator:
         logger.info("ResourceCoordinator initialized successfully")
     
     def _initialize_system_resources(self):
-        """Initialize system resource instances"""
-        try:
+        """Initialize system resource instances"""        try:
             # CPU Resources
             cpu_resource = ResourceInstance(
                 resource_id="system_cpu",
@@ -312,8 +299,7 @@ class ResourceCoordinator:
             logger.error(f"System resource initialization failed: {e}")
     
     def register_resource(self, resource: ResourceInstance) -> bool:
-        """Register a new resource instance"""
-        try:
+        """Register a new resource instance"""        try:
             with self.resource_locks[resource.resource_id]:
                 self.resources[resource.resource_id] = resource
                 
@@ -330,8 +316,7 @@ class ResourceCoordinator:
         requirements: List[ResourceRequirement],
         strategy: Optional[AllocationStrategy] = None
     ) -> Dict[str, str]:
-        """Allocate resources based on requirements"""
-        try:
+        """Allocate resources based on requirements"""        try:
             strategy = strategy or self.default_strategy
             allocations = {}
             allocated_resources = []
@@ -383,8 +368,7 @@ class ResourceCoordinator:
         requirement: ResourceRequirement,
         strategy: AllocationStrategy
     ) -> Optional[str]:
-        """Allocate a single resource using specified strategy"""
-        try:
+        """Allocate a single resource using specified strategy"""        try:
             # Get suitable resources
             candidates = self._find_suitable_resources(requirement)
             
@@ -446,8 +430,7 @@ class ResourceCoordinator:
         self, 
         requirement: ResourceRequirement
     ) -> List[ResourceInstance]:
-        """Find resources suitable for the requirement"""
-        candidates = []
+        """Find resources suitable for the requirement"""        candidates = []
         
         for resource in self.resources.values():
             if (resource.resource_type == requirement.resource_type and
@@ -465,8 +448,7 @@ class ResourceCoordinator:
         resource: ResourceInstance, 
         constraints: Dict[str, Any]
     ) -> bool:
-        """Check if resource meets allocation constraints"""
-        try:
+        """Check if resource meets allocation constraints"""        try:
             for constraint_key, constraint_value in constraints.items():
                 if constraint_key == "location":
                     if resource.location != constraint_value:
@@ -492,16 +474,14 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """First-fit allocation strategy"""
-        return candidates[0] if candidates else None
+        """First-fit allocation strategy"""        return candidates[0] if candidates else None
     
     async def _allocate_best_fit(
         self, 
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Best-fit allocation strategy"""
-        if not candidates:
+        """Best-fit allocation strategy"""        if not candidates:
             return None
         
         # Find resource with minimum waste
@@ -517,8 +497,7 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Worst-fit allocation strategy"""
-        if not candidates:
+        """Worst-fit allocation strategy"""        if not candidates:
             return None
         
         # Find resource with maximum remaining capacity
@@ -534,8 +513,7 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Round-robin allocation strategy"""
-        if not candidates:
+        """Round-robin allocation strategy"""        if not candidates:
             return None
         
         # Simple round-robin based on allocation count
@@ -546,8 +524,7 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Priority-based allocation strategy"""
-        if not candidates:
+        """Priority-based allocation strategy"""        if not candidates:
             return None
         
         # Allocate based on resource health score and availability
@@ -561,8 +538,7 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Load-balanced allocation strategy"""
-        if not candidates:
+        """Load-balanced allocation strategy"""        if not candidates:
             return None
         
         # Find resource with lowest utilization
@@ -576,8 +552,7 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Fair-share allocation strategy"""
-        if not candidates:
+        """Fair-share allocation strategy"""        if not candidates:
             return None
         
         # Distribute load fairly across resources
@@ -588,8 +563,7 @@ class ResourceCoordinator:
         candidates: List[ResourceInstance], 
         requirement: ResourceRequirement
     ) -> Optional[ResourceInstance]:
-        """Predictive allocation strategy"""
-        if not candidates:
+        """Predictive allocation strategy"""        if not candidates:
             return None
         
         # Use historical data to predict best allocation
@@ -597,8 +571,7 @@ class ResourceCoordinator:
         return await self._allocate_best_fit(candidates, requirement)
     
     async def deallocate_resource(self, allocation_id: str) -> bool:
-        """Deallocate a previously allocated resource"""
-        try:
+        """Deallocate a previously allocated resource"""        try:
             if allocation_id not in self.allocations:
                 logger.warning(f"Allocation not found: {allocation_id}")
                 return False
@@ -639,8 +612,7 @@ class ResourceCoordinator:
             return False
     
     async def deallocate_consumer_resources(self, consumer_id: str) -> int:
-        """Deallocate all resources for a specific consumer"""
-        try:
+        """Deallocate all resources for a specific consumer"""        try:
             consumer_allocations = [
                 allocation_id for allocation_id, allocation in self.allocations.items()
                 if allocation.consumer_id == consumer_id
@@ -659,8 +631,7 @@ class ResourceCoordinator:
             return 0
     
     def start_monitoring(self):
-        """Start resource monitoring"""
-        if not self.monitoring_active:
+        """Start resource monitoring"""        if not self.monitoring_active:
             self.monitoring_active = True
             self.monitoring_thread = threading.Thread(
                 target=self._monitoring_loop,
@@ -670,15 +641,13 @@ class ResourceCoordinator:
             logger.info("Resource monitoring started")
     
     def stop_monitoring(self):
-        """Stop resource monitoring"""
-        self.monitoring_active = False
+        """Stop resource monitoring"""        self.monitoring_active = False
         if self.monitoring_thread:
             self.monitoring_thread.join(timeout=5)
         logger.info("Resource monitoring stopped")
     
     def _monitoring_loop(self):
-        """Continuous resource monitoring loop"""
-        while self.monitoring_active:
+        """Continuous resource monitoring loop"""        while self.monitoring_active:
             try:
                 self._update_resource_metrics()
                 self._check_resource_health()
@@ -689,8 +658,7 @@ class ResourceCoordinator:
                 logger.error(f"Monitoring loop error: {e}")
     
     def _update_resource_metrics(self):
-        """Update resource utilization metrics"""
-        try:
+        """Update resource utilization metrics"""        try:
             for resource in self.resources.values():
                 with self.resource_locks[resource.resource_id]:
                     # Update system resource metrics
@@ -730,8 +698,7 @@ class ResourceCoordinator:
             logger.error(f"Resource metrics update failed: {e}")
     
     def _check_resource_health(self):
-        """Check health status of all resources"""
-        try:
+        """Check health status of all resources"""        try:
             for resource in self.resources.values():
                 with self.resource_locks[resource.resource_id]:
                     previous_health = resource.health_score
@@ -763,8 +730,7 @@ class ResourceCoordinator:
             logger.error(f"Resource health check failed: {e}")
     
     def _handle_expired_allocations(self):
-        """Handle expired resource allocations"""
-        try:
+        """Handle expired resource allocations"""        try:
             now = datetime.now(timezone.utc)
             expired_allocations = []
             
@@ -781,8 +747,7 @@ class ResourceCoordinator:
             logger.error(f"Expired allocation handling failed: {e}")
     
     def _generate_optimization_recommendations(self):
-        """Generate resource optimization recommendations"""
-        try:
+        """Generate resource optimization recommendations"""        try:
             recommendations = []
             
             for resource in self.resources.values():
@@ -819,8 +784,7 @@ class ResourceCoordinator:
             logger.error(f"Optimization recommendation generation failed: {e}")
     
     async def _emit_resource_event(self, event_type: str, event_data: Dict[str, Any]):
-        """Emit resource events to registered handlers"""
-        try:
+        """Emit resource events to registered handlers"""        try:
             event_data.update({
                 "event_type": event_type,
                 "timestamp": datetime.now(timezone.utc).isoformat()
@@ -837,8 +801,7 @@ class ResourceCoordinator:
             logger.error(f"Event emission failed: {e}")
     
     def get_resource_status(self, resource_id: str) -> Optional[Dict[str, Any]]:
-        """Get current resource status"""
-        resource = self.resources.get(resource_id)
+        """Get current resource status"""        resource = self.resources.get(resource_id)
         if not resource:
             return None
         
@@ -861,8 +824,7 @@ class ResourceCoordinator:
         }
     
     def get_allocation_status(self, allocation_id: str) -> Optional[Dict[str, Any]]:
-        """Get allocation status"""
-        allocation = self.allocations.get(allocation_id)
+        """Get allocation status"""        allocation = self.allocations.get(allocation_id)
         if not allocation:
             return None
         
@@ -879,8 +841,7 @@ class ResourceCoordinator:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive system resource metrics"""
-        total_resources = len(self.resources)
+        """Get comprehensive system resource metrics"""        total_resources = len(self.resources)
         active_allocations = len(self.allocations)
         
         # Calculate overall utilization by resource type
@@ -902,17 +863,14 @@ class ResourceCoordinator:
         }
     
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register event handler for resource events"""
-        self.event_handlers[event_type].append(handler)
+        """Register event handler for resource events"""        self.event_handlers[event_type].append(handler)
     
     def set_default_strategy(self, strategy: AllocationStrategy):
-        """Set default allocation strategy"""
-        self.default_strategy = strategy
+        """Set default allocation strategy"""        self.default_strategy = strategy
         logger.info(f"Default allocation strategy set to: {strategy.value}")
     
     def shutdown(self):
-        """Shutdown resource coordinator and cleanup"""
-        try:
+        """Shutdown resource coordinator and cleanup"""        try:
             self.stop_monitoring()
             
             # Deallocate all resources

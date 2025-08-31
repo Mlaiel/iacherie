@@ -21,8 +21,7 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""
-from .rate_limiter import (
+"""from .rate_limiter import (
     RateLimiter,
     YouTubeRateLimiter,
     InstagramRateLimiter,

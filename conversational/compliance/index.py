@@ -1,5 +1,4 @@
-"""
-Ultra-Industrial Conversational Compliance Module Index
+"""Ultra-Industrial Conversational Compliance Module Index
 Enterprise-Grade Legal & Regulatory Compliance Suite for IA Influencer Agent
 
 Comprehensive compliance ecosystem providing centralized access to all compliance
@@ -37,7 +36,6 @@ LEGAL CONSEQUENCES: Violation will result in immediate legal action including:
 - Reporting to international law enforcement agencies
 - Patent infringement prosecution where applicable
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -65,14 +63,12 @@ from ..security.encryption import EncryptionService
 
 
 class ComplianceHub:
-    """
-    Enterprise Compliance Management Hub
+    """    Enterprise Compliance Management Hub
     
     Central orchestration point for all compliance operations, providing unified
     access to legal validation, content protection, platform compliance, and
     AI-powered monitoring capabilities.
-    """
-    
+    """    
     def __init__(self, 
                  db_manager: DatabaseManager,
                  cache_manager: CacheManager,
@@ -164,13 +160,11 @@ from .audit_system import ComplianceAuditSystem
 
 
 class ComplianceSystemIndex:
-    """
-    Main entry point for the IA Influencer Agent Compliance System
+    """    Main entry point for the IA Influencer Agent Compliance System
     
     Provides a unified interface for all compliance operations including
     legal validation, copyright protection, platform compliance, and monitoring.
-    """
-    
+    """    
     def __init__(self, 
                  db_manager, 
                  cache_manager, 
@@ -215,8 +209,7 @@ class ComplianceSystemIndex:
                                         content_data: Union[str, bytes],
                                         content_type: str,
                                         user_id: int) -> Dict[str, Any]:
-        """
-        Perform comprehensive AI-powered content analysis for compliance
+        """        Perform comprehensive AI-powered content analysis for compliance
         
         Args:
             content_id: Unique content identifier
@@ -226,8 +219,7 @@ class ComplianceSystemIndex:
             
         Returns:
             Dict: Comprehensive analysis results including fingerprinting, violations, and recommendations
-        """
-        try:
+        """        try:
             analysis_results = {}
             
             # 1. AI Fingerprinting
@@ -311,8 +303,7 @@ class ComplianceSystemIndex:
     async def start_compliance_monitoring_session(self, 
                                                  user_id: int,
                                                  monitoring_config: Dict[str, Any]) -> str:
-        """
-        Start a comprehensive compliance monitoring session
+        """        Start a comprehensive compliance monitoring session
         
         Args:
             user_id: User identifier
@@ -320,8 +311,7 @@ class ComplianceSystemIndex:
             
         Returns:
             str: Session ID for tracking
-        """
-        try:
+        """        try:
             session_id = f"compliance_session_{user_id}_{int(datetime.now().timestamp())}"
             
             # Initialize monitoring session
@@ -367,16 +357,14 @@ class ComplianceSystemIndex:
             raise
     
     async def stop_compliance_monitoring_session(self, session_id: str) -> bool:
-        """
-        Stop a compliance monitoring session
+        """        Stop a compliance monitoring session
         
         Args:
             session_id: Session identifier
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if session_id not in self.compliance_sessions:
                 self.logger.warning(f"Session not found: {session_id}")
                 return False
@@ -407,8 +395,7 @@ class ComplianceSystemIndex:
     async def get_compliance_dashboard_data(self, 
                                           user_id: int,
                                           time_range: Optional[timedelta] = None) -> Dict[str, Any]:
-        """
-        Get comprehensive compliance dashboard data
+        """        Get comprehensive compliance dashboard data
         
         Args:
             user_id: User identifier
@@ -416,8 +403,7 @@ class ComplianceSystemIndex:
             
         Returns:
             Dict: Dashboard data with metrics, alerts, and insights
-        """
-        try:
+        """        try:
             if time_range is None:
                 time_range = timedelta(hours=24)
             
@@ -487,8 +473,7 @@ class ComplianceSystemIndex:
             }
     
     def _calculate_overall_score(self, compliance_results: Dict[str, Any]) -> float:
-        """Calculate overall compliance score from individual results"""
-        try:
+        """Calculate overall compliance score from individual results"""        try:
             scores = []
             
             # Core compliance score
@@ -519,8 +504,7 @@ class ComplianceSystemIndex:
             return 0.0
     
     def _calculate_risk_score(self, analysis_results: Dict[str, Any]) -> float:
-        """Calculate overall risk score from analysis results"""
-        try:
+        """Calculate overall risk score from analysis results"""        try:
             risk_factors = []
             
             # Similarity detection risk
@@ -548,8 +532,7 @@ class ComplianceSystemIndex:
             return 0.0
     
     def _generate_recommendations(self, analysis_results: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on analysis results"""
-        recommendations = []
+        """Generate recommendations based on analysis results"""        recommendations = []
         
         try:
             # Check fingerprinting results
@@ -589,8 +572,7 @@ class ComplianceSystemIndex:
         return recommendations
     
     def _calculate_health_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall system health score"""
-        try:
+        """Calculate overall system health score"""        try:
             health_factors = []
             
             # Compliance health
@@ -623,16 +605,14 @@ class ComplianceSystemIndex:
     
     async def register_content_protection(self, 
                                         content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Register content for comprehensive protection
+        """        Register content for comprehensive protection
         
         Args:
             content_metadata: Complete content metadata including user_id, content_id, etc.
             
         Returns:
             Dict: Protection registration result with all protection levels activated
-        """
-        try:
+        """        try:
             protection_results = {}
             
             # 1. Register with copyright protection engine
@@ -699,16 +679,14 @@ class ComplianceSystemIndex:
     
     async def handle_violation_detected(self, 
                                       violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Handle detected compliance violation with automated response
+        """        Handle detected compliance violation with automated response
         
         Args:
             violation_data: Violation details and context
             
         Returns:
             Dict: Violation handling result with actions taken
-        """
-        try:
+        """        try:
             handling_results = {}
             
             # 1. Classify violation severity
@@ -776,8 +754,7 @@ class ComplianceSystemIndex:
                                        user_id: int,
                                        report_type: str = "comprehensive",
                                        time_range: Optional[timedelta] = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report
+        """        Generate comprehensive compliance report
         
         Args:
             user_id: User identifier
@@ -786,8 +763,7 @@ class ComplianceSystemIndex:
             
         Returns:
             Dict: Generated report with all compliance data
-        """
-        try:
+        """        try:
             if time_range is None:
                 time_range = timedelta(days=30)
             
@@ -866,8 +842,7 @@ class ComplianceSystemIndex:
             }
     
     def _classify_violation_severity(self, violation_data: Dict[str, Any]) -> str:
-        """Classify violation severity based on multiple factors"""
-        try:
+        """Classify violation severity based on multiple factors"""        try:
             severity_score = 0
             
             # Violation type scoring
@@ -912,8 +887,7 @@ class ComplianceSystemIndex:
             return "medium"  # Default to medium severity
     
     def _generate_executive_summary(self, report_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary from report data"""
-        try:
+        """Generate executive summary from report data"""        try:
             summary = {
                 "total_content_protected": 0,
                 "violations_detected": 0,
@@ -960,8 +934,7 @@ class ComplianceSystemIndex:
             return {"error": "Failed to generate executive summary"}
     
     def _generate_compliance_recommendations(self, report_data: Dict[str, Any]) -> List[str]:
-        """Generate compliance recommendations based on report data"""
-        recommendations = []
+        """Generate compliance recommendations based on report data"""        recommendations = []
         
         try:
             # Analyze compliance summary
@@ -998,8 +971,7 @@ class ComplianceSystemIndex:
         return recommendations
     
     def _calculate_overall_compliance_score(self, report_data: Dict[str, Any]) -> float:
-        """Calculate overall compliance score from report data"""
-        try:
+        """Calculate overall compliance score from report data"""        try:
             scores = []
             
             # Extract scores from different reports
@@ -1046,8 +1018,7 @@ __all__ = [
 async def create_compliance_hub(db_manager: DatabaseManager,
                               cache_manager: CacheManager,
                               encryption_service: EncryptionService) -> ComplianceHub:
-    """
-    Create and initialize a ComplianceHub instance
+    """    Create and initialize a ComplianceHub instance
     
     Args:
         db_manager: Database manager instance
@@ -1056,10 +1027,8 @@ async def create_compliance_hub(db_manager: DatabaseManager,
         
     Returns:
         ComplianceHub: Initialized compliance hub ready for use
-    """
-    return ComplianceHub(db_manager, cache_manager, encryption_service)
-        """
-        try:
+    """    return ComplianceHub(db_manager, cache_manager, encryption_service)
+        """        try:
             # Convert metadata to CopyrightMetadata object
             metadata = CopyrightMetadata(**content_metadata)
             
@@ -1087,16 +1056,14 @@ async def create_compliance_hub(db_manager: DatabaseManager,
             }
     
     async def process_dmca_takedown(self, dmca_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Process DMCA takedown request with full compliance workflow
+        """        Process DMCA takedown request with full compliance workflow
         
         Args:
             dmca_data: DMCA takedown request data
             
         Returns:
             Dict: DMCA processing result
-        """
-        try:
+        """        try:
             # Create DMCA request object
             dmca_request = DMCARequest(**dmca_data)
             
@@ -1132,8 +1099,7 @@ async def create_compliance_hub(db_manager: DatabaseManager,
                                         platforms: List[str],
                                         content_data: Dict[str, Any],
                                         submission_options: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Submit content to multiple platforms with compliance verification
+        """        Submit content to multiple platforms with compliance verification
         
         Args:
             content_id: Content identifier
@@ -1143,8 +1109,7 @@ async def create_compliance_hub(db_manager: DatabaseManager,
             
         Returns:
             Dict: Multi-platform submission results
-        """
-        try:
+        """        try:
             submission_results = {}
             successful_submissions = 0
             failed_submissions = 0
@@ -1193,13 +1158,11 @@ async def create_compliance_hub(db_manager: DatabaseManager,
             }
     
     async def generate_compliance_dashboard(self) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance dashboard
+        """        Generate comprehensive compliance dashboard
         
         Returns:
             Dict: Complete compliance dashboard data
-        """
-        try:
+        """        try:
             dashboard_data = {}
             
             # Get core compliance metrics
@@ -1236,13 +1199,11 @@ async def create_compliance_hub(db_manager: DatabaseManager,
             }
     
     async def start_comprehensive_monitoring(self) -> Dict[str, Any]:
-        """
-        Start comprehensive compliance monitoring across all systems
+        """        Start comprehensive compliance monitoring across all systems
         
         Returns:
             Dict: Monitoring startup result
-        """
-        try:
+        """        try:
             results = {}
             
             # Start automated monitoring
@@ -1276,8 +1237,7 @@ async def create_compliance_hub(db_manager: DatabaseManager,
             }
     
     def _calculate_overall_score(self, compliance_results: Dict[str, Any]) -> float:
-        """Calculate overall compliance score from component results"""
-        scores = []
+        """Calculate overall compliance score from component results"""        scores = []
         
         # Core compliance score
         if "core_compliance" in compliance_results:
@@ -1301,8 +1261,7 @@ async def create_compliance_hub(db_manager: DatabaseManager,
         return sum(scores) / len(scores) if scores else 0.0
     
     def _calculate_system_health(self, dashboard_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate overall system health metrics"""
-        health_indicators = []
+        """Calculate overall system health metrics"""        health_indicators = []
         
         # Check each system component
         for component, data in dashboard_data.items():
@@ -1328,8 +1287,7 @@ async def create_compliance_system(db_manager,
                                  cache_manager, 
                                  encryption_service,
                                  **optional_services) -> ComplianceSystemIndex:
-    """
-    Factory function to create and initialize the compliance system
+    """    Factory function to create and initialize the compliance system
     
     Args:
         db_manager: Database manager instance
@@ -1339,8 +1297,7 @@ async def create_compliance_system(db_manager,
         
     Returns:
         ComplianceSystemIndex: Initialized compliance system
-    """
-    compliance_system = ComplianceSystemIndex(
+    """    compliance_system = ComplianceSystemIndex(
         db_manager=db_manager,
         cache_manager=cache_manager,
         encryption_service=encryption_service,

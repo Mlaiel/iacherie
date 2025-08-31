@@ -1,5 +1,4 @@
-"""
-Infrastructure Health Monitoring Service
+"""Infrastructure Health Monitoring Service
 Comprehensive health checking for infrastructure components
 
 This module provides health monitoring for:
@@ -18,7 +17,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
-
 import asyncio
 import time
 import json
@@ -39,8 +37,7 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class InfrastructureMetrics:
-    """Infrastructure component performance metrics"""
-    component_name: str
+    """Infrastructure component performance metrics"""    component_name: str
     component_type: str
     status: str
     response_time_ms: float
@@ -52,21 +49,17 @@ class InfrastructureMetrics:
 
 
 class InfrastructureHealthChecker:
-    """
-    Infrastructure health monitoring system
+    """    Infrastructure health monitoring system
     
     Monitors all infrastructure components including containers,
     load balancers, storage, networking, and observability systems.
     """
-
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize infrastructure health checker
+        """        Initialize infrastructure health checker
         
         Args:
             config: Infrastructure configuration dictionary
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Infrastructure configurations
@@ -84,13 +77,11 @@ class InfrastructureHealthChecker:
         self.disk_threshold = config.get("health_checks", {}).get("infrastructure_disk_threshold", 90.0)
 
     async def check_kubernetes_cluster(self) -> HealthCheckResult:
-        """
-        Check Kubernetes cluster health and performance
+        """        Check Kubernetes cluster health and performance
         
         Returns:
             HealthCheckResult: Kubernetes cluster health status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             details = {
@@ -248,13 +239,11 @@ class InfrastructureHealthChecker:
             )
 
     async def check_docker_services(self) -> HealthCheckResult:
-        """
-        Check Docker services and containers health
+        """        Check Docker services and containers health
         
         Returns:
             HealthCheckResult: Docker services health status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             details = {
@@ -402,13 +391,11 @@ class InfrastructureHealthChecker:
             )
 
     async def check_storage_systems(self) -> HealthCheckResult:
-        """
-        Check storage systems health and connectivity
+        """        Check storage systems health and connectivity
         
         Returns:
             HealthCheckResult: Storage systems health status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             details = {
@@ -621,13 +608,11 @@ class InfrastructureHealthChecker:
             )
 
     async def check_ssl_certificates(self) -> HealthCheckResult:
-        """
-        Check SSL/TLS certificates health and expiration
+        """        Check SSL/TLS certificates health and expiration
         
         Returns:
             HealthCheckResult: SSL certificates health status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             details = {
@@ -753,13 +738,11 @@ class InfrastructureHealthChecker:
             )
 
     async def perform_comprehensive_check(self) -> List[HealthCheckResult]:
-        """
-        Perform all infrastructure health checks concurrently
+        """        Perform all infrastructure health checks concurrently
         
         Returns:
             List[HealthCheckResult]: All infrastructure health check results
-        """
-        checks = await asyncio.gather(
+        """        checks = await asyncio.gather(
             self.check_kubernetes_cluster(),
             self.check_docker_services(),
             self.check_storage_systems(),
@@ -785,13 +768,11 @@ class InfrastructureHealthChecker:
         return results
 
     async def get_infrastructure_health_summary(self) -> Dict[str, Any]:
-        """
-        Get comprehensive infrastructure health summary
+        """        Get comprehensive infrastructure health summary
         
         Returns:
             Dict[str, Any]: Infrastructure health summary with overall status
-        """
-        results = await self.perform_comprehensive_check()
+        """        results = await self.perform_comprehensive_check()
         
         # Calculate overall infrastructure health
         status_weights = {

@@ -1,5 +1,4 @@
-"""
-Image Engine - Ultra-Advanced Processing Engine
+"""Image Engine - Ultra-Advanced Processing Engine
 
 Core processing engine for image operations with intelligent
 optimization and comprehensive functionality.
@@ -7,7 +6,6 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,24 +16,21 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ImageJob:
-    """Job configuration for image operations"""
-    job_id: str
+    """Job configuration for image operations"""    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class ImageResult:
-    """Result of image operations"""
-    job_id: str
+    """Result of image operations"""    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class ImageEngine:
-    """
-    Ultra-Advanced Image Processing Engine
+    """    Ultra-Advanced Image Processing Engine
     
     Provides enterprise-grade image processing with:
     - High-performance operation handling
@@ -43,8 +38,7 @@ class ImageEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -53,8 +47,7 @@ class ImageEngine:
         logger.info("ImageEngine initialized")
 
     async def start(self) -> None:
-        """Start the image processing engine"""
-        try:
+        """Start the image processing engine"""        try:
             self.is_running = True
             logger.info("ImageEngine started successfully")
         except Exception as e:
@@ -62,8 +55,7 @@ class ImageEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> ImageResult:
-        """Process image operation"""
-        try:
+        """Process image operation"""        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -90,6 +82,5 @@ class ImageEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""
-        self.is_running = False
+        """Graceful shutdown of the processing engine"""        self.is_running = False
         logger.info("ImageEngine shutdown complete")

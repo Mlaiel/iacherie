@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Marketplace Metrics & Analytics System
+"""IA Influencer Agent - Marketplace Metrics & Analytics System
 Enterprise-grade analytics engine for marketplace performance and insights.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,8 +27,7 @@ from ...ml.predictive_models import PredictiveAnalyzer
 
 
 class MetricType(Enum):
-    """Metric type enumeration."""
-    ENGAGEMENT = "engagement"
+    """Metric type enumeration."""    ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     GROWTH = "growth"
     QUALITY = "quality"
@@ -41,8 +38,7 @@ class MetricType(Enum):
 
 
 class AnalyticsPeriod(Enum):
-    """Analytics time period enumeration."""
-    REAL_TIME = "real_time"
+    """Analytics time period enumeration."""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -53,8 +49,7 @@ class AnalyticsPeriod(Enum):
 
 @dataclass
 class MetricConfig:
-    """Metric configuration structure."""
-    metric_name: str
+    """Metric configuration structure."""    metric_name: str
     metric_type: MetricType
     aggregation_method: str
     filters: Dict[str, Any]
@@ -64,8 +59,7 @@ class MetricConfig:
 
 @dataclass
 class PerformanceKPI:
-    """Key Performance Indicator structure."""
-    kpi_name: str
+    """Key Performance Indicator structure."""    kpi_name: str
     current_value: float
     target_value: float
     trend: str
@@ -74,11 +68,9 @@ class PerformanceKPI:
 
 
 class MarketplaceMetrics:
-    """
-    Enterprise marketplace metrics collection and analysis system.
+    """    Enterprise marketplace metrics collection and analysis system.
     Provides comprehensive metrics tracking and real-time analytics.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -95,8 +87,7 @@ class MarketplaceMetrics:
         metric_configs: List[MetricConfig],
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """
-        Collect comprehensive marketplace metrics based on configurations.
+        """        Collect comprehensive marketplace metrics based on configurations.
         
         Args:
             metric_configs: List of metric configurations
@@ -104,8 +95,7 @@ class MarketplaceMetrics:
             
         Returns:
             Collected metrics data
-        """
-        try:
+        """        try:
             collection_id = f"metrics_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Collect metrics in parallel for efficiency
@@ -158,16 +148,14 @@ class MarketplaceMetrics:
         self,
         dashboard_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Get real-time metrics for dashboard display.
+        """        Get real-time metrics for dashboard display.
         
         Args:
             dashboard_config: Dashboard configuration and layout
             
         Returns:
             Real-time dashboard metrics
-        """
-        try:
+        """        try:
             cache_key = f"dashboard_metrics:{hash(str(dashboard_config))}"
             
             # Check cache for recent data
@@ -228,16 +216,14 @@ class MarketplaceMetrics:
         self,
         assessment_period: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """
-        Generate overall marketplace health score based on multiple indicators.
+        """        Generate overall marketplace health score based on multiple indicators.
         
         Args:
             assessment_period: Time period for health assessment
             
         Returns:
             Marketplace health score and analysis
-        """
-        try:
+        """        try:
             cache_key = f"health_score:{int(assessment_period.total_seconds())}"
             
             # Check cache
@@ -334,8 +320,7 @@ class MarketplaceMetrics:
         config: MetricConfig,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Collect data for a single metric configuration."""
-        if config.metric_type == MetricType.ENGAGEMENT:
+        """Collect data for a single metric configuration."""        if config.metric_type == MetricType.ENGAGEMENT:
             return await self._collect_engagement_metric(config, time_range)
         elif config.metric_type == MetricType.REVENUE:
             return await self._collect_revenue_metric(config, time_range)
@@ -358,8 +343,7 @@ class MarketplaceMetrics:
         self, 
         time_windows: Dict[str, Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Collect core marketplace KPIs."""
-        core_kpis = {}
+        """Collect core marketplace KPIs."""        core_kpis = {}
         
         # Active users
         for window_name, (start, end) in time_windows.items():
@@ -380,11 +364,9 @@ class MarketplaceMetrics:
 
 
 class PerformanceAnalytics:
-    """
-    Enterprise performance analytics system.
+    """    Enterprise performance analytics system.
     Provides deep performance analysis and optimization insights.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -402,8 +384,7 @@ class PerformanceAnalytics:
         analysis_period: timedelta = timedelta(days=30),
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """
-        Comprehensive creator performance analysis.
+        """        Comprehensive creator performance analysis.
         
         Args:
             creator_id: Creator identifier
@@ -412,8 +393,7 @@ class PerformanceAnalytics:
             
         Returns:
             Detailed creator performance analysis
-        """
-        try:
+        """        try:
             cache_key = f"creator_performance:{creator_id}:{int(analysis_period.total_seconds())}"
             
             # Check cache
@@ -479,8 +459,7 @@ class PerformanceAnalytics:
         content_id: str,
         performance_metrics: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Detailed content performance analysis.
+        """        Detailed content performance analysis.
         
         Args:
             content_id: Content identifier
@@ -488,8 +467,7 @@ class PerformanceAnalytics:
             
         Returns:
             Content performance analysis
-        """
-        try:
+        """        try:
             default_metrics = [
                 'views', 'engagement', 'shares', 'comments', 
                 'likes', 'saves', 'conversion_rate'
@@ -538,8 +516,7 @@ class PerformanceAnalytics:
         entity_id: str,
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """
-        Generate performance optimization recommendations.
+        """        Generate performance optimization recommendations.
         
         Args:
             entity_type: Type of entity (creator, content, campaign)
@@ -548,8 +525,7 @@ class PerformanceAnalytics:
             
         Returns:
             Optimization recommendations
-        """
-        try:
+        """        try:
             # Analyze current performance
             if entity_type == 'creator':
                 current_performance = await self.analyze_creator_performance(entity_id)
@@ -596,11 +572,9 @@ class PerformanceAnalytics:
 
 
 class ROICalculator:
-    """
-    Enterprise ROI calculation and financial analytics system.
+    """    Enterprise ROI calculation and financial analytics system.
     Provides comprehensive return on investment analysis for marketplace activities.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -615,8 +589,7 @@ class ROICalculator:
         collaboration_id: str,
         include_projections: bool = True
     ) -> Dict[str, Any]:
-        """
-        Calculate ROI for collaboration projects.
+        """        Calculate ROI for collaboration projects.
         
         Args:
             collaboration_id: Collaboration identifier
@@ -624,8 +597,7 @@ class ROICalculator:
             
         Returns:
             Collaboration ROI analysis
-        """
-        try:
+        """        try:
             cache_key = f"collaboration_roi:{collaboration_id}"
             
             # Check cache
@@ -683,8 +655,7 @@ class ROICalculator:
         content_id: str,
         investment_breakdown: Dict[str, float]
     ) -> Dict[str, Any]:
-        """
-        Calculate ROI for individual content pieces.
+        """        Calculate ROI for individual content pieces.
         
         Args:
             content_id: Content identifier
@@ -692,8 +663,7 @@ class ROICalculator:
             
         Returns:
             Content ROI analysis
-        """
-        try:
+        """        try:
             # Get content performance and revenue data
             content_data = await self._get_content_financial_performance(content_id)
             
@@ -731,16 +701,14 @@ class ROICalculator:
         self,
         calculation_period: timedelta = timedelta(days=90)
     ) -> Dict[str, Any]:
-        """
-        Calculate overall platform ROI across all activities.
+        """        Calculate overall platform ROI across all activities.
         
         Args:
             calculation_period: Period for ROI calculation
             
         Returns:
             Platform-wide ROI analysis
-        """
-        try:
+        """        try:
             end_time = datetime.now()
             start_time = end_time - calculation_period
             

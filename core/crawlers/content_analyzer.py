@@ -1,11 +1,9 @@
-"""
-Advanced Content Analyzer - Ultra-Advanced Implementation
+"""Advanced Content Analyzer - Ultra-Advanced Implementation
 AI-Powered Content Analysis and Classification System
 
 This module provides comprehensive content analysis capabilities including
 sentiment analysis, content classification, similarity detection, and quality assessment.
 """
-
 import asyncio
 import aiohttp
 import json
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(str, Enum):
-    """Content types for analysis"""
-    TEXT = "text"
+    """Content types for analysis"""    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -40,8 +37,7 @@ class ContentType(str, Enum):
 
 
 class AnalysisType(str, Enum):
-    """Types of content analysis"""
-    SENTIMENT = "sentiment"
+    """Types of content analysis"""    SENTIMENT = "sentiment"
     CLASSIFICATION = "classification"
     SIMILARITY = "similarity"
     QUALITY = "quality"
@@ -52,8 +48,7 @@ class AnalysisType(str, Enum):
 
 
 class SentimentLabel(str, Enum):
-    """Sentiment analysis labels"""
-    VERY_POSITIVE = "very_positive"
+    """Sentiment analysis labels"""    VERY_POSITIVE = "very_positive"
     POSITIVE = "positive"
     NEUTRAL = "neutral"
     NEGATIVE = "negative"
@@ -61,8 +56,7 @@ class SentimentLabel(str, Enum):
 
 
 class ContentCategory(str, Enum):
-    """Content categories"""
-    ENTERTAINMENT = "entertainment"
+    """Content categories"""    ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     NEWS = "news"
     SPORTS = "sports"
@@ -81,16 +75,14 @@ class ContentCategory(str, Enum):
 
 
 class QualityMetric(BaseModel):
-    """Quality assessment metric"""
-    metric_name: str
+    """Quality assessment metric"""    metric_name: str
     score: float = Field(ge=0.0, le=1.0)
     description: str
     weight: float = Field(ge=0.0, le=1.0)
 
 
 class SentimentAnalysis(BaseModel):
-    """Sentiment analysis result"""
-    sentiment_label: SentimentLabel
+    """Sentiment analysis result"""    sentiment_label: SentimentLabel
     confidence_score: float = Field(ge=0.0, le=1.0)
     polarity: float = Field(ge=-1.0, le=1.0)
     subjectivity: float = Field(ge=0.0, le=1.0)
@@ -100,8 +92,7 @@ class SentimentAnalysis(BaseModel):
 
 
 class ContentClassification(BaseModel):
-    """Content classification result"""
-    primary_category: ContentCategory
+    """Content classification result"""    primary_category: ContentCategory
     confidence_score: float = Field(ge=0.0, le=1.0)
     secondary_categories: List[Tuple[ContentCategory, float]] = Field(default_factory=list)
     tags: List[str] = Field(default_factory=list)
@@ -112,8 +103,7 @@ class ContentClassification(BaseModel):
 
 
 class SimilarityResult(BaseModel):
-    """Content similarity analysis result"""
-    similarity_score: float = Field(ge=0.0, le=1.0)
+    """Content similarity analysis result"""    similarity_score: float = Field(ge=0.0, le=1.0)
     similarity_type: str
     matching_segments: List[Dict[str, Any]] = Field(default_factory=list)
     common_features: List[str] = Field(default_factory=list)
@@ -122,8 +112,7 @@ class SimilarityResult(BaseModel):
 
 
 class QualityAssessment(BaseModel):
-    """Content quality assessment result"""
-    overall_quality_score: float = Field(ge=0.0, le=1.0)
+    """Content quality assessment result"""    overall_quality_score: float = Field(ge=0.0, le=1.0)
     quality_metrics: List[QualityMetric] = Field(default_factory=list)
     readability_score: float = Field(ge=0.0, le=1.0)
     engagement_potential: float = Field(ge=0.0, le=1.0)
@@ -134,8 +123,7 @@ class QualityAssessment(BaseModel):
 
 
 class ToxicityAnalysis(BaseModel):
-    """Content toxicity analysis result"""
-    toxicity_score: float = Field(ge=0.0, le=1.0)
+    """Content toxicity analysis result"""    toxicity_score: float = Field(ge=0.0, le=1.0)
     is_toxic: bool
     toxicity_categories: Dict[str, float] = Field(default_factory=dict)
     flagged_content: List[str] = Field(default_factory=list)
@@ -144,8 +132,7 @@ class ToxicityAnalysis(BaseModel):
 
 
 class ContentAnalysisResult(BaseModel):
-    """Comprehensive content analysis result"""
-    content_id: str
+    """Comprehensive content analysis result"""    content_id: str
     content_type: ContentType
     analysis_timestamp: datetime
     
@@ -168,13 +155,11 @@ class ContentAnalysisResult(BaseModel):
 
 
 class AdvancedContentAnalyzer(BaseCrawler):
-    """
-    Ultra-Advanced Content Analyzer
+    """    Ultra-Advanced Content Analyzer
     
     Provides comprehensive AI-powered content analysis including sentiment analysis,
     classification, similarity detection, quality assessment, and toxicity detection.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -226,8 +211,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         analysis_types: List[AnalysisType] = None,
         comparison_content: List[str] = None
     ) -> ContentAnalysisResult:
-        """
-        Perform comprehensive content analysis
+        """        Perform comprehensive content analysis
         
         Args:
             content: Content to analyze
@@ -238,8 +222,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
             
         Returns:
             ContentAnalysisResult: Comprehensive analysis results
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         content_id = content_id or hashlib.md5(content.encode()).hexdigest()
         
         # Check cache first
@@ -326,8 +309,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         content_batch: List[Dict[str, Any]],
         analysis_types: List[AnalysisType] = None
     ) -> List[ContentAnalysisResult]:
-        """
-        Perform batch content analysis for multiple items
+        """        Perform batch content analysis for multiple items
         
         Args:
             content_batch: List of content items to analyze
@@ -335,8 +317,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
             
         Returns:
             List[ContentAnalysisResult]: Batch analysis results
-        """
-        results = []
+        """        results = []
         
         # Process in parallel batches to respect rate limits
         batch_size = 10
@@ -371,8 +352,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         content_b: str,
         similarity_threshold: float = None
     ) -> SimilarityResult:
-        """
-        Compare similarity between two pieces of content
+        """        Compare similarity between two pieces of content
         
         Args:
             content_a: First content to compare
@@ -381,8 +361,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
             
         Returns:
             SimilarityResult: Detailed similarity analysis
-        """
-        threshold = similarity_threshold or self.similarity_threshold
+        """        threshold = similarity_threshold or self.similarity_threshold
         
         try:
             # Text-based similarity
@@ -430,8 +409,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
     # Helper methods
     
     async def _analyze_sentiment(self, content: str) -> SentimentAnalysis:
-        """Perform sentiment analysis on content"""
-        try:
+        """Perform sentiment analysis on content"""        try:
             # Simplified sentiment analysis (would use ML models in production)
             positive_words = [
                 'good', 'great', 'excellent', 'amazing', 'wonderful', 'fantastic',
@@ -487,8 +465,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
             )
 
     async def _classify_content(self, content: str, content_type: ContentType) -> ContentClassification:
-        """Classify content into categories"""
-        try:
+        """Classify content into categories"""        try:
             # Simplified classification based on keywords
             category_keywords = {
                 ContentCategory.TECHNOLOGY: ['tech', 'software', 'AI', 'computer', 'digital', 'app'],
@@ -547,8 +524,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         content: str,
         comparison_content: List[str]
     ) -> List[SimilarityResult]:
-        """Analyze similarity against multiple comparison contents"""
-        results = []
+        """Analyze similarity against multiple comparison contents"""        results = []
         
         for comp_content in comparison_content:
             similarity_result = await self.compare_content_similarity(content, comp_content)
@@ -557,8 +533,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return results
 
     async def _assess_quality(self, content: str, content_type: ContentType) -> QualityAssessment:
-        """Assess content quality across multiple metrics"""
-        try:
+        """Assess content quality across multiple metrics"""        try:
             metrics = []
             
             # Readability assessment
@@ -624,8 +599,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
             )
 
     async def _detect_toxicity(self, content: str) -> ToxicityAnalysis:
-        """Detect toxic content and harmful language"""
-        try:
+        """Detect toxic content and harmful language"""        try:
             # Simplified toxicity detection
             toxic_words = [
                 'hate', 'kill', 'die', 'stupid', 'idiot', 'moron',
@@ -677,8 +651,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
             )
 
     async def _calculate_semantic_similarity(self, content_a: str, content_b: str) -> float:
-        """Calculate semantic similarity between contents"""
-        # Simplified semantic similarity (would use embeddings)
+        """Calculate semantic similarity between contents"""        # Simplified semantic similarity (would use embeddings)
         words_a = set(content_a.lower().split())
         words_b = set(content_b.lower().split())
         
@@ -688,8 +661,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return len(intersection) / len(union) if union else 0.0
 
     async def _calculate_structural_similarity(self, content_a: str, content_b: str) -> float:
-        """Calculate structural similarity between contents"""
-        # Compare sentence structure, length, etc.
+        """Calculate structural similarity between contents"""        # Compare sentence structure, length, etc.
         sentences_a = content_a.split('.')
         sentences_b = content_b.split('.')
         
@@ -699,8 +671,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return (length_similarity + sentence_similarity) / 2.0
 
     async def _find_matching_segments(self, content_a: str, content_b: str) -> List[Dict[str, Any]]:
-        """Find matching segments between two contents"""
-        segments = []
+        """Find matching segments between two contents"""        segments = []
         
         # Find common phrases (simplified)
         words_a = content_a.split()
@@ -719,8 +690,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return segments
 
     async def _extract_common_features(self, content_a: str, content_b: str) -> List[str]:
-        """Extract common features between contents"""
-        features = []
+        """Extract common features between contents"""        features = []
         
         # Common words
         words_a = set(content_a.lower().split())
@@ -741,8 +711,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return features
 
     async def _calculate_readability(self, content: str) -> float:
-        """Calculate content readability score"""
-        words = content.split()
+        """Calculate content readability score"""        words = content.split()
         sentences = content.split('.')
         
         if not words or not sentences:
@@ -758,8 +727,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return max(0.0, min(1.0, readability / 100.0))
 
     async def _calculate_content_depth(self, content: str) -> float:
-        """Calculate content depth and substance"""
-        # Simplified depth calculation
+        """Calculate content depth and substance"""        # Simplified depth calculation
         word_count = len(content.split())
         unique_words = len(set(content.lower().split()))
         
@@ -772,8 +740,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return (lexical_diversity + length_factor) / 2.0
 
     async def _calculate_engagement_potential(self, content: str) -> float:
-        """Calculate potential for user engagement"""
-        engagement_indicators = [
+        """Calculate potential for user engagement"""        engagement_indicators = [
             '?', '!', 'how', 'why', 'what', 'when', 'where',
             'check out', 'click', 'share', 'comment', 'like'
         ]
@@ -784,13 +751,11 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return min(engagement_count / 10.0, 1.0)
 
     async def _detect_language(self, content: str) -> str:
-        """Detect content language"""
-        # Simplified language detection
+        """Detect content language"""        # Simplified language detection
         return self.default_language
 
     async def _calculate_overall_confidence(self, result: ContentAnalysisResult) -> float:
-        """Calculate overall confidence score for analysis"""
-        confidences = []
+        """Calculate overall confidence score for analysis"""        confidences = []
         
         if result.sentiment_analysis:
             confidences.append(result.sentiment_analysis.confidence_score)
@@ -804,8 +769,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return sum(confidences) / len(confidences) if confidences else 0.0
 
     async def _generate_recommendations(self, result: ContentAnalysisResult) -> List[str]:
-        """Generate content improvement recommendations"""
-        recommendations = []
+        """Generate content improvement recommendations"""        recommendations = []
         
         if result.quality_assessment and result.quality_assessment.overall_quality_score < 0.6:
             recommendations.append("Consider improving content quality and depth")
@@ -819,8 +783,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return recommendations
 
     async def _generate_optimization_suggestions(self, result: ContentAnalysisResult) -> List[str]:
-        """Generate content optimization suggestions"""
-        suggestions = []
+        """Generate content optimization suggestions"""        suggestions = []
         
         if result.quality_assessment:
             if result.quality_assessment.engagement_potential < 0.5:
@@ -832,8 +795,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return suggestions
 
     async def _identify_risk_factors(self, result: ContentAnalysisResult) -> List[str]:
-        """Identify potential risk factors in content"""
-        risks = []
+        """Identify potential risk factors in content"""        risks = []
         
         if result.toxicity_analysis and result.toxicity_analysis.toxicity_score > 0.5:
             risks.append("High toxicity score detected")
@@ -846,8 +808,7 @@ class AdvancedContentAnalyzer(BaseCrawler):
         return risks
 
     async def close(self):
-        """Close analyzer and cleanup resources"""
-        try:
+        """Close analyzer and cleanup resources"""        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("Advanced Content Analyzer closed successfully")

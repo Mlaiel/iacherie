@@ -1,12 +1,10 @@
-"""
-Distributed Training Module - Distributed machine learning and training capabilities
+"""Distributed Training Module - Distributed machine learning and training capabilities
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive distributed training capabilities including
 data parallelism, model parallelism, and distributed training orchestration.
 """
-
 import logging
 import json
 import os
@@ -42,22 +40,19 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class DistributionStrategy(Enum):
-    """Distribution strategies"""
-    DATA_PARALLEL = "data_parallel"
+    """Distribution strategies"""    DATA_PARALLEL = "data_parallel"
     MODEL_PARALLEL = "model_parallel"
     PIPELINE_PARALLEL = "pipeline_parallel"
     HYBRID = "hybrid"
 
 class NodeRole(Enum):
-    """Node roles in distributed training"""
-    MASTER = "master"
+    """Node roles in distributed training"""    MASTER = "master"
     WORKER = "worker"
     PARAMETER_SERVER = "parameter_server"
     COORDINATOR = "coordinator"
 
 class TrainingStatus(Enum):
-    """Training status"""
-    INITIALIZING = "initializing"
+    """Training status"""    INITIALIZING = "initializing"
     TRAINING = "training"
     VALIDATING = "validating"
     COMPLETED = "completed"
@@ -66,8 +61,7 @@ class TrainingStatus(Enum):
 
 @dataclass
 class NodeInfo:
-    """Information about a distributed training node"""
-    node_id: str
+    """Information about a distributed training node"""    node_id: str
     role: NodeRole
     host: str
     port: int
@@ -78,8 +72,7 @@ class NodeInfo:
 
 @dataclass
 class TrainingConfig:
-    """Distributed training configuration"""
-    strategy: DistributionStrategy
+    """Distributed training configuration"""    strategy: DistributionStrategy
     world_size: int
     master_addr: str
     master_port: int
@@ -90,8 +83,7 @@ class TrainingConfig:
     mixed_precision: bool = True
 
 class DistributedTrainer:
-    """Main distributed training orchestrator"""
-    
+    """Main distributed training orchestrator"""    
     def __init__(self, config: TrainingConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -110,8 +102,7 @@ class DistributedTrainer:
         self.logger.info("DistributedTrainer initialized successfully")
     
     def initialize_cluster(self, node_configs: List[Dict[str, Any]]) -> bool:
-        """Initialize distributed training cluster"""
-        try:
+        """Initialize distributed training cluster"""        try:
             self.logger.info("Initializing distributed training cluster")
             
             # Register nodes
@@ -143,8 +134,7 @@ class DistributedTrainer:
     
     def start_training(self, model_config: Dict[str, Any], 
                       data_config: Dict[str, Any]) -> bool:
-        """Start distributed training"""
-        try:
+        """Start distributed training"""        try:
             self.logger.info("Starting distributed training")
             
             if not self.coordinator:
@@ -181,8 +171,7 @@ class DistributedTrainer:
             return False
     
     def stop_training(self) -> bool:
-        """Stop distributed training"""
-        try:
+        """Stop distributed training"""        try:
             self.logger.info("Stopping distributed training")
             
             if self.coordinator:
@@ -197,8 +186,7 @@ class DistributedTrainer:
             return False
     
     def _validate_cluster_health(self) -> bool:
-        """Validate cluster health before training"""
-        try:
+        """Validate cluster health before training"""        try:
             healthy_nodes = 0
             
             for node_id, node_info in self.nodes.items():
@@ -220,8 +208,7 @@ class DistributedTrainer:
             return False
     
     def _start_cluster_communication(self):
-        """Start cluster communication threads"""
-        try:
+        """Start cluster communication threads"""        try:
             # Start heartbeat monitoring
             heartbeat_thread = threading.Thread(
                 target=self._heartbeat_monitor,
@@ -235,8 +222,7 @@ class DistributedTrainer:
             self.logger.error(f"Cluster communication start failed: {e}")
     
     def _heartbeat_monitor(self):
-        """Monitor node heartbeats"""
-        while True:
+        """Monitor node heartbeats"""        while True:
             try:
                 # Update heartbeats (simulated)
                 for node_id in self.nodes:
@@ -250,8 +236,7 @@ class DistributedTrainer:
                 time.sleep(5)
     
     def get_training_status(self) -> Dict[str, Any]:
-        """Get current training status"""
-        return {
+        """Get current training status"""        return {
             "status": self.training_status.value,
             "current_epoch": self.current_epoch,
             "global_step": self.global_step,
@@ -264,8 +249,7 @@ class DistributedTrainer:
         }
 
 class TrainingCoordinator:
-    """Coordinates distributed training across nodes"""
-    
+    """Coordinates distributed training across nodes"""    
     def __init__(self, config: TrainingConfig, nodes: Dict[str, NodeInfo]):
         self.config = config
         self.nodes = nodes
@@ -273,8 +257,7 @@ class TrainingCoordinator:
         self.is_training = False
     
     def execute_training(self, training_job: 'DistributedTrainingJob') -> bool:
-        """Execute distributed training job"""
-        try:
+        """Execute distributed training job"""        try:
             self.logger.info(f"Executing training job: {training_job.job_id}")
             
             # Initialize training processes
@@ -304,13 +287,11 @@ class TrainingCoordinator:
             return False
     
     def stop_training(self):
-        """Stop ongoing training"""
-        self.is_training = False
+        """Stop ongoing training"""        self.is_training = False
         self.logger.info("Training stop requested")
     
     def _worker_training_process(self, rank: int, training_job: 'DistributedTrainingJob'):
-        """Worker process for distributed training"""
-        try:
+        """Worker process for distributed training"""        try:
             self.logger.info(f"Starting worker process - Rank {rank}")
             
             # Initialize distributed backend (simulated)
@@ -333,16 +314,14 @@ class TrainingCoordinator:
             self.logger.error(f"Worker process failed - Rank {rank}: {e}")
     
     def _simulate_training_epoch(self, rank: int, epoch: int, training_job: 'DistributedTrainingJob'):
-        """Simulate a training epoch"""
-        # Simulate training metrics
+        """Simulate a training epoch"""        # Simulate training metrics
         loss = 1.0 - (epoch * 0.1)  # Decreasing loss
         accuracy = epoch * 0.1  # Increasing accuracy
         
         self.logger.info(f"Rank {rank}, Epoch {epoch}: Loss={loss:.4f}, Accuracy={accuracy:.4f}")
 
 class ModelParallelism:
-    """Model parallelism implementation"""
-    
+    """Model parallelism implementation"""    
     def __init__(self, model_config: Dict[str, Any]):
         self.model_config = model_config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -351,8 +330,7 @@ class ModelParallelism:
         self.logger.info("ModelParallelism initialized successfully")
     
     def partition_model(self, model: Any, num_partitions: int) -> List[Any]:
-        """Partition model across multiple devices"""
-        try:
+        """Partition model across multiple devices"""        try:
             self.logger.info(f"Partitioning model into {num_partitions} parts")
             
             # Simulate model partitioning
@@ -376,8 +354,7 @@ class ModelParallelism:
             return []
     
     def forward_pass(self, input_data: Any) -> Any:
-        """Execute forward pass across model partitions"""
-        try:
+        """Execute forward pass across model partitions"""        try:
             self.logger.info("Executing distributed forward pass")
             
             # Simulate forward pass through partitions
@@ -396,16 +373,14 @@ class ModelParallelism:
             return None
     
     def get_memory_usage(self) -> Dict[str, Any]:
-        """Get memory usage across partitions"""
-        return {
+        """Get memory usage across partitions"""        return {
             "total_partitions": len(self.partitions),
             "memory_per_partition": f"{1000 // len(self.partitions) if self.partitions else 0}MB",
             "total_parameters": sum(p.get("parameters", 0) for p in self.partitions)
         }
 
 class DataParallelism:
-    """Data parallelism implementation"""
-    
+    """Data parallelism implementation"""    
     def __init__(self, data_config: Dict[str, Any]):
         self.data_config = data_config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -414,8 +389,7 @@ class DataParallelism:
         self.logger.info("DataParallelism initialized successfully")
     
     def shard_data(self, dataset: Any, num_shards: int) -> List[Any]:
-        """Shard dataset across multiple workers"""
-        try:
+        """Shard dataset across multiple workers"""        try:
             self.logger.info(f"Sharding data into {num_shards} shards")
             
             # Simulate data sharding
@@ -445,8 +419,7 @@ class DataParallelism:
             return []
     
     def aggregate_gradients(self, gradients: List[Any]) -> Any:
-        """Aggregate gradients from multiple workers"""
-        try:
+        """Aggregate gradients from multiple workers"""        try:
             self.logger.info(f"Aggregating gradients from {len(gradients)} workers")
             
             # Simulate gradient aggregation (averaging)
@@ -464,8 +437,7 @@ class DataParallelism:
             return None
     
     def synchronize_parameters(self, parameters: Any) -> bool:
-        """Synchronize parameters across all workers"""
-        try:
+        """Synchronize parameters across all workers"""        try:
             self.logger.info("Synchronizing parameters across workers")
             
             # Simulate parameter synchronization
@@ -481,8 +453,7 @@ class DataParallelism:
             return False
     
     def get_data_distribution(self) -> Dict[str, Any]:
-        """Get data distribution statistics"""
-        return {
+        """Get data distribution statistics"""        return {
             "total_shards": len(self.data_shards),
             "samples_per_shard": self.data_shards[0]["sample_count"] if self.data_shards else 0,
             "total_samples": sum(shard["sample_count"] for shard in self.data_shards),
@@ -490,8 +461,7 @@ class DataParallelism:
         }
 
 class DistributedTrainingJob:
-    """Represents a distributed training job"""
-    
+    """Represents a distributed training job"""    
     def __init__(self, job_id: str, config: TrainingConfig, 
                  model_config: Dict[str, Any], data_config: Dict[str, Any],
                  nodes: Dict[str, NodeInfo]):
@@ -510,8 +480,7 @@ class DistributedTrainingJob:
         self.logger.info(f"DistributedTrainingJob created: {job_id}")
     
     def start(self) -> bool:
-        """Start the training job"""
-        try:
+        """Start the training job"""        try:
             self.started_at = datetime.utcnow()
             self.status = "running"
             self.logger.info(f"Training job started: {self.job_id}")
@@ -521,14 +490,12 @@ class DistributedTrainingJob:
             return False
     
     def complete(self, success: bool = True):
-        """Mark job as completed"""
-        self.completed_at = datetime.utcnow()
+        """Mark job as completed"""        self.completed_at = datetime.utcnow()
         self.status = "completed" if success else "failed"
         self.logger.info(f"Training job completed: {self.job_id} (success={success})")
     
     def get_job_info(self) -> Dict[str, Any]:
-        """Get job information"""
-        return {
+        """Get job information"""        return {
             "job_id": self.job_id,
             "status": self.status,
             "strategy": self.config.strategy.value,
@@ -545,8 +512,7 @@ class DistributedTrainingJob:
 
 # Utility functions for distributed training
 def get_available_gpus() -> List[Dict[str, Any]]:
-    """Get available GPU information"""
-    gpus = []
+    """Get available GPU information"""    gpus = []
     
     if TORCH_AVAILABLE and hasattr(torch.cuda, 'is_available') and torch.cuda.is_available():
         for i in range(torch.cuda.device_count()):
@@ -563,8 +529,7 @@ def get_available_gpus() -> List[Dict[str, Any]]:
 
 def estimate_training_time(model_size: int, dataset_size: int, 
                           world_size: int, gpu_memory: int) -> float:
-    """Estimate distributed training time"""
-    # Simplified estimation formula
+    """Estimate distributed training time"""    # Simplified estimation formula
     base_time = (model_size * dataset_size) / (gpu_memory * 1000000)  # Basic calculation
     distributed_speedup = min(world_size * 0.8, world_size)  # Account for communication overhead
     estimated_hours = base_time / distributed_speedup
@@ -572,8 +537,7 @@ def estimate_training_time(model_size: int, dataset_size: int,
     return max(estimated_hours, 0.1)  # Minimum 0.1 hours
 
 def optimize_batch_size(model_size: int, gpu_memory: int, world_size: int) -> int:
-    """Optimize batch size for distributed training"""
-    # Simple optimization logic
+    """Optimize batch size for distributed training"""    # Simple optimization logic
     memory_per_gpu = gpu_memory // world_size if world_size > 0 else gpu_memory
     base_batch_size = max(memory_per_gpu // (model_size // 1000000), 1)
     

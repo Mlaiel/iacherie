@@ -1,5 +1,4 @@
 """Enterprise webhook notification service with intelligent routing and retry mechanisms."""
-
 import os
 import json
 import aiohttp
@@ -21,8 +20,7 @@ from app.utils.metrics import MetricsCollector
 
 
 class WebhookEvent(str, Enum):
-    """Supported webhook event types for IA Influencer business logic."""
-    # Content Protection Events
+    """Supported webhook event types for IA Influencer business logic."""    # Content Protection Events
     CONTENT_UPLOADED = "content.uploaded"
     CONTENT_PROTECTED = "content.protected"
     INFRINGEMENT_DETECTED = "infringement.detected"
@@ -64,23 +62,20 @@ class WebhookEvent(str, Enum):
 
 
 class WebhookMethod(str, Enum):
-    """Supported HTTP methods for webhooks."""
-    POST = "POST"
+    """Supported HTTP methods for webhooks."""    POST = "POST"
     PUT = "PUT"
     PATCH = "PATCH"
 
 
 class RetryStrategy(str, Enum):
-    """Webhook retry strategies."""
-    LINEAR = "linear"
+    """Webhook retry strategies."""    LINEAR = "linear"
     EXPONENTIAL = "exponential"
     FIXED = "fixed"
 
 
 @dataclass
 class WebhookEndpoint:
-    """Webhook endpoint configuration with enterprise features."""
-    url: str
+    """Webhook endpoint configuration with enterprise features."""    url: str
     method: WebhookMethod = WebhookMethod.POST
     headers: Optional[Dict[str, str]] = None
     secret: Optional[str] = None  # For HMAC signature
@@ -98,8 +93,7 @@ class WebhookEndpoint:
 
 @dataclass
 class WebhookPayload:
-    """Webhook payload with IA Influencer business context."""
-    event: WebhookEvent
+    """Webhook payload with IA Influencer business context."""    event: WebhookEvent
     data: Dict[str, Any]
     timestamp: datetime
     user_id: Optional[str] = None
@@ -115,8 +109,7 @@ class WebhookPayload:
 
 @dataclass
 class WebhookDeliveryResult:
-    """Webhook delivery tracking and analytics result."""
-    webhook_id: str
+    """Webhook delivery tracking and analytics result."""    webhook_id: str
     endpoint_url: str
     event: WebhookEvent
     status: str  # sent, delivered, failed, retrying
@@ -135,7 +128,6 @@ class WebhookDeliveryResult:
 
 class WebhookNotifier:
     """Enterprise webhook notification service with intelligent delivery and comprehensive analytics."""
-
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
@@ -162,24 +154,21 @@ class WebhookNotifier:
         self.endpoints = {}  # endpoint_id -> WebhookEndpoint
 
     async def register_endpoint(self, endpoint: WebhookEndpoint) -> str:
-        """Register a new webhook endpoint."""
-        endpoint_id = hashlib.md5(f"{endpoint.url}_{endpoint.method}".encode()).hexdigest()[:12]
+        """Register a new webhook endpoint."""        endpoint_id = hashlib.md5(f"{endpoint.url}_{endpoint.method}".encode()).hexdigest()[:12]
         self.endpoints[endpoint_id] = endpoint
         
         self.logger.info(f"Webhook endpoint registered: {endpoint_id} -> {endpoint.url}")
         return endpoint_id
 
     async def unregister_endpoint(self, endpoint_id: str) -> bool:
-        """Unregister a webhook endpoint."""
-        if endpoint_id in self.endpoints:
+        """Unregister a webhook endpoint."""        if endpoint_id in self.endpoints:
             del self.endpoints[endpoint_id]
             self.logger.info(f"Webhook endpoint unregistered: {endpoint_id}")
             return True
         return False
 
     async def send_webhook(self, endpoint_id: str, payload: WebhookPayload) -> WebhookDeliveryResult:
-        """Send webhook notification with intelligent routing and retry."""
-        if endpoint_id not in self.endpoints:
+        """Send webhook notification with intelligent routing and retry."""        if endpoint_id not in self.endpoints:
             raise ValueError(f"Webhook endpoint not found: {endpoint_id}")
         
         endpoint = self.endpoints[endpoint_id]
@@ -236,8 +225,7 @@ class WebhookNotifier:
             return result
 
     async def send_webhook_batch(self, webhooks: List[tuple]) -> List[WebhookDeliveryResult]:
-        """Send multiple webhooks efficiently with concurrency control."""
-        results = []
+        """Send multiple webhooks efficiently with concurrency control."""        results = []
         
         # Create semaphore for concurrency control
         semaphore = asyncio.Semaphore(self.max_concurrent_webhooks)
@@ -260,8 +248,7 @@ class WebhookNotifier:
         return results
 
     async def broadcast_event(self, payload: WebhookPayload) -> List[WebhookDeliveryResult]:
-        """Broadcast event to all subscribed endpoints."""
-        applicable_endpoints = [
+        """Broadcast event to all subscribed endpoints."""        applicable_endpoints = [
             endpoint_id for endpoint_id, endpoint in self.endpoints.items()
             if endpoint.active and (not endpoint.events or payload.event in endpoint.events)
         ]
@@ -270,8 +257,7 @@ class WebhookNotifier:
         return await self.send_webhook_batch(webhooks)
 
     async def get_endpoint_status(self, endpoint_id: str) -> Dict[str, Any]:
-        """Get comprehensive status information for an endpoint."""
-        if endpoint_id not in self.endpoints:
+        """Get comprehensive status information for an endpoint."""        if endpoint_id not in self.endpoints:
             raise ValueError(f"Webhook endpoint not found: {endpoint_id}")
         
         endpoint = self.endpoints[endpoint_id]
@@ -289,8 +275,7 @@ class WebhookNotifier:
         }
 
     async def test_endpoint(self, endpoint_id: str) -> WebhookDeliveryResult:
-        """Test webhook endpoint with a ping event."""
-        test_payload = WebhookPayload(
+        """Test webhook endpoint with a ping event."""        test_payload = WebhookPayload(
             event=WebhookEvent.SYSTEM_MAINTENANCE,
             data={
                 "test": True,
@@ -304,8 +289,7 @@ class WebhookNotifier:
         return await self.send_webhook(endpoint_id, test_payload)
 
     async def get_analytics(self, start_date: datetime, end_date: datetime, filters: Optional[Dict] = None) -> Dict[str, Any]:
-        """Get comprehensive webhook analytics and insights."""
-        return {
+        """Get comprehensive webhook analytics and insights."""        return {
             "total_webhooks_sent": await self._get_total_sent(start_date, end_date, filters),
             "delivery_success_rate": await self._get_delivery_success_rate(start_date, end_date, filters),
             "average_delivery_time": await self._get_average_delivery_time(start_date, end_date, filters),
@@ -317,8 +301,7 @@ class WebhookNotifier:
         }
 
     async def _deliver_webhook(self, endpoint: WebhookEndpoint, payload: WebhookPayload) -> WebhookDeliveryResult:
-        """Deliver webhook to endpoint with proper formatting and security."""
-        webhook_id = payload.webhook_id or f"webhook_{int(time.time())}"
+        """Deliver webhook to endpoint with proper formatting and security."""        webhook_id = payload.webhook_id or f"webhook_{int(time.time())}"
         
         # Prepare payload
         webhook_data = {
@@ -397,8 +380,7 @@ class WebhookNotifier:
                 )
 
     def _generate_signature(self, payload: str, secret: str, timestamp: datetime) -> str:
-        """Generate HMAC signature for webhook authentication."""
-        timestamp_str = str(int(timestamp.timestamp()))
+        """Generate HMAC signature for webhook authentication."""        timestamp_str = str(int(timestamp.timestamp()))
         signature_string = f"{timestamp_str}.{payload}"
         
         signature = hmac.new(
@@ -410,8 +392,7 @@ class WebhookNotifier:
         return f"sha256={signature}"
 
     def _create_skipped_result(self, endpoint_id: str, endpoint: WebhookEndpoint, payload: WebhookPayload) -> WebhookDeliveryResult:
-        """Create result for skipped webhook."""
-        return WebhookDeliveryResult(
+        """Create result for skipped webhook."""        return WebhookDeliveryResult(
             webhook_id=payload.webhook_id or f"skipped_{int(time.time())}",
             endpoint_url=endpoint.url,
             event=payload.event,
@@ -421,13 +402,11 @@ class WebhookNotifier:
         )
 
     async def _check_rate_limit(self, endpoint_id: str, endpoint: WebhookEndpoint) -> bool:
-        """Check if endpoint is within rate limits."""
-        # Simplified rate limiting - would use Redis or similar in production
+        """Check if endpoint is within rate limits."""        # Simplified rate limiting - would use Redis or similar in production
         return True
 
     async def _schedule_retry(self, endpoint: WebhookEndpoint, payload: WebhookPayload):
-        """Schedule webhook retry with appropriate delay."""
-        delay_seconds = self.retry_delays[endpoint.retry_strategy][min(payload.retry_count, len(self.retry_delays[endpoint.retry_strategy]) - 1)]
+        """Schedule webhook retry with appropriate delay."""        delay_seconds = self.retry_delays[endpoint.retry_strategy][min(payload.retry_count, len(self.retry_delays[endpoint.retry_strategy]) - 1)]
         
         # Increment retry count
         payload.retry_count += 1
@@ -436,8 +415,7 @@ class WebhookNotifier:
         self.logger.info(f"Webhook retry scheduled in {delay_seconds} seconds: {payload.webhook_id}")
 
     async def _track_webhook_metrics(self, result: WebhookDeliveryResult):
-        """Track webhook delivery metrics for analytics."""
-        await self.metrics.increment(
+        """Track webhook delivery metrics for analytics."""        await self.metrics.increment(
             "webhooks_sent_total",
             tags={
                 "event": result.event.value,

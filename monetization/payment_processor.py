@@ -1,11 +1,9 @@
-"""
-Payment Processor
+"""Payment Processor
 Automated payment processing and distribution system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import hashlib
 import hmac
@@ -21,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class PaymentProvider(Enum):
-    """Payment providers"""
-    STRIPE = "stripe"
+    """Payment providers"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BITCOIN = "bitcoin"
@@ -30,8 +27,7 @@ class PaymentProvider(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment status"""
-    PENDING = "pending"
+    """Payment status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -41,8 +37,7 @@ class PaymentStatus(Enum):
 
 
 class PaymentType(Enum):
-    """Payment types"""
-    LICENSE_PAYMENT = "license_payment"
+    """Payment types"""    LICENSE_PAYMENT = "license_payment"
     ROYALTY_PAYMENT = "royalty_payment"
     REVENUE_SHARE = "revenue_share"
     SUBSCRIPTION = "subscription"
@@ -52,8 +47,7 @@ class PaymentType(Enum):
 
 @dataclass
 class PaymentTransaction:
-    """Payment transaction structure"""
-    id: str
+    """Payment transaction structure"""    id: str
     transaction_type: PaymentType
     provider: PaymentProvider
     amount: float
@@ -71,8 +65,7 @@ class PaymentTransaction:
 
 @dataclass
 class EscrowTransaction:
-    """Escrow transaction for dispute management"""
-    id: str
+    """Escrow transaction for dispute management"""    id: str
     payment_id: str
     amount: float
     currency: str
@@ -84,8 +77,7 @@ class EscrowTransaction:
 
 
 class PaymentProcessor:
-    """Automated payment processing and distribution engine"""
-    
+    """Automated payment processing and distribution engine"""    
     # Provider fee structures
     PROVIDER_FEES = {
         PaymentProvider.STRIPE: {
@@ -121,8 +113,7 @@ class PaymentProcessor:
         webhook_secret: str,
         connect_enabled: bool = True
     ):
-        """Configure Stripe payment provider"""
-        try:
+        """Configure Stripe payment provider"""        try:
             self.provider_configs[PaymentProvider.STRIPE] = {
                 "secret_key": secret_key,
                 "webhook_secret": webhook_secret,
@@ -141,8 +132,7 @@ class PaymentProcessor:
         client_secret: str,
         environment: str = "sandbox"
     ):
-        """Configure PayPal payment provider"""
-        try:
+        """Configure PayPal payment provider"""        try:
             self.provider_configs[PaymentProvider.PAYPAL] = {
                 "client_id": client_id,
                 "client_secret": client_secret,
@@ -165,8 +155,7 @@ class PaymentProcessor:
         provider: PaymentProvider = PaymentProvider.STRIPE,
         payment_method_id: Optional[str] = None
     ) -> PaymentTransaction:
-        """Process license payment"""
-        try:
+        """Process license payment"""        try:
             transaction_id = str(uuid.uuid4())
             
             # Calculate fees
@@ -219,8 +208,7 @@ class PaymentProcessor:
         split_rules: Dict[str, float],
         currency: str = "EUR"
     ) -> List[PaymentTransaction]:
-        """Distribute revenue shares automatically"""
-        try:
+        """Distribute revenue shares automatically"""        try:
             transactions = []
             total_revenue = sum(revenue_data.values())
             
@@ -282,8 +270,7 @@ class PaymentProcessor:
         release_conditions: List[str],
         dispute_period_days: int = 7
     ) -> EscrowTransaction:
-        """Create escrow transaction for dispute protection"""
-        try:
+        """Create escrow transaction for dispute protection"""        try:
             escrow_id = str(uuid.uuid4())
             
             escrow = EscrowTransaction(
@@ -311,8 +298,7 @@ class PaymentProcessor:
         escrow_id: str,
         release_reason: str
     ) -> bool:
-        """Release funds from escrow"""
-        try:
+        """Release funds from escrow"""        try:
             escrow = self.escrow_accounts.get(escrow_id)
             if not escrow:
                 logger.error(f"Escrow transaction not found: {escrow_id}")
@@ -349,8 +335,7 @@ class PaymentProcessor:
         payer_id: str,
         payee_id: str
     ) -> PaymentTransaction:
-        """Process multi-currency payment with conversion"""
-        try:
+        """Process multi-currency payment with conversion"""        try:
             # Get exchange rate (simplified - in production use real exchange API)
             exchange_rate = await self._get_exchange_rate(from_currency, to_currency)
             converted_amount = amount * exchange_rate
@@ -404,8 +389,7 @@ class PaymentProcessor:
         dispute_reason: str,
         evidence: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle payment dispute"""
-        try:
+        """Handle payment dispute"""        try:
             transaction = self.transactions.get(transaction_id)
             if not transaction:
                 return {"success": False, "error": "Transaction not found"}
@@ -442,8 +426,7 @@ class PaymentProcessor:
         year: int,
         country: str
     ) -> Dict[str, Any]:
-        """Generate tax reports for users"""
-        try:
+        """Generate tax reports for users"""        try:
             user_transactions = [
                 t for t in self.transactions.values()
                 if (t.payee_id == user_id or t.payer_id == user_id) and
@@ -488,8 +471,7 @@ class PaymentProcessor:
         currency: str,
         international: bool = False
     ) -> float:
-        """Calculate payment provider fees"""
-        try:
+        """Calculate payment provider fees"""        try:
             fee_structure = self.PROVIDER_FEES.get(provider)
             if not fee_structure:
                 return amount * 0.03  # Default 3%
@@ -511,8 +493,7 @@ class PaymentProcessor:
         transaction: PaymentTransaction,
         payment_method_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Process Stripe payment (simplified implementation)"""
-        try:
+        """Process Stripe payment (simplified implementation)"""        try:
             # In production, this would use the Stripe SDK
             # For now, simulate processing
             
@@ -541,8 +522,7 @@ class PaymentProcessor:
             return {"success": False, "error": str(e)}
     
     async def _process_stripe_payout(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Process Stripe payout (simplified implementation)"""
-        try:
+        """Process Stripe payout (simplified implementation)"""        try:
             # In production, this would use Stripe Connect
             await asyncio.sleep(0.1)
             
@@ -557,8 +537,7 @@ class PaymentProcessor:
             return {"success": False, "error": str(e)}
     
     async def _process_paypal_payment(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Process PayPal payment (simplified implementation)"""
-        try:
+        """Process PayPal payment (simplified implementation)"""        try:
             # Simulate PayPal processing
             await asyncio.sleep(0.2)
             
@@ -573,8 +552,7 @@ class PaymentProcessor:
             return {"success": False, "error": str(e)}
     
     async def _process_wise_payment(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Process Wise transfer (simplified implementation)"""
-        try:
+        """Process Wise transfer (simplified implementation)"""        try:
             # Simulate Wise processing
             await asyncio.sleep(0.3)
             
@@ -589,8 +567,7 @@ class PaymentProcessor:
             return {"success": False, "error": str(e)}
     
     async def _get_exchange_rate(self, from_currency: str, to_currency: str) -> float:
-        """Get exchange rate (simplified implementation)"""
-        try:
+        """Get exchange rate (simplified implementation)"""        try:
             # In production, use real exchange rate API
             rates = {
                 ("USD", "EUR"): 0.85,
@@ -606,8 +583,7 @@ class PaymentProcessor:
             return 1.0
     
     def _calculate_tax_obligations(self, income: float, country: str) -> Dict[str, float]:
-        """Calculate tax obligations by country"""
-        try:
+        """Calculate tax obligations by country"""        try:
             # Simplified tax calculations
             tax_rates = {
                 "DE": {"rate": 0.25, "threshold": 9744},  # Germany

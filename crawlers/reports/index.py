@@ -1,5 +1,4 @@
-"""
-Reports Module Index
+"""Reports Module Index
 ===================
 
 Central entry point and orchestration layer for the ultra-advanced enterprise reporting
@@ -38,7 +37,6 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
-
 import asyncio
 import logging
 import warnings
@@ -157,16 +155,14 @@ if MONITORING_AVAILABLE:
 
 
 class ServiceStatus(Enum):
-    """Service status enumeration."""
-    HEALTHY = "healthy"
+    """Service status enumeration."""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     MAINTENANCE = "maintenance"
 
 
 class ComponentType(Enum):
-    """Component type enumeration."""
-    GENERATOR = "generator"
+    """Component type enumeration."""    GENERATOR = "generator"
     ANALYTICS = "analytics"
     FORMATTER = "formatter"
     SCHEDULER = "scheduler"
@@ -179,8 +175,7 @@ class ComponentType(Enum):
 
 @dataclass
 class ServiceConfig:
-    """Service configuration dataclass."""
-    name: str
+    """Service configuration dataclass."""    name: str
     version: str = "2.0.0"
     environment: str = "production"
     debug: bool = False
@@ -198,8 +193,7 @@ class ServiceConfig:
 
 
 class ReportsSettings(PydanticSettings):
-    """Reports service settings with environment variable support."""
-    
+    """Reports service settings with environment variable support."""    
     # Basic Settings
     app_name: str = Field(default="IA Influencer Agent - Reports Service", env="APP_NAME")
     app_version: str = Field(default="2.0.0", env="APP_VERSION")
@@ -252,13 +246,11 @@ class ReportsSettings(PydanticSettings):
 
 
 class ReportsServiceManager:
-    """
-    Central service manager for the reports module.
+    """    Central service manager for the reports module.
     
     Manages all reporting components, handles service lifecycle,
     provides dependency injection, and ensures system reliability.
-    """
-    
+    """    
     def __init__(self, settings: ReportsSettings):
         self.settings = settings
         self.status = ServiceStatus.HEALTHY
@@ -288,8 +280,7 @@ class ReportsServiceManager:
         logger.info(f"ReportsServiceManager initialized for environment: {settings.environment}")
     
     async def initialize(self) -> None:
-        """Initialize all service components."""
-        try:
+        """Initialize all service components."""        try:
             logger.info("Initializing Reports Service components...")
             
             # Initialize database
@@ -321,8 +312,7 @@ class ReportsServiceManager:
             raise
     
     async def _initialize_database(self) -> None:
-        """Initialize database connection and session factory."""
-        try:
+        """Initialize database connection and session factory."""        try:
             self._db_engine = create_async_engine(
                 self.settings.database_url,
                 pool_size=self.settings.database_pool_size,
@@ -347,8 +337,7 @@ class ReportsServiceManager:
             raise
     
     async def _initialize_cache(self) -> None:
-        """Initialize local caching system."""
-        try:
+        """Initialize local caching system."""        try:
             self._cache = TTLCache(
                 maxsize=self.settings.cache_max_size,
                 ttl=self.settings.cache_default_ttl
@@ -361,8 +350,7 @@ class ReportsServiceManager:
             raise
     
     async def _initialize_redis(self) -> None:
-        """Initialize Redis connection pool."""
-        try:
+        """Initialize Redis connection pool."""        try:
             self._redis_pool = redis.from_url(
                 self.settings.redis_url,
                 max_connections=self.settings.redis_pool_size,
@@ -379,8 +367,7 @@ class ReportsServiceManager:
             raise
     
     async def _initialize_monitoring(self) -> None:
-        """Initialize monitoring and metrics collection."""
-        try:
+        """Initialize monitoring and metrics collection."""        try:
             # Start Prometheus metrics server
             start_http_server(self.settings.metrics_port)
             
@@ -391,8 +378,7 @@ class ReportsServiceManager:
             raise
     
     async def _register_components(self) -> None:
-        """Register all reporting components in the service registry."""
-        try:
+        """Register all reporting components in the service registry."""        try:
             # Register generators
             self._service_registry["generators"] = {
                 "performance": PerformanceReportGenerator,
@@ -475,16 +461,14 @@ class ReportsServiceManager:
             raise
     
     async def _run_startup_tasks(self) -> None:
-        """Run all startup tasks."""
-        for task in self.startup_tasks:
+        """Run all startup tasks."""        for task in self.startup_tasks:
             try:
                 await task()
             except Exception as e:
                 logger.error(f"Startup task failed: {e}")
     
     async def get_database_session(self) -> AsyncSession:
-        """Get database session for dependency injection."""
-        if not self._session_maker:
+        """Get database session for dependency injection."""        if not self._session_maker:
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Database not available"
@@ -497,8 +481,7 @@ class ReportsServiceManager:
             await session.close()
     
     async def get_redis_client(self) -> redis.Redis:
-        """Get Redis client for dependency injection."""
-        if not self._redis_pool:
+        """Get Redis client for dependency injection."""        if not self._redis_pool:
             raise HTTPException(
                 status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
                 detail="Redis not available"
@@ -507,8 +490,7 @@ class ReportsServiceManager:
         return self._redis_pool
     
     def get_component(self, component_type: str, component_name: str) -> Any:
-        """Get registered component by type and name."""
-        components = self._service_registry.get(component_type, {})
+        """Get registered component by type and name."""        components = self._service_registry.get(component_type, {})
         component_class = components.get(component_name)
         
         if not component_class:
@@ -520,8 +502,7 @@ class ReportsServiceManager:
         return component_class
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check."""
-        health_status = {
+        """Perform comprehensive health check."""        health_status = {
             "status": self.status.value,
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "version": self.settings.app_version,
@@ -564,8 +545,7 @@ class ReportsServiceManager:
         return health_status
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of all service components."""
-        try:
+        """Graceful shutdown of all service components."""        try:
             logger.info("Shutting down Reports Service...")
             
             # Run shutdown tasks
@@ -596,8 +576,7 @@ service_manager: Optional[ReportsServiceManager] = None
 
 
 def get_service_manager() -> ReportsServiceManager:
-    """Get the global service manager instance."""
-    global service_manager
+    """Get the global service manager instance."""    global service_manager
     if not service_manager:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -607,8 +586,7 @@ def get_service_manager() -> ReportsServiceManager:
 
 
 def create_fastapi_app(settings: ReportsSettings) -> FastAPI:
-    """Create and configure FastAPI application."""
-    
+    """Create and configure FastAPI application."""    
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         # Startup
@@ -657,15 +635,13 @@ def create_fastapi_app(settings: ReportsSettings) -> FastAPI:
     # Health check endpoint
     @app.get("/health", tags=["Health"])
     async def health_check():
-        """Comprehensive health check endpoint."""
-        manager = get_service_manager()
+        """Comprehensive health check endpoint."""        manager = get_service_manager()
         return await manager.health_check()
     
     # Service info endpoint
     @app.get("/info", tags=["Info"])
     async def service_info():
-        """Service information endpoint."""
-        return {
+        """Service information endpoint."""        return {
             "name": settings.app_name,
             "version": settings.app_version,
             "environment": settings.environment,
@@ -677,8 +653,7 @@ def create_fastapi_app(settings: ReportsSettings) -> FastAPI:
     if MONITORING_AVAILABLE:
         @app.get("/metrics", tags=["Monitoring"])
         async def metrics():
-            """Prometheus metrics endpoint."""
-            return Response(
+            """Prometheus metrics endpoint."""            return Response(
                 generate_latest(),
                 media_type="text/plain; version=0.0.4; charset=utf-8"
             )
@@ -692,8 +667,7 @@ def run_service(
     reload: bool = False,
     workers: int = 1
 ) -> None:
-    """Run the reports service."""
-    
+    """Run the reports service."""    
     # Load settings
     settings = ReportsSettings()
     
@@ -720,21 +694,18 @@ def run_service(
 
 # Dependency injection functions
 async def get_db_session() -> AsyncSession:
-    """Database session dependency."""
-    manager = get_service_manager()
+    """Database session dependency."""    manager = get_service_manager()
     async for session in manager.get_database_session():
         yield session
 
 
 async def get_redis_client() -> redis.Redis:
-    """Redis client dependency."""
-    manager = get_service_manager()
+    """Redis client dependency."""    manager = get_service_manager()
     return await manager.get_redis_client()
 
 
 def get_component_factory(component_type: str):
-    """Component factory dependency."""
-    def _get_component(component_name: str):
+    """Component factory dependency."""    def _get_component(component_name: str):
         manager = get_service_manager()
         return manager.get_component(component_type, component_name)
     
@@ -746,8 +717,7 @@ security = HTTPBearer()
 
 
 async def verify_token(credentials: HTTPAuthorizationCredentials = Depends(security)) -> Dict[str, Any]:
-    """Verify JWT token and return user info."""
-    
+    """Verify JWT token and return user info."""    
     try:
         import jwt
         from datetime import datetime, timezone
@@ -856,8 +826,7 @@ async def verify_token(credentials: HTTPAuthorizationCredentials = Depends(secur
 
 # Rate limiting decorator
 def rate_limit(limit: str = "100/minute"):
-    """Rate limiting decorator."""
-    def decorator(func):
+    """Rate limiting decorator."""    def decorator(func):
         if RATE_LIMITING_AVAILABLE:
             return limiter.limit(limit)(func)
         return func
@@ -866,8 +835,7 @@ def rate_limit(limit: str = "100/minute"):
 
 # Circuit breaker decorator
 def circuit_breaker(failure_threshold: int = 5, recovery_timeout: int = 30):
-    """Circuit breaker decorator."""
-    def decorator(func):
+    """Circuit breaker decorator."""    def decorator(func):
         if CIRCUIT_BREAKER_AVAILABLE:
             return circuit(failure_threshold=failure_threshold, recovery_timeout=recovery_timeout)(func)
         return func
@@ -876,8 +844,7 @@ def circuit_breaker(failure_threshold: int = 5, recovery_timeout: int = 30):
 
 # Caching decorator
 def cache_result(ttl: int = 3600, key_prefix: str = "reports"):
-    """Caching decorator for expensive operations."""
-    def decorator(func):
+    """Caching decorator for expensive operations."""    def decorator(func):
         @wraps(func)
         async def wrapper(*args, **kwargs):
             manager = get_service_manager()

@@ -1,5 +1,4 @@
-"""
-🚨 Real-Time Surveillance Monitor - IA Influencer Agent Surveillance Module
+"""🚨 Real-Time Surveillance Monitor - IA Influencer Agent Surveillance Module
 ==========================================================================
 
 Ultra-advanced real-time surveillance monitoring system providing continuous
@@ -29,7 +28,6 @@ Threat Detection → Instant Alerts → Automated Response →
 Evidence Collection → Legal Action → Performance Tracking → 
 System Optimization
 """
-
 import asyncio
 import logging
 import json
@@ -75,8 +73,7 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringMode(Enum):
-    """Real-time monitoring modes"""
-    PASSIVE = "passive"
+    """Real-time monitoring modes"""    PASSIVE = "passive"
     ACTIVE = "active"
     AGGRESSIVE = "aggressive"
     STEALTH = "stealth"
@@ -84,8 +81,7 @@ class MonitoringMode(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
-    MINIMAL = "minimal"
+    """Threat severity levels"""    MINIMAL = "minimal"
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -94,8 +90,7 @@ class ThreatLevel(Enum):
 
 
 class MonitoringStatus(Enum):
-    """Monitoring system status"""
-    INITIALIZING = "initializing"
+    """Monitoring system status"""    INITIALIZING = "initializing"
     ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -104,8 +99,7 @@ class MonitoringStatus(Enum):
 
 
 class AlertPriority(Enum):
-    """Alert priority levels"""
-    INFORMATIONAL = "informational"
+    """Alert priority levels"""    INFORMATIONAL = "informational"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -115,8 +109,7 @@ class AlertPriority(Enum):
 
 @dataclass
 class MonitoringTarget:
-    """Content monitoring target"""
-    target_id: str
+    """Content monitoring target"""    target_id: str
     content_id: str
     user_id: str
     content_type: str
@@ -134,8 +127,7 @@ class MonitoringTarget:
 
 @dataclass
 class ThreatDetection:
-    """Real-time threat detection result"""
-    detection_id: str
+    """Real-time threat detection result"""    detection_id: str
     target_id: str
     threat_type: str
     threat_level: ThreatLevel
@@ -152,8 +144,7 @@ class ThreatDetection:
 
 @dataclass
 class SystemMetrics:
-    """Real-time system performance metrics"""
-    timestamp: datetime
+    """Real-time system performance metrics"""    timestamp: datetime
     active_monitors: int
     detection_rate: float
     false_positive_rate: float
@@ -169,8 +160,7 @@ class SystemMetrics:
 
 @dataclass
 class MonitoringConfiguration:
-    """Real-time monitoring configuration"""
-    monitoring_interval: float = 30.0  # seconds
+    """Real-time monitoring configuration"""    monitoring_interval: float = 30.0  # seconds
     max_concurrent_monitors: int = 100
     similarity_threshold: float = 0.8
     false_positive_threshold: float = 0.1
@@ -189,13 +179,11 @@ class MonitoringConfiguration:
 
 
 class RealtimeMonitor:
-    """
-    Ultra-Advanced Real-Time Surveillance Monitor
+    """    Ultra-Advanced Real-Time Surveillance Monitor
     
     Provides continuous, high-performance monitoring of content across
     multiple platforms with instant threat detection and automated response.
-    """
-    
+    """    
     def __init__(
         self,
         config: MonitoringConfiguration,
@@ -204,8 +192,7 @@ class RealtimeMonitor:
         websocket_port: int = 8765,
         metrics_port: int = 9090
     ):
-        """Initialize real-time surveillance monitor"""
-        self.config = config
+        """Initialize real-time surveillance monitor"""        self.config = config
         self.redis_client = redis_client or redis.Redis(decode_responses=True)
         self.database_url = database_url
         self.websocket_port = websocket_port
@@ -245,8 +232,7 @@ class RealtimeMonitor:
         logger.info("RealtimeMonitor initialized successfully")
     
     def setup_prometheus_metrics(self):
-        """Setup Prometheus metrics"""
-        self.metrics = {
+        """Setup Prometheus metrics"""        self.metrics = {
             'detections_total': Counter('surveillance_detections_total', 'Total detections'),
             'processing_time': Histogram('surveillance_processing_seconds', 'Processing time'),
             'active_monitors': Gauge('surveillance_active_monitors', 'Active monitors'),
@@ -260,8 +246,7 @@ class RealtimeMonitor:
         }
     
     def _initialize_database(self):
-        """Initialize database connection and tables"""
-        try:
+        """Initialize database connection and tables"""        try:
             if self.database_url:
                 self.engine = create_engine(self.database_url)
                 self._create_monitoring_tables()
@@ -270,9 +255,7 @@ class RealtimeMonitor:
             self.engine = None
     
     def _create_monitoring_tables(self):
-        """Create monitoring tables"""
-        tables_sql = """
-        CREATE TABLE IF NOT EXISTS monitoring_targets (
+        """Create monitoring tables"""        tables_sql = """        CREATE TABLE IF NOT EXISTS monitoring_targets (
             id SERIAL PRIMARY KEY,
             target_id VARCHAR(255) UNIQUE NOT NULL,
             content_id VARCHAR(255) NOT NULL,
@@ -326,15 +309,13 @@ class RealtimeMonitor:
         CREATE INDEX IF NOT EXISTS idx_targets_user_id ON monitoring_targets(user_id);
         CREATE INDEX IF NOT EXISTS idx_detections_timestamp ON threat_detections(detection_timestamp);
         CREATE INDEX IF NOT EXISTS idx_detections_threat_level ON threat_detections(threat_level);
-        """
-        
+        """        
         if self.engine:
             with self.engine.begin() as conn:
                 conn.execute(text(tables_sql))
     
     def _setup_notification_services(self):
-        """Setup notification services"""
-        try:
+        """Setup notification services"""        try:
             # Email service
             self.notification_services['email'] = {
                 'smtp_server': 'smtp.gmail.com',
@@ -369,8 +350,7 @@ class RealtimeMonitor:
             logger.error(f"Notification service setup failed: {e}")
     
     async def start_monitoring(self):
-        """Start real-time monitoring system"""
-        try:
+        """Start real-time monitoring system"""        try:
             logger.info("Starting real-time surveillance monitoring...")
             
             # Update status
@@ -426,8 +406,7 @@ class RealtimeMonitor:
             raise
     
     async def start_websocket_server(self):
-        """Start WebSocket server for real-time updates"""
-        try:
+        """Start WebSocket server for real-time updates"""        try:
             async def handle_client(websocket, path):
                 logger.info(f"New WebSocket client connected: {websocket.remote_address}")
                 self.websocket_clients.add(websocket)
@@ -468,8 +447,7 @@ class RealtimeMonitor:
             logger.error(f"WebSocket server error: {e}")
     
     async def main_monitoring_loop(self):
-        """Main monitoring loop"""
-        try:
+        """Main monitoring loop"""        try:
             while self.status == MonitoringStatus.ACTIVE:
                 start_time = time.time()
                 
@@ -509,17 +487,14 @@ class RealtimeMonitor:
             self.status = MonitoringStatus.ERROR
     
     async def load_monitoring_targets(self):
-        """Load active monitoring targets from database"""
-        try:
+        """Load active monitoring targets from database"""        try:
             if not self.engine:
                 return
             
-            select_sql = """
-            SELECT * FROM monitoring_targets 
+            select_sql = """            SELECT * FROM monitoring_targets 
             WHERE is_active = TRUE
             ORDER BY priority_level DESC, created_at ASC
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 result = conn.execute(text(select_sql))
                 
@@ -549,8 +524,7 @@ class RealtimeMonitor:
             logger.error(f"Failed to load monitoring targets: {e}")
     
     async def monitor_target(self, target: MonitoringTarget) -> Optional[ThreatDetection]:
-        """Monitor a specific content target"""
-        try:
+        """Monitor a specific content target"""        try:
             # Check if target should be monitored now
             if not self.should_monitor_target(target):
                 return None
@@ -586,8 +560,7 @@ class RealtimeMonitor:
             return None
     
     def should_monitor_target(self, target: MonitoringTarget) -> bool:
-        """Check if target should be monitored based on schedule"""
-        try:
+        """Check if target should be monitored based on schedule"""        try:
             # Always monitor high priority targets
             if target.priority_level in [AlertPriority.URGENT, AlertPriority.EMERGENCY]:
                 return True
@@ -624,8 +597,7 @@ class RealtimeMonitor:
             return True  # Default to monitoring on error
     
     def get_monitoring_interval(self, priority: AlertPriority) -> float:
-        """Get monitoring interval based on priority"""
-        intervals = {
+        """Get monitoring interval based on priority"""        intervals = {
             AlertPriority.EMERGENCY: 60,      # 1 minute
             AlertPriority.URGENT: 300,       # 5 minutes
             AlertPriority.HIGH: 900,         # 15 minutes
@@ -636,8 +608,7 @@ class RealtimeMonitor:
         return intervals.get(priority, 1800)
     
     async def monitor_platform(self, target: MonitoringTarget, platform: str) -> List[ThreatDetection]:
-        """Monitor content on a specific platform"""
-        try:
+        """Monitor content on a specific platform"""        try:
             detections = []
             
             # Platform-specific monitoring logic
@@ -662,8 +633,7 @@ class RealtimeMonitor:
             return []
     
     async def monitor_youtube(self, target: MonitoringTarget) -> List[ThreatDetection]:
-        """Monitor YouTube for content violations"""
-        try:
+        """Monitor YouTube for content violations"""        try:
             detections = []
             
             # YouTube API search (would require actual API key)
@@ -700,8 +670,7 @@ class RealtimeMonitor:
             return []
     
     async def monitor_tiktok(self, target: MonitoringTarget) -> List[ThreatDetection]:
-        """Monitor TikTok for content violations"""
-        try:
+        """Monitor TikTok for content violations"""        try:
             detections = []
             
             # TikTok API/scraping logic
@@ -737,28 +706,23 @@ class RealtimeMonitor:
             return []
     
     async def monitor_instagram(self, target: MonitoringTarget) -> List[ThreatDetection]:
-        """Monitor Instagram for content violations"""
-        # Similar implementation to other platforms
+        """Monitor Instagram for content violations"""        # Similar implementation to other platforms
         return []
     
     async def monitor_twitter(self, target: MonitoringTarget) -> List[ThreatDetection]:
-        """Monitor Twitter for content violations"""
-        # Similar implementation to other platforms
+        """Monitor Twitter for content violations"""        # Similar implementation to other platforms
         return []
     
     async def monitor_facebook(self, target: MonitoringTarget) -> List[ThreatDetection]:
-        """Monitor Facebook for content violations"""
-        # Similar implementation to other platforms
+        """Monitor Facebook for content violations"""        # Similar implementation to other platforms
         return []
     
     async def monitor_generic_web(self, target: MonitoringTarget, domain: str) -> List[ThreatDetection]:
-        """Monitor generic web domains"""
-        # Generic web scraping and monitoring logic
+        """Monitor generic web domains"""        # Generic web scraping and monitoring logic
         return []
     
     async def simulate_youtube_search(self, query: str) -> List[Dict[str, Any]]:
-        """Simulate YouTube API search (replace with real API calls)"""
-        # This would be replaced with actual YouTube API calls
+        """Simulate YouTube API search (replace with real API calls)"""        # This would be replaced with actual YouTube API calls
         return [
             {
                 'id': f'video_{i}',
@@ -773,8 +737,7 @@ class RealtimeMonitor:
         ]
     
     async def simulate_tiktok_search(self, query: str) -> List[Dict[str, Any]]:
-        """Simulate TikTok API search"""
-        return [
+        """Simulate TikTok API search"""        return [
             {
                 'id': f'tiktok_{i}',
                 'description': f'Sample TikTok {i} for {query}',
@@ -791,8 +754,7 @@ class RealtimeMonitor:
         target: MonitoringTarget,
         content_data: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between target and found content"""
-        try:
+        """Calculate similarity between target and found content"""        try:
             # This would integrate with the fingerprinting engine
             # For now, simulate based on title/description similarity
             
@@ -821,8 +783,7 @@ class RealtimeMonitor:
             return 0.0
     
     def calculate_threat_level(self, similarity_score: float) -> ThreatLevel:
-        """Calculate threat level based on similarity score"""
-        if similarity_score >= 0.95:
+        """Calculate threat level based on similarity score"""        if similarity_score >= 0.95:
             return ThreatLevel.EMERGENCY
         elif similarity_score >= 0.85:
             return ThreatLevel.CRITICAL
@@ -836,8 +797,7 @@ class RealtimeMonitor:
             return ThreatLevel.MINIMAL
     
     def get_threat_score(self, threat_level: ThreatLevel) -> int:
-        """Get numeric score for threat level"""
-        scores = {
+        """Get numeric score for threat level"""        scores = {
             ThreatLevel.MINIMAL: 1,
             ThreatLevel.LOW: 2,
             ThreatLevel.MODERATE: 3,
@@ -848,8 +808,7 @@ class RealtimeMonitor:
         return scores.get(threat_level, 1)
     
     async def process_detections(self):
-        """Process threat detections queue"""
-        try:
+        """Process threat detections queue"""        try:
             while self.status == MonitoringStatus.ACTIVE:
                 try:
                     # Get detection from queue with timeout
@@ -880,13 +839,11 @@ class RealtimeMonitor:
             logger.error(f"Detection processing error: {e}")
     
     async def store_detection(self, detection: ThreatDetection):
-        """Store threat detection in database"""
-        try:
+        """Store threat detection in database"""        try:
             if not self.engine:
                 return
             
-            insert_sql = """
-            INSERT INTO threat_detections (
+            insert_sql = """            INSERT INTO threat_detections (
                 detection_id, target_id, threat_type, threat_level,
                 detection_source, detection_data, similarity_score,
                 evidence_urls, geographic_location, detection_timestamp,
@@ -897,8 +854,7 @@ class RealtimeMonitor:
                 :evidence_urls, :geographic_location, :detection_timestamp,
                 :verification_status, :automated_actions, :manual_review_required
             )
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 conn.execute(text(insert_sql), {
                     'detection_id': detection.detection_id,
@@ -920,8 +876,7 @@ class RealtimeMonitor:
             logger.error(f"Detection storage failed: {e}")
     
     async def execute_automated_actions(self, detection: ThreatDetection):
-        """Execute automated actions for threat detection"""
-        try:
+        """Execute automated actions for threat detection"""        try:
             actions_executed = []
             
             # Determine actions based on threat level
@@ -955,8 +910,7 @@ class RealtimeMonitor:
             logger.error(f"Automated action execution failed: {e}")
     
     async def capture_evidence_screenshot(self, detection: ThreatDetection):
-        """Capture screenshot evidence of violation"""
-        try:
+        """Capture screenshot evidence of violation"""        try:
             # This would use screenshot tools like Selenium or Playwright
             # For now, simulate the action
             logger.info(f"Capturing evidence screenshot for {detection.detection_id}")
@@ -965,8 +919,7 @@ class RealtimeMonitor:
             logger.error(f"Screenshot capture failed: {e}")
     
     async def prepare_dmca_notice(self, detection: ThreatDetection):
-        """Prepare DMCA takedown notice"""
-        try:
+        """Prepare DMCA takedown notice"""        try:
             # Generate DMCA notice based on detection
             logger.info(f"Preparing DMCA notice for {detection.detection_id}")
             
@@ -974,8 +927,7 @@ class RealtimeMonitor:
             logger.error(f"DMCA notice preparation failed: {e}")
     
     async def verify_detection_accuracy(self, detection: ThreatDetection):
-        """Verify detection accuracy with additional algorithms"""
-        try:
+        """Verify detection accuracy with additional algorithms"""        try:
             # Run additional similarity checks
             logger.info(f"Verifying detection accuracy for {detection.detection_id}")
             
@@ -983,8 +935,7 @@ class RealtimeMonitor:
             logger.error(f"Detection verification failed: {e}")
     
     def should_generate_alert(self, detection: ThreatDetection) -> bool:
-        """Determine if an alert should be generated"""
-        try:
+        """Determine if an alert should be generated"""        try:
             # Always alert for high-severity threats
             if detection.threat_level in [ThreatLevel.CRITICAL, ThreatLevel.EMERGENCY]:
                 return True
@@ -1007,8 +958,7 @@ class RealtimeMonitor:
             return False
     
     async def process_alerts(self):
-        """Process alert queue and send notifications"""
-        try:
+        """Process alert queue and send notifications"""        try:
             while self.status == MonitoringStatus.ACTIVE:
                 try:
                     # Get alert from queue
@@ -1027,8 +977,7 @@ class RealtimeMonitor:
             logger.error(f"Alert processing error: {e}")
     
     async def send_notifications(self, detection: ThreatDetection):
-        """Send notifications through configured channels"""
-        try:
+        """Send notifications through configured channels"""        try:
             target = self.monitoring_targets.get(detection.target_id)
             if not target:
                 return
@@ -1060,8 +1009,7 @@ class RealtimeMonitor:
             logger.error(f"Notification sending failed: {e}")
     
     async def send_email_alert(self, target: MonitoringTarget, detection: ThreatDetection, urgent: bool):
-        """Send email alert"""
-        try:
+        """Send email alert"""        try:
             # Email sending logic would go here
             logger.info(f"Email alert sent for detection {detection.detection_id}")
             
@@ -1069,8 +1017,7 @@ class RealtimeMonitor:
             logger.error(f"Email alert failed: {e}")
     
     async def send_sms_alert(self, target: MonitoringTarget, detection: ThreatDetection):
-        """Send SMS alert"""
-        try:
+        """Send SMS alert"""        try:
             # SMS sending logic would go here
             logger.info(f"SMS alert sent for detection {detection.detection_id}")
             
@@ -1078,8 +1025,7 @@ class RealtimeMonitor:
             logger.error(f"SMS alert failed: {e}")
     
     async def send_slack_alert(self, detection: ThreatDetection, urgent: bool):
-        """Send Slack notification"""
-        try:
+        """Send Slack notification"""        try:
             # Slack API logic would go here
             logger.info(f"Slack alert sent for detection {detection.detection_id}")
             
@@ -1087,8 +1033,7 @@ class RealtimeMonitor:
             logger.error(f"Slack alert failed: {e}")
     
     async def send_discord_alert(self, detection: ThreatDetection, urgent: bool):
-        """Send Discord notification"""
-        try:
+        """Send Discord notification"""        try:
             # Discord webhook logic would go here
             logger.info(f"Discord alert sent for detection {detection.detection_id}")
             
@@ -1096,8 +1041,7 @@ class RealtimeMonitor:
             logger.error(f"Discord alert failed: {e}")
     
     async def send_webhook_alerts(self, detection: ThreatDetection):
-        """Send webhook notifications"""
-        try:
+        """Send webhook notifications"""        try:
             # Webhook sending logic would go here
             logger.info(f"Webhook alerts sent for detection {detection.detection_id}")
             
@@ -1105,8 +1049,7 @@ class RealtimeMonitor:
             logger.error(f"Webhook alerts failed: {e}")
     
     async def broadcast_detection(self, detection: ThreatDetection):
-        """Broadcast detection to WebSocket clients"""
-        try:
+        """Broadcast detection to WebSocket clients"""        try:
             if not self.websocket_clients:
                 return
             
@@ -1138,8 +1081,7 @@ class RealtimeMonitor:
             logger.error(f"WebSocket broadcast failed: {e}")
     
     async def collect_system_metrics(self):
-        """Collect system performance metrics"""
-        try:
+        """Collect system performance metrics"""        try:
             while self.status == MonitoringStatus.ACTIVE:
                 # Collect system metrics
                 cpu_usage = psutil.cpu_percent()
@@ -1198,13 +1140,11 @@ class RealtimeMonitor:
             logger.error(f"Metrics collection failed: {e}")
     
     async def store_system_metrics(self, metrics: SystemMetrics):
-        """Store system metrics in database"""
-        try:
+        """Store system metrics in database"""        try:
             if not self.engine:
                 return
             
-            insert_sql = """
-            INSERT INTO system_metrics (
+            insert_sql = """            INSERT INTO system_metrics (
                 timestamp, active_monitors, detection_rate, false_positive_rate,
                 response_time, cpu_usage, memory_usage, gpu_usage,
                 network_throughput, queue_size, error_count, uptime_seconds
@@ -1213,8 +1153,7 @@ class RealtimeMonitor:
                 :response_time, :cpu_usage, :memory_usage, :gpu_usage,
                 :network_throughput, :queue_size, :error_count, :uptime_seconds
             )
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 conn.execute(text(insert_sql), asdict(metrics))
                 
@@ -1222,8 +1161,7 @@ class RealtimeMonitor:
             logger.error(f"Metrics storage failed: {e}")
     
     async def periodic_cleanup(self):
-        """Perform periodic cleanup tasks"""
-        try:
+        """Perform periodic cleanup tasks"""        try:
             while self.status == MonitoringStatus.ACTIVE:
                 # Clean up old cached data
                 await self.cleanup_old_cache_data()
@@ -1245,8 +1183,7 @@ class RealtimeMonitor:
             logger.error(f"Cleanup task failed: {e}")
     
     async def cleanup_old_cache_data(self):
-        """Clean up old cached data"""
-        try:
+        """Clean up old cached data"""        try:
             # Remove old cached threats (older than 1 hour)
             current_time = datetime.now(timezone.utc)
             old_keys = []
@@ -1265,19 +1202,16 @@ class RealtimeMonitor:
             logger.error(f"Cache cleanup failed: {e}")
     
     async def cleanup_old_detections(self):
-        """Clean up old detection records"""
-        try:
+        """Clean up old detection records"""        try:
             if not self.engine:
                 return
             
             # Keep detections for 30 days
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=30)
             
-            cleanup_sql = """
-            DELETE FROM threat_detections
+            cleanup_sql = """            DELETE FROM threat_detections
             WHERE detection_timestamp < :cutoff_date
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 result = conn.execute(text(cleanup_sql), {'cutoff_date': cutoff_date})
                 deleted_count = result.rowcount
@@ -1288,19 +1222,16 @@ class RealtimeMonitor:
             logger.error(f"Detection cleanup failed: {e}")
     
     async def cleanup_old_metrics(self):
-        """Clean up old metrics records"""
-        try:
+        """Clean up old metrics records"""        try:
             if not self.engine:
                 return
             
             # Keep metrics for 90 days
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=90)
             
-            cleanup_sql = """
-            DELETE FROM system_metrics
+            cleanup_sql = """            DELETE FROM system_metrics
             WHERE timestamp < :cutoff_date
-            """
-            
+            """            
             with self.engine.begin() as conn:
                 result = conn.execute(text(cleanup_sql), {'cutoff_date': cutoff_date})
                 deleted_count = result.rowcount
@@ -1311,12 +1242,10 @@ class RealtimeMonitor:
             logger.error(f"Metrics cleanup failed: {e}")
     
     async def add_monitoring_target(self, target: MonitoringTarget) -> bool:
-        """Add new monitoring target"""
-        try:
+        """Add new monitoring target"""        try:
             # Store in database
             if self.engine:
-                insert_sql = """
-                INSERT INTO monitoring_targets (
+                insert_sql = """                INSERT INTO monitoring_targets (
                     target_id, content_id, user_id, content_type,
                     fingerprints, monitoring_platforms, monitoring_keywords,
                     alert_thresholds, monitoring_schedule, priority_level,
@@ -1327,8 +1256,7 @@ class RealtimeMonitor:
                     :alert_thresholds, :monitoring_schedule, :priority_level,
                     :created_at, :is_active, :metadata
                 )
-                """
-                
+                """                
                 with self.engine.begin() as conn:
                     conn.execute(text(insert_sql), {
                         'target_id': target.target_id,
@@ -1357,8 +1285,7 @@ class RealtimeMonitor:
             return False
     
     async def remove_monitoring_target(self, target_id: str) -> bool:
-        """Remove monitoring target"""
-        try:
+        """Remove monitoring target"""        try:
             # Remove from database
             if self.engine:
                 delete_sql = "DELETE FROM monitoring_targets WHERE target_id = :target_id"
@@ -1377,8 +1304,7 @@ class RealtimeMonitor:
             return False
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get current monitoring system status"""
-        try:
+        """Get current monitoring system status"""        try:
             uptime = (datetime.now(timezone.utc) - self.start_time).total_seconds()
             
             status = {
@@ -1413,8 +1339,7 @@ class RealtimeMonitor:
             return {}
     
     async def shutdown(self):
-        """Gracefully shutdown monitoring system"""
-        try:
+        """Gracefully shutdown monitoring system"""        try:
             logger.info("Shutting down real-time monitoring system...")
             
             # Update status
@@ -1451,8 +1376,7 @@ def create_realtime_monitor(
     max_concurrent_monitors: int = 100,
     similarity_threshold: float = 0.8
 ) -> RealtimeMonitor:
-    """Create and configure real-time monitoring system"""
-    config = MonitoringConfiguration(
+    """Create and configure real-time monitoring system"""    config = MonitoringConfiguration(
         monitoring_interval=monitoring_interval,
         max_concurrent_monitors=max_concurrent_monitors,
         similarity_threshold=similarity_threshold

@@ -1,5 +1,4 @@
-"""
-🔍 Content Protection Transformer - IA Influencer Agent Platform Enterprise
+"""🔍 Content Protection Transformer - IA Influencer Agent Platform Enterprise
 ========================================================================
 Module: backend/data_management/transformers/protection_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -22,7 +21,6 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
 """
-
 import asyncio
 import logging
 import time
@@ -67,15 +65,13 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Niveaux de protection du contenu"""
-    BASIC = "basic"
+    """Niveaux de protection du contenu"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     MILITARY = "military"
 
 class WatermarkType(Enum):
-    """Types de watermarks supportés"""
-    VISIBLE_TEXT = "visible_text"
+    """Types de watermarks supportés"""    VISIBLE_TEXT = "visible_text"
     VISIBLE_LOGO = "visible_logo"
     INVISIBLE_LSB = "invisible_lsb"
     INVISIBLE_DCT = "invisible_dct"
@@ -84,15 +80,13 @@ class WatermarkType(Enum):
     VIDEO_FRAME = "video_frame"
 
 class EncryptionType(Enum):
-    """Types de chiffrement supportés"""
-    AES_256 = "aes_256"
+    """Types de chiffrement supportés"""    AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     HYBRID = "hybrid"
     STEGANOGRAPHY = "steganography"
 
 class LicenseType(Enum):
-    """Types de licences de contenu"""
-    COPYRIGHT = "copyright"
+    """Types de licences de contenu"""    COPYRIGHT = "copyright"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
     CUSTOM = "custom"
@@ -101,8 +95,7 @@ class LicenseType(Enum):
 
 @dataclass
 class ProtectionConfig:
-    """Configuration de protection du contenu"""
-    protection_level: ProtectionLevel
+    """Configuration de protection du contenu"""    protection_level: ProtectionLevel
     watermark_config: Optional['WatermarkConfiguration'] = None
     encryption_config: Optional['EncryptionConfiguration'] = None
     license_config: Optional['LicenseConfiguration'] = None
@@ -113,8 +106,7 @@ class ProtectionConfig:
 
 @dataclass
 class WatermarkConfiguration:
-    """Configuration de watermark"""
-    watermark_type: WatermarkType
+    """Configuration de watermark"""    watermark_type: WatermarkType
     visibility: float = 0.3  # 0.0 = invisible, 1.0 = fully visible
     position: str = "bottom_right"  # top_left, top_right, bottom_left, bottom_right, center
     text: Optional[str] = None
@@ -126,8 +118,7 @@ class WatermarkConfiguration:
 
 @dataclass
 class EncryptionConfiguration:
-    """Configuration de chiffrement"""
-    encryption_type: EncryptionType
+    """Configuration de chiffrement"""    encryption_type: EncryptionType
     key_strength: int = 256
     password: Optional[str] = None
     key_derivation_iterations: int = 100000
@@ -136,8 +127,7 @@ class EncryptionConfiguration:
 
 @dataclass
 class LicenseConfiguration:
-    """Configuration de licence"""
-    license_type: LicenseType
+    """Configuration de licence"""    license_type: LicenseType
     owner_name: str
     owner_email: str
     usage_rights: List[str]
@@ -149,8 +139,7 @@ class LicenseConfiguration:
 
 @dataclass
 class ContentProtectionResult:
-    """Résultat de protection de contenu"""
-    success: bool
+    """Résultat de protection de contenu"""    success: bool
     original_path: str
     protected_path: Optional[str]
     protection_id: str
@@ -165,8 +154,7 @@ class ContentProtectionResult:
     warnings: List[str]
 
 class AudioWatermarkTransformer:
-    """Transformateur de watermarks audio professionnel"""
-    
+    """Transformateur de watermarks audio professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.supported_formats = {'.mp3', '.wav', '.flac', '.ogg', '.m4a'}
@@ -177,8 +165,7 @@ class AudioWatermarkTransformer:
         watermark_config: WatermarkConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Applique un watermark inaudible dans l'audio"""
-        
+        """Applique un watermark inaudible dans l'audio"""        
         try:
             # Chargement audio
             y, sr = librosa.load(audio_path, sr=None)
@@ -218,8 +205,7 @@ class AudioWatermarkTransformer:
         sample_rate: int,
         config: WatermarkConfiguration
     ) -> np.ndarray:
-        """Génère un signal de watermark dans une bande de fréquence spécifique"""
-        
+        """Génère un signal de watermark dans une bande de fréquence spécifique"""        
         # Fréquences par défaut (hautes fréquences moins audibles)
         freq_band = config.frequency_band or (15000, 18000)
         center_freq = (freq_band[0] + freq_band[1]) / 2
@@ -261,8 +247,7 @@ class AudioWatermarkTransformer:
         return watermark_signal * envelope
 
 class ImageWatermarkTransformer:
-    """Transformateur de watermarks image professionnel"""
-    
+    """Transformateur de watermarks image professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.supported_formats = {'.jpg', '.jpeg', '.png', '.tiff', '.bmp', '.webp'}
@@ -273,8 +258,7 @@ class ImageWatermarkTransformer:
         watermark_config: WatermarkConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Applique un watermark visible sur l'image"""
-        
+        """Applique un watermark visible sur l'image"""        
         try:
             # Chargement de l'image
             image = Image.open(image_path)
@@ -329,8 +313,7 @@ class ImageWatermarkTransformer:
         watermark_config: WatermarkConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Applique un watermark invisible (LSB steganography)"""
-        
+        """Applique un watermark invisible (LSB steganography)"""        
         try:
             # Chargement de l'image
             image = cv2.imread(image_path)
@@ -367,8 +350,7 @@ class ImageWatermarkTransformer:
         draw: ImageDraw.Draw,
         config: WatermarkConfiguration
     ) -> Dict[str, Any]:
-        """Applique un watermark texte"""
-        
+        """Applique un watermark texte"""        
         # Configuration de la police
         try:
             font = ImageFont.truetype("arial.ttf", config.font_size)
@@ -408,8 +390,7 @@ class ImageWatermarkTransformer:
         watermark_layer: Image.Image,
         config: WatermarkConfiguration
     ) -> Dict[str, Any]:
-        """Applique un watermark logo"""
-        
+        """Applique un watermark logo"""        
         if not config.logo_path or not Path(config.logo_path).exists():
             raise ValueError("Chemin du logo manquant ou invalide")
         
@@ -449,8 +430,7 @@ class ImageWatermarkTransformer:
         image: np.ndarray,
         config: WatermarkConfiguration
     ) -> Dict[str, Any]:
-        """Applique un watermark par LSB steganography"""
-        
+        """Applique un watermark par LSB steganography"""        
         # Message à cacher
         message = config.text or f"PROTECTED_{uuid.uuid4().hex[:8]}"
         
@@ -487,8 +467,7 @@ class ImageWatermarkTransformer:
         image: np.ndarray,
         config: WatermarkConfiguration
     ) -> Dict[str, Any]:
-        """Applique un watermark par DCT (Discrete Cosine Transform)"""
-        
+        """Applique un watermark par DCT (Discrete Cosine Transform)"""        
         # Conversion en YUV pour travailler sur la luminance
         yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
         y_channel = yuv[:, :, 0].astype(np.float32)
@@ -539,8 +518,7 @@ class ImageWatermarkTransformer:
         watermark_size: Tuple[int, int],
         position: str
     ) -> Tuple[int, int]:
-        """Calcule la position du watermark"""
-        
+        """Calcule la position du watermark"""        
         img_w, img_h = image_size
         wm_w, wm_h = watermark_size
         
@@ -557,8 +535,7 @@ class ImageWatermarkTransformer:
         return positions.get(position, positions['bottom_right'])
     
     def _parse_color(self, color_str: str, visibility: float) -> Tuple[int, int, int, int]:
-        """Parse une couleur et applique la visibilité"""
-        
+        """Parse une couleur et applique la visibilité"""        
         colors = {
             'white': (255, 255, 255),
             'black': (0, 0, 0),
@@ -576,8 +553,7 @@ class ImageWatermarkTransformer:
         return rgb + (alpha,)
     
     def _generate_watermark_pattern(self, text: str) -> List[float]:
-        """Génère un pattern de watermark basé sur le texte"""
-        
+        """Génère un pattern de watermark basé sur le texte"""        
         # Hash du texte pour générer un pattern reproductible
         text_hash = hashlib.sha256(text.encode()).hexdigest()
         
@@ -591,8 +567,7 @@ class ImageWatermarkTransformer:
         return pattern
 
 class ContentEncryptionTransformer:
-    """Transformateur de chiffrement de contenu professionnel"""
-    
+    """Transformateur de chiffrement de contenu professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.crypto_manager = CryptoManager()
@@ -603,8 +578,7 @@ class ContentEncryptionTransformer:
         encryption_config: EncryptionConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Chiffre le contenu selon la configuration"""
-        
+        """Chiffre le contenu selon la configuration"""        
         try:
             # Lecture du contenu
             with open(content_path, 'rb') as f:
@@ -655,8 +629,7 @@ class ContentEncryptionTransformer:
         data: bytes,
         config: EncryptionConfiguration
     ) -> Dict[str, Any]:
-        """Chiffrement AES-256"""
-        
+        """Chiffrement AES-256"""        
         # Génération ou dérivation de la clé
         if config.password:
             # Dérivation de clé depuis le mot de passe
@@ -694,8 +667,7 @@ class ContentEncryptionTransformer:
         data: bytes,
         config: EncryptionConfiguration
     ) -> Dict[str, Any]:
-        """Chiffrement hybride (AES + RSA)"""
-        
+        """Chiffrement hybride (AES + RSA)"""        
         from cryptography.hazmat.primitives.asymmetric import rsa, padding
         from cryptography.hazmat.primitives import serialization
         
@@ -751,8 +723,7 @@ class ContentEncryptionTransformer:
         }
 
 class ContentLicenseTransformer:
-    """Transformateur de licences de contenu professionnel"""
-    
+    """Transformateur de licences de contenu professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -762,8 +733,7 @@ class ContentLicenseTransformer:
         license_config: LicenseConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Intègre les informations de licence dans le contenu"""
-        
+        """Intègre les informations de licence dans le contenu"""        
         try:
             # Génération des métadonnées de licence
             license_metadata = self._generate_license_metadata(license_config)
@@ -803,8 +773,7 @@ class ContentLicenseTransformer:
         self,
         config: LicenseConfiguration
     ) -> Dict[str, Any]:
-        """Génère les métadonnées de licence"""
-        
+        """Génère les métadonnées de licence"""        
         license_id = f"LIC_{uuid.uuid4().hex[:12].upper()}"
         
         return {
@@ -829,8 +798,7 @@ class ContentLicenseTransformer:
         license_metadata: Dict[str, Any],
         output_path: str
     ) -> Dict[str, Any]:
-        """Intègre la licence dans les métadonnées EXIF de l'image"""
-        
+        """Intègre la licence dans les métadonnées EXIF de l'image"""        
         from PIL import Image
         from PIL.ExifTags import TAGS
         import piexif
@@ -860,8 +828,7 @@ class ContentLicenseTransformer:
         license_metadata: Dict[str, Any],
         output_path: str
     ) -> Dict[str, Any]:
-        """Intègre la licence dans les métadonnées ID3 de l'audio"""
-        
+        """Intègre la licence dans les métadonnées ID3 de l'audio"""        
         import eyed3
         
         # Copie du fichier audio
@@ -894,8 +861,7 @@ class ContentLicenseTransformer:
         license_metadata: Dict[str, Any],
         output_path: str
     ) -> Dict[str, Any]:
-        """Intègre la licence dans les métadonnées du vidéo"""
-        
+        """Intègre la licence dans les métadonnées du vidéo"""        
         # Utilisation de ffmpeg pour ajouter des métadonnées
         import subprocess
         
@@ -930,8 +896,7 @@ class ContentLicenseTransformer:
         license_metadata: Dict[str, Any],
         output_path: str
     ) -> Dict[str, Any]:
-        """Crée un fichier de licence séparé"""
-        
+        """Crée un fichier de licence séparé"""        
         # Copie du fichier original
         import shutil
         shutil.copy2(content_path, output_path)
@@ -973,19 +938,16 @@ class ContentLicenseTransformer:
         }
     
     def _generate_license_url(self, license_id: str) -> str:
-        """Génère une URL de vérification de licence"""
-        base_url = settings.get('LICENSE_VERIFICATION_URL', 'https://license.ia-influencer.com/verify')
+        """Génère une URL de vérification de licence"""        base_url = settings.get('LICENSE_VERIFICATION_URL', 'https://license.ia-influencer.com/verify')
         return f"{base_url}/{license_id}"
     
     def _generate_verification_hash(self, config: LicenseConfiguration) -> str:
-        """Génère un hash de vérification de la licence"""
-        
+        """Génère un hash de vérification de la licence"""        
         verification_data = f"{config.license_type.value}{config.owner_name}{config.owner_email}"
         return hashlib.sha256(verification_data.encode()).hexdigest()[:16].upper()
 
 class ContentProtectionTransformer:
-    """Gestionnaire principal de protection de contenu"""
-    
+    """Gestionnaire principal de protection de contenu"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -1041,8 +1003,7 @@ class ContentProtectionTransformer:
         protection_config: ProtectionConfig,
         output_path: Optional[str] = None
     ) -> ContentProtectionResult:
-        """Applique une protection complète au contenu"""
-        
+        """Applique une protection complète au contenu"""        
         start_time = time.time()
         protection_id = f"PROT_{uuid.uuid4().hex[:12].upper()}"
         
@@ -1159,8 +1120,7 @@ class ContentProtectionTransformer:
         content_path: str,
         protection_config: ProtectionConfig
     ) -> Dict[str, Any]:
-        """Applique l'empreinte digitale"""
-        
+        """Applique l'empreinte digitale"""        
         try:
             # Configuration de l'empreinte selon le type de contenu
             content_type = self._detect_content_type(content_path)
@@ -1215,8 +1175,7 @@ class ContentProtectionTransformer:
         watermark_config: WatermarkConfiguration,
         output_path: str
     ) -> Dict[str, Any]:
-        """Applique le watermarking"""
-        
+        """Applique le watermarking"""        
         try:
             content_type = self._detect_content_type(content_path)
             
@@ -1240,8 +1199,7 @@ class ContentProtectionTransformer:
             return {'success': False, 'errors': [f"Erreur watermarking: {str(e)}"]}
     
     def _detect_content_type(self, content_path: str) -> str:
-        """Détecte le type de contenu"""
-        
+        """Détecte le type de contenu"""        
         ext = Path(content_path).suffix.lower()
         
         audio_exts = {'.mp3', '.wav', '.flac', '.ogg', '.m4a'}
@@ -1258,8 +1216,7 @@ class ContentProtectionTransformer:
             return 'document'
     
     def _generate_output_path(self, content_path: str, protection_id: str) -> str:
-        """Génère le chemin de sortie protégé"""
-        
+        """Génère le chemin de sortie protégé"""        
         path = Path(content_path)
         return str(path.parent / f"{path.stem}_protected_{protection_id}{path.suffix}")
     
@@ -1268,8 +1225,7 @@ class ContentProtectionTransformer:
         results: Dict[str, bool],
         config: ProtectionConfig
     ) -> float:
-        """Calcule le score de confiance de la protection"""
-        
+        """Calcule le score de confiance de la protection"""        
         base_score = 0.5
         
         # Bonus par étape de protection appliquée
@@ -1300,8 +1256,7 @@ class ContentProtectionTransformer:
         content_path: str,
         custom_settings: Optional[Dict[str, Any]] = None
     ) -> ProtectionConfig:
-        """Génère une configuration de protection optimale pour le type de créateur"""
-        
+        """Génère une configuration de protection optimale pour le type de créateur"""        
         # Configuration de base par type de créateur
         preset = self.creator_protection_presets.get(creator_type, self.creator_protection_presets['influencer'])
         
@@ -1356,8 +1311,7 @@ class ContentProtectionTransformer:
         content_paths: List[str],
         protection_config: ProtectionConfig
     ) -> List[ContentProtectionResult]:
-        """Protège plusieurs contenus en lot de manière asynchrone"""
-        
+        """Protège plusieurs contenus en lot de manière asynchrone"""        
         tasks = []
         for path in content_paths:
             task = asyncio.create_task(
@@ -1397,8 +1351,7 @@ class ContentProtectionTransformer:
         content_path: str,
         protection_config: ProtectionConfig
     ) -> ContentProtectionResult:
-        """Version asynchrone de la protection de contenu"""
-        
+        """Version asynchrone de la protection de contenu"""        
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,

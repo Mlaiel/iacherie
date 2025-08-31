@@ -1,5 +1,4 @@
-"""
-Audio Engine - Ultra-Advanced Processing Engine
+"""Audio Engine - Ultra-Advanced Processing Engine
 
 Core processing engine for audio operations with intelligent
 optimization and comprehensive functionality.
@@ -7,7 +6,6 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,24 +16,21 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioJob:
-    """Job configuration for audio operations"""
-    job_id: str
+    """Job configuration for audio operations"""    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class AudioResult:
-    """Result of audio operations"""
-    job_id: str
+    """Result of audio operations"""    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class AudioEngine:
-    """
-    Ultra-Advanced Audio Processing Engine
+    """    Ultra-Advanced Audio Processing Engine
     
     Provides enterprise-grade audio processing with:
     - High-performance operation handling
@@ -43,8 +38,7 @@ class AudioEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -53,8 +47,7 @@ class AudioEngine:
         logger.info("AudioEngine initialized")
 
     async def start(self) -> None:
-        """Start the audio processing engine"""
-        try:
+        """Start the audio processing engine"""        try:
             self.is_running = True
             logger.info("AudioEngine started successfully")
         except Exception as e:
@@ -62,8 +55,7 @@ class AudioEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> AudioResult:
-        """Process audio operation"""
-        try:
+        """Process audio operation"""        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -90,6 +82,5 @@ class AudioEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""
-        self.is_running = False
+        """Graceful shutdown of the processing engine"""        self.is_running = False
         logger.info("AudioEngine shutdown complete")

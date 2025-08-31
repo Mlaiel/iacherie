@@ -1,5 +1,4 @@
-"""
-Tax Compliance Engine - International tax compliance and reporting
+"""Tax Compliance Engine - International tax compliance and reporting
 =================================================================
 
 Comprehensive tax compliance system supporting international tax
@@ -8,7 +7,6 @@ regulations, automated calculations, and compliance reporting.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,24 +22,21 @@ import json
 logger = logging.getLogger(__name__)
 
 class TaxType(Enum):
-    """Types of taxes"""
-    VAT = "vat"
+    """Types of taxes"""    VAT = "vat"
     GST = "gst"
     SALES_TAX = "sales_tax"
     INCOME_TAX = "income_tax"
     WITHHOLDING_TAX = "withholding_tax"
 
 class ComplianceStatus(Enum):
-    """Tax compliance status"""
-    COMPLIANT = "compliant"
+    """Tax compliance status"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
     EXEMPTED = "exempted"
 
 @dataclass
 class TaxRule:
-    """Tax rule configuration"""
-    rule_id: str
+    """Tax rule configuration"""    rule_id: str
     country: str
     tax_type: TaxType
     rate: Decimal
@@ -52,8 +47,7 @@ class TaxRule:
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""
-    transaction_id: str
+    """Tax calculation result"""    transaction_id: str
     total_amount: Decimal
     tax_amount: Decimal
     net_amount: Decimal
@@ -62,18 +56,15 @@ class TaxCalculation:
     compliance_status: ComplianceStatus
 
 class TaxComplianceEngine:
-    """
-    Advanced tax compliance system supporting international tax regulations,
+    """    Advanced tax compliance system supporting international tax regulations,
     automated calculations, compliance monitoring, and reporting.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize tax compliance engine"""
-        try:
+        """Initialize tax compliance engine"""        try:
             await self._setup_database_tables()
             await self._load_tax_rules()
             await self._setup_compliance_monitoring()
@@ -83,10 +74,8 @@ class TaxComplianceEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for tax compliance"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS tax_rules (
+        """Setup database tables for tax compliance"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS tax_rules (
                     id SERIAL PRIMARY KEY,
                     rule_id VARCHAR(100) UNIQUE NOT NULL,
                     country VARCHAR(2) NOT NULL,
@@ -102,8 +91,7 @@ class TaxComplianceEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS tax_calculations (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS tax_calculations (
                     id SERIAL PRIMARY KEY,
                     transaction_id VARCHAR(255) UNIQUE NOT NULL,
                     customer_country VARCHAR(2) NOT NULL,
@@ -119,8 +107,7 @@ class TaxComplianceEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS tax_reports (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS tax_reports (
                     id SERIAL PRIMARY KEY,
                     report_id VARCHAR(100) UNIQUE NOT NULL,
                     report_type VARCHAR(30) NOT NULL,
@@ -138,8 +125,7 @@ class TaxComplianceEngine:
             """)
 
     async def _load_tax_rules(self) -> None:
-        """Load tax rules for different countries"""
-        try:
+        """Load tax rules for different countries"""        try:
             # Default tax rules for major markets
             default_rules = [
                 # United States
@@ -191,8 +177,7 @@ class TaxComplianceEngine:
             
             async with self.db_pool.acquire() as conn:
                 for rule_data in default_rules:
-                    await conn.execute("""
-                        INSERT INTO tax_rules 
+                    await conn.execute("""                        INSERT INTO tax_rules 
                         (rule_id, country, tax_type, rate, threshold, applicable_categories, effective_date)
                         VALUES ($1, $2, $3, $4, $5, $6, $7)
                         ON CONFLICT (rule_id) DO UPDATE SET
@@ -213,8 +198,7 @@ class TaxComplianceEngine:
             logger.error(f"Failed to load tax rules: {e}")
 
     async def _setup_compliance_monitoring(self) -> None:
-        """Setup compliance monitoring system"""
-        try:
+        """Setup compliance monitoring system"""        try:
             # Cache compliance thresholds
             thresholds = {
                 'US': {'sales_tax': 100000},      # $100k
@@ -232,8 +216,7 @@ class TaxComplianceEngine:
 
     async def calculate_tax(self, transaction_id: str, amount: Decimal, 
                            customer_country: str, category: str = 'digital_content') -> TaxCalculation:
-        """Calculate taxes for transaction"""
-        try:
+        """Calculate taxes for transaction"""        try:
             # Get applicable tax rules
             tax_rules = await self._get_tax_rules(customer_country, category)
             
@@ -286,12 +269,10 @@ class TaxComplianceEngine:
             raise HTTPException(status_code=500, detail="Tax calculation failed")
 
     async def _get_tax_rules(self, country: str, category: str) -> List[TaxRule]:
-        """Get applicable tax rules for country and category"""
-        try:
+        """Get applicable tax rules for country and category"""        try:
             async with self.db_pool.acquire() as conn:
                 # Check for country-specific rules first
-                rules_data = await conn.fetch("""
-                    SELECT rule_id, country, tax_type, rate, threshold, applicable_categories
+                rules_data = await conn.fetch("""                    SELECT rule_id, country, tax_type, rate, threshold, applicable_categories
                     FROM tax_rules 
                     WHERE (country = $1 OR country = 'EU') 
                     AND is_active = TRUE
@@ -321,11 +302,9 @@ class TaxComplianceEngine:
             return []
 
     async def _store_tax_calculation(self, tax_calc: TaxCalculation, customer_country: str) -> None:
-        """Store tax calculation record"""
-        try:
+        """Store tax calculation record"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO tax_calculations 
+                await conn.execute("""                    INSERT INTO tax_calculations 
                     (transaction_id, customer_country, total_amount, tax_amount, net_amount,
                      tax_breakdown, applicable_rules, compliance_status)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -345,12 +324,10 @@ class TaxComplianceEngine:
 
     async def generate_tax_report(self, country: str, start_date: datetime, 
                                 end_date: datetime, report_type: str = 'summary') -> Dict[str, Any]:
-        """Generate tax compliance report"""
-        try:
+        """Generate tax compliance report"""        try:
             async with self.db_pool.acquire() as conn:
                 # Get transaction summary
-                summary = await conn.fetchrow("""
-                    SELECT 
+                summary = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as transaction_count,
                         SUM(total_amount) as total_revenue,
                         SUM(tax_amount) as total_tax,
@@ -362,8 +339,7 @@ class TaxComplianceEngine:
                 """, country, start_date, end_date)
                 
                 # Get tax breakdown
-                breakdown = await conn.fetch("""
-                    SELECT 
+                breakdown = await conn.fetch("""                    SELECT 
                         jsonb_object_keys(tax_breakdown) as tax_type,
                         SUM((tax_breakdown ->> jsonb_object_keys(tax_breakdown))::decimal) as amount
                     FROM tax_calculations 
@@ -373,8 +349,7 @@ class TaxComplianceEngine:
                 """, country, start_date, end_date)
                 
                 # Monthly breakdown
-                monthly_data = await conn.fetch("""
-                    SELECT 
+                monthly_data = await conn.fetch("""                    SELECT 
                         DATE_TRUNC('month', calculated_at) as month,
                         COUNT(*) as transactions,
                         SUM(total_amount) as revenue,
@@ -413,8 +388,7 @@ class TaxComplianceEngine:
                 
                 # Store report
                 report_id = f"tax_report_{country}_{report_type}_{int(datetime.now().timestamp())}"
-                await conn.execute("""
-                    INSERT INTO tax_reports 
+                await conn.execute("""                    INSERT INTO tax_reports 
                     (report_id, report_type, country, period_start, period_end,
                      total_revenue, total_tax, transaction_count, report_data, status)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, 'generated')
@@ -446,8 +420,7 @@ class TaxComplianceEngine:
             raise HTTPException(status_code=500, detail="Tax report generation failed")
 
     async def check_compliance_threshold(self, country: str, current_revenue: Decimal) -> Dict[str, Any]:
-        """Check if revenue exceeds compliance thresholds"""
-        try:
+        """Check if revenue exceeds compliance thresholds"""        try:
             # Get threshold data
             cached_thresholds = self.redis.get(f"tax_threshold_{country}")
             if not cached_thresholds:
@@ -479,8 +452,7 @@ class TaxComplianceEngine:
             return {'requires_registration': False, 'threshold_info': {}}
 
     async def update_tax_rule(self, rule_id: str, updates: Dict[str, Any]) -> bool:
-        """Update tax rule"""
-        try:
+        """Update tax rule"""        try:
             async with self.db_pool.acquire() as conn:
                 set_clauses = []
                 values = []
@@ -500,12 +472,10 @@ class TaxComplianceEngine:
                 
                 if set_clauses:
                     values.append(rule_id)
-                    query = f"""
-                        UPDATE tax_rules 
+                    query = f"""                        UPDATE tax_rules 
                         SET {', '.join(set_clauses)}
                         WHERE rule_id = ${param_count}
-                    """
-                    
+                    """                    
                     await conn.execute(query, *values)
                     return True
                     
@@ -516,12 +486,10 @@ class TaxComplianceEngine:
             return False
 
     async def get_compliance_dashboard(self) -> Dict[str, Any]:
-        """Get tax compliance dashboard data"""
-        try:
+        """Get tax compliance dashboard data"""        try:
             async with self.db_pool.acquire() as conn:
                 # Recent calculations
-                recent_calcs = await conn.fetch("""
-                    SELECT 
+                recent_calcs = await conn.fetch("""                    SELECT 
                         transaction_id,
                         customer_country,
                         total_amount,
@@ -534,8 +502,7 @@ class TaxComplianceEngine:
                 """)
                 
                 # Country summary
-                country_summary = await conn.fetch("""
-                    SELECT 
+                country_summary = await conn.fetch("""                    SELECT 
                         customer_country,
                         COUNT(*) as transaction_count,
                         SUM(total_amount) as revenue,
@@ -547,8 +514,7 @@ class TaxComplianceEngine:
                 """)
                 
                 # Compliance status distribution
-                status_dist = await conn.fetch("""
-                    SELECT 
+                status_dist = await conn.fetch("""                    SELECT 
                         compliance_status,
                         COUNT(*) as count
                     FROM tax_calculations

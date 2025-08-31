@@ -1,5 +1,4 @@
-"""
-Creative Assistant - Advanced AI-Powered Creative Ideation and Content Enhancement
+"""Creative Assistant - Advanced AI-Powered Creative Ideation and Content Enhancement
 
 Ultra-advanced creative assistance system providing intelligent ideation, brainstorming,
 and creative enhancement for all content types.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -75,8 +73,7 @@ settings = get_settings()
 
 
 class IdeationType(str, Enum):
-    """Types of creative ideas to generate"""
-    CONTENT_CONCEPT = "content_concept"
+    """Types of creative ideas to generate"""    CONTENT_CONCEPT = "content_concept"
     STORY_IDEA = "story_idea"
     MARKETING_ANGLE = "marketing_angle"
     VISUAL_CONCEPT = "visual_concept"
@@ -91,8 +88,7 @@ class IdeationType(str, Enum):
 
 
 class CreativeMethod(str, Enum):
-    """Creative thinking methods"""
-    BRAINSTORMING = "brainstorming"
+    """Creative thinking methods"""    BRAINSTORMING = "brainstorming"
     MIND_MAPPING = "mind_mapping"
     SCAMPER = "scamper"  # Substitute, Combine, Adapt, Modify, Put to another use, Eliminate, Reverse
     SIX_THINKING_HATS = "six_thinking_hats"
@@ -105,8 +101,7 @@ class CreativeMethod(str, Enum):
 
 
 class CreativeDirection(str, Enum):
-    """Creative directions for idea development"""
-    INNOVATIVE = "innovative"
+    """Creative directions for idea development"""    INNOVATIVE = "innovative"
     TRENDING = "trending"
     CONTROVERSIAL = "controversial"
     EMOTIONAL = "emotional"
@@ -120,8 +115,7 @@ class CreativeDirection(str, Enum):
 
 @dataclass
 class CreativePrompt:
-    """Structure for creative prompts and constraints"""
-    topic: str
+    """Structure for creative prompts and constraints"""    topic: str
     context: Optional[str] = None
     target_audience: Optional[str] = None
     constraints: List[str] = field(default_factory=list)
@@ -139,8 +133,7 @@ class CreativePrompt:
 
 @dataclass
 class CreativeIdea:
-    """Structure for generated creative ideas"""
-    idea_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Structure for generated creative ideas"""    idea_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str = ""
     description: str = ""
     concept: str = ""
@@ -161,8 +154,7 @@ class CreativeIdea:
 
 @dataclass
 class BrainstormingSession:
-    """Structure for creative brainstorming sessions"""
-    session_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Structure for creative brainstorming sessions"""    session_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: Optional[str] = None
     topic: str = ""
     method: CreativeMethod = CreativeMethod.BRAINSTORMING
@@ -176,8 +168,7 @@ class BrainstormingSession:
 
 
 class CreativeAssistant:
-    """Advanced AI-powered creative assistant for content ideation"""
-    
+    """Advanced AI-powered creative assistant for content ideation"""    
     def __init__(self):
         # Initialize AI clients
         self.openai_client = AsyncOpenAI(api_key=settings.OPENAI_API_KEY)
@@ -202,8 +193,7 @@ class CreativeAssistant:
         logger.info("CreativeAssistant initialized with AI engines")
 
     def _load_creative_models(self):
-        """Load specialized models for creative tasks"""
-        try:
+        """Load specialized models for creative tasks"""        try:
             # Sentence transformer for semantic similarity
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -229,8 +219,7 @@ class CreativeAssistant:
             self.use_cloud_only = True
 
     def _load_creative_patterns(self) -> Dict[str, List[str]]:
-        """Load creative thinking patterns and templates"""
-        return {
+        """Load creative thinking patterns and templates"""        return {
             "story_structures": [
                 "Hero's Journey", "Three-Act Structure", "Problem-Solution", 
                 "Before-After", "Question-Answer", "List Format",
@@ -262,8 +251,7 @@ class CreativeAssistant:
         }
 
     def _load_inspiration_databases(self) -> Dict[str, List[Dict]]:
-        """Load databases of inspiration sources"""
-        return {
+        """Load databases of inspiration sources"""        return {
             "creative_prompts": [
                 {"prompt": "What would happen if gravity stopped working for 24 hours?", "category": "sci-fi"},
                 {"prompt": "Describe a world where colors have sounds", "category": "fantasy"},
@@ -286,8 +274,7 @@ class CreativeAssistant:
         }
 
     def _initialize_trend_tracker(self):
-        """Initialize trend tracking system"""
-        return {
+        """Initialize trend tracking system"""        return {
             "current_trends": [],
             "emerging_trends": [],
             "declining_trends": [],
@@ -295,8 +282,7 @@ class CreativeAssistant:
         }
 
     async def generate_ideas(self, prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Generate creative ideas based on prompt and method"""
-        try:
+        """Generate creative ideas based on prompt and method"""        try:
             # Start brainstorming session
             session = BrainstormingSession(
                 user_id=prompt.user_id,
@@ -345,9 +331,7 @@ class CreativeAssistant:
             raise HTTPException(status_code=500, detail=f"Idea generation failed: {str(e)}")
 
     async def _brainstorming_method(self, prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Generate ideas using AI-powered brainstorming"""
-        brainstorm_prompt = f"""
-        Generate creative ideas for: {prompt.topic}
+        """Generate ideas using AI-powered brainstorming"""        brainstorm_prompt = f"""        Generate creative ideas for: {prompt.topic}
         
         Context: {prompt.context or 'General creative content'}
         Target audience: {prompt.target_audience or 'General audience'}
@@ -364,8 +348,7 @@ class CreativeAssistant:
         5. Implementation approach
         
         Be innovative, think outside the box, and consider current trends.
-        """
-        
+        """        
         try:
             # Use OpenAI for brainstorming
             response = await self.openai_client.chat.completions.create(
@@ -388,20 +371,17 @@ class CreativeAssistant:
             return self._generate_fallback_ideas(prompt)
 
     async def _mind_mapping_method(self, prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Generate ideas using mind mapping technique"""
-        # Create central concept and branches
+        """Generate ideas using mind mapping technique"""        # Create central concept and branches
         central_concept = prompt.topic
         
         # Generate related concepts
-        association_prompt = f"""
-        Create a mind map for: {central_concept}
+        association_prompt = f"""        Create a mind map for: {central_concept}
         
         Generate 8 main branches (related concepts) and for each branch, 
         provide 3-4 sub-concepts. Then create content ideas from these connections.
         
         Format as: Branch -> Sub-concepts -> Content idea
-        """
-        
+        """        
         try:
             response = await self.openai_client.chat.completions.create(
                 model="gpt-4-turbo-preview",
@@ -423,8 +403,7 @@ class CreativeAssistant:
             return self._generate_fallback_ideas(prompt)
 
     async def _scamper_method(self, prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Generate ideas using SCAMPER technique"""
-        scamper_questions = {
+        """Generate ideas using SCAMPER technique"""        scamper_questions = {
             "Substitute": f"What can be substituted in {prompt.topic}?",
             "Combine": f"What can be combined with {prompt.topic}?",
             "Adapt": f"How can {prompt.topic} be adapted for different uses?",
@@ -437,16 +416,14 @@ class CreativeAssistant:
         ideas = []
         
         for technique, question in scamper_questions.items():
-            scamper_prompt = f"""
-            Using the SCAMPER technique - {technique}:
+            scamper_prompt = f"""            Using the SCAMPER technique - {technique}:
             
             Question: {question}
             Context: {prompt.context or 'Creative content development'}
             
             Generate 2 creative content ideas that answer this question.
             Each idea should be unique, actionable, and engaging.
-            """
-            
+            """            
             try:
                 response = await self.openai_client.chat.completions.create(
                     model="gpt-4-turbo-preview",
@@ -468,22 +445,19 @@ class CreativeAssistant:
         return ideas[:prompt.quantity * 2]
 
     async def _random_word_method(self, prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Generate ideas using random word association"""
-        random_words = random.sample(self.inspiration_databases["random_words"], 5)
+        """Generate ideas using random word association"""        random_words = random.sample(self.inspiration_databases["random_words"], 5)
         
         ideas = []
         
         for word in random_words:
-            association_prompt = f"""
-            Create content ideas by connecting: {prompt.topic} with the random word "{word}"
+            association_prompt = f"""            Create content ideas by connecting: {prompt.topic} with the random word "{word}"
             
             Find creative connections, analogies, or metaphors between these concepts.
             Generate 2 unique content ideas from this connection.
             
             Context: {prompt.context or 'Creative content'}
             Target audience: {prompt.target_audience or 'General'}
-            """
-            
+            """            
             try:
                 response = await self.openai_client.chat.completions.create(
                     model="gpt-4-turbo-preview",
@@ -505,9 +479,7 @@ class CreativeAssistant:
         return ideas
 
     async def _analogical_thinking_method(self, prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Generate ideas using analogical thinking"""
-        analogical_prompt = f"""
-        Use analogical thinking to generate content ideas for: {prompt.topic}
+        """Generate ideas using analogical thinking"""        analogical_prompt = f"""        Use analogical thinking to generate content ideas for: {prompt.topic}
         
         Think of analogies from these domains:
         1. Nature (animals, plants, natural phenomena)
@@ -519,8 +491,7 @@ class CreativeAssistant:
         For each domain, find an analogy to {prompt.topic} and create a content idea based on that analogy.
         
         Context: {prompt.context or 'Creative content'}
-        """
-        
+        """        
         try:
             response = await self.openai_client.chat.completions.create(
                 model="gpt-4-turbo-preview",
@@ -542,8 +513,7 @@ class CreativeAssistant:
             return self._generate_fallback_ideas(prompt)
 
     async def _what_if_scenarios_method(self, prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Generate ideas using what-if scenarios"""
-        scenarios = [
+        """Generate ideas using what-if scenarios"""        scenarios = [
             f"What if {prompt.topic} was completely banned tomorrow?",
             f"What if {prompt.topic} could only be done by children?",
             f"What if {prompt.topic} was the most expensive thing in the world?",
@@ -558,16 +528,14 @@ class CreativeAssistant:
         ideas = []
         
         for scenario in selected_scenarios:
-            scenario_prompt = f"""
-            Explore this hypothetical scenario: {scenario}
+            scenario_prompt = f"""            Explore this hypothetical scenario: {scenario}
             
             Generate 2 creative content ideas based on this scenario.
             Think about the implications, consequences, and interesting angles.
             
             Context: {prompt.context or 'Creative exploration'}
             Make the ideas engaging and thought-provoking.
-            """
-            
+            """            
             try:
                 response = await self.openai_client.chat.completions.create(
                     model="gpt-4-turbo-preview",
@@ -589,12 +557,10 @@ class CreativeAssistant:
         return ideas
 
     async def _trend_analysis_method(self, prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Generate ideas based on current trends analysis"""
-        # Update trends if needed
+        """Generate ideas based on current trends analysis"""        # Update trends if needed
         await self._update_trends_if_needed()
         
-        trend_prompt = f"""
-        Generate content ideas for: {prompt.topic}
+        trend_prompt = f"""        Generate content ideas for: {prompt.topic}
         Based on current trends analysis.
         
         Current trending topics: {', '.join(self.trend_tracker.get('current_trends', [])[:5])}
@@ -608,8 +574,7 @@ class CreativeAssistant:
         
         Generate {prompt.quantity} trend-based ideas.
         Context: {prompt.context or 'Trend-focused content'}
-        """
-        
+        """        
         try:
             response = await self.openai_client.chat.completions.create(
                 model="gpt-4-turbo-preview",
@@ -631,8 +596,7 @@ class CreativeAssistant:
             return self._generate_fallback_ideas(prompt)
 
     def _parse_brainstorming_response(self, content: str, method: CreativeMethod) -> List[CreativeIdea]:
-        """Parse brainstorming response into structured ideas"""
-        ideas = []
+        """Parse brainstorming response into structured ideas"""        ideas = []
         
         # Split by numbered items or bullet points
         sections = re.split(r'\n\s*[\d\.\-\*]+\s*', content)
@@ -666,13 +630,11 @@ class CreativeAssistant:
         return ideas
 
     def _parse_mind_map_response(self, content: str, method: CreativeMethod) -> List[CreativeIdea]:
-        """Parse mind map response into ideas"""
-        # Similar parsing logic adapted for mind map structure
+        """Parse mind map response into ideas"""        # Similar parsing logic adapted for mind map structure
         return self._parse_brainstorming_response(content, method)
 
     def _parse_scamper_response(self, content: str, technique: str) -> List[CreativeIdea]:
-        """Parse SCAMPER response into ideas"""
-        ideas = []
+        """Parse SCAMPER response into ideas"""        ideas = []
         sections = content.split('\n\n')
         
         for section in sections:
@@ -698,8 +660,7 @@ class CreativeAssistant:
         return ideas
 
     def _parse_random_word_response(self, content: str, word: str) -> List[CreativeIdea]:
-        """Parse random word association response"""
-        ideas = self._parse_brainstorming_response(content, CreativeMethod.RANDOM_WORD)
+        """Parse random word association response"""        ideas = self._parse_brainstorming_response(content, CreativeMethod.RANDOM_WORD)
         
         # Add random word context
         for idea in ideas:
@@ -710,8 +671,7 @@ class CreativeAssistant:
         return ideas
 
     def _parse_analogical_response(self, content: str, method: CreativeMethod) -> List[CreativeIdea]:
-        """Parse analogical thinking response"""
-        ideas = self._parse_brainstorming_response(content, method)
+        """Parse analogical thinking response"""        ideas = self._parse_brainstorming_response(content, method)
         
         # Add analogical thinking context
         for idea in ideas:
@@ -721,8 +681,7 @@ class CreativeAssistant:
         return ideas
 
     def _parse_scenario_response(self, content: str, scenario: str) -> List[CreativeIdea]:
-        """Parse what-if scenario response"""
-        ideas = self._parse_brainstorming_response(content, CreativeMethod.WHAT_IF_SCENARIOS)
+        """Parse what-if scenario response"""        ideas = self._parse_brainstorming_response(content, CreativeMethod.WHAT_IF_SCENARIOS)
         
         # Add scenario context
         for idea in ideas:
@@ -733,8 +692,7 @@ class CreativeAssistant:
         return ideas
 
     def _parse_trend_response(self, content: str, method: CreativeMethod) -> List[CreativeIdea]:
-        """Parse trend analysis response"""
-        ideas = self._parse_brainstorming_response(content, method)
+        """Parse trend analysis response"""        ideas = self._parse_brainstorming_response(content, method)
         
         # Add trend context
         for idea in ideas:
@@ -744,8 +702,7 @@ class CreativeAssistant:
         return ideas
 
     async def _evaluate_and_rank_ideas(self, ideas: List[CreativeIdea], prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Evaluate and rank ideas based on multiple criteria"""
-        try:
+        """Evaluate and rank ideas based on multiple criteria"""        try:
             for idea in ideas:
                 # Calculate comprehensive score
                 scores = []
@@ -783,11 +740,9 @@ class CreativeAssistant:
             return ideas
 
     async def _assess_creativity(self, description: str) -> float:
-        """Assess creativity of an idea"""
-        try:
+        """Assess creativity of an idea"""        try:
             # Use AI to assess creativity
-            assessment_prompt = f"""
-            Rate the creativity of this idea on a scale of 0.0 to 1.0:
+            assessment_prompt = f"""            Rate the creativity of this idea on a scale of 0.0 to 1.0:
             
             Idea: {description}
             
@@ -798,8 +753,7 @@ class CreativeAssistant:
             - Creative connections
             
             Respond with only a number between 0.0 and 1.0.
-            """
-            
+            """            
             response = await self.openai_client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -820,8 +774,7 @@ class CreativeAssistant:
             return 0.7  # Default score
 
     def _assess_feasibility(self, description: str, prompt: CreativePrompt) -> float:
-        """Assess feasibility of implementing the idea"""
-        feasibility_factors = []
+        """Assess feasibility of implementing the idea"""        feasibility_factors = []
         
         # Check for complexity indicators
         complexity_words = ['complex', 'difficult', 'advanced', 'expensive', 'time-consuming']
@@ -861,8 +814,7 @@ class CreativeAssistant:
         return np.mean(feasibility_factors) if feasibility_factors else 0.6
 
     async def _assess_originality(self, description: str, all_ideas: List[CreativeIdea]) -> float:
-        """Assess originality by comparing with other ideas"""
-        try:
+        """Assess originality by comparing with other ideas"""        try:
             # Calculate similarity with other ideas
             descriptions = [idea.description for idea in all_ideas if idea.description != description]
             
@@ -886,8 +838,7 @@ class CreativeAssistant:
             return 0.7  # Default score
 
     def _assess_audience_fit(self, description: str, target_audience: Optional[str]) -> float:
-        """Assess how well the idea fits the target audience"""
-        if not target_audience:
+        """Assess how well the idea fits the target audience"""        if not target_audience:
             return 0.6  # Default score when no audience specified
         
         description_lower = description.lower()
@@ -912,14 +863,12 @@ class CreativeAssistant:
         return max(0.2, min(1.0, fit_score))
 
     async def _update_trends_if_needed(self):
-        """Update trend data if it's stale"""
-        last_updated = self.trend_tracker.get('last_updated')
+        """Update trend data if it's stale"""        last_updated = self.trend_tracker.get('last_updated')
         if not last_updated or (datetime.now(timezone.utc) - last_updated).hours > 6:
             await self._fetch_current_trends()
 
     async def _fetch_current_trends(self):
-        """Fetch current trends from various sources"""
-        try:
+        """Fetch current trends from various sources"""        try:
             # Mock trend data - in production, this would fetch from real APIs
             mock_trends = {
                 'current_trends': [
@@ -944,8 +893,7 @@ class CreativeAssistant:
             logger.error(f"Failed to fetch trends: {e}")
 
     def _generate_fallback_ideas(self, prompt: CreativePrompt) -> List[CreativeIdea]:
-        """Generate fallback ideas when AI methods fail"""
-        fallback_ideas = []
+        """Generate fallback ideas when AI methods fail"""        fallback_ideas = []
         
         # Use creative patterns for fallback
         patterns = self.creative_patterns.get('content_angles', [])
@@ -966,8 +914,7 @@ class CreativeAssistant:
         return fallback_ideas
 
     async def _store_creative_session(self, session: BrainstormingSession):
-        """Store creative session in database"""
-        try:
+        """Store creative session in database"""        try:
             async with get_async_session() as db_session:
                 # Store session data (would implement proper database model)
                 logger.info(f"Creative session stored: {session.session_id}")
@@ -976,8 +923,7 @@ class CreativeAssistant:
             logger.error(f"Failed to store creative session: {e}")
 
     async def enhance_idea(self, idea: CreativeIdea, enhancement_type: str = "expand") -> CreativeIdea:
-        """Enhance an existing idea with additional details"""
-        try:
+        """Enhance an existing idea with additional details"""        try:
             enhancement_prompts = {
                 "expand": f"Expand this content idea with more details, examples, and implementation steps: {idea.description}",
                 "adapt": f"Adapt this idea for different platforms and formats: {idea.description}",
@@ -1024,8 +970,7 @@ class CreativeAssistant:
             return idea
 
     def _extract_implementation_steps(self, content: str) -> List[str]:
-        """Extract implementation steps from content"""
-        steps = []
+        """Extract implementation steps from content"""        steps = []
         
         # Look for numbered lists or bullet points
         lines = content.split('\n')
@@ -1041,8 +986,7 @@ class CreativeAssistant:
 
 
 class IdeaGenerator:
-    """Specialized idea generator for different content types"""
-    
+    """Specialized idea generator for different content types"""    
     def __init__(self):
         self.creative_assistant = CreativeAssistant()
         
@@ -1052,8 +996,7 @@ class IdeaGenerator:
         logger.info("IdeaGenerator initialized")
 
     def _load_content_templates(self) -> Dict[str, Dict]:
-        """Load templates for different content types"""
-        return {
+        """Load templates for different content types"""        return {
             IdeationType.TITLE_SUGGESTION: {
                 "patterns": [
                     "How to {action} {topic} in {timeframe}",
@@ -1084,10 +1027,8 @@ class IdeaGenerator:
         }
 
     async def generate_titles(self, topic: str, quantity: int = 10) -> List[str]:
-        """Generate engaging titles for content"""
-        try:
-            title_prompt = f"""
-            Generate {quantity} compelling, engaging titles for content about: {topic}
+        """Generate engaging titles for content"""        try:
+            title_prompt = f"""            Generate {quantity} compelling, engaging titles for content about: {topic}
             
             Titles should be:
             - Attention-grabbing and clickable
@@ -1096,8 +1037,7 @@ class IdeaGenerator:
             - Varied in style and approach
             
             Include different formats: how-to, listicles, questions, secrets, ultimate guides, etc.
-            """
-            
+            """            
             response = await self.creative_assistant.openai_client.chat.completions.create(
                 model="gpt-4-turbo-preview",
                 messages=[
@@ -1118,10 +1058,8 @@ class IdeaGenerator:
             return self._generate_fallback_titles(topic, quantity)
 
     async def generate_hooks(self, topic: str, style: str = "engaging") -> List[str]:
-        """Generate compelling content hooks"""
-        try:
-            hook_prompt = f"""
-            Generate 8 compelling content hooks for: {topic}
+        """Generate compelling content hooks"""        try:
+            hook_prompt = f"""            Generate 8 compelling content hooks for: {topic}
             Style: {style}
             
             Hooks should:
@@ -1131,8 +1069,7 @@ class IdeaGenerator:
             - Vary in approach (question, statement, story, statistic)
             
             Make them irresistible to read further.
-            """
-            
+            """            
             response = await self.creative_assistant.openai_client.chat.completions.create(
                 model="gpt-4-turbo-preview",
                 messages=[
@@ -1153,10 +1090,8 @@ class IdeaGenerator:
             return self._generate_fallback_hooks(topic)
 
     async def generate_hashtags(self, topic: str, platform: str = "instagram") -> List[str]:
-        """Generate relevant hashtags for content"""
-        try:
-            hashtag_prompt = f"""
-            Generate relevant hashtags for content about: {topic}
+        """Generate relevant hashtags for content"""        try:
+            hashtag_prompt = f"""            Generate relevant hashtags for content about: {topic}
             Platform: {platform}
             
             Include:
@@ -1166,8 +1101,7 @@ class IdeaGenerator:
             
             Make them discoverable and relevant for {platform}.
             Format as a list without the # symbol.
-            """
-            
+            """            
             response = await self.creative_assistant.openai_client.chat.completions.create(
                 model="gpt-3.5-turbo",
                 messages=[
@@ -1188,8 +1122,7 @@ class IdeaGenerator:
             return self._generate_fallback_hashtags(topic)
 
     def _extract_titles_from_response(self, content: str) -> List[str]:
-        """Extract titles from AI response"""
-        titles = []
+        """Extract titles from AI response"""        titles = []
         lines = content.strip().split('\n')
         
         for line in lines:
@@ -1204,12 +1137,10 @@ class IdeaGenerator:
         return titles
 
     def _extract_hooks_from_response(self, content: str) -> List[str]:
-        """Extract hooks from AI response"""
-        return self._extract_titles_from_response(content)  # Similar extraction logic
+        """Extract hooks from AI response"""        return self._extract_titles_from_response(content)  # Similar extraction logic
 
     def _extract_hashtags_from_response(self, content: str) -> List[str]:
-        """Extract hashtags from AI response"""
-        hashtags = []
+        """Extract hashtags from AI response"""        hashtags = []
         
         # Extract hashtags with or without # symbol
         hashtag_pattern = r'#?([a-zA-Z0-9_]+)'
@@ -1222,8 +1153,7 @@ class IdeaGenerator:
         return list(set(hashtags))  # Remove duplicates
 
     def _generate_fallback_titles(self, topic: str, quantity: int) -> List[str]:
-        """Generate fallback titles using templates"""
-        templates = self.content_templates[IdeationType.TITLE_SUGGESTION]["patterns"]
+        """Generate fallback titles using templates"""        templates = self.content_templates[IdeationType.TITLE_SUGGESTION]["patterns"]
         titles = []
         
         for template in templates[:quantity]:
@@ -1237,8 +1167,7 @@ class IdeaGenerator:
         return titles
 
     def _generate_fallback_hooks(self, topic: str) -> List[str]:
-        """Generate fallback hooks using templates"""
-        templates = self.content_templates[IdeationType.HOOK_IDEA]["patterns"]
+        """Generate fallback hooks using templates"""        templates = self.content_templates[IdeationType.HOOK_IDEA]["patterns"]
         hooks = []
         
         for template in templates:
@@ -1251,8 +1180,7 @@ class IdeaGenerator:
         return hooks
 
     def _generate_fallback_hashtags(self, topic: str) -> List[str]:
-        """Generate fallback hashtags"""
-        words = topic.lower().split()
+        """Generate fallback hashtags"""        words = topic.lower().split()
         base_hashtags = [word for word in words if len(word) > 3]
         
         additional = ['content', 'creative', 'inspiration', 'tips', 'guide']

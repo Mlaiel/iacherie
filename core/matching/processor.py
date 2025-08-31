@@ -1,5 +1,4 @@
-"""
-Enterprise Match Processor for Creator Collaboration Workflow Management
+"""Enterprise Match Processor for Creator Collaboration Workflow Management
 
 This module implements an advanced, AI-driven processing system for managing the complete
 lifecycle of creator collaboration matches, from discovery through completion, featuring
@@ -39,7 +38,6 @@ This processing system contains proprietary algorithms and business logic
 developed by Fahed Mlaiel. Unauthorized use, reverse engineering, or distribution
 is strictly prohibited and subject to legal prosecution.
 """
-
 import logging
 import asyncio
 import json
@@ -65,8 +63,7 @@ from .validator import MatchValidator, ValidationResult
 
 
 class ProcessingMode(Enum):
-    """Advanced processing mode options"""
-    REAL_TIME = "real_time"           # Immediate processing for high-priority matches
+    """Advanced processing mode options"""    REAL_TIME = "real_time"           # Immediate processing for high-priority matches
     BATCH = "batch"                   # Batch processing for efficiency
     STREAMING = "streaming"           # Continuous streaming processing
     PRIORITY_QUEUE = "priority_queue" # Priority-based processing
@@ -75,8 +72,7 @@ class ProcessingMode(Enum):
 
 
 class MatchStatus(Enum):
-    """Enhanced match processing status with business intelligence"""
-    # Initial States
+    """Enhanced match processing status with business intelligence"""    # Initial States
     DISCOVERED = "discovered"         # Match discovered by AI
     QUEUED = "queued"                # Queued for processing
     PROCESSING = "processing"        # Currently being processed
@@ -113,8 +109,7 @@ class MatchStatus(Enum):
 
 
 class ProcessingStage(Enum):
-    """Advanced processing stages with AI optimization"""
-    # Discovery & Initial Processing
+    """Advanced processing stages with AI optimization"""    # Discovery & Initial Processing
     DISCOVERY = "discovery"          # AI-powered match discovery
     INITIAL_SCORING = "initial_scoring"    # Initial compatibility scoring
     DEDUPLICATION = "deduplication"  # Remove duplicate matches
@@ -147,8 +142,7 @@ class ProcessingStage(Enum):
 
 @dataclass
 class BatchConfig:
-    """Configuration for batch processing optimization"""
-    batch_size: int = 100
+    """Configuration for batch processing optimization"""    batch_size: int = 100
     max_parallel_batches: int = 4
     processing_timeout: timedelta = timedelta(minutes=30)
     
@@ -172,8 +166,7 @@ class BatchConfig:
 
 @dataclass
 class ProcessingResult:
-    """Comprehensive processing result with business intelligence"""
-    processing_id: str
+    """Comprehensive processing result with business intelligence"""    processing_id: str
     status: MatchStatus
     stage: ProcessingStage
     
@@ -212,8 +205,7 @@ class ProcessingResult:
 
 
 class MatchPriority(Enum):
-    """Match priority levels"""
-    LOW = "low"
+    """Match priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -221,8 +213,7 @@ class MatchPriority(Enum):
 
 @dataclass
 class MatchProcessingConfig:
-    """Configuration for match processing"""
-    auto_validation: bool
+    """Configuration for match processing"""    auto_validation: bool
     validation_level: str
     expiration_days: int
     max_retries: int
@@ -233,8 +224,7 @@ class MatchProcessingConfig:
 
 @dataclass
 class MatchMetadata:
-    """Extended metadata for matches"""
-    match_id: str
+    """Extended metadata for matches"""    match_id: str
     creator_a_id: int
     creator_b_id: int
     matching_algorithm: str
@@ -255,8 +245,7 @@ class MatchMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Result of match processing operation"""
-    success: bool
+    """Result of match processing operation"""    success: bool
     match_id: str
     new_status: MatchStatus
     processing_stage: ProcessingStage
@@ -267,13 +256,11 @@ class ProcessingResult:
 
 
 class MatchProcessor:
-    """
-    Comprehensive match processor for content creator collaboration
+    """    Comprehensive match processor for content creator collaboration
     
     This class manages the complete lifecycle of matches, from initial creation
     through validation, presentation, and collaboration tracking.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: Session,
@@ -298,8 +285,7 @@ class MatchProcessor:
         self._initialize_stage_processors()
     
     def _initialize_processing_config(self) -> None:
-        """Initialize default processing configuration"""
-        self.default_config = MatchProcessingConfig(
+        """Initialize default processing configuration"""        self.default_config = MatchProcessingConfig(
             auto_validation=True,
             validation_level="standard",
             expiration_days=30,
@@ -325,8 +311,7 @@ class MatchProcessor:
         )
     
     def _initialize_stage_processors(self) -> None:
-        """Initialize stage processor functions"""
-        self.stage_processors = {
+        """Initialize stage processor functions"""        self.stage_processors = {
             ProcessingStage.INITIAL_MATCHING: self._process_initial_matching,
             ProcessingStage.VALIDATION: self._process_validation,
             ProcessingStage.ENRICHMENT: self._process_enrichment,
@@ -344,8 +329,7 @@ class MatchProcessor:
         creator_b: CreatorProfile,
         config: Optional[MatchProcessingConfig] = None
     ) -> ProcessingResult:
-        """
-        Process a match through the complete workflow
+        """        Process a match through the complete workflow
         
         Args:
             match_result: Initial match result
@@ -355,8 +339,7 @@ class MatchProcessor:
             
         Returns:
             Processing result with status and next actions
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         processing_config = config or self.default_config
         
         try:
@@ -426,8 +409,7 @@ class MatchProcessor:
         creator_b: CreatorProfile,
         config: MatchProcessingConfig
     ) -> MatchMetadata:
-        """Create initial match metadata"""
-        match_id = f"match_{creator_a.user_id}_{creator_b.user_id}_{int(datetime.utcnow().timestamp())}"
+        """Create initial match metadata"""        match_id = f"match_{creator_a.user_id}_{creator_b.user_id}_{int(datetime.utcnow().timestamp())}"
         
         # Determine priority based on compatibility score and other factors
         priority = self._calculate_match_priority(match_result, creator_a, creator_b, config)
@@ -463,8 +445,7 @@ class MatchProcessor:
         creator_b: CreatorProfile,
         config: MatchProcessingConfig
     ) -> ProcessingResult:
-        """Process match through all stages"""
-        current_stage = ProcessingStage.INITIAL_MATCHING
+        """Process match through all stages"""        current_stage = ProcessingStage.INITIAL_MATCHING
         messages = []
         errors = []
         
@@ -576,8 +557,7 @@ class MatchProcessor:
         creator_b: CreatorProfile,
         config: MatchProcessingConfig
     ) -> ProcessingResult:
-        """Process initial matching stage"""
-        try:
+        """Process initial matching stage"""        try:
             messages = ["Initial matching completed"]
             
             # Validate basic requirements
@@ -629,8 +609,7 @@ class MatchProcessor:
         creator_b: CreatorProfile,
         config: MatchProcessingConfig
     ) -> ProcessingResult:
-        """Process validation stage"""
-        try:
+        """Process validation stage"""        try:
             from .validator import ValidationLevel
             
             # Perform validation
@@ -700,8 +679,7 @@ class MatchProcessor:
         creator_b: CreatorProfile,
         config: MatchProcessingConfig
     ) -> ProcessingResult:
-        """Process enrichment stage - add additional data and insights"""
-        try:
+        """Process enrichment stage - add additional data and insights"""        try:
             messages = []
             
             # Enrich with additional insights
@@ -759,8 +737,7 @@ class MatchProcessor:
         creator_b: CreatorProfile,
         config: MatchProcessingConfig
     ) -> ProcessingResult:
-        """Process ranking stage - calculate final ranking score"""
-        try:
+        """Process ranking stage - calculate final ranking score"""        try:
             # Calculate ranking score based on multiple factors
             ranking_score = await self._calculate_ranking_score(
                 match_result, creator_a, creator_b, metadata, config
@@ -804,8 +781,7 @@ class MatchProcessor:
         creator_b: CreatorProfile,
         config: MatchProcessingConfig
     ) -> ProcessingResult:
-        """Process presentation stage - prepare and present match to users"""
-        try:
+        """Process presentation stage - prepare and present match to users"""        try:
             messages = []
             
             # Prepare presentation data
@@ -858,8 +834,7 @@ class MatchProcessor:
         metadata: MatchMetadata,
         response_data: Dict[str, Any]
     ) -> ProcessingResult:
-        """Process creator response to match"""
-        try:
+        """Process creator response to match"""        try:
             creator_id = response_data.get('creator_id')
             response_type = response_data.get('response_type')  # 'accept', 'reject', 'interested'
             response_message = response_data.get('message', '')
@@ -922,8 +897,7 @@ class MatchProcessor:
         metadata: MatchMetadata,
         tracking_data: Dict[str, Any]
     ) -> ProcessingResult:
-        """Process collaboration tracking updates"""
-        try:
+        """Process collaboration tracking updates"""        try:
             messages = []
             
             # Update collaboration progress
@@ -979,8 +953,7 @@ class MatchProcessor:
         metadata: MatchMetadata,
         completion_data: Dict[str, Any]
     ) -> ProcessingResult:
-        """Process collaboration completion"""
-        try:
+        """Process collaboration completion"""        try:
             messages = ["Collaboration completion processing"]
             
             # Generate completion report
@@ -1037,8 +1010,7 @@ class MatchProcessor:
         creator_b: CreatorProfile,
         config: MatchProcessingConfig
     ) -> MatchPriority:
-        """Calculate match priority based on various factors"""
-        score = 0.0
+        """Calculate match priority based on various factors"""        score = 0.0
         
         # Factor in compatibility score
         score += match_result.compatibility_score * config.priority_weights.get('compatibility_score', 0.4)
@@ -1070,8 +1042,7 @@ class MatchProcessor:
         current_stage: ProcessingStage,
         errors: List[str]
     ) -> List[str]:
-        """Generate next actions based on current state"""
-        if errors:
+        """Generate next actions based on current state"""        if errors:
             return ["Review and resolve errors", "Retry processing", "Adjust configuration"]
         
         if current_stage == ProcessingStage.PRESENTATION:
@@ -1084,8 +1055,7 @@ class MatchProcessor:
         return ["Continue monitoring", "Proceed to next stage"]
     
     def _get_response_next_actions(self, status: MatchStatus) -> List[str]:
-        """Get next actions based on response status"""
-        if status == MatchStatus.ACCEPTED:
+        """Get next actions based on response status"""        if status == MatchStatus.ACCEPTED:
             return ["Begin collaboration setup", "Create collaboration workspace", "Send welcome notifications"]
         elif status == MatchStatus.REJECTED:
             return ["Analyze rejection feedback", "Update creator preferences", "Consider alternative matches"]
@@ -1101,8 +1071,7 @@ class MatchProcessor:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> None:
-        """Store match data in database"""
-        try:
+        """Store match data in database"""        try:
             # Implementation would store in database
             # This includes metadata, match result, and creator references
             pass
@@ -1111,8 +1080,7 @@ class MatchProcessor:
             raise
     
     async def _update_match_metadata(self, metadata: MatchMetadata) -> None:
-        """Update match metadata in database"""
-        try:
+        """Update match metadata in database"""        try:
             # Implementation would update database record
             pass
         except Exception as e:
@@ -1125,8 +1093,7 @@ class MatchProcessor:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> Dict[str, Any]:
-        """Enrich match data with additional insights"""
-        # Implementation would add market data, trends, etc.
+        """Enrich match data with additional insights"""        # Implementation would add market data, trends, etc.
         return {}
     
     async def _add_market_insights(
@@ -1134,8 +1101,7 @@ class MatchProcessor:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> Dict[str, Any]:
-        """Add market insights to match"""
-        # Implementation would analyze market conditions
+        """Add market insights to match"""        # Implementation would analyze market conditions
         return {}
     
     async def _generate_collaboration_suggestions(
@@ -1144,8 +1110,7 @@ class MatchProcessor:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> List[str]:
-        """Generate collaboration suggestions"""
-        # Implementation would generate specific collaboration ideas
+        """Generate collaboration suggestions"""        # Implementation would generate specific collaboration ideas
         return []
     
     async def _calculate_ranking_score(
@@ -1156,8 +1121,7 @@ class MatchProcessor:
         metadata: MatchMetadata,
         config: MatchProcessingConfig
     ) -> float:
-        """Calculate final ranking score for match"""
-        # Implementation would calculate comprehensive ranking
+        """Calculate final ranking score for match"""        # Implementation would calculate comprehensive ranking
         return match_result.compatibility_score
     
     async def _prepare_presentation_data(
@@ -1167,8 +1131,7 @@ class MatchProcessor:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> Dict[str, Any]:
-        """Prepare data for presenting match to creators"""
-        # Implementation would format data for presentation
+        """Prepare data for presenting match to creators"""        # Implementation would format data for presentation
         return {}
     
     # Notification methods
@@ -1178,8 +1141,7 @@ class MatchProcessor:
         metadata: MatchMetadata,
         presentation_data: Dict[str, Any]
     ) -> None:
-        """Send email notifications to creators"""
-        # Implementation would send emails
+        """Send email notifications to creators"""        # Implementation would send emails
         pass
     
     async def _send_push_notifications(
@@ -1187,8 +1149,7 @@ class MatchProcessor:
         metadata: MatchMetadata,
         presentation_data: Dict[str, Any]
     ) -> None:
-        """Send push notifications to creators"""
-        # Implementation would send push notifications
+        """Send push notifications to creators"""        # Implementation would send push notifications
         pass
     
     async def _create_in_app_notifications(
@@ -1196,8 +1157,7 @@ class MatchProcessor:
         metadata: MatchMetadata,
         presentation_data: Dict[str, Any]
     ) -> None:
-        """Create in-app notifications"""
-        # Implementation would create in-app notifications
+        """Create in-app notifications"""        # Implementation would create in-app notifications
         pass
     
     async def _send_completion_notifications(
@@ -1205,15 +1165,13 @@ class MatchProcessor:
         metadata: MatchMetadata,
         completion_report: Dict[str, Any]
     ) -> None:
-        """Send collaboration completion notifications"""
-        # Implementation would send completion notifications
+        """Send collaboration completion notifications"""        # Implementation would send completion notifications
         pass
     
     # Response and tracking methods
     
     async def _both_creators_accepted(self, match_id: str) -> bool:
-        """Check if both creators have accepted the match"""
-        # Implementation would check response database
+        """Check if both creators have accepted the match"""        # Implementation would check response database
         return False
     
     async def _store_creator_response(
@@ -1222,8 +1180,7 @@ class MatchProcessor:
         creator_id: int,
         response_data: Dict[str, Any]
     ) -> None:
-        """Store creator response to match"""
-        # Implementation would store response in database
+        """Store creator response to match"""        # Implementation would store response in database
         pass
     
     async def _generate_completion_report(
@@ -1231,11 +1188,9 @@ class MatchProcessor:
         metadata: MatchMetadata,
         completion_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate collaboration completion report"""
-        # Implementation would generate comprehensive report
+        """Generate collaboration completion report"""        # Implementation would generate comprehensive report
         return {}
     
     async def _archive_match_data(self, metadata: MatchMetadata) -> None:
-        """Archive completed match data"""
-        # Implementation would archive data for analytics
+        """Archive completed match data"""        # Implementation would archive data for analytics
         pass

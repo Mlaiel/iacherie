@@ -1,5 +1,4 @@
-"""
-Optimization Manager for IA-Influencer-Agent Platform
+"""Optimization Manager for IA-Influencer-Agent Platform
 
 Advanced optimization engine for database indexes with AI-powered analysis,
 automated tuning, and performance-driven optimization strategies.
@@ -24,7 +23,6 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
-
 import asyncio
 import logging
 import statistics
@@ -57,15 +55,13 @@ from .performance import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class OptimizationLevel(Enum):
-    """Levels of optimization intensity"""
-    MINIMAL = "minimal"
+    """Levels of optimization intensity"""    MINIMAL = "minimal"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
     EXTREME = "extreme"
 
 class OptimizationStrategy(Enum):
-    """Optimization strategies for different scenarios"""
-    PERFORMANCE_FIRST = "performance_first"
+    """Optimization strategies for different scenarios"""    PERFORMANCE_FIRST = "performance_first"
     STORAGE_EFFICIENT = "storage_efficient"
     BALANCED = "balanced"
     READ_OPTIMIZED = "read_optimized"
@@ -74,8 +70,7 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class OptimizationResult:
-    """Result of an optimization operation"""
-    index_name: str
+    """Result of an optimization operation"""    index_name: str
     optimization_type: str
     before_metrics: Dict[str, Any]
     after_metrics: Dict[str, Any]
@@ -85,8 +80,7 @@ class OptimizationResult:
     recommendations: List[str]
 
 class IndexOptimizationEngine:
-    """
-    Ultra-advanced index optimization engine for IA-Influencer platform
+    """    Ultra-advanced index optimization engine for IA-Influencer platform
     
     Provides AI-powered optimization capabilities:
     - Automated performance analysis and tuning
@@ -95,11 +89,9 @@ class IndexOptimizationEngine:
     - Cost-benefit analysis for optimization decisions
     - Predictive maintenance and proactive optimization
     - Multi-dimensional optimization (speed, storage, memory)
-    """
-    
+    """    
     def __init__(self):
-        """Initialize optimization engine with enterprise components"""
-        self.db_manager = DatabaseManager()
+        """Initialize optimization engine with enterprise components"""        self.db_manager = DatabaseManager()
         self.performance_tracker = PerformanceTracker()
         self.query_optimizer = QueryOptimizer()
         self.performance_monitor = PerformanceMonitor()
@@ -190,8 +182,7 @@ class IndexOptimizationEngine:
         logger.info("IndexOptimizationEngine initialized with enterprise configuration")
     
     async def initialize(self) -> bool:
-        """Initialize optimization engine and load ML models"""
-        try:
+        """Initialize optimization engine and load ML models"""        try:
             # Initialize supporting services
             await self.db_manager.initialize()
             await self.performance_tracker.initialize()
@@ -217,8 +208,7 @@ class IndexOptimizationEngine:
     async def analyze_optimization_opportunities(self, 
                                                level: OptimizationLevel = OptimizationLevel.MODERATE,
                                                strategy: OptimizationStrategy = OptimizationStrategy.BALANCED) -> Dict[str, Any]:
-        """
-        Analyze current system performance and identify optimization opportunities
+        """        Analyze current system performance and identify optimization opportunities
         
         Args:
             level: Optimization level to apply
@@ -226,8 +216,7 @@ class IndexOptimizationEngine:
             
         Returns:
             Analysis results with optimization recommendations
-        """
-        try:
+        """        try:
             analysis_results = {
                 'analysis_timestamp': datetime.utcnow().isoformat(),
                 'optimization_level': level.value,
@@ -276,8 +265,7 @@ class IndexOptimizationEngine:
             return {'error': str(e)}
     
     async def _collect_performance_baseline(self) -> Dict[str, Any]:
-        """Collect current performance metrics as baseline"""
-        try:
+        """Collect current performance metrics as baseline"""        try:
             baseline = {
                 'collection_timestamp': datetime.utcnow().isoformat(),
                 'system_metrics': {},
@@ -302,8 +290,7 @@ class IndexOptimizationEngine:
     
     async def _analyze_index_performance(self, level: OptimizationLevel, 
                                        strategy: OptimizationStrategy) -> List[Dict[str, Any]]:
-        """Analyze index performance and identify optimization opportunities"""
-        try:
+        """Analyze index performance and identify optimization opportunities"""        try:
             opportunities = []
             thresholds = self.performance_thresholds[level]
             strategy_config = self.strategy_configs[strategy]
@@ -384,8 +371,7 @@ class IndexOptimizationEngine:
     
     async def _analyze_query_patterns(self, level: OptimizationLevel, 
                                     strategy: OptimizationStrategy) -> List[Dict[str, Any]]:
-        """Analyze query patterns and identify optimization opportunities"""
-        try:
+        """Analyze query patterns and identify optimization opportunities"""        try:
             opportunities = []
             
             # Get slow query statistics
@@ -438,8 +424,7 @@ class IndexOptimizationEngine:
     
     async def _analyze_storage_efficiency(self, level: OptimizationLevel, 
                                         strategy: OptimizationStrategy) -> List[Dict[str, Any]]:
-        """Analyze storage efficiency and identify optimization opportunities"""
-        try:
+        """Analyze storage efficiency and identify optimization opportunities"""        try:
             opportunities = []
             
             # Get table and index size statistics
@@ -494,8 +479,7 @@ class IndexOptimizationEngine:
             return []
     
     async def _generate_ml_recommendations(self, analysis_results: Dict[str, Any]) -> List[str]:
-        """Generate ML-powered optimization recommendations"""
-        try:
+        """Generate ML-powered optimization recommendations"""        try:
             recommendations = []
             
             # This would integrate with a trained ML model
@@ -556,8 +540,7 @@ class IndexOptimizationEngine:
     async def execute_optimization_plan(self, opportunities: List[Dict[str, Any]], 
                                       max_concurrent: int = 4,
                                       dry_run: bool = False) -> Dict[str, Any]:
-        """
-        Execute optimization plan with safety checks and rollback capability
+        """        Execute optimization plan with safety checks and rollback capability
         
         Args:
             opportunities: List of optimization opportunities to execute
@@ -566,8 +549,7 @@ class IndexOptimizationEngine:
             
         Returns:
             Execution results with success/failure status
-        """
-        try:
+        """        try:
             execution_results = {
                 'execution_timestamp': datetime.utcnow().isoformat(),
                 'total_optimizations': len(opportunities),
@@ -633,8 +615,7 @@ class IndexOptimizationEngine:
     async def _execute_single_optimization(self, opportunity: Dict[str, Any], 
                                          semaphore: asyncio.Semaphore,
                                          dry_run: bool) -> OptimizationResult:
-        """Execute a single optimization with safety checks"""
-        async with semaphore:
+        """Execute a single optimization with safety checks"""        async with semaphore:
             try:
                 optimization_type = opportunity['type']
                 start_time = datetime.utcnow()
@@ -683,8 +664,7 @@ class IndexOptimizationEngine:
     
     async def _execute_optimization_by_type(self, optimization_type: str, 
                                           opportunity: Dict[str, Any]) -> bool:
-        """Execute specific optimization type"""
-        try:
+        """Execute specific optimization type"""        try:
             if optimization_type == 'remove_unused_index':
                 return await self._remove_unused_index(opportunity['index_name'])
             
@@ -728,8 +708,7 @@ class IndexOptimizationEngine:
     
     # Individual optimization methods
     async def _remove_unused_index(self, index_name: str) -> bool:
-        """Remove unused index"""
-        try:
+        """Remove unused index"""        try:
             sql = f"DROP INDEX CONCURRENTLY IF EXISTS {index_name}"
             async with self.db_manager.get_connection() as conn:
                 await conn.execute(sql)
@@ -740,8 +719,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _optimize_index_efficiency(self, index_name: str) -> bool:
-        """Optimize index efficiency through reindexing"""
-        try:
+        """Optimize index efficiency through reindexing"""        try:
             sql = f"REINDEX INDEX CONCURRENTLY {index_name}"
             async with self.db_manager.get_connection() as conn:
                 await conn.execute(sql)
@@ -752,8 +730,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _resize_oversized_index(self, index_name: str) -> bool:
-        """Resize oversized index with better parameters"""
-        try:
+        """Resize oversized index with better parameters"""        try:
             # This would involve analyzing the index and recreating with optimal parameters
             logger.info(f"Resized oversized index: {index_name}")
             return True
@@ -762,8 +739,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _add_covering_index(self, base_index_name: str) -> bool:
-        """Add covering index for performance"""
-        try:
+        """Add covering index for performance"""        try:
             # This would analyze query patterns and create covering indexes
             logger.info(f"Added covering index based on: {base_index_name}")
             return True
@@ -772,8 +748,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _compress_large_index(self, index_name: str) -> bool:
-        """Compress large index"""
-        try:
+        """Compress large index"""        try:
             # This would implement index compression strategies
             logger.info(f"Compressed large index: {index_name}")
             return True
@@ -782,8 +757,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _optimize_slow_query(self, opportunity: Dict[str, Any]) -> bool:
-        """Optimize slow query"""
-        try:
+        """Optimize slow query"""        try:
             # This would use the query optimizer to improve query performance
             return await self.query_optimizer.optimize_query(opportunity['query_pattern'])
         except Exception as e:
@@ -791,8 +765,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _add_read_index(self, opportunity: Dict[str, Any]) -> bool:
-        """Add optimized index for read operations"""
-        try:
+        """Add optimized index for read operations"""        try:
             # This would analyze the query and create optimal read indexes
             logger.info(f"Added read-optimized index for query pattern")
             return True
@@ -801,8 +774,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _optimize_write_query(self, opportunity: Dict[str, Any]) -> bool:
-        """Optimize write query performance"""
-        try:
+        """Optimize write query performance"""        try:
             # This would optimize write operations
             logger.info(f"Optimized write query performance")
             return True
@@ -811,8 +783,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _reduce_index_overhead(self, table_name: str) -> bool:
-        """Reduce index overhead for table"""
-        try:
+        """Reduce index overhead for table"""        try:
             # This would analyze and remove redundant indexes
             logger.info(f"Reduced index overhead for table: {table_name}")
             return True
@@ -821,8 +792,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _consider_partitioning(self, table_name: str) -> bool:
-        """Consider partitioning for large table"""
-        try:
+        """Consider partitioning for large table"""        try:
             # This would implement table partitioning strategies
             logger.info(f"Implemented partitioning strategy for: {table_name}")
             return True
@@ -831,8 +801,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _enable_compression(self, table_name: str) -> bool:
-        """Enable compression for table"""
-        try:
+        """Enable compression for table"""        try:
             # This would enable table/column compression
             logger.info(f"Enabled compression for table: {table_name}")
             return True
@@ -842,18 +811,15 @@ class IndexOptimizationEngine:
     
     # Utility methods
     async def _get_index_usage_statistics(self) -> List[Dict[str, Any]]:
-        """Get index usage statistics"""
-        try:
-            sql = """
-            SELECT 
+        """Get index usage statistics"""        try:
+            sql = """            SELECT 
                 schemaname, tablename, indexname,
                 idx_scan, idx_tup_read, idx_tup_fetch,
                 pg_relation_size(indexname::regclass) as index_size_bytes
             FROM pg_stat_user_indexes
             WHERE schemaname = 'public'
             ORDER BY idx_scan DESC
-            """
-            
+            """            
             async with self.db_manager.get_connection() as conn:
                 rows = await conn.fetch(sql)
                 return [dict(row) for row in rows]
@@ -863,16 +829,13 @@ class IndexOptimizationEngine:
             return []
     
     async def _get_slow_query_statistics(self) -> List[Dict[str, Any]]:
-        """Get slow query statistics"""
-        try:
-            sql = """
-            SELECT query, calls, mean_exec_time, total_exec_time
+        """Get slow query statistics"""        try:
+            sql = """            SELECT query, calls, mean_exec_time, total_exec_time
             FROM pg_stat_statements
             WHERE mean_exec_time > 10  -- Queries taking more than 10ms
             ORDER BY mean_exec_time DESC
             LIMIT 100
-            """
-            
+            """            
             async with self.db_manager.get_connection() as conn:
                 rows = await conn.fetch(sql)
                 return [dict(row) for row in rows]
@@ -882,18 +845,15 @@ class IndexOptimizationEngine:
             return []
     
     async def _get_storage_statistics(self) -> List[Dict[str, Any]]:
-        """Get storage statistics"""
-        try:
-            sql = """
-            SELECT 
+        """Get storage statistics"""        try:
+            sql = """            SELECT 
                 schemaname, tablename,
                 pg_total_relation_size(schemaname||'.'||tablename) as table_size_bytes,
                 pg_indexes_size(schemaname||'.'||tablename) as index_size_bytes
             FROM pg_tables
             WHERE schemaname = 'public'
             ORDER BY pg_total_relation_size(schemaname||'.'||tablename) DESC
-            """
-            
+            """            
             async with self.db_manager.get_connection() as conn:
                 rows = await conn.fetch(sql)
                 return [dict(row) for row in rows]
@@ -903,8 +863,7 @@ class IndexOptimizationEngine:
             return []
     
     async def _collect_optimization_metrics(self, opportunity: Dict[str, Any]) -> Dict[str, Any]:
-        """Collect metrics for optimization measurement"""
-        try:
+        """Collect metrics for optimization measurement"""        try:
             metrics = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'performance_metrics': {},
@@ -932,8 +891,7 @@ class IndexOptimizationEngine:
     
     def _calculate_improvement(self, before_metrics: Dict[str, Any], 
                              after_metrics: Dict[str, Any]) -> float:
-        """Calculate improvement percentage"""
-        try:
+        """Calculate improvement percentage"""        try:
             # This would implement comprehensive improvement calculation
             # For now, we'll return a placeholder value
             return 10.0  # 10% improvement placeholder
@@ -943,17 +901,14 @@ class IndexOptimizationEngine:
             return 0.0
     
     async def _store_optimization_history(self, execution_results: Dict[str, Any]) -> bool:
-        """Store optimization history for future learning"""
-        try:
+        """Store optimization history for future learning"""        try:
             self.optimization_history.append(execution_results)
             
             # Store in database for persistence
-            sql = """
-            INSERT INTO optimization_history (
+            sql = """            INSERT INTO optimization_history (
                 execution_timestamp, results_data, successful_optimizations, failed_optimizations
             ) VALUES ($1, $2, $3, $4)
-            """
-            
+            """            
             async with self.db_manager.get_connection() as conn:
                 await conn.execute(
                     sql,
@@ -970,11 +925,9 @@ class IndexOptimizationEngine:
             return False
     
     async def _load_optimization_history(self) -> bool:
-        """Load optimization history from storage"""
-        try:
+        """Load optimization history from storage"""        try:
             # Create history table if it doesn't exist
-            create_table_sql = """
-            CREATE TABLE IF NOT EXISTS optimization_history (
+            create_table_sql = """            CREATE TABLE IF NOT EXISTS optimization_history (
                 id BIGSERIAL PRIMARY KEY,
                 execution_timestamp TIMESTAMP WITH TIME ZONE,
                 results_data JSONB,
@@ -982,19 +935,16 @@ class IndexOptimizationEngine:
                 failed_optimizations INTEGER,
                 created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
             )
-            """
-            
+            """            
             async with self.db_manager.get_connection() as conn:
                 await conn.execute(create_table_sql)
                 
                 # Load recent history
-                load_sql = """
-                SELECT results_data FROM optimization_history
+                load_sql = """                SELECT results_data FROM optimization_history
                 WHERE created_at >= NOW() - INTERVAL '30 days'
                 ORDER BY created_at DESC
                 LIMIT 100
-                """
-                
+                """                
                 rows = await conn.fetch(load_sql)
                 for row in rows:
                     self.optimization_history.append(row['results_data'])
@@ -1007,8 +957,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _initialize_ml_model(self) -> bool:
-        """Initialize machine learning model for optimization"""
-        try:
+        """Initialize machine learning model for optimization"""        try:
             # This would load a trained ML model for optimization recommendations
             # For now, we'll use a placeholder
             self.ml_optimization_model = "placeholder_model"
@@ -1021,8 +970,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _setup_optimization_monitoring(self) -> bool:
-        """Setup monitoring for optimization operations"""
-        try:
+        """Setup monitoring for optimization operations"""        try:
             # This would setup monitoring and alerting for optimization operations
             logger.info("Optimization monitoring setup completed")
             return True
@@ -1032,8 +980,7 @@ class IndexOptimizationEngine:
             return False
     
     async def _estimate_improvements(self, opportunities: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Estimate potential improvements from optimization opportunities"""
-        try:
+        """Estimate potential improvements from optimization opportunities"""        try:
             estimates = {
                 'performance_improvement': 0.0,
                 'storage_savings': 0.0,
@@ -1071,8 +1018,7 @@ class IndexOptimizationEngine:
     async def _assess_optimization_risks(self, opportunities: List[Dict[str, Any]], 
                                        level: OptimizationLevel, 
                                        strategy: OptimizationStrategy) -> Dict[str, Any]:
-        """Assess risks associated with optimization opportunities"""
-        try:
+        """Assess risks associated with optimization opportunities"""        try:
             risk_assessment = {
                 'overall_risk': 'low',
                 'risk_factors': [],
@@ -1112,8 +1058,7 @@ class IndexOptimizationEngine:
             return {}
     
     async def cleanup(self):
-        """Cleanup optimization engine resources"""
-        try:
+        """Cleanup optimization engine resources"""        try:
             await self.db_manager.cleanup()
             await self.performance_tracker.cleanup()
             await self.query_optimizer.cleanup()
@@ -1125,8 +1070,7 @@ class IndexOptimizationEngine:
             logger.error(f"IndexOptimizationEngine cleanup failed: {str(e)}")
 
 class OptimizationTarget(Enum):
-    """Optimization targets"""
-    QUERY_PERFORMANCE = "query_performance"
+    """Optimization targets"""    QUERY_PERFORMANCE = "query_performance"
     STORAGE_EFFICIENCY = "storage_efficiency"
     MEMORY_USAGE = "memory_usage"
     CPU_UTILIZATION = "cpu_utilization"
@@ -1135,8 +1079,7 @@ class OptimizationTarget(Enum):
     BALANCED = "balanced"
 
 class OptimizationStatus(Enum):
-    """Status of optimization operations"""
-    PENDING = "pending"
+    """Status of optimization operations"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -1144,8 +1087,7 @@ class OptimizationStatus(Enum):
 
 @dataclass
 class OptimizationTask:
-    """Optimization task definition"""
-    task_id: str
+    """Optimization task definition"""    task_id: str
     task_type: str
     target: OptimizationTarget
     level: OptimizationLevel
@@ -1160,8 +1102,7 @@ class OptimizationTask:
 
 @dataclass
 class OptimizationResult:
-    """Optimization operation result"""
-    task_id: str
+    """Optimization operation result"""    task_id: str
     success: bool
     improvements: Dict[str, float]
     metrics_before: Dict[str, Any]
@@ -1171,8 +1112,7 @@ class OptimizationResult:
     recommendations: List[str]
 
 class OptimizationEngine:
-    """
-    Ultra-advanced optimization engine for IA-Influencer platform indexing
+    """    Ultra-advanced optimization engine for IA-Influencer platform indexing
     
     Features:
     - AI-powered performance analysis and optimization
@@ -1184,11 +1124,9 @@ class OptimizationEngine:
     - Continuous learning and adaptation
     - Advanced statistical analysis for optimization decisions
     - Cost-benefit analysis for optimization strategies
-    """
-    
+    """    
     def __init__(self):
-        """Initialize optimization engine"""
-        self.db_manager = DatabaseManager()
+        """Initialize optimization engine"""        self.db_manager = DatabaseManager()
         self.performance_tracker = PerformanceTracker()
         self.query_optimizer = QueryOptimizer()
         self.performance_monitor = PerformanceMonitor()
@@ -1238,8 +1176,7 @@ class OptimizationEngine:
         logger.info("OptimizationEngine initialized")
     
     async def initialize(self) -> bool:
-        """Initialize optimization engine"""
-        try:
+        """Initialize optimization engine"""        try:
             # Initialize components
             await self.db_manager.initialize()
             await self.performance_tracker.initialize()
@@ -1263,8 +1200,7 @@ class OptimizationEngine:
             return False
     
     async def start_optimization_engine(self):
-        """Start optimization engine workers"""
-        try:
+        """Start optimization engine workers"""        try:
             if self.optimization_active:
                 logger.warning("Optimization engine already active")
                 return
@@ -1286,8 +1222,7 @@ class OptimizationEngine:
             logger.error(f"Failed to start optimization engine: {str(e)}")
     
     async def stop_optimization_engine(self):
-        """Stop optimization engine workers"""
-        try:
+        """Stop optimization engine workers"""        try:
             self.optimization_active = False
             
             # Cancel all workers
@@ -1307,8 +1242,7 @@ class OptimizationEngine:
     
     async def optimize_index(self, index_name: str, target: OptimizationTarget = OptimizationTarget.BALANCED,
                            level: OptimizationLevel = OptimizationLevel.MODERATE) -> str:
-        """Optimize specific index"""
-        try:
+        """Optimize specific index"""        try:
             task_id = f"optimize_index_{index_name}_{int(datetime.now().timestamp())}"
             
             task = OptimizationTask(
@@ -1334,8 +1268,7 @@ class OptimizationEngine:
     
     async def optimize_table(self, table_name: str, target: OptimizationTarget = OptimizationTarget.BALANCED,
                            level: OptimizationLevel = OptimizationLevel.MODERATE) -> str:
-        """Optimize entire table and its indexes"""
-        try:
+        """Optimize entire table and its indexes"""        try:
             task_id = f"optimize_table_{table_name}_{int(datetime.now().timestamp())}"
             
             task = OptimizationTask(
@@ -1361,8 +1294,7 @@ class OptimizationEngine:
     async def optimize_query_performance(self, query_patterns: Optional[List[str]] = None,
                                        target: OptimizationTarget = OptimizationTarget.QUERY_PERFORMANCE,
                                        level: OptimizationLevel = OptimizationLevel.MODERATE) -> str:
-        """Optimize for specific query patterns"""
-        try:
+        """Optimize for specific query patterns"""        try:
             task_id = f"optimize_queries_{int(datetime.now().timestamp())}"
             
             task = OptimizationTask(
@@ -1386,8 +1318,7 @@ class OptimizationEngine:
             raise
     
     async def _optimization_worker(self, worker_id: str):
-        """Optimization worker task"""
-        logger.info(f"Optimization worker {worker_id} started")
+        """Optimization worker task"""        logger.info(f"Optimization worker {worker_id} started")
         
         while self.optimization_active:
             try:
@@ -1409,8 +1340,7 @@ class OptimizationEngine:
         logger.info(f"Optimization worker {worker_id} stopped")
     
     async def _process_optimization_task(self, task: OptimizationTask, worker_id: str):
-        """Process optimization task"""
-        try:
+        """Process optimization task"""        try:
             logger.info(f"Worker {worker_id} processing task {task.task_id}")
             
             # Update task status
@@ -1478,8 +1408,7 @@ class OptimizationEngine:
                 del self.active_tasks[task.task_id]
     
     async def _execute_index_optimization(self, task: OptimizationTask) -> Dict[str, Any]:
-        """Execute index-specific optimization"""
-        try:
+        """Execute index-specific optimization"""        try:
             index_name = task.parameters['index_name']
             optimizations_applied = []
             recommendations = []
@@ -1520,8 +1449,7 @@ class OptimizationEngine:
             raise
     
     async def _execute_table_optimization(self, task: OptimizationTask) -> Dict[str, Any]:
-        """Execute table-wide optimization"""
-        try:
+        """Execute table-wide optimization"""        try:
             table_name = task.parameters['table_name']
             optimizations_applied = []
             recommendations = []
@@ -1574,8 +1502,7 @@ class OptimizationEngine:
             raise
     
     async def _execute_query_optimization(self, task: OptimizationTask) -> Dict[str, Any]:
-        """Execute query performance optimization"""
-        try:
+        """Execute query performance optimization"""        try:
             query_patterns = task.parameters.get('query_patterns', [])
             optimizations_applied = []
             recommendations = []
@@ -1614,8 +1541,7 @@ class OptimizationEngine:
             raise
     
     async def _optimization_scheduler(self):
-        """Scheduled optimization tasks"""
-        logger.info("Optimization scheduler started")
+        """Scheduled optimization tasks"""        logger.info("Optimization scheduler started")
         
         while self.optimization_active:
             try:
@@ -1652,8 +1578,7 @@ class OptimizationEngine:
         logger.info("Optimization scheduler stopped")
     
     async def get_optimization_status(self, task_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get optimization status"""
-        try:
+        """Get optimization status"""        try:
             if task_id:
                 # Get specific task status
                 if task_id in self.active_tasks:
@@ -1704,18 +1629,15 @@ class OptimizationEngine:
     
     # Helper methods (simplified implementations)
     async def _load_performance_baselines(self):
-        """Load performance baselines for optimization decisions"""
-        # Implementation would load historical performance data
+        """Load performance baselines for optimization decisions"""        # Implementation would load historical performance data
         pass
     
     async def _initialize_learning_models(self):
-        """Initialize machine learning models for optimization"""
-        # Implementation would initialize ML models
+        """Initialize machine learning models for optimization"""        # Implementation would initialize ML models
         pass
     
     async def _collect_baseline_metrics(self, task: OptimizationTask) -> Dict[str, Any]:
-        """Collect baseline metrics before optimization"""
-        return {
+        """Collect baseline metrics before optimization"""        return {
             'query_time': 1.5,
             'index_size': 1024000,
             'cache_hit_rate': 0.8,
@@ -1724,8 +1646,7 @@ class OptimizationEngine:
         }
     
     async def _calculate_improvements(self, before: Dict[str, Any], after: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate improvement percentages"""
-        improvements = {}
+        """Calculate improvement percentages"""        improvements = {}
         for metric, before_value in before.items():
             if metric in after:
                 after_value = after[metric]
@@ -1735,13 +1656,11 @@ class OptimizationEngine:
         return improvements
     
     async def _learn_from_optimization(self, task: OptimizationTask, result: OptimizationResult):
-        """Learn from optimization results"""
-        # Implementation would update learning models
+        """Learn from optimization results"""        # Implementation would update learning models
         pass
     
     async def _analyze_index_usage(self, index_name: str) -> Dict[str, Any]:
-        """Analyze index usage statistics"""
-        return {
+        """Analyze index usage statistics"""        return {
             'scans': 1000,
             'seeks': 5000,
             'last_used_days': 1,
@@ -1749,63 +1668,50 @@ class OptimizationEngine:
         }
     
     async def _check_index_fragmentation(self, index_name: str) -> float:
-        """Check index fragmentation level"""
-        return 0.15  # 15% fragmentation
+        """Check index fragmentation level"""        return 0.15  # 15% fragmentation
     
     async def _rebuild_index(self, index_name: str):
-        """Rebuild fragmented index"""
-        # Implementation would rebuild the index
+        """Rebuild fragmented index"""        # Implementation would rebuild the index
         pass
     
     async def _optimize_index_configuration(self, index_name: str, target: OptimizationTarget) -> List[str]:
-        """Optimize index configuration"""
-        return [f"Optimized {index_name} configuration for {target.value}"]
+        """Optimize index configuration"""        return [f"Optimized {index_name} configuration for {target.value}"]
     
     async def _update_index_statistics(self, index_name: str):
-        """Update index statistics"""
-        # Implementation would update database statistics
+        """Update index statistics"""        # Implementation would update database statistics
         pass
     
     async def _get_table_indexes(self, table_name: str) -> List[str]:
-        """Get list of indexes for table"""
-        return [f"{table_name}_idx1", f"{table_name}_idx2"]
+        """Get list of indexes for table"""        return [f"{table_name}_idx1", f"{table_name}_idx2"]
     
     async def _vacuum_table(self, table_name: str):
-        """Vacuum table to reclaim space"""
-        # Implementation would run VACUUM command
+        """Vacuum table to reclaim space"""        # Implementation would run VACUUM command
         pass
     
     async def _analyze_table(self, table_name: str):
-        """Analyze table to update statistics"""
-        # Implementation would run ANALYZE command
+        """Analyze table to update statistics"""        # Implementation would run ANALYZE command
         pass
     
     async def _identify_missing_indexes(self, table_name: str) -> List[str]:
-        """Identify potentially missing indexes"""
-        return [f"CREATE INDEX ON {table_name} (column1, column2)"]
+        """Identify potentially missing indexes"""        return [f"CREATE INDEX ON {table_name} (column1, column2)"]
     
     async def _optimize_table_storage(self, table_name: str, level: OptimizationLevel) -> List[str]:
-        """Optimize table storage"""
-        return [f"Optimized storage for {table_name}"]
+        """Optimize table storage"""        return [f"Optimized storage for {table_name}"]
     
     async def _identify_slow_queries(self) -> List[Dict[str, Any]]:
-        """Identify slow queries"""
-        return [
+        """Identify slow queries"""        return [
             {'query_id': 'q1', 'query': 'SELECT * FROM large_table', 'avg_time': 5.0},
             {'query_id': 'q2', 'query': 'SELECT * FROM another_table WHERE complex_condition', 'avg_time': 3.0}
         ]
     
     async def _suggest_indexes_for_pattern(self, pattern: str) -> List[str]:
-        """Suggest indexes for query pattern"""
-        return [f"CREATE INDEX FOR pattern: {pattern}"]
+        """Suggest indexes for query pattern"""        return [f"CREATE INDEX FOR pattern: {pattern}"]
     
     async def _optimize_query_cache(self) -> List[str]:
-        """Optimize query cache settings"""
-        return ["Optimized query cache configuration"]
+        """Optimize query cache settings"""        return ["Optimized query cache configuration"]
     
     async def _schedule_maintenance_tasks(self, schedule_name: str):
-        """Schedule maintenance tasks"""
-        tasks = self.optimization_schedules[schedule_name]['tasks']
+        """Schedule maintenance tasks"""        tasks = self.optimization_schedules[schedule_name]['tasks']
         for task_name in tasks:
             # Create maintenance task
             task_id = f"maintenance_{task_name}_{int(datetime.now().timestamp())}"
@@ -1822,21 +1728,17 @@ class OptimizationEngine:
             self.active_tasks[task_id] = task
     
     async def _has_run_today(self, task_name: str) -> bool:
-        """Check if task has run today"""
-        # Implementation would check execution history
+        """Check if task has run today"""        # Implementation would check execution history
         return False
     
     async def _has_run_this_week(self, task_name: str) -> bool:
-        """Check if task has run this week"""
-        return False
+        """Check if task has run this week"""        return False
     
     async def _has_run_this_month(self, task_name: str) -> bool:
-        """Check if task has run this month"""
-        return False
+        """Check if task has run this month"""        return False
     
     async def cleanup(self):
-        """Cleanup optimization engine"""
-        try:
+        """Cleanup optimization engine"""        try:
             # Stop optimization engine
             await self.stop_optimization_engine()
             

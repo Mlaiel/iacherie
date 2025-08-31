@@ -1,5 +1,4 @@
-"""
-Multi-Platform Payment Processing Engine
+"""Multi-Platform Payment Processing Engine
 =======================================
 
 Professional payment processing system for content creator monetization.
@@ -12,7 +11,6 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -39,8 +37,7 @@ from .revenue_calculator import Currency
 
 
 class PaymentGateway(Enum):
-    """Supported payment gateways"""
-    STRIPE = "stripe"
+    """Supported payment gateways"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -50,8 +47,7 @@ class PaymentGateway(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -61,8 +57,7 @@ class PaymentStatus(Enum):
 
 
 class PayoutFrequency(Enum):
-    """Payout frequency options"""
-    REAL_TIME = "real_time"
+    """Payout frequency options"""    REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -71,8 +66,7 @@ class PayoutFrequency(Enum):
 
 @dataclass
 class PaymentRequest:
-    """Payment processing request"""
-    user_id: str
+    """Payment processing request"""    user_id: str
     amount: Decimal
     currency: Currency
     gateway: PaymentGateway
@@ -84,8 +78,7 @@ class PaymentRequest:
 
 @dataclass
 class PaymentResult:
-    """Payment processing result"""
-    payment_id: str
+    """Payment processing result"""    payment_id: str
     status: PaymentStatus
     transaction_id: Optional[str]
     gateway_response: Dict[str, Any]
@@ -97,8 +90,7 @@ class PaymentResult:
 
 @dataclass
 class PayoutConfiguration:
-    """User payout configuration"""
-    user_id: str
+    """User payout configuration"""    user_id: str
     primary_gateway: PaymentGateway
     backup_gateway: Optional[PaymentGateway]
     minimum_payout: Decimal
@@ -110,22 +102,18 @@ class PayoutConfiguration:
 
 
 class PaymentProcessor:
-    """
-    Professional payment processing engine for IA Influencer Agent platform.
+    """    Professional payment processing engine for IA Influencer Agent platform.
     
     Provides multi-gateway payment processing, automated payouts, currency conversion,
     and comprehensive financial compliance for content creator monetization.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """
-        Initialize PaymentProcessor.
+        """        Initialize PaymentProcessor.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -162,8 +150,7 @@ class PaymentProcessor:
         self.rate_last_updated = None
     
     def _initialize_gateways(self):
-        """Initialize payment gateway connections"""
-        try:
+        """Initialize payment gateway connections"""        try:
             # Stripe initialization
             stripe.api_key = self._get_config('STRIPE_SECRET_KEY')
             
@@ -188,16 +175,14 @@ class PaymentProcessor:
             raise
     
     async def process_payout(self, payment_request: PaymentRequest) -> PaymentResult:
-        """
-        Process a payout request through the appropriate gateway.
+        """        Process a payout request through the appropriate gateway.
         
         Args:
             payment_request: Payment request details
             
         Returns:
             Payment processing result
-        """
-        try:
+        """        try:
             # Validate request
             await self._validate_payment_request(payment_request)
             
@@ -269,13 +254,11 @@ class PaymentProcessor:
             )
     
     async def process_automated_payouts(self) -> List[PaymentResult]:
-        """
-        Process automated payouts based on user configurations.
+        """        Process automated payouts based on user configurations.
         
         Returns:
             List of payment results
-        """
-        try:
+        """        try:
             results = []
             
             # Get users eligible for automated payouts
@@ -333,8 +316,7 @@ class PaymentProcessor:
     
     async def setup_payout_configuration(self, user_id: str, 
                                        config: PayoutConfiguration) -> bool:
-        """
-        Setup or update user payout configuration.
+        """        Setup or update user payout configuration.
         
         Args:
             user_id: User identifier
@@ -342,8 +324,7 @@ class PaymentProcessor:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Validate configuration
             await self._validate_payout_configuration(config)
             
@@ -366,8 +347,7 @@ class PaymentProcessor:
             return False
     
     async def get_payment_history(self, user_id: str, limit: int = 50) -> List[Dict]:
-        """
-        Get payment history for user.
+        """        Get payment history for user.
         
         Args:
             user_id: User identifier
@@ -375,8 +355,7 @@ class PaymentProcessor:
             
         Returns:
             Payment history records
-        """
-        try:
+        """        try:
             query = select(PaymentModel).where(
                 PaymentModel.user_id == user_id
             ).order_by(PaymentModel.created_at.desc()).limit(limit)
@@ -406,8 +385,7 @@ class PaymentProcessor:
             return []
     
     async def refund_payment(self, payment_id: str, reason: str) -> PaymentResult:
-        """
-        Process payment refund.
+        """        Process payment refund.
         
         Args:
             payment_id: Payment identifier
@@ -415,8 +393,7 @@ class PaymentProcessor:
             
         Returns:
             Refund result
-        """
-        try:
+        """        try:
             # Get payment record
             payment = await self._get_payment_record(payment_id)
             if not payment:
@@ -462,13 +439,11 @@ class PaymentProcessor:
             )
     
     async def get_gateway_status(self) -> Dict[str, Dict]:
-        """
-        Get status of all payment gateways.
+        """        Get status of all payment gateways.
         
         Returns:
             Gateway status information
-        """
-        try:
+        """        try:
             status = {}
             
             # Check Stripe status
@@ -492,8 +467,7 @@ class PaymentProcessor:
     # Private helper methods
     
     async def _validate_payment_request(self, request: PaymentRequest):
-        """Validate payment request"""
-        if request.amount <= 0:
+        """Validate payment request"""        if request.amount <= 0:
             raise ValueError("Payment amount must be positive")
         
         if not request.user_id:
@@ -503,8 +477,7 @@ class PaymentProcessor:
             raise ValueError("Recipient information is required")
     
     async def _get_payout_configuration(self, user_id: str) -> PayoutConfiguration:
-        """Get user payout configuration"""
-        # Query user payout configuration from database
+        """Get user payout configuration"""        # Query user payout configuration from database
         # Placeholder implementation
         return PayoutConfiguration(
             user_id=user_id,
@@ -524,8 +497,7 @@ class PaymentProcessor:
     
     async def _convert_currency(self, amount: Decimal, from_currency: Currency,
                               to_currency: Currency) -> Decimal:
-        """Convert currency amount"""
-        if from_currency == to_currency:
+        """Convert currency amount"""        if from_currency == to_currency:
             return amount
         
         # Get current exchange rates
@@ -538,8 +510,7 @@ class PaymentProcessor:
         return converted.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     async def _calculate_fees(self, amount: Decimal, gateway: PaymentGateway) -> Decimal:
-        """Calculate gateway fees"""
-        fee_structure = self.gateway_fees.get(gateway, {})
+        """Calculate gateway fees"""        fee_structure = self.gateway_fees.get(gateway, {})
         percentage_fee = amount * fee_structure.get('percentage', Decimal('0'))
         fixed_fee = fee_structure.get('fixed', Decimal('0'))
         
@@ -547,8 +518,7 @@ class PaymentProcessor:
     
     async def _process_gateway_payment(self, request: PaymentRequest, amount: Decimal,
                                      config: PayoutConfiguration) -> Dict[str, Any]:
-        """Process payment through specific gateway"""
-        try:
+        """Process payment through specific gateway"""        try:
             if request.gateway == PaymentGateway.STRIPE:
                 return await self._process_stripe_payment(request, amount, config)
             elif request.gateway == PaymentGateway.PAYPAL:
@@ -569,8 +539,7 @@ class PaymentProcessor:
     
     async def _process_stripe_payment(self, request: PaymentRequest, amount: Decimal,
                                     config: PayoutConfiguration) -> Dict[str, Any]:
-        """Process Stripe payout"""
-        try:
+        """Process Stripe payout"""        try:
             # Create Stripe transfer
             transfer = stripe.Transfer.create(
                 amount=int(amount * 100),  # Convert to cents
@@ -596,8 +565,7 @@ class PaymentProcessor:
     
     async def _process_paypal_payment(self, request: PaymentRequest, amount: Decimal,
                                     config: PayoutConfiguration) -> Dict[str, Any]:
-        """Process PayPal payout"""
-        try:
+        """Process PayPal payout"""        try:
             # PayPal payout implementation
             payout_request = {
                 'sender_batch_header': {
@@ -634,8 +602,7 @@ class PaymentProcessor:
     
     async def _process_wise_payment(self, request: PaymentRequest, amount: Decimal,
                                   config: PayoutConfiguration) -> Dict[str, Any]:
-        """Process Wise transfer"""
-        try:
+        """Process Wise transfer"""        try:
             # Wise transfer implementation
             transfer_data = {
                 'amount': float(amount),
@@ -661,8 +628,7 @@ class PaymentProcessor:
     
     async def _process_bank_transfer(self, request: PaymentRequest, amount: Decimal,
                                    config: PayoutConfiguration) -> Dict[str, Any]:
-        """Process traditional bank transfer"""
-        try:
+        """Process traditional bank transfer"""        try:
             # Bank transfer implementation (would integrate with banking API)
             transfer_data = {
                 'amount': float(amount),
@@ -688,8 +654,7 @@ class PaymentProcessor:
     
     async def _create_payment_record(self, request: PaymentRequest, gateway_result: Dict,
                                    fees: Decimal, net_amount: Decimal) -> str:
-        """Create payment record in database"""
-        payment_id = str(uuid.uuid4())
+        """Create payment record in database"""        payment_id = str(uuid.uuid4())
         
         payment_record = PaymentModel(
             id=payment_id,
@@ -712,13 +677,11 @@ class PaymentProcessor:
         return payment_id
     
     def _get_config(self, key: str) -> str:
-        """Get configuration value"""
-        import os
+        """Get configuration value"""        import os
         return os.getenv(key, '')
     
     async def _update_exchange_rates(self):
-        """Update currency exchange rates"""
-        if (self.rate_last_updated and 
+        """Update currency exchange rates"""        if (self.rate_last_updated and 
             datetime.utcnow() - self.rate_last_updated < timedelta(hours=1)):
             return
         
@@ -740,26 +703,21 @@ class PaymentProcessor:
     # Additional helper methods would be implemented here...
     
     async def _get_eligible_payout_users(self) -> List[Dict]:
-        """Get users eligible for automated payouts"""
-        # Implementation would query database for eligible users
+        """Get users eligible for automated payouts"""        # Implementation would query database for eligible users
         return []
     
     async def _calculate_available_balance(self, user_id: str) -> Decimal:
-        """Calculate user's available balance for payout"""
-        # Implementation would calculate from revenue records
+        """Calculate user's available balance for payout"""        # Implementation would calculate from revenue records
         return Decimal('0')
     
     async def _is_payout_due(self, user_id: str, config: PayoutConfiguration) -> bool:
-        """Check if payout is due based on frequency"""
-        # Implementation would check last payout date vs frequency
+        """Check if payout is due based on frequency"""        # Implementation would check last payout date vs frequency
         return False
     
     async def _send_payment_notifications(self, request: PaymentRequest, result: Dict):
-        """Send payment notifications to user"""
-        # Implementation would send email/SMS notifications
+        """Send payment notifications to user"""        # Implementation would send email/SMS notifications
         pass
     
     async def _verify_bank_details(self, config: PayoutConfiguration) -> Dict:
-        """Verify bank account details"""
-        # Implementation would verify bank details through banking API
+        """Verify bank account details"""        # Implementation would verify bank details through banking API
         return {'valid': True, 'error': None}

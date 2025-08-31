@@ -1,5 +1,4 @@
-"""
-Integration Environment Manager - IA Influencer Agent
+"""Integration Environment Manager - IA Influencer Agent
 =====================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -17,7 +16,6 @@ Handles APIs, webhooks, third-party integrations, data synchronization,
 and service orchestration for multi-platform content distribution.
 =====================================================
 """
-
 import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union, Callable
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class IntegrationType(Enum):
-    """Integration type enumeration"""
-    API_REST = "api_rest"
+    """Integration type enumeration"""    API_REST = "api_rest"
     API_GRAPHQL = "api_graphql"
     WEBHOOK = "webhook"
     WEBSOCKET = "websocket"
@@ -46,8 +43,7 @@ class IntegrationType(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Integration status enumeration"""
-    ACTIVE = "active"
+    """Integration status enumeration"""    ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING = "pending"
     ERROR = "error"
@@ -56,8 +52,7 @@ class IntegrationStatus(Enum):
 
 
 class AuthenticationType(Enum):
-    """Authentication type enumeration"""
-    API_KEY = "api_key"
+    """Authentication type enumeration"""    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
     BASIC_AUTH = "basic_auth"
@@ -68,8 +63,7 @@ class AuthenticationType(Enum):
 
 @dataclass
 class SocialMediaPlatformConfig:
-    """Social media platform integration configuration"""
-    platform_name: str
+    """Social media platform integration configuration"""    platform_name: str
     enabled: bool = True
     api_version: str = "v1.0"
     base_url: str = ""
@@ -88,8 +82,7 @@ class SocialMediaPlatformConfig:
 
 @dataclass
 class PaymentProviderConfig:
-    """Payment provider integration configuration"""
-    provider_name: str
+    """Payment provider integration configuration"""    provider_name: str
     enabled: bool = True
     api_version: str = "v1"
     base_url: str = ""
@@ -109,8 +102,7 @@ class PaymentProviderConfig:
 
 @dataclass
 class CloudServiceConfig:
-    """Cloud service integration configuration"""
-    service_name: str
+    """Cloud service integration configuration"""    service_name: str
     provider: str
     enabled: bool = True
     region: str = "eu-central-1"
@@ -126,8 +118,7 @@ class CloudServiceConfig:
 
 @dataclass
 class WebhookConfig:
-    """Webhook configuration"""
-    name: str
+    """Webhook configuration"""    name: str
     url: str
     events: List[str] = field(default_factory=list)
     secret: str = ""
@@ -142,8 +133,7 @@ class WebhookConfig:
 
 @dataclass
 class APIConfiguration:
-    """API integration configuration"""
-    name: str
+    """API integration configuration"""    name: str
     base_url: str
     auth_type: AuthenticationType
     headers: Dict[str, str] = field(default_factory=dict)
@@ -157,8 +147,7 @@ class APIConfiguration:
 
 
 class IntegrationEnvironmentManager:
-    """
-    Integration environment manager for comprehensive external service management.
+    """    Integration environment manager for comprehensive external service management.
     
     Features:
     - Multi-platform social media integration (YouTube, Instagram, TikTok, Twitter)
@@ -173,8 +162,7 @@ class IntegrationEnvironmentManager:
     - Error handling and retry mechanisms
     - Integration monitoring and analytics
     - Authentication and authorization management
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/config/integrations.yml"
         self.environment = "integration"
@@ -196,8 +184,7 @@ class IntegrationEnvironmentManager:
         logger.info(f"Integration environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load integration environment configuration"""
-        try:
+        """Load integration environment configuration"""        try:
             config = {
                 'environment': self.environment,
                 
@@ -292,8 +279,7 @@ class IntegrationEnvironmentManager:
             raise
     
     def setup_integrations(self) -> bool:
-        """Setup all integration connections"""
-        try:
+        """Setup all integration connections"""        try:
             # Setup social media integrations
             self._setup_social_media_integrations()
             
@@ -321,8 +307,7 @@ class IntegrationEnvironmentManager:
     
     async def publish_content_to_platforms(self, content_data: Dict[str, Any], 
                                          target_platforms: List[str]) -> Dict[str, Any]:
-        """Publish content to multiple social media platforms"""
-        try:
+        """Publish content to multiple social media platforms"""        try:
             results = {}
             
             for platform in target_platforms:
@@ -351,8 +336,7 @@ class IntegrationEnvironmentManager:
     
     async def process_payment(self, payment_data: Dict[str, Any], 
                             provider: str = None) -> Dict[str, Any]:
-        """Process payment through configured provider"""
-        try:
+        """Process payment through configured provider"""        try:
             if not provider:
                 provider = self._select_optimal_payment_provider(payment_data)
             
@@ -379,8 +363,7 @@ class IntegrationEnvironmentManager:
     
     def handle_webhook(self, webhook_name: str, payload: Dict[str, Any], 
                       headers: Dict[str, str]) -> Dict[str, Any]:
-        """Handle incoming webhook"""
-        try:
+        """Handle incoming webhook"""        try:
             webhook_config = self._get_webhook_config(webhook_name)
             if not webhook_config or not webhook_config.active:
                 return {'status': 'error', 'message': 'Webhook not found or inactive'}
@@ -421,8 +404,7 @@ class IntegrationEnvironmentManager:
     
     async def sync_data_with_platforms(self, data_type: str, 
                                      sync_direction: str = "bidirectional") -> Dict[str, Any]:
-        """Synchronize data with external platforms"""
-        try:
+        """Synchronize data with external platforms"""        try:
             sync_results = {}
             
             # Get platforms that support the data type
@@ -450,8 +432,7 @@ class IntegrationEnvironmentManager:
             return {}
     
     def monitor_integration_health(self) -> Dict[str, Any]:
-        """Monitor health of all integrations"""
-        try:
+        """Monitor health of all integrations"""        try:
             health_status = {
                 'overall_status': 'healthy',
                 'social_media_platforms': {},
@@ -502,8 +483,7 @@ class IntegrationEnvironmentManager:
             return {'overall_status': 'error', 'error': str(e)}
     
     def get_integration_analytics(self, time_period: str = "24h") -> Dict[str, Any]:
-        """Get integration analytics and metrics"""
-        try:
+        """Get integration analytics and metrics"""        try:
             analytics = {
                 'time_period': time_period,
                 'api_metrics': self._get_api_metrics(time_period),
@@ -523,8 +503,7 @@ class IntegrationEnvironmentManager:
             return {}
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get integration environment health status"""
-        return {
+        """Get integration environment health status"""        return {
             'environment': self.environment,
             'status': 'healthy',
             'total_integrations': len(self.active_integrations),
@@ -556,8 +535,7 @@ class IntegrationEnvironmentManager:
     
     # Private helper methods
     def _initialize_social_media_platforms(self) -> List[SocialMediaPlatformConfig]:
-        """Initialize social media platform configurations"""
-        return [
+        """Initialize social media platform configurations"""        return [
             SocialMediaPlatformConfig(
                 platform_name="youtube",
                 enabled=bool(os.getenv('YOUTUBE_ENABLED', 'true').lower() == 'true'),
@@ -626,8 +604,7 @@ class IntegrationEnvironmentManager:
         ]
     
     def _initialize_payment_providers(self) -> List[PaymentProviderConfig]:
-        """Initialize payment provider configurations"""
-        return [
+        """Initialize payment provider configurations"""        return [
             PaymentProviderConfig(
                 provider_name="stripe",
                 enabled=bool(os.getenv('STRIPE_ENABLED', 'true').lower() == 'true'),
@@ -670,8 +647,7 @@ class IntegrationEnvironmentManager:
         ]
     
     def _initialize_cloud_services(self) -> List[CloudServiceConfig]:
-        """Initialize cloud service configurations"""
-        return [
+        """Initialize cloud service configurations"""        return [
             CloudServiceConfig(
                 service_name="aws_s3",
                 provider="aws",
@@ -713,8 +689,7 @@ class IntegrationEnvironmentManager:
         ]
     
     def _initialize_webhooks(self) -> List[WebhookConfig]:
-        """Initialize webhook configurations"""
-        return [
+        """Initialize webhook configurations"""        return [
             WebhookConfig(
                 name="stripe_webhook",
                 url="/webhooks/stripe",
@@ -739,8 +714,7 @@ class IntegrationEnvironmentManager:
         ]
     
     def _initialize_api_configs(self) -> List[APIConfiguration]:
-        """Initialize API configurations"""
-        return [
+        """Initialize API configurations"""        return [
             APIConfiguration(
                 name="content_moderation_api",
                 base_url="https://api.moderatecontent.com/v1",
@@ -765,8 +739,7 @@ class IntegrationEnvironmentManager:
         ]
     
     def _setup_social_media_integrations(self):
-        """Setup social media platform integrations"""
-        logger.info("Setting up social media integrations")
+        """Setup social media platform integrations"""        logger.info("Setting up social media integrations")
         for platform in self.social_media_platforms:
             if platform.enabled:
                 self.active_integrations[platform.platform_name] = {
@@ -776,8 +749,7 @@ class IntegrationEnvironmentManager:
                 }
     
     def _setup_payment_integrations(self):
-        """Setup payment provider integrations"""
-        logger.info("Setting up payment integrations")
+        """Setup payment provider integrations"""        logger.info("Setting up payment integrations")
         for provider in self.payment_providers:
             if provider.enabled:
                 self.active_integrations[provider.provider_name] = {
@@ -787,8 +759,7 @@ class IntegrationEnvironmentManager:
                 }
     
     def _setup_cloud_integrations(self):
-        """Setup cloud service integrations"""
-        logger.info("Setting up cloud service integrations")
+        """Setup cloud service integrations"""        logger.info("Setting up cloud service integrations")
         for service in self.cloud_services:
             if service.enabled:
                 self.active_integrations[service.service_name] = {
@@ -798,8 +769,7 @@ class IntegrationEnvironmentManager:
                 }
     
     def _setup_webhook_endpoints(self):
-        """Setup webhook endpoints"""
-        logger.info("Setting up webhook endpoints")
+        """Setup webhook endpoints"""        logger.info("Setting up webhook endpoints")
         for webhook in self.webhooks:
             if webhook.active:
                 self.active_integrations[f"webhook_{webhook.name}"] = {
@@ -809,8 +779,7 @@ class IntegrationEnvironmentManager:
                 }
     
     def _setup_api_clients(self):
-        """Setup API clients"""
-        logger.info("Setting up API clients")
+        """Setup API clients"""        logger.info("Setting up API clients")
         for api_config in self.api_configs:
             self.active_integrations[f"api_{api_config.name}"] = {
                 'type': 'api',
@@ -819,56 +788,46 @@ class IntegrationEnvironmentManager:
             }
     
     def _setup_integration_monitoring(self):
-        """Setup integration monitoring"""
-        logger.info("Setting up integration monitoring")
+        """Setup integration monitoring"""        logger.info("Setting up integration monitoring")
     
     # Integration helper methods
     def _get_social_media_config(self, platform_name: str) -> Optional[SocialMediaPlatformConfig]:
-        """Get social media platform configuration"""
-        return next((p for p in self.social_media_platforms if p.platform_name == platform_name), None)
+        """Get social media platform configuration"""        return next((p for p in self.social_media_platforms if p.platform_name == platform_name), None)
     
     def _get_payment_provider_config(self, provider_name: str) -> Optional[PaymentProviderConfig]:
-        """Get payment provider configuration"""
-        return next((p for p in self.payment_providers if p.provider_name == provider_name), None)
+        """Get payment provider configuration"""        return next((p for p in self.payment_providers if p.provider_name == provider_name), None)
     
     def _get_webhook_config(self, webhook_name: str) -> Optional[WebhookConfig]:
-        """Get webhook configuration"""
-        return next((w for w in self.webhooks if w.name == webhook_name), None)
+        """Get webhook configuration"""        return next((w for w in self.webhooks if w.name == webhook_name), None)
     
     async def _publish_to_platform(self, platform: str, content_data: Dict[str, Any], 
                                   config: SocialMediaPlatformConfig) -> Dict[str, Any]:
-        """Publish content to specific platform"""
-        # Implement platform-specific publishing logic
+        """Publish content to specific platform"""        # Implement platform-specific publishing logic
         logger.info(f"Publishing content to {platform}")
         return {'status': 'success', 'platform_id': f"{platform}_123456"}
     
     def _select_optimal_payment_provider(self, payment_data: Dict[str, Any]) -> str:
-        """Select optimal payment provider based on payment data"""
-        # Implement provider selection logic
+        """Select optimal payment provider based on payment data"""        # Implement provider selection logic
         return "stripe"  # Default to Stripe
     
     def _validate_payment_amount(self, payment_data: Dict[str, Any], 
                                 config: PaymentProviderConfig) -> bool:
-        """Validate payment amount against provider limits"""
-        amount_cents = payment_data.get('amount_cents', 0)
+        """Validate payment amount against provider limits"""        amount_cents = payment_data.get('amount_cents', 0)
         return config.minimum_amount_cents <= amount_cents <= config.maximum_amount_cents
     
     async def _process_payment_with_provider(self, payment_data: Dict[str, Any], 
                                            config: PaymentProviderConfig) -> Dict[str, Any]:
-        """Process payment with specific provider"""
-        # Implement provider-specific payment processing
+        """Process payment with specific provider"""        # Implement provider-specific payment processing
         logger.info(f"Processing payment with {config.provider_name}")
         return {'status': 'success', 'transaction_id': 'tx_123456'}
     
     def _log_payment_transaction(self, provider: str, payment_data: Dict[str, Any], 
                                result: Dict[str, Any]):
-        """Log payment transaction"""
-        logger.info(f"Payment logged: {provider} - {result['status']}")
+        """Log payment transaction"""        logger.info(f"Payment logged: {provider} - {result['status']}")
     
     def _verify_webhook_signature(self, payload: Dict[str, Any], headers: Dict[str, str], 
                                  config: WebhookConfig) -> bool:
-        """Verify webhook signature"""
-        signature = headers.get(config.signature_header, '')
+        """Verify webhook signature"""        signature = headers.get(config.signature_header, '')
         if not signature or not config.secret:
             return False
         
@@ -882,14 +841,12 @@ class IntegrationEnvironmentManager:
         return hmac.compare_digest(signature, expected_signature)
     
     def _route_webhook_event(self, webhook_name: str, payload: Dict[str, Any]) -> Dict[str, Any]:
-        """Route webhook event to appropriate handler"""
-        # Implement webhook routing logic
+        """Route webhook event to appropriate handler"""        # Implement webhook routing logic
         logger.info(f"Routing webhook event: {webhook_name}")
         return {'status': 'processed'}
     
     def _log_api_call(self, service: str, endpoint: str, status: str):
-        """Log API call"""
-        call_record = {
+        """Log API call"""        call_record = {
             'service': service,
             'endpoint': endpoint,
             'status': status,
@@ -899,43 +856,35 @@ class IntegrationEnvironmentManager:
     
     # Data synchronization methods
     def _get_compatible_platforms_for_data_type(self, data_type: str) -> List[str]:
-        """Get platforms compatible with data type"""
-        compatible_platforms = []
+        """Get platforms compatible with data type"""        compatible_platforms = []
         for platform in self.social_media_platforms:
             if data_type in platform.content_types_supported:
                 compatible_platforms.append(platform.platform_name)
         return compatible_platforms
     
     async def _sync_data_outbound(self, platform: str, data_type: str) -> Dict[str, Any]:
-        """Sync data outbound to platform"""
-        logger.info(f"Syncing {data_type} data outbound to {platform}")
+        """Sync data outbound to platform"""        logger.info(f"Syncing {data_type} data outbound to {platform}")
         return {'status': 'success', 'synced_items': 10}
     
     async def _sync_data_inbound(self, platform: str, data_type: str) -> Dict[str, Any]:
-        """Sync data inbound from platform"""
-        logger.info(f"Syncing {data_type} data inbound from {platform}")
+        """Sync data inbound from platform"""        logger.info(f"Syncing {data_type} data inbound from {platform}")
         return {'status': 'success', 'synced_items': 15}
     
     # Health monitoring methods
     def _check_platform_health(self, platform: SocialMediaPlatformConfig) -> str:
-        """Check social media platform health"""
-        return "healthy" if platform.enabled else "disabled"
+        """Check social media platform health"""        return "healthy" if platform.enabled else "disabled"
     
     def _check_payment_provider_health(self, provider: PaymentProviderConfig) -> str:
-        """Check payment provider health"""
-        return "healthy" if provider.enabled else "disabled"
+        """Check payment provider health"""        return "healthy" if provider.enabled else "disabled"
     
     def _check_cloud_service_health(self, service: CloudServiceConfig) -> str:
-        """Check cloud service health"""
-        return "healthy" if service.enabled else "disabled"
+        """Check cloud service health"""        return "healthy" if service.enabled else "disabled"
     
     def _check_webhook_health(self, webhook: WebhookConfig) -> str:
-        """Check webhook health"""
-        return "healthy" if webhook.active else "inactive"
+        """Check webhook health"""        return "healthy" if webhook.active else "inactive"
     
     def _count_failed_integrations(self, health_status: Dict[str, Any]) -> int:
-        """Count failed integrations"""
-        failed_count = 0
+        """Count failed integrations"""        failed_count = 0
         for category in ['social_media_platforms', 'payment_providers', 'cloud_services', 'webhooks']:
             for status in health_status.get(category, {}).values():
                 if status in ['error', 'unhealthy', 'disabled']:
@@ -944,16 +893,14 @@ class IntegrationEnvironmentManager:
     
     # Metrics calculation methods
     def _count_api_calls_24h(self) -> int:
-        """Count API calls in last 24 hours"""
-        cutoff = datetime.now() - timedelta(days=1)
+        """Count API calls in last 24 hours"""        cutoff = datetime.now() - timedelta(days=1)
         return len([
             call for call in self.api_call_history
             if datetime.fromisoformat(call['timestamp']) > cutoff
         ])
     
     def _calculate_success_rate(self) -> float:
-        """Calculate API call success rate"""
-        if not self.api_call_history:
+        """Calculate API call success rate"""        if not self.api_call_history:
             return 100.0
         
         successful_calls = len([
@@ -963,24 +910,20 @@ class IntegrationEnvironmentManager:
         return (successful_calls / len(self.api_call_history)) * 100
     
     def _calculate_average_response_time(self) -> float:
-        """Calculate average response time"""
-        return 150.5  # Placeholder
+        """Calculate average response time"""        return 150.5  # Placeholder
     
     def _count_rate_limited_calls(self) -> int:
-        """Count rate limited calls"""
-        return len([
+        """Count rate limited calls"""        return len([
             call for call in self.api_call_history
             if call['status'] == 'rate_limited'
         ])
     
     def _count_payment_transactions_24h(self) -> int:
-        """Count payment transactions in last 24 hours"""
-        return 125  # Placeholder
+        """Count payment transactions in last 24 hours"""        return 125  # Placeholder
     
     # Analytics methods
     def _get_api_metrics(self, time_period: str) -> Dict[str, Any]:
-        """Get API metrics"""
-        return {
+        """Get API metrics"""        return {
             'total_calls': 1500,
             'successful_calls': 1425,
             'failed_calls': 75,
@@ -988,16 +931,14 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_platform_performance(self, time_period: str) -> Dict[str, Any]:
-        """Get platform performance metrics"""
-        return {
+        """Get platform performance metrics"""        return {
             'youtube': {'uptime': 99.8, 'avg_response_ms': 120},
             'instagram': {'uptime': 99.5, 'avg_response_ms': 180},
             'tiktok': {'uptime': 98.9, 'avg_response_ms': 200}
         }
     
     def _get_payment_analytics(self, time_period: str) -> Dict[str, Any]:
-        """Get payment analytics"""
-        return {
+        """Get payment analytics"""        return {
             'total_transactions': 125,
             'successful_transactions': 120,
             'failed_transactions': 5,
@@ -1005,8 +946,7 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_webhook_analytics(self, time_period: str) -> Dict[str, Any]:
-        """Get webhook analytics"""
-        return {
+        """Get webhook analytics"""        return {
             'total_events': 250,
             'processed_events': 245,
             'failed_events': 5,
@@ -1014,8 +954,7 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_error_analysis(self, time_period: str) -> Dict[str, Any]:
-        """Get error analysis"""
-        return {
+        """Get error analysis"""        return {
             'error_types': {
                 'timeout': 15,
                 'rate_limit': 8,
@@ -1026,16 +965,14 @@ class IntegrationEnvironmentManager:
         }
     
     def _get_rate_limit_analysis(self, time_period: str) -> Dict[str, Any]:
-        """Get rate limit analysis"""
-        return {
+        """Get rate limit analysis"""        return {
             'rate_limited_calls': 8,
             'most_limited_service': 'youtube',
             'peak_usage_hour': '14:00-15:00'
         }
     
     def _get_integration_cost_analysis(self, time_period: str) -> Dict[str, Any]:
-        """Get integration cost analysis"""
-        return {
+        """Get integration cost analysis"""        return {
             'api_costs_usd': 150.75,
             'payment_processing_fees_usd': 85.20,
             'cloud_service_costs_usd': 320.50,

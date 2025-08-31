@@ -1,5 +1,4 @@
-"""
-Content Processor - Advanced Multi-Format Content Processing Engine
+"""Content Processor - Advanced Multi-Format Content Processing Engine
 
 Handles intelligent content processing, analysis, optimization, and transformation
 for multiple content types including audio, video, image, and text content.
@@ -7,7 +6,6 @@ for multiple content types including audio, video, image, and text content.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 import mimetypes
@@ -38,8 +36,7 @@ from ...utils.text_utils import TextProcessor
 logger = get_logger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration"""
-    AUDIO = "audio"
+    """Content type enumeration"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -47,8 +44,7 @@ class ContentType(Enum):
     UNKNOWN = "unknown"
 
 class ProcessingStatus(Enum):
-    """Processing status enumeration"""
-    PENDING = "pending"
+    """Processing status enumeration"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,8 +52,7 @@ class ProcessingStatus(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure"""
-    file_name: str
+    """Content metadata structure"""    file_name: str
     file_size: int
     content_type: ContentType
     mime_type: str
@@ -74,8 +69,7 @@ class ContentMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Content processing result"""
-    content_id: str
+    """Content processing result"""    content_id: str
     original_path: str
     processed_paths: Dict[str, str]
     metadata: ContentMetadata
@@ -86,8 +80,7 @@ class ProcessingResult:
     created_at: datetime
 
 class ContentProcessor:
-    """
-    Advanced multi-format content processing engine
+    """    Advanced multi-format content processing engine
     
     Features:
     - Intelligent content type detection
@@ -96,8 +89,7 @@ class ContentProcessor:
     - SEO metadata extraction
     - Platform-specific optimization
     - AI-powered content enhancement
-    """
-    
+    """    
     def __init__(self):
         self.content_analysis = ContentAnalysisService()
         self.file_storage = FileStorageService()
@@ -121,13 +113,11 @@ class ContentProcessor:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize content processor and AI models
+        """        Initialize content processor and AI models
         
         Returns:
             bool: Initialization success status
-        """
-        try:
+        """        try:
             logger.info("Initializing Content Processor...")
             
             # Initialize AI models
@@ -152,8 +142,7 @@ class ContentProcessor:
         user_id: int,
         processing_options: Dict[str, Any] = None
     ) -> ProcessingResult:
-        """
-        Process uploaded content file
+        """        Process uploaded content file
         
         Args:
             file: Uploaded file object
@@ -162,8 +151,7 @@ class ContentProcessor:
             
         Returns:
             ProcessingResult with processing information
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             # Validate file
@@ -225,8 +213,7 @@ class ContentProcessor:
         original_path: str,
         new_options: Dict[str, Any]
     ) -> ProcessingResult:
-        """
-        Reprocess existing content with new options
+        """        Reprocess existing content with new options
         
         Args:
             content_id: Existing content ID
@@ -235,8 +222,7 @@ class ContentProcessor:
             
         Returns:
             Updated ProcessingResult
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             # Detect content type from file
@@ -288,8 +274,7 @@ class ContentProcessor:
         content_path: str,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """
-        Extract SEO-optimized metadata from content
+        """        Extract SEO-optimized metadata from content
         
         Args:
             content_path: Path to content file
@@ -297,8 +282,7 @@ class ContentProcessor:
             
         Returns:
             Dict containing SEO metadata
-        """
-        try:
+        """        try:
             seo_metadata = {
                 'title': '',
                 'description': '',
@@ -331,8 +315,7 @@ class ContentProcessor:
         platform: str,
         content_type: ContentType
     ) -> str:
-        """
-        Optimize content for specific platform requirements
+        """        Optimize content for specific platform requirements
         
         Args:
             content_path: Path to original content
@@ -341,8 +324,7 @@ class ContentProcessor:
             
         Returns:
             Path to optimized content file
-        """
-        try:
+        """        try:
             platform_configs = {
                 'youtube': {
                     'video': {'max_size': 128000000, 'formats': ['mp4'], 'max_duration': 43200},
@@ -396,8 +378,7 @@ class ContentProcessor:
             return content_path  # Return original if optimization fails
     
     async def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""
-        try:
+        """Initialize AI models for content analysis"""        try:
             # Text analysis model
             self.text_analyzer = pipeline(
                 "text-classification",
@@ -418,8 +399,7 @@ class ContentProcessor:
             logger.warning(f"AI model initialization failed: {e}")
     
     async def _validate_uploaded_file(self, file: UploadFile):
-        """Validate uploaded file"""
-        if not file.filename:
+        """Validate uploaded file"""        if not file.filename:
             raise HTTPException(status_code=400, detail="No filename provided")
         
         # Check file size (max 500MB)
@@ -436,8 +416,7 @@ class ContentProcessor:
             raise HTTPException(status_code=400, detail=f"Unsupported file format: {file_ext}")
     
     async def _detect_content_type(self, file: UploadFile) -> ContentType:
-        """Detect content type from uploaded file"""
-        file_ext = Path(file.filename).suffix.lower()
+        """Detect content type from uploaded file"""        file_ext = Path(file.filename).suffix.lower()
         mime_type = mimetypes.guess_type(file.filename)[0] or ''
         
         # Check by extension first
@@ -458,8 +437,7 @@ class ContentProcessor:
         return ContentType.UNKNOWN
     
     async def _detect_content_type_from_path(self, file_path: str) -> ContentType:
-        """Detect content type from file path"""
-        file_ext = Path(file_path).suffix.lower()
+        """Detect content type from file path"""        file_ext = Path(file_path).suffix.lower()
         
         for content_type, extensions in self.supported_formats.items():
             if file_ext in extensions:
@@ -468,8 +446,7 @@ class ContentProcessor:
         return ContentType.UNKNOWN
     
     async def _save_original_file(self, file: UploadFile, content_id: str, user_id: int) -> str:
-        """Save original uploaded file"""
-        file_ext = Path(file.filename).suffix
+        """Save original uploaded file"""        file_ext = Path(file.filename).suffix
         filename = f"{content_id}{file_ext}"
         file_path = f"uploads/user_{user_id}/originals/{filename}"
         
@@ -490,8 +467,7 @@ class ContentProcessor:
         content_type: ContentType,
         file: UploadFile
     ) -> ContentMetadata:
-        """Extract basic metadata from file"""
-        file_size = Path(file_path).stat().st_size
+        """Extract basic metadata from file"""        file_size = Path(file_path).stat().st_size
         mime_type = mimetypes.guess_type(file_path)[0] or ''
         
         metadata = ContentMetadata(
@@ -519,8 +495,7 @@ class ContentProcessor:
         file_path: str,
         content_type: ContentType
     ) -> ContentMetadata:
-        """Extract basic metadata from file path only"""
-        file_size = Path(file_path).stat().st_size
+        """Extract basic metadata from file path only"""        file_size = Path(file_path).stat().st_size
         mime_type = mimetypes.guess_type(file_path)[0] or ''
         
         metadata = ContentMetadata(
@@ -534,8 +509,7 @@ class ContentProcessor:
         return metadata
     
     async def _extract_audio_metadata(self, file_path: str, metadata: ContentMetadata):
-        """Extract audio-specific metadata"""
-        try:
+        """Extract audio-specific metadata"""        try:
             y, sr = librosa.load(file_path, sr=None)
             metadata.duration = librosa.get_duration(y=y, sr=sr)
             metadata.sample_rate = sr
@@ -545,8 +519,7 @@ class ContentProcessor:
             logger.warning(f"Audio metadata extraction failed: {e}")
     
     async def _extract_video_metadata(self, file_path: str, metadata: ContentMetadata):
-        """Extract video-specific metadata"""
-        try:
+        """Extract video-specific metadata"""        try:
             cap = cv2.VideoCapture(file_path)
             if cap.isOpened():
                 fps = cap.get(cv2.CAP_PROP_FPS)
@@ -563,8 +536,7 @@ class ContentProcessor:
             logger.warning(f"Video metadata extraction failed: {e}")
     
     async def _extract_image_metadata(self, file_path: str, metadata: ContentMetadata):
-        """Extract image-specific metadata"""
-        try:
+        """Extract image-specific metadata"""        try:
             with Image.open(file_path) as img:
                 metadata.dimensions = img.size
                 metadata.encoding = img.format
@@ -573,8 +545,7 @@ class ContentProcessor:
             logger.warning(f"Image metadata extraction failed: {e}")
     
     async def _extract_text_metadata(self, file_path: str, metadata: ContentMetadata):
-        """Extract text-specific metadata"""
-        try:
+        """Extract text-specific metadata"""        try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
                 content = await f.read()
                 metadata.extracted_text = content[:1000]  # First 1000 chars
@@ -588,8 +559,7 @@ class ContentProcessor:
         content_type: ContentType,
         options: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Process content based on its type"""
-        processed_paths = {}
+        """Process content based on its type"""        processed_paths = {}
         
         try:
             if content_type == ContentType.AUDIO:
@@ -613,8 +583,7 @@ class ContentProcessor:
         content_type: ContentType,
         metadata: ContentMetadata
     ) -> Dict[str, Any]:
-        """Perform AI analysis on content"""
-        analysis_results = {}
+        """Perform AI analysis on content"""        analysis_results = {}
         
         try:
             if content_type == ContentType.TEXT and self.text_analyzer:
@@ -643,8 +612,7 @@ class ContentProcessor:
         processed_paths: Dict[str, str],
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Optimize content for different platforms"""
-        optimization_results = {}
+        """Optimize content for different platforms"""        optimization_results = {}
         
         # Define target platforms based on content type
         target_platforms = ['youtube', 'instagram', 'tiktok']
@@ -665,28 +633,23 @@ class ContentProcessor:
         return optimization_results
     
     async def _extract_audio_seo_metadata(self, content_path: str) -> Dict[str, Any]:
-        """Extract SEO metadata from audio content"""
-        # Implementation for audio SEO metadata extraction
+        """Extract SEO metadata from audio content"""        # Implementation for audio SEO metadata extraction
         return {'content_type': 'audio', 'duration': None}
     
     async def _extract_video_seo_metadata(self, content_path: str) -> Dict[str, Any]:
-        """Extract SEO metadata from video content"""
-        # Implementation for video SEO metadata extraction
+        """Extract SEO metadata from video content"""        # Implementation for video SEO metadata extraction
         return {'content_type': 'video', 'duration': None}
     
     async def _extract_image_seo_metadata(self, content_path: str) -> Dict[str, Any]:
-        """Extract SEO metadata from image content"""
-        # Implementation for image SEO metadata extraction
+        """Extract SEO metadata from image content"""        # Implementation for image SEO metadata extraction
         return {'content_type': 'image', 'alt_text': ''}
     
     async def _extract_text_seo_metadata(self, content_path: str) -> Dict[str, Any]:
-        """Extract SEO metadata from text content"""
-        # Implementation for text SEO metadata extraction
+        """Extract SEO metadata from text content"""        # Implementation for text SEO metadata extraction
         return {'content_type': 'text', 'word_count': 0}
     
     async def _generate_optimized_path(self, original_path: str, platform: str) -> str:
-        """Generate path for optimized content"""
-        path = Path(original_path)
+        """Generate path for optimized content"""        path = Path(original_path)
         parent = path.parent
         stem = path.stem
         suffix = path.suffix
@@ -702,8 +665,7 @@ class ContentProcessor:
         output_path: str,
         config: Dict[str, Any]
     ):
-        """Optimize video for platform-specific requirements"""
-        # Implementation for video optimization
+        """Optimize video for platform-specific requirements"""        # Implementation for video optimization
         pass
     
     async def _optimize_audio_for_platform(
@@ -712,8 +674,7 @@ class ContentProcessor:
         output_path: str,
         config: Dict[str, Any]
     ):
-        """Optimize audio for platform-specific requirements"""
-        # Implementation for audio optimization
+        """Optimize audio for platform-specific requirements"""        # Implementation for audio optimization
         pass
     
     async def _optimize_image_for_platform(
@@ -722,6 +683,5 @@ class ContentProcessor:
         output_path: str,
         config: Dict[str, Any]
     ):
-        """Optimize image for platform-specific requirements"""
-        # Implementation for image optimization
+        """Optimize image for platform-specific requirements"""        # Implementation for image optimization
         pass

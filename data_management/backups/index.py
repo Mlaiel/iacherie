@@ -1,5 +1,4 @@
-"""
-⚠️ Index - Backup System Public API
+"""⚠️ Index - Backup System Public API
 ===================================
 Module: backend/data_management/backups/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -13,7 +12,6 @@ Responsibility: Point d'entrée unifié pour le système de sauvegarde
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 from typing import Optional, Dict, Any, List, Union
 import asyncio
 import logging
@@ -56,21 +54,17 @@ logger = logging.getLogger(__name__)
 
 
 class BackupSystem:
-    """
-    Système de sauvegarde unifié
+    """    Système de sauvegarde unifié
     
     Point d'entrée principal pour toutes les opérations de sauvegarde.
     Orchestré l'ensemble des composants de manière cohérente.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialise le système de sauvegarde
+        """        Initialise le système de sauvegarde
         
         Args:
             config: Configuration du système
-        """
-        self.config = config
+        """        self.config = config
         
         # Initialisation des composants
         self.backup_manager = BackupManager(config)
@@ -87,8 +81,7 @@ class BackupSystem:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialise le système de manière asynchrone"""
-        if self._initialized:
+        """Initialise le système de manière asynchrone"""        if self._initialized:
             return
         
         # Initialisation des composants
@@ -102,8 +95,7 @@ class BackupSystem:
         self._initialized = True
     
     async def shutdown(self) -> None:
-        """Arrêt propre du système"""
-        if not self._initialized:
+        """Arrêt propre du système"""        if not self._initialized:
             return
         
         await self.scheduler.shutdown()
@@ -120,8 +112,7 @@ class BackupSystem:
         backup_plan_id: str,
         options: Optional[Dict[str, Any]] = None
     ) -> BackupJob:
-        """
-        Crée une nouvelle sauvegarde
+        """        Crée une nouvelle sauvegarde
         
         Args:
             source_path: Chemin source à sauvegarder
@@ -130,8 +121,7 @@ class BackupSystem:
             
         Returns:
             BackupJob: Tâche de sauvegarde créée
-        """
-        return await self.backup_manager.create_backup(
+        """        return await self.backup_manager.create_backup(
             source_path=source_path,
             backup_plan_id=backup_plan_id,
             options=options or {}
@@ -144,8 +134,7 @@ class BackupSystem:
         backup_plan_id: str,
         options: Optional[Dict[str, Any]] = None
     ) -> BackupJob:
-        """
-        Crée une sauvegarde incrémentale
+        """        Crée une sauvegarde incrémentale
         
         Args:
             source_path: Chemin source
@@ -155,8 +144,7 @@ class BackupSystem:
             
         Returns:
             BackupJob: Tâche de sauvegarde incrémentale
-        """
-        return await self.backup_manager.create_incremental_backup(
+        """        return await self.backup_manager.create_incremental_backup(
             source_path=source_path,
             base_backup_id=base_backup_id,
             backup_plan_id=backup_plan_id,
@@ -169,8 +157,7 @@ class BackupSystem:
         target_path: str,
         options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Restaure une sauvegarde
+        """        Restaure une sauvegarde
         
         Args:
             backup_id: ID de la sauvegarde
@@ -179,8 +166,7 @@ class BackupSystem:
             
         Returns:
             str: ID de la tâche de restauration
-        """
-        return await self.recovery_engine.restore_backup(
+        """        return await self.recovery_engine.restore_backup(
             backup_id=backup_id,
             target_path=target_path,
             options=options or {}
@@ -193,8 +179,7 @@ class BackupSystem:
         target_path: str,
         options: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Restaure à un point dans le temps
+        """        Restaure à un point dans le temps
         
         Args:
             backup_chain_id: ID de la chaîne de sauvegarde
@@ -204,8 +189,7 @@ class BackupSystem:
             
         Returns:
             str: ID de la tâche de restauration
-        """
-        return await self.recovery_engine.restore_point_in_time(
+        """        return await self.recovery_engine.restore_point_in_time(
             backup_chain_id=backup_chain_id,
             target_time=target_time,
             target_path=target_path,
@@ -219,8 +203,7 @@ class BackupSystem:
         name: str,
         configuration: Dict[str, Any]
     ) -> BackupPlan:
-        """
-        Crée un plan de sauvegarde
+        """        Crée un plan de sauvegarde
         
         Args:
             name: Nom du plan
@@ -228,8 +211,7 @@ class BackupSystem:
             
         Returns:
             BackupPlan: Plan créé
-        """
-        return await self.backup_manager.create_backup_plan(
+        """        return await self.backup_manager.create_backup_plan(
             name=name,
             configuration=configuration
         )
@@ -240,8 +222,7 @@ class BackupSystem:
         cron_expression: str,
         source_paths: List[str]
     ) -> str:
-        """
-        Planifie une sauvegarde récurrente
+        """        Planifie une sauvegarde récurrente
         
         Args:
             backup_plan_id: ID du plan de sauvegarde
@@ -250,8 +231,7 @@ class BackupSystem:
             
         Returns:
             str: ID de la planification
-        """
-        return await self.scheduler.schedule_backup(
+        """        return await self.scheduler.schedule_backup(
             backup_plan_id=backup_plan_id,
             cron_expression=cron_expression,
             source_paths=source_paths
@@ -260,25 +240,21 @@ class BackupSystem:
     # Monitoring et statuts
     
     async def get_backup_status(self, backup_id: str) -> BackupStatus:
-        """
-        Récupère le statut d'une sauvegarde
+        """        Récupère le statut d'une sauvegarde
         
         Args:
             backup_id: ID de la sauvegarde
             
         Returns:
             BackupStatus: Statut de la sauvegarde
-        """
-        return await self.backup_manager.get_backup_status(backup_id)
+        """        return await self.backup_manager.get_backup_status(backup_id)
     
     async def get_system_metrics(self) -> Dict[str, Any]:
-        """
-        Récupère les métriques système
+        """        Récupère les métriques système
         
         Returns:
             Dict[str, Any]: Métriques du système
-        """
-        return await self.monitor.get_system_metrics()
+        """        return await self.monitor.get_system_metrics()
     
     async def get_backup_statistics(
         self,
@@ -286,8 +262,7 @@ class BackupSystem:
         date_from: Optional[datetime] = None,
         date_to: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Récupère les statistiques de sauvegarde
+        """        Récupère les statistiques de sauvegarde
         
         Args:
             user_id: ID utilisateur (optionnel)
@@ -296,8 +271,7 @@ class BackupSystem:
             
         Returns:
             Dict[str, Any]: Statistiques
-        """
-        return await self.monitor.get_backup_statistics(
+        """        return await self.monitor.get_backup_statistics(
             user_id=user_id,
             date_from=date_from,
             date_to=date_to
@@ -306,37 +280,31 @@ class BackupSystem:
     # Vérification et maintenance
     
     async def verify_backup(self, backup_id: str) -> Dict[str, Any]:
-        """
-        Vérifie l'intégrité d'une sauvegarde
+        """        Vérifie l'intégrité d'une sauvegarde
         
         Args:
             backup_id: ID de la sauvegarde
             
         Returns:
             Dict[str, Any]: Résultat de la vérification
-        """
-        return await self.verification_engine.verify_backup(backup_id)
+        """        return await self.verification_engine.verify_backup(backup_id)
     
     async def verify_backup_chain(self, chain_id: str) -> Dict[str, Any]:
-        """
-        Vérifie une chaîne de sauvegardes
+        """        Vérifie une chaîne de sauvegardes
         
         Args:
             chain_id: ID de la chaîne
             
         Returns:
             Dict[str, Any]: Résultat de la vérification
-        """
-        return await self.verification_engine.verify_backup_chain(chain_id)
+        """        return await self.verification_engine.verify_backup_chain(chain_id)
     
     async def cleanup_expired_backups(self) -> Dict[str, Any]:
-        """
-        Nettoie les sauvegardes expirées
+        """        Nettoie les sauvegardes expirées
         
         Returns:
             Dict[str, Any]: Résultat du nettoyage
-        """
-        return await self.retention_manager.cleanup_expired_backups()
+        """        return await self.retention_manager.cleanup_expired_backups()
     
     # Gestion des politiques de rétention
     
@@ -345,8 +313,7 @@ class BackupSystem:
         name: str,
         rules: Dict[str, Any]
     ) -> RetentionPolicy:
-        """
-        Crée une politique de rétention
+        """        Crée une politique de rétention
         
         Args:
             name: Nom de la politique
@@ -354,8 +321,7 @@ class BackupSystem:
             
         Returns:
             RetentionPolicy: Politique créée
-        """
-        return await self.retention_manager.create_retention_policy(
+        """        return await self.retention_manager.create_retention_policy(
             name=name,
             rules=rules
         )
@@ -365,14 +331,12 @@ class BackupSystem:
         backup_plan_id: str,
         policy_id: str
     ) -> None:
-        """
-        Applique une politique de rétention
+        """        Applique une politique de rétention
         
         Args:
             backup_plan_id: ID du plan de sauvegarde
             policy_id: ID de la politique
-        """
-        await self.retention_manager.apply_retention_policy(
+        """        await self.retention_manager.apply_retention_policy(
             backup_plan_id=backup_plan_id,
             policy_id=policy_id
         )
@@ -386,8 +350,7 @@ async def quick_backup(
     encryption_key: Optional[str] = None,
     compression_level: int = 6
 ) -> str:
-    """
-    Sauvegarde rapide avec configuration par défaut
+    """    Sauvegarde rapide avec configuration par défaut
     
     Args:
         source_path: Chemin source
@@ -397,8 +360,7 @@ async def quick_backup(
         
     Returns:
         str: ID de la sauvegarde
-    """
-    config = {
+    """    config = {
         "storage": {
             "default_provider": "local",
             "providers": {
@@ -448,8 +410,7 @@ async def quick_restore(
     target_path: str,
     decryption_key: Optional[str] = None
 ) -> bool:
-    """
-    Restauration rapide
+    """    Restauration rapide
     
     Args:
         backup_id: ID de la sauvegarde
@@ -458,8 +419,7 @@ async def quick_restore(
         
     Returns:
         bool: Succès de la restauration
-    """
-    config = {
+    """    config = {
         "storage": {
             "default_provider": "local"
         },
@@ -523,13 +483,11 @@ async def quick_restore(
 
 
 def get_backup_system_info() -> Dict[str, Any]:
-    """
-    Informations sur le système de sauvegarde
+    """    Informations sur le système de sauvegarde
     
     Returns:
         Dict[str, Any]: Informations système
-    """
-    return {
+    """    return {
         "name": "IA Influencer Agent Backup System",
         "version": "1.0.0",
         "author": "Fahed Mlaiel",
@@ -568,31 +526,27 @@ def get_backup_system_info() -> Dict[str, Any]:
 # Factory pour la création du système
 
 def create_backup_system(config: Dict[str, Any]) -> BackupSystem:
-    """
-    Factory pour créer un système de sauvegarde
+    """    Factory pour créer un système de sauvegarde
     
     Args:
         config: Configuration du système
         
     Returns:
         BackupSystem: Instance du système
-    """
-    return BackupSystem(config)
+    """    return BackupSystem(config)
 
 
 async def create_and_initialize_backup_system(
     config: Dict[str, Any]
 ) -> BackupSystem:
-    """
-    Crée et initialise un système de sauvegarde
+    """    Crée et initialise un système de sauvegarde
     
     Args:
         config: Configuration du système
         
     Returns:
         BackupSystem: Instance initialisée
-    """
-    system = BackupSystem(config)
+    """    system = BackupSystem(config)
     await system.initialize()
     return system
 
@@ -677,8 +631,7 @@ DEFAULT_CONFIG = {
 
 # Point d'entrée simple
 async def main():
-    """Point d'entrée pour tests et démonstrations"""
-    print("IA Influencer Agent Backup System")
+    """Point d'entrée pour tests et démonstrations"""    print("IA Influencer Agent Backup System")
     print("=================================")
     
     info = get_backup_system_info()

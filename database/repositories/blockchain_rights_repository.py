@@ -1,5 +1,4 @@
-"""
-Blockchain Rights Repository
+"""Blockchain Rights Repository
 
 Enterprise-grade repository for blockchain-based rights management,
 NFT integration, and smart contract automation.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 import logging
 from typing import List, Dict, Any, Optional, Tuple
 from datetime import datetime, timezone, timedelta
@@ -48,13 +46,11 @@ logger = logging.getLogger(__name__)
 
 
 class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
-    """
-    Enterprise Blockchain Rights Repository
+    """    Enterprise Blockchain Rights Repository
     
     Manages blockchain-based intellectual property rights, NFT integration,
     and automated licensing for content creators.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
         super().__init__(BlockchainRights, db_session)
         self.model = BlockchainRights
@@ -68,8 +64,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         ownership_proof_hash: str,
         **kwargs
     ) -> BlockchainRights:
-        """
-        Create new blockchain rights registration
+        """        Create new blockchain rights registration
         
         Args:
             content_fingerprint_id: Content fingerprint UUID
@@ -81,8 +76,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
             
         Returns:
             Created BlockchainRights instance
-        """
-        try:
+        """        try:
             rights_data = {
                 "content_fingerprint_id": content_fingerprint_id,
                 "user_id": user_id,
@@ -117,8 +111,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         gas_used: int,
         status: SmartContractStatus
     ) -> BlockchainRights:
-        """
-        Update smart contract deployment status
+        """        Update smart contract deployment status
         
         Args:
             rights_id: BlockchainRights UUID
@@ -130,8 +123,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
             
         Returns:
             Updated BlockchainRights instance
-        """
-        try:
+        """        try:
             blockchain_rights = await self.get_by_id(rights_id)
             if not blockchain_rights:
                 raise ValueError(f"Blockchain rights not found: {rights_id}")
@@ -161,8 +153,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         metadata_uri: str,
         royalty_percentage: float = 10.0
     ) -> BlockchainRights:
-        """
-        Record NFT minting for blockchain rights
+        """        Record NFT minting for blockchain rights
         
         Args:
             rights_id: BlockchainRights UUID
@@ -172,8 +163,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
             
         Returns:
             Updated BlockchainRights instance
-        """
-        try:
+        """        try:
             blockchain_rights = await self.get_by_id(rights_id)
             if not blockchain_rights:
                 raise ValueError(f"Blockchain rights not found: {rights_id}")
@@ -201,8 +191,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         rights_type: Optional[RightsType] = None,
         active_only: bool = True
     ) -> List[BlockchainRights]:
-        """
-        Get blockchain rights by user with optional filters
+        """        Get blockchain rights by user with optional filters
         
         Args:
             user_id: User UUID
@@ -212,8 +201,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
             
         Returns:
             List of BlockchainRights instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(self.model).filter(
                 self.model.user_id == user_id
             )
@@ -240,16 +228,14 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         self,
         contract_address: str
     ) -> Optional[BlockchainRights]:
-        """
-        Get blockchain rights by smart contract address
+        """        Get blockchain rights by smart contract address
         
         Args:
             contract_address: Smart contract address
             
         Returns:
             BlockchainRights instance or None
-        """
-        try:
+        """        try:
             blockchain_rights = self.db_session.query(self.model).filter(
                 self.model.smart_contract_address == contract_address
             ).first()
@@ -272,8 +258,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         similarity_score: float,
         evidence_hash: str
     ) -> ViolationReport:
-        """
-        Record a content violation for blockchain rights
+        """        Record a content violation for blockchain rights
         
         Args:
             rights_id: BlockchainRights UUID
@@ -285,8 +270,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
             
         Returns:
             Created ViolationReport instance
-        """
-        try:
+        """        try:
             violation_data = {
                 "blockchain_rights_id": rights_id,
                 "violation_type": violation_type,
@@ -326,8 +310,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         proposed_price: Decimal,
         duration_days: int
     ) -> LicenseAutomation:
-        """
-        Create automated licensing request
+        """        Create automated licensing request
         
         Args:
             rights_id: BlockchainRights UUID
@@ -338,8 +321,7 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
             
         Returns:
             Created LicenseAutomation instance
-        """
-        try:
+        """        try:
             license_data = {
                 "blockchain_rights_id": rights_id,
                 "licensee_wallet_address": licensee_wallet_address,
@@ -366,16 +348,14 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         self,
         user_id: str
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive portfolio analytics for user's blockchain rights
+        """        Get comprehensive portfolio analytics for user's blockchain rights
         
         Args:
             user_id: User UUID
             
         Returns:
             Dictionary containing portfolio analytics
-        """
-        try:
+        """        try:
             # Total rights registered
             total_rights = self.db_session.query(func.count(self.model.id)).filter(
                 self.model.user_id == user_id,
@@ -466,16 +446,14 @@ class BlockchainRightsRepository(BaseRepository[BlockchainRights]):
         self,
         user_id: str
     ) -> List[Dict[str, Any]]:
-        """
-        Get blockchain rights that require user attention or action
+        """        Get blockchain rights that require user attention or action
         
         Args:
             user_id: User UUID
             
         Returns:
             List of rights requiring action with context
-        """
-        try:
+        """        try:
             action_items = []
             
             # Rights with failed deployments

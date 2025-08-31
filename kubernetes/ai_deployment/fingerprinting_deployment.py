@@ -1,5 +1,4 @@
-"""
-Fingerprinting Deployment
+"""Fingerprinting Deployment
 Enterprise content fingerprinting and copyright protection system
 
 This module provides comprehensive content fingerprinting capabilities for
@@ -13,7 +12,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Content fingerprint types"""
-    AUDIO_CHROMAPRINT = "audio_chromaprint"
+    """Content fingerprint types"""    AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_MFCC = "audio_mfcc"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_PERCEPTUAL = "video_perceptual"
@@ -61,8 +58,7 @@ class FingerprintType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -70,8 +66,7 @@ class ProtectionLevel(Enum):
 
 
 class MatchAccuracy(Enum):
-    """Fingerprint matching accuracy levels"""
-    EXACT = "exact"
+    """Fingerprint matching accuracy levels"""    EXACT = "exact"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -79,8 +74,7 @@ class MatchAccuracy(Enum):
 
 
 class ContentOwnership(Enum):
-    """Content ownership types"""
-    ORIGINAL = "original"
+    """Content ownership types"""    ORIGINAL = "original"
     LICENSED = "licensed"
     FAIR_USE = "fair_use"
     PUBLIC_DOMAIN = "public_domain"
@@ -90,8 +84,7 @@ class ContentOwnership(Enum):
 
 @dataclass
 class FingerprintingConfig:
-    """Content fingerprinting configuration"""
-    fingerprinting_name: str = "ia-content-fingerprinting"
+    """Content fingerprinting configuration"""    fingerprinting_name: str = "ia-content-fingerprinting"
     supported_fingerprint_types: List[FingerprintType] = None
     protection_level: ProtectionLevel = ProtectionLevel.PREMIUM
     match_accuracy: MatchAccuracy = MatchAccuracy.HIGH
@@ -130,8 +123,7 @@ class FingerprintingConfig:
 
 
 class FingerprintingDeployment:
-    """
-    Enterprise content fingerprinting deployment system
+    """    Enterprise content fingerprinting deployment system
     
     Provides comprehensive content protection with:
     - Multi-modal fingerprint generation (audio, video, image, text)
@@ -142,16 +134,13 @@ class FingerprintingDeployment:
     - Legal-grade evidence generation
     - Cross-platform infringement detection
     - Quantum-resistant cryptographic protection
-    """
-    
+    """    
     def __init__(self, namespace: str = "ia-content-fingerprinting"):
-        """
-        Initialize fingerprinting deployment
+        """        Initialize fingerprinting deployment
         
         Args:
             namespace: Kubernetes namespace for fingerprinting infrastructure
-        """
-        self.namespace = namespace
+        """        self.namespace = namespace
         self.config = FingerprintingConfig()
         self.fingerprint_database = {}
         self.protection_jobs = {}
@@ -164,8 +153,7 @@ class FingerprintingDeployment:
         self._initialize_fingerprinting_models()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and blockchain clients"""
-        try:
+        """Initialize Kubernetes, Docker, and blockchain clients"""        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -200,8 +188,7 @@ class FingerprintingDeployment:
             raise
     
     def _initialize_fingerprinting_models(self) -> None:
-        """Initialize AI models for fingerprinting"""
-        try:
+        """Initialize AI models for fingerprinting"""        try:
             # Audio fingerprinting models
             self.audio_feature_extractor = librosa
             
@@ -234,13 +221,11 @@ class FingerprintingDeployment:
             logger.warning(f"Some fingerprinting models failed to initialize: {e}")
     
     async def deploy_fingerprinting_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete fingerprinting infrastructure
+        """        Deploy complete fingerprinting infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """
-        try:
+        """        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying content fingerprinting infrastructure")
             
@@ -332,16 +317,14 @@ class FingerprintingDeployment:
             raise
     
     async def generate_content_fingerprint(self, fingerprint_request: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Generate comprehensive fingerprints for content protection
+        """        Generate comprehensive fingerprints for content protection
         
         Args:
             fingerprint_request: Content fingerprinting request
             
         Returns:
             Generated fingerprints and protection details
-        """
-        try:
+        """        try:
             content_url = fingerprint_request.get("content_url")
             content_type = fingerprint_request.get("content_type")
             owner_id = fingerprint_request.get("owner_id")
@@ -452,16 +435,14 @@ class FingerprintingDeployment:
             raise
     
     async def search_similar_content(self, search_request: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Search for similar content using fingerprint matching
+        """        Search for similar content using fingerprint matching
         
         Args:
             search_request: Content similarity search request
             
         Returns:
             Similar content matches with confidence scores
-        """
-        try:
+        """        try:
             query_content = search_request.get("query_content")
             content_type = search_request.get("content_type")
             similarity_threshold = search_request.get("similarity_threshold", self.config.similarity_threshold)
@@ -518,16 +499,14 @@ class FingerprintingDeployment:
             raise
     
     async def detect_content_infringement(self, detection_request: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Detect potential content infringement using advanced matching
+        """        Detect potential content infringement using advanced matching
         
         Args:
             detection_request: Infringement detection request
             
         Returns:
             Infringement detection results with legal evidence
-        """
-        try:
+        """        try:
             protected_fingerprint_id = detection_request.get("fingerprint_id")
             suspected_content = detection_request.get("suspected_content")
             detection_sensitivity = detection_request.get("sensitivity", "high")
@@ -609,8 +588,7 @@ class FingerprintingDeployment:
             raise
     
     async def _deploy_fingerprint_workers(self) -> Dict[str, Any]:
-        """Deploy fingerprint generation worker nodes"""
-        fingerprint_workers = {
+        """Deploy fingerprint generation worker nodes"""        fingerprint_workers = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -693,8 +671,7 @@ class FingerprintingDeployment:
         }
     
     async def _deploy_fingerprinting_api(self) -> Dict[str, Any]:
-        """Deploy fingerprinting API service"""
-        fingerprinting_api = {
+        """Deploy fingerprinting API service"""        fingerprinting_api = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -763,8 +740,7 @@ class FingerprintingDeployment:
         }
     
     async def _generate_audio_fingerprints(self, content_info: Dict[str, Any], fingerprint_types: List[FingerprintType]) -> Dict[str, Any]:
-        """Generate audio fingerprints using multiple algorithms"""
-        audio_fingerprints = {}
+        """Generate audio fingerprints using multiple algorithms"""        audio_fingerprints = {}
         
         try:
             # Chromaprint fingerprint
@@ -806,8 +782,7 @@ class FingerprintingDeployment:
             return {}
     
     async def _generate_video_fingerprints(self, content_info: Dict[str, Any], fingerprint_types: List[FingerprintType]) -> Dict[str, Any]:
-        """Generate video fingerprints using frame analysis"""
-        video_fingerprints = {}
+        """Generate video fingerprints using frame analysis"""        video_fingerprints = {}
         
         try:
             # Perceptual hash of key frames
@@ -844,8 +819,7 @@ class FingerprintingDeployment:
             return {}
     
     async def _generate_image_fingerprints(self, content_info: Dict[str, Any], fingerprint_types: List[FingerprintType]) -> Dict[str, Any]:
-        """Generate image fingerprints using perceptual hashing"""
-        image_fingerprints = {}
+        """Generate image fingerprints using perceptual hashing"""        image_fingerprints = {}
         
         try:
             # Perceptual hashes
@@ -886,8 +860,7 @@ class FingerprintingDeployment:
             return {}
     
     async def _generate_text_fingerprints(self, content_info: Dict[str, Any], fingerprint_types: List[FingerprintType]) -> Dict[str, Any]:
-        """Generate text fingerprints using semantic and syntactic analysis"""
-        text_fingerprints = {}
+        """Generate text fingerprints using semantic and syntactic analysis"""        text_fingerprints = {}
         
         try:
             # Semantic fingerprint
@@ -927,8 +900,7 @@ class FingerprintingDeployment:
             return {}
     
     async def _generate_blockchain_timestamp(self, fingerprint_id: str, fingerprints: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate blockchain timestamp for legal evidence"""
-        try:
+        """Generate blockchain timestamp for legal evidence"""        try:
             # Create composite hash of all fingerprints
             fingerprint_data = json.dumps(fingerprints, sort_keys=True).encode()
             composite_hash = hashlib.sha256(fingerprint_data).hexdigest()
@@ -954,8 +926,7 @@ class FingerprintingDeployment:
             return {"status": "failed", "error": str(e)}
     
     async def _store_fingerprints(self, fingerprint_id: str, fingerprint_data: Dict[str, Any]) -> None:
-        """Store fingerprints in distributed database"""
-        try:
+        """Store fingerprints in distributed database"""        try:
             # Store in Redis for fast access
             self._redis_client.hset(
                 f"fingerprint:{fingerprint_id}",
@@ -967,8 +938,7 @@ class FingerprintingDeployment:
             
             # Store in PostgreSQL for persistent storage
             cursor = self._db_connection.cursor()
-            cursor.execute("""
-                INSERT INTO fingerprints (id, content_info, fingerprints, owner_id, protection_level, created_at)
+            cursor.execute("""                INSERT INTO fingerprints (id, content_info, fingerprints, owner_id, protection_level, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s)
             """, (
                 fingerprint_id,
@@ -987,8 +957,7 @@ class FingerprintingDeployment:
             raise
     
     async def get_fingerprinting_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive fingerprinting metrics"""
-        try:
+        """Get comprehensive fingerprinting metrics"""        try:
             active_protections = len([job for job in self.protection_jobs.values() if job.get("status") == "active"])
             
             metrics = {
@@ -1024,8 +993,7 @@ class FingerprintingDeployment:
             return {"error": str(e)}
     
     async def _ensure_fingerprinting_namespace(self) -> None:
-        """Create fingerprinting namespace"""
-        try:
+        """Create fingerprinting namespace"""        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -1044,8 +1012,7 @@ class FingerprintingDeployment:
                 logger.info(f"Created fingerprinting namespace: {self.namespace}")
     
     async def _configure_fingerprinting_networking(self) -> None:
-        """Configure secure networking for fingerprinting infrastructure"""
-        # High-security network policy
+        """Configure secure networking for fingerprinting infrastructure"""        # High-security network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1082,8 +1049,7 @@ class FingerprintingDeployment:
         logger.info("Configured high-security fingerprinting networking policies")
     
     async def _validate_fingerprinting_infrastructure(self) -> bool:
-        """Validate fingerprinting infrastructure deployment"""
-        try:
+        """Validate fingerprinting infrastructure deployment"""        try:
             # Check essential services
             essential_services = [
                 "fingerprint-workers", "fingerprinting-api"
@@ -1118,8 +1084,7 @@ class FingerprintingDeployment:
             return False
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed fingerprinting infrastructure"""
-        try:
+        """Clean up failed fingerprinting infrastructure"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed fingerprinting infrastructure")
@@ -1127,8 +1092,7 @@ class FingerprintingDeployment:
             logger.error(f"Fingerprinting infrastructure cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire fingerprinting infrastructure"""
-        try:
+        """Clean up entire fingerprinting infrastructure"""        try:
             # Close database connection
             if hasattr(self, '_db_connection'):
                 self._db_connection.close()

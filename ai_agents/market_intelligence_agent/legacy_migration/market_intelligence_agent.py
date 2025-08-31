@@ -1,5 +1,4 @@
-"""
-Market Intelligence Agent - Enterprise Strategic Business Intelligence System
+"""Market Intelligence Agent - Enterprise Strategic Business Intelligence System
 
 Ultra-advanced AI agent providing comprehensive market intelligence, competitive analysis, 
 and strategic business insights for content creators and platform optimization.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import uuid
@@ -54,8 +52,7 @@ from ...security.data_protection import DataProtection
 logger = logging.getLogger(__name__)
 
 class MarketAnalysisType(Enum):
-    """Market analysis operation types"""
-    COMPETITIVE_ANALYSIS = "competitive_analysis"
+    """Market analysis operation types"""    COMPETITIVE_ANALYSIS = "competitive_analysis"
     TREND_FORECASTING = "trend_forecasting" 
     MARKET_SURVEILLANCE = "market_surveillance"
     OPPORTUNITY_IDENTIFICATION = "opportunity_identification"
@@ -67,8 +64,7 @@ class MarketAnalysisType(Enum):
     REVENUE_FORECASTING = "revenue_forecasting"
 
 class MarketSegment(Enum):
-    """Market segment classifications"""
-    MUSIC_STREAMING = "music_streaming"
+    """Market segment classifications"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_CONTENT = "video_content"
     SOCIAL_MEDIA = "social_media"
     LIVE_STREAMING = "live_streaming"
@@ -80,8 +76,7 @@ class MarketSegment(Enum):
     INFLUENCER_MARKETING = "influencer_marketing"
 
 class CompetitiveAdvantage(Enum):
-    """Types of competitive advantages"""
-    TECHNOLOGY_LEADERSHIP = "technology_leadership"
+    """Types of competitive advantages"""    TECHNOLOGY_LEADERSHIP = "technology_leadership"
     CONTENT_QUALITY = "content_quality"
     AUDIENCE_SIZE = "audience_size"
     ENGAGEMENT_RATE = "engagement_rate"
@@ -94,8 +89,7 @@ class CompetitiveAdvantage(Enum):
 
 @dataclass
 class MarketIntelligenceRequest:
-    """Market intelligence analysis request parameters"""
-    analysis_type: MarketAnalysisType
+    """Market intelligence analysis request parameters"""    analysis_type: MarketAnalysisType
     target_market: MarketSegment
     creator_id: str
     time_horizon: str = "3_months"  # 1_week, 1_month, 3_months, 6_months, 1_year
@@ -111,8 +105,7 @@ class MarketIntelligenceRequest:
 
 @dataclass
 class CompetitorAnalysis:
-    """Comprehensive competitor analysis results"""
-    competitor_id: str
+    """Comprehensive competitor analysis results"""    competitor_id: str
     competitor_name: str
     market_share: float
     growth_rate: float
@@ -131,8 +124,7 @@ class CompetitorAnalysis:
 
 @dataclass  
 class TrendForecast:
-    """Market trend forecasting results"""
-    trend_id: str
+    """Market trend forecasting results"""    trend_id: str
     trend_name: str
     trend_type: str
     current_momentum: float
@@ -151,8 +143,7 @@ class TrendForecast:
 
 @dataclass
 class MarketOpportunity:
-    """Market opportunity identification results"""
-    opportunity_id: str
+    """Market opportunity identification results"""    opportunity_id: str
     opportunity_type: str
     market_size: float
     growth_potential: float
@@ -170,8 +161,7 @@ class MarketOpportunity:
 
 @dataclass
 class MarketIntelligenceResult:
-    """Comprehensive market intelligence analysis results"""
-    request_id: str
+    """Comprehensive market intelligence analysis results"""    request_id: str
     analysis_type: MarketAnalysisType
     target_market: MarketSegment
     created_at: datetime
@@ -206,8 +196,7 @@ class MarketIntelligenceResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class MarketIntelligenceAgent(BaseAgent):
-    """
-    Ultra-Advanced Market Intelligence Agent
+    """    Ultra-Advanced Market Intelligence Agent
     
     Provides comprehensive market intelligence, competitive analysis, and strategic business
     insights for content creators, influencers, and platform optimization.
@@ -221,8 +210,7 @@ class MarketIntelligenceAgent(BaseAgent):
     - Multi-platform market surveillance
     - Revenue optimization and pricing strategies
     - Brand positioning and differentiation analysis
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             agent_type="market_intelligence",
@@ -272,8 +260,7 @@ class MarketIntelligenceAgent(BaseAgent):
         logger.info(f"Initialized {self.__class__.__name__}")
     
     async def initialize(self) -> None:
-        """Initialize market intelligence agent components"""
-        try:
+        """Initialize market intelligence agent components"""        try:
             await super().initialize()
             
             # Initialize engines
@@ -312,16 +299,14 @@ class MarketIntelligenceAgent(BaseAgent):
         self, 
         request: MarketIntelligenceRequest
     ) -> MarketIntelligenceResult:
-        """
-        Execute comprehensive market intelligence analysis
+        """        Execute comprehensive market intelligence analysis
         
         Args:
             request: Market intelligence analysis request
             
         Returns:
             MarketIntelligenceResult: Complete market intelligence analysis
-        """
-        start_time = datetime.now(timezone.utc)
+        """        start_time = datetime.now(timezone.utc)
         request_id = str(uuid.uuid4())
         
         try:
@@ -402,8 +387,7 @@ class MarketIntelligenceAgent(BaseAgent):
             raise
     
     async def _execute_analysis(self, request: MarketIntelligenceRequest) -> Dict[str, Any]:
-        """Execute the core market intelligence analysis"""
-        results = {
+        """Execute the core market intelligence analysis"""        results = {
             'confidence_score': 0.0,
             'data_quality_score': 0.0,
             'market_overview': {},
@@ -448,8 +432,7 @@ class MarketIntelligenceAgent(BaseAgent):
         return results
     
     async def _analyze_competitors(self, request: MarketIntelligenceRequest) -> List[CompetitorAnalysis]:
-        """Analyze competitors in the target market"""
-        if not self.competitive_engine:
+        """Analyze competitors in the target market"""        if not self.competitive_engine:
             return []
         
         try:
@@ -474,8 +457,7 @@ class MarketIntelligenceAgent(BaseAgent):
             return []
     
     async def _forecast_trends(self, request: MarketIntelligenceRequest) -> List[TrendForecast]:
-        """Forecast market trends"""
-        if not self.forecasting_engine:
+        """Forecast market trends"""        if not self.forecasting_engine:
             return []
         
         try:
@@ -492,8 +474,7 @@ class MarketIntelligenceAgent(BaseAgent):
             return []
     
     async def _conduct_surveillance(self, request: MarketIntelligenceRequest) -> Dict[str, Any]:
-        """Conduct market surveillance"""
-        if not self.surveillance_engine:
+        """Conduct market surveillance"""        if not self.surveillance_engine:
             return {}
         
         try:
@@ -510,8 +491,7 @@ class MarketIntelligenceAgent(BaseAgent):
             return {}
     
     async def _identify_opportunities(self, request: MarketIntelligenceRequest) -> List[MarketOpportunity]:
-        """Identify market opportunities"""
-        if not self.opportunity_engine:
+        """Identify market opportunities"""        if not self.opportunity_engine:
             return []
         
         try:
@@ -528,8 +508,7 @@ class MarketIntelligenceAgent(BaseAgent):
             return []
     
     async def _analyze_consumer_behavior(self, request: MarketIntelligenceRequest) -> Dict[str, Any]:
-        """Analyze consumer behavior and insights"""
-        if not self.insights_engine:
+        """Analyze consumer behavior and insights"""        if not self.insights_engine:
             return {}
         
         try:
@@ -550,8 +529,7 @@ class MarketIntelligenceAgent(BaseAgent):
         analysis_results: Dict[str, Any],
         request: MarketIntelligenceRequest
     ) -> List[str]:
-        """Generate strategic recommendations based on analysis"""
-        recommendations = []
+        """Generate strategic recommendations based on analysis"""        recommendations = []
         
         # Competitive recommendations
         if analysis_results.get('competitive_landscape'):
@@ -605,8 +583,7 @@ class MarketIntelligenceAgent(BaseAgent):
         analysis_results: Dict[str, Any],
         request: MarketIntelligenceRequest
     ) -> Dict[str, Any]:
-        """Calculate comprehensive market performance metrics"""
-        return {
+        """Calculate comprehensive market performance metrics"""        return {
             'market_metrics': {
                 'market_size_estimate': 1000000.0,
                 'growth_rate': 0.15,
@@ -637,31 +614,25 @@ class MarketIntelligenceAgent(BaseAgent):
         }
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for market intelligence"""
-        # Load pre-trained models for market analysis
+        """Initialize machine learning models for market intelligence"""        # Load pre-trained models for market analysis
         pass
     
     async def _setup_data_sources(self) -> None:
-        """Setup external data sources for market intelligence"""
-        # Configure data source connections
+        """Setup external data sources for market intelligence"""        # Configure data source connections
         pass
     
     async def _load_market_segments(self) -> None:
-        """Load market segment definitions and characteristics"""
-        # Load market segment data
+        """Load market segment definitions and characteristics"""        # Load market segment data
         pass
     
     async def _assess_data_quality(self, results: Dict[str, Any]) -> float:
-        """Assess the quality of analysis data"""
-        return 0.85  # Placeholder score
+        """Assess the quality of analysis data"""        return 0.85  # Placeholder score
     
     async def _cache_results(self, request_id: str, result: MarketIntelligenceResult) -> None:
-        """Cache analysis results for performance"""
-        self.intelligence_cache[request_id] = result
+        """Cache analysis results for performance"""        self.intelligence_cache[request_id] = result
     
     async def _log_analysis(self, result: MarketIntelligenceResult) -> None:
-        """Log market intelligence analysis for audit trail"""
-        self.analysis_history.append({
+        """Log market intelligence analysis for audit trail"""        self.analysis_history.append({
             'request_id': result.request_id,
             'analysis_type': result.analysis_type.value,
             'target_market': result.target_market.value,
@@ -670,8 +641,7 @@ class MarketIntelligenceAgent(BaseAgent):
         })
     
     def _validate_request(self, request: MarketIntelligenceRequest) -> None:
-        """Validate market intelligence request parameters"""
-        if not request.creator_id:
+        """Validate market intelligence request parameters"""        if not request.creator_id:
             raise ValueError("Creator ID is required")
         
         if not isinstance(request.analysis_type, MarketAnalysisType):
@@ -681,8 +651,7 @@ class MarketIntelligenceAgent(BaseAgent):
             raise ValueError("Invalid target market segment")
     
     async def get_agent_status(self) -> Dict[str, Any]:
-        """Get current agent status and performance metrics"""
-        base_status = await super().get_agent_status()
+        """Get current agent status and performance metrics"""        base_status = await super().get_agent_status()
         
         return {
             **base_status,

@@ -1,5 +1,4 @@
-"""
-User Management Database Index File
+"""User Management Database Index File
 
 Point d'entrée principal pour tous les modules de gestion d'utilisateurs
 avec initialisation automatique et gestion des relations.
@@ -14,7 +13,6 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
-
 from sqlalchemy import create_engine, MetaData, event
 from sqlalchemy.orm import sessionmaker, relationship
 from sqlalchemy.ext.declarative import declarative_base
@@ -85,20 +83,16 @@ from .monetization_tracking import (
 
 
 class UserManagementEngine:
-    """
-    Moteur principal de gestion utilisateurs avec orchestration complète.
+    """    Moteur principal de gestion utilisateurs avec orchestration complète.
     Centralise toutes les opérations et fournit une interface unifiée.
-    """
-    
+    """    
     def __init__(self, database_url: str = None, **engine_kwargs):
-        """
-        Initialise le moteur de gestion utilisateurs.
+        """        Initialise le moteur de gestion utilisateurs.
         
         Args:
             database_url: URL de connexion à la base de données
             **engine_kwargs: Arguments additionnels pour l'engine SQLAlchemy
-        """
-        self.database_url = database_url or self._get_database_url()
+        """        self.database_url = database_url or self._get_database_url()
         
         # Configuration optimisée pour production
         engine_config = {
@@ -123,13 +117,11 @@ class UserManagementEngine:
         logger.info("UserManagementEngine initialisé avec succès")
     
     def _get_database_url(self) -> str:
-        """Récupère l'URL de la base de données depuis l'environnement."""
-        default_url = "postgresql://user:password@localhost/ia_influencer_db"
+        """Récupère l'URL de la base de données depuis l'environnement."""        default_url = "postgresql://user:password@localhost/ia_influencer_db"
         return os.getenv("DATABASE_URL", default_url)
     
     def _init_repositories(self):
-        """Initialise tous les repositories avec une session partagée."""
-        self.user_repository = None
+        """Initialise tous les repositories avec une session partagée."""        self.user_repository = None
         self.creator_repository = None
         self.subscription_repository = None
         self.preferences_repository = None
@@ -139,12 +131,10 @@ class UserManagementEngine:
         self.monetization_repository = None
     
     def _setup_events(self):
-        """Configure les événements SQLAlchemy pour l'audit et la performance."""
-        
+        """Configure les événements SQLAlchemy pour l'audit et la performance."""        
         @event.listens_for(self.engine, "connect")
         def set_sqlite_pragma(dbapi_connection, connection_record):
-            """Configure les paramètres de performance pour SQLite (dev)."""
-            if 'sqlite' in self.database_url:
+            """Configure les paramètres de performance pour SQLite (dev)."""            if 'sqlite' in self.database_url:
                 cursor = dbapi_connection.cursor()
                 cursor.execute("PRAGMA foreign_keys=ON")
                 cursor.execute("PRAGMA journal_mode=WAL")
@@ -153,25 +143,21 @@ class UserManagementEngine:
         
         @event.listens_for(User, 'before_insert')
         def user_before_insert(mapper, connection, target):
-            """Événement avant insertion d'un utilisateur."""
-            target.created_at = datetime.utcnow()
+            """Événement avant insertion d'un utilisateur."""            target.created_at = datetime.utcnow()
             target.updated_at = datetime.utcnow()
             logger.info(f"Nouvel utilisateur en cours de création: {target.email}")
         
         @event.listens_for(User, 'before_update')
         def user_before_update(mapper, connection, target):
-            """Événement avant mise à jour d'un utilisateur."""
-            target.updated_at = datetime.utcnow()
+            """Événement avant mise à jour d'un utilisateur."""            target.updated_at = datetime.utcnow()
     
     @contextmanager
     def get_session(self):
-        """
-        Context manager pour obtenir une session de base de données.
+        """        Context manager pour obtenir une session de base de données.
         
         Yields:
             Session: Session SQLAlchemy configurée
-        """
-        session = self.SessionLocal()
+        """        session = self.SessionLocal()
         try:
             yield session
         except Exception as e:
@@ -182,13 +168,11 @@ class UserManagementEngine:
             session.close()
     
     def init_database(self, drop_existing: bool = False):
-        """
-        Initialise la base de données avec tous les modèles.
+        """        Initialise la base de données avec tous les modèles.
         
         Args:
             drop_existing: Si True, supprime les tables existantes
-        """
-        try:
+        """        try:
             if drop_existing:
                 logger.warning("Suppression des tables existantes...")
                 Base.metadata.drop_all(bind=self.engine)
@@ -206,8 +190,7 @@ class UserManagementEngine:
             raise
     
     def _init_default_data(self):
-        """Initialise les données par défaut nécessaires."""
-        with self.get_session() as session:
+        """Initialise les données par défaut nécessaires."""        with self.get_session() as session:
             try:
                 # Créer les plans d'abonnement par défaut
                 default_plans = [
@@ -274,16 +257,14 @@ class UserManagementEngine:
                 raise
     
     def get_repositories(self, session=None) -> Dict[str, Any]:
-        """
-        Retourne tous les repositories initialisés avec une session.
+        """        Retourne tous les repositories initialisés avec une session.
         
         Args:
             session: Session SQLAlchemy (optionnel)
             
         Returns:
             Dict contenant tous les repositories
-        """
-        if session is None:
+        """        if session is None:
             session = self.SessionLocal()
         
         return {
@@ -298,16 +279,14 @@ class UserManagementEngine:
         }
     
     def create_user_complete(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Crée un utilisateur complet avec tous les profils associés.
+        """        Crée un utilisateur complet avec tous les profils associés.
         
         Args:
             user_data: Données de l'utilisateur
             
         Returns:
             Dict contenant l'utilisateur créé et ses profils
-        """
-        with self.get_session() as session:
+        """        with self.get_session() as session:
             try:
                 repositories = self.get_repositories(session)
                 
@@ -382,16 +361,14 @@ class UserManagementEngine:
                 raise
     
     def get_user_complete_profile(self, user_id: str) -> Dict[str, Any]:
-        """
-        Récupère le profil complet d'un utilisateur avec toutes ses données.
+        """        Récupère le profil complet d'un utilisateur avec toutes ses données.
         
         Args:
             user_id: ID de l'utilisateur
             
         Returns:
             Dict contenant toutes les données de l'utilisateur
-        """
-        with self.get_session() as session:
+        """        with self.get_session() as session:
             try:
                 repositories = self.get_repositories(session)
                 
@@ -434,13 +411,11 @@ class UserManagementEngine:
                 return {"error": str(e)}
     
     def get_system_health(self) -> Dict[str, Any]:
-        """
-        Vérifie la santé du système de gestion utilisateurs.
+        """        Vérifie la santé du système de gestion utilisateurs.
         
         Returns:
             Dict contenant les métriques de santé
-        """
-        health_data = {
+        """        health_data = {
             "timestamp": datetime.utcnow().isoformat(),
             "database_connection": False,
             "total_users": 0,
@@ -491,8 +466,7 @@ class UserManagementEngine:
         return health_data
     
     def close(self):
-        """Ferme les connexions et nettoie les ressources."""
-        if hasattr(self, 'engine'):
+        """Ferme les connexions et nettoie les ressources."""        if hasattr(self, 'engine'):
             self.engine.dispose()
         logger.info("UserManagementEngine fermé")
 
@@ -501,8 +475,7 @@ class UserManagementEngine:
 _user_management_engine = None
 
 def get_user_management_engine(database_url: str = None, **kwargs) -> UserManagementEngine:
-    """
-    Retourne l'instance singleton du moteur de gestion utilisateurs.
+    """    Retourne l'instance singleton du moteur de gestion utilisateurs.
     
     Args:
         database_url: URL de la base de données
@@ -510,8 +483,7 @@ def get_user_management_engine(database_url: str = None, **kwargs) -> UserManage
         
     Returns:
         UserManagementEngine: Instance du moteur
-    """
-    global _user_management_engine
+    """    global _user_management_engine
     
     if _user_management_engine is None:
         _user_management_engine = UserManagementEngine(database_url, **kwargs)
@@ -520,14 +492,12 @@ def get_user_management_engine(database_url: str = None, **kwargs) -> UserManage
 
 
 def init_user_management_database(database_url: str = None, drop_existing: bool = False):
-    """
-    Fonction utilitaire pour initialiser la base de données.
+    """    Fonction utilitaire pour initialiser la base de données.
     
     Args:
         database_url: URL de la base de données
         drop_existing: Si True, supprime les tables existantes
-    """
-    engine = get_user_management_engine(database_url)
+    """    engine = get_user_management_engine(database_url)
     engine.init_database(drop_existing)
 
 
@@ -608,11 +578,9 @@ from .account_security import (
 
 # Configuration des relations inter-modules
 def configure_relationships():
-    """
-    Configure toutes les relations entre les modèles de différents modules.
+    """    Configure toutes les relations entre les modèles de différents modules.
     Cette fonction doit être appelée après l'import de tous les modèles.
-    """
-    
+    """    
     # Relations User avec autres modules
     User.creator_account = relationship("CreatorAccount", back_populates="user", uselist=False)
     User.subscriptions = relationship("UserSubscription", back_populates="user")
@@ -698,20 +666,16 @@ def configure_relationships():
 
 
 class UserManagementDatabase:
-    """
-    Classe principale pour la gestion de la base de données utilisateur.
+    """    Classe principale pour la gestion de la base de données utilisateur.
     Fournit une interface unifiée pour tous les repositories.
-    """
-    
+    """    
     def __init__(self, database_url: str, echo: bool = False):
-        """
-        Initialise la base de données de gestion utilisateur.
+        """        Initialise la base de données de gestion utilisateur.
         
         Args:
             database_url: URL de connexion à la base de données
             echo: Activer les logs SQL
-        """
-        self.engine = create_engine(database_url, echo=echo)
+        """        self.engine = create_engine(database_url, echo=echo)
         self.SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=self.engine)
         self.metadata = MetaData()
         
@@ -724,8 +688,7 @@ class UserManagementDatabase:
         logger.info("Base de données User Management initialisée")
     
     def create_all_tables(self):
-        """Crée toutes les tables de la base de données."""
-        try:
+        """Crée toutes les tables de la base de données."""        try:
             Base.metadata.create_all(bind=self.engine)
             logger.info("Toutes les tables User Management créées avec succès")
         except Exception as e:
@@ -733,39 +696,31 @@ class UserManagementDatabase:
             raise
     
     def get_session(self):
-        """Retourne une nouvelle session de base de données."""
-        return self.SessionLocal()
+        """Retourne une nouvelle session de base de données."""        return self.SessionLocal()
     
     def get_user_repository(self) -> UserRepository:
-        """Retourne le repository des utilisateurs."""
-        session = self.get_session()
+        """Retourne le repository des utilisateurs."""        session = self.get_session()
         return UserRepository(session)
     
     def get_creator_repository(self) -> CreatorAccountRepository:
-        """Retourne le repository des créateurs."""
-        session = self.get_session()
+        """Retourne le repository des créateurs."""        session = self.get_session()
         return CreatorAccountRepository(session)
     
     def get_subscription_repository(self) -> SubscriptionRepository:
-        """Retourne le repository des abonnements."""
-        session = self.get_session()
+        """Retourne le repository des abonnements."""        session = self.get_session()
         return SubscriptionRepository(session)
     
     def get_preferences_repository(self) -> UserPreferencesRepository:
-        """Retourne le repository des préférences."""
-        session = self.get_session()
+        """Retourne le repository des préférences."""        session = self.get_session()
         return UserPreferencesRepository(session)
     
     def get_security_repository(self, encryption_key: str = None) -> SecurityRepository:
-        """Retourne le repository de sécurité."""
-        session = self.get_session()
+        """Retourne le repository de sécurité."""        session = self.get_session()
         return SecurityRepository(session, encryption_key)
     
     def initialize_default_data(self):
-        """
-        Initialise les données par défaut (plans d'abonnement, etc.).
-        """
-        try:
+        """        Initialise les données par défaut (plans d'abonnement, etc.).
+        """        try:
             session = self.get_session()
             
             # Vérifier si les plans existent déjà
@@ -853,13 +808,11 @@ class UserManagementDatabase:
             raise
     
     def get_database_stats(self) -> Dict[str, Any]:
-        """
-        Retourne les statistiques de la base de données utilisateur.
+        """        Retourne les statistiques de la base de données utilisateur.
         
         Returns:
             Dict[str, Any]: Statistiques globales
-        """
-        try:
+        """        try:
             session = self.get_session()
             
             stats = {
@@ -903,13 +856,11 @@ class UserManagementDatabase:
             return {}
     
     def health_check(self) -> Dict[str, Any]:
-        """
-        Effectue un contrôle de santé de la base de données.
+        """        Effectue un contrôle de santé de la base de données.
         
         Returns:
             Dict[str, Any]: Résultats du contrôle de santé
-        """
-        try:
+        """        try:
             session = self.get_session()
             
             # Test de connexion
@@ -946,8 +897,7 @@ class UserManagementDatabase:
 _db_instance = None
 
 def get_user_management_db(database_url: str = None, echo: bool = False) -> UserManagementDatabase:
-    """
-    Retourne l'instance singleton de la base de données.
+    """    Retourne l'instance singleton de la base de données.
     
     Args:
         database_url: URL de la base de données (requis pour la première initialisation)
@@ -955,8 +905,7 @@ def get_user_management_db(database_url: str = None, echo: bool = False) -> User
         
     Returns:
         UserManagementDatabase: Instance de la base de données
-    """
-    global _db_instance
+    """    global _db_instance
     
     if _db_instance is None:
         if database_url is None:

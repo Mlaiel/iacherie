@@ -1,5 +1,4 @@
-"""
-🔍 Integrity Validator - Enterprise Data Integrity and Validation Engine
+"""🔍 Integrity Validator - Enterprise Data Integrity and Validation Engine
 ========================================================================
 
 Ultra-advanced data integrity validation system for IA Influencer Agent:
@@ -17,7 +16,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This data validation engine is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import json
@@ -39,16 +37,14 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Data validation levels"""
-    BASIC = "basic"          # Essential constraints only
+    """Data validation levels"""    BASIC = "basic"          # Essential constraints only
     STANDARD = "standard"    # Standard business rules
     ADVANCED = "advanced"    # Advanced consistency checks
     ULTRA = "ultra"          # Maximum validation rigor
 
 
 class ValidationCategory(Enum):
-    """Validation rule categories"""
-    SCHEMA = "schema"                    # Database schema validation
+    """Validation rule categories"""    SCHEMA = "schema"                    # Database schema validation
     CONSTRAINT = "constraint"           # Data constraint validation
     BUSINESS_RULE = "business_rule"     # Business logic validation
     INTEGRITY = "integrity"             # Referential integrity
@@ -60,8 +56,7 @@ class ValidationCategory(Enum):
 
 
 class ValidationSeverity(Enum):
-    """Validation error severity levels"""
-    INFO = "info"            # Informational
+    """Validation error severity levels"""    INFO = "info"            # Informational
     WARNING = "warning"      # Warning - may need attention
     ERROR = "error"          # Error - requires correction
     CRITICAL = "critical"    # Critical - system integrity at risk
@@ -69,8 +64,7 @@ class ValidationSeverity(Enum):
 
 @dataclass
 class ValidationRule:
-    """Data validation rule specification"""
-    rule_id: str
+    """Data validation rule specification"""    rule_id: str
     name: str
     description: str
     category: ValidationCategory
@@ -86,8 +80,7 @@ class ValidationRule:
 
 @dataclass
 class ValidationError:
-    """Validation error details"""
-    rule_id: str
+    """Validation error details"""    rule_id: str
     severity: ValidationSeverity
     table_name: str
     column_name: Optional[str]
@@ -100,8 +93,7 @@ class ValidationError:
 
 @dataclass
 class ValidationResult:
-    """Validation execution result"""
-    validation_id: str
+    """Validation execution result"""    validation_id: str
     level: ValidationLevel
     total_rules: int
     passed_rules: int
@@ -114,8 +106,7 @@ class ValidationResult:
 
 
 class IntegrityValidator:
-    """
-    Enterprise-grade data integrity validation engine
+    """    Enterprise-grade data integrity validation engine
     
     Provides comprehensive validation for:
     - Content protection data consistency
@@ -123,8 +114,7 @@ class IntegrityValidator:
     - Creator monetization data accuracy
     - Multi-platform data synchronization integrity
     - Business rule enforcement and compliance
-    """
-    
+    """    
     def __init__(self, 
                  database_url: str,
                  validation_level: ValidationLevel = ValidationLevel.STANDARD):
@@ -140,23 +130,19 @@ class IntegrityValidator:
         self._register_builtin_validators()
         
     def register_validation_rule(self, rule: ValidationRule) -> None:
-        """Register data validation rule"""
-        self.validation_rules[rule.rule_id] = rule
+        """Register data validation rule"""        self.validation_rules[rule.rule_id] = rule
         logger.info(f"Registered validation rule: {rule.rule_id}")
         
     def register_custom_validator(self, name: str, validator: Callable) -> None:
-        """Register custom validation function"""
-        self.custom_validators[name] = validator
+        """Register custom validation function"""        self.custom_validators[name] = validator
         logger.info(f"Registered custom validator: {name}")
         
     async def validate_all(self) -> ValidationResult:
-        """
-        Execute complete data validation suite
+        """        Execute complete data validation suite
         
         Returns:
             Comprehensive validation result with all errors and warnings
-        """
-        start_time = datetime.now(timezone.utc)
+        """        start_time = datetime.now(timezone.utc)
         validation_id = f"validation_{int(start_time.timestamp())}"
         
         logger.info(f"Starting comprehensive data validation: {validation_id}")
@@ -236,16 +222,14 @@ class IntegrityValidator:
         return result
         
     async def validate_content_fingerprints(self) -> ValidationResult:
-        """
-        Validate content fingerprint data integrity
+        """        Validate content fingerprint data integrity
         
         Checks:
         - Fingerprint data format consistency
         - Hash integrity and uniqueness
         - Vector embedding validity
         - Metadata completeness
-        """
-        fingerprint_rules = [
+        """        fingerprint_rules = [
             rule for rule in self.validation_rules.values()
             if rule.category == ValidationCategory.FINGERPRINT
         ]
@@ -253,16 +237,14 @@ class IntegrityValidator:
         return await self._execute_rule_subset("fingerprint_validation", fingerprint_rules)
         
     async def validate_monetization_data(self) -> ValidationResult:
-        """
-        Validate monetization and revenue data
+        """        Validate monetization and revenue data
         
         Checks:
         - Revenue amount accuracy
         - Currency consistency
         - Period validity
         - Platform data integrity
-        """
-        monetization_rules = [
+        """        monetization_rules = [
             rule for rule in self.validation_rules.values()
             if rule.category == ValidationCategory.MONETIZATION
         ]
@@ -270,16 +252,14 @@ class IntegrityValidator:
         return await self._execute_rule_subset("monetization_validation", monetization_rules)
         
     async def validate_collaboration_data(self) -> ValidationResult:
-        """
-        Validate creator collaboration data
+        """        Validate creator collaboration data
         
         Checks:
         - Request status consistency
         - User relationship validity
         - Content availability
         - Terms and conditions compliance
-        """
-        collaboration_rules = [
+        """        collaboration_rules = [
             rule for rule in self.validation_rules.values()
             if rule.category == ValidationCategory.COLLABORATION
         ]
@@ -287,8 +267,7 @@ class IntegrityValidator:
         return await self._execute_rule_subset("collaboration_validation", collaboration_rules)
         
     async def _execute_validation_rule(self, rule: ValidationRule) -> List[ValidationError]:
-        """Execute single validation rule"""
-        try:
+        """Execute single validation rule"""        try:
             if rule.validation_function in self.custom_validators:
                 validator_func = self.custom_validators[rule.validation_function]
                 return await validator_func(rule)
@@ -308,8 +287,7 @@ class IntegrityValidator:
             )]
             
     async def _execute_builtin_validation(self, rule: ValidationRule) -> List[ValidationError]:
-        """Execute built-in validation function"""
-        if rule.validation_function == "check_not_null":
+        """Execute built-in validation function"""        if rule.validation_function == "check_not_null":
             return await self._validate_not_null(rule)
         elif rule.validation_function == "check_unique":
             return await self._validate_unique(rule)
@@ -325,13 +303,11 @@ class IntegrityValidator:
             raise ValueError(f"Unknown validation function: {rule.validation_function}")
             
     async def _validate_not_null(self, rule: ValidationRule) -> List[ValidationError]:
-        """Validate non-null constraints"""
-        errors = []
+        """Validate non-null constraints"""        errors = []
         
         async with self._get_session() as session:
             for column_name in rule.column_names:
-                query = text(f"""
-                    SELECT COUNT(*) as null_count
+                query = text(f"""                    SELECT COUNT(*) as null_count
                     FROM {rule.table_name}
                     WHERE {column_name} IS NULL
                 """)
@@ -354,13 +330,11 @@ class IntegrityValidator:
         return errors
         
     async def _validate_unique(self, rule: ValidationRule) -> List[ValidationError]:
-        """Validate uniqueness constraints"""
-        errors = []
+        """Validate uniqueness constraints"""        errors = []
         
         async with self._get_session() as session:
             columns_str = ", ".join(rule.column_names)
-            query = text(f"""
-                SELECT {columns_str}, COUNT(*) as duplicate_count
+            query = text(f"""                SELECT {columns_str}, COUNT(*) as duplicate_count
                 FROM {rule.table_name}
                 GROUP BY {columns_str}
                 HAVING COUNT(*) > 1
@@ -387,8 +361,7 @@ class IntegrityValidator:
         return errors
         
     async def _validate_foreign_key(self, rule: ValidationRule) -> List[ValidationError]:
-        """Validate foreign key constraints"""
-        errors = []
+        """Validate foreign key constraints"""        errors = []
         
         # Get foreign key reference from conditions
         ref_table = rule.conditions.get("ref_table")
@@ -407,8 +380,7 @@ class IntegrityValidator:
             
         async with self._get_session() as session:
             column_name = rule.column_names[0]
-            query = text(f"""
-                SELECT t1.{column_name}
+            query = text(f"""                SELECT t1.{column_name}
                 FROM {rule.table_name} t1
                 LEFT JOIN {ref_table} t2 ON t1.{column_name} = t2.{ref_column}
                 WHERE t1.{column_name} IS NOT NULL
@@ -433,12 +405,10 @@ class IntegrityValidator:
         return errors
         
     async def _validate_fingerprint_format(self, rule: ValidationRule) -> List[ValidationError]:
-        """Validate fingerprint data format"""
-        errors = []
+        """Validate fingerprint data format"""        errors = []
         
         async with self._get_session() as session:
-            query = text(f"""
-                SELECT fingerprint_id, hash_fingerprint, feature_fingerprint, metadata
+            query = text(f"""                SELECT fingerprint_id, hash_fingerprint, feature_fingerprint, metadata
                 FROM {rule.table_name}
                 WHERE fingerprint_id IS NOT NULL
             """)
@@ -482,13 +452,11 @@ class IntegrityValidator:
         return errors
         
     async def _validate_revenue_consistency(self, rule: ValidationRule) -> List[ValidationError]:
-        """Validate revenue data consistency"""
-        errors = []
+        """Validate revenue data consistency"""        errors = []
         
         async with self._get_session() as session:
             # Check for negative revenue amounts
-            query = text(f"""
-                SELECT revenue_id, revenue_amount
+            query = text(f"""                SELECT revenue_id, revenue_amount
                 FROM {rule.table_name}
                 WHERE revenue_amount < 0
             """)
@@ -509,8 +477,7 @@ class IntegrityValidator:
                 ))
                 
             # Check date consistency
-            query = text(f"""
-                SELECT revenue_id, period_start, period_end
+            query = text(f"""                SELECT revenue_id, period_start, period_end
                 FROM {rule.table_name}
                 WHERE period_end < period_start
             """)
@@ -533,13 +500,11 @@ class IntegrityValidator:
         return errors
         
     async def _validate_collaboration_status(self, rule: ValidationRule) -> List[ValidationError]:
-        """Validate collaboration request status consistency"""
-        errors = []
+        """Validate collaboration request status consistency"""        errors = []
         
         async with self._get_session() as session:
             # Check for expired pending requests
-            query = text(f"""
-                SELECT request_id, request_status, expires_at
+            query = text(f"""                SELECT request_id, request_status, expires_at
                 FROM {rule.table_name}
                 WHERE request_status = 'pending'
                 AND expires_at < NOW()
@@ -566,8 +531,7 @@ class IntegrityValidator:
     async def _execute_rule_subset(self, 
                                  validation_name: str, 
                                  rules: List[ValidationRule]) -> ValidationResult:
-        """Execute subset of validation rules"""
-        start_time = datetime.now(timezone.utc)
+        """Execute subset of validation rules"""        start_time = datetime.now(timezone.utc)
         validation_id = f"{validation_name}_{int(start_time.timestamp())}"
         
         errors = []
@@ -623,8 +587,7 @@ class IntegrityValidator:
         )
         
     def _get_applicable_rules(self) -> List[ValidationRule]:
-        """Get validation rules applicable to current validation level"""
-        level_mapping = {
+        """Get validation rules applicable to current validation level"""        level_mapping = {
             ValidationLevel.BASIC: [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR],
             ValidationLevel.STANDARD: [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR, ValidationSeverity.WARNING],
             ValidationLevel.ADVANCED: [ValidationSeverity.CRITICAL, ValidationSeverity.ERROR, ValidationSeverity.WARNING, ValidationSeverity.INFO],
@@ -639,16 +602,13 @@ class IntegrityValidator:
         ]
         
     async def _attempt_auto_fix(self, rule: ValidationRule, errors: List[ValidationError]) -> None:
-        """Attempt automatic fixing of validation errors"""
-        # Implementation for auto-fix functionality
+        """Attempt automatic fixing of validation errors"""        # Implementation for auto-fix functionality
         logger.info(f"Auto-fix not implemented for rule: {rule.rule_id}")
         
     async def _record_validation_result(self, result: ValidationResult) -> None:
-        """Record validation result for audit purposes"""
-        async with self._get_session() as session:
+        """Record validation result for audit purposes"""        async with self._get_session() as session:
             try:
-                insert_query = text("""
-                    INSERT INTO validation_history 
+                insert_query = text("""                    INSERT INTO validation_history 
                     (validation_id, level, total_rules, passed_rules, failed_rules, 
                      error_count, warning_count, execution_time, overall_status, 
                      validation_timestamp, details)
@@ -681,8 +641,7 @@ class IntegrityValidator:
                 logger.error(f"Failed to record validation result: {e}")
                 
     def _register_builtin_rules(self) -> None:
-        """Register built-in validation rules"""
-        # Content fingerprint validation rules
+        """Register built-in validation rules"""        # Content fingerprint validation rules
         self.validation_rules.update({
             "fingerprint_not_null": ValidationRule(
                 rule_id="fingerprint_not_null",
@@ -749,10 +708,8 @@ class IntegrityValidator:
         })
         
     def _register_builtin_validators(self) -> None:
-        """Register built-in validation functions"""
-        # Built-in validators are already implemented as methods
+        """Register built-in validation functions"""        # Built-in validators are already implemented as methods
         pass
         
     async def _get_session(self) -> Session:
-        """Get database session"""
-        return self.session_maker()
+        """Get database session"""        return self.session_maker()

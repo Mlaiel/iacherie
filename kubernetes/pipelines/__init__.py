@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Deployment Pipelines Module
+"""IA Influencer Agent - Deployment Pipelines Module
 Enterprise-Grade CI/CD Pipeline Management System with Advanced Content Protection & Monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -22,7 +21,6 @@ Architecture:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
-
 from typing import Dict, List, Optional, Any
 import logging
 from enum import Enum
@@ -31,8 +29,7 @@ from pathlib import Path
 
 # Pipeline Status Enumeration
 class PipelineStatus(Enum):
-    """Pipeline execution status definitions"""
-    PENDING = "pending"
+    """Pipeline execution status definitions"""    PENDING = "pending"
     RUNNING = "running" 
     SUCCESS = "success"
     FAILED = "failed"
@@ -40,15 +37,13 @@ class PipelineStatus(Enum):
     SKIPPED = "skipped"
 
 class Environment(Enum):
-    """Deployment environment types"""
-    DEVELOPMENT = "development"
+    """Deployment environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 class PipelineType(Enum):
-    """Pipeline type definitions"""
-    BUILD = "build"
+    """Pipeline type definitions"""    BUILD = "build"
     TEST = "test"
     DEPLOY = "deploy"
     VALIDATE = "validate"
@@ -57,8 +52,7 @@ class PipelineType(Enum):
 
 @dataclass
 class PipelineConfig:
-    """Pipeline configuration data structure"""
-    name: str
+    """Pipeline configuration data structure"""    name: str
     environment: Environment
     pipeline_type: PipelineType
     steps: List[str]
@@ -68,8 +62,7 @@ class PipelineConfig:
     notifications: Dict[str, Any] = None
 
 class PipelineManager:
-    """
-    Central pipeline management system for IA Influencer Agent deployments
+    """    Central pipeline management system for IA Influencer Agent deployments
     
     Provides enterprise-grade pipeline orchestration with:
     - Multi-environment support
@@ -77,28 +70,24 @@ class PipelineManager:
     - Security scanning workflows  
     - Performance monitoring
     - Rollback capabilities
-    """
-    
+    """    
     def __init__(self, config_path: Optional[Path] = None):
         self.logger = logging.getLogger(__name__)
         self.config_path = config_path or Path(__file__).parent / "config"
         self.active_pipelines: Dict[str, PipelineConfig] = {}
         
     def register_pipeline(self, config: PipelineConfig) -> str:
-        """Register a new pipeline configuration"""
-        pipeline_id = f"{config.name}_{config.environment.value}_{config.pipeline_type.value}"
+        """Register a new pipeline configuration"""        pipeline_id = f"{config.name}_{config.environment.value}_{config.pipeline_type.value}"
         self.active_pipelines[pipeline_id] = config
         self.logger.info(f"Registered pipeline: {pipeline_id}")
         return pipeline_id
         
     def get_pipeline_status(self, pipeline_id: str) -> PipelineStatus:
-        """Get current status of specified pipeline"""
-        # Implementation would connect to actual pipeline execution system
+        """Get current status of specified pipeline"""        # Implementation would connect to actual pipeline execution system
         return PipelineStatus.PENDING
         
     def trigger_pipeline(self, pipeline_id: str, **kwargs) -> bool:
-        """Trigger pipeline execution with optional parameters"""
-        if pipeline_id not in self.active_pipelines:
+        """Trigger pipeline execution with optional parameters"""        if pipeline_id not in self.active_pipelines:
             self.logger.error(f"Pipeline not found: {pipeline_id}")
             return False
             
@@ -252,8 +241,7 @@ __description__ = "IA Influencer Agent Enterprise Pipeline Management System wit
 
 # System capabilities check
 def check_system_capabilities() -> Dict[str, bool]:
-    """Check which pipeline system capabilities are available"""
-    return {
+    """Check which pipeline system capabilities are available"""    return {
         "core_components": CORE_COMPONENTS_AVAILABLE,
         "content_protection": CONTENT_PROTECTION_AVAILABLE,
         "revenue_recovery": REVENUE_RECOVERY_AVAILABLE,
@@ -262,8 +250,7 @@ def check_system_capabilities() -> Dict[str, bool]:
     }
 
 def get_system_info() -> Dict[str, Any]:
-    """Get comprehensive system information"""
-    capabilities = check_system_capabilities()
+    """Get comprehensive system information"""    capabilities = check_system_capabilities()
     
     return {
         "module": "IA Influencer Agent Pipeline Management System",

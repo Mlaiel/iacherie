@@ -1,5 +1,4 @@
-"""
-Quality Assurance Configuration Module for IA-Influencer Agent Platform
+"""Quality Assurance Configuration Module for IA-Influencer Agent Platform
 ======================================================================
 
 Advanced quality assurance and testing configuration for audio content processing.
@@ -19,7 +18,6 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityMetric(Enum):
-    """Quality metrics for assessment"""
-    AUDIO_FIDELITY = "audio_fidelity"
+    """Quality metrics for assessment"""    AUDIO_FIDELITY = "audio_fidelity"
     DYNAMIC_RANGE = "dynamic_range"
     FREQUENCY_RESPONSE = "frequency_response"
     SIGNAL_TO_NOISE_RATIO = "signal_to_noise_ratio"
@@ -45,8 +42,7 @@ class QualityMetric(Enum):
 
 
 class ValidationLevel(Enum):
-    """Validation levels"""
-    BASIC = "basic"
+    """Validation levels"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -54,8 +50,7 @@ class ValidationLevel(Enum):
 
 
 class TestType(Enum):
-    """Types of quality tests"""
-    AUTOMATED_ANALYSIS = "automated_analysis"
+    """Types of quality tests"""    AUTOMATED_ANALYSIS = "automated_analysis"
     HUMAN_EVALUATION = "human_evaluation"
     A_B_TESTING = "a_b_testing"
     CROWD_SOURCED_REVIEW = "crowd_sourced_review"
@@ -65,8 +60,7 @@ class TestType(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Compliance standards"""
-    EBU_R128 = "ebu_r128"  # Loudness standard
+    """Compliance standards"""    EBU_R128 = "ebu_r128"  # Loudness standard
     ITU_BS1770 = "itu_bs1770"  # Loudness measurement
     AES31 = "aes31"  # Audio file format
     BWF = "bwf"  # Broadcast Wave Format
@@ -76,8 +70,7 @@ class ComplianceStandard(Enum):
 
 
 class PerformanceBenchmark(Enum):
-    """Performance benchmarks"""
-    PROCESSING_SPEED = "processing_speed"
+    """Performance benchmarks"""    PROCESSING_SPEED = "processing_speed"
     MEMORY_USAGE = "memory_usage"
     CPU_UTILIZATION = "cpu_utilization"
     IO_THROUGHPUT = "io_throughput"
@@ -88,8 +81,7 @@ class PerformanceBenchmark(Enum):
 
 @dataclass
 class ValidationConfig:
-    """Configuration for content validation"""
-    validation_level: ValidationLevel = ValidationLevel.PROFESSIONAL
+    """Configuration for content validation"""    validation_level: ValidationLevel = ValidationLevel.PROFESSIONAL
     enabled_metrics: List[QualityMetric] = field(
         default_factory=lambda: [
             QualityMetric.AUDIO_FIDELITY,
@@ -162,8 +154,7 @@ class ValidationConfig:
 
 @dataclass
 class TestingConfig:
-    """Configuration for quality testing"""
-    enabled_test_types: List[TestType] = field(
+    """Configuration for quality testing"""    enabled_test_types: List[TestType] = field(
         default_factory=lambda: [
             TestType.AUTOMATED_ANALYSIS,
             TestType.ALGORITHMIC_ASSESSMENT,
@@ -219,8 +210,7 @@ class TestingConfig:
 
 @dataclass
 class BenchmarkConfig:
-    """Configuration for performance benchmarking"""
-    enabled_benchmarks: List[PerformanceBenchmark] = field(
+    """Configuration for performance benchmarking"""    enabled_benchmarks: List[PerformanceBenchmark] = field(
         default_factory=lambda: [
             PerformanceBenchmark.PROCESSING_SPEED,
             PerformanceBenchmark.MEMORY_USAGE,
@@ -277,8 +267,7 @@ class BenchmarkConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for performance monitoring"""
-    
+    """Configuration for performance monitoring"""    
     # Real-time monitoring
     real_time_monitoring: bool = True
     monitoring_interval_seconds: float = 10.0
@@ -334,8 +323,7 @@ class PerformanceConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Configuration for compliance checking"""
-    enabled_standards: List[ComplianceStandard] = field(
+    """Configuration for compliance checking"""    enabled_standards: List[ComplianceStandard] = field(
         default_factory=lambda: [
             ComplianceStandard.EBU_R128,
             ComplianceStandard.DDEX,
@@ -408,8 +396,7 @@ class ComplianceConfig:
 
 @dataclass
 class QualityAssuranceConfig:
-    """Master configuration for quality assurance"""
-    
+    """Master configuration for quality assurance"""    
     # Core configurations
     validation_config: ValidationConfig = field(default_factory=ValidationConfig)
     testing_config: TestingConfig = field(default_factory=TestingConfig)
@@ -464,16 +451,14 @@ class QualityAssuranceConfig:
 
 
 def validate_quality_assurance_config(config: QualityAssuranceConfig) -> bool:
-    """
-    Validate quality assurance configuration
+    """    Validate quality assurance configuration
     
     Args:
         config: Configuration to validate
         
     Returns:
         True if configuration is valid, False otherwise
-    """
-    try:
+    """    try:
         # Validate thresholds
         for metric, thresholds in config.validation_config.quality_thresholds.items():
             if "minimum" in thresholds and "recommended" in thresholds:
@@ -504,5 +489,4 @@ DEFAULT_QUALITY_ASSURANCE_CONFIG = QualityAssuranceConfig()
 
 
 def get_quality_assurance_config() -> QualityAssuranceConfig:
-    """Get default quality assurance configuration"""
-    return DEFAULT_QUALITY_ASSURANCE_CONFIG
+    """Get default quality assurance configuration"""    return DEFAULT_QUALITY_ASSURANCE_CONFIG

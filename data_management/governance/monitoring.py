@@ -1,5 +1,4 @@
-"""
-Data Governance Monitoring and Surveillance System
+"""Data Governance Monitoring and Surveillance System
 
 Advanced monitoring system for data governance compliance,
 policy enforcement, and real-time governance violations detection.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Callable, Awaitable
@@ -32,8 +30,7 @@ from .access import AccessController
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -41,8 +38,7 @@ class AlertSeverity(Enum):
 
 
 class MonitoringScope(Enum):
-    """Monitoring scope types"""
-    GLOBAL = "global"
+    """Monitoring scope types"""    GLOBAL = "global"
     CONTENT_TYPE = "content_type"
     USER_GROUP = "user_group"
     GEOGRAPHIC = "geographic"
@@ -50,8 +46,7 @@ class MonitoringScope(Enum):
 
 
 class MetricType(Enum):
-    """Types of governance metrics"""
-    POLICY_VIOLATIONS = "policy_violations"
+    """Types of governance metrics"""    POLICY_VIOLATIONS = "policy_violations"
     COMPLIANCE_SCORE = "compliance_score"
     ACCESS_VIOLATIONS = "access_violations"
     PRIVACY_BREACHES = "privacy_breaches"
@@ -62,8 +57,7 @@ class MetricType(Enum):
 
 @dataclass
 class GovernanceAlert:
-    """Governance monitoring alert"""
-    alert_id: str
+    """Governance monitoring alert"""    alert_id: str
     title: str
     description: str
     severity: AlertSeverity
@@ -81,8 +75,7 @@ class GovernanceAlert:
 
 @dataclass
 class MonitoringThreshold:
-    """Monitoring threshold configuration"""
-    threshold_id: str
+    """Monitoring threshold configuration"""    threshold_id: str
     name: str
     metric_type: MetricType
     operator: str  # "gt", "lt", "eq", "gte", "lte"
@@ -96,8 +89,7 @@ class MonitoringThreshold:
 
 @dataclass
 class MetricSnapshot:
-    """Point-in-time metric measurement"""
-    metric_type: MetricType
+    """Point-in-time metric measurement"""    metric_type: MetricType
     scope: str
     value: float
     timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -106,8 +98,7 @@ class MetricSnapshot:
 
 @dataclass
 class GovernanceDashboard:
-    """Governance monitoring dashboard data"""
-    total_policies: int
+    """Governance monitoring dashboard data"""    total_policies: int
     active_violations: int
     compliance_score: float
     privacy_risk_score: float
@@ -119,13 +110,11 @@ class GovernanceDashboard:
 
 
 class MetricsCollector:
-    """
-    Collects governance metrics from various components
+    """    Collects governance metrics from various components
     
     Aggregates metrics from policy engine, compliance checker,
     privacy manager, and other governance components.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -149,15 +138,13 @@ class MetricsCollector:
         privacy_manager: PrivacyManager,
         access_controller: AccessController
     ) -> None:
-        """Set references to governance components"""
-        self.policy_manager = policy_manager
+        """Set references to governance components"""        self.policy_manager = policy_manager
         self.compliance_manager = compliance_manager
         self.privacy_manager = privacy_manager
         self.access_controller = access_controller
     
     async def collect_all_metrics(self) -> Dict[MetricType, MetricSnapshot]:
-        """Collect all governance metrics"""
-        try:
+        """Collect all governance metrics"""        try:
             metrics = {}
             
             # Collect policy violation metrics
@@ -192,8 +179,7 @@ class MetricsCollector:
             raise MonitoringError(f"Metric collection failed: {e}")
     
     async def _collect_policy_metrics(self) -> Dict[MetricType, MetricSnapshot]:
-        """Collect policy-related metrics"""
-        try:
+        """Collect policy-related metrics"""        try:
             metrics = {}
             
             # Get policy violations
@@ -220,8 +206,7 @@ class MetricsCollector:
             return {}
     
     async def _collect_compliance_metrics(self) -> Dict[MetricType, MetricSnapshot]:
-        """Collect compliance-related metrics"""
-        try:
+        """Collect compliance-related metrics"""        try:
             metrics = {}
             
             # Get compliance scores
@@ -248,8 +233,7 @@ class MetricsCollector:
             return {}
     
     async def _collect_privacy_metrics(self) -> Dict[MetricType, MetricSnapshot]:
-        """Collect privacy-related metrics"""
-        try:
+        """Collect privacy-related metrics"""        try:
             metrics = {}
             
             # Get privacy metrics
@@ -276,8 +260,7 @@ class MetricsCollector:
             return {}
     
     async def _collect_access_metrics(self) -> Dict[MetricType, MetricSnapshot]:
-        """Collect access control metrics"""
-        try:
+        """Collect access control metrics"""        try:
             metrics = {}
             
             # Get access control metrics
@@ -308,8 +291,7 @@ class MetricsCollector:
         metric_type: MetricType,
         time_window: int = 3600  # seconds
     ) -> List[float]:
-        """Get metric trend over time window"""
-        cutoff_time = datetime.utcnow() - timedelta(seconds=time_window)
+        """Get metric trend over time window"""        cutoff_time = datetime.utcnow() - timedelta(seconds=time_window)
         
         history = self.metric_history.get(metric_type, [])
         recent_metrics = [
@@ -321,13 +303,11 @@ class MetricsCollector:
 
 
 class AlertManager:
-    """
-    Manages governance alerts and notifications
+    """    Manages governance alerts and notifications
     
     Processes threshold violations, sends notifications,
     and tracks alert resolution.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -344,12 +324,10 @@ class AlertManager:
         self,
         handler: Callable[[GovernanceAlert], Awaitable[None]]
     ) -> None:
-        """Add an alert handler"""
-        self.alert_handlers.append(handler)
+        """Add an alert handler"""        self.alert_handlers.append(handler)
     
     async def configure_threshold(self, threshold: MonitoringThreshold) -> None:
-        """Configure a monitoring threshold"""
-        try:
+        """Configure a monitoring threshold"""        try:
             # Validate threshold
             await self._validate_threshold(threshold)
             
@@ -366,8 +344,7 @@ class AlertManager:
         self,
         metrics: Dict[MetricType, MetricSnapshot]
     ) -> List[GovernanceAlert]:
-        """Evaluate metrics against thresholds and generate alerts"""
-        try:
+        """Evaluate metrics against thresholds and generate alerts"""        try:
             alerts = []
             
             for threshold in self.thresholds.values():
@@ -406,8 +383,7 @@ class AlertManager:
         source_component: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> GovernanceAlert:
-        """Create a new governance alert"""
-        try:
+        """Create a new governance alert"""        try:
             alert = GovernanceAlert(
                 alert_id=f"alert_{datetime.utcnow().timestamp()}",
                 title=title,
@@ -436,8 +412,7 @@ class AlertManager:
             raise MonitoringError(f"Alert creation failed: {e}")
     
     async def acknowledge_alert(self, alert_id: str, user_id: str) -> bool:
-        """Acknowledge an alert"""
-        try:
+        """Acknowledge an alert"""        try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
                 return False
@@ -454,8 +429,7 @@ class AlertManager:
             return False
     
     async def resolve_alert(self, alert_id: str, user_id: str, resolution: str) -> bool:
-        """Resolve an alert"""
-        try:
+        """Resolve an alert"""        try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
                 return False
@@ -480,8 +454,7 @@ class AlertManager:
         severity: Optional[AlertSeverity] = None,
         metric_type: Optional[MetricType] = None
     ) -> List[GovernanceAlert]:
-        """Get active alerts with optional filtering"""
-        alerts = list(self.active_alerts.values())
+        """Get active alerts with optional filtering"""        alerts = list(self.active_alerts.values())
         
         if severity:
             alerts = [a for a in alerts if a.severity == severity]
@@ -492,16 +465,14 @@ class AlertManager:
         return sorted(alerts, key=lambda a: a.created_at, reverse=True)
     
     def _should_skip_alert(self, threshold: MonitoringThreshold) -> bool:
-        """Check if alert should be skipped due to frequency limits"""
-        if not threshold.last_alerted:
+        """Check if alert should be skipped due to frequency limits"""        if not threshold.last_alerted:
             return False
         
         time_since_last = datetime.utcnow() - threshold.last_alerted
         return time_since_last.total_seconds() < threshold.alert_frequency
     
     def _evaluate_threshold(self, threshold: MonitoringThreshold, value: float) -> bool:
-        """Evaluate if threshold is violated"""
-        if threshold.operator == "gt":
+        """Evaluate if threshold is violated"""        if threshold.operator == "gt":
             return value > threshold.value
         elif threshold.operator == "gte":
             return value >= threshold.value
@@ -519,8 +490,7 @@ class AlertManager:
         threshold: MonitoringThreshold,
         metric: MetricSnapshot
     ) -> GovernanceAlert:
-        """Create alert from threshold violation"""
-        alert = GovernanceAlert(
+        """Create alert from threshold violation"""        alert = GovernanceAlert(
             alert_id=f"threshold_{threshold.threshold_id}_{datetime.utcnow().timestamp()}",
             title=f"Threshold Violation: {threshold.name}",
             description=f"Metric {threshold.metric_type.value} violated threshold {threshold.value} (current: {metric.value})",
@@ -547,16 +517,14 @@ class AlertManager:
         return alert
     
     async def _send_alert_notifications(self, alert: GovernanceAlert) -> None:
-        """Send alert notifications to handlers"""
-        for handler in self.alert_handlers:
+        """Send alert notifications to handlers"""        for handler in self.alert_handlers:
             try:
                 await handler(alert)
             except Exception as e:
                 self.logger.error(f"Error in alert handler: {e}")
     
     async def _validate_threshold(self, threshold: MonitoringThreshold) -> None:
-        """Validate threshold configuration"""
-        valid_operators = {"gt", "gte", "lt", "lte", "eq"}
+        """Validate threshold configuration"""        valid_operators = {"gt", "gte", "lt", "lte", "eq"}
         if threshold.operator not in valid_operators:
             raise ValidationError(f"Invalid threshold operator: {threshold.operator}")
         
@@ -565,16 +533,13 @@ class AlertManager:
 
 
 class GovernanceMonitor(BaseManager):
-    """
-    Central governance monitoring system
+    """    Central governance monitoring system
     
     Coordinates monitoring of all governance components,
     collects metrics, evaluates thresholds, and manages alerts.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the governance monitor"""
-        super().__init__(config)
+        """Initialize the governance monitor"""        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -596,8 +561,7 @@ class GovernanceMonitor(BaseManager):
         self.access_controller: Optional[AccessController] = None
     
     async def initialize(self) -> None:
-        """Initialize the governance monitor"""
-        try:
+        """Initialize the governance monitor"""        try:
             # Configure default thresholds
             await self._configure_default_thresholds()
             
@@ -617,8 +581,7 @@ class GovernanceMonitor(BaseManager):
         privacy_manager: PrivacyManager,
         access_controller: AccessController
     ) -> None:
-        """Set references to governance components"""
-        self.policy_manager = policy_manager
+        """Set references to governance components"""        self.policy_manager = policy_manager
         self.compliance_manager = compliance_manager
         self.privacy_manager = privacy_manager
         self.access_controller = access_controller
@@ -629,8 +592,7 @@ class GovernanceMonitor(BaseManager):
         )
     
     async def start_monitoring(self) -> None:
-        """Start continuous governance monitoring"""
-        if self.is_monitoring:
+        """Start continuous governance monitoring"""        if self.is_monitoring:
             self.logger.warning("Monitoring is already running")
             return
         
@@ -640,8 +602,7 @@ class GovernanceMonitor(BaseManager):
         self.logger.info("Started governance monitoring")
     
     async def stop_monitoring(self) -> None:
-        """Stop governance monitoring"""
-        self.is_monitoring = False
+        """Stop governance monitoring"""        self.is_monitoring = False
         
         if self.monitoring_task:
             self.monitoring_task.cancel()
@@ -654,8 +615,7 @@ class GovernanceMonitor(BaseManager):
         self.logger.info("Stopped governance monitoring")
     
     async def collect_metrics(self) -> Dict[MetricType, MetricSnapshot]:
-        """Manually trigger metric collection"""
-        return await self.metrics_collector.collect_all_metrics()
+        """Manually trigger metric collection"""        return await self.metrics_collector.collect_all_metrics()
     
     async def create_manual_alert(
         self,
@@ -665,8 +625,7 @@ class GovernanceMonitor(BaseManager):
         source_component: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> GovernanceAlert:
-        """Create a manual alert"""
-        return await self.alert_manager.create_alert(
+        """Create a manual alert"""        return await self.alert_manager.create_alert(
             title=title,
             description=description,
             severity=severity,
@@ -676,8 +635,7 @@ class GovernanceMonitor(BaseManager):
         )
     
     async def get_dashboard_data(self) -> GovernanceDashboard:
-        """Get current governance dashboard data"""
-        try:
+        """Get current governance dashboard data"""        try:
             # Collect latest metrics
             metrics = await self.collect_metrics()
             
@@ -736,8 +694,7 @@ class GovernanceMonitor(BaseManager):
             raise MonitoringError(f"Dashboard generation failed: {e}")
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get monitoring system status"""
-        return {
+        """Get monitoring system status"""        return {
             "is_monitoring": self.is_monitoring,
             "monitoring_interval": self.monitoring_interval,
             "active_alerts_count": len(self.alert_manager.active_alerts),
@@ -753,8 +710,7 @@ class GovernanceMonitor(BaseManager):
         }
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
-        while self.is_monitoring:
+        """Main monitoring loop"""        while self.is_monitoring:
             try:
                 # Collect metrics
                 metrics = await self.metrics_collector.collect_all_metrics()
@@ -776,8 +732,7 @@ class GovernanceMonitor(BaseManager):
                 await asyncio.sleep(self.monitoring_interval)
     
     async def _configure_default_thresholds(self) -> None:
-        """Configure default monitoring thresholds"""
-        # Policy violations threshold
+        """Configure default monitoring thresholds"""        # Policy violations threshold
         policy_threshold = MonitoringThreshold(
             threshold_id="policy_violations_high",
             name="High Policy Violations",
@@ -830,8 +785,7 @@ class GovernanceMonitor(BaseManager):
         await self.alert_manager.configure_threshold(access_threshold)
     
     async def _setup_default_alert_handlers(self) -> None:
-        """Set up default alert handlers"""
-        # Log alert handler
+        """Set up default alert handlers"""        # Log alert handler
         async def log_alert_handler(alert: GovernanceAlert) -> None:
             log_level = {
                 AlertSeverity.CRITICAL: logging.CRITICAL,

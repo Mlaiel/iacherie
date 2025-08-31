@@ -1,5 +1,4 @@
-"""
-Workflow Processor Module - IA-Influencer-Agent Platform
+"""Workflow Processor Module - IA-Influencer-Agent Platform
 
 Enterprise-grade workflow orchestration engine for multi-stage content processing.
 AI-powered pipeline management, content routing, and automated workflow execution.
@@ -24,7 +23,6 @@ Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
-
 import asyncio
 import logging
 import json
@@ -68,8 +66,7 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(str, Enum):
-    """Workflow execution status"""
-    PENDING = "pending"
+    """Workflow execution status"""    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -79,8 +76,7 @@ class WorkflowStatus(str, Enum):
 
 
 class StepStatus(str, Enum):
-    """Individual step status"""
-    PENDING = "pending"
+    """Individual step status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -89,8 +85,7 @@ class StepStatus(str, Enum):
 
 
 class WorkflowTrigger(str, Enum):
-    """Workflow trigger types"""
-    MANUAL = "manual"
+    """Workflow trigger types"""    MANUAL = "manual"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
     API_TRIGGER = "api_trigger"
@@ -99,8 +94,7 @@ class WorkflowTrigger(str, Enum):
 
 
 class StepType(str, Enum):
-    """Types of workflow steps"""
-    PROCESSOR = "processor"
+    """Types of workflow steps"""    PROCESSOR = "processor"
     CONDITION = "condition"
     PARALLEL = "parallel"
     WAIT = "wait"
@@ -111,8 +105,7 @@ class StepType(str, Enum):
 
 @dataclass
 class WorkflowStep:
-    """Individual workflow step definition"""
-    id: str
+    """Individual workflow step definition"""    id: str
     name: str
     step_type: StepType
     processor_type: Optional[str] = None
@@ -134,8 +127,7 @@ class WorkflowStep:
 
 @dataclass  
 class WorkflowDefinition:
-    """Complete workflow definition"""
-    id: str
+    """Complete workflow definition"""    id: str
     name: str
     description: str
     version: str
@@ -153,12 +145,10 @@ class WorkflowDefinition:
     tags: List[str] = field(default_factory=list)
     
     def get_step(self, step_id: str) -> Optional[WorkflowStep]:
-        """Get step by ID"""
-        return next((step for step in self.steps if step.id == step_id), None)
+        """Get step by ID"""        return next((step for step in self.steps if step.id == step_id), None)
     
     def get_dependencies_graph(self) -> nx.DiGraph:
-        """Build dependency graph"""
-        graph = nx.DiGraph()
+        """Build dependency graph"""        graph = nx.DiGraph()
         
         for step in self.steps:
             graph.add_node(step.id, step=step)
@@ -170,8 +160,7 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Runtime workflow execution instance"""
-    id: str
+    """Runtime workflow execution instance"""    id: str
     workflow_id: str
     definition: WorkflowDefinition
     
@@ -202,8 +191,7 @@ class WorkflowExecution:
 
 @dataclass
 class WorkflowConfig:
-    """Workflow processor configuration"""
-    enable_distributed_execution: bool = True
+    """Workflow processor configuration"""    enable_distributed_execution: bool = True
     enable_state_persistence: bool = True
     enable_monitoring: bool = True
     enable_retry_mechanism: bool = True
@@ -231,13 +219,11 @@ class WorkflowConfig:
 
 
 class WorkflowProcessor:
-    """
-    🏭 ENTERPRISE WORKFLOW ORCHESTRATION ENGINE
+    """    🏭 ENTERPRISE WORKFLOW ORCHESTRATION ENGINE
     
     Advanced workflow processor for orchestrating complex multi-stage content
     processing pipelines with AI-powered optimization and monitoring.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: Session,
@@ -269,8 +255,7 @@ class WorkflowProcessor:
         self._initialize_step_executors()
     
     def _initialize_metrics(self) -> Dict[str, Any]:
-        """Initialize Prometheus metrics"""
-        if not MONITORING_AVAILABLE:
+        """Initialize Prometheus metrics"""        if not MONITORING_AVAILABLE:
             return {}
         
         return {
@@ -304,8 +289,7 @@ class WorkflowProcessor:
         }
     
     def _initialize_step_executors(self):
-        """Initialize step executor functions"""
-        self._step_executors = {
+        """Initialize step executor functions"""        self._step_executors = {
             StepType.PROCESSOR: self._execute_processor_step,
             StepType.CONDITION: self._execute_condition_step,
             StepType.PARALLEL: self._execute_parallel_step,
@@ -316,16 +300,14 @@ class WorkflowProcessor:
         }
     
     async def register_workflow(self, definition: WorkflowDefinition) -> Dict[str, Any]:
-        """
-        Register a new workflow definition
+        """        Register a new workflow definition
         
         Args:
             definition: Workflow definition
             
         Returns:
             Registration result
-        """
-        try:
+        """        try:
             # Validate workflow definition
             validation_result = await self._validate_workflow_definition(definition)
             if not validation_result["valid"]:
@@ -364,8 +346,7 @@ class WorkflowProcessor:
         triggered_by: str = "system",
         trigger_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Execute a workflow
+        """        Execute a workflow
         
         Args:
             workflow_id: Workflow definition ID
@@ -376,8 +357,7 @@ class WorkflowProcessor:
             
         Returns:
             Execution result
-        """
-        try:
+        """        try:
             # Get workflow definition
             definition = self._workflow_definitions.get(workflow_id)
             if not definition:
@@ -427,13 +407,11 @@ class WorkflowProcessor:
             }
     
     async def _execute_workflow_async(self, execution: WorkflowExecution):
-        """
-        Asynchronously execute a workflow
+        """        Asynchronously execute a workflow
         
         Args:
             execution: Workflow execution instance
-        """
-        try:
+        """        try:
             execution.status = WorkflowStatus.RUNNING
             start_time = time.time()
             
@@ -510,8 +488,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """
-        Execute an individual workflow step
+        """        Execute an individual workflow step
         
         Args:
             step: Step to execute
@@ -519,8 +496,7 @@ class WorkflowProcessor:
             
         Returns:
             Step execution result
-        """
-        try:
+        """        try:
             step.status = StepStatus.RUNNING
             step.start_time = datetime.now()
             
@@ -578,8 +554,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Execute a processor step"""
-        try:
+        """Execute a processor step"""        try:
             # Get processor
             processor = self.processor_registry.get_processor(step.processor_type)
             if not processor:
@@ -615,8 +590,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Execute a condition step"""
-        try:
+        """Execute a condition step"""        try:
             # Evaluate conditions
             for condition in step.conditions:
                 condition_result = await self._evaluate_condition(condition, execution)
@@ -643,8 +617,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Execute parallel steps"""
-        try:
+        """Execute parallel steps"""        try:
             parallel_steps = step.config.get("parallel_steps", [])
             
             # Execute steps in parallel
@@ -680,8 +653,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Execute a wait step"""
-        try:
+        """Execute a wait step"""        try:
             wait_seconds = step.config.get("wait_seconds", 0)
             await asyncio.sleep(wait_seconds)
             
@@ -701,8 +673,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Execute a webhook step"""
-        try:
+        """Execute a webhook step"""        try:
             import aiohttp
             
             url = step.config.get("url")
@@ -736,8 +707,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Execute a script step"""
-        try:
+        """Execute a script step"""        try:
             script = step.config.get("script", "")
             script_type = step.config.get("script_type", "python")
             
@@ -772,8 +742,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Execute a human approval step"""
-        try:
+        """Execute a human approval step"""        try:
             # Create approval request
             approval_id = str(uuid.uuid4())
             approval_data = {
@@ -805,8 +774,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> Dict[str, Any]:
-        """Get input data for a step from previous steps or initial input"""
-        input_data = execution.input_data.copy()
+        """Get input data for a step from previous steps or initial input"""        input_data = execution.input_data.copy()
         
         # Add results from dependency steps
         for dependency_id in step.dependencies:
@@ -821,8 +789,7 @@ class WorkflowProcessor:
         step: WorkflowStep,
         execution: WorkflowExecution
     ) -> bool:
-        """Check if step dependencies are satisfied"""
-        for dependency_id in step.dependencies:
+        """Check if step dependencies are satisfied"""        for dependency_id in step.dependencies:
             if dependency_id not in execution.step_results:
                 return False
             
@@ -837,8 +804,7 @@ class WorkflowProcessor:
         condition: Dict[str, Any],
         execution: WorkflowExecution
     ) -> bool:
-        """Evaluate a condition"""
-        condition_type = condition.get("type", "expression")
+        """Evaluate a condition"""        condition_type = condition.get("type", "expression")
         
         if condition_type == "expression":
             expression = condition.get("expression", "True")
@@ -860,8 +826,7 @@ class WorkflowProcessor:
         self,
         definition: WorkflowDefinition
     ) -> Dict[str, Any]:
-        """Validate workflow definition"""
-        errors = []
+        """Validate workflow definition"""        errors = []
         
         # Check for duplicate step IDs
         step_ids = [step.id for step in definition.steps]
@@ -888,26 +853,22 @@ class WorkflowProcessor:
         }
     
     async def _persist_workflow_definition(self, definition: WorkflowDefinition):
-        """Persist workflow definition to storage"""
-        # Implementation would depend on storage backend
+        """Persist workflow definition to storage"""        # Implementation would depend on storage backend
         pass
     
     async def _persist_execution_result(self, execution: WorkflowExecution):
-        """Persist execution result to storage"""
-        # Implementation would depend on storage backend
+        """Persist execution result to storage"""        # Implementation would depend on storage backend
         pass
     
     async def get_workflow_status(self, execution_id: str) -> Dict[str, Any]:
-        """
-        Get workflow execution status
+        """        Get workflow execution status
         
         Args:
             execution_id: Workflow execution ID
             
         Returns:
             Status information
-        """
-        try:
+        """        try:
             execution = self._active_workflows.get(execution_id)
             if not execution:
                 return {
@@ -944,15 +905,13 @@ class WorkflowProcessor:
             }
     
     def _get_current_step(self, execution: WorkflowExecution) -> Optional[str]:
-        """Get currently executing step"""
-        for step in execution.definition.steps:
+        """Get currently executing step"""        for step in execution.definition.steps:
             if step.status == StepStatus.RUNNING:
                 return step.id
         return None
     
     async def pause_workflow(self, execution_id: str) -> Dict[str, Any]:
-        """Pause workflow execution"""
-        try:
+        """Pause workflow execution"""        try:
             execution = self._active_workflows.get(execution_id)
             if not execution:
                 return {
@@ -974,8 +933,7 @@ class WorkflowProcessor:
             }
     
     async def resume_workflow(self, execution_id: str) -> Dict[str, Any]:
-        """Resume paused workflow execution"""
-        try:
+        """Resume paused workflow execution"""        try:
             execution = self._active_workflows.get(execution_id)
             if not execution:
                 return {
@@ -1006,8 +964,7 @@ class WorkflowProcessor:
             }
     
     async def cancel_workflow(self, execution_id: str) -> Dict[str, Any]:
-        """Cancel workflow execution"""
-        try:
+        """Cancel workflow execution"""        try:
             execution = self._active_workflows.get(execution_id)
             if not execution:
                 return {
@@ -1033,8 +990,7 @@ class WorkflowProcessor:
             }
     
     async def list_active_workflows(self) -> Dict[str, Any]:
-        """List all active workflow executions"""
-        try:
+        """List all active workflow executions"""        try:
             active_list = []
             for execution_id, execution in self._active_workflows.items():
                 active_list.append({
@@ -1058,8 +1014,7 @@ class WorkflowProcessor:
             }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check"""
-        try:
+        """Perform health check"""        try:
             return {
                 "status": "healthy",
                 "active_workflows": len(self._active_workflows),
@@ -1087,8 +1042,7 @@ async def create_workflow_processor(
     processor_registry,
     config: Optional[Union[WorkflowConfig, Dict[str, Any]]] = None
 ) -> WorkflowProcessor:
-    """
-    Create and initialize workflow processor
+    """    Create and initialize workflow processor
     
     Args:
         db_session: Database session
@@ -1098,8 +1052,7 @@ async def create_workflow_processor(
         
     Returns:
         Initialized WorkflowProcessor instance
-    """
-    if config is None:
+    """    if config is None:
         config = WorkflowConfig()
     elif isinstance(config, dict):
         config = WorkflowConfig(**config)

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,14 +12,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Tests d'amélioration pour le système d'évaluation de qualité IA.
+"""Tests d'amélioration pour le système d'évaluation de qualité IA.
 Module de test complet pour la validation d'optimisation assistée par IA.
 
 Créé par : Fahed Mlaiel (mlaiel@live.de)
 Développement de Systèmes IA Professionnels
 """
-
 import pytest
 import sys
 import os
@@ -112,17 +108,14 @@ except ImportError:
 
 
 class TestContentEnhancer:
-    """Tests complets pour l'améliorateur de contenu principal."""
-    
+    """Tests complets pour l'améliorateur de contenu principal."""    
     @pytest.fixture
     def content_enhancer(self):
-        """Fixture pour l'améliorateur de contenu."""
-        return ContentEnhancer()
+        """Fixture pour l'améliorateur de contenu."""        return ContentEnhancer()
     
     @pytest.fixture
     def sample_enhancement_request(self):
-        """Génère une demande d'amélioration de test."""
-        return {
+        """Génère une demande d'amélioration de test."""        return {
             'content_id': 'enhancement_test_001',
             'content_type': 'image',
             'platform': 'instagram',
@@ -153,8 +146,7 @@ class TestContentEnhancer:
     
     @pytest.mark.asyncio
     async def test_enhance_content_comprehensive(self, content_enhancer, sample_enhancement_request):
-        """Test d'amélioration complète de contenu."""
-        result = await content_enhancer.enhance_content(sample_enhancement_request)
+        """Test d'amélioration complète de contenu."""        result = await content_enhancer.enhance_content(sample_enhancement_request)
         
         # Vérification de la structure de résultat
         assert isinstance(result, dict)
@@ -176,8 +168,7 @@ class TestContentEnhancer:
     
     @pytest.mark.asyncio
     async def test_enhance_low_quality_content(self, content_enhancer):
-        """Test d'amélioration de contenu de faible qualité."""
-        # Création d'une image de faible qualité
+        """Test d'amélioration de contenu de faible qualité."""        # Création d'une image de faible qualité
         with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
             # Image pixelisée et floue
             low_quality_image = Image.new('RGB', (200, 200), color='gray')
@@ -225,8 +216,7 @@ class TestContentEnhancer:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_enhancement_performance(self, content_enhancer, sample_enhancement_request):
-        """Test de performance pour l'amélioration de contenu."""
-        import time
+        """Test de performance pour l'amélioration de contenu."""        import time
         
         start_time = time.time()
         result = await content_enhancer.enhance_content(sample_enhancement_request)
@@ -242,16 +232,13 @@ class TestContentEnhancer:
 
 
 class TestImageOptimizer:
-    """Tests pour l'optimiseur d'images."""
-    
+    """Tests pour l'optimiseur d'images."""    
     @pytest.fixture
     def image_optimizer(self):
-        """Fixture pour l'optimiseur d'images."""
-        return ImageOptimizer()
+        """Fixture pour l'optimiseur d'images."""        return ImageOptimizer()
     
     def test_image_quality_enhancement(self, image_optimizer):
-        """Test d'amélioration de qualité d'image."""
-        # Création d'une image de test avec problèmes de qualité
+        """Test d'amélioration de qualité d'image."""        # Création d'une image de test avec problèmes de qualité
         with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as tmp_file:
             # Image avec bruit et faible contraste
             test_image = Image.new('RGB', (800, 600), color=(128, 128, 128))
@@ -308,8 +295,7 @@ class TestImageOptimizer:
                 os.unlink(tmp_file.name)
     
     def test_platform_specific_optimization(self, image_optimizer):
-        """Test d'optimisation spécifique aux plateformes."""
-        platform_specs = {
+        """Test d'optimisation spécifique aux plateformes."""        platform_specs = {
             'instagram': {
                 'preferred_aspect_ratios': [(1, 1), (4, 5), (16, 9)],
                 'max_resolution': (1080, 1080),
@@ -362,16 +348,13 @@ class TestImageOptimizer:
 
 
 class TestVideoOptimizer:
-    """Tests pour l'optimiseur de vidéos."""
-    
+    """Tests pour l'optimiseur de vidéos."""    
     @pytest.fixture
     def video_optimizer(self):
-        """Fixture pour l'optimiseur de vidéos."""
-        return VideoOptimizer()
+        """Fixture pour l'optimiseur de vidéos."""        return VideoOptimizer()
     
     def test_video_quality_enhancement(self, video_optimizer):
-        """Test d'amélioration de qualité vidéo."""
-        # Création d'un fichier vidéo de test basique avec OpenCV
+        """Test d'amélioration de qualité vidéo."""        # Création d'un fichier vidéo de test basique avec OpenCV
         with tempfile.NamedTemporaryFile(suffix='.mp4', delete=False) as tmp_file:
             # Génération d'une vidéo simple
             fourcc = cv2.VideoWriter_fourcc(*'mp4v')
@@ -425,8 +408,7 @@ class TestVideoOptimizer:
                 os.unlink(tmp_file.name)
     
     def test_video_format_conversion(self, video_optimizer):
-        """Test de conversion de format vidéo."""
-        conversion_scenarios = [
+        """Test de conversion de format vidéo."""        conversion_scenarios = [
             {
                 'input_format': 'avi',
                 'output_format': 'mp4',
@@ -467,16 +449,13 @@ class TestVideoOptimizer:
 
 
 class TestAudioOptimizer:
-    """Tests pour l'optimiseur audio."""
-    
+    """Tests pour l'optimiseur audio."""    
     @pytest.fixture
     def audio_optimizer(self):
-        """Fixture pour l'optimiseur audio."""
-        return AudioOptimizer()
+        """Fixture pour l'optimiseur audio."""        return AudioOptimizer()
     
     def test_audio_quality_enhancement(self, audio_optimizer):
-        """Test d'amélioration de qualité audio."""
-        # Génération d'un fichier audio de test
+        """Test d'amélioration de qualité audio."""        # Génération d'un fichier audio de test
         with tempfile.NamedTemporaryFile(suffix='.wav', delete=False) as tmp_file:
             # Simulation d'un signal audio simple
             sample_rate = 44100
@@ -548,16 +527,13 @@ class TestAudioOptimizer:
 
 
 class TestTextOptimizer:
-    """Tests pour l'optimiseur de texte."""
-    
+    """Tests pour l'optimiseur de texte."""    
     @pytest.fixture
     def text_optimizer(self):
-        """Fixture pour l'optimiseur de texte."""
-        return TextOptimizer()
+        """Fixture pour l'optimiseur de texte."""        return TextOptimizer()
     
     def test_text_quality_improvement(self, text_optimizer):
-        """Test d'amélioration de qualité textuelle."""
-        text_samples = [
+        """Test d'amélioration de qualité textuelle."""        text_samples = [
             {
                 'original': 'voici un text avec des fautes dorthographe et de gramaire',
                 'content_type': 'caption',
@@ -623,8 +599,7 @@ class TestTextOptimizer:
                 assert sample['platform'] in ['instagram', 'youtube', 'linkedin']
     
     def test_hashtag_optimization(self, text_optimizer):
-        """Test d'optimisation des hashtags."""
-        hashtag_scenarios = [
+        """Test d'optimisation des hashtags."""        hashtag_scenarios = [
             {
                 'content': 'Photo de voyage en montagne',
                 'current_hashtags': ['#voyage', '#montagne'],
@@ -675,17 +650,14 @@ class TestTextOptimizer:
 
 
 class TestAIEnhancementEngine:
-    """Tests pour le moteur d'amélioration IA avancé."""
-    
+    """Tests pour le moteur d'amélioration IA avancé."""    
     @pytest.fixture
     def ai_enhancement_engine(self):
-        """Fixture pour le moteur d'amélioration IA."""
-        return AIEnhancementEngine()
+        """Fixture pour le moteur d'amélioration IA."""        return AIEnhancementEngine()
     
     @pytest.mark.asyncio
     async def test_ai_powered_content_enhancement(self, ai_enhancement_engine):
-        """Test d'amélioration de contenu assistée par IA."""
-        ai_enhancement_request = {
+        """Test d'amélioration de contenu assistée par IA."""        ai_enhancement_request = {
             'content_data': {
                 'type': 'multimedia',
                 'platform': 'instagram',
@@ -744,8 +716,7 @@ class TestAIEnhancementEngine:
             assert len(ai_enhancement_request['learning_data']['successful_posts']) > 0
     
     def test_batch_enhancement_processing(self, ai_enhancement_engine):
-        """Test de traitement d'amélioration en lot."""
-        batch_content = []
+        """Test de traitement d'amélioration en lot."""        batch_content = []
         for i in range(5):
             content_item = {
                 'id': f'batch_item_{i}',
@@ -799,13 +770,11 @@ class TestAIEnhancementEngine:
 
 
 class TestEnhancementIntegration:
-    """Tests d'intégration pour le système d'amélioration complet."""
-    
+    """Tests d'intégration pour le système d'amélioration complet."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_end_to_end_enhancement_workflow(self):
-        """Test du workflow d'amélioration de bout en bout."""
-        # Création d'un contenu de test complet
+        """Test du workflow d'amélioration de bout en bout."""        # Création d'un contenu de test complet
         with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as image_file:
             # Image de test
             test_image = Image.new('RGB', (800, 600), color='blue')
@@ -883,8 +852,7 @@ class TestEnhancementIntegration:
     
     @pytest.mark.performance
     def test_enhancement_system_performance(self):
-        """Test de performance du système d'amélioration."""
-        import time
+        """Test de performance du système d'amélioration."""        import time
         
         # Test de performance avec contenu multiple
         content_items = []

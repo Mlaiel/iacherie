@@ -1,5 +1,4 @@
-"""
-Metadata Extraction Engine
+"""Metadata Extraction Engine
 =========================
 
 Professional metadata extraction system for multi-format content analysis.
@@ -14,7 +13,6 @@ This code is proprietary and confidential. Any unauthorized copying, distributio
 or use without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 strictly prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 import mimetypes
@@ -51,8 +49,7 @@ from ...core.exceptions import MetadataExtractionError, ValidationError
 
 
 class MetadataType(Enum):
-    """Types of metadata that can be extracted"""
-    TECHNICAL = "technical"
+    """Types of metadata that can be extracted"""    TECHNICAL = "technical"
     DESCRIPTIVE = "descriptive"
     ADMINISTRATIVE = "administrative"
     STRUCTURAL = "structural"
@@ -61,8 +58,7 @@ class MetadataType(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats for metadata extraction"""
-    AUDIO = "audio"
+    """Supported content formats for metadata extraction"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -71,8 +67,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class MetadataField:
-    """Individual metadata field with validation and type information"""
-    name: str
+    """Individual metadata field with validation and type information"""    name: str
     value: Any
     type: str
     confidence: float = 1.0
@@ -83,8 +78,7 @@ class MetadataField:
 
 @dataclass
 class MetadataCollection:
-    """Collection of metadata organized by type and source"""
-    content_id: str
+    """Collection of metadata organized by type and source"""    content_id: str
     content_type: ContentFormat
     technical_metadata: Dict[str, Any] = field(default_factory=dict)
     descriptive_metadata: Dict[str, Any] = field(default_factory=dict)
@@ -99,8 +93,7 @@ class MetadataCollection:
 
 
 class MetadataExtractor:
-    """
-    Professional metadata extraction engine for IA Influencer Agent platform.
+    """    Professional metadata extraction engine for IA Influencer Agent platform.
     
     Provides comprehensive metadata extraction capabilities including:
     - Technical metadata (format, dimensions, encoding, etc.)
@@ -110,11 +103,9 @@ class MetadataExtractor:
     - ID3/Vorbis tags for audio
     - Document properties and text analysis
     - Video stream information and analysis
-    """
-    
+    """    
     def __init__(self):
-        """Initialize MetadataExtractor with AI models and processors."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize MetadataExtractor with AI models and processors."""        self.logger = logging.getLogger(__name__)
         
         # Initialize AI models for content analysis
         self._init_ai_models()
@@ -136,8 +127,7 @@ class MetadataExtractor:
         }
     
     def _init_ai_models(self):
-        """Initialize AI models for content analysis"""
-        try:
+        """Initialize AI models for content analysis"""        try:
             # Image analysis models
             self.image_classifier = pipeline(
                 "image-classification",
@@ -177,8 +167,7 @@ class MetadataExtractor:
     async def extract_metadata(self, file_data: Union[bytes, BinaryIO], 
                              filename: str, content_type: ContentFormat = None,
                              include_ai_analysis: bool = True) -> MetadataCollection:
-        """
-        Extract comprehensive metadata from content.
+        """        Extract comprehensive metadata from content.
         
         Args:
             file_data: Content file data
@@ -188,8 +177,7 @@ class MetadataExtractor:
             
         Returns:
             Complete metadata collection
-        """
-        content_id = hashlib.sha256(
+        """        content_id = hashlib.sha256(
             (filename + str(datetime.utcnow())).encode()
         ).hexdigest()[:16]
         
@@ -245,8 +233,7 @@ class MetadataExtractor:
     
     async def batch_extract_metadata(self, content_items: List[tuple],
                                    include_ai_analysis: bool = True) -> List[MetadataCollection]:
-        """
-        Extract metadata from multiple content items in batch.
+        """        Extract metadata from multiple content items in batch.
         
         Args:
             content_items: List of (file_data, filename, content_type) tuples
@@ -254,8 +241,7 @@ class MetadataExtractor:
             
         Returns:
             List of metadata collections
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting batch metadata extraction: {len(content_items)} items")
             
             # Process items concurrently with limited concurrency
@@ -299,8 +285,7 @@ class MetadataExtractor:
     
     async def enrich_metadata(self, metadata_collection: MetadataCollection,
                             additional_sources: Dict[str, Any] = None) -> MetadataCollection:
-        """
-        Enrich existing metadata with additional sources and AI analysis.
+        """        Enrich existing metadata with additional sources and AI analysis.
         
         Args:
             metadata_collection: Existing metadata collection
@@ -308,8 +293,7 @@ class MetadataExtractor:
             
         Returns:
             Enriched metadata collection
-        """
-        try:
+        """        try:
             self.logger.info(f"Enriching metadata: {metadata_collection.content_id}")
             
             # Add additional sources if provided
@@ -340,16 +324,14 @@ class MetadataExtractor:
             raise
     
     async def validate_metadata(self, metadata_collection: MetadataCollection) -> Dict[str, Any]:
-        """
-        Validate metadata completeness and consistency.
+        """        Validate metadata completeness and consistency.
         
         Args:
             metadata_collection: Metadata collection to validate
             
         Returns:
             Validation results with issues and recommendations
-        """
-        try:
+        """        try:
             validation_results = {
                 'is_valid': True,
                 'completeness_score': 0.0,
@@ -431,8 +413,7 @@ class MetadataExtractor:
     
     async def export_metadata(self, metadata_collection: MetadataCollection,
                             format: str = "json") -> Union[str, bytes]:
-        """
-        Export metadata in various formats.
+        """        Export metadata in various formats.
         
         Args:
             metadata_collection: Metadata to export
@@ -440,8 +421,7 @@ class MetadataExtractor:
             
         Returns:
             Exported metadata in requested format
-        """
-        try:
+        """        try:
             if format.lower() == "json":
                 return await self._export_json(metadata_collection)
             elif format.lower() == "xml":
@@ -458,8 +438,7 @@ class MetadataExtractor:
     # Private extraction methods
     
     async def _detect_content_format(self, file_data: bytes, filename: str) -> ContentFormat:
-        """Auto-detect content format"""
-        try:
+        """Auto-detect content format"""        try:
             # Use python-magic for MIME type detection
             mime_type = magic.from_buffer(file_data, mime=True)
             
@@ -492,8 +471,7 @@ class MetadataExtractor:
     
     async def _extract_basic_metadata(self, metadata_collection: MetadataCollection,
                                     file_data: bytes, filename: str):
-        """Extract basic file metadata"""
-        try:
+        """Extract basic file metadata"""        try:
             # Basic file information
             metadata_collection.administrative_metadata.update({
                 'original_filename': filename,
@@ -518,8 +496,7 @@ class MetadataExtractor:
     
     async def _extract_audio_metadata(self, metadata_collection: MetadataCollection,
                                     file_data: bytes, filename: str):
-        """Extract audio-specific metadata"""
-        try:
+        """Extract audio-specific metadata"""        try:
             # Save to temporary file for processing
             with tempfile.NamedTemporaryFile(suffix=Path(filename).suffix, delete=False) as temp_file:
                 temp_file.write(file_data)
@@ -603,8 +580,7 @@ class MetadataExtractor:
     
     async def _extract_video_metadata(self, metadata_collection: MetadataCollection,
                                     file_data: bytes, filename: str):
-        """Extract video-specific metadata"""
-        try:
+        """Extract video-specific metadata"""        try:
             # Save to temporary file for processing
             with tempfile.NamedTemporaryFile(suffix=Path(filename).suffix, delete=False) as temp_file:
                 temp_file.write(file_data)
@@ -725,8 +701,7 @@ class MetadataExtractor:
     
     async def _extract_image_metadata(self, metadata_collection: MetadataCollection,
                                     file_data: bytes, filename: str):
-        """Extract image-specific metadata"""
-        try:
+        """Extract image-specific metadata"""        try:
             # Load image with PIL
             with tempfile.NamedTemporaryFile() as temp_file:
                 temp_file.write(file_data)
@@ -832,8 +807,7 @@ class MetadataExtractor:
     
     async def _extract_text_metadata(self, metadata_collection: MetadataCollection,
                                    file_data: bytes, filename: str):
-        """Extract text/document-specific metadata"""
-        try:
+        """Extract text/document-specific metadata"""        try:
             file_ext = Path(filename).suffix.lower()
             
             # Extract text content based on format
@@ -935,8 +909,7 @@ class MetadataExtractor:
             self.logger.warning(f"Text metadata extraction failed: {str(e)}")
     
     async def _extract_pdf_metadata(self, pdf_data: bytes) -> tuple:
-        """Extract metadata from PDF"""
-        try:
+        """Extract metadata from PDF"""        try:
             doc = fitz.open(stream=pdf_data, filetype="pdf")
             
             # Extract text content
@@ -965,8 +938,7 @@ class MetadataExtractor:
             return "", {}
     
     async def _extract_docx_metadata(self, docx_data: bytes) -> tuple:
-        """Extract metadata from DOCX"""
-        try:
+        """Extract metadata from DOCX"""        try:
             with tempfile.NamedTemporaryFile() as temp_file:
                 temp_file.write(docx_data)
                 temp_file.flush()
@@ -1002,8 +974,7 @@ class MetadataExtractor:
     
     async def _extract_ai_metadata(self, metadata_collection: MetadataCollection,
                                  file_data: bytes, content_type: ContentFormat):
-        """Extract AI-powered metadata analysis"""
-        try:
+        """Extract AI-powered metadata analysis"""        try:
             ai_metadata = {}
             
             # Content-specific AI analysis
@@ -1089,8 +1060,7 @@ class MetadataExtractor:
             self.logger.warning(f"AI metadata extraction failed: {str(e)}")
     
     async def _calculate_metadata_scores(self, metadata_collection: MetadataCollection):
-        """Calculate quality and completeness scores for metadata"""
-        try:
+        """Calculate quality and completeness scores for metadata"""        try:
             # Count extracted fields
             total_fields = 0
             filled_fields = 0
@@ -1195,8 +1165,7 @@ class MetadataExtractor:
             metadata_collection.quality_score = 0.0
     
     async def _generate_extraction_summary(self, metadata_collection: MetadataCollection):
-        """Generate extraction summary with statistics and insights"""
-        try:
+        """Generate extraction summary with statistics and insights"""        try:
             summary = {
                 'extraction_status': 'completed',
                 'content_type': metadata_collection.content_type.value,
@@ -1284,8 +1253,7 @@ class MetadataExtractor:
     # Export methods
     
     async def _export_json(self, metadata_collection: MetadataCollection) -> str:
-        """Export metadata as JSON"""
-        try:
+        """Export metadata as JSON"""        try:
             export_data = {
                 'content_id': metadata_collection.content_id,
                 'content_type': metadata_collection.content_type.value,
@@ -1312,8 +1280,7 @@ class MetadataExtractor:
             raise
     
     async def _export_xml(self, metadata_collection: MetadataCollection) -> str:
-        """Export metadata as XML"""
-        try:
+        """Export metadata as XML"""        try:
             import xml.etree.ElementTree as ET
             
             root = ET.Element("metadata")
@@ -1350,8 +1317,7 @@ class MetadataExtractor:
             raise
     
     async def _export_dublin_core(self, metadata_collection: MetadataCollection) -> str:
-        """Export metadata in Dublin Core format"""
-        try:
+        """Export metadata in Dublin Core format"""        try:
             dublin_core_mapping = {
                 'title': metadata_collection.descriptive_metadata.get('title', ''),
                 'creator': metadata_collection.descriptive_metadata.get('author', ''),
@@ -1388,12 +1354,10 @@ class MetadataExtractor:
             raise
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get supported formats by content type"""
-        return {fmt.value: exts for fmt, exts in self.supported_formats.items()}
+        """Get supported formats by content type"""        return {fmt.value: exts for fmt, exts in self.supported_formats.items()}
     
     def get_extraction_capabilities(self) -> Dict[str, Any]:
-        """Get extractor capabilities and configuration"""
-        return {
+        """Get extractor capabilities and configuration"""        return {
             'supported_formats': self.get_supported_formats(),
             'ai_models_available': {
                 'image_classifier': self.image_classifier is not None,

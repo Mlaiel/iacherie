@@ -1,5 +1,4 @@
-"""
-Video Processor Module - IA-Influencer-Agent Platform
+"""Video Processor Module - IA-Influencer-Agent Platform
 
 Industrial-grade video processing engine for content creators and influencers.
 Handles video analysis, enhancement, conversion, and AI-powered features.
@@ -14,7 +13,6 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -52,8 +50,7 @@ logger = logging.getLogger(__name__)
 
 
 class VideoFormat(str, Enum):
-    """Supported video formats"""
-    MP4 = "mp4"
+    """Supported video formats"""    MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
     MKV = "mkv"
@@ -64,16 +61,14 @@ class VideoFormat(str, Enum):
 
 
 class VideoQuality(str, Enum):
-    """Video quality levels"""
-    LOW = "low"          # 480p
+    """Video quality levels"""    LOW = "low"          # 480p
     MEDIUM = "medium"    # 720p
     HIGH = "high"        # 1080p
     ULTRA = "ultra"      # 4K
 
 
 class VideoProcessingType(str, Enum):
-    """Types of video processing"""
-    ANALYSIS = "analysis"
+    """Types of video processing"""    ANALYSIS = "analysis"
     ENHANCEMENT = "enhancement"
     CONVERSION = "conversion"
     COMPRESSION = "compression"
@@ -88,8 +83,7 @@ class VideoProcessingType(str, Enum):
 
 @dataclass
 class VideoProcessingConfig:
-    """Configuration for video processing"""
-    target_format: VideoFormat = VideoFormat.MP4
+    """Configuration for video processing"""    target_format: VideoFormat = VideoFormat.MP4
     target_quality: VideoQuality = VideoQuality.HIGH
     target_fps: int = 30
     target_bitrate: str = "2M"
@@ -112,8 +106,7 @@ class VideoProcessingConfig:
 
 @dataclass
 class VideoMetadata:
-    """Comprehensive video metadata"""
-    duration: float
+    """Comprehensive video metadata"""    duration: float
     fps: float
     width: int
     height: int
@@ -134,8 +127,7 @@ class VideoMetadata:
 
 @dataclass
 class VideoFeatures:
-    """Advanced video features extracted via AI"""
-    scene_changes: List[float] = field(default_factory=list)
+    """Advanced video features extracted via AI"""    scene_changes: List[float] = field(default_factory=list)
     dominant_colors: List[Tuple[int, int, int]] = field(default_factory=list)
     brightness_levels: List[float] = field(default_factory=list)
     motion_intensity: List[float] = field(default_factory=list)
@@ -152,8 +144,7 @@ class VideoFeatures:
 
 @dataclass
 class VideoAnalysisResult:
-    """Result of video analysis"""
-    success: bool
+    """Result of video analysis"""    success: bool
     metadata: Optional[VideoMetadata] = None
     features: Optional[VideoFeatures] = None
     thumbnails: List[str] = field(default_factory=list)
@@ -171,13 +162,11 @@ class VideoAnalysisResult:
 
 
 class VideoProcessor:
-    """
-    🎬 ENTERPRISE VIDEO PROCESSOR
+    """    🎬 ENTERPRISE VIDEO PROCESSOR
     
     Industrial-grade video processing engine with advanced AI capabilities
     for content creators, filmmakers, and influencers.
-    """
-    
+    """    
     def __init__(
         self,
         db_session,
@@ -201,8 +190,7 @@ class VideoProcessor:
             self.logger.warning("AI libraries not available")
     
     async def initialize(self) -> bool:
-        """Initialize the video processor"""
-        try:
+        """Initialize the video processor"""        try:
             if AI_LIBS_AVAILABLE and self.config.enable_ai_analysis:
                 # Initialize object detection model
                 if self.config.enable_object_detection:
@@ -240,8 +228,7 @@ class VideoProcessor:
         options: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Process video content with comprehensive analysis
+        """        Process video content with comprehensive analysis
         
         Args:
             content: Video content (bytes, file path, or file object)
@@ -250,8 +237,7 @@ class VideoProcessor:
             
         Returns:
             Processing result dictionary
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         options = options or {}
         metadata = metadata or {}
         
@@ -364,8 +350,7 @@ class VideoProcessor:
             }
     
     async def _prepare_video_file(self, content: Union[bytes, str, BinaryIO]) -> Optional[str]:
-        """Prepare video file for processing"""
-        try:
+        """Prepare video file for processing"""        try:
             if isinstance(content, str):
                 # File path
                 if Path(content).exists():
@@ -393,8 +378,7 @@ class VideoProcessor:
             return None
     
     async def _extract_metadata(self, video_path: str) -> VideoMetadata:
-        """Extract comprehensive video metadata"""
-        try:
+        """Extract comprehensive video metadata"""        try:
             if not VIDEO_LIBS_AVAILABLE:
                 raise Exception("Video libraries not available")
             
@@ -478,8 +462,7 @@ class VideoProcessor:
             )
     
     async def _validate_video(self, metadata: VideoMetadata) -> Dict[str, Any]:
-        """Validate video against configuration constraints"""
-        if metadata.duration > self.config.max_duration_seconds:
+        """Validate video against configuration constraints"""        if metadata.duration > self.config.max_duration_seconds:
             return {
                 "valid": False,
                 "reason": f"Video duration ({metadata.duration}s) exceeds maximum ({self.config.max_duration_seconds}s)"
@@ -500,8 +483,7 @@ class VideoProcessor:
         return {"valid": True}
     
     async def _enhance_video(self, video_path: str) -> str:
-        """Enhance video quality through various techniques"""
-        try:
+        """Enhance video quality through various techniques"""        try:
             if not VIDEO_LIBS_AVAILABLE:
                 return video_path
             
@@ -538,8 +520,7 @@ class VideoProcessor:
             return video_path
     
     async def _extract_features(self, video_path: str) -> VideoFeatures:
-        """Extract advanced video features using computer vision and AI"""
-        try:
+        """Extract advanced video features using computer vision and AI"""        try:
             features = VideoFeatures()
             
             if not VIDEO_LIBS_AVAILABLE:
@@ -589,8 +570,7 @@ class VideoProcessor:
             return VideoFeatures()
     
     async def _analyze_frame(self, frame: np.ndarray, features: VideoFeatures, frame_number: int):
-        """Analyze individual frame for various features"""
-        try:
+        """Analyze individual frame for various features"""        try:
             # Brightness analysis
             brightness = np.mean(cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY))
             features.brightness_levels.append(float(brightness))
@@ -630,8 +610,7 @@ class VideoProcessor:
             self.logger.error(f"Frame analysis failed: {e}")
     
     async def _calculate_motion(self, prev_frame: np.ndarray, curr_frame: np.ndarray) -> float:
-        """Calculate motion between consecutive frames"""
-        try:
+        """Calculate motion between consecutive frames"""        try:
             # Convert to grayscale
             prev_gray = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY)
             curr_gray = cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY)
@@ -654,8 +633,7 @@ class VideoProcessor:
             return 0.0
     
     async def _extract_dominant_colors(self, frame: np.ndarray, k: int = 3) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors from frame using K-means clustering"""
-        try:
+        """Extract dominant colors from frame using K-means clustering"""        try:
             # Reshape frame to be a list of pixels
             pixels = frame.reshape(-1, 3)
             
@@ -674,8 +652,7 @@ class VideoProcessor:
             return []
     
     async def _detect_faces_in_frame(self, frame: np.ndarray) -> List[Dict[str, Any]]:
-        """Detect faces in a frame"""
-        try:
+        """Detect faces in a frame"""        try:
             # Use face_recognition library
             face_locations = face_recognition.face_locations(frame)
             
@@ -694,8 +671,7 @@ class VideoProcessor:
             return []
     
     async def _detect_objects_in_frame(self, frame: np.ndarray) -> List[Dict[str, Any]]:
-        """Detect objects in a frame using AI model"""
-        try:
+        """Detect objects in a frame using AI model"""        try:
             if not self._object_detector:
                 return []
             
@@ -721,8 +697,7 @@ class VideoProcessor:
             return []
     
     async def _generate_thumbnails(self, video_path: str) -> List[str]:
-        """Generate thumbnail images from video"""
-        try:
+        """Generate thumbnail images from video"""        try:
             if not VIDEO_LIBS_AVAILABLE:
                 return []
             
@@ -765,8 +740,7 @@ class VideoProcessor:
             return []
     
     async def _detect_scenes(self, video_path: str) -> List[float]:
-        """Detect scene boundaries in video"""
-        try:
+        """Detect scene boundaries in video"""        try:
             if not VIDEO_LIBS_AVAILABLE:
                 return []
             
@@ -811,8 +785,7 @@ class VideoProcessor:
             return []
     
     async def _assess_quality(self, video_path: str) -> Dict[str, float]:
-        """Assess video quality metrics"""
-        try:
+        """Assess video quality metrics"""        try:
             if not VIDEO_LIBS_AVAILABLE:
                 return {}
             
@@ -911,8 +884,7 @@ class VideoProcessor:
             }
     
     async def _generate_fingerprint(self, video_path: str) -> str:
-        """Generate video fingerprint for content identification"""
-        try:
+        """Generate video fingerprint for content identification"""        try:
             if not VIDEO_LIBS_AVAILABLE:
                 return ""
             
@@ -959,8 +931,7 @@ class VideoProcessor:
         features: Optional[VideoFeatures],
         quality_metrics: Dict[str, float]
     ) -> List[str]:
-        """Generate relevant tags for the video content"""
-        tags = []
+        """Generate relevant tags for the video content"""        tags = []
         
         try:
             # Duration-based tags
@@ -1019,8 +990,7 @@ class VideoProcessor:
         target_format: VideoFormat,
         options: Dict[str, Any]
     ) -> bytes:
-        """Convert video to target format"""
-        try:
+        """Convert video to target format"""        try:
             if not VIDEO_LIBS_AVAILABLE:
                 return b""
             
@@ -1063,8 +1033,7 @@ class VideoProcessor:
             return b""
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the video processor"""
-        return {
+        """Perform health check on the video processor"""        return {
             "status": "healthy" if self._initialized else "not_initialized",
             "video_libs_available": VIDEO_LIBS_AVAILABLE,
             "ai_libs_available": AI_LIBS_AVAILABLE,
@@ -1079,8 +1048,7 @@ async def create_video_processor(
     redis_client,
     config: Optional[Dict[str, Any]] = None
 ) -> VideoProcessor:
-    """
-    Factory function to create and initialize a video processor
+    """    Factory function to create and initialize a video processor
     
     Args:
         db_session: Database session
@@ -1089,8 +1057,7 @@ async def create_video_processor(
         
     Returns:
         Initialized VideoProcessor instance
-    """
-    # Create config from dict if provided
+    """    # Create config from dict if provided
     processor_config = None
     if config:
         processor_config = VideoProcessingConfig(**{

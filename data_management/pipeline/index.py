@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Data Management Pipeline Index
+"""IA Influencer Agent - Data Management Pipeline Index
 ==================================================
 
 Main entry point for the data management pipeline system.
@@ -23,7 +22,6 @@ User (musician/blogger/photographer/influencer/comedian) →
 Upload multi-format → IA protection rights → SEO pro → 
 Matching collaboration → Multi-platform distribution
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
@@ -72,8 +70,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Enumeration of supported creator types."""
-    MUSICIAN = "musician"
+    """Enumeration of supported creator types."""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -83,8 +80,7 @@ class CreatorType(Enum):
 
 
 class PipelineMode(Enum):
-    """Pipeline execution modes."""
-    BATCH = "batch"
+    """Pipeline execution modes."""    BATCH = "batch"
     STREAMING = "streaming"
     REAL_TIME = "real_time"
     DISTRIBUTED = "distributed"
@@ -92,8 +88,7 @@ class PipelineMode(Enum):
 
 @dataclass
 class PipelineConfig:
-    """Configuration for pipeline execution."""
-    creator_type: CreatorType
+    """Configuration for pipeline execution."""    creator_type: CreatorType
     mode: PipelineMode = PipelineMode.BATCH
     enable_ai_protection: bool = True
     enable_seo_optimization: bool = True
@@ -106,16 +101,13 @@ class PipelineConfig:
 
 
 class PipelineInterface:
-    """
-    Main interface for the IA Influencer Agent data management pipeline.
+    """    Main interface for the IA Influencer Agent data management pipeline.
     
     This class provides a unified entry point for all content creators to process,
     protect, optimize, and distribute their content across multiple platforms.
-    """
-    
+    """    
     def __init__(self, config: PipelineConfig):
-        """Initialize the pipeline interface."""
-        self.config = config
+        """Initialize the pipeline interface."""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Initialize core components
@@ -138,8 +130,7 @@ class PipelineInterface:
         self.logger.info(f"Pipeline initialized for creator type: {config.creator_type.value}")
     
     def _init_processors(self) -> None:
-        """Initialize content processors."""
-        self.processors = {
+        """Initialize content processors."""        self.processors = {
             'audio': AudioProcessor(),
             'image': ImageProcessor(),
             'video': VideoProcessor(),
@@ -150,8 +141,7 @@ class PipelineInterface:
         }
     
     def _init_transformers(self) -> None:
-        """Initialize content transformers."""
-        self.transformers = {
+        """Initialize content transformers."""        self.transformers = {
             'content': ContentTransformer(),
             'metadata': MetadataTransformer(),
             'format': FormatTransformer(),
@@ -160,8 +150,7 @@ class PipelineInterface:
         }
     
     def _init_engines(self) -> None:
-        """Initialize processing engines."""
-        engine_map = {
+        """Initialize processing engines."""        engine_map = {
             PipelineMode.BATCH: BatchEngine(),
             PipelineMode.STREAMING: StreamingEngine(),
             PipelineMode.DISTRIBUTED: DistributedEngine()
@@ -169,8 +158,7 @@ class PipelineInterface:
         self.engine = engine_map.get(self.config.mode, BatchEngine())
     
     def _init_validators(self) -> None:
-        """Initialize content validators."""
-        self.validators = {
+        """Initialize content validators."""        self.validators = {
             'content': ContentValidator(),
             'metadata': MetadataValidator(),
             'quality': QualityValidator(),
@@ -178,8 +166,7 @@ class PipelineInterface:
         }
     
     def _init_workflows(self) -> None:
-        """Initialize creator-specific workflows."""
-        workflow_map = {
+        """Initialize creator-specific workflows."""        workflow_map = {
             CreatorType.MUSICIAN: MusicianWorkflow(),
             CreatorType.BLOGGER: BloggerWorkflow(),
             CreatorType.PHOTOGRAPHER: PhotographerWorkflow(),
@@ -190,8 +177,7 @@ class PipelineInterface:
         self.workflow = workflow_map.get(self.config.creator_type)
     
     def _init_integrations(self) -> None:
-        """Initialize platform integrations."""
-        self.integrations = {
+        """Initialize platform integrations."""        self.integrations = {
             'spotify': SpotifyIntegration(),
             'youtube': YouTubeIntegration(),
             'instagram': InstagramIntegration(),
@@ -201,8 +187,7 @@ class PipelineInterface:
         }
     
     def _init_analytics(self) -> None:
-        """Initialize monetization analytics."""
-        self.analytics = {
+        """Initialize monetization analytics."""        self.analytics = {
             'revenue': RevenueAnalyzer(),
             'engagement': EngagementAnalyzer(),
             'growth': GrowthAnalyzer(),
@@ -216,8 +201,7 @@ class PipelineInterface:
         metadata: Optional[Dict[str, Any]] = None,
         custom_pipeline: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Process content through the complete pipeline.
+        """        Process content through the complete pipeline.
         
         Args:
             content_path: Path to the content file
@@ -226,8 +210,7 @@ class PipelineInterface:
             
         Returns:
             Processing results with all pipeline outputs
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting content processing: {content_path}")
             
             # Step 1: Validate input
@@ -276,8 +259,7 @@ class PipelineInterface:
         content_path: Union[str, Path],
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Validate input content and metadata."""
-        content_path = Path(content_path)
+        """Validate input content and metadata."""        content_path = Path(content_path)
         
         # Content validation
         content_validation = await self.validators['content'].validate(content_path)
@@ -311,8 +293,7 @@ class PipelineInterface:
         metadata: Optional[Dict[str, Any]],
         custom_pipeline: Optional[List[str]]
     ) -> Dict[str, Any]:
-        """Execute the content processing pipeline."""
-        content_path = Path(content_path)
+        """Execute the content processing pipeline."""        content_path = Path(content_path)
         
         # Determine content type and select appropriate processor
         content_type = self._detect_content_type(content_path)
@@ -340,8 +321,7 @@ class PipelineInterface:
         return processing_result
     
     def _detect_content_type(self, content_path: Path) -> str:
-        """Detect content type based on file extension."""
-        extension = content_path.suffix.lower()
+        """Detect content type based on file extension."""        extension = content_path.suffix.lower()
         
         type_mapping = {
             # Audio formats
@@ -369,8 +349,7 @@ class PipelineInterface:
         return type_mapping.get(extension, 'document')
     
     async def _apply_ai_protection(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply AI-powered content protection."""
-        # This would integrate with the content_protection module
+        """Apply AI-powered content protection."""        # This would integrate with the content_protection module
         protection_result = {
             'ai_protection': {
                 'fingerprint_generated': True,
@@ -382,8 +361,7 @@ class PipelineInterface:
         return protection_result
     
     async def _optimize_seo(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply SEO optimization."""
-        seo_result = {
+        """Apply SEO optimization."""        seo_result = {
             'seo_optimization': {
                 'keywords_extracted': True,
                 'metadata_optimized': True,
@@ -394,8 +372,7 @@ class PipelineInterface:
         return seo_result
     
     async def _match_collaborations(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Find collaboration opportunities."""
-        collaboration_result = {
+        """Find collaboration opportunities."""        collaboration_result = {
             'collaboration_matching': {
                 'potential_collaborators': [],
                 'matching_score': 0.0,
@@ -405,8 +382,7 @@ class PipelineInterface:
         return collaboration_result
     
     async def _distribute_content(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Distribute content to multiple platforms."""
-        distribution_tasks = []
+        """Distribute content to multiple platforms."""        distribution_tasks = []
         
         for platform_name, integration in self.integrations.items():
             if self._should_distribute_to_platform(platform_name):
@@ -424,8 +400,7 @@ class PipelineInterface:
         }
     
     def _should_distribute_to_platform(self, platform_name: str) -> bool:
-        """Determine if content should be distributed to a specific platform."""
-        platform_mapping = {
+        """Determine if content should be distributed to a specific platform."""        platform_mapping = {
             CreatorType.MUSICIAN: ['spotify', 'youtube', 'soundcloud'],
             CreatorType.BLOGGER: ['substack', 'youtube'],
             CreatorType.PHOTOGRAPHER: ['instagram', 'youtube'],
@@ -438,8 +413,7 @@ class PipelineInterface:
         return platform_name in relevant_platforms
     
     async def _analyze_monetization(self, processing_result: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze monetization opportunities."""
-        analytics_tasks = []
+        """Analyze monetization opportunities."""        analytics_tasks = []
         
         for analyzer_name, analyzer in self.analytics.items():
             task = analyzer.analyze(processing_result)
@@ -462,8 +436,7 @@ class PipelineInterface:
         content_list: List[Union[str, Path]],
         metadata_list: Optional[List[Dict[str, Any]]] = None
     ) -> List[Dict[str, Any]]:
-        """Process multiple content files in batch."""
-        if metadata_list and len(metadata_list) != len(content_list):
+        """Process multiple content files in batch."""        if metadata_list and len(metadata_list) != len(content_list):
             raise ValueError("Metadata list length must match content list length")
         
         tasks = []
@@ -476,8 +449,7 @@ class PipelineInterface:
         return results
     
     def get_pipeline_status(self) -> Dict[str, Any]:
-        """Get current pipeline status and statistics."""
-        return {
+        """Get current pipeline status and statistics."""        return {
             'config': {
                 'creator_type': self.config.creator_type.value,
                 'mode': self.config.mode.value,
@@ -499,8 +471,7 @@ class PipelineInterface:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform a health check on all pipeline components."""
-        health_status = {
+        """Perform a health check on all pipeline components."""        health_status = {
             'overall_health': 'healthy',
             'components': {}
         }
@@ -539,8 +510,7 @@ class PipelineInterface:
 
 
 def create_pipeline(creator_type: str, **kwargs) -> PipelineInterface:
-    """
-    Factory function to create a pipeline interface for a specific creator type.
+    """    Factory function to create a pipeline interface for a specific creator type.
     
     Args:
         creator_type: Type of creator (musician, blogger, photographer, etc.)
@@ -548,8 +518,7 @@ def create_pipeline(creator_type: str, **kwargs) -> PipelineInterface:
         
     Returns:
         Configured PipelineInterface instance
-    """
-    try:
+    """    try:
         creator_enum = CreatorType(creator_type.lower())
     except ValueError:
         raise ValueError(f"Unsupported creator type: {creator_type}")
@@ -563,8 +532,7 @@ async def quick_process(
     creator_type: str,
     metadata: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """
-    Quick processing function for single content files.
+    """    Quick processing function for single content files.
     
     Args:
         content_path: Path to the content file
@@ -573,14 +541,12 @@ async def quick_process(
         
     Returns:
         Processing results
-    """
-    pipeline = create_pipeline(creator_type)
+    """    pipeline = create_pipeline(creator_type)
     return await pipeline.process_content(content_path, metadata)
 
 
 def main():
-    """Main entry point for command-line usage."""
-    import argparse
+    """Main entry point for command-line usage."""    import argparse
     import asyncio
     
     parser = argparse.ArgumentParser(description='IA Influencer Agent Pipeline')

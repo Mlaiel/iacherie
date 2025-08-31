@@ -1,5 +1,4 @@
-"""
-🔐 Advanced License Engine - Ultra-Professional DRM License Management
+"""🔐 Advanced License Engine - Ultra-Professional DRM License Management
 ====================================================================
 
 Ultra-advanced license generation, validation, and management system for comprehensive
@@ -24,7 +23,6 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
-
 import asyncio
 import logging
 import secrets
@@ -43,8 +41,7 @@ import base64
 logger = logging.getLogger(__name__)
 
 class LicenseCategory(str, Enum):
-    """License categories for different content types."""
-    MUSIC = "music"
+    """License categories for different content types."""    MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -53,8 +50,7 @@ class LicenseCategory(str, Enum):
     MERCHANDISE = "merchandise"
 
 class LicenseScope(str, Enum):
-    """License scope definitions."""
-    PERSONAL = "personal"
+    """License scope definitions."""    PERSONAL = "personal"
     COMMERCIAL = "commercial"
     EDUCATIONAL = "educational"
     BROADCAST = "broadcast"
@@ -64,8 +60,7 @@ class LicenseScope(str, Enum):
     MASTER = "master"
 
 class TerritoryScope(str, Enum):
-    """Geographic territory scope."""
-    WORLDWIDE = "worldwide"
+    """Geographic territory scope."""    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -75,8 +70,7 @@ class TerritoryScope(str, Enum):
     CUSTOM = "custom"
 
 class RevenueModel(str, Enum):
-    """Revenue calculation models."""
-    FLAT_FEE = "flat_fee"
+    """Revenue calculation models."""    FLAT_FEE = "flat_fee"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
     PERFORMANCE_BASED = "performance_based"
@@ -85,8 +79,7 @@ class RevenueModel(str, Enum):
 
 @dataclass
 class LicenseTerms:
-    """Comprehensive license terms and conditions."""
-    license_id: str
+    """Comprehensive license terms and conditions."""    license_id: str
     category: LicenseCategory
     scope: LicenseScope
     territory: TerritoryScope
@@ -113,8 +106,7 @@ class LicenseTerms:
 
 @dataclass
 class LicenseHolder:
-    """License holder information."""
-    user_id: int
+    """License holder information."""    user_id: int
     organization_id: Optional[str] = None
     legal_name: str = ""
     contact_email: str = ""
@@ -128,8 +120,7 @@ class LicenseHolder:
 
 @dataclass
 class LicenseAuditEntry:
-    """License audit trail entry."""
-    timestamp: datetime
+    """License audit trail entry."""    timestamp: datetime
     action: str
     user_id: int
     license_id: str
@@ -138,8 +129,7 @@ class LicenseAuditEntry:
     user_agent: Optional[str] = None
 
 class LicenseEngine:
-    """
-    Ultra-Advanced License Engine for DRM System
+    """    Ultra-Advanced License Engine for DRM System
     
     Features:
     - Multi-format license generation (music, video, image, text, multimedia)
@@ -150,11 +140,9 @@ class LicenseEngine:
     - AI-powered license optimization and recommendations
     - Blockchain integration for immutable license records
     - Advanced security with encryption and digital signatures
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the License Engine."""
-        self.config = config
+        """Initialize the License Engine."""        self.config = config
         self._initialized = False
         
         # Storage
@@ -178,8 +166,7 @@ class LicenseEngine:
         logger.info("License Engine initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the License Engine."""
-        try:
+        """Initialize the License Engine."""        try:
             # Load license templates
             await self._load_license_templates()
             
@@ -201,8 +188,7 @@ class LicenseEngine:
             return False
 
     async def _load_license_templates(self) -> None:
-        """Load predefined license templates."""
-        # Standard music license templates
+        """Load predefined license templates."""        # Standard music license templates
         music_sync_template = LicenseTerms(
             license_id="template_music_sync",
             category=LicenseCategory.MUSIC,
@@ -268,18 +254,15 @@ class LicenseEngine:
         logger.debug(f"Loaded {len(self.license_templates)} license templates")
 
     async def _load_existing_licenses(self) -> None:
-        """Load existing licenses from persistent storage."""
-        # Placeholder for database loading
+        """Load existing licenses from persistent storage."""        # Placeholder for database loading
         logger.debug("Loading existing licenses from storage")
 
     async def _load_license_holders(self) -> None:
-        """Load license holder information."""
-        # Placeholder for database loading
+        """Load license holder information."""        # Placeholder for database loading
         logger.debug("Loading license holder information")
 
     async def _initialize_blockchain(self) -> None:
-        """Initialize blockchain integration for immutable license records."""
-        # Placeholder for blockchain initialization
+        """Initialize blockchain integration for immutable license records."""        # Placeholder for blockchain initialization
         logger.debug("Initializing blockchain integration")
 
     async def generate_license(
@@ -290,8 +273,7 @@ class LicenseEngine:
         license_holder: LicenseHolder,
         custom_terms: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate a comprehensive digital license.
+        """        Generate a comprehensive digital license.
         
         Args:
             content_id: Unique content identifier
@@ -302,8 +284,7 @@ class LicenseEngine:
             
         Returns:
             Dict containing complete license information
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("License Engine not initialized")
         
         # Generate unique license ID
@@ -378,8 +359,7 @@ class LicenseEngine:
         content_id: str,
         user_id: int
     ) -> str:
-        """Generate cryptographically secure license key."""
-        timestamp = str(int(datetime.utcnow().timestamp()))
+        """Generate cryptographically secure license key."""        timestamp = str(int(datetime.utcnow().timestamp()))
         key_material = f"{license_id}:{content_id}:{user_id}:{timestamp}:{self.jwt_secret}"
         
         # Create hash
@@ -393,8 +373,7 @@ class LicenseEngine:
         return base64.urlsafe_b64encode(encrypted_key).decode()
 
     async def _calculate_financial_terms(self, license_terms: LicenseTerms) -> Dict[str, Any]:
-        """Calculate comprehensive financial terms."""
-        financial_terms = {
+        """Calculate comprehensive financial terms."""        financial_terms = {
             "license_fee": float(license_terms.license_fee),
             "revenue_model": license_terms.revenue_model.value,
             "currency": "USD",  # Default currency
@@ -430,8 +409,7 @@ class LicenseEngine:
         license_terms: LicenseTerms,
         license_holder: LicenseHolder
     ) -> str:
-        """Generate cryptographic digital signature for license."""
-        signature_payload = {
+        """Generate cryptographic digital signature for license."""        signature_payload = {
             "license_id": license_id,
             "content_id": content_id,
             "user_id": license_holder.user_id,
@@ -450,15 +428,13 @@ class LicenseEngine:
         return signature
 
     async def _record_on_blockchain(self, license_id: str) -> str:
-        """Record license on blockchain for immutability."""
-        # Placeholder for blockchain integration
+        """Record license on blockchain for immutability."""        # Placeholder for blockchain integration
         # In production, this would interact with blockchain network
         blockchain_hash = hashlib.sha256(f"blockchain_{license_id}_{datetime.utcnow()}".encode()).hexdigest()
         return blockchain_hash
 
     def _determine_jurisdiction(self, territory: TerritoryScope) -> str:
-        """Determine legal jurisdiction based on territory."""
-        jurisdiction_map = {
+        """Determine legal jurisdiction based on territory."""        jurisdiction_map = {
             TerritoryScope.WORLDWIDE: "international",
             TerritoryScope.NORTH_AMERICA: "nafta",
             TerritoryScope.EUROPE: "eu",
@@ -476,8 +452,7 @@ class LicenseEngine:
         content_id: str,
         usage_context: Dict[str, Any]
     ) -> Tuple[bool, str, Optional[Dict[str, Any]]]:
-        """
-        Validate license for content usage.
+        """        Validate license for content usage.
         
         Args:
             license_key: License key to validate
@@ -486,8 +461,7 @@ class LicenseEngine:
             
         Returns:
             Tuple[bool, str, Dict]: (is_valid, reason, license_info)
-        """
-        try:
+        """        try:
             # Decrypt and verify license key
             encrypted_key = base64.urlsafe_b64decode(license_key.encode())
             decrypted_key = self.cipher_suite.decrypt(encrypted_key).decode()
@@ -551,16 +525,14 @@ class LicenseEngine:
             return False, f"Validation error: {str(e)}", None
 
     async def _validate_license_key(self, stored_key: str, provided_key: str) -> bool:
-        """Validate license key cryptographically."""
-        return stored_key == provided_key
+        """Validate license key cryptographically."""        return stored_key == provided_key
 
     async def _validate_territory_access(
         self,
         license_doc: Dict[str, Any],
         user_location: Optional[str]
     ) -> bool:
-        """Validate geographic access permissions."""
-        license_terms = license_doc["license_terms"]
+        """Validate geographic access permissions."""        license_terms = license_doc["license_terms"]
         territory = license_terms.get("territory")
         
         if territory == TerritoryScope.WORLDWIDE.value:
@@ -593,8 +565,7 @@ class LicenseEngine:
         usage_type: str,
         usage_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Record license usage event."""
-        if license_id not in self.active_licenses:
+        """Record license usage event."""        if license_id not in self.active_licenses:
             raise ValueError(f"License not found: {license_id}")
         
         license_doc = self.active_licenses[license_id]
@@ -630,8 +601,7 @@ class LicenseEngine:
         license_doc: Dict[str, Any],
         usage_context: Dict[str, Any]
     ) -> Decimal:
-        """Calculate revenue generated from usage."""
-        financial_terms = license_doc["financial_terms"]
+        """Calculate revenue generated from usage."""        financial_terms = license_doc["financial_terms"]
         revenue_model = financial_terms["revenue_model"]
         
         if revenue_model == RevenueModel.FLAT_FEE.value:
@@ -656,8 +626,7 @@ class LicenseEngine:
         revocation_reason: str,
         revoked_by: int
     ) -> bool:
-        """Revoke an active license."""
-        if license_id not in self.active_licenses:
+        """Revoke an active license."""        if license_id not in self.active_licenses:
             return False
         
         license_doc = self.active_licenses[license_id]
@@ -687,8 +656,7 @@ class LicenseEngine:
         user_id: Optional[int] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive license analytics."""
-        analytics = {
+        """Get comprehensive license analytics."""        analytics = {
             "total_licenses": len(self.active_licenses),
             "active_licenses": 0,
             "expired_licenses": 0,
@@ -741,8 +709,7 @@ class LicenseEngine:
         ip_address: Optional[str] = None,
         user_agent: Optional[str] = None
     ) -> None:
-        """Record audit trail entry."""
-        audit_entry = LicenseAuditEntry(
+        """Record audit trail entry."""        audit_entry = LicenseAuditEntry(
             timestamp=datetime.utcnow(),
             action=action,
             user_id=user_id,
@@ -768,8 +735,7 @@ class LicenseEngine:
         actions: Optional[List[str]] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> List[Dict[str, Any]]:
-        """Retrieve audit trail entries."""
-        filtered_entries = []
+        """Retrieve audit trail entries."""        filtered_entries = []
         
         for entry in self.audit_trail:
             # Apply filters
@@ -799,8 +765,7 @@ class LicenseEngine:
         return filtered_entries
 
     async def shutdown(self) -> None:
-        """Shutdown the License Engine."""
-        logger.info("Shutting down License Engine...")
+        """Shutdown the License Engine."""        logger.info("Shutting down License Engine...")
         
         # Save state to persistent storage
         await self._save_state()
@@ -809,6 +774,5 @@ class LicenseEngine:
         logger.info("License Engine shutdown complete")
 
     async def _save_state(self) -> None:
-        """Save engine state to persistent storage."""
-        # Placeholder for database persistence
+        """Save engine state to persistent storage."""        # Placeholder for database persistence
         logger.debug("Saving License Engine state")

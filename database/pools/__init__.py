@@ -1,5 +1,4 @@
-"""
-Database Connection Pools Module - IA Influencer Agent + Content Protection Platform
+"""Database Connection Pools Module - IA Influencer Agent + Content Protection Platform
 
 Complete enterprise-grade database connection pool management system providing:
 
@@ -46,7 +45,6 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 # Core pool manager and interfaces
 from .manager import (
     DatabasePoolManager,
@@ -167,8 +165,7 @@ __description__ = "Enterprise Database Connection Pools for IA Influencer Agent 
 
 # Quick initialization functions
 async def initialize_all_pools(config_dir: str = "config/pools", master_key: str = None) -> bool:
-    """
-    Initialize all pool components with default configuration
+    """    Initialize all pool components with default configuration
     
     Args:
         config_dir: Configuration directory path
@@ -176,8 +173,7 @@ async def initialize_all_pools(config_dir: str = "config/pools", master_key: str
         
     Returns:
         bool: True if all components initialized successfully
-    """
-    try:
+    """    try:
         # Initialize core components
         pool_manager_ok = await initialize_pool_manager()
         config_manager_ok = await initialize_configuration_manager(config_dir, master_key)
@@ -207,13 +203,11 @@ async def initialize_all_pools(config_dir: str = "config/pools", master_key: str
         return False
 
 def get_pool_summary() -> dict:
-    """
-    Get summary of all pool components
+    """    Get summary of all pool components
     
     Returns:
         dict: Summary of pool status and configuration
-    """
-    try:
+    """    try:
         summary = {
             "version": __version__,
             "components": {

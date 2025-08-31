@@ -1,5 +1,4 @@
-"""
-Format Adapters - Enterprise Multi-format Content Processing System
+"""Format Adapters - Enterprise Multi-format Content Processing System
 ==================================================================
 
 Industrial-grade adapters for comprehensive content format processing, validation, compression,
@@ -37,7 +36,6 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
-
 import asyncio
 import logging
 import gzip
@@ -174,8 +172,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class CompressionAlgorithm(Enum):
-    """Supported compression algorithms."""
-    NONE = "none"
+    """Supported compression algorithms."""    NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -185,8 +182,7 @@ class CompressionAlgorithm(Enum):
     ZSTD = "zstd"
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms."""
-    NONE = "none"
+    """Supported encryption algorithms."""    NONE = "none"
     FERNET = "fernet"
     AES_GCM = "aes_gcm"
     AES_CBC = "aes_cbc"
@@ -194,8 +190,7 @@ class EncryptionAlgorithm(Enum):
     CHACHA20 = "chacha20"
 
 class FormatType(Enum):
-    """Supported format types."""
-    TEXT = "text"
+    """Supported format types."""    TEXT = "text"
     BINARY = "binary"
     IMAGE = "image"
     AUDIO = "audio"
@@ -206,8 +201,7 @@ class FormatType(Enum):
 
 @dataclass
 class ProcessingMetrics:
-    """Metrics for format processing operations."""
-    input_size: int = 0
+    """Metrics for format processing operations."""    input_size: int = 0
     output_size: int = 0
     compression_ratio: float = 0.0
     processing_time: float = 0.0
@@ -218,8 +212,7 @@ class ProcessingMetrics:
 
 @dataclass
 class FormatConfig:
-    """Advanced configuration for format adapters."""
-    # Basic settings
+    """Advanced configuration for format adapters."""    # Basic settings
     format_type: FormatType
     target_format: Optional[str] = None
     quality: int = 85  # For lossy formats (1-100)
@@ -263,8 +256,7 @@ class FormatConfig:
 
 @dataclass
 class FormatResult:
-    """Enhanced format processing result container."""
-    success: bool
+    """Enhanced format processing result container."""    success: bool
     data: Any
     format_info: Dict[str, Any]
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -277,14 +269,12 @@ class FormatResult:
     timestamp: datetime = field(default_factory=datetime.now)
 
 class FormatDetector:
-    """Advanced format detection utility."""
-    
+    """Advanced format detection utility."""    
     def __init__(self):
         self.magic_detector = magic.Magic(mime=True) if hasattr(magic, 'Magic') else None
     
     def detect_format(self, data: Union[bytes, str, Path]) -> Dict[str, Any]:
-        """Detect format with multiple methods."""
-        result = {
+        """Detect format with multiple methods."""        result = {
             'mime_type': None,
             'extension': None,
             'format_family': None,
@@ -340,8 +330,7 @@ class FormatDetector:
         return result
     
     def _detect_by_header(self, header: bytes) -> Dict[str, Any]:
-        """Detect format by file header (magic numbers)."""
-        signatures = {
+        """Detect format by file header (magic numbers)."""        signatures = {
             # Images
             b'\xFF\xD8\xFF': {'mime_type': 'image/jpeg', 'extension': '.jpg'},
             b'\x89PNG\r\n\x1A\n': {'mime_type': 'image/png', 'extension': '.png'},
@@ -376,8 +365,7 @@ class FormatDetector:
         return {'confidence': 0.0}
     
     def _get_format_family(self, mime_type: str) -> str:
-        """Get format family from MIME type."""
-        if mime_type.startswith('image/'):
+        """Get format family from MIME type."""        if mime_type.startswith('image/'):
             return 'image'
         elif mime_type.startswith('audio/'):
             return 'audio'
@@ -393,11 +381,9 @@ class FormatDetector:
             return 'binary'
 
 class FormatAdapter(ABC):
-    """Enterprise base class for all format adapters."""
-    
+    """Enterprise base class for all format adapters."""    
     def __init__(self, config: FormatConfig):
-        """Initialize format adapter with enterprise features."""
-        self.config = config
+        """Initialize format adapter with enterprise features."""        self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
         self.format_name = ""
         self.supported_formats: List[str] = []
@@ -409,8 +395,7 @@ class FormatAdapter(ABC):
             self._init_encryption()
     
     def _init_encryption(self):
-        """Initialize encryption cipher."""
-        if not CRYPTO_AVAILABLE:
+        """Initialize encryption cipher."""        if not CRYPTO_AVAILABLE:
             raise ImportError("cryptography package required for encryption")
         
         if not self.config.encryption_key:
@@ -435,8 +420,7 @@ class FormatAdapter(ABC):
             self._cipher = Fernet(key)
     
     def _encrypt_data(self, data: bytes) -> bytes:
-        """Encrypt data using configured algorithm."""
-        if self.config.encryption == EncryptionAlgorithm.NONE:
+        """Encrypt data using configured algorithm."""        if self.config.encryption == EncryptionAlgorithm.NONE:
             return data
         
         if self.config.encryption == EncryptionAlgorithm.FERNET:
@@ -446,8 +430,7 @@ class FormatAdapter(ABC):
         return data
     
     def _decrypt_data(self, data: bytes) -> bytes:
-        """Decrypt data using configured algorithm."""
-        if self.config.encryption == EncryptionAlgorithm.NONE:
+        """Decrypt data using configured algorithm."""        if self.config.encryption == EncryptionAlgorithm.NONE:
             return data
         
         if self.config.encryption == EncryptionAlgorithm.FERNET:
@@ -457,8 +440,7 @@ class FormatAdapter(ABC):
         return data
     
     def _compress_data(self, data: bytes) -> bytes:
-        """Compress data using configured algorithm."""
-        if self.config.compression == CompressionAlgorithm.NONE:
+        """Compress data using configured algorithm."""        if self.config.compression == CompressionAlgorithm.NONE:
             return data
         
         level = self.config.compression_level
@@ -482,8 +464,7 @@ class FormatAdapter(ABC):
         return data
     
     def _decompress_data(self, data: bytes) -> bytes:
-        """Decompress data using configured algorithm."""
-        if self.config.compression == CompressionAlgorithm.NONE:
+        """Decompress data using configured algorithm."""        if self.config.compression == CompressionAlgorithm.NONE:
             return data
         
         try:
@@ -509,24 +490,20 @@ class FormatAdapter(ABC):
         return data
     
     def _calculate_checksum(self, data: bytes, algorithm: str = 'sha256') -> str:
-        """Calculate checksum for data integrity."""
-        hash_func = getattr(hashlib, algorithm)()
+        """Calculate checksum for data integrity."""        hash_func = getattr(hashlib, algorithm)()
         hash_func.update(data)
         return hash_func.hexdigest()
     
     @abstractmethod
     async def process(self, data: Any, **kwargs) -> FormatResult:
-        """Process data with the format adapter."""
-        pass
+        """Process data with the format adapter."""        pass
     
     @abstractmethod
     async def validate(self, data: Any) -> bool:
-        """Validate data format."""
-        pass
+        """Validate data format."""        pass
     
     def get_format_info(self, data: Any) -> Dict[str, Any]:
-        """Get format information about the data."""
-        info = {
+        """Get format information about the data."""        info = {
             'format_name': self.format_name,
             'data_type': type(data).__name__,
             'size': len(data) if hasattr(data, '__len__') else None,
@@ -540,8 +517,7 @@ class FormatAdapter(ABC):
         return info
     
     def _detect_mime_type(self, data: bytes) -> Optional[str]:
-        """Detect MIME type from binary data."""
-        # Basic magic number detection
+        """Detect MIME type from binary data."""        # Basic magic number detection
         if data.startswith(b'\xFF\xD8\xFF'):
             return 'image/jpeg'
         elif data.startswith(b'\x89PNG\r\n\x1a\n'):
@@ -558,11 +534,9 @@ class FormatAdapter(ABC):
             return 'application/octet-stream'
 
 class MediaFormatAdapter(FormatAdapter):
-    """Adapter for media format processing (images, videos, audio)."""
-    
+    """Adapter for media format processing (images, videos, audio)."""    
     def __init__(self, config: FormatConfig):
-        """Initialize media format adapter."""
-        super().__init__(config)
+        """Initialize media format adapter."""        super().__init__(config)
         
         if not MEDIA_AVAILABLE:
             raise ImportError("Media dependencies not available. Install with: pip install Pillow av-python")
@@ -575,8 +549,7 @@ class MediaFormatAdapter(FormatAdapter):
         ]
     
     async def process(self, data: Any, **kwargs) -> FormatResult:
-        """Process media data."""
-        start_time = datetime.now()
+        """Process media data."""        start_time = datetime.now()
         
         try:
             operation = kwargs.get('operation', 'convert')
@@ -615,8 +588,7 @@ class MediaFormatAdapter(FormatAdapter):
         target_format: str,
         **kwargs
     ) -> FormatResult:
-        """Process binary media data."""
-        mime_type = self._detect_mime_type(data)
+        """Process binary media data."""        mime_type = self._detect_mime_type(data)
         
         if mime_type and mime_type.startswith('image/'):
             return await self._process_image_data(data, operation, target_format, **kwargs)
@@ -634,8 +606,7 @@ class MediaFormatAdapter(FormatAdapter):
         target_format: str,
         **kwargs
     ) -> FormatResult:
-        """Process image data."""
-        # Open image from bytes
+        """Process image data."""        # Open image from bytes
         image = Image.open(io.BytesIO(data))
         original_size = len(data)
         
@@ -709,8 +680,7 @@ class MediaFormatAdapter(FormatAdapter):
         target_format: str,
         **kwargs
     ) -> FormatResult:
-        """Process video data using av-python."""
-        # Create temporary file for av processing
+        """Process video data using av-python."""        # Create temporary file for av processing
         import tempfile
         
         with tempfile.NamedTemporaryFile(delete=False) as temp_input:
@@ -780,8 +750,7 @@ class MediaFormatAdapter(FormatAdapter):
         target_format: str,
         **kwargs
     ) -> FormatResult:
-        """Process audio data."""
-        # For now, return basic audio info
+        """Process audio data."""        # For now, return basic audio info
         # Full audio processing would require additional libraries like librosa
         
         return FormatResult(
@@ -803,16 +772,14 @@ class MediaFormatAdapter(FormatAdapter):
         target_format: str,
         **kwargs
     ) -> FormatResult:
-        """Process media file."""
-        # Read file and process as binary data
+        """Process media file."""        # Read file and process as binary data
         async with aiofiles.open(file_path, 'rb') as f:
             data = await f.read()
         
         return await self._process_binary_media(data, operation, target_format, **kwargs)
     
     async def validate(self, data: Any) -> bool:
-        """Validate media data."""
-        try:
+        """Validate media data."""        try:
             if isinstance(data, bytes):
                 mime_type = self._detect_mime_type(data)
                 return mime_type is not None and any(
@@ -830,17 +797,14 @@ class MediaFormatAdapter(FormatAdapter):
             return False
 
 class CompressionAdapter(FormatAdapter):
-    """Adapter for data compression and decompression."""
-    
+    """Adapter for data compression and decompression."""    
     def __init__(self, config: FormatConfig):
-        """Initialize compression adapter."""
-        super().__init__(config)
+        """Initialize compression adapter."""        super().__init__(config)
         self.format_name = "COMPRESSION"
         self.supported_formats = ['gzip', 'bz2', 'lzma', 'zlib']
     
     async def process(self, data: Any, **kwargs) -> FormatResult:
-        """Process data with compression."""
-        start_time = datetime.now()
+        """Process data with compression."""        start_time = datetime.now()
         
         try:
             operation = kwargs.get('operation', 'compress')
@@ -893,8 +857,7 @@ class CompressionAdapter(FormatAdapter):
             )
     
     async def _compress_data(self, data: bytes, algorithm: str) -> bytes:
-        """Compress data using specified algorithm."""
-        if algorithm == 'gzip':
+        """Compress data using specified algorithm."""        if algorithm == 'gzip':
             return gzip.compress(data, compresslevel=self.config.compression_level)
         elif algorithm == 'bz2':
             return bz2.compress(data, compresslevel=self.config.compression_level)
@@ -906,8 +869,7 @@ class CompressionAdapter(FormatAdapter):
             raise ValueError(f"Unsupported compression algorithm: {algorithm}")
     
     async def _decompress_data(self, data: bytes, algorithm: str) -> bytes:
-        """Decompress data using specified algorithm."""
-        if algorithm == 'gzip':
+        """Decompress data using specified algorithm."""        if algorithm == 'gzip':
             return gzip.decompress(data)
         elif algorithm == 'bz2':
             return bz2.decompress(data)
@@ -919,8 +881,7 @@ class CompressionAdapter(FormatAdapter):
             raise ValueError(f"Unsupported compression algorithm: {algorithm}")
     
     async def validate(self, data: Any) -> bool:
-        """Validate compressed data."""
-        try:
+        """Validate compressed data."""        try:
             if not isinstance(data, bytes):
                 return False
             
@@ -948,19 +909,15 @@ class CompressionAdapter(FormatAdapter):
             return False
     
     async def compress(self, data: Any, algorithm: str = 'gzip') -> FormatResult:
-        """Compress data."""
-        return await self.process(data, operation='compress', algorithm=algorithm)
+        """Compress data."""        return await self.process(data, operation='compress', algorithm=algorithm)
     
     async def decompress(self, data: bytes, algorithm: str = 'gzip') -> FormatResult:
-        """Decompress data."""
-        return await self.process(data, operation='decompress', algorithm=algorithm)
+        """Decompress data."""        return await self.process(data, operation='decompress', algorithm=algorithm)
 
 class EncryptionAdapter(FormatAdapter):
-    """Adapter for data encryption and decryption."""
-    
+    """Adapter for data encryption and decryption."""    
     def __init__(self, config: FormatConfig):
-        """Initialize encryption adapter."""
-        super().__init__(config)
+        """Initialize encryption adapter."""        super().__init__(config)
         
         if not CRYPTO_AVAILABLE:
             raise ImportError("Encryption dependencies not available. Install with: pip install cryptography")
@@ -976,8 +933,7 @@ class EncryptionAdapter(FormatAdapter):
             self.encryption_key = config.encryption_key.encode() if isinstance(config.encryption_key, str) else config.encryption_key
     
     async def process(self, data: Any, **kwargs) -> FormatResult:
-        """Process data with encryption."""
-        start_time = datetime.now()
+        """Process data with encryption."""        start_time = datetime.now()
         
         try:
             operation = kwargs.get('operation', 'encrypt')
@@ -1030,8 +986,7 @@ class EncryptionAdapter(FormatAdapter):
             )
     
     async def _encrypt_data(self, data: bytes, algorithm: str, **kwargs) -> bytes:
-        """Encrypt data using specified algorithm."""
-        if algorithm == 'fernet':
+        """Encrypt data using specified algorithm."""        if algorithm == 'fernet':
             cipher = Fernet(self.encryption_key)
             return cipher.encrypt(data)
         
@@ -1094,8 +1049,7 @@ class EncryptionAdapter(FormatAdapter):
             raise ValueError(f"Unsupported encryption algorithm: {algorithm}")
     
     async def _decrypt_data(self, data: bytes, algorithm: str, **kwargs) -> bytes:
-        """Decrypt data using specified algorithm."""
-        if algorithm == 'fernet':
+        """Decrypt data using specified algorithm."""        if algorithm == 'fernet':
             cipher = Fernet(self.encryption_key)
             return cipher.decrypt(data)
         
@@ -1146,8 +1100,7 @@ class EncryptionAdapter(FormatAdapter):
             raise ValueError(f"Unsupported encryption algorithm: {algorithm}")
     
     async def validate(self, data: Any) -> bool:
-        """Validate encrypted data."""
-        try:
+        """Validate encrypted data."""        try:
             if not isinstance(data, bytes):
                 return False
             
@@ -1168,25 +1121,20 @@ class EncryptionAdapter(FormatAdapter):
             return False
     
     async def encrypt(self, data: Any, algorithm: str = 'fernet', **kwargs) -> FormatResult:
-        """Encrypt data."""
-        return await self.process(data, operation='encrypt', algorithm=algorithm, **kwargs)
+        """Encrypt data."""        return await self.process(data, operation='encrypt', algorithm=algorithm, **kwargs)
     
     async def decrypt(self, data: bytes, algorithm: str = 'fernet', **kwargs) -> FormatResult:
-        """Decrypt data."""
-        return await self.process(data, operation='decrypt', algorithm=algorithm, **kwargs)
+        """Decrypt data."""        return await self.process(data, operation='decrypt', algorithm=algorithm, **kwargs)
 
 class SerializationAdapter(FormatAdapter):
-    """Adapter for data serialization and deserialization."""
-    
+    """Adapter for data serialization and deserialization."""    
     def __init__(self, config: FormatConfig):
-        """Initialize serialization adapter."""
-        super().__init__(config)
+        """Initialize serialization adapter."""        super().__init__(config)
         self.format_name = "SERIALIZATION"
         self.supported_formats = ['json', 'pickle', 'msgpack', 'yaml', 'cbor']
     
     async def process(self, data: Any, **kwargs) -> FormatResult:
-        """Process data with serialization."""
-        start_time = datetime.now()
+        """Process data with serialization."""        start_time = datetime.now()
         
         try:
             operation = kwargs.get('operation', 'serialize')
@@ -1229,8 +1177,7 @@ class SerializationAdapter(FormatAdapter):
             )
     
     async def _serialize_data(self, data: Any, format_type: str, **kwargs) -> Union[str, bytes]:
-        """Serialize data to specified format."""
-        if format_type == 'json':
+        """Serialize data to specified format."""        if format_type == 'json':
             return json.dumps(data, default=str, ensure_ascii=False, indent=kwargs.get('indent'))
         
         elif format_type == 'pickle':
@@ -1262,8 +1209,7 @@ class SerializationAdapter(FormatAdapter):
             raise ValueError(f"Unsupported serialization format: {format_type}")
     
     async def _deserialize_data(self, data: Union[str, bytes], format_type: str, **kwargs) -> Any:
-        """Deserialize data from specified format."""
-        if format_type == 'json':
+        """Deserialize data from specified format."""        if format_type == 'json':
             if isinstance(data, bytes):
                 data = data.decode('utf-8')
             return json.loads(data)
@@ -1305,8 +1251,7 @@ class SerializationAdapter(FormatAdapter):
             raise ValueError(f"Unsupported serialization format: {format_type}")
     
     async def validate(self, data: Any) -> bool:
-        """Validate serialized data."""
-        try:
+        """Validate serialized data."""        try:
             # Try to detect serialization format and validate
             if isinstance(data, str):
                 # Try JSON first
@@ -1347,11 +1292,9 @@ class SerializationAdapter(FormatAdapter):
             return False
 
 class ValidationAdapter(FormatAdapter):
-    """Adapter for data validation against schemas."""
-    
+    """Adapter for data validation against schemas."""    
     def __init__(self, config: FormatConfig):
-        """Initialize validation adapter."""
-        super().__init__(config)
+        """Initialize validation adapter."""        super().__init__(config)
         
         if not VALIDATION_AVAILABLE:
             self.logger.warning("Validation dependencies not available. Limited validation features.")
@@ -1360,8 +1303,7 @@ class ValidationAdapter(FormatAdapter):
         self.supported_formats = ['jsonschema', 'cerberus', 'custom']
     
     async def process(self, data: Any, **kwargs) -> FormatResult:
-        """Process data with validation."""
-        start_time = datetime.now()
+        """Process data with validation."""        start_time = datetime.now()
         
         try:
             schema = kwargs.get('schema', self.config.validation_schema)
@@ -1403,8 +1345,7 @@ class ValidationAdapter(FormatAdapter):
             )
     
     async def _validate_data(self, data: Any, schema: Dict, validator_type: str) -> Dict[str, Any]:
-        """Validate data against schema."""
-        if validator_type == 'jsonschema' and VALIDATION_AVAILABLE:
+        """Validate data against schema."""        if validator_type == 'jsonschema' and VALIDATION_AVAILABLE:
             try:
                 jsonschema.validate(data, schema)
                 return {'valid': True, 'errors': []}
@@ -1431,8 +1372,7 @@ class ValidationAdapter(FormatAdapter):
             raise ValueError(f"Unsupported validator type: {validator_type}")
     
     async def _custom_validation(self, data: Any, schema: Dict) -> Dict[str, Any]:
-        """Custom validation logic."""
-        errors = []
+        """Custom validation logic."""        errors = []
         
         # Basic type checking
         if 'type' in schema:
@@ -1469,8 +1409,7 @@ class ValidationAdapter(FormatAdapter):
         return {'valid': len(errors) == 0, 'errors': errors}
     
     async def validate(self, data: Any) -> bool:
-        """Basic validation check."""
-        if self.config.validation_schema:
+        """Basic validation check."""        if self.config.validation_schema:
             result = await self.process(data, schema=self.config.validation_schema)
             return result.success
         return True

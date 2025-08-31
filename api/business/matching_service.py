@@ -1,5 +1,4 @@
-"""
-Matching business service for IA Influencer Agent platform.
+"""Matching business service for IA Influencer Agent platform.
 
 This service handles intelligent matching between content creators for 
 collaborations, partnerships, and content discovery using AI algorithms.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any, Tuple
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class MatchingService:
-    """
-    AI-powered matching service for content creator collaborations.
+    """    AI-powered matching service for content creator collaborations.
     
     Features:
     - Content-based matching using ML embeddings
@@ -41,8 +38,7 @@ class MatchingService:
     - Genre and style compatibility
     - Audience overlap analysis
     - Success prediction modeling
-    """
-    
+    """    
     def __init__(self):
         self.content_embedding = ContentEmbeddingModel()
         self.user_profile_model = UserProfileModel()
@@ -56,8 +52,7 @@ class MatchingService:
         limit: int = 50,
         db: Session = None
     ) -> List[Dict[str, Any]]:
-        """
-        Find optimal collaboration matches for a user based on AI analysis.
+        """        Find optimal collaboration matches for a user based on AI analysis.
         
         Args:
             user_id: ID of user seeking collaboration
@@ -67,8 +62,7 @@ class MatchingService:
             
         Returns:
             Sorted list of collaboration matches with compatibility scores
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -137,8 +131,7 @@ class MatchingService:
         limit: int = 20,
         db: Session = None
     ) -> List[Dict[str, Any]]:
-        """
-        Find similar content or complementary content for cross-promotion.
+        """        Find similar content or complementary content for cross-promotion.
         
         Args:
             content_id: ID of content to match against
@@ -148,8 +141,7 @@ class MatchingService:
             
         Returns:
             List of matching content with similarity scores
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -220,8 +212,7 @@ class MatchingService:
         proposal_data: Dict[str, Any],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Create a collaboration request between users.
+        """        Create a collaboration request between users.
         
         Args:
             requester_id: ID of user making the request
@@ -232,8 +223,7 @@ class MatchingService:
             
         Returns:
             Created collaboration request data
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -288,8 +278,7 @@ class MatchingService:
         recommendation_type: str,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get personalized match recommendations for a user.
+        """        Get personalized match recommendations for a user.
         
         Args:
             user_id: User ID for recommendations
@@ -298,8 +287,7 @@ class MatchingService:
             
         Returns:
             Comprehensive recommendation data
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -352,8 +340,7 @@ class MatchingService:
     # Private helper methods
     
     async def _get_user_profile(self, user_id: uuid.UUID, db: Session) -> Optional[User]:
-        """Get comprehensive user profile for matching."""
-        return db.query(User).filter(
+        """Get comprehensive user profile for matching."""        return db.query(User).filter(
             and_(User.id == user_id, User.is_active == True)
         ).first()
     
@@ -363,8 +350,7 @@ class MatchingService:
         criteria: Dict[str, Any], 
         db: Session
     ) -> List[User]:
-        """Find potential collaboration partners based on criteria."""
-        query = db.query(User).filter(
+        """Find potential collaboration partners based on criteria."""        query = db.query(User).filter(
             and_(
                 User.id != user.id,
                 User.is_active == True,
@@ -396,8 +382,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Calculate compatibility score between two users using ML."""
-        try:
+        """Calculate compatibility score between two users using ML."""        try:
             # Content format compatibility (30%)
             format_score = self._calculate_format_compatibility(user1, user2)
             
@@ -429,8 +414,7 @@ class MatchingService:
             return 0.0
     
     def _calculate_format_compatibility(self, user1: User, user2: User) -> float:
-        """Calculate content format compatibility score."""
-        if not user1.supported_content_formats or not user2.supported_content_formats:
+        """Calculate content format compatibility score."""        if not user1.supported_content_formats or not user2.supported_content_formats:
             return 0.0
         
         formats1 = set(user1.supported_content_formats)
@@ -447,8 +431,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Calculate genre/category compatibility score."""
-        try:
+        """Calculate genre/category compatibility score."""        try:
             # Get recent content for both users
             user1_contents = db.query(Content).filter(
                 Content.owner_id == user1.id
@@ -495,8 +478,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Calculate audience overlap and compatibility."""
-        try:
+        """Calculate audience overlap and compatibility."""        try:
             # Get audience analytics for both users
             user1_analytics = await self.analytics.get_user_audience_data(user1.id, db)
             user2_analytics = await self.analytics.get_user_audience_data(user2.id, db)
@@ -534,8 +516,7 @@ class MatchingService:
             return 0.5
     
     def _compare_demographics(self, demo1: Dict, demo2: Dict) -> float:
-        """Compare demographic data between audiences."""
-        if not demo1 or not demo2:
+        """Compare demographic data between audiences."""        if not demo1 or not demo2:
             return 0.5
         
         age_similarity = self._compare_age_ranges(
@@ -551,8 +532,7 @@ class MatchingService:
         return (age_similarity + gender_similarity) / 2
     
     def _compare_age_ranges(self, ages1: Dict, ages2: Dict) -> float:
-        """Compare age range distributions."""
-        if not ages1 or not ages2:
+        """Compare age range distributions."""        if not ages1 or not ages2:
             return 0.5
         
         # Calculate overlap in age distributions
@@ -569,8 +549,7 @@ class MatchingService:
         return overlap_score / total_weight if total_weight > 0 else 0.5
     
     def _compare_gender_distribution(self, gender1: Dict, gender2: Dict) -> float:
-        """Compare gender distributions."""
-        if not gender1 or not gender2:
+        """Compare gender distributions."""        if not gender1 or not gender2:
             return 0.5
         
         # Simple similarity based on distribution overlap
@@ -581,8 +560,7 @@ class MatchingService:
         return max(0.0, 1.0 - total_diff / 200.0)  # Normalize to 0-1
     
     def _compare_geographic_data(self, geo1: Dict, geo2: Dict) -> float:
-        """Compare geographic audience data."""
-        if not geo1 or not geo2:
+        """Compare geographic audience data."""        if not geo1 or not geo2:
             return 0.5
         
         # Compare top countries/regions
@@ -598,8 +576,7 @@ class MatchingService:
         return intersection / union if union > 0 else 0.0
     
     def _compare_interests(self, interests1: List, interests2: List) -> float:
-        """Compare audience interests."""
-        if not interests1 or not interests2:
+        """Compare audience interests."""        if not interests1 or not interests2:
             return 0.5
         
         set1 = set(interests1)
@@ -616,8 +593,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Calculate score based on collaboration history and success."""
-        try:
+        """Calculate score based on collaboration history and success."""        try:
             # Check if users have collaborated before
             previous_collaborations = db.query(Collaboration).filter(
                 or_(
@@ -663,8 +639,7 @@ class MatchingService:
         user_id: uuid.UUID, 
         db: Session
     ) -> float:
-        """Calculate user's overall collaboration success rate."""
-        try:
+        """Calculate user's overall collaboration success rate."""        try:
             user_collaborations = db.query(Collaboration).filter(
                 or_(
                     Collaboration.requester_id == user_id,
@@ -693,8 +668,7 @@ class MatchingService:
             return 0.5
     
     def _calculate_activity_compatibility(self, user1: User, user2: User) -> float:
-        """Calculate activity level and profile completeness compatibility."""
-        try:
+        """Calculate activity level and profile completeness compatibility."""        try:
             # Profile completeness scores
             user1_completeness = self._calculate_profile_completeness(user1)
             user2_completeness = self._calculate_profile_completeness(user2)
@@ -714,8 +688,7 @@ class MatchingService:
             return 0.5
     
     def _calculate_profile_completeness(self, user: User) -> float:
-        """Calculate profile completeness score."""
-        score = 0.0
+        """Calculate profile completeness score."""        score = 0.0
         total_fields = 10
         
         if user.full_name: score += 1
@@ -732,8 +705,7 @@ class MatchingService:
         return score / total_fields
     
     def _calculate_activity_score(self, user: User) -> float:
-        """Calculate user activity score based on recent activity."""
-        if not user.last_activity_at:
+        """Calculate user activity score based on recent activity."""        if not user.last_activity_at:
             return 0.0
         
         days_since_activity = (datetime.utcnow() - user.last_activity_at).days
@@ -755,8 +727,7 @@ class MatchingService:
         user2: User, 
         compatibility_score: float
     ) -> List[str]:
-        """Generate human-readable match reasons."""
-        reasons = []
+        """Generate human-readable match reasons."""        reasons = []
         
         # Format compatibility
         format_overlap = self._calculate_format_compatibility(user1, user2)
@@ -792,8 +763,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Predict the success probability of a collaboration."""
-        try:
+        """Predict the success probability of a collaboration."""        try:
             # Feature extraction for ML model
             features = await self._extract_collaboration_features(user1, user2, db)
             
@@ -819,8 +789,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> Dict[str, float]:
-        """Extract features for collaboration success prediction."""
-        features = {}
+        """Extract features for collaboration success prediction."""        features = {}
         
         features["compatibility_score"] = await self._calculate_compatibility_score(
             user1, user2, db
@@ -853,8 +822,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Calculate audience overlap percentage."""
-        try:
+        """Calculate audience overlap percentage."""        try:
             # This is a simplified version - in production would use detailed analytics
             user1_followers = user1.follower_count or 0
             user2_followers = user2.follower_count or 0
@@ -880,8 +848,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> Dict[str, Any]:
-        """Analyze content synergy potential."""
-        try:
+        """Analyze content synergy potential."""        try:
             synergy_analysis = {
                 "format_synergy": self._calculate_format_compatibility(user1, user2),
                 "genre_synergy": await self._calculate_genre_compatibility(user1, user2, db),
@@ -902,8 +869,7 @@ class MatchingService:
             return {"overall_synergy": 0.5}
     
     async def _analyze_complementary_skills(self, user1: User, user2: User) -> float:
-        """Analyze how well users' skills complement each other."""
-        if not user1.skills or not user2.skills:
+        """Analyze how well users' skills complement each other."""        if not user1.skills or not user2.skills:
             return 0.5
         
         skills1 = set(user1.skills)
@@ -934,8 +900,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Calculate cross-promotion potential."""
-        try:
+        """Calculate cross-promotion potential."""        try:
             # Factors: audience size difference, audience overlap, content complementarity
             follower1 = user1.follower_count or 0
             follower2 = user2.follower_count or 0
@@ -971,8 +936,7 @@ class MatchingService:
         user2: User, 
         db: Session
     ) -> float:
-        """Identify remix and mashup opportunities."""
-        try:
+        """Identify remix and mashup opportunities."""        try:
             # Get recent audio/video content from both users
             user1_content = db.query(Content).filter(
                 and_(
@@ -1014,8 +978,7 @@ class MatchingService:
         match_type: str,
         db: Session
     ) -> List[Content]:
-        """Get candidate contents for matching."""
-        query = db.query(Content).filter(
+        """Get candidate contents for matching."""        query = db.query(Content).filter(
             and_(
                 Content.id != source_content.id,
                 Content.is_active == True,
@@ -1040,8 +1003,7 @@ class MatchingService:
         embedding1: np.ndarray,
         embedding2: np.ndarray
     ) -> float:
-        """Calculate similarity between content embeddings."""
-        try:
+        """Calculate similarity between content embeddings."""        try:
             if embedding1 is None or embedding2 is None:
                 return 0.0
             
@@ -1063,8 +1025,7 @@ class MatchingService:
         content2: Content,
         db: Session
     ) -> float:
-        """Calculate how well contents complement each other."""
-        try:
+        """Calculate how well contents complement each other."""        try:
             # Complementarity factors
             format_complement = 0.0
             if content1.file_type != content2.file_type:
@@ -1107,8 +1068,7 @@ class MatchingService:
         content2: Content,
         db: Session
     ) -> float:
-        """Calculate remix potential between two pieces of content."""
-        try:
+        """Calculate remix potential between two pieces of content."""        try:
             # Only audio and video content can be remixed effectively
             if content1.file_type not in ["audio", "video"] or content2.file_type not in ["audio", "video"]:
                 return 0.0
@@ -1152,8 +1112,7 @@ class MatchingService:
             return 0.0
     
     def _are_keys_compatible(self, key1: str, key2: str) -> bool:
-        """Check if musical keys are compatible for remixing."""
-        # Simplified key compatibility - in production would use music theory
+        """Check if musical keys are compatible for remixing."""        # Simplified key compatibility - in production would use music theory
         compatible_keys = {
             "C": ["C", "Am", "F", "G"],
             "G": ["G", "Em", "C", "D"],
@@ -1177,8 +1136,7 @@ class MatchingService:
         partner_id: uuid.UUID,
         db: Session
     ):
-        """Validate that both users are eligible for collaboration."""
-        # Check if users exist and are active
+        """Validate that both users are eligible for collaboration."""        # Check if users exist and are active
         requester = db.query(User).filter(User.id == requester_id).first()
         partner = db.query(User).filter(User.id == partner_id).first()
         
@@ -1205,8 +1163,7 @@ class MatchingService:
             raise ValueError("Collaboration request already exists")
     
     async def _get_trending_creators(self, user: User, db: Session) -> List[Dict[str, Any]]:
-        """Get trending creators in user's categories."""
-        try:
+        """Get trending creators in user's categories."""        try:
             # Get users with similar content formats and high recent activity
             trending_query = db.query(User).filter(
                 and_(
@@ -1253,8 +1210,7 @@ class MatchingService:
             return []
     
     async def _calculate_trending_score(self, user: User, db: Session) -> float:
-        """Calculate trending score for a user."""
-        try:
+        """Calculate trending score for a user."""        try:
             score = 0.0
             
             # Recent activity score (40%)
@@ -1287,8 +1243,7 @@ class MatchingService:
             return 0.0
     
     async def _generate_match_insights(self, user: User, db: Session) -> Dict[str, Any]:
-        """Generate personalized matching insights for user."""
-        try:
+        """Generate personalized matching insights for user."""        try:
             insights = {
                 "profile_optimization": [],
                 "collaboration_tips": [],

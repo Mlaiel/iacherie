@@ -1,5 +1,4 @@
-"""
-Content Management Schemas
+"""Content Management Schemas
 
 Comprehensive Pydantic schemas for content fingerprinting, metadata management, 
 and content versioning in the IA Influencer Agent platform.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 from datetime import datetime
 from decimal import Decimal
 from enum import Enum
@@ -20,8 +18,7 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class ContentTypeEnum(str, Enum):
-    """Supported content types for fingerprinting"""
-    AUDIO = "audio"
+    """Supported content types for fingerprinting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -31,8 +28,7 @@ class ContentTypeEnum(str, Enum):
 
 
 class ContentStatusEnum(str, Enum):
-    """Content processing status"""
-    PENDING = "pending"
+    """Content processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -41,8 +37,7 @@ class ContentStatusEnum(str, Enum):
 
 
 class FingerprintAlgorithmEnum(str, Enum):
-    """Fingerprinting algorithms available"""
-    CHROMAPRINT = "chromaprint"
+    """Fingerprinting algorithms available"""    CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     OPENCV_PHASH = "opencv_phash"
     CLIP_EMBEDDING = "clip_embedding"
@@ -52,8 +47,7 @@ class FingerprintAlgorithmEnum(str, Enum):
 
 
 class ContentQualityEnum(str, Enum):
-    """Content quality classifications"""
-    HIGH = "high"
+    """Content quality classifications"""    HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     PROFESSIONAL = "professional"
@@ -62,8 +56,7 @@ class ContentQualityEnum(str, Enum):
 
 
 class AudioMetadataSchema(BaseModel):
-    """Audio-specific metadata schema"""
-    duration_seconds: PositiveFloat = Field(..., description="Audio duration in seconds")
+    """Audio-specific metadata schema"""    duration_seconds: PositiveFloat = Field(..., description="Audio duration in seconds")
     sample_rate: PositiveInt = Field(..., description="Sample rate in Hz")
     bit_rate: Optional[PositiveInt] = Field(None, description="Bit rate in kbps")
     channels: PositiveInt = Field(..., description="Number of audio channels")
@@ -95,8 +88,7 @@ class AudioMetadataSchema(BaseModel):
 
 
 class VideoMetadataSchema(BaseModel):
-    """Video-specific metadata schema"""
-    duration_seconds: PositiveFloat = Field(..., description="Video duration in seconds")
+    """Video-specific metadata schema"""    duration_seconds: PositiveFloat = Field(..., description="Video duration in seconds")
     width: PositiveInt = Field(..., description="Video width in pixels")
     height: PositiveInt = Field(..., description="Video height in pixels")
     fps: PositiveFloat = Field(..., description="Frames per second")
@@ -127,8 +119,7 @@ class VideoMetadataSchema(BaseModel):
 
 
 class ImageMetadataSchema(BaseModel):
-    """Image-specific metadata schema"""
-    width: PositiveInt = Field(..., description="Image width in pixels")
+    """Image-specific metadata schema"""    width: PositiveInt = Field(..., description="Image width in pixels")
     height: PositiveInt = Field(..., description="Image height in pixels")
     format: str = Field(..., description="Image format (jpg, png, etc.)")
     color_mode: Optional[str] = Field(None, description="Color mode (RGB, CMYK, etc.)")
@@ -157,8 +148,7 @@ class ImageMetadataSchema(BaseModel):
 
 
 class TextMetadataSchema(BaseModel):
-    """Text-specific metadata schema"""
-    character_count: PositiveInt = Field(..., description="Total character count")
+    """Text-specific metadata schema"""    character_count: PositiveInt = Field(..., description="Total character count")
     word_count: PositiveInt = Field(..., description="Total word count")
     paragraph_count: PositiveInt = Field(..., description="Number of paragraphs")
     language: Optional[str] = Field(None, description="Detected language code")
@@ -185,8 +175,7 @@ class TextMetadataSchema(BaseModel):
 
 
 class ContentFingerprintBaseSchema(BaseModel):
-    """Base schema for content fingerprinting"""
-    content_type: ContentTypeEnum = Field(..., description="Type of content being fingerprinted")
+    """Base schema for content fingerprinting"""    content_type: ContentTypeEnum = Field(..., description="Type of content being fingerprinted")
     filename: str = Field(..., min_length=1, max_length=255, description="Original filename")
     file_size: PositiveInt = Field(..., description="File size in bytes")
     mime_type: str = Field(..., description="MIME type of the content")
@@ -211,15 +200,13 @@ class ContentFingerprintBaseSchema(BaseModel):
     @classmethod
     @classmethod
     def validate_fingerprint_hash(cls, v):
-        """Validate fingerprint hash format"""
-        if not v or len(v) < 32:
+        """Validate fingerprint hash format"""        if not v or len(v) < 32:
             raise ValueError("Fingerprint hash must be at least 32 characters long")
         return v.lower()
     
     @model_validator(mode='after')
     def validate_metadata_consistency(self):
-        """Ensure metadata matches content type"""
-        content_type = self.content_type
+        """Ensure metadata matches content type"""        content_type = self.content_type
         
         if content_type == ContentTypeEnum.AUDIO and not self.audio_metadata:
             raise ValueError("Audio metadata required for audio content")
@@ -234,8 +221,7 @@ class ContentFingerprintBaseSchema(BaseModel):
 
 
 class ContentFingerprintCreateSchema(ContentFingerprintBaseSchema):
-    """Schema for creating content fingerprints"""
-    user_id: PositiveInt = Field(..., description="ID of the user uploading content")
+    """Schema for creating content fingerprints"""    user_id: PositiveInt = Field(..., description="ID of the user uploading content")
     project_id: Optional[PositiveInt] = Field(None, description="Associated project ID")
     collection_id: Optional[PositiveInt] = Field(None, description="Associated collection ID")
     
@@ -264,8 +250,7 @@ class ContentFingerprintCreateSchema(ContentFingerprintBaseSchema):
 
 
 class ContentFingerprintUpdateSchema(BaseModel):
-    """Schema for updating content fingerprints"""
-    tags: Optional[List[str]] = Field(None, description="Updated content tags")
+    """Schema for updating content fingerprints"""    tags: Optional[List[str]] = Field(None, description="Updated content tags")
     categories: Optional[List[str]] = Field(None, description="Updated content categories")
     custom_metadata: Optional[Dict[str, Any]] = Field(None, description="Updated custom metadata")
     enable_protection: Optional[bool] = Field(None, description="Toggle protection monitoring")
@@ -286,8 +271,7 @@ class ContentFingerprintUpdateSchema(BaseModel):
 
 
 class ContentFingerprintResponseSchema(ContentFingerprintBaseSchema):
-    """Schema for content fingerprint responses"""
-    id: PositiveInt = Field(..., description="Unique fingerprint ID")
+    """Schema for content fingerprint responses"""    id: PositiveInt = Field(..., description="Unique fingerprint ID")
     user_id: PositiveInt = Field(..., description="Owner user ID")
     project_id: Optional[PositiveInt] = Field(None, description="Associated project ID")
     collection_id: Optional[PositiveInt] = Field(None, description="Associated collection ID")
@@ -337,8 +321,7 @@ class ContentFingerprintResponseSchema(ContentFingerprintBaseSchema):
 
 
 class ContentFingerprintListSchema(BaseModel):
-    """Schema for listing content fingerprints"""
-    fingerprints: List[ContentFingerprintResponseSchema] = Field(..., description="List of fingerprints")
+    """Schema for listing content fingerprints"""    fingerprints: List[ContentFingerprintResponseSchema] = Field(..., description="List of fingerprints")
     total_count: int = Field(..., description="Total number of fingerprints")
     page: int = Field(..., description="Current page number")
     per_page: int = Field(..., description="Items per page")
@@ -361,8 +344,7 @@ class ContentFingerprintListSchema(BaseModel):
 
 
 class ContentStatisticsSchema(BaseModel):
-    """Schema for content statistics"""
-    total_content_items: int = Field(..., description="Total content items")
+    """Schema for content statistics"""    total_content_items: int = Field(..., description="Total content items")
     content_by_type: Dict[str, int] = Field(..., description="Content count by type")
     content_by_status: Dict[str, int] = Field(..., description="Content count by status")
     total_file_size: int = Field(..., description="Total file size in bytes")
@@ -390,8 +372,7 @@ class ContentStatisticsSchema(BaseModel):
 
 
 class ContentSearchSchema(BaseModel):
-    """Schema for content search requests"""
-    query: Optional[str] = Field(None, description="Search query")
+    """Schema for content search requests"""    query: Optional[str] = Field(None, description="Search query")
     content_types: Optional[List[ContentTypeEnum]] = Field(None, description="Filter by content types")
     status: Optional[List[ContentStatusEnum]] = Field(None, description="Filter by status")
     quality: Optional[List[ContentQualityEnum]] = Field(None, description="Filter by quality")
@@ -422,8 +403,7 @@ class ContentSearchSchema(BaseModel):
 
 
 class ContentBatchOperationSchema(BaseModel):
-    """Schema for batch operations on content"""
-    fingerprint_ids: List[PositiveInt] = Field(..., description="List of fingerprint IDs")
+    """Schema for batch operations on content"""    fingerprint_ids: List[PositiveInt] = Field(..., description="List of fingerprint IDs")
     operation: str = Field(..., description="Operation to perform")
     parameters: Optional[Dict[str, Any]] = Field(None, description="Operation parameters")
     

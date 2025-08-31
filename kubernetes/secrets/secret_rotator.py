@@ -1,11 +1,9 @@
-"""
-IA Influencer Agent - Secret Rotation Manager
+"""IA Influencer Agent - Secret Rotation Manager
 Automated secret rotation with zero-downtime deployment
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
-
 import os
 import logging
 import asyncio
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class RotationStrategy(Enum):
-    """Secret rotation strategies."""
-    DATABASE_PASSWORD = "database_password"
+    """Secret rotation strategies."""    DATABASE_PASSWORD = "database_password"
     API_KEY = "api_key"
     JWT_SECRET = "jwt_secret"
     CERTIFICATE = "certificate"
@@ -44,8 +41,7 @@ class RotationStrategy(Enum):
 
 
 class RotationStatus(Enum):
-    """Rotation job status."""
-    PENDING = "pending"
+    """Rotation job status."""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -55,8 +51,7 @@ class RotationStatus(Enum):
 
 @dataclass
 class RotationJob:
-    """Secret rotation job configuration."""
-    id: str
+    """Secret rotation job configuration."""    id: str
     secret_path: str
     strategy: RotationStrategy
     schedule: str  # Cron expression
@@ -73,8 +68,7 @@ class RotationJob:
 
 @dataclass
 class RotationResult:
-    """Rotation operation result."""
-    job_id: str
+    """Rotation operation result."""    job_id: str
     success: bool
     new_version: Optional[str] = None
     old_version: Optional[str] = None
@@ -84,24 +78,20 @@ class RotationResult:
 
 
 class SecretRotator:
-    """
-    Enterprise secret rotation manager with automated scheduling,
+    """    Enterprise secret rotation manager with automated scheduling,
     zero-downtime deployment, and comprehensive rollback capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         vault_manager: VaultManager,
         config: SecretsConfig = None
     ):
-        """
-        Initialize secret rotator.
+        """        Initialize secret rotator.
         
         Args:
             vault_manager: Configured VaultManager instance
             config: Optional secrets configuration
-        """
-        self.vault = vault_manager
+        """        self.vault = vault_manager
         self.config = config or SecretsConfig()
         self.security = SecurityUtils()
         self.notifications = NotificationUtils()
@@ -119,8 +109,7 @@ class SecretRotator:
         logger.info("SecretRotator initialized")
     
     def start_scheduler(self) -> None:
-        """Start the rotation scheduler."""
-        if self.is_running:
+        """Start the rotation scheduler."""        if self.is_running:
             logger.warning("Scheduler is already running")
             return
         
@@ -133,8 +122,7 @@ class SecretRotator:
         logger.info("Secret rotation scheduler started")
     
     def stop_scheduler(self) -> None:
-        """Stop the rotation scheduler."""
-        self.is_running = False
+        """Stop the rotation scheduler."""        self.is_running = False
         if self.scheduler_thread:
             self.scheduler_thread.join(timeout=30)
         self.executor.shutdown(wait=True)
@@ -148,8 +136,7 @@ class SecretRotator:
         metadata: Dict[str, Any] = None,
         notification_webhooks: List[str] = None
     ) -> str:
-        """
-        Schedule automatic secret rotation.
+        """        Schedule automatic secret rotation.
         
         Args:
             secret_path: Path to secret in Vault
@@ -160,8 +147,7 @@ class SecretRotator:
             
         Returns:
             str: Job ID for the scheduled rotation
-        """
-        try:
+        """        try:
             # Convert strategy to enum
             if isinstance(rotation_strategy, str):
                 strategy = RotationStrategy(rotation_strategy)
@@ -206,8 +192,7 @@ class SecretRotator:
         rotation_strategy: Union[str, RotationStrategy],
         force: bool = False
     ) -> RotationResult:
-        """
-        Immediately rotate a secret.
+        """        Immediately rotate a secret.
         
         Args:
             secret_path: Path to secret in Vault
@@ -216,8 +201,7 @@ class SecretRotator:
             
         Returns:
             RotationResult: Result of the rotation operation
-        """
-        try:
+        """        try:
             # Convert strategy to enum
             if isinstance(rotation_strategy, str):
                 strategy = RotationStrategy(rotation_strategy)
@@ -252,16 +236,14 @@ class SecretRotator:
             )
     
     def get_rotation_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Get status of a rotation job.
+        """        Get status of a rotation job.
         
         Args:
             job_id: Job ID to query
             
         Returns:
             dict: Job status information
-        """
-        job = self.rotation_jobs.get(job_id)
+        """        job = self.rotation_jobs.get(job_id)
         if not job:
             return None
         
@@ -279,16 +261,14 @@ class SecretRotator:
         }
     
     def cancel_rotation(self, job_id: str) -> bool:
-        """
-        Cancel a scheduled rotation.
+        """        Cancel a scheduled rotation.
         
         Args:
             job_id: Job ID to cancel
             
         Returns:
             bool: True if cancelled successfully
-        """
-        try:
+        """        try:
             job = self.rotation_jobs.get(job_id)
             if not job:
                 logger.error(f"Job {job_id} not found")
@@ -315,8 +295,7 @@ class SecretRotator:
         secret_path: str,
         target_version: str = None
     ) -> bool:
-        """
-        Rollback secret to previous version.
+        """        Rollback secret to previous version.
         
         Args:
             secret_path: Path to secret in Vault
@@ -324,8 +303,7 @@ class SecretRotator:
             
         Returns:
             bool: True if rollback successful
-        """
-        try:
+        """        try:
             if not target_version:
                 # Get previous version
                 secret_metadata = self.vault.get_secret(secret_path, decrypt=False)
@@ -378,8 +356,7 @@ class SecretRotator:
         secret_path: str = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """
-        Get rotation history.
+        """        Get rotation history.
         
         Args:
             secret_path: Filter by secret path
@@ -387,8 +364,7 @@ class SecretRotator:
             
         Returns:
             list: List of rotation results
-        """
-        history = self.rotation_history
+        """        history = self.rotation_history
         
         if secret_path:
             history = [
@@ -402,8 +378,7 @@ class SecretRotator:
         return [self._rotation_result_to_dict(result) for result in history[:limit]]
     
     def _scheduler_loop(self) -> None:
-        """Main scheduler loop."""
-        while self.is_running:
+        """Main scheduler loop."""        while self.is_running:
             try:
                 current_time = datetime.utcnow()
                 
@@ -423,16 +398,14 @@ class SecretRotator:
                 time.sleep(60)
     
     def _execute_rotation(self, job: RotationJob) -> RotationResult:
-        """
-        Execute secret rotation job.
+        """        Execute secret rotation job.
         
         Args:
             job: Rotation job to execute
             
         Returns:
             RotationResult: Result of the rotation
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         result = RotationResult(job_id=job.id, success=False)
         
         try:
@@ -545,8 +518,7 @@ class SecretRotator:
         strategy: RotationStrategy,
         current_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate new secret data based on rotation strategy."""
-        new_data = current_data.copy()
+        """Generate new secret data based on rotation strategy."""        new_data = current_data.copy()
         
         if strategy == RotationStrategy.DATABASE_PASSWORD:
             new_data['password'] = self._generate_secure_password(32)
@@ -575,29 +547,23 @@ class SecretRotator:
         return new_data
     
     def _generate_secure_password(self, length: int = 32) -> str:
-        """Generate a secure random password."""
-        alphabet = string.ascii_letters + string.digits + "!@#$%^&*"
+        """Generate a secure random password."""        alphabet = string.ascii_letters + string.digits + "!@#$%^&*"
         return ''.join(secrets.choice(alphabet) for _ in range(length))
     
     def _generate_api_key(self) -> str:
-        """Generate a secure API key."""
-        return secrets.token_urlsafe(32)
+        """Generate a secure API key."""        return secrets.token_urlsafe(32)
     
     def _generate_jwt_secret(self) -> str:
-        """Generate a JWT signing secret."""
-        return secrets.token_urlsafe(64)
+        """Generate a JWT signing secret."""        return secrets.token_urlsafe(64)
     
     def _generate_encryption_key(self) -> str:
-        """Generate an encryption key."""
-        return secrets.token_urlsafe(32)
+        """Generate an encryption key."""        return secrets.token_urlsafe(32)
     
     def _generate_webhook_token(self) -> str:
-        """Generate a webhook verification token."""
-        return secrets.token_hex(32)
+        """Generate a webhook verification token."""        return secrets.token_hex(32)
     
     def _generate_service_account_key(self) -> Dict[str, str]:
-        """Generate service account credentials."""
-        return {
+        """Generate service account credentials."""        return {
             'access_key': secrets.token_urlsafe(20),
             'secret_key': secrets.token_urlsafe(40)
         }
@@ -607,8 +573,7 @@ class SecretRotator:
         strategy: RotationStrategy,
         secret_data: Dict[str, Any]
     ) -> bool:
-        """Validate generated secret meets requirements."""
-        try:
+        """Validate generated secret meets requirements."""        try:
             if strategy == RotationStrategy.DATABASE_PASSWORD:
                 password = secret_data.get('password', '')
                 return len(password) >= 12 and any(c.isdigit() for c in password)
@@ -638,8 +603,7 @@ class SecretRotator:
         old_data: Dict[str, Any],
         new_data: Dict[str, Any]
     ) -> None:
-        """Execute pre-rotation hooks."""
-        try:
+        """Execute pre-rotation hooks."""        try:
             # Custom pre-rotation logic based on strategy
             if job.strategy == RotationStrategy.DATABASE_PASSWORD:
                 self._prepare_database_rotation(old_data, new_data)
@@ -653,8 +617,7 @@ class SecretRotator:
         old_data: Dict[str, Any],
         new_data: Dict[str, Any]
     ) -> None:
-        """Execute post-rotation hooks."""
-        try:
+        """Execute post-rotation hooks."""        try:
             # Custom post-rotation logic based on strategy
             if job.strategy == RotationStrategy.DATABASE_PASSWORD:
                 self._finalize_database_rotation(old_data, new_data)
@@ -667,8 +630,7 @@ class SecretRotator:
         job: RotationJob,
         new_data: Dict[str, Any]
     ) -> bool:
-        """Test new secret functionality."""
-        try:
+        """Test new secret functionality."""        try:
             # Strategy-specific testing
             if job.strategy == RotationStrategy.DATABASE_PASSWORD:
                 return self._test_database_connection(new_data)
@@ -683,14 +645,12 @@ class SecretRotator:
             return False
     
     def _test_database_connection(self, db_config: Dict[str, Any]) -> bool:
-        """Test database connection with new credentials."""
-        # Implement database connection test
+        """Test database connection with new credentials."""        # Implement database connection test
         # This is a placeholder - implement actual connection test
         return True
     
     def _test_api_key(self, api_config: Dict[str, Any]) -> bool:
-        """Test API key functionality."""
-        # Implement API key test
+        """Test API key functionality."""        # Implement API key test
         # This is a placeholder - implement actual API test
         return True
     
@@ -699,8 +659,7 @@ class SecretRotator:
         old_data: Dict[str, Any],
         new_data: Dict[str, Any]
     ) -> None:
-        """Prepare database for credential rotation."""
-        # Implement database-specific preparation
+        """Prepare database for credential rotation."""        # Implement database-specific preparation
         pass
     
     def _finalize_database_rotation(
@@ -708,8 +667,7 @@ class SecretRotator:
         old_data: Dict[str, Any],
         new_data: Dict[str, Any]
     ) -> None:
-        """Finalize database credential rotation."""
-        # Implement database-specific finalization
+        """Finalize database credential rotation."""        # Implement database-specific finalization
         pass
     
     def _send_rotation_notification(
@@ -718,8 +676,7 @@ class SecretRotator:
         result: RotationResult,
         success: bool
     ) -> None:
-        """Send rotation completion notification."""
-        try:
+        """Send rotation completion notification."""        try:
             notification_data = {
                 'event': 'secret_rotation',
                 'job_id': job.id,
@@ -746,8 +703,7 @@ class SecretRotator:
         secret_path: str,
         target_version: str
     ) -> None:
-        """Send rollback notification."""
-        try:
+        """Send rollback notification."""        try:
             notification_data = {
                 'event': 'secret_rollback',
                 'secret_path': secret_path,
@@ -761,8 +717,7 @@ class SecretRotator:
             logger.error(f"Failed to send rollback notification: {e}")
     
     def _parse_interval_to_cron(self, interval: str) -> str:
-        """Parse interval string to cron expression."""
-        if ' ' in interval and len(interval.split()) >= 5:
+        """Parse interval string to cron expression."""        if ' ' in interval and len(interval.split()) >= 5:
             # Already a cron expression
             return interval
         
@@ -781,12 +736,10 @@ class SecretRotator:
             return "0 0 * * *"
     
     def _generate_job_id(self) -> str:
-        """Generate unique job ID."""
-        return f"rot_{secrets.token_hex(8)}_{int(time.time())}"
+        """Generate unique job ID."""        return f"rot_{secrets.token_hex(8)}_{int(time.time())}"
     
     def _load_rotation_jobs(self) -> None:
-        """Load rotation jobs from persistent storage."""
-        try:
+        """Load rotation jobs from persistent storage."""        try:
             jobs_file = Path(self.config.rotation_jobs_file)
             if jobs_file.exists():
                 with open(jobs_file, 'r') as f:
@@ -816,8 +769,7 @@ class SecretRotator:
             logger.error(f"Failed to load rotation jobs: {e}")
     
     def _save_rotation_jobs(self) -> None:
-        """Save rotation jobs to persistent storage."""
-        try:
+        """Save rotation jobs to persistent storage."""        try:
             jobs_data = []
             for job in self.rotation_jobs.values():
                 jobs_data.append({
@@ -846,8 +798,7 @@ class SecretRotator:
             logger.error(f"Failed to save rotation jobs: {e}")
     
     def _rotation_result_to_dict(self, result: RotationResult) -> Dict[str, Any]:
-        """Convert RotationResult to dictionary."""
-        return {
+        """Convert RotationResult to dictionary."""        return {
             'job_id': result.job_id,
             'success': result.success,
             'new_version': result.new_version,
@@ -859,8 +810,7 @@ class SecretRotator:
 
 
 class EmergencyRotator:
-    """Emergency secret rotation for security incidents."""
-    
+    """Emergency secret rotation for security incidents."""    
     def __init__(self, rotator: SecretRotator):
         self.rotator = rotator
         self.vault = rotator.vault
@@ -871,8 +821,7 @@ class EmergencyRotator:
         reason: str,
         exclude_paths: List[str] = None
     ) -> Dict[str, bool]:
-        """
-        Emergency rotation of all secrets.
+        """        Emergency rotation of all secrets.
         
         Args:
             reason: Reason for emergency rotation
@@ -880,8 +829,7 @@ class EmergencyRotator:
             
         Returns:
             dict: Results of emergency rotation
-        """
-        exclude_paths = exclude_paths or []
+        """        exclude_paths = exclude_paths or []
         results = {}
         
         try:
@@ -917,8 +865,7 @@ class EmergencyRotator:
             return {}
     
     def _determine_strategy(self, secret_data: Dict[str, Any]) -> Optional[RotationStrategy]:
-        """Determine rotation strategy based on secret content."""
-        if 'password' in secret_data:
+        """Determine rotation strategy based on secret content."""        if 'password' in secret_data:
             return RotationStrategy.DATABASE_PASSWORD
         elif 'api_key' in secret_data:
             return RotationStrategy.API_KEY
@@ -934,8 +881,7 @@ class EmergencyRotator:
         reason: str,
         results: Dict[str, bool]
     ) -> None:
-        """Send emergency rotation notification."""
-        try:
+        """Send emergency rotation notification."""        try:
             total_secrets = len(results)
             successful_rotations = sum(1 for success in results.values() if success)
             
@@ -956,8 +902,7 @@ class EmergencyRotator:
 
 
 class InfluencerSecretRotator(SecretRotator):
-    """
-    Specialized secret rotator for IA Influencer Agent platform.
+    """    Specialized secret rotator for IA Influencer Agent platform.
     
     Handles rotation of:
     - Platform API credentials with validation
@@ -965,8 +910,7 @@ class InfluencerSecretRotator(SecretRotator):
     - Content protection encryption keys
     - Payment processor secrets with PCI compliance
     - Fingerprinting algorithm keys
-    """
-    
+    """    
     def __init__(self, vault_manager: VaultManager, config: SecretsConfig = None):
         super().__init__(vault_manager, config)
         self.platform_rotators = {
@@ -988,8 +932,7 @@ class InfluencerSecretRotator(SecretRotator):
         schedule: str = "0 2 * * 0",  # Weekly on Sunday at 2 AM
         auto_validate: bool = True
     ) -> str:
-        """
-        Schedule automatic rotation for platform API credentials.
+        """        Schedule automatic rotation for platform API credentials.
         
         Args:
             platform: Platform name
@@ -998,8 +941,7 @@ class InfluencerSecretRotator(SecretRotator):
             
         Returns:
             str: Job ID
-        """
-        try:
+        """        try:
             secret_path = f"ia-influencer/apis/{platform}"
             
             # Create rotation job with platform-specific metadata
@@ -1035,8 +977,7 @@ class InfluencerSecretRotator(SecretRotator):
         schedule: str = "0 3 1 * *",  # Monthly on 1st at 3 AM
         preserve_usage_history: bool = True
     ) -> str:
-        """
-        Schedule AI model API key rotation with usage tracking.
+        """        Schedule AI model API key rotation with usage tracking.
         
         Args:
             model_name: AI model name
@@ -1045,8 +986,7 @@ class InfluencerSecretRotator(SecretRotator):
             
         Returns:
             str: Job ID
-        """
-        try:
+        """        try:
             secret_path = f"ia-influencer/ai-models/{model_name}"
             
             job = RotationJob(
@@ -1080,8 +1020,7 @@ class InfluencerSecretRotator(SecretRotator):
         schedule: str = "0 1 1 * *",  # Monthly on 1st at 1 AM
         gradual_rollout: bool = True
     ) -> str:
-        """
-        Schedule content protection key rotation with gradual rollout.
+        """        Schedule content protection key rotation with gradual rollout.
         
         Args:
             protection_type: Type of protection (audio, video, image, text)
@@ -1090,8 +1029,7 @@ class InfluencerSecretRotator(SecretRotator):
             
         Returns:
             str: Job ID
-        """
-        try:
+        """        try:
             secret_path = f"ia-influencer/protection/{protection_type}"
             
             job = RotationJob(
@@ -1125,8 +1063,7 @@ class InfluencerSecretRotator(SecretRotator):
         schedule: str = "0 4 15 * *",  # Monthly on 15th at 4 AM
         pci_compliance_check: bool = True
     ) -> str:
-        """
-        Schedule payment processor secret rotation with PCI compliance.
+        """        Schedule payment processor secret rotation with PCI compliance.
         
         Args:
             processor: Payment processor name
@@ -1135,8 +1072,7 @@ class InfluencerSecretRotator(SecretRotator):
             
         Returns:
             str: Job ID
-        """
-        try:
+        """        try:
             secret_path = f"ia-influencer/payments/{processor}"
             
             job = RotationJob(
@@ -1169,8 +1105,7 @@ class InfluencerSecretRotator(SecretRotator):
         exclude_platforms: List[str] = None,
         parallel: bool = True
     ) -> Dict[str, RotationResult]:
-        """
-        Rotate all platform credentials with coordination.
+        """        Rotate all platform credentials with coordination.
         
         Args:
             exclude_platforms: Platforms to exclude from rotation
@@ -1178,8 +1113,7 @@ class InfluencerSecretRotator(SecretRotator):
             
         Returns:
             dict: Rotation results by platform
-        """
-        exclude_platforms = exclude_platforms or []
+        """        exclude_platforms = exclude_platforms or []
         results = {}
         
         try:
@@ -1235,8 +1169,7 @@ class InfluencerSecretRotator(SecretRotator):
             return {}
     
     def _rotate_platform_safe(self, platform: str) -> RotationResult:
-        """Safely rotate platform credentials with error handling."""
-        start_time = time.time()
+        """Safely rotate platform credentials with error handling."""        start_time = time.time()
         
         try:
             secret_path = f"ia-influencer/apis/{platform}"
@@ -1304,8 +1237,7 @@ class InfluencerSecretRotator(SecretRotator):
             )
     
     def _rotate_youtube_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate YouTube API credentials."""
-        # In real implementation, this would use YouTube API to refresh tokens
+        """Rotate YouTube API credentials."""        # In real implementation, this would use YouTube API to refresh tokens
         return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
@@ -1315,8 +1247,7 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_instagram_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Instagram API credentials."""
-        return {
+        """Rotate Instagram API credentials."""        return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
             'expires_at': (datetime.utcnow() + timedelta(days=60)).isoformat(),
@@ -1324,8 +1255,7 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_tiktok_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate TikTok API credentials."""
-        return {
+        """Rotate TikTok API credentials."""        return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
             'refresh_token': self._generate_secure_token(64),
@@ -1334,8 +1264,7 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_spotify_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Spotify API credentials."""
-        return {
+        """Rotate Spotify API credentials."""        return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
             'refresh_token': self._generate_secure_token(64),
@@ -1344,8 +1273,7 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_twitter_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Twitter API credentials."""
-        return {
+        """Rotate Twitter API credentials."""        return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
             'access_token_secret': self._generate_secure_token(64),
@@ -1353,8 +1281,7 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_facebook_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Facebook API credentials."""
-        return {
+        """Rotate Facebook API credentials."""        return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
             'expires_at': (datetime.utcnow() + timedelta(days=60)).isoformat(),
@@ -1362,8 +1289,7 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_linkedin_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate LinkedIn API credentials."""
-        return {
+        """Rotate LinkedIn API credentials."""        return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
             'expires_at': (datetime.utcnow() + timedelta(days=60)).isoformat(),
@@ -1371,8 +1297,7 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _rotate_twitch_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Rotate Twitch API credentials."""
-        return {
+        """Rotate Twitch API credentials."""        return {
             **current_creds,
             'access_token': self._generate_secure_token(64),
             'refresh_token': self._generate_secure_token(64),
@@ -1381,8 +1306,7 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _generate_generic_api_credentials(self, current_creds: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate generic API credentials for unknown platforms."""
-        return {
+        """Generate generic API credentials for unknown platforms."""        return {
             **current_creds,
             'api_key': self._generate_secure_token(64),
             'secret_key': self._generate_secure_token(64),
@@ -1390,13 +1314,11 @@ class InfluencerSecretRotator(SecretRotator):
         }
     
     def _generate_secure_token(self, length: int = 64) -> str:
-        """Generate cryptographically secure token."""
-        alphabet = string.ascii_letters + string.digits + "._-"
+        """Generate cryptographically secure token."""        alphabet = string.ascii_letters + string.digits + "._-"
         return ''.join(secrets.choice(alphabet) for _ in range(length))
     
     def _validate_new_credentials(self, platform: str, credentials: Dict[str, Any]) -> bool:
-        """Validate new credentials format and requirements."""
-        required_fields = {
+        """Validate new credentials format and requirements."""        required_fields = {
             'youtube': ['client_id', 'client_secret', 'access_token'],
             'instagram': ['app_id', 'app_secret', 'access_token'],
             'tiktok': ['client_key', 'client_secret', 'access_token'],
@@ -1411,14 +1333,12 @@ class InfluencerSecretRotator(SecretRotator):
         return all(field in credentials for field in platform_fields)
     
     def _test_platform_credentials(self, platform: str, credentials: Dict[str, Any]) -> bool:
-        """Test platform credentials with actual API calls."""
-        # In real implementation, this would make actual API test calls
+        """Test platform credentials with actual API calls."""        # In real implementation, this would make actual API test calls
         # For now, return True if credentials are properly formatted
         return self._validate_new_credentials(platform, credentials)
     
     def _send_bulk_rotation_notification(self, results: Dict[str, RotationResult]) -> None:
-        """Send notification for bulk rotation results."""
-        try:
+        """Send notification for bulk rotation results."""        try:
             total_platforms = len(results)
             successful_rotations = sum(1 for r in results.values() if r.success)
             failed_rotations = total_platforms - successful_rotations
@@ -1441,16 +1361,14 @@ class InfluencerSecretRotator(SecretRotator):
 
 
 class InfluencerEmergencyRotator(EmergencyRotator):
-    """
-    Emergency rotator specialized for IA Influencer Agent security incidents.
+    """    Emergency rotator specialized for IA Influencer Agent security incidents.
     
     Handles rapid response to:
     - API key compromises
     - Platform account breaches  
     - Payment processor security alerts
     - Content protection key leaks
-    """
-    
+    """    
     def __init__(self, rotator: InfluencerSecretRotator):
         super().__init__(rotator)
         self.influencer_rotator = rotator
@@ -1460,8 +1378,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
         compromised_platforms: List[str],
         reason: str = "Security incident"
     ) -> Dict[str, bool]:
-        """
-        Emergency rotation of compromised platform credentials.
+        """        Emergency rotation of compromised platform credentials.
         
         Args:
             compromised_platforms: List of compromised platforms
@@ -1469,8 +1386,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
             
         Returns:
             dict: Results of emergency rotation
-        """
-        results = {}
+        """        results = {}
         
         try:
             logger.warning(f"Emergency platform rotation initiated: {reason}")
@@ -1503,8 +1419,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
         compromised_processors: List[str],
         reason: str = "Payment security incident"
     ) -> Dict[str, bool]:
-        """
-        Emergency rotation of payment processor secrets.
+        """        Emergency rotation of payment processor secrets.
         
         Args:
             compromised_processors: List of compromised payment processors
@@ -1512,8 +1427,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
             
         Returns:
             dict: Results of emergency rotation
-        """
-        results = {}
+        """        results = {}
         
         try:
             logger.warning(f"Emergency payment rotation initiated: {reason}")
@@ -1553,8 +1467,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
         compromised_models: List[str],
         reason: str = "AI service security incident"
     ) -> Dict[str, bool]:
-        """
-        Emergency rotation of AI model API keys.
+        """        Emergency rotation of AI model API keys.
         
         Args:
             compromised_models: List of compromised AI models
@@ -1562,8 +1475,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
             
         Returns:
             dict: Results of emergency rotation
-        """
-        results = {}
+        """        results = {}
         
         try:
             logger.warning(f"Emergency AI model rotation initiated: {reason}")
@@ -1602,8 +1514,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
         platforms: List[str],
         results: Dict[str, bool]
     ) -> None:
-        """Send emergency notification for platform credential rotation."""
-        try:
+        """Send emergency notification for platform credential rotation."""        try:
             notification_data = {
                 'event': 'emergency_platform_rotation',
                 'reason': reason,
@@ -1627,8 +1538,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
         processors: List[str],
         results: Dict[str, bool]
     ) -> None:
-        """Send PCI compliance emergency notification for payment rotation."""
-        try:
+        """Send PCI compliance emergency notification for payment rotation."""        try:
             notification_data = {
                 'event': 'emergency_payment_rotation',
                 'reason': reason,
@@ -1653,8 +1563,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
         models: List[str],
         results: Dict[str, bool]
     ) -> None:
-        """Send emergency notification for AI model key rotation."""
-        try:
+        """Send emergency notification for AI model key rotation."""        try:
             notification_data = {
                 'event': 'emergency_ai_rotation',
                 'reason': reason,
@@ -1674,8 +1583,7 @@ class InfluencerEmergencyRotator(EmergencyRotator):
             logger.error(f"Failed to send AI emergency notification: {e}")
     
     def _notify_payment_system_rotation(self, processor: str) -> None:
-        """Notify payment system of credential rotation."""
-        try:
+        """Notify payment system of credential rotation."""        try:
             # Implementation would send webhook notification to payment system
             logger.info(f"Payment system notified of credential rotation for {processor}")
             

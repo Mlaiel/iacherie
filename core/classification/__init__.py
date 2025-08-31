@@ -16,8 +16,7 @@ WARNING: This code and concept are protected by copyright law. Any unauthorized
 copying, modification, distribution, or use of this code without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will
 result in legal action under German and international copyright law.
-"""
-from typing import Dict, List, Optional, Union, Any
+"""from typing import Dict, List, Optional, Union, Any
 
 # Core classification modules
 from .audio_classifier import AudioContentClassifier

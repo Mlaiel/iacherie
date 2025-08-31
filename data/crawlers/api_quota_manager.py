@@ -1,5 +1,4 @@
-"""
-API Quota Manager Implementation
+"""API Quota Manager Implementation
 ===============================
 
 Advanced API quota management system for monitoring and controlling API usage.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import json
 from datetime import datetime, timedelta
@@ -36,8 +34,7 @@ import time
 
 
 class QuotaStatus(Enum):
-    """API quota status levels"""
-    AVAILABLE = "available"
+    """API quota status levels"""    AVAILABLE = "available"
     WARNING = "warning"
     CRITICAL = "critical"
     EXHAUSTED = "exhausted"
@@ -45,8 +42,7 @@ class QuotaStatus(Enum):
 
 
 class QuotaPeriod(Enum):
-    """Quota reset periods"""
-    MINUTE = "minute"
+    """Quota reset periods"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     MONTH = "month"
@@ -54,8 +50,7 @@ class QuotaPeriod(Enum):
 
 @dataclass
 class PlatformQuotas:
-    """Quota configuration for a platform"""
-    platform_name: str
+    """Quota configuration for a platform"""    platform_name: str
     requests_per_minute: int
     requests_per_hour: int
     requests_per_day: int
@@ -72,8 +67,7 @@ class PlatformQuotas:
 
 @dataclass
 class QuotaAlert:
-    """Alert for quota threshold breach"""
-    alert_id: str
+    """Alert for quota threshold breach"""    alert_id: str
     platform: str
     quota_type: str  # requests, cost
     threshold_percentage: float
@@ -86,8 +80,7 @@ class QuotaAlert:
 
 @dataclass
 class UsageMetrics:
-    """Usage metrics for analytics"""
-    platform: str
+    """Usage metrics for analytics"""    platform: str
     time_period: str
     requests_made: int
     requests_failed: int
@@ -99,8 +92,7 @@ class UsageMetrics:
 
 
 class APIQuotaManager:
-    """
-    Advanced API quota management system for monitoring and controlling API usage.
+    """    Advanced API quota management system for monitoring and controlling API usage.
     
     Features:
     - Real-time quota monitoring
@@ -111,8 +103,7 @@ class APIQuotaManager:
     - Predictive quota planning
     - Alert system for threshold breaches
     - Usage analytics and reporting
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -165,8 +156,7 @@ class APIQuotaManager:
                          cost_per_request: float = 0.0,
                          burst_allowance: int = 0,
                          priority_reserves: int = 0):
-        """
-        Register a platform with its quota configuration.
+        """        Register a platform with its quota configuration.
         
         Args:
             platform_name: Name of the platform
@@ -174,8 +164,7 @@ class APIQuotaManager:
             cost_per_request: Cost per API request
             burst_allowance: Additional requests allowed in burst
             priority_reserves: Reserved quota for high priority requests
-        """
-        try:
+        """        try:
             platform_quota = PlatformQuotas(
                 platform_name=platform_name,
                 requests_per_minute=quotas.get('per_minute', 60),
@@ -208,8 +197,7 @@ class APIQuotaManager:
     async def request_quota(self, platform: str, 
                           requests_needed: int = 1,
                           priority: str = "normal") -> Tuple[bool, Optional[float]]:
-        """
-        Request quota for API calls with intelligent throttling.
+        """        Request quota for API calls with intelligent throttling.
         
         Args:
             platform: Platform name
@@ -218,8 +206,7 @@ class APIQuotaManager:
             
         Returns:
             Tuple of (allowed, suggested_delay_seconds)
-        """
-        try:
+        """        try:
             if platform not in self.platform_quotas:
                 self.logger.warning(f"Platform {platform} not registered")
                 return False, None
@@ -255,16 +242,14 @@ class APIQuotaManager:
             return False, None
     
     async def check_quota_status(self, platform: str) -> Dict[str, Any]:
-        """
-        Check current quota status for a platform.
+        """        Check current quota status for a platform.
         
         Args:
             platform: Platform name
             
         Returns:
             Quota status information
-        """
-        try:
+        """        try:
             if platform not in self.platform_quotas:
                 return {'status': 'unknown', 'message': 'Platform not registered'}
             
@@ -334,8 +319,7 @@ class APIQuotaManager:
     
     async def get_usage_analytics(self, platform: str = None, 
                                 time_range_hours: int = 24) -> Dict[str, Any]:
-        """
-        Get usage analytics for platforms.
+        """        Get usage analytics for platforms.
         
         Args:
             platform: Specific platform or None for all platforms
@@ -343,8 +327,7 @@ class APIQuotaManager:
             
         Returns:
             Analytics data
-        """
-        try:
+        """        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=time_range_hours)
             
             analytics = {
@@ -390,8 +373,7 @@ class APIQuotaManager:
     
     async def predict_quota_usage(self, platform: str, 
                                 hours_ahead: int = 24) -> Dict[str, Any]:
-        """
-        Predict quota usage for planning purposes.
+        """        Predict quota usage for planning purposes.
         
         Args:
             platform: Platform name
@@ -399,8 +381,7 @@ class APIQuotaManager:
             
         Returns:
             Usage predictions
-        """
-        try:
+        """        try:
             if platform not in self.platform_quotas:
                 return {}
             
@@ -448,13 +429,11 @@ class APIQuotaManager:
             return {}
     
     async def optimize_quota_distribution(self) -> Dict[str, Any]:
-        """
-        Optimize quota distribution across platforms based on usage patterns.
+        """        Optimize quota distribution across platforms based on usage patterns.
         
         Returns:
             Optimization recommendations
-        """
-        try:
+        """        try:
             optimization = {
                 'total_platforms': len(self.platform_quotas),
                 'recommendations': [],
@@ -509,8 +488,7 @@ class APIQuotaManager:
     async def _check_quota_availability(self, platform: str, 
                                       requests_needed: int, 
                                       priority: str) -> bool:
-        """Check if quota is available for requests"""
-        try:
+        """Check if quota is available for requests"""        try:
             quota_config = self.platform_quotas[platform]
             
             # Check all time periods
@@ -545,8 +523,7 @@ class APIQuotaManager:
             return False
     
     async def _consume_quota(self, platform: str, requests_count: int):
-        """Consume quota for successful requests"""
-        try:
+        """Consume quota for successful requests"""        try:
             quota_config = self.platform_quotas[platform]
             
             # Update usage counters
@@ -570,8 +547,7 @@ class APIQuotaManager:
             self.logger.error(f"Error consuming quota for {platform}: {str(e)}")
     
     async def _calculate_suggested_delay(self, platform: str, requests_needed: int) -> float:
-        """Calculate suggested delay for throttled requests"""
-        try:
+        """Calculate suggested delay for throttled requests"""        try:
             quota_config = self.platform_quotas[platform]
             
             # Find the most restrictive period
@@ -591,8 +567,7 @@ class APIQuotaManager:
             return 60.0  # Default 1 minute
     
     async def _process_throttled_requests(self, platform: str):
-        """Process throttled requests when quota becomes available"""
-        try:
+        """Process throttled requests when quota becomes available"""        try:
             self.throttling_active[platform] = True
             queue = self.request_queues[platform]
             
@@ -624,8 +599,7 @@ class APIQuotaManager:
             self.throttling_active[platform] = False
     
     async def _quota_monitor_loop(self):
-        """Background loop for quota monitoring and alerting"""
-        try:
+        """Background loop for quota monitoring and alerting"""        try:
             while True:
                 for platform_name, quota_config in self.platform_quotas.items():
                     await self._check_quota_thresholds(platform_name, quota_config)
@@ -636,8 +610,7 @@ class APIQuotaManager:
             self.logger.error(f"Error in quota monitor loop: {str(e)}")
     
     async def _reset_quotas_loop(self):
-        """Background loop for resetting quotas"""
-        try:
+        """Background loop for resetting quotas"""        try:
             while True:
                 current_time = datetime.utcnow()
                 
@@ -665,8 +638,7 @@ class APIQuotaManager:
             self.logger.error(f"Error in quota reset loop: {str(e)}")
     
     async def _check_quota_thresholds(self, platform_name: str, quota_config: PlatformQuotas):
-        """Check quota thresholds and generate alerts"""
-        try:
+        """Check quota thresholds and generate alerts"""        try:
             for period in ['minute', 'hour', 'day', 'month']:
                 current_usage = quota_config.current_usage[period]
                 limit = getattr(quota_config, f'requests_per_{period}')
@@ -688,8 +660,7 @@ class APIQuotaManager:
     async def _generate_quota_alert(self, platform: str, period: str, 
                                   usage_percentage: float, current_usage: int, 
                                   limit: int, severity: str):
-        """Generate quota alert"""
-        try:
+        """Generate quota alert"""        try:
             alert_id = f"quota_alert_{platform}_{period}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             alert = QuotaAlert(
@@ -721,8 +692,7 @@ class APIQuotaManager:
     
     def _record_usage_metrics(self, platform: str, requests_count: int, 
                             success: bool, response_time: float = 0.0):
-        """Record usage metrics for analytics"""
-        try:
+        """Record usage metrics for analytics"""        try:
             current_time = datetime.utcnow()
             
             # Update performance stats
@@ -769,8 +739,7 @@ class APIQuotaManager:
             self.logger.error(f"Error recording usage metrics: {str(e)}")
     
     async def _analyze_platform_usage(self, platform: str, since_time: datetime) -> Dict[str, Any]:
-        """Analyze usage for a specific platform"""
-        try:
+        """Analyze usage for a specific platform"""        try:
             relevant_metrics = [
                 metric for metric in self.usage_metrics
                 if metric.platform == platform and metric.timestamp >= since_time
@@ -807,8 +776,7 @@ class APIQuotaManager:
             return {}
     
     async def _get_historical_usage_pattern(self, platform: str) -> Dict[str, float]:
-        """Get historical usage pattern for predictions"""
-        try:
+        """Get historical usage pattern for predictions"""        try:
             # Get timestamps for the platform
             timestamps = list(self.request_timestamps.get(platform, []))
             
@@ -841,8 +809,7 @@ class APIQuotaManager:
             return {'recent_hourly_average': 10, 'daily_trend': 1.0}
     
     def get_quota_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive quota management statistics"""
-        try:
+        """Get comprehensive quota management statistics"""        try:
             stats = {
                 'total_platforms': len(self.platform_quotas),
                 'active_platforms': len([q for q in self.platform_quotas.values() if q.is_active]),

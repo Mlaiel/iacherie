@@ -1,5 +1,4 @@
-"""
-Enterprise Multi-Database Manager - IA-Influencer-Agent
+"""Enterprise Multi-Database Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/database_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Requête application → Routing intelligent → DB optimale → 
 Connection pooling → Transaction management → Monitoring performance → Auto-scaling
 """
-
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set, Protocol
 import logging
 import asyncio
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseType(Enum):
-    """Supported database types"""
-    POSTGRESQL = "postgresql"
+    """Supported database types"""    POSTGRESQL = "postgresql"
     MONGODB = "mongodb"
     REDIS = "redis"
     ELASTICSEARCH = "elasticsearch"
@@ -53,8 +50,7 @@ class DatabaseType(Enum):
 
 
 class OperationType(Enum):
-    """Database operation types"""
-    READ = "read"
+    """Database operation types"""    READ = "read"
     WRITE = "write"
     ANALYTICS = "analytics"
     SEARCH = "search"
@@ -63,8 +59,7 @@ class OperationType(Enum):
 
 
 class ConnectionStrategy(Enum):
-    """Connection routing strategies"""
-    ROUND_ROBIN = "round_robin"
+    """Connection routing strategies"""    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED = "weighted"
     GEOGRAPHIC = "geographic"
@@ -73,8 +68,7 @@ class ConnectionStrategy(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Advanced multi-database configuration"""
-    # Database connections
+    """Advanced multi-database configuration"""    # Database connections
     databases: Dict[DatabaseType, Dict[str, Any]] = field(default_factory=lambda: {
         DatabaseType.POSTGRESQL: {
             "primary": {
@@ -137,8 +131,7 @@ class DatabaseConfig:
 
 @dataclass
 class DatabaseMetrics:
-    """Database performance metrics"""
-    # Connection metrics
+    """Database performance metrics"""    # Connection metrics
     active_connections: Dict[DatabaseType, int] = field(default_factory=dict)
     connection_pool_utilization: Dict[DatabaseType, float] = field(default_factory=dict)
     
@@ -160,8 +153,7 @@ class DatabaseMetrics:
 
 
 class EnterpriseDatabaseManager(ABC):
-    """
-    🎯 Enterprise Multi-Database Manager - IA-Influencer-Agent
+    """    🎯 Enterprise Multi-Database Manager - IA-Influencer-Agent
     
     Advanced database management system featuring:
     - Multi-database orchestration (PostgreSQL, MongoDB, Redis, Elasticsearch)
@@ -173,8 +165,7 @@ class EnterpriseDatabaseManager(ABC):
     - Transaction management across multiple databases
     - Query caching and result optimization
     - Geographic distribution and edge database support
-    """
-    
+    """    
     def __init__(self, config: DatabaseConfig = None):
         self.config = config or DatabaseConfig()
         
@@ -203,13 +194,11 @@ class EnterpriseDatabaseManager(ABC):
     
     @abstractmethod
     async def initialize_databases(self) -> bool:
-        """
-        Initialize all database connections and pools
+        """        Initialize all database connections and pools
         
         Returns:
             bool: True if all databases initialized successfully
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def execute_query(
@@ -220,8 +209,7 @@ class EnterpriseDatabaseManager(ABC):
         operation_type: OperationType = OperationType.READ,
         timeout: Optional[int] = None,
     ) -> Any:
-        """
-        Execute query with intelligent routing and optimization
+        """        Execute query with intelligent routing and optimization
         
         Args:
             database_type: Target database type
@@ -232,8 +220,7 @@ class EnterpriseDatabaseManager(ABC):
             
         Returns:
             Query result
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def execute_transaction(
@@ -242,8 +229,7 @@ class EnterpriseDatabaseManager(ABC):
         queries: List[Tuple[str, Dict[str, Any]]],
         isolation_level: str = "READ_COMMITTED",
     ) -> bool:
-        """
-        Execute multiple queries in a transaction
+        """        Execute multiple queries in a transaction
         
         Args:
             database_type: Target database type
@@ -252,8 +238,7 @@ class EnterpriseDatabaseManager(ABC):
             
         Returns:
             bool: True if transaction successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def get_connection(
@@ -261,8 +246,7 @@ class EnterpriseDatabaseManager(ABC):
         database_type: DatabaseType,
         operation_type: OperationType = OperationType.READ,
     ) -> Any:
-        """
-        Get database connection with intelligent routing
+        """        Get database connection with intelligent routing
         
         Args:
             database_type: Target database type
@@ -270,17 +254,14 @@ class EnterpriseDatabaseManager(ABC):
             
         Returns:
             Database connection
-        """
-        pass
+        """        pass
     
     async def optimize_database_performance(self) -> Dict[str, Any]:
-        """
-        Analyze and optimize database performance across all databases
+        """        Analyze and optimize database performance across all databases
         
         Returns:
             Dict with optimization results and recommendations
-        """
-        try:
+        """        try:
             optimization_results = {
                 "performance_improvements": {},
                 "index_recommendations": [],
@@ -313,13 +294,11 @@ class EnterpriseDatabaseManager(ABC):
             return {"error": str(e)}
     
     async def get_comprehensive_metrics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive database metrics and health status
+        """        Get comprehensive database metrics and health status
         
         Returns:
             Dict with detailed database metrics
-        """
-        try:
+        """        try:
             metrics = {
                 "overview": dict(self._metrics.__dict__),
                 "connection_status": await self._get_connection_status(),
@@ -337,13 +316,11 @@ class EnterpriseDatabaseManager(ABC):
             return {"error": str(e)}
     
     async def backup_databases(self) -> Dict[str, Any]:
-        """
-        Trigger backup for all databases
+        """        Trigger backup for all databases
         
         Returns:
             Dict with backup results
-        """
-        try:
+        """        try:
             backup_results = {
                 "successful_backups": [],
                 "failed_backups": [],
@@ -381,13 +358,11 @@ class EnterpriseDatabaseManager(ABC):
             return {"error": str(e)}
     
     async def perform_health_checks(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health checks on all databases
+        """        Perform comprehensive health checks on all databases
         
         Returns:
             Dict with health check results
-        """
-        try:
+        """        try:
             health_results = {
                 "overall_health": "healthy",
                 "database_status": {},
@@ -431,61 +406,47 @@ class EnterpriseDatabaseManager(ABC):
     
     # Helper methods for implementation
     async def _analyze_slow_queries(self) -> List[Dict[str, Any]]:
-        """Analyze slow queries and provide optimization suggestions"""
-        return []
+        """Analyze slow queries and provide optimization suggestions"""        return []
     
     async def _analyze_connection_pools(self) -> Dict[str, Any]:
-        """Analyze connection pool utilization"""
-        return {}
+        """Analyze connection pool utilization"""        return {}
     
     async def _generate_index_recommendations(self) -> List[Dict[str, Any]]:
-        """Generate index recommendations based on query patterns"""
-        return []
+        """Generate index recommendations based on query patterns"""        return []
     
     async def _optimize_read_write_splitting(self) -> Dict[str, Any]:
-        """Optimize read/write splitting configuration"""
-        return {}
+        """Optimize read/write splitting configuration"""        return {}
     
     async def _get_connection_status(self) -> Dict[str, Any]:
-        """Get current connection status for all databases"""
-        return {}
+        """Get current connection status for all databases"""        return {}
     
     async def _get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for all databases"""
-        return {}
+        """Get performance metrics for all databases"""        return {}
     
     async def _get_health_status(self) -> Dict[str, Any]:
-        """Get health status for all databases"""
-        return {}
+        """Get health status for all databases"""        return {}
     
     async def _get_database_sizes(self) -> Dict[str, float]:
-        """Get database sizes in MB"""
-        return {}
+        """Get database sizes in MB"""        return {}
     
     async def _backup_postgresql(self) -> Dict[str, Any]:
-        """Backup PostgreSQL database"""
-        return {"success": True, "size_mb": 100.0}
+        """Backup PostgreSQL database"""        return {"success": True, "size_mb": 100.0}
     
     async def _backup_mongodb(self) -> Dict[str, Any]:
-        """Backup MongoDB database"""
-        return {"success": True, "size_mb": 50.0}
+        """Backup MongoDB database"""        return {"success": True, "size_mb": 50.0}
     
     async def _check_database_health(self, db_type: DatabaseType) -> Dict[str, Any]:
-        """Check health of specific database"""
-        return {"healthy": True, "status": "healthy", "issues": []}
+        """Check health of specific database"""        return {"healthy": True, "status": "healthy", "issues": []}
     
     async def _generate_health_recommendations(self, issues: List[str]) -> List[str]:
-        """Generate recommendations based on health issues"""
-        return []
+        """Generate recommendations based on health issues"""        return []
 
 
 # Concrete implementation
 class ProductionDatabaseManager(EnterpriseDatabaseManager):
-    """Production implementation of the database manager"""
-    
+    """Production implementation of the database manager"""    
     async def initialize_databases(self) -> bool:
-        """Initialize all database connections"""
-        try:
+        """Initialize all database connections"""        try:
             initialization_results = []
             
             # Initialize PostgreSQL
@@ -530,8 +491,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
         operation_type: OperationType = OperationType.READ,
         timeout: Optional[int] = None,
     ) -> Any:
-        """Execute query with routing and optimization"""
-        start_time = time.time()
+        """Execute query with routing and optimization"""        start_time = time.time()
         try:
             # Get appropriate connection
             connection = await self.get_connection(database_type, operation_type)
@@ -565,8 +525,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
         queries: List[Tuple[str, Dict[str, Any]]],
         isolation_level: str = "READ_COMMITTED",
     ) -> bool:
-        """Execute transaction"""
-        try:
+        """Execute transaction"""        try:
             if database_type == DatabaseType.POSTGRESQL:
                 return await self._execute_postgresql_transaction(queries, isolation_level)
             elif database_type == DatabaseType.MONGODB:
@@ -584,8 +543,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
         database_type: DatabaseType,
         operation_type: OperationType = OperationType.READ,
     ) -> Any:
-        """Get optimized database connection"""
-        try:
+        """Get optimized database connection"""        try:
             # Check if database is healthy
             if not self._health_status.get(database_type, True):
                 raise ConnectionError(f"Database {database_type} is unhealthy")
@@ -609,8 +567,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
     
     # Database-specific initialization methods
     async def _initialize_postgresql(self) -> bool:
-        """Initialize PostgreSQL connections"""
-        try:
+        """Initialize PostgreSQL connections"""        try:
             pg_config = self.config.databases[DatabaseType.POSTGRESQL]["primary"]
             
             # Create connection pool
@@ -657,8 +614,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
             return False
     
     async def _initialize_mongodb(self) -> bool:
-        """Initialize MongoDB connections"""
-        try:
+        """Initialize MongoDB connections"""        try:
             mongo_config = self.config.databases[DatabaseType.MONGODB]["primary"]
             
             # Create MongoDB client
@@ -681,8 +637,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
             return False
     
     async def _initialize_redis(self) -> bool:
-        """Initialize Redis connections"""
-        try:
+        """Initialize Redis connections"""        try:
             redis_config = self.config.databases[DatabaseType.REDIS]["primary"]
             
             # Create Redis connection pool
@@ -704,8 +659,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
             return False
     
     async def _initialize_elasticsearch(self) -> bool:
-        """Initialize Elasticsearch connections"""
-        try:
+        """Initialize Elasticsearch connections"""        try:
             es_config = self.config.databases[DatabaseType.ELASTICSEARCH]["primary"]
             
             # Create Elasticsearch client
@@ -728,8 +682,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
     async def _execute_postgresql_query(
         self, connection, query: str, parameters: Optional[Dict], timeout: Optional[int]
     ) -> Any:
-        """Execute PostgreSQL query"""
-        async with connection.acquire() as conn:
+        """Execute PostgreSQL query"""        async with connection.acquire() as conn:
             if parameters:
                 return await conn.fetch(query, *parameters.values())
             else:
@@ -738,8 +691,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
     async def _execute_mongodb_query(
         self, database, query: str, parameters: Optional[Dict]
     ) -> Any:
-        """Execute MongoDB query"""
-        # MongoDB queries would be different format
+        """Execute MongoDB query"""        # MongoDB queries would be different format
         # This is a placeholder implementation
         collection_name = parameters.get("collection") if parameters else "default"
         collection = database[collection_name]
@@ -748,8 +700,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
     async def _execute_redis_command(
         self, connection, command: str, parameters: Optional[Dict]
     ) -> Any:
-        """Execute Redis command"""
-        # Redis command execution
+        """Execute Redis command"""        # Redis command execution
         if parameters:
             return await connection.execute_command(command, *parameters.values())
         else:
@@ -758,16 +709,14 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
     async def _execute_elasticsearch_query(
         self, connection, query: str, parameters: Optional[Dict]
     ) -> Any:
-        """Execute Elasticsearch query"""
-        # Elasticsearch query execution
+        """Execute Elasticsearch query"""        # Elasticsearch query execution
         body = json.loads(query) if isinstance(query, str) else query
         return await connection.search(body=body, **parameters or {})
     
     async def _execute_postgresql_transaction(
         self, queries: List[Tuple[str, Dict]], isolation_level: str
     ) -> bool:
-        """Execute PostgreSQL transaction"""
-        pool = self._connection_pools[DatabaseType.POSTGRESQL]["primary"]
+        """Execute PostgreSQL transaction"""        pool = self._connection_pools[DatabaseType.POSTGRESQL]["primary"]
         async with pool.acquire() as conn:
             async with conn.transaction(isolation=isolation_level):
                 for query, params in queries:
@@ -778,14 +727,12 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
                 return True
     
     async def _execute_mongodb_transaction(self, queries: List[Tuple[str, Dict]]) -> bool:
-        """Execute MongoDB transaction"""
-        # MongoDB transaction implementation
+        """Execute MongoDB transaction"""        # MongoDB transaction implementation
         return True
     
     # Helper methods
     async def _get_read_replica_connection(self, database_type: DatabaseType) -> Optional[Any]:
-        """Get connection from read replica"""
-        replicas = self._read_replicas.get(database_type, [])
+        """Get connection from read replica"""        replicas = self._read_replicas.get(database_type, [])
         if replicas:
             # Simple round-robin for now
             replica_index = len(self._metrics.active_connections.get(database_type, [])) % len(replicas)
@@ -793,14 +740,12 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
         return None
     
     async def _get_primary_connection(self, database_type: DatabaseType) -> Any:
-        """Get primary connection"""
-        return self._connection_pools[database_type]["primary"]
+        """Get primary connection"""        return self._connection_pools[database_type]["primary"]
     
     async def _track_query_performance(
         self, database_type: DatabaseType, query: str, execution_time_ms: float
     ):
-        """Track query performance metrics"""
-        self._metrics.total_queries_count += 1
+        """Track query performance metrics"""        self._metrics.total_queries_count += 1
         
         # Update average query time
         current_avg = self._metrics.average_query_time_ms
@@ -826,8 +771,7 @@ class ProductionDatabaseManager(EnterpriseDatabaseManager):
     async def _track_query_error(
         self, database_type: DatabaseType, query: str, execution_time_ms: float, error: str
     ):
-        """Track query errors"""
-        self._metrics.failed_queries_count += 1
+        """Track query errors"""        self._metrics.failed_queries_count += 1
         logger.error(f"Query failed on {database_type}: {error}")
 
 
@@ -836,13 +780,11 @@ _database_manager: Optional[ProductionDatabaseManager] = None
 
 
 def get_database_manager() -> ProductionDatabaseManager:
-    """
-    Get the global database manager instance
+    """    Get the global database manager instance
     
     Returns:
         ProductionDatabaseManager: Global database manager instance
-    """
-    global _database_manager
+    """    global _database_manager
     if _database_manager is None:
         _database_manager = ProductionDatabaseManager()
     return _database_manager
@@ -850,8 +792,7 @@ def get_database_manager() -> ProductionDatabaseManager:
 
 # Alias for backward compatibility
 DatabaseManager = EnterpriseDatabaseManager
-    """
-    🎯 Gestionnaire DatabaseManager - IA-Influencer-Agent
+    """    🎯 Gestionnaire DatabaseManager - IA-Influencer-Agent
     
     Responsabilité:
     Gestion des connexions PostgreSQL/MongoDB
@@ -865,8 +806,7 @@ DatabaseManager = EnterpriseDatabaseManager
     - Auto-scaling basé sur la charge
     - Gestion d'erreurs avec circuit breaker
     - Nettoyage automatique des ressources
-    """
-    
+    """    
     def __init__(self, config: DatabaseManagerConfig = None):
         self.config = config or DatabaseManagerConfig()
         self._pool = []
@@ -882,46 +822,38 @@ DatabaseManager = EnterpriseDatabaseManager
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """
-        Initialise le pool de ressources
+        """        Initialise le pool de ressources
         
         Returns:
             bool: True si initialisation réussie
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def acquire_resource(self) -> Any:
-        """
-        Acquiert une ressource du pool
+        """        Acquiert une ressource du pool
         
         Returns:
             Any: Ressource acquise
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def release_resource(self, resource: Any) -> bool:
-        """
-        Libère une ressource vers le pool
+        """        Libère une ressource vers le pool
         
         Args:
             resource: Ressource à libérer
             
         Returns:
             bool: True si libération réussie
-        """
-        pass
+        """        pass
     
     @asynccontextmanager
     async def get_resource(self):
-        """
-        Context manager pour gestion automatique des ressources
+        """        Context manager pour gestion automatique des ressources
         
         Yields:
             Any: Ressource gérée automatiquement
-        """
-        resource = None
+        """        resource = None
         try:
             resource = await self.acquire_resource()
             yield resource
@@ -930,26 +862,22 @@ DatabaseManager = EnterpriseDatabaseManager
                 await self.release_resource(resource)
     
     async def cleanup(self) -> bool:
-        """
-        Nettoyage des ressources
+        """        Nettoyage des ressources
         
         Returns:
             bool: True si nettoyage réussi
-        """
-        with self._lock:
+        """        with self._lock:
             self._pool.clear()
             self._active_connections = 0
         logger.info(f"🧹 Nettoyage {self.__class__.__name__} terminé")
         return True
     
     def get_stats(self) -> Dict[str, Any]:
-        """
-        Statistiques du gestionnaire
+        """        Statistiques du gestionnaire
         
         Returns:
             Dict: Métriques actuelles
-        """
-        with self._lock:
+        """        with self._lock:
             return {
                 "pool_size": len(self._pool),
                 "active_connections": self._active_connections,
@@ -963,13 +891,11 @@ database_manager = None
 
 
 def get_database_manager() -> DatabaseManager:
-    """
-    Obtient l'instance du gestionnaire
+    """    Obtient l'instance du gestionnaire
     
     Returns:
         DatabaseManager: Instance du gestionnaire
-    """
-    global database_manager
+    """    global database_manager
     if database_manager is None:
         database_manager = DatabaseManager()
     return database_manager

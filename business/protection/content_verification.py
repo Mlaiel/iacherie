@@ -1,5 +1,4 @@
-"""
-🔍 Content Verification - IA-Influencer-Agent
+"""🔍 Content Verification - IA-Influencer-Agent
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
@@ -16,7 +15,6 @@ technology. Provides comprehensive authenticity verification,
 integrity checks, and ownership validation for digital content
 across multiple formats and platforms.
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple, Protocol, Set, Callable
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field, asdict
@@ -84,8 +82,7 @@ logger = logging.getLogger(__name__)
 # =============== ENUMS & CONFIGURATION ===============
 
 class ContentVerificationStatus(Enum):
-    """Content verification system operational status"""
-    ACTIVE = "active"
+    """Content verification system operational status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     VERIFYING = "verifying"
     ANALYZING = "analyzing"
@@ -94,16 +91,14 @@ class ContentVerificationStatus(Enum):
     MAINTENANCE = "maintenance"
 
 class VerificationLevel(IntEnum):
-    """Verification thoroughness levels"""
-    BASIC = 1
+    """Verification thoroughness levels"""    BASIC = 1
     STANDARD = 2
     COMPREHENSIVE = 3
     FORENSIC = 4
     BLOCKCHAIN = 5
 
 class VerificationResult(Enum):
-    """Verification result states"""
-    AUTHENTIC = "authentic"
+    """Verification result states"""    AUTHENTIC = "authentic"
     MODIFIED = "modified"
     FAKE = "fake"
     SUSPICIOUS = "suspicious"
@@ -112,16 +107,14 @@ class VerificationResult(Enum):
     ERROR = "error"
 
 class ContentIntegrityLevel(IntEnum):
-    """Content integrity confidence levels"""
-    VERY_LOW = 1
+    """Content integrity confidence levels"""    VERY_LOW = 1
     LOW = 2
     MEDIUM = 3
     HIGH = 4
     VERY_HIGH = 5
 
 class VerificationMethod(Enum):
-    """Verification methods used"""
-    HASH_VERIFICATION = "hash_verification"
+    """Verification methods used"""    HASH_VERIFICATION = "hash_verification"
     METADATA_ANALYSIS = "metadata_analysis"
     FORENSIC_ANALYSIS = "forensic_analysis"
     AI_DEEPFAKE_DETECTION = "ai_deepfake_detection"
@@ -134,8 +127,7 @@ class VerificationMethod(Enum):
     FREQUENCY_ANALYSIS = "frequency_analysis"
 
 class ContentType(Enum):
-    """Types of content for verification"""
-    IMAGE = "image"
+    """Types of content for verification"""    IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
     TEXT = "text"
@@ -143,8 +135,7 @@ class ContentType(Enum):
     MIXED = "mixed"
 
 class TamperingType(Enum):
-    """Types of tampering detected"""
-    NONE = "none"
+    """Types of tampering detected"""    NONE = "none"
     COPY_MOVE = "copy_move"
     SPLICING = "splicing"
     RESAMPLING = "resampling"
@@ -158,8 +149,7 @@ class TamperingType(Enum):
 
 @dataclass
 class ContentVerificationConfig:
-    """Configuration for content verification system"""
-    enabled: bool = True
+    """Configuration for content verification system"""    enabled: bool = True
     default_verification_level: VerificationLevel = VerificationLevel.STANDARD
     max_concurrent_verifications: int = 25
     timeout_seconds: int = 300
@@ -185,8 +175,7 @@ class ContentVerificationConfig:
 
 @dataclass
 class ContentHash:
-    """Comprehensive content hash information"""
-    hash_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive content hash information"""    hash_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     
     # Various hash types
@@ -217,8 +206,7 @@ class ContentHash:
 
 @dataclass
 class VerificationEvidence:
-    """Evidence collected during verification process"""
-    evidence_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Evidence collected during verification process"""    evidence_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     verification_id: str = ""
     evidence_type: str = ""
     method_used: VerificationMethod = VerificationMethod.HASH_VERIFICATION
@@ -239,8 +227,7 @@ class VerificationEvidence:
 
 @dataclass 
 class VerificationReport:
-    """Comprehensive verification report"""
-    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive verification report"""    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     content_hash: str = ""
     
@@ -276,8 +263,7 @@ class VerificationReport:
     technical_details: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert report to dictionary"""
-        return {
+        """Convert report to dictionary"""        return {
             'report_id': self.report_id,
             'content_id': self.content_id,
             'content_hash': self.content_hash,
@@ -301,15 +287,13 @@ class VerificationReport:
 
 
 class ContentHashGenerator:
-    """Advanced content hash generation system"""
-    
+    """Advanced content hash generation system"""    
     def __init__(self):
         self.hash_algorithms = ['md5', 'sha256', 'sha512']
         self.perceptual_hash_algorithms = ['phash', 'dhash', 'ahash', 'whash']
     
     async def generate_comprehensive_hash(self, content_path: str, content_type: ContentType) -> ContentHash:
-        """Generate comprehensive hash for content"""
-        try:
+        """Generate comprehensive hash for content"""        try:
             file_path = Path(content_path)
             
             if not file_path.exists():
@@ -353,8 +337,7 @@ class ContentHashGenerator:
             raise
     
     async def _generate_image_hashes(self, image_path: str, content_hash: ContentHash):
-        """Generate image-specific perceptual hashes"""
-        try:
+        """Generate image-specific perceptual hashes"""        try:
             with Image.open(image_path) as img:
                 # Convert to RGB if necessary
                 if img.mode != 'RGB':
@@ -375,8 +358,7 @@ class ContentHashGenerator:
             logger.error(f"Error generating image hashes: {str(e)}")
     
     async def _generate_video_hashes(self, video_path: str, content_hash: ContentHash):
-        """Generate video-specific fingerprints"""
-        try:
+        """Generate video-specific fingerprints"""        try:
             # Extract key frames for fingerprinting
             cap = cv2.VideoCapture(video_path)
             frame_hashes = []
@@ -410,8 +392,7 @@ class ContentHashGenerator:
             logger.error(f"Error generating video hashes: {str(e)}")
     
     async def _generate_audio_hashes(self, audio_path: str, content_hash: ContentHash):
-        """Generate audio-specific fingerprints"""
-        try:
+        """Generate audio-specific fingerprints"""        try:
             # Load audio file
             y, sr = librosa.load(audio_path, duration=30)  # First 30 seconds
             
@@ -434,8 +415,7 @@ class ContentHashGenerator:
             logger.error(f"Error generating audio hashes: {str(e)}")
     
     async def _generate_text_hashes(self, text_path: str, content_hash: ContentHash):
-        """Generate text-specific semantic hashes"""
-        try:
+        """Generate text-specific semantic hashes"""        try:
             with open(text_path, 'r', encoding='utf-8', errors='ignore') as f:
                 text_content = f.read()
             
@@ -462,8 +442,7 @@ class ContentHashGenerator:
 
 
 class ForensicAnalysisEngine:
-    """Advanced forensic analysis for tampering detection"""
-    
+    """Advanced forensic analysis for tampering detection"""    
     def __init__(self):
         self.analysis_methods = [
             'error_level_analysis',
@@ -476,8 +455,7 @@ class ForensicAnalysisEngine:
     
     async def analyze_content_authenticity(self, content_path: str, 
                                          content_type: ContentType) -> Dict[str, Any]:
-        """Comprehensive forensic analysis"""
-        try:
+        """Comprehensive forensic analysis"""        try:
             results = {
                 'authenticity_score': 0.0,
                 'tampering_indicators': [],
@@ -504,8 +482,7 @@ class ForensicAnalysisEngine:
             return {'authenticity_score': 0.0, 'error': str(e)}
     
     async def _analyze_image_forensics(self, image_path: str, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Forensic analysis specific to images"""
-        try:
+        """Forensic analysis specific to images"""        try:
             with Image.open(image_path) as img:
                 img_array = np.array(img)
                 
@@ -546,8 +523,7 @@ class ForensicAnalysisEngine:
             return results
     
     async def _error_level_analysis(self, img: Image.Image) -> Dict[str, Any]:
-        """Error Level Analysis for JPEG tampering detection"""
-        try:
+        """Error Level Analysis for JPEG tampering detection"""        try:
             # Save image with known compression quality
             with tempfile.NamedTemporaryFile(suffix='.jpg', delete=False) as temp_file:
                 img.save(temp_file.name, 'JPEG', quality=95)
@@ -598,8 +574,7 @@ class ForensicAnalysisEngine:
         return {'suspicious': False, 'regions': [], 'error': 'Analysis failed'}
     
     async def _jpeg_compression_analysis(self, image_path: str) -> Dict[str, Any]:
-        """Analyze JPEG compression patterns for inconsistencies"""
-        try:
+        """Analyze JPEG compression patterns for inconsistencies"""        try:
             # Read JPEG quantization tables
             with open(image_path, 'rb') as f:
                 # This is a simplified version - full implementation would parse JPEG structure
@@ -619,8 +594,7 @@ class ForensicAnalysisEngine:
             return {'inconsistent': False, 'error': str(e)}
     
     async def _copy_move_detection(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Detect copy-move forgery in images"""
-        try:
+        """Detect copy-move forgery in images"""        try:
             if len(img_array.shape) == 3:
                 gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             else:
@@ -692,8 +666,7 @@ class ForensicAnalysisEngine:
             return {'detected': False, 'regions': [], 'error': str(e)}
     
     async def _noise_pattern_analysis(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Analyze noise patterns for tampering indicators"""
-        try:
+        """Analyze noise patterns for tampering indicators"""        try:
             if len(img_array.shape) == 3:
                 gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             else:
@@ -738,8 +711,7 @@ class ForensicAnalysisEngine:
             return {'inconsistent': False, 'error': str(e)}
     
     async def _analyze_video_forensics(self, video_path: str, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Forensic analysis specific to videos"""
-        try:
+        """Forensic analysis specific to videos"""        try:
             cap = cv2.VideoCapture(video_path)
             
             # Analyze temporal consistency
@@ -767,8 +739,7 @@ class ForensicAnalysisEngine:
             return results
     
     async def _temporal_consistency_analysis(self, cap: cv2.VideoCapture) -> Dict[str, Any]:
-        """Analyze temporal consistency in video frames"""
-        try:
+        """Analyze temporal consistency in video frames"""        try:
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             fps = cap.get(cv2.CAP_PROP_FPS)
             
@@ -816,8 +787,7 @@ class ForensicAnalysisEngine:
             return {'inconsistent': False, 'error': str(e)}
     
     async def _analyze_key_frames(self, cap: cv2.VideoCapture) -> Dict[str, Any]:
-        """Analyze key frames for tampering indicators"""
-        try:
+        """Analyze key frames for tampering indicators"""        try:
             indicators = []
             regions = []
             
@@ -861,8 +831,7 @@ class ForensicAnalysisEngine:
             return {'indicators': [], 'regions': []}
     
     async def _analyze_audio_forensics(self, audio_path: str, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Forensic analysis specific to audio"""
-        try:
+        """Forensic analysis specific to audio"""        try:
             # Load audio file
             y, sr = librosa.load(audio_path)
             
@@ -890,8 +859,7 @@ class ForensicAnalysisEngine:
             return results
     
     async def _spectral_consistency_analysis(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyze spectral consistency in audio"""
-        try:
+        """Analyze spectral consistency in audio"""        try:
             # Compute short-time Fourier transform
             stft = librosa.stft(y)
             magnitude = np.abs(stft)
@@ -921,8 +889,7 @@ class ForensicAnalysisEngine:
             return {'inconsistent': False, 'error': str(e)}
     
     async def _audio_splicing_detection(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Detect audio splicing points"""
-        try:
+        """Detect audio splicing points"""        try:
             # Calculate short-time energy
             frame_length = 2048
             hop_length = 512
@@ -972,8 +939,7 @@ class ForensicAnalysisEngine:
 
 
 class AIDeepfakeDetector:
-    """AI-powered deepfake and synthetic content detection"""
-    
+    """AI-powered deepfake and synthetic content detection"""    
     def __init__(self, config: ContentVerificationConfig):
         self.config = config
         self.models_loaded = False
@@ -982,8 +948,7 @@ class AIDeepfakeDetector:
         self.audio_detector = None
         
     async def initialize_models(self):
-        """Initialize AI models for detection"""
-        try:
+        """Initialize AI models for detection"""        try:
             # Initialize deepfake detection models
             # Note: In production, these would be actual trained models
             
@@ -1000,8 +965,7 @@ class AIDeepfakeDetector:
             self.models_loaded = False
     
     async def detect_deepfake(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Detect deepfake/synthetic content using AI"""
-        try:
+        """Detect deepfake/synthetic content using AI"""        try:
             if not self.models_loaded:
                 await self.initialize_models()
             
@@ -1030,8 +994,7 @@ class AIDeepfakeDetector:
             }
     
     async def _detect_image_deepfake(self, image_path: str, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect deepfake in images"""
-        try:
+        """Detect deepfake in images"""        try:
             with Image.open(image_path) as img:
                 img_array = np.array(img)
                 
@@ -1066,8 +1029,7 @@ class AIDeepfakeDetector:
             return result
     
     async def _analyze_facial_features(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Analyze facial features for deepfake indicators"""
-        try:
+        """Analyze facial features for deepfake indicators"""        try:
             # Convert to grayscale for face detection
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             
@@ -1099,8 +1061,7 @@ class AIDeepfakeDetector:
             return {'authenticity_score': 0.5, 'error': str(e)}
     
     async def _check_face_inconsistencies(self, face_region: np.ndarray) -> List[str]:
-        """Check for facial inconsistencies that indicate deepfakes"""
-        inconsistencies = []
+        """Check for facial inconsistencies that indicate deepfakes"""        inconsistencies = []
         
         try:
             # Check for unnatural symmetry (simplified)
@@ -1139,8 +1100,7 @@ class AIDeepfakeDetector:
         return inconsistencies
     
     async def _analyze_generation_artifacts(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Analyze image for generation artifacts"""
-        try:
+        """Analyze image for generation artifacts"""        try:
             analysis = {
                 'authenticity_score': 1.0,
                 'artifacts_detected': []
@@ -1200,8 +1160,7 @@ class AIDeepfakeDetector:
             return {'authenticity_score': 0.5, 'error': str(e)}
     
     async def _detect_video_deepfake(self, video_path: str, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect deepfake in videos"""
-        try:
+        """Detect deepfake in videos"""        try:
             cap = cv2.VideoCapture(video_path)
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
             
@@ -1249,8 +1208,7 @@ class AIDeepfakeDetector:
             return result
     
     async def _detect_image_deepfake_direct(self, img_array: np.ndarray, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Direct deepfake detection on numpy array"""
-        try:
+        """Direct deepfake detection on numpy array"""        try:
             # Reuse image analysis methods
             face_analysis = await self._analyze_facial_features(img_array)
             artifact_analysis = await self._analyze_generation_artifacts(img_array)
@@ -1271,8 +1229,7 @@ class AIDeepfakeDetector:
             return result
     
     async def _detect_audio_deepfake(self, audio_path: str, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect deepfake in audio"""
-        try:
+        """Detect deepfake in audio"""        try:
             # Load audio
             y, sr = librosa.load(audio_path)
             
@@ -1304,8 +1261,7 @@ class AIDeepfakeDetector:
             return result
     
     async def _analyze_vocal_characteristics(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyze vocal characteristics for synthetic speech detection"""
-        try:
+        """Analyze vocal characteristics for synthetic speech detection"""        try:
             analysis = {
                 'authenticity_score': 1.0,
                 'anomalies': []
@@ -1351,8 +1307,7 @@ class AIDeepfakeDetector:
             return {'authenticity_score': 0.5, 'error': str(e)}
     
 class ContentVerificationEngine:
-    """Main content verification engine coordinating all verification processes"""
-    
+    """Main content verification engine coordinating all verification processes"""    
     def __init__(self, config: ContentVerificationConfig):
         self.config = config
         self.status = ContentVerificationStatus.INACTIVE
@@ -1376,8 +1331,7 @@ class ContentVerificationEngine:
         }
     
     async def initialize(self):
-        """Initialize the verification engine"""
-        try:
+        """Initialize the verification engine"""        try:
             self.status = ContentVerificationStatus.ACTIVE
             await self.deepfake_detector.initialize_models()
             logger.info("Content verification engine initialized successfully")
@@ -1389,8 +1343,7 @@ class ContentVerificationEngine:
     
     async def verify_content(self, content_path: str, verification_level: VerificationLevel = None,
                            expected_hash: str = None, owner_id: str = None) -> VerificationReport:
-        """Comprehensive content verification"""
-        try:
+        """Comprehensive content verification"""        try:
             if verification_level is None:
                 verification_level = self.config.default_verification_level
             
@@ -1462,8 +1415,7 @@ class ContentVerificationEngine:
             return report
     
     async def _detect_content_type(self, content_path: str) -> ContentType:
-        """Detect the type of content"""
-        try:
+        """Detect the type of content"""        try:
             mime_type = magic.from_file(content_path, mime=True)
             
             if mime_type.startswith('image/'):
@@ -1482,8 +1434,7 @@ class ContentVerificationEngine:
             return ContentType.MIXED
     
     async def _basic_verification(self, content_path: str, content_type: ContentType, report: VerificationReport):
-        """Basic verification - hash checking and basic metadata"""
-        try:
+        """Basic verification - hash checking and basic metadata"""        try:
             report.methods_applied.append(VerificationMethod.HASH_VERIFICATION)
             
             # Hash verification
@@ -1512,8 +1463,7 @@ class ContentVerificationEngine:
             report.warnings.append(f"Basic verification incomplete: {str(e)}")
     
     async def _standard_verification(self, content_path: str, content_type: ContentType, report: VerificationReport):
-        """Standard verification - includes tampering detection"""
-        try:
+        """Standard verification - includes tampering detection"""        try:
             # Forensic analysis
             report.methods_applied.append(VerificationMethod.FORENSIC_ANALYSIS)
             forensic_results = await self.forensic_analyzer.analyze_content_authenticity(content_path, content_type)
@@ -1537,8 +1487,7 @@ class ContentVerificationEngine:
             report.warnings.append(f"Standard verification incomplete: {str(e)}")
     
     async def _comprehensive_verification(self, content_path: str, content_type: ContentType, report: VerificationReport):
-        """Comprehensive verification - includes AI analysis"""
-        try:
+        """Comprehensive verification - includes AI analysis"""        try:
             # AI-based deepfake detection
             if self.config.enable_ai_detection:
                 report.methods_applied.append(VerificationMethod.AI_DEEPFAKE_DETECTION)
@@ -1574,8 +1523,7 @@ class ContentVerificationEngine:
             report.warnings.append(f"Comprehensive verification incomplete: {str(e)}")
     
     async def _forensic_verification(self, content_path: str, content_type: ContentType, report: VerificationReport):
-        """Forensic-level verification - advanced analysis techniques"""
-        try:
+        """Forensic-level verification - advanced analysis techniques"""        try:
             # Advanced forensic techniques
             if content_type == ContentType.VIDEO:
                 # Temporal consistency analysis
@@ -1608,8 +1556,7 @@ class ContentVerificationEngine:
             report.warnings.append(f"Forensic verification incomplete: {str(e)}")
     
     async def _blockchain_verification(self, content_hash: ContentHash, report: VerificationReport):
-        """Blockchain-based verification"""
-        try:
+        """Blockchain-based verification"""        try:
             if not self.config.enable_blockchain_verification:
                 return
             
@@ -1630,8 +1577,7 @@ class ContentVerificationEngine:
             report.warnings.append(f"Blockchain verification failed: {str(e)}")
     
     async def _calculate_final_results(self, report: VerificationReport):
-        """Calculate final verification results and confidence score"""
-        try:
+        """Calculate final verification results and confidence score"""        try:
             scores = []
             
             # Basic integrity score
@@ -1693,8 +1639,7 @@ class ContentVerificationEngine:
             report.confidence_score = 0.0
     
     async def _extract_basic_metadata(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Extract basic metadata from content"""
-        try:
+        """Extract basic metadata from content"""        try:
             metadata = {}
             
             # File system metadata
@@ -1723,8 +1668,7 @@ class ContentVerificationEngine:
             return {'error': str(e)}
     
     async def _extract_image_metadata(self, image_path: str) -> Dict[str, Any]:
-        """Extract image-specific metadata"""
-        try:
+        """Extract image-specific metadata"""        try:
             metadata = {}
             
             with Image.open(image_path) as img:
@@ -1750,8 +1694,7 @@ class ContentVerificationEngine:
             return {}
     
     async def _extract_video_metadata(self, video_path: str) -> Dict[str, Any]:
-        """Extract video-specific metadata"""
-        try:
+        """Extract video-specific metadata"""        try:
             cap = cv2.VideoCapture(video_path)
             
             metadata = {
@@ -1770,8 +1713,7 @@ class ContentVerificationEngine:
             return {}
     
     async def _extract_audio_metadata(self, audio_path: str) -> Dict[str, Any]:
-        """Extract audio-specific metadata"""
-        try:
+        """Extract audio-specific metadata"""        try:
             # Using mutagen for metadata extraction
             audio_file = MutagenFile(audio_path)
             metadata = {}
@@ -1797,8 +1739,7 @@ class ContentVerificationEngine:
             return {}
     
     async def _detect_steganography(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Detect hidden data using steganography"""
-        try:
+        """Detect hidden data using steganography"""        try:
             # Simplified steganography detection
             result = {
                 'hidden_data_detected': False,
@@ -1833,8 +1774,7 @@ class ContentVerificationEngine:
             return {'hidden_data_detected': False, 'error': str(e)}
     
     async def _detect_watermark(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Detect digital watermarks"""
-        try:
+        """Detect digital watermarks"""        try:
             result = {
                 'watermark_found': False,
                 'watermark_type': None,
@@ -1869,8 +1809,7 @@ class ContentVerificationEngine:
             return {'watermark_found': False, 'error': str(e)}
     
     async def _analyze_temporal_consistency(self, video_path: str) -> Dict[str, Any]:
-        """Analyze temporal consistency in video"""
-        # This method was implemented in the ForensicAnalysisEngine
+        """Analyze temporal consistency in video"""        # This method was implemented in the ForensicAnalysisEngine
         # We'll delegate to that implementation
         forensic_engine = ForensicAnalysisEngine()
         
@@ -1884,8 +1823,7 @@ class ContentVerificationEngine:
         }
     
     async def _analyze_frequency_domain(self, audio_path: str) -> Dict[str, Any]:
-        """Analyze audio in frequency domain"""
-        try:
+        """Analyze audio in frequency domain"""        try:
             y, sr = librosa.load(audio_path)
             
             # Spectral analysis
@@ -1909,8 +1847,7 @@ class ContentVerificationEngine:
             return {'anomalies_detected': False, 'error': str(e)}
     
     async def _cross_reference_forgery_database(self, content_hash: str) -> Dict[str, Any]:
-        """Cross-reference with known forgery databases"""
-        try:
+        """Cross-reference with known forgery databases"""        try:
             # In production, this would query actual forgery databases
             # For now, we simulate the functionality
             
@@ -1937,8 +1874,7 @@ class ContentVerificationEngine:
             return {'match_found': False, 'error': str(e)}
     
     async def _query_blockchain(self, content_hash: str) -> Dict[str, Any]:
-        """Query blockchain for content registration"""
-        try:
+        """Query blockchain for content registration"""        try:
             # In production, this would query actual blockchain networks
             # For now, we simulate the functionality
             
@@ -1955,8 +1891,7 @@ class ContentVerificationEngine:
             return {'registered': False, 'error': str(e)}
     
     async def _check_verification_cache(self, content_hash: str) -> Optional[Dict[str, Any]]:
-        """Check verification cache for existing results"""
-        try:
+        """Check verification cache for existing results"""        try:
             if content_hash in self.verification_cache:
                 cached_data = self.verification_cache[content_hash]
                 
@@ -1978,8 +1913,7 @@ class ContentVerificationEngine:
             return None
     
     async def _cache_verification_result(self, report: VerificationReport):
-        """Cache verification result"""
-        try:
+        """Cache verification result"""        try:
             self.verification_cache[report.content_hash] = {
                 'result': report.overall_result,
                 'confidence': report.confidence_score,
@@ -2001,8 +1935,7 @@ class ContentVerificationEngine:
             logger.error(f"Error caching verification result: {str(e)}")
     
     def _update_statistics(self, report: VerificationReport):
-        """Update verification statistics"""
-        try:
+        """Update verification statistics"""        try:
             self.verification_stats['total_verifications'] += 1
             
             if report.overall_result == VerificationResult.AUTHENTIC:
@@ -2018,8 +1951,7 @@ class ContentVerificationEngine:
             logger.error(f"Error updating statistics: {str(e)}")
     
     async def get_verification_statistics(self) -> Dict[str, Any]:
-        """Get verification engine statistics"""
-        try:
+        """Get verification engine statistics"""        try:
             total = self.verification_stats['total_verifications']
             
             return {
@@ -2062,8 +1994,7 @@ __all__ = [
 # =============== LEGACY COMPATIBILITY ===============
 
 class ContentVerificationManager:
-    """Legacy manager for backward compatibility"""
-    def __init__(self, config: ContentVerificationConfig):
+    """Legacy manager for backward compatibility"""    def __init__(self, config: ContentVerificationConfig):
         self.engine = ContentVerificationEngine(config)
     
     async def start(self) -> bool:
@@ -2071,8 +2002,7 @@ class ContentVerificationManager:
         return True
 
 class ContentVerificationService:
-    """Legacy service for backward compatibility"""
-    def __init__(self, manager: ContentVerificationManager):
+    """Legacy service for backward compatibility"""    def __init__(self, manager: ContentVerificationManager):
         self.manager = manager
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
@@ -2135,8 +2065,7 @@ class ContentVerificationService:
 
 @dataclass
 class VerificationResult:
-    """Comprehensive verification result"""
-    verification_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive verification result"""    verification_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     content_hash_id: str = ""
     
@@ -2172,40 +2101,33 @@ class VerificationResult:
 # =============== CORE INTERFACES ===============
 
 class IContentVerificationService(ABC):
-    """Interface for content verification service"""
-    
+    """Interface for content verification service"""    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialize content verification system"""
-        pass
+        """Initialize content verification system"""        pass
     
     @abstractmethod
     async def verify_content(self, content_data: bytes, content_type: str) -> VerificationResult:
-        """Verify content authenticity and integrity"""
-        pass
+        """Verify content authenticity and integrity"""        pass
     
     @abstractmethod
     async def generate_content_hash(self, content_data: bytes) -> ContentHash:
-        """Generate comprehensive content hash"""
-        pass
+        """Generate comprehensive content hash"""        pass
     
     @abstractmethod
     async def compare_content_integrity(self, hash1: ContentHash, hash2: ContentHash) -> float:
-        """Compare integrity between two content hashes"""
-        pass
+        """Compare integrity between two content hashes"""        pass
 
 # =============== HASH GENERATION ENGINE ===============
 
 class ContentHashEngine:
-    """Advanced content hash generation engine"""
-    
+    """Advanced content hash generation engine"""    
     def __init__(self, config: ContentVerificationConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.HashEngine")
         
     async def generate_comprehensive_hash(self, content_data: bytes, content_type: str) -> ContentHash:
-        """Generate comprehensive hash for content"""
-        content_hash = ContentHash()
+        """Generate comprehensive hash for content"""        content_hash = ContentHash()
         
         try:
             # Basic cryptographic hashes
@@ -2240,8 +2162,7 @@ class ContentHashEngine:
         return content_hash
     
     async def _generate_image_perceptual_hash(self, image_data: bytes) -> str:
-        """Generate perceptual hash for image content"""
-        try:
+        """Generate perceptual hash for image content"""        try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
             
@@ -2271,8 +2192,7 @@ class ContentHashEngine:
             return ""
     
     async def _generate_image_content_hash(self, image_data: bytes) -> str:
-        """Generate content-aware hash for image"""
-        try:
+        """Generate content-aware hash for image"""        try:
             # Convert to OpenCV format
             nparr = np.frombuffer(image_data, np.uint8)
             image = cv2.imdecode(nparr, cv2.IMREAD_COLOR)
@@ -2307,8 +2227,7 @@ class ContentHashEngine:
             return ""
     
     async def _generate_video_content_hash(self, video_data: bytes) -> str:
-        """Generate content hash for video"""
-        try:
+        """Generate content hash for video"""        try:
             # Save temporary file for video processing
             temp_path = f"/tmp/temp_video_{uuid.uuid4().hex}.mp4"
             
@@ -2349,8 +2268,7 @@ class ContentHashEngine:
             return ""
     
     async def _generate_audio_content_hash(self, audio_data: bytes) -> str:
-        """Generate content hash for audio"""
-        try:
+        """Generate content hash for audio"""        try:
             # Convert bytes to audio array (simplified)
             # In reality, would need to handle different audio formats
             audio_array = np.frombuffer(audio_data, dtype=np.float32)
@@ -2387,8 +2305,7 @@ class ContentHashEngine:
             return ""
     
     async def _calculate_integrity_score(self, content_data: bytes, content_type: str) -> float:
-        """Calculate initial integrity score based on content analysis"""
-        try:
+        """Calculate initial integrity score based on content analysis"""        try:
             integrity_score = 0.8  # Base score
             
             # Check file size (very small or very large files might be suspicious)
@@ -2413,8 +2330,7 @@ class ContentHashEngine:
             return 0.5
     
     async def _check_image_integrity(self, image_data: bytes) -> float:
-        """Check image-specific integrity factors"""
-        try:
+        """Check image-specific integrity factors"""        try:
             image = Image.open(io.BytesIO(image_data))
             
             # Check for EXIF data (original photos usually have EXIF)
@@ -2437,27 +2353,23 @@ class ContentHashEngine:
             return 0.0
     
     async def _check_video_integrity(self, video_data: bytes) -> float:
-        """Check video-specific integrity factors"""
-        # Placeholder for video integrity checks
+        """Check video-specific integrity factors"""        # Placeholder for video integrity checks
         return 0.0
     
     async def _check_audio_integrity(self, audio_data: bytes) -> float:
-        """Check audio-specific integrity factors"""
-        # Placeholder for audio integrity checks
+        """Check audio-specific integrity factors"""        # Placeholder for audio integrity checks
         return 0.0
 
 # =============== FORENSIC ANALYSIS ENGINE ===============
 
 class ForensicAnalysisEngine:
-    """Advanced forensic analysis for content verification"""
-    
+    """Advanced forensic analysis for content verification"""    
     def __init__(self, config: ContentVerificationConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ForensicEngine")
         
     async def perform_forensic_analysis(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
-        """Perform comprehensive forensic analysis"""
-        forensic_results = {
+        """Perform comprehensive forensic analysis"""        forensic_results = {
             'metadata_analysis': {},
             'steganography_check': {},
             'compression_analysis': {},
@@ -2481,8 +2393,7 @@ class ForensicAnalysisEngine:
         return forensic_results
     
     async def _analyze_image_forensics(self, image_data: bytes) -> Dict[str, Any]:
-        """Analyze image for forensic evidence"""
-        results = {
+        """Analyze image for forensic evidence"""        results = {
             'exif_analysis': {},
             'error_level_analysis': {},
             'jpeg_quality': 0,
@@ -2542,8 +2453,7 @@ class ForensicAnalysisEngine:
         return results
     
     async def _analyze_video_forensics(self, video_data: bytes) -> Dict[str, Any]:
-        """Analyze video for forensic evidence"""
-        results = {
+        """Analyze video for forensic evidence"""        results = {
             'codec_analysis': {},
             'frame_consistency': {},
             'temporal_anomalies': [],
@@ -2562,8 +2472,7 @@ class ForensicAnalysisEngine:
         return results
     
     async def _analyze_audio_forensics(self, audio_data: bytes) -> Dict[str, Any]:
-        """Analyze audio for forensic evidence"""
-        results = {
+        """Analyze audio for forensic evidence"""        results = {
             'spectrum_analysis': {},
             'voice_authenticity': {},
             'editing_artifacts': [],
@@ -2584,16 +2493,14 @@ class ForensicAnalysisEngine:
 # =============== AI DEEPFAKE DETECTION ENGINE ===============
 
 class AIDeepfakeDetectionEngine:
-    """AI-powered deepfake and manipulation detection"""
-    
+    """AI-powered deepfake and manipulation detection"""    
     def __init__(self, config: ContentVerificationConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AIDetectionEngine")
         self.model_endpoints = config.ai_model_endpoints
         
     async def detect_deepfake(self, content_data: bytes, content_type: str) -> Dict[str, Any]:
-        """Detect deepfake/AI-generated content"""
-        detection_results = {
+        """Detect deepfake/AI-generated content"""        detection_results = {
             'is_deepfake': False,
             'confidence_score': 0.0,
             'detection_method': '',
@@ -2616,8 +2523,7 @@ class AIDeepfakeDetectionEngine:
         return detection_results
     
     async def _detect_image_deepfake(self, image_data: bytes) -> Dict[str, Any]:
-        """Detect AI-generated or manipulated images"""
-        results = {
+        """Detect AI-generated or manipulated images"""        results = {
             'gan_artifacts': False,
             'face_manipulation': False,
             'style_transfer': False,
@@ -2665,8 +2571,7 @@ class AIDeepfakeDetectionEngine:
         return results
     
     async def _detect_video_deepfake(self, video_data: bytes) -> Dict[str, Any]:
-        """Detect deepfake videos"""
-        results = {
+        """Detect deepfake videos"""        results = {
             'temporal_inconsistencies': [],
             'face_swap_detected': False,
             'lip_sync_anomalies': False,
@@ -2685,8 +2590,7 @@ class AIDeepfakeDetectionEngine:
         return results
     
     async def _detect_audio_deepfake(self, audio_data: bytes) -> Dict[str, Any]:
-        """Detect AI-generated or voice-cloned audio"""
-        results = {
+        """Detect AI-generated or voice-cloned audio"""        results = {
             'voice_cloning_detected': False,
             'tts_artifacts': False,
             'spectral_anomalies': [],
@@ -2705,8 +2609,7 @@ class AIDeepfakeDetectionEngine:
         return results
     
     async def _has_face_content(self, img_array: np.ndarray) -> bool:
-        """Check if image contains faces"""
-        try:
+        """Check if image contains faces"""        try:
             # Simple face detection using OpenCV
             face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
@@ -2716,8 +2619,7 @@ class AIDeepfakeDetectionEngine:
             return False
     
     async def _calculate_skin_smoothness(self, img_array: np.ndarray) -> float:
-        """Calculate skin texture smoothness"""
-        try:
+        """Calculate skin texture smoothness"""        try:
             # Convert to grayscale and calculate texture
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             
@@ -2736,8 +2638,7 @@ class AIDeepfakeDetectionEngine:
             return 0.5
     
     async def _analyze_frequency_domain(self, img_array: np.ndarray) -> Dict[str, float]:
-        """Analyze image in frequency domain for GAN artifacts"""
-        try:
+        """Analyze image in frequency domain for GAN artifacts"""        try:
             # Convert to grayscale
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             
@@ -2765,8 +2666,7 @@ class AIDeepfakeDetectionEngine:
             return {'anomaly_score': 0.0, 'frequency_variance': 0.0}
     
     async def _check_color_consistency(self, img_array: np.ndarray) -> float:
-        """Check color distribution consistency"""
-        try:
+        """Check color distribution consistency"""        try:
             # Calculate color channel correlations
             r_channel = img_array[:, :, 0].flatten()
             g_channel = img_array[:, :, 1].flatten()
@@ -2787,8 +2687,7 @@ class AIDeepfakeDetectionEngine:
 # =============== MAIN SERVICE IMPLEMENTATION ===============
 
 class ContentVerificationService(IContentVerificationService):
-    """Professional content verification service implementation"""
-    
+    """Professional content verification service implementation"""    
     def __init__(self, config: ContentVerificationConfig):
         self.config = config
         self.status = ContentVerificationStatus.INACTIVE
@@ -2804,8 +2703,7 @@ class ContentVerificationService(IContentVerificationService):
         self.hash_cache: Dict[str, ContentHash] = {}
         
     async def initialize(self) -> bool:
-        """Initialize content verification service"""
-        try:
+        """Initialize content verification service"""        try:
             self.logger.info("🚀 Initializing Content Verification Service")
             
             # Validate configuration
@@ -2825,8 +2723,7 @@ class ContentVerificationService(IContentVerificationService):
             return False
     
     async def verify_content(self, content_data: bytes, content_type: str) -> VerificationResult:
-        """Verify content authenticity and integrity"""
-        verification_result = VerificationResult()
+        """Verify content authenticity and integrity"""        verification_result = VerificationResult()
         start_time = time.time()
         
         try:
@@ -2886,8 +2783,7 @@ class ContentVerificationService(IContentVerificationService):
         return verification_result
     
     async def generate_content_hash(self, content_data: bytes) -> ContentHash:
-        """Generate comprehensive content hash"""
-        try:
+        """Generate comprehensive content hash"""        try:
             # Detect content type
             mime_type = magic.from_buffer(content_data, mime=True)
             
@@ -2904,8 +2800,7 @@ class ContentVerificationService(IContentVerificationService):
             return ContentHash()
     
     async def compare_content_integrity(self, hash1: ContentHash, hash2: ContentHash) -> float:
-        """Compare integrity between two content hashes"""
-        try:
+        """Compare integrity between two content hashes"""        try:
             # Compare cryptographic hashes (exact match)
             if hash1.sha256_hash == hash2.sha256_hash:
                 return 1.0
@@ -2937,8 +2832,7 @@ class ContentVerificationService(IContentVerificationService):
     # =============== PRIVATE VERIFICATION METHODS ===============
     
     async def _perform_basic_verification(self, content_data: bytes, content_type: str, result: VerificationResult):
-        """Perform basic verification checks"""
-        result.verification_methods_used.append(VerificationMethod.HASH_VERIFICATION)
+        """Perform basic verification checks"""        result.verification_methods_used.append(VerificationMethod.HASH_VERIFICATION)
         
         # File format validation
         detected_mime = magic.from_buffer(content_data, mime=True)
@@ -2955,8 +2849,7 @@ class ContentVerificationService(IContentVerificationService):
             result.anomalies_detected.append(f"MIME type mismatch: expected {content_type}, got {detected_mime}")
     
     async def _perform_standard_verification(self, content_data: bytes, content_type: str, result: VerificationResult):
-        """Perform standard verification including metadata analysis"""
-        result.verification_methods_used.append(VerificationMethod.METADATA_ANALYSIS)
+        """Perform standard verification including metadata analysis"""        result.verification_methods_used.append(VerificationMethod.METADATA_ANALYSIS)
         
         # Metadata extraction and analysis
         metadata_analysis = {}
@@ -2976,8 +2869,7 @@ class ContentVerificationService(IContentVerificationService):
         result.method_results[VerificationMethod.METADATA_ANALYSIS.value] = metadata_analysis
     
     async def _perform_comprehensive_verification(self, content_data: bytes, content_type: str, result: VerificationResult):
-        """Perform comprehensive verification including AI detection"""
-        if self.config.enable_ai_detection:
+        """Perform comprehensive verification including AI detection"""        if self.config.enable_ai_detection:
             result.verification_methods_used.append(VerificationMethod.AI_DEEPFAKE_DETECTION)
             
             # AI deepfake detection
@@ -2988,8 +2880,7 @@ class ContentVerificationService(IContentVerificationService):
                 result.modifications_found.append('AI-generated or deepfake content detected')
     
     async def _perform_forensic_verification(self, content_data: bytes, content_type: str, result: VerificationResult):
-        """Perform forensic-level verification"""
-        if self.config.enable_forensic_analysis:
+        """Perform forensic-level verification"""        if self.config.enable_forensic_analysis:
             result.verification_methods_used.append(VerificationMethod.FORENSIC_ANALYSIS)
             
             # Forensic analysis
@@ -3002,8 +2893,7 @@ class ContentVerificationService(IContentVerificationService):
                 result.modifications_found.extend(forensic_results['editing_indicators'])
     
     async def _perform_blockchain_verification(self, content_hash: ContentHash, result: VerificationResult):
-        """Perform blockchain-based verification"""
-        result.verification_methods_used.append(VerificationMethod.BLOCKCHAIN_VALIDATION)
+        """Perform blockchain-based verification"""        result.verification_methods_used.append(VerificationMethod.BLOCKCHAIN_VALIDATION)
         
         # Placeholder for blockchain verification
         blockchain_results = {
@@ -3016,8 +2906,7 @@ class ContentVerificationService(IContentVerificationService):
         result.method_results[VerificationMethod.BLOCKCHAIN_VALIDATION.value] = blockchain_results
     
     async def _finalize_verification_result(self, result: VerificationResult):
-        """Calculate final verification scores and result"""
-        # Calculate confidence score
+        """Calculate final verification scores and result"""        # Calculate confidence score
         total_methods = len(result.verification_methods_used)
         positive_indicators = 0
         
@@ -3051,21 +2940,18 @@ class ContentVerificationService(IContentVerificationService):
         result.authenticity_probability = max(0.0, result.confidence_score - (len(result.modifications_found) * 0.3))
     
     async def _validate_configuration(self):
-        """Validate service configuration"""
-        if not self.config.supported_formats:
+        """Validate service configuration"""        if not self.config.supported_formats:
             raise ValueError("No supported formats configured")
         
         if self.config.max_concurrent_verifications <= 0:
             raise ValueError("Invalid max_concurrent_verifications value")
     
     async def _initialize_ai_models(self):
-        """Initialize AI models for detection"""
-        # Placeholder for AI model initialization
+        """Initialize AI models for detection"""        # Placeholder for AI model initialization
         self.logger.info("AI models initialized for deepfake detection")
     
     def _calculate_hamming_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate Hamming similarity between two hashes"""
-        try:
+        """Calculate Hamming similarity between two hashes"""        try:
             if len(hash1) != len(hash2):
                 return 0.0
             
@@ -3080,12 +2966,10 @@ class ContentVerificationService(IContentVerificationService):
 # =============== FACTORY & UTILITIES ===============
 
 class ContentVerificationServiceFactory:
-    """Factory for creating content verification service instances"""
-    
+    """Factory for creating content verification service instances"""    
     @staticmethod
     def create_service(config: Optional[ContentVerificationConfig] = None) -> ContentVerificationService:
-        """Create configured content verification service"""
-        if config is None:
+        """Create configured content verification service"""        if config is None:
             config = ContentVerificationConfig()
         
         return ContentVerificationService(config)
@@ -3096,8 +2980,7 @@ class ContentVerificationServiceFactory:
         enable_ai_detection: bool = True,
         **kwargs
     ) -> ContentVerificationConfig:
-        """Create content verification configuration"""
-        return ContentVerificationConfig(
+        """Create content verification configuration"""        return ContentVerificationConfig(
             default_verification_level=verification_level,
             enable_ai_detection=enable_ai_detection,
             **kwargs
@@ -3105,15 +2988,13 @@ class ContentVerificationServiceFactory:
 
 
 def format_verification_result(result: VerificationResult) -> str:
-    """Format verification result for display"""
-    status = result.overall_result.value.upper()
+    """Format verification result for display"""    status = result.overall_result.value.upper()
     confidence = f"{result.confidence_score:.1%}"
     return f"[{status}] Confidence: {confidence} - Methods: {len(result.verification_methods_used)}"
 
 
 def calculate_content_similarity(hash1: str, hash2: str) -> float:
-    """Calculate similarity between content hashes"""
-    if hash1 == hash2:
+    """Calculate similarity between content hashes"""    if hash1 == hash2:
         return 1.0
     
     # Simple character-based similarity
@@ -3141,27 +3022,23 @@ __all__ = [
     'calculate_content_similarity'
 ]
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
-        pass
+        """Traitement principal"""        pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
-        pass
+        """Validation des données"""        pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class ContentVerificationManager:
-    """Gestionnaire principal Content Verification"""
-    
+    """Gestionnaire principal Content Verification"""    
     def __init__(self, config: ContentVerificationConfig):
         self.config = config
         self.status = ContentVerificationStatus.INACTIVE
         self.logger = logging.getLogger(f"{__name__}.ContentVerification")
         
     async def start(self) -> bool:
-        """Démarrage du gestionnaire"""
-        try:
+        """Démarrage du gestionnaire"""        try:
             self.status = ContentVerificationStatus.ACTIVE
             self.logger.info(f"🚀 Content Verification Manager démarré")
             return True
@@ -3171,21 +3048,18 @@ class ContentVerificationManager:
             return False
     
     async def stop(self) -> bool:
-        """Arrêt du gestionnaire"""
-        self.status = ContentVerificationStatus.INACTIVE
+        """Arrêt du gestionnaire"""        self.status = ContentVerificationStatus.INACTIVE
         self.logger.info(f"⏹️ Content Verification Manager arrêté")
         return True
 
 class ContentVerificationService(IContentVerificationService):
-    """Service principal Content Verification"""
-    
+    """Service principal Content Verification"""    
     def __init__(self, manager: ContentVerificationManager):
         self.manager = manager
         self.logger = logging.getLogger(f"{__name__}.Service")
     
     async def initialize(self) -> bool:
-        """Initialisation du service"""
-        try:
+        """Initialisation du service"""        try:
             self.logger.info(f"🔧 Initialisation Content Verification Service")
             return True
         except Exception as e:
@@ -3193,8 +3067,7 @@ class ContentVerificationService(IContentVerificationService):
             return False
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal des données"""
-        try:
+        """Traitement principal des données"""        try:
             self.logger.info(f"⚡ Traitement Content Verification")
             
             # Validation des données
@@ -3219,16 +3092,14 @@ class ContentVerificationService(IContentVerificationService):
             }
     
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données d'entrée"""
-        if not input_data:
+        """Validation des données d'entrée"""        if not input_data:
             return False
         
         # Validation spécifique au module
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""
-        try:
+        """Exécution de la logique métier spécifique"""        try:
             # Vérification complète de contenu avec IA et blockchain
             result = {
                 "processed": True,
@@ -3289,8 +3160,7 @@ class ContentVerificationService(IContentVerificationService):
             }
 
     async def _verify_content_authenticity(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Vérification d'authenticité avec IA avancée"""
-        try:
+        """Vérification d'authenticité avec IA avancée"""        try:
             content_type = content_data.get("type", "unknown")
             content_hash = self._calculate_content_hash(content_data)
             
@@ -3331,8 +3201,7 @@ class ContentVerificationService(IContentVerificationService):
             return {"error": str(e), "is_authentic": False, "confidence_score": 0.0}
 
     async def _detect_deepfakes(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Détection de deepfakes avec ML avancé"""
-        try:
+        """Détection de deepfakes avec ML avancé"""        try:
             content_type = content_data.get("type")
             deepfake_results = {
                 "is_deepfake": False,
@@ -3371,8 +3240,7 @@ class ContentVerificationService(IContentVerificationService):
             return {"error": str(e), "is_deepfake": None, "confidence_score": 0.0}
 
     async def _verify_content_integrity(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Vérification d'intégrité complète"""
-        try:
+        """Vérification d'intégrité complète"""        try:
             integrity_results = {
                 "is_intact": True,
                 "integrity_score": 1.0,
@@ -3404,8 +3272,7 @@ class ContentVerificationService(IContentVerificationService):
             return {"error": str(e), "is_intact": False, "integrity_score": 0.0}
 
     async def _verify_content_ownership(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Vérification de propriété et droits d'auteur"""
-        try:
+        """Vérification de propriété et droits d'auteur"""        try:
             ownership_results = {
                 "is_owner_verified": False,
                 "confidence_score": 0.0,
@@ -3437,8 +3304,7 @@ class ContentVerificationService(IContentVerificationService):
             return {"error": str(e), "is_owner_verified": False}
 
     def _calculate_content_hash(self, content_data: Dict[str, Any]) -> str:
-        """Calcul du hash de contenu"""
-        try:
+        """Calcul du hash de contenu"""        try:
             content_bytes = str(content_data).encode('utf-8')
             return hashlib.sha256(content_bytes).hexdigest()
         except Exception as e:
@@ -3446,8 +3312,7 @@ class ContentVerificationService(IContentVerificationService):
             return "unknown"
 
     async def _calculate_trust_score(self, verification_results: Dict[str, Any]) -> float:
-        """Calcul du score de confiance global"""
-        try:
+        """Calcul du score de confiance global"""        try:
             scores = []
             
             # Score d'authenticité
@@ -3487,8 +3352,7 @@ class ContentVerificationService(IContentVerificationService):
 # =============== FONCTIONS UTILITAIRES ===============
 
 async def create_contentverification_service(config: Optional[ContentVerificationConfig] = None) -> ContentVerificationService:
-    """Factory pour créer le service Content Verification"""
-    if config is None:
+    """Factory pour créer le service Content Verification"""    if config is None:
         config = ContentVerificationConfig()
     
     manager = ContentVerificationManager(config)
@@ -3500,8 +3364,7 @@ async def create_contentverification_service(config: Optional[ContentVerificatio
     return service
 
 def get_contentverification_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
-    return {
+    """Récupération du statut du module"""    return {
         "module": "Content Verification",
         "version": "1.0.0",
         "expert": "SECURITY_SPECIALIST + BLOCKCHAIN_EXPERT",
@@ -3512,14 +3375,12 @@ def get_contentverification_status() -> Dict[str, Any]:
 # =============== POINTS D'ENTRÉE API ===============
 
 class ContentVerificationAPI:
-    """Points d'entrée API pour Content Verification"""
-    
+    """Points d'entrée API pour Content Verification"""    
     def __init__(self, service: ContentVerificationService):
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
-        return {
+        """Vérification de santé du module"""        return {
             "status": "healthy",
             "module": "Content Verification",
             "timestamp": datetime.now().isoformat()

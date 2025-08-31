@@ -1,5 +1,4 @@
-"""
-🎯 Subscription Management - IA-Influencer-Agent
+"""🎯 Subscription Management - IA-Influencer-Agent
 ==================================================================
 Expert: BUSINESS_ANALYST + FINTECH_EXPERT
 Type: MONETIZATION
@@ -9,7 +8,6 @@ Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 0 classes et 0 fonctions.
 ==================================================================
 """
-
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -24,16 +22,14 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class SubscriptionManagementStatus(Enum):
-    """Statuts du module Subscription Management"""
-    ACTIVE = "active"
+    """Statuts du module Subscription Management"""    ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
     ERROR = "error"
 
 @dataclass
 class SubscriptionManagementConfig:
-    """Configuration du module Subscription Management"""
-    enabled: bool = True
+    """Configuration du module Subscription Management"""    enabled: bool = True
     max_concurrent_tasks: int = 10
     timeout_seconds: int = 30
     debug_mode: bool = False
@@ -41,36 +37,30 @@ class SubscriptionManagementConfig:
 # =============== INTERFACES BUSINESS ===============
 
 class ISubscriptionManagementService(ABC):
-    """Interface du service Subscription Management"""
-    
+    """Interface du service Subscription Management"""    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""
-        pass
+        """Initialisation du service"""        pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
-        pass
+        """Traitement principal"""        pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
-        pass
+        """Validation des données"""        pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class SubscriptionManagementManager:
-    """Gestionnaire principal Subscription Management"""
-    
+    """Gestionnaire principal Subscription Management"""    
     def __init__(self, config: SubscriptionManagementConfig):
         self.config = config
         self.status = SubscriptionManagementStatus.INACTIVE
         self.logger = logging.getLogger(f"{__name__}.SubscriptionManagement")
         
     async def start(self) -> bool:
-        """Démarrage du gestionnaire"""
-        try:
+        """Démarrage du gestionnaire"""        try:
             self.status = SubscriptionManagementStatus.ACTIVE
             self.logger.info(f"🚀 Subscription Management Manager démarré")
             return True
@@ -80,21 +70,18 @@ class SubscriptionManagementManager:
             return False
     
     async def stop(self) -> bool:
-        """Arrêt du gestionnaire"""
-        self.status = SubscriptionManagementStatus.INACTIVE
+        """Arrêt du gestionnaire"""        self.status = SubscriptionManagementStatus.INACTIVE
         self.logger.info(f"⏹️ Subscription Management Manager arrêté")
         return True
 
 class SubscriptionManagementService(ISubscriptionManagementService):
-    """Service principal Subscription Management"""
-    
+    """Service principal Subscription Management"""    
     def __init__(self, manager: SubscriptionManagementManager):
         self.manager = manager
         self.logger = logging.getLogger(f"{__name__}.Service")
     
     async def initialize(self) -> bool:
-        """Initialisation du service"""
-        try:
+        """Initialisation du service"""        try:
             self.logger.info(f"🔧 Initialisation Subscription Management Service")
             return True
         except Exception as e:
@@ -102,8 +89,7 @@ class SubscriptionManagementService(ISubscriptionManagementService):
             return False
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal des données"""
-        try:
+        """Traitement principal des données"""        try:
             self.logger.info(f"⚡ Traitement Subscription Management")
             
             # Validation des données
@@ -128,16 +114,14 @@ class SubscriptionManagementService(ISubscriptionManagementService):
             }
     
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données d'entrée"""
-        if not input_data:
+        """Validation des données d'entrée"""        if not input_data:
             return False
         
         # Validation spécifique au module
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""
-        # Implement subscription management consolidated business logic
+        """Exécution de la logique métier spécifique"""        # Implement subscription management consolidated business logic
         subscription_data = data.get('subscription', {})
         user_id = subscription_data.get('user_id')
         plan_type = subscription_data.get('plan_type', 'basic')
@@ -190,8 +174,7 @@ class SubscriptionManagementService(ISubscriptionManagementService):
 # =============== FONCTIONS UTILITAIRES ===============
 
 async def create_subscriptionmanagement_service(config: Optional[SubscriptionManagementConfig] = None) -> SubscriptionManagementService:
-    """Factory pour créer le service Subscription Management"""
-    if config is None:
+    """Factory pour créer le service Subscription Management"""    if config is None:
         config = SubscriptionManagementConfig()
     
     manager = SubscriptionManagementManager(config)
@@ -203,8 +186,7 @@ async def create_subscriptionmanagement_service(config: Optional[SubscriptionMan
     return service
 
 def get_subscriptionmanagement_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
-    return {
+    """Récupération du statut du module"""    return {
         "module": "Subscription Management",
         "version": "1.0.0",
         "expert": "BUSINESS_ANALYST + FINTECH_EXPERT",
@@ -215,14 +197,12 @@ def get_subscriptionmanagement_status() -> Dict[str, Any]:
 # =============== POINTS D'ENTRÉE API ===============
 
 class SubscriptionManagementAPI:
-    """Points d'entrée API pour Subscription Management"""
-    
+    """Points d'entrée API pour Subscription Management"""    
     def __init__(self, service: SubscriptionManagementService):
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
-        return {
+        """Vérification de santé du module"""        return {
             "status": "healthy",
             "module": "Subscription Management",
             "timestamp": datetime.now().isoformat()

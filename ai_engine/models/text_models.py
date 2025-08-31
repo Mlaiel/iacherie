@@ -1,5 +1,4 @@
-"""
-Text AI Models for IA Influencer Agent Platform
+"""Text AI Models for IA Influencer Agent Platform
 Enterprise-grade text processing, NLP, and content generation models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
-
 import re
 import json
 import hashlib
@@ -37,8 +35,7 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class TextLanguage(Enum):
-    """Supported languages for text processing"""
-    ENGLISH = "en"
+    """Supported languages for text processing"""    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -54,8 +51,7 @@ class TextLanguage(Enum):
 
 
 class TextContentType(Enum):
-    """Text content type classification"""
-    BLOG_POST = "blog_post"
+    """Text content type classification"""    BLOG_POST = "blog_post"
     SOCIAL_MEDIA = "social_media"
     ARTICLE = "article"
     CAPTION = "caption"
@@ -71,16 +67,14 @@ class TextContentType(Enum):
 
 
 class SentimentType(Enum):
-    """Sentiment classification types"""
-    POSITIVE = "positive"
+    """Sentiment classification types"""    POSITIVE = "positive"
     NEGATIVE = "negative"
     NEUTRAL = "neutral"
     MIXED = "mixed"
 
 
 class TextQuality(Enum):
-    """Text quality levels"""
-    POOR = "poor"
+    """Text quality levels"""    POOR = "poor"
     BASIC = "basic"
     GOOD = "good"
     PROFESSIONAL = "professional"
@@ -89,8 +83,7 @@ class TextQuality(Enum):
 
 @dataclass
 class TextFeatures:
-    """Comprehensive text feature extraction results"""
-    content: str
+    """Comprehensive text feature extraction results"""    content: str
     language: TextLanguage
     content_type: TextContentType
     word_count: int
@@ -123,8 +116,7 @@ class TextFeatures:
 
 @dataclass
 class ContentGenerationRequest:
-    """Request for content generation"""
-    content_type: TextContentType
+    """Request for content generation"""    content_type: TextContentType
     topic: str
     target_audience: str
     tone: str
@@ -137,8 +129,7 @@ class ContentGenerationRequest:
 
 @dataclass
 class GeneratedContent:
-    """Generated content with metadata"""
-    content: str
+    """Generated content with metadata"""    content: str
     title: Optional[str]
     meta_description: Optional[str]
     hashtags: List[str]
@@ -150,8 +141,7 @@ class GeneratedContent:
 
 
 class TextAnalyzer(BaseAIModel):
-    """Advanced text analysis and feature extraction"""
-    
+    """Advanced text analysis and feature extraction"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.nlp_models = {}
@@ -161,8 +151,7 @@ class TextAnalyzer(BaseAIModel):
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize NLP models"""
-        try:
+        """Initialize NLP models"""        try:
             # Load spaCy models for different languages
             self.nlp_models = {
                 'en': self._load_spacy_model('en_core_web_sm'),
@@ -192,8 +181,7 @@ class TextAnalyzer(BaseAIModel):
             self.logger.error(f"Failed to initialize NLP models: {e}")
     
     def _load_spacy_model(self, model_name: str):
-        """Load spaCy model with fallback"""
-        try:
+        """Load spaCy model with fallback"""        try:
             return spacy.load(model_name)
         except OSError:
             self.logger.warning(f"SpaCy model {model_name} not found, using en_core_web_sm")
@@ -204,8 +192,7 @@ class TextAnalyzer(BaseAIModel):
                 return None
     
     async def process(self, text: str, **kwargs) -> ProcessingResult:
-        """Comprehensive text analysis"""
-        try:
+        """Comprehensive text analysis"""        try:
             start_time = datetime.now()
             
             if not text or not text.strip():
@@ -268,8 +255,7 @@ class TextAnalyzer(BaseAIModel):
             )
     
     async def _detect_language(self, text: str) -> TextLanguage:
-        """Detect text language"""
-        try:
+        """Detect text language"""        try:
             if self.language_detector:
                 # Use first 512 characters for language detection
                 sample_text = text[:512]
@@ -305,8 +291,7 @@ class TextAnalyzer(BaseAIModel):
             return TextLanguage.ENGLISH
     
     def _extract_basic_features(self, text: str) -> Dict:
-        """Extract basic text statistics"""
-        # Clean text for counting
+        """Extract basic text statistics"""        # Clean text for counting
         clean_text = text.strip()
         
         # Count words (split by whitespace)
@@ -340,8 +325,7 @@ class TextAnalyzer(BaseAIModel):
         }
     
     async def _extract_nlp_features(self, text: str, language: TextLanguage) -> Dict:
-        """Extract NLP features using spaCy"""
-        try:
+        """Extract NLP features using spaCy"""        try:
             # Get appropriate NLP model
             nlp = self.nlp_models.get(language.value, self.nlp_models.get('en'))
             
@@ -389,8 +373,7 @@ class TextAnalyzer(BaseAIModel):
             return self._extract_basic_nlp_features(text)
     
     def _extract_basic_nlp_features(self, text: str) -> Dict:
-        """Basic NLP features without advanced models"""
-        # Extract hashtags
+        """Basic NLP features without advanced models"""        # Extract hashtags
         hashtags = re.findall(r'#\w+', text)
         
         # Extract mentions
@@ -420,8 +403,7 @@ class TextAnalyzer(BaseAIModel):
         }
     
     def _calculate_reading_level(self, text: str, doc=None) -> str:
-        """Calculate reading level using various metrics"""
-        try:
+        """Calculate reading level using various metrics"""        try:
             # Flesch Reading Ease calculation
             word_count = len(text.split())
             sentence_count = len(re.split(r'[.!?]+', text))
@@ -449,8 +431,7 @@ class TextAnalyzer(BaseAIModel):
             return "intermediate"
     
     def _count_syllables(self, text: str) -> int:
-        """Count syllables in text (approximation)"""
-        # Simple syllable counting using vowel patterns
+        """Count syllables in text (approximation)"""        # Simple syllable counting using vowel patterns
         vowels = "aeiouyAEIOUY"
         syllable_count = 0
         
@@ -478,8 +459,7 @@ class TextAnalyzer(BaseAIModel):
         return syllable_count
     
     async def _analyze_sentiment_emotion(self, text: str) -> Dict:
-        """Analyze sentiment and emotions"""
-        try:
+        """Analyze sentiment and emotions"""        try:
             sentiment_result = {"sentiment": SentimentType.NEUTRAL, "sentiment_scores": {}, "emotion_scores": {}}
             
             # Sentiment analysis
@@ -530,8 +510,7 @@ class TextAnalyzer(BaseAIModel):
             }
     
     def _classify_content_type(self, text: str) -> TextContentType:
-        """Classify text content type"""
-        text_lower = text.lower()
+        """Classify text content type"""        text_lower = text.lower()
         
         # Check for hashtags (social media indicator)
         if '#' in text and len(text) < 280:
@@ -562,8 +541,7 @@ class TextAnalyzer(BaseAIModel):
             return TextContentType.BLOG_POST
     
     def _assess_quality(self, text: str) -> Dict:
-        """Assess text quality"""
-        # Calculate various quality metrics
+        """Assess text quality"""        # Calculate various quality metrics
         word_count = len(text.split())
         
         # Grammar score (simplified - count basic errors)
@@ -618,8 +596,7 @@ class TextAnalyzer(BaseAIModel):
         }
     
     def _estimate_grammar_quality(self, text: str) -> float:
-        """Estimate grammar quality (simplified)"""
-        # Count potential grammar issues
+        """Estimate grammar quality (simplified)"""        # Count potential grammar issues
         issues = 0
         
         # Check for basic patterns that might indicate errors
@@ -648,8 +625,7 @@ class TextAnalyzer(BaseAIModel):
         return grammar_score
     
     def _assess_structure(self, text: str) -> float:
-        """Assess text structure quality"""
-        # Check for proper paragraph structure
+        """Assess text structure quality"""        # Check for proper paragraph structure
         paragraphs = text.split('\n\n')
         paragraph_count = len([p for p in paragraphs if p.strip()])
         
@@ -672,8 +648,7 @@ class TextAnalyzer(BaseAIModel):
         return (variety_score + paragraph_score) / 2
     
     def _calculate_engagement_potential(self, text: str) -> float:
-        """Calculate potential for engagement"""
-        engagement_factors = 0
+        """Calculate potential for engagement"""        engagement_factors = 0
         total_factors = 7
         
         # Check for questions
@@ -712,8 +687,7 @@ class TextAnalyzer(BaseAIModel):
         return engagement_factors / total_factors
     
     def _analyze_bias(self, text: str) -> Dict[str, float]:
-        """Analyze potential bias in text (simplified)"""
-        # This is a simplified implementation
+        """Analyze potential bias in text (simplified)"""        # This is a simplified implementation
         # In production, use specialized bias detection models
         
         bias_indicators = {
@@ -738,8 +712,7 @@ class TextAnalyzer(BaseAIModel):
         return bias_indicators
     
     def _analyze_toxicity(self, text: str) -> float:
-        """Analyze toxicity level (simplified)"""
-        # Simplified toxicity detection
+        """Analyze toxicity level (simplified)"""        # Simplified toxicity detection
         # In production, use specialized toxicity detection models
         
         toxic_words = ['hate', 'stupid', 'idiot', 'kill', 'die', 'murder']
@@ -754,8 +727,7 @@ class TextAnalyzer(BaseAIModel):
         return toxicity_score
     
     def _analyze_seo(self, text: str) -> Dict:
-        """Analyze SEO quality of text"""
-        word_count = len(text.split())
+        """Analyze SEO quality of text"""        word_count = len(text.split())
         
         # Keyword density analysis (simplified)
         seo_score = 0.0
@@ -779,8 +751,7 @@ class TextAnalyzer(BaseAIModel):
         return {"seo_score": seo_score}
     
     def _generate_text_fingerprints(self, text: str) -> Dict:
-        """Generate fingerprints for text"""
-        # Clean text for fingerprinting
+        """Generate fingerprints for text"""        # Clean text for fingerprinting
         clean_text = re.sub(r'\s+', ' ', text.lower().strip())
         
         # Generate different fingerprints
@@ -798,8 +769,7 @@ class TextAnalyzer(BaseAIModel):
         }
     
     async def validate_connection(self) -> bool:
-        """Validate text analysis capabilities"""
-        try:
+        """Validate text analysis capabilities"""        try:
             test_text = "This is a test sentence for validation."
             result = await self.process(test_text)
             return result.success
@@ -809,8 +779,7 @@ class TextAnalyzer(BaseAIModel):
 
 
 class ContentGenerator(BaseAIModel):
-    """Advanced content generation and optimization"""
-    
+    """Advanced content generation and optimization"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.text_generator = None
@@ -818,8 +787,7 @@ class ContentGenerator(BaseAIModel):
         self._initialize_generators()
     
     def _initialize_generators(self):
-        """Initialize content generation models"""
-        try:
+        """Initialize content generation models"""        try:
             # Initialize text generation model
             self.text_generator = pipeline(
                 "text-generation",
@@ -831,8 +799,7 @@ class ContentGenerator(BaseAIModel):
             self.logger.error(f"Failed to initialize generators: {e}")
     
     async def process(self, request: ContentGenerationRequest, **kwargs) -> ProcessingResult:
-        """Generate content based on request"""
-        try:
+        """Generate content based on request"""        try:
             start_time = datetime.now()
             
             # Generate base content
@@ -880,8 +847,7 @@ class ContentGenerator(BaseAIModel):
             )
     
     async def _generate_content(self, request: ContentGenerationRequest) -> str:
-        """Generate base content"""
-        try:
+        """Generate base content"""        try:
             # Create prompt based on request
             prompt = self._create_generation_prompt(request)
             
@@ -909,8 +875,7 @@ class ContentGenerator(BaseAIModel):
             return self._generate_template_content(request)
     
     def _create_generation_prompt(self, request: ContentGenerationRequest) -> str:
-        """Create prompt for content generation"""
-        prompt_parts = []
+        """Create prompt for content generation"""        prompt_parts = []
         
         # Add content type context
         if request.content_type == TextContentType.BLOG_POST:
@@ -942,8 +907,7 @@ class ContentGenerator(BaseAIModel):
         return prompt
     
     def _generate_template_content(self, request: ContentGenerationRequest) -> str:
-        """Generate content using templates (fallback)"""
-        templates = {
+        """Generate content using templates (fallback)"""        templates = {
             TextContentType.BLOG_POST: self._generate_blog_post_template(request),
             TextContentType.SOCIAL_MEDIA: self._generate_social_media_template(request),
             TextContentType.PRODUCT_DESCRIPTION: self._generate_product_description_template(request),
@@ -953,8 +917,7 @@ class ContentGenerator(BaseAIModel):
         return templates.get(request.content_type, self._generate_generic_template(request))
     
     def _generate_blog_post_template(self, request: ContentGenerationRequest) -> str:
-        """Generate blog post template"""
-        return f"""# {request.topic.title()}
+        """Generate blog post template"""        return f"""# {request.topic.title()}
 
 ## Introduction
 
@@ -981,11 +944,9 @@ When working with {request.topic}, consider these essential steps:
 
 {request.topic} presents both opportunities and challenges. By following the strategies outlined in this guide, {request.target_audience} can achieve better results and maximize their success.
 
-*Keywords: {', '.join(request.keywords[:5])}*"""
-    
+*Keywords: {', '.join(request.keywords[:5])}*"""    
     def _generate_social_media_template(self, request: ContentGenerationRequest) -> str:
-        """Generate social media template"""
-        hashtags = ' '.join([f"#{keyword.replace(' ', '')}" for keyword in request.keywords[:5]])
+        """Generate social media template"""        hashtags = ' '.join([f"#{keyword.replace(' ', '')}" for keyword in request.keywords[:5]])
         
         return f"""🚀 Exciting insights about {request.topic}!
 
@@ -1000,11 +961,9 @@ What's your experience with {request.topic}? Share in the comments! 👇
 
 {hashtags}
 
-#Success #Growth #Innovation"""
-    
+#Success #Growth #Innovation"""    
     def _generate_product_description_template(self, request: ContentGenerationRequest) -> str:
-        """Generate product description template"""
-        return f"""**{request.topic}** - Premium Solution for {request.target_audience}
+        """Generate product description template"""        return f"""**{request.topic}** - Premium Solution for {request.target_audience}
 
 🌟 **Key Features:**
 • Advanced functionality designed for modern needs
@@ -1023,21 +982,17 @@ What's your experience with {request.topic}? Share in the comments! 👇
 
 *Keywords: {', '.join(request.keywords[:3])}*
 
-**Order now and transform your {request.topic} experience!**"""
-    
+**Order now and transform your {request.topic} experience!**"""    
     def _generate_caption_template(self, request: ContentGenerationRequest) -> str:
-        """Generate caption template"""
-        hashtags = ' '.join([f"#{keyword.replace(' ', '')}" for keyword in request.keywords[:3]])
+        """Generate caption template"""        hashtags = ' '.join([f"#{keyword.replace(' ', '')}" for keyword in request.keywords[:3]])
         
         return f"""Exploring {request.topic} today! 📸
 
 Perfect moment for {request.target_audience} to discover new possibilities.
 
-{hashtags} #Inspiration #Moment"""
-    
+{hashtags} #Inspiration #Moment"""    
     def _generate_generic_template(self, request: ContentGenerationRequest) -> str:
-        """Generate generic content template"""
-        return f"""# {request.topic}
+        """Generate generic content template"""        return f"""# {request.topic}
 
 This content explores {request.topic} specifically designed for {request.target_audience}.
 
@@ -1059,11 +1014,9 @@ Consider these factors when working with {request.topic}:
 2. Execution and monitoring
 3. Analysis and optimization
 
-*Focus keywords: {', '.join(request.keywords[:3])}*"""
-    
+*Focus keywords: {', '.join(request.keywords[:3])}*"""    
     async def _optimize_for_seo(self, content: str, request: ContentGenerationRequest) -> str:
-        """Optimize content for SEO"""
-        # Ensure keywords are naturally integrated
+        """Optimize content for SEO"""        # Ensure keywords are naturally integrated
         optimized_content = content
         
         # Add keywords if not present
@@ -1079,8 +1032,7 @@ Consider these factors when working with {request.topic}:
         return optimized_content
     
     async def _generate_metadata(self, content: str, request: ContentGenerationRequest) -> Dict:
-        """Generate metadata for content"""
-        # Generate title
+        """Generate metadata for content"""        # Generate title
         title = self._generate_title(content, request)
         
         # Generate meta description
@@ -1100,8 +1052,7 @@ Consider these factors when working with {request.topic}:
         }
     
     def _generate_title(self, content: str, request: ContentGenerationRequest) -> str:
-        """Generate SEO-optimized title"""
-        # Extract first keyword for title
+        """Generate SEO-optimized title"""        # Extract first keyword for title
         primary_keyword = request.keywords[0] if request.keywords else request.topic
         
         title_templates = [
@@ -1120,8 +1071,7 @@ Consider these factors when working with {request.topic}:
             return title_templates[1]
     
     def _generate_meta_description(self, content: str, request: ContentGenerationRequest) -> str:
-        """Generate meta description"""
-        # Extract first sentence or create summary
+        """Generate meta description"""        # Extract first sentence or create summary
         sentences = re.split(r'[.!?]+', content)
         first_meaningful_sentence = None
         
@@ -1142,8 +1092,7 @@ Consider these factors when working with {request.topic}:
         return f"Discover essential insights about {primary_keyword} for {request.target_audience}. Expert tips and strategies for success."
     
     def _generate_hashtags(self, content: str, request: ContentGenerationRequest) -> List[str]:
-        """Generate relevant hashtags"""
-        hashtags = []
+        """Generate relevant hashtags"""        hashtags = []
         
         # Add hashtags from keywords
         for keyword in request.keywords[:5]:
@@ -1164,8 +1113,7 @@ Consider these factors when working with {request.topic}:
         return hashtags[:8]  # Limit to 8 hashtags
     
     async def _assess_generated_quality(self, content: str) -> Dict[str, float]:
-        """Assess quality of generated content"""
-        # Use the text analyzer to assess quality
+        """Assess quality of generated content"""        # Use the text analyzer to assess quality
         analyzer = TextAnalyzer(self.config)
         result = await analyzer.process(content)
         
@@ -1189,8 +1137,7 @@ Consider these factors when working with {request.topic}:
         }
     
     async def validate_connection(self) -> bool:
-        """Validate content generation capabilities"""
-        try:
+        """Validate content generation capabilities"""        try:
             test_request = ContentGenerationRequest(
                 content_type=TextContentType.CAPTION,
                 topic="test content",

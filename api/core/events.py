@@ -1,11 +1,9 @@
-"""
-Enterprise-grade event handling system for IA Influencer Agent.
+"""Enterprise-grade event handling system for IA Influencer Agent.
 Implements professional event sourcing and domain events patterns.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
-
 from typing import Any, Dict, List, Optional, Type, Callable, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass, field
@@ -19,16 +17,14 @@ from contextlib import asynccontextmanager
 
 
 class EventPriority(Enum):
-    """Event priority levels for processing order."""
-    LOW = 1
+    """Event priority levels for processing order."""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
 
 
 class EventStatus(Enum):
-    """Event processing status tracking."""
-    PENDING = "pending"
+    """Event processing status tracking."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -37,8 +33,7 @@ class EventStatus(Enum):
 
 @dataclass
 class DomainEvent:
-    """Base domain event with enterprise-grade metadata."""
-    
+    """Base domain event with enterprise-grade metadata."""    
     event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event_type: str = field(default="")
     aggregate_id: str = field(default="")
@@ -58,8 +53,7 @@ class DomainEvent:
             self.event_type = self.__class__.__name__
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert event to dictionary for serialization."""
-        return {
+        """Convert event to dictionary for serialization."""        return {
             "event_id": self.event_id,
             "event_type": self.event_type,
             "aggregate_id": self.aggregate_id,
@@ -77,8 +71,7 @@ class DomainEvent:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'DomainEvent':
-        """Create event from dictionary."""
-        occurred_at = datetime.fromisoformat(data.get("occurred_at", datetime.now(timezone.utc).isoformat()))
+        """Create event from dictionary."""        occurred_at = datetime.fromisoformat(data.get("occurred_at", datetime.now(timezone.utc).isoformat()))
         priority = EventPriority(data.get("priority", EventPriority.NORMAL.value))
         
         return cls(
@@ -99,26 +92,21 @@ class DomainEvent:
 
 
 class IEventHandler(ABC):
-    """Interface for event handlers."""
-    
+    """Interface for event handlers."""    
     @abstractmethod
     async def handle(self, event: DomainEvent) -> bool:
-        """Handle domain event. Return True if successful."""
-        pass
+        """Handle domain event. Return True if successful."""        pass
     
     @abstractmethod
     def can_handle(self, event_type: str) -> bool:
-        """Check if handler can process event type."""
-        pass
+        """Check if handler can process event type."""        pass
 
 
 class IEventStore(ABC):
-    """Interface for event store implementation."""
-    
+    """Interface for event store implementation."""    
     @abstractmethod
     async def append_event(self, event: DomainEvent) -> bool:
-        """Append event to store."""
-        pass
+        """Append event to store."""        pass
     
     @abstractmethod
     async def get_events(
@@ -127,8 +115,7 @@ class IEventStore(ABC):
         from_version: int = 1,
         to_version: Optional[int] = None
     ) -> List[DomainEvent]:
-        """Get events for aggregate."""
-        pass
+        """Get events for aggregate."""        pass
     
     @abstractmethod
     async def get_events_by_type(
@@ -137,20 +124,17 @@ class IEventStore(ABC):
         from_date: Optional[datetime] = None,
         to_date: Optional[datetime] = None
     ) -> List[DomainEvent]:
-        """Get events by type and date range."""
-        pass
+        """Get events by type and date range."""        pass
 
 
 class InMemoryEventStore(IEventStore):
-    """In-memory event store for development/testing."""
-    
+    """In-memory event store for development/testing."""    
     def __init__(self):
         self._events: List[DomainEvent] = []
         self._lock = threading.RLock()
     
     async def append_event(self, event: DomainEvent) -> bool:
-        """Append event to in-memory store."""
-        with self._lock:
+        """Append event to in-memory store."""        with self._lock:
             self._events.append(event)
             return True
     
@@ -160,8 +144,7 @@ class InMemoryEventStore(IEventStore):
         from_version: int = 1,
         to_version: Optional[int] = None
     ) -> List[DomainEvent]:
-        """Get events for aggregate from memory."""
-        with self._lock:
+        """Get events for aggregate from memory."""        with self._lock:
             events = [
                 e for e in self._events
                 if e.aggregate_id == aggregate_id and e.version >= from_version
@@ -178,8 +161,7 @@ class InMemoryEventStore(IEventStore):
         from_date: Optional[datetime] = None,
         to_date: Optional[datetime] = None
     ) -> List[DomainEvent]:
-        """Get events by type from memory."""
-        with self._lock:
+        """Get events by type from memory."""        with self._lock:
             events = [e for e in self._events if e.event_type == event_type]
             
             if from_date:
@@ -193,8 +175,7 @@ class InMemoryEventStore(IEventStore):
 
 @dataclass
 class EventSubscription:
-    """Event subscription configuration."""
-    handler: IEventHandler
+    """Event subscription configuration."""    handler: IEventHandler
     event_types: List[str]
     priority: EventPriority = EventPriority.NORMAL
     retry_count: int = 3
@@ -202,8 +183,7 @@ class EventSubscription:
 
 
 class EventBus:
-    """Professional event bus implementation with async support."""
-    
+    """Professional event bus implementation with async support."""    
     def __init__(self, event_store: Optional[IEventStore] = None):
         self._handlers: Dict[str, List[EventSubscription]] = {}
         self._global_handlers: List[EventSubscription] = []
@@ -213,16 +193,14 @@ class EventBus:
         self._is_running = False
         
     async def start(self):
-        """Start event processing."""
-        if self._is_running:
+        """Start event processing."""        if self._is_running:
             return
         
         self._is_running = True
         asyncio.create_task(self._process_events())
     
     async def stop(self):
-        """Stop event processing."""
-        self._is_running = False
+        """Stop event processing."""        self._is_running = False
     
     def subscribe(
         self,
@@ -232,8 +210,7 @@ class EventBus:
         retry_count: int = 3,
         timeout_seconds: int = 30
     ):
-        """Subscribe handler to specific event types."""
-        subscription = EventSubscription(
+        """Subscribe handler to specific event types."""        subscription = EventSubscription(
             handler=handler,
             event_types=event_types,
             priority=priority,
@@ -256,8 +233,7 @@ class EventBus:
         retry_count: int = 3,
         timeout_seconds: int = 30
     ):
-        """Subscribe handler to all events."""
-        subscription = EventSubscription(
+        """Subscribe handler to all events."""        subscription = EventSubscription(
             handler=handler,
             event_types=["*"],
             priority=priority,
@@ -270,8 +246,7 @@ class EventBus:
             self._global_handlers.sort(key=lambda x: x.priority.value, reverse=True)
     
     async def publish(self, event: DomainEvent) -> bool:
-        """Publish event to subscribers."""
-        # Store event
+        """Publish event to subscribers."""        # Store event
         await self._event_store.append_event(event)
         
         # Queue for processing
@@ -280,8 +255,7 @@ class EventBus:
         return True
     
     async def _process_events(self):
-        """Background event processing loop."""
-        while self._is_running:
+        """Background event processing loop."""        while self._is_running:
             try:
                 # Get event from queue with timeout
                 event = await asyncio.wait_for(
@@ -298,8 +272,7 @@ class EventBus:
                 print(f"Event processing error: {e}")
     
     async def _handle_event(self, event: DomainEvent):
-        """Handle single event with all subscribed handlers."""
-        handlers_to_run = []
+        """Handle single event with all subscribed handlers."""        handlers_to_run = []
         
         # Get specific handlers
         with self._lock:
@@ -317,8 +290,7 @@ class EventBus:
                 await self._execute_handler(subscription, event)
     
     async def _execute_handler(self, subscription: EventSubscription, event: DomainEvent):
-        """Execute handler with retry logic and timeout."""
-        retry_count = 0
+        """Execute handler with retry logic and timeout."""        retry_count = 0
         max_retries = subscription.retry_count
         
         while retry_count <= max_retries:
@@ -343,16 +315,14 @@ class EventBus:
                 await asyncio.sleep(2 ** retry_count)
     
     def get_subscriptions(self) -> Dict[str, List[EventSubscription]]:
-        """Get all subscriptions for debugging."""
-        with self._lock:
+        """Get all subscriptions for debugging."""        with self._lock:
             return self._handlers.copy()
 
 
 # Content Protection Domain Events
 @dataclass
 class ContentUploadedEvent(DomainEvent):
-    """Event raised when content is uploaded."""
-    
+    """Event raised when content is uploaded."""    
     def __init__(
         self,
         content_id: str,
@@ -378,8 +348,7 @@ class ContentUploadedEvent(DomainEvent):
 
 @dataclass
 class FingerprintGeneratedEvent(DomainEvent):
-    """Event raised when content fingerprint is generated."""
-    
+    """Event raised when content fingerprint is generated."""    
     def __init__(
         self,
         content_id: str,
@@ -403,8 +372,7 @@ class FingerprintGeneratedEvent(DomainEvent):
 
 @dataclass
 class ContentProtectedEvent(DomainEvent):
-    """Event raised when content protection is activated."""
-    
+    """Event raised when content protection is activated."""    
     def __init__(
         self,
         content_id: str,
@@ -426,8 +394,7 @@ class ContentProtectedEvent(DomainEvent):
 
 @dataclass
 class InfringementDetectedEvent(DomainEvent):
-    """Event raised when content infringement is detected."""
-    
+    """Event raised when content infringement is detected."""    
     def __init__(
         self,
         content_id: str,
@@ -452,8 +419,7 @@ class InfringementDetectedEvent(DomainEvent):
 
 @dataclass
 class RevenueGeneratedEvent(DomainEvent):
-    """Event raised when revenue is generated from protected content."""
-    
+    """Event raised when revenue is generated from protected content."""    
     def __init__(
         self,
         content_id: str,
@@ -483,8 +449,7 @@ _event_bus_lock = threading.RLock()
 
 
 async def get_event_bus(event_store: Optional[IEventStore] = None) -> EventBus:
-    """Get global event bus instance."""
-    global _event_bus
+    """Get global event bus instance."""    global _event_bus
     
     with _event_bus_lock:
         if _event_bus is None:
@@ -495,14 +460,12 @@ async def get_event_bus(event_store: Optional[IEventStore] = None) -> EventBus:
 
 
 async def publish_event(event: DomainEvent) -> bool:
-    """Publish event to global event bus."""
-    bus = await get_event_bus()
+    """Publish event to global event bus."""    bus = await get_event_bus()
     return await bus.publish(event)
 
 
 def event_handler(event_types: List[str], priority: EventPriority = EventPriority.NORMAL):
-    """Decorator to register event handler."""
-    def decorator(cls: Type[IEventHandler]) -> Type[IEventHandler]:
+    """Decorator to register event handler."""    def decorator(cls: Type[IEventHandler]) -> Type[IEventHandler]:
         # Store registration info for later use
         cls._event_types = event_types
         cls._event_priority = priority

@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-🔒 CONTENT PROTECTION MANAGER - ENTERPRISE AI-POWERED CONTENT SECURITY SYSTEM
+"""🔒 CONTENT PROTECTION MANAGER - ENTERPRISE AI-POWERED CONTENT SECURITY SYSTEM
 ===============================================================================
 
 Ultra-advanced content protection and rights management system featuring real-time
@@ -52,7 +51,6 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED AND LEGALLY PROSECUTED.
 Contact: mlaiel@live.de for enterprise licensing.
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import hashlib
 import json
@@ -118,15 +116,13 @@ from backend.models.content_protection import (
 logger = logging.getLogger(__name__)
 
 class ViolationSeverity(Enum):
-    """Niveaux de sévérité des violations."""
-    LOW = "low"
+    """Niveaux de sévérité des violations."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class ProtectionStatus(Enum):
-    """États de protection du contenu."""
-    MONITORING = "monitoring"
+    """États de protection du contenu."""    MONITORING = "monitoring"
     VIOLATION_DETECTED = "violation_detected"
     EVIDENCE_COLLECTED = "evidence_collected"
     LEGAL_ACTION_INITIATED = "legal_action_initiated"
@@ -134,8 +130,7 @@ class ProtectionStatus(Enum):
     DISMISSED = "dismissed"
 
 class PlatformType(Enum):
-    """Plateformes surveillées."""
-    YOUTUBE = "youtube"
+    """Plateformes surveillées."""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -145,8 +140,7 @@ class PlatformType(Enum):
     GENERIC_WEB = "generic_web"
 
 class ContentProtectionManager:
-    """
-    🔒 GESTIONNAIRE DE PROTECTION DE CONTENU ULTRA-AVANCÉ
+    """    🔒 GESTIONNAIRE DE PROTECTION DE CONTENU ULTRA-AVANCÉ
     
     Système de protection en temps réel utilisant l'IA pour détecter,
     documenter et traiter automatiquement les violations de droits d'auteur.
@@ -158,11 +152,9 @@ class ContentProtectionManager:
     - Intégration DMCA et actions légales
     - Blockchain pour preuve d'antériorité
     - Analytics et reporting avancés
-    """
-    
+    """    
     def __init__(self):
-        """Initialisation du gestionnaire de protection."""
-        self.settings = get_settings()
+        """Initialisation du gestionnaire de protection."""        self.settings = get_settings()
         self.redis_client = None
         self.elasticsearch_client = None
         self.metrics = get_metrics_collector()
@@ -209,8 +201,7 @@ class ContentProtectionManager:
         self._initialize_ai_models()
     
     async def initialize(self):
-        """Initialisation asynchrone des connexions et services."""
-        try:
+        """Initialisation asynchrone des connexions et services."""        try:
             # Database connections
             self.redis_client = await get_redis_client()
             self.elasticsearch_client = AsyncElasticsearch([
@@ -231,8 +222,7 @@ class ContentProtectionManager:
             raise ProtectionError(f"Initialization failed: {e}")
     
     def _initialize_ai_models(self):
-        """Initialisation des modèles IA pour la détection."""
-        try:
+        """Initialisation des modèles IA pour la détection."""        try:
             # CLIP for image/video similarity
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -250,8 +240,7 @@ class ContentProtectionManager:
             raise ProtectionError(f"AI model initialization failed: {e}")
     
     async def _initialize_blockchain(self):
-        """Initialisation de la connexion blockchain pour les preuves."""
-        try:
+        """Initialisation de la connexion blockchain pour les preuves."""        try:
             # Connect to Ethereum network (or other blockchain)
             self.web3 = Web3(Web3.HTTPProvider(self.settings.BLOCKCHAIN_RPC_URL))
             
@@ -276,8 +265,7 @@ class ContentProtectionManager:
         content_metadata: Dict[str, Any],
         protection_level: str = "standard"
     ) -> Dict[str, Any]:
-        """
-        🔒 ENREGISTREMENT DE CONTENU POUR PROTECTION
+        """        🔒 ENREGISTREMENT DE CONTENU POUR PROTECTION
         
         Enregistre un contenu dans le système de protection avec
         surveillance automatique et détection de violations.
@@ -290,8 +278,7 @@ class ContentProtectionManager:
             
         Returns:
             Dict contenant les détails de l'enregistrement
-        """
-        try:
+        """        try:
             # Create protection record
             protection_record = {
                 'id': str(uuid.uuid4()),
@@ -351,8 +338,7 @@ class ContentProtectionManager:
             raise ProtectionError(f"Registration failed: {e}")
     
     def _get_monitoring_frequency(self, protection_level: str) -> int:
-        """Détermine la fréquence de surveillance selon le niveau."""
-        frequencies = {
+        """Détermine la fréquence de surveillance selon le niveau."""        frequencies = {
             'basic': 3600,      # 1 hour
             'standard': 1800,   # 30 minutes
             'premium': 600,     # 10 minutes
@@ -361,8 +347,7 @@ class ContentProtectionManager:
         return frequencies.get(protection_level, 1800)
     
     async def _schedule_content_monitoring(self, protection_record: Dict[str, Any]):
-        """Planifie la surveillance automatique du contenu."""
-        try:
+        """Planifie la surveillance automatique du contenu."""        try:
             # Create Celery task for monitoring
             monitoring_task = {
                 'protection_id': protection_record['id'],
@@ -387,8 +372,7 @@ class ContentProtectionManager:
         protection_id: str,
         platforms: Optional[List[PlatformType]] = None
     ) -> Dict[str, Any]:
-        """
-        🔍 SCAN DES PLATEFORMES POUR VIOLATIONS
+        """        🔍 SCAN DES PLATEFORMES POUR VIOLATIONS
         
         Scanne les plateformes spécifiées à la recherche de violations
         du contenu protégé.
@@ -399,8 +383,7 @@ class ContentProtectionManager:
             
         Returns:
             Dict avec les résultats du scan
-        """
-        try:
+        """        try:
             # Get protection record
             redis_key = f"protection:{protection_id}"
             protection_data = await self.redis_client.get(redis_key)
@@ -483,8 +466,7 @@ class ContentProtectionManager:
         fingerprint_data: Dict[str, Any],
         protection_record: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scanne une plateforme spécifique pour violations."""
-        violations = []
+        """Scanne une plateforme spécifique pour violations."""        violations = []
         
         try:
             if platform == PlatformType.YOUTUBE:
@@ -507,8 +489,7 @@ class ContentProtectionManager:
         fingerprint_data: Dict[str, Any],
         protection_record: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan YouTube pour violations."""
-        violations = []
+        """Scan YouTube pour violations."""        violations = []
         
         try:
             config = self.platform_configs[PlatformType.YOUTUBE]
@@ -566,8 +547,7 @@ class ContentProtectionManager:
         fingerprint_data: Dict[str, Any],
         protection_record: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan Instagram pour violations."""
-        violations = []
+        """Scan Instagram pour violations."""        violations = []
         
         try:
             # Instagram scanning would require Instagram Basic Display API
@@ -587,8 +567,7 @@ class ContentProtectionManager:
         fingerprint_data: Dict[str, Any],
         protection_record: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan TikTok pour violations."""
-        violations = []
+        """Scan TikTok pour violations."""        violations = []
         
         try:
             # TikTok scanning would require TikTok Business API access
@@ -607,8 +586,7 @@ class ContentProtectionManager:
         fingerprint_data: Dict[str, Any],
         protection_record: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan web générique pour violations."""
-        violations = []
+        """Scan web générique pour violations."""        violations = []
         
         try:
             # Use search engines to find potential violations
@@ -662,8 +640,7 @@ class ContentProtectionManager:
             return []
     
     def _generate_search_queries(self, metadata: Dict[str, Any]) -> List[str]:
-        """Génère des requêtes de recherche basées sur les métadonnées."""
-        queries = []
+        """Génère des requêtes de recherche basées sur les métadonnées."""        queries = []
         
         if 'title' in metadata:
             queries.append(f'"{metadata["title"]}"')
@@ -688,8 +665,7 @@ class ContentProtectionManager:
         fingerprint_data: Dict[str, Any],
         content_type: str
     ) -> float:
-        """Calcule la similarité entre le contenu candidat et l'empreinte."""
-        try:
+        """Calcule la similarité entre le contenu candidat et l'empreinte."""        try:
             if content_type == 'video':
                 # For video, analyze title and description similarity
                 candidate_text = f"{candidate_content.get('snippet', {}).get('title', '')} {candidate_content.get('snippet', {}).get('description', '')}"
@@ -719,8 +695,7 @@ class ContentProtectionManager:
         protection_id: str,
         violations: List[Dict[str, Any]]
     ):
-        """Traite les violations détectées."""
-        try:
+        """Traite les violations détectées."""        try:
             for violation in violations:
                 # Create violation record
                 violation_record = {
@@ -754,8 +729,7 @@ class ContentProtectionManager:
             raise ProtectionError(f"Violation processing failed: {e}")
     
     async def _collect_violation_evidence(self, violation_record: Dict[str, Any]):
-        """Collecte automatique de preuves pour violation."""
-        try:
+        """Collecte automatique de preuves pour violation."""        try:
             evidence = {
                 'violation_id': violation_record['id'],
                 'collection_timestamp': datetime.utcnow().isoformat(),
@@ -797,8 +771,7 @@ class ContentProtectionManager:
             raise EvidenceCollectionError(f"Evidence collection failed: {e}")
     
     async def _capture_screenshot(self, url: str) -> Optional[str]:
-        """Capture une capture d'écran de l'URL violatrice."""
-        try:
+        """Capture une capture d'écran de l'URL violatrice."""        try:
             # This would typically use Selenium or Playwright
             # Placeholder implementation
             logger.info(f"Screenshot capture requested for {url}")
@@ -809,8 +782,7 @@ class ContentProtectionManager:
             return None
     
     async def _archive_page_content(self, url: str) -> Optional[str]:
-        """Archive le contenu de la page violatrice."""
-        try:
+        """Archive le contenu de la page violatrice."""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status == 200:
@@ -824,8 +796,7 @@ class ContentProtectionManager:
             return None
     
     def _assess_violation_severity(self, violation: Dict[str, Any]) -> ViolationSeverity:
-        """Évalue la sévérité d'une violation."""
-        similarity_score = violation.get('similarity_score', 0.0)
+        """Évalue la sévérité d'une violation."""        similarity_score = violation.get('similarity_score', 0.0)
         platform = violation.get('platform', '')
         
         # High-impact platforms
@@ -841,8 +812,7 @@ class ContentProtectionManager:
             return ViolationSeverity.LOW
     
     async def _trigger_immediate_action(self, violation_record: Dict[str, Any]):
-        """Déclenche une action immédiate pour violations critiques."""
-        try:
+        """Déclenche une action immédiate pour violations critiques."""        try:
             # Send DMCA takedown notice
             await self._send_dmca_takedown(violation_record)
             
@@ -860,8 +830,7 @@ class ContentProtectionManager:
             raise LegalActionError(f"Immediate action failed: {e}")
     
     async def _send_dmca_takedown(self, violation_record: Dict[str, Any]):
-        """Envoie un avis de retrait DMCA automatique."""
-        try:
+        """Envoie un avis de retrait DMCA automatique."""        try:
             # Get platform-specific DMCA contact information
             platform_contacts = {
                 'youtube': 'copyright@youtube.com',
@@ -896,8 +865,7 @@ class ContentProtectionManager:
             raise LegalActionError(f"DMCA takedown failed: {e}")
     
     def _generate_dmca_notice(self, violation_record: Dict[str, Any]) -> str:
-        """Génère un avis DMCA à partir du template."""
-        template = self.dmca_templates['takedown_notice']
+        """Génère un avis DMCA à partir du template."""        template = self.dmca_templates['takedown_notice']
         
         # Replace placeholders with actual data
         notice = template.format(
@@ -910,11 +878,9 @@ class ContentProtectionManager:
         return notice
     
     def _load_dmca_template(self, template_type: str) -> str:
-        """Charge un template DMCA."""
-        # Placeholder - would load from file or database
+        """Charge un template DMCA."""        # Placeholder - would load from file or database
         templates = {
-            'takedown': """
-DMCA Takedown Notice
+            'takedown': """DMCA Takedown Notice
 
 To Whom It May Concern:
 
@@ -942,12 +908,10 @@ IA-Influencer-Agent Legal Team
         user_id: int,
         time_range: str = '30d'
     ) -> Dict[str, Any]:
-        """
-        📊 TABLEAU DE BORD DE PROTECTION
+        """        📊 TABLEAU DE BORD DE PROTECTION
         
         Fournit un aperçu complet de l'état de protection du contenu.
-        """
-        try:
+        """        try:
             # Calculate time range
             time_ranges = {
                 '24h': timedelta(days=1),
@@ -1030,8 +994,7 @@ IA-Influencer-Agent Legal Team
             raise ProtectionError(f"Dashboard generation failed: {e}")
     
     async def _get_recent_alerts(self, user_id: int, limit: int) -> List[Dict[str, Any]]:
-        """Récupère les alertes récentes pour l'utilisateur."""
-        try:
+        """Récupère les alertes récentes pour l'utilisateur."""        try:
             query = {
                 "query": {
                     "term": {"user_id": user_id}
@@ -1064,8 +1027,7 @@ IA-Influencer-Agent Legal Team
     
     # Helper methods for data storage
     async def _store_violation_record(self, violation: Dict[str, Any]):
-        """Stocke un enregistrement de violation."""
-        try:
+        """Stocke un enregistrement de violation."""        try:
             await self.elasticsearch_client.index(
                 index="violations",
                 id=violation['id'],
@@ -1075,8 +1037,7 @@ IA-Influencer-Agent Legal Team
             logger.error(f"❌ Failed to store violation: {e}")
     
     async def _store_evidence_record(self, evidence: Dict[str, Any]):
-        """Stocke un enregistrement de preuve."""
-        try:
+        """Stocke un enregistrement de preuve."""        try:
             await self.elasticsearch_client.index(
                 index="evidence",
                 id=str(uuid.uuid4()),
@@ -1086,8 +1047,7 @@ IA-Influencer-Agent Legal Team
             logger.error(f"❌ Failed to store evidence: {e}")
     
     async def _store_legal_action(self, action: Dict[str, Any]):
-        """Stocke une action légale."""
-        try:
+        """Stocke une action légale."""        try:
             await self.elasticsearch_client.index(
                 index="legal_actions",
                 id=action['id'],
@@ -1097,8 +1057,7 @@ IA-Influencer-Agent Legal Team
             logger.error(f"❌ Failed to store legal action: {e}")
     
     async def _update_violation_record(self, violation: Dict[str, Any]):
-        """Met à jour un enregistrement de violation."""
-        try:
+        """Met à jour un enregistrement de violation."""        try:
             await self.elasticsearch_client.update(
                 index="violations",
                 id=violation['id'],
@@ -1108,8 +1067,7 @@ IA-Influencer-Agent Legal Team
             logger.error(f"❌ Failed to update violation: {e}")
     
     async def _get_fingerprint_data(self, fingerprint_id: str) -> Dict[str, Any]:
-        """Récupère les données d'empreinte."""
-        try:
+        """Récupère les données d'empreinte."""        try:
             redis_key = f"fingerprint:{fingerprint_id}"
             data = await self.redis_client.get(redis_key)
             if data:
@@ -1122,20 +1080,16 @@ IA-Influencer-Agent Legal Team
     
     # Placeholder methods for notification and legal escalation
     async def _notify_content_owner(self, violation: Dict[str, Any]):
-        """Notifie le propriétaire du contenu."""
-        logger.info(f"Content owner notification for violation {violation['id']}")
+        """Notifie le propriétaire du contenu."""        logger.info(f"Content owner notification for violation {violation['id']}")
     
     async def _escalate_to_legal(self, violation: Dict[str, Any]):
-        """Escalade vers l'équipe légale."""
-        logger.info(f"Legal escalation for violation {violation['id']}")
+        """Escalade vers l'équipe légale."""        logger.info(f"Legal escalation for violation {violation['id']}")
     
     async def _create_monitoring_task(self, task: Dict[str, Any]):
-        """Crée une tâche de surveillance."""
-        logger.info(f"Monitoring task created for protection {task['protection_id']}")
+        """Crée une tâche de surveillance."""        logger.info(f"Monitoring task created for protection {task['protection_id']}")
     
     def _parse_search_results(self, html: str) -> List[Dict[str, Any]]:
-        """Parse les résultats de recherche HTML."""
-        try:
+        """Parse les résultats de recherche HTML."""        try:
             soup = BeautifulSoup(html, 'html.parser')
             results = []
             
@@ -1154,8 +1108,7 @@ IA-Influencer-Agent Legal Team
             return []
     
     async def _analyze_web_content(self, url: str, fingerprint_data: Dict[str, Any]) -> float:
-        """Analyse le contenu web pour similarité."""
-        try:
+        """Analyse le contenu web pour similarité."""        try:
             # Simplified web content analysis
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
@@ -1174,13 +1127,11 @@ IA-Influencer-Agent Legal Team
             return 0.0
     
     def _load_contract_abi(self) -> List[Dict]:
-        """Charge l'ABI du contrat blockchain."""
-        # Placeholder - would load actual contract ABI
+        """Charge l'ABI du contrat blockchain."""        # Placeholder - would load actual contract ABI
         return []
     
     async def _record_blockchain_ownership(self, protection_id: str, fingerprint_id: str, user_id: int):
-        """Enregistre la propriété sur blockchain."""
-        if self.web3 and self.evidence_contract:
+        """Enregistre la propriété sur blockchain."""        if self.web3 and self.evidence_contract:
             try:
                 # This would create a blockchain transaction
                 logger.info(f"Blockchain ownership recorded for {protection_id}")
@@ -1188,13 +1139,11 @@ IA-Influencer-Agent Legal Team
                 logger.error(f"❌ Blockchain recording failed: {e}")
     
     async def _start_monitoring_services(self):
-        """Démarre les services de surveillance."""
-        logger.info("✅ Monitoring services started")
+        """Démarre les services de surveillance."""        logger.info("✅ Monitoring services started")
 
 # Factory function
 async def create_protection_manager() -> ContentProtectionManager:
-    """Factory pour créer et initialiser le gestionnaire de protection."""
-    manager = ContentProtectionManager()
+    """Factory pour créer et initialiser le gestionnaire de protection."""    manager = ContentProtectionManager()
     await manager.initialize()
     return manager
 

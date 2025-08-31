@@ -1,5 +1,4 @@
-"""
-Workflow Coordinator - Central Workflow Orchestration Engine
+"""Workflow Coordinator - Central Workflow Orchestration Engine
 
 Advanced workflow coordination system managing complex multi-step processes across
 content creation, protection, monetization, and distribution workflows for the
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Content Upload → Analysis → Protection → Optimization → Distribution → Monitoring
 """
-
 import asyncio
 import uuid
 from datetime import datetime, timezone, timedelta
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status enumeration"""
-    PENDING = "pending"
+    """Workflow execution status enumeration"""    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -44,8 +41,7 @@ class WorkflowStatus(Enum):
 
 
 class WorkflowPriority(Enum):
-    """Workflow execution priority levels"""
-    CRITICAL = 1
+    """Workflow execution priority levels"""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -53,8 +49,7 @@ class WorkflowPriority(Enum):
 
 
 class WorkflowType(Enum):
-    """Types of workflows supported"""
-    CONTENT_PROCESSING = "content_processing"
+    """Types of workflows supported"""    CONTENT_PROCESSING = "content_processing"
     PROTECTION_ANALYSIS = "protection_analysis"
     MONETIZATION_TRACKING = "monetization_tracking"
     DISTRIBUTION_MANAGEMENT = "distribution_management"
@@ -66,8 +61,7 @@ class WorkflowType(Enum):
 
 @dataclass
 class WorkflowStep:
-    """Individual workflow step definition"""
-    step_id: str
+    """Individual workflow step definition"""    step_id: str
     name: str
     service_endpoint: str
     parameters: Dict[str, Any] = field(default_factory=dict)
@@ -80,8 +74,7 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition"""
-    workflow_id: str
+    """Complete workflow definition"""    workflow_id: str
     name: str
     description: str
     workflow_type: WorkflowType
@@ -94,8 +87,7 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution state and tracking"""
-    execution_id: str
+    """Workflow execution state and tracking"""    execution_id: str
     workflow_id: str
     user_id: str
     status: WorkflowStatus
@@ -110,8 +102,7 @@ class WorkflowExecution:
 
 
 class WorkflowCoordinator:
-    """Enterprise workflow coordination and orchestration engine"""
-    
+    """Enterprise workflow coordination and orchestration engine"""    
     def __init__(self, max_concurrent_workflows: int = 50):
         self.max_concurrent_workflows = max_concurrent_workflows
         self.workflow_definitions: Dict[str, WorkflowDefinition] = {}
@@ -137,8 +128,7 @@ class WorkflowCoordinator:
         logger.info("WorkflowCoordinator initialized successfully")
     
     def _initialize_standard_workflows(self):
-        """Initialize standard business workflow definitions"""
-        # Content Processing Workflow
+        """Initialize standard business workflow definitions"""        # Content Processing Workflow
         content_workflow = WorkflowDefinition(
             workflow_id="content_processing_standard",
             name="Standard Content Processing",
@@ -267,8 +257,7 @@ class WorkflowCoordinator:
         self.register_workflow(monetization_workflow)
     
     def register_workflow(self, workflow_definition: WorkflowDefinition) -> bool:
-        """Register a new workflow definition"""
-        try:
+        """Register a new workflow definition"""        try:
             # Validate workflow definition
             if not self._validate_workflow_definition(workflow_definition):
                 return False
@@ -282,8 +271,7 @@ class WorkflowCoordinator:
             return False
     
     def _validate_workflow_definition(self, workflow: WorkflowDefinition) -> bool:
-        """Validate workflow definition integrity"""
-        try:
+        """Validate workflow definition integrity"""        try:
             # Check for duplicate step IDs
             step_ids = [step.step_id for step in workflow.steps]
             if len(step_ids) != len(set(step_ids)):
@@ -309,8 +297,7 @@ class WorkflowCoordinator:
             return False
     
     def _has_circular_dependencies(self, steps: List[WorkflowStep]) -> bool:
-        """Check for circular dependencies in workflow steps"""
-        step_deps = {step.step_id: set(step.dependencies) for step in steps}
+        """Check for circular dependencies in workflow steps"""        step_deps = {step.step_id: set(step.dependencies) for step in steps}
         
         def has_cycle(node: str, visited: Set[str], rec_stack: Set[str]) -> bool:
             visited.add(node)
@@ -341,8 +328,7 @@ class WorkflowCoordinator:
         execution_context: Dict[str, Any] = None,
         priority_override: Optional[WorkflowPriority] = None
     ) -> str:
-        """Execute a workflow with specified parameters"""
-        try:
+        """Execute a workflow with specified parameters"""        try:
             if workflow_id not in self.workflow_definitions:
                 raise ValueError(f"Workflow '{workflow_id}' not found")
             
@@ -382,8 +368,7 @@ class WorkflowCoordinator:
             raise
     
     async def _execute_workflow_async(self, execution: WorkflowExecution):
-        """Execute workflow asynchronously with proper coordination"""
-        try:
+        """Execute workflow asynchronously with proper coordination"""        try:
             execution.status = WorkflowStatus.RUNNING
             execution.started_at = datetime.now(timezone.utc)
             
@@ -465,8 +450,7 @@ class WorkflowCoordinator:
             logger.error(f"Workflow {execution.execution_id} failed: {e}")
     
     def _resolve_execution_order(self, steps: List[WorkflowStep]) -> List[List[WorkflowStep]]:
-        """Resolve step execution order considering dependencies and parallel execution"""
-        step_dict = {step.step_id: step for step in steps}
+        """Resolve step execution order considering dependencies and parallel execution"""        step_dict = {step.step_id: step for step in steps}
         execution_order = []
         executed_steps = set()
         
@@ -487,8 +471,7 @@ class WorkflowCoordinator:
         return execution_order
     
     async def _execute_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute individual workflow step"""
-        try:
+        """Execute individual workflow step"""        try:
             start_time = datetime.now(timezone.utc)
             
             # Prepare step execution context
@@ -522,8 +505,7 @@ class WorkflowCoordinator:
             raise
     
     async def _call_service_endpoint(self, endpoint: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Call service endpoint for step execution"""
-        # This would integrate with actual service calls
+        """Call service endpoint for step execution"""        # This would integrate with actual service calls
         # For now, simulate processing
         await asyncio.sleep(0.1)
         
@@ -535,8 +517,7 @@ class WorkflowCoordinator:
         }
     
     async def _emit_workflow_event(self, event_type: str, execution: WorkflowExecution):
-        """Emit workflow events to registered handlers"""
-        try:
+        """Emit workflow events to registered handlers"""        try:
             event_data = {
                 "event_type": event_type,
                 "execution_id": execution.execution_id,
@@ -565,8 +546,7 @@ class WorkflowCoordinator:
             logger.error(f"Event emission failed: {e}")
     
     async def _process_next_queued_workflow(self):
-        """Process next workflow from queue if resources are available"""
-        try:
+        """Process next workflow from queue if resources are available"""        try:
             if (self.execution_queue and 
                 len(self.active_executions) < self.max_concurrent_workflows):
                 
@@ -579,8 +559,7 @@ class WorkflowCoordinator:
             logger.error(f"Queue processing failed: {e}")
     
     def get_workflow_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get current workflow execution status"""
-        execution = (self.active_executions.get(execution_id) or 
+        """Get current workflow execution status"""        execution = (self.active_executions.get(execution_id) or 
                     self.completed_executions.get(execution_id))
         
         if not execution:
@@ -600,8 +579,7 @@ class WorkflowCoordinator:
         }
     
     def cancel_workflow(self, execution_id: str) -> bool:
-        """Cancel running workflow execution"""
-        try:
+        """Cancel running workflow execution"""        try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]
                 execution.status = WorkflowStatus.CANCELLED
@@ -621,16 +599,13 @@ class WorkflowCoordinator:
             return False
     
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register event handler for workflow events"""
-        self.event_handlers[event_type].append(handler)
+        """Register event handler for workflow events"""        self.event_handlers[event_type].append(handler)
     
     def register_workflow_listener(self, workflow_id: str, listener: Callable):
-        """Register listener for specific workflow"""
-        self.workflow_listeners[workflow_id].append(listener)
+        """Register listener for specific workflow"""        self.workflow_listeners[workflow_id].append(listener)
     
     def get_execution_metrics(self) -> Dict[str, Any]:
-        """Get workflow execution performance metrics"""
-        active_count = len(self.active_executions)
+        """Get workflow execution performance metrics"""        active_count = len(self.active_executions)
         queued_count = len(self.execution_queue)
         completed_count = len(self.completed_executions)
         

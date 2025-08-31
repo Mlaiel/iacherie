@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Revenue Recovery & Monetization Pipeline System
+"""IA Influencer Agent - Revenue Recovery & Monetization Pipeline System
 Enterprise-Grade Revenue Tracking & Recovery Pipeline Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,7 +19,6 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -36,8 +34,7 @@ from . import PipelineStatus, Environment, PipelineType, PipelineConfig
 from .pipeline_manager import PipelineStep, PipelineExecution, AdvancedPipelineManager
 
 class RevenueSource(Enum):
-    """Revenue source platform enumeration"""
-    YOUTUBE = "youtube"
+    """Revenue source platform enumeration"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -49,8 +46,7 @@ class RevenueSource(Enum):
     SUBSTACK = "substack"
 
 class RevenueType(Enum):
-    """Revenue type classifications"""
-    AD_REVENUE = "ad_revenue"
+    """Revenue type classifications"""    AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     DONATION = "donation"
     MERCHANDISE = "merchandise"
@@ -60,8 +56,7 @@ class RevenueType(Enum):
     PREMIUM_CONTENT = "premium_content"
 
 class ClaimStatus(Enum):
-    """Revenue claim status enumeration"""
-    PENDING = "pending"
+    """Revenue claim status enumeration"""    PENDING = "pending"
     PROCESSING = "processing"
     APPROVED = "approved"
     DISPUTED = "disputed"
@@ -70,8 +65,7 @@ class ClaimStatus(Enum):
 
 @dataclass
 class RevenueStream:
-    """Revenue stream data structure"""
-    stream_id: str
+    """Revenue stream data structure"""    stream_id: str
     owner_id: str
     content_id: str
     platform: RevenueSource
@@ -85,8 +79,7 @@ class RevenueStream:
 
 @dataclass
 class RevenueClaim:
-    """Revenue claim data structure"""
-    claim_id: str
+    """Revenue claim data structure"""    claim_id: str
     content_id: str
     owner_id: str
     platform: RevenueSource
@@ -100,8 +93,7 @@ class RevenueClaim:
 
 @dataclass
 class PaymentInstruction:
-    """Payment instruction data structure"""
-    payment_id: str
+    """Payment instruction data structure"""    payment_id: str
     recipient_id: str
     amount: Decimal
     currency: str
@@ -112,8 +104,7 @@ class PaymentInstruction:
     scheduled_at: datetime
 
 class RevenueRecoveryPipelineManager:
-    """
-    Advanced Revenue Recovery & Monetization Pipeline Management System
+    """    Advanced Revenue Recovery & Monetization Pipeline Management System
     
     Provides enterprise-grade revenue management workflows with:
     - Multi-platform revenue tracking automation
@@ -122,8 +113,7 @@ class RevenueRecoveryPipelineManager:
     - Real-time payment distribution pipelines
     - Revenue analytics and reporting
     - Cross-platform monetization optimization
-    """
-    
+    """    
     def __init__(self, base_pipeline_manager: AdvancedPipelineManager,
                  storage_path: Optional[Path] = None):
         self.base_manager = base_pipeline_manager
@@ -145,8 +135,7 @@ class RevenueRecoveryPipelineManager:
         self._register_revenue_pipelines()
         
     def _register_revenue_pipelines(self):
-        """Register revenue recovery and monetization pipeline configurations"""
-        # Revenue tracking pipeline
+        """Register revenue recovery and monetization pipeline configurations"""        # Revenue tracking pipeline
         revenue_tracking_config = PipelineConfig(
             name="revenue-tracking",
             environment=Environment.PRODUCTION,
@@ -281,8 +270,7 @@ class RevenueRecoveryPipelineManager:
             
     async def start_revenue_tracking(self, owner_id: str, platforms: List[RevenueSource],
                                    tracking_frequency: int = 3600) -> str:
-        """Start automated revenue tracking for specified platforms"""
-        tracking_id = hashlib.sha256(f"tracking_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Start automated revenue tracking for specified platforms"""        tracking_id = hashlib.sha256(f"tracking_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Prepare tracking context
         context = {
@@ -306,8 +294,7 @@ class RevenueRecoveryPipelineManager:
                                   platform: RevenueSource, claimed_amount: Decimal,
                                   currency: str = "USD", violation_id: Optional[str] = None,
                                   evidence_data: Optional[Dict[str, Any]] = None) -> str:
-        """Process revenue claim through automated pipeline"""
-        claim_id = hashlib.sha256(f"claim_{content_id}_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Process revenue claim through automated pipeline"""        claim_id = hashlib.sha256(f"claim_{content_id}_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Create claim record
         claim = RevenueClaim(
@@ -348,8 +335,7 @@ class RevenueRecoveryPipelineManager:
         
     async def calculate_revenue_loss(self, content_id: str, violation_data: Dict[str, Any],
                                    platform: RevenueSource) -> Dict[str, Any]:
-        """Calculate revenue loss from content violation using AI models"""
-        calculation_id = hashlib.sha256(f"calc_{content_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Calculate revenue loss from content violation using AI models"""        calculation_id = hashlib.sha256(f"calc_{content_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Prepare calculation context
         context = {
@@ -376,8 +362,7 @@ class RevenueRecoveryPipelineManager:
         }
         
     async def distribute_payments(self, payment_instructions: List[PaymentInstruction]) -> str:
-        """Execute automated payment distribution pipeline"""
-        distribution_id = hashlib.sha256(f"distribution_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Execute automated payment distribution pipeline"""        distribution_id = hashlib.sha256(f"distribution_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Add to payment queue
         self.payment_queue.extend(payment_instructions)
@@ -412,8 +397,7 @@ class RevenueRecoveryPipelineManager:
         
     async def optimize_monetization(self, owner_id: str, content_ids: List[str],
                                   optimization_goals: List[str] = None) -> str:
-        """Execute monetization optimization pipeline"""
-        if optimization_goals is None:
+        """Execute monetization optimization pipeline"""        if optimization_goals is None:
             optimization_goals = ["maximize_revenue", "improve_engagement", "expand_reach"]
             
         optimization_id = hashlib.sha256(f"optimization_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
@@ -440,8 +424,7 @@ class RevenueRecoveryPipelineManager:
     async def generate_revenue_analytics(self, owner_id: str, 
                                        date_range: Optional[tuple] = None,
                                        platforms: Optional[List[RevenueSource]] = None) -> Dict[str, Any]:
-        """Generate comprehensive revenue analytics report"""
-        if date_range is None:
+        """Generate comprehensive revenue analytics report"""        if date_range is None:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=30)
         else:
@@ -529,8 +512,7 @@ class RevenueRecoveryPipelineManager:
         return analytics
         
     def get_claim_status(self, claim_id: str) -> Optional[Dict[str, Any]]:
-        """Get current status of revenue claim"""
-        if claim_id not in self.pending_claims:
+        """Get current status of revenue claim"""        if claim_id not in self.pending_claims:
             return None
             
         claim = self.pending_claims[claim_id]
@@ -548,8 +530,7 @@ class RevenueRecoveryPipelineManager:
         
     def list_revenue_streams(self, owner_id: Optional[str] = None,
                            platform: Optional[RevenueSource] = None) -> List[Dict[str, Any]]:
-        """List revenue streams with optional filtering"""
-        filtered_streams = list(self.active_revenue_streams.values())
+        """List revenue streams with optional filtering"""        filtered_streams = list(self.active_revenue_streams.values())
         
         if owner_id:
             filtered_streams = [s for s in filtered_streams if s.owner_id == owner_id]
@@ -574,8 +555,7 @@ class RevenueRecoveryPipelineManager:
         ]
         
     def get_payment_queue_status(self) -> Dict[str, Any]:
-        """Get current payment queue status and metrics"""
-        total_payments = len(self.payment_queue)
+        """Get current payment queue status and metrics"""        total_payments = len(self.payment_queue)
         total_amount = sum(payment.amount for payment in self.payment_queue)
         
         payments_by_method = {}
@@ -595,8 +575,7 @@ class RevenueRecoveryPipelineManager:
 revenue_pipeline_manager = None
 
 def get_revenue_pipeline_manager(base_manager: AdvancedPipelineManager) -> RevenueRecoveryPipelineManager:
-    """Get or create revenue pipeline manager instance"""
-    global revenue_pipeline_manager
+    """Get or create revenue pipeline manager instance"""    global revenue_pipeline_manager
     if revenue_pipeline_manager is None:
         revenue_pipeline_manager = RevenueRecoveryPipelineManager(base_manager)
     return revenue_pipeline_manager

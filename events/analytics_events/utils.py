@@ -1,5 +1,4 @@
-"""
-Analytics Events Utilities Module
+"""Analytics Events Utilities Module
 
 Ultra-advanced utility functions for analytics events processing,
 data transformation, statistical analysis, and ML feature engineering.
@@ -13,7 +12,6 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import hashlib
 import json
@@ -40,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class TimeSeriesAnalyzer:
-    """Ultra-advanced time series analysis for analytics events"""
-    
+    """Ultra-advanced time series analysis for analytics events"""    
     def __init__(self):
         self.scaler = StandardScaler()
         self.trend_detector = None
@@ -50,8 +47,7 @@ class TimeSeriesAnalyzer:
     async def analyze_trend(self, data: List[Dict[str, Any]], 
                           time_column: str = 'timestamp',
                           value_column: str = 'value') -> Dict[str, Any]:
-        """
-        Analyze trend in time series data using advanced statistical methods
+        """        Analyze trend in time series data using advanced statistical methods
         
         Args:
             data: List of data points with timestamp and value
@@ -60,8 +56,7 @@ class TimeSeriesAnalyzer:
             
         Returns:
             Dictionary with trend analysis results
-        """
-        try:
+        """        try:
             df = pd.DataFrame(data)
             df[time_column] = pd.to_datetime(df[time_column])
             df = df.sort_values(time_column)
@@ -157,8 +152,7 @@ class TimeSeriesAnalyzer:
             return {'error': str(e)}
     
     def _extract_seasonality(self, values: np.ndarray, period: int = 24) -> np.ndarray:
-        """Extract seasonal component from time series"""
-        try:
+        """Extract seasonal component from time series"""        try:
             if len(values) < period * 2:
                 return np.zeros_like(values)
             
@@ -180,8 +174,7 @@ class TimeSeriesAnalyzer:
 
 
 class FeatureEngineering:
-    """Advanced feature engineering for analytics events"""
-    
+    """Advanced feature engineering for analytics events"""    
     def __init__(self):
         self.scalers = {}
         self.encoders = {}
@@ -189,8 +182,7 @@ class FeatureEngineering:
     
     async def engineer_features(self, data: Dict[str, Any], 
                               feature_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Engineer features from raw analytics data
+        """        Engineer features from raw analytics data
         
         Args:
             data: Raw analytics data
@@ -198,8 +190,7 @@ class FeatureEngineering:
             
         Returns:
             Dictionary with engineered features
-        """
-        try:
+        """        try:
             features = {}
             
             # Temporal features
@@ -260,8 +251,7 @@ class FeatureEngineering:
             return {}
     
     def _extract_temporal_features(self, timestamp: pd.Timestamp) -> Dict[str, Any]:
-        """Extract temporal features from timestamp"""
-        return {
+        """Extract temporal features from timestamp"""        return {
             'hour': timestamp.hour,
             'day_of_week': timestamp.dayofweek,
             'day_of_month': timestamp.day,
@@ -279,8 +269,7 @@ class FeatureEngineering:
     
     def _engineer_numerical_features(self, value: Union[int, float], 
                                    feature_name: str) -> Dict[str, Any]:
-        """Engineer features from numerical values"""
-        features = {
+        """Engineer features from numerical values"""        features = {
             f"{feature_name}_original": value,
             f"{feature_name}_log": np.log1p(abs(value)) if value != 0 else 0,
             f"{feature_name}_sqrt": np.sqrt(abs(value)),
@@ -301,8 +290,7 @@ class FeatureEngineering:
     
     def _engineer_categorical_features(self, value: str, 
                                      feature_name: str) -> Dict[str, Any]:
-        """Engineer features from categorical values"""
-        features = {
+        """Engineer features from categorical values"""        features = {
             f"{feature_name}_original": value,
             f"{feature_name}_length": len(str(value)),
             f"{feature_name}_word_count": len(str(value).split()),
@@ -319,8 +307,7 @@ class FeatureEngineering:
         return features
     
     def _engineer_text_features(self, text: str, feature_name: str) -> Dict[str, Any]:
-        """Engineer features from text data"""
-        features = {
+        """Engineer features from text data"""        features = {
             f"{feature_name}_length": len(text),
             f"{feature_name}_word_count": len(text.split()),
             f"{feature_name}_char_count": len(text),
@@ -340,8 +327,7 @@ class FeatureEngineering:
     
     def _create_interaction_features(self, features: Dict[str, Any], 
                                    interaction_config: List[List[str]]) -> Dict[str, Any]:
-        """Create interaction features between existing features"""
-        interaction_features = {}
+        """Create interaction features between existing features"""        interaction_features = {}
         
         for feature_pair in interaction_config:
             if len(feature_pair) == 2 and all(f in features for f in feature_pair):
@@ -367,8 +353,7 @@ class FeatureEngineering:
     
     def _create_aggregation_features(self, data: Dict[str, Any], 
                                    aggregation_config: Dict[str, List[str]]) -> Dict[str, Any]:
-        """Create aggregation features from grouped data"""
-        aggregation_features = {}
+        """Create aggregation features from grouped data"""        aggregation_features = {}
         
         for group_key, numeric_columns in aggregation_config.items():
             if group_key in data and isinstance(data[group_key], list):
@@ -395,15 +380,13 @@ class FeatureEngineering:
 
 
 class EventHasher:
-    """Advanced event hashing and ID generation utilities"""
-    
+    """Advanced event hashing and ID generation utilities"""    
     def __init__(self, salt: str = "ia_influencer_2025"):
         self.salt = salt
         self.hashids = hashids.Hashids(salt=salt, min_length=8)
     
     def generate_event_id(self, event_data: Dict[str, Any]) -> str:
-        """Generate unique event ID based on event data"""
-        # Create deterministic hash from event data
+        """Generate unique event ID based on event data"""        # Create deterministic hash from event data
         event_string = json.dumps(event_data, sort_keys=True, default=str)
         event_hash = hashlib.sha256(f"{event_string}{self.salt}".encode()).hexdigest()
         
@@ -414,23 +397,20 @@ class EventHasher:
         return self.hashids.encode(timestamp, hash_int)
     
     def generate_session_id(self, user_id: str, platform: str) -> str:
-        """Generate session ID for user and platform"""
-        timestamp = int(time.time())
+        """Generate session ID for user and platform"""        timestamp = int(time.time())
         session_string = f"{user_id}_{platform}_{timestamp}"
         session_hash = hashlib.md5(session_string.encode()).hexdigest()
         
         return f"session_{session_hash[:16]}"
     
     def generate_fingerprint(self, content_data: Dict[str, Any]) -> str:
-        """Generate content fingerprint for protection"""
-        content_string = json.dumps(content_data, sort_keys=True)
+        """Generate content fingerprint for protection"""        content_string = json.dumps(content_data, sort_keys=True)
         fingerprint = hashlib.sha512(content_string.encode()).hexdigest()
         
         return f"fp_{fingerprint[:32]}"
     
     def validate_event_id(self, event_id: str) -> bool:
-        """Validate if event ID is properly formatted"""
-        try:
+        """Validate if event ID is properly formatted"""        try:
             decoded = self.hashids.decode(event_id)
             return len(decoded) == 2 and all(isinstance(x, int) for x in decoded)
         except Exception:
@@ -438,13 +418,11 @@ class EventHasher:
 
 
 class DataValidator:
-    """Advanced data validation for analytics events"""
-    
+    """Advanced data validation for analytics events"""    
     @staticmethod
     def validate_event_schema(event: Dict[str, Any], 
                             required_fields: List[str]) -> Tuple[bool, List[str]]:
-        """Validate event against required schema"""
-        errors = []
+        """Validate event against required schema"""        errors = []
         
         # Check required fields
         for field in required_fields:
@@ -484,8 +462,7 @@ class DataValidator:
     
     @staticmethod
     def sanitize_event_data(event: Dict[str, Any]) -> Dict[str, Any]:
-        """Sanitize event data for security and consistency"""
-        sanitized = event.copy()
+        """Sanitize event data for security and consistency"""        sanitized = event.copy()
         
         # Remove sensitive fields
         sensitive_fields = ['password', 'token', 'secret', 'api_key']
@@ -514,12 +491,10 @@ class DataValidator:
 
 
 class PerformanceOptimizer:
-    """Performance optimization utilities for analytics processing"""
-    
+    """Performance optimization utilities for analytics processing"""    
     @staticmethod
     def batch_process(items: List[Any], batch_size: int = 100) -> List[List[Any]]:
-        """Split items into batches for efficient processing"""
-        batches = []
+        """Split items into batches for efficient processing"""        batches = []
         for i in range(0, len(items), batch_size):
             batches.append(items[i:i + batch_size])
         return batches
@@ -527,8 +502,7 @@ class PerformanceOptimizer:
     @staticmethod
     async def parallel_execute(coroutines: List[Callable], 
                              max_concurrency: int = 10) -> List[Any]:
-        """Execute coroutines in parallel with concurrency limit"""
-        semaphore = asyncio.Semaphore(max_concurrency)
+        """Execute coroutines in parallel with concurrency limit"""        semaphore = asyncio.Semaphore(max_concurrency)
         
         async def execute_with_semaphore(coro):
             async with semaphore:
@@ -539,8 +513,7 @@ class PerformanceOptimizer:
     
     @staticmethod
     def memoize(func: Callable) -> Callable:
-        """Memoization decorator for expensive computations"""
-        cache = {}
+        """Memoization decorator for expensive computations"""        cache = {}
         
         @wraps(func)
         def wrapper(*args, **kwargs):
@@ -553,8 +526,7 @@ class PerformanceOptimizer:
     
     @staticmethod
     def rate_limit(calls_per_second: int):
-        """Rate limiting decorator"""
-        min_interval = 1.0 / calls_per_second
+        """Rate limiting decorator"""        min_interval = 1.0 / calls_per_second
         last_called = [0.0]
         
         def decorator(func):
@@ -572,12 +544,10 @@ class PerformanceOptimizer:
 
 
 class StatisticalAnalyzer:
-    """Advanced statistical analysis utilities"""
-    
+    """Advanced statistical analysis utilities"""    
     @staticmethod
     def calculate_correlation_matrix(data: pd.DataFrame) -> Dict[str, Any]:
-        """Calculate correlation matrix with statistical significance"""
-        numeric_cols = data.select_dtypes(include=[np.number]).columns
+        """Calculate correlation matrix with statistical significance"""        numeric_cols = data.select_dtypes(include=[np.number]).columns
         corr_matrix = data[numeric_cols].corr()
         
         # Calculate p-values for correlations
@@ -608,8 +578,7 @@ class StatisticalAnalyzer:
     
     @staticmethod
     def detect_outliers(data: np.ndarray, method: str = 'iqr') -> Dict[str, Any]:
-        """Detect outliers using various statistical methods"""
-        outliers = {}
+        """Detect outliers using various statistical methods"""        outliers = {}
         
         if method == 'iqr':
             q1 = np.percentile(data, 25)
@@ -642,8 +611,7 @@ class StatisticalAnalyzer:
     @staticmethod
     def hypothesis_test(sample1: np.ndarray, sample2: np.ndarray, 
                        test_type: str = 'ttest') -> Dict[str, Any]:
-        """Perform hypothesis testing between two samples"""
-        results = {}
+        """Perform hypothesis testing between two samples"""        results = {}
         
         if test_type == 'ttest':
             # Independent t-test
@@ -681,8 +649,7 @@ class StatisticalAnalyzer:
 
 # Utility functions for common analytics tasks
 async def calculate_engagement_metrics(events: List[Dict[str, Any]]) -> Dict[str, float]:
-    """Calculate comprehensive engagement metrics from events"""
-    if not events:
+    """Calculate comprehensive engagement metrics from events"""    if not events:
         return {}
     
     df = pd.DataFrame(events)
@@ -708,8 +675,7 @@ async def calculate_engagement_metrics(events: List[Dict[str, Any]]) -> Dict[str
 
 
 async def calculate_revenue_metrics(transactions: List[Dict[str, Any]]) -> Dict[str, float]:
-    """Calculate comprehensive revenue metrics from transaction data"""
-    if not transactions:
+    """Calculate comprehensive revenue metrics from transaction data"""    if not transactions:
         return {}
     
     df = pd.DataFrame(transactions)

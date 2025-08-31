@@ -1,5 +1,4 @@
-"""
-Professional Base Schemas for IA Influencer Agent Platform
+"""Professional Base Schemas for IA Influencer Agent Platform
 Core foundational schemas for data validation and serialization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -8,7 +7,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
-
 from datetime import datetime
 from typing import Any, Dict, Generic, List, Optional, TypeVar, Union
 from uuid import UUID
@@ -19,8 +17,7 @@ from pydantic.generics import GenericModel
 
 # Configuration for all schemas
 class BaseSchema(BaseModel):
-    """Base schema with common configuration for all Pydantic models."""
-    
+    """Base schema with common configuration for all Pydantic models."""    
     model_config = ConfigDict(
         # Allow population by field name or alias
         populate_by_name=True,
@@ -47,8 +44,7 @@ DataT = TypeVar('DataT')
 
 
 class PaginatedResponse(GenericModel, Generic[DataT]):
-    """Professional paginated response schema for API endpoints."""
-    
+    """Professional paginated response schema for API endpoints."""    
     items: List[DataT] = Field(description="List of items in current page")
     total: int = Field(description="Total number of items across all pages")
     page: int = Field(description="Current page number (1-indexed)")
@@ -65,8 +61,7 @@ class PaginatedResponse(GenericModel, Generic[DataT]):
         page: int,
         page_size: int
     ) -> "PaginatedResponse[DataT]":
-        """Create paginated response with calculated metadata."""
-        total_pages = (total + page_size - 1) // page_size if total > 0 else 0
+        """Create paginated response with calculated metadata."""        total_pages = (total + page_size - 1) // page_size if total > 0 else 0
         
         return cls(
             items=items,
@@ -80,8 +75,7 @@ class PaginatedResponse(GenericModel, Generic[DataT]):
 
 
 class ApiResponse(GenericModel, Generic[DataT]):
-    """Professional API response wrapper with status and metadata."""
-    
+    """Professional API response wrapper with status and metadata."""    
     success: bool = Field(description="Whether the operation was successful")
     data: Optional[DataT] = Field(None, description="Response data")
     message: str = Field(description="Human-readable message")
@@ -96,8 +90,7 @@ class ApiResponse(GenericModel, Generic[DataT]):
         message: str = "Operation completed successfully",
         metadata: Optional[Dict[str, Any]] = None
     ) -> "ApiResponse[DataT]":
-        """Create a successful API response."""
-        return cls(
+        """Create a successful API response."""        return cls(
             success=True,
             data=data,
             message=message,
@@ -110,8 +103,7 @@ class ApiResponse(GenericModel, Generic[DataT]):
         message: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> "ApiResponse[None]":
-        """Create an error API response."""
-        return cls(
+        """Create an error API response."""        return cls(
             success=False,
             data=None,
             message=message,
@@ -120,8 +112,7 @@ class ApiResponse(GenericModel, Generic[DataT]):
 
 
 class ValidationError(BaseSchema):
-    """Professional validation error schema."""
-    
+    """Professional validation error schema."""    
     field: str = Field(description="Field that failed validation")
     message: str = Field(description="Validation error message")
     value: Optional[Any] = Field(None, description="Invalid value that caused error")
@@ -129,8 +120,7 @@ class ValidationError(BaseSchema):
 
 
 class BulkOperationResult(BaseSchema):
-    """Result schema for bulk operations."""
-    
+    """Result schema for bulk operations."""    
     total_processed: int = Field(description="Total number of items processed")
     successful: int = Field(description="Number of successfully processed items")
     failed: int = Field(description="Number of failed items")
@@ -139,44 +129,38 @@ class BulkOperationResult(BaseSchema):
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate percentage."""
-        if self.total_processed == 0:
+        """Calculate success rate percentage."""        if self.total_processed == 0:
             return 0.0
         return (self.successful / self.total_processed) * 100
 
 
 class TimestampSchema(BaseSchema):
-    """Schema mixin for timestamp fields."""
-    
+    """Schema mixin for timestamp fields."""    
     created_at: datetime = Field(description="Creation timestamp")
     updated_at: datetime = Field(description="Last update timestamp")
 
 
 class UUIDSchema(BaseSchema):
-    """Schema mixin for UUID-based identifiers."""
-    
+    """Schema mixin for UUID-based identifiers."""    
     id: UUID = Field(description="Unique identifier")
 
 
 class AuditSchema(BaseSchema):
-    """Schema mixin for audit trail fields."""
-    
+    """Schema mixin for audit trail fields."""    
     created_by: Optional[UUID] = Field(None, description="ID of user who created this record")
     updated_by: Optional[UUID] = Field(None, description="ID of user who last updated this record")
     version: int = Field(default=1, description="Record version for optimistic locking")
 
 
 class SoftDeleteSchema(BaseSchema):
-    """Schema mixin for soft delete functionality."""
-    
+    """Schema mixin for soft delete functionality."""    
     is_deleted: bool = Field(default=False, description="Whether this record is soft deleted")
     deleted_at: Optional[datetime] = Field(None, description="Soft deletion timestamp")
     deleted_by: Optional[UUID] = Field(None, description="ID of user who soft deleted this record")
 
 
 class MetadataSchema(BaseSchema):
-    """Schema for flexible metadata storage."""
-    
+    """Schema for flexible metadata storage."""    
     metadata: Dict[str, Any] = Field(
         default_factory=dict,
         description="Flexible metadata storage for additional properties"
@@ -184,8 +168,7 @@ class MetadataSchema(BaseSchema):
 
 
 class SearchQuerySchema(BaseSchema):
-    """Professional search query schema with filtering and sorting."""
-    
+    """Professional search query schema with filtering and sorting."""    
     query: Optional[str] = Field(None, description="Search query string")
     filters: Dict[str, Any] = Field(default_factory=dict, description="Search filters")
     sort_by: Optional[str] = Field(None, description="Field to sort by")
@@ -196,8 +179,7 @@ class SearchQuerySchema(BaseSchema):
 
 
 class FileUploadSchema(BaseSchema):
-    """Schema for file upload operations."""
-    
+    """Schema for file upload operations."""    
     filename: str = Field(description="Original filename")
     content_type: str = Field(description="MIME content type")
     size: int = Field(ge=0, description="File size in bytes")
@@ -206,8 +188,7 @@ class FileUploadSchema(BaseSchema):
     
 
 class ProcessingStatusSchema(BaseSchema):
-    """Schema for async processing status."""
-    
+    """Schema for async processing status."""    
     task_id: str = Field(description="Unique task identifier")
     status: str = Field(description="Processing status")
     progress: float = Field(ge=0.0, le=1.0, description="Progress percentage (0-1)")
@@ -218,8 +199,7 @@ class ProcessingStatusSchema(BaseSchema):
 
 
 class HealthCheckSchema(BaseSchema):
-    """System health check schema."""
-    
+    """System health check schema."""    
     service: str = Field(description="Service name")
     status: str = Field(description="Health status")
     timestamp: datetime = Field(default_factory=datetime.utcnow)

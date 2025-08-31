@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for TaskManager
+"""Comprehensive Tests for TaskManager
 
 Industrial-grade testing for task management, scheduling, coordination,
 and execution monitoring capabilities.
@@ -27,7 +24,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -57,11 +53,9 @@ logger = logging.getLogger(__name__)
 
 
 class TestTask:
-    """Test task creation and management"""
-    
+    """Test task creation and management"""    
     def test_task_creation(self):
-        """Test creating task instances"""
-        task = Task(
+        """Test creating task instances"""        task = Task(
             task_id="test_task_001",
             task_type=TaskType.CONTENT_GENERATION,
             agent_id="content_creator_001",
@@ -85,8 +79,7 @@ class TestTask:
         assert task.completed_at is None
     
     def test_task_serialization(self):
-        """Test task serialization and deserialization"""
-        original_task = Task(
+        """Test task serialization and deserialization"""        original_task = Task(
             task_id="serialization_test",
             task_type=TaskType.SOCIAL_MEDIA_POSTING,
             agent_id="social_media_agent",
@@ -110,8 +103,7 @@ class TestTask:
         assert deserialized.dependencies == original_task.dependencies
     
     def test_task_validation(self):
-        """Test task validation"""
-        # Valid task
+        """Test task validation"""        # Valid task
         valid_task = Task(
             task_id="valid_task",
             task_type=TaskType.CONTENT_ANALYSIS,
@@ -128,8 +120,7 @@ class TestTask:
             )
     
     def test_task_dependencies(self):
-        """Test task dependency management"""
-        task = Task(
+        """Test task dependency management"""        task = Task(
             task_id="dependent_task",
             task_type=TaskType.CONTENT_OPTIMIZATION,
             agent_id="optimizer_agent",
@@ -150,8 +141,7 @@ class TestTask:
         assert task.are_dependencies_satisfied()
     
     def test_task_retry_logic(self):
-        """Test task retry mechanism"""
-        task = Task(
+        """Test task retry mechanism"""        task = Task(
             task_id="retry_task",
             task_type=TaskType.AUDIO_PROCESSING,
             agent_id="audio_agent",
@@ -169,8 +159,7 @@ class TestTask:
         assert not task.can_retry()  # Max retries reached
     
     def test_task_execution_time_tracking(self):
-        """Test task execution time tracking"""
-        task = Task(
+        """Test task execution time tracking"""        task = Task(
             task_id="timing_task",
             task_type=TaskType.CONTENT_GENERATION,
             agent_id="content_agent"
@@ -194,12 +183,10 @@ class TestTask:
 
 
 class TestTaskQueue:
-    """Test task queue functionality"""
-    
+    """Test task queue functionality"""    
     @pytest.fixture
     def task_queue(self) -> TaskQueue:
-        """Create task queue for testing"""
-        config = TaskConfig(
+        """Create task queue for testing"""        config = TaskConfig(
             max_queue_size=100,
             priority_levels=5,
             enable_persistence=False
@@ -207,8 +194,7 @@ class TestTaskQueue:
         return TaskQueue(config)
     
     def test_queue_initialization(self):
-        """Test task queue initialization"""
-        config = TaskConfig(max_queue_size=50)
+        """Test task queue initialization"""        config = TaskConfig(max_queue_size=50)
         queue = TaskQueue(config)
         
         assert queue.size() == 0
@@ -217,8 +203,7 @@ class TestTaskQueue:
         assert queue.max_size == 50
     
     def test_task_enqueue_dequeue(self, task_queue):
-        """Test adding and removing tasks from queue"""
-        task1 = Task(
+        """Test adding and removing tasks from queue"""        task1 = Task(
             task_id="queue_task_1",
             task_type=TaskType.CONTENT_GENERATION,
             agent_id="agent_1",
@@ -248,8 +233,7 @@ class TestTaskQueue:
         assert task_queue.is_empty()
     
     def test_priority_ordering(self, task_queue):
-        """Test priority-based task ordering"""
-        priorities = [TaskPriority.LOW, TaskPriority.CRITICAL, TaskPriority.MEDIUM, TaskPriority.HIGH]
+        """Test priority-based task ordering"""        priorities = [TaskPriority.LOW, TaskPriority.CRITICAL, TaskPriority.MEDIUM, TaskPriority.HIGH]
         
         # Add tasks with different priorities
         for i, priority in enumerate(priorities):
@@ -269,8 +253,7 @@ class TestTaskQueue:
             assert dequeued_task.priority == expected_priority
     
     def test_queue_capacity_limits(self, task_queue):
-        """Test queue capacity management"""
-        # Fill queue to capacity
+        """Test queue capacity management"""        # Fill queue to capacity
         for i in range(task_queue.max_size):
             task = Task(
                 task_id=f"capacity_task_{i}",
@@ -290,8 +273,7 @@ class TestTaskQueue:
         assert task_queue.enqueue(overflow_task) is False
     
     def test_task_filtering(self, task_queue):
-        """Test filtering tasks by criteria"""
-        # Add tasks with different attributes
+        """Test filtering tasks by criteria"""        # Add tasks with different attributes
         tasks = [
             Task(task_id="filter_1", task_type=TaskType.CONTENT_GENERATION, agent_id="agent_1"),
             Task(task_id="filter_2", task_type=TaskType.SOCIAL_MEDIA_POSTING, agent_id="agent_2"),
@@ -311,8 +293,7 @@ class TestTaskQueue:
         assert len(agent1_tasks) == 2
     
     def test_task_removal(self, task_queue):
-        """Test removing specific tasks from queue"""
-        task1 = Task(task_id="remove_1", task_type=TaskType.CONTENT_ANALYSIS, agent_id="agent")
+        """Test removing specific tasks from queue"""        task1 = Task(task_id="remove_1", task_type=TaskType.CONTENT_ANALYSIS, agent_id="agent")
         task2 = Task(task_id="remove_2", task_type=TaskType.SOCIAL_MEDIA_POSTING, agent_id="agent")
         
         task_queue.enqueue(task1)
@@ -330,12 +311,10 @@ class TestTaskQueue:
 
 
 class TestTaskScheduler:
-    """Test task scheduling functionality"""
-    
+    """Test task scheduling functionality"""    
     @pytest.fixture
     async def task_scheduler(self) -> TaskScheduler:
-        """Create task scheduler for testing"""
-        config = TaskConfig(
+        """Create task scheduler for testing"""        config = TaskConfig(
             scheduling_algorithm="priority_round_robin",
             time_slice_ms=100,
             enable_load_balancing=True
@@ -348,8 +327,7 @@ class TestTaskScheduler:
         await scheduler.shutdown()
     
     async def test_scheduler_initialization(self):
-        """Test task scheduler initialization"""
-        config = TaskConfig()
+        """Test task scheduler initialization"""        config = TaskConfig()
         scheduler = TaskScheduler(config)
         
         assert not scheduler.initialized
@@ -360,8 +338,7 @@ class TestTaskScheduler:
         await scheduler.shutdown()
     
     async def test_task_scheduling(self, task_scheduler):
-        """Test basic task scheduling"""
-        # Create tasks for scheduling
+        """Test basic task scheduling"""        # Create tasks for scheduling
         tasks = [
             Task(
                 task_id="schedule_1",
@@ -388,8 +365,7 @@ class TestTaskScheduler:
         assert len(scheduled) >= 2
     
     async def test_dependency_scheduling(self, task_scheduler):
-        """Test scheduling tasks with dependencies"""
-        # Create dependent tasks
+        """Test scheduling tasks with dependencies"""        # Create dependent tasks
         base_task = Task(
             task_id="base_task",
             task_type=TaskType.CONTENT_GENERATION,
@@ -413,8 +389,7 @@ class TestTaskScheduler:
         assert "execution_order" in execution_plan
     
     async def test_load_balancing(self, task_scheduler):
-        """Test load balancing across agents"""
-        # Create multiple tasks for the same agent type
+        """Test load balancing across agents"""        # Create multiple tasks for the same agent type
         tasks = []
         for i in range(10):
             task = Task(
@@ -443,8 +418,7 @@ class TestTaskScheduler:
             assert load_variance <= 5  # Reasonable load balance
     
     async def test_scheduling_algorithms(self, task_scheduler):
-        """Test different scheduling algorithms"""
-        algorithms = ["fifo", "priority_queue", "round_robin", "shortest_job_first"]
+        """Test different scheduling algorithms"""        algorithms = ["fifo", "priority_queue", "round_robin", "shortest_job_first"]
         
         for algorithm in algorithms:
             # Configure scheduler with algorithm
@@ -466,12 +440,10 @@ class TestTaskScheduler:
 
 
 class TestTaskExecutor:
-    """Test task execution functionality"""
-    
+    """Test task execution functionality"""    
     @pytest.fixture
     async def task_executor(self) -> TaskExecutor:
-        """Create task executor for testing"""
-        config = TaskConfig(
+        """Create task executor for testing"""        config = TaskConfig(
             max_concurrent_tasks=5,
             execution_timeout=60,
             enable_monitoring=True
@@ -484,8 +456,7 @@ class TestTaskExecutor:
         await executor.shutdown()
     
     async def test_executor_initialization(self):
-        """Test task executor initialization"""
-        config = TaskConfig()
+        """Test task executor initialization"""        config = TaskConfig()
         executor = TaskExecutor(config)
         
         assert not executor.initialized
@@ -497,8 +468,7 @@ class TestTaskExecutor:
         await executor.shutdown()
     
     async def test_task_execution(self, task_executor):
-        """Test basic task execution"""
-        task = Task(
+        """Test basic task execution"""        task = Task(
             task_id="execution_test",
             task_type=TaskType.CONTENT_GENERATION,
             agent_id="content_agent",
@@ -514,8 +484,7 @@ class TestTaskExecutor:
         assert execution_result["task_id"] == task.task_id
     
     async def test_concurrent_execution(self, task_executor):
-        """Test concurrent task execution"""
-        # Create multiple tasks
+        """Test concurrent task execution"""        # Create multiple tasks
         tasks = []
         for i in range(3):
             task = Task(
@@ -536,8 +505,7 @@ class TestTaskExecutor:
             assert result["success"] is True
     
     async def test_execution_monitoring(self, task_executor):
-        """Test task execution monitoring"""
-        task = Task(
+        """Test task execution monitoring"""        task = Task(
             task_id="monitoring_test",
             task_type=TaskType.AUDIO_PROCESSING,
             agent_id="audio_agent",
@@ -571,8 +539,7 @@ class TestTaskExecutor:
         assert final_progress["status"] in [TaskStatus.COMPLETED, TaskStatus.FAILED]
     
     async def test_execution_timeout(self, task_executor):
-        """Test task execution timeout handling"""
-        # Create task with short timeout
+        """Test task execution timeout handling"""        # Create task with short timeout
         task = Task(
             task_id="timeout_test",
             task_type=TaskType.CONTENT_GENERATION,
@@ -588,8 +555,7 @@ class TestTaskExecutor:
             assert "timeout" in execution_result.get("error", "").lower()
     
     async def test_execution_error_handling(self, task_executor):
-        """Test execution error handling"""
-        # Create task that will fail
+        """Test execution error handling"""        # Create task that will fail
         failing_task = Task(
             task_id="failing_test",
             task_type=TaskType.CONTENT_GENERATION,
@@ -616,12 +582,10 @@ class TestTaskExecutor:
 
 
 class TestTaskManager:
-    """Test complete task manager functionality"""
-    
+    """Test complete task manager functionality"""    
     @pytest.fixture
     async def task_manager(self) -> TaskManager:
-        """Create task manager for testing"""
-        config = TaskConfig(
+        """Create task manager for testing"""        config = TaskConfig(
             max_concurrent_tasks=10,
             max_queue_size=100,
             enable_persistence=True,
@@ -636,8 +600,7 @@ class TestTaskManager:
         await manager.shutdown()
     
     async def test_manager_initialization(self):
-        """Test task manager initialization"""
-        config = TaskConfig()
+        """Test task manager initialization"""        config = TaskConfig()
         manager = TaskManager(config)
         
         assert not manager.initialized
@@ -651,8 +614,7 @@ class TestTaskManager:
         await manager.shutdown()
     
     async def test_end_to_end_task_processing(self, task_manager):
-        """Test complete task processing pipeline"""
-        # Create a complex task
+        """Test complete task processing pipeline"""        # Create a complex task
         task = Task(
             task_id="e2e_test_task",
             task_type=TaskType.CONTENT_GENERATION,
@@ -695,8 +657,7 @@ class TestTaskManager:
             assert final_status["execution_time"] > 0
     
     async def test_batch_task_processing(self, task_manager):
-        """Test processing multiple tasks in batch"""
-        # Create batch of tasks
+        """Test processing multiple tasks in batch"""        # Create batch of tasks
         batch_tasks = []
         for i in range(5):
             task = Task(
@@ -735,8 +696,7 @@ class TestTaskManager:
         assert "failed_tasks" in final_batch_status
     
     async def test_task_dependencies(self, task_manager):
-        """Test task dependency management"""
-        # Create dependent task chain
+        """Test task dependency management"""        # Create dependent task chain
         task_a = Task(
             task_id="dep_task_a",
             task_type=TaskType.CONTENT_GENERATION,
@@ -787,8 +747,7 @@ class TestTaskManager:
             wait_time += 2
     
     async def test_task_cancellation(self, task_manager):
-        """Test task cancellation"""
-        # Submit long-running task
+        """Test task cancellation"""        # Submit long-running task
         long_task = Task(
             task_id="cancellation_test",
             task_type=TaskType.AUDIO_PROCESSING,
@@ -812,8 +771,7 @@ class TestTaskManager:
         assert status["status"] == TaskStatus.CANCELLED
     
     async def test_task_retry_mechanism(self, task_manager):
-        """Test automatic task retry"""
-        # Create task that might fail
+        """Test automatic task retry"""        # Create task that might fail
         retry_task = Task(
             task_id="retry_test",
             task_type=TaskType.CONTENT_GENERATION,
@@ -847,8 +805,7 @@ class TestTaskManager:
         # This is acceptable behavior
     
     async def test_performance_monitoring(self, task_manager):
-        """Test performance monitoring and metrics"""
-        # Submit several tasks to generate metrics
+        """Test performance monitoring and metrics"""        # Submit several tasks to generate metrics
         for i in range(3):
             task = Task(
                 task_id=f"metrics_task_{i}",
@@ -878,8 +835,7 @@ class TestTaskManager:
     
     @pytest.mark.performance
     async def test_task_manager_performance(self, task_manager, assert_performance):
-        """Test task manager performance under load"""
-        # Test task submission performance
+        """Test task manager performance under load"""        # Test task submission performance
         start_time = datetime.now(timezone.utc)
         
         submission_tasks = []
@@ -899,8 +855,7 @@ class TestTaskManager:
         assert_performance("task_submission", max_time=5.0)
     
     async def test_error_recovery(self, task_manager):
-        """Test system error recovery"""
-        # Submit task that will cause system error
+        """Test system error recovery"""        # Submit task that will cause system error
         error_task = Task(
             task_id="system_error_test",
             task_type=TaskType.CONTENT_GENERATION,

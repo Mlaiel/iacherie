@@ -1,5 +1,4 @@
-"""
-Protection Alerts Database Model
+"""Protection Alerts Database Model
 
 Enterprise-grade SQLAlchemy model for content protection alerts and violation detection.
 Manages real-time monitoring, threat detection, and automated response systems.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -38,8 +36,7 @@ Base = declarative_base()
 
 
 class AlertType(Enum):
-    """Alert type enumeration"""
-    COPYRIGHT_VIOLATION = "copyright_violation"
+    """Alert type enumeration"""    COPYRIGHT_VIOLATION = "copyright_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     COMMERCIAL_INFRINGEMENT = "commercial_infringement"
     PIRACY_DETECTED = "piracy_detected"
@@ -52,8 +49,7 @@ class AlertType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -61,8 +57,7 @@ class AlertSeverity(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert processing status"""
-    PENDING = "pending"
+    """Alert processing status"""    PENDING = "pending"
     INVESTIGATING = "investigating"
     VERIFIED = "verified"
     FALSE_POSITIVE = "false_positive"
@@ -73,8 +68,7 @@ class AlertStatus(Enum):
 
 
 class DetectionMethod(Enum):
-    """Detection method enumeration"""
-    AI_FINGERPRINT = "ai_fingerprint"
+    """Detection method enumeration"""    AI_FINGERPRINT = "ai_fingerprint"
     WEB_CRAWLER = "web_crawler"
     USER_REPORT = "user_report"
     PLATFORM_API = "platform_api"
@@ -84,8 +78,7 @@ class DetectionMethod(Enum):
 
 
 class Platform(Enum):
-    """Platform enumeration"""
-    YOUTUBE = "youtube"
+    """Platform enumeration"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -103,8 +96,7 @@ class Platform(Enum):
 
 
 class ActionType(Enum):
-    """Automated action types"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Automated action types"""    DMCA_TAKEDOWN = "dmca_takedown"
     CONTENT_BLOCKING = "content_blocking"
     MONETIZATION_CLAIM = "monetization_claim"
     WATERMARK_ENFORCEMENT = "watermark_enforcement"
@@ -115,13 +107,11 @@ class ActionType(Enum):
 
 
 class ProtectionAlert(Base):
-    """
-    Enterprise Protection Alert Model
+    """    Enterprise Protection Alert Model
     
     Comprehensive alert system for content protection violations, unauthorized usage,
     and copyright infringement detection with automated response capabilities.
-    """
-    __tablename__ = "protection_alerts"
+    """    __tablename__ = "protection_alerts"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -246,8 +236,7 @@ class ProtectionAlert(Base):
         return f"<ProtectionAlert(id={self.id}, type={self.alert_type.value}, severity={self.severity.value}, status={self.status.value})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        return {
+        """Convert model to dictionary for API responses"""        return {
             "id": str(self.id),
             "fingerprint_id": str(self.fingerprint_id),
             "user_id": str(self.user_id),
@@ -319,8 +308,7 @@ class ProtectionAlert(Base):
         }
     
     def calculate_priority_score(self) -> float:
-        """Calculate dynamic priority score based on multiple factors"""
-        base_score = 0.0
+        """Calculate dynamic priority score based on multiple factors"""        base_score = 0.0
         
         # Severity weight
         severity_weights = {
@@ -349,8 +337,7 @@ class ProtectionAlert(Base):
         return min(base_score, 100.0)  # Cap at 100
     
     def should_escalate(self) -> bool:
-        """Determine if alert should be escalated"""
-        if self.severity in [AlertSeverity.CRITICAL, AlertSeverity.HIGH]:
+        """Determine if alert should be escalated"""        if self.severity in [AlertSeverity.CRITICAL, AlertSeverity.HIGH]:
             return True
         
         if self.similarity_score and self.similarity_score > 0.9:
@@ -366,8 +353,7 @@ class ProtectionAlert(Base):
     
     @classmethod
     def create_from_detection(cls, detection_data: Dict[str, Any], fingerprint_id: str, user_id: str) -> 'ProtectionAlert':
-        """Create ProtectionAlert from detection engine output"""
-        return cls(
+        """Create ProtectionAlert from detection engine output"""        return cls(
             fingerprint_id=fingerprint_id,
             user_id=user_id,
             alert_type=AlertType(detection_data.get('alert_type', 'copyright_violation')),

@@ -37,8 +37,7 @@ Enterprise Features:
 - Content fingerprinting for copyright protection and duplicate detection
 - Platform compliance validation for Spotify, YouTube, Instagram, TikTok
 - Revenue optimization recommendations and monetization eligibility assessment
-"""
-from .content_validator import (
+"""from .content_validator import (
     ContentValidator,
     ContentType,
     ValidationResult,

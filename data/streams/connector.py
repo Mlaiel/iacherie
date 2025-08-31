@@ -1,5 +1,4 @@
-"""
-Stream Connector Manager for IA Influencer Agent Platform
+"""Stream Connector Manager for IA Influencer Agent Platform
 ========================================================
 
 Universal connector management system for integrating with various
@@ -8,7 +7,6 @@ data sources, APIs, databases, and external services.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type
@@ -29,8 +27,7 @@ settings = get_settings()
 
 
 class ConnectorType(str, Enum):
-    """Connector type enumeration"""
-    DATABASE = "database"
+    """Connector type enumeration"""    DATABASE = "database"
     API = "api"
     MESSAGE_QUEUE = "message_queue"
     FILE_SYSTEM = "file_system"
@@ -41,8 +38,7 @@ class ConnectorType(str, Enum):
 
 
 class ConnectionStatus(str, Enum):
-    """Connection status enumeration"""
-    DISCONNECTED = "disconnected"
+    """Connection status enumeration"""    DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     ERROR = "error"
@@ -50,8 +46,7 @@ class ConnectionStatus(str, Enum):
 
 
 class DataFormat(str, Enum):
-    """Data format types"""
-    JSON = "json"
+    """Data format types"""    JSON = "json"
     XML = "xml"
     CSV = "csv"
     BINARY = "binary"
@@ -62,8 +57,7 @@ class DataFormat(str, Enum):
 
 @dataclass
 class ConnectorConfig:
-    """Connector configuration"""
-    connector_id: str
+    """Connector configuration"""    connector_id: str
     connector_type: ConnectorType
     name: str
     connection_params: Dict[str, Any]
@@ -77,8 +71,7 @@ class ConnectorConfig:
 
 
 class ConnectionMetrics(BaseModel):
-    """Connection performance metrics"""
-    total_requests: int = Field(default=0, description="Total requests made")
+    """Connection performance metrics"""    total_requests: int = Field(default=0, description="Total requests made")
     successful_requests: int = Field(default=0, description="Successful requests")
     failed_requests: int = Field(default=0, description="Failed requests")
     avg_response_time: float = Field(default=0.0, description="Average response time")
@@ -89,8 +82,7 @@ class ConnectionMetrics(BaseModel):
 
 
 class BaseConnector(ABC):
-    """Abstract base class for all connectors"""
-    
+    """Abstract base class for all connectors"""    
     def __init__(self, config: ConnectorConfig):
         self.config = config
         self.status = ConnectionStatus.DISCONNECTED
@@ -100,40 +92,32 @@ class BaseConnector(ABC):
         
     @abstractmethod
     async def connect(self) -> bool:
-        """Establish connection"""
-        pass
+        """Establish connection"""        pass
         
     @abstractmethod
     async def disconnect(self) -> bool:
-        """Close connection"""
-        pass
+        """Close connection"""        pass
         
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check connection health"""
-        pass
+        """Check connection health"""        pass
         
     @abstractmethod
     async def send_data(self, data: Any, **kwargs) -> bool:
-        """Send data through connector"""
-        pass
+        """Send data through connector"""        pass
         
     @abstractmethod
     async def receive_data(self, **kwargs) -> Optional[Any]:
-        """Receive data through connector"""
-        pass
+        """Receive data through connector"""        pass
         
     async def get_status(self) -> ConnectionStatus:
-        """Get connection status"""
-        return self.status
+        """Get connection status"""        return self.status
         
     async def get_metrics(self) -> ConnectionMetrics:
-        """Get performance metrics"""
-        return self.metrics
+        """Get performance metrics"""        return self.metrics
         
     def _update_metrics(self, success: bool, response_time: float = 0, data_size: int = 0):
-        """Update connection metrics"""
-        self.metrics.total_requests += 1
+        """Update connection metrics"""        self.metrics.total_requests += 1
         
         if success:
             self.metrics.successful_requests += 1
@@ -160,8 +144,7 @@ class BaseConnector(ABC):
 
 
 class DatabaseConnector(BaseConnector):
-    """Database connector implementation"""
-    
+    """Database connector implementation"""    
     async def connect(self) -> bool:
         try:
             self.status = ConnectionStatus.CONNECTING
@@ -242,8 +225,7 @@ class DatabaseConnector(BaseConnector):
 
 
 class APIConnector(BaseConnector):
-    """REST API connector implementation"""
-    
+    """REST API connector implementation"""    
     async def connect(self) -> bool:
         try:
             self.status = ConnectionStatus.CONNECTING
@@ -352,8 +334,7 @@ class APIConnector(BaseConnector):
 
 
 class RedisConnector(BaseConnector):
-    """Redis connector implementation"""
-    
+    """Redis connector implementation"""    
     async def connect(self) -> bool:
         try:
             self.status = ConnectionStatus.CONNECTING
@@ -453,11 +434,9 @@ class RedisConnector(BaseConnector):
 
 
 class StreamConnector:
-    """
-    Universal connector management system for integrating with various
+    """    Universal connector management system for integrating with various
     data sources, APIs, databases, and external services.
-    """
-    
+    """    
     def __init__(self):
         self.connectors: Dict[str, BaseConnector] = {}
         self.connector_types: Dict[ConnectorType, Type[BaseConnector]] = {
@@ -468,8 +447,7 @@ class StreamConnector:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream connector manager"""
-        try:
+        """Initialize stream connector manager"""        try:
             # Start health check task
             asyncio.create_task(self._health_check_loop())
             
@@ -480,16 +458,14 @@ class StreamConnector:
             raise
             
     async def register_connector(self, config: ConnectorConfig) -> bool:
-        """
-        Register new connector
+        """        Register new connector
         
         Args:
             config: Connector configuration
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if config.connector_type not in self.connector_types:
                 logger.error(f"Unsupported connector type: {config.connector_type}")
                 return False
@@ -517,16 +493,14 @@ class StreamConnector:
             return False
             
     async def unregister_connector(self, connector_id: str) -> bool:
-        """
-        Unregister connector
+        """        Unregister connector
         
         Args:
             connector_id: Connector identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if connector_id in self.connectors:
                 connector = self.connectors[connector_id]
                 await connector.disconnect()
@@ -546,8 +520,7 @@ class StreamConnector:
         data: Any,
         **kwargs
     ) -> bool:
-        """
-        Send data through connector
+        """        Send data through connector
         
         Args:
             connector_id: Connector identifier
@@ -556,8 +529,7 @@ class StreamConnector:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if connector_id not in self.connectors:
                 logger.error(f"Connector {connector_id} not found")
                 return False
@@ -581,8 +553,7 @@ class StreamConnector:
         connector_id: str,
         **kwargs
     ) -> Optional[Any]:
-        """
-        Receive data through connector
+        """        Receive data through connector
         
         Args:
             connector_id: Connector identifier
@@ -590,8 +561,7 @@ class StreamConnector:
             
         Returns:
             Received data or None
-        """
-        try:
+        """        try:
             if connector_id not in self.connectors:
                 logger.error(f"Connector {connector_id} not found")
                 return None
@@ -611,20 +581,17 @@ class StreamConnector:
             return None
             
     async def get_connector_status(self, connector_id: str) -> Optional[ConnectionStatus]:
-        """Get connector status"""
-        if connector_id in self.connectors:
+        """Get connector status"""        if connector_id in self.connectors:
             return await self.connectors[connector_id].get_status()
         return None
         
     async def get_connector_metrics(self, connector_id: str) -> Optional[ConnectionMetrics]:
-        """Get connector performance metrics"""
-        if connector_id in self.connectors:
+        """Get connector performance metrics"""        if connector_id in self.connectors:
             return await self.connectors[connector_id].get_metrics()
         return None
         
     async def list_connectors(self) -> List[Dict[str, Any]]:
-        """List all registered connectors"""
-        connectors = []
+        """List all registered connectors"""        connectors = []
         
         for connector_id, connector in self.connectors.items():
             status = await connector.get_status()
@@ -642,8 +609,7 @@ class StreamConnector:
         return connectors
         
     async def enable_connector(self, connector_id: str) -> bool:
-        """Enable connector"""
-        try:
+        """Enable connector"""        try:
             if connector_id not in self.connectors:
                 return False
                 
@@ -660,8 +626,7 @@ class StreamConnector:
             return False
             
     async def disable_connector(self, connector_id: str) -> bool:
-        """Disable connector"""
-        try:
+        """Disable connector"""        try:
             if connector_id not in self.connectors:
                 return False
                 
@@ -678,8 +643,7 @@ class StreamConnector:
             return False
             
     async def reconnect_connector(self, connector_id: str) -> bool:
-        """Reconnect specific connector"""
-        try:
+        """Reconnect specific connector"""        try:
             if connector_id not in self.connectors:
                 return False
                 
@@ -694,8 +658,7 @@ class StreamConnector:
             return False
             
     async def _health_check_loop(self) -> None:
-        """Background health check loop"""
-        while not self._shutdown_event.is_set():
+        """Background health check loop"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(60)  # Check every minute
                 
@@ -720,8 +683,7 @@ class StreamConnector:
                 logger.error(f"Health check loop error: {e}")
                 
     async def shutdown(self) -> None:
-        """Gracefully shutdown connector manager"""
-        try:
+        """Gracefully shutdown connector manager"""        try:
             self._shutdown_event.set()
             
             # Disconnect all connectors

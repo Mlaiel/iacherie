@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-"""
-Application Deployment Manager
+"""Application Deployment Manager
 Handles complete application deployment lifecycle including zero-downtime deployments
 """
-
 import os
 import sys
 import time
@@ -29,24 +27,21 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy enumeration"""
-    ROLLING_UPDATE = "rolling_update"
+    """Deployment strategy enumeration"""    ROLLING_UPDATE = "rolling_update"
     BLUE_GREEN = "blue_green"
     CANARY = "canary"
     RECREATE = "recreate"
 
 
 class Environment(Enum):
-    """Environment enumeration"""
-    DEVELOPMENT = "development"
+    """Environment enumeration"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 @dataclass
 class DeploymentConfig:
-    """Deployment configuration data class"""
-    app_name: str
+    """Deployment configuration data class"""    app_name: str
     version: str
     environment: Environment
     strategy: DeploymentStrategy
@@ -59,14 +54,11 @@ class DeploymentConfig:
 
 
 class AppDeploymentManager:
-    """
-    Enterprise-grade application deployment manager
+    """    Enterprise-grade application deployment manager
     Handles zero-downtime deployments with advanced strategies
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize deployment manager"""
-        self.config_path = config_path or "/etc/deployment/config.yaml"
+        """Initialize deployment manager"""        self.config_path = config_path or "/etc/deployment/config.yaml"
         self.k8s_client = None
         self.apps_v1 = None
         self.core_v1 = None
@@ -76,8 +68,7 @@ class AppDeploymentManager:
         self._load_configuration()
     
     def _initialize_kubernetes(self) -> None:
-        """Initialize Kubernetes client"""
-        try:
+        """Initialize Kubernetes client"""        try:
             # Load in-cluster config if running in pod
             config.load_incluster_config()
             logger.info("Loaded in-cluster Kubernetes configuration")
@@ -95,8 +86,7 @@ class AppDeploymentManager:
         self.core_v1 = client.CoreV1Api()
     
     def _load_configuration(self) -> None:
-        """Load deployment configuration"""
-        try:
+        """Load deployment configuration"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     self.config = yaml.safe_load(f)
@@ -110,8 +100,7 @@ class AppDeploymentManager:
             self.config = self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default deployment configuration"""
-        return {
+        """Get default deployment configuration"""        return {
             "default_strategy": "rolling_update",
             "default_replicas": 3,
             "health_check_timeout": 300,
@@ -128,16 +117,14 @@ class AppDeploymentManager:
         }
     
     def deploy_application(self, deployment_config: DeploymentConfig) -> bool:
-        """
-        Deploy application with specified configuration
+        """        Deploy application with specified configuration
         
         Args:
             deployment_config: Deployment configuration
             
         Returns:
             bool: True if deployment successful, False otherwise
-        """
-        try:
+        """        try:
             logger.info(f"Starting deployment of {deployment_config.app_name} "
                        f"version {deployment_config.version}")
             
@@ -175,8 +162,7 @@ class AppDeploymentManager:
             return False
     
     def _validate_deployment_config(self, config: DeploymentConfig) -> bool:
-        """Validate deployment configuration"""
-        try:
+        """Validate deployment configuration"""        try:
             # Check if namespace exists
             self.core_v1.read_namespace(config.namespace)
             
@@ -200,8 +186,7 @@ class AppDeploymentManager:
             return False
     
     def _validate_container_image(self, image_tag: str) -> bool:
-        """Validate container image exists in registry"""
-        try:
+        """Validate container image exists in registry"""        try:
             # This would typically check against the container registry
             # For now, we'll assume the image exists
             return True
@@ -210,8 +195,7 @@ class AppDeploymentManager:
             return False
     
     def _check_resource_availability(self, config: DeploymentConfig) -> bool:
-        """Check if sufficient resources are available"""
-        try:
+        """Check if sufficient resources are available"""        try:
             # Get current resource usage
             nodes = self.core_v1.list_node()
             
@@ -236,8 +220,7 @@ class AppDeploymentManager:
             return True  # Allow deployment to proceed
     
     def _rolling_update_deployment(self, config: DeploymentConfig) -> bool:
-        """Execute rolling update deployment"""
-        try:
+        """Execute rolling update deployment"""        try:
             logger.info("Executing rolling update deployment")
             
             # Get current deployment
@@ -277,8 +260,7 @@ class AppDeploymentManager:
             return False
     
     def _blue_green_deployment(self, config: DeploymentConfig) -> bool:
-        """Execute blue-green deployment"""
-        try:
+        """Execute blue-green deployment"""        try:
             logger.info("Executing blue-green deployment")
             
             # Create green deployment
@@ -334,8 +316,7 @@ class AppDeploymentManager:
             return False
     
     def _canary_deployment(self, config: DeploymentConfig) -> bool:
-        """Execute canary deployment"""
-        try:
+        """Execute canary deployment"""        try:
             logger.info("Executing canary deployment")
             
             # Create canary deployment with reduced replicas
@@ -379,8 +360,7 @@ class AppDeploymentManager:
             return False
     
     def _recreate_deployment(self, config: DeploymentConfig) -> bool:
-        """Execute recreate deployment (downtime strategy)"""
-        try:
+        """Execute recreate deployment (downtime strategy)"""        try:
             logger.info("Executing recreate deployment")
             
             # Delete existing deployment
@@ -413,8 +393,7 @@ class AppDeploymentManager:
             return False
     
     def _create_deployment_manifest(self, config: DeploymentConfig) -> Dict[str, Any]:
-        """Create Kubernetes deployment manifest"""
-        return {
+        """Create Kubernetes deployment manifest"""        return {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -495,8 +474,7 @@ class AppDeploymentManager:
         }
     
     def _wait_for_rollout_completion(self, config: DeploymentConfig) -> bool:
-        """Wait for deployment rollout to complete"""
-        try:
+        """Wait for deployment rollout to complete"""        try:
             start_time = time.time()
             timeout = config.health_check_timeout
             
@@ -522,8 +500,7 @@ class AppDeploymentManager:
             return False
     
     def _health_check_deployment(self, config: DeploymentConfig) -> bool:
-        """Perform health check on deployment"""
-        try:
+        """Perform health check on deployment"""        try:
             # Get service endpoint
             service = self.core_v1.read_namespaced_service(
                 name=config.app_name,
@@ -539,8 +516,7 @@ class AppDeploymentManager:
             return False
     
     def _switch_service_traffic(self, old_config: DeploymentConfig, new_config: DeploymentConfig) -> None:
-        """Switch service traffic from old to new deployment"""
-        try:
+        """Switch service traffic from old to new deployment"""        try:
             service = self.core_v1.read_namespaced_service(
                 name=old_config.app_name,
                 namespace=old_config.namespace
@@ -561,8 +537,7 @@ class AppDeploymentManager:
             logger.error(f"Traffic switch error: {e}")
     
     def _monitor_canary_health(self, config: DeploymentConfig) -> bool:
-        """Monitor canary deployment health"""
-        try:
+        """Monitor canary deployment health"""        try:
             # Monitor metrics, error rates, etc.
             # This is a simplified implementation
             logger.info("Monitoring canary health...")
@@ -579,8 +554,7 @@ class AppDeploymentManager:
             return False
     
     def _promote_canary(self, config: DeploymentConfig, canary_config: DeploymentConfig) -> bool:
-        """Promote canary to full deployment"""
-        try:
+        """Promote canary to full deployment"""        try:
             logger.info("Promoting canary to full deployment")
             
             # Update main deployment with canary image
@@ -609,8 +583,7 @@ class AppDeploymentManager:
             return False
     
     def _cleanup_canary(self, config: DeploymentConfig) -> None:
-        """Clean up canary deployment"""
-        try:
+        """Clean up canary deployment"""        try:
             self.apps_v1.delete_namespaced_deployment(
                 name=config.app_name,
                 namespace=config.namespace
@@ -621,8 +594,7 @@ class AppDeploymentManager:
             logger.error(f"Canary cleanup error: {e}")
     
     def _rollback_deployment(self, config: DeploymentConfig) -> bool:
-        """Rollback deployment to previous version"""
-        try:
+        """Rollback deployment to previous version"""        try:
             logger.info(f"Rolling back deployment {config.app_name}")
             
             # Get deployment history
@@ -663,8 +635,7 @@ class AppDeploymentManager:
             return False
     
     def _post_deployment_tasks(self, config: DeploymentConfig) -> None:
-        """Execute post-deployment tasks"""
-        try:
+        """Execute post-deployment tasks"""        try:
             logger.info("Executing post-deployment tasks")
             
             # Update monitoring
@@ -684,8 +655,7 @@ class AppDeploymentManager:
             logger.error(f"Post-deployment task error: {e}")
     
     def _update_monitoring_config(self, config: DeploymentConfig) -> None:
-        """Update monitoring configuration"""
-        try:
+        """Update monitoring configuration"""        try:
             # Update Prometheus targets
             # Update Grafana dashboards
             # This would integrate with monitoring systems
@@ -695,8 +665,7 @@ class AppDeploymentManager:
             logger.error(f"Monitoring update error: {e}")
     
     def _send_deployment_notification(self, config: DeploymentConfig, success: bool) -> None:
-        """Send deployment notification"""
-        try:
+        """Send deployment notification"""        try:
             status = "SUCCESS" if success else "FAILED"
             message = f"Deployment {status}: {config.app_name} v{config.version} to {config.environment.value}"
             
@@ -711,8 +680,7 @@ class AppDeploymentManager:
             logger.error(f"Notification error: {e}")
     
     def _update_load_balancer(self, config: DeploymentConfig) -> None:
-        """Update load balancer configuration"""
-        try:
+        """Update load balancer configuration"""        try:
             # Update ingress rules
             # Update service mesh configuration
             logger.info("Load balancer configuration updated")
@@ -721,8 +689,7 @@ class AppDeploymentManager:
             logger.error(f"Load balancer update error: {e}")
     
     def _cleanup_old_resources(self, config: DeploymentConfig) -> None:
-        """Clean up old deployment resources"""
-        try:
+        """Clean up old deployment resources"""        try:
             # Clean up old ReplicaSets
             # Clean up old ConfigMaps/Secrets if needed
             logger.info("Old resources cleaned up")
@@ -731,8 +698,7 @@ class AppDeploymentManager:
             logger.error(f"Cleanup error: {e}")
     
     def _record_deployment(self, config: DeploymentConfig, success: bool) -> None:
-        """Record deployment in history"""
-        deployment_record = {
+        """Record deployment in history"""        deployment_record = {
             "timestamp": time.time(),
             "app_name": config.app_name,
             "version": config.version,
@@ -747,8 +713,7 @@ class AppDeploymentManager:
         logger.info(f"Deployment recorded: {deployment_record}")
     
     def get_deployment_status(self, app_name: str, namespace: str) -> Dict[str, Any]:
-        """Get current deployment status"""
-        try:
+        """Get current deployment status"""        try:
             deployment = self.apps_v1.read_namespaced_deployment(
                 name=app_name,
                 namespace=namespace
@@ -770,8 +735,7 @@ class AppDeploymentManager:
             return {}
     
     def list_deployments(self, namespace: str = None) -> List[Dict[str, Any]]:
-        """List all deployments"""
-        try:
+        """List all deployments"""        try:
             if namespace:
                 deployments = self.apps_v1.list_namespaced_deployment(namespace=namespace)
             else:
@@ -794,8 +758,7 @@ class AppDeploymentManager:
 
 
 def main():
-    """Main function for standalone execution"""
-    import argparse
+    """Main function for standalone execution"""    import argparse
     
     parser = argparse.ArgumentParser(description="Application Deployment Manager")
     parser.add_argument("--app-name", required=True, help="Application name")

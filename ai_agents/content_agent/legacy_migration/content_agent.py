@@ -1,12 +1,10 @@
-"""
-Content Agent - Advanced Multi-Format Content Processing System
+"""Content Agent - Advanced Multi-Format Content Processing System
 
 Core agent responsible for analyzing, processing, and optimizing content across multiple formats.
 Integrates with AI models for intelligent content understanding and enhancement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 import time
@@ -47,8 +45,7 @@ from ...ml.content_models import ContentClassifier, QualityAssesssor
 logger = logging.getLogger(__name__)
 
 class ContentAgent(BaseAgent):
-    """
-    Advanced content processing agent with multi-format support and AI analysis.
+    """    Advanced content processing agent with multi-format support and AI analysis.
     
     Capabilities:
     - Multi-format content analysis (audio, video, image, text)
@@ -57,8 +54,7 @@ class ContentAgent(BaseAgent):
     - Content optimization recommendations
     - Format conversion and standardization
     - Trend analysis and content scoring
-    """
-    
+    """    
     def __init__(self, agent_id: str = "content_agent", config: Dict[str, Any] = None):
         super().__init__(agent_id, config)
         
@@ -85,8 +81,7 @@ class ContentAgent(BaseAgent):
         }
         
     async def initialize(self):
-        """Initialize AI models and processors"""
-        try:
+        """Initialize AI models and processors"""        try:
             # Initialize content classifier
             self.content_classifier = ContentClassifier()
             await self.content_classifier.load_model()
@@ -109,8 +104,7 @@ class ContentAgent(BaseAgent):
             raise ContentProcessingError(f"Initialization failed: {e}")
     
     async def process(self, request: Dict[str, Any]) -> AgentResponse:
-        """
-        Process content analysis request.
+        """        Process content analysis request.
         
         Args:
             request: Dictionary containing:
@@ -122,8 +116,7 @@ class ContentAgent(BaseAgent):
         
         Returns:
             AgentResponse with analysis results and recommendations
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Validate request
@@ -175,8 +168,7 @@ class ContentAgent(BaseAgent):
             )
     
     def _detect_content_type(self, file_path: Path) -> str:
-        """Detect content type from file extension"""
-        suffix = file_path.suffix.lower()
+        """Detect content type from file extension"""        suffix = file_path.suffix.lower()
         
         for content_type, extensions in self.supported_formats.items():
             if suffix in extensions:
@@ -204,8 +196,7 @@ class ContentAgent(BaseAgent):
         optimization_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Route content to appropriate processor based on type"""
-        
+        """Route content to appropriate processor based on type"""        
         base_results = {
             'content_path': str(content_path),
             'content_type': content_type,
@@ -251,16 +242,14 @@ class ContentAgent(BaseAgent):
         return base_results
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file"""
-        hash_sha256 = hashlib.sha256()
+        """Calculate SHA-256 hash of file"""        hash_sha256 = hashlib.sha256()
         async with aiofiles.open(file_path, 'rb') as f:
             while chunk := await f.read(8192):
                 hash_sha256.update(chunk)
         return hash_sha256.hexdigest()
     
     async def _perform_ai_analysis(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Perform AI-powered analysis on content"""
-        ai_results = {}
+        """Perform AI-powered analysis on content"""        ai_results = {}
         
         try:
             # Content classification
@@ -285,8 +274,7 @@ class ContentAgent(BaseAgent):
         return ai_results
     
     async def _generate_recommendations(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate optimization and improvement recommendations"""
-        recommendations = {
+        """Generate optimization and improvement recommendations"""        recommendations = {
             'optimization': [],
             'quality_improvements': [],
             'seo_suggestions': [],
@@ -332,8 +320,7 @@ class ContentAgent(BaseAgent):
         return recommendations
     
     async def _add_audio_recommendations(self, content_data: Dict[str, Any], recommendations: Dict[str, Any]):
-        """Add audio-specific recommendations"""
-        audio_data = content_data.get('audio_analysis', {})
+        """Add audio-specific recommendations"""        audio_data = content_data.get('audio_analysis', {})
         
         if audio_data.get('sample_rate', 0) < 44100:
             recommendations['quality_improvements'].append("Consider using higher sample rate (44.1kHz or higher)")
@@ -348,8 +335,7 @@ class ContentAgent(BaseAgent):
             recommendations['metadata_enhancements'].append("Add ID3 tags for better music library organization")
     
     async def _add_video_recommendations(self, content_data: Dict[str, Any], recommendations: Dict[str, Any]):
-        """Add video-specific recommendations"""
-        video_data = content_data.get('video_analysis', {})
+        """Add video-specific recommendations"""        video_data = content_data.get('video_analysis', {})
         
         if video_data.get('resolution', [0, 0])[1] < 720:
             recommendations['quality_improvements'].append("Consider using HD resolution (720p or higher)")
@@ -364,8 +350,7 @@ class ContentAgent(BaseAgent):
             recommendations['metadata_enhancements'].append("Add subtitles for accessibility")
     
     async def _add_image_recommendations(self, content_data: Dict[str, Any], recommendations: Dict[str, Any]):
-        """Add image-specific recommendations"""
-        image_data = content_data.get('image_analysis', {})
+        """Add image-specific recommendations"""        image_data = content_data.get('image_analysis', {})
         
         width, height = image_data.get('dimensions', [0, 0])
         if width < 1920 or height < 1080:
@@ -378,8 +363,7 @@ class ContentAgent(BaseAgent):
             recommendations['metadata_enhancements'].append("Add EXIF metadata for better organization")
     
     async def _add_text_recommendations(self, content_data: Dict[str, Any], recommendations: Dict[str, Any]):
-        """Add text-specific recommendations"""
-        text_data = content_data.get('text_analysis', {})
+        """Add text-specific recommendations"""        text_data = content_data.get('text_analysis', {})
         
         word_count = text_data.get('word_count', 0)
         if word_count < 300:
@@ -393,8 +377,7 @@ class ContentAgent(BaseAgent):
 
 
 class AudioContentProcessor:
-    """Advanced audio content processing and analysis"""
-    
+    """Advanced audio content processing and analysis"""    
     async def process(
         self, 
         file_path: Path, 
@@ -402,8 +385,7 @@ class AudioContentProcessor:
         optimization_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process audio content with comprehensive analysis"""
-        
+        """Process audio content with comprehensive analysis"""        
         try:
             # Load audio file
             y, sr = librosa.load(file_path, sr=None)
@@ -439,8 +421,7 @@ class AudioContentProcessor:
             raise ContentProcessingError(f"Audio processing failed: {e}")
     
     async def _detailed_audio_analysis(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Perform detailed audio analysis"""
-        
+        """Perform detailed audio analysis"""        
         # Spectral analysis
         stft = librosa.stft(y)
         spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
@@ -469,8 +450,7 @@ class AudioContentProcessor:
         }
     
     async def _assess_audio_quality(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Assess audio quality metrics"""
-        
+        """Assess audio quality metrics"""        
         # Signal-to-noise ratio estimation
         stft = librosa.stft(y)
         magnitude = np.abs(stft)
@@ -505,8 +485,7 @@ class AudioContentProcessor:
         }
     
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract audio metadata"""
-        try:
+        """Extract audio metadata"""        try:
             import mutagen
             from mutagen.id3 import ID3NoHeaderError
             
@@ -532,8 +511,7 @@ class AudioContentProcessor:
 
 
 class VideoContentProcessor:
-    """Advanced video content processing and analysis"""
-    
+    """Advanced video content processing and analysis"""    
     async def process(
         self, 
         file_path: Path, 
@@ -541,8 +519,7 @@ class VideoContentProcessor:
         optimization_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process video content with comprehensive analysis"""
-        
+        """Process video content with comprehensive analysis"""        
         try:
             # Open video file
             cap = cv2.VideoCapture(str(file_path))
@@ -587,8 +564,7 @@ class VideoContentProcessor:
             raise ContentProcessingError(f"Video processing failed: {e}")
     
     async def _detailed_video_analysis(self, cap: cv2.VideoCapture, frame_count: int) -> Dict[str, Any]:
-        """Perform detailed video analysis"""
-        
+        """Perform detailed video analysis"""        
         # Sample frames for analysis (max 30 frames)
         sample_indices = np.linspace(0, frame_count - 1, min(30, frame_count), dtype=int)
         
@@ -635,8 +611,7 @@ class VideoContentProcessor:
         }
     
     async def _assess_video_quality(self, cap: cv2.VideoCapture, frame_count: int, fps: float) -> Dict[str, Any]:
-        """Assess video quality metrics"""
-        
+        """Assess video quality metrics"""        
         # Resolution-based quality
         width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
         height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
@@ -689,8 +664,7 @@ class VideoContentProcessor:
         }
     
     async def _extract_video_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract video metadata"""
-        try:
+        """Extract video metadata"""        try:
             import ffmpeg
             
             probe = ffmpeg.probe(str(file_path))
@@ -714,8 +688,7 @@ class VideoContentProcessor:
 
 
 class ImageContentProcessor:
-    """Advanced image content processing and analysis"""
-    
+    """Advanced image content processing and analysis"""    
     async def process(
         self, 
         file_path: Path, 
@@ -723,8 +696,7 @@ class ImageContentProcessor:
         optimization_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process image content with comprehensive analysis"""
-        
+        """Process image content with comprehensive analysis"""        
         try:
             # Open image
             with Image.open(file_path) as img:
@@ -758,8 +730,7 @@ class ImageContentProcessor:
             raise ContentProcessingError(f"Image processing failed: {e}")
     
     async def _detailed_image_analysis(self, img: Image.Image) -> Dict[str, Any]:
-        """Perform detailed image analysis"""
-        
+        """Perform detailed image analysis"""        
         # Convert to numpy array for analysis
         img_array = np.array(img.convert('RGB'))
         
@@ -787,8 +758,7 @@ class ImageContentProcessor:
         }
     
     def _get_dominant_color(self, img_array: np.ndarray) -> List[int]:
-        """Get dominant color using k-means clustering"""
-        try:
+        """Get dominant color using k-means clustering"""        try:
             from sklearn.cluster import KMeans
             
             # Reshape for clustering
@@ -810,8 +780,7 @@ class ImageContentProcessor:
             return np.mean(img_array, axis=(0, 1)).astype(int).tolist()
     
     async def _assess_image_quality(self, img: Image.Image) -> Dict[str, Any]:
-        """Assess image quality metrics"""
-        
+        """Assess image quality metrics"""        
         width, height = img.size
         
         # Resolution quality
@@ -845,8 +814,7 @@ class ImageContentProcessor:
         }
     
     async def _extract_image_metadata(self, img: Image.Image) -> Dict[str, Any]:
-        """Extract image EXIF metadata"""
-        try:
+        """Extract image EXIF metadata"""        try:
             from PIL.ExifTags import TAGS
             
             exifdata = img.getexif()
@@ -885,15 +853,13 @@ class ImageContentProcessor:
 
 
 class TextContentProcessor:
-    """Advanced text content processing and analysis"""
-    
+    """Advanced text content processing and analysis"""    
     def __init__(self):
         self.tokenizer = None
         self.model = None
     
     async def initialize_models(self):
-        """Initialize NLP models"""
-        try:
+        """Initialize NLP models"""        try:
             from transformers import AutoTokenizer, AutoModel
             
             model_name = "sentence-transformers/all-MiniLM-L6-v2"
@@ -910,8 +876,7 @@ class TextContentProcessor:
         optimization_options: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process text content with comprehensive analysis"""
-        
+        """Process text content with comprehensive analysis"""        
         try:
             # Read text content
             async with aiofiles.open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
@@ -946,8 +911,7 @@ class TextContentProcessor:
             raise ContentProcessingError(f"Text processing failed: {e}")
     
     async def _detailed_text_analysis(self, text: str) -> Dict[str, Any]:
-        """Perform detailed text analysis"""
-        
+        """Perform detailed text analysis"""        
         import re
         from collections import Counter
         
@@ -983,16 +947,14 @@ class TextContentProcessor:
         }
     
     async def _detect_language(self, text: str) -> str:
-        """Detect text language"""
-        try:
+        """Detect text language"""        try:
             from langdetect import detect
             return detect(text)
         except:
             return 'unknown'
     
     async def _assess_text_quality(self, text: str) -> Dict[str, Any]:
-        """Assess text quality metrics"""
-        
+        """Assess text quality metrics"""        
         # Readability assessment using simple metrics
         words = text.split()
         sentences = re.split(r'[.!?]+', text)
@@ -1032,8 +994,7 @@ class TextContentProcessor:
         }
     
     async def _analyze_seo_factors(self, text: str) -> Dict[str, Any]:
-        """Analyze SEO factors in text"""
-        
+        """Analyze SEO factors in text"""        
         import re
         from collections import Counter
         
@@ -1068,8 +1029,7 @@ class TextContentProcessor:
         }
     
     def _calculate_seo_score(self, words: List[str], headings: List[str], keywords: List[str]) -> float:
-        """Calculate basic SEO score"""
-        score = 0
+        """Calculate basic SEO score"""        score = 0
         
         # Length factor (300-2000 words is optimal)
         word_count = len(words)

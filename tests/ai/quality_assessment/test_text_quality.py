@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Text Quality Analysis Tests
+"""Text Quality Analysis Tests
 
 Comprehensive test suite for professional text quality assessment with advanced linguistic analysis,
 grammar evaluation, readability scoring, SEO optimization, and content intelligence validation.
@@ -46,7 +43,6 @@ AND WRITTEN AUTHORIZATION WILL FACE SEVERE LEGAL CONSEQUENCES.
 
 Contact: Fahed Mlaiel - mlaiel@live.de
 """
-
 import pytest
 import sys
 import os
@@ -66,15 +62,12 @@ from ai.quality_assessment.text_quality import (
 
 
 class TestTextQualityAnalyzer(TestCase):
-    """Comprehensive test suite for TextQualityAnalyzer with professional text standards."""
-    
+    """Comprehensive test suite for TextQualityAnalyzer with professional text standards."""    
     def setUp(self):
-        """Set up test environment with various text samples and configurations."""
-        self.analyzer = TextQualityAnalyzer()
+        """Set up test environment with various text samples and configurations."""        self.analyzer = TextQualityAnalyzer()
         
         # High-quality professional text
-        self.high_quality_text = """
-        Artificial intelligence represents one of the most transformative technological advances 
+        self.high_quality_text = """        Artificial intelligence represents one of the most transformative technological advances 
         of our time. As we stand at the threshold of a new era, the integration of AI systems 
         into our daily lives continues to accelerate at an unprecedented pace. From healthcare 
         diagnostics to autonomous vehicles, from personalized education to climate modeling, 
@@ -91,11 +84,9 @@ class TestTextQualityAnalyzer(TestCase):
         between technologists, policymakers, and citizens will be essential to ensure that 
         artificial intelligence serves humanity's best interests while maintaining our 
         fundamental values and freedoms.
-        """
-        
+        """        
         # Low-quality text with errors
-        self.low_quality_text = """
-        ai is good technology that help people alot. it make life easy and do many thing 
+        self.low_quality_text = """        ai is good technology that help people alot. it make life easy and do many thing 
         for us everyday. many company use ai now for there business and its very popular.
         
         people like ai because it fast and can solve problem quick. but some people worried 
@@ -103,11 +94,9 @@ class TestTextQualityAnalyzer(TestCase):
         
         in conclusion ai will continue grow and become more important in society so we 
         should learn about it and use it wisely for better world.
-        """
-        
+        """        
         # SEO-optimized text
-        self.seo_optimized_text = """
-        Digital Marketing Strategies: Complete Guide for 2025 Success
+        self.seo_optimized_text = """        Digital Marketing Strategies: Complete Guide for 2025 Success
         
         Digital marketing has become essential for businesses seeking growth in today's 
         competitive landscape. This comprehensive guide explores proven digital marketing 
@@ -125,11 +114,9 @@ class TestTextQualityAnalyzer(TestCase):
         digital marketing campaigns combine multiple channels for maximum impact.
         
         Start your digital marketing journey today and transform your business growth.
-        """
-        
+        """        
         # Creative/artistic text
-        self.creative_text = """
-        Whispers of Tomorrow
+        self.creative_text = """        Whispers of Tomorrow
         
         In the twilight's gentle embrace, where shadows dance with fading light,
         Dreams weave through the fabric of time, painting hope across the night.
@@ -142,11 +129,9 @@ class TestTextQualityAnalyzer(TestCase):
         
         So let us sleep with hearts at peace, knowing morning's grace will come,
         Bringing chances fresh and new beneath the rising sun.
-        """
-        
+        """        
         # Technical documentation text
-        self.technical_text = """
-        API Authentication Implementation Guide
+        self.technical_text = """        API Authentication Implementation Guide
         
         Authentication is a critical security mechanism that verifies user identity 
         before granting access to protected resources. This guide covers JWT-based 
@@ -174,8 +159,7 @@ class TestTextQualityAnalyzer(TestCase):
         
         Testing should include unit tests, integration tests, and security assessments 
         to ensure robust authentication implementation.
-        """
-        
+        """        
         # Platform-specific content samples
         self.platform_samples = {
             'twitter': "🚀 Excited to share our latest AI breakthrough! Revolutionary technology that's changing the game. #AI #Innovation #TechNews",
@@ -187,8 +171,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_comprehensive_text_analysis(self):
-        """Test comprehensive text quality analysis with all metrics."""
-        analysis_result = await self.analyzer.analyze_text_quality(
+        """Test comprehensive text quality analysis with all metrics."""        analysis_result = await self.analyzer.analyze_text_quality(
             self.high_quality_text,
             platform='blog',
             content_type='article'
@@ -214,8 +197,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_grammar_analysis_comprehensive(self):
-        """Test detailed grammar analysis functionality."""
-        # Test high-quality text
+        """Test detailed grammar analysis functionality."""        # Test high-quality text
         hq_grammar = await self.analyzer.analyze_grammar(self.high_quality_text)
         
         # Test low-quality text
@@ -248,8 +230,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_readability_analysis(self):
-        """Test readability analysis with multiple metrics."""
-        readability_result = await self.analyzer.analyze_readability(self.high_quality_text)
+        """Test readability analysis with multiple metrics."""        readability_result = await self.analyzer.analyze_readability(self.high_quality_text)
         
         # Validate readability analysis structure
         self.assertIsInstance(readability_result, ReadabilityAnalysis)
@@ -285,8 +266,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_seo_analysis_comprehensive(self):
-        """Test comprehensive SEO analysis functionality."""
-        seo_result = await self.analyzer.analyze_seo_quality(
+        """Test comprehensive SEO analysis functionality."""        seo_result = await self.analyzer.analyze_seo_quality(
             self.seo_optimized_text,
             target_keywords=['digital marketing', 'SEO', 'strategies']
         )
@@ -323,8 +303,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_sentiment_analysis_detailed(self):
-        """Test detailed sentiment analysis functionality."""
-        # Test different sentiment texts
+        """Test detailed sentiment analysis functionality."""        # Test different sentiment texts
         test_texts = {
             'positive': "I absolutely love this amazing product! It's fantastic and exceeded all my expectations.",
             'negative': "This is terrible and disappointing. I hate everything about this experience.",
@@ -365,8 +344,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_style_analysis_comprehensive(self):
-        """Test comprehensive style analysis functionality."""
-        # Test different content types
+        """Test comprehensive style analysis functionality."""        # Test different content types
         content_samples = {
             'professional': self.high_quality_text,
             'casual': self.low_quality_text,
@@ -411,8 +389,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_content_structure_analysis(self):
-        """Test content structure and organization analysis."""
-        structure_result = await self.analyzer.analyze_content_structure(self.technical_text)
+        """Test content structure and organization analysis."""        structure_result = await self.analyzer.analyze_content_structure(self.technical_text)
         
         # Validate content structure analysis
         self.assertIsInstance(structure_result, ContentStructureAnalysis)
@@ -446,8 +423,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_platform_specific_optimization(self):
-        """Test platform-specific content optimization analysis."""
-        for platform, content in self.platform_samples.items():
+        """Test platform-specific content optimization analysis."""        for platform, content in self.platform_samples.items():
             platform_result = await self.analyzer.analyze_platform_optimization(
                 content,
                 platform=platform
@@ -485,8 +461,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_content_quality_comparison(self):
-        """Test quality comparison between different text samples."""
-        texts_to_compare = [
+        """Test quality comparison between different text samples."""        texts_to_compare = [
             ('high_quality', self.high_quality_text),
             ('low_quality', self.low_quality_text),
             ('seo_optimized', self.seo_optimized_text),
@@ -514,8 +489,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_multilingual_text_analysis(self):
-        """Test text analysis for different languages."""
-        multilingual_samples = {
+        """Test text analysis for different languages."""        multilingual_samples = {
             'english': "This is a comprehensive analysis of text quality using advanced algorithms.",
             'french': "Ceci est une analyse complète de la qualité du texte utilisant des algorithmes avancés.",
             'german': "Dies ist eine umfassende Analyse der Textqualität mit fortschrittlichen Algorithmen.",
@@ -549,8 +523,7 @@ class TestTextQualityAnalyzer(TestCase):
                 self.assertIn('language not supported', str(e).lower())
     
     def test_text_quality_metrics_data_model(self):
-        """Test TextQualityMetrics data model validation."""
-        metrics = TextQualityMetrics(
+        """Test TextQualityMetrics data model validation."""        metrics = TextQualityMetrics(
             overall_score=86.5,
             grammar_score=92.0,
             readability_score=88.0,
@@ -576,8 +549,7 @@ class TestTextQualityAnalyzer(TestCase):
         self.assertIn(quality_level, ['excellent', 'good', 'acceptable', 'poor'])
     
     def test_text_quality_profile_functionality(self):
-        """Test TextQualityProfile class with comprehensive text characteristics."""
-        profile = TextQualityProfile(
+        """Test TextQualityProfile class with comprehensive text characteristics."""        profile = TextQualityProfile(
             content_type='blog_article',
             platform='wordpress',
             target_audience='professionals',
@@ -609,8 +581,7 @@ class TestTextQualityAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_real_time_text_analysis(self):
-        """Test real-time text analysis capabilities."""
-        # Simulate real-time analysis with partial text
+        """Test real-time text analysis capabilities."""        # Simulate real-time analysis with partial text
         partial_texts = [
             "Artificial intelligence",
             "Artificial intelligence represents one of the most",

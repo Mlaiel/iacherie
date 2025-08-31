@@ -1,5 +1,4 @@
-"""
-Partner Analytics Service for IA Influencer Agent
+"""Partner Analytics Service for IA Influencer Agent
 Advanced analytics and intelligence for partnership performance
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
@@ -20,7 +19,6 @@ Development Team Specialties:
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
-    DAILY = "daily"
+    """Analytics timeframe options"""    DAILY = "daily"
     WEEKLY = "weekly" 
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -53,8 +50,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Partnership metric types"""
-    REVENUE = "revenue"
+    """Partnership metric types"""    REVENUE = "revenue"
     ENGAGEMENT = "engagement"
     PERFORMANCE = "performance"
     SATISFACTION = "satisfaction"
@@ -63,11 +59,9 @@ class MetricType(Enum):
 
 
 class PartnerAnalyticsService:
-    """
-    Advanced analytics service for partnership intelligence and insights.
+    """    Advanced analytics service for partnership intelligence and insights.
     Provides comprehensive analytics, reporting, and predictive insights.
     """
-
     def __init__(self):
         self.logger = logger
         self.analytics_cache = {}
@@ -79,8 +73,7 @@ class PartnerAnalyticsService:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive partnership analytics dashboard"""
-        try:
+        """Generate comprehensive partnership analytics dashboard"""        try:
             dashboard = {
                 'partnership_id': partnership_id,
                 'generated_at': datetime.utcnow().isoformat(),
@@ -156,8 +149,7 @@ class PartnerAnalyticsService:
         partnership_id: str,
         calculation_method: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """Calculate comprehensive ROI analysis for partnership"""
-        try:
+        """Calculate comprehensive ROI analysis for partnership"""        try:
             roi_analysis = {
                 'partnership_id': partnership_id,
                 'calculation_method': calculation_method,
@@ -227,8 +219,7 @@ class PartnerAnalyticsService:
         metrics: List[MetricType],
         comparison_period: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Comprehensive partnership performance analysis"""
-        try:
+        """Comprehensive partnership performance analysis"""        try:
             performance_analysis = {
                 'partnership_id': partnership_id,
                 'analysis_date': datetime.utcnow().isoformat(),
@@ -287,8 +278,7 @@ class PartnerAnalyticsService:
         competitor_partnerships: List[str],
         analysis_depth: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """Generate competitive intelligence for partnership strategy"""
-        try:
+        """Generate competitive intelligence for partnership strategy"""        try:
             intelligence = {
                 'partnership_id': partnership_id,
                 'competitors_analyzed': competitor_partnerships,
@@ -350,8 +340,7 @@ class PartnerAnalyticsService:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calculate comprehensive partnership revenue for analytics"""
-        try:
+        """Calculate comprehensive partnership revenue for analytics"""        try:
             revenue_calculation = {
                 'partnership_id': partnership_id,
                 'period_start': period_start.isoformat(),
@@ -412,8 +401,7 @@ class PartnerAnalyticsService:
         prediction_horizon_days: int = 90,
         confidence_level: float = 0.8
     ) -> Dict[str, Any]:
-        """Generate AI-powered predictive insights for partnership"""
-        try:
+        """Generate AI-powered predictive insights for partnership"""        try:
             predictions = {
                 'partnership_id': partnership_id,
                 'prediction_date': datetime.utcnow().isoformat(),
@@ -470,8 +458,7 @@ class PartnerAnalyticsService:
     # Private helper methods
 
     def _load_benchmark_data(self) -> Dict[str, Any]:
-        """Load industry benchmark data for comparisons"""
-        return {
+        """Load industry benchmark data for comparisons"""        return {
             'industry_averages': {
                 'roi': 0.25,
                 'commission_rate': 0.15,
@@ -498,8 +485,7 @@ class PartnerAnalyticsService:
         partnership_id: str,
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Get comprehensive partnership data for analytics"""
-        # Mock data for demonstration
+        """Get comprehensive partnership data for analytics"""        # Mock data for demonstration
         return {
             'partnership_id': partnership_id,
             'revenue_data': [
@@ -520,8 +506,7 @@ class PartnerAnalyticsService:
         }
 
     async def _generate_overview_metrics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate high-level overview metrics"""
-        total_revenue = sum(item['amount'] for item in data['revenue_data'])
+        """Generate high-level overview metrics"""        total_revenue = sum(item['amount'] for item in data['revenue_data'])
         avg_engagement = sum(item['rate'] for item in data['engagement_data']) / len(data['engagement_data'])
         
         return {
@@ -538,8 +523,7 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Analyze performance trends over time"""
-        revenue_trend = 'increasing' if data['revenue_data'][-1]['amount'] > data['revenue_data'][0]['amount'] else 'stable'
+        """Analyze performance trends over time"""        revenue_trend = 'increasing' if data['revenue_data'][-1]['amount'] > data['revenue_data'][0]['amount'] else 'stable'
         engagement_trend = 'increasing' if data['engagement_data'][-1]['rate'] > data['engagement_data'][0]['rate'] else 'stable'
         
         return {
@@ -555,8 +539,7 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Generate comprehensive revenue analytics"""
-        revenue_by_source = {}
+        """Generate comprehensive revenue analytics"""        revenue_by_source = {}
         for item in data['revenue_data']:
             source = item['source']
             revenue_by_source[source] = revenue_by_source.get(source, 0) + item['amount']
@@ -575,8 +558,7 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Analyze engagement metrics"""
-        avg_engagement = sum(item['rate'] for item in data['engagement_data']) / len(data['engagement_data'])
+        """Analyze engagement metrics"""        avg_engagement = sum(item['rate'] for item in data['engagement_data']) / len(data['engagement_data'])
         total_views = sum(item['views'] for item in data['engagement_data'])
         
         return {
@@ -593,8 +575,7 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         partnership_id: str
     ) -> Dict[str, Any]:
-        """Compare partnership performance against benchmarks"""
-        current_roi = 0.28  # From data analysis
+        """Compare partnership performance against benchmarks"""        current_roi = 0.28  # From data analysis
         benchmark_roi = self.benchmark_data['industry_averages']['roi']
         
         return {
@@ -615,8 +596,7 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         dashboard: Dict[str, Any]
     ) -> List[str]:
-        """Generate AI-powered insights"""
-        return [
+        """Generate AI-powered insights"""        return [
             "Revenue growth is accelerating with 18% month-over-month increase",
             "Engagement rates consistently outperform industry average by 15%",
             "Sponsorship content generates 40% higher ROI than licensing",
@@ -629,8 +609,7 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         dashboard: Dict[str, Any]
     ) -> List[str]:
-        """Generate strategic recommendations"""
-        return [
+        """Generate strategic recommendations"""        return [
             "Focus more resources on sponsorship content due to higher ROI",
             "Increase content frequency during peak engagement periods",
             "Explore premium pricing tier based on above-average performance",
@@ -643,8 +622,7 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         dashboard: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate performance alerts"""
-        return [
+        """Generate performance alerts"""        return [
             {
                 'type': 'opportunity',
                 'severity': 'medium',
@@ -664,8 +642,7 @@ class PartnerAnalyticsService:
         financial_data: Dict[str, Any],
         method: str
     ) -> Dict[str, float]:
-        """Calculate detailed ROI breakdown"""
-        return {
+        """Calculate detailed ROI breakdown"""        return {
             'financial_roi': 0.28,
             'strategic_roi': 0.35,
             'brand_value_roi': 0.42,
@@ -680,8 +657,7 @@ class PartnerAnalyticsService:
         metric: MetricType,
         comparison_period: Optional[str]
     ) -> Dict[str, Any]:
-        """Analyze specific performance metric"""
-        base_score = 0.8  # Mock score
+        """Analyze specific performance metric"""        base_score = 0.8  # Mock score
         
         return {
             'current_score': base_score,
@@ -695,8 +671,7 @@ class PartnerAnalyticsService:
         self,
         metric_scores: Dict[str, Any]
     ) -> float:
-        """Calculate weighted overall performance score"""
-        weights = {
+        """Calculate weighted overall performance score"""        weights = {
             'revenue': 0.30,
             'engagement': 0.25,
             'performance': 0.20,
@@ -716,8 +691,7 @@ class PartnerAnalyticsService:
         data: Dict[str, Any],
         analysis: Dict[str, Any]
     ) -> Dict[str, List[str]]:
-        """Perform SWOT analysis"""
-        return {
+        """Perform SWOT analysis"""        return {
             'strengths': [
                 'High engagement rates',
                 'Strong revenue growth',

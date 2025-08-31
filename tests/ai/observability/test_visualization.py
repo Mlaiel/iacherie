@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Ultra-Industrial Test Suite for Visualization Module
+"""Ultra-Industrial Test Suite for Visualization Module
 
 This module provides comprehensive testing for visualization engines,
 chart generators, dashboard renderers, and interactive plotters.
@@ -51,7 +48,6 @@ copyright law, financial damages claims, and criminal prosecution where applicab
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import json
 import numpy as np
@@ -86,12 +82,10 @@ from ai.observability.visualization import (
 
 
 class TestVisualizationEngine:
-    """Ultra-industrial tests for VisualizationEngine class"""
-    
+    """Ultra-industrial tests for VisualizationEngine class"""    
     @pytest.fixture
     def visualization_engine(self):
-        """Create VisualizationEngine instance for testing"""
-        config = {
+        """Create VisualizationEngine instance for testing"""        config = {
             "supported_backends": ["plotly", "d3js", "matplotlib", "bokeh"],
             "default_theme": "professional",
             "caching_enabled": True,
@@ -103,8 +97,7 @@ class TestVisualizationEngine:
     
     @pytest.fixture
     def comprehensive_dataset(self):
-        """Generate comprehensive dataset for visualization testing"""
-        # Time series data
+        """Generate comprehensive dataset for visualization testing"""        # Time series data
         dates = pd.date_range(start="2024-01-01", end="2024-12-31", freq="D")
         time_series_data = []
         
@@ -177,8 +170,7 @@ class TestVisualizationEngine:
         }
     
     def test_initialization(self, visualization_engine):
-        """Test VisualizationEngine initialization"""
-        assert visualization_engine is not None
+        """Test VisualizationEngine initialization"""        assert visualization_engine is not None
         assert "plotly" in visualization_engine.config["supported_backends"]
         assert hasattr(visualization_engine, 'chart_generators')
         assert hasattr(visualization_engine, 'theme_manager')
@@ -186,8 +178,7 @@ class TestVisualizationEngine:
         assert hasattr(visualization_engine, 'export_manager')
     
     def test_chart_type_support(self, visualization_engine, comprehensive_dataset):
-        """Test support for various chart types"""
-        # Test line chart creation
+        """Test support for various chart types"""        # Test line chart creation
         line_chart = visualization_engine.create_chart(
             chart_type=ChartType.LINE,
             data=comprehensive_dataset["time_series"],
@@ -244,8 +235,7 @@ class TestVisualizationEngine:
         assert scatter_plot["chart_type"] == ChartType.SCATTER
     
     def test_advanced_chart_types(self, visualization_engine, comprehensive_dataset):
-        """Test advanced chart types"""
-        # Test heatmap creation
+        """Test advanced chart types"""        # Test heatmap creation
         heatmap_data = []
         for day in range(7):
             for hour in range(24):
@@ -304,8 +294,7 @@ class TestVisualizationEngine:
         assert network_diagram["chart_type"] == ChartType.NETWORK
     
     def test_interactive_features(self, visualization_engine, comprehensive_dataset):
-        """Test interactive visualization features"""
-        # Create interactive line chart
+        """Test interactive visualization features"""        # Create interactive line chart
         interactive_chart = visualization_engine.create_interactive_chart(
             chart_type=ChartType.LINE,
             data=comprehensive_dataset["time_series"],
@@ -357,8 +346,7 @@ class TestVisualizationEngine:
         assert len(cross_filter_charts["charts"]) == 2
     
     def test_theme_management(self, visualization_engine, comprehensive_dataset):
-        """Test theme and styling management"""
-        # Test default theme
+        """Test theme and styling management"""        # Test default theme
         default_themed_chart = visualization_engine.create_chart(
             chart_type=ChartType.LINE,
             data=comprehensive_dataset["time_series"][:30],  # First 30 days
@@ -411,8 +399,7 @@ class TestVisualizationEngine:
         assert "breakpoints" in responsive_chart["responsive_config"]
     
     def test_data_processing_and_aggregation(self, visualization_engine, comprehensive_dataset):
-        """Test data processing and aggregation for visualization"""
-        # Test automatic data aggregation
+        """Test data processing and aggregation for visualization"""        # Test automatic data aggregation
         aggregated_chart = visualization_engine.create_chart_with_aggregation(
             chart_type=ChartType.BAR,
             data=comprehensive_dataset["time_series"],
@@ -452,8 +439,7 @@ class TestVisualizationEngine:
         assert len(transformed_data["transformations_applied"]) == 3
     
     def test_export_functionality(self, visualization_engine, comprehensive_dataset):
-        """Test chart export functionality"""
-        # Create a chart for export testing
+        """Test chart export functionality"""        # Create a chart for export testing
         chart = visualization_engine.create_chart(
             chart_type=ChartType.LINE,
             data=comprehensive_dataset["time_series"][:50],
@@ -516,8 +502,7 @@ class TestVisualizationEngine:
         assert pdf_export["format"] == "pdf"
     
     def test_performance_optimization(self, visualization_engine):
-        """Test performance optimization features"""
-        # Generate large dataset for performance testing
+        """Test performance optimization features"""        # Generate large dataset for performance testing
         large_dataset = []
         for i in range(10000):
             large_dataset.append({
@@ -578,12 +563,10 @@ class TestVisualizationEngine:
 
 
 class TestChartGenerator:
-    """Ultra-industrial tests for ChartGenerator class"""
-    
+    """Ultra-industrial tests for ChartGenerator class"""    
     @pytest.fixture
     def chart_generator(self):
-        """Create ChartGenerator instance for testing"""
-        config = {
+        """Create ChartGenerator instance for testing"""        config = {
             "default_backend": "plotly",
             "fallback_backends": ["matplotlib", "bokeh"],
             "optimization_enabled": True,
@@ -592,15 +575,13 @@ class TestChartGenerator:
         return ChartGenerator(config)
     
     def test_initialization(self, chart_generator):
-        """Test ChartGenerator initialization"""
-        assert chart_generator is not None
+        """Test ChartGenerator initialization"""        assert chart_generator is not None
         assert chart_generator.config["default_backend"] == "plotly"
         assert hasattr(chart_generator, 'backend_engines')
         assert hasattr(chart_generator, 'chart_templates')
     
     def test_time_series_generation(self, chart_generator):
-        """Test time series chart generation"""
-        # Generate time series data
+        """Test time series chart generation"""        # Generate time series data
         time_data = []
         base_time = datetime.now()
         for i in range(100):
@@ -640,8 +621,7 @@ class TestChartGenerator:
         assert "anomaly_threshold" in anomaly_chart
     
     def test_distribution_charts(self, chart_generator):
-        """Test distribution chart generation"""
-        # Generate sample data for distribution
+        """Test distribution chart generation"""        # Generate sample data for distribution
         distribution_data = []
         for i in range(1000):
             distribution_data.append({
@@ -690,8 +670,7 @@ class TestChartGenerator:
         assert violin_plot["chart_type"] == "violin_plot"
     
     def test_correlation_charts(self, chart_generator):
-        """Test correlation and relationship charts"""
-        # Generate correlated data
+        """Test correlation and relationship charts"""        # Generate correlated data
         correlation_data = []
         for i in range(500):
             base_value = np.random.normal(100, 20)
@@ -745,8 +724,7 @@ class TestChartGenerator:
         assert "size_encoding" in bubble_chart
     
     def test_geospatial_charts(self, chart_generator):
-        """Test geospatial chart generation"""
-        # Generate geographic data
+        """Test geospatial chart generation"""        # Generate geographic data
         geo_data = [
             {"country": "Germany", "value": 1500, "lat": 51.1657, "lon": 10.4515},
             {"country": "France", "value": 1200, "lat": 46.2276, "lon": 2.2137},
@@ -787,8 +765,7 @@ class TestChartGenerator:
         assert "mapbox_config" in scatter_map
     
     def test_specialized_business_charts(self, chart_generator):
-        """Test specialized business charts"""
-        # Funnel data
+        """Test specialized business charts"""        # Funnel data
         funnel_data = [
             {"stage": "Visitors", "count": 10000},
             {"stage": "Sign-ups", "count": 2500},
@@ -871,8 +848,7 @@ class TestChartGenerator:
         assert "flow_analysis" in sankey_diagram
     
     def test_chart_customization_and_styling(self, chart_generator):
-        """Test chart customization and styling capabilities"""
-        # Sample data for customization testing
+        """Test chart customization and styling capabilities"""        # Sample data for customization testing
         sample_data = [
             {"category": "A", "value": 100, "secondary": 80},
             {"category": "B", "value": 150, "secondary": 120},
@@ -940,12 +916,10 @@ class TestChartGenerator:
 
 
 class TestRealtimeVisualizer:
-    """Ultra-industrial tests for RealtimeVisualizer class"""
-    
+    """Ultra-industrial tests for RealtimeVisualizer class"""    
     @pytest.fixture
     def realtime_visualizer(self):
-        """Create RealtimeVisualizer instance for testing"""
-        config = {
+        """Create RealtimeVisualizer instance for testing"""        config = {
             "update_interval_ms": 1000,
             "max_data_points": 1000,
             "buffer_size": 5000,
@@ -955,8 +929,7 @@ class TestRealtimeVisualizer:
         return RealtimeVisualizer(config)
     
     def test_initialization(self, realtime_visualizer):
-        """Test RealtimeVisualizer initialization"""
-        assert realtime_visualizer is not None
+        """Test RealtimeVisualizer initialization"""        assert realtime_visualizer is not None
         assert realtime_visualizer.config["update_interval_ms"] == 1000
         assert hasattr(realtime_visualizer, 'data_buffer')
         assert hasattr(realtime_visualizer, 'websocket_manager')
@@ -964,8 +937,7 @@ class TestRealtimeVisualizer:
     
     @pytest.mark.asyncio
     async def test_streaming_data_visualization(self, realtime_visualizer):
-        """Test streaming data visualization"""
-        # Initialize streaming chart
+        """Test streaming data visualization"""        # Initialize streaming chart
         streaming_config = {
             "chart_type": ChartType.LINE,
             "x_field": "timestamp",
@@ -1005,8 +977,7 @@ class TestRealtimeVisualizer:
     
     @pytest.mark.asyncio
     async def test_multiple_stream_management(self, realtime_visualizer):
-        """Test management of multiple concurrent streams"""
-        # Create multiple streaming charts
+        """Test management of multiple concurrent streams"""        # Create multiple streaming charts
         stream_configs = [
             {"chart_type": ChartType.LINE, "title": "CPU Usage", "y_field": "cpu"},
             {"chart_type": ChartType.LINE, "title": "Memory Usage", "y_field": "memory"},
@@ -1052,8 +1023,7 @@ class TestRealtimeVisualizer:
     
     @pytest.mark.asyncio
     async def test_realtime_dashboard_updates(self, realtime_visualizer):
-        """Test real-time dashboard updates"""
-        # Create dashboard with multiple charts
+        """Test real-time dashboard updates"""        # Create dashboard with multiple charts
         dashboard_config = {
             "dashboard_id": "realtime_dashboard_001",
             "charts": [
@@ -1102,8 +1072,7 @@ class TestRealtimeVisualizer:
         assert "update_frequency" in perf_metrics
     
     def test_data_buffering_and_windowing(self, realtime_visualizer):
-        """Test data buffering and windowing mechanisms"""
-        # Test circular buffer implementation
+        """Test data buffering and windowing mechanisms"""        # Test circular buffer implementation
         buffer_test = realtime_visualizer.test_data_buffer(
             buffer_size=100,
             data_points=150  # More than buffer size
@@ -1135,8 +1104,7 @@ class TestRealtimeVisualizer:
         assert aggregation_result["aggregation_configured"] is True
     
     def test_performance_monitoring_and_optimization(self, realtime_visualizer):
-        """Test performance monitoring and optimization features"""
-        # Enable performance monitoring
+        """Test performance monitoring and optimization features"""        # Enable performance monitoring
         performance_config = {
             "monitor_fps": True,
             "monitor_memory_usage": True,

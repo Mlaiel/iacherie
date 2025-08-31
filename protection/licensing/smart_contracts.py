@@ -1,5 +1,4 @@
-"""
-🔗 Smart Contract Manager - Blockchain Integration Engine
+"""🔗 Smart Contract Manager - Blockchain Integration Engine
 ======================================================
 
 Professional blockchain smart contract management system:
@@ -13,7 +12,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Blockchain Engineer + Smart Contract Developer + Legal Tech Specialist
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
@@ -28,8 +26,7 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
-    ETHEREUM = "ethereum"
+    """Supported blockchain networks"""    ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BSC = "bsc"
     AVALANCHE = "avalanche"
@@ -37,16 +34,14 @@ class BlockchainNetwork(Enum):
     NEAR = "near"
 
 class ContractStatus(Enum):
-    """Smart contract status"""
-    DEPLOYED = "deployed"
+    """Smart contract status"""    DEPLOYED = "deployed"
     ACTIVE = "active"
     PAUSED = "paused"
     TERMINATED = "terminated"
     UPGRADED = "upgraded"
 
 class TransactionType(Enum):
-    """Blockchain transaction types"""
-    DEPLOYMENT = "deployment"
+    """Blockchain transaction types"""    DEPLOYMENT = "deployment"
     LICENSE_CREATION = "license_creation"
     REVENUE_DISTRIBUTION = "revenue_distribution"
     OWNERSHIP_TRANSFER = "ownership_transfer"
@@ -54,8 +49,7 @@ class TransactionType(Enum):
 
 @dataclass
 class SmartContractInfo:
-    """Smart contract information"""
-    contract_id: str
+    """Smart contract information"""    contract_id: str
     network: BlockchainNetwork
     contract_address: str
     license_id: str
@@ -68,8 +62,7 @@ class SmartContractInfo:
 
 @dataclass
 class BlockchainTransaction:
-    """Blockchain transaction record"""
-    transaction_id: str
+    """Blockchain transaction record"""    transaction_id: str
     contract_address: str
     transaction_type: TransactionType
     network: BlockchainNetwork
@@ -82,16 +75,13 @@ class BlockchainTransaction:
     data: Dict[str, Any]
 
 class SmartContractManager:
-    """
-    🚀 Professional blockchain smart contract management system
+    """    🚀 Professional blockchain smart contract management system
     
     Advanced system for deploying and managing smart contracts for
     content licensing with multi-chain support and automated operations.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize smart contract manager with configuration."""
-        self.config = config
+        """Initialize smart contract manager with configuration."""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Blockchain connections
@@ -118,8 +108,7 @@ class SmartContractManager:
         self._load_contract_templates()
     
     def _initialize_blockchain_clients(self):
-        """Initialize blockchain network clients."""
-        try:
+        """Initialize blockchain network clients."""        try:
             # Ethereum/Polygon Web3 integration
             if self.config.get('ethereum_enabled', False):
                 from .integrations.web3_client import Web3Client
@@ -167,8 +156,7 @@ class SmartContractManager:
             self.logger.error(f"Failed to initialize blockchain clients: {e}")
     
     def _load_contract_templates(self):
-        """Load smart contract templates for different networks."""
-        # Ethereum/Polygon Solidity contracts
+        """Load smart contract templates for different networks."""        # Ethereum/Polygon Solidity contracts
         ethereum_templates = {
             'license_contract': {
                 'name': 'MusicLicenseContract',
@@ -246,8 +234,7 @@ class SmartContractManager:
         royalty_structure: Dict[str, Any],
         network: str = 'polygon'
     ) -> str:
-        """
-        🚀 Deploy smart contract for license agreement
+        """        🚀 Deploy smart contract for license agreement
         
         Args:
             license_data: Complete license information
@@ -256,8 +243,7 @@ class SmartContractManager:
             
         Returns:
             contract_address: Deployed contract address
-        """
-        try:
+        """        try:
             self.logger.info(f"Deploying license contract on {network}")
             
             # Validate network support
@@ -342,8 +328,7 @@ class SmartContractManager:
         royalty_structure: Dict[str, Any],
         network: str
     ) -> Dict[str, Any]:
-        """Prepare contract deployment parameters for specific network."""
-        license_metadata = license_data.get('metadata', {})
+        """Prepare contract deployment parameters for specific network."""        license_metadata = license_data.get('metadata', {})
         license_terms = license_data.get('terms', {})
         
         # Common parameters for all networks
@@ -395,8 +380,7 @@ class SmartContractManager:
         return base_params
     
     def _convert_duration_to_seconds(self, duration_string: str) -> int:
-        """Convert duration string to seconds."""
-        duration_lower = duration_string.lower()
+        """Convert duration string to seconds."""        duration_lower = duration_string.lower()
         
         if 'year' in duration_lower:
             years = int(duration_lower.split()[0])
@@ -411,8 +395,7 @@ class SmartContractManager:
             return 5 * 365 * 24 * 3600  # Default 5 years
     
     def _convert_to_wei(self, amount: float, network: str) -> int:
-        """Convert amount to smallest unit for blockchain network."""
-        if network in ['ethereum', 'polygon']:
+        """Convert amount to smallest unit for blockchain network."""        if network in ['ethereum', 'polygon']:
             return int(amount * 10**18)  # Wei
         elif network == 'solana':
             return int(amount * 10**9)   # Lamports
@@ -422,8 +405,7 @@ class SmartContractManager:
             return int(amount * 10**18)  # Default to 18 decimals
     
     async def _store_metadata_on_ipfs(self, license_data: Dict[str, Any]) -> str:
-        """Store license metadata on IPFS and return URI."""
-        try:
+        """Store license metadata on IPFS and return URI."""        try:
             # This would integrate with IPFS client
             # For now, return a mock IPFS URI
             metadata = {
@@ -445,8 +427,7 @@ class SmartContractManager:
             return ""
     
     async def _activate_contract(self, contract_address: str):
-        """Activate deployed contract."""
-        contract_info = self.deployed_contracts.get(contract_address)
+        """Activate deployed contract."""        contract_info = self.deployed_contracts.get(contract_address)
         if contract_info:
             contract_info.status = ContractStatus.ACTIVE
             self.logger.info(f"Contract {contract_address} activated")
@@ -457,8 +438,7 @@ class SmartContractManager:
         action: str,
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        🔄 Update smart contract with new action
+        """        🔄 Update smart contract with new action
         
         Args:
             contract_address: Contract to update
@@ -467,8 +447,7 @@ class SmartContractManager:
             
         Returns:
             update_result: Transaction result
-        """
-        try:
+        """        try:
             self.logger.info(f"Updating contract {contract_address} with action: {action}")
             
             # Get contract info
@@ -534,8 +513,7 @@ class SmartContractManager:
         parameters: Dict[str, Any],
         network: str
     ) -> Dict[str, Any]:
-        """Prepare parameters for contract update transaction."""
-        if action == 'renew':
+        """Prepare parameters for contract update transaction."""        if action == 'renew':
             return {
                 'new_expiration_timestamp': int(
                     (datetime.now() + timedelta(days=365)).timestamp()
@@ -568,8 +546,7 @@ class SmartContractManager:
             return parameters
     
     def _get_contract_method_name(self, action: str) -> str:
-        """Get contract method name for action."""
-        method_mapping = {
+        """Get contract method name for action."""        method_mapping = {
             'renew': 'renewLicense',
             'modify': 'modifyTerms',
             'terminate': 'terminateLicense',
@@ -578,8 +555,7 @@ class SmartContractManager:
         return method_mapping.get(action, 'updateContract')
     
     def _get_transaction_type(self, action: str) -> TransactionType:
-        """Get transaction type for action."""
-        type_mapping = {
+        """Get transaction type for action."""        type_mapping = {
             'renew': TransactionType.CONTRACT_UPDATE,
             'modify': TransactionType.CONTRACT_UPDATE,
             'terminate': TransactionType.CONTRACT_UPDATE,
@@ -593,8 +569,7 @@ class SmartContractManager:
         revenue_amount: Decimal,
         currency: str = 'USD'
     ) -> Dict[str, Any]:
-        """
-        💰 Distribute revenue through smart contract
+        """        💰 Distribute revenue through smart contract
         
         Args:
             contract_address: Contract handling distribution
@@ -603,8 +578,7 @@ class SmartContractManager:
             
         Returns:
             distribution_result: On-chain distribution result
-        """
-        try:
+        """        try:
             self.logger.info(f"Distributing revenue on-chain: {revenue_amount} {currency}")
             
             # Get contract info
@@ -671,8 +645,7 @@ class SmartContractManager:
             raise
     
     async def verify_contract_integrity(self, contract_address: str) -> Dict[str, Any]:
-        """Verify smart contract integrity and status."""
-        try:
+        """Verify smart contract integrity and status."""        try:
             contract_info = self.deployed_contracts.get(contract_address)
             if not contract_info:
                 raise ValueError(f"Contract {contract_address} not found")
@@ -708,8 +681,7 @@ class SmartContractManager:
             raise
     
     def get_contract_info(self, contract_address: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive contract information."""
-        contract_info = self.deployed_contracts.get(contract_address)
+        """Get comprehensive contract information."""        contract_info = self.deployed_contracts.get(contract_address)
         if contract_info:
             return asdict(contract_info)
         return None
@@ -720,8 +692,7 @@ class SmartContractManager:
         transaction_type: Optional[TransactionType] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get blockchain transaction history."""
-        transactions = self.transaction_history
+        """Get blockchain transaction history."""        transactions = self.transaction_history
         
         # Filter by contract address
         if contract_address:
@@ -740,8 +711,7 @@ class SmartContractManager:
         return [asdict(tx) for tx in transactions]
     
     def get_smart_contract_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive smart contract metrics."""
-        return {
+        """Get comprehensive smart contract metrics."""        return {
             **self.metrics,
             'deployed_contracts': len(self.deployed_contracts),
             'active_contracts': len([c for c in self.deployed_contracts.values() if c.status == ContractStatus.ACTIVE]),

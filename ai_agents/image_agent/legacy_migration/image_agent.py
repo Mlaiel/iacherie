@@ -1,5 +1,4 @@
-"""
-Image Agent - Industrial-Grade AI Image Processing & Analysis System
+"""Image Agent - Industrial-Grade AI Image Processing & Analysis System
 
 Advanced AI-powered image processing, analysis, generation, and protection system for visual content creators.
 Handles comprehensive image operations including quality assessment, content protection, format optimization,
@@ -20,7 +19,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import hashlib
 import logging
@@ -77,8 +75,7 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFormat(Enum):
-    """Supported image formats for processing"""
-    JPEG = "jpeg"
+    """Supported image formats for processing"""    JPEG = "jpeg"
     PNG = "png" 
     WEBP = "webp"
     AVIF = "avif"
@@ -90,8 +87,7 @@ class ImageFormat(Enum):
 
 
 class ImageQuality(Enum):
-    """Image quality assessment levels"""
-    EXCELLENT = "excellent"
+    """Image quality assessment levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
@@ -99,8 +95,7 @@ class ImageQuality(Enum):
 
 
 class ProcessingOperation(Enum):
-    """Available image processing operations"""
-    ANALYZE = "analyze"
+    """Available image processing operations"""    ANALYZE = "analyze"
     ENHANCE = "enhance"
     PROTECT = "protect"
     OPTIMIZE = "optimize"
@@ -112,8 +107,7 @@ class ProcessingOperation(Enum):
 
 @dataclass
 class ImageMetadata:
-    """Comprehensive image metadata structure"""
-    filename: str
+    """Comprehensive image metadata structure"""    filename: str
     file_size: int
     dimensions: Tuple[int, int]
     format: ImageFormat
@@ -130,8 +124,7 @@ class ImageMetadata:
 
 @dataclass 
 class ImageAnalysisResult:
-    """Detailed image analysis results"""
-    quality_score: float  # 0.0 to 1.0
+    """Detailed image analysis results"""    quality_score: float  # 0.0 to 1.0
     quality_level: ImageQuality
     aesthetic_score: float
     technical_score: float
@@ -150,8 +143,7 @@ class ImageAnalysisResult:
 
 @dataclass
 class ImageProtectionResult:
-    """Image content protection analysis results"""
-    fingerprint: str
+    """Image content protection analysis results"""    fingerprint: str
     perceptual_hash: str
     robust_hash: str
     similarity_matches: List[Dict[str, Any]] = field(default_factory=list)
@@ -164,8 +156,7 @@ class ImageProtectionResult:
 
 @dataclass
 class ImageEnhancementResult:
-    """Image enhancement processing results"""
-    original_size: int
+    """Image enhancement processing results"""    original_size: int
     enhanced_size: int
     quality_improvement: float
     operations_applied: List[str] = field(default_factory=list)
@@ -177,8 +168,7 @@ class ImageEnhancementResult:
 
 @dataclass
 class ImageOptimizationResult:
-    """Image optimization results"""
-    original_format: ImageFormat
+    """Image optimization results"""    original_format: ImageFormat
     optimized_format: ImageFormat
     original_size: int
     optimized_size: int
@@ -191,14 +181,12 @@ class ImageOptimizationResult:
 
 
 class ImageAgent(BaseAgent):
-    """
-    Industrial-grade AI Image Processing Agent
+    """    Industrial-grade AI Image Processing Agent
     
     Provides comprehensive image processing, analysis, protection, and optimization
     capabilities for visual content creators including photographers, influencers,
     and digital artists.
-    """
-    
+    """    
     def __init__(
         self,
         agent_id: Optional[str] = None,
@@ -208,8 +196,7 @@ class ImageAgent(BaseAgent):
         max_concurrent_operations: int = 10,
         cache_enabled: bool = True
     ):
-        """
-        Initialize the Image Agent with advanced configurations
+        """        Initialize the Image Agent with advanced configurations
         
         Args:
             agent_id: Unique identifier for this agent instance
@@ -218,8 +205,7 @@ class ImageAgent(BaseAgent):
             quality_preset: Processing quality level (low/medium/high/ultra)
             max_concurrent_operations: Maximum parallel operations
             cache_enabled: Enable result caching for performance
-        """
-        super().__init__(
+        """        super().__init__(
             agent_id=agent_id or f"image_agent_{uuid.uuid4().hex[:8]}",
             agent_type="ImageAgent",
             version="2.1.0"
@@ -259,8 +245,7 @@ class ImageAgent(BaseAgent):
         logger.info(f"ImageAgent {self.agent_id} initialized with config: {model_config}")
 
     def _initialize_engines(self) -> None:
-        """Initialize all processing engines and AI models"""
-        try:
+        """Initialize all processing engines and AI models"""        try:
             # Computer Vision Engine
             self.cv_engine = ComputerVisionEngine(
                 device="cuda" if self.enable_gpu else "cpu",
@@ -293,8 +278,7 @@ class ImageAgent(BaseAgent):
             raise ProcessingError(f"Engine initialization failed: {str(e)}")
 
     def _setup_transforms(self) -> None:
-        """Setup image transformation pipelines"""
-        self.transforms = {
+        """Setup image transformation pipelines"""        self.transforms = {
             "analyze": transforms.Compose([
                 transforms.Resize((224, 224)),
                 transforms.ToTensor(),
@@ -315,8 +299,7 @@ class ImageAgent(BaseAgent):
         }
 
     def _load_ai_models(self) -> None:
-        """Load pre-trained AI models for image processing"""
-        model_path = Path(settings.MODEL_PATH) / "image_agent"
+        """Load pre-trained AI models for image processing"""        model_path = Path(settings.MODEL_PATH) / "image_agent"
         
         try:
             # Quality Assessment Model
@@ -353,8 +336,7 @@ class ImageAgent(BaseAgent):
         output_path: Optional[Union[str, Path]] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> AgentResult:
-        """
-        Comprehensive image processing with multiple operations
+        """        Comprehensive image processing with multiple operations
         
         Args:
             image_path: Path to input image
@@ -364,8 +346,7 @@ class ImageAgent(BaseAgent):
             
         Returns:
             AgentResult with comprehensive processing results
-        """
-        operation_id = f"process_image_{uuid.uuid4().hex[:8]}"
+        """        operation_id = f"process_image_{uuid.uuid4().hex[:8]}"
         start_time = time.time()
         
         try:
@@ -436,8 +417,7 @@ class ImageAgent(BaseAgent):
             )
 
     async def _load_image(self, image_path: Path) -> Image.Image:
-        """Load and validate image file"""
-        try:
+        """Load and validate image file"""        try:
             image = Image.open(image_path)
             
             # Convert to RGB if necessary
@@ -460,8 +440,7 @@ class ImageAgent(BaseAgent):
             raise ValidationError(f"Cannot load image {image_path}: {str(e)}")
 
     async def _extract_metadata(self, image: Image.Image, image_path: Path) -> ImageMetadata:
-        """Extract comprehensive metadata from image"""
-        try:
+        """Extract comprehensive metadata from image"""        try:
             # Basic metadata
             stat = image_path.stat()
             
@@ -533,8 +512,7 @@ class ImageAgent(BaseAgent):
         metadata: ImageMetadata,
         options: Optional[Dict[str, Any]] = None
     ) -> Any:
-        """Execute specific image processing operation"""
-        options = options or {}
+        """Execute specific image processing operation"""        options = options or {}
         
         operation_handlers = {
             ProcessingOperation.ANALYZE: self._analyze_image,
@@ -559,8 +537,7 @@ class ImageAgent(BaseAgent):
         metadata: ImageMetadata, 
         options: Dict[str, Any]
     ) -> ImageAnalysisResult:
-        """Comprehensive AI-powered image analysis"""
-        try:
+        """Comprehensive AI-powered image analysis"""        try:
             # Convert image for analysis
             image_tensor = self.transforms["analyze"](image).unsqueeze(0)
             if self.enable_gpu:
@@ -664,8 +641,7 @@ class ImageAgent(BaseAgent):
             raise ProcessingError(f"Analysis failed: {str(e)}")
 
     def _calculate_color_harmony(self, hsv_image: np.ndarray) -> float:
-        """Calculate color harmony score based on HSV distribution"""
-        h_channel = hsv_image[:, :, 0]
+        """Calculate color harmony score based on HSV distribution"""        h_channel = hsv_image[:, :, 0]
         
         # Calculate histogram of hues
         hist = cv2.calcHist([h_channel], [0], None, [180], [0, 180])
@@ -698,8 +674,7 @@ class ImageAgent(BaseAgent):
         return min(1.0, harmony_score)
 
     def _extract_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[str]:
-        """Extract dominant colors using K-means clustering"""
-        try:
+        """Extract dominant colors using K-means clustering"""        try:
             # Reshape image to be a list of pixels
             data = image.reshape((-1, 3))
             data = np.float32(data)
@@ -723,8 +698,7 @@ class ImageAgent(BaseAgent):
             return ["#000000"]  # Default black
 
     def _analyze_composition(self, image: np.ndarray) -> float:
-        """Analyze image composition using rule of thirds and other principles"""
-        try:
+        """Analyze image composition using rule of thirds and other principles"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             h, w = gray.shape
             
@@ -788,8 +762,7 @@ class ImageAgent(BaseAgent):
         contrast: float, 
         composition: float
     ) -> List[str]:
-        """Generate improvement recommendations based on analysis"""
-        recommendations = []
+        """Generate improvement recommendations based on analysis"""        recommendations = []
         
         if quality < 0.6:
             recommendations.append("Consider retaking the photo with better lighting conditions")
@@ -825,8 +798,7 @@ class ImageAgent(BaseAgent):
         metadata: ImageMetadata, 
         options: Dict[str, Any]
     ) -> ImageEnhancementResult:
-        """AI-powered image enhancement and quality improvement"""
-        try:
+        """AI-powered image enhancement and quality improvement"""        try:
             start_time = time.time()
             original_size = len(image.tobytes())
             operations_applied = []
@@ -932,8 +904,7 @@ class ImageAgent(BaseAgent):
         metadata: ImageMetadata, 
         options: Dict[str, Any]
     ) -> ImageProtectionResult:
-        """Comprehensive image content protection and analysis"""
-        try:
+        """Comprehensive image content protection and analysis"""        try:
             # Generate multiple types of fingerprints
             fingerprint = await self._create_fingerprint(image, metadata, options)
             
@@ -984,15 +955,13 @@ class ImageAgent(BaseAgent):
         perceptual_hash: str, 
         robust_hash: str
     ) -> List[Dict[str, Any]]:
-        """Search for similar images in database"""
-        try:
+        """Search for similar images in database"""        try:
             matches = []
             
             # Search in database
             async with get_db_session() as session:
                 # Query for similar perceptual hashes
-                query = """
-                    SELECT image_id, file_path, perceptual_hash, upload_date, owner_id
+                query = """                    SELECT image_id, file_path, perceptual_hash, upload_date, owner_id
                     FROM image_fingerprints 
                     WHERE hamming_distance(perceptual_hash, %s) <= 5
                     OR hamming_distance(robust_hash, %s) <= 5
@@ -1000,8 +969,7 @@ class ImageAgent(BaseAgent):
                         LEAST(hamming_distance(perceptual_hash, %s), 
                               hamming_distance(robust_hash, %s))
                     LIMIT 10
-                """
-                
+                """                
                 result = await session.execute(query, [
                     perceptual_hash, robust_hash, perceptual_hash, robust_hash
                 ])
@@ -1026,8 +994,7 @@ class ImageAgent(BaseAgent):
         image: Image.Image, 
         metadata: ImageMetadata
     ) -> str:
-        """Analyze copyright status of the image"""
-        try:
+        """Analyze copyright status of the image"""        try:
             # Check EXIF for copyright information
             if metadata.exif_data:
                 if 'Copyright' in metadata.exif_data:
@@ -1045,8 +1012,7 @@ class ImageAgent(BaseAgent):
             return "unknown"
 
     async def _detect_watermark(self, image: Image.Image) -> bool:
-        """Detect presence of watermarks in the image"""
-        try:
+        """Detect presence of watermarks in the image"""        try:
             # Convert to grayscale for analysis
             gray = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2GRAY)
             
@@ -1072,8 +1038,7 @@ class ImageAgent(BaseAgent):
             return False
 
     async def _detect_tampering(self, image: Image.Image, metadata: ImageMetadata) -> bool:
-        """Detect if image has been tampered with or manipulated"""
-        try:
+        """Detect if image has been tampered with or manipulated"""        try:
             # Error Level Analysis (ELA) for JPEG compression artifacts
             if metadata.format == ImageFormat.JPEG:
                 # Save image at high quality and compare
@@ -1127,8 +1092,7 @@ class ImageAgent(BaseAgent):
         tampering_detected: bool, 
         metadata: ImageMetadata
     ) -> float:
-        """Calculate overall authenticity score"""
-        score = 1.0
+        """Calculate overall authenticity score"""        score = 1.0
         
         # Reduce score for detected issues
         if watermark_detected:
@@ -1156,8 +1120,7 @@ class ImageAgent(BaseAgent):
         tampering_detected: bool, 
         authenticity_score: float
     ) -> List[str]:
-        """Generate content protection recommendations"""
-        recommendations = []
+        """Generate content protection recommendations"""        recommendations = []
         
         if copyright_status == "unknown":
             recommendations.append("Consider adding copyright information to EXIF data")
@@ -1182,8 +1145,7 @@ class ImageAgent(BaseAgent):
         metadata: ImageMetadata, 
         options: Dict[str, Any]
     ) -> ImageOptimizationResult:
-        """Optimize image for web, storage, and SEO"""
-        try:
+        """Optimize image for web, storage, and SEO"""        try:
             original_format = metadata.format
             original_size = metadata.file_size
             
@@ -1259,8 +1221,7 @@ class ImageAgent(BaseAgent):
             raise ProcessingError(f"Optimization failed: {str(e)}")
 
     def _estimate_quality_retention(self, quality: int, compression_ratio: float) -> float:
-        """Estimate quality retention after compression"""
-        # Empirical formula based on compression quality and ratio
+        """Estimate quality retention after compression"""        # Empirical formula based on compression quality and ratio
         base_quality = quality / 100.0
         compression_penalty = compression_ratio * 0.3
         return max(0.1, min(1.0, base_quality - compression_penalty))
@@ -1270,8 +1231,7 @@ class ImageAgent(BaseAgent):
         image: Image.Image, 
         metadata: ImageMetadata
     ) -> Dict[str, Any]:
-        """Generate SEO-optimized alt text and keywords"""
-        try:
+        """Generate SEO-optimized alt text and keywords"""        try:
             # Use computer vision to analyze image content
             detected_objects = await self.cv_engine.detect_objects(image)
             scene_classification = await self.cv_engine.classify_scene(image)
@@ -1351,8 +1311,7 @@ class ImageAgent(BaseAgent):
         keywords: List[str], 
         metadata: ImageMetadata
     ) -> float:
-        """Calculate SEO optimization score"""
-        score = 0.0
+        """Calculate SEO optimization score"""        score = 0.0
         
         # Alt text quality (0.4 weight)
         if alt_text and alt_text != "Image":
@@ -1390,8 +1349,7 @@ class ImageAgent(BaseAgent):
         output_path: Union[str, Path], 
         metadata: ImageMetadata
     ) -> None:
-        """Save processed image with metadata preservation"""
-        try:
+        """Save processed image with metadata preservation"""        try:
             output_path = Path(output_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -1431,8 +1389,7 @@ class ImageAgent(BaseAgent):
             raise ProcessingError(f"Image save failed: {str(e)}")
 
     async def get_processing_stats(self) -> Dict[str, Any]:
-        """Get comprehensive processing statistics"""
-        try:
+        """Get comprehensive processing statistics"""        try:
             stats = await super().get_processing_stats()
             
             # Add image-specific metrics
@@ -1456,18 +1413,15 @@ class ImageAgent(BaseAgent):
 
     # Placeholder implementations for other operations
     async def _generate_image(self, image: Image.Image, metadata: ImageMetadata, options: Dict[str, Any]) -> Any:
-        """AI image generation and style transfer"""
-        # Implementation would use generative models
+        """AI image generation and style transfer"""        # Implementation would use generative models
         return {"status": "generated", "message": "AI image generation completed"}
 
     async def _add_watermark(self, image: Image.Image, metadata: ImageMetadata, options: Dict[str, Any]) -> Any:
-        """Add watermark to image"""
-        # Implementation would add visible or invisible watermarks
+        """Add watermark to image"""        # Implementation would add visible or invisible watermarks
         return {"status": "watermarked", "message": "Watermark added successfully"}
 
     async def _create_fingerprint(self, image: Image.Image, metadata: ImageMetadata, options: Dict[str, Any]) -> str:
-        """Create unique fingerprint for image"""
-        # Combine multiple hashing techniques
+        """Create unique fingerprint for image"""        # Combine multiple hashing techniques
         phash = str(imagehash.phash(image))
         dhash = str(imagehash.dhash(image))
         ahash = str(imagehash.average_hash(image))
@@ -1477,25 +1431,20 @@ class ImageAgent(BaseAgent):
         return hashlib.sha256(combined.encode()).hexdigest()
 
     async def _seo_optimize(self, image: Image.Image, metadata: ImageMetadata, options: Dict[str, Any]) -> Any:
-        """SEO optimization for images"""
-        seo_result = await self._generate_seo_optimization(image, metadata)
+        """SEO optimization for images"""        seo_result = await self._generate_seo_optimization(image, metadata)
         return {"status": "optimized", "seo_data": seo_result}
 
 
 class ImageAgentManager:
-    """
-    Manager class for handling multiple Image Agent instances and coordinating
+    """    Manager class for handling multiple Image Agent instances and coordinating
     batch processing operations across different agents.
-    """
-    
+    """    
     def __init__(self, max_agents: int = 5):
-        """
-        Initialize Image Agent Manager
+        """        Initialize Image Agent Manager
         
         Args:
             max_agents: Maximum number of concurrent agent instances
-        """
-        self.max_agents = max_agents
+        """        self.max_agents = max_agents
         self.agents: Dict[str, ImageAgent] = {}
         self.processing_queue = asyncio.Queue()
         self.results_cache = {}
@@ -1503,8 +1452,7 @@ class ImageAgentManager:
         logger.info(f"ImageAgentManager initialized with {max_agents} max agents")
 
     async def create_agent(self, agent_config: Dict[str, Any]) -> str:
-        """Create new image agent instance"""
-        if len(self.agents) >= self.max_agents:
+        """Create new image agent instance"""        if len(self.agents) >= self.max_agents:
             raise ResourceLimitError(f"Maximum agents ({self.max_agents}) reached")
         
         agent = ImageAgent(**agent_config)
@@ -1518,8 +1466,7 @@ class ImageAgentManager:
         operations: List[str],
         batch_options: Optional[Dict[str, Any]] = None
     ) -> List[AgentResult]:
-        """Process multiple images in batch"""
-        batch_options = batch_options or {}
+        """Process multiple images in batch"""        batch_options = batch_options or {}
         results = []
         
         # Create processing tasks
@@ -1542,8 +1489,7 @@ class ImageAgentManager:
         return results
 
     async def _get_available_agent(self) -> str:
-        """Get available agent or create new one"""
-        # Simple round-robin selection
+        """Get available agent or create new one"""        # Simple round-robin selection
         if not self.agents:
             agent_id = await self.create_agent({})
             return agent_id
@@ -1551,8 +1497,7 @@ class ImageAgentManager:
         return next(iter(self.agents.keys()))
 
     async def shutdown(self):
-        """Shutdown all agents and cleanup resources"""
-        for agent in self.agents.values():
+        """Shutdown all agents and cleanup resources"""        for agent in self.agents.values():
             await agent.shutdown()
         
         self.agents.clear()

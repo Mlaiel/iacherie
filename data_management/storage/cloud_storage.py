@@ -1,5 +1,4 @@
-"""
-☁️ Cloud Storage Provider - IA Influencer Agent Platform Enterprise
+"""☁️ Cloud Storage Provider - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/storage/cloud_storage.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
 """
-
 from typing import Dict, List, Optional, Any, Union, BinaryIO, AsyncGenerator
 import logging
 import asyncio
@@ -40,16 +38,14 @@ import aioboto3
 logger = logging.getLogger(__name__)
 
 class CloudProvider(Enum):
-    """Supported cloud storage providers"""
-    AWS_S3 = "aws_s3"
+    """Supported cloud storage providers"""    AWS_S3 = "aws_s3"
     MINIO = "minio"
     AZURE_BLOB = "azure_blob"
     GOOGLE_CLOUD = "google_cloud"
 
 @dataclass
 class CloudConfig:
-    """Cloud storage configuration"""
-    provider: CloudProvider
+    """Cloud storage configuration"""    provider: CloudProvider
     access_key: str
     secret_key: str
     region: str
@@ -70,8 +66,7 @@ class CloudConfig:
     lifecycle_policies: Dict[str, Any] = None
 
 class CloudStorageManager:
-    """
-    Enterprise cloud storage manager with multi-provider support.
+    """    Enterprise cloud storage manager with multi-provider support.
     
     Features:
     - Multi-cloud support (AWS S3, MinIO, Azure, GCP)
@@ -79,11 +74,9 @@ class CloudStorageManager:
     - Cost optimization with storage classes
     - Global replication and distribution
     - Advanced security and encryption
-    """
-    
+    """    
     def __init__(self, config: CloudConfig):
-        """Initialize cloud storage manager"""
-        self.config = config
+        """Initialize cloud storage manager"""        self.config = config
         self.client = None
         self.async_client = None
         self.bucket_name = config.bucket_name
@@ -104,8 +97,7 @@ class CloudStorageManager:
         logger.info(f"CloudStorageManager initialized for {config.provider.value}")
     
     def _initialize_client(self) -> None:
-        """Initialize cloud provider client"""
-        try:
+        """Initialize cloud provider client"""        try:
             if self.config.provider == CloudProvider.AWS_S3:
                 self._initialize_s3_client()
             elif self.config.provider == CloudProvider.MINIO:
@@ -122,8 +114,7 @@ class CloudStorageManager:
             raise
     
     def _initialize_s3_client(self) -> None:
-        """Initialize AWS S3 client"""
-        try:
+        """Initialize AWS S3 client"""        try:
             session = boto3.Session(
                 aws_access_key_id=self.config.access_key,
                 aws_secret_access_key=self.config.secret_key,
@@ -143,8 +134,7 @@ class CloudStorageManager:
             raise
     
     def _initialize_minio_client(self) -> None:
-        """Initialize MinIO client"""
-        try:
+        """Initialize MinIO client"""        try:
             session = boto3.Session(
                 aws_access_key_id=self.config.access_key,
                 aws_secret_access_key=self.config.secret_key
@@ -163,8 +153,7 @@ class CloudStorageManager:
             raise
     
     def _initialize_azure_client(self) -> None:
-        """Initialize Azure Blob Storage client"""
-        try:
+        """Initialize Azure Blob Storage client"""        try:
             # Azure uses connection string format
             connection_string = (
                 f"DefaultEndpointsProtocol=https;"
@@ -183,8 +172,7 @@ class CloudStorageManager:
             raise
     
     def _initialize_gcp_client(self) -> None:
-        """Initialize Google Cloud Storage client"""
-        try:
+        """Initialize Google Cloud Storage client"""        try:
             # Set credentials from environment or service account
             os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = self.config.secret_key
             
@@ -203,8 +191,7 @@ class CloudStorageManager:
         content: Union[bytes, BinaryIO],
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Store file in cloud storage with optimal settings.
+        """        Store file in cloud storage with optimal settings.
         
         Business Logic:
         1. Determine optimal storage class based on file type and metadata
@@ -212,8 +199,7 @@ class CloudStorageManager:
         3. Set up encryption and security headers
         4. Handle multipart upload for large files
         5. Configure lifecycle policies
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Prepare content
@@ -288,8 +274,7 @@ class CloudStorageManager:
         file_path: str,
         local_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Retrieve file from cloud storage"""
-        start_time = datetime.now()
+        """Retrieve file from cloud storage"""        start_time = datetime.now()
         
         try:
             # Download based on provider
@@ -327,8 +312,7 @@ class CloudStorageManager:
             }
     
     async def delete_file(self, file_path: str) -> Dict[str, Any]:
-        """Delete file from cloud storage"""
-        try:
+        """Delete file from cloud storage"""        try:
             # Delete based on provider
             if self.config.provider in [CloudProvider.AWS_S3, CloudProvider.MINIO]:
                 await self._delete_from_s3(file_path)
@@ -358,8 +342,7 @@ class CloudStorageManager:
         limit: int = 1000,
         include_metadata: bool = True
     ) -> List[Dict[str, Any]]:
-        """List files in cloud storage with optional filtering"""
-        try:
+        """List files in cloud storage with optional filtering"""        try:
             # List based on provider
             if self.config.provider in [CloudProvider.AWS_S3, CloudProvider.MINIO]:
                 files = await self._list_s3_objects(prefix, limit, include_metadata)
@@ -378,8 +361,7 @@ class CloudStorageManager:
             return []
     
     async def get_file_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Get file metadata without downloading content"""
-        try:
+        """Get file metadata without downloading content"""        try:
             # Get metadata based on provider
             if self.config.provider in [CloudProvider.AWS_S3, CloudProvider.MINIO]:
                 metadata = await self._get_s3_metadata(file_path)
@@ -402,8 +384,7 @@ class CloudStorageManager:
         destination_path: str,
         preserve_metadata: bool = True
     ) -> Dict[str, Any]:
-        """Copy file within cloud storage"""
-        try:
+        """Copy file within cloud storage"""        try:
             # Copy based on provider
             if self.config.provider in [CloudProvider.AWS_S3, CloudProvider.MINIO]:
                 result = await self._copy_s3_object(source_path, destination_path, preserve_metadata)
@@ -422,8 +403,7 @@ class CloudStorageManager:
             return {'success': False, 'error': str(e)}
     
     def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get storage usage and performance statistics"""
-        return {
+        """Get storage usage and performance statistics"""        return {
             'provider': self.config.provider.value,
             'bucket_name': self.bucket_name,
             'metrics': self.metrics,
@@ -446,8 +426,7 @@ class CloudStorageManager:
         storage_class: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """Upload file to AWS S3 or MinIO"""
-        try:
+        """Upload file to AWS S3 or MinIO"""        try:
             extra_args = {
                 'StorageClass': storage_class,
                 'ContentType': content_type,
@@ -495,8 +474,7 @@ class CloudStorageManager:
         file_path: str,
         local_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Download file from AWS S3 or MinIO"""
-        try:
+        """Download file from AWS S3 or MinIO"""        try:
             # Get object with metadata
             response = self.client.get_object(
                 Bucket=self.bucket_name,
@@ -524,8 +502,7 @@ class CloudStorageManager:
             raise
     
     async def _delete_from_s3(self, file_path: str) -> None:
-        """Delete file from AWS S3 or MinIO"""
-        try:
+        """Delete file from AWS S3 or MinIO"""        try:
             self.client.delete_object(
                 Bucket=self.bucket_name,
                 Key=file_path
@@ -540,8 +517,7 @@ class CloudStorageManager:
         limit: int,
         include_metadata: bool
     ) -> List[Dict[str, Any]]:
-        """List objects in S3 bucket"""
-        try:
+        """List objects in S3 bucket"""        try:
             objects = []
             
             paginator = self.client.get_paginator('list_objects_v2')
@@ -574,8 +550,7 @@ class CloudStorageManager:
             raise
     
     async def _get_s3_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Get S3 object metadata"""
-        try:
+        """Get S3 object metadata"""        try:
             response = self.client.head_object(
                 Bucket=self.bucket_name,
                 Key=file_path
@@ -602,8 +577,7 @@ class CloudStorageManager:
         destination_path: str,
         preserve_metadata: bool
     ) -> Dict[str, Any]:
-        """Copy S3 object"""
-        try:
+        """Copy S3 object"""        try:
             copy_source = {
                 'Bucket': self.bucket_name,
                 'Key': source_path
@@ -632,31 +606,26 @@ class CloudStorageManager:
     
     # Azure Blob Storage methods (similar pattern)
     async def _upload_to_azure(self, file_path: str, content: bytes, metadata: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Upload to Azure Blob Storage"""
-        # Azure-specific implementation
+        """Upload to Azure Blob Storage"""        # Azure-specific implementation
         pass
     
     async def _download_from_azure(self, file_path: str, local_path: Optional[str] = None) -> Dict[str, Any]:
-        """Download from Azure Blob Storage"""
-        # Azure-specific implementation
+        """Download from Azure Blob Storage"""        # Azure-specific implementation
         pass
     
     # Google Cloud Storage methods (similar pattern)
     async def _upload_to_gcp(self, file_path: str, content: bytes, metadata: Dict[str, Any], storage_class: str, content_type: str) -> Dict[str, Any]:
-        """Upload to Google Cloud Storage"""
-        # GCP-specific implementation
+        """Upload to Google Cloud Storage"""        # GCP-specific implementation
         pass
     
     async def _download_from_gcp(self, file_path: str, local_path: Optional[str] = None) -> Dict[str, Any]:
-        """Download from Google Cloud Storage"""
-        # GCP-specific implementation
+        """Download from Google Cloud Storage"""        # GCP-specific implementation
         pass
     
     # Helper methods
     
     def _determine_storage_class(self, file_size: int, metadata: Optional[Dict[str, Any]]) -> str:
-        """Determine optimal storage class based on file characteristics"""
-        if not metadata:
+        """Determine optimal storage class based on file characteristics"""        if not metadata:
             return 'STANDARD'
         
         # Business logic for storage class selection
@@ -679,8 +648,7 @@ class CloudStorageManager:
         return 'STANDARD_IA'
     
     def _ensure_bucket_exists(self) -> None:
-        """Ensure S3 bucket exists"""
-        try:
+        """Ensure S3 bucket exists"""        try:
             self.client.head_bucket(Bucket=self.bucket_name)
         except ClientError as e:
             if e.response['Error']['Code'] == '404':
@@ -694,18 +662,15 @@ class CloudStorageManager:
                 raise
     
     def _ensure_azure_container_exists(self) -> None:
-        """Ensure Azure container exists"""
-        # Azure-specific implementation
+        """Ensure Azure container exists"""        # Azure-specific implementation
         pass
     
     def _ensure_gcp_bucket_exists(self) -> None:
-        """Ensure GCP bucket exists"""
-        # GCP-specific implementation
+        """Ensure GCP bucket exists"""        # GCP-specific implementation
         pass
     
     def _configure_bucket_policies(self) -> None:
-        """Configure bucket security and lifecycle policies"""
-        try:
+        """Configure bucket security and lifecycle policies"""        try:
             # Enable versioning if configured
             if self.config.versioning_enabled:
                 self.client.put_bucket_versioning(
@@ -746,8 +711,7 @@ class CloudStorageManager:
             logger.warning(f"Failed to configure bucket policies: {str(e)}")
     
     def _update_metrics(self, operation: str, file_size: int, processing_time: float) -> None:
-        """Update performance metrics"""
-        if operation == 'upload':
+        """Update performance metrics"""        if operation == 'upload':
             self.metrics['uploads'] += 1
             self.metrics['avg_upload_time'] = (
                 (self.metrics['avg_upload_time'] * (self.metrics['uploads'] - 1) + processing_time) /
@@ -763,8 +727,7 @@ class CloudStorageManager:
         self.metrics['total_size'] += file_size
 
 class AsyncCloudStorageManager:
-    """Async wrapper for high-performance concurrent operations"""
-    
+    """Async wrapper for high-performance concurrent operations"""    
     def __init__(self, config: CloudConfig):
         self.sync_manager = CloudStorageManager(config)
         self.semaphore = asyncio.Semaphore(config.max_concurrency)
@@ -773,8 +736,7 @@ class AsyncCloudStorageManager:
         self,
         files: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Store multiple files concurrently"""
-        async def store_single(file_info):
+        """Store multiple files concurrently"""        async def store_single(file_info):
             async with self.semaphore:
                 return await self.sync_manager.store_file(
                     file_info['path'],
@@ -794,8 +756,7 @@ class AsyncCloudStorageManager:
         self,
         file_paths: List[str]
     ) -> List[Dict[str, Any]]:
-        """Retrieve multiple files concurrently"""
-        async def retrieve_single(file_path):
+        """Retrieve multiple files concurrently"""        async def retrieve_single(file_path):
             async with self.semaphore:
                 return await self.sync_manager.retrieve_file(file_path)
         

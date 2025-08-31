@@ -1,5 +1,4 @@
-"""
-Context Analyzer - IA Influencer Agent
+"""Context Analyzer - IA Influencer Agent
 
 Advanced context analysis engine providing intelligent interpretation and
 enrichment of conversational context for multi-format content creators.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import re
@@ -33,8 +31,7 @@ from ...ml.text_processing import TextProcessor
 
 
 class ContextType(Enum):
-    """Types of context elements"""
-    INTENT = "intent"
+    """Types of context elements"""    INTENT = "intent"
     ENTITY = "entity"
     EMOTION = "emotion"
     TOPIC = "topic"
@@ -50,8 +47,7 @@ class ContextType(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Confidence levels for context analysis"""
-    VERY_LOW = 0.2
+    """Confidence levels for context analysis"""    VERY_LOW = 0.2
     LOW = 0.4
     MEDIUM = 0.6
     HIGH = 0.8
@@ -60,8 +56,7 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class ContextElement:
-    """Individual context element"""
-    element_id: str
+    """Individual context element"""    element_id: str
     context_type: ContextType
     value: Any
     confidence: float
@@ -85,8 +80,7 @@ class ContextElement:
 
 @dataclass
 class ContextInsight:
-    """Context analysis insight"""
-    insight_id: str
+    """Context analysis insight"""    insight_id: str
     insight_type: str
     title: str
     description: str
@@ -112,8 +106,7 @@ class ContextInsight:
 
 @dataclass
 class ContextPattern:
-    """Recurring context pattern"""
-    pattern_id: str
+    """Recurring context pattern"""    pattern_id: str
     pattern_name: str
     pattern_type: str
     elements: List[str]
@@ -138,8 +131,7 @@ class ContextPattern:
 
 
 class ContextAnalyzer:
-    """
-    Advanced context analyzer providing intelligent interpretation and enrichment
+    """    Advanced context analyzer providing intelligent interpretation and enrichment
     of conversational context for multi-format content creators.
     
     Features:
@@ -149,8 +141,7 @@ class ContextAnalyzer:
     - Pattern recognition and learning
     - Semantic context enrichment
     - Predictive context insights
-    """
-    
+    """    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -219,8 +210,7 @@ class ContextAnalyzer:
         self.logger.info("ContextAnalyzer initialized")
     
     async def start(self):
-        """Start the context analyzer"""
-        try:
+        """Start the context analyzer"""        try:
             # Load NLP models
             await self._load_nlp_models()
             
@@ -244,8 +234,7 @@ class ContextAnalyzer:
         message_type: str = "text",
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[ContextElement]:
-        """
-        Analyze message for context elements
+        """        Analyze message for context elements
         
         Args:
             user_id: User identifier
@@ -256,8 +245,7 @@ class ContextAnalyzer:
             
         Returns:
             List of extracted context elements
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             elements = []
             
@@ -324,8 +312,7 @@ class ContextAnalyzer:
         context_types: Optional[List[ContextType]] = None,
         time_window: Optional[timedelta] = None
     ) -> Dict[str, Any]:
-        """
-        Get context summary for user
+        """        Get context summary for user
         
         Args:
             user_id: User identifier
@@ -334,8 +321,7 @@ class ContextAnalyzer:
             
         Returns:
             Context summary dictionary
-        """
-        try:
+        """        try:
             user_elements = self.context_elements.get(user_id, [])
             
             # Apply filters
@@ -409,8 +395,7 @@ class ContextAnalyzer:
         user_id: str,
         context_window: Optional[timedelta] = None
     ) -> List[ContextInsight]:
-        """
-        Generate insights from user context
+        """        Generate insights from user context
         
         Args:
             user_id: User identifier
@@ -418,8 +403,7 @@ class ContextAnalyzer:
             
         Returns:
             List of context insights
-        """
-        try:
+        """        try:
             user_elements = self.context_elements.get(user_id, [])
             
             # Apply time filter
@@ -481,8 +465,7 @@ class ContextAnalyzer:
         min_frequency: int = 3,
         min_strength: float = 0.6
     ) -> List[ContextPattern]:
-        """
-        Detect recurring context patterns
+        """        Detect recurring context patterns
         
         Args:
             user_id: Specific user to analyze (None for all users)
@@ -491,8 +474,7 @@ class ContextAnalyzer:
             
         Returns:
             List of detected patterns
-        """
-        try:
+        """        try:
             patterns = []
             
             if user_id:
@@ -523,8 +505,7 @@ class ContextAnalyzer:
         current_context: List[ContextElement],
         prediction_horizon: int = 5
     ) -> List[Tuple[ContextElement, float]]:
-        """
-        Predict next likely context elements
+        """        Predict next likely context elements
         
         Args:
             user_id: User identifier
@@ -533,8 +514,7 @@ class ContextAnalyzer:
             
         Returns:
             List of (predicted_element, probability) tuples
-        """
-        try:
+        """        try:
             user_elements = self.context_elements.get(user_id, [])
             
             if len(user_elements) < 10:  # Need sufficient history
@@ -562,8 +542,7 @@ class ContextAnalyzer:
     # Private helper methods
     
     async def _analyze_intent(self, message: str, user_id: str) -> List[ContextElement]:
-        """Analyze user intent from message"""
-        elements = []
+        """Analyze user intent from message"""        elements = []
         
         # Intent patterns for content creators
         intent_patterns = {
@@ -612,8 +591,7 @@ class ContextAnalyzer:
         return elements
     
     async def _extract_entities(self, message: str, user_id: str) -> List[ContextElement]:
-        """Extract entities from message"""
-        elements = []
+        """Extract entities from message"""        elements = []
         
         if not self.nlp_model:
             return elements
@@ -647,8 +625,7 @@ class ContextAnalyzer:
         return elements
     
     async def _analyze_emotion(self, message: str) -> List[ContextElement]:
-        """Analyze emotional context of message"""
-        elements = []
+        """Analyze emotional context of message"""        elements = []
         
         try:
             # Use TextBlob for sentiment analysis
@@ -693,8 +670,7 @@ class ContextAnalyzer:
         return elements
     
     async def _analyze_topics(self, message: str, user_id: str) -> List[ContextElement]:
-        """Analyze topics in message"""
-        elements = []
+        """Analyze topics in message"""        elements = []
         
         # Topic keywords for content creators
         topic_keywords = {
@@ -729,8 +705,7 @@ class ContextAnalyzer:
         return elements
     
     async def _analyze_creator_context(self, message: str, user_id: str) -> List[ContextElement]:
-        """Analyze creator-specific context"""
-        elements = []
+        """Analyze creator-specific context"""        elements = []
         
         message_lower = message.lower()
         
@@ -778,8 +753,7 @@ class ContextAnalyzer:
         return elements
     
     async def _analyze_temporal_context(self, message: str) -> List[ContextElement]:
-        """Analyze temporal context in message"""
-        elements = []
+        """Analyze temporal context in message"""        elements = []
         
         # Temporal expressions
         temporal_patterns = {
@@ -814,8 +788,7 @@ class ContextAnalyzer:
         user_id: str,
         conversation_id: str
     ) -> List[ContextElement]:
-        """Enrich context elements with additional information"""
-        enriched = []
+        """Enrich context elements with additional information"""        enriched = []
         
         for element in elements:
             # Add conversation context
@@ -836,8 +809,7 @@ class ContextAnalyzer:
         return enriched
     
     async def _update_patterns(self, elements: List[ContextElement], user_id: str):
-        """Update context patterns based on new elements"""
-        try:
+        """Update context patterns based on new elements"""        try:
             # Simple pattern detection: sequences of context types
             if len(elements) >= 2:
                 element_types = [e.context_type.value for e in elements]
@@ -872,8 +844,7 @@ class ContextAnalyzer:
         elements: List[ContextElement],
         user_id: str
     ) -> Optional[ContextInsight]:
-        """Generate insight about user's creator type"""
-        try:
+        """Generate insight about user's creator type"""        try:
             content_type_elements = [e for e in elements if e.context_type == ContextType.CONTENT_TYPE]
             
             if not content_type_elements:
@@ -917,8 +888,7 @@ class ContextAnalyzer:
         elements: List[ContextElement],
         user_id: str
     ) -> Optional[ContextInsight]:
-        """Generate insight about user's skill level"""
-        try:
+        """Generate insight about user's skill level"""        try:
             # Analyze vocabulary sophistication and context complexity
             technical_terms = 0
             basic_terms = 0
@@ -976,8 +946,7 @@ class ContextAnalyzer:
         elements: List[ContextElement],
         user_id: str
     ) -> Optional[ContextInsight]:
-        """Generate insight about user's goal alignment"""
-        try:
+        """Generate insight about user's goal alignment"""        try:
             goal_elements = [e for e in elements if e.context_type == ContextType.GOAL]
             intent_elements = [e for e in elements if e.context_type == ContextType.INTENT]
             
@@ -1027,8 +996,7 @@ class ContextAnalyzer:
         elements: List[ContextElement],
         user_id: str
     ) -> Optional[ContextInsight]:
-        """Generate platform optimization insights"""
-        try:
+        """Generate platform optimization insights"""        try:
             platform_elements = [e for e in elements if e.context_type == ContextType.PLATFORM]
             content_elements = [e for e in elements if e.context_type == ContextType.CONTENT_TYPE]
             
@@ -1080,8 +1048,7 @@ class ContextAnalyzer:
         elements: List[ContextElement],
         user_id: str
     ) -> Optional[ContextInsight]:
-        """Generate collaboration opportunity insights"""
-        try:
+        """Generate collaboration opportunity insights"""        try:
             collab_elements = [e for e in elements if e.context_type == ContextType.COLLABORATION]
             intent_elements = [e for e in elements if e.context_type == ContextType.INTENT and e.value == "collaboration_seeking"]
             
@@ -1116,8 +1083,7 @@ class ContextAnalyzer:
         elements: List[ContextElement],
         user_id: str
     ) -> Optional[ContextInsight]:
-        """Generate monetization readiness insights"""
-        try:
+        """Generate monetization readiness insights"""        try:
             monetization_elements = [e for e in elements if e.context_type == ContextType.MONETIZATION]
             intent_elements = [e for e in elements if e.context_type == ContextType.INTENT and e.value == "monetization_interest"]
             
@@ -1168,8 +1134,7 @@ class ContextAnalyzer:
             return None
     
     async def _load_nlp_models(self):
-        """Load NLP models"""
-        try:
+        """Load NLP models"""        try:
             # Load spaCy model for entity extraction
             self.nlp_model = spacy.load("en_core_web_sm")
             self.logger.info("NLP models loaded successfully")
@@ -1178,21 +1143,18 @@ class ContextAnalyzer:
             self.nlp_model = None
     
     async def _initialize_patterns(self):
-        """Initialize analysis patterns"""
-        # Implementation would load pre-trained patterns
+        """Initialize analysis patterns"""        # Implementation would load pre-trained patterns
         pass
     
     async def _load_context_data(self):
-        """Load existing context data"""
-        try:
+        """Load existing context data"""        try:
             # Load from cache or persistent storage
             pass
         except Exception as e:
             self.logger.error(f"Error loading context data: {e}")
     
     def _calculate_intent_confidence(self, pattern: str, message: str) -> float:
-        """Calculate confidence for intent match"""
-        # Simple confidence based on pattern specificity and context
+        """Calculate confidence for intent match"""        # Simple confidence based on pattern specificity and context
         base_confidence = 0.6
         
         # Boost confidence for exact matches
@@ -1207,8 +1169,7 @@ class ContextAnalyzer:
         return min(base_confidence, 1.0)
     
     def _calculate_entity_confidence(self, entity) -> float:
-        """Calculate confidence for entity extraction"""
-        # Base confidence from spaCy model
+        """Calculate confidence for entity extraction"""        # Base confidence from spaCy model
         base_confidence = 0.7
         
         # Adjust based on entity length and type
@@ -1226,8 +1187,7 @@ class ContextAnalyzer:
         user_id: str,
         max_results: int = 5
     ) -> List[ContextElement]:
-        """Find similar context elements for the user"""
-        user_elements = self.context_elements.get(user_id, [])
+        """Find similar context elements for the user"""        user_elements = self.context_elements.get(user_id, [])
         
         similar = []
         for existing_element in user_elements:
@@ -1239,8 +1199,7 @@ class ContextAnalyzer:
         return similar[:max_results]
     
     async def _enhance_confidence(self, element: ContextElement, user_id: str) -> float:
-        """Enhance confidence based on context consistency"""
-        base_confidence = element.confidence
+        """Enhance confidence based on context consistency"""        base_confidence = element.confidence
         
         # Find similar historical elements
         similar_elements = await self._find_similar_elements(element, user_id)
@@ -1258,8 +1217,7 @@ class ContextAnalyzer:
         min_frequency: int,
         min_strength: float
     ) -> List[ContextPattern]:
-        """Detect patterns for specific user"""
-        patterns = []
+        """Detect patterns for specific user"""        patterns = []
         user_elements = self.context_elements.get(user_id, [])
         
         if len(user_elements) < min_frequency:
@@ -1292,8 +1250,7 @@ class ContextAnalyzer:
         return patterns
     
     async def _deduplicate_patterns(self, patterns: List[ContextPattern]) -> List[ContextPattern]:
-        """Remove duplicate patterns"""
-        seen_patterns = set()
+        """Remove duplicate patterns"""        seen_patterns = set()
         unique_patterns = []
         
         for pattern in patterns:
@@ -1305,8 +1262,7 @@ class ContextAnalyzer:
         return unique_patterns
     
     async def _extract_context_features(self, context: List[ContextElement]) -> Dict[str, Any]:
-        """Extract features from context elements"""
-        features = {
+        """Extract features from context elements"""        features = {
             "context_types": [e.context_type.value for e in context],
             "values": [str(e.value) for e in context],
             "avg_confidence": sum(e.confidence for e in context) / len(context) if context else 0,
@@ -1321,8 +1277,7 @@ class ContextAnalyzer:
         historical_elements: List[ContextElement],
         top_k: int = 10
     ) -> List[List[ContextElement]]:
-        """Find similar historical contexts"""
-        # Simple implementation: group elements by time windows and find similar groups
+        """Find similar historical contexts"""        # Simple implementation: group elements by time windows and find similar groups
         similar_contexts = []
         
         # Group elements by time windows (e.g., 1-hour windows)
@@ -1348,8 +1303,7 @@ class ContextAnalyzer:
         similar_contexts: List[List[ContextElement]],
         prediction_horizon: int
     ) -> List[Tuple[ContextElement, float]]:
-        """Predict next elements from similar contexts"""
-        predictions = []
+        """Predict next elements from similar contexts"""        predictions = []
         
         # Count next elements after similar contexts
         next_element_counts = defaultdict(int)

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Quality Enhancer Tests
+"""Quality Enhancer Tests
 
 Comprehensive tests for the QualityEnhancer class that handles
 content quality improvement and validation.
@@ -26,7 +23,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -48,42 +44,33 @@ from ai.content_generation.content_models import ContentType, Platform
 
 
 class TestQualityEnhancer:
-    """Test suite for QualityEnhancer"""
-    
+    """Test suite for QualityEnhancer"""    
     @pytest.fixture
     def enhancer(self):
-        """Create a quality enhancer instance"""
-        return QualityEnhancer()
+        """Create a quality enhancer instance"""        return QualityEnhancer()
     
     @pytest.fixture
     def sample_content(self):
-        """Create sample content for quality analysis"""
-        return """
-        The artficial inteligence revoluton is here. It's transforming how we work, live, and interact with technology.
+        """Create sample content for quality analysis"""        return """        The artficial inteligence revoluton is here. It's transforming how we work, live, and interact with technology.
         
         AI systms can now understnd natural language, recognize images, and even create art. This technoogy has many aplications across diferent industries.
         
         However, their are still challenges. Privacy concerns, ethical considerations, and the need for human oversight are importent factors to consider.
         
         The future of AI is bright, but we must procede with caution and responsibility.
-        """
-    
+        """    
     @pytest.fixture
     def high_quality_content(self):
-        """Create high-quality content for comparison"""
-        return """
-        The artificial intelligence revolution is here. It's transforming how we work, live, and interact with technology.
+        """Create high-quality content for comparison"""        return """        The artificial intelligence revolution is here. It's transforming how we work, live, and interact with technology.
         
         AI systems can now understand natural language, recognize images, and even create art. This technology has many applications across different industries.
         
         However, there are still challenges. Privacy concerns, ethical considerations, and the need for human oversight are important factors to consider.
         
         The future of AI is bright, but we must proceed with caution and responsibility.
-        """
-    
+        """    
     def test_enhancer_initialization(self, enhancer):
-        """Test quality enhancer initialization"""
-        assert enhancer is not None
+        """Test quality enhancer initialization"""        assert enhancer is not None
         assert hasattr(enhancer, 'grammar_checker')
         assert hasattr(enhancer, 'style_analyzer')
         assert hasattr(enhancer, 'readability_analyzer')
@@ -93,8 +80,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_comprehensive_quality_analysis(self, enhancer, sample_content):
-        """Test comprehensive quality analysis"""
-        with patch.object(enhancer, '_analyze_quality') as mock_analysis:
+        """Test comprehensive quality analysis"""        with patch.object(enhancer, '_analyze_quality') as mock_analysis:
             mock_analysis.return_value = {
                 "success": True,
                 "overall_score": 72.5,
@@ -129,8 +115,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_grammar_and_spelling_correction(self, enhancer, sample_content):
-        """Test grammar and spelling correction"""
-        with patch.object(enhancer, '_correct_grammar_spelling') as mock_correction:
+        """Test grammar and spelling correction"""        with patch.object(enhancer, '_correct_grammar_spelling') as mock_correction:
             mock_correction.return_value = {
                 "success": True,
                 "corrected_content": sample_content.replace("artficial", "artificial").replace("inteligence", "intelligence"),
@@ -157,12 +142,10 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_readability_improvement(self, enhancer, sample_content):
-        """Test readability improvement"""
-        with patch.object(enhancer, '_improve_readability') as mock_readability:
+        """Test readability improvement"""        with patch.object(enhancer, '_improve_readability') as mock_readability:
             mock_readability.return_value = {
                 "success": True,
-                "improved_content": """
-                The artificial intelligence revolution is here. It's changing how we work, live, and use technology.
+                "improved_content": """                The artificial intelligence revolution is here. It's changing how we work, live, and use technology.
                 
                 AI systems can understand language, recognize images, and create art. This technology works in many industries.
                 
@@ -194,8 +177,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_style_consistency_analysis(self, enhancer, sample_content):
-        """Test style consistency analysis"""
-        with patch.object(enhancer, '_analyze_style_consistency') as mock_style:
+        """Test style consistency analysis"""        with patch.object(enhancer, '_analyze_style_consistency') as mock_style:
             mock_style.return_value = {
                 "success": True,
                 "consistency_score": 76.5,
@@ -228,8 +210,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_tone_adjustment(self, enhancer, sample_content):
-        """Test tone adjustment functionality"""
-        target_tone = "professional_friendly"
+        """Test tone adjustment functionality"""        target_tone = "professional_friendly"
         
         with patch.object(enhancer, '_adjust_tone') as mock_tone:
             mock_tone.return_value = {
@@ -260,14 +241,11 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_fact_checking(self, enhancer):
-        """Test fact-checking functionality"""
-        content_with_facts = """
-        The speed of light is approximately 299,792,458 meters per second.
+        """Test fact-checking functionality"""        content_with_facts = """        The speed of light is approximately 299,792,458 meters per second.
         The human brain contains about 86 billion neurons.
         Python was created by Guido van Rossum in 1991.
         The Earth's circumference is approximately 40,075 kilometers.
-        """
-        
+        """        
         with patch.object(enhancer, '_check_facts') as mock_facts:
             mock_facts.return_value = {
                 "success": True,
@@ -309,8 +287,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_plagiarism_detection(self, enhancer, sample_content):
-        """Test plagiarism detection"""
-        with patch.object(enhancer, '_detect_plagiarism') as mock_plagiarism:
+        """Test plagiarism detection"""        with patch.object(enhancer, '_detect_plagiarism') as mock_plagiarism:
             mock_plagiarism.return_value = {
                 "success": True,
                 "plagiarism_score": 5.2,  # Low plagiarism
@@ -344,8 +321,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_sentiment_analysis(self, enhancer, sample_content):
-        """Test sentiment analysis"""
-        with patch.object(enhancer, '_analyze_sentiment') as mock_sentiment:
+        """Test sentiment analysis"""        with patch.object(enhancer, '_analyze_sentiment') as mock_sentiment:
             mock_sentiment.return_value = {
                 "success": True,
                 "overall_sentiment": {
@@ -381,8 +357,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_content_enhancement_suggestions(self, enhancer, sample_content):
-        """Test content enhancement suggestions"""
-        with patch.object(enhancer, '_generate_suggestions') as mock_suggestions:
+        """Test content enhancement suggestions"""        with patch.object(enhancer, '_generate_suggestions') as mock_suggestions:
             mock_suggestions.return_value = {
                 "success": True,
                 "suggestions": [
@@ -423,8 +398,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_automated_content_improvement(self, enhancer, sample_content):
-        """Test automated content improvement"""
-        with patch.object(enhancer, '_auto_improve_content') as mock_improve:
+        """Test automated content improvement"""        with patch.object(enhancer, '_auto_improve_content') as mock_improve:
             mock_improve.return_value = {
                 "success": True,
                 "improved_content": sample_content.replace("artficial inteligence", "artificial intelligence"),
@@ -456,8 +430,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_brand_voice_consistency(self, enhancer, sample_content):
-        """Test brand voice consistency checking"""
-        brand_guidelines = {
+        """Test brand voice consistency checking"""        brand_guidelines = {
             "voice": "professional yet approachable",
             "tone": "confident and helpful",
             "style": "clear and concise",
@@ -502,8 +475,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_content_accessibility_check(self, enhancer, sample_content):
-        """Test content accessibility checking"""
-        with patch.object(enhancer, '_check_accessibility') as mock_accessibility:
+        """Test content accessibility checking"""        with patch.object(enhancer, '_check_accessibility') as mock_accessibility:
             mock_accessibility.return_value = {
                 "success": True,
                 "accessibility_score": 78.5,
@@ -546,8 +518,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_multilingual_quality_check(self, enhancer):
-        """Test multilingual quality checking"""
-        multilingual_content = {
+        """Test multilingual quality checking"""        multilingual_content = {
             "en": "The artificial intelligence revolution is transforming our world.",
             "es": "La revolución de la inteligencia artificial está transformando nuestro mundo.",
             "fr": "La révolution de l'intelligence artificielle transforme notre monde.",
@@ -584,8 +555,7 @@ class TestQualityEnhancer:
     
     @pytest.mark.asyncio
     async def test_performance_monitoring(self, enhancer, sample_content):
-        """Test performance monitoring for quality enhancement"""
-        with patch.object(enhancer, '_analyze_quality') as mock_analysis:
+        """Test performance monitoring for quality enhancement"""        with patch.object(enhancer, '_analyze_quality') as mock_analysis:
             mock_analysis.return_value = {
                 "success": True,
                 "overall_score": 85.2,
@@ -615,11 +585,9 @@ class TestQualityEnhancer:
 
 
 class TestQualityMetrics:
-    """Test suite for QualityMetrics model"""
-    
+    """Test suite for QualityMetrics model"""    
     def test_quality_metrics_creation(self):
-        """Test quality metrics creation"""
-        metrics = QualityMetrics(
+        """Test quality metrics creation"""        metrics = QualityMetrics(
             grammar_score=85.5,
             spelling_score=92.3,
             readability_score=78.9,
@@ -637,11 +605,9 @@ class TestQualityMetrics:
 
 
 class TestGrammarCheck:
-    """Test suite for GrammarCheck model"""
-    
+    """Test suite for GrammarCheck model"""    
     def test_grammar_check_creation(self):
-        """Test grammar check result creation"""
-        check = GrammarCheck(
+        """Test grammar check result creation"""        check = GrammarCheck(
             error_count=5,
             corrections=[
                 {"type": "subject_verb", "original": "They was", "corrected": "They were"},

@@ -1,5 +1,4 @@
-"""
-Infrastructure Monitoring Configuration for IA-Influencer Agent Platform
+"""Infrastructure Monitoring Configuration for IA-Influencer Agent Platform
 =========================================================================
 
 Professional infrastructure monitoring configuration for comprehensive
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import asyncio
 from typing import Dict, List, Any, Optional, Callable, Union, Tuple
@@ -32,8 +30,7 @@ from collections import defaultdict
 
 
 class InfrastructureLayer(Enum):
-    """Infrastructure monitoring layers"""
-    HARDWARE = "hardware"
+    """Infrastructure monitoring layers"""    HARDWARE = "hardware"
     OPERATING_SYSTEM = "operating_system"
     CONTAINER = "container"
     KUBERNETES = "kubernetes"
@@ -44,8 +41,7 @@ class InfrastructureLayer(Enum):
 
 
 class ResourceType(Enum):
-    """Infrastructure resource types"""
-    CPU = "cpu"
+    """Infrastructure resource types"""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -57,8 +53,7 @@ class ResourceType(Enum):
 
 
 class MonitoringCollectorType(Enum):
-    """Monitoring collector types"""
-    NODE_EXPORTER = "node_exporter"
+    """Monitoring collector types"""    NODE_EXPORTER = "node_exporter"
     CADVISOR = "cadvisor"
     KUBERNETES_STATE = "kubernetes_state"
     CUSTOM_EXPORTER = "custom_exporter"
@@ -68,8 +63,7 @@ class MonitoringCollectorType(Enum):
 
 @dataclass
 class InfrastructureTarget:
-    """Infrastructure monitoring target"""
-    name: str
+    """Infrastructure monitoring target"""    name: str
     target_type: str
     endpoint: str
     layer: InfrastructureLayer
@@ -83,8 +77,7 @@ class InfrastructureTarget:
 
 @dataclass
 class ResourceThreshold:
-    """Resource monitoring threshold"""
-    resource_type: ResourceType
+    """Resource monitoring threshold"""    resource_type: ResourceType
     warning_threshold: float
     critical_threshold: float
     unit: str
@@ -94,8 +87,7 @@ class ResourceThreshold:
 
 @dataclass
 class InfrastructureAlert:
-    """Infrastructure alert rule"""
-    name: str
+    """Infrastructure alert rule"""    name: str
     description: str
     expression: str
     severity: str
@@ -106,17 +98,14 @@ class InfrastructureAlert:
 
 
 class InfrastructureMonitoringConfig:
-    """
-    Professional infrastructure monitoring configuration
+    """    Professional infrastructure monitoring configuration
     
     Manages comprehensive infrastructure monitoring including hardware,
     containers, Kubernetes, databases, and network components with
     advanced alerting and automated remediation capabilities.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize infrastructure monitoring configuration"""
-        self._targets = {}
+        """Initialize infrastructure monitoring configuration"""        self._targets = {}
         self._thresholds = {}
         self._alert_rules = {}
         self._collectors = {}
@@ -159,8 +148,7 @@ class InfrastructureMonitoringConfig:
         self._setup_collectors()
     
     def _setup_infrastructure_targets(self):
-        """Setup infrastructure monitoring targets"""
-        # Kubernetes cluster monitoring
+        """Setup infrastructure monitoring targets"""        # Kubernetes cluster monitoring
         self.register_target(InfrastructureTarget(
             name="kube-state-metrics",
             target_type="kubernetes_metrics",
@@ -315,8 +303,7 @@ class InfrastructureMonitoringConfig:
         ))
     
     def _setup_resource_thresholds(self):
-        """Setup resource monitoring thresholds"""
-        # CPU thresholds
+        """Setup resource monitoring thresholds"""        # CPU thresholds
         self.register_threshold(ResourceThreshold(
             resource_type=ResourceType.CPU,
             warning_threshold=70.0,
@@ -362,8 +349,7 @@ class InfrastructureMonitoringConfig:
         ))
     
     def _setup_infrastructure_alerts(self):
-        """Setup infrastructure alert rules"""
-        # Node alerts
+        """Setup infrastructure alert rules"""        # Node alerts
         self.register_alert_rule(InfrastructureAlert(
             name="NodeDown",
             description="Node has been down for more than 5 minutes",
@@ -499,8 +485,7 @@ class InfrastructureMonitoringConfig:
         ))
     
     def _setup_collectors(self):
-        """Setup monitoring collectors configuration"""
-        self._collectors = {
+        """Setup monitoring collectors configuration"""        self._collectors = {
             "node_exporter": {
                 "type": MonitoringCollectorType.NODE_EXPORTER,
                 "version": "1.6.1",
@@ -546,47 +531,38 @@ class InfrastructureMonitoringConfig:
         }
     
     def register_target(self, target: InfrastructureTarget):
-        """Register infrastructure monitoring target"""
-        self._targets[target.name] = target
+        """Register infrastructure monitoring target"""        self._targets[target.name] = target
         logging.info(f"Registered infrastructure target: {target.name}")
     
     def register_threshold(self, threshold: ResourceThreshold):
-        """Register resource threshold"""
-        key = f"{threshold.resource_type.value}_threshold"
+        """Register resource threshold"""        key = f"{threshold.resource_type.value}_threshold"
         self._thresholds[key] = threshold
         logging.info(f"Registered threshold: {key}")
     
     def register_alert_rule(self, alert_rule: InfrastructureAlert):
-        """Register alert rule"""
-        self._alert_rules[alert_rule.name] = alert_rule
+        """Register alert rule"""        self._alert_rules[alert_rule.name] = alert_rule
         logging.info(f"Registered infrastructure alert: {alert_rule.name}")
     
     def get_target(self, name: str) -> Optional[InfrastructureTarget]:
-        """Get target by name"""
-        return self._targets.get(name)
+        """Get target by name"""        return self._targets.get(name)
     
     def get_threshold(self, resource_type: ResourceType) -> Optional[ResourceThreshold]:
-        """Get threshold by resource type"""
-        key = f"{resource_type.value}_threshold"
+        """Get threshold by resource type"""        key = f"{resource_type.value}_threshold"
         return self._thresholds.get(key)
     
     def get_alert_rule(self, name: str) -> Optional[InfrastructureAlert]:
-        """Get alert rule by name"""
-        return self._alert_rules.get(name)
+        """Get alert rule by name"""        return self._alert_rules.get(name)
     
     def get_targets_by_layer(self, layer: InfrastructureLayer) -> List[InfrastructureTarget]:
-        """Get targets by infrastructure layer"""
-        return [target for target in self._targets.values() 
+        """Get targets by infrastructure layer"""        return [target for target in self._targets.values() 
                 if target.layer == layer]
     
     def get_critical_alerts(self) -> List[InfrastructureAlert]:
-        """Get critical alert rules"""
-        return [alert for alert in self._alert_rules.values() 
+        """Get critical alert rules"""        return [alert for alert in self._alert_rules.values() 
                 if alert.severity == "critical"]
     
     def generate_prometheus_config(self) -> Dict[str, Any]:
-        """Generate Prometheus configuration"""
-        scrape_configs = []
+        """Generate Prometheus configuration"""        scrape_configs = []
         
         for target in self._targets.values():
             if not target.enabled:
@@ -633,8 +609,7 @@ class InfrastructureMonitoringConfig:
         }
     
     def generate_alert_rules_config(self) -> Dict[str, Any]:
-        """Generate alert rules configuration"""
-        groups = defaultdict(list)
+        """Generate alert rules configuration"""        groups = defaultdict(list)
         
         for alert in self._alert_rules.values():
             if not alert.enabled:
@@ -661,8 +636,7 @@ class InfrastructureMonitoringConfig:
         }
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export complete infrastructure monitoring configuration"""
-        return {
+        """Export complete infrastructure monitoring configuration"""        return {
             "metadata": {
                 "generated_at": datetime.utcnow().isoformat(),
                 "version": "1.0.0",

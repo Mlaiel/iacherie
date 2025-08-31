@@ -1,5 +1,4 @@
-"""
-🗜️ Compression Engine - Intelligent Content Compression System
+"""🗜️ Compression Engine - Intelligent Content Compression System
 ============================================================
 Module: backend/data_management/backups/compression_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -13,7 +12,6 @@ Responsibility: Compression avancée multi-format avec optimisation intelligente
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import zstandard as zstd
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CompressionResult:
-    """Résultat d'une opération de compression"""
-    original_size: int
+    """Résultat d'une opération de compression"""    original_size: int
     compressed_size: int
     compression_ratio: float
     algorithm: str
@@ -52,21 +49,18 @@ class CompressionResult:
     
     @property
     def space_saved_bytes(self) -> int:
-        """Espace économisé en bytes"""
-        return self.original_size - self.compressed_size
+        """Espace économisé en bytes"""        return self.original_size - self.compressed_size
     
     @property
     def space_saved_percentage(self) -> float:
-        """Pourcentage d'espace économisé"""
-        if self.original_size == 0:
+        """Pourcentage d'espace économisé"""        if self.original_size == 0:
             return 0.0
         return ((self.original_size - self.compressed_size) / self.original_size) * 100
 
 
 @dataclass
 class CompressionConfig:
-    """Configuration de compression"""
-    algorithm: str = "zstd"
+    """Configuration de compression"""    algorithm: str = "zstd"
     level: int = 6
     threads: int = 4
     content_aware: bool = True
@@ -78,8 +72,7 @@ class CompressionConfig:
     zstd_enable_ldm: bool = False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "algorithm": self.algorithm,
             "level": self.level,
             "threads": self.threads,
@@ -92,8 +85,7 @@ class CompressionConfig:
 
 
 class CompressionAlgorithm(ABC):
-    """Interface abstraite pour les algorithmes de compression"""
-    
+    """Interface abstraite pour les algorithmes de compression"""    
     @abstractmethod
     async def compress(
         self,
@@ -102,8 +94,7 @@ class CompressionAlgorithm(ABC):
         level: int = 6,
         **kwargs
     ) -> CompressionResult:
-        """Compresse un fichier"""
-        pass
+        """Compresse un fichier"""        pass
     
     @abstractmethod
     async def decompress(
@@ -112,26 +103,22 @@ class CompressionAlgorithm(ABC):
         output_path: Path,
         **kwargs
     ) -> bool:
-        """Décompresse un fichier"""
-        pass
+        """Décompresse un fichier"""        pass
     
     @abstractmethod
     def get_optimal_level(self, content_type: str, file_size: int) -> int:
-        """Retourne le niveau optimal pour le type de contenu"""
-        pass
+        """Retourne le niveau optimal pour le type de contenu"""        pass
 
 
 class ZstandardAlgorithm(CompressionAlgorithm):
-    """
-    Algorithme Zstandard - Performance et compression optimales
+    """    Algorithme Zstandard - Performance et compression optimales
     
     Avantages:
     - Très bon ratio compression/vitesse
     - Support dictionnaires personnalisés
     - Parallélisation native
     - Optimisé pour contenus répétitifs
-    """
-    
+    """    
     def __init__(self):
         self.name = "zstd"
         self.extensions = [".zst"]
@@ -154,8 +141,7 @@ class ZstandardAlgorithm(CompressionAlgorithm):
         level: int = 6,
         **kwargs
     ) -> CompressionResult:
-        """
-        Compresse un fichier avec Zstandard
+        """        Compresse un fichier avec Zstandard
         
         Args:
             input_path: Fichier source
@@ -165,8 +151,7 @@ class ZstandardAlgorithm(CompressionAlgorithm):
             
         Returns:
             CompressionResult: Résultats de la compression
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Vérification fichier source
@@ -248,8 +233,7 @@ class ZstandardAlgorithm(CompressionAlgorithm):
         output_path: Path,
         **kwargs
     ) -> bool:
-        """
-        Décompresse un fichier Zstandard
+        """        Décompresse un fichier Zstandard
         
         Args:
             input_path: Fichier compressé
@@ -258,8 +242,7 @@ class ZstandardAlgorithm(CompressionAlgorithm):
             
         Returns:
             bool: True si décompression réussie
-        """
-        try:
+        """        try:
             if not input_path.exists():
                 logger.error(f"Compressed file not found: {input_path}")
                 return False
@@ -282,8 +265,7 @@ class ZstandardAlgorithm(CompressionAlgorithm):
             return False
     
     def get_optimal_level(self, content_type: str, file_size: int) -> int:
-        """
-        Détermine le niveau optimal selon le type de contenu
+        """        Détermine le niveau optimal selon le type de contenu
         
         Args:
             content_type: Type de contenu
@@ -291,8 +273,7 @@ class ZstandardAlgorithm(CompressionAlgorithm):
             
         Returns:
             int: Niveau de compression optimal
-        """
-        base_level = self.optimal_levels.get(content_type, 6)
+        """        base_level = self.optimal_levels.get(content_type, 6)
         
         # Ajustement selon la taille
         if file_size > 1024**3:  # > 1GB
@@ -303,8 +284,7 @@ class ZstandardAlgorithm(CompressionAlgorithm):
         return base_level
     
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum SHA-256 d'un fichier"""
-        hash_sha256 = hashlib.sha256()
+        """Calcule le checksum SHA-256 d'un fichier"""        hash_sha256 = hashlib.sha256()
         
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(8192), b""):
@@ -313,8 +293,7 @@ class ZstandardAlgorithm(CompressionAlgorithm):
         return hash_sha256.hexdigest()
     
     def _detect_content_type(self, file_path: Path) -> str:
-        """Détecte le type de contenu d'un fichier"""
-        extension = file_path.suffix.lower()
+        """Détecte le type de contenu d'un fichier"""        extension = file_path.suffix.lower()
         
         content_type_mapping = {
             # Audio
@@ -345,16 +324,14 @@ class ZstandardAlgorithm(CompressionAlgorithm):
 
 
 class GzipAlgorithm(CompressionAlgorithm):
-    """
-    Algorithme Gzip - Compatibilité maximale
+    """    Algorithme Gzip - Compatibilité maximale
     
     Avantages:
     - Support universel
     - Intégration web native
     - Streaming efficace
     - Décompression rapide
-    """
-    
+    """    
     def __init__(self):
         self.name = "gzip"
         self.extensions = [".gz"]
@@ -376,8 +353,7 @@ class GzipAlgorithm(CompressionAlgorithm):
         level: int = 6,
         **kwargs
     ) -> CompressionResult:
-        """Compresse un fichier avec Gzip"""
-        try:
+        """Compresse un fichier avec Gzip"""        try:
             start_time = datetime.now()
             
             if not input_path.exists():
@@ -419,8 +395,7 @@ class GzipAlgorithm(CompressionAlgorithm):
             raise CompressionException(f"Gzip compression failed: {e}")
     
     async def decompress(self, input_path: Path, output_path: Path, **kwargs) -> bool:
-        """Décompresse un fichier Gzip"""
-        try:
+        """Décompresse un fichier Gzip"""        try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
             with gzip.open(input_path, 'rb') as source:
@@ -434,33 +409,28 @@ class GzipAlgorithm(CompressionAlgorithm):
             return False
     
     def get_optimal_level(self, content_type: str, file_size: int) -> int:
-        """Retourne le niveau optimal pour Gzip"""
-        return self.optimal_levels.get(content_type, 6)
+        """Retourne le niveau optimal pour Gzip"""        return self.optimal_levels.get(content_type, 6)
     
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum SHA-256"""
-        hash_sha256 = hashlib.sha256()
+        """Calcule le checksum SHA-256"""        hash_sha256 = hashlib.sha256()
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(8192), b""):
                 hash_sha256.update(chunk)
         return hash_sha256.hexdigest()
     
     def _detect_content_type(self, file_path: Path) -> str:
-        """Détecte le type de contenu"""
-        return ZstandardAlgorithm()._detect_content_type(file_path)
+        """Détecte le type de contenu"""        return ZstandardAlgorithm()._detect_content_type(file_path)
 
 
 class Bzip2Algorithm(CompressionAlgorithm):
-    """
-    Algorithme Bzip2 - Compression maximale
+    """    Algorithme Bzip2 - Compression maximale
     
     Avantages:
     - Très bon ratio de compression
     - Adapté aux gros fichiers texte
     - Récupération d'erreurs
     - Compression déterministe
-    """
-    
+    """    
     def __init__(self):
         self.name = "bzip2"
         self.extensions = [".bz2"]
@@ -482,8 +452,7 @@ class Bzip2Algorithm(CompressionAlgorithm):
         level: int = 6,
         **kwargs
     ) -> CompressionResult:
-        """Compresse un fichier avec Bzip2"""
-        try:
+        """Compresse un fichier avec Bzip2"""        try:
             start_time = datetime.now()
             
             if not input_path.exists():
@@ -525,8 +494,7 @@ class Bzip2Algorithm(CompressionAlgorithm):
             raise CompressionException(f"Bzip2 compression failed: {e}")
     
     async def decompress(self, input_path: Path, output_path: Path, **kwargs) -> bool:
-        """Décompresse un fichier Bzip2"""
-        try:
+        """Décompresse un fichier Bzip2"""        try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
             with bz2.open(input_path, 'rb') as source:
@@ -540,25 +508,21 @@ class Bzip2Algorithm(CompressionAlgorithm):
             return False
     
     def get_optimal_level(self, content_type: str, file_size: int) -> int:
-        """Retourne le niveau optimal pour Bzip2"""
-        return self.optimal_levels.get(content_type, 6)
+        """Retourne le niveau optimal pour Bzip2"""        return self.optimal_levels.get(content_type, 6)
     
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum SHA-256"""
-        hash_sha256 = hashlib.sha256()
+        """Calcule le checksum SHA-256"""        hash_sha256 = hashlib.sha256()
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(8192), b""):
                 hash_sha256.update(chunk)
         return hash_sha256.hexdigest()
     
     def _detect_content_type(self, file_path: Path) -> str:
-        """Détecte le type de contenu"""
-        return ZstandardAlgorithm()._detect_content_type(file_path)
+        """Détecte le type de contenu"""        return ZstandardAlgorithm()._detect_content_type(file_path)
 
 
 class CompressionEngine:
-    """
-    Moteur de compression intelligent avec sélection automatique d'algorithme
+    """    Moteur de compression intelligent avec sélection automatique d'algorithme
     
     Fonctionnalités:
     - Sélection automatique algorithme optimal
@@ -567,8 +531,7 @@ class CompressionEngine:
     - Compression parallèle
     - Vérification intégrité
     - Statistiques détaillées
-    """
-    
+    """    
     def __init__(self):
         self.algorithms = {
             "zstd": ZstandardAlgorithm(),
@@ -594,8 +557,7 @@ class CompressionEngine:
         source_paths: List[Path],
         config: Optional[CompressionConfig] = None
     ) -> List[CompressionResult]:
-        """
-        Compresse une liste de fichiers avec optimisation intelligente
+        """        Compresse une liste de fichiers avec optimisation intelligente
         
         Args:
             source_paths: Liste des fichiers à comprimer
@@ -603,8 +565,7 @@ class CompressionEngine:
             
         Returns:
             List[CompressionResult]: Résultats de compression
-        """
-        config = config or CompressionConfig()
+        """        config = config or CompressionConfig()
         results = []
         
         # Préparation des tâches parallèles
@@ -646,8 +607,7 @@ class CompressionEngine:
         source_path: Path,
         config: CompressionConfig
     ) -> CompressionResult:
-        """
-        Compresse un fichier unique avec sélection d'algorithme optimal
+        """        Compresse un fichier unique avec sélection d'algorithme optimal
         
         Args:
             source_path: Fichier source
@@ -655,8 +615,7 @@ class CompressionEngine:
             
         Returns:
             CompressionResult: Résultat de la compression
-        """
-        try:
+        """        try:
             # Sélection algorithme optimal
             algorithm_name = config.algorithm
             
@@ -709,8 +668,7 @@ class CompressionEngine:
         source_path: Path,
         config: CompressionConfig
     ) -> str:
-        """
-        Sélectionne l'algorithme optimal selon le contexte
+        """        Sélectionne l'algorithme optimal selon le contexte
         
         Args:
             source_path: Fichier à analyser
@@ -718,8 +676,7 @@ class CompressionEngine:
             
         Returns:
             str: Nom de l'algorithme optimal
-        """
-        content_type = ZstandardAlgorithm()._detect_content_type(source_path)
+        """        content_type = ZstandardAlgorithm()._detect_content_type(source_path)
         file_size = source_path.stat().st_size
         
         # Matrice de sélection basée sur type de contenu et taille
@@ -780,8 +737,7 @@ class CompressionEngine:
         source_path: Path,
         config: CompressionConfig
     ) -> CompressionResult:
-        """
-        Benchmark de tous les algorithmes pour sélectionner le meilleur
+        """        Benchmark de tous les algorithmes pour sélectionner le meilleur
         
         Args:
             source_path: Fichier à benchmark
@@ -789,8 +745,7 @@ class CompressionEngine:
             
         Returns:
             CompressionResult: Meilleur résultat de compression
-        """
-        logger.info(f"Benchmarking compression algorithms for {source_path.name}")
+        """        logger.info(f"Benchmarking compression algorithms for {source_path.name}")
         
         benchmark_results = []
         temp_dir = Path(tempfile.mkdtemp())
@@ -851,8 +806,7 @@ class CompressionEngine:
         compressed_path: Path,
         algorithm: CompressionAlgorithm
     ) -> bool:
-        """
-        Vérifie l'intégrité de la compression via décompression test
+        """        Vérifie l'intégrité de la compression via décompression test
         
         Args:
             original_path: Fichier original
@@ -861,8 +815,7 @@ class CompressionEngine:
             
         Returns:
             bool: True si intégrité vérifiée
-        """
-        try:
+        """        try:
             # Décompression dans fichier temporaire
             with tempfile.NamedTemporaryFile(delete=False) as temp_file:
                 temp_path = Path(temp_file.name)
@@ -887,8 +840,7 @@ class CompressionEngine:
             return False
     
     async def _calculate_file_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum SHA-256 d'un fichier"""
-        hash_sha256 = hashlib.sha256()
+        """Calcule le checksum SHA-256 d'un fichier"""        hash_sha256 = hashlib.sha256()
         
         with open(file_path, 'rb') as f:
             while chunk := f.read(8192):
@@ -897,8 +849,7 @@ class CompressionEngine:
         return hash_sha256.hexdigest()
     
     async def _update_compression_stats(self, result: CompressionResult):
-        """Met à jour les statistiques globales de compression"""
-        self.compression_stats["total_files_compressed"] += 1
+        """Met à jour les statistiques globales de compression"""        self.compression_stats["total_files_compressed"] += 1
         self.compression_stats["total_bytes_processed"] += result.original_size
         self.compression_stats["total_bytes_saved"] += result.space_saved_bytes
         
@@ -941,8 +892,7 @@ class CompressionEngine:
         compressed_paths: List[Path],
         output_directory: Optional[Path] = None
     ) -> List[bool]:
-        """
-        Décompresse une liste de fichiers
+        """        Décompresse une liste de fichiers
         
         Args:
             compressed_paths: Liste des fichiers compressés
@@ -950,8 +900,7 @@ class CompressionEngine:
             
         Returns:
             List[bool]: Résultats de décompression
-        """
-        results = []
+        """        results = []
         
         for compressed_path in compressed_paths:
             try:
@@ -985,8 +934,7 @@ class CompressionEngine:
         return results
     
     def _detect_algorithm_from_extension(self, file_path: Path) -> Optional[CompressionAlgorithm]:
-        """Détecte l'algorithme de compression par l'extension du fichier"""
-        extension = file_path.suffix.lower()
+        """Détecte l'algorithme de compression par l'extension du fichier"""        extension = file_path.suffix.lower()
         
         for algorithm in self.algorithms.values():
             if extension in algorithm.extensions:
@@ -995,13 +943,11 @@ class CompressionEngine:
         return None
     
     def get_compression_stats(self) -> Dict[str, Any]:
-        """
-        Récupère les statistiques de compression
+        """        Récupère les statistiques de compression
         
         Returns:
             Dict[str, Any]: Statistiques détaillées
-        """
-        stats = self.compression_stats.copy()
+        """        stats = self.compression_stats.copy()
         
         # Calculs additionnels
         if stats["total_bytes_processed"] > 0:
@@ -1015,8 +961,7 @@ class CompressionEngine:
         return stats
     
     def get_algorithm_recommendations(self, content_type: str, file_size: int) -> Dict[str, Any]:
-        """
-        Fournit des recommandations d'algorithme pour un type de contenu
+        """        Fournit des recommandations d'algorithme pour un type de contenu
         
         Args:
             content_type: Type de contenu
@@ -1024,8 +969,7 @@ class CompressionEngine:
             
         Returns:
             Dict[str, Any]: Recommandations détaillées
-        """
-        recommendations = {}
+        """        recommendations = {}
         
         for algo_name, algorithm in self.algorithms.items():
             optimal_level = algorithm.get_optimal_level(content_type, file_size)
@@ -1044,8 +988,7 @@ class CompressionEngine:
         return recommendations
     
     def _estimate_compression_ratio(self, algorithm: str, content_type: str) -> float:
-        """Estime le ratio de compression selon l'algorithme et type de contenu"""
-        # Ratios estimés basés sur données empiriques
+        """Estime le ratio de compression selon l'algorithme et type de contenu"""        # Ratios estimés basés sur données empiriques
         ratios = {
             "zstd": {
                 "text": 0.25, "image": 0.95, "audio": 0.98, "video": 0.99,
@@ -1064,8 +1007,7 @@ class CompressionEngine:
         return ratios.get(algorithm, {}).get(content_type, 0.70)
     
     def _estimate_compression_speed(self, algorithm: str, file_size: int) -> float:
-        """Estime la vitesse de compression en MB/s"""
-        # Vitesses estimées basées sur benchmarks
+        """Estime la vitesse de compression en MB/s"""        # Vitesses estimées basées sur benchmarks
         base_speeds = {
             "zstd": 100,    # MB/s
             "gzip": 50,     # MB/s
@@ -1083,8 +1025,7 @@ class CompressionEngine:
         return base_speed
     
     def _get_suitability_description(self, algorithm: str, content_type: str) -> str:
-        """Fournit une description de l'adéquation de l'algorithme"""
-        descriptions = {
+        """Fournit une description de l'adéquation de l'algorithme"""        descriptions = {
             "zstd": {
                 "text": "Excellent équilibre vitesse/compression pour texte",
                 "image": "Rapide pour images déjà compressées",
@@ -1118,16 +1059,14 @@ class CompressionEngine:
 
 
 class AdaptiveCompression(CompressionEngine):
-    """
-    Moteur de compression adaptatif avec apprentissage automatique
+    """    Moteur de compression adaptatif avec apprentissage automatique
     
     Fonctionnalités:
     - Apprentissage patterns de compression
     - Adaptation automatique selon usage
     - Prédiction performances
     - Optimisation continue
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.learning_data = {}
@@ -1136,8 +1075,7 @@ class AdaptiveCompression(CompressionEngine):
         logger.info("AdaptiveCompression initialized with ML optimization")
     
     async def learn_from_compression(self, source_path: Path, result: CompressionResult):
-        """Apprend des résultats de compression pour améliorer les prédictions"""
-        content_type = result.metadata.get("content_type", "other")
+        """Apprend des résultats de compression pour améliorer les prédictions"""        content_type = result.metadata.get("content_type", "other")
         file_size = result.original_size
         
         # Stockage données d'apprentissage
@@ -1163,8 +1101,7 @@ class AdaptiveCompression(CompressionEngine):
             self.learning_data[key]["best_ratio"] = result.compression_ratio
     
     def _get_size_category(self, file_size: int) -> str:
-        """Catégorise la taille de fichier"""
-        if file_size < 1024**2:
+        """Catégorise la taille de fichier"""        if file_size < 1024**2:
             return "small"
         elif file_size < 100 * 1024**2:
             return "medium"
@@ -1172,8 +1109,7 @@ class AdaptiveCompression(CompressionEngine):
             return "large"
     
     async def _select_optimal_algorithm(self, source_path: Path, config: CompressionConfig) -> str:
-        """Sélection d'algorithme basée sur l'apprentissage"""
-        if not self.adaptation_enabled:
+        """Sélection d'algorithme basée sur l'apprentissage"""        if not self.adaptation_enabled:
             return await super()._select_optimal_algorithm(source_path, config)
         
         content_type = ZstandardAlgorithm()._detect_content_type(source_path)
@@ -1193,16 +1129,14 @@ class AdaptiveCompression(CompressionEngine):
 
 
 class ContentAwareCompression(CompressionEngine):
-    """
-    Compression intelligente basée sur l'analyse de contenu
+    """    Compression intelligente basée sur l'analyse de contenu
     
     Fonctionnalités:
     - Analyse profonde du contenu
     - Optimisation fine par type
     - Détection patterns spécifiques
     - Compression spécialisée
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.content_analyzers = self._initialize_content_analyzers()
@@ -1210,8 +1144,7 @@ class ContentAwareCompression(CompressionEngine):
         logger.info("ContentAwareCompression initialized with content analysis")
     
     def _initialize_content_analyzers(self) -> Dict[str, Any]:
-        """Initialise les analyseurs de contenu spécialisés"""
-        return {
+        """Initialise les analyseurs de contenu spécialisés"""        return {
             "text": self._analyze_text_content,
             "image": self._analyze_image_content,
             "audio": self._analyze_audio_content,
@@ -1220,8 +1153,7 @@ class ContentAwareCompression(CompressionEngine):
         }
     
     async def _analyze_text_content(self, file_path: Path) -> Dict[str, Any]:
-        """Analyse approfondie du contenu textuel"""
-        try:
+        """Analyse approfondie du contenu textuel"""        try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 sample = f.read(10000)  # Échantillon 10KB
             
@@ -1240,40 +1172,35 @@ class ContentAwareCompression(CompressionEngine):
             return {"recommended_algorithm": "zstd", "recommended_level": 6}
     
     async def _analyze_image_content(self, file_path: Path) -> Dict[str, Any]:
-        """Analyse du contenu image"""
-        # Analyse simplifiée - en production utiliser PIL/OpenCV
+        """Analyse du contenu image"""        # Analyse simplifiée - en production utiliser PIL/OpenCV
         return {
             "recommended_algorithm": "gzip",
             "recommended_level": 1  # Images déjà compressées
         }
     
     async def _analyze_audio_content(self, file_path: Path) -> Dict[str, Any]:
-        """Analyse du contenu audio"""
-        # Analyse simplifiée - en production utiliser librosa
+        """Analyse du contenu audio"""        # Analyse simplifiée - en production utiliser librosa
         return {
             "recommended_algorithm": "zstd",
             "recommended_level": 3  # Audio déjà compressé
         }
     
     async def _analyze_video_content(self, file_path: Path) -> Dict[str, Any]:
-        """Analyse du contenu vidéo"""
-        # Analyse simplifiée - en production utiliser ffprobe
+        """Analyse du contenu vidéo"""        # Analyse simplifiée - en production utiliser ffprobe
         return {
             "recommended_algorithm": "zstd",
             "recommended_level": 1  # Vidéo déjà compressée
         }
     
     async def _analyze_document_content(self, file_path: Path) -> Dict[str, Any]:
-        """Analyse du contenu document"""
-        # Analyse simplifiée - en production utiliser extracteurs spécialisés
+        """Analyse du contenu document"""        # Analyse simplifiée - en production utiliser extracteurs spécialisés
         return {
             "recommended_algorithm": "zstd",
             "recommended_level": 6
         }
     
     async def _select_optimal_algorithm(self, source_path: Path, config: CompressionConfig) -> str:
-        """Sélection basée sur l'analyse de contenu"""
-        content_type = ZstandardAlgorithm()._detect_content_type(source_path)
+        """Sélection basée sur l'analyse de contenu"""        content_type = ZstandardAlgorithm()._detect_content_type(source_path)
         
         # Analyse approfondie si analyseur disponible
         if content_type in self.content_analyzers:

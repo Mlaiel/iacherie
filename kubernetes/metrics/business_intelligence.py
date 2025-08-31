@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Business Intelligence Engine
+"""IA Influencer Agent - Business Intelligence Engine
 Advanced business intelligence with ML-powered analytics and revenue optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -32,7 +31,6 @@ Features:
 - Competitive analysis and market insights
 - ROI analysis and cost optimization
 """
-
 import logging
 import asyncio
 import time
@@ -69,8 +67,7 @@ settings = get_settings()
 
 
 class BusinessMetricType(Enum):
-    """Business metric types"""
-    REVENUE = "revenue"
+    """Business metric types"""    REVENUE = "revenue"
     CUSTOMER_ACQUISITION_COST = "cac"
     CUSTOMER_LIFETIME_VALUE = "clv"
     CHURN_RATE = "churn_rate"
@@ -92,8 +89,7 @@ class BusinessMetricType(Enum):
 
 
 class AnalysisType(Enum):
-    """Analysis types for business intelligence"""
-    DESCRIPTIVE = "descriptive"
+    """Analysis types for business intelligence"""    DESCRIPTIVE = "descriptive"
     DIAGNOSTIC = "diagnostic"
     PREDICTIVE = "predictive"
     PRESCRIPTIVE = "prescriptive"
@@ -106,8 +102,7 @@ class AnalysisType(Enum):
 
 
 class CustomerSegment(Enum):
-    """Customer segmentation categories"""
-    HIGH_VALUE = "high_value"
+    """Customer segmentation categories"""    HIGH_VALUE = "high_value"
     GROWING = "growing"
     AT_RISK = "at_risk"
     NEW_CUSTOMER = "new_customer"
@@ -119,8 +114,7 @@ class CustomerSegment(Enum):
 
 
 class RevenueMetric(Enum):
-    """Revenue metric types"""
-    TOTAL_REVENUE = "total_revenue"
+    """Revenue metric types"""    TOTAL_REVENUE = "total_revenue"
     RECURRING_REVENUE = "recurring_revenue"
     AVERAGE_REVENUE_PER_USER = "arpu"
     LIFETIME_VALUE = "ltv"
@@ -130,8 +124,7 @@ class RevenueMetric(Enum):
 
 @dataclass
 class BusinessKPI:
-    """Business KPI definition"""
-    name: str
+    """Business KPI definition"""    name: str
     metric_type: BusinessMetricType
     current_value: float
     target_value: float
@@ -150,8 +143,7 @@ class BusinessKPI:
 
 @dataclass
 class CustomerInsight:
-    """Customer behavior insight"""
-    customer_id: str
+    """Customer behavior insight"""    customer_id: str
     segment: CustomerSegment
     clv_prediction: float
     churn_probability: float
@@ -169,8 +161,7 @@ class CustomerInsight:
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis results"""
-    current_revenue: float
+    """Revenue analysis results"""    current_revenue: float
     projected_revenue: float
     revenue_growth_rate: float
     seasonal_patterns: Dict[str, float]
@@ -185,8 +176,7 @@ class RevenueAnalysis:
 
 @dataclass
 class RevenueBreakdown:
-    """Revenue breakdown analysis"""
-    total_revenue: float
+    """Revenue breakdown analysis"""    total_revenue: float
     revenue_by_platform: Dict[str, float]
     revenue_by_content_type: Dict[str, float]
     revenue_by_tenant: Dict[str, float]
@@ -201,8 +191,7 @@ class RevenueBreakdown:
 
 @dataclass
 class MarketAnalysis:
-    """Market and competitive analysis"""
-    market_size: float
+    """Market and competitive analysis"""    market_size: float
     market_growth_rate: float
     competitive_position: str
     market_share: float
@@ -217,8 +206,7 @@ class MarketAnalysis:
 
 @dataclass
 class BusinessMetrics:
-    """Comprehensive business metrics"""
-    revenue_metrics: RevenueBreakdown
+    """Comprehensive business metrics"""    revenue_metrics: RevenueBreakdown
     customer_metrics: Dict[str, Any]
     operational_metrics: Dict[str, Any]
     financial_metrics: Dict[str, Any]
@@ -229,8 +217,7 @@ class BusinessMetrics:
 
 
 class BusinessIntelligenceEngine:
-    """
-    Advanced Business Intelligence Engine
+    """    Advanced Business Intelligence Engine
     
     Features:
     - Real-time business metrics tracking and analysis
@@ -243,8 +230,7 @@ class BusinessIntelligenceEngine:
     - ML-powered recommendations and insights
     - ROI analysis and cost optimization
     - Performance benchmarking and trend analysis
-    """
-    
+    """    
     def __init__(self, config: Optional[MetricsConfiguration] = None):
         self.config = config or get_metrics_config()
         self.logger = logger
@@ -283,8 +269,7 @@ class BusinessIntelligenceEngine:
         self._initialize_ml_models()
     
     async def start(self) -> None:
-        """Start business intelligence engine"""
-        try:
+        """Start business intelligence engine"""        try:
             if self._running:
                 self.logger.warning("Business Intelligence Engine already running")
                 return
@@ -328,8 +313,7 @@ class BusinessIntelligenceEngine:
             raise
     
     async def stop(self) -> None:
-        """Stop business intelligence engine"""
-        try:
+        """Stop business intelligence engine"""        try:
             self._running = False
             
             # Stop all analysis tasks
@@ -357,8 +341,7 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None,
         time_range: str = "30d"
     ) -> Dict[str, BusinessKPI]:
-        """Calculate comprehensive business KPIs"""
-        try:
+        """Calculate comprehensive business KPIs"""        try:
             kpis = {}
             
             # Revenue KPIs
@@ -417,8 +400,7 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None,
         analysis_type: AnalysisType = AnalysisType.DESCRIPTIVE
     ) -> Dict[str, Any]:
-        """Analyze customer behavior patterns"""
-        try:
+        """Analyze customer behavior patterns"""        try:
             # Get customer data
             customer_data = await self._get_customer_data(tenant_id)
             
@@ -458,8 +440,7 @@ class BusinessIntelligenceEngine:
         tenant_id: Optional[str] = None,
         forecast_days: int = 30
     ) -> RevenueAnalysis:
-        """Predict revenue using ML models"""
-        try:
+        """Predict revenue using ML models"""        try:
             # Get historical revenue data
             revenue_data = await self._get_revenue_data(tenant_id)
             
@@ -549,8 +530,7 @@ class BusinessIntelligenceEngine:
         self,
         tenant_id: Optional[str] = None
     ) -> Dict[str, CustomerInsight]:
-        """Predict customer churn using ML models"""
-        try:
+        """Predict customer churn using ML models"""        try:
             # Get customer data
             customer_data = await self._get_customer_data(tenant_id)
             
@@ -618,8 +598,7 @@ class BusinessIntelligenceEngine:
         time_period: timedelta = timedelta(days=30),
         tenant_id: Optional[str] = None
     ) -> RevenueBreakdown:
-        """Analyze revenue performance and trends"""
-        try:
+        """Analyze revenue performance and trends"""        try:
             end_time = datetime.utcnow()
             start_time = end_time - time_period
             
@@ -675,8 +654,7 @@ class BusinessIntelligenceEngine:
         time_period: timedelta = timedelta(days=30),
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Analyze user engagement metrics"""
-        try:
+        """Analyze user engagement metrics"""        try:
             end_time = datetime.utcnow()
             start_time = end_time - time_period
             
@@ -732,8 +710,7 @@ class BusinessIntelligenceEngine:
         time_period: timedelta = timedelta(days=30),
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Analyze content performance metrics"""
-        try:
+        """Analyze content performance metrics"""        try:
             end_time = datetime.utcnow()
             start_time = end_time - time_period
             
@@ -798,8 +775,7 @@ class BusinessIntelligenceEngine:
         self,
         tenant_id: Optional[str] = None
     ) -> List[BusinessKPI]:
-        """Calculate key business KPIs"""
-        try:
+        """Calculate key business KPIs"""        try:
             kpis = []
             
             # Revenue KPIs
@@ -882,8 +858,7 @@ class BusinessIntelligenceEngine:
         time_period: timedelta = timedelta(days=30),
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive business report"""
-        try:
+        """Generate comprehensive business report"""        try:
             report = {
                 "report_type": report_type,
                 "tenant_id": tenant_id,
@@ -952,8 +927,7 @@ class BusinessIntelligenceEngine:
         forecast_days: int = 30,
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Forecast business metrics using machine learning"""
-        try:
+        """Forecast business metrics using machine learning"""        try:
             # Get historical data
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(days=90)  # 3 months of history
@@ -1027,8 +1001,7 @@ class BusinessIntelligenceEngine:
         tenant_ids: List[str],
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """Compare performance across multiple tenants"""
-        try:
+        """Compare performance across multiple tenants"""        try:
             comparison = {
                 "time_period": {
                     "days": time_period.days,
@@ -1093,8 +1066,7 @@ class BusinessIntelligenceEngine:
         end_time: datetime,
         tenant_id: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """Get revenue data from storage"""
-        try:
+        """Get revenue data from storage"""        try:
             # This would fetch from actual revenue tracking storage
             # Placeholder implementation
             revenue_data = []
@@ -1139,8 +1111,7 @@ class BusinessIntelligenceEngine:
         end_time: datetime,
         tenant_id: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """Get user activity data"""
-        try:
+        """Get user activity data"""        try:
             # This would fetch from actual user activity storage
             # Placeholder implementation
             activity_data = []
@@ -1178,8 +1149,7 @@ class BusinessIntelligenceEngine:
             return []
     
     def _calculate_daily_active_users(self, activity_data: List[Dict]) -> Dict[str, int]:
-        """Calculate daily active users from activity data"""
-        try:
+        """Calculate daily active users from activity data"""        try:
             daily_users = {}
             
             for activity in activity_data:
@@ -1199,8 +1169,7 @@ class BusinessIntelligenceEngine:
             return {}
     
     def _create_empty_revenue_breakdown(self) -> RevenueBreakdown:
-        """Create empty revenue breakdown"""
-        return RevenueBreakdown(
+        """Create empty revenue breakdown"""        return RevenueBreakdown(
             total_revenue=0.0,
             revenue_by_platform={},
             revenue_by_content_type={},
@@ -1210,8 +1179,7 @@ class BusinessIntelligenceEngine:
         )
     
     def _determine_trend(self, growth_rate: float) -> str:
-        """Determine trend from growth rate"""
-        if growth_rate > 0.05:  # 5% growth
+        """Determine trend from growth rate"""        if growth_rate > 0.05:  # 5% growth
             return "increasing"
         elif growth_rate < -0.05:  # 5% decline
             return "decreasing"
@@ -1219,8 +1187,7 @@ class BusinessIntelligenceEngine:
             return "stable"
     
     def _determine_health_status(self, current_value: float, target_value: float) -> str:
-        """Determine health status from current vs target value"""
-        ratio = current_value / target_value if target_value > 0 else 0
+        """Determine health status from current vs target value"""        ratio = current_value / target_value if target_value > 0 else 0
         
         if ratio >= 1.2:  # 120% of target
             return "excellent"
@@ -1232,8 +1199,7 @@ class BusinessIntelligenceEngine:
             return "critical"
     
     def _initialize_business_targets(self) -> Dict[str, float]:
-        """Initialize business targets"""
-        return {
+        """Initialize business targets"""        return {
             "monthly_revenue": 100000.0,  # EUR
             "monthly_active_users": 10000,
             "daily_content_target": 100,
@@ -1243,8 +1209,7 @@ class BusinessIntelligenceEngine:
         }
     
     def _initialize_kpi_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize KPI thresholds"""
-        return {
+        """Initialize KPI thresholds"""        return {
             "revenue": {
                 "excellent": 1.2,
                 "good": 1.0,

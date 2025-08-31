@@ -1,5 +1,4 @@
-"""
-Creator Collaboration Matching Parsers Module
+"""Creator Collaboration Matching Parsers Module
 =============================================
 
 Ultra-advanced parsers for creator collaboration matching, partnership analytics,
@@ -23,7 +22,6 @@ Development Team Specialties:
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
 """
-
 import asyncio
 import json
 import logging
@@ -45,8 +43,7 @@ from .parser_config import ParserConfig
 
 
 class CreatorTier(Enum):
-    """Creator tier classification"""
-    MEGA_INFLUENCER = "mega"      # 1M+ followers
+    """Creator tier classification"""    MEGA_INFLUENCER = "mega"      # 1M+ followers
     MACRO_INFLUENCER = "macro"    # 100K-1M followers
     MICRO_INFLUENCER = "micro"    # 10K-100K followers
     NANO_INFLUENCER = "nano"      # 1K-10K followers
@@ -54,8 +51,7 @@ class CreatorTier(Enum):
 
 
 class ContentCategory(Enum):
-    """Content category types"""
-    MUSIC = "music"
+    """Content category types"""    MUSIC = "music"
     GAMING = "gaming"
     BEAUTY = "beauty"
     TECH = "tech"
@@ -73,8 +69,7 @@ class ContentCategory(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of collaboration"""
-    FEATURING = "featuring"       # Music featuring
+    """Types of collaboration"""    FEATURING = "featuring"       # Music featuring
     GUEST_APPEARANCE = "guest"    # Podcast/video guest
     JOINT_CONTENT = "joint"       # Collaborative content
     CROSS_PROMOTION = "cross_promo"  # Mutual promotion
@@ -87,8 +82,7 @@ class CollaborationType(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile"""
-    creator_id: str
+    """Comprehensive creator profile"""    creator_id: str
     username: str
     display_name: str
     platforms: Dict[str, Dict[str, Any]] = field(default_factory=dict)
@@ -107,8 +101,7 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationMatch:
-    """Potential collaboration match"""
-    primary_creator: CreatorProfile
+    """Potential collaboration match"""    primary_creator: CreatorProfile
     matched_creator: CreatorProfile
     compatibility_score: float
     collaboration_types: List[CollaborationType]
@@ -122,8 +115,7 @@ class CollaborationMatch:
 
 @dataclass
 class CollaborationAnalytics:
-    """Analytics for collaboration opportunities"""
-    total_matches: int = 0
+    """Analytics for collaboration opportunities"""    total_matches: int = 0
     high_potential_matches: int = 0
     category_distribution: Dict[ContentCategory, int] = field(default_factory=dict)
     tier_distribution: Dict[CreatorTier, int] = field(default_factory=dict)
@@ -133,8 +125,7 @@ class CollaborationAnalytics:
 
 
 class CreatorProfileParser:
-    """Advanced creator profile analysis and parsing"""
-    
+    """Advanced creator profile analysis and parsing"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -144,8 +135,7 @@ class CreatorProfileParser:
         creator_data: Dict[str, Any],
         platforms: List[str] = None
     ) -> CreatorProfile:
-        """Analyze and create comprehensive creator profile"""
-        try:
+        """Analyze and create comprehensive creator profile"""        try:
             profile = CreatorProfile(
                 creator_id=creator_data.get('id', ''),
                 username=creator_data.get('username', ''),
@@ -201,8 +191,7 @@ class CreatorProfileParser:
             raise CollaborationParsingError(f"Failed to analyze creator profile: {e}")
     
     async def _analyze_platform_presence(self, platform_data: Dict[str, Any], platform: str) -> Dict[str, Any]:
-        """Analyze creator's presence on specific platform"""
-        analysis = {
+        """Analyze creator's presence on specific platform"""        analysis = {
             'platform': platform,
             'followers': platform_data.get('followers', 0),
             'following': platform_data.get('following', 0),
@@ -267,8 +256,7 @@ class CreatorProfileParser:
         return analysis
     
     def _determine_creator_tier(self, total_followers: int) -> CreatorTier:
-        """Determine creator tier based on follower count"""
-        if total_followers >= 1_000_000:
+        """Determine creator tier based on follower count"""        if total_followers >= 1_000_000:
             return CreatorTier.MEGA_INFLUENCER
         elif total_followers >= 100_000:
             return CreatorTier.MACRO_INFLUENCER
@@ -280,8 +268,7 @@ class CreatorProfileParser:
             return CreatorTier.EMERGING
     
     async def _analyze_content_categories(self, creator_data: Dict[str, Any]) -> List[ContentCategory]:
-        """Analyze and categorize creator's content"""
-        categories = []
+        """Analyze and categorize creator's content"""        categories = []
         
         # Analyze bio/description text
         bio_text = ""
@@ -333,8 +320,7 @@ class CreatorProfileParser:
         return categories
     
     async def _calculate_overall_engagement(self, platform_data: Dict[str, Dict[str, Any]]) -> float:
-        """Calculate overall engagement rate across platforms"""
-        total_engagement = 0
+        """Calculate overall engagement rate across platforms"""        total_engagement = 0
         total_weight = 0
         
         for platform, data in platform_data.items():
@@ -350,8 +336,7 @@ class CreatorProfileParser:
         return total_engagement / max(total_weight, 1)
     
     async def _assess_content_quality(self, creator_data: Dict[str, Any]) -> float:
-        """Assess overall content quality score"""
-        quality_score = 0.5  # Base score
+        """Assess overall content quality score"""        quality_score = 0.5  # Base score
         
         # Check for verified status
         verified_count = sum(1 for platform_data in creator_data.values() 
@@ -380,8 +365,7 @@ class CreatorProfileParser:
         return min(quality_score, 1.0)
     
     async def _extract_collaboration_history(self, creator_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Extract collaboration history from creator data"""
-        collaborations = []
+        """Extract collaboration history from creator data"""        collaborations = []
         
         # This would typically involve analyzing:
         # - Video titles/descriptions for "feat.", "with", "collab"
@@ -393,8 +377,7 @@ class CreatorProfileParser:
         return collaborations
     
     async def _analyze_audience_demographics(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience demographics"""
-        demographics = {
+        """Analyze audience demographics"""        demographics = {
             'age_groups': {},
             'gender_distribution': {},
             'geographic_distribution': {},
@@ -407,8 +390,7 @@ class CreatorProfileParser:
         return demographics
     
     async def _calculate_brand_safety_score(self, creator_data: Dict[str, Any]) -> float:
-        """Calculate brand safety score"""
-        safety_score = 0.8  # Base safe score
+        """Calculate brand safety score"""        safety_score = 0.8  # Base safe score
         
         # Check for controversial content indicators
         content_text = ""
@@ -436,8 +418,7 @@ class CreatorProfileParser:
         return max(0.0, min(safety_score, 1.0))
     
     async def _extract_collaboration_preferences(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract collaboration preferences from creator data"""
-        preferences = {
+        """Extract collaboration preferences from creator data"""        preferences = {
             'collaboration_types': [],
             'preferred_brands': [],
             'budget_range': {'min': 0, 'max': 0},
@@ -456,8 +437,7 @@ class CreatorProfileParser:
 
 
 class CollaborationMatchingEngine:
-    """Advanced AI-powered collaboration matching engine"""
-    
+    """Advanced AI-powered collaboration matching engine"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -470,8 +450,7 @@ class CollaborationMatchingEngine:
         collaboration_types: List[CollaborationType] = None,
         min_compatibility_score: float = 0.6
     ) -> List[CollaborationMatch]:
-        """Find potential collaboration matches using AI algorithms"""
-        try:
+        """Find potential collaboration matches using AI algorithms"""        try:
             matches = []
             
             for candidate in candidate_creators:
@@ -508,8 +487,7 @@ class CollaborationMatchingEngine:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate compatibility score between two creators"""
-        try:
+        """Calculate compatibility score between two creators"""        try:
             scores = []
             
             # 1. Category overlap score
@@ -550,8 +528,7 @@ class CollaborationMatchingEngine:
             return 0.0
     
     def _calculate_category_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate category compatibility score"""
-        categories1 = set(creator1.categories)
+        """Calculate category compatibility score"""        categories1 = set(creator1.categories)
         categories2 = set(creator2.categories)
         
         if not categories1 or not categories2:
@@ -583,8 +560,7 @@ class CollaborationMatchingEngine:
         return min(jaccard_score, 1.0)
     
     def _calculate_tier_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate tier compatibility score"""
-        tier_values = {
+        """Calculate tier compatibility score"""        tier_values = {
             CreatorTier.EMERGING: 1,
             CreatorTier.NANO_INFLUENCER: 2,
             CreatorTier.MICRO_INFLUENCER: 3,
@@ -608,8 +584,7 @@ class CollaborationMatchingEngine:
             return 0.3  # Very different tiers
     
     def _calculate_audience_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate audience size compatibility"""
-        followers1 = creator1.total_followers
+        """Calculate audience size compatibility"""        followers1 = creator1.total_followers
         followers2 = creator2.total_followers
         
         if followers1 == 0 or followers2 == 0:
@@ -631,8 +606,7 @@ class CollaborationMatchingEngine:
             return 0.2
     
     def _calculate_engagement_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate engagement rate compatibility"""
-        engagement1 = creator1.engagement_rate
+        """Calculate engagement rate compatibility"""        engagement1 = creator1.engagement_rate
         engagement2 = creator2.engagement_rate
         
         if engagement1 == 0 or engagement2 == 0:
@@ -643,8 +617,7 @@ class CollaborationMatchingEngine:
         return ratio
     
     def _calculate_quality_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate content quality compatibility"""
-        quality1 = creator1.content_quality_score
+        """Calculate content quality compatibility"""        quality1 = creator1.content_quality_score
         quality2 = creator2.content_quality_score
         
         # Both should have reasonably high quality scores
@@ -655,16 +628,14 @@ class CollaborationMatchingEngine:
         return min_quality * 0.7 + avg_quality * 0.3
     
     def _calculate_safety_compatibility(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate brand safety compatibility"""
-        safety1 = creator1.brand_safety_score
+        """Calculate brand safety compatibility"""        safety1 = creator1.brand_safety_score
         safety2 = creator2.brand_safety_score
         
         # Both should have high safety scores
         return min(safety1, safety2)
     
     def _calculate_platform_overlap(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate platform overlap score"""
-        platforms1 = set(creator1.platforms.keys())
+        """Calculate platform overlap score"""        platforms1 = set(creator1.platforms.keys())
         platforms2 = set(creator2.platforms.keys())
         
         if not platforms1 or not platforms2:
@@ -681,8 +652,7 @@ class CollaborationMatchingEngine:
         creator2: CreatorProfile,
         requested_types: List[CollaborationType] = None
     ) -> List[CollaborationType]:
-        """Determine suitable collaboration types for creators"""
-        suitable_types = []
+        """Determine suitable collaboration types for creators"""        suitable_types = []
         
         # Music collaborations
         if ContentCategory.MUSIC in creator1.categories and ContentCategory.MUSIC in creator2.categories:
@@ -723,8 +693,7 @@ class CollaborationMatchingEngine:
         compatibility_score: float,
         collaboration_types: List[CollaborationType]
     ) -> CollaborationMatch:
-        """Create a complete collaboration match object"""
-        
+        """Create a complete collaboration match object"""        
         # Calculate estimated reach
         estimated_reach = int((creator1.total_followers + creator2.total_followers) * 0.7)  # 70% overlap assumption
         
@@ -761,8 +730,7 @@ class CollaborationMatchingEngine:
         )
     
     async def _calculate_synergy_score(self, creator1: CreatorProfile, creator2: CreatorProfile) -> float:
-        """Calculate synergy score between creators"""
-        # Synergy factors
+        """Calculate synergy score between creators"""        # Synergy factors
         synergy_factors = []
         
         # Complementary strengths
@@ -790,8 +758,7 @@ class CollaborationMatchingEngine:
         return min(sum(synergy_factors), 1.0)
     
     async def _identify_risk_factors(self, creator1: CreatorProfile, creator2: CreatorProfile) -> List[str]:
-        """Identify potential risk factors in collaboration"""
-        risks = []
+        """Identify potential risk factors in collaboration"""        risks = []
         
         # Brand safety risks
         if creator1.brand_safety_score < 0.7 or creator2.brand_safety_score < 0.7:
@@ -833,8 +800,7 @@ class CollaborationMatchingEngine:
         creator2: CreatorProfile, 
         compatibility_score: float
     ) -> List[str]:
-        """Generate human-readable reasons for the match"""
-        reasons = []
+        """Generate human-readable reasons for the match"""        reasons = []
         
         # Category overlap
         shared_categories = set(creator1.categories).intersection(set(creator2.categories))
@@ -874,8 +840,7 @@ class CollaborationMatchingEngine:
         creator2: CreatorProfile,
         collaboration_types: List[CollaborationType]
     ) -> str:
-        """Recommend approach for collaboration"""
-        
+        """Recommend approach for collaboration"""        
         if CollaborationType.FEATURING in collaboration_types:
             return "Start with a music featuring to test audience reception, then explore video content collaboration"
         
@@ -898,8 +863,7 @@ class CollaborationMatchingEngine:
         collaboration_types: List[CollaborationType],
         estimated_reach: int
     ) -> float:
-        """Estimate potential revenue from collaboration"""
-        
+        """Estimate potential revenue from collaboration"""        
         # Base revenue calculation (simplified)
         base_cpm = 2.0  # $2 per 1000 views/impressions
         base_revenue = (estimated_reach / 1000) * base_cpm

@@ -1,5 +1,4 @@
-"""
-SEO Optimization AI Agents
+"""SEO Optimization AI Agents
 
 Specialized agents for SEO optimization, content discoverability, and search ranking improvement.
 
@@ -9,7 +8,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 This module contains AI agents specialized in SEO optimization, keyword research,
 content discoverability, and search engine ranking improvement for creators.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -25,8 +23,7 @@ from ..neural_networks.optimization_networks import SEOOptimizationNetwork
 
 @dataclass
 class SEOAnalysis:
-    """SEO analysis results"""
-    seo_score: float
+    """SEO analysis results"""    seo_score: float
     keyword_performance: Dict[str, float]
     optimization_opportunities: List[str]
     ranking_potential: float
@@ -37,8 +34,7 @@ class SEOAnalysis:
 
 @dataclass
 class KeywordOpportunity:
-    """Keyword opportunity structure"""
-    keyword: str
+    """Keyword opportunity structure"""    keyword: str
     search_volume: int
     competition: float
     difficulty: float
@@ -49,13 +45,11 @@ class KeywordOpportunity:
 
 
 class SEOOptimizerAgent(BaseAIAgent):
-    """
-    AI agent specialized in SEO optimization and content discoverability.
+    """    AI agent specialized in SEO optimization and content discoverability.
     
     Provides comprehensive SEO analysis, keyword research, content optimization
     recommendations, and search ranking improvement strategies.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_id="seo_optimizer", config=config)
         self.seo_network = SEOOptimizationNetwork()
@@ -87,16 +81,14 @@ class SEOOptimizerAgent(BaseAIAgent):
         logging.info(f"SEOOptimizerAgent initialized with {len(self.ranking_factors)} ranking factors")
 
     async def analyze_content_seo(self, content_data: Dict[str, Any]) -> SEOAnalysis:
-        """
-        Analyze content for SEO performance and optimization opportunities.
+        """        Analyze content for SEO performance and optimization opportunities.
         
         Args:
             content_data: Content metadata, performance, and SEO data
             
         Returns:
             Comprehensive SEO analysis
-        """
-        try:
+        """        try:
             content_type = content_data.get('type', 'video')
             title = content_data.get('title', '')
             description = content_data.get('description', '')
@@ -179,8 +171,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     async def research_keyword_opportunities(self, creator_profile: Dict[str, Any],
                                            target_topics: List[str]) -> List[KeywordOpportunity]:
-        """
-        Research keyword opportunities for content creation.
+        """        Research keyword opportunities for content creation.
         
         Args:
             creator_profile: Creator's niche, audience, and current content
@@ -188,8 +179,7 @@ class SEOOptimizerAgent(BaseAIAgent):
             
         Returns:
             List of keyword opportunities ranked by potential
-        """
-        try:
+        """        try:
             niche = creator_profile.get('niche', 'general')
             audience_demographics = creator_profile.get('audience_demographics', {})
             current_keywords = creator_profile.get('current_top_keywords', [])
@@ -251,8 +241,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     async def optimize_content_elements(self, content_data: Dict[str, Any],
                                       target_keywords: List[str]) -> Dict[str, Any]:
-        """
-        Optimize specific content elements for SEO.
+        """        Optimize specific content elements for SEO.
         
         Args:
             content_data: Current content data
@@ -260,8 +249,7 @@ class SEOOptimizerAgent(BaseAIAgent):
             
         Returns:
             Optimized content recommendations
-        """
-        try:
+        """        try:
             content_type = content_data.get('type', 'video')
             current_title = content_data.get('title', '')
             current_description = content_data.get('description', '')
@@ -316,8 +304,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     async def monitor_seo_performance(self, creator_profile: Dict[str, Any],
                                     monitoring_period: str = "30_days") -> Dict[str, Any]:
-        """
-        Monitor SEO performance and track improvements over time.
+        """        Monitor SEO performance and track improvements over time.
         
         Args:
             creator_profile: Creator's profile and content portfolio
@@ -325,8 +312,7 @@ class SEOOptimizerAgent(BaseAIAgent):
             
         Returns:
             SEO performance monitoring report
-        """
-        try:
+        """        try:
             content_portfolio = creator_profile.get('content_portfolio', [])
             
             monitoring_report = {
@@ -400,8 +386,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     async def _analyze_keyword_optimization(self, title: str, description: str,
                                           tags: List[str]) -> Dict[str, Any]:
-        """Analyze keyword optimization in content"""
-        # Extract potential keywords
+        """Analyze keyword optimization in content"""        # Extract potential keywords
         text_content = f"{title} {description} {' '.join(tags)}".lower()
         
         # Simple keyword extraction (in production, use more sophisticated NLP)
@@ -442,8 +427,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         }
 
     def _analyze_content_structure(self, title: str, description: str) -> float:
-        """Analyze content structure for SEO"""
-        score = 0.0
+        """Analyze content structure for SEO"""        score = 0.0
         
         # Title analysis
         title_length = len(title)
@@ -476,8 +460,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return min(score, 1.0)
 
     def _analyze_engagement_signals(self, performance_data: Dict[str, Any]) -> float:
-        """Analyze engagement signals that affect SEO"""
-        if not performance_data:
+        """Analyze engagement signals that affect SEO"""        if not performance_data:
             return 0.5  # Default score
         
         views = performance_data.get('views', 0)
@@ -512,8 +495,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return engagement_score
 
     def _analyze_technical_factors(self, content_data: Dict[str, Any]) -> float:
-        """Analyze technical SEO factors"""
-        score = 0.0
+        """Analyze technical SEO factors"""        score = 0.0
         
         # Thumbnail quality
         if content_data.get('has_custom_thumbnail'):
@@ -549,8 +531,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     async def _analyze_competitive_positioning(self, keywords: List[str], 
                                              niche: str) -> Dict[str, Any]:
-        """Analyze competitive positioning for keywords"""
-        # Simulate competitive analysis
+        """Analyze competitive positioning for keywords"""        # Simulate competitive analysis
         # In production, this would query actual search results and competitor data
         
         competitor_analysis = {
@@ -594,8 +575,7 @@ class SEOOptimizerAgent(BaseAIAgent):
     def _identify_seo_opportunities(self, seo_scores: Dict[str, float],
                                   keyword_analysis: Dict[str, Any],
                                   competitive_analysis: Dict[str, Any]) -> List[str]:
-        """Identify specific SEO optimization opportunities"""
-        opportunities = []
+        """Identify specific SEO optimization opportunities"""        opportunities = []
         
         # Low-hanging fruit opportunities
         if seo_scores.get('keyword_optimization', 0) < 0.6:
@@ -627,8 +607,7 @@ class SEOOptimizerAgent(BaseAIAgent):
     def _calculate_ranking_potential(self, seo_scores: Dict[str, float],
                                    performance_data: Dict[str, Any],
                                    competitive_analysis: Dict[str, Any]) -> float:
-        """Calculate potential for ranking improvement"""
-        # Base potential from current SEO score
+        """Calculate potential for ranking improvement"""        # Base potential from current SEO score
         base_potential = 1.0 - sum(seo_scores.values()) / len(seo_scores)
         
         # Adjust for competitive landscape
@@ -649,8 +628,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return min(max(ranking_potential, 0.0), 1.0)
 
     def _identify_technical_issues(self, content_data: Dict[str, Any]) -> List[str]:
-        """Identify technical SEO issues"""
-        issues = []
+        """Identify technical SEO issues"""        issues = []
         
         if not content_data.get('has_custom_thumbnail'):
             issues.append("Missing custom thumbnail")
@@ -684,8 +662,7 @@ class SEOOptimizerAgent(BaseAIAgent):
     def _generate_content_recommendations(self, keyword_analysis: Dict[str, Any],
                                         seo_scores: Dict[str, float],
                                         content_type: str) -> List[str]:
-        """Generate specific content optimization recommendations"""
-        recommendations = []
+        """Generate specific content optimization recommendations"""        recommendations = []
         
         primary_keywords = keyword_analysis.get('primary_keywords', [])
         
@@ -716,8 +693,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return recommendations[:8]  # Return top 8 recommendations
 
     async def _generate_keyword_variations(self, topic: str, niche: str) -> List[str]:
-        """Generate keyword variations for a topic"""
-        base_variations = [
+        """Generate keyword variations for a topic"""        base_variations = [
             topic,
             f"{topic} tutorial",
             f"how to {topic}",
@@ -753,8 +729,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return base_variations[:12]  # Return top 12 variations
 
     async def _get_search_volume(self, keyword: str, niche: str) -> int:
-        """Get estimated search volume for keyword"""
-        # Simulate search volume estimation
+        """Get estimated search volume for keyword"""        # Simulate search volume estimation
         # In production, this would use actual search volume APIs
         
         base_volume = len(keyword.split()) * 1000  # Longer keywords = lower volume
@@ -772,8 +747,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return max(volume, 100)  # Minimum volume
 
     async def _analyze_keyword_competition(self, keyword: str, niche: str) -> float:
-        """Analyze competition level for keyword"""
-        # Simulate competition analysis
+        """Analyze competition level for keyword"""        # Simulate competition analysis
         # In production, this would analyze actual SERP data
         
         word_count = len(keyword.split())
@@ -795,8 +769,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return min(max(competition, 0.1), 1.0)
 
     def _calculate_keyword_difficulty(self, keyword: str, competition: float) -> float:
-        """Calculate keyword ranking difficulty"""
-        # Basic difficulty calculation
+        """Calculate keyword ranking difficulty"""        # Basic difficulty calculation
         word_count = len(keyword.split())
         
         # Shorter keywords are typically harder to rank for
@@ -808,8 +781,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return min(max(difficulty, 0.1), 1.0)
 
     def _calculate_keyword_relevance(self, keyword: str, creator_profile: Dict[str, Any]) -> float:
-        """Calculate keyword relevance to creator's content"""
-        niche = creator_profile.get('niche', 'general')
+        """Calculate keyword relevance to creator's content"""        niche = creator_profile.get('niche', 'general')
         content_themes = creator_profile.get('content_themes', [])
         
         relevance = 0.5  # Base relevance
@@ -828,8 +800,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     def _estimate_potential_traffic(self, search_volume: int, competition: float, 
                                   authority_score: float) -> int:
-        """Estimate potential traffic from ranking for keyword"""
-        # Click-through rates by position (simplified)
+        """Estimate potential traffic from ranking for keyword"""        # Click-through rates by position (simplified)
         ctr_by_position = {1: 0.32, 2: 0.24, 3: 0.18, 4: 0.12, 5: 0.09}
         
         # Estimate ranking position based on competition and authority
@@ -843,8 +814,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return max(potential_traffic, 10)  # Minimum traffic estimate
 
     async def _analyze_content_gap(self, keyword: str, creator_profile: Dict[str, Any]) -> float:
-        """Analyze content gap for keyword opportunity"""
-        existing_content = creator_profile.get('content_portfolio', [])
+        """Analyze content gap for keyword opportunity"""        existing_content = creator_profile.get('content_portfolio', [])
         
         # Check if creator already has content targeting this keyword
         for content in existing_content:
@@ -866,8 +836,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     def _determine_keyword_action(self, difficulty: float, relevance: float,
                                 content_gap: float, potential_traffic: int) -> str:
-        """Determine recommended action for keyword"""
-        score = (relevance * 0.4 + content_gap * 0.3 + 
+        """Determine recommended action for keyword"""        score = (relevance * 0.4 + content_gap * 0.3 + 
                 (1 - difficulty) * 0.2 + min(potential_traffic / 1000, 1) * 0.1)
         
         if score > 0.8 and difficulty < 0.6:
@@ -880,8 +849,7 @@ class SEOOptimizerAgent(BaseAIAgent):
             return "Low priority - consider alternative keywords"
 
     async def _optimize_title(self, current_title: str, target_keywords: List[str]) -> str:
-        """Optimize title for SEO"""
-        if not target_keywords:
+        """Optimize title for SEO"""        if not target_keywords:
             return current_title
         
         primary_keyword = target_keywords[0]
@@ -902,8 +870,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     async def _optimize_description(self, current_description: str, 
                                   target_keywords: List[str], content_type: str) -> str:
-        """Optimize description for SEO"""
-        if not target_keywords:
+        """Optimize description for SEO"""        if not target_keywords:
             return current_description
         
         optimized_desc = current_description
@@ -926,8 +893,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return optimized_desc
 
     def _optimize_tags(self, current_tags: List[str], target_keywords: List[str]) -> List[str]:
-        """Optimize tags for SEO"""
-        optimized_tags = current_tags.copy()
+        """Optimize tags for SEO"""        optimized_tags = current_tags.copy()
         
         # Add target keywords as tags if not already present
         for keyword in target_keywords:
@@ -950,8 +916,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     def _generate_thumbnail_recommendations(self, target_keywords: List[str], 
                                           content_type: str) -> List[str]:
-        """Generate thumbnail optimization recommendations"""
-        recommendations = []
+        """Generate thumbnail optimization recommendations"""        recommendations = []
         
         if target_keywords:
             primary_keyword = target_keywords[0]
@@ -970,8 +935,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     def _optimize_content_structure(self, content_data: Dict[str, Any], 
                                   target_keywords: List[str]) -> List[str]:
-        """Optimize content structure recommendations"""
-        recommendations = []
+        """Optimize content structure recommendations"""        recommendations = []
         
         content_type = content_data.get('type', 'video')
         
@@ -994,8 +958,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     def _optimize_call_to_actions(self, current_description: str, 
                                 target_keywords: List[str]) -> List[str]:
-        """Optimize call-to-action recommendations"""
-        cta_recommendations = []
+        """Optimize call-to-action recommendations"""        cta_recommendations = []
         
         if target_keywords:
             primary_keyword = target_keywords[0]
@@ -1019,8 +982,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     def _generate_video_chapters(self, content_data: Dict[str, Any], 
                                target_keywords: List[str]) -> List[str]:
-        """Generate video chapter recommendations"""
-        chapters = []
+        """Generate video chapter recommendations"""        chapters = []
         
         duration = content_data.get('duration', 600)  # Default 10 minutes
         
@@ -1037,8 +999,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return chapters
 
     def _optimize_end_screens(self, target_keywords: List[str]) -> List[str]:
-        """Optimize end screen recommendations"""
-        recommendations = []
+        """Optimize end screen recommendations"""        recommendations = []
         
         if target_keywords:
             primary_keyword = target_keywords[0]
@@ -1056,8 +1017,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return recommendations
 
     def _generate_card_recommendations(self, target_keywords: List[str]) -> List[str]:
-        """Generate video card recommendations"""
-        recommendations = []
+        """Generate video card recommendations"""        recommendations = []
         
         if target_keywords:
             recommendations.append(f"Add cards to related {target_keywords[0]} content at relevant moments")
@@ -1071,8 +1031,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return recommendations
 
     def _optimize_tiktok_hashtags(self, target_keywords: List[str]) -> List[str]:
-        """Optimize TikTok hashtags"""
-        hashtags = []
+        """Optimize TikTok hashtags"""        hashtags = []
         
         for keyword in target_keywords[:3]:
             # Convert to hashtag format
@@ -1087,8 +1046,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         return hashtags[:10]  # TikTok optimal hashtag count
 
     async def _integrate_trending_elements(self, target_keywords: List[str]) -> List[str]:
-        """Integrate trending elements for better discoverability"""
-        trending_elements = []
+        """Integrate trending elements for better discoverability"""        trending_elements = []
         
         # Simulate trending elements
         trending_elements.extend([
@@ -1105,8 +1063,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     def _calculate_expected_improvement(self, content_data: Dict[str, Any],
                                       optimization_results: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate expected SEO improvement from optimizations"""
-        current_seo_score = content_data.get('seo_score', 0.5)
+        """Calculate expected SEO improvement from optimizations"""        current_seo_score = content_data.get('seo_score', 0.5)
         
         # Estimate improvement based on optimizations
         improvement_factors = {
@@ -1128,22 +1085,19 @@ class SEOOptimizerAgent(BaseAIAgent):
         }
 
     async def _get_current_ranking(self, keyword: str, content_id: str) -> int:
-        """Get current ranking position for keyword"""
-        # Simulate ranking data
+        """Get current ranking position for keyword"""        # Simulate ranking data
         # In production, this would query actual search results
         return np.random.randint(1, 20)  # Random ranking between 1-20
 
     async def _get_historical_ranking(self, keyword: str, content_id: str, period: str) -> int:
-        """Get historical ranking for comparison"""
-        # Simulate historical data
+        """Get historical ranking for comparison"""        # Simulate historical data
         current_ranking = await self._get_current_ranking(keyword, content_id)
         # Add some variation for historical data
         return current_ranking + np.random.randint(-3, 4)
 
     async def _analyze_traffic_trends(self, creator_profile: Dict[str, Any],
                                     period: str) -> Dict[str, Any]:
-        """Analyze traffic trends over period"""
-        # Simulate traffic analysis
+        """Analyze traffic trends over period"""        # Simulate traffic analysis
         return {
             "organic_traffic_change": np.random.uniform(-0.2, 0.3),  # -20% to +30%
             "search_impressions_change": np.random.uniform(-0.1, 0.4),
@@ -1153,8 +1107,7 @@ class SEOOptimizerAgent(BaseAIAgent):
         }
 
     def _generate_monitoring_recommendations(self, monitoring_report: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on monitoring results"""
-        recommendations = []
+        """Generate recommendations based on monitoring results"""        recommendations = []
         
         keyword_performance = monitoring_report.get("keyword_performance", {})
         declining_keywords = [kw for kw, data in keyword_performance.items() 
@@ -1181,8 +1134,7 @@ class SEOOptimizerAgent(BaseAIAgent):
 
     async def _analyze_competitor_movements(self, creator_profile: Dict[str, Any],
                                           period: str) -> Dict[str, Any]:
-        """Analyze competitor SEO movements"""
-        # Simulate competitor analysis
+        """Analyze competitor SEO movements"""        # Simulate competitor analysis
         return {
             "new_competitors_identified": 2,
             "competitor_ranking_changes": {

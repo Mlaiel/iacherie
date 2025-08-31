@@ -1,5 +1,4 @@
-"""
-🚀 Pricing Validators - Comprehensive Pricing Validation System
+"""🚀 Pricing Validators - Comprehensive Pricing Validation System
 ==============================================================
 
 Advanced validation system for pricing data integrity, business rule compliance,
@@ -33,7 +32,6 @@ Email: mlaiel@live.de
 All usage must be pre-approved in writing.
 ==============================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -57,16 +55,14 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationSeverity(Enum):
-    """Validation result severity levels"""
-    ERROR = "error"
+    """Validation result severity levels"""    ERROR = "error"
     WARNING = "warning"
     INFO = "info"
     SUCCESS = "success"
 
 
 class ValidationType(Enum):
-    """Types of validation checks"""
-    DATA_INTEGRITY = "data_integrity"
+    """Types of validation checks"""    DATA_INTEGRITY = "data_integrity"
     BUSINESS_RULES = "business_rules"
     MARKET_REASONABLENESS = "market_reasonableness"
     PLATFORM_COMPLIANCE = "platform_compliance"
@@ -78,8 +74,7 @@ class ValidationType(Enum):
 
 @dataclass
 class ValidationResult:
-    """Individual validation result"""
-    validation_id: str
+    """Individual validation result"""    validation_id: str
     validation_type: ValidationType
     severity: ValidationSeverity
     field_name: Optional[str]
@@ -91,8 +86,7 @@ class ValidationResult:
 
 @dataclass
 class ValidationReport:
-    """Complete validation report"""
-    request_id: str
+    """Complete validation report"""    request_id: str
     creator_id: str
     validation_timestamp: datetime
     overall_status: str
@@ -106,8 +100,7 @@ class ValidationReport:
 
 
 class PricingValidator:
-    """
-    Comprehensive pricing validation system
+    """    Comprehensive pricing validation system
     
     Features:
     - Data integrity validation
@@ -117,8 +110,7 @@ class PricingValidator:
     - Security validation
     - Performance bounds checking
     - Tier compliance validation
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -139,8 +131,7 @@ class PricingValidator:
         pricing_factors: Dict[str, Any],
         context: Optional[Dict[str, Any]] = None
     ) -> ValidationReport:
-        """Validate a complete pricing request"""
-        
+        """Validate a complete pricing request"""        
         request_id = str(uuid.uuid4())
         validation_results = []
         
@@ -253,8 +244,7 @@ class PricingValidator:
         self,
         calculation: Dict[str, Any]
     ) -> ValidationReport:
-        """Validate a pricing calculation result"""
-        
+        """Validate a pricing calculation result"""        
         request_id = str(uuid.uuid4())
         validation_results = []
         
@@ -314,8 +304,7 @@ class PricingValidator:
         base_price: Decimal,
         pricing_factors: Dict[str, Any]
     ) -> List[ValidationResult]:
-        """Validate data integrity and format"""
-        
+        """Validate data integrity and format"""        
         results = []
         
         # Validate creator_id
@@ -443,8 +432,7 @@ class PricingValidator:
         pricing_factors: Dict[str, Any],
         context: Optional[Dict[str, Any]]
     ) -> List[ValidationResult]:
-        """Validate business rules compliance"""
-        
+        """Validate business rules compliance"""        
         results = []
         
         # Check creator exists and is active
@@ -528,8 +516,7 @@ class PricingValidator:
         base_price: Decimal,
         pricing_factors: Dict[str, Any]
     ) -> List[ValidationResult]:
-        """Validate market reasonableness of pricing"""
-        
+        """Validate market reasonableness of pricing"""        
         results = []
         
         # Get market data for comparison (mock implementation)
@@ -600,8 +587,7 @@ class PricingValidator:
         base_price: Decimal,
         pricing_factors: Dict[str, Any]
     ) -> List[ValidationResult]:
-        """Validate platform-specific compliance requirements"""
-        
+        """Validate platform-specific compliance requirements"""        
         results = []
         
         # Platform-specific validation rules
@@ -657,8 +643,7 @@ class PricingValidator:
         pricing_factors: Dict[str, Any],
         context: Optional[Dict[str, Any]]
     ) -> List[ValidationResult]:
-        """Validate security requirements"""
-        
+        """Validate security requirements"""        
         results = []
         
         # Check for sensitive data in pricing factors
@@ -705,8 +690,7 @@ class PricingValidator:
         base_price: Decimal,
         pricing_factors: Dict[str, Any]
     ) -> List[ValidationResult]:
-        """Validate performance bounds and limits"""
-        
+        """Validate performance bounds and limits"""        
         results = []
         
         # Check pricing factors complexity
@@ -744,8 +728,7 @@ class PricingValidator:
         pricing_factors: Dict[str, Any],
         context: Optional[Dict[str, Any]]
     ) -> List[ValidationResult]:
-        """Validate tier-specific compliance"""
-        
+        """Validate tier-specific compliance"""        
         results = []
         
         # Get creator's tier information
@@ -808,8 +791,7 @@ class PricingValidator:
         self,
         calculation: Dict[str, Any]
     ) -> List[ValidationResult]:
-        """Validate calculation result structure"""
-        
+        """Validate calculation result structure"""        
         results = []
         required_fields = [
             'creator_id', 'base_price', 'optimized_price', 
@@ -835,8 +817,7 @@ class PricingValidator:
         self,
         calculation: Dict[str, Any]
     ) -> List[ValidationResult]:
-        """Validate calculation logic and consistency"""
-        
+        """Validate calculation logic and consistency"""        
         results = []
         
         base_price = calculation.get('base_price')
@@ -897,8 +878,7 @@ class PricingValidator:
         self,
         calculation: Dict[str, Any]
     ) -> List[ValidationResult]:
-        """Validate internal consistency of calculation results"""
-        
+        """Validate internal consistency of calculation results"""        
         results = []
         
         # Check confidence score consistency with price changes
@@ -957,8 +937,7 @@ class PricingValidator:
         self,
         calculation: Dict[str, Any]
     ) -> List[ValidationResult]:
-        """Validate confidence scores"""
-        
+        """Validate confidence scores"""        
         results = []
         
         confidence_score = calculation.get('confidence_score')
@@ -1006,8 +985,7 @@ class PricingValidator:
     
     # Helper methods
     def _load_validation_rules(self) -> Dict[str, Any]:
-        """Load validation rules configuration"""
-        
+        """Load validation rules configuration"""        
         return {
             'platform_rules': {
                 'spotify': {
@@ -1071,8 +1049,7 @@ class PricingValidator:
         }
         
     async def _get_tier_limits(self, tier_name: str) -> Dict[str, Any]:
-        """Get limits for a specific tier"""
-        
+        """Get limits for a specific tier"""        
         return self.validation_rules.get('tier_limits', {}).get(tier_name.lower(), {
             'max_base_price': Decimal('99.99'),
             'max_calculations_per_hour': 10,
@@ -1084,8 +1061,7 @@ class PricingValidator:
         platform: str,
         content_type: str
     ) -> Dict[str, Decimal]:
-        """Get market price ranges for validation (mock implementation)"""
-        
+        """Get market price ranges for validation (mock implementation)"""        
         # Mock market data - replace with real market intelligence
         base_ranges = {
             'audio': {'min': Decimal('0.99'), 'max': Decimal('99.99'), 'average': Decimal('19.99')},
@@ -1102,8 +1078,7 @@ class PricingValidator:
         })
         
     async def _get_recent_calculation_count(self, creator_id: str) -> int:
-        """Get recent calculation count for rate limiting"""
-        
+        """Get recent calculation count for rate limiting"""        
         try:
             cache_key = f"calculation_count:{creator_id}:{datetime.utcnow().hour}"
             count = await self.cache_manager.get(cache_key)
@@ -1112,8 +1087,7 @@ class PricingValidator:
             return 0
             
     def _is_valid_origin(self, origin: str) -> bool:
-        """Validate request origin"""
-        
+        """Validate request origin"""        
         valid_origins = [
             'localhost',
             'ia-influencer.com',
@@ -1127,8 +1101,7 @@ class PricingValidator:
         self,
         validation_results: List[ValidationResult]
     ) -> Dict[str, Any]:
-        """Generate validation summary"""
-        
+        """Generate validation summary"""        
         return {
             'validation_types': {
                 vtype.value: len([r for r in validation_results if r.validation_type == vtype])
@@ -1151,8 +1124,7 @@ class PricingValidator:
         self,
         validation_results: List[ValidationResult]
     ) -> str:
-        """Get overall validation recommendation"""
-        
+        """Get overall validation recommendation"""        
         errors = [r for r in validation_results if r.severity == ValidationSeverity.ERROR]
         warnings = [r for r in validation_results if r.severity == ValidationSeverity.WARNING]
         

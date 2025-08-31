@@ -1,5 +1,4 @@
-"""
-Enterprise-grade content protection and digital rights management system.
+"""Enterprise-grade content protection and digital rights management system.
 
 This module provides comprehensive multi-format content protection including:
 - AI-powered fingerprinting for audio, video, image and text content
@@ -27,7 +26,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -99,8 +97,7 @@ from ..core.config import get_database, get_redis_client
 
 
 class ContentFormat(Enum):
-    """Supported content formats for protection."""
-    AUDIO_MP3 = "audio_mp3"
+    """Supported content formats for protection."""    AUDIO_MP3 = "audio_mp3"
     AUDIO_WAV = "audio_wav"
     AUDIO_FLAC = "audio_flac"
     VIDEO_MP4 = "video_mp4"
@@ -117,8 +114,7 @@ class ContentFormat(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection security levels."""
-    BASIC = "basic"
+    """Content protection security levels."""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
@@ -126,8 +122,7 @@ class ProtectionLevel(Enum):
 
 
 class ThreatSeverity(Enum):
-    """Piracy threat severity classification."""
-    LOW = "low"
+    """Piracy threat severity classification."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -135,8 +130,7 @@ class ThreatSeverity(Enum):
 
 
 class ProtectionStatus(Enum):
-    """Protection operation status tracking."""
-    PENDING = "pending"
+    """Protection operation status tracking."""    PENDING = "pending"
     PROCESSING = "processing"
     FINGERPRINTING = "fingerprinting"
     WATERMARKING = "watermarking"
@@ -149,8 +143,7 @@ class ProtectionStatus(Enum):
 
 
 class ResponseAction(Enum):
-    """Automated response actions to threats."""
-    MONITOR_ONLY = "monitor_only"
+    """Automated response actions to threats."""    MONITOR_ONLY = "monitor_only"
     SEND_WARNING = "send_warning"
     DMCA_TAKEDOWN = "dmca_takedown"
     LEGAL_NOTICE = "legal_notice"
@@ -161,8 +154,7 @@ class ResponseAction(Enum):
 
 @dataclass
 class ContentProtectionRequest:
-    """Complete content protection request configuration."""
-    content_id: str
+    """Complete content protection request configuration."""    content_id: str
     creator_id: str
     content_format: ContentFormat
     content_path: str
@@ -193,8 +185,7 @@ class ContentProtectionRequest:
 
 @dataclass
 class ProtectionResult:
-    """Comprehensive protection operation result."""
-    protection_id: str
+    """Comprehensive protection operation result."""    protection_id: str
     content_id: str
     creator_id: str
     protection_status: ProtectionStatus
@@ -232,8 +223,7 @@ class ProtectionResult:
 
 @dataclass
 class ThreatAlert:
-    """Security threat alert with detailed context."""
-    alert_id: str
+    """Security threat alert with detailed context."""    alert_id: str
     content_id: str
     creator_id: str
     threat_type: str
@@ -268,8 +258,7 @@ class ThreatAlert:
 
 
 class ContentProtectionSystem:
-    """
-    Enterprise-grade content protection orchestration system.
+    """    Enterprise-grade content protection orchestration system.
     
     Provides comprehensive protection services including:
     - Multi-format AI fingerprinting (audio, video, image, text)
@@ -278,11 +267,9 @@ class ContentProtectionSystem:
     - Advanced digital watermarking with forensic capabilities
     - Automated legal response and compliance workflows
     - Threat intelligence and security analytics
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the content protection system."""
-        self.config = config or {}
+        """Initialize the content protection system."""        self.config = config or {}
         self.logger = logging.getLogger("protection.system")
         
         # Database connections
@@ -310,8 +297,7 @@ class ContentProtectionSystem:
         self.logger.info("ContentProtectionSystem initialized successfully")
     
     async def _initialize_protection_system(self):
-        """Initialize all protection system components."""
-        try:
+        """Initialize all protection system components."""        try:
             # Initialize fingerprinting engine
             fingerprint_config = self.config.get("fingerprinting", {})
             self.fingerprint_engine = create_fingerprint_engine(fingerprint_config)
@@ -346,8 +332,7 @@ class ContentProtectionSystem:
             raise ProtectionException(f"System initialization error: {e}")
     
     async def _start_monitoring_services(self):
-        """Start background monitoring and scanning services."""
-        try:
+        """Start background monitoring and scanning services."""        try:
             # Start continuous threat monitoring
             asyncio.create_task(self._threat_monitoring_loop())
             
@@ -370,16 +355,14 @@ class ContentProtectionSystem:
         self,
         request: ContentProtectionRequest
     ) -> ProtectionResult:
-        """
-        Protect content with comprehensive security measures.
+        """        Protect content with comprehensive security measures.
         
         Args:
             request: Content protection configuration request
             
         Returns:
             Complete protection result with all security measures applied
-        """
-        protection_id = f"prot_{uuid.uuid4().hex[:12]}"
+        """        protection_id = f"prot_{uuid.uuid4().hex[:12]}"
         start_time = datetime.utcnow()
         
         try:
@@ -453,8 +436,7 @@ class ContentProtectionSystem:
         request: ContentProtectionRequest,
         result: ProtectionResult
     ):
-        """Apply multi-format fingerprinting to content."""
-        try:
+        """Apply multi-format fingerprinting to content."""        try:
             result.protection_status = ProtectionStatus.FINGERPRINTING
             
             # Generate fingerprints based on content format
@@ -482,8 +464,7 @@ class ContentProtectionSystem:
         request: ContentProtectionRequest,
         result: ProtectionResult
     ):
-        """Apply digital watermarking to content."""
-        try:
+        """Apply digital watermarking to content."""        try:
             result.protection_status = ProtectionStatus.WATERMARKING
             
             # Apply appropriate watermarking based on content format and protection level
@@ -515,8 +496,7 @@ class ContentProtectionSystem:
         request: ContentProtectionRequest,
         result: ProtectionResult
     ):
-        """Register content ownership on blockchain."""
-        try:
+        """Register content ownership on blockchain."""        try:
             result.protection_status = ProtectionStatus.BLOCKCHAIN_REGISTRATION
             
             # Prepare ownership data
@@ -553,8 +533,7 @@ class ContentProtectionSystem:
         request: ContentProtectionRequest,
         result: ProtectionResult
     ):
-        """Setup automated piracy monitoring and detection."""
-        try:
+        """Setup automated piracy monitoring and detection."""        try:
             # Configure monitoring parameters
             monitoring_config = {
                 "content_id": request.content_id,
@@ -588,8 +567,7 @@ class ContentProtectionSystem:
         request: ContentProtectionRequest,
         result: ProtectionResult
     ):
-        """Setup automated legal response workflows."""
-        try:
+        """Setup automated legal response workflows."""        try:
             # Configure legal automation
             legal_config = {
                 "content_id": request.content_id,
@@ -612,8 +590,7 @@ class ContentProtectionSystem:
             # Don't raise - legal automation setup is not critical for immediate protection
     
     async def _calculate_protection_score(self, result: ProtectionResult) -> float:
-        """Calculate comprehensive protection score."""
-        score = 0.0
+        """Calculate comprehensive protection score."""        score = 0.0
         max_score = 100.0
         
         # Fingerprinting score (25 points)
@@ -649,8 +626,7 @@ class ContentProtectionSystem:
         content_id: str,
         scan_platforms: Optional[List[str]] = None
     ) -> List[ThreatAlert]:
-        """
-        Detect threats to protected content across platforms.
+        """        Detect threats to protected content across platforms.
         
         Args:
             content_id: Protected content identifier
@@ -658,8 +634,7 @@ class ContentProtectionSystem:
             
         Returns:
             List of detected threats with detailed analysis
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting threat detection for content: {content_id}")
             
             # Get content protection details
@@ -717,8 +692,7 @@ class ContentProtectionSystem:
         alert_id: str,
         response_action: Optional[ResponseAction] = None
     ) -> Dict[str, Any]:
-        """
-        Execute automated response to detected threat.
+        """        Execute automated response to detected threat.
         
         Args:
             alert_id: Threat alert identifier
@@ -726,8 +700,7 @@ class ContentProtectionSystem:
             
         Returns:
             Response execution result
-        """
-        try:
+        """        try:
             # Get threat alert details
             alert = await self._get_threat_alert(alert_id)
             if not alert:
@@ -764,16 +737,14 @@ class ContentProtectionSystem:
         self,
         content_id: str
     ) -> Optional[ProtectionResult]:
-        """
-        Get current protection status for content.
+        """        Get current protection status for content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Current protection result or None if not found
-        """
-        try:
+        """        try:
             return await self._get_protection_record(content_id)
             
         except Exception as e:
@@ -785,8 +756,7 @@ class ContentProtectionSystem:
         creator_id: Optional[str] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive threat analytics and protection metrics.
+        """        Get comprehensive threat analytics and protection metrics.
         
         Args:
             creator_id: Optional creator filter
@@ -794,8 +764,7 @@ class ContentProtectionSystem:
             
         Returns:
             Detailed analytics report
-        """
-        try:
+        """        try:
             analytics_result = await self.piracy_detector.generate_analytics(
                 creator_id=creator_id,
                 time_range=time_range
@@ -810,8 +779,7 @@ class ContentProtectionSystem:
 
 # Factory functions for easy instantiation
 def create_protection_system(config: Optional[Dict[str, Any]] = None) -> ContentProtectionSystem:
-    """Create and return configured content protection system."""
-    return ContentProtectionSystem(config)
+    """Create and return configured content protection system."""    return ContentProtectionSystem(config)
 
 
 # Export all public classes and functions

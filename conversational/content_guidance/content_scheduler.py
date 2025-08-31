@@ -1,5 +1,4 @@
-"""
-Content Scheduler - Advanced AI-Powered Content Publishing Optimization
+"""Content Scheduler - Advanced AI-Powered Content Publishing Optimization
 =====================================================================
 
 This module provides intelligent content scheduling, optimal timing analysis,
@@ -10,7 +9,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -40,8 +38,7 @@ settings = get_settings()
 
 
 class SchedulingPriority(Enum):
-    """Content scheduling priority levels."""
-    URGENT = "urgent"           # Trending/time-sensitive content
+    """Content scheduling priority levels."""    URGENT = "urgent"           # Trending/time-sensitive content
     HIGH = "high"               # High-impact content
     MEDIUM = "medium"           # Regular content
     LOW = "low"                 # Evergreen content
@@ -49,8 +46,7 @@ class SchedulingPriority(Enum):
 
 
 class ContentFrequency(Enum):
-    """Content publishing frequency patterns."""
-    DAILY = "daily"
+    """Content publishing frequency patterns."""    DAILY = "daily"
     WEEKLY = "weekly"
     BI_WEEKLY = "bi_weekly"
     MONTHLY = "monthly"
@@ -59,8 +55,7 @@ class ContentFrequency(Enum):
 
 
 class PlatformType(Enum):
-    """Social media platform types."""
-    SHORT_VIDEO = "short_video"     # TikTok, Instagram Reels, YouTube Shorts
+    """Social media platform types."""    SHORT_VIDEO = "short_video"     # TikTok, Instagram Reels, YouTube Shorts
     LONG_VIDEO = "long_video"       # YouTube, IGTV
     IMAGE_FOCUSED = "image_focused" # Instagram, Pinterest
     TEXT_BASED = "text_based"       # Twitter, LinkedIn
@@ -69,8 +64,7 @@ class PlatformType(Enum):
 
 
 class TimingStrategy(Enum):
-    """Content timing strategies."""
-    PEAK_ENGAGEMENT = "peak_engagement"
+    """Content timing strategies."""    PEAK_ENGAGEMENT = "peak_engagement"
     AVOID_COMPETITION = "avoid_competition"
     CONSISTENT_SCHEDULE = "consistent_schedule"
     TREND_FOLLOWING = "trend_following"
@@ -79,8 +73,7 @@ class TimingStrategy(Enum):
 
 @dataclass
 class TimeSlot:
-    """Represents a time slot for content publishing."""
-    start_time: datetime
+    """Represents a time slot for content publishing."""    start_time: datetime
     end_time: datetime
     platform: str
     priority_score: float
@@ -92,8 +85,7 @@ class TimeSlot:
 
 @dataclass
 class ContentScheduleItem:
-    """Individual content item in the schedule."""
-    content_id: str
+    """Individual content item in the schedule."""    content_id: str
     title: str
     content_type: str
     platform: str
@@ -109,8 +101,7 @@ class ContentScheduleItem:
 
 @dataclass
 class ScheduleOptimization:
-    """Schedule optimization result."""
-    optimization_id: str
+    """Schedule optimization result."""    optimization_id: str
     original_schedule: List[ContentScheduleItem]
     optimized_schedule: List[ContentScheduleItem]
     improvements: Dict[str, float]
@@ -122,8 +113,7 @@ class ScheduleOptimization:
 
 @dataclass
 class PublishingCalendar:
-    """Complete publishing calendar."""
-    calendar_id: str
+    """Complete publishing calendar."""    calendar_id: str
     creator_id: str
     start_date: datetime
     end_date: datetime
@@ -136,14 +126,11 @@ class PublishingCalendar:
 
 
 class PublishingOptimizer:
-    """
-    Advanced AI-powered publishing optimizer that analyzes audience behavior,
+    """    Advanced AI-powered publishing optimizer that analyzes audience behavior,
     platform algorithms, and content performance to determine optimal publishing times.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the publishing optimizer."""
-        self.analytics_service = SchedulingAnalyticsService()
+        """Initialize the publishing optimizer."""        self.analytics_service = SchedulingAnalyticsService()
         self.timing_predictor = TimingPredictionEngine()
         self.platform_manager = PlatformAPIManager()
         
@@ -172,8 +159,7 @@ class PublishingOptimizer:
         logger.info("Publishing optimizer initialized successfully")
     
     def _initialize_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific publishing configurations."""
-        
+        """Initialize platform-specific publishing configurations."""        
         return {
             'tiktok': {
                 'optimal_times': ['15:00', '18:00', '19:00', '20:00'],
@@ -243,8 +229,7 @@ class PublishingOptimizer:
         }
     
     def _load_and_train_models(self):
-        """Load historical data and train ML models for timing optimization."""
-        try:
+        """Load historical data and train ML models for timing optimization."""        try:
             # Generate synthetic training data for timing optimization
             n_samples = 30000
             
@@ -287,8 +272,7 @@ class PublishingOptimizer:
             # Continue with default models
     
     def _simulate_audience_activity(self, hour: int, day_of_week: int) -> float:
-        """Simulate realistic audience activity patterns."""
-        
+        """Simulate realistic audience activity patterns."""        
         # Base activity pattern (higher in evenings)
         base_activity = 0.3 + 0.7 * np.sin((hour - 6) * np.pi / 12) ** 2
         
@@ -311,8 +295,7 @@ class PublishingOptimizer:
         platforms: List[str] = None,
         strategy: TimingStrategy = TimingStrategy.PEAK_ENGAGEMENT
     ) -> ScheduleOptimization:
-        """
-        Optimize content publishing schedule for maximum engagement and reach.
+        """        Optimize content publishing schedule for maximum engagement and reach.
         
         Args:
             creator_id: Creator identifier
@@ -323,8 +306,7 @@ class PublishingOptimizer:
             
         Returns:
             Optimized publishing schedule
-        """
-        
+        """        
         try:
             # Get creator's audience data and historical performance
             audience_data = await self.analytics_service.get_audience_patterns(creator_id)
@@ -396,8 +378,7 @@ class PublishingOptimizer:
         platforms: List[str],
         time_period: int
     ) -> List[ContentScheduleItem]:
-        """Generate baseline schedule without optimization."""
-        
+        """Generate baseline schedule without optimization."""        
         schedule = []
         start_date = datetime.now(timezone.utc)
         
@@ -433,8 +414,7 @@ class PublishingOptimizer:
         platforms: List[str],
         time_period: int
     ) -> List[TimeSlot]:
-        """Analyze optimal time slots for content publishing."""
-        
+        """Analyze optimal time slots for content publishing."""        
         time_slots = []
         start_date = datetime.now(timezone.utc)
         
@@ -487,8 +467,7 @@ class PublishingOptimizer:
     def _calculate_audience_activity(
         self, time_slot: datetime, audience_data: Dict[str, Any], platform: str
     ) -> float:
-        """Calculate audience activity score for a specific time slot."""
-        
+        """Calculate audience activity score for a specific time slot."""        
         # Extract audience patterns
         patterns = audience_data.get('engagement_patterns', {})
         hourly_activity = patterns.get('hourly_activity', {})
@@ -515,8 +494,7 @@ class PublishingOptimizer:
         return min(1.0, activity_score)
     
     async def _calculate_competition_level(self, time_slot: datetime, platform: str) -> float:
-        """Calculate competition level for a specific time slot."""
-        
+        """Calculate competition level for a specific time slot."""        
         try:
             # This would analyze actual posting patterns of similar creators
             # For now, return simulated competition based on platform patterns
@@ -552,8 +530,7 @@ class PublishingOptimizer:
     def _calculate_priority_score(
         self, audience_activity: float, competition_level: float, platform: str
     ) -> float:
-        """Calculate priority score for a time slot."""
-        
+        """Calculate priority score for a time slot."""        
         # Higher audience activity increases priority
         # Higher competition decreases priority
         activity_weight = 0.7
@@ -573,8 +550,7 @@ class PublishingOptimizer:
         audience_activity: float,
         competition_level: float
     ) -> float:
-        """Predict expected engagement for a time slot."""
-        
+        """Predict expected engagement for a time slot."""        
         try:
             # Prepare features for ML prediction
             features = np.array([[
@@ -604,8 +580,7 @@ class PublishingOptimizer:
             return audience_activity * (1 - competition_level * 0.5)
     
     def _get_optimal_content_types(self, time_slot: datetime, platform: str) -> List[str]:
-        """Determine optimal content types for a specific time slot and platform."""
-        
+        """Determine optimal content types for a specific time slot and platform."""        
         hour = time_slot.hour
         day_of_week = time_slot.weekday()
         
@@ -657,8 +632,7 @@ class PublishingOptimizer:
         strategy: TimingStrategy,
         audience_data: Dict[str, Any]
     ) -> List[ContentScheduleItem]:
-        """Optimize schedule based on selected strategy."""
-        
+        """Optimize schedule based on selected strategy."""        
         optimized_schedule = []
         used_slots = set()
         
@@ -740,8 +714,7 @@ class PublishingOptimizer:
         original_schedule: List[ContentScheduleItem],
         optimized_schedule: List[ContentScheduleItem]
     ) -> Dict[str, float]:
-        """Calculate improvements from schedule optimization."""
-        
+        """Calculate improvements from schedule optimization."""        
         # Calculate metrics for both schedules
         original_avg_engagement = np.mean([
             item.estimated_engagement for item in original_schedule
@@ -774,8 +747,7 @@ class PublishingOptimizer:
         original_schedule: List[ContentScheduleItem],
         optimized_schedule: List[ContentScheduleItem]
     ) -> float:
-        """Calculate timing score improvement."""
-        
+        """Calculate timing score improvement."""        
         # This would compare timing scores based on platform optimal times
         # For now, return a simulated improvement
         return 0.25  # 25% improvement in timing scores
@@ -785,8 +757,7 @@ class PublishingOptimizer:
         original_schedule: List[ContentScheduleItem],
         optimized_schedule: List[ContentScheduleItem]
     ) -> float:
-        """Calculate platform-specific alignment improvement."""
-        
+        """Calculate platform-specific alignment improvement."""        
         # Check how well content aligns with platform best practices
         original_alignment = self._calculate_alignment_score(original_schedule)
         optimized_alignment = self._calculate_alignment_score(optimized_schedule)
@@ -797,8 +768,7 @@ class PublishingOptimizer:
             return 0.3  # Default 30% improvement
     
     def _calculate_alignment_score(self, schedule: List[ContentScheduleItem]) -> float:
-        """Calculate alignment score for a schedule."""
-        
+        """Calculate alignment score for a schedule."""        
         total_score = 0
         for item in schedule:
             platform_config = self.platform_configs.get(item.platform, {})
@@ -817,8 +787,7 @@ class PublishingOptimizer:
         original_schedule: List[ContentScheduleItem],
         optimized_schedule: List[ContentScheduleItem]
     ) -> float:
-        """Calculate content distribution improvement."""
-        
+        """Calculate content distribution improvement."""        
         # Analyze how evenly content is distributed across time
         original_distribution = self._calculate_distribution_score(original_schedule)
         optimized_distribution = self._calculate_distribution_score(optimized_schedule)
@@ -826,8 +795,7 @@ class PublishingOptimizer:
         return optimized_distribution - original_distribution
     
     def _calculate_distribution_score(self, schedule: List[ContentScheduleItem]) -> float:
-        """Calculate distribution score for content spread."""
-        
+        """Calculate distribution score for content spread."""        
         if not schedule:
             return 0
         
@@ -858,8 +826,7 @@ class PublishingOptimizer:
         improvements: Dict[str, float],
         optimal_slots: List[TimeSlot]
     ) -> List[str]:
-        """Generate human-readable reasoning for optimization decisions."""
-        
+        """Generate human-readable reasoning for optimization decisions."""        
         reasoning = []
         
         # Strategy-based reasoning
@@ -896,8 +863,7 @@ class PublishingOptimizer:
         performance_history: List[Dict[str, Any]],
         content_count: int
     ) -> float:
-        """Calculate confidence score for optimization."""
-        
+        """Calculate confidence score for optimization."""        
         base_confidence = 0.7
         
         # Increase confidence with more audience data
@@ -924,8 +890,7 @@ class PublishingOptimizer:
         optimized_schedule: List[ContentScheduleItem],
         audience_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Estimate impact of schedule optimization."""
-        
+        """Estimate impact of schedule optimization."""        
         total_engagement = sum(item.estimated_engagement for item in optimized_schedule)
         avg_engagement = total_engagement / len(optimized_schedule) if optimized_schedule else 0
         
@@ -946,8 +911,7 @@ class PublishingOptimizer:
         optimal_slots: List[TimeSlot],
         num_alternatives: int = 3
     ) -> List[List[ContentScheduleItem]]:
-        """Generate alternative schedule options."""
-        
+        """Generate alternative schedule options."""        
         alternatives = []
         
         # Generate alternatives with different strategies
@@ -976,14 +940,11 @@ class PublishingOptimizer:
 
 
 class ContentScheduler:
-    """
-    Master content scheduler that coordinates all scheduling operations
+    """    Master content scheduler that coordinates all scheduling operations
     and provides a unified interface for content calendar management.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the content scheduler."""
-        self.optimizer = PublishingOptimizer()
+        """Initialize the content scheduler."""        self.optimizer = PublishingOptimizer()
         self.analytics_service = SchedulingAnalyticsService()
         
         logger.info("Content scheduler initialized successfully")
@@ -996,8 +957,7 @@ class ContentScheduler:
         platforms: List[str] = None,
         strategy: TimingStrategy = TimingStrategy.PEAK_ENGAGEMENT
     ) -> PublishingCalendar:
-        """
-        Create comprehensive publishing calendar for creator.
+        """        Create comprehensive publishing calendar for creator.
         
         Args:
             creator_id: Creator identifier
@@ -1008,8 +968,7 @@ class ContentScheduler:
             
         Returns:
             Complete publishing calendar
-        """
-        
+        """        
         try:
             # Set default platforms if none provided
             if not platforms:
@@ -1063,8 +1022,7 @@ class ContentScheduler:
     def _calculate_platform_quotas(
         self, schedule: List[ContentScheduleItem], time_period: int
     ) -> Dict[str, int]:
-        """Calculate recommended posting quotas by platform."""
-        
+        """Calculate recommended posting quotas by platform."""        
         quotas = defaultdict(int)
         
         # Count current scheduled content by platform
@@ -1096,8 +1054,7 @@ class ContentScheduler:
         time_period: int,
         platforms: List[str]
     ) -> List[Dict[str, Any]]:
-        """Identify gaps in content schedule."""
-        
+        """Identify gaps in content schedule."""        
         gaps = []
         start_date = datetime.now(timezone.utc)
         
@@ -1146,8 +1103,7 @@ class ContentScheduler:
         schedule: List[ContentScheduleItem],
         content_gaps: List[Dict[str, Any]]
     ) -> List[str]:
-        """Identify optimization opportunities for the schedule."""
-        
+        """Identify optimization opportunities for the schedule."""        
         opportunities = []
         
         # Analyze content distribution
@@ -1188,8 +1144,7 @@ class ContentScheduler:
         return opportunities
     
     def _analyze_peak_time_usage(self, schedule: List[ContentScheduleItem]) -> float:
-        """Analyze how well the schedule utilizes peak times."""
-        
+        """Analyze how well the schedule utilizes peak times."""        
         peak_posts = 0
         total_posts = len(schedule)
         
@@ -1204,8 +1159,7 @@ class ContentScheduler:
         return peak_posts / total_posts if total_posts > 0 else 0
     
     def _has_batch_posting_opportunity(self, schedule: List[ContentScheduleItem]) -> bool:
-        """Check if there are opportunities for batch content creation."""
-        
+        """Check if there are opportunities for batch content creation."""        
         # Group content by type and analyze patterns
         type_dates = defaultdict(list)
         for item in schedule:
@@ -1225,8 +1179,7 @@ class ContentScheduler:
     async def _predict_calendar_performance(
         self, schedule: List[ContentScheduleItem]
     ) -> Dict[str, float]:
-        """Predict performance metrics for the publishing calendar."""
-        
+        """Predict performance metrics for the publishing calendar."""        
         total_engagement = sum(item.estimated_engagement for item in schedule)
         avg_engagement = total_engagement / len(schedule) if schedule else 0
         

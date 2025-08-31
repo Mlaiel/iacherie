@@ -1,5 +1,4 @@
-"""
-Error Handler Module
+"""Error Handler Module
 ===================
 
 Professional error handling system for crawler operations and platform integrations.
@@ -31,7 +30,6 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
-
 import asyncio
 import logging
 import json
@@ -73,8 +71,7 @@ logger = get_logger(__name__)
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels."""
-    LOW = 1
+    """Error severity levels."""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
@@ -82,8 +79,7 @@ class ErrorSeverity(Enum):
 
 
 class ErrorCategory(Enum):
-    """Error categories for classification."""
-    PLATFORM_API = "platform.api"
+    """Error categories for classification."""    PLATFORM_API = "platform.api"
     NETWORK = "network"
     CONTENT_PROCESSING = "content.processing"
     SECURITY = "security"
@@ -100,8 +96,7 @@ class ErrorCategory(Enum):
 
 
 class ErrorAction(Enum):
-    """Possible error handling actions."""
-    RETRY = "retry"
+    """Possible error handling actions."""    RETRY = "retry"
     FALLBACK = "fallback"
     SKIP = "skip"
     ABORT = "abort"
@@ -112,8 +107,7 @@ class ErrorAction(Enum):
 
 @dataclass
 class ErrorContext:
-    """Error context information."""
-    
+    """Error context information."""    
     error_id: str
     timestamp: datetime
     user_id: Optional[int] = None
@@ -127,14 +121,12 @@ class ErrorContext:
     correlation_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return asdict(self)
+        """Convert to dictionary."""        return asdict(self)
 
 
 @dataclass
 class ErrorDetails:
-    """Comprehensive error details."""
-    
+    """Comprehensive error details."""    
     error_id: str
     category: ErrorCategory
     severity: ErrorSeverity
@@ -150,8 +142,7 @@ class ErrorDetails:
     resolution_notes: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             'error_id': self.error_id,
             'category': self.category.value,
             'severity': self.severity.value,
@@ -169,14 +160,12 @@ class ErrorDetails:
 
 
 class ErrorClassifier:
-    """Professional error classification system."""
-    
+    """Professional error classification system."""    
     def __init__(self):
         self.classification_rules = self._load_classification_rules()
     
     def _load_classification_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load error classification rules."""
-        return {
+        """Load error classification rules."""        return {
             # Platform API Errors
             'platform_api': {
                 'patterns': [
@@ -280,8 +269,7 @@ class ErrorClassifier:
         exception: Exception, 
         context: Optional[ErrorContext] = None
     ) -> Tuple[ErrorCategory, ErrorSeverity, ErrorAction]:
-        """
-        Classify error and determine appropriate handling.
+        """        Classify error and determine appropriate handling.
         
         Args:
             exception: The exception to classify
@@ -289,8 +277,7 @@ class ErrorClassifier:
             
         Returns:
             Tuple of (category, severity, suggested_action)
-        """
-        try:
+        """        try:
             error_message = str(exception).lower()
             exception_type = type(exception).__name__
             
@@ -311,8 +298,7 @@ class ErrorClassifier:
             return ErrorCategory.UNKNOWN, ErrorSeverity.MEDIUM, ErrorAction.RETRY
     
     def _classify_by_exception_type(self, exception: Exception) -> Tuple[ErrorCategory, ErrorSeverity]:
-        """Classify error by exception type."""
-        type_mapping = {
+        """Classify error by exception type."""        type_mapping = {
             # Platform errors
             aiohttp.ClientResponseError: (ErrorCategory.PLATFORM_API, ErrorSeverity.MEDIUM),
             aiohttp.ClientTimeout: (ErrorCategory.NETWORK, ErrorSeverity.MEDIUM),
@@ -362,8 +348,7 @@ class ErrorClassifier:
         return ErrorCategory.UNKNOWN, ErrorSeverity.MEDIUM
     
     def _classify_by_patterns(self, error_message: str) -> Tuple[ErrorCategory, ErrorSeverity]:
-        """Classify error by message patterns."""
-        for rule_name, rule_config in self.classification_rules.items():
+        """Classify error by message patterns."""        for rule_name, rule_config in self.classification_rules.items():
             patterns = rule_config['patterns']
             
             for pattern in patterns:
@@ -388,8 +373,7 @@ class ErrorClassifier:
         severity: ErrorSeverity, 
         exception: Exception
     ) -> ErrorAction:
-        """Determine suggested action based on error characteristics."""
-        # Critical and emergency errors
+        """Determine suggested action based on error characteristics."""        # Critical and emergency errors
         if severity in [ErrorSeverity.CRITICAL, ErrorSeverity.EMERGENCY]:
             return ErrorAction.ESCALATE
         
@@ -413,15 +397,13 @@ class ErrorClassifier:
 
 
 class ErrorRecoveryManager:
-    """Professional error recovery and retry management."""
-    
+    """Professional error recovery and retry management."""    
     def __init__(self):
         self.recovery_strategies = self._load_recovery_strategies()
         self.retry_delays = [1, 2, 4, 8, 16]  # Exponential backoff
     
     def _load_recovery_strategies(self) -> Dict[ErrorCategory, Dict[str, Any]]:
-        """Load recovery strategies for different error categories."""
-        return {
+        """Load recovery strategies for different error categories."""        return {
             ErrorCategory.RATE_LIMIT: {
                 'max_retries': 5,
                 'base_delay': 60,  # 1 minute
@@ -465,8 +447,7 @@ class ErrorRecoveryManager:
         context: ErrorContext,
         max_retries: Optional[int] = None
     ) -> Any:
-        """
-        Execute operation with automatic error recovery.
+        """        Execute operation with automatic error recovery.
         
         Args:
             operation: Async operation to execute
@@ -475,8 +456,7 @@ class ErrorRecoveryManager:
             
         Returns:
             Operation result
-        """
-        attempt = 0
+        """        attempt = 0
         last_error = None
         
         while attempt <= (max_retries or 3):
@@ -518,8 +498,7 @@ class ErrorRecoveryManager:
             raise last_error
     
     async def _calculate_retry_delay(self, category: ErrorCategory, attempt: int) -> float:
-        """Calculate retry delay based on category and attempt number."""
-        strategy = self.recovery_strategies.get(category, {})
+        """Calculate retry delay based on category and attempt number."""        strategy = self.recovery_strategies.get(category, {})
         
         base_delay = strategy.get('base_delay', 2)
         exponential_backoff = strategy.get('exponential_backoff', True)
@@ -545,8 +524,7 @@ class ErrorRecoveryManager:
         fallback_operation: Callable[[], Coroutine[Any, Any, Any]],
         context: ErrorContext
     ) -> Any:
-        """
-        Attempt primary operation with fallback.
+        """        Attempt primary operation with fallback.
         
         Args:
             primary_operation: Primary async operation
@@ -555,8 +533,7 @@ class ErrorRecoveryManager:
             
         Returns:
             Operation result
-        """
-        try:
+        """        try:
             return await primary_operation()
         except Exception as e:
             logger.warning(f"Primary operation failed, attempting fallback: {e}")
@@ -571,8 +548,7 @@ class ErrorRecoveryManager:
 
 
 class ErrorAggregator:
-    """Error aggregation and analysis system."""
-    
+    """Error aggregation and analysis system."""    
     def __init__(self):
         self.error_cache: Dict[str, List[ErrorDetails]] = {}
         self.aggregation_window = timedelta(minutes=5)
@@ -584,8 +560,7 @@ class ErrorAggregator:
         }
     
     async def add_error(self, error_details: ErrorDetails):
-        """Add error to aggregation system."""
-        try:
+        """Add error to aggregation system."""        try:
             # Create aggregation key
             key = f"{error_details.category.value}:{error_details.exception_type}"
             
@@ -605,8 +580,7 @@ class ErrorAggregator:
             logger.error(f"Error aggregation failed: {e}")
     
     async def _clean_old_errors(self, key: str):
-        """Remove errors outside aggregation window."""
-        try:
+        """Remove errors outside aggregation window."""        try:
             cutoff_time = datetime.utcnow() - self.aggregation_window
             self.error_cache[key] = [
                 error for error in self.error_cache[key]
@@ -616,8 +590,7 @@ class ErrorAggregator:
             logger.warning(f"Error cache cleanup failed: {e}")
     
     async def _check_alert_conditions(self, key: str, latest_error: ErrorDetails):
-        """Check if alert conditions are met."""
-        try:
+        """Check if alert conditions are met."""        try:
             errors_in_window = self.error_cache[key]
             error_count = len(errors_in_window)
             
@@ -631,8 +604,7 @@ class ErrorAggregator:
             logger.error(f"Alert condition check failed: {e}")
     
     async def _trigger_error_alert(self, key: str, errors: List[ErrorDetails]):
-        """Trigger alert for error pattern."""
-        try:
+        """Trigger alert for error pattern."""        try:
             alert_data = {
                 'error_pattern': key,
                 'error_count': len(errors),
@@ -667,8 +639,7 @@ class ErrorAggregator:
 
 
 class ErrorHandler:
-    """Main error handler orchestrating all error management operations."""
-    
+    """Main error handler orchestrating all error management operations."""    
     def __init__(
         self,
         notification_manager: Optional[NotificationManager] = None,
@@ -689,8 +660,7 @@ class ErrorHandler:
         context: Optional[ErrorContext] = None,
         operation: Optional[str] = None
     ) -> ErrorDetails:
-        """
-        Main entry point for error handling.
+        """        Main entry point for error handling.
         
         Args:
             exception: The exception to handle
@@ -699,8 +669,7 @@ class ErrorHandler:
             
         Returns:
             Error details
-        """
-        try:
+        """        try:
             # Create error context if not provided
             if context is None:
                 context = ErrorContext(
@@ -767,8 +736,7 @@ class ErrorHandler:
             )
     
     def _extract_error_metadata(self, exception: Exception) -> Dict[str, Any]:
-        """Extract metadata from exception."""
-        metadata = {}
+        """Extract metadata from exception."""        metadata = {}
         
         try:
             # HTTP response errors
@@ -805,8 +773,7 @@ class ErrorHandler:
         return metadata
     
     async def _log_error(self, error_details: ErrorDetails):
-        """Log error to database and file system."""
-        try:
+        """Log error to database and file system."""        try:
             # Log to database
             async with async_session() as session:
                 error_log = ErrorLog(
@@ -831,8 +798,7 @@ class ErrorHandler:
             logger.warning(f"Error logging to database failed: {e}")
     
     async def _send_critical_notification(self, error_details: ErrorDetails):
-        """Send notification for critical errors."""
-        try:
+        """Send notification for critical errors."""        try:
             if self.notification_manager:
                 await self.notification_manager.send_critical_error_alert(error_details)
             
@@ -847,8 +813,7 @@ class ErrorHandler:
         operation: Optional[str] = None,
         context_factory: Optional[Callable[[], ErrorContext]] = None
     ):
-        """Decorator for automatic error handling."""
-        def decorator(func: Callable):
+        """Decorator for automatic error handling."""        def decorator(func: Callable):
             @wraps(func)
             async def wrapper(*args, **kwargs):
                 try:
@@ -862,8 +827,7 @@ class ErrorHandler:
     
     async def get_error_statistics(self, 
                                  time_range: timedelta = timedelta(hours=24)) -> Dict[str, Any]:
-        """Get error statistics for monitoring."""
-        try:
+        """Get error statistics for monitoring."""        try:
             cutoff_time = datetime.utcnow() - time_range
             
             async with async_session() as session:
@@ -871,15 +835,13 @@ class ErrorHandler:
                 from sqlalchemy import text, func
                 
                 # Total errors query
-                total_errors_query = text("""
-                    SELECT COUNT(*) as total_errors
+                total_errors_query = text("""                    SELECT COUNT(*) as total_errors
                     FROM error_logs 
                     WHERE created_at >= :cutoff_time
                 """)
                 
                 # Errors by category query
-                category_query = text("""
-                    SELECT category, COUNT(*) as count
+                category_query = text("""                    SELECT category, COUNT(*) as count
                     FROM error_logs 
                     WHERE created_at >= :cutoff_time
                     GROUP BY category
@@ -887,8 +849,7 @@ class ErrorHandler:
                 """)
                 
                 # Errors by severity query
-                severity_query = text("""
-                    SELECT severity, COUNT(*) as count
+                severity_query = text("""                    SELECT severity, COUNT(*) as count
                     FROM error_logs 
                     WHERE created_at >= :cutoff_time
                     GROUP BY severity
@@ -896,8 +857,7 @@ class ErrorHandler:
                 """)
                 
                 # Top error types query
-                error_types_query = text("""
-                    SELECT exception_type, COUNT(*) as count
+                error_types_query = text("""                    SELECT exception_type, COUNT(*) as count
                     FROM error_logs 
                     WHERE created_at >= :cutoff_time
                     GROUP BY exception_type
@@ -906,8 +866,7 @@ class ErrorHandler:
                 """)
                 
                 # Error rate trend (hourly)
-                trend_query = text("""
-                    SELECT 
+                trend_query = text("""                    SELECT 
                         DATE_TRUNC('hour', created_at) as hour,
                         COUNT(*) as count
                     FROM error_logs 
@@ -970,8 +929,7 @@ def create_error_context(
     operation: Optional[str] = None,
     **kwargs
 ) -> ErrorContext:
-    """Create error context with provided information."""
-    return ErrorContext(
+    """Create error context with provided information."""    return ErrorContext(
         error_id=str(uuid.uuid4()),
         timestamp=datetime.utcnow(),
         user_id=user_id,
@@ -988,8 +946,7 @@ def create_error_handler(
     metrics_collector: Optional[MetricsCollector] = None,
     alert_manager: Optional[AlertManager] = None
 ) -> ErrorHandler:
-    """Create and return an ErrorHandler instance."""
-    return ErrorHandler(
+    """Create and return an ErrorHandler instance."""    return ErrorHandler(
         notification_manager=notification_manager,
         metrics_collector=metrics_collector,
         alert_manager=alert_manager

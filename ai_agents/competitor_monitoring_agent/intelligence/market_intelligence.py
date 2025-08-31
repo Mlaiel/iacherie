@@ -1,12 +1,10 @@
-"""
-Market Intelligence Engine - Advanced Market Analysis System
+"""Market Intelligence Engine - Advanced Market Analysis System
 Provides comprehensive market intelligence and competitive analysis.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,8 +30,7 @@ from ...ml.prediction_engine import PredictionEngine
 
 @dataclass
 class MarketTrend:
-    """Market trend data structure."""
-    trend_id: str
+    """Market trend data structure."""    trend_id: str
     name: str
     category: str
     growth_rate: float
@@ -48,8 +45,7 @@ class MarketTrend:
 
 @dataclass
 class CompetitiveLandscape:
-    """Competitive landscape analysis."""
-    landscape_id: str
+    """Competitive landscape analysis."""    landscape_id: str
     market_segment: str
     total_competitors: int
     market_concentration: float
@@ -64,8 +60,7 @@ class CompetitiveLandscape:
 
 @dataclass
 class OpportunityMatrix:
-    """Market opportunity analysis matrix."""
-    matrix_id: str
+    """Market opportunity analysis matrix."""    matrix_id: str
     segment: str
     opportunities: List[Dict[str, Any]]
     threats: List[Dict[str, Any]]
@@ -79,16 +74,13 @@ class OpportunityMatrix:
 
 
 class MarketIntelligenceEngine:
-    """
-    Advanced market intelligence and analysis engine.
+    """    Advanced market intelligence and analysis engine.
     
     Provides comprehensive market analysis, trend identification,
     competitive landscape mapping, and opportunity assessment.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the market intelligence engine."""
-        self.config = config
+        """Initialize the market intelligence engine."""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -108,8 +100,7 @@ class MarketIntelligenceEngine:
         self.logger.info("MarketIntelligenceEngine initialized")
     
     async def analyze_market_trends(self, segment: str, data: Dict[str, Any]) -> List[MarketTrend]:
-        """Analyze and identify market trends for a specific segment."""
-        try:
+        """Analyze and identify market trends for a specific segment."""        try:
             self.logger.info(f"Analyzing market trends for segment: {segment}")
             
             # Validate input data
@@ -144,8 +135,7 @@ class MarketIntelligenceEngine:
             raise AnalysisError(f"Failed to analyze market trends: {str(e)}")
     
     async def analyze_competitive_landscape(self, segment: str, competitors: List[Dict[str, Any]]) -> CompetitiveLandscape:
-        """Analyze the competitive landscape for a market segment."""
-        try:
+        """Analyze the competitive landscape for a market segment."""        try:
             self.logger.info(f"Analyzing competitive landscape for segment: {segment}")
             
             if not competitors:
@@ -201,8 +191,7 @@ class MarketIntelligenceEngine:
             raise AnalysisError(f"Failed to analyze competitive landscape: {str(e)}")
     
     async def create_opportunity_matrix(self, segment: str, market_data: Dict[str, Any]) -> OpportunityMatrix:
-        """Create comprehensive opportunity matrix for market segment."""
-        try:
+        """Create comprehensive opportunity matrix for market segment."""        try:
             self.logger.info(f"Creating opportunity matrix for segment: {segment}")
             
             # Identify market opportunities
@@ -255,8 +244,7 @@ class MarketIntelligenceEngine:
             raise AnalysisError(f"Failed to create opportunity matrix: {str(e)}")
     
     async def predict_market_evolution(self, segment: str, horizon: int = 12) -> Dict[str, Any]:
-        """Predict market evolution over specified time horizon (months)."""
-        try:
+        """Predict market evolution over specified time horizon (months)."""        try:
             self.logger.info(f"Predicting market evolution for {segment} over {horizon} months")
             
             # Get historical market data
@@ -309,8 +297,7 @@ class MarketIntelligenceEngine:
             raise AnalysisError(f"Failed to predict market evolution: {str(e)}")
     
     async def _identify_statistical_trends(self, time_series: Dict[str, List], segment: str) -> List[MarketTrend]:
-        """Identify trends using statistical analysis methods."""
-        trends = []
+        """Identify trends using statistical analysis methods."""        trends = []
         
         for metric, data in time_series.items():
             if len(data) < 3:
@@ -345,8 +332,7 @@ class MarketIntelligenceEngine:
         return trends
     
     async def _identify_competitive_clusters(self, competitor_features: pd.DataFrame) -> Dict[str, List[str]]:
-        """Identify competitive clusters using machine learning."""
-        try:
+        """Identify competitive clusters using machine learning."""        try:
             # Standardize features
             scaler = StandardScaler()
             features_scaled = scaler.fit_transform(competitor_features.drop('name', axis=1))
@@ -373,8 +359,7 @@ class MarketIntelligenceEngine:
             return {}
     
     async def _calculate_market_concentration(self, competitors: List[Dict[str, Any]]) -> float:
-        """Calculate market concentration using Herfindahl-Hirschman Index."""
-        try:
+        """Calculate market concentration using Herfindahl-Hirschman Index."""        try:
             total_market_share = sum(comp.get('market_share', 0) for comp in competitors)
             if total_market_share == 0:
                 return 0.0
@@ -388,8 +373,7 @@ class MarketIntelligenceEngine:
             return 0.0
     
     async def _assess_competition_intensity(self, competitors: List[Dict[str, Any]]) -> str:
-        """Assess the intensity of competition in the market."""
-        try:
+        """Assess the intensity of competition in the market."""        try:
             # Factors to consider
             num_competitors = len(competitors)
             avg_growth = np.mean([comp.get('growth_rate', 0) for comp in competitors])

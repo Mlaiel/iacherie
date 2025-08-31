@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Observability Module Validation Script
+"""Observability Module Validation Script
 
 Final validation script to ensure all components are working correctly
 and the module is production-ready for the IA Influencer Agent platform.
@@ -14,7 +13,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import sys
 import asyncio
 import importlib
@@ -37,8 +35,7 @@ sys.path.insert(0, str(current_dir))
 
 
 class ObservabilityValidator:
-    """Comprehensive validation suite for the observability module"""
-    
+    """Comprehensive validation suite for the observability module"""    
     def __init__(self):
         self.results = {
             "timestamp": datetime.now().isoformat(),
@@ -68,8 +65,7 @@ class ObservabilityValidator:
         ]
     
     def validate_imports(self) -> Tuple[bool, List[str]]:
-        """Validate all module imports"""
-        logger.info("🔍 Validating module imports...")
+        """Validate all module imports"""        logger.info("🔍 Validating module imports...")
         
         successful_imports = []
         failed_imports = []
@@ -99,8 +95,7 @@ class ObservabilityValidator:
         return len(failed_imports) == 0, failed_imports
     
     async def validate_core_functionality(self) -> Tuple[bool, List[str]]:
-        """Validate core functionality"""
-        logger.info("🚀 Validating core functionality...")
+        """Validate core functionality"""        logger.info("🚀 Validating core functionality...")
         
         errors = []
         
@@ -163,8 +158,7 @@ class ObservabilityValidator:
         return len(errors) == 0, errors
     
     def validate_file_structure(self) -> Tuple[bool, List[str]]:
-        """Validate file structure completeness"""
-        logger.info("📁 Validating file structure...")
+        """Validate file structure completeness"""        logger.info("📁 Validating file structure...")
         
         required_files = [
             "__init__.py",
@@ -211,8 +205,7 @@ class ObservabilityValidator:
         return len(missing_files) == 0, missing_files
     
     def validate_documentation(self) -> Tuple[bool, List[str]]:
-        """Validate documentation completeness"""
-        logger.info("📖 Validating documentation...")
+        """Validate documentation completeness"""        logger.info("📖 Validating documentation...")
         
         doc_files = ["README.md", "README.de.md", "README.fr.md"]
         errors = []
@@ -258,8 +251,7 @@ class ObservabilityValidator:
         return len(errors) == 0, errors
     
     async def validate_business_logic(self) -> Tuple[bool, List[str]]:
-        """Validate IA Influencer Agent business logic integration"""
-        logger.info("🎯 Validating IA Influencer business logic...")
+        """Validate IA Influencer Agent business logic integration"""        logger.info("🎯 Validating IA Influencer business logic...")
         
         errors = []
         
@@ -318,8 +310,7 @@ class ObservabilityValidator:
         return len(errors) == 0, errors
     
     async def run_complete_validation(self) -> Dict[str, Any]:
-        """Run complete validation suite"""
-        logger.info("🎯 STARTING COMPLETE OBSERVABILITY MODULE VALIDATION")
+        """Run complete validation suite"""        logger.info("🎯 STARTING COMPLETE OBSERVABILITY MODULE VALIDATION")
         logger.info("=" * 70)
         
         validation_steps = [
@@ -379,16 +370,14 @@ class ObservabilityValidator:
         return self.results
     
     def save_results(self, filename: str = "validation_results.json"):
-        """Save validation results to file"""
-        results_path = current_dir / filename
+        """Save validation results to file"""        results_path = current_dir / filename
         with open(results_path, 'w', encoding='utf-8') as f:
             json.dump(self.results, f, indent=2, default=str)
         logger.info(f"📁 Results saved to: {results_path}")
 
 
 async def main():
-    """Main validation runner"""
-    print("🎯 IA INFLUENCER AGENT - OBSERVABILITY MODULE VALIDATOR")
+    """Main validation runner"""    print("🎯 IA INFLUENCER AGENT - OBSERVABILITY MODULE VALIDATOR")
     print("=" * 70)
     print("👨‍💼 Author: Fahed Mlaiel <mlaiel@live.de>")
     print("🔍 Production Readiness Validation Suite")

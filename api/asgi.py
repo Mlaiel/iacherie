@@ -1,5 +1,4 @@
-"""
-ASGI Application Entry Point
+"""ASGI Application Entry Point
 ---------------------------
 - Complete FastAPI-ASGI App for Ainflue AI Platform
 - Integrates Security, CORS, Observability, Health, Multilingual, Sentry, OpenTelemetry
@@ -9,7 +8,6 @@ Authors & Roles:
 - Lead Dev, Architect IA, Backend Senior, ML Engineer, DBA/Data Engineer, Security Specialist, Microservices Architect
 - Fahed Mlaiel <mlaiel@live.de>
 """
-
 import os
 import sys
 from pathlib import Path
@@ -83,8 +81,7 @@ def custom_openapi():
     openapi_schema = get_openapi(
         title="Ainflue AI Platform - Complete API Documentation",
         version="2.0.0",
-        description="""
-        # 🚀 Ainflue AI Platform - Enterprise Content Protection & Monetization
+        description="""        # 🚀 Ainflue AI Platform - Enterprise Content Protection & Monetization
 
         ## Overview
         The Ainflue AI Platform provides comprehensive AI-powered content protection, monetization, 
@@ -391,8 +388,7 @@ app.include_router(api_router, prefix=root_prefix)
 # Enhanced Health Endpoint
 @app.get("/health", tags=["System"], summary="System Health Check")
 async def health():
-    """
-    Comprehensive system health check endpoint.
+    """    Comprehensive system health check endpoint.
     
     Returns detailed health information including:
     - System status
@@ -400,8 +396,7 @@ async def health():
     - Cache status
     - External service connectivity
     - Performance metrics
-    """
-    return {
+    """    return {
         "status": "healthy",
         "timestamp": datetime.utcnow().isoformat(),
         "version": "2.0.0",
@@ -423,13 +418,11 @@ async def health():
 # Enhanced Readiness Endpoint
 @app.get("/ready", tags=["System"], summary="System Readiness Check")
 async def ready():
-    """
-    System readiness check for load balancers and orchestrators.
+    """    System readiness check for load balancers and orchestrators.
     
     Returns 200 when system is ready to accept traffic.
     Returns 503 when system is not ready.
-    """
-    return {
+    """    return {
         "status": "ready",
         "timestamp": datetime.utcnow().isoformat(),
         "checks": {
@@ -442,10 +435,8 @@ async def ready():
 # Root endpoint with API information
 @app.get("/", tags=["System"], summary="API Information")
 async def root():
-    """
-    API root endpoint with basic information and navigation.
-    """
-    return {
+    """    API root endpoint with basic information and navigation.
+    """    return {
         "message": "Welcome to Ainflue AI Platform API",
         "version": "2.0.0",
         "documentation": {

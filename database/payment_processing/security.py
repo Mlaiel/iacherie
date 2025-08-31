@@ -1,5 +1,4 @@
-"""
-Payment Security Module - Enterprise Grade
+"""Payment Security Module - Enterprise Grade
 Advanced security features for payment processing in IA Influencer Agent platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -23,7 +22,6 @@ ENTERPRISE SECURITY FEATURES:
 - Blockchain-based transaction verification
 - Advanced threat detection and prevention
 """
-
 import hashlib
 import hmac
 import secrets
@@ -64,16 +62,14 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security levels for payment processing"""
-    BASIC = "basic"
+    """Security levels for payment processing"""    BASIC = "basic"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class FraudRisk(Enum):
-    """Fraud risk levels"""
-    MINIMAL = "minimal"
+    """Fraud risk levels"""    MINIMAL = "minimal"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -81,8 +77,7 @@ class FraudRisk(Enum):
 
 
 class AuthenticationMethod(Enum):
-    """Authentication methods for payments"""
-    PASSWORD = "password"
+    """Authentication methods for payments"""    PASSWORD = "password"
     TWO_FACTOR = "two_factor"
     BIOMETRIC = "biometric"
     HARDWARE_TOKEN = "hardware_token"
@@ -90,8 +85,7 @@ class AuthenticationMethod(Enum):
 
 
 class ThreatType(Enum):
-    """Types of security threats"""
-    FRAUD_ATTEMPT = "fraud_attempt"
+    """Types of security threats"""    FRAUD_ATTEMPT = "fraud_attempt"
     IDENTITY_THEFT = "identity_theft"
     CARD_TESTING = "card_testing"
     ACCOUNT_TAKEOVER = "account_takeover"
@@ -101,8 +95,7 @@ class ThreatType(Enum):
 
 @dataclass
 class SecurityAssessment:
-    """Security assessment result container"""
-    risk_score: int  # 0-100
+    """Security assessment result container"""    risk_score: int  # 0-100
     security_level: SecurityLevel
     fraud_risk: FraudRisk
     threats_detected: List[ThreatType]
@@ -113,8 +106,7 @@ class SecurityAssessment:
 
 @dataclass
 class FraudIndicator:
-    """Fraud indicator container"""
-    indicator_type: str
+    """Fraud indicator container"""    indicator_type: str
     severity: FraudRisk
     confidence: float  # 0.0-1.0
     description: str
@@ -122,23 +114,19 @@ class FraudIndicator:
 
 
 class PaymentSecurityError(Exception):
-    """Custom exception for payment security errors"""
-    pass
+    """Custom exception for payment security errors"""    pass
 
 
 class EncryptionError(PaymentSecurityError):
-    """Raised when encryption/decryption fails"""
-    pass
+    """Raised when encryption/decryption fails"""    pass
 
 
 class FraudDetectionError(PaymentSecurityError):
-    """Raised when fraud detection fails"""
-    pass
+    """Raised when fraud detection fails"""    pass
 
 
 class PaymentEncryption:
-    """Advanced encryption for payment data with multiple algorithms"""
-    
+    """Advanced encryption for payment data with multiple algorithms"""    
     def __init__(self, master_key: Optional[bytes] = None):
         self.master_key = master_key or Fernet.generate_key() if Fernet else b"dummy_key"
         self.cipher_suite = Fernet(self.master_key) if Fernet else None
@@ -156,8 +144,7 @@ class PaymentEncryption:
             self.public_key = None
     
     def encrypt_sensitive_data(self, data: str, use_asymmetric: bool = False) -> str:
-        """Encrypt sensitive payment data"""
-        try:
+        """Encrypt sensitive payment data"""        try:
             if use_asymmetric and self.public_key:
                 # Use RSA encryption for highly sensitive data
                 encrypted = self.public_key.encrypt(
@@ -182,8 +169,7 @@ class PaymentEncryption:
             raise EncryptionError(f"Failed to encrypt data: {str(e)}")
     
     def decrypt_sensitive_data(self, encrypted_data: str, use_asymmetric: bool = False) -> str:
-        """Decrypt sensitive payment data"""
-        try:
+        """Decrypt sensitive payment data"""        try:
             encrypted_bytes = base64.b64decode(encrypted_data.encode('utf-8'))
             
             if use_asymmetric and self.private_key:
@@ -210,8 +196,7 @@ class PaymentEncryption:
             raise EncryptionError(f"Failed to decrypt data: {str(e)}")
     
     def generate_token(self, data: Dict[str, Any], expiry_hours: int = 24) -> str:
-        """Generate secure token for payment data"""
-        try:
+        """Generate secure token for payment data"""        try:
             token_data = {
                 "data": data,
                 "expires_at": (datetime.utcnow() + timedelta(hours=expiry_hours)).isoformat(),
@@ -226,8 +211,7 @@ class PaymentEncryption:
             raise EncryptionError(f"Failed to generate token: {str(e)}")
     
     def validate_token(self, token: str) -> Tuple[bool, Optional[Dict[str, Any]]]:
-        """Validate and extract data from secure token"""
-        try:
+        """Validate and extract data from secure token"""        try:
             decrypted_json = self.decrypt_sensitive_data(token)
             token_data = json.loads(decrypted_json)
             
@@ -243,8 +227,7 @@ class PaymentEncryption:
             return False, None
     
     def hash_payment_data(self, data: str, salt: Optional[str] = None) -> Tuple[str, str]:
-        """Create secure hash of payment data"""
-        if not salt:
+        """Create secure hash of payment data"""        if not salt:
             salt = secrets.token_hex(16)
         
         # Use PBKDF2 for secure hashing
@@ -267,15 +250,13 @@ class PaymentEncryption:
 
 
 class PaymentTokenization:
-    """Advanced tokenization system for payment methods"""
-    
+    """Advanced tokenization system for payment methods"""    
     def __init__(self, encryption: PaymentEncryption):
         self.encryption = encryption
         self.token_registry = {}  # In production, this would be a secure database
     
     def tokenize_payment_method(self, payment_data: Dict[str, Any]) -> str:
-        """Create secure token for payment method"""
-        try:
+        """Create secure token for payment method"""        try:
             # Generate unique token ID
             token_id = secrets.token_urlsafe(32)
             
@@ -300,8 +281,7 @@ class PaymentTokenization:
             raise PaymentSecurityError(f"Failed to tokenize payment method: {str(e)}")
     
     def detokenize_payment_method(self, token_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve payment data from token"""
-        try:
+        """Retrieve payment data from token"""        try:
             if token_id not in self.token_registry:
                 return None
             
@@ -324,8 +304,7 @@ class PaymentTokenization:
             return None
     
     def revoke_token(self, token_id: str) -> bool:
-        """Revoke a payment token"""
-        try:
+        """Revoke a payment token"""        try:
             if token_id in self.token_registry:
                 del self.token_registry[token_id]
                 return True
@@ -336,8 +315,7 @@ class PaymentTokenization:
 
 
 class FraudDetectionEngine:
-    """Advanced fraud detection with machine learning algorithms"""
-    
+    """Advanced fraud detection with machine learning algorithms"""    
     def __init__(self):
         self.ml_model = None
         self.scaler = None
@@ -361,8 +339,7 @@ class FraudDetectionEngine:
         payment_method: Any,
         metadata: Optional[Dict[str, Any]] = None
     ) -> int:
-        """Calculate comprehensive fraud risk score (0-100)"""
-        try:
+        """Calculate comprehensive fraud risk score (0-100)"""        try:
             risk_factors = []
             
             # Amount-based risk
@@ -404,8 +381,7 @@ class FraudDetectionEngine:
             return 100  # Return maximum risk on error
     
     def _assess_amount_risk(self, amount: Decimal) -> int:
-        """Assess risk based on transaction amount"""
-        if amount < Decimal('10'):
+        """Assess risk based on transaction amount"""        if amount < Decimal('10'):
             return 5
         elif amount < Decimal('100'):
             return 10
@@ -419,8 +395,7 @@ class FraudDetectionEngine:
             return 80
     
     def _assess_payment_method_risk(self, payment_method: Any) -> int:
-        """Assess risk based on payment method"""
-        try:
+        """Assess risk based on payment method"""        try:
             if not payment_method:
                 return 50
             
@@ -441,8 +416,7 @@ class FraudDetectionEngine:
             return 40
     
     async def _assess_user_behavior_risk(self, user_id: str, metadata: Optional[Dict[str, Any]]) -> int:
-        """Assess risk based on user behavior patterns"""
-        try:
+        """Assess risk based on user behavior patterns"""        try:
             # This would analyze user's historical behavior
             # For now, return a baseline risk
             return 15
@@ -451,8 +425,7 @@ class FraudDetectionEngine:
             return 30
     
     def _assess_geographic_risk(self, metadata: Optional[Dict[str, Any]]) -> int:
-        """Assess risk based on geographic location"""
-        try:
+        """Assess risk based on geographic location"""        try:
             if not metadata or 'geo_location' not in metadata:
                 return 20
             
@@ -474,8 +447,7 @@ class FraudDetectionEngine:
             return 25
     
     def _assess_time_risk(self, metadata: Optional[Dict[str, Any]]) -> int:
-        """Assess risk based on transaction timing"""
-        try:
+        """Assess risk based on transaction timing"""        try:
             current_hour = datetime.utcnow().hour
             
             # Higher risk during unusual hours (simplified)
@@ -490,8 +462,7 @@ class FraudDetectionEngine:
             return 10
     
     def _assess_device_risk(self, metadata: Optional[Dict[str, Any]]) -> int:
-        """Assess risk based on device and IP information"""
-        try:
+        """Assess risk based on device and IP information"""        try:
             if not metadata:
                 return 20
             
@@ -518,23 +489,19 @@ class FraudDetectionEngine:
             return 20
     
     def _is_tor_ip(self, ip_address: str) -> bool:
-        """Check if IP is from Tor network"""
-        # In production, this would use a Tor exit node list
+        """Check if IP is from Tor network"""        # In production, this would use a Tor exit node list
         return False
     
     def _is_vpn_ip(self, ip_address: str) -> bool:
-        """Check if IP is from VPN service"""
-        # In production, this would use VPN detection services
+        """Check if IP is from VPN service"""        # In production, this would use VPN detection services
         return False
     
     def _is_datacenter_ip(self, ip_address: str) -> bool:
-        """Check if IP is from datacenter"""
-        # In production, this would use datacenter IP ranges
+        """Check if IP is from datacenter"""        # In production, this would use datacenter IP ranges
         return False
     
     def _calculate_weighted_score(self, risk_factors: List[int]) -> int:
-        """Calculate weighted risk score from individual factors"""
-        if not risk_factors:
+        """Calculate weighted risk score from individual factors"""        if not risk_factors:
             return 50
         
         # Apply weights to different factors
@@ -548,8 +515,7 @@ class FraudDetectionEngine:
         return int(weighted_sum)
     
     def _apply_ml_detection(self, risk_factors: List[int], metadata: Optional[Dict[str, Any]]) -> int:
-        """Apply machine learning model for fraud detection"""
-        try:
+        """Apply machine learning model for fraud detection"""        try:
             if not self.ml_model or not np:
                 return 0
             
@@ -576,8 +542,7 @@ class FraudDetectionEngine:
         transaction_data: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[FraudIndicator]:
-        """Detect specific fraud indicators"""
-        indicators = []
+        """Detect specific fraud indicators"""        indicators = []
         
         try:
             # Rapid successive transactions
@@ -617,24 +582,20 @@ class FraudDetectionEngine:
             return []
     
     async def _detect_rapid_transactions(self, user_id: str) -> bool:
-        """Detect if user is making rapid successive transactions"""
-        # In production, this would query the database for recent transactions
+        """Detect if user is making rapid successive transactions"""        # In production, this would query the database for recent transactions
         return False
     
     def _detect_unusual_amounts(self, transaction_data: Dict[str, Any]) -> bool:
-        """Detect unusual transaction amounts"""
-        # In production, this would analyze historical patterns
+        """Detect unusual transaction amounts"""        # In production, this would analyze historical patterns
         return False
     
     def _detect_geographic_anomaly(self, user_id: str, metadata: Optional[Dict[str, Any]]) -> bool:
-        """Detect geographic anomalies"""
-        # In production, this would compare with user's usual locations
+        """Detect geographic anomalies"""        # In production, this would compare with user's usual locations
         return False
 
 
 class PaymentAuthentication:
-    """Advanced authentication for payment operations"""
-    
+    """Advanced authentication for payment operations"""    
     def __init__(self, encryption: PaymentEncryption):
         self.encryption = encryption
     
@@ -645,8 +606,7 @@ class PaymentAuthentication:
         auth_method: AuthenticationMethod,
         credentials: Dict[str, Any]
     ) -> Tuple[bool, Optional[str]]:
-        """Authenticate payment operation"""
-        try:
+        """Authenticate payment operation"""        try:
             if auth_method == AuthenticationMethod.PASSWORD:
                 return await self._authenticate_password(user_id, credentials)
             elif auth_method == AuthenticationMethod.TWO_FACTOR:
@@ -663,32 +623,28 @@ class PaymentAuthentication:
             return False, str(e)
     
     async def _authenticate_password(self, user_id: str, credentials: Dict[str, Any]) -> Tuple[bool, Optional[str]]:
-        """Authenticate using password"""
-        # In production, this would verify against stored password hash
+        """Authenticate using password"""        # In production, this would verify against stored password hash
         password = credentials.get('password')
         if password and len(password) >= 8:
             return True, None
         return False, "Invalid password"
     
     async def _authenticate_two_factor(self, user_id: str, credentials: Dict[str, Any]) -> Tuple[bool, Optional[str]]:
-        """Authenticate using two-factor authentication"""
-        # In production, this would verify TOTP token or SMS code
+        """Authenticate using two-factor authentication"""        # In production, this would verify TOTP token or SMS code
         token = credentials.get('token')
         if token and len(token) == 6 and token.isdigit():
             return True, None
         return False, "Invalid 2FA token"
     
     async def _authenticate_biometric(self, user_id: str, credentials: Dict[str, Any]) -> Tuple[bool, Optional[str]]:
-        """Authenticate using biometric data"""
-        # In production, this would verify biometric signature
+        """Authenticate using biometric data"""        # In production, this would verify biometric signature
         biometric_data = credentials.get('biometric_data')
         if biometric_data:
             return True, None
         return False, "Biometric authentication failed"
     
     async def _authenticate_hardware_token(self, user_id: str, credentials: Dict[str, Any]) -> Tuple[bool, Optional[str]]:
-        """Authenticate using hardware token"""
-        # In production, this would verify hardware token signature
+        """Authenticate using hardware token"""        # In production, this would verify hardware token signature
         token_signature = credentials.get('token_signature')
         if token_signature:
             return True, None
@@ -696,8 +652,7 @@ class PaymentAuthentication:
 
 
 class PaymentSecurityManager:
-    """Central security manager for payment operations"""
-    
+    """Central security manager for payment operations"""    
     def __init__(self):
         self.encryption = PaymentEncryption()
         self.tokenization = PaymentTokenization(self.encryption)
@@ -710,8 +665,7 @@ class PaymentSecurityManager:
         payment_data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> SecurityAssessment:
-        """Comprehensive security assessment for payment"""
-        try:
+        """Comprehensive security assessment for payment"""        try:
             # Calculate fraud risk score
             risk_score = await self.fraud_detector.calculate_risk_score(
                 user_id=user_id,
@@ -779,8 +733,7 @@ class PaymentSecurityManager:
             )
     
     def _determine_security_level(self, risk_score: int) -> SecurityLevel:
-        """Determine security level based on risk score"""
-        if risk_score >= 80:
+        """Determine security level based on risk score"""        if risk_score >= 80:
             return SecurityLevel.BASIC
         elif risk_score >= 60:
             return SecurityLevel.ENHANCED
@@ -790,8 +743,7 @@ class PaymentSecurityManager:
             return SecurityLevel.ENTERPRISE
     
     def _determine_fraud_risk(self, risk_score: int) -> FraudRisk:
-        """Determine fraud risk category based on risk score"""
-        if risk_score >= 90:
+        """Determine fraud risk category based on risk score"""        if risk_score >= 90:
             return FraudRisk.CRITICAL
         elif risk_score >= 75:
             return FraudRisk.HIGH
@@ -808,8 +760,7 @@ class PaymentSecurityManager:
         security_level: SecurityLevel,
         fraud_indicators: List[FraudIndicator]
     ) -> List[str]:
-        """Generate security recommendations based on assessment"""
-        recommendations = []
+        """Generate security recommendations based on assessment"""        recommendations = []
         
         if risk_score >= 80:
             recommendations.append("Require manual review before processing")
@@ -837,8 +788,7 @@ class PaymentSecurityManager:
         signature: str,
         timestamp: datetime
     ) -> bool:
-        """Validate payment data integrity using digital signatures"""
-        try:
+        """Validate payment data integrity using digital signatures"""        try:
             # Check timestamp validity (within 5 minutes)
             if datetime.utcnow() - timestamp > timedelta(minutes=5):
                 return False
@@ -858,8 +808,7 @@ class PaymentSecurityManager:
             return False
     
     def create_payment_signature(self, payment_data: Dict[str, Any]) -> str:
-        """Create digital signature for payment data"""
-        try:
+        """Create digital signature for payment data"""        try:
             data_string = json.dumps(payment_data, sort_keys=True)
             signature = hmac.new(
                 self.encryption.master_key,
@@ -875,8 +824,7 @@ class PaymentSecurityManager:
 
 
 class SecurityAudit:
-    """Security audit and compliance monitoring"""
-    
+    """Security audit and compliance monitoring"""    
     def __init__(self):
         self.audit_log = []  # In production, this would be a secure database
     
@@ -887,8 +835,7 @@ class SecurityAudit:
         details: Dict[str, Any],
         severity: str = "info"
     ):
-        """Log security-related events for audit purposes"""
-        try:
+        """Log security-related events for audit purposes"""        try:
             audit_entry = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "event_type": event_type,
@@ -912,8 +859,7 @@ class SecurityAudit:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate compliance report for regulatory requirements"""
-        try:
+        """Generate compliance report for regulatory requirements"""        try:
             # Filter audit log by date range
             filtered_events = [
                 event for event in self.audit_log
@@ -955,12 +901,10 @@ class SecurityAudit:
 
 
 class PaymentValidator:
-    """Advanced payment validation and verification"""
-    
+    """Advanced payment validation and verification"""    
     @staticmethod
     def validate_card_number(card_number: str) -> Tuple[bool, Optional[str]]:
-        """Validate credit card number using Luhn algorithm"""
-        try:
+        """Validate credit card number using Luhn algorithm"""        try:
             # Remove spaces and non-digit characters
             card_number = re.sub(r'\D', '', card_number)
             
@@ -987,8 +931,7 @@ class PaymentValidator:
     
     @staticmethod
     def validate_iban(iban: str) -> Tuple[bool, Optional[str]]:
-        """Validate International Bank Account Number"""
-        try:
+        """Validate International Bank Account Number"""        try:
             # Remove spaces and convert to uppercase
             iban = re.sub(r'\s', '', iban).upper()
             
@@ -1017,8 +960,7 @@ class PaymentValidator:
     
     @staticmethod
     def validate_routing_number(routing_number: str) -> Tuple[bool, Optional[str]]:
-        """Validate US bank routing number"""
-        try:
+        """Validate US bank routing number"""        try:
             # Remove non-digit characters
             routing_number = re.sub(r'\D', '', routing_number)
             
@@ -1042,8 +984,7 @@ class PaymentValidator:
         self._derive_key()
     
     def _derive_key(self):
-        """Derive encryption key from master key"""
-        salt = b'payment_salt_ia_influencer'
+        """Derive encryption key from master key"""        salt = b'payment_salt_ia_influencer'
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
@@ -1054,8 +995,7 @@ class PaymentValidator:
         self.cipher = Fernet(key)
     
     def encrypt_payment_data(self, data: Dict[str, Any]) -> str:
-        """Encrypt sensitive payment data"""
-        try:
+        """Encrypt sensitive payment data"""        try:
             json_data = json.dumps(data, default=str)
             encrypted_data = self.cipher.encrypt(json_data.encode())
             return base64.urlsafe_b64encode(encrypted_data).decode()
@@ -1064,8 +1004,7 @@ class PaymentValidator:
             raise PaymentSecurityError(f"Encryption failed: {str(e)}")
     
     def decrypt_payment_data(self, encrypted_data: str) -> Dict[str, Any]:
-        """Decrypt sensitive payment data"""
-        try:
+        """Decrypt sensitive payment data"""        try:
             decoded_data = base64.urlsafe_b64decode(encrypted_data.encode())
             decrypted_data = self.cipher.decrypt(decoded_data)
             return json.loads(decrypted_data.decode())
@@ -1074,8 +1013,7 @@ class PaymentValidator:
             raise PaymentSecurityError(f"Decryption failed: {str(e)}")
     
     def encrypt_card_number(self, card_number: str) -> str:
-        """Encrypt credit card number with additional security"""
-        # Remove all non-digits
+        """Encrypt credit card number with additional security"""        # Remove all non-digits
         clean_number = re.sub(r'\D', '', card_number)
         
         # Validate card number format
@@ -1090,8 +1028,7 @@ class PaymentValidator:
         return base64.urlsafe_b64encode(encrypted).decode()
     
     def _validate_card_number(self, card_number: str) -> bool:
-        """Validate card number using Luhn algorithm"""
-        def luhn_checksum(card_num):
+        """Validate card number using Luhn algorithm"""        def luhn_checksum(card_num):
             def digits_of(n):
                 return [int(d) for d in str(n)]
             digits = digits_of(card_num)
@@ -1106,8 +1043,7 @@ class PaymentValidator:
 
 
 class FraudDetection:
-    """Advanced fraud detection for payment transactions"""
-    
+    """Advanced fraud detection for payment transactions"""    
     def __init__(self):
         self.suspicious_patterns = {
             'rapid_transactions': 5,  # Max transactions per minute
@@ -1128,8 +1064,7 @@ class FraudDetection:
         location: Dict[str, Any],
         transaction_history: List[Dict[str, Any]]
     ) -> Tuple[FraudRisk, Dict[str, Any]]:
-        """Comprehensive fraud analysis"""
-        
+        """Comprehensive fraud analysis"""        
         risk_factors = []
         risk_score = 0
         
@@ -1211,8 +1146,7 @@ class FraudDetection:
         return risk_level, analysis_result
     
     def _calculate_distance(self, loc1: Dict[str, Any], loc2: Dict[str, Any]) -> float:
-        """Calculate distance between two geographic locations (Haversine formula)"""
-        try:
+        """Calculate distance between two geographic locations (Haversine formula)"""        try:
             lat1, lon1 = float(loc1.get('latitude', 0)), float(loc1.get('longitude', 0))
             lat2, lon2 = float(loc2.get('latitude', 0)), float(loc2.get('longitude', 0))
             
@@ -1236,8 +1170,7 @@ class FraudDetection:
             return 0
     
     def _is_suspicious_user_agent(self, user_agent: str) -> bool:
-        """Check if user agent is suspicious"""
-        suspicious_patterns = [
+        """Check if user agent is suspicious"""        suspicious_patterns = [
             'bot', 'crawler', 'scraper', 'automated',
             'curl', 'wget', 'python-requests'
         ]
@@ -1246,14 +1179,12 @@ class FraudDetection:
         return any(pattern in user_agent_lower for pattern in suspicious_patterns)
     
     def _is_suspicious_time(self, transaction_time: datetime) -> bool:
-        """Check if transaction time is suspicious"""
-        # Transactions between 2 AM and 6 AM are considered suspicious
+        """Check if transaction time is suspicious"""        # Transactions between 2 AM and 6 AM are considered suspicious
         hour = transaction_time.hour
         return 2 <= hour <= 6
     
     def _get_recommended_action(self, risk_level: FraudRisk) -> str:
-        """Get recommended action based on risk level"""
-        actions = {
+        """Get recommended action based on risk level"""        actions = {
             FraudRisk.MINIMAL: "approve",
             FraudRisk.LOW: "approve_with_monitoring",
             FraudRisk.MEDIUM: "require_additional_verification",
@@ -1263,8 +1194,7 @@ class FraudDetection:
         return actions.get(risk_level, "manual_review_required")
     
     def add_to_blacklist(self, entity_type: str, entity_value: str):
-        """Add entity to blacklist"""
-        if entity_type == 'ip':
+        """Add entity to blacklist"""        if entity_type == 'ip':
             self.blacklisted_ips.add(entity_value)
         elif entity_type == 'card':
             self.blacklisted_cards.add(entity_value)
@@ -1273,15 +1203,13 @@ class FraudDetection:
 
 
 class PaymentAuthentication:
-    """Multi-factor authentication for payments"""
-    
+    """Multi-factor authentication for payments"""    
     def __init__(self):
         self.otp_validity = timedelta(minutes=5)
         self.max_otp_attempts = 3
     
     def generate_otp(self, user_id: str, phone_number: str) -> str:
-        """Generate one-time password"""
-        # Generate 6-digit OTP
+        """Generate one-time password"""        # Generate 6-digit OTP
         otp = f"{secrets.randbelow(1000000):06d}"
         
         # In production, this would be sent via SMS/email
@@ -1290,13 +1218,11 @@ class PaymentAuthentication:
         return otp
     
     def verify_otp(self, user_id: str, provided_otp: str, stored_otp: str) -> bool:
-        """Verify one-time password"""
-        # In production, check OTP expiry and attempt count
+        """Verify one-time password"""        # In production, check OTP expiry and attempt count
         return provided_otp == stored_otp
     
     def generate_3ds_challenge(self, card_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate 3D Secure challenge"""
-        challenge_id = secrets.token_urlsafe(32)
+        """Generate 3D Secure challenge"""        challenge_id = secrets.token_urlsafe(32)
         
         return {
             'challenge_id': challenge_id,
@@ -1306,21 +1232,18 @@ class PaymentAuthentication:
         }
     
     def verify_3ds_response(self, challenge_id: str, response: str) -> bool:
-        """Verify 3D Secure response"""
-        # In production, verify with card issuer
+        """Verify 3D Secure response"""        # In production, verify with card issuer
         return len(response) > 0
 
 
 class PaymentTokenization:
-    """Secure tokenization of payment methods"""
-    
+    """Secure tokenization of payment methods"""    
     def __init__(self, encryption_key: str):
         self.encryption = PaymentEncryption(encryption_key)
         self.token_length = 32
     
     def tokenize_payment_method(self, payment_data: Dict[str, Any]) -> str:
-        """Create secure token for payment method"""
-        # Generate unique token
+        """Create secure token for payment method"""        # Generate unique token
         token = secrets.token_urlsafe(self.token_length)
         
         # Encrypt payment data
@@ -1332,8 +1255,7 @@ class PaymentTokenization:
         return token
     
     def detokenize_payment_method(self, token: str) -> Dict[str, Any]:
-        """Retrieve payment data from token"""
-        # In production, retrieve from secure vault
+        """Retrieve payment data from token"""        # In production, retrieve from secure vault
         # For now, return mock data
         return {
             'card_number': '**** **** **** 1234',
@@ -1343,8 +1265,7 @@ class PaymentTokenization:
         }
     
     def create_card_fingerprint(self, card_number: str) -> str:
-        """Create unique fingerprint for card"""
-        # Use first 6 and last 4 digits + hash
+        """Create unique fingerprint for card"""        # Use first 6 and last 4 digits + hash
         clean_number = re.sub(r'\D', '', card_number)
         
         if len(clean_number) < 10:
@@ -1360,8 +1281,7 @@ class PaymentTokenization:
 
 
 class PaymentSecurityManager:
-    """Main security manager coordinating all security features"""
-    
+    """Main security manager coordinating all security features"""    
     def __init__(self, config: Dict[str, Any]):
         self.encryption = PaymentEncryption(config['encryption_key'])
         self.fraud_detection = FraudDetection()
@@ -1374,8 +1294,7 @@ class PaymentSecurityManager:
         payment_data: Dict[str, Any],
         user_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Comprehensive secure payment processing"""
-        
+        """Comprehensive secure payment processing"""        
         try:
             # Step 1: Fraud detection
             risk_level, fraud_analysis = self.fraud_detection.analyze_transaction(
@@ -1431,8 +1350,7 @@ class PaymentSecurityManager:
         user_context: Dict[str, Any],
         risk_level: FraudRisk
     ) -> Dict[str, Any]:
-        """Enforce security measures based on configured security level"""
-        
+        """Enforce security measures based on configured security level"""        
         security_checks = {
             'fraud_check': True,
             'encryption': True,
@@ -1473,8 +1391,7 @@ class PaymentSecurityManager:
         signature: str,
         secret: str
     ) -> bool:
-        """Validate webhook signature"""
-        try:
+        """Validate webhook signature"""        try:
             expected_signature = hmac.new(
                 secret.encode(),
                 payload.encode(),

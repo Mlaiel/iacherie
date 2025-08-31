@@ -1,5 +1,4 @@
-"""
-Multimedia Format Detector - Advanced Format Detection Engine
+"""Multimedia Format Detector - Advanced Format Detection Engine
 
 Enterprise-grade format detection system for multimedia content with deep analysis capabilities.
 Provides intelligent format identification, validation, and metadata extraction.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Tuple, BinaryIO
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class MediaFormat(Enum):
-    """Supported media formats"""
-    # Video formats
+    """Supported media formats"""    # Video formats
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -80,8 +77,7 @@ class MediaFormat(Enum):
 
 
 class MediaType(Enum):
-    """Media type categories"""
-    VIDEO = "video"
+    """Media type categories"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     CONTAINER = "container"
@@ -89,8 +85,7 @@ class MediaType(Enum):
 
 
 class FormatConfidence(Enum):
-    """Format detection confidence levels"""
-    VERY_HIGH = "very_high"
+    """Format detection confidence levels"""    VERY_HIGH = "very_high"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -99,8 +94,7 @@ class FormatConfidence(Enum):
 
 @dataclass
 class FormatSignature:
-    """Format detection signature"""
-    format: MediaFormat
+    """Format detection signature"""    format: MediaFormat
     magic_bytes: bytes
     offset: int = 0
     mask: Optional[bytes] = None
@@ -110,8 +104,7 @@ class FormatSignature:
 
 @dataclass
 class FormatDetectionResult:
-    """Format detection result"""
-    detected_format: MediaFormat
+    """Format detection result"""    detected_format: MediaFormat
     media_type: MediaType
     confidence: FormatConfidence
     confidence_score: float
@@ -125,8 +118,7 @@ class FormatDetectionResult:
 
 
 class MultimediaFormatDetector:
-    """
-    Advanced multimedia format detection engine with deep analysis.
+    """    Advanced multimedia format detection engine with deep analysis.
     
     Features:
     - Magic byte signature detection
@@ -137,11 +129,9 @@ class MultimediaFormatDetector:
     - Confidence scoring
     - Support for corrupted files
     - Performance optimization
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize format detector"""
-        self.config = config or {}
+        """Initialize format detector"""        self.config = config or {}
         self.metrics = MetricsCollector()
         self.events = EventDispatcher()
         
@@ -172,8 +162,7 @@ class MultimediaFormatDetector:
         logger.info("Multimedia format detector initialized successfully")
     
     def _initialize_format_signatures(self) -> List[FormatSignature]:
-        """Initialize format detection signatures"""
-        return [
+        """Initialize format detection signatures"""        return [
             # Video formats
             FormatSignature(MediaFormat.MP4, b'\x00\x00\x00\x18ftypmp4', 0),
             FormatSignature(MediaFormat.MP4, b'\x00\x00\x00\x1cftypisom', 0),
@@ -211,8 +200,7 @@ class MultimediaFormatDetector:
         ]
     
     def _initialize_mime_mappings(self) -> Dict[str, MediaFormat]:
-        """Initialize MIME type to format mappings"""
-        return {
+        """Initialize MIME type to format mappings"""        return {
             # Video
             'video/mp4': MediaFormat.MP4,
             'video/avi': MediaFormat.AVI,
@@ -251,8 +239,7 @@ class MultimediaFormatDetector:
         }
     
     def _initialize_format_type_mappings(self) -> Dict[MediaFormat, MediaType]:
-        """Initialize format to media type mappings"""
-        return {
+        """Initialize format to media type mappings"""        return {
             # Video formats
             MediaFormat.MP4: MediaType.VIDEO,
             MediaFormat.AVI: MediaType.VIDEO,
@@ -294,8 +281,7 @@ class MultimediaFormatDetector:
         source: Union[str, bytes, BinaryIO],
         max_bytes: int = 8192
     ) -> FormatDetectionResult:
-        """
-        Detect multimedia format from various sources
+        """        Detect multimedia format from various sources
         
         Args:
             source: File path, raw bytes, or file-like object
@@ -303,8 +289,7 @@ class MultimediaFormatDetector:
             
         Returns:
             FormatDetectionResult: Detection result with confidence score
-        """
-        import time
+        """        import time
         start_time = time.time()
         
         try:
@@ -385,8 +370,7 @@ class MultimediaFormatDetector:
         source: Union[str, bytes, BinaryIO],
         max_bytes: int
     ) -> Tuple[bytes, Optional[str], Optional[str]]:
-        """Prepare data for format detection"""
-        data = b''
+        """Prepare data for format detection"""        data = b''
         file_path = None
         file_extension = None
         
@@ -414,8 +398,7 @@ class MultimediaFormatDetector:
         return data, file_path, file_extension
     
     async def _detect_by_magic_bytes(self, data: bytes) -> Optional[Dict[str, Any]]:
-        """Detect format using magic byte signatures"""
-        for signature in self.format_signatures:
+        """Detect format using magic byte signatures"""        for signature in self.format_signatures:
             if len(data) < signature.offset + len(signature.magic_bytes):
                 continue
             
@@ -445,8 +428,7 @@ class MultimediaFormatDetector:
         return None
     
     async def _detect_by_extension(self, file_extension: str) -> Optional[Dict[str, Any]]:
-        """Detect format using file extension"""
-        try:
+        """Detect format using file extension"""        try:
             format_enum = MediaFormat(file_extension.lower())
             return {
                 'format': format_enum,
@@ -457,8 +439,7 @@ class MultimediaFormatDetector:
             return None
     
     async def _detect_by_mime_type(self, file_path: str) -> Optional[Dict[str, Any]]:
-        """Detect format using MIME type"""
-        mime_type, _ = mimetypes.guess_type(file_path)
+        """Detect format using MIME type"""        mime_type, _ = mimetypes.guess_type(file_path)
         if mime_type and mime_type in self.mime_mappings:
             return {
                 'format': self.mime_mappings[mime_type],
@@ -469,8 +450,7 @@ class MultimediaFormatDetector:
         return None
     
     async def _detect_by_content_analysis(self, data: bytes) -> Optional[Dict[str, Any]]:
-        """Detect format using content analysis"""
-        # Analyze content patterns
+        """Detect format using content analysis"""        # Analyze content patterns
         if len(data) < 16:
             return None
         
@@ -499,8 +479,7 @@ class MultimediaFormatDetector:
         data: bytes,
         checks: List[str]
     ) -> bool:
-        """Perform additional format-specific checks"""
-        for check in checks:
+        """Perform additional format-specific checks"""        for check in checks:
             if check == 'avi_header':
                 # Check for AVI-specific header
                 if len(data) >= 12 and data[8:12] == b'AVI ':
@@ -554,8 +533,7 @@ class MultimediaFormatDetector:
         results: List[Dict[str, Any]],
         data: bytes
     ) -> FormatDetectionResult:
-        """Combine multiple detection results"""
-        if not results:
+        """Combine multiple detection results"""        if not results:
             return self._create_unknown_result()
         
         # Weight results by confidence and method
@@ -611,8 +589,7 @@ class MultimediaFormatDetector:
         )
     
     def _score_to_confidence(self, score: float) -> FormatConfidence:
-        """Convert confidence score to confidence level"""
-        if score >= 0.9:
+        """Convert confidence score to confidence level"""        if score >= 0.9:
             return FormatConfidence.VERY_HIGH
         elif score >= 0.75:
             return FormatConfidence.HIGH
@@ -628,8 +605,7 @@ class MultimediaFormatDetector:
         data: bytes,
         format_type: MediaFormat
     ) -> Dict[str, Any]:
-        """Extract format-specific metadata"""
-        metadata = {}
+        """Extract format-specific metadata"""        metadata = {}
         
         try:
             if format_type == MediaFormat.JPEG:
@@ -647,8 +623,7 @@ class MultimediaFormatDetector:
         return metadata
     
     async def _extract_jpeg_metadata(self, data: bytes) -> Dict[str, Any]:
-        """Extract JPEG-specific metadata"""
-        metadata = {}
+        """Extract JPEG-specific metadata"""        metadata = {}
         
         # Look for EXIF data
         if b'\xff\xe1' in data[:1000]:
@@ -661,8 +636,7 @@ class MultimediaFormatDetector:
         return metadata
     
     async def _extract_png_metadata(self, data: bytes) -> Dict[str, Any]:
-        """Extract PNG-specific metadata"""
-        metadata = {}
+        """Extract PNG-specific metadata"""        metadata = {}
         
         # Check for text chunks
         if b'tEXt' in data or b'iTXt' in data:
@@ -675,8 +649,7 @@ class MultimediaFormatDetector:
         return metadata
     
     async def _extract_mp3_metadata(self, data: bytes) -> Dict[str, Any]:
-        """Extract MP3-specific metadata"""
-        metadata = {}
+        """Extract MP3-specific metadata"""        metadata = {}
         
         # Check for ID3 tags
         if data.startswith(b'ID3'):
@@ -686,8 +659,7 @@ class MultimediaFormatDetector:
         return metadata
     
     async def _extract_mp4_metadata(self, data: bytes) -> Dict[str, Any]:
-        """Extract MP4-specific metadata"""
-        metadata = {}
+        """Extract MP4-specific metadata"""        metadata = {}
         
         # Look for common MP4 atoms
         atoms = [b'ftyp', b'moov', b'mdat', b'free']
@@ -703,8 +675,7 @@ class MultimediaFormatDetector:
         data: bytes,
         detected_format: MediaFormat
     ) -> List[str]:
-        """Validate detected format"""
-        errors = []
+        """Validate detected format"""        errors = []
         
         try:
             if detected_format == MediaFormat.JPEG:
@@ -727,8 +698,7 @@ class MultimediaFormatDetector:
         detection_time: float = 0.0,
         error_message: Optional[str] = None
     ) -> FormatDetectionResult:
-        """Create result for unknown format"""
-        result = FormatDetectionResult(
+        """Create result for unknown format"""        result = FormatDetectionResult(
             detected_format=MediaFormat.UNKNOWN,
             media_type=MediaType.UNKNOWN,
             confidence=FormatConfidence.VERY_LOW,
@@ -746,8 +716,7 @@ class MultimediaFormatDetector:
         sources: List[Union[str, bytes]],
         max_concurrent: int = 10
     ) -> List[FormatDetectionResult]:
-        """
-        Batch detect formats for multiple sources
+        """        Batch detect formats for multiple sources
         
         Args:
             sources: List of sources to analyze
@@ -755,8 +724,7 @@ class MultimediaFormatDetector:
             
         Returns:
             List[FormatDetectionResult]: Detection results
-        """
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def detect_single(source: Union[str, bytes]) -> FormatDetectionResult:
             async with semaphore:
@@ -777,8 +745,7 @@ class MultimediaFormatDetector:
         return valid_results
     
     def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get supported formats by media type"""
-        formats_by_type = {
+        """Get supported formats by media type"""        formats_by_type = {
             'video': [],
             'audio': [],
             'image': []
@@ -795,8 +762,7 @@ class MultimediaFormatDetector:
         return formats_by_type
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get detection statistics"""
-        stats = self.stats.copy()
+        """Get detection statistics"""        stats = self.stats.copy()
         
         if stats['detections_performed'] > 0:
             stats['success_rate'] = stats['successful_detections'] / stats['detections_performed']
@@ -806,8 +772,7 @@ class MultimediaFormatDetector:
         return stats
     
     def reset_statistics(self):
-        """Reset detection statistics"""
-        self.stats = {
+        """Reset detection statistics"""        self.stats = {
             'detections_performed': 0,
             'successful_detections': 0,
             'failed_detections': 0,
@@ -823,16 +788,14 @@ class MultimediaFormatDetector:
         logger.info("Detection statistics reset")
     
     async def is_format_supported(self, format_name: str) -> bool:
-        """Check if format is supported"""
-        try:
+        """Check if format is supported"""        try:
             MediaFormat(format_name.lower())
             return True
         except ValueError:
             return False
     
     async def get_format_info(self, format_name: str) -> Optional[Dict[str, Any]]:
-        """Get information about a specific format"""
-        try:
+        """Get information about a specific format"""        try:
             format_enum = MediaFormat(format_name.lower())
             media_type = self.format_type_mappings.get(format_enum, MediaType.UNKNOWN)
             

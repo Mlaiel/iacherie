@@ -1,5 +1,4 @@
-"""
-Utilities and Examples for Cross-Platform Distribution System
+"""Utilities and Examples for Cross-Platform Distribution System
 
 Provides utility functions, example implementations, and helper methods
 for the cross-platform distribution system.
@@ -13,7 +12,6 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional
@@ -27,10 +25,8 @@ from .scheduling_engine import SchedulingStrategy, AudienceSegment
 logger = logging.getLogger(__name__)
 
 class DistributionSystemExamples:
-    """
-    Example implementations and utility functions for the distribution system
-    """
-    
+    """    Example implementations and utility functions for the distribution system
+    """    
     def __init__(self, db_session=None):
         self.db_session = db_session
         self.system = create_distribution_system(db_session)
@@ -42,8 +38,7 @@ class DistributionSystemExamples:
         user_id: int,
         track_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Example: Complete music release campaign
+        """        Example: Complete music release campaign
         
         Args:
             user_id: User identifier
@@ -51,8 +46,7 @@ class DistributionSystemExamples:
             
         Returns:
             Campaign results
-        """
-        
+        """        
         self.logger.info("Creating example music release campaign")
         
         # Configure campaign for music release
@@ -107,8 +101,7 @@ class DistributionSystemExamples:
         user_id: int,
         post_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Example: Social media post distribution
+        """        Example: Social media post distribution
         
         Args:
             user_id: User identifier
@@ -116,8 +109,7 @@ class DistributionSystemExamples:
             
         Returns:
             Distribution results
-        """
-        
+        """        
         self.logger.info("Creating example social media post campaign")
         
         campaign_config = {
@@ -153,8 +145,7 @@ class DistributionSystemExamples:
         user_id: int,
         video_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Example: Video content distribution
+        """        Example: Video content distribution
         
         Args:
             user_id: User identifier
@@ -162,8 +153,7 @@ class DistributionSystemExamples:
             
         Returns:
             Distribution results
-        """
-        
+        """        
         self.logger.info("Creating example video distribution campaign")
         
         campaign_config = {
@@ -200,8 +190,7 @@ class DistributionSystemExamples:
         user_id: int,
         episode_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Example: Podcast episode distribution
+        """        Example: Podcast episode distribution
         
         Args:
             user_id: User identifier
@@ -209,8 +198,7 @@ class DistributionSystemExamples:
             
         Returns:
             Distribution results
-        """
-        
+        """        
         self.logger.info("Creating example podcast distribution campaign")
         
         campaign_config = {
@@ -242,13 +230,11 @@ class DistributionSystemExamples:
             return {"success": False, "error": str(e)}
     
     def create_example_platform_credentials(self) -> Dict[str, PlatformCredentials]:
-        """
-        Create example platform credentials for testing
+        """        Create example platform credentials for testing
         
         Returns:
             Dictionary of platform credentials
-        """
-        
+        """        
         credentials = {}
         
         # YouTube credentials example
@@ -287,13 +273,11 @@ class DistributionSystemExamples:
         return credentials
     
     async def test_platform_connectivity(self) -> Dict[str, Any]:
-        """
-        Test connectivity to all configured platforms
+        """        Test connectivity to all configured platforms
         
         Returns:
             Platform connectivity test results
-        """
-        
+        """        
         self.logger.info("Testing platform connectivity")
         
         results = {
@@ -331,13 +315,11 @@ class DistributionSystemExamples:
         return results
     
     def get_example_content_data(self) -> Dict[str, Dict[str, Any]]:
-        """
-        Get example content data for different content types
+        """        Get example content data for different content types
         
         Returns:
             Dictionary of example content data
-        """
-        
+        """        
         return {
             "music_track": {
                 "id": 1,
@@ -380,13 +362,11 @@ class DistributionSystemExamples:
         }
     
     async def run_comprehensive_example(self) -> Dict[str, Any]:
-        """
-        Run comprehensive example showcasing all system capabilities
+        """        Run comprehensive example showcasing all system capabilities
         
         Returns:
             Comprehensive test results
-        """
-        
+        """        
         self.logger.info("Running comprehensive distribution system example")
         
         results = {
@@ -471,16 +451,14 @@ class DistributionSystemExamples:
 
 # Utility functions for quick testing
 async def quick_test_distribution_system(db_session=None) -> Dict[str, Any]:
-    """
-    Quick test of the distribution system
+    """    Quick test of the distribution system
     
     Args:
         db_session: Database session
         
     Returns:
         Test results
-    """
-    
+    """    
     examples = DistributionSystemExamples(db_session)
     
     # Run a simple music release campaign test
@@ -495,16 +473,14 @@ async def quick_test_distribution_system(db_session=None) -> Dict[str, Any]:
     return await examples.example_music_release_campaign(1, test_track)
 
 async def test_content_optimization(content_data: Dict[str, Any]) -> Dict[str, Any]:
-    """
-    Test content optimization for given content
+    """    Test content optimization for given content
     
     Args:
         content_data: Content to optimize
         
     Returns:
         Optimization results
-    """
-    
+    """    
     system = create_distribution_system()
     
     return await system.optimize_content_for_platforms(
@@ -513,13 +489,11 @@ async def test_content_optimization(content_data: Dict[str, Any]) -> Dict[str, A
     )
 
 def get_system_info() -> Dict[str, Any]:
-    """
-    Get comprehensive system information
+    """    Get comprehensive system information
     
     Returns:
         System information and capabilities
-    """
-    
+    """    
     system = create_distribution_system()
     config = get_config()
     

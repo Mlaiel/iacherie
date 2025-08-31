@@ -1,5 +1,4 @@
-"""
-Advanced Speech Recognition Module - IA Influencer Agent Conversational System
+"""Advanced Speech Recognition Module - IA Influencer Agent Conversational System
 
 Ultra-advanced enterprise-grade speech recognition system with multi-engine support,
 real-time processing, speaker diarization, noise robustness, and professional accuracy
@@ -41,7 +40,6 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 
 For official licensing inquiries ONLY: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import time
@@ -77,8 +75,7 @@ from .models import AudioMetadata, ProcessingStatus
 logger = logging.getLogger(__name__)
 
 class RecognitionEngine(Enum):
-    """Speech recognition engine types."""
-    WHISPER_OPENAI = "whisper_openai"
+    """Speech recognition engine types."""    WHISPER_OPENAI = "whisper_openai"
     WHISPER_LOCAL = "whisper_local"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_SPEECH = "azure_speech"
@@ -86,16 +83,14 @@ class RecognitionEngine(Enum):
     HUGGINGFACE = "huggingface"
 
 class AudioPreprocessingMode(Enum):
-    """Audio preprocessing modes."""
-    NONE = "none"
+    """Audio preprocessing modes."""    NONE = "none"
     BASIC = "basic"
     ENHANCED = "enhanced"
     PROFESSIONAL = "professional"
 
 @dataclass
 class WordAlignment:
-    """Word-level alignment information."""
-    word: str
+    """Word-level alignment information."""    word: str
     start_time: float
     end_time: float
     confidence: float
@@ -103,8 +98,7 @@ class WordAlignment:
 
 @dataclass
 class SpeakerSegment:
-    """Speaker diarization segment."""
-    speaker_id: str
+    """Speaker diarization segment."""    speaker_id: str
     start_time: float
     end_time: float
     confidence: float
@@ -112,8 +106,7 @@ class SpeakerSegment:
 
 @dataclass
 class RecognitionResult:
-    """Comprehensive speech recognition result."""
-    text: str
+    """Comprehensive speech recognition result."""    text: str
     confidence: float
     language: str
     language_confidence: float
@@ -150,8 +143,7 @@ class RecognitionResult:
 
 @dataclass
 class StreamingRecognitionState:
-    """State tracking for streaming recognition."""
-    session_id: str
+    """State tracking for streaming recognition."""    session_id: str
     accumulated_text: str = ""
     current_confidence: float = 0.0
     last_update: datetime = field(default_factory=datetime.utcnow)
@@ -160,16 +152,13 @@ class StreamingRecognitionState:
     silence_duration: float = 0.0
 
 class AdvancedSpeechRecognizer:
-    """
-    Ultra-advanced speech recognition system with enterprise capabilities.
+    """    Ultra-advanced speech recognition system with enterprise capabilities.
     
     Integrates multiple recognition engines, provides real-time processing,
     speaker diarization, and professional-grade accuracy for content creators.
-    """
-    
+    """    
     def __init__(self, config: AdvancedSpeechRecognitionConfig):
-        """Initialize the speech recognizer with configuration."""
-        self.config = config
+        """Initialize the speech recognizer with configuration."""        self.config = config
         self.engines = {}
         self.thread_pool = ThreadPoolExecutor(max_workers=4)
         self.vad = None
@@ -190,8 +179,7 @@ class AdvancedSpeechRecognizer:
         logger.info("AdvancedSpeechRecognizer initialized successfully")
     
     def _initialize_engines(self) -> None:
-        """Initialize all configured recognition engines."""
-        try:
+        """Initialize all configured recognition engines."""        try:
             # Initialize Whisper
             if self.config.primary_engine in [VoiceEngine.WHISPER_OPENAI, VoiceEngine.WHISPER_LARGE_V3]:
                 self._initialize_whisper()
@@ -215,8 +203,7 @@ class AdvancedSpeechRecognizer:
             raise
     
     def _initialize_whisper(self) -> None:
-        """Initialize Whisper recognition engine."""
-        try:
+        """Initialize Whisper recognition engine."""        try:
             # Load Whisper model
             if self.config.whisper_device == "auto":
                 device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -249,8 +236,7 @@ class AdvancedSpeechRecognizer:
             logger.error(f"Failed to initialize Whisper: {e}")
     
     def _initialize_google_speech(self) -> None:
-        """Initialize Google Cloud Speech engine."""
-        try:
+        """Initialize Google Cloud Speech engine."""        try:
             # Initialize Google Cloud Speech client
             client = speech.SpeechClient()
             self.engines['google_cloud'] = {
@@ -262,8 +248,7 @@ class AdvancedSpeechRecognizer:
             logger.warning(f"Failed to initialize Google Speech: {e}")
     
     def _initialize_azure_speech(self) -> None:
-        """Initialize Azure Speech Services."""
-        try:
+        """Initialize Azure Speech Services."""        try:
             # Get Azure credentials from environment
             import os
             subscription_key = os.getenv('AZURE_SPEECH_KEY')
@@ -283,8 +268,7 @@ class AdvancedSpeechRecognizer:
             logger.warning(f"Failed to initialize Azure Speech: {e}")
     
     def _initialize_aws_transcribe(self) -> None:
-        """Initialize AWS Transcribe."""
-        try:
+        """Initialize AWS Transcribe."""        try:
             # Initialize AWS Transcribe client
             client = boto3.client('transcribe')
             self.engines['aws_transcribe'] = {
@@ -296,8 +280,7 @@ class AdvancedSpeechRecognizer:
             logger.warning(f"Failed to initialize AWS Transcribe: {e}")
     
     def _setup_voice_activity_detection(self) -> None:
-        """Setup voice activity detection."""
-        if self.config.voice_activity_detection:
+        """Setup voice activity detection."""        if self.config.voice_activity_detection:
             try:
                 # Initialize WebRTC VAD
                 self.vad = webrtcvad.Vad(2)  # Aggressiveness level 0-3
@@ -307,8 +290,7 @@ class AdvancedSpeechRecognizer:
                 self.vad = None
     
     def _initialize_language_detection(self) -> None:
-        """Initialize automatic language detection."""
-        if self.config.auto_language_detection:
+        """Initialize automatic language detection."""        if self.config.auto_language_detection:
             try:
                 # Initialize language detection model
                 self.language_detector = pipeline(
@@ -321,8 +303,7 @@ class AdvancedSpeechRecognizer:
                 self.language_detector = None
     
     def _setup_audio_preprocessing(self) -> None:
-        """Setup audio preprocessing pipeline."""
-        self.preprocessing_enabled = self.config.noise_reduction_enabled
+        """Setup audio preprocessing pipeline."""        self.preprocessing_enabled = self.config.noise_reduction_enabled
         if self.preprocessing_enabled:
             try:
                 # Initialize noise reduction components
@@ -339,8 +320,7 @@ class AdvancedSpeechRecognizer:
         sample_rate: int,
         context: Optional[Dict[str, Any]] = None
     ) -> RecognitionResult:
-        """
-        Advanced speech recognition with comprehensive analysis.
+        """        Advanced speech recognition with comprehensive analysis.
         
         Args:
             audio_data: Audio data as numpy array
@@ -349,8 +329,7 @@ class AdvancedSpeechRecognizer:
         
         Returns:
             Comprehensive recognition result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # 1. Audio preprocessing
@@ -442,8 +421,7 @@ class AdvancedSpeechRecognizer:
         audio_stream: AsyncGenerator[bytes, None],
         session_id: Optional[str] = None
     ) -> AsyncGenerator[RecognitionResult, None]:
-        """
-        Real-time streaming speech recognition.
+        """        Real-time streaming speech recognition.
         
         Args:
             audio_stream: Streaming audio data
@@ -451,8 +429,7 @@ class AdvancedSpeechRecognizer:
         
         Yields:
             Real-time recognition results
-        """
-        if session_id is None:
+        """        if session_id is None:
             session_id = str(uuid.uuid4())
         
         # Initialize streaming session
@@ -478,8 +455,7 @@ class AdvancedSpeechRecognizer:
     async def _preprocess_audio(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> np.ndarray:
-        """Preprocess audio for optimal recognition."""
-        processed_audio = audio_data.copy()
+        """Preprocess audio for optimal recognition."""        processed_audio = audio_data.copy()
         
         try:
             # Resample to target sample rate
@@ -513,8 +489,7 @@ class AdvancedSpeechRecognizer:
     async def _detect_speech_segments(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> List[Tuple[float, float]]:
-        """Detect speech segments using voice activity detection."""
-        if not self.vad:
+        """Detect speech segments using voice activity detection."""        if not self.vad:
             # Return full audio as single segment
             return [(0.0, len(audio_data) / sample_rate)]
         
@@ -564,8 +539,7 @@ class AdvancedSpeechRecognizer:
     async def _detect_language(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> Dict[str, Any]:
-        """Detect the language of the audio."""
-        try:
+        """Detect the language of the audio."""        try:
             if not self.config.auto_language_detection or not hasattr(self, 'language_detector'):
                 return {
                     'language': self.config.supported_languages[0] if self.config.supported_languages else 'en-US',
@@ -591,8 +565,7 @@ class AdvancedSpeechRecognizer:
     async def _perform_speaker_diarization(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> List[SpeakerSegment]:
-        """Perform speaker diarization to identify different speakers."""
-        try:
+        """Perform speaker diarization to identify different speakers."""        try:
             # Simplified speaker diarization
             # Real implementation would use models like pyannote.audio
             
@@ -613,8 +586,7 @@ class AdvancedSpeechRecognizer:
     async def _perform_recognition(
         self, audio_data: np.ndarray, sample_rate: int, language_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform the actual speech recognition."""
-        try:
+        """Perform the actual speech recognition."""        try:
             # Try primary engine first
             if self.config.primary_engine == VoiceEngine.WHISPER_LARGE_V3:
                 return await self._recognize_with_whisper(audio_data, sample_rate, language_info)
@@ -650,8 +622,7 @@ class AdvancedSpeechRecognizer:
     async def _recognize_with_whisper(
         self, audio_data: np.ndarray, sample_rate: int, language_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Recognize speech using Whisper."""
-        try:
+        """Recognize speech using Whisper."""        try:
             if 'whisper_local' in self.engines:
                 model = self.engines['whisper_local']['model']
                 
@@ -710,8 +681,7 @@ class AdvancedSpeechRecognizer:
     async def _recognize_with_google(
         self, audio_data: np.ndarray, sample_rate: int, language_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Recognize speech using Google Cloud Speech."""
-        try:
+        """Recognize speech using Google Cloud Speech."""        try:
             if 'google_cloud' not in self.engines:
                 raise Exception("Google Cloud Speech not available")
             
@@ -765,8 +735,7 @@ class AdvancedSpeechRecognizer:
     async def _recognize_with_azure(
         self, audio_data: np.ndarray, sample_rate: int, language_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Recognize speech using Azure Speech Services."""
-        try:
+        """Recognize speech using Azure Speech Services."""        try:
             if 'azure_speech' not in self.engines:
                 raise Exception("Azure Speech not available")
             
@@ -815,8 +784,7 @@ class AdvancedSpeechRecognizer:
     async def _perform_word_alignment(
         self, audio_data: np.ndarray, text: str, sample_rate: int
     ) -> List[WordAlignment]:
-        """Perform word-level alignment."""
-        try:
+        """Perform word-level alignment."""        try:
             # Simplified word alignment
             # Real implementation would use forced alignment models
             
@@ -845,8 +813,7 @@ class AdvancedSpeechRecognizer:
     async def _assess_recognition_quality(
         self, audio_data: np.ndarray, recognition_result: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Assess the quality of recognition."""
-        try:
+        """Assess the quality of recognition."""        try:
             # Calculate audio quality metrics
             rms_energy = np.sqrt(np.mean(audio_data ** 2))
             noise_floor = np.percentile(np.abs(audio_data), 10)
@@ -873,8 +840,7 @@ class AdvancedSpeechRecognizer:
             }
     
     async def _analyze_content(self, text: str) -> Dict[str, Any]:
-        """Analyze content for profanity, sentiment, and topics."""
-        try:
+        """Analyze content for profanity, sentiment, and topics."""        try:
             # Profanity detection
             profanity_detected = False
             if self.config.profanity_filtering:
@@ -905,8 +871,7 @@ class AdvancedSpeechRecognizer:
     async def _process_streaming_chunk(
         self, audio_chunk: bytes, session_id: str
     ) -> Optional[RecognitionResult]:
-        """Process streaming audio chunk."""
-        try:
+        """Process streaming audio chunk."""        try:
             session = self.streaming_sessions[session_id]
             session.audio_buffer += audio_chunk
             session.last_update = datetime.utcnow()
@@ -950,8 +915,7 @@ class AdvancedSpeechRecognizer:
     async def _quick_recognition(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> Dict[str, Any]:
-        """Quick recognition for streaming."""
-        try:
+        """Quick recognition for streaming."""        try:
             # Use fastest available engine for streaming
             if 'whisper_local' in self.engines:
                 model = self.engines['whisper_local']['model']
@@ -982,8 +946,7 @@ class AdvancedSpeechRecognizer:
             }
     
     async def shutdown(self) -> None:
-        """Shutdown the speech recognizer."""
-        logger.info("Shutting down speech recognizer...")
+        """Shutdown the speech recognizer."""        logger.info("Shutting down speech recognizer...")
         
         # Cleanup resources
         self.thread_pool.shutdown(wait=True)

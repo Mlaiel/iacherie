@@ -1,5 +1,4 @@
-"""
-Advanced Multimedia Content Analysis Validator for IA Influencer Agent Platform
+"""Advanced Multimedia Content Analysis Validator for IA Influencer Agent Platform
 ===============================================================================
 
 Comprehensive multimedia content validation system providing AI-powered analysis,
@@ -23,7 +22,6 @@ Features:
 - Performance prediction based on content characteristics
 - Accessibility compliance validation
 """
-
 import re
 import json
 import hashlib
@@ -87,8 +85,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Types of multimedia content"""
-    VIDEO = "video"
+    """Types of multimedia content"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     LIVE_STREAM = "live_stream"
@@ -100,8 +97,7 @@ class ContentType(Enum):
 
 
 class QualityLevel(Enum):
-    """Content quality levels"""
-    EXCELLENT = "excellent"
+    """Content quality levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
@@ -109,8 +105,7 @@ class QualityLevel(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    # Video formats
+    """Supported content formats"""    # Video formats
     MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
@@ -133,8 +128,7 @@ class ContentFormat(Enum):
 
 
 class PlatformOptimization(Enum):
-    """Platform optimization targets"""
-    YOUTUBE = "youtube"
+    """Platform optimization targets"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -145,8 +139,7 @@ class PlatformOptimization(Enum):
 
 
 class AnalysisFeature(Enum):
-    """Content analysis features"""
-    OBJECT_DETECTION = "object_detection"
+    """Content analysis features"""    OBJECT_DETECTION = "object_detection"
     SCENE_ANALYSIS = "scene_analysis"
     EMOTION_DETECTION = "emotion_detection"
     TEXT_RECOGNITION = "text_recognition"
@@ -160,8 +153,7 @@ class AnalysisFeature(Enum):
 
 @dataclass
 class MediaMetadata:
-    """Multimedia content metadata"""
-    file_path: str
+    """Multimedia content metadata"""    file_path: str
     content_type: ContentType
     format: ContentFormat
     file_size_bytes: int
@@ -178,8 +170,7 @@ class MediaMetadata:
 
 @dataclass
 class VideoAnalysisResult:
-    """Video content analysis result"""
-    metadata: MediaMetadata
+    """Video content analysis result"""    metadata: MediaMetadata
     quality_score: float = 0.0
     quality_level: QualityLevel = QualityLevel.AVERAGE
     technical_quality: Dict[str, float] = field(default_factory=dict)
@@ -199,8 +190,7 @@ class VideoAnalysisResult:
 
 @dataclass
 class AudioAnalysisResult:
-    """Audio content analysis result"""
-    metadata: MediaMetadata
+    """Audio content analysis result"""    metadata: MediaMetadata
     quality_score: float = 0.0
     quality_level: QualityLevel = QualityLevel.AVERAGE
     technical_quality: Dict[str, float] = field(default_factory=dict)
@@ -220,8 +210,7 @@ class AudioAnalysisResult:
 
 @dataclass
 class ImageAnalysisResult:
-    """Image content analysis result"""
-    metadata: MediaMetadata
+    """Image content analysis result"""    metadata: MediaMetadata
     quality_score: float = 0.0
     quality_level: QualityLevel = QualityLevel.AVERAGE
     technical_quality: Dict[str, float] = field(default_factory=dict)
@@ -242,8 +231,7 @@ class ImageAnalysisResult:
 
 @dataclass
 class MultimediaValidationResult:
-    """Comprehensive multimedia validation result"""
-    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive multimedia validation result"""    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_path: str = ""
     content_type: ContentType = ContentType.IMAGE
     validation_timestamp: datetime = field(default_factory=datetime.utcnow)
@@ -263,13 +251,11 @@ class MultimediaValidationResult:
 
 
 class MultimediaContentAnalysisValidator:
-    """
-    Advanced multimedia content analysis validator for content creators.
+    """    Advanced multimedia content analysis validator for content creators.
     
     Provides comprehensive analysis, quality assessment, and optimization
     recommendations for video, audio, and image content across multiple platforms.
-    """
-    
+    """    
     def __init__(
         self,
         enable_ai_analysis: bool = True,
@@ -278,8 +264,7 @@ class MultimediaContentAnalysisValidator:
         supported_formats: Optional[List[ContentFormat]] = None,
         cache_analysis_results: bool = True
     ):
-        """
-        Initialize multimedia content analysis validator.
+        """        Initialize multimedia content analysis validator.
         
         Args:
             enable_ai_analysis: Enable AI-powered content analysis
@@ -287,8 +272,7 @@ class MultimediaContentAnalysisValidator:
             max_file_size_mb: Maximum file size for analysis (MB)
             supported_formats: List of supported content formats
             cache_analysis_results: Cache analysis results for performance
-        """
-        self.enable_ai_analysis = enable_ai_analysis and HAS_ML_DEPENDENCIES
+        """        self.enable_ai_analysis = enable_ai_analysis and HAS_ML_DEPENDENCIES
         self.enable_performance_prediction = enable_performance_prediction
         self.max_file_size_mb = max_file_size_mb
         self.max_file_size_bytes = max_file_size_mb * 1024 * 1024
@@ -320,8 +304,7 @@ class MultimediaContentAnalysisValidator:
         logger.info("MultimediaContentAnalysisValidator initialized successfully")
     
     def _initialize_ai_models(self) -> None:
-        """Initialize AI models for content analysis"""
-        try:
+        """Initialize AI models for content analysis"""        try:
             if HAS_ML_DEPENDENCIES:
                 # CLIP model for image-text understanding
                 self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -343,8 +326,7 @@ class MultimediaContentAnalysisValidator:
             self.enable_ai_analysis = False
     
     def _initialize_platform_specifications(self) -> Dict[PlatformOptimization, Dict[str, Any]]:
-        """Initialize platform-specific specifications"""
-        return {
+        """Initialize platform-specific specifications"""        return {
             PlatformOptimization.YOUTUBE: {
                 "video": {
                     "max_duration_seconds": 43200,  # 12 hours
@@ -403,8 +385,7 @@ class MultimediaContentAnalysisValidator:
         }
     
     def _initialize_quality_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality assessment thresholds"""
-        return {
+        """Initialize quality assessment thresholds"""        return {
             "video": {
                 "excellent": 0.9,
                 "good": 0.75,
@@ -445,8 +426,7 @@ class MultimediaContentAnalysisValidator:
         analysis_features: List[AnalysisFeature],
         enable_optimization: bool = True
     ) -> MultimediaValidationResult:
-        """
-        Perform comprehensive multimedia content analysis.
+        """        Perform comprehensive multimedia content analysis.
         
         Args:
             content_path: Path to content file
@@ -456,8 +436,7 @@ class MultimediaContentAnalysisValidator:
             
         Returns:
             MultimediaValidationResult with comprehensive analysis
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             # Validate file existence and size
@@ -559,8 +538,7 @@ class MultimediaContentAnalysisValidator:
             raise ContentAnalysisException(f"Analysis failed: {e}")
     
     def _determine_content_type(self, content_path: str) -> ContentType:
-        """Determine content type from file path"""
-        mime_type, _ = mimetypes.guess_type(content_path)
+        """Determine content type from file path"""        mime_type, _ = mimetypes.guess_type(content_path)
         
         if mime_type:
             if mime_type.startswith('video/'):
@@ -596,8 +574,7 @@ class MultimediaContentAnalysisValidator:
         return ContentType.IMAGE  # Default fallback
     
     def _extract_metadata(self, content_path: str, content_type: ContentType) -> MediaMetadata:
-        """Extract metadata from content file"""
-        file_size = os.path.getsize(content_path)
+        """Extract metadata from content file"""        file_size = os.path.getsize(content_path)
         format_name = os.path.splitext(content_path)[1][1:].lower()
         
         # Determine content format
@@ -646,8 +623,7 @@ class MultimediaContentAnalysisValidator:
         return metadata
     
     def _extract_video_metadata(self, content_path: str, metadata: MediaMetadata) -> MediaMetadata:
-        """Extract video-specific metadata"""
-        try:
+        """Extract video-specific metadata"""        try:
             if HAS_VIDEO_DEPENDENCIES:
                 probe = ffmpeg.probe(content_path)
                 
@@ -684,8 +660,7 @@ class MultimediaContentAnalysisValidator:
         return metadata
     
     def _extract_audio_metadata(self, content_path: str, metadata: MediaMetadata) -> MediaMetadata:
-        """Extract audio-specific metadata"""
-        try:
+        """Extract audio-specific metadata"""        try:
             if HAS_AUDIO_DEPENDENCIES:
                 y, sr = librosa.load(content_path, sr=None)
                 metadata.sample_rate = sr
@@ -698,8 +673,7 @@ class MultimediaContentAnalysisValidator:
         return metadata
     
     def _extract_image_metadata(self, content_path: str, metadata: MediaMetadata) -> MediaMetadata:
-        """Extract image-specific metadata"""
-        try:
+        """Extract image-specific metadata"""        try:
             if HAS_VISION_DEPENDENCIES:
                 with Image.open(content_path) as img:
                     metadata.resolution = img.size
@@ -716,8 +690,7 @@ class MultimediaContentAnalysisValidator:
         metadata: MediaMetadata,
         analysis_features: List[AnalysisFeature]
     ) -> VideoAnalysisResult:
-        """Analyze video content comprehensively"""
-        result = VideoAnalysisResult(metadata=metadata)
+        """Analyze video content comprehensively"""        result = VideoAnalysisResult(metadata=metadata)
         
         try:
             # Technical quality assessment
@@ -765,8 +738,7 @@ class MultimediaContentAnalysisValidator:
         metadata: MediaMetadata,
         analysis_features: List[AnalysisFeature]
     ) -> AudioAnalysisResult:
-        """Analyze audio content comprehensively"""
-        result = AudioAnalysisResult(metadata=metadata)
+        """Analyze audio content comprehensively"""        result = AudioAnalysisResult(metadata=metadata)
         
         try:
             # Technical quality assessment
@@ -821,8 +793,7 @@ class MultimediaContentAnalysisValidator:
         metadata: MediaMetadata,
         analysis_features: List[AnalysisFeature]
     ) -> ImageAnalysisResult:
-        """Analyze image content comprehensively"""
-        result = ImageAnalysisResult(metadata=metadata)
+        """Analyze image content comprehensively"""        result = ImageAnalysisResult(metadata=metadata)
         
         try:
             # Technical quality assessment
@@ -876,8 +847,7 @@ class MultimediaContentAnalysisValidator:
     
     # Technical quality assessment methods
     def _assess_video_technical_quality(self, metadata: MediaMetadata) -> Dict[str, float]:
-        """Assess video technical quality"""
-        quality = {}
+        """Assess video technical quality"""        quality = {}
         
         # Resolution score
         if metadata.resolution:
@@ -916,8 +886,7 @@ class MultimediaContentAnalysisValidator:
         return quality
     
     def _assess_audio_technical_quality(self, metadata: MediaMetadata) -> Dict[str, float]:
-        """Assess audio technical quality"""
-        quality = {}
+        """Assess audio technical quality"""        quality = {}
         
         # Sample rate score
         if metadata.sample_rate:
@@ -946,8 +915,7 @@ class MultimediaContentAnalysisValidator:
         return quality
     
     def _assess_image_technical_quality(self, content_path: str, metadata: MediaMetadata) -> Dict[str, float]:
-        """Assess image technical quality"""
-        quality = {}
+        """Assess image technical quality"""        quality = {}
         
         try:
             if HAS_VISION_DEPENDENCIES:
@@ -988,8 +956,7 @@ class MultimediaContentAnalysisValidator:
     
     # AI-powered analysis methods
     def _detect_video_scenes(self, content_path: str) -> List[Dict[str, Any]]:
-        """Detect scenes in video content"""
-        scenes = []
+        """Detect scenes in video content"""        scenes = []
         
         try:
             if HAS_VISION_DEPENDENCIES:
@@ -1025,8 +992,7 @@ class MultimediaContentAnalysisValidator:
         return scenes[:10]  # Return up to 10 scenes
     
     def _detect_video_objects(self, content_path: str) -> List[Dict[str, Any]]:
-        """Detect objects in video content"""
-        objects = []
+        """Detect objects in video content"""        objects = []
         
         try:
             if self.enable_ai_analysis and hasattr(self, 'object_detector'):
@@ -1063,8 +1029,7 @@ class MultimediaContentAnalysisValidator:
         return objects
     
     def _detect_video_faces(self, content_path: str) -> List[Dict[str, Any]]:
-        """Detect faces in video content"""
-        faces = []
+        """Detect faces in video content"""        faces = []
         
         try:
             if HAS_VISION_DEPENDENCIES:
@@ -1100,8 +1065,7 @@ class MultimediaContentAnalysisValidator:
         return faces
     
     def _recognize_video_text(self, content_path: str) -> List[str]:
-        """Recognize text in video content"""
-        texts = []
+        """Recognize text in video content"""        texts = []
         
         try:
             # Professional OCR implementation on video frames using Tesseract and OpenCV
@@ -1117,31 +1081,26 @@ class MultimediaContentAnalysisValidator:
     # For brevity, implementing key methods only
     
     def _generate_cache_key(self, content_path: str, analysis_features: List[AnalysisFeature]) -> str:
-        """Generate cache key for analysis results"""
-        features_str = "_".join(sorted([f.value for f in analysis_features]))
+        """Generate cache key for analysis results"""        features_str = "_".join(sorted([f.value for f in analysis_features]))
         content_hash = hashlib.md5(content_path.encode()).hexdigest()
         return f"{content_hash}_{features_str}"
     
     def _calculate_file_checksum(self, content_path: str) -> str:
-        """Calculate file checksum"""
-        hash_md5 = hashlib.md5()
+        """Calculate file checksum"""        hash_md5 = hashlib.md5()
         with open(content_path, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_md5.update(chunk)
         return hash_md5.hexdigest()
     
     def _generate_content_fingerprint(self, content_path: str) -> str:
-        """Generate content fingerprint for duplicate detection"""
-        return self._calculate_file_checksum(content_path)[:16]
+        """Generate content fingerprint for duplicate detection"""        return self._calculate_file_checksum(content_path)[:16]
     
     def _detect_duplicates(self, fingerprint: str) -> List[str]:
-        """Detect potential duplicate content using advanced fingerprint database"""
-        # Professional implementation using comprehensive fingerprint database
+        """Detect potential duplicate content using advanced fingerprint database"""        # Professional implementation using comprehensive fingerprint database
         return self._query_fingerprint_database_for_duplicates(fingerprint)
     
     def _determine_quality_level(self, score: float, content_type: str) -> QualityLevel:
-        """Determine quality level from score"""
-        thresholds = self.quality_thresholds.get(content_type, {})
+        """Determine quality level from score"""        thresholds = self.quality_thresholds.get(content_type, {})
         
         if score >= thresholds.get("excellent", 0.9):
             return QualityLevel.EXCELLENT
@@ -1155,8 +1114,7 @@ class MultimediaContentAnalysisValidator:
             return QualityLevel.UNACCEPTABLE
     
     def get_processing_metrics(self) -> Dict[str, Any]:
-        """Get processing performance metrics"""
-        return {
+        """Get processing performance metrics"""        return {
             "files_processed": self.processing_metrics["files_processed"],
             "total_processing_time": self.processing_metrics["total_processing_time"],
             "average_processing_time": (
@@ -1183,8 +1141,7 @@ def create_multimedia_content_analyzer(
     max_file_size_mb: int = 500,
     supported_formats: Optional[List[ContentFormat]] = None
 ) -> MultimediaContentAnalysisValidator:
-    """Create configured multimedia content analyzer"""
-    return MultimediaContentAnalysisValidator(
+    """Create configured multimedia content analyzer"""    return MultimediaContentAnalysisValidator(
         enable_ai_analysis=enable_ai_analysis,
         enable_performance_prediction=True,
         max_file_size_mb=max_file_size_mb,
@@ -1197,8 +1154,7 @@ def analyze_content_for_platforms(
     target_platforms: List[PlatformOptimization],
     comprehensive_analysis: bool = True
 ) -> MultimediaValidationResult:
-    """
-    Analyze content for specific platforms.
+    """    Analyze content for specific platforms.
     
     Args:
         content_path: Path to content file
@@ -1207,8 +1163,7 @@ def analyze_content_for_platforms(
         
     Returns:
         MultimediaValidationResult with platform-specific insights
-    """
-    analyzer = create_multimedia_content_analyzer()
+    """    analyzer = create_multimedia_content_analyzer()
     
     analysis_features = [
         AnalysisFeature.QUALITY_ASSESSMENT,
@@ -1234,8 +1189,7 @@ def analyze_content_for_platforms(
 
 # Additional helper methods for comprehensive analysis
 def _advanced_video_text_recognition(video_data: bytes) -> List[str]:
-    """Advanced video text recognition using OCR on video frames"""
-    try:
+    """Advanced video text recognition using OCR on video frames"""    try:
         import cv2
         import pytesseract
         import numpy as np
@@ -1268,8 +1222,7 @@ def _advanced_video_text_recognition(video_data: bytes) -> List[str]:
 
 
 def _comprehensive_content_fingerprinting(content_data: bytes, content_format: 'MultimediaContentFormat') -> str:
-    """Comprehensive content fingerprinting using multiple algorithms"""
-    try:
+    """Comprehensive content fingerprinting using multiple algorithms"""    try:
         import hashlib
         
         # Multiple fingerprinting approaches
@@ -1310,8 +1263,7 @@ def _comprehensive_content_fingerprinting(content_data: bytes, content_format: '
 
 
 def _generate_audio_fingerprint(audio_data: bytes) -> str:
-    """Generate audio fingerprint using advanced audio analysis"""
-    try:
+    """Generate audio fingerprint using advanced audio analysis"""    try:
         # Simulate audio fingerprinting
         # In production, would use Chromaprint or similar
         import hashlib
@@ -1327,8 +1279,7 @@ def _generate_audio_fingerprint(audio_data: bytes) -> str:
 
 
 def _generate_video_fingerprint(video_data: bytes) -> str:
-    """Generate video fingerprint using frame analysis"""
-    try:
+    """Generate video fingerprint using frame analysis"""    try:
         # Simulate video fingerprinting
         # In production, would analyze key frames
         import hashlib
@@ -1343,8 +1294,7 @@ def _generate_video_fingerprint(video_data: bytes) -> str:
 
 
 def _generate_image_fingerprint(image_data: bytes) -> str:
-    """Generate image fingerprint using perceptual hashing"""
-    try:
+    """Generate image fingerprint using perceptual hashing"""    try:
         # Simulate image fingerprinting
         # In production, would use pHash or similar
         import hashlib
@@ -1359,8 +1309,7 @@ def _generate_image_fingerprint(image_data: bytes) -> str:
 
 
 def _check_against_comprehensive_fingerprint_database(fingerprint: str, content_format: 'MultimediaContentFormat') -> bool:
-    """Check fingerprint against comprehensive database"""
-    try:
+    """Check fingerprint against comprehensive database"""    try:
         # Simulate database lookup
         # In production, would query actual fingerprint database
         
@@ -1395,8 +1344,7 @@ def _check_against_comprehensive_fingerprint_database(fingerprint: str, content_
 
 
 def _query_fingerprint_database_for_duplicates(fingerprint: str) -> List[str]:
-    """Query fingerprint database for duplicate content"""
-    try:
+    """Query fingerprint database for duplicate content"""    try:
         # Simulate database query for duplicates
         # In production, would query actual database
         
@@ -1428,5 +1376,4 @@ def _query_fingerprint_database_for_duplicates(fingerprint: str) -> List[str]:
 
 # Custom exceptions
 class ContentAnalysisException(ValidationException):
-    """Multimedia content analysis specific exception"""
-    pass
+    """Multimedia content analysis specific exception"""    pass

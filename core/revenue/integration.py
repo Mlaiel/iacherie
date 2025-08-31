@@ -1,5 +1,4 @@
-"""
-Revenue Integration Engine - Central integration point for all revenue management components
+"""Revenue Integration Engine - Central integration point for all revenue management components
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -11,7 +10,6 @@ written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IntegrationConfig:
-    """Configuration for revenue integration"""
-    optimization_enabled: bool = True
+    """Configuration for revenue integration"""    optimization_enabled: bool = True
     forecasting_enabled: bool = True
     tracking_enabled: bool = True
     allocation_enabled: bool = True
@@ -55,8 +52,7 @@ class IntegrationConfig:
 
 @dataclass
 class IntegrationState:
-    """Current state of revenue integration system"""
-    status: str
+    """Current state of revenue integration system"""    status: str
     last_sync: datetime
     active_components: List[str]
     error_count: int
@@ -67,8 +63,7 @@ class IntegrationState:
 
 
 class RevenueIntegrationEngine:
-    """
-    Central integration engine that coordinates all revenue management components
+    """    Central integration engine that coordinates all revenue management components
     
     This class serves as the main orchestrator for:
     - Revenue optimization across all streams
@@ -78,8 +73,7 @@ class RevenueIntegrationEngine:
     - Cross-platform optimization
     - Stream diversification management
     - Comprehensive analytics and reporting
-    """
-    
+    """    
     def __init__(self, config: Optional[IntegrationConfig] = None):
         self.config = config or IntegrationConfig()
         self.state = IntegrationState(
@@ -106,8 +100,7 @@ class RevenueIntegrationEngine:
         self.performance_cache = {}
         
     async def initialize(self) -> None:
-        """Initialize all revenue management components"""
-        try:
+        """Initialize all revenue management components"""        try:
             logger.info("Initializing Revenue Integration Engine...")
             
             # Initialize core components
@@ -131,8 +124,7 @@ class RevenueIntegrationEngine:
             raise IntegrationError(f"Integration initialization failed: {e}")
     
     async def _initialize_components(self) -> None:
-        """Initialize all revenue management components"""
-        try:
+        """Initialize all revenue management components"""        try:
             # Initialize optimizer
             if self.config.optimization_enabled:
                 self.optimizer = RevenueOptimizer()
@@ -187,8 +179,7 @@ class RevenueIntegrationEngine:
             raise
     
     async def _start_integration_services(self) -> None:
-        """Start integration background services"""
-        try:
+        """Start integration background services"""        try:
             # Start sync service if real-time processing is enabled
             if self.config.real_time_processing:
                 self.sync_task = asyncio.create_task(self._sync_service())
@@ -211,8 +202,7 @@ class RevenueIntegrationEngine:
             raise
     
     async def _validate_integration(self) -> None:
-        """Validate that all components are properly integrated"""
-        try:
+        """Validate that all components are properly integrated"""        try:
             validation_results = {}
             
             # Validate each component
@@ -242,8 +232,7 @@ class RevenueIntegrationEngine:
             raise
     
     async def _sync_service(self) -> None:
-        """Background sync service for real-time processing"""
-        while True:
+        """Background sync service for real-time processing"""        while True:
             try:
                 await asyncio.sleep(self.config.sync_interval_minutes * 60)
                 
@@ -257,8 +246,7 @@ class RevenueIntegrationEngine:
                 self.state.error_count += 1
     
     async def _sync_all_components(self) -> None:
-        """Sync data between all components"""
-        try:
+        """Sync data between all components"""        try:
             # Get latest revenue data from tracker
             if self.tracker:
                 latest_data = await self.tracker.get_latest_revenue_data()
@@ -282,8 +270,7 @@ class RevenueIntegrationEngine:
             raise
     
     async def _sync_stream_data(self, revenue_data: Dict[str, Any]) -> None:
-        """Sync revenue data with stream manager"""
-        try:
+        """Sync revenue data with stream manager"""        try:
             # Update stream revenues based on tracked data
             for stream_id, stream in self.stream_manager.streams.items():
                 if stream_id in revenue_data:
@@ -294,8 +281,7 @@ class RevenueIntegrationEngine:
             logger.error(f"Error syncing stream data: {e}")
     
     async def _auto_optimization_service(self) -> None:
-        """Auto-optimization background service"""
-        while True:
+        """Auto-optimization background service"""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -318,8 +304,7 @@ class RevenueIntegrationEngine:
                 logger.error(f"Error in auto-optimization service: {e}")
     
     async def _performance_monitoring_service(self) -> None:
-        """Performance monitoring background service"""
-        while True:
+        """Performance monitoring background service"""        while True:
             try:
                 await asyncio.sleep(900)  # Run every 15 minutes
                 
@@ -336,8 +321,7 @@ class RevenueIntegrationEngine:
                 logger.error(f"Error in performance monitoring: {e}")
     
     async def _collect_performance_metrics(self) -> Dict[str, Any]:
-        """Collect performance metrics from all components"""
-        metrics = {}
+        """Collect performance metrics from all components"""        metrics = {}
         
         try:
             # Optimizer metrics
@@ -388,8 +372,7 @@ class RevenueIntegrationEngine:
         return metrics
     
     async def _check_performance_alerts(self, metrics: Dict[str, Any]) -> None:
-        """Check for performance alerts and issues"""
-        try:
+        """Check for performance alerts and issues"""        try:
             alerts = []
             
             # Check error rate
@@ -424,8 +407,7 @@ class RevenueIntegrationEngine:
             logger.error(f"Error checking performance alerts: {e}")
     
     async def get_comprehensive_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive revenue management dashboard"""
-        try:
+        """Get comprehensive revenue management dashboard"""        try:
             dashboard = {
                 'system_status': {
                     'status': self.state.status,
@@ -499,8 +481,7 @@ class RevenueIntegrationEngine:
             raise IntegrationError(f"Dashboard generation failed: {e}")
     
     async def _generate_integrated_recommendations(self, dashboard: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate integrated recommendations based on all available data"""
-        try:
+        """Generate integrated recommendations based on all available data"""        try:
             recommendations = []
             
             # Revenue-based recommendations
@@ -592,8 +573,7 @@ class RevenueIntegrationEngine:
             return []
     
     async def execute_optimization_cycle(self) -> Dict[str, Any]:
-        """Execute a complete optimization cycle across all components"""
-        try:
+        """Execute a complete optimization cycle across all components"""        try:
             logger.info("Starting comprehensive optimization cycle...")
             
             optimization_results = {
@@ -664,8 +644,7 @@ class RevenueIntegrationEngine:
             raise IntegrationError(f"Optimization cycle failed: {e}")
     
     async def _optimize_stream_portfolio(self) -> Dict[str, Any]:
-        """Optimize the stream portfolio"""
-        try:
+        """Optimize the stream portfolio"""        try:
             portfolio_overview = await self.stream_manager.get_portfolio_overview()
             
             # Identify optimization opportunities
@@ -691,8 +670,7 @@ class RevenueIntegrationEngine:
             return {}
     
     async def _apply_optimization_recommendations(self, optimization_result: Dict[str, Any]) -> List[str]:
-        """Apply optimization recommendations"""
-        try:
+        """Apply optimization recommendations"""        try:
             applied = []
             
             recommendations = optimization_result.get('recommendations', [])
@@ -720,8 +698,7 @@ class RevenueIntegrationEngine:
             return []
     
     async def _generate_optimization_cycle_recommendations(self, cycle_results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate recommendations based on optimization cycle results"""
-        try:
+        """Generate recommendations based on optimization cycle results"""        try:
             recommendations = []
             
             # Analyze optimization results
@@ -764,8 +741,7 @@ class RevenueIntegrationEngine:
             return []
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the integration engine"""
-        try:
+        """Gracefully shutdown the integration engine"""        try:
             logger.info("Shutting down Revenue Integration Engine...")
             
             # Cancel background tasks
@@ -798,8 +774,7 @@ _integration_engine: Optional[RevenueIntegrationEngine] = None
 
 
 async def get_integration_engine(config: Optional[IntegrationConfig] = None) -> RevenueIntegrationEngine:
-    """Get or create the global integration engine instance"""
-    global _integration_engine
+    """Get or create the global integration engine instance"""    global _integration_engine
     
     if _integration_engine is None:
         _integration_engine = RevenueIntegrationEngine(config)
@@ -809,8 +784,7 @@ async def get_integration_engine(config: Optional[IntegrationConfig] = None) -> 
 
 
 async def initialize_revenue_system(config: Optional[IntegrationConfig] = None) -> RevenueIntegrationEngine:
-    """Initialize the complete revenue management system"""
-    try:
+    """Initialize the complete revenue management system"""    try:
         logger.info("Initializing complete revenue management system...")
         
         # Get integration engine

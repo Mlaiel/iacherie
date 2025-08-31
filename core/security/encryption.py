@@ -1,5 +1,4 @@
-"""
-Encryption Management Module
+"""Encryption Management Module
 Enterprise-grade encryption and cryptographic services for IA Influencer Agent
 
 Features:
@@ -18,7 +17,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
-
 import os
 import secrets
 import hashlib
@@ -53,8 +51,7 @@ from backend.core.logging import SecurityLogger
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms with security levels"""
-    AES_256_GCM = "aes_256_gcm"          # Authenticated encryption
+    """Supported encryption algorithms with security levels"""    AES_256_GCM = "aes_256_gcm"          # Authenticated encryption
     AES_256_CBC = "aes_256_cbc"          # Block cipher mode
     CHACHA20_POLY1305 = "chacha20_poly1305"  # Stream cipher with authentication
     FERNET = "fernet"                    # High-level symmetric encryption
@@ -66,8 +63,7 @@ class EncryptionAlgorithm(Enum):
 
 
 class KeyType(Enum):
-    """Types of cryptographic keys"""
-    SYMMETRIC = "symmetric"
+    """Types of cryptographic keys"""    SYMMETRIC = "symmetric"
     ASYMMETRIC = "asymmetric"
     SIGNING = "signing"
     CONTENT = "content"
@@ -76,8 +72,7 @@ class KeyType(Enum):
 
 @dataclass
 class EncryptionKey:
-    """Encryption key metadata"""
-    key_id: str
+    """Encryption key metadata"""    key_id: str
     key_type: KeyType
     algorithm: EncryptionAlgorithm
     created_at: datetime
@@ -88,8 +83,7 @@ class EncryptionKey:
 
 @dataclass
 class EncryptedData:
-    """Encrypted data container"""
-    data: bytes
+    """Encrypted data container"""    data: bytes
     algorithm: EncryptionAlgorithm
     key_id: str
     iv: Optional[bytes] = None
@@ -98,8 +92,7 @@ class EncryptedData:
 
 
 class KeyManager:
-    """Cryptographic key management system"""
-    
+    """Cryptographic key management system"""    
     def __init__(self):
         self.logger = SecurityLogger("KeyManager")
         self.cache = CacheManager()
@@ -109,8 +102,7 @@ class KeyManager:
         self.master_key = self._get_or_create_master_key()
         
     def _get_or_create_master_key(self) -> bytes:
-        """Get or create master encryption key"""
-        try:
+        """Get or create master encryption key"""        try:
             # Try to get from environment first
             master_key_b64 = os.getenv("MASTER_ENCRYPTION_KEY")
             if master_key_b64:
@@ -134,8 +126,7 @@ class KeyManager:
         algorithm: EncryptionAlgorithm,
         key_size: Optional[int] = None
     ) -> EncryptionKey:
-        """Generate new encryption key"""
-        try:
+        """Generate new encryption key"""        try:
             key_id = secrets.token_hex(16)
             
             if algorithm == EncryptionAlgorithm.AES_256_GCM:
@@ -180,8 +171,7 @@ class KeyManager:
             raise
     
     async def get_key(self, key_id: str) -> Optional[bytes]:
-        """Retrieve and decrypt key"""
-        try:
+        """Retrieve and decrypt key"""        try:
             # Check cache first
             cache_key = f"encryption_key:{key_id}"
             cached_key = await self.cache.get(cache_key)
@@ -210,8 +200,7 @@ class KeyManager:
             return None
     
     async def rotate_key(self, old_key_id: str) -> Optional[EncryptionKey]:
-        """Rotate encryption key"""
-        try:
+        """Rotate encryption key"""        try:
             # Get old key metadata
             old_key_metadata = await self._get_key_metadata(old_key_id)
             if not old_key_metadata:
@@ -234,18 +223,15 @@ class KeyManager:
             return None
     
     def _encrypt_key(self, key_data: bytes) -> bytes:
-        """Encrypt key with master key"""
-        fernet = Fernet(self.master_key)
+        """Encrypt key with master key"""        fernet = Fernet(self.master_key)
         return fernet.encrypt(key_data)
     
     def _decrypt_key(self, encrypted_key: bytes) -> bytes:
-        """Decrypt key with master key"""
-        fernet = Fernet(self.master_key)
+        """Decrypt key with master key"""        fernet = Fernet(self.master_key)
         return fernet.decrypt(encrypted_key)
     
     async def _store_key(self, key_id: str, encrypted_key: bytes, metadata: EncryptionKey):
-        """Store encrypted key in database"""
-        try:
+        """Store encrypted key in database"""        try:
             # Store in cache for immediate access
             cache_key = f"encryption_key_data:{key_id}"
             key_data = {
@@ -281,8 +267,7 @@ class KeyManager:
             raise
     
     async def _retrieve_key(self, key_id: str) -> Optional[bytes]:
-        """Retrieve encrypted key from database"""
-        try:
+        """Retrieve encrypted key from database"""        try:
             # Try cache first
             cache_key = f"encryption_key_data:{key_id}"
             key_data = await self.cache.get(cache_key)
@@ -311,8 +296,7 @@ class KeyManager:
             return None
     
     async def _get_key_metadata(self, key_id: str) -> Optional[EncryptionKey]:
-        """Get key metadata"""
-        try:
+        """Get key metadata"""        try:
             # Try cache first
             cache_key = f"encryption_key_data:{key_id}"
             key_data = await self.cache.get(cache_key)
@@ -348,8 +332,7 @@ class KeyManager:
             return None
     
     async def _deactivate_key(self, key_id: str):
-        """Deactivate key"""
-        try:
+        """Deactivate key"""        try:
             # Get current metadata
             key_metadata = await self._get_key_metadata(key_id)
             if not key_metadata:
@@ -374,8 +357,7 @@ class KeyManager:
 
 
 class CryptoService:
-    """Core cryptographic operations service"""
-    
+    """Core cryptographic operations service"""    
     def __init__(self, key_manager: KeyManager):
         self.key_manager = key_manager
         self.logger = SecurityLogger("CryptoService")
@@ -386,8 +368,7 @@ class CryptoService:
         key_id: str,
         associated_data: Optional[bytes] = None
     ) -> EncryptedData:
-        """Encrypt data using AES-256-GCM"""
-        try:
+        """Encrypt data using AES-256-GCM"""        try:
             # Get encryption key
             key = await self.key_manager.get_key(key_id)
             if not key:
@@ -428,8 +409,7 @@ class CryptoService:
         encrypted_data: EncryptedData,
         associated_data: Optional[bytes] = None
     ) -> bytes:
-        """Decrypt AES-256-GCM encrypted data"""
-        try:
+        """Decrypt AES-256-GCM encrypted data"""        try:
             # Get decryption key
             key = await self.key_manager.get_key(encrypted_data.key_id)
             if not key:
@@ -457,8 +437,7 @@ class CryptoService:
             raise
     
     async def encrypt_fernet(self, data: bytes, key_id: str) -> EncryptedData:
-        """Encrypt data using Fernet (symmetric encryption)"""
-        try:
+        """Encrypt data using Fernet (symmetric encryption)"""        try:
             # Get encryption key
             key = await self.key_manager.get_key(key_id)
             if not key:
@@ -481,8 +460,7 @@ class CryptoService:
             raise
     
     async def decrypt_fernet(self, encrypted_data: EncryptedData) -> bytes:
-        """Decrypt Fernet encrypted data"""
-        try:
+        """Decrypt Fernet encrypted data"""        try:
             # Get decryption key
             key = await self.key_manager.get_key(encrypted_data.key_id)
             if not key:
@@ -501,8 +479,7 @@ class CryptoService:
             raise
     
     async def encrypt_rsa(self, data: bytes, key_id: str) -> EncryptedData:
-        """Encrypt data using RSA-OAEP"""
-        try:
+        """Encrypt data using RSA-OAEP"""        try:
             # Get private key (to derive public key)
             private_key_pem = await self.key_manager.get_key(key_id)
             if not private_key_pem:
@@ -539,8 +516,7 @@ class CryptoService:
             raise
     
     async def decrypt_rsa(self, encrypted_data: EncryptedData) -> bytes:
-        """Decrypt RSA-OAEP encrypted data"""
-        try:
+        """Decrypt RSA-OAEP encrypted data"""        try:
             # Get private key
             private_key_pem = await self.key_manager.get_key(encrypted_data.key_id)
             if not private_key_pem:
@@ -570,8 +546,7 @@ class CryptoService:
             raise
     
     def generate_hash(self, data: bytes, algorithm: str = "sha256") -> str:
-        """Generate cryptographic hash"""
-        try:
+        """Generate cryptographic hash"""        try:
             if algorithm == "sha256":
                 hash_obj = hashlib.sha256(data)
             elif algorithm == "sha512":
@@ -588,8 +563,7 @@ class CryptoService:
             raise
     
     def generate_hmac(self, data: bytes, key: bytes, algorithm: str = "sha256") -> str:
-        """Generate HMAC"""
-        try:
+        """Generate HMAC"""        try:
             if algorithm == "sha256":
                 mac = hmac.new(key, data, hashlib.sha256)
             elif algorithm == "sha512":
@@ -604,8 +578,7 @@ class CryptoService:
             raise
     
     def verify_hmac(self, data: bytes, key: bytes, expected_mac: str, algorithm: str = "sha256") -> bool:
-        """Verify HMAC"""
-        try:
+        """Verify HMAC"""        try:
             computed_mac = self.generate_hmac(data, key, algorithm)
             return hmac.compare_digest(computed_mac, expected_mac)
             
@@ -615,8 +588,7 @@ class CryptoService:
 
 
 class ContentEncryption:
-    """Specialized encryption for content protection"""
-    
+    """Specialized encryption for content protection"""    
     def __init__(self, crypto_service: CryptoService):
         self.crypto_service = crypto_service
         self.logger = SecurityLogger("ContentEncryption")
@@ -627,8 +599,7 @@ class ContentEncryption:
         content_type: str,
         owner_id: str
     ) -> Tuple[EncryptedData, str]:
-        """Encrypt content file with metadata"""
-        try:
+        """Encrypt content file with metadata"""        try:
             # Generate content-specific key
             key = await self.crypto_service.key_manager.generate_key(
                 KeyType.CONTENT,
@@ -661,8 +632,7 @@ class ContentEncryption:
             raise
     
     async def decrypt_content_file(self, encrypted_data: EncryptedData) -> bytes:
-        """Decrypt content file"""
-        try:
+        """Decrypt content file"""        try:
             # Prepare associated data from metadata
             if encrypted_data.metadata:
                 associated_data = json.dumps(encrypted_data.metadata, sort_keys=True).encode()
@@ -687,8 +657,7 @@ class ContentEncryption:
         content_data: bytes, 
         key_id: str
     ) -> str:
-        """Generate cryptographic signature for content"""
-        try:
+        """Generate cryptographic signature for content"""        try:
             # Get signing key
             key = await self.crypto_service.key_manager.get_key(key_id)
             if not key:
@@ -710,8 +679,7 @@ class ContentEncryption:
         signature: str, 
         key_id: str
     ) -> bool:
-        """Verify content signature"""
-        try:
+        """Verify content signature"""        try:
             # Get signing key
             key = await self.crypto_service.key_manager.get_key(key_id)
             if not key:
@@ -729,8 +697,7 @@ class ContentEncryption:
 
 
 class DatabaseEncryption:
-    """Database field encryption service"""
-    
+    """Database field encryption service"""    
     def __init__(self, crypto_service: CryptoService):
         self.crypto_service = crypto_service
         self.logger = SecurityLogger("DatabaseEncryption")
@@ -740,8 +707,7 @@ class DatabaseEncryption:
         self._initialize_db_key()
     
     async def _initialize_db_key(self):
-        """Initialize database encryption key"""
-        try:
+        """Initialize database encryption key"""        try:
             # Try to get existing key
             # In production, store key ID in secure configuration
             self.db_key_id = "db_encryption_key_v1"
@@ -762,8 +728,7 @@ class DatabaseEncryption:
             raise
     
     async def encrypt_field(self, value: str) -> str:
-        """Encrypt database field value"""
-        try:
+        """Encrypt database field value"""        try:
             if not value:
                 return value
             
@@ -778,8 +743,7 @@ class DatabaseEncryption:
             raise
     
     async def decrypt_field(self, encrypted_value: str) -> str:
-        """Decrypt database field value"""
-        try:
+        """Decrypt database field value"""        try:
             if not encrypted_value:
                 return encrypted_value
             
@@ -801,8 +765,7 @@ class DatabaseEncryption:
 
 
 class EncryptionManager:
-    """Main encryption manager orchestrating all encryption services"""
-    
+    """Main encryption manager orchestrating all encryption services"""    
     def __init__(self):
         self.key_manager = KeyManager()
         self.crypto_service = CryptoService(self.key_manager)
@@ -816,8 +779,7 @@ class EncryptionManager:
         algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM,
         key_type: KeyType = KeyType.SYMMETRIC
     ) -> Tuple[EncryptedData, str]:
-        """Encrypt sensitive data with appropriate algorithm"""
-        try:
+        """Encrypt sensitive data with appropriate algorithm"""        try:
             # Convert string to bytes if needed
             if isinstance(data, str):
                 data_bytes = data.encode('utf-8')
@@ -844,8 +806,7 @@ class EncryptionManager:
             raise
     
     async def decrypt_sensitive_data(self, encrypted_data: EncryptedData) -> bytes:
-        """Decrypt sensitive data"""
-        try:
+        """Decrypt sensitive data"""        try:
             if encrypted_data.algorithm == EncryptionAlgorithm.AES_256_GCM:
                 return await self.crypto_service.decrypt_aes_gcm(encrypted_data)
             elif encrypted_data.algorithm == EncryptionAlgorithm.FERNET:
@@ -860,8 +821,7 @@ class EncryptionManager:
             raise
     
     async def hash_password(self, password: str) -> str:
-        """Hash password using Argon2"""
-        try:
+        """Hash password using Argon2"""        try:
             ph = argon2.PasswordHasher()
             return ph.hash(password)
             
@@ -870,8 +830,7 @@ class EncryptionManager:
             raise
     
     async def verify_password(self, password: str, hashed: str) -> bool:
-        """Verify password against hash"""
-        try:
+        """Verify password against hash"""        try:
             ph = argon2.PasswordHasher()
             ph.verify(hashed, password)
             return True
@@ -887,8 +846,7 @@ class EncryptionManager:
         password: str, 
         salt: Optional[bytes] = None
     ) -> Tuple[bytes, bytes]:
-        """Derive encryption key from password using PBKDF2"""
-        try:
+        """Derive encryption key from password using PBKDF2"""        try:
             if not salt:
                 salt = secrets.token_bytes(16)
             

@@ -1,5 +1,4 @@
-"""
-Cache Strategies Configuration for IA-Influencer Agent Platform
+"""Cache Strategies Configuration for IA-Influencer Agent Platform
 ===============================================================
 
 Advanced caching strategies implementation including write-through,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Optional, Any, Callable, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -28,8 +26,7 @@ from pydantic import BaseModel, validator
 
 
 class CacheStrategy(str, Enum):
-    """Cache strategy patterns"""
-    CACHE_ASIDE = "cache_aside"  # Lazy loading
+    """Cache strategy patterns"""    CACHE_ASIDE = "cache_aside"  # Lazy loading
     READ_THROUGH = "read_through"  # Cache loads data on miss
     WRITE_THROUGH = "write_through"  # Cache and DB updated together
     WRITE_BEHIND = "write_behind"  # Cache updated first, DB later
@@ -37,8 +34,7 @@ class CacheStrategy(str, Enum):
 
 
 class EvictionPolicy(str, Enum):
-    """Cache eviction policies"""
-    LRU = "lru"  # Least Recently Used
+    """Cache eviction policies"""    LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In First Out
     TTL = "ttl"  # Time To Live based
@@ -47,8 +43,7 @@ class EvictionPolicy(str, Enum):
 
 
 class ConsistencyLevel(str, Enum):
-    """Cache consistency levels"""
-    STRONG = "strong"  # Immediate consistency
+    """Cache consistency levels"""    STRONG = "strong"  # Immediate consistency
     EVENTUAL = "eventual"  # Eventual consistency
     WEAK = "weak"  # No consistency guarantees
     SESSION = "session"  # Session consistency
@@ -56,8 +51,7 @@ class ConsistencyLevel(str, Enum):
 
 @dataclass
 class CacheKeyConfig:
-    """Cache key configuration"""
-    namespace: str = "ia_agent"
+    """Cache key configuration"""    namespace: str = "ia_agent"
     separator: str = ":"
     include_version: bool = True
     include_tenant: bool = True
@@ -66,8 +60,7 @@ class CacheKeyConfig:
     
     def generate_key(self, *parts: str, tenant_id: Optional[str] = None, 
                     version: Optional[str] = None) -> str:
-        """Generate cache key with namespace and separators"""
-        key_parts = [self.namespace]
+        """Generate cache key with namespace and separators"""        key_parts = [self.namespace]
         
         if self.include_tenant and tenant_id:
             key_parts.append(f"tenant_{tenant_id}")
@@ -89,8 +82,7 @@ class CacheKeyConfig:
 
 @dataclass
 class CacheMetrics:
-    """Cache performance metrics"""
-    hits: int = 0
+    """Cache performance metrics"""    hits: int = 0
     misses: int = 0
     sets: int = 0
     deletes: int = 0
@@ -110,30 +102,25 @@ class CacheMetrics:
 
 
 class BaseCacheStrategy(ABC):
-    """Abstract base class for cache strategies"""
-    
+    """Abstract base class for cache strategies"""    
     def __init__(self, config: 'CacheStrategiesConfig'):
         self.config = config
         self.metrics = CacheMetrics()
     
     @abstractmethod
     async def get(self, key: str, **kwargs) -> Any:
-        """Get value from cache"""
-        pass
+        """Get value from cache"""        pass
     
     @abstractmethod
     async def set(self, key: str, value: Any, ttl: Optional[int] = None, **kwargs) -> bool:
-        """Set value in cache"""
-        pass
+        """Set value in cache"""        pass
     
     @abstractmethod
     async def delete(self, key: str, **kwargs) -> bool:
-        """Delete value from cache"""
-        pass
+        """Delete value from cache"""        pass
     
     def track_operation(self, operation: str, duration: float):
-        """Track cache operation metrics"""
-        self.metrics.total_time += duration
+        """Track cache operation metrics"""        self.metrics.total_time += duration
         
         if operation == "hit":
             self.metrics.hits += 1
@@ -148,11 +135,9 @@ class BaseCacheStrategy(ABC):
 
 
 class CacheAsideStrategy(BaseCacheStrategy):
-    """Cache-aside (lazy loading) strategy implementation"""
-    
+    """Cache-aside (lazy loading) strategy implementation"""    
     async def get(self, key: str, loader: Optional[Callable] = None, **kwargs) -> Any:
-        """Get value with cache-aside pattern"""
-        start_time = time.time()
+        """Get value with cache-aside pattern"""        start_time = time.time()
         
         try:
             # Try to get from cache first
@@ -181,8 +166,7 @@ class CacheAsideStrategy(BaseCacheStrategy):
             return None
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None, **kwargs) -> bool:
-        """Set value in cache"""
-        start_time = time.time()
+        """Set value in cache"""        start_time = time.time()
         
         try:
             result = await self._set_to_cache(key, value, ttl)
@@ -193,8 +177,7 @@ class CacheAsideStrategy(BaseCacheStrategy):
             return False
     
     async def delete(self, key: str, **kwargs) -> bool:
-        """Delete value from cache"""
-        start_time = time.time()
+        """Delete value from cache"""        start_time = time.time()
         
         try:
             result = await self._delete_from_cache(key)
@@ -205,23 +188,19 @@ class CacheAsideStrategy(BaseCacheStrategy):
             return False
     
     async def _get_from_cache(self, key: str) -> Any:
-        """Get value from cache backend"""
-        # Implementation depends on cache backend
+        """Get value from cache backend"""        # Implementation depends on cache backend
         return None
     
     async def _set_to_cache(self, key: str, value: Any, ttl: Optional[int] = None) -> bool:
-        """Set value to cache backend"""
-        # Implementation depends on cache backend
+        """Set value to cache backend"""        # Implementation depends on cache backend
         return True
     
     async def _delete_from_cache(self, key: str) -> bool:
-        """Delete value from cache backend"""
-        # Implementation depends on cache backend
+        """Delete value from cache backend"""        # Implementation depends on cache backend
         return True
     
     async def _load_with_loader(self, loader: Callable, key: str, **kwargs) -> Any:
-        """Load data using provided loader function"""
-        if asyncio.iscoroutinefunction(loader):
+        """Load data using provided loader function"""        if asyncio.iscoroutinefunction(loader):
             return await loader(key, **kwargs)
         else:
             # Run synchronous loader in thread pool
@@ -231,15 +210,13 @@ class CacheAsideStrategy(BaseCacheStrategy):
 
 
 class WriteThroughStrategy(BaseCacheStrategy):
-    """Write-through strategy implementation"""
-    
+    """Write-through strategy implementation"""    
     def __init__(self, config: 'CacheStrategiesConfig', data_store: Callable):
         super().__init__(config)
         self.data_store = data_store
     
     async def get(self, key: str, **kwargs) -> Any:
-        """Get value from cache, fallback to data store"""
-        start_time = time.time()
+        """Get value from cache, fallback to data store"""        start_time = time.time()
         
         try:
             # Try cache first
@@ -263,8 +240,7 @@ class WriteThroughStrategy(BaseCacheStrategy):
             return None
     
     async def set(self, key: str, value: Any, ttl: Optional[int] = None, **kwargs) -> bool:
-        """Set value to both cache and data store"""
-        start_time = time.time()
+        """Set value to both cache and data store"""        start_time = time.time()
         
         try:
             # Write to data store first
@@ -284,8 +260,7 @@ class WriteThroughStrategy(BaseCacheStrategy):
             return False
     
     async def delete(self, key: str, **kwargs) -> bool:
-        """Delete from both cache and data store"""
-        start_time = time.time()
+        """Delete from both cache and data store"""        start_time = time.time()
         
         try:
             # Delete from data store first
@@ -302,8 +277,7 @@ class WriteThroughStrategy(BaseCacheStrategy):
             return False
     
     async def _load_from_store(self, key: str) -> Any:
-        """Load data from data store"""
-        if asyncio.iscoroutinefunction(self.data_store.get):
+        """Load data from data store"""        if asyncio.iscoroutinefunction(self.data_store.get):
             return await self.data_store.get(key)
         else:
             loop = asyncio.get_event_loop()
@@ -311,8 +285,7 @@ class WriteThroughStrategy(BaseCacheStrategy):
                 return await loop.run_in_executor(executor, self.data_store.get, key)
     
     async def _write_to_store(self, key: str, value: Any) -> bool:
-        """Write data to data store"""
-        try:
+        """Write data to data store"""        try:
             if asyncio.iscoroutinefunction(self.data_store.set):
                 return await self.data_store.set(key, value)
             else:
@@ -323,8 +296,7 @@ class WriteThroughStrategy(BaseCacheStrategy):
             return False
     
     async def _delete_from_store(self, key: str) -> bool:
-        """Delete data from data store"""
-        try:
+        """Delete data from data store"""        try:
             if asyncio.iscoroutinefunction(self.data_store.delete):
                 return await self.data_store.delete(key)
             else:
@@ -336,10 +308,8 @@ class WriteThroughStrategy(BaseCacheStrategy):
 
 
 class CacheStrategiesConfig(BaseModel):
-    """
-    Comprehensive cache strategies configuration
-    """
-    
+    """    Comprehensive cache strategies configuration
+    """    
     # Strategy selection
     primary_strategy: CacheStrategy = CacheStrategy.CACHE_ASIDE
     fallback_strategy: Optional[CacheStrategy] = CacheStrategy.READ_THROUGH
@@ -402,8 +372,7 @@ class CacheStrategiesConfig(BaseModel):
         return v
     
     def get_strategy_instance(self, data_store: Optional[Callable] = None) -> BaseCacheStrategy:
-        """Get strategy instance based on configuration"""
-        if self.primary_strategy == CacheStrategy.CACHE_ASIDE:
+        """Get strategy instance based on configuration"""        if self.primary_strategy == CacheStrategy.CACHE_ASIDE:
             return CacheAsideStrategy(self)
         elif self.primary_strategy == CacheStrategy.WRITE_THROUGH:
             if not data_store:
@@ -414,16 +383,14 @@ class CacheStrategiesConfig(BaseModel):
             return CacheAsideStrategy(self)
     
     def should_refresh_ahead(self, ttl_remaining: float, original_ttl: float) -> bool:
-        """Check if key should be refreshed ahead of expiry"""
-        if original_ttl <= 0:
+        """Check if key should be refreshed ahead of expiry"""        if original_ttl <= 0:
             return False
         
         elapsed_ratio = (original_ttl - ttl_remaining) / original_ttl
         return elapsed_ratio >= self.refresh_ahead_factor
     
     def get_l1_cache_config(self) -> Dict[str, Any]:
-        """Get L1 (in-memory) cache configuration"""
-        return {
+        """Get L1 (in-memory) cache configuration"""        return {
             "enabled": self.enable_l1_cache,
             "size": self.l1_cache_size,
             "ttl": self.l1_cache_ttl,
@@ -431,8 +398,7 @@ class CacheStrategiesConfig(BaseModel):
         }
     
     def get_l2_cache_config(self) -> Dict[str, Any]:
-        """Get L2 (distributed) cache configuration"""
-        return {
+        """Get L2 (distributed) cache configuration"""        return {
             "enabled": self.enable_l2_cache,
             "consistency_level": self.consistency_level,
             "timeout": self.timeout_seconds,
@@ -440,8 +406,7 @@ class CacheStrategiesConfig(BaseModel):
         }
     
     def get_performance_config(self) -> Dict[str, Any]:
-        """Get performance-related configuration"""
-        return {
+        """Get performance-related configuration"""        return {
             "batch_size": self.batch_size,
             "concurrent_requests": self.concurrent_requests,
             "timeout_seconds": self.timeout_seconds,
@@ -453,12 +418,10 @@ class CacheStrategiesConfig(BaseModel):
 
 # Strategy factory for different use cases
 class CacheStrategyFactory:
-    """Factory for creating cache strategy configurations"""
-    
+    """Factory for creating cache strategy configurations"""    
     @staticmethod
     def create_high_performance_config() -> CacheStrategiesConfig:
-        """Configuration optimized for high performance"""
-        return CacheStrategiesConfig(
+        """Configuration optimized for high performance"""        return CacheStrategiesConfig(
             primary_strategy=CacheStrategy.CACHE_ASIDE,
             enable_l1_cache=True,
             enable_l2_cache=True,
@@ -472,8 +435,7 @@ class CacheStrategyFactory:
     
     @staticmethod
     def create_consistency_focused_config() -> CacheStrategiesConfig:
-        """Configuration optimized for data consistency"""
-        return CacheStrategiesConfig(
+        """Configuration optimized for data consistency"""        return CacheStrategiesConfig(
             primary_strategy=CacheStrategy.WRITE_THROUGH,
             consistency_level=ConsistencyLevel.STRONG,
             enable_l1_cache=False,  # Disable L1 for consistency
@@ -485,8 +447,7 @@ class CacheStrategyFactory:
     
     @staticmethod
     def create_memory_optimized_config() -> CacheStrategiesConfig:
-        """Configuration optimized for memory usage"""
-        return CacheStrategiesConfig(
+        """Configuration optimized for memory usage"""        return CacheStrategiesConfig(
             primary_strategy=CacheStrategy.CACHE_ASIDE,
             eviction_policy=EvictionPolicy.LFU,
             enable_l1_cache=True,

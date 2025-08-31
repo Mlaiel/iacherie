@@ -1,5 +1,4 @@
-"""
-Platform Integration Security Configuration Module
+"""Platform Integration Security Configuration Module
 ================================================
 
 Advanced security configuration for platform integrations and API management
@@ -21,7 +20,6 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -30,8 +28,7 @@ from enum import Enum
 
 
 class Platform(Enum):
-    """Supported content and social media platforms."""
-    SPOTIFY = "spotify"
+    """Supported content and social media platforms."""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -45,24 +42,21 @@ class Platform(Enum):
 
 
 class AuthFlow(Enum):
-    """OAuth2 authentication flow types."""
-    AUTHORIZATION_CODE = "authorization_code"
+    """OAuth2 authentication flow types."""    AUTHORIZATION_CODE = "authorization_code"
     CLIENT_CREDENTIALS = "client_credentials"
     DEVICE_CODE = "device_code"
     REFRESH_TOKEN = "refresh_token"
 
 
 class SecurityLevel(Enum):
-    """Security levels for platform integrations."""
-    BASIC = "basic"
+    """Security levels for platform integrations."""    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     MAXIMUM = "maximum"
 
 
 class WebhookEvent(Enum):
-    """Webhook event types for platform notifications."""
-    CONTENT_UPLOADED = "content_uploaded"
+    """Webhook event types for platform notifications."""    CONTENT_UPLOADED = "content_uploaded"
     CONTENT_REMOVED = "content_removed"
     REVENUE_UPDATE = "revenue_update"
     COPYRIGHT_CLAIM = "copyright_claim"
@@ -73,8 +67,7 @@ class WebhookEvent(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform-specific credential configuration."""
-    client_id: str = ""
+    """Platform-specific credential configuration."""    client_id: str = ""
     client_secret: str = ""
     api_key: str = ""
     access_token: str = ""
@@ -93,8 +86,7 @@ class PlatformCredentials:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration for API calls."""
-    # General rate limits
+    """Rate limiting configuration for API calls."""    # General rate limits
     requests_per_minute: int = 100
     requests_per_hour: int = 5000
     requests_per_day: int = 100000
@@ -142,8 +134,7 @@ class RateLimitConfig:
 
 @dataclass
 class OAuth2SecurityConfig:
-    """OAuth2 security configuration for platform integrations."""
-    # OAuth2 flow security
+    """OAuth2 security configuration for platform integrations."""    # OAuth2 flow security
     state_parameter_required: bool = True
     pkce_enabled: bool = True  # Proof Key for Code Exchange
     nonce_verification: bool = True
@@ -219,8 +210,7 @@ class OAuth2SecurityConfig:
 
 @dataclass
 class WebhookSecurityConfig:
-    """Webhook security configuration for platform notifications."""
-    # Webhook validation
+    """Webhook security configuration for platform notifications."""    # Webhook validation
     signature_verification: bool = True
     timestamp_validation: bool = True
     duplicate_prevention: bool = True
@@ -283,8 +273,7 @@ class WebhookSecurityConfig:
 
 @dataclass
 class ApiGatewayConfig:
-    """API Gateway security configuration."""
-    # Gateway features
+    """API Gateway security configuration."""    # Gateway features
     request_validation: bool = True
     response_filtering: bool = True
     api_versioning: bool = True
@@ -320,8 +309,7 @@ class ApiGatewayConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Integration monitoring and alerting configuration."""
-    # Real-time monitoring
+    """Integration monitoring and alerting configuration."""    # Real-time monitoring
     health_checks_enabled: bool = True
     health_check_interval_seconds: int = 30
     performance_monitoring: bool = True
@@ -368,8 +356,7 @@ class MonitoringConfig:
 
 @dataclass
 class SecurityScanningConfig:
-    """Security scanning configuration for integrations."""
-    # Automated security scanning
+    """Security scanning configuration for integrations."""    # Automated security scanning
     vulnerability_scanning: bool = True
     dependency_scanning: bool = True
     api_security_testing: bool = True
@@ -403,8 +390,7 @@ class SecurityScanningConfig:
 
 @dataclass
 class DataProtectionConfig:
-    """Data protection configuration for platform integrations."""
-    # Data encryption
+    """Data protection configuration for platform integrations."""    # Data encryption
     encryption_in_transit: bool = True
     encryption_at_rest: bool = True
     end_to_end_encryption: bool = True
@@ -441,8 +427,7 @@ class DataProtectionConfig:
 
 @dataclass
 class PlatformIntegrationSecurityConfig:
-    """Main platform integration security configuration container."""
-    credentials: Dict[Platform, PlatformCredentials] = field(default_factory=dict)
+    """Main platform integration security configuration container."""    credentials: Dict[Platform, PlatformCredentials] = field(default_factory=dict)
     rate_limiting: RateLimitConfig = field(default_factory=RateLimitConfig)
     oauth2_security: OAuth2SecurityConfig = field(default_factory=OAuth2SecurityConfig)
     webhook_security: WebhookSecurityConfig = field(default_factory=WebhookSecurityConfig)
@@ -476,13 +461,11 @@ platform_integration_security_config = PlatformIntegrationSecurityConfig()
 
 
 def get_platform_integration_security_config() -> PlatformIntegrationSecurityConfig:
-    """Get the platform integration security configuration instance."""
-    return platform_integration_security_config
+    """Get the platform integration security configuration instance."""    return platform_integration_security_config
 
 
 def validate_platform_integration_config(config: PlatformIntegrationSecurityConfig) -> bool:
-    """Validate platform integration security configuration settings."""
-    # Validate rate limits
+    """Validate platform integration security configuration settings."""    # Validate rate limits
     if config.rate_limiting.requests_per_minute <= 0:
         raise ValueError("Requests per minute must be positive")
     
@@ -508,8 +491,7 @@ def validate_platform_integration_config(config: PlatformIntegrationSecurityConf
 
 
 def get_platform_specific_config(platform: Platform) -> Dict[str, Any]:
-    """Get platform-specific security configuration."""
-    platform_configs = {
+    """Get platform-specific security configuration."""    platform_configs = {
         Platform.SPOTIFY: {
             "rate_limiting.requests_per_minute": 100,
             "oauth2_security.required_scopes": [

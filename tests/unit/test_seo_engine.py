@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,15 +12,13 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test SEO Optimization Engine
+"""Test SEO Optimization Engine
 
 This script demonstrates and tests the SEO Optimization Engine functionality.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import sys
 import os
 
@@ -30,20 +26,17 @@ import os
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 def test_content_seo_optimizer():
-    """Test the Content SEO Optimizer"""
-    print("Testing Content SEO Optimizer...")
+    """Test the Content SEO Optimizer"""    print("Testing Content SEO Optimizer...")
     
     try:
         from seo.optimization import ContentSEOOptimizer, OptimizationLevel
         
         optimizer = ContentSEOOptimizer(OptimizationLevel.ADVANCED)
         
-        content = """
-        Digital marketing has become essential for businesses in 2025. 
+        content = """        Digital marketing has become essential for businesses in 2025. 
         Companies need to understand social media marketing, content marketing, 
         and search engine optimization to succeed online.
-        """
-        
+        """        
         keywords = ["digital marketing", "social media", "SEO"]
         
         result = optimizer.optimize_content(
@@ -65,8 +58,7 @@ def test_content_seo_optimizer():
 
 
 def test_keyword_generator():
-    """Test the Keyword Generator AI"""
-    print("\nTesting Keyword Generator AI...")
+    """Test the Keyword Generator AI"""    print("\nTesting Keyword Generator AI...")
     
     try:
         from seo.optimization import KeywordGeneratorAI
@@ -94,8 +86,7 @@ def test_keyword_generator():
 
 
 def test_platform_seo_adapter():
-    """Test the Platform SEO Adapter"""
-    print("\nTesting Platform SEO Adapter...")
+    """Test the Platform SEO Adapter"""    print("\nTesting Platform SEO Adapter...")
     
     try:
         from seo.optimization import PlatformSEOAdapter, Platform
@@ -125,8 +116,7 @@ def test_platform_seo_adapter():
 
 
 def test_meta_optimizer():
-    """Test the Meta Optimizer"""
-    print("\nTesting Meta Optimizer...")
+    """Test the Meta Optimizer"""    print("\nTesting Meta Optimizer...")
     
     try:
         from seo.optimization import MetaOptimizer, ContentType
@@ -157,8 +147,7 @@ def test_meta_optimizer():
 
 
 def test_hashtag_intelligence():
-    """Test the Hashtag Intelligence"""
-    print("\nTesting Hashtag Intelligence...")
+    """Test the Hashtag Intelligence"""    print("\nTesting Hashtag Intelligence...")
     
     try:
         from seo.optimization import HashtagIntelligence, Platform
@@ -188,8 +177,7 @@ def test_hashtag_intelligence():
 
 
 def test_multilingual_seo():
-    """Test the Multilingual SEO"""
-    print("\nTesting Multilingual SEO...")
+    """Test the Multilingual SEO"""    print("\nTesting Multilingual SEO...")
     
     try:
         from seo.optimization import MultilingualSEO, Language, Region, LocalizationLevel
@@ -226,8 +214,7 @@ def test_multilingual_seo():
 
 
 def test_trending_analyzer():
-    """Test the Trending Analyzer"""
-    print("\nTesting Trending Analyzer...")
+    """Test the Trending Analyzer"""    print("\nTesting Trending Analyzer...")
     
     try:
         from seo.optimization import TrendingAnalyzer, Platform, TimeFrame
@@ -254,8 +241,7 @@ def test_trending_analyzer():
 
 
 def test_competitor_intelligence():
-    """Test the Competitor Intelligence"""
-    print("\nTesting Competitor Intelligence...")
+    """Test the Competitor Intelligence"""    print("\nTesting Competitor Intelligence...")
     
     try:
         from seo.optimization import CompetitorIntelligence, AnalysisType
@@ -283,8 +269,7 @@ def test_competitor_intelligence():
 
 
 def test_seo_performance_tracker():
-    """Test the SEO Performance Tracker"""
-    print("\nTesting SEO Performance Tracker...")
+    """Test the SEO Performance Tracker"""    print("\nTesting SEO Performance Tracker...")
     
     try:
         from seo.optimization import SEOPerformanceTracker, TimeRange
@@ -314,8 +299,7 @@ def test_seo_performance_tracker():
 
 
 def run_all_tests():
-    """Run all SEO optimization tests"""
-    print("=" * 60)
+    """Run all SEO optimization tests"""    print("=" * 60)
     print("SEO OPTIMIZATION ENGINE - COMPREHENSIVE TESTING")
     print("=" * 60)
     

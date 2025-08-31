@@ -1,5 +1,4 @@
-"""
-Protection Manager - Advanced Content Protection and Rights Management
+"""Protection Manager - Advanced Content Protection and Rights Management
 =====================================================================
 
 Comprehensive content protection system with AI-powered fingerprinting,
@@ -12,7 +11,6 @@ WARNING: This code is protected by copyright law. Unauthorized use, reproduction
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
-
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set, Tuple
 from enum import Enum
@@ -34,16 +32,14 @@ from backend.utils.blockchain_recorder import BlockchainRecorder
 
 
 class ProtectionLevel(str, Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class ContentViolationType(str, Enum):
-    """Types of content violations"""
-    UNAUTHORIZED_USE = "unauthorized_use"
+    """Types of content violations"""    UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     PIRACY = "piracy"
@@ -54,8 +50,7 @@ class ContentViolationType(str, Enum):
 
 
 class ProtectionStatus(str, Enum):
-    """Protection status states"""
-    UNPROTECTED = "unprotected"
+    """Protection status states"""    UNPROTECTED = "unprotected"
     PROCESSING = "processing"
     PROTECTED = "protected"
     MONITORING = "monitoring"
@@ -66,8 +61,7 @@ class ProtectionStatus(str, Enum):
 
 
 class MonitoringScope(str, Enum):
-    """Monitoring scope options"""
-    GLOBAL = "global"
+    """Monitoring scope options"""    GLOBAL = "global"
     REGIONAL = "regional"
     PLATFORM_SPECIFIC = "platform_specific"
     TARGETED = "targeted"
@@ -75,8 +69,7 @@ class MonitoringScope(str, Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data"""
-    content_id: str
+    """Content fingerprint data"""    content_id: str
     fingerprint_hash: str
     content_type: str
     algorithm_used: str
@@ -88,8 +81,7 @@ class ContentFingerprint:
 
 @dataclass
 class ProtectionRule:
-    """Content protection rule"""
-    rule_id: str
+    """Content protection rule"""    rule_id: str
     content_id: str
     rule_type: str
     conditions: Dict[str, Any]
@@ -101,8 +93,7 @@ class ProtectionRule:
 
 @dataclass
 class ViolationReport:
-    """Content violation report"""
-    violation_id: str
+    """Content violation report"""    violation_id: str
     content_id: str
     violation_type: ContentViolationType
     platform: str
@@ -116,8 +107,7 @@ class ViolationReport:
 
 @dataclass
 class ProtectionMetrics:
-    """Protection performance metrics"""
-    total_content_protected: int
+    """Protection performance metrics"""    total_content_protected: int
     active_monitoring: int
     violations_detected: int
     violations_resolved: int
@@ -128,8 +118,7 @@ class ProtectionMetrics:
 
 
 class ProtectionConfiguration:
-    """Protection configuration settings"""
-    def __init__(
+    """Protection configuration settings"""    def __init__(
         self,
         content_id: str,
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
@@ -149,14 +138,12 @@ class ProtectionConfiguration:
 
 
 class ProtectionManager:
-    """
-    Advanced Content Protection and Rights Management System
+    """    Advanced Content Protection and Rights Management System
     
     Provides comprehensive content protection including AI-powered fingerprinting,
     real-time monitoring across platforms, automated violation detection,
     takedown request management, and legal rights enforcement.
-    """
-    
+    """    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.fingerprinting_engine = FingerprintingEngine()
@@ -184,8 +171,7 @@ class ProtectionManager:
         content_data: Dict[str, Any],
         config: Optional[ProtectionConfiguration] = None
     ) -> Dict[str, Any]:
-        """
-        Implement comprehensive protection for content
+        """        Implement comprehensive protection for content
         
         Args:
             campaign_id: Campaign unique identifier
@@ -195,8 +181,7 @@ class ProtectionManager:
             
         Returns:
             Protection implementation result
-        """
-        try:
+        """        try:
             config = config or ProtectionConfiguration(content_id)
             protection_id = f"prot_{content_id}_{int(datetime.utcnow().timestamp())}"
             
@@ -301,8 +286,7 @@ class ProtectionManager:
         scan_platforms: Optional[List[str]] = None,
         deep_scan: bool = False
     ) -> Dict[str, Any]:
-        """
-        Monitor content for violations across platforms
+        """        Monitor content for violations across platforms
         
         Args:
             content_id: Content unique identifier
@@ -311,8 +295,7 @@ class ProtectionManager:
             
         Returns:
             Monitoring results with detected violations
-        """
-        try:
+        """        try:
             if content_id not in self._protected_content:
                 raise ValueError(f"Content not protected: {content_id}")
             
@@ -380,8 +363,7 @@ class ProtectionManager:
         violation_report: ViolationReport,
         auto_resolve: bool = True
     ) -> Dict[str, Any]:
-        """
-        Handle detected content violations with automated resolution
+        """        Handle detected content violations with automated resolution
         
         Args:
             violation_report: Violation report details
@@ -389,8 +371,7 @@ class ProtectionManager:
             
         Returns:
             Violation handling result
-        """
-        try:
+        """        try:
             content_id = violation_report.content_id
             
             # Validate violation report
@@ -479,8 +460,7 @@ class ProtectionManager:
         campaign_id: Optional[str] = None,
         timeframe_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Track and analyze protection effectiveness metrics
+        """        Track and analyze protection effectiveness metrics
         
         Args:
             content_id: Specific content to analyze
@@ -489,8 +469,7 @@ class ProtectionManager:
             
         Returns:
             Protection effectiveness analysis
-        """
-        try:
+        """        try:
             # Determine content scope
             if content_id:
                 content_ids = [content_id]
@@ -615,8 +594,7 @@ class ProtectionManager:
         action: str,
         rule_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Manage content protection rules
+        """        Manage content protection rules
         
         Args:
             content_id: Content unique identifier
@@ -625,8 +603,7 @@ class ProtectionManager:
             
         Returns:
             Rule management result
-        """
-        try:
+        """        try:
             if content_id not in self._protected_content:
                 raise ValueError(f"Content not protected: {content_id}")
             
@@ -719,8 +696,7 @@ class ProtectionManager:
     # Private helper methods
     
     async def _continuous_monitoring_loop(self) -> None:
-        """Continuous monitoring background process"""
-        while True:
+        """Continuous monitoring background process"""        while True:
             try:
                 current_time = datetime.utcnow()
                 
@@ -741,8 +717,7 @@ class ProtectionManager:
                 await asyncio.sleep(600)
     
     async def _violation_processing_loop(self) -> None:
-        """Violation processing background loop"""
-        while True:
+        """Violation processing background loop"""        while True:
             try:
                 # Process queued violations
                 await self._process_violation_queue()
@@ -757,8 +732,7 @@ class ProtectionManager:
         content_data: Dict[str, Any],
         protection_level: ProtectionLevel
     ) -> List[ContentFingerprint]:
-        """Generate content fingerprints for protection"""
-        fingerprints = []
+        """Generate content fingerprints for protection"""        fingerprints = []
         
         content_type = content_data.get("content_type", "unknown")
         content_url = content_data.get("url", "")
@@ -796,8 +770,7 @@ class ProtectionManager:
         fingerprints: List[ContentFingerprint],
         deep_scan: bool
     ) -> Dict[str, Any]:
-        """Scan specific platform for violations"""
-        # Implementation would use platform APIs and fingerprint matching
+        """Scan specific platform for violations"""        # Implementation would use platform APIs and fingerprint matching
         return {
             "platform": platform,
             "scan_type": "deep" if deep_scan else "standard",
@@ -807,8 +780,7 @@ class ProtectionManager:
         }
     
     async def _get_scan_frequency(self, protection_level: ProtectionLevel) -> timedelta:
-        """Get scan frequency based on protection level"""
-        frequency_map = {
+        """Get scan frequency based on protection level"""        frequency_map = {
             ProtectionLevel.BASIC: timedelta(days=7),
             ProtectionLevel.STANDARD: timedelta(days=1),
             ProtectionLevel.PREMIUM: timedelta(hours=6),

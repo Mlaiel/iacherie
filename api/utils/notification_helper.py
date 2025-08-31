@@ -1,5 +1,4 @@
-"""
-Notification Helper for IA Influencer Agent Platform
+"""Notification Helper for IA Influencer Agent Platform
 Advanced notification system with multi-channel delivery and template management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +6,6 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import smtplib
 import ssl
 from email.mime.text import MIMEText
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationChannel(Enum):
-    """Notification delivery channels"""
-    EMAIL = "email"
+    """Notification delivery channels"""    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     WEBHOOK = "webhook"
@@ -51,8 +48,7 @@ class NotificationChannel(Enum):
 
 
 class NotificationPriority(Enum):
-    """Notification priority levels"""
-    LOW = "low"
+    """Notification priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -60,8 +56,7 @@ class NotificationPriority(Enum):
 
 
 class NotificationStatus(Enum):
-    """Notification delivery status"""
-    PENDING = "pending"
+    """Notification delivery status"""    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -71,8 +66,7 @@ class NotificationStatus(Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Notification template structure"""
-    template_id: str
+    """Notification template structure"""    template_id: str
     name: str
     subject_template: str
     body_template: str
@@ -84,8 +78,7 @@ class NotificationTemplate:
     is_active: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'template_id': self.template_id,
             'name': self.name,
             'subject_template': self.subject_template,
@@ -101,8 +94,7 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationMessage:
-    """Individual notification message"""
-    message_id: str
+    """Individual notification message"""    message_id: str
     recipient: str
     channel: NotificationChannel
     priority: NotificationPriority
@@ -122,8 +114,7 @@ class NotificationMessage:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'message_id': self.message_id,
             'recipient': self.recipient,
             'channel': self.channel.value,
@@ -147,8 +138,7 @@ class NotificationMessage:
 
 @dataclass
 class DeliveryResult:
-    """Notification delivery result"""
-    success: bool
+    """Notification delivery result"""    success: bool
     message_id: str
     channel: NotificationChannel
     recipient: str
@@ -161,8 +151,7 @@ class DeliveryResult:
 
 
 class TemplateEngine:
-    """Advanced template engine for notifications"""
-    
+    """Advanced template engine for notifications"""    
     def __init__(self):
         self.jinja_env = jinja2.Environment(
             loader=jinja2.DictLoader({}),
@@ -181,8 +170,7 @@ class TemplateEngine:
     
     def render_template(self, template_content: str, 
                        template_data: Dict[str, Any]) -> str:
-        """Render template with provided data"""
-        try:
+        """Render template with provided data"""        try:
             template = Template(template_content, environment=self.jinja_env)
             return template.render(**template_data)
         except Exception as e:
@@ -190,8 +178,7 @@ class TemplateEngine:
             raise
     
     def validate_template(self, template_content: str) -> Dict[str, Any]:
-        """Validate template syntax and extract variables"""
-        try:
+        """Validate template syntax and extract variables"""        try:
             template = Template(template_content, environment=self.jinja_env)
             
             # Extract undefined variables
@@ -214,39 +201,33 @@ class TemplateEngine:
     
     def _datetime_filter(self, value: Union[str, datetime], 
                         format_string: str = "%Y-%m-%d %H:%M:%S") -> str:
-        """Format datetime values"""
-        if isinstance(value, str):
+        """Format datetime values"""        if isinstance(value, str):
             value = datetime.fromisoformat(value.replace('Z', '+00:00'))
         return value.strftime(format_string)
     
     def _currency_filter(self, value: Union[int, float], 
                         currency: str = "USD") -> str:
-        """Format currency values"""
-        return f"{value:.2f} {currency}"
+        """Format currency values"""        return f"{value:.2f} {currency}"
     
     def _truncate_filter(self, value: str, length: int = 100, 
                         end: str = "...") -> str:
-        """Truncate text to specified length"""
-        if len(value) <= length:
+        """Truncate text to specified length"""        if len(value) <= length:
             return value
         return value[:length - len(end)] + end
     
     def _markdown_filter(self, value: str) -> str:
-        """Convert markdown to HTML"""
-        return markdown.markdown(value)
+        """Convert markdown to HTML"""        return markdown.markdown(value)
     
     def _format_number(self, value: Union[int, float], 
                       decimal_places: int = 0) -> str:
-        """Format numbers with thousand separators"""
-        if decimal_places > 0:
+        """Format numbers with thousand separators"""        if decimal_places > 0:
             return f"{value:,.{decimal_places}f}"
         else:
             return f"{int(value):,}"
 
 
 class EmailChannel:
-    """Email notification channel handler"""
-    
+    """Email notification channel handler"""    
     def __init__(self, smtp_host: str, smtp_port: int, 
                  username: str, password: str, use_tls: bool = True):
         self.smtp_host = smtp_host
@@ -257,8 +238,7 @@ class EmailChannel:
         self.from_address = username
         
     async def send_notification(self, message: NotificationMessage) -> DeliveryResult:
-        """Send email notification"""
-        start_time = time.time()
+        """Send email notification"""        start_time = time.time()
         
         try:
             # Create message
@@ -317,8 +297,7 @@ class EmailChannel:
 
 
 class WebhookChannel:
-    """Webhook notification channel handler"""
-    
+    """Webhook notification channel handler"""    
     def __init__(self, default_timeout: int = 30):
         self.default_timeout = default_timeout
         
@@ -326,8 +305,7 @@ class WebhookChannel:
                               webhook_url: str, 
                               headers: Optional[Dict[str, str]] = None,
                               method: str = "POST") -> DeliveryResult:
-        """Send webhook notification"""
-        start_time = time.time()
+        """Send webhook notification"""        start_time = time.time()
         
         try:
             # Prepare payload
@@ -396,15 +374,13 @@ class WebhookChannel:
 
 
 class SlackChannel:
-    """Slack notification channel handler"""
-    
+    """Slack notification channel handler"""    
     def __init__(self, bot_token: str):
         self.bot_token = bot_token
         self.api_url = "https://slack.com/api"
         
     async def send_notification(self, message: NotificationMessage) -> DeliveryResult:
-        """Send Slack notification"""
-        start_time = time.time()
+        """Send Slack notification"""        start_time = time.time()
         
         try:
             # Prepare Slack message
@@ -488,15 +464,13 @@ class SlackChannel:
 
 
 class TelegramChannel:
-    """Telegram notification channel handler"""
-    
+    """Telegram notification channel handler"""    
     def __init__(self, bot_token: str):
         self.bot_token = bot_token
         self.api_url = f"https://api.telegram.org/bot{bot_token}"
         
     async def send_notification(self, message: NotificationMessage) -> DeliveryResult:
-        """Send Telegram notification"""
-        start_time = time.time()
+        """Send Telegram notification"""        start_time = time.time()
         
         try:
             # Prepare message text
@@ -556,16 +530,14 @@ class TelegramChannel:
 
 
 class NotificationStorage:
-    """Notification storage and retrieval"""
-    
+    """Notification storage and retrieval"""    
     def __init__(self, database_path: str = "notifications.db"):
         self.database_path = database_path
         self._init_database()
         self._lock = threading.Lock()
     
     def _init_database(self):
-        """Initialize SQLite database"""
-        with sqlite3.connect(self.database_path) as conn:
+        """Initialize SQLite database"""        with sqlite3.connect(self.database_path) as conn:
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS notification_templates (
                     template_id TEXT PRIMARY KEY,
@@ -633,8 +605,7 @@ class NotificationStorage:
             ''')
     
     def save_template(self, template: NotificationTemplate) -> bool:
-        """Save notification template"""
-        try:
+        """Save notification template"""        try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
                     conn.execute('''
@@ -660,8 +631,7 @@ class NotificationStorage:
             return False
     
     def get_template(self, template_id: str) -> Optional[NotificationTemplate]:
-        """Get notification template by ID"""
-        try:
+        """Get notification template by ID"""        try:
             with sqlite3.connect(self.database_path) as conn:
                 conn.row_factory = sqlite3.Row
                 cursor = conn.execute(
@@ -689,8 +659,7 @@ class NotificationStorage:
         return None
     
     def save_message(self, message: NotificationMessage) -> bool:
-        """Save notification message"""
-        try:
+        """Save notification message"""        try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
                     conn.execute('''
@@ -726,8 +695,7 @@ class NotificationStorage:
             return False
     
     def get_pending_messages(self, limit: int = 100) -> List[NotificationMessage]:
-        """Get pending notification messages"""
-        messages = []
+        """Get pending notification messages"""        messages = []
         try:
             with sqlite3.connect(self.database_path) as conn:
                 conn.row_factory = sqlite3.Row
@@ -768,8 +736,7 @@ class NotificationStorage:
         return messages
     
     def save_delivery_result(self, result: DeliveryResult) -> bool:
-        """Save delivery result"""
-        try:
+        """Save delivery result"""        try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
                     result_id = str(uuid.uuid4())
@@ -800,8 +767,7 @@ class NotificationStorage:
 
 
 class NotificationManager:
-    """Main notification management system"""
-    
+    """Main notification management system"""    
     def __init__(self, storage: NotificationStorage,
                  email_config: Optional[Dict[str, Any]] = None,
                  webhook_config: Optional[Dict[str, Any]] = None,
@@ -841,8 +807,7 @@ class NotificationManager:
     def create_template(self, name: str, subject_template: str, 
                        body_template: str, channel: NotificationChannel,
                        content_type: str = "text/html") -> NotificationTemplate:
-        """Create new notification template"""
-        template = NotificationTemplate(
+        """Create new notification template"""        template = NotificationTemplate(
             template_id=str(uuid.uuid4()),
             name=name,
             subject_template=subject_template,
@@ -882,8 +847,7 @@ class NotificationManager:
                               attachments: Optional[List[str]] = None,
                               scheduled_at: Optional[datetime] = None,
                               send_immediately: bool = False) -> NotificationMessage:
-        """Send notification message"""
-        
+        """Send notification message"""        
         message_data = {
             'message_id': str(uuid.uuid4()),
             'recipient': recipient,
@@ -937,8 +901,7 @@ class NotificationManager:
         return message
     
     async def _process_message(self, message: NotificationMessage) -> DeliveryResult:
-        """Process individual notification message"""
-        # Check rate limiting
+        """Process individual notification message"""        # Check rate limiting
         if not self._check_rate_limit(message.channel):
             # Schedule for retry
             message.status = NotificationStatus.RETRY
@@ -1034,8 +997,7 @@ class NotificationManager:
             return result
     
     def _check_rate_limit(self, channel: NotificationChannel) -> bool:
-        """Check if channel rate limit allows sending"""
-        if channel not in self.rate_limits:
+        """Check if channel rate limit allows sending"""        if channel not in self.rate_limits:
             return True
         
         rate_limit = self.rate_limits[channel]
@@ -1049,13 +1011,11 @@ class NotificationManager:
         return rate_limit['count'] < rate_limit['max_per_minute']
     
     def _update_rate_limit(self, channel: NotificationChannel):
-        """Update rate limit counter"""
-        if channel in self.rate_limits:
+        """Update rate limit counter"""        if channel in self.rate_limits:
             self.rate_limits[channel]['count'] += 1
     
     async def start_processing(self):
-        """Start processing notification queue"""
-        self.processing = True
+        """Start processing notification queue"""        self.processing = True
         
         while self.processing:
             try:
@@ -1075,12 +1035,10 @@ class NotificationManager:
                 await asyncio.sleep(self.process_interval)
     
     def stop_processing(self):
-        """Stop processing notification queue"""
-        self.processing = False
+        """Stop processing notification queue"""        self.processing = False
     
     def get_delivery_stats(self, hours: int = 24) -> Dict[str, Any]:
-        """Get delivery statistics for the specified time period"""
-        try:
+        """Get delivery statistics for the specified time period"""        try:
             since_time = (datetime.utcnow() - timedelta(hours=hours)).isoformat()
             
             with sqlite3.connect(self.storage.database_path) as conn:
@@ -1248,5 +1206,4 @@ PLATFORM_TEMPLATES = {
 
 
 class NotificationError(Exception):
-    """Custom exception for notification errors"""
-    pass
+    """Custom exception for notification errors"""    pass

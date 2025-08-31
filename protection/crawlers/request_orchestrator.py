@@ -1,5 +1,4 @@
-"""
-🎼 Enterprise Request Orchestration Engine
+"""🎼 Enterprise Request Orchestration Engine
 =========================================
 
 Advanced request orchestration system for intelligent scheduling,
@@ -25,7 +24,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 import time
@@ -43,8 +41,7 @@ import threading
 logger = logging.getLogger(__name__)
 
 class RequestStatus(str, Enum):
-    """Request status enumeration."""
-    PENDING = "pending"
+    """Request status enumeration."""    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -54,22 +51,19 @@ class RequestStatus(str, Enum):
     RATE_LIMITED = "rate_limited"
 
 class ExecutionMode(str, Enum):
-    """Request execution mode."""
-    SEQUENTIAL = "sequential"
+    """Request execution mode."""    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     BATCH = "batch"
     ADAPTIVE = "adaptive"
 
 class DependencyType(str, Enum):
-    """Request dependency types."""
-    STRICT = "strict"  # Must complete before dependent can start
+    """Request dependency types."""    STRICT = "strict"  # Must complete before dependent can start
     SOFT = "soft"     # Preferred but not required
     RESOURCE = "resource"  # Same resource required
 
 @dataclass
 class RequestContext:
-    """Enhanced request context with metadata."""
-    request_id: str
+    """Enhanced request context with metadata."""    request_id: str
     platform: str
     endpoint: str
     method: str = "GET"
@@ -101,8 +95,7 @@ class RequestContext:
 
 @dataclass
 class BatchConfig:
-    """Batch processing configuration."""
-    batch_size: int = 10
+    """Batch processing configuration."""    batch_size: int = 10
     batch_timeout: float = 5.0
     max_concurrent_batches: int = 3
     batch_strategy: str = "size_based"  # size_based, time_based, adaptive
@@ -110,8 +103,7 @@ class BatchConfig:
 
 @dataclass
 class ResourceQuota:
-    """Resource quota configuration."""
-    platform: str
+    """Resource quota configuration."""    platform: str
     max_concurrent: int = 10
     max_per_second: int = 5
     max_per_minute: int = 100
@@ -121,8 +113,7 @@ class ResourceQuota:
 
 @dataclass
 class ExecutionPlan:
-    """Request execution plan."""
-    plan_id: str
+    """Request execution plan."""    plan_id: str
     requests: List[RequestContext]
     execution_mode: ExecutionMode
     estimated_duration: float
@@ -131,26 +122,21 @@ class ExecutionPlan:
     batch_groups: List[List[str]] = field(default_factory=list)
 
 class DependencyGraph:
-    """Request dependency graph manager."""
-    
+    """Request dependency graph manager."""    
     def __init__(self):
-        """Initialize dependency graph."""
-        self.graph: Dict[str, Set[str]] = defaultdict(set)
+        """Initialize dependency graph."""        self.graph: Dict[str, Set[str]] = defaultdict(set)
         self.reverse_graph: Dict[str, Set[str]] = defaultdict(set)
         self.completed: Set[str] = set()
         
     def add_dependency(self, request_id: str, depends_on: str):
-        """Add dependency relationship."""
-        self.graph[request_id].add(depends_on)
+        """Add dependency relationship."""        self.graph[request_id].add(depends_on)
         self.reverse_graph[depends_on].add(request_id)
     
     def mark_completed(self, request_id: str):
-        """Mark request as completed."""
-        self.completed.add(request_id)
+        """Mark request as completed."""        self.completed.add(request_id)
     
     def get_ready_requests(self, all_requests: Set[str]) -> Set[str]:
-        """Get requests that are ready to execute."""
-        ready = set()
+        """Get requests that are ready to execute."""        ready = set()
         
         for request_id in all_requests:
             if request_id in self.completed:
@@ -164,12 +150,10 @@ class DependencyGraph:
         return ready
     
     def get_dependent_requests(self, request_id: str) -> Set[str]:
-        """Get requests that depend on this request."""
-        return self.reverse_graph.get(request_id, set())
+        """Get requests that depend on this request."""        return self.reverse_graph.get(request_id, set())
     
     def has_cycles(self) -> bool:
-        """Check for circular dependencies."""
-        visited = set()
+        """Check for circular dependencies."""        visited = set()
         rec_stack = set()
         
         def dfs(node):
@@ -193,29 +177,24 @@ class DependencyGraph:
         return False
 
 class ResourceManager:
-    """Resource allocation and management."""
-    
+    """Resource allocation and management."""    
     def __init__(self):
-        """Initialize resource manager."""
-        self.quotas: Dict[str, ResourceQuota] = {}
+        """Initialize resource manager."""        self.quotas: Dict[str, ResourceQuota] = {}
         self.allocations: Dict[str, Dict[str, int]] = defaultdict(dict)
         self.waiting_requests: Dict[str, List[str]] = defaultdict(list)
         
     def set_quota(self, platform: str, quota: ResourceQuota):
-        """Set resource quota for platform."""
-        self.quotas[platform] = quota
+        """Set resource quota for platform."""        self.quotas[platform] = quota
     
     def can_allocate(self, platform: str, required: int) -> bool:
-        """Check if resources can be allocated."""
-        if platform not in self.quotas:
+        """Check if resources can be allocated."""        if platform not in self.quotas:
             return True
         
         quota = self.quotas[platform]
         return quota.current_usage + required <= quota.max_concurrent
     
     def allocate(self, request_id: str, platform: str, required: int) -> bool:
-        """Allocate resources for request."""
-        if not self.can_allocate(platform, required):
+        """Allocate resources for request."""        if not self.can_allocate(platform, required):
             self.waiting_requests[platform].append(request_id)
             return False
         
@@ -226,8 +205,7 @@ class ResourceManager:
         return True
     
     def release(self, request_id: str):
-        """Release resources for completed request."""
-        if request_id not in self.allocations:
+        """Release resources for completed request."""        if request_id not in self.allocations:
             return
         
         for platform, allocated in self.allocations[request_id].items():
@@ -242,8 +220,7 @@ class ResourceManager:
         del self.allocations[request_id]
     
     def get_resource_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get current resource allocation status."""
-        status = {}
+        """Get current resource allocation status."""        status = {}
         for platform, quota in self.quotas.items():
             status[platform] = {
                 'max_concurrent': quota.max_concurrent,
@@ -254,17 +231,14 @@ class ResourceManager:
         return status
 
 class BatchProcessor:
-    """Intelligent batch processing engine."""
-    
+    """Intelligent batch processing engine."""    
     def __init__(self, config: BatchConfig):
-        """Initialize batch processor."""
-        self.config = config
+        """Initialize batch processor."""        self.config = config
         self.pending_requests: Dict[str, List[RequestContext]] = defaultdict(list)
         self.active_batches: Dict[str, asyncio.Task] = {}
         
     def add_request(self, request: RequestContext):
-        """Add request to batch queue."""
-        # Determine batch key based on grouping strategy
+        """Add request to batch queue."""        # Determine batch key based on grouping strategy
         batch_key = self._get_batch_key(request)
         self.pending_requests[batch_key].append(request)
         
@@ -273,8 +247,7 @@ class BatchProcessor:
             asyncio.create_task(self._process_batch(batch_key))
     
     def _get_batch_key(self, request: RequestContext) -> str:
-        """Generate batch key for request grouping."""
-        key_parts = []
+        """Generate batch key for request grouping."""        key_parts = []
         
         for field in self.config.group_by:
             if hasattr(request, field):
@@ -283,8 +256,7 @@ class BatchProcessor:
         return ":".join(key_parts)
     
     def _is_batch_ready(self, batch_key: str) -> bool:
-        """Check if batch is ready for processing."""
-        requests = self.pending_requests[batch_key]
+        """Check if batch is ready for processing."""        requests = self.pending_requests[batch_key]
         
         # Size-based trigger
         if len(requests) >= self.config.batch_size:
@@ -300,8 +272,7 @@ class BatchProcessor:
         return False
     
     async def _process_batch(self, batch_key: str):
-        """Process batch of requests."""
-        if batch_key in self.active_batches:
+        """Process batch of requests."""        if batch_key in self.active_batches:
             return  # Batch already processing
         
         requests = self.pending_requests[batch_key][:self.config.batch_size]
@@ -324,8 +295,7 @@ class BatchProcessor:
                 del self.active_batches[batch_key]
     
     async def _execute_batch(self, batch_key: str, requests: List[RequestContext]):
-        """Execute batch of requests."""
-        # Process requests in parallel within the batch
+        """Execute batch of requests."""        # Process requests in parallel within the batch
         tasks = []
         for request in requests:
             task = asyncio.create_task(self._execute_single_request(request))
@@ -348,8 +318,7 @@ class BatchProcessor:
                 request.execution_time = (request.completed_at - request.started_at).total_seconds()
     
     async def _execute_single_request(self, request: RequestContext) -> Any:
-        """Execute single request (placeholder for actual implementation)."""
-        # This would be implemented to call the actual API
+        """Execute single request (placeholder for actual implementation)."""        # This would be implemented to call the actual API
         request.started_at = datetime.utcnow()
         request.status = RequestStatus.PROCESSING
         
@@ -359,17 +328,14 @@ class BatchProcessor:
         return {"status": "success", "data": "mock_data"}
 
 class PerformanceOptimizer:
-    """Performance optimization engine."""
-    
+    """Performance optimization engine."""    
     def __init__(self):
-        """Initialize performance optimizer."""
-        self.execution_history: deque = deque(maxlen=1000)
+        """Initialize performance optimizer."""        self.execution_history: deque = deque(maxlen=1000)
         self.platform_stats: Dict[str, Dict] = defaultdict(dict)
         self.optimization_rules: List[Callable] = []
         
     def record_execution(self, request: RequestContext):
-        """Record request execution for optimization."""
-        if request.execution_time is None:
+        """Record request execution for optimization."""        if request.execution_time is None:
             return
         
         execution_record = {
@@ -384,8 +350,7 @@ class PerformanceOptimizer:
         self._update_platform_stats(request.platform, execution_record)
     
     def _update_platform_stats(self, platform: str, record: Dict[str, Any]):
-        """Update platform performance statistics."""
-        stats = self.platform_stats[platform]
+        """Update platform performance statistics."""        stats = self.platform_stats[platform]
         
         if 'total_requests' not in stats:
             stats['total_requests'] = 0
@@ -402,8 +367,7 @@ class PerformanceOptimizer:
             )
     
     def get_optimization_recommendations(self, platform: str) -> List[str]:
-        """Get optimization recommendations for platform."""
-        recommendations = []
+        """Get optimization recommendations for platform."""        recommendations = []
         
         if platform not in self.platform_stats:
             return recommendations
@@ -422,8 +386,7 @@ class PerformanceOptimizer:
         return recommendations
 
 class RequestOrchestrator:
-    """
-    Enterprise request orchestration engine.
+    """    Enterprise request orchestration engine.
     
     Provides comprehensive request coordination with:
     - Intelligent scheduling and prioritization
@@ -431,11 +394,9 @@ class RequestOrchestrator:
     - Dependency resolution
     - Batch processing
     - Performance monitoring
-    """
-    
+    """    
     def __init__(self, max_workers: int = 50):
-        """Initialize request orchestrator."""
-        self.max_workers = max_workers
+        """Initialize request orchestrator."""        self.max_workers = max_workers
         self.requests: Dict[str, RequestContext] = {}
         self.dependency_graph = DependencyGraph()
         self.resource_manager = ResourceManager()
@@ -475,8 +436,7 @@ class RequestOrchestrator:
         request: RequestContext,
         execution_mode: ExecutionMode = ExecutionMode.ADAPTIVE
     ) -> str:
-        """
-        Submit request for orchestrated execution.
+        """        Submit request for orchestrated execution.
         
         Args:
             request: Request context
@@ -484,8 +444,7 @@ class RequestOrchestrator:
             
         Returns:
             Request ID for tracking
-        """
-        # Validate request
+        """        # Validate request
         if not request.request_id:
             request.request_id = self._generate_request_id()
         
@@ -511,20 +470,17 @@ class RequestOrchestrator:
         return request.request_id
     
     async def _queue_request(self, request: RequestContext):
-        """Queue request for execution."""
-        request.status = RequestStatus.QUEUED
+        """Queue request for execution."""        request.status = RequestStatus.QUEUED
         priority_queue = self.priority_queues.get(request.priority, self.priority_queues['medium'])
         await priority_queue.put(request.request_id)
     
     def _generate_request_id(self) -> str:
-        """Generate unique request ID."""
-        timestamp = str(int(time.time() * 1000))
+        """Generate unique request ID."""        timestamp = str(int(time.time() * 1000))
         random_part = hashlib.md5(timestamp.encode()).hexdigest()[:8]
         return f"req_{timestamp}_{random_part}"
     
     async def start(self):
-        """Start the orchestrator."""
-        if self.running:
+        """Start the orchestrator."""        if self.running:
             return
         
         self.running = True
@@ -532,8 +488,7 @@ class RequestOrchestrator:
         logger.info("Request Orchestrator started")
     
     async def stop(self):
-        """Stop the orchestrator."""
-        self.running = False
+        """Stop the orchestrator."""        self.running = False
         
         if self.scheduler_task:
             self.scheduler_task.cancel()
@@ -552,8 +507,7 @@ class RequestOrchestrator:
         logger.info("Request Orchestrator stopped")
     
     async def _scheduler_loop(self):
-        """Main scheduler loop."""
-        logger.info("Scheduler loop started")
+        """Main scheduler loop."""        logger.info("Scheduler loop started")
         
         while self.running:
             try:
@@ -589,8 +543,7 @@ class RequestOrchestrator:
                 await asyncio.sleep(1)
     
     async def _process_request(self, request_id: str):
-        """Process individual request."""
-        if request_id not in self.requests:
+        """Process individual request."""        if request_id not in self.requests:
             logger.warning(f"Request {request_id} not found")
             return
         
@@ -618,13 +571,11 @@ class RequestOrchestrator:
         self.active_workers.add(worker)
     
     def _are_dependencies_ready(self, request_id: str) -> bool:
-        """Check if request dependencies are ready."""
-        ready_requests = self.dependency_graph.get_ready_requests({request_id})
+        """Check if request dependencies are ready."""        ready_requests = self.dependency_graph.get_ready_requests({request_id})
         return request_id in ready_requests
     
     async def _execute_request(self, request: RequestContext):
-        """Execute request with full lifecycle management."""
-        async with self.worker_semaphore:
+        """Execute request with full lifecycle management."""        async with self.worker_semaphore:
             try:
                 # Update status
                 request.status = RequestStatus.PROCESSING
@@ -673,8 +624,7 @@ class RequestOrchestrator:
                 self.performance_optimizer.record_execution(request)
     
     async def _perform_request(self, request: RequestContext) -> Any:
-        """Perform actual API request (placeholder for implementation)."""
-        # This would contain the actual API calling logic
+        """Perform actual API request (placeholder for implementation)."""        # This would contain the actual API calling logic
         # For now, simulate request execution
         await asyncio.sleep(0.1)  # Simulate network delay
         
@@ -689,8 +639,7 @@ class RequestOrchestrator:
         }
     
     async def _retry_request(self, request: RequestContext):
-        """Retry failed request with backoff."""
-        request.attempt_count += 1
+        """Retry failed request with backoff."""        request.attempt_count += 1
         request.status = RequestStatus.RETRYING
         
         # Calculate backoff delay
@@ -702,13 +651,11 @@ class RequestOrchestrator:
         asyncio.create_task(self._delayed_retry(request, delay))
     
     async def _delayed_retry(self, request: RequestContext, delay: float):
-        """Perform delayed retry."""
-        await asyncio.sleep(delay)
+        """Perform delayed retry."""        await asyncio.sleep(delay)
         await self._queue_request(request)
     
     def _update_metrics(self):
-        """Update orchestrator metrics."""
-        # Update queue sizes
+        """Update orchestrator metrics."""        # Update queue sizes
         for priority, queue in self.priority_queues.items():
             self.metrics['queue_sizes'][priority] = queue.qsize()
         
@@ -721,12 +668,10 @@ class RequestOrchestrator:
             self.metrics['avg_execution_time'] = total_time / len(completed_requests)
     
     def get_request_status(self, request_id: str) -> Optional[RequestContext]:
-        """Get status of specific request."""
-        return self.requests.get(request_id)
+        """Get status of specific request."""        return self.requests.get(request_id)
     
     def get_orchestrator_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive orchestrator metrics."""
-        self._update_metrics()
+        """Get comprehensive orchestrator metrics."""        self._update_metrics()
         return {
             **self.metrics,
             'active_workers': len(self.active_workers),
@@ -735,8 +680,7 @@ class RequestOrchestrator:
         }
     
     def get_performance_report(self) -> Dict[str, Any]:
-        """Get detailed performance report."""
-        return {
+        """Get detailed performance report."""        return {
             'platform_stats': dict(self.performance_optimizer.platform_stats),
             'orchestrator_metrics': self.get_orchestrator_metrics(),
             'optimization_recommendations': {

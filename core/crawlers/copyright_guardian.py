@@ -1,5 +1,4 @@
-"""
-Copyright Guardian - Gardien des droits d'auteur avancé
+"""Copyright Guardian - Gardien des droits d'auteur avancé
 =====================================================
 
 Système de protection avancée des droits d'auteur avec surveillance
@@ -9,7 +8,6 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
 """
-
 import asyncio
 import logging
 import json
@@ -31,8 +29,7 @@ from ...utils.evidence_collector import EvidenceCollector
 
 
 class CopyrightStatus(Enum):
-    """Statuts de protection des droits d'auteur"""
-    PROTECTED = "protected"
+    """Statuts de protection des droits d'auteur"""    PROTECTED = "protected"
     PENDING_REGISTRATION = "pending_registration"
     REGISTERED = "registered"
     DISPUTED = "disputed"
@@ -41,8 +38,7 @@ class CopyrightStatus(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Niveaux de sévérité des violations"""
-    MINOR = "minor"
+    """Niveaux de sévérité des violations"""    MINOR = "minor"
     MODERATE = "moderate"
     SEVERE = "severe"
     CRITICAL = "critical"
@@ -51,8 +47,7 @@ class ViolationSeverity(Enum):
 
 @dataclass
 class CopyrightRegistration:
-    """Enregistrement de droits d'auteur"""
-    content_id: str
+    """Enregistrement de droits d'auteur"""    content_id: str
     owner_id: str
     title: str
     description: str
@@ -69,8 +64,7 @@ class CopyrightRegistration:
 
 @dataclass
 class CopyrightViolation:
-    """Violation de droits d'auteur"""
-    violation_id: str
+    """Violation de droits d'auteur"""    violation_id: str
     original_content_id: str
     infringing_url: str
     infringer_info: Dict[str, Any]
@@ -88,18 +82,14 @@ class CopyrightViolation:
 
 
 class CopyrightGuardian:
-    """
-    Gardien avancé des droits d'auteur avec IA
-    """
-    
+    """    Gardien avancé des droits d'auteur avec IA
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialise le gardien des droits d'auteur
+        """        Initialise le gardien des droits d'auteur
         
         Args:
             config: Configuration du système
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Composants de base
@@ -144,9 +134,7 @@ class CopyrightGuardian:
         }
 
     def _load_dmca_template(self) -> str:
-        """Charge le template DMCA"""
-        return """
-DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
+        """Charge le template DMCA"""        return """DIGITAL MILLENNIUM COPYRIGHT ACT TAKEDOWN NOTICE
 
 To: {platform_name}
 From: {copyright_owner}
@@ -177,11 +165,8 @@ SIGNATURE:
 {owner_name}
 {contact_information}
 """
-
     def _load_cease_desist_template(self) -> str:
-        """Charge le template de cessation"""
-        return """
-CEASE AND DESIST NOTICE
+        """Charge le template de cessation"""        return """CEASE AND DESIST NOTICE
 
 To: {infringer_name}
 From: {copyright_owner}
@@ -213,11 +198,8 @@ Sincerely,
 {law_firm}
 {contact_information}
 """
-
     def _load_settlement_template(self) -> str:
-        """Charge le template de règlement"""
-        return """
-SETTLEMENT OFFER
+        """Charge le template de règlement"""        return """SETTLEMENT OFFER
 
 To: {infringer_name}
 From: {copyright_owner}
@@ -246,11 +228,8 @@ Please contact us to accept this settlement offer.
 Regards,
 {legal_counsel}
 """
-
     def _load_court_filing_template(self) -> str:
-        """Charge le template de dépôt judiciaire"""
-        return """
-COMPLAINT FOR COPYRIGHT INFRINGEMENT
+        """Charge le template de dépôt judiciaire"""        return """COMPLAINT FOR COPYRIGHT INFRINGEMENT
 
 {court_header}
 
@@ -273,15 +252,13 @@ PRAYER FOR RELIEF:
 
 {attorney_signature}
 """
-
     async def register_copyright(
         self,
         content_id: str,
         owner_id: str,
         content_info: Dict[str, Any]
     ) -> CopyrightRegistration:
-        """
-        Enregistre un contenu pour protection des droits d'auteur
+        """        Enregistre un contenu pour protection des droits d'auteur
         
         Args:
             content_id: ID unique du contenu
@@ -290,8 +267,7 @@ PRAYER FOR RELIEF:
             
         Returns:
             CopyrightRegistration: Enregistrement créé
-        """
-        try:
+        """        try:
             # Génération d'empreinte avancée
             fingerprint = await self.fingerprint_engine.generate_comprehensive_fingerprint(
                 content_info['url'], content_info['type']
@@ -332,8 +308,7 @@ PRAYER FOR RELIEF:
             raise
 
     def _generate_copyright_number(self, registration: CopyrightRegistration) -> str:
-        """Génère un numéro de copyright unique"""
-        # Format: CR-YYYY-NNNNNN (CR + année + numéro séquentiel)
+        """Génère un numéro de copyright unique"""        # Format: CR-YYYY-NNNNNN (CR + année + numéro séquentiel)
         year = registration.registration_date.year
         content_hash = hashlib.md5(
             f"{registration.content_id}{registration.owner_id}".encode()
@@ -342,8 +317,7 @@ PRAYER FOR RELIEF:
         return f"CR-{year}-{content_hash}"
 
     async def _submit_official_registration(self, registration: CopyrightRegistration) -> None:
-        """Soumet l'enregistrement aux organismes officiels"""
-        try:
+        """Soumet l'enregistrement aux organismes officiels"""        try:
             jurisdiction = registration.jurisdiction
             
             if jurisdiction == 'US':
@@ -357,19 +331,16 @@ PRAYER FOR RELIEF:
             self.logger.error(f"Erreur soumission officielle: {e}")
 
     async def _submit_us_copyright_office(self, registration: CopyrightRegistration) -> None:
-        """Soumet au US Copyright Office"""
-        # Implémentation de l'API Copyright Office (si disponible)
+        """Soumet au US Copyright Office"""        # Implémentation de l'API Copyright Office (si disponible)
         # En pratique, nécessiterait une intégration manuelle ou service tiers
         pass
 
     async def _submit_eu_copyright_office(self, registration: CopyrightRegistration) -> None:
-        """Soumet aux organismes EU"""
-        # Implémentation pour l'UE
+        """Soumet aux organismes EU"""        # Implémentation pour l'UE
         pass
 
     async def _submit_uk_copyright_office(self, registration: CopyrightRegistration) -> None:
-        """Soumet au UK IPO"""
-        # Implémentation pour le Royaume-Uni
+        """Soumet au UK IPO"""        # Implémentation pour le Royaume-Uni
         pass
 
     async def detect_copyright_violations(
@@ -377,8 +348,7 @@ PRAYER FOR RELIEF:
         content_id: str,
         scan_scope: str = 'comprehensive'
     ) -> List[CopyrightViolation]:
-        """
-        Détecte les violations de droits d'auteur
+        """        Détecte les violations de droits d'auteur
         
         Args:
             content_id: ID du contenu à protéger
@@ -386,8 +356,7 @@ PRAYER FOR RELIEF:
             
         Returns:
             List[CopyrightViolation]: Violations détectées
-        """
-        if content_id not in self.copyright_registrations:
+        """        if content_id not in self.copyright_registrations:
             raise ValueError(f"Contenu {content_id} non enregistré")
         
         registration = self.copyright_registrations[content_id]
@@ -429,8 +398,7 @@ PRAYER FOR RELIEF:
         registration: CopyrightRegistration,
         scope: str
     ) -> List[Dict[str, Any]]:
-        """Recherche de contenus similaires"""
-        suspect_contents = []
+        """Recherche de contenus similaires"""        suspect_contents = []
         
         try:
             # Génération de requêtes de recherche
@@ -459,8 +427,7 @@ PRAYER FOR RELIEF:
             return []
 
     def _generate_copyright_search_queries(self, registration: CopyrightRegistration) -> List[str]:
-        """Génère des requêtes de recherche pour détection de violations"""
-        queries = []
+        """Génère des requêtes de recherche pour détection de violations"""        queries = []
         
         # Requêtes basées sur le titre
         if registration.title:
@@ -486,8 +453,7 @@ PRAYER FOR RELIEF:
         return queries
 
     async def _search_web_for_content(self, query: str) -> List[Dict[str, Any]]:
-        """Recherche web de contenu"""
-        results = []
+        """Recherche web de contenu"""        results = []
         
         try:
             search_engines = [
@@ -518,8 +484,7 @@ PRAYER FOR RELIEF:
             return []
 
     def _get_search_headers(self) -> Dict[str, str]:
-        """Génère des headers pour les recherches"""
-        return {
+        """Génère des headers pour les recherches"""        return {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Language': 'en-US,en;q=0.5',
@@ -527,8 +492,7 @@ PRAYER FOR RELIEF:
         }
 
     def _parse_search_results(self, html: str) -> List[Dict[str, Any]]:
-        """Parse les résultats de recherche"""
-        results = []
+        """Parse les résultats de recherche"""        results = []
         soup = BeautifulSoup(html, 'html.parser')
         
         # Extraction basique des liens
@@ -549,16 +513,14 @@ PRAYER FOR RELIEF:
         self,
         registration: CopyrightRegistration
     ) -> List[Dict[str, Any]]:
-        """Recherche sur plateformes spécialisées"""
-        # Implémentation des recherches spécialisées
+        """Recherche sur plateformes spécialisées"""        # Implémentation des recherches spécialisées
         return []
 
     async def _search_file_sharing_networks(
         self,
         registration: CopyrightRegistration
     ) -> List[Dict[str, Any]]:
-        """Recherche sur réseaux de partage"""
-        # Implémentation des recherches P2P
+        """Recherche sur réseaux de partage"""        # Implémentation des recherches P2P
         return []
 
     async def _analyze_potential_violation(
@@ -566,8 +528,7 @@ PRAYER FOR RELIEF:
         registration: CopyrightRegistration,
         suspect_content: Dict[str, Any]
     ) -> Optional[CopyrightViolation]:
-        """Analyse une violation potentielle"""
-        try:
+        """Analyse une violation potentielle"""        try:
             # Analyse du contenu suspect
             suspect_analysis = await self._analyze_suspect_content(suspect_content['url'])
             if not suspect_analysis:
@@ -616,8 +577,7 @@ PRAYER FOR RELIEF:
             return None
 
     async def _analyze_suspect_content(self, url: str) -> Optional[Dict[str, Any]]:
-        """Analyse approfondie d'un contenu suspect"""
-        try:
+        """Analyse approfondie d'un contenu suspect"""        try:
             # Utilise l'analyseur de contenu
             return await self.content_analyzer.analyze_comprehensive_content(url)
             
@@ -630,8 +590,7 @@ PRAYER FOR RELIEF:
         registration: CopyrightRegistration,
         suspect_analysis: Dict[str, Any]
     ) -> float:
-        """Calcule la similarité pour violation de copyright"""
-        try:
+        """Calcule la similarité pour violation de copyright"""        try:
             # Comparaison d'empreintes
             fingerprint_similarity = await self.fingerprint_engine.compare_fingerprints(
                 registration.fingerprint_hash,
@@ -657,8 +616,7 @@ PRAYER FOR RELIEF:
         registration: CopyrightRegistration,
         suspect_analysis: Dict[str, Any]
     ) -> float:
-        """Compare les métadonnées"""
-        score = 0.0
+        """Compare les métadonnées"""        score = 0.0
         comparisons = 0
         
         # Comparaison des titres
@@ -680,8 +638,7 @@ PRAYER FOR RELIEF:
         return score / comparisons if comparisons > 0 else 0.0
 
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calcule la similarité textuelle"""
-        if not text1 or not text2:
+        """Calcule la similarité textuelle"""        if not text1 or not text2:
             return 0.0
         
         words1 = set(text1.lower().split())
@@ -700,8 +657,7 @@ PRAYER FOR RELIEF:
         suspect_analysis: Dict[str, Any],
         similarity_score: float
     ) -> str:
-        """Classifie le type de violation"""
-        if similarity_score >= 0.95:
+        """Classifie le type de violation"""        if similarity_score >= 0.95:
             return "exact_copy"
         elif similarity_score >= 0.85:
             return "substantial_similarity"
@@ -715,8 +671,7 @@ PRAYER FOR RELIEF:
         violation_type: str,
         suspect_analysis: Dict[str, Any]
     ) -> ViolationSeverity:
-        """Évalue la sévérité de la violation"""
-        # Facteurs de sévérité
+        """Évalue la sévérité de la violation"""        # Facteurs de sévérité
         commercial_use = suspect_analysis.get('commercial_use', False)
         view_count = suspect_analysis.get('view_count', 0)
         download_count = suspect_analysis.get('download_count', 0)
@@ -736,8 +691,7 @@ PRAYER FOR RELIEF:
         suspect_analysis: Dict[str, Any],
         similarity_score: float
     ) -> float:
-        """Estime les dommages financiers"""
-        base_value = registration.commercial_value
+        """Estime les dommages financiers"""        base_value = registration.commercial_value
         
         if base_value == 0:
             # Estimation basée sur le type de contenu
@@ -769,14 +723,12 @@ PRAYER FOR RELIEF:
         return min(estimated_damage, 1000000)  # Cap à 1M
 
     def _generate_violation_id(self) -> str:
-        """Génère un ID unique pour la violation"""
-        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
+        """Génère un ID unique pour la violation"""        timestamp = datetime.now().strftime('%Y%m%d%H%M%S')
         random_suffix = hashlib.md5(str(datetime.now()).encode()).hexdigest()[:6]
         return f"CV-{timestamp}-{random_suffix.upper()}"
 
     async def _handle_severe_violation(self, violation: CopyrightViolation) -> None:
-        """Traite une violation sévère"""
-        try:
+        """Traite une violation sévère"""        try:
             self.logger.warning(
                 f"Violation sévère détectée: {violation.infringing_url} "
                 f"(ID: {violation.violation_id})"
@@ -796,8 +748,7 @@ PRAYER FOR RELIEF:
             self.logger.error(f"Erreur traitement violation sévère: {e}")
 
     async def _send_dmca_takedown(self, violation: CopyrightViolation) -> None:
-        """Envoie un takedown DMCA"""
-        try:
+        """Envoie un takedown DMCA"""        try:
             registration = self.copyright_registrations[violation.original_content_id]
             
             # Génération du DMCA
@@ -818,8 +769,7 @@ PRAYER FOR RELIEF:
             self.logger.error(f"Erreur envoi DMCA: {e}")
 
     async def _send_cease_desist(self, violation: CopyrightViolation) -> None:
-        """Envoie un cease & desist"""
-        try:
+        """Envoie un cease & desist"""        try:
             registration = self.copyright_registrations[violation.original_content_id]
             
             # Génération de la lettre
@@ -842,8 +792,7 @@ PRAYER FOR RELIEF:
         registration: CopyrightRegistration,
         violation: CopyrightViolation
     ) -> str:
-        """Génère une lettre de cessation"""
-        template = self.legal_templates['cease_desist']
+        """Génère une lettre de cessation"""        template = self.legal_templates['cease_desist']
         
         return template.format(
             infringer_name=violation.infringer_info.get('name', 'Unknown'),
@@ -863,15 +812,13 @@ PRAYER FOR RELIEF:
         infringer_info: Dict[str, Any],
         notice_content: str
     ) -> None:
-        """Envoie une notice légale"""
-        # Implémentation d'envoi (email, courrier, etc.)
+        """Envoie une notice légale"""        # Implémentation d'envoi (email, courrier, etc.)
         await self.notification_manager.send_legal_notice(
             infringer_info, notice_content
         )
 
     async def _notify_copyright_violation(self, violation: CopyrightViolation) -> None:
-        """Notifie une violation de copyright"""
-        notification_data = {
+        """Notifie une violation de copyright"""        notification_data = {
             'type': 'copyright_violation',
             'violation_id': violation.violation_id,
             'severity': violation.severity.value,
@@ -888,8 +835,7 @@ PRAYER FOR RELIEF:
         violation_id: str,
         action_type: str = 'federal_lawsuit'
     ) -> Dict[str, Any]:
-        """
-        Initie une action légale
+        """        Initie une action légale
         
         Args:
             violation_id: ID de la violation
@@ -897,8 +843,7 @@ PRAYER FOR RELIEF:
             
         Returns:
             Dict[str, Any]: Résultat de l'initiation
-        """
-        if violation_id not in self.copyright_violations:
+        """        if violation_id not in self.copyright_violations:
             raise ValueError(f"Violation {violation_id} non trouvée")
         
         violation = self.copyright_violations[violation_id]
@@ -939,8 +884,7 @@ PRAYER FOR RELIEF:
         registration: CopyrightRegistration,
         violation: CopyrightViolation
     ) -> Dict[str, Any]:
-        """Prépare le dossier légal"""
-        return {
+        """Prépare le dossier légal"""        return {
             'plaintiff_info': {
                 'name': registration.owner_id,
                 'copyright_registrations': [registration.copyright_number]
@@ -961,8 +905,7 @@ PRAYER FOR RELIEF:
         legal_case: Dict[str, Any],
         action_type: str
     ) -> Dict[str, str]:
-        """Génère les documents de procédure"""
-        documents = {}
+        """Génère les documents de procédure"""        documents = {}
         
         if action_type == 'federal_lawsuit':
             # Complaint
@@ -977,8 +920,7 @@ PRAYER FOR RELIEF:
         return documents
 
     def _generate_complaint(self, legal_case: Dict[str, Any]) -> str:
-        """Génère la plainte"""
-        template = self.legal_templates['court_filing']
+        """Génère la plainte"""        template = self.legal_templates['court_filing']
         
         return template.format(
             court_header="UNITED STATES DISTRICT COURT",
@@ -992,9 +934,7 @@ PRAYER FOR RELIEF:
         )
 
     def _generate_injunction_motion(self, legal_case: Dict[str, Any]) -> str:
-        """Génère la motion d'injonction"""
-        return f"""
-MOTION FOR PRELIMINARY INJUNCTION
+        """Génère la motion d'injonction"""        return f"""MOTION FOR PRELIMINARY INJUNCTION
 
 TO THE HONORABLE COURT:
 
@@ -1011,13 +951,10 @@ WHEREFORE, Plaintiff requests immediate injunctive relief.
 Respectfully submitted,
 Copyright Guardian Legal System
 """
-
     def _generate_damages_request(self, legal_case: Dict[str, Any]) -> str:
-        """Génère la demande de dommages"""
-        damages = legal_case['damages_claimed']
+        """Génère la demande de dommages"""        damages = legal_case['damages_claimed']
         
-        return f"""
-REQUEST FOR DAMAGES
+        return f"""REQUEST FOR DAMAGES
 
 Plaintiff seeks the following relief:
 
@@ -1029,14 +966,12 @@ Plaintiff seeks the following relief:
 
 Total damages sought: ${damages * 3:.2f} (including enhanced damages)
 """
-
     async def _file_court_documents(
         self,
         documents: Dict[str, str],
         action_type: str
     ) -> Dict[str, Any]:
-        """Dépose les documents au tribunal"""
-        # Simulation du dépôt électronique
+        """Dépose les documents au tribunal"""        # Simulation du dépôt électronique
         case_number = f"CV-{datetime.now().strftime('%Y')}-{hash(str(documents)) % 10000:04d}"
         
         return {
@@ -1047,13 +982,11 @@ Total damages sought: ${damages * 3:.2f} (including enhanced damages)
         }
 
     def get_copyright_portfolio_summary(self) -> Dict[str, Any]:
-        """
-        Retourne un résumé du portfolio de droits d'auteur
+        """        Retourne un résumé du portfolio de droits d'auteur
         
         Returns:
             Dict[str, Any]: Résumé détaillé
-        """
-        total_registrations = len(self.copyright_registrations)
+        """        total_registrations = len(self.copyright_registrations)
         total_violations = len(self.copyright_violations)
         
         # Statistiques par statut
@@ -1120,8 +1053,7 @@ Total damages sought: ${damages * 3:.2f} (including enhanced damages)
         }
 
     def _calculate_dmca_success_rate(self) -> float:
-        """Calcule le taux de succès des DMCA"""
-        dmca_sent = len([v for v in self.copyright_violations.values() if v.dmca_sent])
+        """Calcule le taux de succès des DMCA"""        dmca_sent = len([v for v in self.copyright_violations.values() if v.dmca_sent])
         dmca_successful = len([
             v for v in self.copyright_violations.values()
             if v.dmca_sent and v.resolution_status == 'resolved'
@@ -1130,8 +1062,7 @@ Total damages sought: ${damages * 3:.2f} (including enhanced damages)
         return (dmca_successful / dmca_sent * 100) if dmca_sent > 0 else 0
 
     def _calculate_average_response_time(self) -> float:
-        """Calcule le temps de réponse moyen"""
-        resolved_violations = [
+        """Calcule le temps de réponse moyen"""        resolved_violations = [
             v for v in self.copyright_violations.values()
             if v.resolution_date
         ]
@@ -1147,8 +1078,7 @@ Total damages sought: ${damages * 3:.2f} (including enhanced damages)
         return total_time / len(resolved_violations) / 3600  # En heures
 
     def _calculate_legal_success_rate(self) -> float:
-        """Calcule le taux de succès des actions légales"""
-        legal_actions = [v for v in self.copyright_violations.values() if v.legal_action_initiated]
+        """Calcule le taux de succès des actions légales"""        legal_actions = [v for v in self.copyright_violations.values() if v.legal_action_initiated]
         successful_actions = [
             v for v in legal_actions
             if v.resolution_status in ['settled', 'judgment_plaintiff']

@@ -1,5 +1,4 @@
-"""
-Blockchain Network Connectors Module
+"""Blockchain Network Connectors Module
 
 Enterprise-grade blockchain connectivity layer providing unified access to multiple
 blockchain networks (Ethereum, Polygon, BSC) with advanced features like load balancing,
@@ -26,7 +25,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -49,8 +47,7 @@ import websockets
 logger = logging.getLogger(__name__)
 
 class NetworkType(Enum):
-    """Supported blockchain network types."""
-    ETHEREUM_MAINNET = "ethereum_mainnet"
+    """Supported blockchain network types."""    ETHEREUM_MAINNET = "ethereum_mainnet"
     ETHEREUM_SEPOLIA = "ethereum_sepolia"
     POLYGON_MAINNET = "polygon_mainnet"
     POLYGON_MUMBAI = "polygon_mumbai"
@@ -60,8 +57,7 @@ class NetworkType(Enum):
     OPTIMISM_MAINNET = "optimism_mainnet"
 
 class ConnectionStatus(Enum):
-    """Connection status states."""
-    CONNECTED = "connected"
+    """Connection status states."""    CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     ERROR = "error"
@@ -69,8 +65,7 @@ class ConnectionStatus(Enum):
 
 @dataclass
 class NetworkConfig:
-    """Configuration for blockchain network connection."""
-    network_type: NetworkType
+    """Configuration for blockchain network connection."""    network_type: NetworkType
     name: str
     chain_id: int
     rpc_urls: List[str]
@@ -86,8 +81,7 @@ class NetworkConfig:
 
 @dataclass
 class ConnectionMetrics:
-    """Connection performance and health metrics."""
-    network_type: NetworkType
+    """Connection performance and health metrics."""    network_type: NetworkType
     status: ConnectionStatus
     last_block_number: int
     last_sync_time: datetime
@@ -99,21 +93,17 @@ class ConnectionMetrics:
     pending_tx_count: int = 0
 
 class BlockchainConnector:
-    """
-    Base blockchain connector with common functionality.
+    """    Base blockchain connector with common functionality.
     
     Provides connection management, health monitoring, and basic operations
     for blockchain networks.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
-        """
-        Initialize blockchain connector.
+        """        Initialize blockchain connector.
         
         Args:
             config: Network configuration
-        """
-        self.config = config
+        """        self.config = config
         self.web3_instances: List[Web3] = []
         self.current_instance_index = 0
         self.metrics = ConnectionMetrics(
@@ -127,13 +117,11 @@ class BlockchainConnector:
         self._is_monitoring = False
         
     async def initialize(self) -> bool:
-        """
-        Initialize connections to all configured RPC endpoints.
+        """        Initialize connections to all configured RPC endpoints.
         
         Returns:
             True if at least one connection is successful
-        """
-        try:
+        """        try:
             self.metrics.status = ConnectionStatus.CONNECTING
             connected_count = 0
             
@@ -176,16 +164,14 @@ class BlockchainConnector:
             return False
     
     async def _test_connection(self, w3: Web3) -> bool:
-        """
-        Test Web3 connection and verify chain ID.
+        """        Test Web3 connection and verify chain ID.
         
         Args:
             w3: Web3 instance to test
             
         Returns:
             True if connection is valid
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Check if connected
@@ -217,13 +203,11 @@ class BlockchainConnector:
             return False
     
     def get_web3_instance(self) -> Optional[Web3]:
-        """
-        Get a healthy Web3 instance using round-robin load balancing.
+        """        Get a healthy Web3 instance using round-robin load balancing.
         
         Returns:
             Web3 instance or None if no healthy connections
-        """
-        with self._lock:
+        """        with self._lock:
             if not self.web3_instances:
                 return None
             
@@ -246,13 +230,11 @@ class BlockchainConnector:
             return None
     
     async def get_gas_price(self) -> Optional[int]:
-        """
-        Get current gas price for the network.
+        """        Get current gas price for the network.
         
         Returns:
             Gas price in wei
-        """
-        try:
+        """        try:
             w3 = self.get_web3_instance()
             if not w3:
                 return None
@@ -274,8 +256,7 @@ class BlockchainConnector:
             return None
     
     async def _get_oracle_gas_price(self) -> Optional[int]:
-        """Get gas price from external oracle (e.g., ETH Gas Station)."""
-        try:
+        """Get gas price from external oracle (e.g., ETH Gas Station)."""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.config.gas_price_oracle) as response:
                     if response.status == 200:
@@ -288,24 +269,21 @@ class BlockchainConnector:
             return None
     
     def _parse_oracle_response(self, data: Dict[str, Any]) -> Optional[int]:
-        """Parse gas price oracle response based on network type."""
-        # Implementation varies by oracle provider
+        """Parse gas price oracle response based on network type."""        # Implementation varies by oracle provider
         return None
     
     async def estimate_gas(
         self, 
         transaction: Dict[str, Any]
     ) -> Optional[int]:
-        """
-        Estimate gas for a transaction.
+        """        Estimate gas for a transaction.
         
         Args:
             transaction: Transaction parameters
             
         Returns:
             Estimated gas limit
-        """
-        try:
+        """        try:
             w3 = self.get_web3_instance()
             if not w3:
                 return None
@@ -320,14 +298,12 @@ class BlockchainConnector:
             return None
     
     def _start_monitoring(self) -> None:
-        """Start background monitoring of connection health."""
-        if not self._is_monitoring:
+        """Start background monitoring of connection health."""        if not self._is_monitoring:
             self._is_monitoring = True
             asyncio.create_task(self._monitor_connections())
     
     async def _monitor_connections(self) -> None:
-        """Monitor connection health and update metrics."""
-        while self._is_monitoring:
+        """Monitor connection health and update metrics."""        while self._is_monitoring:
             try:
                 # Test all connections
                 healthy_count = 0
@@ -362,27 +338,22 @@ class BlockchainConnector:
                 await asyncio.sleep(60)  # Wait longer on error
     
     def get_metrics(self) -> ConnectionMetrics:
-        """Get current connection metrics."""
-        return self.metrics
+        """Get current connection metrics."""        return self.metrics
     
     async def shutdown(self) -> None:
-        """Shutdown the connector and clean up resources."""
-        self._is_monitoring = False
+        """Shutdown the connector and clean up resources."""        self._is_monitoring = False
         self.web3_instances.clear()
         self.metrics.status = ConnectionStatus.DISCONNECTED
 
 
 class EthereumConnector(BlockchainConnector):
-    """Ethereum mainnet and testnet connector with ETH-specific optimizations."""
-    
+    """Ethereum mainnet and testnet connector with ETH-specific optimizations."""    
     def __init__(self, mainnet: bool = True):
-        """
-        Initialize Ethereum connector.
+        """        Initialize Ethereum connector.
         
         Args:
             mainnet: True for mainnet, False for Sepolia testnet
-        """
-        if mainnet:
+        """        if mainnet:
             config = NetworkConfig(
                 network_type=NetworkType.ETHEREUM_MAINNET,
                 name="Ethereum Mainnet",
@@ -437,16 +408,13 @@ class EthereumConnector(BlockchainConnector):
 
 
 class PolygonConnector(BlockchainConnector):
-    """Polygon mainnet and testnet connector with MATIC-specific optimizations."""
-    
+    """Polygon mainnet and testnet connector with MATIC-specific optimizations."""    
     def __init__(self, mainnet: bool = True):
-        """
-        Initialize Polygon connector.
+        """        Initialize Polygon connector.
         
         Args:
             mainnet: True for mainnet, False for Mumbai testnet
-        """
-        if mainnet:
+        """        if mainnet:
             config = NetworkConfig(
                 network_type=NetworkType.POLYGON_MAINNET,
                 name="Polygon Mainnet",
@@ -501,16 +469,13 @@ class PolygonConnector(BlockchainConnector):
 
 
 class BSCConnector(BlockchainConnector):
-    """Binance Smart Chain connector with BNB-specific optimizations."""
-    
+    """Binance Smart Chain connector with BNB-specific optimizations."""    
     def __init__(self, mainnet: bool = True):
-        """
-        Initialize BSC connector.
+        """        Initialize BSC connector.
         
         Args:
             mainnet: True for mainnet, False for testnet
-        """
-        if mainnet:
+        """        if mainnet:
             config = NetworkConfig(
                 network_type=NetworkType.BSC_MAINNET,
                 name="BSC Mainnet",
@@ -559,14 +524,11 @@ class BSCConnector(BlockchainConnector):
 
 
 class MultiChainConnector:
-    """
-    Multi-blockchain connector manager that handles multiple networks
+    """    Multi-blockchain connector manager that handles multiple networks
     and provides unified access across different blockchains.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize multi-chain connector."""
-        self.connectors: Dict[NetworkType, BlockchainConnector] = {}
+        """Initialize multi-chain connector."""        self.connectors: Dict[NetworkType, BlockchainConnector] = {}
         self.default_networks = [
             NetworkType.ETHEREUM_MAINNET,
             NetworkType.POLYGON_MAINNET,
@@ -577,16 +539,14 @@ class MultiChainConnector:
         self, 
         networks: Optional[List[NetworkType]] = None
     ) -> Dict[NetworkType, bool]:
-        """
-        Initialize connections to specified networks.
+        """        Initialize connections to specified networks.
         
         Args:
             networks: List of networks to initialize, defaults to default_networks
             
         Returns:
             Dictionary mapping network types to initialization success
-        """
-        if networks is None:
+        """        if networks is None:
             networks = self.default_networks
         
         results = {}
@@ -632,27 +592,23 @@ class MultiChainConnector:
         return results
     
     def get_connector(self, network: NetworkType) -> Optional[BlockchainConnector]:
-        """Get connector for specific network."""
-        return self.connectors.get(network)
+        """Get connector for specific network."""        return self.connectors.get(network)
     
     def get_all_connectors(self) -> Dict[NetworkType, BlockchainConnector]:
-        """Get all active connectors."""
-        return self.connectors.copy()
+        """Get all active connectors."""        return self.connectors.copy()
     
     async def get_best_network_for_operation(
         self, 
         operation_type: str = "transaction"
     ) -> Optional[NetworkType]:
-        """
-        Get the best network for a specific operation based on current conditions.
+        """        Get the best network for a specific operation based on current conditions.
         
         Args:
             operation_type: Type of operation (transaction, query, etc.)
             
         Returns:
             Best network type or None if no networks available
-        """
-        if not self.connectors:
+        """        if not self.connectors:
             return None
         
         best_network = None
@@ -693,8 +649,7 @@ class MultiChainConnector:
         return best_network
     
     async def shutdown(self) -> None:
-        """Shutdown all connectors."""
-        for connector in self.connectors.values():
+        """Shutdown all connectors."""        for connector in self.connectors.values():
             await connector.shutdown()
         
         self.connectors.clear()

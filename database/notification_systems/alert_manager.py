@@ -1,5 +1,4 @@
-"""
-Alert Management System
+"""Alert Management System
 
 Système de gestion avancée des alertes et notifications critiques.
 Gestion des escalades, seuils, règles métier et notifications multi-canaux.
@@ -14,7 +13,6 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
 """
-
 from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Niveaux de sévérité des alertes"""
-    INFO = "info"
+    """Niveaux de sévérité des alertes"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -42,8 +39,7 @@ class AlertSeverity(Enum):
 
 
 class AlertStatus(Enum):
-    """Statuts des alertes"""
-    ACTIVE = "active"
+    """Statuts des alertes"""    ACTIVE = "active"
     ACKNOWLEDGED = "acknowledged"
     RESOLVED = "resolved"
     SUPPRESSED = "suppressed"
@@ -51,8 +47,7 @@ class AlertStatus(Enum):
 
 
 class AlertType(Enum):
-    """Types d'alertes"""
-    SYSTEM_ERROR = "system_error"
+    """Types d'alertes"""    SYSTEM_ERROR = "system_error"
     SECURITY_BREACH = "security_breach"
     CONTENT_VIOLATION = "content_violation"
     PAYMENT_FAILURE = "payment_failure"
@@ -67,8 +62,7 @@ class AlertType(Enum):
 
 
 class EscalationAction(Enum):
-    """Actions d'escalade"""
-    EMAIL = "email"
+    """Actions d'escalade"""    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     WEBHOOK = "webhook"
@@ -80,8 +74,7 @@ class EscalationAction(Enum):
 
 @dataclass
 class AlertRule:
-    """Règle d'alerte"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Règle d'alerte"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     alert_type: AlertType = AlertType.SYSTEM_ERROR
@@ -102,8 +95,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alerte système"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Alerte système"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     rule_id: str = ""
     alert_type: AlertType = AlertType.SYSTEM_ERROR
     severity: AlertSeverity = AlertSeverity.MEDIUM
@@ -135,8 +127,7 @@ class Alert:
 
 @dataclass
 class EscalationPolicy:
-    """Politique d'escalade"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Politique d'escalade"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     alert_types: List[AlertType] = field(default_factory=list)
@@ -149,8 +140,7 @@ class EscalationPolicy:
 
 @dataclass
 class AlertNotification:
-    """Notification d'alerte"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Notification d'alerte"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     alert_id: str = ""
     escalation_step: int = 0
     action: EscalationAction = EscalationAction.EMAIL
@@ -169,20 +159,16 @@ class AlertNotification:
 
 
 class AlertConditionEvaluator(ABC):
-    """Évaluateur de conditions d'alerte abstrait"""
-    
+    """Évaluateur de conditions d'alerte abstrait"""    
     @abstractmethod
     async def evaluate(self, rule: AlertRule, context: Dict[str, Any]) -> bool:
-        """Évaluer une condition"""
-        pass
+        """Évaluer une condition"""        pass
 
 
 class ThresholdConditionEvaluator(AlertConditionEvaluator):
-    """Évaluateur de conditions de seuil"""
-    
+    """Évaluateur de conditions de seuil"""    
     async def evaluate(self, rule: AlertRule, context: Dict[str, Any]) -> bool:
-        """Évaluer une condition de seuil"""
-        try:
+        """Évaluer une condition de seuil"""        try:
             current_value = context.get("value")
             threshold_value = rule.threshold_value
             operator = rule.threshold_operator
@@ -212,11 +198,9 @@ class ThresholdConditionEvaluator(AlertConditionEvaluator):
 
 
 class PatternConditionEvaluator(AlertConditionEvaluator):
-    """Évaluateur de conditions de motif"""
-    
+    """Évaluateur de conditions de motif"""    
     async def evaluate(self, rule: AlertRule, context: Dict[str, Any]) -> bool:
-        """Évaluer une condition de motif"""
-        try:
+        """Évaluer une condition de motif"""        try:
             conditions = rule.conditions
             pattern_type = conditions.get("pattern_type")
             
@@ -234,16 +218,14 @@ class PatternConditionEvaluator(AlertConditionEvaluator):
             return False
     
     async def _evaluate_frequency_pattern(self, conditions: Dict[str, Any], context: Dict[str, Any]) -> bool:
-        """Évaluer un motif de fréquence"""
-        expected_count = conditions.get("expected_count", 0)
+        """Évaluer un motif de fréquence"""        expected_count = conditions.get("expected_count", 0)
         time_window = conditions.get("time_window", 300)
         actual_count = context.get("event_count", 0)
         
         return actual_count >= expected_count
     
     async def _evaluate_trend_pattern(self, conditions: Dict[str, Any], context: Dict[str, Any]) -> bool:
-        """Évaluer un motif de tendance"""
-        trend_type = conditions.get("trend_type", "increasing")
+        """Évaluer un motif de tendance"""        trend_type = conditions.get("trend_type", "increasing")
         trend_threshold = conditions.get("trend_threshold", 0.1)
         values = context.get("values", [])
         
@@ -263,16 +245,14 @@ class PatternConditionEvaluator(AlertConditionEvaluator):
             return False
     
     async def _evaluate_anomaly_pattern(self, conditions: Dict[str, Any], context: Dict[str, Any]) -> bool:
-        """Évaluer un motif d'anomalie"""
-        anomaly_score = context.get("anomaly_score", 0)
+        """Évaluer un motif d'anomalie"""        anomaly_score = context.get("anomaly_score", 0)
         threshold = conditions.get("anomaly_threshold", 0.8)
         
         return anomaly_score > threshold
 
 
 class AlertEngine:
-    """Moteur de gestion des alertes"""
-    
+    """Moteur de gestion des alertes"""    
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
         self.db_pool = db_pool
         self.redis = redis_client
@@ -285,8 +265,7 @@ class AlertEngine:
         }
         
     async def initialize(self):
-        """Initialiser le moteur d'alertes"""
-        try:
+        """Initialiser le moteur d'alertes"""        try:
             await self._load_rules()
             await self._load_escalation_policies()
             await self._load_active_alerts()
@@ -303,8 +282,7 @@ class AlertEngine:
             raise
     
     async def create_rule(self, rule: AlertRule) -> str:
-        """Créer une règle d'alerte"""
-        try:
+        """Créer une règle d'alerte"""        try:
             # Sauvegarder en base
             rule_id = await self._save_rule(rule)
             
@@ -319,8 +297,7 @@ class AlertEngine:
             raise
     
     async def evaluate_conditions(self, rule_id: str, context: Dict[str, Any]) -> Optional[Alert]:
-        """Évaluer les conditions d'une règle"""
-        try:
+        """Évaluer les conditions d'une règle"""        try:
             rule = self.rules.get(rule_id)
             if not rule or not rule.is_active:
                 return None
@@ -354,8 +331,7 @@ class AlertEngine:
             return None
     
     async def acknowledge_alert(self, alert_id: str, user_id: str, notes: Optional[str] = None) -> bool:
-        """Acquitter une alerte"""
-        try:
+        """Acquitter une alerte"""        try:
             alert = self.active_alerts.get(alert_id)
             if not alert or alert.status != AlertStatus.ACTIVE:
                 return False
@@ -383,8 +359,7 @@ class AlertEngine:
             return False
     
     async def resolve_alert(self, alert_id: str, user_id: str, notes: Optional[str] = None) -> bool:
-        """Résoudre une alerte"""
-        try:
+        """Résoudre une alerte"""        try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
                 return False
@@ -410,8 +385,7 @@ class AlertEngine:
             return False
     
     async def suppress_alert(self, alert_id: str, duration: int, user_id: str) -> bool:
-        """Supprimer temporairement une alerte"""
-        try:
+        """Supprimer temporairement une alerte"""        try:
             alert = self.active_alerts.get(alert_id)
             if not alert:
                 return False
@@ -440,8 +414,7 @@ class AlertEngine:
             return False
     
     async def _create_or_update_alert(self, rule: AlertRule, context: Dict[str, Any]) -> Alert:
-        """Créer ou mettre à jour une alerte"""
-        try:
+        """Créer ou mettre à jour une alerte"""        try:
             # Chercher une alerte existante pour cette règle
             existing_alert = None
             for alert in self.active_alerts.values():
@@ -499,8 +472,7 @@ class AlertEngine:
             raise
     
     async def _schedule_escalation(self, alert: Alert):
-        """Programmer l'escalade d'une alerte"""
-        try:
+        """Programmer l'escalade d'une alerte"""        try:
             # Trouver la politique d'escalade appropriée
             policy = await self._find_escalation_policy(alert)
             if not policy or not policy.steps:
@@ -516,8 +488,7 @@ class AlertEngine:
             logger.error(f"Erreur programmation escalade: {e}")
     
     async def _find_escalation_policy(self, alert: Alert) -> Optional[EscalationPolicy]:
-        """Trouver la politique d'escalade pour une alerte"""
-        for policy in self.escalation_policies.values():
+        """Trouver la politique d'escalade pour une alerte"""        for policy in self.escalation_policies.values():
             if not policy.is_active:
                 continue
             
@@ -534,8 +505,7 @@ class AlertEngine:
         return None
     
     async def _escalation_processor(self):
-        """Processeur d'escalades"""
-        while True:
+        """Processeur d'escalades"""        while True:
             try:
                 now = datetime.utcnow()
                 
@@ -554,8 +524,7 @@ class AlertEngine:
                 await asyncio.sleep(60)
     
     async def _process_escalation(self, alert: Alert):
-        """Traiter l'escalade d'une alerte"""
-        try:
+        """Traiter l'escalade d'une alerte"""        try:
             policy = await self._find_escalation_policy(alert)
             if not policy:
                 return
@@ -587,8 +556,7 @@ class AlertEngine:
             logger.error(f"Erreur traitement escalade {alert.id}: {e}")
     
     async def _execute_escalation_action(self, alert: Alert, action_config: Dict[str, Any], escalation_step: int):
-        """Exécuter une action d'escalade"""
-        try:
+        """Exécuter une action d'escalade"""        try:
             action_type = EscalationAction(action_config["type"])
             recipients = action_config.get("recipients", [])
             
@@ -607,8 +575,7 @@ class AlertEngine:
             logger.error(f"Erreur exécution action escalade: {e}")
     
     def _build_alert_message(self, alert: Alert, action_config: Dict[str, Any]) -> str:
-        """Construire le message d'alerte"""
-        template = action_config.get("message_template", 
+        """Construire le message d'alerte"""        template = action_config.get("message_template", 
                                    "Alert: {title}\nSeverity: {severity}\nDescription: {description}")
         
         return template.format(
@@ -623,8 +590,7 @@ class AlertEngine:
         )
     
     async def _send_alert_notification(self, notification: AlertNotification):
-        """Envoyer une notification d'alerte"""
-        try:
+        """Envoyer une notification d'alerte"""        try:
             # Sauvegarder la notification
             await self._save_notification(notification)
             
@@ -643,8 +609,7 @@ class AlertEngine:
             logger.error(f"Erreur envoi notification alerte: {e}")
     
     async def _auto_resolver(self):
-        """Résolveur automatique d'alertes"""
-        while True:
+        """Résolveur automatique d'alertes"""        while True:
             try:
                 now = datetime.utcnow()
                 
@@ -668,8 +633,7 @@ class AlertEngine:
                 await asyncio.sleep(300)
     
     async def _suppression_cleaner(self):
-        """Nettoyeur de suppressions expirées"""
-        while True:
+        """Nettoyeur de suppressions expirées"""        while True:
             try:
                 now = datetime.utcnow()
                 
@@ -696,8 +660,7 @@ class AlertEngine:
                 await asyncio.sleep(300)
     
     async def _is_suppressed(self, rule_id: str) -> bool:
-        """Vérifier si une règle est supprimée"""
-        try:
+        """Vérifier si une règle est supprimée"""        try:
             key = f"alert:suppressed:rule:{rule_id}"
             return await self.redis.exists(key)
         except Exception as e:
@@ -705,8 +668,7 @@ class AlertEngine:
             return False
     
     async def _load_rules(self):
-        """Charger les règles d'alerte"""
-        async with self.db_pool.acquire() as conn:
+        """Charger les règles d'alerte"""        async with self.db_pool.acquire() as conn:
             query = "SELECT * FROM alert_rules WHERE is_active = true"
             rows = await conn.fetch(query)
             
@@ -734,8 +696,7 @@ class AlertEngine:
                 self.rules[rule.id] = rule
     
     async def _load_escalation_policies(self):
-        """Charger les politiques d'escalade"""
-        async with self.db_pool.acquire() as conn:
+        """Charger les politiques d'escalade"""        async with self.db_pool.acquire() as conn:
             query = "SELECT * FROM escalation_policies WHERE is_active = true"
             rows = await conn.fetch(query)
             
@@ -755,14 +716,11 @@ class AlertEngine:
                 self.escalation_policies[policy.id] = policy
     
     async def _load_active_alerts(self):
-        """Charger les alertes actives"""
-        async with self.db_pool.acquire() as conn:
-            query = """
-                SELECT * FROM alerts 
+        """Charger les alertes actives"""        async with self.db_pool.acquire() as conn:
+            query = """                SELECT * FROM alerts 
                 WHERE status IN ('active', 'acknowledged', 'suppressed')
                 AND (expires_at IS NULL OR expires_at > $1)
-            """
-            rows = await conn.fetch(query, datetime.utcnow())
+            """            rows = await conn.fetch(query, datetime.utcnow())
             
             for row in rows:
                 alert = Alert(
@@ -799,18 +757,15 @@ class AlertEngine:
                 self.active_alerts[alert.id] = alert
     
     async def _save_rule(self, rule: AlertRule) -> str:
-        """Sauvegarder une règle"""
-        async with self.db_pool.acquire() as conn:
-            query = """
-                INSERT INTO alert_rules (
+        """Sauvegarder une règle"""        async with self.db_pool.acquire() as conn:
+            query = """                INSERT INTO alert_rules (
                     id, name, description, alert_type, severity, conditions,
                     threshold_value, threshold_operator, time_window,
                     occurrence_count, suppression_time, auto_resolve_time,
                     tags, is_active, created_at, updated_at, metadata
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
                 RETURNING id
-            """
-            
+            """            
             result = await conn.fetchval(
                 query,
                 rule.id, rule.name, rule.description, rule.alert_type.value,
@@ -823,10 +778,8 @@ class AlertEngine:
             return result
     
     async def _save_alert(self, alert: Alert):
-        """Sauvegarder une alerte"""
-        async with self.db_pool.acquire() as conn:
-            query = """
-                INSERT INTO alerts (
+        """Sauvegarder une alerte"""        async with self.db_pool.acquire() as conn:
+            query = """                INSERT INTO alerts (
                     id, rule_id, alert_type, severity, status, title, description,
                     source, entity_id, entity_type, current_value, threshold_value,
                     occurrence_count, first_occurrence, last_occurrence,
@@ -834,8 +787,7 @@ class AlertEngine:
                     resolution_notes, suppressed_until, expires_at, tags, context,
                     escalation_level, next_escalation_at, created_at, updated_at
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23, $24, $25, $26, $27, $28)
-            """
-            
+            """            
             await conn.execute(
                 query,
                 alert.id, alert.rule_id, alert.alert_type.value, alert.severity.value,
@@ -849,18 +801,15 @@ class AlertEngine:
             )
     
     async def _update_alert(self, alert: Alert):
-        """Mettre à jour une alerte"""
-        async with self.db_pool.acquire() as conn:
-            query = """
-                UPDATE alerts SET
+        """Mettre à jour une alerte"""        async with self.db_pool.acquire() as conn:
+            query = """                UPDATE alerts SET
                     status = $2, current_value = $3, occurrence_count = $4,
                     last_occurrence = $5, acknowledged_at = $6, acknowledged_by = $7,
                     resolved_at = $8, resolved_by = $9, resolution_notes = $10,
                     suppressed_until = $11, context = $12, escalation_level = $13,
                     next_escalation_at = $14, updated_at = $15
                 WHERE id = $1
-            """
-            
+            """            
             await conn.execute(
                 query,
                 alert.id, alert.status.value, alert.current_value, alert.occurrence_count,
@@ -871,17 +820,14 @@ class AlertEngine:
             )
     
     async def _save_notification(self, notification: AlertNotification):
-        """Sauvegarder une notification"""
-        async with self.db_pool.acquire() as conn:
-            query = """
-                INSERT INTO alert_notifications (
+        """Sauvegarder une notification"""        async with self.db_pool.acquire() as conn:
+            query = """                INSERT INTO alert_notifications (
                     id, alert_id, escalation_step, action, recipient,
                     recipient_type, message, status, sent_at, delivered_at,
                     failed_at, failure_reason, retry_count, max_retries,
                     next_retry_at, created_at
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-            """
-            
+            """            
             await conn.execute(
                 query,
                 notification.id, notification.alert_id, notification.escalation_step,
@@ -893,8 +839,7 @@ class AlertEngine:
             )
     
     async def get_active_alerts(self, filters: Optional[Dict[str, Any]] = None) -> List[Alert]:
-        """Récupérer les alertes actives avec filtres"""
-        alerts = list(self.active_alerts.values())
+        """Récupérer les alertes actives avec filtres"""        alerts = list(self.active_alerts.values())
         
         if not filters:
             return alerts
@@ -907,8 +852,7 @@ class AlertEngine:
         return filtered_alerts
     
     def _match_alert_filters(self, alert: Alert, filters: Dict[str, Any]) -> bool:
-        """Vérifier si une alerte correspond aux filtres"""
-        if "severity" in filters and alert.severity not in filters["severity"]:
+        """Vérifier si une alerte correspond aux filtres"""        if "severity" in filters and alert.severity not in filters["severity"]:
             return False
         
         if "status" in filters and alert.status not in filters["status"]:
@@ -926,11 +870,9 @@ class AlertEngine:
         return True
     
     async def get_alert_statistics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Récupérer les statistiques d'alertes"""
-        async with self.db_pool.acquire() as conn:
+        """Récupérer les statistiques d'alertes"""        async with self.db_pool.acquire() as conn:
             # Statistiques générales
-            stats_query = """
-                SELECT 
+            stats_query = """                SELECT 
                     COUNT(*) as total_alerts,
                     COUNT(CASE WHEN status = 'active' THEN 1 END) as active_alerts,
                     COUNT(CASE WHEN status = 'resolved' THEN 1 END) as resolved_alerts,
@@ -938,28 +880,23 @@ class AlertEngine:
                     AVG(EXTRACT(EPOCH FROM (COALESCE(resolved_at, NOW()) - first_occurrence))) as avg_resolution_time
                 FROM alerts
                 WHERE created_at BETWEEN $1 AND $2
-            """
-            
+            """            
             stats = await conn.fetchrow(stats_query, start_date, end_date)
             
             # Statistiques par sévérité
-            severity_query = """
-                SELECT severity, COUNT(*) as count
+            severity_query = """                SELECT severity, COUNT(*) as count
                 FROM alerts
                 WHERE created_at BETWEEN $1 AND $2
                 GROUP BY severity
-            """
-            
+            """            
             severity_stats = await conn.fetch(severity_query, start_date, end_date)
             
             # Statistiques par type
-            type_query = """
-                SELECT alert_type, COUNT(*) as count
+            type_query = """                SELECT alert_type, COUNT(*) as count
                 FROM alerts
                 WHERE created_at BETWEEN $1 AND $2
                 GROUP BY alert_type
-            """
-            
+            """            
             type_stats = await conn.fetch(type_query, start_date, end_date)
             
             return {

@@ -21,8 +21,7 @@ Key Components:
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized use, modification, or distribution of this code is strictly prohibited.
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
-"""
-from .upload_events import (
+"""from .upload_events import (
     AudioUploadStartedEvent,
     AudioUploadCompletedEvent,
     AudioUploadFailedEvent,

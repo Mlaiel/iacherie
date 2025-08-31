@@ -1,5 +1,4 @@
-"""
-Advanced Network Security Monitor for Deployment Infrastructure
+"""Advanced Network Security Monitor for Deployment Infrastructure
 
 Provides real-time network security monitoring, intrusion detection,
 traffic analysis, and network-based threat prevention for the IA Influencer
@@ -14,7 +13,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
-
 import asyncio
 import logging
 import socket
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkProtocol(Enum):
-    """Network protocol types"""
-    TCP = "tcp"
+    """Network protocol types"""    TCP = "tcp"
     UDP = "udp"
     ICMP = "icmp"
     HTTP = "http"
@@ -50,8 +47,7 @@ class NetworkProtocol(Enum):
 
 
 class NetworkThreatType(Enum):
-    """Network-specific threat types"""
-    PORT_SCAN = "port_scan"
+    """Network-specific threat types"""    PORT_SCAN = "port_scan"
     NETWORK_INTRUSION = "network_intrusion"
     SUSPICIOUS_TRAFFIC = "suspicious_traffic"
     MALICIOUS_PAYLOAD = "malicious_payload"
@@ -63,8 +59,7 @@ class NetworkThreatType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -73,8 +68,7 @@ class AlertSeverity(Enum):
 
 @dataclass
 class NetworkConnection:
-    """Network connection information"""
-    source_ip: str
+    """Network connection information"""    source_ip: str
     destination_ip: str
     source_port: int
     destination_port: int
@@ -91,8 +85,7 @@ class NetworkConnection:
 
 @dataclass
 class NetworkPacket:
-    """Network packet information"""
-    timestamp: datetime
+    """Network packet information"""    timestamp: datetime
     source_ip: str
     destination_ip: str
     source_port: int
@@ -107,8 +100,7 @@ class NetworkPacket:
 
 @dataclass
 class NetworkAlert:
-    """Network security alert"""
-    alert_id: str
+    """Network security alert"""    alert_id: str
     threat_type: NetworkThreatType
     severity: AlertSeverity
     source_ip: str
@@ -124,8 +116,7 @@ class NetworkAlert:
 
 @dataclass
 class TrafficPattern:
-    """Network traffic pattern for analysis"""
-    pattern_id: str
+    """Network traffic pattern for analysis"""    pattern_id: str
     source_ip: str
     destination_ports: Set[int]
     request_frequency: float
@@ -137,10 +128,8 @@ class TrafficPattern:
 
 
 class PortScanner:
-    """
-    Port scanning detection system
-    """
-    
+    """    Port scanning detection system
+    """    
     def __init__(self, scan_threshold: int = 10, time_window: int = 60):
         self.scan_threshold = scan_threshold
         self.time_window = time_window
@@ -160,8 +149,7 @@ class PortScanner:
         timestamp: datetime,
         is_successful: bool
     ) -> Optional[NetworkAlert]:
-        """
-        Analyze connection attempt for port scanning behavior
+        """        Analyze connection attempt for port scanning behavior
         
         Args:
             source_ip: Source IP address
@@ -171,8 +159,7 @@ class PortScanner:
             
         Returns:
             Alert if port scanning detected
-        """
-        try:
+        """        try:
             current_time = time.time()
             
             # Track connection attempt
@@ -232,10 +219,8 @@ class PortScanner:
 
 
 class TrafficAnalyzer:
-    """
-    Network traffic analysis and anomaly detection
-    """
-    
+    """    Network traffic analysis and anomaly detection
+    """    
     def __init__(self, baseline_window: int = 3600):
         self.baseline_window = baseline_window
         
@@ -258,8 +243,7 @@ class TrafficAnalyzer:
         bytes_transferred: int,
         timestamp: datetime
     ):
-        """
-        Update traffic metrics for analysis
+        """        Update traffic metrics for analysis
         
         Args:
             source_ip: Source IP address
@@ -267,8 +251,7 @@ class TrafficAnalyzer:
             destination_port: Destination port
             bytes_transferred: Number of bytes transferred
             timestamp: Transfer timestamp
-        """
-        try:
+        """        try:
             key = f"{source_ip}:{destination_port}"
             
             # Update current metrics
@@ -302,16 +285,14 @@ class TrafficAnalyzer:
             logger.error(f"Failed to update traffic metrics: {e}")
     
     def detect_traffic_anomalies(self, threshold_multiplier: float = 3.0) -> List[NetworkAlert]:
-        """
-        Detect traffic anomalies based on baseline comparison
+        """        Detect traffic anomalies based on baseline comparison
         
         Args:
             threshold_multiplier: Multiplier for anomaly threshold
             
         Returns:
             List of traffic anomaly alerts
-        """
-        try:
+        """        try:
             alerts = []
             current_time = time.time()
             
@@ -387,8 +368,7 @@ class TrafficAnalyzer:
             return []
     
     def update_baselines(self):
-        """Update traffic baselines from current metrics"""
-        try:
+        """Update traffic baselines from current metrics"""        try:
             for key, metrics in self.current_metrics.items():
                 # Update baseline with exponential moving average
                 alpha = 0.1  # Learning rate
@@ -412,10 +392,8 @@ class TrafficAnalyzer:
 
 
 class IntrusionDetector:
-    """
-    Network intrusion detection system
-    """
-    
+    """    Network intrusion detection system
+    """    
     def __init__(self):
         self.malicious_signatures = self._load_malicious_signatures()
         self.suspicious_user_agents = self._load_suspicious_user_agents()
@@ -424,8 +402,7 @@ class IntrusionDetector:
         logger.info("Intrusion detector initialized")
     
     def _load_malicious_signatures(self) -> List[bytes]:
-        """Load known malicious payload signatures"""
-        # In production, these would be loaded from threat intelligence feeds
+        """Load known malicious payload signatures"""        # In production, these would be loaded from threat intelligence feeds
         return [
             b"GET /admin",
             b"SELECT * FROM",
@@ -445,8 +422,7 @@ class IntrusionDetector:
         ]
     
     def _load_suspicious_user_agents(self) -> List[str]:
-        """Load known suspicious user agents"""
-        return [
+        """Load known suspicious user agents"""        return [
             "sqlmap",
             "nmap",
             "nikto",
@@ -465,8 +441,7 @@ class IntrusionDetector:
         packet: NetworkPacket,
         payload: bytes
     ) -> Optional[NetworkAlert]:
-        """
-        Analyze packet payload for malicious content
+        """        Analyze packet payload for malicious content
         
         Args:
             packet: Network packet information
@@ -474,8 +449,7 @@ class IntrusionDetector:
             
         Returns:
             Alert if malicious content detected
-        """
-        try:
+        """        try:
             # Check for malicious signatures
             for signature in self.malicious_signatures:
                 if signature in payload.lower():
@@ -511,8 +485,7 @@ class IntrusionDetector:
         headers: Dict[str, str],
         timestamp: datetime
     ) -> List[NetworkAlert]:
-        """
-        Analyze HTTP request for suspicious activity
+        """        Analyze HTTP request for suspicious activity
         
         Args:
             source_ip: Source IP address
@@ -522,8 +495,7 @@ class IntrusionDetector:
             
         Returns:
             List of alerts for suspicious activity
-        """
-        try:
+        """        try:
             alerts = []
             
             # Check user agent
@@ -601,10 +573,8 @@ class IntrusionDetector:
 
 
 class NetworkSecurityMonitor:
-    """
-    Main network security monitoring system
-    """
-    
+    """    Main network security monitoring system
+    """    
     def __init__(
         self,
         interface: str = "eth0",
@@ -642,8 +612,7 @@ class NetworkSecurityMonitor:
         logger.info("Network security monitor initialized")
     
     async def initialize_redis(self):
-        """Initialize Redis connection"""
-        try:
+        """Initialize Redis connection"""        try:
             self.redis_pool = aioredis.ConnectionPool.from_url(self.redis_url)
             logger.info("Redis connection initialized for network monitoring")
         except Exception as e:
@@ -651,8 +620,7 @@ class NetworkSecurityMonitor:
             raise
     
     def get_geo_location(self, ip_address: str) -> Optional[Dict[str, str]]:
-        """Get geographic location for IP address"""
-        try:
+        """Get geographic location for IP address"""        try:
             if not self.geo_analyzer:
                 return None
                 
@@ -671,8 +639,7 @@ class NetworkSecurityMonitor:
             return None
     
     async def start_monitoring(self):
-        """Start network monitoring"""
-        try:
+        """Start network monitoring"""        try:
             await self.initialize_redis()
             
             self._monitoring_active = True
@@ -685,8 +652,7 @@ class NetworkSecurityMonitor:
             raise
     
     async def stop_monitoring(self):
-        """Stop network monitoring"""
-        try:
+        """Stop network monitoring"""        try:
             self._monitoring_active = False
             
             if self._monitoring_task:
@@ -699,8 +665,7 @@ class NetworkSecurityMonitor:
             logger.error(f"Failed to stop network monitoring: {e}")
     
     async def _monitoring_loop(self):
-        """Main network monitoring loop"""
-        try:
+        """Main network monitoring loop"""        try:
             # In a real implementation, this would capture network packets
             # For this example, we'll simulate monitoring
             while self._monitoring_active:
@@ -726,16 +691,14 @@ class NetworkSecurityMonitor:
             logger.error(f"Error in network monitoring loop: {e}")
     
     def process_network_packet(self, packet_data: bytes) -> List[NetworkAlert]:
-        """
-        Process captured network packet
+        """        Process captured network packet
         
         Args:
             packet_data: Raw packet data
             
         Returns:
             List of alerts generated from packet analysis
-        """
-        try:
+        """        try:
             alerts = []
             
             # Parse packet (simplified example)
@@ -786,16 +749,14 @@ class NetworkSecurityMonitor:
             return []
     
     def _parse_packet(self, packet_data: bytes) -> Optional[NetworkPacket]:
-        """
-        Parse raw packet data into NetworkPacket object
+        """        Parse raw packet data into NetworkPacket object
         
         Args:
             packet_data: Raw packet data
             
         Returns:
             Parsed packet information
-        """
-        try:
+        """        try:
             # This is a simplified example
             # In production, use proper packet parsing libraries like dpkt or scapy
             
@@ -828,8 +789,7 @@ class NetworkSecurityMonitor:
         protocol: NetworkProtocol,
         bytes_transferred: int
     ) -> List[NetworkAlert]:
-        """
-        Analyze network connection for security threats
+        """        Analyze network connection for security threats
         
         Args:
             source_ip: Source IP address
@@ -840,8 +800,7 @@ class NetworkSecurityMonitor:
             
         Returns:
             List of security alerts
-        """
-        try:
+        """        try:
             alerts = []
             timestamp = datetime.utcnow()
             
@@ -921,13 +880,11 @@ class NetworkSecurityMonitor:
             return []
     
     async def get_network_status(self) -> Dict[str, Any]:
-        """
-        Get current network security status
+        """        Get current network security status
         
         Returns:
             Network security status summary
-        """
-        try:
+        """        try:
             current_time = datetime.utcnow()
             
             # Count recent alerts by severity
@@ -974,13 +931,11 @@ class NetworkSecurityMonitor:
             return {"error": str(e)}
     
     async def cleanup_old_data(self, retention_hours: int = 24):
-        """
-        Cleanup old monitoring data
+        """        Cleanup old monitoring data
         
         Args:
             retention_hours: Data retention period in hours
-        """
-        try:
+        """        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=retention_hours)
             
             # Remove old alerts

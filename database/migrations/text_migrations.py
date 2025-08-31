@@ -1,5 +1,4 @@
-"""
-📝 Text Content Migrations - Advanced Text Processing & Protection Schema Evolution
+"""📝 Text Content Migrations - Advanced Text Processing & Protection Schema Evolution
 =================================================================================
 Module: backend/database/migrations/text_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -25,7 +24,6 @@ Text Content Types Supported:
 - Marketing Content: Ads, newsletters, press releases
 - Technical Documentation: Manuals, API docs, specifications
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -48,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class TextFormat(Enum):
-    """Supported text formats"""
-    PLAIN_TEXT = "plain_text"
+    """Supported text formats"""    PLAIN_TEXT = "plain_text"
     MARKDOWN = "markdown"
     HTML = "html"
     RTF = "rtf"
@@ -60,8 +57,7 @@ class TextFormat(Enum):
 
 
 class TextContentType(Enum):
-    """Text content categorization"""
-    BLOG_ARTICLE = "blog_article"
+    """Text content categorization"""    BLOG_ARTICLE = "blog_article"
     CREATIVE_WRITING = "creative_writing"
     ACADEMIC_CONTENT = "academic_content"
     SOCIAL_MEDIA = "social_media"
@@ -72,8 +68,7 @@ class TextContentType(Enum):
 
 
 class LanguageCode(Enum):
-    """Supported language codes (ISO 639-1)"""
-    EN = "en"  # English
+    """Supported language codes (ISO 639-1)"""    EN = "en"  # English
     FR = "fr"  # French
     DE = "de"  # German
     ES = "es"  # Spanish
@@ -89,8 +84,7 @@ class LanguageCode(Enum):
 
 @dataclass
 class TextMigrationConfiguration:
-    """Migration configuration for text processing systems"""
-    enable_nlp_analysis: bool = True
+    """Migration configuration for text processing systems"""    enable_nlp_analysis: bool = True
     enable_sentiment_analysis: bool = True
     enable_entity_extraction: bool = True
     enable_topic_modeling: bool = True
@@ -100,8 +94,7 @@ class TextMigrationConfiguration:
 
 
 class TextMigrations:
-    """
-    Ultra-advanced text database migrations for professional text content management
+    """    Ultra-advanced text database migrations for professional text content management
     
     Handles schema evolution for:
     - Text content metadata and linguistic analysis
@@ -109,21 +102,17 @@ class TextMigrations:
     - Text fingerprinting and plagiarism protection
     - SEO optimization and content scoring
     - Multi-language text processing pipelines
-    """
-    
+    """    
     def __init__(self, migration_manager: EnterpriseMigrationManager):
         self.migration_manager = migration_manager
         self.logger = logging.getLogger(__name__)
     
     async def create_text_files_table(self) -> str:
-        """
-        Create comprehensive text files table with NLP metadata support
+        """        Create comprehensive text files table with NLP metadata support
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS text_files (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS text_files (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             content_id UUID NOT NULL REFERENCES content_items(id) ON DELETE CASCADE,
             creator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
@@ -295,8 +284,7 @@ class TextMigrations:
         CREATE TRIGGER text_files_search_vector_update
             BEFORE INSERT OR UPDATE ON text_files
             FOR EACH ROW EXECUTE FUNCTION update_text_search_vector();
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -305,14 +293,11 @@ class TextMigrations:
         )
     
     async def create_text_sentences_table(self) -> str:
-        """
-        Create text sentences table for detailed sentence-level analysis
+        """        Create text sentences table for detailed sentence-level analysis
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS text_sentences (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS text_sentences (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             text_file_id UUID NOT NULL REFERENCES text_files(id) ON DELETE CASCADE,
             
@@ -404,8 +389,7 @@ class TextMigrations:
         
         -- Similarity search
         CREATE INDEX IF NOT EXISTS idx_text_sentences_similarity ON text_sentences(similarity_hash);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -414,14 +398,11 @@ class TextMigrations:
         )
     
     async def create_text_fingerprints_table(self) -> str:
-        """
-        Create specialized text fingerprints table for plagiarism detection
+        """        Create specialized text fingerprints table for plagiarism detection
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS text_fingerprints (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS text_fingerprints (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             text_file_id UUID NOT NULL REFERENCES text_files(id) ON DELETE CASCADE,
             
@@ -517,8 +498,7 @@ class TextMigrations:
         -- Binary data optimization
         CREATE INDEX IF NOT EXISTS idx_text_fingerprints_binary ON text_fingerprints USING HASH(fingerprint_binary) 
         WHERE fingerprint_binary IS NOT NULL;
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -527,14 +507,11 @@ class TextMigrations:
         )
     
     async def create_text_analytics_table(self) -> str:
-        """
-        Create text-specific analytics table for performance tracking
+        """        Create text-specific analytics table for performance tracking
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS text_analytics (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS text_analytics (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             text_file_id UUID NOT NULL REFERENCES text_files(id) ON DELETE CASCADE,
             
@@ -624,8 +601,7 @@ class TextMigrations:
         CREATE INDEX IF NOT EXISTS idx_text_analytics_platforms ON text_analytics USING GIN(platform_reads);
         CREATE INDEX IF NOT EXISTS idx_text_analytics_keywords ON text_analytics USING GIN(search_keywords);
         CREATE INDEX IF NOT EXISTS idx_text_analytics_sections ON text_analytics USING GIN(most_read_sections);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -634,16 +610,14 @@ class TextMigrations:
         )
     
     async def execute_full_text_migration(self, config: TextMigrationConfiguration) -> List[str]:
-        """
-        Execute complete text database migration according to configuration
+        """        Execute complete text database migration according to configuration
         
         Args:
             config: TextMigrationConfiguration with specific settings
             
         Returns:
             List[str]: Migration IDs for tracking
-        """
-        migration_ids = []
+        """        migration_ids = []
         
         try:
             self.logger.info("Starting comprehensive text database migration")
@@ -668,14 +642,11 @@ class TextMigrations:
             raise
     
     async def add_text_performance_optimizations(self) -> str:
-        """
-        Add performance optimizations for text processing workloads
+        """        Add performance optimizations for text processing workloads
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        -- Partitioning for text analytics by date
+        """        migration_sql = """        -- Partitioning for text analytics by date
         CREATE TABLE IF NOT EXISTS text_analytics_partitioned (
             LIKE text_analytics INCLUDING DEFAULTS INCLUDING CONSTRAINTS
         ) PARTITION BY RANGE (analytics_date);
@@ -707,8 +678,7 @@ class TextMigrations:
         CREATE INDEX IF NOT EXISTS idx_text_title_similarity
         ON text_files USING GIN(suggested_title gin_trgm_ops)
         WHERE suggested_title IS NOT NULL;
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.OPTIMIZATION,

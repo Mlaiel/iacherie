@@ -1,5 +1,4 @@
-"""
-Core separation engine providing the main interface for audio source separation.
+"""Core separation engine providing the main interface for audio source separation.
 
 This module contains the primary SeparationEngine class and configuration management
 for the entire audio separation system.
@@ -7,7 +6,6 @@ for the entire audio separation system.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel - Unauthorized use strictly prohibited
 """
-
 import asyncio
 import logging
 import threading
@@ -28,8 +26,7 @@ logger = get_logger(__name__)
 
 
 class SeparationModel(Enum):
-    """Available separation model types."""
-    SPLEETER = "spleeter"
+    """Available separation model types."""    SPLEETER = "spleeter"
     OPEN_UNMIX = "open_unmix"
     DEMUCS = "demucs"
     HYBRID = "hybrid"
@@ -37,16 +34,14 @@ class SeparationModel(Enum):
 
 
 class SeparationQuality(Enum):
-    """Quality levels for separation processing."""
-    DRAFT = "draft"
+    """Quality levels for separation processing."""    DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
     STUDIO = "studio"
 
 
 class OutputFormat(Enum):
-    """Supported output audio formats."""
-    WAV = "wav"
+    """Supported output audio formats."""    WAV = "wav"
     FLAC = "flac"
     MP3 = "mp3"
     AAC = "aac"
@@ -55,8 +50,7 @@ class OutputFormat(Enum):
 
 @dataclass
 class SeparationConfig:
-    """Configuration for audio separation operations."""
-    
+    """Configuration for audio separation operations."""    
     # Model configuration
     model_type: SeparationModel = SeparationModel.DEMUCS
     quality: SeparationQuality = SeparationQuality.HIGH
@@ -92,8 +86,7 @@ class SeparationConfig:
     silence_threshold: float = 0.001
     
     def __post_init__(self):
-        """Validate configuration after initialization."""
-        if self.use_gpu and not torch.cuda.is_available():
+        """Validate configuration after initialization."""        if self.use_gpu and not torch.cuda.is_available():
             logger.warning("GPU requested but not available, falling back to CPU")
             self.device = "cpu"
             self.use_gpu = False
@@ -104,16 +97,13 @@ class SeparationConfig:
 
 
 class SeparationEngine:
-    """
-    Advanced audio source separation engine using state-of-the-art AI models.
+    """    Advanced audio source separation engine using state-of-the-art AI models.
     
     Supports multiple separation models and provides high-quality stem extraction
     for professional music production and content creation.
-    """
-    
+    """    
     def __init__(self, config: Optional[SeparationConfig] = None):
-        """Initialize the separation engine."""
-        self.config = config or SeparationConfig()
+        """Initialize the separation engine."""        self.config = config or SeparationConfig()
         self.models: Dict[str, Any] = {}
         self.is_initialized = False
         self._lock = threading.RLock()
@@ -121,8 +111,7 @@ class SeparationEngine:
         logger.info(f"Initializing SeparationEngine with {self.config.model_type.value}")
         
     async def initialize(self) -> None:
-        """Initialize the separation models asynchronously."""
-        if self.is_initialized:
+        """Initialize the separation models asynchronously."""        if self.is_initialized:
             return
             
         async with asyncio.Lock():
@@ -138,8 +127,7 @@ class SeparationEngine:
                 raise AudioProcessingError(f"Engine initialization failed: {e}")
     
     async def _load_models(self) -> None:
-        """Load separation models based on configuration."""
-        if self.config.model_type == SeparationModel.DEMUCS:
+        """Load separation models based on configuration."""        if self.config.model_type == SeparationModel.DEMUCS:
             await self._load_demucs_model()
         elif self.config.model_type == SeparationModel.SPLEETER:
             await self._load_spleeter_model()
@@ -151,8 +139,7 @@ class SeparationEngine:
             raise ValueError(f"Unsupported model type: {self.config.model_type}")
     
     async def _load_demucs_model(self) -> None:
-        """Load Demucs model for high-quality separation."""
-        try:
+        """Load Demucs model for high-quality separation."""        try:
             import demucs.api
             
             model_name = self._get_demucs_model_name()
@@ -173,8 +160,7 @@ class SeparationEngine:
             raise
     
     async def _load_spleeter_model(self) -> None:
-        """Load Spleeter model."""
-        try:
+        """Load Spleeter model."""        try:
             from spleeter.separator import Separator
             
             model_name = self._get_spleeter_model_name()
@@ -191,8 +177,7 @@ class SeparationEngine:
             raise
     
     async def _load_openunmix_model(self) -> None:
-        """Load Open-Unmix model."""
-        try:
+        """Load Open-Unmix model."""        try:
             import openunmix
             
             device = torch.device(self.config.device)
@@ -209,14 +194,12 @@ class SeparationEngine:
             raise
     
     async def _load_hybrid_models(self) -> None:
-        """Load multiple models for hybrid separation."""
-        await self._load_demucs_model()
+        """Load multiple models for hybrid separation."""        await self._load_demucs_model()
         await self._load_spleeter_model()
         logger.info("Loaded hybrid models")
     
     def _get_demucs_model_name(self) -> str:
-        """Get appropriate Demucs model name based on quality."""
-        quality_models = {
+        """Get appropriate Demucs model name based on quality."""        quality_models = {
             SeparationQuality.DRAFT: "mdx",
             SeparationQuality.STANDARD: "mdx_extra",
             SeparationQuality.HIGH: "mdx_extra_q",
@@ -225,8 +208,7 @@ class SeparationEngine:
         return quality_models.get(self.config.quality, "mdx_extra")
     
     def _get_spleeter_model_name(self) -> str:
-        """Get appropriate Spleeter model name."""
-        return "spleeter:4stems-16kHz"
+        """Get appropriate Spleeter model name."""        return "spleeter:4stems-16kHz"
     
     async def separate(
         self,
@@ -234,8 +216,7 @@ class SeparationEngine:
         output_dir: Optional[Union[str, Path]] = None,
         stems: Optional[List[str]] = None
     ) -> Dict[str, Path]:
-        """
-        Separate audio into individual stems.
+        """        Separate audio into individual stems.
         
         Args:
             audio_path: Path to input audio file
@@ -244,8 +225,7 @@ class SeparationEngine:
             
         Returns:
             Dictionary mapping stem names to output file paths
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             await self.initialize()
         
         audio_path = Path(audio_path)
@@ -277,8 +257,7 @@ class SeparationEngine:
             raise AudioProcessingError(f"Audio separation failed: {e}")
     
     async def _validate_audio_file(self, audio_path: Path) -> None:
-        """Validate audio file format and properties."""
-        try:
+        """Validate audio file format and properties."""        try:
             info = librosa.get_samplerate(str(audio_path))
             duration = librosa.get_duration(filename=str(audio_path))
             
@@ -296,8 +275,7 @@ class SeparationEngine:
         output_dir: Path,
         stems: Optional[List[str]] = None
     ) -> Dict[str, Path]:
-        """Separate audio using Demucs model."""
-        separator = self.models['demucs']
+        """Separate audio using Demucs model."""        separator = self.models['demucs']
         
         # Load and separate
         waveform, sr = librosa.load(str(audio_path), sr=self.config.sample_rate, mono=False)
@@ -338,8 +316,7 @@ class SeparationEngine:
         output_dir: Path,
         stems: Optional[List[str]] = None
     ) -> Dict[str, Path]:
-        """Separate audio using Spleeter model."""
-        separator = self.models['spleeter']
+        """Separate audio using Spleeter model."""        separator = self.models['spleeter']
         
         # Load audio
         waveform, sr = librosa.load(
@@ -377,8 +354,7 @@ class SeparationEngine:
         output_dir: Path,
         stems: Optional[List[str]] = None
     ) -> Dict[str, Path]:
-        """Separate using hybrid approach with multiple models."""
-        # Use Demucs for primary separation
+        """Separate using hybrid approach with multiple models."""        # Use Demucs for primary separation
         demucs_results = await self._separate_with_demucs(audio_path, output_dir, stems)
         
         # Enhance vocal separation with Spleeter
@@ -399,8 +375,7 @@ class SeparationEngine:
         return demucs_results
     
     async def _enhance_vocal_separation(self, audio_path: Path) -> Optional[np.ndarray]:
-        """Enhance vocal separation using secondary model."""
-        try:
+        """Enhance vocal separation using secondary model."""        try:
             if 'spleeter' not in self.models:
                 return None
             
@@ -418,8 +393,7 @@ class SeparationEngine:
         primary_path: Path, 
         secondary_audio: np.ndarray
     ) -> np.ndarray:
-        """Blend vocal sources from different models."""
-        # Load primary vocal
+        """Blend vocal sources from different models."""        # Load primary vocal
         primary_audio, _ = librosa.load(str(primary_path), sr=self.config.sample_rate)
         
         # Simple weighted blend
@@ -429,15 +403,13 @@ class SeparationEngine:
         return self._normalize_audio(blended)
     
     def _normalize_audio(self, audio: np.ndarray) -> np.ndarray:
-        """Normalize audio to prevent clipping."""
-        if audio.max() == 0:
+        """Normalize audio to prevent clipping."""        if audio.max() == 0:
             return audio
         
         return audio / np.max(np.abs(audio)) * 0.95
     
     async def get_separation_info(self, audio_path: Union[str, Path]) -> Dict[str, Any]:
-        """Get information about potential separation quality."""
-        audio_path = Path(audio_path)
+        """Get information about potential separation quality."""        audio_path = Path(audio_path)
         
         try:
             # Load audio for analysis
@@ -467,8 +439,7 @@ class SeparationEngine:
             return {'error': str(e)}
     
     def _estimate_complexity(self, audio: np.ndarray, sr: int) -> float:
-        """Estimate separation complexity based on audio characteristics."""
-        # Calculate various features
+        """Estimate separation complexity based on audio characteristics."""        # Calculate various features
         spectral_bandwidth = np.mean(librosa.feature.spectral_bandwidth(y=audio, sr=sr))
         spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=audio, sr=sr))
         zero_crossing_rate = np.mean(librosa.feature.zero_crossing_rate(audio))
@@ -483,8 +454,7 @@ class SeparationEngine:
         return min(max(complexity, 0.0), 1.0)
     
     def _recommend_quality(self, complexity: float) -> SeparationQuality:
-        """Recommend separation quality based on complexity."""
-        if complexity < 0.3:
+        """Recommend separation quality based on complexity."""        if complexity < 0.3:
             return SeparationQuality.STANDARD
         elif complexity < 0.6:
             return SeparationQuality.HIGH
@@ -492,8 +462,7 @@ class SeparationEngine:
             return SeparationQuality.STUDIO
     
     def _estimate_processing_time(self, duration: float, complexity: float) -> float:
-        """Estimate processing time in seconds."""
-        base_ratio = {
+        """Estimate processing time in seconds."""        base_ratio = {
             SeparationQuality.DRAFT: 0.5,
             SeparationQuality.STANDARD: 1.0,
             SeparationQuality.HIGH: 2.0,
@@ -506,8 +475,7 @@ class SeparationEngine:
         return duration * ratio * complexity_factor
     
     async def cleanup(self) -> None:
-        """Clean up resources and temporary files."""
-        try:
+        """Clean up resources and temporary files."""        try:
             # Clear models
             self.models.clear()
             

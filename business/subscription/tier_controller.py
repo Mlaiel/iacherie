@@ -1,5 +1,4 @@
-"""
-Tier Controller
+"""Tier Controller
 
 Feature access control and tier management system for subscription plans.
 Manages granular feature permissions, usage limits, and tier-based functionality.
@@ -9,7 +8,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
-
 from datetime import datetime
 from typing import Optional, Dict, Any, List, Set
 import logging
@@ -32,8 +30,7 @@ logger = get_logger(__name__)
 
 
 class FeatureCategory(Enum):
-    """Feature categories for the IA Influencer platform."""
-    AI_PROCESSING = "ai_processing"
+    """Feature categories for the IA Influencer platform."""    AI_PROCESSING = "ai_processing"
     CONTENT_PROTECTION = "content_protection"
     ANALYTICS = "analytics"
     COLLABORATION = "collaboration"
@@ -46,8 +43,7 @@ class FeatureCategory(Enum):
 
 
 class TierController:
-    """
-    Advanced tier-based feature access controller.
+    """    Advanced tier-based feature access controller.
     
     Manages:
     - Feature access permissions per subscription tier
@@ -58,11 +54,9 @@ class TierController:
     - Enterprise-level custom feature sets
     - API rate limiting and quota management
     - Feature rollout and A/B testing support
-    """
-    
+    """    
     def __init__(self):
-        """Initialize tier controller."""
-        self.logger = get_logger(__name__)
+        """Initialize tier controller."""        self.logger = get_logger(__name__)
         self.cache = CacheManager()
         
         # Feature definitions for IA Influencer platform
@@ -266,8 +260,7 @@ class TierController:
         feature_name: str,
         db: Session = None
     ) -> bool:
-        """
-        Check if user has access to specific feature.
+        """        Check if user has access to specific feature.
         
         Args:
             user_id: User ID
@@ -276,8 +269,7 @@ class TierController:
             
         Returns:
             True if user has access, False otherwise
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -329,8 +321,7 @@ class TierController:
         category: Optional[str] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get all available features for user.
+        """        Get all available features for user.
         
         Args:
             user_id: User ID
@@ -339,8 +330,7 @@ class TierController:
             
         Returns:
             Available features with access status and limits
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -397,16 +387,14 @@ class TierController:
             raise ValidationError(f"Failed to get available features: {str(e)}")
     
     async def check_free_tier_access(self, feature_name: str) -> bool:
-        """
-        Check if feature is available in free tier.
+        """        Check if feature is available in free tier.
         
         Args:
             feature_name: Feature name to check
             
         Returns:
             True if available in free tier
-        """
-        if feature_name not in self.platform_features:
+        """        if feature_name not in self.platform_features:
             return False
         
         feature_def = self.platform_features[feature_name]
@@ -418,8 +406,7 @@ class TierController:
         requested_features: List[str],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get tier upgrade recommendations based on requested features.
+        """        Get tier upgrade recommendations based on requested features.
         
         Args:
             user_id: User ID
@@ -428,8 +415,7 @@ class TierController:
             
         Returns:
             Upgrade recommendations with pricing
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -508,8 +494,7 @@ class TierController:
         requested_usage: int = 1,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Enforce feature usage limits.
+        """        Enforce feature usage limits.
         
         Args:
             user_id: User ID
@@ -519,8 +504,7 @@ class TierController:
             
         Returns:
             Enforcement result with allowed status and recommendations
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -597,16 +581,14 @@ class TierController:
         self, 
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get feature comparison matrix across all subscription tiers.
+        """        Get feature comparison matrix across all subscription tiers.
         
         Args:
             db: Database session
             
         Returns:
             Feature comparison matrix
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -696,8 +678,7 @@ class TierController:
         feature_name: str,
         feature_def: Dict[str, Any]
     ) -> bool:
-        """Check if paid tier plan has access to feature."""
-        # Check if feature is enterprise-only
+        """Check if paid tier plan has access to feature."""        # Check if feature is enterprise-only
         if feature_def.get("enterprise_only", False):
             return plan.is_enterprise
         
@@ -714,8 +695,7 @@ class TierController:
         plan: SubscriptionPlan,
         requested_features: List[str]
     ) -> List[str]:
-        """Get features that would be unlocked by upgrading to specific plan."""
-        unlocked_features = []
+        """Get features that would be unlocked by upgrading to specific plan."""        unlocked_features = []
         
         for feature_name in requested_features:
             if feature_name not in self.platform_features:

@@ -1,5 +1,4 @@
-"""
-Audio Agent Index - Enterprise Audio Processing Orchestration Module
+"""Audio Agent Index - Enterprise Audio Processing Orchestration Module
 
 Ultra-advanced industrial-grade audio processing system providing complete audio lifecycle management
 for musicians, creators, and content professionals. Handles upload, analysis, enhancement, protection,
@@ -23,7 +22,6 @@ Enterprise Audio Processing Workflow:
 6. Collaboration Matching → Creator Network → Partnership Opportunities
 7. Multi-platform Distribution → Revenue Tracking → Analytics
 """
-
 import asyncio
 import logging
 import time
@@ -108,8 +106,7 @@ collaboration_matches = Counter('collaboration_matches_total', 'Successful colla
 
 @dataclass
 class AudioUploadRequest:
-    """Enterprise audio upload request with comprehensive metadata"""
-    file_data: bytes
+    """Enterprise audio upload request with comprehensive metadata"""    file_data: bytes
     filename: str
     content_type: str
     creator_id: str
@@ -125,8 +122,7 @@ class AudioUploadRequest:
 
 @dataclass
 class AudioProcessingResponse:
-    """Comprehensive audio processing response with business insights"""
-    processing_id: str
+    """Comprehensive audio processing response with business insights"""    processing_id: str
     status: str  # processing, completed, failed, queued
     audio_features: Optional[AudioFeatures] = None
     quality_score: float = 0.0
@@ -140,11 +136,9 @@ class AudioProcessingResponse:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class EnterpriseAudioOrchestrator:
-    """
-    Master orchestrator for all audio processing operations
+    """    Master orchestrator for all audio processing operations
     Coordinates between different audio processing components and business logic
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.cache = CacheManager()
@@ -181,8 +175,7 @@ class EnterpriseAudioOrchestrator:
         logger.info("Enterprise Audio Orchestrator initialized with all components")
     
     async def initialize_async_resources(self):
-        """Initialize async resources like Redis connections"""
-        try:
+        """Initialize async resources like Redis connections"""        try:
             self.redis_client = redis.Redis.from_url(
                 self.settings.REDIS_URL,
                 decode_responses=True,
@@ -200,11 +193,9 @@ class EnterpriseAudioOrchestrator:
         session: AsyncSession,
         background_tasks: BackgroundTasks
     ) -> AudioProcessingResponse:
-        """
-        Complete audio upload processing workflow
+        """        Complete audio upload processing workflow
         Implements the full business logic from upload to distribution
-        """
-        processing_start = time.time()
+        """        processing_start = time.time()
         processing_id = str(uuid.uuid4())
         
         try:
@@ -353,8 +344,7 @@ class EnterpriseAudioOrchestrator:
             active_audio_sessions.dec()
     
     async def _load_and_normalize_audio(self, file_data: bytes, filename: str) -> Tuple[np.ndarray, int]:
-        """Load and normalize audio data from uploaded file"""
-        try:
+        """Load and normalize audio data from uploaded file"""        try:
             # Detect format and load audio
             audio_data, sample_rate = await self.format_converter.load_audio_from_bytes(
                 file_data=file_data,
@@ -383,8 +373,7 @@ class EnterpriseAudioOrchestrator:
         audio_data: np.ndarray,
         metadata: Dict[str, Any]
     ):
-        """Background task for preparing multi-platform distribution"""
-        try:
+        """Background task for preparing multi-platform distribution"""        try:
             for platform in target_platforms:
                 await self.platform_manager.prepare_content_for_platform(
                     processing_id=processing_id,
@@ -404,8 +393,7 @@ class EnterpriseAudioOrchestrator:
         generation_params: Dict[str, Any],
         session: AsyncSession
     ) -> AudioProcessingResponse:
-        """Generate new audio content using AI"""
-        processing_start = time.time()
+        """Generate new audio content using AI"""        processing_start = time.time()
         processing_id = str(uuid.uuid4())
         
         try:
@@ -473,8 +461,7 @@ class EnterpriseAudioOrchestrator:
             active_audio_sessions.dec()
 
     async def get_processing_status(self, processing_id: str) -> Optional[Dict[str, Any]]:
-        """Get processing status from cache or database"""
-        if self.redis_client:
+        """Get processing status from cache or database"""        if self.redis_client:
             cached_result = await self.redis_client.get(f"audio_processing:{processing_id}")
             if cached_result:
                 return json.loads(cached_result)
@@ -488,8 +475,7 @@ class EnterpriseAudioOrchestrator:
         enhancement_params: Dict[str, Any],
         session: AsyncSession
     ) -> AudioProcessingResponse:
-        """Enhance previously uploaded audio content"""
-        try:
+        """Enhance previously uploaded audio content"""        try:
             # Retrieve original audio data
             audio_record = await self.data_manager.get_audio_by_processing_id(processing_id, session)
             if not audio_record:
@@ -533,8 +519,7 @@ orchestrator = EnterpriseAudioOrchestrator()
 # FastAPI application for audio services
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    """Application lifespan management"""
-    # Startup
+    """Application lifespan management"""    # Startup
     await orchestrator.initialize_async_resources()
     logger.info("Audio Agent API started successfully")
     
@@ -546,8 +531,7 @@ async def lifespan(app: FastAPI):
     logger.info("Audio Agent API shutdown complete")
 
 def create_audio_app() -> FastAPI:
-    """Create enterprise FastAPI application for audio processing"""
-    app = FastAPI(
+    """Create enterprise FastAPI application for audio processing"""    app = FastAPI(
         title="Audio Agent API - Enterprise Audio Processing",
         description="Ultra-advanced audio processing, analysis, and AI generation system by Fahed Mlaiel",
         version="1.0.0",
@@ -618,8 +602,7 @@ async def upload_audio(
     session: AsyncSession = Depends(get_async_db_session),
     api_key: str = Depends(validate_api_key)
 ):
-    """
-    Upload and process audio content with complete workflow
+    """    Upload and process audio content with complete workflow
     
     - **Multi-format support**: WAV, FLAC, MP3, AAC, OGG
     - **AI Analysis**: Advanced feature extraction and quality assessment
@@ -627,8 +610,7 @@ async def upload_audio(
     - **SEO Optimization**: Metadata enhancement and discoverability
     - **Collaboration**: Creator matching and partnership opportunities
     - **Distribution**: Multi-platform preparation and revenue tracking
-    """
-    if not file.content_type.startswith('audio/'):
+    """    if not file.content_type.startswith('audio/'):
         raise HTTPException(status_code=400, detail="File must be an audio format")
     
     # Read file data
@@ -674,15 +656,13 @@ async def generate_audio(
     session: AsyncSession = Depends(get_async_db_session),
     api_key: str = Depends(validate_api_key)
 ):
-    """
-    Generate new audio content using advanced AI models
+    """    Generate new audio content using advanced AI models
     
     - **Text-to-Audio**: Neural synthesis from text descriptions
     - **Music Generation**: AI-powered music composition
     - **Professional Quality**: Automatic mastering and optimization
     - **Genre Awareness**: Style-specific generation capabilities
-    """
-    generation_params = {
+    """    generation_params = {
         "duration_seconds": request.duration_seconds,
         "genre": request.genre,
         "mood": request.mood,
@@ -712,15 +692,13 @@ async def enhance_audio(
     session: AsyncSession = Depends(get_async_db_session),
     api_key: str = Depends(validate_api_key)
 ):
-    """
-    Enhance existing audio content with professional processing
+    """    Enhance existing audio content with professional processing
     
     - **Intelligent Enhancement**: AI-powered audio improvement
     - **Noise Reduction**: Advanced spectral cleaning
     - **Dynamic Processing**: Professional compression and limiting
     - **Mastering Chain**: Complete mastering suite application
-    """
-    enhancement_params = {
+    """    enhancement_params = {
         "enhancement_type": request.enhancement_type,
         "noise_reduction": request.noise_reduction,
         "dynamic_range_optimization": request.dynamic_range_optimization,
@@ -747,8 +725,7 @@ async def get_processing_status(
     processing_id: str,
     api_key: str = Depends(validate_api_key)
 ):
-    """Get current status of audio processing operation"""
-    status = await orchestrator.get_processing_status(processing_id)
+    """Get current status of audio processing operation"""    status = await orchestrator.get_processing_status(processing_id)
     
     if not status:
         raise HTTPException(status_code=404, detail="Processing ID not found")
@@ -761,8 +738,7 @@ async def get_creator_analytics(
     session: AsyncSession = Depends(get_async_db_session),
     api_key: str = Depends(validate_api_key)
 ):
-    """Get comprehensive analytics for a creator"""
-    analytics = await orchestrator.business_manager.get_creator_analytics(creator_id, session)
+    """Get comprehensive analytics for a creator"""    analytics = await orchestrator.business_manager.get_creator_analytics(creator_id, session)
     return analytics
 
 @app.get("/collaboration/opportunities/{creator_id}", response_model=List[Dict[str, Any]])
@@ -771,8 +747,7 @@ async def get_collaboration_opportunities(
     session: AsyncSession = Depends(get_async_db_session),
     api_key: str = Depends(validate_api_key)
 ):
-    """Find collaboration opportunities for a creator"""
-    opportunities = await orchestrator.business_manager.find_collaboration_opportunities(
+    """Find collaboration opportunities for a creator"""    opportunities = await orchestrator.business_manager.find_collaboration_opportunities(
         creator_id=creator_id,
         session=session
     )
@@ -780,20 +755,17 @@ async def get_collaboration_opportunities(
 
 @app.get("/health", response_model=Dict[str, Any])
 async def health_check():
-    """System health check endpoint"""
-    health_status = await orchestrator.health_checker.get_system_health()
+    """System health check endpoint"""    health_status = await orchestrator.health_checker.get_system_health()
     return health_status
 
 @app.get("/metrics")
 async def get_metrics():
-    """Prometheus metrics endpoint"""
-    return generate_latest()
+    """Prometheus metrics endpoint"""    return generate_latest()
 
 # WebSocket endpoint for real-time processing updates
 @app.websocket("/ws/processing/{processing_id}")
 async def websocket_processing_updates(processing_id: str):
-    """WebSocket endpoint for real-time processing status updates"""
-    async def send_updates(websocket):
+    """WebSocket endpoint for real-time processing status updates"""    async def send_updates(websocket):
         while True:
             status = await orchestrator.get_processing_status(processing_id)
             if status:
@@ -810,8 +782,7 @@ def run_audio_server(
     workers: int = 1,
     reload: bool = False
 ):
-    """Run the audio processing server"""
-    import uvicorn
+    """Run the audio processing server"""    import uvicorn
     
     logger.info(f"Starting Audio Agent Server on {host}:{port}")
     

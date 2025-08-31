@@ -1,5 +1,4 @@
-"""
-Content Protection Storage Manager
+"""Content Protection Storage Manager
 
 Ultra-industrial storage management system for content protection data, 
 fingerprints, and violation tracking with enterprise-grade performance and security.
@@ -17,7 +16,6 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
-
 import asyncio
 import hashlib
 import json
@@ -47,20 +45,17 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionStorageError(Exception):
-    """Custom exception for protection storage operations"""
-    pass
+    """Custom exception for protection storage operations"""    pass
 
 
 class ProtectionStorageManager:
-    """
-    Ultra-advanced content protection storage manager with enterprise features:
+    """    Ultra-advanced content protection storage manager with enterprise features:
     - High-performance batch operations and optimized queries
     - Advanced encryption for sensitive protection data
     - Distributed storage with automatic failover
     - Real-time monitoring and performance analytics
     - Compliance with GDPR, CCPA, and international data protection laws
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -100,8 +95,7 @@ class ProtectionStorageManager:
         protection_level: str = "standard",
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """
-        Store content fingerprint with advanced security and validation
+        """        Store content fingerprint with advanced security and validation
         
         Args:
             content_id: Unique content identifier
@@ -116,8 +110,7 @@ class ProtectionStorageManager:
             
         Raises:
             ProtectionStorageError: If storage operation fails
-        """
-        try:
+        """        try:
             # Validate input data
             await self._validate_fingerprint_data(fingerprint_data, content_type)
             
@@ -183,8 +176,7 @@ class ProtectionStorageManager:
         content_type: Optional[str] = None,
         limit: int = 100
     ) -> List[Tuple[ContentFingerprint, float]]:
-        """
-        Search for similar fingerprints using advanced vector similarity
+        """        Search for similar fingerprints using advanced vector similarity
         
         Args:
             target_fingerprint: Fingerprint to compare against
@@ -194,8 +186,7 @@ class ProtectionStorageManager:
             
         Returns:
             List of tuples (fingerprint, similarity_score)
-        """
-        try:
+        """        try:
             # Generate vector embedding for target
             target_embedding = await self._generate_vector_embedding(target_fingerprint)
             
@@ -238,8 +229,7 @@ class ProtectionStorageManager:
         evidence_data: Dict[str, Any],
         alert_priority: str = "medium"
     ) -> ProtectionAlert:
-        """
-        Store protection alert with comprehensive evidence
+        """        Store protection alert with comprehensive evidence
         
         Args:
             fingerprint_id: Associated fingerprint ID
@@ -251,8 +241,7 @@ class ProtectionStorageManager:
             
         Returns:
             ProtectionAlert: Created alert record
-        """
-        try:
+        """        try:
             # Encrypt evidence data
             encrypted_evidence = await self.encryption_manager.encrypt_data(
                 json.dumps(evidence_data)
@@ -291,8 +280,7 @@ class ProtectionStorageManager:
         fingerprint_batch: List[Dict[str, Any]],
         batch_metadata: Optional[Dict[str, Any]] = None
     ) -> List[ContentFingerprint]:
-        """
-        High-performance batch storage of multiple fingerprints
+        """        High-performance batch storage of multiple fingerprints
         
         Args:
             fingerprint_batch: List of fingerprint data dictionaries
@@ -300,8 +288,7 @@ class ProtectionStorageManager:
             
         Returns:
             List of created ContentFingerprint records
-        """
-        try:
+        """        try:
             created_fingerprints = []
             batch_start_time = datetime.now()
             
@@ -375,8 +362,7 @@ class ProtectionStorageManager:
         limit: int = 1000,
         offset: int = 0
     ) -> List[ContentFingerprint]:
-        """
-        Retrieve fingerprints by creator with filtering and pagination
+        """        Retrieve fingerprints by creator with filtering and pagination
         
         Args:
             creator_id: Creator identifier
@@ -387,8 +373,7 @@ class ProtectionStorageManager:
             
         Returns:
             List of ContentFingerprint records
-        """
-        try:
+        """        try:
             query = self.db_session.query(ContentFingerprint).filter(
                 and_(
                     ContentFingerprint.creator_id == creator_id,
@@ -421,8 +406,7 @@ class ProtectionStorageManager:
         new_status: str,
         status_metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Update protection status with audit trail
+        """        Update protection status with audit trail
         
         Args:
             fingerprint_id: Fingerprint identifier
@@ -431,8 +415,7 @@ class ProtectionStorageManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             fingerprint = await self.db_session.get(ContentFingerprint, fingerprint_id)
             
             if not fingerprint:
@@ -475,8 +458,7 @@ class ProtectionStorageManager:
         retention_days: int = 365,
         dry_run: bool = False
     ) -> Dict[str, int]:
-        """
-        Clean up expired protection records with configurable retention
+        """        Clean up expired protection records with configurable retention
         
         Args:
             retention_days: Number of days to retain records
@@ -484,8 +466,7 @@ class ProtectionStorageManager:
             
         Returns:
             Dictionary with cleanup statistics
-        """
-        try:
+        """        try:
             cutoff_date = datetime.now(timezone.utc) - timedelta(days=retention_days)
             
             # Find expired records
@@ -542,13 +523,11 @@ class ProtectionStorageManager:
             raise ProtectionStorageError(f"Cleanup operation failed: {e}")
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive storage statistics and metrics
+        """        Get comprehensive storage statistics and metrics
         
         Returns:
             Dictionary with detailed storage statistics
-        """
-        try:
+        """        try:
             # Count active records
             total_fingerprints = await self.db_session.query(ContentFingerprint).filter(
                 ContentFingerprint.is_active == True
@@ -597,8 +576,7 @@ class ProtectionStorageManager:
         fingerprint_data: Dict[str, Any], 
         content_type: str
     ) -> None:
-        """Validate fingerprint data structure and content"""
-        required_fields = ["hash_value", "features", "metadata"]
+        """Validate fingerprint data structure and content"""        required_fields = ["hash_value", "features", "metadata"]
         
         for field in required_fields:
             if field not in fingerprint_data:
@@ -617,8 +595,7 @@ class ProtectionStorageManager:
         content_id: str, 
         creator_id: str
     ) -> str:
-        """Generate secure hash for fingerprint identification"""
-        hash_input = json.dumps({
+        """Generate secure hash for fingerprint identification"""        hash_input = json.dumps({
             "fingerprint_data": fingerprint_data,
             "content_id": content_id,
             "creator_id": creator_id,
@@ -631,8 +608,7 @@ class ProtectionStorageManager:
         self, 
         fingerprint_data: Dict[str, Any]
     ) -> bytes:
-        """Generate vector embedding for similarity search"""
-        try:
+        """Generate vector embedding for similarity search"""        try:
             # Extract numeric features for embedding
             features = []
             
@@ -673,8 +649,7 @@ class ProtectionStorageManager:
         embedding1: bytes, 
         embedding2: bytes
     ) -> float:
-        """Calculate cosine similarity between vector embeddings"""
-        try:
+        """Calculate cosine similarity between vector embeddings"""        try:
             vec1 = np.frombuffer(embedding1, dtype=np.float32)
             vec2 = np.frombuffer(embedding2, dtype=np.float32)
             

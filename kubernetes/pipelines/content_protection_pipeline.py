@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Content Protection Pipeline System
+"""IA Influencer Agent - Content Protection Pipeline System
 Enterprise-Grade Content Protection & Fingerprinting Pipeline Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -19,7 +18,6 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -34,23 +32,20 @@ from . import PipelineStatus, Environment, PipelineType, PipelineConfig
 from .pipeline_manager import PipelineStep, PipelineExecution, AdvancedPipelineManager
 
 class ContentType(Enum):
-    """Content type enumeration for protection pipelines"""
-    AUDIO = "audio"
+    """Content type enumeration for protection pipelines"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MIXED_MEDIA = "mixed_media"
 
 class ProtectionLevel(Enum):
-    """Content protection level definitions"""
-    BASIC = "basic"
+    """Content protection level definitions"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 class ViolationType(Enum):
-    """Content violation type classifications"""
-    UNAUTHORIZED_USE = "unauthorized_use"
+    """Content violation type classifications"""    UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     REVENUE_THEFT = "revenue_theft"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -58,8 +53,7 @@ class ViolationType(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""
-    content_id: str
+    """Content fingerprint data structure"""    content_id: str
     content_type: ContentType
     file_hash: str
     ai_fingerprint: str
@@ -71,8 +65,7 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationDetection:
-    """Content violation detection result"""
-    violation_id: str
+    """Content violation detection result"""    violation_id: str
     content_fingerprint: ContentFingerprint
     detected_url: str
     platform: str
@@ -83,8 +76,7 @@ class ViolationDetection:
     status: str = "pending"
 
 class ContentProtectionPipelineManager:
-    """
-    Advanced Content Protection Pipeline Management System
+    """    Advanced Content Protection Pipeline Management System
     
     Provides enterprise-grade content protection workflows with:
     - Multi-format AI fingerprinting pipelines
@@ -93,8 +85,7 @@ class ContentProtectionPipelineManager:
     - DMCA takedown pipeline automation
     - Revenue recovery tracking workflows
     - Cross-platform monitoring orchestration
-    """
-    
+    """    
     def __init__(self, base_pipeline_manager: AdvancedPipelineManager,
                  storage_path: Optional[Path] = None):
         self.base_manager = base_pipeline_manager
@@ -113,8 +104,7 @@ class ContentProtectionPipelineManager:
         self._register_protection_pipelines()
         
     def _register_protection_pipelines(self):
-        """Register content protection pipeline configurations"""
-        # Audio fingerprinting pipeline
+        """Register content protection pipeline configurations"""        # Audio fingerprinting pipeline
         audio_fingerprint_config = PipelineConfig(
             name="audio-fingerprinting",
             environment=Environment.PRODUCTION,
@@ -221,8 +211,7 @@ class ContentProtectionPipelineManager:
     async def fingerprint_content(self, content_path: Path, content_type: ContentType,
                                 owner_id: str, protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
                                 metadata: Optional[Dict[str, Any]] = None) -> str:
-        """Execute content fingerprinting pipeline"""
-        content_id = hashlib.sha256(f"{content_path.name}_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Execute content fingerprinting pipeline"""        content_id = hashlib.sha256(f"{content_path.name}_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Select appropriate fingerprinting pipeline
         if content_type == ContentType.AUDIO:
@@ -272,8 +261,7 @@ class ContentProtectionPipelineManager:
     async def start_content_surveillance(self, fingerprint_ids: List[str],
                                        platforms: List[str] = None,
                                        scan_frequency: int = 3600) -> str:
-        """Start content surveillance pipeline for specified fingerprints"""
-        if platforms is None:
+        """Start content surveillance pipeline for specified fingerprints"""        if platforms is None:
             platforms = ["youtube", "instagram", "tiktok", "twitter", "facebook"]
             
         surveillance_id = hashlib.sha256(f"surveillance_{datetime.utcnow().isoformat()}".encode()).hexdigest()
@@ -306,8 +294,7 @@ class ContentProtectionPipelineManager:
         return surveillance_id
         
     async def process_violation_detection(self, violation: ViolationDetection) -> str:
-        """Process detected content violation through appropriate pipeline"""
-        violation_id = violation.violation_id
+        """Process detected content violation through appropriate pipeline"""        violation_id = violation.violation_id
         
         # Add to violation queue
         self.violation_queue.append(violation)
@@ -331,8 +318,7 @@ class ContentProtectionPipelineManager:
         return response_id
         
     async def _initiate_dmca_takedown(self, violation: ViolationDetection) -> str:
-        """Initiate automated DMCA takedown pipeline"""
-        context = {
+        """Initiate automated DMCA takedown pipeline"""        context = {
             "violation_id": violation.violation_id,
             "content_id": violation.content_fingerprint.content_id,
             "detected_url": violation.detected_url,
@@ -348,8 +334,7 @@ class ContentProtectionPipelineManager:
         return f"dmca_{execution_id}"
         
     async def _queue_manual_review(self, violation: ViolationDetection) -> str:
-        """Queue violation for manual review"""
-        review_id = f"review_{violation.violation_id}"
+        """Queue violation for manual review"""        review_id = f"review_{violation.violation_id}"
         
         # Save violation data for manual review
         review_file = self.storage_path / "manual_reviews" / f"{review_id}.json"
@@ -377,8 +362,7 @@ class ContentProtectionPipelineManager:
         return review_id
         
     async def _initiate_revenue_recovery(self, violation: ViolationDetection) -> str:
-        """Initiate revenue recovery pipeline"""
-        context = {
+        """Initiate revenue recovery pipeline"""        context = {
             "violation_id": violation.violation_id,
             "content_id": violation.content_fingerprint.content_id,
             "detected_url": violation.detected_url,
@@ -393,8 +377,7 @@ class ContentProtectionPipelineManager:
         return f"revenue_{execution_id}"
         
     async def _standard_violation_response(self, violation: ViolationDetection) -> str:
-        """Execute standard violation response pipeline"""
-        context = {
+        """Execute standard violation response pipeline"""        context = {
             "violation_id": violation.violation_id,
             "response_type": "standard",
             "escalation_enabled": True
@@ -407,8 +390,7 @@ class ContentProtectionPipelineManager:
         
     async def generate_protection_report(self, owner_id: str, 
                                        date_range: Optional[tuple] = None) -> Dict[str, Any]:
-        """Generate comprehensive content protection report"""
-        if date_range is None:
+        """Generate comprehensive content protection report"""        if date_range is None:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=30)
         else:
@@ -480,8 +462,7 @@ class ContentProtectionPipelineManager:
         return report
         
     def get_protection_status(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get current protection status for content"""
-        if content_id not in self.active_fingerprints:
+        """Get current protection status for content"""        if content_id not in self.active_fingerprints:
             return None
             
         fingerprint = self.active_fingerprints[content_id]
@@ -518,8 +499,7 @@ class ContentProtectionPipelineManager:
         
     def list_violations(self, owner_id: Optional[str] = None, 
                        platform: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List violations with optional filtering"""
-        filtered_violations = self.violation_queue
+        """List violations with optional filtering"""        filtered_violations = self.violation_queue
         
         if owner_id:
             filtered_violations = [
@@ -551,8 +531,7 @@ class ContentProtectionPipelineManager:
 protection_pipeline_manager = None
 
 def get_protection_pipeline_manager(base_manager: AdvancedPipelineManager) -> ContentProtectionPipelineManager:
-    """Get or create protection pipeline manager instance"""
-    global protection_pipeline_manager
+    """Get or create protection pipeline manager instance"""    global protection_pipeline_manager
     if protection_pipeline_manager is None:
         protection_pipeline_manager = ContentProtectionPipelineManager(base_manager)
     return protection_pipeline_manager

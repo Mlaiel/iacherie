@@ -1,5 +1,4 @@
-"""
-Surveillance Serializer Module
+"""Surveillance Serializer Module
 ==============================
 
 Specialized serialization for surveillance data and monitoring results.
@@ -30,7 +29,6 @@ Expertise combinée:
 - DevOps: Monitoring en temps réel et alertes automatisées
 - IA Prompt Engineer: Optimisation de la détection par IA
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Union, Set
 from datetime import datetime, timedelta
@@ -45,8 +43,7 @@ from pydantic import BaseModel, Field, validator, HttpUrl
 logger = logging.getLogger(__name__)
 
 class SurveillanceType(Enum):
-    """Types of surveillance monitoring."""
-    CONTENT_DETECTION = "content_detection"
+    """Types of surveillance monitoring."""    CONTENT_DETECTION = "content_detection"
     COPYRIGHT_VIOLATION = "copyright_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     PLATFORM_MONITORING = "platform_monitoring"
@@ -56,8 +53,7 @@ class SurveillanceType(Enum):
     TREND_MONITORING = "trend_monitoring"
 
 class DetectionMethod(Enum):
-    """Detection methods used."""
-    FINGERPRINT_MATCHING = "fingerprint_matching"
+    """Detection methods used."""    FINGERPRINT_MATCHING = "fingerprint_matching"
     AI_VISUAL_RECOGNITION = "ai_visual_recognition"
     AUDIO_ANALYSIS = "audio_analysis"
     TEXT_SIMILARITY = "text_similarity"
@@ -67,16 +63,14 @@ class DetectionMethod(Enum):
     WEB_SCRAPING = "web_scraping"
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    LOW = "low"
+    """Alert severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     URGENT = "urgent"
 
 class ActionStatus(Enum):
-    """Status of enforcement actions."""
-    PENDING = "pending"
+    """Status of enforcement actions."""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -84,8 +78,7 @@ class ActionStatus(Enum):
     ESCALATED = "escalated"
 
 class PlatformStatus(Enum):
-    """Platform monitoring status."""
-    ACTIVE = "active"
+    """Platform monitoring status."""    ACTIVE = "active"
     INACTIVE = "inactive"
     RATE_LIMITED = "rate_limited"
     BLOCKED = "blocked"
@@ -94,8 +87,7 @@ class PlatformStatus(Enum):
 
 @dataclass
 class DetectionEvidence:
-    """Evidence data for detection results."""
-    evidence_id: str
+    """Evidence data for detection results."""    evidence_id: str
     evidence_type: str  # screenshot, url, metadata, etc.
     evidence_data: Optional[bytes] = None
     evidence_url: Optional[str] = None
@@ -106,8 +98,7 @@ class DetectionEvidence:
 
 @dataclass
 class EnforcementAction:
-    """Enforcement action taken."""
-    action_id: str
+    """Enforcement action taken."""    action_id: str
     action_type: str  # dmca_takedown, cease_desist, platform_report, etc.
     status: ActionStatus
     platform: str
@@ -120,8 +111,7 @@ class EnforcementAction:
 
 @dataclass
 class SurveillanceMetrics:
-    """Surveillance performance metrics."""
-    total_scans: int = 0
+    """Surveillance performance metrics."""    total_scans: int = 0
     successful_scans: int = 0
     failed_scans: int = 0
     detections_found: int = 0
@@ -132,13 +122,11 @@ class SurveillanceMetrics:
     coverage_percentage: float = 0.0
 
 class SurveillanceData(BaseModel):
-    """
-    Comprehensive surveillance data model.
+    """    Comprehensive surveillance data model.
     
     Represents surveillance monitoring results, detections, and actions
     for content protection in the IA-Influencer-Agent platform.
-    """
-    
+    """    
     # Basic identification
     surveillance_id: str = Field(..., description="Unique surveillance identifier")
     session_id: str = Field(..., description="Surveillance session identifier")
@@ -228,16 +216,13 @@ class SurveillanceData(BaseModel):
         return v.strip().lower()
 
 class SurveillanceSerializer:
-    """
-    Advanced surveillance data serialization system.
+    """    Advanced surveillance data serialization system.
     
     Handles efficient serialization and deserialization of surveillance monitoring data,
     detection results, and enforcement actions for the IA-Influencer-Agent platform.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize surveillance serializer."""
-        self.max_evidence_size = 50 * 1024 * 1024  # 50MB max evidence size
+        """Initialize surveillance serializer."""        self.max_evidence_size = 50 * 1024 * 1024  # 50MB max evidence size
         self.evidence_compression_threshold = 1024  # 1KB threshold for compression
         
         logger.info("Surveillance serializer initialized")
@@ -249,8 +234,7 @@ class SurveillanceSerializer:
         include_html_source: bool = False,
         compress_large_data: bool = True
     ) -> Dict[str, Any]:
-        """
-        Serialize surveillance data to dictionary format.
+        """        Serialize surveillance data to dictionary format.
         
         Args:
             surveillance: Surveillance data to serialize
@@ -260,8 +244,7 @@ class SurveillanceSerializer:
             
         Returns:
             Serialized surveillance dictionary
-        """
-        try:
+        """        try:
             # Convert to dictionary
             data = surveillance.dict()
             
@@ -333,16 +316,14 @@ class SurveillanceSerializer:
         self,
         data: Dict[str, Any]
     ) -> SurveillanceData:
-        """
-        Deserialize surveillance data from dictionary format.
+        """        Deserialize surveillance data from dictionary format.
         
         Args:
             data: Serialized surveillance dictionary
             
         Returns:
             Deserialized SurveillanceData object
-        """
-        try:
+        """        try:
             # Handle datetime conversions
             if isinstance(data.get('first_detected'), str):
                 data['first_detected'] = datetime.fromisoformat(data['first_detected'])
@@ -394,8 +375,7 @@ class SurveillanceSerializer:
         surveillance_list: List[SurveillanceData],
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
-        """Serialize multiple surveillance records efficiently."""
-        try:
+        """Serialize multiple surveillance records efficiently."""        try:
             serialized_list = []
             
             for surveillance in surveillance_list:
@@ -418,8 +398,7 @@ class SurveillanceSerializer:
         self,
         data_list: List[Dict[str, Any]]
     ) -> List[SurveillanceData]:
-        """Deserialize multiple surveillance records efficiently."""
-        try:
+        """Deserialize multiple surveillance records efficiently."""        try:
             surveillance_list = []
             
             for data in data_list:
@@ -438,8 +417,7 @@ class SurveillanceSerializer:
         evidence: DetectionEvidence,
         compress: bool = True
     ) -> Dict[str, Any]:
-        """Serialize detection evidence."""
-        try:
+        """Serialize detection evidence."""        try:
             data = {
                 'evidence_id': evidence.evidence_id,
                 'evidence_type': evidence.evidence_type,
@@ -472,8 +450,7 @@ class SurveillanceSerializer:
         self,
         data: Dict[str, Any]
     ) -> DetectionEvidence:
-        """Deserialize detection evidence."""
-        try:
+        """Deserialize detection evidence."""        try:
             # Handle datetime conversion
             if isinstance(data.get('captured_at'), str):
                 data['captured_at'] = datetime.fromisoformat(data['captured_at'])
@@ -497,8 +474,7 @@ class SurveillanceSerializer:
         self,
         action: EnforcementAction
     ) -> Dict[str, Any]:
-        """Serialize enforcement action."""
-        try:
+        """Serialize enforcement action."""        try:
             data = {
                 'action_id': action.action_id,
                 'action_type': action.action_type,
@@ -524,8 +500,7 @@ class SurveillanceSerializer:
         self,
         data: Dict[str, Any]
     ) -> EnforcementAction:
-        """Deserialize enforcement action."""
-        try:
+        """Deserialize enforcement action."""        try:
             # Handle datetime conversions
             if isinstance(data.get('initiated_at'), str):
                 data['initiated_at'] = datetime.fromisoformat(data['initiated_at'])
@@ -544,8 +519,7 @@ class SurveillanceSerializer:
             raise
     
     def _encode_binary_data(self, binary_data: bytes, compress: bool = True) -> str:
-        """Encode binary data to base64 string with optional compression."""
-        try:
+        """Encode binary data to base64 string with optional compression."""        try:
             import base64
             
             if compress and len(binary_data) > self.evidence_compression_threshold:
@@ -562,8 +536,7 @@ class SurveillanceSerializer:
             raise
     
     def _decode_binary_data(self, encoded_data: str) -> bytes:
-        """Decode binary data from base64 string with decompression."""
-        try:
+        """Decode binary data from base64 string with decompression."""        try:
             import base64
             
             if encoded_data.startswith('gzip:'):
@@ -583,8 +556,7 @@ class SurveillanceSerializer:
             raise
     
     def _compress_text_data(self, text_data: str) -> str:
-        """Compress text data using gzip."""
-        try:
+        """Compress text data using gzip."""        try:
             import gzip
             
             compressed = gzip.compress(text_data.encode('utf-8'))
@@ -596,8 +568,7 @@ class SurveillanceSerializer:
             return text_data
     
     def _decompress_text_data(self, compressed_data: str) -> str:
-        """Decompress text data from gzip."""
-        try:
+        """Decompress text data from gzip."""        try:
             import gzip
             
             if compressed_data.startswith('gzip:'):
@@ -615,8 +586,7 @@ class SurveillanceSerializer:
         self,
         surveillance: SurveillanceData
     ) -> Dict[str, Any]:
-        """Create summary of surveillance data."""
-        try:
+        """Create summary of surveillance data."""        try:
             return {
                 'surveillance_id': surveillance.surveillance_id,
                 'surveillance_type': surveillance.surveillance_type.value,
@@ -645,8 +615,7 @@ class SurveillanceSerializer:
         self,
         surveillance: SurveillanceData
     ) -> Dict[str, Any]:
-        """Validate surveillance data integrity."""
-        try:
+        """Validate surveillance data integrity."""        try:
             validation_result = {
                 'valid': True,
                 'errors': [],
@@ -723,7 +692,6 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -736,8 +704,7 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class SurveillanceStatus(Enum):
-    """Surveillance operation status."""
-    PENDING = "pending"
+    """Surveillance operation status."""    PENDING = "pending"
     ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -745,16 +712,14 @@ class SurveillanceStatus(Enum):
     CANCELLED = "cancelled"
 
 class ThreatLevel(Enum):
-    """Threat level classification."""
-    LOW = "low"
+    """Threat level classification."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
 
 class SurveillanceType(Enum):
-    """Types of surveillance operations."""
-    CONTENT_MONITORING = "content_monitoring"
+    """Types of surveillance operations."""    CONTENT_MONITORING = "content_monitoring"
     VIOLATION_DETECTION = "violation_detection"
     TRADEMARK_WATCH = "trademark_watch"
     COMPETITOR_ANALYSIS = "competitor_analysis"
@@ -762,8 +727,7 @@ class SurveillanceType(Enum):
     SENTIMENT_TRACKING = "sentiment_tracking"
 
 class Platform(Enum):
-    """Supported surveillance platforms."""
-    YOUTUBE = "youtube"
+    """Supported surveillance platforms."""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -777,8 +741,7 @@ class Platform(Enum):
 
 @dataclass
 class SurveillanceTarget:
-    """Surveillance target configuration."""
-    target_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Surveillance target configuration."""    target_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     platform: Platform = Platform.GENERIC
     target_type: str = "content"  # content, user, hashtag, keyword
     identifier: str = ""  # URL, username, hashtag, etc.
@@ -793,8 +756,7 @@ class SurveillanceTarget:
 
 @dataclass
 class SurveillanceResult:
-    """Surveillance operation result."""
-    result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Surveillance operation result."""    result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     target_id: str = ""
     operation_id: str = ""
     platform: Platform = Platform.GENERIC
@@ -811,8 +773,7 @@ class SurveillanceResult:
 
 @dataclass
 class SurveillanceMetrics:
-    """Surveillance operation metrics."""
-    total_targets: int = 0
+    """Surveillance operation metrics."""    total_targets: int = 0
     active_targets: int = 0
     total_operations: int = 0
     successful_operations: int = 0
@@ -823,13 +784,11 @@ class SurveillanceMetrics:
     last_updated: datetime = field(default_factory=datetime.now)
 
 class SurveillanceData(BaseModel):
-    """
-    Comprehensive surveillance data model.
+    """    Comprehensive surveillance data model.
     
     Represents surveillance operations, targets, results, and metrics
     for the IA-Influencer-Agent content protection platform.
-    """
-    
+    """    
     # Operation information
     operation_id: str = Field(..., description="Unique operation identifier")
     surveillance_type: SurveillanceType = Field(..., description="Type of surveillance")
@@ -884,16 +843,13 @@ class SurveillanceData(BaseModel):
         return v
 
 class SurveillanceSerializer:
-    """
-    Advanced surveillance data serialization system.
+    """    Advanced surveillance data serialization system.
     
     Handles efficient serialization and deserialization of surveillance
     operations, targets, results, and metrics with real-time optimization.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize surveillance serializer."""
-        self.compression_threshold = 10 * 1024  # 10KB
+        """Initialize surveillance serializer."""        self.compression_threshold = 10 * 1024  # 10KB
         self.max_result_history = 1000  # Maximum results to keep
         
         logger.info("Surveillance serializer initialized")
@@ -904,8 +860,7 @@ class SurveillanceSerializer:
         include_full_history: bool = False,
         compress_results: bool = True
     ) -> Dict[str, Any]:
-        """
-        Serialize surveillance data to dictionary format.
+        """        Serialize surveillance data to dictionary format.
         
         Args:
             surveillance_data: Surveillance data to serialize
@@ -914,8 +869,7 @@ class SurveillanceSerializer:
             
         Returns:
             Serialized surveillance dictionary
-        """
-        try:
+        """        try:
             # Convert to dictionary
             data = surveillance_data.dict()
             
@@ -967,16 +921,14 @@ class SurveillanceSerializer:
         self,
         data: Dict[str, Any]
     ) -> SurveillanceData:
-        """
-        Deserialize surveillance data from dictionary format.
+        """        Deserialize surveillance data from dictionary format.
         
         Args:
             data: Serialized surveillance dictionary
             
         Returns:
             Deserialized SurveillanceData object
-        """
-        try:
+        """        try:
             # Handle datetime conversions
             if isinstance(data.get('started_at'), str):
                 data['started_at'] = datetime.fromisoformat(data['started_at'])
@@ -1025,8 +977,7 @@ class SurveillanceSerializer:
         surveillance_list: List[SurveillanceData],
         compact_mode: bool = True
     ) -> List[Dict[str, Any]]:
-        """Serialize multiple surveillance operations efficiently."""
-        try:
+        """Serialize multiple surveillance operations efficiently."""        try:
             serialized_list = []
             
             for surveillance in surveillance_list:
@@ -1048,8 +999,7 @@ class SurveillanceSerializer:
         self,
         data_list: List[Dict[str, Any]]
     ) -> List[SurveillanceData]:
-        """Deserialize multiple surveillance operations efficiently."""
-        try:
+        """Deserialize multiple surveillance operations efficiently."""        try:
             surveillance_list = []
             
             for data in data_list:
@@ -1064,8 +1014,7 @@ class SurveillanceSerializer:
             raise
     
     def _serialize_target(self, target: SurveillanceTarget) -> Dict[str, Any]:
-        """Serialize surveillance target."""
-        data = {
+        """Serialize surveillance target."""        data = {
             'target_id': target.target_id,
             'platform': target.platform.value,
             'target_type': target.target_type,
@@ -1085,8 +1034,7 @@ class SurveillanceSerializer:
         return data
     
     def _deserialize_target(self, data: Dict[str, Any]) -> SurveillanceTarget:
-        """Deserialize surveillance target."""
-        # Convert datetime strings
+        """Deserialize surveillance target."""        # Convert datetime strings
         if isinstance(data.get('created_at'), str):
             data['created_at'] = datetime.fromisoformat(data['created_at'])
         
@@ -1100,8 +1048,7 @@ class SurveillanceSerializer:
         return SurveillanceTarget(**data)
     
     def _serialize_result(self, result: SurveillanceResult) -> Dict[str, Any]:
-        """Serialize surveillance result."""
-        data = {
+        """Serialize surveillance result."""        data = {
             'result_id': result.result_id,
             'target_id': result.target_id,
             'operation_id': result.operation_id,
@@ -1123,8 +1070,7 @@ class SurveillanceSerializer:
         return data
     
     def _deserialize_result(self, data: Dict[str, Any]) -> SurveillanceResult:
-        """Deserialize surveillance result."""
-        # Convert datetime strings
+        """Deserialize surveillance result."""        # Convert datetime strings
         if isinstance(data.get('detected_at'), str):
             data['detected_at'] = datetime.fromisoformat(data['detected_at'])
         
@@ -1141,8 +1087,7 @@ class SurveillanceSerializer:
         return SurveillanceResult(**data)
     
     def _serialize_metrics(self, metrics: SurveillanceMetrics) -> Dict[str, Any]:
-        """Serialize surveillance metrics."""
-        return {
+        """Serialize surveillance metrics."""        return {
             'total_targets': metrics.total_targets,
             'active_targets': metrics.active_targets,
             'total_operations': metrics.total_operations,
@@ -1155,8 +1100,7 @@ class SurveillanceSerializer:
         }
     
     def _deserialize_metrics(self, data: Dict[str, Any]) -> SurveillanceMetrics:
-        """Deserialize surveillance metrics."""
-        if isinstance(data.get('last_updated'), str):
+        """Deserialize surveillance metrics."""        if isinstance(data.get('last_updated'), str):
             data['last_updated'] = datetime.fromisoformat(data['last_updated'])
         
         return SurveillanceMetrics(**data)
@@ -1165,8 +1109,7 @@ class SurveillanceSerializer:
         self,
         surveillance_data: SurveillanceData
     ) -> Dict[str, Any]:
-        """Create compact summary of surveillance operation."""
-        try:
+        """Create compact summary of surveillance operation."""        try:
             summary = {
                 'operation_id': surveillance_data.operation_id,
                 'surveillance_type': surveillance_data.surveillance_type.value,
@@ -1210,8 +1153,7 @@ class SurveillanceSerializer:
         surveillance_data: SurveillanceData,
         min_threat_level: ThreatLevel
     ) -> List[SurveillanceResult]:
-        """Filter surveillance results by minimum threat level."""
-        try:
+        """Filter surveillance results by minimum threat level."""        try:
             threat_levels = {
                 ThreatLevel.LOW: 1,
                 ThreatLevel.MEDIUM: 2,
@@ -1241,8 +1183,7 @@ class SurveillanceSerializer:
         self,
         surveillance_list: List[SurveillanceData]
     ) -> Dict[str, Any]:
-        """Aggregate metrics across multiple surveillance operations."""
-        try:
+        """Aggregate metrics across multiple surveillance operations."""        try:
             total_targets = 0
             total_violations = 0
             threat_distribution = {level.value: 0 for level in ThreatLevel}

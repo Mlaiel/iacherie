@@ -1,5 +1,4 @@
-"""
-Revenue Optimization Engine for IA Influencer Agent Platform
+"""Revenue Optimization Engine for IA Influencer Agent Platform
 
 Advanced monetization strategies, revenue stream optimization, and financial
 intelligence for multi-format creators and influencers.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -28,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStream(Enum):
-    """Types of revenue streams for creators."""
-    ADVERTISING_REVENUE = "advertising_revenue"
+    """Types of revenue streams for creators."""    ADVERTISING_REVENUE = "advertising_revenue"
     SUBSCRIPTION_FEES = "subscription_fees"
     MERCHANDISE_SALES = "merchandise_sales"
     BRAND_PARTNERSHIPS = "brand_partnerships"
@@ -44,8 +41,7 @@ class RevenueStream(Enum):
 
 
 class MonetizationTier(Enum):
-    """Monetization tiers based on creator status."""
-    EMERGING = "emerging"          # 0-1K followers
+    """Monetization tiers based on creator status."""    EMERGING = "emerging"          # 0-1K followers
     GROWING = "growing"            # 1K-10K followers
     ESTABLISHED = "established"    # 10K-100K followers
     INFLUENTIAL = "influential"    # 100K-1M followers
@@ -53,8 +49,7 @@ class MonetizationTier(Enum):
 
 
 class RevenueCategory(Enum):
-    """Categories of revenue for analysis."""
-    PASSIVE_INCOME = "passive_income"
+    """Categories of revenue for analysis."""    PASSIVE_INCOME = "passive_income"
     ACTIVE_INCOME = "active_income"
     RECURRING_REVENUE = "recurring_revenue"
     ONE_TIME_REVENUE = "one_time_revenue"
@@ -64,8 +59,7 @@ class RevenueCategory(Enum):
 
 @dataclass
 class RevenueOpportunity:
-    """Individual revenue opportunity."""
-    opportunity_id: str
+    """Individual revenue opportunity."""    opportunity_id: str
     revenue_stream: RevenueStream
     category: RevenueCategory
     estimated_monthly_revenue: Decimal
@@ -85,8 +79,7 @@ class RevenueOpportunity:
 
 @dataclass
 class MonetizationStrategy:
-    """Comprehensive monetization strategy."""
-    strategy_id: str
+    """Comprehensive monetization strategy."""    strategy_id: str
     creator_id: str
     tier: MonetizationTier
     primary_opportunities: List[RevenueOpportunity]
@@ -103,8 +96,7 @@ class MonetizationStrategy:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics."""
-    creator_id: str
+    """Revenue performance metrics."""    creator_id: str
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -120,16 +112,13 @@ class RevenueMetrics:
 
 
 class RevenueOptimizationEngine:
-    """
-    Advanced revenue optimization engine for creator monetization.
+    """    Advanced revenue optimization engine for creator monetization.
     
     Analyzes creator profiles, audience data, and market conditions to provide
     personalized monetization strategies and revenue optimization recommendations.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the revenue optimization engine."""
-        self.creator_profiles: Dict[str, Dict[str, Any]] = {}
+        """Initialize the revenue optimization engine."""        self.creator_profiles: Dict[str, Dict[str, Any]] = {}
         self.revenue_data: Dict[str, List[RevenueMetrics]] = defaultdict(list)
         self.market_rates: Dict[RevenueStream, Dict[str, float]] = {}
         self.industry_benchmarks: Dict[str, Dict[str, float]] = {}
@@ -183,8 +172,7 @@ class RevenueOptimizationEngine:
         }
     
     def _initialize_market_data(self):
-        """Initialize market rates and data."""
-        try:
+        """Initialize market rates and data."""        try:
             # Average market rates per 1K followers/views
             self.market_rates = {
                 RevenueStream.BRAND_PARTNERSHIPS: {
@@ -221,8 +209,7 @@ class RevenueOptimizationEngine:
             raise
     
     def _initialize_industry_benchmarks(self):
-        """Initialize industry benchmarks."""
-        try:
+        """Initialize industry benchmarks."""        try:
             self.industry_benchmarks = {
                 'musician': {
                     'revenue_per_follower': 0.15,
@@ -268,8 +255,7 @@ class RevenueOptimizationEngine:
         current_revenue_data: Optional[RevenueMetrics] = None,
         target_monthly_revenue: Optional[Decimal] = None
     ) -> MonetizationStrategy:
-        """
-        Generate comprehensive monetization strategy for creator.
+        """        Generate comprehensive monetization strategy for creator.
         
         Args:
             creator_profile: Creator profile with audience, content, and performance data
@@ -278,8 +264,7 @@ class RevenueOptimizationEngine:
             
         Returns:
             MonetizationStrategy: Comprehensive monetization strategy
-        """
-        try:
+        """        try:
             creator_id = creator_profile['creator_id']
             creator_type = creator_profile.get('creator_type', 'influencer')
             follower_count = creator_profile.get('follower_count', 0)
@@ -347,8 +332,7 @@ class RevenueOptimizationEngine:
             raise
     
     def _determine_monetization_tier(self, follower_count: int) -> MonetizationTier:
-        """Determine monetization tier based on follower count."""
-        try:
+        """Determine monetization tier based on follower count."""        try:
             if follower_count >= 1000000:
                 return MonetizationTier.CELEBRITY
             elif follower_count >= 100000:
@@ -368,8 +352,7 @@ class RevenueOptimizationEngine:
         creator_profile: Dict[str, Any], 
         tier: MonetizationTier
     ) -> List[RevenueOpportunity]:
-        """Generate primary revenue opportunities."""
-        try:
+        """Generate primary revenue opportunities."""        try:
             opportunities = []
             creator_type = creator_profile.get('creator_type', 'influencer')
             follower_count = creator_profile.get('follower_count', 0)
@@ -404,8 +387,7 @@ class RevenueOptimizationEngine:
         creator_profile: Dict[str, Any], 
         tier: MonetizationTier
     ) -> List[RevenueOpportunity]:
-        """Generate secondary revenue opportunities."""
-        try:
+        """Generate secondary revenue opportunities."""        try:
             opportunities = []
             creator_type = creator_profile.get('creator_type', 'influencer')
             
@@ -438,8 +420,7 @@ class RevenueOptimizationEngine:
         tier: MonetizationTier,
         is_primary: bool = True
     ) -> Optional[RevenueOpportunity]:
-        """Create individual revenue opportunity."""
-        try:
+        """Create individual revenue opportunity."""        try:
             creator_id = creator_profile['creator_id']
             creator_type = creator_profile.get('creator_type', 'influencer')
             follower_count = creator_profile.get('follower_count', 0)
@@ -495,8 +476,7 @@ class RevenueOptimizationEngine:
         creator_profile: Dict[str, Any],
         tier: MonetizationTier
     ) -> Decimal:
-        """Calculate revenue potential for specific stream."""
-        try:
+        """Calculate revenue potential for specific stream."""        try:
             follower_count = creator_profile.get('follower_count', 0)
             engagement_rate = creator_profile.get('engagement_rate', 0.03)
             niche = creator_profile.get('niche', ['general'])[0]
@@ -619,8 +599,7 @@ class RevenueOptimizationEngine:
             return Decimal('0.00')
     
     def _assess_implementation_difficulty(self, stream: RevenueStream, tier: MonetizationTier) -> float:
-        """Assess implementation difficulty (0-1 scale, 1 being most difficult)."""
-        try:
+        """Assess implementation difficulty (0-1 scale, 1 being most difficult)."""        try:
             difficulty_matrix = {
                 RevenueStream.ADVERTISING_REVENUE: 0.2,
                 RevenueStream.AFFILIATE_MARKETING: 0.3,
@@ -654,8 +633,7 @@ class RevenueOptimizationEngine:
             return 0.5
     
     def _estimate_time_to_revenue(self, stream: RevenueStream, tier: MonetizationTier) -> int:
-        """Estimate time to first revenue in days."""
-        try:
+        """Estimate time to first revenue in days."""        try:
             time_matrix = {
                 RevenueStream.ADVERTISING_REVENUE: 30,
                 RevenueStream.AFFILIATE_MARKETING: 14,
@@ -689,8 +667,7 @@ class RevenueOptimizationEngine:
             return 60
     
     def _calculate_audience_match(self, stream: RevenueStream, creator_profile: Dict[str, Any]) -> float:
-        """Calculate how well the revenue stream matches the creator's audience."""
-        try:
+        """Calculate how well the revenue stream matches the creator's audience."""        try:
             creator_type = creator_profile.get('creator_type', 'influencer')
             niche = creator_profile.get('niche', ['general'])
             audience_demographics = creator_profile.get('target_audience', {})
@@ -732,8 +709,7 @@ class RevenueOptimizationEngine:
             return 0.6
     
     def _assess_market_saturation(self, stream: RevenueStream, niche: str) -> float:
-        """Assess market saturation for the revenue stream in the niche."""
-        try:
+        """Assess market saturation for the revenue stream in the niche."""        try:
             # Market saturation levels (0-1, 1 being highly saturated)
             saturation_matrix = {
                 ('general', RevenueStream.BRAND_PARTNERSHIPS): 0.8,
@@ -753,8 +729,7 @@ class RevenueOptimizationEngine:
             return 0.6
     
     def _calculate_scalability_factor(self, stream: RevenueStream, creator_type: str) -> float:
-        """Calculate scalability factor (0-10 scale)."""
-        try:
+        """Calculate scalability factor (0-10 scale)."""        try:
             scalability_matrix = {
                 RevenueStream.DIGITAL_PRODUCTS: 9.0,
                 RevenueStream.SUBSCRIPTION_FEES: 8.5,
@@ -776,8 +751,7 @@ class RevenueOptimizationEngine:
             return 5.0
     
     def _assess_risk_level(self, stream: RevenueStream, tier: MonetizationTier) -> float:
-        """Assess risk level for revenue stream (0-1 scale)."""
-        try:
+        """Assess risk level for revenue stream (0-1 scale)."""        try:
             risk_matrix = {
                 RevenueStream.ADVERTISING_REVENUE: 0.3,
                 RevenueStream.PLATFORM_MONETIZATION: 0.4,
@@ -818,8 +792,7 @@ class RevenueOptimizationEngine:
         implementation_difficulty: float,
         audience_match: float
     ) -> float:
-        """Calculate overall success probability."""
-        try:
+        """Calculate overall success probability."""        try:
             # Base success rates by stream
             base_success = {
                 RevenueStream.ADVERTISING_REVENUE: 0.8,
@@ -860,8 +833,7 @@ class RevenueOptimizationEngine:
             return 0.5
     
     def _categorize_revenue_stream(self, stream: RevenueStream) -> RevenueCategory:
-        """Categorize revenue stream by income type."""
-        try:
+        """Categorize revenue stream by income type."""        try:
             category_mapping = {
                 RevenueStream.ADVERTISING_REVENUE: RevenueCategory.PASSIVE_INCOME,
                 RevenueStream.SUBSCRIPTION_FEES: RevenueCategory.RECURRING_REVENUE,
@@ -883,8 +855,7 @@ class RevenueOptimizationEngine:
             return RevenueCategory.ACTIVE_INCOME
     
     def _get_stream_specific_data(self, stream: RevenueStream, creator_type: str) -> Dict[str, Any]:
-        """Get stream-specific implementation data."""
-        try:
+        """Get stream-specific implementation data."""        try:
             stream_data = {
                 RevenueStream.BRAND_PARTNERSHIPS: {
                     'description': 'Partner with brands to promote products/services to your audience',
@@ -983,8 +954,7 @@ class RevenueOptimizationEngine:
             }
     
     async def _calculate_revenue_potential(self, creator_profile: Dict[str, Any]) -> Dict[str, Decimal]:
-        """Calculate overall revenue potential."""
-        try:
+        """Calculate overall revenue potential."""        try:
             potential = {}
             creator_type = creator_profile.get('creator_type', 'influencer')
             tier = self._determine_monetization_tier(creator_profile.get('follower_count', 0))
@@ -1003,8 +973,7 @@ class RevenueOptimizationEngine:
             return {}
     
     async def _assess_implementation_timeline(self, creator_profile: Dict[str, Any]) -> Dict[str, int]:
-        """Assess implementation timeline for opportunities."""
-        try:
+        """Assess implementation timeline for opportunities."""        try:
             timeline = {}
             creator_type = creator_profile.get('creator_type', 'influencer')
             tier = self._determine_monetization_tier(creator_profile.get('follower_count', 0))
@@ -1021,8 +990,7 @@ class RevenueOptimizationEngine:
             return {}
     
     async def _analyze_resource_requirements(self, creator_profile: Dict[str, Any]) -> Dict[str, List[str]]:
-        """Analyze resource requirements for implementation."""
-        try:
+        """Analyze resource requirements for implementation."""        try:
             resources = {}
             creator_type = creator_profile.get('creator_type', 'influencer')
             
@@ -1039,8 +1007,7 @@ class RevenueOptimizationEngine:
             return {}
     
     async def _evaluate_risks(self, creator_profile: Dict[str, Any]) -> Dict[str, float]:
-        """Evaluate risks for each revenue stream."""
-        try:
+        """Evaluate risks for each revenue stream."""        try:
             risks = {}
             tier = self._determine_monetization_tier(creator_profile.get('follower_count', 0))
             creator_type = creator_profile.get('creator_type', 'influencer')
@@ -1061,8 +1028,7 @@ class RevenueOptimizationEngine:
         creator_profile: Dict[str, Any], 
         opportunities: List[RevenueOpportunity]
     ) -> List[str]:
-        """Generate success metrics for strategy."""
-        try:
+        """Generate success metrics for strategy."""        try:
             metrics = [
                 'monthly_recurring_revenue',
                 'total_monthly_revenue',
@@ -1092,8 +1058,7 @@ class RevenueOptimizationEngine:
         opportunities: List[RevenueOpportunity], 
         timeline: Dict[str, int]
     ) -> List[Dict[str, Any]]:
-        """Create quarterly implementation milestones."""
-        try:
+        """Create quarterly implementation milestones."""        try:
             milestones = []
             
             # Q1 Milestones
@@ -1152,8 +1117,7 @@ class RevenueOptimizationEngine:
         opportunities: List[RevenueOpportunity],
         current_revenue: Optional[RevenueMetrics]
     ) -> List[str]:
-        """Generate optimization recommendations."""
-        try:
+        """Generate optimization recommendations."""        try:
             recommendations = []
             
             # Diversification recommendations
@@ -1205,11 +1169,9 @@ class RevenueOptimizationEngine:
 
 
 class RevenueTracker:
-    """Track and analyze revenue performance."""
-    
+    """Track and analyze revenue performance."""    
     def __init__(self):
-        """Initialize revenue tracker."""
-        self.revenue_history: Dict[str, List[RevenueMetrics]] = defaultdict(list)
+        """Initialize revenue tracker."""        self.revenue_history: Dict[str, List[RevenueMetrics]] = defaultdict(list)
         self.benchmark_data: Dict[str, Dict[str, float]] = {}
     
     async def track_revenue_metrics(
@@ -1219,8 +1181,7 @@ class RevenueTracker:
         period_start: datetime,
         period_end: datetime
     ) -> RevenueMetrics:
-        """Track revenue metrics for a creator."""
-        try:
+        """Track revenue metrics for a creator."""        try:
             # Parse revenue data
             total_revenue = Decimal(str(revenue_data.get('total_revenue', 0)))
             revenue_by_stream = {
@@ -1255,8 +1216,7 @@ class RevenueTracker:
             raise
     
     def calculate_performance_trends(self, creator_id: str) -> Dict[str, Any]:
-        """Calculate performance trends for a creator."""
-        try:
+        """Calculate performance trends for a creator."""        try:
             history = self.revenue_history.get(creator_id, [])
             if len(history) < 2:
                 return {}

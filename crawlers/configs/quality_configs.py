@@ -1,5 +1,4 @@
-"""
-Quality Assurance and Validation Configurations
+"""Quality Assurance and Validation Configurations
 ===============================================
 
 Advanced quality control system for crawler operations and content validation.
@@ -16,7 +15,6 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
-
 import os
 from typing import Dict, List, Optional, Union, Any, Callable
 from dataclasses import dataclass, field
@@ -26,24 +24,21 @@ import json
 from pathlib import Path
 
 class QualityLevel(Enum):
-    """Quality levels for different validation requirements."""
-    BASIC = "basic"
+    """Quality levels for different validation requirements."""    BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 class ValidationSeverity(Enum):
-    """Severity levels for validation issues."""
-    INFO = "info"
+    """Severity levels for validation issues."""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
     BLOCKER = "blocker"
 
 class DataQualityMetric(Enum):
-    """Data quality metrics."""
-    COMPLETENESS = "completeness"
+    """Data quality metrics."""    COMPLETENESS = "completeness"
     ACCURACY = "accuracy"
     CONSISTENCY = "consistency"
     TIMELINESS = "timeliness"
@@ -53,8 +48,7 @@ class DataQualityMetric(Enum):
     PRECISION = "precision"
 
 class ValidationRule(Enum):
-    """Types of validation rules."""
-    REQUIRED_FIELD = "required_field"
+    """Types of validation rules."""    REQUIRED_FIELD = "required_field"
     DATA_TYPE = "data_type"
     FORMAT_PATTERN = "format_pattern"
     VALUE_RANGE = "value_range"
@@ -65,8 +59,7 @@ class ValidationRule(Enum):
 
 @dataclass
 class QualityMetric:
-    """Configuration for individual quality metrics."""
-    name: str
+    """Configuration for individual quality metrics."""    name: str
     metric_type: DataQualityMetric
     threshold: float  # 0.0 to 1.0
     weight: float = 1.0
@@ -89,8 +82,7 @@ class QualityMetric:
 
 @dataclass
 class ValidationRuleConfig:
-    """Configuration for validation rules."""
-    rule_id: str
+    """Configuration for validation rules."""    rule_id: str
     rule_type: ValidationRule
     field_name: str
     severity: ValidationSeverity = ValidationSeverity.ERROR
@@ -117,8 +109,7 @@ class ValidationRuleConfig:
 
 @dataclass
 class ContentQualityConfig:
-    """Configuration for content quality assessment."""
-    enabled: bool = True
+    """Configuration for content quality assessment."""    enabled: bool = True
     
     # Audio quality checks
     audio_quality_enabled: bool = True
@@ -159,8 +150,7 @@ class ContentQualityConfig:
 
 @dataclass
 class DataIntegrityConfig:
-    """Configuration for data integrity checks."""
-    enabled: bool = True
+    """Configuration for data integrity checks."""    enabled: bool = True
     
     # Database integrity
     referential_integrity: bool = True
@@ -186,8 +176,7 @@ class DataIntegrityConfig:
 
 @dataclass
 class PerformanceQualityConfig:
-    """Configuration for performance quality monitoring."""
-    enabled: bool = True
+    """Configuration for performance quality monitoring."""    enabled: bool = True
     
     # Response time monitoring
     response_time_monitoring: bool = True
@@ -217,8 +206,7 @@ class PerformanceQualityConfig:
 
 @dataclass
 class QualityReportConfig:
-    """Configuration for quality reporting."""
-    enabled: bool = True
+    """Configuration for quality reporting."""    enabled: bool = True
     
     # Report types
     daily_reports: bool = True
@@ -248,11 +236,9 @@ class QualityReportConfig:
     escalation_recipients: List[str] = field(default_factory=list)
 
 class QualityConfigManager:
-    """Manager for quality assurance configurations."""
-    
+    """Manager for quality assurance configurations."""    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize quality configuration manager."""
-        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
+        """Initialize quality configuration manager."""        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
         self.quality_metrics: Dict[str, QualityMetric] = {}
         self.validation_rules: Dict[str, ValidationRuleConfig] = {}
         self.content_quality = ContentQualityConfig()
@@ -264,8 +250,7 @@ class QualityConfigManager:
         self._setup_default_rules()
     
     def _load_configurations(self) -> None:
-        """Load quality configurations from files."""
-        try:
+        """Load quality configurations from files."""        try:
             config_file = self.config_dir / "quality_config.json"
             if config_file.exists():
                 with open(config_file, 'r', encoding='utf-8') as f:
@@ -277,8 +262,7 @@ class QualityConfigManager:
             print(f"Error loading quality configurations: {e}")
     
     def _setup_default_metrics(self) -> None:
-        """Setup default quality metrics."""
-        default_metrics = [
+        """Setup default quality metrics."""        default_metrics = [
             QualityMetric(
                 name="Data Completeness",
                 metric_type=DataQualityMetric.COMPLETENESS,
@@ -314,8 +298,7 @@ class QualityConfigManager:
                 self.quality_metrics[metric.name] = metric
     
     def _setup_default_rules(self) -> None:
-        """Setup default validation rules."""
-        default_rules = [
+        """Setup default validation rules."""        default_rules = [
             ValidationRuleConfig(
                 rule_id="content_url_required",
                 rule_type=ValidationRule.REQUIRED_FIELD,
@@ -348,32 +331,27 @@ class QualityConfigManager:
                 self.validation_rules[rule.rule_id] = rule
     
     def add_quality_metric(self, metric: QualityMetric) -> None:
-        """Add a new quality metric."""
-        self.quality_metrics[metric.name] = metric
+        """Add a new quality metric."""        self.quality_metrics[metric.name] = metric
         self._save_configurations()
     
     def add_validation_rule(self, rule: ValidationRuleConfig) -> None:
-        """Add a new validation rule."""
-        self.validation_rules[rule.rule_id] = rule
+        """Add a new validation rule."""        self.validation_rules[rule.rule_id] = rule
         self._save_configurations()
     
     def get_quality_metrics(self, enabled_only: bool = True) -> List[QualityMetric]:
-        """Get quality metrics."""
-        metrics = list(self.quality_metrics.values())
+        """Get quality metrics."""        metrics = list(self.quality_metrics.values())
         if enabled_only:
             metrics = [m for m in metrics if m.enabled]
         return metrics
     
     def get_validation_rules(self, field_name: Optional[str] = None) -> List[ValidationRuleConfig]:
-        """Get validation rules, optionally filtered by field name."""
-        rules = list(self.validation_rules.values())
+        """Get validation rules, optionally filtered by field name."""        rules = list(self.validation_rules.values())
         if field_name:
             rules = [r for r in rules if r.field_name == field_name]
         return [r for r in rules if r.enabled]
     
     def validate_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate data against configured rules."""
-        validation_result = {
+        """Validate data against configured rules."""        validation_result = {
             "valid": True,
             "errors": [],
             "warnings": [],
@@ -398,8 +376,7 @@ class QualityConfigManager:
         return validation_result
     
     def _apply_validation_rule(self, data: Dict[str, Any], rule: ValidationRuleConfig) -> Dict[str, Any]:
-        """Apply a single validation rule to data."""
-        result = {"valid": True, "message": ""}
+        """Apply a single validation rule to data."""        result = {"valid": True, "message": ""}
         field_value = data.get(rule.field_name)
         
         try:
@@ -433,8 +410,7 @@ class QualityConfigManager:
         return result
     
     def calculate_quality_score(self, metrics_data: Dict[str, float]) -> float:
-        """Calculate overall quality score based on metrics."""
-        total_weight = sum(metric.weight for metric in self.get_quality_metrics())
+        """Calculate overall quality score based on metrics."""        total_weight = sum(metric.weight for metric in self.get_quality_metrics())
         if total_weight == 0:
             return 1.0
         
@@ -447,8 +423,7 @@ class QualityConfigManager:
         return weighted_score / total_weight
     
     def get_quality_report(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Generate comprehensive quality report."""
-        report = {
+        """Generate comprehensive quality report."""        report = {
             "period": {
                 "start": start_date.isoformat(),
                 "end": end_date.isoformat()
@@ -469,8 +444,7 @@ class QualityConfigManager:
         return report
     
     def _save_configurations(self) -> None:
-        """Save configurations to file."""
-        try:
+        """Save configurations to file."""        try:
             config_file = self.config_dir / "quality_config.json"
             config_data = {
                 "metrics": {

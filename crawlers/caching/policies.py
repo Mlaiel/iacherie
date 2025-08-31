@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Policies - Advanced Cache Policy Management System
+"""Cache Policies - Advanced Cache Policy Management System
 ========================================================
 
 Comprehensive policy management for cache behavior control,
@@ -10,7 +9,6 @@ lifecycle management, and intelligent decision making.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import json
@@ -28,8 +26,7 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class PolicyType(Enum):
-    """Cache policy types."""
-    EVICTION = "eviction"
+    """Cache policy types."""    EVICTION = "eviction"
     RETENTION = "retention"
     ACCESS = "access"
     STORAGE = "storage"
@@ -37,16 +34,14 @@ class PolicyType(Enum):
     PERFORMANCE = "performance"
 
 class PolicyScope(Enum):
-    """Policy scope levels."""
-    GLOBAL = "global"
+    """Policy scope levels."""    GLOBAL = "global"
     NAMESPACE = "namespace"
     KEY_PATTERN = "key_pattern"
     USER = "user"
     SESSION = "session"
 
 class PolicyAction(Enum):
-    """Policy actions."""
-    ALLOW = "allow"
+    """Policy actions."""    ALLOW = "allow"
     DENY = "deny"
     MODIFY = "modify"
     REDIRECT = "redirect"
@@ -54,8 +49,7 @@ class PolicyAction(Enum):
     ALERT = "alert"
 
 class ConditionOperator(Enum):
-    """Condition operators."""
-    EQUALS = "equals"
+    """Condition operators."""    EQUALS = "equals"
     NOT_EQUALS = "not_equals"
     GREATER_THAN = "greater_than"
     LESS_THAN = "less_than"
@@ -66,16 +60,14 @@ class ConditionOperator(Enum):
 
 @dataclass
 class PolicyCondition:
-    """Policy condition definition."""
-    field: str
+    """Policy condition definition."""    field: str
     operator: ConditionOperator
     value: Any
     case_sensitive: bool = True
 
 @dataclass
 class PolicyRule:
-    """Policy rule definition."""
-    rule_id: str
+    """Policy rule definition."""    rule_id: str
     name: str
     description: str
     conditions: List[PolicyCondition]
@@ -88,8 +80,7 @@ class PolicyRule:
 
 @dataclass
 class CachePolicy:
-    """Cache policy definition."""
-    policy_id: str
+    """Cache policy definition."""    policy_id: str
     name: str
     description: str
     policy_type: PolicyType
@@ -103,8 +94,7 @@ class CachePolicy:
 
 @dataclass
 class PolicyEvaluation:
-    """Policy evaluation result."""
-    policy_id: str
+    """Policy evaluation result."""    policy_id: str
     rule_id: Optional[str]
     action: PolicyAction
     allowed: bool
@@ -113,8 +103,7 @@ class PolicyEvaluation:
     evaluation_time: datetime = field(default_factory=datetime.now)
 
 class PolicyEngine:
-    """
-    Advanced cache policy management engine.
+    """    Advanced cache policy management engine.
     
     Features:
     - Multi-level policy hierarchy
@@ -122,11 +111,9 @@ class PolicyEngine:
     - Pattern matching
     - Dynamic policy updates
     - Audit logging
-    """
-    
+    """    
     def __init__(self):
-        """Initialize policy engine."""
-        self.logger = logging.getLogger(f"{__name__}.PolicyEngine")
+        """Initialize policy engine."""        self.logger = logging.getLogger(f"{__name__}.PolicyEngine")
         
         # Policy storage
         self.policies: Dict[str, CachePolicy] = {}
@@ -164,8 +151,7 @@ class PolicyEngine:
         self.logger.info("Policy engine initialized")
     
     async def add_policy(self, policy: CachePolicy) -> bool:
-        """Add cache policy."""
-        try:
+        """Add cache policy."""        try:
             with self.lock:
                 self.policies[policy.policy_id] = policy
                 self.policies_by_type[policy.policy_type].append(policy)
@@ -184,8 +170,7 @@ class PolicyEngine:
             return False
     
     async def remove_policy(self, policy_id: str) -> bool:
-        """Remove cache policy."""
-        try:
+        """Remove cache policy."""        try:
             with self.lock:
                 if policy_id not in self.policies:
                     return False
@@ -207,8 +192,7 @@ class PolicyEngine:
             return False
     
     async def update_policy(self, policy_id: str, updates: Dict[str, Any]) -> bool:
-        """Update cache policy."""
-        try:
+        """Update cache policy."""        try:
             with self.lock:
                 if policy_id not in self.policies:
                     return False
@@ -247,8 +231,7 @@ class PolicyEngine:
     
     async def evaluate_policies(self, policy_type: PolicyType,
                               context: Dict[str, Any]) -> List[PolicyEvaluation]:
-        """
-        Evaluate policies for given context.
+        """        Evaluate policies for given context.
         
         Args:
             policy_type: Type of policies to evaluate
@@ -256,8 +239,7 @@ class PolicyEngine:
             
         Returns:
             List of policy evaluations
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             evaluations = []
             
@@ -304,8 +286,7 @@ class PolicyEngine:
     
     async def _get_applicable_policies(self, policy_type: PolicyType,
                                      context: Dict[str, Any]) -> List[CachePolicy]:
-        """Get policies applicable to the context."""
-        try:
+        """Get policies applicable to the context."""        try:
             applicable = []
             
             with self.lock:
@@ -323,8 +304,7 @@ class PolicyEngine:
     
     async def _is_policy_applicable(self, policy: CachePolicy,
                                   context: Dict[str, Any]) -> bool:
-        """Check if policy is applicable to context."""
-        try:
+        """Check if policy is applicable to context."""        try:
             # Check scope
             if policy.scope == PolicyScope.GLOBAL:
                 return True
@@ -352,8 +332,7 @@ class PolicyEngine:
             return False
     
     def _match_pattern(self, text: str, pattern: str) -> bool:
-        """Match text against pattern."""
-        try:
+        """Match text against pattern."""        try:
             # Support wildcards and regex
             if '*' in pattern or '?' in pattern:
                 # Convert wildcard to regex
@@ -370,8 +349,7 @@ class PolicyEngine:
     
     async def _evaluate_policy(self, policy: CachePolicy,
                              context: Dict[str, Any]) -> Optional[PolicyEvaluation]:
-        """Evaluate single policy against context."""
-        try:
+        """Evaluate single policy against context."""        try:
             # Evaluate rules in priority order
             for rule in sorted(policy.rules, key=lambda r: r.priority, reverse=True):
                 if not rule.enabled:
@@ -395,8 +373,7 @@ class PolicyEngine:
     
     async def _evaluate_rule(self, rule: PolicyRule,
                            context: Dict[str, Any]) -> bool:
-        """Evaluate rule conditions."""
-        try:
+        """Evaluate rule conditions."""        try:
             # All conditions must be true (AND logic)
             for condition in rule.conditions:
                 if not await self._evaluate_condition(condition, context):
@@ -410,8 +387,7 @@ class PolicyEngine:
     
     async def _evaluate_condition(self, condition: PolicyCondition,
                                 context: Dict[str, Any]) -> bool:
-        """Evaluate single condition."""
-        try:
+        """Evaluate single condition."""        try:
             # Get field value from context
             field_value = context.get(condition.field)
             
@@ -432,37 +408,32 @@ class PolicyEngine:
     
     def _evaluate_equals(self, field_value: Any, condition_value: Any,
                         case_sensitive: bool) -> bool:
-        """Evaluate equals condition."""
-        if isinstance(field_value, str) and isinstance(condition_value, str):
+        """Evaluate equals condition."""        if isinstance(field_value, str) and isinstance(condition_value, str):
             if not case_sensitive:
                 return field_value.lower() == condition_value.lower()
         return field_value == condition_value
     
     def _evaluate_not_equals(self, field_value: Any, condition_value: Any,
                            case_sensitive: bool) -> bool:
-        """Evaluate not equals condition."""
-        return not self._evaluate_equals(field_value, condition_value, case_sensitive)
+        """Evaluate not equals condition."""        return not self._evaluate_equals(field_value, condition_value, case_sensitive)
     
     def _evaluate_greater_than(self, field_value: Any, condition_value: Any,
                              case_sensitive: bool) -> bool:
-        """Evaluate greater than condition."""
-        try:
+        """Evaluate greater than condition."""        try:
             return float(field_value) > float(condition_value)
         except (ValueError, TypeError):
             return False
     
     def _evaluate_less_than(self, field_value: Any, condition_value: Any,
                           case_sensitive: bool) -> bool:
-        """Evaluate less than condition."""
-        try:
+        """Evaluate less than condition."""        try:
             return float(field_value) < float(condition_value)
         except (ValueError, TypeError):
             return False
     
     def _evaluate_contains(self, field_value: Any, condition_value: Any,
                          case_sensitive: bool) -> bool:
-        """Evaluate contains condition."""
-        try:
+        """Evaluate contains condition."""        try:
             field_str = str(field_value)
             condition_str = str(condition_value)
             
@@ -476,8 +447,7 @@ class PolicyEngine:
     
     def _evaluate_regex_match(self, field_value: Any, condition_value: Any,
                             case_sensitive: bool) -> bool:
-        """Evaluate regex match condition."""
-        try:
+        """Evaluate regex match condition."""        try:
             flags = 0 if case_sensitive else re.IGNORECASE
             return bool(re.search(str(condition_value), str(field_value), flags))
         except Exception:
@@ -485,8 +455,7 @@ class PolicyEngine:
     
     def _evaluate_in_list(self, field_value: Any, condition_value: Any,
                         case_sensitive: bool) -> bool:
-        """Evaluate in list condition."""
-        try:
+        """Evaluate in list condition."""        try:
             if not isinstance(condition_value, list):
                 return False
             
@@ -500,13 +469,11 @@ class PolicyEngine:
     
     def _evaluate_not_in_list(self, field_value: Any, condition_value: Any,
                             case_sensitive: bool) -> bool:
-        """Evaluate not in list condition."""
-        return not self._evaluate_in_list(field_value, condition_value, case_sensitive)
+        """Evaluate not in list condition."""        return not self._evaluate_in_list(field_value, condition_value, case_sensitive)
     
     def _generate_cache_key(self, policy_type: PolicyType,
                           context: Dict[str, Any]) -> str:
-        """Generate cache key for evaluation."""
-        try:
+        """Generate cache key for evaluation."""        try:
             # Create deterministic key from policy type and context
             key_parts = [policy_type.value]
             
@@ -520,8 +487,7 @@ class PolicyEngine:
             return f"{policy_type.value}:unknown"
     
     async def get_policy_stats(self) -> Dict[str, Any]:
-        """Get policy engine statistics."""
-        try:
+        """Get policy engine statistics."""        try:
             with self.lock:
                 policy_counts = {}
                 for policy_type in PolicyType:
@@ -559,8 +525,7 @@ class PolicyEngine:
             return {}
     
     async def export_policies(self) -> Dict[str, Any]:
-        """Export all policies to dictionary."""
-        try:
+        """Export all policies to dictionary."""        try:
             with self.lock:
                 policies_data = {}
                 
@@ -611,13 +576,11 @@ class PolicyEngine:
     
     async def import_policies(self, policies_data: Dict[str, Any],
                             overwrite_existing: bool = False) -> Tuple[int, int]:
-        """
-        Import policies from dictionary.
+        """        Import policies from dictionary.
         
         Returns:
             Tuple of (imported_count, error_count)
-        """
-        try:
+        """        try:
             imported_count = 0
             error_count = 0
             
@@ -686,12 +649,10 @@ class PolicyEngine:
             return 0, 1
 
 class PolicyTemplates:
-    """Pre-defined policy templates for common use cases."""
-    
+    """Pre-defined policy templates for common use cases."""    
     @staticmethod
     def create_size_limit_policy(max_size_mb: int, namespace: str = "*") -> CachePolicy:
-        """Create policy to limit cache entry size."""
-        rule = PolicyRule(
+        """Create policy to limit cache entry size."""        rule = PolicyRule(
             rule_id=generate_uuid(),
             name="Size Limit Rule",
             description=f"Deny cache entries larger than {max_size_mb}MB",
@@ -718,8 +679,7 @@ class PolicyTemplates:
     
     @staticmethod
     def create_ttl_policy(ttl_seconds: int, key_pattern: str) -> CachePolicy:
-        """Create TTL-based retention policy."""
-        rule = PolicyRule(
+        """Create TTL-based retention policy."""        rule = PolicyRule(
             rule_id=generate_uuid(),
             name="TTL Rule",
             description=f"Set TTL to {ttl_seconds} seconds",
@@ -742,8 +702,7 @@ class PolicyTemplates:
     @staticmethod
     def create_access_control_policy(allowed_users: List[str],
                                    key_pattern: str) -> CachePolicy:
-        """Create user access control policy."""
-        rule = PolicyRule(
+        """Create user access control policy."""        rule = PolicyRule(
             rule_id=generate_uuid(),
             name="Access Control Rule",
             description="Allow access only to specified users",

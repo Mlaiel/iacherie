@@ -1,5 +1,4 @@
-"""
-Entity Extraction Exceptions - IA Influencer Agent
+"""Entity Extraction Exceptions - IA Influencer Agent
 
 Custom exception classes for robust error handling in entity extraction module
 with specific error types for different failure scenarios.
@@ -13,14 +12,12 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, Any, Optional, List
 import logging
 
 
 class EntityExtractionError(Exception):
-    """Base exception for entity extraction errors"""
-    
+    """Base exception for entity extraction errors"""    
     def __init__(self, message: str, error_code: str = None, details: Dict[str, Any] = None):
         self.message = message
         self.error_code = error_code or "ENTITY_EXTRACTION_ERROR"
@@ -28,8 +25,7 @@ class EntityExtractionError(Exception):
         super().__init__(self.message)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for API responses"""
-        return {
+        """Convert exception to dictionary for API responses"""        return {
             'error': self.error_code,
             'message': self.message,
             'details': self.details,
@@ -38,8 +34,7 @@ class EntityExtractionError(Exception):
 
 
 class ModelLoadError(EntityExtractionError):
-    """Raised when ML models fail to load"""
-    
+    """Raised when ML models fail to load"""    
     def __init__(self, model_name: str, reason: str = None):
         message = f"Failed to load model '{model_name}'"
         if reason:
@@ -54,8 +49,7 @@ class ModelLoadError(EntityExtractionError):
 
 
 class ModelInferenceError(EntityExtractionError):
-    """Raised when model inference fails"""
-    
+    """Raised when model inference fails"""    
     def __init__(self, model_name: str, input_data: Any = None, reason: str = None):
         message = f"Model inference failed for '{model_name}'"
         if reason:
@@ -71,8 +65,7 @@ class ModelInferenceError(EntityExtractionError):
 
 
 class InvalidInputError(EntityExtractionError):
-    """Raised when input data is invalid"""
-    
+    """Raised when input data is invalid"""    
     def __init__(self, input_type: str, validation_errors: List[str] = None):
         message = f"Invalid input data for {input_type}"
         if validation_errors:
@@ -87,8 +80,7 @@ class InvalidInputError(EntityExtractionError):
 
 
 class APIConnectionError(EntityExtractionError):
-    """Raised when external API connections fail"""
-    
+    """Raised when external API connections fail"""    
     def __init__(self, api_name: str, endpoint: str = None, status_code: int = None, reason: str = None):
         message = f"Failed to connect to {api_name} API"
         if status_code:
@@ -107,8 +99,7 @@ class APIConnectionError(EntityExtractionError):
 
 
 class RateLimitError(EntityExtractionError):
-    """Raised when API rate limits are exceeded"""
-    
+    """Raised when API rate limits are exceeded"""    
     def __init__(self, api_name: str, retry_after: int = None):
         message = f"Rate limit exceeded for {api_name} API"
         if retry_after:
@@ -123,8 +114,7 @@ class RateLimitError(EntityExtractionError):
 
 
 class DataProcessingError(EntityExtractionError):
-    """Raised when data processing fails"""
-    
+    """Raised when data processing fails"""    
     def __init__(self, operation: str, data_type: str = None, reason: str = None):
         message = f"Data processing failed for operation '{operation}'"
         if data_type:
@@ -142,8 +132,7 @@ class DataProcessingError(EntityExtractionError):
 
 
 class ConfigurationError(EntityExtractionError):
-    """Raised when configuration is invalid or missing"""
-    
+    """Raised when configuration is invalid or missing"""    
     def __init__(self, config_key: str = None, reason: str = None):
         message = "Configuration error"
         if config_key:
@@ -160,8 +149,7 @@ class ConfigurationError(EntityExtractionError):
 
 
 class ResourceNotFoundError(EntityExtractionError):
-    """Raised when required resources are not found"""
-    
+    """Raised when required resources are not found"""    
     def __init__(self, resource_type: str, resource_id: str = None):
         message = f"Required {resource_type} not found"
         if resource_id:
@@ -176,8 +164,7 @@ class ResourceNotFoundError(EntityExtractionError):
 
 
 class TimeoutError(EntityExtractionError):
-    """Raised when operations timeout"""
-    
+    """Raised when operations timeout"""    
     def __init__(self, operation: str, timeout_seconds: float):
         message = f"Operation '{operation}' timed out after {timeout_seconds} seconds"
         
@@ -190,8 +177,7 @@ class TimeoutError(EntityExtractionError):
 
 
 class CacheError(EntityExtractionError):
-    """Raised when cache operations fail"""
-    
+    """Raised when cache operations fail"""    
     def __init__(self, operation: str, cache_key: str = None, reason: str = None):
         message = f"Cache {operation} failed"
         if cache_key:
@@ -209,8 +195,7 @@ class CacheError(EntityExtractionError):
 
 
 class ValidationError(EntityExtractionError):
-    """Raised when data validation fails"""
-    
+    """Raised when data validation fails"""    
     def __init__(self, field_name: str, expected_type: str = None, actual_value: Any = None):
         message = f"Validation failed for field '{field_name}'"
         if expected_type:
@@ -229,8 +214,7 @@ class ValidationError(EntityExtractionError):
 
 
 class SecurityError(EntityExtractionError):
-    """Raised when security violations are detected"""
-    
+    """Raised when security violations are detected"""    
     def __init__(self, violation_type: str, details_msg: str = None):
         message = f"Security violation detected: {violation_type}"
         if details_msg:
@@ -245,8 +229,7 @@ class SecurityError(EntityExtractionError):
 
 
 class MemoryError(EntityExtractionError):
-    """Raised when memory limits are exceeded"""
-    
+    """Raised when memory limits are exceeded"""    
     def __init__(self, operation: str, memory_usage_mb: float = None):
         message = f"Memory limit exceeded during operation '{operation}'"
         if memory_usage_mb:
@@ -261,8 +244,7 @@ class MemoryError(EntityExtractionError):
 
 
 class DependencyError(EntityExtractionError):
-    """Raised when required dependencies are missing or incompatible"""
-    
+    """Raised when required dependencies are missing or incompatible"""    
     def __init__(self, dependency_name: str, required_version: str = None, actual_version: str = None):
         message = f"Dependency error: {dependency_name}"
         if required_version:
@@ -281,8 +263,7 @@ class DependencyError(EntityExtractionError):
 
 
 class DataQualityError(EntityExtractionError):
-    """Raised when data quality is insufficient for processing"""
-    
+    """Raised when data quality is insufficient for processing"""    
     def __init__(self, quality_issue: str, quality_score: float = None, threshold: float = None):
         message = f"Data quality issue: {quality_issue}"
         if quality_score is not None and threshold is not None:
@@ -298,8 +279,7 @@ class DataQualityError(EntityExtractionError):
 
 
 class ConcurrencyError(EntityExtractionError):
-    """Raised when concurrency-related issues occur"""
-    
+    """Raised when concurrency-related issues occur"""    
     def __init__(self, operation: str, concurrent_operations: int = None):
         message = f"Concurrency error in operation '{operation}'"
         if concurrent_operations:
@@ -314,8 +294,7 @@ class ConcurrencyError(EntityExtractionError):
 
 
 class EntityNotFoundError(EntityExtractionError):
-    """Raised when expected entities are not found"""
-    
+    """Raised when expected entities are not found"""    
     def __init__(self, entity_type: str, search_criteria: Dict[str, Any] = None):
         message = f"No {entity_type} entities found"
         if search_criteria:
@@ -331,8 +310,7 @@ class EntityNotFoundError(EntityExtractionError):
 
 
 class ExtractionQualityError(EntityExtractionError):
-    """Raised when extraction quality is below acceptable threshold"""
-    
+    """Raised when extraction quality is below acceptable threshold"""    
     def __init__(self, avg_confidence: float, min_threshold: float, entity_count: int = None):
         message = f"Extraction quality below threshold: {avg_confidence:.3f} < {min_threshold:.3f}"
         if entity_count:
@@ -349,12 +327,10 @@ class ExtractionQualityError(EntityExtractionError):
 
 # Error handling utilities
 class ErrorHandler:
-    """Centralized error handling utilities"""
-    
+    """Centralized error handling utilities"""    
     @staticmethod
     def log_error(error: EntityExtractionError, context: str = None):
-        """Log error with appropriate level and context"""
-        log_message = f"EntityExtraction Error: {error.message}"
+        """Log error with appropriate level and context"""        log_message = f"EntityExtraction Error: {error.message}"
         if context:
             log_message = f"{context} - {log_message}"
         
@@ -370,8 +346,7 @@ class ErrorHandler:
     
     @staticmethod
     def handle_and_reraise(func):
-        """Decorator to handle exceptions and convert to EntityExtractionError"""
-        def wrapper(*args, **kwargs):
+        """Decorator to handle exceptions and convert to EntityExtractionError"""        def wrapper(*args, **kwargs):
             try:
                 return func(*args, **kwargs)
             except EntityExtractionError:
@@ -398,8 +373,7 @@ class ErrorHandler:
     
     @staticmethod
     def create_error_response(error: EntityExtractionError) -> Dict[str, Any]:
-        """Create standardized error response for APIs"""
-        return {
+        """Create standardized error response for APIs"""        return {
             'success': False,
             'error': error.to_dict(),
             'timestamp': __import__('datetime').datetime.now().isoformat()
@@ -407,8 +381,7 @@ class ErrorHandler:
     
     @staticmethod
     def is_retryable_error(error: EntityExtractionError) -> bool:
-        """Determine if an error is retryable"""
-        retryable_types = (
+        """Determine if an error is retryable"""        retryable_types = (
             APIConnectionError,
             TimeoutError,
             CacheError,
@@ -419,8 +392,7 @@ class ErrorHandler:
 
 # Exception context manager
 class EntityExtractionContext:
-    """Context manager for entity extraction operations with error handling"""
-    
+    """Context manager for entity extraction operations with error handling"""    
     def __init__(self, operation_name: str, log_errors: bool = True):
         self.operation_name = operation_name
         self.log_errors = log_errors

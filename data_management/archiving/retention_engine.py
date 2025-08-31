@@ -1,5 +1,4 @@
-"""
-Retention Engine - Enterprise Content Retention Management
+"""Retention Engine - Enterprise Content Retention Management
 
 Provides comprehensive retention policy management, automated
 lifecycle enforcement, and compliance-driven content lifecycle
@@ -14,7 +13,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import asyncio
 import logging
 import json
@@ -32,8 +30,7 @@ from ..exceptions import RetentionPolicyViolationError
 
 
 class RetentionAction(Enum):
-    """Retention action enumeration"""
-    KEEP = "keep"
+    """Retention action enumeration"""    KEEP = "keep"
     ARCHIVE = "archive"
     COMPRESS = "compress"
     MIGRATE = "migrate"
@@ -44,8 +41,7 @@ class RetentionAction(Enum):
 
 @dataclass
 class RetentionPolicy:
-    """Comprehensive retention policy definition"""
-    policy_id: str
+    """Comprehensive retention policy definition"""    policy_id: str
     name: str
     description: str
     
@@ -87,8 +83,7 @@ class RetentionPolicy:
 
 @dataclass
 class RetentionSchedule:
-    """Retention schedule for content"""
-    content_id: str
+    """Retention schedule for content"""    content_id: str
     archive_id: str
     policy_id: str
     
@@ -106,8 +101,7 @@ class RetentionSchedule:
 
 
 class RetentionScheduler:
-    """Automated retention action scheduler"""
-    
+    """Automated retention action scheduler"""    
     def __init__(self, retention_engine):
         self.retention_engine = retention_engine
         self.logger = logging.getLogger("retention.scheduler")
@@ -115,8 +109,7 @@ class RetentionScheduler:
         self.schedule_task: Optional[asyncio.Task] = None
     
     async def start(self):
-        """Start the retention scheduler"""
-        if self.running:
+        """Start the retention scheduler"""        if self.running:
             return
         
         self.running = True
@@ -124,8 +117,7 @@ class RetentionScheduler:
         self.logger.info("Retention scheduler started")
     
     async def stop(self):
-        """Stop the retention scheduler"""
-        if not self.running:
+        """Stop the retention scheduler"""        if not self.running:
             return
         
         self.running = False
@@ -139,8 +131,7 @@ class RetentionScheduler:
         self.logger.info("Retention scheduler stopped")
     
     async def _scheduler_loop(self):
-        """Main scheduler loop"""
-        while self.running:
+        """Main scheduler loop"""        while self.running:
             try:
                 await self._process_scheduled_actions()
                 await asyncio.sleep(3600)  # Check every hour
@@ -151,8 +142,7 @@ class RetentionScheduler:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
     async def _process_scheduled_actions(self):
-        """Process all scheduled retention actions"""
-        current_time = datetime.utcnow()
+        """Process all scheduled retention actions"""        current_time = datetime.utcnow()
         due_actions = await self.retention_engine.get_due_actions(current_time)
         
         for action in due_actions:
@@ -167,11 +157,9 @@ class RetentionScheduler:
 
 
 class RetentionEngine:
-    """
-    Enterprise retention engine with policy-driven content lifecycle
+    """    Enterprise retention engine with policy-driven content lifecycle
     management, compliance enforcement, and automated retention actions
-    """
-    
+    """    
     def __init__(self, database_path: Optional[str] = None):
         self.database_path = database_path or "/var/data/retention/retention.db"
         self.logger = logging.getLogger("retention.engine")
@@ -202,12 +190,10 @@ class RetentionEngine:
         self._initialize_default_policies()
     
     def _init_database(self):
-        """Initialize retention database"""
-        Path(self.database_path).parent.mkdir(parents=True, exist_ok=True)
+        """Initialize retention database"""        Path(self.database_path).parent.mkdir(parents=True, exist_ok=True)
         
         with sqlite3.connect(self.database_path) as conn:
-            conn.execute("""
-                CREATE TABLE IF NOT EXISTS retention_policies (
+            conn.execute("""                CREATE TABLE IF NOT EXISTS retention_policies (
                     policy_id TEXT PRIMARY KEY,
                     name TEXT NOT NULL,
                     description TEXT,
@@ -235,8 +221,7 @@ class RetentionEngine:
                 )
             """)
             
-            conn.execute("""
-                CREATE TABLE IF NOT EXISTS content_schedules (
+            conn.execute("""                CREATE TABLE IF NOT EXISTS content_schedules (
                     content_id TEXT PRIMARY KEY,
                     archive_id TEXT NOT NULL,
                     policy_id TEXT NOT NULL,
@@ -252,8 +237,7 @@ class RetentionEngine:
                 )
             """)
             
-            conn.execute("""
-                CREATE TABLE IF NOT EXISTS retention_audit_log (
+            conn.execute("""                CREATE TABLE IF NOT EXISTS retention_audit_log (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     content_id TEXT NOT NULL,
                     policy_id TEXT NOT NULL,
@@ -274,8 +258,7 @@ class RetentionEngine:
             conn.commit()
     
     def _initialize_default_policies(self):
-        """Initialize default retention policies"""
-        
+        """Initialize default retention policies"""        
         # GDPR compliance policy
         gdpr_policy = RetentionPolicy(
             policy_id="gdpr_standard",
@@ -382,13 +365,11 @@ class RetentionEngine:
             self.register_policy(policy)
     
     def register_policy(self, policy: RetentionPolicy):
-        """Register a retention policy"""
-        self.policies[policy.policy_id] = policy
+        """Register a retention policy"""        self.policies[policy.policy_id] = policy
         
         # Store in database
         with sqlite3.connect(self.database_path) as conn:
-            conn.execute("""
-                INSERT OR REPLACE INTO retention_policies (
+            conn.execute("""                INSERT OR REPLACE INTO retention_policies (
                     policy_id, name, description, content_types, content_categories,
                     creator_ids, tags, minimum_retention_days, maximum_retention_days,
                     legal_hold_days, action_schedule, regulatory_framework,
@@ -417,8 +398,7 @@ class RetentionEngine:
         self.logger.info(f"Registered retention policy: {policy.policy_id}")
     
     def get_policy(self, policy_id: str) -> Optional[RetentionPolicy]:
-        """Get retention policy by ID"""
-        return self.policies.get(policy_id)
+        """Get retention policy by ID"""        return self.policies.get(policy_id)
     
     def find_applicable_policy(
         self,
@@ -428,8 +408,7 @@ class RetentionEngine:
         tags: Set[str] = None,
         metadata: Dict[str, Any] = None
     ) -> Optional[RetentionPolicy]:
-        """Find the most applicable retention policy"""
-        
+        """Find the most applicable retention policy"""        
         matching_policies = []
         tags = tags or set()
         metadata = metadata or {}
@@ -479,8 +458,7 @@ class RetentionEngine:
         return None
     
     def _evaluate_conditions(self, conditions: Dict[str, Any], metadata: Dict[str, Any]) -> bool:
-        """Evaluate policy conditions against content metadata"""
-        # Simplified condition evaluation
+        """Evaluate policy conditions against content metadata"""        # Simplified condition evaluation
         # In a real implementation, this would support complex boolean logic
         for key, expected_value in conditions.items():
             if key in metadata:
@@ -493,8 +471,7 @@ class RetentionEngine:
         archive_entry: ArchiveEntry,
         policy: Optional[RetentionPolicy] = None
     ):
-        """Register content with retention engine"""
-        
+        """Register content with retention engine"""        
         if not policy:
             # Find applicable policy
             policy = self.find_applicable_policy(
@@ -515,8 +492,7 @@ class RetentionEngine:
         
         # Store in database
         with sqlite3.connect(self.database_path) as conn:
-            conn.execute("""
-                INSERT OR REPLACE INTO content_schedules (
+            conn.execute("""                INSERT OR REPLACE INTO content_schedules (
                     content_id, archive_id, policy_id, scheduled_actions,
                     completed_actions, next_action_date, next_action,
                     legal_hold_until, deletion_eligible_date, created_at, updated_at
@@ -542,8 +518,7 @@ class RetentionEngine:
         archive_entry: ArchiveEntry,
         policy: RetentionPolicy
     ) -> RetentionSchedule:
-        """Create retention schedule for content"""
-        
+        """Create retention schedule for content"""        
         schedule = RetentionSchedule(
             content_id=archive_entry.content_id,
             archive_id=archive_entry.archive_id,
@@ -580,8 +555,7 @@ class RetentionEngine:
         return schedule
     
     async def can_delete_content(self, content_id: str) -> bool:
-        """Check if content can be deleted according to retention policy"""
-        
+        """Check if content can be deleted according to retention policy"""        
         schedule = self.content_schedules.get(content_id)
         if not schedule:
             return True  # No retention policy, can delete
@@ -609,8 +583,7 @@ class RetentionEngine:
         return True
     
     async def get_due_actions(self, current_time: datetime) -> List[Dict[str, Any]]:
-        """Get retention actions that are due for execution"""
-        
+        """Get retention actions that are due for execution"""        
         due_actions = []
         
         for schedule in self.content_schedules.values():
@@ -632,8 +605,7 @@ class RetentionEngine:
         policy_id: str,
         executed_by: str = "system"
     ) -> bool:
-        """Execute a retention action"""
-        
+        """Execute a retention action"""        
         try:
             self.logger.info(f"Executing retention action {action.value} for content {content_id}")
             
@@ -671,8 +643,7 @@ class RetentionEngine:
         action: RetentionAction,
         policy_id: str
     ) -> bool:
-        """Default retention action handler"""
-        
+        """Default retention action handler"""        
         # This is a placeholder implementation
         # In a real system, these would integrate with actual storage/archival systems
         
@@ -701,8 +672,7 @@ class RetentionEngine:
         return False
     
     def register_action_handler(self, action: RetentionAction, handler: Callable):
-        """Register custom action handler"""
-        self.action_handlers[action] = handler
+        """Register custom action handler"""        self.action_handlers[action] = handler
         self.logger.info(f"Registered custom handler for action {action.value}")
     
     async def _log_retention_action(
@@ -714,11 +684,9 @@ class RetentionEngine:
         executed_by: str,
         details: Dict[str, Any] = None
     ):
-        """Log retention action execution"""
-        
+        """Log retention action execution"""        
         with sqlite3.connect(self.database_path) as conn:
-            conn.execute("""
-                INSERT INTO retention_audit_log (
+            conn.execute("""                INSERT INTO retention_audit_log (
                     content_id, policy_id, action, status, details, executed_at, executed_by
                 ) VALUES (?, ?, ?, ?, ?, ?, ?)
             """, (
@@ -728,8 +696,7 @@ class RetentionEngine:
             conn.commit()
     
     async def _update_content_schedule(self, content_id: str, completed_action: RetentionAction):
-        """Update content schedule after action completion"""
-        
+        """Update content schedule after action completion"""        
         schedule = self.content_schedules.get(content_id)
         if not schedule:
             return
@@ -759,8 +726,7 @@ class RetentionEngine:
         
         # Update database
         with sqlite3.connect(self.database_path) as conn:
-            conn.execute("""
-                UPDATE content_schedules SET
+            conn.execute("""                UPDATE content_schedules SET
                     completed_actions = ?, next_action_date = ?, next_action = ?, updated_at = ?
                 WHERE content_id = ?
             """, (
@@ -773,8 +739,7 @@ class RetentionEngine:
             conn.commit()
     
     async def find_expired_content(self) -> List[str]:
-        """Find content that has expired according to retention policies"""
-        
+        """Find content that has expired according to retention policies"""        
         expired_content = []
         current_time = datetime.utcnow()
         
@@ -788,8 +753,7 @@ class RetentionEngine:
         return expired_content
     
     async def unregister_content(self, content_id: str):
-        """Unregister content from retention management"""
-        
+        """Unregister content from retention management"""        
         if content_id in self.content_schedules:
             del self.content_schedules[content_id]
         
@@ -801,23 +765,20 @@ class RetentionEngine:
         self.logger.info(f"Unregistered content {content_id} from retention management")
     
     async def get_retention_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive retention statistics"""
-        
+        """Get comprehensive retention statistics"""        
         stats = self.stats.copy()
         
         # Add database statistics
         with sqlite3.connect(self.database_path) as conn:
             # Count by policy
-            cursor = conn.execute("""
-                SELECT policy_id, COUNT(*) 
+            cursor = conn.execute("""                SELECT policy_id, COUNT(*) 
                 FROM content_schedules 
                 GROUP BY policy_id
             """)
             stats["content_by_policy"] = dict(cursor.fetchall())
             
             # Count by next action
-            cursor = conn.execute("""
-                SELECT next_action, COUNT(*) 
+            cursor = conn.execute("""                SELECT next_action, COUNT(*) 
                 FROM content_schedules 
                 WHERE next_action IS NOT NULL
                 GROUP BY next_action
@@ -825,8 +786,7 @@ class RetentionEngine:
             stats["pending_actions"] = dict(cursor.fetchall())
             
             # Count legal holds
-            cursor = conn.execute("""
-                SELECT COUNT(*) 
+            cursor = conn.execute("""                SELECT COUNT(*) 
                 FROM content_schedules 
                 WHERE legal_hold_until > ?
             """, (datetime.utcnow().isoformat(),))
@@ -836,8 +796,7 @@ class RetentionEngine:
         return stats
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform retention engine health check"""
-        
+        """Perform retention engine health check"""        
         health = {
             "status": "healthy",
             "checks": {},
@@ -875,9 +834,7 @@ class RetentionEngine:
         return health
     
     async def start_scheduler(self):
-        """Start the retention scheduler"""
-        await self.scheduler.start()
+        """Start the retention scheduler"""        await self.scheduler.start()
     
     async def stop_scheduler(self):
-        """Stop the retention scheduler"""
-        await self.scheduler.stop()
+        """Stop the retention scheduler"""        await self.scheduler.stop()

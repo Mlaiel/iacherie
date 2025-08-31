@@ -1,12 +1,10 @@
-"""
-IA Influencer Agent - Fingerprint Analyzer
+"""IA Influencer Agent - Fingerprint Analyzer
 Advanced analysis and intelligence for fingerprint data
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved to Fahed Mlaiel
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -25,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AnalysisReport:
-    """Report generated from fingerprint analysis"""
-    report_id: str
+    """Report generated from fingerprint analysis"""    report_id: str
     analysis_type: str
     target_fingerprint: str
     findings: Dict[str, Any]
@@ -37,8 +34,7 @@ class AnalysisReport:
 
 @dataclass
 class SimilarityCluster:
-    """Cluster of similar fingerprints"""
-    cluster_id: str
+    """Cluster of similar fingerprints"""    cluster_id: str
     representative_fingerprint: FingerprintResult
     members: List[FingerprintResult]
     similarity_scores: List[float]
@@ -47,14 +43,11 @@ class SimilarityCluster:
 
 
 class FingerprintAnalyzer:
-    """
-    Advanced analyzer for fingerprint data providing intelligence,
+    """    Advanced analyzer for fingerprint data providing intelligence,
     clustering, pattern detection, and forensic analysis
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the fingerprint analyzer"""
-        self.analysis_cache = {}
+        """Initialize the fingerprint analyzer"""        self.analysis_cache = {}
         self.clustering_cache = {}
         self.pattern_database = defaultdict(list)
         
@@ -69,16 +62,14 @@ class FingerprintAnalyzer:
         self, 
         fingerprint: FingerprintResult
     ) -> AnalysisReport:
-        """
-        Analyze the quality and reliability of a fingerprint
+        """        Analyze the quality and reliability of a fingerprint
         
         Args:
             fingerprint: Fingerprint result to analyze
         
         Returns:
             Quality analysis report
-        """
-        try:
+        """        try:
             report_id = f"quality_{fingerprint.request_id}_{int(time.time())}"
             
             if not fingerprint.success:
@@ -155,8 +146,7 @@ class FingerprintAnalyzer:
         data: Dict[str, Any], 
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Analyze quality of specific fingerprinting method"""
-        try:
+        """Analyze quality of specific fingerprinting method"""        try:
             if 'error' in data:
                 return {
                     'score': 0.0,
@@ -191,8 +181,7 @@ class FingerprintAnalyzer:
             return {'score': 0.0, 'status': 'error', 'error': str(e)}
     
     async def _analyze_audio_method_quality(self, method: str, data: Dict) -> List[float]:
-        """Analyze audio method quality factors"""
-        factors = []
+        """Analyze audio method quality factors"""        factors = []
         
         try:
             if method == 'chromaprint':
@@ -240,8 +229,7 @@ class FingerprintAnalyzer:
         return factors
     
     async def _analyze_video_method_quality(self, method: str, data: Dict) -> List[float]:
-        """Analyze video method quality factors"""
-        factors = []
+        """Analyze video method quality factors"""        factors = []
         
         try:
             if method == 'perceptual_hash':
@@ -285,8 +273,7 @@ class FingerprintAnalyzer:
         return factors
     
     async def _analyze_image_method_quality(self, method: str, data: Dict) -> List[float]:
-        """Analyze image method quality factors"""
-        factors = []
+        """Analyze image method quality factors"""        factors = []
         
         try:
             if method == 'perceptual_hash':
@@ -336,8 +323,7 @@ class FingerprintAnalyzer:
         fingerprints: List[FingerprintResult],
         similarity_threshold: float = None
     ) -> List[List[FingerprintResult]]:
-        """
-        Detect duplicate or near-duplicate content from fingerprint list
+        """        Detect duplicate or near-duplicate content from fingerprint list
         
         Args:
             fingerprints: List of fingerprint results to analyze
@@ -345,8 +331,7 @@ class FingerprintAnalyzer:
         
         Returns:
             List of groups containing duplicate content
-        """
-        try:
+        """        try:
             threshold = similarity_threshold or self.similarity_threshold
             duplicate_groups = []
             processed_fingerprints = set()
@@ -390,8 +375,7 @@ class FingerprintAnalyzer:
         fp1: FingerprintResult, 
         fp2: FingerprintResult
     ) -> float:
-        """Calculate overall similarity between two fingerprints"""
-        try:
+        """Calculate overall similarity between two fingerprints"""        try:
             if fp1.content_type != fp2.content_type:
                 return 0.0
             
@@ -422,8 +406,7 @@ class FingerprintAnalyzer:
         data2: Dict, 
         content_type: ContentType
     ) -> float:
-        """Compare data from specific fingerprinting method"""
-        try:
+        """Compare data from specific fingerprinting method"""        try:
             # Use the primary hash/signature from each method
             if content_type == ContentType.AUDIO:
                 if method == 'chromaprint':
@@ -495,8 +478,7 @@ class FingerprintAnalyzer:
         fingerprints: List[FingerprintResult],
         min_cluster_size: int = None
     ) -> List[SimilarityCluster]:
-        """
-        Cluster fingerprints by similarity
+        """        Cluster fingerprints by similarity
         
         Args:
             fingerprints: List of fingerprint results
@@ -504,8 +486,7 @@ class FingerprintAnalyzer:
         
         Returns:
             List of similarity clusters
-        """
-        try:
+        """        try:
             min_size = min_cluster_size or self.cluster_min_size
             clusters = []
             
@@ -536,8 +517,7 @@ class FingerprintAnalyzer:
         content_type: ContentType,
         min_size: int
     ) -> List[SimilarityCluster]:
-        """Cluster fingerprints of same content type"""
-        try:
+        """Cluster fingerprints of same content type"""        try:
             clusters = []
             used_fingerprints = set()
             
@@ -588,8 +568,7 @@ class FingerprintAnalyzer:
             return []
     
     async def _calculate_cluster_center(self, cluster_members: List[FingerprintResult]) -> Dict[str, Any]:
-        """Calculate centroid of cluster for analysis"""
-        try:
+        """Calculate centroid of cluster for analysis"""        try:
             center = {
                 'member_count': len(cluster_members),
                 'content_type': cluster_members[0].content_type.value,
@@ -607,8 +586,7 @@ class FingerprintAnalyzer:
             return {}
     
     def _find_common_methods(self, fingerprints: List[FingerprintResult]) -> List[str]:
-        """Find methods common to all fingerprints in cluster"""
-        try:
+        """Find methods common to all fingerprints in cluster"""        try:
             if not fingerprints:
                 return []
             
@@ -631,8 +609,7 @@ class FingerprintAnalyzer:
         target_fingerprint: FingerprintResult,
         reference_database: List[FingerprintResult]
     ) -> AnalysisReport:
-        """
-        Generate comprehensive forensic analysis report
+        """        Generate comprehensive forensic analysis report
         
         Args:
             target_fingerprint: Target fingerprint to analyze
@@ -640,8 +617,7 @@ class FingerprintAnalyzer:
         
         Returns:
             Forensic analysis report
-        """
-        try:
+        """        try:
             report_id = f"forensic_{target_fingerprint.request_id}_{int(time.time())}"
             
             findings = {}
@@ -739,12 +715,10 @@ class FingerprintAnalyzer:
             raise
     
     def get_cached_analysis(self, report_id: str) -> Optional[AnalysisReport]:
-        """Get cached analysis report by ID"""
-        return self.analysis_cache.get(report_id)
+        """Get cached analysis report by ID"""        return self.analysis_cache.get(report_id)
     
     def clear_analysis_cache(self, older_than_hours: Optional[int] = None):
-        """Clear analysis cache"""
-        try:
+        """Clear analysis cache"""        try:
             if older_than_hours is None:
                 self.analysis_cache.clear()
                 logger.info("Cleared all analysis cache")
@@ -764,8 +738,7 @@ class FingerprintAnalyzer:
             logger.error(f"Error clearing analysis cache: {str(e)}")
     
     def get_analyzer_stats(self) -> Dict[str, Any]:
-        """Get analyzer statistics and configuration"""
-        try:
+        """Get analyzer statistics and configuration"""        try:
             return {
                 'analyzer': 'FingerprintAnalyzer',
                 'version': '1.0.0',

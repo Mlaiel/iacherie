@@ -1,5 +1,4 @@
-"""
-Royalty Distributor Engine - Automated royalty distribution system
+"""Royalty Distributor Engine - Automated royalty distribution system
 ==================================================================
 
 Sophisticated royalty distribution engine for multi-stakeholder content
@@ -8,7 +7,6 @@ monetization with automated calculations and payments.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,16 +21,14 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class DistributionStatus(Enum):
-    """Royalty distribution status"""
-    PENDING = "pending"
+    """Royalty distribution status"""    PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
     DISTRIBUTED = "distributed"
     FAILED = "failed"
 
 class RoyaltyType(Enum):
-    """Types of royalties"""
-    CONTENT_SALES = "content_sales"
+    """Types of royalties"""    CONTENT_SALES = "content_sales"
     STREAMING = "streaming"
     LICENSING = "licensing"
     COLLABORATION = "collaboration"
@@ -40,8 +36,7 @@ class RoyaltyType(Enum):
 
 @dataclass
 class RoyaltyStakeholder:
-    """Royalty stakeholder information"""
-    stakeholder_id: str
+    """Royalty stakeholder information"""    stakeholder_id: str
     name: str
     role: str
     share_percentage: Decimal
@@ -50,8 +45,7 @@ class RoyaltyStakeholder:
 
 @dataclass
 class RoyaltyData:
-    """Royalty distribution data"""
-    distribution_id: str
+    """Royalty distribution data"""    distribution_id: str
     content_id: str
     total_revenue: Decimal
     royalty_type: RoyaltyType
@@ -63,18 +57,15 @@ class RoyaltyData:
     net_distributable: Decimal
 
 class RoyaltyDistributorEngine:
-    """
-    Advanced royalty distribution system with automated calculations,
+    """    Advanced royalty distribution system with automated calculations,
     multi-stakeholder support, and compliance tracking.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize royalty distributor engine"""
-        try:
+        """Initialize royalty distributor engine"""        try:
             await self._setup_database_tables()
             await self._load_distribution_rules()
             logger.info("Royalty Distributor Engine initialized successfully")
@@ -83,10 +74,8 @@ class RoyaltyDistributorEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for royalty distribution"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS content_stakeholders (
+        """Setup database tables for royalty distribution"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS content_stakeholders (
                     id SERIAL PRIMARY KEY,
                     content_id VARCHAR(255) NOT NULL,
                     stakeholder_id VARCHAR(255) NOT NULL,
@@ -101,8 +90,7 @@ class RoyaltyDistributorEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS royalty_distributions (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS royalty_distributions (
                     id SERIAL PRIMARY KEY,
                     distribution_id VARCHAR(100) UNIQUE NOT NULL,
                     content_id VARCHAR(255) NOT NULL,
@@ -121,8 +109,7 @@ class RoyaltyDistributorEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS royalty_payments (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS royalty_payments (
                     id SERIAL PRIMARY KEY,
                     payment_id VARCHAR(100) UNIQUE NOT NULL,
                     distribution_id VARCHAR(100) REFERENCES royalty_distributions(distribution_id),
@@ -138,8 +125,7 @@ class RoyaltyDistributorEngine:
             """)
 
     async def _load_distribution_rules(self) -> None:
-        """Load royalty distribution rules"""
-        try:
+        """Load royalty distribution rules"""        try:
             # Distribution fee rates by type
             fee_rates = {
                 RoyaltyType.CONTENT_SALES: Decimal('0.05'),      # 5%
@@ -159,8 +145,7 @@ class RoyaltyDistributorEngine:
     async def calculate_royalty_distribution(self, content_id: str, total_revenue: Decimal,
                                            royalty_type: RoyaltyType,
                                            distribution_period: tuple[datetime, datetime]) -> RoyaltyData:
-        """Calculate royalty distribution for content"""
-        try:
+        """Calculate royalty distribution for content"""        try:
             # Get content stakeholders
             stakeholders = await self._get_content_stakeholders(content_id)
             if not stakeholders:
@@ -204,11 +189,9 @@ class RoyaltyDistributorEngine:
             raise HTTPException(status_code=500, detail="Royalty distribution calculation failed")
 
     async def _get_content_stakeholders(self, content_id: str) -> List[RoyaltyStakeholder]:
-        """Get stakeholders for content"""
-        try:
+        """Get stakeholders for content"""        try:
             async with self.db_pool.acquire() as conn:
-                stakeholder_rows = await conn.fetch("""
-                    SELECT stakeholder_id, name, role, share_percentage, payment_method, account_details
+                stakeholder_rows = await conn.fetch("""                    SELECT stakeholder_id, name, role, share_percentage, payment_method, account_details
                     FROM content_stakeholders 
                     WHERE content_id = $1 AND is_active = TRUE
                     ORDER BY share_percentage DESC
@@ -231,8 +214,7 @@ class RoyaltyDistributorEngine:
             return []
 
     async def _get_distribution_fee_rate(self, royalty_type: RoyaltyType) -> Decimal:
-        """Get distribution fee rate for royalty type"""
-        try:
+        """Get distribution fee rate for royalty type"""        try:
             cached_rate = self.redis.get(f"distribution_fee_{royalty_type.value}")
             if cached_rate:
                 return Decimal(cached_rate.decode())
@@ -245,11 +227,9 @@ class RoyaltyDistributorEngine:
             return Decimal('0.05')
 
     async def _store_distribution(self, royalty_data: RoyaltyData) -> None:
-        """Store royalty distribution record"""
-        try:
+        """Store royalty distribution record"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO royalty_distributions 
+                await conn.execute("""                    INSERT INTO royalty_distributions 
                     (distribution_id, content_id, total_revenue, royalty_type,
                      distribution_period_start, distribution_period_end, status,
                      currency, fees_deducted, net_distributable)
@@ -270,15 +250,13 @@ class RoyaltyDistributorEngine:
             logger.error(f"Failed to store distribution: {e}")
 
     async def _calculate_stakeholder_payments(self, royalty_data: RoyaltyData) -> None:
-        """Calculate individual stakeholder payments"""
-        try:
+        """Calculate individual stakeholder payments"""        try:
             async with self.db_pool.acquire() as conn:
                 for stakeholder in royalty_data.stakeholders:
                     payment_amount = royalty_data.net_distributable * stakeholder.share_percentage
                     payment_id = f"pay_{royalty_data.distribution_id}_{stakeholder.stakeholder_id}"
                     
-                    await conn.execute("""
-                        INSERT INTO royalty_payments 
+                    await conn.execute("""                        INSERT INTO royalty_payments 
                         (payment_id, distribution_id, stakeholder_id, amount, 
                          share_percentage, payment_status, payment_method)
                         VALUES ($1, $2, $3, $4, $5, 'pending', $6)
@@ -295,12 +273,10 @@ class RoyaltyDistributorEngine:
             logger.error(f"Failed to calculate stakeholder payments: {e}")
 
     async def process_distribution_payments(self, distribution_id: str) -> Dict[str, Any]:
-        """Process payments for a royalty distribution"""
-        try:
+        """Process payments for a royalty distribution"""        try:
             # Get pending payments
             async with self.db_pool.acquire() as conn:
-                payments = await conn.fetch("""
-                    SELECT payment_id, stakeholder_id, amount, payment_method
+                payments = await conn.fetch("""                    SELECT payment_id, stakeholder_id, amount, payment_method
                     FROM royalty_payments 
                     WHERE distribution_id = $1 AND payment_status = 'pending'
                 """, distribution_id)
@@ -318,8 +294,7 @@ class RoyaltyDistributorEngine:
                         )
                         
                         if payment_result['success']:
-                            await conn.execute("""
-                                UPDATE royalty_payments 
+                            await conn.execute("""                                UPDATE royalty_payments 
                                 SET payment_status = 'completed', 
                                     transaction_reference = $1,
                                     paid_at = NOW()
@@ -328,8 +303,7 @@ class RoyaltyDistributorEngine:
                             
                             results['successful'] += 1
                         else:
-                            await conn.execute("""
-                                UPDATE royalty_payments 
+                            await conn.execute("""                                UPDATE royalty_payments 
                                 SET payment_status = 'failed'
                                 WHERE payment_id = $1
                             """, payment['payment_id'])
@@ -349,14 +323,12 @@ class RoyaltyDistributorEngine:
                 
                 # Update distribution status
                 if results['failed'] == 0:
-                    await conn.execute("""
-                        UPDATE royalty_distributions 
+                    await conn.execute("""                        UPDATE royalty_distributions 
                         SET status = 'distributed', distributed_at = NOW()
                         WHERE distribution_id = $1
                     """, distribution_id)
                 else:
-                    await conn.execute("""
-                        UPDATE royalty_distributions 
+                    await conn.execute("""                        UPDATE royalty_distributions 
                         SET status = 'failed'
                         WHERE distribution_id = $1
                     """, distribution_id)
@@ -369,8 +341,7 @@ class RoyaltyDistributorEngine:
 
     async def _process_stakeholder_payment(self, payment_id: str, stakeholder_id: str,
                                          amount: Decimal, payment_method: str) -> Dict[str, Any]:
-        """Process individual stakeholder payment"""
-        try:
+        """Process individual stakeholder payment"""        try:
             # Get stakeholder payment details
             stakeholder_details = await self._get_stakeholder_payment_details(stakeholder_id)
             
@@ -394,11 +365,9 @@ class RoyaltyDistributorEngine:
             }
 
     async def _get_stakeholder_payment_details(self, stakeholder_id: str) -> Dict[str, Any]:
-        """Get stakeholder payment details"""
-        try:
+        """Get stakeholder payment details"""        try:
             async with self.db_pool.acquire() as conn:
-                details = await conn.fetchrow("""
-                    SELECT account_details FROM content_stakeholders 
+                details = await conn.fetchrow("""                    SELECT account_details FROM content_stakeholders 
                     WHERE stakeholder_id = $1
                 """, stakeholder_id)
                 
@@ -409,8 +378,7 @@ class RoyaltyDistributorEngine:
             return {}
 
     async def _process_bank_transfer(self, amount: Decimal, details: Dict[str, Any]) -> Dict[str, Any]:
-        """Process bank transfer payment"""
-        try:
+        """Process bank transfer payment"""        try:
             # Mock bank transfer processing
             transaction_id = f"bank_{int(datetime.now().timestamp())}"
             
@@ -428,8 +396,7 @@ class RoyaltyDistributorEngine:
             }
 
     async def _process_paypal_payment(self, amount: Decimal, details: Dict[str, Any]) -> Dict[str, Any]:
-        """Process PayPal payment"""
-        try:
+        """Process PayPal payment"""        try:
             transaction_id = f"paypal_{int(datetime.now().timestamp())}"
             
             return {
@@ -446,8 +413,7 @@ class RoyaltyDistributorEngine:
             }
 
     async def _process_stripe_transfer(self, amount: Decimal, details: Dict[str, Any]) -> Dict[str, Any]:
-        """Process Stripe transfer"""
-        try:
+        """Process Stripe transfer"""        try:
             transaction_id = f"stripe_{int(datetime.now().timestamp())}"
             
             return {
@@ -464,11 +430,9 @@ class RoyaltyDistributorEngine:
             }
 
     async def add_content_stakeholder(self, content_id: str, stakeholder_data: Dict[str, Any]) -> bool:
-        """Add stakeholder to content"""
-        try:
+        """Add stakeholder to content"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO content_stakeholders 
+                await conn.execute("""                    INSERT INTO content_stakeholders 
                     (content_id, stakeholder_id, name, role, share_percentage, 
                      payment_method, account_details)
                     VALUES ($1, $2, $3, $4, $5, $6, $7)
@@ -494,12 +458,10 @@ class RoyaltyDistributorEngine:
             return False
 
     async def get_royalty_dashboard_data(self, stakeholder_id: str) -> Dict[str, Any]:
-        """Get royalty dashboard data for stakeholder"""
-        try:
+        """Get royalty dashboard data for stakeholder"""        try:
             async with self.db_pool.acquire() as conn:
                 # Payment summary
-                summary = await conn.fetchrow("""
-                    SELECT 
+                summary = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as total_payments,
                         COALESCE(SUM(amount), 0) as total_earned,
                         COUNT(CASE WHEN payment_status = 'completed' THEN 1 END) as completed_payments,
@@ -510,8 +472,7 @@ class RoyaltyDistributorEngine:
                 """, stakeholder_id)
                 
                 # Recent payments
-                recent_payments = await conn.fetch("""
-                    SELECT 
+                recent_payments = await conn.fetch("""                    SELECT 
                         rp.payment_id,
                         rp.amount,
                         rp.payment_status,
@@ -526,8 +487,7 @@ class RoyaltyDistributorEngine:
                 """, stakeholder_id)
                 
                 # Monthly earnings
-                monthly_earnings = await conn.fetch("""
-                    SELECT 
+                monthly_earnings = await conn.fetch("""                    SELECT 
                         DATE_TRUNC('month', created_at) as month,
                         SUM(amount) as earnings,
                         COUNT(*) as payment_count

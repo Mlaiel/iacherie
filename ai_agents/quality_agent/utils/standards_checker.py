@@ -1,5 +1,4 @@
-"""
-Standards Checker - Industrial-Grade Content Standards Compliance Engine
+"""Standards Checker - Industrial-Grade Content Standards Compliance Engine
 
 Comprehensive standards validation and compliance checking system for all content types.
 Ensures adherence to industry standards, regulations, and best practices.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import time
@@ -54,8 +52,7 @@ from ..quality_agent import ContentType
 logger = logging.getLogger(__name__)
 
 class StandardType(Enum):
-    """Types of content standards"""
-    TECHNICAL = "technical"
+    """Types of content standards"""    TECHNICAL = "technical"
     LEGAL = "legal"
     ACCESSIBILITY = "accessibility"
     SECURITY = "security"
@@ -67,16 +64,14 @@ class StandardType(Enum):
     QUALITY = "quality"
 
 class ComplianceLevel(Enum):
-    """Compliance severity levels"""
-    CRITICAL = "critical"
+    """Compliance severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class StandardsFramework(Enum):
-    """Industry standards frameworks"""
-    ISO = "iso"
+    """Industry standards frameworks"""    ISO = "iso"
     WCAG = "wcag"
     GDPR = "gdpr"
     DMCA = "dmca"
@@ -89,8 +84,7 @@ class StandardsFramework(Enum):
 
 @dataclass
 class StandardRule:
-    """Individual standard rule definition"""
-    rule_id: str
+    """Individual standard rule definition"""    rule_id: str
     standard_type: StandardType
     framework: StandardsFramework
     title: str
@@ -105,8 +99,7 @@ class StandardRule:
 
 @dataclass
 class ComplianceViolation:
-    """Standards compliance violation"""
-    violation_id: str
+    """Standards compliance violation"""    violation_id: str
     rule_id: str
     severity: ComplianceLevel
     title: str
@@ -120,8 +113,7 @@ class ComplianceViolation:
 
 @dataclass
 class StandardsReport:
-    """Comprehensive standards compliance report"""
-    report_id: str
+    """Comprehensive standards compliance report"""    report_id: str
     content_id: str
     content_type: ContentType
     standards_checked: List[StandardsFramework]
@@ -141,8 +133,7 @@ class StandardsReport:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class StandardsChecker:
-    """
-    Advanced Standards Checker for comprehensive compliance validation.
+    """    Advanced Standards Checker for comprehensive compliance validation.
     
     Features:
     - Multi-framework standards checking (WCAG, GDPR, DMCA, ISO, etc.)
@@ -153,8 +144,7 @@ class StandardsChecker:
     - Auto-fix suggestions for violations
     - Regulatory compliance tracking
     - Audit trail maintenance
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None
@@ -186,8 +176,7 @@ class StandardsChecker:
         custom_rules: Optional[List[StandardRule]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> StandardsReport:
-        """
-        Perform comprehensive standards compliance checking.
+        """        Perform comprehensive standards compliance checking.
         
         Args:
             content_id: Unique identifier for the content
@@ -199,8 +188,7 @@ class StandardsChecker:
             
         Returns:
             StandardsReport: Complete compliance report
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             self.logger.info(f"Starting standards compliance check for {content_id}")
@@ -296,8 +284,7 @@ class StandardsChecker:
         rule: StandardRule,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[ComplianceViolation]:
-        """Check compliance against a specific rule"""
-        
+        """Check compliance against a specific rule"""        
         violations = []
         
         try:
@@ -344,8 +331,7 @@ class StandardsChecker:
         rule: StandardRule,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[ComplianceViolation]:
-        """Check technical standards compliance"""
-        
+        """Check technical standards compliance"""        
         violations = []
         
         try:
@@ -376,8 +362,7 @@ class StandardsChecker:
         content_path: str,
         rule: StandardRule
     ) -> List[ComplianceViolation]:
-        """Check audio technical standards"""
-        
+        """Check audio technical standards"""        
         violations = []
         
         try:
@@ -458,8 +443,7 @@ class StandardsChecker:
         rule: StandardRule,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[ComplianceViolation]:
-        """Check accessibility standards compliance (WCAG, etc.)"""
-        
+        """Check accessibility standards compliance (WCAG, etc.)"""        
         violations = []
         
         try:
@@ -534,8 +518,7 @@ class StandardsChecker:
         rule: StandardRule,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[ComplianceViolation]:
-        """Check legal and copyright compliance"""
-        
+        """Check legal and copyright compliance"""        
         violations = []
         
         try:
@@ -609,8 +592,7 @@ class StandardsChecker:
         rule: StandardRule,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[ComplianceViolation]:
-        """Check platform-specific compliance"""
-        
+        """Check platform-specific compliance"""        
         violations = []
         
         try:
@@ -680,8 +662,7 @@ class StandardsChecker:
 
     # Helper methods
     async def _calculate_color_contrast(self, content_path: str) -> float:
-        """Calculate color contrast ratio for images"""
-        try:
+        """Calculate color contrast ratio for images"""        try:
             import cv2
             import numpy as np
             
@@ -705,8 +686,7 @@ class StandardsChecker:
             return 4.5  # Default passing value
 
     async def _detect_personal_data(self, content_path: str, content_type: ContentType) -> bool:
-        """Detect potential personal data in content"""
-        try:
+        """Detect potential personal data in content"""        try:
             if content_type in [ContentType.TEXT, ContentType.BLOG]:
                 with open(content_path, 'r', encoding='utf-8') as f:
                     text = f.read()
@@ -727,8 +707,7 @@ class StandardsChecker:
             return False
 
     def _calculate_compliance_metrics(self, violations: List[ComplianceViolation]) -> Dict[str, Any]:
-        """Calculate compliance metrics from violations"""
-        
+        """Calculate compliance metrics from violations"""        
         total_violations = len(violations)
         
         critical_count = sum(1 for v in violations if v.severity == ComplianceLevel.CRITICAL)
@@ -766,8 +745,7 @@ class StandardsChecker:
         }
 
     def _determine_compliance_status(self, violations: List[ComplianceViolation], score: float) -> str:
-        """Determine overall compliance status"""
-        
+        """Determine overall compliance status"""        
         critical_violations = sum(1 for v in violations if v.severity == ComplianceLevel.CRITICAL)
         high_violations = sum(1 for v in violations if v.severity == ComplianceLevel.HIGH)
         
@@ -781,8 +759,7 @@ class StandardsChecker:
             return "compliant"
 
     def _calculate_estimated_fix_time(self, violations: List[ComplianceViolation]) -> str:
-        """Calculate estimated time to fix all violations"""
-        
+        """Calculate estimated time to fix all violations"""        
         if not violations:
             return "0 minutes"
             
@@ -824,8 +801,7 @@ class StandardsChecker:
         violations: List[ComplianceViolation], 
         content_type: ContentType
     ) -> datetime:
-        """Calculate when next compliance review should occur"""
-        
+        """Calculate when next compliance review should occur"""        
         from datetime import timedelta
         
         base_date = datetime.now(timezone.utc)
@@ -847,8 +823,7 @@ class StandardsChecker:
             return base_date + timedelta(weeks=12)
 
     def _get_applicable_frameworks(self, content_type: ContentType) -> List[StandardsFramework]:
-        """Get applicable standards frameworks for content type"""
-        
+        """Get applicable standards frameworks for content type"""        
         base_frameworks = [StandardsFramework.WCAG, StandardsFramework.GDPR]
         
         if content_type in [ContentType.AUDIO, ContentType.MUSIC]:
@@ -868,8 +843,7 @@ class StandardsChecker:
         frameworks: List[StandardsFramework],
         custom_rules: Optional[List[StandardRule]] = None
     ) -> List[StandardRule]:
-        """Get applicable rules for content type and frameworks"""
-        
+        """Get applicable rules for content type and frameworks"""        
         applicable_rules = []
         
         for framework in frameworks:
@@ -886,8 +860,7 @@ class StandardsChecker:
         return applicable_rules
 
     def _load_standards_rules(self) -> Dict[str, List[StandardRule]]:
-        """Load standards rules from configuration"""
-        
+        """Load standards rules from configuration"""        
         rules = {
             "wcag": [
                 StandardRule(
@@ -1037,8 +1010,7 @@ class StandardsChecker:
         return rules
 
     async def _log_compliance_check(self, report: StandardsReport) -> None:
-        """Log compliance check to audit trail"""
-        
+        """Log compliance check to audit trail"""        
         audit_entry = {
             "timestamp": report.created_at.isoformat(),
             "report_id": report.report_id,
@@ -1057,8 +1029,7 @@ class StandardsChecker:
             self.audit_log = self.audit_log[-1000:]
 
     async def _update_checking_metrics(self, report: StandardsReport) -> None:
-        """Update performance metrics for compliance checking"""
-        
+        """Update performance metrics for compliance checking"""        
         content_type = report.content_type.value
         if content_type not in self.checking_metrics:
             self.checking_metrics[content_type] = {
@@ -1083,10 +1054,8 @@ class StandardsChecker:
             metrics["violation_counts"] = metrics["violation_counts"][-1000:]
 
 class ComplianceValidator:
-    """
-    Specialized compliance validator for rapid standards checking.
-    """
-    
+    """    Specialized compliance validator for rapid standards checking.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -1096,8 +1065,7 @@ class ComplianceValidator:
         content_type: ContentType,
         framework: StandardsFramework
     ) -> Dict[str, Any]:
-        """Perform quick compliance validation"""
-        
+        """Perform quick compliance validation"""        
         try:
             validation_result = {
                 "framework": framework.value,
@@ -1142,8 +1110,7 @@ class ComplianceValidator:
             }
 
     async def _quick_wcag_check(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Quick WCAG compliance check"""
-        
+        """Quick WCAG compliance check"""        
         result = {"critical_issues": 0, "warnings": 0, "passed_checks": 0, "total_checks": 3}
         
         try:
@@ -1172,8 +1139,7 @@ class ComplianceValidator:
         return result
 
     async def _quick_dmca_check(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Quick DMCA compliance check"""
-        
+        """Quick DMCA compliance check"""        
         result = {"critical_issues": 0, "warnings": 0, "passed_checks": 1, "total_checks": 1}
         
         # Basic existence check
@@ -1184,8 +1150,7 @@ class ComplianceValidator:
         return result
 
     async def _quick_gdpr_check(self, content_path: str, content_type: ContentType) -> Dict[str, Any]:
-        """Quick GDPR compliance check"""
-        
+        """Quick GDPR compliance check"""        
         result = {"critical_issues": 0, "warnings": 0, "passed_checks": 1, "total_checks": 1}
         
         # Basic privacy check for text content

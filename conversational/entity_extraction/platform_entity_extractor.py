@@ -1,5 +1,4 @@
-"""
-Platform Entity Extractor - Specialized Module
+"""Platform Entity Extractor - Specialized Module
 
 Advanced platform-specific entity extraction for social media, streaming, and content
 distribution platforms. Identifies platform handles, content IDs, URLs, metrics,
@@ -25,7 +24,6 @@ Team Specializations:
 - DevOps Engineer: CI/CD & infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt optimization
 """
-
 import asyncio
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
@@ -50,8 +48,7 @@ from ...utils.validation import validate_input
 
 
 class PlatformType(Enum):
-    """Supported social media and content platforms"""
-    YOUTUBE = "youtube"
+    """Supported social media and content platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -75,8 +72,7 @@ class PlatformType(Enum):
 
 
 class PlatformEntityType(Enum):
-    """Types of platform-specific entities"""
-    HANDLE = "handle"
+    """Types of platform-specific entities"""    HANDLE = "handle"
     CHANNEL_ID = "channel_id"
     CONTENT_ID = "content_id"
     HASHTAG = "hashtag"
@@ -99,8 +95,7 @@ class PlatformEntityType(Enum):
 
 @dataclass
 class PlatformEntity:
-    """Platform-specific entity with metadata"""
-    text: str
+    """Platform-specific entity with metadata"""    text: str
     entity_type: PlatformEntityType
     platform: PlatformType
     confidence: float
@@ -118,8 +113,7 @@ class PlatformEntity:
 
 @dataclass
 class PlatformExtractionResult:
-    """Complete platform entity extraction results"""
-    entities: List[PlatformEntity]
+    """Complete platform entity extraction results"""    entities: List[PlatformEntity]
     platforms_detected: Set[PlatformType]
     total_entities: int
     confidence_avg: float
@@ -128,8 +122,7 @@ class PlatformExtractionResult:
 
 
 class PlatformEntityExtractor(BaseService):
-    """
-    Advanced platform entity extractor for social media and content platforms.
+    """    Advanced platform entity extractor for social media and content platforms.
     
     Specializes in:
     - Multi-platform handle detection
@@ -138,8 +131,7 @@ class PlatformEntityExtractor(BaseService):
     - Engagement metrics extraction
     - Cross-platform entity linking
     - Platform-specific pattern recognition
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -155,8 +147,7 @@ class PlatformEntityExtractor(BaseService):
         self.cache_ttl = config.get("cache_ttl", 3600) if config else 3600
         
     def _initialize_platform_patterns(self) -> Dict[PlatformType, Dict[str, re.Pattern]]:
-        """Initialize regex patterns for each platform"""
-        patterns = {
+        """Initialize regex patterns for each platform"""        patterns = {
             PlatformType.YOUTUBE: {
                 "channel_id": re.compile(r"UC[a-zA-Z0-9_-]{22}", re.IGNORECASE),
                 "video_id": re.compile(r"[a-zA-Z0-9_-]{11}", re.IGNORECASE),
@@ -247,8 +238,7 @@ class PlatformEntityExtractor(BaseService):
         return patterns
     
     def _load_models(self):
-        """Load ML models for platform detection and entity classification"""
-        try:
+        """Load ML models for platform detection and entity classification"""        try:
             # Platform classifier for ambiguous URLs
             self.platform_classifier = pipeline(
                 "text-classification",
@@ -277,8 +267,7 @@ class PlatformEntityExtractor(BaseService):
         platforms: Optional[List[PlatformType]] = None,
         include_metrics: bool = True
     ) -> PlatformExtractionResult:
-        """
-        Extract all platform entities from text
+        """        Extract all platform entities from text
         
         Args:
             text: Input text to analyze
@@ -287,8 +276,7 @@ class PlatformEntityExtractor(BaseService):
             
         Returns:
             Complete platform extraction results
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Validate input
@@ -362,8 +350,7 @@ class PlatformEntityExtractor(BaseService):
         platform: PlatformType,
         include_metrics: bool = True
     ) -> List[PlatformEntity]:
-        """Extract entities specific to one platform"""
-        entities = []
+        """Extract entities specific to one platform"""        entities = []
         
         try:
             patterns = self._platform_patterns.get(platform, {})
@@ -396,8 +383,7 @@ class PlatformEntityExtractor(BaseService):
         full_text: str,
         include_metrics: bool
     ) -> Optional[PlatformEntity]:
-        """Create platform entity from regex match"""
-        try:
+        """Create platform entity from regex match"""        try:
             # Determine entity type enum
             try:
                 platform_entity_type = PlatformEntityType(entity_type)
@@ -442,8 +428,7 @@ class PlatformEntityExtractor(BaseService):
         platform: PlatformType,
         include_metrics: bool
     ) -> List[PlatformEntity]:
-        """Extract and validate platform URLs"""
-        entities = []
+        """Extract and validate platform URLs"""        entities = []
         
         # Generic URL pattern
         url_pattern = re.compile(
@@ -467,8 +452,7 @@ class PlatformEntityExtractor(BaseService):
         return entities
     
     async def _is_platform_url(self, url: str, platform: PlatformType) -> bool:
-        """Check if URL belongs to specified platform"""
-        try:
+        """Check if URL belongs to specified platform"""        try:
             parsed = urlparse(url)
             domain = parsed.netloc.lower()
             
@@ -498,8 +482,7 @@ class PlatformEntityExtractor(BaseService):
         full_text: str,
         include_metrics: bool
     ) -> Optional[PlatformEntity]:
-        """Create platform entity from URL match"""
-        try:
+        """Create platform entity from URL match"""        try:
             url = match.group(0)
             parsed = urlparse(url)
             
@@ -546,8 +529,7 @@ class PlatformEntityExtractor(BaseService):
         url: str, 
         platform: PlatformType
     ) -> Optional[str]:
-        """Extract content ID from platform URL"""
-        try:
+        """Extract content ID from platform URL"""        try:
             parsed = urlparse(url)
             
             if platform == PlatformType.YOUTUBE:
@@ -585,8 +567,7 @@ class PlatformEntityExtractor(BaseService):
         url: str, 
         platform: PlatformType
     ) -> PlatformEntityType:
-        """Determine entity type from URL structure"""
-        try:
+        """Determine entity type from URL structure"""        try:
             parsed = urlparse(url)
             path = parsed.path.lower()
             
@@ -633,8 +614,7 @@ class PlatformEntityExtractor(BaseService):
         platform: PlatformType,
         entity_type: str
     ) -> Dict[str, Any]:
-        """Extract additional metadata from entity match"""
-        metadata = {
+        """Extract additional metadata from entity match"""        metadata = {
             "platform": platform.value,
             "entity_type": entity_type,
             "match_length": len(match.group(0)),
@@ -668,8 +648,7 @@ class PlatformEntityExtractor(BaseService):
         entity_type: str,
         full_text: str
     ) -> float:
-        """Calculate confidence score for extracted entity"""
-        base_confidence = 0.7
+        """Calculate confidence score for extracted entity"""        base_confidence = 0.7
         
         # Pattern strength bonus
         pattern_strength = {
@@ -712,8 +691,7 @@ class PlatformEntityExtractor(BaseService):
         platform: PlatformType,
         entity_type: str
     ) -> Optional[str]:
-        """Construct full URL from extracted entity"""
-        try:
+        """Construct full URL from extracted entity"""        try:
             text = match.group(0)
             
             # If already a URL, return as-is
@@ -757,8 +735,7 @@ class PlatformEntityExtractor(BaseService):
         url: str,
         platform: PlatformType
     ) -> Dict[str, int]:
-        """Fetch comprehensive engagement metrics for platform content"""
-        try:
+        """Fetch comprehensive engagement metrics for platform content"""        try:
             # Initialize metrics structure
             metrics = {
                 "views": 0,
@@ -809,8 +786,7 @@ class PlatformEntityExtractor(BaseService):
             return metrics
     
     async def _fetch_youtube_api_metrics(self, url: str) -> Dict[str, int]:
-        """Fetch YouTube API metrics"""
-        try:
+        """Fetch YouTube API metrics"""        try:
             # Extract video/channel ID from URL
             video_id = self._extract_youtube_id(url)
             if not video_id:
@@ -834,8 +810,7 @@ class PlatformEntityExtractor(BaseService):
             return {}
     
     async def _fetch_instagram_api_metrics(self, url: str) -> Dict[str, int]:
-        """Fetch Instagram API metrics"""
-        try:
+        """Fetch Instagram API metrics"""        try:
             # Extract post/profile ID
             entity_id = self._extract_instagram_id(url)
             if not entity_id:
@@ -857,8 +832,7 @@ class PlatformEntityExtractor(BaseService):
             return {}
     
     async def _fetch_spotify_api_metrics(self, url: str) -> Dict[str, int]:
-        """Fetch Spotify API metrics"""
-        try:
+        """Fetch Spotify API metrics"""        try:
             # Extract track/artist/album ID
             entity_id = self._extract_spotify_id(url)
             if not entity_id:
@@ -879,8 +853,7 @@ class PlatformEntityExtractor(BaseService):
             return {}
     
     async def _make_youtube_api_request(self, video_id: str) -> Dict[str, Any]:
-        """Simulate YouTube API request - replace with actual implementation"""
-        # This is a mock response - implement actual API calls in production
+        """Simulate YouTube API request - replace with actual implementation"""        # This is a mock response - implement actual API calls in production
         import random
         return {
             "viewCount": random.randint(1000, 1000000),
@@ -892,8 +865,7 @@ class PlatformEntityExtractor(BaseService):
         }
     
     async def _make_instagram_api_request(self, entity_id: str) -> Dict[str, Any]:
-        """Simulate Instagram API request - replace with actual implementation"""
-        import random
+        """Simulate Instagram API request - replace with actual implementation"""        import random
         return {
             "like_count": random.randint(50, 10000),
             "comments_count": random.randint(5, 1000),
@@ -903,8 +875,7 @@ class PlatformEntityExtractor(BaseService):
         }
     
     async def _make_spotify_api_request(self, entity_id: str) -> Dict[str, Any]:
-        """Simulate Spotify API request - replace with actual implementation"""
-        import random
+        """Simulate Spotify API request - replace with actual implementation"""        import random
         return {
             "followers": {"total": random.randint(1000, 5000000)},
             "popularity": random.randint(0, 100),
@@ -916,8 +887,7 @@ class PlatformEntityExtractor(BaseService):
         self, 
         entities: List[PlatformEntity]
     ) -> List[PlatformEntity]:
-        """Remove duplicate entities and resolve conflicts"""
-        if not entities:
+        """Remove duplicate entities and resolve conflicts"""        if not entities:
             return []
         
         # Group by text content
@@ -956,8 +926,7 @@ class PlatformEntityExtractor(BaseService):
         return unique_entities
     
     async def extract_hashtags(self, text: str) -> List[PlatformEntity]:
-        """Extract hashtags from text"""
-        hashtag_pattern = re.compile(r"#\w+", re.IGNORECASE)
+        """Extract hashtags from text"""        hashtag_pattern = re.compile(r"#\w+", re.IGNORECASE)
         hashtags = []
         
         for match in hashtag_pattern.finditer(text):
@@ -974,8 +943,7 @@ class PlatformEntityExtractor(BaseService):
         return hashtags
     
     async def extract_mentions(self, text: str) -> List[PlatformEntity]:
-        """Extract mentions from text"""
-        mention_pattern = re.compile(r"@\w+", re.IGNORECASE)
+        """Extract mentions from text"""        mention_pattern = re.compile(r"@\w+", re.IGNORECASE)
         mentions = []
         
         for match in mention_pattern.finditer(text):
@@ -992,12 +960,10 @@ class PlatformEntityExtractor(BaseService):
         return mentions
     
     async def get_platform_statistics(self) -> Dict[str, Any]:
-        """Get extraction statistics by platform"""
-        return await self.metrics.get_all_metrics()
+        """Get extraction statistics by platform"""        return await self.metrics.get_all_metrics()
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check service health status"""
-        return {
+        """Check service health status"""        return {
             "status": "healthy" if self.models_loaded else "degraded",
             "models_loaded": self.models_loaded,
             "supported_platforms": len(self._platform_patterns),

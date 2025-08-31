@@ -1,5 +1,4 @@
-"""
-Recommendation Networks for IA-Influencer-Agent
+"""Recommendation Networks for IA-Influencer-Agent
 
 Advanced recommendation systems for content creators, including collaboration
 matching, audience targeting, and content optimization recommendations.
@@ -7,7 +6,6 @@ matching, audience targeting, and content optimization recommendations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -21,8 +19,7 @@ from .base_networks import BaseNeuralNetwork, NetworkConfig
 
 
 class RecommendationType(Enum):
-    """Types of recommendations"""
-    COLLABORATION = "collaboration"
+    """Types of recommendations"""    COLLABORATION = "collaboration"
     CONTENT_OPTIMIZATION = "content_optimization"
     AUDIENCE_TARGETING = "audience_targeting"
     TREND_ALIGNMENT = "trend_alignment"
@@ -31,8 +28,7 @@ class RecommendationType(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of collaborations"""
-    MUSICAL_COLLAB = "musical_collaboration"
+    """Types of collaborations"""    MUSICAL_COLLAB = "musical_collaboration"
     VIDEO_COLLAB = "video_collaboration"
     PODCAST_GUEST = "podcast_guest"
     CROSS_PROMOTION = "cross_promotion"
@@ -43,8 +39,7 @@ class CollaborationType(Enum):
 
 @dataclass
 class RecommendationResult:
-    """Result of a recommendation query"""
-    
+    """Result of a recommendation query"""    
     recommendation_type: RecommendationType
     score: float
     confidence: float
@@ -71,19 +66,16 @@ class RecommendationResult:
     alternative_options: Optional[List['RecommendationResult']] = None
     
     def __post_init__(self):
-        """Ensure score and confidence are in valid ranges"""
-        self.score = max(0.0, min(1.0, self.score))
+        """Ensure score and confidence are in valid ranges"""        self.score = max(0.0, min(1.0, self.score))
         self.confidence = max(0.0, min(1.0, self.confidence))
 
 
 class CollaborationRecommendationNetwork(BaseNeuralNetwork):
-    """
-    Network for recommending creator collaborations
+    """    Network for recommending creator collaborations
     
     Matches creators based on complementary skills, audience overlap,
     and collaboration potential.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -195,10 +187,8 @@ class CollaborationRecommendationNetwork(BaseNeuralNetwork):
         candidate_creators: torch.Tensor,
         top_k: int = 10
     ) -> List[RecommendationResult]:
-        """
-        Recommend top collaborations for a creator
-        """
-        
+        """        Recommend top collaborations for a creator
+        """        
         self.eval()
         recommendations = []
         
@@ -268,12 +258,10 @@ class CollaborationRecommendationNetwork(BaseNeuralNetwork):
 
 
 class ContentRecommendationNetwork(BaseNeuralNetwork):
-    """
-    Network for recommending content optimization strategies
+    """    Network for recommending content optimization strategies
     
     Suggests content types, timing, and optimization strategies.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -375,12 +363,10 @@ class ContentRecommendationNetwork(BaseNeuralNetwork):
 
 
 class AudienceTargetingNetwork(BaseNeuralNetwork):
-    """
-    Network for audience analysis and targeting recommendations
+    """    Network for audience analysis and targeting recommendations
     
     Analyzes audience demographics and suggests targeting strategies.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -475,12 +461,10 @@ class AudienceTargetingNetwork(BaseNeuralNetwork):
 
 
 class TrendPredictionNetwork(BaseNeuralNetwork):
-    """
-    Network for predicting trends and viral potential
+    """    Network for predicting trends and viral potential
     
     Analyzes current trends and predicts future content opportunities.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -555,10 +539,8 @@ class TrendPredictionNetwork(BaseNeuralNetwork):
         historical_data: torch.Tensor,
         forecast_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Predict future trends for the specified number of days
-        """
-        
+        """        Predict future trends for the specified number of days
+        """        
         self.eval()
         
         with torch.no_grad():

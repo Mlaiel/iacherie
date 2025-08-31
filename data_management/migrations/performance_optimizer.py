@@ -1,5 +1,4 @@
-"""
-⚡ Performance Optimizer - Enterprise Database Performance Enhancement Engine
+"""⚡ Performance Optimizer - Enterprise Database Performance Enhancement Engine
 ============================================================================
 
 Ultra-advanced database performance optimization for IA Influencer Agent:
@@ -17,7 +16,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This performance optimization engine is protected intellectual property.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import json
@@ -39,16 +37,14 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationLevel(Enum):
-    """Performance optimization levels"""
-    BASIC = "basic"          # Essential optimizations only
+    """Performance optimization levels"""    BASIC = "basic"          # Essential optimizations only
     STANDARD = "standard"    # Standard performance tuning
     ADVANCED = "advanced"    # Advanced optimization techniques
     ULTRA = "ultra"          # Maximum performance optimization
 
 
 class OptimizationType(Enum):
-    """Types of performance optimizations"""
-    INDEX = "index"                    # Index optimization
+    """Types of performance optimizations"""    INDEX = "index"                    # Index optimization
     QUERY = "query"                   # Query optimization
     PARTITION = "partition"           # Table partitioning
     VACUUM = "vacuum"                 # Database maintenance
@@ -60,8 +56,7 @@ class OptimizationType(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance measurement data"""
-    metric_name: str
+    """Performance measurement data"""    metric_name: str
     value: float
     unit: str
     timestamp: datetime
@@ -72,8 +67,7 @@ class PerformanceMetric:
 
 @dataclass
 class OptimizationRule:
-    """Performance optimization rule"""
-    rule_id: str
+    """Performance optimization rule"""    rule_id: str
     name: str
     description: str
     optimization_type: OptimizationType
@@ -87,8 +81,7 @@ class OptimizationRule:
 
 @dataclass
 class OptimizationResult:
-    """Optimization execution result"""
-    rule_id: str
+    """Optimization execution result"""    rule_id: str
     optimization_type: OptimizationType
     status: str  # success, failed, skipped
     execution_time: float
@@ -100,8 +93,7 @@ class OptimizationResult:
 
 
 class PerformanceOptimizer:
-    """
-    Enterprise-grade database performance optimization engine
+    """    Enterprise-grade database performance optimization engine
     
     Provides comprehensive performance optimization for:
     - Content fingerprint similarity searches (FAISS-style optimizations)
@@ -109,8 +101,7 @@ class PerformanceOptimizer:
     - Creator collaboration matching algorithms
     - Platform integration data synchronization
     - Real-time monitoring and alerting queries
-    """
-    
+    """    
     def __init__(self, 
                  database_url: str,
                  optimization_level: OptimizationLevel = OptimizationLevel.STANDARD):
@@ -125,18 +116,15 @@ class PerformanceOptimizer:
         self._register_builtin_rules()
         
     def register_optimization_rule(self, rule: OptimizationRule) -> None:
-        """Register performance optimization rule"""
-        self.optimization_rules[rule.rule_id] = rule
+        """Register performance optimization rule"""        self.optimization_rules[rule.rule_id] = rule
         logger.info(f"Registered optimization rule: {rule.rule_id}")
         
     async def optimize_all(self) -> List[OptimizationResult]:
-        """
-        Execute complete performance optimization suite
+        """        Execute complete performance optimization suite
         
         Returns:
             List of optimization results for all applicable rules
-        """
-        logger.info(f"Starting comprehensive performance optimization: {self.optimization_level.value}")
+        """        logger.info(f"Starting comprehensive performance optimization: {self.optimization_level.value}")
         
         results = []
         applicable_rules = self._get_applicable_rules()
@@ -177,16 +165,14 @@ class PerformanceOptimizer:
         return results
         
     async def optimize_fingerprint_searches(self) -> List[OptimizationResult]:
-        """
-        Optimize content fingerprint similarity searches
+        """        Optimize content fingerprint similarity searches
         
         Specific optimizations for:
         - Vector similarity queries
         - Hash-based lookups
         - Metadata filtering
         - Bulk fingerprint operations
-        """
-        fingerprint_rules = [
+        """        fingerprint_rules = [
             rule for rule in self.optimization_rules.values()
             if rule.target_table == "content_fingerprints"
         ]
@@ -199,16 +185,14 @@ class PerformanceOptimizer:
         return results
         
     async def optimize_revenue_analytics(self) -> List[OptimizationResult]:
-        """
-        Optimize monetization and revenue analytics queries
+        """        Optimize monetization and revenue analytics queries
         
         Specific optimizations for:
         - Time-based aggregations
         - Platform-specific revenue calculations
         - Creator performance analytics
         - Revenue trend analysis
-        """
-        revenue_rules = [
+        """        revenue_rules = [
             rule for rule in self.optimization_rules.values()
             if rule.target_table == "revenue_tracking"
         ]
@@ -221,22 +205,19 @@ class PerformanceOptimizer:
         return results
         
     async def analyze_slow_queries(self, threshold_ms: int = 1000) -> List[Dict[str, Any]]:
-        """
-        Analyze slow queries for optimization opportunities
+        """        Analyze slow queries for optimization opportunities
         
         Args:
             threshold_ms: Query time threshold in milliseconds
             
         Returns:
             List of slow query analysis results
-        """
-        async with self._get_session() as session:
+        """        async with self._get_session() as session:
             # Enable query statistics if not already enabled
             await session.execute(text("SELECT pg_stat_statements_reset()"))
             
             # Get slow queries from pg_stat_statements
-            query = text("""
-                SELECT 
+            query = text("""                SELECT 
                     query,
                     calls,
                     total_time,
@@ -263,13 +244,11 @@ class PerformanceOptimizer:
             return analyzed_queries
             
     async def create_optimal_indices(self) -> List[OptimizationResult]:
-        """
-        Create optimal database indices based on query patterns
+        """        Create optimal database indices based on query patterns
         
         Returns:
             List of index creation results
-        """
-        results = []
+        """        results = []
         
         # Fingerprint table indices
         fingerprint_indices = [
@@ -311,15 +290,13 @@ class PerformanceOptimizer:
         return results
         
     async def optimize_table_partitioning(self) -> List[OptimizationResult]:
-        """
-        Optimize table partitioning for large datasets
+        """        Optimize table partitioning for large datasets
         
         Partitioning strategies:
         - Time-based partitioning for audit logs
         - Hash partitioning for content fingerprints
         - Range partitioning for revenue data
-        """
-        results = []
+        """        results = []
         
         # Partition content fingerprints by hash
         fingerprint_partition = await self._create_hash_partition(
@@ -348,8 +325,7 @@ class PerformanceOptimizer:
         return results
         
     async def _execute_optimization_rule(self, rule: OptimizationRule) -> OptimizationResult:
-        """Execute single optimization rule"""
-        start_time = time.time()
+        """Execute single optimization rule"""        start_time = time.time()
         
         try:
             # Capture before metrics
@@ -403,8 +379,7 @@ class PerformanceOptimizer:
             )
             
     async def _execute_index_optimization(self, rule: OptimizationRule) -> List[str]:
-        """Execute index optimization"""
-        sql_statements = []
+        """Execute index optimization"""        sql_statements = []
         
         if rule.action == "create_composite_index":
             columns = rule.conditions.get("columns", [])
@@ -433,18 +408,15 @@ class PerformanceOptimizer:
         return sql_statements
         
     async def _execute_query_optimization(self, rule: OptimizationRule) -> List[str]:
-        """Execute query optimization"""
-        # Implementation for query optimization
+        """Execute query optimization"""        # Implementation for query optimization
         return []
         
     async def _execute_partition_optimization(self, rule: OptimizationRule) -> List[str]:
-        """Execute partitioning optimization"""
-        # Implementation for partitioning optimization
+        """Execute partitioning optimization"""        # Implementation for partitioning optimization
         return []
         
     async def _execute_vacuum_optimization(self, rule: OptimizationRule) -> List[str]:
-        """Execute vacuum optimization"""
-        sql_statements = []
+        """Execute vacuum optimization"""        sql_statements = []
         
         if rule.target_table:
             sql = f"VACUUM ANALYZE {rule.target_table}"
@@ -457,8 +429,7 @@ class PerformanceOptimizer:
         return sql_statements
         
     async def _execute_statistics_optimization(self, rule: OptimizationRule) -> List[str]:
-        """Execute statistics optimization"""
-        sql_statements = []
+        """Execute statistics optimization"""        sql_statements = []
         
         if rule.target_table:
             sql = f"ANALYZE {rule.target_table}"
@@ -475,14 +446,12 @@ class PerformanceOptimizer:
                           table_name: str, 
                           columns: List[str], 
                           index_type: str = "BTREE") -> OptimizationResult:
-        """Create database index"""
-        start_time = time.time()
+        """Create database index"""        start_time = time.time()
         
         try:
             # Check if index already exists
             async with self._get_session() as session:
-                check_query = text("""
-                    SELECT EXISTS (
+                check_query = text("""                    SELECT EXISTS (
                         SELECT 1 FROM pg_indexes 
                         WHERE tablename = :table_name 
                         AND indexname = :index_name
@@ -545,8 +514,7 @@ class PerformanceOptimizer:
                                    table_name: str, 
                                    partition_column: str, 
                                    num_partitions: int) -> OptimizationResult:
-        """Create hash-based table partitioning"""
-        # Implementation for hash partitioning
+        """Create hash-based table partitioning"""        # Implementation for hash partitioning
         return OptimizationResult(
             rule_id=f"hash_partition_{table_name}",
             optimization_type=OptimizationType.PARTITION,
@@ -563,8 +531,7 @@ class PerformanceOptimizer:
                                    table_name: str, 
                                    date_column: str, 
                                    interval: str) -> OptimizationResult:
-        """Create date-based table partitioning"""
-        # Implementation for date partitioning
+        """Create date-based table partitioning"""        # Implementation for date partitioning
         return OptimizationResult(
             rule_id=f"date_partition_{table_name}",
             optimization_type=OptimizationType.PARTITION,
@@ -578,13 +545,11 @@ class PerformanceOptimizer:
         )
         
     async def _capture_baseline_metrics(self) -> Dict[str, float]:
-        """Capture baseline performance metrics"""
-        metrics = {}
+        """Capture baseline performance metrics"""        metrics = {}
         
         async with self._get_session() as session:
             # Query execution statistics
-            stats_query = text("""
-                SELECT 
+            stats_query = text("""                SELECT 
                     sum(calls) as total_calls,
                     avg(mean_time) as avg_execution_time,
                     sum(total_time) as total_execution_time
@@ -602,8 +567,7 @@ class PerformanceOptimizer:
                 })
                 
             # Database size metrics
-            size_query = text("""
-                SELECT pg_database_size(current_database()) as db_size
+            size_query = text("""                SELECT pg_database_size(current_database()) as db_size
             """)
             
             result = await session.execute(size_query)
@@ -613,16 +577,14 @@ class PerformanceOptimizer:
         return metrics
         
     async def _capture_table_metrics(self, table_name: Optional[str]) -> Dict[str, float]:
-        """Capture table-specific performance metrics"""
-        if not table_name:
+        """Capture table-specific performance metrics"""        if not table_name:
             return {}
             
         metrics = {}
         
         async with self._get_session() as session:
             # Table size and statistics
-            stats_query = text("""
-                SELECT 
+            stats_query = text("""                SELECT 
                     pg_total_relation_size(:table_name) as total_size,
                     pg_relation_size(:table_name) as table_size,
                     (SELECT reltuples FROM pg_class WHERE relname = :table_name) as estimated_rows
@@ -641,8 +603,7 @@ class PerformanceOptimizer:
         return metrics
         
     async def _analyze_query_performance(self, query_data: Any) -> Dict[str, Any]:
-        """Analyze individual query performance"""
-        query, calls, total_time, mean_time, min_time, max_time, stddev_time, rows, hit_percent = query_data
+        """Analyze individual query performance"""        query, calls, total_time, mean_time, min_time, max_time, stddev_time, rows, hit_percent = query_data
         
         analysis = {
             "query": query,
@@ -672,8 +633,7 @@ class PerformanceOptimizer:
         return analysis
         
     def _calculate_improvement(self, before: Dict[str, float], after: Dict[str, float]) -> float:
-        """Calculate performance improvement percentage"""
-        if not before or not after:
+        """Calculate performance improvement percentage"""        if not before or not after:
             return 0.0
             
         # Focus on execution time improvement
@@ -687,8 +647,7 @@ class PerformanceOptimizer:
         return 0.0
         
     def _get_applicable_rules(self) -> List[OptimizationRule]:
-        """Get optimization rules applicable to current optimization level"""
-        impact_mapping = {
+        """Get optimization rules applicable to current optimization level"""        impact_mapping = {
             OptimizationLevel.BASIC: ["high"],
             OptimizationLevel.STANDARD: ["high", "medium"],
             OptimizationLevel.ADVANCED: ["high", "medium", "low"],
@@ -703,8 +662,7 @@ class PerformanceOptimizer:
         ]
         
     def _register_builtin_rules(self) -> None:
-        """Register built-in optimization rules"""
-        # Fingerprint optimization rules
+        """Register built-in optimization rules"""        # Fingerprint optimization rules
         self.optimization_rules.update({
             "fingerprint_composite_index": OptimizationRule(
                 rule_id="fingerprint_composite_index",
@@ -771,18 +729,15 @@ class PerformanceOptimizer:
         })
         
     async def _apply_optimization(self, rule: OptimizationRule, result: OptimizationResult) -> None:
-        """Apply optimization if auto-apply is enabled"""
-        logger.info(f"Auto-applying optimization: {rule.rule_id}")
+        """Apply optimization if auto-apply is enabled"""        logger.info(f"Auto-applying optimization: {rule.rule_id}")
         # Implementation for auto-apply logic
         
     async def _generate_optimization_report(self, 
                                           results: List[OptimizationResult],
                                           baseline: Dict[str, float],
                                           final: Dict[str, float]) -> None:
-        """Generate comprehensive optimization report"""
-        # Implementation for optimization reporting
+        """Generate comprehensive optimization report"""        # Implementation for optimization reporting
         logger.info(f"Generated optimization report for {len(results)} rules")
         
     async def _get_session(self) -> Session:
-        """Get database session"""
-        return self.session_maker()
+        """Get database session"""        return self.session_maker()

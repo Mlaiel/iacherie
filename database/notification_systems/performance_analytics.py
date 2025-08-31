@@ -1,5 +1,4 @@
-"""
-Performance Analytics and Insights Notification Manager
+"""Performance Analytics and Insights Notification Manager
 
 Gestionnaire spécialisé pour les notifications d'analytics et insights de performance
 dans l'écosystème IA Influencer Agent. Métriques avancées, prédictions IA et recommandations.
@@ -21,7 +20,6 @@ Toute utilisation, copie, modification, distribution ou tentative de reverse eng
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta, date
@@ -51,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceMetric(Enum):
-    """Métriques de performance trackées"""
-    PLAYS = "plays"
+    """Métriques de performance trackées"""    PLAYS = "plays"
     DOWNLOADS = "downloads"
     LIKES = "likes"
     SHARES = "shares"
@@ -70,8 +67,7 @@ class PerformanceMetric(Enum):
 
 
 class Platform(Enum):
-    """Plateformes surveillées pour analytics"""
-    SPOTIFY = "spotify"
+    """Plateformes surveillées pour analytics"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     SOUNDCLOUD = "soundcloud"
     INSTAGRAM = "instagram"
@@ -86,8 +82,7 @@ class Platform(Enum):
 
 
 class InsightType(Enum):
-    """Types d'insights générés par IA"""
-    PERFORMANCE_TREND = "performance_trend"
+    """Types d'insights générés par IA"""    PERFORMANCE_TREND = "performance_trend"
     AUDIENCE_BEHAVIOR = "audience_behavior"
     OPTIMAL_TIMING = "optimal_timing"
     CONTENT_RECOMMENDATION = "content_recommendation"
@@ -98,8 +93,7 @@ class InsightType(Enum):
 
 
 class AlertSeverity(IntEnum):
-    """Niveaux de gravité des alertes performance"""
-    INFO = 1
+    """Niveaux de gravité des alertes performance"""    INFO = 1
     WARNING = 2
     CRITICAL = 3
     URGENT = 4
@@ -107,8 +101,7 @@ class AlertSeverity(IntEnum):
 
 @dataclass
 class PerformanceDataPoint:
-    """Point de données de performance"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Point de données de performance"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     content_id: str = None
     platform: Platform = Platform.SPOTIFY
@@ -120,8 +113,7 @@ class PerformanceDataPoint:
 
 @dataclass
 class PerformanceInsight:
-    """Insight IA générée à partir des données"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Insight IA générée à partir des données"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     insight_type: InsightType = InsightType.PERFORMANCE_TREND
     title: str = ""
@@ -139,8 +131,7 @@ class PerformanceInsight:
 
 @dataclass
 class PerformanceGoal:
-    """Objectif de performance utilisateur"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Objectif de performance utilisateur"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     metric: PerformanceMetric = PerformanceMetric.PLAYS
     target_value: float = 0.0
@@ -155,8 +146,7 @@ class PerformanceGoal:
 
 @dataclass
 class CompetitiveAnalysis:
-    """Analyse concurrentielle"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Analyse concurrentielle"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     competitor_ids: List[str] = field(default_factory=list)
     comparison_metrics: Dict[str, Any] = field(default_factory=dict)
@@ -169,8 +159,7 @@ class CompetitiveAnalysis:
 
 
 class PerformanceAnalyticsManager:
-    """
-    Gestionnaire avancé des analytics et insights de performance
+    """    Gestionnaire avancé des analytics et insights de performance
     
     Responsabilités:
     - Collecte et agrégation données multi-plateformes
@@ -179,7 +168,6 @@ class PerformanceAnalyticsManager:
     - Prédictions et recommandations
     - Analytics concurrentiel et benchmarking
     """
-
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
         self.db_pool = db_pool
         self.redis = redis_client
@@ -188,8 +176,7 @@ class PerformanceAnalyticsManager:
         self.platform_apis = self._init_platform_apis()
         
     def _init_ml_models(self) -> Dict[str, Any]:
-        """Initialise les modèles ML pour analytics"""
-        return {
+        """Initialise les modèles ML pour analytics"""        return {
             "trend_predictor": RandomForestRegressor(n_estimators=100),
             "anomaly_detector": None,  # IsolationForest à charger
             "engagement_predictor": None,
@@ -197,10 +184,8 @@ class PerformanceAnalyticsManager:
         }
 
     def _load_analytics_templates(self) -> Dict[str, Template]:
-        """Charge les templates de notification analytics"""
-        templates = {
-            "performance_milestone": Template("""
-                🎯 JALON DE PERFORMANCE ATTEINT!
+        """Charge les templates de notification analytics"""        templates = {
+            "performance_milestone": Template("""                🎯 JALON DE PERFORMANCE ATTEINT!
                 
                 🏆 {{ metric_name }}: {{ current_value | format_number }}
                 📈 Objectif: {{ target_value | format_number }}
@@ -217,8 +202,7 @@ class PerformanceAnalyticsManager:
                 🎯 Définir nouveau défi: {{ new_goal_url }}
             """),
             
-            "trend_alert": Template("""
-                📈 ALERTE TENDANCE {{ severity.upper() }}
+            "trend_alert": Template("""                📈 ALERTE TENDANCE {{ severity.upper() }}
                 
                 🔍 Tendance détectée: {{ trend_description }}
                 📊 Changement: {{ change_percentage }}% sur {{ period }}
@@ -239,8 +223,7 @@ class PerformanceAnalyticsManager:
                 📊 Voir détails: {{ dashboard_url }}
             """),
             
-            "weekly_insights": Template("""
-                📊 INSIGHTS HEBDOMADAIRES IA
+            "weekly_insights": Template("""                📊 INSIGHTS HEBDOMADAIRES IA
                 
                 📅 Semaine du {{ week_start }} au {{ week_end }}
                 
@@ -265,8 +248,7 @@ class PerformanceAnalyticsManager:
                 📈 Dashboard complet: {{ dashboard_url }}
             """),
             
-            "competitive_update": Template("""
-                🏁 MISE À JOUR CONCURRENTIELLE
+            "competitive_update": Template("""                🏁 MISE À JOUR CONCURRENTIELLE
                 
                 📊 Position marché: {{ market_position }}
                 📈 Évolution classement: {{ ranking_change }}
@@ -286,8 +268,7 @@ class PerformanceAnalyticsManager:
                 📈 Benchmark complet: {{ benchmark_url }}
             """),
             
-            "anomaly_detected": Template("""
-                ⚠️ ANOMALIE PERFORMANCE DÉTECTÉE
+            "anomaly_detected": Template("""                ⚠️ ANOMALIE PERFORMANCE DÉTECTÉE
                 
                 🔍 Métrique: {{ metric_name }}
                 📊 Valeur actuelle: {{ current_value }}
@@ -314,8 +295,7 @@ class PerformanceAnalyticsManager:
         return templates
 
     def _init_platform_apis(self) -> Dict[str, Any]:
-        """Initialise les APIs des plateformes"""
-        return {
+        """Initialise les APIs des plateformes"""        return {
             "spotify": {
                 "client_id": "spotify_client_id",
                 "client_secret": "spotify_client_secret",
@@ -337,8 +317,7 @@ class PerformanceAnalyticsManager:
         platforms: List[Platform] = None,
         metrics: List[PerformanceMetric] = None
     ) -> Dict[str, Any]:
-        """
-        Collecte les données de performance depuis toutes les plateformes
+        """        Collecte les données de performance depuis toutes les plateformes
         
         Args:
             user_id: ID de l'utilisateur
@@ -347,8 +326,7 @@ class PerformanceAnalyticsManager:
             
         Returns:
             Dict contenant les données collectées et les insights générés
-        """
-        try:
+        """        try:
             platforms = platforms or list(Platform)
             metrics = metrics or list(PerformanceMetric)
             
@@ -412,11 +390,9 @@ class PerformanceAnalyticsManager:
         period_end: date,
         report_type: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """Génère un rapport de performance détaillé avec visualisations"""
-        async with self.db_pool.acquire() as conn:
+        """Génère un rapport de performance détaillé avec visualisations"""        async with self.db_pool.acquire() as conn:
             # Données de performance de la période
-            performance_data = await conn.fetch("""
-                SELECT * FROM performance_data_points 
+            performance_data = await conn.fetch("""                SELECT * FROM performance_data_points 
                 WHERE user_id = $1 
                 AND timestamp BETWEEN $2 AND $3
                 ORDER BY timestamp
@@ -469,8 +445,7 @@ class PerformanceAnalyticsManager:
         user_id: str,
         monitoring_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Configure la surveillance automatique des performances"""
-        try:
+        """Configure la surveillance automatique des performances"""        try:
             # Validation configuration
             validated_config = await self._validate_monitoring_config(monitoring_config)
             
@@ -530,8 +505,7 @@ class PerformanceAnalyticsManager:
             raise
 
     async def get_real_time_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """Récupère les données du dashboard temps réel"""
-        # Cache Redis pour performance
+        """Récupère les données du dashboard temps réel"""        # Cache Redis pour performance
         cache_key = f"performance_dashboard:{user_id}"
         cached_data = await self.redis.get(cache_key)
         
@@ -543,8 +517,7 @@ class PerformanceAnalyticsManager:
         
         async with self.db_pool.acquire() as conn:
             # Métriques clés dernières 24h
-            recent_metrics = await conn.fetch("""
-                SELECT 
+            recent_metrics = await conn.fetch("""                SELECT 
                     metric, platform,
                     SUM(value) as total_value,
                     AVG(value) as avg_value,
@@ -557,8 +530,7 @@ class PerformanceAnalyticsManager:
             """, user_id)
             
             # Tendances dernière semaine
-            weekly_trends = await conn.fetch("""
-                SELECT 
+            weekly_trends = await conn.fetch("""                SELECT 
                     metric,
                     DATE_TRUNC('day', timestamp) as day,
                     SUM(value) as daily_total
@@ -570,16 +542,14 @@ class PerformanceAnalyticsManager:
             """, user_id)
             
             # Insights récents
-            recent_insights = await conn.fetch("""
-                SELECT * FROM performance_insights 
+            recent_insights = await conn.fetch("""                SELECT * FROM performance_insights 
                 WHERE user_id = $1 
                 ORDER BY generated_at DESC 
                 LIMIT 5
             """, user_id)
             
             # Objectifs en cours
-            active_goals = await conn.fetch("""
-                SELECT * FROM performance_goals 
+            active_goals = await conn.fetch("""                SELECT * FROM performance_goals 
                 WHERE user_id = $1 
                 AND is_active = true 
                 ORDER BY target_date
@@ -610,8 +580,7 @@ class PerformanceAnalyticsManager:
         platform: Platform,
         metrics: List[PerformanceMetric]
     ) -> Dict[str, Any]:
-        """Collecte données depuis une plateforme spécifique"""
-        try:
+        """Collecte données depuis une plateforme spécifique"""        try:
             if platform == Platform.SPOTIFY:
                 return await self._collect_spotify_data(user_id, metrics)
             elif platform == Platform.YOUTUBE:
@@ -632,8 +601,7 @@ class PerformanceAnalyticsManager:
         data_points: List[Dict[str, Any]],
         trend_analysis: Dict[str, Any]
     ) -> List[PerformanceInsight]:
-        """Génère des insights IA basés sur les données de performance"""
-        insights = []
+        """Génère des insights IA basés sur les données de performance"""        insights = []
         
         # Analyse des anomalies
         anomalies = await self._detect_performance_anomalies(data_points)
@@ -666,8 +634,7 @@ class PerformanceAnalyticsManager:
         return insights
 
     async def _generate_performance_visualizations(self, df: pd.DataFrame) -> Dict[str, str]:
-        """Génère des visualisations des données de performance"""
-        visualizations = {}
+        """Génère des visualisations des données de performance"""        visualizations = {}
         
         try:
             # Graphique tendances temporelles
@@ -707,8 +674,7 @@ class PerformanceAnalyticsManager:
         return visualizations
 
     async def _predict_future_performance(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Prédit les performances futures basées sur l'historique"""
-        predictions = {}
+        """Prédit les performances futures basées sur l'historique"""        predictions = {}
         
         try:
             for metric in df['metric'].unique():

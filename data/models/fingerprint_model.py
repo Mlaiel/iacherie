@@ -1,5 +1,4 @@
-"""
-Fingerprint Data Model
+"""Fingerprint Data Model
 =====================
 
 Professional fingerprint data model for multi-format content fingerprinting.
@@ -14,7 +13,6 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from datetime import datetime
 from typing import Optional, Dict, List, Any, Union
 from decimal import Decimal
@@ -32,8 +30,7 @@ Base = declarative_base()
 
 
 class FingerprintType(Enum):
-    """Fingerprint type enumeration"""
-    AUDIO = "audio"
+    """Fingerprint type enumeration"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -42,8 +39,7 @@ class FingerprintType(Enum):
 
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprint algorithm enumeration"""
-    # Audio algorithms
+    """Fingerprint algorithm enumeration"""    # Audio algorithms
     CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     SPECTRAL_HASH = "spectral_hash"
@@ -72,8 +68,7 @@ class FingerprintAlgorithm(Enum):
 
 
 class FingerprintStatus(Enum):
-    """Fingerprint status enumeration"""
-    PENDING = "pending"
+    """Fingerprint status enumeration"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -82,8 +77,7 @@ class FingerprintStatus(Enum):
 
 
 class MatchConfidenceLevel(Enum):
-    """Match confidence level enumeration"""
-    VERY_LOW = "very_low"      # 0-20%
+    """Match confidence level enumeration"""    VERY_LOW = "very_low"      # 0-20%
     LOW = "low"                # 20-40%
     MEDIUM = "medium"          # 40-60%
     HIGH = "high"              # 60-80%
@@ -92,13 +86,11 @@ class MatchConfidenceLevel(Enum):
 
 
 class FingerprintModel(Base):
-    """
-    Professional fingerprint data model for IA Influencer Agent platform.
+    """    Professional fingerprint data model for IA Influencer Agent platform.
     
     Advanced AI-powered content fingerprinting with multi-algorithm support,
     vector embeddings, similarity matching, and comprehensive metadata.
-    """
-    
+    """    
     __tablename__ = "fingerprints"
     
     # Primary identification
@@ -228,8 +220,7 @@ class FingerprintModel(Base):
         return f"<FingerprintModel(id='{self.id}', type='{self.fingerprint_type}', algorithm='{self.algorithm}')>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary representation"""
-        return {
+        """Convert model to dictionary representation"""        return {
             'id': self.id,
             'user_id': self.user_id,
             'content_id': self.content_id,
@@ -267,40 +258,33 @@ class FingerprintModel(Base):
     
     @property
     def is_audio(self) -> bool:
-        """Check if fingerprint is for audio content"""
-        return self.fingerprint_type == FingerprintType.AUDIO.value
+        """Check if fingerprint is for audio content"""        return self.fingerprint_type == FingerprintType.AUDIO.value
     
     @property
     def is_video(self) -> bool:
-        """Check if fingerprint is for video content"""
-        return self.fingerprint_type == FingerprintType.VIDEO.value
+        """Check if fingerprint is for video content"""        return self.fingerprint_type == FingerprintType.VIDEO.value
     
     @property
     def is_image(self) -> bool:
-        """Check if fingerprint is for image content"""
-        return self.fingerprint_type == FingerprintType.IMAGE.value
+        """Check if fingerprint is for image content"""        return self.fingerprint_type == FingerprintType.IMAGE.value
     
     @property
     def is_text(self) -> bool:
-        """Check if fingerprint is for text content"""
-        return self.fingerprint_type == FingerprintType.TEXT.value
+        """Check if fingerprint is for text content"""        return self.fingerprint_type == FingerprintType.TEXT.value
     
     @property
     def is_completed(self) -> bool:
-        """Check if fingerprint processing is completed"""
-        return self.status == FingerprintStatus.COMPLETED.value
+        """Check if fingerprint processing is completed"""        return self.status == FingerprintStatus.COMPLETED.value
     
     @property
     def is_active(self) -> bool:
-        """Check if fingerprint is active and usable"""
-        return (self.status == FingerprintStatus.COMPLETED.value and 
+        """Check if fingerprint is active and usable"""        return (self.status == FingerprintStatus.COMPLETED.value and 
                 not self.is_deleted and
                 (not self.expires_at or datetime.utcnow() < self.expires_at))
     
     @property
     def confidence_level(self) -> str:
-        """Get confidence level category"""
-        if self.confidence_score >= 95:
+        """Get confidence level category"""        if self.confidence_score >= 95:
             return MatchConfidenceLevel.EXACT.value
         elif self.confidence_score >= 80:
             return MatchConfidenceLevel.VERY_HIGH.value
@@ -315,8 +299,7 @@ class FingerprintModel(Base):
     
     @property
     def processing_time_formatted(self) -> str:
-        """Get formatted processing time"""
-        if not self.processing_duration:
+        """Get formatted processing time"""        if not self.processing_duration:
             return "Unknown"
         
         if self.processing_duration < 1:
@@ -330,8 +313,7 @@ class FingerprintModel(Base):
     
     @property
     def quality_rating(self) -> str:
-        """Get quality rating based on scores"""
-        avg_score = (self.confidence_score + self.robustness_score + self.uniqueness_score) / 3
+        """Get quality rating based on scores"""        avg_score = (self.confidence_score + self.robustness_score + self.uniqueness_score) / 3
         
         if avg_score >= 90:
             return "Excellent"
@@ -345,8 +327,7 @@ class FingerprintModel(Base):
             return "Very Poor"
     
     def set_fingerprint_data(self, data: Union[bytes, str, Dict], data_type: str = "binary"):
-        """Set fingerprint data in appropriate format"""
-        if data_type == "binary" and isinstance(data, bytes):
+        """Set fingerprint data in appropriate format"""        if data_type == "binary" and isinstance(data, bytes):
             self.fingerprint_data = data
             self.fingerprint_hash = hashlib.sha256(data).hexdigest()
         elif data_type == "json" and isinstance(data, (dict, list)):
@@ -360,8 +341,7 @@ class FingerprintModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_vector_embedding(self, embedding: List[float], model: str, dimensions: int = None):
-        """Set vector embedding for similarity search"""
-        import numpy as np
+        """Set vector embedding for similarity search"""        import numpy as np
         
         # Convert to numpy array and then to bytes
         embedding_array = np.array(embedding, dtype=np.float32)
@@ -372,8 +352,7 @@ class FingerprintModel(Base):
         self.updated_at = datetime.utcnow()
     
     def get_vector_embedding(self) -> Optional[List[float]]:
-        """Get vector embedding as list"""
-        if not self.vector_embedding or not self.vector_dimensions:
+        """Get vector embedding as list"""        if not self.vector_embedding or not self.vector_dimensions:
             return None
         
         import numpy as np
@@ -383,14 +362,12 @@ class FingerprintModel(Base):
         return embedding_array.tolist()
     
     def start_processing(self):
-        """Mark fingerprint processing as started"""
-        self.status = FingerprintStatus.PROCESSING.value
+        """Mark fingerprint processing as started"""        self.status = FingerprintStatus.PROCESSING.value
         self.processing_started_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def complete_processing(self, success: bool = True, error_message: str = None):
-        """Mark fingerprint processing as completed"""
-        self.processing_completed_at = datetime.utcnow()
+        """Mark fingerprint processing as completed"""        self.processing_completed_at = datetime.utcnow()
         
         if self.processing_started_at:
             duration = (self.processing_completed_at - self.processing_started_at).total_seconds()
@@ -405,15 +382,13 @@ class FingerprintModel(Base):
         self.updated_at = datetime.utcnow()
     
     def record_match(self):
-        """Record a successful match"""
-        self.match_count = (self.match_count or 0) + 1
+        """Record a successful match"""        self.match_count = (self.match_count or 0) + 1
         self.last_matched_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
     
     def update_quality_metrics(self, confidence: float = None, robustness: float = None, 
                              uniqueness: float = None):
-        """Update quality metrics"""
-        if confidence is not None:
+        """Update quality metrics"""        if confidence is not None:
             self.confidence_score = max(0.0, min(100.0, confidence))
         if robustness is not None:
             self.robustness_score = max(0.0, min(100.0, robustness))
@@ -423,8 +398,7 @@ class FingerprintModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_audio_features(self, features: Dict[str, Any]):
-        """Set audio-specific features"""
-        self.audio_features = features
+        """Set audio-specific features"""        self.audio_features = features
         
         # Extract common audio parameters
         if 'sample_rate' in features:
@@ -437,8 +411,7 @@ class FingerprintModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_video_features(self, features: Dict[str, Any]):
-        """Set video-specific features"""
-        self.video_keyframes = features
+        """Set video-specific features"""        self.video_keyframes = features
         
         # Extract common video parameters
         if 'frame_rate' in features:
@@ -451,8 +424,7 @@ class FingerprintModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_image_features(self, features: Dict[str, Any]):
-        """Set image-specific features"""
-        self.image_features = features
+        """Set image-specific features"""        self.image_features = features
         
         # Extract common image parameters
         if 'format' in features:
@@ -465,8 +437,7 @@ class FingerprintModel(Base):
         self.updated_at = datetime.utcnow()
     
     def set_text_features(self, features: Dict[str, Any]):
-        """Set text-specific features"""
-        self.text_entities = features
+        """Set text-specific features"""        self.text_entities = features
         
         # Extract common text parameters
         if 'language' in features:
@@ -483,8 +454,7 @@ class FingerprintModel(Base):
         self.updated_at = datetime.utcnow()
     
     def calculate_similarity(self, other_fingerprint: 'FingerprintModel') -> float:
-        """Calculate similarity with another fingerprint"""
-        if (self.fingerprint_type != other_fingerprint.fingerprint_type or
+        """Calculate similarity with another fingerprint"""        if (self.fingerprint_type != other_fingerprint.fingerprint_type or
             self.algorithm != other_fingerprint.algorithm):
             return 0.0
         
@@ -513,26 +483,22 @@ class FingerprintModel(Base):
         return 0.0
     
     def is_match(self, other_fingerprint: 'FingerprintModel') -> bool:
-        """Check if this fingerprint matches another"""
-        similarity = self.calculate_similarity(other_fingerprint)
+        """Check if this fingerprint matches another"""        similarity = self.calculate_similarity(other_fingerprint)
         return similarity >= self.similarity_threshold
     
     def expire_fingerprint(self, days: int = 365):
-        """Set fingerprint expiration"""
-        from datetime import timedelta
+        """Set fingerprint expiration"""        from datetime import timedelta
         self.expires_at = datetime.utcnow() + timedelta(days=days)
         self.updated_at = datetime.utcnow()
     
     def archive_fingerprint(self):
-        """Archive old fingerprint"""
-        self.status = FingerprintStatus.ARCHIVED.value
+        """Archive old fingerprint"""        self.status = FingerprintStatus.ARCHIVED.value
         self.protection_enabled = False
         self.monitoring_enabled = False
         self.updated_at = datetime.utcnow()
     
     def soft_delete(self):
-        """Soft delete fingerprint"""
-        self.is_deleted = True
+        """Soft delete fingerprint"""        self.is_deleted = True
         self.deleted_at = datetime.utcnow()
         self.status = FingerprintStatus.ARCHIVED.value
         self.protection_enabled = False
@@ -540,8 +506,7 @@ class FingerprintModel(Base):
         self.updated_at = datetime.utcnow()
     
     def restore(self):
-        """Restore soft-deleted fingerprint"""
-        self.is_deleted = False
+        """Restore soft-deleted fingerprint"""        self.is_deleted = False
         self.deleted_at = None
         if self.status == FingerprintStatus.ARCHIVED.value:
             self.status = FingerprintStatus.COMPLETED.value

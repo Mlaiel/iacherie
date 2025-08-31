@@ -1,5 +1,4 @@
-"""
-Quality Agent Extended Methods - Advanced Analysis Implementations
+"""Quality Agent Extended Methods - Advanced Analysis Implementations
 
 Extended methods for the Quality Agent to provide comprehensive quality analysis.
 This module contains specialized analysis methods for various content types.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -35,8 +33,7 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 class QualityAnalysisExtensions:
-    """Extended analysis methods for comprehensive quality assessment"""
-    
+    """Extended analysis methods for comprehensive quality assessment"""    
     def __init__(self):
         # Load NLP model
         try:
@@ -46,8 +43,7 @@ class QualityAnalysisExtensions:
             logger.warning("Spacy model not found, some text analysis features will be limited")
             
     async def _analyze_focus_quality(self, image: np.ndarray) -> float:
-        """Analyze focus quality and depth of field"""
-        try:
+        """Analyze focus quality and depth of field"""        try:
             # Calculate Laplacian variance for overall sharpness
             laplacian_var = cv2.Laplacian(image, cv2.CV_64F).var()
             
@@ -71,8 +67,7 @@ class QualityAnalysisExtensions:
             return 0.5
 
     def _calculate_texture_score(self, image: np.ndarray) -> float:
-        """Calculate texture richness score"""
-        try:
+        """Calculate texture richness score"""        try:
             # Convert to grayscale if needed
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -93,8 +88,7 @@ class QualityAnalysisExtensions:
             return 0.5
 
     async def _analyze_subject_prominence(self, image: np.ndarray) -> float:
-        """Analyze subject prominence and foreground/background separation"""
-        try:
+        """Analyze subject prominence and foreground/background separation"""        try:
             # Convert to grayscale
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -127,8 +121,7 @@ class QualityAnalysisExtensions:
             return 0.6
 
     def _calculate_saliency(self, image: np.ndarray) -> np.ndarray:
-        """Calculate basic saliency map"""
-        try:
+        """Calculate basic saliency map"""        try:
             # Spectral residual method (simplified)
             img_float = image.astype(np.float32)
             
@@ -153,8 +146,7 @@ class QualityAnalysisExtensions:
             return np.ones(image.shape, dtype=np.float32) * 0.5
 
     async def _analyze_golden_ratio(self, image: np.ndarray) -> float:
-        """Analyze golden ratio spiral composition"""
-        try:
+        """Analyze golden ratio spiral composition"""        try:
             height, width = image.shape
             
             # Golden ratio ≈ 1.618
@@ -190,8 +182,7 @@ class QualityAnalysisExtensions:
             return 0.4
 
     async def _analyze_negative_space(self, image: np.ndarray) -> float:
-        """Analyze negative space utilization"""
-        try:
+        """Analyze negative space utilization"""        try:
             # Threshold image to find negative space
             _, binary = cv2.threshold(image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
             
@@ -218,8 +209,7 @@ class QualityAnalysisExtensions:
             return 0.6
 
     async def _analyze_keyword_density(self, text_content: str) -> float:
-        """Analyze keyword density and distribution"""
-        try:
+        """Analyze keyword density and distribution"""        try:
             words = text_content.lower().split()
             word_count = len(words)
             
@@ -263,8 +253,7 @@ class QualityAnalysisExtensions:
             return 0.5
 
     async def _analyze_heading_structure(self, text_content: str) -> float:
-        """Analyze heading structure and hierarchy"""
-        try:
+        """Analyze heading structure and hierarchy"""        try:
             # Look for markdown-style headings and HTML headings
             lines = text_content.split('\n')
             
@@ -323,8 +312,7 @@ class QualityAnalysisExtensions:
             return 0.4
 
     async def _analyze_link_structure(self, text_content: str) -> float:
-        """Analyze internal and external links"""
-        try:
+        """Analyze internal and external links"""        try:
             # Find markdown and HTML links
             markdown_links = re.findall(r'\[([^\]]+)\]\(([^)]+)\)', text_content)
             html_links = re.findall(r'<a[^>]+href=["\']([^"\']+)["\'][^>]*>([^<]*)</a>', 
@@ -374,8 +362,7 @@ class QualityAnalysisExtensions:
             return 0.5
 
     async def _analyze_meta_description_potential(self, text_content: str) -> float:
-        """Analyze first paragraph as potential meta description"""
-        try:
+        """Analyze first paragraph as potential meta description"""        try:
             # Get first paragraph
             paragraphs = [p.strip() for p in text_content.split('\n\n') if p.strip()]
             
@@ -414,8 +401,7 @@ class QualityAnalysisExtensions:
             return 0.5
 
     async def _calculate_seo_readability(self, text_content: str) -> float:
-        """Calculate SEO-optimized readability score"""
-        try:
+        """Calculate SEO-optimized readability score"""        try:
             # Multiple readability metrics
             fk_grade = flesch_kincaid_grade(text_content)
             gunning_fog_score = gunning_fog(text_content)
@@ -432,8 +418,7 @@ class QualityAnalysisExtensions:
             return 0.6
 
     async def _analyze_semantic_richness(self, text_content: str) -> float:
-        """Analyze semantic richness and vocabulary diversity"""
-        try:
+        """Analyze semantic richness and vocabulary diversity"""        try:
             if not self.nlp:
                 return 0.6  # Default score if NLP not available
                 
@@ -476,8 +461,7 @@ class QualityAnalysisExtensions:
             return 0.6
 
     async def _analyze_content_freshness(self, text_content: str) -> float:
-        """Analyze content freshness indicators"""
-        try:
+        """Analyze content freshness indicators"""        try:
             # Look for temporal indicators
             current_year = datetime.now().year
             fresh_indicators = [
@@ -519,8 +503,7 @@ class QualityAnalysisExtensions:
             return 0.5
 
     async def _analyze_schema_potential(self, text_content: str) -> float:
-        """Analyze potential for structured data/schema markup"""
-        try:
+        """Analyze potential for structured data/schema markup"""        try:
             schema_indicators = 0
             text_lower = text_content.lower()
             
@@ -560,8 +543,7 @@ class QualityAnalysisExtensions:
             return 0.3
 
     async def _analyze_transition_words(self, text_content: str) -> float:
-        """Analyze use of transition words for flow"""
-        try:
+        """Analyze use of transition words for flow"""        try:
             transition_words = [
                 'however', 'moreover', 'furthermore', 'therefore', 'consequently',
                 'additionally', 'meanwhile', 'nevertheless', 'similarly',
@@ -595,8 +577,7 @@ class QualityAnalysisExtensions:
             return 0.6
 
     async def _analyze_logical_flow(self, paragraphs: List[str]) -> float:
-        """Analyze logical flow between paragraphs"""
-        try:
+        """Analyze logical flow between paragraphs"""        try:
             if not self.nlp or len(paragraphs) < 2:
                 return 0.7  # Default for insufficient data
                 
@@ -623,8 +604,7 @@ class QualityAnalysisExtensions:
             return 0.6
 
     async def _analyze_intro_conclusion(self, paragraphs: List[str]) -> float:
-        """Analyze introduction and conclusion quality"""
-        try:
+        """Analyze introduction and conclusion quality"""        try:
             if len(paragraphs) < 2:
                 return 0.3
                 
@@ -669,8 +649,7 @@ class QualityAnalysisExtensions:
             return 0.5
 
     async def _analyze_topic_coherence(self, paragraphs: List[str]) -> float:
-        """Analyze topic coherence throughout content"""
-        try:
+        """Analyze topic coherence throughout content"""        try:
             if not self.nlp or len(paragraphs) < 2:
                 return 0.7
                 
@@ -709,8 +688,7 @@ class QualityAnalysisExtensions:
             return 0.6
 
     async def _generate_content_fingerprint(self, text_content: str) -> str:
-        """Generate content fingerprint for uniqueness checking"""
-        try:
+        """Generate content fingerprint for uniqueness checking"""        try:
             # Normalize text
             normalized = re.sub(r'[^\w\s]', '', text_content.lower())
             words = normalized.split()
@@ -733,8 +711,7 @@ class QualityAnalysisExtensions:
             return hashlib.md5(text_content.encode()).hexdigest()
 
     async def _check_semantic_uniqueness(self, text_content: str) -> float:
-        """Check semantic uniqueness using NLP"""
-        try:
+        """Check semantic uniqueness using NLP"""        try:
             if not self.nlp:
                 return 0.8  # Default high score
                 
@@ -765,8 +742,7 @@ class QualityAnalysisExtensions:
             return 0.7
 
     async def _analyze_ngram_uniqueness(self, text_content: str) -> float:
-        """Analyze n-gram uniqueness for plagiarism detection"""
-        try:
+        """Analyze n-gram uniqueness for plagiarism detection"""        try:
             words = text_content.lower().split()
             
             if len(words) < 5:
@@ -796,8 +772,7 @@ class QualityAnalysisExtensions:
             return 0.7
 
     async def _analyze_structure_uniqueness(self, text_content: str) -> float:
-        """Analyze sentence structure uniqueness"""
-        try:
+        """Analyze sentence structure uniqueness"""        try:
             if not self.nlp:
                 return 0.8
                 
@@ -831,8 +806,7 @@ class QualityAnalysisExtensions:
             return 0.7
 
     async def _detect_paraphrasing(self, text_content: str) -> float:
-        """Detect paraphrasing patterns"""
-        try:
+        """Detect paraphrasing patterns"""        try:
             # Simple paraphrase detection using sentence similarity
             sentences = [s.strip() for s in text_content.split('.') if s.strip()]
             
@@ -865,8 +839,7 @@ class QualityAnalysisExtensions:
             return 0.8
 
     async def _analyze_statistical_uniqueness(self, text_content: str) -> float:
-        """Analyze statistical uniqueness of language patterns"""
-        try:
+        """Analyze statistical uniqueness of language patterns"""        try:
             words = text_content.lower().split()
             
             if len(words) < 10:
@@ -901,8 +874,7 @@ class QualityAnalysisExtensions:
             return 0.7
 
     async def _analyze_citation_patterns(self, text_content: str) -> float:
-        """Analyze citation and reference patterns"""
-        try:
+        """Analyze citation and reference patterns"""        try:
             # Look for citation patterns
             citation_patterns = [
                 r'\([^)]*\d{4}[^)]*\)',  # (Author, 2024)

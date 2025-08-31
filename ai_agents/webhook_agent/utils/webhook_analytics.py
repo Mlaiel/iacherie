@@ -1,5 +1,4 @@
-"""
-Webhook Analytics - Enterprise Analytics and Monitoring System
+"""Webhook Analytics - Enterprise Analytics and Monitoring System
 
 Industrial-grade webhook analytics engine for comprehensive monitoring,
 metrics collection, and business intelligence across multi-platform integrations.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
-
 import asyncio
 import json
 import logging
@@ -51,8 +49,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class WebhookAnalyticsModel(Base):
-    """Database model for webhook analytics events"""
-    __tablename__ = "webhook_analytics_events"
+    """Database model for webhook analytics events"""    __tablename__ = "webhook_analytics_events"
     
     event_id = Column(String, primary_key=True)
     endpoint_id = Column(String, nullable=False)
@@ -70,8 +67,7 @@ class WebhookAnalyticsModel(Base):
     metadata = Column(JSON)
 
 class WebhookMetricsModel(Base):
-    """Database model for aggregated webhook metrics"""
-    __tablename__ = "webhook_analytics_metrics"
+    """Database model for aggregated webhook metrics"""    __tablename__ = "webhook_analytics_metrics"
     
     metric_id = Column(String, primary_key=True)
     endpoint_id = Column(String)
@@ -92,8 +88,7 @@ class WebhookMetricsModel(Base):
     metadata = Column(JSON)
 
 class MetricType(Enum):
-    """Types of webhook metrics"""
-    REQUESTS = "requests"
+    """Types of webhook metrics"""    REQUESTS = "requests"
     RESPONSE_TIME = "response_time"
     ERROR_RATE = "error_rate"
     THROUGHPUT = "throughput"
@@ -103,8 +98,7 @@ class MetricType(Enum):
     USER_ACTIVITY = "user_activity"
 
 class TimeWindow(Enum):
-    """Time windows for metrics aggregation"""
-    MINUTE = "1m"
+    """Time windows for metrics aggregation"""    MINUTE = "1m"
     HOUR = "1h"
     DAY = "1d"
     WEEK = "1w"
@@ -112,8 +106,7 @@ class TimeWindow(Enum):
 
 @dataclass
 class WebhookEvent:
-    """Webhook event for analytics"""
-    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Webhook event for analytics"""    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     endpoint_id: str = None
     user_id: str = None
     platform: str = None
@@ -130,8 +123,7 @@ class WebhookEvent:
 
 @dataclass
 class MetricSnapshot:
-    """Snapshot of webhook metrics"""
-    metric_type: MetricType
+    """Snapshot of webhook metrics"""    metric_type: MetricType
     time_window: TimeWindow
     timestamp: datetime
     count: int = 0
@@ -149,8 +141,7 @@ class MetricSnapshot:
 
 @dataclass
 class AnalyticsQuery:
-    """Query configuration for analytics data"""
-    start_time: datetime
+    """Query configuration for analytics data"""    start_time: datetime
     end_time: datetime
     endpoint_ids: List[str] = field(default_factory=list)
     user_ids: List[str] = field(default_factory=list)
@@ -163,14 +154,12 @@ class AnalyticsQuery:
     include_success_only: bool = False
 
 class WebhookAnalytics:
-    """
-    Industrial-grade webhook analytics and monitoring system
+    """    Industrial-grade webhook analytics and monitoring system
     
     Provides comprehensive analytics, metrics collection, and business intelligence
     for webhook operations across multi-platform integrations with real-time
     monitoring and alerting capabilities.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.db_session = get_db_session()
@@ -204,8 +193,7 @@ class WebhookAnalytics:
         logger.info("WebhookAnalytics initialized")
 
     async def initialize(self) -> None:
-        """Initialize webhook analytics with required services"""
-        try:
+        """Initialize webhook analytics with required services"""        try:
             # Initialize Redis connection
             self._redis_client = await aioredis.from_url(
                 self.config.get('redis_url', 'redis://localhost:6379'),
@@ -239,8 +227,7 @@ class WebhookAnalytics:
         retry_count: int = 0,
         metadata: Dict[str, Any] = None
     ) -> str:
-        """
-        Record webhook event for analytics
+        """        Record webhook event for analytics
         
         Args:
             endpoint_id: Webhook endpoint identifier
@@ -258,8 +245,7 @@ class WebhookAnalytics:
             
         Returns:
             Event ID
-        """
-        try:
+        """        try:
             # Create event
             event = WebhookEvent(
                 endpoint_id=endpoint_id,
@@ -299,16 +285,14 @@ class WebhookAnalytics:
         self,
         query: AnalyticsQuery
     ) -> Dict[str, Any]:
-        """
-        Get webhook metrics based on query parameters
+        """        Get webhook metrics based on query parameters
         
         Args:
             query: Analytics query configuration
             
         Returns:
             Metrics data
-        """
-        try:
+        """        try:
             # Generate cache key
             cache_key = self._generate_metrics_cache_key(query)
             
@@ -366,8 +350,7 @@ class WebhookAnalytics:
         platform: str = None,
         time_window_minutes: int = 5
     ) -> Dict[str, Any]:
-        """
-        Get real-time webhook metrics
+        """        Get real-time webhook metrics
         
         Args:
             endpoint_id: Optional endpoint filter
@@ -377,8 +360,7 @@ class WebhookAnalytics:
             
         Returns:
             Real-time metrics
-        """
-        try:
+        """        try:
             cutoff_time = datetime.now(timezone.utc) - timedelta(minutes=time_window_minutes)
             
             # Filter events from buffer
@@ -445,8 +427,7 @@ class WebhookAnalytics:
         endpoint_id: str,
         time_range_hours: int = 24
     ) -> Dict[str, Any]:
-        """
-        Get detailed analytics for specific endpoint
+        """        Get detailed analytics for specific endpoint
         
         Args:
             endpoint_id: Endpoint identifier
@@ -454,8 +435,7 @@ class WebhookAnalytics:
             
         Returns:
             Endpoint analytics
-        """
-        try:
+        """        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(hours=time_range_hours)
             
@@ -497,8 +477,7 @@ class WebhookAnalytics:
         user_id: str,
         time_range_days: int = 7
     ) -> Dict[str, Any]:
-        """
-        Get analytics for specific user
+        """        Get analytics for specific user
         
         Args:
             user_id: User identifier
@@ -506,8 +485,7 @@ class WebhookAnalytics:
             
         Returns:
             User analytics
-        """
-        try:
+        """        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(days=time_range_days)
             
@@ -545,8 +523,7 @@ class WebhookAnalytics:
         platform: str,
         time_range_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Get analytics for specific platform
+        """        Get analytics for specific platform
         
         Args:
             platform: Platform name
@@ -554,8 +531,7 @@ class WebhookAnalytics:
             
         Returns:
             Platform analytics
-        """
-        try:
+        """        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(days=time_range_days)
             
@@ -591,8 +567,7 @@ class WebhookAnalytics:
         user_id: str = None,
         platform: str = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive analytics report
+        """        Generate comprehensive analytics report
         
         Args:
             report_type: Type of report (comprehensive, summary, detailed)
@@ -602,8 +577,7 @@ class WebhookAnalytics:
             
         Returns:
             Analytics report
-        """
-        try:
+        """        try:
             end_time = datetime.now(timezone.utc)
             start_time = end_time - timedelta(days=time_range_days)
             
@@ -669,8 +643,7 @@ class WebhookAnalytics:
             raise AnalyticsError(f"Report generation failed: {str(e)}")
 
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for webhook analytics"""
-        return {
+        """Comprehensive health check for webhook analytics"""        return {
             'status': 'healthy',
             'redis_connected': self._redis_client is not None,
             'event_buffer_size': len(self._event_buffer),
@@ -680,8 +653,7 @@ class WebhookAnalytics:
         }
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of webhook analytics"""
-        try:
+        """Graceful shutdown of webhook analytics"""        try:
             logger.info("Shutting down WebhookAnalytics")
             
             # Cancel aggregation tasks
@@ -703,8 +675,7 @@ class WebhookAnalytics:
     # Private methods
     
     async def _store_event_async(self, event: WebhookEvent) -> None:
-        """Store event in database asynchronously"""
-        try:
+        """Store event in database asynchronously"""        try:
             db_event = WebhookAnalyticsModel(
                 event_id=event.event_id,
                 endpoint_id=event.endpoint_id,
@@ -730,8 +701,7 @@ class WebhookAnalytics:
             logger.error(f"Failed to store event in database: {e}")
 
     async def _update_real_time_metrics(self, event: WebhookEvent) -> None:
-        """Update real-time metrics with new event"""
-        try:
+        """Update real-time metrics with new event"""        try:
             current_time = time.time()
             
             # Update request counts
@@ -769,8 +739,7 @@ class WebhookAnalytics:
             logger.error(f"Failed to update real-time metrics: {e}")
 
     async def _update_redis_metrics(self, event: WebhookEvent) -> None:
-        """Update Redis metrics cache"""
-        try:
+        """Update Redis metrics cache"""        try:
             if self._redis_client:
                 # Update request counter
                 await self._redis_client.incr(f"webhook_requests:{event.platform}")
@@ -796,8 +765,7 @@ class WebhookAnalytics:
             logger.error(f"Failed to update Redis metrics: {e}")
 
     async def _query_metrics_from_db(self, query: AnalyticsQuery) -> List[Dict[str, Any]]:
-        """Query metrics data from database"""
-        try:
+        """Query metrics data from database"""        try:
             db_query = self.db_session.query(WebhookAnalyticsModel).filter(
                 WebhookAnalyticsModel.timestamp >= query.start_time,
                 WebhookAnalyticsModel.timestamp <= query.end_time
@@ -858,8 +826,7 @@ class WebhookAnalytics:
         raw_data: List[Dict[str, Any]],
         query: AnalyticsQuery
     ) -> Dict[str, Any]:
-        """Process and aggregate raw metrics data"""
-        try:
+        """Process and aggregate raw metrics data"""        try:
             if not raw_data:
                 return self._get_empty_metrics()
             
@@ -944,8 +911,7 @@ class WebhookAnalytics:
         data: List[Dict[str, Any]],
         time_window: TimeWindow
     ) -> List[Dict[str, Any]]:
-        """Aggregate data into time series based on time window"""
-        try:
+        """Aggregate data into time series based on time window"""        try:
             # Group data by time window
             time_buckets = defaultdict(list)
             
@@ -986,8 +952,7 @@ class WebhookAnalytics:
             return []
 
     def _calculate_bucket_metrics(self, bucket_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate metrics for a time bucket"""
-        total_requests = len(bucket_data)
+        """Calculate metrics for a time bucket"""        total_requests = len(bucket_data)
         successful_requests = len([d for d in bucket_data if d['success']])
         failed_requests = total_requests - successful_requests
         
@@ -1005,8 +970,7 @@ class WebhookAnalytics:
         }
 
     def _analyze_errors(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze errors in the data"""
-        errors = [d for d in data if not d['success']]
+        """Analyze errors in the data"""        errors = [d for d in data if not d['success']]
         
         if not errors:
             return {
@@ -1039,8 +1003,7 @@ class WebhookAnalytics:
         }
 
     def _get_empty_metrics(self) -> Dict[str, Any]:
-        """Get empty metrics structure"""
-        return {
+        """Get empty metrics structure"""        return {
             'summary': {
                 'total_requests': 0,
                 'successful_requests': 0,
@@ -1079,8 +1042,7 @@ class WebhookAnalytics:
         metrics: Dict[str, Any],
         query: AnalyticsQuery
     ) -> Dict[str, Any]:
-        """Calculate insights from metrics data"""
-        insights = {
+        """Calculate insights from metrics data"""        insights = {
             'key_findings': [],
             'recommendations': [],
             'alerts': []
@@ -1130,8 +1092,7 @@ class WebhookAnalytics:
         return insights
 
     def _generate_metrics_cache_key(self, query: AnalyticsQuery) -> str:
-        """Generate cache key for metrics query"""
-        key_components = [
+        """Generate cache key for metrics query"""        key_components = [
             query.start_time.isoformat(),
             query.end_time.isoformat(),
             query.time_window.value,
@@ -1146,8 +1107,7 @@ class WebhookAnalytics:
         return 'metrics:' + ':'.join(key_components)
 
     async def _start_aggregation_tasks(self) -> None:
-        """Start background aggregation tasks"""
-        # Metrics aggregation task
+        """Start background aggregation tasks"""        # Metrics aggregation task
         task = asyncio.create_task(self._aggregate_metrics_task())
         self._aggregation_tasks.add(task)
         
@@ -1156,8 +1116,7 @@ class WebhookAnalytics:
         self._aggregation_tasks.add(task)
 
     async def _aggregate_metrics_task(self) -> None:
-        """Background task for metrics aggregation"""
-        while True:
+        """Background task for metrics aggregation"""        while True:
             try:
                 await asyncio.sleep(self.aggregation_interval_seconds)
                 
@@ -1168,8 +1127,7 @@ class WebhookAnalytics:
                 logger.error(f"Error in metrics aggregation task: {e}")
 
     async def _cache_cleanup_task(self) -> None:
-        """Background task for cache cleanup"""
-        while True:
+        """Background task for cache cleanup"""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -1190,8 +1148,7 @@ class WebhookAnalytics:
                 logger.error(f"Error in cache cleanup task: {e}")
 
     async def _aggregate_buffer_metrics(self) -> None:
-        """Aggregate metrics from event buffer"""
-        try:
+        """Aggregate metrics from event buffer"""        try:
             if not self._event_buffer:
                 return
             
@@ -1207,13 +1164,11 @@ class WebhookAnalytics:
             logger.error(f"Failed to aggregate buffer metrics: {e}")
 
     async def _initialize_metric_cache(self) -> None:
-        """Initialize metric cache with default values"""
-        self._metric_cache = {}
+        """Initialize metric cache with default values"""        self._metric_cache = {}
         logger.info("Metric cache initialized")
 
     async def _flush_event_buffer(self) -> None:
-        """Flush remaining events in buffer to database"""
-        try:
+        """Flush remaining events in buffer to database"""        try:
             while self._event_buffer:
                 event = self._event_buffer.popleft()
                 await self._store_event_async(event)
@@ -1224,8 +1179,7 @@ class WebhookAnalytics:
             logger.error(f"Failed to flush event buffer: {e}")
 
     async def _check_real_time_alerts(self, events: List[WebhookEvent]) -> List[Dict[str, Any]]:
-        """Check for real-time alerts based on recent events"""
-        alerts = []
+        """Check for real-time alerts based on recent events"""        alerts = []
         
         if not events:
             return alerts
@@ -1264,59 +1218,45 @@ class WebhookAnalytics:
     # These are placeholders for the comprehensive analytics features
     
     async def _calculate_endpoint_insights(self, endpoint_id: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Calculate insights for specific endpoint"""
-        return {'placeholder': 'endpoint_insights'}
+        """Calculate insights for specific endpoint"""        return {'placeholder': 'endpoint_insights'}
     
     async def _analyze_endpoint_errors(self, endpoint_id: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Analyze errors for specific endpoint"""
-        return {'placeholder': 'error_analysis'}
+        """Analyze errors for specific endpoint"""        return {'placeholder': 'error_analysis'}
     
     async def _calculate_performance_trends(self, endpoint_id: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Calculate performance trends for endpoint"""
-        return {'placeholder': 'performance_trends'}
+        """Calculate performance trends for endpoint"""        return {'placeholder': 'performance_trends'}
     
     async def _calculate_user_insights(self, user_id: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Calculate insights for specific user"""
-        return {'placeholder': 'user_insights'}
+        """Calculate insights for specific user"""        return {'placeholder': 'user_insights'}
     
     async def _calculate_platform_usage(self, user_id: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Calculate platform usage for user"""
-        return {'placeholder': 'platform_usage'}
+        """Calculate platform usage for user"""        return {'placeholder': 'platform_usage'}
     
     async def _calculate_platform_insights(self, platform: str, start_time: datetime, end_time: datetime) -> Dict[str, Any]:
-        """Calculate insights for specific platform"""
-        return {'placeholder': 'platform_insights'}
+        """Calculate insights for specific platform"""        return {'placeholder': 'platform_insights'}
     
     # Report generation methods (placeholders for full implementation)
     
     async def _generate_executive_summary(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate executive summary section"""
-        return {'placeholder': 'executive_summary'}
+        """Generate executive summary section"""        return {'placeholder': 'executive_summary'}
     
     async def _generate_performance_analysis(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate performance analysis section"""
-        return {'placeholder': 'performance_analysis'}
+        """Generate performance analysis section"""        return {'placeholder': 'performance_analysis'}
     
     async def _generate_error_analysis(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate error analysis section"""
-        return {'placeholder': 'error_analysis'}
+        """Generate error analysis section"""        return {'placeholder': 'error_analysis'}
     
     async def _generate_trend_analysis(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate trend analysis section"""
-        return {'placeholder': 'trend_analysis'}
+        """Generate trend analysis section"""        return {'placeholder': 'trend_analysis'}
     
     async def _generate_platform_insights(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate platform insights section"""
-        return {'placeholder': 'platform_insights'}
+        """Generate platform insights section"""        return {'placeholder': 'platform_insights'}
     
     async def _generate_detailed_breakdowns(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate detailed breakdowns section"""
-        return {'placeholder': 'detailed_breakdowns'}
+        """Generate detailed breakdowns section"""        return {'placeholder': 'detailed_breakdowns'}
     
     async def _generate_recommendations(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate recommendations section"""
-        return {'placeholder': 'recommendations'}
+        """Generate recommendations section"""        return {'placeholder': 'recommendations'}
     
     async def _generate_summary_statistics(self, metrics: Dict[str, Any], query: AnalyticsQuery) -> Dict[str, Any]:
-        """Generate summary statistics section"""
-        return {'placeholder': 'summary_statistics'}
+        """Generate summary statistics section"""        return {'placeholder': 'summary_statistics'}

@@ -1,5 +1,4 @@
-"""
-Comprehensive Integration Tests for Ainflue Platform
+"""Comprehensive Integration Tests for Ainflue Platform
 ==================================================
 
 End-to-end, load, and security tests for production readiness.
@@ -7,7 +6,6 @@ End-to-end, load, and security tests for production readiness.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import pytest
 import aiohttp
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class TestType(Enum):
-    """Test categories"""
-    INTEGRATION = "integration"
+    """Test categories"""    INTEGRATION = "integration"
     LOAD = "load"  
     SECURITY = "security"
     END_TO_END = "end_to_end"
@@ -43,8 +40,7 @@ class TestType(Enum):
 
 @dataclass
 class TestResult:
-    """Test result data"""
-    test_name: str
+    """Test result data"""    test_name: str
     test_type: TestType
     passed: bool
     execution_time: float
@@ -53,8 +49,7 @@ class TestResult:
 
 
 class IntegrationTestSuite:
-    """Comprehensive integration test suite"""
-    
+    """Comprehensive integration test suite"""    
     def __init__(self, base_url: str = "http://localhost:8000"):
         self.base_url = base_url
         self.session = None
@@ -62,18 +57,15 @@ class IntegrationTestSuite:
         self.logger = logging.getLogger(__name__)
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     async def run_all_tests(self) -> Dict[str, Any]:
-        """Run all test suites"""
-        self.logger.info("Starting comprehensive test suite")
+        """Run all test suites"""        self.logger.info("Starting comprehensive test suite")
         
         test_suites = [
             ("Integration Tests", self.run_integration_tests),
@@ -121,8 +113,7 @@ class IntegrationTestSuite:
         return overall_results
     
     async def run_integration_tests(self) -> Dict[str, Any]:
-        """Run integration tests"""
-        integration_tests = [
+        """Run integration tests"""        integration_tests = [
             self.test_health_endpoint,
             self.test_database_connection,
             self.test_redis_connection,
@@ -137,8 +128,7 @@ class IntegrationTestSuite:
         return await self._run_test_group(integration_tests, TestType.INTEGRATION)
     
     async def run_load_tests(self) -> Dict[str, Any]:
-        """Run load/performance tests"""
-        load_tests = [
+        """Run load/performance tests"""        load_tests = [
             self.test_concurrent_requests,
             self.test_database_performance,
             self.test_memory_usage,
@@ -150,8 +140,7 @@ class IntegrationTestSuite:
         return await self._run_test_group(load_tests, TestType.LOAD)
     
     async def run_security_tests(self) -> Dict[str, Any]:
-        """Run security tests"""
-        security_tests = [
+        """Run security tests"""        security_tests = [
             self.test_authentication_security,
             self.test_authorization_controls,
             self.test_input_validation,
@@ -167,8 +156,7 @@ class IntegrationTestSuite:
         return await self._run_test_group(security_tests, TestType.SECURITY)
     
     async def run_end_to_end_tests(self) -> Dict[str, Any]:
-        """Run end-to-end workflow tests"""
-        e2e_tests = [
+        """Run end-to-end workflow tests"""        e2e_tests = [
             self.test_user_registration_flow,
             self.test_content_upload_workflow,
             self.test_content_protection_workflow,
@@ -179,8 +167,7 @@ class IntegrationTestSuite:
         return await self._run_test_group(e2e_tests, TestType.END_TO_END)
     
     async def _run_test_group(self, tests: List, test_type: TestType) -> Dict[str, Any]:
-        """Run a group of tests"""
-        results = []
+        """Run a group of tests"""        results = []
         passed_count = 0
         failed_count = 0
         total_duration = 0.0
@@ -226,8 +213,7 @@ class IntegrationTestSuite:
     
     # Integration Tests
     async def test_health_endpoint(self) -> Dict[str, Any]:
-        """Test health check endpoint"""
-        try:
+        """Test health check endpoint"""        try:
             async with self.session.get(f"{self.base_url}/health") as response:
                 if response.status == 200:
                     data = await response.json()
@@ -246,8 +232,7 @@ class IntegrationTestSuite:
             return {'passed': False, 'error': str(e)}
     
     async def test_database_connection(self) -> Dict[str, Any]:
-        """Test database connectivity"""
-        try:
+        """Test database connectivity"""        try:
             # This would test actual database connection
             # For now, simulate with health check
             async with self.session.get(f"{self.base_url}/health/database") as response:
@@ -260,8 +245,7 @@ class IntegrationTestSuite:
             return {'passed': False, 'error': str(e)}
     
     async def test_redis_connection(self) -> Dict[str, Any]:
-        """Test Redis connectivity"""
-        try:
+        """Test Redis connectivity"""        try:
             async with self.session.get(f"{self.base_url}/health/redis") as response:
                 return {
                     'passed': response.status == 200,
@@ -272,8 +256,7 @@ class IntegrationTestSuite:
             return {'passed': False, 'error': str(e)}
     
     async def test_authentication_flow(self) -> Dict[str, Any]:
-        """Test authentication workflow"""
-        try:
+        """Test authentication workflow"""        try:
             # Test login endpoint
             login_data = {
                 'username': 'test_user',
@@ -301,8 +284,7 @@ class IntegrationTestSuite:
             return {'passed': False, 'error': str(e)}
     
     async def test_content_protection_api(self) -> Dict[str, Any]:
-        """Test content protection API endpoints"""
-        try:
+        """Test content protection API endpoints"""        try:
             # Test content fingerprinting
             test_content = {
                 'content_type': 'image',
@@ -321,8 +303,7 @@ class IntegrationTestSuite:
             return {'passed': False, 'error': str(e)}
     
     async def test_ai_model_integration(self) -> Dict[str, Any]:
-        """Test AI model integration"""
-        try:
+        """Test AI model integration"""        try:
             test_data = {
                 'input_text': 'This is a test for AI processing',
                 'model_type': 'content_analysis'
@@ -340,8 +321,7 @@ class IntegrationTestSuite:
     
     # Load Tests
     async def test_concurrent_requests(self) -> Dict[str, Any]:
-        """Test concurrent request handling"""
-        try:
+        """Test concurrent request handling"""        try:
             concurrent_requests = 50
             request_tasks = []
             
@@ -368,8 +348,7 @@ class IntegrationTestSuite:
             return {'passed': False, 'error': str(e)}
     
     async def test_database_performance(self) -> Dict[str, Any]:
-        """Test database performance under load"""
-        try:
+        """Test database performance under load"""        try:
             # Simulate database-heavy operations
             request_count = 20
             tasks = []
@@ -396,8 +375,7 @@ class IntegrationTestSuite:
     
     # Security Tests
     async def test_authentication_security(self) -> Dict[str, Any]:
-        """Test authentication security measures"""
-        try:
+        """Test authentication security measures"""        try:
             # Test invalid token
             invalid_headers = {'Authorization': 'Bearer invalid_token_here'}
             async with self.session.get(f"{self.base_url}/auth/me", headers=invalid_headers) as response:
@@ -417,8 +395,7 @@ class IntegrationTestSuite:
             return {'passed': False, 'error': str(e)}
     
     async def test_input_validation(self) -> Dict[str, Any]:
-        """Test input validation and sanitization"""
-        try:
+        """Test input validation and sanitization"""        try:
             # Test malicious input
             malicious_inputs = [
                 {'test': '<script>alert("xss")</script>'},
@@ -444,8 +421,7 @@ class IntegrationTestSuite:
             return {'passed': False, 'error': str(e)}
     
     async def test_rate_limiting(self) -> Dict[str, Any]:
-        """Test rate limiting protection"""
-        try:
+        """Test rate limiting protection"""        try:
             # Make rapid requests to trigger rate limiting
             rapid_requests = 200
             successful_requests = 0
@@ -471,8 +447,7 @@ class IntegrationTestSuite:
     
     # End-to-End Tests
     async def test_user_registration_flow(self) -> Dict[str, Any]:
-        """Test complete user registration workflow"""
-        try:
+        """Test complete user registration workflow"""        try:
             # Generate unique test user
             test_email = f"test_{int(time.time())}@example.com"
             
@@ -514,100 +489,78 @@ class IntegrationTestSuite:
     
     # Additional test methods would continue here...
     async def test_file_upload_processing(self) -> Dict[str, Any]:
-        """Test file upload and processing"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test file upload and processing"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_notification_system(self) -> Dict[str, Any]:
-        """Test notification system"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test notification system"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_analytics_endpoints(self) -> Dict[str, Any]:
-        """Test analytics endpoints"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test analytics endpoints"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_memory_usage(self) -> Dict[str, Any]:
-        """Test memory usage under load"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test memory usage under load"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_response_times(self) -> Dict[str, Any]:
-        """Test response times"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test response times"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_throughput_limits(self) -> Dict[str, Any]:
-        """Test throughput limits"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test throughput limits"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_resource_scaling(self) -> Dict[str, Any]:
-        """Test resource scaling"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test resource scaling"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_authorization_controls(self) -> Dict[str, Any]:
-        """Test authorization controls"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test authorization controls"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_sql_injection_protection(self) -> Dict[str, Any]:
-        """Test SQL injection protection"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test SQL injection protection"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_xss_protection(self) -> Dict[str, Any]:
-        """Test XSS protection"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test XSS protection"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_csrf_protection(self) -> Dict[str, Any]:
-        """Test CSRF protection"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test CSRF protection"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_cors_configuration(self) -> Dict[str, Any]:
-        """Test CORS configuration"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test CORS configuration"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_https_enforcement(self) -> Dict[str, Any]:
-        """Test HTTPS enforcement"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test HTTPS enforcement"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_sensitive_data_exposure(self) -> Dict[str, Any]:
-        """Test sensitive data exposure"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test sensitive data exposure"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_content_upload_workflow(self) -> Dict[str, Any]:
-        """Test content upload workflow"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test content upload workflow"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_content_protection_workflow(self) -> Dict[str, Any]:
-        """Test content protection workflow"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test content protection workflow"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_analytics_workflow(self) -> Dict[str, Any]:
-        """Test analytics workflow"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test analytics workflow"""        return {'passed': True, 'note': 'Placeholder implementation'}
     
     async def test_billing_workflow(self) -> Dict[str, Any]:
-        """Test billing workflow"""
-        return {'passed': True, 'note': 'Placeholder implementation'}
+        """Test billing workflow"""        return {'passed': True, 'note': 'Placeholder implementation'}
 
 
 # Test runner functions
 async def run_integration_tests(base_url: str = "http://localhost:8000") -> Dict[str, Any]:
-    """Run integration tests"""
-    async with IntegrationTestSuite(base_url) as test_suite:
+    """Run integration tests"""    async with IntegrationTestSuite(base_url) as test_suite:
         return await test_suite.run_integration_tests()
 
 
 async def run_load_tests(base_url: str = "http://localhost:8000") -> Dict[str, Any]:
-    """Run load tests"""
-    async with IntegrationTestSuite(base_url) as test_suite:
+    """Run load tests"""    async with IntegrationTestSuite(base_url) as test_suite:
         return await test_suite.run_load_tests()
 
 
 async def run_security_tests(base_url: str = "http://localhost:8000") -> Dict[str, Any]:
-    """Run security tests"""
-    async with IntegrationTestSuite(base_url) as test_suite:
+    """Run security tests"""    async with IntegrationTestSuite(base_url) as test_suite:
         return await test_suite.run_security_tests()
 
 
 async def run_all_tests(base_url: str = "http://localhost:8000") -> Dict[str, Any]:
-    """Run all test suites"""
-    async with IntegrationTestSuite(base_url) as test_suite:
+    """Run all test suites"""    async with IntegrationTestSuite(base_url) as test_suite:
         return await test_suite.run_all_tests()
 
 

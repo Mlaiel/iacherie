@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Text Content Filters
+"""IA Influencer Agent - Text Content Filters
 ==========================================
 
 Ultra-advanced professional text content filtering for multimedia processing.
@@ -29,7 +28,6 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
-
 import asyncio
 import logging
 import time
@@ -56,16 +54,13 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class TextQualityAnalyzer:
-    """Text quality analysis and readability scoring."""
-    
+    """Text quality analysis and readability scoring."""    
     def __init__(self):
-        """Initialize text quality analyzer."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize text quality analyzer."""        self.logger = logging.getLogger(__name__)
         self.stemmer = PorterStemmer() if HAS_NLP_LIBS else None
     
     def analyze_text_quality(self, text: str) -> Dict[str, float]:
-        """Analyze comprehensive text quality metrics."""
-        try:
+        """Analyze comprehensive text quality metrics."""        try:
             quality_metrics = {}
             
             # Basic statistics
@@ -91,8 +86,7 @@ class TextQualityAnalyzer:
             return {'error': str(e), 'overall_score': 0.5}
     
     def _calculate_basic_stats(self, text: str) -> Dict[str, float]:
-        """Calculate basic text statistics."""
-        try:
+        """Calculate basic text statistics."""        try:
             # Clean text for analysis
             clean_text = re.sub(r'\s+', ' ', text.strip())
             
@@ -128,8 +122,7 @@ class TextQualityAnalyzer:
             return {}
     
     def _calculate_readability(self, text: str) -> Dict[str, float]:
-        """Calculate readability scores."""
-        try:
+        """Calculate readability scores."""        try:
             # Clean text
             clean_text = re.sub(r'[^\w\s.!?]', '', text)
             
@@ -171,8 +164,7 @@ class TextQualityAnalyzer:
             return {'flesch_reading_ease': 50.0, 'flesch_kincaid_grade': 8.0}
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified algorithm)."""
-        try:
+        """Count syllables in a word (simplified algorithm)."""        try:
             word = word.lower()
             vowels = 'aeiouy'
             syllable_count = 0
@@ -194,8 +186,7 @@ class TextQualityAnalyzer:
             return 1
     
     def _analyze_language_quality(self, text: str) -> Dict[str, float]:
-        """Analyze language quality metrics."""
-        try:
+        """Analyze language quality metrics."""        try:
             # Vocabulary diversity (Type-Token Ratio)
             words = re.findall(r'\b\w+\b', text.lower())
             unique_words = set(words)
@@ -233,8 +224,7 @@ class TextQualityAnalyzer:
             return {'language_quality_score': 0.5}
     
     def _analyze_structure(self, text: str) -> Dict[str, float]:
-        """Analyze text structure and organization."""
-        try:
+        """Analyze text structure and organization."""        try:
             paragraphs = [p.strip() for p in text.split('\n\n') if p.strip()]
             
             # Paragraph consistency
@@ -281,8 +271,7 @@ class TextQualityAnalyzer:
             return {'structure_score': 0.5}
     
     def _calculate_quality_score(self, metrics: Dict[str, float]) -> float:
-        """Calculate overall quality score from individual metrics."""
-        try:
+        """Calculate overall quality score from individual metrics."""        try:
             scores = []
             weights = []
             
@@ -319,11 +308,9 @@ class TextQualityAnalyzer:
 
 
 class TextSentimentAnalyzer:
-    """Text sentiment analysis and emotional content detection."""
-    
+    """Text sentiment analysis and emotional content detection."""    
     def __init__(self):
-        """Initialize sentiment analyzer."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize sentiment analyzer."""        self.logger = logging.getLogger(__name__)
         self.sentiment_analyzer = None
         
         if HAS_NLP_LIBS:
@@ -333,8 +320,7 @@ class TextSentimentAnalyzer:
                 self.logger.warning(f"Failed to initialize sentiment analyzer: {str(e)}")
     
     def analyze_sentiment(self, text: str) -> Dict[str, float]:
-        """Analyze text sentiment and emotional content."""
-        try:
+        """Analyze text sentiment and emotional content."""        try:
             if not self.sentiment_analyzer:
                 return self._fallback_sentiment_analysis(text)
             
@@ -363,8 +349,7 @@ class TextSentimentAnalyzer:
             return self._fallback_sentiment_analysis(text)
     
     def _fallback_sentiment_analysis(self, text: str) -> Dict[str, float]:
-        """Fallback sentiment analysis without NLTK."""
-        try:
+        """Fallback sentiment analysis without NLTK."""        try:
             text_lower = text.lower()
             
             # Simple positive/negative word lists
@@ -421,8 +406,7 @@ class TextSentimentAnalyzer:
             }
     
     def _classify_sentiment(self, compound_score: float) -> str:
-        """Classify sentiment based on compound score."""
-        if compound_score >= 0.05:
+        """Classify sentiment based on compound score."""        if compound_score >= 0.05:
             return 'positive'
         elif compound_score <= -0.05:
             return 'negative'
@@ -430,8 +414,7 @@ class TextSentimentAnalyzer:
             return 'neutral'
     
     def _analyze_emotional_content(self, text: str) -> Dict[str, float]:
-        """Analyze emotional content beyond basic sentiment."""
-        try:
+        """Analyze emotional content beyond basic sentiment."""        try:
             text_lower = text.lower()
             
             # Emotion keyword dictionaries
@@ -469,15 +452,12 @@ class TextSentimentAnalyzer:
 
 
 class TextToxicityDetector:
-    """Text toxicity and harmful content detection."""
-    
+    """Text toxicity and harmful content detection."""    
     def __init__(self):
-        """Initialize toxicity detector."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize toxicity detector."""        self.logger = logging.getLogger(__name__)
     
     def detect_toxicity(self, text: str) -> Dict[str, Any]:
-        """Detect toxic and harmful content in text."""
-        try:
+        """Detect toxic and harmful content in text."""        try:
             toxicity_metrics = {}
             
             # Profanity detection
@@ -501,8 +481,7 @@ class TextToxicityDetector:
             return {'error': str(e), 'overall_toxicity': 0.0, 'is_toxic': False}
     
     def _detect_profanity(self, text: str) -> Dict[str, float]:
-        """Detect profanity in text."""
-        try:
+        """Detect profanity in text."""        try:
             # Basic profanity list (simplified)
             profanity_words = {
                 'damn', 'hell', 'crap', 'stupid', 'idiot', 'moron',
@@ -526,8 +505,7 @@ class TextToxicityDetector:
             return {'profanity_ratio': 0.0, 'contains_profanity': False}
     
     def _detect_hate_speech(self, text: str) -> Dict[str, float]:
-        """Detect hate speech patterns."""
-        try:
+        """Detect hate speech patterns."""        try:
             text_lower = text.lower()
             
             # Hate speech indicators (simplified)
@@ -556,8 +534,7 @@ class TextToxicityDetector:
             return {'hate_speech_score': 0.0, 'contains_hate_speech': False}
     
     def _detect_spam_patterns(self, text: str) -> Dict[str, float]:
-        """Detect spam-like patterns in text."""
-        try:
+        """Detect spam-like patterns in text."""        try:
             spam_indicators = 0
             
             # Excessive repetition
@@ -600,8 +577,7 @@ class TextToxicityDetector:
             return {'spam_score': 0.0, 'is_spam': False}
     
     def _calculate_toxicity_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall toxicity score."""
-        try:
+        """Calculate overall toxicity score."""        try:
             scores = []
             
             # Profanity weight
@@ -624,11 +600,9 @@ class TextToxicityDetector:
 
 
 class TextContentFilter:
-    """Enterprise-grade text content filter."""
-    
+    """Enterprise-grade text content filter."""    
     def __init__(self, config: TextFilterConfig):
-        """Initialize text content filter."""
-        self.config = config
+        """Initialize text content filter."""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -644,8 +618,7 @@ class TextContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Asynchronously filter text content."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Asynchronously filter text content."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.filter, content, ai_validation, strict_mode
         )
     
@@ -655,8 +628,7 @@ class TextContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Filter text content with comprehensive analysis."""
-        start_time = time.time()
+        """Filter text content with comprehensive analysis."""        start_time = time.time()
         
         try:
             # Extract and validate text
@@ -717,8 +689,7 @@ class TextContentFilter:
             )
     
     def _extract_text_content(self, content: ContentItem) -> Tuple[str, Dict[str, Any]]:
-        """Extract and validate text content."""
-        try:
+        """Extract and validate text content."""        try:
             metadata = {}
             text_data = ""
             
@@ -796,8 +767,7 @@ class TextContentFilter:
         ai_validation: bool,
         strict_mode: bool
     ) -> Dict[str, Any]:
-        """Perform comprehensive text content analysis."""
-        analysis_results = {
+        """Perform comprehensive text content analysis."""        analysis_results = {
             'warnings': [],
             'errors': [],
             'confidence': 0.85
@@ -834,8 +804,7 @@ class TextContentFilter:
             return analysis_results
     
     def _detect_language(self, text: str) -> Dict[str, Any]:
-        """Detect the language of the text."""
-        try:
+        """Detect the language of the text."""        try:
             if HAS_NLP_LIBS:
                 try:
                     import langdetect
@@ -882,8 +851,7 @@ class TextContentFilter:
             }
     
     def _calculate_overall_score(self, analysis_results: Dict[str, Any], strict_mode: bool) -> float:
-        """Calculate overall text filter score."""
-        scores = []
+        """Calculate overall text filter score."""        scores = []
         weights = []
         
         # Quality score
@@ -937,8 +905,7 @@ class TextContentFilter:
         analysis_results: Dict[str, Any],
         strict_mode: bool
     ) -> FilterResult:
-        """Determine filter result based on analysis."""
-        # Check for blocking conditions
+        """Determine filter result based on analysis."""        # Check for blocking conditions
         toxicity_data = analysis_results.get('toxicity', {})
         if toxicity_data.get('is_toxic') and toxicity_data.get('overall_toxicity', 0) > 0.7:
             return FilterResult.BLOCKED
@@ -977,8 +944,7 @@ class TextContentFilter:
                 return FilterResult.FAILED
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on text filter."""
-        health_status = {
+        """Perform health check on text filter."""        health_status = {
             'status': 'healthy',
             'libraries': {
                 'nltk': HAS_NLP_LIBS,

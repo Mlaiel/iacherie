@@ -1,12 +1,10 @@
-"""
-Advanced Watermarking and Digital Signature Engine for IA Influencer Agent
+"""Advanced Watermarking and Digital Signature Engine for IA Influencer Agent
 Handles invisible watermarking, digital signatures, and content authentication
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass
 from datetime import datetime
@@ -27,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WatermarkConfig:
-    """Watermark configuration structure"""
-    watermark_type: str  # visible, invisible, digital_signature
+    """Watermark configuration structure"""    watermark_type: str  # visible, invisible, digital_signature
     strength: float = 0.3  # Watermark strength (0.0 - 1.0)
     position: str = "center"  # center, corner, distributed
     transparency: float = 0.5  # For visible watermarks
@@ -40,8 +37,7 @@ class WatermarkConfig:
 
 @dataclass
 class DigitalSignature:
-    """Digital signature structure"""
-    signature_id: str
+    """Digital signature structure"""    signature_id: str
     content_id: str
     owner_id: str
     signature_data: bytes
@@ -51,8 +47,7 @@ class DigitalSignature:
     metadata: Dict = None
     
     def verify_signature(self, public_key: bytes, content_hash: bytes) -> bool:
-        """Verify digital signature"""
-        try:
+        """Verify digital signature"""        try:
             public_key_obj = serialization.load_pem_public_key(public_key, backend=default_backend())
             public_key_obj.verify(
                 self.signature_data,
@@ -70,8 +65,7 @@ class DigitalSignature:
 
 @dataclass
 class WatermarkResult:
-    """Result of watermarking operation"""
-    success: bool
+    """Result of watermarking operation"""    success: bool
     watermarked_content: Optional[bytes] = None
     watermark_id: str = ""
     signature: Optional[DigitalSignature] = None
@@ -81,11 +75,9 @@ class WatermarkResult:
 
 
 class AdvancedWatermarkingEngine:
-    """
-    Ultra-advanced watermarking system supporting multiple content types
+    """    Ultra-advanced watermarking system supporting multiple content types
     Implements both visible and invisible watermarking with digital signatures
-    """
-    
+    """    
     def __init__(self, config: Dict = None):
         self.config = config or {}
         
@@ -114,8 +106,7 @@ class AdvancedWatermarkingEngine:
         
     def apply_watermark(self, content_data: bytes, content_type: str,
                        watermark_config: WatermarkConfig, owner_info: Dict) -> WatermarkResult:
-        """
-        Apply advanced watermark to content based on type
+        """        Apply advanced watermark to content based on type
         
         Args:
             content_data: Raw content bytes
@@ -125,8 +116,7 @@ class AdvancedWatermarkingEngine:
             
         Returns:
             WatermarkResult with processed content
-        """
-        try:
+        """        try:
             watermark_id = f"WM_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{hashlib.md5(content_data).hexdigest()[:8]}"
             
             # Route to appropriate watermarking method
@@ -160,8 +150,7 @@ class AdvancedWatermarkingEngine:
             
     def extract_watermark(self, watermarked_content: bytes, content_type: str,
                          extraction_key: str = None) -> Dict:
-        """
-        Extract watermark information from content
+        """        Extract watermark information from content
         
         Args:
             watermarked_content: Watermarked content bytes
@@ -170,8 +159,7 @@ class AdvancedWatermarkingEngine:
             
         Returns:
             Extracted watermark information
-        """
-        try:
+        """        try:
             extraction_result = {
                 'watermark_detected': False,
                 'watermark_data': None,
@@ -204,8 +192,7 @@ class AdvancedWatermarkingEngine:
             
     def verify_content_authenticity(self, content_data: bytes, 
                                   signature: DigitalSignature) -> Dict:
-        """
-        Verify content authenticity using digital signature
+        """        Verify content authenticity using digital signature
         
         Args:
             content_data: Content to verify
@@ -213,8 +200,7 @@ class AdvancedWatermarkingEngine:
             
         Returns:
             Verification result
-        """
-        try:
+        """        try:
             # Generate content hash
             content_hash = hashlib.sha256(content_data).digest()
             
@@ -241,8 +227,7 @@ class AdvancedWatermarkingEngine:
             
     def _apply_image_watermark(self, image_data: bytes, config: WatermarkConfig, 
                               owner_info: Dict) -> WatermarkResult:
-        """Apply watermark to image content"""
-        try:
+        """Apply watermark to image content"""        try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
             original_mode = image.mode
@@ -275,8 +260,7 @@ class AdvancedWatermarkingEngine:
             
     def _apply_visible_image_watermark(self, image: Image.Image, config: WatermarkConfig,
                                      owner_info: Dict) -> Image.Image:
-        """Apply visible watermark to image"""
-        watermarked = image.copy().convert('RGBA')
+        """Apply visible watermark to image"""        watermarked = image.copy().convert('RGBA')
         
         # Create watermark overlay
         overlay = Image.new('RGBA', watermarked.size, (0, 0, 0, 0))
@@ -316,8 +300,7 @@ class AdvancedWatermarkingEngine:
         
     def _apply_invisible_image_watermark(self, image: Image.Image, config: WatermarkConfig,
                                        owner_info: Dict) -> Image.Image:
-        """Apply invisible watermark using DCT frequency domain"""
-        # Convert to numpy array
+        """Apply invisible watermark using DCT frequency domain"""        # Convert to numpy array
         img_array = np.array(image.convert('RGB'))
         
         # Convert to YUV color space for better watermarking
@@ -336,8 +319,7 @@ class AdvancedWatermarkingEngine:
         
     def _embed_dct_watermark(self, channel: np.ndarray, watermark_pattern: np.ndarray,
                            strength: float) -> np.ndarray:
-        """Embed watermark in DCT domain"""
-        # Divide image into 8x8 blocks
+        """Embed watermark in DCT domain"""        # Divide image into 8x8 blocks
         height, width = channel.shape
         watermarked = channel.copy().astype(np.float32)
         
@@ -364,8 +346,7 @@ class AdvancedWatermarkingEngine:
         return np.clip(watermarked, 0, 255).astype(np.uint8)
         
     def _generate_watermark_pattern(self, owner_info: Dict) -> np.ndarray:
-        """Generate unique watermark pattern for owner"""
-        owner_id = owner_info.get('id', 'unknown')
+        """Generate unique watermark pattern for owner"""        owner_id = owner_info.get('id', 'unknown')
         
         # Create deterministic pattern based on owner ID
         np.random.seed(hash(owner_id) % (2**32))
@@ -378,8 +359,7 @@ class AdvancedWatermarkingEngine:
         
     def _apply_audio_watermark(self, audio_data: bytes, config: WatermarkConfig,
                              owner_info: Dict) -> WatermarkResult:
-        """Apply watermark to audio content"""
-        try:
+        """Apply watermark to audio content"""        try:
             # Load audio data
             y, sr = librosa.load(io.BytesIO(audio_data), sr=self.audio_params['sample_rate'])
             
@@ -407,8 +387,7 @@ class AdvancedWatermarkingEngine:
             
     def _apply_invisible_audio_watermark(self, audio: np.ndarray, sr: int,
                                        config: WatermarkConfig, owner_info: Dict) -> np.ndarray:
-        """Apply invisible watermark to audio using spectral modification"""
-        # Generate watermark sequence
+        """Apply invisible watermark to audio using spectral modification"""        # Generate watermark sequence
         watermark_sequence = self._generate_audio_watermark_sequence(owner_info)
         
         # Apply STFT
@@ -433,8 +412,7 @@ class AdvancedWatermarkingEngine:
         return watermarked_audio
         
     def _generate_audio_watermark_sequence(self, owner_info: Dict) -> np.ndarray:
-        """Generate audio watermark sequence"""
-        owner_id = owner_info.get('id', 'unknown')
+        """Generate audio watermark sequence"""        owner_id = owner_info.get('id', 'unknown')
         
         # Create deterministic sequence
         np.random.seed(hash(owner_id) % (2**32))
@@ -444,8 +422,7 @@ class AdvancedWatermarkingEngine:
         
     def _apply_video_watermark(self, video_data: bytes, config: WatermarkConfig,
                              owner_info: Dict) -> WatermarkResult:
-        """Apply watermark to video content"""
-        # Video watermarking would involve frame-by-frame processing
+        """Apply watermark to video content"""        # Video watermarking would involve frame-by-frame processing
         # This is a simplified implementation
         return WatermarkResult(
             success=True,
@@ -455,8 +432,7 @@ class AdvancedWatermarkingEngine:
         
     def _apply_text_watermark(self, text_data: bytes, config: WatermarkConfig,
                             owner_info: Dict) -> WatermarkResult:
-        """Apply watermark to text content"""
-        try:
+        """Apply watermark to text content"""        try:
             text = text_data.decode('utf-8')
             
             if config.watermark_type == "visible":
@@ -477,8 +453,7 @@ class AdvancedWatermarkingEngine:
             return WatermarkResult(success=False, error=str(e))
             
     def _apply_invisible_text_watermark(self, text: str, owner_info: Dict) -> str:
-        """Apply invisible watermark to text using steganography"""
-        owner_id = owner_info.get('id', 'unknown')
+        """Apply invisible watermark to text using steganography"""        owner_id = owner_info.get('id', 'unknown')
         
         # Convert owner ID to binary
         owner_binary = ''.join(format(ord(c), '08b') for c in owner_id[:8])
@@ -504,8 +479,7 @@ class AdvancedWatermarkingEngine:
         return watermarked_text
         
     def _extract_image_watermark(self, image_data: bytes, extraction_key: str = None) -> Dict:
-        """Extract watermark from image"""
-        try:
+        """Extract watermark from image"""        try:
             image = Image.open(io.BytesIO(image_data))
             img_array = np.array(image.convert('RGB'))
             
@@ -527,8 +501,7 @@ class AdvancedWatermarkingEngine:
             return {'error': str(e)}
             
     def _extract_dct_watermark(self, channel: np.ndarray) -> np.ndarray:
-        """Extract watermark from DCT domain"""
-        height, width = channel.shape
+        """Extract watermark from DCT domain"""        height, width = channel.shape
         extracted_pattern = np.zeros((height // 8, width // 8))
         
         for i in range(0, height - 8, 8):
@@ -546,8 +519,7 @@ class AdvancedWatermarkingEngine:
         return extracted_pattern
         
     def _calculate_watermark_confidence(self, extracted_pattern: np.ndarray) -> float:
-        """Calculate confidence score for extracted watermark"""
-        # Analyze pattern characteristics
+        """Calculate confidence score for extracted watermark"""        # Analyze pattern characteristics
         pattern_std = np.std(extracted_pattern)
         pattern_range = np.max(extracted_pattern) - np.min(extracted_pattern)
         
@@ -557,8 +529,7 @@ class AdvancedWatermarkingEngine:
         return confidence
         
     def _extract_audio_watermark(self, audio_data: bytes, extraction_key: str = None) -> Dict:
-        """Extract watermark from audio"""
-        # Placeholder implementation
+        """Extract watermark from audio"""        # Placeholder implementation
         return {
             'watermark_detected': False,
             'confidence': 0.0,
@@ -566,8 +537,7 @@ class AdvancedWatermarkingEngine:
         }
         
     def _extract_video_watermark(self, video_data: bytes, extraction_key: str = None) -> Dict:
-        """Extract watermark from video"""
-        # Placeholder implementation
+        """Extract watermark from video"""        # Placeholder implementation
         return {
             'watermark_detected': False,
             'confidence': 0.0,
@@ -575,8 +545,7 @@ class AdvancedWatermarkingEngine:
         }
         
     def _extract_text_watermark(self, text_data: bytes, extraction_key: str = None) -> Dict:
-        """Extract watermark from text"""
-        try:
+        """Extract watermark from text"""        try:
             text = text_data.decode('utf-8')
             
             # Extract zero-width characters
@@ -619,8 +588,7 @@ class AdvancedWatermarkingEngine:
             
     def _generate_digital_signature(self, content_data: bytes, owner_info: Dict,
                                   watermark_id: str) -> DigitalSignature:
-        """Generate digital signature for content"""
-        # Create content hash
+        """Generate digital signature for content"""        # Create content hash
         content_hash = hashlib.sha256(content_data).digest()
         
         # Sign the hash
@@ -655,14 +623,12 @@ class AdvancedWatermarkingEngine:
         )
         
     def _generate_extraction_key(self, config: WatermarkConfig, owner_info: Dict) -> str:
-        """Generate extraction key for invisible watermarks"""
-        key_data = f"{owner_info.get('id', 'unknown')}:{config.strength}:{config.watermark_type}"
+        """Generate extraction key for invisible watermarks"""        key_data = f"{owner_info.get('id', 'unknown')}:{config.strength}:{config.watermark_type}"
         key_hash = hashlib.sha256(key_data.encode()).hexdigest()
         return base64.b64encode(key_hash.encode()).decode('utf-8')
         
     def _verify_content_signature(self, content_data: bytes, signature_data: Dict) -> bool:
-        """Verify content digital signature"""
-        try:
+        """Verify content digital signature"""        try:
             # This would verify against stored signature data
             # Placeholder implementation
             return True

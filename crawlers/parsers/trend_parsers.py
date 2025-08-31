@@ -1,5 +1,4 @@
-"""
-Trend Analysis and Prediction Parsers Module
+"""Trend Analysis and Prediction Parsers Module
 ============================================
 
 Ultra-advanced parsers for trend analysis, viral content prediction,
@@ -23,7 +22,6 @@ Development Team Specialties:
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
 """
-
 import asyncio
 import json
 import logging
@@ -47,8 +45,7 @@ from .parser_config import ParserConfig
 
 
 class TrendCategory(Enum):
-    """Trend category types"""
-    HASHTAG = "hashtag"
+    """Trend category types"""    HASHTAG = "hashtag"
     MUSIC_TRACK = "music_track"
     CHALLENGE = "challenge"
     MEME = "meme"
@@ -61,8 +58,7 @@ class TrendCategory(Enum):
 
 
 class TrendStage(Enum):
-    """Trend lifecycle stages"""
-    EMERGING = "emerging"      # Just starting to gain traction
+    """Trend lifecycle stages"""    EMERGING = "emerging"      # Just starting to gain traction
     GROWING = "growing"        # Rapidly gaining popularity
     VIRAL = "viral"           # At peak virality
     MAINSTREAM = "mainstream"  # Widely adopted
@@ -71,8 +67,7 @@ class TrendStage(Enum):
 
 
 class ViralityLevel(Enum):
-    """Virality potential levels"""
-    EXTREMELY_HIGH = "extremely_high"  # 90%+ chance to go viral
+    """Virality potential levels"""    EXTREMELY_HIGH = "extremely_high"  # 90%+ chance to go viral
     HIGH = "high"                      # 70-90% chance
     MODERATE = "moderate"              # 40-70% chance
     LOW = "low"                        # 10-40% chance
@@ -81,8 +76,7 @@ class ViralityLevel(Enum):
 
 @dataclass
 class TrendData:
-    """Core trend data structure"""
-    trend_id: str
+    """Core trend data structure"""    trend_id: str
     name: str
     category: TrendCategory
     stage: TrendStage
@@ -102,8 +96,7 @@ class TrendData:
 
 @dataclass
 class ViralityPrediction:
-    """Virality prediction results"""
-    content_id: str
+    """Virality prediction results"""    content_id: str
     virality_score: float
     confidence_level: float
     predicted_peak_time: Optional[datetime] = None
@@ -117,8 +110,7 @@ class ViralityPrediction:
 
 @dataclass
 class MarketIntelligence:
-    """Comprehensive market intelligence"""
-    trending_topics: List[TrendData] = field(default_factory=list)
+    """Comprehensive market intelligence"""    trending_topics: List[TrendData] = field(default_factory=list)
     emerging_opportunities: List[Dict[str, Any]] = field(default_factory=list)
     competitor_analysis: Dict[str, Any] = field(default_factory=dict)
     content_gaps: List[Dict[str, Any]] = field(default_factory=list)
@@ -129,8 +121,7 @@ class MarketIntelligence:
 
 
 class TrendDetectionEngine:
-    """Advanced AI-powered trend detection engine"""
-    
+    """Advanced AI-powered trend detection engine"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -144,8 +135,7 @@ class TrendDetectionEngine:
         time_window_hours: int = 24,
         min_engagement_threshold: int = 1000
     ) -> List[TrendData]:
-        """Detect emerging trends across platforms"""
-        try:
+        """Detect emerging trends across platforms"""        try:
             trends = []
             
             for platform, content_data in platform_data.items():
@@ -173,8 +163,7 @@ class TrendDetectionEngine:
         time_window_hours: int,
         min_engagement_threshold: int
     ) -> List[TrendData]:
-        """Analyze trends for specific platform"""
-        trends = []
+        """Analyze trends for specific platform"""        trends = []
         
         try:
             # Group content by time intervals
@@ -201,8 +190,7 @@ class TrendDetectionEngine:
             return []
     
     def _group_content_by_time(self, content_data: List[Dict[str, Any]], window_hours: int) -> Dict[str, List[Dict[str, Any]]]:
-        """Group content into time buckets"""
-        time_buckets = {}
+        """Group content into time buckets"""        time_buckets = {}
         
         for content in content_data:
             # Parse timestamp
@@ -230,8 +218,7 @@ class TrendDetectionEngine:
         return time_buckets
     
     async def _analyze_hashtag_trends(self, time_buckets: Dict[str, List[Dict[str, Any]]], platform: str) -> List[TrendData]:
-        """Analyze hashtag trends"""
-        hashtag_data = {}
+        """Analyze hashtag trends"""        hashtag_data = {}
         
         # Extract hashtags from all content
         for bucket_time, content_list in time_buckets.items():
@@ -270,8 +257,7 @@ class TrendDetectionEngine:
         return trends
     
     async def _create_hashtag_trend(self, hashtag: str, data: Dict[str, Any], platform: str) -> Optional[TrendData]:
-        """Create trend data for hashtag"""
-        try:
+        """Create trend data for hashtag"""        try:
             # Calculate momentum
             momentum = self._calculate_momentum(data['engagement'], data['timestamps'])
             
@@ -311,8 +297,7 @@ class TrendDetectionEngine:
             return None
     
     def _calculate_momentum(self, engagement_values: List[int], timestamps: List[str]) -> float:
-        """Calculate momentum score for trend"""
-        if len(engagement_values) < 2:
+        """Calculate momentum score for trend"""        if len(engagement_values) < 2:
             return 0.0
         
         try:
@@ -336,8 +321,7 @@ class TrendDetectionEngine:
             return 0.0
     
     def _calculate_velocity(self, engagement_values: List[int], timestamps: List[str]) -> float:
-        """Calculate engagement velocity"""
-        if len(engagement_values) < 2:
+        """Calculate engagement velocity"""        if len(engagement_values) < 2:
             return 0.0
         
         try:
@@ -358,8 +342,7 @@ class TrendDetectionEngine:
             return 0.0
     
     def _determine_trend_stage(self, momentum: float, content_count: int, creator_count: int) -> TrendStage:
-        """Determine trend lifecycle stage"""
-        if momentum > 0.8 and content_count > 1000:
+        """Determine trend lifecycle stage"""        if momentum > 0.8 and content_count > 1000:
             return TrendStage.VIRAL
         elif momentum > 0.6 and content_count > 500:
             return TrendStage.GROWING
@@ -373,8 +356,7 @@ class TrendDetectionEngine:
             return TrendStage.DORMANT
     
     def _assess_virality_level(self, momentum: float, engagement_values: List[int], creator_count: int) -> ViralityLevel:
-        """Assess virality potential level"""
-        total_engagement = sum(engagement_values)
+        """Assess virality potential level"""        total_engagement = sum(engagement_values)
         avg_engagement = total_engagement / max(creator_count, 1)
         
         # Multi-factor virality assessment
@@ -404,24 +386,20 @@ class TrendDetectionEngine:
             return ViralityLevel.VERY_LOW
     
     async def _analyze_keyword_trends(self, time_buckets: Dict[str, List[Dict[str, Any]]], platform: str) -> List[TrendData]:
-        """Analyze keyword and topic trends"""
-        # Similar to hashtag analysis but for general keywords/topics
+        """Analyze keyword and topic trends"""        # Similar to hashtag analysis but for general keywords/topics
         # This would use NLP to extract meaningful phrases and topics
         return []  # Placeholder
     
     async def _analyze_audio_trends(self, time_buckets: Dict[str, List[Dict[str, Any]]], platform: str) -> List[TrendData]:
-        """Analyze trending audio/music"""
-        # Analyze trending audio clips, songs, or sounds
+        """Analyze trending audio/music"""        # Analyze trending audio clips, songs, or sounds
         return []  # Placeholder
     
     async def _analyze_creator_trends(self, time_buckets: Dict[str, List[Dict[str, Any]]], platform: str) -> List[TrendData]:
-        """Analyze trending creators"""
-        # Analyze creators who are rapidly gaining popularity
+        """Analyze trending creators"""        # Analyze creators who are rapidly gaining popularity
         return []  # Placeholder
     
     async def _correlate_cross_platform_trends(self, trends: List[TrendData]) -> List[TrendData]:
-        """Correlate trends across multiple platforms"""
-        # Group similar trends from different platforms
+        """Correlate trends across multiple platforms"""        # Group similar trends from different platforms
         correlated_trends = []
         processed_names = set()
         
@@ -444,14 +422,12 @@ class TrendDetectionEngine:
         return correlated_trends
     
     def _are_trends_similar(self, trend1: TrendData, trend2: TrendData) -> bool:
-        """Check if two trends are similar"""
-        # Simple similarity check - could be enhanced with NLP
+        """Check if two trends are similar"""        # Simple similarity check - could be enhanced with NLP
         return (trend1.name.lower() == trend2.name.lower() and 
                 trend1.category == trend2.category)
     
     def _merge_trends(self, trends: List[TrendData]) -> TrendData:
-        """Merge multiple similar trends"""
-        if not trends:
+        """Merge multiple similar trends"""        if not trends:
             return None
         
         base_trend = trends[0]
@@ -480,8 +456,7 @@ class TrendDetectionEngine:
         return base_trend
     
     async def _filter_and_rank_trends(self, trends: List[TrendData]) -> List[TrendData]:
-        """Filter and rank trends by importance"""
-        # Filter out low-quality trends
+        """Filter and rank trends by importance"""        # Filter out low-quality trends
         filtered_trends = [
             t for t in trends 
             if (t.momentum_score > 0.1 and 
@@ -499,8 +474,7 @@ class TrendDetectionEngine:
         return filtered_trends[:50]  # Return top 50 trends
     
     def _calculate_composite_score(self, trend: TrendData) -> float:
-        """Calculate composite ranking score"""
-        score = 0.0
+        """Calculate composite ranking score"""        score = 0.0
         
         # Momentum score (40%)
         score += trend.momentum_score * 0.4
@@ -521,8 +495,7 @@ class TrendDetectionEngine:
 
 
 class ViralityPredictor:
-    """AI-powered virality prediction system"""
-    
+    """AI-powered virality prediction system"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -531,8 +504,7 @@ class ViralityPredictor:
         self.is_trained = False
     
     async def predict_virality(self, content_data: Dict[str, Any]) -> ViralityPrediction:
-        """Predict virality potential for content"""
-        try:
+        """Predict virality potential for content"""        try:
             # Extract features from content
             features = await self._extract_virality_features(content_data)
             
@@ -562,8 +534,7 @@ class ViralityPredictor:
             raise PredictionError(f"Failed to predict virality: {e}")
     
     async def _extract_virality_features(self, content_data: Dict[str, Any]) -> Dict[str, float]:
-        """Extract features that influence virality"""
-        features = {}
+        """Extract features that influence virality"""        features = {}
         
         # Content type features
         content_type = content_data.get('type', 'unknown')
@@ -613,8 +584,7 @@ class ViralityPredictor:
         return features
     
     async def _calculate_virality_score(self, features: Dict[str, float]) -> float:
-        """Calculate virality score using heuristic model"""
-        # In production, this would use a trained ML model
+        """Calculate virality score using heuristic model"""        # In production, this would use a trained ML model
         # For now, using weighted heuristics
         
         score = 0.0
@@ -660,8 +630,7 @@ class ViralityPredictor:
         return min(max(score, 0.0), 1.0)
     
     async def _calculate_confidence_level(self, features: Dict[str, float]) -> float:
-        """Calculate confidence in prediction"""
-        # Confidence based on data completeness and creator track record
+        """Calculate confidence in prediction"""        # Confidence based on data completeness and creator track record
         confidence = 0.5  # Base confidence
         
         # Data completeness bonus
@@ -675,8 +644,7 @@ class ViralityPredictor:
         return min(confidence, 1.0)
     
     async def _identify_success_factors(self, features: Dict[str, float], content_data: Dict[str, Any]) -> List[str]:
-        """Identify factors contributing to potential success"""
-        factors = []
+        """Identify factors contributing to potential success"""        factors = []
         
         if features.get('creator_verified', 0) > 0:
             factors.append("Verified creator with established credibility")
@@ -707,8 +675,7 @@ class ViralityPredictor:
         return factors
     
     async def _identify_risk_factors(self, features: Dict[str, float], content_data: Dict[str, Any]) -> List[str]:
-        """Identify potential risk factors"""
-        risks = []
+        """Identify potential risk factors"""        risks = []
         
         if features.get('creator_followers', 0) < 2:  # log10(100) = 2
             risks.append("Small follower base may limit initial reach")
@@ -733,8 +700,7 @@ class ViralityPredictor:
         return risks
     
     async def _generate_enhancement_suggestions(self, features: Dict[str, float], content_data: Dict[str, Any]) -> List[str]:
-        """Generate suggestions to improve virality potential"""
-        suggestions = []
+        """Generate suggestions to improve virality potential"""        suggestions = []
         
         if features.get('hashtag_count', 0) < 5:
             suggestions.append("Add more relevant hashtags (aim for 5-10)")
@@ -759,8 +725,7 @@ class ViralityPredictor:
         return suggestions
     
     async def _recommend_platforms(self, features: Dict[str, float], content_data: Dict[str, Any]) -> List[str]:
-        """Recommend optimal platforms for content"""
-        platforms = []
+        """Recommend optimal platforms for content"""        platforms = []
         
         content_type = content_data.get('type', 'unknown')
         
@@ -783,8 +748,7 @@ class ViralityPredictor:
         return list(set(platforms))  # Remove duplicates
     
     async def _predict_optimal_timing(self, content_data: Dict[str, Any]) -> Optional[datetime]:
-        """Predict optimal posting time"""
-        # This would use historical performance data
+        """Predict optimal posting time"""        # This would use historical performance data
         # For now, return next peak hour
         now = datetime.now(timezone.utc)
         peak_hours = [7, 13, 19]  # 7 AM, 1 PM, 7 PM UTC
@@ -801,8 +765,7 @@ class ViralityPredictor:
         return next_peak
     
     async def _estimate_reach(self, virality_score: float, content_data: Dict[str, Any]) -> int:
-        """Estimate potential reach based on virality score"""
-        creator_data = content_data.get('creator', {})
+        """Estimate potential reach based on virality score"""        creator_data = content_data.get('creator', {})
         base_reach = creator_data.get('followers', 1000)
         
         # Viral multiplier based on score

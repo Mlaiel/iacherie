@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Event Workflow Orchestration System
+"""IA-Influencer-Agent - Event Workflow Orchestration System
 Module: backend/core/events/event_workflows.py
 Architecture: Advanced Business Process Orchestration via Events
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -18,7 +17,6 @@ Description:
     - Orchestration collaboration et matching
     - Gestion des processus de takedown et revenus
 """
-
 from typing import Any, Dict, List, Optional, Union, Callable, Set, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Statut d'un workflow"""
-    PENDING = "pending"
+    """Statut d'un workflow"""    PENDING = "pending"
     RUNNING = "running"
     WAITING = "waiting"  # En attente d'événement
     COMPLETED = "completed"
@@ -48,8 +45,7 @@ class WorkflowStatus(Enum):
 
 
 class StepStatus(Enum):
-    """Statut d'une étape de workflow"""
-    PENDING = "pending"
+    """Statut d'une étape de workflow"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -58,8 +54,7 @@ class StepStatus(Enum):
 
 
 class StepType(Enum):
-    """Types d'étapes de workflow"""
-    ACTION = "action"  # Exécution d'une action
+    """Types d'étapes de workflow"""    ACTION = "action"  # Exécution d'une action
     WAIT_EVENT = "wait_event"  # Attente d'un événement
     CONDITION = "condition"  # Vérification de condition
     PARALLEL = "parallel"  # Exécution parallèle
@@ -70,8 +65,7 @@ class StepType(Enum):
 
 @dataclass
 class WorkflowVariable:
-    """Variable de workflow"""
-    name: str
+    """Variable de workflow"""    name: str
     value: Any
     var_type: str = "string"  # string, number, boolean, object, array
     description: str = ""
@@ -80,8 +74,7 @@ class WorkflowVariable:
 
 @dataclass
 class WorkflowStep:
-    """Étape de workflow"""
-    step_id: str
+    """Étape de workflow"""    step_id: str
     name: str
     step_type: StepType
     config: Dict[str, Any] = field(default_factory=dict)
@@ -117,8 +110,7 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowInstance:
-    """Instance d'exécution de workflow"""
-    instance_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Instance d'exécution de workflow"""    instance_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     workflow_id: str = ""
     status: WorkflowStatus = WorkflowStatus.PENDING
     variables: Dict[str, WorkflowVariable] = field(default_factory=dict)
@@ -153,8 +145,7 @@ class WorkflowInstance:
 
 
 class WorkflowDefinition:
-    """Définition d'un workflow"""
-    
+    """Définition d'un workflow"""    
     def __init__(
         self,
         workflow_id: str,
@@ -175,33 +166,27 @@ class WorkflowDefinition:
         self.enabled: bool = True
         
     def add_step(self, step: WorkflowStep) -> "WorkflowDefinition":
-        """Ajoute une étape au workflow"""
-        self.steps[step.step_id] = step
+        """Ajoute une étape au workflow"""        self.steps[step.step_id] = step
         return self
     
     def set_start_step(self, step_id: str) -> "WorkflowDefinition":
-        """Définit l'étape de démarrage"""
-        self.start_step = step_id
+        """Définit l'étape de démarrage"""        self.start_step = step_id
         return self
     
     def add_end_step(self, step_id: str) -> "WorkflowDefinition":
-        """Ajoute une étape de fin"""
-        self.end_steps.add(step_id)
+        """Ajoute une étape de fin"""        self.end_steps.add(step_id)
         return self
     
     def add_variable(self, variable: WorkflowVariable) -> "WorkflowDefinition":
-        """Ajoute une variable"""
-        self.variables[variable.name] = variable
+        """Ajoute une variable"""        self.variables[variable.name] = variable
         return self
     
     def add_trigger(self, event_type: str) -> "WorkflowDefinition":
-        """Ajoute un déclencheur d'événement"""
-        self.triggers.append(event_type)
+        """Ajoute un déclencheur d'événement"""        self.triggers.append(event_type)
         return self
     
     def validate(self) -> List[str]:
-        """Valide la définition du workflow"""
-        errors = []
+        """Valide la définition du workflow"""        errors = []
         
         if not self.start_step:
             errors.append("No start step defined")
@@ -225,8 +210,7 @@ class WorkflowDefinition:
 
 
 class WorkflowStepExecutor(ABC):
-    """Interface pour l'exécution d'étapes de workflow"""
-    
+    """Interface pour l'exécution d'étapes de workflow"""    
     @abstractmethod
     async def execute(
         self,
@@ -234,25 +218,21 @@ class WorkflowStepExecutor(ABC):
         instance: WorkflowInstance,
         context: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """
-        Exécute une étape
+        """        Exécute une étape
         
         Returns:
             (success, output_data)
-        """
-        pass
+        """        pass
 
 
 class ActionStepExecutor(WorkflowStepExecutor):
-    """Exécuteur pour les étapes d'action"""
-    
+    """Exécuteur pour les étapes d'action"""    
     def __init__(self, event_bus: EventBus):
         self.event_bus = event_bus
         self.actions: Dict[str, Callable] = {}
     
     def register_action(self, action_name: str, handler: Callable):
-        """Enregistre une action"""
-        self.actions[action_name] = handler
+        """Enregistre une action"""        self.actions[action_name] = handler
     
     async def execute(
         self,
@@ -260,8 +240,7 @@ class ActionStepExecutor(WorkflowStepExecutor):
         instance: WorkflowInstance,
         context: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Exécute une action"""
-        action_name = step.config.get("action")
+        """Exécute une action"""        action_name = step.config.get("action")
         if not action_name:
             return False, {"error": "No action specified"}
         
@@ -294,8 +273,7 @@ class ActionStepExecutor(WorkflowStepExecutor):
         instance: WorkflowInstance,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Résout les variables dans les paramètres"""
-        resolved = {}
+        """Résout les variables dans les paramètres"""        resolved = {}
         
         for key, value in params.items():
             if isinstance(value, str) and value.startswith("${") and value.endswith("}"):
@@ -313,16 +291,14 @@ class ActionStepExecutor(WorkflowStepExecutor):
 
 
 class WaitEventStepExecutor(WorkflowStepExecutor):
-    """Exécuteur pour les étapes d'attente d'événement"""
-    
+    """Exécuteur pour les étapes d'attente d'événement"""    
     async def execute(
         self,
         step: WorkflowStep,
         instance: WorkflowInstance,
         context: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Configure l'attente d'événement"""
-        event_type = step.config.get("event_type")
+        """Configure l'attente d'événement"""        event_type = step.config.get("event_type")
         if not event_type:
             return False, {"error": "No event type specified"}
         
@@ -336,16 +312,14 @@ class WaitEventStepExecutor(WorkflowStepExecutor):
 
 
 class ConditionStepExecutor(WorkflowStepExecutor):
-    """Exécuteur pour les étapes de condition"""
-    
+    """Exécuteur pour les étapes de condition"""    
     async def execute(
         self,
         step: WorkflowStep,
         instance: WorkflowInstance,
         context: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Évalue une condition"""
-        condition = step.config.get("condition")
+        """Évalue une condition"""        condition = step.config.get("condition")
         if not condition:
             return False, {"error": "No condition specified"}
         
@@ -364,8 +338,7 @@ class ConditionStepExecutor(WorkflowStepExecutor):
         instance: WorkflowInstance,
         context: Dict[str, Any]
     ) -> bool:
-        """Évalue une condition simple"""
-        # Implémentation basique - peut être étendue
+        """Évalue une condition simple"""        # Implémentation basique - peut être étendue
         # Supporte des conditions comme: "${variable} == 'value'", "${count} > 5"
         
         # Substitution des variables
@@ -383,8 +356,7 @@ class ConditionStepExecutor(WorkflowStepExecutor):
 
 
 class WorkflowEngine:
-    """Moteur d'exécution de workflows"""
-    
+    """Moteur d'exécution de workflows"""    
     def __init__(self, event_bus: EventBus):
         self.event_bus = event_bus
         self.definitions: Dict[str, WorkflowDefinition] = {}
@@ -412,8 +384,7 @@ class WorkflowEngine:
         logger.info("WorkflowEngine initialized")
     
     def register_workflow(self, definition: WorkflowDefinition) -> bool:
-        """Enregistre une définition de workflow"""
-        errors = definition.validate()
+        """Enregistre une définition de workflow"""        errors = definition.validate()
         if errors:
             logger.error("Workflow validation failed: %s", errors)
             return False
@@ -423,8 +394,7 @@ class WorkflowEngine:
         return True
     
     def register_action(self, action_name: str, handler: Callable):
-        """Enregistre une action pour les étapes ACTION"""
-        if StepType.ACTION in self.executors:
+        """Enregistre une action pour les étapes ACTION"""        if StepType.ACTION in self.executors:
             self.executors[StepType.ACTION].register_action(action_name, handler)
     
     async def start_workflow(
@@ -435,8 +405,7 @@ class WorkflowEngine:
         tenant_id: Optional[str] = None,
         correlation_id: Optional[str] = None
     ) -> Optional[str]:
-        """Démarre une instance de workflow"""
-        if workflow_id not in self.definitions:
+        """Démarre une instance de workflow"""        if workflow_id not in self.definitions:
             logger.error("Unknown workflow: %s", workflow_id)
             return None
         
@@ -494,8 +463,7 @@ class WorkflowEngine:
         return instance.instance_id
     
     async def _execute_workflow(self, instance: WorkflowInstance, step_id: str):
-        """Exécute un workflow à partir d'une étape"""
-        try:
+        """Exécute un workflow à partir d'une étape"""        try:
             while step_id and instance.status == WorkflowStatus.RUNNING:
                 step = instance.steps.get(step_id)
                 if not step:
@@ -532,8 +500,7 @@ class WorkflowEngine:
         instance: WorkflowInstance,
         step: WorkflowStep
     ) -> Tuple[bool, Optional[str]]:
-        """Exécute une étape de workflow"""
-        logger.debug("Executing step %s in instance %s", step.step_id, instance.instance_id)
+        """Exécute une étape de workflow"""        logger.debug("Executing step %s in instance %s", step.step_id, instance.instance_id)
         
         step.status = StepStatus.RUNNING
         step.started_at = datetime.now(timezone.utc)
@@ -594,16 +561,14 @@ class WorkflowEngine:
             return False, None
     
     def _check_conditions(self, conditions: List[str], instance: WorkflowInstance) -> bool:
-        """Vérifie les conditions d'une étape"""
-        # Implémentation basique
+        """Vérifie les conditions d'une étape"""        # Implémentation basique
         for condition in conditions:
             if not self._evaluate_simple_condition(condition, instance):
                 return False
         return True
     
     def _evaluate_simple_condition(self, condition: str, instance: WorkflowInstance) -> bool:
-        """Évalue une condition simple"""
-        # Format: "variable_name == value" ou "variable_name > value"
+        """Évalue une condition simple"""        # Format: "variable_name == value" ou "variable_name > value"
         try:
             # Substitution des variables
             for var_name, var in instance.variables.items():
@@ -614,8 +579,7 @@ class WorkflowEngine:
             return False
     
     def _get_next_step(self, step: WorkflowStep) -> Optional[str]:
-        """Détermine la prochaine étape"""
-        if not step.next_steps:
+        """Détermine la prochaine étape"""        if not step.next_steps:
             return None
         
         # Pour l'instant, prend la première étape suivante
@@ -623,16 +587,14 @@ class WorkflowEngine:
         return step.next_steps[0]
     
     async def _handle_event(self, event: Event):
-        """Gère les événements pour les workflows en attente"""
-        # Vérification des déclencheurs de nouveaux workflows
+        """Gère les événements pour les workflows en attente"""        # Vérification des déclencheurs de nouveaux workflows
         await self._check_workflow_triggers(event)
         
         # Vérification des workflows en attente
         await self._check_waiting_workflows(event)
     
     async def _check_workflow_triggers(self, event: Event):
-        """Vérifie si l'événement déclenche de nouveaux workflows"""
-        for definition in self.definitions.values():
+        """Vérifie si l'événement déclenche de nouveaux workflows"""        for definition in self.definitions.values():
             if not definition.enabled:
                 continue
             
@@ -656,8 +618,7 @@ class WorkflowEngine:
                     )
     
     async def _check_waiting_workflows(self, event: Event):
-        """Vérifie les workflows en attente d'événements"""
-        matching_types = []
+        """Vérifie les workflows en attente d'événements"""        matching_types = []
         
         # Recherche des types d'événements correspondants
         for event_type in self.waiting_instances.keys():
@@ -690,8 +651,7 @@ class WorkflowEngine:
                         instance.completed_at = datetime.now(timezone.utc)
     
     def _event_matches_filters(self, event: Event, filters: Dict[str, Any]) -> bool:
-        """Vérifie si un événement correspond aux filtres"""
-        for key, expected_value in filters.items():
+        """Vérifie si un événement correspond aux filtres"""        for key, expected_value in filters.items():
             if key == "user_id" and event.user_id != expected_value:
                 return False
             elif key == "tenant_id" and event.tenant_id != expected_value:
@@ -704,19 +664,16 @@ class WorkflowEngine:
         return True
     
     def get_instance(self, instance_id: str) -> Optional[WorkflowInstance]:
-        """Retourne une instance de workflow"""
-        return self.instances.get(instance_id)
+        """Retourne une instance de workflow"""        return self.instances.get(instance_id)
     
     def get_instances_by_workflow(self, workflow_id: str) -> List[WorkflowInstance]:
-        """Retourne toutes les instances d'un workflow"""
-        return [
+        """Retourne toutes les instances d'un workflow"""        return [
             instance for instance in self.instances.values()
             if instance.workflow_id == workflow_id
         ]
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques"""
-        return {
+        """Retourne les statistiques"""        return {
             "stats": self.stats.copy(),
             "definitions_count": len(self.definitions),
             "active_instances": len([i for i in self.instances.values() 
@@ -727,8 +684,7 @@ class WorkflowEngine:
 
 # Workflows prédéfinis pour IA-Influencer-Agent
 def create_content_processing_workflow() -> WorkflowDefinition:
-    """Crée le workflow de traitement de contenu"""
-    workflow = WorkflowDefinition(
+    """Crée le workflow de traitement de contenu"""    workflow = WorkflowDefinition(
         workflow_id="content_processing",
         name="Content Processing Workflow",
         description="Workflow complet de traitement du contenu uploadé"
@@ -780,8 +736,7 @@ def create_content_processing_workflow() -> WorkflowDefinition:
 
 
 def create_violation_response_workflow() -> WorkflowDefinition:
-    """Crée le workflow de réponse aux violations"""
-    workflow = WorkflowDefinition(
+    """Crée le workflow de réponse aux violations"""    workflow = WorkflowDefinition(
         workflow_id="violation_response",
         name="Violation Response Workflow",
         description="Workflow de réponse automatique aux violations détectées"
@@ -849,8 +804,7 @@ workflow_engine: Optional[WorkflowEngine] = None
 
 
 def initialize_workflow_engine(event_bus: EventBus) -> WorkflowEngine:
-    """Initialise le moteur de workflows"""
-    global workflow_engine
+    """Initialise le moteur de workflows"""    global workflow_engine
     
     if workflow_engine is None:
         workflow_engine = WorkflowEngine(event_bus)

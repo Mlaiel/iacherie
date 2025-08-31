@@ -1,5 +1,4 @@
-"""
-🎵 Fingerprint Migration System - Ultra-Industrial Audio/Video Fingerprinting Evolution Engine
+"""🎵 Fingerprint Migration System - Ultra-Industrial Audio/Video Fingerprinting Evolution Engine
 ============================================================================================
 
 Enterprise-grade fingerprinting migration system for IA Influencer Agent platform:
@@ -39,7 +38,6 @@ Business Logic Flow:
 Content Upload → Fingerprint Extraction → Algorithm Migration → Vector Storage → 
 Search Index Update → Matching Optimization → Protection Registration → Monitoring Setup
 """
-
 import asyncio
 import logging
 import traceback
@@ -84,8 +82,7 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Fingerprint algorithm types for migration"""
-    CHROMAPRINT = "chromaprint"
+    """Fingerprint algorithm types for migration"""    CHROMAPRINT = "chromaprint"
     MFCC = "mfcc"
     SPECTRAL_CENTROID = "spectral_centroid"
     CHROMA = "chroma"
@@ -101,8 +98,7 @@ class FingerprintType(Enum):
 
 
 class FingerprintVersion(Enum):
-    """Fingerprint algorithm versions"""
-    V1_LEGACY = "v1.0"
+    """Fingerprint algorithm versions"""    V1_LEGACY = "v1.0"
     V2_ENHANCED = "v2.0"
     V3_NEURAL = "v3.0"
     V4_MULTIMODAL = "v4.0"
@@ -110,8 +106,7 @@ class FingerprintVersion(Enum):
 
 
 class FingerprintQuality(Enum):
-    """Fingerprint quality levels"""
-    LOW = "low"
+    """Fingerprint quality levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
@@ -120,8 +115,7 @@ class FingerprintQuality(Enum):
 
 @dataclass
 class FingerprintConfig:
-    """Configuration for fingerprint extraction and migration"""
-    fingerprint_type: FingerprintType
+    """Configuration for fingerprint extraction and migration"""    fingerprint_type: FingerprintType
     version: FingerprintVersion = FingerprintVersion.V4_MULTIMODAL
     quality: FingerprintQuality = FingerprintQuality.HIGH
     sample_rate: int = 22050
@@ -140,8 +134,7 @@ class FingerprintConfig:
 
 @dataclass
 class FingerprintData:
-    """Fingerprint data structure"""
-    fingerprint_id: str
+    """Fingerprint data structure"""    fingerprint_id: str
     content_id: str
     fingerprint_type: FingerprintType
     version: FingerprintVersion
@@ -156,8 +149,7 @@ class FingerprintData:
 
 @dataclass
 class FingerprintMigrationResult:
-    """Result of fingerprint migration operation"""
-    content_id: str
+    """Result of fingerprint migration operation"""    content_id: str
     success: bool
     original_fingerprints: List[FingerprintData] = field(default_factory=list)
     migrated_fingerprints: List[FingerprintData] = field(default_factory=list)
@@ -169,15 +161,13 @@ class FingerprintMigrationResult:
 
 
 class AudioFingerprintExtractor:
-    """Advanced audio fingerprint extraction engine"""
-    
+    """Advanced audio fingerprint extraction engine"""    
     def __init__(self, config: FingerprintConfig):
         self.config = config
         self.redis_client = redis.Redis(host='localhost', port=6379, db=0)
     
     async def extract_audio_fingerprints(self, audio_path: Path, content_metadata: ContentMetadata) -> List[FingerprintData]:
-        """Extract comprehensive audio fingerprints using multiple algorithms"""
-        fingerprints = []
+        """Extract comprehensive audio fingerprints using multiple algorithms"""        fingerprints = []
         
         try:
             # Load audio file
@@ -225,8 +215,7 @@ class AudioFingerprintExtractor:
         return fingerprints
     
     async def _extract_chromaprint(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract Chromaprint fingerprint for audio identification"""
-        start_time = datetime.now()
+        """Extract Chromaprint fingerprint for audio identification"""        start_time = datetime.now()
         
         # Convert to int16 for chromaprint
         audio_int16 = (y * 32767).astype(np.int16)
@@ -264,8 +253,7 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_mfcc(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract MFCC (Mel-Frequency Cepstral Coefficients) features"""
-        start_time = datetime.now()
+        """Extract MFCC (Mel-Frequency Cepstral Coefficients) features"""        start_time = datetime.now()
         
         # Extract MFCC features
         mfcc = librosa.feature.mfcc(
@@ -316,8 +304,7 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_chroma(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract Chroma features for harmonic content analysis"""
-        start_time = datetime.now()
+        """Extract Chroma features for harmonic content analysis"""        start_time = datetime.now()
         
         # Extract chroma features
         chroma = librosa.feature.chroma_stft(
@@ -360,8 +347,7 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_spectral_features(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract spectral features for timbral analysis"""
-        start_time = datetime.now()
+        """Extract spectral features for timbral analysis"""        start_time = datetime.now()
         
         # Extract spectral features
         spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
@@ -402,8 +388,7 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_tonnetz(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract Tonnetz features for harmonic analysis"""
-        start_time = datetime.now()
+        """Extract Tonnetz features for harmonic analysis"""        start_time = datetime.now()
         
         # Extract tonnetz features
         tonnetz = librosa.feature.tonnetz(y=y, sr=sr)
@@ -437,8 +422,7 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_zero_crossing_rate(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract Zero Crossing Rate features"""
-        start_time = datetime.now()
+        """Extract Zero Crossing Rate features"""        start_time = datetime.now()
         
         # Extract zero crossing rate
         zcr = librosa.feature.zero_crossing_rate(y)
@@ -475,8 +459,7 @@ class AudioFingerprintExtractor:
         )
     
     async def _extract_neural_fingerprint(self, y: np.ndarray, sr: int, metadata: ContentMetadata) -> FingerprintData:
-        """Extract neural network-based fingerprint"""
-        start_time = datetime.now()
+        """Extract neural network-based fingerprint"""        start_time = datetime.now()
         
         # Simulated neural fingerprint extraction (would use trained model in production)
         # For now, using a combination of multiple features as a neural-like representation
@@ -524,14 +507,12 @@ class AudioFingerprintExtractor:
 
 
 class VideoFingerprintExtractor:
-    """Advanced video fingerprint extraction engine"""
-    
+    """Advanced video fingerprint extraction engine"""    
     def __init__(self, config: FingerprintConfig):
         self.config = config
     
     async def extract_video_fingerprints(self, video_path: Path, content_metadata: ContentMetadata) -> List[FingerprintData]:
-        """Extract comprehensive video fingerprints"""
-        fingerprints = []
+        """Extract comprehensive video fingerprints"""        fingerprints = []
         
         try:
             # Extract video hash fingerprint
@@ -556,8 +537,7 @@ class VideoFingerprintExtractor:
         return fingerprints
     
     async def _extract_video_hash(self, video_path: Path, metadata: ContentMetadata) -> FingerprintData:
-        """Extract perceptual hash from video frames"""
-        start_time = datetime.now()
+        """Extract perceptual hash from video frames"""        start_time = datetime.now()
         
         cap = cv2.VideoCapture(str(video_path))
         frame_hashes = []
@@ -622,8 +602,7 @@ class VideoFingerprintExtractor:
         )
     
     async def _extract_frame_difference(self, video_path: Path, metadata: ContentMetadata) -> FingerprintData:
-        """Extract frame difference features for motion analysis"""
-        start_time = datetime.now()
+        """Extract frame difference features for motion analysis"""        start_time = datetime.now()
         
         cap = cv2.VideoCapture(str(video_path))
         differences = []
@@ -688,8 +667,7 @@ class VideoFingerprintExtractor:
         )
     
     async def _extract_optical_flow(self, video_path: Path, metadata: ContentMetadata) -> FingerprintData:
-        """Extract optical flow features for motion pattern analysis"""
-        start_time = datetime.now()
+        """Extract optical flow features for motion pattern analysis"""        start_time = datetime.now()
         
         cap = cv2.VideoCapture(str(video_path))
         flow_features = []
@@ -770,8 +748,7 @@ class VideoFingerprintExtractor:
 
 
 class FingerprintMigration(BaseMigration):
-    """Main fingerprint migration class for algorithm updates and optimization"""
-    
+    """Main fingerprint migration class for algorithm updates and optimization"""    
     def __init__(self, version: str, description: str, config: Optional[FingerprintConfig] = None):
         super().__init__(version, description)
         self.migration_id = f"fingerprint_{version}"
@@ -785,8 +762,7 @@ class FingerprintMigration(BaseMigration):
         self.video_extractor = VideoFingerprintExtractor(self.config)
     
     async def execute_migration(self, session: Session) -> MigrationResult:
-        """Execute comprehensive fingerprint migration"""
-        try:
+        """Execute comprehensive fingerprint migration"""        try:
             # Update fingerprint schema
             await self._update_fingerprint_schema(session)
             
@@ -816,9 +792,7 @@ class FingerprintMigration(BaseMigration):
             )
     
     async def _update_fingerprint_schema(self, session: Session):
-        """Update fingerprint table schema for enhanced features"""
-        schema_updates = """
-        -- Create enhanced fingerprint table
+        """Update fingerprint table schema for enhanced features"""        schema_updates = """        -- Create enhanced fingerprint table
         CREATE TABLE IF NOT EXISTS content_fingerprints (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             content_id UUID NOT NULL REFERENCES content(id),
@@ -850,23 +824,19 @@ class FingerprintMigration(BaseMigration):
         CREATE INDEX IF NOT EXISTS idx_fingerprints_version ON content_fingerprints(algorithm_version);
         CREATE INDEX IF NOT EXISTS idx_fingerprints_quality ON content_fingerprints(quality_score);
         CREATE INDEX IF NOT EXISTS idx_fingerprints_hash ON content_fingerprints(fingerprint_hash);
-        """
-        
+        """        
         session.execute(text(schema_updates))
         session.commit()
     
     async def _migrate_existing_fingerprints(self, session: Session):
-        """Migrate existing fingerprints to new format and algorithms"""
-        # Get content that needs fingerprint migration
-        content_query = """
-        SELECT c.id, c.file_path, c.content_type, c.created_at
+        """Migrate existing fingerprints to new format and algorithms"""        # Get content that needs fingerprint migration
+        content_query = """        SELECT c.id, c.file_path, c.content_type, c.created_at
         FROM content c
         LEFT JOIN content_fingerprints cf ON c.id = cf.content_id
         WHERE c.file_path IS NOT NULL 
         AND cf.content_id IS NULL
         LIMIT 100;
-        """
-        
+        """        
         result = session.execute(text(content_query))
         content_records = result.fetchall()
         
@@ -904,17 +874,14 @@ class FingerprintMigration(BaseMigration):
         session.commit()
     
     async def _store_fingerprint(self, session: Session, fingerprint: FingerprintData):
-        """Store fingerprint data in database"""
-        insert_sql = """
-        INSERT INTO content_fingerprints (
+        """Store fingerprint data in database"""        insert_sql = """        INSERT INTO content_fingerprints (
             content_id, fingerprint_type, algorithm_version, fingerprint_hash,
             feature_vector, quality_score, extraction_time, metadata, checksum
         ) VALUES (
             :content_id, :fingerprint_type, :algorithm_version, :fingerprint_hash,
             :feature_vector, :quality_score, :extraction_time, :metadata, :checksum
         );
-        """
-        
+        """        
         session.execute(text(insert_sql), {
             'content_id': fingerprint.content_id,
             'fingerprint_type': fingerprint.fingerprint_type.value,
@@ -928,10 +895,8 @@ class FingerprintMigration(BaseMigration):
         })
     
     async def _optimize_fingerprint_storage(self, session: Session):
-        """Optimize fingerprint storage and create search indexes"""
-        # Create clusters for similar fingerprints
-        clustering_sql = """
-        WITH fingerprint_vectors AS (
+        """Optimize fingerprint storage and create search indexes"""        # Create clusters for similar fingerprints
+        clustering_sql = """        WITH fingerprint_vectors AS (
             SELECT id, fingerprint_type, feature_vector
             FROM content_fingerprints
             WHERE array_length(feature_vector, 1) > 0
@@ -940,15 +905,12 @@ class FingerprintMigration(BaseMigration):
         SELECT id, feature_vector
         FROM fingerprint_vectors
         ON CONFLICT DO NOTHING;
-        """
-        
+        """        
         session.execute(text(clustering_sql))
         session.commit()
     
     async def _update_fingerprint_indexes(self, session: Session):
-        """Update and optimize fingerprint-related indexes"""
-        index_sql = """
-        -- Performance indexes for fingerprint queries
+        """Update and optimize fingerprint-related indexes"""        index_sql = """        -- Performance indexes for fingerprint queries
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_fingerprints_composite 
         ON content_fingerprints(content_id, fingerprint_type, algorithm_version);
         
@@ -962,20 +924,16 @@ class FingerprintMigration(BaseMigration):
         -- Partial indexes for high-quality fingerprints
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_fingerprints_high_quality 
         ON content_fingerprints(quality_score) WHERE quality_score > 0.8;
-        """
-        
+        """        
         session.execute(text(index_sql))
         session.commit()
     
     async def rollback_migration(self, session: Session) -> MigrationResult:
-        """Rollback fingerprint migration changes"""
-        try:
+        """Rollback fingerprint migration changes"""        try:
             # Drop new tables and indexes
-            rollback_sql = """
-            DROP TABLE IF EXISTS fingerprint_search_index CASCADE;
+            rollback_sql = """            DROP TABLE IF EXISTS fingerprint_search_index CASCADE;
             DROP TABLE IF EXISTS content_fingerprints CASCADE;
-            """
-            
+            """            
             session.execute(text(rollback_sql))
             session.commit()
             
@@ -997,8 +955,7 @@ class FingerprintMigration(BaseMigration):
 
 
 class AudioFingerprintMigration(FingerprintMigration):
-    """Specialized audio fingerprint migration"""
-    
+    """Specialized audio fingerprint migration"""    
     def __init__(self, version: str, description: str):
         config = FingerprintConfig(
             fingerprint_type=FingerprintType.HYBRID_MULTIMODAL,
@@ -1011,8 +968,7 @@ class AudioFingerprintMigration(FingerprintMigration):
         self.migration_id = f"audio_fingerprint_{version}"
     
     async def execute_migration(self, session: Session) -> MigrationResult:
-        """Execute audio-specific fingerprint migration"""
-        try:
+        """Execute audio-specific fingerprint migration"""        try:
             # Create audio-specific fingerprint optimizations
             await self._create_audio_optimizations(session)
             
@@ -1032,9 +988,7 @@ class AudioFingerprintMigration(FingerprintMigration):
             )
     
     async def _create_audio_optimizations(self, session: Session):
-        """Create audio-specific optimizations"""
-        audio_optimizations = """
-        -- Audio-specific indexes
+        """Create audio-specific optimizations"""        audio_optimizations = """        -- Audio-specific indexes
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_audio_fingerprints 
         ON content_fingerprints(fingerprint_type) 
         WHERE fingerprint_type IN ('chromaprint', 'mfcc', 'chroma', 'hybrid_multimodal');
@@ -1043,7 +997,6 @@ class AudioFingerprintMigration(FingerprintMigration):
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_audio_quality 
         ON content_fingerprints(quality_score) 
         WHERE fingerprint_type LIKE '%audio%' OR fingerprint_type IN ('chromaprint', 'mfcc');
-        """
-        
+        """        
         session.execute(text(audio_optimizations))
         session.commit()

@@ -1,5 +1,4 @@
-"""
-Content Protection Alert Notification Manager
+"""Content Protection Alert Notification Manager
 
 Gestionnaire spécialisé pour les alertes de protection de contenu dans l'écosystème
 IA Influencer Agent. Détection en temps réel, notifications d'urgence et escalation automatique.
@@ -21,7 +20,6 @@ Toute utilisation, copie, modification, distribution ou tentative de reverse eng
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class ViolationType(Enum):
-    """Types de violations de protection de contenu"""
-    DIRECT_COPY = "direct_copy"
+    """Types de violations de protection de contenu"""    DIRECT_COPY = "direct_copy"
     PARTIAL_USE = "partial_use"
     REMIX_UNAUTHORIZED = "remix_unauthorized"
     REUPLOAD = "reupload"
@@ -55,16 +52,14 @@ class ViolationType(Enum):
 
 
 class ViolationSeverity(IntEnum):
-    """Niveaux de gravité des violations"""
-    LOW = 1          # Utilisation partielle, non commerciale
+    """Niveaux de gravité des violations"""    LOW = 1          # Utilisation partielle, non commerciale
     MEDIUM = 2       # Utilisation significative sans attribution
     HIGH = 3         # Utilisation commerciale non autorisée
     CRITICAL = 4     # Violation massive ou récidive
 
 
 class Platform(Enum):
-    """Plateformes surveillées pour la protection de contenu"""
-    YOUTUBE = "youtube"
+    """Plateformes surveillées pour la protection de contenu"""    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     SOUNDCLOUD = "soundcloud"
     INSTAGRAM = "instagram"
@@ -81,8 +76,7 @@ class Platform(Enum):
 
 @dataclass
 class ProtectionViolation:
-    """Modèle de données pour une violation détectée"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Modèle de données pour une violation détectée"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = None
     content_id: str = None
     fingerprint_id: str = None
@@ -103,8 +97,7 @@ class ProtectionViolation:
 
 @dataclass
 class EscalationRule:
-    """Règles d'escalation automatique selon le type et la gravité"""
-    violation_type: ViolationType
+    """Règles d'escalation automatique selon le type et la gravité"""    violation_type: ViolationType
     min_severity: ViolationSeverity
     escalation_delay: timedelta
     notification_channels: List[str]
@@ -113,8 +106,7 @@ class EscalationRule:
 
 
 class ContentProtectionAlertManager:
-    """
-    Gestionnaire avancé des alertes de protection de contenu
+    """    Gestionnaire avancé des alertes de protection de contenu
     
     Responsabilités:
     - Détection et classification des violations
@@ -123,7 +115,6 @@ class ContentProtectionAlertManager:
     - Coordination avec équipes juridiques
     - Analytics et reporting protection
     """
-
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
         self.db_pool = db_pool
         self.redis = redis_client
@@ -132,8 +123,7 @@ class ContentProtectionAlertManager:
         self.legal_contacts = self._load_legal_contacts()
         
     def _load_escalation_rules(self) -> List[EscalationRule]:
-        """Charge les règles d'escalation depuis la configuration"""
-        return [
+        """Charge les règles d'escalation depuis la configuration"""        return [
             EscalationRule(
                 violation_type=ViolationType.COMMERCIAL_USE,
                 min_severity=ViolationSeverity.HIGH,
@@ -161,10 +151,8 @@ class ContentProtectionAlertManager:
         ]
 
     def _load_notification_templates(self) -> Dict[str, Template]:
-        """Charge les templates de notification personnalisés"""
-        templates = {
-            "violation_detected": Template("""
-                🚨 VIOLATION DE DROITS D'AUTEUR DÉTECTÉE
+        """Charge les templates de notification personnalisés"""        templates = {
+            "violation_detected": Template("""                🚨 VIOLATION DE DROITS D'AUTEUR DÉTECTÉE
 
                 Artiste: {{ artist_name }}
                 Contenu: {{ content_title }}
@@ -181,8 +169,7 @@ class ContentProtectionAlertManager:
                 ⚡ Action rapide: {{ quick_action_url }}
             """),
             
-            "critical_violation": Template("""
-                🔴 ALERTE CRITIQUE - VIOLATION MAJEURE
+            "critical_violation": Template("""                🔴 ALERTE CRITIQUE - VIOLATION MAJEURE
 
                 ⚠️ VIOLATION COMMERCIALE DÉTECTÉE
                 
@@ -199,8 +186,7 @@ class ContentProtectionAlertManager:
                 📞 Contact urgence: +49 xxx xxx xxxx
             """),
             
-            "escalation_legal": Template("""
-                ⚖️ ESCALATION JURIDIQUE AUTOMATIQUE
+            "escalation_legal": Template("""                ⚖️ ESCALATION JURIDIQUE AUTOMATIQUE
                 
                 Violation: {{ violation_id }}
                 Récidive: {{ is_repeat_offender }}
@@ -216,8 +202,7 @@ class ContentProtectionAlertManager:
         return templates
 
     def _load_legal_contacts(self) -> Dict[str, Any]:
-        """Charge les contacts juridiques pour escalation"""
-        return {
+        """Charge les contacts juridiques pour escalation"""        return {
             "primary_lawyer": {
                 "name": "Dr. Maria Schmidt",
                 "email": "legal@ia-influencer.de",
@@ -240,16 +225,14 @@ class ContentProtectionAlertManager:
         self,
         violation: ProtectionViolation
     ) -> Dict[str, Any]:
-        """
-        Traite une violation détectée avec classification et notification automatique
+        """        Traite une violation détectée avec classification et notification automatique
         
         Args:
             violation: Données de la violation détectée
             
         Returns:
             Dict contenant les actions prises et les notifications envoyées
-        """
-        try:
+        """        try:
             # Enrichissement des données de violation
             enriched_violation = await self._enrich_violation_data(violation)
             
@@ -297,8 +280,7 @@ class ContentProtectionAlertManager:
             raise
 
     async def _enrich_violation_data(self, violation: ProtectionViolation) -> ProtectionViolation:
-        """Enrichit les données de violation avec informations complémentaires"""
-        # Récupération métadonnées contenu original
+        """Enrichit les données de violation avec informations complémentaires"""        # Récupération métadonnées contenu original
         original_content = await self._get_original_content_metadata(violation.content_id)
         
         # Analyse de la plateforme violatrice
@@ -325,8 +307,7 @@ class ContentProtectionAlertManager:
         return violation
 
     async def _classify_violation_severity(self, violation: ProtectionViolation) -> ProtectionViolation:
-        """Classification automatique de la gravité basée sur ML et règles métier"""
-        severity_factors = {
+        """Classification automatique de la gravité basée sur ML et règles métier"""        severity_factors = {
             "similarity_score": violation.similarity_score,
             "commercial_use": self._detect_commercial_use(violation),
             "duration_used": self._calculate_duration_used(violation),
@@ -361,8 +342,7 @@ class ContentProtectionAlertManager:
         is_repeat: bool,
         revenue_impact: Decimal
     ) -> List[Dict[str, Any]]:
-        """Envoi notifications immédiates selon la gravité et le type"""
-        notifications_sent = []
+        """Envoi notifications immédiates selon la gravité et le type"""        notifications_sent = []
         
         # Template selection basé sur gravité
         if violation.severity == ViolationSeverity.CRITICAL:
@@ -404,8 +384,7 @@ class ContentProtectionAlertManager:
         return notifications_sent
 
     async def _trigger_automated_actions(self, violation: ProtectionViolation) -> List[str]:
-        """Déclenche les actions automatiques selon le type et la gravité"""
-        actions_triggered = []
+        """Déclenche les actions automatiques selon le type et la gravité"""        actions_triggered = []
         
         # Actions basées sur la gravité
         if violation.severity == ViolationSeverity.CRITICAL:
@@ -439,8 +418,7 @@ class ContentProtectionAlertManager:
         return actions_triggered
 
     async def _schedule_escalation(self, violation: ProtectionViolation) -> Dict[str, Any]:
-        """Programme l'escalation automatique selon les règles définies"""
-        applicable_rules = [
+        """Programme l'escalation automatique selon les règles définies"""        applicable_rules = [
             rule for rule in self.escalation_rules
             if (rule.violation_type == violation.violation_type and
                 rule.min_severity <= violation.severity)
@@ -475,19 +453,16 @@ class ContentProtectionAlertManager:
         return escalation_job
 
     async def get_protection_dashboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Récupère les données du dashboard de protection pour un utilisateur"""
-        async with self.db_pool.acquire() as conn:
+        """Récupère les données du dashboard de protection pour un utilisateur"""        async with self.db_pool.acquire() as conn:
             # Violations récentes
-            recent_violations = await conn.fetch("""
-                SELECT * FROM content_protection_violations 
+            recent_violations = await conn.fetch("""                SELECT * FROM content_protection_violations 
                 WHERE user_id = $1 
                 ORDER BY detected_at DESC 
                 LIMIT 50
             """, user_id)
             
             # Statistiques protection
-            stats = await conn.fetchrow("""
-                SELECT 
+            stats = await conn.fetchrow("""                SELECT 
                     COUNT(*) as total_violations,
                     COUNT(*) FILTER (WHERE severity = 'CRITICAL') as critical_count,
                     COUNT(*) FILTER (WHERE status = 'resolved') as resolved_count,
@@ -499,8 +474,7 @@ class ContentProtectionAlertManager:
             """, user_id)
             
             # Plateformes les plus problématiques
-            platform_stats = await conn.fetch("""
-                SELECT 
+            platform_stats = await conn.fetch("""                SELECT 
                     platform, 
                     COUNT(*) as violation_count,
                     AVG(severity_score) as avg_severity
@@ -520,10 +494,8 @@ class ContentProtectionAlertManager:
 
     # Méthodes utilitaires (implementation details)
     async def _save_violation_to_db(self, violation: ProtectionViolation) -> str:
-        """Sauvegarde violation en base de données avec toutes les métadonnées"""
-        async with self.db_pool.acquire() as conn:
-            violation_id = await conn.fetchval("""
-                INSERT INTO content_protection_violations (
+        """Sauvegarde violation en base de données avec toutes les métadonnées"""        async with self.db_pool.acquire() as conn:
+            violation_id = await conn.fetchval("""                INSERT INTO content_protection_violations (
                     id, user_id, content_id, fingerprint_id, violation_type, 
                     severity, platform, detected_url, violator_info, 
                     similarity_score, content_segment, evidence_data,
@@ -546,18 +518,15 @@ class ContentProtectionAlertManager:
         return violation_id
 
     async def _detect_commercial_use(self, violation: ProtectionViolation) -> bool:
-        """Détecte si l'usage est commercial (publicités, monétisation)"""
-        # Implementation de détection usage commercial via ML et analyse metadata
+        """Détecte si l'usage est commercial (publicités, monétisation)"""        # Implementation de détection usage commercial via ML et analyse metadata
         return False  # Placeholder
 
     async def _calculate_revenue_impact(self, violation: ProtectionViolation) -> Decimal:
-        """Calcule l'impact sur les revenus estimé"""
-        # Implementation calcul impact revenus basé sur analytics et données marché
+        """Calcule l'impact sur les revenus estimé"""        # Implementation calcul impact revenus basé sur analytics et données marché
         return Decimal('0.00')  # Placeholder
 
     async def _send_automated_dmca_notice(self, violation: ProtectionViolation) -> bool:
-        """Envoi automatique notice DMCA via API dédiée"""
-        # Implementation envoi DMCA automatique
+        """Envoi automatique notice DMCA via API dédiée"""        # Implementation envoi DMCA automatique
         return True  # Placeholder
 
 

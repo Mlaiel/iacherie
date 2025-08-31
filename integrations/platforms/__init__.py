@@ -1,5 +1,4 @@
-"""
-Platform APIs Integration Module
+"""Platform APIs Integration Module
 ================================
 
 Complete platform integration system with OAuth, rate limiting, and API management.
@@ -8,7 +7,6 @@ Supports YouTube, Instagram, TikTok, Spotify, Facebook, Twitter, and DMCA servic
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .platform_coordinator import PlatformCoordinator
 from .platform_oauth_manager import PlatformOAuthManager
 from .api_rate_limiter import APIRateLimiter

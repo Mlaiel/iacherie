@@ -1,5 +1,4 @@
-"""
-Scheduling Engine - Intelligent Content Scheduling System
+"""Scheduling Engine - Intelligent Content Scheduling System
 
 Advanced scheduling engine for optimal content distribution timing across multiple platforms.
 Provides AI-powered timing optimization, audience analysis, and intelligent scheduling recommendations.
@@ -13,7 +12,6 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class SchedulingStrategy(str, Enum):
-    """Scheduling optimization strategies"""
-    MAXIMUM_REACH = "maximum_reach"
+    """Scheduling optimization strategies"""    MAXIMUM_REACH = "maximum_reach"
     MAXIMUM_ENGAGEMENT = "maximum_engagement"
     BALANCED_DISTRIBUTION = "balanced_distribution"
     STAGGERED_RELEASE = "staggered_release"
@@ -41,16 +38,14 @@ class SchedulingStrategy(str, Enum):
     TRENDING_ALIGNMENT = "trending_alignment"
 
 class TimeSlotPriority(str, Enum):
-    """Time slot priority levels"""
-    PEAK = "peak"
+    """Time slot priority levels"""    PEAK = "peak"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     AVOID = "avoid"
 
 class AudienceSegment(str, Enum):
-    """Audience segments for timing optimization"""
-    GLOBAL = "global"
+    """Audience segments for timing optimization"""    GLOBAL = "global"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -60,8 +55,7 @@ class AudienceSegment(str, Enum):
 
 @dataclass
 class TimeSlot:
-    """Represents a scheduled time slot"""
-    start_time: datetime
+    """Represents a scheduled time slot"""    start_time: datetime
     end_time: datetime
     priority: TimeSlotPriority
     estimated_reach: int
@@ -72,8 +66,7 @@ class TimeSlot:
 
 @dataclass
 class SchedulingRequest:
-    """Request for content scheduling optimization"""
-    content_id: str
+    """Request for content scheduling optimization"""    content_id: str
     target_platforms: List[str]
     content_type: str
     target_audience: AudienceSegment
@@ -87,8 +80,7 @@ class SchedulingRequest:
 
 @dataclass
 class SchedulingResult:
-    """Result of scheduling optimization"""
-    content_id: str
+    """Result of scheduling optimization"""    content_id: str
     success: bool
     recommended_schedule: Dict[str, datetime] = field(default_factory=dict)
     alternative_times: Dict[str, List[datetime]] = field(default_factory=dict)
@@ -99,8 +91,7 @@ class SchedulingResult:
     analysis_metadata: Dict[str, Any] = field(default_factory=dict)
 
 class ScheduleTemplate(Base):
-    """Database model for reusable schedule templates"""
-    __tablename__ = "schedule_templates"
+    """Database model for reusable schedule templates"""    __tablename__ = "schedule_templates"
     
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
@@ -116,8 +107,7 @@ class ScheduleTemplate(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow, nullable=False)
 
 class PerformanceHistory(Base):
-    """Database model for tracking scheduling performance"""
-    __tablename__ = "scheduling_performance_history"
+    """Database model for tracking scheduling performance"""    __tablename__ = "scheduling_performance_history"
     
     id = Column(Integer, primary_key=True, index=True)
     content_id = Column(String(100), nullable=False, index=True)
@@ -132,13 +122,11 @@ class PerformanceHistory(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 class SchedulingEngine:
-    """
-    Enterprise-grade intelligent scheduling engine
+    """    Enterprise-grade intelligent scheduling engine
     
     Provides AI-powered content scheduling optimization with audience analysis,
     platform-specific timing, and performance prediction capabilities.
-    """
-    
+    """    
     # Platform-specific optimal time patterns (24-hour format, UTC)
     PLATFORM_OPTIMAL_TIMES = {
         "youtube": {
@@ -188,16 +176,14 @@ class SchedulingEngine:
         self.logger = logging.getLogger(__name__)
     
     async def optimize_schedule(self, request: SchedulingRequest) -> SchedulingResult:
-        """
-        Optimize content scheduling based on AI analysis
+        """        Optimize content scheduling based on AI analysis
         
         Args:
             request: Scheduling optimization request
             
         Returns:
             SchedulingResult: Optimized scheduling recommendations
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting schedule optimization for content {request.content_id}")
             
             result = SchedulingResult(
@@ -261,8 +247,7 @@ class SchedulingEngine:
         self, 
         request: SchedulingRequest
     ) -> Dict[str, Any]:
-        """Analyze audience timezone distribution"""
-        
+        """Analyze audience timezone distribution"""        
         target_timezones = self.AUDIENCE_TIMEZONES.get(
             request.target_audience, 
             ["UTC"]
@@ -298,8 +283,7 @@ class SchedulingEngine:
         request: SchedulingRequest,
         audience_analysis: Dict[str, Any]
     ) -> List[TimeSlot]:
-        """Generate potential time slots for platform"""
-        
+        """Generate potential time slots for platform"""        
         time_slots = []
         platform_config = self.PLATFORM_OPTIMAL_TIMES.get(platform.lower(), {})
         
@@ -332,8 +316,7 @@ class SchedulingEngine:
         audience_analysis: Dict[str, Any],
         request: SchedulingRequest
     ) -> List[TimeSlot]:
-        """Generate time slots for a specific day"""
-        
+        """Generate time slots for a specific day"""        
         slots = []
         is_weekend = date.weekday() >= 5
         
@@ -397,8 +380,7 @@ class SchedulingEngine:
         date: datetime.date, 
         platform_config: Dict[str, Any]
     ) -> float:
-        """Calculate priority score for a specific day"""
-        
+        """Calculate priority score for a specific day"""        
         peak_days = platform_config.get("peak_days", [])
         weekday = date.weekday()  # 0=Monday, 6=Sunday
         
@@ -416,8 +398,7 @@ class SchedulingEngine:
         platform_config: Dict[str, Any],
         request: SchedulingRequest
     ) -> float:
-        """Calculate comprehensive score for a time slot"""
-        
+        """Calculate comprehensive score for a time slot"""        
         scores = []
         
         # Base platform optimization score
@@ -452,8 +433,7 @@ class SchedulingEngine:
         slot_time: datetime, 
         platform_config: Dict[str, Any]
     ) -> float:
-        """Get score based on platform optimal times"""
-        
+        """Get score based on platform optimal times"""        
         hour = slot_time.hour
         weekday = slot_time.weekday()
         
@@ -479,8 +459,7 @@ class SchedulingEngine:
         slot_time: datetime,
         audience_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate audience timezone alignment score"""
-        
+        """Calculate audience timezone alignment score"""        
         timezone_weights = audience_analysis.get("timezone_weights", {})
         if not timezone_weights:
             return 0.5
@@ -518,8 +497,7 @@ class SchedulingEngine:
         slot_time: datetime,
         previous_posts_data: List[Dict]
     ) -> float:
-        """Calculate score based on historical performance"""
-        
+        """Calculate score based on historical performance"""        
         if not previous_posts_data:
             return 0.5
         
@@ -547,8 +525,7 @@ class SchedulingEngine:
         return min(1.0, avg_engagement / 10.0)
     
     async def _get_competition_avoidance_score(self, slot_time: datetime) -> float:
-        """Calculate score for avoiding competition"""
-        
+        """Calculate score for avoiding competition"""        
         # This would integrate with competitor analysis
         # For now, return a base score with some variation
         hour = slot_time.hour
@@ -566,8 +543,7 @@ class SchedulingEngine:
         time_slots: List[TimeSlot],
         strategy: SchedulingStrategy
     ) -> datetime:
-        """Select optimal time based on strategy"""
-        
+        """Select optimal time based on strategy"""        
         if not time_slots:
             return datetime.utcnow() + timedelta(hours=1)
         
@@ -591,8 +567,7 @@ class SchedulingEngine:
         time_slots: List[TimeSlot],
         optimal_time: datetime
     ) -> List[datetime]:
-        """Generate alternative time options"""
-        
+        """Generate alternative time options"""        
         # Filter out the selected optimal time and get top alternatives
         alternatives = [
             slot.start_time for slot in time_slots 
@@ -614,8 +589,7 @@ class SchedulingEngine:
         scheduled_time: datetime,
         request: SchedulingRequest
     ) -> Dict[str, float]:
-        """Predict performance metrics for scheduled time"""
-        
+        """Predict performance metrics for scheduled time"""        
         # Base performance metrics by platform
         base_metrics = {
             "youtube": {"views": 5000, "likes": 250, "comments": 50, "shares": 25},
@@ -649,8 +623,7 @@ class SchedulingEngine:
         return predictions
     
     async def _calculate_optimization_score(self, result: SchedulingResult) -> float:
-        """Calculate overall optimization score"""
-        
+        """Calculate overall optimization score"""        
         if not result.recommended_schedule:
             return 0.0
         
@@ -676,8 +649,7 @@ class SchedulingEngine:
         request: SchedulingRequest,
         result: SchedulingResult
     ) -> List[str]:
-        """Generate scheduling recommendations"""
-        
+        """Generate scheduling recommendations"""        
         recommendations = []
         
         if request.strategy == SchedulingStrategy.MAXIMUM_REACH:
@@ -721,8 +693,7 @@ class SchedulingEngine:
         strategy: SchedulingStrategy,
         timezone: str = "UTC"
     ) -> Optional[ScheduleTemplate]:
-        """Create a reusable schedule template"""
-        
+        """Create a reusable schedule template"""        
         if not self.db_session:
             self.logger.error("Database session not available")
             return None
@@ -753,8 +724,7 @@ class SchedulingEngine:
         self,
         user_id: int
     ) -> List[ScheduleTemplate]:
-        """Get user's schedule templates"""
-        
+        """Get user's schedule templates"""        
         if not self.db_session:
             return []
         

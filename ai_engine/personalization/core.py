@@ -1,5 +1,4 @@
-"""
-Core Personalization Engine
+"""Core Personalization Engine
 
 Advanced AI personalization system for multi-format content creators.
 Implements deep learning algorithms for intelligent user profiling and content adaptation.
@@ -7,7 +6,6 @@ Implements deep learning algorithms for intelligent user profiling and content a
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -28,8 +26,7 @@ from .exceptions import ProfileNotFoundError, InsufficientDataError
 
 
 class PersonalizationType(Enum):
-    """Types of personalization strategies"""
-    COLLABORATIVE_FILTERING = "collaborative_filtering"
+    """Types of personalization strategies"""    COLLABORATIVE_FILTERING = "collaborative_filtering"
     CONTENT_BASED = "content_based"  
     HYBRID = "hybrid"
     DEEP_LEARNING = "deep_learning"
@@ -38,8 +35,7 @@ class PersonalizationType(Enum):
 
 
 class ContentType(Enum):
-    """Content types for personalization"""
-    AUDIO = "audio"
+    """Content types for personalization"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -50,8 +46,7 @@ class ContentType(Enum):
 
 
 class UserInteractionType(Enum):
-    """Types of user interactions"""
-    VIEW = "view"
+    """Types of user interactions"""    VIEW = "view"
     LIKE = "like"
     SHARE = "share"
     COMMENT = "comment"
@@ -64,8 +59,7 @@ class UserInteractionType(Enum):
 
 
 class PersonalizationStrategy(Enum):
-    """Personalization strategies"""
-    EXPLORATION = "exploration"
+    """Personalization strategies"""    EXPLORATION = "exploration"
     EXPLOITATION = "exploitation"
     BALANCED = "balanced"
     NOVELTY_FOCUSED = "novelty_focused"
@@ -73,8 +67,7 @@ class PersonalizationStrategy(Enum):
 
 
 class PersonalizationSettings:
-    """Settings for personalization system"""
-    
+    """Settings for personalization system"""    
     def __init__(self):
         self.max_recommendations = 50
         self.min_confidence = 0.3
@@ -84,8 +77,7 @@ class PersonalizationSettings:
         
 
 class ModelConfiguration:
-    """Configuration for ML models"""
-    
+    """Configuration for ML models"""    
     def __init__(self):
         self.model_path = "/models/personalization/"
         self.update_frequency = timedelta(hours=24)
@@ -93,8 +85,7 @@ class ModelConfiguration:
         
 
 class CacheConfiguration:
-    """Cache configuration"""
-    
+    """Cache configuration"""    
     def __init__(self):
         self.redis_host = "localhost"
         self.redis_port = 6379
@@ -102,8 +93,7 @@ class CacheConfiguration:
         
 
 class SecurityConfiguration:
-    """Security and privacy configuration"""
-    
+    """Security and privacy configuration"""    
     def __init__(self):
         self.encrypt_profiles = True
         self.anonymize_logs = True
@@ -112,8 +102,7 @@ class SecurityConfiguration:
 
 @dataclass
 class PersonalizationConfig:
-    """Configuration for personalization engine"""
-    
+    """Configuration for personalization engine"""    
     # Model settings
     model_type: PersonalizationType = PersonalizationType.HYBRID
     embedding_dimension: int = 512
@@ -151,8 +140,7 @@ class PersonalizationConfig:
 
 @dataclass 
 class UserProfile:
-    """Comprehensive user profile for personalization"""
-    
+    """Comprehensive user profile for personalization"""    
     user_id: str
     created_at: datetime
     updated_at: datetime
@@ -192,8 +180,7 @@ class UserProfile:
 
 @dataclass
 class ContentItem:
-    """Comprehensive content item for personalization"""
-    
+    """Comprehensive content item for personalization"""    
     content_id: str
     content_type: ContentType
     created_at: datetime
@@ -230,8 +217,7 @@ class ContentItem:
 
 @dataclass
 class PersonalizationResult:
-    """Result of personalization operation"""
-    
+    """Result of personalization operation"""    
     user_id: str
     content_items: List[ContentItem]
     scores: List[float]
@@ -248,8 +234,7 @@ class PersonalizationResult:
 
 @dataclass
 class RecommendationScore:
-    """Detailed recommendation scoring"""
-    
+    """Detailed recommendation scoring"""    
     content_id: str
     user_id: str
     score: float
@@ -272,8 +257,7 @@ class RecommendationScore:
 
 
 class PersonalizationEngine:
-    """
-    Advanced personalization engine with multi-algorithm support.
+    """    Advanced personalization engine with multi-algorithm support.
     
     Features:
     - Real-time user profiling
@@ -281,11 +265,9 @@ class PersonalizationEngine:
     - Adaptive learning algorithms
     - Collaboration matching
     - Performance optimization
-    """
-    
+    """    
     def __init__(self, config: PersonalizationConfig):
-        """Initialize personalization engine"""
-        self.config = config
+        """Initialize personalization engine"""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -302,8 +284,7 @@ class PersonalizationEngine:
         }
     
     def _init_cache(self):
-        """Initialize Redis cache for performance"""
-        try:
+        """Initialize Redis cache for performance"""        try:
             self.cache = redis.Redis(
                 host='localhost',
                 port=6379,
@@ -317,8 +298,7 @@ class PersonalizationEngine:
             self.cache = None
     
     def _init_models(self):
-        """Initialize ML models for personalization"""
-        self.models = {}
+        """Initialize ML models for personalization"""        self.models = {}
         
         # Content similarity model
         self.models['content_similarity'] = self._load_content_model()
@@ -332,8 +312,7 @@ class PersonalizationEngine:
         self.logger.info("Personalization models initialized")
     
     def _init_analytics(self):
-        """Initialize analytics tracking"""
-        self.analytics = {
+        """Initialize analytics tracking"""        self.analytics = {
             "user_profiles": {},
             "recommendation_feedback": [],
             "performance_metrics": {},
@@ -341,8 +320,7 @@ class PersonalizationEngine:
         }
     
     async def get_user_profile(self, user_id: str) -> UserProfile:
-        """
-        Retrieve or create user profile with caching.
+        """        Retrieve or create user profile with caching.
         
         Args:
             user_id: Unique user identifier
@@ -352,8 +330,7 @@ class PersonalizationEngine:
             
         Raises:
             ProfileNotFoundError: If profile cannot be found or created
-        """
-        try:
+        """        try:
             # Check cache first
             cached_profile = await self._get_cached_profile(user_id)
             if cached_profile:
@@ -375,8 +352,7 @@ class PersonalizationEngine:
             raise ProfileNotFoundError(f"Cannot retrieve profile for user {user_id}")
     
     async def _load_profile_from_db(self, user_id: str) -> Optional[UserProfile]:
-        """Load user profile from database"""
-        try:
+        """Load user profile from database"""        try:
             # For now, return None as we don't have a real database
             # In production, this would query the actual database
             self.logger.info(f"Attempting to load profile for user {user_id} from database")
@@ -386,8 +362,7 @@ class PersonalizationEngine:
             return None
     
     async def _create_new_profile(self, user_id: str) -> UserProfile:
-        """Create a new user profile"""
-        try:
+        """Create a new user profile"""        try:
             profile = UserProfile(
                 user_id=user_id,
                 created_at=datetime.utcnow(),
@@ -414,8 +389,7 @@ class PersonalizationEngine:
         user_id: str, 
         interaction_data: Dict[str, Any]
     ) -> UserProfile:
-        """
-        Update user profile with new interaction data.
+        """        Update user profile with new interaction data.
         
         Args:
             user_id: User identifier
@@ -423,8 +397,7 @@ class PersonalizationEngine:
             
         Returns:
             UserProfile: Updated profile
-        """
-        try:
+        """        try:
             profile = await self.get_user_profile(user_id)
             
             # Update interaction history
@@ -466,8 +439,7 @@ class PersonalizationEngine:
         content_type: Optional[ContentType] = None,
         num_recommendations: Optional[int] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Generate personalized content recommendations.
+        """        Generate personalized content recommendations.
         
         Args:
             user_id: User identifier
@@ -476,8 +448,7 @@ class PersonalizationEngine:
             
         Returns:
             List of personalized recommendations with scores
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             # Get user profile
@@ -522,8 +493,7 @@ class PersonalizationEngine:
         max_recommendations: int = 10,
         strategy: Optional[PersonalizationType] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Alias for get_personalized_recommendations for backward compatibility.
+        """        Alias for get_personalized_recommendations for backward compatibility.
         
         Args:
             user_id: User identifier
@@ -533,8 +503,7 @@ class PersonalizationEngine:
             
         Returns:
             List of personalized recommendations with metadata
-        """
-        # Validate user_id
+        """        # Validate user_id
         if not user_id or not user_id.strip():
             raise PersonalizationError("Invalid user ID: user_id cannot be empty")
         
@@ -552,8 +521,7 @@ class PersonalizationEngine:
         feedback_value: Optional[float] = None,
         value: Optional[Union[float, str]] = None
     ) -> None:
-        """
-        Process user feedback to improve personalization.
+        """        Process user feedback to improve personalization.
         
         Args:
             user_id: User identifier
@@ -561,8 +529,7 @@ class PersonalizationEngine:
             feedback_type: Type of feedback (like, share, time_spent, etc.)
             feedback_value: Numerical feedback value
             value: Alternative parameter name for feedback value (for compatibility)
-        """
-        try:
+        """        try:
             # Validate feedback type
             valid_feedback_types = ['like', 'share', 'view', 'time_spent', 'engagement_time', 'rating', 'skip', 'dislike']
             if feedback_type not in valid_feedback_types:
@@ -632,8 +599,7 @@ class PersonalizationEngine:
         user_id: str,
         collaboration_type: str = "any"
     ) -> List[Dict[str, Any]]:
-        """
-        Find potential collaboration partners based on user profile.
+        """        Find potential collaboration partners based on user profile.
         
         Args:
             user_id: User seeking collaborations
@@ -641,8 +607,7 @@ class PersonalizationEngine:
             
         Returns:
             List of potential collaboration matches with compatibility scores
-        """
-        try:
+        """        try:
             user_profile = await self.get_user_profile(user_id)
             
             # Get all user profiles (in production, this would be optimized)
@@ -677,8 +642,7 @@ class PersonalizationEngine:
     # Private helper methods
     
     async def _get_cached_profile(self, user_id: str) -> Optional[UserProfile]:
-        """Retrieve profile from cache"""
-        if not self.cache:
+        """Retrieve profile from cache"""        if not self.cache:
             return None
         
         try:
@@ -692,8 +656,7 @@ class PersonalizationEngine:
             return None
     
     async def _cache_profile(self, profile: UserProfile) -> None:
-        """Cache user profile"""
-        if not self.cache:
+        """Cache user profile"""        if not self.cache:
             return
         
         try:
@@ -712,8 +675,7 @@ class PersonalizationEngine:
         content_types: Optional[List[ContentType]] = None, 
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """
-        Generate cold start recommendations for new users with limited data.
+        """        Generate cold start recommendations for new users with limited data.
         
         Args:
             user_profile: User profile with limited interaction history
@@ -722,8 +684,7 @@ class PersonalizationEngine:
             
         Returns:
             List of cold start recommendations based on demographics and popular content
-        """
-        try:
+        """        try:
             recommendations = []
             
             # Get popular content for cold start
@@ -790,8 +751,7 @@ class PersonalizationEngine:
         recommendations: List[Dict[str, Any]], 
         target_count: int
     ) -> List[Dict[str, Any]]:
-        """
-        Apply diversity filtering to ensure variety in recommendations.
+        """        Apply diversity filtering to ensure variety in recommendations.
         
         Args:
             recommendations: Raw recommendation list
@@ -799,8 +759,7 @@ class PersonalizationEngine:
             
         Returns:
             Filtered list with improved diversity
-        """
-        try:
+        """        try:
             if not recommendations:
                 return []
             
@@ -851,8 +810,7 @@ class PersonalizationEngine:
         content_types: Optional[List[ContentType]] = None, 
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """
-        Generate recommendations using collaborative filtering.
+        """        Generate recommendations using collaborative filtering.
         
         Args:
             user_profile: User profile with interaction history
@@ -861,8 +819,7 @@ class PersonalizationEngine:
             
         Returns:
             List of collaborative filtering recommendations
-        """
-        try:
+        """        try:
             recommendations = []
             
             # Find similar users based on interaction patterns
@@ -929,8 +886,7 @@ class PersonalizationEngine:
         content_types: Optional[List[ContentType]] = None, 
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """
-        Generate recommendations using content-based filtering.
+        """        Generate recommendations using content-based filtering.
         
         Args:
             user_profile: User profile with preferences
@@ -939,8 +895,7 @@ class PersonalizationEngine:
             
         Returns:
             List of content-based recommendations
-        """
-        try:
+        """        try:
             recommendations = []
             
             # Extract user preferences from interaction history
@@ -988,8 +943,7 @@ class PersonalizationEngine:
         profile: UserProfile,
         content_type: Optional[ContentType]
     ) -> List[Dict[str, Any]]:
-        """Generate hybrid recommendations combining multiple approaches"""
-        
+        """Generate hybrid recommendations combining multiple approaches"""        
         # Get recommendations from different models
         collaborative_recs = await self._collaborative_recommendations(profile, content_type)
         content_based_recs = await self._content_based_recommendations(profile, content_type)
@@ -1022,21 +976,17 @@ class PersonalizationEngine:
         return final_recs
     
     def _load_content_model(self):
-        """Load content similarity model"""
-        # In production, this would load a trained model
+        """Load content similarity model"""        # In production, this would load a trained model
         return {"model_type": "content_similarity", "loaded": True}
     
     def _load_user_model(self):
-        """Load user embedding model"""
-        return {"model_type": "user_embedding", "loaded": True}
+        """Load user embedding model"""        return {"model_type": "user_embedding", "loaded": True}
     
     def _load_collaborative_model(self):
-        """Load collaborative filtering model"""
-        return {"model_type": "collaborative_filtering", "loaded": True}
+        """Load collaborative filtering model"""        return {"model_type": "collaborative_filtering", "loaded": True}
     
     def _update_performance_metrics(self, start_time: datetime, num_recs: int):
-        """Update performance tracking metrics"""
-        response_time = (datetime.utcnow() - start_time).total_seconds()
+        """Update performance tracking metrics"""        response_time = (datetime.utcnow() - start_time).total_seconds()
         self.metrics["total_recommendations"] += 1
         self.metrics["avg_response_time"] = (
             (self.metrics["avg_response_time"] * (self.metrics["total_recommendations"] - 1) + response_time) 
@@ -1050,8 +1000,7 @@ class PersonalizationEngine:
         content_types: Optional[List[ContentType]] = None, 
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """Get popular content for cold start recommendations"""
-        try:
+        """Get popular content for cold start recommendations"""        try:
             # Simulate popular content retrieval (in production, this would query a database)
             popular_content = []
             
@@ -1079,8 +1028,7 @@ class PersonalizationEngine:
         content: List[Dict[str, Any]], 
         demographics: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Filter content based on demographic preferences"""
-        try:
+        """Filter content based on demographic preferences"""        try:
             filtered_content = []
             
             for item in content:
@@ -1112,8 +1060,7 @@ class PersonalizationEngine:
         user_profile: UserProfile, 
         limit: int = 10
     ) -> List[Tuple[str, float]]:
-        """Find users with similar preferences and behavior patterns"""
-        try:
+        """Find users with similar preferences and behavior patterns"""        try:
             # Simulate finding similar users (in production, this would use ML models)
             similar_users = []
             
@@ -1135,8 +1082,7 @@ class PersonalizationEngine:
         self, 
         user_profile: UserProfile
     ) -> Dict[str, Any]:
-        """Extract user preferences from interaction history and explicit preferences"""
-        try:
+        """Extract user preferences from interaction history and explicit preferences"""        try:
             preferences = {}
             
             # Extract from explicit preferences
@@ -1188,8 +1134,7 @@ class PersonalizationEngine:
         content_types: Optional[List[ContentType]] = None, 
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """Find content matching user preferences"""
-        try:
+        """Find content matching user preferences"""        try:
             matching_content = []
             
             # Generate mock content based on preferences
@@ -1239,8 +1184,7 @@ class PersonalizationEngine:
         user_preferences: Dict[str, Any], 
         content: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between user preferences and content"""
-        try:
+        """Calculate similarity between user preferences and content"""        try:
             similarity_score = 0.0
             factors = 0
             
@@ -1277,8 +1221,7 @@ class PersonalizationEngine:
         profile: UserProfile, 
         content_type: Optional[ContentType]
     ) -> List[Dict[str, Any]]:
-        """Generate collaborative filtering recommendations (legacy method for compatibility)"""
-        content_types = [content_type] if content_type else None
+        """Generate collaborative filtering recommendations (legacy method for compatibility)"""        content_types = [content_type] if content_type else None
         return await self._collaborative_filtering_recommendations(profile, content_types, 10)
 
     async def _behavioral_recommendations(
@@ -1286,8 +1229,7 @@ class PersonalizationEngine:
         profile: UserProfile, 
         content_type: Optional[ContentType]
     ) -> List[Dict[str, Any]]:
-        """Generate behavioral-based recommendations"""
-        try:
+        """Generate behavioral-based recommendations"""        try:
             recommendations = []
             
             # Analyze user behavior patterns
@@ -1321,8 +1263,7 @@ class PersonalizationEngine:
         self, 
         profile: UserProfile
     ) -> Dict[str, Dict[str, Any]]:
-        """Analyze user behavior patterns from interaction history"""
-        try:
+        """Analyze user behavior patterns from interaction history"""        try:
             patterns = {}
             
             if not profile.interaction_history:
@@ -1374,8 +1315,7 @@ class PersonalizationEngine:
         profile: UserProfile, 
         interaction_data: Dict[str, Any]
     ) -> None:
-        """Update user preferences based on interaction data"""
-        try:
+        """Update user preferences based on interaction data"""        try:
             # Update genre preferences
             if 'genre' in interaction_data:
                 genre = interaction_data['genre']
@@ -1424,8 +1364,7 @@ class PersonalizationEngine:
             self.logger.error(f"Error updating preferences: {e}")
 
     async def _update_behavioral_patterns(self, profile: UserProfile) -> None:
-        """Update behavioral patterns based on interaction history"""
-        try:
+        """Update behavioral patterns based on interaction history"""        try:
             if not profile.interaction_history:
                 return
             
@@ -1475,8 +1414,7 @@ class PersonalizationEngine:
             self.logger.error(f"Error updating behavioral patterns: {e}")
 
     async def _update_user_embedding(self, profile: UserProfile) -> None:
-        """Update user embedding based on current profile data"""
-        try:
+        """Update user embedding based on current profile data"""        try:
             # Simple embedding generation based on preferences
             # In production, this would use a trained ML model
             
@@ -1514,8 +1452,7 @@ class PersonalizationEngine:
             self.logger.error(f"Error updating user embedding: {e}")
 
     async def _save_profile_to_db(self, profile: UserProfile) -> None:
-        """Save user profile to database"""
-        try:
+        """Save user profile to database"""        try:
             # Simulate database save operation
             # In production, this would save to actual database
             profile_data = {
@@ -1551,8 +1488,7 @@ class PersonalizationEngine:
             self.logger.error(f"Error saving profile to database: {e}")
 
     async def _trigger_model_update(self) -> None:
-        """Trigger model retraining with accumulated feedback"""
-        try:
+        """Trigger model retraining with accumulated feedback"""        try:
             # Simulate model update trigger
             # In production, this would trigger ML model retraining
             self.logger.info("Triggering model update with accumulated feedback")
@@ -1568,8 +1504,7 @@ class PersonalizationEngine:
         profile: UserProfile, 
         content_type: Optional[ContentType]
     ) -> List[Dict[str, Any]]:
-        """Generate deep learning based recommendations"""
-        try:
+        """Generate deep learning based recommendations"""        try:
             # Simulate deep learning recommendation generation
             recommendations = []
             
@@ -1600,18 +1535,15 @@ class PersonalizationEngine:
 
 
 class UserProfileManager:
-    """
-    Manages user profile lifecycle and operations.
+    """    Manages user profile lifecycle and operations.
     Handles profile creation, updates, validation, and optimization.
-    """
-    
+    """    
     def __init__(self, config: PersonalizationConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
     
     async def create_profile(self, user_id: str, initial_data: Dict[str, Any]) -> UserProfile:
-        """Create new user profile with initial data"""
-        try:
+        """Create new user profile with initial data"""        try:
             profile = UserProfile(
                 user_id=user_id,
                 created_at=datetime.utcnow(),
@@ -1648,8 +1580,7 @@ class UserProfileManager:
             raise PersonalizationError(f"Failed to create profile: {e}")
     
     async def validate_profile(self, profile: UserProfile) -> bool:
-        """Validate profile data integrity and completeness"""
-        try:
+        """Validate profile data integrity and completeness"""        try:
             # Check required fields
             if not profile.user_id or not profile.created_at:
                 return False
@@ -1673,8 +1604,7 @@ class UserProfileManager:
             return False
     
     async def optimize_profile(self, profile: UserProfile) -> UserProfile:
-        """Optimize profile for performance and storage"""
-        try:
+        """Optimize profile for performance and storage"""        try:
             # Remove old interactions beyond retention window
             cutoff_date = datetime.utcnow() - self.config.behavior_window
             profile.interaction_history = [
@@ -1706,11 +1636,9 @@ class UserProfileManager:
 
 
 class ContentPersonalizer:
-    """
-    Personalizes content presentation and delivery based on user preferences.
+    """    Personalizes content presentation and delivery based on user preferences.
     Adapts content format, timing, and presentation style.
-    """
-    
+    """    
     def __init__(self, config: PersonalizationConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -1720,8 +1648,7 @@ class ContentPersonalizer:
         content: Dict[str, Any], 
         profile: UserProfile
     ) -> Dict[str, Any]:
-        """
-        Personalize content based on user profile.
+        """        Personalize content based on user profile.
         
         Args:
             content: Raw content data
@@ -1729,8 +1656,7 @@ class ContentPersonalizer:
             
         Returns:
             Personalized content with adapted presentation
-        """
-        try:
+        """        try:
             personalized = content.copy()
             
             # Adapt content format
@@ -1760,8 +1686,7 @@ class ContentPersonalizer:
         content: Dict[str, Any], 
         profile: UserProfile
     ) -> Dict[str, Any]:
-        """Adapt content format based on user preferences"""
-        
+        """Adapt content format based on user preferences"""        
         # Get user's preferred formats
         preferred_formats = profile.preferred_formats
         
@@ -1786,8 +1711,7 @@ class ContentPersonalizer:
         content: Dict[str, Any], 
         profile: UserProfile
     ) -> Dict[str, Any]:
-        """Personalize content presentation style"""
-        
+        """Personalize content presentation style"""        
         # Adapt complexity based on sophistication level
         sophistication = profile.content_sophistication
         
@@ -1814,8 +1738,7 @@ class ContentPersonalizer:
         content: Dict[str, Any], 
         profile: UserProfile
     ) -> Dict[str, Any]:
-        """Optimize content timing based on user patterns"""
-        
+        """Optimize content timing based on user patterns"""        
         # Analyze user's session patterns
         session_patterns = profile.session_patterns
         
@@ -1832,8 +1755,7 @@ class ContentPersonalizer:
         original_content: Dict[str, Any], 
         profile: UserProfile
     ) -> float:
-        """Calculate how well content was adapted for user"""
-        
+        """Calculate how well content was adapted for user"""        
         score = 0.0
         
         # Content type preference match
@@ -1856,11 +1778,9 @@ class ContentPersonalizer:
 
 
 class RecommendationEngine:
-    """
-    Advanced recommendation engine with multiple algorithms and strategies.
+    """    Advanced recommendation engine with multiple algorithms and strategies.
     Provides content recommendations, collaboration matching, and trend analysis.
-    """
-    
+    """    
     def __init__(self, config: PersonalizationConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -1877,8 +1797,7 @@ class RecommendationEngine:
         }
     
     def _initialize_models(self) -> Dict[str, Any]:
-        """Initialize recommendation models"""
-        return {
+        """Initialize recommendation models"""        return {
             'collaborative_filtering': {'initialized': True},
             'content_based': {'initialized': True},
             'matrix_factorization': {'initialized': True},
@@ -1892,8 +1811,7 @@ class RecommendationEngine:
         content_type: Optional[ContentType] = None,
         num_recommendations: int = 20
     ) -> List[Dict[str, Any]]:
-        """
-        Generate content recommendations using specified strategy.
+        """        Generate content recommendations using specified strategy.
         
         Args:
             user_profile: User profile for personalization
@@ -1903,8 +1821,7 @@ class RecommendationEngine:
             
         Returns:
             List of recommended content with relevance scores
-        """
-        try:
+        """        try:
             if strategy == PersonalizationType.COLLABORATIVE_FILTERING:
                 return await self._collaborative_filtering_recommendations(
                     user_profile, content_type, num_recommendations
@@ -1932,8 +1849,7 @@ class RecommendationEngine:
         content_type: Optional[ContentType],
         num_recommendations: int
     ) -> List[Dict[str, Any]]:
-        """Generate recommendations using collaborative filtering"""
-        
+        """Generate recommendations using collaborative filtering"""        
         recommendations = []
         
         # Find similar users based on interaction patterns
@@ -1974,8 +1890,7 @@ class RecommendationEngine:
         content_type: Optional[ContentType],
         num_recommendations: int
     ) -> List[Dict[str, Any]]:
-        """Generate recommendations using content-based filtering"""
-        
+        """Generate recommendations using content-based filtering"""        
         recommendations = []
         
         # Analyze user's content preferences
@@ -2014,8 +1929,7 @@ class RecommendationEngine:
         content_type: Optional[ContentType],
         num_recommendations: int
     ) -> List[Dict[str, Any]]:
-        """Generate recommendations using deep learning models"""
-        
+        """Generate recommendations using deep learning models"""        
         recommendations = []
         
         # Use user embedding if available
@@ -2047,8 +1961,7 @@ class RecommendationEngine:
         content_type: Optional[ContentType],
         num_recommendations: int
     ) -> List[Dict[str, Any]]:
-        """Generate hybrid recommendations combining multiple strategies"""
-        
+        """Generate hybrid recommendations combining multiple strategies"""        
         # Get recommendations from different strategies
         collaborative_recs = await self._collaborative_filtering_recommendations(
             user_profile, content_type, num_recommendations
@@ -2094,8 +2007,7 @@ class RecommendationEngine:
     # Helper methods
     
     def _deduplicate_recommendations(self, recommendations: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate recommendations and combine scores"""
-        seen_content = {}
+        """Remove duplicate recommendations and combine scores"""        seen_content = {}
         deduplicated = []
         
         for rec in recommendations:
@@ -2111,19 +2023,16 @@ class RecommendationEngine:
         return deduplicated
     
     def _user_already_interacted(self, user_profile: UserProfile, content_id: str) -> bool:
-        """Check if user already interacted with content"""
-        for interaction in user_profile.interaction_history:
+        """Check if user already interacted with content"""        for interaction in user_profile.interaction_history:
             if interaction.get('content_id') == content_id:
                 return True
         return False
 
 
 class AdaptiveLearning:
-    """
-    Adaptive learning system for continuous personalization improvement.
+    """    Adaptive learning system for continuous personalization improvement.
     Implements online learning algorithms and real-time model updates.
-    """
-    
+    """    
     def __init__(self, config: PersonalizationConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -2147,16 +2056,14 @@ class AdaptiveLearning:
         interaction_type: str,
         feedback_score: float
     ) -> None:
-        """
-        Process user interaction feedback for adaptive learning.
+        """        Process user interaction feedback for adaptive learning.
         
         Args:
             user_id: User identifier
             content_id: Content that was interacted with
             interaction_type: Type of interaction (view, like, share, etc.)
             feedback_score: Numerical feedback score (0-1)
-        """
-        try:
+        """        try:
             # Create feedback record
             feedback = {
                 'user_id': user_id,
@@ -2181,8 +2088,7 @@ class AdaptiveLearning:
             self.logger.error(f"Feedback processing error: {e}")
     
     async def _update_models(self) -> None:
-        """Update recommendation models based on accumulated feedback"""
-        try:
+        """Update recommendation models based on accumulated feedback"""        try:
             self.logger.info("Updating models with adaptive learning")
             
             # Process feedback batch
@@ -2199,8 +2105,7 @@ class AdaptiveLearning:
             self.logger.error(f"Model update error: {e}")
     
     async def _apply_feedback_to_model(self, feedback: Dict[str, Any]) -> None:
-        """Apply individual feedback to model weights"""
-        
+        """Apply individual feedback to model weights"""        
         user_id = feedback['user_id']
         content_id = feedback['content_id']
         feedback_score = feedback['feedback_score']
@@ -2219,8 +2124,7 @@ class AdaptiveLearning:
         content_id: str,
         feedback_score: float
     ) -> None:
-        """Update user preferences based on immediate feedback"""
-        try:
+        """Update user preferences based on immediate feedback"""        try:
             # Get content metadata to update genre/format preferences
             content_metadata = await self._get_content_metadata(content_id)
             
@@ -2238,8 +2142,7 @@ class AdaptiveLearning:
             self.logger.error(f"Preference update error: {e}")
     
     async def _validate_model_performance(self) -> None:
-        """Validate and track model performance improvements"""
-        try:
+        """Validate and track model performance improvements"""        try:
             # Calculate performance metrics
             # This would typically involve validation datasets
             
@@ -2253,8 +2156,7 @@ class AdaptiveLearning:
             self.logger.error(f"Performance validation error: {e}")
     
     def _calculate_convergence_rate(self) -> float:
-        """Calculate model convergence rate"""
-        # Simplified convergence calculation
+        """Calculate model convergence rate"""        # Simplified convergence calculation
         if len(self.model_weights) > 0:
             weight_variance = np.var(list(self.model_weights.values()))
             return max(0.0, 1.0 - weight_variance)

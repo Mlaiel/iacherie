@@ -1,5 +1,4 @@
-"""
-📊 Piracy Monitoring Service
+"""📊 Piracy Monitoring Service
 ===========================
 
 Real-time continuous monitoring for content piracy detection.
@@ -14,7 +13,6 @@ This module provides:
 - Performance tracking and analytics
 - Scalable monitoring infrastructure
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -26,23 +24,20 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class MonitoringStatus(Enum):
-    """Monitoring session status."""
-    ACTIVE = "active"
+    """Monitoring session status."""    ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
     ERROR = "error"
 
 class MonitoringPriority(Enum):
-    """Monitoring priority levels."""
-    LOW = "low"
+    """Monitoring priority levels."""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class MonitoringSession:
-    """Monitoring session configuration and state."""
-    session_id: str
+    """Monitoring session configuration and state."""    session_id: str
     content_id: str
     platforms: List[str]
     priority: MonitoringPriority
@@ -55,21 +50,17 @@ class MonitoringSession:
     config: Dict[str, Any]
 
 class PiracyMonitoringService:
-    """
-    Advanced piracy monitoring service with intelligent scheduling.
+    """    Advanced piracy monitoring service with intelligent scheduling.
     
     Provides continuous monitoring capabilities with optimized resource usage,
     smart prioritization, and real-time violation detection.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Piracy Monitoring Service.
+        """        Initialize the Piracy Monitoring Service.
         
         Args:
             config: Monitoring configuration parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         
         # Monitoring parameters
@@ -103,13 +94,11 @@ class PiracyMonitoringService:
         logger.info("Piracy Monitoring Service initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize monitoring service components.
+        """        Initialize monitoring service components.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing Piracy Monitoring Service...")
             
             # Initialize detector
@@ -139,8 +128,7 @@ class PiracyMonitoringService:
             return False
     
     async def start_monitoring(self, content_id: str, monitoring_config: Optional[Dict[str, Any]] = None) -> str:
-        """
-        Start continuous monitoring for a piece of content.
+        """        Start continuous monitoring for a piece of content.
         
         Args:
             content_id: Unique identifier for the content to monitor
@@ -148,8 +136,7 @@ class PiracyMonitoringService:
             
         Returns:
             Monitoring session ID
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Service not initialized")
         
         if len(self.active_sessions) >= self.max_concurrent_sessions:
@@ -195,16 +182,14 @@ class PiracyMonitoringService:
         return session_id
     
     async def stop_monitoring(self, session_id: str) -> bool:
-        """
-        Stop monitoring for a specific session.
+        """        Stop monitoring for a specific session.
         
         Args:
             session_id: Monitoring session ID
             
         Returns:
             bool: True if stopped successfully
-        """
-        if session_id not in self.active_sessions:
+        """        if session_id not in self.active_sessions:
             logger.warning(f"Monitoring session {session_id} not found")
             return False
         
@@ -233,16 +218,14 @@ class PiracyMonitoringService:
             return False
     
     async def pause_monitoring(self, session_id: str) -> bool:
-        """
-        Pause monitoring for a specific session.
+        """        Pause monitoring for a specific session.
         
         Args:
             session_id: Monitoring session ID
             
         Returns:
             bool: True if paused successfully
-        """
-        if session_id not in self.active_sessions:
+        """        if session_id not in self.active_sessions:
             return False
         
         self.active_sessions[session_id].status = MonitoringStatus.PAUSED
@@ -250,16 +233,14 @@ class PiracyMonitoringService:
         return True
     
     async def resume_monitoring(self, session_id: str) -> bool:
-        """
-        Resume monitoring for a specific session.
+        """        Resume monitoring for a specific session.
         
         Args:
             session_id: Monitoring session ID
             
         Returns:
             bool: True if resumed successfully
-        """
-        if session_id not in self.active_sessions:
+        """        if session_id not in self.active_sessions:
             return False
         
         self.active_sessions[session_id].status = MonitoringStatus.ACTIVE
@@ -267,16 +248,14 @@ class PiracyMonitoringService:
         return True
     
     async def get_monitoring_status(self, session_id: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get monitoring status for specific session or all sessions.
+        """        Get monitoring status for specific session or all sessions.
         
         Args:
             session_id: Optional specific session ID
             
         Returns:
             Monitoring status information
-        """
-        if session_id:
+        """        if session_id:
             if session_id not in self.active_sessions:
                 return {'error': 'Session not found'}
             
@@ -314,21 +293,18 @@ class PiracyMonitoringService:
             }
     
     def _get_default_platforms(self) -> List[str]:
-        """Get default list of platforms to monitor."""
-        return [
+        """Get default list of platforms to monitor."""        return [
             'youtube', 'instagram', 'tiktok', 'twitter', 'facebook',
             'soundcloud', 'spotify', 'dailymotion', 'vimeo', 'twitch',
             'pinterest', 'reddit', 'telegram', 'discord', 'whatsapp'
         ]
     
     async def _monitor_content(self, session: MonitoringSession) -> None:
-        """
-        Main monitoring loop for a content session.
+        """        Main monitoring loop for a content session.
         
         Args:
             session: Monitoring session configuration
-        """
-        logger.info(f"Starting monitoring loop for session {session.session_id}")
+        """        logger.info(f"Starting monitoring loop for session {session.session_id}")
         
         try:
             while session.status == MonitoringStatus.ACTIVE:
@@ -385,14 +361,12 @@ class PiracyMonitoringService:
             session.status = MonitoringStatus.ERROR
     
     async def _process_monitoring_violations(self, session: MonitoringSession, detection_result: Dict[str, Any]) -> None:
-        """
-        Process violations found during monitoring.
+        """        Process violations found during monitoring.
         
         Args:
             session: Monitoring session
             detection_result: Detection results containing violations
-        """
-        violations = detection_result.get('violations', [])
+        """        violations = detection_result.get('violations', [])
         
         for violation in violations:
             try:
@@ -409,8 +383,7 @@ class PiracyMonitoringService:
                 logger.error(f"Error processing violation in session {session.session_id}: {str(e)}")
     
     async def _send_violation_alert(self, session: MonitoringSession, violation: Any) -> None:
-        """Send alert for detected violation."""
-        if self.alert_service:
+        """Send alert for detected violation."""        if self.alert_service:
             alert_data = {
                 'session_id': session.session_id,
                 'content_id': session.content_id,
@@ -423,8 +396,7 @@ class PiracyMonitoringService:
             await self.alert_service.send_piracy_alert(alert_data)
     
     async def _trigger_auto_enforcement(self, session: MonitoringSession, violation: Any) -> None:
-        """Trigger automated enforcement for violation."""
-        try:
+        """Trigger automated enforcement for violation."""        try:
             from .enforcement import AutomatedEnforcement
             enforcement = AutomatedEnforcement(self.config.get('enforcement', {}))
             await enforcement.initialize()
@@ -434,8 +406,7 @@ class PiracyMonitoringService:
             logger.error(f"Error in auto-enforcement: {str(e)}")
     
     async def _monitoring_scheduler(self) -> None:
-        """Background scheduler for monitoring optimization."""
-        while True:
+        """Background scheduler for monitoring optimization."""        while True:
             try:
                 # Optimize monitoring intervals based on system load
                 await self._optimize_monitoring_intervals()
@@ -454,14 +425,12 @@ class PiracyMonitoringService:
                 await asyncio.sleep(60)  # Retry after 1 minute
     
     async def _optimize_monitoring_intervals(self) -> None:
-        """Optimize monitoring intervals based on system performance."""
-        # Implementation for intelligent interval optimization
+        """Optimize monitoring intervals based on system performance."""        # Implementation for intelligent interval optimization
         # This would analyze system load, violation patterns, etc.
         pass
     
     async def _cleanup_completed_sessions(self) -> None:
-        """Clean up completed or error sessions."""
-        completed_sessions = []
+        """Clean up completed or error sessions."""        completed_sessions = []
         for session_id, session in self.active_sessions.items():
             if session.status in [MonitoringStatus.STOPPED, MonitoringStatus.ERROR]:
                 completed_sessions.append(session_id)
@@ -470,8 +439,7 @@ class PiracyMonitoringService:
             await self.stop_monitoring(session_id)
     
     async def _update_monitoring_statistics(self) -> None:
-        """Update monitoring performance statistics."""
-        self.monitoring_stats['active_sessions'] = len(self.active_sessions)
+        """Update monitoring performance statistics."""        self.monitoring_stats['active_sessions'] = len(self.active_sessions)
         
         # Calculate uptime percentage (simplified implementation)
         total_sessions = self.monitoring_stats['total_sessions']
@@ -482,8 +450,7 @@ class PiracyMonitoringService:
                 100.0 - (error_sessions / total_sessions * 100.0))
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown monitoring service."""
-        logger.info("Shutting down Piracy Monitoring Service...")
+        """Gracefully shutdown monitoring service."""        logger.info("Shutting down Piracy Monitoring Service...")
         
         # Stop all active monitoring sessions
         session_ids = list(self.active_sessions.keys())

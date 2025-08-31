@@ -1,5 +1,4 @@
-"""
-Collaborative Session Manager - IA Influencer Agent
+"""Collaborative Session Manager - IA Influencer Agent
 
 Enterprise-grade collaborative session management for multi-user content creation,
 real-time collaboration, shared workspaces, and coordinated content protection
@@ -25,7 +24,6 @@ Team Specialists:
 - DevOps: Collaboration Scalability & Performance
 - IA Prompt Engineer: Multi-User Conversational Optimization
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -55,8 +53,7 @@ logger = get_logger(__name__)
 
 
 class CollaborationRole(Enum):
-    """Collaboration role types"""
-    OWNER = "owner"
+    """Collaboration role types"""    OWNER = "owner"
     COLLABORATOR = "collaborator"
     VIEWER = "viewer"
     EDITOR = "editor"
@@ -66,8 +63,7 @@ class CollaborationRole(Enum):
 
 
 class CollaborationPermission(Enum):
-    """Collaboration permission types"""
-    READ = "read"
+    """Collaboration permission types"""    READ = "read"
     WRITE = "write"
     DELETE = "delete"
     INVITE = "invite"
@@ -78,8 +74,7 @@ class CollaborationPermission(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Collaboration session status"""
-    ACTIVE = "active"
+    """Collaboration session status"""    ACTIVE = "active"
     PAUSED = "paused"
     SUSPENDED = "suspended"
     COMPLETED = "completed"
@@ -87,8 +82,7 @@ class CollaborationStatus(Enum):
 
 
 class CollaborationEvent(BaseModel):
-    """Collaboration event structure"""
-    event_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Collaboration event structure"""    event_id: str = Field(default_factory=lambda: str(uuid4()))
     session_id: str
     user_id: str
     event_type: str
@@ -103,8 +97,7 @@ class CollaborationEvent(BaseModel):
 
 
 class CollaborationParticipant(BaseModel):
-    """Collaboration participant information"""
-    user_id: str
+    """Collaboration participant information"""    user_id: str
     username: str
     email: str
     role: CollaborationRole
@@ -123,8 +116,7 @@ class CollaborationParticipant(BaseModel):
 
 
 class SharedWorkspaceContent(BaseModel):
-    """Shared workspace content structure"""
-    content_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Shared workspace content structure"""    content_id: str = Field(default_factory=lambda: str(uuid4()))
     content_type: str  # audio, video, image, text, document
     content_data: Dict[str, Any]
     creator_id: str
@@ -144,8 +136,7 @@ class SharedWorkspaceContent(BaseModel):
 
 @dataclass
 class CollaborationConfig:
-    """Collaboration configuration"""
-    max_participants: int = 50
+    """Collaboration configuration"""    max_participants: int = 50
     max_concurrent_editors: int = 10
     auto_save_interval: int = 30  # seconds
     conflict_resolution_strategy: str = "last_writer_wins"
@@ -157,8 +148,7 @@ class CollaborationConfig:
 
 
 class MultiUserSessionCoordinator:
-    """Coordinates multi-user session interactions"""
-    
+    """Coordinates multi-user session interactions"""    
     def __init__(self, config: CollaborationConfig):
         self.config = config
         self.cache_manager = CacheManager()
@@ -180,8 +170,7 @@ class MultiUserSessionCoordinator:
         self._setup_default_conflict_handlers()
     
     def _setup_default_conflict_handlers(self):
-        """Setup default conflict resolution handlers"""
-        
+        """Setup default conflict resolution handlers"""        
         self.conflict_handlers = {
             "last_writer_wins": self._resolve_last_writer_wins,
             "merge_changes": self._resolve_merge_changes,
@@ -194,8 +183,7 @@ class MultiUserSessionCoordinator:
         owner_id: str,
         initial_participants: List[str] = None
     ) -> bool:
-        """Create new collaboration session"""
-        
+        """Create new collaboration session"""        
         try:
             # Create owner participant
             owner_participant = CollaborationParticipant(
@@ -267,8 +255,7 @@ class MultiUserSessionCoordinator:
         user_id: str,
         invited_by: Optional[str] = None
     ) -> bool:
-        """Join existing collaboration session"""
-        
+        """Join existing collaboration session"""        
         try:
             session_data = await self._get_collaboration_session(session_id)
             
@@ -330,8 +317,7 @@ class MultiUserSessionCoordinator:
         session_id: str,
         user_id: str
     ) -> bool:
-        """Leave collaboration session"""
-        
+        """Leave collaboration session"""        
         try:
             session_data = await self._get_collaboration_session(session_id)
             
@@ -377,8 +363,7 @@ class MultiUserSessionCoordinator:
         new_role: CollaborationRole,
         updated_by: str
     ) -> bool:
-        """Update participant role"""
-        
+        """Update participant role"""        
         try:
             session_data = await self._get_collaboration_session(session_id)
             
@@ -419,8 +404,7 @@ class MultiUserSessionCoordinator:
             return False
     
     def _get_role_permissions(self, role: CollaborationRole) -> List[str]:
-        """Get permissions for role"""
-        
+        """Get permissions for role"""        
         role_permissions = {
             CollaborationRole.OWNER: list(CollaborationPermission),
             CollaborationRole.COLLABORATOR: [
@@ -455,8 +439,7 @@ class MultiUserSessionCoordinator:
         user_id: str,
         content_id: str
     ) -> bool:
-        """Start editing content (acquire edit lock)"""
-        
+        """Start editing content (acquire edit lock)"""        
         try:
             session_data = await self._get_collaboration_session(session_id)
             
@@ -502,8 +485,7 @@ class MultiUserSessionCoordinator:
         user_id: str,
         content_id: str
     ) -> bool:
-        """Stop editing content (release edit lock)"""
-        
+        """Stop editing content (release edit lock)"""        
         try:
             session_data = await self._get_collaboration_session(session_id)
             
@@ -543,8 +525,7 @@ class MultiUserSessionCoordinator:
         conflict_id: str,
         resolution_strategy: Optional[str] = None
     ) -> bool:
-        """Resolve collaboration conflict"""
-        
+        """Resolve collaboration conflict"""        
         try:
             session_data = await self._get_collaboration_session(session_id)
             
@@ -598,8 +579,7 @@ class MultiUserSessionCoordinator:
             return False
     
     async def _resolve_last_writer_wins(self, session_id: str, conflict: Dict[str, Any]) -> bool:
-        """Resolve conflict using last writer wins strategy"""
-        
+        """Resolve conflict using last writer wins strategy"""        
         try:
             # Get the latest change and apply it
             latest_change = conflict.get("latest_change")
@@ -616,8 +596,7 @@ class MultiUserSessionCoordinator:
             return False
     
     async def _resolve_merge_changes(self, session_id: str, conflict: Dict[str, Any]) -> bool:
-        """Resolve conflict by merging changes"""
-        
+        """Resolve conflict by merging changes"""        
         try:
             # Implement intelligent merge logic
             conflicting_changes = conflict.get("changes", [])
@@ -649,8 +628,7 @@ class MultiUserSessionCoordinator:
             return False
     
     async def _resolve_manual_review(self, session_id: str, conflict: Dict[str, Any]) -> bool:
-        """Mark conflict for manual review"""
-        
+        """Mark conflict for manual review"""        
         try:
             # Notify session owner about conflict
             session_data = await self._get_collaboration_session(session_id)
@@ -674,8 +652,7 @@ class MultiUserSessionCoordinator:
             return False
     
     async def _get_collaboration_session(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get collaboration session data"""
-        
+        """Get collaboration session data"""        
         # Check memory cache first
         if session_id in self.active_sessions:
             return self.active_sessions[session_id]
@@ -720,8 +697,7 @@ class MultiUserSessionCoordinator:
         return None
     
     async def _update_collaboration_session(self, session_id: str, session_data: Dict[str, Any]):
-        """Update collaboration session"""
-        
+        """Update collaboration session"""        
         # Update memory cache
         self.active_sessions[session_id] = session_data
         
@@ -732,8 +708,7 @@ class MultiUserSessionCoordinator:
         asyncio.create_task(self._persist_collaboration_session(session_data))
     
     async def _cache_collaboration_session(self, session_id: str, session_data: Dict[str, Any]):
-        """Cache collaboration session in Redis"""
-        
+        """Cache collaboration session in Redis"""        
         try:
             cache_key = f"collaboration_session:{session_id}"
             
@@ -752,8 +727,7 @@ class MultiUserSessionCoordinator:
             self.logger.error(f"Failed to cache collaboration session: {str(e)}")
     
     async def _persist_collaboration_session(self, session_data: Dict[str, Any]):
-        """Persist collaboration session to database"""
-        
+        """Persist collaboration session to database"""        
         try:
             async with get_async_session() as session:
                 # Check if session exists
@@ -800,8 +774,7 @@ class MultiUserSessionCoordinator:
         event_type: str,
         event_data: Dict[str, Any]
     ):
-        """Publish collaboration event"""
-        
+        """Publish collaboration event"""        
         try:
             # Increment sequence number
             if session_id not in self.event_sequences:
@@ -829,8 +802,7 @@ class MultiUserSessionCoordinator:
             self.logger.error(f"Failed to publish collaboration event: {str(e)}")
     
     async def _broadcast_to_participants(self, session_id: str, message: Dict[str, Any]):
-        """Broadcast message to all session participants"""
-        
+        """Broadcast message to all session participants"""        
         try:
             session_data = await self._get_collaboration_session(session_id)
             
@@ -848,8 +820,7 @@ class MultiUserSessionCoordinator:
         user_id: str,
         permission: CollaborationPermission
     ) -> bool:
-        """Check if user has specific permission"""
-        
+        """Check if user has specific permission"""        
         try:
             session_data = await self._get_collaboration_session(session_id)
             
@@ -866,54 +837,44 @@ class MultiUserSessionCoordinator:
             return False
     
     async def _get_username(self, user_id: str) -> str:
-        """Get username for user ID"""
-        # Implementation would query user service
+        """Get username for user ID"""        # Implementation would query user service
         return f"user_{user_id}"
     
     async def _get_user_email(self, user_id: str) -> str:
-        """Get user email for user ID"""
-        # Implementation would query user service
+        """Get user email for user ID"""        # Implementation would query user service
         return f"user_{user_id}@example.com"
     
     async def _notify_session_created(self, session_id: str, participants: Dict[str, Any]):
-        """Notify participants about session creation"""
-        # Implementation would send notifications
+        """Notify participants about session creation"""        # Implementation would send notifications
         pass
     
     async def _notify_user_joined(self, session_id: str, user_id: str):
-        """Notify participants about user joining"""
-        # Implementation would send notifications
+        """Notify participants about user joining"""        # Implementation would send notifications
         pass
     
     async def _notify_user_left(self, session_id: str, user_id: str):
-        """Notify participants about user leaving"""
-        # Implementation would send notifications
+        """Notify participants about user leaving"""        # Implementation would send notifications
         pass
     
     async def _notify_editing_started(self, session_id: str, user_id: str, content_id: str):
-        """Notify participants about editing start"""
-        # Implementation would send notifications
+        """Notify participants about editing start"""        # Implementation would send notifications
         pass
     
     async def _notify_editing_stopped(self, session_id: str, user_id: str, content_id: str):
-        """Notify participants about editing stop"""
-        # Implementation would send notifications
+        """Notify participants about editing stop"""        # Implementation would send notifications
         pass
     
     async def _notify_conflict_review_needed(self, session_id: str, owner_id: str, conflict: Dict[str, Any]):
-        """Notify owner about conflict requiring manual review"""
-        # Implementation would send notifications
+        """Notify owner about conflict requiring manual review"""        # Implementation would send notifications
         pass
     
     async def _apply_content_change(self, session_id: str, change: Dict[str, Any]):
-        """Apply content change to workspace"""
-        # Implementation would update workspace content
+        """Apply content change to workspace"""        # Implementation would update workspace content
         pass
 
 
 class SharedSessionWorkspace:
-    """Manages shared workspace content and versioning"""
-    
+    """Manages shared workspace content and versioning"""    
     def __init__(self, config: CollaborationConfig):
         self.config = config
         self.coordinator = MultiUserSessionCoordinator(config)
@@ -926,8 +887,7 @@ class SharedSessionWorkspace:
         content_type: str,
         content_data: Dict[str, Any]
     ) -> Optional[str]:
-        """Create new content in shared workspace"""
-        
+        """Create new content in shared workspace"""        
         try:
             # Check permission
             if not await self.coordinator._has_permission(
@@ -976,8 +936,7 @@ class SharedSessionWorkspace:
         user_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update existing content in workspace"""
-        
+        """Update existing content in workspace"""        
         try:
             # Check permission
             if not await self.coordinator._has_permission(
@@ -1033,8 +992,7 @@ class SharedSessionWorkspace:
         content_id: str,
         user_id: str
     ) -> Optional[Dict[str, Any]]:
-        """Get content from workspace"""
-        
+        """Get content from workspace"""        
         try:
             # Check permission
             if not await self.coordinator._has_permission(
@@ -1060,8 +1018,7 @@ class SharedSessionWorkspace:
         session_id: str,
         user_id: str
     ) -> List[Dict[str, Any]]:
-        """List all content in workspace"""
-        
+        """List all content in workspace"""        
         try:
             # Check permission
             if not await self.coordinator._has_permission(
@@ -1084,8 +1041,7 @@ class SharedSessionWorkspace:
 
 
 class CollaborationStateHandler:
-    """Handles collaboration state changes and events"""
-    
+    """Handles collaboration state changes and events"""    
     def __init__(self, config: CollaborationConfig):
         self.config = config
         self.coordinator = MultiUserSessionCoordinator(config)
@@ -1099,8 +1055,7 @@ class CollaborationStateHandler:
         activity_type: str,
         activity_data: Dict[str, Any]
     ) -> bool:
-        """Handle user activity in collaboration session"""
-        
+        """Handle user activity in collaboration session"""        
         try:
             # Update user activity timestamp
             session_data = await self.coordinator._get_collaboration_session(session_id)
@@ -1127,8 +1082,7 @@ class CollaborationStateHandler:
         user_id: str,
         activity_type: str
     ):
-        """Update user contribution score"""
-        
+        """Update user contribution score"""        
         score_weights = {
             "content_created": 10.0,
             "content_updated": 5.0,
@@ -1147,8 +1101,7 @@ class CollaborationStateHandler:
 
 
 class CollaborativeSessionManager:
-    """Main collaborative session management facade"""
-    
+    """Main collaborative session management facade"""    
     def __init__(self, config: Optional[CollaborationConfig] = None):
         self.config = config or CollaborationConfig()
         self.coordinator = MultiUserSessionCoordinator(self.config)
@@ -1157,12 +1110,10 @@ class CollaborativeSessionManager:
         self.logger = get_logger(self.__class__.__name__)
     
     async def initialize(self):
-        """Initialize collaborative session manager"""
-        self.logger.info("Collaborative session manager initialized")
+        """Initialize collaborative session manager"""        self.logger.info("Collaborative session manager initialized")
     
     async def shutdown(self):
-        """Shutdown collaborative session manager"""
-        self.logger.info("Collaborative session manager shutdown")
+        """Shutdown collaborative session manager"""        self.logger.info("Collaborative session manager shutdown")
     
     # Expose coordinator methods
     async def create_session(self, session_id: str, owner_id: str, participants: List[str] = None) -> bool:
@@ -1191,8 +1142,7 @@ class CollaborativeSessionManager:
         return await self.workspace.list_content(session_id, user_id)
     
     async def get_session_info(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive session information"""
-        
+        """Get comprehensive session information"""        
         try:
             session_data = await self.coordinator._get_collaboration_session(session_id)
             

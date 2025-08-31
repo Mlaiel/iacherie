@@ -1,5 +1,4 @@
-"""
-Support Agent - Ultra-Advanced AI Customer Support & Assistance System
+"""Support Agent - Ultra-Advanced AI Customer Support & Assistance System
 
 Enterprise-grade intelligent customer support agent providing comprehensive help,
 troubleshooting, onboarding assistance, and 24/7 automated customer service.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 import asyncio
 import logging
 import time
@@ -57,8 +55,7 @@ from ...utils.ticket_system import TicketSystem
 logger = logging.getLogger(__name__)
 
 class SupportCategory(Enum):
-    """Categories of support requests"""
-    TECHNICAL_ISSUE = "technical_issue"
+    """Categories of support requests"""    TECHNICAL_ISSUE = "technical_issue"
     ACCOUNT_MANAGEMENT = "account_management"
     BILLING_PAYMENT = "billing_payment"
     CONTENT_UPLOAD = "content_upload"
@@ -72,16 +69,14 @@ class SupportCategory(Enum):
     GENERAL_INQUIRY = "general_inquiry"
 
 class Priority(Enum):
-    """Support ticket priority levels"""
-    LOW = 1
+    """Support ticket priority levels"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
     CRITICAL = 5
 
 class SupportChannel(Enum):
-    """Support communication channels"""
-    CHAT = "chat"
+    """Support communication channels"""    CHAT = "chat"
     EMAIL = "email"
     PHONE = "phone"
     VIDEO_CALL = "video_call"
@@ -89,8 +84,7 @@ class SupportChannel(Enum):
     COMMUNITY_FORUM = "community_forum"
 
 class TicketStatus(Enum):
-    """Support ticket status"""
-    OPEN = "open"
+    """Support ticket status"""    OPEN = "open"
     IN_PROGRESS = "in_progress"
     WAITING_CUSTOMER = "waiting_customer"
     ESCALATED = "escalated"
@@ -99,8 +93,7 @@ class TicketStatus(Enum):
 
 @dataclass
 class SupportTicket:
-    """Support ticket data structure"""
-    ticket_id: str
+    """Support ticket data structure"""    ticket_id: str
     user_id: str
     category: SupportCategory
     priority: Priority
@@ -120,8 +113,7 @@ class SupportTicket:
 
 @dataclass
 class ConversationMessage:
-    """Individual conversation message"""
-    message_id: str
+    """Individual conversation message"""    message_id: str
     sender: str  # 'user', 'agent', 'system'
     content: str
     timestamp: datetime
@@ -129,8 +121,7 @@ class ConversationMessage:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class SupportAgent(BaseAgent):
-    """
-    Ultra-advanced AI customer support system with comprehensive assistance capabilities:
+    """    Ultra-advanced AI customer support system with comprehensive assistance capabilities:
     
     Core Features:
     - Intelligent conversation handling with context awareness
@@ -145,8 +136,7 @@ class SupportAgent(BaseAgent):
     - Integration with ticketing systems
     - Performance analytics and optimization
     - 24/7 availability with contextual responses
-    """
-    
+    """    
     def __init__(self, agent_id: str, config: Dict[str, Any] = None):
         super().__init__(
             agent_id=agent_id,
@@ -198,8 +188,7 @@ class SupportAgent(BaseAgent):
         ]
     
     async def _load_models_and_resources(self):
-        """Load AI models and support resources"""
-        try:
+        """Load AI models and support resources"""        try:
             # Load conversation models
             await self._load_conversation_models()
             
@@ -222,8 +211,7 @@ class SupportAgent(BaseAgent):
             raise
     
     async def _load_conversation_models(self):
-        """Load AI models for conversation handling"""
-        try:
+        """Load AI models for conversation handling"""        try:
             # Load conversational AI model
             model_name = "microsoft/DialoGPT-medium"
             self.conversation_model = AutoModelForCausalLM.from_pretrained(model_name)
@@ -243,8 +231,7 @@ class SupportAgent(BaseAgent):
             raise
     
     async def _setup_knowledge_base(self):
-        """Setup knowledge base with semantic search"""
-        try:
+        """Setup knowledge base with semantic search"""        try:
             # Load knowledge base articles
             knowledge_articles = await self.knowledge_base.load_articles()
             
@@ -267,8 +254,7 @@ class SupportAgent(BaseAgent):
             raise
     
     async def _setup_intent_classification(self):
-        """Setup intent classification for request routing"""
-        try:
+        """Setup intent classification for request routing"""        try:
             # Load intent classifier
             self.intent_classifier = pipeline(
                 "text-classification",
@@ -293,8 +279,7 @@ class SupportAgent(BaseAgent):
             raise
     
     async def _setup_sentiment_analysis(self):
-        """Setup sentiment analysis for conversation monitoring"""
-        try:
+        """Setup sentiment analysis for conversation monitoring"""        try:
             # Load sentiment analyzer
             self.sentiment_analyzer = pipeline(
                 "sentiment-analysis",
@@ -308,8 +293,7 @@ class SupportAgent(BaseAgent):
             raise
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main support processing pipeline"""
-        action = request.action
+        """Main support processing pipeline"""        action = request.action
         data = request.data
         
         try:
@@ -351,8 +335,7 @@ class SupportAgent(BaseAgent):
             )
     
     async def _handle_support_request(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle new support request"""
-        user_id = data.get('user_id')
+        """Handle new support request"""        user_id = data.get('user_id')
         message = data.get('message', '')
         channel = SupportChannel(data.get('channel', 'chat'))
         attachments = data.get('attachments', [])
@@ -410,8 +393,7 @@ class SupportAgent(BaseAgent):
         }
     
     async def _continue_conversation(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Continue ongoing conversation"""
-        ticket_id = data.get('ticket_id')
+        """Continue ongoing conversation"""        ticket_id = data.get('ticket_id')
         user_message = data.get('message', '')
         user_id = data.get('user_id')
         
@@ -471,8 +453,7 @@ class SupportAgent(BaseAgent):
         }
     
     async def _search_knowledge_base(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Search knowledge base for relevant information"""
-        query = data.get('query', '')
+        """Search knowledge base for relevant information"""        query = data.get('query', '')
         max_results = data.get('max_results', 5)
         threshold = data.get('similarity_threshold', 0.7)
         
@@ -519,8 +500,7 @@ class SupportAgent(BaseAgent):
         context: Dict[str, Any], 
         ticket: SupportTicket
     ) -> Dict[str, Any]:
-        """Generate contextual AI response"""
-        
+        """Generate contextual AI response"""        
         # Build conversation prompt
         conversation_history = context.get('conversation_history', [])
         
@@ -578,8 +558,7 @@ class SupportAgent(BaseAgent):
             return await self._generate_template_response(user_message, ticket)
     
     async def _analyze_intent(self, message: str) -> Dict[str, Any]:
-        """Analyze intent of user message"""
-        try:
+        """Analyze intent of user message"""        try:
             # Use zero-shot classification for intent detection
             candidate_labels = [intent.replace("_", " ") for intent in [intent.value for intent in SupportCategory]]
             
@@ -603,8 +582,7 @@ class SupportAgent(BaseAgent):
             }
     
     async def _analyze_sentiment(self, message: str) -> Dict[str, Any]:
-        """Analyze sentiment of user message"""
-        try:
+        """Analyze sentiment of user message"""        try:
             result = self.sentiment_analyzer(message)[0]
             
             # Map labels to standard sentiment categories
@@ -634,8 +612,7 @@ class SupportAgent(BaseAgent):
             }
     
     async def _categorize_request(self, message: str, intent_analysis: Dict[str, Any]) -> SupportCategory:
-        """Categorize support request"""
-        intent = intent_analysis.get('primary_intent', '').lower()
+        """Categorize support request"""        intent = intent_analysis.get('primary_intent', '').lower()
         
         # Intent to category mapping
         category_mappings = {
@@ -665,8 +642,7 @@ class SupportAgent(BaseAgent):
         return SupportCategory.GENERAL_INQUIRY
     
     def _ticket_to_dict(self, ticket: SupportTicket) -> Dict[str, Any]:
-        """Convert ticket to dictionary for API response"""
-        return {
+        """Convert ticket to dictionary for API response"""        return {
             'ticket_id': ticket.ticket_id,
             'user_id': ticket.user_id,
             'category': ticket.category.value,
@@ -685,8 +661,7 @@ class SupportAgent(BaseAgent):
         }
     
     def _load_escalation_rules(self) -> Dict[str, Any]:
-        """Load escalation rules configuration"""
-        return {
+        """Load escalation rules configuration"""        return {
             'sentiment_threshold': -0.7,  # Negative sentiment threshold
             'max_conversation_turns': 10,
             'keywords_requiring_human': [
@@ -701,8 +676,7 @@ class SupportAgent(BaseAgent):
         }
     
     def _setup_proactive_triggers(self) -> Dict[str, Any]:
-        """Setup proactive support triggers"""
-        return {
+        """Setup proactive support triggers"""        return {
             'failed_upload_attempts': 3,
             'login_failures': 5,
             'feature_struggle_time': 300,  # 5 minutes
@@ -711,8 +685,7 @@ class SupportAgent(BaseAgent):
         }
 
     async def _escalate_ticket(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Escalate ticket to human agent"""
-        ticket_id = data.get('ticket_id')
+        """Escalate ticket to human agent"""        ticket_id = data.get('ticket_id')
         escalation_reason = data.get('reason', 'Customer request')
         assigned_agent = data.get('assigned_agent')
         
@@ -751,8 +724,7 @@ class SupportAgent(BaseAgent):
         }
     
     async def _resolve_ticket(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Resolve support ticket"""
-        ticket_id = data.get('ticket_id')
+        """Resolve support ticket"""        ticket_id = data.get('ticket_id')
         resolution_notes = data.get('resolution_notes', '')
         customer_satisfaction = data.get('customer_satisfaction')
         
@@ -796,8 +768,7 @@ class SupportAgent(BaseAgent):
         }
     
     async def _get_support_analytics(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get comprehensive support analytics"""
-        date_range = data.get('date_range', 30)  # days
+        """Get comprehensive support analytics"""        date_range = data.get('date_range', 30)  # days
         include_trends = data.get('include_trends', True)
         
         # Get ticket statistics from database
@@ -821,8 +792,7 @@ class SupportAgent(BaseAgent):
         return combined_stats
     
     async def _provide_proactive_support(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Provide proactive support based on user behavior"""
-        user_id = data.get('user_id')
+        """Provide proactive support based on user behavior"""        user_id = data.get('user_id')
         trigger_type = data.get('trigger_type')
         context = data.get('context', {})
         
@@ -857,8 +827,7 @@ class SupportAgent(BaseAgent):
         }
     
     async def _onboard_user(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Provide user onboarding assistance"""
-        user_id = data.get('user_id')
+        """Provide user onboarding assistance"""        user_id = data.get('user_id')
         user_profile = data.get('user_profile', {})
         onboarding_step = data.get('step', 'welcome')
         
@@ -894,8 +863,7 @@ class SupportAgent(BaseAgent):
         }
     
     async def _troubleshoot_issue(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Provide automated troubleshooting assistance"""
-        issue_description = data.get('issue_description', '')
+        """Provide automated troubleshooting assistance"""        issue_description = data.get('issue_description', '')
         error_logs = data.get('error_logs', [])
         user_context = data.get('context', {})
         
@@ -928,8 +896,7 @@ class SupportAgent(BaseAgent):
         category: SupportCategory, 
         sentiment: Dict[str, Any]
     ) -> Priority:
-        """Determine ticket priority based on content and context"""
-        # Check for urgent keywords
+        """Determine ticket priority based on content and context"""        # Check for urgent keywords
         urgent_keywords = [
             'urgent', 'critical', 'emergency', 'down', 'broken',
             'can\'t access', 'payment failed', 'security', 'hack'
@@ -956,8 +923,7 @@ class SupportAgent(BaseAgent):
         message: str, 
         intent_analysis: Dict[str, Any]
     ) -> str:
-        """Generate a concise ticket subject"""
-        primary_intent = intent_analysis.get('primary_intent', 'General inquiry')
+        """Generate a concise ticket subject"""        primary_intent = intent_analysis.get('primary_intent', 'General inquiry')
         
         # Extract key phrases from message (simplified approach)
         words = message.split()[:10]  # First 10 words
@@ -971,8 +937,7 @@ class SupportAgent(BaseAgent):
         return subject[:100]  # Limit length
     
     async def _attempt_auto_resolution(self, ticket: SupportTicket) -> Dict[str, Any]:
-        """Attempt to automatically resolve common issues"""
-        message = ticket.description.lower()
+        """Attempt to automatically resolve common issues"""        message = ticket.description.lower()
         
         # Common issue patterns and solutions
         auto_solutions = {
@@ -1021,8 +986,7 @@ class SupportAgent(BaseAgent):
         return {'resolved': False}
     
     async def _suggest_user_actions(self, ticket: SupportTicket) -> List[str]:
-        """Suggest helpful actions for the user"""
-        category = ticket.category
+        """Suggest helpful actions for the user"""        category = ticket.category
         
         action_suggestions = {
             SupportCategory.TECHNICAL_ISSUE: [
@@ -1058,8 +1022,7 @@ class SupportAgent(BaseAgent):
         ])
     
     async def _estimate_resolution_time(self, ticket: SupportTicket) -> str:
-        """Estimate resolution time based on category and priority"""
-        time_estimates = {
+        """Estimate resolution time based on category and priority"""        time_estimates = {
             (SupportCategory.TECHNICAL_ISSUE, Priority.LOW): '2-4 hours',
             (SupportCategory.TECHNICAL_ISSUE, Priority.NORMAL): '1-2 hours', 
             (SupportCategory.TECHNICAL_ISSUE, Priority.HIGH): '30-60 minutes',
@@ -1075,8 +1038,7 @@ class SupportAgent(BaseAgent):
         )
     
     async def _find_similar_issues(self, ticket: SupportTicket) -> List[Dict[str, Any]]:
-        """Find similar resolved issues"""
-        # This would query the database for similar tickets
+        """Find similar resolved issues"""        # This would query the database for similar tickets
         # Simplified implementation for now
         similar_issues = []
         
@@ -1096,8 +1058,7 @@ class SupportAgent(BaseAgent):
         return similar_issues
     
     def _build_conversation_context(self, ticket: SupportTicket) -> Dict[str, Any]:
-        """Build conversation context for AI response generation"""
-        return {
+        """Build conversation context for AI response generation"""        return {
             'ticket_id': ticket.ticket_id,
             'category': ticket.category.value,
             'priority': ticket.priority.value,
@@ -1117,8 +1078,7 @@ class SupportAgent(BaseAgent):
         category: SupportCategory,
         metadata: Dict[str, Any]
     ) -> str:
-        """Build conversation prompt for AI model"""
-        # Build context-aware prompt
+        """Build conversation prompt for AI model"""        # Build context-aware prompt
         context_info = f"Category: {category.value.replace('_', ' ').title()}\n"
         
         # Add conversation history (last 5 messages)
@@ -1135,13 +1095,11 @@ class SupportAgent(BaseAgent):
 
 Current user message: {user_message}
 
-Please provide a helpful, professional response. Be concise but thorough. If you need more information, ask specific questions."""
-        
+Please provide a helpful, professional response. Be concise but thorough. If you need more information, ask specific questions."""        
         return prompt
     
     def _post_process_response(self, response: str, ticket: SupportTicket) -> str:
-        """Post-process AI-generated response"""
-        # Remove any unwanted patterns
+        """Post-process AI-generated response"""        # Remove any unwanted patterns
         response = response.strip()
         
         # Add helpful resources if relevant
@@ -1155,8 +1113,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         user_message: str, 
         category: SupportCategory
     ) -> List[Dict[str, Any]]:
-        """Find relevant help resources"""
-        resources = []
+        """Find relevant help resources"""        resources = []
         
         category_resources = {
             SupportCategory.CONTENT_UPLOAD: [
@@ -1184,8 +1141,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         user_message: str, 
         ticket: SupportTicket
     ) -> List[str]:
-        """Suggest next actions for the conversation"""
-        actions = []
+        """Suggest next actions for the conversation"""        actions = []
         
         if 'thank' in user_message.lower():
             actions.extend([
@@ -1213,8 +1169,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         user_message: str, 
         ticket: SupportTicket
     ) -> Dict[str, Any]:
-        """Generate template-based fallback response"""
-        templates = {
+        """Generate template-based fallback response"""        templates = {
             SupportCategory.TECHNICAL_ISSUE: "I understand you're experiencing a technical issue. Let me help you troubleshoot this step by step.",
             SupportCategory.CONTENT_UPLOAD: "I see you're having trouble with uploading content. Let's work through this together.",
             SupportCategory.BILLING_PAYMENT: "I'll help you resolve this billing concern. Let me check what options are available."
@@ -1241,8 +1196,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         ticket: SupportTicket, 
         sentiment: Dict[str, Any]
     ) -> bool:
-        """Check if ticket should be escalated"""
-        rules = self.escalation_rules
+        """Check if ticket should be escalated"""        rules = self.escalation_rules
         
         # Check sentiment threshold
         if (sentiment.get('sentiment') == 'negative' and 
@@ -1271,8 +1225,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         return False
     
     def _message_to_dict(self, message: ConversationMessage) -> Dict[str, Any]:
-        """Convert message object to dictionary"""
-        return {
+        """Convert message object to dictionary"""        return {
             'message_id': message.message_id,
             'sender': message.sender,
             'content': message.content,
@@ -1282,8 +1235,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         }
     
     async def _load_support_templates(self):
-        """Load support response templates"""
-        # This would load templates from database or files
+        """Load support response templates"""        # This would load templates from database or files
         self.response_templates = {
             'welcome': "Welcome to IA-Influencer-Agent support! How can I help you today?",
             'escalation': "I'm transferring you to a human agent who can better assist you.",
@@ -1294,8 +1246,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         logger.info("Support templates loaded")
     
     async def _generate_initial_response(self, ticket: SupportTicket) -> str:
-        """Generate initial response for new ticket"""
-        category_responses = {
+        """Generate initial response for new ticket"""        category_responses = {
             SupportCategory.TECHNICAL_ISSUE: f"Hi! I see you're experiencing a technical issue. I'm here to help you resolve this quickly. Let me analyze your request: '{ticket.description[:100]}...'",
             SupportCategory.CONTENT_UPLOAD: f"Hello! I understand you're having trouble with content upload. Let's get this sorted out for you right away.",
             SupportCategory.BILLING_PAYMENT: f"Hi there! I see you have a billing inquiry. I'm here to help resolve any payment-related concerns.",
@@ -1307,8 +1258,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         return category_responses.get(ticket.category, default_response)
     
     async def _calculate_trends(self, date_range: int) -> Dict[str, Any]:
-        """Calculate support trends over time"""
-        # This would calculate actual trends from historical data
+        """Calculate support trends over time"""        # This would calculate actual trends from historical data
         return {
             'ticket_volume_trend': 'increasing',
             'resolution_time_trend': 'improving',
@@ -1328,8 +1278,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         trigger_type: str, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate proactive support message"""
-        messages = {
+        """Generate proactive support message"""        messages = {
             'failed_upload_attempts': {
                 'content': "I noticed you've been having trouble uploading files. Would you like some assistance with the upload process?",
                 'recommendations': [
@@ -1366,8 +1315,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         user_profile: Dict[str, Any], 
         step: str
     ) -> Dict[str, Any]:
-        """Generate personalized onboarding content"""
-        user_type = user_profile.get('type', 'musician')  # musician, blogger, photographer, etc.
+        """Generate personalized onboarding content"""        user_type = user_profile.get('type', 'musician')  # musician, blogger, photographer, etc.
         
         onboarding_steps = {
             'welcome': {
@@ -1409,8 +1357,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         error_logs: List[str], 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze technical issue for troubleshooting"""
-        issue_keywords = {
+        """Analyze technical issue for troubleshooting"""        issue_keywords = {
             'upload_failure': ['upload', 'failed', 'error uploading', 'cannot upload'],
             'login_issue': ['login', 'sign in', 'authentication', 'password'],
             'performance_issue': ['slow', 'loading', 'timeout', 'lag'],
@@ -1450,8 +1397,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         self, 
         issue_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate step-by-step troubleshooting guide"""
-        primary_issue = issue_analysis.get('primary_issue', 'general_technical')
+        """Generate step-by-step troubleshooting guide"""        primary_issue = issue_analysis.get('primary_issue', 'general_technical')
         
         troubleshooting_guides = {
             'upload_failure': [
@@ -1534,8 +1480,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
         self, 
         issue_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Find related solutions from knowledge base"""
-        primary_issue = issue_analysis.get('primary_issue', '')
+        """Find related solutions from knowledge base"""        primary_issue = issue_analysis.get('primary_issue', '')
         
         # Search knowledge base for related articles
         if self.knowledge_base and primary_issue:
@@ -1559,8 +1504,7 @@ Please provide a helpful, professional response. Be concise but thorough. If you
 
 
 class SupportAgentManager:
-    """Manager for support agent instances with load balancing and health monitoring"""
-    
+    """Manager for support agent instances with load balancing and health monitoring"""    
     def __init__(self):
         self.agents: Dict[str, SupportAgent] = {}
         self.agent_health: Dict[str, Dict[str, Any]] = {}
@@ -1575,8 +1519,7 @@ class SupportAgentManager:
         agent_id: str, 
         config: Dict[str, Any] = None
     ) -> SupportAgent:
-        """Create new support agent with health monitoring"""
-        agent = SupportAgent(agent_id, config)
+        """Create new support agent with health monitoring"""        agent = SupportAgent(agent_id, config)
         await agent.initialize()
         
         self.agents[agent_id] = agent
@@ -1592,8 +1535,7 @@ class SupportAgentManager:
         return agent
     
     async def get_available_agent(self) -> Optional[SupportAgent]:
-        """Get available agent using load balancing"""
-        healthy_agents = [
+        """Get available agent using load balancing"""        healthy_agents = [
             agent_id for agent_id, health in self.agent_health.items()
             if health['status'] == 'healthy'
         ]
@@ -1608,15 +1550,13 @@ class SupportAgentManager:
         return self.agents[selected_agent_id]
     
     async def remove_agent(self, agent_id: str):
-        """Remove agent from manager"""
-        if agent_id in self.agents:
+        """Remove agent from manager"""        if agent_id in self.agents:
             del self.agents[agent_id]
             del self.agent_health[agent_id]
             logger.info(f"Removed support agent: {agent_id}")
     
     async def get_manager_stats(self) -> Dict[str, Any]:
-        """Get manager statistics"""
-        total_agents = len(self.agents)
+        """Get manager statistics"""        total_agents = len(self.agents)
         healthy_agents = sum(
             1 for health in self.agent_health.values()
             if health['status'] == 'healthy'
@@ -1636,12 +1576,10 @@ class SupportAgentManager:
         }
     
     def _initialize_load_balancer(self):
-        """Initialize load balancer"""
-        return RoundRobinLoadBalancer()
+        """Initialize load balancer"""        return RoundRobinLoadBalancer()
     
     async def _start_health_monitoring(self):
-        """Start periodic health monitoring"""
-        while True:
+        """Start periodic health monitoring"""        while True:
             try:
                 await self._check_agent_health()
                 await asyncio.sleep(self.health_check_interval)
@@ -1650,8 +1588,7 @@ class SupportAgentManager:
                 await asyncio.sleep(self.health_check_interval)
     
     async def _check_agent_health(self):
-        """Check health of all agents"""
-        current_time = datetime.now(timezone.utc)
+        """Check health of all agents"""        current_time = datetime.now(timezone.utc)
         
         for agent_id, agent in self.agents.items():
             try:
@@ -1671,8 +1608,7 @@ class SupportAgentManager:
                 self.agent_health[agent_id]['error_count'] += 1
     
     async def _perform_agent_health_check(self, agent: SupportAgent) -> Dict[str, Any]:
-        """Perform health check on individual agent"""
-        start_time = time.time()
+        """Perform health check on individual agent"""        start_time = time.time()
         
         # Simple ping test
         try:
@@ -1698,15 +1634,13 @@ class SupportAgentManager:
 
 
 class RoundRobinLoadBalancer:
-    """Simple round-robin load balancer"""
-    
+    """Simple round-robin load balancer"""    
     def __init__(self):
         self.current_index = 0
         self.request_count = 0
     
     def get_next_agent(self, agent_ids: List[str]) -> str:
-        """Get next agent using round-robin"""
-        if not agent_ids:
+        """Get next agent using round-robin"""        if not agent_ids:
             return None
         
         agent_id = agent_ids[self.current_index % len(agent_ids)]
@@ -1716,8 +1650,7 @@ class RoundRobinLoadBalancer:
         return agent_id
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get load balancer statistics"""
-        return {
+        """Get load balancer statistics"""        return {
             'total_requests': self.request_count,
             'current_index': self.current_index
         }

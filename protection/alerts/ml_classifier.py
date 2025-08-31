@@ -1,5 +1,4 @@
-"""
-🤖 ML Alert Classifier
+"""🤖 ML Alert Classifier
 =====================
 
 Machine Learning-powered alert classification and enhancement system.
@@ -8,7 +7,6 @@ Uses advanced ML models for automatic categorization, priority scoring, and risk
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 import pickle
@@ -38,16 +36,14 @@ from ...core.cache import CacheManager
 logger = logging.getLogger(__name__)
 
 class ModelType(str, Enum):
-    """ML model types."""
-    SEVERITY_CLASSIFIER = "severity_classifier"
+    """ML model types."""    SEVERITY_CLASSIFIER = "severity_classifier"
     RISK_ASSESSOR = "risk_assessor"
     PRIORITY_SCORER = "priority_scorer"
     CATEGORY_CLASSIFIER = "category_classifier"
     ANOMALY_DETECTOR = "anomaly_detector"
 
 class FeatureType(str, Enum):
-    """Feature extraction types."""
-    TEXT_FEATURES = "text_features"
+    """Feature extraction types."""    TEXT_FEATURES = "text_features"
     METADATA_FEATURES = "metadata_features"
     TEMPORAL_FEATURES = "temporal_features"
     PLATFORM_FEATURES = "platform_features"
@@ -55,8 +51,7 @@ class FeatureType(str, Enum):
 
 @dataclass
 class ClassificationResult:
-    """ML classification result."""
-    severity: str
+    """ML classification result."""    severity: str
     confidence_score: float
     risk_level: str
     priority_score: float
@@ -68,8 +63,7 @@ class ClassificationResult:
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics."""
-    accuracy: float
+    """Model performance metrics."""    accuracy: float
     precision: float
     recall: float
     f1_score: float
@@ -78,8 +72,7 @@ class ModelMetrics:
     model_version: str
 
 class FeatureExtractor:
-    """Extracts features from alerts for ML processing."""
-    
+    """Extracts features from alerts for ML processing."""    
     def __init__(self):
         self.text_vectorizer = TfidfVectorizer(
             max_features=1000,
@@ -91,8 +84,7 @@ class FeatureExtractor:
         self._is_fitted = False
     
     def extract_features(self, alert: Alert, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract comprehensive features from alert."""
-        features = {}
+        """Extract comprehensive features from alert."""        features = {}
         
         # Text features
         features.update(self._extract_text_features(alert))
@@ -112,8 +104,7 @@ class FeatureExtractor:
         return features
     
     def _extract_text_features(self, alert: Alert) -> Dict[str, Any]:
-        """Extract text-based features."""
-        text_content = f"{alert.title} {alert.description}"
+        """Extract text-based features."""        text_content = f"{alert.title} {alert.description}"
         
         features = {
             "text_length": len(text_content),
@@ -129,8 +120,7 @@ class FeatureExtractor:
         return features
     
     def _extract_metadata_features(self, alert: Alert) -> Dict[str, Any]:
-        """Extract metadata-based features."""
-        metadata = alert.metadata or {}
+        """Extract metadata-based features."""        metadata = alert.metadata or {}
         evidence = alert.evidence or {}
         
         features = {
@@ -147,8 +137,7 @@ class FeatureExtractor:
         return features
     
     def _extract_temporal_features(self, alert: Alert) -> Dict[str, Any]:
-        """Extract time-based features."""
-        now = datetime.utcnow()
+        """Extract time-based features."""        now = datetime.utcnow()
         created_at = alert.created_at or now
         
         features = {
@@ -162,8 +151,7 @@ class FeatureExtractor:
         return features
     
     def _extract_platform_features(self, alert: Alert) -> Dict[str, Any]:
-        """Extract platform-specific features."""
-        platform = alert.platform.lower()
+        """Extract platform-specific features."""        platform = alert.platform.lower()
         
         # Platform risk scores (configurable)
         platform_risk_scores = {
@@ -185,8 +173,7 @@ class FeatureExtractor:
         return features
     
     def _extract_user_features(self, alert: Alert, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract user-related features."""
-        user_id = alert.user_id
+        """Extract user-related features."""        user_id = alert.user_id
         
         # Get user history from context
         user_stats = context.get("user_stats", {})
@@ -203,24 +190,21 @@ class FeatureExtractor:
         return features
     
     def _has_urgent_keywords(self, text: str) -> bool:
-        """Check for urgent keywords."""
-        urgent_keywords = [
+        """Check for urgent keywords."""        urgent_keywords = [
             "urgent", "immediate", "emergency", "critical",
             "asap", "now", "quickly", "fast", "priority"
         ]
         return any(keyword in text.lower() for keyword in urgent_keywords)
     
     def _has_legal_keywords(self, text: str) -> bool:
-        """Check for legal keywords."""
-        legal_keywords = [
+        """Check for legal keywords."""        legal_keywords = [
             "copyright", "trademark", "dmca", "infringement",
             "lawsuit", "legal", "attorney", "court", "violation"
         ]
         return any(keyword in text.lower() for keyword in legal_keywords)
     
     def _analyze_sentiment(self, text: str) -> float:
-        """Analyze text sentiment (simplified)."""
-        # Simplified sentiment analysis
+        """Analyze text sentiment (simplified)."""        # Simplified sentiment analysis
         negative_words = ["bad", "terrible", "awful", "hate", "angry", "frustrated"]
         positive_words = ["good", "great", "excellent", "love", "happy", "satisfied"]
         
@@ -234,8 +218,7 @@ class FeatureExtractor:
         return (positive_count - negative_count) / (positive_count + negative_count)
     
     def _calculate_readability(self, text: str) -> float:
-        """Calculate text readability score (simplified)."""
-        words = text.split()
+        """Calculate text readability score (simplified)."""        words = text.split()
         if not words:
             return 0.0
         
@@ -243,8 +226,7 @@ class FeatureExtractor:
         return min(avg_word_length / 10.0, 1.0)  # Normalize to 0-1
     
     def _encode_categorical(self, value: str, category: str) -> int:
-        """Encode categorical values."""
-        if category not in self.label_encoders:
+        """Encode categorical values."""        if category not in self.label_encoders:
             self.label_encoders[category] = LabelEncoder()
         
         encoder = self.label_encoders[category]
@@ -264,8 +246,7 @@ class FeatureExtractor:
             return 0
 
 class SeverityClassifier:
-    """Classifies alert severity using ML."""
-    
+    """Classifies alert severity using ML."""    
     def __init__(self):
         self.model = RandomForestClassifier(
             n_estimators=100,
@@ -281,8 +262,7 @@ class SeverityClassifier:
         alert: Alert,
         context: Dict[str, Any]
     ) -> Tuple[str, float]:
-        """Predict alert severity."""
-        try:
+        """Predict alert severity."""        try:
             if not self.is_trained:
                 await self._load_pretrained_model()
             
@@ -306,8 +286,7 @@ class SeverityClassifier:
             return "medium", 0.5
     
     async def train_model(self, training_data: List[Dict[str, Any]]) -> ModelMetrics:
-        """Train the severity classification model."""
-        try:
+        """Train the severity classification model."""        try:
             if not training_data:
                 raise ValueError("No training data provided")
             
@@ -351,8 +330,7 @@ class SeverityClassifier:
             raise
     
     def _prepare_feature_vector(self, features: Dict[str, Any]) -> List[float]:
-        """Prepare feature vector for prediction."""
-        # Define expected feature order
+        """Prepare feature vector for prediction."""        # Define expected feature order
         feature_order = [
             "text_length", "word_count", "title_length", "description_length",
             "has_urgent_keywords", "has_legal_keywords", "sentiment_score",
@@ -379,8 +357,7 @@ class SeverityClassifier:
         return vector
     
     def _prepare_training_data(self, training_data: List[Dict[str, Any]]) -> Tuple[np.ndarray, np.ndarray]:
-        """Prepare training data for model."""
-        X = []
+        """Prepare training data for model."""        X = []
         y = []
         
         for data_point in training_data:
@@ -404,8 +381,7 @@ class SeverityClassifier:
         return np.array(X), np.array(y)
     
     async def _load_pretrained_model(self) -> None:
-        """Load pretrained model if available."""
-        try:
+        """Load pretrained model if available."""        try:
             model_path = Path(settings.ML_MODELS_PATH) / "severity_classifier.pkl"
             
             if model_path.exists():
@@ -427,8 +403,7 @@ class SeverityClassifier:
             await self._initialize_heuristic_model()
     
     async def _save_model(self) -> None:
-        """Save trained model."""
-        try:
+        """Save trained model."""        try:
             model_path = Path(settings.ML_MODELS_PATH) / "severity_classifier.pkl"
             model_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -448,14 +423,12 @@ class SeverityClassifier:
             logger.error("Failed to save model: %s", str(e))
     
     async def _initialize_heuristic_model(self) -> None:
-        """Initialize simple heuristic-based model."""
-        # This would be a fallback implementation
+        """Initialize simple heuristic-based model."""        # This would be a fallback implementation
         self.is_trained = True
         logger.info("Initialized heuristic severity classifier")
 
 class RiskAssessor:
-    """Assesses risk level of alerts."""
-    
+    """Assesses risk level of alerts."""    
     def __init__(self):
         self.risk_factors = {
             "confidence_score": 0.3,
@@ -466,8 +439,7 @@ class RiskAssessor:
         }
     
     async def assess_risk(self, alert: Alert, context: Dict[str, Any]) -> Tuple[str, float]:
-        """Assess risk level of alert."""
-        try:
+        """Assess risk level of alert."""        try:
             risk_score = 0.0
             
             # Confidence score factor
@@ -515,8 +487,7 @@ class RiskAssessor:
             return "medium", 0.5
     
     def _get_platform_risk(self, platform: str) -> float:
-        """Get platform-specific risk score."""
-        platform_risks = {
+        """Get platform-specific risk score."""        platform_risks = {
             "youtube": 0.8,
             "instagram": 0.7,
             "tiktok": 0.9,
@@ -528,8 +499,7 @@ class RiskAssessor:
         return platform_risks.get(platform.lower(), 0.5)
     
     def _get_violation_type_risk(self, violation_type: str) -> float:
-        """Get violation type risk score."""
-        violation_risks = {
+        """Get violation type risk score."""        violation_risks = {
             "copyright": 0.9,
             "trademark": 0.8,
             "impersonation": 0.7,
@@ -540,8 +510,7 @@ class RiskAssessor:
         return violation_risks.get(violation_type.lower(), 0.5)
     
     def _assess_evidence_quality(self, evidence: Dict[str, Any]) -> float:
-        """Assess quality of evidence."""
-        if not evidence:
+        """Assess quality of evidence."""        if not evidence:
             return 0.2
         
         quality_score = 0.0
@@ -565,8 +534,7 @@ class RiskAssessor:
         return min(quality_score, 1.0)
     
     def _assess_user_risk(self, user_stats: Dict[str, Any]) -> float:
-        """Assess user-specific risk factors."""
-        if not user_stats:
+        """Assess user-specific risk factors."""        if not user_stats:
             return 0.5
         
         # High success rate = lower risk
@@ -584,10 +552,8 @@ class RiskAssessor:
         return min(max(risk_score, 0.0), 1.0)
 
 class AlertMLClassifier:
-    """
-    Main ML classifier for alert processing.
-    """
-    
+    """    Main ML classifier for alert processing.
+    """    
     def __init__(self, cache_manager: CacheManager):
         self.cache_manager = cache_manager
         self.severity_classifier = SeverityClassifier()
@@ -606,8 +572,7 @@ class AlertMLClassifier:
         description: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Classify and enhance alert using ML models.
+        """        Classify and enhance alert using ML models.
         
         Args:
             alert_type: Type of alert
@@ -617,8 +582,7 @@ class AlertMLClassifier:
             
         Returns:
             Enhanced alert data with ML predictions
-        """
-        try:
+        """        try:
             # Create temporary alert object for classification
             alert = Alert(
                 id="temp",
@@ -693,8 +657,7 @@ class AlertMLClassifier:
             }
 
     async def train_models(self, training_data: Dict[str, List[Dict[str, Any]]]) -> Dict[str, ModelMetrics]:
-        """Train all ML models."""
-        results = {}
+        """Train all ML models."""        results = {}
         
         try:
             # Train severity classifier
@@ -713,12 +676,10 @@ class AlertMLClassifier:
             raise
 
     async def get_model_metrics(self) -> Dict[str, ModelMetrics]:
-        """Get current model performance metrics."""
-        return self.metrics.copy()
+        """Get current model performance metrics."""        return self.metrics.copy()
 
     async def _get_user_context(self, user_id: str) -> Dict[str, Any]:
-        """Get user context for classification."""
-        try:
+        """Get user context for classification."""        try:
             # Check cache first
             cache_key = f"user_context:{user_id}"
             cached_context = await self.cache_manager.get(cache_key)
@@ -749,8 +710,7 @@ class AlertMLClassifier:
             return {"user_stats": {}}
 
     async def _generate_tags(self, alert: Alert, context: Dict[str, Any]) -> List[str]:
-        """Generate relevant tags for alert."""
-        tags = []
+        """Generate relevant tags for alert."""        tags = []
         
         # Platform tag
         tags.append(f"platform:{alert.platform}")
@@ -786,8 +746,7 @@ class AlertMLClassifier:
         risk_score: float,
         context: Dict[str, Any]
     ) -> float:
-        """Calculate priority score for alert."""
-        # Base score from severity
+        """Calculate priority score for alert."""        # Base score from severity
         severity_scores = {"low": 0.2, "medium": 0.5, "high": 0.8, "critical": 1.0}
         base_score = severity_scores.get(severity, 0.5)
         
@@ -814,8 +773,7 @@ class AlertMLClassifier:
         risk_level: str,
         context: Dict[str, Any]
     ) -> str:
-        """Generate human-readable explanation for classification."""
-        explanation_parts = []
+        """Generate human-readable explanation for classification."""        explanation_parts = []
         
         explanation_parts.append(f"Classified as {severity} severity")
         explanation_parts.append(f"with {risk_level} risk level")

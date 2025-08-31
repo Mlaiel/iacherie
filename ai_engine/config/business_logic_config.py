@@ -1,5 +1,4 @@
-"""
-Business Logic Configuration Module
+"""Business Logic Configuration Module
 
 Advanced business workflow configuration for the IA Influencer Agent platform.
 Complete content creation pipeline from multi-format upload to monetization.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -25,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of content creators supported"""
-    MUSICIAN = "musician"
+    """Types of content creators supported"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -37,8 +34,7 @@ class CreatorType(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    # Audio formats
+    """Supported content formats"""    # Audio formats
     AUDIO_MP3 = "audio/mp3"
     AUDIO_WAV = "audio/wav"
     AUDIO_FLAC = "audio/flac"
@@ -67,8 +63,7 @@ class ContentFormat(Enum):
 
 
 class WorkflowStage(Enum):
-    """Business workflow stages"""
-    UPLOAD = "upload"
+    """Business workflow stages"""    UPLOAD = "upload"
     PROCESSING = "processing"
     AI_ANALYSIS = "ai_analysis"
     PROTECTION = "protection"
@@ -82,8 +77,7 @@ class WorkflowStage(Enum):
 
 
 class PlatformType(Enum):
-    """Distribution platforms"""
-    # Social Media
+    """Distribution platforms"""    # Social Media
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -117,8 +111,7 @@ class PlatformType(Enum):
 
 @dataclass
 class ContentProcessingPipeline:
-    """Configuration for content processing pipeline"""
-    enabled: bool = True
+    """Configuration for content processing pipeline"""    enabled: bool = True
     
     # Upload stage
     max_file_size_mb: int = 500
@@ -164,8 +157,7 @@ class ContentProcessingPipeline:
 
 @dataclass
 class CollaborationMatchingConfig:
-    """Configuration for AI-powered collaboration matching"""
-    enabled: bool = True
+    """Configuration for AI-powered collaboration matching"""    enabled: bool = True
     
     # Matching algorithms
     semantic_matching: bool = True
@@ -203,8 +195,7 @@ class CollaborationMatchingConfig:
 
 @dataclass
 class MonetizationWorkflowConfig:
-    """Advanced monetization workflow configuration"""
-    enabled: bool = True
+    """Advanced monetization workflow configuration"""    enabled: bool = True
     
     # Revenue tracking
     real_time_tracking: bool = True
@@ -241,8 +232,7 @@ class MonetizationWorkflowConfig:
 
 @dataclass
 class QualityAssessmentConfig:
-    """AI-powered quality assessment configuration"""
-    enabled: bool = True
+    """AI-powered quality assessment configuration"""    enabled: bool = True
     
     # Assessment criteria
     technical_quality_weight: float = 0.3
@@ -277,8 +267,7 @@ class QualityAssessmentConfig:
 
 @dataclass
 class DistributionConfig:
-    """Multi-platform distribution configuration"""
-    enabled: bool = True
+    """Multi-platform distribution configuration"""    enabled: bool = True
     
     # Platform scheduling
     optimal_timing_analysis: bool = True
@@ -312,8 +301,7 @@ class DistributionConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Advanced analytics and monitoring configuration"""
-    enabled: bool = True
+    """Advanced analytics and monitoring configuration"""    enabled: bool = True
     
     # Data collection
     user_behavior_tracking: bool = True
@@ -348,8 +336,7 @@ class AnalyticsConfig:
 
 @dataclass
 class BusinessLogicConfig:
-    """Master business logic configuration"""
-    
+    """Master business logic configuration"""    
     # Core settings
     enabled: bool = True
     workflow_automation: bool = True
@@ -382,8 +369,7 @@ class BusinessLogicConfig:
     dmca_compliance: bool = True
     
     def get_workflow_for_creator(self, creator_type: CreatorType) -> Dict[str, Any]:
-        """Get optimized workflow configuration for specific creator type"""
-        
+        """Get optimized workflow configuration for specific creator type"""        
         workflows = {
             CreatorType.MUSICIAN: {
                 "priority_stages": [
@@ -453,8 +439,7 @@ class BusinessLogicConfig:
         return workflows.get(creator_type, workflows[CreatorType.INFLUENCER])
     
     def validate_configuration(self) -> List[str]:
-        """Validate business logic configuration"""
-        issues = []
+        """Validate business logic configuration"""        issues = []
         
         # Validate workflow components
         if not self.content_pipeline.enabled:

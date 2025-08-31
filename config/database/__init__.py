@@ -14,8 +14,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from .postgresql_config import PostgreSQLConfig
+"""from .postgresql_config import PostgreSQLConfig
 try:
     from .mongodb_config import MongoDBConfig  
 except ImportError:

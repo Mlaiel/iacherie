@@ -1,5 +1,4 @@
-"""
-Enterprise Platform Configuration Manager
+"""Enterprise Platform Configuration Manager
 
 Advanced configuration management for platform-specific crawling
 with dynamic settings and intelligent optimization.
@@ -12,7 +11,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
 """
-
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -35,8 +33,7 @@ from ..core.exceptions import (
 
 
 class PlatformType(Enum):
-    """Supported crawling platforms."""
-    YOUTUBE = 'youtube'
+    """Supported crawling platforms."""    YOUTUBE = 'youtube'
     TIKTOK = 'tiktok'
     INSTAGRAM = 'instagram'
     TWITTER = 'twitter'
@@ -44,8 +41,7 @@ class PlatformType(Enum):
 
 
 class DefaultConfigurations:
-    """Default configurations for each platform."""
-    
+    """Default configurations for each platform."""    
     YOUTUBE = {
         'api_version': 'v3',
         'rate_limit_requests_per_hour': 10000,
@@ -201,8 +197,7 @@ class DefaultConfigurations:
 
 
 class PlatformConfigManager(DatabaseManager):
-    """
-    Enterprise-grade platform configuration manager.
+    """    Enterprise-grade platform configuration manager.
     
     Handles:
     - Platform-specific crawling configurations
@@ -210,16 +205,13 @@ class PlatformConfigManager(DatabaseManager):
     - Performance optimization settings
     - Anti-detection measures
     - Configuration versioning and rollback
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize platform configuration manager.
+        """        Initialize platform configuration manager.
         
         Args:
             db_session: SQLAlchemy database session
-        """
-        super().__init__(db_session)
+        """        super().__init__(db_session)
         self.table = PlatformConfig
         self.default_configs = {
             PlatformType.YOUTUBE.value: DefaultConfigurations.YOUTUBE,
@@ -235,8 +227,7 @@ class PlatformConfigManager(DatabaseManager):
         config_overrides: Optional[Dict[str, Any]] = None,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive configuration for platform with overrides.
+        """        Get comprehensive configuration for platform with overrides.
         
         Args:
             platform: Target platform
@@ -249,8 +240,7 @@ class PlatformConfigManager(DatabaseManager):
         Raises:
             ValidationError: If platform not supported
             ConfigurationError: If configuration invalid
-        """
-        try:
+        """        try:
             # Validate platform
             if platform not in [p.value for p in PlatformType]:
                 raise ValidationError(f"Unsupported platform: {platform}")
@@ -293,19 +283,16 @@ class PlatformConfigManager(DatabaseManager):
             raise ConfigurationError(f"Failed to get configuration: {str(e)}")
     
     async def _get_stored_platform_config(self, platform: str) -> Optional[Dict[str, Any]]:
-        """
-        Get stored platform configuration from database.
+        """        Get stored platform configuration from database.
         
         Args:
             platform: Target platform
             
         Returns:
             Dict containing stored configuration or None
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                SELECT config_data FROM platform_configs
+                text("""                SELECT config_data FROM platform_configs
                 WHERE platform = :platform
                   AND scope = :platform_scope
                   AND is_active = true
@@ -332,8 +319,7 @@ class PlatformConfigManager(DatabaseManager):
         platform: str,
         user_id: str
     ) -> Optional[Dict[str, Any]]:
-        """
-        Get user-specific platform configuration.
+        """        Get user-specific platform configuration.
         
         Args:
             platform: Target platform
@@ -341,11 +327,9 @@ class PlatformConfigManager(DatabaseManager):
             
         Returns:
             Dict containing user configuration or None
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                SELECT config_data FROM platform_configs
+                text("""                SELECT config_data FROM platform_configs
                 WHERE platform = :platform
                   AND scope = :user_scope
                   AND user_id = :user_id
@@ -374,8 +358,7 @@ class PlatformConfigManager(DatabaseManager):
         base_config: Dict[str, Any],
         override_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Recursively merge configuration dictionaries.
+        """        Recursively merge configuration dictionaries.
         
         Args:
             base_config: Base configuration
@@ -383,8 +366,7 @@ class PlatformConfigManager(DatabaseManager):
             
         Returns:
             Merged configuration
-        """
-        result = base_config.copy()
+        """        result = base_config.copy()
         
         for key, value in override_config.items():
             if key in result and isinstance(result[key], dict) and isinstance(value, dict):
@@ -399,8 +381,7 @@ class PlatformConfigManager(DatabaseManager):
         platform: str,
         config: Dict[str, Any]
     ) -> None:
-        """
-        Validate platform configuration for completeness and correctness.
+        """        Validate platform configuration for completeness and correctness.
         
         Args:
             platform: Target platform
@@ -408,8 +389,7 @@ class PlatformConfigManager(DatabaseManager):
             
         Raises:
             ConfigurationError: If configuration is invalid
-        """
-        try:
+        """        try:
             # Required fields for all platforms
             required_fields = [
                 'rate_limit_requests_per_hour',
@@ -454,19 +434,16 @@ class PlatformConfigManager(DatabaseManager):
             raise ConfigurationError(f"Configuration validation failed: {str(e)}")
     
     async def _get_config_version(self, platform: str) -> str:
-        """
-        Get current configuration version for platform.
+        """        Get current configuration version for platform.
         
         Args:
             platform: Target platform
             
         Returns:
             Configuration version string
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                SELECT MAX(version) as latest_version
+                text("""                SELECT MAX(version) as latest_version
                 FROM platform_configs
                 WHERE platform = :platform
                   AND scope = :platform_scope
@@ -490,8 +467,7 @@ class PlatformConfigManager(DatabaseManager):
         user_id: Optional[str] = None,
         description: Optional[str] = None
     ) -> str:
-        """
-        Update platform configuration with new settings.
+        """        Update platform configuration with new settings.
         
         Args:
             platform: Target platform
@@ -504,8 +480,7 @@ class PlatformConfigManager(DatabaseManager):
             
         Raises:
             ValidationError: If platform or updates invalid
-        """
-        try:
+        """        try:
             # Validate platform
             if platform not in [p.value for p in PlatformType]:
                 raise ValidationError(f"Unsupported platform: {platform}")
@@ -565,8 +540,7 @@ class PlatformConfigManager(DatabaseManager):
         scope: str,
         user_id: Optional[str]
     ) -> int:
-        """
-        Get next version number for configuration.
+        """        Get next version number for configuration.
         
         Args:
             platform: Target platform
@@ -575,19 +549,16 @@ class PlatformConfigManager(DatabaseManager):
             
         Returns:
             Next version number
-        """
-        try:
+        """        try:
             query_params = {
                 'platform': platform,
                 'scope': scope
             }
             
-            query = """
-            SELECT MAX(version) as latest_version
+            query = """            SELECT MAX(version) as latest_version
             FROM platform_configs
             WHERE platform = :platform AND scope = :scope
-            """
-            
+            """            
             if user_id:
                 query += " AND user_id = :user_id"
                 query_params['user_id'] = user_id
@@ -608,27 +579,23 @@ class PlatformConfigManager(DatabaseManager):
         scope: str,
         user_id: Optional[str]
     ) -> None:
-        """
-        Deactivate previous configuration versions.
+        """        Deactivate previous configuration versions.
         
         Args:
             platform: Target platform
             scope: Configuration scope
             user_id: Optional user identifier
-        """
-        try:
+        """        try:
             query_params = {
                 'platform': platform,
                 'scope': scope,
                 'now': datetime.utcnow()
             }
             
-            query = """
-            UPDATE platform_configs 
+            query = """            UPDATE platform_configs 
             SET is_active = false, updated_at = :now
             WHERE platform = :platform AND scope = :scope AND is_active = true
-            """
-            
+            """            
             if user_id:
                 query += " AND user_id = :user_id"
                 query_params['user_id'] = user_id
@@ -646,8 +613,7 @@ class PlatformConfigManager(DatabaseManager):
         user_id: Optional[str] = None,
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """
-        Get configuration change history for platform.
+        """        Get configuration change history for platform.
         
         Args:
             platform: Target platform
@@ -656,20 +622,17 @@ class PlatformConfigManager(DatabaseManager):
             
         Returns:
             List of configuration history records
-        """
-        try:
+        """        try:
             query_params = {
                 'platform': platform,
                 'limit': limit
             }
             
-            query = """
-            SELECT config_id, version, description, is_active,
+            query = """            SELECT config_id, version, description, is_active,
                    created_at, updated_at, scope, user_id
             FROM platform_configs
             WHERE platform = :platform
-            """
-            
+            """            
             if user_id:
                 query += " AND user_id = :user_id"
                 query_params['user_id'] = user_id
@@ -701,8 +664,7 @@ class PlatformConfigManager(DatabaseManager):
         target_version: int,
         user_id: Optional[str] = None
     ) -> bool:
-        """
-        Rollback configuration to specific version.
+        """        Rollback configuration to specific version.
         
         Args:
             platform: Target platform
@@ -711,8 +673,7 @@ class PlatformConfigManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             scope = ConfigScope.USER.value if user_id else ConfigScope.PLATFORM.value
             
             # Get target configuration
@@ -722,11 +683,9 @@ class PlatformConfigManager(DatabaseManager):
                 'version': target_version
             }
             
-            query = """
-            SELECT config_data FROM platform_configs
+            query = """            SELECT config_data FROM platform_configs
             WHERE platform = :platform AND scope = :scope AND version = :version
-            """
-            
+            """            
             if user_id:
                 query += " AND user_id = :user_id"
                 query_params['user_id'] = user_id
@@ -755,13 +714,11 @@ class PlatformConfigManager(DatabaseManager):
             raise DatabaseError(f"Failed to rollback configuration: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check of configuration system.
+        """        Perform health check of configuration system.
         
         Returns:
             Dict containing health status
-        """
-        try:
+        """        try:
             # Check configuration completeness for all platforms
             platform_status = {}
             

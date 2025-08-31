@@ -1,5 +1,4 @@
-"""
-Cache Invalidation Engine - Intelligent Cache Invalidation System
+"""Cache Invalidation Engine - Intelligent Cache Invalidation System
 
 Advanced cache invalidation providing smart invalidation strategies,
 event-driven triggers, and automated cleanup mechanisms.
@@ -7,7 +6,6 @@ event-driven triggers, and automated cleanup mechanisms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -23,8 +21,7 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class InvalidationTrigger(Enum):
-    """Types of invalidation triggers"""
-    TTL_EXPIRED = "ttl_expired"
+    """Types of invalidation triggers"""    TTL_EXPIRED = "ttl_expired"
     MANUAL_REQUEST = "manual_request"
     TAG_BASED = "tag_based"
     PATTERN_BASED = "pattern_based"
@@ -36,8 +33,7 @@ class InvalidationTrigger(Enum):
     CACHE_COHERENCE = "cache_coherence"
 
 class InvalidationPriority(Enum):
-    """Priority levels for invalidation operations"""
-    IMMEDIATE = 1
+    """Priority levels for invalidation operations"""    IMMEDIATE = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -45,8 +41,7 @@ class InvalidationPriority(Enum):
 
 @dataclass
 class InvalidationEvent:
-    """Invalidation event with comprehensive metadata"""
-    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Invalidation event with comprehensive metadata"""    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     trigger: InvalidationTrigger = InvalidationTrigger.MANUAL_REQUEST
     priority: InvalidationPriority = InvalidationPriority.NORMAL
     keys: List[str] = field(default_factory=list)
@@ -65,8 +60,7 @@ class InvalidationEvent:
 
 @dataclass
 class InvalidationRule:
-    """Configurable invalidation rule"""
-    rule_id: str
+    """Configurable invalidation rule"""    rule_id: str
     name: str
     description: str
     trigger_conditions: Dict[str, Any]
@@ -79,16 +73,14 @@ class InvalidationRule:
     execution_count: int = 0
 
 class InvalidationStrategy(ABC):
-    """Abstract base class for invalidation strategies"""
-    
+    """Abstract base class for invalidation strategies"""    
     @abstractmethod
     async def should_invalidate(
         self, 
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> bool:
-        """Determine if invalidation should proceed"""
-        pass
+        """Determine if invalidation should proceed"""        pass
     
     @abstractmethod
     async def get_invalidation_candidates(
@@ -96,8 +88,7 @@ class InvalidationStrategy(ABC):
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> List[str]:
-        """Get list of cache keys to invalidate"""
-        pass
+        """Get list of cache keys to invalidate"""        pass
     
     @abstractmethod
     async def post_invalidation_actions(
@@ -105,27 +96,23 @@ class InvalidationStrategy(ABC):
         event: InvalidationEvent,
         invalidated_keys: List[str]
     ):
-        """Actions to perform after invalidation"""
-        pass
+        """Actions to perform after invalidation"""        pass
 
 class TTLInvalidationStrategy(InvalidationStrategy):
-    """Time-To-Live based invalidation strategy"""
-    
+    """Time-To-Live based invalidation strategy"""    
     async def should_invalidate(
         self,
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> bool:
-        """Always proceed with TTL invalidation"""
-        return True
+        """Always proceed with TTL invalidation"""        return True
     
     async def get_invalidation_candidates(
         self,
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> List[str]:
-        """Find expired cache entries"""
-        candidates = []
+        """Find expired cache entries"""        candidates = []
         current_time = datetime.utcnow()
         
         for key, entry in cache_entries.items():
@@ -141,20 +128,17 @@ class TTLInvalidationStrategy(InvalidationStrategy):
         event: InvalidationEvent,
         invalidated_keys: List[str]
     ):
-        """Log TTL-based invalidations"""
-        if invalidated_keys:
+        """Log TTL-based invalidations"""        if invalidated_keys:
             logger.info(f"TTL invalidation completed: {len(invalidated_keys)} entries expired")
 
 class TagBasedInvalidation(InvalidationStrategy):
-    """Tag-based cache invalidation strategy"""
-    
+    """Tag-based cache invalidation strategy"""    
     def __init__(self):
         self.tag_dependencies: Dict[str, Set[str]] = {}  # tag -> set of keys
         self.key_tags: Dict[str, Set[str]] = {}  # key -> set of tags
     
     def register_key_tags(self, key: str, tags: Set[str]):
-        """Register tags for a cache key"""
-        self.key_tags[key] = tags
+        """Register tags for a cache key"""        self.key_tags[key] = tags
         
         for tag in tags:
             if tag not in self.tag_dependencies:
@@ -162,8 +146,7 @@ class TagBasedInvalidation(InvalidationStrategy):
             self.tag_dependencies[tag].add(key)
     
     def unregister_key(self, key: str):
-        """Remove key from tag tracking"""
-        if key in self.key_tags:
+        """Remove key from tag tracking"""        if key in self.key_tags:
             for tag in self.key_tags[key]:
                 if tag in self.tag_dependencies:
                     self.tag_dependencies[tag].discard(key)
@@ -174,16 +157,14 @@ class TagBasedInvalidation(InvalidationStrategy):
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> bool:
-        """Proceed if we have tags to invalidate"""
-        return bool(event.tags)
+        """Proceed if we have tags to invalidate"""        return bool(event.tags)
     
     async def get_invalidation_candidates(
         self,
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> List[str]:
-        """Find cache entries matching specified tags"""
-        candidates = set()
+        """Find cache entries matching specified tags"""        candidates = set()
         
         for tag in event.tags:
             if tag in self.tag_dependencies:
@@ -197,22 +178,19 @@ class TagBasedInvalidation(InvalidationStrategy):
         event: InvalidationEvent,
         invalidated_keys: List[str]
     ):
-        """Clean up tag tracking for invalidated keys"""
-        for key in invalidated_keys:
+        """Clean up tag tracking for invalidated keys"""        for key in invalidated_keys:
             self.unregister_key(key)
         
         logger.info(f"Tag-based invalidation completed: {len(invalidated_keys)} entries for tags {event.tags}")
 
 class TimeBasedInvalidation(InvalidationStrategy):
-    """Time-based invalidation with advanced scheduling"""
-    
+    """Time-based invalidation with advanced scheduling"""    
     def __init__(self):
         self.scheduled_invalidations: Dict[str, datetime] = {}
         self.recurring_schedules: Dict[str, Dict[str, Any]] = {}
     
     def schedule_invalidation(self, key: str, scheduled_time: datetime):
-        """Schedule a key for future invalidation"""
-        self.scheduled_invalidations[key] = scheduled_time
+        """Schedule a key for future invalidation"""        self.scheduled_invalidations[key] = scheduled_time
     
     def schedule_recurring_invalidation(
         self,
@@ -220,8 +198,7 @@ class TimeBasedInvalidation(InvalidationStrategy):
         interval_seconds: int,
         start_time: Optional[datetime] = None
     ):
-        """Schedule recurring invalidation for key pattern"""
-        schedule_id = f"recurring_{pattern}_{int(time.time())}"
+        """Schedule recurring invalidation for key pattern"""        schedule_id = f"recurring_{pattern}_{int(time.time())}"
         self.recurring_schedules[schedule_id] = {
             'pattern': pattern,
             'interval': interval_seconds,
@@ -234,8 +211,7 @@ class TimeBasedInvalidation(InvalidationStrategy):
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> bool:
-        """Check if it's time for scheduled invalidations"""
-        current_time = datetime.utcnow()
+        """Check if it's time for scheduled invalidations"""        current_time = datetime.utcnow()
         
         # Check for due scheduled invalidations
         for key, scheduled_time in list(self.scheduled_invalidations.items()):
@@ -257,8 +233,7 @@ class TimeBasedInvalidation(InvalidationStrategy):
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> List[str]:
-        """Get keys due for time-based invalidation"""
-        candidates = []
+        """Get keys due for time-based invalidation"""        candidates = []
         current_time = datetime.utcnow()
         
         # Process scheduled invalidations
@@ -290,31 +265,26 @@ class TimeBasedInvalidation(InvalidationStrategy):
         event: InvalidationEvent,
         invalidated_keys: List[str]
     ):
-        """Log time-based invalidations"""
-        logger.info(f"Time-based invalidation completed: {len(invalidated_keys)} entries")
+        """Log time-based invalidations"""        logger.info(f"Time-based invalidation completed: {len(invalidated_keys)} entries")
 
 class EventDrivenInvalidation(InvalidationStrategy):
-    """Event-driven invalidation based on application events"""
-    
+    """Event-driven invalidation based on application events"""    
     def __init__(self):
         self.event_handlers: Dict[str, Callable] = {}
         self.dependency_graph: Dict[str, Set[str]] = {}  # key -> dependent keys
         
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register handler for specific event type"""
-        self.event_handlers[event_type] = handler
+        """Register handler for specific event type"""        self.event_handlers[event_type] = handler
     
     def register_dependency(self, key: str, dependent_keys: Set[str]):
-        """Register cache dependencies"""
-        self.dependency_graph[key] = dependent_keys
+        """Register cache dependencies"""        self.dependency_graph[key] = dependent_keys
     
     async def should_invalidate(
         self,
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> bool:
-        """Check if event should trigger invalidation"""
-        event_type = event.metadata.get('event_type')
+        """Check if event should trigger invalidation"""        event_type = event.metadata.get('event_type')
         return event_type in self.event_handlers
     
     async def get_invalidation_candidates(
@@ -322,8 +292,7 @@ class EventDrivenInvalidation(InvalidationStrategy):
         event: InvalidationEvent,
         cache_entries: Dict[str, Any]
     ) -> List[str]:
-        """Get candidates based on event and dependencies"""
-        candidates = set()
+        """Get candidates based on event and dependencies"""        candidates = set()
         event_type = event.metadata.get('event_type')
         
         if event_type in self.event_handlers:
@@ -343,19 +312,16 @@ class EventDrivenInvalidation(InvalidationStrategy):
         event: InvalidationEvent,
         invalidated_keys: List[str]
     ):
-        """Clean up dependencies for invalidated keys"""
-        for key in invalidated_keys:
+        """Clean up dependencies for invalidated keys"""        for key in invalidated_keys:
             if key in self.dependency_graph:
                 del self.dependency_graph[key]
         
         logger.info(f"Event-driven invalidation completed: {len(invalidated_keys)} entries")
 
 class InvalidationEngine:
-    """
-    Advanced cache invalidation engine orchestrating multiple strategies
+    """    Advanced cache invalidation engine orchestrating multiple strategies
     and providing comprehensive invalidation capabilities.
-    """
-    
+    """    
     def __init__(self):
         self.strategies: Dict[InvalidationTrigger, InvalidationStrategy] = {
             InvalidationTrigger.TTL_EXPIRED: TTLInvalidationStrategy(),
@@ -378,13 +344,11 @@ class InvalidationEngine:
         self.cache_access_callback: Optional[Callable] = None
         
     async def initialize(self):
-        """Initialize invalidation engine"""
-        self.processing_task = asyncio.create_task(self._process_invalidation_queue())
+        """Initialize invalidation engine"""        self.processing_task = asyncio.create_task(self._process_invalidation_queue())
         logger.info("InvalidationEngine initialized")
     
     async def shutdown(self):
-        """Graceful shutdown"""
-        if self.processing_task:
+        """Graceful shutdown"""        if self.processing_task:
             self.processing_task.cancel()
             try:
                 await self.processing_task
@@ -394,13 +358,11 @@ class InvalidationEngine:
         logger.info("InvalidationEngine shut down")
     
     def add_rule(self, rule: InvalidationRule):
-        """Add invalidation rule"""
-        self.rules[rule.rule_id] = rule
+        """Add invalidation rule"""        self.rules[rule.rule_id] = rule
         logger.info(f"Added invalidation rule: {rule.name}")
     
     def remove_rule(self, rule_id: str):
-        """Remove invalidation rule"""
-        if rule_id in self.rules:
+        """Remove invalidation rule"""        if rule_id in self.rules:
             del self.rules[rule_id]
             logger.info(f"Removed invalidation rule: {rule_id}")
     
@@ -413,8 +375,7 @@ class InvalidationEngine:
         priority: InvalidationPriority = InvalidationPriority.NORMAL,
         **metadata
     ) -> InvalidationEvent:
-        """Queue invalidation event"""
-        event = InvalidationEvent(
+        """Queue invalidation event"""        event = InvalidationEvent(
             trigger=trigger,
             priority=priority,
             keys=keys or [],
@@ -429,26 +390,22 @@ class InvalidationEngine:
         return event
     
     async def schedule_invalidation(self, key: str, delay_seconds: int):
-        """Schedule key for future invalidation"""
-        scheduled_time = datetime.utcnow() + timedelta(seconds=delay_seconds)
+        """Schedule key for future invalidation"""        scheduled_time = datetime.utcnow() + timedelta(seconds=delay_seconds)
         
         strategy = self.strategies.get(InvalidationTrigger.TTL_EXPIRED)
         if isinstance(strategy, TimeBasedInvalidation):
             strategy.schedule_invalidation(key, scheduled_time)
     
     async def cancel_invalidation(self, key: str):
-        """Cancel scheduled invalidation for key"""
-        strategy = self.strategies.get(InvalidationTrigger.TTL_EXPIRED)
+        """Cancel scheduled invalidation for key"""        strategy = self.strategies.get(InvalidationTrigger.TTL_EXPIRED)
         if isinstance(strategy, TimeBasedInvalidation):
             strategy.scheduled_invalidations.pop(key, None)
     
     def register_cache_access_callback(self, callback: Callable):
-        """Register callback for cache access monitoring"""
-        self.cache_access_callback = callback
+        """Register callback for cache access monitoring"""        self.cache_access_callback = callback
     
     async def _process_invalidation_queue(self):
-        """Process invalidation events from queue"""
-        while True:
+        """Process invalidation events from queue"""        while True:
             try:
                 event = await self.event_queue.get()
                 await self._process_invalidation_event(event)
@@ -460,8 +417,7 @@ class InvalidationEngine:
                 await asyncio.sleep(1)
     
     async def _process_invalidation_event(self, event: InvalidationEvent):
-        """Process single invalidation event"""
-        start_time = time.time()
+        """Process single invalidation event"""        start_time = time.time()
         
         try:
             # Get cache entries (would be provided by caching manager)
@@ -520,14 +476,12 @@ class InvalidationEngine:
             logger.error(f"Invalidation event failed: {e}")
     
     async def _perform_invalidation(self, keys: List[str]) -> List[str]:
-        """Perform actual cache invalidation"""
-        # This would integrate with the caching manager
+        """Perform actual cache invalidation"""        # This would integrate with the caching manager
         # For now, just return the keys as if they were invalidated
         return keys
     
     def _update_average_processing_time(self, processing_time: float):
-        """Update average processing time metric"""
-        current_avg = self.metrics['average_processing_time']
+        """Update average processing time metric"""        current_avg = self.metrics['average_processing_time']
         total_events = self.metrics['successful_invalidations'] + self.metrics['failed_invalidations']
         
         if total_events > 0:
@@ -536,9 +490,7 @@ class InvalidationEngine:
             ) / total_events
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get invalidation engine metrics"""
-        return self.metrics.copy()
+        """Get invalidation engine metrics"""        return self.metrics.copy()
     
     def get_queue_size(self) -> int:
-        """Get current invalidation queue size"""
-        return self.event_queue.qsize()
+        """Get current invalidation queue size"""        return self.event_queue.qsize()

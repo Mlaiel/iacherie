@@ -1,5 +1,4 @@
-"""
-Compliance Engine - Ultra-Advanced Processing Engine
+"""Compliance Engine - Ultra-Advanced Processing Engine
 
 Core processing engine for compliance operations with intelligent
 optimization and comprehensive functionality.
@@ -7,7 +6,6 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,24 +16,21 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ComplianceJob:
-    """Job configuration for compliance operations"""
-    job_id: str
+    """Job configuration for compliance operations"""    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class ComplianceResult:
-    """Result of compliance operations"""
-    job_id: str
+    """Result of compliance operations"""    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class ComplianceEngine:
-    """
-    Ultra-Advanced Compliance Processing Engine
+    """    Ultra-Advanced Compliance Processing Engine
     
     Provides enterprise-grade compliance processing with:
     - High-performance operation handling
@@ -43,8 +38,7 @@ class ComplianceEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -53,8 +47,7 @@ class ComplianceEngine:
         logger.info("ComplianceEngine initialized")
 
     async def start(self) -> None:
-        """Start the compliance processing engine"""
-        try:
+        """Start the compliance processing engine"""        try:
             self.is_running = True
             logger.info("ComplianceEngine started successfully")
         except Exception as e:
@@ -62,8 +55,7 @@ class ComplianceEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> ComplianceResult:
-        """Process compliance operation"""
-        try:
+        """Process compliance operation"""        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -90,6 +82,5 @@ class ComplianceEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""
-        self.is_running = False
+        """Graceful shutdown of the processing engine"""        self.is_running = False
         logger.info("ComplianceEngine shutdown complete")

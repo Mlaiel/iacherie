@@ -1,11 +1,9 @@
-"""
-Comprehensive Test Suite Runner
+"""Comprehensive Test Suite Runner
 Runs all tests for the Ainflue platform including unit, integration, performance, and security tests.
 
 Author: AI Assistant
 Purpose: Run complete test suite and generate comprehensive reports
 """
-
 import subprocess
 import json
 import datetime
@@ -14,8 +12,7 @@ import os
 from typing import Dict, List, Any, Tuple
 
 def run_command(command: List[str], timeout: int = 300) -> Tuple[int, str, str]:
-    """Run a command and return exit code, stdout, stderr"""
-    try:
+    """Run a command and return exit code, stdout, stderr"""    try:
         result = subprocess.run(
             command,
             capture_output=True,
@@ -30,8 +27,7 @@ def run_command(command: List[str], timeout: int = 300) -> Tuple[int, str, str]:
         return -1, "", str(e)
 
 def run_unit_tests() -> Dict[str, Any]:
-    """Run unit tests and return results"""
-    print("🧪 Running Unit Tests...")
+    """Run unit tests and return results"""    print("🧪 Running Unit Tests...")
     
     command = [
         "python", "-m", "pytest", 
@@ -64,8 +60,7 @@ def run_unit_tests() -> Dict[str, Any]:
     }
 
 def run_integration_tests() -> Dict[str, Any]:
-    """Run integration tests and return results"""
-    print("🔗 Running Integration Tests...")
+    """Run integration tests and return results"""    print("🔗 Running Integration Tests...")
     
     command = [
         "python", "-m", "pytest",
@@ -84,8 +79,7 @@ def run_integration_tests() -> Dict[str, Any]:
     }
 
 def run_performance_tests() -> Dict[str, Any]:
-    """Run performance tests and return results"""
-    print("⚡ Running Performance Tests...")
+    """Run performance tests and return results"""    print("⚡ Running Performance Tests...")
     
     command = [
         "python", "-m", "pytest",
@@ -105,8 +99,7 @@ def run_performance_tests() -> Dict[str, Any]:
     }
 
 def generate_api_documentation() -> Dict[str, Any]:
-    """Generate API documentation and return results"""
-    print("📚 Generating API Documentation...")
+    """Generate API documentation and return results"""    print("📚 Generating API Documentation...")
     
     command = ["python", "docs/swagger_documentation_generator.py"]
     exit_code, stdout, stderr = run_command(command)
@@ -126,8 +119,7 @@ def generate_api_documentation() -> Dict[str, Any]:
     }
 
 def run_security_audit() -> Dict[str, Any]:
-    """Run security audit and return results"""
-    print("🔒 Running Security Audit...")
+    """Run security audit and return results"""    print("🔒 Running Security Audit...")
     
     command = ["python", "security/security_audit_framework.py"]
     exit_code, stdout, stderr = run_command(command)
@@ -148,8 +140,7 @@ def run_security_audit() -> Dict[str, Any]:
     }
 
 def generate_test_coverage_report() -> Dict[str, Any]:
-    """Generate test coverage report"""
-    print("📊 Generating Test Coverage Report...")
+    """Generate test coverage report"""    print("📊 Generating Test Coverage Report...")
     
     command = [
         "python", "-m", "pytest",
@@ -175,8 +166,7 @@ def generate_test_coverage_report() -> Dict[str, Any]:
     }
 
 def validate_critical_modules() -> Dict[str, Any]:
-    """Validate that critical modules are properly tested"""
-    print("✅ Validating Critical Module Coverage...")
+    """Validate that critical modules are properly tested"""    print("✅ Validating Critical Module Coverage...")
     
     critical_modules = [
         "business_logic_core.py",
@@ -207,11 +197,9 @@ def validate_critical_modules() -> Dict[str, Any]:
     }
 
 def generate_comprehensive_report(results: List[Dict[str, Any]]) -> str:
-    """Generate comprehensive test report"""
-    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    """Generate comprehensive test report"""    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    report = f"""
-# Comprehensive Test and Documentation Report
+    report = f"""# Comprehensive Test and Documentation Report
 Generated: {timestamp}
 
 ## Summary
@@ -226,8 +214,7 @@ This report covers the implementation of comprehensive testing and documentation
 
 ## Test Results Overview
 
-"""
-    
+"""    
     total_tests = len(results)
     passed_tests = sum(1 for r in results if r["passed"])
     
@@ -276,8 +263,7 @@ This report covers the implementation of comprehensive testing and documentation
                 report += "\n```\n\n"
     
     # Implementation summary
-    report += """
-## Implementation Summary
+    report += """## Implementation Summary
 
 ### ✅ Unit Tests for Critical Modules
 - **File**: `tests/unit/test_business_logic_core_comprehensive.py`
@@ -351,13 +337,11 @@ This report covers the implementation of comprehensive testing and documentation
 ✅ **Maintainable**: Modular design allows for easy extension and maintenance
 ✅ **Documented**: Comprehensive documentation and examples provided
 
-"""
-    
+"""    
     return report
 
 def main():
-    """Main function to run comprehensive test suite"""
-    print("🚀 Starting Comprehensive Test Suite for Ainflue Platform")
+    """Main function to run comprehensive test suite"""    print("🚀 Starting Comprehensive Test Suite for Ainflue Platform")
     print("=" * 70)
     
     # Run all test components

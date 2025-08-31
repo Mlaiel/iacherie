@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,11 +12,9 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive API endpoint tests
+"""Comprehensive API endpoint tests
 Tests all critical API routes for functionality, security, and performance
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -46,8 +42,7 @@ except ImportError as e:
 
 
 class TestAuthAPI:
-    """Test suite for authentication APIs"""
-    
+    """Test suite for authentication APIs"""    
     @pytest.fixture
     def client(self):
         return TestClient(app)
@@ -62,8 +57,7 @@ class TestAuthAPI:
         }
     
     def test_user_registration(self, client, mock_user_data):
-        """Test user registration endpoint"""
-        response = client.post("/api/auth/register", json=mock_user_data)
+        """Test user registration endpoint"""        response = client.post("/api/auth/register", json=mock_user_data)
         
         assert response.status_code == 201
         data = response.json()
@@ -72,8 +66,7 @@ class TestAuthAPI:
         assert data["user"]["email"] == mock_user_data["email"]
     
     def test_user_login(self, client, mock_user_data):
-        """Test user login endpoint"""
-        # First register a user
+        """Test user login endpoint"""        # First register a user
         client.post("/api/auth/register", json=mock_user_data)
         
         # Then try to login
@@ -89,8 +82,7 @@ class TestAuthAPI:
         assert "refresh_token" in data
     
     def test_token_refresh(self, client, mock_user_data):
-        """Test token refresh endpoint"""
-        # Register and login
+        """Test token refresh endpoint"""        # Register and login
         client.post("/api/auth/register", json=mock_user_data)
         login_response = client.post("/api/auth/login", json={
             "email": mock_user_data["email"],
@@ -109,8 +101,7 @@ class TestAuthAPI:
         assert "access_token" in data
     
     def test_protected_route_access(self, client, mock_user_data):
-        """Test access to protected routes with valid token"""
-        # Register and login
+        """Test access to protected routes with valid token"""        # Register and login
         client.post("/api/auth/register", json=mock_user_data)
         login_response = client.post("/api/auth/login", json={
             "email": mock_user_data["email"],
@@ -128,15 +119,13 @@ class TestAuthAPI:
         assert data["email"] == mock_user_data["email"]
     
     def test_invalid_token_access(self, client):
-        """Test access with invalid token"""
-        headers = {"Authorization": "Bearer invalid_token"}
+        """Test access with invalid token"""        headers = {"Authorization": "Bearer invalid_token"}
         response = client.get("/api/auth/profile", headers=headers)
         
         assert response.status_code == 401
     
     def test_password_reset_request(self, client, mock_user_data):
-        """Test password reset request"""
-        # Register user first
+        """Test password reset request"""        # Register user first
         client.post("/api/auth/register", json=mock_user_data)
         
         response = client.post("/api/auth/reset-password-request", json={
@@ -148,16 +137,14 @@ class TestAuthAPI:
 
 
 class TestContentAPI:
-    """Test suite for content management APIs"""
-    
+    """Test suite for content management APIs"""    
     @pytest.fixture
     def client(self):
         return TestClient(app)
     
     @pytest.fixture
     def auth_headers(self, client):
-        """Get authorization headers for testing"""
-        user_data = {
+        """Get authorization headers for testing"""        user_data = {
             "email": "creator@example.com",
             "password": "password123",
             "name": "Creator User",
@@ -183,8 +170,7 @@ class TestContentAPI:
         }
     
     def test_create_content(self, client, auth_headers, sample_content_data):
-        """Test content creation"""
-        response = client.post(
+        """Test content creation"""        response = client.post(
             "/api/content/create",
             json=sample_content_data,
             headers=auth_headers
@@ -197,8 +183,7 @@ class TestContentAPI:
         assert "created_at" in data
     
     def test_get_content_list(self, client, auth_headers, sample_content_data):
-        """Test getting user's content list"""
-        # Create some content first
+        """Test getting user's content list"""        # Create some content first
         for i in range(3):
             content_data = sample_content_data.copy()
             content_data["title"] = f"Test Track {i+1}"
@@ -214,8 +199,7 @@ class TestContentAPI:
         assert "page" in data
     
     def test_get_content_by_id(self, client, auth_headers, sample_content_data):
-        """Test getting specific content by ID"""
-        # Create content
+        """Test getting specific content by ID"""        # Create content
         create_response = client.post(
             "/api/content/create",
             json=sample_content_data,
@@ -232,8 +216,7 @@ class TestContentAPI:
         assert data["title"] == sample_content_data["title"]
     
     def test_update_content(self, client, auth_headers, sample_content_data):
-        """Test content update"""
-        # Create content
+        """Test content update"""        # Create content
         create_response = client.post(
             "/api/content/create",
             json=sample_content_data,
@@ -255,8 +238,7 @@ class TestContentAPI:
         assert data["description"] == update_data["description"]
     
     def test_delete_content(self, client, auth_headers, sample_content_data):
-        """Test content deletion"""
-        # Create content
+        """Test content deletion"""        # Create content
         create_response = client.post(
             "/api/content/create",
             json=sample_content_data,
@@ -275,16 +257,14 @@ class TestContentAPI:
 
 
 class TestFingerprintingAPI:
-    """Test suite for fingerprinting APIs"""
-    
+    """Test suite for fingerprinting APIs"""    
     @pytest.fixture
     def client(self):
         return TestClient(app)
     
     @pytest.fixture
     def auth_headers(self, client):
-        """Get authorization headers for testing"""
-        user_data = {
+        """Get authorization headers for testing"""        user_data = {
             "email": "creator@example.com",
             "password": "password123",
             "name": "Creator User",
@@ -299,8 +279,7 @@ class TestFingerprintingAPI:
         return {"Authorization": f"Bearer {token}"}
     
     def test_upload_for_fingerprinting(self, client, auth_headers):
-        """Test file upload for fingerprinting"""
-        # Mock file upload
+        """Test file upload for fingerprinting"""        # Mock file upload
         test_file_content = b"fake audio file content"
         files = {"file": ("test_audio.mp3", test_file_content, "audio/mpeg")}
         
@@ -320,8 +299,7 @@ class TestFingerprintingAPI:
         assert data["status"] == "completed"
     
     def test_get_fingerprint_status(self, client, auth_headers):
-        """Test getting fingerprint status"""
-        # Mock upload first
+        """Test getting fingerprint status"""        # Mock upload first
         test_file_content = b"fake audio file content"
         files = {"file": ("test_audio.mp3", test_file_content, "audio/mpeg")}
         
@@ -349,8 +327,7 @@ class TestFingerprintingAPI:
         assert "created_at" in data
     
     def test_search_similar_content(self, client, auth_headers):
-        """Test searching for similar content"""
-        search_data = {
+        """Test searching for similar content"""        search_data = {
             "fingerprint": "fp_test123456789",
             "threshold": 0.85,
             "limit": 10
@@ -375,8 +352,7 @@ class TestFingerprintingAPI:
         assert data["results"][0]["similarity"] > 0.9
     
     def test_batch_fingerprinting(self, client, auth_headers):
-        """Test batch fingerprinting"""
-        # Mock multiple files
+        """Test batch fingerprinting"""        # Mock multiple files
         files = [
             ("files", ("test1.mp3", b"fake audio 1", "audio/mpeg")),
             ("files", ("test2.mp3", b"fake audio 2", "audio/mpeg")),
@@ -400,16 +376,14 @@ class TestFingerprintingAPI:
 
 
 class TestProtectionAPI:
-    """Test suite for content protection APIs"""
-    
+    """Test suite for content protection APIs"""    
     @pytest.fixture
     def client(self):
         return TestClient(app)
     
     @pytest.fixture
     def auth_headers(self, client):
-        """Get authorization headers for testing"""
-        user_data = {
+        """Get authorization headers for testing"""        user_data = {
             "email": "creator@example.com",
             "password": "password123",
             "name": "Creator User",
@@ -424,8 +398,7 @@ class TestProtectionAPI:
         return {"Authorization": f"Bearer {token}"}
     
     def test_enable_protection(self, client, auth_headers):
-        """Test enabling protection for content"""
-        protection_data = {
+        """Test enabling protection for content"""        protection_data = {
             "content_id": "content_123",
             "protection_type": "dmca",
             "monitoring_platforms": ["youtube", "spotify", "instagram"],
@@ -445,8 +418,7 @@ class TestProtectionAPI:
         assert data["content_id"] == protection_data["content_id"]
     
     def test_get_violations(self, client, auth_headers):
-        """Test getting violation reports"""
-        response = client.get("/api/protection/violations", headers=auth_headers)
+        """Test getting violation reports"""        response = client.get("/api/protection/violations", headers=auth_headers)
         
         assert response.status_code == 200
         data = response.json()
@@ -455,8 +427,7 @@ class TestProtectionAPI:
         assert "page" in data
     
     def test_send_dmca_notice(self, client, auth_headers):
-        """Test sending DMCA takedown notice"""
-        dmca_data = {
+        """Test sending DMCA takedown notice"""        dmca_data = {
             "violation_id": "violation_123",
             "platform": "youtube",
             "infringing_url": "https://youtube.com/watch?v=example",
@@ -479,8 +450,7 @@ class TestProtectionAPI:
         assert data["status"] == "sent"
     
     def test_get_protection_stats(self, client, auth_headers):
-        """Test getting protection statistics"""
-        response = client.get("/api/protection/stats", headers=auth_headers)
+        """Test getting protection statistics"""        response = client.get("/api/protection/stats", headers=auth_headers)
         
         assert response.status_code == 200
         data = response.json()
@@ -491,16 +461,14 @@ class TestProtectionAPI:
 
 
 class TestMonetizationAPI:
-    """Test suite for monetization APIs"""
-    
+    """Test suite for monetization APIs"""    
     @pytest.fixture
     def client(self):
         return TestClient(app)
     
     @pytest.fixture
     def auth_headers(self, client):
-        """Get authorization headers for testing"""
-        user_data = {
+        """Get authorization headers for testing"""        user_data = {
             "email": "creator@example.com",
             "password": "password123",
             "name": "Creator User",
@@ -515,8 +483,7 @@ class TestMonetizationAPI:
         return {"Authorization": f"Bearer {token}"}
     
     def test_get_revenue_stats(self, client, auth_headers):
-        """Test getting revenue statistics"""
-        response = client.get("/api/monetization/revenue", headers=auth_headers)
+        """Test getting revenue statistics"""        response = client.get("/api/monetization/revenue", headers=auth_headers)
         
         assert response.status_code == 200
         data = response.json()
@@ -526,8 +493,7 @@ class TestMonetizationAPI:
         assert "payment_history" in data
     
     def test_setup_payment_method(self, client, auth_headers):
-        """Test setting up payment method"""
-        payment_data = {
+        """Test setting up payment method"""        payment_data = {
             "type": "stripe",
             "account_id": "acct_test123",
             "currency": "USD",
@@ -546,8 +512,7 @@ class TestMonetizationAPI:
         assert data["status"] == "active"
     
     def test_request_withdrawal(self, client, auth_headers):
-        """Test requesting withdrawal"""
-        withdrawal_data = {
+        """Test requesting withdrawal"""        withdrawal_data = {
             "amount": 100.00,
             "currency": "USD",
             "payment_method_id": "pm_test123"
@@ -569,15 +534,13 @@ class TestMonetizationAPI:
 
 
 class TestAPIPerformance:
-    """Test suite for API performance"""
-    
+    """Test suite for API performance"""    
     @pytest.fixture
     def client(self):
         return TestClient(app)
     
     def test_api_response_times(self, client):
-        """Test API response times"""
-        import time
+        """Test API response times"""        import time
         
         endpoints = [
             ("GET", "/api/health"),
@@ -597,8 +560,7 @@ class TestAPIPerformance:
             assert response_time < 1.0  # Should respond within 1 second
     
     def test_concurrent_requests(self, client):
-        """Test handling concurrent requests"""
-        import threading
+        """Test handling concurrent requests"""        import threading
         import time
         
         results = []
@@ -639,15 +601,13 @@ class TestAPIPerformance:
 
 
 class TestAPIErrorHandling:
-    """Test suite for API error handling"""
-    
+    """Test suite for API error handling"""    
     @pytest.fixture
     def client(self):
         return TestClient(app)
     
     def test_404_handling(self, client):
-        """Test 404 error handling"""
-        response = client.get("/api/nonexistent-endpoint")
+        """Test 404 error handling"""        response = client.get("/api/nonexistent-endpoint")
         
         assert response.status_code == 404
         data = response.json()
@@ -655,8 +615,7 @@ class TestAPIErrorHandling:
         assert "message" in data
     
     def test_validation_errors(self, client):
-        """Test request validation errors"""
-        # Invalid registration data
+        """Test request validation errors"""        # Invalid registration data
         invalid_data = {
             "email": "invalid-email",  # Invalid email format
             "password": "123",         # Too short password
@@ -669,8 +628,7 @@ class TestAPIErrorHandling:
         assert "detail" in data
     
     def test_rate_limiting(self, client):
-        """Test rate limiting"""
-        # Make multiple rapid requests
+        """Test rate limiting"""        # Make multiple rapid requests
         responses = []
         for _ in range(100):  # Exceed rate limit
             response = client.get("/api/health")

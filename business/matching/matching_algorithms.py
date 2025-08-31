@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Matching Algorithms System
+"""IA Influencer Agent - Advanced Matching Algorithms System
 =========================================================
 
 Professional AI-Powered Matching & Compatibility Algorithms
@@ -35,7 +34,6 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
@@ -58,8 +56,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MatchingVector:
-    """Multi-dimensional matching vector for creator comparison"""
-    creator_id: str
+    """Multi-dimensional matching vector for creator comparison"""    creator_id: str
     content_vector: np.ndarray
     audience_vector: np.ndarray
     behavioral_vector: np.ndarray
@@ -71,8 +68,7 @@ class MatchingVector:
 
 @dataclass
 class MatchingResult:
-    """Comprehensive matching result with detailed scoring"""
-    primary_creator_id: str
+    """Comprehensive matching result with detailed scoring"""    primary_creator_id: str
     matched_creator_id: str
     overall_compatibility: float
     component_scores: Dict[str, float]
@@ -85,8 +81,7 @@ class MatchingResult:
 
 
 class SemanticMatcher:
-    """Advanced semantic matching using NLP and embeddings"""
-    
+    """Advanced semantic matching using NLP and embeddings"""    
     def __init__(self, db_session, embedding_model, nlp_processor):
         self.db = db_session
         self.embedding_model = embedding_model
@@ -99,8 +94,7 @@ class SemanticMatcher:
         creator1_id: str,
         creator2_id: str
     ) -> Dict[str, float]:
-        """Calculate semantic similarity between creators"""
-        try:
+        """Calculate semantic similarity between creators"""        try:
             # Get creator content and profiles
             creator1_data = await self._get_creator_semantic_data(creator1_id)
             creator2_data = await self._get_creator_semantic_data(creator2_id)
@@ -150,10 +144,8 @@ class SemanticMatcher:
             return {}
     
     async def _get_creator_semantic_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive semantic data for a creator"""
-        try:
-            query = """
-                SELECT 
+        """Get comprehensive semantic data for a creator"""        try:
+            query = """                SELECT 
                     c.*,
                     cp.bio,
                     cp.content_themes,
@@ -165,8 +157,7 @@ class SemanticMatcher:
                 LEFT JOIN creator_profiles cp ON c.id = cp.creator_id
                 LEFT JOIN creator_content cc ON c.id = cc.creator_id
                 WHERE c.id = %s
-            """
-            
+            """            
             result = await self.db.fetch_one(query, (creator_id,))
             if not result:
                 return {}
@@ -202,8 +193,7 @@ class SemanticMatcher:
         creator1_data: Dict[str, Any],
         creator2_data: Dict[str, Any]
     ) -> float:
-        """Calculate semantic similarity of content using embeddings"""
-        try:
+        """Calculate semantic similarity of content using embeddings"""        try:
             text1 = creator1_data['combined_text']
             text2 = creator2_data['combined_text']
             
@@ -230,8 +220,7 @@ class SemanticMatcher:
 
 
 class BehavioralMatcher:
-    """Advanced behavioral pattern matching and analysis"""
-    
+    """Advanced behavioral pattern matching and analysis"""    
     def __init__(self, db_session, ml_models):
         self.db = db_session
         self.ml_models = ml_models
@@ -242,8 +231,7 @@ class BehavioralMatcher:
         creator1_id: str,
         creator2_id: str
     ) -> Dict[str, float]:
-        """Analyze behavioral compatibility between creators"""
-        try:
+        """Analyze behavioral compatibility between creators"""        try:
             # Get behavioral patterns
             creator1_patterns = await self._extract_behavioral_patterns(creator1_id)
             creator2_patterns = await self._extract_behavioral_patterns(creator2_id)
@@ -294,8 +282,7 @@ class BehavioralMatcher:
 
 
 class ContentStyleMatcher:
-    """Advanced content style analysis and matching system"""
-    
+    """Advanced content style analysis and matching system"""    
     def __init__(self, db_session, vision_model, audio_analyzer):
         self.db = db_session
         self.vision_model = vision_model
@@ -307,8 +294,7 @@ class ContentStyleMatcher:
         creator1_id: str,
         creator2_id: str
     ) -> Dict[str, float]:
-        """Analyze content style compatibility between creators"""
-        try:
+        """Analyze content style compatibility between creators"""        try:
             # Get content style profiles
             creator1_style = await self._extract_content_style_profile(creator1_id)
             creator2_style = await self._extract_content_style_profile(creator2_id)
@@ -359,8 +345,7 @@ class ContentStyleMatcher:
 
 
 class AudienceMatcher:
-    """Advanced audience analysis and matching system"""
-    
+    """Advanced audience analysis and matching system"""    
     def __init__(self, db_session, analytics_service):
         self.db = db_session
         self.analytics = analytics_service
@@ -371,8 +356,7 @@ class AudienceMatcher:
         creator1_id: str,
         creator2_id: str
     ) -> Dict[str, Any]:
-        """Analyze audience compatibility and synergy potential"""
-        try:
+        """Analyze audience compatibility and synergy potential"""        try:
             # Get audience profiles
             creator1_audience = await self._get_audience_profile(creator1_id)
             creator2_audience = await self._get_audience_profile(creator2_id)
@@ -432,8 +416,7 @@ class AudienceMatcher:
 
 
 class RevenueCompatibilityMatcher:
-    """Revenue model and monetization compatibility analysis"""
-    
+    """Revenue model and monetization compatibility analysis"""    
     def __init__(self, db_session, financial_analyzer):
         self.db = db_session
         self.financial_analyzer = financial_analyzer
@@ -444,8 +427,7 @@ class RevenueCompatibilityMatcher:
         creator1_id: str,
         creator2_id: str
     ) -> Dict[str, Any]:
-        """Analyze revenue model compatibility and collaboration potential"""
-        try:
+        """Analyze revenue model compatibility and collaboration potential"""        try:
             # Get revenue profiles
             creator1_revenue = await self._get_creator_revenue_profile(creator1_id)
             creator2_revenue = await self._get_creator_revenue_profile(creator2_id)
@@ -503,10 +485,8 @@ class RevenueCompatibilityMatcher:
             return {}
     
     async def _get_creator_revenue_profile(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive revenue profile for a creator"""
-        try:
-            query = """
-                SELECT 
+        """Get comprehensive revenue profile for a creator"""        try:
+            query = """                SELECT 
                     cr.*,
                     cm.monetization_methods,
                     cm.revenue_streams,
@@ -519,8 +499,7 @@ class RevenueCompatibilityMatcher:
                 LEFT JOIN creator_finances cf ON cr.creator_id = cf.creator_id
                 LEFT JOIN creator_profiles cp ON cr.creator_id = cp.creator_id
                 WHERE cr.creator_id = %s
-            """
-            
+            """            
             result = await self.db.fetch_one(query, (creator_id,))
             if not result:
                 return {}
@@ -543,8 +522,7 @@ class RevenueCompatibilityMatcher:
         creator1_revenue: Dict[str, Any],
         creator2_revenue: Dict[str, Any]
     ) -> float:
-        """Analyze compatibility of revenue models"""
-        try:
+        """Analyze compatibility of revenue models"""        try:
             # Get primary revenue models
             model1 = creator1_revenue.get('primary_revenue_model', '')
             model2 = creator2_revenue.get('primary_revenue_model', '')

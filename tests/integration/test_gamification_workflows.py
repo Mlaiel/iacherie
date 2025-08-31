@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Integration Test: Gamification Workflows End-to-End
+"""Integration Test: Gamification Workflows End-to-End
 ==================================================
 
 Tests the complete gamification system workflows including:
@@ -27,7 +24,6 @@ Tests the complete gamification system workflows including:
 
 Author: Integration Test Suite
 """
-
 import asyncio
 import pytest
 import sys
@@ -43,12 +39,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestGamificationWorkflows:
-    """Integration tests for gamification system workflows"""
-    
+    """Integration tests for gamification system workflows"""    
     @pytest.fixture
     def sample_user_data(self):
-        """Sample user data for testing"""
-        return {
+        """Sample user data for testing"""        return {
             "user_id": "test_user_123",
             "username": "test_creator",
             "level": 1,
@@ -62,8 +56,7 @@ class TestGamificationWorkflows:
     
     @pytest.fixture
     def mock_gamification_manager(self):
-        """Mock gamification manager for testing"""
-        try:
+        """Mock gamification manager for testing"""        try:
             from business.engagement.gamification_manager import GamificationManager
             return GamificationManager()
         except ImportError:
@@ -77,8 +70,7 @@ class TestGamificationWorkflows:
     
     @pytest.fixture
     def mock_reward_calculator(self):
-        """Mock reward calculator for testing"""
-        try:
+        """Mock reward calculator for testing"""        try:
             from business.engagement.reward_calculator import RewardCalculator
             calculator = RewardCalculator()
             # Add missing methods as mocks
@@ -92,8 +84,7 @@ class TestGamificationWorkflows:
     
     @pytest.mark.asyncio
     async def test_user_registration_workflow(self, mock_gamification_manager, sample_user_data):
-        """Test complete user registration and gamification profile creation"""
-        print("👤 Testing user registration gamification workflow...")
+        """Test complete user registration and gamification profile creation"""        print("👤 Testing user registration gamification workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -117,8 +108,7 @@ class TestGamificationWorkflows:
     
     @pytest.mark.asyncio
     async def test_content_creation_reward_workflow(self, mock_gamification_manager, mock_reward_calculator, sample_user_data):
-        """Test content creation reward calculation and XP award workflow"""
-        print("🎨 Testing content creation reward workflow...")
+        """Test content creation reward calculation and XP award workflow"""        print("🎨 Testing content creation reward workflow...")
         
         user_id = sample_user_data["user_id"]
         content_data = {
@@ -164,8 +154,7 @@ class TestGamificationWorkflows:
     
     @pytest.mark.asyncio
     async def test_level_progression_workflow(self, mock_gamification_manager, sample_user_data):
-        """Test user level progression and unlocks"""
-        print("📈 Testing level progression workflow...")
+        """Test user level progression and unlocks"""        print("📈 Testing level progression workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -190,8 +179,7 @@ class TestGamificationWorkflows:
     
     @pytest.mark.asyncio
     async def test_achievement_tracking_workflow(self, mock_gamification_manager, sample_user_data):
-        """Test achievement tracking and unlocking system"""
-        print("🏆 Testing achievement tracking workflow...")
+        """Test achievement tracking and unlocking system"""        print("🏆 Testing achievement tracking workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -228,8 +216,7 @@ class TestGamificationWorkflows:
     
     @pytest.mark.asyncio
     async def test_challenge_participation_workflow(self, mock_gamification_manager, sample_user_data):
-        """Test challenge participation and completion workflow"""
-        print("🎯 Testing challenge participation workflow...")
+        """Test challenge participation and completion workflow"""        print("🎯 Testing challenge participation workflow...")
         
         user_id = sample_user_data["user_id"]
         challenge_data = {
@@ -277,8 +264,7 @@ class TestGamificationWorkflows:
     
     @pytest.mark.asyncio
     async def test_leaderboard_ranking_workflow(self, mock_gamification_manager, sample_user_data):
-        """Test leaderboard ranking and position calculation"""
-        print("🏅 Testing leaderboard ranking workflow...")
+        """Test leaderboard ranking and position calculation"""        print("🏅 Testing leaderboard ranking workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -307,8 +293,7 @@ class TestGamificationWorkflows:
     
     @pytest.mark.asyncio
     async def test_daily_streak_workflow(self, mock_gamification_manager, sample_user_data):
-        """Test daily streak tracking and bonus calculation"""
-        print("🔥 Testing daily streak workflow...")
+        """Test daily streak tracking and bonus calculation"""        print("🔥 Testing daily streak workflow...")
         
         user_id = sample_user_data["user_id"]
         
@@ -333,8 +318,7 @@ class TestGamificationWorkflows:
     
     @pytest.mark.asyncio
     async def test_gamification_analytics_workflow(self, mock_gamification_manager, sample_user_data):
-        """Test gamification analytics and insights generation"""
-        print("📊 Testing gamification analytics workflow...")
+        """Test gamification analytics and insights generation"""        print("📊 Testing gamification analytics workflow...")
         
         user_id = sample_user_data["user_id"]
         

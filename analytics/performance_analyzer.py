@@ -1,11 +1,9 @@
-"""
-Performance Analyzer
+"""Performance Analyzer
 Content performance analysis and optimization recommendations.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -18,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentPerformance:
-    """Content performance metrics"""
-    content_id: str
+    """Content performance metrics"""    content_id: str
     platform: str
     views: int
     likes: int
@@ -34,8 +31,7 @@ class ContentPerformance:
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight recommendation"""
-    insight_type: str
+    """Performance insight recommendation"""    insight_type: str
     title: str
     description: str
     impact_level: str  # high, medium, low
@@ -44,8 +40,7 @@ class PerformanceInsight:
 
 
 class PerformanceAnalyzer:
-    """Content performance analysis and optimization engine"""
-    
+    """Content performance analysis and optimization engine"""    
     def __init__(self):
         self.performance_data = {}
         self.insights_cache = {}
@@ -55,8 +50,7 @@ class PerformanceAnalyzer:
         content_id: str,
         platform_metrics: Dict[str, Dict]
     ) -> Dict[str, Any]:
-        """Analyze content performance across platforms"""
-        try:
+        """Analyze content performance across platforms"""        try:
             performance_records = []
             
             for platform, metrics in platform_metrics.items():
@@ -145,8 +139,7 @@ class PerformanceAnalyzer:
         early_metrics: Dict[str, Any],
         content_type: str = "music"
     ) -> Dict[str, Any]:
-        """Predict viral potential based on early performance"""
-        try:
+        """Predict viral potential based on early performance"""        try:
             # Early indicators of viral content
             viral_indicators = {
                 "early_engagement": early_metrics.get("engagement_rate", 0.0),
@@ -253,8 +246,7 @@ class PerformanceAnalyzer:
         content_id: str,
         engagement_data: Dict[str, List]
     ) -> Dict[str, Any]:
-        """Analyze audience engagement patterns"""
-        try:
+        """Analyze audience engagement patterns"""        try:
             # Analyze engagement timeline
             timeline_analysis = self._analyze_engagement_timeline(engagement_data)
             
@@ -307,8 +299,7 @@ class PerformanceAnalyzer:
         content_id: str,
         performance_history: List[Dict]
     ) -> List[PerformanceInsight]:
-        """Generate actionable optimization recommendations"""
-        try:
+        """Generate actionable optimization recommendations"""        try:
             insights = []
             
             # Analyze performance trends
@@ -392,8 +383,7 @@ class PerformanceAnalyzer:
             return []
     
     def _calculate_engagement_rate(self, metrics: Dict) -> float:
-        """Calculate engagement rate from metrics"""
-        try:
+        """Calculate engagement rate from metrics"""        try:
             views = metrics.get("views", 0)
             if views == 0:
                 return 0.0
@@ -411,8 +401,7 @@ class PerformanceAnalyzer:
             return 0.0
     
     def _calculate_platform_score(self, performance: ContentPerformance) -> float:
-        """Calculate overall platform performance score"""
-        try:
+        """Calculate overall platform performance score"""        try:
             # Weighted scoring
             view_score = min(performance.views / 10000, 1.0) * 30  # Max 30 points
             engagement_score = min(performance.engagement_rate / 0.1, 1.0) * 25  # Max 25 points
@@ -427,8 +416,7 @@ class PerformanceAnalyzer:
             return 0.0
     
     def _analyze_engagement_timeline(self, engagement_data: Dict[str, List]) -> Dict:
-        """Analyze engagement timeline patterns"""
-        try:
+        """Analyze engagement timeline patterns"""        try:
             timeline = {
                 "peak_hours": [],
                 "engagement_velocity": 0.0,
@@ -457,8 +445,7 @@ class PerformanceAnalyzer:
             return {}
     
     def _calculate_engagement_quality(self, engagement_breakdown: Dict) -> float:
-        """Calculate engagement quality score"""
-        try:
+        """Calculate engagement quality score"""        try:
             # Quality weights (comments and shares are higher quality than likes)
             quality_weights = {
                 "likes_ratio": 0.2,
@@ -479,8 +466,7 @@ class PerformanceAnalyzer:
             return 50.0
     
     def _analyze_audience_sentiment(self, engagement_data: Dict) -> str:
-        """Analyze audience sentiment from engagement patterns"""
-        try:
+        """Analyze audience sentiment from engagement patterns"""        try:
             likes = sum(engagement_data.get("likes", []))
             shares = sum(engagement_data.get("shares", []))
             comments = sum(engagement_data.get("comments", []))
@@ -499,8 +485,7 @@ class PerformanceAnalyzer:
             return "Unknown"
     
     def _get_optimal_posting_insights(self, engagement_data: Dict) -> Dict:
-        """Get insights about optimal posting times"""
-        try:
+        """Get insights about optimal posting times"""        try:
             # Simplified optimal timing analysis
             return {
                 "best_day": "Tuesday",  # Placeholder
@@ -518,8 +503,7 @@ class PerformanceAnalyzer:
         viral_score: float,
         factor_scores: Dict
     ) -> List[str]:
-        """Generate recommendations to improve viral potential"""
-        try:
+        """Generate recommendations to improve viral potential"""        try:
             recommendations = []
             
             if factor_scores.get("engagement", 0) < 15:

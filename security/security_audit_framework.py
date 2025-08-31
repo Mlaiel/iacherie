@@ -1,11 +1,9 @@
-"""
-Comprehensive Security Audit Framework
+"""Comprehensive Security Audit Framework
 Complete security audit implementation for infrastructure and application security.
 
 Author: AI Assistant
 Purpose: Complete security audit capabilities for infrastructure
 """
-
 import json
 import datetime
 import hashlib
@@ -24,8 +22,7 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 
 
 class SecuritySeverity(Enum):
-    """Security finding severity levels"""
-    CRITICAL = "critical"
+    """Security finding severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -33,8 +30,7 @@ class SecuritySeverity(Enum):
 
 
 class AuditCategory(Enum):
-    """Security audit categories"""
-    AUTHENTICATION = "authentication"
+    """Security audit categories"""    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_PROTECTION = "data_protection"
     NETWORK_SECURITY = "network_security"
@@ -48,8 +44,7 @@ class AuditCategory(Enum):
 
 @dataclass
 class SecurityFinding:
-    """Security audit finding"""
-    id: str
+    """Security audit finding"""    id: str
     category: AuditCategory
     severity: SecuritySeverity
     title: str
@@ -64,8 +59,7 @@ class SecurityFinding:
 
 @dataclass
 class AuditReport:
-    """Complete security audit report"""
-    audit_id: str
+    """Complete security audit report"""    audit_id: str
     audit_type: str
     start_time: datetime.datetime
     end_time: datetime.datetime
@@ -78,27 +72,23 @@ class AuditReport:
 
 
 class SecurityAuditor:
-    """Comprehensive security auditor"""
-    
+    """Comprehensive security auditor"""    
     def __init__(self):
         self.findings = []
         self.audit_start_time = None
         self.audit_end_time = None
     
     def start_audit(self, audit_type: str = "comprehensive") -> str:
-        """Start a new security audit"""
-        self.audit_start_time = datetime.datetime.now()
+        """Start a new security audit"""        self.audit_start_time = datetime.datetime.now()
         self.findings = []
         audit_id = f"audit_{int(self.audit_start_time.timestamp())}"
         return audit_id
     
     def add_finding(self, finding: SecurityFinding):
-        """Add a security finding to the audit"""
-        self.findings.append(finding)
+        """Add a security finding to the audit"""        self.findings.append(finding)
     
     def audit_authentication_security(self) -> List[SecurityFinding]:
-        """Audit authentication mechanisms"""
-        findings = []
+        """Audit authentication mechanisms"""        findings = []
         
         # Check for strong password policies
         findings.append(SecurityFinding(
@@ -142,8 +132,7 @@ class SecurityAuditor:
         return findings
     
     def audit_data_protection(self) -> List[SecurityFinding]:
-        """Audit data protection mechanisms"""
-        findings = []
+        """Audit data protection mechanisms"""        findings = []
         
         # Check encryption at rest
         findings.append(SecurityFinding(
@@ -190,8 +179,7 @@ class SecurityAuditor:
         return findings
     
     def audit_network_security(self) -> List[SecurityFinding]:
-        """Audit network security configurations"""
-        findings = []
+        """Audit network security configurations"""        findings = []
         
         # Check firewall configuration
         findings.append(SecurityFinding(
@@ -222,8 +210,7 @@ class SecurityAuditor:
         return findings
     
     def audit_input_validation(self) -> List[SecurityFinding]:
-        """Audit input validation and sanitization"""
-        findings = []
+        """Audit input validation and sanitization"""        findings = []
         
         # Check for SQL injection protection
         findings.append(SecurityFinding(
@@ -254,8 +241,7 @@ class SecurityAuditor:
         return findings
     
     def audit_api_security(self) -> List[SecurityFinding]:
-        """Audit API security configurations"""
-        findings = []
+        """Audit API security configurations"""        findings = []
         
         # Check rate limiting
         findings.append(SecurityFinding(
@@ -286,8 +272,7 @@ class SecurityAuditor:
         return findings
     
     def audit_logging_monitoring(self) -> List[SecurityFinding]:
-        """Audit logging and monitoring capabilities"""
-        findings = []
+        """Audit logging and monitoring capabilities"""        findings = []
         
         # Check security event logging
         findings.append(SecurityFinding(
@@ -319,8 +304,7 @@ class SecurityAuditor:
         return findings
     
     def audit_compliance_frameworks(self) -> List[SecurityFinding]:
-        """Audit compliance with various frameworks"""
-        findings = []
+        """Audit compliance with various frameworks"""        findings = []
         
         # GDPR compliance
         findings.append(SecurityFinding(
@@ -353,8 +337,7 @@ class SecurityAuditor:
         return findings
     
     def perform_vulnerability_scan(self) -> List[SecurityFinding]:
-        """Perform basic vulnerability scanning"""
-        findings = []
+        """Perform basic vulnerability scanning"""        findings = []
         
         # Check for common vulnerabilities
         findings.append(SecurityFinding(
@@ -385,8 +368,7 @@ class SecurityAuditor:
         return findings
     
     def check_security_headers(self) -> List[SecurityFinding]:
-        """Check security headers implementation"""
-        findings = []
+        """Check security headers implementation"""        findings = []
         
         security_headers = [
             "Strict-Transport-Security",
@@ -411,8 +393,7 @@ class SecurityAuditor:
         return findings
     
     def audit_access_controls(self) -> List[SecurityFinding]:
-        """Audit access control mechanisms"""
-        findings = []
+        """Audit access control mechanisms"""        findings = []
         
         # Check role-based access control
         findings.append(SecurityFinding(
@@ -444,8 +425,7 @@ class SecurityAuditor:
         return findings
     
     def run_comprehensive_audit(self) -> AuditReport:
-        """Run a comprehensive security audit"""
-        audit_id = self.start_audit("comprehensive")
+        """Run a comprehensive security audit"""        audit_id = self.start_audit("comprehensive")
         
         # Run all audit components
         all_findings = []
@@ -514,8 +494,7 @@ class SecurityAuditor:
         return report
     
     def _calculate_risk_level(self, score: float) -> str:
-        """Calculate risk level based on score"""
-        if score >= 90:
+        """Calculate risk level based on score"""        if score >= 90:
             return "low"
         elif score >= 70:
             return "medium"
@@ -525,8 +504,7 @@ class SecurityAuditor:
             return "critical"
     
     def _generate_recommendations(self, findings: List[SecurityFinding]) -> List[str]:
-        """Generate prioritized recommendations"""
-        critical_findings = [f for f in findings if f.severity == SecuritySeverity.CRITICAL]
+        """Generate prioritized recommendations"""        critical_findings = [f for f in findings if f.severity == SecuritySeverity.CRITICAL]
         high_findings = [f for f in findings if f.severity == SecuritySeverity.HIGH]
         
         recommendations = []
@@ -549,8 +527,7 @@ class SecurityAuditor:
         return recommendations
     
     def _check_compliance_status(self, findings: List[SecurityFinding]) -> Dict[str, Any]:
-        """Check compliance framework status"""
-        frameworks = ["GDPR", "SOC2", "ISO27001", "PCI-DSS", "CCPA"]
+        """Check compliance framework status"""        frameworks = ["GDPR", "SOC2", "ISO27001", "PCI-DSS", "CCPA"]
         compliance_status = {}
         
         for framework in frameworks:
@@ -581,8 +558,7 @@ class SecurityAuditor:
         return compliance_status
     
     def export_report_json(self, report: AuditReport, filename: str):
-        """Export audit report as JSON"""
-        report_dict = {
+        """Export audit report as JSON"""        report_dict = {
             "audit_id": report.audit_id,
             "audit_type": report.audit_type,
             "start_time": report.start_time.isoformat(),
@@ -614,14 +590,12 @@ class SecurityAuditor:
             json.dump(report_dict, f, indent=2, ensure_ascii=False)
     
     def generate_executive_summary(self, report: AuditReport) -> str:
-        """Generate executive summary of audit results"""
-        risk_level = report.summary["risk_level"].upper()
+        """Generate executive summary of audit results"""        risk_level = report.summary["risk_level"].upper()
         total_findings = report.summary["total_findings"]
         critical_count = report.summary["severity_breakdown"].get("critical", 0)
         high_count = report.summary["severity_breakdown"].get("high", 0)
         
-        summary = f"""
-EXECUTIVE SECURITY AUDIT SUMMARY
+        summary = f"""EXECUTIVE SECURITY AUDIT SUMMARY
 ================================
 
 Audit ID: {report.audit_id}
@@ -635,30 +609,24 @@ FINDINGS OVERVIEW:
 - High Priority Issues: {high_count}
 
 KEY RECOMMENDATIONS:
-"""
-        
+"""        
         for i, rec in enumerate(report.recommendations[:5], 1):
             summary += f"{i}. {rec}\n"
         
-        summary += f"""
-COMPLIANCE STATUS:
-"""
-        
+        summary += f"""COMPLIANCE STATUS:
+"""        
         for framework, status in report.compliance_status.items():
             if status["status"] != "not-assessed":
                 summary += f"- {framework}: {status['status'].upper()}\n"
         
         if critical_count > 0:
-            summary += f"""
-⚠️  CRITICAL ALERT: {critical_count} critical security issues require immediate attention.
-"""
-        
+            summary += f"""⚠️  CRITICAL ALERT: {critical_count} critical security issues require immediate attention.
+"""        
         return summary
 
 
 def run_security_audit_cli():
-    """Command-line interface for running security audit"""
-    auditor = SecurityAuditor()
+    """Command-line interface for running security audit"""    auditor = SecurityAuditor()
     
     print("Starting comprehensive security audit...")
     print("=" * 50)

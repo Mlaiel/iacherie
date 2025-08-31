@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - SSL/TLS Examples
+"""IA Influencer Agent - SSL/TLS Examples
 Industrial-grade examples for SSL/TLS management operations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
-
 import asyncio
 import json
 import logging
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class SSLExamplesRunner:
-    """Industrial-grade SSL/TLS examples runner"""
-    
+    """Industrial-grade SSL/TLS examples runner"""    
     def __init__(self):
         self.cert_manager = create_certificate_manager()
         self.tls_config_manager = create_tls_config_manager()
@@ -191,8 +188,7 @@ PRODUCTION_MONITORING_CONFIG = {
 
 
 def example_basic_certificate_management():
-    """Example: Basic certificate management operations"""
-    print("=== Basic Certificate Management Example ===")
+    """Example: Basic certificate management operations"""    print("=== Basic Certificate Management Example ===")
     
     runner = SSLExamplesRunner()
     
@@ -240,8 +236,7 @@ def example_basic_certificate_management():
 
 
 def example_letsencrypt_certificate():
-    """Example: Let's Encrypt certificate issuance"""
-    print("\n=== Let's Encrypt Certificate Example ===")
+    """Example: Let's Encrypt certificate issuance"""    print("\n=== Let's Encrypt Certificate Example ===")
     
     try:
         # Configure Let's Encrypt (staging environment for testing)
@@ -416,8 +411,7 @@ HIGH_SECURITY_TLS_CONFIG = TLSConfig(
 )
 
 def export_monitoring_config(output_path: Path) -> None:
-    """Export complete monitoring configuration to file"""
-    monitoring_config = {
+    """Export complete monitoring configuration to file"""    monitoring_config = {
         "endpoints": [
             {
                 "name": endpoint.name,
@@ -458,9 +452,7 @@ def export_monitoring_config(output_path: Path) -> None:
         json.dump(monitoring_config, f, indent=2)
 
 def generate_docker_compose_ssl() -> str:
-    """Generate Docker Compose SSL configuration"""
-    return """
-version: '3.8'
+    """Generate Docker Compose SSL configuration"""    return """version: '3.8'
 
 services:
   ssl-monitor:
@@ -511,11 +503,8 @@ volumes:
   ssl-certs:
     driver: local
 """
-
 def generate_systemd_service() -> str:
-    """Generate systemd service configuration"""
-    return """
-[Unit]
+    """Generate systemd service configuration"""    return """[Unit]
 Description=IA Influencer Agent SSL Certificate Monitor
 After=network.target
 Wants=network.target
@@ -548,11 +537,8 @@ CPUQuota=50%
 [Install]
 WantedBy=multi-user.target
 """
-
 def generate_logrotate_config() -> str:
-    """Generate logrotate configuration"""
-    return """
-/var/log/ssl-monitor.log {
+    """Generate logrotate configuration"""    return """/var/log/ssl-monitor.log {
     daily
     missingok
     rotate 30
@@ -575,7 +561,6 @@ def generate_logrotate_config() -> str:
     create 0644 ssl-monitor ssl-monitor
 }
 """
-
 if __name__ == "__main__":
     # Export example configurations
     output_dir = Path("examples/configs")

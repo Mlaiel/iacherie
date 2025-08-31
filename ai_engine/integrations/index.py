@@ -1,5 +1,4 @@
-"""
-Integration Module Index - Quick Reference Guide
+"""Integration Module Index - Quick Reference Guide
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -13,7 +12,6 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 
 Quick Reference Index for the Advanced Integrations Module
 """
-
 # Integration Module Structure
 INTEGRATION_MODULES = {
     "social_platforms": {
@@ -110,16 +108,14 @@ INTEGRATION_MODULES = {
 
 # Quick Usage Examples
 USAGE_EXAMPLES = {
-    "initialize_orchestrator": """
-from ai.integrations import IntegrationOrchestrator
+    "initialize_orchestrator": """from ai.integrations import IntegrationOrchestrator
 
 # Initialize main orchestrator
 orchestrator = IntegrationOrchestrator()
 await orchestrator.initialize_all_services()
     """,
     
-    "add_social_platform": """
-# Add YouTube integration
+    "add_social_platform": """# Add YouTube integration
 await orchestrator.add_platform_integration('youtube', {
     'client_id': 'your_client_id',
     'client_secret': 'your_client_secret',
@@ -127,8 +123,7 @@ await orchestrator.add_platform_integration('youtube', {
 })
     """,
     
-    "distribute_content": """
-# Distribute content to multiple platforms
+    "distribute_content": """# Distribute content to multiple platforms
 result = await orchestrator.distribute_content_everywhere(
     content_data={
         'title': 'My New Track',
@@ -141,8 +136,7 @@ result = await orchestrator.distribute_content_everywhere(
 )
     """,
     
-    "get_analytics": """
-# Get unified analytics report
+    "get_analytics": """# Get unified analytics report
 from datetime import datetime, timedelta
 
 report = await orchestrator.get_unified_analytics(
@@ -151,12 +145,10 @@ report = await orchestrator.get_unified_analytics(
 )
     """,
     
-    "optimize_costs": """
-# Optimize cloud infrastructure costs
+    "optimize_costs": """# Optimize cloud infrastructure costs
 optimization = await orchestrator.optimize_cloud_costs()
 print(f"Potential savings: ${optimization['optimization_report']['potential_monthly_savings']}")
-    """
-}
+    """}
 
 # Business Logic Flow
 BUSINESS_FLOW = {

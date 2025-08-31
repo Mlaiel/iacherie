@@ -1,5 +1,4 @@
-"""
-🚀 Tenant Management System - IA Influencer Agent Platform Enterprise
+"""🚀 Tenant Management System - IA Influencer Agent Platform Enterprise
 ====================================================================
 Module: backend/platform_core/tenant_management/tenant_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Isolation de données et routage intelligent pour architecture multi-tenant
 - Gestion des ressources et quotas par tenant
 - Sécurité et conformité multi-tenant
 """
-
 import asyncio
 import logging
 import uuid
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class TenantStatus(Enum):
-    """Status des tenants"""
-    ACTIVE = "active"
+    """Status des tenants"""    ACTIVE = "active"
     SUSPENDED = "suspended"
     TRIAL = "trial"
     EXPIRED = "expired"
@@ -41,8 +38,7 @@ class TenantStatus(Enum):
 
 
 class TenantTier(Enum):
-    """Niveaux de service tenant"""
-    STARTER = "starter"
+    """Niveaux de service tenant"""    STARTER = "starter"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     PREMIUM = "premium"
@@ -50,8 +46,7 @@ class TenantTier(Enum):
 
 @dataclass
 class TenantConfig:
-    """Configuration du tenant"""
-    tenant_id: str
+    """Configuration du tenant"""    tenant_id: str
     name: str
     domain: str
     tier: TenantTier
@@ -67,8 +62,7 @@ class TenantConfig:
 
 @dataclass
 class TenantUsage:
-    """Utilisation actuelle du tenant"""
-    tenant_id: str
+    """Utilisation actuelle du tenant"""    tenant_id: str
     current_users: int
     storage_used_gb: float
     api_calls_current_hour: int
@@ -79,8 +73,7 @@ class TenantUsage:
 
 
 class TenantManager:
-    """Gestionnaire principal des tenants"""
-    
+    """Gestionnaire principal des tenants"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.tenants: Dict[str, TenantConfig] = {}
@@ -98,8 +91,7 @@ class TenantManager:
         admin_email: str,
         **kwargs
     ) -> TenantConfig:
-        """Créer un nouveau tenant"""
-        try:
+        """Créer un nouveau tenant"""        try:
             tenant_id = self._generate_tenant_id()
             
             # Configuration par défaut selon le tier
@@ -149,19 +141,16 @@ class TenantManager:
             raise
     
     async def get_tenant(self, tenant_id: str) -> Optional[TenantConfig]:
-        """Récupérer la configuration d'un tenant"""
-        return self.tenants.get(tenant_id)
+        """Récupérer la configuration d'un tenant"""        return self.tenants.get(tenant_id)
     
     async def get_tenant_by_domain(self, domain: str) -> Optional[TenantConfig]:
-        """Récupérer un tenant par son domaine"""
-        for tenant in self.tenants.values():
+        """Récupérer un tenant par son domaine"""        for tenant in self.tenants.values():
             if tenant.domain == domain:
                 return tenant
         return None
     
     async def update_tenant_status(self, tenant_id: str, status: TenantStatus) -> bool:
-        """Mettre à jour le statut d'un tenant"""
-        try:
+        """Mettre à jour le statut d'un tenant"""        try:
             if tenant_id in self.tenants:
                 self.tenants[tenant_id].status = status
                 logger.info(f"✅ Tenant {tenant_id} status updated to {status.value}")
@@ -172,8 +161,7 @@ class TenantManager:
             return False
     
     async def upgrade_tenant_tier(self, tenant_id: str, new_tier: TenantTier) -> bool:
-        """Mettre à niveau un tenant"""
-        try:
+        """Mettre à niveau un tenant"""        try:
             tenant = self.tenants.get(tenant_id)
             if not tenant:
                 return False
@@ -195,8 +183,7 @@ class TenantManager:
             return False
     
     async def check_tenant_limits(self, tenant_id: str) -> Dict[str, Any]:
-        """Vérifier les limites d'utilisation d'un tenant"""
-        try:
+        """Vérifier les limites d'utilisation d'un tenant"""        try:
             tenant = self.tenants.get(tenant_id)
             usage = self.usage_tracker.get(tenant_id)
             
@@ -232,8 +219,7 @@ class TenantManager:
             return {"error": str(e)}
     
     async def get_tenant_database_connection(self, tenant_id: str) -> Optional[Any]:
-        """Obtenir la connexion base de données pour un tenant"""
-        try:
+        """Obtenir la connexion base de données pour un tenant"""        try:
             # Retourner la connexion existante ou en créer une nouvelle
             if tenant_id in self.db_connections:
                 return self.db_connections[tenant_id]
@@ -253,8 +239,7 @@ class TenantManager:
             return None
     
     def route_request(self, domain: str, path: str) -> Dict[str, Any]:
-        """Router une requête vers le bon tenant"""
-        try:
+        """Router une requête vers le bon tenant"""        try:
             # Trouver le tenant par domaine
             tenant = None
             for t in self.tenants.values():
@@ -292,17 +277,14 @@ class TenantManager:
             return {"status": "error", "message": "Routing failed"}
     
     def _generate_tenant_id(self) -> str:
-        """Générer un ID unique pour le tenant"""
-        return f"tenant_{uuid.uuid4().hex[:12]}"
+        """Générer un ID unique pour le tenant"""        return f"tenant_{uuid.uuid4().hex[:12]}"
     
     def _generate_encryption_key(self, tenant_id: str) -> str:
-        """Générer une clé de chiffrement pour le tenant"""
-        key_material = f"{tenant_id}_{uuid.uuid4().hex}_{datetime.utcnow().isoformat()}"
+        """Générer une clé de chiffrement pour le tenant"""        key_material = f"{tenant_id}_{uuid.uuid4().hex}_{datetime.utcnow().isoformat()}"
         return hashlib.sha256(key_material.encode()).hexdigest()
     
     def _get_tier_config(self, tier: TenantTier) -> Dict[str, Any]:
-        """Obtenir la configuration pour un tier"""
-        tier_configs = {
+        """Obtenir la configuration pour un tier"""        tier_configs = {
             TenantTier.STARTER: {
                 "max_users": 5,
                 "max_storage_gb": 1,
@@ -331,8 +313,7 @@ class TenantManager:
         return tier_configs.get(tier, tier_configs[TenantTier.STARTER])
     
     async def _setup_tenant_database(self, tenant_config: TenantConfig) -> None:
-        """Configurer la base de données pour le tenant"""
-        try:
+        """Configurer la base de données pour le tenant"""        try:
             # Créer le schéma de base de données isolé
             schema_name = f"tenant_{tenant_config.tenant_id}"
             
@@ -345,8 +326,7 @@ class TenantManager:
             raise
     
     async def _create_tenant_connection(self, tenant: TenantConfig) -> Any:
-        """Créer une connexion base de données pour le tenant"""
-        try:
+        """Créer une connexion base de données pour le tenant"""        try:
             # Placeholder pour création de connexion réelle
             # En production, ceci retournerait une vraie connexion DB
             connection_info = {
@@ -364,14 +344,12 @@ class TenantManager:
 
 
 class TenantDataIsolator:
-    """Gestionnaire d'isolation des données par tenant"""
-    
+    """Gestionnaire d'isolation des données par tenant"""    
     def __init__(self, tenant_manager: TenantManager):
         self.tenant_manager = tenant_manager
         
     async def isolate_query(self, tenant_id: str, query: str, params: Dict[str, Any]) -> str:
-        """Isoler une requête pour un tenant spécifique"""
-        try:
+        """Isoler une requête pour un tenant spécifique"""        try:
             tenant = await self.tenant_manager.get_tenant(tenant_id)
             if not tenant:
                 raise ValueError(f"Tenant not found: {tenant_id}")
@@ -390,8 +368,7 @@ class TenantDataIsolator:
             raise
     
     async def encrypt_tenant_data(self, tenant_id: str, data: Any) -> str:
-        """Chiffrer les données d'un tenant"""
-        try:
+        """Chiffrer les données d'un tenant"""        try:
             tenant = await self.tenant_manager.get_tenant(tenant_id)
             if not tenant or not tenant.encryption_key:
                 raise ValueError(f"Encryption key not found for tenant: {tenant_id}")
@@ -409,8 +386,7 @@ class TenantDataIsolator:
             raise
     
     async def decrypt_tenant_data(self, tenant_id: str, encrypted_data: str) -> Any:
-        """Déchiffrer les données d'un tenant"""
-        try:
+        """Déchiffrer les données d'un tenant"""        try:
             tenant = await self.tenant_manager.get_tenant(tenant_id)
             if not tenant or not tenant.encryption_key:
                 raise ValueError(f"Encryption key not found for tenant: {tenant_id}")

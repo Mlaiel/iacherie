@@ -1,5 +1,4 @@
-"""
-Revenue Tracking Database Model
+"""Revenue Tracking Database Model
 
 Enterprise-grade SQLAlchemy model for revenue tracking, monetization analytics,
 and financial performance monitoring across multiple platforms.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -39,8 +37,7 @@ Base = declarative_base()
 
 
 class RevenueType(Enum):
-    """Revenue type enumeration"""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Revenue type enumeration"""    STREAMING_ROYALTIES = "streaming_royalties"
     DOWNLOAD_SALES = "download_sales"
     LICENSING_FEES = "licensing_fees"
     SYNC_LICENSING = "sync_licensing"
@@ -56,8 +53,7 @@ class RevenueType(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies"""
-    USD = "USD"
+    """Supported currencies"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -76,8 +72,7 @@ class Currency(Enum):
 
 
 class Platform(Enum):
-    """Revenue platforms"""
-    SPOTIFY = "spotify"
+    """Revenue platforms"""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     YOUTUBE_MUSIC = "youtube_music"
@@ -100,8 +95,7 @@ class Platform(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -113,8 +107,7 @@ class PaymentStatus(Enum):
 
 
 class RevenueStatus(Enum):
-    """Revenue record status"""
-    DRAFT = "draft"
+    """Revenue record status"""    DRAFT = "draft"
     CONFIRMED = "confirmed"
     DISPUTED = "disputed"
     VERIFIED = "verified"
@@ -123,8 +116,7 @@ class RevenueStatus(Enum):
 
 
 class TaxStatus(Enum):
-    """Tax processing status"""
-    NOT_APPLICABLE = "not_applicable"
+    """Tax processing status"""    NOT_APPLICABLE = "not_applicable"
     PENDING = "pending"
     CALCULATED = "calculated"
     PAID = "paid"
@@ -133,13 +125,11 @@ class TaxStatus(Enum):
 
 
 class RevenueTracking(Base):
-    """
-    Enterprise Revenue Tracking Model
+    """    Enterprise Revenue Tracking Model
     
     Comprehensive revenue tracking system for content monetization across
     multiple platforms with advanced analytics, tax management, and payout automation.
-    """
-    __tablename__ = "revenue_tracking"
+    """    __tablename__ = "revenue_tracking"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -288,8 +278,7 @@ class RevenueTracking(Base):
         return f"<RevenueTracking(id={self.id}, platform={self.platform.value}, revenue_type={self.revenue_type.value}, amount={self.gross_amount})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        return {
+        """Convert model to dictionary for API responses"""        return {
             "id": str(self.id),
             "content_fingerprint_id": str(self.content_fingerprint_id) if self.content_fingerprint_id else None,
             "user_id": str(self.user_id),
@@ -379,8 +368,7 @@ class RevenueTracking(Base):
         }
     
     def calculate_net_revenue(self) -> Decimal:
-        """Calculate net revenue after all deductions"""
-        total_deductions = (
+        """Calculate net revenue after all deductions"""        total_deductions = (
             self.platform_fee + 
             self.service_fee + 
             self.processing_fee + 
@@ -391,27 +379,23 @@ class RevenueTracking(Base):
         return self.gross_amount - total_deductions
     
     def calculate_profit_margin(self) -> float:
-        """Calculate profit margin percentage"""
-        if self.gross_amount > 0:
+        """Calculate profit margin percentage"""        if self.gross_amount > 0:
             return float((self.net_amount / self.gross_amount) * 100)
         return 0.0
     
     def get_effective_royalty_rate(self) -> float:
-        """Get effective royalty rate based on performance"""
-        if self.play_count and self.gross_amount:
+        """Get effective royalty rate based on performance"""        if self.play_count and self.gross_amount:
             return float(self.gross_amount / self.play_count)
         return self.royalty_rate or 0.0
     
     def is_payment_overdue(self) -> bool:
-        """Check if payment is overdue"""
-        if self.payment_due_date and self.payment_status == PaymentStatus.PENDING:
+        """Check if payment is overdue"""        if self.payment_due_date and self.payment_status == PaymentStatus.PENDING:
             return datetime.now(timezone.utc) > self.payment_due_date
         return False
     
     @classmethod
     def create_from_platform_data(cls, platform_data: Dict[str, Any], user_id: str, content_fingerprint_id: str = None) -> 'RevenueTracking':
-        """Create RevenueTracking from platform API data"""
-        return cls(
+        """Create RevenueTracking from platform API data"""        return cls(
             content_fingerprint_id=content_fingerprint_id,
             user_id=user_id,
             revenue_type=RevenueType(platform_data.get('revenue_type', 'streaming_royalties')),

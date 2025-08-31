@@ -1,5 +1,4 @@
-"""
-Advanced Multi-Modal Integration Models for IA Influencer Agent Platform
+"""Advanced Multi-Modal Integration Models for IA Influencer Agent Platform
 Enterprise-grade cross-modal understanding and fusion systems
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -38,8 +36,7 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class ModalityType(Enum):
-    """Supported modality types"""
-    AUDIO = "audio"
+    """Supported modality types"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -49,8 +46,7 @@ class ModalityType(Enum):
 
 
 class FusionStrategy(Enum):
-    """Multi-modal fusion strategies"""
-    EARLY_FUSION = "early_fusion"          # Feature-level fusion
+    """Multi-modal fusion strategies"""    EARLY_FUSION = "early_fusion"          # Feature-level fusion
     LATE_FUSION = "late_fusion"            # Decision-level fusion  
     HYBRID_FUSION = "hybrid_fusion"        # Combination of both
     ATTENTION_FUSION = "attention_fusion"   # Attention-based fusion
@@ -60,8 +56,7 @@ class FusionStrategy(Enum):
 
 @dataclass
 class MultiModalConfig:
-    """Configuration for multi-modal models"""
-    enabled_modalities: List[ModalityType]
+    """Configuration for multi-modal models"""    enabled_modalities: List[ModalityType]
     fusion_strategy: FusionStrategy
     embedding_dimension: int = 512
     attention_heads: int = 8
@@ -77,8 +72,7 @@ class MultiModalConfig:
 
 @dataclass
 class ModalityEmbedding:
-    """Single modality embedding representation"""
-    modality: ModalityType
+    """Single modality embedding representation"""    modality: ModalityType
     embedding: np.ndarray
     confidence: float
     timestamp: float
@@ -88,8 +82,7 @@ class ModalityEmbedding:
 
 @dataclass
 class MultiModalResult:
-    """Multi-modal processing result"""
-    fused_embedding: np.ndarray
+    """Multi-modal processing result"""    fused_embedding: np.ndarray
     modality_embeddings: List[ModalityEmbedding]
     fusion_weights: Dict[ModalityType, float]
     confidence_score: float
@@ -99,11 +92,9 @@ class MultiModalResult:
 
 
 class CrossModalAttention(nn.Module):
-    """
-    Cross-modal attention mechanism for multi-modal fusion
+    """    Cross-modal attention mechanism for multi-modal fusion
     Allows different modalities to attend to each other
-    """
-    
+    """    
     def __init__(self, embedding_dim: int, num_heads: int = 8):
         super().__init__()
         self.embedding_dim = embedding_dim
@@ -132,16 +123,14 @@ class CrossModalAttention(nn.Module):
         self.layer_norm = nn.LayerNorm(embedding_dim)
     
     def forward(self, modality_embeddings: Dict[ModalityType, torch.Tensor]) -> Dict[ModalityType, torch.Tensor]:
-        """
-        Compute cross-modal attention
+        """        Compute cross-modal attention
         
         Args:
             modality_embeddings: Dict mapping ModalityType to embeddings (batch_size, embedding_dim)
             
         Returns:
             Attended embeddings for each modality
-        """
-        batch_size = next(iter(modality_embeddings.values())).size(0)
+        """        batch_size = next(iter(modality_embeddings.values())).size(0)
         attended_embeddings = {}
         
         for query_modality, query_embed in modality_embeddings.items():
@@ -191,11 +180,9 @@ class CrossModalAttention(nn.Module):
 
 
 class MultiModalTransformerFusion(nn.Module):
-    """
-    Transformer-based multi-modal fusion architecture
+    """    Transformer-based multi-modal fusion architecture
     Uses cross-modal attention and temporal modeling
-    """
-    
+    """    
     def __init__(self, config: MultiModalConfig):
         super().__init__()
         self.config = config
@@ -246,8 +233,7 @@ class MultiModalTransformerFusion(nn.Module):
         )
     
     def _create_modality_encoder(self, modality: ModalityType) -> nn.Module:
-        """Create encoder for specific modality"""
-        if modality == ModalityType.AUDIO:
+        """Create encoder for specific modality"""        if modality == ModalityType.AUDIO:
             return nn.Sequential(
                 nn.Linear(768, self.config.embedding_dimension),  # Assuming wav2vec2 features
                 nn.ReLU(),
@@ -279,16 +265,14 @@ class MultiModalTransformerFusion(nn.Module):
             )
     
     def forward(self, modality_inputs: Dict[ModalityType, torch.Tensor]) -> Tuple[torch.Tensor, Dict]:
-        """
-        Forward pass through multi-modal fusion
+        """        Forward pass through multi-modal fusion
         
         Args:
             modality_inputs: Dict mapping ModalityType to input tensors
             
         Returns:
             Tuple of (fused_embedding, attention_info)
-        """
-        # Encode each modality
+        """        # Encode each modality
         modality_embeddings = {}
         for modality, input_tensor in modality_inputs.items():
             if modality in self.config.enabled_modalities:
@@ -342,11 +326,9 @@ class MultiModalTransformerFusion(nn.Module):
 
 
 class MultiModalIntegrationEngine(BaseAIModel):
-    """
-    Advanced multi-modal integration engine for the IA Influencer Agent
+    """    Advanced multi-modal integration engine for the IA Influencer Agent
     Processes and fuses audio, video, image, text, and metadata
-    """
-    
+    """    
     def __init__(self, config: ModelConfig, multimodal_config: MultiModalConfig):
         super().__init__(config)
         self.multimodal_config = multimodal_config
@@ -364,8 +346,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
         self.sync_buffer = {modality: [] for modality in multimodal_config.enabled_modalities}
         
     def _initialize_pretrained_models(self):
-        """Initialize pre-trained models for each modality"""
-        try:
+        """Initialize pre-trained models for each modality"""        try:
             # Text processing
             if ModalityType.TEXT in self.multimodal_config.enabled_modalities:
                 self.text_tokenizer = AutoTokenizer.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
@@ -389,16 +370,14 @@ class MultiModalIntegrationEngine(BaseAIModel):
             self._initialize_dummy_models()
     
     def _initialize_dummy_models(self):
-        """Initialize dummy models as fallbacks"""
-        self.logger.info("Initializing dummy models as fallbacks")
+        """Initialize dummy models as fallbacks"""        self.logger.info("Initializing dummy models as fallbacks")
         # Create simple dummy models that return random features
         self.dummy_text_model = lambda x: torch.randn(len(x), 768)
         self.dummy_image_model = lambda x: torch.randn(x.shape[0], 768)
         self.dummy_audio_model = lambda x: torch.randn(x.shape[0], 768)
     
     def _initialize_similarity_calculator(self):
-        """Initialize cross-modal similarity calculation"""
-        class CrossModalSimilarity(nn.Module):
+        """Initialize cross-modal similarity calculation"""        class CrossModalSimilarity(nn.Module):
             def __init__(self, embedding_dim):
                 super().__init__()
                 self.projection = nn.Linear(embedding_dim, embedding_dim)
@@ -415,8 +394,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
         content_data: Dict[str, Any],
         synchronize: bool = True
     ) -> MultiModalResult:
-        """
-        Process multi-modal content and return fused representation
+        """        Process multi-modal content and return fused representation
         
         Args:
             content_data: Dict containing different modality data
@@ -424,8 +402,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             
         Returns:
             Multi-modal processing result
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Extract features from each modality
@@ -502,8 +479,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             raise ModelError(f"Multi-modal processing error: {e}")
     
     async def _extract_modality_features(self, modality: ModalityType, data: Any) -> np.ndarray:
-        """Extract features from specific modality"""
-        try:
+        """Extract features from specific modality"""        try:
             if modality == ModalityType.TEXT:
                 return await self._extract_text_features(data)
             elif modality == ModalityType.IMAGE:
@@ -522,8 +498,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             return np.zeros(self.multimodal_config.embedding_dimension)
     
     async def _extract_text_features(self, text_data: str) -> np.ndarray:
-        """Extract features from text"""
-        try:
+        """Extract features from text"""        try:
             if hasattr(self, 'text_model'):
                 # Use real model
                 inputs = self.text_tokenizer(text_data, return_tensors="pt", padding=True, truncation=True, max_length=512)
@@ -541,8 +516,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             return np.random.randn(768)  # Default BERT-like dimension
     
     async def _extract_image_features(self, image_data: np.ndarray) -> np.ndarray:
-        """Extract features from image"""
-        try:
+        """Extract features from image"""        try:
             if hasattr(self, 'clip_model'):
                 # Use CLIP model
                 inputs = self.clip_processor(images=image_data, return_tensors="pt")
@@ -560,8 +534,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             return np.random.randn(768)
     
     async def _extract_audio_features(self, audio_data: np.ndarray) -> np.ndarray:
-        """Extract features from audio"""
-        try:
+        """Extract features from audio"""        try:
             if hasattr(self, 'wav2vec_model'):
                 # Use Wav2Vec2 model
                 inputs = self.wav2vec_processor(audio_data, return_tensors="pt", sampling_rate=16000)
@@ -579,8 +552,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             return np.random.randn(768)
     
     async def _extract_video_features(self, video_data: np.ndarray) -> np.ndarray:
-        """Extract features from video (simplified as frame average)"""
-        try:
+        """Extract features from video (simplified as frame average)"""        try:
             # Extract features from multiple frames and average
             frame_features = []
             
@@ -603,8 +575,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             return np.random.randn(768)
     
     async def _extract_metadata_features(self, metadata: Dict[str, Any]) -> np.ndarray:
-        """Extract features from metadata"""
-        try:
+        """Extract features from metadata"""        try:
             # Convert metadata to numerical features
             feature_vector = []
             
@@ -632,8 +603,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             return np.random.randn(256)
     
     def _synchronize_modalities(self, modality_embeddings: List[ModalityEmbedding]) -> List[ModalityEmbedding]:
-        """Synchronize modalities based on timestamps"""
-        try:
+        """Synchronize modalities based on timestamps"""        try:
             if len(modality_embeddings) <= 1:
                 return modality_embeddings
             
@@ -657,8 +627,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             return modality_embeddings
     
     def _calculate_modality_confidence(self, modality: ModalityType, embedding: np.ndarray) -> float:
-        """Calculate confidence score for modality"""
-        try:
+        """Calculate confidence score for modality"""        try:
             # Simple confidence based on embedding magnitude and variance
             magnitude = np.linalg.norm(embedding)
             variance = np.var(embedding)
@@ -672,8 +641,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
             return 0.5  # Default confidence
     
     def _assess_modality_quality(self, modality: ModalityType, embedding: np.ndarray) -> float:
-        """Assess quality of modality embedding"""
-        try:
+        """Assess quality of modality embedding"""        try:
             # Quality based on embedding distribution
             std_dev = np.std(embedding)
             mean_abs = np.mean(np.abs(embedding))
@@ -691,8 +659,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
         modality_embeddings: List[ModalityEmbedding], 
         fusion_info: Dict
     ) -> Dict[ModalityType, float]:
-        """Calculate fusion weights for each modality"""
-        try:
+        """Calculate fusion weights for each modality"""        try:
             weights = {}
             
             if "fusion_weights" in fusion_info:
@@ -721,8 +688,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
         self, 
         embeddings: Dict[ModalityType, torch.Tensor]
     ) -> Dict[Tuple[ModalityType, ModalityType], float]:
-        """Calculate cross-modal alignment scores"""
-        try:
+        """Calculate cross-modal alignment scores"""        try:
             alignments = {}
             modalities = list(embeddings.keys())
             
@@ -747,8 +713,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
         modality_embeddings: List[ModalityEmbedding],
         fusion_info: Dict
     ) -> float:
-        """Calculate overall confidence score"""
-        try:
+        """Calculate overall confidence score"""        try:
             if not modality_embeddings:
                 return 0.0
             
@@ -779,8 +744,7 @@ class MultiModalIntegrationEngine(BaseAIModel):
         modality_embeddings: List[ModalityEmbedding],
         fusion_info: Dict
     ) -> Dict[str, float]:
-        """Calculate comprehensive quality metrics"""
-        try:
+        """Calculate comprehensive quality metrics"""        try:
             metrics = {}
             
             if modality_embeddings:

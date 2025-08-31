@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Business Events Metrics Collector
+"""IA Influencer Agent - Business Events Metrics Collector
 Enterprise business metrics collection for content protection and monetization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -31,7 +30,6 @@ Features:
 - Collaboration opportunity metrics
 - Creator success measurement
 """
-
 import asyncio
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -50,8 +48,7 @@ metrics_config = get_metrics_config()
 
 
 class BusinessEventType(Enum):
-    """Business event types for metrics collection"""
-    # Content Protection Events
+    """Business event types for metrics collection"""    # Content Protection Events
     CONTENT_UPLOADED = "content_uploaded"
     FINGERPRINT_CREATED = "fingerprint_created"
     VIOLATION_DETECTED = "violation_detected"
@@ -80,8 +77,7 @@ class BusinessEventType(Enum):
 
 @dataclass
 class BusinessEvent:
-    """Business event data structure"""
-    event_type: BusinessEventType
+    """Business event data structure"""    event_type: BusinessEventType
     tenant_id: str
     user_id: Optional[str]
     timestamp: datetime
@@ -94,13 +90,11 @@ class BusinessEvent:
 
 
 class BusinessEventsCollector:
-    """
-    Enterprise business events metrics collector
+    """    Enterprise business events metrics collector
     
     Tracks all business-critical events for the IA Influencer platform
     including content protection, revenue generation, and user engagement
-    """
-    
+    """    
     def __init__(self):
         self.redis_manager = RedisManager()
         self.logger = logger
@@ -124,8 +118,7 @@ class BusinessEventsCollector:
         duration: Optional[float] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track content upload event"""
-        event = BusinessEvent(
+        """Track content upload event"""        event = BusinessEvent(
             event_type=BusinessEventType.CONTENT_UPLOADED,
             tenant_id=tenant_id,
             user_id=user_id,
@@ -150,8 +143,7 @@ class BusinessEventsCollector:
         fingerprint_quality: float,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track fingerprint creation event"""
-        event = BusinessEvent(
+        """Track fingerprint creation event"""        event = BusinessEvent(
             event_type=BusinessEventType.FINGERPRINT_CREATED,
             tenant_id=tenant_id,
             user_id=user_id,
@@ -177,8 +169,7 @@ class BusinessEventsCollector:
         detected_url: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track content violation detection"""
-        event = BusinessEvent(
+        """Track content violation detection"""        event = BusinessEvent(
             event_type=BusinessEventType.VIOLATION_DETECTED,
             tenant_id=tenant_id,
             user_id=user_id,
@@ -205,8 +196,7 @@ class BusinessEventsCollector:
         revenue_source: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track revenue generation event"""
-        event = BusinessEvent(
+        """Track revenue generation event"""        event = BusinessEvent(
             event_type=BusinessEventType.REVENUE_GENERATED,
             tenant_id=tenant_id,
             user_id=user_id,
@@ -236,8 +226,7 @@ class BusinessEventsCollector:
         duration_months: int,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track licensing deal creation"""
-        event = BusinessEvent(
+        """Track licensing deal creation"""        event = BusinessEvent(
             event_type=BusinessEventType.LICENSING_DEAL_CREATED,
             tenant_id=tenant_id,
             user_id=user_id,
@@ -265,8 +254,7 @@ class BusinessEventsCollector:
         engagement_score: Optional[float] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track user engagement event"""
-        event_type_map = {
+        """Track user engagement event"""        event_type_map = {
             "register": BusinessEventType.USER_REGISTERED,
             "verify": BusinessEventType.USER_VERIFIED,
             "complete_profile": BusinessEventType.PROFILE_COMPLETED,
@@ -299,8 +287,7 @@ class BusinessEventsCollector:
         prediction_count: int,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track AI model performance metrics"""
-        event = BusinessEvent(
+        """Track AI model performance metrics"""        event = BusinessEvent(
             event_type=BusinessEventType.AI_MODEL_TRAINED,
             tenant_id=tenant_id,
             user_id=None,
@@ -318,8 +305,7 @@ class BusinessEventsCollector:
         await self._add_event(event)
     
     async def _add_event(self, event: BusinessEvent) -> None:
-        """Add event to processing buffer"""
-        async with self.buffer_lock:
+        """Add event to processing buffer"""        async with self.buffer_lock:
             self.event_buffer.append(event)
             
             # Flush buffer if it gets too large
@@ -327,8 +313,7 @@ class BusinessEventsCollector:
                 await self._flush_events()
     
     async def _flush_events(self) -> None:
-        """Flush events buffer to storage and processing"""
-        if not self.event_buffer:
+        """Flush events buffer to storage and processing"""        if not self.event_buffer:
             return
         
         events_to_process = self.event_buffer.copy()
@@ -348,14 +333,12 @@ class BusinessEventsCollector:
             self.logger.error(f"Error flushing events: {e}")
     
     async def _store_events(self, events: List[BusinessEvent]) -> None:
-        """Store events in database"""
-        try:
+        """Store events in database"""        try:
             async with get_database_session() as session:
                 for event in events:
                     # Store in events table
                     await session.execute(
-                        """
-                        INSERT INTO business_events 
+                        """                        INSERT INTO business_events 
                         (tenant_id, user_id, event_type, timestamp, event_data, 
                          platform, content_type, revenue_amount, currency, metadata)
                         VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -377,8 +360,7 @@ class BusinessEventsCollector:
             self.logger.error(f"Error storing events in database: {e}")
     
     async def _process_realtime_metrics(self, events: List[BusinessEvent]) -> None:
-        """Process real-time metrics from events"""
-        try:
+        """Process real-time metrics from events"""        try:
             # Group events by type and tenant
             event_groups = defaultdict(lambda: defaultdict(list))
             for event in events:
@@ -403,8 +385,7 @@ class BusinessEventsCollector:
         tenant_id: str,
         events_by_type: Dict[BusinessEventType, List[BusinessEvent]]
     ) -> Dict[str, Any]:
-        """Calculate real-time metrics from events"""
-        metrics = {
+        """Calculate real-time metrics from events"""        metrics = {
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "tenant_id": tenant_id,
             "period": "realtime"
@@ -443,8 +424,7 @@ class BusinessEventsCollector:
         return metrics
     
     async def _cache_events_for_aggregation(self, events: List[BusinessEvent]) -> None:
-        """Cache events for later aggregation"""
-        try:
+        """Cache events for later aggregation"""        try:
             # Group events by hour for aggregation
             current_hour = datetime.now(timezone.utc).replace(minute=0, second=0, microsecond=0)
             
@@ -466,8 +446,7 @@ class BusinessEventsCollector:
         tenant_id: str,
         time_range: str = "24h"
     ) -> Dict[str, Any]:
-        """Get business metrics summary for tenant"""
-        try:
+        """Get business metrics summary for tenant"""        try:
             # Parse time range
             if time_range == "1h":
                 start_time = datetime.now(timezone.utc) - timedelta(hours=1)
@@ -483,8 +462,7 @@ class BusinessEventsCollector:
             async with get_database_session() as session:
                 # Get business metrics from database
                 result = await session.fetchrow(
-                    """
-                    SELECT 
+                    """                    SELECT 
                         COUNT(*) as total_events,
                         COUNT(CASE WHEN event_type = 'content_uploaded' THEN 1 END) as content_uploads,
                         COUNT(CASE WHEN event_type = 'violation_detected' THEN 1 END) as violations_detected,
@@ -519,8 +497,7 @@ class BusinessEventsCollector:
         platform: str,
         time_range: str = "24h"
     ) -> Dict[str, Any]:
-        """Get platform-specific performance metrics"""
-        try:
+        """Get platform-specific performance metrics"""        try:
             if time_range == "1h":
                 start_time = datetime.now(timezone.utc) - timedelta(hours=1)
             elif time_range == "24h":
@@ -532,8 +509,7 @@ class BusinessEventsCollector:
             
             async with get_database_session() as session:
                 result = await session.fetchrow(
-                    """
-                    SELECT 
+                    """                    SELECT 
                         COUNT(*) as total_events,
                         COUNT(CASE WHEN event_type = 'violation_detected' THEN 1 END) as violations,
                         COALESCE(SUM(revenue_amount), 0) as revenue,
@@ -561,8 +537,7 @@ class BusinessEventsCollector:
             return {}
     
     async def _start_background_processing(self) -> None:
-        """Start background event processing"""
-        while self.processing_enabled:
+        """Start background event processing"""        while self.processing_enabled:
             try:
                 # Flush events buffer periodically
                 await asyncio.sleep(self.buffer_flush_interval)
@@ -575,8 +550,7 @@ class BusinessEventsCollector:
                 await asyncio.sleep(5)
     
     async def stop_processing(self) -> None:
-        """Stop background processing and flush remaining events"""
-        self.processing_enabled = False
+        """Stop background processing and flush remaining events"""        self.processing_enabled = False
         async with self.buffer_lock:
             if self.event_buffer:
                 await self._flush_events()

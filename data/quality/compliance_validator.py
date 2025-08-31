@@ -1,5 +1,4 @@
-"""
-Compliance Validator - Regulatory Compliance Verification System
+"""Compliance Validator - Regulatory Compliance Verification System
 ================================================================
 
 Enterprise-grade regulatory and legal compliance validation for content.
@@ -8,7 +7,6 @@ Ensures GDPR, CCPA, copyright, and platform policy compliance.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 from typing import Dict, Any, List, Optional, Union, Set
 import asyncio
 import logging
@@ -20,8 +18,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class ComplianceRegulation(Enum):
-    """Supported compliance regulations"""
-    GDPR = "gdpr"           # General Data Protection Regulation (EU)
+    """Supported compliance regulations"""    GDPR = "gdpr"           # General Data Protection Regulation (EU)
     CCPA = "ccpa"           # California Consumer Privacy Act (US)
     COPPA = "coppa"         # Children's Online Privacy Protection Act (US)
     DMCA = "dmca"           # Digital Millennium Copyright Act (US)
@@ -30,14 +27,12 @@ class ComplianceRegulation(Enum):
     CONTENT_POLICY = "content_policy"  # Content guidelines compliance
 
 class ComplianceLevel(Enum):
-    """Compliance requirement levels"""
-    MANDATORY = "mandatory"
+    """Compliance requirement levels"""    MANDATORY = "mandatory"
     RECOMMENDED = "recommended"
     OPTIONAL = "optional"
 
 class ComplianceResult:
-    """Container for compliance validation results"""
-    
+    """Container for compliance validation results"""    
     def __init__(self):
         self.passed = True
         self.score = 100.0
@@ -47,8 +42,7 @@ class ComplianceResult:
         self.recommendations: List[str] = []
         self.required_actions: List[str] = []
 
-"""
-Compliance Validator - Regulatory Compliance Verification System
+"""Compliance Validator - Regulatory Compliance Verification System
 ================================================================
 
 Enterprise-grade regulatory and legal compliance validation for content.
@@ -66,7 +60,6 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 from typing import Dict, Any, List, Optional, Union, Set, Tuple, Callable
 import asyncio
 import logging
@@ -87,8 +80,7 @@ import spacy
 logger = logging.getLogger(__name__)
 
 class ComplianceRegulation(Enum):
-    """Supported compliance regulations"""
-    GDPR = "gdpr"                       # General Data Protection Regulation (EU)
+    """Supported compliance regulations"""    GDPR = "gdpr"                       # General Data Protection Regulation (EU)
     CCPA = "ccpa"                       # California Consumer Privacy Act (US)
     COPPA = "coppa"                     # Children's Online Privacy Protection Act (US)
     DMCA = "dmca"                       # Digital Millennium Copyright Act (US)
@@ -101,22 +93,19 @@ class ComplianceRegulation(Enum):
     DATA_RETENTION = "data_retention"    # Data retention policies
 
 class ComplianceLevel(Enum):
-    """Compliance requirement levels"""
-    MANDATORY = "mandatory"             # Must comply - legal requirement
+    """Compliance requirement levels"""    MANDATORY = "mandatory"             # Must comply - legal requirement
     RECOMMENDED = "recommended"         # Should comply - best practice
     OPTIONAL = "optional"              # May comply - enhancement
 
 class ComplianceSeverity(Enum):
-    """Compliance violation severity"""
-    CRITICAL = "critical"              # Legal liability risk
+    """Compliance violation severity"""    CRITICAL = "critical"              # Legal liability risk
     HIGH = "high"                      # Significant compliance risk
     MEDIUM = "medium"                  # Moderate compliance concern
     LOW = "low"                        # Minor compliance issue
     INFO = "info"                      # Informational finding
 
 class ComplianceScope(Enum):
-    """Scope of compliance check"""
-    CONTENT = "content"                # Content-specific compliance
+    """Scope of compliance check"""    CONTENT = "content"                # Content-specific compliance
     METADATA = "metadata"              # Metadata compliance
     PROCESSING = "processing"          # Data processing compliance
     STORAGE = "storage"                # Data storage compliance
@@ -125,8 +114,7 @@ class ComplianceScope(Enum):
 
 @dataclass
 class ComplianceViolation:
-    """Individual compliance violation"""
-    regulation: ComplianceRegulation
+    """Individual compliance violation"""    regulation: ComplianceRegulation
     severity: ComplianceSeverity
     scope: ComplianceScope
     title: str
@@ -157,8 +145,7 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceResult:
-    """Comprehensive compliance validation result"""
-    regulation: ComplianceRegulation
+    """Comprehensive compliance validation result"""    regulation: ComplianceRegulation
     passed: bool = True
     compliance_score: float = 100.0
     violations: List[ComplianceViolation] = field(default_factory=list)
@@ -171,16 +158,14 @@ class ComplianceResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     def add_violation(self, violation: ComplianceViolation):
-        """Add compliance violation"""
-        if violation.severity in [ComplianceSeverity.CRITICAL, ComplianceSeverity.HIGH]:
+        """Add compliance violation"""        if violation.severity in [ComplianceSeverity.CRITICAL, ComplianceSeverity.HIGH]:
             self.violations.append(violation)
             self.passed = False
         else:
             self.warnings.append(violation)
     
     def calculate_score(self) -> float:
-        """Calculate compliance score"""
-        if not self.violations and not self.warnings:
+        """Calculate compliance score"""        if not self.violations and not self.warnings:
             return 100.0
         
         # Penalty weights by severity
@@ -218,8 +203,7 @@ class ComplianceResult:
         }
 
 class ComplianceRule:
-    """Individual compliance rule definition"""
-    
+    """Individual compliance rule definition"""    
     def __init__(
         self,
         regulation: ComplianceRegulation,
@@ -248,35 +232,29 @@ class ComplianceRule:
         self.last_execution = None
     
     def update_stats(self, had_violation: bool):
-        """Update rule execution statistics"""
-        self.execution_count += 1
+        """Update rule execution statistics"""        self.execution_count += 1
         if had_violation:
             self.violation_count += 1
         self.last_execution = datetime.utcnow()
     
     @property
     def compliance_rate(self) -> float:
-        """Calculate compliance rate for this rule"""
-        if self.execution_count == 0:
+        """Calculate compliance rate for this rule"""        if self.execution_count == 0:
             return 100.0
         return ((self.execution_count - self.violation_count) / self.execution_count) * 100
 
 class ComplianceValidator:
-    """
-    Enterprise-grade regulatory compliance validation system.
+    """    Enterprise-grade regulatory compliance validation system.
     
     Provides comprehensive compliance checking for GDPR, CCPA, copyright,
     and platform policies with automated violation detection and remediation.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize compliance validator.
+        """        Initialize compliance validator.
         
         Args:
             config: Compliance configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Configuration
@@ -319,8 +297,7 @@ class ComplianceValidator:
         self.logger.info(f"ComplianceValidator initialized with {len(self.rules)} rules")
     
     def _initialize_personal_data_patterns(self) -> Dict[str, List[str]]:
-        """Initialize personal data detection patterns"""
-        return {
+        """Initialize personal data detection patterns"""        return {
             'email': [
                 r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'
             ],
@@ -349,8 +326,7 @@ class ComplianceValidator:
         }
     
     def _initialize_copyright_patterns(self) -> Dict[str, List[str]]:
-        """Initialize copyright detection patterns"""
-        return {
+        """Initialize copyright detection patterns"""        return {
             'copyright_notice': [
                 r'©\s*\d{4}',
                 r'copyright\s+\d{4}',
@@ -379,8 +355,7 @@ class ComplianceValidator:
         metadata: Optional[Dict[str, Any]] = None,
         regulations: Optional[List[ComplianceRegulation]] = None
     ) -> Dict[str, ComplianceResult]:
-        """
-        Validate content compliance against specified regulations.
+        """        Validate content compliance against specified regulations.
         
         Args:
             content_data: Content to validate
@@ -390,8 +365,7 @@ class ComplianceValidator:
             
         Returns:
             Dictionary of compliance results by regulation
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         results = {}
         
         try:
@@ -431,8 +405,7 @@ class ComplianceValidator:
         regulation: ComplianceRegulation,
         metadata: Optional[Dict[str, Any]]
     ) -> ComplianceResult:
-        """Validate compliance for a single regulation"""
-        
+        """Validate compliance for a single regulation"""        
         start_time = datetime.utcnow()
         result = ComplianceResult(regulation=regulation)
         
@@ -505,8 +478,7 @@ class ComplianceValidator:
             return result
     
     def _initialize_gdpr_rules(self):
-        """Initialize GDPR compliance rules"""
-        
+        """Initialize GDPR compliance rules"""        
         # Personal data detection
         self._add_rule(
             regulation=ComplianceRegulation.GDPR,
@@ -568,8 +540,7 @@ class ComplianceValidator:
         )
     
     def _initialize_ccpa_rules(self):
-        """Initialize CCPA compliance rules"""
-        
+        """Initialize CCPA compliance rules"""        
         # Personal information detection
         self._add_rule(
             regulation=ComplianceRegulation.CCPA,
@@ -607,8 +578,7 @@ class ComplianceValidator:
         )
     
     def _initialize_copyright_rules(self):
-        """Initialize copyright compliance rules"""
-        
+        """Initialize copyright compliance rules"""        
         # Copyright notice detection
         self._add_rule(
             regulation=ComplianceRegulation.COPYRIGHT,
@@ -646,8 +616,7 @@ class ComplianceValidator:
         )
     
     def _initialize_content_policy_rules(self):
-        """Initialize content policy compliance rules"""
-        
+        """Initialize content policy compliance rules"""        
         # Inappropriate content detection
         self._add_rule(
             regulation=ComplianceRegulation.CONTENT_POLICY,
@@ -696,8 +665,7 @@ class ComplianceValidator:
         validator: Callable,
         applies_to_content_types: Optional[List[str]] = None
     ):
-        """Add compliance rule to registry"""
-        rule = ComplianceRule(
+        """Add compliance rule to registry"""        rule = ComplianceRule(
             regulation=regulation,
             rule_id=rule_id,
             title=title,
@@ -717,8 +685,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate GDPR personal data handling"""
-        
+        """Validate GDPR personal data handling"""        
         try:
             # Convert content to text for analysis
             text_content = self._extract_text_content(content_data, content_type)
@@ -766,8 +733,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate GDPR consent requirements"""
-        
+        """Validate GDPR consent requirements"""        
         # Check for personal data processing
         text_content = self._extract_text_content(content_data, content_type)
         if not text_content:
@@ -816,8 +782,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate GDPR data minimization principle"""
-        
+        """Validate GDPR data minimization principle"""        
         processing_purpose = metadata.get('processing_purpose')
         if not processing_purpose:
             return ComplianceViolation(
@@ -854,8 +819,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate GDPR purpose limitation principle"""
-        
+        """Validate GDPR purpose limitation principle"""        
         original_purpose = metadata.get('original_purpose')
         current_purpose = metadata.get('processing_purpose')
         
@@ -880,8 +844,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate GDPR data retention requirements"""
-        
+        """Validate GDPR data retention requirements"""        
         creation_date = metadata.get('created_at')
         retention_period = metadata.get('retention_period_days')
         
@@ -910,8 +873,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate CCPA personal information handling"""
-        
+        """Validate CCPA personal information handling"""        
         # CCPA has broader definition of personal information
         text_content = self._extract_text_content(content_data, content_type)
         if not text_content:
@@ -949,8 +911,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate CCPA consumer rights compliance"""
-        
+        """Validate CCPA consumer rights compliance"""        
         # Check if consumer rights are documented and accessible
         consumer_rights_info = metadata.get('ccpa_consumer_rights_info')
         opt_out_mechanism = metadata.get('ccpa_opt_out_mechanism')
@@ -985,8 +946,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate CCPA sale disclosure requirements"""
-        
+        """Validate CCPA sale disclosure requirements"""        
         sells_personal_info = metadata.get('sells_personal_information', False)
         sale_disclosure = metadata.get('ccpa_sale_disclosure')
         
@@ -1010,8 +970,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate copyright notice requirements"""
-        
+        """Validate copyright notice requirements"""        
         text_content = self._extract_text_content(content_data, content_type)
         if not text_content:
             return None
@@ -1043,8 +1002,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate copyright licensing"""
-        
+        """Validate copyright licensing"""        
         content_source = metadata.get('content_source')
         license_info = metadata.get('license_info')
         attribution = metadata.get('attribution')
@@ -1079,8 +1037,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate DMCA compliance"""
-        
+        """Validate DMCA compliance"""        
         dmca_agent_info = metadata.get('dmca_agent_info')
         takedown_procedure = metadata.get('dmca_takedown_procedure')
         
@@ -1115,8 +1072,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate content policy for inappropriate content"""
-        
+        """Validate content policy for inappropriate content"""        
         text_content = self._extract_text_content(content_data, content_type)
         if not text_content:
             return None
@@ -1151,8 +1107,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate content policy for hate speech"""
-        
+        """Validate content policy for hate speech"""        
         text_content = self._extract_text_content(content_data, content_type)
         if not text_content:
             return None
@@ -1185,8 +1140,7 @@ class ComplianceValidator:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Optional[ComplianceViolation]:
-        """Validate content policy for misinformation"""
-        
+        """Validate content policy for misinformation"""        
         text_content = self._extract_text_content(content_data, content_type)
         if not text_content:
             return None
@@ -1216,8 +1170,7 @@ class ComplianceValidator:
         return None
     
     def _extract_text_content(self, content_data: Any, content_type: str) -> Optional[str]:
-        """Extract text content for analysis"""
-        
+        """Extract text content for analysis"""        
         if content_type == "text" or isinstance(content_data, str):
             return content_data if isinstance(content_data, str) else str(content_data)
         
@@ -1238,8 +1191,7 @@ class ComplianceValidator:
         return None
     
     def _generate_recommendations(self, result: ComplianceResult) -> List[str]:
-        """Generate compliance recommendations based on violations"""
-        
+        """Generate compliance recommendations based on violations"""        
         recommendations = []
         
         # General recommendations by regulation
@@ -1278,8 +1230,7 @@ class ComplianceValidator:
         return recommendations
     
     def get_compliance_statistics(self) -> Dict[str, Any]:
-        """Get compliance validation statistics"""
-        
+        """Get compliance validation statistics"""        
         if not self.validation_history:
             return {'message': 'No compliance validations performed yet'}
         
@@ -1337,32 +1288,27 @@ class ComplianceValidator:
         }
     
     def enable_regulation(self, regulation: ComplianceRegulation):
-        """Enable compliance checking for a regulation"""
-        if regulation not in self.enabled_regulations:
+        """Enable compliance checking for a regulation"""        if regulation not in self.enabled_regulations:
             self.enabled_regulations.append(regulation)
             self.logger.info(f"Enabled compliance checking for {regulation.value}")
     
     def disable_regulation(self, regulation: ComplianceRegulation):
-        """Disable compliance checking for a regulation"""
-        if regulation in self.enabled_regulations:
+        """Disable compliance checking for a regulation"""        if regulation in self.enabled_regulations:
             self.enabled_regulations.remove(regulation)
             self.logger.info(f"Disabled compliance checking for {regulation.value}")
     
     def enable_rule(self, rule_id: str):
-        """Enable specific compliance rule"""
-        if rule_id in self.rules:
+        """Enable specific compliance rule"""        if rule_id in self.rules:
             self.rules[rule_id].enabled = True
             self.logger.info(f"Enabled compliance rule: {rule_id}")
     
     def disable_rule(self, rule_id: str):
-        """Disable specific compliance rule"""
-        if rule_id in self.rules:
+        """Disable specific compliance rule"""        if rule_id in self.rules:
             self.rules[rule_id].enabled = False
             self.logger.info(f"Disabled compliance rule: {rule_id}")
     
     def list_rules(self) -> List[Dict[str, Any]]:
-        """List all compliance rules"""
-        return [
+        """List all compliance rules"""        return [
             {
                 'rule_id': rule.rule_id,
                 'regulation': rule.regulation.value,
@@ -1380,16 +1326,13 @@ class ComplianceValidator:
     
     Validates content against various regulations including GDPR, CCPA,
     copyright laws, and platform-specific policies.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the compliance validator.
+        """        Initialize the compliance validator.
         
         Args:
             config: Compliance validation configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Enabled regulations
@@ -1451,8 +1394,7 @@ class ComplianceValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Validate content compliance against all enabled regulations.
+        """        Validate content compliance against all enabled regulations.
         
         Args:
             content_data: Content to validate
@@ -1461,8 +1403,7 @@ class ComplianceValidator:
             
         Returns:
             Comprehensive compliance validation results
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             results = {}
@@ -1560,8 +1501,7 @@ class ComplianceValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Validate GDPR compliance"""
-        
+        """Validate GDPR compliance"""        
         result = {
             'passed': True,
             'score': 100.0,
@@ -1632,8 +1572,7 @@ class ComplianceValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Validate CCPA compliance"""
-        
+        """Validate CCPA compliance"""        
         result = {
             'passed': True,
             'score': 100.0,
@@ -1688,8 +1627,7 @@ class ComplianceValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Validate COPPA compliance (children's privacy)"""
-        
+        """Validate COPPA compliance (children's privacy)"""        
         result = {
             'passed': True,
             'score': 100.0,
@@ -1747,8 +1685,7 @@ class ComplianceValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Validate DMCA compliance"""
-        
+        """Validate DMCA compliance"""        
         result = {
             'passed': True,
             'score': 100.0,
@@ -1803,8 +1740,7 @@ class ComplianceValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Validate general copyright compliance"""
-        
+        """Validate general copyright compliance"""        
         result = {
             'passed': True,
             'score': 100.0,
@@ -1855,8 +1791,7 @@ class ComplianceValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Validate content policy compliance"""
-        
+        """Validate content policy compliance"""        
         result = {
             'passed': True,
             'score': 100.0,
@@ -1916,8 +1851,7 @@ class ComplianceValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Validate platform-specific policy compliance"""
-        
+        """Validate platform-specific policy compliance"""        
         result = {
             'passed': True,
             'score': 100.0,
@@ -1948,8 +1882,7 @@ class ComplianceValidator:
             }
     
     def _detect_personal_data(self, content_data: Any) -> Dict[str, List[str]]:
-        """Detect personal data in content"""
-        
+        """Detect personal data in content"""        
         personal_data_found = {}
         
         # Convert content to string for pattern matching
@@ -1972,8 +1905,7 @@ class ComplianceValidator:
         return personal_data_found
     
     def _detect_copyright_content(self, content_data: Any) -> List[str]:
-        """Detect copyright indicators in content"""
-        
+        """Detect copyright indicators in content"""        
         copyright_found = []
         
         # Convert content to string
@@ -1996,8 +1928,7 @@ class ComplianceValidator:
         return copyright_found
     
     def _detect_prohibited_content(self, content_data: Any) -> Dict[str, List[str]]:
-        """Detect prohibited content patterns"""
-        
+        """Detect prohibited content patterns"""        
         prohibited_found = {}
         
         # Convert content to string

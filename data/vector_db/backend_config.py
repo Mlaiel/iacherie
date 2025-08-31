@@ -1,5 +1,4 @@
-"""
-Vector Database Backend Configuration Management
+"""Vector Database Backend Configuration Management
 ==============================================
 
 Advanced configuration management for multiple vector database backends
@@ -24,7 +23,6 @@ TEAM SPECIALTIES:
 - Computer Vision Engineer: Image/video processing & recognition
 - Microservices Architect: Distributed systems & API design
 """
-
 import os
 import yaml
 import json
@@ -42,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class BackendType(Enum):
-    """Supported vector database backends."""
-    FAISS = "faiss"
+    """Supported vector database backends."""    FAISS = "faiss"
     CHROMA = "chroma"
     ELASTICSEARCH = "elasticsearch"
     PINECONE = "pinecone"
@@ -52,8 +49,7 @@ class BackendType(Enum):
 
 
 class IndexType(Enum):
-    """FAISS index types for different use cases."""
-    FLAT = "IndexFlatL2"
+    """FAISS index types for different use cases."""    FLAT = "IndexFlatL2"
     IVF_FLAT = "IndexIVFFlat"
     IVF_PQ = "IndexIVFPQ"
     HNSW = "IndexHNSWFlat"
@@ -62,8 +58,7 @@ class IndexType(Enum):
 
 
 class MetricType(Enum):
-    """Distance metrics for similarity computation."""
-    EUCLIDEAN = "l2"
+    """Distance metrics for similarity computation."""    EUCLIDEAN = "l2"
     COSINE = "cosine"
     INNER_PRODUCT = "ip"
     MANHATTAN = "l1"
@@ -72,8 +67,7 @@ class MetricType(Enum):
 
 @dataclass
 class PerformanceSettings:
-    """Performance optimization settings."""
-    enable_gpu: bool = False
+    """Performance optimization settings."""    enable_gpu: bool = False
     gpu_devices: List[int] = field(default_factory=list)
     num_threads: int = 4
     batch_size: int = 32
@@ -86,8 +80,7 @@ class PerformanceSettings:
 
 @dataclass
 class SecuritySettings:
-    """Security and access control settings."""
-    encryption_enabled: bool = True
+    """Security and access control settings."""    encryption_enabled: bool = True
     encryption_algorithm: str = "AES-256"
     key_rotation_days: int = 90
     access_logging: bool = True
@@ -100,8 +93,7 @@ class SecuritySettings:
 
 @dataclass
 class MonitoringSettings:
-    """Monitoring and observability settings."""
-    metrics_enabled: bool = True
+    """Monitoring and observability settings."""    metrics_enabled: bool = True
     prometheus_port: int = 9090
     health_check_interval: int = 30
     performance_logging: bool = True
@@ -116,8 +108,7 @@ class MonitoringSettings:
 
 @dataclass
 class FAISSBackendConfig:
-    """FAISS-specific configuration."""
-    index_type: IndexType = IndexType.IVF_FLAT
+    """FAISS-specific configuration."""    index_type: IndexType = IndexType.IVF_FLAT
     nlist: int = 1024
     nprobe: int = 64
     m_pq: int = 8
@@ -134,8 +125,7 @@ class FAISSBackendConfig:
 
 @dataclass
 class ChromaDBConfig:
-    """ChromaDB-specific configuration."""
-    persist_directory: str = "./chroma_db"
+    """ChromaDB-specific configuration."""    persist_directory: str = "./chroma_db"
     collection_metadata: Dict[str, Any] = field(default_factory=dict)
     distance_function: MetricType = MetricType.COSINE
     anonymized_telemetry: bool = False
@@ -148,8 +138,7 @@ class ChromaDBConfig:
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch-specific configuration."""
-    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
+    """Elasticsearch-specific configuration."""    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
     username: Optional[str] = None
     password: Optional[str] = None
     use_ssl: bool = False
@@ -165,8 +154,7 @@ class ElasticsearchConfig:
 
 @dataclass
 class PineconeConfig:
-    """Pinecone-specific configuration."""
-    api_key: Optional[str] = None
+    """Pinecone-specific configuration."""    api_key: Optional[str] = None
     environment: str = "us-west1-gcp"
     project_name: Optional[str] = None
     index_name: str = "vector-index"
@@ -180,8 +168,7 @@ class PineconeConfig:
 
 @dataclass
 class WeaviateConfig:
-    """Weaviate-specific configuration."""
-    url: str = "http://localhost:8080"
+    """Weaviate-specific configuration."""    url: str = "http://localhost:8080"
     auth_client_secret: Optional[str] = None
     timeout_config: Dict[str, int] = field(default_factory=lambda: {
         'query': 60,
@@ -194,8 +181,7 @@ class WeaviateConfig:
 
 @dataclass
 class QdrantConfig:
-    """Qdrant-specific configuration."""
-    host: str = "localhost"
+    """Qdrant-specific configuration."""    host: str = "localhost"
     port: int = 6333
     grpc_port: int = 6334
     prefer_grpc: bool = False
@@ -217,8 +203,7 @@ class QdrantConfig:
 
 @dataclass
 class VectorBackendConfig:
-    """Complete vector database backend configuration."""
-    backend_type: BackendType = BackendType.FAISS
+    """Complete vector database backend configuration."""    backend_type: BackendType = BackendType.FAISS
     data_directory: str = "./vector_data"
     
     # Backend-specific configurations
@@ -242,13 +227,11 @@ class VectorBackendConfig:
     backup_interval_hours: int = 24
     
     def __post_init__(self):
-        """Initialize configuration after creation."""
-        self._validate_configuration()
+        """Initialize configuration after creation."""        self._validate_configuration()
         self._setup_directories()
     
     def _validate_configuration(self):
-        """Validate configuration settings."""
-        try:
+        """Validate configuration settings."""        try:
             # Validate backend type
             if not isinstance(self.backend_type, BackendType):
                 raise ValueError(f"Invalid backend type: {self.backend_type}")
@@ -283,8 +266,7 @@ class VectorBackendConfig:
             raise
     
     def _validate_faiss_config(self):
-        """Validate FAISS-specific configuration."""
-        if self.faiss.nlist <= 0:
+        """Validate FAISS-specific configuration."""        if self.faiss.nlist <= 0:
             raise ValueError("FAISS nlist must be positive")
         
         if self.faiss.nprobe <= 0 or self.faiss.nprobe > self.faiss.nlist:
@@ -294,8 +276,7 @@ class VectorBackendConfig:
             raise ValueError("GPU device IDs must be specified when GPU is enabled")
     
     def _validate_pinecone_config(self):
-        """Validate Pinecone-specific configuration."""
-        if not self.pinecone.api_key:
+        """Validate Pinecone-specific configuration."""        if not self.pinecone.api_key:
             if 'PINECONE_API_KEY' not in os.environ:
                 raise ValueError("Pinecone API key must be provided")
             self.pinecone.api_key = os.environ['PINECONE_API_KEY']
@@ -304,8 +285,7 @@ class VectorBackendConfig:
             logger.warning("Pinecone dimension differs from default dimension")
     
     def _validate_elasticsearch_config(self):
-        """Validate Elasticsearch-specific configuration."""
-        if not self.elasticsearch.hosts:
+        """Validate Elasticsearch-specific configuration."""        if not self.elasticsearch.hosts:
             raise ValueError("Elasticsearch hosts must be specified")
         
         for host in self.elasticsearch.hosts:
@@ -313,8 +293,7 @@ class VectorBackendConfig:
                 raise ValueError(f"Invalid Elasticsearch host format: {host}")
     
     def _setup_directories(self):
-        """Setup required directories."""
-        try:
+        """Setup required directories."""        try:
             # Create main data directory
             Path(self.data_directory).mkdir(parents=True, exist_ok=True)
             
@@ -337,8 +316,7 @@ class VectorBackendConfig:
 
 
 class VectorBackendConfigManager:
-    """Manager for vector database backend configurations."""
-    
+    """Manager for vector database backend configurations."""    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or os.getenv(
             'VECTOR_BACKEND_CONFIG',
@@ -349,8 +327,7 @@ class VectorBackendConfigManager:
         self._load_config()
     
     def _load_config(self) -> VectorBackendConfig:
-        """Load configuration from file or environment."""
-        try:
+        """Load configuration from file or environment."""        try:
             with self._lock:
                 if os.path.exists(self.config_path):
                     self.config = self._load_from_file()
@@ -367,8 +344,7 @@ class VectorBackendConfigManager:
             return self.config
     
     def _load_from_file(self) -> VectorBackendConfig:
-        """Load configuration from YAML file."""
-        try:
+        """Load configuration from YAML file."""        try:
             with open(self.config_path, 'r') as f:
                 if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
                     config_dict = yaml.safe_load(f)
@@ -382,8 +358,7 @@ class VectorBackendConfigManager:
             raise
     
     def _load_from_environment(self) -> VectorBackendConfig:
-        """Load configuration from environment variables."""
-        config = VectorBackendConfig()
+        """Load configuration from environment variables."""        config = VectorBackendConfig()
         
         # Backend type
         backend_type = os.getenv('VECTOR_BACKEND_TYPE', 'faiss')
@@ -426,8 +401,7 @@ class VectorBackendConfigManager:
         return config
     
     def _dict_to_config(self, config_dict: Dict[str, Any]) -> VectorBackendConfig:
-        """Convert dictionary to configuration object."""
-        try:
+        """Convert dictionary to configuration object."""        try:
             # Handle backend type
             if 'backend_type' in config_dict:
                 backend_str = config_dict['backend_type']
@@ -461,8 +435,7 @@ class VectorBackendConfigManager:
             raise
     
     def save_config(self, config: Optional[VectorBackendConfig] = None) -> bool:
-        """Save configuration to file."""
-        try:
+        """Save configuration to file."""        try:
             with self._lock:
                 config_to_save = config or self.config
                 if not config_to_save:
@@ -491,8 +464,7 @@ class VectorBackendConfigManager:
             return False
     
     def _config_to_dict(self, config: VectorBackendConfig) -> Dict[str, Any]:
-        """Convert configuration object to dictionary."""
-        try:
+        """Convert configuration object to dictionary."""        try:
             config_dict = asdict(config)
             
             # Convert enums to strings
@@ -517,8 +489,7 @@ class VectorBackendConfigManager:
             raise
     
     def get_backend_config(self, backend_type: Optional[BackendType] = None) -> Dict[str, Any]:
-        """Get backend-specific configuration."""
-        if not self.config:
+        """Get backend-specific configuration."""        if not self.config:
             raise ValueError("Configuration not loaded")
         
         target_backend = backend_type or self.config.backend_type
@@ -539,8 +510,7 @@ class VectorBackendConfigManager:
             raise ValueError(f"Unsupported backend type: {target_backend}")
     
     def update_config(self, updates: Dict[str, Any]) -> bool:
-        """Update configuration with new values."""
-        try:
+        """Update configuration with new values."""        try:
             with self._lock:
                 if not self.config:
                     raise ValueError("Configuration not loaded")
@@ -563,8 +533,7 @@ class VectorBackendConfigManager:
             return False
     
     def get_system_recommendations(self) -> Dict[str, Any]:
-        """Get system-specific configuration recommendations."""
-        try:
+        """Get system-specific configuration recommendations."""        try:
             recommendations = {}
             
             # Memory recommendations
@@ -609,8 +578,7 @@ class VectorBackendConfigManager:
             return {}
     
     def validate_system_compatibility(self) -> Dict[str, Any]:
-        """Validate system compatibility with current configuration."""
-        try:
+        """Validate system compatibility with current configuration."""        try:
             compatibility_report = {
                 'compatible': True,
                 'warnings': [],
@@ -771,8 +739,7 @@ DEPLOYMENT_PRESETS = {
 
 
 def load_preset(preset_name: str) -> VectorBackendConfig:
-    """Load a deployment preset configuration."""
-    if preset_name not in DEPLOYMENT_PRESETS:
+    """Load a deployment preset configuration."""    if preset_name not in DEPLOYMENT_PRESETS:
         available = list(DEPLOYMENT_PRESETS.keys())
         raise ValueError(f"Unknown preset: {preset_name}. Available: {available}")
     
@@ -780,8 +747,7 @@ def load_preset(preset_name: str) -> VectorBackendConfig:
 
 
 def auto_detect_optimal_config() -> VectorBackendConfig:
-    """Auto-detect optimal configuration based on system resources."""
-    try:
+    """Auto-detect optimal configuration based on system resources."""    try:
         # Get system info
         memory_gb = psutil.virtual_memory().total / (1024**3)
         cpu_cores = psutil.cpu_count()

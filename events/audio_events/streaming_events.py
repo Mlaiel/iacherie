@@ -1,5 +1,4 @@
-"""
-Audio Streaming Events - Industrial Grade Real-time Streaming & Broadcasting
+"""Audio Streaming Events - Industrial Grade Real-time Streaming & Broadcasting
 ===========================================================================
 
 This module handles all events related to audio streaming, live broadcasting,
@@ -8,7 +7,6 @@ real-time audio processing, and streaming analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -19,8 +17,7 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class StreamingProtocol(Enum):
-    """Streaming protocols supported"""
-    RTMP = "rtmp"
+    """Streaming protocols supported"""    RTMP = "rtmp"
     HLS = "hls"
     DASH = "dash"
     WEBRTC = "webrtc"
@@ -31,8 +28,7 @@ class StreamingProtocol(Enum):
 
 
 class StreamQuality(Enum):
-    """Audio streaming quality levels"""
-    LOW = "low"          # 64 kbps
+    """Audio streaming quality levels"""    LOW = "low"          # 64 kbps
     MEDIUM = "medium"    # 128 kbps
     HIGH = "high"        # 256 kbps
     LOSSLESS = "lossless"  # 1411 kbps
@@ -40,8 +36,7 @@ class StreamQuality(Enum):
 
 
 class StreamingPlatform(Enum):
-    """Supported streaming platforms"""
-    SPOTIFY = "spotify"
+    """Supported streaming platforms"""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
     SOUNDCLOUD = "soundcloud"
@@ -53,12 +48,10 @@ class StreamingPlatform(Enum):
 
 @dataclass
 class AudioStreamStartedEvent(BaseEvent):
-    """
-    Event triggered when an audio stream is initiated.
+    """    Event triggered when an audio stream is initiated.
     
     Handles real-time streaming setup and configuration.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     stream_id: UUID
     stream_title: str
@@ -98,12 +91,10 @@ class AudioStreamStartedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamEndedEvent(BaseEvent):
-    """
-    Event triggered when an audio stream ends.
+    """    Event triggered when an audio stream ends.
     
     Contains comprehensive streaming session metrics and analytics.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     stream_id: UUID
     stream_duration: float
@@ -141,12 +132,10 @@ class AudioStreamEndedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamQualityChangedEvent(BaseEvent):
-    """
-    Event triggered when streaming quality is dynamically adjusted.
+    """    Event triggered when streaming quality is dynamically adjusted.
     
     Handles adaptive bitrate streaming and quality optimization.
-    """
-    user_id: UUID
+    """    user_id: UUID
     stream_id: UUID
     previous_quality: StreamQuality
     new_quality: StreamQuality
@@ -180,12 +169,10 @@ class AudioStreamQualityChangedEvent(BaseEvent):
 
 @dataclass
 class AudioLiveStreamStartedEvent(BaseEvent):
-    """
-    Event triggered when a live audio broadcast begins.
+    """    Event triggered when a live audio broadcast begins.
     
     Handles live streaming events, concerts, and real-time broadcasts.
-    """
-    user_id: UUID
+    """    user_id: UUID
     live_stream_id: UUID
     event_title: str
     event_description: str
@@ -222,12 +209,10 @@ class AudioLiveStreamStartedEvent(BaseEvent):
 
 @dataclass
 class AudioLiveStreamEndedEvent(BaseEvent):
-    """
-    Event triggered when a live audio broadcast ends.
+    """    Event triggered when a live audio broadcast ends.
     
     Contains comprehensive live streaming analytics and performance metrics.
-    """
-    user_id: UUID
+    """    user_id: UUID
     live_stream_id: UUID
     actual_duration: float
     total_unique_viewers: int
@@ -266,12 +251,10 @@ class AudioLiveStreamEndedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamListenerJoinedEvent(BaseEvent):
-    """
-    Event triggered when a listener joins an audio stream.
+    """    Event triggered when a listener joins an audio stream.
     
     Tracks audience engagement and listener behavior.
-    """
-    stream_id: UUID
+    """    stream_id: UUID
     listener_id: UUID
     listener_session_id: UUID
     join_timestamp: datetime
@@ -304,12 +287,10 @@ class AudioStreamListenerJoinedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamListenerLeftEvent(BaseEvent):
-    """
-    Event triggered when a listener leaves an audio stream.
+    """    Event triggered when a listener leaves an audio stream.
     
     Captures listener session analytics and departure reasons.
-    """
-    stream_id: UUID
+    """    stream_id: UUID
     listener_id: UUID
     listener_session_id: UUID
     leave_timestamp: datetime
@@ -343,12 +324,10 @@ class AudioStreamListenerLeftEvent(BaseEvent):
 
 @dataclass
 class AudioStreamBufferingEvent(BaseEvent):
-    """
-    Event triggered when stream buffering occurs.
+    """    Event triggered when stream buffering occurs.
     
     Monitors streaming performance and connection quality.
-    """
-    stream_id: UUID
+    """    stream_id: UUID
     listener_id: Optional[UUID] = None
     buffering_start_time: datetime
     buffering_duration: float
@@ -381,12 +360,10 @@ class AudioStreamBufferingEvent(BaseEvent):
 
 @dataclass
 class AudioStreamAnalyticsEvent(BaseEvent):
-    """
-    Event triggered for periodic streaming analytics updates.
+    """    Event triggered for periodic streaming analytics updates.
     
     Provides comprehensive streaming performance insights.
-    """
-    user_id: UUID
+    """    user_id: UUID
     stream_id: UUID
     analytics_period_start: datetime
     analytics_period_end: datetime
@@ -423,12 +400,10 @@ class AudioStreamAnalyticsEvent(BaseEvent):
 
 @dataclass
 class AudioStreamErrorEvent(BaseEvent):
-    """
-    Event triggered when streaming errors occur.
+    """    Event triggered when streaming errors occur.
     
     Handles error tracking and recovery procedures.
-    """
-    stream_id: UUID
+    """    stream_id: UUID
     error_id: UUID
     error_type: str  # connection, encoding, decoding, network, server
     error_code: str

@@ -1,9 +1,7 @@
-"""
-Collaboration Seeds Manager - Creator Collaboration and Revenue Sharing
+"""Collaboration Seeds Manager - Creator Collaboration and Revenue Sharing
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
-
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
@@ -19,8 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(str, Enum):
-    """Types of creator collaborations."""
-    JOINT_CONTENT = "joint_content"
+    """Types of creator collaborations."""    JOINT_CONTENT = "joint_content"
     REMIX_COLLABORATION = "remix_collaboration"
     SERIES_COLLABORATION = "series_collaboration"
     CROSS_PROMOTION = "cross_promotion"
@@ -31,8 +28,7 @@ class CollaborationType(str, Enum):
 
 
 class RevenueSplitType(str, Enum):
-    """Revenue splitting methodologies."""
-    EQUAL_SPLIT = "equal_split"
+    """Revenue splitting methodologies."""    EQUAL_SPLIT = "equal_split"
     CONTRIBUTION_BASED = "contribution_based"
     VIEWERSHIP_BASED = "viewership_based"
     HYBRID_MODEL = "hybrid_model"
@@ -42,8 +38,7 @@ class RevenueSplitType(str, Enum):
 
 
 class CollaborationStatus(str, Enum):
-    """Status of collaboration projects."""
-    PROPOSED = "proposed"
+    """Status of collaboration projects."""    PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     APPROVED = "approved"
     IN_PROGRESS = "in_progress"
@@ -55,8 +50,7 @@ class CollaborationStatus(str, Enum):
 
 
 class TeamRole(str, Enum):
-    """Roles within collaboration teams."""
-    PROJECT_LEAD = "project_lead"
+    """Roles within collaboration teams."""    PROJECT_LEAD = "project_lead"
     CREATIVE_DIRECTOR = "creative_director"
     CONTENT_CREATOR = "content_creator"
     TECHNICAL_LEAD = "technical_lead"
@@ -67,8 +61,7 @@ class TeamRole(str, Enum):
 
 
 class CollaborationModel(str, Enum):
-    """Collaboration business models."""
-    ONE_TIME_PROJECT = "one_time_project"
+    """Collaboration business models."""    ONE_TIME_PROJECT = "one_time_project"
     ONGOING_PARTNERSHIP = "ongoing_partnership"
     REVENUE_SHARE = "revenue_share"
     LICENSING_DEAL = "licensing_deal"
@@ -78,8 +71,7 @@ class CollaborationModel(str, Enum):
 
 
 class MatchingCriteria(str, Enum):
-    """Creator matching criteria."""
-    AUDIENCE_OVERLAP = "audience_overlap"
+    """Creator matching criteria."""    AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_STYLE = "content_style"
     PERFORMANCE_METRICS = "performance_metrics"
     GEOGRAPHIC_LOCATION = "geographic_location"
@@ -90,8 +82,7 @@ class MatchingCriteria(str, Enum):
 
 @dataclass
 class CollaborationAgreement:
-    """Collaboration agreement structure."""
-    agreement_id: str
+    """Collaboration agreement structure."""    agreement_id: str
     project_title: str
     collaboration_type: CollaborationType
     participants: List[str] = field(default_factory=list)
@@ -107,8 +98,7 @@ class CollaborationAgreement:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for matching algorithm."""
-    creator_id: str
+    """Creator profile for matching algorithm."""    creator_id: str
     content_categories: List[str] = field(default_factory=list)
     audience_demographics: Dict[str, Any] = field(default_factory=dict)
     performance_metrics: Dict[str, float] = field(default_factory=dict)
@@ -118,8 +108,7 @@ class CreatorProfile:
 
 
 class CollaborationSeedsManager:
-    """
-    Enterprise-grade collaboration seeds manager for comprehensive creator partnerships and revenue sharing.
+    """    Enterprise-grade collaboration seeds manager for comprehensive creator partnerships and revenue sharing.
     
     Handles:
     - AI-powered creator matching and recommendation algorithms
@@ -131,11 +120,9 @@ class CollaborationSeedsManager:
     - Performance tracking and ROI analysis
     - Dispute resolution and mediation systems
     - Community-driven collaboration initiatives
-    """
-    
+    """    
     def __init__(self):
-        """Initialize collaboration seeds manager with enterprise configurations."""
-        self.collaboration_types = {}
+        """Initialize collaboration seeds manager with enterprise configurations."""        self.collaboration_types = {}
         self.revenue_models = {}
         self.team_management = {}
         self.partnership_tools = {}
@@ -147,8 +134,7 @@ class CollaborationSeedsManager:
         self.dispute_resolution = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all collaboration-related seed data with full enterprise support."""
-        logger.info("Initializing comprehensive collaboration seeds data...")
+        """Initialize all collaboration-related seed data with full enterprise support."""        logger.info("Initializing comprehensive collaboration seeds data...")
         start_time = datetime.now(timezone.utc)
         
         results = {}
@@ -234,8 +220,7 @@ class CollaborationSeedsManager:
             raise
     
     async def _initialize_collaboration_types(self) -> Dict[str, Any]:
-        """Initialize comprehensive collaboration types and configurations."""
-        collaboration_types = {
+        """Initialize comprehensive collaboration types and configurations."""        collaboration_types = {
             # Joint Content Collaborations
             'music_collaboration': {
                 'collaboration_name': 'Music Production Collaboration',
@@ -530,8 +515,7 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_revenue_models(self) -> Dict[str, Any]:
-        """Initialize comprehensive revenue sharing models and calculations."""
-        revenue_models = {
+        """Initialize comprehensive revenue sharing models and calculations."""        revenue_models = {
             'equal_split_model': {
                 'model_name': 'Equal Revenue Split',
                 'split_type': RevenueSplitType.EQUAL_SPLIT,
@@ -801,8 +785,7 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_team_management(self) -> Dict[str, Any]:
-        """Initialize team management and coordination tools."""
-        team_management = {
+        """Initialize team management and coordination tools."""        team_management = {
             'team_formation': {
                 'team_discovery': {
                     'creator_matching_algorithm': {
@@ -1014,8 +997,7 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_partnership_tools(self) -> Dict[str, Any]:
-        """Initialize partnership tools and collaboration utilities."""
-        partnership_tools = {
+        """Initialize partnership tools and collaboration utilities."""        partnership_tools = {
             'project_management_tools': {
                 'integrated_project_dashboard': {
                     'features': [
@@ -1226,8 +1208,7 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_collaboration_workflows(self) -> Dict[str, Any]:
-        """Initialize collaboration workflows and process management."""
-        workflows = {
+        """Initialize collaboration workflows and process management."""        workflows = {
             'project_initiation_workflow': {
                 'workflow_stages': [
                     'concept_development',
@@ -1327,8 +1308,7 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_dispute_resolution(self) -> Dict[str, Any]:
-        """Initialize dispute resolution mechanisms and procedures."""
-        dispute_resolution = {
+        """Initialize dispute resolution mechanisms and procedures."""        dispute_resolution = {
             'dispute_types': {
                 'creative_disputes': [
                     'artistic_direction_disagreements',
@@ -1395,8 +1375,7 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_legal_frameworks(self) -> Dict[str, Any]:
-        """Initialize legal frameworks for collaborations."""
-        legal_frameworks = {
+        """Initialize legal frameworks for collaborations."""        legal_frameworks = {
             'intellectual_property_management': {
                 'copyright_frameworks': {
                     'joint_ownership_models': True,
@@ -1431,8 +1410,7 @@ class CollaborationSeedsManager:
         }
     
     async def _initialize_performance_tracking(self) -> Dict[str, Any]:
-        """Initialize performance tracking and analytics."""
-        performance_tracking = {
+        """Initialize performance tracking and analytics."""        performance_tracking = {
             'collaboration_metrics': {
                 'project_success_indicators': [
                     'timeline_adherence',
@@ -1468,8 +1446,7 @@ class CollaborationSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all collaboration seed data (use with caution)."""
-        logger.warning("Resetting collaboration seeds data...")
+        """Reset all collaboration seed data (use with caution)."""        logger.warning("Resetting collaboration seeds data...")
         
         self.collaboration_types.clear()
         self.revenue_models.clear()

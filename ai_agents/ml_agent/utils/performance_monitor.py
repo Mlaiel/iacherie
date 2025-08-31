@@ -1,5 +1,4 @@
-"""
-ML Performance Monitor - Advanced ML Performance Monitoring & Analytics System
+"""ML Performance Monitor - Advanced ML Performance Monitoring & Analytics System
 
 Industrial-grade ML performance monitoring providing comprehensive performance tracking,
 drift detection, model quality analysis, and predictive maintenance for ML systems
@@ -26,7 +25,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import time
@@ -98,22 +96,19 @@ from ...utils.alerting import AlertManager
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 class DriftType(Enum):
-    """Data drift types"""
-    DATA_DRIFT = "data_drift"
+    """Data drift types"""    DATA_DRIFT = "data_drift"
     CONCEPT_DRIFT = "concept_drift"
     PREDICTION_DRIFT = "prediction_drift"
     TARGET_DRIFT = "target_drift"
 
 class PerformanceMetric(Enum):
-    """Performance metrics to track"""
-    ACCURACY = "accuracy"
+    """Performance metrics to track"""    ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
     F1_SCORE = "f1_score"
@@ -126,8 +121,7 @@ class PerformanceMetric(Enum):
 
 @dataclass
 class PerformanceThresholds:
-    """Performance monitoring thresholds"""
-    accuracy_threshold: float = 0.8
+    """Performance monitoring thresholds"""    accuracy_threshold: float = 0.8
     drift_threshold: float = 0.1
     latency_threshold: float = 100.0  # milliseconds
     error_rate_threshold: float = 0.05
@@ -137,8 +131,7 @@ class PerformanceThresholds:
 
 @dataclass
 class MonitoringAlert:
-    """Monitoring alert data"""
-    alert_id: str
+    """Monitoring alert data"""    alert_id: str
     model_id: str
     alert_type: str
     severity: AlertSeverity
@@ -150,8 +143,7 @@ class MonitoringAlert:
 
 @dataclass
 class DriftReport:
-    """Data drift analysis report"""
-    report_id: str
+    """Data drift analysis report"""    report_id: str
     model_id: str
     drift_type: DriftType
     drift_detected: bool
@@ -166,8 +158,7 @@ class DriftReport:
 
 @dataclass
 class ModelQualityReport:
-    """Model quality analysis report"""
-    report_id: str
+    """Model quality analysis report"""    report_id: str
     model_id: str
     model_version: str
     performance_metrics: Dict[str, float]
@@ -180,11 +171,9 @@ class ModelQualityReport:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class MLPerformanceMonitor:
-    """
-    Ultra-advanced ML performance monitoring system providing comprehensive
+    """    Ultra-advanced ML performance monitoring system providing comprehensive
     performance tracking, drift detection, quality analysis, and alerting
-    """
-    
+    """    
     def __init__(self):
         self.monitoring_configs = {}
         self.performance_data = {}
@@ -197,8 +186,7 @@ class MLPerformanceMonitor:
         self._initialize_monitoring()
     
     def _initialize_monitoring(self):
-        """Initialize performance monitoring system"""
-        try:
+        """Initialize performance monitoring system"""        try:
             # Setup default thresholds
             self.default_thresholds = PerformanceThresholds()
             
@@ -215,8 +203,7 @@ class MLPerformanceMonitor:
             raise MonitoringError(f"Monitor initialization failed: {str(e)}")
     
     def _setup_data_collectors(self):
-        """Setup data collection mechanisms"""
-        # Initialize metrics collectors
+        """Setup data collection mechanisms"""        # Initialize metrics collectors
         self.metrics_collectors = {
             'prediction_metrics': self._collect_prediction_metrics,
             'system_metrics': self._collect_system_metrics,
@@ -229,8 +216,7 @@ class MLPerformanceMonitor:
         model_id: str, 
         monitoring_config: Dict[str, Any]
     ) -> str:
-        """Register a model for continuous monitoring"""
-        try:
+        """Register a model for continuous monitoring"""        try:
             config_id = str(uuid.uuid4())
             
             # Validate configuration
@@ -267,8 +253,7 @@ class MLPerformanceMonitor:
             raise MonitoringError(f"Registration failed: {str(e)}")
     
     async def _validate_monitoring_config(self, config: Dict[str, Any]):
-        """Validate monitoring configuration"""
-        required_fields = ['model_id']
+        """Validate monitoring configuration"""        required_fields = ['model_id']
         for field in required_fields:
             if field not in config:
                 raise ValidationError(f"Missing required field: {field}")
@@ -282,8 +267,7 @@ class MLPerformanceMonitor:
                         raise ValidationError(f"Invalid threshold value for {key}")
     
     async def _run_continuous_monitoring(self):
-        """Run continuous monitoring loop"""
-        while True:
+        """Run continuous monitoring loop"""        while True:
             try:
                 for model_id, config in self.monitoring_configs.items():
                     if not config.get('enabled', True):
@@ -312,8 +296,7 @@ class MLPerformanceMonitor:
                 await asyncio.sleep(60)
     
     async def _collect_model_metrics(self, model_id: str):
-        """Collect comprehensive metrics for a model"""
-        try:
+        """Collect comprehensive metrics for a model"""        try:
             timestamp = datetime.now(timezone.utc)
             metrics = {}
             
@@ -345,8 +328,7 @@ class MLPerformanceMonitor:
             logger.error(f"Error collecting metrics for {model_id}: {str(e)}")
     
     async def _collect_prediction_metrics(self, model_id: str) -> Dict[str, Any]:
-        """Collect prediction-related metrics"""
-        # This would integrate with the model's prediction endpoint
+        """Collect prediction-related metrics"""        # This would integrate with the model's prediction endpoint
         # For now, returning simulated metrics
         return {
             'prediction_count': np.random.randint(50, 500),
@@ -356,8 +338,7 @@ class MLPerformanceMonitor:
         }
     
     async def _collect_system_metrics(self, model_id: str) -> Dict[str, Any]:
-        """Collect system-level metrics"""
-        import psutil
+        """Collect system-level metrics"""        import psutil
         
         return {
             'cpu_usage': psutil.cpu_percent(),
@@ -367,8 +348,7 @@ class MLPerformanceMonitor:
         }
     
     async def _collect_data_quality_metrics(self, model_id: str) -> Dict[str, Any]:
-        """Collect data quality metrics"""
-        # This would analyze incoming data quality
+        """Collect data quality metrics"""        # This would analyze incoming data quality
         return {
             'completeness': np.random.uniform(0.9, 1.0),
             'consistency': np.random.uniform(0.8, 1.0),
@@ -377,8 +357,7 @@ class MLPerformanceMonitor:
         }
     
     async def _collect_drift_metrics(self, model_id: str) -> Dict[str, Any]:
-        """Collect drift-related metrics"""
-        # This would calculate statistical measures for drift detection
+        """Collect drift-related metrics"""        # This would calculate statistical measures for drift detection
         return {
             'feature_drift_scores': {f'feature_{i}': np.random.uniform(0, 0.2) for i in range(5)},
             'prediction_drift_score': np.random.uniform(0, 0.1),
@@ -386,8 +365,7 @@ class MLPerformanceMonitor:
         }
     
     async def _detect_drift(self, model_id: str):
-        """Detect data drift for a model"""
-        try:
+        """Detect data drift for a model"""        try:
             config = self.monitoring_configs.get(model_id)
             if not config:
                 return
@@ -416,8 +394,7 @@ class MLPerformanceMonitor:
             logger.error(f"Error detecting drift for {model_id}: {str(e)}")
     
     async def _get_recent_data(self, model_id: str, hours: int = 24) -> Optional[pd.DataFrame]:
-        """Get recent data for drift analysis"""
-        # This would retrieve recent prediction data from the database
+        """Get recent data for drift analysis"""        # This would retrieve recent prediction data from the database
         # For now, returning simulated data
         cutoff_time = datetime.now(timezone.utc) - timedelta(hours=hours)
         
@@ -436,8 +413,7 @@ class MLPerformanceMonitor:
         current_data: pd.DataFrame,
         model_id: str
     ) -> Dict[str, Any]:
-        """Perform comprehensive drift analysis"""
-        
+        """Perform comprehensive drift analysis"""        
         drift_results = {
             'drift_detected': False,
             'drift_score': 0.0,
@@ -493,8 +469,7 @@ class MLPerformanceMonitor:
         reference_data: pd.DataFrame, 
         current_data: pd.DataFrame
     ) -> Dict[str, Any]:
-        """Run Evidently drift analysis"""
-        try:
+        """Run Evidently drift analysis"""        try:
             # Create Evidently report
             report = Report(metrics=[
                 DataDriftPreset(),
@@ -516,8 +491,7 @@ class MLPerformanceMonitor:
             return {}
     
     async def _create_drift_report(self, model_id: str, drift_results: Dict[str, Any]):
-        """Create comprehensive drift report"""
-        try:
+        """Create comprehensive drift report"""        try:
             report_id = str(uuid.uuid4())
             
             # Generate visualizations
@@ -557,8 +531,7 @@ class MLPerformanceMonitor:
         drift_results: Dict[str, Any],
         report_id: str
     ) -> Dict[str, str]:
-        """Generate drift visualization charts"""
-        visualization_paths = {}
+        """Generate drift visualization charts"""        visualization_paths = {}
         
         try:
             # Create output directory
@@ -591,8 +564,7 @@ class MLPerformanceMonitor:
         return visualization_paths
     
     async def _generate_drift_recommendations(self, drift_results: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on drift analysis"""
-        recommendations = []
+        """Generate recommendations based on drift analysis"""        recommendations = []
         
         if drift_results['drift_detected']:
             recommendations.append("Data drift detected - consider retraining the model")
@@ -609,8 +581,7 @@ class MLPerformanceMonitor:
         return recommendations
     
     async def _generate_drift_alert(self, model_id: str, drift_results: Dict[str, Any]):
-        """Generate drift detection alert"""
-        alert_id = str(uuid.uuid4())
+        """Generate drift detection alert"""        alert_id = str(uuid.uuid4())
         
         severity = AlertSeverity.WARNING
         if drift_results['drift_score'] > 0.2:
@@ -639,8 +610,7 @@ class MLPerformanceMonitor:
         logger.warning(f"Drift alert generated: {alert_id} for model {model_id}")
     
     async def _analyze_model_quality(self, model_id: str):
-        """Analyze model quality metrics"""
-        try:
+        """Analyze model quality metrics"""        try:
             # Get recent performance metrics
             recent_metrics = await self._get_recent_performance_metrics(model_id)
             
@@ -660,8 +630,7 @@ class MLPerformanceMonitor:
             logger.error(f"Error analyzing model quality for {model_id}: {str(e)}")
     
     async def _get_recent_performance_metrics(self, model_id: str) -> Optional[Dict[str, Any]]:
-        """Get recent performance metrics for quality analysis"""
-        if model_id not in self.performance_data:
+        """Get recent performance metrics for quality analysis"""        if model_id not in self.performance_data:
             return None
         
         metrics_history = self.performance_data[model_id].get('metrics_history', [])
@@ -683,8 +652,7 @@ class MLPerformanceMonitor:
         model_id: str, 
         recent_metrics: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate comprehensive quality metrics"""
-        
+        """Calculate comprehensive quality metrics"""        
         quality_metrics = {
             'performance_metrics': {},
             'stability_metrics': {},
@@ -757,8 +725,7 @@ class MLPerformanceMonitor:
         return quality_metrics
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for a series of values"""
-        if len(values) < 2:
+        """Calculate trend direction for a series of values"""        if len(values) < 2:
             return "stable"
         
         # Simple linear trend calculation
@@ -773,8 +740,7 @@ class MLPerformanceMonitor:
             return "stable"
     
     async def _calculate_overall_quality_score(self, quality_metrics: Dict[str, Any]) -> float:
-        """Calculate overall quality score from component metrics"""
-        score_components = []
+        """Calculate overall quality score from component metrics"""        score_components = []
         
         # Performance score
         perf_metrics = quality_metrics.get('performance_metrics', {})
@@ -811,8 +777,7 @@ class MLPerformanceMonitor:
             return 0.5  # Default neutral score
     
     async def _create_quality_report(self, model_id: str, quality_analysis: Dict[str, Any]):
-        """Create model quality report"""
-        try:
+        """Create model quality report"""        try:
             report_id = str(uuid.uuid4())
             
             # Get model version (would come from model registry)
@@ -838,8 +803,7 @@ class MLPerformanceMonitor:
             logger.error(f"Error creating quality report: {str(e)}")
     
     async def _check_quality_alerts(self, model_id: str, quality_analysis: Dict[str, Any]):
-        """Check for quality-based alerts"""
-        try:
+        """Check for quality-based alerts"""        try:
             config = self.monitoring_configs.get(model_id, {})
             thresholds = config.get('thresholds', self.default_thresholds)
             
@@ -875,8 +839,7 @@ class MLPerformanceMonitor:
             logger.error(f"Error checking quality alerts: {str(e)}")
     
     async def _generate_performance_alert(self, model_id: str, alert_type: str, message: str):
-        """Generate performance-related alert"""
-        alert_id = str(uuid.uuid4())
+        """Generate performance-related alert"""        alert_id = str(uuid.uuid4())
         
         alert = MonitoringAlert(
             alert_id=alert_id,
@@ -892,8 +855,7 @@ class MLPerformanceMonitor:
         logger.warning(f"Performance alert generated: {alert_id} - {message}")
     
     async def _generate_quality_alert(self, model_id: str, severity: AlertSeverity, message: str):
-        """Generate quality-related alert"""
-        alert_id = str(uuid.uuid4())
+        """Generate quality-related alert"""        alert_id = str(uuid.uuid4())
         
         alert = MonitoringAlert(
             alert_id=alert_id,
@@ -909,14 +871,12 @@ class MLPerformanceMonitor:
         logger.warning(f"Quality alert generated: {alert_id} - {message}")
     
     async def _check_alerts(self, model_id: str):
-        """Check for any alerts that need to be generated"""
-        # This method orchestrates all alert checking
+        """Check for any alerts that need to be generated"""        # This method orchestrates all alert checking
         # Individual alert checks are handled in other methods
         pass
     
     async def get_model_performance_summary(self, model_id: str) -> Dict[str, Any]:
-        """Get comprehensive performance summary for a model"""
-        try:
+        """Get comprehensive performance summary for a model"""        try:
             if model_id not in self.performance_data:
                 raise ValueError(f"No performance data found for model: {model_id}")
             
@@ -969,8 +929,7 @@ class MLPerformanceMonitor:
             raise MonitoringError(f"Failed to get performance summary: {str(e)}")
     
     async def _calculate_performance_trends(self, model_id: str) -> Dict[str, Any]:
-        """Calculate performance trends for a model"""
-        if model_id not in self.performance_data:
+        """Calculate performance trends for a model"""        if model_id not in self.performance_data:
             return {}
         
         metrics_history = self.performance_data[model_id].get('metrics_history', [])
@@ -1003,8 +962,7 @@ class MLPerformanceMonitor:
         return trends
     
     async def _get_overall_health_status(self, model_id: str) -> str:
-        """Get overall health status for a model"""
-        # Check for critical alerts
+        """Get overall health status for a model"""        # Check for critical alerts
         critical_alerts = [
             alert for alert in self.alerts.values()
             if alert.model_id == model_id and alert.severity == AlertSeverity.CRITICAL and not alert.resolved
@@ -1034,8 +992,7 @@ class MLPerformanceMonitor:
         return "healthy"
     
     async def resolve_alert(self, alert_id: str, resolution_notes: str = "") -> bool:
-        """Resolve a monitoring alert"""
-        try:
+        """Resolve a monitoring alert"""        try:
             if alert_id not in self.alerts:
                 raise ValueError(f"Alert not found: {alert_id}")
             
@@ -1054,22 +1011,19 @@ class MLPerformanceMonitor:
             return False
     
     async def get_drift_report(self, report_id: str) -> Dict[str, Any]:
-        """Get detailed drift report"""
-        if report_id not in self.drift_reports:
+        """Get detailed drift report"""        if report_id not in self.drift_reports:
             raise ValueError(f"Drift report not found: {report_id}")
         
         return asdict(self.drift_reports[report_id])
     
     async def get_quality_report(self, report_id: str) -> Dict[str, Any]:
-        """Get detailed quality report"""
-        if report_id not in self.quality_reports:
+        """Get detailed quality report"""        if report_id not in self.quality_reports:
             raise ValueError(f"Quality report not found: {report_id}")
         
         return asdict(self.quality_reports[report_id])
     
     async def disable_model_monitoring(self, model_id: str) -> bool:
-        """Disable monitoring for a model"""
-        try:
+        """Disable monitoring for a model"""        try:
             if model_id in self.monitoring_configs:
                 self.monitoring_configs[model_id]['enabled'] = False
                 logger.info(f"Monitoring disabled for model: {model_id}")
@@ -1088,8 +1042,7 @@ class MLPerformanceMonitor:
         format: str = 'json',
         time_range_hours: int = 24
     ) -> str:
-        """Export comprehensive performance report"""
-        try:
+        """Export comprehensive performance report"""        try:
             # Get performance summary
             summary = await self.get_model_performance_summary(model_id)
             
@@ -1139,9 +1092,7 @@ class MLPerformanceMonitor:
             raise MonitoringError(f"Report export failed: {str(e)}")
     
     async def _generate_html_performance_report(self, report_data: Dict[str, Any], output_path: str):
-        """Generate HTML performance report"""
-        html_content = f"""
-        <!DOCTYPE html>
+        """Generate HTML performance report"""        html_content = f"""        <!DOCTYPE html>
         <html>
         <head>
             <title>ML Performance Report - {report_data['model_id']}</title>
@@ -1174,20 +1125,17 @@ class MLPerformanceMonitor:
                     <p>{report_data['summary'].get('health_status', 'Unknown')}</p>
                 </div>
             </div>
-        """
-        
+        """        
         # Add alerts section
         if report_data['summary'].get('active_alerts'):
             html_content += "<div class='section'><h3>Active Alerts</h3>"
             for alert in report_data['summary']['active_alerts']:
                 alert_class = f"alert-{alert['severity']}"
-                html_content += f"""
-                <div class="alert {alert_class}">
+                html_content += f"""                <div class="alert {alert_class}">
                     <strong>{alert['alert_type']}</strong>: {alert['message']}
                     <small>({alert['timestamp']})</small>
                 </div>
-                """
-            html_content += "</div>"
+                """            html_content += "</div>"
         
         html_content += "</body></html>"
         

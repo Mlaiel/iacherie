@@ -1,5 +1,4 @@
-"""
-Anti-Detection System Implementation
+"""Anti-Detection System Implementation
 ===================================
 
 Advanced anti-detection system for web crawling and content monitoring.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import random
 import time
@@ -49,16 +47,14 @@ from fake_useragent import UserAgent
 
 
 class BrowserType(Enum):
-    """Supported browser types for automation"""
-    CHROME = "chrome"
+    """Supported browser types for automation"""    CHROME = "chrome"
     FIREFOX = "firefox"
     SAFARI = "safari"
     EDGE = "edge"
 
 
 class ProxyType(Enum):
-    """Types of proxy connections"""
-    HTTP = "http"
+    """Types of proxy connections"""    HTTP = "http"
     HTTPS = "https"
     SOCKS4 = "socks4"
     SOCKS5 = "socks5"
@@ -66,8 +62,7 @@ class ProxyType(Enum):
 
 @dataclass
 class BrowserProfile:
-    """Browser profile for anti-detection"""
-    user_agent: str
+    """Browser profile for anti-detection"""    user_agent: str
     viewport_width: int
     viewport_height: int
     language: str
@@ -85,8 +80,7 @@ class BrowserProfile:
 
 @dataclass
 class ProxyServer:
-    """Proxy server configuration"""
-    host: str
+    """Proxy server configuration"""    host: str
     port: int
     proxy_type: ProxyType
     username: Optional[str] = None
@@ -100,8 +94,7 @@ class ProxyServer:
 
 @dataclass
 class SessionState:
-    """State of a crawling session"""
-    session_id: str
+    """State of a crawling session"""    session_id: str
     browser_profile: BrowserProfile
     proxy_server: Optional[ProxyServer]
     start_time: datetime
@@ -114,10 +107,8 @@ class SessionState:
 
 
 class ProxyManager:
-    """
-    Advanced proxy management system with rotation and health monitoring.
-    """
-    
+    """    Advanced proxy management system with rotation and health monitoring.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.proxy_servers: List[ProxyServer] = []
@@ -134,13 +125,11 @@ class ProxyManager:
         }
     
     def add_proxy_server(self, proxy: ProxyServer):
-        """Add proxy server to the pool"""
-        self.proxy_servers.append(proxy)
+        """Add proxy server to the pool"""        self.proxy_servers.append(proxy)
         self.logger.info(f"Added proxy server: {proxy.host}:{proxy.port}")
     
     def add_proxy_list(self, proxy_list: List[Dict[str, Any]]):
-        """Add multiple proxy servers from configuration"""
-        for proxy_config in proxy_list:
+        """Add multiple proxy servers from configuration"""        for proxy_config in proxy_list:
             proxy = ProxyServer(
                 host=proxy_config['host'],
                 port=proxy_config['port'],
@@ -152,8 +141,7 @@ class ProxyManager:
             self.add_proxy_server(proxy)
     
     async def get_working_proxy(self) -> Optional[ProxyServer]:
-        """Get a working proxy server with rotation"""
-        try:
+        """Get a working proxy server with rotation"""        try:
             # Perform health check if needed
             if (datetime.utcnow() - self.last_health_check).total_seconds() > self.health_check_interval:
                 await self._perform_health_check()
@@ -181,8 +169,7 @@ class ProxyManager:
             return None
     
     async def _perform_health_check(self):
-        """Perform health check on all proxy servers"""
-        try:
+        """Perform health check on all proxy servers"""        try:
             self.logger.info("Performing proxy health check")
             
             # Test each proxy
@@ -203,8 +190,7 @@ class ProxyManager:
             self.logger.error(f"Error performing health check: {str(e)}")
     
     async def _test_proxy_health(self, proxy: ProxyServer):
-        """Test individual proxy health"""
-        try:
+        """Test individual proxy health"""        try:
             start_time = time.time()
             
             # Configure proxy for aiohttp
@@ -235,8 +221,7 @@ class ProxyManager:
             self.logger.debug(f"Proxy {proxy.host}:{proxy.port} health check failed: {str(e)}")
     
     def update_proxy_performance(self, proxy: ProxyServer, success: bool, response_time: float = 0):
-        """Update proxy performance metrics"""
-        try:
+        """Update proxy performance metrics"""        try:
             if success:
                 proxy.success_rate = min(proxy.success_rate * 1.05, 1.0)
                 proxy.response_time_ms = (proxy.response_time_ms + response_time) / 2
@@ -256,8 +241,7 @@ class ProxyManager:
 
 
 class AntiDetectionSystem:
-    """
-    Advanced anti-detection system for web crawling and content monitoring.
+    """    Advanced anti-detection system for web crawling and content monitoring.
     
     Features:
     - Browser fingerprint randomization
@@ -267,8 +251,7 @@ class AntiDetectionSystem:
     - Request timing randomization
     - Session state management
     - Detection evasion techniques
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.proxy_manager = ProxyManager()
@@ -302,8 +285,7 @@ class AntiDetectionSystem:
         asyncio.create_task(self._initialize_browser_profiles())
     
     async def _initialize_browser_profiles(self):
-        """Initialize pool of realistic browser profiles"""
-        try:
+        """Initialize pool of realistic browser profiles"""        try:
             self.logger.info("Initializing browser profiles")
             
             # Generate diverse browser profiles
@@ -322,8 +304,7 @@ class AntiDetectionSystem:
     
     async def _generate_browser_profile(self, platforms: List[str], 
                                       languages: List[str], timezones: List[str]) -> BrowserProfile:
-        """Generate a realistic browser profile"""
-        try:
+        """Generate a realistic browser profile"""        try:
             # Select random characteristics
             platform = random.choice(platforms)
             language = random.choice(languages)
@@ -383,8 +364,7 @@ class AntiDetectionSystem:
             )
     
     def _generate_user_agent(self, browser_type: BrowserType, platform: str) -> str:
-        """Generate realistic user agent string"""
-        try:
+        """Generate realistic user agent string"""        try:
             if browser_type == BrowserType.CHROME:
                 return self.user_agent_generator.chrome
             elif browser_type == BrowserType.FIREFOX:
@@ -400,8 +380,7 @@ class AntiDetectionSystem:
             return "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
     
     def _generate_plugin_list(self, browser_type: BrowserType) -> List[str]:
-        """Generate realistic plugin list"""
-        base_plugins = [
+        """Generate realistic plugin list"""        base_plugins = [
             "Chrome PDF Plugin",
             "Chrome PDF Viewer",
             "Native Client"
@@ -421,8 +400,7 @@ class AntiDetectionSystem:
         return base_plugins
     
     def _generate_font_list(self, platform: str) -> List[str]:
-        """Generate realistic font list"""
-        common_fonts = [
+        """Generate realistic font list"""        common_fonts = [
             "Arial", "Times New Roman", "Helvetica", "Georgia", "Verdana",
             "Tahoma", "Trebuchet MS", "Arial Black", "Impact", "Comic Sans MS"
         ]
@@ -439,18 +417,15 @@ class AntiDetectionSystem:
         return common_fonts
     
     def _generate_canvas_fingerprint(self) -> str:
-        """Generate canvas fingerprint"""
-        # Simplified canvas fingerprint simulation
+        """Generate canvas fingerprint"""        # Simplified canvas fingerprint simulation
         return hashlib.md5(f"canvas_{random.randint(1000000, 9999999)}".encode()).hexdigest()
     
     def _generate_webrtc_fingerprint(self) -> str:
-        """Generate WebRTC fingerprint"""
-        # Simplified WebRTC fingerprint simulation
+        """Generate WebRTC fingerprint"""        # Simplified WebRTC fingerprint simulation
         return hashlib.md5(f"webrtc_{random.randint(1000000, 9999999)}".encode()).hexdigest()
     
     async def create_stealth_session(self, target_domain: str = None) -> str:
-        """Create a new stealth crawling session"""
-        try:
+        """Create a new stealth crawling session"""        try:
             session_id = f"session_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{random.randint(1000, 9999)}"
             
             # Select browser profile
@@ -477,8 +452,7 @@ class AntiDetectionSystem:
             raise
     
     async def create_stealth_driver(self, session_id: str) -> webdriver.Chrome:
-        """Create Selenium WebDriver with anti-detection measures"""
-        try:
+        """Create Selenium WebDriver with anti-detection measures"""        try:
             session = self.active_sessions.get(session_id)
             if not session:
                 raise ValueError(f"Session {session_id} not found")
@@ -530,41 +504,33 @@ class AntiDetectionSystem:
             raise
     
     async def _apply_stealth_scripts(self, driver: webdriver.Chrome, profile: BrowserProfile):
-        """Apply JavaScript stealth scripts to driver"""
-        try:
+        """Apply JavaScript stealth scripts to driver"""        try:
             # Hide webdriver property
             driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
             
             # Override plugins
-            plugins_script = f"""
-            Object.defineProperty(navigator, 'plugins', {{
+            plugins_script = f"""            Object.defineProperty(navigator, 'plugins', {{
                 get: () => {json.dumps([{'name': p} for p in profile.plugins])}
             }});
-            """
-            driver.execute_script(plugins_script)
+            """            driver.execute_script(plugins_script)
             
             # Override language
-            language_script = f"""
-            Object.defineProperty(navigator, 'language', {{
+            language_script = f"""            Object.defineProperty(navigator, 'language', {{
                 get: () => '{profile.language}'
             }});
             Object.defineProperty(navigator, 'languages', {{
                 get: () => ['{profile.language}']
             }});
-            """
-            driver.execute_script(language_script)
+            """            driver.execute_script(language_script)
             
             # Override platform
-            platform_script = f"""
-            Object.defineProperty(navigator, 'platform', {{
+            platform_script = f"""            Object.defineProperty(navigator, 'platform', {{
                 get: () => '{profile.platform}'
             }});
-            """
-            driver.execute_script(platform_script)
+            """            driver.execute_script(platform_script)
             
             # Override WebGL
-            webgl_script = f"""
-            const getParameter = WebGLRenderingContext.prototype.getParameter;
+            webgl_script = f"""            const getParameter = WebGLRenderingContext.prototype.getParameter;
             WebGLRenderingContext.prototype.getParameter = function(parameter) {{
                 if (parameter === 37445) {{ // UNMASKED_VENDOR_WEBGL
                     return '{profile.webgl_vendor}';
@@ -574,15 +540,13 @@ class AntiDetectionSystem:
                 }}
                 return getParameter.call(this, parameter);
             }};
-            """
-            driver.execute_script(webgl_script)
+            """            driver.execute_script(webgl_script)
             
         except Exception as e:
             self.logger.error(f"Error applying stealth scripts: {str(e)}")
     
     async def human_like_delay(self, base_delay: float = None) -> None:
-        """Apply human-like delay between actions"""
-        try:
+        """Apply human-like delay between actions"""        try:
             if base_delay is None:
                 delay = random.uniform(*self.request_delay_range)
             else:
@@ -596,8 +560,7 @@ class AntiDetectionSystem:
             self.logger.error(f"Error applying human-like delay: {str(e)}")
     
     async def human_like_typing(self, driver: webdriver.Chrome, element, text: str):
-        """Type text with human-like timing"""
-        try:
+        """Type text with human-like timing"""        try:
             element.clear()
             
             for char in text:
@@ -610,8 +573,7 @@ class AntiDetectionSystem:
     
     async def human_like_mouse_movement(self, driver: webdriver.Chrome, 
                                       target_element, steps: int = None):
-        """Move mouse to element with human-like path"""
-        try:
+        """Move mouse to element with human-like path"""        try:
             if steps is None:
                 steps = random.randint(*self.mouse_movement_steps)
             
@@ -647,8 +609,7 @@ class AntiDetectionSystem:
     
     async def detect_anti_bot_measures(self, driver: webdriver.Chrome, 
                                      response_text: str = None) -> Dict[str, bool]:
-        """Detect if anti-bot measures are present"""
-        try:
+        """Detect if anti-bot measures are present"""        try:
             detections = {
                 'captcha': False,
                 'rate_limit': False,
@@ -708,8 +669,7 @@ class AntiDetectionSystem:
     
     async def handle_detection_evasion(self, session_id: str, 
                                      detections: Dict[str, bool]) -> bool:
-        """Handle detected anti-bot measures"""
-        try:
+        """Handle detected anti-bot measures"""        try:
             session = self.active_sessions.get(session_id)
             if not session:
                 return False
@@ -762,8 +722,7 @@ class AntiDetectionSystem:
             return False
     
     async def _get_next_browser_profile(self) -> BrowserProfile:
-        """Get next browser profile with rotation"""
-        if not self.browser_profiles:
+        """Get next browser profile with rotation"""        if not self.browser_profiles:
             # Generate default profile if none available
             return await self._generate_browser_profile(
                 ['Windows NT 10.0'], ['en-US'], ['America/New_York']
@@ -775,8 +734,7 @@ class AntiDetectionSystem:
         return profile
     
     async def _rotate_session(self, session_id: str) -> str:
-        """Rotate session with new profile and proxy"""
-        try:
+        """Rotate session with new profile and proxy"""        try:
             old_session = self.active_sessions.get(session_id)
             if old_session:
                 old_session.is_active = False
@@ -792,8 +750,7 @@ class AntiDetectionSystem:
             return session_id
     
     async def cleanup_sessions(self):
-        """Clean up inactive and expired sessions"""
-        try:
+        """Clean up inactive and expired sessions"""        try:
             current_time = datetime.utcnow()
             expired_sessions = []
             
@@ -817,8 +774,7 @@ class AntiDetectionSystem:
             self.logger.error(f"Error cleaning up sessions: {str(e)}")
     
     def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get anti-detection system statistics"""
-        try:
+        """Get anti-detection system statistics"""        try:
             stats = {
                 'active_sessions': len(self.active_sessions),
                 'browser_profiles': len(self.browser_profiles),

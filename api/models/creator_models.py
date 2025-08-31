@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - Creator Models
+"""IA Influencer Agent Platform - Creator Models
 Advanced creator management for multi-format content creators
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ will result in legal action.
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from decimal import Decimal
@@ -32,8 +30,7 @@ from .base import (
 
 
 class Creator(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin):
-    """Core creator model for multi-format content creators"""
-    
+    """Core creator model for multi-format content creators"""    
     __tablename__ = 'creators'
     
     user_id: Mapped[UUID] = mapped_column(
@@ -192,8 +189,7 @@ class Creator(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin,
 
 
 class CreatorProfile(BaseModel, UUIDMixin, TimestampMixin, MetadataMixin, PerformanceMetricsMixin):
-    """Extended creator profile with rich media and analytics"""
-    
+    """Extended creator profile with rich media and analytics"""    
     __tablename__ = 'creator_profiles'
     
     creator_id: Mapped[UUID] = mapped_column(
@@ -341,8 +337,7 @@ class CreatorProfile(BaseModel, UUIDMixin, TimestampMixin, MetadataMixin, Perfor
 
 
 class CreatorStatistics(BaseModel, UUIDMixin, TimestampMixin):
-    """Real-time statistics and analytics for creators"""
-    
+    """Real-time statistics and analytics for creators"""    
     __tablename__ = 'creator_statistics'
     
     creator_id: Mapped[UUID] = mapped_column(
@@ -503,8 +498,7 @@ class CreatorStatistics(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class CreatorSubscription(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
-    """Creator subscription and billing management"""
-    
+    """Creator subscription and billing management"""    
     __tablename__ = 'creator_subscriptions'
     
     creator_id: Mapped[UUID] = mapped_column(

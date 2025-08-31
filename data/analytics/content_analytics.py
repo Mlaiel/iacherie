@@ -1,5 +1,4 @@
-"""
-Content Analytics Engine
+"""Content Analytics Engine
 ========================
 
 Advanced content analytics and metrics processing for multi-format content.
@@ -8,7 +7,6 @@ Handles performance tracking, engagement analysis, and content optimization insi
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -30,8 +28,7 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class ContentType(Enum):
-    """Content type enumeration"""
-    AUDIO = "audio"
+    """Content type enumeration"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -39,8 +36,7 @@ class ContentType(Enum):
 
 
 class MetricType(Enum):
-    """Analytics metric types"""
-    VIEWS = "views"
+    """Analytics metric types"""    VIEWS = "views"
     ENGAGEMENT = "engagement"
     SHARES = "shares"
     DOWNLOADS = "downloads"
@@ -51,8 +47,7 @@ class MetricType(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Content performance metrics"""
-    content_id: str
+    """Content performance metrics"""    content_id: str
     content_type: ContentType
     views: int
     engagement_rate: float
@@ -66,8 +61,7 @@ class ContentMetrics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    user_id: str
+    """Comprehensive analytics report"""    user_id: str
     period_start: datetime
     period_end: datetime
     total_content: int
@@ -81,25 +75,21 @@ class AnalyticsReport:
 
 
 class ContentAnalytics:
-    """
-    Professional content analytics engine for IA Influencer Agent platform.
+    """    Professional content analytics engine for IA Influencer Agent platform.
     
     Provides comprehensive analytics for content performance, engagement,
     revenue tracking, and protection effectiveness across multiple platforms.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis, 
                  storage_manager: StorageManager, vector_db: VectorDBManager):
-        """
-        Initialize ContentAnalytics engine.
+        """        Initialize ContentAnalytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             storage_manager: Storage management service
             vector_db: Vector database manager
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.storage = storage_manager
         self.vector_db = vector_db
@@ -110,8 +100,7 @@ class ContentAnalytics:
         self.batch_size = 1000
         
     async def track_content_metrics(self, content_id: str, metrics: Dict[str, Any]) -> bool:
-        """
-        Track content performance metrics.
+        """        Track content performance metrics.
         
         Args:
             content_id: Unique content identifier
@@ -119,8 +108,7 @@ class ContentAnalytics:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Validate content exists
             content = await self._get_content_by_id(content_id)
             if not content:
@@ -156,8 +144,7 @@ class ContentAnalytics:
     
     async def get_content_performance(self, content_id: str, 
                                     period_days: int = 30) -> Optional[ContentMetrics]:
-        """
-        Get comprehensive performance metrics for specific content.
+        """        Get comprehensive performance metrics for specific content.
         
         Args:
             content_id: Content identifier
@@ -165,8 +152,7 @@ class ContentAnalytics:
             
         Returns:
             Content metrics or None if not found
-        """
-        try:
+        """        try:
             # Check cache first
             cache_key = f"content_metrics:{content_id}:{period_days}"
             cached_data = await self._get_from_cache(cache_key)
@@ -223,8 +209,7 @@ class ContentAnalytics:
     
     async def generate_analytics_report(self, user_id: str, 
                                       period_days: int = 30) -> Optional[AnalyticsReport]:
-        """
-        Generate comprehensive analytics report for user.
+        """        Generate comprehensive analytics report for user.
         
         Args:
             user_id: User identifier
@@ -232,8 +217,7 @@ class ContentAnalytics:
             
         Returns:
             Analytics report or None
-        """
-        try:
+        """        try:
             # Check cache
             cache_key = f"analytics_report:{user_id}:{period_days}"
             cached_report = await self._get_from_cache(cache_key)
@@ -295,16 +279,14 @@ class ContentAnalytics:
             return None
     
     async def get_real_time_metrics(self, content_id: str) -> Dict[str, Any]:
-        """
-        Get real-time metrics for content.
+        """        Get real-time metrics for content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Real-time metrics dictionary
-        """
-        try:
+        """        try:
             # Get from real-time cache
             rt_cache_key = f"realtime_metrics:{content_id}"
             metrics = await self._get_from_cache(rt_cache_key)
@@ -321,8 +303,7 @@ class ContentAnalytics:
     
     async def analyze_content_similarity(self, content_id: str, 
                                        limit: int = 10) -> List[Dict[str, Any]]:
-        """
-        Find similar content based on performance patterns.
+        """        Find similar content based on performance patterns.
         
         Args:
             content_id: Reference content ID
@@ -330,8 +311,7 @@ class ContentAnalytics:
             
         Returns:
             List of similar content with similarity scores
-        """
-        try:
+        """        try:
             # Get content metrics vector
             content_vector = await self._get_content_vector(content_id)
             if not content_vector:
@@ -364,16 +344,14 @@ class ContentAnalytics:
             return []
     
     async def predict_content_performance(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Predict content performance based on historical data and ML models.
+        """        Predict content performance based on historical data and ML models.
         
         Args:
             content_metadata: Content metadata for prediction
             
         Returns:
             Performance predictions
-        """
-        try:
+        """        try:
             # Extract features from metadata
             features = await self._extract_prediction_features(content_metadata)
             
@@ -400,46 +378,39 @@ class ContentAnalytics:
     # Private helper methods
     
     async def _get_content_by_id(self, content_id: str) -> Optional[ContentModel]:
-        """Get content by ID from database"""
-        query = select(ContentModel).where(ContentModel.id == content_id)
+        """Get content by ID from database"""        query = select(ContentModel).where(ContentModel.id == content_id)
         result = await self.db_session.execute(query)
         return result.scalar_one_or_none()
     
     async def _get_user_content(self, user_id: str) -> List[ContentModel]:
-        """Get all content for a user"""
-        query = select(ContentModel).where(ContentModel.user_id == user_id)
+        """Get all content for a user"""        query = select(ContentModel).where(ContentModel.user_id == user_id)
         result = await self.db_session.execute(query)
         return result.scalars().all()
     
     async def _update_metrics_cache(self, content_id: str, metrics: Dict[str, Any]):
-        """Update metrics in cache"""
-        cache_key = f"current_metrics:{content_id}"
+        """Update metrics in cache"""        cache_key = f"current_metrics:{content_id}"
         await self.redis.setex(cache_key, self.cache_ttl, json.dumps(metrics))
     
     async def _trigger_realtime_update(self, content_id: str, metrics: Dict[str, Any]):
-        """Trigger real-time analytics update"""
-        rt_key = f"realtime_metrics:{content_id}"
+        """Trigger real-time analytics update"""        rt_key = f"realtime_metrics:{content_id}"
         await self.redis.setex(rt_key, 300, json.dumps(metrics))  # 5 min cache
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""
-        try:
+        """Get data from cache"""        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
-        try:
+        """Save data to cache"""        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
             self.logger.warning(f"Cache save failed: {str(e)}")
     
     async def _aggregate_content_metrics(self, analytics_records: List[AnalyticsModel]) -> Dict[str, Any]:
-        """Aggregate metrics from analytics records"""
-        # Implementation for metrics aggregation
+        """Aggregate metrics from analytics records"""        # Implementation for metrics aggregation
         total_views = 0
         total_shares = 0
         total_downloads = 0
@@ -488,8 +459,7 @@ class ContentAnalytics:
     
     async def _process_analytics_data(self, analytics_data: List[AnalyticsModel], 
                                     user_content: List[ContentModel]) -> Dict[str, Any]:
-        """Process analytics data for report generation"""
-        # Implementation for comprehensive data processing
+        """Process analytics data for report generation"""        # Implementation for comprehensive data processing
         # This would include aggregation, calculations, and analysis
         
         total_views = 0
@@ -568,8 +538,7 @@ class ContentAnalytics:
     
     async def _analyze_trends(self, user_id: str, analytics_data: List[AnalyticsModel], 
                             period_days: int) -> Dict[str, Any]:
-        """Analyze trends in user analytics data"""
-        # Implementation for trend analysis
+        """Analyze trends in user analytics data"""        # Implementation for trend analysis
         # This would calculate growth rates, seasonal patterns, etc.
         
         # Group data by time periods
@@ -620,8 +589,7 @@ class ContentAnalytics:
         }
     
     async def _get_latest_metrics(self, content_id: str) -> Dict[str, Any]:
-        """Get latest metrics for content"""
-        query = select(AnalyticsModel).where(
+        """Get latest metrics for content"""        query = select(AnalyticsModel).where(
             AnalyticsModel.content_id == content_id
         ).order_by(AnalyticsModel.timestamp.desc()).limit(10)
         
@@ -634,8 +602,7 @@ class ContentAnalytics:
         return await self._aggregate_content_metrics(records)
     
     async def _get_content_vector(self, content_id: str) -> Optional[List[float]]:
-        """Get content performance vector for similarity analysis"""
-        # Implementation would extract performance features as vector
+        """Get content performance vector for similarity analysis"""        # Implementation would extract performance features as vector
         # This is a simplified placeholder
         metrics = await self._get_latest_metrics(content_id)
         
@@ -653,8 +620,7 @@ class ContentAnalytics:
         return vector
     
     async def _extract_prediction_features(self, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features for performance prediction"""
-        # Implementation would extract relevant features
+        """Extract features for performance prediction"""        # Implementation would extract relevant features
         return {
             'content_type': content_metadata.get('content_type'),
             'duration': content_metadata.get('duration', 0),
@@ -665,15 +631,13 @@ class ContentAnalytics:
         }
     
     async def _find_similar_historical_content(self, features: Dict[str, Any]) -> List[Dict]:
-        """Find similar historical content for prediction"""
-        # Implementation would use ML models or similarity search
+        """Find similar historical content for prediction"""        # Implementation would use ML models or similarity search
         # Placeholder implementation
         return []
     
     async def _calculate_performance_predictions(self, features: Dict[str, Any], 
                                                similar_content: List[Dict]) -> Dict[str, Any]:
-        """Calculate performance predictions using ML models"""
-        # Implementation would use trained ML models
+        """Calculate performance predictions using ML models"""        # Implementation would use trained ML models
         # Placeholder with basic heuristics
         
         base_views = 1000

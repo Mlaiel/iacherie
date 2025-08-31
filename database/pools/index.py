@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Database Connection Pools Index - IA Influencer Agent + Content Protection Platform
+"""Database Connection Pools Index - IA Influencer Agent + Content Protection Platform
 
 Main entry point for the database connection pools module providing
 enterprise-grade connection management, monitoring, and configuration.
@@ -18,7 +17,6 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 import sys
@@ -64,9 +62,7 @@ from database.pools import (
 logger = logging.getLogger(__name__)
 
 def print_banner():
-    """Print application banner"""
-    banner = """
-    ╔══════════════════════════════════════════════════════════════╗
+    """Print application banner"""    banner = """    ╔══════════════════════════════════════════════════════════════╗
     ║                Database Connection Pools                     ║
     ║            IA Influencer Agent + Content Protection         ║
     ║                                                              ║
@@ -76,12 +72,10 @@ def print_banner():
     ║  Author: Fahed Mlaiel <mlaiel@live.de>                      ║
     ║  © 2025 All Rights Reserved                                  ║
     ╚══════════════════════════════════════════════════════════════╝
-    """
-    print(banner)
+    """    print(banner)
 
 async def run_health_check():
-    """Run comprehensive health check on all pools"""
-    print("🔍 Running comprehensive pool health check...")
+    """Run comprehensive health check on all pools"""    print("🔍 Running comprehensive pool health check...")
     
     try:
         # Get pool summary
@@ -139,8 +133,7 @@ async def run_health_check():
         return False
 
 async def initialize_demo_pools():
-    """Initialize demo pools for testing"""
-    print("🚀 Initializing demo pools...")
+    """Initialize demo pools for testing"""    print("🚀 Initializing demo pools...")
     
     try:
         # Initialize with demo configuration
@@ -172,8 +165,7 @@ async def initialize_demo_pools():
         return False
 
 async def run_performance_test():
-    """Run basic performance test"""
-    print("⚡ Running performance test...")
+    """Run basic performance test"""    print("⚡ Running performance test...")
     
     try:
         pool_manager = get_pool_manager()
@@ -205,8 +197,7 @@ async def run_performance_test():
         return False
 
 async def main():
-    """Main application entry point"""
-    print_banner()
+    """Main application entry point"""    print_banner()
     
     # Configure logging
     logging.basicConfig(
@@ -250,8 +241,7 @@ async def main():
             print(f"❌ Error: {e}")
 
 if __name__ == "__main__":
-    """Run the pools management system"""
-    try:
+    """Run the pools management system"""    try:
         asyncio.run(main())
     except KeyboardInterrupt:
         print("\n👋 Application terminated by user")

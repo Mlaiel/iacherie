@@ -1,11 +1,9 @@
-"""
-Asset Compression Middleware - Web Asset Optimization
+"""Asset Compression Middleware - Web Asset Optimization
 Middleware for compressing and optimizing web assets (CSS, JS, images)
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import gzip
 import zlib
 import io
@@ -19,8 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class AssetCompressionMiddleware(BaseHTTPMiddleware):
-    """
-    Middleware for compressing static assets and API responses
+    """    Middleware for compressing static assets and API responses
     
     Features:
     - Multiple compression algorithms (gzip, deflate)
@@ -28,8 +25,7 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
     - Configurable compression levels
     - File size thresholds
     - Cache-friendly headers
-    """
-    
+    """    
     def __init__(
         self,
         app,
@@ -69,8 +65,7 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
         logger.info("Asset Compression Middleware initialized")
     
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        """Process request and compress response if appropriate"""
-        
+        """Process request and compress response if appropriate"""        
         response = await call_next(request)
         
         # Check if we should compress this response
@@ -89,8 +84,7 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
         return response
     
     def _should_compress(self, request: Request, response: Response) -> bool:
-        """Determine if response should be compressed"""
-        
+        """Determine if response should be compressed"""        
         # Check excluded paths
         for excluded_path in self.exclude_paths:
             if request.url.path.startswith(excluded_path):
@@ -113,8 +107,7 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
         return True
     
     async def _compress_response_gzip(self, response: Response) -> Response:
-        """Compress response using gzip"""
-        
+        """Compress response using gzip"""        
         try:
             # Get response body
             body = self._get_response_body(response)
@@ -152,8 +145,7 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
             return response
     
     async def _compress_response_deflate(self, response: Response) -> Response:
-        """Compress response using deflate"""
-        
+        """Compress response using deflate"""        
         try:
             # Get response body
             body = self._get_response_body(response)
@@ -191,8 +183,7 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
             return response
     
     def _get_response_body(self, response: Response) -> Optional[bytes]:
-        """Extract body from response"""
-        
+        """Extract body from response"""        
         if hasattr(response, 'body') and response.body:
             return response.body
         
@@ -203,8 +194,7 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
         return None
     
     def get_compression_stats(self) -> Dict[str, Any]:
-        """Get compression performance statistics"""
-        
+        """Get compression performance statistics"""        
         avg_savings = (
             self.total_bytes_saved / self.compressions_performed
             if self.compressions_performed > 0 else 0
@@ -219,10 +209,8 @@ class AssetCompressionMiddleware(BaseHTTPMiddleware):
 
 
 class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
-    """
-    Middleware for optimizing static assets (CSS, JS minification, etc.)
-    """
-    
+    """    Middleware for optimizing static assets (CSS, JS minification, etc.)
+    """    
     def __init__(
         self,
         app,
@@ -240,8 +228,7 @@ class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
         logger.info("Static Asset Optimization Middleware initialized")
     
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        """Process request and optimize static assets"""
-        
+        """Process request and optimize static assets"""        
         response = await call_next(request)
         
         # Check if this is a static asset request
@@ -251,14 +238,12 @@ class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
         return response
     
     def _is_static_asset(self, request: Request) -> bool:
-        """Check if request is for a static asset"""
-        
+        """Check if request is for a static asset"""        
         path = request.url.path
         return any(path.startswith(static_path) for static_path in self.static_paths)
     
     async def _optimize_asset(self, request: Request, response: Response) -> Response:
-        """Optimize static asset based on type"""
-        
+        """Optimize static asset based on type"""        
         content_type = response.headers.get('content-type', '').split(';')[0]
         
         if content_type == 'text/css' and self.enable_css_minification:
@@ -271,8 +256,7 @@ class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
         return response
     
     def _minify_css(self, response: Response) -> Response:
-        """Basic CSS minification"""
-        
+        """Basic CSS minification"""        
         try:
             body = self._get_response_body_as_string(response)
             if not body:
@@ -307,8 +291,7 @@ class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
             return response
     
     def _minify_javascript(self, response: Response) -> Response:
-        """Basic JavaScript minification"""
-        
+        """Basic JavaScript minification"""        
         try:
             body = self._get_response_body_as_string(response)
             if not body:
@@ -344,8 +327,7 @@ class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
             return response
     
     def _minify_html(self, response: Response) -> Response:
-        """Basic HTML minification"""
-        
+        """Basic HTML minification"""        
         try:
             body = self._get_response_body_as_string(response)
             if not body:
@@ -383,8 +365,7 @@ class StaticAssetOptimizationMiddleware(BaseHTTPMiddleware):
             return response
     
     def _get_response_body_as_string(self, response: Response) -> Optional[str]:
-        """Get response body as string"""
-        
+        """Get response body as string"""        
         if hasattr(response, 'body') and response.body:
             if isinstance(response.body, bytes):
                 return response.body.decode('utf-8')

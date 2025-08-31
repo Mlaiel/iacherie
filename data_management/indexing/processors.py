@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Advanced Content Processors
+"""IA Influencer Agent - Advanced Content Processors
 =================================================
 
 Multi-format content processing for indexing with specialized handlers
@@ -14,7 +13,6 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import hashlib
 import logging
@@ -44,8 +42,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessingConfig:
-    """Configuration for content processors"""
-    max_file_size: int = 100 * 1024 * 1024  # 100MB
+    """Configuration for content processors"""    max_file_size: int = 100 * 1024 * 1024  # 100MB
     audio_sample_rate: int = 22050
     image_max_dimension: int = 2048
     video_fps_limit: int = 30
@@ -58,8 +55,7 @@ class ProcessingConfig:
 
 
 class BaseContentProcessor(ABC):
-    """Abstract base class for content processors"""
-    
+    """Abstract base class for content processors"""    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -67,22 +63,18 @@ class BaseContentProcessor(ABC):
     
     @abstractmethod
     async def initialize(self) -> None:
-        """Initialize the processor"""
-        pass
+        """Initialize the processor"""        pass
     
     @abstractmethod
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process content and extract features"""
-        pass
+        """Process content and extract features"""        pass
     
     @abstractmethod
     def supports_format(self, file_path: str) -> bool:
-        """Check if the processor supports the file format"""
-        pass
+        """Check if the processor supports the file format"""        pass
     
     async def validate_file(self, file_path: str) -> bool:
-        """Validate file before processing"""
-        try:
+        """Validate file before processing"""        try:
             path = Path(file_path)
             if not path.exists():
                 return False
@@ -100,8 +92,7 @@ class BaseContentProcessor(ABC):
 
 
 class AudioIndexProcessor(BaseContentProcessor):
-    """Advanced audio content processor for indexing"""
-    
+    """Advanced audio content processor for indexing"""    
     def __init__(self, config: ProcessingConfig):
         super().__init__(config)
         self.speech_recognizer = None
@@ -113,8 +104,7 @@ class AudioIndexProcessor(BaseContentProcessor):
             ]
     
     async def initialize(self) -> None:
-        """Initialize audio processing components"""
-        try:
+        """Initialize audio processing components"""        try:
             # Initialize speech recognition
             self.speech_recognizer = sr.Recognizer()
             
@@ -138,12 +128,10 @@ class AudioIndexProcessor(BaseContentProcessor):
             raise
     
     def supports_format(self, file_path: str) -> bool:
-        """Check if audio format is supported"""
-        return Path(file_path).suffix.lower() in self.config.supported_audio_formats
+        """Check if audio format is supported"""        return Path(file_path).suffix.lower() in self.config.supported_audio_formats
     
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process audio file and extract comprehensive features"""
-        try:
+        """Process audio file and extract comprehensive features"""        try:
             if not await self.validate_file(file_path):
                 raise ValueError(f"Invalid audio file: {file_path}")
             
@@ -193,8 +181,7 @@ class AudioIndexProcessor(BaseContentProcessor):
             raise
     
     async def _extract_audio_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract basic audio file metadata"""
-        try:
+        """Extract basic audio file metadata"""        try:
             metadata = {}
             
             # File information
@@ -229,8 +216,7 @@ class AudioIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_audio_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""
-        try:
+        """Extract comprehensive audio features"""        try:
             features = {}
             
             # Basic audio properties
@@ -268,8 +254,7 @@ class AudioIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_spectral_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract advanced spectral features"""
-        try:
+        """Extract advanced spectral features"""        try:
             features = {}
             
             # Chroma features
@@ -299,8 +284,7 @@ class AudioIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_speech_transcription(self, file_path: str) -> Optional[str]:
-        """Extract speech transcription from audio"""
-        try:
+        """Extract speech transcription from audio"""        try:
             with sr.AudioFile(file_path) as source:
                 audio = self.speech_recognizer.record(source)
                 
@@ -330,8 +314,7 @@ class AudioIndexProcessor(BaseContentProcessor):
             return None
     
     async def _extract_music_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract music-specific features"""
-        try:
+        """Extract music-specific features"""        try:
             features = {}
             
             # Harmonic and percussive separation
@@ -360,8 +343,7 @@ class AudioIndexProcessor(BaseContentProcessor):
             return {}
     
     def _generate_searchable_text(self, features: Dict[str, Any]) -> str:
-        """Generate searchable text from audio features"""
-        searchable_parts = []
+        """Generate searchable text from audio features"""        searchable_parts = []
         
         # Add metadata
         if "title" in features:
@@ -397,8 +379,7 @@ class AudioIndexProcessor(BaseContentProcessor):
 
 
 class VideoIndexProcessor(BaseContentProcessor):
-    """Advanced video content processor for indexing"""
-    
+    """Advanced video content processor for indexing"""    
     def __init__(self, config: ProcessingConfig):
         super().__init__(config)
         
@@ -408,8 +389,7 @@ class VideoIndexProcessor(BaseContentProcessor):
             ]
     
     async def initialize(self) -> None:
-        """Initialize video processing components"""
-        try:
+        """Initialize video processing components"""        try:
             self._initialized = True
             self.logger.info("VideoIndexProcessor initialized successfully")
             
@@ -418,12 +398,10 @@ class VideoIndexProcessor(BaseContentProcessor):
             raise
     
     def supports_format(self, file_path: str) -> bool:
-        """Check if video format is supported"""
-        return Path(file_path).suffix.lower() in self.config.supported_video_formats
+        """Check if video format is supported"""        return Path(file_path).suffix.lower() in self.config.supported_video_formats
     
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process video file and extract comprehensive features"""
-        try:
+        """Process video file and extract comprehensive features"""        try:
             if not await self.validate_file(file_path):
                 raise ValueError(f"Invalid video file: {file_path}")
             
@@ -459,8 +437,7 @@ class VideoIndexProcessor(BaseContentProcessor):
             raise
     
     async def _extract_video_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract basic video metadata"""
-        try:
+        """Extract basic video metadata"""        try:
             metadata = {}
             
             # File information
@@ -496,8 +473,7 @@ class VideoIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_visual_features(self, file_path: str) -> Dict[str, Any]:
-        """Extract visual features from video frames"""
-        try:
+        """Extract visual features from video frames"""        try:
             features = {}
             
             cap = cv2.VideoCapture(file_path)
@@ -555,8 +531,7 @@ class VideoIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_video_audio_features(self, file_path: str) -> Dict[str, Any]:
-        """Extract audio features from video"""
-        try:
+        """Extract audio features from video"""        try:
             features = {}
             
             try:
@@ -596,8 +571,7 @@ class VideoIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_scene_features(self, file_path: str) -> Dict[str, Any]:
-        """Extract scene and motion features"""
-        try:
+        """Extract scene and motion features"""        try:
             features = {}
             
             cap = cv2.VideoCapture(file_path)
@@ -655,8 +629,7 @@ class VideoIndexProcessor(BaseContentProcessor):
             return {}
     
     def _generate_searchable_text(self, features: Dict[str, Any]) -> str:
-        """Generate searchable text from video features"""
-        searchable_parts = []
+        """Generate searchable text from video features"""        searchable_parts = []
         
         # Add filename without extension
         if "filename" in features:
@@ -693,8 +666,7 @@ class VideoIndexProcessor(BaseContentProcessor):
 
 
 class ImageIndexProcessor(BaseContentProcessor):
-    """Advanced image content processor for indexing"""
-    
+    """Advanced image content processor for indexing"""    
     def __init__(self, config: ProcessingConfig):
         super().__init__(config)
         
@@ -704,8 +676,7 @@ class ImageIndexProcessor(BaseContentProcessor):
             ]
     
     async def initialize(self) -> None:
-        """Initialize image processing components"""
-        try:
+        """Initialize image processing components"""        try:
             self._initialized = True
             self.logger.info("ImageIndexProcessor initialized successfully")
             
@@ -714,12 +685,10 @@ class ImageIndexProcessor(BaseContentProcessor):
             raise
     
     def supports_format(self, file_path: str) -> bool:
-        """Check if image format is supported"""
-        return Path(file_path).suffix.lower() in self.config.supported_image_formats
+        """Check if image format is supported"""        return Path(file_path).suffix.lower() in self.config.supported_image_formats
     
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process image file and extract comprehensive features"""
-        try:
+        """Process image file and extract comprehensive features"""        try:
             if not await self.validate_file(file_path):
                 raise ValueError(f"Invalid image file: {file_path}")
             
@@ -755,8 +724,7 @@ class ImageIndexProcessor(BaseContentProcessor):
             raise
     
     async def _extract_image_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract basic image metadata including EXIF"""
-        try:
+        """Extract basic image metadata including EXIF"""        try:
             metadata = {}
             
             # File information
@@ -810,8 +778,7 @@ class ImageIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_visual_features(self, file_path: str) -> Dict[str, Any]:
-        """Extract visual features from image"""
-        try:
+        """Extract visual features from image"""        try:
             features = {}
             
             # Load image with OpenCV
@@ -842,8 +809,7 @@ class ImageIndexProcessor(BaseContentProcessor):
             return {}
     
     def _analyze_colors(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze color properties of the image"""
-        try:
+        """Analyze color properties of the image"""        try:
             features = {}
             
             # Convert to different color spaces
@@ -882,8 +848,7 @@ class ImageIndexProcessor(BaseContentProcessor):
             return {}
     
     def _analyze_texture(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze texture properties of the image"""
-        try:
+        """Analyze texture properties of the image"""        try:
             features = {}
             
             # Convert to grayscale
@@ -919,8 +884,7 @@ class ImageIndexProcessor(BaseContentProcessor):
             return {}
     
     def _analyze_edges(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze edge properties of the image"""
-        try:
+        """Analyze edge properties of the image"""        try:
             features = {}
             
             # Convert to grayscale
@@ -952,8 +916,7 @@ class ImageIndexProcessor(BaseContentProcessor):
             return {}
     
     def _detect_faces(self, img: np.ndarray) -> Dict[str, Any]:
-        """Detect faces in the image"""
-        try:
+        """Detect faces in the image"""        try:
             features = {}
             
             # Load face cascade classifier
@@ -985,8 +948,7 @@ class ImageIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_ocr_text(self, file_path: str) -> Optional[str]:
-        """Extract text from image using OCR"""
-        try:
+        """Extract text from image using OCR"""        try:
             img = cv2.imread(file_path)
             if img is None:
                 return None
@@ -1012,8 +974,7 @@ class ImageIndexProcessor(BaseContentProcessor):
             return None
     
     def _generate_searchable_text(self, features: Dict[str, Any]) -> str:
-        """Generate searchable text from image features"""
-        searchable_parts = []
+        """Generate searchable text from image features"""        searchable_parts = []
         
         # Add filename without extension
         if "filename" in features:
@@ -1057,15 +1018,13 @@ class ImageIndexProcessor(BaseContentProcessor):
 
 
 class TextIndexProcessor(BaseContentProcessor):
-    """Advanced text content processor for indexing"""
-    
+    """Advanced text content processor for indexing"""    
     def __init__(self, config: ProcessingConfig):
         super().__init__(config)
         self.nlp = None
         
     async def initialize(self) -> None:
-        """Initialize text processing components"""
-        try:
+        """Initialize text processing components"""        try:
             # Load spaCy model
             try:
                 self.nlp = spacy.load("en_core_web_sm")
@@ -1081,13 +1040,11 @@ class TextIndexProcessor(BaseContentProcessor):
             raise
     
     def supports_format(self, file_path: str) -> bool:
-        """Check if text format is supported"""
-        supported_formats = [".txt", ".md", ".rtf", ".doc", ".docx"]
+        """Check if text format is supported"""        supported_formats = [".txt", ".md", ".rtf", ".doc", ".docx"]
         return Path(file_path).suffix.lower() in supported_formats
     
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process text file and extract comprehensive features"""
-        try:
+        """Process text file and extract comprehensive features"""        try:
             if not await self.validate_file(file_path):
                 raise ValueError(f"Invalid text file: {file_path}")
             
@@ -1126,8 +1083,7 @@ class TextIndexProcessor(BaseContentProcessor):
             raise
     
     async def _read_text_file(self, file_path: str) -> str:
-        """Read text content from file"""
-        try:
+        """Read text content from file"""        try:
             path = Path(file_path)
             extension = path.suffix.lower()
             
@@ -1149,8 +1105,7 @@ class TextIndexProcessor(BaseContentProcessor):
             return ""
     
     async def _extract_text_metadata(self, file_path: str, text_content: str) -> Dict[str, Any]:
-        """Extract basic text metadata"""
-        try:
+        """Extract basic text metadata"""        try:
             metadata = {}
             
             # File information
@@ -1186,8 +1141,7 @@ class TextIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_linguistic_features(self, text_content: str) -> Dict[str, Any]:
-        """Extract linguistic features from text"""
-        try:
+        """Extract linguistic features from text"""        try:
             features = {}
             
             # Basic linguistic analysis
@@ -1224,8 +1178,7 @@ class TextIndexProcessor(BaseContentProcessor):
             return {}
     
     async def _extract_entities(self, text_content: str) -> Dict[str, List[str]]:
-        """Extract named entities from text using spaCy"""
-        try:
+        """Extract named entities from text using spaCy"""        try:
             if not self.nlp:
                 return {}
             
@@ -1254,8 +1207,7 @@ class TextIndexProcessor(BaseContentProcessor):
 
 
 class MultiFormatProcessor:
-    """Unified processor for handling multiple content formats"""
-    
+    """Unified processor for handling multiple content formats"""    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -1269,8 +1221,7 @@ class MultiFormatProcessor:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all processors"""
-        try:
+        """Initialize all processors"""        try:
             await asyncio.gather(
                 self.audio_processor.initialize(),
                 self.video_processor.initialize(),
@@ -1286,8 +1237,7 @@ class MultiFormatProcessor:
             raise
     
     async def process(self, file_path: str, metadata: Dict = None) -> Dict[str, Any]:
-        """Process file with appropriate processor based on format"""
-        try:
+        """Process file with appropriate processor based on format"""        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -1311,8 +1261,7 @@ class MultiFormatProcessor:
             raise
     
     def _detect_content_type(self, file_path: str) -> str:
-        """Detect content type based on file extension and MIME type"""
-        try:
+        """Detect content type based on file extension and MIME type"""        try:
             # Get MIME type
             mime_type, _ = mimetypes.guess_type(file_path)
             
@@ -1345,8 +1294,7 @@ class MultiFormatProcessor:
             return "unknown"
     
     def supports_format(self, file_path: str) -> bool:
-        """Check if any processor supports the file format"""
-        return (
+        """Check if any processor supports the file format"""        return (
             self.audio_processor.supports_format(file_path) or
             self.video_processor.supports_format(file_path) or
             self.image_processor.supports_format(file_path) or

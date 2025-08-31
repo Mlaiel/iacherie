@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test Error Handler Module
+"""Test Error Handler Module
 
 Tests for comprehensive error handling, classification, and recovery mechanisms.
 
@@ -23,7 +20,6 @@ Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
 """
-
 import pytest
 import sys
 import os
@@ -50,10 +46,8 @@ from crawlers.handlers.error_handler import (
 
 class TestCrawlerError:
     """Test suite for CrawlerError class."""
-
     def test_error_creation(self):
-        """Test error object creation."""
-        error = CrawlerError(
+        """Test error object creation."""        error = CrawlerError(
             error_id="test-001",
             message="Test error message",
             category=ErrorCategory.NETWORK,
@@ -69,8 +63,7 @@ class TestCrawlerError:
         assert isinstance(error.timestamp, datetime)
 
     def test_error_serialization(self):
-        """Test error JSON serialization."""
-        error = CrawlerError(
+        """Test error JSON serialization."""        error = CrawlerError(
             error_id="test-002",
             message="Serialization test",
             category=ErrorCategory.VALIDATION,
@@ -85,8 +78,7 @@ class TestCrawlerError:
         assert 'timestamp' in json_data
 
     def test_error_from_exception(self):
-        """Test creating error from exception."""
-        try:
+        """Test creating error from exception."""        try:
             raise ValueError("Test exception")
         except Exception as e:
             error = CrawlerError.from_exception("exc-001", e, ErrorCategory.VALIDATION)
@@ -97,8 +89,7 @@ class TestCrawlerError:
             assert error.category == ErrorCategory.VALIDATION
 
     def test_error_string_representation(self):
-        """Test error string representation."""
-        error = CrawlerError(
+        """Test error string representation."""        error = CrawlerError(
             error_id="str-001",
             message="String test",
             category=ErrorCategory.AUTHENTICATION,
@@ -114,17 +105,14 @@ class TestCrawlerError:
 
 class TestErrorClassifier:
     """Test suite for ErrorClassifier class."""
-
     def test_classifier_initialization(self):
-        """Test classifier setup."""
-        classifier = ErrorClassifier()
+        """Test classifier setup."""        classifier = ErrorClassifier()
         assert classifier.patterns is not None
         assert len(classifier.patterns) > 0
         assert classifier.ml_model is not None
 
     def test_classify_network_error(self):
-        """Test network error classification."""
-        classifier = ErrorClassifier()
+        """Test network error classification."""        classifier = ErrorClassifier()
         
         # Connection timeout
         error = Exception("Connection timed out")
@@ -138,8 +126,7 @@ class TestErrorClassifier:
         assert category == ErrorCategory.NETWORK
 
     def test_classify_authentication_error(self):
-        """Test authentication error classification."""
-        classifier = ErrorClassifier()
+        """Test authentication error classification."""        classifier = ErrorClassifier()
         
         # Invalid API key
         error = Exception("Invalid API key provided")
@@ -153,8 +140,7 @@ class TestErrorClassifier:
         assert category == ErrorCategory.AUTHENTICATION
 
     def test_classify_rate_limit_error(self):
-        """Test rate limit error classification."""
-        classifier = ErrorClassifier()
+        """Test rate limit error classification."""        classifier = ErrorClassifier()
         
         # Rate limit exceeded
         error = Exception("Rate limit exceeded. Try again later")
@@ -163,8 +149,7 @@ class TestErrorClassifier:
         assert severity == ErrorSeverity.MEDIUM
 
     def test_classify_validation_error(self):
-        """Test validation error classification."""
-        classifier = ErrorClassifier()
+        """Test validation error classification."""        classifier = ErrorClassifier()
         
         # Invalid data format
         error = Exception("Invalid JSON format in response")
@@ -177,8 +162,7 @@ class TestErrorClassifier:
         assert category == ErrorCategory.VALIDATION
 
     def test_classify_parsing_error(self):
-        """Test parsing error classification."""
-        classifier = ErrorClassifier()
+        """Test parsing error classification."""        classifier = ErrorClassifier()
         
         # JSON parsing error
         error = Exception("Expecting ',' delimiter: line 1 column 15")
@@ -186,8 +170,7 @@ class TestErrorClassifier:
         assert category == ErrorCategory.PARSING
 
     def test_classify_unknown_error(self):
-        """Test unknown error classification."""
-        classifier = ErrorClassifier()
+        """Test unknown error classification."""        classifier = ErrorClassifier()
         
         # Unrecognized error
         error = Exception("This is a completely unknown error type")
@@ -197,8 +180,7 @@ class TestErrorClassifier:
 
     @patch('backend.crawlers.handlers.error_handler.ErrorClassifier._predict_with_ml')
     def test_ml_classification(self, mock_ml_predict):
-        """Test ML-based error classification."""
-        mock_ml_predict.return_value = (ErrorCategory.NETWORK, ErrorSeverity.HIGH, 0.95)
+        """Test ML-based error classification."""        mock_ml_predict.return_value = (ErrorCategory.NETWORK, ErrorSeverity.HIGH, 0.95)
         
         classifier = ErrorClassifier()
         error = Exception("Complex network error scenario")
@@ -208,8 +190,7 @@ class TestErrorClassifier:
         assert severity == ErrorSeverity.HIGH
 
     def test_learn_from_feedback(self):
-        """Test learning from classification feedback."""
-        classifier = ErrorClassifier()
+        """Test learning from classification feedback."""        classifier = ErrorClassifier()
         
         error = CrawlerError(
             error_id="learn-001",
@@ -227,17 +208,14 @@ class TestErrorClassifier:
 
 class TestErrorRecoveryManager:
     """Test suite for ErrorRecoveryManager class."""
-
     def test_recovery_manager_initialization(self):
-        """Test recovery manager setup."""
-        manager = ErrorRecoveryManager()
+        """Test recovery manager setup."""        manager = ErrorRecoveryManager()
         assert manager.strategies is not None
         assert len(manager.strategies) > 0
 
     @pytest.mark.asyncio
     async def test_retry_strategy(self):
-        """Test retry recovery strategy."""
-        manager = ErrorRecoveryManager()
+        """Test retry recovery strategy."""        manager = ErrorRecoveryManager()
         
         error = CrawlerError(
             error_id="retry-001",
@@ -258,8 +236,7 @@ class TestErrorRecoveryManager:
 
     @pytest.mark.asyncio
     async def test_fallback_strategy(self):
-        """Test fallback recovery strategy."""
-        manager = ErrorRecoveryManager()
+        """Test fallback recovery strategy."""        manager = ErrorRecoveryManager()
         
         error = CrawlerError(
             error_id="fallback-001",
@@ -284,8 +261,7 @@ class TestErrorRecoveryManager:
 
     @pytest.mark.asyncio
     async def test_circuit_breaker_strategy(self):
-        """Test circuit breaker recovery strategy."""
-        manager = ErrorRecoveryManager()
+        """Test circuit breaker recovery strategy."""        manager = ErrorRecoveryManager()
         
         # Simulate repeated failures to trigger circuit breaker
         for i in range(5):
@@ -309,8 +285,7 @@ class TestErrorRecoveryManager:
 
     @pytest.mark.asyncio
     async def test_escalation_strategy(self):
-        """Test escalation recovery strategy."""
-        manager = ErrorRecoveryManager()
+        """Test escalation recovery strategy."""        manager = ErrorRecoveryManager()
         
         error = CrawlerError(
             error_id="escalate-001",
@@ -330,8 +305,7 @@ class TestErrorRecoveryManager:
             mock_escalate.assert_called_once()
 
     def test_should_retry_logic(self):
-        """Test retry decision logic."""
-        manager = ErrorRecoveryManager()
+        """Test retry decision logic."""        manager = ErrorRecoveryManager()
         
         # Retryable error
         retryable_error = CrawlerError(
@@ -355,8 +329,7 @@ class TestErrorRecoveryManager:
         assert not manager._should_retry(retryable_error, attempt=5)
 
     def test_calculate_backoff_delay(self):
-        """Test backoff delay calculation."""
-        manager = ErrorRecoveryManager()
+        """Test backoff delay calculation."""        manager = ErrorRecoveryManager()
         
         # Exponential backoff
         delay1 = manager._calculate_backoff_delay(1, "exponential")
@@ -375,16 +348,13 @@ class TestErrorRecoveryManager:
 
 class TestErrorAggregator:
     """Test suite for ErrorAggregator class."""
-
     def test_aggregator_initialization(self):
-        """Test aggregator setup."""
-        aggregator = ErrorAggregator()
+        """Test aggregator setup."""        aggregator = ErrorAggregator()
         assert aggregator.error_buffer == []
         assert aggregator.stats is not None
 
     def test_collect_error(self):
-        """Test error collection."""
-        aggregator = ErrorAggregator()
+        """Test error collection."""        aggregator = ErrorAggregator()
         
         error = CrawlerError(
             error_id="collect-001",
@@ -398,8 +368,7 @@ class TestErrorAggregator:
         assert aggregator.error_buffer[0] == error
 
     def test_generate_stats(self):
-        """Test error statistics generation."""
-        aggregator = ErrorAggregator()
+        """Test error statistics generation."""        aggregator = ErrorAggregator()
         
         # Add various errors
         errors = [
@@ -421,8 +390,7 @@ class TestErrorAggregator:
         assert stats.by_severity[ErrorSeverity.HIGH] == 1
 
     def test_detect_patterns(self):
-        """Test error pattern detection."""
-        aggregator = ErrorAggregator()
+        """Test error pattern detection."""        aggregator = ErrorAggregator()
         
         # Create pattern of similar errors
         for i in range(10):
@@ -446,8 +414,7 @@ class TestErrorAggregator:
         assert network_pattern['count'] == 10
 
     def test_should_alert_logic(self):
-        """Test alerting decision logic."""
-        aggregator = ErrorAggregator()
+        """Test alerting decision logic."""        aggregator = ErrorAggregator()
         
         # High frequency of errors should trigger alert
         for i in range(20):
@@ -465,8 +432,7 @@ class TestErrorAggregator:
 
     @pytest.mark.asyncio
     async def test_send_alert(self):
-        """Test alert sending."""
-        aggregator = ErrorAggregator()
+        """Test alert sending."""        aggregator = ErrorAggregator()
         
         with patch.object(aggregator, '_send_notification') as mock_send:
             mock_send.return_value = True
@@ -480,8 +446,7 @@ class TestErrorAggregator:
             mock_send.assert_called_once()
 
     def test_cleanup_old_errors(self):
-        """Test old error cleanup."""
-        aggregator = ErrorAggregator()
+        """Test old error cleanup."""        aggregator = ErrorAggregator()
         
         # Create old error
         old_error = CrawlerError(
@@ -509,11 +474,9 @@ class TestErrorAggregator:
 
 class TestIntegration:
     """Integration tests for error handling system."""
-
     @pytest.mark.asyncio
     async def test_complete_error_handling_flow(self):
-        """Test complete error handling pipeline."""
-        classifier = ErrorClassifier()
+        """Test complete error handling pipeline."""        classifier = ErrorClassifier()
         recovery_manager = ErrorRecoveryManager()
         aggregator = ErrorAggregator()
         
@@ -548,8 +511,7 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_error_pattern_detection_and_alerting(self):
-        """Test error pattern detection and alerting system."""
-        aggregator = ErrorAggregator()
+        """Test error pattern detection and alerting system."""        aggregator = ErrorAggregator()
         
         # Simulate burst of authentication errors
         for i in range(15):
@@ -578,8 +540,7 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_recovery_strategy_selection(self):
-        """Test recovery strategy selection based on error type."""
-        recovery_manager = ErrorRecoveryManager()
+        """Test recovery strategy selection based on error type."""        recovery_manager = ErrorRecoveryManager()
         
         # Network error - should use retry strategy
         network_error = CrawlerError(
@@ -625,8 +586,7 @@ class TestIntegration:
             assert result.strategy_used == RecoveryStrategy.ESCALATION
 
     def test_error_learning_and_improvement(self):
-        """Test error classification learning and improvement."""
-        classifier = ErrorClassifier()
+        """Test error classification learning and improvement."""        classifier = ErrorClassifier()
         
         # Create an error that might be misclassified initially
         error_message = "Custom timeout error in new API endpoint"

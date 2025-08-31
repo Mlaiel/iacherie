@@ -1,5 +1,4 @@
-"""
-Replication Configuration Manager - IA Influencer Agent Platform
+"""Replication Configuration Manager - IA Influencer Agent Platform
 
 Centralized configuration management for database replication across all
 supported systems. Handles environment-specific settings, security credentials,
@@ -8,7 +7,6 @@ and topology configurations for the content creator platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import os
 import yaml
 import logging
@@ -22,8 +20,7 @@ import json
 
 @dataclass
 class DatabaseConfig:
-    """Database-specific configuration"""
-    host: str
+    """Database-specific configuration"""    host: str
     port: int
     database: str
     username: str
@@ -41,8 +38,7 @@ class DatabaseConfig:
 
 @dataclass
 class ReplicationTopologyConfig:
-    """Replication topology configuration"""
-    primary_region: str
+    """Replication topology configuration"""    primary_region: str
     secondary_regions: List[str]
     failover_strategy: str = "automatic"
     conflict_resolution: str = "last_write_wins"
@@ -54,8 +50,7 @@ class ReplicationTopologyConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for replication"""
-    encryption_enabled: bool = True
+    """Security configuration for replication"""    encryption_enabled: bool = True
     encryption_algorithm: str = "AES-256"
     tls_version: str = "1.3"
     certificate_validation: bool = True
@@ -66,23 +61,19 @@ class SecurityConfig:
 
 
 class ReplicationConfig:
-    """
-    Comprehensive configuration manager for database replication.
+    """    Comprehensive configuration manager for database replication.
     
     Handles all configuration aspects including database connections,
     topology, security, monitoring, and performance tuning for the
     IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None, environment: str = "production"):
-        """
-        Initialize replication configuration.
+        """        Initialize replication configuration.
         
         Args:
             config_path: Path to configuration file
             environment: Environment name (development, staging, production)
-        """
-        self.environment = environment
+        """        self.environment = environment
         self.logger = logging.getLogger(f"{__name__}.ReplicationConfig")
         
         # Configuration paths
@@ -106,18 +97,15 @@ class ReplicationConfig:
         self.logger.info(f"ReplicationConfig initialized for environment: {environment}")
     
     def _get_default_config_path(self) -> str:
-        """Get default configuration file path"""
-        base_path = Path(__file__).parent
+        """Get default configuration file path"""        base_path = Path(__file__).parent
         return str(base_path / "config.yml")
     
     def _get_secrets_path(self) -> str:
-        """Get secrets file path"""
-        base_path = Path(__file__).parent
+        """Get secrets file path"""        base_path = Path(__file__).parent
         return str(base_path / f"secrets_{self.environment}.enc")
     
     def _get_or_create_encryption_key(self) -> bytes:
-        """Get or create encryption key for secrets"""
-        key_file = Path(__file__).parent / ".encryption_key"
+        """Get or create encryption key for secrets"""        key_file = Path(__file__).parent / ".encryption_key"
         
         if key_file.exists():
             return key_file.read_bytes()
@@ -128,8 +116,7 @@ class ReplicationConfig:
             return key
     
     def _load_configuration(self) -> None:
-        """Load configuration from files"""
-        try:
+        """Load configuration from files"""        try:
             # Load main configuration
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
@@ -157,8 +144,7 @@ class ReplicationConfig:
             self._parse_security_config()
     
     def _load_secrets(self) -> None:
-        """Load and decrypt secrets"""
-        try:
+        """Load and decrypt secrets"""        try:
             if os.path.exists(self.secrets_path):
                 with open(self.secrets_path, 'rb') as f:
                     encrypted_data = f.read()
@@ -173,8 +159,7 @@ class ReplicationConfig:
             self.secrets_data = {}
     
     def _save_secrets(self) -> None:
-        """Encrypt and save secrets"""
-        try:
+        """Encrypt and save secrets"""        try:
             json_data = json.dumps(self.secrets_data).encode()
             encrypted_data = self.cipher.encrypt(json_data)
             
@@ -188,8 +173,7 @@ class ReplicationConfig:
             self.logger.error(f"Failed to save secrets: {e}")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             "environment": self.environment,
             "replication": {
                 "mode": "master_slave",
@@ -265,8 +249,7 @@ class ReplicationConfig:
         }
     
     def _parse_database_configs(self) -> None:
-        """Parse database configurations"""
-        databases_config = self.config_data.get("databases", {})
+        """Parse database configurations"""        databases_config = self.config_data.get("databases", {})
         
         for db_type, db_config in databases_config.items():
             if not db_config.get("enabled", False):
@@ -279,8 +262,7 @@ class ReplicationConfig:
                 self.database_configs[db_type] = DatabaseConfig(**connection_config)
     
     def _get_database_connection_config(self, db_type: str) -> Optional[Dict[str, Any]]:
-        """Get database connection configuration"""
-        # Try to get from secrets first
+        """Get database connection configuration"""        # Try to get from secrets first
         secrets_key = f"{db_type}_connection"
         if secrets_key in self.secrets_data:
             return self.secrets_data[secrets_key]
@@ -330,8 +312,7 @@ class ReplicationConfig:
         return None
     
     def _parse_topology_config(self) -> None:
-        """Parse topology configuration"""
-        topology_data = self.config_data.get("replication", {}).get("topology", {})
+        """Parse topology configuration"""        topology_data = self.config_data.get("replication", {}).get("topology", {})
         
         self.topology_config = ReplicationTopologyConfig(
             primary_region=topology_data.get("primary_region", "eu-west-1"),
@@ -345,8 +326,7 @@ class ReplicationConfig:
         )
     
     def _parse_security_config(self) -> None:
-        """Parse security configuration"""
-        security_data = self.config_data.get("replication", {}).get("security", {})
+        """Parse security configuration"""        security_data = self.config_data.get("replication", {}).get("security", {})
         
         self.security_config = SecurityConfig(
             encryption_enabled=security_data.get("encryption_enabled", True),
@@ -360,16 +340,14 @@ class ReplicationConfig:
         )
     
     def get_database_config(self, database_type: str) -> Optional[Dict[str, Any]]:
-        """
-        Get configuration for specific database type.
+        """        Get configuration for specific database type.
         
         Args:
             database_type: Type of database
             
         Returns:
             Database configuration or None if not found
-        """
-        db_config = self.database_configs.get(database_type)
+        """        db_config = self.database_configs.get(database_type)
         if not db_config:
             return None
         
@@ -398,8 +376,7 @@ class ReplicationConfig:
         return config_dict
     
     def get_topology_config(self) -> Dict[str, Any]:
-        """Get topology configuration as dictionary"""
-        if not self.topology_config:
+        """Get topology configuration as dictionary"""        if not self.topology_config:
             return {}
         
         return {
@@ -415,8 +392,7 @@ class ReplicationConfig:
         }
     
     def get_security_config(self) -> Dict[str, Any]:
-        """Get security configuration as dictionary"""
-        if not self.security_config:
+        """Get security configuration as dictionary"""        if not self.security_config:
             return {}
         
         return {
@@ -431,14 +407,12 @@ class ReplicationConfig:
         }
     
     def set_database_credentials(self, database_type: str, credentials: Dict[str, Any]) -> None:
-        """
-        Set encrypted database credentials.
+        """        Set encrypted database credentials.
         
         Args:
             database_type: Type of database
             credentials: Database connection credentials
-        """
-        secrets_key = f"{database_type}_connection"
+        """        secrets_key = f"{database_type}_connection"
         self.secrets_data[secrets_key] = credentials
         self._save_secrets()
         
@@ -453,21 +427,18 @@ class ReplicationConfig:
         self.logger.info(f"Credentials updated for {database_type}")
     
     def update_topology(self, topology_config: Dict[str, Any]) -> None:
-        """
-        Update topology configuration.
+        """        Update topology configuration.
         
         Args:
             topology_config: New topology configuration
-        """
-        self.config_data.setdefault("replication", {})["topology"] = topology_config
+        """        self.config_data.setdefault("replication", {})["topology"] = topology_config
         self._parse_topology_config()
         self._save_configuration()
         
         self.logger.info("Topology configuration updated")
     
     def _save_configuration(self) -> None:
-        """Save configuration to file"""
-        try:
+        """Save configuration to file"""        try:
             with open(self.config_path, 'w') as f:
                 yaml.dump(self.config_data, f, default_flow_style=False)
         except Exception as e:
@@ -476,48 +447,39 @@ class ReplicationConfig:
     # Property accessors for commonly used values
     @property
     def health_check_interval(self) -> int:
-        """Get health check interval in seconds"""
-        return self.config_data.get("monitoring", {}).get("health_check_interval", 30)
+        """Get health check interval in seconds"""        return self.config_data.get("monitoring", {}).get("health_check_interval", 30)
     
     @property
     def lag_threshold(self) -> int:
-        """Get replication lag threshold in milliseconds"""
-        return self.config_data.get("monitoring", {}).get("lag_threshold", 1000)
+        """Get replication lag threshold in milliseconds"""        return self.config_data.get("monitoring", {}).get("lag_threshold", 1000)
     
     @property
     def max_error_count(self) -> int:
-        """Get maximum error count before recovery"""
-        return self.config_data.get("monitoring", {}).get("max_error_count", 5)
+        """Get maximum error count before recovery"""        return self.config_data.get("monitoring", {}).get("max_error_count", 5)
     
     @property
     def monitoring_interval(self) -> int:
-        """Get monitoring interval in seconds"""
-        return self.config_data.get("monitoring", {}).get("monitoring_interval", 60)
+        """Get monitoring interval in seconds"""        return self.config_data.get("monitoring", {}).get("monitoring_interval", 60)
     
     @property
     def automatic_failover_enabled(self) -> bool:
-        """Check if automatic failover is enabled"""
-        return (self.topology_config and 
+        """Check if automatic failover is enabled"""        return (self.topology_config and 
                 self.topology_config.failover_strategy == "automatic")
     
     @property
     def batch_size(self) -> int:
-        """Get batch size for replication operations"""
-        return self.config_data.get("performance", {}).get("batch_size", 1000)
+        """Get batch size for replication operations"""        return self.config_data.get("performance", {}).get("batch_size", 1000)
     
     @property
     def parallel_workers(self) -> int:
-        """Get number of parallel workers"""
-        return self.config_data.get("performance", {}).get("parallel_workers", 4)
+        """Get number of parallel workers"""        return self.config_data.get("performance", {}).get("parallel_workers", 4)
     
     def validate_configuration(self) -> List[str]:
-        """
-        Validate configuration and return list of issues.
+        """        Validate configuration and return list of issues.
         
         Returns:
             List of validation error messages
-        """
-        issues = []
+        """        issues = []
         
         # Check database configurations
         for db_type, db_config in self.database_configs.items():
@@ -549,8 +511,7 @@ class ReplicationConfig:
         return issues
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary for logging/debugging"""
-        return {
+        """Get configuration summary for logging/debugging"""        return {
             "environment": self.environment,
             "databases_configured": list(self.database_configs.keys()),
             "primary_region": self.topology_config.primary_region if self.topology_config else None,

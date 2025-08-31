@@ -1,5 +1,4 @@
-"""
-Enterprise Leaderboard Manager - Dynamic leaderboard system for IA Influencer platform.
+"""Enterprise Leaderboard Manager - Dynamic leaderboard system for IA Influencer platform.
 
 This module provides a comprehensive leaderboard management system that creates
 dynamic rankings, competitive environments, and recognition systems for
@@ -27,7 +26,6 @@ Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Leaderboard Ranking → Distribution → Monetization → Analytics
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class LeaderboardType(str, Enum):
-    """Types of leaderboards."""
-    GLOBAL = "global"
+    """Types of leaderboards."""    GLOBAL = "global"
     REGIONAL = "regional"
     CATEGORY = "category"
     CREATOR_TYPE = "creator_type"
@@ -57,8 +54,7 @@ class LeaderboardType(str, Enum):
 
 
 class LeaderboardMetric(str, Enum):
-    """Metrics used for leaderboard rankings."""
-    EXPERIENCE_POINTS = "experience_points"
+    """Metrics used for leaderboard rankings."""    EXPERIENCE_POINTS = "experience_points"
     CONTENT_COUNT = "content_count"
     COLLABORATION_COUNT = "collaboration_count"
     TOTAL_REVENUE = "total_revenue"
@@ -76,8 +72,7 @@ class LeaderboardMetric(str, Enum):
 
 
 class LeaderboardScope(str, Enum):
-    """Scope/duration of leaderboards."""
-    ALL_TIME = "all_time"
+    """Scope/duration of leaderboards."""    ALL_TIME = "all_time"
     YEARLY = "yearly"
     MONTHLY = "monthly"
     WEEKLY = "weekly"
@@ -86,8 +81,7 @@ class LeaderboardScope(str, Enum):
 
 
 class LeaderboardStatus(str, Enum):
-    """Status of leaderboards."""
-    ACTIVE = "active"
+    """Status of leaderboards."""    ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
     ARCHIVED = "archived"
@@ -95,8 +89,7 @@ class LeaderboardStatus(str, Enum):
 
 @dataclass
 class LeaderboardEntry:
-    """Represents a single entry in a leaderboard."""
-    entry_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents a single entry in a leaderboard."""    entry_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     leaderboard_id: str = ""
     
@@ -131,8 +124,7 @@ class LeaderboardEntry:
     consistency_score: float = 0.0
     
     def get_rank_change_indicator(self) -> str:
-        """Get visual indicator for rank change."""
-        if self.rank_change > 0:
+        """Get visual indicator for rank change."""        if self.rank_change > 0:
             return f"↑{self.rank_change}"
         elif self.rank_change < 0:
             return f"↓{abs(self.rank_change)}"
@@ -140,8 +132,7 @@ class LeaderboardEntry:
             return "→"
     
     def get_score_change_percentage(self) -> float:
-        """Get percentage change in score."""
-        if not self.previous_score or self.previous_score == 0:
+        """Get percentage change in score."""        if not self.previous_score or self.previous_score == 0:
             return 0.0
         
         change = float(self.score - self.previous_score)
@@ -150,8 +141,7 @@ class LeaderboardEntry:
 
 @dataclass
 class LeaderboardDefinition:
-    """Defines a leaderboard configuration."""
-    leaderboard_id: str = field(default_factory=lambda: str(uuid4()))
+    """Defines a leaderboard configuration."""    leaderboard_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     description: str = ""
     
@@ -199,8 +189,7 @@ class LeaderboardDefinition:
     last_calculation: Optional[datetime] = None
     
     def is_user_eligible(self, user_profile: Dict[str, Any]) -> bool:
-        """Check if a user is eligible for this leaderboard."""
-        # Check creator type filter
+        """Check if a user is eligible for this leaderboard."""        # Check creator type filter
         if self.creator_type_filter:
             user_creator_type = user_profile.get("creator_type", "")
             if user_creator_type != self.creator_type_filter:
@@ -242,8 +231,7 @@ class LeaderboardDefinition:
         return True
     
     def get_scope_start_date(self) -> Optional[datetime]:
-        """Get the start date for the current scope period."""
-        now = datetime.utcnow()
+        """Get the start date for the current scope period."""        now = datetime.utcnow()
         
         if self.scope == LeaderboardScope.ALL_TIME:
             return None
@@ -263,16 +251,13 @@ class LeaderboardDefinition:
 
 
 class LeaderboardManager:
-    """
-    Enterprise-grade leaderboard management system.
+    """    Enterprise-grade leaderboard management system.
     
     Manages dynamic rankings, competitive environments, and recognition
     systems across multiple dimensions and time periods.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the leaderboard manager."""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the leaderboard manager."""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._leaderboards: Dict[str, LeaderboardDefinition] = {}
         self._leaderboard_data: Dict[str, List[LeaderboardEntry]] = {}
         self._user_data_cache: Dict[str, Dict[str, Any]] = {}
@@ -284,8 +269,7 @@ class LeaderboardManager:
         self.logger.info("LeaderboardManager initialized successfully")
     
     def _initialize_default_leaderboards(self) -> None:
-        """Initialize default platform leaderboards."""
-        
+        """Initialize default platform leaderboards."""        
         # Global Experience Points Leaderboard
         global_xp = LeaderboardDefinition(
             name="Global Experience Leaders",
@@ -458,8 +442,7 @@ class LeaderboardManager:
         value: Union[int, float, Decimal],
         user_profile: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """Update user score for a specific metric and affected leaderboards."""
-        try:
+        """Update user score for a specific metric and affected leaderboards."""        try:
             # Cache user profile for performance
             if user_profile:
                 self._user_data_cache[user_id] = user_profile
@@ -498,8 +481,7 @@ class LeaderboardManager:
         metric: LeaderboardMetric,
         value: Union[int, float, Decimal]
     ) -> None:
-        """Update a specific entry in a leaderboard."""
-        try:
+        """Update a specific entry in a leaderboard."""        try:
             if leaderboard_id not in self._leaderboard_data:
                 self._leaderboard_data[leaderboard_id] = []
             
@@ -545,8 +527,7 @@ class LeaderboardManager:
             self.logger.error(f"Error updating leaderboard entry: {e}")
     
     async def _calculate_entry_momentum(self, entry: LeaderboardEntry) -> None:
-        """Calculate momentum and trending indicators for an entry."""
-        try:
+        """Calculate momentum and trending indicators for an entry."""        try:
             # Calculate momentum based on recent score changes
             if entry.previous_score and entry.score > entry.previous_score:
                 score_increase = float(entry.score - entry.previous_score)
@@ -565,8 +546,7 @@ class LeaderboardManager:
             self.logger.error(f"Error calculating entry momentum: {e}")
     
     async def _recalculate_leaderboard_rankings(self, leaderboard_id: str) -> None:
-        """Recalculate rankings for a specific leaderboard."""
-        async with self._calculation_lock:
+        """Recalculate rankings for a specific leaderboard."""        async with self._calculation_lock:
             try:
                 if leaderboard_id not in self._leaderboard_data:
                     return
@@ -608,8 +588,7 @@ class LeaderboardManager:
         entry: LeaderboardEntry,
         leaderboard: LeaderboardDefinition
     ) -> Decimal:
-        """Calculate composite score based on weighted metrics."""
-        try:
+        """Calculate composite score based on weighted metrics."""        try:
             composite_score = Decimal('0')
             
             # Primary metric weight (default to 1.0 if not specified)
@@ -637,8 +616,7 @@ class LeaderboardManager:
         offset: int = 0,
         include_user_context: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get leaderboard data with optional user context."""
-        try:
+        """Get leaderboard data with optional user context."""        try:
             if leaderboard_id not in self._leaderboards:
                 raise ValueError(f"Leaderboard {leaderboard_id} not found")
             
@@ -722,8 +700,7 @@ class LeaderboardManager:
             return {}
     
     def _format_score(self, score: Decimal, metric: LeaderboardMetric) -> str:
-        """Format score for display based on metric type."""
-        if metric == LeaderboardMetric.TOTAL_REVENUE:
+        """Format score for display based on metric type."""        if metric == LeaderboardMetric.TOTAL_REVENUE:
             return f"${float(score):,.2f}"
         elif metric == LeaderboardMetric.ENGAGEMENT_RATE:
             return f"{float(score):.1f}%"
@@ -735,8 +712,7 @@ class LeaderboardManager:
             return f"{float(score):,.1f}"
     
     def _calculate_percentile(self, rank: int, total: int) -> float:
-        """Calculate percentile for a given rank."""
-        if total == 0:
+        """Calculate percentile for a given rank."""        if total == 0:
             return 0.0
         return ((total - rank + 1) / total) * 100
     
@@ -745,8 +721,7 @@ class LeaderboardManager:
         leaderboard_id: str,
         user_id: str
     ) -> Optional[LeaderboardEntry]:
-        """Get a user's position in a specific leaderboard."""
-        entries = self._leaderboard_data.get(leaderboard_id, [])
+        """Get a user's position in a specific leaderboard."""        entries = self._leaderboard_data.get(leaderboard_id, [])
         
         for entry in entries:
             if entry.user_id == user_id:
@@ -755,8 +730,7 @@ class LeaderboardManager:
         return None
     
     async def get_user_leaderboard_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get summary of user's performance across all leaderboards."""
-        try:
+        """Get summary of user's performance across all leaderboards."""        try:
             summary = {
                 "user_id": user_id,
                 "total_leaderboards": 0,
@@ -843,8 +817,7 @@ class LeaderboardManager:
         user_profile: Optional[Dict[str, Any]] = None,
         featured_only: bool = False
     ) -> List[Dict[str, Any]]:
-        """Get list of available leaderboards, optionally filtered by user eligibility."""
-        try:
+        """Get list of available leaderboards, optionally filtered by user eligibility."""        try:
             leaderboards = []
             
             for leaderboard_id, leaderboard in self._leaderboards.items():
@@ -902,8 +875,7 @@ class LeaderboardManager:
         leaderboard_config: Dict[str, Any],
         creator_id: str
     ) -> str:
-        """Create a custom leaderboard."""
-        try:
+        """Create a custom leaderboard."""        try:
             # Validate required fields
             required_fields = ["name", "primary_metric"]
             for field in required_fields:
@@ -952,8 +924,7 @@ class LeaderboardManager:
             raise
     
     async def schedule_leaderboard_updates(self) -> None:
-        """Schedule regular leaderboard updates."""
-        try:
+        """Schedule regular leaderboard updates."""        try:
             for leaderboard_id, leaderboard in self._leaderboards.items():
                 if leaderboard.status == LeaderboardStatus.ACTIVE and not leaderboard.real_time_updates:
                     last_calc = leaderboard.last_calculation
@@ -968,8 +939,7 @@ class LeaderboardManager:
             self.logger.error(f"Error in scheduled leaderboard updates: {e}")
     
     async def get_leaderboard_analytics(self, leaderboard_id: str) -> Dict[str, Any]:
-        """Get analytics data for a specific leaderboard."""
-        try:
+        """Get analytics data for a specific leaderboard."""        try:
             if leaderboard_id not in self._leaderboards:
                 raise ValueError(f"Leaderboard {leaderboard_id} not found")
             
@@ -1028,8 +998,7 @@ _leaderboard_manager: Optional[LeaderboardManager] = None
 
 
 async def get_leaderboard_manager() -> LeaderboardManager:
-    """Get the global leaderboard manager instance."""
-    global _leaderboard_manager
+    """Get the global leaderboard manager instance."""    global _leaderboard_manager
     
     if _leaderboard_manager is None:
         _leaderboard_manager = LeaderboardManager()
@@ -1044,14 +1013,12 @@ async def update_user_metric_score(
     value: Union[int, float, Decimal],
     user_profile: Optional[Dict[str, Any]] = None
 ) -> List[str]:
-    """Update user metric score (convenience function)."""
-    manager = await get_leaderboard_manager()
+    """Update user metric score (convenience function)."""    manager = await get_leaderboard_manager()
     return await manager.update_user_score(user_id, metric, value, user_profile)
 
 
 async def get_global_leaderboard(limit: int = 50, user_context: Optional[str] = None) -> Dict[str, Any]:
-    """Get the main global leaderboard (convenience function)."""
-    manager = await get_leaderboard_manager()
+    """Get the main global leaderboard (convenience function)."""    manager = await get_leaderboard_manager()
     
     # Find the global experience points leaderboard
     for leaderboard_id, leaderboard in manager._leaderboards.items():
@@ -1064,6 +1031,5 @@ async def get_global_leaderboard(limit: int = 50, user_context: Optional[str] = 
 
 
 async def get_user_rankings(user_id: str) -> Dict[str, Any]:
-    """Get user's rankings across all leaderboards (convenience function)."""
-    manager = await get_leaderboard_manager()
+    """Get user's rankings across all leaderboards (convenience function)."""    manager = await get_leaderboard_manager()
     return await manager.get_user_leaderboard_summary(user_id)

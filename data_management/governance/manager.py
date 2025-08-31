@@ -1,12 +1,10 @@
-"""
-Data Governance Manager - Central orchestrator for all governance operations
+"""Data Governance Manager - Central orchestrator for all governance operations
 
 This manager coordinates all governance activities including compliance checking,
 policy enforcement, lifecycle management, and quality assurance.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -29,8 +27,7 @@ from .classification import DataClassifier
 
 
 class ContentType(Enum):
-    """Content types supported by the platform"""
-    AUDIO = "audio"
+    """Content types supported by the platform"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -38,8 +35,7 @@ class ContentType(Enum):
 
 
 class GovernanceStatus(Enum):
-    """Governance status levels"""
-    COMPLIANT = "compliant"
+    """Governance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
     PROCESSING = "processing"
@@ -48,8 +44,7 @@ class GovernanceStatus(Enum):
 
 @dataclass
 class GovernanceResult:
-    """Result of governance operations"""
-    content_id: str
+    """Result of governance operations"""    content_id: str
     status: GovernanceStatus
     policies_applied: List[str]
     compliance_score: float
@@ -61,16 +56,13 @@ class GovernanceResult:
 
 
 class DataGovernanceManager(BaseManager):
-    """
-    Central manager for all data governance operations
+    """    Central manager for all data governance operations
     
     Coordinates compliance checking, policy enforcement, quality assurance,
     and lifecycle management for all content types in the platform.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the data governance manager"""
-        super().__init__(config)
+        """Initialize the data governance manager"""        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize sub-managers
@@ -103,8 +95,7 @@ class DataGovernanceManager(BaseManager):
         tenant_id: Optional[str] = None,
         policies: Optional[List[str]] = None
     ) -> GovernanceResult:
-        """
-        Apply complete governance framework to content
+        """        Apply complete governance framework to content
         
         Args:
             content_id: Unique content identifier
@@ -116,8 +107,7 @@ class DataGovernanceManager(BaseManager):
             
         Returns:
             GovernanceResult with complete governance analysis
-        """
-        try:
+        """        try:
             self.logger.info(f"Applying governance to content {content_id}")
             
             # Initialize result
@@ -225,8 +215,7 @@ class DataGovernanceManager(BaseManager):
             raise GovernanceError(f"Failed to apply governance: {str(e)}")
     
     async def check_compliance(self, content_id: str) -> Dict[str, Any]:
-        """Check current compliance status of content"""
-        try:
+        """Check current compliance status of content"""        try:
             return await self.compliance_manager.get_compliance_status(content_id)
         except Exception as e:
             raise ComplianceError(f"Failed to check compliance: {str(e)}")
@@ -236,8 +225,7 @@ class DataGovernanceManager(BaseManager):
         content_id: str,
         new_policies: List[str]
     ) -> GovernanceResult:
-        """Update governance policies for existing content"""
-        try:
+        """Update governance policies for existing content"""        try:
             # Get existing content metadata
             metadata = await self.metadata_manager.get_metadata(content_id)
             if not metadata:
@@ -256,8 +244,7 @@ class DataGovernanceManager(BaseManager):
             raise GovernanceError(f"Failed to update policies: {str(e)}")
     
     async def get_governance_status(self, content_id: str) -> Optional[GovernanceResult]:
-        """Get current governance status for content"""
-        try:
+        """Get current governance status for content"""        try:
             metadata = await self.metadata_manager.get_metadata(content_id)
             if not metadata:
                 return None
@@ -278,8 +265,7 @@ class DataGovernanceManager(BaseManager):
             return None
     
     async def get_governance_metrics(self) -> Dict[str, Any]:
-        """Get current governance metrics"""
-        return {
+        """Get current governance metrics"""        return {
             **self.metrics,
             "compliance_details": await self.compliance_manager.get_metrics(),
             "quality_details": await self.quality_manager.get_metrics(),
@@ -288,8 +274,7 @@ class DataGovernanceManager(BaseManager):
         }
     
     async def _generate_recommendations(self, result: GovernanceResult) -> List[str]:
-        """Generate governance recommendations based on analysis"""
-        recommendations = []
+        """Generate governance recommendations based on analysis"""        recommendations = []
         
         # Compliance recommendations
         if result.compliance_score < 0.9:
@@ -316,8 +301,7 @@ class DataGovernanceManager(BaseManager):
         return recommendations
     
     async def _update_metrics(self, result: GovernanceResult) -> None:
-        """Update governance metrics based on result"""
-        self.metrics["total_governed_content"] += 1
+        """Update governance metrics based on result"""        self.metrics["total_governed_content"] += 1
         
         # Update compliance rate
         if result.status == GovernanceStatus.COMPLIANT:
@@ -337,16 +321,14 @@ class DataGovernanceManager(BaseManager):
             self.metrics["policy_violations"] += len(result.issues)
     
     async def cleanup_expired_content(self) -> Dict[str, int]:
-        """Clean up expired content based on retention policies"""
-        return await self.lifecycle_manager.cleanup_expired_content()
+        """Clean up expired content based on retention policies"""        return await self.lifecycle_manager.cleanup_expired_content()
     
     async def export_governance_data(
         self,
         content_ids: Optional[List[str]] = None,
         format_type: str = "json"
     ) -> Dict[str, Any]:
-        """Export governance data for auditing or reporting"""
-        try:
+        """Export governance data for auditing or reporting"""        try:
             return await self.metadata_manager.export_data(content_ids, format_type)
         except Exception as e:
             raise GovernanceError(f"Failed to export governance data: {str(e)}")

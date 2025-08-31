@@ -1,5 +1,4 @@
-"""
-System monitoring and health endpoints for IA Influencer Agent platform.
+"""System monitoring and health endpoints for IA Influencer Agent platform.
 
 This module provides comprehensive system monitoring, health checks,
 and operational intelligence for the entire platform ecosystem.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 import asyncio
@@ -36,8 +34,7 @@ settings = get_settings()
 router = APIRouter(prefix="/monitoring", tags=["System Monitoring"])
 
 class SystemHealthResponse(BaseModel):
-    """Response model for system health check"""
-    status: str = Field(..., description="Overall system status")
+    """Response model for system health check"""    status: str = Field(..., description="Overall system status")
     timestamp: datetime = Field(..., description="Health check timestamp")
     version: str = Field(..., description="API version")
     uptime: str = Field(..., description="System uptime")
@@ -46,8 +43,7 @@ class SystemHealthResponse(BaseModel):
     active_connections: int = Field(..., description="Number of active connections")
 
 class ServiceMetrics(BaseModel):
-    """Model for individual service metrics"""
-    service_name: str = Field(..., description="Name of the service")
+    """Model for individual service metrics"""    service_name: str = Field(..., description="Name of the service")
     status: str = Field(..., description="Service status")
     response_time: float = Field(..., description="Average response time")
     cpu_usage: float = Field(..., description="CPU usage percentage")
@@ -59,8 +55,7 @@ class ServiceMetrics(BaseModel):
 async def comprehensive_health_check(
     db: Session = Depends(get_db)
 ):
-    """
-    Comprehensive system health check for all platform services.
+    """    Comprehensive system health check for all platform services.
     
     Monitors:
     - Database connectivity and performance
@@ -68,8 +63,7 @@ async def comprehensive_health_check(
     - AI processing engines
     - External API integrations
     - System resources and performance
-    """
-    try:
+    """    try:
         health_check_start = datetime.utcnow()
         
         # Initialize health status
@@ -169,11 +163,9 @@ async def comprehensive_health_check(
 async def get_service_metrics(
     current_user: User = Depends(require_admin)
 ):
-    """
-    Get detailed metrics for all platform services.
+    """    Get detailed metrics for all platform services.
     Requires admin privileges.
-    """
-    try:
+    """    try:
         service_metrics = await SystemMonitor.get_all_service_metrics()
         
         metrics_list = []
@@ -202,11 +194,9 @@ async def get_performance_analytics(
     hours: int = 24,
     current_user: User = Depends(require_admin)
 ):
-    """
-    Get detailed performance analytics for the specified time period.
+    """    Get detailed performance analytics for the specified time period.
     Requires admin privileges.
-    """
-    try:
+    """    try:
         end_time = datetime.utcnow()
         start_time = end_time - timedelta(hours=hours)
         
@@ -237,11 +227,9 @@ async def get_performance_analytics(
 
 @router.get("/status", response_model=Dict[str, Any])
 async def get_system_status():
-    """
-    Get basic system status for load balancers and monitoring tools.
+    """    Get basic system status for load balancers and monitoring tools.
     No authentication required for this endpoint.
-    """
-    try:
+    """    try:
         # Quick health checks
         database_ok = True
         redis_ok = True
@@ -285,8 +273,7 @@ async def get_system_status():
 async def get_fingerprinting_metrics(
     current_user: User = Depends(require_admin)
 ):
-    """Get AI fingerprinting engine performance metrics."""
-    try:
+    """Get AI fingerprinting engine performance metrics."""    try:
         metrics = await SystemMonitor.get_fingerprinting_metrics()
         
         return {
@@ -312,8 +299,7 @@ async def get_fingerprinting_metrics(
 async def get_protection_metrics(
     current_user: User = Depends(require_admin)
 ):
-    """Get content protection system performance metrics."""
-    try:
+    """Get content protection system performance metrics."""    try:
         metrics = await SystemMonitor.get_protection_metrics()
         
         return {
@@ -340,8 +326,7 @@ async def get_protection_metrics(
 async def get_monetization_metrics(
     current_user: User = Depends(require_admin)
 ):
-    """Get monetization system performance metrics."""
-    try:
+    """Get monetization system performance metrics."""    try:
         metrics = await SystemMonitor.get_monetization_metrics()
         
         return {

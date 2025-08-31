@@ -1,5 +1,4 @@
-"""
-Workflow Engine - Enterprise-Grade Workflow Orchestration System
+"""Workflow Engine - Enterprise-Grade Workflow Orchestration System
 
 Advanced workflow execution engine with AI-powered optimization, dynamic routing,
 and intelligent resource allocation for complex multi-step content processing workflows.
@@ -12,7 +11,6 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,8 +24,7 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status enumeration."""
-    PENDING = "pending"
+    """Workflow execution status enumeration."""    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -37,8 +34,7 @@ class WorkflowStatus(Enum):
 
 
 class TaskStatus(Enum):
-    """Individual task status enumeration."""
-    WAITING = "waiting"
+    """Individual task status enumeration."""    WAITING = "waiting"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -47,8 +43,7 @@ class TaskStatus(Enum):
 
 
 class ExecutionMode(Enum):
-    """Workflow execution mode options."""
-    SEQUENTIAL = "sequential"
+    """Workflow execution mode options."""    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     HYBRID = "hybrid"
     ADAPTIVE = "adaptive"
@@ -56,8 +51,7 @@ class ExecutionMode(Enum):
 
 @dataclass
 class TaskDefinition:
-    """Task definition with execution parameters."""
-    task_id: str
+    """Task definition with execution parameters."""    task_id: str
     name: str
     handler: str
     parameters: Dict[str, Any] = field(default_factory=dict)
@@ -72,8 +66,7 @@ class TaskDefinition:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition structure."""
-    workflow_id: str
+    """Complete workflow definition structure."""    workflow_id: str
     name: str
     description: str
     tasks: List[TaskDefinition]
@@ -88,8 +81,7 @@ class WorkflowDefinition:
 
 @dataclass
 class TaskExecution:
-    """Task execution tracking information."""
-    task_id: str
+    """Task execution tracking information."""    task_id: str
     workflow_id: str
     status: TaskStatus = TaskStatus.WAITING
     start_time: Optional[datetime] = None
@@ -104,8 +96,7 @@ class TaskExecution:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution tracking information."""
-    workflow_id: str
+    """Workflow execution tracking information."""    workflow_id: str
     execution_id: str
     status: WorkflowStatus = WorkflowStatus.PENDING
     start_time: Optional[datetime] = None
@@ -122,8 +113,7 @@ class WorkflowExecution:
 
 
 class WorkflowEngine:
-    """
-    Enterprise-grade workflow orchestration engine with AI-powered optimization.
+    """    Enterprise-grade workflow orchestration engine with AI-powered optimization.
     
     Provides comprehensive workflow execution capabilities including:
     - Dynamic task scheduling and dependency resolution
@@ -131,8 +121,7 @@ class WorkflowEngine:
     - Automatic retry mechanisms with exponential backoff
     - Real-time monitoring and performance optimization
     - Rollback and recovery mechanisms
-    """
-    
+    """    
     def __init__(self, max_concurrent_workflows: int = 100):
         self.logger = logging.getLogger(__name__)
         self.metrics_collector = MetricsCollector()
@@ -163,16 +152,14 @@ class WorkflowEngine:
         self.logger.info("WorkflowEngine initialized successfully")
     
     async def register_workflow(self, workflow_def: WorkflowDefinition) -> bool:
-        """
-        Register a new workflow definition.
+        """        Register a new workflow definition.
         
         Args:
             workflow_def: Complete workflow definition
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Validate workflow definition
             if not await self._validate_workflow_definition(workflow_def):
                 return False
@@ -197,8 +184,7 @@ class WorkflowEngine:
             return False
     
     async def register_task_handler(self, handler_name: str, handler_func: Callable) -> bool:
-        """
-        Register a task handler function.
+        """        Register a task handler function.
         
         Args:
             handler_name: Unique handler identifier
@@ -206,8 +192,7 @@ class WorkflowEngine:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if not asyncio.iscoroutinefunction(handler_func):
                 raise ValueError("Handler must be an async function")
             
@@ -227,8 +212,7 @@ class WorkflowEngine:
         context: Optional[Dict[str, Any]] = None,
         priority: int = 5
     ) -> str:
-        """
-        Execute a workflow with given context.
+        """        Execute a workflow with given context.
         
         Args:
             workflow_id: ID of workflow to execute
@@ -237,8 +221,7 @@ class WorkflowEngine:
             
         Returns:
             str: Execution ID
-        """
-        execution_id = str(uuid.uuid4())
+        """        execution_id = str(uuid.uuid4())
         
         try:
             # Check workflow exists
@@ -291,13 +274,11 @@ class WorkflowEngine:
             raise
     
     async def _execute_workflow_async(self, execution_id: str) -> None:
-        """
-        Internal asynchronous workflow execution.
+        """        Internal asynchronous workflow execution.
         
         Args:
             execution_id: Unique execution identifier
-        """
-        execution = self.active_executions[execution_id]
+        """        execution = self.active_executions[execution_id]
         workflow_def = self.workflow_definitions[execution.workflow_id]
         
         try:
@@ -357,8 +338,7 @@ class WorkflowEngine:
                 del self.task_executions[execution_id]
     
     async def _execute_sequential(self, execution_id: str) -> None:
-        """Execute tasks in sequential order."""
-        execution = self.active_executions[execution_id]
+        """Execute tasks in sequential order."""        execution = self.active_executions[execution_id]
         workflow_def = self.workflow_definitions[execution.workflow_id]
         
         for task_def in workflow_def.tasks:
@@ -370,8 +350,7 @@ class WorkflowEngine:
                 break
     
     async def _execute_parallel(self, execution_id: str) -> None:
-        """Execute all tasks in parallel."""
-        execution = self.active_executions[execution_id]
+        """Execute all tasks in parallel."""        execution = self.active_executions[execution_id]
         workflow_def = self.workflow_definitions[execution.workflow_id]
         
         tasks = []
@@ -382,8 +361,7 @@ class WorkflowEngine:
         await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _execute_hybrid(self, execution_id: str) -> None:
-        """Execute with intelligent hybrid approach."""
-        execution = self.active_executions[execution_id]
+        """Execute with intelligent hybrid approach."""        execution = self.active_executions[execution_id]
         workflow_def = self.workflow_definitions[execution.workflow_id]
         
         # Build dependency graph
@@ -413,13 +391,11 @@ class WorkflowEngine:
                     self.logger.error(f"Task failed: {task_def.task_id}")
     
     async def _execute_adaptive(self, execution_id: str) -> None:
-        """Execute with AI-powered adaptive optimization."""
-        # Use machine learning to optimize execution order
+        """Execute with AI-powered adaptive optimization."""        # Use machine learning to optimize execution order
         await self._execute_hybrid(execution_id)  # Fallback to hybrid for now
     
     async def _execute_task(self, execution_id: str, task_def: TaskDefinition) -> bool:
-        """
-        Execute individual task with error handling and retry logic.
+        """        Execute individual task with error handling and retry logic.
         
         Args:
             execution_id: Workflow execution ID
@@ -427,8 +403,7 @@ class WorkflowEngine:
             
         Returns:
             bool: Success status
-        """
-        task_exec = self.task_executions[execution_id][task_def.task_id]
+        """        task_exec = self.task_executions[execution_id][task_def.task_id]
         execution = self.active_executions[execution_id]
         
         try:
@@ -501,8 +476,7 @@ class WorkflowEngine:
             return False
     
     async def _validate_workflow_definition(self, workflow_def: WorkflowDefinition) -> bool:
-        """Validate workflow definition structure."""
-        try:
+        """Validate workflow definition structure."""        try:
             # Check basic structure
             if not workflow_def.workflow_id or not workflow_def.name:
                 return False
@@ -534,8 +508,7 @@ class WorkflowEngine:
             return False
     
     async def _check_task_dependencies(self, execution_id: str, task_id: str) -> bool:
-        """Check if task dependencies are satisfied."""
-        workflow_def = self.workflow_definitions[
+        """Check if task dependencies are satisfied."""        workflow_def = self.workflow_definitions[
             self.active_executions[execution_id].workflow_id
         ]
         
@@ -552,15 +525,13 @@ class WorkflowEngine:
         return True
     
     def _build_dependency_graph(self, tasks: List[TaskDefinition]) -> Dict[str, Set[str]]:
-        """Build task dependency graph."""
-        graph = {}
+        """Build task dependency graph."""        graph = {}
         for task in tasks:
             graph[task.task_id] = set(task.dependencies)
         return graph
     
     def _has_circular_dependencies(self, tasks: List[TaskDefinition]) -> bool:
-        """Check for circular dependencies in task definitions."""
-        # Simple cycle detection using DFS
+        """Check for circular dependencies in task definitions."""        # Simple cycle detection using DFS
         graph = self._build_dependency_graph(tasks)
         visited = set()
         rec_stack = set()
@@ -589,20 +560,17 @@ class WorkflowEngine:
         return False
     
     def _update_performance_stats(self) -> None:
-        """Update performance statistics."""
-        if self.execution_stats['total_workflows'] > 0:
+        """Update performance statistics."""        if self.execution_stats['total_workflows'] > 0:
             self.execution_stats['error_rate'] = (
                 self.execution_stats['failed_workflows'] / 
                 self.execution_stats['total_workflows']
             )
     
     async def get_workflow_status(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Get current workflow execution status."""
-        return self.active_executions.get(execution_id)
+        """Get current workflow execution status."""        return self.active_executions.get(execution_id)
     
     async def cancel_workflow(self, execution_id: str) -> bool:
-        """Cancel running workflow execution."""
-        try:
+        """Cancel running workflow execution."""        try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]
                 execution.status = WorkflowStatus.CANCELLED
@@ -623,8 +591,7 @@ class WorkflowEngine:
             return False
     
     async def get_performance_stats(self) -> Dict[str, Any]:
-        """Get engine performance statistics."""
-        return {
+        """Get engine performance statistics."""        return {
             **self.execution_stats,
             'active_workflows': len(self.active_executions),
             'registered_workflows': len(self.workflow_definitions),

@@ -1,5 +1,4 @@
-"""
-🔒 Security Migration System - Ultra-Industrial Cryptographic & Compliance Evolution Engine
+"""🔒 Security Migration System - Ultra-Industrial Cryptographic & Compliance Evolution Engine
 ========================================================================================
 
 Enterprise-grade security migration system for IA Influencer Agent platform:
@@ -39,7 +38,6 @@ Business Logic Flow:
 Security Assessment → Threat Analysis → Encryption Upgrade → Authentication Enhancement → 
 Compliance Validation → Monitoring Setup → Incident Response → Audit Trail Generation
 """
-
 import asyncio
 import logging
 import traceback
@@ -76,8 +74,7 @@ logger = logging.getLogger(__name__)
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""
-    AES_256_GCM = "aes_256_gcm"
+    """Supported encryption algorithms"""    AES_256_GCM = "aes_256_gcm"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     FERNET = "fernet"
     RSA_4096 = "rsa_4096"
@@ -88,8 +85,7 @@ class EncryptionAlgorithm(Enum):
 
 
 class AuthenticationMethod(Enum):
-    """Authentication methods supported"""
-    PASSWORD = "password"
+    """Authentication methods supported"""    PASSWORD = "password"
     TOTP = "totp"
     SMS = "sms"
     EMAIL = "email"
@@ -100,8 +96,7 @@ class AuthenticationMethod(Enum):
 
 
 class ComplianceStandard(Enum):
-    """Compliance standards and regulations"""
-    GDPR = "gdpr"
+    """Compliance standards and regulations"""    GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
     SOX = "sox"
@@ -112,8 +107,7 @@ class ComplianceStandard(Enum):
 
 
 class SecurityLevel(Enum):
-    """Security clearance levels"""
-    PUBLIC = "public"
+    """Security clearance levels"""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     SECRET = "secret"
@@ -121,8 +115,7 @@ class SecurityLevel(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat assessment levels"""
-    LOW = "low"
+    """Threat assessment levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -131,8 +124,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class EncryptionKey:
-    """Encryption key management structure"""
-    key_id: str
+    """Encryption key management structure"""    key_id: str
     algorithm: EncryptionAlgorithm
     key_data: bytes
     public_key: Optional[bytes] = None
@@ -146,8 +138,7 @@ class EncryptionKey:
 
 @dataclass
 class SecurityEvent:
-    """Security event logging structure"""
-    event_id: str
+    """Security event logging structure"""    event_id: str
     event_type: str
     severity: ThreatLevel
     user_id: Optional[str] = None
@@ -162,8 +153,7 @@ class SecurityEvent:
 
 @dataclass
 class ComplianceRecord:
-    """Compliance tracking record"""
-    record_id: str
+    """Compliance tracking record"""    record_id: str
     standard: ComplianceStandard
     data_subject_id: Optional[str] = None
     data_type: str = ""
@@ -180,8 +170,7 @@ class ComplianceRecord:
 
 @dataclass
 class SecurityMigrationConfig:
-    """Configuration for security migration operations"""
-    upgrade_encryption: bool = True
+    """Configuration for security migration operations"""    upgrade_encryption: bool = True
     enable_zero_trust: bool = True
     enhance_authentication: bool = True
     update_compliance: bool = True
@@ -195,8 +184,7 @@ class SecurityMigrationConfig:
 
 
 class CryptographicManager:
-    """Advanced cryptographic operations manager"""
-    
+    """Advanced cryptographic operations manager"""    
     def __init__(self):
         self.key_cache = {}
         self.algorithm_preferences = [
@@ -206,8 +194,7 @@ class CryptographicManager:
         ]
     
     def generate_key(self, algorithm: EncryptionAlgorithm) -> EncryptionKey:
-        """Generate new encryption key for specified algorithm"""
-        key_id = str(uuid.uuid4())
+        """Generate new encryption key for specified algorithm"""        key_id = str(uuid.uuid4())
         
         if algorithm == EncryptionAlgorithm.AES_256_GCM:
             key_data = secrets.token_bytes(32)  # 256 bits
@@ -243,8 +230,7 @@ class CryptographicManager:
         )
     
     def encrypt_data(self, data: bytes, key: EncryptionKey) -> Dict[str, Any]:
-        """Encrypt data using specified key and algorithm"""
-        if key.algorithm == EncryptionAlgorithm.AES_256_GCM:
+        """Encrypt data using specified key and algorithm"""        if key.algorithm == EncryptionAlgorithm.AES_256_GCM:
             return self._encrypt_aes_gcm(data, key.key_data)
         elif key.algorithm == EncryptionAlgorithm.CHACHA20_POLY1305:
             return self._encrypt_chacha20(data, key.key_data)
@@ -256,8 +242,7 @@ class CryptographicManager:
             raise ValueError(f"Unsupported encryption algorithm: {key.algorithm}")
     
     def decrypt_data(self, encrypted_data: Dict[str, Any], key: EncryptionKey) -> bytes:
-        """Decrypt data using specified key and algorithm"""
-        if key.algorithm == EncryptionAlgorithm.AES_256_GCM:
+        """Decrypt data using specified key and algorithm"""        if key.algorithm == EncryptionAlgorithm.AES_256_GCM:
             return self._decrypt_aes_gcm(encrypted_data, key.key_data)
         elif key.algorithm == EncryptionAlgorithm.CHACHA20_POLY1305:
             return self._decrypt_chacha20(encrypted_data, key.key_data)
@@ -269,8 +254,7 @@ class CryptographicManager:
             raise ValueError(f"Unsupported decryption algorithm: {key.algorithm}")
     
     def _encrypt_aes_gcm(self, data: bytes, key: bytes) -> Dict[str, Any]:
-        """Encrypt using AES-256-GCM"""
-        iv = secrets.token_bytes(16)
+        """Encrypt using AES-256-GCM"""        iv = secrets.token_bytes(16)
         cipher = Cipher(algorithms.AES(key), modes.GCM(iv))
         encryptor = cipher.encryptor()
         
@@ -284,8 +268,7 @@ class CryptographicManager:
         }
     
     def _decrypt_aes_gcm(self, encrypted_data: Dict[str, Any], key: bytes) -> bytes:
-        """Decrypt using AES-256-GCM"""
-        ciphertext = base64.b64decode(encrypted_data['ciphertext'])
+        """Decrypt using AES-256-GCM"""        ciphertext = base64.b64decode(encrypted_data['ciphertext'])
         iv = base64.b64decode(encrypted_data['iv'])
         tag = base64.b64decode(encrypted_data['tag'])
         
@@ -295,8 +278,7 @@ class CryptographicManager:
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     def _encrypt_chacha20(self, data: bytes, key: bytes) -> Dict[str, Any]:
-        """Encrypt using ChaCha20-Poly1305"""
-        nonce = secrets.token_bytes(12)
+        """Encrypt using ChaCha20-Poly1305"""        nonce = secrets.token_bytes(12)
         cipher = Cipher(algorithms.ChaCha20(key, nonce), None)
         encryptor = cipher.encryptor()
         
@@ -309,8 +291,7 @@ class CryptographicManager:
         }
     
     def _decrypt_chacha20(self, encrypted_data: Dict[str, Any], key: bytes) -> bytes:
-        """Decrypt using ChaCha20-Poly1305"""
-        ciphertext = base64.b64decode(encrypted_data['ciphertext'])
+        """Decrypt using ChaCha20-Poly1305"""        ciphertext = base64.b64decode(encrypted_data['ciphertext'])
         nonce = base64.b64decode(encrypted_data['nonce'])
         
         cipher = Cipher(algorithms.ChaCha20(key, nonce), None)
@@ -319,8 +300,7 @@ class CryptographicManager:
         return decryptor.update(ciphertext) + decryptor.finalize()
     
     def _encrypt_fernet(self, data: bytes, key: bytes) -> Dict[str, Any]:
-        """Encrypt using Fernet"""
-        f = Fernet(key)
+        """Encrypt using Fernet"""        f = Fernet(key)
         ciphertext = f.encrypt(data)
         
         return {
@@ -329,15 +309,13 @@ class CryptographicManager:
         }
     
     def _decrypt_fernet(self, encrypted_data: Dict[str, Any], key: bytes) -> bytes:
-        """Decrypt using Fernet"""
-        f = Fernet(key)
+        """Decrypt using Fernet"""        f = Fernet(key)
         ciphertext = base64.b64decode(encrypted_data['ciphertext'])
         
         return f.decrypt(ciphertext)
     
     def _encrypt_rsa(self, data: bytes, public_key: bytes) -> Dict[str, Any]:
-        """Encrypt using RSA-4096 (for small data only)"""
-        public_key_obj = serialization.load_pem_public_key(public_key)
+        """Encrypt using RSA-4096 (for small data only)"""        public_key_obj = serialization.load_pem_public_key(public_key)
         
         ciphertext = public_key_obj.encrypt(
             data,
@@ -354,8 +332,7 @@ class CryptographicManager:
         }
     
     def _decrypt_rsa(self, encrypted_data: Dict[str, Any], private_key: bytes) -> bytes:
-        """Decrypt using RSA-4096"""
-        private_key_obj = serialization.load_pem_private_key(private_key, password=None)
+        """Decrypt using RSA-4096"""        private_key_obj = serialization.load_pem_private_key(private_key, password=None)
         ciphertext = base64.b64decode(encrypted_data['ciphertext'])
         
         return private_key_obj.decrypt(
@@ -368,8 +345,7 @@ class CryptographicManager:
         )
     
     def hash_password(self, password: str, algorithm: EncryptionAlgorithm = EncryptionAlgorithm.BCRYPT) -> str:
-        """Hash password using specified algorithm"""
-        if algorithm == EncryptionAlgorithm.BCRYPT:
+        """Hash password using specified algorithm"""        if algorithm == EncryptionAlgorithm.BCRYPT:
             salt = bcrypt.gensalt(rounds=15)
             return bcrypt.hashpw(password.encode('utf-8'), salt).decode('utf-8')
         elif algorithm == EncryptionAlgorithm.ARGON2ID:
@@ -382,8 +358,7 @@ class CryptographicManager:
             raise ValueError(f"Unsupported password hashing algorithm: {algorithm}")
     
     def verify_password(self, password: str, hashed: str, algorithm: EncryptionAlgorithm = EncryptionAlgorithm.BCRYPT) -> bool:
-        """Verify password against hash"""
-        if algorithm == EncryptionAlgorithm.BCRYPT:
+        """Verify password against hash"""        if algorithm == EncryptionAlgorithm.BCRYPT:
             return bcrypt.checkpw(password.encode('utf-8'), hashed.encode('utf-8'))
         elif algorithm == EncryptionAlgorithm.ARGON2ID:
             import hashlib
@@ -397,15 +372,13 @@ class CryptographicManager:
 
 
 class AuthenticationManager:
-    """Multi-factor authentication management system"""
-    
+    """Multi-factor authentication management system"""    
     def __init__(self):
         self.totp_issuer = "IA Influencer Agent"
         self.token_validity = timedelta(minutes=15)
     
     def setup_totp(self, user_id: str, username: str) -> Dict[str, Any]:
-        """Set up TOTP (Time-based One-Time Password) for user"""
-        secret = pyotp.random_base32()
+        """Set up TOTP (Time-based One-Time Password) for user"""        secret = pyotp.random_base32()
         totp = pyotp.TOTP(secret)
         
         # Generate QR code
@@ -433,17 +406,14 @@ class AuthenticationManager:
         }
     
     def verify_totp(self, secret: str, token: str) -> bool:
-        """Verify TOTP token"""
-        totp = pyotp.TOTP(secret)
+        """Verify TOTP token"""        totp = pyotp.TOTP(secret)
         return totp.verify(token, valid_window=1)
     
     def generate_backup_codes(self, count: int = 10) -> List[str]:
-        """Generate backup codes for account recovery"""
-        return [secrets.token_hex(8) for _ in range(count)]
+        """Generate backup codes for account recovery"""        return [secrets.token_hex(8) for _ in range(count)]
     
     def generate_webauthn_challenge(self, user_id: str) -> Dict[str, Any]:
-        """Generate WebAuthn challenge for biometric authentication"""
-        challenge = secrets.token_bytes(32)
+        """Generate WebAuthn challenge for biometric authentication"""        challenge = secrets.token_bytes(32)
         
         return {
             'challenge': base64.b64encode(challenge).decode(),
@@ -455,25 +425,21 @@ class AuthenticationManager:
     
     def verify_webauthn_response(self, challenge_data: Dict[str, Any], 
                                 response_data: Dict[str, Any]) -> bool:
-        """Verify WebAuthn authentication response"""
-        # Simplified verification - would use actual WebAuthn library in production
+        """Verify WebAuthn authentication response"""        # Simplified verification - would use actual WebAuthn library in production
         return (
             response_data.get('challenge') == challenge_data.get('challenge') and
             response_data.get('user_id') == challenge_data.get('user_id')
         )
     
     def generate_sms_token(self) -> str:
-        """Generate SMS verification token"""
-        return str(secrets.randbelow(1000000)).zfill(6)
+        """Generate SMS verification token"""        return str(secrets.randbelow(1000000)).zfill(6)
     
     def generate_email_token(self) -> str:
-        """Generate email verification token"""
-        return secrets.token_urlsafe(32)
+        """Generate email verification token"""        return secrets.token_urlsafe(32)
 
 
 class ComplianceManager:
-    """Data protection compliance management system"""
-    
+    """Data protection compliance management system"""    
     def __init__(self):
         self.supported_standards = [standard.value for standard in ComplianceStandard]
         self.data_retention_periods = {
@@ -488,8 +454,7 @@ class ComplianceManager:
     def create_compliance_record(self, standard: ComplianceStandard, 
                                data_subject_id: str, data_type: str,
                                processing_purpose: str, legal_basis: str) -> ComplianceRecord:
-        """Create new compliance tracking record"""
-        return ComplianceRecord(
+        """Create new compliance tracking record"""        return ComplianceRecord(
             record_id=str(uuid.uuid4()),
             standard=standard,
             data_subject_id=data_subject_id,
@@ -502,8 +467,7 @@ class ComplianceManager:
         )
     
     def check_data_retention(self, record: ComplianceRecord) -> Dict[str, Any]:
-        """Check if data retention period has expired"""
-        if not record.retention_period:
+        """Check if data retention period has expired"""        if not record.retention_period:
             return {'expired': False, 'action_required': False}
         
         expiry_date = record.created_at + record.retention_period
@@ -517,8 +481,7 @@ class ComplianceManager:
         }
     
     def validate_consent(self, record: ComplianceRecord) -> Dict[str, Any]:
-        """Validate consent requirements for data processing"""
-        validation_result = {
+        """Validate consent requirements for data processing"""        validation_result = {
             'valid': True,
             'issues': [],
             'recommendations': []
@@ -537,8 +500,7 @@ class ComplianceManager:
     
     def generate_privacy_report(self, user_id: str, 
                               compliance_records: List[ComplianceRecord]) -> Dict[str, Any]:
-        """Generate privacy report for data subject"""
-        user_records = [r for r in compliance_records if r.data_subject_id == user_id]
+        """Generate privacy report for data subject"""        user_records = [r for r in compliance_records if r.data_subject_id == user_id]
         
         data_categories = {}
         processing_purposes = set()
@@ -574,8 +536,7 @@ class ComplianceManager:
 
 
 class SecurityMigration(BaseMigration):
-    """Main security migration class for comprehensive security evolution"""
-    
+    """Main security migration class for comprehensive security evolution"""    
     def __init__(self, version: str, description: str, config: Optional[SecurityMigrationConfig] = None):
         super().__init__(version, description)
         self.migration_id = f"security_{version}"
@@ -586,8 +547,7 @@ class SecurityMigration(BaseMigration):
         self.compliance_manager = ComplianceManager()
     
     async def execute_migration(self, session: Session) -> MigrationResult:
-        """Execute comprehensive security migration"""
-        try:
+        """Execute comprehensive security migration"""        try:
             # Update security schema
             await self._update_security_schema(session)
             
@@ -623,9 +583,7 @@ class SecurityMigration(BaseMigration):
             )
     
     async def _update_security_schema(self, session: Session):
-        """Update security table schema for enhanced features"""
-        schema_updates = """
-        -- Encryption keys table
+        """Update security table schema for enhanced features"""        schema_updates = """        -- Encryption keys table
         CREATE TABLE IF NOT EXISTS encryption_keys (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             key_id VARCHAR(255) UNIQUE NOT NULL,
@@ -714,14 +672,12 @@ class SecurityMigration(BaseMigration):
             next_rotation TIMESTAMP WITH TIME ZONE,
             created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
         );
-        """
-        
+        """        
         session.execute(text(schema_updates))
         session.commit()
     
     async def _upgrade_encryption_systems(self, session: Session):
-        """Upgrade encryption systems to latest algorithms"""
-        # Generate new encryption keys
+        """Upgrade encryption systems to latest algorithms"""        # Generate new encryption keys
         algorithms_to_deploy = [
             EncryptionAlgorithm.AES_256_GCM,
             EncryptionAlgorithm.CHACHA20_POLY1305,
@@ -732,16 +688,14 @@ class SecurityMigration(BaseMigration):
             key = self.crypto_manager.generate_key(algorithm)
             
             # Store encryption key
-            insert_key_sql = """
-            INSERT INTO encryption_keys (
+            insert_key_sql = """            INSERT INTO encryption_keys (
                 key_id, algorithm, key_data, public_key, expires_at, 
                 rotation_schedule, metadata
             ) VALUES (
                 :key_id, :algorithm, :key_data, :public_key, :expires_at,
                 :rotation_schedule, :metadata
             ) ON CONFLICT (key_id) DO NOTHING;
-            """
-            
+            """            
             session.execute(text(insert_key_sql), {
                 'key_id': key.key_id,
                 'algorithm': key.algorithm.value,
@@ -759,23 +713,18 @@ class SecurityMigration(BaseMigration):
         session.commit()
     
     async def _rotate_user_passwords(self, session: Session):
-        """Rotate user passwords to stronger hashing algorithms"""
-        # Mark passwords for rotation (users will be required to reset on next login)
-        rotation_sql = """
-        UPDATE users_enhanced 
+        """Rotate user passwords to stronger hashing algorithms"""        # Mark passwords for rotation (users will be required to reset on next login)
+        rotation_sql = """        UPDATE users_enhanced 
         SET preferences = COALESCE(preferences, '{}'::jsonb) || 
             jsonb_build_object('password_rotation_required', true)
         WHERE two_factor_enabled = false;
-        """
-        
+        """        
         session.execute(text(rotation_sql))
         session.commit()
     
     async def _enhance_authentication_systems(self, session: Session):
-        """Enhance multi-factor authentication systems"""
-        # Enable TOTP for existing users who don't have it
-        enable_totp_sql = """
-        INSERT INTO authentication_factors (user_id, factor_type, factor_data, is_enabled)
+        """Enhance multi-factor authentication systems"""        # Enable TOTP for existing users who don't have it
+        enable_totp_sql = """        INSERT INTO authentication_factors (user_id, factor_type, factor_data, is_enabled)
         SELECT 
             id as user_id,
             'totp' as factor_type,
@@ -789,14 +738,12 @@ class SecurityMigration(BaseMigration):
         AND id NOT IN (
             SELECT user_id FROM authentication_factors WHERE factor_type = 'totp'
         );
-        """
-        
+        """        
         session.execute(text(enable_totp_sql))
         
         # Create WebAuthn support for biometric authentication
         if self.config.enable_biometrics:
-            webauthn_sql = """
-            INSERT INTO authentication_factors (user_id, factor_type, factor_data, is_enabled)
+            webauthn_sql = """            INSERT INTO authentication_factors (user_id, factor_type, factor_data, is_enabled)
             SELECT 
                 id as user_id,
                 'webauthn' as factor_type,
@@ -809,17 +756,14 @@ class SecurityMigration(BaseMigration):
             WHERE id NOT IN (
                 SELECT user_id FROM authentication_factors WHERE factor_type = 'webauthn'
             );
-            """
-            
+            """            
             session.execute(text(webauthn_sql))
         
         session.commit()
     
     async def _update_compliance_systems(self, session: Session):
-        """Update compliance tracking and data protection systems"""
-        # Create compliance records for existing users
-        compliance_sql = """
-        INSERT INTO compliance_records (
+        """Update compliance tracking and data protection systems"""        # Create compliance records for existing users
+        compliance_sql = """        INSERT INTO compliance_records (
             record_id, standard, data_subject_id, data_type, 
             processing_purpose, legal_basis, consent_given, consent_date
         )
@@ -837,13 +781,11 @@ class SecurityMigration(BaseMigration):
             SELECT data_subject_id FROM compliance_records 
             WHERE data_type = 'profile_data'
         );
-        """
-        
+        """        
         session.execute(text(compliance_sql))
         
         # Track data encryption status
-        encryption_tracking_sql = """
-        INSERT INTO data_encryption_tracking (
+        encryption_tracking_sql = """        INSERT INTO data_encryption_tracking (
             table_name, column_name, algorithm, encryption_status
         ) VALUES
         ('users_enhanced', 'email', 'aes_256_gcm', 'pending'),
@@ -851,15 +793,12 @@ class SecurityMigration(BaseMigration):
         ('payment_accounts', 'account_details', 'aes_256_gcm', 'pending'),
         ('authentication_factors', 'factor_data', 'aes_256_gcm', 'pending')
         ON CONFLICT DO NOTHING;
-        """
-        
+        """        
         session.execute(text(encryption_tracking_sql))
         session.commit()
     
     async def _create_security_indexes(self, session: Session):
-        """Create indexes for security tables"""
-        index_sql = """
-        -- Encryption keys indexes
+        """Create indexes for security tables"""        index_sql = """        -- Encryption keys indexes
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_encryption_keys_algorithm 
         ON encryption_keys(algorithm);
         
@@ -934,23 +873,19 @@ class SecurityMigration(BaseMigration):
         
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_audit_logs_details_gin 
         ON security_audit_logs USING GIN (details);
-        """
-        
+        """        
         session.execute(text(index_sql))
         session.commit()
     
     async def rollback_migration(self, session: Session) -> MigrationResult:
-        """Rollback security migration changes"""
-        try:
-            rollback_sql = """
-            DROP TABLE IF EXISTS data_encryption_tracking CASCADE;
+        """Rollback security migration changes"""        try:
+            rollback_sql = """            DROP TABLE IF EXISTS data_encryption_tracking CASCADE;
             DROP TABLE IF EXISTS security_audit_logs CASCADE;
             DROP TABLE IF EXISTS compliance_records CASCADE;
             DROP TABLE IF EXISTS authentication_factors CASCADE;
             DROP TABLE IF EXISTS security_events CASCADE;
             DROP TABLE IF EXISTS encryption_keys CASCADE;
-            """
-            
+            """            
             session.execute(text(rollback_sql))
             session.commit()
             
@@ -972,15 +907,13 @@ class SecurityMigration(BaseMigration):
 
 
 class EncryptionMigration(SecurityMigration):
-    """Specialized encryption system migration"""
-    
+    """Specialized encryption system migration"""    
     def __init__(self, version: str, description: str):
         super().__init__(version, description)
         self.migration_id = f"encryption_{version}"
     
     async def execute_migration(self, session: Session) -> MigrationResult:
-        """Execute encryption-specific migration"""
-        try:
+        """Execute encryption-specific migration"""        try:
             # Run base security migration
             await super().execute_migration(session)
             
@@ -1004,9 +937,7 @@ class EncryptionMigration(SecurityMigration):
             )
     
     async def _create_encryption_enhancements(self, session: Session):
-        """Create encryption-specific enhancements"""
-        encryption_enhancements = """
-        -- Key rotation schedule table
+        """Create encryption-specific enhancements"""        encryption_enhancements = """        -- Key rotation schedule table
         CREATE TABLE IF NOT EXISTS key_rotation_schedule (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             key_id VARCHAR(255) NOT NULL REFERENCES encryption_keys(key_id),
@@ -1035,22 +966,19 @@ class EncryptionMigration(SecurityMigration):
         
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_encryption_metrics_algorithm 
         ON encryption_metrics(algorithm, operation_type);
-        """
-        
+        """        
         session.execute(text(encryption_enhancements))
         session.commit()
 
 
 class ComplianceMigration(SecurityMigration):
-    """Specialized compliance system migration"""
-    
+    """Specialized compliance system migration"""    
     def __init__(self, version: str, description: str):
         super().__init__(version, description)
         self.migration_id = f"compliance_{version}"
     
     async def execute_migration(self, session: Session) -> MigrationResult:
-        """Execute compliance-specific migration"""
-        try:
+        """Execute compliance-specific migration"""        try:
             # Run base security migration
             await super().execute_migration(session)
             
@@ -1074,9 +1002,7 @@ class ComplianceMigration(SecurityMigration):
             )
     
     async def _create_compliance_enhancements(self, session: Session):
-        """Create compliance-specific enhancements"""
-        compliance_enhancements = """
-        -- Data subject requests table
+        """Create compliance-specific enhancements"""        compliance_enhancements = """        -- Data subject requests table
         CREATE TABLE IF NOT EXISTS data_subject_requests (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             request_id VARCHAR(255) UNIQUE NOT NULL,
@@ -1111,7 +1037,6 @@ class ComplianceMigration(SecurityMigration):
         
         CREATE INDEX CONCURRENTLY IF NOT EXISTS idx_privacy_assessments_risk_level 
         ON privacy_impact_assessments(risk_level);
-        """
-        
+        """        
         session.execute(text(compliance_enhancements))
         session.commit()

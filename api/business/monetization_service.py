@@ -1,5 +1,4 @@
-"""
-Monetization business service for IA Influencer Agent platform.
+"""Monetization business service for IA Influencer Agent platform.
 
 This service handles comprehensive revenue management, payment processing,
 licensing automation, and financial analytics for content creators.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any, Tuple
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class RevenueType(str, Enum):
-    """Types of revenue sources."""
-    LICENSING = "licensing"
+    """Types of revenue sources."""    LICENSING = "licensing"
     VIOLATION_RECOVERY = "violation_recovery"
     COLLABORATION = "collaboration"
     SUBSCRIPTION = "subscription"
@@ -43,8 +40,7 @@ class RevenueType(str, Enum):
     SETTLEMENT = "settlement"
 
 class PaymentStatus(str, Enum):
-    """Payment processing statuses."""
-    PENDING = "pending"
+    """Payment processing statuses."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -52,8 +48,7 @@ class PaymentStatus(str, Enum):
     REFUNDED = "refunded"
 
 class LicenseType(str, Enum):
-    """Content license types."""
-    STANDARD = "standard"
+    """Content license types."""    STANDARD = "standard"
     EXTENDED = "extended"
     EXCLUSIVE = "exclusive"
     COMMERCIAL = "commercial"
@@ -61,8 +56,7 @@ class LicenseType(str, Enum):
     CUSTOM = "custom"
 
 class MonetizationService:
-    """
-    Comprehensive monetization and revenue management service.
+    """    Comprehensive monetization and revenue management service.
     
     Features:
     - Automated revenue calculation and tracking
@@ -73,8 +67,7 @@ class MonetizationService:
     - Financial analytics and reporting
     - Tax compliance and documentation
     - Automated payout scheduling
-    """
-    
+    """    
     def __init__(self):
         self.payment_processor = PaymentProcessor()
         self.license_generator = LicenseGenerator()
@@ -92,8 +85,7 @@ class MonetizationService:
         metadata: Dict[str, Any],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Record revenue from content monetization.
+        """        Record revenue from content monetization.
         
         Args:
             content_id: ID of the content generating revenue
@@ -107,8 +99,7 @@ class MonetizationService:
             
         Returns:
             Recorded revenue data
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -185,8 +176,7 @@ class MonetizationService:
         violation_data: Dict[str, Any],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Process revenue recovery from content violations.
+        """        Process revenue recovery from content violations.
         
         Args:
             content_id: ID of the violated content
@@ -195,8 +185,7 @@ class MonetizationService:
             
         Returns:
             Recovery processing results
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -259,8 +248,7 @@ class MonetizationService:
         license_terms: Dict[str, Any],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Generate and process content licensing agreement.
+        """        Generate and process content licensing agreement.
         
         Args:
             content_id: ID of the content to license
@@ -271,8 +259,7 @@ class MonetizationService:
             
         Returns:
             Generated license data
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -338,8 +325,7 @@ class MonetizationService:
         revenue_data: Dict[str, Any],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Process revenue sharing for collaboration projects.
+        """        Process revenue sharing for collaboration projects.
         
         Args:
             collaboration_id: ID of the collaboration
@@ -348,8 +334,7 @@ class MonetizationService:
             
         Returns:
             Payout processing results
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -448,8 +433,7 @@ class MonetizationService:
         payout_method: str = "bank_transfer",
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Initiate payout to content creator.
+        """        Initiate payout to content creator.
         
         Args:
             user_id: ID of the user to pay out
@@ -459,8 +443,7 @@ class MonetizationService:
             
         Returns:
             Payout processing results
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -572,8 +555,7 @@ class MonetizationService:
         breakdown_by: str = "day",
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive revenue analytics for a user.
+        """        Get comprehensive revenue analytics for a user.
         
         Args:
             user_id: ID of the user
@@ -583,8 +565,7 @@ class MonetizationService:
             
         Returns:
             Revenue analytics data
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -692,8 +673,7 @@ class MonetizationService:
         user_id: uuid.UUID,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get pending payout information for a user.
+        """        Get pending payout information for a user.
         
         Args:
             user_id: ID of the user
@@ -701,8 +681,7 @@ class MonetizationService:
             
         Returns:
             Pending payout data
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -774,8 +753,7 @@ class MonetizationService:
         user_id: uuid.UUID,
         db: Session
     ) -> float:
-        """Get platform fee percentage based on revenue type and user tier."""
-        # Get user subscription tier
+        """Get platform fee percentage based on revenue type and user tier."""        # Get user subscription tier
         user = db.query(User).filter(User.id == user_id).first()
         subscription_tier = getattr(user, 'subscription_tier', 'basic')
         
@@ -810,8 +788,7 @@ class MonetizationService:
         content: Content,
         db: Session
     ):
-        """Process revenue sharing for collaboration content."""
-        try:
+        """Process revenue sharing for collaboration content."""        try:
             collaboration_data = content.collaboration_data
             if not collaboration_data or "revenue_sharing" not in collaboration_data:
                 return
@@ -859,8 +836,7 @@ class MonetizationService:
         amount: Decimal,
         db: Session
     ):
-        """Update content revenue statistics."""
-        try:
+        """Update content revenue statistics."""        try:
             content = db.query(Content).filter(Content.id == content_id).first()
             if content:
                 current_revenue = getattr(content, 'total_revenue', Decimal('0')) or Decimal('0')
@@ -876,8 +852,7 @@ class MonetizationService:
         amount: Decimal,
         db: Session
     ):
-        """Update user revenue statistics."""
-        try:
+        """Update user revenue statistics."""        try:
             user = db.query(User).filter(User.id == user_id).first()
             if user:
                 current_revenue = getattr(user, 'total_earned', Decimal('0')) or Decimal('0')
@@ -892,8 +867,7 @@ class MonetizationService:
         user_id: uuid.UUID,
         db: Session
     ):
-        """Check if user has reached automatic payout threshold."""
-        try:
+        """Check if user has reached automatic payout threshold."""        try:
             # Get total pending revenue
             total_pending = db.query(func.sum(Revenue.net_amount)).filter(
                 and_(
@@ -925,8 +899,7 @@ class MonetizationService:
         content: Content,
         db: Session
     ) -> float:
-        """Calculate recovery amount for content violation."""
-        try:
+        """Calculate recovery amount for content violation."""        try:
             # Base calculation factors
             views = violation_data.get("views", 0)
             duration_days = violation_data.get("duration_days", 1)
@@ -971,8 +944,7 @@ class MonetizationService:
         violation_data: Dict[str, Any],
         db: Session
     ):
-        """Update violation recovery statistics for user."""
-        try:
+        """Update violation recovery statistics for user."""        try:
             user = db.query(User).filter(User.id == user_id).first()
             if user:
                 current_stats = getattr(user, 'violation_recovery_stats', {})
@@ -994,8 +966,7 @@ class MonetizationService:
         license_terms: Dict[str, Any],
         db: Session
     ) -> float:
-        """Calculate licensing price for content."""
-        try:
+        """Calculate licensing price for content."""        try:
             # Base price by content type
             base_prices = {
                 "image": 25.0,
@@ -1053,8 +1024,7 @@ class MonetizationService:
         buyer_info: Dict[str, Any],
         db: Session
     ) -> Dict[str, Any]:
-        """Process payment for content license."""
-        try:
+        """Process payment for content license."""        try:
             # This would integrate with payment processors like Stripe, PayPal, etc.
             # For now, we'll simulate the payment process
             
@@ -1079,8 +1049,7 @@ class MonetizationService:
         user: User,
         db: Session
     ) -> Dict[str, Any]:
-        """Validate user's payout information."""
-        try:
+        """Validate user's payout information."""        try:
             errors = []
             
             # Check required payout information
@@ -1124,8 +1093,7 @@ class MonetizationService:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Generate time series data for revenue analytics."""
-        try:
+        """Generate time series data for revenue analytics."""        try:
             time_series = []
             
             if breakdown_by == "day":
@@ -1173,8 +1141,7 @@ class MonetizationService:
         revenues: List[Revenue],
         db: Session
     ) -> List[Dict[str, Any]]:
-        """Analyze revenue performance by content."""
-        try:
+        """Analyze revenue performance by content."""        try:
             content_revenue = {}
             
             for revenue in revenues:
@@ -1227,8 +1194,7 @@ class MonetizationService:
         end_date: datetime,
         db: Session
     ) -> Dict[str, Any]:
-        """Calculate revenue growth metrics."""
-        try:
+        """Calculate revenue growth metrics."""        try:
             # Get comparison period (same duration before start_date)
             duration = end_date - start_date
             comparison_start = start_date - duration

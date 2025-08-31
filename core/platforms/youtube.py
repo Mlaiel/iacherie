@@ -1,5 +1,4 @@
-"""
-YouTube Platform Integration
+"""YouTube Platform Integration
 
 Complete YouTube Data API v3 integration for video distribution, analytics and monitoring.
 
@@ -7,7 +6,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import asyncio
 import aiohttp
 import aiofiles
@@ -27,27 +25,23 @@ logger = logging.getLogger(__name__)
 
 
 class YouTubePlatform(PlatformBase):
-    """YouTube platform integration"""
-    
+    """YouTube platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize YouTube platform"""
-        super().__init__(config)
+        """Initialize YouTube platform"""        super().__init__(config)
         self.api_base = "https://www.googleapis.com/youtube/v3"
         self.upload_base = "https://www.googleapis.com/upload/youtube/v3"
         self.auth_base = "https://oauth2.googleapis.com"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube using OAuth2"""
-        try:
+        """Authenticate with YouTube using OAuth2"""        try:
             # If we have a refresh token, use it
             if self.config.credentials.refresh_token:
                 return await self.refresh_token()
@@ -68,8 +62,7 @@ class YouTubePlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh YouTube access token"""
-        if not self.config.credentials.refresh_token:
+        """Refresh YouTube access token"""        if not self.config.credentials.refresh_token:
             logger.error("No refresh token available for YouTube")
             return False
         
@@ -108,8 +101,7 @@ class YouTubePlatform(PlatformBase):
             return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to YouTube API"""
-        if not self.is_authenticated or self._token_expired():
+        """Make authenticated request to YouTube API"""        if not self.is_authenticated or self._token_expired():
             if not await self.refresh_token():
                 return None
         
@@ -161,14 +153,12 @@ class YouTubePlatform(PlatformBase):
             return None
     
     def _token_expired(self) -> bool:
-        """Check if token is expired"""
-        if not self.config.credentials.expires_at:
+        """Check if token is expired"""        if not self.config.credentials.expires_at:
             return True
         return datetime.utcnow() >= self.config.credentials.expires_at
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload video content to YouTube"""
-        try:
+        """Upload video content to YouTube"""        try:
             if not os.path.exists(content_path):
                 return UploadResult(
                     success=False,
@@ -275,8 +265,7 @@ class YouTubePlatform(PlatformBase):
             )
     
     def _get_category_id(self, category: str) -> str:
-        """Map category name to YouTube category ID"""
-        category_map = {
+        """Map category name to YouTube category ID"""        category_map = {
             'music': '10',
             'entertainment': '24',
             'education': '27',
@@ -290,8 +279,7 @@ class YouTubePlatform(PlatformBase):
         return category_map.get(category.lower(), '22')  # Default to People & Blogs
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get YouTube analytics for a video"""
-        try:
+        """Get YouTube analytics for a video"""        try:
             # Get video statistics
             video_stats = await self._make_request(
                 'GET',
@@ -336,8 +324,7 @@ class YouTubePlatform(PlatformBase):
             raise
     
     async def _get_video_analytics(self, video_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get detailed video analytics using YouTube Analytics API"""
-        # This would require YouTube Analytics API access
+        """Get detailed video analytics using YouTube Analytics API"""        # This would require YouTube Analytics API access
         # For now, return empty analytics
         return {
             'watch_time': 0,
@@ -347,8 +334,7 @@ class YouTubePlatform(PlatformBase):
         }
     
     def _calculate_engagement_rate(self, stats: Dict[str, Any]) -> float:
-        """Calculate engagement rate"""
-        views = int(stats.get('viewCount', 0))
+        """Calculate engagement rate"""        views = int(stats.get('viewCount', 0))
         likes = int(stats.get('likeCount', 0))
         comments = int(stats.get('commentCount', 0))
         
@@ -358,8 +344,7 @@ class YouTubePlatform(PlatformBase):
         return ((likes + comments) / views) * 100
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on YouTube"""
-        search_type = 'video'  # YouTube API default
+        """Search content on YouTube"""        search_type = 'video'  # YouTube API default
         if content_type == ContentType.PLAYLIST:
             search_type = 'playlist'
         
@@ -393,8 +378,7 @@ class YouTubePlatform(PlatformBase):
         return formatted_results
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's videos from YouTube"""
-        try:
+        """Get user's videos from YouTube"""        try:
             # Get channel info first
             if user_id:
                 channel_params = {'part': 'contentDetails', 'id': user_id}
@@ -442,8 +426,7 @@ class YouTubePlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete video from YouTube"""
-        try:
+        """Delete video from YouTube"""        try:
             result = await self._make_request(
                 'DELETE',
                 'videos',
@@ -455,8 +438,7 @@ class YouTubePlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update video metadata on YouTube"""
-        try:
+        """Update video metadata on YouTube"""        try:
             # First get current video data
             current_data = await self._make_request(
                 'GET',
@@ -493,8 +475,7 @@ class YouTubePlatform(PlatformBase):
             return False
     
     async def get_video_comments(self, video_id: str, max_results: int = 100) -> List[Dict[str, Any]]:
-        """Get comments for a video"""
-        params = {
+        """Get comments for a video"""        params = {
             'part': 'snippet',
             'videoId': video_id,
             'maxResults': min(max_results, 100),
@@ -522,8 +503,7 @@ class YouTubePlatform(PlatformBase):
         return comments
     
     async def create_playlist(self, title: str, description: str = "", privacy_status: str = "private") -> Optional[str]:
-        """Create a new playlist"""
-        data = {
+        """Create a new playlist"""        data = {
             'snippet': {
                 'title': title,
                 'description': description
@@ -545,8 +525,7 @@ class YouTubePlatform(PlatformBase):
         return None
     
     async def add_video_to_playlist(self, playlist_id: str, video_id: str) -> bool:
-        """Add video to playlist"""
-        data = {
+        """Add video to playlist"""        data = {
             'snippet': {
                 'playlistId': playlist_id,
                 'resourceId': {
@@ -566,6 +545,5 @@ class YouTubePlatform(PlatformBase):
         return result is not None
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

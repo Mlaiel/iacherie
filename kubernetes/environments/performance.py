@@ -1,5 +1,4 @@
-"""
-Performance Environment Manager - IA Influencer Agent
+"""Performance Environment Manager - IA Influencer Agent
 =====================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -16,7 +15,6 @@ Performance environment configuration for optimization and tuning.
 Handles caching strategies, database optimization, and resource management.
 =====================================================
 """
-
 import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
@@ -27,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class PerformanceProfile(Enum):
-    """Performance optimization profiles"""
-    DEVELOPMENT = "development"
+    """Performance optimization profiles"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -38,8 +35,7 @@ class PerformanceProfile(Enum):
 
 @dataclass
 class DatabasePerformanceConfig:
-    """Database performance optimization configuration"""
-    connection_pool_size: int = int(os.getenv('DB_POOL_SIZE', '20'))
+    """Database performance optimization configuration"""    connection_pool_size: int = int(os.getenv('DB_POOL_SIZE', '20'))
     max_overflow: int = int(os.getenv('DB_MAX_OVERFLOW', '30'))
     pool_timeout: int = int(os.getenv('DB_POOL_TIMEOUT', '30'))
     pool_recycle: int = int(os.getenv('DB_POOL_RECYCLE', '3600'))
@@ -56,8 +52,7 @@ class DatabasePerformanceConfig:
 
 @dataclass
 class CachePerformanceConfig:
-    """Cache performance optimization configuration"""
-    redis_max_connections: int = int(os.getenv('REDIS_MAX_CONN', '100'))
+    """Cache performance optimization configuration"""    redis_max_connections: int = int(os.getenv('REDIS_MAX_CONN', '100'))
     redis_connection_pool_size: int = int(os.getenv('REDIS_POOL_SIZE', '50'))
     redis_socket_timeout: int = int(os.getenv('REDIS_SOCKET_TIMEOUT', '5'))
     redis_socket_connect_timeout: int = int(os.getenv('REDIS_CONNECT_TIMEOUT', '5'))
@@ -73,8 +68,7 @@ class CachePerformanceConfig:
 
 @dataclass
 class ApplicationPerformanceConfig:
-    """Application-level performance configuration"""
-    max_workers: int = int(os.getenv('MAX_WORKERS', '8'))
+    """Application-level performance configuration"""    max_workers: int = int(os.getenv('MAX_WORKERS', '8'))
     worker_class: str = "uvicorn.workers.UvicornWorker"
     worker_connections: int = int(os.getenv('WORKER_CONNECTIONS', '1000'))
     max_requests: int = int(os.getenv('MAX_REQUESTS', '1000'))
@@ -89,8 +83,7 @@ class ApplicationPerformanceConfig:
 
 @dataclass
 class AIPerformanceConfig:
-    """AI and ML performance optimization configuration"""
-    model_optimization_level: str = os.getenv('AI_OPTIMIZATION_LEVEL', 'standard')
+    """AI and ML performance optimization configuration"""    model_optimization_level: str = os.getenv('AI_OPTIMIZATION_LEVEL', 'standard')
     gpu_memory_fraction: float = float(os.getenv('GPU_MEMORY_FRACTION', '0.8'))
     model_quantization: bool = bool(os.getenv('MODEL_QUANTIZATION', 'true').lower() == 'true')
     mixed_precision: bool = bool(os.getenv('MIXED_PRECISION', 'true').lower() == 'true')
@@ -106,8 +99,7 @@ class AIPerformanceConfig:
 
 @dataclass
 class ContentProcessingPerformanceConfig:
-    """Content processing performance configuration"""
-    max_file_size_mb: int = int(os.getenv('MAX_FILE_SIZE_MB', '500'))
+    """Content processing performance configuration"""    max_file_size_mb: int = int(os.getenv('MAX_FILE_SIZE_MB', '500'))
     concurrent_processing_limit: int = int(os.getenv('CONCURRENT_PROCESSING_LIMIT', '10'))
     processing_timeout: int = int(os.getenv('PROCESSING_TIMEOUT', '300'))
     chunk_size_mb: int = int(os.getenv('CHUNK_SIZE_MB', '10'))
@@ -123,8 +115,7 @@ class ContentProcessingPerformanceConfig:
 
 @dataclass
 class NetworkPerformanceConfig:
-    """Network performance optimization configuration"""
-    connection_timeout: int = int(os.getenv('CONNECTION_TIMEOUT', '30'))
+    """Network performance optimization configuration"""    connection_timeout: int = int(os.getenv('CONNECTION_TIMEOUT', '30'))
     read_timeout: int = int(os.getenv('READ_TIMEOUT', '30'))
     max_retries: int = int(os.getenv('MAX_RETRIES', '3'))
     backoff_factor: float = float(os.getenv('BACKOFF_FACTOR', '0.3'))
@@ -140,8 +131,7 @@ class NetworkPerformanceConfig:
 
 @dataclass
 class MonitoringPerformanceConfig:
-    """Monitoring and observability performance configuration"""
-    metrics_collection_interval: int = int(os.getenv('METRICS_INTERVAL', '15'))
+    """Monitoring and observability performance configuration"""    metrics_collection_interval: int = int(os.getenv('METRICS_INTERVAL', '15'))
     log_buffer_size: int = int(os.getenv('LOG_BUFFER_SIZE', '1000'))
     trace_sampling_rate: float = float(os.getenv('TRACE_SAMPLING_RATE', '0.1'))
     metrics_retention_days: int = int(os.getenv('METRICS_RETENTION_DAYS', '30'))
@@ -154,8 +144,7 @@ class MonitoringPerformanceConfig:
 
 
 class PerformanceEnvironmentManager:
-    """
-    Performance environment manager for optimization and tuning.
+    """    Performance environment manager for optimization and tuning.
     
     Features:
     - Database query optimization and connection pooling
@@ -166,8 +155,7 @@ class PerformanceEnvironmentManager:
     - Network performance optimization
     - Resource allocation and scaling
     - Performance monitoring and profiling
-    """
-    
+    """    
     def __init__(self, profile: PerformanceProfile = PerformanceProfile.PRODUCTION, config_path: Optional[str] = None):
         self.profile = profile
         self.config_path = config_path or f"./performance/{profile.value}_config.yml"
@@ -194,8 +182,7 @@ class PerformanceEnvironmentManager:
         logger.info(f"Performance environment manager initialized for profile: {profile.value}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load performance environment configuration"""
-        try:
+        """Load performance environment configuration"""        try:
             config = {
                 'environment': self.environment,
                 'profile': self.profile.value,
@@ -374,8 +361,7 @@ class PerformanceEnvironmentManager:
             raise
     
     def optimize_database_performance(self) -> Dict[str, Any]:
-        """Optimize database performance"""
-        try:
+        """Optimize database performance"""        try:
             optimization_results = {
                 'connection_pool_optimized': False,
                 'query_cache_enabled': False,
@@ -411,8 +397,7 @@ class PerformanceEnvironmentManager:
             return {'error': str(e)}
     
     def optimize_cache_performance(self) -> Dict[str, Any]:
-        """Optimize cache performance"""
-        try:
+        """Optimize cache performance"""        try:
             optimization_results = {
                 'redis_optimized': False,
                 'cache_strategies_implemented': False,
@@ -444,8 +429,7 @@ class PerformanceEnvironmentManager:
             return {'error': str(e)}
     
     def optimize_ai_performance(self) -> Dict[str, Any]:
-        """Optimize AI model performance"""
-        try:
+        """Optimize AI model performance"""        try:
             optimization_results = {
                 'model_quantization_applied': False,
                 'mixed_precision_enabled': False,
@@ -481,8 +465,7 @@ class PerformanceEnvironmentManager:
             return {'error': str(e)}
     
     def benchmark_performance(self) -> Dict[str, Any]:
-        """Run performance benchmarks"""
-        try:
+        """Run performance benchmarks"""        try:
             benchmark_results = {
                 'database_latency_ms': 0.0,
                 'cache_hit_rate': 0.0,
@@ -528,8 +511,7 @@ class PerformanceEnvironmentManager:
             return {'error': str(e)}
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get performance environment health status"""
-        return {
+        """Get performance environment health status"""        return {
             'environment': self.environment,
             'profile': self.profile.value,
             'status': 'optimized',
@@ -546,8 +528,7 @@ class PerformanceEnvironmentManager:
     
     # Private helper methods
     def _apply_profile_optimizations(self):
-        """Apply profile-specific performance optimizations"""
-        if self.profile == PerformanceProfile.HIGH_PERFORMANCE:
+        """Apply profile-specific performance optimizations"""        if self.profile == PerformanceProfile.HIGH_PERFORMANCE:
             self.database.connection_pool_size = 50
             self.cache.redis_max_connections = 200
             self.application.max_workers = 16
@@ -562,8 +543,7 @@ class PerformanceEnvironmentManager:
             self.ai.model_quantization = True
     
     def _get_optimization_level(self) -> str:
-        """Get optimization level based on profile"""
-        optimization_levels = {
+        """Get optimization level based on profile"""        optimization_levels = {
             PerformanceProfile.DEVELOPMENT: "basic",
             PerformanceProfile.TESTING: "basic",
             PerformanceProfile.STAGING: "standard",

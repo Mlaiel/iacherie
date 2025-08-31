@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Crawler Functional Verification Test
+"""Crawler Functional Verification Test
 ====================================
 
 Enhanced functional verification for crawler implementations beyond static analysis.
@@ -8,7 +7,6 @@ Tests actual functionality, initialization, and core capabilities of priority cr
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import sys
 import os
 import ast
@@ -22,22 +20,19 @@ import json
 
 @dataclass
 class FunctionalTest:
-    """Result of a functional test."""
-    test_name: str
+    """Result of a functional test."""    test_name: str
     status: str  # 'pass', 'fail', 'skip'
     message: str
     details: Optional[Dict[str, Any]] = None
 
 class CrawlerFunctionalVerifier:
-    """Enhanced functional verification for crawler implementations."""
-    
+    """Enhanced functional verification for crawler implementations."""    
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
         self.results = []
         
     def verify_implementation_completeness(self, file_path: Path) -> FunctionalTest:
-        """Verify that a crawler has real implementation vs stub."""
-        try:
+        """Verify that a crawler has real implementation vs stub."""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
                 
@@ -104,8 +99,7 @@ class CrawlerFunctionalVerifier:
             )
     
     def verify_data_structures(self, file_path: Path) -> FunctionalTest:
-        """Verify that crawler has proper data structures."""
-        try:
+        """Verify that crawler has proper data structures."""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
                 
@@ -159,8 +153,7 @@ class CrawlerFunctionalVerifier:
             )
     
     def verify_api_integration(self, file_path: Path) -> FunctionalTest:
-        """Verify that crawler has real API integration capabilities."""
-        try:
+        """Verify that crawler has real API integration capabilities."""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
                 
@@ -209,8 +202,7 @@ class CrawlerFunctionalVerifier:
             )
     
     def verify_error_handling(self, file_path: Path) -> FunctionalTest:
-        """Verify that crawler has proper error handling."""
-        try:
+        """Verify that crawler has proper error handling."""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
                 
@@ -259,8 +251,7 @@ class CrawlerFunctionalVerifier:
             )
     
     def verify_priority_crawlers(self) -> List[FunctionalTest]:
-        """Verify the three priority crawlers: Spotify, YouTube, Instagram."""
-        priority_crawlers = [
+        """Verify the three priority crawlers: Spotify, YouTube, Instagram."""        priority_crawlers = [
             'spotify_crawler.py',
             'youtube_crawler.py', 
             'instagram_crawler.py'
@@ -301,8 +292,7 @@ class CrawlerFunctionalVerifier:
         return all_tests
     
     def generate_report(self) -> Dict[str, Any]:
-        """Generate comprehensive functional verification report."""
-        tests = self.verify_priority_crawlers()
+        """Generate comprehensive functional verification report."""        tests = self.verify_priority_crawlers()
         
         passed = [t for t in tests if t.status == 'pass']
         failed = [t for t in tests if t.status == 'fail']
@@ -345,8 +335,7 @@ class CrawlerFunctionalVerifier:
         return report
     
     def print_summary(self, report: Dict[str, Any]):
-        """Print a human-readable summary of the verification results."""
-        print("\n🔍 CRAWLER FUNCTIONAL VERIFICATION RESULTS")
+        """Print a human-readable summary of the verification results."""        print("\n🔍 CRAWLER FUNCTIONAL VERIFICATION RESULTS")
         print("=" * 50)
         
         summary = report["summary"]
@@ -366,8 +355,7 @@ class CrawlerFunctionalVerifier:
             print()
 
 def main():
-    """Main execution function."""
-    verifier = CrawlerFunctionalVerifier()
+    """Main execution function."""    verifier = CrawlerFunctionalVerifier()
     report = verifier.generate_report()
     
     # Print summary

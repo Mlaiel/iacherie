@@ -1,5 +1,4 @@
-"""
-Quality Controller - Enterprise Content Quality Management System
+"""Quality Controller - Enterprise Content Quality Management System
 
 Ultra-advanced quality assurance and validation system for content creation,
 ensuring professional standards and brand compliance across all content types.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -91,8 +89,7 @@ settings = get_settings()
 
 
 class QualityDimension(str, Enum):
-    """Quality assessment dimensions"""
-    ACCURACY = "accuracy"
+    """Quality assessment dimensions"""    ACCURACY = "accuracy"
     CLARITY = "clarity"
     COMPLETENESS = "completeness"
     CONSISTENCY = "consistency"
@@ -107,8 +104,7 @@ class QualityDimension(str, Enum):
 
 
 class QualityLevel(str, Enum):
-    """Quality level standards"""
-    DRAFT = "draft"
+    """Quality level standards"""    DRAFT = "draft"
     REVIEW_READY = "review_ready"
     PROFESSIONAL = "professional"
     PREMIUM = "premium"
@@ -116,8 +112,7 @@ class QualityLevel(str, Enum):
 
 
 class ContentFormat(str, Enum):
-    """Content format types for quality assessment"""
-    TEXT = "text"
+    """Content format types for quality assessment"""    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -127,8 +122,7 @@ class ContentFormat(str, Enum):
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics"""
-    # Overall scores
+    """Comprehensive quality metrics"""    # Overall scores
     overall_score: float = 0.0
     dimension_scores: Dict[str, float] = field(default_factory=dict)
     
@@ -163,8 +157,7 @@ class QualityMetrics:
 
 @dataclass
 class QualityCriteria:
-    """Quality assessment criteria"""
-    target_quality_level: QualityLevel = QualityLevel.PROFESSIONAL
+    """Quality assessment criteria"""    target_quality_level: QualityLevel = QualityLevel.PROFESSIONAL
     required_dimensions: List[QualityDimension] = field(default_factory=list)
     minimum_scores: Dict[str, float] = field(default_factory=dict)
     content_requirements: Dict[str, Any] = field(default_factory=dict)
@@ -174,8 +167,7 @@ class QualityCriteria:
 
 
 class QualityController:
-    """Enterprise content quality management and validation system"""
-    
+    """Enterprise content quality management and validation system"""    
     def __init__(self):
         self.settings = get_settings()
         self.performance_monitor = PerformanceMonitor("quality_controller")
@@ -195,8 +187,7 @@ class QualityController:
         self._quality_models = {}
     
     def _initialize_quality_tools(self):
-        """Initialize quality analysis tools and models"""
-        try:
+        """Initialize quality analysis tools and models"""        try:
             # Grammar and spell checking
             self.grammar_tool = language_tool_python.LanguageTool('en-US')
             self.spell_checker = SpellChecker()
@@ -228,8 +219,7 @@ class QualityController:
             self.sentiment_analyzer = SentimentIntensityAnalyzer()
     
     def _initialize_quality_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality thresholds for different levels"""
-        return {
+        """Initialize quality thresholds for different levels"""        return {
             QualityLevel.DRAFT.value: {
                 "overall_score": 0.4,
                 "grammar_score": 0.5,
@@ -269,8 +259,7 @@ class QualityController:
         user_id: str,
         db: AsyncSession
     ) -> Dict[str, Any]:
-        """Comprehensive content quality validation"""
-        
+        """Comprehensive content quality validation"""        
         async with self.performance_monitor.track_operation("content_validation"):
             try:
                 validation_id = str(uuid.uuid4())
@@ -319,8 +308,7 @@ class QualityController:
                 raise HTTPException(status_code=500, detail=f"Quality validation failed: {str(e)}")
     
     def _parse_quality_criteria(self, criteria: Dict[str, Any]) -> QualityCriteria:
-        """Parse and validate quality criteria"""
-        
+        """Parse and validate quality criteria"""        
         try:
             return QualityCriteria(
                 target_quality_level=QualityLevel(criteria.get("target_level", "professional")),
@@ -338,8 +326,7 @@ class QualityController:
             return QualityCriteria()
     
     def _determine_content_format(self, content: Dict[str, Any]) -> ContentFormat:
-        """Determine content format for appropriate quality assessment"""
-        
+        """Determine content format for appropriate quality assessment"""        
         if "text" in content or "body" in content:
             return ContentFormat.TEXT
         elif "image_data" in content or "image_url" in content:
@@ -359,8 +346,7 @@ class QualityController:
         content_format: ContentFormat,
         criteria: QualityCriteria
     ) -> QualityMetrics:
-        """Perform comprehensive quality assessment"""
-        
+        """Perform comprehensive quality assessment"""        
         try:
             if content_format == ContentFormat.TEXT:
                 return await self._assess_text_quality(content, criteria)
@@ -384,8 +370,7 @@ class QualityController:
         content: Dict[str, Any],
         criteria: QualityCriteria
     ) -> QualityMetrics:
-        """Assess text content quality"""
-        
+        """Assess text content quality"""        
         text = content.get("text", "") or content.get("body", "")
         if not text:
             return QualityMetrics(issues_found=[{"type": "error", "message": "No text content found"}])
@@ -479,8 +464,7 @@ class QualityController:
             return metrics
     
     def _calculate_readability_score(self, text: str) -> float:
-        """Calculate comprehensive readability score"""
-        
+        """Calculate comprehensive readability score"""        
         try:
             # Multiple readability metrics
             flesch_ease = flesch_reading_ease(text)
@@ -499,8 +483,7 @@ class QualityController:
             return 50.0  # Default middle score
     
     def _analyze_sentence_structure(self, text: str) -> float:
-        """Analyze sentence structure quality"""
-        
+        """Analyze sentence structure quality"""        
         try:
             sentences = sent_tokenize(text)
             if not sentences:
@@ -536,12 +519,10 @@ class QualityController:
             return 0.5
     
     async def _assess_originality(self, text: str) -> float:
-        """Assess content originality using AI detection"""
-        
+        """Assess content originality using AI detection"""        
         try:
             # Use LLM to assess originality
-            originality_prompt = f"""
-            Analyze the following text for originality and uniqueness. Rate from 0-1 where:
+            originality_prompt = f"""            Analyze the following text for originality and uniqueness. Rate from 0-1 where:
             0 = Generic/clichéd content
             0.5 = Some original elements mixed with common phrases
             1 = Highly original and unique content
@@ -549,8 +530,7 @@ class QualityController:
             Text: "{text[:500]}..."
             
             Provide only a numerical score between 0 and 1.
-            """
-            
+            """            
             response = await self.llm_engine.generate_response(
                 prompt=originality_prompt,
                 max_tokens=10,
@@ -569,8 +549,7 @@ class QualityController:
             return 0.5
     
     def _assess_tone_consistency(self, text: str) -> float:
-        """Assess tone consistency throughout the text"""
-        
+        """Assess tone consistency throughout the text"""        
         try:
             # Split text into chunks for analysis
             sentences = sent_tokenize(text)
@@ -603,8 +582,7 @@ class QualityController:
             return 0.5
     
     def _assess_engagement_potential(self, text: str) -> float:
-        """Assess content engagement potential"""
-        
+        """Assess content engagement potential"""        
         try:
             # Engagement indicators
             engagement_words = [
@@ -638,8 +616,7 @@ class QualityController:
             return 0.5
     
     def _assess_seo_quality(self, text: str, seo_requirements: Dict[str, Any]) -> float:
-        """Assess SEO quality of text content"""
-        
+        """Assess SEO quality of text content"""        
         try:
             seo_score = 0.0
             total_checks = 0
@@ -688,8 +665,7 @@ class QualityController:
         text: str,
         brand_guidelines: Dict[str, Any]
     ) -> float:
-        """Assess brand alignment using guidelines"""
-        
+        """Assess brand alignment using guidelines"""        
         try:
             alignment_score = 0.0
             total_checks = 0
@@ -737,8 +713,7 @@ class QualityController:
         content: Dict[str, Any],
         criteria: QualityCriteria
     ) -> QualityMetrics:
-        """Assess image content quality"""
-        
+        """Assess image content quality"""        
         metrics = QualityMetrics()
         
         try:
@@ -826,8 +801,7 @@ class QualityController:
         content: Dict[str, Any],
         criteria: QualityCriteria
     ) -> QualityMetrics:
-        """Assess audio content quality"""
-        
+        """Assess audio content quality"""        
         metrics = QualityMetrics()
         
         try:
@@ -936,8 +910,7 @@ class QualityController:
         content: Dict[str, Any],
         criteria: QualityCriteria
     ) -> QualityMetrics:
-        """Assess video content quality"""
-        
+        """Assess video content quality"""        
         metrics = QualityMetrics()
         
         try:
@@ -1089,8 +1062,7 @@ class QualityController:
         content: Dict[str, Any],
         criteria: QualityCriteria
     ) -> QualityMetrics:
-        """Assess document content quality"""
-        
+        """Assess document content quality"""        
         # For documents, extract text and perform text quality assessment
         text_content = content.get("extracted_text", "")
         if text_content:
@@ -1109,8 +1081,7 @@ class QualityController:
         content: Dict[str, Any],
         criteria: QualityCriteria
     ) -> QualityMetrics:
-        """Assess multimedia content quality (combination of formats)"""
-        
+        """Assess multimedia content quality (combination of formats)"""        
         metrics = QualityMetrics()
         
         try:
@@ -1162,8 +1133,7 @@ class QualityController:
             return metrics
     
     def _calculate_overall_score(self, metrics: QualityMetrics) -> float:
-        """Calculate overall quality score from individual metrics"""
-        
+        """Calculate overall quality score from individual metrics"""        
         try:
             # Weight different quality aspects
             score_components = []
@@ -1211,8 +1181,7 @@ class QualityController:
         metrics: QualityMetrics,
         criteria: QualityCriteria
     ) -> List[str]:
-        """Generate quality warnings based on metrics and criteria"""
-        
+        """Generate quality warnings based on metrics and criteria"""        
         warnings = []
         
         try:
@@ -1255,8 +1224,7 @@ class QualityController:
         criteria: QualityCriteria,
         validation_id: str
     ) -> Dict[str, Any]:
-        """Generate comprehensive validation result"""
-        
+        """Generate comprehensive validation result"""        
         try:
             passed_checks = []
             failed_checks = []
@@ -1320,8 +1288,7 @@ class QualityController:
             }
     
     def _determine_quality_level(self, metrics: QualityMetrics) -> str:
-        """Determine quality level based on metrics"""
-        
+        """Determine quality level based on metrics"""        
         score = metrics.overall_score
         
         if score >= 0.9:
@@ -1336,8 +1303,7 @@ class QualityController:
             return QualityLevel.DRAFT.value
     
     def _serialize_quality_metrics(self, metrics: QualityMetrics) -> Dict[str, Any]:
-        """Serialize quality metrics for API response"""
-        
+        """Serialize quality metrics for API response"""        
         return {
             "overall_score": round(metrics.overall_score, 3),
             "dimension_scores": {k: round(v, 3) for k, v in metrics.dimension_scores.items()},
@@ -1361,8 +1327,7 @@ class QualityController:
         metrics: QualityMetrics,
         criteria: QualityCriteria
     ) -> List[str]:
-        """Generate actionable quality improvement recommendations"""
-        
+        """Generate actionable quality improvement recommendations"""        
         recommendations = []
         
         try:
@@ -1425,8 +1390,7 @@ class QualityController:
         metrics: QualityMetrics,
         db: AsyncSession
     ):
-        """Store quality assessment record in database"""
-        
+        """Store quality assessment record in database"""        
         try:
             assessment_record = {
                 "id": validation_id,
@@ -1456,8 +1420,7 @@ class QualityController:
             logger.error(f"Error storing quality assessment: {e}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for quality controller"""
-        return {
+        """Health check for quality controller"""        return {
             "status": "healthy",
             "grammar_tool_available": self.grammar_tool is not None,
             "ai_models_loaded": bool(self.quality_classifier and self.toxicity_detector),
@@ -1468,8 +1431,7 @@ class QualityController:
 
 
 class ContentValidator:
-    """Advanced content validation and compliance checker"""
-    
+    """Advanced content validation and compliance checker"""    
     def __init__(self):
         self.quality_controller = QualityController()
         self.performance_monitor = PerformanceMonitor("content_validator")
@@ -1481,8 +1443,7 @@ class ContentValidator:
         user_id: str,
         db: AsyncSession
     ) -> Dict[str, Any]:
-        """Validate multiple content pieces in batch"""
-        
+        """Validate multiple content pieces in batch"""        
         async with self.performance_monitor.track_operation("batch_validation"):
             try:
                 batch_results = []

@@ -1,5 +1,4 @@
-"""
-🔧 Quality Gates Validator - IA-Influencer-Agent CI/CD
+"""🔧 Quality Gates Validator - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + QA_ENGINEER
 Created: 2025-08-24
@@ -9,7 +8,6 @@ Enterprise quality gates validation system with comprehensive code analysis.
 Integrates linting, testing, security, and performance validation.
 ================================================================
 """
-
 from typing import Dict, List, Optional, Any, Tuple
 import asyncio
 import logging
@@ -25,8 +23,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class QualityGateType(Enum):
-    """Quality gate type enumeration"""
-    CODE_COVERAGE = "code_coverage"
+    """Quality gate type enumeration"""    CODE_COVERAGE = "code_coverage"
     LINTING = "linting"
     TYPE_CHECKING = "type_checking"
     SECURITY_SCAN = "security_scan"
@@ -36,16 +33,14 @@ class QualityGateType(Enum):
     DOCUMENTATION = "documentation"
 
 class QualityStatus(Enum):
-    """Quality status enumeration"""
-    PASSED = "passed"
+    """Quality status enumeration"""    PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
     SKIPPED = "skipped"
 
 @dataclass
 class QualityGateConfig:
-    """Quality gate configuration"""
-    gate_type: QualityGateType
+    """Quality gate configuration"""    gate_type: QualityGateType
     enabled: bool = True
     threshold: Optional[float] = None
     fail_on_warning: bool = False
@@ -54,8 +49,7 @@ class QualityGateConfig:
 
 @dataclass
 class QualityGateResult:
-    """Quality gate result"""
-    gate_type: QualityGateType
+    """Quality gate result"""    gate_type: QualityGateType
     status: QualityStatus
     score: Optional[float] = None
     message: str = ""
@@ -67,8 +61,7 @@ class QualityGateResult:
 
 @dataclass
 class QualityValidationReport:
-    """Complete quality validation report"""
-    project_name: str
+    """Complete quality validation report"""    project_name: str
     validation_timestamp: datetime
     overall_status: QualityStatus
     overall_score: float
@@ -77,11 +70,9 @@ class QualityValidationReport:
     recommendations: List[str] = None
 
 class QualityGateValidator:
-    """Enterprise quality gates validation engine"""
-    
+    """Enterprise quality gates validation engine"""    
     def __init__(self):
-        """Initialize quality gate validator"""
-        self.initialized = False
+        """Initialize quality gate validator"""        self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.validation_history: List[QualityValidationReport] = []
         
@@ -120,8 +111,7 @@ class QualityGateValidator:
         }
         
     async def initialize(self) -> bool:
-        """Initialize quality gate validator"""
-        try:
+        """Initialize quality gate validator"""        try:
             # Verify required tools are available
             await self._verify_quality_tools()
             
@@ -133,8 +123,7 @@ class QualityGateValidator:
             return False
     
     async def _verify_quality_tools(self) -> None:
-        """Verify required quality tools are installed"""
-        required_tools = {
+        """Verify required quality tools are installed"""        required_tools = {
             "python": "Python interpreter",
             "pytest": "Testing framework",
             "flake8": "Code linting",
@@ -153,8 +142,7 @@ class QualityGateValidator:
             raise RuntimeError(f"Missing required tools: {', '.join(missing_tools)}")
     
     async def _check_tool_available(self, tool: str) -> bool:
-        """Check if a tool is available in PATH"""
-        try:
+        """Check if a tool is available in PATH"""        try:
             result = await self._run_command([tool, "--version"], timeout=30)
             return result.returncode == 0
         except:
@@ -166,8 +154,7 @@ class QualityGateValidator:
         project_name: str = "ia-influencer-agent",
         custom_gates: Optional[Dict[QualityGateType, QualityGateConfig]] = None
     ) -> QualityValidationReport:
-        """Execute complete quality validation"""
-        start_time = datetime.now()
+        """Execute complete quality validation"""        start_time = datetime.now()
         
         try:
             self.logger.info(f"Starting quality validation for {project_name}")
@@ -235,8 +222,7 @@ class QualityGateValidator:
         source_path: str,
         config: QualityGateConfig
     ) -> QualityGateResult:
-        """Execute individual quality gate"""
-        start_time = datetime.now()
+        """Execute individual quality gate"""        start_time = datetime.now()
         
         try:
             if config.gate_type == QualityGateType.CODE_COVERAGE:
@@ -283,8 +269,7 @@ class QualityGateValidator:
         source_path: str,
         config: QualityGateConfig
     ) -> QualityGateResult:
-        """Validate code coverage"""
-        try:
+        """Validate code coverage"""        try:
             # Run pytest with coverage
             cmd = [
                 "python", "-m", "pytest",
@@ -331,8 +316,7 @@ class QualityGateValidator:
         source_path: str,
         config: QualityGateConfig
     ) -> QualityGateResult:
-        """Validate code linting"""
-        try:
+        """Validate code linting"""        try:
             # Run flake8 linting
             cmd = [
                 "flake8",
@@ -388,8 +372,7 @@ class QualityGateValidator:
         source_path: str,
         config: QualityGateConfig
     ) -> QualityGateResult:
-        """Validate type checking"""
-        try:
+        """Validate type checking"""        try:
             # Run mypy type checking
             cmd = [
                 "mypy",
@@ -443,8 +426,7 @@ class QualityGateValidator:
         source_path: str,
         config: QualityGateConfig
     ) -> QualityGateResult:
-        """Validate security scanning"""
-        try:
+        """Validate security scanning"""        try:
             # Run bandit security scan
             cmd = [
                 "bandit",
@@ -515,8 +497,7 @@ class QualityGateValidator:
         source_path: str,
         config: QualityGateConfig
     ) -> QualityGateResult:
-        """Validate dependency vulnerabilities"""
-        try:
+        """Validate dependency vulnerabilities"""        try:
             # Run safety check for known vulnerabilities
             cmd = ["safety", "check", "--json"]
             
@@ -563,8 +544,7 @@ class QualityGateValidator:
         source_path: str,
         config: QualityGateConfig
     ) -> QualityGateResult:
-        """Validate code complexity"""
-        try:
+        """Validate code complexity"""        try:
             # Run radon complexity analysis
             cmd = [
                 "radon", "cc", "backend/",
@@ -634,8 +614,7 @@ class QualityGateValidator:
         source_path: str,
         config: QualityGateConfig
     ) -> QualityGateResult:
-        """Validate performance tests"""
-        try:
+        """Validate performance tests"""        try:
             # Run performance tests using pytest-benchmark
             cmd = [
                 "python", "-m", "pytest",
@@ -690,8 +669,7 @@ class QualityGateValidator:
         source_path: str,
         config: QualityGateConfig
     ) -> QualityGateResult:
-        """Validate documentation coverage"""
-        try:
+        """Validate documentation coverage"""        try:
             # Check for documentation files
             doc_files = []
             required_docs = ["README.md", "README.de.md", "README.fr.md"]
@@ -748,8 +726,7 @@ class QualityGateValidator:
         self,
         gate_results: List[QualityGateResult]
     ) -> Tuple[QualityStatus, float]:
-        """Calculate overall quality status and score"""
-        if not gate_results:
+        """Calculate overall quality status and score"""        if not gate_results:
             return QualityStatus.FAILED, 0.0
         
         # Count status types
@@ -783,8 +760,7 @@ class QualityGateValidator:
         return overall_status, overall_score
     
     def _generate_quality_summary(self, gate_results: List[QualityGateResult]) -> Dict[str, Any]:
-        """Generate quality validation summary"""
-        summary = {
+        """Generate quality validation summary"""        summary = {
             "total_gates": len(gate_results),
             "passed": sum(1 for r in gate_results if r.status == QualityStatus.PASSED),
             "failed": sum(1 for r in gate_results if r.status == QualityStatus.FAILED),
@@ -797,8 +773,7 @@ class QualityGateValidator:
         return summary
     
     def _generate_recommendations(self, gate_results: List[QualityGateResult]) -> List[str]:
-        """Generate quality improvement recommendations"""
-        recommendations = []
+        """Generate quality improvement recommendations"""        recommendations = []
         
         for result in gate_results:
             if result.status == QualityStatus.FAILED:
@@ -824,8 +799,7 @@ class QualityGateValidator:
         cwd: Optional[str] = None,
         timeout: int = 300
     ) -> subprocess.CompletedProcess:
-        """Run shell command asynchronously"""
-        try:
+        """Run shell command asynchronously"""        try:
             process = await asyncio.create_subprocess_exec(
                 *cmd,
                 cwd=cwd,
@@ -851,12 +825,10 @@ class QualityGateValidator:
             raise RuntimeError(f"Command failed: {e}")
     
     def get_validation_history(self, limit: int = 10) -> List[QualityValidationReport]:
-        """Get validation history"""
-        return self.validation_history[-limit:]
+        """Get validation history"""        return self.validation_history[-limit:]
     
     def get_quality_trends(self) -> Dict[str, Any]:
-        """Get quality trends over time"""
-        if not self.validation_history:
+        """Get quality trends over time"""        if not self.validation_history:
             return {}
         
         recent_reports = self.validation_history[-10:]  # Last 10 reports

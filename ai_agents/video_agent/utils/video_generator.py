@@ -1,5 +1,4 @@
-"""
-AI Video Generator - Advanced AI-Powered Video Generation and Synthesis
+"""AI Video Generator - Advanced AI-Powered Video Generation and Synthesis
 
 Industrial-grade AI video generation system with advanced synthesis capabilities,
 style transfer, and content-aware video creation for professional creators.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import os
@@ -55,16 +53,14 @@ from ...models.video_models import GeneratedVideo, VideoTemplate
 logger = logging.getLogger(__name__)
 
 class VideoGenerationModel:
-    """Video generation model specifications"""
-    STABLE_DIFFUSION = "stable_diffusion"
+    """Video generation model specifications"""    STABLE_DIFFUSION = "stable_diffusion"
     DALLE_3 = "dalle_3"
     MIDJOURNEY = "midjourney"
     RUNWAY_ML = "runway_ml"
     PIKA_LABS = "pika_labs"
 
 class VideoStyle:
-    """Video style presets for generation"""
-    CINEMATIC = "cinematic"
+    """Video style presets for generation"""    CINEMATIC = "cinematic"
     DOCUMENTARY = "documentary"
     ANIMATION = "animation"
     SKETCH = "sketch"
@@ -74,28 +70,23 @@ class VideoStyle:
     MODERN = "modern"
 
 class GenerationQuality:
-    """Quality levels for video generation"""
-    DRAFT = {"resolution": (480, 360), "fps": 15, "duration": 10}
+    """Quality levels for video generation"""    DRAFT = {"resolution": (480, 360), "fps": 15, "duration": 10}
     STANDARD = {"resolution": (720, 480), "fps": 24, "duration": 30}
     HIGH = {"resolution": (1080, 720), "fps": 30, "duration": 60}
     PREMIUM = {"resolution": (1920, 1080), "fps": 60, "duration": 120}
 
 class AIVideoGenerator:
-    """
-    Advanced AI-powered video generation system with multiple model support.
+    """    Advanced AI-powered video generation system with multiple model support.
     
     Provides comprehensive video generation capabilities including text-to-video,
     image-to-video, style transfer, and content-aware video synthesis.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize AIVideoGenerator with advanced configuration.
+        """        Initialize AIVideoGenerator with advanced configuration.
         
         Args:
             config: Optional configuration dictionary
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.temp_dir = Path(tempfile.gettempdir()) / "video_generator" / str(uuid.uuid4())
         self.temp_dir.mkdir(parents=True, exist_ok=True)
         
@@ -118,8 +109,7 @@ class AIVideoGenerator:
         logger.info(f"AIVideoGenerator initialized with device: {self.device}")
     
     def _initialize_models(self):
-        """Initialize AI models for video generation"""
-        try:
+        """Initialize AI models for video generation"""        try:
             # Text-to-image model for frame generation
             if self.gpu_available:
                 self.text_to_image = StableDiffusionPipeline.from_pretrained(
@@ -153,8 +143,7 @@ class AIVideoGenerator:
                                      style: str = VideoStyle.CINEMATIC,
                                      quality: str = "standard",
                                      fps: int = 30) -> Dict[str, Any]:
-        """
-        Generate video from text prompt using AI models.
+        """        Generate video from text prompt using AI models.
         
         Args:
             prompt: Text description for video generation
@@ -165,8 +154,7 @@ class AIVideoGenerator:
             
         Returns:
             Generation result with video path and metadata
-        """
-        if not prompt or len(prompt.strip()) == 0:
+        """        if not prompt or len(prompt.strip()) == 0:
             raise ValueError("Text prompt is required")
         
         if duration > self.max_duration:
@@ -220,8 +208,7 @@ class AIVideoGenerator:
                                        duration_per_image: float = 2.0,
                                        transition_style: str = "fade",
                                        fps: int = 30) -> Dict[str, Any]:
-        """
-        Generate video from sequence of images with transitions.
+        """        Generate video from sequence of images with transitions.
         
         Args:
             image_paths: List of paths to input images
@@ -231,8 +218,7 @@ class AIVideoGenerator:
             
         Returns:
             Generation result with video path
-        """
-        if not image_paths:
+        """        if not image_paths:
             raise ValueError("At least one image path is required")
         
         # Validate image paths
@@ -299,8 +285,7 @@ class AIVideoGenerator:
     async def apply_style_transfer(self, input_video_path: str,
                                  style_prompt: str,
                                  output_path: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Apply AI-powered style transfer to existing video.
+        """        Apply AI-powered style transfer to existing video.
         
         Args:
             input_video_path: Path to input video
@@ -309,8 +294,7 @@ class AIVideoGenerator:
             
         Returns:
             Style transfer result
-        """
-        if not os.path.exists(input_video_path):
+        """        if not os.path.exists(input_video_path):
             raise FileNotFoundError(f"Input video not found: {input_video_path}")
         
         if not output_path:
@@ -388,8 +372,7 @@ class AIVideoGenerator:
             raise
     
     async def _generate_key_frames(self, prompt: str, style: str, num_frames: int) -> List[np.ndarray]:
-        """Generate key frames based on text prompt"""
-        key_frames = []
+        """Generate key frames based on text prompt"""        key_frames = []
         
         if not self.text_to_image:
             # Fallback: create colored frames based on prompt
@@ -423,8 +406,7 @@ class AIVideoGenerator:
         return key_frames
     
     async def _create_prompt_variations(self, base_prompt: str, style: str, num_variations: int) -> List[str]:
-        """Create variations of the base prompt for different frames"""
-        style_modifiers = {
+        """Create variations of the base prompt for different frames"""        style_modifiers = {
             VideoStyle.CINEMATIC: "cinematic lighting, film grain, dramatic shadows",
             VideoStyle.DOCUMENTARY: "natural lighting, realistic, documentary style",
             VideoStyle.ANIMATION: "animated, cartoon style, vibrant colors",
@@ -460,8 +442,7 @@ class AIVideoGenerator:
         return variations
     
     async def _interpolate_frames(self, key_frames: List[np.ndarray], total_frames: int) -> List[np.ndarray]:
-        """Interpolate between key frames to create smooth animation"""
-        if not key_frames:
+        """Interpolate between key frames to create smooth animation"""        if not key_frames:
             return []
         
         if len(key_frames) == 1:
@@ -491,8 +472,7 @@ class AIVideoGenerator:
         return all_frames[:total_frames]
     
     async def _blend_frames(self, frame1: np.ndarray, frame2: np.ndarray, alpha: float) -> np.ndarray:
-        """Blend two frames using alpha blending"""
-        # Ensure frames are the same size
+        """Blend two frames using alpha blending"""        # Ensure frames are the same size
         if frame1.shape != frame2.shape:
             frame2 = cv2.resize(frame2, (frame1.shape[1], frame1.shape[0]))
         
@@ -501,8 +481,7 @@ class AIVideoGenerator:
         return blended.astype(np.uint8)
     
     async def _create_video_from_frames(self, frames: List[np.ndarray], output_path: str, fps: float) -> bool:
-        """Create video file from list of frames"""
-        if not frames:
+        """Create video file from list of frames"""        if not frames:
             return False
         
         try:
@@ -532,8 +511,7 @@ class AIVideoGenerator:
             return False
     
     async def _extract_video_frames(self, video_path: str) -> List[np.ndarray]:
-        """Extract frames from video file"""
-        frames = []
+        """Extract frames from video file"""        frames = []
         
         try:
             cap = cv2.VideoCapture(video_path)
@@ -556,8 +534,7 @@ class AIVideoGenerator:
     
     async def _create_transition_frames(self, frame1: np.ndarray, frame2: np.ndarray, 
                                       num_frames: int, transition_style: str) -> List[np.ndarray]:
-        """Create transition frames between two images"""
-        transition_frames = []
+        """Create transition frames between two images"""        transition_frames = []
         
         for i in range(num_frames):
             alpha = i / (num_frames - 1) if num_frames > 1 else 0
@@ -580,8 +557,7 @@ class AIVideoGenerator:
         return transition_frames
     
     async def _slide_transition(self, frame1: np.ndarray, frame2: np.ndarray, alpha: float) -> np.ndarray:
-        """Create sliding transition effect"""
-        height, width = frame1.shape[:2]
+        """Create sliding transition effect"""        height, width = frame1.shape[:2]
         offset = int(width * alpha)
         
         result = np.zeros_like(frame1)
@@ -597,8 +573,7 @@ class AIVideoGenerator:
         return result
     
     async def _zoom_transition(self, frame1: np.ndarray, frame2: np.ndarray, alpha: float) -> np.ndarray:
-        """Create zoom transition effect"""
-        height, width = frame1.shape[:2]
+        """Create zoom transition effect"""        height, width = frame1.shape[:2]
         
         # Zoom out frame1 and zoom in frame2
         scale1 = 1.0 + alpha * 0.5  # Zoom out
@@ -617,8 +592,7 @@ class AIVideoGenerator:
         return await self._blend_frames(zoomed_frame1, zoomed_frame2, alpha)
     
     async def _create_fallback_frames(self, prompt: str, num_frames: int) -> List[np.ndarray]:
-        """Create simple colored frames when AI models are not available"""
-        frames = []
+        """Create simple colored frames when AI models are not available"""        frames = []
         
         # Extract color information from prompt
         color_keywords = {
@@ -655,13 +629,11 @@ class AIVideoGenerator:
         return frames
     
     async def _create_single_fallback_frame(self, prompt: str) -> np.ndarray:
-        """Create a single fallback frame"""
-        frames = await self._create_fallback_frames(prompt, 1)
+        """Create a single fallback frame"""        frames = await self._create_fallback_frames(prompt, 1)
         return frames[0] if frames else np.zeros((*self.default_resolution[::-1], 3), dtype=np.uint8)
     
     async def _add_text_overlay(self, frame: np.ndarray, title: str, subtitle: str) -> np.ndarray:
-        """Add text overlay to frame"""
-        try:
+        """Add text overlay to frame"""        try:
             # Convert to PIL for text rendering
             pil_frame = Image.fromarray(frame)
             draw = ImageDraw.Draw(pil_frame)
@@ -701,20 +673,17 @@ class AIVideoGenerator:
             return frame
     
     async def _should_add_audio(self, prompt: str) -> bool:
-        """Determine if audio should be generated based on prompt"""
-        audio_keywords = ["music", "sound", "audio", "soundtrack", "background music"]
+        """Determine if audio should be generated based on prompt"""        audio_keywords = ["music", "sound", "audio", "soundtrack", "background music"]
         return any(keyword in prompt.lower() for keyword in audio_keywords)
     
     async def _add_generated_audio(self, video_path: str, prompt: str, duration: float) -> str:
-        """Add generated audio to video (placeholder implementation)"""
-        # This would integrate with audio generation services
+        """Add generated audio to video (placeholder implementation)"""        # This would integrate with audio generation services
         # For now, return the original video path
         logger.info(f"Audio generation requested for prompt: {prompt}")
         return video_path
     
     async def _copy_audio(self, source_video: str, target_video: str):
-        """Copy audio from source video to target video"""
-        try:
+        """Copy audio from source video to target video"""        try:
             temp_output = str(self.temp_dir / f"temp_with_audio_{uuid.uuid4()}.mp4")
             
             # Use ffmpeg to combine video with audio
@@ -738,8 +707,7 @@ class AIVideoGenerator:
             logger.warning(f"Failed to copy audio: {e}")
     
     async def _apply_basic_style(self, frames: List[np.ndarray], style_prompt: str) -> List[np.ndarray]:
-        """Apply basic style effects when advanced models are not available"""
-        styled_frames = []
+        """Apply basic style effects when advanced models are not available"""        styled_frames = []
         
         # Parse style from prompt
         style_effects = {
@@ -779,8 +747,7 @@ class AIVideoGenerator:
         return styled_frames
     
     async def _apply_sepia(self, frame: np.ndarray) -> np.ndarray:
-        """Apply sepia tone effect"""
-        sepia_filter = np.array([
+        """Apply sepia tone effect"""        sepia_filter = np.array([
             [0.272, 0.534, 0.131],
             [0.349, 0.686, 0.168],
             [0.393, 0.769, 0.189]
@@ -791,24 +758,20 @@ class AIVideoGenerator:
         return sepia_frame.astype(np.uint8)
     
     async def _apply_grayscale(self, frame: np.ndarray) -> np.ndarray:
-        """Convert frame to grayscale"""
-        gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+        """Convert frame to grayscale"""        gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
         return cv2.cvtColor(gray, cv2.COLOR_GRAY2RGB)
     
     async def _adjust_brightness(self, frame: np.ndarray, factor: float) -> np.ndarray:
-        """Adjust frame brightness"""
-        bright_frame = frame.astype(np.float32) * factor
+        """Adjust frame brightness"""        bright_frame = frame.astype(np.float32) * factor
         return np.clip(bright_frame, 0, 255).astype(np.uint8)
     
     async def _adjust_contrast(self, frame: np.ndarray, factor: float) -> np.ndarray:
-        """Adjust frame contrast"""
-        mean = np.mean(frame)
+        """Adjust frame contrast"""        mean = np.mean(frame)
         contrast_frame = (frame.astype(np.float32) - mean) * factor + mean
         return np.clip(contrast_frame, 0, 255).astype(np.uint8)
     
     async def cleanup(self):
-        """Cleanup temporary files and GPU memory"""
-        try:
+        """Cleanup temporary files and GPU memory"""        try:
             # Clear GPU memory
             if self.gpu_available:
                 torch.cuda.empty_cache()
@@ -825,13 +788,10 @@ class AIVideoGenerator:
 
 
 class VideoSynthesizer:
-    """
-    Advanced video synthesis system for combining multiple video sources.
-    """
-    
+    """    Advanced video synthesis system for combining multiple video sources.
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize VideoSynthesizer"""
-        self.config = config or {}
+        """Initialize VideoSynthesizer"""        self.config = config or {}
         self.temp_dir = Path(tempfile.gettempdir()) / "video_synthesizer" / str(uuid.uuid4())
         self.temp_dir.mkdir(parents=True, exist_ok=True)
         
@@ -840,8 +800,7 @@ class VideoSynthesizer:
     async def synthesize_videos(self, video_sources: List[Dict[str, Any]], 
                               layout: str = "grid",
                               output_path: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Synthesize multiple videos into a single composition.
+        """        Synthesize multiple videos into a single composition.
         
         Args:
             video_sources: List of video source configurations
@@ -850,8 +809,7 @@ class VideoSynthesizer:
             
         Returns:
             Synthesis result
-        """
-        if not video_sources:
+        """        if not video_sources:
             raise ValueError("At least one video source is required")
         
         if not output_path:
@@ -923,19 +881,16 @@ class VideoSynthesizer:
             raise
     
     async def _create_grid_layout(self, clips: List) -> Any:
-        """Create grid layout from multiple clips"""
-        # Implementation would depend on moviepy version and requirements
+        """Create grid layout from multiple clips"""        # Implementation would depend on moviepy version and requirements
         # This is a placeholder for the grid layout logic
         return clips[0]  # Simplified for now
     
     async def _create_overlay_layout(self, clips: List) -> Any:
-        """Create overlay layout from multiple clips"""
-        # Implementation for overlay composition
+        """Create overlay layout from multiple clips"""        # Implementation for overlay composition
         return clips[0]  # Simplified for now
     
     async def cleanup(self):
-        """Cleanup temporary files"""
-        try:
+        """Cleanup temporary files"""        try:
             if self.temp_dir.exists():
                 import shutil
                 shutil.rmtree(self.temp_dir)

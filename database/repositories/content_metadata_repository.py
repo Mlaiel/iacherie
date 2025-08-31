@@ -1,5 +1,4 @@
-"""
-Content Metadata Repository Module
+"""Content Metadata Repository Module
 
 Enterprise-grade repository for content metadata management with AI-powered
 extraction, validation, enrichment, and intelligent content discovery.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import and_, or_, func, desc, asc, text
@@ -47,14 +45,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 class ContentMetadataRepository(BaseRepository[ContentMetadata]):
-    """
-    Repository for content metadata operations with AI-powered extraction,
+    """    Repository for content metadata operations with AI-powered extraction,
     validation, enrichment, and intelligent content discovery capabilities.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize content metadata repository"""
-        super().__init__(db_session, ContentMetadata)
+        """Initialize content metadata repository"""        super().__init__(db_session, ContentMetadata)
         
     def create_metadata(self,
                        content_id: int,
@@ -66,8 +61,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
                        source: Optional[str] = None,
                        validation_rules: Optional[Dict[str, Any]] = None,
                        extraction_context: Optional[Dict[str, Any]] = None) -> ContentMetadata:
-        """
-        Create content metadata with AI extraction context and validation
+        """        Create content metadata with AI extraction context and validation
         
         Args:
             content_id: Associated content ID
@@ -82,8 +76,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
             
         Returns:
             Created ContentMetadata instance
-        """
-        try:
+        """        try:
             # Validate confidence score
             if not (0.0 <= confidence_score <= 1.0):
                 raise RepositoryException("Confidence score must be between 0.0 and 1.0")
@@ -133,16 +126,14 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
             raise RepositoryException(f"Metadata creation failed: {str(e)}")
             
     def _determine_confidence_level(self, confidence_score: float) -> ConfidenceLevel:
-        """
-        Determine confidence level from numerical score
+        """        Determine confidence level from numerical score
         
         Args:
             confidence_score: Numerical confidence score
             
         Returns:
             ConfidenceLevel enum value
-        """
-        if confidence_score >= 0.9:
+        """        if confidence_score >= 0.9:
             return ConfidenceLevel.VERY_HIGH
         elif confidence_score >= 0.8:
             return ConfidenceLevel.HIGH
@@ -157,8 +148,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
                                  metadata_value: Dict[str, Any],
                                  schema_version: MetadataSchema,
                                  validation_rules: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """
-        Validate metadata against schema and rules
+        """        Validate metadata against schema and rules
         
         Args:
             metadata_value: Metadata to validate
@@ -167,8 +157,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
             
         Returns:
             Validation result dictionary
-        """
-        try:
+        """        try:
             errors = []
             
             # Schema-specific validation
@@ -217,8 +206,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
                            metadata_type: Optional[MetadataType] = None,
                            min_confidence: Optional[float] = None,
                            status: Optional[MetadataStatus] = None) -> List[ContentMetadata]:
-        """
-        Get metadata for content with filtering options
+        """        Get metadata for content with filtering options
         
         Args:
             content_id: Content ID to get metadata for
@@ -228,8 +216,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
             
         Returns:
             List of ContentMetadata instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(ContentMetadata).filter(
                 ContentMetadata.content_id == content_id
             )
@@ -265,8 +252,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
                           metadata_type: Optional[MetadataType] = None,
                           min_confidence: float = 0.7,
                           limit: int = 50) -> List[Dict[str, Any]]:
-        """
-        Search content by metadata values with intelligent matching
+        """        Search content by metadata values with intelligent matching
         
         Args:
             search_criteria: Metadata search criteria
@@ -276,8 +262,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
             
         Returns:
             List of content with matching metadata
-        """
-        try:
+        """        try:
             # Build metadata search query
             query = self.db_session.query(
                 ContentMetadata, UserContent
@@ -367,8 +352,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
                        enrichment_data: Dict[str, Any],
                        enrichment_source: str,
                        confidence_boost: float = 0.0) -> Optional[ContentMetadata]:
-        """
-        Enrich existing metadata with additional information
+        """        Enrich existing metadata with additional information
         
         Args:
             metadata_id: Metadata ID to enrich
@@ -378,8 +362,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
             
         Returns:
             Updated ContentMetadata instance
-        """
-        try:
+        """        try:
             metadata = self.get_by_id(metadata_id)
             if not metadata:
                 return None
@@ -425,8 +408,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
     def get_metadata_statistics(self,
                               user_id: Optional[int] = None,
                               content_type: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get comprehensive metadata statistics and insights
+        """        Get comprehensive metadata statistics and insights
         
         Args:
             user_id: Optional user ID to filter statistics
@@ -434,8 +416,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
             
         Returns:
             Dictionary containing metadata statistics
-        """
-        try:
+        """        try:
             # Base query with content join for user filtering
             base_query = self.db_session.query(ContentMetadata).join(
                 UserContent,
@@ -543,16 +524,14 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
             return {'error': str(e)}
             
     def suggest_metadata_improvements(self, content_id: int) -> List[Dict[str, Any]]:
-        """
-        Suggest metadata improvements based on analysis
+        """        Suggest metadata improvements based on analysis
         
         Args:
             content_id: Content ID to analyze
             
         Returns:
             List of improvement suggestions
-        """
-        try:
+        """        try:
             metadata_entries = self.get_content_metadata(content_id)
             
             if not metadata_entries:
@@ -648,8 +627,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
                                   metadata_ids: List[int],
                                   new_status: MetadataStatus,
                                   reason: Optional[str] = None) -> int:
-        """
-        Bulk update metadata status for multiple entries
+        """        Bulk update metadata status for multiple entries
         
         Args:
             metadata_ids: List of metadata IDs to update
@@ -658,8 +636,7 @@ class ContentMetadataRepository(BaseRepository[ContentMetadata]):
             
         Returns:
             Number of updated metadata entries
-        """
-        try:
+        """        try:
             update_data = {
                 'status': new_status,
                 'updated_at': datetime.utcnow()

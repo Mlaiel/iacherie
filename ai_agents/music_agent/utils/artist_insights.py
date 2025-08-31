@@ -1,5 +1,4 @@
-"""
-Artist Insights - Advanced Artist Analytics and Intelligence Engine
+"""Artist Insights - Advanced Artist Analytics and Intelligence Engine
 ==================================================================
 
 Professional-grade artist insights system providing comprehensive analytics,
@@ -16,7 +15,6 @@ under German and International Copyright Law.
 
 Team: Lead Dev IA + Backend Senior + ML Engineer + Audio Specialist + DevOps Expert
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -49,8 +47,7 @@ settings = get_settings()
 
 
 class InsightType(Enum):
-    """Types of artist insights"""
-    PERFORMANCE = "performance"
+    """Types of artist insights"""    PERFORMANCE = "performance"
     AUDIENCE = "audience"
     MARKET = "market"
     CREATIVE = "creative"
@@ -61,8 +58,7 @@ class InsightType(Enum):
 
 
 class MetricTrend(Enum):
-    """Metric trend directions"""
-    GROWING = "growing"
+    """Metric trend directions"""    GROWING = "growing"
     DECLINING = "declining"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -70,8 +66,7 @@ class MetricTrend(Enum):
 
 
 class RecommendationPriority(Enum):
-    """Priority levels for recommendations"""
-    CRITICAL = "critical"
+    """Priority levels for recommendations"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -80,8 +75,7 @@ class RecommendationPriority(Enum):
 
 @dataclass
 class PerformanceMetrics:
-    """Artist performance metrics"""
-    # Streaming metrics
+    """Artist performance metrics"""    # Streaming metrics
     total_streams: int = 0
     monthly_streams: int = 0
     stream_growth_rate: float = 0.0
@@ -109,8 +103,7 @@ class PerformanceMetrics:
 
 @dataclass
 class AudienceInsights:
-    """Audience analysis insights"""
-    # Demographics
+    """Audience analysis insights"""    # Demographics
     age_distribution: Dict[str, float] = field(default_factory=dict)
     gender_distribution: Dict[str, float] = field(default_factory=dict)
     geographic_distribution: Dict[str, float] = field(default_factory=dict)
@@ -133,8 +126,7 @@ class AudienceInsights:
 
 @dataclass
 class MarketPosition:
-    """Market positioning analysis"""
-    # Competitive position
+    """Market positioning analysis"""    # Competitive position
     market_rank: Optional[int] = None
     genre_rank: Optional[int] = None
     regional_rank: Optional[int] = None
@@ -153,8 +145,7 @@ class MarketPosition:
 
 @dataclass
 class CreativeAnalysis:
-    """Creative output analysis"""
-    # Musical characteristics
+    """Creative output analysis"""    # Musical characteristics
     signature_sound: Dict[str, float] = field(default_factory=dict)
     style_evolution: List[Dict[str, Any]] = field(default_factory=list)
     creative_consistency: float = 0.0
@@ -172,8 +163,7 @@ class CreativeAnalysis:
 
 @dataclass
 class FinancialInsights:
-    """Financial performance insights"""
-    # Revenue streams
+    """Financial performance insights"""    # Revenue streams
     streaming_revenue: float = 0.0
     performance_revenue: float = 0.0
     merchandise_revenue: float = 0.0
@@ -193,8 +183,7 @@ class FinancialInsights:
 
 @dataclass
 class ArtistRecommendation:
-    """Artist recommendation with priority and impact"""
-    recommendation_id: str
+    """Artist recommendation with priority and impact"""    recommendation_id: str
     title: str
     description: str
     category: InsightType
@@ -217,8 +206,7 @@ class ArtistRecommendation:
 
 @dataclass
 class ComprehensiveInsights:
-    """Complete artist insights report"""
-    artist_id: str
+    """Complete artist insights report"""    artist_id: str
     analysis_period: Tuple[datetime, datetime]
     
     # Core metrics
@@ -244,16 +232,13 @@ class ComprehensiveInsights:
 
 
 class ArtistInsights:
-    """
-    Advanced artist insights engine for comprehensive performance analytics.
+    """    Advanced artist insights engine for comprehensive performance analytics.
     
     Provides deep insights into artist performance, audience behavior, market position,
     and strategic recommendations for growth and optimization.
     """
-
     def __init__(self):
-        """Initialize artist insights engine"""
-        self.spotify_agent = SpotifyAgent()
+        """Initialize artist insights engine"""        self.spotify_agent = SpotifyAgent()
         self.analytics_agent = AnalyticsAgent()
         self.performance_analyzer = PerformanceAnalyzer()
         self.audience_analyzer = AudienceAnalyzer()
@@ -271,8 +256,7 @@ class ArtistInsights:
         period_days: int = 90,
         include_forecasts: bool = True
     ) -> ComprehensiveInsights:
-        """
-        Generate comprehensive artist insights report.
+        """        Generate comprehensive artist insights report.
         
         Args:
             artist_id: Unique artist identifier
@@ -281,8 +265,7 @@ class ArtistInsights:
             
         Returns:
             Complete insights report
-        """
-        try:
+        """        try:
             # Define analysis period
             end_date = datetime.now()
             start_date = end_date - timedelta(days=period_days)
@@ -360,8 +343,7 @@ class ArtistInsights:
         metrics: List[str],
         period_days: int = 30
     ) -> Dict[str, Dict[str, Any]]:
-        """Get specific performance trend analysis"""
-        try:
+        """Get specific performance trend analysis"""        try:
             end_date = datetime.now()
             start_date = end_date - timedelta(days=period_days)
             
@@ -394,8 +376,7 @@ class ArtistInsights:
         artist_id: str,
         segmentation_type: str = "behavior"
     ) -> Dict[str, Any]:
-        """Get detailed audience segmentation analysis"""
-        try:
+        """Get detailed audience segmentation analysis"""        try:
             # Get audience data
             audience_data = await self.audience_analyzer.get_audience_data(artist_id)
             
@@ -424,8 +405,7 @@ class ArtistInsights:
         artist_id: str,
         competitor_ids: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Generate competitive analysis report"""
-        try:
+        """Generate competitive analysis report"""        try:
             # Get or identify competitors
             if not competitor_ids:
                 competitor_ids = await self._identify_competitors(artist_id)
@@ -473,8 +453,7 @@ class ArtistInsights:
         artist_id: str,
         max_recommendations: int = 10
     ) -> List[Dict[str, Any]]:
-        """Get AI-powered collaboration recommendations"""
-        try:
+        """Get AI-powered collaboration recommendations"""        try:
             # Get artist profile
             artist_profile = await self._get_artist_profile(artist_id)
             
@@ -518,8 +497,7 @@ class ArtistInsights:
         artist_id: str,
         track_metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Get release timing and strategy optimization"""
-        try:
+        """Get release timing and strategy optimization"""        try:
             # Get historical performance data
             historical_data = await self._get_historical_release_data(artist_id)
             
@@ -557,8 +535,7 @@ class ArtistInsights:
         artist_id: str, 
         analysis_period: Tuple[datetime, datetime]
     ) -> PerformanceMetrics:
-        """Analyze artist performance metrics"""
-        try:
+        """Analyze artist performance metrics"""        try:
             # Get streaming data from Spotify agent
             streaming_data = await self.spotify_agent.get_streaming_analytics(
                 artist_id, analysis_period[0], analysis_period[1]
@@ -600,8 +577,7 @@ class ArtistInsights:
         artist_id: str, 
         analysis_period: Tuple[datetime, datetime]
     ) -> AudienceInsights:
-        """Analyze audience insights and behavior"""
-        try:
+        """Analyze audience insights and behavior"""        try:
             # Get audience data
             audience_data = await self.audience_analyzer.get_detailed_audience_analysis(
                 artist_id, analysis_period[0], analysis_period[1]
@@ -638,8 +614,7 @@ class ArtistInsights:
         artist_id: str, 
         analysis_period: Tuple[datetime, datetime]
     ) -> MarketPosition:
-        """Analyze market position and competitive landscape"""
-        try:
+        """Analyze market position and competitive landscape"""        try:
             # Get market data
             market_data = await self.market_analyzer.get_market_position(
                 artist_id, analysis_period[0], analysis_period[1]
@@ -671,8 +646,7 @@ class ArtistInsights:
         artist_id: str, 
         analysis_period: Tuple[datetime, datetime]
     ) -> CreativeAnalysis:
-        """Analyze creative output and artistic development"""
-        try:
+        """Analyze creative output and artistic development"""        try:
             # Get creative data
             creative_data = await self._get_creative_analysis_data(
                 artist_id, analysis_period
@@ -699,8 +673,7 @@ class ArtistInsights:
         artist_id: str, 
         analysis_period: Tuple[datetime, datetime]
     ) -> FinancialInsights:
-        """Analyze financial performance and revenue streams"""
-        try:
+        """Analyze financial performance and revenue streams"""        try:
             # Get financial data (would integrate with payment/analytics systems)
             financial_data = await self._get_financial_data(artist_id, analysis_period)
             
@@ -727,8 +700,7 @@ class ArtistInsights:
             return FinancialInsights()
 
     async def _analyze_key_trends(self, insights: ComprehensiveInsights) -> Dict[str, MetricTrend]:
-        """Analyze key performance trends"""
-        trends = {}
+        """Analyze key performance trends"""        trends = {}
         
         try:
             # Stream trend
@@ -764,8 +736,7 @@ class ArtistInsights:
         self, 
         insights: ComprehensiveInsights
     ) -> Dict[str, float]:
-        """Generate growth forecasts based on current trends"""
-        forecasts = {}
+        """Generate growth forecasts based on current trends"""        forecasts = {}
         
         try:
             # Simple linear projection (would use more sophisticated ML models in production)
@@ -794,8 +765,7 @@ class ArtistInsights:
         return forecasts
 
     async def _assess_risks(self, insights: ComprehensiveInsights) -> Dict[str, float]:
-        """Assess various business risks"""
-        risks = {}
+        """Assess various business risks"""        risks = {}
         
         try:
             # Performance risk
@@ -834,8 +804,7 @@ class ArtistInsights:
         self, 
         insights: ComprehensiveInsights
     ) -> List[ArtistRecommendation]:
-        """Generate strategic recommendations based on insights"""
-        recommendations = []
+        """Generate strategic recommendations based on insights"""        recommendations = []
         
         try:
             # Performance recommendations
@@ -910,8 +879,7 @@ class ArtistInsights:
         return recommendations
 
     def _calculate_confidence_score(self, insights: ComprehensiveInsights) -> float:
-        """Calculate confidence score for insights"""
-        confidence_factors = []
+        """Calculate confidence score for insights"""        confidence_factors = []
         
         # Data availability factors
         if insights.performance_metrics.total_streams > 0:
@@ -932,8 +900,7 @@ class ArtistInsights:
         return np.mean(confidence_factors) if confidence_factors else 0.5
 
     def _calculate_data_completeness(self, insights: ComprehensiveInsights) -> float:
-        """Calculate data completeness score"""
-        total_fields = 0
+        """Calculate data completeness score"""        total_fields = 0
         populated_fields = 0
         
         # Check performance metrics
@@ -959,8 +926,7 @@ class ArtistInsights:
     # Additional helper methods for specific analysis components
 
     def _calculate_trend_direction(self, data: List[float]) -> str:
-        """Calculate trend direction from time series data"""
-        if len(data) < 2:
+        """Calculate trend direction from time series data"""        if len(data) < 2:
             return "stable"
         
         # Simple linear regression slope
@@ -976,8 +942,7 @@ class ArtistInsights:
             return "stable"
 
     def _calculate_growth_rate(self, data: List[float]) -> float:
-        """Calculate growth rate from time series data"""
-        if len(data) < 2:
+        """Calculate growth rate from time series data"""        if len(data) < 2:
             return 0.0
         
         start_value = data[0]
@@ -989,15 +954,13 @@ class ArtistInsights:
         return (end_value - start_value) / start_value
 
     def _calculate_volatility(self, data: List[float]) -> float:
-        """Calculate volatility (standard deviation) of data"""
-        if len(data) < 2:
+        """Calculate volatility (standard deviation) of data"""        if len(data) < 2:
             return 0.0
         
         return float(np.std(data))
 
     def _detect_seasonal_pattern(self, data: List[float]) -> Dict[str, float]:
-        """Detect seasonal patterns in data"""
-        # Simplified seasonal analysis
+        """Detect seasonal patterns in data"""        # Simplified seasonal analysis
         if len(data) < 12:  # Need at least a year of data
             return {}
         
@@ -1017,8 +980,7 @@ class ArtistInsights:
         return seasonal_pattern
 
     async def get_insights_summary(self, insights: ComprehensiveInsights) -> Dict[str, Any]:
-        """Get concise summary of insights"""
-        return {
+        """Get concise summary of insights"""        return {
             'artist_id': insights.artist_id,
             'analysis_period': f"{insights.analysis_period[0].date()} to {insights.analysis_period[1].date()}",
             'key_metrics': {
@@ -1037,16 +999,14 @@ class ArtistInsights:
         }
 
     def clear_cache(self):
-        """Clear insights cache"""
-        self._insights_cache.clear()
+        """Clear insights cache"""        self._insights_cache.clear()
         self._trend_cache.clear()
         logger.info("Insights cache cleared")
 
     # Placeholder methods for external integrations (would be implemented based on actual APIs)
     
     async def _get_basic_metrics(self, artist_id: str) -> Dict[str, Any]:
-        """Get basic metrics for an artist"""
-        # Placeholder - would integrate with actual data sources
+        """Get basic metrics for an artist"""        # Placeholder - would integrate with actual data sources
         return {
             'streams': np.random.randint(10000, 1000000),
             'followers': np.random.randint(1000, 100000),
@@ -1054,13 +1014,11 @@ class ArtistInsights:
         }
 
     async def _identify_competitors(self, artist_id: str) -> List[str]:
-        """Identify competitor artists"""
-        # Placeholder - would use ML to find similar artists
+        """Identify competitor artists"""        # Placeholder - would use ML to find similar artists
         return [f"competitor_{i}" for i in range(3)]
 
     async def _get_artist_profile(self, artist_id: str) -> Dict[str, Any]:
-        """Get comprehensive artist profile"""
-        # Placeholder
+        """Get comprehensive artist profile"""        # Placeholder
         return {
             'artist_id': artist_id,
             'genres': ['pop', 'electronic'],
@@ -1072,8 +1030,7 @@ class ArtistInsights:
         artist_profile: Dict[str, Any], 
         max_results: int
     ) -> List[Dict[str, Any]]:
-        """Find potential collaboration partners"""
-        # Placeholder
+        """Find potential collaboration partners"""        # Placeholder
         return [
             {
                 'artist_id': f'collab_{i}',
@@ -1090,8 +1047,7 @@ class ArtistInsights:
         artist_profile: Dict[str, Any], 
         collaborator: Dict[str, Any]
     ) -> float:
-        """Calculate collaboration compatibility score"""
-        # Simplified scoring
+        """Calculate collaboration compatibility score"""        # Simplified scoring
         score = 0.0
         score += collaborator.get('audience_overlap', 0.0) * 0.3
         score += collaborator.get('style_compatibility', 0.0) * 0.4
@@ -1106,8 +1062,7 @@ class ArtistInsights:
         collaborator: Dict[str, Any], 
         score: float
     ) -> str:
-        """Generate rationale for collaboration recommendation"""
-        if score > 0.7:
+        """Generate rationale for collaboration recommendation"""        if score > 0.7:
             return "High compatibility across multiple dimensions"
         elif score > 0.5:
             return "Good potential with complementary strengths"

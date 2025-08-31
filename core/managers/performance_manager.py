@@ -1,5 +1,4 @@
-"""
-Performance Manager - IA-Influencer-Agent
+"""Performance Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/performance_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Monitoring continu → Analyse performance → Détection anomalies → 
 Optimisation automatique → Scaling intelligent → Alertes proactives → Rapports performance
 """
-
 from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
 import logging
 import asyncio
@@ -40,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types de métriques de performance"""
-    # System metrics
+    """Types de métriques de performance"""    # System metrics
     CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     DISK_USAGE = "disk_usage"
@@ -75,16 +72,14 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Niveaux de sévérité des alertes"""
-    INFO = "info"
+    """Niveaux de sévérité des alertes"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class OptimizationAction(Enum):
-    """Actions d'optimisation automatique"""
-    SCALE_UP = "scale_up"
+    """Actions d'optimisation automatique"""    SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     CACHE_OPTIMIZATION = "cache_optimization"
     QUERY_OPTIMIZATION = "query_optimization"
@@ -95,8 +90,7 @@ class OptimizationAction(Enum):
 
 
 class PerformanceStatus(Enum):
-    """Statuts de performance"""
-    EXCELLENT = "excellent"
+    """Statuts de performance"""    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -105,8 +99,7 @@ class PerformanceStatus(Enum):
 
 @dataclass
 class PerformanceConfig:
-    """Configuration du gestionnaire de performance"""
-    # Monitoring settings
+    """Configuration du gestionnaire de performance"""    # Monitoring settings
     monitoring_interval_seconds: int = 30
     metric_retention_hours: int = 168  # 7 days
     detailed_monitoring: bool = True
@@ -149,8 +142,7 @@ class PerformanceConfig:
 
 @dataclass
 class MetricDataPoint:
-    """Point de données de métrique"""
-    metric_type: MetricType
+    """Point de données de métrique"""    metric_type: MetricType
     value: float
     timestamp: datetime
     
@@ -169,8 +161,7 @@ class MetricDataPoint:
 
 @dataclass
 class PerformanceAlert:
-    """Alerte de performance"""
-    id: str
+    """Alerte de performance"""    id: str
     alert_type: str
     severity: AlertSeverity
     metric_type: MetricType
@@ -208,8 +199,7 @@ class PerformanceAlert:
 
 @dataclass
 class OptimizationAction:
-    """Action d'optimisation"""
-    id: str
+    """Action d'optimisation"""    id: str
     action_type: OptimizationAction
     target_component: str
     
@@ -240,8 +230,7 @@ class OptimizationAction:
 
 @dataclass
 class PerformanceReport:
-    """Rapport de performance"""
-    id: str
+    """Rapport de performance"""    id: str
     report_type: str
     period_start: datetime
     period_end: datetime
@@ -289,8 +278,7 @@ class PerformanceReport:
 
 @dataclass
 class SystemHealthCheck:
-    """Vérification de santé du système"""
-    id: str
+    """Vérification de santé du système"""    id: str
     component_name: str
     
     # Health status
@@ -327,8 +315,7 @@ class SystemHealthCheck:
 
 
 class PerformanceManager(ABC):
-    """
-    📊 Advanced Performance Manager - IA-Influencer-Agent
+    """    📊 Advanced Performance Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel pour monitoring performance et optimisation système
@@ -354,8 +341,7 @@ class PerformanceManager(ABC):
     - Health checks automatisés
     - Recovery automatique pannes
     - Tuning performance continu
-    """
-    
+    """    
     def __init__(self, config: PerformanceConfig = None):
         self.config = config or PerformanceConfig()
         
@@ -417,55 +403,47 @@ class PerformanceManager(ABC):
     
     @abstractmethod
     async def initialize_monitoring(self) -> bool:
-        """
-        Initialize performance monitoring system
+        """        Initialize performance monitoring system
         
         Returns:
             bool: True if initialization successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def collect_system_metrics(self) -> Dict[MetricType, MetricDataPoint]:
-        """
-        Collect current system performance metrics
+        """        Collect current system performance metrics
         
         Returns:
             Dict[MetricType, MetricDataPoint]: Current system metrics
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def execute_optimization_action(
         self,
         action: OptimizationAction
     ) -> bool:
-        """
-        Execute performance optimization action
+        """        Execute performance optimization action
         
         Args:
             action: Optimization action to execute
             
         Returns:
             bool: True if action executed successfully
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def perform_health_check(
         self,
         component_name: str
     ) -> SystemHealthCheck:
-        """
-        Perform health check on system component
+        """        Perform health check on system component
         
         Args:
             component_name: Component to check
             
         Returns:
             SystemHealthCheck: Health check results
-        """
-        pass
+        """        pass
     
     async def record_metric(
         self,
@@ -474,16 +452,14 @@ class PerformanceManager(ABC):
         tags: Dict[str, str] = None,
         metadata: Dict[str, Any] = None
     ) -> None:
-        """
-        Record performance metric
+        """        Record performance metric
         
         Args:
             metric_type: Type of metric
             value: Metric value
             tags: Optional metric tags
             metadata: Optional metric metadata
-        """
-        try:
+        """        try:
             # Create metric data point
             metric_point = MetricDataPoint(
                 metric_type=metric_type,
@@ -519,8 +495,7 @@ class PerformanceManager(ABC):
         condition: str = "greater_than",
         duration_minutes: int = 5
     ) -> str:
-        """
-        Create performance alert rule
+        """        Create performance alert rule
         
         Args:
             metric_type: Metric to monitor
@@ -531,8 +506,7 @@ class PerformanceManager(ABC):
             
         Returns:
             str: Alert rule ID
-        """
-        try:
+        """        try:
             rule_id = str(uuid.uuid4())
             
             alert_rule = {
@@ -560,16 +534,14 @@ class PerformanceManager(ABC):
         self,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive performance dashboard data
+        """        Get comprehensive performance dashboard data
         
         Args:
             time_range: Optional time range filter
             
         Returns:
             Dict: Complete dashboard data
-        """
-        try:
+        """        try:
             # Default to last 24 hours
             if not time_range:
                 end_time = datetime.utcnow()
@@ -725,16 +697,14 @@ class PerformanceManager(ABC):
         self,
         target_metrics: Dict[MetricType, float] = None
     ) -> Dict[str, Any]:
-        """
-        Perform automatic performance optimization
+        """        Perform automatic performance optimization
         
         Args:
             target_metrics: Optional target values for metrics
             
         Returns:
             Dict: Optimization results
-        """
-        try:
+        """        try:
             targets = target_metrics or {
                 MetricType.CPU_USAGE: self.config.target_cpu_usage_percent,
                 MetricType.MEMORY_USAGE: self.config.target_memory_usage_percent,
@@ -791,8 +761,7 @@ class PerformanceManager(ABC):
             raise
     
     async def _evaluate_alert_rules(self, metric_point: MetricDataPoint) -> None:
-        """Evaluate alert rules for metric"""
-        metric_type = metric_point.metric_type
+        """Evaluate alert rules for metric"""        metric_type = metric_point.metric_type
         
         for rule in self._alert_rules.get(metric_type, []):
             if not rule.get("active", True):
@@ -828,16 +797,14 @@ class PerformanceManager(ABC):
                 await self._queue_alert(alert)
     
     async def _queue_alert(self, alert: PerformanceAlert) -> None:
-        """Queue alert for processing"""
-        with self._lock:
+        """Queue alert for processing"""        with self._lock:
             self._alerts[alert.id] = alert
             self._metrics_summary["active_alerts"] += 1
         
         await self._alert_queue.put(alert)
     
     async def _update_performance_baselines(self, metric_type: MetricType, value: float) -> None:
-        """Update performance baselines"""
-        with self._lock:
+        """Update performance baselines"""        with self._lock:
             if metric_type not in self._performance_baselines:
                 self._performance_baselines[metric_type] = value
             else:
@@ -847,23 +814,20 @@ class PerformanceManager(ABC):
                 self._performance_baselines[metric_type] = alpha * value + (1 - alpha) * current_baseline
     
     def _calculate_overall_health_score(self) -> float:
-        """Calculate overall system health score"""
-        if not self._health_checks:
+        """Calculate overall system health score"""        if not self._health_checks:
             return 100.0
         
         total_score = sum(check.health_score for check in self._health_checks.values())
         return total_score / len(self._health_checks)
     
     def _calculate_system_uptime(self) -> float:
-        """Calculate system uptime in hours"""
-        try:
+        """Calculate system uptime in hours"""        try:
             return time.time() - psutil.boot_time()
         except:
             return 0.0
     
     def _get_metric_status(self, metric_type: MetricType, value: float) -> str:
-        """Get status for metric value"""
-        # Define status thresholds based on metric type
+        """Get status for metric value"""        # Define status thresholds based on metric type
         if metric_type in [MetricType.CPU_USAGE, MetricType.MEMORY_USAGE]:
             if value < 70:
                 return "good"
@@ -882,8 +846,7 @@ class PerformanceManager(ABC):
             return "unknown"
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend from values"""
-        if len(values) < 2:
+        """Calculate trend from values"""        if len(values) < 2:
             return "stable"
         
         # Simple trend calculation
@@ -900,16 +863,14 @@ class PerformanceManager(ABC):
             return "stable"
     
     def _calculate_resource_utilization(self) -> Dict[str, float]:
-        """Calculate current resource utilization"""
-        return {
+        """Calculate current resource utilization"""        return {
             "cpu": self._current_metrics.get(MetricType.CPU_USAGE, MetricDataPoint(MetricType.CPU_USAGE, 0.0, datetime.utcnow())).value,
             "memory": self._current_metrics.get(MetricType.MEMORY_USAGE, MetricDataPoint(MetricType.MEMORY_USAGE, 0.0, datetime.utcnow())).value,
             "disk": self._current_metrics.get(MetricType.DISK_USAGE, MetricDataPoint(MetricType.DISK_USAGE, 0.0, datetime.utcnow())).value,
         }
     
     def _analyze_performance_trends(self, time_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Analyze performance trends"""
-        # Simplified trend analysis
+        """Analyze performance trends"""        # Simplified trend analysis
         return {
             "cpu_trend": "stable",
             "memory_trend": "stable",
@@ -918,15 +879,13 @@ class PerformanceManager(ABC):
         }
     
     def _count_optimization_types(self, optimizations: List[OptimizationAction]) -> Dict[str, int]:
-        """Count optimization types"""
-        counts = defaultdict(int)
+        """Count optimization types"""        counts = defaultdict(int)
         for opt in optimizations:
             counts[opt.action_type.value] += 1
         return dict(counts)
     
     def _calculate_average_optimization_impact(self, optimizations: List[OptimizationAction]) -> Dict[str, float]:
-        """Calculate average optimization impact"""
-        # Simplified impact calculation
+        """Calculate average optimization impact"""        # Simplified impact calculation
         return {
             "cpu_improvement": 5.0,
             "memory_improvement": 3.0,
@@ -934,8 +893,7 @@ class PerformanceManager(ABC):
         }
     
     async def _generate_capacity_forecast(self) -> Dict[str, Any]:
-        """Generate capacity forecast"""
-        # Simplified capacity forecasting
+        """Generate capacity forecast"""        # Simplified capacity forecasting
         return {
             "cpu_forecast_30_days": 75.0,
             "memory_forecast_30_days": 80.0,
@@ -948,22 +906,19 @@ class PerformanceManager(ABC):
         }
     
     def _count_alerts_by_severity(self, alerts: List[PerformanceAlert]) -> Dict[str, int]:
-        """Count alerts by severity"""
-        counts = defaultdict(int)
+        """Count alerts by severity"""        counts = defaultdict(int)
         for alert in alerts:
             counts[alert.severity.value] += 1
         return dict(counts)
     
     def _count_alerts_by_component(self, alerts: List[PerformanceAlert]) -> Dict[str, int]:
-        """Count alerts by component"""
-        counts = defaultdict(int)
+        """Count alerts by component"""        counts = defaultdict(int)
         for alert in alerts:
             counts[alert.affected_component] += 1
         return dict(counts)
     
     async def _analyze_performance_gaps(self, targets: Dict[MetricType, float]) -> Dict[MetricType, float]:
-        """Analyze performance gaps vs targets"""
-        gaps = {}
+        """Analyze performance gaps vs targets"""        gaps = {}
         
         with self._lock:
             for metric_type, target_value in targets.items():
@@ -976,8 +931,7 @@ class PerformanceManager(ABC):
         return gaps
     
     async def _generate_optimization_actions(self, performance_gaps: Dict[MetricType, float]) -> List[OptimizationAction]:
-        """Generate optimization actions based on performance gaps"""
-        actions = []
+        """Generate optimization actions based on performance gaps"""        actions = []
         
         for metric_type, gap in performance_gaps.items():
             if metric_type == MetricType.CPU_USAGE and gap > 0:
@@ -1004,8 +958,7 @@ class PerformanceManager(ABC):
     
     @asynccontextmanager
     async def get_performance_session(self, component_name: str):
-        """Context manager for performance monitoring operations"""
-        session_id = str(uuid.uuid4())
+        """Context manager for performance monitoring operations"""        session_id = str(uuid.uuid4())
         try:
             logger.info(f"📊 Performance session started: {session_id} for {component_name}")
             yield session_id
@@ -1013,8 +966,7 @@ class PerformanceManager(ABC):
             logger.info(f"📊 Performance session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup performance monitoring resources"""
-        try:
+        """Cleanup performance monitoring resources"""        try:
             # Stop monitoring
             self._monitoring_active = False
             
@@ -1068,8 +1020,7 @@ class PerformanceManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get performance system statistics"""
-        with self._lock:
+        """Get performance system statistics"""        with self._lock:
             return {
                 "metrics_tracked": len(self._metrics),
                 "total_data_points": sum(len(deque) for deque in self._metrics.values()),
@@ -1104,13 +1055,11 @@ performance_manager = None
 
 
 def get_performance_manager() -> PerformanceManager:
-    """
-    Get the global performance manager instance
+    """    Get the global performance manager instance
     
     Returns:
         PerformanceManager: Global performance manager
-    """
-    global performance_manager
+    """    global performance_manager
     if performance_manager is None:
         from ..implementations.performance_manager_impl import PerformanceManagerImpl
         performance_manager = PerformanceManagerImpl()

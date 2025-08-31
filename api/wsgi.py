@@ -1,8 +1,6 @@
-"""
-WSGI application entry point (e.g., for Gunicorn/uWSGI or AWS Lambda via Mangum).
+"""WSGI application entry point (e.g., for Gunicorn/uWSGI or AWS Lambda via Mangum).
 English-only comments and professional naming.
 """
-
 import os
 import sentry_sdk
 from fastapi import FastAPI

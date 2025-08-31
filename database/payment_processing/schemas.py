@@ -1,5 +1,4 @@
-"""
-Payment Processing Database Schemas
+"""Payment Processing Database Schemas
 
 Advanced Pydantic schemas for payment processing data validation,
 serialization, and API documentation.
@@ -13,7 +12,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from pydantic import BaseModel, Field, validator, root_validator
 from typing import Optional, List, Dict, Any, Union
 from decimal import Decimal
@@ -27,8 +25,7 @@ from .models import PaymentStatus, PaymentMethodType, BillingFrequency, Currency
 
 
 class PaymentStatusEnum(str, Enum):
-    """Payment status enumeration for API"""
-    PENDING = "pending"
+    """Payment status enumeration for API"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -39,8 +36,7 @@ class PaymentStatusEnum(str, Enum):
 
 
 class PaymentMethodTypeEnum(str, Enum):
-    """Payment method type enumeration for API"""
-    CREDIT_CARD = "credit_card"
+    """Payment method type enumeration for API"""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
@@ -52,8 +48,7 @@ class PaymentMethodTypeEnum(str, Enum):
 
 
 class CurrencyEnum(str, Enum):
-    """Currency enumeration for API"""
-    USD = "USD"
+    """Currency enumeration for API"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -66,8 +61,7 @@ class CurrencyEnum(str, Enum):
 
 # Base schemas
 class BasePaymentSchema(BaseModel):
-    """Base schema for payment-related models"""
-    
+    """Base schema for payment-related models"""    
     class Config:
         orm_mode = True
         allow_population_by_field_name = True
@@ -79,8 +73,7 @@ class BasePaymentSchema(BaseModel):
 
 
 class AddressSchema(BasePaymentSchema):
-    """Address schema for billing and shipping"""
-    line1: str = Field(..., min_length=1, max_length=255)
+    """Address schema for billing and shipping"""    line1: str = Field(..., min_length=1, max_length=255)
     line2: Optional[str] = Field(None, max_length=255)
     city: str = Field(..., min_length=1, max_length=100)
     state: Optional[str] = Field(None, max_length=100)
@@ -96,8 +89,7 @@ class AddressSchema(BasePaymentSchema):
 
 # Payment Transaction Schemas
 class PaymentTransactionCreateSchema(BasePaymentSchema):
-    """Schema for creating payment transactions"""
-    user_id: int = Field(..., gt=0)
+    """Schema for creating payment transactions"""    user_id: int = Field(..., gt=0)
     payment_method_id: Optional[uuid.UUID] = None
     transaction_type: str = Field(..., min_length=1, max_length=50)
     amount: Decimal = Field(..., gt=0, decimal_places=2)
@@ -115,8 +107,7 @@ class PaymentTransactionCreateSchema(BasePaymentSchema):
 
 
 class PaymentTransactionUpdateSchema(BasePaymentSchema):
-    """Schema for updating payment transactions"""
-    status: Optional[PaymentStatusEnum] = None
+    """Schema for updating payment transactions"""    status: Optional[PaymentStatusEnum] = None
     external_transaction_id: Optional[str] = Field(None, max_length=255)
     processor_response: Optional[Dict[str, Any]] = None
     processed_at: Optional[datetime] = None
@@ -124,8 +115,7 @@ class PaymentTransactionUpdateSchema(BasePaymentSchema):
 
 
 class PaymentTransactionResponseSchema(BasePaymentSchema):
-    """Schema for payment transaction responses"""
-    id: uuid.UUID
+    """Schema for payment transaction responses"""    id: uuid.UUID
     user_id: int
     payment_method_id: Optional[uuid.UUID]
     transaction_type: str
@@ -146,8 +136,7 @@ class PaymentTransactionResponseSchema(BasePaymentSchema):
 
 # Payment Method Schemas
 class PaymentMethodCreateSchema(BasePaymentSchema):
-    """Schema for creating payment methods"""
-    user_id: int = Field(..., gt=0)
+    """Schema for creating payment methods"""    user_id: int = Field(..., gt=0)
     method_type: PaymentMethodTypeEnum
     provider: str = Field(..., min_length=1, max_length=50)
     external_id: Optional[str] = Field(None, max_length=255)
@@ -178,8 +167,7 @@ class PaymentMethodCreateSchema(BasePaymentSchema):
 
 
 class PaymentMethodResponseSchema(BasePaymentSchema):
-    """Schema for payment method responses"""
-    id: uuid.UUID
+    """Schema for payment method responses"""    id: uuid.UUID
     user_id: int
     method_type: str
     provider: str
@@ -200,8 +188,7 @@ class PaymentMethodResponseSchema(BasePaymentSchema):
 
 # Billing Record Schemas
 class BillingRecordCreateSchema(BasePaymentSchema):
-    """Schema for creating billing records"""
-    user_id: int = Field(..., gt=0)
+    """Schema for creating billing records"""    user_id: int = Field(..., gt=0)
     subscription_type: str = Field(..., min_length=1, max_length=100)
     billing_frequency: BillingFrequency
     amount: Decimal = Field(..., gt=0, decimal_places=2)
@@ -220,8 +207,7 @@ class BillingRecordCreateSchema(BasePaymentSchema):
 
 
 class BillingRecordResponseSchema(BasePaymentSchema):
-    """Schema for billing record responses"""
-    id: uuid.UUID
+    """Schema for billing record responses"""    id: uuid.UUID
     user_id: int
     subscription_type: str
     billing_frequency: str
@@ -241,8 +227,7 @@ class BillingRecordResponseSchema(BasePaymentSchema):
 
 # Financial Record Schemas
 class FinancialRecordCreateSchema(BasePaymentSchema):
-    """Schema for creating financial records"""
-    user_id: int = Field(..., gt=0)
+    """Schema for creating financial records"""    user_id: int = Field(..., gt=0)
     record_type: str = Field(..., min_length=1, max_length=50)
     category: str = Field(..., min_length=1, max_length=100)
     subcategory: Optional[str] = Field(None, max_length=100)
@@ -262,8 +247,7 @@ class FinancialRecordCreateSchema(BasePaymentSchema):
 
 
 class FinancialRecordResponseSchema(BasePaymentSchema):
-    """Schema for financial record responses"""
-    id: uuid.UUID
+    """Schema for financial record responses"""    id: uuid.UUID
     user_id: int
     record_type: str
     category: str
@@ -286,8 +270,7 @@ class FinancialRecordResponseSchema(BasePaymentSchema):
 
 # Automated Payout Schemas
 class AutomatedPayoutCreateSchema(BasePaymentSchema):
-    """Schema for creating automated payouts"""
-    user_id: int = Field(..., gt=0)
+    """Schema for creating automated payouts"""    user_id: int = Field(..., gt=0)
     payment_method_id: uuid.UUID
     payout_frequency: str = Field(..., min_length=1, max_length=20)
     minimum_amount: Decimal = Field(..., gt=0, decimal_places=2)
@@ -314,8 +297,7 @@ class AutomatedPayoutCreateSchema(BasePaymentSchema):
 
 
 class AutomatedPayoutResponseSchema(BasePaymentSchema):
-    """Schema for automated payout responses"""
-    id: uuid.UUID
+    """Schema for automated payout responses"""    id: uuid.UUID
     user_id: int
     payment_method_id: uuid.UUID
     payout_frequency: str
@@ -343,8 +325,7 @@ class AutomatedPayoutResponseSchema(BasePaymentSchema):
 
 # Analytics and Reporting Schemas
 class RevenueAnalyticsSchema(BasePaymentSchema):
-    """Schema for revenue analytics"""
-    total_revenue: Decimal
+    """Schema for revenue analytics"""    total_revenue: Decimal
     transaction_count: int
     average_transaction: Decimal
     period_start: datetime
@@ -353,23 +334,20 @@ class RevenueAnalyticsSchema(BasePaymentSchema):
 
 
 class RevenueTrendSchema(BasePaymentSchema):
-    """Schema for revenue trend data"""
-    date: str
+    """Schema for revenue trend data"""    date: str
     revenue: Decimal
     transactions: int
 
 
 class PlatformRevenueSchema(BasePaymentSchema):
-    """Schema for platform revenue breakdown"""
-    platform: str
+    """Schema for platform revenue breakdown"""    platform: str
     revenue: Decimal
     transactions: int
     percentage: Optional[float] = None
 
 
 class FinancialSummarySchema(BasePaymentSchema):
-    """Schema for financial summary"""
-    period: str
+    """Schema for financial summary"""    period: str
     total_amount: Decimal
     record_count: int
     categories: List[Dict[str, Any]]
@@ -377,8 +355,7 @@ class FinancialSummarySchema(BasePaymentSchema):
 
 # Query and Filter Schemas
 class PaymentTransactionFilterSchema(BasePaymentSchema):
-    """Schema for filtering payment transactions"""
-    user_id: Optional[int] = None
+    """Schema for filtering payment transactions"""    user_id: Optional[int] = None
     status: Optional[PaymentStatusEnum] = None
     transaction_type: Optional[str] = None
     currency: Optional[CurrencyEnum] = None
@@ -392,8 +369,7 @@ class PaymentTransactionFilterSchema(BasePaymentSchema):
 
 
 class PaymentMethodFilterSchema(BasePaymentSchema):
-    """Schema for filtering payment methods"""
-    user_id: Optional[int] = None
+    """Schema for filtering payment methods"""    user_id: Optional[int] = None
     method_type: Optional[PaymentMethodTypeEnum] = None
     provider: Optional[str] = None
     is_active: Optional[bool] = None
@@ -401,8 +377,7 @@ class PaymentMethodFilterSchema(BasePaymentSchema):
 
 
 class AnalyticsQuerySchema(BasePaymentSchema):
-    """Schema for analytics queries"""
-    user_id: int = Field(..., gt=0)
+    """Schema for analytics queries"""    user_id: int = Field(..., gt=0)
     start_date: datetime
     end_date: datetime
     currency: Optional[CurrencyEnum] = None
@@ -418,35 +393,30 @@ class AnalyticsQuerySchema(BasePaymentSchema):
 
 # Bulk Operation Schemas
 class BulkPaymentTransactionSchema(BasePaymentSchema):
-    """Schema for bulk payment transaction operations"""
-    transactions: List[PaymentTransactionCreateSchema] = Field(..., min_items=1, max_items=100)
+    """Schema for bulk payment transaction operations"""    transactions: List[PaymentTransactionCreateSchema] = Field(..., min_items=1, max_items=100)
 
 
 class BulkPayoutSchema(BasePaymentSchema):
-    """Schema for bulk payout operations"""
-    payouts: List[AutomatedPayoutCreateSchema] = Field(..., min_items=1, max_items=50)
+    """Schema for bulk payout operations"""    payouts: List[AutomatedPayoutCreateSchema] = Field(..., min_items=1, max_items=50)
 
 
 # Error and Response Schemas
 class PaymentErrorSchema(BasePaymentSchema):
-    """Schema for payment processing errors"""
-    error_code: str
+    """Schema for payment processing errors"""    error_code: str
     error_message: str
     error_details: Optional[Dict[str, Any]] = None
     retry_after: Optional[int] = None
 
 
 class PaymentSuccessSchema(BasePaymentSchema):
-    """Schema for successful payment responses"""
-    success: bool = True
+    """Schema for successful payment responses"""    success: bool = True
     message: str
     data: Optional[Dict[str, Any]] = None
 
 
 # Configuration Schemas
 class PaymentConfigurationSchema(BasePaymentSchema):
-    """Schema for payment configuration"""
-    default_currency: CurrencyEnum = CurrencyEnum.EUR
+    """Schema for payment configuration"""    default_currency: CurrencyEnum = CurrencyEnum.EUR
     supported_payment_methods: List[PaymentMethodTypeEnum]
     minimum_payout_amount: Decimal = Field(Decimal('50.00'), gt=0)
     payout_frequencies: List[str] = ["weekly", "monthly", "quarterly"]

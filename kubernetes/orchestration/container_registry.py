@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Container Registry Management
+"""IA Influencer Agent - Container Registry Management
 Enterprise container image management and security scanning
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +11,6 @@ Features:
 - Registry mirroring and replication
 - Access control and authentication
 """
-
 import asyncio
 import logging
 import json
@@ -32,10 +30,8 @@ from .base_manager import BaseDeploymentManager
 
 # Mock classes for standalone operation
 class VulnerabilityScanner:
-    """Mock vulnerability scanner."""
-    def __init__(self):
-        """Initialize vulnerability scanner with security databases"""
-        self.logger = logging.getLogger(f"{__name__}.VulnerabilityScanner")
+    """Mock vulnerability scanner."""    def __init__(self):
+        """Initialize vulnerability scanner with security databases"""        self.logger = logging.getLogger(f"{__name__}.VulnerabilityScanner")
         self.vulnerability_databases = ['CVE', 'NVD', 'OSV', 'GitHub_Advisory']
         self.scan_engines = ['trivy', 'clair', 'snyk', 'aqua']
         self.severity_levels = ['low', 'medium', 'high', 'critical']
@@ -44,14 +40,11 @@ class VulnerabilityScanner:
         self.logger.info("VulnerabilityScanner initialized with security databases")
     
     async def scan_image(self, image_id: str, name: str, tag: str):
-        """Mock scan returning empty vulnerabilities."""
-        return []
+        """Mock scan returning empty vulnerabilities."""        return []
 
 class MetricsCollector:
-    """Mock metrics collector."""
-    def __init__(self):
-        """Initialize metrics collector with monitoring endpoints"""
-        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
+    """Mock metrics collector."""    def __init__(self):
+        """Initialize metrics collector with monitoring endpoints"""        self.logger = logging.getLogger(f"{__name__}.MetricsCollector")
         self.metrics_endpoints = ['prometheus', 'grafana', 'datadog', 'newrelic']
         self.collection_interval = 60  # seconds
         self.metric_types = ['counter', 'gauge', 'histogram', 'summary']
@@ -65,8 +58,7 @@ class MetricsCollector:
 
 
 class RegistryType(Enum):
-    """Container registry types."""
-    DOCKER_HUB = "docker_hub"
+    """Container registry types."""    DOCKER_HUB = "docker_hub"
     AWS_ECR = "aws_ecr"
     GCP_GCR = "gcp_gcr"
     AZURE_ACR = "azure_acr"
@@ -76,8 +68,7 @@ class RegistryType(Enum):
 
 
 class ImageStatus(Enum):
-    """Container image status."""
-    BUILDING = "building"
+    """Container image status."""    BUILDING = "building"
     BUILT = "built"
     SCANNING = "scanning"
     SCANNED = "scanned"
@@ -87,8 +78,7 @@ class ImageStatus(Enum):
 
 
 class ScanSeverity(Enum):
-    """Vulnerability scan severity levels."""
-    CRITICAL = "critical"
+    """Vulnerability scan severity levels."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -97,8 +87,7 @@ class ScanSeverity(Enum):
 
 @dataclass
 class RegistryConfig:
-    """Container registry configuration."""
-    name: str
+    """Container registry configuration."""    name: str
     registry_type: RegistryType
     url: str
     username: str
@@ -110,8 +99,7 @@ class RegistryConfig:
 
 @dataclass
 class ImageConfig:
-    """Container image configuration."""
-    name: str
+    """Container image configuration."""    name: str
     tag: str
     dockerfile_path: str
     build_context: str
@@ -124,8 +112,7 @@ class ImageConfig:
 
 @dataclass
 class ScanResult:
-    """Security scan result."""
-    image_id: str
+    """Security scan result."""    image_id: str
     scan_id: str
     timestamp: datetime
     vulnerabilities: List[Dict[str, Any]]
@@ -137,8 +124,7 @@ class ScanResult:
 
 @dataclass
 class ImageInfo:
-    """Container image information."""
-    name: str
+    """Container image information."""    name: str
     tag: str
     digest: str
     size_bytes: int
@@ -150,13 +136,11 @@ class ImageInfo:
 
 
 class ContainerRegistryManager(BaseDeploymentManager):
-    """
-    Enterprise container registry management.
+    """    Enterprise container registry management.
     
     Manages container images across multiple registries with security
     scanning, lifecycle management, and automated compliance checks.
     """
-
     def __init__(
         self,
         vulnerability_scanner: Optional[VulnerabilityScanner] = None,
@@ -198,16 +182,14 @@ class ContainerRegistryManager(BaseDeploymentManager):
         )
 
     async def register_registry(self, config: RegistryConfig) -> bool:
-        """
-        Register container registry.
+        """        Register container registry.
         
         Args:
             config: Registry configuration
             
         Returns:
             True if registration successful, False otherwise
-        """
-        try:
+        """        try:
             # Validate registry configuration
             if not self._validate_registry_config(config):
                 return False
@@ -234,8 +216,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return False
 
     def _validate_registry_config(self, config: RegistryConfig) -> bool:
-        """Validate registry configuration."""
-        if not config.name or not config.url:
+        """Validate registry configuration."""        if not config.name or not config.url:
             self.logger.error("Registry name and URL are required")
             return False
         
@@ -246,8 +227,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
         return True
 
     async def _test_registry_connection(self, config: RegistryConfig) -> bool:
-        """Test registry connection."""
-        try:
+        """Test registry connection."""        try:
             # Implementation would test actual registry connection
             self.logger.info(f"Testing connection to registry '{config.name}'")
             await asyncio.sleep(0.5)  # Simulate connection test
@@ -258,8 +238,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return False
 
     def _create_docker_client(self, config: RegistryConfig) -> Optional[docker.DockerClient]:
-        """Create Docker client for registry."""
-        try:
+        """Create Docker client for registry."""        try:
             # Create Docker client with registry configuration
             client = docker.from_env()
             
@@ -277,16 +256,14 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return None
 
     async def build_image(self, config: ImageConfig) -> Optional[str]:
-        """
-        Build container image.
+        """        Build container image.
         
         Args:
             config: Image configuration
             
         Returns:
             Image ID if build successful, None otherwise
-        """
-        try:
+        """        try:
             # Validate build configuration
             if not self._validate_image_config(config):
                 return None
@@ -362,8 +339,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return None
 
     def _validate_image_config(self, config: ImageConfig) -> bool:
-        """Validate image configuration."""
-        if not config.name or not config.tag:
+        """Validate image configuration."""        if not config.name or not config.tag:
             self.logger.error("Image name and tag are required")
             return False
         
@@ -374,16 +350,14 @@ class ContainerRegistryManager(BaseDeploymentManager):
         return True
 
     async def scan_image(self, image_key: str) -> Optional[ScanResult]:
-        """
-        Scan image for security vulnerabilities.
+        """        Scan image for security vulnerabilities.
         
         Args:
             image_key: Image identifier
             
         Returns:
             Scan result or None if scan failed
-        """
-        try:
+        """        try:
             if image_key not in self.images:
                 self.logger.error(f"Image '{image_key}' not found")
                 return None
@@ -445,8 +419,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return None
 
     def _check_compliance(self, severity_counts: Dict[ScanSeverity, int]) -> bool:
-        """Check if image meets security compliance requirements."""
-        if severity_counts[ScanSeverity.CRITICAL] > self.security_policies["max_critical_vulnerabilities"]:
+        """Check if image meets security compliance requirements."""        if severity_counts[ScanSeverity.CRITICAL] > self.security_policies["max_critical_vulnerabilities"]:
             return False
         
         if severity_counts[ScanSeverity.HIGH] > self.security_policies["max_high_vulnerabilities"]:
@@ -455,8 +428,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
         return True
 
     async def push_image(self, image_key: str, force: bool = False) -> bool:
-        """
-        Push image to registry.
+        """        Push image to registry.
         
         Args:
             image_key: Image identifier
@@ -464,8 +436,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             
         Returns:
             True if push successful, False otherwise
-        """
-        try:
+        """        try:
             if image_key not in self.images:
                 self.logger.error(f"Image '{image_key}' not found")
                 return False
@@ -510,8 +481,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return False
 
     async def pull_image(self, image_key: str, registry_name: str) -> bool:
-        """
-        Pull image from registry.
+        """        Pull image from registry.
         
         Args:
             image_key: Image identifier
@@ -519,8 +489,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             
         Returns:
             True if pull successful, False otherwise
-        """
-        try:
+        """        try:
             if registry_name not in self.registries:
                 self.logger.error(f"Registry '{registry_name}' not found")
                 return False
@@ -554,8 +523,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return False
 
     async def delete_image(self, image_key: str, force: bool = False) -> bool:
-        """
-        Delete image from registry and local storage.
+        """        Delete image from registry and local storage.
         
         Args:
             image_key: Image identifier
@@ -563,8 +531,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             
         Returns:
             True if deletion successful, False otherwise
-        """
-        try:
+        """        try:
             if image_key not in self.images:
                 self.logger.error(f"Image '{image_key}' not found")
                 return False
@@ -599,8 +566,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return False
 
     async def _check_image_in_use(self, image_key: str) -> bool:
-        """Check if image is currently in use by running containers."""
-        try:
+        """Check if image is currently in use by running containers."""        try:
             # This would check Kubernetes deployments, running containers, etc.
             # For now, we'll simulate the check
             await asyncio.sleep(0.1)
@@ -611,16 +577,14 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return False
 
     async def list_images(self, registry_name: Optional[str] = None) -> List[ImageInfo]:
-        """
-        List container images.
+        """        List container images.
         
         Args:
             registry_name: Optional filter by registry
             
         Returns:
             List of image information
-        """
-        images = list(self.images.values())
+        """        images = list(self.images.values())
         
         if registry_name:
             images = [img for img in images if img.metadata.get("registry") == registry_name]
@@ -628,16 +592,14 @@ class ContainerRegistryManager(BaseDeploymentManager):
         return images
 
     async def cleanup_old_images(self, retention_days: Optional[int] = None) -> int:
-        """
-        Cleanup old and unused images.
+        """        Cleanup old and unused images.
         
         Args:
             retention_days: Number of days to retain images (uses policy default if None)
             
         Returns:
             Number of images cleaned up
-        """
-        try:
+        """        try:
             retention_days = retention_days or self.security_policies["retention_days"]
             cutoff_date = datetime.now() - timedelta(days=retention_days)
             
@@ -674,8 +636,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return 0
 
     async def mirror_image(self, source_image: str, target_registry: str, target_tag: Optional[str] = None) -> bool:
-        """
-        Mirror image between registries.
+        """        Mirror image between registries.
         
         Args:
             source_image: Source image identifier
@@ -684,8 +645,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             
         Returns:
             True if mirroring successful, False otherwise
-        """
-        try:
+        """        try:
             if target_registry not in self.registries:
                 self.logger.error(f"Target registry '{target_registry}' not found")
                 return False
@@ -727,23 +687,20 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return False
 
     def _detect_source_registry(self, image: str) -> Optional[str]:
-        """Detect source registry from image name."""
-        for registry_name, config in self.registries.items():
+        """Detect source registry from image name."""        for registry_name, config in self.registries.items():
             if image.startswith(config.url):
                 return registry_name
         return None
 
     async def generate_image_report(self, registry_name: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive image security and usage report.
+        """        Generate comprehensive image security and usage report.
         
         Args:
             registry_name: Optional filter by registry
             
         Returns:
             Report data
-        """
-        try:
+        """        try:
             images = await self.list_images(registry_name)
             
             # Calculate statistics
@@ -794,8 +751,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return {}
 
     async def process_scan_queue(self) -> None:
-        """Process pending image scans."""
-        while self.scan_queue:
+        """Process pending image scans."""        while self.scan_queue:
             image_key = self.scan_queue.pop(0)
             scan_result = await self.scan_image(image_key)
             
@@ -808,8 +764,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             await asyncio.sleep(1)
 
     async def set_security_policy(self, policy_name: str, value: Any) -> bool:
-        """
-        Update security policy.
+        """        Update security policy.
         
         Args:
             policy_name: Policy name
@@ -817,8 +772,7 @@ class ContainerRegistryManager(BaseDeploymentManager):
             
         Returns:
             True if policy updated successfully, False otherwise
-        """
-        try:
+        """        try:
             if policy_name in self.security_policies:
                 self.security_policies[policy_name] = value
                 self.logger.info(f"Security policy '{policy_name}' updated to: {value}")
@@ -832,13 +786,11 @@ class ContainerRegistryManager(BaseDeploymentManager):
             return False
 
     async def cleanup(self) -> bool:
-        """
-        Cleanup container registry manager.
+        """        Cleanup container registry manager.
         
         Returns:
             True if cleanup successful, False otherwise
-        """
-        try:
+        """        try:
             # Close Docker clients
             for client in self.docker_clients.values():
                 client.close()

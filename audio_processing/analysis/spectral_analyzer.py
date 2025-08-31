@@ -1,5 +1,4 @@
-"""
-🔍 Spectral Analyzer - Advanced Frequency Domain Audio Analysis
+"""🔍 Spectral Analyzer - Advanced Frequency Domain Audio Analysis
 
 Professional spectral analysis engine providing comprehensive frequency domain
 analysis, spectral feature extraction, and advanced signal processing capabilities.
@@ -7,7 +6,6 @@ analysis, spectral feature extraction, and advanced signal processing capabiliti
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Any
@@ -21,8 +19,7 @@ from scipy.fft import fft, fftfreq
 
 
 class WindowType(Enum):
-    """Audio window types for spectral analysis"""
-    HANN = "hann"
+    """Audio window types for spectral analysis"""    HANN = "hann"
     HAMMING = "hamming"
     BLACKMAN = "blackman"
     KAISER = "kaiser"
@@ -30,8 +27,7 @@ class WindowType(Enum):
 
 
 class SpectralFeatureType(Enum):
-    """Types of spectral features to extract"""
-    CENTROID = "spectral_centroid"
+    """Types of spectral features to extract"""    CENTROID = "spectral_centroid"
     ROLLOFF = "spectral_rolloff"
     BANDWIDTH = "spectral_bandwidth"
     CONTRAST = "spectral_contrast"
@@ -42,8 +38,7 @@ class SpectralFeatureType(Enum):
 
 @dataclass
 class SpectralAnalysisResult:
-    """Complete spectral analysis results"""
-    sample_rate: int
+    """Complete spectral analysis results"""    sample_rate: int
     duration: float
     frequency_bins: np.ndarray
     magnitude_spectrum: np.ndarray
@@ -63,21 +58,18 @@ class SpectralAnalysisResult:
 
 
 class SpectralAnalyzer:
-    """
-    🎼 Professional Spectral Analysis Engine
+    """    🎼 Professional Spectral Analysis Engine
     
     Advanced frequency domain analysis with comprehensive spectral feature
     extraction, peak detection, harmonic analysis, and noise characterization.
-    """
-    
+    """    
     def __init__(self, 
                  sample_rate: int = 44100,
                  frame_size: int = 2048,
                  hop_length: int = 512,
                  window_type: WindowType = WindowType.HANN,
                  n_fft: Optional[int] = None):
-        """
-        Initialize spectral analyzer with advanced configuration
+        """        Initialize spectral analyzer with advanced configuration
         
         Args:
             sample_rate: Audio sample rate
@@ -85,8 +77,7 @@ class SpectralAnalyzer:
             hop_length: Hop length between frames
             window_type: Window function type
             n_fft: FFT size (defaults to frame_size)
-        """
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """        self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.frame_size = frame_size
         self.hop_length = hop_length
@@ -117,8 +108,7 @@ class SpectralAnalyzer:
         self.logger.info(f"SpectralAnalyzer initialized: {sample_rate}Hz, frame_size={frame_size}")
     
     def _create_window(self) -> np.ndarray:
-        """Create analysis window function"""
-        if self.window_type == WindowType.HANN:
+        """Create analysis window function"""        if self.window_type == WindowType.HANN:
             return np.hanning(self.frame_size)
         elif self.window_type == WindowType.HAMMING:
             return np.hamming(self.frame_size)
@@ -134,8 +124,7 @@ class SpectralAnalyzer:
     async def analyze_spectrum(self, 
                              audio_data: np.ndarray,
                              normalize: bool = True) -> SpectralAnalysisResult:
-        """
-        Perform comprehensive spectral analysis
+        """        Perform comprehensive spectral analysis
         
         Args:
             audio_data: Input audio signal
@@ -143,8 +132,7 @@ class SpectralAnalyzer:
             
         Returns:
             Complete spectral analysis results
-        """
-        try:
+        """        try:
             start_time = asyncio.get_event_loop().time()
             
             if normalize:
@@ -198,8 +186,7 @@ class SpectralAnalyzer:
             raise
     
     async def _compute_fft_analysis(self, audio_data: np.ndarray) -> Tuple[np.ndarray, np.ndarray, np.ndarray]:
-        """Compute FFT-based spectral analysis"""
-        def compute_fft():
+        """Compute FFT-based spectral analysis"""        def compute_fft():
             # Apply window
             windowed_audio = audio_data[:self.frame_size] * self.window if len(audio_data) >= self.frame_size else audio_data
             
@@ -218,8 +205,7 @@ class SpectralAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute_fft)
     
     async def _extract_spectral_features(self, audio_data: np.ndarray) -> Dict[str, np.ndarray]:
-        """Extract comprehensive spectral features"""
-        def extract_features():
+        """Extract comprehensive spectral features"""        def extract_features():
             features = {}
             
             # Spectral centroid
@@ -259,8 +245,7 @@ class SpectralAnalyzer:
                           frequency_bins: np.ndarray,
                           min_height_ratio: float = 0.1,
                           max_peaks: int = 20) -> List[Tuple[float, float]]:
-        """Detect spectral peaks"""
-        def detect_peaks():
+        """Detect spectral peaks"""        def detect_peaks():
             # Find peaks
             threshold = np.max(magnitude_spectrum) * min_height_ratio
             peak_indices, _ = scipy.signal.find_peaks(magnitude_spectrum, height=threshold)
@@ -286,8 +271,7 @@ class SpectralAnalyzer:
     async def _compute_energy_distribution(self, 
                                          power_spectrum: np.ndarray, 
                                          frequency_bins: np.ndarray) -> Dict[str, float]:
-        """Compute energy distribution across frequency bands"""
-        def compute_energy():
+        """Compute energy distribution across frequency bands"""        def compute_energy():
             total_energy = np.sum(power_spectrum)
             energy_distribution = {}
             
@@ -304,8 +288,7 @@ class SpectralAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute_energy)
     
     async def _analyze_harmonics(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Analyze harmonic content"""
-        def analyze():
+        """Analyze harmonic content"""        def analyze():
             harmonic_analysis = {}
             
             try:
@@ -351,8 +334,7 @@ class SpectralAnalyzer:
     
     async def _compute_noise_characteristics(self, 
                                            magnitude_spectrum: np.ndarray) -> Tuple[float, float]:
-        """Compute noise floor and dynamic range"""
-        def compute_noise():
+        """Compute noise floor and dynamic range"""        def compute_noise():
             # Noise floor estimation (10th percentile)
             noise_floor = np.percentile(magnitude_spectrum, 10)
             
@@ -365,11 +347,9 @@ class SpectralAnalyzer:
         return await asyncio.get_event_loop().run_in_executor(self.executor, compute_noise)
     
     def analyze_real_time_frame(self, frame: np.ndarray) -> Dict[str, float]:
-        """
-        Real-time spectral analysis for single frame
+        """        Real-time spectral analysis for single frame
         Optimized for low-latency processing
-        """
-        try:
+        """        try:
             # Apply window
             windowed_frame = frame * self.window[:len(frame)]
             
@@ -410,8 +390,7 @@ class SpectralAnalyzer:
     def get_frequency_band_analysis(self, 
                                   power_spectrum: np.ndarray, 
                                   frequency_bins: np.ndarray) -> Dict[str, Dict[str, float]]:
-        """Get detailed analysis for each frequency band"""
-        band_analysis = {}
+        """Get detailed analysis for each frequency band"""        band_analysis = {}
         
         for band_name, (low_freq, high_freq) in self.frequency_bands.items():
             band_mask = (frequency_bins >= low_freq) & (frequency_bins <= high_freq)
@@ -435,6 +414,5 @@ class SpectralAnalyzer:
         return band_analysis
     
     def __del__(self):
-        """Cleanup thread pool"""
-        if hasattr(self, 'executor'):
+        """Cleanup thread pool"""        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=False)

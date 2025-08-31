@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Messaging Deployment Orchestrator
+"""IA Influencer Agent - Messaging Deployment Orchestrator
 Main orchestration module for enterprise messaging infrastructure deployment
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
-
 import asyncio
 import json
 import logging
@@ -39,8 +37,7 @@ settings = get_settings()
 
 
 class MessagingInfrastructureConfig(BaseModel):
-    """Configuration for complete messaging infrastructure"""
-    deployment_name: str = Field(default="ia-influencer-messaging", description="Deployment name")
+    """Configuration for complete messaging infrastructure"""    deployment_name: str = Field(default="ia-influencer-messaging", description="Deployment name")
     deploy_kafka: bool = Field(default=True, description="Deploy Kafka cluster")
     deploy_rabbitmq: bool = Field(default=True, description="Deploy RabbitMQ cluster")
     deploy_celery: bool = Field(default=True, description="Deploy Celery workers")
@@ -61,11 +58,9 @@ class MessagingInfrastructureConfig(BaseModel):
 
 
 class MessagingDeploymentOrchestrator:
-    """
-    Enterprise messaging infrastructure deployment orchestrator
+    """    Enterprise messaging infrastructure deployment orchestrator
     Manages complete lifecycle of multi-protocol messaging systems
     """
-
     def __init__(self, config: Optional[MessagingInfrastructureConfig] = None):
         self.config = config or self._get_default_config()
         self.health_checker = HealthChecker()
@@ -82,8 +77,7 @@ class MessagingDeploymentOrchestrator:
         self.monitoring_tasks: List[asyncio.Task] = []
 
     def _get_default_config(self) -> MessagingInfrastructureConfig:
-        """Get default infrastructure configuration"""
-        return MessagingInfrastructureConfig(
+        """Get default infrastructure configuration"""        return MessagingInfrastructureConfig(
             deployment_name="ia-influencer-messaging",
             deploy_kafka=True,
             deploy_rabbitmq=True,
@@ -96,8 +90,7 @@ class MessagingDeploymentOrchestrator:
         )
 
     async def deploy_infrastructure(self) -> Dict[str, Union[str, bool, Dict]]:
-        """Deploy complete messaging infrastructure"""
-        try:
+        """Deploy complete messaging infrastructure"""        try:
             logger.info("Starting messaging infrastructure deployment")
             self.deployment_timestamp = time.time()
             
@@ -159,8 +152,7 @@ class MessagingDeploymentOrchestrator:
             raise
 
     async def _deploy_kafka_cluster(self) -> Dict[str, Union[str, bool, int]]:
-        """Deploy Kafka cluster"""
-        try:
+        """Deploy Kafka cluster"""        try:
             logger.info("Deploying Kafka cluster")
             
             # Use custom config or generate based on cluster size
@@ -177,8 +169,7 @@ class MessagingDeploymentOrchestrator:
             return {"status": "failed", "error": str(e)}
 
     async def _deploy_rabbitmq_cluster(self) -> Dict[str, Union[str, bool, int]]:
-        """Deploy RabbitMQ cluster"""
-        try:
+        """Deploy RabbitMQ cluster"""        try:
             logger.info("Deploying RabbitMQ cluster")
             
             # Use custom config or generate based on cluster size
@@ -195,8 +186,7 @@ class MessagingDeploymentOrchestrator:
             return {"status": "failed", "error": str(e)}
 
     async def _deploy_celery_cluster(self) -> Dict[str, Union[str, bool, int]]:
-        """Deploy Celery workers"""
-        try:
+        """Deploy Celery workers"""        try:
             logger.info("Deploying Celery workers")
             
             # Use custom config or generate based on cluster size
@@ -213,8 +203,7 @@ class MessagingDeploymentOrchestrator:
             return {"status": "failed", "error": str(e)}
 
     def _generate_kafka_config(self) -> KafkaClusterConfig:
-        """Generate Kafka configuration based on cluster size"""
-        cluster_configs = {
+        """Generate Kafka configuration based on cluster size"""        cluster_configs = {
             "small": {
                 "brokers": 1,
                 "zookeepers": 1,
@@ -274,8 +263,7 @@ class MessagingDeploymentOrchestrator:
         )
 
     def _generate_rabbitmq_config(self) -> RabbitMQClusterConfig:
-        """Generate RabbitMQ configuration based on cluster size"""
-        cluster_configs = {
+        """Generate RabbitMQ configuration based on cluster size"""        cluster_configs = {
             "small": {"nodes": 1, "memory": "2GB"},
             "medium": {"nodes": 3, "memory": "4GB"},
             "large": {"nodes": 5, "memory": "6GB"},
@@ -305,8 +293,7 @@ class MessagingDeploymentOrchestrator:
         )
 
     def _generate_celery_config(self) -> CeleryClusterConfig:
-        """Generate Celery configuration based on cluster size and performance profile"""
-        cluster_configs = {
+        """Generate Celery configuration based on cluster size and performance profile"""        cluster_configs = {
             "small": {"workers": 3, "concurrency": 4},
             "medium": {"workers": 5, "concurrency": 8},
             "large": {"workers": 8, "concurrency": 12},
@@ -382,8 +369,7 @@ class MessagingDeploymentOrchestrator:
         )
 
     async def _initialize_message_router(self) -> None:
-        """Initialize message router with deployed components"""
-        try:
+        """Initialize message router with deployed components"""        try:
             await self.message_router.initialize_protocols(
                 kafka_manager=self.kafka_manager,
                 rabbitmq_manager=self.rabbitmq_manager,
@@ -397,8 +383,7 @@ class MessagingDeploymentOrchestrator:
             raise
 
     async def _setup_monitoring(self) -> None:
-        """Setup comprehensive monitoring for all components"""
-        try:
+        """Setup comprehensive monitoring for all components"""        try:
             # Start infrastructure monitoring
             monitor_task = asyncio.create_task(self._monitor_infrastructure())
             self.monitoring_tasks.append(monitor_task)
@@ -418,8 +403,7 @@ class MessagingDeploymentOrchestrator:
             raise
 
     async def _setup_backup_systems(self) -> None:
-        """Setup backup and disaster recovery systems"""
-        try:
+        """Setup backup and disaster recovery systems"""        try:
             # Create backup directories
             backup_dir = Path("/app/backups/messaging")
             backup_dir.mkdir(parents=True, exist_ok=True)
@@ -435,8 +419,7 @@ class MessagingDeploymentOrchestrator:
             raise
 
     async def _monitor_infrastructure(self) -> None:
-        """Monitor infrastructure components"""
-        while True:
+        """Monitor infrastructure components"""        while True:
             try:
                 # Monitor each component
                 if self.kafka_manager:
@@ -461,8 +444,7 @@ class MessagingDeploymentOrchestrator:
                 await asyncio.sleep(60)
 
     async def _monitor_performance(self) -> None:
-        """Monitor performance metrics"""
-        while True:
+        """Monitor performance metrics"""        while True:
             try:
                 performance_metrics = await self.get_performance_metrics()
                 
@@ -480,8 +462,7 @@ class MessagingDeploymentOrchestrator:
                 await asyncio.sleep(120)
 
     async def _monitor_health(self) -> None:
-        """Monitor overall health"""
-        while True:
+        """Monitor overall health"""        while True:
             try:
                 health_status = await self.health_check()
                 
@@ -495,8 +476,7 @@ class MessagingDeploymentOrchestrator:
                 await asyncio.sleep(90)
 
     async def _run_periodic_backups(self) -> None:
-        """Run periodic backups"""
-        while True:
+        """Run periodic backups"""        while True:
             try:
                 # Run backup every 6 hours
                 await asyncio.sleep(21600)
@@ -518,8 +498,7 @@ class MessagingDeploymentOrchestrator:
                           priority: MessagePriority = MessagePriority.MEDIUM,
                           destination: Optional[str] = None,
                           routing_key: Optional[str] = None) -> bool:
-        """Send message through the routing system"""
-        try:
+        """Send message through the routing system"""        try:
             if not self.message_router:
                 raise ValueError("Message router not initialized")
             
@@ -540,8 +519,7 @@ class MessagingDeploymentOrchestrator:
             return False
 
     async def get_infrastructure_status(self) -> Dict[str, Union[str, int, Dict]]:
-        """Get comprehensive infrastructure status"""
-        try:
+        """Get comprehensive infrastructure status"""        try:
             status = {
                 "overall_status": self.deployment_status.get("overall_status", "unknown"),
                 "deployment_timestamp": self.deployment_timestamp,
@@ -583,8 +561,7 @@ class MessagingDeploymentOrchestrator:
             return {"overall_status": "error", "error": str(e)}
 
     async def get_performance_metrics(self) -> Dict[str, Union[int, float]]:
-        """Get performance metrics from all components"""
-        try:
+        """Get performance metrics from all components"""        try:
             metrics = {
                 "timestamp": time.time(),
                 "message_throughput": 0,
@@ -631,8 +608,7 @@ class MessagingDeploymentOrchestrator:
             return {"error": str(e)}
 
     async def health_check(self) -> Dict[str, Union[str, bool, List[Dict]]]:
-        """Perform comprehensive health check"""
-        try:
+        """Perform comprehensive health check"""        try:
             health_checks = []
             overall_healthy = True
             
@@ -678,8 +654,7 @@ class MessagingDeploymentOrchestrator:
             return {"overall_status": "error", "error": str(e)}
 
     async def scale_infrastructure(self, component: str, scale_factor: float) -> Dict[str, Union[str, bool]]:
-        """Scale infrastructure components"""
-        try:
+        """Scale infrastructure components"""        try:
             if component == "kafka" and self.kafka_manager:
                 # Kafka scaling would be implemented here
                 logger.info(f"Scaling Kafka cluster by factor {scale_factor}")
@@ -706,8 +681,7 @@ class MessagingDeploymentOrchestrator:
             return {"status": "error", "error": str(e)}
 
     async def create_backup(self) -> Dict[str, Union[str, bool]]:
-        """Create backup of messaging infrastructure"""
-        try:
+        """Create backup of messaging infrastructure"""        try:
             backup_timestamp = int(time.time())
             backup_dir = Path(f"/app/backups/messaging/{backup_timestamp}")
             backup_dir.mkdir(parents=True, exist_ok=True)
@@ -750,8 +724,7 @@ class MessagingDeploymentOrchestrator:
             return {"status": "error", "error": str(e)}
 
     async def restore_from_backup(self, backup_file: str) -> Dict[str, Union[str, bool]]:
-        """Restore infrastructure from backup"""
-        try:
+        """Restore infrastructure from backup"""        try:
             logger.info(f"Restoring from backup: {backup_file}")
             
             with open(backup_file, 'r') as f:
@@ -781,8 +754,7 @@ class MessagingDeploymentOrchestrator:
             return {"status": "error", "error": str(e)}
 
     async def shutdown_infrastructure(self) -> Dict[str, Union[str, bool]]:
-        """Gracefully shutdown messaging infrastructure"""
-        try:
+        """Gracefully shutdown messaging infrastructure"""        try:
             logger.info("Starting infrastructure shutdown")
             
             shutdown_results = {}
@@ -819,8 +791,7 @@ class MessagingDeploymentOrchestrator:
             return {"status": "error", "error": str(e)}
 
     def export_deployment_config(self) -> Dict:
-        """Export current deployment configuration"""
-        return {
+        """Export current deployment configuration"""        return {
             "infrastructure_config": self.config.dict(),
             "deployment_status": self.deployment_status,
             "deployment_timestamp": self.deployment_timestamp,
@@ -830,40 +801,34 @@ class MessagingDeploymentOrchestrator:
 
 # Factory functions for creating component managers
 async def create_kafka_manager(config: Optional[KafkaClusterConfig] = None) -> KafkaManager:
-    """Create and deploy Kafka manager"""
-    manager = KafkaManager(config)
+    """Create and deploy Kafka manager"""    manager = KafkaManager(config)
     await manager.deploy_cluster()
     return manager
 
 
 async def create_rabbitmq_manager(config: Optional[RabbitMQClusterConfig] = None) -> RabbitMQManager:
-    """Create and deploy RabbitMQ manager"""
-    manager = RabbitMQManager(config)
+    """Create and deploy RabbitMQ manager"""    manager = RabbitMQManager(config)
     await manager.deploy_cluster()
     return manager
 
 
 async def create_celery_manager(config: Optional[CeleryClusterConfig] = None) -> CeleryManager:
-    """Create and deploy Celery manager"""
-    manager = CeleryManager(config)
+    """Create and deploy Celery manager"""    manager = CeleryManager(config)
     await manager.deploy_cluster()
     return manager
 
 
 async def create_message_router() -> MessageRouter:
-    """Create and initialize message router"""
-    router = MessageRouter()
+    """Create and initialize message router"""    router = MessageRouter()
     return router
 
 
 async def create_messaging_orchestrator(config: Optional[MessagingInfrastructureConfig] = None) -> MessagingDeploymentOrchestrator:
-    """Create messaging deployment orchestrator"""
-    return MessagingDeploymentOrchestrator(config)
+    """Create messaging deployment orchestrator"""    return MessagingDeploymentOrchestrator(config)
 
 
 async def deploy_messaging_infrastructure(config: Optional[MessagingInfrastructureConfig] = None) -> MessagingDeploymentOrchestrator:
-    """Deploy complete messaging infrastructure"""
-    orchestrator = MessagingDeploymentOrchestrator(config)
+    """Deploy complete messaging infrastructure"""    orchestrator = MessagingDeploymentOrchestrator(config)
     await orchestrator.deploy_infrastructure()
     return orchestrator
 
@@ -871,8 +836,7 @@ async def deploy_messaging_infrastructure(config: Optional[MessagingInfrastructu
 # Main deployment function
 if __name__ == "__main__":
     async def main():
-        """Main deployment function"""
-        try:
+        """Main deployment function"""        try:
             orchestrator = await deploy_messaging_infrastructure()
             status = await orchestrator.get_infrastructure_status()
             print(f"Deployment Status: {status['overall_status']}")
@@ -899,11 +863,9 @@ settings = get_settings()
 
 
 class MessagingDeploymentOrchestrator:
-    """
-    Enterprise messaging deployment orchestrator
+    """    Enterprise messaging deployment orchestrator
     Manages complete messaging infrastructure for IA content processing
     """
-
     def __init__(self):
         self.kafka_manager: Optional[KafkaManager] = None
         self.rabbitmq_manager: Optional[RabbitMQManager] = None
@@ -915,8 +877,7 @@ class MessagingDeploymentOrchestrator:
                                            kafka_config: Optional[KafkaClusterConfig] = None,
                                            rabbitmq_config: Optional[RabbitMQClusterConfig] = None,
                                            celery_config: Optional[CeleryClusterConfig] = None) -> Dict[str, Union[str, bool]]:
-        """Deploy complete messaging infrastructure"""
-        try:
+        """Deploy complete messaging infrastructure"""        try:
             logger.info("Starting complete messaging infrastructure deployment")
             
             deployment_results = {}
@@ -968,8 +929,7 @@ class MessagingDeploymentOrchestrator:
             return {"status": "error", "error": str(e)}
 
     async def get_infrastructure_status(self) -> Dict[str, Union[str, int, Dict]]:
-        """Get complete infrastructure status"""
-        try:
+        """Get complete infrastructure status"""        try:
             status_report = {
                 "overall_status": "healthy",
                 "deployment_status": self.deployment_status,
@@ -1014,8 +974,7 @@ class MessagingDeploymentOrchestrator:
                          payload: Dict,
                          priority: MessagePriority = MessagePriority.MEDIUM,
                          destination: Optional[str] = None) -> bool:
-        """Send message through the routing system"""
-        try:
+        """Send message through the routing system"""        try:
             if not self.message_router:
                 logger.error("Message router not initialized")
                 return False
@@ -1039,8 +998,7 @@ class MessagingDeploymentOrchestrator:
             return False
 
     async def shutdown_infrastructure(self) -> Dict[str, Union[str, bool]]:
-        """Gracefully shutdown complete infrastructure"""
-        try:
+        """Gracefully shutdown complete infrastructure"""        try:
             logger.info("Starting infrastructure shutdown")
             
             shutdown_results = {}
@@ -1077,28 +1035,23 @@ class MessagingDeploymentOrchestrator:
 # Factory functions for easy instantiation
 
 def create_kafka_manager(config: Optional[KafkaClusterConfig] = None) -> KafkaManager:
-    """Create Kafka manager instance"""
-    return KafkaManager(config)
+    """Create Kafka manager instance"""    return KafkaManager(config)
 
 
 def create_rabbitmq_manager(config: Optional[RabbitMQClusterConfig] = None) -> RabbitMQManager:
-    """Create RabbitMQ manager instance"""
-    return RabbitMQManager(config)
+    """Create RabbitMQ manager instance"""    return RabbitMQManager(config)
 
 
 def create_celery_manager(config: Optional[CeleryClusterConfig] = None) -> CeleryManager:
-    """Create Celery manager instance"""
-    return CeleryManager(config)
+    """Create Celery manager instance"""    return CeleryManager(config)
 
 
 def create_message_router() -> MessageRouter:
-    """Create message router instance"""
-    return MessageRouter()
+    """Create message router instance"""    return MessageRouter()
 
 
 def create_messaging_orchestrator() -> MessagingDeploymentOrchestrator:
-    """Create messaging deployment orchestrator"""
-    return MessagingDeploymentOrchestrator()
+    """Create messaging deployment orchestrator"""    return MessagingDeploymentOrchestrator()
 
 
 # Main deployment function for easy usage
@@ -1108,13 +1061,11 @@ async def deploy_messaging_infrastructure(
     rabbitmq_config: Optional[RabbitMQClusterConfig] = None,
     celery_config: Optional[CeleryClusterConfig] = None
 ) -> MessagingDeploymentOrchestrator:
-    """
-    Deploy complete messaging infrastructure with optional configurations
+    """    Deploy complete messaging infrastructure with optional configurations
     
     Returns:
         MessagingDeploymentOrchestrator: Configured orchestrator instance
-    """
-    try:
+    """    try:
         orchestrator = MessagingDeploymentOrchestrator()
         
         result = await orchestrator.deploy_complete_infrastructure(
@@ -1135,8 +1086,7 @@ async def deploy_messaging_infrastructure(
 
 
 if __name__ == "__main__":
-    """Example usage of messaging deployment"""
-    
+    """Example usage of messaging deployment"""    
     async def main():
         try:
             # Deploy complete infrastructure

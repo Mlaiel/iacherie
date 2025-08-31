@@ -1,5 +1,4 @@
-"""
-Certificate Management System for Deployment Security
+"""Certificate Management System for Deployment Security
 
 Provides comprehensive SSL/TLS certificate management, automatic renewal,
 certificate validation, and secure key generation for the IA Influencer
@@ -14,7 +13,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and
 will result in legal action.
 """
-
 import os
 import ssl
 import asyncio
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CertificateInfo:
-    """Certificate information container"""
-    common_name: str
+    """Certificate information container"""    common_name: str
     subject_alt_names: List[str]
     issuer: str
     valid_from: datetime
@@ -53,8 +50,7 @@ class CertificateInfo:
 
 @dataclass
 class TLSConfiguration:
-    """TLS configuration container"""
-    min_version: str
+    """TLS configuration container"""    min_version: str
     max_version: str
     cipher_suites: List[str]
     protocols: List[str]
@@ -66,8 +62,7 @@ class TLSConfiguration:
 
 
 class CertificateManager:
-    """
-    Advanced certificate management system for deployment security
+    """    Advanced certificate management system for deployment security
     
     Features:
     - Automatic certificate generation and renewal
@@ -75,8 +70,7 @@ class CertificateManager:
     - Certificate validation and monitoring
     - Secure key storage and rotation
     - Integration with cloud certificate services
-    """
-    
+    """    
     def __init__(
         self,
         cert_dir: str = "/etc/ssl/certs",
@@ -110,8 +104,7 @@ class CertificateManager:
         key_size: int = 2048,
         curve: Optional[str] = None
     ) -> Any:
-        """
-        Generate secure private key
+        """        Generate secure private key
         
         Args:
             key_type: Type of key (rsa, ec)
@@ -120,8 +113,7 @@ class CertificateManager:
             
         Returns:
             Generated private key
-        """
-        try:
+        """        try:
             if key_type.lower() == "rsa":
                 if key_size < 2048:
                     raise ValueError("RSA key size must be at least 2048 bits")
@@ -161,8 +153,7 @@ class CertificateManager:
         organization: str = "IA Influencer Agent",
         organizational_unit: str = "Security"
     ) -> x509.CertificateSigningRequest:
-        """
-        Create certificate signing request (CSR)
+        """        Create certificate signing request (CSR)
         
         Args:
             private_key: Private key for the certificate
@@ -176,8 +167,7 @@ class CertificateManager:
             
         Returns:
             Certificate signing request
-        """
-        try:
+        """        try:
             # Build subject name
             subject = x509.Name([
                 x509.NameAttribute(NameOID.COUNTRY_NAME, country),
@@ -249,8 +239,7 @@ class CertificateManager:
         ca_private_key: Optional[Any] = None,
         ca_certificate: Optional[x509.Certificate] = None
     ) -> x509.Certificate:
-        """
-        Create self-signed certificate or sign with CA
+        """        Create self-signed certificate or sign with CA
         
         Args:
             private_key: Private key for the certificate
@@ -261,8 +250,7 @@ class CertificateManager:
             
         Returns:
             Signed certificate
-        """
-        try:
+        """        try:
             # Determine if self-signed or CA-signed
             is_self_signed = ca_private_key is None or ca_certificate is None
             
@@ -325,8 +313,7 @@ class CertificateManager:
         name: str,
         password: Optional[bytes] = None
     ) -> Tuple[str, str]:
-        """
-        Save certificate and private key to files
+        """        Save certificate and private key to files
         
         Args:
             certificate: Certificate to save
@@ -336,8 +323,7 @@ class CertificateManager:
             
         Returns:
             Tuple of (certificate_path, private_key_path)
-        """
-        try:
+        """        try:
             cert_path = self.cert_dir / f"{name}.crt"
             key_path = self.key_dir / f"{name}.key"
             
@@ -371,8 +357,7 @@ class CertificateManager:
             raise
     
     def load_certificate(self, cert_path: str) -> x509.Certificate:
-        """Load certificate from file"""
-        try:
+        """Load certificate from file"""        try:
             with open(cert_path, "rb") as cert_file:
                 certificate = x509.load_pem_x509_certificate(cert_file.read())
             return certificate
@@ -381,16 +366,14 @@ class CertificateManager:
             raise
     
     def get_certificate_info(self, certificate: x509.Certificate) -> CertificateInfo:
-        """
-        Extract detailed information from certificate
+        """        Extract detailed information from certificate
         
         Args:
             certificate: Certificate to analyze
             
         Returns:
             Certificate information
-        """
-        try:
+        """        try:
             # Extract subject common name
             common_name = None
             for attribute in certificate.subject:
@@ -447,16 +430,14 @@ class CertificateManager:
             raise
     
     def check_certificate_expiry(self, cert_path: str) -> bool:
-        """
-        Check if certificate needs renewal
+        """        Check if certificate needs renewal
         
         Args:
             cert_path: Path to certificate file
             
         Returns:
             True if certificate needs renewal
-        """
-        try:
+        """        try:
             certificate = self.load_certificate(cert_path)
             cert_info = self.get_certificate_info(certificate)
             
@@ -474,13 +455,11 @@ class CertificateManager:
             return True  # Assume renewal needed on error
     
     async def auto_renew_certificates(self) -> Dict[str, bool]:
-        """
-        Automatically renew certificates that are close to expiry
+        """        Automatically renew certificates that are close to expiry
         
         Returns:
             Dictionary of renewal results by certificate name
-        """
-        renewal_results = {}
+        """        renewal_results = {}
         
         try:
             # Scan for certificates that need renewal
@@ -521,8 +500,7 @@ class CertificateManager:
         cert_path: str,
         ca_bundle_path: Optional[str] = None
     ) -> bool:
-        """
-        Validate certificate chain
+        """        Validate certificate chain
         
         Args:
             cert_path: Path to certificate to validate
@@ -530,8 +508,7 @@ class CertificateManager:
             
         Returns:
             True if certificate chain is valid
-        """
-        try:
+        """        try:
             # Load certificate
             certificate = self.load_certificate(cert_path)
             
@@ -561,10 +538,8 @@ class CertificateManager:
 
 
 class TLSConfigGenerator:
-    """
-    Generate secure TLS configurations for various services
-    """
-    
+    """    Generate secure TLS configurations for various services
+    """    
     # Secure cipher suites (Mozilla modern configuration)
     MODERN_CIPHER_SUITES = [
         "TLS_AES_128_GCM_SHA256",
@@ -592,8 +567,7 @@ class TLSConfigGenerator:
         enable_ocsp: bool = True,
         hsts_max_age: int = 31536000
     ) -> str:
-        """
-        Generate secure Nginx TLS configuration
+        """        Generate secure Nginx TLS configuration
         
         Args:
             server_name: Server name for the configuration
@@ -604,12 +578,10 @@ class TLSConfigGenerator:
             
         Returns:
             Nginx configuration string
-        """
-        cert_path = self.cert_manager.cert_dir / f"{cert_name}.crt"
+        """        cert_path = self.cert_manager.cert_dir / f"{cert_name}.crt"
         key_path = self.cert_manager.key_dir / f"{cert_name}.key"
         
-        config = f"""
-server {{
+        config = f"""server {{
     listen 443 ssl{'http2' if enable_http2 else ''};
     server_name {server_name};
     
@@ -655,8 +627,7 @@ server {{
     server_name {server_name};
     return 301 https://$server_name$request_uri;
 }}
-"""
-        
+"""        
         return config.strip()
     
     def generate_python_ssl_context(
@@ -665,8 +636,7 @@ server {{
         client_auth: bool = False,
         verify_mode: str = "CERT_REQUIRED"
     ) -> TLSConfiguration:
-        """
-        Generate Python SSL context configuration
+        """        Generate Python SSL context configuration
         
         Args:
             cert_name: Name of the certificate
@@ -675,8 +645,7 @@ server {{
             
         Returns:
             TLS configuration object
-        """
-        cert_path = str(self.cert_manager.cert_dir / f"{cert_name}.crt")
+        """        cert_path = str(self.cert_manager.cert_dir / f"{cert_name}.crt")
         key_path = str(self.cert_manager.key_dir / f"{cert_name}.key")
         ca_bundle_path = str(self.cert_manager.ca_dir / "ca-bundle.crt")
         
@@ -693,16 +662,14 @@ server {{
         )
     
     def create_ssl_context(self, config: TLSConfiguration) -> ssl.SSLContext:
-        """
-        Create SSL context from configuration
+        """        Create SSL context from configuration
         
         Args:
             config: TLS configuration
             
         Returns:
             Configured SSL context
-        """
-        try:
+        """        try:
             # Create SSL context
             context = ssl.create_default_context(ssl.Purpose.SERVER_AUTH)
             

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Core Remix Module
+"""IA-Influencer-Agent Core Remix Module
 ================================================================================
 Module: backend/core/remix/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -23,7 +22,6 @@ Distribution multi-plateformes → Remix IA professionnel
 MISSION: Service core remix et génération de contenu IA pour créateurs multi-format
 ARCHITECTURE: Service enterprise-grade pour remix IA industriel
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -122,13 +120,11 @@ __all__ = [
 
 # Module initialization
 def initialize_core_remix() -> bool:
-    """
-    Initialize core remix module with enterprise configuration.
+    """    Initialize core remix module with enterprise configuration.
     
     Returns:
         bool: True if initialization successful, False otherwise
-    """
-    try:
+    """    try:
         logger.info("Initializing IA-Influencer-Agent Core Remix Module v%s", __version__)
         logger.info("Team: %s", ", ".join(__team_specialities__))
         

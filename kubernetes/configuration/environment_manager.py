@@ -1,5 +1,4 @@
-"""
-🔧 Environment Manager - IA-Influencer-Agent
+"""🔧 Environment Manager - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -17,7 +16,6 @@ Enterprise-grade environment-specific configuration management for multi-format
 content creators → AI processing → protection → monetization → collaboration.
 ==================================================================
 """
-
 import os
 import yaml
 import json
@@ -32,8 +30,7 @@ from pathlib import Path
 import aiofiles
 
 class EnvironmentType(Enum):
-    """Supported deployment environments"""
-    DEVELOPMENT = "development"
+    """Supported deployment environments"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -44,8 +41,7 @@ class EnvironmentType(Enum):
     BLUE_GREEN = "blue_green"
 
 class DeploymentTier(Enum):
-    """Deployment tier classifications"""
-    LOCAL = "local"
+    """Deployment tier classifications"""    LOCAL = "local"
     CLOUD_DEV = "cloud_dev" 
     CLOUD_STAGING = "cloud_staging"
     CLOUD_PRODUCTION = "cloud_production"
@@ -55,8 +51,7 @@ class DeploymentTier(Enum):
     CDN_EDGE = "cdn_edge"
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
-    AWS = "aws"
+    """Supported cloud providers"""    AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
     DIGITAL_OCEAN = "digital_ocean"
@@ -65,8 +60,7 @@ class CloudProvider(Enum):
     HYBRID_CLOUD = "hybrid_cloud"
 
 class AIProcessingTier(Enum):
-    """AI processing tier configurations"""
-    CPU_ONLY = "cpu_only"
+    """AI processing tier configurations"""    CPU_ONLY = "cpu_only"
     GPU_BASIC = "gpu_basic"
     GPU_ADVANCED = "gpu_advanced"
     TPU_ENABLED = "tpu_enabled"
@@ -75,8 +69,7 @@ class AIProcessingTier(Enum):
 
 @dataclass
 class DatabaseConfiguration:
-    """Advanced database configuration for content and AI processing"""
-    # Primary database
+    """Advanced database configuration for content and AI processing"""    # Primary database
     primary_host: str
     primary_port: int = 5432
     database_name: str
@@ -126,8 +119,7 @@ class DatabaseConfiguration:
 
 @dataclass 
 class RedisConfiguration:
-    """Redis configuration for caching and real-time features"""
-    # Basic configuration
+    """Redis configuration for caching and real-time features"""    # Basic configuration
     host: str
     port: int = 6379
     password: Optional[str] = None
@@ -167,8 +159,7 @@ class RedisConfiguration:
 
 @dataclass
 class SecurityConfiguration:
-    """Comprehensive security configuration"""
-    # Authentication
+    """Comprehensive security configuration"""    # Authentication
     jwt_secret: str
     jwt_algorithm: str = "HS256"
     jwt_expiration: int = 3600
@@ -218,8 +209,7 @@ class SecurityConfiguration:
 
 @dataclass
 class AIConfiguration:
-    """AI and ML processing configuration"""
-    # Processing tier
+    """AI and ML processing configuration"""    # Processing tier
     processing_tier: AIProcessingTier = AIProcessingTier.GPU_BASIC
     
     # GPU configuration
@@ -260,8 +250,7 @@ class AIConfiguration:
 
 @dataclass
 class ScalingConfiguration:
-    """Advanced auto-scaling configuration"""
-    # Basic scaling
+    """Advanced auto-scaling configuration"""    # Basic scaling
     min_replicas: int = 1
     max_replicas: int = 10
     enabled: bool = True
@@ -300,8 +289,7 @@ class ScalingConfiguration:
 
 @dataclass
 class MonitoringConfiguration:
-    """Comprehensive monitoring and observability"""
-    # Core monitoring
+    """Comprehensive monitoring and observability"""    # Core monitoring
     prometheus_enabled: bool = True
     grafana_enabled: bool = True
     jaeger_enabled: bool = True
@@ -348,8 +336,7 @@ class MonitoringConfiguration:
 
 @dataclass
 class ResourceConfiguration:
-    """Resource allocation and limits"""
-    # CPU resources
+    """Resource allocation and limits"""    # CPU resources
     cpu_request: str = "500m"
     cpu_limit: str = "2000m"
     cpu_burst_enabled: bool = True
@@ -383,8 +370,7 @@ class ResourceConfiguration:
 
 @dataclass
 class ContentProtectionConfiguration:
-    """Content protection and fingerprinting configuration"""
-    # Fingerprinting engines
+    """Content protection and fingerprinting configuration"""    # Fingerprinting engines
     audio_fingerprinting_enabled: bool = True
     video_fingerprinting_enabled: bool = True
     image_fingerprinting_enabled: bool = True
@@ -415,8 +401,7 @@ class ContentProtectionConfiguration:
 
 @dataclass
 class MonetizationConfiguration:
-    """Revenue tracking and monetization configuration"""
-    # Revenue tracking
+    """Revenue tracking and monetization configuration"""    # Revenue tracking
     revenue_tracking_enabled: bool = True
     platform_apis_enabled: bool = True
     real_time_analytics: bool = True
@@ -439,8 +424,7 @@ class MonetizationConfiguration:
 
 @dataclass
 class EnvironmentConfiguration:
-    """Complete environment configuration"""
-    # Basic info
+    """Complete environment configuration"""    # Basic info
     name: str
     type: EnvironmentType
     tier: DeploymentTier
@@ -470,8 +454,7 @@ class EnvironmentConfiguration:
     version: str = "1.0.0"
     description: str = ""
 class EnvironmentManager:
-    """
-    Enterprise-grade environment configuration manager.
+    """    Enterprise-grade environment configuration manager.
     
     Manages comprehensive environment-specific configurations for:
     - Multi-format content creator platforms
@@ -491,16 +474,13 @@ class EnvironmentManager:
     - Disaster recovery and backup automation
     - Service mesh and network configuration
     - Container orchestration and management
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """
-        Initialize environment manager.
+        """        Initialize environment manager.
         
         Args:
             config_path: Optional path to configuration files
-        """
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration storage
         self.config_path = config_path or "/etc/ia-influencer/environments"
@@ -523,13 +503,11 @@ class EnvironmentManager:
         self.logger.info("Environment manager initialized with config path: %s", self.config_path)
     
     async def initialize(self) -> bool:
-        """
-        Initialize environment manager with comprehensive setup.
+        """        Initialize environment manager with comprehensive setup.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing environment manager...")
             
             # Create configuration directory
@@ -564,8 +542,7 @@ class EnvironmentManager:
             return False
     
     async def _ensure_config_directory(self) -> None:
-        """Ensure configuration directory exists"""
-        config_dir = Path(self.config_path)
+        """Ensure configuration directory exists"""        config_dir = Path(self.config_path)
         config_dir.mkdir(parents=True, exist_ok=True)
         
         # Create subdirectories
@@ -573,8 +550,7 @@ class EnvironmentManager:
             (config_dir / subdir).mkdir(exist_ok=True)
     
     async def _load_environment_templates(self) -> None:
-        """Load comprehensive environment configuration templates"""
-        
+        """Load comprehensive environment configuration templates"""        
         # Development environment template
         self.templates[EnvironmentType.DEVELOPMENT] = {
             "tier": DeploymentTier.LOCAL,
@@ -1071,8 +1047,7 @@ class EnvironmentManager:
         self.logger.info("Environment templates loaded successfully")
     
     async def _load_cloud_presets(self) -> None:
-        """Load cloud provider-specific configuration presets"""
-        
+        """Load cloud provider-specific configuration presets"""        
         # AWS presets
         self.cloud_presets[CloudProvider.AWS] = {
             "compute": {
@@ -1204,8 +1179,7 @@ class EnvironmentManager:
         self.logger.info("Cloud provider presets loaded successfully")
     
     async def _setup_validation_rules(self) -> None:
-        """Setup comprehensive validation rules for environment configurations"""
-        
+        """Setup comprehensive validation rules for environment configurations"""        
         self.validation_rules = {
             "database": {
                 "required_fields": ["primary_host", "database_name", "username", "password"],
@@ -1249,8 +1223,7 @@ class EnvironmentManager:
         self.logger.info("Validation rules configured successfully")
     
     async def _load_existing_environments(self) -> None:
-        """Load existing environment configurations from storage"""
-        try:
+        """Load existing environment configurations from storage"""        try:
             env_dir = Path(self.config_path) / "environments"
             if env_dir.exists():
                 for env_file in env_dir.glob("*.yaml"):
@@ -1273,8 +1246,7 @@ class EnvironmentManager:
             self.logger.error(f"Failed to load existing environments: {e}")
     
     async def _detect_current_environment(self) -> None:
-        """Detect current environment from system variables or configuration"""
-        try:
+        """Detect current environment from system variables or configuration"""        try:
             # Check environment variable
             env_name = os.getenv("IA_INFLUENCER_ENVIRONMENT")
             if env_name and env_name in self.environments:
@@ -1300,8 +1272,7 @@ class EnvironmentManager:
             self.logger.error(f"Failed to detect current environment: {e}")
     
     async def _initialize_monitoring(self) -> None:
-        """Initialize monitoring for environment manager"""
-        self.health_status = {
+        """Initialize monitoring for environment manager"""        self.health_status = {
             "status": "healthy",
             "last_check": datetime.now(),
             "environments_count": len(self.environments),
@@ -1313,8 +1284,7 @@ class EnvironmentManager:
         self.logger.info("Environment monitoring initialized")
     
     def _dict_to_environment_config(self, data: Dict[str, Any]) -> EnvironmentConfiguration:
-        """Convert dictionary to EnvironmentConfiguration object"""
-        # This would implement the conversion logic
+        """Convert dictionary to EnvironmentConfiguration object"""        # This would implement the conversion logic
         # For brevity, showing simplified version
         return EnvironmentConfiguration(
             name=data["name"],
@@ -1333,8 +1303,7 @@ class EnvironmentManager:
         cloud_provider: CloudProvider = CloudProvider.KUBERNETES,
         custom_config: Optional[Dict[str, Any]] = None
     ) -> EnvironmentConfiguration:
-        """
-        Create new environment configuration.
+        """        Create new environment configuration.
         
         Args:
             name: Environment name
@@ -1345,8 +1314,7 @@ class EnvironmentManager:
             
         Returns:
             EnvironmentConfiguration: Created environment configuration
-        """
-        try:
+        """        try:
             self.logger.info(f"Creating environment: {name} (type: {env_type.value})")
             
             # Get base template
@@ -1394,20 +1362,17 @@ class EnvironmentManager:
             raise
     
     async def get_environment(self, name: str) -> Optional[EnvironmentConfiguration]:
-        """Get environment configuration by name"""
-        return self.environments.get(name)
+        """Get environment configuration by name"""        return self.environments.get(name)
     
     async def list_environments(self) -> List[EnvironmentConfiguration]:
-        """List all available environment configurations"""
-        return list(self.environments.values())
+        """List all available environment configurations"""        return list(self.environments.values())
     
     async def update_environment(
         self,
         name: str,
         updates: Dict[str, Any]
     ) -> EnvironmentConfiguration:
-        """
-        Update existing environment configuration.
+        """        Update existing environment configuration.
         
         Args:
             name: Environment name
@@ -1415,8 +1380,7 @@ class EnvironmentManager:
             
         Returns:
             EnvironmentConfiguration: Updated environment configuration
-        """
-        try:
+        """        try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
             
@@ -1454,16 +1418,14 @@ class EnvironmentManager:
             raise
     
     async def delete_environment(self, name: str) -> bool:
-        """
-        Delete environment configuration.
+        """        Delete environment configuration.
         
         Args:
             name: Environment name
             
         Returns:
             bool: True if deletion successful
-        """
-        try:
+        """        try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
             
@@ -1494,16 +1456,14 @@ class EnvironmentManager:
         self,
         env_config: EnvironmentConfiguration
     ) -> Dict[str, Any]:
-        """
-        Validate environment configuration against rules.
+        """        Validate environment configuration against rules.
         
         Args:
             env_config: Environment configuration to validate
             
         Returns:
             Dict containing validation results
-        """
-        errors = []
+        """        errors = []
         warnings = []
         
         try:
@@ -1553,8 +1513,7 @@ class EnvironmentManager:
             }
     
     def _validate_database_config(self, db_config: DatabaseConfiguration) -> List[str]:
-        """Validate database configuration"""
-        errors = []
+        """Validate database configuration"""        errors = []
         rules = self.validation_rules.get("database", {})
         
         # Check required fields
@@ -1570,8 +1529,7 @@ class EnvironmentManager:
         return errors
     
     def _validate_redis_config(self, redis_config: RedisConfiguration) -> List[str]:
-        """Validate Redis configuration"""
-        errors = []
+        """Validate Redis configuration"""        errors = []
         
         # Basic validation logic
         if redis_config.max_connections < 10:
@@ -1580,8 +1538,7 @@ class EnvironmentManager:
         return errors
     
     def _validate_security_config(self, security_config: SecurityConfiguration) -> List[str]:
-        """Validate security configuration"""
-        errors = []
+        """Validate security configuration"""        errors = []
         
         # JWT validation
         if security_config.jwt_expiration < 300:
@@ -1594,8 +1551,7 @@ class EnvironmentManager:
         return errors
     
     def _validate_ai_config(self, ai_config: AIConfiguration) -> List[str]:
-        """Validate AI configuration"""
-        errors = []
+        """Validate AI configuration"""        errors = []
         
         # Similarity threshold validation
         if not (0.5 <= ai_config.similarity_threshold <= 1.0):
@@ -1604,8 +1560,7 @@ class EnvironmentManager:
         return errors
     
     def _validate_scaling_config(self, scaling_config: ScalingConfiguration) -> List[str]:
-        """Validate scaling configuration"""
-        errors = []
+        """Validate scaling configuration"""        errors = []
         
         # Replica validation
         if scaling_config.min_replicas < 1:
@@ -1617,16 +1572,14 @@ class EnvironmentManager:
         return errors
     
     def _validate_resource_config(self, resource_config: ResourceConfiguration) -> List[str]:
-        """Validate resource configuration"""
-        errors = []
+        """Validate resource configuration"""        errors = []
         
         # Basic resource validation would go here
         
         return errors
     
     def _validate_production_requirements(self, env_config: EnvironmentConfiguration) -> List[str]:
-        """Validate production-specific requirements"""
-        errors = []
+        """Validate production-specific requirements"""        errors = []
         
         # SSL required for production
         if not env_config.security.ssl_required:
@@ -1648,8 +1601,7 @@ class EnvironmentManager:
         target_platform: str = "kubernetes",
         dry_run: bool = False
     ) -> Dict[str, Any]:
-        """
-        Deploy environment configuration to target platform.
+        """        Deploy environment configuration to target platform.
         
         Args:
             name: Environment name
@@ -1658,8 +1610,7 @@ class EnvironmentManager:
             
         Returns:
             Dict containing deployment results
-        """
-        try:
+        """        try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
             
@@ -1709,8 +1660,7 @@ class EnvironmentManager:
             raise
     
     async def get_environment_status(self, name: str) -> Dict[str, Any]:
-        """Get comprehensive status of environment"""
-        try:
+        """Get comprehensive status of environment"""        try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
             
@@ -1758,8 +1708,7 @@ class EnvironmentManager:
             raise
     
     async def backup_environment(self, name: str) -> Dict[str, Any]:
-        """Create backup of environment configuration"""
-        try:
+        """Create backup of environment configuration"""        try:
             if name not in self.environments:
                 raise ValueError(f"Environment {name} not found")
             
@@ -1795,8 +1744,7 @@ class EnvironmentManager:
             raise
     
     def _merge_configurations(self, base: Dict[str, Any], override: Dict[str, Any]) -> Dict[str, Any]:
-        """Deep merge two configuration dictionaries"""
-        result = base.copy()
+        """Deep merge two configuration dictionaries"""        result = base.copy()
         
         for key, value in override.items():
             if key in result and isinstance(result[key], dict) and isinstance(value, dict):
@@ -1813,8 +1761,7 @@ class EnvironmentManager:
         cloud_provider: CloudProvider,
         config_data: Dict[str, Any]
     ) -> EnvironmentConfiguration:
-        """Create EnvironmentConfiguration from config data"""
-        # This would implement the full conversion logic
+        """Create EnvironmentConfiguration from config data"""        # This would implement the full conversion logic
         # For brevity, showing simplified version
         
         return EnvironmentConfiguration(
@@ -1840,14 +1787,12 @@ class EnvironmentManager:
         env_config: EnvironmentConfiguration,
         updates: Dict[str, Any]
     ) -> EnvironmentConfiguration:
-        """Apply configuration updates to environment"""
-        # This would implement the update logic
+        """Apply configuration updates to environment"""        # This would implement the update logic
         # For brevity, showing simplified version
         return env_config
     
     async def _save_environment(self, env_config: EnvironmentConfiguration) -> None:
-        """Save environment configuration to storage"""
-        try:
+        """Save environment configuration to storage"""        try:
             env_file = Path(self.config_path) / "environments" / f"{env_config.name}.yaml"
             env_data = asdict(env_config)
             
@@ -1861,8 +1806,7 @@ class EnvironmentManager:
             raise
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get environment manager status"""
-        return {
+        """Get environment manager status"""        return {
             "initialized": self.initialized,
             "environments_count": len(self.environments),
             "current_environment": self.current_environment.name if self.current_environment else None,
@@ -2026,8 +1970,7 @@ __all__ = [
         self.logger.info(f"Loaded {len(self.templates)} environment templates")
     
     async def _setup_validation_rules(self) -> None:
-        """Setup environment validation rules"""
-        self.validation_rules = {
+        """Setup environment validation rules"""        self.validation_rules = {
             EnvironmentType.DEVELOPMENT: {
                 "min_replicas": {"min": 1, "max": 3},
                 "ssl_required": False,
@@ -2054,8 +1997,7 @@ __all__ = [
         }
     
     async def _detect_current_environment(self) -> None:
-        """Detect current environment from environment variables"""
-        env_name = os.getenv("ENVIRONMENT", "development").lower()
+        """Detect current environment from environment variables"""        env_name = os.getenv("ENVIRONMENT", "development").lower()
         
         try:
             env_type = EnvironmentType(env_name)
@@ -2070,8 +2012,7 @@ __all__ = [
         env_type: EnvironmentType,
         custom_config: Optional[Dict[str, Any]] = None
     ) -> EnvironmentConfiguration:
-        """
-        Create environment configuration.
+        """        Create environment configuration.
         
         Args:
             env_type: Environment type to create
@@ -2079,8 +2020,7 @@ __all__ = [
             
         Returns:
             Complete environment configuration
-        """
-        try:
+        """        try:
             # Get template for environment type
             template = self.templates.get(env_type, {})
             
@@ -2119,8 +2059,7 @@ __all__ = [
             raise
     
     async def _merge_config(self, base: Dict[str, Any], override: Dict[str, Any]) -> Dict[str, Any]:
-        """Deep merge configuration dictionaries"""
-        merged = base.copy()
+        """Deep merge configuration dictionaries"""        merged = base.copy()
         
         for key, value in override.items():
             if key in merged and isinstance(merged[key], dict) and isinstance(value, dict):
@@ -2131,16 +2070,14 @@ __all__ = [
         return merged
     
     async def _validate_environment(self, env_config: EnvironmentConfiguration) -> Dict[str, Any]:
-        """
-        Validate environment configuration.
+        """        Validate environment configuration.
         
         Args:
             env_config: Environment configuration to validate
             
         Returns:
             Validation result
-        """
-        result = {
+        """        result = {
             "valid": True,
             "errors": [],
             "warnings": []
@@ -2183,28 +2120,24 @@ __all__ = [
         return result
     
     async def get_environment(self, env_type: EnvironmentType) -> Optional[EnvironmentConfiguration]:
-        """
-        Get environment configuration.
+        """        Get environment configuration.
         
         Args:
             env_type: Environment type to retrieve
             
         Returns:
             Environment configuration or None
-        """
-        return self.environments.get(env_type)
+        """        return self.environments.get(env_type)
     
     async def set_environment(self, env_type: EnvironmentType) -> bool:
-        """
-        Set current active environment.
+        """        Set current active environment.
         
         Args:
             env_type: Environment type to activate
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if env_type not in self.environments:
                 await self.create_environment(env_type)
             
@@ -2229,8 +2162,7 @@ __all__ = [
         env_type: EnvironmentType,
         config_updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update environment configuration.
+        """        Update environment configuration.
         
         Args:
             env_type: Environment type to update
@@ -2238,8 +2170,7 @@ __all__ = [
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if env_type not in self.environments:
                 raise ValueError(f"Environment {env_type.value} not found")
             
@@ -2273,18 +2204,15 @@ __all__ = [
             return False
     
     async def get_current_configuration(self) -> Optional[EnvironmentConfiguration]:
-        """Get current active environment configuration"""
-        if self.current_environment:
+        """Get current active environment configuration"""        if self.current_environment:
             return self.environments.get(self.current_environment)
         return None
     
     async def list_environments(self) -> List[str]:
-        """List all configured environments"""
-        return [env_type.value for env_type in self.environments.keys()]
+        """List all configured environments"""        return [env_type.value for env_type in self.environments.keys()]
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get environment manager status"""
-        return {
+        """Get environment manager status"""        return {
             "current_environment": self.current_environment.value if self.current_environment else None,
             "configured_environments": await self.list_environments(),
             "templates_loaded": len(self.templates),
@@ -2296,8 +2224,7 @@ __all__ = [
         env1: EnvironmentType,
         env2: EnvironmentType
     ) -> Dict[str, Any]:
-        """
-        Compare two environment configurations.
+        """        Compare two environment configurations.
         
         Args:
             env1: First environment to compare
@@ -2305,8 +2232,7 @@ __all__ = [
             
         Returns:
             Configuration differences
-        """
-        config1 = self.environments.get(env1)
+        """        config1 = self.environments.get(env1)
         config2 = self.environments.get(env2)
         
         if not config1 or not config2:

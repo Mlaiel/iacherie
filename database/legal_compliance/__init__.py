@@ -26,8 +26,7 @@ Expert Team:
 - Audio Processing Specialist - Advanced Audio Analytics
 - DevOps Engineer - Production Infrastructure
 - IA Prompt Engineer - AI Integration & Optimization
-"""
-from typing import List, Dict, Any, Optional
+"""from typing import List, Dict, Any, Optional
 import logging
 
 # Core orchestration

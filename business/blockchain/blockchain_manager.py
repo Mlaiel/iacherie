@@ -1,5 +1,4 @@
-"""
-Main Blockchain Manager for IA-Influencer-Agent Platform
+"""Main Blockchain Manager for IA-Influencer-Agent Platform
 
 This is the central blockchain management system that orchestrates all blockchain
 operations including smart contracts, NFTs, consensus, payments, governance, and
@@ -8,7 +7,6 @@ cross-chain functionality for content creators and rights protection.
 © 2025 Fahed Mlaiel (mlaiel@live.de) - IA-Influencer-Agent Platform
 Propriété Intellectuelle Exclusive - Tous Droits Réservés
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class BlockchainNetwork:
-    """Blockchain network configuration"""
-    name: str
+    """Blockchain network configuration"""    name: str
     rpc_url: str
     chain_id: int
     native_currency: str
@@ -56,8 +53,7 @@ class BlockchainNetwork:
 
 @dataclass
 class TransactionResult:
-    """Result of blockchain transaction"""
-    tx_hash: str
+    """Result of blockchain transaction"""    tx_hash: str
     block_number: int
     gas_used: int
     status: str
@@ -66,13 +62,11 @@ class TransactionResult:
 
 
 class BlockchainManager:
-    """
-    Central blockchain management system for IA-Influencer-Agent platform.
+    """    Central blockchain management system for IA-Influencer-Agent platform.
     
     Manages all blockchain operations including smart contracts, NFTs, 
     cryptocurrency payments, governance, and content protection.
-    """
-    
+    """    
     def __init__(
         self,
         config: BlockchainConfig,
@@ -113,8 +107,7 @@ class BlockchainManager:
         logger.info("BlockchainManager initialized successfully")
     
     def _initialize_networks(self) -> Dict[str, BlockchainNetwork]:
-        """Initialize blockchain network configurations"""
-        return {
+        """Initialize blockchain network configurations"""        return {
             "ethereum_mainnet": BlockchainNetwork(
                 name="Ethereum Mainnet",
                 rpc_url=self.config.ethereum_mainnet_rpc,
@@ -158,8 +151,7 @@ class BlockchainManager:
         }
     
     async def initialize(self) -> None:
-        """Initialize blockchain connections and services"""
-        try:
+        """Initialize blockchain connections and services"""        try:
             logger.info("Initializing blockchain connections...")
             
             # Initialize Web3 connections for all networks
@@ -212,8 +204,7 @@ class BlockchainManager:
             raise BlockchainError(f"Initialization failed: {str(e)}")
     
     async def _test_network_connection(self, web3: Web3) -> bool:
-        """Test blockchain network connection"""
-        try:
+        """Test blockchain network connection"""        try:
             # Test if we can get the latest block
             latest_block = web3.eth.block_number
             return latest_block > 0
@@ -228,13 +219,11 @@ class BlockchainManager:
         metadata: Dict[str, Any],
         network: str = "polygon_mainnet"
     ) -> TransactionResult:
-        """
-        Register content rights on blockchain for immutable protection
+        """        Register content rights on blockchain for immutable protection
         
         This creates an immutable record of content ownership and metadata
         that can be used for copyright protection and licensing.
-        """
-        try:
+        """        try:
             logger.info(f"Registering content rights for content {content_id}")
             
             # Validate network
@@ -296,13 +285,11 @@ class BlockchainManager:
         price: Decimal,
         network: str = "polygon_mainnet"
     ) -> TransactionResult:
-        """
-        Create NFT-based license for content monetization
+        """        Create NFT-based license for content monetization
         
         This mints an NFT representing licensing rights for the content,
         enabling automated licensing and royalty distribution.
-        """
-        try:
+        """        try:
             logger.info(f"Creating NFT license for content {content_id}")
             
             # Validate network
@@ -378,13 +365,11 @@ class BlockchainManager:
         recipient_address: str,
         metadata: Dict[str, Any]
     ) -> TransactionResult:
-        """
-        Process cryptocurrency payment for content licensing or services
+        """        Process cryptocurrency payment for content licensing or services
         
         Supports Bitcoin, Ethereum, and other major cryptocurrencies
         as specified in the cahier des charges.
-        """
-        try:
+        """        try:
             logger.info(f"Processing crypto payment: {amount} {currency}")
             
             # Validate currency support
@@ -435,13 +420,11 @@ class BlockchainManager:
         total_revenue: Decimal,
         distribution_rules: Dict[str, Any]
     ) -> List[TransactionResult]:
-        """
-        Automatically distribute royalties to content creators and stakeholders
+        """        Automatically distribute royalties to content creators and stakeholders
         
         Uses smart contracts to ensure transparent and automatic distribution
         based on predefined rules and percentages.
-        """
-        try:
+        """        try:
             logger.info(f"Distributing royalties for content {content_id}: {total_revenue}")
             
             # Get distribution smart contract
@@ -503,13 +486,11 @@ class BlockchainManager:
         voting_period: timedelta,
         execution_data: Dict[str, Any]
     ) -> TransactionResult:
-        """
-        Create governance proposal for decentralized platform management
+        """        Create governance proposal for decentralized platform management
         
         Enables community governance of platform parameters, upgrades,
         and policy decisions through democratic voting.
-        """
-        try:
+        """        try:
             logger.info(f"Creating governance proposal: {title}")
             
             # Validate proposer has sufficient governance tokens
@@ -574,13 +555,11 @@ class BlockchainManager:
         from_network: str,
         to_network: str
     ) -> TransactionResult:
-        """
-        Bridge assets between different blockchain networks
+        """        Bridge assets between different blockchain networks
         
         Enables cross-chain functionality for multi-network operations
         and asset mobility across supported blockchain ecosystems.
-        """
-        try:
+        """        try:
             logger.info(f"Bridging {amount} {token} from {from_network} to {to_network}")
             
             # Validate networks
@@ -629,8 +608,7 @@ class BlockchainManager:
             raise BlockchainError(f"Asset bridging failed: {str(e)}")
     
     async def get_network_status(self) -> Dict[str, Any]:
-        """Get status of all blockchain networks"""
-        status = {}
+        """Get status of all blockchain networks"""        status = {}
         
         for network_name in self.networks.keys():
             if network_name in self.active_networks:
@@ -654,8 +632,7 @@ class BlockchainManager:
         return status
     
     async def get_user_blockchain_assets(self, user_id: int) -> Dict[str, Any]:
-        """Get user's blockchain assets across all networks"""
-        assets = {}
+        """Get user's blockchain assets across all networks"""        assets = {}
         user_wallet = await self.wallet_manager.get_user_wallet(user_id)
         
         if not user_wallet:
@@ -673,8 +650,7 @@ class BlockchainManager:
         total_revenue: Decimal,
         rules: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Calculate royalty distributions based on rules"""
-        # This would implement complex royalty calculation logic
+        """Calculate royalty distributions based on rules"""        # This would implement complex royalty calculation logic
         # For now, returning a simplified structure
         return [
             {
@@ -692,8 +668,7 @@ class BlockchainManager:
         ]
     
     async def _get_content_metadata(self, content_id: int) -> Dict[str, Any]:
-        """Get content metadata from database"""
-        # Implementation would query the content database
+        """Get content metadata from database"""        # Implementation would query the content database
         return {
             "title": "Sample Content",
             "creator": "Creator Name",
@@ -701,8 +676,7 @@ class BlockchainManager:
         }
     
     async def _get_network_assets(self, address: str, network: str) -> Dict[str, Any]:
-        """Get user's assets on specific network"""
-        web3 = self.web3_instances[network]
+        """Get user's assets on specific network"""        web3 = self.web3_instances[network]
         
         # Get native balance
         native_balance = web3.eth.get_balance(address)
@@ -717,8 +691,7 @@ class BlockchainManager:
         }
     
     async def _get_nft_count(self, address: str, network: str) -> int:
-        """Get NFT count for address on network"""
-        # Implementation would query NFT contracts
+        """Get NFT count for address on network"""        # Implementation would query NFT contracts
         return 0
     
     async def _notify_governance_stakeholders(
@@ -727,13 +700,11 @@ class BlockchainManager:
         title: str,
         proposer_id: int
     ) -> None:
-        """Notify stakeholders about new governance proposal"""
-        # Implementation would send notifications to governance token holders
+        """Notify stakeholders about new governance proposal"""        # Implementation would send notifications to governance token holders
         pass
     
     async def _monitor_networks(self) -> None:
-        """Background task to monitor network health"""
-        while True:
+        """Background task to monitor network health"""        while True:
             try:
                 for network_name in self.active_networks:
                     web3 = self.web3_instances[network_name]
@@ -753,8 +724,7 @@ class BlockchainManager:
                 await asyncio.sleep(30)
     
     async def _process_pending_transactions(self) -> None:
-        """Background task to process pending transactions"""
-        while True:
+        """Background task to process pending transactions"""        while True:
             try:
                 # Process pending transactions from queue
                 await self.payment_gateway.process_pending_transactions()
@@ -765,8 +735,7 @@ class BlockchainManager:
                 await asyncio.sleep(10)
     
     async def _update_analytics(self) -> None:
-        """Background task to update blockchain analytics"""
-        while True:
+        """Background task to update blockchain analytics"""        while True:
             try:
                 await self.analytics.update_metrics()
                 await asyncio.sleep(300)  # Update every 5 minutes
@@ -776,8 +745,7 @@ class BlockchainManager:
                 await asyncio.sleep(300)
     
     async def cleanup(self) -> None:
-        """Cleanup blockchain connections and resources"""
-        try:
+        """Cleanup blockchain connections and resources"""        try:
             logger.info("Cleaning up blockchain manager...")
             
             # Close all connections and cleanup managers

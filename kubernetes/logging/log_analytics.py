@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Log Analytics Engine
+"""IA Influencer Agent - Log Analytics Engine
 Advanced log analytics and insights for monitoring
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ Any unauthorized use, reproduction, or distribution without explicit
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import json
 import logging
@@ -32,16 +30,14 @@ from .log_aggregator import LogEntry, LogLevel
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
-    LOW = "low"
+    """Alert severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class TrendDirection(str, Enum):
-    """Trend direction indicators"""
-    INCREASING = "increasing"
+    """Trend direction indicators"""    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -49,8 +45,7 @@ class TrendDirection(str, Enum):
 
 @dataclass
 class LogAlert:
-    """Log-based alert definition"""
-    id: str
+    """Log-based alert definition"""    id: str
     name: str
     description: str
     query: str
@@ -63,8 +58,7 @@ class LogAlert:
     trigger_count: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         if self.created_at:
             data['created_at'] = self.created_at.isoformat()
         if self.last_triggered:
@@ -74,8 +68,7 @@ class LogAlert:
 
 @dataclass
 class LogMetric:
-    """Log metric definition"""
-    name: str
+    """Log metric definition"""    name: str
     description: str
     query: str
     aggregation: str  # count, avg, sum, min, max
@@ -84,28 +77,24 @@ class LogMetric:
     time_window_minutes: int = 60
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return asdict(self)
+        """Convert to dictionary"""        return asdict(self)
 
 
 @dataclass
 class AnalyticsResult:
-    """Analytics computation result"""
-    metric_name: str
+    """Analytics computation result"""    metric_name: str
     value: Union[float, int, str]
     timestamp: datetime
     metadata: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         return data
 
 
 class AnomalyDetector:
-    """Machine learning-based anomaly detection for logs"""
-    
+    """Machine learning-based anomaly detection for logs"""    
     def __init__(self):
         self.isolation_forest = IsolationForest(
             contamination=0.1,
@@ -115,8 +104,7 @@ class AnomalyDetector:
         self.is_trained = False
     
     def prepare_features(self, log_data: List[Dict[str, Any]]) -> np.ndarray:
-        """Prepare features for anomaly detection"""
-        features = []
+        """Prepare features for anomaly detection"""        features = []
         
         for log_entry in log_data:
             feature_vector = [
@@ -147,8 +135,7 @@ class AnomalyDetector:
         return np.array(features)
     
     async def train(self, training_data: List[Dict[str, Any]]):
-        """Train anomaly detection model"""
-        if len(training_data) < 100:
+        """Train anomaly detection model"""        if len(training_data) < 100:
             raise AnalyticsError("Insufficient training data (minimum 100 samples)")
         
         features = self.prepare_features(training_data)
@@ -160,8 +147,7 @@ class AnomalyDetector:
         logging.info(f"Trained anomaly detector on {len(training_data)} samples")
     
     async def detect_anomalies(self, log_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect anomalies in log data"""
-        if not self.is_trained:
+        """Detect anomalies in log data"""        if not self.is_trained:
             raise AnalyticsError("Anomaly detector not trained")
         
         if not log_data:
@@ -186,14 +172,12 @@ class AnomalyDetector:
 
 
 class LogPatternAnalyzer:
-    """Analyze log patterns and extract insights"""
-    
+    """Analyze log patterns and extract insights"""    
     def __init__(self):
         self.clustering_model = DBSCAN(eps=0.5, min_samples=5)
     
     async def analyze_error_patterns(self, error_logs: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze patterns in error logs"""
-        if not error_logs:
+        """Analyze patterns in error logs"""        if not error_logs:
             return {"patterns": [], "summary": "No error logs to analyze"}
         
         # Group errors by similarity
@@ -249,8 +233,7 @@ class LogPatternAnalyzer:
         }
     
     async def analyze_user_activity_patterns(self, user_logs: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze user activity patterns"""
-        if not user_logs:
+        """Analyze user activity patterns"""        if not user_logs:
             return {"patterns": [], "summary": "No user logs to analyze"}
         
         # Group by user
@@ -306,8 +289,7 @@ class LogPatternAnalyzer:
         return patterns
     
     def _find_peak_hour(self, user_activity: Dict[str, Any]) -> int:
-        """Find peak activity hour across all users"""
-        hourly_totals = [0] * 24
+        """Find peak activity hour across all users"""        hourly_totals = [0] * 24
         for data in user_activity.values():
             for hour, count in enumerate(data['hourly_activity']):
                 hourly_totals[hour] += count
@@ -315,8 +297,7 @@ class LogPatternAnalyzer:
         return hourly_totals.index(max(hourly_totals))
     
     def _calculate_service_distribution(self, user_activity: Dict[str, Any]) -> Dict[str, int]:
-        """Calculate service usage distribution"""
-        service_counts = {}
+        """Calculate service usage distribution"""        service_counts = {}
         for data in user_activity.values():
             for service in data['services_used']:
                 service_counts[service] = service_counts.get(service, 0) + 1
@@ -325,13 +306,11 @@ class LogPatternAnalyzer:
 
 
 class TrendAnalyzer:
-    """Analyze trends in log data"""
-    
+    """Analyze trends in log data"""    
     async def analyze_volume_trends(self, 
                                    log_data: List[Dict[str, Any]],
                                    time_bucket_minutes: int = 60) -> Dict[str, Any]:
-        """Analyze log volume trends over time"""
-        if not log_data:
+        """Analyze log volume trends over time"""        if not log_data:
             return {"trend": TrendDirection.STABLE, "data_points": []}
         
         # Group logs by time buckets
@@ -379,8 +358,7 @@ class TrendAnalyzer:
         }
     
     def _calculate_trend_direction(self, values: List[int]) -> TrendDirection:
-        """Calculate trend direction from values"""
-        if len(values) < 3:
+        """Calculate trend direction from values"""        if len(values) < 3:
             return TrendDirection.STABLE
         
         # Simple linear trend
@@ -406,8 +384,7 @@ class TrendAnalyzer:
                 return TrendDirection.STABLE
     
     def _calculate_volatility(self, values: List[int]) -> float:
-        """Calculate volatility score"""
-        if len(values) < 2:
+        """Calculate volatility score"""        if len(values) < 2:
             return 0.0
         
         mean_val = statistics.mean(values)
@@ -418,8 +395,7 @@ class TrendAnalyzer:
 
 
 class LogAnalyticsEngine:
-    """Complete log analytics engine for IA Influencer Agent"""
-    
+    """Complete log analytics engine for IA Influencer Agent"""    
     def __init__(self, elasticsearch_manager: ElasticsearchManager):
         self.es_manager = elasticsearch_manager
         self.anomaly_detector = AnomalyDetector()
@@ -430,8 +406,7 @@ class LogAnalyticsEngine:
         self._setup_default_alerts_and_metrics()
     
     def _setup_default_alerts_and_metrics(self):
-        """Setup default alerts and metrics for IA Influencer Agent"""
-        
+        """Setup default alerts and metrics for IA Influencer Agent"""        
         # Default alerts
         default_alerts = [
             LogAlert(
@@ -528,8 +503,7 @@ class LogAnalyticsEngine:
         self.metrics.extend(default_metrics)
     
     async def compute_metrics(self, time_range_hours: int = 24) -> List[AnalyticsResult]:
-        """Compute all defined metrics"""
-        end_time = datetime.now(timezone.utc)
+        """Compute all defined metrics"""        end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=time_range_hours)
         
         results = []
@@ -569,8 +543,7 @@ class LogAnalyticsEngine:
                                     metric: LogMetric,
                                     start_time: datetime,
                                     end_time: datetime) -> Union[float, int]:
-        """Compute a single metric value"""
-        
+        """Compute a single metric value"""        
         query_builder = QueryBuilder().add_time_range(start_time, end_time)
         
         # Add filters if specified
@@ -614,8 +587,7 @@ class LogAnalyticsEngine:
         return 0
     
     async def check_alerts(self) -> List[Dict[str, Any]]:
-        """Check all defined alerts"""
-        triggered_alerts = []
+        """Check all defined alerts"""        triggered_alerts = []
         current_time = datetime.now(timezone.utc)
         
         for alert in self.alerts:
@@ -658,8 +630,7 @@ class LogAnalyticsEngine:
         return triggered_alerts
     
     async def detect_anomalies(self, hours_back: int = 24) -> List[Dict[str, Any]]:
-        """Detect anomalies in recent logs"""
-        end_time = datetime.now(timezone.utc)
+        """Detect anomalies in recent logs"""        end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=hours_back)
         
         # Get recent logs for training and detection
@@ -683,8 +654,7 @@ class LogAnalyticsEngine:
         return anomalies
     
     async def analyze_error_patterns(self, hours_back: int = 24) -> Dict[str, Any]:
-        """Analyze error patterns in recent logs"""
-        end_time = datetime.now(timezone.utc)
+        """Analyze error patterns in recent logs"""        end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=hours_back)
         
         # Get error logs
@@ -698,8 +668,7 @@ class LogAnalyticsEngine:
         return await self.pattern_analyzer.analyze_error_patterns(error_logs)
     
     async def analyze_user_activity(self, hours_back: int = 24) -> Dict[str, Any]:
-        """Analyze user activity patterns"""
-        end_time = datetime.now(timezone.utc)
+        """Analyze user activity patterns"""        end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=hours_back)
         
         # Get user activity logs
@@ -713,8 +682,7 @@ class LogAnalyticsEngine:
         return await self.pattern_analyzer.analyze_user_activity_patterns(user_logs)
     
     async def analyze_trends(self, hours_back: int = 24) -> Dict[str, Any]:
-        """Analyze log volume and error trends"""
-        end_time = datetime.now(timezone.utc)
+        """Analyze log volume and error trends"""        end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=hours_back)
         
         # Get all logs for volume analysis
@@ -742,8 +710,7 @@ class LogAnalyticsEngine:
         }
     
     async def generate_dashboard_data(self) -> Dict[str, Any]:
-        """Generate comprehensive dashboard data"""
-        # Compute current metrics
+        """Generate comprehensive dashboard data"""        # Compute current metrics
         metrics = await self.compute_metrics(24)
         
         # Check alerts
@@ -779,23 +746,19 @@ class LogAnalyticsEngine:
         }
     
     def add_alert(self, alert: LogAlert):
-        """Add custom alert"""
-        self.alerts.append(alert)
+        """Add custom alert"""        self.alerts.append(alert)
     
     def add_metric(self, metric: LogMetric):
-        """Add custom metric"""
-        self.metrics.append(metric)
+        """Add custom metric"""        self.metrics.append(metric)
     
     def get_alert(self, alert_id: str) -> Optional[LogAlert]:
-        """Get alert by ID"""
-        for alert in self.alerts:
+        """Get alert by ID"""        for alert in self.alerts:
             if alert.id == alert_id:
                 return alert
         return None
     
     def update_alert(self, alert_id: str, **kwargs) -> bool:
-        """Update alert configuration"""
-        alert = self.get_alert(alert_id)
+        """Update alert configuration"""        alert = self.get_alert(alert_id)
         if alert:
             for key, value in kwargs.items():
                 if hasattr(alert, key):
@@ -804,8 +767,7 @@ class LogAnalyticsEngine:
         return False
     
     def delete_alert(self, alert_id: str) -> bool:
-        """Delete alert"""
-        for i, alert in enumerate(self.alerts):
+        """Delete alert"""        for i, alert in enumerate(self.alerts):
             if alert.id == alert_id:
                 del self.alerts[i]
                 return True

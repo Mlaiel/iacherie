@@ -1,5 +1,4 @@
-"""
-API Security and Firewall Module
+"""API Security and Firewall Module
 Advanced API protection and firewall for IA Influencer Agent
 
 Features:
@@ -20,7 +19,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 License: Proprietary - Contact author for licensing terms
 """
-
 import asyncio
 import time
 import json
@@ -54,8 +52,7 @@ from backend.core.logging import SecurityLogger
 
 
 class RateLimitType(Enum):
-    """Types of rate limiting with priority levels"""
-    IP_BASED = "ip_based"
+    """Types of rate limiting with priority levels"""    IP_BASED = "ip_based"
     USER_BASED = "user_based"
     ENDPOINT_BASED = "endpoint_based"
     CONTENT_BASED = "content_based"
@@ -66,16 +63,14 @@ class RateLimitType(Enum):
 
 
 class BlockAction(Enum):
-    """Actions to take when blocking requests"""
-    DENY = "deny"
+    """Actions to take when blocking requests"""    DENY = "deny"
     DELAY = "delay"
     CAPTCHA = "captcha"
     REDIRECT = "redirect"
 
 
 class ThreatLevel(Enum):
-    """Threat levels for requests"""
-    LOW = 1
+    """Threat levels for requests"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
@@ -83,8 +78,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class RateLimitRule:
-    """Rate limiting rule definition"""
-    rule_id: str
+    """Rate limiting rule definition"""    rule_id: str
     limit_type: RateLimitType
     requests_per_window: int
     window_seconds: int
@@ -99,8 +93,7 @@ class RateLimitRule:
 
 @dataclass
 class SecurityRule:
-    """Security filtering rule"""
-    rule_id: str
+    """Security filtering rule"""    rule_id: str
     name: str
     description: str
     pattern: str
@@ -114,8 +107,7 @@ class SecurityRule:
 
 @dataclass
 class RequestAnalysis:
-    """Request analysis result"""
-    request_id: str
+    """Request analysis result"""    request_id: str
     source_ip: str
     endpoint: str
     method: str
@@ -131,8 +123,7 @@ class RequestAnalysis:
 
 
 class RateLimiter:
-    """Advanced rate limiting implementation"""
-    
+    """Advanced rate limiting implementation"""    
     def __init__(self):
         self.logger = SecurityLogger("RateLimiter")
         self.cache = CacheManager()
@@ -145,8 +136,7 @@ class RateLimiter:
         self.request_counters = defaultdict(lambda: defaultdict(deque))
     
     def _initialize_default_rules(self) -> List[RateLimitRule]:
-        """Initialize default rate limiting rules"""
-        rules = []
+        """Initialize default rate limiting rules"""        rules = []
         
         # Global rate limit
         rules.append(RateLimitRule(
@@ -202,8 +192,7 @@ class RateLimiter:
         request: Request, 
         user_id: Optional[str] = None
     ) -> Tuple[bool, Optional[str]]:
-        """Check if request exceeds rate limits"""
-        try:
+        """Check if request exceeds rate limits"""        try:
             source_ip = self._get_client_ip(request)
             endpoint = str(request.url.path)
             method = request.method
@@ -239,8 +228,7 @@ class RateLimiter:
         source_ip: str, 
         user_id: Optional[str]
     ) -> bool:
-        """Check if rate limiting rule applies to request"""
-        
+        """Check if rate limiting rule applies to request"""        
         # Check IP exemptions
         if source_ip in rule.exempted_ips:
             return False
@@ -270,8 +258,7 @@ class RateLimiter:
         method: str,
         user_id: Optional[str]
     ) -> Tuple[bool, Optional[str]]:
-        """Check if specific rule is violated"""
-        try:
+        """Check if specific rule is violated"""        try:
             current_time = time.time()
             
             # Determine cache key based on rule type
@@ -317,8 +304,7 @@ class RateLimiter:
             return False, None
     
     def _get_client_ip(self, request: Request) -> str:
-        """Extract client IP from request"""
-        # Check for forwarded headers
+        """Extract client IP from request"""        # Check for forwarded headers
         forwarded_for = request.headers.get("x-forwarded-for")
         if forwarded_for:
             return forwarded_for.split(",")[0].strip()
@@ -332,8 +318,7 @@ class RateLimiter:
 
 
 class DDoSProtection:
-    """DDoS detection and protection"""
-    
+    """DDoS detection and protection"""    
     def __init__(self, rate_limiter: RateLimiter):
         self.rate_limiter = rate_limiter
         self.logger = SecurityLogger("DDoSProtection")
@@ -352,8 +337,7 @@ class DDoSProtection:
         self.blocked_subnets = set()
     
     async def detect_ddos(self, request: Request) -> Tuple[bool, Optional[str]]:
-        """Detect DDoS attack patterns"""
-        try:
+        """Detect DDoS attack patterns"""        try:
             current_time = time.time()
             source_ip = self.rate_limiter._get_client_ip(request)
             
@@ -379,8 +363,7 @@ class DDoSProtection:
             return False, None
     
     async def _is_ip_blocked(self, ip_address: str) -> bool:
-        """Check if IP address is blocked"""
-        try:
+        """Check if IP address is blocked"""        try:
             # Check exact IP
             if ip_address in self.blocked_ips:
                 return True
@@ -404,8 +387,7 @@ class DDoSProtection:
             return False
     
     async def _update_metrics(self, source_ip: str, request: Request):
-        """Update DDoS detection metrics"""
-        try:
+        """Update DDoS detection metrics"""        try:
             current_minute = int(time.time() // 60)
             
             # Global request counter
@@ -435,8 +417,7 @@ class DDoSProtection:
             self.logger.error(f"Metrics update failed: {str(e)}")
     
     async def _check_attack_patterns(self) -> Tuple[bool, Optional[str]]:
-        """Check for DDoS attack patterns"""
-        try:
+        """Check for DDoS attack patterns"""        try:
             current_minute = int(time.time() // 60)
             
             # Check global request rate
@@ -468,8 +449,7 @@ class DDoSProtection:
             return False, None
     
     async def _implement_protection(self, source_ip: str, reason: str):
-        """Implement DDoS protection measures"""
-        try:
+        """Implement DDoS protection measures"""        try:
             # Block IP temporarily
             block_duration = 300  # 5 minutes
             cache_key = f"blocked_ip:{source_ip}"
@@ -488,14 +468,12 @@ class DDoSProtection:
             self.logger.error(f"Protection implementation failed: {str(e)}")
     
     async def _send_ddos_alert(self, source_ip: str, reason: str):
-        """Send DDoS alert notification"""
-        # Implementation depends on your notification system
+        """Send DDoS alert notification"""        # Implementation depends on your notification system
         pass
 
 
 class RequestFilter:
-    """Advanced request filtering and validation"""
-    
+    """Advanced request filtering and validation"""    
     def __init__(self):
         self.logger = SecurityLogger("RequestFilter")
         self.cache = CacheManager()
@@ -508,8 +486,7 @@ class RequestFilter:
         self.allowed_countries = set()  # If empty, all countries allowed
     
     def _initialize_security_rules(self) -> List[SecurityRule]:
-        """Initialize security filtering rules"""
-        rules = []
+        """Initialize security filtering rules"""        rules = []
         
         # SQL Injection detection
         rules.append(SecurityRule(
@@ -569,8 +546,7 @@ class RequestFilter:
         return rules
     
     async def filter_request(self, request: Request) -> Tuple[bool, Optional[str], ThreatLevel]:
-        """Filter incoming request through security rules"""
-        try:
+        """Filter incoming request through security rules"""        try:
             source_ip = self._get_client_ip(request)
             
             # Check geo-blocking
@@ -604,8 +580,7 @@ class RequestFilter:
             return False, None, ThreatLevel.LOW
     
     async def _check_geo_blocking(self, ip_address: str) -> Tuple[bool, Optional[str]]:
-        """Check if request should be geo-blocked"""
-        try:
+        """Check if request should be geo-blocked"""        try:
             # Skip private/local IPs
             ip = ipaddress.ip_address(ip_address)
             if ip.is_private or ip.is_loopback:
@@ -632,8 +607,7 @@ class RequestFilter:
             return False, None
     
     async def _get_country_code(self, ip_address: str) -> Optional[str]:
-        """Get country code for IP address"""
-        # Check cache first
+        """Get country code for IP address"""        # Check cache first
         cache_key = f"geo_country:{ip_address}"
         cached_country = await self.cache.get(cache_key)
         if cached_country:
@@ -649,8 +623,7 @@ class RequestFilter:
         return country_code
     
     async def _check_rule_pattern(self, request: Request, rule: SecurityRule) -> Tuple[bool, str]:
-        """Check if request matches security rule pattern"""
-        try:
+        """Check if request matches security rule pattern"""        try:
             # Check URL path
             url_path = str(request.url.path)
             if self._pattern_matches(rule.pattern, url_path, rule.is_regex):
@@ -679,8 +652,7 @@ class RequestFilter:
             return False, ""
     
     def _pattern_matches(self, pattern: str, text: str, is_regex: bool) -> bool:
-        """Check if pattern matches text"""
-        try:
+        """Check if pattern matches text"""        try:
             if is_regex:
                 return bool(re.search(pattern, text))
             else:
@@ -689,8 +661,7 @@ class RequestFilter:
             return False
     
     def _get_client_ip(self, request: Request) -> str:
-        """Extract client IP from request"""
-        forwarded_for = request.headers.get("x-forwarded-for")
+        """Extract client IP from request"""        forwarded_for = request.headers.get("x-forwarded-for")
         if forwarded_for:
             return forwarded_for.split(",")[0].strip()
         
@@ -702,8 +673,7 @@ class RequestFilter:
 
 
 class SecurityGateway:
-    """Main security gateway orchestrating all security components"""
-    
+    """Main security gateway orchestrating all security components"""    
     def __init__(self):
         self.rate_limiter = RateLimiter()
         self.ddos_protection = DDoSProtection(self.rate_limiter)
@@ -716,8 +686,7 @@ class SecurityGateway:
         request: Request, 
         user_id: Optional[str] = None
     ) -> RequestAnalysis:
-        """Comprehensive request analysis"""
-        try:
+        """Comprehensive request analysis"""        try:
             source_ip = self._get_client_ip(request)
             endpoint = str(request.url.path)
             method = request.method
@@ -781,8 +750,7 @@ class SecurityGateway:
             )
     
     def _detect_bot(self, user_agent: str) -> bool:
-        """Detect if request is from a bot"""
-        try:
+        """Detect if request is from a bot"""        try:
             if not user_agent:
                 return True  # No user agent is suspicious
             
@@ -810,8 +778,7 @@ class SecurityGateway:
             return False
     
     async def _get_geolocation(self, ip_address: str) -> Optional[Dict[str, str]]:
-        """Get geolocation for IP address"""
-        try:
+        """Get geolocation for IP address"""        try:
             # Check cache first
             cache_key = f"geolocation:{ip_address}"
             cached_geo = await self.cache.get(cache_key)
@@ -842,8 +809,7 @@ class SecurityGateway:
             return None
     
     def _get_client_ip(self, request: Request) -> str:
-        """Extract client IP from request"""
-        forwarded_for = request.headers.get("x-forwarded-for")
+        """Extract client IP from request"""        forwarded_for = request.headers.get("x-forwarded-for")
         if forwarded_for:
             return forwarded_for.split(",")[0].strip()
         
@@ -855,16 +821,14 @@ class SecurityGateway:
 
 
 class APIFirewall(BaseHTTPMiddleware):
-    """API Firewall middleware for FastAPI"""
-    
+    """API Firewall middleware for FastAPI"""    
     def __init__(self, app, security_gateway: SecurityGateway):
         super().__init__(app)
         self.security_gateway = security_gateway
         self.logger = SecurityLogger("APIFirewall")
     
     async def dispatch(self, request: Request, call_next: RequestResponseEndpoint) -> Response:
-        """Process request through security gateway"""
-        try:
+        """Process request through security gateway"""        try:
             start_time = time.time()
             
             # Analyze request

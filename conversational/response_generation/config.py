@@ -1,5 +1,4 @@
-"""
-Response Generation Configuration - IA Influencer Agent
+"""Response Generation Configuration - IA Influencer Agent
 
 Enterprise configuration management for response generation system with 
 comprehensive environment-specific settings, AI model configurations, 
@@ -23,7 +22,6 @@ Features:
 - Business intelligence configuration
 - Content protection and compliance settings
 """
-
 import os
 import json
 from typing import Dict, List, Optional, Any, Union
@@ -38,8 +36,7 @@ from cryptography.fernet import Fernet
 
 
 class Environment(Enum):
-    """Environment types for deployment"""
-    DEVELOPMENT = "development"
+    """Environment types for deployment"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -47,8 +44,7 @@ class Environment(Enum):
 
 
 class ResponseQualityLevel(Enum):
-    """Response quality configuration levels"""
-    BASIC = "basic"
+    """Response quality configuration levels"""    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     PREMIUM = "premium"
@@ -57,8 +53,7 @@ class ResponseQualityLevel(Enum):
 
 
 class ModelProvider(Enum):
-    """AI model provider types"""
-    OPENAI = "openai"
+    """AI model provider types"""    OPENAI = "openai"
     ANTHROPIC = "anthropic"
     GOOGLE = "google"
     HUGGINGFACE = "huggingface"
@@ -68,8 +63,7 @@ class ModelProvider(Enum):
 
 
 class PlatformType(Enum):
-    """Platform integration types"""
-    SPOTIFY = "spotify"
+    """Platform integration types"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -83,8 +77,7 @@ class PlatformType(Enum):
 
 @dataclass
 class ModelConfiguration:
-    """AI model configuration for response generation"""
-    model_name: str
+    """AI model configuration for response generation"""    model_name: str
     model_type: str
     provider: ModelProvider
     api_endpoint: Optional[str] = None
@@ -108,8 +101,7 @@ class ModelConfiguration:
 
 @dataclass 
 class PlatformConfiguration:
-    """Platform-specific API configuration"""
-    platform: PlatformType
+    """Platform-specific API configuration"""    platform: PlatformType
     client_id: Optional[SecretStr] = None
     client_secret: Optional[SecretStr] = None
     access_token: Optional[SecretStr] = None
@@ -128,8 +120,7 @@ class PlatformConfiguration:
 
 @dataclass
 class DatabaseConfiguration:
-    """Database connection and optimization settings"""
-    database_url: str
+    """Database connection and optimization settings"""    database_url: str
     pool_size: int = 20
     max_overflow: int = 30
     pool_timeout: int = 30
@@ -145,8 +136,7 @@ class DatabaseConfiguration:
 
 @dataclass
 class CacheConfiguration:
-    """Cache system configuration"""
-    redis_url: str
+    """Cache system configuration"""    redis_url: str
     default_ttl: int = 3600
     max_connections: int = 100
     socket_timeout: int = 5
@@ -161,8 +151,7 @@ class CacheConfiguration:
 
 @dataclass
 class SecurityConfiguration:
-    """Security and encryption settings"""
-    jwt_secret_key: SecretStr
+    """Security and encryption settings"""    jwt_secret_key: SecretStr
     jwt_algorithm: str = "HS256"
     jwt_expiration_hours: int = 24
     encryption_key: SecretStr
@@ -180,8 +169,7 @@ class SecurityConfiguration:
 
 @dataclass
 class QualityConfiguration:
-    """Response quality assurance settings"""
-    quality_level: ResponseQualityLevel = ResponseQualityLevel.HIGH
+    """Response quality assurance settings"""    quality_level: ResponseQualityLevel = ResponseQualityLevel.HIGH
     min_confidence_score: float = 0.8
     enable_fact_checking: bool = True
     enable_bias_detection: bool = True
@@ -198,8 +186,7 @@ class QualityConfiguration:
 
 @dataclass
 class PersonalizationConfiguration:
-    """User personalization settings"""
-    enable_personalization: bool = True
+    """User personalization settings"""    enable_personalization: bool = True
     learning_rate: float = 0.01
     min_interactions_for_personalization: int = 10
     max_user_profile_size: int = 10000
@@ -214,8 +201,7 @@ class PersonalizationConfiguration:
 
 @dataclass
 class BusinessIntelligenceConfiguration:
-    """Business intelligence and analytics settings"""
-    enable_revenue_tracking: bool = True
+    """Business intelligence and analytics settings"""    enable_revenue_tracking: bool = True
     enable_market_analysis: bool = True
     enable_competitor_monitoring: bool = True
     enable_trend_prediction: bool = True
@@ -230,8 +216,7 @@ class BusinessIntelligenceConfiguration:
 
 @dataclass
 class ContentProtectionConfiguration:
-    """Content protection and IP management settings"""
-    enable_fingerprinting: bool = True
+    """Content protection and IP management settings"""    enable_fingerprinting: bool = True
     enable_monitoring: bool = True
     enable_automated_takedowns: bool = True
     fingerprint_similarity_threshold: float = 0.85
@@ -245,8 +230,7 @@ class ContentProtectionConfiguration:
 
 @dataclass
 class MultimodalConfiguration:
-    """Multimodal content generation settings"""
-    enable_audio_generation: bool = True
+    """Multimodal content generation settings"""    enable_audio_generation: bool = True
     enable_image_generation: bool = True
     enable_video_generation: bool = True
     enable_text_to_speech: bool = True
@@ -262,8 +246,7 @@ class MultimodalConfiguration:
 
 @dataclass
 class InternationalizationConfiguration:
-    """Multi-language and localization settings"""
-    default_language: str = "en"
+    """Multi-language and localization settings"""    default_language: str = "en"
     supported_languages: List[str] = field(default_factory=lambda: [
         "en", "es", "fr", "de", "it", "pt", "ru", "zh", "ja", "ko", "ar", "hi"
     ])
@@ -277,8 +260,7 @@ class InternationalizationConfiguration:
 
 @dataclass
 class PerformanceConfiguration:
-    """Performance optimization settings"""
-    enable_caching: bool = True
+    """Performance optimization settings"""    enable_caching: bool = True
     enable_async_processing: bool = True
     max_concurrent_requests: int = 100
     request_timeout_seconds: int = 30
@@ -293,8 +275,7 @@ class PerformanceConfiguration:
 
 @dataclass
 class LoggingConfiguration:
-    """Logging and monitoring settings"""
-    log_level: str = "INFO"
+    """Logging and monitoring settings"""    log_level: str = "INFO"
     log_format: str = "json"
     enable_structured_logging: bool = True
     enable_performance_logging: bool = True
@@ -309,8 +290,7 @@ class LoggingConfiguration:
 
 
 class ResponseGenerationConfig(BaseSettings):
-    """Main configuration class for the response generation system"""
-    
+    """Main configuration class for the response generation system"""    
     # Environment settings
     environment: Environment = Field(default=Environment.DEVELOPMENT, env="ENVIRONMENT")
     debug: bool = Field(default=False, env="DEBUG")
@@ -365,8 +345,7 @@ class ResponseGenerationConfig(BaseSettings):
     
     @classmethod
     def load_from_file(cls, config_path: str) -> 'ResponseGenerationConfig':
-        """Load configuration from YAML or JSON file"""
-        config_file = Path(config_path)
+        """Load configuration from YAML or JSON file"""        config_file = Path(config_path)
         
         if not config_file.exists():
             raise FileNotFoundError(f"Configuration file not found: {config_path}")
@@ -382,8 +361,7 @@ class ResponseGenerationConfig(BaseSettings):
         return cls(**config_data)
     
     def save_to_file(self, config_path: str) -> None:
-        """Save configuration to YAML or JSON file"""
-        config_file = Path(config_path)
+        """Save configuration to YAML or JSON file"""        config_file = Path(config_path)
         config_data = self.dict()
         
         # Convert SecretStr objects to strings for serialization
@@ -408,19 +386,16 @@ class ResponseGenerationConfig(BaseSettings):
                 raise ValueError(f"Unsupported configuration file format: {config_file.suffix}")
     
     def get_platform_config(self, platform: PlatformType) -> Optional[PlatformConfiguration]:
-        """Get configuration for a specific platform"""
-        for platform_config in self.platforms:
+        """Get configuration for a specific platform"""        for platform_config in self.platforms:
             if platform_config.platform == platform:
                 return platform_config
         return None
     
     def is_production(self) -> bool:
-        """Check if running in production environment"""
-        return self.environment == Environment.PRODUCTION
+        """Check if running in production environment"""        return self.environment == Environment.PRODUCTION
     
     def get_model_config(self, model_name: Optional[str] = None) -> ModelConfiguration:
-        """Get model configuration by name or return primary model"""
-        if model_name:
+        """Get model configuration by name or return primary model"""        if model_name:
             for model in self.fallback_models:
                 if model.model_name == model_name:
                     return model
@@ -452,14 +427,12 @@ DEFAULT_CONFIGS = {
 
 
 def create_config_for_environment(env: Environment) -> ResponseGenerationConfig:
-    """Create configuration for specific environment"""
-    base_config = DEFAULT_CONFIGS.get(env, {})
+    """Create configuration for specific environment"""    base_config = DEFAULT_CONFIGS.get(env, {})
     return ResponseGenerationConfig(environment=env, **base_config)
 
 
 def encrypt_sensitive_config(config: ResponseGenerationConfig, encryption_key: bytes) -> Dict[str, Any]:
-    """Encrypt sensitive configuration values"""
-    fernet = Fernet(encryption_key)
+    """Encrypt sensitive configuration values"""    fernet = Fernet(encryption_key)
     config_dict = config.dict()
     
     # Encrypt sensitive fields
@@ -501,8 +474,7 @@ def encrypt_sensitive_config(config: ResponseGenerationConfig, encryption_key: b
 
 @dataclass
 class ResponseConfiguration:
-    """Response generation configuration"""
-    max_length: int = 2000
+    """Response generation configuration"""    max_length: int = 2000
     min_length: int = 50
     quality_threshold: float = 0.8
     personalization_level: float = 0.7
@@ -517,10 +489,8 @@ class ResponseConfiguration:
 
 
 class ResponseGenerationSettings(BaseSettings):
-    """
-    Comprehensive settings for response generation system
-    """
-    
+    """    Comprehensive settings for response generation system
+    """    
     # Environment Configuration
     environment: Environment = Environment.DEVELOPMENT
     debug: bool = False
@@ -576,38 +546,32 @@ class ResponseGenerationSettings(BaseSettings):
 
 
 class ResponseGenerationConfig:
-    """
-    Central configuration manager for response generation system
-    """
-    
+    """    Central configuration manager for response generation system
+    """    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or self._get_default_config_path()
         self.settings = ResponseGenerationSettings()
         self._load_configuration()
     
     def _get_default_config_path(self) -> str:
-        """Get default configuration file path"""
-        return os.path.join(
+        """Get default configuration file path"""        return os.path.join(
             os.path.dirname(__file__), 
             "config", 
             f"response_generation_{self.settings.environment.value}.yaml"
         )
     
     def _load_configuration(self):
-        """Load configuration from file"""
-        if os.path.exists(self.config_path):
+        """Load configuration from file"""        if os.path.exists(self.config_path):
             with open(self.config_path, 'r') as f:
                 config_data = yaml.safe_load(f)
                 self._merge_configuration(config_data)
     
     def _merge_configuration(self, config_data: Dict[str, Any]):
-        """Merge configuration data with settings"""
-        # Implementation for merging configuration
+        """Merge configuration data with settings"""        # Implementation for merging configuration
         pass
     
     def get_model_config(self, model_name: str) -> ModelConfiguration:
-        """Get configuration for specific AI model"""
-        model_configs = {
+        """Get configuration for specific AI model"""        model_configs = {
             "gpt-4": ModelConfiguration(
                 model_name="gpt-4",
                 model_type="openai",
@@ -634,8 +598,7 @@ class ResponseGenerationConfig:
         return model_configs.get(model_name, model_configs["gpt-4"])
     
     def get_response_config(self, response_type: str) -> ResponseConfiguration:
-        """Get configuration for specific response type"""
-        base_config = ResponseConfiguration()
+        """Get configuration for specific response type"""        base_config = ResponseConfiguration()
         
         type_specific_configs = {
             "business": ResponseConfiguration(
@@ -663,8 +626,7 @@ class ResponseGenerationConfig:
         return type_specific_configs.get(response_type, base_config)
     
     def get_feature_flags(self) -> Dict[str, bool]:
-        """Get all feature flags"""
-        return {
+        """Get all feature flags"""        return {
             "revenue_intelligence": self.settings.enable_revenue_intelligence,
             "protection_responses": self.settings.enable_protection_responses,
             "collaboration_intelligence": self.settings.enable_collaboration_intelligence,
@@ -677,8 +639,7 @@ class ResponseGenerationConfig:
         }
     
     def get_performance_config(self) -> Dict[str, Any]:
-        """Get performance configuration"""
-        return {
+        """Get performance configuration"""        return {
             "max_concurrent_responses": self.settings.max_concurrent_responses,
             "response_timeout": self.settings.response_timeout,
             "cache_enabled": self.settings.cache_enabled,
@@ -687,23 +648,20 @@ class ResponseGenerationConfig:
         }
     
     def get_security_config(self) -> Dict[str, Any]:
-        """Get security configuration"""
-        return {
+        """Get security configuration"""        return {
             "content_filtering": self.settings.enable_content_filtering,
             "privacy_protection": self.settings.enable_privacy_protection,
             "audit_logging": self.settings.enable_audit_logging
         }
     
     def update_setting(self, key: str, value: Any):
-        """Update a specific setting"""
-        if hasattr(self.settings, key):
+        """Update a specific setting"""        if hasattr(self.settings, key):
             setattr(self.settings, key, value)
         else:
             raise ValueError(f"Unknown setting: {key}")
     
     def save_configuration(self):
-        """Save current configuration to file"""
-        config_data = {
+        """Save current configuration to file"""        config_data = {
             "environment": self.settings.environment.value,
             "quality_level": self.settings.quality_level.value,
             "performance": self.get_performance_config(),
@@ -750,8 +708,7 @@ TESTING_CONFIG = {
 
 
 def get_config_for_environment(env: Environment) -> Dict[str, Any]:
-    """Get configuration preset for specific environment"""
-    configs = {
+    """Get configuration preset for specific environment"""    configs = {
         Environment.DEVELOPMENT: DEVELOPMENT_CONFIG,
         Environment.PRODUCTION: PRODUCTION_CONFIG,
         Environment.TESTING: TESTING_CONFIG,
@@ -762,8 +719,7 @@ def get_config_for_environment(env: Environment) -> Dict[str, Any]:
 
 
 def apply_environment_config(env: Environment):
-    """Apply environment-specific configuration"""
-    env_config = get_config_for_environment(env)
+    """Apply environment-specific configuration"""    env_config = get_config_for_environment(env)
     
     for key, value in env_config.items():
         config.update_setting(key, value)

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Database Manager for Fingerprinting
+"""IA Influencer Agent - Database Manager for Fingerprinting
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 AVERTISSEMENT LÉGAL STRICT:
@@ -10,7 +9,6 @@ constituera une violation des droits d'auteur.
 
 Advanced database management for content fingerprints with high-performance storage
 """
-
 import asyncio
 import json
 import logging
@@ -31,20 +29,16 @@ from .text_processor import TextFingerprint
 logger = logging.getLogger(__name__)
 
 class DatabaseManager:
-    """
-    Professional database manager for content fingerprints
+    """    Professional database manager for content fingerprints
     Handles high-performance storage, retrieval, and similarity searches
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize database manager"""
-        self.config = config or self._get_default_config()
+        """Initialize database manager"""        self.config = config or self._get_default_config()
         self.pool = None
         self._initialized = False
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default database configuration"""
-        return {
+        """Get default database configuration"""        return {
             'host': 'localhost',
             'port': 5432,
             'database': 'ia_influencer_fingerprints',
@@ -56,8 +50,7 @@ class DatabaseManager:
         }
     
     async def initialize(self):
-        """Initialize database connection pool and tables"""
-        try:
+        """Initialize database connection pool and tables"""        try:
             # Create connection pool
             self.pool = await asyncpg.create_pool(
                 host=self.config['host'],
@@ -84,11 +77,9 @@ class DatabaseManager:
             raise
     
     async def _create_tables(self):
-        """Create database tables for fingerprints"""
-        async with self.pool.acquire() as conn:
+        """Create database tables for fingerprints"""        async with self.pool.acquire() as conn:
             # Main fingerprints table
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS fingerprints (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS fingerprints (
                     id SERIAL PRIMARY KEY,
                     content_hash VARCHAR(64) UNIQUE NOT NULL,
                     content_type VARCHAR(20) NOT NULL,
@@ -103,8 +94,7 @@ class DatabaseManager:
             """)
             
             # Audio fingerprints table
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS audio_fingerprints (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS audio_fingerprints (
                     id SERIAL PRIMARY KEY,
                     fingerprint_id INTEGER REFERENCES fingerprints(id) ON DELETE CASCADE,
                     spectral_features FLOAT8[],
@@ -118,8 +108,7 @@ class DatabaseManager:
             """)
             
             # Video fingerprints table
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS video_fingerprints (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS video_fingerprints (
                     id SERIAL PRIMARY KEY,
                     fingerprint_id INTEGER REFERENCES fingerprints(id) ON DELETE CASCADE,
                     frame_hashes TEXT[],
@@ -136,8 +125,7 @@ class DatabaseManager:
             """)
             
             # Image fingerprints table
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS image_fingerprints (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS image_fingerprints (
                     id SERIAL PRIMARY KEY,
                     fingerprint_id INTEGER REFERENCES fingerprints(id) ON DELETE CASCADE,
                     perceptual_hash VARCHAR(64),
@@ -153,8 +141,7 @@ class DatabaseManager:
             """)
             
             # Text fingerprints table
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS text_fingerprints (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS text_fingerprints (
                     id SERIAL PRIMARY KEY,
                     fingerprint_id INTEGER REFERENCES fingerprints(id) ON DELETE CASCADE,
                     semantic_hash VARCHAR(32),
@@ -172,8 +159,7 @@ class DatabaseManager:
             """)
             
             # Similarity matches table for caching
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS similarity_matches (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS similarity_matches (
                     id SERIAL PRIMARY KEY,
                     fingerprint1_id INTEGER REFERENCES fingerprints(id) ON DELETE CASCADE,
                     fingerprint2_id INTEGER REFERENCES fingerprints(id) ON DELETE CASCADE,
@@ -187,8 +173,7 @@ class DatabaseManager:
             logger.info("Database tables created successfully")
     
     async def _create_indexes(self):
-        """Create database indexes for performance optimization"""
-        async with self.pool.acquire() as conn:
+        """Create database indexes for performance optimization"""        async with self.pool.acquire() as conn:
             indexes = [
                 "CREATE INDEX IF NOT EXISTS idx_fingerprints_content_hash ON fingerprints(content_hash)",
                 "CREATE INDEX IF NOT EXISTS idx_fingerprints_content_type ON fingerprints(content_type)",
@@ -213,31 +198,27 @@ class DatabaseManager:
             logger.info("Database indexes created successfully")
     
     def _serialize_fingerprint(self, fingerprint: Union[AudioFingerprint, VideoFingerprint, ImageFingerprint, TextFingerprint]) -> bytes:
-        """Serialize fingerprint object to bytes"""
-        try:
+        """Serialize fingerprint object to bytes"""        try:
             return pickle.dumps(fingerprint)
         except Exception as e:
             logger.error(f"Failed to serialize fingerprint: {str(e)}")
             raise
     
     def _deserialize_fingerprint(self, data: bytes, content_type: str) -> Union[AudioFingerprint, VideoFingerprint, ImageFingerprint, TextFingerprint]:
-        """Deserialize fingerprint object from bytes"""
-        try:
+        """Deserialize fingerprint object from bytes"""        try:
             return pickle.loads(data)
         except Exception as e:
             logger.error(f"Failed to deserialize fingerprint: {str(e)}")
             raise
     
     async def store_audio_fingerprint(self, fingerprint: AudioFingerprint, file_path: Optional[Path] = None) -> int:
-        """Store audio fingerprint in database"""
-        if not self._initialized:
+        """Store audio fingerprint in database"""        if not self._initialized:
             await self.initialize()
         
         async with self.pool.acquire() as conn:
             async with conn.transaction():
                 # Insert main fingerprint record
-                fingerprint_id = await conn.fetchval("""
-                    INSERT INTO fingerprints (content_hash, content_type, file_path, file_format, 
+                fingerprint_id = await conn.fetchval("""                    INSERT INTO fingerprints (content_hash, content_type, file_path, file_format, 
                                             file_size, metadata, fingerprint_data)
                     VALUES ($1, $2, $3, $4, $5, $6, $7)
                     ON CONFLICT (content_hash) DO UPDATE SET
@@ -252,8 +233,7 @@ class DatabaseManager:
                     self._serialize_fingerprint(fingerprint))
                 
                 # Insert audio-specific data
-                await conn.execute("""
-                    INSERT INTO audio_fingerprints (fingerprint_id, spectral_features, mfcc_features,
+                await conn.execute("""                    INSERT INTO audio_fingerprints (fingerprint_id, spectral_features, mfcc_features,
                                                   chromagram, tempo, duration, sample_rate)
                     VALUES ($1, $2, $3, $4, $5, $6, $7)
                     ON CONFLICT (fingerprint_id) DO UPDATE SET
@@ -275,15 +255,13 @@ class DatabaseManager:
                 return fingerprint_id
     
     async def store_video_fingerprint(self, fingerprint: VideoFingerprint, file_path: Optional[Path] = None) -> int:
-        """Store video fingerprint in database"""
-        if not self._initialized:
+        """Store video fingerprint in database"""        if not self._initialized:
             await self.initialize()
         
         async with self.pool.acquire() as conn:
             async with conn.transaction():
                 # Insert main fingerprint record
-                fingerprint_id = await conn.fetchval("""
-                    INSERT INTO fingerprints (content_hash, content_type, file_path, file_format, 
+                fingerprint_id = await conn.fetchval("""                    INSERT INTO fingerprints (content_hash, content_type, file_path, file_format, 
                                             file_size, metadata, fingerprint_data)
                     VALUES ($1, $2, $3, $4, $5, $6, $7)
                     ON CONFLICT (content_hash) DO UPDATE SET
@@ -298,8 +276,7 @@ class DatabaseManager:
                     self._serialize_fingerprint(fingerprint))
                 
                 # Insert video-specific data
-                await conn.execute("""
-                    INSERT INTO video_fingerprints (fingerprint_id, frame_hashes, histogram_features,
+                await conn.execute("""                    INSERT INTO video_fingerprints (fingerprint_id, frame_hashes, histogram_features,
                                                   edge_features, motion_vectors, keyframes, duration,
                                                   fps, resolution_width, resolution_height)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -328,15 +305,13 @@ class DatabaseManager:
                 return fingerprint_id
     
     async def store_image_fingerprint(self, fingerprint: ImageFingerprint, file_path: Optional[Path] = None) -> int:
-        """Store image fingerprint in database"""
-        if not self._initialized:
+        """Store image fingerprint in database"""        if not self._initialized:
             await self.initialize()
         
         async with self.pool.acquire() as conn:
             async with conn.transaction():
                 # Insert main fingerprint record
-                fingerprint_id = await conn.fetchval("""
-                    INSERT INTO fingerprints (content_hash, content_type, file_path, file_format, 
+                fingerprint_id = await conn.fetchval("""                    INSERT INTO fingerprints (content_hash, content_type, file_path, file_format, 
                                             file_size, metadata, fingerprint_data)
                     VALUES ($1, $2, $3, $4, $5, $6, $7)
                     ON CONFLICT (content_hash) DO UPDATE SET
@@ -351,8 +326,7 @@ class DatabaseManager:
                     self._serialize_fingerprint(fingerprint))
                 
                 # Insert image-specific data
-                await conn.execute("""
-                    INSERT INTO image_fingerprints (fingerprint_id, perceptual_hash, color_histogram,
+                await conn.execute("""                    INSERT INTO image_fingerprints (fingerprint_id, perceptual_hash, color_histogram,
                                                   texture_features, shape_features, sift_features,
                                                   resolution_width, resolution_height, color_space)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
@@ -379,15 +353,13 @@ class DatabaseManager:
                 return fingerprint_id
     
     async def store_text_fingerprint(self, fingerprint: TextFingerprint, file_path: Optional[Path] = None) -> int:
-        """Store text fingerprint in database"""
-        if not self._initialized:
+        """Store text fingerprint in database"""        if not self._initialized:
             await self.initialize()
         
         async with self.pool.acquire() as conn:
             async with conn.transaction():
                 # Insert main fingerprint record
-                fingerprint_id = await conn.fetchval("""
-                    INSERT INTO fingerprints (content_hash, content_type, file_path, file_format, 
+                fingerprint_id = await conn.fetchval("""                    INSERT INTO fingerprints (content_hash, content_type, file_path, file_format, 
                                             file_size, metadata, fingerprint_data)
                     VALUES ($1, $2, $3, $4, $5, $6, $7)
                     ON CONFLICT (content_hash) DO UPDATE SET
@@ -402,8 +374,7 @@ class DatabaseManager:
                     self._serialize_fingerprint(fingerprint))
                 
                 # Insert text-specific data
-                await conn.execute("""
-                    INSERT INTO text_fingerprints (fingerprint_id, semantic_hash, style_features,
+                await conn.execute("""                    INSERT INTO text_fingerprints (fingerprint_id, semantic_hash, style_features,
                                                  linguistic_features, tfidf_features, readability_scores,
                                                  language, word_count, character_count, sentence_count,
                                                  paragraph_count)
@@ -435,13 +406,11 @@ class DatabaseManager:
                 return fingerprint_id
     
     async def get_fingerprint(self, fingerprint_id: int) -> Optional[Union[AudioFingerprint, VideoFingerprint, ImageFingerprint, TextFingerprint]]:
-        """Retrieve fingerprint by ID"""
-        if not self._initialized:
+        """Retrieve fingerprint by ID"""        if not self._initialized:
             await self.initialize()
         
         async with self.pool.acquire() as conn:
-            record = await conn.fetchrow("""
-                SELECT content_type, fingerprint_data
+            record = await conn.fetchrow("""                SELECT content_type, fingerprint_data
                 FROM fingerprints
                 WHERE id = $1
             """, fingerprint_id)
@@ -452,16 +421,14 @@ class DatabaseManager:
     
     async def find_similar_fingerprints(self, fingerprint: Union[AudioFingerprint, VideoFingerprint, ImageFingerprint, TextFingerprint], 
                                       similarity_threshold: float = 0.8, limit: int = 10) -> List[Tuple[int, float]]:
-        """Find similar fingerprints in database"""
-        if not self._initialized:
+        """Find similar fingerprints in database"""        if not self._initialized:
             await self.initialize()
         
         content_type = type(fingerprint).__name__.replace('Fingerprint', '').lower()
         
         # First, check if we already have this exact fingerprint
         async with self.pool.acquire() as conn:
-            existing_id = await conn.fetchval("""
-                SELECT id FROM fingerprints
+            existing_id = await conn.fetchval("""                SELECT id FROM fingerprints
                 WHERE content_hash = $1
             """, fingerprint.content_hash)
             
@@ -469,8 +436,7 @@ class DatabaseManager:
                 return [(existing_id, 1.0)]
             
             # Get all fingerprints of the same type for similarity comparison
-            records = await conn.fetch("""
-                SELECT id, fingerprint_data
+            records = await conn.fetch("""                SELECT id, fingerprint_data
                 FROM fingerprints
                 WHERE content_type = $1
                 ORDER BY created_at DESC
@@ -515,13 +481,11 @@ class DatabaseManager:
         return similarities[:limit]
     
     async def store_similarity_match(self, fingerprint1_id: int, fingerprint2_id: int, similarity_score: float, match_type: str):
-        """Store similarity match for caching"""
-        if not self._initialized:
+        """Store similarity match for caching"""        if not self._initialized:
             await self.initialize()
         
         async with self.pool.acquire() as conn:
-            await conn.execute("""
-                INSERT INTO similarity_matches (fingerprint1_id, fingerprint2_id, similarity_score, match_type)
+            await conn.execute("""                INSERT INTO similarity_matches (fingerprint1_id, fingerprint2_id, similarity_score, match_type)
                 VALUES ($1, $2, $3, $4)
                 ON CONFLICT (fingerprint1_id, fingerprint2_id) DO UPDATE SET
                     similarity_score = EXCLUDED.similarity_score,
@@ -529,13 +493,11 @@ class DatabaseManager:
             """, fingerprint1_id, fingerprint2_id, similarity_score, match_type)
     
     async def get_similarity_matches(self, fingerprint_id: int, similarity_threshold: float = 0.8) -> List[Tuple[int, float]]:
-        """Get cached similarity matches for a fingerprint"""
-        if not self._initialized:
+        """Get cached similarity matches for a fingerprint"""        if not self._initialized:
             await self.initialize()
         
         async with self.pool.acquire() as conn:
-            records = await conn.fetch("""
-                SELECT fingerprint2_id, similarity_score
+            records = await conn.fetch("""                SELECT fingerprint2_id, similarity_score
                 FROM similarity_matches
                 WHERE fingerprint1_id = $1 AND similarity_score >= $2
                 ORDER BY similarity_score DESC
@@ -544,16 +506,14 @@ class DatabaseManager:
             return [(record['fingerprint2_id'], record['similarity_score']) for record in records]
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get database statistics"""
-        if not self._initialized:
+        """Get database statistics"""        if not self._initialized:
             await self.initialize()
         
         async with self.pool.acquire() as conn:
             stats = {}
             
             # Total fingerprints by type
-            type_counts = await conn.fetch("""
-                SELECT content_type, COUNT(*) as count
+            type_counts = await conn.fetch("""                SELECT content_type, COUNT(*) as count
                 FROM fingerprints
                 GROUP BY content_type
             """)
@@ -561,34 +521,29 @@ class DatabaseManager:
             stats['fingerprints_by_type'] = {record['content_type']: record['count'] for record in type_counts}
             
             # Total storage size
-            storage_size = await conn.fetchval("""
-                SELECT pg_size_pretty(pg_total_relation_size('fingerprints')) as size
+            storage_size = await conn.fetchval("""                SELECT pg_size_pretty(pg_total_relation_size('fingerprints')) as size
             """)
             stats['storage_size'] = storage_size
             
             # Recent activity
-            recent_count = await conn.fetchval("""
-                SELECT COUNT(*) FROM fingerprints
+            recent_count = await conn.fetchval("""                SELECT COUNT(*) FROM fingerprints
                 WHERE created_at >= NOW() - INTERVAL '24 hours'
             """)
             stats['recent_fingerprints_24h'] = recent_count
             
             # Similarity matches count
-            matches_count = await conn.fetchval("""
-                SELECT COUNT(*) FROM similarity_matches
+            matches_count = await conn.fetchval("""                SELECT COUNT(*) FROM similarity_matches
             """)
             stats['similarity_matches'] = matches_count
             
             return stats
     
     async def cleanup_old_records(self, days_to_keep: int = 90):
-        """Cleanup old fingerprint records"""
-        if not self._initialized:
+        """Cleanup old fingerprint records"""        if not self._initialized:
             await self.initialize()
         
         async with self.pool.acquire() as conn:
-            deleted_count = await conn.fetchval("""
-                WITH deleted AS (
+            deleted_count = await conn.fetchval("""                WITH deleted AS (
                     DELETE FROM fingerprints
                     WHERE created_at < NOW() - INTERVAL '%s days'
                     RETURNING id
@@ -600,17 +555,14 @@ class DatabaseManager:
             return deleted_count
     
     async def close(self):
-        """Close database connection pool"""
-        if self.pool:
+        """Close database connection pool"""        if self.pool:
             await self.pool.close()
             self._initialized = False
             logger.info("Database connection pool closed")
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        await self.initialize()
+        """Async context manager entry"""        await self.initialize()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        await self.close()
+        """Async context manager exit"""        await self.close()

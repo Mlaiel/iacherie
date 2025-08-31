@@ -1,5 +1,4 @@
-"""
-SEO Optimization Module
+"""SEO Optimization Module
 
 This module provides comprehensive SEO optimization capabilities including
 content optimization, keyword generation, meta-data optimization, and more.
@@ -7,7 +6,6 @@ content optimization, keyword generation, meta-data optimization, and more.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .content_seo_optimizer import ContentSEOOptimizer, OptimizationLevel, ContentAnalysis, SEOOptimizationResult
 from .platform_seo_adapter import PlatformSEOAdapter, Platform, PlatformSEOConfig, PlatformOptimizationResult
 from .keyword_generator_ai import KeywordGeneratorAI, KeywordType, SearchIntent, KeywordResearchResult

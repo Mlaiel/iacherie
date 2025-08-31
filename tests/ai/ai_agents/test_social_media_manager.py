@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for SocialMediaManagerAgent
+"""Comprehensive Tests for SocialMediaManagerAgent
 
 Industrial-grade testing for social media management including cross-platform posting,
 engagement optimization, hashtag strategies, optimal timing, and audience analysis.
@@ -27,7 +24,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -47,12 +43,10 @@ logger = logging.getLogger(__name__)
 
 
 class TestSocialMediaManagerAgent:
-    """Comprehensive test suite for SocialMediaManagerAgent"""
-    
+    """Comprehensive test suite for SocialMediaManagerAgent"""    
     @pytest.fixture
     def social_media_config(self) -> AgentConfiguration:
-        """Social media manager agent configuration"""
-        return AgentConfiguration(
+        """Social media manager agent configuration"""        return AgentConfiguration(
             agent_id="social_media_test",
             agent_name="Test Social Media Manager",
             capabilities={
@@ -79,8 +73,7 @@ class TestSocialMediaManagerAgent:
     
     @pytest.fixture
     async def social_agent(self, social_media_config) -> SocialMediaManagerAgent:
-        """Initialized social media manager agent"""
-        agent = SocialMediaManagerAgent(social_media_config)
+        """Initialized social media manager agent"""        agent = SocialMediaManagerAgent(social_media_config)
         await agent.initialize()
         
         yield agent
@@ -88,8 +81,7 @@ class TestSocialMediaManagerAgent:
         await agent.shutdown()
     
     async def test_agent_initialization(self, social_media_config):
-        """Test social media manager initialization"""
-        agent = SocialMediaManagerAgent(social_media_config)
+        """Test social media manager initialization"""        agent = SocialMediaManagerAgent(social_media_config)
         
         # Before initialization
         assert not agent.initialized
@@ -116,8 +108,7 @@ class TestSocialMediaManagerAgent:
         await agent.shutdown()
     
     async def test_platform_posting(self, social_agent, test_social_media_data):
-        """Test platform-specific posting"""
-        post_request = {
+        """Test platform-specific posting"""        post_request = {
             "task_type": "platform_posting",
             "platform": "instagram",
             "content": {
@@ -160,8 +151,7 @@ class TestSocialMediaManagerAgent:
         assert all(tag.startswith("#") for tag in hashtags)
     
     async def test_cross_platform_posting(self, social_agent):
-        """Test cross-platform content distribution"""
-        cross_platform_request = {
+        """Test cross-platform content distribution"""        cross_platform_request = {
             "task_type": "cross_platform_posting",
             "content": {
                 "base_text": "Exciting news about AI advancements in content creation!",
@@ -217,8 +207,7 @@ class TestSocialMediaManagerAgent:
                 assert "visual_optimization" in optimized_content
     
     async def test_hashtag_optimization(self, social_agent):
-        """Test hashtag research and optimization"""
-        hashtag_request = {
+        """Test hashtag research and optimization"""        hashtag_request = {
             "task_type": "hashtag_optimization",
             "content_topic": "AI and machine learning",
             "platform": "instagram",
@@ -270,8 +259,7 @@ class TestSocialMediaManagerAgent:
         assert "trend_longevity" in trending
     
     async def test_optimal_timing_analysis(self, social_agent, test_social_media_data):
-        """Test optimal posting time analysis"""
-        timing_request = {
+        """Test optimal posting time analysis"""        timing_request = {
             "task_type": "optimal_timing_analysis",
             "platform": "instagram",
             "audience_data": test_social_media_data["audience_data"],
@@ -326,8 +314,7 @@ class TestSocialMediaManagerAgent:
             assert "expected_performance" in rec
     
     async def test_engagement_management(self, social_agent):
-        """Test engagement management and response automation"""
-        engagement_request = {
+        """Test engagement management and response automation"""        engagement_request = {
             "task_type": "engagement_management",
             "platform": "instagram",
             "post_id": "test_post_123",
@@ -393,8 +380,7 @@ class TestSocialMediaManagerAgent:
         assert "user_satisfaction" in analytics
     
     async def test_audience_analysis(self, social_agent, test_social_media_data):
-        """Test audience analysis and segmentation"""
-        audience_request = {
+        """Test audience analysis and segmentation"""        audience_request = {
             "task_type": "audience_analysis",
             "platform": "instagram",
             "analysis_type": "comprehensive",
@@ -448,8 +434,7 @@ class TestSocialMediaManagerAgent:
         assert "reach_trends" in growth
     
     async def test_content_scheduling(self, social_agent):
-        """Test content scheduling and calendar management"""
-        scheduling_request = {
+        """Test content scheduling and calendar management"""        scheduling_request = {
             "task_type": "content_scheduling",
             "platform": "instagram",
             "content_queue": [
@@ -511,8 +496,7 @@ class TestSocialMediaManagerAgent:
         assert "optimal_timing_score" in optimization
     
     async def test_competitor_analysis(self, social_agent):
-        """Test competitor analysis and benchmarking"""
-        competitor_request = {
+        """Test competitor analysis and benchmarking"""        competitor_request = {
             "task_type": "competitor_analysis",
             "platform": "instagram",
             "competitors": [
@@ -567,8 +551,7 @@ class TestSocialMediaManagerAgent:
         assert "competitive_position" in benchmarks
     
     async def test_crisis_management(self, social_agent):
-        """Test social media crisis management"""
-        crisis_request = {
+        """Test social media crisis management"""        crisis_request = {
             "task_type": "crisis_management",
             "platform": "twitter",
             "crisis_type": "negative_feedback",
@@ -622,8 +605,7 @@ class TestSocialMediaManagerAgent:
         assert "decision_matrix" in escalation
     
     async def test_performance_analytics(self, social_agent, test_social_media_data):
-        """Test social media performance analytics"""
-        analytics_request = {
+        """Test social media performance analytics"""        analytics_request = {
             "task_type": "performance_analytics",
             "platform": "instagram",
             "metrics": [
@@ -686,8 +668,7 @@ class TestSocialMediaManagerAgent:
             assert "expected_impact" in rec
     
     async def test_concurrent_platform_management(self, social_agent):
-        """Test concurrent multi-platform management"""
-        platforms = ["instagram", "twitter", "linkedin", "tiktok"]
+        """Test concurrent multi-platform management"""        platforms = ["instagram", "twitter", "linkedin", "tiktok"]
         tasks = []
         
         # Create concurrent tasks for different platforms
@@ -715,8 +696,7 @@ class TestSocialMediaManagerAgent:
     
     @pytest.mark.performance
     async def test_social_media_performance(self, social_agent, assert_performance):
-        """Test social media management performance"""
-        # Test posting performance
+        """Test social media management performance"""        # Test posting performance
         post_task = {
             "task_type": "platform_posting",
             "platform": "instagram",
@@ -742,8 +722,7 @@ class TestSocialMediaManagerAgent:
         assert result["success"] is True
     
     async def test_error_handling(self, social_agent):
-        """Test error handling in social media management"""
-        # Test invalid platform
+        """Test error handling in social media management"""        # Test invalid platform
         invalid_platform_task = {
             "task_type": "platform_posting",
             "platform": "invalid_platform",

@@ -1,5 +1,4 @@
-"""
-🚀 Financial Reporting - IA Influencer Agent Platform Enterprise
+"""🚀 Financial Reporting - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/platform_core/billing/financial_reporting.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Système de reporting financier enterprise avec analytics avancées
 - Export comptable (SAP, QuickBooks, Sage)
 - Conformité GAAP/IFRS et audit trails
 """
-
 import asyncio
 import json
 import logging
@@ -38,8 +36,7 @@ from dateutil.relativedelta import relativedelta
 logger = logging.getLogger(__name__)
 
 class ReportPeriod(Enum):
-    """Périodes de rapport"""
-    DAILY = "daily"
+    """Périodes de rapport"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -47,8 +44,7 @@ class ReportPeriod(Enum):
     CUSTOM = "custom"
 
 class ReportType(Enum):
-    """Types de rapports"""
-    REVENUE = "revenue"
+    """Types de rapports"""    REVENUE = "revenue"
     PROFIT_LOSS = "profit_loss"
     CASH_FLOW = "cash_flow"
     BALANCE_SHEET = "balance_sheet"
@@ -58,8 +54,7 @@ class ReportType(Enum):
     RECONCILIATION = "reconciliation"
 
 class RevenueMetric(Enum):
-    """Métriques de revenus"""
-    MRR = "mrr"  # Monthly Recurring Revenue
+    """Métriques de revenus"""    MRR = "mrr"  # Monthly Recurring Revenue
     ARR = "arr"  # Annual Recurring Revenue
     ARPU = "arpu"  # Average Revenue Per User
     LTV = "ltv"  # Lifetime Value
@@ -68,8 +63,7 @@ class RevenueMetric(Enum):
 
 @dataclass
 class ReportFilter:
-    """Filtres pour les rapports"""
-    start_date: datetime
+    """Filtres pour les rapports"""    start_date: datetime
     end_date: datetime
     
     # Filtres optionnels
@@ -83,8 +77,7 @@ class ReportFilter:
     group_by: Optional[List[str]] = None  # ex: ["country", "plan_id"]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "start_date": self.start_date.isoformat(),
             "end_date": self.end_date.isoformat(),
             "customer_ids": self.customer_ids,
@@ -97,8 +90,7 @@ class ReportFilter:
 
 @dataclass
 class RevenueData:
-    """Données de revenus"""
-    period: str
+    """Données de revenus"""    period: str
     gross_revenue: Decimal = Decimal("0.0")
     net_revenue: Decimal = Decimal("0.0")
     recurring_revenue: Decimal = Decimal("0.0")
@@ -122,15 +114,13 @@ class RevenueData:
 
 @dataclass
 class CohortData:
-    """Données de cohorte"""
-    cohort_month: str
+    """Données de cohorte"""    cohort_month: str
     customer_count: int
     revenue_data: Dict[int, Decimal] = field(default_factory=dict)  # mois -> revenus
     retention_data: Dict[int, float] = field(default_factory=dict)  # mois -> taux rétention
 
 class FinancialReporting:
-    """Système de rapports financiers"""
-    
+    """Système de rapports financiers"""    
     def __init__(self, database_client: Optional[Any] = None):
         self.database_client = database_client
         self.cache: Dict[str, Any] = {}
@@ -139,8 +129,7 @@ class FinancialReporting:
     async def generate_revenue_report(self, 
                                     filters: ReportFilter,
                                     period: ReportPeriod = ReportPeriod.MONTHLY) -> Dict[str, Any]:
-        """Génère un rapport de revenus"""
-        
+        """Génère un rapport de revenus"""        
         cache_key = f"revenue_{period.value}_{hash(str(filters.to_dict()))}"
         if cache_key in self.cache:
             cached_data = self.cache[cache_key]
@@ -202,8 +191,7 @@ class FinancialReporting:
         return report
         
     async def generate_profit_loss_report(self, filters: ReportFilter) -> Dict[str, Any]:
-        """Génère un rapport de profits et pertes"""
-        
+        """Génère un rapport de profits et pertes"""        
         # Revenus
         revenue_data = await self._calculate_period_revenue(filters)
         
@@ -240,8 +228,7 @@ class FinancialReporting:
         }
         
     async def generate_cash_flow_report(self, filters: ReportFilter) -> Dict[str, Any]:
-        """Génère un rapport de cash-flow"""
-        
+        """Génère un rapport de cash-flow"""        
         # Dans un vrai système, on calculerait les flux de trésorerie réels
         # Ici, on fait une approximation basée sur les factures et paiements
         
@@ -280,8 +267,7 @@ class FinancialReporting:
         }
         
     async def _calculate_period_revenue(self, filters: ReportFilter) -> RevenueData:
-        """Calcule les revenus pour une période"""
-        # Dans un vrai système, on ferait des requêtes en base
+        """Calcule les revenus pour une période"""        # Dans un vrai système, on ferait des requêtes en base
         # Ici, on simule avec des données factices
         
         revenue = RevenueData()
@@ -308,8 +294,7 @@ class FinancialReporting:
         return revenue
         
     async def _calculate_period_costs(self, filters: ReportFilter) -> Dict[str, Decimal]:
-        """Calcule les coûts pour une période"""
-        # Simulation des coûts
+        """Calcule les coûts pour une période"""        # Simulation des coûts
         return {
             "cogs": Decimal("15000.00"),
             "sales": Decimal("8000.00"),
@@ -319,21 +304,18 @@ class FinancialReporting:
         }
         
     async def _calculate_cash_inflows(self, start_date: datetime, end_date: datetime) -> Decimal:
-        """Calcule les entrées de trésorerie"""
-        # Dans un vrai système, on additionnerait tous les paiements reçus
+        """Calcule les entrées de trésorerie"""        # Dans un vrai système, on additionnerait tous les paiements reçus
         return Decimal("45000.00")
         
     async def _calculate_cash_outflows(self, start_date: datetime, end_date: datetime) -> Decimal:
-        """Calcule les sorties de trésorerie"""
-        # Dans un vrai système, on additionnerait toutes les dépenses payées
+        """Calcule les sorties de trésorerie"""        # Dans un vrai système, on additionnerait toutes les dépenses payées
         return Decimal("35000.00")
         
     def _generate_periods(self, 
                          start_date: datetime, 
                          end_date: datetime, 
                          period: ReportPeriod) -> List[Tuple[datetime, datetime]]:
-        """Génère les périodes pour le rapport"""
-        periods = []
+        """Génère les périodes pour le rapport"""        periods = []
         current_date = start_date
         
         while current_date < end_date:
@@ -356,8 +338,7 @@ class FinancialReporting:
         return periods
         
     def _format_period_label(self, date: datetime, period: ReportPeriod) -> str:
-        """Formate le libellé d'une période"""
-        if period == ReportPeriod.DAILY:
+        """Formate le libellé d'une période"""        if period == ReportPeriod.DAILY:
             return date.strftime("%Y-%m-%d")
         elif period == ReportPeriod.WEEKLY:
             return f"{date.strftime('%Y-W%U')}"
@@ -372,8 +353,7 @@ class FinancialReporting:
             return date.strftime("%Y-%m-%d")
             
     def _revenue_data_to_dict(self, revenue: RevenueData) -> Dict[str, Any]:
-        """Convertit RevenueData en dictionnaire"""
-        return {
+        """Convertit RevenueData en dictionnaire"""        return {
             "period": revenue.period,
             "gross_revenue": float(revenue.gross_revenue),
             "net_revenue": float(revenue.net_revenue),
@@ -391,14 +371,12 @@ class FinancialReporting:
         }
 
 class RevenueAnalytics:
-    """Analytics avancées de revenus"""
-    
+    """Analytics avancées de revenus"""    
     def __init__(self, database_client: Optional[Any] = None):
         self.database_client = database_client
         
     async def calculate_mrr(self, as_of_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Calcule le Monthly Recurring Revenue"""
-        target_date = as_of_date or datetime.utcnow()
+        """Calcule le Monthly Recurring Revenue"""        target_date = as_of_date or datetime.utcnow()
         
         # Dans un vrai système, on calculerait le MRR réel
         # en sommant tous les abonnements actifs
@@ -425,8 +403,7 @@ class RevenueAnalytics:
         }
         
     async def calculate_arr(self, as_of_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """Calcule l'Annual Recurring Revenue"""
-        mrr_data = await self.calculate_mrr(as_of_date)
+        """Calcule l'Annual Recurring Revenue"""        mrr_data = await self.calculate_mrr(as_of_date)
         arr = mrr_data["total_mrr"] * 12
         
         return {
@@ -438,8 +415,7 @@ class RevenueAnalytics:
     async def calculate_churn_rate(self, 
                                  start_date: datetime, 
                                  end_date: datetime) -> Dict[str, Any]:
-        """Calcule le taux de churn"""
-        
+        """Calcule le taux de churn"""        
         # Dans un vrai système, on calculerait le churn réel
         customers_start = 1500
         customers_churned = 75
@@ -464,8 +440,7 @@ class RevenueAnalytics:
         }
         
     async def calculate_ltv(self, customer_segments: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Calcule la Lifetime Value"""
-        
+        """Calcule la Lifetime Value"""        
         # Calculs simplifiés - dans un vrai système, on utiliserait
         # des cohortes et des modèles prédictifs
         
@@ -489,8 +464,7 @@ class RevenueAnalytics:
     async def generate_cohort_analysis(self, 
                                      start_month: datetime,
                                      months_back: int = 12) -> Dict[str, Any]:
-        """Génère une analyse de cohorte"""
-        
+        """Génère une analyse de cohorte"""        
         cohorts = []
         
         for i in range(months_back):
@@ -537,8 +511,7 @@ class RevenueAnalytics:
         }
         
     async def export_to_csv(self, report_data: Dict[str, Any], filename: str) -> bytes:
-        """Exporte un rapport en CSV"""
-        output = io.StringIO()
+        """Exporte un rapport en CSV"""        output = io.StringIO()
         
         if report_data.get("report_type") == "revenue":
             # Export du rapport de revenus
@@ -571,8 +544,7 @@ class RevenueAnalytics:
         return output.getvalue().encode('utf-8')
         
     def get_analytics_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques des analytics"""
-        return {
+        """Retourne les statistiques des analytics"""        return {
             "available_metrics": [metric.value for metric in RevenueMetric],
             "supported_exports": ["csv", "excel", "pdf"]
         }

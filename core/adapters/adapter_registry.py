@@ -1,5 +1,4 @@
-"""
-Adapter Registry and Factory - Enterprise Adapter Management
+"""Adapter Registry and Factory - Enterprise Adapter Management
 
 This module provides centralized registry and factory management for all
 platform adapters, enabling dynamic adapter discovery, lifecycle management,
@@ -19,7 +18,6 @@ Features:
 - Performance metrics and optimization
 - Multi-tenant adapter isolation
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Type, Callable
@@ -46,8 +44,7 @@ from .analytics_service_adapters import AnalyticsAdapterFactory, AnalyticsPlatfo
 logger = logging.getLogger(__name__)
 
 class AdapterCategory(Enum):
-    """Adapter category types."""
-    SOCIAL_MEDIA = "social_media"
+    """Adapter category types."""    SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     PAYMENT_GATEWAY = "payment_gateway"
     CLOUD_STORAGE = "cloud_storage"
@@ -58,16 +55,14 @@ class AdapterCategory(Enum):
     CONTENT_DELIVERY = "content_delivery"
 
 class AdapterPriority(Enum):
-    """Adapter priority levels for load balancing."""
-    HIGH = "high"
+    """Adapter priority levels for load balancing."""    HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     BACKUP = "backup"
 
 @dataclass
 class AdapterConfig:
-    """Configuration for adapter instances."""
-    adapter_id: str
+    """Configuration for adapter instances."""    adapter_id: str
     category: AdapterCategory
     platform: str
     credentials: AdapterCredentials
@@ -81,8 +76,7 @@ class AdapterConfig:
     tenant_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert config to dictionary."""
-        return {
+        """Convert config to dictionary."""        return {
             'adapter_id': self.adapter_id,
             'category': self.category.value,
             'platform': self.platform,
@@ -97,8 +91,7 @@ class AdapterConfig:
 
 @dataclass
 class AdapterInstance:
-    """Running adapter instance with metadata."""
-    config: AdapterConfig
+    """Running adapter instance with metadata."""    config: AdapterConfig
     adapter: BasePlatformAdapter
     created_at: datetime = field(default_factory=datetime.now)
     last_health_check: Optional[datetime] = None
@@ -109,14 +102,12 @@ class AdapterInstance:
     success_count: int = 0
     
     def get_success_rate(self) -> float:
-        """Calculate success rate percentage."""
-        if self.request_count == 0:
+        """Calculate success rate percentage."""        if self.request_count == 0:
             return 0.0
         return (self.success_count / self.request_count) * 100
 
 class AdapterRegistry:
-    """
-    Centralized registry for managing platform adapters.
+    """    Centralized registry for managing platform adapters.
     
     Provides:
     - Dynamic adapter registration and discovery
@@ -124,8 +115,7 @@ class AdapterRegistry:
     - Load balancing and failover management
     - Configuration validation and security
     - Performance metrics and optimization
-    """
-    
+    """    
     def __init__(self, redis_client: Optional[redis.Redis] = None):
         self.redis_client = redis_client
         self.adapters: Dict[str, AdapterInstance] = {}
@@ -142,8 +132,7 @@ class AdapterRegistry:
         logger.info("Adapter registry initialized")
     
     async def register_adapter(self, config: AdapterConfig) -> str:
-        """Register a new adapter instance."""
-        try:
+        """Register a new adapter instance."""        try:
             # Validate configuration
             await self._validate_config(config)
             
@@ -180,8 +169,7 @@ class AdapterRegistry:
             raise AdapterError(f"Adapter registration failed: {e}")
     
     async def unregister_adapter(self, adapter_id: str) -> bool:
-        """Unregister an adapter instance."""
-        try:
+        """Unregister an adapter instance."""        try:
             if adapter_id not in self.adapters:
                 logger.warning(f"Adapter not found for unregistration: {adapter_id}")
                 return False
@@ -212,16 +200,14 @@ class AdapterRegistry:
             return False
     
     async def get_adapter(self, adapter_id: str) -> Optional[BasePlatformAdapter]:
-        """Get adapter instance by ID."""
-        instance = self.adapters.get(adapter_id)
+        """Get adapter instance by ID."""        instance = self.adapters.get(adapter_id)
         if instance and instance.config.enabled and instance.health_status:
             return instance.adapter
         return None
     
     async def get_adapters_by_category(self, category: AdapterCategory, 
                                       tenant_id: Optional[str] = None) -> List[BasePlatformAdapter]:
-        """Get all healthy adapters in a category."""
-        adapters = []
+        """Get all healthy adapters in a category."""        adapters = []
         
         for instance in self.adapters.values():
             if (instance.config.category == category and 
@@ -237,8 +223,7 @@ class AdapterRegistry:
     
     async def get_best_adapter(self, category: AdapterCategory, platform: str,
                               tenant_id: Optional[str] = None) -> Optional[BasePlatformAdapter]:
-        """Get the best available adapter for a platform."""
-        candidates = []
+        """Get the best available adapter for a platform."""        candidates = []
         
         for instance in self.adapters.values():
             if (instance.config.category == category and
@@ -260,8 +245,7 @@ class AdapterRegistry:
         return candidates[0].adapter
     
     async def get_adapter_status(self, adapter_id: str) -> Optional[Dict[str, Any]]:
-        """Get detailed status information for an adapter."""
-        instance = self.adapters.get(adapter_id)
+        """Get detailed status information for an adapter."""        instance = self.adapters.get(adapter_id)
         if not instance:
             return None
         
@@ -287,8 +271,7 @@ class AdapterRegistry:
     
     async def get_all_statuses(self, category: Optional[AdapterCategory] = None,
                               tenant_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get status for all adapters, optionally filtered."""
-        statuses = []
+        """Get status for all adapters, optionally filtered."""        statuses = []
         
         for adapter_id, instance in self.adapters.items():
             if (category is None or instance.config.category == category) and \
@@ -300,8 +283,7 @@ class AdapterRegistry:
         return statuses
     
     async def update_adapter_config(self, adapter_id: str, updates: Dict[str, Any]) -> bool:
-        """Update adapter configuration."""
-        try:
+        """Update adapter configuration."""        try:
             instance = self.adapters.get(adapter_id)
             if not instance:
                 return False
@@ -324,16 +306,13 @@ class AdapterRegistry:
             return False
     
     async def enable_adapter(self, adapter_id: str) -> bool:
-        """Enable an adapter."""
-        return await self.update_adapter_config(adapter_id, {'enabled': True})
+        """Enable an adapter."""        return await self.update_adapter_config(adapter_id, {'enabled': True})
     
     async def disable_adapter(self, adapter_id: str) -> bool:
-        """Disable an adapter."""
-        return await self.update_adapter_config(adapter_id, {'enabled': False})
+        """Disable an adapter."""        return await self.update_adapter_config(adapter_id, {'enabled': False})
     
     async def record_request(self, adapter_id: str, success: bool, error: Optional[str] = None):
-        """Record adapter request metrics."""
-        instance = self.adapters.get(adapter_id)
+        """Record adapter request metrics."""        instance = self.adapters.get(adapter_id)
         if instance:
             instance.request_count += 1
             if success:
@@ -343,8 +322,7 @@ class AdapterRegistry:
                 instance.last_error = error
     
     async def _validate_config(self, config: AdapterConfig) -> None:
-        """Validate adapter configuration."""
-        if not config.adapter_id:
+        """Validate adapter configuration."""        if not config.adapter_id:
             raise AdapterError("Adapter ID is required")
         
         if config.adapter_id in self.adapters:
@@ -357,8 +335,7 @@ class AdapterRegistry:
             raise AdapterError("Adapter credentials are required")
     
     async def _create_adapter(self, config: AdapterConfig) -> BasePlatformAdapter:
-        """Create adapter instance from configuration."""
-        factory = self.factories[config.category]
+        """Create adapter instance from configuration."""        factory = self.factories[config.category]
         
         # Map platform string to enum
         platform_enum = self._get_platform_enum(config.category, config.platform)
@@ -370,8 +347,7 @@ class AdapterRegistry:
         )
     
     def _get_platform_enum(self, category: AdapterCategory, platform: str):
-        """Get platform enum from string."""
-        mapping = {
+        """Get platform enum from string."""        mapping = {
             AdapterCategory.SOCIAL_MEDIA: SocialMediaPlatform,
             AdapterCategory.MUSIC_STREAMING: MusicPlatform,
             AdapterCategory.PAYMENT_GATEWAY: PaymentGateway,
@@ -389,8 +365,7 @@ class AdapterRegistry:
         raise AdapterError(f"No platform mapping for category {category}")
     
     def _get_priority_weight(self, priority: AdapterPriority) -> int:
-        """Get numeric weight for priority sorting."""
-        weights = {
+        """Get numeric weight for priority sorting."""        weights = {
             AdapterPriority.HIGH: 3,
             AdapterPriority.MEDIUM: 2,
             AdapterPriority.LOW: 1,
@@ -399,8 +374,7 @@ class AdapterRegistry:
         return weights.get(priority, 1)
     
     async def _store_adapter_config(self, config: AdapterConfig) -> None:
-        """Store adapter configuration in Redis."""
-        try:
+        """Store adapter configuration in Redis."""        try:
             key = f"adapter_config:{config.adapter_id}"
             data = json.dumps(config.to_dict(), default=str)
             self.redis_client.setex(key, 86400, data)  # 24 hours
@@ -408,8 +382,7 @@ class AdapterRegistry:
             logger.warning(f"Failed to store adapter config in Redis: {e}")
     
     async def _health_monitor(self) -> None:
-        """Background task for monitoring adapter health."""
-        while True:
+        """Background task for monitoring adapter health."""        while True:
             try:
                 await asyncio.sleep(self.health_check_interval)
                 
@@ -442,8 +415,7 @@ class AdapterRegistry:
 _registry_instance: Optional[AdapterRegistry] = None
 
 def get_adapter_registry(redis_client: Optional[redis.Redis] = None) -> AdapterRegistry:
-    """Get singleton adapter registry instance."""
-    global _registry_instance
+    """Get singleton adapter registry instance."""    global _registry_instance
     
     if _registry_instance is None:
         _registry_instance = AdapterRegistry(redis_client)
@@ -452,8 +424,7 @@ def get_adapter_registry(redis_client: Optional[redis.Redis] = None) -> AdapterR
 
 @asynccontextmanager
 async def adapter_context(config: AdapterConfig):
-    """Context manager for temporary adapter usage."""
-    registry = get_adapter_registry()
+    """Context manager for temporary adapter usage."""    registry = get_adapter_registry()
     adapter_id = None
     
     try:
@@ -467,8 +438,7 @@ async def adapter_context(config: AdapterConfig):
 # Convenience functions for common operations
 async def get_social_media_adapter(platform: str, credentials: AdapterCredentials,
                                   tenant_id: Optional[str] = None) -> Optional[BasePlatformAdapter]:
-    """Get social media adapter by platform name."""
-    registry = get_adapter_registry()
+    """Get social media adapter by platform name."""    registry = get_adapter_registry()
     return await registry.get_best_adapter(
         AdapterCategory.SOCIAL_MEDIA, 
         platform, 
@@ -477,8 +447,7 @@ async def get_social_media_adapter(platform: str, credentials: AdapterCredential
 
 async def get_music_adapter(platform: str, credentials: AdapterCredentials,
                            tenant_id: Optional[str] = None) -> Optional[BasePlatformAdapter]:
-    """Get music streaming adapter by platform name."""
-    registry = get_adapter_registry()
+    """Get music streaming adapter by platform name."""    registry = get_adapter_registry()
     return await registry.get_best_adapter(
         AdapterCategory.MUSIC_STREAMING, 
         platform, 
@@ -487,8 +456,7 @@ async def get_music_adapter(platform: str, credentials: AdapterCredentials,
 
 async def get_payment_adapter(gateway: str, credentials: AdapterCredentials,
                              tenant_id: Optional[str] = None) -> Optional[BasePlatformAdapter]:
-    """Get payment gateway adapter by gateway name."""
-    registry = get_adapter_registry()
+    """Get payment gateway adapter by gateway name."""    registry = get_adapter_registry()
     return await registry.get_best_adapter(
         AdapterCategory.PAYMENT_GATEWAY, 
         gateway, 
@@ -497,8 +465,7 @@ async def get_payment_adapter(gateway: str, credentials: AdapterCredentials,
 
 async def get_storage_adapter(provider: str, credentials: AdapterCredentials,
                              tenant_id: Optional[str] = None) -> Optional[BasePlatformAdapter]:
-    """Get cloud storage adapter by provider name."""
-    registry = get_adapter_registry()
+    """Get cloud storage adapter by provider name."""    registry = get_adapter_registry()
     return await registry.get_best_adapter(
         AdapterCategory.CLOUD_STORAGE, 
         provider, 
@@ -507,8 +474,7 @@ async def get_storage_adapter(provider: str, credentials: AdapterCredentials,
 
 async def get_analytics_adapter(platform: str, credentials: AdapterCredentials,
                                tenant_id: Optional[str] = None) -> Optional[BasePlatformAdapter]:
-    """Get analytics adapter by platform name."""
-    registry = get_adapter_registry()
+    """Get analytics adapter by platform name."""    registry = get_adapter_registry()
     return await registry.get_best_adapter(
         AdapterCategory.ANALYTICS_SERVICE, 
         platform, 

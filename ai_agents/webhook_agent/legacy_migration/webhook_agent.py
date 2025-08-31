@@ -1,5 +1,4 @@
-"""
-Webhook Agent - Main Processing Engine
+"""Webhook Agent - Main Processing Engine
 
 Industrial-grade webhook agent for enterprise-level real-time event processing,
 platform integrations, and automated notification management.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission from Fahed Mlaiel <mlaiel@live.de> is strictly prohibited.
 """
-
 import asyncio
 import json
 import logging
@@ -60,8 +58,7 @@ from .webhook_security import WebhookSecurity
 logger = logging.getLogger(__name__)
 
 class WebhookEventType(Enum):
-    """Webhook event types for platform integrations"""
-    CONTENT_PROTECTION_ALERT = "content_protection_alert"
+    """Webhook event types for platform integrations"""    CONTENT_PROTECTION_ALERT = "content_protection_alert"
     COPYRIGHT_MATCH_FOUND = "copyright_match_found" 
     TAKEDOWN_REQUEST_SUBMITTED = "takedown_request_submitted"
     TAKEDOWN_COMPLETED = "takedown_completed"
@@ -75,15 +72,13 @@ class WebhookEventType(Enum):
     SYSTEM_NOTIFICATION = "system_notification"
 
 class WebhookDirection(Enum):
-    """Webhook direction types"""
-    INCOMING = "incoming"
+    """Webhook direction types"""    INCOMING = "incoming"
     OUTGOING = "outgoing"
     BIDIRECTIONAL = "bidirectional"
 
 @dataclass
 class WebhookEvent:
-    """Webhook event data structure"""
-    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Webhook event data structure"""    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event_type: WebhookEventType = None
     platform: str = None
     direction: WebhookDirection = None
@@ -101,8 +96,7 @@ class WebhookEvent:
 
 @dataclass 
 class WebhookEndpoint:
-    """Webhook endpoint configuration"""
-    endpoint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Webhook endpoint configuration"""    endpoint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     url: str = None
     platform: str = None
     event_types: List[WebhookEventType] = field(default_factory=list)
@@ -117,8 +111,7 @@ class WebhookEndpoint:
 
 @dataclass
 class WebhookMetrics:
-    """Webhook processing metrics"""
-    total_events: int = 0
+    """Webhook processing metrics"""    total_events: int = 0
     successful_events: int = 0
     failed_events: int = 0
     average_processing_time: float = 0.0
@@ -126,13 +119,11 @@ class WebhookMetrics:
     last_event_timestamp: Optional[datetime] = None
 
 class WebhookAgent(BaseAgent):
-    """
-    Industrial-grade webhook agent for enterprise-level event processing
+    """    Industrial-grade webhook agent for enterprise-level event processing
     
     Manages incoming and outgoing webhooks across all platform integrations,
     with advanced security, retry mechanisms, and real-time analytics.
-    """
-    
+    """    
     def __init__(
         self,
         agent_id: str = None,
@@ -178,8 +169,7 @@ class WebhookAgent(BaseAgent):
         logger.info(f"WebhookAgent initialized: {self.agent_id}")
 
     async def initialize(self) -> None:
-        """Initialize webhook agent with all required services"""
-        try:
+        """Initialize webhook agent with all required services"""        try:
             await super().initialize()
             
             # Initialize Redis connection
@@ -220,8 +210,7 @@ class WebhookAgent(BaseAgent):
         headers: Dict[str, str],
         signature: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Process incoming webhook from external platform
+        """        Process incoming webhook from external platform
         
         Args:
             platform: Source platform name
@@ -231,8 +220,7 @@ class WebhookAgent(BaseAgent):
             
         Returns:
             Processing result dictionary
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Rate limiting check
@@ -316,8 +304,7 @@ class WebhookAgent(BaseAgent):
         user_id: str = None,
         headers: Dict[str, str] = None
     ) -> Dict[str, Any]:
-        """
-        Send outgoing webhook to external endpoint
+        """        Send outgoing webhook to external endpoint
         
         Args:
             endpoint_url: Target webhook URL
@@ -329,8 +316,7 @@ class WebhookAgent(BaseAgent):
             
         Returns:
             Send result dictionary
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Create webhook event
@@ -408,8 +394,7 @@ class WebhookAgent(BaseAgent):
         signature_method: str = "hmac_sha256",
         headers: Dict[str, str] = None
     ) -> Dict[str, Any]:
-        """Register new webhook endpoint for platform"""
-        try:
+        """Register new webhook endpoint for platform"""        try:
             endpoint = WebhookEndpoint(
                 url=url,
                 platform=platform,
@@ -445,8 +430,7 @@ class WebhookAgent(BaseAgent):
         event_type: WebhookEventType,
         handler: Callable[[WebhookEvent], Any]
     ) -> None:
-        """Register custom event handler for specific event type"""
-        if event_type not in self._event_handlers:
+        """Register custom event handler for specific event type"""        if event_type not in self._event_handlers:
             self._event_handlers[event_type] = []
         
         self._event_handlers[event_type].append(handler)
@@ -457,8 +441,7 @@ class WebhookAgent(BaseAgent):
         platform: str = None,
         time_range: str = "24h"
     ) -> Dict[str, Any]:
-        """Get webhook processing metrics and analytics"""
-        try:
+        """Get webhook processing metrics and analytics"""        try:
             metrics = await self.webhook_analytics.get_metrics(platform, time_range)
             
             # Add current runtime metrics
@@ -480,18 +463,15 @@ class WebhookAgent(BaseAgent):
             raise WebhookError(f"Metrics retrieval failed: {str(e)}")
 
     async def add_websocket_connection(self, websocket) -> None:
-        """Add WebSocket connection for real-time notifications"""
-        self._websocket_connections.add(websocket)
+        """Add WebSocket connection for real-time notifications"""        self._websocket_connections.add(websocket)
         logger.info(f"WebSocket connection added. Total: {len(self._websocket_connections)}")
 
     async def remove_websocket_connection(self, websocket) -> None:
-        """Remove WebSocket connection"""
-        self._websocket_connections.discard(websocket)
+        """Remove WebSocket connection"""        self._websocket_connections.discard(websocket)
         logger.info(f"WebSocket connection removed. Total: {len(self._websocket_connections)}")
 
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for webhook agent"""
-        health_data = {
+        """Comprehensive health check for webhook agent"""        health_data = {
             'agent_id': self.agent_id,
             'status': self.status.value,
             'uptime_seconds': time.time() - self._start_time,
@@ -529,8 +509,7 @@ class WebhookAgent(BaseAgent):
         return health_data
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of webhook agent"""
-        try:
+        """Graceful shutdown of webhook agent"""        try:
             logger.info(f"Shutting down WebhookAgent: {self.agent_id}")
             
             # Cancel processing tasks
@@ -578,8 +557,7 @@ class WebhookAgent(BaseAgent):
     # Private methods
     
     async def _start_background_tasks(self) -> None:
-        """Start background processing tasks"""
-        # Event processing task
+        """Start background processing tasks"""        # Event processing task
         task = asyncio.create_task(self._process_event_queue())
         self._processing_tasks.add(task)
         
@@ -592,8 +570,7 @@ class WebhookAgent(BaseAgent):
         self._processing_tasks.add(task)
 
     async def _process_event_queue(self) -> None:
-        """Background task to process webhook events from queue"""
-        while self.status == AgentStatus.ACTIVE:
+        """Background task to process webhook events from queue"""        while self.status == AgentStatus.ACTIVE:
             try:
                 # Get event from queue with timeout
                 webhook_event = await asyncio.wait_for(
@@ -610,8 +587,7 @@ class WebhookAgent(BaseAgent):
                 logger.error(f"Error in event queue processing: {e}")
 
     async def _process_webhook_event(self, webhook_event: WebhookEvent) -> None:
-        """Process individual webhook event"""
-        try:
+        """Process individual webhook event"""        try:
             # Process with event processor
             processing_result = await self.event_processor.process_event(webhook_event)
             
@@ -642,8 +618,7 @@ class WebhookAgent(BaseAgent):
         headers: Dict[str, str],
         timeout: int = 30
     ) -> Dict[str, Any]:
-        """Send HTTP request for outgoing webhook"""
-        try:
+        """Send HTTP request for outgoing webhook"""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
                     url,
@@ -664,8 +639,7 @@ class WebhookAgent(BaseAgent):
             }
 
     def _determine_event_type(self, event_data: Dict[str, Any]) -> WebhookEventType:
-        """Determine webhook event type from payload"""
-        event_type = event_data.get('event_type', '').lower()
+        """Determine webhook event type from payload"""        event_type = event_data.get('event_type', '').lower()
         
         event_type_mapping = {
             'copyright_match_found': WebhookEventType.COPYRIGHT_MATCH_FOUND,
@@ -682,8 +656,7 @@ class WebhookAgent(BaseAgent):
         return event_type_mapping.get(event_type, WebhookEventType.SYSTEM_NOTIFICATION)
 
     async def _update_metrics(self, webhook_event: Optional[WebhookEvent], success: bool) -> None:
-        """Update internal metrics"""
-        self._metrics.total_events += 1
+        """Update internal metrics"""        self._metrics.total_events += 1
         
         if success:
             self._metrics.successful_events += 1
@@ -700,8 +673,7 @@ class WebhookAgent(BaseAgent):
         self._metrics.last_event_timestamp = datetime.now(timezone.utc)
 
     async def _collect_metrics(self) -> None:
-        """Background task for metrics collection"""
-        while self.status == AgentStatus.ACTIVE:
+        """Background task for metrics collection"""        while self.status == AgentStatus.ACTIVE:
             try:
                 # Calculate events per minute
                 current_time = datetime.now(timezone.utc)
@@ -716,8 +688,7 @@ class WebhookAgent(BaseAgent):
                 logger.error(f"Error collecting metrics: {e}")
 
     async def _health_monitor(self) -> None:
-        """Background health monitoring task"""
-        while self.status == AgentStatus.ACTIVE:
+        """Background health monitoring task"""        while self.status == AgentStatus.ACTIVE:
             try:
                 # Monitor queue size
                 if self._event_queue.qsize() > 5000:
@@ -734,8 +705,7 @@ class WebhookAgent(BaseAgent):
                 logger.error(f"Error in health monitoring: {e}")
 
     async def _notify_websocket_clients(self, webhook_event: WebhookEvent) -> None:
-        """Send real-time notifications to WebSocket clients"""
-        if not self._websocket_connections:
+        """Send real-time notifications to WebSocket clients"""        if not self._websocket_connections:
             return
         
         notification = {
@@ -761,8 +731,7 @@ class WebhookAgent(BaseAgent):
         self._websocket_connections -= disconnected
 
     async def _register_default_handlers(self) -> None:
-        """Register default event handlers"""
-        # Copyright match handler
+        """Register default event handlers"""        # Copyright match handler
         await self.register_event_handler(
             WebhookEventType.COPYRIGHT_MATCH_FOUND,
             self._handle_copyright_match
@@ -781,16 +750,13 @@ class WebhookAgent(BaseAgent):
         )
 
     async def _handle_copyright_match(self, webhook_event: WebhookEvent) -> None:
-        """Handle copyright match events"""
-        logger.info(f"Processing copyright match: {webhook_event.event_id}")
+        """Handle copyright match events"""        logger.info(f"Processing copyright match: {webhook_event.event_id}")
         # Implementation would trigger protection workflows
 
     async def _handle_content_protection_alert(self, webhook_event: WebhookEvent) -> None:
-        """Handle content protection alerts"""
-        logger.info(f"Processing content protection alert: {webhook_event.event_id}")
+        """Handle content protection alerts"""        logger.info(f"Processing content protection alert: {webhook_event.event_id}")
         # Implementation would trigger alert processing
 
     async def _handle_revenue_notification(self, webhook_event: WebhookEvent) -> None:
-        """Handle revenue notifications"""
-        logger.info(f"Processing revenue notification: {webhook_event.event_id}")
+        """Handle revenue notifications"""        logger.info(f"Processing revenue notification: {webhook_event.event_id}")
         # Implementation would update revenue tracking

@@ -1,5 +1,4 @@
-"""
-Surveillance Orchestrator - Orchestrateur Surveillance
+"""Surveillance Orchestrator - Orchestrateur Surveillance
 ======================================================
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
@@ -14,7 +13,6 @@ Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
 Central surveillance orchestrator for coordinating all surveillance activities.
 Provides unified management, coordination, and control of all surveillance modules.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Union, Callable
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillanceStatus(Enum):
-    """Surveillance system status."""
-    STOPPED = "stopped"
+    """Surveillance system status."""    STOPPED = "stopped"
     STARTING = "starting"
     RUNNING = "running"
     STOPPING = "stopping"
@@ -47,8 +44,7 @@ class SurveillanceStatus(Enum):
 
 
 class ModuleStatus(Enum):
-    """Individual module status."""
-    INACTIVE = "inactive"
+    """Individual module status."""    INACTIVE = "inactive"
     INITIALIZING = "initializing"
     ACTIVE = "active"
     ERROR = "error"
@@ -57,8 +53,7 @@ class ModuleStatus(Enum):
 
 @dataclass
 class SurveillanceTarget:
-    """Surveillance target configuration."""
-    target_id: str
+    """Surveillance target configuration."""    target_id: str
     target_type: str  # creator, content, keyword, platform
     platforms: List[str]
     monitoring_config: Dict[str, Any] = field(default_factory=dict)
@@ -70,8 +65,7 @@ class SurveillanceTarget:
 
 @dataclass
 class SurveillancePolicy:
-    """Surveillance policy configuration."""
-    policy_id: str
+    """Surveillance policy configuration."""    policy_id: str
     name: str
     description: str
     enabled: bool = True
@@ -85,8 +79,7 @@ class SurveillancePolicy:
 
 @dataclass
 class SurveillanceMetrics:
-    """Overall surveillance system metrics."""
-    total_targets: int = 0
+    """Overall surveillance system metrics."""    total_targets: int = 0
     active_targets: int = 0
     total_violations: int = 0
     violations_resolved: int = 0
@@ -100,8 +93,7 @@ class SurveillanceMetrics:
 
 @dataclass
 class ModuleState:
-    """Module state tracking."""
-    module_name: str
+    """Module state tracking."""    module_name: str
     status: ModuleStatus
     instance: Optional[Any] = None
     last_heartbeat: Optional[datetime] = None
@@ -111,8 +103,7 @@ class ModuleState:
 
 
 class SurveillanceOrchestrator:
-    """
-    Central surveillance orchestrator for the IA Influencer Agent platform.
+    """    Central surveillance orchestrator for the IA Influencer Agent platform.
     
     Features:
     - Unified surveillance management
@@ -123,11 +114,9 @@ class SurveillanceOrchestrator:
     - Performance monitoring and optimization
     - Scalable architecture
     - Advanced analytics and reporting
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize surveillance orchestrator."""
-        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize surveillance orchestrator."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -162,8 +151,7 @@ class SurveillanceOrchestrator:
         self._logger.info("Surveillance Orchestrator initialized")
     
     def _initialize_modules(self) -> None:
-        """Initialize surveillance modules."""
-        # Define available modules
+        """Initialize surveillance modules."""        # Define available modules
         module_configs = {
             'youtube_monitor': {
                 'class': YouTubeMonitor,
@@ -244,8 +232,7 @@ class SurveillanceOrchestrator:
         self._logger.info(f"Initialized {len(self.modules)} surveillance modules")
     
     async def initialize(self) -> None:
-        """Initialize the surveillance orchestrator."""
-        try:
+        """Initialize the surveillance orchestrator."""        try:
             self._logger.info("Initializing surveillance orchestrator...")
             
             self.status = SurveillanceStatus.STARTING
@@ -287,8 +274,7 @@ class SurveillanceOrchestrator:
             raise
     
     async def start_surveillance(self) -> None:
-        """Start the surveillance orchestrator."""
-        try:
+        """Start the surveillance orchestrator."""        try:
             if not self.enabled:
                 self._logger.warning("Surveillance orchestrator is disabled")
                 return
@@ -322,8 +308,7 @@ class SurveillanceOrchestrator:
             raise
     
     async def stop_surveillance(self) -> None:
-        """Stop the surveillance orchestrator."""
-        try:
+        """Stop the surveillance orchestrator."""        try:
             if self.status == SurveillanceStatus.STOPPED:
                 self._logger.warning("Surveillance orchestrator is already stopped")
                 return
@@ -361,8 +346,7 @@ class SurveillanceOrchestrator:
         platforms: List[str],
         config: Dict[str, Any]
     ) -> str:
-        """Add a surveillance target."""
-        try:
+        """Add a surveillance target."""        try:
             target_id = f"target_{datetime.now().timestamp()}_{hash(str(config)) % 10000}"
             
             target = SurveillanceTarget(
@@ -389,8 +373,7 @@ class SurveillanceOrchestrator:
             raise
     
     async def remove_surveillance_target(self, target_id: str) -> bool:
-        """Remove a surveillance target."""
-        try:
+        """Remove a surveillance target."""        try:
             if target_id not in self.targets:
                 self._logger.warning(f"Surveillance target not found: {target_id}")
                 return False
@@ -417,8 +400,7 @@ class SurveillanceOrchestrator:
         name: str,
         policy_config: Dict[str, Any]
     ) -> str:
-        """Add a surveillance policy."""
-        try:
+        """Add a surveillance policy."""        try:
             policy_id = f"policy_{datetime.now().timestamp()}_{hash(name) % 10000}"
             
             policy = SurveillancePolicy(
@@ -446,8 +428,7 @@ class SurveillanceOrchestrator:
             raise
     
     async def handle_violation_detected(self, violation_data: Dict[str, Any]) -> None:
-        """Handle violation detection from modules."""
-        try:
+        """Handle violation detection from modules."""        try:
             self._logger.info(f"Violation detected: {violation_data.get('violation_type', 'unknown')}")
             
             # Update metrics
@@ -478,8 +459,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error handling violation: {e}")
     
     async def _orchestrator_loop(self) -> None:
-        """Main orchestrator monitoring loop."""
-        self._logger.info("Surveillance orchestrator loop started")
+        """Main orchestrator monitoring loop."""        self._logger.info("Surveillance orchestrator loop started")
         
         try:
             while self.status == SurveillanceStatus.RUNNING:
@@ -511,8 +491,7 @@ class SurveillanceOrchestrator:
         self._logger.info("Surveillance orchestrator loop stopped")
     
     async def _start_all_modules(self) -> None:
-        """Start all surveillance modules."""
-        for module_name, module_state in self.modules.items():
+        """Start all surveillance modules."""        for module_name, module_state in self.modules.items():
             if module_state.status == ModuleStatus.ACTIVE:
                 try:
                     await self._start_module(module_name)
@@ -525,8 +504,7 @@ class SurveillanceOrchestrator:
         self._update_module_metrics()
     
     async def _stop_all_modules(self) -> None:
-        """Stop all surveillance modules."""
-        for module_name in self.modules.keys():
+        """Stop all surveillance modules."""        for module_name in self.modules.keys():
             try:
                 await self._stop_module(module_name)
             except Exception as e:
@@ -535,8 +513,7 @@ class SurveillanceOrchestrator:
         self._update_module_metrics()
     
     async def _start_module(self, module_name: str) -> None:
-        """Start a specific surveillance module."""
-        if module_name not in self.module_instances:
+        """Start a specific surveillance module."""        if module_name not in self.module_instances:
             self._logger.warning(f"Module instance not found: {module_name}")
             return
         
@@ -564,8 +541,7 @@ class SurveillanceOrchestrator:
         self._logger.info(f"Started module: {module_name}")
     
     async def _stop_module(self, module_name: str) -> None:
-        """Stop a specific surveillance module."""
-        if module_name not in self.module_instances:
+        """Stop a specific surveillance module."""        if module_name not in self.module_instances:
             return
         
         instance = self.module_instances[module_name]
@@ -591,8 +567,7 @@ class SurveillanceOrchestrator:
         self._logger.info(f"Stopped module: {module_name}")
     
     async def _monitor_module_health(self) -> None:
-        """Monitor health of all modules."""
-        current_time = datetime.now()
+        """Monitor health of all modules."""        current_time = datetime.now()
         
         for module_name, module_state in self.modules.items():
             if module_state.status != ModuleStatus.ACTIVE:
@@ -647,8 +622,7 @@ class SurveillanceOrchestrator:
                 module_state.error_count += 1
     
     async def _update_system_metrics(self) -> None:
-        """Update overall system metrics."""
-        if self._start_time:
+        """Update overall system metrics."""        if self._start_time:
             self.metrics.system_uptime_seconds = (datetime.now() - self._start_time).total_seconds()
         
         self._update_module_metrics()
@@ -664,13 +638,11 @@ class SurveillanceOrchestrator:
             self.metrics.performance_score = 0.0
     
     def _update_module_metrics(self) -> None:
-        """Update module metrics."""
-        self.metrics.modules_active = len([m for m in self.modules.values() if m.status == ModuleStatus.ACTIVE])
+        """Update module metrics."""        self.metrics.modules_active = len([m for m in self.modules.values() if m.status == ModuleStatus.ACTIVE])
         self.metrics.modules_total = len(self.modules)
     
     async def _process_messages(self) -> None:
-        """Process inter-module messages."""
-        try:
+        """Process inter-module messages."""        try:
             while not self.message_queue.empty():
                 try:
                     message = await asyncio.wait_for(self.message_queue.get(), timeout=0.1)
@@ -681,8 +653,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error processing messages: {e}")
     
     async def _handle_inter_module_message(self, message: Dict[str, Any]) -> None:
-        """Handle inter-module communication."""
-        try:
+        """Handle inter-module communication."""        try:
             message_type = message.get('type', '')
             
             if message_type == 'violation_detected':
@@ -696,8 +667,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error handling inter-module message: {e}")
     
     async def _handle_module_status_update(self, message: Dict[str, Any]) -> None:
-        """Handle module status updates."""
-        try:
+        """Handle module status updates."""        try:
             module_name = message.get('module', '')
             status_data = message.get('data', {})
             
@@ -709,8 +679,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error handling module status update: {e}")
     
     async def _handle_alert_triggered(self, message: Dict[str, Any]) -> None:
-        """Handle alert triggered notifications."""
-        try:
+        """Handle alert triggered notifications."""        try:
             alert_data = message.get('data', {})
             self.metrics.alerts_sent += 1
             
@@ -720,8 +689,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error handling alert triggered: {e}")
     
     async def _check_policy_updates(self) -> None:
-        """Check for policy updates and apply them."""
-        try:
+        """Check for policy updates and apply them."""        try:
             # This would check for policy changes and apply them
             # For now, just log that policies are being checked
             pass
@@ -730,8 +698,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error checking policy updates: {e}")
     
     async def _configure_target_surveillance(self, target: SurveillanceTarget) -> None:
-        """Configure surveillance for a target across relevant modules."""
-        try:
+        """Configure surveillance for a target across relevant modules."""        try:
             for platform in target.platforms:
                 # Configure platform-specific surveillance
                 if platform == 'youtube' and 'youtube_monitor' in self.module_instances:
@@ -770,8 +737,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error configuring target surveillance: {e}")
     
     async def _remove_target_surveillance(self, target: SurveillanceTarget) -> None:
-        """Remove surveillance for a target from relevant modules."""
-        try:
+        """Remove surveillance for a target from relevant modules."""        try:
             # This would remove surveillance configuration from relevant modules
             # Implementation would depend on the specific module APIs
             pass
@@ -780,8 +746,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error removing target surveillance: {e}")
     
     async def _configure_policy_enforcement(self, policy: SurveillancePolicy) -> None:
-        """Configure policy enforcement across modules."""
-        try:
+        """Configure policy enforcement across modules."""        try:
             # Configure alert system with policy
             alert_system = self.module_instances.get('violation_alert_system')
             if alert_system:
@@ -801,8 +766,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error configuring policy enforcement: {e}")
     
     async def _process_violation_through_policies(self, violation_data: Dict[str, Any]) -> None:
-        """Process violation through active policies."""
-        try:
+        """Process violation through active policies."""        try:
             violation_type = violation_data.get('violation_type', '')
             platform = violation_data.get('platform', '')
             confidence = violation_data.get('confidence_score', 0.0)
@@ -829,8 +793,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error processing violation through policies: {e}")
     
     async def _trigger_auto_response(self, violation_data: Dict[str, Any], policy: SurveillancePolicy) -> None:
-        """Trigger automated response for violation."""
-        try:
+        """Trigger automated response for violation."""        try:
             # This would trigger automated responses based on policy
             # such as content takedown, user suspension, etc.
             self._logger.info(f"Auto-response triggered for policy: {policy.name}")
@@ -839,8 +802,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error triggering auto-response: {e}")
     
     async def _trigger_content_matching(self, violation_data: Dict[str, Any]) -> None:
-        """Trigger content matching for violation."""
-        try:
+        """Trigger content matching for violation."""        try:
             matching_engine = self.module_instances.get('content_matching_engine')
             if matching_engine and violation_data.get('content_data'):
                 content_type = violation_data.get('content_type', 'text')
@@ -859,8 +821,7 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error triggering content matching: {e}")
     
     async def _setup_default_policies(self) -> None:
-        """Setup default surveillance policies."""
-        try:
+        """Setup default surveillance policies."""        try:
             # Copyright protection policy
             await self.add_surveillance_policy(
                 name="Copyright Protection",
@@ -891,24 +852,20 @@ class SurveillanceOrchestrator:
             self._logger.error(f"Error setting up default policies: {e}")
     
     async def _notify_status_change_handlers(self) -> None:
-        """Notify status change handlers."""
-        for handler in self.status_change_handlers:
+        """Notify status change handlers."""        for handler in self.status_change_handlers:
             try:
                 await handler(self.status)
             except Exception as e:
                 self._logger.error(f"Status change handler error: {e}")
     
     def add_violation_handler(self, handler: Callable) -> None:
-        """Add violation detection handler."""
-        self.violation_handlers.append(handler)
+        """Add violation detection handler."""        self.violation_handlers.append(handler)
     
     def add_status_change_handler(self, handler: Callable) -> None:
-        """Add status change handler."""
-        self.status_change_handlers.append(handler)
+        """Add status change handler."""        self.status_change_handlers.append(handler)
     
     def get_orchestrator_status(self) -> Dict[str, Any]:
-        """Get orchestrator status."""
-        return {
+        """Get orchestrator status."""        return {
             'status': self.status.value,
             'enabled': self.enabled,
             'uptime_seconds': self.metrics.system_uptime_seconds,
@@ -943,8 +900,7 @@ class SurveillanceOrchestrator:
         }
     
     def get_module_status(self, module_name: str) -> Optional[Dict[str, Any]]:
-        """Get status of a specific module."""
-        if module_name not in self.modules:
+        """Get status of a specific module."""        if module_name not in self.modules:
             return None
         
         module_state = self.modules[module_name]
@@ -959,8 +915,7 @@ class SurveillanceOrchestrator:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown the surveillance orchestrator."""
-        try:
+        """Shutdown the surveillance orchestrator."""        try:
             self._logger.info("Shutting down surveillance orchestrator...")
             
             await self.stop_surveillance()

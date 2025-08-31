@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Failover Manager
+"""IA Influencer Agent - Failover Manager
 Enterprise-grade automated failover and system resilience management
 
 This module provides intelligent failover capabilities for content protection platform:
@@ -12,7 +11,6 @@ This module provides intelligent failover capabilities for content protection pl
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -31,8 +29,7 @@ from backend.deployment.health_checks import HealthChecker
 
 
 class FailoverType(Enum):
-    """Types of failover operations"""
-    AUTOMATIC = "automatic"
+    """Types of failover operations"""    AUTOMATIC = "automatic"
     MANUAL = "manual"
     PLANNED = "planned"
     EMERGENCY = "emergency"
@@ -41,8 +38,7 @@ class FailoverType(Enum):
 
 
 class FailoverStatus(Enum):
-    """Failover operation status"""
-    DETECTING = "detecting"
+    """Failover operation status"""    DETECTING = "detecting"
     PREPARING = "preparing"
     EXECUTING = "executing"
     VALIDATING = "validating"
@@ -52,8 +48,7 @@ class FailoverStatus(Enum):
 
 
 class ServiceState(Enum):
-    """Service operational states"""
-    HEALTHY = "healthy"
+    """Service operational states"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     FAILED = "failed"
@@ -63,8 +58,7 @@ class ServiceState(Enum):
 
 @dataclass
 class FailoverConfig:
-    """Failover configuration for a service"""
-    service_name: str
+    """Failover configuration for a service"""    service_name: str
     primary_endpoint: str
     secondary_endpoints: List[str]
     health_check_url: str
@@ -80,8 +74,7 @@ class FailoverConfig:
 
 @dataclass
 class FailoverEvent:
-    """Failover event record"""
-    event_id: str
+    """Failover event record"""    event_id: str
     service_name: str
     failover_type: FailoverType
     trigger_reason: str
@@ -97,8 +90,7 @@ class FailoverEvent:
 
 
 class FailoverManager:
-    """
-    Manages enterprise-grade failover operations for content protection platform
+    """    Manages enterprise-grade failover operations for content protection platform
     
     Capabilities:
     - Real-time service health monitoring
@@ -108,7 +100,6 @@ class FailoverManager:
     - Automated rollback on failover failure
     - Service dependency chain management
     """
-
     def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -142,16 +133,14 @@ class FailoverManager:
         }
 
     async def register_service(self, failover_config: FailoverConfig) -> bool:
-        """
-        Register a service for failover management
+        """        Register a service for failover management
         
         Args:
             failover_config: Service failover configuration
             
         Returns:
             bool: Registration success status
-        """
-        try:
+        """        try:
             service_name = failover_config.service_name
             
             # Validate configuration
@@ -177,8 +166,7 @@ class FailoverManager:
             return False
 
     async def _monitor_service_health(self, config: FailoverConfig):
-        """Continuously monitor service health and trigger failover if needed"""
-        service_name = config.service_name
+        """Continuously monitor service health and trigger failover if needed"""        service_name = config.service_name
         
         while True:
             try:
@@ -218,8 +206,7 @@ class FailoverManager:
                 await asyncio.sleep(config.health_check_interval)
 
     async def _check_service_health(self, config: FailoverConfig) -> Dict[str, Any]:
-        """Perform comprehensive service health check"""
-        try:
+        """Perform comprehensive service health check"""        try:
             start_time = time.time()
             
             # Primary endpoint health check
@@ -257,8 +244,7 @@ class FailoverManager:
     async def _evaluate_failover_trigger(self, config: FailoverConfig, 
                                        previous_state: ServiceState, 
                                        current_state: ServiceState):
-        """Evaluate if failover should be triggered based on service state changes"""
-        service_name = config.service_name
+        """Evaluate if failover should be triggered based on service state changes"""        service_name = config.service_name
         
         # Check if service has crossed failure threshold
         if (current_state in [ServiceState.UNHEALTHY, ServiceState.FAILED] and
@@ -270,8 +256,7 @@ class FailoverManager:
 
     async def trigger_failover(self, service_name: str, reason: str, 
                              failover_type: FailoverType = FailoverType.AUTOMATIC) -> str:
-        """
-        Trigger failover operation for a service
+        """        Trigger failover operation for a service
         
         Args:
             service_name: Name of the service to failover
@@ -280,8 +265,7 @@ class FailoverManager:
             
         Returns:
             str: Failover event ID
-        """
-        try:
+        """        try:
             if service_name not in self.service_configs:
                 raise ValueError(f"Service {service_name} not registered")
             
@@ -314,8 +298,7 @@ class FailoverManager:
             raise
 
     async def _execute_failover(self, failover_event: FailoverEvent):
-        """Execute the complete failover process"""
-        service_name = failover_event.service_name
+        """Execute the complete failover process"""        service_name = failover_event.service_name
         config = self.service_configs[service_name]
         
         try:
@@ -377,8 +360,7 @@ class FailoverManager:
                 del self.active_failovers[service_name]
 
     async def _select_best_secondary_endpoint(self, config: FailoverConfig) -> Optional[str]:
-        """Select the best available secondary endpoint for failover"""
-        best_endpoint = None
+        """Select the best available secondary endpoint for failover"""        best_endpoint = None
         best_score = -1
         
         for endpoint in config.secondary_endpoints:
@@ -404,8 +386,7 @@ class FailoverManager:
         return best_endpoint
 
     async def _switch_traffic(self, config: FailoverConfig, target_endpoint: str) -> Dict[str, Any]:
-        """Switch traffic from primary to secondary endpoint"""
-        try:
+        """Switch traffic from primary to secondary endpoint"""        try:
             # Implementation would depend on load balancer/proxy configuration
             # This could involve updating DNS, load balancer rules, or proxy configuration
             
@@ -438,8 +419,7 @@ class FailoverManager:
             }
 
     async def _validate_failover(self, config: FailoverConfig, target_endpoint: str) -> Dict[str, Any]:
-        """Validate that failover was successful"""
-        try:
+        """Validate that failover was successful"""        try:
             validation_checks = []
             
             # Check 1: Target endpoint is responding
@@ -489,8 +469,7 @@ class FailoverManager:
             }
 
     async def get_failover_status(self, service_name: str) -> Dict[str, Any]:
-        """Get current failover status for a service"""
-        try:
+        """Get current failover status for a service"""        try:
             result = {
                 'service_name': service_name,
                 'service_state': self.service_states.get(service_name, ServiceState.UNKNOWN).value,
@@ -530,8 +509,7 @@ class FailoverManager:
             return {'error': str(e)}
 
     async def get_system_failover_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive failover metrics for the entire system"""
-        return {
+        """Get comprehensive failover metrics for the entire system"""        return {
             'metrics': self.failover_metrics.copy(),
             'registered_services': len(self.service_configs),
             'active_failovers': len(self.active_failovers),
@@ -545,13 +523,11 @@ class FailoverManager:
         }
 
     def _generate_event_id(self) -> str:
-        """Generate unique failover event identifier"""
-        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
+        """Generate unique failover event identifier"""        timestamp = datetime.utcnow().strftime('%Y%m%d_%H%M%S')
         return f"failover_{timestamp}_{int(time.time() * 1000) % 10000}"
 
     def _calculate_endpoint_score(self, health_result: Dict[str, Any]) -> float:
-        """Calculate score for endpoint selection"""
-        # Higher score is better
+        """Calculate score for endpoint selection"""        # Higher score is better
         base_score = 100.0
         
         # Penalize high response time
@@ -577,8 +553,7 @@ class FailoverManager:
         return max(0, base_score)
 
     def _update_average_failover_time(self, new_time: float):
-        """Update rolling average failover time"""
-        total_failovers = self.failover_metrics['total_failovers']
+        """Update rolling average failover time"""        total_failovers = self.failover_metrics['total_failovers']
         current_avg = self.failover_metrics['average_failover_time']
         
         if total_failovers == 1:
@@ -589,8 +564,7 @@ class FailoverManager:
             )
 
     async def execute_emergency_failover(self) -> Dict[str, Any]:
-        """Execute emergency failover procedures"""
-        try:
+        """Execute emergency failover procedures"""        try:
             emergency_id = f"emergency_failover_{int(datetime.utcnow().timestamp())}"
             
             self.logger.critical(f"Executing emergency failover: {emergency_id}")
@@ -640,8 +614,7 @@ class FailoverManager:
             }
 
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get failover manager health status for disaster recovery coordinator"""
-        try:
+        """Get failover manager health status for disaster recovery coordinator"""        try:
             # Calculate health metrics
             total_failovers = self.failover_metrics['total_failovers']
             successful_failovers = self.failover_metrics['successful_failovers']
@@ -693,8 +666,7 @@ class FailoverManager:
             }
 
     async def _get_primary_services(self) -> Dict[str, Dict[str, Any]]:
-        """Get current primary services for failover"""
-        try:
+        """Get current primary services for failover"""        try:
             primary_services = {}
             
             for service_id, service in self.monitored_services.items():
@@ -713,8 +685,7 @@ class FailoverManager:
             return {}
 
     async def _execute_rapid_failover(self, service_id: str, service_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute rapid failover for a specific service"""
-        try:
+        """Execute rapid failover for a specific service"""        try:
             start_time = time.time()
             
             # Find best backup node
@@ -754,8 +725,7 @@ class FailoverManager:
             }
 
     async def _calculate_average_system_health(self) -> float:
-        """Calculate average health score across all services"""
-        try:
+        """Calculate average health score across all services"""        try:
             if not self.monitored_services:
                 return 100.0
             

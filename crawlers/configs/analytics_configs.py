@@ -1,5 +1,4 @@
-"""
-Advanced Analytics and Metrics Configurations
+"""Advanced Analytics and Metrics Configurations
 =============================================
 
 Comprehensive analytics configuration system for crawler performance monitoring,
@@ -16,7 +15,6 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
-
 import os
 from typing import Dict, List, Optional, Union, Any, Tuple
 from dataclasses import dataclass, field
@@ -26,8 +24,7 @@ import json
 from pathlib import Path
 
 class MetricType(Enum):
-    """Types of metrics to collect."""
-    COUNTER = "counter"
+    """Types of metrics to collect."""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -36,8 +33,7 @@ class MetricType(Enum):
     DISTRIBUTION = "distribution"
 
 class AggregationType(Enum):
-    """Aggregation methods for metrics."""
-    SUM = "sum"
+    """Aggregation methods for metrics."""    SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
     MAX = "max"
@@ -47,8 +43,7 @@ class AggregationType(Enum):
     STDDEV = "stddev"
 
 class TimeGranularity(Enum):
-    """Time granularity for analytics."""
-    REAL_TIME = "real_time"
+    """Time granularity for analytics."""    REAL_TIME = "real_time"
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -58,8 +53,7 @@ class TimeGranularity(Enum):
     YEAR = "year"
 
 class DashboardType(Enum):
-    """Types of analytics dashboards."""
-    OPERATIONAL = "operational"
+    """Types of analytics dashboards."""    OPERATIONAL = "operational"
     BUSINESS = "business"
     TECHNICAL = "technical"
     EXECUTIVE = "executive"
@@ -67,8 +61,7 @@ class DashboardType(Enum):
     QUALITY = "quality"
 
 class AlertCondition(Enum):
-    """Alert condition types."""
-    THRESHOLD_EXCEEDED = "threshold_exceeded"
+    """Alert condition types."""    THRESHOLD_EXCEEDED = "threshold_exceeded"
     THRESHOLD_BELOW = "threshold_below"
     RATE_CHANGE = "rate_change"
     ANOMALY_DETECTED = "anomaly_detected"
@@ -77,8 +70,7 @@ class AlertCondition(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Definition of a metric to collect."""
-    name: str
+    """Definition of a metric to collect."""    name: str
     metric_type: MetricType
     description: str
     unit: str = ""
@@ -102,8 +94,7 @@ class MetricDefinition:
 
 @dataclass
 class AnalyticsConfig:
-    """Configuration for analytics collection and processing."""
-    enabled: bool = True
+    """Configuration for analytics collection and processing."""    enabled: bool = True
     
     # Collection settings
     real_time_analytics: bool = True
@@ -135,8 +126,7 @@ class AnalyticsConfig:
 
 @dataclass
 class DashboardConfig:
-    """Configuration for analytics dashboards."""
-    dashboard_id: str
+    """Configuration for analytics dashboards."""    dashboard_id: str
     dashboard_type: DashboardType
     title: str
     description: str = ""
@@ -161,8 +151,7 @@ class DashboardConfig:
 
 @dataclass
 class ReportingConfig:
-    """Configuration for automated reporting."""
-    enabled: bool = True
+    """Configuration for automated reporting."""    enabled: bool = True
     
     # Report types
     operational_reports: bool = True
@@ -194,8 +183,7 @@ class ReportingConfig:
 
 @dataclass
 class BusinessIntelligenceConfig:
-    """Configuration for business intelligence features."""
-    enabled: bool = True
+    """Configuration for business intelligence features."""    enabled: bool = True
     
     # Data mining
     pattern_discovery: bool = True
@@ -222,11 +210,9 @@ class BusinessIntelligenceConfig:
     data_exploration_tools: bool = True
 
 class AnalyticsConfigManager:
-    """Manager for analytics configurations."""
-    
+    """Manager for analytics configurations."""    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize analytics configuration manager."""
-        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
+        """Initialize analytics configuration manager."""        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
         self.metrics: Dict[str, MetricDefinition] = {}
         self.dashboards: Dict[str, DashboardConfig] = {}
         self.analytics = AnalyticsConfig()
@@ -237,8 +223,7 @@ class AnalyticsConfigManager:
         self._setup_default_dashboards()
     
     def _load_configurations(self) -> None:
-        """Load analytics configurations from files."""
-        try:
+        """Load analytics configurations from files."""        try:
             config_file = self.config_dir / "analytics_config.json"
             if config_file.exists():
                 with open(config_file, 'r', encoding='utf-8') as f:
@@ -253,8 +238,7 @@ class AnalyticsConfigManager:
             print(f"Error loading analytics configurations: {e}")
     
     def _setup_default_metrics(self) -> None:
-        """Setup default metrics for crawlers."""
-        default_metrics = [
+        """Setup default metrics for crawlers."""        default_metrics = [
             MetricDefinition(
                 name="crawler_requests_total",
                 metric_type=MetricType.COUNTER,
@@ -320,8 +304,7 @@ class AnalyticsConfigManager:
                 self.metrics[metric.name] = metric
     
     def _setup_default_dashboards(self) -> None:
-        """Setup default analytics dashboards."""
-        default_dashboards = [
+        """Setup default analytics dashboards."""        default_dashboards = [
             DashboardConfig(
                 dashboard_id="operational_overview",
                 dashboard_type=DashboardType.OPERATIONAL,
@@ -400,18 +383,15 @@ class AnalyticsConfigManager:
                 self.dashboards[dashboard.dashboard_id] = dashboard
     
     def register_metric(self, metric: MetricDefinition) -> None:
-        """Register a new metric."""
-        self.metrics[metric.name] = metric
+        """Register a new metric."""        self.metrics[metric.name] = metric
         self._save_configurations()
     
     def register_dashboard(self, dashboard: DashboardConfig) -> None:
-        """Register a new dashboard."""
-        self.dashboards[dashboard.dashboard_id] = dashboard
+        """Register a new dashboard."""        self.dashboards[dashboard.dashboard_id] = dashboard
         self._save_configurations()
     
     def get_metrics(self, enabled_only: bool = True, tags: Optional[List[str]] = None) -> List[MetricDefinition]:
-        """Get metrics, optionally filtered by enabled status and tags."""
-        metrics = list(self.metrics.values())
+        """Get metrics, optionally filtered by enabled status and tags."""        metrics = list(self.metrics.values())
         
         if enabled_only:
             metrics = [m for m in metrics if m.enabled]
@@ -422,19 +402,16 @@ class AnalyticsConfigManager:
         return metrics
     
     def get_dashboard(self, dashboard_id: str) -> Optional[DashboardConfig]:
-        """Get dashboard configuration by ID."""
-        return self.dashboards.get(dashboard_id)
+        """Get dashboard configuration by ID."""        return self.dashboards.get(dashboard_id)
     
     def get_dashboards_by_type(self, dashboard_type: DashboardType) -> List[DashboardConfig]:
-        """Get dashboards by type."""
-        return [d for d in self.dashboards.values() if d.dashboard_type == dashboard_type]
+        """Get dashboards by type."""        return [d for d in self.dashboards.values() if d.dashboard_type == dashboard_type]
     
     def generate_analytics_report(self, 
                                 start_time: datetime, 
                                 end_time: datetime,
                                 metrics: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Generate analytics report for specified time period."""
-        report = {
+        """Generate analytics report for specified time period."""        report = {
             "period": {
                 "start": start_time.isoformat(),
                 "end": end_time.isoformat(),
@@ -471,8 +448,7 @@ class AnalyticsConfigManager:
         return report
     
     def get_metric_alerts(self) -> List[Dict[str, Any]]:
-        """Get active metric alerts."""
-        alerts = []
+        """Get active metric alerts."""        alerts = []
         
         for metric in self.get_metrics():
             if metric.alert_enabled:
@@ -490,8 +466,7 @@ class AnalyticsConfigManager:
         return alerts
     
     def optimize_metric_collection(self) -> Dict[str, Any]:
-        """Optimize metric collection based on usage patterns."""
-        optimization_report = {
+        """Optimize metric collection based on usage patterns."""        optimization_report = {
             "recommendations": [],
             "potential_savings": {},
             "performance_improvements": []
@@ -507,8 +482,7 @@ class AnalyticsConfigManager:
         return optimization_report
     
     def _save_configurations(self) -> None:
-        """Save configurations to file."""
-        try:
+        """Save configurations to file."""        try:
             config_file = self.config_dir / "analytics_config.json"
             config_data = {
                 "metrics": {

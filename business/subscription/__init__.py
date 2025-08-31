@@ -22,8 +22,7 @@ License: Proprietary - Unauthorized copying, modification, or distribution stric
 WARNING: This code is proprietary and confidential. Any unauthorized use, reproduction,
 or distribution of this code or any portion of it may result in severe civil and
 criminal penalties, and will be prosecuted to the maximum extent possible under law.
-"""
-from .subscription_service import SubscriptionService
+"""from .subscription_service import SubscriptionService
 from .subscription_manager import SubscriptionManager
 from .billing_engine import BillingEngine
 from .payment_processor import PaymentProcessor

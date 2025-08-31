@@ -1,5 +1,4 @@
-"""
-Performance Logging Configuration for IA-Influencer Agent Platform
+"""Performance Logging Configuration for IA-Influencer Agent Platform
 =================================================================
 
 Advanced performance monitoring and logging for multi-format content processing,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import time
 import threading
 import psutil
@@ -36,8 +34,7 @@ import numpy as np
 
 
 class MetricType(str, Enum):
-    """Types of performance metrics"""
-    # Timing metrics
+    """Types of performance metrics"""    # Timing metrics
     RESPONSE_TIME = "response_time"
     PROCESSING_TIME = "processing_time"
     INFERENCE_TIME = "inference_time"
@@ -79,8 +76,7 @@ class MetricType(str, Enum):
 
 
 class PerformanceLevel(str, Enum):
-    """Performance alert levels"""
-    OPTIMAL = "optimal"
+    """Performance alert levels"""    OPTIMAL = "optimal"
     GOOD = "good"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -89,8 +85,7 @@ class PerformanceLevel(str, Enum):
 
 @dataclass
 class MetricThreshold:
-    """Performance metric threshold configuration"""
-    metric_type: MetricType
+    """Performance metric threshold configuration"""    metric_type: MetricType
     warning_threshold: float
     critical_threshold: float
     unit: str = ""
@@ -101,8 +96,7 @@ class MetricThreshold:
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
-    metric_type: MetricType
+    """Individual performance metric"""    metric_type: MetricType
     value: float
     unit: str
     timestamp: datetime
@@ -114,8 +108,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert data structure"""
-    alert_id: str
+    """Performance alert data structure"""    alert_id: str
     timestamp: datetime
     metric_type: MetricType
     level: PerformanceLevel
@@ -130,8 +123,7 @@ class PerformanceAlert:
 
 @dataclass
 class ComponentProfile:
-    """Performance profile for a system component"""
-    name: str
+    """Performance profile for a system component"""    name: str
     enabled: bool = True
     metrics: List[MetricType] = field(default_factory=list)
     sampling_interval: float = 1.0  # seconds
@@ -141,14 +133,12 @@ class ComponentProfile:
 
 
 class PerformanceLoggingConfig:
-    """
-    Enterprise performance logging configuration for IA-Influencer platform.
+    """    Enterprise performance logging configuration for IA-Influencer platform.
     
     Provides comprehensive performance monitoring with adaptive thresholds,
     predictive alerting, and optimization recommendations for multi-format
     content processing and AI operations.
-    """
-    
+    """    
     def __init__(
         self,
         enabled: bool = True,
@@ -167,8 +157,7 @@ class PerformanceLoggingConfig:
         webhook_urls: Optional[List[str]] = None,
         enable_detailed_tracing: bool = False
     ):
-        """
-        Initialize performance logging configuration.
+        """        Initialize performance logging configuration.
         
         Args:
             enabled: Enable performance logging
@@ -186,8 +175,7 @@ class PerformanceLoggingConfig:
             enable_anomaly_detection: Enable anomaly detection
             webhook_urls: Webhook URLs for alerts
             enable_detailed_tracing: Enable detailed performance tracing
-        """
-        self.enabled = enabled
+        """        self.enabled = enabled
         self.sampling_interval = sampling_interval
         self.aggregation_window = aggregation_window
         self.retention_period = retention_period
@@ -244,8 +232,7 @@ class PerformanceLoggingConfig:
             self.start_monitoring()
     
     def _create_default_profiles(self) -> List[ComponentProfile]:
-        """Create default component profiles"""
-        return [
+        """Create default component profiles"""        return [
             ComponentProfile(
                 name="api_gateway",
                 metrics=[
@@ -309,8 +296,7 @@ class PerformanceLoggingConfig:
         ]
     
     def _create_default_thresholds(self) -> List[MetricThreshold]:
-        """Create default performance thresholds"""
-        return [
+        """Create default performance thresholds"""        return [
             # Response time thresholds
             MetricThreshold(
                 metric_type=MetricType.RESPONSE_TIME,
@@ -385,16 +371,14 @@ class PerformanceLoggingConfig:
         ]
     
     def _check_gpu_availability(self) -> bool:
-        """Check if GPU monitoring is available"""
-        try:
+        """Check if GPU monitoring is available"""        try:
             import GPUtil
             return len(GPUtil.getGPUs()) > 0
         except ImportError:
             return False
     
     def start_monitoring(self) -> None:
-        """Start performance monitoring"""
-        if self._monitoring_thread and self._monitoring_thread.is_alive():
+        """Start performance monitoring"""        if self._monitoring_thread and self._monitoring_thread.is_alive():
             return
         
         self._stop_event.clear()
@@ -407,16 +391,14 @@ class PerformanceLoggingConfig:
         logging.info("Performance monitoring started")
     
     def stop_monitoring(self) -> None:
-        """Stop performance monitoring"""
-        if self._monitoring_thread:
+        """Stop performance monitoring"""        if self._monitoring_thread:
             self._stop_event.set()
             self._monitoring_thread.join(timeout=30)
         
         logging.info("Performance monitoring stopped")
     
     def _monitoring_worker(self) -> None:
-        """Background monitoring worker"""
-        while not self._stop_event.is_set():
+        """Background monitoring worker"""        while not self._stop_event.is_set():
             try:
                 start_time = time.time()
                 
@@ -447,8 +429,7 @@ class PerformanceLoggingConfig:
                 time.sleep(self.sampling_interval)
     
     def _collect_component_metrics(self, profile: ComponentProfile) -> None:
-        """Collect metrics for a specific component"""
-        timestamp = datetime.now(timezone.utc)
+        """Collect metrics for a specific component"""        timestamp = datetime.now(timezone.utc)
         
         for metric_type in profile.metrics:
             try:
@@ -469,8 +450,7 @@ class PerformanceLoggingConfig:
                 logging.error(f"Failed to collect metric {metric_type} for {profile.name}: {e}")
     
     def _collect_metric_value(self, metric_type: MetricType, component: str) -> Optional[float]:
-        """Collect value for a specific metric type"""
-        if metric_type == MetricType.CPU_USAGE:
+        """Collect value for a specific metric type"""        if metric_type == MetricType.CPU_USAGE:
             return psutil.cpu_percent(interval=None)
         
         elif metric_type == MetricType.MEMORY_USAGE:
@@ -505,8 +485,7 @@ class PerformanceLoggingConfig:
             return self._get_cached_metric_value(metric_type, component)
     
     def _get_metric_unit(self, metric_type: MetricType) -> str:
-        """Get unit for metric type"""
-        units = {
+        """Get unit for metric type"""        units = {
             MetricType.RESPONSE_TIME: "ms",
             MetricType.PROCESSING_TIME: "ms",
             MetricType.INFERENCE_TIME: "ms",
@@ -541,14 +520,12 @@ class PerformanceLoggingConfig:
         return units.get(metric_type, "")
     
     def _get_queue_size(self, component: str) -> Optional[float]:
-        """Get queue size for component (placeholder implementation)"""
-        # This would integrate with actual queue systems
+        """Get queue size for component (placeholder implementation)"""        # This would integrate with actual queue systems
         # For now, return a simulated value
         return 0.0
     
     def _get_cached_metric_value(self, metric_type: MetricType, component: str) -> Optional[float]:
-        """Get cached metric value from recent measurements"""
-        key = f"{component}_{metric_type.value}"
+        """Get cached metric value from recent measurements"""        key = f"{component}_{metric_type.value}"
         with self._lock:
             if key in self._metrics_buffer:
                 metrics = list(self._metrics_buffer[key])
@@ -559,15 +536,13 @@ class PerformanceLoggingConfig:
         return None
     
     def _store_metric(self, metric: PerformanceMetric) -> None:
-        """Store metric in buffer"""
-        key = f"{metric.component}_{metric.metric_type.value}"
+        """Store metric in buffer"""        key = f"{metric.component}_{metric.metric_type.value}"
         with self._lock:
             self._metrics_buffer[key].append(metric)
             self._stats['total_metrics'] += 1
     
     def _log_metric(self, metric: PerformanceMetric) -> None:
-        """Log performance metric"""
-        if self.enable_detailed_tracing or metric.value > self._get_warning_threshold(metric.metric_type):
+        """Log performance metric"""        if self.enable_detailed_tracing or metric.value > self._get_warning_threshold(metric.metric_type):
             self._performance_logger.info(
                 "Performance metric collected",
                 metric_type=metric.metric_type.value,
@@ -581,8 +556,7 @@ class PerformanceLoggingConfig:
             )
     
     def _aggregate_metrics(self) -> None:
-        """Aggregate metrics over time windows"""
-        current_time = datetime.now(timezone.utc)
+        """Aggregate metrics over time windows"""        current_time = datetime.now(timezone.utc)
         
         with self._lock:
             for key, metrics in self._metrics_buffer.items():
@@ -610,8 +584,7 @@ class PerformanceLoggingConfig:
                     }
     
     def _check_thresholds(self) -> None:
-        """Check metric thresholds and generate alerts"""
-        current_time = datetime.now(timezone.utc)
+        """Check metric thresholds and generate alerts"""        current_time = datetime.now(timezone.utc)
         
         with self._lock:
             for key, aggregated in self._aggregated_metrics.items():
@@ -637,8 +610,7 @@ class PerformanceLoggingConfig:
                             self._handle_performance_alert(alert)
     
     def _evaluate_threshold(self, value: float, threshold: MetricThreshold) -> Optional[PerformanceLevel]:
-        """Evaluate metric value against threshold"""
-        if threshold.comparison == "greater":
+        """Evaluate metric value against threshold"""        if threshold.comparison == "greater":
             if value >= threshold.critical_threshold:
                 return PerformanceLevel.CRITICAL
             elif value >= threshold.warning_threshold:
@@ -656,14 +628,12 @@ class PerformanceLoggingConfig:
         return PerformanceLevel.OPTIMAL
     
     def _get_warning_threshold(self, metric_type: MetricType) -> float:
-        """Get warning threshold for metric type"""
-        if metric_type in self.metric_thresholds:
+        """Get warning threshold for metric type"""        if metric_type in self.metric_thresholds:
             return self.metric_thresholds[metric_type].warning_threshold
         return float('inf')
     
     def _is_alert_in_cooldown(self, alert_key: str) -> bool:
-        """Check if alert is in cooldown period"""
-        if alert_key in self._active_alerts:
+        """Check if alert is in cooldown period"""        if alert_key in self._active_alerts:
             alert = self._active_alerts[alert_key]
             if not alert.resolved:
                 time_since = (datetime.now(timezone.utc) - alert.timestamp).total_seconds()
@@ -678,8 +648,7 @@ class PerformanceLoggingConfig:
         threshold: MetricThreshold,
         component: str
     ) -> PerformanceAlert:
-        """Create a performance alert"""
-        alert_id = f"PERF_{datetime.now().strftime('%Y%m%d%H%M%S')}_{component}_{metric_type.value}"
+        """Create a performance alert"""        alert_id = f"PERF_{datetime.now().strftime('%Y%m%d%H%M%S')}_{component}_{metric_type.value}"
         
         threshold_value = (
             threshold.critical_threshold if level == PerformanceLevel.CRITICAL 
@@ -700,8 +669,7 @@ class PerformanceLoggingConfig:
         return alert
     
     def _handle_performance_alert(self, alert: PerformanceAlert) -> None:
-        """Handle performance alert"""
-        alert_key = f"{alert.component}_{alert.metric_type.value}_{alert.level.value}"
+        """Handle performance alert"""        alert_key = f"{alert.component}_{alert.metric_type.value}_{alert.level.value}"
         
         with self._lock:
             self._active_alerts[alert_key] = alert
@@ -737,8 +705,7 @@ class PerformanceLoggingConfig:
                 )
     
     def _send_alert_webhook(self, alert: PerformanceAlert) -> None:
-        """Send webhook notification for performance alert"""
-        if not self.webhook_urls:
+        """Send webhook notification for performance alert"""        if not self.webhook_urls:
             return
         
         try:
@@ -773,8 +740,7 @@ class PerformanceLoggingConfig:
             logging.error(f"Error sending performance alert webhook: {e}")
     
     def _generate_optimization_suggestions(self, alert: PerformanceAlert) -> List[str]:
-        """Generate optimization suggestions for performance issues"""
-        suggestions = []
+        """Generate optimization suggestions for performance issues"""        suggestions = []
         
         if alert.metric_type == MetricType.RESPONSE_TIME:
             suggestions.extend([
@@ -835,8 +801,7 @@ class PerformanceLoggingConfig:
         context: Optional[Dict[str, Any]] = None,
         tags: Optional[Dict[str, str]] = None
     ) -> None:
-        """
-        Record a performance metric.
+        """        Record a performance metric.
         
         Args:
             metric_type: Type of metric
@@ -845,8 +810,7 @@ class PerformanceLoggingConfig:
             operation: Operation name
             context: Additional context
             tags: Metric tags
-        """
-        if not self.enabled:
+        """        if not self.enabled:
             return
         
         metric = PerformanceMetric(
@@ -872,8 +836,7 @@ class PerformanceLoggingConfig:
         context: Optional[Dict[str, Any]] = None,
         tags: Optional[Dict[str, str]] = None
     ):
-        """
-        Context manager to measure operation performance.
+        """        Context manager to measure operation performance.
         
         Args:
             operation: Operation name
@@ -881,8 +844,7 @@ class PerformanceLoggingConfig:
             metric_type: Type of timing metric
             context: Additional context
             tags: Metric tags
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         exception_occurred = False
         
         try:
@@ -916,8 +878,7 @@ class PerformanceLoggingConfig:
         end_time: Optional[datetime] = None,
         limit: int = 1000
     ) -> List[PerformanceMetric]:
-        """
-        Get performance metrics with filtering.
+        """        Get performance metrics with filtering.
         
         Args:
             component: Filter by component
@@ -928,8 +889,7 @@ class PerformanceLoggingConfig:
             
         Returns:
             List of performance metrics
-        """
-        metrics = []
+        """        metrics = []
         
         with self._lock:
             for key, metric_deque in self._metrics_buffer.items():
@@ -955,8 +915,7 @@ class PerformanceLoggingConfig:
         component: Optional[str] = None,
         metric_type: Optional[MetricType] = None
     ) -> Dict[str, Dict[str, Any]]:
-        """
-        Get aggregated performance metrics.
+        """        Get aggregated performance metrics.
         
         Args:
             component: Filter by component
@@ -964,8 +923,7 @@ class PerformanceLoggingConfig:
             
         Returns:
             Dictionary of aggregated metrics
-        """
-        filtered_metrics = {}
+        """        filtered_metrics = {}
         
         with self._lock:
             for key, aggregated in self._aggregated_metrics.items():
@@ -982,13 +940,11 @@ class PerformanceLoggingConfig:
         return filtered_metrics
     
     def get_active_alerts(self) -> List[PerformanceAlert]:
-        """Get active performance alerts"""
-        with self._lock:
+        """Get active performance alerts"""        with self._lock:
             return [alert for alert in self._active_alerts.values() if not alert.resolved]
     
     def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve a performance alert"""
-        with self._lock:
+        """Resolve a performance alert"""        with self._lock:
             for alert in self._active_alerts.values():
                 if alert.alert_id == alert_id and not alert.resolved:
                     alert.resolved = True
@@ -1004,8 +960,7 @@ class PerformanceLoggingConfig:
         return False
     
     def get_performance_statistics(self) -> Dict[str, Any]:
-        """Get performance monitoring statistics"""
-        with self._lock:
+        """Get performance monitoring statistics"""        with self._lock:
             stats = self._stats.copy()
             stats['components_profiles'] = len(self.component_profiles)
             stats['metric_thresholds'] = len(self.metric_thresholds)
@@ -1016,18 +971,15 @@ class PerformanceLoggingConfig:
         return stats
     
     def add_component_profile(self, profile: ComponentProfile) -> None:
-        """Add component performance profile"""
-        self.component_profiles[profile.name] = profile
+        """Add component performance profile"""        self.component_profiles[profile.name] = profile
         logging.info(f"Added performance profile for component: {profile.name}")
     
     def update_metric_threshold(self, threshold: MetricThreshold) -> None:
-        """Update metric threshold"""
-        self.metric_thresholds[threshold.metric_type] = threshold
+        """Update metric threshold"""        self.metric_thresholds[threshold.metric_type] = threshold
         logging.info(f"Updated threshold for metric: {threshold.metric_type}")
     
     def get_config_status(self) -> Dict[str, Any]:
-        """Get current configuration status"""
-        return {
+        """Get current configuration status"""        return {
             "enabled": self.enabled,
             "sampling_interval": self.sampling_interval,
             "aggregation_window": self.aggregation_window,
@@ -1054,16 +1006,14 @@ _performance_config: Optional[PerformanceLoggingConfig] = None
 def initialize_performance_logging(
     config: Optional[PerformanceLoggingConfig] = None
 ) -> PerformanceLoggingConfig:
-    """
-    Initialize global performance logging configuration.
+    """    Initialize global performance logging configuration.
     
     Args:
         config: Custom PerformanceLoggingConfig instance
         
     Returns:
         Initialized performance logging configuration
-    """
-    global _performance_config
+    """    global _performance_config
     
     if config:
         _performance_config = config
@@ -1074,8 +1024,7 @@ def initialize_performance_logging(
 
 
 def get_performance_config() -> PerformanceLoggingConfig:
-    """Get the global performance logging configuration"""
-    if not _performance_config:
+    """Get the global performance logging configuration"""    if not _performance_config:
         initialize_performance_logging()
     
     return _performance_config
@@ -1088,8 +1037,7 @@ def record_performance_metric(
     operation: Optional[str] = None,
     **kwargs
 ) -> None:
-    """
-    Record a performance metric using global configuration.
+    """    Record a performance metric using global configuration.
     
     Args:
         metric_type: Type of metric
@@ -1097,8 +1045,7 @@ def record_performance_metric(
         component: Component name
         operation: Operation name
         **kwargs: Additional arguments
-    """
-    config = get_performance_config()
+    """    config = get_performance_config()
     config.record_performance_metric(metric_type, value, component, operation, **kwargs)
 
 
@@ -1108,14 +1055,12 @@ def measure_operation(
     metric_type: MetricType = MetricType.PROCESSING_TIME,
     **kwargs
 ):
-    """
-    Context manager to measure operation performance using global configuration.
+    """    Context manager to measure operation performance using global configuration.
     
     Args:
         operation: Operation name
         component: Component name
         metric_type: Type of timing metric
         **kwargs: Additional arguments
-    """
-    config = get_performance_config()
+    """    config = get_performance_config()
     return config.measure_operation(operation, component, metric_type, **kwargs)

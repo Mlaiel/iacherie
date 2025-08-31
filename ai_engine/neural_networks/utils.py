@@ -1,5 +1,4 @@
-"""
-Neural Networks Utilities - IA Influencer Agent
+"""Neural Networks Utilities - IA Influencer Agent
 
 Advanced utilities for neural network operations, data processing,
 model management, and production deployment support.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ModelMetrics:
-    """Comprehensive model performance metrics"""
-    accuracy: float
+    """Comprehensive model performance metrics"""    accuracy: float
     precision: float
     recall: float
     f1_score: float
@@ -50,15 +47,13 @@ class ModelMetrics:
 
 
 class DeviceManager:
-    """Intelligent device management for optimal performance"""
-    
+    """Intelligent device management for optimal performance"""    
     def __init__(self):
         self.available_devices = self._detect_devices()
         self.device_capabilities = self._get_device_capabilities()
     
     def _detect_devices(self) -> List[str]:
-        """Detect available computing devices"""
-        devices = ["cpu"]
+        """Detect available computing devices"""        devices = ["cpu"]
         
         # CUDA devices
         if torch.cuda.is_available():
@@ -72,8 +67,7 @@ class DeviceManager:
         return devices
     
     def _get_device_capabilities(self) -> Dict[str, Dict]:
-        """Get capabilities and specs for each device"""
-        capabilities = {}
+        """Get capabilities and specs for each device"""        capabilities = {}
         
         for device in self.available_devices:
             if device == "cpu":
@@ -103,8 +97,7 @@ class DeviceManager:
         return capabilities
     
     def get_optimal_device(self, model_size_mb: float = 0) -> str:
-        """Select optimal device based on model size and availability"""
-        
+        """Select optimal device based on model size and availability"""        
         # Prefer GPU if available and model fits in memory
         gpu_devices = [d for d in self.available_devices if d.startswith("cuda")]
         if gpu_devices:
@@ -123,8 +116,7 @@ class DeviceManager:
 
 
 class DataPreprocessor:
-    """Advanced data preprocessing for multi-modal content"""
-    
+    """Advanced data preprocessing for multi-modal content"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")
@@ -135,8 +127,7 @@ class DataPreprocessor:
         target_sr: int = 44100,
         duration: Optional[float] = None
     ) -> Dict[str, np.ndarray]:
-        """Preprocess audio file for neural network input"""
-        
+        """Preprocess audio file for neural network input"""        
         try:
             # Load audio
             audio, sr = librosa.load(audio_path, sr=target_sr, duration=duration)
@@ -163,8 +154,7 @@ class DataPreprocessor:
         image_path: str,
         target_size: Tuple[int, int] = (224, 224)
     ) -> Dict[str, np.ndarray]:
-        """Preprocess image for neural network input"""
-        
+        """Preprocess image for neural network input"""        
         try:
             # Load and resize image
             image = Image.open(image_path).convert('RGB')
@@ -195,8 +185,7 @@ class DataPreprocessor:
         max_frames: int = 30,
         frame_size: Tuple[int, int] = (224, 224)
     ) -> Dict[str, np.ndarray]:
-        """Preprocess video for neural network input"""
-        
+        """Preprocess video for neural network input"""        
         try:
             cap = cv2.VideoCapture(video_path)
             frames = []
@@ -242,8 +231,7 @@ class DataPreprocessor:
         text: str,
         max_length: int = 512
     ) -> Dict[str, Union[List[int], torch.Tensor]]:
-        """Preprocess text for neural network input"""
-        
+        """Preprocess text for neural network input"""        
         try:
             # Tokenize text
             encoded = self.tokenizer.encode_plus(
@@ -271,16 +259,14 @@ class DataPreprocessor:
 
 
 class ModelOptimizer:
-    """Advanced model optimization and acceleration"""
-    
+    """Advanced model optimization and acceleration"""    
     @staticmethod
     def optimize_model_for_inference(
         model: nn.Module,
         example_input: torch.Tensor,
         optimization_level: str = "basic"
     ) -> nn.Module:
-        """Optimize model for inference with various techniques"""
-        
+        """Optimize model for inference with various techniques"""        
         model.eval()
         
         # Basic optimizations
@@ -323,8 +309,7 @@ class ModelOptimizer:
     
     @staticmethod
     def calculate_model_size(model: nn.Module) -> Dict[str, float]:
-        """Calculate model size and parameter statistics"""
-        
+        """Calculate model size and parameter statistics"""        
         total_params = sum(p.numel() for p in model.parameters())
         trainable_params = sum(p.numel() for p in model.parameters() if p.requires_grad)
         
@@ -341,16 +326,14 @@ class ModelOptimizer:
 
 
 class PerformanceProfiler:
-    """Advanced performance profiling and monitoring"""
-    
+    """Advanced performance profiling and monitoring"""    
     def __init__(self):
         self.metrics_history = []
         self.start_time = None
         
     @contextmanager
     def profile_inference(self, model_name: str = "unknown"):
-        """Context manager for profiling model inference"""
-        
+        """Context manager for profiling model inference"""        
         # Record start metrics
         start_time = time.time()
         start_memory = self._get_memory_usage()
@@ -376,12 +359,10 @@ class PerformanceProfiler:
             logger.info(f"Inference metrics for {model_name}: {metrics}")
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage in MB"""
-        return psutil.Process().memory_info().rss / (1024 * 1024)
+        """Get current memory usage in MB"""        return psutil.Process().memory_info().rss / (1024 * 1024)
     
     def _get_gpu_usage(self) -> float:
-        """Get current GPU utilization percentage"""
-        try:
+        """Get current GPU utilization percentage"""        try:
             gpus = GPUtil.getGPUs()
             if gpus:
                 return gpus[0].load * 100
@@ -390,8 +371,7 @@ class PerformanceProfiler:
         return 0.0
     
     def get_performance_summary(self) -> Dict[str, Any]:
-        """Get comprehensive performance summary"""
-        
+        """Get comprehensive performance summary"""        
         if not self.metrics_history:
             return {}
         
@@ -410,12 +390,10 @@ class PerformanceProfiler:
 
 
 class ContentAnalyzer:
-    """Advanced content analysis utilities"""
-    
+    """Advanced content analysis utilities"""    
     @staticmethod
     def extract_content_metadata(file_path: str) -> Dict[str, Any]:
-        """Extract comprehensive metadata from content files"""
-        
+        """Extract comprehensive metadata from content files"""        
         metadata = {
             "file_path": str(file_path),
             "file_size_mb": Path(file_path).stat().st_size / (1024 * 1024),
@@ -471,8 +449,7 @@ class ContentAnalyzer:
     
     @staticmethod
     def generate_content_hash(content: Union[str, bytes, np.ndarray]) -> str:
-        """Generate unique hash for content"""
-        
+        """Generate unique hash for content"""        
         if isinstance(content, str):
             content_bytes = content.encode('utf-8')
         elif isinstance(content, np.ndarray):
@@ -488,8 +465,7 @@ class ContentAnalyzer:
         content2: np.ndarray,
         method: str = "cosine"
     ) -> float:
-        """Calculate similarity between content features"""
-        
+        """Calculate similarity between content features"""        
         if method == "cosine":
             # Flatten arrays if needed
             flat1 = content1.flatten()

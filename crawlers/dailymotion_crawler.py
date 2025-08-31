@@ -1,10 +1,8 @@
-"""
-Dailymotion Video Crawler
+"""Dailymotion Video Crawler
 Advanced industrial-grade Dailymotion crawler for video content protection and analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
 """
-
 import asyncio
 import json
 import re
@@ -28,8 +26,7 @@ settings = get_settings()
 
 
 class DailymotionVideo(BaseModel):
-    """Dailymotion Video data model"""
-    video_id: str
+    """Dailymotion Video data model"""    video_id: str
     title: str
     description: str
     duration: int = 0  # in seconds
@@ -61,8 +58,7 @@ class DailymotionVideo(BaseModel):
 
 
 class DailymotionUser(BaseModel):
-    """Dailymotion User data model"""
-    user_id: str
+    """Dailymotion User data model"""    user_id: str
     username: str
     screenname: str
     description: Optional[str] = None
@@ -83,8 +79,7 @@ class DailymotionUser(BaseModel):
 
 
 class DailymotionChannel(BaseModel):
-    """Dailymotion Channel data model"""
-    channel_id: str
+    """Dailymotion Channel data model"""    channel_id: str
     name: str
     description: Optional[str] = None
     slug: str
@@ -101,8 +96,7 @@ class DailymotionChannel(BaseModel):
 
 
 class DailymotionPlaylist(BaseModel):
-    """Dailymotion Playlist data model"""
-    playlist_id: str
+    """Dailymotion Playlist data model"""    playlist_id: str
     name: str
     description: Optional[str] = None
     video_count: int = 0
@@ -117,8 +111,7 @@ class DailymotionPlaylist(BaseModel):
 
 
 class DailymotionCrawler(BaseCrawler):
-    """
-    Advanced Dailymotion crawler for comprehensive video content monitoring
+    """    Advanced Dailymotion crawler for comprehensive video content monitoring
     
     Features:
     - Video content analysis with detailed metadata extraction
@@ -129,8 +122,7 @@ class DailymotionCrawler(BaseCrawler):
     - Engagement metrics and trend analysis
     - Geographic and language-based content filtering
     - Revenue and monetization tracking for partners
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.platform = "dailymotion"
@@ -148,8 +140,7 @@ class DailymotionCrawler(BaseCrawler):
         self.access_token = None
         
     async def authenticate(self, api_key: str, api_secret: str = None, access_token: str = None) -> bool:
-        """Authenticate with Dailymotion API"""
-        try:
+        """Authenticate with Dailymotion API"""        try:
             if access_token:
                 self.access_token = access_token
                 self.session_headers['Authorization'] = f'Bearer {access_token}'
@@ -182,8 +173,7 @@ class DailymotionCrawler(BaseCrawler):
         language: str = None,
         limit: int = 100
     ) -> List[Dict]:
-        """
-        Search Dailymotion videos with advanced filtering
+        """        Search Dailymotion videos with advanced filtering
         
         Args:
             query: Search query
@@ -195,8 +185,7 @@ class DailymotionCrawler(BaseCrawler):
             
         Returns:
             List of matching videos
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             search_params = {
@@ -232,8 +221,7 @@ class DailymotionCrawler(BaseCrawler):
             return []
     
     async def get_video_details(self, video_id: str) -> Optional[DailymotionVideo]:
-        """Get detailed information about a specific video"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific video"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/video/{video_id}"
@@ -255,8 +243,7 @@ class DailymotionCrawler(BaseCrawler):
             return None
     
     async def get_user_details(self, username: str) -> Optional[DailymotionUser]:
-        """Get detailed information about a specific user"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific user"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/user/{username}"
@@ -278,8 +265,7 @@ class DailymotionCrawler(BaseCrawler):
             return None
     
     async def get_user_videos(self, username: str, limit: int = 100) -> List[DailymotionVideo]:
-        """Get all videos from a specific user"""
-        await self.rate_limiter.wait()
+        """Get all videos from a specific user"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/user/{username}/videos"
@@ -326,8 +312,7 @@ class DailymotionCrawler(BaseCrawler):
             return []
     
     async def get_channel_details(self, channel_id: str) -> Optional[DailymotionChannel]:
-        """Get detailed information about a specific channel"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific channel"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/channel/{channel_id}"
@@ -355,8 +340,7 @@ class DailymotionCrawler(BaseCrawler):
         category: str = None,
         limit: int = 100
     ) -> List[DailymotionVideo]:
-        """
-        Get trending videos on Dailymotion
+        """        Get trending videos on Dailymotion
         
         Args:
             country: Country filter
@@ -366,8 +350,7 @@ class DailymotionCrawler(BaseCrawler):
             
         Returns:
             List of trending videos
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             params = {
@@ -408,8 +391,7 @@ class DailymotionCrawler(BaseCrawler):
             return []
     
     async def get_video_comments(self, video_id: str, limit: int = 100) -> List[Dict]:
-        """Get comments from a specific video"""
-        await self.rate_limiter.wait()
+        """Get comments from a specific video"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/video/{video_id}/comments"
@@ -439,8 +421,7 @@ class DailymotionCrawler(BaseCrawler):
         protected_content: Dict,
         similarity_threshold: float = 0.8
     ) -> List[ContentMatch]:
-        """
-        Monitor Dailymotion for potential copyright infringement
+        """        Monitor Dailymotion for potential copyright infringement
         
         Args:
             protected_content: Content to protect
@@ -448,8 +429,7 @@ class DailymotionCrawler(BaseCrawler):
             
         Returns:
             List of potential copyright matches
-        """
-        matches = []
+        """        matches = []
         
         try:
             # Generate search queries from protected content
@@ -496,16 +476,14 @@ class DailymotionCrawler(BaseCrawler):
             return []
     
     async def analyze_video_performance(self, video_id: str) -> Dict[str, Any]:
-        """
-        Analyze video performance metrics and engagement
+        """        Analyze video performance metrics and engagement
         
         Args:
             video_id: Dailymotion video ID
             
         Returns:
             Comprehensive performance analysis
-        """
-        try:
+        """        try:
             video = await self.get_video_details(video_id)
             if not video:
                 return {}
@@ -576,8 +554,7 @@ class DailymotionCrawler(BaseCrawler):
         time_period: str = "week",
         limit: int = 100
     ) -> Dict[str, Any]:
-        """
-        Analyze content trends on Dailymotion
+        """        Analyze content trends on Dailymotion
         
         Args:
             country: Country filter for trend analysis
@@ -587,8 +564,7 @@ class DailymotionCrawler(BaseCrawler):
             
         Returns:
             Comprehensive trend analysis
-        """
-        try:
+        """        try:
             # Get trending videos for analysis
             trending_videos = await self.get_trending_videos(country, language, limit=limit)
             
@@ -625,8 +601,7 @@ class DailymotionCrawler(BaseCrawler):
             return {}
     
     async def bulk_video_analysis(self, video_ids: List[str]) -> List[Dict[str, Any]]:
-        """Analyze multiple videos in bulk for efficiency"""
-        results = []
+        """Analyze multiple videos in bulk for efficiency"""        results = []
         
         # Process videos in batches to respect rate limits
         batch_size = 20
@@ -648,8 +623,7 @@ class DailymotionCrawler(BaseCrawler):
         return results
     
     async def _parse_video_data(self, video_data: Dict) -> Optional[DailymotionVideo]:
-        """Parse Dailymotion API video data into DailymotionVideo model"""
-        try:
+        """Parse Dailymotion API video data into DailymotionVideo model"""        try:
             # Parse owner information
             owner_info = video_data.get('owner', {})
             
@@ -709,8 +683,7 @@ class DailymotionCrawler(BaseCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict) -> Optional[DailymotionUser]:
-        """Parse Dailymotion API user data into DailymotionUser model"""
-        try:
+        """Parse Dailymotion API user data into DailymotionUser model"""        try:
             created_time = datetime.fromtimestamp(user_data.get('created_time', 0))
             
             user = DailymotionUser(
@@ -741,8 +714,7 @@ class DailymotionCrawler(BaseCrawler):
             return None
     
     async def _parse_channel_data(self, channel_data: Dict) -> Optional[DailymotionChannel]:
-        """Parse Dailymotion API channel data into DailymotionChannel model"""
-        try:
+        """Parse Dailymotion API channel data into DailymotionChannel model"""        try:
             created_time = datetime.fromtimestamp(channel_data.get('created_time', 0))
             updated_time = None
             if channel_data.get('updated_time'):
@@ -776,8 +748,7 @@ class DailymotionCrawler(BaseCrawler):
             return None
     
     def _generate_search_queries(self, protected_content: Dict) -> List[str]:
-        """Generate search queries for content protection"""
-        queries = []
+        """Generate search queries for content protection"""        queries = []
         
         if 'title' in protected_content:
             queries.append(protected_content['title'])
@@ -801,8 +772,7 @@ class DailymotionCrawler(BaseCrawler):
         protected_content: Dict,
         video: DailymotionVideo
     ) -> float:
-        """Calculate similarity between protected content and Dailymotion video"""
-        from difflib import SequenceMatcher
+        """Calculate similarity between protected content and Dailymotion video"""        from difflib import SequenceMatcher
         
         similarity_scores = []
         
@@ -844,8 +814,7 @@ class DailymotionCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     def _calculate_virality_score(self, video: DailymotionVideo) -> float:
-        """Calculate video virality score"""
-        video_age_days = (datetime.utcnow() - video.created_time).days
+        """Calculate video virality score"""        video_age_days = (datetime.utcnow() - video.created_time).days
         if video_age_days == 0:
             video_age_days = 1
         
@@ -859,8 +828,7 @@ class DailymotionCrawler(BaseCrawler):
         return min(virality_score, 10000)  # Cap at 10000
     
     def _categorize_duration(self, duration: int) -> str:
-        """Categorize video duration"""
-        if duration < 60:
+        """Categorize video duration"""        if duration < 60:
             return "very_short"
         elif duration < 300:
             return "short"
@@ -872,8 +840,7 @@ class DailymotionCrawler(BaseCrawler):
             return "very_long"
     
     def _analyze_title_optimization(self, title: str) -> float:
-        """Analyze title optimization score"""
-        if not title:
+        """Analyze title optimization score"""        if not title:
             return 0.0
         
         score = 0.0
@@ -899,8 +866,7 @@ class DailymotionCrawler(BaseCrawler):
         return min(score, 1.0)
     
     def _analyze_description_quality(self, description: str) -> float:
-        """Analyze description quality score"""
-        if not description:
+        """Analyze description quality score"""        if not description:
             return 0.0
         
         score = 0.0
@@ -925,8 +891,7 @@ class DailymotionCrawler(BaseCrawler):
         return min(score, 1.0)
     
     def _categorize_performance(self, video: DailymotionVideo) -> str:
-        """Categorize video performance level"""
-        views = video.view_count
+        """Categorize video performance level"""        views = video.view_count
         engagement = video.like_count + video.comment_count + video.favorite_count
         
         if views > 1000000 and engagement > 10000:
@@ -939,8 +904,7 @@ class DailymotionCrawler(BaseCrawler):
             return "low"
     
     def _generate_optimization_suggestions(self, video: DailymotionVideo) -> List[str]:
-        """Generate optimization suggestions for video"""
-        suggestions = []
+        """Generate optimization suggestions for video"""        suggestions = []
         
         if len(video.title) < 30:
             suggestions.append("Consider expanding the title for better SEO")
@@ -963,8 +927,7 @@ class DailymotionCrawler(BaseCrawler):
         return suggestions
     
     async def _analyze_duration_distribution(self, videos: List[DailymotionVideo]) -> Dict[str, Any]:
-        """Analyze duration distribution in videos"""
-        durations = [v.duration for v in videos if v.duration > 0]
+        """Analyze duration distribution in videos"""        durations = [v.duration for v in videos if v.duration > 0]
         
         if not durations:
             return {}
@@ -984,8 +947,7 @@ class DailymotionCrawler(BaseCrawler):
         }
     
     async def _analyze_language_distribution(self, videos: List[DailymotionVideo]) -> Dict[str, int]:
-        """Analyze language distribution in videos"""
-        language_counts = {}
+        """Analyze language distribution in videos"""        language_counts = {}
         
         for video in videos:
             language = video.language or 'unknown'
@@ -994,8 +956,7 @@ class DailymotionCrawler(BaseCrawler):
         return dict(sorted(language_counts.items(), key=lambda x: x[1], reverse=True)[:10])
     
     async def _analyze_tag_trends(self, videos: List[DailymotionVideo]) -> Dict[str, int]:
-        """Analyze trending tags in videos"""
-        tag_counts = {}
+        """Analyze trending tags in videos"""        tag_counts = {}
         
         for video in videos:
             for tag in video.tags:
@@ -1005,8 +966,7 @@ class DailymotionCrawler(BaseCrawler):
         return dict(sorted(tag_counts.items(), key=lambda x: x[1], reverse=True)[:20])
     
     async def _identify_top_creators(self, videos: List[DailymotionVideo]) -> List[Dict[str, Any]]:
-        """Identify top creators from trending videos"""
-        creator_stats = {}
+        """Identify top creators from trending videos"""        creator_stats = {}
         
         for video in videos:
             creator = video.owner_username
@@ -1041,8 +1001,7 @@ class DailymotionCrawler(BaseCrawler):
         ]
     
     async def _analyze_engagement_patterns(self, videos: List[DailymotionVideo]) -> Dict[str, Any]:
-        """Analyze engagement patterns in videos"""
-        if not videos:
+        """Analyze engagement patterns in videos"""        if not videos:
             return {}
         
         view_counts = [v.view_count for v in videos]
@@ -1059,8 +1018,7 @@ class DailymotionCrawler(BaseCrawler):
         }
     
     async def _analyze_quality_trends(self, videos: List[DailymotionVideo]) -> Dict[str, Any]:
-        """Analyze video quality trends"""
-        quality_analysis = {
+        """Analyze video quality trends"""        quality_analysis = {
             'hd_percentage': 0,
             'uhd_percentage': 0,
             'avg_qualities_per_video': 0,
@@ -1096,8 +1054,7 @@ class DailymotionCrawler(BaseCrawler):
         return quality_analysis
     
     async def _analyze_geographic_distribution(self, videos: List[DailymotionVideo]) -> Dict[str, int]:
-        """Analyze geographic distribution of videos"""
-        country_counts = {}
+        """Analyze geographic distribution of videos"""        country_counts = {}
         
         for video in videos:
             country = video.country or 'unknown'

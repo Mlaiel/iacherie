@@ -1,5 +1,4 @@
-"""
-Security Configuration Module
+"""Security Configuration Module
 
 Enterprise-grade security configuration for the IA Influencer Agent platform.
 Comprehensive authentication, encryption, access control, and audit logging.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import secrets
 import hashlib
@@ -25,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticationMethod(Enum):
-    """Authentication methods"""
-    PASSWORD = "password"
+    """Authentication methods"""    PASSWORD = "password"
     TWO_FACTOR = "two_factor"
     OAUTH2 = "oauth2"
     JWT = "jwt"
@@ -37,8 +34,7 @@ class AuthenticationMethod(Enum):
 
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithms"""
-    AES_256_GCM = "aes_256_gcm"
+    """Encryption algorithms"""    AES_256_GCM = "aes_256_gcm"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     RSA_4096 = "rsa_4096"
     ECDSA_P256 = "ecdsa_p256"
@@ -46,8 +42,7 @@ class EncryptionAlgorithm(Enum):
 
 
 class AccessLevel(Enum):
-    """Access levels"""
-    NONE = "none"
+    """Access levels"""    NONE = "none"
     READ = "read"
     WRITE = "write"
     ADMIN = "admin"
@@ -56,8 +51,7 @@ class AccessLevel(Enum):
 
 
 class SecurityLevel(Enum):
-    """Security levels"""
-    BASIC = "basic"
+    """Security levels"""    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     CRITICAL = "critical"
@@ -65,8 +59,7 @@ class SecurityLevel(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat levels"""
-    LOW = "low"
+    """Threat levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -75,8 +68,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class AuthenticationConfig:
-    """Authentication configuration"""
-    enabled: bool = True
+    """Authentication configuration"""    enabled: bool = True
     
     # Authentication methods
     enabled_methods: List[AuthenticationMethod] = field(default_factory=lambda: [
@@ -128,8 +120,7 @@ class AuthenticationConfig:
     email_verification_required: bool = True
 
     def __post_init__(self):
-        """Initialize default OAuth2 providers"""
-        if not self.oauth2_providers:
+        """Initialize default OAuth2 providers"""        if not self.oauth2_providers:
             self.oauth2_providers = {
                 "google": {
                     "client_id": os.getenv("GOOGLE_CLIENT_ID", ""),
@@ -149,8 +140,7 @@ class AuthenticationConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration"""
-    enabled: bool = True
+    """Encryption configuration"""    enabled: bool = True
     
     # Default algorithms
     symmetric_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
@@ -187,8 +177,7 @@ class EncryptionConfig:
 
 @dataclass
 class AccessControlConfig:
-    """Access control configuration"""
-    enabled: bool = True
+    """Access control configuration"""    enabled: bool = True
     
     # Role-based access control (RBAC)
     rbac_enabled: bool = True
@@ -251,8 +240,7 @@ class AccessControlConfig:
 
 @dataclass
 class AuditLoggingConfig:
-    """Audit logging configuration"""
-    enabled: bool = True
+    """Audit logging configuration"""    enabled: bool = True
     
     # Log levels
     log_authentication: bool = True
@@ -293,8 +281,7 @@ class AuditLoggingConfig:
 
 @dataclass
 class ThreatDetectionConfig:
-    """Threat detection configuration"""
-    enabled: bool = True
+    """Threat detection configuration"""    enabled: bool = True
     
     # Intrusion detection
     ids_enabled: bool = True
@@ -331,8 +318,7 @@ class ThreatDetectionConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Compliance configuration"""
-    enabled: bool = True
+    """Compliance configuration"""    enabled: bool = True
     
     # Regulatory frameworks
     gdpr_compliance: bool = True
@@ -367,8 +353,7 @@ class ComplianceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Main security configuration"""
-    
+    """Main security configuration"""    
     # Core settings
     enabled: bool = True
     security_level: SecurityLevel = SecurityLevel.CRITICAL
@@ -415,8 +400,7 @@ class SecurityConfig:
     recovery_point_objective_hours: int = 1
 
     def __post_init__(self):
-        """Initialize default incident escalation matrix"""
-        if not self.incident_escalation_matrix:
+        """Initialize default incident escalation matrix"""        if not self.incident_escalation_matrix:
             self.incident_escalation_matrix = {
                 ThreatLevel.LOW.value: ["security@ia-influencer.com"],
                 ThreatLevel.MEDIUM.value: ["security@ia-influencer.com", "admin@ia-influencer.com"],
@@ -426,8 +410,7 @@ class SecurityConfig:
             }
 
     def generate_api_key(self, user_id: str, permissions: List[str]) -> Dict[str, Any]:
-        """Generate secure API key"""
-        api_key = secrets.token_urlsafe(self.authentication.api_key_length)
+        """Generate secure API key"""        api_key = secrets.token_urlsafe(self.authentication.api_key_length)
         
         # Create key hash for storage
         key_hash = hashlib.sha256(api_key.encode()).hexdigest()
@@ -451,8 +434,7 @@ class SecurityConfig:
         return key_data
 
     def validate_password(self, password: str) -> Dict[str, Any]:
-        """Validate password against security policy"""
-        validation_result = {
+        """Validate password against security policy"""        validation_result = {
             "valid": True,
             "errors": [],
             "score": 0,
@@ -506,8 +488,7 @@ class SecurityConfig:
         return validation_result
 
     def check_access_permission(self, user_role: str, resource: str, action: str) -> bool:
-        """Check if user has permission for action on resource"""
-        if not self.access_control.enabled:
+        """Check if user has permission for action on resource"""        if not self.access_control.enabled:
             return True
         
         resource_perms = self.access_control.resource_permissions.get(resource, {})
@@ -526,8 +507,7 @@ class SecurityConfig:
         return False
 
     def log_security_event(self, event_type: str, user_id: str, details: Dict[str, Any]):
-        """Log security event"""
-        if not self.audit_logging.enabled:
+        """Log security event"""        if not self.audit_logging.enabled:
             return
         
         event_data = {
@@ -547,8 +527,7 @@ class SecurityConfig:
         logger.info(f"Security event: {event_type} - {event_data}")
 
     def assess_threat_level(self, indicators: Dict[str, Any]) -> ThreatLevel:
-        """Assess threat level based on indicators"""
-        score = 0
+        """Assess threat level based on indicators"""        score = 0
         
         # Failed login attempts
         failed_logins = indicators.get("failed_logins", 0)
@@ -590,8 +569,7 @@ class SecurityConfig:
             return ThreatLevel.LOW
 
     def trigger_incident_response(self, threat_level: ThreatLevel, details: Dict[str, Any]):
-        """Trigger incident response procedures"""
-        if not self.incident_response_enabled:
+        """Trigger incident response procedures"""        if not self.incident_response_enabled:
             return
         
         contacts = self.incident_escalation_matrix.get(threat_level.value, [])
@@ -613,8 +591,7 @@ class SecurityConfig:
             self._emergency_lockdown(details)
 
     def _emergency_lockdown(self, details: Dict[str, Any]):
-        """Execute emergency lockdown procedures"""
-        logger.critical("EMERGENCY LOCKDOWN ACTIVATED")
+        """Execute emergency lockdown procedures"""        logger.critical("EMERGENCY LOCKDOWN ACTIVATED")
         
         # Block suspicious IPs
         if "ip_address" in details:
@@ -630,8 +607,7 @@ class SecurityConfig:
         # Enable enhanced logging and monitoring
 
     def validate_configuration(self) -> List[str]:
-        """Validate security configuration"""
-        issues = []
+        """Validate security configuration"""        issues = []
         
         # Check critical security settings
         if not self.authentication.enabled:
@@ -658,8 +634,7 @@ class SecurityConfig:
 
     @classmethod
     def from_env(cls) -> 'SecurityConfig':
-        """Create configuration from environment variables"""
-        config = cls()
+        """Create configuration from environment variables"""        config = cls()
         
         # Load basic settings
         config.enabled = os.getenv("SECURITY_ENABLED", "true").lower() == "true"

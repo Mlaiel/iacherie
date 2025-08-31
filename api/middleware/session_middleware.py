@@ -1,11 +1,9 @@
-"""
-Session Management Middleware - FastAPI Session Integration
+"""Session Management Middleware - FastAPI Session Integration
 Advanced session management with Redis backend and JWT integration
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import json
 import time
@@ -21,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class SessionManagerMiddleware(BaseHTTPMiddleware):
-    """
-    Advanced session management middleware for FastAPI
+    """    Advanced session management middleware for FastAPI
     
     Features:
     - Redis-backed session storage
@@ -31,8 +28,7 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
     - Multi-tenant session isolation
     - Session hijacking protection
     - Activity tracking
-    """
-    
+    """    
     def __init__(
         self,
         app,
@@ -62,8 +58,7 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
         logger.info("Session Manager Middleware initialized")
     
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        """Process request and handle session management"""
-        
+        """Process request and handle session management"""        
         # Check if path should be excluded
         if self._should_exclude_path(request.url.path):
             return await call_next(request)
@@ -110,24 +105,21 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
         return response
     
     def _should_exclude_path(self, path: str) -> bool:
-        """Check if path should be excluded from session handling"""
-        
+        """Check if path should be excluded from session handling"""        
         for excluded_path in self.exclude_paths:
             if path.startswith(excluded_path):
                 return True
         return False
     
     def _requires_session(self, path: str) -> bool:
-        """Check if path requires an active session"""
-        
+        """Check if path requires an active session"""        
         for required_path in self.require_session_paths:
             if path.startswith(required_path):
                 return True
         return False
     
     def _get_session_id(self, request: Request) -> Optional[str]:
-        """Extract session ID from request"""
-        
+        """Extract session ID from request"""        
         # Try header first
         session_id = request.headers.get(self.session_header_name)
         if session_id:
@@ -151,8 +143,7 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
         return None
     
     async def _load_session(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Load session data from backend"""
-        
+        """Load session data from backend"""        
         if not self.session_backend:
             return None
         
@@ -178,8 +169,7 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
         return None
     
     async def _create_session(self, session_data: Dict[str, Any], request: Request) -> str:
-        """Create new session"""
-        
+        """Create new session"""        
         session_id = str(uuid.uuid4())
         
         # Prepare session data
@@ -219,8 +209,7 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
         return session_id
     
     async def _update_session_activity(self, session_id: str, request: Request):
-        """Update session last accessed time"""
-        
+        """Update session last accessed time"""        
         if not self.session_backend:
             return
         
@@ -259,8 +248,7 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
             logger.warning(f"Failed to update session activity: {e}")
     
     async def _invalidate_session(self, session_id: str):
-        """Invalidate session"""
-        
+        """Invalidate session"""        
         if not self.session_backend:
             return
         
@@ -279,16 +267,14 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
             logger.warning(f"Failed to invalidate session: {e}")
     
     def _is_session_expired(self, session_data: Dict[str, Any]) -> bool:
-        """Check if session is expired"""
-        
+        """Check if session is expired"""        
         last_accessed = session_data.get("last_accessed", 0)
         current_time = time.time()
         
         return (current_time - last_accessed) > self.session_ttl
     
     def _get_client_ip(self, request: Request) -> str:
-        """Get client IP address"""
-        
+        """Get client IP address"""        
         # Check forwarded headers first
         forwarded_for = request.headers.get("X-Forwarded-For")
         if forwarded_for:
@@ -305,8 +291,7 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
         return "unknown"
     
     def get_session_stats(self) -> Dict[str, Any]:
-        """Get session management statistics"""
-        
+        """Get session management statistics"""        
         return {
             "active_sessions": self.active_sessions,
             "session_creates": self.session_creates,
@@ -317,10 +302,8 @@ class SessionManagerMiddleware(BaseHTTPMiddleware):
 
 
 class SessionAuthMiddleware(BaseHTTPMiddleware):
-    """
-    Middleware for session-based authentication
-    """
-    
+    """    Middleware for session-based authentication
+    """    
     def __init__(
         self,
         app,
@@ -336,8 +319,7 @@ class SessionAuthMiddleware(BaseHTTPMiddleware):
         logger.info("Session Auth Middleware initialized")
     
     async def dispatch(self, request: Request, call_next: Callable) -> Response:
-        """Process request and check authentication"""
-        
+        """Process request and check authentication"""        
         path = request.url.path
         
         # Check if path requires authentication
@@ -375,19 +357,16 @@ class SessionAuthMiddleware(BaseHTTPMiddleware):
 
 # Helper functions for session management
 async def create_session(request: Request, user_data: Dict[str, Any]):
-    """Helper to create a new session"""
-    request.state.create_session = True
+    """Helper to create a new session"""    request.state.create_session = True
     request.state.session_data = user_data
 
 
 async def get_session_data(request: Request) -> Dict[str, Any]:
-    """Helper to get session data"""
-    return getattr(request.state, 'session_data', {})
+    """Helper to get session data"""    return getattr(request.state, 'session_data', {})
 
 
 async def invalidate_session(request: Request, session_backend: object):
-    """Helper to invalidate current session"""
-    session_id = getattr(request.state, 'session_id', None)
+    """Helper to invalidate current session"""    session_id = getattr(request.state, 'session_id', None)
     if session_id and session_backend:
         cache_key = f"session:{session_id}"
         if hasattr(session_backend, 'delete'):

@@ -1,5 +1,4 @@
-"""
-Analytics Collector - Professional Multi-Platform Analytics Aggregation System
+"""Analytics Collector - Professional Multi-Platform Analytics Aggregation System
 
 Enterprise-grade analytics collection and analysis system with advanced metrics processing,
 cross-platform insights, and comprehensive business intelligence for the IA Influencer Agent ecosystem.
@@ -15,7 +14,6 @@ immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
 """
-
 import asyncio
 import json
 import logging
@@ -52,8 +50,7 @@ from ...models.analytics import (
 
 
 class MetricType(Enum):
-    """Analytics metric type enumeration"""
-    ENGAGEMENT = "engagement"
+    """Analytics metric type enumeration"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     IMPRESSIONS = "impressions"
     REVENUE = "revenue"
@@ -63,8 +60,7 @@ class MetricType(Enum):
 
 
 class AnalyticsPeriod(Enum):
-    """Analytics time period enumeration"""
-    HOURLY = "hourly"
+    """Analytics time period enumeration"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -74,8 +70,7 @@ class AnalyticsPeriod(Enum):
 
 
 class DataGranularity(Enum):
-    """Data granularity enumeration"""
-    MINUTE = "minute"
+    """Data granularity enumeration"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -83,8 +78,7 @@ class DataGranularity(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend direction enumeration"""
-    UP = "up"
+    """Trend direction enumeration"""    UP = "up"
     DOWN = "down"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -92,8 +86,7 @@ class TrendDirection(Enum):
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query configuration"""
-    platforms: List[str]
+    """Analytics query configuration"""    platforms: List[str]
     metrics: List[MetricType]
     start_date: datetime
     end_date: datetime
@@ -110,8 +103,7 @@ class AnalyticsQuery:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
-    metric_name: str
+    """Trend analysis result"""    metric_name: str
     platform: str
     direction: TrendDirection
     change_percentage: float
@@ -124,8 +116,7 @@ class TrendAnalysis:
 
 @dataclass
 class CrossPlatformInsights:
-    """Cross-platform analytics insights"""
-    total_reach: int
+    """Cross-platform analytics insights"""    total_reach: int
     total_engagement: int
     platform_performance: Dict[str, Dict[str, float]]
     audience_overlap: Dict[str, float]
@@ -136,8 +127,7 @@ class CrossPlatformInsights:
 
 
 class AnalyticsCollector(BaseAgent):
-    """
-    Professional analytics collector with advanced features
+    """    Professional analytics collector with advanced features
     
     Capabilities:
     - Multi-platform data aggregation
@@ -150,16 +140,13 @@ class AnalyticsCollector(BaseAgent):
     - Automated insights generation
     - Anomaly detection
     - Custom dashboard creation
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize analytics collector
+        """        Initialize analytics collector
         
         Args:
             config: Analytics collector configuration
-        """
-        super().__init__(config)
+        """        super().__init__(config)
         
         # Core configuration
         self.collection_interval = config.get('collection_interval', 300)  # 5 minutes
@@ -198,8 +185,7 @@ class AnalyticsCollector(BaseAgent):
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> bool:
-        """Initialize analytics collector"""
-        try:
+        """Initialize analytics collector"""        try:
             # Initialize database
             await self.db.initialize()
             await self._create_analytics_tables()
@@ -236,8 +222,7 @@ class AnalyticsCollector(BaseAgent):
         end_date: datetime,
         metrics: Optional[List[MetricType]] = None
     ) -> AnalyticsData:
-        """
-        Collect analytics data from specific platform
+        """        Collect analytics data from specific platform
         
         Args:
             platform: Platform name
@@ -247,8 +232,7 @@ class AnalyticsCollector(BaseAgent):
             
         Returns:
             Collected analytics data
-        """
-        try:
+        """        try:
             if platform not in self.platform_adapters:
                 raise AnalyticsError(f"No adapter for platform {platform}")
             
@@ -289,8 +273,7 @@ class AnalyticsCollector(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> CrossPlatformInsights:
-        """
-        Analyze performance across multiple platforms
+        """        Analyze performance across multiple platforms
         
         Args:
             platforms: List of platforms to analyze
@@ -299,8 +282,7 @@ class AnalyticsCollector(BaseAgent):
             
         Returns:
             Cross-platform insights
-        """
-        try:
+        """        try:
             # Collect data from all platforms
             platform_data = {}
             for platform in platforms:
@@ -360,8 +342,7 @@ class AnalyticsCollector(BaseAgent):
         period: AnalyticsPeriod,
         lookback_days: int = 90
     ) -> TrendAnalysis:
-        """
-        Analyze trends for specific metric
+        """        Analyze trends for specific metric
         
         Args:
             platform: Platform to analyze
@@ -371,8 +352,7 @@ class AnalyticsCollector(BaseAgent):
             
         Returns:
             Trend analysis result
-        """
-        try:
+        """        try:
             # Get historical data
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=lookback_days)
@@ -431,8 +411,7 @@ class AnalyticsCollector(BaseAgent):
             raise AnalyticsError(f"Trend analysis failed: {str(e)}")
     
     async def query_analytics(self, query: AnalyticsQuery) -> Dict[str, Any]:
-        """Execute complex analytics query"""
-        try:
+        """Execute complex analytics query"""        try:
             results = {}
             
             for platform in query.platforms:
@@ -482,8 +461,7 @@ class AnalyticsCollector(BaseAgent):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate comprehensive insights report"""
-        try:
+        """Generate comprehensive insights report"""        try:
             report = {
                 'period': {'start': start_date.isoformat(), 'end': end_date.isoformat()},
                 'platforms': platforms,
@@ -529,15 +507,12 @@ class AnalyticsCollector(BaseAgent):
             raise AnalyticsError(f"Report generation failed: {str(e)}")
     
     async def register_platform_adapter(self, platform: str, adapter: Any) -> None:
-        """Register platform adapter for analytics collection"""
-        self.platform_adapters[platform] = adapter
+        """Register platform adapter for analytics collection"""        self.platform_adapters[platform] = adapter
         self.logger.info(f"Registered analytics adapter for {platform}")
     
     async def _create_analytics_tables(self) -> None:
-        """Create database tables for analytics data"""
-        # Create main analytics table
-        create_analytics_sql = """
-        CREATE TABLE IF NOT EXISTS analytics_data (
+        """Create database tables for analytics data"""        # Create main analytics table
+        create_analytics_sql = """        CREATE TABLE IF NOT EXISTS analytics_data (
             id SERIAL PRIMARY KEY,
             platform TEXT NOT NULL,
             metric_type TEXT NOT NULL,
@@ -547,8 +522,7 @@ class AnalyticsCollector(BaseAgent):
             content_id TEXT,
             created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
         )
-        """
-        
+        """        
         # Create indices for performance
         create_indices_sql = [
             "CREATE INDEX IF NOT EXISTS idx_analytics_platform_time ON analytics_data(platform, timestamp)",
@@ -561,8 +535,7 @@ class AnalyticsCollector(BaseAgent):
             await self.db.execute(index_sql)
     
     async def _initialize_analytics_engines(self) -> None:
-        """Initialize analytics processing engines"""
-        # Initialize trend analyzer
+        """Initialize analytics processing engines"""        # Initialize trend analyzer
         self.trend_analyzer = {
             'moving_average_window': self.moving_average_window,
             'seasonality_periods': self.seasonality_periods
@@ -583,8 +556,7 @@ class AnalyticsCollector(BaseAgent):
             }
     
     async def _collection_worker(self, worker_id: str) -> None:
-        """Background worker for data collection"""
-        while True:
+        """Background worker for data collection"""        while True:
             try:
                 # Get collection task from queue
                 if not self.processing_queue.empty():
@@ -598,8 +570,7 @@ class AnalyticsCollector(BaseAgent):
                 await asyncio.sleep(5)
     
     async def _processing_worker(self, worker_id: str) -> None:
-        """Background worker for data processing"""
-        while True:
+        """Background worker for data processing"""        while True:
             try:
                 # Process cached data
                 await self._process_cached_data()
@@ -610,8 +581,7 @@ class AnalyticsCollector(BaseAgent):
                 await asyncio.sleep(30)
     
     async def _scheduled_collection_loop(self) -> None:
-        """Main scheduled collection loop"""
-        while True:
+        """Main scheduled collection loop"""        while True:
             try:
                 # Collect from all registered platforms
                 for platform in self.platform_adapters.keys():
@@ -627,8 +597,7 @@ class AnalyticsCollector(BaseAgent):
                 await asyncio.sleep(60)
     
     async def _collect_platform_scheduled(self, platform: str) -> None:
-        """Scheduled collection for specific platform"""
-        try:
+        """Scheduled collection for specific platform"""        try:
             self.active_collections.add(platform)
             
             end_time = datetime.utcnow()
@@ -647,6 +616,5 @@ class AnalyticsCollector(BaseAgent):
     # Due to length constraints, showing key structure and main methods
     
     async def cleanup(self) -> None:
-        """Cleanup analytics collector resources"""
-        await self.db.cleanup()
+        """Cleanup analytics collector resources"""        await self.db.cleanup()
         self.logger.info("Analytics collector cleaned up successfully")

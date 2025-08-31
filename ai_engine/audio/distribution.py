@@ -1,5 +1,4 @@
-"""
-Distribution - Multi-Platform Content Distribution Engine
+"""Distribution - Multi-Platform Content Distribution Engine
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -13,7 +12,6 @@ Email: mlaiel@live.de
 This module provides comprehensive multi-platform content distribution including
 automated publishing, metadata optimization, and cross-platform analytics.
 """
-
 import logging
 import uuid
 import asyncio
@@ -31,8 +29,7 @@ from .signal_processing import AudioData
 logger = logging.getLogger(__name__)
 
 class DistributionChannel(Enum):
-    """Distribution channels/platforms"""
-    SPOTIFY = "spotify"
+    """Distribution channels/platforms"""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
     AMAZON_MUSIC = "amazon_music"
@@ -54,8 +51,7 @@ class DistributionChannel(Enum):
     JUNO_DOWNLOAD = "juno_download"
 
 class DistributionStatus(Enum):
-    """Distribution status"""
-    PENDING = "pending"
+    """Distribution status"""    PENDING = "pending"
     PROCESSING = "processing"
     PUBLISHED = "published"
     FAILED = "failed"
@@ -64,8 +60,7 @@ class DistributionStatus(Enum):
     UNDER_REVIEW = "under_review"
 
 class ContentFormat(Enum):
-    """Content formats for distribution"""
-    AUDIO = "audio"
+    """Content formats for distribution"""    AUDIO = "audio"
     VIDEO = "video"
     ALBUM = "album"
     SINGLE = "single"
@@ -74,8 +69,7 @@ class ContentFormat(Enum):
     PODCAST = "podcast"
 
 class ReleaseType(Enum):
-    """Types of releases"""
-    SINGLE = "single"
+    """Types of releases"""    SINGLE = "single"
     EP = "ep"
     ALBUM = "album"
     COMPILATION = "compilation"
@@ -86,8 +80,7 @@ class ReleaseType(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""
-    platform: DistributionChannel
+    """Platform API credentials"""    platform: DistributionChannel
     client_id: str
     client_secret: str
     api_key: Optional[str] = None
@@ -99,8 +92,7 @@ class PlatformCredentials:
 
 @dataclass
 class DistributionMetadata:
-    """Content metadata for distribution"""
-    title: str
+    """Content metadata for distribution"""    title: str
     artist_name: str
     album_name: Optional[str] = None
     genre: str = "Electronic"
@@ -130,8 +122,7 @@ class DistributionMetadata:
 
 @dataclass
 class DistributionSettings:
-    """Distribution configuration settings"""
-    channels: List[DistributionChannel]
+    """Distribution configuration settings"""    channels: List[DistributionChannel]
     release_type: ReleaseType = ReleaseType.SINGLE
     content_format: ContentFormat = ContentFormat.AUDIO
     auto_publish: bool = True
@@ -152,8 +143,7 @@ class DistributionSettings:
 
 @dataclass
 class DistributionResult:
-    """Distribution operation result"""
-    distribution_id: str
+    """Distribution operation result"""    distribution_id: str
     platform: DistributionChannel
     status: DistributionStatus
     content_url: Optional[str] = None
@@ -175,8 +165,7 @@ class DistributionResult:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Cross-platform analytics aggregation"""
-    content_id: str
+    """Cross-platform analytics aggregation"""    content_id: str
     total_streams: int = 0
     total_downloads: int = 0
     total_revenue: float = 0.0
@@ -190,8 +179,7 @@ class CrossPlatformAnalytics:
     report_period: Tuple[datetime, datetime] = field(default_factory=lambda: (datetime.utcnow(), datetime.utcnow()))
 
 class MultiPlatformDistributor:
-    """
-    Advanced Multi-Platform Content Distribution Engine
+    """    Advanced Multi-Platform Content Distribution Engine
     
     Provides comprehensive distribution including:
     - Automated multi-platform publishing
@@ -199,8 +187,7 @@ class MultiPlatformDistributor:
     - Cross-platform analytics aggregation
     - Revenue tracking and reporting
     - Content lifecycle management
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.config = config or {}
@@ -226,8 +213,7 @@ class MultiPlatformDistributor:
         self.logger.info("MultiPlatformDistributor initialized successfully")
     
     def _setup_platform_configurations(self) -> Dict[DistributionChannel, Dict[str, Any]]:
-        """Setup platform-specific configurations"""
-        return {
+        """Setup platform-specific configurations"""        return {
             DistributionChannel.SPOTIFY: {
                 'api_base': 'https://api.spotify.com/v1',
                 'auth_url': 'https://accounts.spotify.com/api/token',
@@ -280,8 +266,7 @@ class MultiPlatformDistributor:
         }
     
     def _load_platform_credentials(self):
-        """Load platform credentials from configuration"""
-        credentials_config = self.config.get('platform_credentials', {})
+        """Load platform credentials from configuration"""        credentials_config = self.config.get('platform_credentials', {})
         
         for platform_name, creds in credentials_config.items():
             try:
@@ -300,8 +285,7 @@ class MultiPlatformDistributor:
                 self.logger.warning(f"Unknown platform in credentials: {platform_name}")
     
     def _define_platform_requirements(self) -> Dict[DistributionChannel, Dict[str, Any]]:
-        """Define platform-specific requirements"""
-        return {
+        """Define platform-specific requirements"""        return {
             DistributionChannel.SPOTIFY: {
                 'min_duration_seconds': 30,
                 'max_duration_seconds': 3600,
@@ -335,8 +319,7 @@ class MultiPlatformDistributor:
         }
     
     def _load_metadata_templates(self) -> Dict[DistributionChannel, Dict[str, str]]:
-        """Load platform-specific metadata templates"""
-        return {
+        """Load platform-specific metadata templates"""        return {
             DistributionChannel.SPOTIFY: {
                 'title_format': "{title}",
                 'description_format': "{description}",
@@ -361,8 +344,7 @@ class MultiPlatformDistributor:
         metadata: DistributionMetadata,
         settings: Optional[DistributionSettings] = None
     ) -> DistributionResult:
-        """
-        Distribute content to specific platform
+        """        Distribute content to specific platform
         
         Args:
             audio_data: Audio content to distribute
@@ -372,8 +354,7 @@ class MultiPlatformDistributor:
             
         Returns:
             DistributionResult with submission details
-        """
-        distribution_id = str(uuid.uuid4())
+        """        distribution_id = str(uuid.uuid4())
         
         try:
             # Validate platform support
@@ -467,8 +448,7 @@ class MultiPlatformDistributor:
         metadata: DistributionMetadata,
         settings: DistributionSettings
     ) -> List[DistributionResult]:
-        """Distribute content to multiple platforms simultaneously"""
-        results = []
+        """Distribute content to multiple platforms simultaneously"""        results = []
         
         # Create distribution tasks for each platform
         distribution_tasks = []
@@ -508,8 +488,7 @@ class MultiPlatformDistributor:
         platform: DistributionChannel,
         metadata: DistributionMetadata
     ) -> Dict[str, Any]:
-        """Validate content meets platform requirements"""
-        errors = []
+        """Validate content meets platform requirements"""        errors = []
         platform_config = self.platform_configs.get(platform, {})
         platform_requirements = self.platform_requirements.get(platform, {})
         
@@ -549,8 +528,7 @@ class MultiPlatformDistributor:
         metadata: DistributionMetadata,
         platform: DistributionChannel
     ) -> DistributionMetadata:
-        """Optimize metadata for specific platform requirements"""
-        optimized = metadata  # Start with original metadata
+        """Optimize metadata for specific platform requirements"""        optimized = metadata  # Start with original metadata
         
         if not self.seo_optimization_enabled:
             return optimized
@@ -599,8 +577,7 @@ class MultiPlatformDistributor:
         return optimized
     
     def _enhance_tags_for_youtube(self, metadata: DistributionMetadata) -> List[str]:
-        """Enhance tags specifically for YouTube algorithm"""
-        enhanced_tags = metadata.tags.copy()
+        """Enhance tags specifically for YouTube algorithm"""        enhanced_tags = metadata.tags.copy()
         
         # Add genre-related tags
         enhanced_tags.append(metadata.genre.lower())
@@ -633,8 +610,7 @@ class MultiPlatformDistributor:
         return enhanced_tags[:50]  # YouTube has a tag limit
     
     def _generate_upc_code(self) -> str:
-        """Generate UPC code for releases"""
-        # This is a simplified UPC generation - in production, use proper UPC allocation
+        """Generate UPC code for releases"""        # This is a simplified UPC generation - in production, use proper UPC allocation
         import random
         upc = f"0{random.randint(10**11, 10**12-1)}"
         return upc
@@ -645,8 +621,7 @@ class MultiPlatformDistributor:
         platform: DistributionChannel,
         metadata: DistributionMetadata
     ) -> Dict[str, Any]:
-        """Prepare content for platform-specific upload"""
-        prepared = {
+        """Prepare content for platform-specific upload"""        prepared = {
             'audio_data': audio_data,
             'metadata': metadata,
             'platform': platform
@@ -676,8 +651,7 @@ class MultiPlatformDistributor:
         platform: DistributionChannel,
         credentials: PlatformCredentials
     ) -> str:
-        """Authenticate with platform and get access token"""
-        platform_config = self.platform_configs.get(platform, {})
+        """Authenticate with platform and get access token"""        platform_config = self.platform_configs.get(platform, {})
         auth_url = platform_config.get('auth_url')
         
         if not auth_url:
@@ -698,8 +672,7 @@ class MultiPlatformDistributor:
         credentials: PlatformCredentials,
         auth_url: str
     ) -> str:
-        """Authenticate with Spotify API"""
-        # Mock Spotify authentication
+        """Authenticate with Spotify API"""        # Mock Spotify authentication
         return f"spotify_token_{credentials.client_id}"
     
     async def _authenticate_youtube(
@@ -707,8 +680,7 @@ class MultiPlatformDistributor:
         credentials: PlatformCredentials,
         auth_url: str
     ) -> str:
-        """Authenticate with YouTube API"""
-        # Mock YouTube authentication
+        """Authenticate with YouTube API"""        # Mock YouTube authentication
         return f"youtube_token_{credentials.client_id}"
     
     async def _authenticate_soundcloud(
@@ -716,8 +688,7 @@ class MultiPlatformDistributor:
         credentials: PlatformCredentials,
         auth_url: str
     ) -> str:
-        """Authenticate with SoundCloud API"""
-        # Mock SoundCloud authentication
+        """Authenticate with SoundCloud API"""        # Mock SoundCloud authentication
         return f"soundcloud_token_{credentials.client_id}"
     
     async def _upload_content_to_platform(
@@ -727,8 +698,7 @@ class MultiPlatformDistributor:
         metadata: DistributionMetadata,
         auth_token: str
     ) -> Dict[str, Any]:
-        """Upload content to specific platform"""
-        try:
+        """Upload content to specific platform"""        try:
             # Mock upload process (in production, implement real API calls)
             platform_id = f"{platform.value}_{uuid.uuid4().hex[:8]}"
             
@@ -759,8 +729,7 @@ class MultiPlatformDistributor:
             }
     
     def _calculate_estimated_live_date(self, platform: DistributionChannel) -> datetime:
-        """Calculate when content will go live on platform"""
-        platform_config = self.platform_configs.get(platform, {})
+        """Calculate when content will go live on platform"""        platform_config = self.platform_configs.get(platform, {})
         review_time_days = platform_config.get('review_time_days', 1)
         
         return datetime.utcnow() + timedelta(days=review_time_days)
@@ -770,8 +739,7 @@ class MultiPlatformDistributor:
         result: DistributionResult,
         credentials: PlatformCredentials
     ):
-        """Monitor distribution status and update result"""
-        max_checks = 10
+        """Monitor distribution status and update result"""        max_checks = 10
         check_interval = 300  # 5 minutes
         
         for check_count in range(max_checks):
@@ -803,8 +771,7 @@ class MultiPlatformDistributor:
         start_date: datetime,
         end_date: datetime
     ) -> CrossPlatformAnalytics:
-        """Get aggregated analytics across all platforms"""
-        # Check cache first
+        """Get aggregated analytics across all platforms"""        # Check cache first
         cache_key = f"{content_id}_{start_date.date()}_{end_date.date()}"
         if cache_key in self.analytics_cache:
             return self.analytics_cache[cache_key]
@@ -852,8 +819,7 @@ class MultiPlatformDistributor:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Fetch analytics from specific platform"""
-        # Mock analytics (in production, implement real API calls)
+        """Fetch analytics from specific platform"""        # Mock analytics (in production, implement real API calls)
         import random
         
         days_diff = (end_date - start_date).days
@@ -874,8 +840,7 @@ class MultiPlatformDistributor:
         }
     
     def get_distribution_results(self, content_id: str) -> List[DistributionResult]:
-        """Get distribution results for content"""
-        return self.distribution_results.get(content_id, [])
+        """Get distribution results for content"""        return self.distribution_results.get(content_id, [])
     
     async def update_content_metadata(
         self,
@@ -883,8 +848,7 @@ class MultiPlatformDistributor:
         platform: DistributionChannel,
         updated_metadata: DistributionMetadata
     ) -> bool:
-        """Update content metadata on platform"""
-        try:
+        """Update content metadata on platform"""        try:
             # Find distribution result
             results = self.distribution_results.get(content_id, [])
             platform_result = None
@@ -914,8 +878,7 @@ class MultiPlatformDistributor:
         platform: Optional[DistributionChannel] = None,
         reason: str = ""
     ) -> List[bool]:
-        """Takedown content from platform(s)"""
-        results = []
+        """Takedown content from platform(s)"""        results = []
         
         distribution_results = self.distribution_results.get(content_id, [])
         

@@ -1,5 +1,4 @@
-"""
-Resource Allocation Manager
+"""Resource Allocation Manager
 ==========================
 
 Intelligent resource allocation and optimization system for crawler operations.
@@ -8,7 +7,6 @@ Manages memory, CPU, network bandwidth, and storage resources efficiently.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import psutil
 import logging
@@ -30,8 +28,7 @@ from ...monitoring.metrics_collector import MetricsCollector
 
 
 class ResourceType(Enum):
-    """Types of system resources to manage."""
-    CPU = "cpu"
+    """Types of system resources to manage."""    CPU = "cpu"
     MEMORY = "memory"
     NETWORK = "network"
     STORAGE = "storage"
@@ -41,8 +38,7 @@ class ResourceType(Enum):
 
 
 class Priority(Enum):
-    """Task priority levels for resource allocation."""
-    CRITICAL = 1
+    """Task priority levels for resource allocation."""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -51,8 +47,7 @@ class Priority(Enum):
 
 @dataclass
 class ResourceLimit:
-    """Resource limit configuration."""
-    max_value: float
+    """Resource limit configuration."""    max_value: float
     warning_threshold: float = 0.8
     critical_threshold: float = 0.95
     unit: str = ""
@@ -61,8 +56,7 @@ class ResourceLimit:
 
 @dataclass
 class ResourceRequest:
-    """Resource allocation request."""
-    task_id: str
+    """Resource allocation request."""    task_id: str
     resource_type: ResourceType
     amount: float
     priority: Priority
@@ -74,8 +68,7 @@ class ResourceRequest:
 
 @dataclass
 class ResourceAllocation:
-    """Active resource allocation."""
-    request: ResourceRequest
+    """Active resource allocation."""    request: ResourceRequest
     allocated_amount: float
     start_time: datetime
     estimated_end_time: Optional[datetime] = None
@@ -86,8 +79,7 @@ class ResourceAllocation:
 
 @dataclass
 class ResourceMetrics:
-    """System resource metrics."""
-    timestamp: datetime
+    """System resource metrics."""    timestamp: datetime
     cpu_percent: float
     memory_percent: float
     memory_available: int
@@ -100,16 +92,13 @@ class ResourceMetrics:
 
 
 class ResourceAllocationManager:
-    """
-    Intelligent resource allocation manager for crawler operations.
+    """    Intelligent resource allocation manager for crawler operations.
     
     Provides dynamic resource allocation, monitoring, and optimization
     with adaptive algorithms and predictive scaling.
-    """
-    
+    """    
     def __init__(self, config: Optional[ResourceConfig] = None):
-        """Initialize the resource allocation manager."""
-        self.config = config or ResourceConfig()
+        """Initialize the resource allocation manager."""        self.config = config or ResourceConfig()
         self.logger = get_logger(self.__class__.__name__)
         self.metrics_collector = MetricsCollector()
         
@@ -146,8 +135,7 @@ class ResourceAllocationManager:
         self._initialize_resource_limits()
         
     def _initialize_resource_limits(self):
-        """Initialize default resource limits based on system capabilities."""
-        try:
+        """Initialize default resource limits based on system capabilities."""        try:
             # CPU limits
             cpu_count = psutil.cpu_count()
             self.resource_limits[ResourceType.CPU] = ResourceLimit(
@@ -206,8 +194,7 @@ class ResourceAllocationManager:
             raise
             
     async def start_monitoring(self):
-        """Start resource monitoring."""
-        if self.monitoring_active:
+        """Start resource monitoring."""        if self.monitoring_active:
             return
             
         self.monitoring_active = True
@@ -217,16 +204,14 @@ class ResourceAllocationManager:
         self.logger.info("Resource monitoring started")
         
     def stop_monitoring(self):
-        """Stop resource monitoring."""
-        self.monitoring_active = False
+        """Stop resource monitoring."""        self.monitoring_active = False
         if self.monitoring_thread:
             self.monitoring_thread.join(timeout=5)
             
         self.logger.info("Resource monitoring stopped")
         
     def _monitoring_loop(self):
-        """Main monitoring loop running in separate thread."""
-        while self.monitoring_active:
+        """Main monitoring loop running in separate thread."""        while self.monitoring_active:
             try:
                 # Collect current metrics
                 metrics = self._collect_system_metrics()
@@ -251,8 +236,7 @@ class ResourceAllocationManager:
                 time.sleep(1)
                 
     def _collect_system_metrics(self) -> ResourceMetrics:
-        """Collect current system resource metrics."""
-        try:
+        """Collect current system resource metrics."""        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=None)
             
@@ -307,8 +291,7 @@ class ResourceAllocationManager:
             )
             
     def _get_gpu_utilization(self) -> Optional[float]:
-        """Get GPU utilization if available."""
-        try:
+        """Get GPU utilization if available."""        try:
             import GPUtil
             gpus = GPUtil.getGPUs()
             if gpus:
@@ -321,8 +304,7 @@ class ResourceAllocationManager:
         return None
         
     def _update_allocation_tracking(self):
-        """Update tracking for active allocations."""
-        current_time = datetime.utcnow()
+        """Update tracking for active allocations."""        current_time = datetime.utcnow()
         
         for allocation_id, allocation in list(self.active_allocations.items()):
             try:
@@ -344,8 +326,7 @@ class ResourceAllocationManager:
                 self.logger.error(f"Failed to update allocation tracking for {allocation_id}: {e}")
                 
     def _measure_actual_usage(self, allocation: ResourceAllocation) -> float:
-        """Measure actual resource usage for an allocation."""
-        try:
+        """Measure actual resource usage for an allocation."""        try:
             resource_type = allocation.request.resource_type
             
             if resource_type == ResourceType.CPU:
@@ -380,8 +361,7 @@ class ResourceAllocationManager:
         return 0.0
         
     def _check_resource_violations(self, metrics: ResourceMetrics):
-        """Check for resource limit violations and take action."""
-        try:
+        """Check for resource limit violations and take action."""        try:
             violations = []
             
             # Check CPU usage
@@ -406,8 +386,7 @@ class ResourceAllocationManager:
             self.logger.error(f"Resource violation check failed: {e}")
             
     def _handle_resource_violations(self, violations: List[Tuple[str, float, float]]):
-        """Handle resource violations by freeing up resources."""
-        self.logger.warning(f"Resource violations detected: {violations}")
+        """Handle resource violations by freeing up resources."""        self.logger.warning(f"Resource violations detected: {violations}")
         
         # Implement violation handling strategies
         # 1. Suspend low-priority tasks
@@ -428,8 +407,7 @@ class ResourceAllocationManager:
                 )
                 
     def _suspend_background_tasks(self):
-        """Suspend background and low-priority tasks."""
-        suspended_count = 0
+        """Suspend background and low-priority tasks."""        suspended_count = 0
         
         for allocation_id, allocation in list(self.active_allocations.items()):
             if allocation.request.priority in [Priority.LOW, Priority.BACKGROUND]:
@@ -440,8 +418,7 @@ class ResourceAllocationManager:
         self.logger.info(f"Suspended {suspended_count} background tasks due to resource pressure")
         
     async def _send_resource_alert(self, resource_name: str, current_usage: float, limit: float):
-        """Send resource violation alert."""
-        try:
+        """Send resource violation alert."""        try:
             alert_data = {
                 'type': 'resource_violation',
                 'resource': resource_name,
@@ -458,16 +435,14 @@ class ResourceAllocationManager:
             self.logger.error(f"Failed to send resource alert: {e}")
             
     async def request_resource(self, request: ResourceRequest) -> Optional[str]:
-        """
-        Request resource allocation.
+        """        Request resource allocation.
         
         Args:
             request: Resource allocation request
             
         Returns:
             Allocation ID if successful, None otherwise
-        """
-        try:
+        """        try:
             self.allocation_stats['total_requests'] += 1
             
             # Validate request
@@ -497,8 +472,7 @@ class ResourceAllocationManager:
             return None
             
     def _validate_request(self, request: ResourceRequest) -> bool:
-        """Validate resource allocation request."""
-        try:
+        """Validate resource allocation request."""        try:
             # Check if resource type is supported
             if request.resource_type not in self.resource_limits:
                 self.logger.warning(f"Unsupported resource type: {request.resource_type}")
@@ -522,8 +496,7 @@ class ResourceAllocationManager:
             return False
             
     def _can_allocate_immediately(self, request: ResourceRequest) -> bool:
-        """Check if resource can be allocated immediately."""
-        try:
+        """Check if resource can be allocated immediately."""        try:
             resource_type = request.resource_type
             limit = self.resource_limits[resource_type]
             
@@ -540,8 +513,7 @@ class ResourceAllocationManager:
             return False
             
     def _calculate_current_usage(self, resource_type: ResourceType) -> float:
-        """Calculate current resource usage."""
-        current_usage = 0.0
+        """Calculate current resource usage."""        current_usage = 0.0
         
         for allocation in self.active_allocations.values():
             if allocation.request.resource_type == resource_type:
@@ -550,8 +522,7 @@ class ResourceAllocationManager:
         return current_usage
         
     async def _allocate_resource(self, request: ResourceRequest) -> Optional[str]:
-        """Allocate resource to request."""
-        try:
+        """Allocate resource to request."""        try:
             allocation_id = f"{request.task_id}_{int(time.time())}"
             
             # Determine allocation amount using strategy
@@ -595,8 +566,7 @@ class ResourceAllocationManager:
             return None
             
     def _fair_share_allocation(self, request: ResourceRequest) -> float:
-        """Fair share allocation strategy."""
-        resource_type = request.resource_type
+        """Fair share allocation strategy."""        resource_type = request.resource_type
         limit = self.resource_limits[resource_type]
         
         # Calculate fair share based on number of active allocations
@@ -610,8 +580,7 @@ class ResourceAllocationManager:
         return min(request.amount, fair_share)
         
     def _priority_based_allocation(self, request: ResourceRequest) -> float:
-        """Priority-based allocation strategy."""
-        resource_type = request.resource_type
+        """Priority-based allocation strategy."""        resource_type = request.resource_type
         limit = self.resource_limits[resource_type]
         
         # Priority multipliers
@@ -629,8 +598,7 @@ class ResourceAllocationManager:
         return min(request.amount, max_allocation)
         
     def _adaptive_allocation(self, request: ResourceRequest) -> float:
-        """Adaptive allocation strategy based on historical usage."""
-        # Use historical data to predict optimal allocation
+        """Adaptive allocation strategy based on historical usage."""        # Use historical data to predict optimal allocation
         base_allocation = self._fair_share_allocation(request)
         
         # Adjust based on system load
@@ -649,14 +617,12 @@ class ResourceAllocationManager:
         return base_allocation
         
     def _predictive_allocation(self, request: ResourceRequest) -> float:
-        """Predictive allocation strategy using ML models."""
-        # Placeholder for ML-based prediction
+        """Predictive allocation strategy using ML models."""        # Placeholder for ML-based prediction
         # Would use historical data to predict optimal allocation
         return self._adaptive_allocation(request)
         
     async def _process_allocation_queue(self):
-        """Process queued allocation requests."""
-        if not self.allocation_queue:
+        """Process queued allocation requests."""        if not self.allocation_queue:
             return
             
         # Sort queue by priority
@@ -686,20 +652,17 @@ class ResourceAllocationManager:
             self.logger.info(f"Processed {processed_count} queued allocation requests")
             
     def release_resource(self, allocation_id: str) -> bool:
-        """
-        Release resource allocation.
+        """        Release resource allocation.
         
         Args:
             allocation_id: ID of allocation to release
             
         Returns:
             True if successful, False otherwise
-        """
-        return self._release_allocation(allocation_id)
+        """        return self._release_allocation(allocation_id)
         
     def _release_allocation(self, allocation_id: str) -> bool:
-        """Internal method to release allocation."""
-        try:
+        """Internal method to release allocation."""        try:
             if allocation_id not in self.active_allocations:
                 self.logger.warning(f"Allocation not found: {allocation_id}")
                 return False
@@ -730,13 +693,11 @@ class ResourceAllocationManager:
             return False
             
     def _auto_release_allocation(self, allocation_id: str):
-        """Automatically release expired allocation."""
-        self.logger.info(f"Auto-releasing expired allocation: {allocation_id}")
+        """Automatically release expired allocation."""        self.logger.info(f"Auto-releasing expired allocation: {allocation_id}")
         self._release_allocation(allocation_id)
         
     async def _optimize_allocations(self):
-        """Optimize current resource allocations."""
-        try:
+        """Optimize current resource allocations."""        try:
             # Identify underutilized allocations
             underutilized = []
             for allocation_id, allocation in self.active_allocations.items():
@@ -754,8 +715,7 @@ class ResourceAllocationManager:
             self.logger.error(f"Allocation optimization failed: {e}")
             
     async def get_resource_usage(self) -> Dict[str, Any]:
-        """Get current resource usage statistics."""
-        try:
+        """Get current resource usage statistics."""        try:
             usage_stats = {}
             
             for resource_type, limit in self.resource_limits.items():
@@ -778,8 +738,7 @@ class ResourceAllocationManager:
             return {}
             
     async def get_allocation_stats(self) -> Dict[str, Any]:
-        """Get allocation statistics."""
-        stats = self.allocation_stats.copy()
+        """Get allocation statistics."""        stats = self.allocation_stats.copy()
         
         # Calculate additional metrics
         if stats['total_requests'] > 0:
@@ -791,27 +750,23 @@ class ResourceAllocationManager:
         return stats
         
     async def get_system_metrics(self) -> Optional[ResourceMetrics]:
-        """Get latest system metrics."""
-        if self.metrics_history:
+        """Get latest system metrics."""        if self.metrics_history:
             return self.metrics_history[-1]
         return None
         
     def set_resource_limit(self, resource_type: ResourceType, limit: ResourceLimit):
-        """Set resource limit."""
-        self.resource_limits[resource_type] = limit
+        """Set resource limit."""        self.resource_limits[resource_type] = limit
         self.logger.info(f"Resource limit updated: {resource_type.value} = {limit.max_value}")
         
     def update_allocation_strategy(self, strategy: str):
-        """Update allocation strategy."""
-        if strategy in self.allocation_strategies:
+        """Update allocation strategy."""        if strategy in self.allocation_strategies:
             self.config.ALLOCATION_STRATEGY = strategy
             self.logger.info(f"Allocation strategy updated: {strategy}")
         else:
             self.logger.warning(f"Unknown allocation strategy: {strategy}")
             
     async def cleanup(self):
-        """Cleanup resources and stop monitoring."""
-        try:
+        """Cleanup resources and stop monitoring."""        try:
             # Stop monitoring
             self.stop_monitoring()
             
@@ -830,14 +785,12 @@ class ResourceAllocationManager:
 
 # Factory function
 def create_resource_allocation_manager(config: Optional[ResourceConfig] = None) -> ResourceAllocationManager:
-    """Create and return a resource allocation manager instance."""
-    return ResourceAllocationManager(config)
+    """Create and return a resource allocation manager instance."""    return ResourceAllocationManager(config)
 
 
 # Utility functions
 async def monitor_resource_usage(duration_seconds: int = 60) -> List[ResourceMetrics]:
-    """Monitor resource usage for specified duration."""
-    metrics = []
+    """Monitor resource usage for specified duration."""    metrics = []
     manager = create_resource_allocation_manager()
     
     try:
@@ -857,8 +810,7 @@ async def monitor_resource_usage(duration_seconds: int = 60) -> List[ResourceMet
 
 
 async def optimize_resource_allocation(manager: ResourceAllocationManager) -> Dict[str, Any]:
-    """Optimize resource allocation and return statistics."""
-    initial_stats = await manager.get_allocation_stats()
+    """Optimize resource allocation and return statistics."""    initial_stats = await manager.get_allocation_stats()
     await manager._optimize_allocations()
     final_stats = await manager.get_allocation_stats()
     

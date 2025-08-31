@@ -1,5 +1,4 @@
-"""
-SEO Agent Index - Industrial-Grade Central Entry Point for SEO System
+"""SEO Agent Index - Industrial-Grade Central Entry Point for SEO System
 
 Main orchestration hub providing unified access to all enterprise SEO components,
 advanced workflow automation, and comprehensive SEO intelligence systems.
@@ -21,7 +20,6 @@ Any attempt to steal, copy, reverse-engineer, or commercialize this code without
 will result in immediate legal action under German and international intellectual property law.
 Contact mlaiel@live.de for licensing inquiries only.
 """
-
 import asyncio
 import logging
 import time
@@ -68,16 +66,14 @@ from ...utils.caching import DistributedCache
 logger = logging.getLogger(__name__)
 
 class SEOSystemPriority(IntEnum):
-    """System-wide priority levels for SEO operations"""
-    CRITICAL = 1
+    """System-wide priority levels for SEO operations"""    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
     BACKGROUND = 5
 
 class SEOOperationType(Enum):
-    """Types of SEO operations for workflow management"""
-    CONTENT_ANALYSIS = "content_analysis"
+    """Types of SEO operations for workflow management"""    CONTENT_ANALYSIS = "content_analysis"
     KEYWORD_RESEARCH = "keyword_research"
     COMPETITOR_ANALYSIS = "competitor_analysis"
     TECHNICAL_AUDIT = "technical_audit"
@@ -88,8 +84,7 @@ class SEOOperationType(Enum):
 
 @dataclass
 class SEOWorkflowTask:
-    """Advanced SEO workflow task with dependency management"""
-    task_id: str
+    """Advanced SEO workflow task with dependency management"""    task_id: str
     operation_type: SEOOperationType
     priority: SEOSystemPriority
     content_ids: List[str]
@@ -105,8 +100,7 @@ class SEOWorkflowTask:
     error: Optional[str] = None
 
 class SEOSystem:
-    """
-    Enterprise-Grade SEO System Orchestrator
+    """    Enterprise-Grade SEO System Orchestrator
     
     Industrial-strength central hub for coordinating all SEO operations across the platform.
     Provides unified access to all SEO components with advanced workflow management,
@@ -123,11 +117,9 @@ class SEOSystem:
     - Enterprise security and access control integration
     - Advanced reporting and business intelligence
     - Multi-language and international SEO support
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the enterprise SEO system"""
-        self.config = SEOAgentConfig(config or {})
+        """Initialize the enterprise SEO system"""        self.config = SEOAgentConfig(config or {})
         
         # Core system components
         self.seo_agent_pool: Dict[str, SEOAgent] = {}
@@ -170,8 +162,7 @@ class SEOSystem:
         logger.info("SEO System initialized with enterprise configuration")
 
     async def initialize(self) -> bool:
-        """Initialize all system components and prepare for operations"""
-        try:
+        """Initialize all system components and prepare for operations"""        try:
             logger.info("Starting SEO System initialization...")
             
             # Initialize core components
@@ -208,8 +199,7 @@ class SEOSystem:
         analysis_options: Optional[Dict[str, Any]] = None,
         priority: SEOSystemPriority = SEOSystemPriority.MEDIUM
     ) -> Union[SEOAnalysis, List[SEOAnalysis]]:
-        """
-        Comprehensive content SEO analysis with enterprise-level capabilities
+        """        Comprehensive content SEO analysis with enterprise-level capabilities
         
         Args:
             content: Single content item or list of content items to analyze
@@ -218,8 +208,7 @@ class SEOSystem:
             
         Returns:
             SEO analysis result(s) with comprehensive insights and recommendations
-        """
-        try:
+        """        try:
             # Validate input
             if isinstance(content, list):
                 return await self._analyze_multiple_content(content, analysis_options, priority)
@@ -237,8 +226,7 @@ class SEOSystem:
         research_options: Optional[Dict[str, Any]] = None,
         priority: SEOSystemPriority = SEOSystemPriority.MEDIUM
     ) -> Dict[str, KeywordData]:
-        """
-        Advanced keyword research with competitive intelligence and trend analysis
+        """        Advanced keyword research with competitive intelligence and trend analysis
         
         Args:
             seed_keywords: Initial keywords to expand from
@@ -248,8 +236,7 @@ class SEOSystem:
             
         Returns:
             Comprehensive keyword intelligence data
-        """
-        try:
+        """        try:
             # Create workflow task for keyword research
             task = await self._create_workflow_task(
                 operation_type=SEOOperationType.KEYWORD_RESEARCH,
@@ -277,8 +264,7 @@ class SEOSystem:
         target_keywords: Optional[List[str]] = None,
         priority: SEOSystemPriority = SEOSystemPriority.MEDIUM
     ) -> Dict[str, Any]:
-        """
-        AI-powered content optimization with comprehensive enhancement strategies
+        """        AI-powered content optimization with comprehensive enhancement strategies
         
         Args:
             content: Content to optimize
@@ -288,8 +274,7 @@ class SEOSystem:
             
         Returns:
             Optimized content with enhancement details and metrics
-        """
-        try:
+        """        try:
             # Get optimal agent for this content type
             agent = await self._get_optimal_agent(content.get('type', 'blog_post'))
             
@@ -314,8 +299,7 @@ class SEOSystem:
         campaign_config: Dict[str, Any],
         auto_start: bool = False
     ) -> SEOCampaign:
-        """
-        Create and orchestrate comprehensive SEO campaigns
+        """        Create and orchestrate comprehensive SEO campaigns
         
         Args:
             campaign_config: Detailed campaign configuration
@@ -323,8 +307,7 @@ class SEOSystem:
             
         Returns:
             Created SEO campaign with full tracking and management
-        """
-        try:
+        """        try:
             # Delegate to SEO manager
             campaign = await self.seo_manager.create_seo_campaign(
                 campaign_config=campaign_config,
@@ -341,13 +324,11 @@ class SEOSystem:
             raise SEOError(f"Campaign creation failed: {str(e)}")
 
     async def get_system_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system status and health metrics
+        """        Get comprehensive system status and health metrics
         
         Returns:
             Detailed system status including performance metrics and health indicators
-        """
-        try:
+        """        try:
             # Collect current system metrics
             current_metrics = await self._collect_system_metrics()
             
@@ -383,8 +364,7 @@ class SEOSystem:
     # ================== INTERNAL SYSTEM METHODS ==================
 
     async def _initialize_core_components(self) -> None:
-        """Initialize all core SEO components"""
-        try:
+        """Initialize all core SEO components"""        try:
             # Initialize SEO manager
             await self.seo_manager.initialize()
             
@@ -414,8 +394,7 @@ class SEOSystem:
         options: Optional[Dict[str, Any]],
         priority: SEOSystemPriority
     ) -> SEOAnalysis:
-        """Analyze a single content item with advanced options"""
-        try:
+        """Analyze a single content item with advanced options"""        try:
             # Get or create optimal agent for this content
             agent = await self._get_optimal_agent(content.get('type', 'blog_post'))
             
@@ -439,8 +418,7 @@ class SEOSystem:
     # Additional helper methods continue...
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the entire SEO system"""
-        try:
+        """Gracefully shutdown the entire SEO system"""        try:
             logger.info("Starting SEO System shutdown...")
             
             # Stop background tasks
@@ -472,8 +450,7 @@ async def analyze_content(
     config: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> Union[SEOAnalysis, List[SEOAnalysis]]:
-    """
-    Convenience function for quick content SEO analysis
+    """    Convenience function for quick content SEO analysis
     
     Args:
         content: Content to analyze
@@ -482,8 +459,7 @@ async def analyze_content(
         
     Returns:
         SEO analysis results
-    """
-    seo_system = SEOSystem(config)
+    """    seo_system = SEOSystem(config)
     await seo_system.initialize()
     
     try:
@@ -497,8 +473,7 @@ async def optimize_content(
     config: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> Dict[str, Any]:
-    """
-    Convenience function for quick content optimization
+    """    Convenience function for quick content optimization
     
     Args:
         content: Content to optimize
@@ -508,8 +483,7 @@ async def optimize_content(
         
     Returns:
         Optimization results
-    """
-    seo_system = SEOSystem(config)
+    """    seo_system = SEOSystem(config)
     await seo_system.initialize()
     
     try:
@@ -528,8 +502,7 @@ async def research_keywords(
     config: Optional[Dict[str, Any]] = None,
     **kwargs
 ) -> Dict[str, KeywordData]:
-    """
-    Convenience function for keyword research
+    """    Convenience function for keyword research
     
     Args:
         seed_keywords: Keywords to research
@@ -539,8 +512,7 @@ async def research_keywords(
         
     Returns:
         Keyword research results
-    """
-    seo_system = SEOSystem(config)
+    """    seo_system = SEOSystem(config)
     await seo_system.initialize()
     
     try:
@@ -592,13 +564,11 @@ __all__ = [
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize the complete SEO system.
+        """        Initialize the complete SEO system.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing SEO System...")
             
             # Initialize core components
@@ -632,8 +602,7 @@ __all__ = [
         include_competitors: bool = True,
         include_trends: bool = True
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive SEO analysis for content.
+        """        Perform comprehensive SEO analysis for content.
         
         Args:
             content_id: Unique identifier for content
@@ -644,8 +613,7 @@ __all__ = [
         
         Returns:
             Comprehensive SEO analysis results
-        """
-        if not self.initialized:
+        """        if not self.initialized:
             await self.initialize()
         
         try:
@@ -748,8 +716,7 @@ __all__ = [
         optimization_level: str = "advanced",
         target_keywords: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Perform complete content optimization workflow.
+        """        Perform complete content optimization workflow.
         
         Args:
             content_id: Content identifier
@@ -759,8 +726,7 @@ __all__ = [
         
         Returns:
             Complete optimization results
-        """
-        if not self.initialized:
+        """        if not self.initialized:
             await self.initialize()
         
         try:
@@ -857,8 +823,7 @@ __all__ = [
         campaign_config: Dict[str, Any],
         auto_start: bool = True
     ) -> Dict[str, Any]:
-        """
-        Create and optionally start an SEO campaign.
+        """        Create and optionally start an SEO campaign.
         
         Args:
             campaign_config: Campaign configuration
@@ -866,8 +831,7 @@ __all__ = [
         
         Returns:
             Campaign creation and execution results
-        """
-        if not self.initialized:
+        """        if not self.initialized:
             await self.initialize()
         
         try:
@@ -902,8 +866,7 @@ __all__ = [
         competitor_urls: Optional[List[str]] = None,
         max_keywords: int = 100
     ) -> Dict[str, Any]:
-        """
-        Comprehensive keyword research with trend and competitive analysis.
+        """        Comprehensive keyword research with trend and competitive analysis.
         
         Args:
             seed_keywords: Initial keywords to expand from
@@ -914,8 +877,7 @@ __all__ = [
         
         Returns:
             Comprehensive keyword research results
-        """
-        if not self.initialized:
+        """        if not self.initialized:
             await self.initialize()
         
         try:
@@ -990,8 +952,7 @@ __all__ = [
             raise SEOError(f"Keyword research failed: {e}")
     
     async def get_system_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive SEO system analytics and performance metrics."""
-        if not self.initialized:
+        """Get comprehensive SEO system analytics and performance metrics."""        if not self.initialized:
             await self.initialize()
         
         try:
@@ -1044,8 +1005,7 @@ __all__ = [
         keywords: List[str], 
         industry: str
     ) -> List[str]:
-        """Auto-discover competitor URLs based on keywords and industry"""
-        # Implementation would use search APIs to find top-ranking sites
+        """Auto-discover competitor URLs based on keywords and industry"""        # Implementation would use search APIs to find top-ranking sites
         # For now, return empty list
         return []
     
@@ -1055,8 +1015,7 @@ __all__ = [
         content_data: Dict[str, Any],
         results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Consolidate analysis results from multiple components"""
-        
+        """Consolidate analysis results from multiple components"""        
         consolidated = {
             'content_id': content_id,
             'overall_seo_score': 0.0,
@@ -1095,8 +1054,7 @@ __all__ = [
         self, 
         analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate high-level strategic SEO recommendations"""
-        
+        """Generate high-level strategic SEO recommendations"""        
         recommendations = []
         seo_score = analysis.get('overall_seo_score', 0)
         
@@ -1172,8 +1130,7 @@ __all__ = [
         self, 
         analysis: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate priority scores for different optimization areas"""
-        
+        """Calculate priority scores for different optimization areas"""        
         priorities = {}
         component_scores = analysis.get('component_scores', {})
         
@@ -1195,8 +1152,7 @@ __all__ = [
         self, 
         analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Suggest immediate next actions based on analysis"""
-        
+        """Suggest immediate next actions based on analysis"""        
         actions = []
         priorities = await self._calculate_optimization_priorities(analysis)
         
@@ -1216,8 +1172,7 @@ __all__ = [
         return actions
     
     def _get_action_for_priority_area(self, area: str) -> str:
-        """Get specific action recommendation for priority area"""
-        actions = {
+        """Get specific action recommendation for priority area"""        actions = {
             'content_optimization': 'Improve content quality, structure, and depth',
             'keyword_optimization': 'Research and implement target keywords strategically',
             'metadata_optimization': 'Optimize titles, descriptions, and meta tags',
@@ -1226,8 +1181,7 @@ __all__ = [
         return actions.get(area, 'General optimization needed')
     
     def _estimate_effort_for_area(self, area: str) -> str:
-        """Estimate effort level for optimization area"""
-        efforts = {
+        """Estimate effort level for optimization area"""        efforts = {
             'content_optimization': 'Medium-High',
             'keyword_optimization': 'Medium',
             'metadata_optimization': 'Low-Medium',
@@ -1236,8 +1190,7 @@ __all__ = [
         return efforts.get(area, 'Medium')
     
     def _estimate_impact_for_area(self, area: str, priority_score: float) -> str:
-        """Estimate expected impact for optimization area"""
-        if priority_score > 0.7:
+        """Estimate expected impact for optimization area"""        if priority_score > 0.7:
             return 'High'
         elif priority_score > 0.5:
             return 'Medium-High'
@@ -1250,8 +1203,7 @@ __all__ = [
         self, 
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Estimate the potential impact of optimizations"""
-        
+        """Estimate the potential impact of optimizations"""        
         current_score = analysis.get('overall_seo_score', 0)
         priorities = await self._calculate_optimization_priorities(analysis)
         
@@ -1276,8 +1228,7 @@ async def analyze_content(
     target_keywords: Optional[List[str]] = None,
     **kwargs
 ) -> Dict[str, Any]:
-    """Quick content analysis function"""
-    seo_system = SEOSystem()
+    """Quick content analysis function"""    seo_system = SEOSystem()
     return await seo_system.analyze_content_comprehensive(
         content_id, content_data, target_keywords, **kwargs
     )
@@ -1288,8 +1239,7 @@ async def optimize_content(
     optimization_level: str = "advanced",
     target_keywords: Optional[List[str]] = None
 ) -> Dict[str, Any]:
-    """Quick content optimization function"""
-    seo_system = SEOSystem()
+    """Quick content optimization function"""    seo_system = SEOSystem()
     return await seo_system.optimize_content_complete(
         content_id, content_data, optimization_level, target_keywords
     )
@@ -1300,8 +1250,7 @@ async def research_keywords(
     language: str = 'en',
     **kwargs
 ) -> Dict[str, Any]:
-    """Quick keyword research function"""
-    seo_system = SEOSystem()
+    """Quick keyword research function"""    seo_system = SEOSystem()
     return await seo_system.research_keywords_comprehensive(
         seed_keywords, industry, language, **kwargs
     )

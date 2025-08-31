@@ -14,8 +14,7 @@ Gestion complète des plans et abonnements avec intelligence artificielle
 - Limites et quotas en temps réel
 - Upgrades/downgrades automatiques et intelligents
 - Analytics d'utilisation et recommandations IA
-"""
-from .plan_manager import PlanManager, SubscriptionPlan, PlanFeature
+"""from .plan_manager import PlanManager, SubscriptionPlan, PlanFeature
 from .subscription_manager import SubscriptionManager, Subscription, SubscriptionStatus
 from .quota_manager import QuotaManager, ResourceQuota, UsageTracker
 from .upgrade_manager import UpgradeManager, UpgradeStrategy, UpgradeRecommendation

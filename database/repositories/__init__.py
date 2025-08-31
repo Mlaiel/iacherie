@@ -22,8 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-from typing import Dict, Type, Any
+"""from typing import Dict, Type, Any
 from sqlalchemy.orm import Session
 
 # Import base repository

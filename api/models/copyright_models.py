@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - Copyright Models
+"""IA Influencer Agent Platform - Copyright Models
 Comprehensive copyright and intellectual property management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ will result in legal action.
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from decimal import Decimal
@@ -32,8 +30,7 @@ from .base import (
 
 
 class Copyright(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin, MetadataMixin):
-    """Core copyright registration and management"""
-    
+    """Core copyright registration and management"""    
     __tablename__ = 'copyrights'
     
     content_id: Mapped[UUID] = mapped_column(
@@ -209,8 +206,7 @@ class Copyright(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixi
 
 
 class CopyrightClaim(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """Copyright infringement claims and disputes"""
-    
+    """Copyright infringement claims and disputes"""    
     __tablename__ = 'copyright_claims'
     
     copyright_id: Mapped[UUID] = mapped_column(
@@ -326,8 +322,7 @@ class CopyrightClaim(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMix
 
 
 class CopyrightTransfer(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """Copyright ownership transfers and assignments"""
-    
+    """Copyright ownership transfers and assignments"""    
     __tablename__ = 'copyright_transfers'
     
     copyright_id: Mapped[UUID] = mapped_column(
@@ -427,8 +422,7 @@ class CopyrightTransfer(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, Status
 
 
 class CopyrightLicense(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin):
-    """Copyright licensing agreements and permissions"""
-    
+    """Copyright licensing agreements and permissions"""    
     __tablename__ = 'copyright_licenses'
     
     copyright_id: Mapped[UUID] = mapped_column(

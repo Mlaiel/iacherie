@@ -1,5 +1,4 @@
-"""
-Intellectual Property Service - Advanced IP management and protection
+"""Intellectual Property Service - Advanced IP management and protection
 
 Manages intellectual property rights, trademark protection, patent tracking,
 and comprehensive IP portfolio optimization for content creators.
@@ -12,7 +11,6 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
-
 from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -33,8 +31,7 @@ from ..integrations.ip_databases import IPDatabaseManager
 
 
 class IPType(Enum):
-    """Types of intellectual property"""
-    COPYRIGHT = "copyright"
+    """Types of intellectual property"""    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
     TRADE_SECRET = "trade_secret"
@@ -47,8 +44,7 @@ class IPType(Enum):
 
 
 class IPStatus(Enum):
-    """IP protection status"""
-    PENDING_REGISTRATION = "pending_registration"
+    """IP protection status"""    PENDING_REGISTRATION = "pending_registration"
     REGISTERED = "registered"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -60,8 +56,7 @@ class IPStatus(Enum):
 
 
 class ProtectionScope(Enum):
-    """Scope of IP protection"""
-    NATIONAL = "national"
+    """Scope of IP protection"""    NATIONAL = "national"
     REGIONAL = "regional"
     INTERNATIONAL = "international"
     MADRID_PROTOCOL = "madrid_protocol"
@@ -70,8 +65,7 @@ class ProtectionScope(Enum):
 
 
 class IPPriority(Enum):
-    """Priority levels for IP management"""
-    CRITICAL = "critical"          # Core business assets
+    """Priority levels for IP management"""    CRITICAL = "critical"          # Core business assets
     HIGH = "high"                  # Important revenue generators
     MEDIUM = "medium"              # Standard protection
     LOW = "low"                    # Defensive registrations
@@ -80,8 +74,7 @@ class IPPriority(Enum):
 
 @dataclass
 class IPPortfolioMetrics:
-    """IP portfolio performance metrics"""
-    total_assets: int
+    """IP portfolio performance metrics"""    total_assets: int
     active_registrations: int
     pending_applications: int
     renewal_due_count: int
@@ -93,8 +86,7 @@ class IPPortfolioMetrics:
 
 
 class IPRegistrationRequest(BaseModel):
-    """IP registration request structure"""
-    ip_type: IPType = Field(..., description="Type of IP to register")
+    """IP registration request structure"""    ip_type: IPType = Field(..., description="Type of IP to register")
     content_id: Optional[str] = Field(None, description="Associated content ID")
     title: str = Field(..., description="Title or name of IP")
     description: str = Field(..., description="Detailed description")
@@ -106,11 +98,9 @@ class IPRegistrationRequest(BaseModel):
 
 
 class IntellectualPropertyService:
-    """
-    Advanced intellectual property management system with AI-driven portfolio optimization,
+    """    Advanced intellectual property management system with AI-driven portfolio optimization,
     automated renewal tracking, and comprehensive IP analytics.
-    """
-    
+    """    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -125,16 +115,14 @@ class IntellectualPropertyService:
         self,
         registration_request: IPRegistrationRequest
     ) -> Dict[str, Any]:
-        """
-        Register intellectual property with automated documentation and filing
+        """        Register intellectual property with automated documentation and filing
         
         Args:
             registration_request: IP registration details
             
         Returns:
             Registration result with tracking information
-        """
-        try:
+        """        try:
             self.logger.info(f"Processing IP registration for {registration_request.title}")
             
             # Validate registration eligibility
@@ -208,8 +196,7 @@ class IntellectualPropertyService:
         user_id: str,
         portfolio_actions: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive IP portfolio management with optimization recommendations
+        """        Comprehensive IP portfolio management with optimization recommendations
         
         Args:
             user_id: User whose portfolio to manage
@@ -217,8 +204,7 @@ class IntellectualPropertyService:
             
         Returns:
             Portfolio management results and recommendations
-        """
-        try:
+        """        try:
             self.logger.info(f"Managing IP portfolio for user {user_id}")
             
             # Get current IP portfolio
@@ -281,8 +267,7 @@ class IntellectualPropertyService:
         ip_id: str,
         monitoring_scope: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Monitor for IP infringement across multiple channels and platforms
+        """        Monitor for IP infringement across multiple channels and platforms
         
         Args:
             ip_id: IP asset to monitor
@@ -290,8 +275,7 @@ class IntellectualPropertyService:
             
         Returns:
             Infringement monitoring results with detected violations
-        """
-        try:
+        """        try:
             ip_asset = await self._get_ip_asset(ip_id)
             
             if not ip_asset:
@@ -363,8 +347,7 @@ class IntellectualPropertyService:
         ip_ids: List[str],
         valuation_method: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Calculate comprehensive IP valuation using multiple methodologies
+        """        Calculate comprehensive IP valuation using multiple methodologies
         
         Args:
             ip_ids: List of IP assets to value
@@ -372,8 +355,7 @@ class IntellectualPropertyService:
             
         Returns:
             Detailed IP valuation analysis
-        """
-        try:
+        """        try:
             self.logger.info(f"Calculating IP valuation for {len(ip_ids)} assets")
             
             # Get IP assets
@@ -452,8 +434,7 @@ class IntellectualPropertyService:
         analytics_scope: str = "user",
         date_range: Optional[Dict[str, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive IP analytics and business intelligence
+        """        Generate comprehensive IP analytics and business intelligence
         
         Args:
             user_id: Specific user for analytics (None for system-wide)
@@ -462,8 +443,7 @@ class IntellectualPropertyService:
             
         Returns:
             Comprehensive IP analytics and insights
-        """
-        try:
+        """        try:
             if analytics_scope == "user" and not user_id:
                 raise IntellectualPropertyError("User ID required for user-scope analytics")
             
@@ -527,8 +507,7 @@ class IntellectualPropertyService:
             raise IntellectualPropertyError(f"IP analytics generation failed: {str(e)}")
     
     def _initialize_ip_classifiers(self) -> Dict[str, Any]:
-        """Initialize IP classification systems"""
-        return {
+        """Initialize IP classification systems"""        return {
             "nice_classification": {
                 # International trademark classification
                 "classes": {
@@ -559,8 +538,7 @@ class IntellectualPropertyService:
         }
     
     def _initialize_territory_requirements(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize territory-specific IP requirements"""
-        return {
+        """Initialize territory-specific IP requirements"""        return {
             "US": {
                 "copyright": {
                     "registration_required": False,
@@ -606,22 +584,19 @@ class IntellectualPropertyService:
         self, 
         request: IPRegistrationRequest
     ) -> Dict[str, Any]:
-        """Validate IP registration eligibility"""
-        # Implementation for eligibility validation
+        """Validate IP registration eligibility"""        # Implementation for eligibility validation
         pass
     
     async def _perform_ip_conflict_analysis(
         self, 
         request: IPRegistrationRequest
     ) -> Dict[str, Any]:
-        """Perform comprehensive IP conflict analysis"""
-        # Implementation for conflict analysis
+        """Perform comprehensive IP conflict analysis"""        # Implementation for conflict analysis
         pass
     
     async def _calculate_portfolio_metrics(
         self, 
         portfolio: List[IntellectualProperty]
     ) -> IPPortfolioMetrics:
-        """Calculate comprehensive portfolio metrics"""
-        # Implementation for portfolio metrics calculation
+        """Calculate comprehensive portfolio metrics"""        # Implementation for portfolio metrics calculation
         pass

@@ -1,5 +1,4 @@
-"""
-Decision Engine - Advanced AI Decision Making System
+"""Decision Engine - Advanced AI Decision Making System
 
 Provides intelligent decision-making capabilities for content protection,
 monetization strategies, collaboration matching, and platform optimization.
@@ -16,7 +15,6 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -40,8 +38,7 @@ from ..storage.decision_storage import DecisionStorage
 
 
 class DecisionType(Enum):
-    """Types of decisions the engine can make"""
-    PROTECTION_STRATEGY = "protection_strategy"
+    """Types of decisions the engine can make"""    PROTECTION_STRATEGY = "protection_strategy"
     MONETIZATION_PLAN = "monetization_plan"
     PLATFORM_SELECTION = "platform_selection"
     COLLABORATION_MATCH = "collaboration_match"
@@ -51,16 +48,14 @@ class DecisionType(Enum):
 
 
 class DecisionPriority(Enum):
-    """Decision priority levels"""
-    CRITICAL = "critical"
+    """Decision priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
 
 
 class DecisionStatus(Enum):
-    """Decision execution status"""
-    PENDING = "pending"
+    """Decision execution status"""    PENDING = "pending"
     APPROVED = "approved"
     EXECUTING = "executing"
     COMPLETED = "completed"
@@ -70,8 +65,7 @@ class DecisionStatus(Enum):
 
 @dataclass
 class DecisionCriteria:
-    """Criteria for decision making"""
-    content_quality: float
+    """Criteria for decision making"""    content_quality: float
     engagement_potential: float
     monetization_score: float
     risk_level: float
@@ -83,8 +77,7 @@ class DecisionCriteria:
 
 @dataclass
 class DecisionOption:
-    """A decision option with scoring"""
-    option_id: str
+    """A decision option with scoring"""    option_id: str
     description: str
     score: float
     confidence: float
@@ -98,8 +91,7 @@ class DecisionOption:
 
 @dataclass
 class DecisionResult:
-    """Result of a decision process"""
-    decision_id: str
+    """Result of a decision process"""    decision_id: str
     decision_type: DecisionType
     selected_option: DecisionOption
     alternative_options: List[DecisionOption]
@@ -114,18 +106,14 @@ class DecisionResult:
 
 
 class DecisionEngine:
-    """
-    Advanced AI-powered decision engine for content strategy optimization
-    """
-    
+    """    Advanced AI-powered decision engine for content strategy optimization
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the decision engine
+        """        Initialize the decision engine
         
         Args:
             config: Configuration dictionary
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -144,8 +132,7 @@ class DecisionEngine:
         }
     
     def _initialize_models(self) -> None:
-        """Initialize ML models for decision making"""
-        try:
+        """Initialize ML models for decision making"""        try:
             # Revenue prediction model
             self.revenue_model = RandomForestClassifier(
                 n_estimators=100,
@@ -177,18 +164,15 @@ class DecisionEngine:
             raise
     
     def _initialize_processors(self) -> None:
-        """Initialize decision processors"""
-        self.decision_adapter = DecisionAdapter(self.config)
+        """Initialize decision processors"""        self.decision_adapter = DecisionAdapter(self.config)
         self.rule_processor = RuleProcessor(self.config)
         self.optimization_engine = OptimizationEngine(self.config)
     
     def _initialize_storage(self) -> None:
-        """Initialize decision storage"""
-        self.decision_storage = DecisionStorage(self.config)
+        """Initialize decision storage"""        self.decision_storage = DecisionStorage(self.config)
     
     def _load_pretrained_models(self) -> None:
-        """Load pre-trained models from storage"""
-        try:
+        """Load pre-trained models from storage"""        try:
             # This would load actual pre-trained models in production
             # For now, we'll train with synthetic data
             self._train_with_synthetic_data()
@@ -196,8 +180,7 @@ class DecisionEngine:
             self.logger.warning(f"Could not load pre-trained models: {e}")
     
     def _train_with_synthetic_data(self) -> None:
-        """Train models with synthetic data for demonstration"""
-        # Generate synthetic training data
+        """Train models with synthetic data for demonstration"""        # Generate synthetic training data
         n_samples = 1000
         
         # Revenue prediction data
@@ -228,8 +211,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> DecisionResult:
-        """
-        Make an intelligent decision based on criteria and context
+        """        Make an intelligent decision based on criteria and context
         
         Args:
             decision_type: Type of decision to make
@@ -238,8 +220,7 @@ class DecisionEngine:
             
         Returns:
             DecisionResult: Complete decision with reasoning
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         decision_id = self._generate_decision_id(decision_type)
         
         try:
@@ -309,8 +290,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Generate decision options based on type and criteria"""
-        
+        """Generate decision options based on type and criteria"""        
         if decision_type == DecisionType.PROTECTION_STRATEGY:
             return self._generate_protection_options(criteria, context)
         
@@ -340,8 +320,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Generate content protection strategy options"""
-        options = []
+        """Generate content protection strategy options"""        options = []
         
         # Basic protection option
         options.append(DecisionOption(
@@ -393,8 +372,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Generate monetization strategy options"""
-        options = []
+        """Generate monetization strategy options"""        options = []
         
         # Streaming monetization
         if criteria.content_quality > 60:
@@ -448,8 +426,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Generate platform selection options"""
-        options = []
+        """Generate platform selection options"""        options = []
         
         platforms = [
             {
@@ -512,8 +489,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Generate collaboration matching options"""
-        options = []
+        """Generate collaboration matching options"""        options = []
         
         # Similar artists collaboration
         options.append(DecisionOption(
@@ -566,8 +542,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Generate content optimization options"""
-        options = []
+        """Generate content optimization options"""        options = []
         
         # SEO optimization
         options.append(DecisionOption(
@@ -620,8 +595,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Generate risk mitigation options"""
-        options = []
+        """Generate risk mitigation options"""        options = []
         
         # Copyright protection
         if criteria.risk_level > 0.5:
@@ -674,8 +648,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Generate revenue strategy options"""
-        options = []
+        """Generate revenue strategy options"""        options = []
         
         # Subscription model
         if criteria.engagement_potential > 75:
@@ -729,8 +702,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[DecisionOption]:
-        """Evaluate and score decision options"""
-        evaluated_options = []
+        """Evaluate and score decision options"""        evaluated_options = []
         
         for option in options:
             # Calculate multi-criteria score
@@ -758,8 +730,7 @@ class DecisionEngine:
         option: DecisionOption,
         criteria: DecisionCriteria
     ) -> float:
-        """Calculate base score for an option"""
-        score = 0.0
+        """Calculate base score for an option"""        score = 0.0
         
         # ROI weight (30%)
         roi_score = min(100, option.expected_roi * 10)
@@ -788,8 +759,7 @@ class DecisionEngine:
         option: DecisionOption,
         criteria: DecisionCriteria
     ) -> float:
-        """Get ML-based score adjustment"""
-        try:
+        """Get ML-based score adjustment"""        try:
             # Prepare features for ML models
             features = self._prepare_ml_features(option, criteria)
             
@@ -811,8 +781,7 @@ class DecisionEngine:
         option: DecisionOption,
         criteria: DecisionCriteria
     ) -> List[float]:
-        """Prepare features for ML models"""
-        features = [
+        """Prepare features for ML models"""        features = [
             criteria.content_quality / 100,
             criteria.engagement_potential / 100,
             criteria.monetization_score / 100,
@@ -825,8 +794,7 @@ class DecisionEngine:
         return features
     
     def _select_best_option(self, evaluated_options: List[DecisionOption]) -> DecisionOption:
-        """Select the best option from evaluated options"""
-        if not evaluated_options:
+        """Select the best option from evaluated options"""        if not evaluated_options:
             raise ValueError("No options available for selection")
         
         # Return the highest scored option
@@ -838,8 +806,7 @@ class DecisionEngine:
         all_options: List[DecisionOption],
         criteria: DecisionCriteria
     ) -> str:
-        """Generate human-readable reasoning for the decision"""
-        reasoning = f"Selected '{selected_option.description}' with a score of {selected_option.score:.1f}. "
+        """Generate human-readable reasoning for the decision"""        reasoning = f"Selected '{selected_option.description}' with a score of {selected_option.score:.1f}. "
         
         # Add key factors
         reasoning += f"This option offers an expected ROI of {selected_option.expected_roi:.1f}x "
@@ -866,8 +833,7 @@ class DecisionEngine:
         selected_option: DecisionOption,
         criteria: DecisionCriteria
     ) -> Dict[str, float]:
-        """Assess risks associated with the decision"""
-        risks = {}
+        """Assess risks associated with the decision"""        risks = {}
         
         # Financial risk
         financial_risk = min(0.9, selected_option.cost / 1000)
@@ -895,8 +861,7 @@ class DecisionEngine:
         selected_option: DecisionOption,
         criteria: DecisionCriteria
     ) -> Dict[str, Any]:
-        """Predict expected outcomes from the decision"""
-        outcomes = {}
+        """Predict expected outcomes from the decision"""        outcomes = {}
         
         # Revenue prediction
         outcomes["expected_revenue"] = selected_option.expected_roi * selected_option.cost
@@ -920,8 +885,7 @@ class DecisionEngine:
         selected_option: DecisionOption,
         decision_type: DecisionType
     ) -> Dict[str, Any]:
-        """Create monitoring plan for decision execution"""
-        plan = {
+        """Create monitoring plan for decision execution"""        plan = {
             "monitoring_frequency": "weekly",
             "key_metrics": [],
             "alert_thresholds": {},
@@ -967,8 +931,7 @@ class DecisionEngine:
         selected_option: DecisionOption,
         criteria: DecisionCriteria
     ) -> DecisionPriority:
-        """Determine decision priority level"""
-        # High-impact, high-urgency decisions
+        """Determine decision priority level"""        # High-impact, high-urgency decisions
         if selected_option.expected_roi > 5.0 and criteria.risk_level > 0.7:
             return DecisionPriority.CRITICAL
         
@@ -988,8 +951,7 @@ class DecisionEngine:
         selected_option: DecisionOption,
         all_options: List[DecisionOption]
     ) -> float:
-        """Calculate confidence in the decision"""
-        if len(all_options) <= 1:
+        """Calculate confidence in the decision"""        if len(all_options) <= 1:
             return selected_option.confidence
         
         # Base confidence from option
@@ -1012,8 +974,7 @@ class DecisionEngine:
         return min(0.99, max(0.5, confidence))
     
     async def _store_decision(self, decision_result: DecisionResult) -> None:
-        """Store decision result"""
-        try:
+        """Store decision result"""        try:
             await self.decision_storage.store_decision(decision_result)
             self.active_decisions[decision_result.decision_id] = decision_result
             self.decision_history.append(decision_result)
@@ -1021,8 +982,7 @@ class DecisionEngine:
             self.logger.error(f"Failed to store decision: {e}")
     
     def _update_performance_metrics(self, decision_result: DecisionResult) -> None:
-        """Update decision engine performance metrics"""
-        self.performance_metrics["total_decisions"] += 1
+        """Update decision engine performance metrics"""        self.performance_metrics["total_decisions"] += 1
         
         # Update average confidence
         total = self.performance_metrics["total_decisions"]
@@ -1034,15 +994,13 @@ class DecisionEngine:
         )
     
     def _generate_decision_id(self, decision_type: DecisionType) -> str:
-        """Generate unique decision ID"""
-        import hashlib
+        """Generate unique decision ID"""        import hashlib
         timestamp = str(datetime.now().timestamp())
         content = f"{decision_type.value}_{timestamp}"
         return f"dec_{hashlib.md5(content.encode()).hexdigest()[:12]}"
     
     async def get_decision_status(self, decision_id: str) -> Optional[DecisionResult]:
-        """Get status of a specific decision"""
-        return self.active_decisions.get(decision_id)
+        """Get status of a specific decision"""        return self.active_decisions.get(decision_id)
     
     async def update_decision_status(
         self,
@@ -1050,24 +1008,21 @@ class DecisionEngine:
         status: DecisionStatus,
         notes: Optional[str] = None
     ) -> bool:
-        """Update decision execution status"""
-        if decision_id in self.active_decisions:
+        """Update decision execution status"""        if decision_id in self.active_decisions:
             self.active_decisions[decision_id].status = status
             await self.decision_storage.update_decision_status(decision_id, status, notes)
             return True
         return False
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get decision engine performance metrics"""
-        return self.performance_metrics.copy()
+        """Get decision engine performance metrics"""        return self.performance_metrics.copy()
     
     async def get_decision_history(
         self,
         decision_type: Optional[DecisionType] = None,
         limit: int = 100
     ) -> List[DecisionResult]:
-        """Get decision history with optional filtering"""
-        history = self.decision_history
+        """Get decision history with optional filtering"""        history = self.decision_history
         
         if decision_type:
             history = [d for d in history if d.decision_type == decision_type]
@@ -1079,8 +1034,7 @@ class DecisionEngine:
         criteria: DecisionCriteria,
         context: Optional[Dict[str, Any]] = None
     ) -> List[Tuple[DecisionType, float]]:
-        """Recommend decision types based on criteria"""
-        recommendations = []
+        """Recommend decision types based on criteria"""        recommendations = []
         
         # Analyze criteria to recommend decision types
         if criteria.risk_level > 0.6:

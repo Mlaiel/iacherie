@@ -1,5 +1,4 @@
-"""
-Currency Localization Engine - Ainflue Platform
+"""Currency Localization Engine - Ainflue Platform
 ================================================================================
 Module: core/i18n/currency_localization.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ BUSINESS LOGIC:
 Currency input → Regional detection → Format conversion → Cultural adaptation → 
 Compliance validation → Exchange rate processing → Localized display
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Tuple, Union
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class CurrencyCode(Enum):
-    """ISO 4217 Currency Codes"""
-    # Major World Currencies
+    """ISO 4217 Currency Codes"""    # Major World Currencies
     USD = "USD"  # US Dollar
     EUR = "EUR"  # Euro
     JPY = "JPY"  # Japanese Yen
@@ -83,8 +80,7 @@ class CurrencyCode(Enum):
 
 
 class NumberingSystem(Enum):
-    """Numbering systems for different locales"""
-    WESTERN = "western"      # 0123456789
+    """Numbering systems for different locales"""    WESTERN = "western"      # 0123456789
     ARABIC_INDIC = "arabic"  # ٠١٢٣٤٥٦٧٨٩
     PERSIAN = "persian"      # ۰۱۲۳۴۵۶۷۸۹
     DEVANAGARI = "devanagari"  # ०१२३४५६७८९
@@ -93,16 +89,14 @@ class NumberingSystem(Enum):
 
 
 class CurrencyPosition(Enum):
-    """Currency symbol position"""
-    BEFORE = "before"        # $100
+    """Currency symbol position"""    BEFORE = "before"        # $100
     AFTER = "after"          # 100$
     BEFORE_WITH_SPACE = "before_space"  # $ 100
     AFTER_WITH_SPACE = "after_space"    # 100 $
 
 
 class GroupingSeparator(Enum):
-    """Thousands separator types"""
-    COMMA = ","      # 1,000
+    """Thousands separator types"""    COMMA = ","      # 1,000
     PERIOD = "."     # 1.000
     SPACE = " "      # 1 000
     THIN_SPACE = "'"  # 1'000
@@ -110,16 +104,14 @@ class GroupingSeparator(Enum):
 
 
 class DecimalSeparator(Enum):
-    """Decimal separator types"""
-    PERIOD = "."     # 1.50
+    """Decimal separator types"""    PERIOD = "."     # 1.50
     COMMA = ","      # 1,50
     ARABIC = "٫"     # Arabic decimal separator
 
 
 @dataclass
 class CurrencyFormat:
-    """Currency formatting configuration"""
-    code: CurrencyCode
+    """Currency formatting configuration"""    code: CurrencyCode
     symbol: str
     name: str
     native_name: str
@@ -136,8 +128,7 @@ class CurrencyFormat:
 
 @dataclass
 class RegionalCurrency:
-    """Regional currency preferences"""
-    region_code: str
+    """Regional currency preferences"""    region_code: str
     country_codes: List[str]
     primary_currency: CurrencyCode
     accepted_currencies: List[CurrencyCode]
@@ -151,8 +142,7 @@ class RegionalCurrency:
 
 @dataclass
 class ExchangeRate:
-    """Exchange rate information"""
-    from_currency: CurrencyCode
+    """Exchange rate information"""    from_currency: CurrencyCode
     to_currency: CurrencyCode
     rate: Decimal
     timestamp: datetime
@@ -165,8 +155,7 @@ class ExchangeRate:
 
 @dataclass
 class CurrencyConversion:
-    """Currency conversion result"""
-    original_amount: Decimal
+    """Currency conversion result"""    original_amount: Decimal
     original_currency: CurrencyCode
     converted_amount: Decimal
     converted_currency: CurrencyCode
@@ -178,8 +167,7 @@ class CurrencyConversion:
 
 
 class CurrencyLocalization:
-    """Advanced currency localization and formatting engine"""
-    
+    """Advanced currency localization and formatting engine"""    
     def __init__(self):
         self.currency_formats: Dict[str, CurrencyFormat] = {}
         self.regional_currencies: Dict[str, RegionalCurrency] = {}
@@ -195,8 +183,7 @@ class CurrencyLocalization:
         logger.info("Currency Localization Engine initialized")
     
     def _initialize_currency_formats(self):
-        """Initialize currency format configurations"""
-        
+        """Initialize currency format configurations"""        
         # US Dollar
         self.currency_formats["USD"] = CurrencyFormat(
             code=CurrencyCode.USD,
@@ -370,8 +357,7 @@ class CurrencyLocalization:
         logger.info(f"Initialized {len(self.currency_formats)} currency formats")
     
     def _initialize_regional_currencies(self):
-        """Initialize regional currency configurations"""
-        
+        """Initialize regional currency configurations"""        
         # United States
         self.regional_currencies["US"] = RegionalCurrency(
             region_code="US",
@@ -473,8 +459,7 @@ class CurrencyLocalization:
         logger.info(f"Initialized {len(self.regional_currencies)} regional currencies")
     
     def _initialize_mock_exchange_rates(self):
-        """Initialize mock exchange rates for development"""
-        # Mock rates - in production, these would come from real APIs
+        """Initialize mock exchange rates for development"""        # Mock rates - in production, these would come from real APIs
         base_rates = {
             (CurrencyCode.USD, CurrencyCode.EUR): Decimal("0.85"),
             (CurrencyCode.USD, CurrencyCode.GBP): Decimal("0.75"),
@@ -522,8 +507,7 @@ class CurrencyLocalization:
         locale: str = None,
         custom_format: CurrencyFormat = None
     ) -> str:
-        """Format currency amount according to locale and cultural standards"""
-        try:
+        """Format currency amount according to locale and cultural standards"""        try:
             # Convert amount to Decimal for precision
             if not isinstance(amount, Decimal):
                 amount = Decimal(str(amount))
@@ -569,8 +553,7 @@ class CurrencyLocalization:
             return f"{amount} {currency_code}"
     
     def _convert_numbering_system(self, amount: Decimal, currency_format: CurrencyFormat) -> str:
-        """Convert number to appropriate numbering system"""
-        if currency_format.numbering_system == NumberingSystem.WESTERN:
+        """Convert number to appropriate numbering system"""        if currency_format.numbering_system == NumberingSystem.WESTERN:
             return str(amount)
         
         western_digits = "0123456789"
@@ -594,8 +577,7 @@ class CurrencyLocalization:
         return amount_str
     
     def _apply_separators(self, formatted_number: str, currency_format: CurrencyFormat) -> str:
-        """Apply grouping and decimal separators"""
-        # Split into integer and decimal parts
+        """Apply grouping and decimal separators"""        # Split into integer and decimal parts
         if '.' in formatted_number:
             integer_part, decimal_part = formatted_number.split('.')
         else:
@@ -624,8 +606,7 @@ class CurrencyLocalization:
             return integer_part
     
     def _add_currency_symbol(self, formatted_amount: str, currency_format: CurrencyFormat) -> str:
-        """Add currency symbol in the correct position"""
-        symbol = currency_format.symbol
+        """Add currency symbol in the correct position"""        symbol = currency_format.symbol
         
         if currency_format.position == CurrencyPosition.BEFORE:
             return f"{symbol}{formatted_amount}"
@@ -639,8 +620,7 @@ class CurrencyLocalization:
         return f"{symbol}{formatted_amount}"  # Default
     
     def _apply_negative_format(self, amount: Decimal, currency_format: CurrencyFormat) -> str:
-        """Apply negative number formatting"""
-        # This is a simplified implementation
+        """Apply negative number formatting"""        # This is a simplified implementation
         # In production, this would parse the negative_format template
         formatted_positive = self._apply_separators(
             self._convert_numbering_system(amount, currency_format),
@@ -653,8 +633,7 @@ class CurrencyLocalization:
             return f"-{self._add_currency_symbol(formatted_positive, currency_format)}"
     
     def _apply_zero_format(self, currency_format: CurrencyFormat) -> str:
-        """Apply zero value formatting"""
-        # Simple implementation of zero format
+        """Apply zero value formatting"""        # Simple implementation of zero format
         if currency_format.decimal_places > 0:
             zero_amount = "0" + currency_format.decimal_separator.value + "0" * currency_format.decimal_places
         else:
@@ -669,8 +648,7 @@ class CurrencyLocalization:
         to_currency: str,
         use_cached_rate: bool = True
     ) -> CurrencyConversion:
-        """Convert currency amount with exchange rate"""
-        try:
+        """Convert currency amount with exchange rate"""        try:
             # Convert to Decimal for precision
             if not isinstance(amount, Decimal):
                 amount = Decimal(str(amount))
@@ -732,8 +710,7 @@ class CurrencyLocalization:
         to_currency: CurrencyCode,
         use_cached: bool = True
     ) -> ExchangeRate:
-        """Get exchange rate between currencies"""
-        # Check cache first
+        """Get exchange rate between currencies"""        # Check cache first
         rate_key = (from_currency, to_currency)
         if use_cached and rate_key in self.exchange_rates:
             cached_rate = self.exchange_rates[rate_key]
@@ -779,8 +756,7 @@ class CurrencyLocalization:
         )
     
     async def get_regional_currency_info(self, region_code: str) -> Optional[RegionalCurrency]:
-        """Get regional currency information"""
-        return self.regional_currencies.get(region_code.upper())
+        """Get regional currency information"""        return self.regional_currencies.get(region_code.upper())
     
     async def validate_currency_amount(
         self,
@@ -788,8 +764,7 @@ class CurrencyLocalization:
         currency_code: str,
         region_code: str = None
     ) -> Dict[str, Any]:
-        """Validate currency amount according to regional rules"""
-        try:
+        """Validate currency amount according to regional rules"""        try:
             if not isinstance(amount, Decimal):
                 amount = Decimal(str(amount))
             
@@ -841,8 +816,7 @@ class CurrencyLocalization:
             }
     
     async def get_currency_statistics(self) -> Dict[str, Any]:
-        """Get currency localization statistics"""
-        return {
+        """Get currency localization statistics"""        return {
             "supported_currencies": len(self.currency_formats),
             "regional_configurations": len(self.regional_currencies),
             "exchange_rates_cached": len(self.exchange_rates),
@@ -854,8 +828,7 @@ class CurrencyLocalization:
         }
     
     async def clear_cache(self, cache_type: str = "all"):
-        """Clear currency caches"""
-        if cache_type in ["all", "format"]:
+        """Clear currency caches"""        if cache_type in ["all", "format"]:
             self.format_cache.clear()
             logger.info("Cleared currency format cache")
         
@@ -880,8 +853,7 @@ class CurrencyLocalization:
             logger.info(f"Cleared {len(old_rates)} old exchange rates")
     
     async def health_check(self) -> bool:
-        """Health check for currency localization service"""
-        try:
+        """Health check for currency localization service"""        try:
             # Check if currency formats are loaded
             if not self.currency_formats:
                 return False

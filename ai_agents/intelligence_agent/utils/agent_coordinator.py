@@ -1,5 +1,4 @@
-"""
-IA-Influencer Agent - Agent Coordinator
+"""IA-Influencer Agent - Agent Coordinator
 
 Advanced multi-agent coordination system for intelligent orchestration of
 specialized AI agents in content creation and protection workflows.
@@ -20,7 +19,6 @@ Expert Team Specializations:
 - Workflow Orchestration Engineer
 - Performance Optimization Expert
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -45,8 +43,7 @@ from ..base import BaseAgent
 
 
 class AgentType(Enum):
-    """Types of agents in the system."""
-    AUDIO_AGENT = "audio_agent"
+    """Types of agents in the system."""    AUDIO_AGENT = "audio_agent"
     VIDEO_AGENT = "video_agent"
     IMAGE_AGENT = "image_agent"
     TEXT_AGENT = "text_agent"
@@ -64,8 +61,7 @@ class AgentType(Enum):
 
 
 class AgentCapability(Enum):
-    """Capabilities that agents can provide."""
-    CONTENT_ANALYSIS = "content_analysis"
+    """Capabilities that agents can provide."""    CONTENT_ANALYSIS = "content_analysis"
     CONTENT_GENERATION = "content_generation"
     CONTENT_OPTIMIZATION = "content_optimization"
     FINGERPRINTING = "fingerprinting"
@@ -83,8 +79,7 @@ class AgentCapability(Enum):
 
 
 class TaskPriority(Enum):
-    """Task priority levels."""
-    CRITICAL = 1
+    """Task priority levels."""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -92,8 +87,7 @@ class TaskPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status."""
-    PENDING = "pending"
+    """Task execution status."""    PENDING = "pending"
     ASSIGNED = "assigned"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -104,8 +98,7 @@ class TaskStatus(Enum):
 
 @dataclass
 class AgentInfo:
-    """Information about a registered agent."""
-    agent_id: str
+    """Information about a registered agent."""    agent_id: str
     agent_type: AgentType
     capabilities: List[AgentCapability]
     status: str = "idle"
@@ -123,8 +116,7 @@ class AgentInfo:
 
 @dataclass
 class CoordinationTask:
-    """Task to be coordinated among agents."""
-    task_id: str
+    """Task to be coordinated among agents."""    task_id: str
     task_type: str
     priority: TaskPriority
     capabilities_required: List[AgentCapability]
@@ -146,8 +138,7 @@ class CoordinationTask:
 
 @dataclass
 class WorkflowPlan:
-    """Execution plan for a multi-agent workflow."""
-    workflow_id: str
+    """Execution plan for a multi-agent workflow."""    workflow_id: str
     tasks: List[CoordinationTask]
     execution_graph: nx.DiGraph
     estimated_duration: timedelta
@@ -158,8 +149,7 @@ class WorkflowPlan:
 
 
 class AgentCoordinator:
-    """
-    Advanced multi-agent coordination system for content creators.
+    """    Advanced multi-agent coordination system for content creators.
     
     Provides intelligent orchestration including:
     - Dynamic agent discovery and registration
@@ -168,11 +158,9 @@ class AgentCoordinator:
     - Fault tolerance and recovery
     - Performance monitoring and optimization
     - Inter-agent communication management
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict] = None):
-        """Initialize the Agent Coordinator with advanced orchestration capabilities."""
-        self.config = config or {}
+        """Initialize the Agent Coordinator with advanced orchestration capabilities."""        self.config = config or {}
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
         
@@ -218,8 +206,7 @@ class AgentCoordinator:
         self.logger.info("Agent Coordinator initialized with advanced orchestration")
     
     def _initialize_workflow_templates(self):
-        """Initialize common workflow templates for content creation."""
-        self.workflow_templates = {
+        """Initialize common workflow templates for content creation."""        self.workflow_templates = {
             'content_creation_full': {
                 'name': 'Full Content Creation Pipeline',
                 'steps': [
@@ -288,8 +275,7 @@ class AgentCoordinator:
         }
     
     def _start_coordination_services(self):
-        """Start background coordination services."""
-        # Start task processing
+        """Start background coordination services."""        # Start task processing
         for priority in TaskPriority:
             task_name = f"task_processor_{priority.name.lower()}"
             self.coordination_tasks[task_name] = asyncio.create_task(
@@ -318,8 +304,7 @@ class AgentCoordinator:
         capabilities: List[AgentCapability],
         config: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Register a new agent with the coordination system.
+        """        Register a new agent with the coordination system.
         
         Args:
             agent_id: Unique agent identifier
@@ -329,8 +314,7 @@ class AgentCoordinator:
             
         Returns:
             bool: Registration success status
-        """
-        try:
+        """        try:
             if agent_id in self.registered_agents:
                 self.logger.warning(f"Agent {agent_id} already registered, updating...")
             
@@ -372,8 +356,7 @@ class AgentCoordinator:
         input_data: Dict[str, Any],
         priority: TaskPriority = TaskPriority.NORMAL
     ) -> str:
-        """
-        Execute a predefined workflow using optimal agent coordination.
+        """        Execute a predefined workflow using optimal agent coordination.
         
         Args:
             workflow_template: Name of workflow template to execute
@@ -382,8 +365,7 @@ class AgentCoordinator:
             
         Returns:
             str: Workflow execution ID
-        """
-        try:
+        """        try:
             workflow_id = f"workflow_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
             
             if workflow_template not in self.workflow_templates:
@@ -425,8 +407,7 @@ class AgentCoordinator:
         priority: TaskPriority = TaskPriority.NORMAL,
         dependencies: List[str] = None
     ) -> str:
-        """
-        Submit a single task for agent coordination.
+        """        Submit a single task for agent coordination.
         
         Args:
             task_type: Type of task to execute
@@ -437,8 +418,7 @@ class AgentCoordinator:
             
         Returns:
             str: Task ID for tracking
-        """
-        try:
+        """        try:
             task_id = f"task_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
             
             # Create coordination task
@@ -470,8 +450,7 @@ class AgentCoordinator:
         capabilities_required: List[AgentCapability],
         exclude_agents: List[str] = None
     ) -> Dict[AgentCapability, str]:
-        """
-        Find optimal agents for required capabilities.
+        """        Find optimal agents for required capabilities.
         
         Args:
             capabilities_required: List of required capabilities
@@ -479,8 +458,7 @@ class AgentCoordinator:
             
         Returns:
             Dict mapping capabilities to optimal agent IDs
-        """
-        optimal_assignments = {}
+        """        optimal_assignments = {}
         exclude_agents = exclude_agents or []
         
         for capability in capabilities_required:
@@ -511,8 +489,7 @@ class AgentCoordinator:
         input_data: Dict[str, Any],
         priority: TaskPriority
     ) -> WorkflowPlan:
-        """Create detailed execution plan for a workflow."""
-        tasks = []
+        """Create detailed execution plan for a workflow."""        tasks = []
         execution_graph = nx.DiGraph()
         
         # Create tasks from template steps
@@ -555,8 +532,7 @@ class AgentCoordinator:
         )
     
     async def _execute_workflow_plan(self, workflow_plan: WorkflowPlan):
-        """Execute a workflow plan with proper coordination."""
-        try:
+        """Execute a workflow plan with proper coordination."""        try:
             workflow_id = workflow_plan.workflow_id
             self.logger.info(f"Executing workflow plan: {workflow_id}")
             
@@ -610,8 +586,7 @@ class AgentCoordinator:
             raise
     
     async def _execute_single_task(self, task: CoordinationTask) -> Dict[str, Any]:
-        """Execute a single coordination task."""
-        try:
+        """Execute a single coordination task."""        try:
             task.status = TaskStatus.IN_PROGRESS
             task.started_at = datetime.now()
             
@@ -642,8 +617,7 @@ class AgentCoordinator:
             raise
     
     async def _execute_agent_task(self, agent_id: str, task: CoordinationTask) -> Dict[str, Any]:
-        """Execute task with a single agent."""
-        # Simulate agent execution (in real implementation, would call actual agent)
+        """Execute task with a single agent."""        # Simulate agent execution (in real implementation, would call actual agent)
         await asyncio.sleep(0.1)  # Simulate processing time
         
         return {
@@ -659,8 +633,7 @@ class AgentCoordinator:
         agent_assignments: Dict[AgentCapability, str],
         task: CoordinationTask
     ) -> Dict[str, Any]:
-        """Execute task requiring coordination between multiple agents."""
-        results = {}
+        """Execute task requiring coordination between multiple agents."""        results = {}
         
         # Execute sub-tasks in parallel
         futures = []
@@ -695,8 +668,7 @@ class AgentCoordinator:
         available_agents: List[str],
         capability: AgentCapability
     ) -> str:
-        """Select the best agent for a specific capability."""
-        if not available_agents:
+        """Select the best agent for a specific capability."""        if not available_agents:
             raise RuntimeError(f"No agents available for capability: {capability.value}")
         
         # Score agents based on multiple criteria
@@ -730,8 +702,7 @@ class AgentCoordinator:
         return best_agent
     
     async def _process_task_queue(self, priority: TaskPriority):
-        """Process tasks from a specific priority queue."""
-        queue = self.task_queue[priority]
+        """Process tasks from a specific priority queue."""        queue = self.task_queue[priority]
         
         while True:
             try:
@@ -777,8 +748,7 @@ class AgentCoordinator:
                 await asyncio.sleep(1)
     
     async def _monitor_agent_health(self):
-        """Monitor health of all registered agents."""
-        while True:
+        """Monitor health of all registered agents."""        while True:
             try:
                 current_time = datetime.now()
                 
@@ -808,8 +778,7 @@ class AgentCoordinator:
                 await asyncio.sleep(60)
     
     async def get_coordination_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive coordination system analytics."""
-        total_agents = len(self.registered_agents)
+        """Get comprehensive coordination system analytics."""        total_agents = len(self.registered_agents)
         active_agents = sum(1 for a in self.registered_agents.values() if a.status == "idle" or a.status == "busy")
         total_tasks = len(self.active_tasks) + len(self.completed_tasks)
         active_workflows = len(self.active_workflows)
@@ -856,8 +825,7 @@ class AgentCoordinator:
 
 
 class LoadBalancer:
-    """Load balancing utilities for agent coordination."""
-    
+    """Load balancing utilities for agent coordination."""    
     def __init__(self):
         self.load_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
     
@@ -866,8 +834,7 @@ class LoadBalancer:
         agents: List[str],
         tasks: List[CoordinationTask]
     ) -> Dict[str, List[str]]:
-        """Calculate optimal task distribution among agents."""
-        # Simple round-robin for now (can be enhanced with ML)
+        """Calculate optimal task distribution among agents."""        # Simple round-robin for now (can be enhanced with ML)
         distribution = {agent_id: [] for agent_id in agents}
         
         for i, task in enumerate(tasks):
@@ -878,8 +845,7 @@ class LoadBalancer:
 
 
 class PerformanceOptimizer:
-    """Performance optimization utilities for agent coordination."""
-    
+    """Performance optimization utilities for agent coordination."""    
     def __init__(self):
         self.optimization_history: List[Dict[str, Any]] = []
     
@@ -888,8 +854,7 @@ class PerformanceOptimizer:
         agent_metrics: Dict[str, AgentInfo],
         task_metrics: Dict[str, Any]
     ) -> List[str]:
-        """Suggest performance optimizations based on current metrics."""
-        suggestions = []
+        """Suggest performance optimizations based on current metrics."""        suggestions = []
         
         # Check for overloaded agents
         overloaded_agents = [

@@ -1,5 +1,4 @@
-"""
-Data Validation Utilities
+"""Data Validation Utilities
 =========================
 
 Comprehensive validation functions for model data.
@@ -14,7 +13,6 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import re
 import uuid
 from typing import Dict, List, Any, Optional, Union, Callable
@@ -38,8 +36,7 @@ from . import (
 
 
 class ValidationError(Exception):
-    """Custom validation error"""
-    def __init__(self, field: str, message: str, value: Any = None):
+    """Custom validation error"""    def __init__(self, field: str, message: str, value: Any = None):
         self.field = field
         self.message = message
         self.value = value
@@ -47,15 +44,13 @@ class ValidationError(Exception):
 
 
 class ValidationResult:
-    """Result of validation process"""
-    def __init__(self):
+    """Result of validation process"""    def __init__(self):
         self.is_valid = True
         self.errors: List[Dict[str, Any]] = []
         self.warnings: List[Dict[str, Any]] = []
     
     def add_error(self, field: str, message: str, value: Any = None):
-        """Add validation error"""
-        self.is_valid = False
+        """Add validation error"""        self.is_valid = False
         self.errors.append({
             'field': field,
             'message': message,
@@ -63,37 +58,31 @@ class ValidationResult:
         })
     
     def add_warning(self, field: str, message: str, value: Any = None):
-        """Add validation warning"""
-        self.warnings.append({
+        """Add validation warning"""        self.warnings.append({
             'field': field,
             'message': message,
             'value': value
         })
     
     def get_error_messages(self) -> List[str]:
-        """Get all error messages"""
-        return [f"{error['field']}: {error['message']}" for error in self.errors]
+        """Get all error messages"""        return [f"{error['field']}: {error['message']}" for error in self.errors]
     
     def get_warning_messages(self) -> List[str]:
-        """Get all warning messages"""
-        return [f"{warning['field']}: {warning['message']}" for warning in self.warnings]
+        """Get all warning messages"""        return [f"{warning['field']}: {warning['message']}" for warning in self.warnings]
 
 
 class BaseValidator:
-    """Base validator class"""
-    
+    """Base validator class"""    
     @staticmethod
     def validate_required(value: Any, field_name: str) -> bool:
-        """Validate required field"""
-        if value is None or (isinstance(value, str) and value.strip() == ""):
+        """Validate required field"""        if value is None or (isinstance(value, str) and value.strip() == ""):
             raise ValidationError(field_name, "This field is required")
         return True
     
     @staticmethod
     def validate_string_length(value: str, field_name: str, 
                              min_length: int = 0, max_length: int = None) -> bool:
-        """Validate string length"""
-        if not isinstance(value, str):
+        """Validate string length"""        if not isinstance(value, str):
             raise ValidationError(field_name, "Must be a string", value)
         
         length = len(value)
@@ -116,8 +105,7 @@ class BaseValidator:
     
     @staticmethod
     def validate_email(value: str, field_name: str) -> bool:
-        """Validate email address"""
-        try:
+        """Validate email address"""        try:
             valid = validate_email(value)
             return True
         except EmailNotValidError as e:
@@ -125,8 +113,7 @@ class BaseValidator:
     
     @staticmethod
     def validate_phone(value: str, field_name: str, region: str = None) -> bool:
-        """Validate phone number"""
-        try:
+        """Validate phone number"""        try:
             parsed = phonenumbers.parse(value, region)
             if not phonenumbers.is_valid_number(parsed):
                 raise ValidationError(field_name, "Invalid phone number", value)
@@ -136,15 +123,13 @@ class BaseValidator:
     
     @staticmethod
     def validate_url(value: str, field_name: str) -> bool:
-        """Validate URL"""
-        if not url_validators.url(value):
+        """Validate URL"""        if not url_validators.url(value):
             raise ValidationError(field_name, "Invalid URL format", value)
         return True
     
     @staticmethod
     def validate_uuid(value: str, field_name: str) -> bool:
-        """Validate UUID format"""
-        try:
+        """Validate UUID format"""        try:
             uuid.UUID(value)
             return True
         except ValueError:
@@ -154,8 +139,7 @@ class BaseValidator:
     def validate_decimal(value: Union[str, float, Decimal], field_name: str,
                         min_value: Decimal = None, max_value: Decimal = None,
                         decimal_places: int = None) -> bool:
-        """Validate decimal value"""
-        try:
+        """Validate decimal value"""        try:
             decimal_value = Decimal(str(value))
         except (InvalidOperation, ValueError):
             raise ValidationError(field_name, "Invalid decimal format", value)
@@ -189,8 +173,7 @@ class BaseValidator:
     @staticmethod
     def validate_date_range(value: date, field_name: str,
                            min_date: date = None, max_date: date = None) -> bool:
-        """Validate date range"""
-        if min_date and value < min_date:
+        """Validate date range"""        if min_date and value < min_date:
             raise ValidationError(
                 field_name, 
                 f"Date must be after {min_date}", 
@@ -208,8 +191,7 @@ class BaseValidator:
     
     @staticmethod
     def validate_enum(value: str, field_name: str, enum_class) -> bool:
-        """Validate enum value"""
-        valid_values = [item.value for item in enum_class]
+        """Validate enum value"""        valid_values = [item.value for item in enum_class]
         if value not in valid_values:
             raise ValidationError(
                 field_name, 
@@ -220,11 +202,9 @@ class BaseValidator:
 
 
 class UserValidator(BaseValidator):
-    """User model specific validator"""
-    
+    """User model specific validator"""    
     def validate_user_data(self, data: Dict[str, Any]) -> ValidationResult:
-        """Validate complete user data"""
-        result = ValidationResult()
+        """Validate complete user data"""        result = ValidationResult()
         
         try:
             # Required fields
@@ -285,11 +265,9 @@ class UserValidator(BaseValidator):
 
 
 class ContentValidator(BaseValidator):
-    """Content model specific validator"""
-    
+    """Content model specific validator"""    
     def validate_content_data(self, data: Dict[str, Any]) -> ValidationResult:
-        """Validate complete content data"""
-        result = ValidationResult()
+        """Validate complete content data"""        result = ValidationResult()
         
         try:
             # Required fields
@@ -368,11 +346,9 @@ class ContentValidator(BaseValidator):
 
 
 class RevenueValidator(BaseValidator):
-    """Revenue model specific validator"""
-    
+    """Revenue model specific validator"""    
     def validate_revenue_data(self, data: Dict[str, Any]) -> ValidationResult:
-        """Validate complete revenue data"""
-        result = ValidationResult()
+        """Validate complete revenue data"""        result = ValidationResult()
         
         try:
             # Required fields
@@ -441,11 +417,9 @@ class RevenueValidator(BaseValidator):
 
 
 class AnalyticsValidator(BaseValidator):
-    """Analytics model specific validator"""
-    
+    """Analytics model specific validator"""    
     def validate_analytics_data(self, data: Dict[str, Any]) -> ValidationResult:
-        """Validate complete analytics data"""
-        result = ValidationResult()
+        """Validate complete analytics data"""        result = ValidationResult()
         
         try:
             # Required fields
@@ -492,8 +466,7 @@ class AnalyticsValidator(BaseValidator):
 
 
 class ModelDataValidator:
-    """Main validator class that orchestrates all model validations"""
-    
+    """Main validator class that orchestrates all model validations"""    
     def __init__(self):
         self.user_validator = UserValidator()
         self.content_validator = ContentValidator()
@@ -501,8 +474,7 @@ class ModelDataValidator:
         self.analytics_validator = AnalyticsValidator()
     
     def validate_model_data(self, model_name: str, data: Dict[str, Any]) -> ValidationResult:
-        """Validate data for any model"""
-        validators = {
+        """Validate data for any model"""        validators = {
             'UserModel': self.user_validator.validate_user_data,
             'ContentModel': self.content_validator.validate_content_data,
             'RevenueModel': self.revenue_validator.validate_revenue_data,
@@ -519,8 +491,7 @@ class ModelDataValidator:
             return result
     
     def validate_cross_model_relationships(self, data: Dict[str, Any]) -> ValidationResult:
-        """Validate relationships between models"""
-        result = ValidationResult()
+        """Validate relationships between models"""        result = ValidationResult()
         
         # Example: Check if user exists when creating content
         if 'ContentModel' in data and 'UserModel' not in data:
@@ -535,20 +506,16 @@ class ModelDataValidator:
 
 # Convenience functions
 def validate_user(data: Dict[str, Any]) -> ValidationResult:
-    """Quick user validation"""
-    return UserValidator().validate_user_data(data)
+    """Quick user validation"""    return UserValidator().validate_user_data(data)
 
 def validate_content(data: Dict[str, Any]) -> ValidationResult:
-    """Quick content validation"""
-    return ContentValidator().validate_content_data(data)
+    """Quick content validation"""    return ContentValidator().validate_content_data(data)
 
 def validate_revenue(data: Dict[str, Any]) -> ValidationResult:
-    """Quick revenue validation"""
-    return RevenueValidator().validate_revenue_data(data)
+    """Quick revenue validation"""    return RevenueValidator().validate_revenue_data(data)
 
 def validate_analytics(data: Dict[str, Any]) -> ValidationResult:
-    """Quick analytics validation"""
-    return AnalyticsValidator().validate_analytics_data(data)
+    """Quick analytics validation"""    return AnalyticsValidator().validate_analytics_data(data)
 
 
 # Export all validators

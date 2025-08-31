@@ -1,5 +1,4 @@
-"""
-Quality Protection Engine - Advanced Data Quality Protection System
+"""Quality Protection Engine - Advanced Data Quality Protection System
 ===================================================================
 
 Enterprise-grade quality protection engine providing comprehensive data quality
@@ -18,7 +17,6 @@ Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security +
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 from typing import Dict, Any, List, Optional, Union, Tuple, Set, Callable
 import asyncio
 import logging
@@ -47,15 +45,13 @@ import io
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Quality protection levels"""
-    BASIC = "basic"                      # Standard protection
+    """Quality protection levels"""    BASIC = "basic"                      # Standard protection
     ENHANCED = "enhanced"                # Enhanced protection with ML
     MAXIMUM = "maximum"                  # Maximum security protection
     CUSTOM = "custom"                    # Custom protection rules
 
 class ThreatType(Enum):
-    """Types of quality threats"""
-    MALICIOUS_CONTENT = "malicious_content"
+    """Types of quality threats"""    MALICIOUS_CONTENT = "malicious_content"
     DATA_CORRUPTION = "data_corruption"
     FORMAT_EXPLOITATION = "format_exploitation"
     METADATA_INJECTION = "metadata_injection"
@@ -65,8 +61,7 @@ class ThreatType(Enum):
     SYSTEM_VULNERABILITY = "system_vulnerability"
 
 class ProtectionAction(Enum):
-    """Protection actions to take"""
-    ALLOW = "allow"                      # Content passes protection
+    """Protection actions to take"""    ALLOW = "allow"                      # Content passes protection
     BLOCK = "block"                      # Block content completely
     QUARANTINE = "quarantine"            # Quarantine for manual review
     SANITIZE = "sanitize"                # Clean and allow
@@ -74,8 +69,7 @@ class ProtectionAction(Enum):
 
 @dataclass
 class QualityThreat:
-    """Quality threat detection result"""
-    threat_id: str
+    """Quality threat detection result"""    threat_id: str
     threat_type: ThreatType
     severity: str
     confidence: float
@@ -88,8 +82,7 @@ class QualityThreat:
 
 @dataclass
 class ProtectionPolicy:
-    """Quality protection policy"""
-    name: str
+    """Quality protection policy"""    name: str
     description: str
     protection_level: ProtectionLevel
     enabled_checks: List[str]
@@ -100,21 +93,17 @@ class ProtectionPolicy:
     custom_rules: Dict[str, Any]
 
 class QualityProtectionEngine:
-    """
-    Advanced quality protection engine for comprehensive content protection.
+    """    Advanced quality protection engine for comprehensive content protection.
     
     Provides multi-layered security validation, threat detection, and 
     quality-based content filtering with enterprise-grade protection.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the quality protection engine.
+        """        Initialize the quality protection engine.
         
         Args:
             config: Protection configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logger
         
         # Protection configuration
@@ -148,8 +137,7 @@ class QualityProtectionEngine:
         self.logger.info(f"QualityProtectionEngine initialized with {self.protection_level.value} protection")
     
     def _init_encryption(self):
-        """Initialize encryption components"""
-        
+        """Initialize encryption components"""        
         # Generate or load encryption key
         encryption_key = self.config.get('encryption_key')
         if not encryption_key:
@@ -171,8 +159,7 @@ class QualityProtectionEngine:
         self.logger.debug("Encryption components initialized")
     
     def _init_default_policies(self):
-        """Initialize default protection policies"""
-        
+        """Initialize default protection policies"""        
         # Basic protection policy
         basic_policy = ProtectionPolicy(
             name="basic_protection",
@@ -264,8 +251,7 @@ class QualityProtectionEngine:
         self.logger.info(f"Initialized {len(self.policies)} protection policies")
     
     async def _init_security_components(self):
-        """Initialize security scanning components"""
-        
+        """Initialize security scanning components"""        
         try:
             # Initialize YARA rules for malware detection
             if self.protection_level in [ProtectionLevel.ENHANCED, ProtectionLevel.MAXIMUM]:
@@ -280,12 +266,10 @@ class QualityProtectionEngine:
             self.logger.warning(f"Some security components failed to initialize: {str(e)}")
     
     async def _init_yara_rules(self):
-        """Initialize YARA rules for malware detection"""
-        
+        """Initialize YARA rules for malware detection"""        
         try:
             # Basic YARA rules for common threats
-            yara_rules = """
-            rule SuspiciousExecutable {
+            yara_rules = """            rule SuspiciousExecutable {
                 strings:
                     $mz = { 4D 5A }
                     $pe = "PE"
@@ -310,8 +294,7 @@ class QualityProtectionEngine:
                 condition:
                     any of them
             }
-            """
-            
+            """            
             # Compile YARA rules
             self.yara_rules = yara.compile(source=yara_rules)
             self.logger.debug("YARA rules compiled successfully")
@@ -324,8 +307,7 @@ class QualityProtectionEngine:
             self.yara_rules = None
     
     async def _init_ml_detectors(self):
-        """Initialize ML-based threat detectors"""
-        
+        """Initialize ML-based threat detectors"""        
         # Placeholder for ML model initialization
         # In production, this would load pre-trained models
         self.threat_detectors = {
@@ -343,8 +325,7 @@ class QualityProtectionEngine:
         metadata: Optional[Dict[str, Any]] = None,
         policy_name: str = "enhanced"
     ) -> Dict[str, Any]:
-        """
-        Protect content using comprehensive security analysis.
+        """        Protect content using comprehensive security analysis.
         
         Args:
             content_data: Content data to protect
@@ -354,8 +335,7 @@ class QualityProtectionEngine:
             
         Returns:
             Protection analysis results
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             # Get protection policy
@@ -445,8 +425,7 @@ class QualityProtectionEngine:
         metadata: Optional[Dict[str, Any]],
         policy: ProtectionPolicy
     ) -> Dict[str, Any]:
-        """Perform a specific protection check"""
-        
+        """Perform a specific protection check"""        
         check_result = {
             "check_name": check_name,
             "status": "passed",
@@ -490,8 +469,7 @@ class QualityProtectionEngine:
         content_data: bytes,
         content_type: str
     ):
-        """Check format validation"""
-        
+        """Check format validation"""        
         # Use python-magic to detect actual file type
         try:
             detected_type = magic.from_buffer(content_data, mime=True)
@@ -518,8 +496,7 @@ class QualityProtectionEngine:
             result["details"]["error"] = str(e)
     
     async def _check_size_validation(self, result: Dict[str, Any], content_data: bytes):
-        """Check file size validation"""
-        
+        """Check file size validation"""        
         file_size = len(content_data)
         result["details"]["file_size"] = file_size
         result["details"]["max_allowed_size"] = self.max_file_size
@@ -540,8 +517,7 @@ class QualityProtectionEngine:
             result["status"] = "failed"
     
     async def _check_basic_malware(self, result: Dict[str, Any], content_data: bytes):
-        """Basic malware scanning"""
-        
+        """Basic malware scanning"""        
         # Check for executable signatures
         pe_signature = b'\x4D\x5A'  # MZ header
         elf_signature = b'\x7FELF'   # ELF header
@@ -574,16 +550,14 @@ class QualityProtectionEngine:
         content_data: bytes,
         content_type: str
     ):
-        """Check for steganography"""
-        
+        """Check for steganography"""        
         if content_type.startswith('image/'):
             await self._check_image_steganography(result, content_data)
         elif content_type.startswith('audio/'):
             await self._check_audio_steganography(result, content_data)
     
     async def _check_image_steganography(self, result: Dict[str, Any], content_data: bytes):
-        """Check for image steganography"""
-        
+        """Check for image steganography"""        
         try:
             # Convert bytes to numpy array
             nparr = np.frombuffer(content_data, np.uint8)
@@ -614,8 +588,7 @@ class QualityProtectionEngine:
             result["details"]["steganography_error"] = str(e)
     
     def _analyze_lsb_patterns(self, img: np.ndarray) -> Dict[str, Any]:
-        """Analyze LSB patterns for steganography detection"""
-        
+        """Analyze LSB patterns for steganography detection"""        
         # Extract LSBs
         lsbs = img & 1
         
@@ -640,8 +613,7 @@ class QualityProtectionEngine:
         }
     
     def _types_match(self, detected_type: str, declared_type: str) -> bool:
-        """Check if detected and declared MIME types match"""
-        
+        """Check if detected and declared MIME types match"""        
         # Normalize types
         detected_main = detected_type.split('/')[0]
         declared_main = declared_type.split('/')[0]
@@ -654,8 +626,7 @@ class QualityProtectionEngine:
         threats: List[Dict[str, Any]],
         policy: ProtectionPolicy
     ) -> Dict[str, Any]:
-        """Analyze overall threat level and determine action"""
-        
+        """Analyze overall threat level and determine action"""        
         if not threats:
             return {
                 "overall_status": "safe",
@@ -711,8 +682,7 @@ class QualityProtectionEngine:
         content_type: str,
         action: str
     ) -> Optional[bytes]:
-        """Apply protection action to content"""
-        
+        """Apply protection action to content"""        
         if action == ProtectionAction.SANITIZE.value:
             # Attempt to sanitize content
             return await self._sanitize_content(content_data, content_type)
@@ -724,8 +694,7 @@ class QualityProtectionEngine:
             return content_data
     
     async def _sanitize_content(self, content_data: bytes, content_type: str) -> bytes:
-        """Sanitize content by removing threats"""
-        
+        """Sanitize content by removing threats"""        
         try:
             if content_type.startswith('image/'):
                 return await self._sanitize_image(content_data)
@@ -742,8 +711,7 @@ class QualityProtectionEngine:
             return content_data
     
     async def _sanitize_image(self, content_data: bytes) -> bytes:
-        """Sanitize image content"""
-        
+        """Sanitize image content"""        
         try:
             # Convert to PIL Image
             image = Image.open(io.BytesIO(content_data))
@@ -761,8 +729,7 @@ class QualityProtectionEngine:
             return content_data
     
     async def _log_threats(self, threats: List[Dict[str, Any]]):
-        """Log detected threats for analysis"""
-        
+        """Log detected threats for analysis"""        
         for threat_data in threats:
             threat = QualityThreat(**threat_data)
             self.threat_history.append(threat)

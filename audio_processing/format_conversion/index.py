@@ -1,5 +1,4 @@
-"""
-Index - Professional Audio Format Conversion Module Index
+"""Index - Professional Audio Format Conversion Module Index
 
 Central index providing streamlined access to all audio format conversion
 functionality with professional-grade interfaces and convenience methods.
@@ -16,7 +15,6 @@ THE FULL EXTENT OF THE LAW.
 
 ALL RIGHTS RESERVED. PROPRIETARY AND CONFIDENTIAL.
 """
-
 import logging
 import asyncio
 from pathlib import Path
@@ -46,13 +44,11 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ConversionStatistics:
-    """
-    Conversion operation statistics
+    """    Conversion operation statistics
     
     Comprehensive statistics for conversion operations including
     performance metrics, quality analysis, and operational data.
-    """
-    total_conversions: int = 0
+    """    total_conversions: int = 0
     successful_conversions: int = 0
     failed_conversions: int = 0
     total_processing_time: float = 0.0
@@ -74,8 +70,7 @@ class ConversionStatistics:
             self.error_distribution = {}
     
     def calculate_averages(self):
-        """Calculate average metrics"""
-        if self.total_conversions > 0:
+        """Calculate average metrics"""        if self.total_conversions > 0:
             self.average_processing_time = self.total_processing_time / self.total_conversions
         
         if self.quality_scores:
@@ -86,14 +81,12 @@ class ConversionStatistics:
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate percentage"""
-        if self.total_conversions == 0:
+        """Calculate success rate percentage"""        if self.total_conversions == 0:
             return 0.0
         return (self.successful_conversions / self.total_conversions) * 100.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert statistics to dictionary"""
-        return {
+        """Convert statistics to dictionary"""        return {
             'total_conversions': self.total_conversions,
             'successful_conversions': self.successful_conversions,
             'failed_conversions': self.failed_conversions,
@@ -110,22 +103,18 @@ class ConversionStatistics:
 
 
 class AudioConversionIndex:
-    """
-    Professional Audio Conversion Index
+    """    Professional Audio Conversion Index
     
     Central facade providing streamlined access to all audio format conversion
     functionality with comprehensive session management, statistics tracking,
     and professional-grade operational interfaces.
-    """
-    
+    """    
     def __init__(self, config: Optional[ConversionConfig] = None):
-        """
-        Initialize Audio Conversion Index
+        """        Initialize Audio Conversion Index
         
         Args:
             config: Configuration object (uses DEFAULT_CONFIG if None)
-        """
-        self.config = config or DEFAULT_CONFIG
+        """        self.config = config or DEFAULT_CONFIG
         self.session_id = f"conv_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         self.statistics = ConversionStatistics()
         
@@ -142,20 +131,16 @@ class AudioConversionIndex:
         logger.info(f"AudioConversionIndex initialized - Session: {self.session_id}")
     
     def __enter__(self):
-        """Context manager entry"""
-        return self
+        """Context manager entry"""        return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit with cleanup"""
-        self.cleanup()
+        """Context manager exit with cleanup"""        self.cleanup()
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        return self
+        """Async context manager entry"""        return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit with cleanup"""
-        await self.cleanup_async()
+        """Async context manager exit with cleanup"""        await self.cleanup_async()
     
     # ========================================
     # SINGLE FILE CONVERSION METHODS
@@ -167,8 +152,7 @@ class AudioConversionIndex:
                                target_format: AudioFormat,
                                quality_level: QualityLevel = QualityLevel.HIGH,
                                processing_options: Optional[Dict[str, Any]] = None) -> ConversionResult:
-        """
-        Convert single audio file asynchronously
+        """        Convert single audio file asynchronously
         
         Args:
             source_path: Path to source audio file
@@ -179,8 +163,7 @@ class AudioConversionIndex:
             
         Returns:
             ConversionResult with operation details
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Create conversion request
@@ -221,8 +204,7 @@ class AudioConversionIndex:
                     target_format: AudioFormat,
                     quality_level: QualityLevel = QualityLevel.HIGH,
                     processing_options: Optional[Dict[str, Any]] = None) -> ConversionResult:
-        """
-        Convert single audio file synchronously
+        """        Convert single audio file synchronously
         
         Args:
             source_path: Path to source audio file
@@ -233,8 +215,7 @@ class AudioConversionIndex:
             
         Returns:
             ConversionResult with operation details
-        """
-        return asyncio.run(self.convert_file_async(
+        """        return asyncio.run(self.convert_file_async(
             source_path, target_path, target_format, quality_level, processing_options
         ))
     
@@ -249,8 +230,7 @@ class AudioConversionIndex:
                                 quality_level: QualityLevel = QualityLevel.HIGH,
                                 parallel_processing: bool = True,
                                 preserve_structure: bool = False) -> BatchConversionResult:
-        """
-        Convert multiple audio files asynchronously
+        """        Convert multiple audio files asynchronously
         
         Args:
             source_files: List of source file paths
@@ -262,8 +242,7 @@ class AudioConversionIndex:
             
         Returns:
             BatchConversionResult with all operation details
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         target_dir = Path(target_directory)
         target_dir.mkdir(parents=True, exist_ok=True)
         
@@ -341,8 +320,7 @@ class AudioConversionIndex:
                      quality_level: QualityLevel = QualityLevel.HIGH,
                      parallel_processing: bool = True,
                      preserve_structure: bool = False) -> BatchConversionResult:
-        """
-        Convert multiple audio files synchronously
+        """        Convert multiple audio files synchronously
         
         Args:
             source_files: List of source file paths
@@ -354,8 +332,7 @@ class AudioConversionIndex:
             
         Returns:
             BatchConversionResult with all operation details
-        """
-        return asyncio.run(self.convert_batch_async(
+        """        return asyncio.run(self.convert_batch_async(
             source_files, target_directory, target_format, 
             quality_level, parallel_processing, preserve_structure
         ))
@@ -371,8 +348,7 @@ class AudioConversionIndex:
                                     quality_level: QualityLevel = QualityLevel.HIGH,
                                     recursive: bool = True,
                                     file_patterns: Optional[List[str]] = None) -> BatchConversionResult:
-        """
-        Convert all audio files in a directory asynchronously
+        """        Convert all audio files in a directory asynchronously
         
         Args:
             source_directory: Source directory path
@@ -384,8 +360,7 @@ class AudioConversionIndex:
             
         Returns:
             BatchConversionResult with all operation details
-        """
-        source_dir = Path(source_directory)
+        """        source_dir = Path(source_directory)
         
         if not source_dir.exists() or not source_dir.is_dir():
             raise ValueError(f"Source directory does not exist: {source_directory}")
@@ -418,8 +393,7 @@ class AudioConversionIndex:
                          quality_level: QualityLevel = QualityLevel.HIGH,
                          recursive: bool = True,
                          file_patterns: Optional[List[str]] = None) -> BatchConversionResult:
-        """
-        Convert all audio files in a directory synchronously
+        """        Convert all audio files in a directory synchronously
         
         Args:
             source_directory: Source directory path
@@ -431,8 +405,7 @@ class AudioConversionIndex:
             
         Returns:
             BatchConversionResult with all operation details
-        """
-        return asyncio.run(self.convert_directory_async(
+        """        return asyncio.run(self.convert_directory_async(
             source_directory, target_directory, target_format,
             quality_level, recursive, file_patterns
         ))
@@ -442,34 +415,29 @@ class AudioConversionIndex:
     # ========================================
     
     async def analyze_quality_async(self, file_path: Union[str, Path]) -> QualityMetrics:
-        """
-        Analyze audio quality asynchronously
+        """        Analyze audio quality asynchronously
         
         Args:
             file_path: Path to audio file
             
         Returns:
             QualityMetrics with detailed analysis
-        """
-        return await self.quality_controller.analyze_quality_async(Path(file_path))
+        """        return await self.quality_controller.analyze_quality_async(Path(file_path))
     
     def analyze_quality(self, file_path: Union[str, Path]) -> QualityMetrics:
-        """
-        Analyze audio quality synchronously
+        """        Analyze audio quality synchronously
         
         Args:
             file_path: Path to audio file
             
         Returns:
             QualityMetrics with detailed analysis
-        """
-        return asyncio.run(self.analyze_quality_async(file_path))
+        """        return asyncio.run(self.analyze_quality_async(file_path))
     
     def get_quality_recommendations(self, 
                                   source_path: Union[str, Path],
                                   target_format: AudioFormat) -> List[str]:
-        """
-        Get quality optimization recommendations
+        """        Get quality optimization recommendations
         
         Args:
             source_path: Path to source audio file
@@ -477,8 +445,7 @@ class AudioConversionIndex:
             
         Returns:
             List of quality recommendations
-        """
-        try:
+        """        try:
             # Analyze source quality
             quality_metrics = self.analyze_quality(source_path)
             
@@ -516,26 +483,22 @@ class AudioConversionIndex:
     # ========================================
     
     def get_supported_formats(self) -> List[AudioFormat]:
-        """Get list of all supported audio formats"""
-        return list(AudioFormat)
+        """Get list of all supported audio formats"""        return list(AudioFormat)
     
     def detect_format(self, file_path: Union[str, Path]) -> Optional[AudioFormat]:
-        """
-        Detect audio format from file
+        """        Detect audio format from file
         
         Args:
             file_path: Path to audio file
             
         Returns:
             Detected AudioFormat or None if detection fails
-        """
-        return ConversionUtils.detect_audio_format(Path(file_path))
+        """        return ConversionUtils.detect_audio_format(Path(file_path))
     
     def validate_conversion(self, 
                           source_path: Union[str, Path],
                           target_format: AudioFormat) -> Dict[str, Any]:
-        """
-        Validate conversion compatibility
+        """        Validate conversion compatibility
         
         Args:
             source_path: Path to source audio file
@@ -543,8 +506,7 @@ class AudioConversionIndex:
             
         Returns:
             Validation result with compatibility info and warnings
-        """
-        try:
+        """        try:
             # Get source specifications
             source_specs = ConversionUtils.get_audio_specs(Path(source_path))
             source_format = source_specs.get('format')
@@ -584,18 +546,15 @@ class AudioConversionIndex:
     # ========================================
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get current session statistics"""
-        self.statistics.calculate_averages()
+        """Get current session statistics"""        self.statistics.calculate_averages()
         return self.statistics.to_dict()
     
     def reset_statistics(self):
-        """Reset session statistics"""
-        self.statistics = ConversionStatistics()
+        """Reset session statistics"""        self.statistics = ConversionStatistics()
         logger.info("Statistics reset")
     
     def get_session_info(self) -> Dict[str, Any]:
-        """Get current session information"""
-        return {
+        """Get current session information"""        return {
             'session_id': self.session_id,
             'config': self.config.to_dict(),
             'statistics': self.get_statistics()
@@ -606,13 +565,11 @@ class AudioConversionIndex:
     # ========================================
     
     def cleanup_temp_files(self) -> int:
-        """
-        Clean up temporary files
+        """        Clean up temporary files
         
         Returns:
             Number of files cleaned up
-        """
-        if not self.config.temp_directory:
+        """        if not self.config.temp_directory:
             return 0
         
         temp_dir = Path(self.config.temp_directory)
@@ -639,17 +596,14 @@ class AudioConversionIndex:
             return cleaned_count
     
     def validate_configuration(self) -> List[str]:
-        """
-        Validate current configuration
+        """        Validate current configuration
         
         Returns:
             List of configuration issues (empty if valid)
-        """
-        return self.config.validate_configuration()
+        """        return self.config.validate_configuration()
     
     def cleanup(self):
-        """Cleanup resources synchronously"""
-        try:
+        """Cleanup resources synchronously"""        try:
             # Cleanup temporary files if configured
             if self.config.clean_temp_files:
                 self.cleanup_temp_files()
@@ -663,8 +617,7 @@ class AudioConversionIndex:
             logger.error(f"Cleanup failed: {e}")
     
     async def cleanup_async(self):
-        """Cleanup resources asynchronously"""
-        try:
+        """Cleanup resources asynchronously"""        try:
             # Cleanup temporary files if configured
             if self.config.clean_temp_files:
                 self.cleanup_temp_files()
@@ -678,8 +631,7 @@ class AudioConversionIndex:
             logger.error(f"Async cleanup failed: {e}")
     
     def _update_statistics(self, result: ConversionResult, start_time: datetime):
-        """Update session statistics with conversion result"""
-        processing_time = (datetime.now() - start_time).total_seconds()
+        """Update session statistics with conversion result"""        processing_time = (datetime.now() - start_time).total_seconds()
         
         self.statistics.total_conversions += 1
         self.statistics.total_processing_time += processing_time
@@ -717,24 +669,21 @@ class AudioConversionIndex:
 # ========================================
 
 def create_converter(config: Optional[ConversionConfig] = None) -> AudioConversionIndex:
-    """
-    Factory function to create AudioConversionIndex instance
+    """    Factory function to create AudioConversionIndex instance
     
     Args:
         config: Configuration object (uses DEFAULT_CONFIG if None)
         
     Returns:
         Configured AudioConversionIndex instance
-    """
-    return AudioConversionIndex(config)
+    """    return AudioConversionIndex(config)
 
 
 def quick_convert(source_path: Union[str, Path],
                  target_path: Union[str, Path],
                  target_format: AudioFormat,
                  quality_level: QualityLevel = QualityLevel.HIGH) -> ConversionResult:
-    """
-    Quick single file conversion function
+    """    Quick single file conversion function
     
     Args:
         source_path: Path to source audio file
@@ -744,8 +693,7 @@ def quick_convert(source_path: Union[str, Path],
         
     Returns:
         ConversionResult with operation details
-    """
-    with AudioConversionIndex() as converter:
+    """    with AudioConversionIndex() as converter:
         return converter.convert_file(source_path, target_path, target_format, quality_level)
 
 
@@ -753,8 +701,7 @@ def quick_batch_convert(source_files: List[Union[str, Path]],
                        target_directory: Union[str, Path],
                        target_format: AudioFormat,
                        quality_level: QualityLevel = QualityLevel.HIGH) -> BatchConversionResult:
-    """
-    Quick batch conversion function
+    """    Quick batch conversion function
     
     Args:
         source_files: List of source file paths
@@ -764,8 +711,7 @@ def quick_batch_convert(source_files: List[Union[str, Path]],
         
     Returns:
         BatchConversionResult with all operation details
-    """
-    with AudioConversionIndex() as converter:
+    """    with AudioConversionIndex() as converter:
         return converter.convert_batch(source_files, target_directory, target_format, quality_level)
 
 
@@ -773,8 +719,7 @@ def quick_directory_convert(source_directory: Union[str, Path],
                            target_directory: Union[str, Path],
                            target_format: AudioFormat,
                            quality_level: QualityLevel = QualityLevel.HIGH) -> BatchConversionResult:
-    """
-    Quick directory conversion function
+    """    Quick directory conversion function
     
     Args:
         source_directory: Source directory path
@@ -784,8 +729,7 @@ def quick_directory_convert(source_directory: Union[str, Path],
         
     Returns:
         BatchConversionResult with all operation details
-    """
-    with AudioConversionIndex() as converter:
+    """    with AudioConversionIndex() as converter:
         return converter.convert_directory(source_directory, target_directory, target_format, quality_level)
 
 

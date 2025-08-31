@@ -1,5 +1,4 @@
-"""
-Automated Surveillance Configuration Module for Content Protection
+"""Automated Surveillance Configuration Module for Content Protection
 ================================================================
 
 Professional automated surveillance configuration for continuous monitoring
@@ -17,7 +16,6 @@ Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, Any, Optional, List, Set, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -26,8 +24,7 @@ import os
 
 
 class SurveillanceMode(str, Enum):
-    """Surveillance operational modes."""
-    CONTINUOUS = "continuous"
+    """Surveillance operational modes."""    CONTINUOUS = "continuous"
     SCHEDULED = "scheduled"
     TRIGGER_BASED = "trigger_based"
     ON_DEMAND = "on_demand"
@@ -35,8 +32,7 @@ class SurveillanceMode(str, Enum):
 
 
 class MonitoringScope(str, Enum):
-    """Scope of content monitoring."""
-    GLOBAL = "global"
+    """Scope of content monitoring."""    GLOBAL = "global"
     REGIONAL = "regional"
     PLATFORM_SPECIFIC = "platform_specific"
     USER_SPECIFIC = "user_specific"
@@ -44,8 +40,7 @@ class MonitoringScope(str, Enum):
 
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels."""
-    CRITICAL = "critical"
+    """Alert severity levels."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -53,8 +48,7 @@ class AlertSeverity(str, Enum):
 
 
 class AlertType(str, Enum):
-    """Types of surveillance alerts."""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of surveillance alerts."""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     CONTENT_THEFT = "content_theft"
     REVENUE_IMPACT = "revenue_impact"
@@ -65,8 +59,7 @@ class AlertType(str, Enum):
 
 
 class ResponseAction(str, Enum):
-    """Automated response actions."""
-    NOTIFY_ONLY = "notify_only"
+    """Automated response actions."""    NOTIFY_ONLY = "notify_only"
     DMCA_TAKEDOWN = "dmca_takedown"
     COPYRIGHT_CLAIM = "copyright_claim"
     LEGAL_NOTICE = "legal_notice"
@@ -77,8 +70,7 @@ class ResponseAction(str, Enum):
 
 
 class EvidenceType(str, Enum):
-    """Types of evidence to collect."""
-    SCREENSHOT = "screenshot"
+    """Types of evidence to collect."""    SCREENSHOT = "screenshot"
     VIDEO_RECORDING = "video_recording"
     METADATA = "metadata"
     SOURCE_CODE = "source_code"
@@ -90,8 +82,7 @@ class EvidenceType(str, Enum):
 
 @dataclass
 class SurveillanceSchedule:
-    """Configuration for surveillance scheduling."""
-    # Basic scheduling
+    """Configuration for surveillance scheduling."""    # Basic scheduling
     enable_continuous_monitoring: bool = True
     monitoring_interval_minutes: int = 15
     
@@ -118,8 +109,7 @@ class SurveillanceSchedule:
 
 @dataclass
 class ContentTargetConfig:
-    """Configuration for content targeting in surveillance."""
-    # Content identification
+    """Configuration for content targeting in surveillance."""    # Content identification
     monitor_by_fingerprint: bool = True
     monitor_by_metadata: bool = True
     monitor_by_keywords: bool = True
@@ -152,8 +142,7 @@ class ContentTargetConfig:
 
 @dataclass
 class AlertConfig:
-    """Configuration for surveillance alerts."""
-    # Alert generation
+    """Configuration for surveillance alerts."""    # Alert generation
     enable_real_time_alerts: bool = True
     enable_batch_alerts: bool = True
     alert_aggregation_minutes: int = 5
@@ -184,8 +173,7 @@ class AlertConfig:
 
 @dataclass
 class EvidenceCollectionConfig:
-    """Configuration for evidence collection during surveillance."""
-    # Automatic evidence collection
+    """Configuration for evidence collection during surveillance."""    # Automatic evidence collection
     enable_automatic_evidence: bool = True
     collect_on_detection: bool = True
     collect_periodically: bool = True
@@ -221,8 +209,7 @@ class EvidenceCollectionConfig:
 
 @dataclass
 class ResponseAutomationConfig:
-    """Configuration for automated responses to violations."""
-    # Response automation
+    """Configuration for automated responses to violations."""    # Response automation
     enable_automated_responses: bool = True
     require_manual_approval: bool = False
     approval_timeout_hours: int = 24
@@ -270,8 +257,7 @@ class ResponseAutomationConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance configuration for surveillance system."""
-    # Processing limits
+    """Performance configuration for surveillance system."""    # Processing limits
     max_concurrent_monitors: int = 50
     max_content_checks_per_minute: int = 1000
     monitor_timeout_seconds: int = 30
@@ -297,8 +283,7 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for surveillance system."""
-    # Access control
+    """Security configuration for surveillance system."""    # Access control
     require_authentication: bool = True
     enable_role_based_access: bool = True
     enable_audit_logging: bool = True
@@ -326,8 +311,7 @@ class SecurityConfig:
 
 @dataclass
 class ReportingConfig:
-    """Configuration for surveillance reporting."""
-    # Report generation
+    """Configuration for surveillance reporting."""    # Report generation
     enable_automated_reports: bool = True
     daily_reports: bool = True
     weekly_reports: bool = True
@@ -357,8 +341,7 @@ class ReportingConfig:
 
 @dataclass
 class AutomatedSurveillanceConfig:
-    """Main configuration for automated surveillance system."""
-    
+    """Main configuration for automated surveillance system."""    
     # Core settings
     surveillance_mode: SurveillanceMode = SurveillanceMode.HYBRID
     monitoring_scope: MonitoringScope = MonitoringScope.GLOBAL
@@ -393,8 +376,7 @@ class AutomatedSurveillanceConfig:
     enable_predictive_monitoring: bool = True
     
     def get_severity_for_similarity(self, similarity_score: float) -> AlertSeverity:
-        """Determine alert severity based on similarity score."""
-        if similarity_score >= self.alert_config.critical_similarity_threshold:
+        """Determine alert severity based on similarity score."""        if similarity_score >= self.alert_config.critical_similarity_threshold:
             return AlertSeverity.CRITICAL
         elif similarity_score >= self.alert_config.high_similarity_threshold:
             return AlertSeverity.HIGH
@@ -406,8 +388,7 @@ class AutomatedSurveillanceConfig:
             return AlertSeverity.INFO
     
     def get_actions_for_severity(self, severity: AlertSeverity) -> List[ResponseAction]:
-        """Get automated response actions for alert severity."""
-        actions_map = {
+        """Get automated response actions for alert severity."""        actions_map = {
             AlertSeverity.CRITICAL: self.response_config.critical_actions,
             AlertSeverity.HIGH: self.response_config.high_actions,
             AlertSeverity.MEDIUM: self.response_config.medium_actions,
@@ -417,8 +398,7 @@ class AutomatedSurveillanceConfig:
         return actions_map.get(severity, [ResponseAction.NOTIFY_ONLY])
     
     def should_collect_evidence(self, alert_type: AlertType, severity: AlertSeverity) -> bool:
-        """Determine if evidence should be collected for alert."""
-        if not self.evidence_config.enable_automatic_evidence:
+        """Determine if evidence should be collected for alert."""        if not self.evidence_config.enable_automatic_evidence:
             return False
         
         # Always collect evidence for critical alerts
@@ -436,8 +416,7 @@ class AutomatedSurveillanceConfig:
         return False
     
     def validate_config(self) -> bool:
-        """Validate the automated surveillance configuration."""
-        try:
+        """Validate the automated surveillance configuration."""        try:
             if not self.target_platforms:
                 raise ValueError("At least one target platform must be specified")
             
@@ -481,8 +460,7 @@ class AutomatedSurveillanceConfig:
     
     @classmethod
     def from_environment(cls) -> 'AutomatedSurveillanceConfig':
-        """Create configuration from environment variables."""
-        config = cls()
+        """Create configuration from environment variables."""        config = cls()
         
         # Load basic settings
         if os.getenv('SURVEILLANCE_MODE'):
@@ -518,8 +496,7 @@ class AutomatedSurveillanceConfig:
 # Factory functions for different use cases
 
 def create_high_security_surveillance_config() -> AutomatedSurveillanceConfig:
-    """Create high-security surveillance configuration."""
-    config = AutomatedSurveillanceConfig()
+    """Create high-security surveillance configuration."""    config = AutomatedSurveillanceConfig()
     
     # High security settings
     config.security_config.require_authentication = True
@@ -552,8 +529,7 @@ def create_high_security_surveillance_config() -> AutomatedSurveillanceConfig:
 
 
 def create_real_time_surveillance_config() -> AutomatedSurveillanceConfig:
-    """Create real-time focused surveillance configuration."""
-    config = AutomatedSurveillanceConfig()
+    """Create real-time focused surveillance configuration."""    config = AutomatedSurveillanceConfig()
     
     # Real-time settings
     config.surveillance_mode = SurveillanceMode.CONTINUOUS
@@ -581,8 +557,7 @@ def create_real_time_surveillance_config() -> AutomatedSurveillanceConfig:
 
 
 def create_enterprise_surveillance_config() -> AutomatedSurveillanceConfig:
-    """Create enterprise-grade surveillance configuration."""
-    config = AutomatedSurveillanceConfig()
+    """Create enterprise-grade surveillance configuration."""    config = AutomatedSurveillanceConfig()
     
     # Enterprise features
     config.enable_ai_assisted_detection = True

@@ -1,5 +1,4 @@
-"""
-📋 Quality Compliance Engine - Platform Compliance System
+"""📋 Quality Compliance Engine - Platform Compliance System
 
 Advanced compliance checking system for audio content across multiple
 platforms and standards, ensuring content meets platform-specific requirements.
@@ -14,7 +13,6 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -34,16 +32,14 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceLevel(Enum):
-    """Compliance severity levels"""
-    CRITICAL = "critical"       # Must fix before submission
+    """Compliance severity levels"""    CRITICAL = "critical"       # Must fix before submission
     WARNING = "warning"         # Should fix for best results
     RECOMMENDATION = "recommendation"  # Optional improvements
     INFO = "info"              # Informational only
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    STREAMING = "streaming"     # Spotify, Apple Music, etc.
+    """Supported platform types"""    STREAMING = "streaming"     # Spotify, Apple Music, etc.
     VIDEO = "video"            # YouTube, TikTok, Instagram
     BROADCAST = "broadcast"     # Radio, TV
     GAMING = "gaming"          # Games, VR applications
@@ -54,8 +50,7 @@ class PlatformType(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule"""
-    rule_id: str
+    """Individual compliance rule"""    rule_id: str
     name: str
     description: str
     platform: str
@@ -73,8 +68,7 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance rule violation"""
-    rule: ComplianceRule
+    """Compliance rule violation"""    rule: ComplianceRule
     current_value: Optional[Union[float, str, bool]]
     expected_value: Optional[Union[float, str, bool]]
     severity_score: float  # 0.0 to 1.0
@@ -86,8 +80,7 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Complete compliance assessment report"""
-    platform: str
+    """Complete compliance assessment report"""    platform: str
     audio_file: str
     total_rules_checked: int
     violations: List[ComplianceViolation]
@@ -102,22 +95,18 @@ class ComplianceReport:
 
     @property
     def critical_violations(self) -> List[ComplianceViolation]:
-        """Get critical violations"""
-        return [v for v in self.violations if v.rule.level == ComplianceLevel.CRITICAL]
+        """Get critical violations"""        return [v for v in self.violations if v.rule.level == ComplianceLevel.CRITICAL]
 
     @property
     def has_critical_violations(self) -> bool:
-        """Check if has critical violations"""
-        return len(self.critical_violations) > 0
+        """Check if has critical violations"""        return len(self.critical_violations) > 0
 
 
 class ComplianceRuleEngine:
-    """
-    📋 Compliance Rule Engine
+    """    📋 Compliance Rule Engine
     
     Executes compliance checks and generates violation reports
     """
-
     def __init__(self):
         self.custom_rules: Dict[str, ComplianceRule] = {}
         self.rule_execution_stats: Dict[str, Dict[str, Any]] = {}
@@ -127,8 +116,7 @@ class ComplianceRuleEngine:
         quality_report: QualityReport,
         rule: ComplianceRule
     ) -> Optional[ComplianceViolation]:
-        """Check loudness compliance"""
-        
+        """Check loudness compliance"""        
         target_lufs = rule.parameters.get('target_lufs', -14.0)
         tolerance = rule.tolerance or 1.0
         
@@ -168,8 +156,7 @@ class ComplianceRuleEngine:
         quality_report: QualityReport,
         rule: ComplianceRule
     ) -> Optional[ComplianceViolation]:
-        """Check dynamic range compliance"""
-        
+        """Check dynamic range compliance"""        
         min_dr = rule.parameters.get('min_dynamic_range', 6.0)
         max_dr = rule.parameters.get('max_dynamic_range', None)
         
@@ -224,8 +211,7 @@ class ComplianceRuleEngine:
         quality_report: QualityReport,
         rule: ComplianceRule
     ) -> Optional[ComplianceViolation]:
-        """Check peak level compliance"""
-        
+        """Check peak level compliance"""        
         max_peak_db = rule.parameters.get('max_peak_db', -1.0)
         
         # Find peak level metrics
@@ -266,8 +252,7 @@ class ComplianceRuleEngine:
         quality_report: QualityReport,
         rule: ComplianceRule
     ) -> Optional[ComplianceViolation]:
-        """Check frequency response compliance"""
-        
+        """Check frequency response compliance"""        
         min_freq = rule.parameters.get('min_frequency', 20)
         max_freq = rule.parameters.get('max_frequency', 20000)
         
@@ -280,8 +265,7 @@ class ComplianceRuleEngine:
         quality_report: QualityReport,
         rule: ComplianceRule
     ) -> Optional[ComplianceViolation]:
-        """Check file format compliance"""
-        
+        """Check file format compliance"""        
         allowed_formats = rule.parameters.get('allowed_formats', ['wav', 'flac', 'mp3'])
         max_bitrate = rule.parameters.get('max_bitrate', None)
         min_sample_rate = rule.parameters.get('min_sample_rate', 44100)
@@ -349,8 +333,7 @@ class ComplianceRuleEngine:
         quality_report: QualityReport,
         rule: ComplianceRule
     ) -> Optional[ComplianceViolation]:
-        """Check audio duration compliance"""
-        
+        """Check audio duration compliance"""        
         min_duration = rule.parameters.get('min_duration', 0)
         max_duration = rule.parameters.get('max_duration', float('inf'))
         
@@ -393,8 +376,7 @@ class ComplianceRuleEngine:
         quality_report: QualityReport,
         rule: ComplianceRule
     ) -> Optional[ComplianceViolation]:
-        """Check silence compliance"""
-        
+        """Check silence compliance"""        
         max_leading_silence = rule.parameters.get('max_leading_silence', 2.0)
         max_trailing_silence = rule.parameters.get('max_trailing_silence', 2.0)
         max_internal_silence = rule.parameters.get('max_internal_silence', 5.0)
@@ -404,8 +386,7 @@ class ComplianceRuleEngine:
         return None
 
     def add_custom_rule(self, rule: ComplianceRule):
-        """Add custom compliance rule"""
-        self.custom_rules[rule.rule_id] = rule
+        """Add custom compliance rule"""        self.custom_rules[rule.rule_id] = rule
         logger.info(f"Added custom compliance rule: {rule.rule_id}")
 
     async def execute_rule(
@@ -413,8 +394,7 @@ class ComplianceRuleEngine:
         rule: ComplianceRule,
         quality_report: QualityReport
     ) -> Optional[ComplianceViolation]:
-        """Execute a compliance rule"""
-        
+        """Execute a compliance rule"""        
         start_time = datetime.now()
         
         try:
@@ -454,12 +434,10 @@ class ComplianceRuleEngine:
 
 
 class PlatformComplianceManager:
-    """
-    📋 Platform Compliance Manager
+    """    📋 Platform Compliance Manager
     
     Manages compliance rules and standards for different platforms
     """
-
     def __init__(self):
         self.platform_rules: Dict[str, List[ComplianceRule]] = {}
         self.rule_engine = ComplianceRuleEngine()
@@ -471,8 +449,7 @@ class PlatformComplianceManager:
         logger.info(f"PlatformComplianceManager initialized with {len(self.platform_rules)} platform rule sets")
 
     def _initialize_platform_rules(self):
-        """Initialize compliance rules for different platforms"""
-        
+        """Initialize compliance rules for different platforms"""        
         # Spotify compliance rules
         spotify_rules = [
             ComplianceRule(
@@ -667,8 +644,7 @@ class PlatformComplianceManager:
         quality_report: QualityReport,
         audio_file: str = ""
     ) -> ComplianceReport:
-        """Check compliance for a specific platform"""
-        
+        """Check compliance for a specific platform"""        
         start_time = datetime.now()
         
         if platform.lower() not in self.platform_rules:
@@ -769,8 +745,7 @@ class PlatformComplianceManager:
         return report
 
     def _get_platform_type(self, platform: str) -> str:
-        """Get platform type category"""
-        platform_types = {
+        """Get platform type category"""        platform_types = {
             'spotify': PlatformType.STREAMING.value,
             'apple_music': PlatformType.STREAMING.value,
             'youtube': PlatformType.VIDEO.value,
@@ -786,8 +761,7 @@ class PlatformComplianceManager:
         quality_report: QualityReport,
         audio_file: str = ""
     ) -> Dict[str, ComplianceReport]:
-        """Check compliance for multiple platforms"""
-        
+        """Check compliance for multiple platforms"""        
         reports = {}
         
         for platform in platforms:
@@ -801,8 +775,7 @@ class PlatformComplianceManager:
         return reports
 
     def get_platform_requirements(self, platform: str) -> Dict[str, Any]:
-        """Get platform-specific requirements"""
-        
+        """Get platform-specific requirements"""        
         if platform.lower() not in self.platform_rules:
             return {}
         
@@ -823,8 +796,7 @@ class PlatformComplianceManager:
         return requirements
 
     def add_platform_rule(self, platform: str, rule: ComplianceRule):
-        """Add rule to platform"""
-        
+        """Add rule to platform"""        
         if platform.lower() not in self.platform_rules:
             self.platform_rules[platform.lower()] = []
         
@@ -832,8 +804,7 @@ class PlatformComplianceManager:
         logger.info(f"Added rule {rule.rule_id} to platform {platform}")
 
     def get_compliance_statistics(self, platform: Optional[str] = None, hours: int = 24) -> Dict[str, Any]:
-        """Get compliance statistics"""
-        
+        """Get compliance statistics"""        
         from datetime import timedelta
         
         cutoff_time = datetime.now() - timedelta(hours=hours)
@@ -882,12 +853,10 @@ class PlatformComplianceManager:
         }
 
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms"""
-        return list(self.platform_rules.keys())
+        """Get list of supported platforms"""        return list(self.platform_rules.keys())
 
     def export_compliance_report(self, report: ComplianceReport, format: str = "json") -> str:
-        """Export compliance report to specified format"""
-        
+        """Export compliance report to specified format"""        
         if format.lower() == "json":
             # Convert to JSON-serializable format
             report_dict = {

@@ -1,5 +1,4 @@
-"""
-Social Integrations Database Model
+"""Social Integrations Database Model
 
 Enterprise-grade SQLAlchemy model for managing social media platform integrations,
 API connections, authentication tokens, and cross-platform synchronization.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -38,8 +36,7 @@ Base = declarative_base()
 
 
 class Platform(Enum):
-    """Social media platform enumeration"""
-    SPOTIFY = "spotify"
+    """Social media platform enumeration"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -70,8 +67,7 @@ class Platform(Enum):
 
 
 class IntegrationType(Enum):
-    """Integration type enumeration"""
-    OAUTH2 = "oauth2"
+    """Integration type enumeration"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     WEBHOOK = "webhook"
     RSS_FEED = "rss_feed"
@@ -82,8 +78,7 @@ class IntegrationType(Enum):
 
 
 class ConnectionStatus(Enum):
-    """Connection status enumeration"""
-    CONNECTED = "connected"
+    """Connection status enumeration"""    CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     EXPIRED = "expired"
     ERROR = "error"
@@ -95,8 +90,7 @@ class ConnectionStatus(Enum):
 
 
 class PermissionLevel(Enum):
-    """Permission level enumeration"""
-    READ_ONLY = "read_only"
+    """Permission level enumeration"""    READ_ONLY = "read_only"
     READ_WRITE = "read_write"
     FULL_ACCESS = "full_access"
     LIMITED = "limited"
@@ -106,8 +100,7 @@ class PermissionLevel(Enum):
 
 
 class SyncStatus(Enum):
-    """Synchronization status"""
-    IN_SYNC = "in_sync"
+    """Synchronization status"""    IN_SYNC = "in_sync"
     OUT_OF_SYNC = "out_of_sync"
     SYNCING = "syncing"
     SYNC_ERROR = "sync_error"
@@ -116,13 +109,11 @@ class SyncStatus(Enum):
 
 
 class SocialIntegration(Base):
-    """
-    Enterprise Social Integration Model
+    """    Enterprise Social Integration Model
     
     Comprehensive social media platform integration management with secure
     token handling, API rate limiting, and cross-platform synchronization.
-    """
-    __tablename__ = 'social_integrations'
+    """    __tablename__ = 'social_integrations'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -299,8 +290,7 @@ class SocialIntegration(Base):
         platform_username: str = None,
         **kwargs
     ) -> 'SocialIntegration':
-        """Create a new social integration"""
-        return cls(
+        """Create a new social integration"""        return cls(
             user_id=user_id,
             platform=platform,
             integration_type=integration_type,
@@ -311,14 +301,12 @@ class SocialIntegration(Base):
         )
     
     def is_token_expired(self) -> bool:
-        """Check if access token is expired"""
-        if not self.token_expires_at:
+        """Check if access token is expired"""        if not self.token_expires_at:
             return False
         return datetime.now(timezone.utc) >= self.token_expires_at
     
     def is_refresh_needed(self) -> bool:
-        """Check if token refresh is needed"""
-        if not self.token_expires_at:
+        """Check if token refresh is needed"""        if not self.token_expires_at:
             return False
         
         # Refresh if token expires within 1 hour
@@ -326,8 +314,7 @@ class SocialIntegration(Base):
         return datetime.now(timezone.utc) >= refresh_threshold
     
     def update_rate_limit(self, remaining: int, reset_at: datetime) -> None:
-        """Update rate limit information"""
-        self.rate_limit_remaining = remaining
+        """Update rate limit information"""        self.rate_limit_remaining = remaining
         self.rate_limit_reset_at = reset_at
         self.last_api_call = datetime.now(timezone.utc)
         self.api_calls_today += 1
@@ -335,8 +322,7 @@ class SocialIntegration(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def can_make_api_call(self) -> bool:
-        """Check if API call can be made based on rate limits"""
-        if not self.rate_limit_remaining:
+        """Check if API call can be made based on rate limits"""        if not self.rate_limit_remaining:
             return True
         
         if self.rate_limit_remaining <= 0:
@@ -346,8 +332,7 @@ class SocialIntegration(Base):
         return True
     
     def mark_api_success(self, response_time_ms: int = None) -> None:
-        """Mark API call as successful"""
-        self.successful_calls += 1
+        """Mark API call as successful"""        self.successful_calls += 1
         self.consecutive_errors = 0
         self.last_activity_at = datetime.now(timezone.utc)
         
@@ -364,8 +349,7 @@ class SocialIntegration(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def mark_api_failure(self, error_message: str) -> None:
-        """Mark API call as failed"""
-        self.failed_calls += 1
+        """Mark API call as failed"""        self.failed_calls += 1
         self.consecutive_errors += 1
         self.error_count += 1
         self.last_error = error_message
@@ -382,8 +366,7 @@ class SocialIntegration(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def refresh_access_token(self, new_access_token: str, new_refresh_token: str = None, expires_in: int = None) -> None:
-        """Refresh access token"""
-        self.access_token = new_access_token
+        """Refresh access token"""        self.access_token = new_access_token
         if new_refresh_token:
             self.refresh_token = new_refresh_token
         
@@ -395,8 +378,7 @@ class SocialIntegration(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def sync_platform_data(self, data: Dict[str, Any]) -> None:
-        """Synchronize data from platform"""
-        self.last_sync_data = {
+        """Synchronize data from platform"""        self.last_sync_data = {
             **data,
             'synced_at': datetime.now(timezone.utc).isoformat()
         }
@@ -406,8 +388,7 @@ class SocialIntegration(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def mark_sync_error(self, error_message: str, error_details: Dict[str, Any] = None) -> None:
-        """Mark synchronization error"""
-        if not self.sync_errors:
+        """Mark synchronization error"""        if not self.sync_errors:
             self.sync_errors = []
         
         error_entry = {
@@ -421,8 +402,7 @@ class SocialIntegration(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get integration health status"""
-        health_score = 100.0
+        """Get integration health status"""        health_score = 100.0
         issues = []
         
         # Check connection status
@@ -461,8 +441,7 @@ class SocialIntegration(Base):
         }
     
     def get_integration_summary(self) -> Dict[str, Any]:
-        """Get comprehensive integration summary"""
-        return {
+        """Get comprehensive integration summary"""        return {
             'platform_info': {
                 'platform': self.platform.value,
                 'username': self.platform_username,
@@ -497,8 +476,7 @@ class SocialIntegration(Base):
         }
     
     def schedule_next_sync(self) -> Optional[datetime]:
-        """Calculate next synchronization time"""
-        if not self.auto_sync_enabled or self.sync_frequency == "manual":
+        """Calculate next synchronization time"""        if not self.auto_sync_enabled or self.sync_frequency == "manual":
             return None
         
         now = datetime.now(timezone.utc)
@@ -513,8 +491,7 @@ class SocialIntegration(Base):
         return None
     
     def disconnect(self, reason: str = None) -> None:
-        """Disconnect the integration"""
-        self.connection_status = ConnectionStatus.DISCONNECTED
+        """Disconnect the integration"""        self.connection_status = ConnectionStatus.DISCONNECTED
         self.access_token = None
         self.refresh_token = None
         self.token_expires_at = None

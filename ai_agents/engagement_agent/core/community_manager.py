@@ -1,5 +1,4 @@
-"""
-Community Manager - Advanced Community Building & Management System
+"""Community Manager - Advanced Community Building & Management System
 
 Industrial-grade community management platform with automated moderation,
 audience growth strategies, and relationship building capabilities.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -46,8 +44,7 @@ from ...integrations.social_platforms import SocialPlatformIntegrator
 logger = logging.getLogger(__name__)
 
 class CommunityRole(Enum):
-    """Community member roles"""
-    LEADER = "leader"
+    """Community member roles"""    LEADER = "leader"
     AMBASSADOR = "ambassador"
     ACTIVE_MEMBER = "active_member"
     CASUAL_MEMBER = "casual_member"
@@ -57,16 +54,14 @@ class CommunityRole(Enum):
     MODERATOR = "moderator"
 
 class CommunityHealth(Enum):
-    """Community health status levels"""
-    THRIVING = "thriving"
+    """Community health status levels"""    THRIVING = "thriving"
     HEALTHY = "healthy"
     STABLE = "stable"
     DECLINING = "declining"
     CRITICAL = "critical"
 
 class EngagementTier(Enum):
-    """User engagement tier classification"""
-    SUPER_ENGAGED = "super_engaged"
+    """User engagement tier classification"""    SUPER_ENGAGED = "super_engaged"
     HIGHLY_ENGAGED = "highly_engaged"
     MODERATELY_ENGAGED = "moderately_engaged"
     LIGHTLY_ENGAGED = "lightly_engaged"
@@ -74,8 +69,7 @@ class EngagementTier(Enum):
 
 @dataclass
 class CommunityMember:
-    """Community member profile and analytics"""
-    user_id: str
+    """Community member profile and analytics"""    user_id: str
     username: str
     platform: str
     join_date: datetime
@@ -107,8 +101,7 @@ class CommunityMember:
 
 @dataclass
 class CommunityInsights:
-    """Community analytics and insights"""
-    community_id: str
+    """Community analytics and insights"""    community_id: str
     platform: str
     analysis_date: datetime
     
@@ -142,13 +135,11 @@ class CommunityInsights:
     recommendations: List[str]
 
 class CommunityManager:
-    """
-    Advanced Community Management System
+    """    Advanced Community Management System
     
     Comprehensive community building and management platform with AI-powered
     moderation, growth strategies, and member relationship optimization.
-    """
-    
+    """    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager(namespace="community_manager")
@@ -169,8 +160,7 @@ class CommunityManager:
         logger.info("Community Manager initialized")
 
     async def initialize(self) -> bool:
-        """Initialize community manager with existing communities and rules"""
-        try:
+        """Initialize community manager with existing communities and rules"""        try:
             # Load existing communities
             await self._load_communities()
             
@@ -195,8 +185,7 @@ class CommunityManager:
     async def analyze_community_health(self, 
                                      community_id: str,
                                      platform: str) -> CommunityInsights:
-        """
-        Comprehensive community health analysis
+        """        Comprehensive community health analysis
         
         Args:
             community_id: Community identifier
@@ -204,8 +193,7 @@ class CommunityManager:
             
         Returns:
             CommunityInsights: Detailed community analysis
-        """
-        try:
+        """        try:
             # Fetch community data
             community_data = await self._fetch_community_data(community_id, platform)
             
@@ -276,8 +264,7 @@ class CommunityManager:
     async def classify_community_members(self,
                                        community_id: str,
                                        platform: str) -> Dict[str, CommunityMember]:
-        """
-        Classify and profile community members
+        """        Classify and profile community members
         
         Args:
             community_id: Community identifier
@@ -285,8 +272,7 @@ class CommunityManager:
             
         Returns:
             Dict: Member profiles with classifications
-        """
-        try:
+        """        try:
             # Fetch member data
             member_data = await self._fetch_member_data(community_id, platform)
             
@@ -352,8 +338,7 @@ class CommunityManager:
     async def moderate_community_content(self,
                                        community_id: str,
                                        content_batch: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """
-        Automated community content moderation
+        """        Automated community content moderation
         
         Args:
             community_id: Community identifier
@@ -361,8 +346,7 @@ class CommunityManager:
             
         Returns:
             Dict: Moderation results and actions taken
-        """
-        try:
+        """        try:
             moderation_results = {
                 'processed_count': len(content_batch),
                 'approved': [],
@@ -417,8 +401,7 @@ class CommunityManager:
                                      community_id: str,
                                      platform: str,
                                      target_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Generate comprehensive community growth strategy
+        """        Generate comprehensive community growth strategy
         
         Args:
             community_id: Community identifier
@@ -427,8 +410,7 @@ class CommunityManager:
             
         Returns:
             Dict: Detailed growth strategy and recommendations
-        """
-        try:
+        """        try:
             # Analyze current community state
             current_state = await self.analyze_community_health(community_id, platform)
             
@@ -496,8 +478,7 @@ class CommunityManager:
     
     async def _calculate_member_metrics(self, 
                                       community_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate comprehensive member metrics"""
-        try:
+        """Calculate comprehensive member metrics"""        try:
             total_members = len(community_data.get('members', []))
             
             # Calculate active members (interacted in last 30 days)
@@ -567,8 +548,7 @@ class CommunityManager:
 
     async def _analyze_community_engagement(self, 
                                           community_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze community engagement patterns"""
-        try:
+        """Analyze community engagement patterns"""        try:
             interactions = community_data.get('interactions', [])
             
             if not interactions:
@@ -627,8 +607,7 @@ class CommunityManager:
             return {}
 
     def _determine_health_status(self, health_score: float) -> CommunityHealth:
-        """Determine community health status based on score"""
-        if health_score >= 85:
+        """Determine community health status based on score"""        if health_score >= 85:
             return CommunityHealth.THRIVING
         elif health_score >= 70:
             return CommunityHealth.HEALTHY
@@ -642,8 +621,7 @@ class CommunityManager:
     async def _classify_member_role(self, 
                                   user_data: Dict[str, Any],
                                   engagement_metrics: Dict[str, Any]) -> CommunityRole:
-        """Classify member role based on engagement and behavior"""
-        try:
+        """Classify member role based on engagement and behavior"""        try:
             total_interactions = engagement_metrics.get('total_interactions', 0)
             frequency = engagement_metrics.get('frequency', 0.0)
             quality_score = engagement_metrics.get('quality_score', 0.0)
@@ -671,8 +649,7 @@ class CommunityManager:
 
     async def _classify_engagement_tier(self, 
                                       engagement_metrics: Dict[str, Any]) -> EngagementTier:
-        """Classify user engagement tier"""
-        try:
+        """Classify user engagement tier"""        try:
             quality_score = engagement_metrics.get('quality_score', 0.0)
             frequency = engagement_metrics.get('frequency', 0.0)
             
@@ -695,13 +672,11 @@ class CommunityManager:
 
 
 class AudienceBuilder:
-    """
-    Advanced Audience Building & Growth System
+    """    Advanced Audience Building & Growth System
     
     Specialized system for organic audience growth, targeting strategies,
     and relationship building optimization.
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager(namespace="audience_builder")
         self.social_integrator = SocialPlatformIntegrator()
@@ -714,16 +689,14 @@ class AudienceBuilder:
 
     async def create_growth_campaign(self,
                                    campaign_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Create and launch audience growth campaign
+        """        Create and launch audience growth campaign
         
         Args:
             campaign_config: Campaign configuration and parameters
             
         Returns:
             Dict: Campaign setup results and tracking info
-        """
-        try:
+        """        try:
             campaign_id = f"growth_campaign_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             # Validate campaign configuration
@@ -779,8 +752,7 @@ class AudienceBuilder:
                                         creator_id: str,
                                         platform: str,
                                         current_audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Optimize audience targeting strategy
+        """        Optimize audience targeting strategy
         
         Args:
             creator_id: Creator identifier
@@ -789,8 +761,7 @@ class AudienceBuilder:
             
         Returns:
             Dict: Optimized targeting recommendations
-        """
-        try:
+        """        try:
             # Analyze current audience composition
             audience_analysis = await self._analyze_audience_composition(
                 current_audience_data
@@ -847,8 +818,7 @@ class AudienceBuilder:
     
     async def _analyze_audience_composition(self, 
                                           audience_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze current audience composition and characteristics"""
-        try:
+        """Analyze current audience composition and characteristics"""        try:
             composition = {
                 'demographics': audience_data.get('demographics', {}),
                 'interests': audience_data.get('interests', []),
@@ -874,8 +844,7 @@ class AudienceBuilder:
             return {}
 
     def _calculate_engagement_consistency(self, audience_data: Dict[str, Any]) -> float:
-        """Calculate audience engagement consistency score"""
-        try:
+        """Calculate audience engagement consistency score"""        try:
             engagement_history = audience_data.get('engagement_history', [])
             if len(engagement_history) < 2:
                 return 0.5  # Default moderate consistency

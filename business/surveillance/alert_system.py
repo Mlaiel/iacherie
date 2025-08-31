@@ -1,5 +1,4 @@
-"""
-🚨 Alert System - IA Influencer Agent Surveillance Module
+"""🚨 Alert System - IA Influencer Agent Surveillance Module
 ========================================================
 
 Real-time alert system for notifying creators of copyright infringements,
@@ -8,7 +7,6 @@ content violations, and surveillance updates.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 import smtplib
@@ -28,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -38,8 +35,7 @@ class AlertSeverity(Enum):
 
 
 class AlertType(Enum):
-    """Types of alerts"""
-    INFRINGEMENT_DETECTED = "infringement_detected"
+    """Types of alerts"""    INFRINGEMENT_DETECTED = "infringement_detected"
     TAKEDOWN_SUCCESS = "takedown_success"
     TAKEDOWN_FAILED = "takedown_failed"
     HIGH_SIMILARITY_MATCH = "high_similarity_match"
@@ -54,8 +50,7 @@ class AlertType(Enum):
 
 
 class NotificationChannel(Enum):
-    """Available notification channels"""
-    EMAIL = "email"
+    """Available notification channels"""    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     WEBHOOK = "webhook"
@@ -67,8 +62,7 @@ class NotificationChannel(Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
-    rule_id: str
+    """Alert rule configuration"""    rule_id: str
     name: str
     alert_type: AlertType
     severity_threshold: AlertSeverity
@@ -82,8 +76,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert structure"""
-    alert_id: str
+    """Alert structure"""    alert_id: str
     alert_type: AlertType
     severity: AlertSeverity
     title: str
@@ -115,8 +108,7 @@ class Alert:
 
 @dataclass
 class NotificationConfig:
-    """Notification configuration for a creator"""
-    creator_id: str
+    """Notification configuration for a creator"""    creator_id: str
     email: Optional[str] = None
     phone: Optional[str] = None
     webhook_url: Optional[str] = None
@@ -138,30 +130,26 @@ class NotificationConfig:
 
 
 class NotificationChannel:
-    """Base class for notification channels"""
-    
+    """Base class for notification channels"""    
     def __init__(self, channel_type: NotificationChannel, config: Dict[str, Any]):
         self.channel_type = channel_type
         self.config = config
         self.enabled = config.get("enabled", True)
     
     async def send_notification(self, alert: Alert, recipient_config: NotificationConfig) -> bool:
-        """Send notification through this channel"""
-        # Default implementation for notification channels without specific implementation
+        """Send notification through this channel"""        # Default implementation for notification channels without specific implementation
         logging.warning(f"Notification sending not implemented for {self.__class__.__name__}")
         return False
     
     async def format_message(self, alert: Alert) -> Dict[str, str]:
-        """Format message for this channel"""
-        return {
+        """Format message for this channel"""        return {
             "subject": alert.title,
             "body": alert.message
         }
 
 
 class EmailNotificationChannel(NotificationChannel):
-    """Email notification channel"""
-    
+    """Email notification channel"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(NotificationChannel.EMAIL, config)
         self.smtp_server = config.get("smtp_server", "localhost")
@@ -172,8 +160,7 @@ class EmailNotificationChannel(NotificationChannel):
         self.from_name = config.get("from_name", "IA Influencer Agent")
     
     async def send_notification(self, alert: Alert, recipient_config: NotificationConfig) -> bool:
-        """Send email notification"""
-        if not recipient_config.email:
+        """Send email notification"""        if not recipient_config.email:
             logger.warning(f"No email configured for creator {recipient_config.creator_id}")
             return False
         
@@ -205,8 +192,7 @@ class EmailNotificationChannel(NotificationChannel):
             return False
     
     def _create_html_body(self, alert: Alert, text_body: str) -> str:
-        """Create HTML email body"""
-        severity_colors = {
+        """Create HTML email body"""        severity_colors = {
             AlertSeverity.INFO: "#17a2b8",
             AlertSeverity.LOW: "#28a745",
             AlertSeverity.MEDIUM: "#ffc107",
@@ -217,8 +203,7 @@ class EmailNotificationChannel(NotificationChannel):
         
         color = severity_colors.get(alert.severity, "#6c757d")
         
-        html = f"""
-        <html>
+        html = f"""        <html>
         <body style="font-family: Arial, sans-serif; margin: 20px;">
             <div style="border-left: 4px solid {color}; padding-left: 20px; margin-bottom: 20px;">
                 <h2 style="color: {color}; margin-top: 0;">
@@ -245,13 +230,11 @@ class EmailNotificationChannel(NotificationChannel):
             </div>
         </body>
         </html>
-        """
-        
+        """        
         return html
     
     def _create_data_section(self, alert: Alert) -> str:
-        """Create HTML section for alert data"""
-        if not alert.data:
+        """Create HTML section for alert data"""        if not alert.data:
             return ""
         
         data_html = "<h3>Details:</h3><ul>"
@@ -267,16 +250,14 @@ class EmailNotificationChannel(NotificationChannel):
 
 
 class WebhookNotificationChannel(NotificationChannel):
-    """Webhook notification channel"""
-    
+    """Webhook notification channel"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(NotificationChannel.WEBHOOK, config)
         self.timeout = config.get("timeout", 10)
         self.retry_attempts = config.get("retry_attempts", 3)
     
     async def send_notification(self, alert: Alert, recipient_config: NotificationConfig) -> bool:
-        """Send webhook notification"""
-        if not recipient_config.webhook_url:
+        """Send webhook notification"""        if not recipient_config.webhook_url:
             logger.warning(f"No webhook URL configured for creator {recipient_config.creator_id}")
             return False
         
@@ -307,14 +288,12 @@ class WebhookNotificationChannel(NotificationChannel):
 
 
 class SlackNotificationChannel(NotificationChannel):
-    """Slack notification channel"""
-    
+    """Slack notification channel"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(NotificationChannel.SLACK, config)
     
     async def send_notification(self, alert: Alert, recipient_config: NotificationConfig) -> bool:
-        """Send Slack notification"""
-        if not recipient_config.slack_webhook:
+        """Send Slack notification"""        if not recipient_config.slack_webhook:
             logger.warning(f"No Slack webhook configured for creator {recipient_config.creator_id}")
             return False
         
@@ -377,8 +356,7 @@ class SlackNotificationChannel(NotificationChannel):
             return False
     
     def _get_slack_color(self, severity: AlertSeverity) -> str:
-        """Get Slack color for severity"""
-        colors = {
+        """Get Slack color for severity"""        colors = {
             AlertSeverity.INFO: "#17a2b8",
             AlertSeverity.LOW: "#28a745",
             AlertSeverity.MEDIUM: "#ffc107",
@@ -390,8 +368,7 @@ class SlackNotificationChannel(NotificationChannel):
 
 
 class SMSNotificationChannel(NotificationChannel):
-    """SMS notification channel"""
-    
+    """SMS notification channel"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(NotificationChannel.SMS, config)
         self.provider = config.get("provider", "twilio")
@@ -399,8 +376,7 @@ class SMSNotificationChannel(NotificationChannel):
         self.from_number = config.get("from_number", "")
     
     async def send_notification(self, alert: Alert, recipient_config: NotificationConfig) -> bool:
-        """Send SMS notification"""
-        if not recipient_config.phone:
+        """Send SMS notification"""        if not recipient_config.phone:
             logger.warning(f"No phone number configured for creator {recipient_config.creator_id}")
             return False
         
@@ -420,11 +396,9 @@ class SMSNotificationChannel(NotificationChannel):
 
 
 class AlertSystem:
-    """
-    Central alert system for real-time notifications of copyright infringements,
+    """    Central alert system for real-time notifications of copyright infringements,
     content violations, and surveillance updates
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.alert_rules: Dict[str, AlertRule] = {}
@@ -437,8 +411,7 @@ class AlertSystem:
         self.processing_task: Optional[asyncio.Task] = None
     
     async def initialize(self) -> None:
-        """Initialize alert system"""
-        try:
+        """Initialize alert system"""        try:
             # Initialize notification channels
             await self._initialize_channels()
             
@@ -456,8 +429,7 @@ class AlertSystem:
             raise
     
     async def _initialize_channels(self) -> None:
-        """Initialize notification channels"""
-        # Email channel
+        """Initialize notification channels"""        # Email channel
         if self.config.get("email_enabled", True):
             email_config = self.config.get("email", {})
             self.channels[NotificationChannel.EMAIL] = EmailNotificationChannel(email_config)
@@ -480,8 +452,7 @@ class AlertSystem:
         logger.info(f"Initialized {len(self.channels)} notification channels")
     
     async def _load_default_alert_rules(self) -> None:
-        """Load default alert rules"""
-        default_rules = [
+        """Load default alert rules"""        default_rules = [
             AlertRule(
                 rule_id="high_similarity_infringement",
                 name="High Similarity Infringement",
@@ -568,8 +539,7 @@ class AlertSystem:
         data: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Alert:
-        """Create a new alert"""
-        alert_id = f"alert_{int(time.time())}_{uuid.uuid4().hex[:8]}"
+        """Create a new alert"""        alert_id = f"alert_{int(time.time())}_{uuid.uuid4().hex[:8]}"
         
         alert = Alert(
             alert_id=alert_id,
@@ -605,8 +575,7 @@ class AlertSystem:
         return alert
     
     async def _find_matching_rules(self, alert: Alert) -> List[AlertRule]:
-        """Find alert rules that match the alert"""
-        matching_rules = []
+        """Find alert rules that match the alert"""        matching_rules = []
         
         for rule in self.alert_rules.values():
             if not rule.active:
@@ -628,8 +597,7 @@ class AlertSystem:
         return matching_rules
     
     async def _check_rule_conditions(self, rule: AlertRule, alert: Alert) -> bool:
-        """Check if alert meets rule conditions"""
-        for condition_key, condition_value in rule.conditions.items():
+        """Check if alert meets rule conditions"""        for condition_key, condition_value in rule.conditions.items():
             alert_value = alert.data.get(condition_key)
             
             if alert_value is None:
@@ -658,8 +626,7 @@ class AlertSystem:
         return True
     
     async def _process_alert_queue(self) -> None:
-        """Process alerts from the queue"""
-        while True:
+        """Process alerts from the queue"""        while True:
             try:
                 # Get alert from queue
                 alert = await self.alert_queue.get()
@@ -691,8 +658,7 @@ class AlertSystem:
                 await asyncio.sleep(1)
     
     async def _send_alert_notifications(self, alert: Alert, config: NotificationConfig) -> None:
-        """Send alert through all configured channels"""
-        successful_channels = []
+        """Send alert through all configured channels"""        successful_channels = []
         failed_channels = []
         
         for channel_type in alert.channels:
@@ -730,8 +696,7 @@ class AlertSystem:
             self.active_alerts.pop(alert.alert_id, None)
     
     async def _is_quiet_hours(self, config: NotificationConfig) -> bool:
-        """Check if current time is within quiet hours"""
-        if not config.quiet_hours:
+        """Check if current time is within quiet hours"""        if not config.quiet_hours:
             return False
         
         try:
@@ -756,8 +721,7 @@ class AlertSystem:
         webhook_url: Optional[str] = None,
         preferred_channels: Optional[List[NotificationChannel]] = None
     ) -> NotificationConfig:
-        """Register notification configuration for a creator"""
-        config = NotificationConfig(
+        """Register notification configuration for a creator"""        config = NotificationConfig(
             creator_id=creator_id,
             email=email,
             phone=phone,
@@ -780,8 +744,7 @@ class AlertSystem:
         return config
     
     async def acknowledge_alert(self, alert_id: str, creator_id: str) -> bool:
-        """Acknowledge an alert"""
-        if alert_id in self.active_alerts:
+        """Acknowledge an alert"""        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             
             if alert.creator_id != creator_id:
@@ -797,8 +760,7 @@ class AlertSystem:
         return False
     
     async def resolve_alert(self, alert_id: str, creator_id: str) -> bool:
-        """Mark an alert as resolved"""
-        if alert_id in self.active_alerts:
+        """Mark an alert as resolved"""        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             
             if alert.creator_id != creator_id:
@@ -818,8 +780,7 @@ class AlertSystem:
         return False
     
     async def get_active_alerts(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get active alerts for a creator"""
-        creator_alerts = [
+        """Get active alerts for a creator"""        creator_alerts = [
             alert for alert in self.active_alerts.values()
             if alert.creator_id == creator_id
         ]
@@ -841,8 +802,7 @@ class AlertSystem:
         ]
     
     async def get_alert_statistics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get alert statistics"""
-        all_alerts = list(self.active_alerts.values()) + self.alert_history
+        """Get alert statistics"""        all_alerts = list(self.active_alerts.values()) + self.alert_history
         
         if creator_id:
             all_alerts = [alert for alert in all_alerts if alert.creator_id == creator_id]
@@ -880,8 +840,7 @@ class AlertSystem:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on alert system"""
-        return {
+        """Perform health check on alert system"""        return {
             "system": "healthy" if self.initialized else "unhealthy",
             "queue_size": self.alert_queue.qsize(),
             "active_alerts": len(self.active_alerts),
@@ -893,8 +852,7 @@ class AlertSystem:
         }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown alert system"""
-        logger.info("Shutting down Alert System")
+        """Gracefully shutdown alert system"""        logger.info("Shutting down Alert System")
         
         if self.processing_task:
             self.processing_task.cancel()

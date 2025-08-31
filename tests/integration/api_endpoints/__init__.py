@@ -1,5 +1,4 @@
-"""
-API Endpoints Integration Tests
+"""API Endpoints Integration Tests
 
 Tests for comprehensive API endpoint functionality including:
 - Authentication and authorization

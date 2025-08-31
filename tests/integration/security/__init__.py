@@ -1,5 +1,4 @@
-"""
-Security Integration Tests
+"""Security Integration Tests
 
 Tests for security features including:
 - Authentication and authorization flows

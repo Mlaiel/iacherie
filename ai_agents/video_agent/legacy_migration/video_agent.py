@@ -1,5 +1,4 @@
-"""
-Video Agent - Industrial-Grade Video Processing and AI Enhancement System
+"""Video Agent - Industrial-Grade Video Processing and AI Enhancement System
 
 Advanced AI-powered video processing orchestrator for professional content creators.
 Provides comprehensive video handling, analysis, enhancement, and protection capabilities.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import os
@@ -62,8 +60,7 @@ from ...seo.video_optimizer import VideoSEOOptimizer
 logger = logging.getLogger(__name__)
 
 class VideoFormat:
-    """Supported video formats with technical specifications"""
-    MP4 = "mp4"
+    """Supported video formats with technical specifications"""    MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
     WMV = "wmv"
@@ -73,16 +70,14 @@ class VideoFormat:
     M4V = "m4v"
 
 class VideoQuality:
-    """Video quality levels and specifications"""
-    SD_480 = {"width": 854, "height": 480, "bitrate": "1000k"}
+    """Video quality levels and specifications"""    SD_480 = {"width": 854, "height": 480, "bitrate": "1000k"}
     HD_720 = {"width": 1280, "height": 720, "bitrate": "2500k"}
     HD_1080 = {"width": 1920, "height": 1080, "bitrate": "5000k"}
     UHD_4K = {"width": 3840, "height": 2160, "bitrate": "15000k"}
     UHD_8K = {"width": 7680, "height": 4320, "bitrate": "45000k"}
 
 class VideoOperation:
-    """Available video processing operations"""
-    ANALYZE = "analyze"
+    """Available video processing operations"""    ANALYZE = "analyze"
     ENHANCE = "enhance"
     CONVERT = "convert"
     COMPRESS = "compress"
@@ -96,21 +91,17 @@ class VideoOperation:
     AUDIO_SYNC = "audio_sync"
 
 class VideoAgent(BaseAgent):
-    """
-    Industrial-grade video processing agent with advanced AI capabilities.
+    """    Industrial-grade video processing agent with advanced AI capabilities.
     
     Handles all video-related operations including processing, analysis, enhancement,
     format conversion, and content protection for professional video creators.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize VideoAgent with advanced configuration.
+        """        Initialize VideoAgent with advanced configuration.
         
         Args:
             config: Optional configuration dictionary
-        """
-        super().__init__(
+        """        super().__init__(
             agent_type="video_agent",
             capabilities=[
                 "video_processing", "format_conversion", "quality_enhancement",
@@ -151,8 +142,7 @@ class VideoAgent(BaseAgent):
         logger.info("VideoAgent initialized successfully")
     
     def _initialize_ai_models(self):
-        """Initialize AI models for video processing and analysis"""
-        try:
+        """Initialize AI models for video processing and analysis"""        try:
             # Video analysis models
             self.scene_detector = pipeline("zero-shot-image-classification", 
                                          model="openai/clip-vit-base-patch32")
@@ -177,16 +167,14 @@ class VideoAgent(BaseAgent):
             self.quality_assessor = None
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
-        """
-        Process video-related requests with comprehensive handling.
+        """        Process video-related requests with comprehensive handling.
         
         Args:
             request: Standardized agent request
             
         Returns:
             AgentResponse with processing results
-        """
-        start_time = datetime.now(timezone.utc)
+        """        start_time = datetime.now(timezone.utc)
         
         try:
             # Validate request
@@ -263,16 +251,14 @@ class VideoAgent(BaseAgent):
             )
     
     async def _analyze_video(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Comprehensive video analysis including metadata, content, and quality assessment.
+        """        Comprehensive video analysis including metadata, content, and quality assessment.
         
         Args:
             data: Request data containing video path and analysis options
             
         Returns:
             Detailed analysis results
-        """
-        video_path = data.get("video_path")
+        """        video_path = data.get("video_path")
         analysis_options = data.get("options", {})
         
         if not video_path or not os.path.exists(video_path):
@@ -345,8 +331,7 @@ class VideoAgent(BaseAgent):
         return analysis_result
     
     async def _perform_content_analysis(self, cap: cv2.VideoCapture, fps: float, frame_count: int) -> Dict[str, Any]:
-        """
-        Perform AI-powered content analysis on video frames.
+        """        Perform AI-powered content analysis on video frames.
         
         Args:
             cap: OpenCV video capture object
@@ -355,8 +340,7 @@ class VideoAgent(BaseAgent):
             
         Returns:
             Content analysis results
-        """
-        content_analysis = {
+        """        content_analysis = {
             "scenes": [],
             "objects": [],
             "motion_analysis": {},
@@ -465,8 +449,7 @@ class VideoAgent(BaseAgent):
         return content_analysis
     
     async def _assess_video_quality(self, cap: cv2.VideoCapture, fps: float) -> Dict[str, Any]:
-        """
-        Assess video quality using various metrics.
+        """        Assess video quality using various metrics.
         
         Args:
             cap: OpenCV video capture object
@@ -474,8 +457,7 @@ class VideoAgent(BaseAgent):
             
         Returns:
             Quality assessment metrics
-        """
-        quality_metrics = {
+        """        quality_metrics = {
             "overall_score": 0.0,
             "sharpness": 0.0,
             "brightness": 0.0,
@@ -554,8 +536,7 @@ class VideoAgent(BaseAgent):
         return quality_metrics
     
     def _validate_request(self, request: AgentRequest):
-        """Validate video processing request"""
-        if not request.action:
+        """Validate video processing request"""        if not request.action:
             raise ValueError("Action is required")
         
         if not request.data:
@@ -567,8 +548,7 @@ class VideoAgent(BaseAgent):
             raise ValueError(f"Video file not found: {video_path}")
     
     async def cleanup(self):
-        """Cleanup temporary files and resources"""
-        try:
+        """Cleanup temporary files and resources"""        try:
             # Remove temporary directory
             if self.temp_dir.exists():
                 import shutil
@@ -588,41 +568,34 @@ class VideoAgent(BaseAgent):
 
 
 class VideoAgentManager:
-    """
-    Manager class for handling multiple video processing instances and load balancing.
-    """
-    
+    """    Manager class for handling multiple video processing instances and load balancing.
+    """    
     def __init__(self, max_workers: int = 4):
-        """
-        Initialize VideoAgentManager.
+        """        Initialize VideoAgentManager.
         
         Args:
             max_workers: Maximum number of concurrent video processing workers
-        """
-        self.max_workers = max_workers
+        """        self.max_workers = max_workers
         self.workers: List[VideoAgent] = []
         self.current_worker = 0
         self._initialize_workers()
     
     def _initialize_workers(self):
-        """Initialize video processing workers"""
-        for i in range(self.max_workers):
+        """Initialize video processing workers"""        for i in range(self.max_workers):
             worker = VideoAgent(config={"worker_id": i})
             self.workers.append(worker)
         
         logger.info(f"VideoAgentManager initialized with {self.max_workers} workers")
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
-        """
-        Route request to available worker using round-robin load balancing.
+        """        Route request to available worker using round-robin load balancing.
         
         Args:
             request: Video processing request
             
         Returns:
             Processing response
-        """
-        # Select worker using round-robin
+        """        # Select worker using round-robin
         worker = self.workers[self.current_worker]
         self.current_worker = (self.current_worker + 1) % len(self.workers)
         
@@ -630,8 +603,7 @@ class VideoAgentManager:
         return await worker.process_request(request)
     
     async def shutdown(self):
-        """Shutdown all workers and cleanup resources"""
-        for worker in self.workers:
+        """Shutdown all workers and cleanup resources"""        for worker in self.workers:
             await worker.cleanup()
         
         self.workers.clear()

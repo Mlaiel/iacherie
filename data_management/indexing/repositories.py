@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Advanced Data Repositories
+"""IA Influencer Agent - Advanced Data Repositories
 ===============================================
 
 Enterprise-grade data access layer for indexing operations with
@@ -14,7 +13,6 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import json
 import logging
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class IndexRecord:
-    """Base index record structure"""
-    content_id: str
+    """Base index record structure"""    content_id: str
     creator_id: str
     content_type: str
     title: str
@@ -54,8 +51,7 @@ class IndexRecord:
 
 @dataclass
 class VectorRecord:
-    """Vector embedding record structure"""
-    vector_id: str
+    """Vector embedding record structure"""    vector_id: str
     content_id: str
     embedding: List[float]
     embedding_type: str  # text, audio, visual, etc.
@@ -68,8 +64,7 @@ class VectorRecord:
 
 @dataclass
 class FingerprintRecord:
-    """Content fingerprint record structure"""
-    fingerprint_id: str
+    """Content fingerprint record structure"""    fingerprint_id: str
     content_id: str
     fingerprint_type: str  # audio, image, video, text
     fingerprint_data: Dict[str, str]  # algorithm -> hash mapping
@@ -81,8 +76,7 @@ class FingerprintRecord:
 
 @dataclass
 class SearchQuery:
-    """Search query structure"""
-    query_text: Optional[str] = None
+    """Search query structure"""    query_text: Optional[str] = None
     vector_query: Optional[List[float]] = None
     filters: Optional[Dict[str, Any]] = None
     content_types: Optional[List[str]] = None
@@ -97,8 +91,7 @@ class SearchQuery:
 
 
 class BaseRepository(ABC):
-    """Abstract base repository class"""
-    
+    """Abstract base repository class"""    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -106,31 +99,26 @@ class BaseRepository(ABC):
     
     @abstractmethod
     async def create(self, record: Any) -> str:
-        """Create a new record"""
-        self.logger.error(f"create method not implemented in {self.__class__.__name__}")
+        """Create a new record"""        self.logger.error(f"create method not implemented in {self.__class__.__name__}")
         return ""
     
     @abstractmethod
     async def get_by_id(self, record_id: str) -> Optional[Any]:
-        """Get record by ID"""
-        self.logger.error(f"get_by_id method not implemented in {self.__class__.__name__}")
+        """Get record by ID"""        self.logger.error(f"get_by_id method not implemented in {self.__class__.__name__}")
         return None
     
     @abstractmethod
     async def update(self, record_id: str, updates: Dict[str, Any]) -> bool:
-        """Update existing record"""
-        self.logger.error(f"update method not implemented in {self.__class__.__name__}")
+        """Update existing record"""        self.logger.error(f"update method not implemented in {self.__class__.__name__}")
         return False
     
     @abstractmethod
     async def delete(self, record_id: str) -> bool:
-        """Delete record"""
-        self.logger.error(f"delete method not implemented in {self.__class__.__name__}")
+        """Delete record"""        self.logger.error(f"delete method not implemented in {self.__class__.__name__}")
         return False
     
     async def _cache_get(self, key: str) -> Optional[str]:
-        """Get value from Redis cache"""
-        try:
+        """Get value from Redis cache"""        try:
             value = await self.redis_client.get(key)
             return value.decode() if value else None
         except Exception as e:
@@ -138,33 +126,28 @@ class BaseRepository(ABC):
             return None
     
     async def _cache_set(self, key: str, value: str, expire: int = 3600) -> None:
-        """Set value in Redis cache"""
-        try:
+        """Set value in Redis cache"""        try:
             await self.redis_client.setex(key, expire, value)
         except Exception as e:
             self.logger.warning(f"Cache set failed for {key}: {e}")
     
     async def _cache_delete(self, key: str) -> None:
-        """Delete value from Redis cache"""
-        try:
+        """Delete value from Redis cache"""        try:
             await self.redis_client.delete(key)
         except Exception as e:
             self.logger.warning(f"Cache delete failed for {key}: {e}")
 
 
 class IndexRepository(BaseRepository):
-    """Repository for managing content index records"""
-    
+    """Repository for managing content index records"""    
     async def create(self, record: IndexRecord) -> str:
-        """Create new index record"""
-        try:
+        """Create new index record"""        try:
             # Generate ID if not provided
             if not record.content_id:
                 record.content_id = str(uuid.uuid4())
             
             # Prepare SQL insert
-            query = text("""
-                INSERT INTO content_index (
+            query = text("""                INSERT INTO content_index (
                     content_id, creator_id, content_type, title, description,
                     tags, metadata, created_at, updated_at, indexed_at,
                     fingerprint_hash, protection_level, licensing_info
@@ -209,8 +192,7 @@ class IndexRepository(BaseRepository):
             raise
     
     async def get_by_id(self, content_id: str) -> Optional[IndexRecord]:
-        """Get index record by content ID"""
-        try:
+        """Get index record by content ID"""        try:
             # Try cache first
             cache_key = f"index:{content_id}"
             cached = await self._cache_get(cache_key)
@@ -220,8 +202,7 @@ class IndexRepository(BaseRepository):
                 return IndexRecord(**data)
             
             # Query database
-            query = text("""
-                SELECT * FROM content_index WHERE content_id = :content_id
+            query = text("""                SELECT * FROM content_index WHERE content_id = :content_id
             """)
             
             result = await self.db_session.execute(query, {"content_id": content_id})
@@ -257,8 +238,7 @@ class IndexRepository(BaseRepository):
             return None
     
     async def update(self, content_id: str, updates: Dict[str, Any]) -> bool:
-        """Update index record"""
-        try:
+        """Update index record"""        try:
             # Prepare update fields
             set_clauses = []
             params = {"content_id": content_id}
@@ -276,8 +256,7 @@ class IndexRepository(BaseRepository):
             set_clauses.append("updated_at = :updated_at")
             params["updated_at"] = datetime.now(timezone.utc)
             
-            query = text(f"""
-                UPDATE content_index 
+            query = text(f"""                UPDATE content_index 
                 SET {', '.join(set_clauses)}
                 WHERE content_id = :content_id
             """)
@@ -301,8 +280,7 @@ class IndexRepository(BaseRepository):
             return False
     
     async def delete(self, content_id: str) -> bool:
-        """Delete index record"""
-        try:
+        """Delete index record"""        try:
             query = text("DELETE FROM content_index WHERE content_id = :content_id")
             result = await self.db_session.execute(query, {"content_id": content_id})
             await self.db_session.commit()
@@ -326,8 +304,7 @@ class IndexRepository(BaseRepository):
             return False
     
     async def search(self, query: SearchQuery) -> List[IndexRecord]:
-        """Search index records with filters"""
-        try:
+        """Search index records with filters"""        try:
             # Build SQL query
             conditions = []
             params = {}
@@ -341,8 +318,7 @@ class IndexRepository(BaseRepository):
                 params["creator_ids"] = query.creator_ids
             
             if query.query_text:
-                conditions.append("""
-                    (title ILIKE :search_text OR description ILIKE :search_text)
+                conditions.append("""                    (title ILIKE :search_text OR description ILIKE :search_text)
                 """)
                 params["search_text"] = f"%{query.query_text}%"
             
@@ -367,8 +343,7 @@ class IndexRepository(BaseRepository):
             
             sort_direction = "DESC" if query.sort_order == "desc" else "ASC"
             
-            sql_query = text(f"""
-                SELECT * FROM content_index 
+            sql_query = text(f"""                SELECT * FROM content_index 
                 WHERE {where_clause}
                 ORDER BY {sort_column} {sort_direction}
                 LIMIT :limit OFFSET :offset
@@ -409,10 +384,8 @@ class IndexRepository(BaseRepository):
             return []
     
     async def get_by_creator(self, creator_id: str, limit: int = 100) -> List[IndexRecord]:
-        """Get all records for a specific creator"""
-        try:
-            query = text("""
-                SELECT * FROM content_index 
+        """Get all records for a specific creator"""        try:
+            query = text("""                SELECT * FROM content_index 
                 WHERE creator_id = :creator_id
                 ORDER BY created_at DESC
                 LIMIT :limit
@@ -450,8 +423,7 @@ class IndexRepository(BaseRepository):
             return []
     
     async def _update_secondary_indexes(self, record: IndexRecord) -> None:
-        """Update Redis secondary indexes"""
-        try:
+        """Update Redis secondary indexes"""        try:
             # Index by creator
             await self.redis_client.sadd(f"creator:{record.creator_id}:content", record.content_id)
             
@@ -470,8 +442,7 @@ class IndexRepository(BaseRepository):
             self.logger.warning(f"Failed to update secondary indexes: {e}")
     
     async def _remove_from_secondary_indexes(self, content_id: str) -> None:
-        """Remove from Redis secondary indexes"""
-        try:
+        """Remove from Redis secondary indexes"""        try:
             # Get record first to know what to remove
             record = await self.get_by_id(content_id)
             if not record:
@@ -496,23 +467,20 @@ class IndexRepository(BaseRepository):
 
 
 class VectorRepository(BaseRepository):
-    """Repository for managing vector embeddings with FAISS integration"""
-    
+    """Repository for managing vector embeddings with FAISS integration"""    
     def __init__(self, db_session: AsyncSession, redis_client: Redis, faiss_index: faiss.Index = None):
         super().__init__(db_session, redis_client)
         self.faiss_index = faiss_index
         self.vector_mapping = {}  # vector_id -> faiss_index mapping
     
     async def create(self, record: VectorRecord) -> str:
-        """Create new vector record"""
-        try:
+        """Create new vector record"""        try:
             # Generate ID if not provided
             if not record.vector_id:
                 record.vector_id = str(uuid.uuid4())
             
             # Store in database
-            query = text("""
-                INSERT INTO vector_embeddings (
+            query = text("""                INSERT INTO vector_embeddings (
                     vector_id, content_id, embedding, embedding_type,
                     dimension, model_version, similarity_threshold,
                     created_at, metadata
@@ -557,8 +525,7 @@ class VectorRepository(BaseRepository):
             raise
     
     async def get_by_id(self, vector_id: str) -> Optional[VectorRecord]:
-        """Get vector record by ID"""
-        try:
+        """Get vector record by ID"""        try:
             # Try cache first
             cache_key = f"vector:{vector_id}"
             cached = await self._cache_get(cache_key)
@@ -598,10 +565,8 @@ class VectorRepository(BaseRepository):
             return None
     
     async def get_by_content_id(self, content_id: str) -> List[VectorRecord]:
-        """Get all vector records for a content ID"""
-        try:
-            query = text("""
-                SELECT * FROM vector_embeddings 
+        """Get all vector records for a content ID"""        try:
+            query = text("""                SELECT * FROM vector_embeddings 
                 WHERE content_id = :content_id
                 ORDER BY created_at DESC
             """)
@@ -631,8 +596,7 @@ class VectorRepository(BaseRepository):
             return []
     
     async def similarity_search(self, query_vector: List[float], top_k: int = 10) -> List[Tuple[str, float]]:
-        """Perform similarity search using FAISS"""
-        try:
+        """Perform similarity search using FAISS"""        try:
             if not self.faiss_index:
                 raise ValueError("FAISS index not available")
             
@@ -665,8 +629,7 @@ class VectorRepository(BaseRepository):
             return []
     
     async def update(self, vector_id: str, updates: Dict[str, Any]) -> bool:
-        """Update vector record"""
-        try:
+        """Update vector record"""        try:
             # Prepare update fields
             set_clauses = []
             params = {"vector_id": vector_id}
@@ -680,8 +643,7 @@ class VectorRepository(BaseRepository):
             if not set_clauses:
                 return False
             
-            query = text(f"""
-                UPDATE vector_embeddings 
+            query = text(f"""                UPDATE vector_embeddings 
                 SET {', '.join(set_clauses)}
                 WHERE vector_id = :vector_id
             """)
@@ -705,8 +667,7 @@ class VectorRepository(BaseRepository):
             return False
     
     async def delete(self, vector_id: str) -> bool:
-        """Delete vector record"""
-        try:
+        """Delete vector record"""        try:
             query = text("DELETE FROM vector_embeddings WHERE vector_id = :vector_id")
             result = await self.db_session.execute(query, {"vector_id": vector_id})
             await self.db_session.commit()
@@ -732,17 +693,14 @@ class VectorRepository(BaseRepository):
 
 
 class FingerprintRepository(BaseRepository):
-    """Repository for managing content fingerprints"""
-    
+    """Repository for managing content fingerprints"""    
     async def create(self, record: FingerprintRecord) -> str:
-        """Create new fingerprint record"""
-        try:
+        """Create new fingerprint record"""        try:
             # Generate ID if not provided
             if not record.fingerprint_id:
                 record.fingerprint_id = str(uuid.uuid4())
             
-            query = text("""
-                INSERT INTO content_fingerprints (
+            query = text("""                INSERT INTO content_fingerprints (
                     fingerprint_id, content_id, fingerprint_type,
                     fingerprint_data, algorithm_versions, similarity_scores,
                     created_at, updated_at
@@ -782,8 +740,7 @@ class FingerprintRepository(BaseRepository):
             raise
     
     async def get_by_id(self, fingerprint_id: str) -> Optional[FingerprintRecord]:
-        """Get fingerprint record by ID"""
-        try:
+        """Get fingerprint record by ID"""        try:
             # Try cache first
             cache_key = f"fingerprint:{fingerprint_id}"
             cached = await self._cache_get(cache_key)
@@ -821,10 +778,8 @@ class FingerprintRepository(BaseRepository):
             return None
     
     async def get_by_content_id(self, content_id: str) -> List[FingerprintRecord]:
-        """Get all fingerprint records for a content ID"""
-        try:
-            query = text("""
-                SELECT * FROM content_fingerprints 
+        """Get all fingerprint records for a content ID"""        try:
+            query = text("""                SELECT * FROM content_fingerprints 
                 WHERE content_id = :content_id
                 ORDER BY created_at DESC
             """)
@@ -854,8 +809,7 @@ class FingerprintRepository(BaseRepository):
     
     async def find_similar_fingerprints(self, fingerprint_data: Dict[str, str], 
                                       fingerprint_type: str) -> List[Tuple[str, float]]:
-        """Find similar fingerprints"""
-        try:
+        """Find similar fingerprints"""        try:
             results = []
             
             # For each algorithm in the query fingerprint
@@ -889,8 +843,7 @@ class FingerprintRepository(BaseRepository):
             return []
     
     async def _find_similar_perceptual_hashes(self, algorithm: str, query_hash: str) -> List[Tuple[str, float]]:
-        """Find similar perceptual hashes using Hamming distance"""
-        try:
+        """Find similar perceptual hashes using Hamming distance"""        try:
             results = []
             threshold = 10  # Maximum Hamming distance for similarity
             
@@ -924,8 +877,7 @@ class FingerprintRepository(BaseRepository):
             return []
     
     def _calculate_hamming_distance(self, hash1: str, hash2: str) -> int:
-        """Calculate Hamming distance between two hashes"""
-        if len(hash1) != len(hash2):
+        """Calculate Hamming distance between two hashes"""        if len(hash1) != len(hash2):
             return float('inf')
         
         distance = 0
@@ -936,8 +888,7 @@ class FingerprintRepository(BaseRepository):
         return distance
     
     async def _index_fingerprint_hashes(self, record: FingerprintRecord) -> None:
-        """Index fingerprint hashes in Redis for fast lookup"""
-        try:
+        """Index fingerprint hashes in Redis for fast lookup"""        try:
             for algorithm, fingerprint_hash in record.fingerprint_data.items():
                 key = f"fp:{algorithm}:{fingerprint_hash}"
                 await self.redis_client.sadd(key, record.content_id)
@@ -946,8 +897,7 @@ class FingerprintRepository(BaseRepository):
             self.logger.warning(f"Failed to index fingerprint hashes: {e}")
     
     async def update(self, fingerprint_id: str, updates: Dict[str, Any]) -> bool:
-        """Update fingerprint record"""
-        try:
+        """Update fingerprint record"""        try:
             # Prepare update fields
             set_clauses = []
             params = {"fingerprint_id": fingerprint_id}
@@ -965,8 +915,7 @@ class FingerprintRepository(BaseRepository):
             set_clauses.append("updated_at = :updated_at")
             params["updated_at"] = datetime.now(timezone.utc)
             
-            query = text(f"""
-                UPDATE content_fingerprints 
+            query = text(f"""                UPDATE content_fingerprints 
                 SET {', '.join(set_clauses)}
                 WHERE fingerprint_id = :fingerprint_id
             """)
@@ -990,8 +939,7 @@ class FingerprintRepository(BaseRepository):
             return False
     
     async def delete(self, fingerprint_id: str) -> bool:
-        """Delete fingerprint record"""
-        try:
+        """Delete fingerprint record"""        try:
             # Get record to remove from indexes
             record = await self.get_by_id(fingerprint_id)
             
@@ -1019,8 +967,7 @@ class FingerprintRepository(BaseRepository):
             return False
     
     async def _remove_fingerprint_hashes(self, record: FingerprintRecord) -> None:
-        """Remove fingerprint hashes from Redis indexes"""
-        try:
+        """Remove fingerprint hashes from Redis indexes"""        try:
             for algorithm, fingerprint_hash in record.fingerprint_data.items():
                 key = f"fp:{algorithm}:{fingerprint_hash}"
                 await self.redis_client.srem(key, record.content_id)
@@ -1034,8 +981,7 @@ class FingerprintRepository(BaseRepository):
 
 
 class SearchRepository:
-    """Unified search repository combining all search capabilities"""
-    
+    """Unified search repository combining all search capabilities"""    
     def __init__(self, index_repo: IndexRepository, vector_repo: VectorRepository, 
                  fingerprint_repo: FingerprintRepository):
         self.index_repo = index_repo
@@ -1044,8 +990,7 @@ class SearchRepository:
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def unified_search(self, query: SearchQuery) -> Dict[str, Any]:
-        """Perform unified search across all repository types"""
-        try:
+        """Perform unified search across all repository types"""        try:
             results = {
                 "text_results": [],
                 "vector_results": [],
@@ -1102,8 +1047,7 @@ class SearchRepository:
             }
     
     async def find_duplicate_content(self, content_id: str) -> List[Dict[str, Any]]:
-        """Find potential duplicate content using multiple detection methods"""
-        try:
+        """Find potential duplicate content using multiple detection methods"""        try:
             duplicates = []
             
             # Get content fingerprints
@@ -1174,8 +1118,7 @@ class SearchRepository:
             return []
     
     async def get_content_recommendations(self, content_id: str, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get content recommendations based on similarity"""
-        try:
+        """Get content recommendations based on similarity"""        try:
             recommendations = []
             
             # Get content record

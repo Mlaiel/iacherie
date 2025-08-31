@@ -1,5 +1,4 @@
-"""
-Advanced SEO & Monetization Prompts System
+"""Advanced SEO & Monetization Prompts System
 Professional prompts for content optimization and revenue generation
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
-
 from typing import Dict, List, Optional, Tuple, Any, Union
 from enum import Enum
 from dataclasses import dataclass
@@ -23,8 +21,7 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class SEOStrategy(Enum):
-    """SEO strategies available"""
-    BASIC = "basic"
+    """SEO strategies available"""    BASIC = "basic"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
     LOCAL_SEO = "local_seo"
@@ -32,8 +29,7 @@ class SEOStrategy(Enum):
     CONTENT_SEO = "content_seo"
 
 class MonetizationModel(Enum):
-    """Monetization models supported"""
-    ADVERTISING = "advertising"
+    """Monetization models supported"""    ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription"
     AFFILIATE = "affiliate"
     SPONSORSHIP = "sponsorship"
@@ -43,8 +39,7 @@ class MonetizationModel(Enum):
     NFT_SALES = "nft_sales"
 
 class Platform(Enum):
-    """Platforms for optimization and monetization"""
-    SPOTIFY = "spotify"
+    """Platforms for optimization and monetization"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -56,8 +51,7 @@ class Platform(Enum):
     ONLYFANS = "onlyfans"
 
 class ContentCategory(Enum):
-    """Content categories for optimization"""
-    MUSIC = "music"
+    """Content categories for optimization"""    MUSIC = "music"
     VIDEO = "video"
     BLOG = "blog"
     PODCAST = "podcast"
@@ -68,8 +62,7 @@ class ContentCategory(Enum):
 
 @dataclass
 class SEOMonetizationContext:
-    """Context for SEO and monetization prompt generation"""
-    content_category: ContentCategory
+    """Context for SEO and monetization prompt generation"""    content_category: ContentCategory
     seo_strategy: SEOStrategy
     monetization_models: List[MonetizationModel]
     target_platforms: List[Platform]
@@ -78,25 +71,21 @@ class SEOMonetizationContext:
     timeline: Dict[str, str]
 
 class SEOMonetizationPrompts:
-    """Advanced SEO & Monetization Prompts System"""
-    
+    """Advanced SEO & Monetization Prompts System"""    
     def __init__(self):
-        """Initialize the SEO monetization prompts system"""
-        self.seo_templates = {}
+        """Initialize the SEO monetization prompts system"""        self.seo_templates = {}
         self.monetization_templates = {}
         self.platform_specific_prompts = {}
         self._load_seo_monetization_templates()
     
     def _load_seo_monetization_templates(self) -> None:
-        """Load and initialize SEO monetization templates"""
-        
+        """Load and initialize SEO monetization templates"""        
         # SEO Templates
         self.seo_templates = {
             ContentCategory.MUSIC: {
                 SEOStrategy.ADVANCED: {
                     "id": "music_advanced_seo",
-                    "template": """
-                    Create comprehensive SEO strategy for music content:
+                    "template": """                    Create comprehensive SEO strategy for music content:
                     
                     Music Content Analysis:
                     - Track title: {track_title}
@@ -200,8 +189,7 @@ class SEOMonetizationPrompts:
             ContentCategory.BLOG: {
                 SEOStrategy.ENTERPRISE: {
                     "id": "blog_enterprise_seo",
-                    "template": """
-                    Create enterprise-level SEO strategy for blog content:
+                    "template": """                    Create enterprise-level SEO strategy for blog content:
                     
                     Content Analysis:
                     - Blog niche: {blog_niche}
@@ -279,8 +267,7 @@ class SEOMonetizationPrompts:
         self.monetization_templates = {
             MonetizationModel.ADVERTISING: {
                 "id": "advanced_advertising_monetization",
-                "template": """
-                Create comprehensive advertising monetization strategy:
+                "template": """                Create comprehensive advertising monetization strategy:
                 
                 Content Analysis:
                 - Content type: {content_type}
@@ -345,8 +332,7 @@ class SEOMonetizationPrompts:
             
             MonetizationModel.SUBSCRIPTION: {
                 "id": "subscription_monetization_strategy",
-                "template": """
-                Create advanced subscription monetization system:
+                "template": """                Create advanced subscription monetization system:
                 
                 Subscription Model Design:
                 - Content type: {content_type}
@@ -417,8 +403,7 @@ class SEOMonetizationPrompts:
             
             MonetizationModel.NFT_SALES: {
                 "id": "nft_monetization_strategy",
-                "template": """
-                Create comprehensive NFT monetization strategy:
+                "template": """                Create comprehensive NFT monetization strategy:
                 
                 NFT Collection Design:
                 - Content type: {content_type}
@@ -497,8 +482,7 @@ class SEOMonetizationPrompts:
         }
     
     def generate_seo_prompt(self, context: SEOMonetizationContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate SEO optimization prompt based on context"""
-        try:
+        """Generate SEO optimization prompt based on context"""        try:
             # Get SEO template
             category_templates = self.seo_templates.get(context.content_category, {})
             seo_template = category_templates.get(context.seo_strategy)
@@ -530,8 +514,7 @@ class SEOMonetizationPrompts:
             return self._generate_fallback_seo_prompt(context)
     
     def generate_monetization_prompt(self, context: SEOMonetizationContext, monetization_model: MonetizationModel, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate monetization strategy prompt"""
-        try:
+        """Generate monetization strategy prompt"""        try:
             # Get monetization template
             monetization_template = self.monetization_templates.get(monetization_model)
             
@@ -567,8 +550,7 @@ class SEOMonetizationPrompts:
             return self._generate_fallback_monetization_prompt(context, monetization_model)
     
     def _customize_for_platforms(self, template: Dict, platforms: List[Platform]) -> Dict:
-        """Customize template for specific platforms"""
-        customized = template.copy()
+        """Customize template for specific platforms"""        customized = template.copy()
         
         # Add platform-specific instructions
         platform_instructions = []
@@ -590,8 +572,7 @@ class SEOMonetizationPrompts:
         return customized
     
     def _apply_audience_targeting(self, prompt: Dict, audience_data: Dict) -> Dict:
-        """Apply audience targeting to prompt"""
-        modified_prompt = prompt.copy()
+        """Apply audience targeting to prompt"""        modified_prompt = prompt.copy()
         
         # Add audience section
         audience_section = "\n\nAudience Targeting Strategy:\n"
@@ -605,8 +586,7 @@ class SEOMonetizationPrompts:
         return modified_prompt
     
     def _apply_custom_seo_params(self, prompt: Dict, custom_params: Dict) -> Dict:
-        """Apply custom SEO parameters"""
-        modified_prompt = prompt.copy()
+        """Apply custom SEO parameters"""        modified_prompt = prompt.copy()
         
         # Replace custom parameters in template
         template = modified_prompt.get("template", "")
@@ -619,8 +599,7 @@ class SEOMonetizationPrompts:
         return modified_prompt
     
     def _customize_for_content_category(self, template: Dict, category: ContentCategory) -> Dict:
-        """Customize monetization template for content category"""
-        customized = template.copy()
+        """Customize monetization template for content category"""        customized = template.copy()
         
         # Add category-specific monetization strategies
         category_strategies = {
@@ -638,8 +617,7 @@ class SEOMonetizationPrompts:
         return customized
     
     def _apply_budget_constraints(self, prompt: Dict, budget_range: Dict) -> Dict:
-        """Apply budget constraints to monetization strategy"""
-        modified_prompt = prompt.copy()
+        """Apply budget constraints to monetization strategy"""        modified_prompt = prompt.copy()
         
         budget_section = "\n\nBudget Constraints:\n"
         for budget_key, budget_value in budget_range.items():
@@ -652,8 +630,7 @@ class SEOMonetizationPrompts:
         return modified_prompt
     
     def _apply_timeline_constraints(self, prompt: Dict, timeline: Dict) -> Dict:
-        """Apply timeline constraints to strategy"""
-        modified_prompt = prompt.copy()
+        """Apply timeline constraints to strategy"""        modified_prompt = prompt.copy()
         
         timeline_section = "\n\nTimeline Requirements:\n"
         for timeline_key, timeline_value in timeline.items():
@@ -666,8 +643,7 @@ class SEOMonetizationPrompts:
         return modified_prompt
     
     def _apply_custom_monetization_params(self, prompt: Dict, custom_params: Dict) -> Dict:
-        """Apply custom monetization parameters"""
-        modified_prompt = prompt.copy()
+        """Apply custom monetization parameters"""        modified_prompt = prompt.copy()
         
         # Replace custom parameters in template
         template = modified_prompt.get("template", "")
@@ -680,11 +656,9 @@ class SEOMonetizationPrompts:
         return modified_prompt
     
     def _generate_fallback_seo_prompt(self, context: SEOMonetizationContext) -> Dict[str, Any]:
-        """Generate fallback SEO prompt"""
-        return {
+        """Generate fallback SEO prompt"""        return {
             "id": "fallback_seo",
-            "template": f"""
-            Create {context.seo_strategy.value} SEO strategy for {context.content_category.value} content:
+            "template": f"""            Create {context.seo_strategy.value} SEO strategy for {context.content_category.value} content:
             
             SEO Requirements:
             - Content category: {context.content_category.value}
@@ -704,11 +678,9 @@ class SEOMonetizationPrompts:
         }
     
     def _generate_fallback_monetization_prompt(self, context: SEOMonetizationContext, model: MonetizationModel) -> Dict[str, Any]:
-        """Generate fallback monetization prompt"""
-        return {
+        """Generate fallback monetization prompt"""        return {
             "id": "fallback_monetization",
-            "template": f"""
-            Create {model.value} monetization strategy for {context.content_category.value} content:
+            "template": f"""            Create {model.value} monetization strategy for {context.content_category.value} content:
             
             Monetization Requirements:
             - Content category: {context.content_category.value}
@@ -738,8 +710,7 @@ SEO_MONETIZATION_REGISTRY = {
 }
 
 def get_seo_monetization_prompts() -> SEOMonetizationPrompts:
-    """Get the main SEO monetization prompts instance"""
-    return SEOMonetizationPrompts()
+    """Get the main SEO monetization prompts instance"""    return SEOMonetizationPrompts()
 
 def create_seo_monetization_context(
     content_category: str,
@@ -750,8 +721,7 @@ def create_seo_monetization_context(
     budget_range: Optional[Dict] = None,
     timeline: Optional[Dict] = None
 ) -> SEOMonetizationContext:
-    """Create SEO monetization context"""
-    return SEOMonetizationContext(
+    """Create SEO monetization context"""    return SEOMonetizationContext(
         content_category=ContentCategory(content_category),
         seo_strategy=SEOStrategy(seo_strategy),
         monetization_models=[MonetizationModel(m) for m in monetization_models],

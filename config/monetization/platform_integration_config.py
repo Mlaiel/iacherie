@@ -1,5 +1,4 @@
-"""
-Platform Integration Configuration Module
+"""Platform Integration Configuration Module
 =========================================
 
 Professional configuration for external platform integrations and API management.
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union
@@ -25,8 +23,7 @@ from enum import Enum
 
 
 class PlatformType(str, Enum):
-    """Platform type classification for integration."""
-    MUSIC_STREAMING = "music_streaming"
+    """Platform type classification for integration."""    MUSIC_STREAMING = "music_streaming"
     VIDEO_STREAMING = "video_streaming"
     SOCIAL_MEDIA = "social_media"
     PODCAST = "podcast"
@@ -39,8 +36,7 @@ class PlatformType(str, Enum):
 
 
 class AuthenticationType(str, Enum):
-    """Authentication method types."""
-    OAUTH2 = "oauth2"
+    """Authentication method types."""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -49,8 +45,7 @@ class AuthenticationType(str, Enum):
 
 
 class DataSyncFrequency(str, Enum):
-    """Data synchronization frequency options."""
-    REAL_TIME = "real_time"
+    """Data synchronization frequency options."""    REAL_TIME = "real_time"
     EVERY_MINUTE = "every_minute"
     EVERY_5_MINUTES = "every_5_minutes"
     EVERY_15_MINUTES = "every_15_minutes"
@@ -62,8 +57,7 @@ class DataSyncFrequency(str, Enum):
 
 @dataclass
 class PlatformEndpoints:
-    """Platform API endpoints configuration."""
-    base_url: str
+    """Platform API endpoints configuration."""    base_url: str
     auth_url: Optional[str] = None
     refresh_url: Optional[str] = None
     revenue_url: Optional[str] = None
@@ -75,8 +69,7 @@ class PlatformEndpoints:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration for platform APIs."""
-    requests_per_minute: int
+    """Rate limiting configuration for platform APIs."""    requests_per_minute: int
     requests_per_hour: int
     requests_per_day: int
     burst_limit: int
@@ -86,8 +79,7 @@ class RateLimitConfig:
 
 @dataclass
 class PlatformCredentials:
-    """Secure platform credentials configuration."""
-    client_id: Optional[str] = None
+    """Secure platform credentials configuration."""    client_id: Optional[str] = None
     client_secret: Optional[str] = None
     api_key: Optional[str] = None
     access_token: Optional[str] = None
@@ -96,16 +88,14 @@ class PlatformCredentials:
     scopes: List[str] = field(default_factory=list)
     
     def __post_init__(self):
-        """Ensure sensitive data is properly handled."""
-        # In production, these should be encrypted or fetched from secure vault
+        """Ensure sensitive data is properly handled."""        # In production, these should be encrypted or fetched from secure vault
         self.client_secret = self.client_secret or os.getenv(f"{self.client_id}_SECRET")
         self.api_key = self.api_key or os.getenv(f"{self.client_id}_API_KEY")
 
 
 @dataclass
 class PlatformIntegrationConfig:
-    """Complete platform integration configuration."""
-    platform_name: str
+    """Complete platform integration configuration."""    platform_name: str
     platform_type: PlatformType
     authentication_type: AuthenticationType
     endpoints: PlatformEndpoints
@@ -137,19 +127,15 @@ class PlatformIntegrationConfig:
 
 
 class PlatformIntegrationManager:
-    """
-    Central manager for all platform integrations.
+    """    Central manager for all platform integrations.
     Handles configuration, authentication, and health monitoring.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize platform integration manager."""
-        self.platforms: Dict[str, PlatformIntegrationConfig] = {}
+        """Initialize platform integration manager."""        self.platforms: Dict[str, PlatformIntegrationConfig] = {}
         self._initialize_default_platforms()
     
     def _initialize_default_platforms(self):
-        """Initialize default platform configurations."""
-        
+        """Initialize default platform configurations."""        
         # Spotify Integration
         self.platforms["spotify"] = PlatformIntegrationConfig(
             platform_name="Spotify",
@@ -337,49 +323,40 @@ class PlatformIntegrationManager:
         )
     
     def get_platform_config(self, platform_name: str) -> Optional[PlatformIntegrationConfig]:
-        """Get configuration for a specific platform."""
-        return self.platforms.get(platform_name.lower())
+        """Get configuration for a specific platform."""        return self.platforms.get(platform_name.lower())
     
     def get_enabled_platforms(self) -> List[PlatformIntegrationConfig]:
-        """Get all enabled platform configurations."""
-        return [config for config in self.platforms.values() if config.enabled]
+        """Get all enabled platform configurations."""        return [config for config in self.platforms.values() if config.enabled]
     
     def get_platforms_by_type(self, platform_type: PlatformType) -> List[PlatformIntegrationConfig]:
-        """Get all platforms of a specific type."""
-        return [
+        """Get all platforms of a specific type."""        return [
             config for config in self.platforms.values() 
             if config.platform_type == platform_type and config.enabled
         ]
     
     def get_real_time_platforms(self) -> List[PlatformIntegrationConfig]:
-        """Get platforms that support real-time revenue tracking."""
-        return [
+        """Get platforms that support real-time revenue tracking."""        return [
             config for config in self.platforms.values()
             if config.supports_real_time_revenue and config.enabled
         ]
     
     def add_custom_platform(self, platform_config: PlatformIntegrationConfig):
-        """Add a custom platform configuration."""
-        self.platforms[platform_config.platform_name.lower()] = platform_config
+        """Add a custom platform configuration."""        self.platforms[platform_config.platform_name.lower()] = platform_config
     
     def update_platform_credentials(self, platform_name: str, credentials: PlatformCredentials):
-        """Update credentials for a specific platform."""
-        if platform_name.lower() in self.platforms:
+        """Update credentials for a specific platform."""        if platform_name.lower() in self.platforms:
             self.platforms[platform_name.lower()].credentials = credentials
     
     def disable_platform(self, platform_name: str):
-        """Disable a specific platform."""
-        if platform_name.lower() in self.platforms:
+        """Disable a specific platform."""        if platform_name.lower() in self.platforms:
             self.platforms[platform_name.lower()].enabled = False
     
     def enable_platform(self, platform_name: str):
-        """Enable a specific platform."""
-        if platform_name.lower() in self.platforms:
+        """Enable a specific platform."""        if platform_name.lower() in self.platforms:
             self.platforms[platform_name.lower()].enabled = True
     
     def get_platform_health_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get health status for all platforms."""
-        status = {}
+        """Get health status for all platforms."""        status = {}
         for name, config in self.platforms.items():
             status[name] = {
                 "enabled": config.enabled,

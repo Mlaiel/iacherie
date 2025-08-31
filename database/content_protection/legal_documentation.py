@@ -1,5 +1,4 @@
-"""
-Legal Documentation Generator
+"""Legal Documentation Generator
 
 Ultra-advanced legal documentation generation system for content protection
 with automated DMCA takedowns, cease & desist letters, and litigation support.
@@ -17,7 +16,6 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
-
 import asyncio
 import json
 import logging
@@ -46,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class DocumentType(Enum):
-    """Legal document types"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Legal document types"""    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_NOTICE = "copyright_notice"
     LICENSING_AGREEMENT = "licensing_agreement"
@@ -60,8 +57,7 @@ class DocumentType(Enum):
 
 
 class JurisdictionType(Enum):
-    """Legal jurisdictions"""
-    US_FEDERAL = "us_federal"
+    """Legal jurisdictions"""    US_FEDERAL = "us_federal"
     US_STATE = "us_state"
     EU_GENERAL = "eu_general"
     UK = "uk"
@@ -74,8 +70,7 @@ class JurisdictionType(Enum):
 
 
 class UrgencyLevel(Enum):
-    """Document urgency levels"""
-    ROUTINE = "routine"
+    """Document urgency levels"""    ROUTINE = "routine"
     STANDARD = "standard"
     URGENT = "urgent"
     EMERGENCY = "emergency"
@@ -83,13 +78,11 @@ class UrgencyLevel(Enum):
 
 
 class LegalDocumentationError(Exception):
-    """Custom exception for legal documentation operations"""
-    pass
+    """Custom exception for legal documentation operations"""    pass
 
 
 class LegalDocumentationGenerator:
-    """
-    Ultra-advanced legal documentation generator with enterprise features:
+    """    Ultra-advanced legal documentation generator with enterprise features:
     - Automated DMCA takedown generation and submission
     - Multi-jurisdiction legal document templates
     - Evidence collection and preservation
@@ -97,8 +90,7 @@ class LegalDocumentationGenerator:
     - Settlement negotiation documentation
     - Trademark and copyright enforcement
     - International legal compliance
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -162,8 +154,7 @@ class LegalDocumentationGenerator:
         platform_info: Dict[str, Any],
         urgency: UrgencyLevel = UrgencyLevel.STANDARD
     ) -> Dict[str, Any]:
-        """
-        Generate DMCA takedown notice with full legal compliance
+        """        Generate DMCA takedown notice with full legal compliance
         
         Args:
             violation_report_id: ID of the violation report
@@ -174,8 +165,7 @@ class LegalDocumentationGenerator:
             
         Returns:
             Dict containing generated DMCA notice and metadata
-        """
-        try:
+        """        try:
             logger.info(f"Generating DMCA takedown notice for violation: {violation_report_id}")
             
             # Validate copyright ownership
@@ -287,8 +277,7 @@ class LegalDocumentationGenerator:
         demands: List[str],
         deadline_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Generate cease and desist letter with legal authority
+        """        Generate cease and desist letter with legal authority
         
         Args:
             infringer_info: Information about the infringer
@@ -299,8 +288,7 @@ class LegalDocumentationGenerator:
             
         Returns:
             Dict containing generated cease and desist letter
-        """
-        try:
+        """        try:
             logger.info(f"Generating cease and desist letter for infringer: {infringer_info.get('name', 'Unknown')}")
             
             # Calculate monetary damages
@@ -391,8 +379,7 @@ class LegalDocumentationGenerator:
         relief_sought: Dict[str, Any],
         jurisdiction: JurisdictionType
     ) -> Dict[str, Any]:
-        """
-        Generate litigation notice and court filing documents
+        """        Generate litigation notice and court filing documents
         
         Args:
             case_details: Details of the legal case
@@ -403,8 +390,7 @@ class LegalDocumentationGenerator:
             
         Returns:
             Dict containing litigation documents
-        """
-        try:
+        """        try:
             logger.info(f"Generating litigation notice for case: {case_details.get('case_name', 'Unknown')}")
             
             # Generate case number
@@ -480,8 +466,7 @@ class LegalDocumentationGenerator:
         delivery_method: str = "email",
         tracking_required: bool = True
     ) -> Dict[str, Any]:
-        """
-        Send legal document with proper delivery confirmation
+        """        Send legal document with proper delivery confirmation
         
         Args:
             document_id: ID of the document to send
@@ -490,8 +475,7 @@ class LegalDocumentationGenerator:
             
         Returns:
             Dict containing delivery confirmation and tracking info
-        """
-        try:
+        """        try:
             logger.info(f"Sending legal document: {document_id} via {delivery_method}")
             
             # Retrieve document
@@ -535,23 +519,19 @@ class LegalDocumentationGenerator:
     async def _validate_copyright_ownership(
         self, owner_info: Dict[str, Any], content_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate copyright ownership claims"""
-        # Implementation for copyright ownership validation
+        """Validate copyright ownership claims"""        # Implementation for copyright ownership validation
         return {"is_valid": True, "errors": []}
     
     async def _compile_evidence_package(self, violation_id: str) -> Dict[str, Any]:
-        """Compile comprehensive evidence package"""
-        # Implementation for evidence compilation
+        """Compile comprehensive evidence package"""        # Implementation for evidence compilation
         return {"evidence_count": 5, "evidence_types": ["screenshots", "metadata", "fingerprints"]}
     
     async def _assess_monetary_damages(self, violation_details: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess monetary damages from copyright violation"""
-        # Implementation for damage assessment
+        """Assess monetary damages from copyright violation"""        # Implementation for damage assessment
         return {"actual_damages": 5000, "profits": 2000, "statutory_damages": 150000, "total_damages": 157000}
     
     async def _store_legal_document(self, document_data: Dict[str, Any]) -> None:
-        """Store legal document in database"""
-        try:
+        """Store legal document in database"""        try:
             legal_doc = LegalDocument(
                 id=uuid4(),
                 document_id=document_data["document_id"],

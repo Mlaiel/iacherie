@@ -1,5 +1,4 @@
-"""
-DMCA Delivery Manager
+"""DMCA Delivery Manager
 
 Advanced multi-channel delivery system for DMCA takedown notices with
 intelligent routing, delivery optimization, and failure recovery.
@@ -10,7 +9,6 @@ Email: mlaiel@live.de
 ⚠️ COPYRIGHT WARNING ⚠️
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
 """
-
 import asyncio
 import logging
 import uuid
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class DeliveryMethod(Enum):
-    """Supported delivery methods"""
-    EMAIL = "email"
+    """Supported delivery methods"""    EMAIL = "email"
     WEB_FORM = "web_form"
     API_ENDPOINT = "api_endpoint"
     REGISTERED_MAIL = "registered_mail"
@@ -41,8 +38,7 @@ class DeliveryMethod(Enum):
 
 
 class DeliveryStatus(Enum):
-    """Delivery status options"""
-    PENDING = "pending"
+    """Delivery status options"""    PENDING = "pending"
     QUEUED = "queued"
     SENDING = "sending"
     DELIVERED = "delivered"
@@ -53,8 +49,7 @@ class DeliveryStatus(Enum):
 
 
 class DeliveryPriority(Enum):
-    """Delivery priority levels"""
-    LOW = 1
+    """Delivery priority levels"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
@@ -63,8 +58,7 @@ class DeliveryPriority(Enum):
 
 @dataclass
 class DeliveryChannel:
-    """Delivery channel configuration"""
-    channel_id: str
+    """Delivery channel configuration"""    channel_id: str
     method: DeliveryMethod
     endpoint: str
     credentials: Dict[str, str]
@@ -78,8 +72,7 @@ class DeliveryChannel:
 
 @dataclass
 class DeliveryRequest:
-    """Delivery request structure"""
-    request_id: str
+    """Delivery request structure"""    request_id: str
     notice_id: str
     recipient: str
     method: DeliveryMethod
@@ -94,8 +87,7 @@ class DeliveryRequest:
 
 @dataclass
 class DeliveryResult:
-    """Delivery attempt result"""
-    success: bool
+    """Delivery attempt result"""    success: bool
     delivery_id: str
     timestamp: datetime
     method_used: DeliveryMethod
@@ -107,8 +99,7 @@ class DeliveryResult:
 
 
 class DeliveryManager:
-    """
-    Advanced DMCA notice delivery system with intelligent routing
+    """    Advanced DMCA notice delivery system with intelligent routing
     
     Features:
     - Multi-channel delivery (email, web forms, APIs)
@@ -117,11 +108,9 @@ class DeliveryManager:
     - Delivery tracking and analytics
     - Rate limiting and throttling
     - Platform-specific optimizations
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize delivery manager"""
-        self.config = config or {}
+        """Initialize delivery manager"""        self.config = config or {}
         self.db = get_database()
         self.logger = logger
         
@@ -169,8 +158,7 @@ class DeliveryManager:
                            notice_id: str,
                            recipient_info: Dict[str, Any],
                            delivery_options: Optional[Dict[str, Any]] = None) -> DeliveryResult:
-        """
-        Deliver DMCA notice using optimal delivery method
+        """        Deliver DMCA notice using optimal delivery method
         
         Args:
             notice_id: ID of the notice to deliver
@@ -179,8 +167,7 @@ class DeliveryManager:
             
         Returns:
             DeliveryResult with delivery status and details
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting delivery for notice: {notice_id}")
             
             # Retrieve notice content
@@ -233,16 +220,14 @@ class DeliveryManager:
     
     async def batch_deliver_notices(self, 
                                   delivery_requests: List[Dict[str, Any]]) -> List[DeliveryResult]:
-        """
-        Deliver multiple notices in batch with optimization
+        """        Deliver multiple notices in batch with optimization
         
         Args:
             delivery_requests: List of delivery request configurations
             
         Returns:
             List of delivery results
-        """
-        self.logger.info(f"Starting batch delivery for {len(delivery_requests)} notices")
+        """        self.logger.info(f"Starting batch delivery for {len(delivery_requests)} notices")
         
         # Group requests by delivery method for optimization
         method_groups = {}
@@ -292,16 +277,14 @@ class DeliveryManager:
         return all_results
     
     async def retry_failed_delivery(self, delivery_id: str) -> DeliveryResult:
-        """
-        Retry a failed delivery with intelligent fallback
+        """        Retry a failed delivery with intelligent fallback
         
         Args:
             delivery_id: ID of the failed delivery to retry
             
         Returns:
             New delivery result
-        """
-        try:
+        """        try:
             self.logger.info(f"Retrying failed delivery: {delivery_id}")
             
             # Retrieve original delivery attempt
@@ -351,16 +334,14 @@ class DeliveryManager:
             )
     
     async def track_delivery_status(self, delivery_id: str) -> Dict[str, Any]:
-        """
-        Track delivery status and get detailed information
+        """        Track delivery status and get detailed information
         
         Args:
             delivery_id: ID of the delivery to track
             
         Returns:
             Detailed delivery status information
-        """
-        try:
+        """        try:
             # Retrieve delivery record
             delivery_record = await self._get_delivery_record(delivery_id)
             if not delivery_record:
@@ -397,16 +378,14 @@ class DeliveryManager:
     
     async def get_delivery_analytics(self, 
                                    time_range: Optional[Dict[str, datetime]] = None) -> Dict[str, Any]:
-        """
-        Get comprehensive delivery analytics and performance metrics
+        """        Get comprehensive delivery analytics and performance metrics
         
         Args:
             time_range: Optional time range for analytics
             
         Returns:
             Detailed analytics data
-        """
-        try:
+        """        try:
             # Set default time range
             if not time_range:
                 time_range = {
@@ -415,8 +394,7 @@ class DeliveryManager:
                 }
             
             # Query delivery data
-            analytics_query = """
-                SELECT 
+            analytics_query = """                SELECT 
                     delivery_method,
                     status,
                     platform,
@@ -429,8 +407,7 @@ class DeliveryManager:
                 WHERE created_at >= %s AND created_at <= %s
                 GROUP BY delivery_method, status, platform, DATE(created_at)
                 ORDER BY delivery_date DESC
-            """
-            
+            """            
             results = await self.db.fetch_all(
                 analytics_query, 
                 [time_range['start'], time_range['end']]
@@ -511,8 +488,7 @@ class DeliveryManager:
     # Private helper methods
     
     def _initialize_delivery_channels(self) -> None:
-        """Initialize delivery channels configuration"""
-        # Email channel
+        """Initialize delivery channels configuration"""        # Email channel
         self.channels['smtp_primary'] = DeliveryChannel(
             channel_id='smtp_primary',
             method=DeliveryMethod.EMAIL,
@@ -542,8 +518,7 @@ class DeliveryManager:
         )
     
     async def _get_notice_content(self, notice_id: str) -> Optional[TakedownNotice]:
-        """Retrieve notice content from database"""
-        try:
+        """Retrieve notice content from database"""        try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
             
@@ -570,8 +545,7 @@ class DeliveryManager:
     async def _select_delivery_method(self, 
                                     recipient_info: Dict[str, Any],
                                     delivery_options: Optional[Dict[str, Any]]) -> DeliveryMethod:
-        """Select optimal delivery method based on recipient and options"""
-        # Check if method is explicitly specified
+        """Select optimal delivery method based on recipient and options"""        # Check if method is explicitly specified
         if delivery_options and 'method' in delivery_options:
             return DeliveryMethod(delivery_options['method'])
         
@@ -595,8 +569,7 @@ class DeliveryManager:
     async def _format_notice_for_delivery(self, 
                                         notice: TakedownNotice,
                                         method: DeliveryMethod) -> str:
-        """Format notice content for specific delivery method"""
-        if method == DeliveryMethod.EMAIL:
+        """Format notice content for specific delivery method"""        if method == DeliveryMethod.EMAIL:
             return self._format_email_notice(notice)
         elif method == DeliveryMethod.WEB_FORM:
             return self._format_web_form_notice(notice)
@@ -604,9 +577,7 @@ class DeliveryManager:
             return notice.notice_content
     
     def _format_email_notice(self, notice: TakedownNotice) -> str:
-        """Format notice for email delivery"""
-        return f"""
-Subject: DMCA Takedown Notice - Copyright Infringement
+        """Format notice for email delivery"""        return f"""Subject: DMCA Takedown Notice - Copyright Infringement
 
 {notice.notice_content}
 
@@ -616,14 +587,12 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
         """.strip()
     
     def _format_web_form_notice(self, notice: TakedownNotice) -> str:
-        """Format notice for web form submission"""
-        return notice.notice_content  # Web forms typically use the raw content
+        """Format notice for web form submission"""        return notice.notice_content  # Web forms typically use the raw content
     
     async def _generate_delivery_headers(self, 
                                        method: DeliveryMethod,
                                        recipient_info: Dict[str, Any]) -> Dict[str, str]:
-        """Generate appropriate headers for delivery method"""
-        headers = {}
+        """Generate appropriate headers for delivery method"""        headers = {}
         
         if method == DeliveryMethod.EMAIL:
             headers.update({
@@ -642,8 +611,7 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
         return headers
     
     async def _execute_delivery(self, request: DeliveryRequest) -> DeliveryResult:
-        """Execute the actual delivery"""
-        start_time = datetime.now(timezone.utc)
+        """Execute the actual delivery"""        start_time = datetime.now(timezone.utc)
         
         try:
             if request.method == DeliveryMethod.EMAIL:
@@ -671,8 +639,7 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
             )
     
     async def _deliver_via_email(self, request: DeliveryRequest) -> DeliveryResult:
-        """Deliver notice via email"""
-        # Simulate email delivery (would use actual SMTP)
+        """Deliver notice via email"""        # Simulate email delivery (would use actual SMTP)
         self.logger.info(f"Sending email to {request.recipient}")
         
         # Simulate success/failure
@@ -688,8 +655,7 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
         )
     
     async def _deliver_via_web_form(self, request: DeliveryRequest) -> DeliveryResult:
-        """Deliver notice via web form submission"""
-        # Simulate web form submission
+        """Deliver notice via web form submission"""        # Simulate web form submission
         self.logger.info(f"Submitting web form for platform: {request.metadata.get('platform')}")
         
         # In real implementation, this would use Selenium or similar
@@ -705,8 +671,7 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
         )
     
     async def _deliver_via_api(self, request: DeliveryRequest) -> DeliveryResult:
-        """Deliver notice via API endpoint"""
-        # Simulate API delivery
+        """Deliver notice via API endpoint"""        # Simulate API delivery
         self.logger.info(f"Sending to API endpoint for {request.recipient}")
         
         success = True
@@ -721,8 +686,7 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
         )
     
     def _is_method_available(self, method: DeliveryMethod, platform: str) -> bool:
-        """Check if delivery method is available for platform"""
-        # Check if we have the necessary configuration for this method/platform
+        """Check if delivery method is available for platform"""        # Check if we have the necessary configuration for this method/platform
         if method == DeliveryMethod.EMAIL:
             return bool(self.config.get('smtp_server'))
         elif method == DeliveryMethod.WEB_FORM:
@@ -730,8 +694,7 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
         return True
     
     def _get_concurrency_limit(self, method: DeliveryMethod) -> int:
-        """Get concurrency limit for delivery method"""
-        limits = {
+        """Get concurrency limit for delivery method"""        limits = {
             DeliveryMethod.EMAIL: 5,
             DeliveryMethod.WEB_FORM: 2,
             DeliveryMethod.API_ENDPOINT: 10,
@@ -742,16 +705,13 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
     async def _store_delivery_record(self, 
                                    request: DeliveryRequest,
                                    result: DeliveryResult) -> None:
-        """Store delivery record in database"""
-        try:
-            query = """
-                INSERT INTO dmca_delivery_records (
+        """Store delivery record in database"""        try:
+            query = """                INSERT INTO dmca_delivery_records (
                     delivery_id, notice_id, recipient, delivery_method, status,
                     response_code, response_message, delivery_time_seconds,
                     created_at, metadata
                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-            """
-            
+            """            
             status = DeliveryStatus.DELIVERED if result.success else DeliveryStatus.FAILED
             
             await self.db.execute(query, [
@@ -773,8 +733,7 @@ For questions, please contact: {notice.copyright_owner_contact.get('email', '')}
     async def _update_delivery_analytics(self, 
                                        method: DeliveryMethod,
                                        result: DeliveryResult) -> None:
-        """Update delivery analytics"""
-        # Update channel performance metrics
+        """Update delivery analytics"""        # Update channel performance metrics
         if method.value in self.channels:
             channel = self.channels[method.value]
             if result.success:

@@ -6,8 +6,7 @@ covering all aspects of content protection, monetization, and platform managemen
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-# Content management schemas
+"""# Content management schemas
 from .content_schemas import (
     # Enums
     ContentTypeEnum,

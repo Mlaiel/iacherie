@@ -1,11 +1,9 @@
-"""
-Monetization Analytics Engine
+"""Monetization Analytics Engine
 Advanced revenue analytics, predictions, and business intelligence
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,8 +23,7 @@ from ...core.cache import CacheManager
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
-    DAILY = "daily"
+    """Analytics timeframe options"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -35,8 +32,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class RevenueMetricType(Enum):
-    """Types of revenue metrics"""
-    TOTAL_REVENUE = "total_revenue"
+    """Types of revenue metrics"""    TOTAL_REVENUE = "total_revenue"
     NET_REVENUE = "net_revenue"
     PLATFORM_FEES = "platform_fees"
     AVERAGE_RPM = "average_rpm"  # Revenue per mille
@@ -47,8 +43,7 @@ class RevenueMetricType(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend direction indicators"""
-    UPWARD = "upward"
+    """Trend direction indicators"""    UPWARD = "upward"
     DOWNWARD = "downward"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -56,8 +51,7 @@ class TrendDirection(Enum):
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query parameters"""
-    user_id: int
+    """Analytics query parameters"""    user_id: int
     timeframe: AnalyticsTimeframe
     start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
@@ -68,16 +62,14 @@ class AnalyticsQuery:
     granularity: str = "daily"
     
     def validate(self) -> bool:
-        """Validate query parameters"""
-        if self.timeframe == AnalyticsTimeframe.CUSTOM:
+        """Validate query parameters"""        if self.timeframe == AnalyticsTimeframe.CUSTOM:
             return self.start_date is not None and self.end_date is not None
         return True
 
 
 @dataclass
 class RevenueDataPoint:
-    """Single revenue data point"""
-    date: datetime
+    """Single revenue data point"""    date: datetime
     value: Decimal
     platform: Optional[str] = None
     source: Optional[str] = None
@@ -87,8 +79,7 @@ class RevenueDataPoint:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
-    direction: TrendDirection
+    """Trend analysis result"""    direction: TrendDirection
     strength: float  # 0-1 scale
     slope: float
     correlation: float
@@ -102,8 +93,7 @@ class TrendAnalysis:
 
 @dataclass
 class RevenueInsight:
-    """Revenue insight and recommendation"""
-    insight_type: str
+    """Revenue insight and recommendation"""    insight_type: str
     title: str
     description: str
     impact_score: float  # 0-1 scale
@@ -115,8 +105,7 @@ class RevenueInsight:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    user_id: int
+    """Comprehensive analytics report"""    user_id: int
     query: AnalyticsQuery
     generated_at: datetime
     summary_metrics: Dict[str, Any]
@@ -130,8 +119,7 @@ class AnalyticsReport:
 
 
 class MonetizationAnalytics:
-    """Advanced monetization analytics engine"""
-    
+    """Advanced monetization analytics engine"""    
     def __init__(
         self,
         prediction_engine: RevenuePredictionEngine,
@@ -148,8 +136,7 @@ class MonetizationAnalytics:
         query: AnalyticsQuery,
         session: AsyncSession
     ) -> AnalyticsReport:
-        """Generate comprehensive revenue analytics report"""
-        try:
+        """Generate comprehensive revenue analytics report"""        try:
             # Validate query
             if not query.validate():
                 raise ValueError("Invalid analytics query parameters")
@@ -233,8 +220,7 @@ class MonetizationAnalytics:
         timeframe: AnalyticsTimeframe,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Calculate ROI metrics for monetization efforts"""
-        try:
+        """Calculate ROI metrics for monetization efforts"""        try:
             start_date, end_date = self._calculate_date_range(
                 AnalyticsQuery(user_id=user_id, timeframe=timeframe)
             )
@@ -279,8 +265,7 @@ class MonetizationAnalytics:
         user_id: int,
         session: AsyncSession
     ) -> List[Dict[str, Any]]:
-        """Get AI-powered revenue optimization suggestions"""
-        try:
+        """Get AI-powered revenue optimization suggestions"""        try:
             # Analyze recent performance
             end_date = datetime.now()
             start_date = end_date - timedelta(days=90)  # Last 3 months
@@ -378,8 +363,7 @@ class MonetizationAnalytics:
         comparison_end: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Compare performance between two time periods"""
-        try:
+        """Compare performance between two time periods"""        try:
             # Get current period data
             current_revenue = await self._get_total_revenue(
                 user_id, current_start, current_end, session
@@ -455,8 +439,7 @@ class MonetizationAnalytics:
         session: AsyncSession,
         query: AnalyticsQuery
     ) -> List[RevenueDataPoint]:
-        """Fetch raw revenue data for analysis"""
-        # Build query conditions
+        """Fetch raw revenue data for analysis"""        # Build query conditions
         conditions = [
             RevenueRecord.user_id == user_id,
             RevenueRecord.date >= start_date,
@@ -497,8 +480,7 @@ class MonetizationAnalytics:
         revenue_data: List[RevenueDataPoint],
         query: AnalyticsQuery
     ) -> Dict[str, Any]:
-        """Calculate summary metrics from revenue data"""
-        if not revenue_data:
+        """Calculate summary metrics from revenue data"""        if not revenue_data:
             return {}
         
         total_revenue = sum(dp.value for dp in revenue_data)
@@ -526,8 +508,7 @@ class MonetizationAnalytics:
         revenue_data: List[RevenueDataPoint],
         granularity: str
     ) -> List[RevenueDataPoint]:
-        """Generate time series data with specified granularity"""
-        if not revenue_data:
+        """Generate time series data with specified granularity"""        if not revenue_data:
             return []
         
         # Group data by granularity
@@ -568,8 +549,7 @@ class MonetizationAnalytics:
         self,
         time_series: List[RevenueDataPoint]
     ) -> TrendAnalysis:
-        """Analyze trends in time series data"""
-        if len(time_series) < 2:
+        """Analyze trends in time series data"""        if len(time_series) < 2:
             return TrendAnalysis(
                 direction=TrendDirection.STABLE,
                 strength=0.0,
@@ -626,8 +606,7 @@ class MonetizationAnalytics:
         self,
         revenue_data: List[RevenueDataPoint]
     ) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by platform"""
-        platform_revenue = {}
+        """Calculate revenue breakdown by platform"""        platform_revenue = {}
         
         for dp in revenue_data:
             if dp.platform:
@@ -641,8 +620,7 @@ class MonetizationAnalytics:
         self,
         revenue_data: List[RevenueDataPoint]
     ) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by source"""
-        source_revenue = {}
+        """Calculate revenue breakdown by source"""        source_revenue = {}
         
         for dp in revenue_data:
             if dp.source:
@@ -660,8 +638,7 @@ class MonetizationAnalytics:
         source_breakdown: Dict[str, Decimal],
         query: AnalyticsQuery
     ) -> List[RevenueInsight]:
-        """Generate actionable insights from analytics data"""
-        insights = []
+        """Generate actionable insights from analytics data"""        insights = []
         
         # Trend insight
         if trend_analysis.direction == TrendDirection.UPWARD:
@@ -727,8 +704,7 @@ class MonetizationAnalytics:
         time_series: List[RevenueDataPoint],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate revenue predictions using ML"""
-        try:
+        """Generate revenue predictions using ML"""        try:
             # Prepare data for prediction model
             historical_data = [
                 {"date": dp.date, "revenue": float(dp.value)}
@@ -751,8 +727,7 @@ class MonetizationAnalytics:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Get industry benchmarks for comparison"""
-        # This would typically query benchmark data
+        """Get industry benchmarks for comparison"""        # This would typically query benchmark data
         # For now, return mock benchmarks
         return {
             "average_monthly_revenue": 2500.0,
@@ -762,8 +737,7 @@ class MonetizationAnalytics:
         }
     
     def _calculate_date_range(self, query: AnalyticsQuery) -> Tuple[datetime, datetime]:
-        """Calculate date range based on timeframe"""
-        end_date = datetime.now()
+        """Calculate date range based on timeframe"""        end_date = datetime.now()
         
         if query.timeframe == AnalyticsTimeframe.CUSTOM:
             return query.start_date, query.end_date
@@ -783,8 +757,7 @@ class MonetizationAnalytics:
         return start_date, end_date
     
     def _generate_cache_key(self, query: AnalyticsQuery) -> str:
-        """Generate cache key for analytics query"""
-        import hashlib
+        """Generate cache key for analytics query"""        import hashlib
         
         key_data = f"{query.user_id}_{query.timeframe.value}_{query.start_date}_{query.end_date}_{query.platforms}_{query.metrics}"
         return hashlib.md5(key_data.encode()).hexdigest()
@@ -796,8 +769,7 @@ class MonetizationAnalytics:
         end_date: datetime,
         session: AsyncSession
     ) -> Decimal:
-        """Get total revenue for period"""
-        result = await session.execute(
+        """Get total revenue for period"""        result = await session.execute(
             select(func.sum(RevenueRecord.amount)).where(
                 RevenueRecord.user_id == user_id,
                 RevenueRecord.date >= start_date,
@@ -816,8 +788,7 @@ class MonetizationAnalytics:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Decimal]:
-        """Get revenue breakdown by platform"""
-        result = await session.execute(
+        """Get revenue breakdown by platform"""        result = await session.execute(
             select(
                 RevenueRecord.platform,
                 func.sum(RevenueRecord.amount).label('total')
@@ -841,8 +812,7 @@ class MonetizationAnalytics:
         investment: Decimal,
         session: AsyncSession
     ) -> Optional[float]:
-        """Calculate payback period in months"""
-        try:
+        """Calculate payback period in months"""        try:
             # Get monthly revenue trend
             monthly_revenues = []
             for i in range(12):  # Last 12 months
@@ -870,8 +840,7 @@ class MonetizationAnalytics:
         user_id: int,
         session: AsyncSession
     ) -> Decimal:
-        """Calculate lifetime value projection"""
-        try:
+        """Calculate lifetime value projection"""        try:
             # Simple LTV calculation: average monthly revenue * 24 months
             end_date = datetime.now()
             start_date = end_date - timedelta(days=365)  # Last year
@@ -890,8 +859,7 @@ class MonetizationAnalytics:
 
 
 class RevenueAnalyzer:
-    """High-level revenue analysis interface"""
-    
+    """High-level revenue analysis interface"""    
     def __init__(self, analytics_engine: MonetizationAnalytics):
         self.analytics_engine = analytics_engine
         self.logger = logging.getLogger(__name__)
@@ -901,8 +869,7 @@ class RevenueAnalyzer:
         user_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Get comprehensive dashboard data"""
-        try:
+        """Get comprehensive dashboard data"""        try:
             # Current month data
             current_query = AnalyticsQuery(
                 user_id=user_id,

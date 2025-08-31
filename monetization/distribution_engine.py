@@ -1,11 +1,9 @@
-"""
-Distribution Engine
+"""Distribution Engine
 Automated revenue distribution and multi-creator payment system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -19,8 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionType(Enum):
-    """Distribution types"""
-    EQUAL_SPLIT = "equal_split"
+    """Distribution types"""    EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     CONTRIBUTION_BASED = "contribution_based"
     ROLE_BASED = "role_based"
@@ -28,8 +25,7 @@ class DistributionType(Enum):
 
 
 class PayoutSchedule(Enum):
-    """Payout schedule options"""
-    IMMEDIATE = "immediate"
+    """Payout schedule options"""    IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -38,8 +34,7 @@ class PayoutSchedule(Enum):
 
 @dataclass
 class Contributor:
-    """Content contributor structure"""
-    user_id: str
+    """Content contributor structure"""    user_id: str
     role: str
     contribution_percentage: float
     revenue_share: float
@@ -51,8 +46,7 @@ class Contributor:
 
 @dataclass
 class DistributionRule:
-    """Revenue distribution rules"""
-    content_id: str
+    """Revenue distribution rules"""    content_id: str
     distribution_type: DistributionType
     contributors: List[Contributor]
     platform_fee: float = 0.10  # 10% platform fee
@@ -64,8 +58,7 @@ class DistributionRule:
 
 @dataclass
 class DistributionEvent:
-    """Distribution event record"""
-    id: str
+    """Distribution event record"""    id: str
     content_id: str
     total_revenue: float
     platform_revenue: float
@@ -79,8 +72,7 @@ class DistributionEvent:
 
 
 class DistributionEngine:
-    """Automated revenue distribution engine"""
-    
+    """Automated revenue distribution engine"""    
     # Default role-based revenue shares
     DEFAULT_ROLE_SHARES = {
         "primary_artist": 0.40,
@@ -113,8 +105,7 @@ class DistributionEngine:
         platform_fee: float = 0.10,
         payout_schedule: PayoutSchedule = PayoutSchedule.MONTHLY
     ) -> DistributionRule:
-        """Create revenue distribution rule for content"""
-        try:
+        """Create revenue distribution rule for content"""        try:
             # Validate contribution percentages
             total_contribution = sum(c.contribution_percentage for c in contributors)
             if abs(total_contribution - 1.0) > 0.01:  # Allow 1% tolerance
@@ -173,8 +164,7 @@ class DistributionEngine:
         period_start: datetime,
         period_end: datetime
     ) -> DistributionEvent:
-        """Calculate revenue distribution for a period"""
-        try:
+        """Calculate revenue distribution for a period"""        try:
             rule = self.distribution_rules.get(content_id)
             if not rule:
                 raise ValueError(f"No distribution rule found for content {content_id}")
@@ -247,8 +237,7 @@ class DistributionEngine:
         content_id: str,
         revenue_data: Dict[str, float]
     ) -> Optional[DistributionEvent]:
-        """Process automatic distribution based on schedule"""
-        try:
+        """Process automatic distribution based on schedule"""        try:
             rule = self.distribution_rules.get(content_id)
             if not rule:
                 logger.warning(f"No distribution rule for content {content_id}")
@@ -307,8 +296,7 @@ class DistributionEngine:
         creators: List[Dict[str, Any]],
         revenue_split_agreement: Dict[str, float]
     ) -> DistributionRule:
-        """Handle complex multi-creator collaborations"""
-        try:
+        """Handle complex multi-creator collaborations"""        try:
             contributors = []
             
             for creator_data in creators:
@@ -348,8 +336,7 @@ class DistributionEngine:
         annual_earnings: float,
         tax_country: str
     ) -> Dict[str, Any]:
-        """Calculate tax implications for user earnings"""
-        try:
+        """Calculate tax implications for user earnings"""        try:
             # Get user's distributions for the year
             user_distributions = []
             for event in self.distribution_history.values():
@@ -392,8 +379,7 @@ class DistributionEngine:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate detailed royalty statements"""
-        try:
+        """Generate detailed royalty statements"""        try:
             rule = self.distribution_rules.get(content_id)
             if not rule:
                 return {"error": "No distribution rule found"}
@@ -458,8 +444,7 @@ class DistributionEngine:
             return {"error": str(e)}
     
     async def _queue_payouts(self, distribution: DistributionEvent):
-        """Queue payouts for processing"""
-        try:
+        """Queue payouts for processing"""        try:
             for payout in distribution.contributor_payouts:
                 payout_id = str(uuid.uuid4())
                 
@@ -482,8 +467,7 @@ class DistributionEngine:
             logger.error(f"Error queueing payouts: {str(e)}")
     
     def _get_tax_brackets(self, country: str) -> List[Tuple[float, float]]:
-        """Get tax brackets for country"""
-        # Simplified tax brackets
+        """Get tax brackets for country"""        # Simplified tax brackets
         brackets = {
             "DE": [(9744, 0.14), (57051, 0.25), (270500, 0.42), (float('inf'), 0.45)],
             "US": [(12950, 0.10), (52525, 0.22), (210725, 0.32), (523600, 0.37)],
@@ -494,8 +478,7 @@ class DistributionEngine:
         return brackets.get(country, [(10000, 0.20), (50000, 0.30), (float('inf'), 0.40)])
     
     def _calculate_progressive_tax(self, income: float, tax_brackets: List[Tuple[float, float]]) -> float:
-        """Calculate progressive tax"""
-        total_tax = 0.0
+        """Calculate progressive tax"""        total_tax = 0.0
         remaining_income = income
         previous_threshold = 0.0
         
@@ -517,8 +500,7 @@ class DistributionEngine:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Get distribution analytics"""
-        try:
+        """Get distribution analytics"""        try:
             filtered_events = []
             
             for event in self.distribution_history.values():

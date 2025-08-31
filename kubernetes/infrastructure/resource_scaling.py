@@ -1,5 +1,4 @@
-"""
-Resource Scaling Management System
+"""Resource Scaling Management System
 
 Provides comprehensive auto-scaling capabilities including horizontal pod autoscaling,
 vertical pod autoscaling, cluster autoscaling, and custom metrics-based scaling.
@@ -9,7 +8,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
-
 import asyncio
 import logging
 import json
@@ -23,29 +21,25 @@ import yaml
 logger = logging.getLogger(__name__)
 
 class ScalingType(Enum):
-    """Types of scaling"""
-    HORIZONTAL_POD_AUTOSCALER = "hpa"
+    """Types of scaling"""    HORIZONTAL_POD_AUTOSCALER = "hpa"
     VERTICAL_POD_AUTOSCALER = "vpa"
     CLUSTER_AUTOSCALER = "cluster"
     CUSTOM_METRICS = "custom"
 
 class MetricType(Enum):
-    """Metric types for scaling"""
-    CPU_UTILIZATION = "cpu"
+    """Metric types for scaling"""    CPU_UTILIZATION = "cpu"
     MEMORY_UTILIZATION = "memory"
     CUSTOM_METRIC = "custom"
     EXTERNAL_METRIC = "external"
     RESOURCE_METRIC = "resource"
 
 class ScalingBehavior(Enum):
-    """Scaling behavior types"""
-    SCALE_UP = "scale_up"
+    """Scaling behavior types"""    SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
 
 @dataclass
 class MetricSpec:
-    """Metric specification for scaling"""
-    name: str
+    """Metric specification for scaling"""    name: str
     metric_type: MetricType
     target_value: Union[int, str]
     target_type: str = "Utilization"  # Utilization, AverageValue, Value
@@ -54,16 +48,14 @@ class MetricSpec:
 
 @dataclass
 class ScalingPolicy:
-    """Scaling policy configuration"""
-    scaling_type: ScalingBehavior
+    """Scaling policy configuration"""    scaling_type: ScalingBehavior
     period_seconds: int = 60
     value: int = 1
     policy_type: str = "Pods"  # Pods, Percent
 
 @dataclass
 class HPASpec:
-    """Horizontal Pod Autoscaler specification"""
-    name: str
+    """Horizontal Pod Autoscaler specification"""    name: str
     namespace: str
     target_ref: Dict[str, str]
     min_replicas: int = 1
@@ -73,8 +65,7 @@ class HPASpec:
 
 @dataclass
 class VPASpec:
-    """Vertical Pod Autoscaler specification"""
-    name: str
+    """Vertical Pod Autoscaler specification"""    name: str
     namespace: str
     target_ref: Dict[str, str]
     update_mode: str = "Auto"  # Auto, Initial, Off
@@ -82,8 +73,7 @@ class VPASpec:
 
 @dataclass
 class ClusterAutoscalerSpec:
-    """Cluster Autoscaler specification"""
-    name: str
+    """Cluster Autoscaler specification"""    name: str
     namespace: str = "kube-system"
     min_nodes: int = 1
     max_nodes: int = 100
@@ -92,8 +82,7 @@ class ClusterAutoscalerSpec:
     node_groups: List[Dict[str, Any]] = field(default_factory=list)
 
 class ResourceScalingManager:
-    """Main resource scaling manager"""
-    
+    """Main resource scaling manager"""    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
@@ -102,8 +91,7 @@ class ResourceScalingManager:
         self.custom_objects_api = client.CustomObjectsApi() if k8s_client else None
         
     async def create_horizontal_pod_autoscaler(self, hpa_spec: HPASpec) -> Dict[str, Any]:
-        """Create Horizontal Pod Autoscaler"""
-        try:
+        """Create Horizontal Pod Autoscaler"""        try:
             # Convert metrics to HPA format
             hpa_metrics = []
             for metric in hpa_spec.metrics:
@@ -218,8 +206,7 @@ class ResourceScalingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_vertical_pod_autoscaler(self, vpa_spec: VPASpec) -> Dict[str, Any]:
-        """Create Vertical Pod Autoscaler"""
-        try:
+        """Create Vertical Pod Autoscaler"""        try:
             # VPA resource definition
             vpa_resource = {
                 'apiVersion': 'autoscaling.k8s.io/v1',
@@ -272,8 +259,7 @@ class ResourceScalingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_cluster_autoscaler(self, ca_spec: ClusterAutoscalerSpec) -> Dict[str, Any]:
-        """Create Cluster Autoscaler"""
-        try:
+        """Create Cluster Autoscaler"""        try:
             # Cluster Autoscaler deployment
             deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -356,8 +342,7 @@ class ResourceScalingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_cluster_autoscaler_rbac(self, namespace: str) -> Dict[str, Any]:
-        """Create RBAC for Cluster Autoscaler"""
-        try:
+        """Create RBAC for Cluster Autoscaler"""        try:
             # Service Account
             service_account = client.V1ServiceAccount(
                 metadata=client.V1ObjectMeta(
@@ -460,8 +445,7 @@ class ResourceScalingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_ia_influencer_autoscaling(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Create comprehensive autoscaling for IA Influencer platform"""
-        try:
+        """Create comprehensive autoscaling for IA Influencer platform"""        try:
             results = {}
             
             # API Server HPA
@@ -677,8 +661,7 @@ class ResourceScalingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def get_scaling_status(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Get comprehensive scaling status"""
-        try:
+        """Get comprehensive scaling status"""        try:
             status = {}
             
             if self.autoscaling_v2:
@@ -725,8 +708,7 @@ class ResourceScalingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def update_scaling_policy(self, name: str, namespace: str, new_spec: HPASpec) -> Dict[str, Any]:
-        """Update existing HPA scaling policy"""
-        try:
+        """Update existing HPA scaling policy"""        try:
             if self.autoscaling_v2:
                 # Delete existing HPA
                 self.autoscaling_v2.delete_namespaced_horizontal_pod_autoscaler(
@@ -748,8 +730,7 @@ class ResourceScalingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def scale_deployment_manually(self, deployment_name: str, namespace: str, replicas: int) -> Dict[str, Any]:
-        """Manually scale a deployment"""
-        try:
+        """Manually scale a deployment"""        try:
             if self.apps_v1:
                 # Patch deployment with new replica count
                 self.apps_v1.patch_namespaced_deployment_scale(

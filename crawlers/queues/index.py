@@ -1,5 +1,4 @@
-"""
-Queue Management System Index - IA-Influencer-Agent
+"""Queue Management System Index - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/queues/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 System initialization → Component discovery → Health verification → Service orchestration →
 Performance monitoring → Security enforcement → Continuous optimization → Global coordination
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class QueueSystemManager:
-    """Central manager for the complete queue management ecosystem"""
-    
+    """Central manager for the complete queue management ecosystem"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.queue_system = None
@@ -47,8 +44,7 @@ class QueueSystemManager:
         self.performance_history = []
         
     async def initialize_complete_system(self) -> Dict[str, Any]:
-        """Initialize the complete queue management system"""
-        
+        """Initialize the complete queue management system"""        
         logger.info("🚀 Starting IA-Influencer-Agent Queue Management System")
         logger.info("=" * 80)
         logger.info("Author: Fahed Mlaiel (mlaiel@live.de)")
@@ -114,8 +110,7 @@ class QueueSystemManager:
             }
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        
+        """Get comprehensive system status"""        
         if not self.queue_system:
             return {
                 'system_status': self.system_status,
@@ -168,8 +163,7 @@ class QueueSystemManager:
         }
     
     async def perform_system_health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check"""
-        
+        """Perform comprehensive system health check"""        
         if not self.queue_system:
             return {
                 'overall_health': 'critical',
@@ -235,8 +229,7 @@ class QueueSystemManager:
         return health_results
     
     async def optimize_system_performance(self) -> Dict[str, Any]:
-        """Trigger system-wide performance optimization"""
-        
+        """Trigger system-wide performance optimization"""        
         if not self.queue_system:
             return {
                 'status': 'failed',
@@ -283,8 +276,7 @@ class QueueSystemManager:
             }
     
     async def shutdown_system(self) -> Dict[str, Any]:
-        """Gracefully shutdown the queue management system"""
-        
+        """Gracefully shutdown the queue management system"""        
         logger.info("🛑 Initiating graceful system shutdown")
         
         shutdown_results = {}
@@ -331,8 +323,7 @@ class QueueSystemManager:
     # Private methods
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default system configuration"""
-        
+        """Get default system configuration"""        
         return {
             'max_workers': 100,
             'max_queue_size': 50000,
@@ -348,8 +339,7 @@ class QueueSystemManager:
         }
     
     async def _log_system_components(self):
-        """Log information about system components"""
-        
+        """Log information about system components"""        
         components = self.queue_system.keys()
         features = self.queue_system.get('features', {})
         
@@ -365,8 +355,7 @@ class QueueSystemManager:
             logger.info(f"  {status} {feature}")
     
     async def _start_health_monitoring(self):
-        """Start system health monitoring"""
-        
+        """Start system health monitoring"""        
         async def health_monitoring_loop():
             while self.system_status == "operational":
                 try:
@@ -385,8 +374,7 @@ class QueueSystemManager:
         logger.info("💓 System health monitoring started")
     
     async def _start_performance_tracking(self):
-        """Start performance tracking"""
-        
+        """Start performance tracking"""        
         async def performance_tracking_loop():
             while self.system_status == "operational":
                 try:
@@ -407,8 +395,7 @@ class QueueSystemManager:
         logger.info("📊 Performance tracking started")
     
     def _get_component_summary(self) -> Dict[str, str]:
-        """Get summary of system components"""
-        
+        """Get summary of system components"""        
         summary = {}
         
         if self.queue_system:
@@ -422,8 +409,7 @@ class QueueSystemManager:
         return summary
     
     async def _get_performance_summary(self) -> Dict[str, Any]:
-        """Get performance summary"""
-        
+        """Get performance summary"""        
         if not self.performance_history:
             return {'status': 'no_data'}
         
@@ -446,8 +432,7 @@ class QueueSystemManager:
         }
     
     async def _collect_performance_data(self) -> Dict[str, Any]:
-        """Collect current performance data"""
-        
+        """Collect current performance data"""        
         data = {
             'timestamp': datetime.now().isoformat(),
             'uptime': (datetime.now() - self.startup_timestamp).total_seconds() if self.startup_timestamp else 0
@@ -478,8 +463,7 @@ class QueueSystemManager:
         return data
     
     async def _check_orchestrator_health(self) -> Dict[str, Any]:
-        """Check orchestrator health"""
-        
+        """Check orchestrator health"""        
         try:
             status = await self.queue_system['orchestrator'].get_orchestration_status()
             
@@ -520,8 +504,7 @@ class QueueSystemManager:
             }
     
     async def _check_monitor_health(self) -> Dict[str, Any]:
-        """Check monitoring system health"""
-        
+        """Check monitoring system health"""        
         try:
             status = await self.queue_system['monitor'].get_monitoring_status()
             
@@ -555,8 +538,7 @@ class QueueSystemManager:
             }
     
     async def _check_diagnostics_health(self) -> Dict[str, Any]:
-        """Check diagnostics system health"""
-        
+        """Check diagnostics system health"""        
         try:
             status = await self.queue_system['diagnostics'].get_diagnostic_status()
             
@@ -596,16 +578,14 @@ _system_manager = None
 
 
 async def initialize_queue_system(config: Dict[str, Any] = None) -> Dict[str, Any]:
-    """Initialize the complete queue management system"""
-    
+    """Initialize the complete queue management system"""    
     global _system_manager
     _system_manager = QueueSystemManager(config)
     return await _system_manager.initialize_complete_system()
 
 
 async def get_system_status() -> Dict[str, Any]:
-    """Get current system status"""
-    
+    """Get current system status"""    
     if not _system_manager:
         return {
             'status': 'not_initialized',
@@ -616,8 +596,7 @@ async def get_system_status() -> Dict[str, Any]:
 
 
 async def perform_health_check() -> Dict[str, Any]:
-    """Perform system health check"""
-    
+    """Perform system health check"""    
     if not _system_manager:
         return {
             'status': 'not_initialized',
@@ -628,8 +607,7 @@ async def perform_health_check() -> Dict[str, Any]:
 
 
 async def optimize_performance() -> Dict[str, Any]:
-    """Trigger system performance optimization"""
-    
+    """Trigger system performance optimization"""    
     if not _system_manager:
         return {
             'status': 'not_initialized',
@@ -640,8 +618,7 @@ async def optimize_performance() -> Dict[str, Any]:
 
 
 async def shutdown_system() -> Dict[str, Any]:
-    """Shutdown the queue management system"""
-    
+    """Shutdown the queue management system"""    
     if not _system_manager:
         return {
             'status': 'not_initialized',
@@ -652,8 +629,7 @@ async def shutdown_system() -> Dict[str, Any]:
 
 
 def get_system_manager() -> Optional[QueueSystemManager]:
-    """Get the global system manager instance"""
-    return _system_manager
+    """Get the global system manager instance"""    return _system_manager
 
 
 # Export main functions

@@ -1,5 +1,4 @@
-"""
-Nginx Load Balancer Manager for IA Influencer Agent
+"""Nginx Load Balancer Manager for IA Influencer Agent
 
 Provides enterprise-grade Nginx configuration and management for high-traffic
 content protection, fingerprinting, and monetization services.
@@ -12,7 +11,6 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
-
 import os
 import subprocess
 import tempfile
@@ -93,8 +91,7 @@ PLATFORM_SERVICES = {
 
 @dataclass
 class UpstreamServer:
-    """Upstream server configuration for load balancing"""
-    host: str
+    """Upstream server configuration for load balancing"""    host: str
     port: int
     weight: int = 1
     max_fails: int = 3
@@ -108,8 +105,7 @@ class UpstreamServer:
 
 @dataclass
 class NginxLocationConfig:
-    """Nginx location block configuration"""
-    path: str
+    """Nginx location block configuration"""    path: str
     upstream_name: str
     proxy_read_timeout: int = 60
     proxy_connect_timeout: int = 60
@@ -127,8 +123,7 @@ class NginxLocationConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for Nginx"""
-    ssl_protocols: List[str] = None
+    """Security configuration for Nginx"""    ssl_protocols: List[str] = None
     ssl_ciphers: str = "ECDHE-ECDSA-AES128-GCM-SHA256:ECDHE-RSA-AES128-GCM-SHA256"
     ssl_prefer_server_ciphers: bool = True
     hsts_max_age: int = 31536000
@@ -146,8 +141,7 @@ class SecurityConfig:
 
 @dataclass
 class CacheConfig:
-    """Cache configuration for Nginx"""
-    enabled: bool = True
+    """Cache configuration for Nginx"""    enabled: bool = True
     cache_path: str = "/var/cache/nginx/influencer_agent"
     keys_zone_name: str = "influencer_cache"
     keys_zone_size: str = "100m"
@@ -165,8 +159,7 @@ class CacheConfig:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration"""
-    enabled: bool = True
+    """Rate limiting configuration"""    enabled: bool = True
     zone_name: str = "api_limit"
     zone_size: str = "10m"
     rate: str = "10r/s"
@@ -177,8 +170,7 @@ class RateLimitConfig:
 
 
 class NginxManager:
-    """
-    Enterprise-grade Nginx Load Balancer Manager
+    """    Enterprise-grade Nginx Load Balancer Manager
     
     Handles configuration, deployment, and monitoring of Nginx load balancer
     for IA Influencer Agent platform with focus on:
@@ -186,8 +178,7 @@ class NginxManager:
     - AI fingerprinting workloads
     - Real-time monetization APIs
     - Multi-tenant isolation
-    """
-    
+    """    
     def __init__(
         self,
         config_path: str = "/etc/nginx",
@@ -228,11 +219,9 @@ class NginxManager:
         logger.info("Nginx Manager initialized for IA Influencer Agent platform")
     
     async def initialize_platform_configuration(self) -> bool:
-        """
-        Initialize Nginx configuration for IA Influencer Agent platform
+        """        Initialize Nginx configuration for IA Influencer Agent platform
         Configures load balancing for all critical services
-        """
-        try:
+        """        try:
             # Create directory structure
             await self._create_directory_structure()
             
@@ -262,8 +251,7 @@ class NginxManager:
             return False
     
     async def _configure_platform_upstreams(self) -> None:
-        """Configure upstream servers for all platform services"""
-        
+        """Configure upstream servers for all platform services"""        
         # API Gateway services
         api_servers = [
             UpstreamServer("api-gateway-1", 8000, weight=3),
@@ -319,8 +307,7 @@ class NginxManager:
         logger.info("Platform upstream servers configured")
     
     async def _configure_platform_virtual_hosts(self) -> None:
-        """Configure virtual hosts for different platform environments"""
-        
+        """Configure virtual hosts for different platform environments"""        
         # Main API virtual host
         api_config = {
             "server_name": "api.influencer-agent.com",
@@ -401,8 +388,7 @@ class NginxManager:
         logger.info("Platform virtual hosts configured")
     
     async def add_upstream(self, name: str, servers: List[UpstreamServer]) -> bool:
-        """Add or update upstream server group"""
-        try:
+        """Add or update upstream server group"""        try:
             self.upstream_servers[name] = servers
             
             # Validate servers
@@ -425,8 +411,7 @@ class NginxManager:
             return False
     
     async def _validate_upstream_server(self, server: UpstreamServer) -> bool:
-        """Validate upstream server connectivity"""
-        try:
+        """Validate upstream server connectivity"""        try:
             # Test basic connectivity
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(5)
@@ -453,8 +438,7 @@ class NginxManager:
             return False
     
     async def add_virtual_host(self, name: str, config: Dict[str, Any]) -> bool:
-        """Add virtual host configuration"""
-        try:
+        """Add virtual host configuration"""        try:
             self.virtual_hosts[name] = config
             logger.info(f"Added virtual host '{name}'")
             return True
@@ -463,13 +447,11 @@ class NginxManager:
             return False
     
     async def _configure_security_settings(self) -> None:
-        """Configure security settings for the platform"""
-        self.security_config = SecurityConfig()
+        """Configure security settings for the platform"""        self.security_config = SecurityConfig()
         logger.info("Security settings configured")
     
     async def _configure_caching(self) -> None:
-        """Configure caching for performance optimization"""
-        self.cache_config = CacheConfig()
+        """Configure caching for performance optimization"""        self.cache_config = CacheConfig()
         
         # Create cache directories
         cache_dir = Path(self.cache_config.cache_path)
@@ -478,8 +460,7 @@ class NginxManager:
         logger.info("Caching configuration applied")
     
     async def _configure_rate_limiting(self) -> None:
-        """Configure rate limiting for different endpoints"""
-        self.rate_limit_configs = {
+        """Configure rate limiting for different endpoints"""        self.rate_limit_configs = {
             "api_limit": RateLimitConfig(
                 zone_name="api_limit",
                 rate="100r/s",
@@ -499,8 +480,7 @@ class NginxManager:
         logger.info("Rate limiting configured")
     
     async def _generate_main_configuration(self) -> bool:
-        """Generate main Nginx configuration file"""
-        try:
+        """Generate main Nginx configuration file"""        try:
             main_config = self._build_main_config()
             
             config_file = self.config_path / "nginx.conf"
@@ -521,9 +501,7 @@ class NginxManager:
             return False
     
     def _build_main_config(self) -> str:
-        """Build main nginx.conf content"""
-        config = f"""
-# Nginx Configuration for IA Influencer Agent Platform
+        """Build main nginx.conf content"""        config = f"""# Nginx Configuration for IA Influencer Agent Platform
 # Generated: {datetime.now().isoformat()}
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -649,33 +627,27 @@ http {{
     # Include virtual host configurations
     include /etc/nginx/sites-enabled/*;
 }}
-"""
-        return config
+"""        return config
     
     def _build_rate_limit_zones(self) -> str:
-        """Build rate limiting zones configuration"""
-        zones = []
+        """Build rate limiting zones configuration"""        zones = []
         for name, config in self.rate_limit_configs.items():
             zones.append(f"limit_req_zone $binary_remote_addr zone={config.zone_name}:{config.zone_size} rate={config.rate};")
         return "\n    ".join(zones)
     
     def _build_cache_config(self) -> str:
-        """Build cache configuration"""
-        if not self.cache_config.enabled:
+        """Build cache configuration"""        if not self.cache_config.enabled:
             return ""
         
-        return f"""
-    proxy_cache_path {self.cache_config.cache_path} 
+        return f"""    proxy_cache_path {self.cache_config.cache_path} 
                      levels=1:2 
                      keys_zone={self.cache_config.keys_zone_name}:{self.cache_config.keys_zone_size}
                      max_size={self.cache_config.max_size}
                      inactive={self.cache_config.inactive}
                      use_temp_path={str(self.cache_config.use_temp_path).lower()};
-    """
-    
+    """    
     async def _generate_upstream_configs(self) -> None:
-        """Generate upstream configuration files"""
-        upstream_dir = self.config_path / "conf.d" / "upstreams"
+        """Generate upstream configuration files"""        upstream_dir = self.config_path / "conf.d" / "upstreams"
         upstream_dir.mkdir(parents=True, exist_ok=True)
         
         for name, servers in self.upstream_servers.items():
@@ -688,8 +660,7 @@ http {{
         logger.info(f"Generated {len(self.upstream_servers)} upstream configurations")
     
     def _build_upstream_config(self, name: str, servers: List[UpstreamServer]) -> str:
-        """Build upstream configuration block"""
-        config_lines = [f"upstream {name} {{"]
+        """Build upstream configuration block"""        config_lines = [f"upstream {name} {{"]
         
         # Add health check if available
         config_lines.append("    least_conn;")
@@ -720,8 +691,7 @@ http {{
         return "\n".join(config_lines)
     
     async def _generate_virtual_host_configs(self) -> None:
-        """Generate virtual host configuration files"""
-        for name, config in self.virtual_hosts.items():
+        """Generate virtual host configuration files"""        for name, config in self.virtual_hosts.items():
             vhost_content = self._build_virtual_host_config(name, config)
             config_file = self.sites_available / f"{name}.conf"
             
@@ -736,8 +706,7 @@ http {{
         logger.info(f"Generated {len(self.virtual_hosts)} virtual host configurations")
     
     def _build_virtual_host_config(self, name: str, config: Dict[str, Any]) -> str:
-        """Build virtual host configuration"""
-        lines = []
+        """Build virtual host configuration"""        lines = []
         
         # Server block start
         lines.append("server {")
@@ -790,8 +759,7 @@ http {{
         return "\n".join(lines)
     
     def _build_location_block(self, location: NginxLocationConfig) -> List[str]:
-        """Build location block configuration"""
-        lines = [f"    location {location.path} {{"]
+        """Build location block configuration"""        lines = [f"    location {location.path} {{"]
         
         # Rate limiting
         if location.rate_limit:
@@ -843,8 +811,7 @@ http {{
         return lines
     
     async def _create_directory_structure(self) -> None:
-        """Create necessary directory structure"""
-        directories = [
+        """Create necessary directory structure"""        directories = [
             self.config_path,
             self.sites_available,
             self.sites_enabled,
@@ -860,8 +827,7 @@ http {{
         logger.info("Directory structure created")
     
     async def reload_configuration(self) -> bool:
-        """Reload Nginx configuration"""
-        try:
+        """Reload Nginx configuration"""        try:
             # Test configuration first
             result = subprocess.run(
                 ["nginx", "-t"],
@@ -897,8 +863,7 @@ http {{
             return False
     
     async def start_monitoring(self) -> None:
-        """Start monitoring Nginx performance and health"""
-        if self._monitoring_active:
+        """Start monitoring Nginx performance and health"""        if self._monitoring_active:
             return
         
         self._monitoring_active = True
@@ -907,8 +872,7 @@ http {{
         logger.info("Nginx monitoring started")
     
     def _monitoring_loop(self) -> None:
-        """Monitoring loop for Nginx metrics"""
-        while self._monitoring_active:
+        """Monitoring loop for Nginx metrics"""        while self._monitoring_active:
             try:
                 # Collect basic metrics
                 self._collect_connection_metrics()
@@ -922,8 +886,7 @@ http {{
                 time.sleep(60)  # Wait longer on error
     
     def _collect_connection_metrics(self) -> None:
-        """Collect connection metrics from Nginx"""
-        try:
+        """Collect connection metrics from Nginx"""        try:
             # This would typically parse nginx status page or use nginx-prometheus-exporter
             # For now, we'll collect basic system metrics
             
@@ -945,8 +908,7 @@ http {{
             logger.error(f"Error collecting connection metrics: {e}")
     
     def _collect_log_metrics(self) -> None:
-        """Collect metrics from Nginx logs"""
-        try:
+        """Collect metrics from Nginx logs"""        try:
             access_log = self.log_path / "access.log"
             if not access_log.exists():
                 return
@@ -962,8 +924,7 @@ http {{
             logger.error(f"Error collecting log metrics: {e}")
     
     async def _check_upstream_health(self) -> None:
-        """Check health of upstream servers"""
-        health_results = {}
+        """Check health of upstream servers"""        health_results = {}
         
         for upstream_name, servers in self.upstream_servers.items():
             healthy_servers = 0
@@ -982,21 +943,17 @@ http {{
         self.metrics['upstream_health'] = health_results
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get current metrics"""
-        return self.metrics.copy()
+        """Get current metrics"""        return self.metrics.copy()
     
     async def stop_monitoring(self) -> None:
-        """Stop monitoring"""
-        self._monitoring_active = False
+        """Stop monitoring"""        self._monitoring_active = False
         if self._monitor_thread and self._monitor_thread.is_alive():
             self._monitor_thread.join(timeout=10)
         logger.info("Nginx monitoring stopped")
     
     async def emergency_maintenance_mode(self, enable: bool = True) -> bool:
-        """Enable/disable emergency maintenance mode"""
-        try:
-            maintenance_config = f"""
-server {{
+        """Enable/disable emergency maintenance mode"""        try:
+            maintenance_config = f"""server {{
     listen 80 default_server;
     listen [::]:80 default_server;
     listen 443 ssl http2 default_server;
@@ -1013,8 +970,7 @@ server {{
         add_header Retry-After 300;
     }}
 }}
-"""
-            
+"""            
             maintenance_file = self.sites_enabled / "maintenance.conf"
             
             if enable:
@@ -1049,8 +1005,7 @@ server {{
             return False
     
     def __del__(self):
-        """Cleanup on destruction"""
-        if hasattr(self, '_monitoring_active') and self._monitoring_active:
+        """Cleanup on destruction"""        if hasattr(self, '_monitoring_active') and self._monitoring_active:
             asyncio.create_task(self.stop_monitoring())
         
         if hasattr(self, '_executor'):

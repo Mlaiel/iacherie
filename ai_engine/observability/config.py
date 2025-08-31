@@ -1,5 +1,4 @@
-"""
-Observability Configuration Management
+"""Observability Configuration Management
 
 Advanced configuration management for the observability suite
 with environment-specific settings, security configurations,
@@ -14,7 +13,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import json
 import os
 import logging
@@ -26,16 +24,14 @@ from enum import Enum
 
 
 class Environment(Enum):
-    """Environment types"""
-    DEVELOPMENT = "development"
+    """Environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class LogLevel(Enum):
-    """Logging levels"""
-    DEBUG = "DEBUG"
+    """Logging levels"""    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -44,8 +40,7 @@ class LogLevel(Enum):
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring configuration"""
-    enabled: bool = True
+    """Monitoring configuration"""    enabled: bool = True
     real_time_enabled: bool = True
     predictive_enabled: bool = True
     anomaly_detection_enabled: bool = True
@@ -81,8 +76,7 @@ class MonitoringConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics configuration"""
-    enabled: bool = True
+    """Analytics configuration"""    enabled: bool = True
     content_analysis_enabled: bool = True
     user_behavior_enabled: bool = True
     roi_optimization_enabled: bool = True
@@ -113,8 +107,7 @@ class AnalyticsConfig:
 
 @dataclass
 class ReportingConfig:
-    """Reporting configuration"""
-    enabled: bool = True
+    """Reporting configuration"""    enabled: bool = True
     automated_reports_enabled: bool = True
     
     # Report generation
@@ -143,8 +136,7 @@ class ReportingConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    encryption_enabled: bool = True
+    """Security configuration"""    encryption_enabled: bool = True
     audit_logging_enabled: bool = True
     access_control_enabled: bool = True
     
@@ -171,8 +163,7 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance configuration"""
-    # Threading
+    """Performance configuration"""    # Threading
     max_worker_threads: int = 10
     thread_pool_size: int = 20
     
@@ -198,8 +189,7 @@ class PerformanceConfig:
 
 @dataclass
 class IntegrationConfig:
-    """Integration configuration"""
-    # Database integrations
+    """Integration configuration"""    # Database integrations
     postgresql_enabled: bool = True
     mongodb_enabled: bool = False
     redis_enabled: bool = True
@@ -227,8 +217,7 @@ class IntegrationConfig:
 
 @dataclass
 class ObservabilityConfig:
-    """Complete observability configuration"""
-    environment: Environment = Environment.DEVELOPMENT
+    """Complete observability configuration"""    environment: Environment = Environment.DEVELOPMENT
     debug_mode: bool = False
     log_level: LogLevel = LogLevel.INFO
     
@@ -252,17 +241,14 @@ class ObservabilityConfig:
     custom_settings: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        return asdict(self)
+        """Convert configuration to dictionary"""        return asdict(self)
     
     def to_json(self) -> str:
-        """Convert configuration to JSON string"""
-        return json.dumps(self.to_dict(), indent=2, default=str)
+        """Convert configuration to JSON string"""        return json.dumps(self.to_dict(), indent=2, default=str)
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ObservabilityConfig':
-        """Create configuration from dictionary"""
-        # Handle nested dataclasses
+        """Create configuration from dictionary"""        # Handle nested dataclasses
         if 'monitoring' in data and isinstance(data['monitoring'], dict):
             data['monitoring'] = MonitoringConfig(**data['monitoring'])
         
@@ -292,13 +278,11 @@ class ObservabilityConfig:
     
     @classmethod
     def from_json(cls, json_str: str) -> 'ObservabilityConfig':
-        """Create configuration from JSON string"""
-        data = json.loads(json_str)
+        """Create configuration from JSON string"""        data = json.loads(json_str)
         return cls.from_dict(data)
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of issues"""
-        issues = []
+        """Validate configuration and return list of issues"""        issues = []
         
         # Validate monitoring thresholds
         if self.monitoring.cpu_warning_threshold >= self.monitoring.cpu_critical_threshold:
@@ -331,8 +315,7 @@ class ObservabilityConfig:
         return issues
     
     def apply_environment_overrides(self):
-        """Apply environment-specific configuration overrides"""
-        if self.environment == Environment.PRODUCTION:
+        """Apply environment-specific configuration overrides"""        if self.environment == Environment.PRODUCTION:
             # Production optimizations
             self.debug_mode = False
             self.log_level = LogLevel.WARNING
@@ -364,8 +347,7 @@ class ObservabilityConfig:
 
 
 class ConfigurationManager:
-    """Configuration manager for observability suite"""
-    
+    """Configuration manager for observability suite"""    
     def __init__(self, config_path: Optional[Path] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.config_path = config_path or Path("config/observability.json")
@@ -373,8 +355,7 @@ class ConfigurationManager:
         self._watchers = []
     
     def load_config(self, config_file: Optional[Path] = None) -> ObservabilityConfig:
-        """Load configuration from file or create default"""
-        try:
+        """Load configuration from file or create default"""        try:
             config_file = config_file or self.config_path
             
             if config_file.exists():
@@ -404,8 +385,7 @@ class ConfigurationManager:
             return self._create_default_config()
     
     def save_config(self, config: ObservabilityConfig, config_file: Optional[Path] = None):
-        """Save configuration to file"""
-        try:
+        """Save configuration to file"""        try:
             config_file = config_file or self.config_path
             
             # Ensure directory exists
@@ -420,14 +400,12 @@ class ConfigurationManager:
             self.logger.error(f"Failed to save configuration: {str(e)}")
     
     def get_config(self) -> ObservabilityConfig:
-        """Get current configuration"""
-        if self._config is None:
+        """Get current configuration"""        if self._config is None:
             self._config = self.load_config()
         return self._config
     
     def update_config(self, updates: Dict[str, Any]) -> bool:
-        """Update configuration with new values"""
-        try:
+        """Update configuration with new values"""        try:
             current_config = self.get_config()
             config_dict = current_config.to_dict()
             
@@ -457,28 +435,24 @@ class ConfigurationManager:
             return False
     
     def add_config_watcher(self, callback: Callable[[ObservabilityConfig], None]):
-        """Add configuration change watcher"""
-        self._watchers.append(callback)
+        """Add configuration change watcher"""        self._watchers.append(callback)
     
     def _notify_watchers(self, config: ObservabilityConfig):
-        """Notify all configuration watchers"""
-        for watcher in self._watchers:
+        """Notify all configuration watchers"""        for watcher in self._watchers:
             try:
                 watcher(config)
             except Exception as e:
                 self.logger.error(f"Configuration watcher error: {str(e)}")
     
     def _deep_update(self, target: Dict[str, Any], source: Dict[str, Any]):
-        """Recursively update nested dictionary"""
-        for key, value in source.items():
+        """Recursively update nested dictionary"""        for key, value in source.items():
             if key in target and isinstance(target[key], dict) and isinstance(value, dict):
                 self._deep_update(target[key], value)
             else:
                 target[key] = value
     
     def _create_default_config(self) -> ObservabilityConfig:
-        """Create default configuration"""
-        config = ObservabilityConfig()
+        """Create default configuration"""        config = ObservabilityConfig()
         
         # Set environment from environment variable
         env_name = os.getenv('OBSERVABILITY_ENV', 'development').lower()
@@ -501,23 +475,19 @@ class ConfigurationManager:
 _config_manager = None
 
 def get_config_manager() -> ConfigurationManager:
-    """Get global configuration manager"""
-    global _config_manager
+    """Get global configuration manager"""    global _config_manager
     if _config_manager is None:
         _config_manager = ConfigurationManager()
     return _config_manager
 
 def get_config() -> ObservabilityConfig:
-    """Get current observability configuration"""
-    return get_config_manager().get_config()
+    """Get current observability configuration"""    return get_config_manager().get_config()
 
 def update_config(updates: Dict[str, Any]) -> bool:
-    """Update observability configuration"""
-    return get_config_manager().update_config(updates)
+    """Update observability configuration"""    return get_config_manager().update_config(updates)
 
 def load_config_from_file(config_file: Path) -> ObservabilityConfig:
-    """Load configuration from specific file"""
-    return get_config_manager().load_config(config_file)
+    """Load configuration from specific file"""    return get_config_manager().load_config(config_file)
 
 # Export key classes and functions
 __all__ = [

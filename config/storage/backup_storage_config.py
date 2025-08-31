@@ -1,5 +1,4 @@
-"""
-Backup Storage Configuration for IA-Influencer Agent Platform
+"""Backup Storage Configuration for IA-Influencer Agent Platform
 =============================================================
 
 Professional backup and disaster recovery storage configuration.
@@ -15,7 +14,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
@@ -23,23 +21,20 @@ from enum import Enum
 from datetime import datetime, timedelta
 
 class BackupType(Enum):
-    """Types of backup operations."""
-    FULL = "full"
+    """Types of backup operations."""    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     SNAPSHOT = "snapshot"
 
 class BackupStorage(Enum):
-    """Backup storage locations."""
-    LOCAL = "local"
+    """Backup storage locations."""    LOCAL = "local"
     S3 = "s3"
     AZURE_BLOB = "azure_blob"
     GOOGLE_CLOUD = "google_cloud"
     EXTERNAL_SFP = "external_sftp"
 
 class RetentionPolicy(Enum):
-    """Backup retention policies."""
-    DAILY_7 = "daily_7_days"
+    """Backup retention policies."""    DAILY_7 = "daily_7_days"
     WEEKLY_4 = "weekly_4_weeks"
     MONTHLY_12 = "monthly_12_months"
     YEARLY_7 = "yearly_7_years"
@@ -47,8 +42,7 @@ class RetentionPolicy(Enum):
 
 @dataclass
 class BackupSchedule:
-    """Backup schedule configuration."""
-    
+    """Backup schedule configuration."""    
     name: str
     backup_type: BackupType
     frequency: str  # cron expression
@@ -77,8 +71,7 @@ class BackupSchedule:
 
 @dataclass
 class BackupDestination:
-    """Backup destination configuration."""
-    
+    """Backup destination configuration."""    
     storage_type: BackupStorage
     location: str
     credentials: Dict[str, str]
@@ -106,11 +99,9 @@ class BackupDestination:
 
 @dataclass
 class BackupStorageConfig:
-    """
-    Comprehensive backup storage configuration for IA-Influencer Agent platform.
+    """    Comprehensive backup storage configuration for IA-Influencer Agent platform.
     Provides enterprise-grade backup and disaster recovery capabilities.
-    """
-    
+    """    
     # Global backup settings
     enable_backups: bool = True
     backup_base_path: str = os.getenv('BACKUP_BASE_PATH', '/backups/ia-influencer')
@@ -148,16 +139,14 @@ class BackupStorageConfig:
     rto_target_hours: int = 4   # Recovery Time Objective
     
     def __post_init__(self):
-        """Initialize backup configurations if not provided."""
-        if self.schedules is None:
+        """Initialize backup configurations if not provided."""        if self.schedules is None:
             self.schedules = self._get_default_schedules()
         
         if self.destinations is None:
             self.destinations = self._get_default_destinations()
     
     def _get_default_schedules(self) -> Dict[str, BackupSchedule]:
-        """Default backup schedule configurations."""
-        return {
+        """Default backup schedule configurations."""        return {
             'database_daily': BackupSchedule(
                 name="Database Daily Backup",
                 backup_type=BackupType.FULL,
@@ -243,8 +232,7 @@ class BackupStorageConfig:
         }
     
     def _get_default_destinations(self) -> Dict[str, BackupDestination]:
-        """Default backup destination configurations."""
-        env = os.getenv('ENVIRONMENT', 'development')
+        """Default backup destination configurations."""        env = os.getenv('ENVIRONMENT', 'development')
         
         return {
             's3_primary': BackupDestination(
@@ -294,25 +282,21 @@ class BackupStorageConfig:
         }
     
     def get_active_schedules(self) -> Dict[str, BackupSchedule]:
-        """Get all enabled backup schedules."""
-        return {name: schedule for name, schedule in self.schedules.items() 
+        """Get all enabled backup schedules."""        return {name: schedule for name, schedule in self.schedules.items() 
                 if schedule.enabled}
     
     def get_schedule_by_priority(self) -> List[BackupSchedule]:
-        """Get backup schedules sorted by priority (highest first)."""
-        active_schedules = list(self.get_active_schedules().values())
+        """Get backup schedules sorted by priority (highest first)."""        active_schedules = list(self.get_active_schedules().values())
         return sorted(active_schedules, key=lambda x: x.priority, reverse=True)
     
     def get_destination_by_storage_type(self, storage_type: BackupStorage) -> Optional[BackupDestination]:
-        """Get first destination of specified storage type."""
-        for destination in self.destinations.values():
+        """Get first destination of specified storage type."""        for destination in self.destinations.values():
             if destination.storage_type == storage_type:
                 return destination
         return None
     
     def validate_configuration(self) -> bool:
-        """Validate backup configuration."""
-        try:
+        """Validate backup configuration."""        try:
             # Check if at least one schedule is enabled
             active_schedules = self.get_active_schedules()
             if not active_schedules:
@@ -341,8 +325,7 @@ class BackupStorageConfig:
             return False
     
     def get_retention_days(self, policy: RetentionPolicy) -> int:
-        """Get number of retention days for policy."""
-        retention_mapping = {
+        """Get number of retention days for policy."""        retention_mapping = {
             RetentionPolicy.DAILY_7: 7,
             RetentionPolicy.WEEKLY_4: 28,
             RetentionPolicy.MONTHLY_12: 365,
@@ -352,8 +335,7 @@ class BackupStorageConfig:
         return retention_mapping.get(policy, self.default_retention_days)
     
     def calculate_backup_size_estimate(self, schedule_name: str) -> float:
-        """Estimate backup size in GB for a schedule."""
-        schedule = self.schedules.get(schedule_name)
+        """Estimate backup size in GB for a schedule."""        schedule = self.schedules.get(schedule_name)
         if not schedule:
             return 0.0
         
@@ -378,8 +360,7 @@ class BackupStorageConfig:
         return round(size_gb, 2)
     
     def get_next_backup_times(self) -> Dict[str, datetime]:
-        """Get next scheduled backup times for all active schedules."""
-        from croniter import croniter
+        """Get next scheduled backup times for all active schedules."""        from croniter import croniter
         
         next_times = {}
         now = datetime.now()
@@ -396,8 +377,7 @@ class BackupStorageConfig:
         return next_times
     
     def get_storage_usage_summary(self) -> Dict[str, Dict[str, float]]:
-        """Get storage usage summary for all destinations."""
-        summary = {}
+        """Get storage usage summary for all destinations."""        summary = {}
         
         for name, destination in self.destinations.items():
             usage_pct = 0.0
@@ -415,8 +395,7 @@ class BackupStorageConfig:
         return summary
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export backup configuration to JSON-serializable format."""
-        return {
+        """Export backup configuration to JSON-serializable format."""        return {
             'enable_backups': self.enable_backups,
             'backup_base_path': self.backup_base_path,
             'default_retention_days': self.default_retention_days,

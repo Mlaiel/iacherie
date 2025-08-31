@@ -1,5 +1,4 @@
-"""
-Response Generator - Advanced Automated Response & Conversation System
+"""Response Generator - Advanced Automated Response & Conversation System
 
 Industrial-grade automated response generation with AI-powered personalization,
 contextual understanding, and multi-platform conversation management.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -45,8 +43,7 @@ from ...utils.text_processor import TextProcessor
 logger = logging.getLogger(__name__)
 
 class ResponseType(Enum):
-    """Types of automated responses"""
-    APPRECIATION = "appreciation"
+    """Types of automated responses"""    APPRECIATION = "appreciation"
     QUESTION_ANSWER = "question_answer"
     COLLABORATION = "collaboration"
     SUPPORT = "support"
@@ -58,8 +55,7 @@ class ResponseType(Enum):
     CALL_TO_ACTION = "call_to_action"
 
 class ConversationContext(Enum):
-    """Conversation context types"""
-    FIRST_TIME_INTERACTION = "first_time"
+    """Conversation context types"""    FIRST_TIME_INTERACTION = "first_time"
     RETURNING_USER = "returning"
     VIP_MEMBER = "vip"
     INFLUENCER = "influencer"
@@ -70,8 +66,7 @@ class ConversationContext(Enum):
     PRAISE = "praise"
 
 class ResponsePersonality(Enum):
-    """Response personality styles"""
-    PROFESSIONAL = "professional"
+    """Response personality styles"""    PROFESSIONAL = "professional"
     FRIENDLY = "friendly"
     CASUAL = "casual"
     ENTHUSIASTIC = "enthusiastic"
@@ -82,8 +77,7 @@ class ResponsePersonality(Enum):
 
 @dataclass
 class ConversationHistory:
-    """User conversation history tracking"""
-    user_id: str
+    """User conversation history tracking"""    user_id: str
     platform: str
     first_interaction: datetime
     last_interaction: datetime
@@ -95,8 +89,7 @@ class ConversationHistory:
 
 @dataclass
 class ResponseTemplate:
-    """Response template configuration"""
-    template_id: str
+    """Response template configuration"""    template_id: str
     response_type: ResponseType
     template_text: str
     personality_style: ResponsePersonality
@@ -109,8 +102,7 @@ class ResponseTemplate:
 
 @dataclass
 class ResponseContext:
-    """Context information for response generation"""
-    original_message: str
+    """Context information for response generation"""    original_message: str
     user_id: str
     platform: str
     message_type: str
@@ -121,13 +113,11 @@ class ResponseContext:
     creator_brand_voice: Dict[str, Any]
 
 class ResponseGenerator:
-    """
-    Advanced Automated Response Generation System
+    """    Advanced Automated Response Generation System
     
     AI-powered response generation with contextual understanding,
     personality adaptation, and multi-platform optimization.
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager(namespace="response_generator")
         self.conversation_ai = ConversationAI()
@@ -151,8 +141,7 @@ class ResponseGenerator:
         logger.info("Response Generator initialized")
 
     async def initialize(self) -> bool:
-        """Initialize response generator with AI models and templates"""
-        try:
+        """Initialize response generator with AI models and templates"""        try:
             # Load NLP models
             self.nlp = spacy.load("en_core_web_sm")
             self.sentiment_analyzer = pipeline(
@@ -184,8 +173,7 @@ class ResponseGenerator:
     async def generate_response(self,
                               context: ResponseContext,
                               response_config: Optional[Dict[str, Any]] = None) -> Optional[Dict[str, Any]]:
-        """
-        Generate contextual automated response
+        """        Generate contextual automated response
         
         Args:
             context: Response context information
@@ -193,8 +181,7 @@ class ResponseGenerator:
             
         Returns:
             Optional[Dict]: Generated response with metadata
-        """
-        try:
+        """        try:
             # Analyze input message
             message_analysis = await self._analyze_input_message(context.original_message)
             
@@ -274,8 +261,7 @@ class ResponseGenerator:
                                           creator_id: str,
                                           platform: str,
                                           audience_context: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Generate engaging conversation starter content
+        """        Generate engaging conversation starter content
         
         Args:
             creator_id: Creator identifier
@@ -284,8 +270,7 @@ class ResponseGenerator:
             
         Returns:
             Dict: Generated conversation starter with variants
-        """
-        try:
+        """        try:
             # Analyze audience preferences
             audience_analysis = await self._analyze_audience_preferences(audience_context)
             
@@ -347,8 +332,7 @@ class ResponseGenerator:
     async def optimize_response_templates(self,
                                         creator_id: str,
                                         performance_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Optimize response templates based on performance data
+        """        Optimize response templates based on performance data
         
         Args:
             creator_id: Creator identifier
@@ -356,8 +340,7 @@ class ResponseGenerator:
             
         Returns:
             Dict: Optimized templates and recommendations
-        """
-        try:
+        """        try:
             # Analyze template performance
             template_analysis = await self._analyze_template_performance(performance_data)
             
@@ -428,8 +411,7 @@ class ResponseGenerator:
     # Private helper methods
     
     async def _analyze_input_message(self, message: str) -> Dict[str, Any]:
-        """Analyze input message for content, sentiment, and characteristics"""
-        try:
+        """Analyze input message for content, sentiment, and characteristics"""        try:
             # Basic text analysis
             doc = self.nlp(message)
             
@@ -475,8 +457,7 @@ class ResponseGenerator:
 
     async def _determine_conversation_context(self, 
                                             context: ResponseContext) -> ConversationContext:
-        """Determine conversation context based on user history and current interaction"""
-        try:
+        """Determine conversation context based on user history and current interaction"""        try:
             user_history = context.conversation_history
             
             if not user_history:
@@ -520,8 +501,7 @@ class ResponseGenerator:
                                       message_analysis: Dict[str, Any],
                                       intent: str,
                                       context: ResponseContext) -> bool:
-        """Determine if automated response should be generated"""
-        try:
+        """Determine if automated response should be generated"""        try:
             # Don't respond to spam or low-quality messages
             if message_analysis.get('length', 0) < 3:
                 return False
@@ -579,8 +559,7 @@ class ResponseGenerator:
                                        context: ResponseContext,
                                        message_analysis: Dict[str, Any],
                                        intent: str) -> str:
-        """Generate response content using AI and templates"""
-        try:
+        """Generate response content using AI and templates"""        try:
             response_type = response_strategy['type']
             
             # Try template-based response first
@@ -617,8 +596,7 @@ class ResponseGenerator:
                                   response_content: str,
                                   context: ResponseContext,
                                   conversation_context: ConversationContext) -> str:
-        """Personalize response based on user context and history"""
-        try:
+        """Personalize response based on user context and history"""        try:
             personalized_content = response_content
             
             # Add user name if available
@@ -652,8 +630,7 @@ class ResponseGenerator:
     async def _format_response_for_platform(self,
                                           response: str,
                                           platform: str) -> str:
-        """Apply platform-specific formatting"""
-        try:
+        """Apply platform-specific formatting"""        try:
             formatted_response = response
             
             if platform == 'twitter':
@@ -683,8 +660,7 @@ class ResponseGenerator:
     async def _validate_response(self,
                                response: str,
                                context: ResponseContext) -> Dict[str, Any]:
-        """Validate response quality and safety"""
-        try:
+        """Validate response quality and safety"""        try:
             validation_result = {
                 'valid': True,
                 'confidence': 1.0,
@@ -725,13 +701,11 @@ class ResponseGenerator:
 
 
 class AutoResponder:
-    """
-    Automated Response Management & Execution System
+    """    Automated Response Management & Execution System
     
     Manages automated response workflows, scheduling, and execution
     across multiple platforms with intelligent timing and context awareness.
-    """
-    
+    """    
     def __init__(self):
         self.response_generator = ResponseGenerator()
         self.cache_manager = CacheManager(namespace="auto_responder")
@@ -749,8 +723,7 @@ class AutoResponder:
     async def setup_automated_responses(self,
                                       creator_id: str,
                                       response_rules: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Setup automated response rules and triggers
+        """        Setup automated response rules and triggers
         
         Args:
             creator_id: Creator identifier
@@ -758,8 +731,7 @@ class AutoResponder:
             
         Returns:
             Dict: Setup confirmation and active rules
-        """
-        try:
+        """        try:
             # Validate response rules
             validation_result = await self._validate_response_rules(response_rules)
             if not validation_result['valid']:
@@ -802,8 +774,7 @@ class AutoResponder:
     async def process_incoming_messages(self,
                                       creator_id: str,
                                       messages: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """
-        Process incoming messages and generate automated responses
+        """        Process incoming messages and generate automated responses
         
         Args:
             creator_id: Creator identifier
@@ -811,8 +782,7 @@ class AutoResponder:
             
         Returns:
             Dict: Processing results and generated responses
-        """
-        try:
+        """        try:
             processing_results = {
                 'processed_count': len(messages),
                 'responses_generated': 0,
@@ -877,8 +847,7 @@ class AutoResponder:
             raise ProcessingError(f"Message processing failed: {str(e)}")
 
     async def execute_scheduled_responses(self) -> Dict[str, Any]:
-        """Execute scheduled responses that are due"""
-        try:
+        """Execute scheduled responses that are due"""        try:
             execution_results = {
                 'checked_responses': 0,
                 'executed_responses': 0,
@@ -933,8 +902,7 @@ class AutoResponder:
                                              creator_id: str,
                                              message: Dict[str, Any],
                                              response: Dict[str, Any]) -> datetime:
-        """Calculate optimal time to send response"""
-        try:
+        """Calculate optimal time to send response"""        try:
             current_time = datetime.utcnow()
             
             # Immediate response for urgent messages

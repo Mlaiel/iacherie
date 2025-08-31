@@ -1,5 +1,4 @@
-"""
-Training Pipelines - AI Engines Database Module
+"""Training Pipelines - AI Engines Database Module
 
 This module provides comprehensive ML training pipeline management for the IA Influencer
 Agent platform, including MLOps workflows, training job orchestration, hyperparameter
@@ -21,7 +20,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Any, Optional, Union, Callable, Generator
 import json
 import logging
@@ -45,8 +43,7 @@ from ray import tune
 logger = logging.getLogger(__name__)
 
 class TrainingStatus(str, Enum):
-    """Training job status enumeration."""
-    PENDING = "pending"
+    """Training job status enumeration."""    PENDING = "pending"
     INITIALIZING = "initializing"
     RUNNING = "running"
     PAUSED = "paused"
@@ -56,16 +53,14 @@ class TrainingStatus(str, Enum):
     CHECKPOINTING = "checkpointing"
 
 class TrainingMode(str, Enum):
-    """Training mode enumeration."""
-    SINGLE_NODE = "single_node"
+    """Training mode enumeration."""    SINGLE_NODE = "single_node"
     DISTRIBUTED = "distributed"
     FEDERATED = "federated"
     INCREMENTAL = "incremental"
     TRANSFER = "transfer"
 
 class OptimizationStrategy(str, Enum):
-    """Hyperparameter optimization strategy."""
-    GRID_SEARCH = "grid_search"
+    """Hyperparameter optimization strategy."""    GRID_SEARCH = "grid_search"
     RANDOM_SEARCH = "random_search"
     BAYESIAN = "bayesian"
     EVOLUTIONARY = "evolutionary"
@@ -73,8 +68,7 @@ class OptimizationStrategy(str, Enum):
 
 @dataclass
 class TrainingConfiguration:
-    """Training configuration structure."""
-    job_id: str
+    """Training configuration structure."""    job_id: str
     model_id: str
     dataset_id: str
     training_mode: TrainingMode
@@ -89,8 +83,7 @@ class TrainingConfiguration:
 
 @dataclass
 class TrainingMetrics:
-    """Training metrics structure."""
-    job_id: str
+    """Training metrics structure."""    job_id: str
     epoch: int
     step: int
     loss: float
@@ -103,8 +96,7 @@ class TrainingMetrics:
 
 @dataclass
 class TrainingCheckpoint:
-    """Training checkpoint structure."""
-    job_id: str
+    """Training checkpoint structure."""    job_id: str
     checkpoint_id: str
     epoch: int
     step: int
@@ -116,8 +108,7 @@ class TrainingCheckpoint:
     checksum: str
 
 class TrainingJobRequest(BaseModel):
-    """Training job request schema."""
-    model_id: str = Field(..., min_length=1)
+    """Training job request schema."""    model_id: str = Field(..., min_length=1)
     dataset_id: str = Field(..., min_length=1)
     training_mode: TrainingMode = TrainingMode.SINGLE_NODE
     framework: str = Field(default="pytorch", min_length=1)
@@ -133,16 +124,13 @@ class TrainingJobRequest(BaseModel):
     created_by: str = Field(..., min_length=1)
 
 class TrainingPipelineOrchestrator:
-    """
-    Central training pipeline orchestrator.
+    """    Central training pipeline orchestrator.
     
     Manages the complete ML training lifecycle including job scheduling,
     resource allocation, monitoring, and result management.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the training pipeline orchestrator."""
-        self.active_jobs = {}
+        """Initialize the training pipeline orchestrator."""        self.active_jobs = {}
         self.job_queue = asyncio.Queue()
         self.resource_manager = ResourceManager()
         self.checkpoint_manager = CheckpointManager()
@@ -151,13 +139,11 @@ class TrainingPipelineOrchestrator:
         self.initialized = False
         
     async def initialize(self) -> Dict[str, Any]:
-        """
-        Initialize the training pipeline orchestrator.
+        """        Initialize the training pipeline orchestrator.
         
         Returns:
             Dict[str, Any]: Initialization status
-        """
-        try:
+        """        try:
             # Initialize resource manager
             await self.resource_manager.initialize()
             
@@ -193,16 +179,14 @@ class TrainingPipelineOrchestrator:
             }
     
     async def submit_training_job(self, job_request: TrainingJobRequest) -> Dict[str, Any]:
-        """
-        Submit a new training job.
+        """        Submit a new training job.
         
         Args:
             job_request: Training job request
             
         Returns:
             Dict[str, Any]: Job submission result
-        """
-        try:
+        """        try:
             # Generate job ID
             job_id = f"train_{int(time.time())}_{str(uuid.uuid4())[:8]}"
             
@@ -280,16 +264,14 @@ class TrainingPipelineOrchestrator:
             }
     
     async def get_job_status(self, job_id: str) -> Dict[str, Any]:
-        """
-        Get training job status and progress.
+        """        Get training job status and progress.
         
         Args:
             job_id: Job identifier
             
         Returns:
             Dict[str, Any]: Job status information
-        """
-        try:
+        """        try:
             if job_id not in self.active_jobs:
                 return {
                     "status": "error",
@@ -328,16 +310,14 @@ class TrainingPipelineOrchestrator:
             }
     
     async def cancel_job(self, job_id: str) -> Dict[str, Any]:
-        """
-        Cancel a training job.
+        """        Cancel a training job.
         
         Args:
             job_id: Job identifier
             
         Returns:
             Dict[str, Any]: Cancellation result
-        """
-        try:
+        """        try:
             if job_id not in self.active_jobs:
                 return {
                     "status": "error",
@@ -378,8 +358,7 @@ class TrainingPipelineOrchestrator:
     async def list_jobs(self, status_filter: Optional[TrainingStatus] = None,
                        created_by: Optional[str] = None,
                        limit: int = 50) -> Dict[str, Any]:
-        """
-        List training jobs with filtering.
+        """        List training jobs with filtering.
         
         Args:
             status_filter: Filter by job status
@@ -388,8 +367,7 @@ class TrainingPipelineOrchestrator:
             
         Returns:
             Dict[str, Any]: List of jobs
-        """
-        try:
+        """        try:
             filtered_jobs = []
             
             for job_id, job_record in self.active_jobs.items():
@@ -438,18 +416,15 @@ class TrainingPipelineOrchestrator:
             }
     
     async def get_running_jobs_count(self) -> int:
-        """Get number of currently running training jobs."""
-        return len([job for job in self.active_jobs.values() 
+        """Get number of currently running training jobs."""        return len([job for job in self.active_jobs.values() 
                    if job["status"] == TrainingStatus.RUNNING])
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check on training pipelines.
+        """        Perform health check on training pipelines.
         
         Returns:
             Dict[str, Any]: Health status
-        """
-        try:
+        """        try:
             if not self.initialized:
                 return {
                     "status": "unhealthy",
@@ -489,8 +464,7 @@ class TrainingPipelineOrchestrator:
     # Private helper methods
     
     async def _job_worker(self, worker_id: str):
-        """Worker process for handling training jobs."""
-        logger.info(f"Started training job worker {worker_id}")
+        """Worker process for handling training jobs."""        logger.info(f"Started training job worker {worker_id}")
         
         while True:
             try:
@@ -508,8 +482,7 @@ class TrainingPipelineOrchestrator:
                 await asyncio.sleep(5)
     
     async def _process_training_job(self, job_id: str, worker_id: str):
-        """Process a training job."""
-        try:
+        """Process a training job."""        try:
             job_record = self.active_jobs[job_id]
             config = job_record["config"]
             
@@ -562,8 +535,7 @@ class TrainingPipelineOrchestrator:
             logger.error(f"Training job {job_id} failed: {str(e)}")
     
     async def _execute_single_node_training(self, job_id: str):
-        """Execute single-node training."""
-        job_record = self.active_jobs[job_id]
+        """Execute single-node training."""        job_record = self.active_jobs[job_id]
         config = job_record["config"]
         
         # Simulate training loop
@@ -607,20 +579,17 @@ class TrainingPipelineOrchestrator:
                     break
     
     async def _execute_distributed_training(self, job_id: str):
-        """Execute distributed training."""
-        # Mock distributed training
+        """Execute distributed training."""        # Mock distributed training
         logger.info(f"Executing distributed training for job {job_id}")
         await self._execute_single_node_training(job_id)  # Simplified for demo
     
     async def _execute_federated_training(self, job_id: str):
-        """Execute federated training."""
-        # Mock federated training
+        """Execute federated training."""        # Mock federated training
         logger.info(f"Executing federated training for job {job_id}")
         await self._execute_single_node_training(job_id)  # Simplified for demo
     
     async def _create_checkpoint(self, job_id: str, epoch: int, metrics: TrainingMetrics) -> TrainingCheckpoint:
-        """Create a training checkpoint."""
-        checkpoint_id = f"{job_id}_epoch_{epoch}"
+        """Create a training checkpoint."""        checkpoint_id = f"{job_id}_epoch_{epoch}"
         
         checkpoint = TrainingCheckpoint(
             job_id=job_id,
@@ -641,8 +610,7 @@ class TrainingPipelineOrchestrator:
         return checkpoint
     
     async def _should_early_stop(self, job_id: str, current_epoch: int) -> bool:
-        """Check if early stopping should be triggered."""
-        job_record = self.active_jobs[job_id]
+        """Check if early stopping should be triggered."""        job_record = self.active_jobs[job_id]
         config = job_record["config"]
         patience = config.monitoring_config["patience"]
         
@@ -663,8 +631,7 @@ class TrainingPipelineOrchestrator:
         return latest_loss > best_loss * 1.01  # 1% tolerance
     
     async def _monitor_jobs(self):
-        """Background job monitoring."""
-        while True:
+        """Background job monitoring."""        while True:
             try:
                 # Monitor job health and resource usage
                 for job_id, job_record in self.active_jobs.items():
@@ -682,29 +649,24 @@ class TrainingPipelineOrchestrator:
                 await asyncio.sleep(300)
 
 class MLOpsWorkflowManager:
-    """
-    MLOps workflow manager for complete ML lifecycle automation.
+    """    MLOps workflow manager for complete ML lifecycle automation.
     
     Manages data pipelines, model training, validation, deployment,
     and monitoring workflows.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the MLOps workflow manager."""
-        self.workflows = {}
+        """Initialize the MLOps workflow manager."""        self.workflows = {}
         self.workflow_templates = {}
         
     async def create_workflow(self, workflow_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Create a new MLOps workflow.
+        """        Create a new MLOps workflow.
         
         Args:
             workflow_config: Workflow configuration
             
         Returns:
             Dict[str, Any]: Workflow creation result
-        """
-        try:
+        """        try:
             workflow_id = f"workflow_{int(time.time())}_{str(uuid.uuid4())[:8]}"
             
             workflow = {
@@ -734,29 +696,24 @@ class MLOpsWorkflowManager:
             }
 
 class TrainingJobManager:
-    """
-    Training job manager for individual job lifecycle management.
+    """    Training job manager for individual job lifecycle management.
     
     Handles job creation, monitoring, resource management,
     and result collection for individual training jobs.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the training job manager."""
-        self.jobs = {}
+        """Initialize the training job manager."""        self.jobs = {}
         self.job_templates = {}
         
     async def create_job_template(self, template_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Create a reusable job template.
+        """        Create a reusable job template.
         
         Args:
             template_config: Template configuration
             
         Returns:
             Dict[str, Any]: Template creation result
-        """
-        try:
+        """        try:
             template_id = f"template_{int(time.time())}_{str(uuid.uuid4())[:8]}"
             
             template = {
@@ -784,29 +741,24 @@ class TrainingJobManager:
             }
 
 class HyperparameterOptimizer:
-    """
-    Hyperparameter optimization system.
+    """    Hyperparameter optimization system.
     
     Provides automated hyperparameter tuning using various optimization
     strategies including Bayesian optimization, grid search, and evolutionary methods.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the hyperparameter optimizer."""
-        self.optimization_studies = {}
+        """Initialize the hyperparameter optimizer."""        self.optimization_studies = {}
         self.optimization_history = {}
         
     async def create_optimization_study(self, study_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Create a hyperparameter optimization study.
+        """        Create a hyperparameter optimization study.
         
         Args:
             study_config: Study configuration
             
         Returns:
             Dict[str, Any]: Study creation result
-        """
-        try:
+        """        try:
             study_id = f"study_{int(time.time())}_{str(uuid.uuid4())[:8]}"
             
             # Create Optuna study
@@ -846,8 +798,7 @@ class HyperparameterOptimizer:
     async def optimize_hyperparameters(self, study_id: str, 
                                      objective_function: Callable,
                                      n_trials: int = 100) -> Dict[str, Any]:
-        """
-        Run hyperparameter optimization.
+        """        Run hyperparameter optimization.
         
         Args:
             study_id: Study identifier
@@ -856,8 +807,7 @@ class HyperparameterOptimizer:
             
         Returns:
             Dict[str, Any]: Optimization result
-        """
-        try:
+        """        try:
             if study_id not in self.optimization_studies:
                 return {
                     "status": "error",
@@ -897,29 +847,24 @@ class HyperparameterOptimizer:
             }
 
 class DistributedTrainingCoordinator:
-    """
-    Distributed training coordinator for multi-node training.
+    """    Distributed training coordinator for multi-node training.
     
     Coordinates distributed training across multiple nodes with fault tolerance,
     dynamic scaling, and efficient communication.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the distributed training coordinator."""
-        self.training_clusters = {}
+        """Initialize the distributed training coordinator."""        self.training_clusters = {}
         self.node_registry = {}
         
     async def create_training_cluster(self, cluster_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Create a distributed training cluster.
+        """        Create a distributed training cluster.
         
         Args:
             cluster_config: Cluster configuration
             
         Returns:
             Dict[str, Any]: Cluster creation result
-        """
-        try:
+        """        try:
             cluster_id = f"cluster_{int(time.time())}_{str(uuid.uuid4())[:8]}"
             
             cluster = {
@@ -951,8 +896,7 @@ class DistributedTrainingCoordinator:
     
     async def start_distributed_training(self, cluster_id: str, 
                                        training_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Start distributed training on a cluster.
+        """        Start distributed training on a cluster.
         
         Args:
             cluster_id: Cluster identifier
@@ -960,8 +904,7 @@ class DistributedTrainingCoordinator:
             
         Returns:
             Dict[str, Any]: Training start result
-        """
-        try:
+        """        try:
             if cluster_id not in self.training_clusters:
                 return {
                     "status": "error",
@@ -992,8 +935,7 @@ class DistributedTrainingCoordinator:
 # Helper classes
 
 class ResourceManager:
-    """Resource manager for training job resource allocation."""
-    
+    """Resource manager for training job resource allocation."""    
     def __init__(self):
         self.available_resources = {
             "gpus": 8,
@@ -1003,12 +945,10 @@ class ResourceManager:
         self.allocated_resources = {}
     
     async def initialize(self):
-        """Initialize resource manager."""
-        logger.info("Resource manager initialized")
+        """Initialize resource manager."""        logger.info("Resource manager initialized")
     
     async def check_availability(self, required_resources: Dict[str, Any]) -> Dict[str, Any]:
-        """Check if required resources are available."""
-        # Simple availability check
+        """Check if required resources are available."""        # Simple availability check
         gpus_needed = required_resources.get("gpus", 1)
         return {
             "available": gpus_needed <= self.available_resources["gpus"],
@@ -1016,51 +956,42 @@ class ResourceManager:
         }
     
     async def allocate_resources(self, required_resources: Dict[str, Any]) -> str:
-        """Allocate resources for a job."""
-        allocation_id = str(uuid.uuid4())
+        """Allocate resources for a job."""        allocation_id = str(uuid.uuid4())
         self.allocated_resources[allocation_id] = required_resources
         return allocation_id
     
     async def release_resources(self, allocation_id: str):
-        """Release allocated resources."""
-        if allocation_id in self.allocated_resources:
+        """Release allocated resources."""        if allocation_id in self.allocated_resources:
             del self.allocated_resources[allocation_id]
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check resource manager health."""
-        return {
+        """Check resource manager health."""        return {
             "status": "healthy",
             "available_resources": self.available_resources,
             "active_allocations": len(self.allocated_resources)
         }
 
 class CheckpointManager:
-    """Checkpoint manager for training state persistence."""
-    
+    """Checkpoint manager for training state persistence."""    
     def __init__(self):
         self.checkpoints = {}
     
     async def initialize(self):
-        """Initialize checkpoint manager."""
-        logger.info("Checkpoint manager initialized")
+        """Initialize checkpoint manager."""        logger.info("Checkpoint manager initialized")
     
     async def save_checkpoint(self, checkpoint: TrainingCheckpoint):
-        """Save a training checkpoint."""
-        self.checkpoints[checkpoint.checkpoint_id] = checkpoint
+        """Save a training checkpoint."""        self.checkpoints[checkpoint.checkpoint_id] = checkpoint
         logger.info(f"Saved checkpoint {checkpoint.checkpoint_id}")
 
 class MetricsCollector:
-    """Metrics collector for training metrics aggregation."""
-    
+    """Metrics collector for training metrics aggregation."""    
     def __init__(self):
         self.metrics_store = {}
     
     async def initialize(self):
-        """Initialize metrics collector."""
-        logger.info("Metrics collector initialized")
+        """Initialize metrics collector."""        logger.info("Metrics collector initialized")
     
     async def collect_metrics(self, job_id: str, metrics: TrainingMetrics):
-        """Collect training metrics."""
-        if job_id not in self.metrics_store:
+        """Collect training metrics."""        if job_id not in self.metrics_store:
             self.metrics_store[job_id] = []
         self.metrics_store[job_id].append(metrics)

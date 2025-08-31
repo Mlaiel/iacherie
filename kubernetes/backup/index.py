@@ -1,5 +1,4 @@
-"""
-Backup Module Index - IA Influencer Agent Platform.
+"""Backup Module Index - IA Influencer Agent Platform.
 
 Central entry point for all backup and disaster recovery operations.
 Provides simplified access to enterprise backup services and utilities.
@@ -12,7 +11,6 @@ WARNING: This code and concept are the exclusive intellectual property of Fahed 
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -41,21 +39,17 @@ logger = logging.getLogger(__name__)
 
 
 class BackupPlatform:
-    """
-    Unified backup platform providing enterprise-grade backup and recovery.
+    """    Unified backup platform providing enterprise-grade backup and recovery.
     
     This is the main entry point for all backup operations in the IA Influencer
     Agent Platform, providing simplified access to all backup services.
     """
-
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize backup platform.
+        """        Initialize backup platform.
         
         Args:
             config: Platform configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize core backup manager
@@ -84,8 +78,7 @@ class BackupPlatform:
         backup_name: Optional[str] = None,
         tags: Optional[List[str]] = None
     ) -> str:
-        """
-        Create comprehensive full platform backup.
+        """        Create comprehensive full platform backup.
         
         Args:
             backup_name: Custom backup name
@@ -93,8 +86,7 @@ class BackupPlatform:
             
         Returns:
             Backup ID
-        """
-        backup_name = backup_name or f"platform_full_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """        backup_name = backup_name or f"platform_full_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         tags = tags or ["platform", "full", "automated"]
         
         self.logger.info(f"Creating full platform backup: {backup_name}")
@@ -111,8 +103,7 @@ class BackupPlatform:
         content_types: Optional[List[str]] = None,
         tags: Optional[List[str]] = None
     ) -> str:
-        """
-        Create content-only backup for content protection data.
+        """        Create content-only backup for content protection data.
         
         Args:
             content_types: Specific content types to backup
@@ -120,8 +111,7 @@ class BackupPlatform:
             
         Returns:
             Backup ID
-        """
-        tags = tags or ["content", "protection", "automated"]
+        """        tags = tags or ["content", "protection", "automated"]
         
         self.logger.info("Creating content-only backup")
         
@@ -158,8 +148,7 @@ class BackupPlatform:
         user_ids: Optional[List[str]] = None,
         tags: Optional[List[str]] = None
     ) -> str:
-        """
-        Create user data backup.
+        """        Create user data backup.
         
         Args:
             user_ids: Specific user IDs to backup (optional)
@@ -167,8 +156,7 @@ class BackupPlatform:
             
         Returns:
             Backup ID
-        """
-        tags = tags or ["users", "data", "automated"]
+        """        tags = tags or ["users", "data", "automated"]
         
         if user_ids:
             self.logger.info(f"Creating selective user backup for {len(user_ids)} users")
@@ -194,8 +182,7 @@ class BackupPlatform:
         base_backup_id: str,
         backup_scope: str = "full"
     ) -> str:
-        """
-        Create incremental backup based on previous backup.
+        """        Create incremental backup based on previous backup.
         
         Args:
             base_backup_id: Base backup for incremental changes
@@ -203,8 +190,7 @@ class BackupPlatform:
             
         Returns:
             Backup ID
-        """
-        self.logger.info(f"Creating incremental backup from base: {base_backup_id}")
+        """        self.logger.info(f"Creating incremental backup from base: {base_backup_id}")
         
         if backup_scope == "full":
             return await self.backup_manager.create_incremental_backup(
@@ -247,8 +233,7 @@ class BackupPlatform:
         restore_target: str = "full",
         target_path: Optional[str] = None
     ) -> bool:
-        """
-        Restore platform from backup.
+        """        Restore platform from backup.
         
         Args:
             backup_id: Backup to restore
@@ -257,8 +242,7 @@ class BackupPlatform:
             
         Returns:
             Success status
-        """
-        self.logger.info(f"Restoring platform from backup: {backup_id}")
+        """        self.logger.info(f"Restoring platform from backup: {backup_id}")
         
         if restore_target == "full":
             return await self.backup_manager.restore_backup(
@@ -299,16 +283,14 @@ class BackupPlatform:
         self,
         schedule_configs: List[Dict[str, Any]]
     ) -> List[str]:
-        """
-        Schedule multiple automated backup operations.
+        """        Schedule multiple automated backup operations.
         
         Args:
             schedule_configs: List of scheduling configurations
             
         Returns:
             List of schedule IDs
-        """
-        schedule_ids = []
+        """        schedule_ids = []
         
         for config in schedule_configs:
             schedule_id = await self.scheduler.add_schedule(
@@ -320,13 +302,11 @@ class BackupPlatform:
         return schedule_ids
 
     async def get_platform_backup_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive backup status for the platform.
+        """        Get comprehensive backup status for the platform.
         
         Returns:
             Platform backup status
-        """
-        # Get backup statistics
+        """        # Get backup statistics
         stats = await self.backup_manager.get_backup_statistics()
         
         # Get active operations
@@ -353,16 +333,14 @@ class BackupPlatform:
         self,
         backup_ids: Optional[List[str]] = None
     ) -> Dict[str, bool]:
-        """
-        Verify integrity of platform backups.
+        """        Verify integrity of platform backups.
         
         Args:
             backup_ids: Specific backup IDs to verify (optional)
             
         Returns:
             Verification results
-        """
-        if backup_ids is None:
+        """        if backup_ids is None:
             # Verify all recent backups
             recent_backups = await self.backup_manager.list_backups(limit=10)
             backup_ids = [b.backup_id for b in recent_backups]
@@ -383,16 +361,14 @@ class BackupPlatform:
         self,
         retention_policy: Optional[Dict[str, int]] = None
     ) -> int:
-        """
-        Cleanup old backups according to retention policy.
+        """        Cleanup old backups according to retention policy.
         
         Args:
             retention_policy: Custom retention policy
             
         Returns:
             Number of deleted backups
-        """
-        policy = retention_policy or {
+        """        policy = retention_policy or {
             "retention_days": 30,
             "keep_weekly": 4,
             "keep_monthly": 12
@@ -405,8 +381,7 @@ class BackupPlatform:
         backup_id: str,
         emergency_config: Dict[str, Any]
     ) -> bool:
-        """
-        Emergency restore operation with minimal validation.
+        """        Emergency restore operation with minimal validation.
         
         Args:
             backup_id: Backup to restore
@@ -414,8 +389,7 @@ class BackupPlatform:
             
         Returns:
             Success status
-        """
-        self.logger.warning(f"EMERGENCY RESTORE initiated for backup: {backup_id}")
+        """        self.logger.warning(f"EMERGENCY RESTORE initiated for backup: {backup_id}")
         
         # Emergency restore through recovery manager
         return await self.recovery.emergency_restore(backup_id, emergency_config)
@@ -424,16 +398,14 @@ class BackupPlatform:
         self,
         output_path: Optional[str] = None
     ) -> str:
-        """
-        Export complete backup manifest for audit purposes.
+        """        Export complete backup manifest for audit purposes.
         
         Args:
             output_path: Output file path
             
         Returns:
             Manifest file path
-        """
-        # Get all backup metadata
+        """        # Get all backup metadata
         all_backups = await self.backup_manager.list_backups(limit=1000)
         
         manifest = {
@@ -465,34 +437,29 @@ class BackupPlatform:
 
 # Factory function for easy initialization
 def create_backup_platform(config: Dict[str, Any]) -> BackupPlatform:
-    """
-    Factory function to create backup platform instance.
+    """    Factory function to create backup platform instance.
     
     Args:
         config: Platform configuration
         
     Returns:
         Initialized backup platform
-    """
-    return BackupPlatform(config)
+    """    return BackupPlatform(config)
 
 
 # Convenience functions for common operations
 async def quick_full_backup(config: Dict[str, Any]) -> str:
-    """Quick full platform backup."""
-    platform = create_backup_platform(config)
+    """Quick full platform backup."""    platform = create_backup_platform(config)
     return await platform.create_full_platform_backup()
 
 
 async def quick_content_backup(config: Dict[str, Any]) -> str:
-    """Quick content-only backup."""
-    platform = create_backup_platform(config)
+    """Quick content-only backup."""    platform = create_backup_platform(config)
     return await platform.create_content_only_backup()
 
 
 async def quick_restore(config: Dict[str, Any], backup_id: str) -> bool:
-    """Quick platform restore."""
-    platform = create_backup_platform(config)
+    """Quick platform restore."""    platform = create_backup_platform(config)
     return await platform.restore_platform(backup_id)
 
 

@@ -1,11 +1,9 @@
-"""
-Professional validation utilities for IA Influencer Agent.
+"""Professional validation utilities for IA Influencer Agent.
 Enterprise-grade validators with comprehensive business rule enforcement.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 IA Influencer Agent. Unauthorized use strictly prohibited.
 """
-
 from typing import Any, Dict, List, Optional, Union, Callable, Type
 from dataclasses import dataclass
 from datetime import datetime, timezone
@@ -16,8 +14,7 @@ from email_validator import validate_email, EmailNotValidError
 
 
 class ValidationType(Enum):
-    """Types of validation for categorization."""
-    CONTENT = "content"
+    """Types of validation for categorization."""    CONTENT = "content"
     USER = "user"
     BUSINESS = "business"
     SYSTEM = "system"
@@ -26,8 +23,7 @@ class ValidationType(Enum):
 
 @dataclass
 class ValidationResult:
-    """Result of validation with detailed feedback."""
-    is_valid: bool
+    """Result of validation with detailed feedback."""    is_valid: bool
     field_name: str
     value: Any
     error_message: Optional[str] = None
@@ -40,8 +36,7 @@ class ValidationResult:
 
 
 class ValidationError(Exception):
-    """Custom validation error with structured information."""
-    
+    """Custom validation error with structured information."""    
     def __init__(self, results: List[ValidationResult]):
         self.results = results
         self.errors = [r for r in results if not r.is_valid]
@@ -56,12 +51,10 @@ class ValidationError(Exception):
 
 
 class ContentValidator:
-    """Validators for content-related business rules."""
-    
+    """Validators for content-related business rules."""    
     @staticmethod
     def validate_content_type(content_type: str) -> ValidationResult:
-        """Validate content type against supported formats."""
-        allowed_types = {
+        """Validate content type against supported formats."""        allowed_types = {
             'audio': ['mp3', 'wav', 'flac', 'aac', 'ogg', 'm4a'],
             'video': ['mp4', 'avi', 'mov', 'mkv', 'webm', 'flv'],
             'image': ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'tiff'],
@@ -109,8 +102,7 @@ class ContentValidator:
     
     @staticmethod
     def validate_file_size(file_size: int, content_type: str) -> ValidationResult:
-        """Validate file size against business limits."""
-        # Size limits in bytes by content type
+        """Validate file size against business limits."""        # Size limits in bytes by content type
         size_limits = {
             'audio': 100 * 1024 * 1024,  # 100MB
             'video': 500 * 1024 * 1024,  # 500MB
@@ -148,8 +140,7 @@ class ContentValidator:
     
     @staticmethod
     def validate_content_title(title: str) -> ValidationResult:
-        """Validate content title for business requirements."""
-        if not title or not title.strip():
+        """Validate content title for business requirements."""        if not title or not title.strip():
             return ValidationResult(
                 is_valid=False,
                 field_name="title",
@@ -198,12 +189,10 @@ class ContentValidator:
 
 
 class UserValidator:
-    """Validators for user-related data."""
-    
+    """Validators for user-related data."""    
     @staticmethod
     def validate_email(email: str) -> ValidationResult:
-        """Validate email address with comprehensive checks."""
-        if not email:
+        """Validate email address with comprehensive checks."""        if not email:
             return ValidationResult(
                 is_valid=False,
                 field_name="email",
@@ -234,8 +223,7 @@ class UserValidator:
     
     @staticmethod
     def validate_username(username: str) -> ValidationResult:
-        """Validate username according to business rules."""
-        if not username:
+        """Validate username according to business rules."""        if not username:
             return ValidationResult(
                 is_valid=False,
                 field_name="username",
@@ -297,8 +285,7 @@ class UserValidator:
     
     @staticmethod
     def validate_password_strength(password: str) -> ValidationResult:
-        """Validate password strength according to security policies."""
-        if not password:
+        """Validate password strength according to security policies."""        if not password:
             return ValidationResult(
                 is_valid=False,
                 field_name="password",
@@ -377,12 +364,10 @@ class UserValidator:
 
 
 class BusinessValidator:
-    """Validators for business logic rules."""
-    
+    """Validators for business logic rules."""    
     @staticmethod
     def validate_revenue_amount(amount: float, currency: str = "EUR") -> ValidationResult:
-        """Validate revenue amount for business processing."""
-        if amount is None:
+        """Validate revenue amount for business processing."""        if amount is None:
             return ValidationResult(
                 is_valid=False,
                 field_name="amount",
@@ -430,8 +415,7 @@ class BusinessValidator:
     
     @staticmethod
     def validate_platform_name(platform: str) -> ValidationResult:
-        """Validate platform name against supported platforms."""
-        supported_platforms = {
+        """Validate platform name against supported platforms."""        supported_platforms = {
             'youtube', 'instagram', 'tiktok', 'facebook', 'twitter',
             'spotify', 'soundcloud', 'bandcamp', 'linkedin', 'pinterest'
         }
@@ -465,12 +449,10 @@ class BusinessValidator:
 
 
 class SecurityValidator:
-    """Validators for security-related requirements."""
-    
+    """Validators for security-related requirements."""    
     @staticmethod
     def validate_api_key(api_key: str) -> ValidationResult:
-        """Validate API key format and structure."""
-        if not api_key:
+        """Validate API key format and structure."""        if not api_key:
             return ValidationResult(
                 is_valid=False,
                 field_name="api_key",
@@ -497,8 +479,7 @@ class SecurityValidator:
     
     @staticmethod
     def validate_url_safety(url: str) -> ValidationResult:
-        """Validate URL for security and format compliance."""
-        if not url:
+        """Validate URL for security and format compliance."""        if not url:
             return ValidationResult(
                 is_valid=False,
                 field_name="url",
@@ -550,8 +531,7 @@ class SecurityValidator:
 
 
 class CompoundValidator:
-    """Validator that combines multiple validation rules."""
-    
+    """Validator that combines multiple validation rules."""    
     def __init__(self):
         self.content_validator = ContentValidator()
         self.user_validator = UserValidator()
@@ -559,8 +539,7 @@ class CompoundValidator:
         self.security_validator = SecurityValidator()
     
     def validate_content_upload(self, data: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate complete content upload data."""
-        results = []
+        """Validate complete content upload data."""        results = []
         
         # Validate required fields
         if 'title' in data:
@@ -578,8 +557,7 @@ class CompoundValidator:
         return results
     
     def validate_user_registration(self, data: Dict[str, Any]) -> List[ValidationResult]:
-        """Validate user registration data."""
-        results = []
+        """Validate user registration data."""        results = []
         
         if 'email' in data:
             results.append(self.user_validator.validate_email(data['email']))
@@ -593,8 +571,7 @@ class CompoundValidator:
         return results
     
     def validate_and_raise(self, validation_func: Callable, *args, **kwargs):
-        """Validate and raise ValidationError if any validation fails."""
-        results = validation_func(*args, **kwargs)
+        """Validate and raise ValidationError if any validation fails."""        results = validation_func(*args, **kwargs)
         
         if not isinstance(results, list):
             results = [results]
@@ -612,15 +589,12 @@ _validator = CompoundValidator()
 
 
 def get_validator() -> CompoundValidator:
-    """Get global validator instance."""
-    return _validator
+    """Get global validator instance."""    return _validator
 
 
 def validate_content_upload(data: Dict[str, Any]) -> List[ValidationResult]:
-    """Validate content upload data using global validator."""
-    return _validator.validate_content_upload(data)
+    """Validate content upload data using global validator."""    return _validator.validate_content_upload(data)
 
 
 def validate_user_registration(data: Dict[str, Any]) -> List[ValidationResult]:
-    """Validate user registration data using global validator."""
-    return _validator.validate_user_registration(data)
+    """Validate user registration data using global validator."""    return _validator.validate_user_registration(data)

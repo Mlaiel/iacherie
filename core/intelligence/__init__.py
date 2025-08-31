@@ -20,8 +20,7 @@ and may result in legal action under applicable copyright laws.
 🛡️ Team Expertise:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices 
 - Audio + DevOps + IA Prompt Engineer
-"""
-# Core Intelligence Components
+"""# Core Intelligence Components
 from .content_analyzer import ContentAnalyzer, MultiModalAnalyzer, ContentQualityAssessor
 from .decision_engine import DecisionEngine, BusinessRuleEngine, MonetizationDecisionEngine
 from .prediction_models import PredictionModels, RevenuePredictionModel, EngagementPredictionModel

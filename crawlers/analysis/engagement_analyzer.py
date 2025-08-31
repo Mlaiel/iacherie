@@ -1,5 +1,4 @@
-"""
-Engagement Analyzer
+"""Engagement Analyzer
 ==================
 
 Advanced engagement analysis and audience interaction intelligence system.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -42,8 +40,7 @@ from sklearn.model_selection import train_test_split
 logger = logging.getLogger(__name__)
 
 class EngagementType(Enum):
-    """Types of engagement interactions."""
-    LIKE = "like"
+    """Types of engagement interactions."""    LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
     SAVE = "save"
@@ -55,16 +52,14 @@ class EngagementType(Enum):
     REACTION = "reaction"
 
 class EngagementQuality(Enum):
-    """Quality levels of engagement."""
-    EXCELLENT = "excellent"     # High-value meaningful interactions
+    """Quality levels of engagement."""    EXCELLENT = "excellent"     # High-value meaningful interactions
     GOOD = "good"              # Positive meaningful interactions
     AVERAGE = "average"        # Standard interactions
     POOR = "poor"              # Low-value interactions
     SPAM = "spam"              # Spam or bot interactions
 
 class AudienceSegment(Enum):
-    """Audience segmentation categories."""
-    CORE_FANS = "core_fans"           # Most engaged loyal followers
+    """Audience segmentation categories."""    CORE_FANS = "core_fans"           # Most engaged loyal followers
     CASUAL_FOLLOWERS = "casual_followers"  # Regular but less engaged
     NEW_AUDIENCE = "new_audience"     # Recently discovered content
     TRENDING_VIEWERS = "trending_viewers"  # Came from trending content
@@ -73,8 +68,7 @@ class AudienceSegment(Enum):
 
 @dataclass
 class EngagementMetrics:
-    """Comprehensive engagement metrics."""
-    total_interactions: int
+    """Comprehensive engagement metrics."""    total_interactions: int
     engagement_rate: float          # Total engagement / reach
     authentic_engagement_rate: float  # Excluding bots/spam
     
@@ -103,8 +97,7 @@ class EngagementMetrics:
 
 @dataclass
 class AudienceInsights:
-    """Audience behavior and demographic insights."""
-    total_audience_size: int
+    """Audience behavior and demographic insights."""    total_audience_size: int
     active_audience_percentage: float
     
     # Segmentation
@@ -128,8 +121,7 @@ class AudienceInsights:
 
 @dataclass
 class EngagementPrediction:
-    """Engagement prediction and forecasting."""
-    predicted_engagement_rate: float
+    """Engagement prediction and forecasting."""    predicted_engagement_rate: float
     predicted_interactions: int
     confidence_score: float
     
@@ -150,8 +142,7 @@ class EngagementPrediction:
 
 @dataclass
 class EngagementAnalysisResult:
-    """Complete engagement analysis result."""
-    content_id: str
+    """Complete engagement analysis result."""    content_id: str
     analysis_timestamp: datetime
     
     # Current metrics
@@ -183,8 +174,7 @@ class EngagementAnalysisResult:
     analysis_confidence: float = 0.0
 
 class EngagementAnalyzer:
-    """
-    Advanced engagement analysis and audience intelligence system.
+    """    Advanced engagement analysis and audience intelligence system.
     
     Features:
     - Real-time engagement monitoring and analysis
@@ -195,8 +185,7 @@ class EngagementAnalyzer:
     - Cross-platform engagement tracking
     - Bot and spam detection
     - Performance benchmarking
-    """
-    
+    """    
     def __init__(
         self,
         enable_prediction: bool = True,
@@ -204,16 +193,14 @@ class EngagementAnalyzer:
         spam_detection_threshold: float = 0.8,
         prediction_model_type: str = "random_forest"
     ):
-        """
-        Initialize engagement analyzer.
+        """        Initialize engagement analyzer.
         
         Args:
             enable_prediction: Enable engagement prediction
             enable_realtime_monitoring: Enable real-time monitoring
             spam_detection_threshold: Threshold for spam detection
             prediction_model_type: Type of ML model for predictions
-        """
-        self.enable_prediction = enable_prediction
+        """        self.enable_prediction = enable_prediction
         self.enable_realtime_monitoring = enable_realtime_monitoring
         self.spam_detection_threshold = spam_detection_threshold
         self.prediction_model_type = prediction_model_type
@@ -240,8 +227,7 @@ class EngagementAnalyzer:
         logger.info(f"EngagementAnalyzer initialized with {prediction_model_type} prediction model")
     
     def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for engagement analysis."""
-        try:
+        """Initialize machine learning models for engagement analysis."""        try:
             if self.enable_prediction:
                 # Engagement prediction model
                 if self.prediction_model_type == "random_forest":
@@ -260,8 +246,7 @@ class EngagementAnalyzer:
             logger.error(f"Failed to initialize ML models: {e}")
     
     def _load_industry_benchmarks(self) -> None:
-        """Load industry benchmarks for performance comparison."""
-        # Industry engagement rate benchmarks by platform
+        """Load industry benchmarks for performance comparison."""        # Industry engagement rate benchmarks by platform
         self.industry_benchmarks = {
             'instagram': {
                 'excellent': 0.06,
@@ -312,8 +297,7 @@ class EngagementAnalyzer:
         audience_data: Optional[Dict[str, Any]] = None,
         platform: str = "general"
     ) -> EngagementAnalysisResult:
-        """
-        Analyze engagement patterns and predict future performance.
+        """        Analyze engagement patterns and predict future performance.
         
         Args:
             content_id: Unique content identifier
@@ -324,8 +308,7 @@ class EngagementAnalyzer:
             
         Returns:
             EngagementAnalysisResult: Complete engagement analysis
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             audience_data = audience_data or {}
@@ -467,8 +450,7 @@ class EngagementAnalyzer:
         engagement_data: Dict[str, Any],
         platform: str
     ) -> EngagementMetrics:
-        """Calculate comprehensive engagement metrics."""
-        try:
+        """Calculate comprehensive engagement metrics."""        try:
             # Extract basic engagement numbers
             likes = engagement_data.get('likes', 0)
             comments = engagement_data.get('comments', 0)
@@ -541,8 +523,7 @@ class EngagementAnalyzer:
         audience_data: Dict[str, Any],
         engagement_data: Dict[str, Any]
     ) -> AudienceInsights:
-        """Analyze audience behavior and demographics."""
-        try:
+        """Analyze audience behavior and demographics."""        try:
             total_audience_size = audience_data.get('total_followers', 1000)
             active_users = engagement_data.get('unique_users', 0)
             active_audience_percentage = active_users / max(1, total_audience_size)
@@ -598,8 +579,7 @@ class EngagementAnalyzer:
         audience_insights: AudienceInsights,
         platform: str
     ) -> EngagementPrediction:
-        """Predict future engagement performance."""
-        try:
+        """Predict future engagement performance."""        try:
             # Extract features for prediction
             features = self._extract_prediction_features(
                 content_data, current_metrics, audience_insights, platform
@@ -684,8 +664,7 @@ class EngagementAnalyzer:
             )
     
     async def _detect_spam_engagement(self, engagement_data: Dict[str, Any]) -> int:
-        """Detect spam or bot engagement."""
-        spam_indicators = 0
+        """Detect spam or bot engagement."""        spam_indicators = 0
         
         # Check for suspicious patterns
         comments = engagement_data.get('comment_texts', [])
@@ -711,8 +690,7 @@ class EngagementAnalyzer:
         return spam_indicators
     
     def _analyze_comment_sentiment(self, comments: List[str]) -> float:
-        """Analyze sentiment of comments."""
-        if not comments:
+        """Analyze sentiment of comments."""        if not comments:
             return 0.0
         
         positive_words = {'good', 'great', 'amazing', 'love', 'awesome', 'perfect', 'excellent'}
@@ -734,8 +712,7 @@ class EngagementAnalyzer:
         return np.mean(sentiment_scores) if sentiment_scores else 0.0
     
     def _calculate_response_rate(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate creator response rate to comments."""
-        total_comments = engagement_data.get('comments', 0)
+        """Calculate creator response rate to comments."""        total_comments = engagement_data.get('comments', 0)
         creator_responses = engagement_data.get('creator_responses', 0)
         
         if total_comments == 0:
@@ -744,8 +721,7 @@ class EngagementAnalyzer:
         return creator_responses / total_comments
     
     def _calculate_conversation_depth(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate average conversation thread depth."""
-        comment_threads = engagement_data.get('comment_threads', [])
+        """Calculate average conversation thread depth."""        comment_threads = engagement_data.get('comment_threads', [])
         
         if not comment_threads:
             return 0.0
@@ -754,16 +730,14 @@ class EngagementAnalyzer:
         return np.mean(thread_depths)
     
     def _calculate_engagement_velocity(self, content_id: str, engagement_data: Dict[str, Any]) -> float:
-        """Calculate engagement growth velocity."""
-        # Simple implementation - in production would track over time
+        """Calculate engagement growth velocity."""        # Simple implementation - in production would track over time
         total_interactions = engagement_data.get('total_interactions', 0)
         time_since_post = engagement_data.get('hours_since_post', 1)
         
         return total_interactions / max(1, time_since_post)
     
     def _find_peak_engagement_time(self, engagement_data: Dict[str, Any]) -> Optional[datetime]:
-        """Find peak engagement time."""
-        engagement_by_hour = engagement_data.get('engagement_by_hour', {})
+        """Find peak engagement time."""        engagement_by_hour = engagement_data.get('engagement_by_hour', {})
         
         if not engagement_by_hour:
             return None
@@ -775,8 +749,7 @@ class EngagementAnalyzer:
         return datetime.combine(today, datetime.min.time()).replace(hour=int(peak_hour))
     
     def _calculate_engagement_duration(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate how long engagement activity lasts."""
-        engagement_timestamps = engagement_data.get('engagement_timestamps', [])
+        """Calculate how long engagement activity lasts."""        engagement_timestamps = engagement_data.get('engagement_timestamps', [])
         
         if len(engagement_timestamps) < 2:
             return 0.0
@@ -788,8 +761,7 @@ class EngagementAnalyzer:
         return duration
     
     def _calculate_new_vs_returning_ratio(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate ratio of new vs returning users."""
-        new_users = engagement_data.get('new_users', 0)
+        """Calculate ratio of new vs returning users."""        new_users = engagement_data.get('new_users', 0)
         returning_users = engagement_data.get('returning_users', 0)
         
         total_users = new_users + returning_users
@@ -803,8 +775,7 @@ class EngagementAnalyzer:
         audience_data: Dict[str, Any],
         engagement_data: Dict[str, Any]
     ) -> Dict[AudienceSegment, float]:
-        """Segment audience based on engagement patterns."""
-        # Simplified segmentation - in production would use ML clustering
+        """Segment audience based on engagement patterns."""        # Simplified segmentation - in production would use ML clustering
         total_audience = audience_data.get('total_followers', 1000)
         
         # Estimate segment sizes
@@ -824,8 +795,7 @@ class EngagementAnalyzer:
         segments: Dict[AudienceSegment, float],
         engagement_data: Dict[str, Any]
     ) -> Dict[AudienceSegment, float]:
-        """Calculate engagement rates by audience segment."""
-        # Estimated engagement rates by segment
+        """Calculate engagement rates by audience segment."""        # Estimated engagement rates by segment
         engagement_rates = {
             AudienceSegment.CORE_FANS: 0.12,      # High engagement
             AudienceSegment.CASUAL_FOLLOWERS: 0.04,  # Medium engagement
@@ -838,8 +808,7 @@ class EngagementAnalyzer:
         return engagement_rates
     
     def _analyze_optimal_posting_times(self, audience_data: Dict[str, Any]) -> List[datetime]:
-        """Analyze optimal posting times for audience."""
-        # Default optimal times based on general social media patterns
+        """Analyze optimal posting times for audience."""        # Default optimal times based on general social media patterns
         today = datetime.now().date()
         optimal_times = [
             datetime.combine(today, datetime.min.time()).replace(hour=7),   # 7 AM
@@ -850,8 +819,7 @@ class EngagementAnalyzer:
         return optimal_times
     
     def _analyze_content_preferences(self, audience_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze audience content preferences."""
-        # Simulated content preferences
+        """Analyze audience content preferences."""        # Simulated content preferences
         preferences = {
             'video': 0.4,
             'image': 0.3,
@@ -862,8 +830,7 @@ class EngagementAnalyzer:
         return preferences
     
     def _analyze_interaction_patterns(self, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze audience interaction patterns."""
-        patterns = {
+        """Analyze audience interaction patterns."""        patterns = {
             'quick_engagers': 0.3,  # Engage within first hour
             'delayed_engagers': 0.4,  # Engage within 24 hours
             'lurkers': 0.3,  # View but don't engage
@@ -880,8 +847,7 @@ class EngagementAnalyzer:
         audience_insights: AudienceInsights,
         platform: str
     ) -> np.ndarray:
-        """Extract features for ML prediction."""
-        features = [
+        """Extract features for ML prediction."""        features = [
             current_metrics.engagement_rate,
             audience_insights.active_audience_percentage,
             audience_insights.follower_growth_rate,
@@ -900,8 +866,7 @@ class EngagementAnalyzer:
         prediction: EngagementPrediction,
         content_data: Dict[str, Any]
     ) -> float:
-        """Calculate viral potential score."""
-        factors = []
+        """Calculate viral potential score."""        factors = []
         
         # High engagement rate factor
         if current_metrics.engagement_rate > 0.06:
@@ -942,8 +907,7 @@ class EngagementAnalyzer:
         return np.mean(factors)
     
     def _compare_performance_to_average(self, content_id: str, metrics: EngagementMetrics) -> float:
-        """Compare performance to user's historical average."""
-        # Get historical performance (simplified)
+        """Compare performance to user's historical average."""        # Get historical performance (simplified)
         if content_id in self.engagement_history:
             historical_rates = [m.engagement_rate for m in self.engagement_history[content_id]]
             if historical_rates:
@@ -959,8 +923,7 @@ class EngagementAnalyzer:
         platform: str,
         content_type: str
     ) -> Dict[str, float]:
-        """Benchmark against industry standards."""
-        benchmarks = {}
+        """Benchmark against industry standards."""        benchmarks = {}
         
         # Platform benchmarks
         if platform in self.industry_benchmarks:
@@ -989,8 +952,7 @@ class EngagementAnalyzer:
         insights: AudienceInsights,
         prediction: EngagementPrediction
     ) -> List[str]:
-        """Generate engagement optimization recommendations."""
-        recommendations = []
+        """Generate engagement optimization recommendations."""        recommendations = []
         
         # Comment engagement
         if metrics.response_rate < 0.3:
@@ -1021,8 +983,7 @@ class EngagementAnalyzer:
         insights: AudienceInsights,
         benchmarks: Dict[str, float]
     ) -> List[str]:
-        """Generate content strategy recommendations."""
-        recommendations = []
+        """Generate content strategy recommendations."""        recommendations = []
         
         # Content preferences
         top_preference = max(insights.content_preferences.items(), key=lambda x: x[1])
@@ -1047,8 +1008,7 @@ class EngagementAnalyzer:
         insights: AudienceInsights,
         engagement_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate timing optimization recommendations."""
-        recommendations = []
+        """Generate timing optimization recommendations."""        recommendations = []
         
         # Optimal posting times
         if insights.optimal_posting_times:
@@ -1068,8 +1028,7 @@ class EngagementAnalyzer:
         metrics: EngagementMetrics,
         performance_vs_average: float
     ) -> List[str]:
-        """Generate engagement alerts."""
-        alerts = []
+        """Generate engagement alerts."""        alerts = []
         
         # Performance drops
         if performance_vs_average < -0.3:
@@ -1090,8 +1049,7 @@ class EngagementAnalyzer:
         insights: AudienceInsights,
         prediction: EngagementPrediction
     ) -> List[str]:
-        """Identify audience growth opportunities."""
-        opportunities = []
+        """Identify audience growth opportunities."""        opportunities = []
         
         # High potential improvement
         if prediction.predicted_improvement > 20:
@@ -1115,8 +1073,7 @@ class EngagementAnalyzer:
         metrics: EngagementMetrics,
         insights: AudienceInsights
     ) -> List[str]:
-        """Identify engagement risk factors."""
-        risks = []
+        """Identify engagement risk factors."""        risks = []
         
         # High churn rate
         if insights.churn_rate > 0.3:
@@ -1141,8 +1098,7 @@ class EngagementAnalyzer:
         engagement_data: Dict[str, Any],
         audience_data: Dict[str, Any]
     ) -> float:
-        """Calculate data quality score."""
-        quality_factors = []
+        """Calculate data quality score."""        quality_factors = []
         
         # Engagement data completeness
         required_engagement_fields = ['likes', 'comments', 'shares', 'views']
@@ -1169,8 +1125,7 @@ class EngagementAnalyzer:
         metrics: EngagementMetrics,
         data_quality: float
     ) -> float:
-        """Calculate analysis confidence score."""
-        confidence_factors = []
+        """Calculate analysis confidence score."""        confidence_factors = []
         
         # Data quality factor
         confidence_factors.append(data_quality)
@@ -1194,16 +1149,14 @@ class EngagementAnalyzer:
         return np.mean(confidence_factors)
     
     def _update_engagement_history(self, content_id: str, metrics: EngagementMetrics) -> None:
-        """Update engagement history for analysis."""
-        self.engagement_history[content_id].append(metrics)
+        """Update engagement history for analysis."""        self.engagement_history[content_id].append(metrics)
         
         # Keep only recent history (last 50 entries)
         if len(self.engagement_history[content_id]) > 50:
             self.engagement_history[content_id] = self.engagement_history[content_id][-50:]
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get engagement analysis analytics and performance metrics."""
-        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
+        """Get engagement analysis analytics and performance metrics."""        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {
             "total_analyses": self.analysis_count,
@@ -1222,8 +1175,7 @@ class EngagementAnalyzer:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources and clear caches."""
-        self.engagement_history.clear()
+        """Cleanup resources and clear caches."""        self.engagement_history.clear()
         self.audience_data.clear()
         self.performance_baselines.clear()
         self.processing_times.clear()

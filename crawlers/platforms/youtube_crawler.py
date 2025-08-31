@@ -1,5 +1,4 @@
-"""
-YouTube Crawler
+"""YouTube Crawler
 ===============
 
 Professional YouTube content crawler with advanced monitoring capabilities.
@@ -12,7 +11,6 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -41,8 +39,7 @@ settings = get_settings()
 
 @dataclass
 class YouTubeVideo:
-    """YouTube video data structure."""
-    video_id: str
+    """YouTube video data structure."""    video_id: str
     title: str
     description: str
     channel_id: str
@@ -62,8 +59,7 @@ class YouTubeVideo:
 
 @dataclass
 class YouTubeChannel:
-    """YouTube channel data structure."""
-    channel_id: str
+    """YouTube channel data structure."""    channel_id: str
     title: str
     description: str
     subscriber_count: int
@@ -76,8 +72,7 @@ class YouTubeChannel:
     keywords: List[str]
 
 class YouTubeCrawler:
-    """
-    Professional YouTube crawler implementation.
+    """    Professional YouTube crawler implementation.
     
     Features:
     - YouTube Data API v3 integration
@@ -89,11 +84,9 @@ class YouTubeCrawler:
     - Channel and video analytics
     - Caption and transcript extraction
     - Selenium fallback for scraping
-    """
-    
+    """    
     def __init__(self):
-        """Initialize YouTube crawler."""
-        self.api_key = settings.YOUTUBE_API_KEY
+        """Initialize YouTube crawler."""        self.api_key = settings.YOUTUBE_API_KEY
         self.service = None
         self.rate_limiter = YouTubeRateLimiter()
         self.proxy_manager = ProxyManager()
@@ -115,13 +108,11 @@ class YouTubeCrawler:
         self.selenium_options.add_argument('--disable-gpu')
         
     async def __aenter__(self):
-        """Async context manager entry."""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry."""        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        if self.session:
+        """Async context manager exit."""        if self.session:
             await self.session.close()
     
     async def search_videos(
@@ -134,8 +125,7 @@ class YouTubeCrawler:
         video_duration: Optional[str] = None,
         video_type: str = 'any'
     ) -> List[YouTubeVideo]:
-        """
-        Search YouTube videos with advanced filtering.
+        """        Search YouTube videos with advanced filtering.
         
         Args:
             query: Search query string
@@ -148,8 +138,7 @@ class YouTubeCrawler:
             
         Returns:
             List of YouTube video objects
-        """
-        try:
+        """        try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
             
@@ -215,8 +204,7 @@ class YouTubeCrawler:
             raise CrawlerError(f"Search failed: {e}")
     
     async def _get_video_details(self, video_ids: List[str]) -> List[YouTubeVideo]:
-        """Get detailed information for video IDs."""
-        try:
+        """Get detailed information for video IDs."""        try:
             # Rate limiting check
             await self.rate_limiter.wait_if_needed()
             
@@ -241,8 +229,7 @@ class YouTubeCrawler:
             return []
     
     def _parse_video_data(self, item: dict) -> YouTubeVideo:
-        """Parse YouTube API video data into YouTubeVideo object."""
-        snippet = item['snippet']
+        """Parse YouTube API video data into YouTubeVideo object."""        snippet = item['snippet']
         statistics = item.get('statistics', {})
         content_details = item.get('contentDetails', {})
         status = item.get('status', {})
@@ -281,8 +268,7 @@ class YouTubeCrawler:
         )
     
     async def get_channel_info(self, channel_id: str) -> Optional[YouTubeChannel]:
-        """Get detailed channel information."""
-        try:
+        """Get detailed channel information."""        try:
             await self.rate_limiter.wait_if_needed()
             
             channel_response = self.service.channels().list(
@@ -328,8 +314,7 @@ class YouTubeCrawler:
         check_interval: int = 300,
         max_videos: int = 10
     ) -> AsyncGenerator[List[YouTubeVideo], None]:
-        """Monitor channel for new uploads."""
-        last_check = datetime.now()
+        """Monitor channel for new uploads."""        last_check = datetime.now()
         
         while True:
             try:
@@ -362,8 +347,7 @@ class YouTubeCrawler:
         reference_video: YouTubeVideo,
         similarity_threshold: float = 0.8
     ) -> List[Dict]:
-        """Search for content similar to reference video."""
-        try:
+        """Search for content similar to reference video."""        try:
             # Create search queries based on video metadata
             search_queries = [
                 reference_video.title,
@@ -413,8 +397,7 @@ class YouTubeCrawler:
             return []
     
     def _calculate_video_similarity(self, video1: YouTubeVideo, video2: YouTubeVideo) -> float:
-        """Calculate similarity score between two videos."""
-        # Title similarity (Jaccard similarity)
+        """Calculate similarity score between two videos."""        # Title similarity (Jaccard similarity)
         title1_words = set(video1.title.lower().split())
         title2_words = set(video2.title.lower().split())
         title_similarity = len(title1_words & title2_words) / len(title1_words | title2_words) if title1_words | title2_words else 0
@@ -457,8 +440,7 @@ class YouTubeCrawler:
         return similarity
     
     def _duration_to_seconds(self, duration_str: str) -> int:
-        """Convert duration string to seconds."""
-        try:
+        """Convert duration string to seconds."""        try:
             parts = duration_str.split(':')
             if len(parts) == 3:  # HH:MM:SS
                 hours, minutes, seconds = map(int, parts)
@@ -472,8 +454,7 @@ class YouTubeCrawler:
             return 0
     
     async def scrape_with_selenium(self, url: str) -> Dict:
-        """Fallback scraping using Selenium when API limits are reached."""
-        try:
+        """Fallback scraping using Selenium when API limits are reached."""        try:
             driver = webdriver.Chrome(options=self.selenium_options)
             driver.get(url)
             
@@ -515,8 +496,7 @@ class YouTubeCrawler:
             return {}
     
     async def get_video_captions(self, video_id: str, language: str = 'en') -> Optional[str]:
-        """Extract video captions/transcripts."""
-        try:
+        """Extract video captions/transcripts."""        try:
             await self.rate_limiter.wait_if_needed()
             
             # Get available caption tracks
@@ -552,8 +532,7 @@ class YouTubeCrawler:
             return None
     
     async def analyze_engagement_metrics(self, video: YouTubeVideo) -> Dict:
-        """Analyze video engagement metrics."""
-        try:
+        """Analyze video engagement metrics."""        try:
             # Calculate engagement rate
             total_interactions = video.like_count + video.comment_count
             engagement_rate = (total_interactions / video.view_count * 100) if video.view_count > 0 else 0
@@ -585,8 +564,7 @@ class YouTubeCrawler:
             return {}
     
     async def get_trending_content(self, region_code: str = 'US', category_id: str = '0') -> List[YouTubeVideo]:
-        """Get trending videos for region and category."""
-        try:
+        """Get trending videos for region and category."""        try:
             await self.rate_limiter.wait_if_needed()
             
             videos_response = self.service.videos().list(

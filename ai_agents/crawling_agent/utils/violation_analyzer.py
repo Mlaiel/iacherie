@@ -1,5 +1,4 @@
-"""
-Advanced Violation Analysis Engine - AI-Powered Content Rights Violation Detection
+"""Advanced Violation Analysis Engine - AI-Powered Content Rights Violation Detection
 
 Sophisticated violation detection and analysis system with legal assessment,
 evidence collection, and automated response capabilities.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import time
@@ -49,8 +47,7 @@ from ...integrations.legal_databases import LegalDatabaseConnector
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Types of content violations"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of content violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     PLAGIARISM = "plagiarism"
@@ -60,16 +57,14 @@ class ViolationType(Enum):
     ATTRIBUTION_MISSING = "attribution_missing"
 
 class ViolationSeverity(Enum):
-    """Severity levels for violations"""
-    CRITICAL = "critical"        # Immediate legal action required
+    """Severity levels for violations"""    CRITICAL = "critical"        # Immediate legal action required
     HIGH = "high"               # Legal action recommended
     MEDIUM = "medium"           # Monitoring and warning
     LOW = "low"                 # Educational notice
     NEGLIGIBLE = "negligible"   # No action needed
 
 class ViolationStatus(Enum):
-    """Status of violation handling"""
-    DETECTED = "detected"
+    """Status of violation handling"""    DETECTED = "detected"
     ANALYZED = "analyzed"
     EVIDENCE_COLLECTED = "evidence_collected"
     NOTICE_SENT = "notice_sent"
@@ -78,8 +73,7 @@ class ViolationStatus(Enum):
     DISMISSED = "dismissed"
 
 class ActionType(Enum):
-    """Types of actions that can be taken"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of actions that can be taken"""    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_DESIST = "cease_desist"
     COPYRIGHT_STRIKE = "copyright_strike"
     PLATFORM_REPORT = "platform_report"
@@ -90,8 +84,7 @@ class ActionType(Enum):
 
 @dataclass
 class ViolationEvidence:
-    """Evidence collected for a violation"""
-    evidence_id: str
+    """Evidence collected for a violation"""    evidence_id: str
     violation_id: str
     evidence_type: str
     file_path: str
@@ -102,8 +95,7 @@ class ViolationEvidence:
 
 @dataclass
 class LegalAssessment:
-    """Legal assessment of a violation"""
-    assessment_id: str
+    """Legal assessment of a violation"""    assessment_id: str
     violation_id: str
     copyright_strength: float  # 0.0 - 1.0
     fair_use_likelihood: float  # 0.0 - 1.0
@@ -117,8 +109,7 @@ class LegalAssessment:
 
 @dataclass
 class ViolationAnalysis:
-    """Comprehensive violation analysis result"""
-    analysis_id: str
+    """Comprehensive violation analysis result"""    analysis_id: str
     target_fingerprint_id: str
     violating_content_url: str
     platform: str
@@ -134,10 +125,8 @@ class ViolationAnalysis:
     status: ViolationStatus = ViolationStatus.DETECTED
 
 class ViolationAnalyzer:
-    """
-    Advanced violation analysis engine with AI-powered legal assessment
-    """
-    
+    """    Advanced violation analysis engine with AI-powered legal assessment
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -200,8 +189,7 @@ class ViolationAnalyzer:
         }
     
     async def initialize(self):
-        """Initialize violation analyzer components"""
-        try:
+        """Initialize violation analyzer components"""        try:
             start_time = time.time()
             
             # Initialize legal analysis components
@@ -229,10 +217,8 @@ class ViolationAnalyzer:
                               violating_content_url: str,
                               platform: str,
                               content_metadata: Dict[str, Any] = None) -> ViolationAnalysis:
-        """
-        Perform comprehensive violation analysis
-        """
-        start_time = time.time()
+        """        Perform comprehensive violation analysis
+        """        start_time = time.time()
         analysis_id = str(uuid.uuid4())
         
         try:
@@ -323,8 +309,7 @@ class ViolationAnalyzer:
                                       target_fingerprint: ContentFingerprint,
                                       similarity_match: SimilarityMatch,
                                       content_metadata: Dict[str, Any]) -> List[ViolationType]:
-        """Classify the types of violations present"""
-        violation_types = []
+        """Classify the types of violations present"""        violation_types = []
         
         try:
             # Check for exact copying (copyright infringement)
@@ -369,8 +354,7 @@ class ViolationAnalyzer:
                                        similarity_match: SimilarityMatch,
                                        violation_types: List[ViolationType],
                                        platform: str) -> ViolationSeverity:
-        """Assess the severity of the violation"""
-        try:
+        """Assess the severity of the violation"""        try:
             # Base severity from similarity score
             base_score = similarity_match.similarity_score
             
@@ -413,8 +397,7 @@ class ViolationAnalyzer:
                                         violating_content_url: str,
                                         platform: str,
                                         analysis_id: str) -> List[ViolationEvidence]:
-        """Collect evidence for the violation"""
-        evidence_list = []
+        """Collect evidence for the violation"""        evidence_list = []
         
         try:
             # Take screenshot of the violating content
@@ -490,8 +473,7 @@ class ViolationAnalyzer:
                                       violation_types: List[ViolationType],
                                       content_metadata: Dict[str, Any],
                                       platform: str) -> LegalAssessment:
-        """Perform comprehensive legal assessment"""
-        assessment_id = str(uuid.uuid4())
+        """Perform comprehensive legal assessment"""        assessment_id = str(uuid.uuid4())
         
         try:
             # Analyze copyright strength
@@ -564,8 +546,7 @@ class ViolationAnalyzer:
                                            legal_assessment: LegalAssessment,
                                            platform: str,
                                            violation_types: List[ViolationType]) -> List[ActionType]:
-        """Determine recommended actions based on analysis"""
-        actions = []
+        """Determine recommended actions based on analysis"""        actions = []
         
         try:
             # Critical violations - immediate action
@@ -619,8 +600,7 @@ class ViolationAnalyzer:
                                       legal_assessment: LegalAssessment,
                                       similarity_match: SimilarityMatch,
                                       platform: str) -> float:
-        """Calculate priority score for violation handling"""
-        try:
+        """Calculate priority score for violation handling"""        try:
             # Base score from severity
             severity_scores = {
                 ViolationSeverity.CRITICAL: 1.0,
@@ -672,8 +652,7 @@ class ViolationAnalyzer:
                               content_metadata: Dict[str, Any],
                               platform: str,
                               violation_types: List[ViolationType]) -> Optional[float]:
-        """Estimate potential financial damages"""
-        try:
+        """Estimate potential financial damages"""        try:
             base_damage = 0.0
             
             # Base damages by content type
@@ -729,8 +708,7 @@ class ViolationAnalyzer:
     
     async def _check_platform_specific_violations(self,
                                                 content_metadata: Dict[str, Any]) -> List[ViolationType]:
-        """Check for platform-specific violation patterns"""
-        violations = []
+        """Check for platform-specific violation patterns"""        violations = []
         
         try:
             # Check content description for commercial indicators
@@ -765,8 +743,7 @@ class ViolationAnalyzer:
                                       target_fingerprint: ContentFingerprint,
                                       content_metadata: Dict[str, Any],
                                       violation_types: List[ViolationType]) -> float:
-        """Assess the commercial impact of the violation"""
-        try:
+        """Assess the commercial impact of the violation"""        try:
             impact_score = 0.0
             
             # Base impact from violation types
@@ -806,8 +783,7 @@ class ViolationAnalyzer:
                                             target_fingerprint: ContentFingerprint,
                                             content_metadata: Dict[str, Any],
                                             platform: str) -> Dict[str, Any]:
-        """Analyze jurisdictional factors for legal action"""
-        try:
+        """Analyze jurisdictional factors for legal action"""        try:
             factors = {
                 'target_jurisdiction': 'unknown',
                 'violator_jurisdiction': 'unknown',
@@ -860,8 +836,7 @@ class ViolationAnalyzer:
                                      commercial_impact: float,
                                      violation_types: List[ViolationType],
                                      platform: str) -> List[ActionType]:
-        """Determine specific legal actions to recommend"""
-        actions = []
+        """Determine specific legal actions to recommend"""        actions = []
         
         try:
             # Strong copyright case
@@ -895,8 +870,7 @@ class ViolationAnalyzer:
                                         copyright_strength: float,
                                         fair_use_likelihood: float,
                                         precedent_count: int) -> float:
-        """Calculate confidence in legal assessment"""
-        try:
+        """Calculate confidence in legal assessment"""        try:
             # Base confidence from copyright strength
             confidence = copyright_strength * 0.4
             
@@ -918,8 +892,7 @@ class ViolationAnalyzer:
                                            platform: str,
                                            severity: ViolationSeverity,
                                            violation_types: List[ViolationType]) -> List[ActionType]:
-        """Get platform-specific recommended actions"""
-        actions = []
+        """Get platform-specific recommended actions"""        actions = []
         
         try:
             platform_actions = {
@@ -953,8 +926,7 @@ class ViolationAnalyzer:
             return []
     
     async def generate_takedown_notice(self, analysis: ViolationAnalysis) -> Dict[str, Any]:
-        """Generate DMCA takedown notice for the violation"""
-        try:
+        """Generate DMCA takedown notice for the violation"""        try:
             if ActionType.DMCA_TAKEDOWN in analysis.recommended_actions:
                 notice = await self.dmca_generator.generate_notice(
                     violation_analysis=analysis,
@@ -972,8 +944,7 @@ class ViolationAnalyzer:
     async def update_analysis_status(self, analysis_id: str, 
                                    new_status: ViolationStatus,
                                    action_taken: Optional[str] = None):
-        """Update the status of a violation analysis"""
-        try:
+        """Update the status of a violation analysis"""        try:
             if analysis_id in self.analysis_cache:
                 analysis = self.analysis_cache[analysis_id]
                 analysis.status = new_status
@@ -994,8 +965,7 @@ class ViolationAnalyzer:
             logger.error(f"Analysis status update failed: {e}")
     
     async def get_violation_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive violation analysis statistics"""
-        try:
+        """Get comprehensive violation analysis statistics"""        try:
             stats = self.analysis_stats.copy()
             
             # Add cache statistics
@@ -1028,8 +998,7 @@ class ViolationAnalyzer:
             return self.analysis_stats.copy()
     
     async def cleanup(self):
-        """Cleanup analyzer resources"""
-        try:
+        """Cleanup analyzer resources"""        try:
             # Clear cache
             self.analysis_cache.clear()
             

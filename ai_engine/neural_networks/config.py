@@ -1,5 +1,4 @@
-"""
-Advanced Neural Networks Configuration - IA Influencer Agent
+"""Advanced Neural Networks Configuration - IA Influencer Agent
 
 Enterprise-grade configuration for neural network modules with
 production-ready settings, optimization parameters, and deployment options.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
-
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -20,16 +18,14 @@ from pathlib import Path
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types"""
-    DEVELOPMENT = "development"
+    """Deployment environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     ENTERPRISE = "enterprise"
 
 
 class OptimizationLevel(Enum):
-    """Model optimization levels"""
-    BASIC = "basic"
+    """Model optimization levels"""    BASIC = "basic"
     ADVANCED = "advanced"
     ULTRA = "ultra"
     ENTERPRISE = "enterprise"
@@ -37,13 +33,11 @@ class OptimizationLevel(Enum):
 
 @dataclass
 class NeuralNetworkConfig:
-    """
-    Master configuration for all neural networks
+    """    Master configuration for all neural networks
     
     Provides enterprise-grade configuration with environment-specific
     settings, optimization parameters, and production deployment options.
-    """
-    
+    """    
     # Environment Settings
     environment: DeploymentEnvironment = DeploymentEnvironment.PRODUCTION
     debug_mode: bool = False
@@ -140,8 +134,7 @@ class NeuralNetworkConfig:
 
 @dataclass 
 class TransformerNetworkConfig(NeuralNetworkConfig):
-    """Configuration specific to transformer networks"""
-    
+    """Configuration specific to transformer networks"""    
     # Architecture
     d_model: int = 512
     n_heads: int = 8
@@ -162,8 +155,7 @@ class TransformerNetworkConfig(NeuralNetworkConfig):
 
 @dataclass
 class ContentProtectionConfig(NeuralNetworkConfig):
-    """Configuration for content protection networks"""
-    
+    """Configuration for content protection networks"""    
     # Fingerprinting
     fingerprint_length: int = 128
     hash_algorithm: str = "sha256"
@@ -182,8 +174,7 @@ class ContentProtectionConfig(NeuralNetworkConfig):
 
 @dataclass
 class OptimizationNetworkConfig(NeuralNetworkConfig):
-    """Configuration for optimization networks"""
-    
+    """Configuration for optimization networks"""    
     # SEO
     keyword_extraction_model: str = "bert-base-uncased"
     seo_score_weight: float = 0.3
@@ -236,16 +227,14 @@ ENTERPRISE_CONFIG = NeuralNetworkConfig(
 
 # Configuration Factory
 class ConfigFactory:
-    """Factory for creating neural network configurations"""
-    
+    """Factory for creating neural network configurations"""    
     @staticmethod
     def create_config(
         environment: str = "production",
         network_type: str = "transformer",
         custom_params: Optional[Dict[str, Any]] = None
     ) -> NeuralNetworkConfig:
-        """Create configuration based on environment and network type"""
-        
+        """Create configuration based on environment and network type"""        
         # Base configuration selection
         if environment.lower() == "production":
             config = PRODUCTION_CONFIG
@@ -274,8 +263,7 @@ class ConfigFactory:
     
     @staticmethod
     def get_platform_specific_config(platform: str) -> Dict[str, Any]:
-        """Get platform-specific configuration parameters"""
-        
+        """Get platform-specific configuration parameters"""        
         platform_configs = {
             "youtube": {
                 "max_title_length": 100,

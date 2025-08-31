@@ -1,5 +1,4 @@
-"""
-📅 Backup Scheduler - Intelligent Backup Scheduling System
+"""📅 Backup Scheduler - Intelligent Backup Scheduling System
 =======================================================
 Module: backend/data_management/backups/backup_scheduler.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -13,7 +12,6 @@ Responsibility: Planification intelligente et automatisation des sauvegardes
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta, time
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(str, Enum):
-    """Types de planification disponibles"""
-    IMMEDIATE = "immediate"         # Exécution immédiate
+    """Types de planification disponibles"""    IMMEDIATE = "immediate"         # Exécution immédiate
     INTERVAL = "interval"          # Intervalle fixe
     CRON = "cron"                 # Expression cron
     DATE = "date"                 # Date spécifique
@@ -48,8 +45,7 @@ class ScheduleType(str, Enum):
 
 
 class Priority(str, Enum):
-    """Niveaux de priorité pour les sauvegardes"""
-    CRITICAL = "critical"         # Critique (revenus, contenu premium)
+    """Niveaux de priorité pour les sauvegardes"""    CRITICAL = "critical"         # Critique (revenus, contenu premium)
     HIGH = "high"                # Haute (contenu populaire)
     MEDIUM = "medium"            # Moyenne (contenu standard)
     LOW = "low"                  # Basse (contenu archivé)
@@ -58,8 +54,7 @@ class Priority(str, Enum):
 
 @dataclass
 class ScheduleConfig:
-    """Configuration de planification"""
-    schedule_type: ScheduleType
+    """Configuration de planification"""    schedule_type: ScheduleType
     priority: Priority = Priority.MEDIUM
     
     # Paramètres interval
@@ -87,8 +82,7 @@ class ScheduleConfig:
     description: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "schedule_type": self.schedule_type.value,
             "priority": self.priority.value,
             "interval_minutes": self.interval_minutes,
@@ -108,8 +102,7 @@ class ScheduleConfig:
 
 @dataclass
 class BackupScheduleJob:
-    """Job de sauvegarde planifiée"""
-    job_id: str
+    """Job de sauvegarde planifiée"""    job_id: str
     name: str
     source_paths: List[Path]
     schedule_config: ScheduleConfig
@@ -133,8 +126,7 @@ class BackupScheduleJob:
 
 
 class BackupScheduler:
-    """
-    Planificateur intelligent de sauvegardes avec gestion avancée
+    """    Planificateur intelligent de sauvegardes avec gestion avancée
     
     Fonctionnalités:
     - Planification multiple (cron, interval, conditionnel)
@@ -143,8 +135,7 @@ class BackupScheduler:
     - Monitoring performance
     - Auto-adaptation selon usage
     - Failover et retry intelligents
-    """
-    
+    """    
     def __init__(self, redis_url: str = "redis://localhost:6379/0"):
         self.scheduler = AsyncIOScheduler()
         self.backup_manager = BackupManager()
@@ -175,8 +166,7 @@ class BackupScheduler:
         logger.info("BackupScheduler initialized with Redis persistence")
     
     async def start(self):
-        """Démarre le planificateur"""
-        try:
+        """Démarre le planificateur"""        try:
             self.scheduler.start()
             logger.info("Backup scheduler started successfully")
             
@@ -188,8 +178,7 @@ class BackupScheduler:
             raise SchedulerException(f"Scheduler startup failed: {e}")
     
     async def stop(self):
-        """Arrête le planificateur"""
-        try:
+        """Arrête le planificateur"""        try:
             self.scheduler.shutdown(wait=True)
             logger.info("Backup scheduler stopped")
         except Exception as e:
@@ -205,8 +194,7 @@ class BackupScheduler:
         content_type: str = "mixed",
         backup_options: Optional[Dict[str, Any]] = None
     ) -> BackupScheduleJob:
-        """
-        Planifie une nouvelle sauvegarde
+        """        Planifie une nouvelle sauvegarde
         
         Args:
             job_id: ID unique du job
@@ -219,8 +207,7 @@ class BackupScheduler:
             
         Returns:
             BackupScheduleJob: Job planifié créé
-        """
-        try:
+        """        try:
             # Conversion paths
             source_path_objects = [Path(p) for p in source_paths]
             
@@ -257,8 +244,7 @@ class BackupScheduler:
             raise SchedulerException(f"Schedule creation failed: {e}")
     
     def _calculate_next_run(self, config: ScheduleConfig) -> Optional[datetime]:
-        """Calcule la prochaine exécution selon la configuration"""
-        now = datetime.now()
+        """Calcule la prochaine exécution selon la configuration"""        now = datetime.now()
         
         if config.schedule_type == ScheduleType.IMMEDIATE:
             return now
@@ -290,8 +276,7 @@ class BackupScheduler:
         return None
     
     async def _add_to_scheduler(self, schedule_job: BackupScheduleJob):
-        """Ajoute un job au scheduler APScheduler"""
-        config = schedule_job.schedule_config
+        """Ajoute un job au scheduler APScheduler"""        config = schedule_job.schedule_config
         
         # Sélection du trigger selon le type
         trigger = None
@@ -331,13 +316,11 @@ class BackupScheduler:
             )
     
     async def _execute_scheduled_backup(self, job_id: str):
-        """
-        Exécute une sauvegarde planifiée
+        """        Exécute une sauvegarde planifiée
         
         Args:
             job_id: ID du job planifié
-        """
-        if job_id not in self.scheduled_jobs:
+        """        if job_id not in self.scheduled_jobs:
             logger.error(f"Scheduled job {job_id} not found")
             return
         
@@ -404,8 +387,7 @@ class BackupScheduler:
                 del self.active_backups[backup_job.job_id]
     
     def _should_execute_now(self, schedule_job: BackupScheduleJob) -> bool:
-        """Détermine si un job conditionnel/adaptatif doit s'exécuter maintenant"""
-        config = schedule_job.schedule_config
+        """Détermine si un job conditionnel/adaptatif doit s'exécuter maintenant"""        config = schedule_job.schedule_config
         
         if config.schedule_type == ScheduleType.CONDITIONAL:
             return self._evaluate_conditions(config.conditions)
@@ -416,8 +398,7 @@ class BackupScheduler:
         return False
     
     def _evaluate_conditions(self, conditions: Dict[str, Any]) -> bool:
-        """Évalue les conditions de déclenchement"""
-        # Exemples de conditions supportées
+        """Évalue les conditions de déclenchement"""        # Exemples de conditions supportées
         now = datetime.now()
         
         # Condition horaire
@@ -459,8 +440,7 @@ class BackupScheduler:
         return True
     
     def _evaluate_adaptive_conditions(self, schedule_job: BackupScheduleJob) -> bool:
-        """Évalue les conditions adaptatives basées sur l'historique"""
-        # Logique adaptative basée sur:
+        """Évalue les conditions adaptatives basées sur l'historique"""        # Logique adaptative basée sur:
         # - Patterns d'usage historiques
         # - Fréquence des changements
         # - Performance système
@@ -489,8 +469,7 @@ class BackupScheduler:
         return False
     
     def _calculate_adaptive_schedule(self, config: ScheduleConfig) -> datetime:
-        """Calcule la prochaine exécution adaptative"""
-        now = datetime.now()
+        """Calcule la prochaine exécution adaptative"""        now = datetime.now()
         
         # Logique adaptative basée sur la priorité
         if config.priority == Priority.CRITICAL:
@@ -507,8 +486,7 @@ class BackupScheduler:
             return now + timedelta(days=7)
     
     def _has_active_overlap(self, schedule_job: BackupScheduleJob) -> bool:
-        """Vérifie s'il y a un overlap avec une exécution précédente"""
-        for active_job in self.active_backups.values():
+        """Vérifie s'il y a un overlap avec une exécution précédente"""        for active_job in self.active_backups.values():
             if (active_job.user_id == schedule_job.user_id and 
                 active_job.status in [BackupStatus.PENDING, BackupStatus.RUNNING]):
                 
@@ -522,8 +500,7 @@ class BackupScheduler:
         return False
     
     async def _queue_job_execution(self, schedule_job: BackupScheduleJob):
-        """Met en queue un job en cas d'overlap"""
-        # Ajouter à une queue Redis pour exécution différée
+        """Met en queue un job en cas d'overlap"""        # Ajouter à une queue Redis pour exécution différée
         queue_data = {
             "job_id": schedule_job.job_id,
             "queued_at": datetime.now().isoformat(),
@@ -534,8 +511,7 @@ class BackupScheduler:
         logger.info(f"Queued job {schedule_job.job_id} for later execution")
     
     async def _wait_for_backup_completion(self, backup_job_id: str, timeout_seconds: int) -> bool:
-        """
-        Attend la completion d'une sauvegarde avec timeout
+        """        Attend la completion d'une sauvegarde avec timeout
         
         Args:
             backup_job_id: ID du job de sauvegarde
@@ -543,8 +519,7 @@ class BackupScheduler:
             
         Returns:
             bool: True si complété avec succès
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         while (datetime.now() - start_time).total_seconds() < timeout_seconds:
             backup_job = await self.backup_manager.get_backup_status(backup_job_id)
@@ -571,8 +546,7 @@ class BackupScheduler:
         backup_job: BackupJob,
         execution_start: datetime
     ):
-        """Gère une exécution réussie"""
-        execution_time = (datetime.now() - execution_start).total_seconds()
+        """Gère une exécution réussie"""        execution_time = (datetime.now() - execution_start).total_seconds()
         
         # Mise à jour statistiques du job
         schedule_job.avg_duration_seconds = (
@@ -619,8 +593,7 @@ class BackupScheduler:
         error_message: str,
         execution_start: datetime
     ):
-        """Gère une exécution échouée"""
-        execution_time = (datetime.now() - execution_start).total_seconds()
+        """Gère une exécution échouée"""        execution_time = (datetime.now() - execution_start).total_seconds()
         
         # Mise à jour statistiques d'échec
         schedule_job.failure_count += 1
@@ -673,16 +646,14 @@ class BackupScheduler:
         await self._persist_job(schedule_job)
     
     def _update_average_execution_time(self, execution_time: float):
-        """Met à jour le temps d'exécution moyen global"""
-        total_successful = self.performance_metrics["successful_executions"]
+        """Met à jour le temps d'exécution moyen global"""        total_successful = self.performance_metrics["successful_executions"]
         current_avg = self.performance_metrics["average_execution_time"]
         
         new_avg = ((current_avg * (total_successful - 1)) + execution_time) / total_successful
         self.performance_metrics["average_execution_time"] = new_avg
     
     async def _persist_job(self, schedule_job: BackupScheduleJob):
-        """Persiste un job planifié dans Redis"""
-        job_data = {
+        """Persiste un job planifié dans Redis"""        job_data = {
             "job_id": schedule_job.job_id,
             "name": schedule_job.name,
             "source_paths": [str(p) for p in schedule_job.source_paths],
@@ -708,8 +679,7 @@ class BackupScheduler:
         logger.debug(f"Persisted scheduled job: {schedule_job.job_id}")
     
     async def _load_persisted_jobs(self):
-        """Charge les jobs persistés depuis Redis"""
-        # En production, charger depuis Redis
+        """Charge les jobs persistés depuis Redis"""        # En production, charger depuis Redis
         # keys = redis_client.keys("scheduled_job:*")
         # for key in keys:
         #     job_data = json.loads(redis_client.get(key))
@@ -720,16 +690,14 @@ class BackupScheduler:
         logger.info("Loaded persisted scheduled jobs")
     
     async def unschedule_backup(self, job_id: str) -> bool:
-        """
-        Supprime une sauvegarde planifiée
+        """        Supprime une sauvegarde planifiée
         
         Args:
             job_id: ID du job à supprimer
             
         Returns:
             bool: True si supprimé avec succès
-        """
-        try:
+        """        try:
             # Suppression du scheduler
             self.scheduler.remove_job(job_id)
             
@@ -748,16 +716,14 @@ class BackupScheduler:
             return False
     
     async def pause_job(self, job_id: str) -> bool:
-        """
-        Met en pause un job planifié
+        """        Met en pause un job planifié
         
         Args:
             job_id: ID du job à pauser
             
         Returns:
             bool: True si pausé avec succès
-        """
-        try:
+        """        try:
             self.scheduler.pause_job(job_id)
             
             if job_id in self.scheduled_jobs:
@@ -772,16 +738,14 @@ class BackupScheduler:
             return False
     
     async def resume_job(self, job_id: str) -> bool:
-        """
-        Reprend un job planifié en pause
+        """        Reprend un job planifié en pause
         
         Args:
             job_id: ID du job à reprendre
             
         Returns:
             bool: True si repris avec succès
-        """
-        try:
+        """        try:
             self.scheduler.resume_job(job_id)
             
             if job_id in self.scheduled_jobs:
@@ -800,8 +764,7 @@ class BackupScheduler:
         user_id: Optional[str] = None,
         enabled_only: bool = False
     ) -> List[BackupScheduleJob]:
-        """
-        Liste les jobs planifiés
+        """        Liste les jobs planifiés
         
         Args:
             user_id: Filtrer par utilisateur
@@ -809,8 +772,7 @@ class BackupScheduler:
             
         Returns:
             List[BackupScheduleJob]: Liste des jobs planifiés
-        """
-        jobs = list(self.scheduled_jobs.values())
+        """        jobs = list(self.scheduled_jobs.values())
         
         # Filtrage par utilisateur
         if user_id:
@@ -826,24 +788,21 @@ class BackupScheduler:
         return jobs
     
     async def get_job_details(self, job_id: str) -> Optional[BackupScheduleJob]:
-        """
-        Récupère les détails d'un job planifié
+        """        Récupère les détails d'un job planifié
         
         Args:
             job_id: ID du job
             
         Returns:
             Optional[BackupScheduleJob]: Job si trouvé
-        """
-        return self.scheduled_jobs.get(job_id)
+        """        return self.scheduled_jobs.get(job_id)
     
     async def update_job_schedule(
         self,
         job_id: str,
         new_schedule_config: ScheduleConfig
     ) -> bool:
-        """
-        Met à jour la planification d'un job
+        """        Met à jour la planification d'un job
         
         Args:
             job_id: ID du job à modifier
@@ -851,8 +810,7 @@ class BackupScheduler:
             
         Returns:
             bool: True si mis à jour avec succès
-        """
-        try:
+        """        try:
             if job_id not in self.scheduled_jobs:
                 return False
             
@@ -879,13 +837,11 @@ class BackupScheduler:
             return False
     
     async def get_scheduler_metrics(self) -> Dict[str, Any]:
-        """
-        Récupère les métriques du planificateur
+        """        Récupère les métriques du planificateur
         
         Returns:
             Dict[str, Any]: Métriques détaillées
-        """
-        # Mise à jour peak concurrent jobs
+        """        # Mise à jour peak concurrent jobs
         current_active = self.performance_metrics["current_active_jobs"]
         if current_active > self.performance_metrics["peak_concurrent_jobs"]:
             self.performance_metrics["peak_concurrent_jobs"] = current_active
@@ -925,16 +881,14 @@ class BackupScheduler:
 
 
 class AutomatedScheduler(BackupScheduler):
-    """
-    Planificateur automatisé avec intelligence artificielle
+    """    Planificateur automatisé avec intelligence artificielle
     
     Fonctionnalités:
     - Auto-détection patterns d'usage
     - Optimisation automatique des horaires
     - Prédiction charge système
     - Ajustement dynamique selon performance
-    """
-    
+    """    
     def __init__(self, redis_url: str = "redis://localhost:6379/0"):
         super().__init__(redis_url)
         self.usage_analyzer = UsagePatternAnalyzer()
@@ -943,8 +897,7 @@ class AutomatedScheduler(BackupScheduler):
         logger.info("AutomatedScheduler initialized with AI optimization")
     
     async def auto_optimize_schedules(self):
-        """Optimise automatiquement tous les horaires de sauvegarde"""
-        for job_id, schedule_job in self.scheduled_jobs.items():
+        """Optimise automatiquement tous les horaires de sauvegarde"""        for job_id, schedule_job in self.scheduled_jobs.items():
             optimized_config = await self._optimize_job_schedule(schedule_job)
             
             if optimized_config != schedule_job.schedule_config:
@@ -952,8 +905,7 @@ class AutomatedScheduler(BackupScheduler):
                 logger.info(f"Auto-optimized schedule for job {job_id}")
     
     async def _optimize_job_schedule(self, schedule_job: BackupScheduleJob) -> ScheduleConfig:
-        """Optimise la planification d'un job spécifique"""
-        # Analyse patterns d'usage
+        """Optimise la planification d'un job spécifique"""        # Analyse patterns d'usage
         usage_pattern = await self.usage_analyzer.analyze_content_usage(
             schedule_job.source_paths,
             schedule_job.content_type
@@ -977,16 +929,14 @@ class AutomatedScheduler(BackupScheduler):
 
 
 class ConditionalScheduler(BackupScheduler):
-    """
-    Planificateur conditionnel avancé
+    """    Planificateur conditionnel avancé
     
     Fonctionnalités:
     - Conditions complexes multi-critères
     - Évaluation temps réel
     - Triggers personnalisés
     - Intégration monitoring externe
-    """
-    
+    """    
     def __init__(self, redis_url: str = "redis://localhost:6379/0"):
         super().__init__(redis_url)
         self.condition_evaluators = self._initialize_condition_evaluators()
@@ -994,8 +944,7 @@ class ConditionalScheduler(BackupScheduler):
         logger.info("ConditionalScheduler initialized with advanced conditions")
     
     def _initialize_condition_evaluators(self) -> Dict[str, Callable]:
-        """Initialise les évaluateurs de conditions personnalisées"""
-        return {
+        """Initialise les évaluateurs de conditions personnalisées"""        return {
             "file_changes": self._evaluate_file_changes,
             "system_load": self._evaluate_system_load,
             "network_bandwidth": self._evaluate_network_bandwidth,
@@ -1005,46 +954,38 @@ class ConditionalScheduler(BackupScheduler):
         }
     
     async def _evaluate_file_changes(self, condition_params: Dict[str, Any]) -> bool:
-        """Évalue les conditions de changement de fichiers"""
-        # Implémentation détection changements avancée
+        """Évalue les conditions de changement de fichiers"""        # Implémentation détection changements avancée
         return True  # Placeholder
     
     async def _evaluate_system_load(self, condition_params: Dict[str, Any]) -> bool:
-        """Évalue la charge système"""
-        # Intégration métriques système
+        """Évalue la charge système"""        # Intégration métriques système
         return True  # Placeholder
     
     async def _evaluate_network_bandwidth(self, condition_params: Dict[str, Any]) -> bool:
-        """Évalue la bande passante réseau"""
-        # Monitoring bande passante
+        """Évalue la bande passante réseau"""        # Monitoring bande passante
         return True  # Placeholder
     
     async def _evaluate_storage_usage(self, condition_params: Dict[str, Any]) -> bool:
-        """Évalue l'usage du stockage"""
-        # Vérification espace disque
+        """Évalue l'usage du stockage"""        # Vérification espace disque
         return True  # Placeholder
     
     async def _evaluate_content_popularity(self, condition_params: Dict[str, Any]) -> bool:
-        """Évalue la popularité du contenu"""
-        # Analyse engagement/vues récentes
+        """Évalue la popularité du contenu"""        # Analyse engagement/vues récentes
         return True  # Placeholder
     
     async def _evaluate_revenue_impact(self, condition_params: Dict[str, Any]) -> bool:
-        """Évalue l'impact sur les revenus"""
-        # Corrélation contenu/revenus
+        """Évalue l'impact sur les revenus"""        # Corrélation contenu/revenus
         return True  # Placeholder
 
 
 class UsagePatternAnalyzer:
-    """Analyseur de patterns d'usage pour optimisation automatique"""
-    
+    """Analyseur de patterns d'usage pour optimisation automatique"""    
     async def analyze_content_usage(
         self,
         source_paths: List[Path],
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyse les patterns d'usage du contenu"""
-        # Implémentation analyse patterns
+        """Analyse les patterns d'usage du contenu"""        # Implémentation analyse patterns
         return {
             "high_activity_hours": [9, 10, 11, 14, 15, 16],
             "low_activity_hours": [1, 2, 3, 4, 5],
@@ -1053,11 +994,9 @@ class UsagePatternAnalyzer:
 
 
 class PerformancePredictor:
-    """Prédicteur de performance pour optimisation"""
-    
+    """Prédicteur de performance pour optimisation"""    
     async def predict_optimal_backup_times(self, priority: Priority) -> List[int]:
-        """Prédit les heures optimales pour les sauvegardes"""
-        # Logique prédictive basée sur historique
+        """Prédit les heures optimales pour les sauvegardes"""        # Logique prédictive basée sur historique
         if priority == Priority.CRITICAL:
             return [2, 3, 4]  # Heures creuses
         else:

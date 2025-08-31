@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Critical APIs Load Testing
+"""Critical APIs Load Testing
 ========================
 
 Enhanced load testing specifically targeting critical business APIs for the Ainflue platform.
@@ -23,7 +20,6 @@ Tests authentication, content upload, fingerprinting, analytics, protection, and
 
 Author: Performance Optimization Team
 """
-
 import asyncio
 import time
 import json
@@ -47,8 +43,7 @@ from tests.performance.test_load_stress import PerformanceMetrics
 
 @dataclass
 class CriticalAPIEndpoint:
-    """Critical API endpoint configuration"""
-    name: str
+    """Critical API endpoint configuration"""    name: str
     path: str
     method: str = "POST"
     priority: str = "high"  # high, medium, low
@@ -60,16 +55,14 @@ class CriticalAPIEndpoint:
 
 
 class CriticalAPILoadTester:
-    """Enhanced load tester for critical business APIs"""
-    
+    """Enhanced load tester for critical business APIs"""    
     def __init__(self):
         self.critical_endpoints = self._define_critical_endpoints()
         self.performance_metrics = PerformanceMetrics()
         self.session: Optional[aiohttp.ClientSession] = None
         
     def _define_critical_endpoints(self) -> List[CriticalAPIEndpoint]:
-        """Define critical business API endpoints"""
-        return [
+        """Define critical business API endpoints"""        return [
             # Authentication & User Management
             CriticalAPIEndpoint(
                 name="user_authentication",
@@ -164,8 +157,7 @@ class CriticalAPILoadTester:
         ]
     
     async def simulate_api_call(self, endpoint: CriticalAPIEndpoint) -> Dict[str, Any]:
-        """Simulate API call with realistic response times and payloads"""
-        start_time = time.time()
+        """Simulate API call with realistic response times and payloads"""        start_time = time.time()
         
         # Simulate different processing times based on endpoint type
         if "upload" in endpoint.path:
@@ -211,13 +203,11 @@ class CriticalAPILoadTester:
 
 
 class TestCriticalAPIsLoad:
-    """Test suite for critical API load testing"""
-    
+    """Test suite for critical API load testing"""    
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_critical_apis_individual_load(self):
-        """Test each critical API individually under load"""
-        tester = CriticalAPILoadTester()
+        """Test each critical API individually under load"""        tester = CriticalAPILoadTester()
         results = {}
         
         for endpoint in tester.critical_endpoints:
@@ -335,8 +325,7 @@ class TestCriticalAPIsLoad:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_critical_apis_mixed_load(self):
-        """Test mixed load across all critical APIs simultaneously"""
-        tester = CriticalAPILoadTester()
+        """Test mixed load across all critical APIs simultaneously"""        tester = CriticalAPILoadTester()
         
         print("\\nTesting mixed load across all critical APIs...")
         

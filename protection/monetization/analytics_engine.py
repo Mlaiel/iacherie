@@ -1,11 +1,9 @@
-"""
-Analytics Engine - Professional monetization analytics and reporting system.
+"""Analytics Engine - Professional monetization analytics and reporting system.
 Provides comprehensive insights into revenue, performance, and optimization opportunities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -21,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of analytics metrics."""
-    REVENUE = "revenue"
+    """Types of analytics metrics."""    REVENUE = "revenue"
     TRANSACTIONS = "transactions"
     USERS = "users"
     CONVERSION = "conversion"
@@ -33,8 +30,7 @@ class MetricType(Enum):
 
 
 class ReportType(Enum):
-    """Types of analytics reports."""
-    DAILY = "daily"
+    """Types of analytics reports."""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -43,8 +39,7 @@ class ReportType(Enum):
 
 
 class AggregationType(Enum):
-    """Data aggregation methods."""
-    SUM = "sum"
+    """Data aggregation methods."""    SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
     MAX = "max"
@@ -55,8 +50,7 @@ class AggregationType(Enum):
 
 @dataclass
 class MetricData:
-    """Individual metric data point."""
-    metric_id: str
+    """Individual metric data point."""    metric_id: str
     metric_type: MetricType
     value: Union[Decimal, int, float]
     dimensions: Dict[str, Any] = field(default_factory=dict)
@@ -64,8 +58,7 @@ class MetricData:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metric to dictionary."""
-        return {
+        """Convert metric to dictionary."""        return {
             "metric_id": self.metric_id,
             "metric_type": self.metric_type.value,
             "value": float(self.value) if isinstance(self.value, Decimal) else self.value,
@@ -77,8 +70,7 @@ class MetricData:
 
 @dataclass
 class ReportSection:
-    """Report section with specific metrics."""
-    section_id: str
+    """Report section with specific metrics."""    section_id: str
     title: str
     metrics: List[MetricData] = field(default_factory=list)
     charts: List[Dict[str, Any]] = field(default_factory=list)
@@ -86,22 +78,18 @@ class ReportSection:
     recommendations: List[str] = field(default_factory=list)
     
     def add_metric(self, metric: MetricData) -> None:
-        """Add metric to section."""
-        self.metrics.append(metric)
+        """Add metric to section."""        self.metrics.append(metric)
     
     def add_insight(self, insight: str) -> None:
-        """Add insight to section."""
-        self.insights.append(insight)
+        """Add insight to section."""        self.insights.append(insight)
     
     def add_recommendation(self, recommendation: str) -> None:
-        """Add recommendation to section."""
-        self.recommendations.append(recommendation)
+        """Add recommendation to section."""        self.recommendations.append(recommendation)
 
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report."""
-    report_id: str
+    """Comprehensive analytics report."""    report_id: str
     title: str
     report_type: ReportType
     period_start: datetime
@@ -111,12 +99,10 @@ class AnalyticsReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
     
     def add_section(self, section: ReportSection) -> None:
-        """Add section to report."""
-        self.sections.append(section)
+        """Add section to report."""        self.sections.append(section)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert report to dictionary."""
-        return {
+        """Convert report to dictionary."""        return {
             "report_id": self.report_id,
             "title": self.title,
             "report_type": self.report_type.value,
@@ -139,8 +125,7 @@ class AnalyticsReport:
 
 
 class MetricCollector(ABC):
-    """Abstract base class for metric collectors."""
-    
+    """Abstract base class for metric collectors."""    
     @abstractmethod
     async def collect_metrics(
         self, 
@@ -148,16 +133,14 @@ class MetricCollector(ABC):
         start_date: datetime, 
         end_date: datetime
     ) -> List[MetricData]:
-        """Collect metrics for specified period."""
-        # Abstract method that must be implemented by subclasses
+        """Collect metrics for specified period."""        # Abstract method that must be implemented by subclasses
         # This method should return a list of MetricData objects
         # representing the collected metrics for the specified period
         pass
 
 
 class RevenueMetricCollector(MetricCollector):
-    """Revenue metrics collector."""
-    
+    """Revenue metrics collector."""    
     def __init__(self, revenue_engine):
         self.revenue_engine = revenue_engine
     
@@ -167,8 +150,7 @@ class RevenueMetricCollector(MetricCollector):
         start_date: datetime, 
         end_date: datetime
     ) -> List[MetricData]:
-        """Collect revenue metrics."""
-        if metric_type != MetricType.REVENUE:
+        """Collect revenue metrics."""        if metric_type != MetricType.REVENUE:
             return []
         
         metrics = []
@@ -203,8 +185,7 @@ class RevenueMetricCollector(MetricCollector):
 
 
 class TransactionMetricCollector(MetricCollector):
-    """Transaction metrics collector."""
-    
+    """Transaction metrics collector."""    
     def __init__(self, revenue_engine):
         self.revenue_engine = revenue_engine
     
@@ -214,8 +195,7 @@ class TransactionMetricCollector(MetricCollector):
         start_date: datetime, 
         end_date: datetime
     ) -> List[MetricData]:
-        """Collect transaction metrics."""
-        if metric_type != MetricType.TRANSACTIONS:
+        """Collect transaction metrics."""        if metric_type != MetricType.TRANSACTIONS:
             return []
         
         period_transactions = [
@@ -249,8 +229,7 @@ class TransactionMetricCollector(MetricCollector):
 
 
 class ConversionMetricCollector(MetricCollector):
-    """Conversion metrics collector."""
-    
+    """Conversion metrics collector."""    
     def __init__(self, user_data_source):
         self.user_data_source = user_data_source
     
@@ -260,8 +239,7 @@ class ConversionMetricCollector(MetricCollector):
         start_date: datetime, 
         end_date: datetime
     ) -> List[MetricData]:
-        """Collect conversion metrics."""
-        if metric_type != MetricType.CONVERSION:
+        """Collect conversion metrics."""        if metric_type != MetricType.CONVERSION:
             return []
         
         # Simulated conversion data
@@ -279,11 +257,9 @@ class ConversionMetricCollector(MetricCollector):
 
 
 class AnalyticsEngine:
-    """
-    Professional monetization analytics engine.
+    """    Professional monetization analytics engine.
     Provides comprehensive analytics, reporting, and insights.
-    """
-    
+    """    
     def __init__(self):
         self.metric_collectors: Dict[MetricType, MetricCollector] = {}
         self.cached_reports: Dict[str, AnalyticsReport] = {}
@@ -292,8 +268,7 @@ class AnalyticsEngine:
         self.is_initialized = False
     
     async def initialize(self, revenue_engine, subscription_manager, commission_manager) -> bool:
-        """Initialize analytics engine with data sources."""
-        try:
+        """Initialize analytics engine with data sources."""        try:
             # Initialize metric collectors
             self.metric_collectors[MetricType.REVENUE] = RevenueMetricCollector(revenue_engine)
             self.metric_collectors[MetricType.TRANSACTIONS] = TransactionMetricCollector(revenue_engine)
@@ -321,8 +296,7 @@ class AnalyticsEngine:
         start_date: datetime, 
         end_date: datetime
     ) -> List[MetricData]:
-        """Collect metrics for specified types and period."""
-        if not self.is_initialized:
+        """Collect metrics for specified types and period."""        if not self.is_initialized:
             raise RuntimeError("Analytics engine not initialized")
         
         all_metrics = []
@@ -350,8 +324,7 @@ class AnalyticsEngine:
         end_date: datetime,
         user_id: Optional[str] = None
     ) -> AnalyticsReport:
-        """Generate comprehensive analytics report."""
-        if not self.is_initialized:
+        """Generate comprehensive analytics report."""        if not self.is_initialized:
             await self.initialize(None, None, None)  # Basic initialization
         
         try:
@@ -415,8 +388,7 @@ class AnalyticsEngine:
             )
     
     async def get_real_time_metrics(self, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get real-time monetization metrics."""
-        try:
+        """Get real-time monetization metrics."""        try:
             now = datetime.utcnow()
             today_start = datetime.combine(now.date(), datetime.min.time())
             
@@ -474,8 +446,7 @@ class AnalyticsEngine:
         days: int = 30,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Analyze trends for specific metrics."""
-        try:
+        """Analyze trends for specific metrics."""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days)
             
@@ -536,8 +507,7 @@ class AnalyticsEngine:
             }
     
     async def get_performance_insights(self, user_id: Optional[str] = None) -> List[str]:
-        """Generate performance insights and recommendations."""
-        insights = []
+        """Generate performance insights and recommendations."""        insights = []
         
         try:
             # Revenue insights
@@ -600,8 +570,7 @@ class AnalyticsEngine:
         return insights
     
     async def export_report(self, report_id: str, format_type: str = "json") -> Optional[str]:
-        """Export report in specified format."""
-        report = self.cached_reports.get(report_id)
+        """Export report in specified format."""        report = self.cached_reports.get(report_id)
         if not report:
             return None
         
@@ -628,8 +597,7 @@ class AnalyticsEngine:
         end_date: datetime, 
         user_id: Optional[str]
     ) -> ReportSection:
-        """Generate revenue analytics section."""
-        section = ReportSection(
+        """Generate revenue analytics section."""        section = ReportSection(
             section_id="revenue_analytics",
             title="Revenue Analytics"
         )
@@ -675,8 +643,7 @@ class AnalyticsEngine:
         end_date: datetime, 
         user_id: Optional[str]
     ) -> ReportSection:
-        """Generate transaction analytics section."""
-        section = ReportSection(
+        """Generate transaction analytics section."""        section = ReportSection(
             section_id="transaction_analytics",
             title="Transaction Analytics"
         )
@@ -718,8 +685,7 @@ class AnalyticsEngine:
         end_date: datetime, 
         user_id: Optional[str]
     ) -> ReportSection:
-        """Generate subscription analytics section."""
-        section = ReportSection(
+        """Generate subscription analytics section."""        section = ReportSection(
             section_id="subscription_analytics",
             title="Subscription Analytics"
         )
@@ -753,8 +719,7 @@ class AnalyticsEngine:
         end_date: datetime, 
         user_id: Optional[str]
     ) -> ReportSection:
-        """Generate commission analytics section."""
-        section = ReportSection(
+        """Generate commission analytics section."""        section = ReportSection(
             section_id="commission_analytics",
             title="Commission Analytics"
         )
@@ -787,8 +752,7 @@ class AnalyticsEngine:
         end_date: datetime, 
         user_id: Optional[str]
     ) -> ReportSection:
-        """Generate performance analytics section."""
-        section = ReportSection(
+        """Generate performance analytics section."""        section = ReportSection(
             section_id="performance_analytics",
             title="Performance Analytics"
         )
@@ -817,8 +781,7 @@ class AnalyticsEngine:
         return section
     
     async def _generate_report_summary(self, report: AnalyticsReport) -> Dict[str, Any]:
-        """Generate report summary."""
-        try:
+        """Generate report summary."""        try:
             summary = {
                 "total_sections": len(report.sections),
                 "total_metrics": sum(len(section.metrics) for section in report.sections),
@@ -847,8 +810,7 @@ class AnalyticsEngine:
             return {"error": "Summary generation failed"}
     
     def _initialize_report_templates(self) -> None:
-        """Initialize report templates."""
-        self.report_templates = {
+        """Initialize report templates."""        self.report_templates = {
             ReportType.DAILY: {
                 "sections": ["revenue_analytics", "transaction_analytics"],
                 "metrics": [MetricType.REVENUE, MetricType.TRANSACTIONS]

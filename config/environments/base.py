@@ -1,5 +1,4 @@
-"""
-🔧 Base Environment Configuration - IA-Influencer-Agent
+"""🔧 Base Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + Infrastructure Architect
@@ -16,7 +15,6 @@ Configuration environnement de base pour toutes les plateformes.
 Gestion centralisée des variables d'environnement enterprise.
 ==================================================================
 """
-
 from abc import ABC, abstractmethod
 from enum import Enum
 from pathlib import Path
@@ -29,8 +27,7 @@ import json
 
 
 class EnvironmentType(str, Enum):
-    """Types d'environnements supportés"""
-    DEVELOPMENT = "development"
+    """Types d'environnements supportés"""    DEVELOPMENT = "development"
     STAGING = "staging" 
     TESTING = "testing"
     PRODUCTION = "production"
@@ -38,8 +35,7 @@ class EnvironmentType(str, Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Configuration base de données"""
-    host: str
+    """Configuration base de données"""    host: str
     port: int
     name: str
     username: str
@@ -50,14 +46,12 @@ class DatabaseConfig:
     
     @property
     def url(self) -> str:
-        """URL de connexion PostgreSQL"""
-        return f"postgresql://{self.username}:{self.password}@{self.host}:{self.port}/{self.name}"
+        """URL de connexion PostgreSQL"""        return f"postgresql://{self.username}:{self.password}@{self.host}:{self.port}/{self.name}"
 
 
 @dataclass
 class RedisConfig:
-    """Configuration Redis cache et queues"""
-    host: str
+    """Configuration Redis cache et queues"""    host: str
     port: int = 6379
     password: Optional[str] = None
     db: int = 0
@@ -66,15 +60,13 @@ class RedisConfig:
     
     @property
     def url(self) -> str:
-        """URL de connexion Redis"""
-        auth = f":{self.password}@" if self.password else ""
+        """URL de connexion Redis"""        auth = f":{self.password}@" if self.password else ""
         return f"redis://{auth}{self.host}:{self.port}/{self.db}"
 
 
 @dataclass
 class SecurityConfig:
-    """Configuration sécurité enterprise"""
-    jwt_secret_key: str
+    """Configuration sécurité enterprise"""    jwt_secret_key: str
     oauth2_secret_key: str
     encryption_key: str
     jwt_algorithm: str = "HS256"
@@ -85,8 +77,7 @@ class SecurityConfig:
 
 @dataclass
 class AIConfig:
-    """Configuration modules IA et ML"""
-    openai_api_key: str
+    """Configuration modules IA et ML"""    openai_api_key: str
     huggingface_token: str
     tensorflow_gpu_enabled: bool = False
     model_cache_dir: str = "/tmp/ai_models"
@@ -96,8 +87,7 @@ class AIConfig:
 
 @dataclass
 class StorageConfig:
-    """Configuration stockage cloud et local"""
-    aws_access_key_id: str
+    """Configuration stockage cloud et local"""    aws_access_key_id: str
     aws_secret_access_key: str
     s3_bucket_name: str
     aws_region: str = "eu-central-1"
@@ -107,8 +97,7 @@ class StorageConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration monitoring et observabilité"""
-    prometheus_enabled: bool = True
+    """Configuration monitoring et observabilité"""    prometheus_enabled: bool = True
     grafana_enabled: bool = True
     jaeger_enabled: bool = True
     log_level: str = "INFO"
@@ -118,8 +107,7 @@ class MonitoringConfig:
 
 @dataclass
 class IntegrationConfig:
-    """Configuration intégrations externes"""
-    spotify_client_id: str
+    """Configuration intégrations externes"""    spotify_client_id: str
     spotify_client_secret: str
     youtube_api_key: str
     instagram_access_token: str
@@ -130,11 +118,9 @@ class IntegrationConfig:
 
 
 class BaseEnvironmentConfigManager(BaseSettings, ABC):
-    """
-    Gestionnaire de configuration d'environnement de base.
+    """    Gestionnaire de configuration d'environnement de base.
     Classe abstraite pour tous les environnements.
-    """
-    
+    """    
     # Configuration générale
     environment: EnvironmentType
     debug: bool = False
@@ -174,42 +160,35 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
     locale: str = "en_US.UTF-8"
     
     class Config:
-        """Configuration Pydantic"""
-        env_file = ".env"
+        """Configuration Pydantic"""        env_file = ".env"
         env_file_encoding = "utf-8"
         case_sensitive = True
         
     @abstractmethod
     def load_environment_specific_config(self) -> None:
-        """Charge la configuration spécifique à l'environnement"""
-        pass
+        """Charge la configuration spécifique à l'environnement"""        pass
         
     @abstractmethod
     def validate_configuration(self) -> bool:
-        """Valide la configuration de l'environnement"""
-        pass
+        """Valide la configuration de l'environnement"""        pass
         
     def initialize_configuration(self) -> None:
-        """Initialise la configuration complète"""
-        self.load_environment_specific_config()
+        """Initialise la configuration complète"""        self.load_environment_specific_config()
         if not self.validate_configuration():
             raise RuntimeError(f"Configuration invalide pour l'environnement {self.environment}")
             
     def get_database_url(self) -> str:
-        """Retourne l'URL de la base de données"""
-        if not self.database_config:
+        """Retourne l'URL de la base de données"""        if not self.database_config:
             raise ValueError("Configuration base de données non définie")
         return self.database_config.url
         
     def get_redis_url(self) -> str:
-        """Retourne l'URL Redis"""
-        if not self.redis_config:
+        """Retourne l'URL Redis"""        if not self.redis_config:
             raise ValueError("Configuration Redis non définie")
         return self.redis_config.url
         
     def get_security_settings(self) -> Dict[str, Any]:
-        """Retourne les paramètres de sécurité"""
-        if not self.security_config:
+        """Retourne les paramètres de sécurité"""        if not self.security_config:
             raise ValueError("Configuration sécurité non définie")
         return {
             "jwt_secret_key": self.security_config.jwt_secret_key,
@@ -219,8 +198,7 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
         }
         
     def get_ai_settings(self) -> Dict[str, Any]:
-        """Retourne les paramètres IA"""
-        if not self.ai_config:
+        """Retourne les paramètres IA"""        if not self.ai_config:
             raise ValueError("Configuration IA non définie")
         return {
             "openai_api_key": self.ai_config.openai_api_key,
@@ -230,8 +208,7 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
         }
         
     def get_storage_settings(self) -> Dict[str, Any]:
-        """Retourne les paramètres de stockage"""
-        if not self.storage_config:
+        """Retourne les paramètres de stockage"""        if not self.storage_config:
             raise ValueError("Configuration stockage non définie")
         return {
             "aws_region": self.storage_config.aws_region,
@@ -241,8 +218,7 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
         }
         
     def export_to_dict(self) -> Dict[str, Any]:
-        """Exporte la configuration en dictionnaire"""
-        return {
+        """Exporte la configuration en dictionnaire"""        return {
             "environment": self.environment.value,
             "app_name": self.app_name,
             "app_version": self.app_version,
@@ -256,37 +232,30 @@ class BaseEnvironmentConfigManager(BaseSettings, ABC):
         }
         
     def export_to_json(self) -> str:
-        """Exporte la configuration en JSON"""
-        return json.dumps(self.export_to_dict(), indent=2)
+        """Exporte la configuration en JSON"""        return json.dumps(self.export_to_dict(), indent=2)
         
     @classmethod
     def from_env_file(cls, env_file_path: str):
-        """Charge la configuration depuis un fichier .env"""
-        return cls(_env_file=env_file_path)
+        """Charge la configuration depuis un fichier .env"""        return cls(_env_file=env_file_path)
         
     def __str__(self) -> str:
-        """Représentation string de la configuration"""
-        return f"{self.__class__.__name__}(environment={self.environment}, debug={self.debug})"
+        """Représentation string de la configuration"""        return f"{self.__class__.__name__}(environment={self.environment}, debug={self.debug})"
         
     def __repr__(self) -> str:
-        """Représentation détaillée de la configuration"""
-        return self.__str__()
+        """Représentation détaillée de la configuration"""        return self.__str__()
 
 
 class EnvironmentConfigFactory:
-    """Factory pour créer les gestionnaires de configuration"""
-    
+    """Factory pour créer les gestionnaires de configuration"""    
     _config_managers = {}
     
     @classmethod
     def register_manager(cls, env_type: EnvironmentType, manager_class):
-        """Enregistre un gestionnaire pour un type d'environnement"""
-        cls._config_managers[env_type] = manager_class
+        """Enregistre un gestionnaire pour un type d'environnement"""        cls._config_managers[env_type] = manager_class
         
     @classmethod
     def create_manager(cls, env_type: EnvironmentType) -> BaseEnvironmentConfigManager:
-        """Crée un gestionnaire pour le type d'environnement spécifié"""
-        if env_type not in cls._config_managers:
+        """Crée un gestionnaire pour le type d'environnement spécifié"""        if env_type not in cls._config_managers:
             raise ValueError(f"Gestionnaire non enregistré pour l'environnement {env_type}")
         
         manager_class = cls._config_managers[env_type]
@@ -294,13 +263,11 @@ class EnvironmentConfigFactory:
         
     @classmethod
     def get_available_environments(cls) -> List[EnvironmentType]:
-        """Retourne la liste des environnements disponibles"""
-        return list(cls._config_managers.keys())
+        """Retourne la liste des environnements disponibles"""        return list(cls._config_managers.keys())
 
 
 def get_current_environment() -> EnvironmentType:
-    """Détecte l'environnement actuel depuis les variables d'environnement"""
-    env_name = os.getenv("ENVIRONMENT", "development").lower()
+    """Détecte l'environnement actuel depuis les variables d'environnement"""    env_name = os.getenv("ENVIRONMENT", "development").lower()
     try:
         return EnvironmentType(env_name)
     except ValueError:
@@ -308,8 +275,7 @@ def get_current_environment() -> EnvironmentType:
 
 
 def load_config_for_environment(env_type: Optional[EnvironmentType] = None) -> BaseEnvironmentConfigManager:
-    """Charge la configuration pour un environnement spécifique"""
-    if env_type is None:
+    """Charge la configuration pour un environnement spécifique"""    if env_type is None:
         env_type = get_current_environment()
         
     config_manager = EnvironmentConfigFactory.create_manager(env_type)
@@ -319,8 +285,7 @@ def load_config_for_environment(env_type: Optional[EnvironmentType] = None) -> B
 
 # Auto-enregistrement des gestionnaires d'environnement
 def _register_default_managers():
-    """Enregistre automatiquement les gestionnaires par défaut"""
-    try:
+    """Enregistre automatiquement les gestionnaires par défaut"""    try:
         # Import conditionnel pour éviter les imports circulaires
         from .development import DevelopmentConfigManager
         from .production import ProductionConfigManager

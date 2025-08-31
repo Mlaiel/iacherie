@@ -1,5 +1,4 @@
-"""
-Copyright Enforcement Service - Advanced copyright protection and enforcement
+"""Copyright Enforcement Service - Advanced copyright protection and enforcement
 
 Manages copyright violation detection, automated enforcement actions,
 legal procedure automation, and cross-platform content protection.
@@ -12,7 +11,6 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
-
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -32,8 +30,7 @@ from ..integrations.platform_apis import PlatformAPIManager
 
 
 class ViolationType(Enum):
-    """Types of copyright violations"""
-    UNAUTHORIZED_UPLOAD = "unauthorized_upload"
+    """Types of copyright violations"""    UNAUTHORIZED_UPLOAD = "unauthorized_upload"
     COMMERCIAL_MISUSE = "commercial_misuse"
     TERRITORY_VIOLATION = "territory_violation"
     LICENSE_BREACH = "license_breach"
@@ -44,16 +41,14 @@ class ViolationType(Enum):
 
 
 class EnforcementSeverity(Enum):
-    """Enforcement action severity levels"""
-    LOW = "low"           # Warning notice
+    """Enforcement action severity levels"""    LOW = "low"           # Warning notice
     MEDIUM = "medium"     # Takedown request
     HIGH = "high"         # Legal notice
     CRITICAL = "critical" # Legal action
 
 
 class PlatformType(Enum):
-    """Supported platforms for enforcement"""
-    YOUTUBE = "youtube"
+    """Supported platforms for enforcement"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -65,8 +60,7 @@ class PlatformType(Enum):
 
 @dataclass
 class EnforcementStrategy:
-    """Enforcement strategy configuration"""
-    violation_type: ViolationType
+    """Enforcement strategy configuration"""    violation_type: ViolationType
     platform: PlatformType
     severity: EnforcementSeverity
     automated_actions: List[str]
@@ -76,8 +70,7 @@ class EnforcementStrategy:
 
 
 class CopyrightViolationReport(BaseModel):
-    """Copyright violation report structure"""
-    content_id: str
+    """Copyright violation report structure"""    content_id: str
     violation_url: str
     platform: PlatformType
     violation_type: ViolationType
@@ -89,11 +82,9 @@ class CopyrightViolationReport(BaseModel):
 
 
 class CopyrightEnforcementService:
-    """
-    Advanced copyright enforcement system with AI-powered violation detection,
+    """    Advanced copyright enforcement system with AI-powered violation detection,
     automated takedown procedures, and legal action coordination.
-    """
-    
+    """    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -107,16 +98,14 @@ class CopyrightEnforcementService:
         self, 
         report: CopyrightViolationReport
     ) -> Dict[str, Any]:
-        """
-        Process incoming copyright violation report with automated response
+        """        Process incoming copyright violation report with automated response
         
         Args:
             report: Copyright violation details
             
         Returns:
             Processing result with enforcement actions taken
-        """
-        try:
+        """        try:
             self.logger.info(f"Processing violation report for content {report.content_id}")
             
             # Validate and verify the violation
@@ -164,8 +153,7 @@ class CopyrightEnforcementService:
         self, 
         report: CopyrightViolationReport
     ) -> Dict[str, Any]:
-        """Validate copyright violation report using AI analysis"""
-        try:
+        """Validate copyright violation report using AI analysis"""        try:
             # Verify content ownership
             ownership_verification = await self._verify_content_ownership(report.content_id)
             
@@ -218,8 +206,7 @@ class CopyrightEnforcementService:
         self, 
         violation: CopyrightViolation
     ) -> EnforcementStrategy:
-        """Determine optimal enforcement strategy based on violation analysis"""
-        
+        """Determine optimal enforcement strategy based on violation analysis"""        
         # Analyze violation severity factors
         severity_factors = await self._analyze_severity_factors(violation)
         
@@ -250,8 +237,7 @@ class CopyrightEnforcementService:
         violation: CopyrightViolation, 
         strategy: EnforcementStrategy
     ) -> Dict[str, Any]:
-        """Execute automated enforcement actions based on strategy"""
-        
+        """Execute automated enforcement actions based on strategy"""        
         actions_taken = []
         timeline_estimates = {}
         next_steps = []
@@ -323,8 +309,7 @@ class CopyrightEnforcementService:
             raise CopyrightEnforcementError(f"Enforcement execution failed: {str(e)}")
     
     async def _send_warning_notice(self, violation: CopyrightViolation) -> Dict[str, Any]:
-        """Send automated warning notice to violator"""
-        try:
+        """Send automated warning notice to violator"""        try:
             # Generate personalized warning message
             warning_message = await self._generate_warning_message(violation)
             
@@ -363,8 +348,7 @@ class CopyrightEnforcementService:
             return {"success": False, "error": str(e)}
     
     async def _submit_dmca_takedown(self, violation: CopyrightViolation) -> Dict[str, Any]:
-        """Submit DMCA takedown request"""
-        try:
+        """Submit DMCA takedown request"""        try:
             # Generate DMCA notice
             dmca_notice = await self._generate_dmca_notice(violation)
             
@@ -395,8 +379,7 @@ class CopyrightEnforcementService:
         self, 
         violation_id: str
     ) -> Dict[str, Any]:
-        """Monitor progress of enforcement actions"""
-        try:
+        """Monitor progress of enforcement actions"""        try:
             violation = self.db.query(CopyrightViolation).filter(
                 CopyrightViolation.id == violation_id
             ).first()
@@ -436,8 +419,7 @@ class CopyrightEnforcementService:
             raise CopyrightEnforcementError(f"Progress monitoring failed: {str(e)}")
     
     def _initialize_enforcement_strategies(self) -> Dict[str, EnforcementStrategy]:
-        """Initialize pre-configured enforcement strategies"""
-        strategies = {}
+        """Initialize pre-configured enforcement strategies"""        strategies = {}
         
         # YouTube strategies
         strategies["unauthorized_upload_youtube_medium"] = EnforcementStrategy(
@@ -478,8 +460,7 @@ class CopyrightEnforcementService:
         return strategies
     
     async def _assess_copyright_damage(self, violation: CopyrightViolation) -> Dict[str, Any]:
-        """Assess financial and reputational damage from copyright violation"""
-        try:
+        """Assess financial and reputational damage from copyright violation"""        try:
             # Calculate direct financial losses
             direct_losses = await self._calculate_direct_financial_losses(violation)
             
@@ -519,16 +500,13 @@ class CopyrightEnforcementService:
     
     # Additional helper methods would be implemented here
     async def _verify_content_ownership(self, content_id: str) -> Dict[str, Any]:
-        """Verify content ownership for enforcement eligibility"""
-        # Implementation for ownership verification
+        """Verify content ownership for enforcement eligibility"""        # Implementation for ownership verification
         pass
     
     async def _check_violation_url_status(self, url: str) -> Dict[str, Any]:
-        """Check current status of violation URL"""
-        # Implementation for URL status checking
+        """Check current status of violation URL"""        # Implementation for URL status checking
         pass
     
     async def _generate_dmca_notice(self, violation: CopyrightViolation) -> Dict[str, Any]:
-        """Generate properly formatted DMCA takedown notice"""
-        # Implementation for DMCA notice generation
+        """Generate properly formatted DMCA takedown notice"""        # Implementation for DMCA notice generation
         pass

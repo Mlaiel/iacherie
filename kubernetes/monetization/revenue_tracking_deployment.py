@@ -1,5 +1,4 @@
-"""
-Revenue Tracking Deployment System
+"""Revenue Tracking Deployment System
 Enterprise revenue tracking and analytics deployment infrastructure
 
 This module provides deployment infrastructure for comprehensive revenue
@@ -14,7 +13,6 @@ Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueTrackingPlatform(Enum):
-    """Supported revenue tracking platforms"""
-    YOUTUBE = "youtube"
+    """Supported revenue tracking platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -48,8 +45,7 @@ class RevenueTrackingPlatform(Enum):
 
 
 class PaymentProvider(Enum):
-    """Payment processing providers"""
-    STRIPE = "stripe"
+    """Payment processing providers"""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -59,8 +55,7 @@ class PaymentProvider(Enum):
 
 
 class RevenueCalculationMethod(Enum):
-    """Revenue calculation methods"""
-    VIEWS_BASED = "views_based"
+    """Revenue calculation methods"""    VIEWS_BASED = "views_based"
     ENGAGEMENT_BASED = "engagement_based"
     LICENSING_FLAT = "licensing_flat"
     LICENSING_PERCENTAGE = "licensing_percentage"
@@ -70,8 +65,7 @@ class RevenueCalculationMethod(Enum):
 
 
 class CurrencyType(Enum):
-    """Supported currencies"""
-    EUR = "EUR"
+    """Supported currencies"""    EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
     JPY = "JPY"
@@ -84,8 +78,7 @@ class CurrencyType(Enum):
 
 @dataclass
 class RevenueTrackingConfig:
-    """Revenue tracking deployment configuration"""
-    deployment_name: str
+    """Revenue tracking deployment configuration"""    deployment_name: str
     namespace: str = "ia-influencer-monetization"
     
     # Platform integrations
@@ -158,8 +151,7 @@ class RevenueTrackingConfig:
 
 
 class RevenueTrackingDeployment:
-    """
-    Enterprise revenue tracking deployment system
+    """    Enterprise revenue tracking deployment system
     
     Deploys and manages comprehensive revenue tracking infrastructure:
     - Multi-platform revenue analytics and tracking
@@ -168,16 +160,13 @@ class RevenueTrackingDeployment:
     - Compliance and tax calculation
     - Revenue optimization and recommendations
     - Fraud detection and prevention
-    """
-    
+    """    
     def __init__(self, config: RevenueTrackingConfig):
-        """
-        Initialize revenue tracking deployment
+        """        Initialize revenue tracking deployment
         
         Args:
             config: Deployment configuration
-        """
-        self.config = config
+        """        self.config = config
         self.deployment_status = "initializing"
         self.services_deployed = {}
         self.payment_systems_ready = False
@@ -186,8 +175,7 @@ class RevenueTrackingDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""
-        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -213,13 +201,11 @@ class RevenueTrackingDeployment:
             raise
     
     async def deploy_revenue_tracking_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete revenue tracking infrastructure
+        """        Deploy complete revenue tracking infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """
-        try:
+        """        try:
             self.deployment_status = "deploying_infrastructure"
             logger.info("Deploying revenue tracking infrastructure")
             
@@ -312,8 +298,7 @@ class RevenueTrackingDeployment:
             raise
     
     async def _ensure_namespace(self) -> None:
-        """Create namespace if it doesn't exist"""
-        try:
+        """Create namespace if it doesn't exist"""        try:
             self.k8s_core_v1.read_namespace(name=self.config.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -332,8 +317,7 @@ class RevenueTrackingDeployment:
                 logger.info(f"Created namespace: {self.config.namespace}")
     
     async def _deploy_storage_infrastructure(self) -> Dict[str, Any]:
-        """Deploy storage infrastructure for revenue data"""
-        # Create persistent volume claim
+        """Deploy storage infrastructure for revenue data"""        # Create persistent volume claim
         pvc_spec = {
             "apiVersion": "v1",
             "kind": "PersistentVolumeClaim",
@@ -361,8 +345,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_analytics_database(self) -> Dict[str, Any]:
-        """Deploy analytics database (ClickHouse for time-series)"""
-        clickhouse_deployment = {
+        """Deploy analytics database (ClickHouse for time-series)"""        clickhouse_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -440,8 +423,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_revenue_cache(self) -> Dict[str, Any]:
-        """Deploy Redis for revenue caching"""
-        redis_deployment = {
+        """Deploy Redis for revenue caching"""        redis_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -509,8 +491,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_platform_integrations(self) -> Dict[str, Any]:
-        """Deploy platform integration services"""
-        platform_deployment = {
+        """Deploy platform integration services"""        platform_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -598,8 +579,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_calculation_engine(self) -> Dict[str, Any]:
-        """Deploy revenue calculation engine"""
-        calculation_deployment = {
+        """Deploy revenue calculation engine"""        calculation_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -689,8 +669,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_payment_processing(self) -> Dict[str, Any]:
-        """Deploy payment processing services"""
-        payment_deployment = {
+        """Deploy payment processing services"""        payment_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -774,8 +753,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_analytics_services(self) -> Dict[str, Any]:
-        """Deploy analytics and reporting services"""
-        analytics_deployment = {
+        """Deploy analytics and reporting services"""        analytics_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -915,8 +893,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_fraud_detection(self) -> Dict[str, Any]:
-        """Deploy fraud detection system"""
-        fraud_deployment = {
+        """Deploy fraud detection system"""        fraud_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -993,8 +970,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_tax_calculation(self) -> Dict[str, Any]:
-        """Deploy tax calculation service"""
-        tax_deployment = {
+        """Deploy tax calculation service"""        tax_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1071,8 +1047,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_api_gateway(self) -> Dict[str, Any]:
-        """Deploy API gateway for revenue tracking services"""
-        gateway_deployment = {
+        """Deploy API gateway for revenue tracking services"""        gateway_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1155,8 +1130,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _deploy_monitoring_stack(self) -> Dict[str, Any]:
-        """Deploy monitoring and alerting"""
-        monitor_deployment = {
+        """Deploy monitoring and alerting"""        monitor_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1226,8 +1200,7 @@ class RevenueTrackingDeployment:
         }
     
     async def _setup_autoscaling(self, deployment_name: str) -> None:
-        """Set up horizontal pod autoscaling"""
-        hpa_spec = {
+        """Set up horizontal pod autoscaling"""        hpa_spec = {
             "apiVersion": "autoscaling/v2",
             "kind": "HorizontalPodAutoscaler",
             "metadata": {
@@ -1275,8 +1248,7 @@ class RevenueTrackingDeployment:
         logger.info(f"Set up autoscaling for {deployment_name}")
     
     async def _configure_networking(self) -> None:
-        """Configure networking and security policies"""
-        # Network policy for revenue tracking
+        """Configure networking and security policies"""        # Network policy for revenue tracking
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1312,8 +1284,7 @@ class RevenueTrackingDeployment:
         logger.info("Configured networking policies for revenue tracking")
     
     async def _validate_deployment(self) -> bool:
-        """Validate the deployment"""
-        try:
+        """Validate the deployment"""        try:
             essential_services = [
                 "revenue-platform-integrations", "revenue-calculation-engine", 
                 "revenue-payment-processor", "revenue-analytics-service",
@@ -1349,8 +1320,7 @@ class RevenueTrackingDeployment:
             return False
     
     async def get_deployment_status(self) -> Dict[str, Any]:
-        """Get deployment status and metrics"""
-        try:
+        """Get deployment status and metrics"""        try:
             services_status = {}
             
             # Check all services
@@ -1392,8 +1362,7 @@ class RevenueTrackingDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_deployment(self) -> None:
-        """Clean up failed deployment"""
-        try:
+        """Clean up failed deployment"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)
             logger.info("Cleaned up failed revenue tracking deployment")
@@ -1401,8 +1370,7 @@ class RevenueTrackingDeployment:
             logger.error(f"Cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up the entire deployment"""
-        try:
+        """Clean up the entire deployment"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)
             

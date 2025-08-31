@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-🕷️ MULTI-PLATFORM CONTENT CRAWLER SERVICE - MAIN INDEX MODULE
+"""🕷️ MULTI-PLATFORM CONTENT CRAWLER SERVICE - MAIN INDEX MODULE
 ================================================================
 
 Enterprise-grade content discovery and monitoring system main entry point.
@@ -32,7 +31,6 @@ Any violation will result in IMMEDIATE LEGAL ACTION under:
 
 WE MONITOR FOR UNAUTHORIZED USE - YOU WILL BE CAUGHT AND PROSECUTED
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -122,8 +120,7 @@ from ..utils.rate_limiter import GlobalRateLimiter
 
 
 class CrawlerServiceManager:
-    """
-    🎯 ENTERPRISE CRAWLER SERVICE MANAGER
+    """    🎯 ENTERPRISE CRAWLER SERVICE MANAGER
     ====================================
     
     Central orchestration service for all crawler operations.
@@ -135,11 +132,9 @@ class CrawlerServiceManager:
     - Real-time monitoring and analytics
     - Error recovery and fault tolerance
     - Performance optimization and caching
-    """
-    
+    """    
     def __init__(self, config: CrawlerServiceConfig):
-        """Initialize the crawler service manager."""
-        self.config = config
+        """Initialize the crawler service manager."""        self.config = config
         self.logger = setup_crawler_logger("crawler_service_manager")
         self.metrics = MetricsCollector()
         self.cache = CrawlerCache(config.cache_config)
@@ -156,8 +151,7 @@ class CrawlerServiceManager:
         self._initialize_crawlers()
         
     def _initialize_crawlers(self):
-        """Initialize all platform and specialized crawlers."""
-        try:
+        """Initialize all platform and specialized crawlers."""        try:
             # Initialize platform-specific crawlers
             if self.config.platforms.youtube.enabled:
                 self.crawlers[PlatformType.YOUTUBE] = YouTubeCrawler(
@@ -189,16 +183,14 @@ class CrawlerServiceManager:
             raise
     
     async def start_service(self) -> bool:
-        """
-        🚀 START CRAWLER SERVICE
+        """        🚀 START CRAWLER SERVICE
         =======================
         
         Starts all crawler services and begins monitoring operations.
         
         Returns:
             bool: True if service started successfully
-        """
-        try:
+        """        try:
             self.logger.info("Starting Enterprise Crawler Service...")
             
             # Start all platform crawlers
@@ -238,16 +230,14 @@ class CrawlerServiceManager:
             return False
     
     async def stop_service(self) -> bool:
-        """
-        🛑 STOP CRAWLER SERVICE
+        """        🛑 STOP CRAWLER SERVICE
         ======================
         
         Gracefully stops all crawler services and cleanup resources.
         
         Returns:
             bool: True if service stopped successfully
-        """
-        try:
+        """        try:
             self.logger.info("Stopping Enterprise Crawler Service...")
             
             # Cancel all active tasks
@@ -283,8 +273,7 @@ class CrawlerServiceManager:
         search_params: Dict[str, Any],
         content_types: Optional[List[ContentType]] = None
     ) -> List[CrawlResult]:
-        """
-        🔍 CRAWL PLATFORM CONTENT
+        """        🔍 CRAWL PLATFORM CONTENT
         ========================
         
         Performs content crawling on specified platform with given parameters.
@@ -296,8 +285,7 @@ class CrawlerServiceManager:
             
         Returns:
             List[CrawlResult]: Crawling results with discovered content
-        """
-        try:
+        """        try:
             if platform not in self.crawlers:
                 raise ValueError(f"Platform {platform.value} not supported or not enabled")
                 
@@ -330,8 +318,7 @@ class CrawlerServiceManager:
         platforms: List[PlatformType],
         time_range: Optional[timedelta] = None
     ) -> Dict[str, RevenueData]:
-        """
-        💰 MONITOR CREATOR REVENUE
+        """        💰 MONITOR CREATOR REVENUE
         =========================
         
         Monitors creator revenue across specified platforms.
@@ -343,8 +330,7 @@ class CrawlerServiceManager:
             
         Returns:
             Dict[str, RevenueData]: Revenue data per platform
-        """
-        try:
+        """        try:
             revenue_crawler = self.specialized_crawlers['revenue_monitoring']
             
             revenue_data = {}
@@ -368,8 +354,7 @@ class CrawlerServiceManager:
         content_fingerprints: List[str],
         platforms: Optional[List[PlatformType]] = None
     ) -> List[LegalViolation]:
-        """
-        ⚖️ DETECT CONTENT VIOLATIONS
+        """        ⚖️ DETECT CONTENT VIOLATIONS
         ===========================
         
         Detects legal violations of protected content across platforms.
@@ -380,8 +365,7 @@ class CrawlerServiceManager:
             
         Returns:
             List[LegalViolation]: Detected violations with evidence
-        """
-        try:
+        """        try:
             legal_crawler = self.specialized_crawlers['legal_violation']
             
             scan_platforms = platforms or list(self.crawlers.keys())
@@ -404,8 +388,7 @@ class CrawlerServiceManager:
         collaboration_types: List[CollaborationType],
         target_platforms: Optional[List[PlatformType]] = None
     ) -> List[CollaborationOpportunity]:
-        """
-        🤝 DISCOVER COLLABORATION OPPORTUNITIES
+        """        🤝 DISCOVER COLLABORATION OPPORTUNITIES
         ======================================
         
         Discovers collaboration opportunities for creators.
@@ -417,8 +400,7 @@ class CrawlerServiceManager:
             
         Returns:
             List[CollaborationOpportunity]: Found collaboration opportunities
-        """
-        try:
+        """        try:
             collab_crawler = self.specialized_crawlers['collaboration_discovery']
             
             opportunities = await collab_crawler.find_collaboration_opportunities(
@@ -442,8 +424,7 @@ class CrawlerServiceManager:
         platforms: List[PlatformType],
         time_range: Optional[timedelta] = None
     ) -> List[TrendAnalysis]:
-        """
-        📊 ANALYZE MARKET TRENDS
+        """        📊 ANALYZE MARKET TRENDS
         =======================
         
         Analyzes market trends and opportunities across platforms.
@@ -455,8 +436,7 @@ class CrawlerServiceManager:
             
         Returns:
             List[TrendAnalysis]: Market trend analysis results
-        """
-        try:
+        """        try:
             market_crawler = self.specialized_crawlers['market_intelligence']
             
             trends = await market_crawler.analyze_market_trends(
@@ -473,16 +453,14 @@ class CrawlerServiceManager:
             raise
     
     async def get_service_status(self) -> Dict[str, Any]:
-        """
-        📊 GET SERVICE STATUS
+        """        📊 GET SERVICE STATUS
         ====================
         
         Returns comprehensive service status and health metrics.
         
         Returns:
             Dict[str, Any]: Service status and metrics
-        """
-        try:
+        """        try:
             return {
                 'service_name': 'Enterprise Crawler Service',
                 'version': '1.0.0',
@@ -500,8 +478,7 @@ class CrawlerServiceManager:
             return {'error': str(e)}
     
     async def _health_monitoring_loop(self):
-        """Background health monitoring loop."""
-        while True:
+        """Background health monitoring loop."""        while True:
             try:
                 await asyncio.sleep(60)  # Check every minute
                 
@@ -525,8 +502,7 @@ class CrawlerServiceManager:
                 self.logger.error(f"Health monitoring error: {e}")
     
     async def _metrics_collection_loop(self):
-        """Background metrics collection loop."""
-        while True:
+        """Background metrics collection loop."""        while True:
             try:
                 await asyncio.sleep(300)  # Collect every 5 minutes
                 
@@ -540,29 +516,24 @@ class CrawlerServiceManager:
                 self.logger.error(f"Metrics collection error: {e}")
     
     def _calculate_uptime(self) -> str:
-        """Calculate service uptime."""
-        # This would be implemented based on service start time tracking
+        """Calculate service uptime."""        # This would be implemented based on service start time tracking
         return "Active"
 
 
 class CrawlerServiceAPI:
-    """
-    🌐 CRAWLER SERVICE API INTERFACE
+    """    🌐 CRAWLER SERVICE API INTERFACE
     ===============================
     
     High-level API interface for external applications to interact 
     with the crawler service. Provides simplified methods for common operations.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the crawler service API."""
-        self.config = self._load_config(config_path)
+        """Initialize the crawler service API."""        self.config = self._load_config(config_path)
         self.service_manager = CrawlerServiceManager(self.config)
         self.logger = setup_crawler_logger("crawler_api")
     
     def _load_config(self, config_path: Optional[str]) -> CrawlerServiceConfig:
-        """Load configuration from file or environment."""
-        if config_path and Path(config_path).exists():
+        """Load configuration from file or environment."""        if config_path and Path(config_path).exists():
             with open(config_path, 'r') as f:
                 config_data = json.load(f)
             return CrawlerServiceConfig.from_dict(config_data)
@@ -570,12 +541,10 @@ class CrawlerServiceAPI:
             return CrawlerServiceConfig.from_environment()
     
     async def start(self) -> bool:
-        """Start the crawler service."""
-        return await self.service_manager.start_service()
+        """Start the crawler service."""        return await self.service_manager.start_service()
     
     async def stop(self) -> bool:
-        """Stop the crawler service."""
-        return await self.service_manager.stop_service()
+        """Stop the crawler service."""        return await self.service_manager.stop_service()
     
     async def crawl_youtube(
         self,
@@ -583,8 +552,7 @@ class CrawlerServiceAPI:
         max_results: int = 50,
         content_type: str = 'video'
     ) -> List[Dict[str, Any]]:
-        """
-        Simplified YouTube crawling interface.
+        """        Simplified YouTube crawling interface.
         
         Args:
             query: Search query
@@ -593,8 +561,7 @@ class CrawlerServiceAPI:
             
         Returns:
             List[Dict[str, Any]]: Crawled content data
-        """
-        search_params = {
+        """        search_params = {
             'query': query,
             'max_results': max_results,
             'type': content_type
@@ -613,8 +580,7 @@ class CrawlerServiceAPI:
         platforms: List[str],
         days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Simplified revenue monitoring interface.
+        """        Simplified revenue monitoring interface.
         
         Args:
             creator_id: Creator identifier
@@ -623,8 +589,7 @@ class CrawlerServiceAPI:
             
         Returns:
             Dict[str, Any]: Revenue monitoring results
-        """
-        platform_types = [PlatformType(p) for p in platforms]
+        """        platform_types = [PlatformType(p) for p in platforms]
         time_range = timedelta(days=days)
         
         revenue_data = await self.service_manager.monitor_creator_revenue(
@@ -643,8 +608,7 @@ class CrawlerServiceAPI:
         content_fingerprints: List[str],
         platforms: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Simplified violation checking interface.
+        """        Simplified violation checking interface.
         
         Args:
             content_fingerprints: Content fingerprints to check
@@ -652,8 +616,7 @@ class CrawlerServiceAPI:
             
         Returns:
             List[Dict[str, Any]]: Detected violations
-        """
-        platform_types = None
+        """        platform_types = None
         if platforms:
             platform_types = [PlatformType(p) for p in platforms]
         
@@ -670,8 +633,7 @@ class CrawlerServiceAPI:
         collaboration_types: List[str],
         platforms: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Simplified collaboration discovery interface.
+        """        Simplified collaboration discovery interface.
         
         Args:
             creator_data: Creator profile data
@@ -680,8 +642,7 @@ class CrawlerServiceAPI:
             
         Returns:
             List[Dict[str, Any]]: Collaboration opportunities
-        """
-        creator_profile = CreatorProfile.from_dict(creator_data)
+        """        creator_profile = CreatorProfile.from_dict(creator_data)
         collab_types = [CollaborationType(ct) for ct in collaboration_types]
         platform_types = None
         if platforms:
@@ -701,8 +662,7 @@ class CrawlerServiceAPI:
         platforms: List[str],
         days: int = 7
     ) -> List[Dict[str, Any]]:
-        """
-        Simplified trend analysis interface.
+        """        Simplified trend analysis interface.
         
         Args:
             categories: Market categories to analyze
@@ -711,8 +671,7 @@ class CrawlerServiceAPI:
             
         Returns:
             List[Dict[str, Any]]: Trend analysis results
-        """
-        market_categories = [MarketCategory(cat) for cat in categories]
+        """        market_categories = [MarketCategory(cat) for cat in categories]
         platform_types = [PlatformType(p) for p in platforms]
         time_range = timedelta(days=days)
         
@@ -725,14 +684,12 @@ class CrawlerServiceAPI:
         return [trend.to_dict() for trend in trends]
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get service status."""
-        return await self.service_manager.get_service_status()
+        """Get service status."""        return await self.service_manager.get_service_status()
 
 
 # Convenience functions for quick access
 async def create_crawler_service(config_path: Optional[str] = None) -> CrawlerServiceAPI:
-    """
-    🚀 CREATE CRAWLER SERVICE
+    """    🚀 CREATE CRAWLER SERVICE
     ========================
     
     Convenience function to create and start a crawler service instance.
@@ -742,8 +699,7 @@ async def create_crawler_service(config_path: Optional[str] = None) -> CrawlerSe
         
     Returns:
         CrawlerServiceAPI: Started crawler service instance
-    """
-    api = CrawlerServiceAPI(config_path)
+    """    api = CrawlerServiceAPI(config_path)
     await api.start()
     return api
 
@@ -753,8 +709,7 @@ async def quick_youtube_search(
     max_results: int = 10,
     config_path: Optional[str] = None
 ) -> List[Dict[str, Any]]:
-    """
-    🔍 QUICK YOUTUBE SEARCH
+    """    🔍 QUICK YOUTUBE SEARCH
     ======================
     
     Convenience function for quick YouTube content search.
@@ -766,8 +721,7 @@ async def quick_youtube_search(
         
     Returns:
         List[Dict[str, Any]]: Search results
-    """
-    api = await create_crawler_service(config_path)
+    """    api = await create_crawler_service(config_path)
     try:
         results = await api.crawl_youtube(query, max_results)
         return results
@@ -781,8 +735,7 @@ async def quick_revenue_check(
     days: int = 30,
     config_path: Optional[str] = None
 ) -> Dict[str, Any]:
-    """
-    💰 QUICK REVENUE CHECK
+    """    💰 QUICK REVENUE CHECK
     =====================
     
     Convenience function for quick revenue monitoring.
@@ -795,8 +748,7 @@ async def quick_revenue_check(
         
     Returns:
         Dict[str, Any]: Revenue data
-    """
-    api = await create_crawler_service(config_path)
+    """    api = await create_crawler_service(config_path)
     try:
         revenue_data = await api.monitor_revenue(creator_id, platforms, days)
         return revenue_data
@@ -809,8 +761,7 @@ async def quick_violation_scan(
     platforms: Optional[List[str]] = None,
     config_path: Optional[str] = None
 ) -> List[Dict[str, Any]]:
-    """
-    ⚖️ QUICK VIOLATION SCAN
+    """    ⚖️ QUICK VIOLATION SCAN
     ======================
     
     Convenience function for quick violation detection.
@@ -822,8 +773,7 @@ async def quick_violation_scan(
         
     Returns:
         List[Dict[str, Any]]: Detected violations
-    """
-    api = await create_crawler_service(config_path)
+    """    api = await create_crawler_service(config_path)
     try:
         violations = await api.check_violations(content_fingerprints, platforms)
         return violations
@@ -871,14 +821,12 @@ __all__ = [
 
 
 if __name__ == "__main__":
-    """
-    🎯 CRAWLER SERVICE ENTRY POINT
+    """    🎯 CRAWLER SERVICE ENTRY POINT
     ==============================
     
     Direct execution entry point for the crawler service.
     Supports command-line arguments for configuration and testing.
-    """
-    import argparse
+    """    import argparse
     import sys
     
     async def main():

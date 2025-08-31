@@ -1,5 +1,4 @@
-"""
-Content Intelligence Engine
+"""Content Intelligence Engine
 ===========================
 
 Professional multi-format content analysis and intelligence system.
@@ -13,7 +12,6 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -50,16 +48,14 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class ContentType(Enum):
-    """Content type enumeration."""
-    AUDIO = "audio"
+    """Content type enumeration."""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
     MIXED = "mixed"
 
 class ContentCategory(Enum):
-    """Content category classification."""
-    MUSIC = "music"
+    """Content category classification."""    MUSIC = "music"
     PODCAST = "podcast"
     EDUCATIONAL = "educational"
     ENTERTAINMENT = "entertainment"
@@ -72,8 +68,7 @@ class ContentCategory(Enum):
 
 @dataclass
 class ContentFeatures:
-    """Content feature extraction results."""
-    content_id: str
+    """Content feature extraction results."""    content_id: str
     content_type: ContentType
     features: Dict[str, Union[float, List[float], str]]
     embeddings: Optional[np.ndarray]
@@ -84,8 +79,7 @@ class ContentFeatures:
 
 @dataclass
 class ContentInsights:
-    """Content intelligence insights."""
-    content_id: str
+    """Content intelligence insights."""    content_id: str
     category: ContentCategory
     sentiment_score: float
     engagement_prediction: float
@@ -97,8 +91,7 @@ class ContentInsights:
     monetization_potential: float
 
 class ContentIntelligenceEngine:
-    """
-    Advanced content intelligence engine for multi-format analysis.
+    """    Advanced content intelligence engine for multi-format analysis.
     
     Features:
     - Multi-modal content analysis (audio, video, image, text)
@@ -107,16 +100,14 @@ class ContentIntelligenceEngine:
     - Trend detection and viral potential scoring
     - Collaboration opportunity matching
     - Content optimization recommendations
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.metrics_collector = MetricsCollector()
         self._initialize_models()
         
     def _initialize_models(self):
-        """Initialize AI models for content analysis."""
-        try:
+        """Initialize AI models for content analysis."""        try:
             # Text analysis models
             self.text_tokenizer = AutoTokenizer.from_pretrained(
                 "sentence-transformers/all-MiniLM-L6-v2"
@@ -157,8 +148,7 @@ class ContentIntelligenceEngine:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFeatures:
-        """
-        Analyze content and extract comprehensive features.
+        """        Analyze content and extract comprehensive features.
         
         Args:
             content_data: Content data (file path, text, or binary data)
@@ -167,8 +157,7 @@ class ContentIntelligenceEngine:
             
         Returns:
             ContentFeatures object with extracted features
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Generate content ID
@@ -231,8 +220,7 @@ class ContentIntelligenceEngine:
             raise ContentAnalysisError(f"Content analysis failed: {e}")
     
     async def _analyze_text_content(self, text_data: str) -> Tuple[Dict[str, Any], np.ndarray]:
-        """Analyze text content and extract features."""
-        features = {}
+        """Analyze text content and extract features."""        features = {}
         
         # Basic text statistics
         features['word_count'] = len(text_data.split())
@@ -285,8 +273,7 @@ class ContentIntelligenceEngine:
         return features, embeddings
     
     async def _analyze_image_content(self, image_data: Union[str, Path, bytes]) -> Tuple[Dict[str, Any], np.ndarray]:
-        """Analyze image content and extract features."""
-        features = {}
+        """Analyze image content and extract features."""        features = {}
         
         # Load image
         if isinstance(image_data, (str, Path)):
@@ -325,8 +312,7 @@ class ContentIntelligenceEngine:
         return features, embeddings
     
     async def _analyze_audio_content(self, audio_data: Union[str, Path, bytes]) -> Tuple[Dict[str, Any], np.ndarray]:
-        """Analyze audio content and extract features."""
-        features = {}
+        """Analyze audio content and extract features."""        features = {}
         
         # Load audio
         if isinstance(audio_data, (str, Path)):
@@ -368,8 +354,7 @@ class ContentIntelligenceEngine:
         return features, embeddings
     
     async def _analyze_video_content(self, video_data: Union[str, Path]) -> Tuple[Dict[str, Any], np.ndarray]:
-        """Analyze video content and extract features."""
-        features = {}
+        """Analyze video content and extract features."""        features = {}
         
         # Open video
         cap = cv2.VideoCapture(str(video_data))
@@ -417,8 +402,7 @@ class ContentIntelligenceEngine:
         return features, embeddings
     
     async def _analyze_mixed_content(self, content_data: Dict[str, Any]) -> Tuple[Dict[str, Any], np.ndarray]:
-        """Analyze mixed content (multiple formats)."""
-        features = {}
+        """Analyze mixed content (multiple formats)."""        features = {}
         all_embeddings = []
         
         for content_type, data in content_data.items():
@@ -447,8 +431,7 @@ class ContentIntelligenceEngine:
         return features, embeddings
     
     async def generate_insights(self, content_features: ContentFeatures) -> ContentInsights:
-        """Generate intelligent insights from content features."""
-        try:
+        """Generate intelligent insights from content features."""        try:
             # Classify content category
             category = self._classify_content_category(content_features)
             
@@ -492,28 +475,24 @@ class ContentIntelligenceEngine:
             raise ContentAnalysisError(f"Insight generation failed: {e}")
     
     def _generate_content_id(self, content_data: Any, content_type: ContentType) -> str:
-        """Generate unique content ID."""
-        content_str = str(content_data) + str(content_type.value)
+        """Generate unique content ID."""        content_str = str(content_data) + str(content_type.value)
         return hashlib.sha256(content_str.encode()).hexdigest()[:16]
     
     def _calculate_confidence(self, features: Dict[str, Any]) -> float:
-        """Calculate confidence score for analysis."""
-        # Simple confidence calculation based on feature completeness
+        """Calculate confidence score for analysis."""        # Simple confidence calculation based on feature completeness
         total_features = len(features)
         non_empty_features = sum(1 for v in features.values() if v is not None and v != "" and v != [])
         return min(0.95, non_empty_features / max(total_features, 1))
     
     def _calculate_text_complexity(self, text: str) -> float:
-        """Calculate text complexity score."""
-        words = text.split()
+        """Calculate text complexity score."""        words = text.split()
         avg_word_length = sum(len(word) for word in words) / max(len(words), 1)
         unique_words = len(set(words.lower()))
         vocabulary_diversity = unique_words / max(len(words), 1)
         return (avg_word_length * 0.3 + vocabulary_diversity * 0.7) * 10
     
     def _classify_content_category(self, content_features: ContentFeatures) -> ContentCategory:
-        """Classify content into categories using AI."""
-        # Simplified classification logic
+        """Classify content into categories using AI."""        # Simplified classification logic
         features = content_features.features
         
         if content_features.content_type == ContentType.AUDIO:
@@ -537,14 +516,12 @@ class ContentIntelligenceEngine:
         return ContentCategory.ENTERTAINMENT  # Default
     
     def _extract_sentiment_score(self, content_features: ContentFeatures) -> float:
-        """Extract sentiment score from content features."""
-        if 'text' in content_features.features:
+        """Extract sentiment score from content features."""        if 'text' in content_features.features:
             return content_features.features['text'].get('sentiment_score', 0.5)
         return 0.5  # Neutral default
     
     def _predict_engagement(self, content_features: ContentFeatures) -> float:
-        """Predict engagement score using ML."""
-        # Simplified engagement prediction
+        """Predict engagement score using ML."""        # Simplified engagement prediction
         score = 0.5
         
         if content_features.content_type == ContentType.VIDEO:
@@ -561,8 +538,7 @@ class ContentIntelligenceEngine:
         return min(1.0, score)
     
     def _calculate_viral_potential(self, content_features: ContentFeatures) -> float:
-        """Calculate viral potential score."""
-        # Simplified viral potential calculation
+        """Calculate viral potential score."""        # Simplified viral potential calculation
         potential = 0.3
         
         # High visual complexity can be engaging
@@ -580,14 +556,12 @@ class ContentIntelligenceEngine:
         return min(1.0, potential)
     
     def _extract_trending_topics(self, content_features: ContentFeatures) -> List[str]:
-        """Extract trending topics from content."""
-        if 'text' in content_features.features:
+        """Extract trending topics from content."""        if 'text' in content_features.features:
             return content_features.features['text'].get('top_topics', [])[:5]
         return []
     
     def _identify_audience_segments(self, content_features: ContentFeatures) -> List[str]:
-        """Identify target audience segments."""
-        segments = []
+        """Identify target audience segments."""        segments = []
         
         category = self._classify_content_category(content_features)
         
@@ -601,8 +575,7 @@ class ContentIntelligenceEngine:
         return segments
     
     def _generate_optimization_suggestions(self, content_features: ContentFeatures) -> List[str]:
-        """Generate content optimization suggestions."""
-        suggestions = []
+        """Generate content optimization suggestions."""        suggestions = []
         
         if content_features.content_type == ContentType.TEXT:
             word_count = content_features.features.get('word_count', 0)
@@ -623,8 +596,7 @@ class ContentIntelligenceEngine:
         return suggestions
     
     async def _find_collaboration_opportunities(self, content_features: ContentFeatures) -> List[Dict[str, Any]]:
-        """Find collaboration opportunities based on content analysis."""
-        opportunities = []
+        """Find collaboration opportunities based on content analysis."""        opportunities = []
         
         category = self._classify_content_category(content_features)
         trending_topics = self._extract_trending_topics(content_features)
@@ -649,8 +621,7 @@ class ContentIntelligenceEngine:
         return opportunities
     
     def _calculate_monetization_potential(self, content_features: ContentFeatures) -> float:
-        """Calculate monetization potential score."""
-        potential = 0.4  # Base potential
+        """Calculate monetization potential score."""        potential = 0.4  # Base potential
         
         engagement = self._predict_engagement(content_features)
         viral = self._calculate_viral_potential(content_features)
@@ -667,5 +638,4 @@ class ContentIntelligenceEngine:
 
 # Factory function
 def create_content_intelligence_engine() -> ContentIntelligenceEngine:
-    """Create and return a content intelligence engine instance."""
-    return ContentIntelligenceEngine()
+    """Create and return a content intelligence engine instance."""    return ContentIntelligenceEngine()

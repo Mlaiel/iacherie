@@ -1,5 +1,4 @@
-"""
-Similarity Matching Engine - Advanced Content Similarity Analysis
+"""Similarity Matching Engine - Advanced Content Similarity Analysis
 ================================================================
 
 Professional similarity matching engine for content creators providing:
@@ -17,7 +16,6 @@ Professional similarity matching engine for content creators providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
-
 import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging
@@ -40,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SimilarityResult:
-    """Similarity matching result"""
-    similarity_score: float
+    """Similarity matching result"""    similarity_score: float
     content_type: str
     match_confidence: float
     similarity_method: str
@@ -49,8 +46,7 @@ class SimilarityResult:
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint representation"""
-    content_id: str
+    """Content fingerprint representation"""    content_id: str
     content_type: str
     fingerprint: Union[str, np.ndarray]
     metadata: Dict[str, Any]
@@ -58,8 +54,7 @@ class ContentFingerprint:
 
 @dataclass
 class MatchResult:
-    """Content match result"""
-    query_id: str
+    """Content match result"""    query_id: str
     matched_id: str
     similarity_score: float
     match_type: str
@@ -67,10 +62,8 @@ class MatchResult:
     details: Dict[str, Any]
 
 class SimilarityMatchingEngine:
-    """
-    Industrial-grade similarity matching engine for content creators
-    """
-    
+    """    Industrial-grade similarity matching engine for content creators
+    """    
     def __init__(self, index_backend: str = 'faiss'):
         self.index_backend = index_backend
         
@@ -90,8 +83,7 @@ class SimilarityMatchingEngine:
         logger.info("SimilarityMatchingEngine initialized successfully")
     
     def _initialize_similarity_metrics(self) -> None:
-        """Initialize similarity measurement methods"""
-        try:
+        """Initialize similarity measurement methods"""        try:
             self.similarity_methods = {
                 'cosine': self._cosine_similarity,
                 'euclidean': self._euclidean_similarity,
@@ -135,8 +127,7 @@ class SimilarityMatchingEngine:
             raise
     
     def _initialize_indexing_system(self) -> None:
-        """Initialize indexing system for fast similarity search"""
-        try:
+        """Initialize indexing system for fast similarity search"""        try:
             if self.index_backend == 'faiss':
                 # Initialize FAISS indices for different content types
                 self.faiss_indices = {
@@ -167,8 +158,7 @@ class SimilarityMatchingEngine:
             raise
     
     def _initialize_thresholds(self) -> None:
-        """Initialize similarity thresholds for different content types"""
-        self.similarity_thresholds = {
+        """Initialize similarity thresholds for different content types"""        self.similarity_thresholds = {
             'audio': {
                 'exact_match': 0.95,
                 'near_duplicate': 0.85,
@@ -196,8 +186,7 @@ class SimilarityMatchingEngine:
         }
     
     def calculate_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Calculate comprehensive content similarity
+        """        Calculate comprehensive content similarity
         
         Args:
             results: Content analysis results containing features and fingerprints
@@ -205,8 +194,7 @@ class SimilarityMatchingEngine:
             
         Returns:
             Similarity analysis results
-        """
-        try:
+        """        try:
             similarity_results = {}
             
             # Extract content information
@@ -244,8 +232,7 @@ class SimilarityMatchingEngine:
             raise
     
     def _detect_content_type(self, results: Dict[str, Any]) -> str:
-        """Detect content type from results"""
-        try:
+        """Detect content type from results"""        try:
             # Check for audio features
             if 'audio_analysis' in results or 'spectral_features' in results:
                 return 'audio'
@@ -270,8 +257,7 @@ class SimilarityMatchingEngine:
             return 'unknown'
     
     def _extract_features_for_similarity(self, results: Dict[str, Any], content_type: str) -> np.ndarray:
-        """Extract features for similarity calculation"""
-        try:
+        """Extract features for similarity calculation"""        try:
             features_list = []
             
             if content_type == 'audio':
@@ -340,8 +326,7 @@ class SimilarityMatchingEngine:
             return np.array([])
     
     def _calculate_fingerprint_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate fingerprint-based similarity"""
-        try:
+        """Calculate fingerprint-based similarity"""        try:
             fingerprint_results = {}
             
             # Extract fingerprint from results
@@ -375,8 +360,7 @@ class SimilarityMatchingEngine:
             return {}
     
     def _calculate_feature_similarity(self, features: np.ndarray, content_type: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate feature-based similarity"""
-        try:
+        """Calculate feature-based similarity"""        try:
             feature_results = {}
             
             if len(features) == 0:
@@ -416,8 +400,7 @@ class SimilarityMatchingEngine:
             return {}
     
     def _calculate_semantic_similarity(self, results: Dict[str, Any], content_type: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate semantic similarity"""
-        try:
+        """Calculate semantic similarity"""        try:
             semantic_results = {}
             
             # Content-specific semantic similarity
@@ -436,8 +419,7 @@ class SimilarityMatchingEngine:
             return {}
     
     def _perform_content_matching(self, results: Dict[str, Any], content_type: str, config: Dict[str, Any]) -> List[MatchResult]:
-        """Perform content matching against database"""
-        try:
+        """Perform content matching against database"""        try:
             matches = []
             
             # Extract query features
@@ -458,8 +440,7 @@ class SimilarityMatchingEngine:
             return []
     
     def _search_fingerprint_database(self, fingerprint: Union[str, np.ndarray], config: Dict[str, Any]) -> List[SimilarityResult]:
-        """Search fingerprint database for matches"""
-        try:
+        """Search fingerprint database for matches"""        try:
             matches = []
             threshold = config.get('similarity_threshold', 0.8)
             
@@ -486,8 +467,7 @@ class SimilarityMatchingEngine:
             return []
     
     def _calculate_fingerprint_distance(self, fp1: Union[str, np.ndarray], fp2: Union[str, np.ndarray]) -> float:
-        """Calculate distance between two fingerprints"""
-        try:
+        """Calculate distance between two fingerprints"""        try:
             if isinstance(fp1, str) and isinstance(fp2, str):
                 # String-based hash comparison
                 if len(fp1) != len(fp2):
@@ -524,8 +504,7 @@ class SimilarityMatchingEngine:
             return 0.0
     
     def _get_stored_features(self, content_type: str) -> List[Dict[str, Any]]:
-        """Get stored features for content type"""
-        try:
+        """Get stored features for content type"""        try:
             stored_features = []
             
             if content_type in self.vector_databases:
@@ -544,8 +523,7 @@ class SimilarityMatchingEngine:
             return []
     
     def _search_faiss_index(self, query_features: np.ndarray, content_type: str, config: Dict[str, Any]) -> List[MatchResult]:
-        """Search FAISS index for similar content"""
-        try:
+        """Search FAISS index for similar content"""        try:
             matches = []
             
             index = self.faiss_indices.get(content_type)
@@ -584,8 +562,7 @@ class SimilarityMatchingEngine:
             return []
     
     def _brute_force_search(self, query_features: np.ndarray, content_type: str, config: Dict[str, Any]) -> List[MatchResult]:
-        """Perform brute force similarity search"""
-        try:
+        """Perform brute force similarity search"""        try:
             matches = []
             stored_features = self._get_stored_features(content_type)
             
@@ -613,8 +590,7 @@ class SimilarityMatchingEngine:
     
     # Similarity metric implementations
     def _cosine_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate cosine similarity"""
-        try:
+        """Calculate cosine similarity"""        try:
             a_flat = a.flatten()
             b_flat = b.flatten()
             
@@ -634,8 +610,7 @@ class SimilarityMatchingEngine:
             return 0.0
     
     def _euclidean_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate Euclidean similarity"""
-        try:
+        """Calculate Euclidean similarity"""        try:
             a_flat = a.flatten()
             b_flat = b.flatten()
             
@@ -655,8 +630,7 @@ class SimilarityMatchingEngine:
             return 0.0
     
     def _hamming_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate Hamming similarity"""
-        try:
+        """Calculate Hamming similarity"""        try:
             a_flat = a.flatten()
             b_flat = b.flatten()
             
@@ -682,8 +656,7 @@ class SimilarityMatchingEngine:
             return 0.0
     
     def _jaccard_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate Jaccard similarity"""
-        try:
+        """Calculate Jaccard similarity"""        try:
             a_set = set(a.flatten())
             b_set = set(b.flatten())
             
@@ -701,8 +674,7 @@ class SimilarityMatchingEngine:
             return 0.0
     
     def _pearson_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate Pearson correlation similarity"""
-        try:
+        """Calculate Pearson correlation similarity"""        try:
             a_flat = a.flatten()
             b_flat = b.flatten()
             
@@ -725,99 +697,80 @@ class SimilarityMatchingEngine:
             return 0.0
     
     def _semantic_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate semantic similarity using embeddings"""
-        # This would use pre-trained embeddings or semantic models
+        """Calculate semantic similarity using embeddings"""        # This would use pre-trained embeddings or semantic models
         return self._cosine_similarity(a, b)
     
     def _perceptual_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate perceptual similarity"""
-        # This would use perceptual models for human-like similarity judgment
+        """Calculate perceptual similarity"""        # This would use perceptual models for human-like similarity judgment
         return self._cosine_similarity(a, b)
     
     def _structural_similarity(self, a: np.ndarray, b: np.ndarray) -> float:
-        """Calculate structural similarity"""
-        # This would analyze structural patterns in the data
+        """Calculate structural similarity"""        # This would analyze structural patterns in the data
         return self._cosine_similarity(a, b)
     
     # Content-specific similarity methods
     def _audio_chromaprint_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate audio Chromaprint similarity"""
-        # Implementation would use Chromaprint library
+        """Calculate audio Chromaprint similarity"""        # Implementation would use Chromaprint library
         return 0.0
     
     def _audio_spectral_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate audio spectral similarity"""
-        # Implementation would compare spectral features
+        """Calculate audio spectral similarity"""        # Implementation would compare spectral features
         return 0.0
     
     def _audio_mfcc_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate audio MFCC similarity"""
-        # Implementation would compare MFCC features
+        """Calculate audio MFCC similarity"""        # Implementation would compare MFCC features
         return 0.0
     
     def _audio_tempo_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate audio tempo similarity"""
-        # Implementation would compare tempo features
+        """Calculate audio tempo similarity"""        # Implementation would compare tempo features
         return 0.0
     
     def _video_frame_hash_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate video frame hash similarity"""
-        # Implementation would compare frame hashes
+        """Calculate video frame hash similarity"""        # Implementation would compare frame hashes
         return 0.0
     
     def _video_optical_flow_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate video optical flow similarity"""
-        # Implementation would compare optical flow patterns
+        """Calculate video optical flow similarity"""        # Implementation would compare optical flow patterns
         return 0.0
     
     def _video_scene_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate video scene similarity"""
-        # Implementation would compare scene features
+        """Calculate video scene similarity"""        # Implementation would compare scene features
         return 0.0
     
     def _image_phash_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate image perceptual hash similarity"""
-        # Implementation would use pHash algorithm
+        """Calculate image perceptual hash similarity"""        # Implementation would use pHash algorithm
         return 0.0
     
     def _image_dhash_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate image difference hash similarity"""
-        # Implementation would use dHash algorithm
+        """Calculate image difference hash similarity"""        # Implementation would use dHash algorithm
         return 0.0
     
     def _image_feature_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate image feature similarity"""
-        # Implementation would compare SIFT/ORB features
+        """Calculate image feature similarity"""        # Implementation would compare SIFT/ORB features
         return 0.0
     
     def _image_color_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate image color similarity"""
-        # Implementation would compare color histograms
+        """Calculate image color similarity"""        # Implementation would compare color histograms
         return 0.0
     
     def _text_tfidf_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate text TF-IDF similarity"""
-        # Implementation would use TF-IDF vectors
+        """Calculate text TF-IDF similarity"""        # Implementation would use TF-IDF vectors
         return 0.0
     
     def _text_embedding_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate text embedding similarity"""
-        # Implementation would use text embeddings
+        """Calculate text embedding similarity"""        # Implementation would use text embeddings
         return 0.0
     
     def _text_ngram_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate text n-gram similarity"""
-        # Implementation would compare n-grams
+        """Calculate text n-gram similarity"""        # Implementation would compare n-grams
         return 0.0
     
     def _text_semantic_similarity(self, results: Dict[str, Any], config: Dict[str, Any]) -> float:
-        """Calculate text semantic similarity"""
-        # Implementation would use semantic models
+        """Calculate text semantic similarity"""        # Implementation would use semantic models
         return 0.0
     
     def _generate_similarity_report(self, similarity_results: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive similarity report"""
-        try:
+        """Generate comprehensive similarity report"""        try:
             report = {
                 'summary': {},
                 'detailed_results': similarity_results,
@@ -857,8 +810,7 @@ class SimilarityMatchingEngine:
             return {}
     
     def _generate_similarity_recommendations(self, similarity_results: Dict[str, Any]) -> List[str]:
-        """Generate similarity-based recommendations"""
-        recommendations = []
+        """Generate similarity-based recommendations"""        recommendations = []
         
         try:
             # Check for potential duplicates
@@ -889,8 +841,7 @@ class SimilarityMatchingEngine:
         return recommendations
     
     def add_content_to_database(self, content_id: str, results: Dict[str, Any], content_type: str) -> None:
-        """Add content to similarity database"""
-        try:
+        """Add content to similarity database"""        try:
             # Extract fingerprint
             fingerprint = None
             if 'fingerprint' in results:
@@ -919,8 +870,7 @@ class SimilarityMatchingEngine:
             logger.error(f"Failed to add content to database: {e}")
     
     def _add_to_vector_database(self, content_id: str, features: np.ndarray, content_type: str) -> None:
-        """Add features to vector database"""
-        try:
+        """Add features to vector database"""        try:
             if content_type in self.vector_databases:
                 database_key = f'{content_type}_features'
                 self.vector_databases[database_key].append(features)
@@ -932,8 +882,7 @@ class SimilarityMatchingEngine:
             logger.error(f"Failed to add to vector database: {e}")
     
     def _update_faiss_index(self, content_type: str, features: np.ndarray, content_id: str) -> None:
-        """Update FAISS index with new features"""
-        try:
+        """Update FAISS index with new features"""        try:
             if self.faiss_indices[content_type] is None:
                 # Create new index
                 dimension = len(features.flatten())
@@ -952,8 +901,7 @@ class SimilarityMatchingEngine:
             logger.error(f"Failed to update FAISS index: {e}")
     
     def get_similarity_statistics(self) -> Dict[str, Any]:
-        """Get similarity database statistics"""
-        try:
+        """Get similarity database statistics"""        try:
             stats = {
                 'total_content': len(self.fingerprint_database),
                 'content_by_type': {},
@@ -982,8 +930,7 @@ class SimilarityMatchingEngine:
             return {}
     
     def save_database(self, filepath: str) -> bool:
-        """Save similarity database to file"""
-        try:
+        """Save similarity database to file"""        try:
             database_data = {
                 'fingerprint_database': self.fingerprint_database,
                 'content_metadata': self.content_metadata,
@@ -1002,8 +949,7 @@ class SimilarityMatchingEngine:
             return False
     
     def load_database(self, filepath: str) -> bool:
-        """Load similarity database from file"""
-        try:
+        """Load similarity database from file"""        try:
             with open(filepath, 'rb') as f:
                 database_data = pickle.load(f)
             
@@ -1023,8 +969,7 @@ class SimilarityMatchingEngine:
             return False
     
     def _rebuild_faiss_indices(self) -> None:
-        """Rebuild FAISS indices from vector databases"""
-        try:
+        """Rebuild FAISS indices from vector databases"""        try:
             for content_type in self.vector_databases:
                 if content_type.endswith('_features'):
                     type_name = content_type.replace('_features', '')

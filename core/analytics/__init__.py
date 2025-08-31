@@ -26,8 +26,7 @@ Team Specialists:
 - Audio Processing Specialist: Advanced audio AI algorithms
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
-"""
-from .collector import MetricsCollector, BusinessMetricsCollector
+"""from .collector import MetricsCollector, BusinessMetricsCollector
 from .aggregator import DataAggregator, TimeSeriesAggregator
 from .dashboard import AnalyticsDashboard, RealtimeDashboard
 from .intelligence import BusinessIntelligence, PredictiveAnalytics

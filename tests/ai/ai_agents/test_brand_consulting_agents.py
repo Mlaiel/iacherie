@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test suite for Brand Consulting AI Agents
+"""Test suite for Brand Consulting AI Agents
 
 Tests all functionalities of brand consulting, personal brand development,
 brand positioning, and brand strategy optimization agents.
@@ -29,7 +26,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -53,17 +49,14 @@ from ai.ai_agents.brand_consulting_agents import (
 
 
 class TestBrandConsultantAgent:
-    """Test BrandConsultantAgent functionality"""
-    
+    """Test BrandConsultantAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create BrandConsultantAgent instance"""
-        return BrandConsultantAgent()
+        """Create BrandConsultantAgent instance"""        return BrandConsultantAgent()
     
     @pytest.fixture
     def sample_creator_profile(self):
-        """Sample creator profile for brand analysis"""
-        return {
+        """Sample creator profile for brand analysis"""        return {
             "creator_id": "test_creator",
             "personal_info": {
                 "name": "Test Creator",
@@ -92,8 +85,7 @@ class TestBrandConsultantAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_personal_brand(self, agent, sample_creator_profile):
-        """Test personal brand analysis"""
-        analysis = await agent.analyze_personal_brand(sample_creator_profile)
+        """Test personal brand analysis"""        analysis = await agent.analyze_personal_brand(sample_creator_profile)
         
         assert isinstance(analysis, BrandAnalysis)
         assert 0 <= analysis.brand_strength <= 1
@@ -105,8 +97,7 @@ class TestBrandConsultantAgent:
     
     @pytest.mark.asyncio
     async def test_evaluate_brand_consistency(self, agent, sample_creator_profile):
-        """Test brand consistency evaluation"""
-        consistency_analysis = await agent.evaluate_brand_consistency(sample_creator_profile)
+        """Test brand consistency evaluation"""        consistency_analysis = await agent.evaluate_brand_consistency(sample_creator_profile)
         
         assert "visual_consistency" in consistency_analysis
         assert "message_consistency" in consistency_analysis
@@ -119,8 +110,7 @@ class TestBrandConsultantAgent:
     
     @pytest.mark.asyncio
     async def test_identify_brand_gaps(self, agent, sample_creator_profile):
-        """Test brand gap identification"""
-        gaps = await agent.identify_brand_gaps(sample_creator_profile)
+        """Test brand gap identification"""        gaps = await agent.identify_brand_gaps(sample_creator_profile)
         
         assert isinstance(gaps, list)
         
@@ -133,8 +123,7 @@ class TestBrandConsultantAgent:
     
     @pytest.mark.asyncio
     async def test_generate_brand_recommendations(self, agent, sample_creator_profile):
-        """Test brand recommendation generation"""
-        recommendations = await agent.generate_brand_recommendations(sample_creator_profile)
+        """Test brand recommendation generation"""        recommendations = await agent.generate_brand_recommendations(sample_creator_profile)
         
         assert isinstance(recommendations, list)
         assert len(recommendations) > 0
@@ -148,8 +137,7 @@ class TestBrandConsultantAgent:
     
     @pytest.mark.asyncio
     async def test_assess_competitive_positioning(self, agent, sample_creator_profile):
-        """Test competitive positioning assessment"""
-        positioning = await agent.assess_competitive_positioning(
+        """Test competitive positioning assessment"""        positioning = await agent.assess_competitive_positioning(
             sample_creator_profile,
             competitor_profiles=[
                 {"name": "Competitor 1", "niche": "technology", "followers": 50000},
@@ -164,8 +152,7 @@ class TestBrandConsultantAgent:
     
     @pytest.mark.asyncio
     async def test_develop_brand_voice(self, agent, sample_creator_profile):
-        """Test brand voice development"""
-        voice_guide = await agent.develop_brand_voice(sample_creator_profile)
+        """Test brand voice development"""        voice_guide = await agent.develop_brand_voice(sample_creator_profile)
         
         assert "personality_traits" in voice_guide
         assert "tone_guidelines" in voice_guide
@@ -175,17 +162,14 @@ class TestBrandConsultantAgent:
 
 
 class TestPersonalBrandingAgent:
-    """Test PersonalBrandingAgent functionality"""
-    
+    """Test PersonalBrandingAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create PersonalBrandingAgent instance"""
-        return PersonalBrandingAgent()
+        """Create PersonalBrandingAgent instance"""        return PersonalBrandingAgent()
     
     @pytest.fixture
     def sample_personal_data(self):
-        """Sample personal data for branding"""
-        return {
+        """Sample personal data for branding"""        return {
             "individual": {
                 "name": "Jane Doe",
                 "profession": "Data Scientist",
@@ -207,8 +191,7 @@ class TestPersonalBrandingAgent:
     
     @pytest.mark.asyncio
     async def test_create_personal_brand_strategy(self, agent, sample_personal_data):
-        """Test personal brand strategy creation"""
-        strategy = await agent.create_personal_brand_strategy(sample_personal_data)
+        """Test personal brand strategy creation"""        strategy = await agent.create_personal_brand_strategy(sample_personal_data)
         
         assert isinstance(strategy, BrandStrategy)
         assert strategy.brand_vision is not None
@@ -219,8 +202,7 @@ class TestPersonalBrandingAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_personal_strengths(self, agent, sample_personal_data):
-        """Test personal strengths analysis"""
-        strengths = await agent.analyze_personal_strengths(sample_personal_data)
+        """Test personal strengths analysis"""        strengths = await agent.analyze_personal_strengths(sample_personal_data)
         
         assert "core_strengths" in strengths
         assert "unique_differentiators" in strengths
@@ -231,8 +213,7 @@ class TestPersonalBrandingAgent:
     
     @pytest.mark.asyncio
     async def test_develop_content_strategy(self, agent, sample_personal_data):
-        """Test content strategy development"""
-        content_strategy = await agent.develop_content_strategy(sample_personal_data)
+        """Test content strategy development"""        content_strategy = await agent.develop_content_strategy(sample_personal_data)
         
         assert "content_pillars" in content_strategy
         assert "content_calendar" in content_strategy
@@ -243,8 +224,7 @@ class TestPersonalBrandingAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_online_presence(self, agent, sample_personal_data):
-        """Test online presence optimization"""
-        optimization = await agent.optimize_online_presence(sample_personal_data)
+        """Test online presence optimization"""        optimization = await agent.optimize_online_presence(sample_personal_data)
         
         assert "profile_optimizations" in optimization
         assert "content_improvements" in optimization
@@ -253,17 +233,14 @@ class TestPersonalBrandingAgent:
 
 
 class TestBrandPositioningAgent:
-    """Test BrandPositioningAgent functionality"""
-    
+    """Test BrandPositioningAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create BrandPositioningAgent instance"""
-        return BrandPositioningAgent()
+        """Create BrandPositioningAgent instance"""        return BrandPositioningAgent()
     
     @pytest.fixture
     def sample_market_data(self):
-        """Sample market data for positioning analysis"""
-        return {
+        """Sample market data for positioning analysis"""        return {
             "target_market": {
                 "size": 500000,
                 "growth_rate": 0.15,
@@ -295,8 +272,7 @@ class TestBrandPositioningAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_market_positioning(self, agent, sample_market_data):
-        """Test market positioning analysis"""
-        positioning_analysis = await agent.analyze_market_positioning(sample_market_data)
+        """Test market positioning analysis"""        positioning_analysis = await agent.analyze_market_positioning(sample_market_data)
         
         assert "market_gaps" in positioning_analysis
         assert "positioning_opportunities" in positioning_analysis
@@ -305,8 +281,7 @@ class TestBrandPositioningAgent:
     
     @pytest.mark.asyncio
     async def test_identify_white_space_opportunities(self, agent, sample_market_data):
-        """Test white space opportunity identification"""
-        opportunities = await agent.identify_white_space_opportunities(sample_market_data)
+        """Test white space opportunity identification"""        opportunities = await agent.identify_white_space_opportunities(sample_market_data)
         
         assert isinstance(opportunities, list)
         assert len(opportunities) > 0
@@ -319,8 +294,7 @@ class TestBrandPositioningAgent:
     
     @pytest.mark.asyncio
     async def test_create_positioning_statement(self, agent, sample_market_data):
-        """Test positioning statement creation"""
-        creator_profile = {
+        """Test positioning statement creation"""        creator_profile = {
             "unique_strengths": ["practical examples", "clear explanations", "industry experience"],
             "target_audience": "aspiring developers",
             "value_proposition": "learn coding through real-world projects"
@@ -338,8 +312,7 @@ class TestBrandPositioningAgent:
     
     @pytest.mark.asyncio
     async def test_validate_positioning_strategy(self, agent, sample_market_data):
-        """Test positioning strategy validation"""
-        positioning_strategy = {
+        """Test positioning strategy validation"""        positioning_strategy = {
             "target_segment": "intermediate developers",
             "value_proposition": "advanced tutorials with practical application",
             "differentiation": "industry case studies and real project examples"
@@ -358,17 +331,14 @@ class TestBrandPositioningAgent:
 
 
 class TestBrandStrategyAgent:
-    """Test BrandStrategyAgent functionality"""
-    
+    """Test BrandStrategyAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create BrandStrategyAgent instance"""
-        return BrandStrategyAgent()
+        """Create BrandStrategyAgent instance"""        return BrandStrategyAgent()
     
     @pytest.fixture
     def sample_brand_objectives(self):
-        """Sample brand objectives"""
-        return {
+        """Sample brand objectives"""        return {
             "primary_goals": [
                 "increase brand awareness by 200%",
                 "establish thought leadership in AI",
@@ -386,8 +356,7 @@ class TestBrandStrategyAgent:
     
     @pytest.mark.asyncio
     async def test_develop_comprehensive_brand_strategy(self, agent, sample_brand_objectives):
-        """Test comprehensive brand strategy development"""
-        strategy = await agent.develop_comprehensive_brand_strategy(sample_brand_objectives)
+        """Test comprehensive brand strategy development"""        strategy = await agent.develop_comprehensive_brand_strategy(sample_brand_objectives)
         
         assert "strategic_framework" in strategy
         assert "implementation_roadmap" in strategy
@@ -397,8 +366,7 @@ class TestBrandStrategyAgent:
     
     @pytest.mark.asyncio
     async def test_create_brand_implementation_plan(self, agent, sample_brand_objectives):
-        """Test brand implementation plan creation"""
-        implementation_plan = await agent.create_brand_implementation_plan(sample_brand_objectives)
+        """Test brand implementation plan creation"""        implementation_plan = await agent.create_brand_implementation_plan(sample_brand_objectives)
         
         assert "phases" in implementation_plan
         assert "milestones" in implementation_plan
@@ -415,8 +383,7 @@ class TestBrandStrategyAgent:
     
     @pytest.mark.asyncio
     async def test_monitor_brand_performance(self, agent, sample_brand_objectives):
-        """Test brand performance monitoring"""
-        current_metrics = {
+        """Test brand performance monitoring"""        current_metrics = {
             "brand_awareness": 0.08,
             "engagement_rate": 0.045,
             "community_size": 15000,
@@ -435,8 +402,7 @@ class TestBrandStrategyAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_brand_strategy(self, agent, sample_brand_objectives):
-        """Test brand strategy optimization"""
-        performance_data = {
+        """Test brand strategy optimization"""        performance_data = {
             "successful_tactics": ["video content", "community engagement", "collaborations"],
             "underperforming_areas": ["blog posts", "podcast appearances"],
             "market_changes": ["increased competition", "algorithm updates"],
@@ -455,17 +421,14 @@ class TestBrandStrategyAgent:
 
 
 class TestBrandAuditAndAnalysis:
-    """Test brand audit and analysis functionality"""
-    
+    """Test brand audit and analysis functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create BrandConsultantAgent for audit testing"""
-        return BrandConsultantAgent()
+        """Create BrandConsultantAgent for audit testing"""        return BrandConsultantAgent()
     
     @pytest.fixture
     def comprehensive_brand_data(self):
-        """Comprehensive brand data for audit"""
-        return {
+        """Comprehensive brand data for audit"""        return {
             "brand_assets": {
                 "visual_identity": {
                     "logo_variations": 3,
@@ -502,8 +465,7 @@ class TestBrandAuditAndAnalysis:
     
     @pytest.mark.asyncio
     async def test_conduct_comprehensive_brand_audit(self, agent, comprehensive_brand_data):
-        """Test comprehensive brand audit"""
-        audit = await agent.conduct_comprehensive_brand_audit(comprehensive_brand_data)
+        """Test comprehensive brand audit"""        audit = await agent.conduct_comprehensive_brand_audit(comprehensive_brand_data)
         
         assert isinstance(audit, BrandAudit)
         assert audit.overall_brand_health is not None
@@ -515,8 +477,7 @@ class TestBrandAuditAndAnalysis:
     
     @pytest.mark.asyncio
     async def test_evaluate_brand_touchpoints(self, agent, comprehensive_brand_data):
-        """Test brand touchpoint evaluation"""
-        touchpoint_analysis = await agent.evaluate_brand_touchpoints(comprehensive_brand_data)
+        """Test brand touchpoint evaluation"""        touchpoint_analysis = await agent.evaluate_brand_touchpoints(comprehensive_brand_data)
         
         assert "touchpoint_performance" in touchpoint_analysis
         assert "consistency_scores" in touchpoint_analysis
@@ -527,8 +488,7 @@ class TestBrandAuditAndAnalysis:
     
     @pytest.mark.asyncio
     async def test_analyze_brand_perception(self, agent, comprehensive_brand_data):
-        """Test brand perception analysis"""
-        perception_analysis = await agent.analyze_brand_perception(comprehensive_brand_data)
+        """Test brand perception analysis"""        perception_analysis = await agent.analyze_brand_perception(comprehensive_brand_data)
         
         assert "sentiment_analysis" in perception_analysis
         assert "attribute_strength" in perception_analysis
@@ -539,17 +499,14 @@ class TestBrandAuditAndAnalysis:
 
 
 class TestCompetitiveBrandAnalysis:
-    """Test competitive brand analysis functionality"""
-    
+    """Test competitive brand analysis functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create BrandConsultantAgent for competitive analysis"""
-        return BrandConsultantAgent()
+        """Create BrandConsultantAgent for competitive analysis"""        return BrandConsultantAgent()
     
     @pytest.fixture
     def competitive_landscape_data(self):
-        """Competitive landscape data"""
-        return {
+        """Competitive landscape data"""        return {
             "direct_competitors": [
                 {
                     "name": "TechInfluencer1",
@@ -588,8 +545,7 @@ class TestCompetitiveBrandAnalysis:
     
     @pytest.mark.asyncio
     async def test_analyze_competitive_landscape(self, agent, competitive_landscape_data):
-        """Test competitive landscape analysis"""
-        analysis = await agent.analyze_competitive_landscape(competitive_landscape_data)
+        """Test competitive landscape analysis"""        analysis = await agent.analyze_competitive_landscape(competitive_landscape_data)
         
         assert isinstance(analysis, CompetitiveBrandAnalysis)
         assert analysis.market_position is not None
@@ -599,8 +555,7 @@ class TestCompetitiveBrandAnalysis:
     
     @pytest.mark.asyncio
     async def test_identify_competitive_advantages(self, agent, competitive_landscape_data):
-        """Test competitive advantage identification"""
-        advantages = await agent.identify_competitive_advantages(competitive_landscape_data)
+        """Test competitive advantage identification"""        advantages = await agent.identify_competitive_advantages(competitive_landscape_data)
         
         assert isinstance(advantages, list)
         
@@ -612,8 +567,7 @@ class TestCompetitiveBrandAnalysis:
     
     @pytest.mark.asyncio
     async def test_benchmark_brand_performance(self, agent, competitive_landscape_data):
-        """Test brand performance benchmarking"""
-        creator_metrics = {
+        """Test brand performance benchmarking"""        creator_metrics = {
             "followers": 50000,
             "engagement_rate": 0.06,
             "content_quality": 0.8,
@@ -632,12 +586,10 @@ class TestCompetitiveBrandAnalysis:
 
 
 class TestIntegrationScenarios:
-    """Test integration between different brand consulting agents"""
-    
+    """Test integration between different brand consulting agents"""    
     @pytest.fixture
     def agents(self):
-        """Create all brand agents for integration testing"""
-        return {
+        """Create all brand agents for integration testing"""        return {
             "consultant": BrandConsultantAgent(),
             "personal": PersonalBrandingAgent(),
             "positioning": BrandPositioningAgent(),
@@ -646,8 +598,7 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_comprehensive_brand_development_workflow(self, agents):
-        """Test comprehensive brand development workflow"""
-        # Sample comprehensive creator data
+        """Test comprehensive brand development workflow"""        # Sample comprehensive creator data
         creator_data = {
             "personal_profile": {
                 "name": "Alex Tech",
@@ -700,25 +651,21 @@ class TestIntegrationScenarios:
 
 
 class TestErrorHandling:
-    """Test error handling scenarios"""
-    
+    """Test error handling scenarios"""    
     @pytest.fixture
     def agent(self):
-        """Create BrandConsultantAgent for error testing"""
-        return BrandConsultantAgent()
+        """Create BrandConsultantAgent for error testing"""        return BrandConsultantAgent()
     
     @pytest.mark.asyncio
     async def test_invalid_creator_profile(self, agent):
-        """Test handling of invalid creator profile data"""
-        invalid_profile = {"invalid": "data", "missing": "required_fields"}
+        """Test handling of invalid creator profile data"""        invalid_profile = {"invalid": "data", "missing": "required_fields"}
         
         with pytest.raises((ValueError, KeyError)):
             await agent.analyze_personal_brand(invalid_profile)
     
     @pytest.mark.asyncio
     async def test_insufficient_data_handling(self, agent):
-        """Test handling of insufficient data"""
-        minimal_data = {"creator_id": "test"}
+        """Test handling of insufficient data"""        minimal_data = {"creator_id": "test"}
         
         try:
             result = await agent.generate_brand_recommendations(minimal_data)
@@ -730,8 +677,7 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_api_failure_resilience(self, agent):
-        """Test resilience to API failures"""
-        with patch('aiohttp.ClientSession.post') as mock_post:
+        """Test resilience to API failures"""        with patch('aiohttp.ClientSession.post') as mock_post:
             mock_post.side_effect = Exception("API Error")
             
             try:
@@ -744,17 +690,14 @@ class TestErrorHandling:
 
 
 class TestPerformanceAndScaling:
-    """Test performance and scaling scenarios"""
-    
+    """Test performance and scaling scenarios"""    
     @pytest.fixture
     def agent(self):
-        """Create BrandConsultantAgent for performance testing"""
-        return BrandConsultantAgent()
+        """Create BrandConsultantAgent for performance testing"""        return BrandConsultantAgent()
     
     @pytest.mark.asyncio
     async def test_large_scale_brand_analysis(self, agent):
-        """Test large-scale brand analysis performance"""
-        large_profile = {
+        """Test large-scale brand analysis performance"""        large_profile = {
             "creator_id": "large_creator",
             "content_history": [
                 {"id": f"post_{i}", "engagement": 0.05, "theme": f"theme_{i%10}"}
@@ -775,8 +718,7 @@ class TestPerformanceAndScaling:
     
     @pytest.mark.asyncio
     async def test_concurrent_brand_analyses(self, agent):
-        """Test concurrent brand analysis capabilities"""
-        profiles = [
+        """Test concurrent brand analysis capabilities"""        profiles = [
             {"creator_id": f"creator_{i}", "niche": "tech", "followers": 10000 + i*1000}
             for i in range(5)
         ]

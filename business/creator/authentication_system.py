@@ -1,5 +1,4 @@
-"""
-Creator Authentication System - Advanced Multi-Factor Authentication & Security
+"""Creator Authentication System - Advanced Multi-Factor Authentication & Security
 
 Ultra-sophisticated authentication system for content creators with multi-factor authentication,
 session management, security controls, and advanced threat protection.
@@ -18,7 +17,6 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -56,8 +54,7 @@ logger = get_logger(__name__)
 
 
 class AuthenticationMethod(Enum):
-    """Authentication methods supported"""
-    PASSWORD = "password"
+    """Authentication methods supported"""    PASSWORD = "password"
     TWO_FACTOR = "two_factor"
     BIOMETRIC = "biometric"
     SOCIAL_OAUTH = "social_oauth"
@@ -66,8 +63,7 @@ class AuthenticationMethod(Enum):
 
 
 class SessionStatus(Enum):
-    """Session status types"""
-    ACTIVE = "active"
+    """Session status types"""    ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
     SUSPICIOUS = "suspicious"
@@ -75,16 +71,14 @@ class SessionStatus(Enum):
 
 
 class SecurityThreatLevel(Enum):
-    """Security threat levels"""
-    LOW = "low"
+    """Security threat levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class DeviceType(Enum):
-    """Device types for tracking"""
-    MOBILE = "mobile"
+    """Device types for tracking"""    MOBILE = "mobile"
     DESKTOP = "desktop"
     TABLET = "tablet"
     API = "api"
@@ -93,8 +87,7 @@ class DeviceType(Enum):
 
 @dataclass
 class AuthenticationRequest:
-    """Authentication request data"""
-    email: str
+    """Authentication request data"""    email: str
     password: str
     remember_me: bool = False
     device_info: Optional[Dict[str, Any]] = None
@@ -105,8 +98,7 @@ class AuthenticationRequest:
 
 @dataclass
 class SessionInfo:
-    """User session information"""
-    session_id: str
+    """User session information"""    session_id: str
     creator_id: str
     user_id: str
     created_at: datetime
@@ -133,8 +125,7 @@ class SessionInfo:
 
 @dataclass
 class MFASetup:
-    """Multi-factor authentication setup"""
-    creator_id: str
+    """Multi-factor authentication setup"""    creator_id: str
     method_type: str  # totp, sms, email
     secret_key: str
     backup_codes: List[str]
@@ -144,8 +135,7 @@ class MFASetup:
 
 @dataclass
 class SecurityEvent:
-    """Security event tracking"""
-    event_id: str
+    """Security event tracking"""    event_id: str
     creator_id: str
     event_type: str
     timestamp: datetime
@@ -157,13 +147,11 @@ class SecurityEvent:
 
 
 class MultiFactorAuth:
-    """
-    Multi-Factor Authentication manager
+    """    Multi-Factor Authentication manager
     
     Handles setup, verification, and management of various MFA methods
     including TOTP, SMS, email, and backup codes.
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager, security_manager: SecurityManager):
         self.cache = cache_manager
         self.security = security_manager
@@ -177,16 +165,14 @@ class MultiFactorAuth:
         self.code_validity_period = 300  # 5 minutes
     
     async def setup_totp(self, creator_id: str) -> Dict[str, Any]:
-        """
-        Set up TOTP (Time-based One-Time Password) authentication
+        """        Set up TOTP (Time-based One-Time Password) authentication
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             TOTP setup information including QR code
-        """
-        try:
+        """        try:
             self.logger.info(f"Setting up TOTP for creator {creator_id}")
             
             # Generate secret key
@@ -244,8 +230,7 @@ class MultiFactorAuth:
         creator_id: str,
         verification_code: str
     ) -> bool:
-        """
-        Verify TOTP setup with provided code
+        """        Verify TOTP setup with provided code
         
         Args:
             creator_id: Creator identifier
@@ -253,8 +238,7 @@ class MultiFactorAuth:
             
         Returns:
             True if verification successful
-        """
-        try:
+        """        try:
             # Get MFA setup data
             cached_setup = await self.cache.get(f"mfa_setup:{creator_id}")
             if not cached_setup:
@@ -292,8 +276,7 @@ class MultiFactorAuth:
         creator_id: str,
         verification_code: str
     ) -> bool:
-        """
-        Verify TOTP code during login
+        """        Verify TOTP code during login
         
         Args:
             creator_id: Creator identifier
@@ -301,8 +284,7 @@ class MultiFactorAuth:
             
         Returns:
             True if verification successful
-        """
-        try:
+        """        try:
             # Get verified MFA setup
             cached_setup = await self.cache.get(f"mfa_verified:{creator_id}")
             if not cached_setup:
@@ -333,16 +315,14 @@ class MultiFactorAuth:
             return False
     
     async def disable_mfa(self, creator_id: str) -> bool:
-        """
-        Disable MFA for a creator
+        """        Disable MFA for a creator
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             await self.cache.delete(f"mfa_verified:{creator_id}")
             await self.cache.delete(f"mfa_setup:{creator_id}")
             
@@ -354,16 +334,14 @@ class MultiFactorAuth:
             return False
     
     async def get_mfa_status(self, creator_id: str) -> Dict[str, Any]:
-        """
-        Get MFA status for a creator
+        """        Get MFA status for a creator
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             MFA status information
-        """
-        try:
+        """        try:
             cached_setup = await self.cache.get(f"mfa_verified:{creator_id}")
             if not cached_setup:
                 return {
@@ -391,8 +369,7 @@ class MultiFactorAuth:
             }
     
     async def _generate_qr_code(self, data: str) -> str:
-        """Generate QR code as base64 image"""
-        try:
+        """Generate QR code as base64 image"""        try:
             qr = qrcode.QRCode(version=1, box_size=10, border=5)
             qr.add_data(data)
             qr.make(fit=True)
@@ -412,13 +389,11 @@ class MultiFactorAuth:
 
 
 class SessionManager:
-    """
-    Advanced session management system
+    """    Advanced session management system
     
     Handles session creation, validation, renewal, and cleanup with
     comprehensive security monitoring and device tracking.
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager, security_manager: SecurityManager):
         self.cache = cache_manager
         self.security = security_manager
@@ -439,8 +414,7 @@ class SessionManager:
         request_info: Dict[str, Any],
         remember_me: bool = False
     ) -> SessionInfo:
-        """
-        Create new authenticated session
+        """        Create new authenticated session
         
         Args:
             creator_id: Creator identifier
@@ -451,8 +425,7 @@ class SessionManager:
             
         Returns:
             Created session information
-        """
-        try:
+        """        try:
             session_id = str(uuid.uuid4())
             now = datetime.utcnow()
             
@@ -514,16 +487,14 @@ class SessionManager:
             )
     
     async def validate_session(self, session_id: str) -> Optional[SessionInfo]:
-        """
-        Validate and refresh session
+        """        Validate and refresh session
         
         Args:
             session_id: Session identifier
             
         Returns:
             Valid session information or None
-        """
-        try:
+        """        try:
             # Get session from cache
             cached_session = await self.cache.get(f"session:{session_id}")
             if not cached_session:
@@ -571,16 +542,14 @@ class SessionManager:
             return None
     
     async def revoke_session(self, session_id: str) -> bool:
-        """
-        Revoke a specific session
+        """        Revoke a specific session
         
         Args:
             session_id: Session identifier
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             return await self._revoke_session(session_id)
             
         except Exception as e:
@@ -588,8 +557,7 @@ class SessionManager:
             return False
     
     async def revoke_all_sessions(self, creator_id: str, except_session: Optional[str] = None) -> int:
-        """
-        Revoke all sessions for a creator
+        """        Revoke all sessions for a creator
         
         Args:
             creator_id: Creator identifier
@@ -597,8 +565,7 @@ class SessionManager:
             
         Returns:
             Number of sessions revoked
-        """
-        try:
+        """        try:
             # Get all sessions for creator
             session_keys = await self.cache.get(f"user_sessions:{creator_id}")
             if not session_keys:
@@ -632,16 +599,14 @@ class SessionManager:
             return 0
     
     async def get_active_sessions(self, creator_id: str) -> List[Dict[str, Any]]:
-        """
-        Get all active sessions for a creator
+        """        Get all active sessions for a creator
         
         Args:
             creator_id: Creator identifier
             
         Returns:
             List of active session information
-        """
-        try:
+        """        try:
             session_keys = await self.cache.get(f"user_sessions:{creator_id}")
             if not session_keys:
                 return []
@@ -672,8 +637,7 @@ class SessionManager:
     # Private helper methods
     
     async def _extract_device_info(self, request_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract device information from request"""
-        user_agent = request_info.get('user_agent', '').lower()
+        """Extract device information from request"""        user_agent = request_info.get('user_agent', '').lower()
         
         # Simple device type detection
         if any(keyword in user_agent for keyword in ['mobile', 'android', 'iphone']):
@@ -695,8 +659,7 @@ class SessionManager:
         }
     
     async def _check_session_security(self, session: SessionInfo) -> None:
-        """Check session for security threats"""
-        try:
+        """Check session for security threats"""        try:
             threat_level = SecurityThreatLevel.LOW
             
             # Check for suspicious IP addresses
@@ -713,8 +676,7 @@ class SessionManager:
             self.logger.warning(f"Security check failed for session {session.session_id}: {e}")
     
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if IP address is suspicious"""
-        try:
+        """Check if IP address is suspicious"""        try:
             # Implement IP reputation checking
             # For now, just check against some known bad networks
             suspicious_networks = [
@@ -730,8 +692,7 @@ class SessionManager:
             return False
     
     async def _store_session(self, session: SessionInfo) -> None:
-        """Store session in cache"""
-        try:
+        """Store session in cache"""        try:
             session_data = {
                 'session_id': session.session_id,
                 'creator_id': session.creator_id,
@@ -780,8 +741,7 @@ class SessionManager:
             raise
     
     async def _revoke_session(self, session_id: str) -> bool:
-        """Revoke a specific session"""
-        try:
+        """Revoke a specific session"""        try:
             # Get session first
             cached_session = await self.cache.get(f"session:{session_id}")
             if not cached_session:
@@ -824,8 +784,7 @@ class SessionManager:
             return False
     
     async def _cleanup_old_sessions(self, creator_id: str) -> None:
-        """Clean up old sessions for a creator"""
-        try:
+        """Clean up old sessions for a creator"""        try:
             session_keys = await self.cache.get(f"user_sessions:{creator_id}")
             if not session_keys:
                 return
@@ -857,8 +816,7 @@ class SessionManager:
         severity: SecurityThreatLevel,
         details: Dict[str, Any]
     ) -> None:
-        """Log security event"""
-        try:
+        """Log security event"""        try:
             event = SecurityEvent(
                 event_id=str(uuid.uuid4()),
                 creator_id=creator_id,
@@ -902,13 +860,11 @@ class SessionManager:
 
 
 class SecurityController:
-    """
-    Advanced security controller for threat detection and response
+    """    Advanced security controller for threat detection and response
     
     Monitors authentication patterns, detects anomalies, and implements
     automated security responses to protect creator accounts.
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager, security_manager: SecurityManager):
         self.cache = cache_manager
         self.security = security_manager
@@ -926,8 +882,7 @@ class SecurityController:
         creator_id: str,
         request_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Check authentication attempt for security issues
+        """        Check authentication attempt for security issues
         
         Args:
             creator_id: Creator identifier
@@ -935,8 +890,7 @@ class SecurityController:
             
         Returns:
             Security check results
-        """
-        try:
+        """        try:
             security_issues = []
             threat_level = SecurityThreatLevel.LOW
             
@@ -982,8 +936,7 @@ class SecurityController:
             }
     
     async def record_failed_login(self, creator_id: str, request_info: Dict[str, Any]) -> None:
-        """Record failed login attempt"""
-        try:
+        """Record failed login attempt"""        try:
             # Increment failed attempts counter
             failed_key = f"failed_logins:{creator_id}"
             failed_count = await self.cache.get(failed_key)
@@ -1011,8 +964,7 @@ class SecurityController:
             self.logger.error(f"Failed to record failed login for creator {creator_id}: {e}")
     
     async def record_successful_login(self, creator_id: str, request_info: Dict[str, Any]) -> None:
-        """Record successful login attempt"""
-        try:
+        """Record successful login attempt"""        try:
             # Clear failed attempts
             await self.cache.delete(f"failed_logins:{creator_id}")
             
@@ -1036,8 +988,7 @@ class SecurityController:
     # Private helper methods
     
     async def _is_account_locked(self, creator_id: str) -> bool:
-        """Check if account is locked"""
-        try:
+        """Check if account is locked"""        try:
             locked_until = await self.cache.get(f"account_locked:{creator_id}")
             if not locked_until:
                 return False
@@ -1050,8 +1001,7 @@ class SecurityController:
             return False
     
     async def _lock_account(self, creator_id: str) -> None:
-        """Lock account temporarily"""
-        try:
+        """Lock account temporarily"""        try:
             unlock_time = datetime.utcnow() + timedelta(seconds=self.lockout_duration)
             await self.cache.set(
                 f"account_locked:{creator_id}",
@@ -1065,16 +1015,14 @@ class SecurityController:
             self.logger.error(f"Failed to lock account for creator {creator_id}: {e}")
     
     async def _get_failed_attempts(self, creator_id: str) -> int:
-        """Get number of failed attempts"""
-        try:
+        """Get number of failed attempts"""        try:
             failed_count = await self.cache.get(f"failed_logins:{creator_id}")
             return int(failed_count) if failed_count else 0
         except Exception:
             return 0
     
     async def _is_unusual_ip(self, creator_id: str, ip_address: str) -> bool:
-        """Check if IP address is unusual for this creator"""
-        try:
+        """Check if IP address is unusual for this creator"""        try:
             known_ips_key = f"known_ips:{creator_id}"
             known_ips = await self.cache.get(known_ips_key)
             
@@ -1089,8 +1037,7 @@ class SecurityController:
             return False
     
     async def _record_ip_address(self, creator_id: str, ip_address: str) -> None:
-        """Record IP address for creator"""
-        try:
+        """Record IP address for creator"""        try:
             known_ips_key = f"known_ips:{creator_id}"
             known_ips = await self.cache.get(known_ips_key)
             
@@ -1114,8 +1061,7 @@ class SecurityController:
             self.logger.error(f"Failed to record IP address: {e}")
     
     async def _is_rate_limited(self, creator_id: str, ip_address: str) -> bool:
-        """Check if requests are rate limited"""
-        try:
+        """Check if requests are rate limited"""        try:
             rate_key = f"rate_limit:{ip_address}:{creator_id}"
             request_count = await self.cache.get(rate_key)
             
@@ -1141,8 +1087,7 @@ class SecurityController:
         severity: SecurityThreatLevel,
         details: Dict[str, Any]
     ) -> None:
-        """Log security event"""
-        try:
+        """Log security event"""        try:
             event = SecurityEvent(
                 event_id=str(uuid.uuid4()),
                 creator_id=creator_id,
@@ -1166,13 +1111,11 @@ class SecurityController:
 
 
 class CreatorAuthenticationSystem:
-    """
-    Main creator authentication system
+    """    Main creator authentication system
     
     Orchestrates all authentication operations including login, MFA,
     session management, and security controls for content creators.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -1199,16 +1142,14 @@ class CreatorAuthenticationSystem:
         self,
         auth_request: AuthenticationRequest
     ) -> Dict[str, Any]:
-        """
-        Authenticate creator with comprehensive security checks
+        """        Authenticate creator with comprehensive security checks
         
         Args:
             auth_request: Authentication request data
             
         Returns:
             Authentication result with tokens and session info
-        """
-        try:
+        """        try:
             self.logger.info(f"Authentication attempt for {auth_request.email}")
             
             # Extract request information
@@ -1312,16 +1253,14 @@ class CreatorAuthenticationSystem:
             )
     
     async def refresh_token(self, refresh_token: str) -> Dict[str, Any]:
-        """
-        Refresh access token using refresh token
+        """        Refresh access token using refresh token
         
         Args:
             refresh_token: Valid refresh token
             
         Returns:
             New access token
-        """
-        try:
+        """        try:
             # Validate refresh token
             payload = jwt.decode(refresh_token, self.jwt_secret, algorithms=[self.jwt_algorithm])
             session_id = payload.get('session_id')
@@ -1375,16 +1314,14 @@ class CreatorAuthenticationSystem:
             )
     
     async def logout(self, session_id: str) -> Dict[str, Any]:
-        """
-        Logout and revoke session
+        """        Logout and revoke session
         
         Args:
             session_id: Session to logout
             
         Returns:
             Logout result
-        """
-        try:
+        """        try:
             success = await self.session_manager.revoke_session(session_id)
             
             return {
@@ -1402,8 +1339,7 @@ class CreatorAuthenticationSystem:
     # Private helper methods
     
     async def _verify_credentials(self, email: str, password: str) -> Optional[Dict[str, Any]]:
-        """Verify creator credentials"""
-        try:
+        """Verify creator credentials"""        try:
             # This would be a database query in production
             # For now, return placeholder data
             return {
@@ -1419,8 +1355,7 @@ class CreatorAuthenticationSystem:
             return None
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[Dict[str, Any]]:
-        """Get creator profile by ID"""
-        try:
+        """Get creator profile by ID"""        try:
             # This would be a database query in production
             return {
                 'creator_id': creator_id,
@@ -1439,8 +1374,7 @@ class CreatorAuthenticationSystem:
         creator_profile: Dict[str, Any],
         session: SessionInfo
     ) -> str:
-        """Generate JWT access token"""
-        try:
+        """Generate JWT access token"""        try:
             expire = datetime.utcnow() + timedelta(minutes=self.access_token_expire_minutes)
             
             payload = {
@@ -1461,8 +1395,7 @@ class CreatorAuthenticationSystem:
             raise
     
     async def _generate_refresh_token(self, session_id: str) -> str:
-        """Generate JWT refresh token"""
-        try:
+        """Generate JWT refresh token"""        try:
             expire = datetime.utcnow() + timedelta(days=30)
             
             payload = {
@@ -1479,8 +1412,7 @@ class CreatorAuthenticationSystem:
             raise
     
     async def _generate_partial_token(self, creator_id: str) -> str:
-        """Generate partial token for MFA flow"""
-        try:
+        """Generate partial token for MFA flow"""        try:
             expire = datetime.utcnow() + timedelta(minutes=10)
             
             payload = {

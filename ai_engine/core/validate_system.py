@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-AI Core System Validation Script
+"""AI Core System Validation Script
 
 Comprehensive validation suite for the IA-Influencer-Agent AI core system.
 Tests all components, workflows, and integrations to ensure enterprise-grade quality.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 ⚠️ UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
-
 import asyncio
 import sys
 import traceback
@@ -40,8 +38,7 @@ validation_results = {
 
 
 def log_test_result(test_name: str, success: bool, details: str = "", error: str = ""):
-    """Log test result"""
-    validation_results["total_tests"] += 1
+    """Log test result"""    validation_results["total_tests"] += 1
     
     if success:
         validation_results["tests_passed"] += 1
@@ -54,8 +51,7 @@ def log_test_result(test_name: str, success: bool, details: str = "", error: str
 
 
 def test_imports():
-    """Test all imports and core functionality"""
-    try:
+    """Test all imports and core functionality"""    try:
         # Test basic imports
         from ai.core import (
             ai_orchestrator, WorkflowType, ProcessingPriority, 
@@ -100,8 +96,7 @@ def test_imports():
 
 
 async def test_orchestrator():
-    """Test AI orchestrator functionality"""
-    try:
+    """Test AI orchestrator functionality"""    try:
         from ai.core import ai_orchestrator, WorkflowType, ProcessingPriority, WorkflowRequest
         
         # Test system status
@@ -131,8 +126,7 @@ async def test_orchestrator():
 
 
 async def test_components():
-    """Test individual AI components"""
-    component_tests = []
+    """Test individual AI components"""    component_tests = []
     
     try:
         from ai.core import ai_orchestrator
@@ -176,8 +170,7 @@ async def test_components():
 
 
 def test_configuration():
-    """Test configuration system"""
-    try:
+    """Test configuration system"""    try:
         from ai.core.config import get_config, Environment, get_database_config, get_security_config
         
         # Test config loading
@@ -203,8 +196,7 @@ def test_configuration():
 
 
 def test_data_models():
-    """Test data model creation and validation"""
-    try:
+    """Test data model creation and validation"""    try:
         from ai.core import CreatorProfile, CollaborationOpportunity, WorkflowRequest, WorkflowType, ProcessingPriority
         
         # Test CreatorProfile
@@ -242,8 +234,7 @@ def test_data_models():
 
 
 def test_package_completeness():
-    """Test package completeness and exports"""
-    try:
+    """Test package completeness and exports"""    try:
         import ai.core as ai_core
         
         # Check main exports
@@ -286,8 +277,7 @@ def test_package_completeness():
 
 
 async def run_validation():
-    """Run complete validation suite"""
-    print("🚀 Starting IA-Influencer-Agent AI Core Validation Suite")
+    """Run complete validation suite"""    print("🚀 Starting IA-Influencer-Agent AI Core Validation Suite")
     print("=" * 60)
     print(f"Validation started at: {datetime.utcnow()}")
     print("=" * 60)

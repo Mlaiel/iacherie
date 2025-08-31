@@ -1,5 +1,4 @@
-"""
-Dialogue Management System Index - Centralized Import Hub
+"""Dialogue Management System Index - Centralized Import Hub
 
 Enterprise-grade dialogue management system index file that provides centralized
 access to all dialogue management components, facilitating easy imports and
@@ -34,7 +33,6 @@ Fahed Mlaiel will face immediate legal consequences.
 
 For licensing inquiries: mlaiel@live.de
 """
-
 # Core Dialogue Management Components
 from .dialogue_flow_manager import (
     DialogueFlowManager,
@@ -283,13 +281,11 @@ ENTERPRISE_CONFIG = {
 
 # Utility Functions
 def create_dialogue_manager(config: dict = None) -> DialogueFlowManager:
-    """Create a configured dialogue manager instance"""
-    config = config or DEFAULT_DIALOGUE_CONFIG
+    """Create a configured dialogue manager instance"""    config = config or DEFAULT_DIALOGUE_CONFIG
     return DialogueFlowManager(**config)
 
 def create_enterprise_system(config: dict = None) -> dict:
-    """Create a complete enterprise dialogue management system"""
-    config = config or ENTERPRISE_CONFIG
+    """Create a complete enterprise dialogue management system"""    config = config or ENTERPRISE_CONFIG
     
     return {
         "dialogue_manager": DialogueFlowManager(**config),
@@ -303,12 +299,10 @@ def create_enterprise_system(config: dict = None) -> dict:
     }
 
 def get_component(component_name: str):
-    """Get a specific dialogue management component by name"""
-    return DIALOGUE_COMPONENTS.get(component_name)
+    """Get a specific dialogue management component by name"""    return DIALOGUE_COMPONENTS.get(component_name)
 
 def list_available_components() -> list:
-    """List all available dialogue management components"""
-    return list(DIALOGUE_COMPONENTS.keys())
+    """List all available dialogue management components"""    return list(DIALOGUE_COMPONENTS.keys())
 
 # Version and Metadata
 __version__ = "3.0.0"

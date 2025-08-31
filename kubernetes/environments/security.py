@@ -1,5 +1,4 @@
-"""
-Security Environment Manager - IA Influencer Agent
+"""Security Environment Manager - IA Influencer Agent
 ==================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -16,7 +15,6 @@ Security environment configuration for protection and compliance.
 Handles authentication, authorization, encryption, and security monitoring.
 ==================================================
 """
-
 import os
 import logging
 import secrets
@@ -29,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security configuration levels"""
-    DEVELOPMENT = "development"
+    """Security configuration levels"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -39,8 +36,7 @@ class SecurityLevel(Enum):
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms"""
-    AES_256_GCM = "aes-256-gcm"
+    """Supported encryption algorithms"""    AES_256_GCM = "aes-256-gcm"
     AES_256_CBC = "aes-256-cbc"
     CHACHA20_POLY1305 = "chacha20-poly1305"
     RSA_4096 = "rsa-4096"
@@ -49,8 +45,7 @@ class EncryptionAlgorithm(Enum):
 
 @dataclass
 class AuthenticationConfig:
-    """Authentication security configuration"""
-    jwt_secret_key: str = os.getenv('JWT_SECRET_KEY', secrets.token_urlsafe(64))
+    """Authentication security configuration"""    jwt_secret_key: str = os.getenv('JWT_SECRET_KEY', secrets.token_urlsafe(64))
     jwt_algorithm: str = "HS256"
     jwt_expiration_minutes: int = int(os.getenv('JWT_EXPIRATION_MINUTES', '30'))
     jwt_refresh_expiration_days: int = int(os.getenv('JWT_REFRESH_DAYS', '7'))
@@ -70,8 +65,7 @@ class AuthenticationConfig:
 
 @dataclass
 class AuthorizationConfig:
-    """Authorization security configuration"""
-    rbac_enabled: bool = True
+    """Authorization security configuration"""    rbac_enabled: bool = True
     role_hierarchy_enabled: bool = True
     permission_inheritance: bool = True
     resource_based_access: bool = True
@@ -87,8 +81,7 @@ class AuthorizationConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Encryption security configuration"""
-    data_encryption_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
+    """Encryption security configuration"""    data_encryption_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
     transport_encryption: bool = True
     storage_encryption: bool = True
     database_encryption: bool = True
@@ -106,8 +99,7 @@ class EncryptionConfig:
 
 @dataclass
 class NetworkSecurityConfig:
-    """Network security configuration"""
-    https_only: bool = True
+    """Network security configuration"""    https_only: bool = True
     tls_version_min: str = "1.2"
     tls_version_max: str = "1.3"
     cipher_suites: List[str] = field(default_factory=lambda: [
@@ -129,8 +121,7 @@ class NetworkSecurityConfig:
 
 @dataclass
 class MonitoringSecurityConfig:
-    """Security monitoring configuration"""
-    security_logging_enabled: bool = True
+    """Security monitoring configuration"""    security_logging_enabled: bool = True
     audit_logging_enabled: bool = True
     intrusion_detection: bool = True
     anomaly_detection: bool = True
@@ -148,8 +139,7 @@ class MonitoringSecurityConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Compliance and regulatory configuration"""
-    gdpr_compliance: bool = bool(os.getenv('GDPR_COMPLIANCE', 'true').lower() == 'true')
+    """Compliance and regulatory configuration"""    gdpr_compliance: bool = bool(os.getenv('GDPR_COMPLIANCE', 'true').lower() == 'true')
     ccpa_compliance: bool = bool(os.getenv('CCPA_COMPLIANCE', 'true').lower() == 'true')
     hipaa_compliance: bool = bool(os.getenv('HIPAA_COMPLIANCE', 'false').lower() == 'true')
     pci_dss_compliance: bool = bool(os.getenv('PCI_DSS_COMPLIANCE', 'false').lower() == 'true')
@@ -167,8 +157,7 @@ class ComplianceConfig:
 
 @dataclass
 class ThreatProtectionConfig:
-    """Threat protection configuration"""
-    sql_injection_protection: bool = True
+    """Threat protection configuration"""    sql_injection_protection: bool = True
     xss_protection: bool = True
     csrf_protection: bool = True
     clickjacking_protection: bool = True
@@ -186,8 +175,7 @@ class ThreatProtectionConfig:
 
 
 class SecurityEnvironmentManager:
-    """
-    Security environment manager for protection and compliance.
+    """    Security environment manager for protection and compliance.
     
     Features:
     - Multi-factor authentication and authorization
@@ -198,8 +186,7 @@ class SecurityEnvironmentManager:
     - Compliance management (GDPR, CCPA, etc.)
     - Vulnerability management and assessment
     - Security audit and reporting
-    """
-    
+    """    
     def __init__(self, security_level: SecurityLevel = SecurityLevel.PRODUCTION, config_path: Optional[str] = None):
         self.security_level = security_level
         self.config_path = config_path or f"./security/{security_level.value}_config.yml"
@@ -226,8 +213,7 @@ class SecurityEnvironmentManager:
         logger.info(f"Security environment manager initialized for level: {security_level.value}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load security environment configuration"""
-        try:
+        """Load security environment configuration"""        try:
             config = {
                 'environment': self.environment,
                 'security_level': self.security_level.value,
@@ -428,8 +414,7 @@ class SecurityEnvironmentManager:
             raise
     
     def perform_security_audit(self) -> Dict[str, Any]:
-        """Perform comprehensive security audit"""
-        try:
+        """Perform comprehensive security audit"""        try:
             audit_results = {
                 'audit_timestamp': datetime.utcnow().isoformat(),
                 'security_level': self.security_level.value,
@@ -479,8 +464,7 @@ class SecurityEnvironmentManager:
             return {'error': str(e)}
     
     def enable_advanced_threat_protection(self) -> Dict[str, Any]:
-        """Enable advanced threat protection features"""
-        try:
+        """Enable advanced threat protection features"""        try:
             protection_status = {
                 'machine_learning_detection': False,
                 'behavioral_analysis': False,
@@ -524,8 +508,7 @@ class SecurityEnvironmentManager:
             return {'error': str(e)}
     
     def generate_security_report(self) -> Dict[str, Any]:
-        """Generate comprehensive security report"""
-        try:
+        """Generate comprehensive security report"""        try:
             report = {
                 'report_date': datetime.utcnow().isoformat(),
                 'security_level': self.security_level.value,
@@ -567,8 +550,7 @@ class SecurityEnvironmentManager:
             return {'error': str(e)}
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get security environment health status"""
-        return {
+        """Get security environment health status"""        return {
             'environment': self.environment,
             'security_level': self.security_level.value,
             'status': 'secure',
@@ -585,8 +567,7 @@ class SecurityEnvironmentManager:
     
     # Private helper methods
     def _apply_security_level_config(self):
-        """Apply security level-specific configurations"""
-        if self.security_level == SecurityLevel.HIGH_SECURITY:
+        """Apply security level-specific configurations"""        if self.security_level == SecurityLevel.HIGH_SECURITY:
             self.authentication.jwt_expiration_minutes = 15
             self.authentication.password_min_length = 16
             self.authentication.max_login_attempts = 3
@@ -601,8 +582,7 @@ class SecurityEnvironmentManager:
             self.monitoring.log_retention_days = 2555  # 7 years
     
     def _get_security_posture(self) -> str:
-        """Get security posture level"""
-        posture_levels = {
+        """Get security posture level"""        posture_levels = {
             SecurityLevel.DEVELOPMENT: "basic",
             SecurityLevel.TESTING: "standard",
             SecurityLevel.STAGING: "enhanced",

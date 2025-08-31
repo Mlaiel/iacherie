@@ -1,5 +1,4 @@
-"""
-Threat Intelligence System
+"""Threat Intelligence System
 
 Ultra-advanced threat intelligence and security monitoring system for content protection
 with real-time threat detection, attack pattern analysis, and automated response capabilities.
@@ -17,7 +16,6 @@ explicit written permission is STRICTLY PROHIBITED and will result in immediate 
 Contact: mlaiel@live.de for licensing inquiries.
 Legal violations will be prosecuted to the full extent of international law.
 """
-
 import asyncio
 import json
 import logging
@@ -47,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
-    INFO = "info"
+    """Threat severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -57,8 +54,7 @@ class ThreatLevel(Enum):
 
 
 class ThreatCategory(Enum):
-    """Threat categories"""
-    COPYRIGHT_PIRACY = "copyright_piracy"
+    """Threat categories"""    COPYRIGHT_PIRACY = "copyright_piracy"
     ORGANIZED_PIRACY_RING = "organized_piracy_ring"
     AUTOMATED_SCRAPING = "automated_scraping"
     CONTENT_MANIPULATION = "content_manipulation"
@@ -72,8 +68,7 @@ class ThreatCategory(Enum):
 
 
 class AttackVector(Enum):
-    """Attack vectors"""
-    AUTOMATED_BOT = "automated_bot"
+    """Attack vectors"""    AUTOMATED_BOT = "automated_bot"
     MANUAL_UPLOAD = "manual_upload"
     API_EXPLOITATION = "api_exploitation"
     SOCIAL_ENGINEERING = "social_engineering"
@@ -84,8 +79,7 @@ class AttackVector(Enum):
 
 
 class IndicatorType(Enum):
-    """Threat indicator types"""
-    IP_ADDRESS = "ip_address"
+    """Threat indicator types"""    IP_ADDRESS = "ip_address"
     DOMAIN = "domain"
     URL = "url"
     EMAIL = "email"
@@ -98,13 +92,11 @@ class IndicatorType(Enum):
 
 
 class ThreatIntelligenceError(Exception):
-    """Custom exception for threat intelligence operations"""
-    pass
+    """Custom exception for threat intelligence operations"""    pass
 
 
 class ThreatIntelligenceSystem:
-    """
-    Ultra-advanced threat intelligence system with enterprise features:
+    """    Ultra-advanced threat intelligence system with enterprise features:
     - Real-time threat detection and classification
     - Advanced attack pattern recognition using ML
     - Threat actor profiling and attribution
@@ -113,8 +105,7 @@ class ThreatIntelligenceSystem:
     - Integration with global threat intelligence feeds
     - Automated incident response and mitigation
     - Advanced forensics and attribution capabilities
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -190,8 +181,7 @@ class ThreatIntelligenceSystem:
         incident_data: Dict[str, Any],
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Analyze security incident and generate threat intelligence
+        """        Analyze security incident and generate threat intelligence
         
         Args:
             incident_data: Details of the security incident
@@ -199,8 +189,7 @@ class ThreatIntelligenceSystem:
             
         Returns:
             Dict containing threat analysis and intelligence
-        """
-        try:
+        """        try:
             logger.info(f"Analyzing security incident: {incident_data.get('incident_id', 'Unknown')}")
             
             # Generate analysis ID
@@ -292,8 +281,7 @@ class ThreatIntelligenceSystem:
         monitoring_scope: List[str],
         intelligence_sources: List[str]
     ) -> Dict[str, Any]:
-        """
-        Monitor global threat landscape for content protection threats
+        """        Monitor global threat landscape for content protection threats
         
         Args:
             monitoring_scope: Scope of monitoring (platforms, regions, threat types)
@@ -301,8 +289,7 @@ class ThreatIntelligenceSystem:
             
         Returns:
             Dict containing threat landscape analysis
-        """
-        try:
+        """        try:
             logger.info(f"Monitoring threat landscape across {len(monitoring_scope)} areas")
             
             # Aggregate threat feeds
@@ -365,8 +352,7 @@ class ThreatIntelligenceSystem:
         actor_indicators: Dict[str, Any],
         historical_data: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
-        """
-        Create comprehensive threat actor profile
+        """        Create comprehensive threat actor profile
         
         Args:
             actor_indicators: Indicators associated with the threat actor
@@ -374,8 +360,7 @@ class ThreatIntelligenceSystem:
             
         Returns:
             Dict containing detailed threat actor profile
-        """
-        try:
+        """        try:
             logger.info(f"Profiling threat actor with {len(actor_indicators)} indicators")
             
             # Generate actor ID
@@ -450,8 +435,7 @@ class ThreatIntelligenceSystem:
         current_indicators: Dict[str, Any],
         prediction_horizon_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Predict future attack patterns using ML and threat intelligence
+        """        Predict future attack patterns using ML and threat intelligence
         
         Args:
             historical_data: Historical attack data
@@ -460,8 +444,7 @@ class ThreatIntelligenceSystem:
             
         Returns:
             Dict containing attack predictions and recommendations
-        """
-        try:
+        """        try:
             logger.info(f"Predicting attack patterns for {prediction_horizon_days} days")
             
             # Prepare data for ML prediction
@@ -523,8 +506,7 @@ class ThreatIntelligenceSystem:
         time_period: Dict[str, datetime],
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive threat intelligence report
+        """        Generate comprehensive threat intelligence report
         
         Args:
             report_type: Type of report (executive, technical, operational)
@@ -533,8 +515,7 @@ class ThreatIntelligenceSystem:
             
         Returns:
             Dict containing comprehensive threat report
-        """
-        try:
+        """        try:
             logger.info(f"Generating {report_type} threat intelligence report")
             
             start_date = time_period["start_date"]
@@ -610,8 +591,7 @@ class ThreatIntelligenceSystem:
     # Private helper methods
     
     async def _extract_threat_indicators(self, incident_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Extract threat indicators from incident data"""
-        indicators = []
+        """Extract threat indicators from incident data"""        indicators = []
         
         # Extract IP addresses
         if "source_ip" in incident_data:
@@ -639,16 +619,14 @@ class ThreatIntelligenceSystem:
         patterns: Dict[str, Any],
         attribution: Dict[str, Any]
     ) -> float:
-        """Calculate comprehensive threat score"""
-        base_score = classification.get("confidence", 0.0) * 100
+        """Calculate comprehensive threat score"""        base_score = classification.get("confidence", 0.0) * 100
         pattern_modifier = patterns.get("risk_score", 0) * 0.3
         attribution_modifier = attribution.get("confidence", 0.0) * 0.2
         
         return min(100.0, base_score + pattern_modifier + attribution_modifier)
     
     async def _determine_threat_level(self, threat_score: float) -> ThreatLevel:
-        """Determine threat level based on score"""
-        if threat_score >= 90:
+        """Determine threat level based on score"""        if threat_score >= 90:
             return ThreatLevel.EMERGENCY
         elif threat_score >= 80:
             return ThreatLevel.CRITICAL
@@ -662,8 +640,7 @@ class ThreatIntelligenceSystem:
             return ThreatLevel.INFO
     
     async def _store_threat_intelligence(self, intelligence_data: Dict[str, Any]) -> None:
-        """Store threat intelligence in database"""
-        try:
+        """Store threat intelligence in database"""        try:
             threat_intel = ThreatIntelligence(
                 id=uuid4(),
                 analysis_id=intelligence_data["analysis_id"],

@@ -1,5 +1,4 @@
-"""
-Content Transformation Engine
+"""Content Transformation Engine
 =============================
 
 Professional content transformation engine for enterprise-grade multi-format processing.
@@ -24,7 +23,6 @@ PROJECT TEAM SPECIALTIES:
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
 """
-
 import asyncio
 import logging
 import tempfile
@@ -69,8 +67,7 @@ from ...core.config import get_settings
 
 
 class TransformationType(Enum):
-    """Content transformation types"""
-    FORMAT_CONVERSION = "format_conversion"
+    """Content transformation types"""    FORMAT_CONVERSION = "format_conversion"
     QUALITY_ENHANCEMENT = "quality_enhancement"
     COMPRESSION_OPTIMIZATION = "compression_optimization"
     AI_UPSCALING = "ai_upscaling"
@@ -81,8 +78,7 @@ class TransformationType(Enum):
 
 
 class TransformationQuality(Enum):
-    """Transformation quality levels"""
-    DRAFT = "draft"        # Fast processing, basic quality
+    """Transformation quality levels"""    DRAFT = "draft"        # Fast processing, basic quality
     STANDARD = "standard"  # Balanced quality and speed
     HIGH = "high"         # High quality processing
     ULTRA = "ultra"       # Maximum quality, slower processing
@@ -90,16 +86,14 @@ class TransformationQuality(Enum):
 
 
 class TransformationPriority(Enum):
-    """Transformation processing priority"""
-    LOW = "low"
+    """Transformation processing priority"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 
 class OptimizationTarget(Enum):
-    """Content optimization targets"""
-    WEB = "web"              # Web optimization
+    """Content optimization targets"""    WEB = "web"              # Web optimization
     MOBILE = "mobile"        # Mobile optimization
     SOCIAL_MEDIA = "social"  # Social media platforms
     STREAMING = "streaming"  # Streaming services
@@ -111,8 +105,7 @@ class OptimizationTarget(Enum):
 
 @dataclass
 class TransformationOptions:
-    """Transformation configuration options"""
-    transformation_type: TransformationType
+    """Transformation configuration options"""    transformation_type: TransformationType
     quality: TransformationQuality = TransformationQuality.STANDARD
     priority: TransformationPriority = TransformationPriority.NORMAL
     optimization_target: Optional[OptimizationTarget] = None
@@ -144,8 +137,7 @@ class TransformationOptions:
 
 @dataclass
 class TransformationResult:
-    """Transformation processing result"""
-    success: bool
+    """Transformation processing result"""    success: bool
     transformation_id: str
     original_content: Dict[str, Any]
     transformed_content: Dict[str, Any]
@@ -173,8 +165,7 @@ class TransformationResult:
 
 
 class ContentTransformer:
-    """
-    Professional content transformation engine with AI-powered enhancement capabilities.
+    """    Professional content transformation engine with AI-powered enhancement capabilities.
     
     Features:
     - Multi-format transformation and optimization
@@ -184,11 +175,9 @@ class ContentTransformer:
     - Content adaptation
     - SEO optimization
     - Accessibility enhancements
-    """
-    
+    """    
     def __init__(self):
-        """Initialize content transformer"""
-        self.logger = logging.getLogger(__name__)
+        """Initialize content transformer"""        self.logger = logging.getLogger(__name__)
         self.settings = get_settings()
         
         # Initialize processors
@@ -217,8 +206,7 @@ class ContentTransformer:
         }
     
     def _initialize_ai_models(self):
-        """Initialize AI models for transformation"""
-        try:
+        """Initialize AI models for transformation"""        try:
             # Load models based on availability and configuration
             if self.settings.enable_ai_enhancement:
                 
@@ -257,8 +245,7 @@ class ContentTransformer:
             self.logger.error(f"Error initializing AI models: {e}")
     
     def _load_optimization_presets(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform optimization presets"""
-        return {
+        """Load platform optimization presets"""        return {
             'instagram_post': {
                 'image_size': (1080, 1080),
                 'aspect_ratio': '1:1',
@@ -318,8 +305,7 @@ class ContentTransformer:
                               content_type: str,
                               filename: str,
                               options: TransformationOptions) -> TransformationResult:
-        """
-        Transform content with specified options.
+        """        Transform content with specified options.
         
         Args:
             content_data: Content to transform
@@ -329,8 +315,7 @@ class ContentTransformer:
             
         Returns:
             TransformationResult with transformed content and metrics
-        """
-        transformation_id = str(uuid.uuid4())
+        """        transformation_id = str(uuid.uuid4())
         start_time = time.time()
         
         try:
@@ -425,8 +410,7 @@ class ContentTransformer:
                                            content_data: Union[bytes, BinaryIO],
                                            content_type: str,
                                            options: TransformationOptions):
-        """Validate transformation input parameters"""
-        try:
+        """Validate transformation input parameters"""        try:
             # Check content size
             content_size = len(content_data) if isinstance(content_data, bytes) else 0
             max_size = self.settings.max_file_size
@@ -451,8 +435,7 @@ class ContentTransformer:
             raise TransformationError(f"Validation failed: {e}")
     
     def _get_supported_content_types(self) -> List[str]:
-        """Get list of supported content types"""
-        return [
+        """Get list of supported content types"""        return [
             'image/', 'audio/', 'video/', 'text/', 'application/pdf',
             'application/msword', 'application/vnd.openxmlformats-officedocument'
         ]
@@ -461,8 +444,7 @@ class ContentTransformer:
                              content_data: Union[bytes, BinaryIO],
                              content_type: str,
                              filename: str) -> Dict[str, Any]:
-        """Analyze content for transformation optimization"""
-        try:
+        """Analyze content for transformation optimization"""        try:
             analysis = {
                 'content_type': content_type,
                 'filename': filename,
@@ -485,8 +467,7 @@ class ContentTransformer:
             return {'error': str(e)}
     
     async def _analyze_image_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Analyze image content"""
-        try:
+        """Analyze image content"""        try:
             import io
             
             # Load image
@@ -519,8 +500,7 @@ class ContentTransformer:
             return {'error': f"Image analysis failed: {e}"}
     
     async def _analyze_audio_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Analyze audio content"""
-        try:
+        """Analyze audio content"""        try:
             # Save to temporary file for analysis
             with tempfile.NamedTemporaryFile(suffix='.audio', delete=False) as temp_file:
                 temp_file.write(content_data)
@@ -564,8 +544,7 @@ class ContentTransformer:
             return {'error': f"Audio analysis failed: {e}"}
     
     async def _analyze_video_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Analyze video content"""
-        try:
+        """Analyze video content"""        try:
             # Save to temporary file for analysis
             with tempfile.NamedTemporaryFile(suffix='.video', delete=False) as temp_file:
                 temp_file.write(content_data)
@@ -609,8 +588,7 @@ class ContentTransformer:
             return {'error': f"Video analysis failed: {e}"}
     
     async def _analyze_text_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Analyze text content"""
-        try:
+        """Analyze text content"""        try:
             # Decode text
             text = content_data.decode('utf-8')
             
@@ -651,8 +629,7 @@ class ContentTransformer:
     def _build_transformation_pipeline(self, 
                                      content_type: str, 
                                      options: TransformationOptions) -> List[Dict[str, Any]]:
-        """Build transformation pipeline based on content type and options"""
-        pipeline = []
+        """Build transformation pipeline based on content type and options"""        pipeline = []
         
         # Base transformations based on type
         if options.transformation_type == TransformationType.FORMAT_CONVERSION:
@@ -707,8 +684,7 @@ class ContentTransformer:
                                          content_type: str,
                                          step: Dict[str, Any],
                                          options: TransformationOptions) -> Union[bytes, BinaryIO]:
-        """Execute single transformation step"""
-        try:
+        """Execute single transformation step"""        try:
             step_function = step['function']
             step_params = step.get('params', {})
             
@@ -735,8 +711,7 @@ class ContentTransformer:
                                content: bytes, 
                                content_type: str, 
                                params: Dict[str, Any]) -> bytes:
-        """Convert content to different format"""
-        try:
+        """Convert content to different format"""        try:
             output_format = params['output_format']
             
             if content_type.startswith('image/'):
@@ -752,8 +727,7 @@ class ContentTransformer:
             raise TransformationError(f"Format conversion failed: {e}")
     
     async def _convert_image_format(self, content: bytes, output_format: str) -> bytes:
-        """Convert image to different format"""
-        try:
+        """Convert image to different format"""        try:
             import io
             
             # Load image
@@ -775,8 +749,7 @@ class ContentTransformer:
             raise TransformationError(f"Image format conversion failed: {e}")
     
     async def _convert_audio_format(self, content: bytes, output_format: str) -> bytes:
-        """Convert audio to different format"""
-        try:
+        """Convert audio to different format"""        try:
             # Save input to temporary file
             with tempfile.NamedTemporaryFile(suffix='.audio') as input_file:
                 input_file.write(content)
@@ -795,8 +768,7 @@ class ContentTransformer:
             raise TransformationError(f"Audio format conversion failed: {e}")
     
     async def _convert_video_format(self, content: bytes, output_format: str) -> bytes:
-        """Convert video to different format"""
-        try:
+        """Convert video to different format"""        try:
             # This would use ffmpeg for video conversion
             # Implementation would depend on ffmpeg-python library
             
@@ -817,8 +789,7 @@ class ContentTransformer:
             raise TransformationError(f"Video format conversion failed: {e}")
     
     async def _enhance_image_quality(self, content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-        """Enhance image quality using AI and traditional methods"""
-        try:
+        """Enhance image quality using AI and traditional methods"""        try:
             import io
             
             image = Image.open(io.BytesIO(content))
@@ -846,8 +817,7 @@ class ContentTransformer:
             raise TransformationError(f"Image enhancement failed: {e}")
     
     def _estimate_image_quality(self, image: Image.Image) -> float:
-        """Estimate image quality score"""
-        try:
+        """Estimate image quality score"""        try:
             # Convert to grayscale for analysis
             gray = image.convert('L')
             
@@ -864,8 +834,7 @@ class ContentTransformer:
             return 0.5  # Default quality score
     
     def _estimate_compression_potential(self, image: Image.Image) -> float:
-        """Estimate compression potential for image"""
-        try:
+        """Estimate compression potential for image"""        try:
             # Analyze color diversity and complexity
             colors = image.getcolors(maxcolors=256*256*256)
             
@@ -884,8 +853,7 @@ class ContentTransformer:
             return 0.5
     
     def _determine_output_content_type(self, input_type: str, options: TransformationOptions) -> str:
-        """Determine output content type based on transformation"""
-        if options.output_format:
+        """Determine output content type based on transformation"""        if options.output_format:
             # Map format to MIME type
             format_mapping = {
                 'jpg': 'image/jpeg',
@@ -905,8 +873,7 @@ class ContentTransformer:
         return input_type
     
     def _calculate_size_reduction(self, original_size: int, new_size: int) -> float:
-        """Calculate size reduction percentage"""
-        if original_size == 0:
+        """Calculate size reduction percentage"""        if original_size == 0:
             return 0.0
         
         reduction = (original_size - new_size) / original_size
@@ -917,8 +884,7 @@ class ContentTransformer:
                                            transformed_content: bytes,
                                            content_type: str,
                                            options: TransformationOptions) -> Dict[str, Any]:
-        """Assess transformation quality"""
-        try:
+        """Assess transformation quality"""        try:
             metrics = {
                 'size_reduction': self._calculate_size_reduction(
                     len(original_content), len(transformed_content)
@@ -943,8 +909,7 @@ class ContentTransformer:
             return {'error': f"Quality assessment failed: {e}"}
     
     async def _assess_image_quality(self, original: bytes, transformed: bytes) -> Dict[str, Any]:
-        """Assess image transformation quality"""
-        try:
+        """Assess image transformation quality"""        try:
             import io
             
             original_img = Image.open(io.BytesIO(original))
@@ -973,8 +938,7 @@ class ContentTransformer:
             return {'error': f"Image quality assessment failed: {e}"}
     
     async def _assess_audio_quality(self, original: bytes, transformed: bytes) -> Dict[str, Any]:
-        """Assess audio transformation quality"""
-        try:
+        """Assess audio transformation quality"""        try:
             # Placeholder for audio quality assessment
             # In production, would use audio analysis libraries
             
@@ -991,8 +955,7 @@ class ContentTransformer:
     def _generate_optimization_report(self, 
                                     result: TransformationResult, 
                                     options: TransformationOptions) -> Dict[str, Any]:
-        """Generate optimization report"""
-        try:
+        """Generate optimization report"""        try:
             report = {
                 'summary': {
                     'transformation_successful': result.success,
@@ -1025,8 +988,7 @@ class ContentTransformer:
             return {'error': f"Report generation failed: {e}"}
     
     def _calculate_efficiency_score(self, result: TransformationResult) -> float:
-        """Calculate transformation efficiency score"""
-        try:
+        """Calculate transformation efficiency score"""        try:
             # Combine size reduction and quality preservation
             size_score = min(result.file_size_reduction / 50, 1.0)  # Normalize to 50% reduction
             quality_score = result.quality_metrics.get('quality_preservation', 0.5)
@@ -1038,8 +1000,7 @@ class ContentTransformer:
             return 0.5
     
     def _calculate_speed_score(self, processing_time: float) -> float:
-        """Calculate processing speed score"""
-        try:
+        """Calculate processing speed score"""        try:
             # Normalize based on reasonable processing time (10 seconds)
             target_time = 10.0
             speed_score = max(1.0 - (processing_time / target_time), 0.1)
@@ -1051,8 +1012,7 @@ class ContentTransformer:
     def _generate_enhancement_suggestions(self, 
                                         result: TransformationResult, 
                                         options: TransformationOptions) -> List[str]:
-        """Generate enhancement suggestions"""
-        suggestions = []
+        """Generate enhancement suggestions"""        suggestions = []
         
         try:
             # Analyze results and suggest improvements
@@ -1078,8 +1038,7 @@ class ContentTransformer:
             return ["Unable to generate suggestions - transformation analysis incomplete"]
     
     async def get_transformation_capabilities(self) -> Dict[str, Any]:
-        """Get transformation engine capabilities"""
-        try:
+        """Get transformation engine capabilities"""        try:
             return {
                 'supported_transformations': [t.value for t in TransformationType],
                 'supported_qualities': [q.value for q in TransformationQuality],
@@ -1101,8 +1060,7 @@ class ContentTransformer:
             return {'error': f"Unable to get capabilities: {e}"}
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get transformation engine performance metrics"""
-        try:
+        """Get transformation engine performance metrics"""        try:
             return {
                 'total_transformations': self.transformation_metrics['total_transformations'],
                 'successful_transformations': self.transformation_metrics['successful_transformations'],
@@ -1125,53 +1083,43 @@ class ContentTransformer:
 # These are placeholders for the actual implementation
 
 async def _sharpen_image(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Sharpen image using advanced algorithms"""
-    # Implementation would use OpenCV or similar
+    """Sharpen image using advanced algorithms"""    # Implementation would use OpenCV or similar
     return content
 
 async def _correct_image_colors(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Correct image colors using AI or traditional methods"""
-    # Implementation would use color correction algorithms
+    """Correct image colors using AI or traditional methods"""    # Implementation would use color correction algorithms
     return content
 
 async def _reduce_audio_noise(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Reduce audio noise using signal processing"""
-    # Implementation would use audio processing libraries
+    """Reduce audio noise using signal processing"""    # Implementation would use audio processing libraries
     return content
 
 async def _normalize_audio(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Normalize audio levels"""
-    # Implementation would use audio normalization algorithms
+    """Normalize audio levels"""    # Implementation would use audio normalization algorithms
     return content
 
 async def _enhance_audio_eq(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Enhance audio using EQ"""
-    # Implementation would use audio EQ processing
+    """Enhance audio using EQ"""    # Implementation would use audio EQ processing
     return content
 
 async def _intelligent_compression(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Apply intelligent compression based on content analysis"""
-    # Implementation would use AI-powered compression
+    """Apply intelligent compression based on content analysis"""    # Implementation would use AI-powered compression
     return content
 
 async def _optimize_for_platform(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Optimize content for specific platforms"""
-    # Implementation would apply platform-specific optimizations
+    """Optimize content for specific platforms"""    # Implementation would apply platform-specific optimizations
     return content
 
 async def _optimize_metadata(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Optimize metadata for SEO"""
-    # Implementation would enhance metadata
+    """Optimize metadata for SEO"""    # Implementation would enhance metadata
     return content
 
 async def _optimize_filename(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Optimize filename for SEO"""
-    # Implementation would suggest better filenames
+    """Optimize filename for SEO"""    # Implementation would suggest better filenames
     return content
 
 async def _generate_alt_text(content: bytes, content_type: str, params: Dict[str, Any]) -> bytes:
-    """Generate alt text for accessibility"""
-    # Implementation would use AI to generate descriptions
+    """Generate alt text for accessibility"""    # Implementation would use AI to generate descriptions
     return content
 
 

@@ -38,8 +38,7 @@ and will result in immediate legal action including:
 
 Contact: mlaiel@live.de for ANY usage authorization.
 All activities monitored and logged for legal compliance.
-"""
-import asyncio
+"""import asyncio
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple

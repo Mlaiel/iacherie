@@ -1,5 +1,4 @@
-"""
-Distribution Models for IA Influencer Agent - Professional Content Distribution Platform
+"""Distribution Models for IA Influencer Agent - Professional Content Distribution Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -19,7 +18,6 @@ Violators will be prosecuted to the full extent of the law.
 - DevOps Engineer: Cloud Infrastructure & CI/CD
 - IA Prompt Engineer: Advanced Prompt Engineering & LLM Integration
 """
-
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -29,8 +27,7 @@ from pydantic import BaseModel, Field, validator
 
 
 class ContentType(str, Enum):
-    """Professional content type enumeration"""
-    MUSIC = "music"
+    """Professional content type enumeration"""    MUSIC = "music"
     VIDEO = "video" 
     PHOTO = "photo"
     BLOG = "blog"
@@ -44,8 +41,7 @@ class ContentType(str, Enum):
 
 
 class PlatformType(str, Enum):
-    """Professional platform type enumeration"""
-    YOUTUBE = "youtube"
+    """Professional platform type enumeration"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -67,8 +63,7 @@ class PlatformType(str, Enum):
 
 
 class DistributionStatus(str, Enum):
-    """Professional distribution status enumeration"""
-    PENDING = "pending"
+    """Professional distribution status enumeration"""    PENDING = "pending"
     PROCESSING = "processing"
     SCHEDULED = "scheduled"
     PUBLISHED = "published"
@@ -79,8 +74,7 @@ class DistributionStatus(str, Enum):
 
 
 class PlatformCapabilities(BaseModel):
-    """Professional platform capabilities model"""
-    max_file_size: int = Field(description="Maximum file size in bytes")
+    """Professional platform capabilities model"""    max_file_size: int = Field(description="Maximum file size in bytes")
     supported_formats: List[str] = Field(description="Supported file formats")
     max_duration: Optional[int] = Field(None, description="Maximum duration in seconds")
     supports_scheduling: bool = Field(True, description="Supports scheduled publishing")
@@ -92,8 +86,7 @@ class PlatformCapabilities(BaseModel):
 
 
 class ContentMetadata(BaseModel):
-    """Professional content metadata model"""
-    title: str = Field(description="Content title")
+    """Professional content metadata model"""    title: str = Field(description="Content title")
     description: Optional[str] = Field(None, description="Content description")
     tags: List[str] = Field(default_factory=list, description="Content tags")
     category: Optional[str] = Field(None, description="Content category")
@@ -108,8 +101,7 @@ class ContentMetadata(BaseModel):
 
 
 class DistributionConfig(BaseModel):
-    """Professional distribution configuration model"""
-    platform: PlatformType = Field(description="Target platform")
+    """Professional distribution configuration model"""    platform: PlatformType = Field(description="Target platform")
     content_type: ContentType = Field(description="Content type")
     publish_immediately: bool = Field(True, description="Publish immediately")
     scheduled_time: Optional[datetime] = Field(None, description="Scheduled publish time")
@@ -128,8 +120,7 @@ class DistributionConfig(BaseModel):
 
 
 class DistributionRequest(BaseModel):
-    """Professional distribution request model"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Professional distribution request model"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = Field(description="User identifier")
     content_path: str = Field(description="Path to content file")
     content_metadata: ContentMetadata = Field(description="Content metadata")
@@ -141,8 +132,7 @@ class DistributionRequest(BaseModel):
 
 
 class DistributionResult(BaseModel):
-    """Professional distribution result model"""
-    id: str = Field(description="Distribution result identifier")
+    """Professional distribution result model"""    id: str = Field(description="Distribution result identifier")
     request_id: str = Field(description="Original request identifier")
     platform: PlatformType = Field(description="Target platform")
     status: DistributionStatus = Field(description="Distribution status")
@@ -157,8 +147,7 @@ class DistributionResult(BaseModel):
 
 
 class DistributionAnalytics(BaseModel):
-    """Professional distribution analytics model"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Professional distribution analytics model"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     distribution_result_id: str = Field(description="Distribution result identifier")
     platform: PlatformType = Field(description="Platform")
     views: int = Field(0, description="Number of views")
@@ -177,8 +166,7 @@ class DistributionAnalytics(BaseModel):
 
 
 class PlatformCredentials(BaseModel):
-    """Professional platform credentials model"""
-    platform: PlatformType = Field(description="Platform identifier")
+    """Professional platform credentials model"""    platform: PlatformType = Field(description="Platform identifier")
     user_id: str = Field(description="User identifier")
     access_token: str = Field(description="Access token")
     refresh_token: Optional[str] = Field(None, description="Refresh token")
@@ -196,8 +184,7 @@ class PlatformCredentials(BaseModel):
 
 
 class CollaborationRequest(BaseModel):
-    """Professional collaboration request model"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Professional collaboration request model"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = Field(description="Content creator identifier")
     collaborator_id: str = Field(description="Collaborator identifier")
     content_id: str = Field(description="Content identifier")
@@ -211,8 +198,7 @@ class CollaborationRequest(BaseModel):
 
 
 class ContentProtection(BaseModel):
-    """Professional content protection model"""
-    content_id: str = Field(description="Content identifier")
+    """Professional content protection model"""    content_id: str = Field(description="Content identifier")
     protection_level: str = Field("standard", description="Protection level")
     watermark_enabled: bool = Field(True, description="Watermark protection")
     drm_enabled: bool = Field(False, description="DRM protection")
@@ -225,8 +211,7 @@ class ContentProtection(BaseModel):
 
 
 class DistributionBatch(BaseModel):
-    """Professional distribution batch model"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Professional distribution batch model"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = Field(description="User identifier")
     name: str = Field(description="Batch name")
     description: Optional[str] = Field(None, description="Batch description")
@@ -242,8 +227,7 @@ class DistributionBatch(BaseModel):
 
 @dataclass
 class PlatformRegistry:
-    """Professional platform registry for managing all supported platforms"""
-    
+    """Professional platform registry for managing all supported platforms"""    
     def __post_init__(self):
         self._platforms = {
             PlatformType.YOUTUBE: PlatformCapabilities(
@@ -287,16 +271,14 @@ class PlatformRegistry:
         }
     
     def get_platform_capabilities(self, platform: PlatformType) -> PlatformCapabilities:
-        """Get capabilities for a specific platform"""
-        return self._platforms.get(platform, PlatformCapabilities(
+        """Get capabilities for a specific platform"""        return self._platforms.get(platform, PlatformCapabilities(
             max_file_size=100 * 1024 * 1024,  # Default 100MB
             supported_formats=["mp4", "jpg", "png"],
             api_rate_limit=100
         ))
     
     def is_content_supported(self, platform: PlatformType, content_metadata: ContentMetadata) -> bool:
-        """Check if content is supported by platform"""
-        capabilities = self.get_platform_capabilities(platform)
+        """Check if content is supported by platform"""        capabilities = self.get_platform_capabilities(platform)
         
         # Check file size
         if content_metadata.file_size > capabilities.max_file_size:

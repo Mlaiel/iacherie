@@ -1,5 +1,4 @@
-"""
-Professional Performance Monitor - IA Influencer Agent Platform
+"""Professional Performance Monitor - IA Influencer Agent Platform
 ==============================================================
 Module: backend/data/storage/performance_monitor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -24,7 +23,6 @@ Metric Collection → Real-time Analysis → Anomaly Detection →
 Performance Prediction → Optimization Recommendations → 
 Alert Generation → Dashboard Updates → Historical Analytics
 """
-
 import asyncio
 import logging
 import time
@@ -61,24 +59,21 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics collected"""
-    COUNTER = "counter"
+    """Types of metrics collected"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class PerformanceCategory(Enum):
-    """Performance categories for monitoring"""
-    LATENCY = "latency"
+    """Performance categories for monitoring"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     AVAILABILITY = "availability"
@@ -88,8 +83,7 @@ class PerformanceCategory(Enum):
 
 @dataclass
 class MetricPoint:
-    """Single metric data point"""
-    timestamp: datetime
+    """Single metric data point"""    timestamp: datetime
     value: float
     labels: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -97,8 +91,7 @@ class MetricPoint:
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric definition and data"""
-    name: str
+    """Performance metric definition and data"""    name: str
     metric_type: MetricType
     category: PerformanceCategory
     description: str
@@ -108,8 +101,7 @@ class PerformanceMetric:
     thresholds: Dict[str, float] = field(default_factory=dict)
     
     def add_point(self, value: float, labels: Dict[str, str] = None, metadata: Dict[str, Any] = None):
-        """Add a data point to the metric"""
-        point = MetricPoint(
+        """Add a data point to the metric"""        point = MetricPoint(
             timestamp=datetime.utcnow(),
             value=value,
             labels=labels or {},
@@ -118,25 +110,21 @@ class PerformanceMetric:
         self.data_points.append(point)
     
     def get_recent_values(self, duration_minutes: int = 60) -> List[float]:
-        """Get values from recent time period"""
-        cutoff = datetime.utcnow() - timedelta(minutes=duration_minutes)
+        """Get values from recent time period"""        cutoff = datetime.utcnow() - timedelta(minutes=duration_minutes)
         return [p.value for p in self.data_points if p.timestamp >= cutoff]
     
     def get_average(self, duration_minutes: int = 60) -> float:
-        """Get average value over time period"""
-        values = self.get_recent_values(duration_minutes)
+        """Get average value over time period"""        values = self.get_recent_values(duration_minutes)
         return statistics.mean(values) if values else 0.0
     
     def get_percentile(self, percentile: float, duration_minutes: int = 60) -> float:
-        """Get percentile value over time period"""
-        values = self.get_recent_values(duration_minutes)
+        """Get percentile value over time period"""        values = self.get_recent_values(duration_minutes)
         return np.percentile(values, percentile) if values else 0.0
 
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert definition"""
-    id: str
+    """Performance alert definition"""    id: str
     name: str
     description: str
     severity: AlertSeverity
@@ -152,8 +140,7 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceReport:
-    """Performance report summary"""
-    report_id: str
+    """Performance report summary"""    report_id: str
     generated_at: datetime
     period_start: datetime
     period_end: datetime
@@ -165,21 +152,17 @@ class PerformanceReport:
 
 
 class PerformanceMonitor:
-    """
-    Professional performance monitor for IA Influencer Agent storage platform.
+    """    Professional performance monitor for IA Influencer Agent storage platform.
     
     Provides comprehensive real-time monitoring, alerting, and optimization
     recommendations for storage performance.
-    """
-    
+    """    
     def __init__(self, prometheus_port: int = 8000):
-        """
-        Initialize PerformanceMonitor.
+        """        Initialize PerformanceMonitor.
         
         Args:
             prometheus_port: Port for Prometheus metrics server
-        """
-        self.logger = logging.getLogger(__name__)
+        """        self.logger = logging.getLogger(__name__)
         self.prometheus_port = prometheus_port
         
         # Metrics storage
@@ -220,8 +203,7 @@ class PerformanceMonitor:
         self._start_monitoring()
     
     def _initialize_core_metrics(self):
-        """Initialize core performance metrics"""
-        core_metrics = [
+        """Initialize core performance metrics"""        core_metrics = [
             # Latency metrics
             PerformanceMetric(
                 name="storage_operation_latency_ms",
@@ -288,16 +270,14 @@ class PerformanceMonitor:
             self.logger.info(f"Initialized metric: {metric.name}")
     
     def _start_prometheus_server(self):
-        """Start Prometheus metrics server"""
-        try:
+        """Start Prometheus metrics server"""        try:
             start_http_server(self.prometheus_port)
             self.logger.info(f"Prometheus server started on port {self.prometheus_port}")
         except Exception as e:
             self.logger.error(f"Failed to start Prometheus server: {str(e)}")
     
     def _start_monitoring(self):
-        """Start background monitoring tasks"""
-        if self.monitoring_enabled:
+        """Start background monitoring tasks"""        if self.monitoring_enabled:
             # Start metric collection
             task1 = asyncio.create_task(self._collect_system_metrics())
             self.monitoring_tasks.append(task1)
@@ -318,8 +298,7 @@ class PerformanceMonitor:
     def record_operation(self, operation_type: str, duration_ms: float, 
                         success: bool, provider: str = None, 
                         metadata: Dict[str, Any] = None):
-        """
-        Record a storage operation for monitoring.
+        """        Record a storage operation for monitoring.
         
         Args:
             operation_type: Type of operation (upload, download, delete, etc.)
@@ -327,8 +306,7 @@ class PerformanceMonitor:
             success: Whether operation succeeded
             provider: Storage provider used
             metadata: Additional operation metadata
-        """
-        try:
+        """        try:
             labels = {
                 'operation': operation_type,
                 'provider': provider or 'unknown',
@@ -359,16 +337,14 @@ class PerformanceMonitor:
     def record_custom_metric(self, metric_name: str, value: float,
                            labels: Dict[str, str] = None,
                            metadata: Dict[str, Any] = None):
-        """
-        Record a custom metric value.
+        """        Record a custom metric value.
         
         Args:
             metric_name: Name of the metric
             value: Metric value
             labels: Optional labels
             metadata: Optional metadata
-        """
-        try:
+        """        try:
             if metric_name in self.metrics:
                 self.metrics[metric_name].add_point(value, labels, metadata)
             else:
@@ -378,13 +354,11 @@ class PerformanceMonitor:
             self.logger.error(f"Error recording custom metric: {str(e)}")
     
     def add_alert(self, alert: PerformanceAlert):
-        """
-        Add a performance alert.
+        """        Add a performance alert.
         
         Args:
             alert: Performance alert configuration
-        """
-        try:
+        """        try:
             self.alerts[alert.id] = alert
             self.logger.info(f"Added alert: {alert.name} ({alert.id})")
             
@@ -393,8 +367,7 @@ class PerformanceMonitor:
     
     def get_metric_summary(self, metric_name: str, 
                           duration_minutes: int = 60) -> Dict[str, Any]:
-        """
-        Get summary statistics for a metric.
+        """        Get summary statistics for a metric.
         
         Args:
             metric_name: Name of the metric
@@ -402,8 +375,7 @@ class PerformanceMonitor:
             
         Returns:
             Summary statistics dictionary
-        """
-        try:
+        """        try:
             if metric_name not in self.metrics:
                 return {}
             
@@ -438,25 +410,21 @@ class PerformanceMonitor:
             return {}
     
     def get_active_alerts(self) -> List[PerformanceAlert]:
-        """
-        Get list of active alerts.
+        """        Get list of active alerts.
         
         Returns:
             List of active performance alerts
-        """
-        return [alert for alert in self.alerts.values() if alert.is_active]
+        """        return [alert for alert in self.alerts.values() if alert.is_active]
     
     def get_performance_report(self, hours: int = 24) -> PerformanceReport:
-        """
-        Generate comprehensive performance report.
+        """        Generate comprehensive performance report.
         
         Args:
             hours: Number of hours to analyze
             
         Returns:
             Performance report
-        """
-        try:
+        """        try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=hours)
             
@@ -506,8 +474,7 @@ class PerformanceMonitor:
             )
     
     def predict_metric(self, metric_name: str, hours_ahead: int = 24) -> Optional[Dict[str, Any]]:
-        """
-        Predict future metric values using ML models.
+        """        Predict future metric values using ML models.
         
         Args:
             metric_name: Name of metric to predict
@@ -515,8 +482,7 @@ class PerformanceMonitor:
             
         Returns:
             Prediction results or None if not available
-        """
-        try:
+        """        try:
             if not ML_AVAILABLE or metric_name not in self.prediction_models:
                 return None
             
@@ -572,8 +538,7 @@ class PerformanceMonitor:
             return None
     
     async def _collect_system_metrics(self):
-        """Background task to collect system metrics"""
-        while self.monitoring_enabled:
+        """Background task to collect system metrics"""        while self.monitoring_enabled:
             try:
                 # Collect system-level metrics
                 cpu_percent = psutil.cpu_percent()
@@ -596,8 +561,7 @@ class PerformanceMonitor:
                 await asyncio.sleep(self.collection_interval)
     
     async def _process_alerts(self):
-        """Background task to process alerts"""
-        while self.monitoring_enabled:
+        """Background task to process alerts"""        while self.monitoring_enabled:
             try:
                 for alert in self.alerts.values():
                     await self._check_alert_condition(alert)
@@ -609,8 +573,7 @@ class PerformanceMonitor:
                 await asyncio.sleep(30)
     
     async def _check_alert_condition(self, alert: PerformanceAlert):
-        """Check if alert condition is met"""
-        try:
+        """Check if alert condition is met"""        try:
             if alert.metric_name not in self.metrics:
                 return
             
@@ -657,8 +620,7 @@ class PerformanceMonitor:
             self.logger.error(f"Error checking alert condition: {str(e)}")
     
     async def _send_alert_notification(self, alert: PerformanceAlert, current_value: float):
-        """Send alert notification (placeholder for integration)"""
-        notification = {
+        """Send alert notification (placeholder for integration)"""        notification = {
             'alert_id': alert.id,
             'alert_name': alert.name,
             'severity': alert.severity.value,
@@ -672,8 +634,7 @@ class PerformanceMonitor:
         self.logger.info(f"Alert notification: {json.dumps(notification, indent=2)}")
     
     async def _update_prediction_models(self):
-        """Background task to update prediction models"""
-        while self.monitoring_enabled:
+        """Background task to update prediction models"""        while self.monitoring_enabled:
             try:
                 if ML_AVAILABLE:
                     for metric_name in self.metrics:
@@ -687,8 +648,7 @@ class PerformanceMonitor:
                 await asyncio.sleep(self.model_update_interval)
     
     async def _cleanup_old_metrics(self):
-        """Background task to cleanup old metric data"""
-        while self.monitoring_enabled:
+        """Background task to cleanup old metric data"""        while self.monitoring_enabled:
             try:
                 cutoff_time = datetime.utcnow() - timedelta(hours=self.retention_hours)
                 
@@ -705,8 +665,7 @@ class PerformanceMonitor:
                 await asyncio.sleep(3600)
     
     def _update_error_rate(self, success: bool, labels: Dict[str, str]):
-        """Update error rate metrics"""
-        # Simple moving average for error rate
+        """Update error rate metrics"""        # Simple moving average for error rate
         error_rate_metric = 'storage_error_rate_percent'
         if error_rate_metric in self.metrics:
             current_error_rate = self.metrics[error_rate_metric].get_average(60)
@@ -721,8 +680,7 @@ class PerformanceMonitor:
             )
     
     def _update_throughput_counter(self, operation_type: str, provider: str):
-        """Update throughput metrics"""
-        throughput_metric = 'storage_operations_per_second'
+        """Update throughput metrics"""        throughput_metric = 'storage_operations_per_second'
         if throughput_metric in self.metrics:
             # Simple throughput calculation based on recent operations
             recent_ops = len(self.metrics[throughput_metric].get_recent_values(60))
@@ -734,8 +692,7 @@ class PerformanceMonitor:
             })
     
     def _identify_top_issues(self, hours: int) -> List[Dict[str, Any]]:
-        """Identify top performance issues"""
-        issues = []
+        """Identify top performance issues"""        issues = []
         
         # Check each metric against thresholds
         for metric_name, metric in self.metrics.items():
@@ -774,8 +731,7 @@ class PerformanceMonitor:
     
     def _generate_recommendations(self, summary_stats: Dict[str, Any], 
                                 top_issues: List[Dict[str, Any]]) -> List[str]:
-        """Generate performance optimization recommendations"""
-        recommendations = []
+        """Generate performance optimization recommendations"""        recommendations = []
         
         # Analyze latency
         latency_summary = summary_stats.get('storage_operation_latency_ms', {})
@@ -808,8 +764,7 @@ class PerformanceMonitor:
         return recommendations
     
     def _analyze_trends(self, hours: int) -> Dict[str, Any]:
-        """Analyze performance trends"""
-        trends = {}
+        """Analyze performance trends"""        trends = {}
         
         try:
             # Analyze each metric for trends
@@ -843,8 +798,7 @@ class PerformanceMonitor:
         return trends
     
     def _analyze_costs(self, hours: int) -> Dict[str, Any]:
-        """Analyze cost trends"""
-        cost_analysis = {}
+        """Analyze cost trends"""        cost_analysis = {}
         
         try:
             cost_metric = 'storage_cost_per_gb_usd'

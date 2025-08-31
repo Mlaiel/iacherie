@@ -1,5 +1,4 @@
-"""
-🔗 External Integrations Configuration Manager - IA-Influencer-Agent
+"""🔗 External Integrations Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de
 Enterprise-grade external integrations configuration for unified platform management.
 ==================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union, Tuple
@@ -34,8 +32,7 @@ from urllib.parse import urlparse
 logger = logging.getLogger(__name__)
 
 class IntegrationType(Enum):
-    """Types of external integrations"""
-    SOCIAL_PLATFORM = "social_platform"
+    """Types of external integrations"""    SOCIAL_PLATFORM = "social_platform"
     STREAMING_SERVICE = "streaming_service"
     PAYMENT_GATEWAY = "payment_gateway"
     CLOUD_STORAGE = "cloud_storage"
@@ -49,8 +46,7 @@ class IntegrationType(Enum):
     MONITORING_SERVICE = "monitoring_service"
 
 class AuthenticationMethod(Enum):
-    """Authentication methods for integrations"""
-    API_KEY = "api_key"
+    """Authentication methods for integrations"""    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -60,8 +56,7 @@ class AuthenticationMethod(Enum):
     CERTIFICATE = "certificate"
 
 class IntegrationStatus(Enum):
-    """Integration connection status"""
-    ACTIVE = "active"
+    """Integration connection status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     CONNECTING = "connecting"
     ERROR = "error"
@@ -71,8 +66,7 @@ class IntegrationStatus(Enum):
 
 @dataclass
 class PlatformIntegrationConfig:
-    """Configuration for platform integrations"""
-    platform_name: str
+    """Configuration for platform integrations"""    platform_name: str
     integration_type: IntegrationType
     enabled: bool = True
     
@@ -130,8 +124,7 @@ class PlatformIntegrationConfig:
 
 @dataclass
 class StreamingPlatformsConfig:
-    """Configuration for streaming platforms"""
-    # Music streaming platforms
+    """Configuration for streaming platforms"""    # Music streaming platforms
     spotify: PlatformIntegrationConfig = field(default_factory=lambda: PlatformIntegrationConfig(
         platform_name="Spotify",
         integration_type=IntegrationType.STREAMING_SERVICE,
@@ -165,8 +158,7 @@ class StreamingPlatformsConfig:
 
 @dataclass
 class SocialPlatformsConfig:
-    """Configuration for social media platforms"""
-    # Major social platforms
+    """Configuration for social media platforms"""    # Major social platforms
     instagram: PlatformIntegrationConfig = field(default_factory=lambda: PlatformIntegrationConfig(
         platform_name="Instagram",
         integration_type=IntegrationType.SOCIAL_PLATFORM,
@@ -202,8 +194,7 @@ class SocialPlatformsConfig:
 
 @dataclass
 class PaymentGatewaysConfig:
-    """Configuration for payment gateways"""
-    stripe: PlatformIntegrationConfig = field(default_factory=lambda: PlatformIntegrationConfig(
+    """Configuration for payment gateways"""    stripe: PlatformIntegrationConfig = field(default_factory=lambda: PlatformIntegrationConfig(
         platform_name="Stripe",
         integration_type=IntegrationType.PAYMENT_GATEWAY,
         api_base_url="https://api.stripe.com/v1",
@@ -229,8 +220,7 @@ class PaymentGatewaysConfig:
 
 @dataclass
 class CloudServicesConfig:
-    """Configuration for cloud services"""
-    aws_s3: PlatformIntegrationConfig = field(default_factory=lambda: PlatformIntegrationConfig(
+    """Configuration for cloud services"""    aws_s3: PlatformIntegrationConfig = field(default_factory=lambda: PlatformIntegrationConfig(
         platform_name="AWS S3",
         integration_type=IntegrationType.CLOUD_STORAGE,
         api_base_url="https://s3.amazonaws.com",
@@ -259,8 +249,7 @@ class CloudServicesConfig:
 
 @dataclass
 class AIServicesConfig:
-    """Configuration for AI and ML services"""
-    openai: PlatformIntegrationConfig = field(default_factory=lambda: PlatformIntegrationConfig(
+    """Configuration for AI and ML services"""    openai: PlatformIntegrationConfig = field(default_factory=lambda: PlatformIntegrationConfig(
         platform_name="OpenAI",
         integration_type=IntegrationType.AI_SERVICE,
         api_base_url="https://api.openai.com/v1",
@@ -283,8 +272,7 @@ class AIServicesConfig:
 
 @dataclass
 class ExternalIntegrationsConfiguration:
-    """Master external integrations configuration"""
-    # Platform configurations
+    """Master external integrations configuration"""    # Platform configurations
     streaming_platforms: StreamingPlatformsConfig = field(default_factory=StreamingPlatformsConfig)
     social_platforms: SocialPlatformsConfig = field(default_factory=SocialPlatformsConfig)
     payment_gateways: PaymentGatewaysConfig = field(default_factory=PaymentGatewaysConfig)
@@ -328,8 +316,7 @@ class ExternalIntegrationsConfiguration:
     contact_email: str = "mlaiel@live.de"
 
 class ExternalIntegrationsConfigManager:
-    """
-    Enterprise-grade external integrations configuration manager.
+    """    Enterprise-grade external integrations configuration manager.
     
     Manages comprehensive integration with:
     - Streaming platforms (Spotify, Apple Music, YouTube Music)
@@ -342,11 +329,9 @@ class ExternalIntegrationsConfigManager:
     - Analytics and monitoring services
     - Blockchain and NFT platforms
     - Legal and compliance services
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize external integrations configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize external integrations configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
         self.config_path = config_path or os.getenv(
@@ -369,8 +354,7 @@ class ExternalIntegrationsConfigManager:
         self.logger.info("External integrations configuration manager initialized")
     
     def _load_configuration(self) -> bool:
-        """Load configuration from file"""
-        try:
+        """Load configuration from file"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
@@ -390,8 +374,7 @@ class ExternalIntegrationsConfigManager:
             return False
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]) -> None:
-        """Update configuration from dictionary"""
-        for key, value in config_data.items():
+        """Update configuration from dictionary"""        for key, value in config_data.items():
             if hasattr(self._config, key):
                 setattr(self._config, key, value)
         
@@ -399,8 +382,7 @@ class ExternalIntegrationsConfigManager:
         self.last_updated = datetime.now()
     
     async def test_integration(self, platform_name: str) -> Dict[str, Any]:
-        """Test connectivity to a specific platform integration"""
-        try:
+        """Test connectivity to a specific platform integration"""        try:
             integration_config = self.get_integration_config(platform_name)
             if not integration_config:
                 return {
@@ -504,8 +486,7 @@ class ExternalIntegrationsConfigManager:
             }
     
     async def test_all_integrations(self) -> Dict[str, Any]:
-        """Test connectivity to all enabled integrations"""
-        try:
+        """Test connectivity to all enabled integrations"""        try:
             test_results = {}
             
             # Get all platform configurations
@@ -540,8 +521,7 @@ class ExternalIntegrationsConfigManager:
             }
     
     def get_integration_config(self, platform_name: str) -> Optional[PlatformIntegrationConfig]:
-        """Get configuration for specific platform integration"""
-        
+        """Get configuration for specific platform integration"""        
         # Check in all platform categories
         platform_categories = [
             self._config.streaming_platforms,
@@ -562,8 +542,7 @@ class ExternalIntegrationsConfigManager:
         return None
     
     def get_all_platform_configs(self) -> Dict[str, PlatformIntegrationConfig]:
-        """Get all platform configurations"""
-        all_configs = {}
+        """Get all platform configurations"""        all_configs = {}
         
         # Streaming platforms
         streaming_attrs = ["spotify", "apple_music", "youtube_music"]
@@ -606,13 +585,11 @@ class ExternalIntegrationsConfigManager:
         return all_configs
     
     def get_enabled_platforms(self) -> List[str]:
-        """Get list of enabled platform names"""
-        all_configs = self.get_all_platform_configs()
+        """Get list of enabled platform names"""        all_configs = self.get_all_platform_configs()
         return [name for name, config in all_configs.items() if config.enabled]
     
     def add_custom_integration(self, platform_name: str, config: PlatformIntegrationConfig) -> bool:
-        """Add custom integration configuration"""
-        try:
+        """Add custom integration configuration"""        try:
             self._config.custom_integrations[platform_name] = config
             self._config.updated_at = datetime.now()
             self.last_updated = datetime.now()
@@ -623,8 +600,7 @@ class ExternalIntegrationsConfigManager:
             return False
     
     def validate_configuration(self) -> List[str]:
-        """Validate external integrations configuration"""
-        errors = []
+        """Validate external integrations configuration"""        errors = []
         
         try:
             # Validate global settings
@@ -675,8 +651,7 @@ class ExternalIntegrationsConfigManager:
             return [error_msg]
     
     def get_configuration_status(self) -> Dict[str, Any]:
-        """Get configuration status and metadata"""
-        all_configs = self.get_all_platform_configs()
+        """Get configuration status and metadata"""        all_configs = self.get_all_platform_configs()
         enabled_count = sum(1 for config in all_configs.values() if config.enabled)
         
         return {

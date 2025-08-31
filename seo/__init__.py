@@ -1,5 +1,4 @@
-"""
-SEO Module for Ainflue Platform
+"""SEO Module for Ainflue Platform
 
 This module provides comprehensive SEO automation and optimization capabilities
 for the Ainflue AI-powered content platform.
@@ -7,7 +6,6 @@ for the Ainflue AI-powered content platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from .optimization import *
 
 __version__ = "1.0.0"

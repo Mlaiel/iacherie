@@ -1,5 +1,4 @@
-"""
-Agent Manager - Ultra-Advanced Industrial Agent Orchestration System
+"""Agent Manager - Ultra-Advanced Industrial Agent Orchestration System
 
 Enterprise-grade management system for coordinating and optimizing all AI agents
 in the IA-Influencer-Agent platform with load balancing, failover, and scaling.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 import asyncio
 import logging
 import time
@@ -57,16 +55,14 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class PoolingStrategy(Enum):
-    """Agent pooling and scaling strategies"""
-    FIXED_SIZE = "fixed_size"
+    """Agent pooling and scaling strategies"""    FIXED_SIZE = "fixed_size"
     DYNAMIC_SCALING = "dynamic_scaling" 
     LOAD_BALANCED = "load_balanced"
     PRIORITY_BASED = "priority_based"
 
 @dataclass
 class AgentPool:
-    """Pool configuration for agent instances"""
-    agent_type: str
+    """Pool configuration for agent instances"""    agent_type: str
     min_instances: int = 1
     max_instances: int = 10
     current_instances: int = 0
@@ -79,15 +75,13 @@ class AgentPool:
     
 @dataclass  
 class RoutingRule:
-    """Request routing rules for load balancing"""
-    condition: str  # Python expression
+    """Request routing rules for load balancing"""    condition: str  # Python expression
     target_agent_type: str
     priority_boost: int = 0
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class AgentManager:
-    """
-    Ultra-advanced agent orchestration system with enterprise capabilities:
+    """    Ultra-advanced agent orchestration system with enterprise capabilities:
     
     - Multi-agent coordination and load balancing
     - Dynamic scaling based on demand and resources
@@ -95,8 +89,7 @@ class AgentManager:
     - Request routing and priority management
     - Performance optimization and resource management
     - Multi-tenant isolation and security
-    """
-    
+    """    
     def __init__(self):
         self.pools: Dict[str, AgentPool] = {}
         self.routing_rules: List[RoutingRule] = []
@@ -132,8 +125,7 @@ class AgentManager:
         logger.info("AgentManager initialized")
     
     async def start(self):
-        """Start the agent manager and all background services"""
-        if self.is_running:
+        """Start the agent manager and all background services"""        if self.is_running:
             logger.warning("AgentManager already running")
             return
         
@@ -155,8 +147,7 @@ class AgentManager:
             raise
     
     async def _initialize_default_pools(self):
-        """Initialize default agent pools based on configuration"""
-        default_pools = [
+        """Initialize default agent pools based on configuration"""        default_pools = [
             ("content_agent", 2, 5),
             ("protection_agent", 2, 4), 
             ("collaboration_agent", 1, 3),
@@ -181,8 +172,7 @@ class AgentManager:
                 logger.info(f"Registered empty agent pool: {agent_type} ({min_instances}-{max_instances} instances)")
     
     def _start_background_tasks(self):
-        """Start background monitoring and management tasks"""
-        tasks = [
+        """Start background monitoring and management tasks"""        tasks = [
             self._health_monitor_task(),
             self._scaling_monitor_task(),
             self._metrics_collector_task(),
@@ -201,8 +191,7 @@ class AgentManager:
         strategy: PoolingStrategy = PoolingStrategy.DYNAMIC_SCALING,
         agent_class: Optional[Type[BaseAgent]] = None
     ):
-        """Register a new agent pool with specified configuration"""
-        if agent_type in self.pools:
+        """Register a new agent pool with specified configuration"""        if agent_type in self.pools:
             # Attach class and top up instances if pool already exists
             pool = self.pools[agent_type]
             pool.min_instances = min_instances or pool.min_instances
@@ -231,8 +220,7 @@ class AgentManager:
         logger.info(f"Registered agent pool: {agent_type} ({pool.current_instances}/{min_instances} started; max {max_instances})")
 
     async def _ensure_min_instances(self, pool: AgentPool):
-        """Ensure a pool has at least min_instances running, creating as needed."""
-        if pool.agent_class is None:
+        """Ensure a pool has at least min_instances running, creating as needed."""        if pool.agent_class is None:
             return
         missing = max(0, pool.min_instances - pool.current_instances)
         for i in range(missing):
@@ -246,10 +234,8 @@ class AgentManager:
                 logger.error(f"Failed to initialize agent {agent_id}")
     
     async def process_request(self, request: AgentRequest) -> AgentResponse:
-        """
-        Route and process request through appropriate agent with load balancing
-        """
-        start_time = time.time()
+        """        Route and process request through appropriate agent with load balancing
+        """        start_time = time.time()
         
         try:
             # Route request to appropriate agent type
@@ -286,8 +272,7 @@ class AgentManager:
             )
     
     async def _route_request(self, request: AgentRequest) -> str:
-        """Route request to appropriate agent type using routing rules"""
-        
+        """Route request to appropriate agent type using routing rules"""        
         # Check routing rules
         for rule in self.routing_rules:
             try:
@@ -317,8 +302,7 @@ class AgentManager:
         return self._get_default_agent_type(request.action)
     
     def _get_default_agent_type(self, action: str) -> str:
-        """Get default agent type based on action"""
-        action_mappings = {
+        """Get default agent type based on action"""        action_mappings = {
             # Content processing actions
             'analyze_content': 'content_agent',
             'process_upload': 'content_agent',
@@ -359,8 +343,7 @@ class AgentManager:
         agent_type: str, 
         priority: AgentPriority = AgentPriority.NORMAL
     ) -> Optional[BaseAgent]:
-        """Get available agent from pool using load balancing"""
-        
+        """Get available agent from pool using load balancing"""        
         if agent_type not in self.pools:
             logger.error(f"Unknown agent type: {agent_type}")
             return None
@@ -384,8 +367,7 @@ class AgentManager:
         return self.load_balancer.select_agent(available_agents, priority)
     
     async def _check_pool_scaling(self, pool: AgentPool):
-        """Check if agent pool needs scaling up or down"""
-        if pool.strategy != PoolingStrategy.DYNAMIC_SCALING:
+        """Check if agent pool needs scaling up or down"""        if pool.strategy != PoolingStrategy.DYNAMIC_SCALING:
             return
         
         # Calculate average load across agents
@@ -417,8 +399,7 @@ class AgentManager:
             await self._scale_down_pool(pool)
     
     async def _scale_up_pool(self, pool: AgentPool):
-        """Scale up agent pool by adding new instance"""
-        try:
+        """Scale up agent pool by adding new instance"""        try:
             if pool.agent_class is None:
                 logger.warning(f"Cannot scale up {pool.agent_type}: missing agent_class")
                 return
@@ -434,8 +415,7 @@ class AgentManager:
             logger.error(f"Failed to scale up {pool.agent_type} pool: {e}")
     
     async def _scale_down_pool(self, pool: AgentPool):
-        """Scale down agent pool by removing underutilized instance"""
-        try:
+        """Scale down agent pool by removing underutilized instance"""        try:
             # Find agent with lowest load
             min_load_agent = None
             min_load = float('inf')
@@ -461,8 +441,7 @@ class AgentManager:
             logger.error(f"Failed to scale down {pool.agent_type} pool: {e}")
     
     def add_routing_rule(self, condition: str, target_agent_type: str, priority_boost: int = 0):
-        """Add custom routing rule"""
-        rule = RoutingRule(
+        """Add custom routing rule"""        rule = RoutingRule(
             condition=condition,
             target_agent_type=target_agent_type,
             priority_boost=priority_boost
@@ -471,8 +450,7 @@ class AgentManager:
         logger.info(f"Added routing rule: {condition} -> {target_agent_type}")
     
     def _update_request_stats(self, agent_type: str, success: bool, response_time: float):
-        """Update request statistics"""
-        self.request_stats['total_requests'] += 1
+        """Update request statistics"""        self.request_stats['total_requests'] += 1
         
         if success:
             self.request_stats['successful_requests'] += 1
@@ -492,8 +470,7 @@ class AgentManager:
         self.request_stats['requests_by_agent_type'][agent_type] += 1
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        pool_status = {}
+        """Get comprehensive system status"""        pool_status = {}
         
         for agent_type, pool in self.pools.items():
             agent_statuses = {}
@@ -523,8 +500,7 @@ class AgentManager:
     
     # Background monitoring tasks
     async def _health_monitor_task(self):
-        """Background task for monitoring agent health"""
-        while self.is_running and not self.shutdown_requested:
+        """Background task for monitoring agent health"""        while self.is_running and not self.shutdown_requested:
             try:
                 for pool in self.pools.values():
                     for agent in pool.agents.values():
@@ -564,8 +540,7 @@ class AgentManager:
                 await asyncio.sleep(60)
     
     async def _scaling_monitor_task(self):
-        """Background task for monitoring scaling decisions"""
-        while self.is_running and not self.shutdown_requested:
+        """Background task for monitoring scaling decisions"""        while self.is_running and not self.shutdown_requested:
             try:
                 for pool in self.pools.values():
                     await self._check_pool_scaling(pool)
@@ -577,8 +552,7 @@ class AgentManager:
                 await asyncio.sleep(120)
     
     async def _metrics_collector_task(self):
-        """Background task for collecting and aggregating metrics"""
-        while self.is_running and not self.shutdown_requested:
+        """Background task for collecting and aggregating metrics"""        while self.is_running and not self.shutdown_requested:
             try:
                 # Collect and aggregate metrics from all agents; log summary
                 aggregated = {"agents": 0, "active_requests": 0, "errors": 0}
@@ -597,8 +571,7 @@ class AgentManager:
                 await asyncio.sleep(120)
     
     async def _cleanup_task(self):
-        """Background task for cleanup operations"""
-        while self.is_running and not self.shutdown_requested:
+        """Background task for cleanup operations"""        while self.is_running and not self.shutdown_requested:
             try:
                 # Remove shut down or errored agents with no active requests
                 for pool in self.pools.values():
@@ -618,8 +591,7 @@ class AgentManager:
                 await asyncio.sleep(600)
     
     async def stop(self):
-        """Stop the agent manager and all agents"""
-        if not self.is_running:
+        """Stop the agent manager and all agents"""        if not self.is_running:
             logger.warning("AgentManager not running")
             return
         

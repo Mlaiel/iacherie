@@ -1,5 +1,4 @@
-"""
-Apple Music Platform Integration
+"""Apple Music Platform Integration
 
 Apple Music API integration for music distribution and analytics.
 
@@ -7,7 +6,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -25,25 +23,21 @@ logger = logging.getLogger(__name__)
 
 
 class AppleMusicPlatform(PlatformBase):
-    """Apple Music platform integration"""
-    
+    """Apple Music platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize Apple Music platform"""
-        super().__init__(config)
+        """Initialize Apple Music platform"""        super().__init__(config)
         self.api_base = "https://api.music.apple.com/v1"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Apple Music using JWT"""
-        try:
+        """Authenticate with Apple Music using JWT"""        try:
             # Generate JWT token for Apple Music API
             token = self._generate_jwt_token()
             if token:
@@ -63,8 +57,7 @@ class AppleMusicPlatform(PlatformBase):
             return False
     
     def _generate_jwt_token(self) -> Optional[str]:
-        """Generate JWT token for Apple Music API"""
-        try:
+        """Generate JWT token for Apple Music API"""        try:
             # JWT payload
             payload = {
                 'iss': self.config.credentials.client_id,  # Team ID
@@ -91,12 +84,10 @@ class AppleMusicPlatform(PlatformBase):
             return None
     
     async def refresh_token(self) -> bool:
-        """Refresh Apple Music JWT token"""
-        return await self.authenticate()  # JWT tokens are regenerated
+        """Refresh Apple Music JWT token"""        return await self.authenticate()  # JWT tokens are regenerated
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Apple Music API"""
-        if not self.is_authenticated or self._token_expired():
+        """Make authenticated request to Apple Music API"""        if not self.is_authenticated or self._token_expired():
             if not await self.authenticate():
                 return None
         
@@ -136,14 +127,12 @@ class AppleMusicPlatform(PlatformBase):
             return None
     
     def _token_expired(self) -> bool:
-        """Check if token is expired"""
-        if not self.config.credentials.expires_at:
+        """Check if token is expired"""        if not self.config.credentials.expires_at:
             return True
         return datetime.utcnow() >= self.config.credentials.expires_at
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Apple Music (not supported via public API)"""
-        # Apple Music doesn't support direct content uploads via public API
+        """Upload content to Apple Music (not supported via public API)"""        # Apple Music doesn't support direct content uploads via public API
         # Content must be distributed through Apple Music for Artists or music distributors
         return UploadResult(
             success=False,
@@ -152,8 +141,7 @@ class AppleMusicPlatform(PlatformBase):
         )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Apple Music analytics (limited public API access)"""
-        try:
+        """Get Apple Music analytics (limited public API access)"""        try:
             # Get song/album data
             result = await self._make_request('GET', f'catalog/us/songs/{content_id}')
             
@@ -192,8 +180,7 @@ class AppleMusicPlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Apple Music"""
-        try:
+        """Search content on Apple Music"""        try:
             search_types = []
             
             if content_type:
@@ -248,25 +235,21 @@ class AppleMusicPlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's content from Apple Music (limited public API access)"""
-        # Apple Music public API doesn't provide user-specific content
+        """Get user's content from Apple Music (limited public API access)"""        # Apple Music public API doesn't provide user-specific content
         # This would require user authentication and Apple Music subscription
         logger.warning("User content not available via Apple Music public API")
         return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content from Apple Music (not supported)"""
-        logger.warning("Content deletion not supported by Apple Music API")
+        """Delete content from Apple Music (not supported)"""        logger.warning("Content deletion not supported by Apple Music API")
         return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update content metadata on Apple Music (not supported)"""
-        logger.warning("Content update not supported by Apple Music public API")
+        """Update content metadata on Apple Music (not supported)"""        logger.warning("Content update not supported by Apple Music public API")
         return False
     
     async def get_album_tracks(self, album_id: str) -> List[Dict[str, Any]]:
-        """Get tracks from an album"""
-        try:
+        """Get tracks from an album"""        try:
             result = await self._make_request('GET', f'catalog/us/albums/{album_id}/tracks')
             
             if not result or 'data' not in result:
@@ -294,8 +277,7 @@ class AppleMusicPlatform(PlatformBase):
             return []
     
     async def get_artist_albums(self, artist_id: str) -> List[Dict[str, Any]]:
-        """Get albums by an artist"""
-        try:
+        """Get albums by an artist"""        try:
             result = await self._make_request('GET', f'catalog/us/artists/{artist_id}/albums')
             
             if not result or 'data' not in result:
@@ -323,8 +305,7 @@ class AppleMusicPlatform(PlatformBase):
             return []
     
     async def get_playlist_tracks(self, playlist_id: str) -> List[Dict[str, Any]]:
-        """Get tracks from a playlist"""
-        try:
+        """Get tracks from a playlist"""        try:
             result = await self._make_request('GET', f'catalog/us/playlists/{playlist_id}/tracks')
             
             if not result or 'data' not in result:
@@ -350,8 +331,7 @@ class AppleMusicPlatform(PlatformBase):
             return []
     
     async def get_charts(self, chart_type: str = 'songs', genre: str = None) -> List[Dict[str, Any]]:
-        """Get Apple Music charts"""
-        try:
+        """Get Apple Music charts"""        try:
             endpoint = f'catalog/us/charts'
             params = {'types': chart_type}
             
@@ -393,8 +373,7 @@ class AppleMusicPlatform(PlatformBase):
             return []
     
     async def get_genres(self) -> List[Dict[str, Any]]:
-        """Get available genres"""
-        try:
+        """Get available genres"""        try:
             result = await self._make_request('GET', 'catalog/us/genres')
             
             if not result or 'data' not in result:
@@ -416,6 +395,5 @@ class AppleMusicPlatform(PlatformBase):
             return []
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

@@ -1,5 +1,4 @@
-"""
-Gestionnaire de ressources système
+"""Gestionnaire de ressources système
 ================================================================================
 Module: backend/core/managers/collaboration_manager.py
 Type: Manager Core - IA-Influencer-Agent
@@ -7,7 +6,6 @@ Responsabilité: Fonctionnalité spécialisée IA-Influencer-Agent
 Technologies: Python, FastAPI, AsyncIO
 ================================================================================
 """
-
 from typing import Any, Dict, List, Optional, Union, Callable
 import logging
 import asyncio
@@ -21,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CollaborationManagerConfig:
-    """Configuration du gestionnaire CollaborationManager"""
-    pool_size: int = 10
+    """Configuration du gestionnaire CollaborationManager"""    pool_size: int = 10
     max_connections: int = 100
     timeout_seconds: int = 30
     retry_policy: Dict[str, Any] = field(default_factory=dict)
@@ -30,8 +27,7 @@ class CollaborationManagerConfig:
 
 
 class CollaborationManager(ABC):
-    """
-    🎯 Gestionnaire CollaborationManager - IA-Influencer-Agent
+    """    🎯 Gestionnaire CollaborationManager - IA-Influencer-Agent
     
     Responsabilité:
     Fonctionnalité spécialisée IA-Influencer-Agent
@@ -45,8 +41,7 @@ class CollaborationManager(ABC):
     - Auto-scaling basé sur la charge
     - Gestion d'erreurs avec circuit breaker
     - Nettoyage automatique des ressources
-    """
-    
+    """    
     def __init__(self, config: CollaborationManagerConfig = None):
         self.config = config or CollaborationManagerConfig()
         self._pool = []
@@ -62,46 +57,38 @@ class CollaborationManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """
-        Initialise le pool de ressources
+        """        Initialise le pool de ressources
         
         Returns:
             bool: True si initialisation réussie
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def acquire_resource(self) -> Any:
-        """
-        Acquiert une ressource du pool
+        """        Acquiert une ressource du pool
         
         Returns:
             Any: Ressource acquise
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def release_resource(self, resource: Any) -> bool:
-        """
-        Libère une ressource vers le pool
+        """        Libère une ressource vers le pool
         
         Args:
             resource: Ressource à libérer
             
         Returns:
             bool: True si libération réussie
-        """
-        pass
+        """        pass
     
     @asynccontextmanager
     async def get_resource(self):
-        """
-        Context manager pour gestion automatique des ressources
+        """        Context manager pour gestion automatique des ressources
         
         Yields:
             Any: Ressource gérée automatiquement
-        """
-        resource = None
+        """        resource = None
         try:
             resource = await self.acquire_resource()
             yield resource
@@ -110,26 +97,22 @@ class CollaborationManager(ABC):
                 await self.release_resource(resource)
     
     async def cleanup(self) -> bool:
-        """
-        Nettoyage des ressources
+        """        Nettoyage des ressources
         
         Returns:
             bool: True si nettoyage réussi
-        """
-        with self._lock:
+        """        with self._lock:
             self._pool.clear()
             self._active_connections = 0
         logger.info(f"🧹 Nettoyage {self.__class__.__name__} terminé")
         return True
     
     def get_stats(self) -> Dict[str, Any]:
-        """
-        Statistiques du gestionnaire
+        """        Statistiques du gestionnaire
         
         Returns:
             Dict: Métriques actuelles
-        """
-        with self._lock:
+        """        with self._lock:
             return {
                 "pool_size": len(self._pool),
                 "active_connections": self._active_connections,
@@ -143,13 +126,11 @@ collaboration_manager = None
 
 
 def get_collaboration_manager() -> CollaborationManager:
-    """
-    Obtient l'instance du gestionnaire
+    """    Obtient l'instance du gestionnaire
     
     Returns:
         CollaborationManager: Instance du gestionnaire
-    """
-    global collaboration_manager
+    """    global collaboration_manager
     if collaboration_manager is None:
         collaboration_manager = CollaborationManager()
     return collaboration_manager

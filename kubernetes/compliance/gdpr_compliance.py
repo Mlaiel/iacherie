@@ -1,11 +1,9 @@
-"""
-IA Influencer Agent - GDPR Compliance Manager
+"""IA Influencer Agent - GDPR Compliance Manager
 Enterprise-grade GDPR compliance automation and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
-
 import asyncio
 import json
 import logging
@@ -29,8 +27,7 @@ logger = get_logger(__name__)
 
 
 class GDPRRequestType(str, Enum):
-    """GDPR request types"""
-    ACCESS = "access"
+    """GDPR request types"""    ACCESS = "access"
     PORTABILITY = "portability"
     RECTIFICATION = "rectification"
     ERASURE = "erasure"
@@ -39,8 +36,7 @@ class GDPRRequestType(str, Enum):
 
 
 class ConsentPurpose(str, Enum):
-    """Data processing consent purposes"""
-    ESSENTIAL = "essential"
+    """Data processing consent purposes"""    ESSENTIAL = "essential"
     ANALYTICS = "analytics"
     MARKETING = "marketing"
     PERSONALIZATION = "personalization"
@@ -50,8 +46,7 @@ class ConsentPurpose(str, Enum):
 
 
 class ProcessingLawfulBasis(str, Enum):
-    """GDPR lawful basis for processing"""
-    CONSENT = "consent"
+    """GDPR lawful basis for processing"""    CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
     VITAL_INTERESTS = "vital_interests"
@@ -61,8 +56,7 @@ class ProcessingLawfulBasis(str, Enum):
 
 @dataclass
 class PersonalDataInventory:
-    """Personal data inventory for GDPR compliance"""
-    data_category: str
+    """Personal data inventory for GDPR compliance"""    data_category: str
     data_elements: List[str]
     processing_purpose: str
     lawful_basis: ProcessingLawfulBasis
@@ -75,8 +69,7 @@ class PersonalDataInventory:
 
 @dataclass
 class GDPRComplianceReport:
-    """GDPR compliance status report"""
-    user_id: int
+    """GDPR compliance status report"""    user_id: int
     report_date: datetime
     consent_status: Dict[str, bool]
     data_inventory: List[PersonalDataInventory]
@@ -87,8 +80,7 @@ class GDPRComplianceReport:
 
 
 class GDPRComplianceManager:
-    """Enterprise GDPR compliance manager with automation"""
-    
+    """Enterprise GDPR compliance manager with automation"""    
     def __init__(self):
         self.logger = logger
         self.encryption_enabled = settings.ENCRYPTION_ENABLED
@@ -152,8 +144,7 @@ class GDPRComplianceManager:
         user_agent: str,
         explicit_consent: bool = False
     ) -> ConsentRecord:
-        """Record user consent with full audit trail"""
-        try:
+        """Record user consent with full audit trail"""        try:
             async with get_db_session() as session:
                 consent_record = ConsentRecord(
                     user_id=user_id,
@@ -201,8 +192,7 @@ class GDPRComplianceManager:
         purpose: ConsentPurpose,
         ip_address: str
     ) -> bool:
-        """Withdraw user consent and trigger data processing restrictions"""
-        try:
+        """Withdraw user consent and trigger data processing restrictions"""        try:
             async with get_db_session() as session:
                 # Update existing consent record
                 stmt = update(ConsentRecord).where(
@@ -254,8 +244,7 @@ class GDPRComplianceManager:
         request_details: Dict[str, Any],
         requester_ip: str
     ) -> str:
-        """Process GDPR data subject requests"""
-        try:
+        """Process GDPR data subject requests"""        try:
             async with get_db_session() as session:
                 # Create GDPR request record
                 gdpr_request = GDPRRequest(
@@ -326,8 +315,7 @@ class GDPRComplianceManager:
             raise HTTPException(status_code=500, detail="Failed to process GDPR request")
     
     async def generate_compliance_report(self, user_id: int) -> GDPRComplianceReport:
-        """Generate comprehensive GDPR compliance report for user"""
-        try:
+        """Generate comprehensive GDPR compliance report for user"""        try:
             async with get_db_session() as session:
                 # Get user data
                 user_result = await session.execute(
@@ -405,8 +393,7 @@ class GDPRComplianceManager:
             raise HTTPException(status_code=500, detail="Failed to generate compliance report")
     
     async def automated_data_retention_cleanup(self) -> Dict[str, int]:
-        """Automated data retention cleanup based on GDPR requirements"""
-        try:
+        """Automated data retention cleanup based on GDPR requirements"""        try:
             cleanup_stats = {
                 "users_processed": 0,
                 "records_deleted": 0,
@@ -456,8 +443,7 @@ class GDPRComplianceManager:
             return {"users_processed": 0, "records_deleted": 0, "errors": 1}
     
     async def _process_access_request(self, user_id: int, request_id: str) -> None:
-        """Process data access request - provide copy of personal data"""
-        try:
+        """Process data access request - provide copy of personal data"""        try:
             # Collect all personal data for user
             personal_data = await self._collect_personal_data(user_id)
             
@@ -476,8 +462,7 @@ class GDPRComplianceManager:
             raise
     
     async def _process_portability_request(self, user_id: int, request_id: str) -> None:
-        """Process data portability request - provide structured data export"""
-        try:
+        """Process data portability request - provide structured data export"""        try:
             # Export data in structured, machine-readable format
             portable_data = await self._export_portable_data(user_id)
             
@@ -496,8 +481,7 @@ class GDPRComplianceManager:
             raise
     
     async def _process_erasure_request(self, user_id: int, request_id: str) -> None:
-        """Process right to erasure request - delete personal data"""
-        try:
+        """Process right to erasure request - delete personal data"""        try:
             # Check if erasure is legally permissible
             can_erase = await self._check_erasure_eligibility(user_id)
             
@@ -528,8 +512,7 @@ class GDPRComplianceManager:
         data_categories: List[str],
         processing_details: Dict[str, Any]
     ) -> None:
-        """Log data processing activity for GDPR audit trail"""
-        try:
+        """Log data processing activity for GDPR audit trail"""        try:
             async with get_db_session() as session:
                 log_entry = DataProcessingLog(
                     user_id=user_id,
@@ -556,8 +539,7 @@ class GDPRComplianceManager:
         retention_compliance: bool,
         outstanding_requests: List[Dict]
     ) -> float:
-        """Calculate GDPR compliance score for user"""
-        score = 100.0
+        """Calculate GDPR compliance score for user"""        score = 100.0
         
         # Deduct for missing essential consents
         essential_consents = sum(1 for purpose, granted in consent_status.items() 
@@ -580,8 +562,7 @@ class GDPRComplianceManager:
         return max(0.0, min(100.0, score))
     
     def _get_retention_period_for_purpose(self, purpose: str) -> int:
-        """Get data retention period in days for processing purpose"""
-        retention_mapping = {
+        """Get data retention period in days for processing purpose"""        retention_mapping = {
             "essential": 2555,  # 7 years
             "contract": 2555,   # 7 years
             "legal_compliance": 2555,  # 7 years

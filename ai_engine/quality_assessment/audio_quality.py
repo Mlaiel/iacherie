@@ -1,5 +1,4 @@
-"""
-Audio Quality Assessment Module
+"""Audio Quality Assessment Module
 
 Advanced audio quality analysis for musicians, podcasters, and audio content creators.
 Implements professional audio metrics and industry-standard quality assessment.
@@ -14,7 +13,6 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
-
 import asyncio
 import logging
 import wave
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
-    WAV = "wav"
+    """Supported audio formats"""    WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
     AAC = "aac"
@@ -47,8 +44,7 @@ class AudioFormat(Enum):
 
 
 class NoiseLevel(Enum):
-    """Audio noise level categories"""
-    EXCELLENT = "excellent"     # < -60 dB
+    """Audio noise level categories"""    EXCELLENT = "excellent"     # < -60 dB
     GOOD = "good"              # -60 to -50 dB
     ACCEPTABLE = "acceptable"   # -50 to -40 dB
     POOR = "poor"              # -40 to -30 dB
@@ -56,8 +52,7 @@ class NoiseLevel(Enum):
 
 
 class DynamicRange(Enum):
-    """Dynamic range categories"""
-    EXCELLENT = "excellent"     # > 20 dB
+    """Dynamic range categories"""    EXCELLENT = "excellent"     # > 20 dB
     GOOD = "good"              # 15-20 dB
     ACCEPTABLE = "acceptable"   # 10-15 dB
     COMPRESSED = "compressed"   # 5-10 dB
@@ -66,8 +61,7 @@ class DynamicRange(Enum):
 
 @dataclass
 class SpectralAnalysis:
-    """Spectral analysis results"""
-    fundamental_frequency: float = field(default=0.0)
+    """Spectral analysis results"""    fundamental_frequency: float = field(default=0.0)
     harmonics: List[float] = field(default_factory=list)
     spectral_centroid: float = field(default=0.0)
     spectral_bandwidth: float = field(default=0.0)
@@ -88,8 +82,7 @@ class SpectralAnalysis:
 
 @dataclass
 class AudioQualityProfile:
-    """Comprehensive audio quality profile"""
-    # Basic properties
+    """Comprehensive audio quality profile"""    # Basic properties
     sample_rate: int = field(default=0)
     bit_depth: int = field(default=0)
     channels: int = field(default=0)
@@ -135,8 +128,7 @@ class AudioQualityProfile:
 
 @dataclass
 class AudioQualityMetrics:
-    """Audio quality metrics container"""
-    profile: AudioQualityProfile = field(default_factory=AudioQualityProfile)
+    """Audio quality metrics container"""    profile: AudioQualityProfile = field(default_factory=AudioQualityProfile)
     
     # Professional metrics
     broadcast_compliance: bool = field(default=False)
@@ -161,8 +153,7 @@ class AudioQualityMetrics:
 
 
 class AudioQualityAnalyzer(BaseAIModel):
-    """
-    Professional Audio Quality Analyzer
+    """    Professional Audio Quality Analyzer
     
     Provides comprehensive audio quality assessment for:
     - Musicians and music producers
@@ -170,11 +161,9 @@ class AudioQualityAnalyzer(BaseAIModel):
     - Audio engineers and mastering studios
     - Streaming platform optimization
     - Broadcast compliance checking
-    """
-    
+    """    
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize audio quality analyzer"""
-        super().__init__(config or ModelConfig(
+        """Initialize audio quality analyzer"""        super().__init__(config or ModelConfig(
             name="audio_quality_analyzer",
             model_type=ModelType.AUDIO_MODEL,
             provider=ModelProvider.LOCAL
@@ -221,8 +210,7 @@ class AudioQualityAnalyzer(BaseAIModel):
         audio_path: Union[str, Path],
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive audio quality analysis
+        """        Comprehensive audio quality analysis
         
         Args:
             audio_path: Path to audio file
@@ -234,8 +222,7 @@ class AudioQualityAnalyzer(BaseAIModel):
         Raises:
             QualityCheckError: If analysis fails
             ContentValidationError: If audio file is invalid
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             audio_path = Path(audio_path)
@@ -338,21 +325,17 @@ class AudioQualityAnalyzer(BaseAIModel):
             raise QualityCheckError(f"Audio quality analysis failed: {str(e)}") from e
     
     async def connect(self) -> bool:
-        """Connect to audio processing services."""
-        return True
+        """Connect to audio processing services."""        return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from audio processing services."""
-        return True
+        """Disconnect from audio processing services."""        return True
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process audio quality assessment."""
-        return await self.analyze_audio_quality(data.get('audio_data', b''), 
+        """Process audio quality assessment."""        return await self.analyze_audio_quality(data.get('audio_data', b''), 
                                                data.get('profile', AudioQualityProfile()))
     
     async def _load_audio(self, audio_path: Path) -> Tuple[np.ndarray, int]:
-        """Load audio file and return data and sample rate"""
-        try:
+        """Load audio file and return data and sample rate"""        try:
             # For now, simulate audio loading with synthetic data
             # In production, use librosa, pydub, or similar library
             
@@ -380,8 +363,7 @@ class AudioQualityAnalyzer(BaseAIModel):
         sample_rate: int,
         profile: AudioQualityProfile
     ):
-        """Analyze basic audio properties"""
-        try:
+        """Analyze basic audio properties"""        try:
             # Estimate bit depth (simplified)
             profile.bit_depth = 16 if np.max(np.abs(audio_data)) < 1.0 else 24
             
@@ -403,8 +385,7 @@ class AudioQualityAnalyzer(BaseAIModel):
         sample_rate: int,
         profile: AudioQualityProfile
     ):
-        """Analyze loudness metrics (LUFS, True Peak)"""
-        try:
+        """Analyze loudness metrics (LUFS, True Peak)"""        try:
             # Simplified LUFS calculation (in production, use pyloudnorm)
             # LUFS integrated loudness (approximated)
             profile.lufs_integrated = profile.rms_level - 3.0  # Simplified conversion
@@ -425,8 +406,7 @@ class AudioQualityAnalyzer(BaseAIModel):
         sample_rate: int,
         profile: AudioQualityProfile
     ):
-        """Analyze noise floor and distortion"""
-        try:
+        """Analyze noise floor and distortion"""        try:
             # Estimate noise floor (simplified)
             # In production, use silence detection and noise analysis
             sorted_samples = np.sort(np.abs(audio_data))
@@ -466,8 +446,7 @@ class AudioQualityAnalyzer(BaseAIModel):
         sample_rate: int,
         profile: AudioQualityProfile
     ):
-        """Analyze dynamic range"""
-        try:
+        """Analyze dynamic range"""        try:
             # Calculate dynamic range (simplified method)
             # In production, use proper EBU R128 dynamic range measurement
             
@@ -508,8 +487,7 @@ class AudioQualityAnalyzer(BaseAIModel):
         sample_rate: int,
         profile: AudioQualityProfile
     ):
-        """Analyze spectral content and frequency response"""
-        try:
+        """Analyze spectral content and frequency response"""        try:
             # FFT analysis
             fft_data = fft(audio_data)
             freqs = fftfreq(len(audio_data), 1/sample_rate)
@@ -565,8 +543,7 @@ class AudioQualityAnalyzer(BaseAIModel):
             logger.warning(f"Spectral analysis failed: {str(e)}")
     
     def _calculate_quality_scores(self, profile: AudioQualityProfile):
-        """Calculate comprehensive quality scores"""
-        try:
+        """Calculate comprehensive quality scores"""        try:
             # Technical score (sample rate, bit depth, basic metrics)
             tech_score = 0.0
             
@@ -678,8 +655,7 @@ class AudioQualityAnalyzer(BaseAIModel):
             profile.quality_level = "basic"
     
     def _generate_audio_recommendations(self, profile: AudioQualityProfile):
-        """Generate audio-specific recommendations"""
-        recommendations = []
+        """Generate audio-specific recommendations"""        recommendations = []
         
         # Sample rate recommendations
         if profile.sample_rate < 44100:
@@ -749,8 +725,7 @@ class AudioQualityAnalyzer(BaseAIModel):
         profile: AudioQualityProfile,
         metrics: AudioQualityMetrics
     ):
-        """Analyze readiness for various platforms"""
-        try:
+        """Analyze readiness for various platforms"""        try:
             # Spotify readiness
             metrics.spotify_ready = (
                 profile.sample_rate >= 44100 and
@@ -811,8 +786,7 @@ class AudioQualityAnalyzer(BaseAIModel):
         sample_rate: int,
         metrics: AudioQualityMetrics
     ):
-        """Analyze audio content type and characteristics"""
-        try:
+        """Analyze audio content type and characteristics"""        try:
             # Simplified content type detection
             # In production, use machine learning models for accurate classification
             
@@ -854,8 +828,7 @@ class AudioQualityAnalyzer(BaseAIModel):
             metrics.mastering_quality = "unknown"
     
     def _calculate_confidence(self, profile: AudioQualityProfile) -> float:
-        """Calculate analysis confidence score"""
-        confidence = 0.8  # Base confidence
+        """Calculate analysis confidence score"""        confidence = 0.8  # Base confidence
         
         # Adjust based on signal quality
         if profile.noise_level == NoiseLevel.EXCELLENT:
@@ -881,16 +854,14 @@ class AudioQualityAnalyzer(BaseAIModel):
 
 
 async def analyze_audio_quality(audio_path: Union[str, Path]) -> Dict[str, Any]:
-    """
-    Convenient function for audio quality analysis
+    """    Convenient function for audio quality analysis
     
     Args:
         audio_path: Path to audio file
         
     Returns:
         Dict containing audio quality analysis results
-    """
-    try:
+    """    try:
         result = await audio_quality_analyzer.analyze_quality(audio_path)
         return result
     except Exception as e:

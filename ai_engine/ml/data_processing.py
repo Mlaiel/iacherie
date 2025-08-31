@@ -1,5 +1,4 @@
-"""
-Data Processing Module
+"""Data Processing Module
 
 Advanced data processing and feature engineering capabilities for ML pipelines
 including data transformation, feature extraction, and data validation.
@@ -12,7 +11,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import numpy as np
 import pandas as pd
@@ -75,8 +73,7 @@ except:
 
 
 class DataType(Enum):
-    """Data type categories"""
-    NUMERICAL = "numerical"
+    """Data type categories"""    NUMERICAL = "numerical"
     CATEGORICAL = "categorical"
     TEXT = "text"
     IMAGE = "image"
@@ -88,8 +85,7 @@ class DataType(Enum):
 
 
 class ProcessingStrategy(Enum):
-    """Data processing strategies"""
-    BATCH = "batch"
+    """Data processing strategies"""    BATCH = "batch"
     STREAM = "stream"
     INCREMENTAL = "incremental"
     PARALLEL = "parallel"
@@ -97,8 +93,7 @@ class ProcessingStrategy(Enum):
 
 
 class FeatureType(Enum):
-    """Feature types for extraction"""
-    STATISTICAL = "statistical"
+    """Feature types for extraction"""    STATISTICAL = "statistical"
     STRUCTURAL = "structural"
     TEMPORAL = "temporal"
     SPECTRAL = "spectral"
@@ -109,8 +104,7 @@ class FeatureType(Enum):
 
 @dataclass
 class ProcessingConfig:
-    """Configuration for data processing"""
-    # General settings
+    """Configuration for data processing"""    # General settings
     strategy: ProcessingStrategy = ProcessingStrategy.BATCH
     chunk_size: int = 10000
     n_jobs: int = -1
@@ -160,8 +154,7 @@ class ProcessingConfig:
 
 @dataclass
 class ProcessingResult:
-    """Result from data processing operation"""
-    processed_data: Any
+    """Result from data processing operation"""    processed_data: Any
     feature_names: List[str] = field(default_factory=list)
     processing_stats: Dict[str, Any] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -173,14 +166,12 @@ class ProcessingResult:
 
 
 class DataValidator:
-    """Data validation and quality checking"""
-    
+    """Data validation and quality checking"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     def validate_data_quality(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Perform comprehensive data quality validation"""
-        quality_report = {
+        """Perform comprehensive data quality validation"""        quality_report = {
             'total_rows': len(data),
             'total_columns': len(data.columns),
             'missing_values': {},
@@ -243,8 +234,7 @@ class DataValidator:
         return quality_report
     
     def validate_schema(self, data: pd.DataFrame, expected_schema: Dict[str, str]) -> Tuple[bool, List[str]]:
-        """Validate data against expected schema"""
-        errors = []
+        """Validate data against expected schema"""        errors = []
         
         # Check columns exist
         missing_columns = set(expected_schema.keys()) - set(data.columns)
@@ -262,26 +252,21 @@ class DataValidator:
 
 
 class DataTransformer(ABC):
-    """Abstract base class for data transformers"""
-    
+    """Abstract base class for data transformers"""    
     @abstractmethod
     def fit(self, data: Any, **kwargs) -> 'DataTransformer':
-        """Fit transformer to data"""
-        pass
+        """Fit transformer to data"""        pass
     
     @abstractmethod
     def transform(self, data: Any, **kwargs) -> Any:
-        """Transform data"""
-        pass
+        """Transform data"""        pass
     
     def fit_transform(self, data: Any, **kwargs) -> Any:
-        """Fit and transform data"""
-        return self.fit(data, **kwargs).transform(data, **kwargs)
+        """Fit and transform data"""        return self.fit(data, **kwargs).transform(data, **kwargs)
 
 
 class NumericalTransformer(DataTransformer):
-    """Transformer for numerical data"""
-    
+    """Transformer for numerical data"""    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.scaler = None
@@ -292,8 +277,7 @@ class NumericalTransformer(DataTransformer):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     def fit(self, data: pd.DataFrame, **kwargs) -> 'NumericalTransformer':
-        """Fit numerical transformer"""
-        self.logger.info("Fitting numerical transformer")
+        """Fit numerical transformer"""        self.logger.info("Fitting numerical transformer")
         
         # Fit imputer for missing values
         if self.config.handle_missing_values:
@@ -347,8 +331,7 @@ class NumericalTransformer(DataTransformer):
         return self
     
     def transform(self, data: pd.DataFrame, **kwargs) -> np.ndarray:
-        """Transform numerical data"""
-        transformed_data = data.copy()
+        """Transform numerical data"""        transformed_data = data.copy()
         
         # Handle missing values
         if self.imputer:
@@ -379,8 +362,7 @@ class NumericalTransformer(DataTransformer):
         return transformed_data
     
     def _remove_outliers(self, data: np.ndarray) -> np.ndarray:
-        """Remove outliers from numerical data"""
-        if self.config.outlier_method == "iqr":
+        """Remove outliers from numerical data"""        if self.config.outlier_method == "iqr":
             Q1 = np.percentile(data, 25, axis=0)
             Q3 = np.percentile(data, 75, axis=0)
             IQR = Q3 - Q1
@@ -399,16 +381,14 @@ class NumericalTransformer(DataTransformer):
 
 
 class CategoricalTransformer(DataTransformer):
-    """Transformer for categorical data"""
-    
+    """Transformer for categorical data"""    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.encoders = {}
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     def fit(self, data: pd.DataFrame, **kwargs) -> 'CategoricalTransformer':
-        """Fit categorical transformer"""
-        self.logger.info("Fitting categorical transformer")
+        """Fit categorical transformer"""        self.logger.info("Fitting categorical transformer")
         
         for column in data.select_dtypes(include=['object', 'category']).columns:
             unique_values = data[column].nunique()
@@ -428,8 +408,7 @@ class CategoricalTransformer(DataTransformer):
         return self
     
     def transform(self, data: pd.DataFrame, **kwargs) -> np.ndarray:
-        """Transform categorical data"""
-        transformed_data = []
+        """Transform categorical data"""        transformed_data = []
         
         for column in data.columns:
             if column in self.encoders:
@@ -451,8 +430,7 @@ class CategoricalTransformer(DataTransformer):
 
 
 class TextTransformer(DataTransformer):
-    """Transformer for text data"""
-    
+    """Transformer for text data"""    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.tokenizer = None
@@ -468,8 +446,7 @@ class TextTransformer(DataTransformer):
         self._initialize_text_tools()
     
     def _initialize_text_tools(self):
-        """Initialize text processing tools"""
-        try:
+        """Initialize text processing tools"""        try:
             # Initialize spaCy
             self.nlp = spacy.load("en_core_web_sm")
         except OSError:
@@ -488,8 +465,7 @@ class TextTransformer(DataTransformer):
                 self.stop_words = set()
     
     def fit(self, data: List[str], **kwargs) -> 'TextTransformer':
-        """Fit text transformer"""
-        self.logger.info("Fitting text transformer")
+        """Fit text transformer"""        self.logger.info("Fitting text transformer")
         
         # For transformer-based models
         if kwargs.get('use_transformers', False):
@@ -503,15 +479,13 @@ class TextTransformer(DataTransformer):
         return self
     
     def transform(self, data: List[str], **kwargs) -> np.ndarray:
-        """Transform text data"""
-        if self.tokenizer and self.model:
+        """Transform text data"""        if self.tokenizer and self.model:
             return self._transform_with_transformers(data)
         else:
             return self._transform_with_traditional_methods(data)
     
     def _transform_with_transformers(self, texts: List[str]) -> np.ndarray:
-        """Transform text using transformer models"""
-        embeddings = []
+        """Transform text using transformer models"""        embeddings = []
         
         for text in texts:
             # Tokenize and encode
@@ -533,8 +507,7 @@ class TextTransformer(DataTransformer):
         return np.array(embeddings)
     
     def _transform_with_traditional_methods(self, texts: List[str]) -> List[str]:
-        """Transform text using traditional NLP methods"""
-        processed_texts = []
+        """Transform text using traditional NLP methods"""        processed_texts = []
         
         for text in texts:
             # Lowercase
@@ -568,8 +541,7 @@ class TextTransformer(DataTransformer):
         return processed_texts
     
     def extract_features(self, texts: List[str]) -> Dict[str, Any]:
-        """Extract statistical features from text"""
-        features = {
+        """Extract statistical features from text"""        features = {
             'char_count': [],
             'word_count': [],
             'sentence_count': [],
@@ -609,19 +581,16 @@ class TextTransformer(DataTransformer):
 
 
 class ImageTransformer(DataTransformer):
-    """Transformer for image data"""
-    
+    """Transformer for image data"""    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     def fit(self, data: List[str], **kwargs) -> 'ImageTransformer':
-        """Fit image transformer (usually no fitting required)"""
-        return self
+        """Fit image transformer (usually no fitting required)"""        return self
     
     def transform(self, image_paths: List[str], **kwargs) -> np.ndarray:
-        """Transform images to numerical arrays"""
-        images = []
+        """Transform images to numerical arrays"""        images = []
         
         for image_path in image_paths:
             try:
@@ -647,8 +616,7 @@ class ImageTransformer(DataTransformer):
         return np.array(images)
     
     def extract_features(self, image_paths: List[str]) -> Dict[str, Any]:
-        """Extract features from images"""
-        features = {
+        """Extract features from images"""        features = {
             'mean_intensity': [],
             'std_intensity': [],
             'edge_density': [],
@@ -685,19 +653,16 @@ class ImageTransformer(DataTransformer):
 
 
 class AudioTransformer(DataTransformer):
-    """Transformer for audio data"""
-    
+    """Transformer for audio data"""    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     def fit(self, data: List[str], **kwargs) -> 'AudioTransformer':
-        """Fit audio transformer"""
-        return self
+        """Fit audio transformer"""        return self
     
     def transform(self, audio_paths: List[str], **kwargs) -> np.ndarray:
-        """Transform audio files to feature arrays"""
-        features = []
+        """Transform audio files to feature arrays"""        features = []
         
         for audio_path in audio_paths:
             try:
@@ -725,8 +690,7 @@ class AudioTransformer(DataTransformer):
         return np.array(features)
     
     def extract_features(self, audio_paths: List[str]) -> Dict[str, Any]:
-        """Extract audio features"""
-        features = {
+        """Extract audio features"""        features = {
             'duration': [],
             'tempo': [],
             'spectral_centroid': [],
@@ -782,8 +746,7 @@ class AudioTransformer(DataTransformer):
 
 
 class DataProcessor:
-    """Main data processing orchestrator"""
-    
+    """Main data processing orchestrator"""    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.transformers = {}
@@ -796,8 +759,7 @@ class DataProcessor:
         data_type: DataType,
         **kwargs
     ) -> ProcessingResult:
-        """Process data based on its type"""
-        start_time = time.time()
+        """Process data based on its type"""        start_time = time.time()
         
         try:
             # Validate input data
@@ -844,8 +806,7 @@ class DataProcessor:
             )
     
     def _get_transformer(self, data_type: DataType) -> DataTransformer:
-        """Get appropriate transformer for data type"""
-        if data_type not in self.transformers:
+        """Get appropriate transformer for data type"""        if data_type not in self.transformers:
             if data_type == DataType.NUMERICAL or data_type == DataType.TABULAR:
                 self.transformers[data_type] = NumericalTransformer(self.config)
             elif data_type == DataType.CATEGORICAL:
@@ -866,8 +827,7 @@ class DataProcessor:
         data: pd.DataFrame,
         transformer: DataTransformer
     ) -> np.ndarray:
-        """Process tabular data"""
-        # Separate numerical and categorical columns
+        """Process tabular data"""        # Separate numerical and categorical columns
         numerical_cols = data.select_dtypes(include=[np.number]).columns
         categorical_cols = data.select_dtypes(include=['object', 'category']).columns
         
@@ -897,8 +857,7 @@ class DataProcessor:
         transformer: TextTransformer,
         **kwargs
     ) -> Union[np.ndarray, List[str]]:
-        """Process text data"""
-        # Fit and transform
+        """Process text data"""        # Fit and transform
         transformer.fit(data, **kwargs)
         processed_data = transformer.transform(data, **kwargs)
         
@@ -914,20 +873,17 @@ class DataProcessor:
         data: List[str],
         transformer: ImageTransformer
     ) -> np.ndarray:
-        """Process image data"""
-        return transformer.fit_transform(data)
+        """Process image data"""        return transformer.fit_transform(data)
     
     async def _process_audio_data(
         self,
         data: List[str],
         transformer: AudioTransformer
     ) -> np.ndarray:
-        """Process audio data"""
-        return transformer.fit_transform(data)
+        """Process audio data"""        return transformer.fit_transform(data)
     
     def _validate_input_data(self, data: Any, data_type: DataType) -> Dict[str, Any]:
-        """Validate input data quality"""
-        if data_type == DataType.TABULAR and isinstance(data, pd.DataFrame):
+        """Validate input data quality"""        if data_type == DataType.TABULAR and isinstance(data, pd.DataFrame):
             return self.validator.validate_data_quality(data)
         else:
             # Basic validation for other data types
@@ -939,15 +895,13 @@ class DataProcessor:
 
 
 class FeatureExtractor:
-    """Advanced feature extraction for different data types"""
-    
+    """Advanced feature extraction for different data types"""    
     def __init__(self, config: ProcessingConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     def extract_statistical_features(self, data: np.ndarray) -> Dict[str, float]:
-        """Extract statistical features from numerical data"""
-        return {
+        """Extract statistical features from numerical data"""        return {
             'mean': float(np.mean(data)),
             'std': float(np.std(data)),
             'median': float(np.median(data)),
@@ -960,8 +914,7 @@ class FeatureExtractor:
         }
     
     def extract_temporal_features(self, time_series: np.ndarray) -> Dict[str, float]:
-        """Extract temporal features from time series data"""
-        features = {}
+        """Extract temporal features from time series data"""        features = {}
         
         # Trend analysis
         features['trend_slope'] = self._calculate_trend_slope(time_series)
@@ -978,33 +931,28 @@ class FeatureExtractor:
         return features
     
     def _calculate_skewness(self, data: np.ndarray) -> float:
-        """Calculate skewness of data"""
-        mean = np.mean(data)
+        """Calculate skewness of data"""        mean = np.mean(data)
         std = np.std(data)
         return np.mean(((data - mean) / std) ** 3)
     
     def _calculate_kurtosis(self, data: np.ndarray) -> float:
-        """Calculate kurtosis of data"""
-        mean = np.mean(data)
+        """Calculate kurtosis of data"""        mean = np.mean(data)
         std = np.std(data)
         return np.mean(((data - mean) / std) ** 4) - 3
     
     def _calculate_trend_slope(self, time_series: np.ndarray) -> float:
-        """Calculate trend slope using linear regression"""
-        x = np.arange(len(time_series))
+        """Calculate trend slope using linear regression"""        x = np.arange(len(time_series))
         coeffs = np.polyfit(x, time_series, 1)
         return float(coeffs[0])
     
     def _calculate_seasonality_strength(self, time_series: np.ndarray) -> float:
-        """Calculate seasonality strength"""
-        # Simple seasonality detection using FFT
+        """Calculate seasonality strength"""        # Simple seasonality detection using FFT
         fft = np.fft.fft(time_series)
         power_spectrum = np.abs(fft) ** 2
         return float(np.max(power_spectrum[1:len(power_spectrum)//2]))
     
     def _calculate_autocorrelation(self, time_series: np.ndarray, lag: int) -> float:
-        """Calculate autocorrelation at specified lag"""
-        if len(time_series) <= lag:
+        """Calculate autocorrelation at specified lag"""        if len(time_series) <= lag:
             return 0.0
         
         x1 = time_series[:-lag]

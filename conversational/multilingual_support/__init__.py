@@ -26,8 +26,7 @@ Global Language Coverage:
 - Business culture awareness
 - Sign language support
 - Historical language preservation
-"""
-# Core language management
+"""# Core language management
 from .language_manager import (
     LanguageManager,
     LanguageDetector,
@@ -281,7 +280,6 @@ async def main():
     )
 
 asyncio.run(main())
-"""
-__version__ = "2.0.0"
+"""__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

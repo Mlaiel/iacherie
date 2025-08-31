@@ -1,5 +1,4 @@
-"""
-Revenue Stream Tracker for IA Influencer Agent Platform
+"""Revenue Stream Tracker for IA Influencer Agent Platform
 ======================================================
 
 Advanced revenue streaming and analytics system for real-time monetization
@@ -8,7 +7,6 @@ tracking, payment processing, and revenue optimization across platforms.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -31,8 +29,7 @@ settings = get_settings()
 
 
 class RevenueSource(str, Enum):
-    """Revenue source types"""
-    STREAMING = "streaming"
+    """Revenue source types"""    STREAMING = "streaming"
     LICENSING = "licensing"
     SPONSORSHIP = "sponsorship"
     MERCHANDISE = "merchandise"
@@ -43,8 +40,7 @@ class RevenueSource(str, Enum):
 
 
 class PaymentStatus(str, Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -53,8 +49,7 @@ class PaymentStatus(str, Enum):
 
 
 class CurrencyCode(str, Enum):
-    """Supported currency codes"""
-    USD = "USD"
+    """Supported currency codes"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -65,8 +60,7 @@ class CurrencyCode(str, Enum):
 
 @dataclass
 class RevenueStream:
-    """Revenue stream configuration"""
-    id: str
+    """Revenue stream configuration"""    id: str
     user_id: str
     content_id: Optional[str]
     source: RevenueSource
@@ -81,8 +75,7 @@ class RevenueStream:
 
 @dataclass
 class RevenueEvent:
-    """Revenue generation event"""
-    id: str
+    """Revenue generation event"""    id: str
     stream_id: str
     user_id: str
     amount: Decimal
@@ -95,8 +88,7 @@ class RevenueEvent:
 
 
 class RevenueAnalytics(BaseModel):
-    """Revenue analytics data"""
-    user_id: str = Field(description="User identifier")
+    """Revenue analytics data"""    user_id: str = Field(description="User identifier")
     total_revenue: Decimal = Field(default=Decimal("0"), description="Total revenue earned")
     pending_revenue: Decimal = Field(default=Decimal("0"), description="Pending revenue")
     paid_revenue: Decimal = Field(default=Decimal("0"), description="Already paid revenue")
@@ -109,8 +101,7 @@ class RevenueAnalytics(BaseModel):
 
 
 class PaymentInfo(BaseModel):
-    """Payment processing information"""
-    payment_id: str = Field(description="Payment identifier")
+    """Payment processing information"""    payment_id: str = Field(description="Payment identifier")
     user_id: str = Field(description="User identifier")
     amount: Decimal = Field(description="Payment amount")
     currency: CurrencyCode = Field(description="Payment currency")
@@ -124,11 +115,9 @@ class PaymentInfo(BaseModel):
 
 
 class RevenueStreamer:
-    """
-    Enterprise-grade revenue streaming system for real-time monetization
+    """    Enterprise-grade revenue streaming system for real-time monetization
     tracking, payment processing, and revenue analytics.
-    """
-    
+    """    
     def __init__(self):
         self.redis: Optional[Redis] = None
         self.revenue_streams: Dict[str, RevenueStream] = {}
@@ -138,8 +127,7 @@ class RevenueStreamer:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize revenue streamer with Redis and payment processors"""
-        try:
+        """Initialize revenue streamer with Redis and payment processors"""        try:
             from ...core.cache import get_redis_client
             self.redis = await get_redis_client()
             
@@ -172,8 +160,7 @@ class RevenueStreamer:
         minimum_payout: Optional[Decimal] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Create new revenue stream
+        """        Create new revenue stream
         
         Args:
             user_id: User identifier
@@ -187,8 +174,7 @@ class RevenueStreamer:
             
         Returns:
             Revenue stream identifier
-        """
-        try:
+        """        try:
             from uuid import uuid4
             stream_id = str(uuid4())
             
@@ -236,8 +222,7 @@ class RevenueStreamer:
         reference_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Track revenue generation event
+        """        Track revenue generation event
         
         Args:
             stream_id: Revenue stream identifier
@@ -247,8 +232,7 @@ class RevenueStreamer:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if stream_id not in self.revenue_streams:
                 logger.warning(f"Revenue stream {stream_id} not found")
                 return False
@@ -300,15 +284,13 @@ class RevenueStreamer:
             return False
             
     async def get_user_analytics(self, user_id: str) -> RevenueAnalytics:
-        """Get revenue analytics for user"""
-        if user_id not in self.user_analytics:
+        """Get revenue analytics for user"""        if user_id not in self.user_analytics:
             self.user_analytics[user_id] = RevenueAnalytics(user_id=user_id)
             
         return self.user_analytics[user_id]
         
     async def get_revenue_streams(self, user_id: str) -> List[RevenueStream]:
-        """Get all revenue streams for user"""
-        return [
+        """Get all revenue streams for user"""        return [
             stream for stream in self.revenue_streams.values()
             if stream.user_id == user_id
         ]
@@ -318,8 +300,7 @@ class RevenueStreamer:
         stream_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update revenue stream configuration"""
-        try:
+        """Update revenue stream configuration"""        try:
             if stream_id not in self.revenue_streams:
                 return False
                 
@@ -359,8 +340,7 @@ class RevenueStreamer:
         currency: CurrencyCode,
         method: str = "bank_transfer"
     ) -> Optional[str]:
-        """
-        Initiate payment to user
+        """        Initiate payment to user
         
         Args:
             user_id: User identifier
@@ -370,8 +350,7 @@ class RevenueStreamer:
             
         Returns:
             Payment identifier if successful
-        """
-        try:
+        """        try:
             from uuid import uuid4
             payment_id = str(uuid4())
             
@@ -417,19 +396,16 @@ class RevenueStreamer:
             return None
             
     async def get_payment_status(self, payment_id: str) -> Optional[PaymentInfo]:
-        """Get payment status"""
-        return self.pending_payments.get(payment_id)
+        """Get payment status"""        return self.pending_payments.get(payment_id)
         
     async def get_user_payments(self, user_id: str) -> List[PaymentInfo]:
-        """Get all payments for user"""
-        return [
+        """Get all payments for user"""        return [
             payment for payment in self.pending_payments.values()
             if payment.user_id == user_id
         ]
         
     async def calculate_pending_payout(self, user_id: str) -> Tuple[Decimal, CurrencyCode]:
-        """Calculate pending payout amount for user"""
-        try:
+        """Calculate pending payout amount for user"""        try:
             analytics = await self.get_user_analytics(user_id)
             
             # Find the primary currency (highest revenue)
@@ -460,8 +436,7 @@ class RevenueStreamer:
         user_id: str,
         days: int = 30
     ) -> Dict[str, Any]:
-        """Generate revenue forecast for user"""
-        try:
+        """Generate revenue forecast for user"""        try:
             analytics = await self.get_user_analytics(user_id)
             
             # Calculate trend from last 30 days
@@ -493,8 +468,7 @@ class RevenueStreamer:
             return {}
             
     async def _load_revenue_streams(self) -> None:
-        """Load existing revenue streams from Redis"""
-        try:
+        """Load existing revenue streams from Redis"""        try:
             # Scan for revenue stream keys
             cursor = 0
             while True:
@@ -529,8 +503,7 @@ class RevenueStreamer:
             logger.error(f"Failed to load revenue streams: {e}")
             
     async def _update_user_analytics(self, user_id: str, event: RevenueEvent) -> None:
-        """Update user revenue analytics"""
-        try:
+        """Update user revenue analytics"""        try:
             if user_id not in self.user_analytics:
                 self.user_analytics[user_id] = RevenueAnalytics(user_id=user_id)
                 
@@ -570,8 +543,7 @@ class RevenueStreamer:
             logger.error(f"Failed to update user analytics: {e}")
             
     async def _update_exchange_rates(self) -> None:
-        """Update currency exchange rates"""
-        try:
+        """Update currency exchange rates"""        try:
             # Mock exchange rates - in production, use real API
             self.exchange_rates = {
                 "USD": {"EUR": 0.85, "GBP": 0.73, "JPY": 110.0, "CAD": 1.25, "AUD": 1.35, "CHF": 0.92},
@@ -585,8 +557,7 @@ class RevenueStreamer:
             logger.error(f"Failed to update exchange rates: {e}")
             
     async def _revenue_processor(self) -> None:
-        """Background revenue processing task"""
-        while not self._shutdown_event.is_set():
+        """Background revenue processing task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(300)  # Process every 5 minutes
                 
@@ -598,8 +569,7 @@ class RevenueStreamer:
                 logger.error(f"Revenue processor error: {e}")
                 
     async def _payment_processor(self) -> None:
-        """Background payment processing task"""
-        while not self._shutdown_event.is_set():
+        """Background payment processing task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(60)  # Check every minute
                 
@@ -613,8 +583,7 @@ class RevenueStreamer:
                 logger.error(f"Payment processor error: {e}")
                 
     async def _analytics_updater(self) -> None:
-        """Background analytics update task"""
-        while not self._shutdown_event.is_set():
+        """Background analytics update task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(3600)  # Update every hour
                 
@@ -626,8 +595,7 @@ class RevenueStreamer:
                 logger.error(f"Analytics updater error: {e}")
                 
     async def _exchange_rate_updater(self) -> None:
-        """Background exchange rate update task"""
-        while not self._shutdown_event.is_set():
+        """Background exchange rate update task"""        while not self._shutdown_event.is_set():
             try:
                 await asyncio.sleep(3600)  # Update every hour
                 await self._update_exchange_rates()
@@ -636,8 +604,7 @@ class RevenueStreamer:
                 logger.error(f"Exchange rate updater error: {e}")
                 
     async def _recalculate_user_analytics(self, user_id: str) -> None:
-        """Recalculate user analytics from events"""
-        try:
+        """Recalculate user analytics from events"""        try:
             # This would query all revenue events for the user
             # and recalculate analytics - implementation depends on data storage
             pass
@@ -646,8 +613,7 @@ class RevenueStreamer:
             logger.error(f"Failed to recalculate analytics: {e}")
             
     async def _process_payment(self, payment: PaymentInfo) -> None:
-        """Process individual payment"""
-        try:
+        """Process individual payment"""        try:
             # Update payment status
             payment.status = PaymentStatus.PROCESSING
             payment.processed_at = datetime.now(timezone.utc)
@@ -670,8 +636,7 @@ class RevenueStreamer:
             payment.status = PaymentStatus.FAILED
             
     async def _calculate_growth_rate(self, user_id: str) -> None:
-        """Calculate revenue growth rate for user"""
-        try:
+        """Calculate revenue growth rate for user"""        try:
             analytics = self.user_analytics.get(user_id)
             if not analytics:
                 return
@@ -691,8 +656,7 @@ class RevenueStreamer:
             logger.error(f"Failed to calculate growth rate: {e}")
             
     async def shutdown(self) -> None:
-        """Gracefully shutdown revenue streamer"""
-        try:
+        """Gracefully shutdown revenue streamer"""        try:
             self._shutdown_event.set()
             
             if self.redis:

@@ -1,5 +1,4 @@
-"""
-Advanced Monitoring and Observability System for AI Processing Deployment
+"""Advanced Monitoring and Observability System for AI Processing Deployment
 ========================================================================
 
 Enterprise-grade monitoring system providing comprehensive observability,
@@ -24,7 +23,6 @@ permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import time
@@ -68,16 +66,14 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    LOW = "low"
+    """Alert severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class AlertType(Enum):
-    """Types of alerts."""
-    PERFORMANCE = "performance"
+    """Types of alerts."""    PERFORMANCE = "performance"
     ERROR = "error"
     AVAILABILITY = "availability"
     RESOURCE = "resource"
@@ -86,16 +82,14 @@ class AlertType(Enum):
 
 
 class HealthStatus(Enum):
-    """Health check status."""
-    HEALTHY = "healthy"
+    """Health check status."""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     UNKNOWN = "unknown"
 
 
 class MonitoringState(Enum):
-    """Monitoring system state."""
-    INITIALIZING = "initializing"
+    """Monitoring system state."""    INITIALIZING = "initializing"
     ACTIVE = "active"
     DEGRADED = "degraded"
     MAINTENANCE = "maintenance"
@@ -104,8 +98,7 @@ class MonitoringState(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition and configuration."""
-    name: str
+    """Metric definition and configuration."""    name: str
     type: str  # counter, gauge, histogram
     description: str
     labels: List[str] = None
@@ -116,8 +109,7 @@ class MetricDefinition:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration."""
-    rule_id: str
+    """Alert rule configuration."""    rule_id: str
     name: str
     description: str
     metric_name: str
@@ -134,8 +126,7 @@ class AlertRule:
 
 @dataclass
 class AlertEvent:
-    """Alert event data."""
-    event_id: str
+    """Alert event data."""    event_id: str
     rule_id: str
     alert_name: str
     severity: AlertSeverity
@@ -151,8 +142,7 @@ class AlertEvent:
 
 @dataclass
 class HealthCheckResult:
-    """Health check result."""
-    component: str
+    """Health check result."""    component: str
     status: HealthStatus
     message: str
     details: Dict[str, Any] = None
@@ -162,8 +152,7 @@ class HealthCheckResult:
 
 @dataclass
 class SystemMetrics:
-    """System-level metrics snapshot."""
-    timestamp: datetime
+    """System-level metrics snapshot."""    timestamp: datetime
     cpu_usage_percent: float
     memory_usage_percent: float
     disk_usage_percent: float
@@ -177,8 +166,7 @@ class SystemMetrics:
 
 @dataclass
 class PerformanceReport:
-    """Performance analysis report."""
-    report_id: str
+    """Performance analysis report."""    report_id: str
     generated_at: datetime
     time_range: Dict[str, datetime]
     system_summary: Dict[str, Any]
@@ -189,22 +177,18 @@ class PerformanceReport:
 
 
 class MetricsCollector:
-    """
-    Advanced metrics collector for system and application performance monitoring
+    """    Advanced metrics collector for system and application performance monitoring
     with intelligent sampling and aggregation.
-    """
-    
+    """    
     def __init__(self, collection_interval: int = 60):
-        """Initialize metrics collector."""
-        self.collection_interval = collection_interval
+        """Initialize metrics collector."""        self.collection_interval = collection_interval
         self.metrics_buffer: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         self.custom_metrics: Dict[str, MetricDefinition] = {}
         self.collection_tasks: List[asyncio.Task] = []
         self.is_collecting = False
         
     async def start_collection(self):
-        """Start metrics collection."""
-        if self.is_collecting:
+        """Start metrics collection."""        if self.is_collecting:
             return
             
         self.is_collecting = True
@@ -222,8 +206,7 @@ class MetricsCollector:
         logger.info("Metrics collection started")
     
     async def stop_collection(self):
-        """Stop metrics collection."""
-        self.is_collecting = False
+        """Stop metrics collection."""        self.is_collecting = False
         
         # Cancel all collection tasks
         for task in self.collection_tasks:
@@ -235,8 +218,7 @@ class MetricsCollector:
         logger.info("Metrics collection stopped")
     
     async def _collect_system_metrics(self):
-        """Collect system-level metrics continuously."""
-        last_network_stats = psutil.net_io_counters()
+        """Collect system-level metrics continuously."""        last_network_stats = psutil.net_io_counters()
         last_disk_stats = psutil.disk_io_counters()
         last_time = time.time()
         
@@ -305,8 +287,7 @@ class MetricsCollector:
                 await asyncio.sleep(self.collection_interval)
     
     async def _collect_application_metrics(self):
-        """Collect application-specific metrics."""
-        while self.is_collecting:
+        """Collect application-specific metrics."""        while self.is_collecting:
             try:
                 # Collect custom application metrics
                 for metric_name, metric_def in self.custom_metrics.items():
@@ -320,17 +301,14 @@ class MetricsCollector:
                 await asyncio.sleep(self.collection_interval)
     
     def register_custom_metric(self, metric_def: MetricDefinition):
-        """Register custom metric for collection."""
-        self.custom_metrics[metric_def.name] = metric_def
+        """Register custom metric for collection."""        self.custom_metrics[metric_def.name] = metric_def
         logger.info(f"Registered custom metric: {metric_def.name}")
     
     def get_recent_metrics(self, metric_type: str, count: int = 100) -> List[Any]:
-        """Get recent metrics from buffer."""
-        return list(self.metrics_buffer[metric_type])[-count:]
+        """Get recent metrics from buffer."""        return list(self.metrics_buffer[metric_type])[-count:]
     
     def get_metric_statistics(self, metric_type: str, field: str) -> Dict[str, float]:
-        """Get statistical summary of metric field."""
-        metrics = self.get_recent_metrics(metric_type)
+        """Get statistical summary of metric field."""        metrics = self.get_recent_metrics(metric_type)
         
         if not metrics:
             return {}
@@ -353,14 +331,11 @@ class MetricsCollector:
 
 
 class AlertManager:
-    """
-    Intelligent alert management system with rule-based alerting,
+    """    Intelligent alert management system with rule-based alerting,
     notification routing, and alert correlation.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize alert manager."""
-        self.config = config or {}
+        """Initialize alert manager."""        self.config = config or {}
         self.alert_rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, AlertEvent] = {}
         self.alert_history: List[AlertEvent] = []
@@ -369,8 +344,7 @@ class AlertManager:
         self.is_active = False
         
     async def start_alerting(self):
-        """Start alert evaluation and notification system."""
-        if self.is_active:
+        """Start alert evaluation and notification system."""        if self.is_active:
             return
             
         self.is_active = True
@@ -383,8 +357,7 @@ class AlertManager:
         logger.info("Alert manager started")
     
     async def stop_alerting(self):
-        """Stop alert evaluation and notification system."""
-        self.is_active = False
+        """Stop alert evaluation and notification system."""        self.is_active = False
         
         # Cancel evaluation tasks
         for task in self.evaluation_tasks:
@@ -396,24 +369,20 @@ class AlertManager:
         logger.info("Alert manager stopped")
     
     def add_alert_rule(self, rule: AlertRule):
-        """Add new alert rule."""
-        self.alert_rules[rule.rule_id] = rule
+        """Add new alert rule."""        self.alert_rules[rule.rule_id] = rule
         logger.info(f"Added alert rule: {rule.name}")
     
     def remove_alert_rule(self, rule_id: str):
-        """Remove alert rule."""
-        if rule_id in self.alert_rules:
+        """Remove alert rule."""        if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             logger.info(f"Removed alert rule: {rule_id}")
     
     def add_notification_channel(self, channel_name: str, channel_config: Dict[str, Any]):
-        """Add notification channel configuration."""
-        self.notification_channels[channel_name] = channel_config
+        """Add notification channel configuration."""        self.notification_channels[channel_name] = channel_config
         logger.info(f"Added notification channel: {channel_name}")
     
     async def _evaluate_alerts(self):
-        """Continuously evaluate alert rules."""
-        while self.is_active:
+        """Continuously evaluate alert rules."""        while self.is_active:
             try:
                 current_time = datetime.utcnow()
                 
@@ -446,14 +415,12 @@ class AlertManager:
                 await asyncio.sleep(60)
     
     async def _get_metric_value(self, metric_name: str) -> Optional[float]:
-        """Get current value of metric."""
-        # This would integrate with the metrics collector
+        """Get current value of metric."""        # This would integrate with the metrics collector
         # For now, return a placeholder value
         return None
     
     def _evaluate_condition(self, value: float, condition: str, threshold: float) -> bool:
-        """Evaluate alert condition."""
-        if condition == '>':
+        """Evaluate alert condition."""        if condition == '>':
             return value > threshold
         elif condition == '<':
             return value < threshold
@@ -470,8 +437,7 @@ class AlertManager:
             return False
     
     async def _handle_alert_trigger(self, rule: AlertRule, value: float, timestamp: datetime):
-        """Handle alert trigger."""
-        # Check if alert is already active (avoid duplicate alerts)
+        """Handle alert trigger."""        # Check if alert is already active (avoid duplicate alerts)
         if rule.rule_id in self.active_alerts:
             return
         
@@ -498,8 +464,7 @@ class AlertManager:
         logger.warning(f"Alert triggered: {rule.name} - {alert_event.message}")
     
     async def _handle_alert_resolution(self, rule_id: str, timestamp: datetime):
-        """Handle alert resolution."""
-        if rule_id in self.active_alerts:
+        """Handle alert resolution."""        if rule_id in self.active_alerts:
             alert_event = self.active_alerts[rule_id]
             alert_event.resolved_at = timestamp
             alert_event.duration_seconds = (timestamp - alert_event.triggered_at).total_seconds()
@@ -513,8 +478,7 @@ class AlertManager:
             logger.info(f"Alert resolved: {alert_event.alert_name}")
     
     async def _send_alert_notification(self, alert: AlertEvent, rule: AlertRule):
-        """Send alert notification through configured channels."""
-        if not rule.notification_channels:
+        """Send alert notification through configured channels."""        if not rule.notification_channels:
             return
         
         for channel_name in rule.notification_channels:
@@ -526,8 +490,7 @@ class AlertManager:
                     logger.error(f"Failed to send alert to channel {channel_name}: {e}")
     
     async def _send_resolution_notification(self, alert: AlertEvent):
-        """Send alert resolution notification."""
-        # Find the rule to get notification channels
+        """Send alert resolution notification."""        # Find the rule to get notification channels
         rule = self.alert_rules.get(alert.rule_id)
         if not rule or not rule.notification_channels:
             return
@@ -541,8 +504,7 @@ class AlertManager:
                     logger.error(f"Failed to send resolution to channel {channel_name}: {e}")
     
     async def _send_to_channel(self, channel_name: str, alert: AlertEvent, notification_type: str):
-        """Send notification to specific channel."""
-        channel_config = self.notification_channels[channel_name]
+        """Send notification to specific channel."""        channel_config = self.notification_channels[channel_name]
         channel_type = channel_config.get('type')
         
         if channel_type == 'email':
@@ -555,26 +517,21 @@ class AlertManager:
             logger.warning(f"Unknown notification channel type: {channel_type}")
     
     async def _send_email_notification(self, config: Dict[str, Any], alert: AlertEvent, notification_type: str):
-        """Send email notification."""
-        try:
+        """Send email notification."""        try:
             # Prepare email
             subject = f"[{alert.severity.value.upper()}] {alert.alert_name}"
             if notification_type == 'resolution':
                 subject = f"[RESOLVED] {subject}"
             
-            body = f"""
-Alert: {alert.alert_name}
+            body = f"""Alert: {alert.alert_name}
 Severity: {alert.severity.value}
 Type: {alert.alert_type.value}
 Message: {alert.message}
 Triggered At: {alert.triggered_at}
-"""
-            if notification_type == 'resolution':
-                body += f"""
-Resolved At: {alert.resolved_at}
+"""            if notification_type == 'resolution':
+                body += f"""Resolved At: {alert.resolved_at}
 Duration: {alert.duration_seconds:.2f} seconds
-"""
-            
+"""            
             # Send email (implementation would depend on SMTP configuration)
             logger.info(f"Email notification sent for alert: {alert.alert_name}")
             
@@ -582,8 +539,7 @@ Duration: {alert.duration_seconds:.2f} seconds
             logger.error(f"Email notification failed: {e}")
     
     async def _send_webhook_notification(self, config: Dict[str, Any], alert: AlertEvent, notification_type: str):
-        """Send webhook notification."""
-        try:
+        """Send webhook notification."""        try:
             webhook_url = config.get('url')
             if not webhook_url:
                 return
@@ -618,8 +574,7 @@ Duration: {alert.duration_seconds:.2f} seconds
             logger.error(f"Webhook notification failed: {e}")
     
     async def _send_slack_notification(self, config: Dict[str, Any], alert: AlertEvent, notification_type: str):
-        """Send Slack notification."""
-        try:
+        """Send Slack notification."""        try:
             webhook_url = config.get('webhook_url')
             if not webhook_url:
                 return
@@ -661,31 +616,25 @@ Duration: {alert.duration_seconds:.2f} seconds
             logger.error(f"Slack notification failed: {e}")
     
     def get_active_alerts(self) -> List[AlertEvent]:
-        """Get list of currently active alerts."""
-        return list(self.active_alerts.values())
+        """Get list of currently active alerts."""        return list(self.active_alerts.values())
     
     def get_alert_history(self, limit: int = 100) -> List[AlertEvent]:
-        """Get alert history."""
-        return self.alert_history[-limit:]
+        """Get alert history."""        return self.alert_history[-limit:]
 
 
 class HealthMonitor:
-    """
-    Comprehensive health monitoring system for all system components
+    """    Comprehensive health monitoring system for all system components
     with automated health checks and status reporting.
-    """
-    
+    """    
     def __init__(self, check_interval: int = 300):
-        """Initialize health monitor."""
-        self.check_interval = check_interval
+        """Initialize health monitor."""        self.check_interval = check_interval
         self.health_checks: Dict[str, Callable] = {}
         self.health_status: Dict[str, HealthCheckResult] = {}
         self.check_tasks: List[asyncio.Task] = []
         self.is_monitoring = False
         
     async def start_monitoring(self):
-        """Start health monitoring."""
-        if self.is_monitoring:
+        """Start health monitoring."""        if self.is_monitoring:
             return
             
         self.is_monitoring = True
@@ -698,8 +647,7 @@ class HealthMonitor:
         logger.info("Health monitoring started")
     
     async def stop_monitoring(self):
-        """Stop health monitoring."""
-        self.is_monitoring = False
+        """Stop health monitoring."""        self.is_monitoring = False
         
         # Cancel check tasks
         for task in self.check_tasks:
@@ -711,13 +659,11 @@ class HealthMonitor:
         logger.info("Health monitoring stopped")
     
     def register_health_check(self, component: str, check_function: Callable):
-        """Register health check function for component."""
-        self.health_checks[component] = check_function
+        """Register health check function for component."""        self.health_checks[component] = check_function
         logger.info(f"Registered health check for component: {component}")
     
     async def _run_health_checks(self):
-        """Run all health checks periodically."""
-        while self.is_monitoring:
+        """Run all health checks periodically."""        while self.is_monitoring:
             try:
                 # Run all registered health checks
                 for component, check_function in self.health_checks.items():
@@ -740,8 +686,7 @@ class HealthMonitor:
                 await asyncio.sleep(self.check_interval)
     
     async def _execute_health_check(self, component: str, check_function: Callable) -> HealthCheckResult:
-        """Execute individual health check."""
-        start_time = time.time()
+        """Execute individual health check."""        start_time = time.time()
         
         try:
             # Execute health check function
@@ -793,8 +738,7 @@ class HealthMonitor:
             )
     
     async def get_overall_health(self) -> Dict[str, Any]:
-        """Get overall system health status."""
-        if not self.health_status:
+        """Get overall system health status."""        if not self.health_status:
             return {
                 'status': HealthStatus.UNKNOWN,
                 'message': 'No health checks configured',
@@ -843,19 +787,15 @@ class HealthMonitor:
         }
     
     def get_component_health(self, component: str) -> Optional[HealthCheckResult]:
-        """Get health status for specific component."""
-        return self.health_status.get(component)
+        """Get health status for specific component."""        return self.health_status.get(component)
 
 
 class MonitoringSystem:
-    """
-    Unified monitoring system orchestrating metrics collection,
+    """    Unified monitoring system orchestrating metrics collection,
     alerting, health monitoring, and performance analysis.
-    """
-    
+    """    
     def __init__(self, config: ProcessingConfig):
-        """Initialize monitoring system."""
-        self.config = config
+        """Initialize monitoring system."""        self.config = config
         self.metrics_collector = MetricsCollector()
         self.alert_manager = AlertManager()
         self.health_monitor = HealthMonitor()
@@ -863,8 +803,7 @@ class MonitoringSystem:
         self.prometheus_server = None
         
     async def initialize(self):
-        """Initialize monitoring system."""
-        try:
+        """Initialize monitoring system."""        try:
             # Start Prometheus metrics server
             if self.config.monitoring_enabled:
                 self.prometheus_server = start_http_server(8000, registry=monitoring_registry)
@@ -885,8 +824,7 @@ class MonitoringSystem:
             raise
     
     async def start(self):
-        """Start all monitoring components."""
-        try:
+        """Start all monitoring components."""        try:
             # Start metrics collection
             await self.metrics_collector.start_collection()
             
@@ -903,8 +841,7 @@ class MonitoringSystem:
             raise
     
     async def stop(self):
-        """Stop all monitoring components."""
-        try:
+        """Stop all monitoring components."""        try:
             # Stop health monitoring
             await self.health_monitor.stop_monitoring()
             
@@ -921,8 +858,7 @@ class MonitoringSystem:
             logger.error(f"Error stopping monitoring system: {e}")
     
     async def _setup_default_alert_rules(self):
-        """Setup default alert rules."""
-        default_rules = [
+        """Setup default alert rules."""        default_rules = [
             AlertRule(
                 rule_id="high_cpu_usage",
                 name="High CPU Usage",
@@ -962,8 +898,7 @@ class MonitoringSystem:
             self.alert_manager.add_alert_rule(rule)
     
     async def _setup_default_health_checks(self):
-        """Setup default health checks."""
-        # System health check
+        """Setup default health checks."""        # System health check
         async def system_health_check():
             cpu_usage = psutil.cpu_percent()
             memory_usage = psutil.virtual_memory().percent
@@ -993,8 +928,7 @@ class MonitoringSystem:
         self.health_monitor.register_health_check("system", system_health_check)
     
     async def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive system monitoring overview."""
-        # Get recent metrics
+        """Get comprehensive system monitoring overview."""        # Get recent metrics
         recent_system_metrics = self.metrics_collector.get_recent_metrics('system_metrics', 10)
         
         # Get health status
@@ -1040,8 +974,7 @@ class MonitoringSystem:
         }
     
     async def generate_performance_report(self, time_range_hours: int = 24) -> PerformanceReport:
-        """Generate comprehensive performance analysis report."""
-        end_time = datetime.utcnow()
+        """Generate comprehensive performance analysis report."""        end_time = datetime.utcnow()
         start_time = end_time - timedelta(hours=time_range_hours)
         
         # Get metrics for time range

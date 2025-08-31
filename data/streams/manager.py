@@ -1,5 +1,4 @@
-"""
-Core Data Stream Manager for IA Influencer Agent Platform
+"""Core Data Stream Manager for IA Influencer Agent Platform
 ========================================================
 
 Enterprise-grade stream management for real-time content processing,
@@ -8,7 +7,6 @@ protection monitoring, and revenue tracking across multiple platforms.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, AsyncGenerator
@@ -34,8 +32,7 @@ settings = get_settings()
 
 
 class StreamType(str, Enum):
-    """Stream type enumeration for different content categories"""
-    AUDIO = "audio"
+    """Stream type enumeration for different content categories"""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -46,8 +43,7 @@ class StreamType(str, Enum):
 
 
 class StreamStatus(str, Enum):
-    """Stream processing status enumeration"""
-    PENDING = "pending"
+    """Stream processing status enumeration"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,8 +52,7 @@ class StreamStatus(str, Enum):
 
 @dataclass
 class StreamEvent:
-    """Data stream event structure"""
-    id: str
+    """Data stream event structure"""    id: str
     stream_id: str
     event_type: str
     timestamp: datetime
@@ -68,8 +63,7 @@ class StreamEvent:
 
 
 class StreamMetrics(BaseModel):
-    """Stream performance metrics"""
-    total_events: int = Field(default=0, description="Total events processed")
+    """Stream performance metrics"""    total_events: int = Field(default=0, description="Total events processed")
     success_rate: float = Field(default=0.0, description="Success rate percentage")
     avg_processing_time: float = Field(default=0.0, description="Average processing time in seconds")
     error_count: int = Field(default=0, description="Total error count")
@@ -78,13 +72,11 @@ class StreamMetrics(BaseModel):
 
 
 class DataStreamManager:
-    """
-    Enterprise-grade data stream manager for real-time content processing
+    """    Enterprise-grade data stream manager for real-time content processing
     
     Handles multi-format content streams, protection monitoring, revenue tracking,
     and cross-platform data synchronization with high availability.
-    """
-    
+    """    
     def __init__(self):
         self.redis: Optional[Redis] = None
         self.active_streams: Dict[str, Dict[str, Any]] = {}
@@ -93,8 +85,7 @@ class DataStreamManager:
         self._shutdown_event = asyncio.Event()
         
     async def initialize(self) -> None:
-        """Initialize stream manager with Redis connection and handlers"""
-        try:
+        """Initialize stream manager with Redis connection and handlers"""        try:
             self.redis = await get_redis_client()
             await self._register_default_handlers()
             logger.info("DataStreamManager initialized successfully")
@@ -103,8 +94,7 @@ class DataStreamManager:
             raise
             
     async def _register_default_handlers(self) -> None:
-        """Register default stream handlers for each content type"""
-        handlers = {
+        """Register default stream handlers for each content type"""        handlers = {
             StreamType.AUDIO: [self._handle_audio_stream],
             StreamType.VIDEO: [self._handle_video_stream],
             StreamType.IMAGE: [self._handle_image_stream],
@@ -123,8 +113,7 @@ class DataStreamManager:
         content_id: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Create new data stream for content processing
+        """        Create new data stream for content processing
         
         Args:
             stream_type: Type of stream to create
@@ -134,8 +123,7 @@ class DataStreamManager:
             
         Returns:
             Stream identifier
-        """
-        try:
+        """        try:
             stream_id = str(uuid4())
             
             stream_config = {
@@ -179,8 +167,7 @@ class DataStreamManager:
         data: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Push event to data stream
+        """        Push event to data stream
         
         Args:
             stream_id: Stream identifier
@@ -190,8 +177,7 @@ class DataStreamManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if stream_id not in self.active_streams:
                 logger.warning(f"Stream {stream_id} not found")
                 return False
@@ -240,8 +226,7 @@ class DataStreamManager:
         start: str = "0",
         count: int = 100
     ) -> List[StreamEvent]:
-        """
-        Retrieve events from stream
+        """        Retrieve events from stream
         
         Args:
             stream_id: Stream identifier
@@ -250,8 +235,7 @@ class DataStreamManager:
             
         Returns:
             List of stream events
-        """
-        try:
+        """        try:
             events = []
             stream_data = await self.redis.xrange(
                 f"events:{stream_id}",
@@ -278,16 +262,14 @@ class DataStreamManager:
             return []
             
     async def close_stream(self, stream_id: str) -> bool:
-        """
-        Close and cleanup data stream
+        """        Close and cleanup data stream
         
         Args:
             stream_id: Stream identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if stream_id in self.active_streams:
                 # Update stream status
                 await self.redis.hset(
@@ -318,18 +300,15 @@ class DataStreamManager:
         stream_type: StreamType,
         handler: Callable[[StreamEvent], None]
     ) -> None:
-        """Register custom event handler for stream type"""
-        if stream_type not in self.stream_handlers:
+        """Register custom event handler for stream type"""        if stream_type not in self.stream_handlers:
             self.stream_handlers[stream_type] = []
         self.stream_handlers[stream_type].append(handler)
         
     async def get_stream_metrics(self, stream_id: str) -> Optional[StreamMetrics]:
-        """Get performance metrics for stream"""
-        return self.metrics.get(stream_id)
+        """Get performance metrics for stream"""        return self.metrics.get(stream_id)
         
     async def list_active_streams(self, user_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List active streams, optionally filtered by user"""
-        streams = []
+        """List active streams, optionally filtered by user"""        streams = []
         for stream_id, config in self.active_streams.items():
             if user_id is None or config.get("user_id") == user_id:
                 streams.append({
@@ -343,8 +322,7 @@ class DataStreamManager:
         return streams
         
     def _update_metrics(self, stream_id: str, success: bool) -> None:
-        """Update stream performance metrics"""
-        if stream_id not in self.metrics:
+        """Update stream performance metrics"""        if stream_id not in self.metrics:
             self.metrics[stream_id] = StreamMetrics()
             
         metrics = self.metrics[stream_id]
@@ -359,8 +337,7 @@ class DataStreamManager:
                               metrics.total_events * 100) if metrics.total_events > 0 else 0
                               
     async def _trigger_handlers(self, stream_type: StreamType, event: StreamEvent) -> None:
-        """Trigger registered handlers for stream type"""
-        handlers = self.stream_handlers.get(stream_type, [])
+        """Trigger registered handlers for stream type"""        handlers = self.stream_handlers.get(stream_type, [])
         for handler in handlers:
             try:
                 if asyncio.iscoroutinefunction(handler):
@@ -371,8 +348,7 @@ class DataStreamManager:
                 logger.error(f"Handler error for {stream_type}: {e}")
                 
     async def _archive_metrics(self, stream_id: str) -> None:
-        """Archive stream metrics to database"""
-        try:
+        """Archive stream metrics to database"""        try:
             metrics = self.metrics.get(stream_id)
             if metrics:
                 # Store metrics in database for historical analysis
@@ -385,40 +361,31 @@ class DataStreamManager:
             
     # Default stream handlers
     async def _handle_audio_stream(self, event: StreamEvent) -> None:
-        """Handle audio stream events"""
-        logger.debug(f"Processing audio event: {event.event_type}")
+        """Handle audio stream events"""        logger.debug(f"Processing audio event: {event.event_type}")
         
     async def _handle_video_stream(self, event: StreamEvent) -> None:
-        """Handle video stream events"""
-        logger.debug(f"Processing video event: {event.event_type}")
+        """Handle video stream events"""        logger.debug(f"Processing video event: {event.event_type}")
         
     async def _handle_image_stream(self, event: StreamEvent) -> None:
-        """Handle image stream events"""
-        logger.debug(f"Processing image event: {event.event_type}")
+        """Handle image stream events"""        logger.debug(f"Processing image event: {event.event_type}")
         
     async def _handle_text_stream(self, event: StreamEvent) -> None:
-        """Handle text stream events"""
-        logger.debug(f"Processing text event: {event.event_type}")
+        """Handle text stream events"""        logger.debug(f"Processing text event: {event.event_type}")
         
     async def _handle_metadata_stream(self, event: StreamEvent) -> None:
-        """Handle metadata stream events"""
-        logger.debug(f"Processing metadata event: {event.event_type}")
+        """Handle metadata stream events"""        logger.debug(f"Processing metadata event: {event.event_type}")
         
     async def _handle_protection_stream(self, event: StreamEvent) -> None:
-        """Handle protection monitoring events"""
-        logger.debug(f"Processing protection event: {event.event_type}")
+        """Handle protection monitoring events"""        logger.debug(f"Processing protection event: {event.event_type}")
         
     async def _handle_revenue_stream(self, event: StreamEvent) -> None:
-        """Handle revenue tracking events"""
-        logger.debug(f"Processing revenue event: {event.event_type}")
+        """Handle revenue tracking events"""        logger.debug(f"Processing revenue event: {event.event_type}")
         
     async def _handle_analytics_stream(self, event: StreamEvent) -> None:
-        """Handle analytics events"""
-        logger.debug(f"Processing analytics event: {event.event_type}")
+        """Handle analytics events"""        logger.debug(f"Processing analytics event: {event.event_type}")
         
     async def shutdown(self) -> None:
-        """Gracefully shutdown stream manager"""
-        try:
+        """Gracefully shutdown stream manager"""        try:
             self._shutdown_event.set()
             
             # Close all active streams

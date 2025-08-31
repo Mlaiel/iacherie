@@ -1,5 +1,4 @@
-"""
-Advanced Health Checks Module
+"""Advanced Health Checks Module
 
 Enterprise-grade health monitoring and system status verification for IA Influencer Agent platform.
 Provides comprehensive health checks for all system components and dependencies.
@@ -9,7 +8,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
-
 import asyncio
 import time
 import json
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health check status levels"""
-    HEALTHY = "healthy"
+    """Health check status levels"""    HEALTHY = "healthy"
     WARNING = "warning"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -42,8 +39,7 @@ class HealthStatus(Enum):
 
 
 class ComponentType(Enum):
-    """Types of system components"""
-    DATABASE = "database"
+    """Types of system components"""    DATABASE = "database"
     CACHE = "cache"
     API = "api"
     AI_MODEL = "ai_model"
@@ -57,8 +53,7 @@ class ComponentType(Enum):
 
 @dataclass
 class HealthCheckResult:
-    """Health check result for a component"""
-    component_name: str
+    """Health check result for a component"""    component_name: str
     component_type: ComponentType
     status: HealthStatus
     response_time: float
@@ -72,8 +67,7 @@ class HealthCheckResult:
 
 @dataclass
 class SystemHealthSummary:
-    """Overall system health summary"""
-    overall_status: HealthStatus
+    """Overall system health summary"""    overall_status: HealthStatus
     healthy_components: int
     warning_components: int
     degraded_components: int
@@ -89,13 +83,11 @@ class SystemHealthSummary:
 
 
 class HealthChecks:
-    """
-    Advanced Health Checks System
+    """    Advanced Health Checks System
     
     Provides comprehensive health monitoring for all system components,
     dependencies, and services in the IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(
         self,
         metrics_collector: Optional[MetricsCollector] = None,
@@ -141,8 +133,7 @@ class HealthChecks:
         self._register_default_components()
         
     async def start_monitoring(self) -> None:
-        """Start health check monitoring"""
-        if self.is_monitoring:
+        """Start health check monitoring"""        if self.is_monitoring:
             logger.warning("Health check monitoring is already running")
             return
             
@@ -155,8 +146,7 @@ class HealthChecks:
         logger.info("Health check monitoring started successfully")
         
     async def stop_monitoring(self) -> None:
-        """Stop health check monitoring"""
-        if not self.is_monitoring:
+        """Stop health check monitoring"""        if not self.is_monitoring:
             return
             
         self.is_monitoring = False
@@ -180,8 +170,7 @@ class HealthChecks:
         critical: bool = False,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Register a component for health monitoring"""
-        self.components[name] = {
+        """Register a component for health monitoring"""        self.components[name] = {
             "type": component_type,
             "endpoint": endpoint,
             "dependencies": dependencies or [],
@@ -193,8 +182,7 @@ class HealthChecks:
         logger.info(f"Registered component for health monitoring: {name}")
         
     def unregister_component(self, name: str) -> bool:
-        """Unregister a component from health monitoring"""
-        if name in self.components:
+        """Unregister a component from health monitoring"""        if name in self.components:
             del self.components[name]
             if name in self.health_results:
                 del self.health_results[name]
@@ -208,8 +196,7 @@ class HealthChecks:
         self,
         component_name: str
     ) -> HealthCheckResult:
-        """Check health of a specific component"""
-        if component_name not in self.components:
+        """Check health of a specific component"""        if component_name not in self.components:
             raise HealthCheckError(f"Component {component_name} not registered")
             
         component = self.components[component_name]
@@ -264,8 +251,7 @@ class HealthChecks:
             return error_result
             
     async def perform_full_health_check(self) -> SystemHealthSummary:
-        """Perform health check on all registered components"""
-        start_time = time.time()
+        """Perform health check on all registered components"""        start_time = time.time()
         
         # Check all components
         check_tasks = []
@@ -308,8 +294,7 @@ class HealthChecks:
         return summary
         
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get current health status of all components"""
-        # Ensure we have recent health data
+        """Get current health status of all components"""        # Ensure we have recent health data
         if not self.last_full_check or (
             datetime.utcnow() - self.last_full_check > timedelta(minutes=5)
         ):
@@ -351,8 +336,7 @@ class HealthChecks:
         component_name: str,
         time_window: timedelta = timedelta(hours=24)
     ) -> List[Dict[str, Any]]:
-        """Get health history for a specific component"""
-        if component_name not in self.health_history:
+        """Get health history for a specific component"""        if component_name not in self.health_history:
             return []
             
         cutoff_time = datetime.utcnow() - time_window
@@ -372,8 +356,7 @@ class HealthChecks:
         return history
         
     async def get_health_trends(self) -> Dict[str, Any]:
-        """Get health trends and analytics"""
-        trends = {}
+        """Get health trends and analytics"""        trends = {}
         
         for component_name, history in self.health_history.items():
             if not history:
@@ -422,8 +405,7 @@ class HealthChecks:
         return trends
         
     def _register_default_components(self) -> None:
-        """Register default system components"""
-        default_components = [
+        """Register default system components"""        default_components = [
             # Core system components
             {
                 "name": "system_resources",
@@ -519,8 +501,7 @@ class HealthChecks:
         logger.info(f"Registered {len(default_components)} default components")
         
     async def _check_database(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check database health"""
-        try:
+        """Check database health"""        try:
             if self.database_session:
                 # Test database connection with a simple query
                 result = await self.database_session.execute(text("SELECT 1"))
@@ -557,8 +538,7 @@ class HealthChecks:
             )
             
     async def _check_cache(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check cache (Redis) health"""
-        try:
+        """Check cache (Redis) health"""        try:
             if self.redis_client:
                 # Test Redis connection
                 await self.redis_client.ping()
@@ -617,8 +597,7 @@ class HealthChecks:
             )
             
     async def _check_api(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check API endpoint health"""
-        endpoint = config.get("endpoint")
+        """Check API endpoint health"""        endpoint = config.get("endpoint")
         if not endpoint:
             return HealthCheckResult(
                 component_name=name,
@@ -676,8 +655,7 @@ class HealthChecks:
             )
             
     async def _check_ai_model(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check AI model health"""
-        try:
+        """Check AI model health"""        try:
             # This would integrate with actual AI model monitoring
             # For now, simulate a model health check
             
@@ -728,8 +706,7 @@ class HealthChecks:
             )
             
     async def _check_storage(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check storage health"""
-        try:
+        """Check storage health"""        try:
             # This would integrate with actual storage system (S3, etc.)
             # For now, simulate storage health check
             
@@ -784,8 +761,7 @@ class HealthChecks:
             )
             
     async def _check_queue(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check message queue health"""
-        try:
+        """Check message queue health"""        try:
             # This would integrate with actual queue system (Celery/Redis)
             # For now, simulate queue health check
             
@@ -826,8 +802,7 @@ class HealthChecks:
             )
             
     async def _check_external_service(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check external service health"""
-        endpoint = config.get("endpoint")
+        """Check external service health"""        endpoint = config.get("endpoint")
         if not endpoint:
             return HealthCheckResult(
                 component_name=name,
@@ -869,12 +844,10 @@ class HealthChecks:
             )
             
     async def _check_microservice(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check microservice health"""
-        return await self._check_api(name, config)  # Same as API check
+        """Check microservice health"""        return await self._check_api(name, config)  # Same as API check
         
     async def _check_network(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check network connectivity"""
-        endpoint = config.get("endpoint", "8.8.8.8:53")
+        """Check network connectivity"""        endpoint = config.get("endpoint", "8.8.8.8:53")
         
         try:
             host, port = endpoint.split(":")
@@ -913,8 +886,7 @@ class HealthChecks:
             )
             
     async def _check_system(self, name: str, config: Dict[str, Any]) -> HealthCheckResult:
-        """Check system resources health"""
-        try:
+        """Check system resources health"""        try:
             # Get system metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
@@ -977,8 +949,7 @@ class HealthChecks:
             )
             
     async def _calculate_system_health_summary(self) -> SystemHealthSummary:
-        """Calculate overall system health summary"""
-        status_counts = {
+        """Calculate overall system health summary"""        status_counts = {
             HealthStatus.HEALTHY: 0,
             HealthStatus.WARNING: 0,
             HealthStatus.DEGRADED: 0,
@@ -1041,8 +1012,7 @@ class HealthChecks:
         )
         
     def _calculate_health_score(self, summary: SystemHealthSummary) -> float:
-        """Calculate numerical health score (0-100)"""
-        if summary.total_components == 0:
+        """Calculate numerical health score (0-100)"""        if summary.total_components == 0:
             return 0.0
             
         weights = {
@@ -1064,8 +1034,7 @@ class HealthChecks:
         return (total_score / summary.total_components) * 100
         
     async def _collect_health_metrics(self, result: HealthCheckResult) -> None:
-        """Collect health check metrics"""
-        # Collect component health metric
+        """Collect health check metrics"""        # Collect component health metric
         await self.metrics_collector.collect_metric(
             MetricEntry(
                 name="component_health_status",
@@ -1094,8 +1063,7 @@ class HealthChecks:
         )
         
     async def _monitoring_loop(self) -> None:
-        """Main health monitoring loop"""
-        while self.is_monitoring:
+        """Main health monitoring loop"""        while self.is_monitoring:
             try:
                 # Perform full health check
                 await self.perform_full_health_check()

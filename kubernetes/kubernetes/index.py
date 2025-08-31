@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Kubernetes Deployment Index
+"""IA Influencer Agent - Kubernetes Deployment Index
 Main entry point for Kubernetes deployment automation and management
 
 Copyright (c) 2025 Fahed Mlaiel
@@ -16,7 +15,6 @@ Module: backend.deployment.kubernetes
 Purpose: Kubernetes deployment automation and management tools
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import os
 import sys
 import subprocess
@@ -41,14 +39,11 @@ __copyright__ = "Copyright (c) 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
 
 class KubernetesDeployer:
-    """
-    Main Kubernetes deployment manager for IA Influencer Agent platform.
+    """    Main Kubernetes deployment manager for IA Influencer Agent platform.
     Handles deployment, scaling, monitoring, and maintenance of the platform.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize the Kubernetes deployer."""
-        self.base_path = Path(__file__).parent
+        """Initialize the Kubernetes deployer."""        self.base_path = Path(__file__).parent
         self.manifests = {
             'namespaces': 'namespaces.yaml',
             'rbac': 'rbac.yaml', 
@@ -84,8 +79,7 @@ class KubernetesDeployer:
         logger.info(f"Author: {__author__} <{__email__}>")
     
     def validate_prerequisites(self) -> bool:
-        """Validate that all prerequisites are met for deployment."""
-        logger.info("Validating deployment prerequisites...")
+        """Validate that all prerequisites are met for deployment."""        logger.info("Validating deployment prerequisites...")
         
         # Check kubectl
         try:
@@ -121,8 +115,7 @@ class KubernetesDeployer:
         return True
     
     def apply_manifest(self, manifest_name: str, dry_run: bool = False) -> bool:
-        """Apply a specific Kubernetes manifest."""
-        if manifest_name not in self.manifests:
+        """Apply a specific Kubernetes manifest."""        if manifest_name not in self.manifests:
             logger.error(f"Unknown manifest: {manifest_name}")
             return False
         
@@ -148,8 +141,7 @@ class KubernetesDeployer:
             return False
     
     def deploy_all(self, dry_run: bool = False, skip_validation: bool = False) -> bool:
-        """Deploy all manifests in the correct order."""
-        if not skip_validation and not self.validate_prerequisites():
+        """Deploy all manifests in the correct order."""        if not skip_validation and not self.validate_prerequisites():
             logger.error("Prerequisites validation failed. Use --skip-validation to bypass.")
             return False
         
@@ -181,8 +173,7 @@ class KubernetesDeployer:
         return True
     
     def show_deployment_status(self) -> None:
-        """Show the current deployment status."""
-        logger.info("Checking deployment status...")
+        """Show the current deployment status."""        logger.info("Checking deployment status...")
         
         namespaces = ['ia-influencer-prod', 'ia-monitoring', 'ia-storage']
         
@@ -210,8 +201,7 @@ class KubernetesDeployer:
                 logger.warning(f"Could not get services for namespace {namespace}")
     
     def delete_deployment(self, confirm: bool = False) -> bool:
-        """Delete the entire deployment."""
-        if not confirm:
+        """Delete the entire deployment."""        if not confirm:
             response = input("Are you sure you want to delete the entire deployment? (yes/no): ")
             if response.lower() != 'yes':
                 logger.info("Deletion cancelled")
@@ -236,8 +226,7 @@ class KubernetesDeployer:
         return True
     
     def scale_deployment(self, component: str, replicas: int) -> bool:
-        """Scale a specific component."""
-        deployments = {
+        """Scale a specific component."""        deployments = {
             'api-gateway': 'ia-api-gateway',
             'ml-engine': 'ia-ml-engine',
             'protection': 'ia-protection-service',
@@ -273,8 +262,7 @@ class KubernetesDeployer:
             return False
     
     def backup_stateful_data(self, backup_path: str = "/backups") -> bool:
-        """Backup all stateful data from the platform."""
-        logger.info("Starting backup of stateful data...")
+        """Backup all stateful data from the platform."""        logger.info("Starting backup of stateful data...")
         
         stateful_services = [
             'postgresql',
@@ -328,8 +316,7 @@ class KubernetesDeployer:
         return backup_success
     
     def restore_stateful_data(self, backup_path: str, confirm: bool = False) -> bool:
-        """Restore stateful data from backup."""
-        if not confirm:
+        """Restore stateful data from backup."""        if not confirm:
             response = input("Are you sure you want to restore from backup? This will overwrite current data (yes/no): ")
             if response.lower() != 'yes':
                 logger.info("Restore cancelled")
@@ -341,8 +328,7 @@ class KubernetesDeployer:
         return True
     
     def health_check(self) -> Dict[str, bool]:
-        """Perform comprehensive health check of all services."""
-        logger.info("Performing platform health check...")
+        """Perform comprehensive health check of all services."""        logger.info("Performing platform health check...")
         
         health_status = {}
         
@@ -410,8 +396,7 @@ class KubernetesDeployer:
         return health_status
     
     def monitor_resources(self) -> Dict[str, Dict[str, str]]:
-        """Monitor resource usage across the platform."""
-        logger.info("Monitoring resource usage...")
+        """Monitor resource usage across the platform."""        logger.info("Monitoring resource usage...")
         
         resource_usage = {}
         namespaces = ['ia-influencer-prod', 'ia-monitoring', 'ia-storage']
@@ -458,8 +443,7 @@ class KubernetesDeployer:
         return resource_usage
     
     def update_platform(self, component: Optional[str] = None) -> bool:
-        """Update platform components with rolling updates."""
-        logger.info(f"Starting platform update{' for ' + component if component else ''}...")
+        """Update platform components with rolling updates."""        logger.info(f"Starting platform update{' for ' + component if component else ''}...")
         
         if component:
             # Update specific component
@@ -510,8 +494,7 @@ class KubernetesDeployer:
             return self.deploy_all(dry_run=False, skip_validation=True)
     
     def generate_maintenance_report(self) -> str:
-        """Generate a comprehensive maintenance report."""
-        logger.info("Generating maintenance report...")
+        """Generate a comprehensive maintenance report."""        logger.info("Generating maintenance report...")
         
         report = []
         report.append(f"IA Influencer Agent Platform - Maintenance Report")
@@ -564,13 +547,11 @@ class KubernetesDeployer:
         return report_text
     
     def _get_timestamp(self) -> str:
-        """Get current timestamp for file naming."""
-        from datetime import datetime
+        """Get current timestamp for file naming."""        from datetime import datetime
         return datetime.now().strftime("%Y%m%d_%H%M%S")
     
     def disaster_recovery_test(self) -> bool:
-        """Test disaster recovery procedures."""
-        logger.info("Starting disaster recovery test...")
+        """Test disaster recovery procedures."""        logger.info("Starting disaster recovery test...")
         
         # Simulate failure scenarios and test recovery
         logger.info("Testing database failover...")
@@ -581,8 +562,7 @@ class KubernetesDeployer:
         return True
     
     def security_scan(self) -> Dict[str, List[str]]:
-        """Perform security scan of the deployment."""
-        logger.info("Performing security scan...")
+        """Perform security scan of the deployment."""        logger.info("Performing security scan...")
         
         security_issues = {
             'critical': [],
@@ -615,8 +595,7 @@ class KubernetesDeployer:
         return security_issues
     
     def get_logs(self, component: str, lines: int = 100) -> bool:
-        """Get logs from a specific component."""
-        try:
+        """Get logs from a specific component."""        try:
             result = subprocess.run(
                 ['kubectl', 'logs', '-l', f'app.kubernetes.io/component={component}',
                  '-n', 'ia-influencer-prod', f'--tail={lines}'],
@@ -629,8 +608,7 @@ class KubernetesDeployer:
             return False
 
 def main():
-    """Main entry point for the Kubernetes deployment tool."""
-    parser = argparse.ArgumentParser(
+    """Main entry point for the Kubernetes deployment tool."""    parser = argparse.ArgumentParser(
         description='IA Influencer Agent Kubernetes Deployment Tool',
         epilog=f'Copyright (c) 2025 {__author__} <{__email__}>'
     )

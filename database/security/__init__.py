@@ -24,8 +24,7 @@ Contact: mlaiel@live.de
 ⚠️ LEGAL WARNING: Any unauthorized use, copying, distribution, or commercialization 
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
-"""
-# Core security components
+"""# Core security components
 from .encryption_manager import DatabaseEncryptionManager, EncryptionAlgorithm, KeyType
 from .access_control import DatabaseAccessControl, AccessLevel, PermissionType, ResourceType
 from .audit_logger import DatabaseAuditLogger, AuditEventType, AuditSeverity

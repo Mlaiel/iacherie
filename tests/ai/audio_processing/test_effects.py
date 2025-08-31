@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-🧪 Audio Effects Tests - Industrial-Grade Effects Testing Suite
+"""🧪 Audio Effects Tests - Industrial-Grade Effects Testing Suite
 
 Comprehensive testing for professional audio effects and restoration including:
 - EffectsProcessor validation
@@ -28,7 +25,6 @@ Comprehensive testing for professional audio effects and restoration including:
 Created by Expert Team: Audio Developer + Backend Senior + ML Engineer
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -61,8 +57,7 @@ from . import TEST_CONFIG, setup_test_environment
 
 
 class TestEffectsProcessor:
-    """
-    Industrial-grade testing for EffectsProcessor class
+    """    Industrial-grade testing for EffectsProcessor class
     
     Test Coverage:
     - Reverb effects validation
@@ -72,27 +67,23 @@ class TestEffectsProcessor:
     - Distortion effects
     - Modulation effects
     - Effects chain processing
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
-        setup_test_environment()
+        """Setup test environment before each test"""        setup_test_environment()
         self.effects = EffectsProcessor()
         self.processor = AudioProcessor()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_initialization(self):
-        """Test EffectsProcessor initialization"""
-        effects = EffectsProcessor()
+        """Test EffectsProcessor initialization"""        effects = EffectsProcessor()
         assert effects is not None
         assert hasattr(effects, 'sample_rate')
         assert hasattr(effects, 'effects_chain')
         assert effects.sample_rate == 44100  # Default
     
     def test_apply_reverb_hall(self):
-        """Test hall reverb effect"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test hall reverb effect"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         reverb_audio = self.effects.apply_reverb(
@@ -117,8 +108,7 @@ class TestEffectsProcessor:
         assert reverb_rms > original_rms * 0.8  # Should preserve most energy
     
     def test_apply_reverb_plate(self):
-        """Test plate reverb effect"""
-        audio_file = self.test_data_dir / "chirp_sweep.wav"
+        """Test plate reverb effect"""        audio_file = self.test_data_dir / "chirp_sweep.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         reverb_audio = self.effects.apply_reverb(
@@ -134,8 +124,7 @@ class TestEffectsProcessor:
         assert not np.array_equal(reverb_audio[:len(audio_data)], audio_data)  # Should be different
     
     def test_apply_delay(self):
-        """Test delay effect"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test delay effect"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         delay_audio = self.effects.apply_delay(
@@ -160,8 +149,7 @@ class TestEffectsProcessor:
             assert correlation > 0.1  # Some similarity due to delay effect
     
     def test_apply_compression(self):
-        """Test compression effect"""
-        # Create audio with varying amplitude
+        """Test compression effect"""        # Create audio with varying amplitude
         t = np.linspace(0, 2, 88200)  # 2 seconds
         varying_audio = np.concatenate([
             np.sin(2 * np.pi * 440 * t[:44100]) * 0.8,  # Loud part
@@ -187,8 +175,7 @@ class TestEffectsProcessor:
         assert compressed_dynamic_range <= original_dynamic_range
     
     def test_apply_eq_low_pass(self):
-        """Test low-pass EQ filter"""
-        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test low-pass EQ filter"""        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         eq_audio = self.effects.apply_eq(
@@ -217,8 +204,7 @@ class TestEffectsProcessor:
         assert eq_high_energy < original_high_energy
     
     def test_apply_eq_high_pass(self):
-        """Test high-pass EQ filter"""
-        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test high-pass EQ filter"""        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         eq_audio = self.effects.apply_eq(
@@ -244,8 +230,7 @@ class TestEffectsProcessor:
         assert eq_low_energy < original_low_energy
     
     def test_apply_parametric_eq(self):
-        """Test parametric EQ"""
-        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test parametric EQ"""        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         # Boost at 1kHz
@@ -273,8 +258,7 @@ class TestEffectsProcessor:
         assert eq_target_energy > original_target_energy
     
     def test_apply_distortion(self):
-        """Test distortion effect"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test distortion effect"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         distorted_audio = self.effects.apply_distortion(
@@ -306,8 +290,7 @@ class TestEffectsProcessor:
             assert False, "No harmonic enhancement detected"
     
     def test_apply_chorus(self):
-        """Test chorus effect"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test chorus effect"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         chorus_audio = self.effects.apply_chorus(
@@ -327,8 +310,7 @@ class TestEffectsProcessor:
         assert not np.array_equal(chorus_audio[:len(audio_data)], audio_data)
     
     def test_effects_chain(self):
-        """Test effects chain processing"""
-        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
+        """Test effects chain processing"""        audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         # Create effects chain: EQ -> Compression -> Reverb
@@ -346,8 +328,7 @@ class TestEffectsProcessor:
         assert not np.array_equal(processed_audio[:len(audio_data)], audio_data)
     
     def test_limiter(self):
-        """Test limiter effect"""
-        # Create audio with potential clipping
+        """Test limiter effect"""        # Create audio with potential clipping
         loud_audio = np.sin(2 * np.pi * 440 * np.linspace(0, 1, 44100)) * 1.5
         
         limited_audio = self.effects.apply_limiter(
@@ -363,8 +344,7 @@ class TestEffectsProcessor:
         assert not np.isnan(limited_audio).any()
     
     def test_performance_benchmarking(self):
-        """Test effects processing performance"""
-        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test effects processing performance"""        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         start_time = time.time()
@@ -382,8 +362,7 @@ class TestEffectsProcessor:
 
 
 class TestAudioRestoration:
-    """
-    Industrial-grade testing for AudioRestoration class
+    """    Industrial-grade testing for AudioRestoration class
     
     Test Coverage:
     - Noise reduction effectiveness
@@ -392,26 +371,22 @@ class TestAudioRestoration:
     - Hum removal testing
     - Clipping restoration
     - Dynamic range restoration
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
-        setup_test_environment()
+        """Setup test environment before each test"""        setup_test_environment()
         self.restoration = AudioRestoration()
         self.processor = AudioProcessor()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_initialization(self):
-        """Test AudioRestoration initialization"""
-        restoration = AudioRestoration()
+        """Test AudioRestoration initialization"""        restoration = AudioRestoration()
         assert restoration is not None
         assert hasattr(restoration, 'sample_rate')
         assert hasattr(restoration, 'noise_profile')
     
     def test_remove_noise_spectral(self):
-        """Test spectral noise reduction"""
-        # Load noisy audio
+        """Test spectral noise reduction"""        # Load noisy audio
         noisy_file = self.test_data_dir / "white_noise.wav"
         noisy_audio, sample_rate = self.processor.load_audio(str(noisy_file))
         
@@ -433,8 +408,7 @@ class TestAudioRestoration:
         assert cleaned_rms <= original_rms
     
     def test_remove_noise_wiener(self):
-        """Test Wiener filter noise reduction"""
-        noisy_file = self.test_data_dir / "white_noise.wav"
+        """Test Wiener filter noise reduction"""        noisy_file = self.test_data_dir / "white_noise.wav"
         noisy_audio, sample_rate = self.processor.load_audio(str(noisy_file))
         
         cleaned_audio = self.restoration.remove_noise(
@@ -448,8 +422,7 @@ class TestAudioRestoration:
         assert not np.array_equal(cleaned_audio, noisy_audio)  # Should be different
     
     def test_remove_clicks_and_pops(self):
-        """Test click and pop removal"""
-        # Create audio with artificial clicks
+        """Test click and pop removal"""        # Create audio with artificial clicks
         clean_audio_file = self.test_data_dir / "pure_tone_440hz.wav"
         clean_audio, sample_rate = self.processor.load_audio(str(clean_audio_file))
         
@@ -477,8 +450,7 @@ class TestAudioRestoration:
         assert restored_mse < original_mse
     
     def test_remove_hum(self):
-        """Test power line hum removal"""
-        # Create audio with 50Hz hum
+        """Test power line hum removal"""        # Create audio with 50Hz hum
         clean_file = self.test_data_dir / "pure_tone_440hz.wav"
         clean_audio, sample_rate = self.processor.load_audio(str(clean_file))
         
@@ -507,8 +479,7 @@ class TestAudioRestoration:
         assert dehum_spectrum[hum_freq_idx] < hummed_spectrum[hum_freq_idx]
     
     def test_repair_clipping(self):
-        """Test clipping repair"""
-        # Create clipped audio
+        """Test clipping repair"""        # Create clipped audio
         clean_file = self.test_data_dir / "pure_tone_440hz.wav"
         clean_audio, sample_rate = self.processor.load_audio(str(clean_file))
         
@@ -531,8 +502,7 @@ class TestAudioRestoration:
         assert repaired_samples < clipped_samples
     
     def test_restore_dynamics(self):
-        """Test dynamic range restoration"""
-        # Create over-compressed audio
+        """Test dynamic range restoration"""        # Create over-compressed audio
         clean_file = self.test_data_dir / "chirp_sweep.wav"
         clean_audio, sample_rate = self.processor.load_audio(str(clean_file))
         
@@ -554,8 +524,7 @@ class TestAudioRestoration:
         assert restored_range >= compressed_range
     
     def test_spectral_repair(self):
-        """Test spectral repair for missing frequencies"""
-        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test spectral repair for missing frequencies"""        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         # Create spectral hole (remove frequencies around 2kHz)
@@ -587,8 +556,7 @@ class TestAudioRestoration:
         assert repair_band_energy > damaged_band_energy
     
     def test_comprehensive_restoration(self):
-        """Test comprehensive audio restoration"""
-        audio_file = self.test_data_dir / "white_noise.wav"
+        """Test comprehensive audio restoration"""        audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = self.processor.load_audio(str(audio_file))
         
         # Apply comprehensive restoration
@@ -608,11 +576,9 @@ class TestAudioRestoration:
 
 
 class TestReverbType:
-    """Test ReverbType enumeration"""
-    
+    """Test ReverbType enumeration"""    
     def test_reverb_types(self):
-        """Test all reverb types are available"""
-        assert hasattr(ReverbType, 'HALL')
+        """Test all reverb types are available"""        assert hasattr(ReverbType, 'HALL')
         assert hasattr(ReverbType, 'ROOM')
         assert hasattr(ReverbType, 'PLATE')
         assert hasattr(ReverbType, 'SPRING')
@@ -620,11 +586,9 @@ class TestReverbType:
 
 
 class TestFilterType:
-    """Test FilterType enumeration"""
-    
+    """Test FilterType enumeration"""    
     def test_filter_types(self):
-        """Test all filter types are available"""
-        assert hasattr(FilterType, 'LOW_PASS')
+        """Test all filter types are available"""        assert hasattr(FilterType, 'LOW_PASS')
         assert hasattr(FilterType, 'HIGH_PASS')
         assert hasattr(FilterType, 'BAND_PASS')
         assert hasattr(FilterType, 'BAND_STOP')
@@ -632,19 +596,15 @@ class TestFilterType:
 
 
 class TestEffectsIntegration:
-    """
-    Integration tests for effects workflow
-    """
-    
+    """    Integration tests for effects workflow
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         self.test_data_dir = TEST_CONFIG["test_data_dir"]
     
     def test_effects_and_restoration_workflow(self):
-        """Test complete effects and restoration workflow"""
-        # Load audio
+        """Test complete effects and restoration workflow"""        # Load audio
         processor = AudioProcessor()
         audio_file = self.test_data_dir / "white_noise.wav"
         audio_data, sample_rate = processor.load_audio(str(audio_file))
@@ -665,8 +625,7 @@ class TestEffectsIntegration:
         assert len(final_audio) >= len(audio_data)
     
     def test_real_time_effects_simulation(self):
-        """Test real-time effects processing simulation"""
-        processor = AudioProcessor()
+        """Test real-time effects processing simulation"""        processor = AudioProcessor()
         effects = EffectsProcessor()
         
         audio_file = self.test_data_dir / "pure_tone_440hz.wav"

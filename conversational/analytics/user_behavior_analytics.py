@@ -1,5 +1,4 @@
-"""
-User Behavior Analytics Module - Advanced User Behavior Analysis System
+"""User Behavior Analytics Module - Advanced User Behavior Analysis System
 
 Enterprise-grade user behavior analytics for content creators
 providing deep behavioral insights, pattern recognition, and predictive modeling.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class BehaviorType(Enum):
-    """User behavior types for analysis"""
-    CONSUMPTION = "consumption"
+    """User behavior types for analysis"""    CONSUMPTION = "consumption"
     CREATION = "creation"
     INTERACTION = "interaction"
     SHARING = "sharing"
@@ -49,8 +46,7 @@ class BehaviorType(Enum):
 
 
 class UserSegment(Enum):
-    """User segmentation categories"""
-    HEAVY_USERS = "heavy_users"
+    """User segmentation categories"""    HEAVY_USERS = "heavy_users"
     REGULAR_USERS = "regular_users"
     CASUAL_USERS = "casual_users"
     NEW_USERS = "new_users"
@@ -60,8 +56,7 @@ class UserSegment(Enum):
 
 @dataclass
 class BehaviorMetrics:
-    """User behavior metrics structure"""
-    user_id: str
+    """User behavior metrics structure"""    user_id: str
     session_duration: float
     pages_visited: int
     actions_performed: int
@@ -85,8 +80,7 @@ class BehaviorMetrics:
 
 
 class UserBehaviorAnalytics:
-    """
-    Enterprise-grade user behavior analytics engine
+    """    Enterprise-grade user behavior analytics engine
     
     Features:
     - Real-time behavior tracking
@@ -97,8 +91,7 @@ class UserBehaviorAnalytics:
     - Personalization insights
     - User journey analysis
     - Feature adoption tracking
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.behavior_predictor = BehaviorPredictor()
@@ -111,8 +104,7 @@ class UserBehaviorAnalytics:
         user_id: str,
         period: timedelta = timedelta(days=30)
     ) -> BehaviorMetrics:
-        """
-        Analyze comprehensive user behavior metrics
+        """        Analyze comprehensive user behavior metrics
         
         Args:
             user_id: User identifier
@@ -120,8 +112,7 @@ class UserBehaviorAnalytics:
             
         Returns:
             BehaviorMetrics: Comprehensive behavior analysis
-        """
-        try:
+        """        try:
             cache_key = f"behavior_metrics:{user_id}:{period.days}"
             cached_result = await self.cache_manager.get(cache_key)
             
@@ -165,8 +156,7 @@ class UserBehaviorAnalytics:
         user_ids: Optional[List[str]] = None,
         segmentation_method: str = "kmeans"
     ) -> Dict[str, Any]:
-        """
-        Segment users based on behavior patterns
+        """        Segment users based on behavior patterns
         
         Args:
             user_ids: Specific users to segment (None for all users)
@@ -174,8 +164,7 @@ class UserBehaviorAnalytics:
             
         Returns:
             Dict containing user segmentation results
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Get user behavior data
                 if user_ids:
@@ -220,8 +209,7 @@ class UserBehaviorAnalytics:
         user_id: str,
         prediction_horizon: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """
-        Predict user churn probability
+        """        Predict user churn probability
         
         Args:
             user_id: User identifier
@@ -229,8 +217,7 @@ class UserBehaviorAnalytics:
             
         Returns:
             Dict containing churn prediction
-        """
-        try:
+        """        try:
             # Analyze current behavior
             current_behavior = await self.analyze_user_behavior(user_id)
             
@@ -274,8 +261,7 @@ class UserBehaviorAnalytics:
         user_id: str,
         journey_period: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """
-        Analyze user journey and touchpoints
+        """        Analyze user journey and touchpoints
         
         Args:
             user_id: User identifier
@@ -283,8 +269,7 @@ class UserBehaviorAnalytics:
             
         Returns:
             Dict containing user journey analysis
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Get user journey data
                 journey_data = await self._fetch_user_journey_data(
@@ -332,8 +317,7 @@ class UserBehaviorAnalytics:
         user_segment: Optional[str] = None,
         period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """
-        Track feature adoption rates and patterns
+        """        Track feature adoption rates and patterns
         
         Args:
             feature_name: Feature to track
@@ -342,8 +326,7 @@ class UserBehaviorAnalytics:
             
         Returns:
             Dict containing feature adoption analysis
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Get feature usage data
                 usage_data = await self._fetch_feature_usage_data(
@@ -389,35 +372,30 @@ class UserBehaviorAnalytics:
         user_id: str,
         period: timedelta
     ) -> Dict[str, Any]:
-        """Fetch user behavior data from database"""
-        # Implementation for fetching behavior data
+        """Fetch user behavior data from database"""        # Implementation for fetching behavior data
         pass
     
     async def _calculate_behavior_metrics(
         self,
         behavior_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate behavior metrics"""
-        # Implementation for behavior metrics calculation
+        """Calculate behavior metrics"""        # Implementation for behavior metrics calculation
         pass
     
     async def _analyze_behavior_patterns(
         self,
         behavior_data: Dict[str, Any]
     ) -> List[str]:
-        """Analyze behavior patterns"""
-        # Implementation for pattern analysis
+        """Analyze behavior patterns"""        # Implementation for pattern analysis
         pass
 
 
 # User Behavior Analytics Factory
 class UserBehaviorAnalyticsFactory:
-    """Factory for creating user behavior analytics instances"""
-    
+    """Factory for creating user behavior analytics instances"""    
     @staticmethod
     def create_analytics_engine() -> UserBehaviorAnalytics:
-        """Create a new user behavior analytics engine"""
-        return UserBehaviorAnalytics()
+        """Create a new user behavior analytics engine"""        return UserBehaviorAnalytics()
 
 
 # Export main classes

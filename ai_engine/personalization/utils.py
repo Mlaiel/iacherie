@@ -1,5 +1,4 @@
-"""
-Advanced Multi-Platform Personalization Utilities & Performance Optimization
+"""Advanced Multi-Platform Personalization Utilities & Performance Optimization
 
 Ultra-sophisticated utility library providing advanced tools, validators, optimizers,
 and performance enhancers for multi-format content creator personalization platform.
@@ -43,7 +42,6 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable, Set, Generator
@@ -89,16 +87,14 @@ from .exceptions import PersonalizationError, ValidationError, PerformanceError,
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels"""
-    STRICT = "strict"
+    """Validation strictness levels"""    STRICT = "strict"
     MODERATE = "moderate"
     LENIENT = "lenient"
     DISABLED = "disabled"
 
 
 class CacheStrategy(Enum):
-    """Caching strategies for personalization data"""
-    LRU = "lru"
+    """Caching strategies for personalization data"""    LRU = "lru"
     FIFO = "fifo"
     LIFO = "lifo"
     RANDOM = "random"
@@ -108,8 +104,7 @@ class CacheStrategy(Enum):
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics for operations"""
-    
+    """Performance metrics for operations"""    
     execution_time: float
     memory_usage: float
     cache_hit_rate: float
@@ -131,8 +126,7 @@ class PerformanceMetrics:
 
 
 class DataValidator:
-    """
-    Comprehensive data validation for personalization inputs.
+    """    Comprehensive data validation for personalization inputs.
     
     Features:
     - Schema validation
@@ -140,8 +134,7 @@ class DataValidator:
     - Range validation
     - Business rule validation
     - Performance optimization
-    """
-    
+    """    
     def __init__(self, validation_level: ValidationLevel = ValidationLevel.MODERATE):
         self.logger = logging.getLogger(__name__)
         self.validation_level = validation_level
@@ -156,8 +149,7 @@ class DataValidator:
         self.logger.info(f"Data validator initialized with {validation_level.value} validation")
     
     def _initialize_validation_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize validation rules for different data types"""
-        
+        """Initialize validation rules for different data types"""        
         return {
             'user_profile': {
                 'required_fields': ['user_id', 'preferences'],
@@ -217,72 +209,63 @@ class DataValidator:
         }
     
     def validate_user_profile(self, profile_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """
-        Validate user profile data.
+        """        Validate user profile data.
         
         Args:
             profile_data: User profile data to validate
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """
-        try:
+        """        try:
             return self._validate_data('user_profile', profile_data)
         except Exception as e:
             self.logger.error(f"User profile validation error: {e}")
             return False, [f"Validation error: {e}"]
     
     def validate_content_item(self, content_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """
-        Validate content item data.
+        """        Validate content item data.
         
         Args:
             content_data: Content item data to validate
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """
-        try:
+        """        try:
             return self._validate_data('content_item', content_data)
         except Exception as e:
             self.logger.error(f"Content item validation error: {e}")
             return False, [f"Validation error: {e}"]
     
     def validate_recommendation(self, rec_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """
-        Validate recommendation data.
+        """        Validate recommendation data.
         
         Args:
             rec_data: Recommendation data to validate
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """
-        try:
+        """        try:
             return self._validate_data('recommendation', rec_data)
         except Exception as e:
             self.logger.error(f"Recommendation validation error: {e}")
             return False, [f"Validation error: {e}"]
     
     def validate_feedback(self, feedback_data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """
-        Validate feedback data.
+        """        Validate feedback data.
         
         Args:
             feedback_data: Feedback data to validate
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """
-        try:
+        """        try:
             return self._validate_data('feedback', feedback_data)
         except Exception as e:
             self.logger.error(f"Feedback validation error: {e}")
             return False, [f"Validation error: {e}"]
     
     def _validate_data(self, data_type: str, data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Generic data validation using rules"""
-        
+        """Generic data validation using rules"""        
         if self.validation_level == ValidationLevel.DISABLED:
             return True, []
         
@@ -330,8 +313,7 @@ class DataValidator:
         value: Any, 
         constraints: Dict[str, Any]
     ) -> List[str]:
-        """Validate field against constraints"""
-        
+        """Validate field against constraints"""        
         errors = []
         
         # Length constraints
@@ -365,13 +347,11 @@ class DataValidator:
         return errors
     
     def get_validation_stats(self) -> Dict[str, int]:
-        """Get validation statistics"""
-        return dict(self.validation_stats)
+        """Get validation statistics"""        return dict(self.validation_stats)
 
 
 class PersonalizationCache:
-    """
-    High-performance caching system for personalization data.
+    """    High-performance caching system for personalization data.
     
     Features:
     - Multiple caching strategies
@@ -379,8 +359,7 @@ class PersonalizationCache:
     - Memory management
     - Performance monitoring
     - Automatic cleanup
-    """
-    
+    """    
     def __init__(
         self, 
         max_size: int = 10000,
@@ -414,16 +393,14 @@ class PersonalizationCache:
         self.logger.info(f"Cache initialized: size={max_size}, ttl={default_ttl}, strategy={strategy.value}")
     
     def get(self, key: str) -> Optional[Any]:
-        """
-        Get value from cache.
+        """        Get value from cache.
         
         Args:
             key: Cache key
             
         Returns:
             Cached value or None if not found/expired
-        """
-        with self.lock:
+        """        with self.lock:
             # Check if key exists
             if key not in self.cache:
                 self.misses += 1
@@ -443,15 +420,13 @@ class PersonalizationCache:
             return self.cache[key]
     
     def put(self, key: str, value: Any, ttl: Optional[timedelta] = None) -> None:
-        """
-        Put value in cache.
+        """        Put value in cache.
         
         Args:
             key: Cache key
             value: Value to cache
             ttl: Time to live (uses default if None)
-        """
-        with self.lock:
+        """        with self.lock:
             current_time = time.time()
             
             # Set TTL
@@ -468,32 +443,28 @@ class PersonalizationCache:
             self.ttl_times[key] = ttl_time
     
     def delete(self, key: str) -> bool:
-        """
-        Delete key from cache.
+        """        Delete key from cache.
         
         Args:
             key: Cache key to delete
             
         Returns:
             True if key was deleted, False if not found
-        """
-        with self.lock:
+        """        with self.lock:
             if key in self.cache:
                 self._remove_key(key)
                 return True
             return False
     
     def clear(self) -> None:
-        """Clear all cached data"""
-        with self.lock:
+        """Clear all cached data"""        with self.lock:
             self.cache.clear()
             self.access_times.clear()
             self.insertion_times.clear()
             self.ttl_times.clear()
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache performance statistics"""
-        with self.lock:
+        """Get cache performance statistics"""        with self.lock:
             total_requests = self.hits + self.misses
             hit_rate = self.hits / total_requests if total_requests > 0 else 0
             
@@ -508,19 +479,16 @@ class PersonalizationCache:
             }
     
     def _is_expired(self, key: str) -> bool:
-        """Check if cache entry is expired"""
-        return time.time() > self.ttl_times.get(key, float('inf'))
+        """Check if cache entry is expired"""        return time.time() > self.ttl_times.get(key, float('inf'))
     
     def _remove_key(self, key: str) -> None:
-        """Remove key and all associated metadata"""
-        self.cache.pop(key, None)
+        """Remove key and all associated metadata"""        self.cache.pop(key, None)
         self.access_times.pop(key, None)
         self.insertion_times.pop(key, None)
         self.ttl_times.pop(key, None)
     
     def _evict_one(self) -> None:
-        """Evict one entry based on strategy"""
-        if not self.cache:
+        """Evict one entry based on strategy"""        if not self.cache:
             return
         
         if self.strategy == CacheStrategy.LRU:
@@ -542,8 +510,7 @@ class PersonalizationCache:
         self.evictions += 1
     
     def _start_cleanup_thread(self) -> None:
-        """Start background cleanup thread"""
-        def cleanup_expired():
+        """Start background cleanup thread"""        def cleanup_expired():
             while self.running:
                 try:
                     with self.lock:
@@ -564,15 +531,13 @@ class PersonalizationCache:
         self.cleanup_thread.start()
     
     def __del__(self):
-        """Cleanup on destruction"""
-        self.running = False
+        """Cleanup on destruction"""        self.running = False
         if self.cleanup_thread and self.cleanup_thread.is_alive():
             self.cleanup_thread.join(timeout=1)
 
 
 class DataConverter:
-    """
-    Data conversion utilities for personalization.
+    """    Data conversion utilities for personalization.
     
     Features:
     - Format conversion
@@ -580,8 +545,7 @@ class DataConverter:
     - Data normalization
     - Encoding/decoding
     - Performance optimization
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -603,8 +567,7 @@ class DataConverter:
         source_format: str, 
         target_format: str
     ) -> Any:
-        """
-        Convert user profile between formats.
+        """        Convert user profile between formats.
         
         Args:
             profile_data: Profile data to convert
@@ -613,8 +576,7 @@ class DataConverter:
             
         Returns:
             Converted profile data
-        """
-        try:
+        """        try:
             # Check cache first
             cache_key = self._generate_cache_key(profile_data, source_format, target_format)
             cached_result = self.conversion_cache.get(cache_key)
@@ -639,8 +601,7 @@ class DataConverter:
         source_format: str, 
         target_format: str
     ) -> Any:
-        """
-        Convert content features between formats.
+        """        Convert content features between formats.
         
         Args:
             content_data: Content data to convert
@@ -649,8 +610,7 @@ class DataConverter:
             
         Returns:
             Converted content data
-        """
-        try:
+        """        try:
             return self._convert_data(content_data, source_format, target_format, 'content_features')
         except Exception as e:
             self.logger.error(f"Content features conversion error: {e}")
@@ -662,8 +622,7 @@ class DataConverter:
         method: str = "min_max",
         target_range: Tuple[float, float] = (0.0, 1.0)
     ) -> np.ndarray:
-        """
-        Normalize scores to target range.
+        """        Normalize scores to target range.
         
         Args:
             scores: Scores to normalize
@@ -672,8 +631,7 @@ class DataConverter:
             
         Returns:
             Normalized scores
-        """
-        try:
+        """        try:
             scores_array = np.array(scores)
             
             if method == "min_max":
@@ -718,8 +676,7 @@ class DataConverter:
         features: Dict[str, Any],
         encoding_method: str = "one_hot"
     ) -> Dict[str, Any]:
-        """
-        Encode categorical features for ML models.
+        """        Encode categorical features for ML models.
         
         Args:
             features: Features dictionary
@@ -727,8 +684,7 @@ class DataConverter:
             
         Returns:
             Encoded features
-        """
-        try:
+        """        try:
             encoded_features = features.copy()
             
             for key, value in features.items():
@@ -766,8 +722,7 @@ class DataConverter:
         target_format: str, 
         data_type: str
     ) -> Any:
-        """Generic data conversion"""
-        
+        """Generic data conversion"""        
         # If formats are the same, return as-is
         if source_format == target_format:
             return data
@@ -793,52 +748,45 @@ class DataConverter:
         return result
     
     def _handle_json(self, data: Any, operation: str) -> Any:
-        """Handle JSON format conversions"""
-        if operation == 'to_dict':
+        """Handle JSON format conversions"""        if operation == 'to_dict':
             return json.loads(data) if isinstance(data, str) else data
         elif operation == 'from_dict':
             return json.dumps(data, default=str)
         return data
     
     def _handle_dict(self, data: Any, operation: str) -> Any:
-        """Handle dict format conversions"""
-        return data  # Already in dict format
+        """Handle dict format conversions"""        return data  # Already in dict format
     
     def _handle_pandas(self, data: Any, operation: str) -> Any:
-        """Handle pandas DataFrame conversions"""
-        if operation == 'to_dict':
+        """Handle pandas DataFrame conversions"""        if operation == 'to_dict':
             return data.to_dict('records')[0] if len(data) > 0 else {}
         elif operation == 'from_dict':
             return pd.DataFrame([data])
         return data
     
     def _handle_numpy(self, data: Any, operation: str) -> Any:
-        """Handle numpy array conversions"""
-        if operation == 'to_dict':
+        """Handle numpy array conversions"""        if operation == 'to_dict':
             return {'features': data.tolist()}
         elif operation == 'from_dict':
             return np.array(data.get('features', []))
         return data
     
     def _handle_list(self, data: Any, operation: str) -> Any:
-        """Handle list format conversions"""
-        if operation == 'to_dict':
+        """Handle list format conversions"""        if operation == 'to_dict':
             return {'items': data}
         elif operation == 'from_dict':
             return data.get('items', [])
         return data
     
     def _generate_cache_key(self, data: Any, source_format: str, target_format: str) -> str:
-        """Generate cache key for conversion"""
-        # Create hash of data structure (not content)
+        """Generate cache key for conversion"""        # Create hash of data structure (not content)
         data_signature = str(type(data)) + str(len(str(data))[:100])
         key_string = f"{source_format}_{target_format}_{data_signature}"
         return hashlib.md5(key_string.encode()).hexdigest()
 
 
 class PerformanceMonitor:
-    """
-    Performance monitoring for personalization operations.
+    """    Performance monitoring for personalization operations.
     
     Features:
     - Execution time tracking
@@ -846,8 +794,7 @@ class PerformanceMonitor:
     - Cache performance analysis
     - Resource utilization tracking
     - Automated alerts
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -871,16 +818,14 @@ class PerformanceMonitor:
         self.lock = threading.RLock()
     
     def start_operation(self, operation_name: str) -> str:
-        """
-        Start monitoring an operation.
+        """        Start monitoring an operation.
         
         Args:
             operation_name: Name of the operation
             
         Returns:
             Operation ID for tracking
-        """
-        operation_id = f"{operation_name}_{int(time.time() * 1000)}"
+        """        operation_id = f"{operation_name}_{int(time.time() * 1000)}"
         
         with self.lock:
             self.current_operations[operation_id] = {
@@ -897,8 +842,7 @@ class PerformanceMonitor:
         success: bool = True,
         additional_metrics: Optional[Dict[str, float]] = None
     ) -> PerformanceMetrics:
-        """
-        End monitoring an operation and record metrics.
+        """        End monitoring an operation and record metrics.
         
         Args:
             operation_id: Operation ID from start_operation
@@ -907,8 +851,7 @@ class PerformanceMonitor:
             
         Returns:
             Performance metrics for the operation
-        """
-        with self.lock:
+        """        with self.lock:
             if operation_id not in self.current_operations:
                 self.logger.warning(f"Unknown operation ID: {operation_id}")
                 return PerformanceMetrics(0, 0, 0, 0)
@@ -948,16 +891,14 @@ class PerformanceMonitor:
             return metrics
     
     def get_operation_stats(self, operation_name: str) -> Dict[str, Any]:
-        """
-        Get performance statistics for an operation.
+        """        Get performance statistics for an operation.
         
         Args:
             operation_name: Name of the operation
             
         Returns:
             Performance statistics
-        """
-        with self.lock:
+        """        with self.lock:
             metrics_list = self.performance_history.get(operation_name, [])
             
             if not metrics_list:
@@ -989,8 +930,7 @@ class PerformanceMonitor:
             }
     
     def get_system_overview(self) -> Dict[str, Any]:
-        """Get overall system performance overview"""
-        
+        """Get overall system performance overview"""        
         with self.lock:
             all_operations = list(self.performance_history.keys())
             
@@ -1035,14 +975,12 @@ class PerformanceMonitor:
             }
     
     def _get_memory_usage(self) -> float:
-        """Get current memory usage (simplified)"""
-        # In a real implementation, this would use psutil or similar
+        """Get current memory usage (simplified)"""        # In a real implementation, this would use psutil or similar
         # For now, return a placeholder value
         return 1024 * 1024 * 100  # 100MB placeholder
     
     def _check_performance_alerts(self, metrics: PerformanceMetrics) -> None:
-        """Check if metrics trigger any performance alerts"""
-        
+        """Check if metrics trigger any performance alerts"""        
         alerts = []
         
         if metrics.execution_time > self.alert_thresholds['execution_time']:
@@ -1059,8 +997,7 @@ class PerformanceMonitor:
             self.logger.warning(f"Performance alert: {alert}")
     
     def _calculate_performance_trend(self, metrics_list: List[PerformanceMetrics]) -> str:
-        """Calculate performance trend direction"""
-        
+        """Calculate performance trend direction"""        
         if len(metrics_list) < 10:
             return "insufficient_data"
         
@@ -1082,13 +1019,11 @@ class PerformanceMonitor:
 
 
 def performance_timer(operation_name: str):
-    """
-    Decorator for automatic performance monitoring.
+    """    Decorator for automatic performance monitoring.
     
     Args:
         operation_name: Name of the operation being monitored
-    """
-    def decorator(func: Callable) -> Callable:
+    """    def decorator(func: Callable) -> Callable:
         @functools.wraps(func)
         async def async_wrapper(*args, **kwargs):
             monitor = PerformanceMonitor()
@@ -1125,8 +1060,7 @@ def performance_timer(operation_name: str):
 
 
 class FeatureExtractor:
-    """
-    Feature extraction utilities for personalization.
+    """    Feature extraction utilities for personalization.
     
     Features:
     - Text feature extraction
@@ -1134,8 +1068,7 @@ class FeatureExtractor:
     - User behavior features
     - Content metadata features
     - Real-time feature computation
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -1149,16 +1082,14 @@ class FeatureExtractor:
         self.logger.info("Feature extractor initialized")
     
     def extract_user_features(self, user_profile: UserProfile) -> Dict[str, float]:
-        """
-        Extract numerical features from user profile.
+        """        Extract numerical features from user profile.
         
         Args:
             user_profile: User profile object
             
         Returns:
             Dictionary of numerical features
-        """
-        try:
+        """        try:
             features = {}
             
             # Basic demographic features
@@ -1214,16 +1145,14 @@ class FeatureExtractor:
             return {}
     
     def extract_content_features(self, content_metadata: Dict[str, Any]) -> Dict[str, float]:
-        """
-        Extract numerical features from content metadata.
+        """        Extract numerical features from content metadata.
         
         Args:
             content_metadata: Content metadata dictionary
             
         Returns:
             Dictionary of numerical features
-        """
-        try:
+        """        try:
             features = {}
             
             # Basic content features
@@ -1276,8 +1205,7 @@ class FeatureExtractor:
         content_id: str,
         interaction_history: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """
-        Extract features from user-content interaction history.
+        """        Extract features from user-content interaction history.
         
         Args:
             user_id: User identifier
@@ -1286,8 +1214,7 @@ class FeatureExtractor:
             
         Returns:
             Dictionary of interaction features
-        """
-        try:
+        """        try:
             features = {}
             
             # Filter interactions for this user
@@ -1366,16 +1293,14 @@ class FeatureExtractor:
             return {}
     
     def combine_features(self, *feature_dicts: Dict[str, float]) -> Dict[str, float]:
-        """
-        Combine multiple feature dictionaries into one.
+        """        Combine multiple feature dictionaries into one.
         
         Args:
             *feature_dicts: Variable number of feature dictionaries
             
         Returns:
             Combined feature dictionary
-        """
-        try:
+        """        try:
             combined = {}
             
             for feature_dict in feature_dicts:
@@ -1393,8 +1318,7 @@ class FeatureExtractor:
         features: Dict[str, float],
         method: str = "min_max"
     ) -> Dict[str, float]:
-        """
-        Normalize feature values.
+        """        Normalize feature values.
         
         Args:
             features: Feature dictionary to normalize
@@ -1402,8 +1326,7 @@ class FeatureExtractor:
             
         Returns:
             Normalized features
-        """
-        try:
+        """        try:
             if not features:
                 return features
             
@@ -1438,8 +1361,7 @@ class FeatureExtractor:
 
 
 class ConfigurationManager:
-    """
-    Configuration management for personalization system.
+    """    Configuration management for personalization system.
     
     Features:
     - Environment-based configuration
@@ -1447,8 +1369,7 @@ class ConfigurationManager:
     - Configuration validation
     - Default value management
     - Configuration history
-    """
-    
+    """    
     def __init__(self, config_file: Optional[str] = None):
         self.logger = logging.getLogger(__name__)
         
@@ -1466,8 +1387,7 @@ class ConfigurationManager:
         self.logger.info("Configuration manager initialized")
     
     def _load_default_config(self) -> Dict[str, Any]:
-        """Load default configuration values"""
-        
+        """Load default configuration values"""        
         return {
             # Model configuration
             'models': {
@@ -1520,8 +1440,7 @@ class ConfigurationManager:
         }
     
     def get(self, key: str, default: Any = None) -> Any:
-        """
-        Get configuration value using dot notation.
+        """        Get configuration value using dot notation.
         
         Args:
             key: Configuration key (supports dot notation like 'models.collaborative_filtering.n_factors')
@@ -1529,8 +1448,7 @@ class ConfigurationManager:
             
         Returns:
             Configuration value
-        """
-        try:
+        """        try:
             keys = key.split('.')
             value = self.config
             
@@ -1547,14 +1465,12 @@ class ConfigurationManager:
             return default
     
     def set(self, key: str, value: Any) -> None:
-        """
-        Set configuration value using dot notation.
+        """        Set configuration value using dot notation.
         
         Args:
             key: Configuration key (supports dot notation)
             value: Value to set
-        """
-        try:
+        """        try:
             # Store current config in history
             self.config_history.append({
                 'timestamp': datetime.utcnow(),
@@ -1583,13 +1499,11 @@ class ConfigurationManager:
             raise PersonalizationError(f"Failed to set configuration: {e}")
     
     def load_from_file(self, config_file: str) -> None:
-        """
-        Load configuration from JSON file.
+        """        Load configuration from JSON file.
         
         Args:
             config_file: Path to configuration file
-        """
-        try:
+        """        try:
             with open(config_file, 'r') as f:
                 file_config = json.load(f)
             
@@ -1604,13 +1518,11 @@ class ConfigurationManager:
             self.config = self.default_config.copy()
     
     def save_to_file(self, config_file: str) -> None:
-        """
-        Save current configuration to JSON file.
+        """        Save current configuration to JSON file.
         
         Args:
             config_file: Path to save configuration file
-        """
-        try:
+        """        try:
             with open(config_file, 'w') as f:
                 json.dump(self.config, f, indent=2, default=str)
             
@@ -1621,19 +1533,16 @@ class ConfigurationManager:
             raise PersonalizationError(f"Failed to save configuration: {e}")
     
     def reset_to_defaults(self) -> None:
-        """Reset configuration to default values"""
-        
+        """Reset configuration to default values"""        
         self.config = self.default_config.copy()
         self.logger.info("Configuration reset to defaults")
     
     def validate_config(self) -> Tuple[bool, List[str]]:
-        """
-        Validate current configuration.
+        """        Validate current configuration.
         
         Returns:
             Tuple of (is_valid, error_messages)
-        """
-        errors = []
+        """        errors = []
         
         try:
             # Validate model configuration
@@ -1677,8 +1586,7 @@ class ConfigurationManager:
             return False, [f"Validation error: {e}"]
     
     def _merge_configs(self, base: Dict[str, Any], override: Dict[str, Any]) -> Dict[str, Any]:
-        """Recursively merge configuration dictionaries"""
-        
+        """Recursively merge configuration dictionaries"""        
         result = base.copy()
         
         for key, value in override.items():
@@ -1690,8 +1598,7 @@ class ConfigurationManager:
         return result
     
     def get_config_summary(self) -> Dict[str, Any]:
-        """Get summary of current configuration"""
-        
+        """Get summary of current configuration"""        
         return {
             'total_keys': len(self._flatten_config(self.config)),
             'major_sections': list(self.config.keys()),
@@ -1703,8 +1610,7 @@ class ConfigurationManager:
         }
     
     def _flatten_config(self, config: Dict[str, Any], prefix: str = "") -> Dict[str, Any]:
-        """Flatten nested configuration dictionary"""
-        
+        """Flatten nested configuration dictionary"""        
         result = {}
         
         for key, value in config.items():
@@ -1724,22 +1630,19 @@ _global_monitor = None
 _global_config = None
 
 def get_global_cache() -> PersonalizationCache:
-    """Get global cache instance"""
-    global _global_cache
+    """Get global cache instance"""    global _global_cache
     if _global_cache is None:
         _global_cache = PersonalizationCache()
     return _global_cache
 
 def get_global_monitor() -> PerformanceMonitor:
-    """Get global performance monitor instance"""
-    global _global_monitor
+    """Get global performance monitor instance"""    global _global_monitor
     if _global_monitor is None:
         _global_monitor = PerformanceMonitor()
     return _global_monitor
 
 def get_global_config() -> ConfigurationManager:
-    """Get global configuration manager instance"""
-    global _global_config
+    """Get global configuration manager instance"""    global _global_config
     if _global_config is None:
         _global_config = ConfigurationManager()
     return _global_config

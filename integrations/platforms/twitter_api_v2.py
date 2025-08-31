@@ -1,5 +1,4 @@
-"""
-Twitter API v2 Integration
+"""Twitter API v2 Integration
 ==========================
 
 Complete Twitter API v2 integration for social media management and analytics.
@@ -8,7 +7,6 @@ Handles tweets, users, spaces, lists, and comprehensive analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import aiohttp
 import json
@@ -26,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class Tweet:
-    """Twitter tweet information"""
-    tweet_id: str
+    """Twitter tweet information"""    tweet_id: str
     text: str
     author_id: str
     created_at: datetime
@@ -42,8 +39,7 @@ class Tweet:
 
 @dataclass
 class TwitterUser:
-    """Twitter user information"""
-    user_id: str
+    """Twitter user information"""    user_id: str
     username: str
     name: str
     created_at: datetime
@@ -60,8 +56,7 @@ class TwitterUser:
 
 @dataclass
 class TwitterAnalytics:
-    """Twitter analytics data"""
-    user_id: str
+    """Twitter analytics data"""    user_id: str
     date_range: Dict[str, str]
     tweet_count: int = 0
     impression_count: int = 0
@@ -72,22 +67,19 @@ class TwitterAnalytics:
 
 
 class TwitterAPIv2:
-    """Twitter API v2 integration"""
-    
+    """Twitter API v2 integration"""    
     def __init__(self, rate_limiter: Optional[APIRateLimiter] = None):
         self.session = None
         self.rate_limiter = rate_limiter or APIRateLimiter()
         self.base_url = "https://api.twitter.com/2"
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         await self.rate_limiter.__aenter__()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
         
@@ -99,8 +91,7 @@ class TwitterAPIv2:
         params: Optional[Dict[str, Any]] = None,
         data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Make authenticated API request with rate limiting"""
-        
+        """Make authenticated API request with rate limiting"""        
         # Check rate limit
         rate_status = await self.rate_limiter.check_rate_limit("twitter", endpoint)
         if rate_status.is_limited:
@@ -155,8 +146,7 @@ class TwitterAPIv2:
             raise
             
     async def get_me(self, tokens: OAuthTokens) -> TwitterUser:
-        """Get authenticated user's information"""
-        user_fields = [
+        """Get authenticated user's information"""        user_fields = [
             "id", "username", "name", "created_at", "description",
             "location", "pinned_tweet_id", "profile_image_url", "protected",
             "public_metrics", "url", "verified", "verified_type"
@@ -187,8 +177,7 @@ class TwitterAPIv2:
         return user
         
     async def get_user_by_username(self, tokens: OAuthTokens, username: str) -> TwitterUser:
-        """Get user by username"""
-        user_fields = [
+        """Get user by username"""        user_fields = [
             "id", "username", "name", "created_at", "description",
             "location", "pinned_tweet_id", "profile_image_url", "protected",
             "public_metrics", "url", "verified", "verified_type"
@@ -227,8 +216,7 @@ class TwitterAPIv2:
         poll_options: Optional[List[str]] = None,
         poll_duration_minutes: int = 1440
     ) -> Tweet:
-        """Create a new tweet"""
-        
+        """Create a new tweet"""        
         data = {"text": text}
         
         if reply_to_tweet_id:
@@ -258,8 +246,7 @@ class TwitterAPIv2:
         return tweet
         
     async def delete_tweet(self, tokens: OAuthTokens, tweet_id: str) -> bool:
-        """Delete a tweet"""
-        
+        """Delete a tweet"""        
         try:
             response = await self._make_request("DELETE", f"tweets/{tweet_id}", tokens)
             deleted = response.get("data", {}).get("deleted", False)
@@ -281,8 +268,7 @@ class TwitterAPIv2:
         user_fields: Optional[List[str]] = None,
         expansions: Optional[List[str]] = None
     ) -> List[Tweet]:
-        """Get tweets by IDs"""
-        
+        """Get tweets by IDs"""        
         if isinstance(tweet_ids, str):
             tweet_ids = [tweet_ids]
             
@@ -331,8 +317,7 @@ class TwitterAPIv2:
         exclude: Optional[List[str]] = None,
         pagination_token: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get tweets from a user"""
-        
+        """Get tweets from a user"""        
         tweet_fields = [
             "id", "text", "author_id", "created_at", "public_metrics",
             "entities", "context_annotations", "referenced_tweets"
@@ -360,8 +345,7 @@ class TwitterAPIv2:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Search for tweets"""
-        
+        """Search for tweets"""        
         tweet_fields = [
             "id", "text", "author_id", "created_at", "public_metrics",
             "entities", "context_annotations", "referenced_tweets"
@@ -384,8 +368,7 @@ class TwitterAPIv2:
         return await self._make_request("GET", "tweets/search/recent", tokens, params=params)
         
     async def like_tweet(self, tokens: OAuthTokens, user_id: str, tweet_id: str) -> bool:
-        """Like a tweet"""
-        
+        """Like a tweet"""        
         data = {"tweet_id": tweet_id}
         
         try:
@@ -402,8 +385,7 @@ class TwitterAPIv2:
             return False
             
     async def unlike_tweet(self, tokens: OAuthTokens, user_id: str, tweet_id: str) -> bool:
-        """Unlike a tweet"""
-        
+        """Unlike a tweet"""        
         try:
             response = await self._make_request("DELETE", f"users/{user_id}/likes/{tweet_id}", tokens)
             unliked = response.get("data", {}).get("liked", True) == False
@@ -418,8 +400,7 @@ class TwitterAPIv2:
             return False
             
     async def retweet(self, tokens: OAuthTokens, user_id: str, tweet_id: str) -> bool:
-        """Retweet a tweet"""
-        
+        """Retweet a tweet"""        
         data = {"tweet_id": tweet_id}
         
         try:
@@ -436,8 +417,7 @@ class TwitterAPIv2:
             return False
             
     async def unretweet(self, tokens: OAuthTokens, user_id: str, tweet_id: str) -> bool:
-        """Remove retweet"""
-        
+        """Remove retweet"""        
         try:
             response = await self._make_request("DELETE", f"users/{user_id}/retweets/{tweet_id}", tokens)
             unretweeted = response.get("data", {}).get("retweeted", True) == False
@@ -452,8 +432,7 @@ class TwitterAPIv2:
             return False
             
     async def follow_user(self, tokens: OAuthTokens, user_id: str, target_user_id: str) -> bool:
-        """Follow a user"""
-        
+        """Follow a user"""        
         data = {"target_user_id": target_user_id}
         
         try:
@@ -470,8 +449,7 @@ class TwitterAPIv2:
             return False
             
     async def unfollow_user(self, tokens: OAuthTokens, user_id: str, target_user_id: str) -> bool:
-        """Unfollow a user"""
-        
+        """Unfollow a user"""        
         try:
             response = await self._make_request("DELETE", f"users/{user_id}/following/{target_user_id}", tokens)
             unfollowed = response.get("data", {}).get("following", True) == False
@@ -492,8 +470,7 @@ class TwitterAPIv2:
         max_results: int = 100,
         pagination_token: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get user's followers"""
-        
+        """Get user's followers"""        
         user_fields = ["id", "username", "name", "public_metrics", "verified"]
         
         params = {
@@ -513,8 +490,7 @@ class TwitterAPIv2:
         max_results: int = 100,
         pagination_token: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get users that a user is following"""
-        
+        """Get users that a user is following"""        
         user_fields = ["id", "username", "name", "public_metrics", "verified"]
         
         params = {
@@ -534,8 +510,7 @@ class TwitterAPIv2:
         max_results: int = 10,
         pagination_token: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get tweets mentioning the user"""
-        
+        """Get tweets mentioning the user"""        
         tweet_fields = [
             "id", "text", "author_id", "created_at", "public_metrics",
             "entities", "context_annotations", "referenced_tweets"

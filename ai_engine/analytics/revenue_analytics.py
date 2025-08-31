@@ -1,5 +1,4 @@
-"""
-Revenue Analytics - Advanced Monetization and Revenue Analysis
+"""Revenue Analytics - Advanced Monetization and Revenue Analysis
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -11,7 +10,6 @@ prohibited and will result in severe legal consequences.
 This module provides comprehensive revenue analytics and monetization insights
 for content creators on the IA Influencer Agent platform.
 """
-
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -26,8 +24,7 @@ from collections import defaultdict
 logger = logging.getLogger(__name__)
 
 class RevenueSource(Enum):
-    """Types of revenue sources"""
-    ADVERTISING = "advertising"
+    """Types of revenue sources"""    ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     AFFILIATE = "affiliate"
     MERCHANDISE = "merchandise"
@@ -44,8 +41,7 @@ class RevenueSource(Enum):
     ROYALTIES = "royalties"
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     PAID = "paid"
     FAILED = "failed"
@@ -54,8 +50,7 @@ class PaymentStatus(Enum):
     CANCELLED = "cancelled"
 
 class RevenueCategory(Enum):
-    """Revenue categorization for tax and reporting"""
-    DIRECT_SALES = "direct_sales"
+    """Revenue categorization for tax and reporting"""    DIRECT_SALES = "direct_sales"
     PASSIVE_INCOME = "passive_income"
     ACTIVE_INCOME = "active_income"
     RECURRING_REVENUE = "recurring_revenue"
@@ -63,8 +58,7 @@ class RevenueCategory(Enum):
     COMMISSION_BASED = "commission_based"
 
 class CurrencyCode(Enum):
-    """Supported currencies"""
-    USD = "USD"
+    """Supported currencies"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -77,8 +71,7 @@ class CurrencyCode(Enum):
 
 @dataclass
 class RevenueTransaction:
-    """Individual revenue transaction record"""
-    transaction_id: str
+    """Individual revenue transaction record"""    transaction_id: str
     creator_id: str
     content_id: Optional[str] = None
     revenue_source: RevenueSource = RevenueSource.ADVERTISING
@@ -98,8 +91,7 @@ class RevenueTransaction:
 
 @dataclass
 class RevenueMetrics:
-    """Comprehensive revenue metrics"""
-    creator_id: str
+    """Comprehensive revenue metrics"""    creator_id: str
     analysis_period: Dict[str, datetime] = field(default_factory=dict)
     
     # Primary Revenue Metrics
@@ -136,8 +128,7 @@ class RevenueMetrics:
 
 @dataclass
 class MonetizationOpportunity:
-    """Identified monetization opportunity"""
-    opportunity_id: str
+    """Identified monetization opportunity"""    opportunity_id: str
     creator_id: str
     opportunity_type: RevenueSource
     estimated_monthly_revenue: Decimal
@@ -152,8 +143,7 @@ class MonetizationOpportunity:
 
 @dataclass
 class RevenueReport:
-    """Comprehensive revenue analysis report"""
-    report_id: str
+    """Comprehensive revenue analysis report"""    report_id: str
     creator_id: str
     report_period: Dict[str, datetime]
     generated_at: datetime = field(default_factory=datetime.utcnow)
@@ -179,11 +169,9 @@ class RevenueReport:
     peer_comparison: Dict[str, float] = field(default_factory=dict)
 
 class RevenueAnalyticsEngine:
-    """Advanced revenue analytics engine for creator monetization"""
-    
+    """Advanced revenue analytics engine for creator monetization"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize revenue analytics engine"""
-        self.config = config or {}
+        """Initialize revenue analytics engine"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Exchange rates cache (in production, fetch from real API)
@@ -218,8 +206,7 @@ class RevenueAnalyticsEngine:
         self.logger.info("RevenueAnalyticsEngine initialized successfully")
     
     def add_revenue_transaction(self, transaction: RevenueTransaction) -> bool:
-        """Add a revenue transaction for tracking"""
-        try:
+        """Add a revenue transaction for tracking"""        try:
             # Validate transaction
             if not self._validate_transaction(transaction):
                 self.logger.error(f"Invalid transaction: {transaction.transaction_id}")
@@ -244,8 +231,7 @@ class RevenueAnalyticsEngine:
             return False
     
     def _validate_transaction(self, transaction: RevenueTransaction) -> bool:
-        """Validate transaction data"""
-        if not transaction.transaction_id:
+        """Validate transaction data"""        if not transaction.transaction_id:
             return False
         if not transaction.creator_id:
             return False
@@ -256,8 +242,7 @@ class RevenueAnalyticsEngine:
         return True
     
     def _convert_to_usd(self, transaction: RevenueTransaction) -> RevenueTransaction:
-        """Convert transaction to USD"""
-        if transaction.currency == CurrencyCode.USD:
+        """Convert transaction to USD"""        if transaction.currency == CurrencyCode.USD:
             return transaction
         
         rate = self.exchange_rates.get(transaction.currency.value, Decimal('1.00'))
@@ -277,8 +262,7 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         timeframe: Optional[timedelta] = None
     ) -> RevenueMetrics:
-        """Analyze comprehensive revenue metrics for a creator"""
-        start_time = datetime.utcnow()
+        """Analyze comprehensive revenue metrics for a creator"""        start_time = datetime.utcnow()
         
         try:
             if not timeframe:
@@ -335,8 +319,7 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         timeframe: timedelta
     ) -> List[RevenueTransaction]:
-        """Get transactions for a specific time period"""
-        all_transactions = self.transactions_cache.get(creator_id, [])
+        """Get transactions for a specific time period"""        all_transactions = self.transactions_cache.get(creator_id, [])
         cutoff_date = datetime.utcnow() - timeframe
         
         return [
@@ -349,8 +332,7 @@ class RevenueAnalyticsEngine:
         metrics: RevenueMetrics,
         transactions: List[RevenueTransaction]
     ):
-        """Calculate primary revenue metrics"""
-        if not transactions:
+        """Calculate primary revenue metrics"""        if not transactions:
             return
         
         # Total revenue calculations
@@ -377,8 +359,7 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         timeframe: timedelta
     ):
-        """Calculate revenue growth metrics"""
-        try:
+        """Calculate revenue growth metrics"""        try:
             # Get previous period for comparison
             previous_period_transactions = self._get_transactions_for_period(
                 creator_id,
@@ -413,8 +394,7 @@ class RevenueAnalyticsEngine:
         metrics: RevenueMetrics,
         transactions: List[RevenueTransaction]
     ):
-        """Analyze revenue by different sources and dimensions"""
-        if not transactions:
+        """Analyze revenue by different sources and dimensions"""        if not transactions:
             return
         
         # Revenue by source
@@ -446,8 +426,7 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         timeframe: timedelta
     ):
-        """Calculate performance-related revenue metrics"""
-        try:
+        """Calculate performance-related revenue metrics"""        try:
             # Simulate getting engagement and view data
             total_views = await self._get_creator_views(creator_id, timeframe)
             total_engagements = await self._get_creator_engagements(creator_id, timeframe)
@@ -481,8 +460,7 @@ class RevenueAnalyticsEngine:
         metrics: RevenueMetrics,
         transactions: List[RevenueTransaction]
     ):
-        """Generate revenue forecasts and trends"""
-        try:
+        """Generate revenue forecasts and trends"""        try:
             if len(transactions) < self.min_transactions_for_trend:
                 metrics.projected_monthly_revenue = metrics.net_revenue
                 metrics.revenue_trend = "stable"
@@ -523,8 +501,7 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         current_metrics: RevenueMetrics
     ) -> List[MonetizationOpportunity]:
-        """Identify new monetization opportunities for a creator"""
-        opportunities = []
+        """Identify new monetization opportunities for a creator"""        opportunities = []
         
         try:
             self.logger.info(f"Identifying monetization opportunities for: {creator_id}")
@@ -569,8 +546,7 @@ class RevenueAnalyticsEngine:
         content_types: List[str],
         metrics: RevenueMetrics
     ) -> List[MonetizationOpportunity]:
-        """Generate opportunities based on content types"""
-        opportunities = []
+        """Generate opportunities based on content types"""        opportunities = []
         
         # Music-specific opportunities
         if 'music' in content_types:
@@ -628,8 +604,7 @@ class RevenueAnalyticsEngine:
         engagement_rate: float,
         metrics: RevenueMetrics
     ) -> List[MonetizationOpportunity]:
-        """Generate opportunities based on audience characteristics"""
-        opportunities = []
+        """Generate opportunities based on audience characteristics"""        opportunities = []
         
         # High engagement opportunities
         if engagement_rate > 5.0:  # Above 5% engagement
@@ -670,8 +645,7 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         metrics: RevenueMetrics
     ) -> List[MonetizationOpportunity]:
-        """Generate platform-specific opportunities"""
-        opportunities = []
+        """Generate platform-specific opportunities"""        opportunities = []
         
         # If not maximizing platform-specific revenue streams
         platform_count = len(metrics.revenue_by_platform)
@@ -697,8 +671,7 @@ class RevenueAnalyticsEngine:
         creator_id: str,
         timeframe: Optional[timedelta] = None
     ) -> RevenueReport:
-        """Generate comprehensive revenue report"""
-        try:
+        """Generate comprehensive revenue report"""        try:
             if not timeframe:
                 timeframe = timedelta(days=30)
             
@@ -753,8 +726,7 @@ class RevenueAnalyticsEngine:
             raise
     
     def _generate_performance_insights(self, metrics: RevenueMetrics) -> List[str]:
-        """Generate performance insights from metrics"""
-        insights = []
+        """Generate performance insights from metrics"""        insights = []
         
         try:
             # Revenue growth insights
@@ -796,8 +768,7 @@ class RevenueAnalyticsEngine:
             return []
     
     def _generate_optimization_recommendations(self, metrics: RevenueMetrics) -> List[str]:
-        """Generate revenue optimization recommendations"""
-        recommendations = []
+        """Generate revenue optimization recommendations"""        recommendations = []
         
         try:
             # Conversion rate optimization
@@ -829,8 +800,7 @@ class RevenueAnalyticsEngine:
             return []
     
     def _identify_revenue_risks(self, metrics: RevenueMetrics) -> List[str]:
-        """Identify potential revenue risks"""
-        risks = []
+        """Identify potential revenue risks"""        risks = []
         
         try:
             # Revenue concentration risk
@@ -863,8 +833,7 @@ class RevenueAnalyticsEngine:
             return []
     
     def _calculate_diversification_score(self, metrics: RevenueMetrics) -> float:
-        """Calculate revenue diversification score (0-100)"""
-        try:
+        """Calculate revenue diversification score (0-100)"""        try:
             if not metrics.revenue_by_source or metrics.net_revenue == 0:
                 return 0.0
             
@@ -892,17 +861,14 @@ class RevenueAnalyticsEngine:
     # Simulation methods (replace with actual data sources in production)
     
     async def _get_creator_views(self, creator_id: str, timeframe: timedelta) -> int:
-        """Simulate getting creator's total views"""
-        return hash(creator_id) % 50000 + 10000
+        """Simulate getting creator's total views"""        return hash(creator_id) % 50000 + 10000
     
     async def _get_creator_engagements(self, creator_id: str, timeframe: timedelta) -> int:
-        """Simulate getting creator's total engagements"""
-        views = await self._get_creator_views(creator_id, timeframe)
+        """Simulate getting creator's total engagements"""        views = await self._get_creator_views(creator_id, timeframe)
         return int(views * 0.05)  # 5% engagement rate
     
     async def _analyze_creator_content(self, creator_id: str) -> List[str]:
-        """Simulate analyzing creator's content types"""
-        content_types = ['music', 'video', 'photo', 'blog']
+        """Simulate analyzing creator's content types"""        content_types = ['music', 'video', 'photo', 'blog']
         # Simulate based on creator_id hash
         selected_types = []
         for i, content_type in enumerate(content_types):
@@ -912,16 +878,13 @@ class RevenueAnalyticsEngine:
         return selected_types if selected_types else ['video']  # Default to video
     
     async def _get_creator_audience_size(self, creator_id: str) -> int:
-        """Simulate getting creator's audience size"""
-        return hash(creator_id + 'audience') % 100000 + 5000
+        """Simulate getting creator's audience size"""        return hash(creator_id + 'audience') % 100000 + 5000
     
     async def _get_creator_engagement_rate(self, creator_id: str) -> float:
-        """Simulate getting creator's engagement rate"""
-        return (hash(creator_id + 'engagement') % 10) + 1  # 1-10%
+        """Simulate getting creator's engagement rate"""        return (hash(creator_id + 'engagement') % 10) + 1  # 1-10%
     
     async def _get_industry_benchmarks(self, creator_id: str) -> Dict[str, float]:
-        """Simulate industry benchmarking data"""
-        return {
+        """Simulate industry benchmarking data"""        return {
             'average_revenue_per_creator': 1500.0,
             'median_engagement_rate': 3.2,
             'average_monetization_rate': 12.5,
@@ -929,8 +892,7 @@ class RevenueAnalyticsEngine:
         }
     
     async def _get_peer_benchmarks(self, creator_id: str) -> Dict[str, float]:
-        """Simulate peer comparison data"""
-        return {
+        """Simulate peer comparison data"""        return {
             'peer_average_revenue': 1800.0,
             'peer_median_engagement': 4.1,
             'peer_diversification_score': 65.0,
@@ -938,8 +900,7 @@ class RevenueAnalyticsEngine:
         }
     
     def _update_analytics_stats(self, processing_time: float):
-        """Update internal analytics performance statistics"""
-        self.analytics_stats['analyses_performed'] += 1
+        """Update internal analytics performance statistics"""        self.analytics_stats['analyses_performed'] += 1
         
         # Update rolling average processing time
         current_avg = self.analytics_stats['average_processing_time']
@@ -949,8 +910,7 @@ class RevenueAnalyticsEngine:
         )
     
     def get_engine_statistics(self) -> Dict[str, Any]:
-        """Get revenue analytics engine performance statistics"""
-        stats = self.analytics_stats.copy()
+        """Get revenue analytics engine performance statistics"""        stats = self.analytics_stats.copy()
         stats['creators_analyzed'] = len(stats['creators_analyzed'])
         stats['revenue_tracked'] = str(stats['revenue_tracked'])
         return stats
@@ -961,8 +921,7 @@ class RevenueAnalyticsEngine:
         format_type: str = "json",
         timeframe: Optional[timedelta] = None
     ) -> Dict[str, Any]:
-        """Export revenue data in specified format"""
-        try:
+        """Export revenue data in specified format"""        try:
             if not timeframe:
                 timeframe = timedelta(days=90)  # 3 months default
             

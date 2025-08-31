@@ -1,5 +1,4 @@
-"""
-Content Parsers Module
+"""Content Parsers Module
 ======================
 
 Specialized parsers for various content formats including HTML, JSON, XML, CSV, RSS, Atom.
@@ -13,7 +12,6 @@ This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
-
 import csv
 import json
 import re
@@ -33,24 +31,20 @@ from .parser_config import ParserConfig
 
 
 class BaseContentParser(ABC):
-    """Abstract base class for content parsers"""
-    
+    """Abstract base class for content parsers"""    
     def __init__(self, config: ParserConfig):
         self.config = config
     
     @abstractmethod
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse content and extract structured data"""
-        pass
+        """Parse content and extract structured data"""        pass
     
     @abstractmethod
     def get_parser_type(self) -> str:
-        """Get the type of content this parser handles"""
-        pass
+        """Get the type of content this parser handles"""        pass
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text content"""
-        if not text:
+        """Clean and normalize text content"""        if not text:
             return ""
         
         # Remove extra whitespace
@@ -63,8 +57,7 @@ class BaseContentParser(ABC):
         return text
     
     def _normalize_url(self, url: str, base_url: Optional[str] = None) -> str:
-        """Normalize relative URLs to absolute URLs"""
-        if not url or url.startswith(('http://', 'https://', 'mailto:', 'tel:')):
+        """Normalize relative URLs to absolute URLs"""        if not url or url.startswith(('http://', 'https://', 'mailto:', 'tel:')):
             return url
         
         if base_url:
@@ -74,14 +67,12 @@ class BaseContentParser(ABC):
 
 
 class HTMLContentParser(BaseContentParser):
-    """Parser for HTML content with advanced extraction capabilities"""
-    
+    """Parser for HTML content with advanced extraction capabilities"""    
     def get_parser_type(self) -> str:
         return "html_content"
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse HTML content and extract structured information"""
-        try:
+        """Parse HTML content and extract structured information"""        try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
             
@@ -129,8 +120,7 @@ class HTMLContentParser(BaseContentParser):
             )
     
     async def _extract_main_content(self, soup: BeautifulSoup) -> str:
-        """Extract main content using multiple heuristics"""
-        content_candidates = []
+        """Extract main content using multiple heuristics"""        content_candidates = []
         
         # Try semantic HTML5 elements first
         main_element = soup.find('main')
@@ -174,8 +164,7 @@ class HTMLContentParser(BaseContentParser):
         return soup.get_text(separator=' ', strip=True)
     
     async def _analyze_document_structure(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Analyze HTML document structure"""
-        structure = {
+        """Analyze HTML document structure"""        structure = {
             'doctype': '',
             'html_lang': '',
             'head_elements': {},
@@ -230,8 +219,7 @@ class HTMLContentParser(BaseContentParser):
         return structure
     
     async def _extract_links(self, soup: BeautifulSoup, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Extract and categorize links"""
-        links = {
+        """Extract and categorize links"""        links = {
             'internal': [],
             'external': [],
             'anchors': [],
@@ -287,8 +275,7 @@ class HTMLContentParser(BaseContentParser):
         return links
     
     async def _extract_media(self, soup: BeautifulSoup, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Extract media elements (images, videos, audio)"""
-        media = {
+        """Extract media elements (images, videos, audio)"""        media = {
             'images': [],
             'videos': [],
             'audio': [],
@@ -386,8 +373,7 @@ class HTMLContentParser(BaseContentParser):
         return media
     
     async def _calculate_text_statistics(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Calculate text-based statistics"""
-        text = soup.get_text(separator=' ', strip=True)
+        """Calculate text-based statistics"""        text = soup.get_text(separator=' ', strip=True)
         
         return {
             'character_count': len(text),
@@ -402,8 +388,7 @@ class HTMLContentParser(BaseContentParser):
         }
     
     async def _extract_semantic_elements(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Extract semantic HTML5 elements content"""
-        semantic = {}
+        """Extract semantic HTML5 elements content"""        semantic = {}
         
         # Extract header content
         header = soup.find('header')
@@ -445,13 +430,11 @@ class HTMLContentParser(BaseContentParser):
         return semantic
     
     def _extract_title(self, soup: BeautifulSoup) -> str:
-        """Extract document title"""
-        title_tag = soup.find('title')
+        """Extract document title"""        title_tag = soup.find('title')
         return self._clean_text(title_tag.get_text()) if title_tag else ""
     
     def _extract_headings(self, soup: BeautifulSoup) -> List[Dict[str, Any]]:
-        """Extract all headings with hierarchy"""
-        headings = []
+        """Extract all headings with hierarchy"""        headings = []
         
         for heading in soup.find_all(re.compile(r'^h[1-6]$')):
             headings.append({
@@ -464,8 +447,7 @@ class HTMLContentParser(BaseContentParser):
         return headings
     
     def _extract_paragraphs(self, soup: BeautifulSoup) -> List[str]:
-        """Extract all paragraph content"""
-        paragraphs = []
+        """Extract all paragraph content"""        paragraphs = []
         
         for p in soup.find_all('p'):
             text = self._clean_text(p.get_text())
@@ -476,14 +458,12 @@ class HTMLContentParser(BaseContentParser):
 
 
 class MarkdownParser(BaseContentParser):
-    """Parser for Markdown content"""
-    
+    """Parser for Markdown content"""    
     def get_parser_type(self) -> str:
         return "markdown"
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse Markdown content"""
-        try:
+        """Parse Markdown content"""        try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
             
@@ -593,14 +573,12 @@ class MarkdownParser(BaseContentParser):
 
 
 class JSONContentParser(BaseContentParser):
-    """Parser for JSON content"""
-    
+    """Parser for JSON content"""    
     def get_parser_type(self) -> str:
         return "json"
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse JSON content"""
-        try:
+        """Parse JSON content"""        try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
             
@@ -643,8 +621,7 @@ class JSONContentParser(BaseContentParser):
             )
     
     async def _analyze_json_structure(self, data: Any, path: str = "$") -> Dict[str, Any]:
-        """Analyze JSON structure recursively"""
-        analysis = {
+        """Analyze JSON structure recursively"""        analysis = {
             'type': type(data).__name__,
             'path': path,
             'size': 0,
@@ -687,8 +664,7 @@ class JSONContentParser(BaseContentParser):
         return analysis
     
     async def _extract_text_from_json(self, data: Any) -> str:
-        """Extract all text content from JSON recursively"""
-        text_parts = []
+        """Extract all text content from JSON recursively"""        text_parts = []
         
         if isinstance(data, dict):
             for value in data.values():
@@ -705,14 +681,12 @@ class JSONContentParser(BaseContentParser):
 
 
 class XMLContentParser(BaseContentParser):
-    """Parser for XML content"""
-    
+    """Parser for XML content"""    
     def get_parser_type(self) -> str:
         return "xml"
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse XML content"""
-        try:
+        """Parse XML content"""        try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
             
@@ -759,8 +733,7 @@ class XMLContentParser(BaseContentParser):
             )
     
     async def _xml_to_dict(self, element: ET.Element) -> Dict[str, Any]:
-        """Convert XML element to dictionary"""
-        result = {}
+        """Convert XML element to dictionary"""        result = {}
         
         # Add attributes
         if element.attrib:
@@ -791,8 +764,7 @@ class XMLContentParser(BaseContentParser):
         return result if result else None
     
     async def _analyze_xml_structure(self, root: ET.Element) -> Dict[str, Any]:
-        """Analyze XML structure"""
-        all_elements = list(root.iter())
+        """Analyze XML structure"""        all_elements = list(root.iter())
         tag_counts = {}
         
         for element in all_elements:
@@ -809,22 +781,19 @@ class XMLContentParser(BaseContentParser):
         }
     
     async def _calculate_xml_depth(self, element: ET.Element, current_depth: int = 0) -> int:
-        """Calculate maximum depth of XML tree"""
-        if not list(element):
+        """Calculate maximum depth of XML tree"""        if not list(element):
             return current_depth
         
         return max(await self._calculate_xml_depth(child, current_depth + 1) for child in element)
 
 
 class CSVParser(BaseContentParser):
-    """Parser for CSV content"""
-    
+    """Parser for CSV content"""    
     def get_parser_type(self) -> str:
         return "csv"
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse CSV content"""
-        try:
+        """Parse CSV content"""        try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
             
@@ -894,8 +863,7 @@ class CSVParser(BaseContentParser):
             )
     
     async def _analyze_csv_columns(self, data: List[Dict[str, str]], headers: List[str]) -> Dict[str, Any]:
-        """Analyze CSV columns for data types and patterns"""
-        analysis = {}
+        """Analyze CSV columns for data types and patterns"""        analysis = {}
         
         for header in headers:
             values = [row.get(header, '') for row in data if row.get(header, '')]
@@ -944,14 +912,12 @@ class CSVParser(BaseContentParser):
 
 
 class RSSParser(BaseContentParser):
-    """Parser for RSS feeds"""
-    
+    """Parser for RSS feeds"""    
     def get_parser_type(self) -> str:
         return "rss"
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse RSS feed content"""
-        try:
+        """Parse RSS feed content"""        try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
             
@@ -1039,14 +1005,12 @@ class RSSParser(BaseContentParser):
 
 
 class AtomParser(BaseContentParser):
-    """Parser for Atom feeds"""
-    
+    """Parser for Atom feeds"""    
     def get_parser_type(self) -> str:
         return "atom"
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse Atom feed content"""
-        # Atom feeds are handled by feedparser as well
+        """Parse Atom feed content"""        # Atom feeds are handled by feedparser as well
         # This could be extended for Atom-specific features
         rss_parser = RSSParser(self.config)
         result = await rss_parser.parse(content, **kwargs)
@@ -1055,14 +1019,12 @@ class AtomParser(BaseContentParser):
 
 
 class SitemapParser(BaseContentParser):
-    """Parser for XML sitemaps"""
-    
+    """Parser for XML sitemaps"""    
     def get_parser_type(self) -> str:
         return "sitemap"
     
     async def parse(self, content: Union[str, bytes], **kwargs) -> Dict[str, Any]:
-        """Parse XML sitemap content"""
-        try:
+        """Parse XML sitemap content"""        try:
             if isinstance(content, bytes):
                 content = content.decode('utf-8', errors='ignore')
             

@@ -1,5 +1,4 @@
-"""
-Pipeline Coordinator - Advanced Multi-Pipeline Orchestration System
+"""Pipeline Coordinator - Advanced Multi-Pipeline Orchestration System
 
 Sophisticated pipeline management system for coordinating complex content processing
 pipelines with intelligent load balancing, resource optimization, and quality gates.
@@ -12,7 +11,6 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,8 +25,7 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class PipelineStatus(Enum):
-    """Pipeline execution status enumeration."""
-    IDLE = "idle"
+    """Pipeline execution status enumeration."""    IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -38,8 +35,7 @@ class PipelineStatus(Enum):
 
 
 class PipelineType(Enum):
-    """Pipeline type classification."""
-    CONTENT_PROCESSING = "content_processing"
+    """Pipeline type classification."""    CONTENT_PROCESSING = "content_processing"
     AI_ENHANCEMENT = "ai_enhancement"
     PROTECTION_WORKFLOW = "protection_workflow"
     MONETIZATION_FLOW = "monetization_flow"
@@ -49,8 +45,7 @@ class PipelineType(Enum):
 
 
 class QualityGateType(Enum):
-    """Quality gate validation types."""
-    CONTENT_VALIDATION = "content_validation"
+    """Quality gate validation types."""    CONTENT_VALIDATION = "content_validation"
     SECURITY_SCAN = "security_scan"
     PERFORMANCE_CHECK = "performance_check"
     BUSINESS_RULES = "business_rules"
@@ -59,8 +54,7 @@ class QualityGateType(Enum):
 
 @dataclass
 class QualityGate:
-    """Quality gate definition for pipeline validation."""
-    gate_id: str
+    """Quality gate definition for pipeline validation."""    gate_id: str
     name: str
     gate_type: QualityGateType
     validator: str
@@ -73,8 +67,7 @@ class QualityGate:
 
 @dataclass
 class PipelineStage:
-    """Individual pipeline stage definition."""
-    stage_id: str
+    """Individual pipeline stage definition."""    stage_id: str
     name: str
     processor: str
     parameters: Dict[str, Any] = field(default_factory=dict)
@@ -89,8 +82,7 @@ class PipelineStage:
 
 @dataclass
 class PipelineDefinition:
-    """Complete pipeline definition structure."""
-    pipeline_id: str
+    """Complete pipeline definition structure."""    pipeline_id: str
     name: str
     description: str
     pipeline_type: PipelineType
@@ -105,8 +97,7 @@ class PipelineDefinition:
 
 @dataclass
 class PipelineExecution:
-    """Pipeline execution tracking information."""
-    pipeline_id: str
+    """Pipeline execution tracking information."""    pipeline_id: str
     execution_id: str
     status: PipelineStatus = PipelineStatus.IDLE
     current_stage: Optional[str] = None
@@ -128,8 +119,7 @@ class PipelineExecution:
 
 @dataclass
 class ResourcePool:
-    """Resource pool for pipeline execution."""
-    pool_id: str
+    """Resource pool for pipeline execution."""    pool_id: str
     name: str
     resource_type: str
     capacity: int
@@ -141,8 +131,7 @@ class ResourcePool:
 
 
 class PipelineCoordinator:
-    """
-    Advanced multi-pipeline orchestration system for enterprise content processing.
+    """    Advanced multi-pipeline orchestration system for enterprise content processing.
     
     Provides comprehensive pipeline coordination capabilities including:
     - Intelligent pipeline scheduling and resource allocation
@@ -150,8 +139,7 @@ class PipelineCoordinator:
     - Cross-pipeline dependency management
     - Performance optimization and load balancing
     - Real-time monitoring and alerting
-    """
-    
+    """    
     def __init__(self, max_concurrent_pipelines: int = 50):
         self.logger = logging.getLogger(__name__)
         self.metrics_collector = MetricsCollector()
@@ -189,16 +177,14 @@ class PipelineCoordinator:
         self.logger.info("PipelineCoordinator initialized successfully")
     
     async def register_pipeline(self, pipeline_def: PipelineDefinition) -> bool:
-        """
-        Register a new pipeline definition.
+        """        Register a new pipeline definition.
         
         Args:
             pipeline_def: Complete pipeline definition
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Validate pipeline definition
             if not await self._validate_pipeline_definition(pipeline_def):
                 return False
@@ -227,8 +213,7 @@ class PipelineCoordinator:
             return False
     
     async def register_stage_processor(self, processor_name: str, processor_func: Callable) -> bool:
-        """
-        Register a stage processor function.
+        """        Register a stage processor function.
         
         Args:
             processor_name: Unique processor identifier
@@ -236,8 +221,7 @@ class PipelineCoordinator:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if not asyncio.iscoroutinefunction(processor_func):
                 raise ValueError("Processor must be an async function")
             
@@ -252,8 +236,7 @@ class PipelineCoordinator:
             return False
     
     async def register_quality_validator(self, validator_name: str, validator_func: Callable) -> bool:
-        """
-        Register a quality gate validator function.
+        """        Register a quality gate validator function.
         
         Args:
             validator_name: Unique validator identifier
@@ -261,8 +244,7 @@ class PipelineCoordinator:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if not asyncio.iscoroutinefunction(validator_func):
                 raise ValueError("Validator must be an async function")
             
@@ -283,8 +265,7 @@ class PipelineCoordinator:
         context: Optional[Dict[str, Any]] = None,
         priority: int = 5
     ) -> str:
-        """
-        Execute a pipeline with given input data.
+        """        Execute a pipeline with given input data.
         
         Args:
             pipeline_id: ID of pipeline to execute
@@ -294,8 +275,7 @@ class PipelineCoordinator:
             
         Returns:
             str: Execution ID
-        """
-        execution_id = str(uuid.uuid4())
+        """        execution_id = str(uuid.uuid4())
         
         try:
             # Check pipeline exists
@@ -354,13 +334,11 @@ class PipelineCoordinator:
             raise
     
     async def _execute_pipeline_async(self, execution_id: str) -> None:
-        """
-        Internal asynchronous pipeline execution.
+        """        Internal asynchronous pipeline execution.
         
         Args:
             execution_id: Unique execution identifier
-        """
-        execution = self.active_executions[execution_id]
+        """        execution = self.active_executions[execution_id]
         pipeline_def = self.pipeline_definitions[execution.pipeline_id]
         
         try:
@@ -415,8 +393,7 @@ class PipelineCoordinator:
                 del self.active_executions[execution_id]
     
     async def _execute_pipeline_stages(self, execution_id: str) -> None:
-        """Execute all pipeline stages in sequence."""
-        execution = self.active_executions[execution_id]
+        """Execute all pipeline stages in sequence."""        execution = self.active_executions[execution_id]
         pipeline_def = self.pipeline_definitions[execution.pipeline_id]
         
         current_data = execution.input_data.copy()
@@ -468,8 +445,7 @@ class PipelineCoordinator:
         stage: PipelineStage,
         input_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """
-        Execute individual stage processor.
+        """        Execute individual stage processor.
         
         Args:
             execution_id: Pipeline execution ID
@@ -478,8 +454,7 @@ class PipelineCoordinator:
             
         Returns:
             Optional[Dict[str, Any]]: Stage execution result
-        """
-        execution = self.active_executions[execution_id]
+        """        execution = self.active_executions[execution_id]
         
         try:
             # Get stage processor
@@ -536,8 +511,7 @@ class PipelineCoordinator:
         data: Dict[str, Any],
         phase: str
     ) -> bool:
-        """
-        Execute quality gates for stage validation.
+        """        Execute quality gates for stage validation.
         
         Args:
             execution_id: Pipeline execution ID
@@ -547,8 +521,7 @@ class PipelineCoordinator:
             
         Returns:
             bool: All quality gates passed
-        """
-        execution = self.active_executions[execution_id]
+        """        execution = self.active_executions[execution_id]
         
         for gate in stage.quality_gates:
             try:
@@ -609,8 +582,7 @@ class PipelineCoordinator:
         return True
     
     async def _validate_pipeline_definition(self, pipeline_def: PipelineDefinition) -> bool:
-        """Validate pipeline definition structure."""
-        try:
+        """Validate pipeline definition structure."""        try:
             # Check basic structure
             if not pipeline_def.pipeline_id or not pipeline_def.name:
                 return False
@@ -638,16 +610,14 @@ class PipelineCoordinator:
             return False
     
     async def _build_pipeline_dependencies(self, pipeline_def: PipelineDefinition) -> None:
-        """Build pipeline stage dependency graph."""
-        pipeline_id = pipeline_def.pipeline_id
+        """Build pipeline stage dependency graph."""        pipeline_id = pipeline_def.pipeline_id
         self.dependency_graph[pipeline_id] = {}
         
         for stage in pipeline_def.stages:
             self.dependency_graph[pipeline_id][stage.stage_id] = set(stage.dependencies)
     
     async def _check_stage_dependencies(self, execution_id: str, stage: PipelineStage) -> bool:
-        """Check if stage dependencies are satisfied."""
-        execution = self.active_executions[execution_id]
+        """Check if stage dependencies are satisfied."""        execution = self.active_executions[execution_id]
         
         # Check all dependencies are completed
         for dep_id in stage.dependencies:
@@ -657,8 +627,7 @@ class PipelineCoordinator:
         return True
     
     async def _check_resource_availability(self, pipeline_def: PipelineDefinition) -> bool:
-        """Check if required resources are available."""
-        required_resources = pipeline_def.resource_requirements
+        """Check if required resources are available."""        required_resources = pipeline_def.resource_requirements
         
         for resource_type, required_amount in required_resources.items():
             if resource_type in self.resource_pools:
@@ -669,8 +638,7 @@ class PipelineCoordinator:
         return True
     
     async def _allocate_resources(self, execution_id: str, pipeline_def: PipelineDefinition) -> None:
-        """Allocate resources for pipeline execution."""
-        required_resources = pipeline_def.resource_requirements
+        """Allocate resources for pipeline execution."""        required_resources = pipeline_def.resource_requirements
         
         for resource_type, required_amount in required_resources.items():
             if resource_type in self.resource_pools:
@@ -679,15 +647,13 @@ class PipelineCoordinator:
                 pool.allocated[execution_id] = required_amount
     
     async def _release_resources(self, execution_id: str) -> None:
-        """Release allocated resources."""
-        for pool in self.resource_pools.values():
+        """Release allocated resources."""        for pool in self.resource_pools.values():
             if execution_id in pool.allocated:
                 pool.available += pool.allocated[execution_id]
                 del pool.allocated[execution_id]
     
     def _update_performance_stats(self) -> None:
-        """Update coordination performance statistics."""
-        if self.coordination_stats['total_pipelines'] > 0:
+        """Update coordination performance statistics."""        if self.coordination_stats['total_pipelines'] > 0:
             # Calculate resource utilization
             total_capacity = sum(pool.capacity for pool in self.resource_pools.values())
             total_available = sum(pool.available for pool in self.resource_pools.values())
@@ -698,8 +664,7 @@ class PipelineCoordinator:
                 )
     
     async def add_resource_pool(self, pool: ResourcePool) -> bool:
-        """Add a new resource pool."""
-        try:
+        """Add a new resource pool."""        try:
             self.resource_pools[pool.pool_id] = pool
             
             await self.event_dispatcher.emit('resource_pool_added', {
@@ -717,12 +682,10 @@ class PipelineCoordinator:
             return False
     
     async def get_pipeline_status(self, execution_id: str) -> Optional[PipelineExecution]:
-        """Get current pipeline execution status."""
-        return self.active_executions.get(execution_id)
+        """Get current pipeline execution status."""        return self.active_executions.get(execution_id)
     
     async def cancel_pipeline(self, execution_id: str) -> bool:
-        """Cancel running pipeline execution."""
-        try:
+        """Cancel running pipeline execution."""        try:
             if execution_id in self.active_executions:
                 execution = self.active_executions[execution_id]
                 execution.status = PipelineStatus.CANCELLED
@@ -743,8 +706,7 @@ class PipelineCoordinator:
             return False
     
     async def get_coordination_stats(self) -> Dict[str, Any]:
-        """Get coordinator performance statistics."""
-        return {
+        """Get coordinator performance statistics."""        return {
             **self.coordination_stats,
             'active_pipelines': len(self.active_executions),
             'registered_pipelines': len(self.pipeline_definitions),

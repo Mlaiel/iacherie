@@ -1,5 +1,4 @@
-"""
-Enterprise Security Cache Manager
+"""Enterprise Security Cache Manager
 
 Advanced security management for cache deployment with military-grade encryption,
 comprehensive access control, AI-powered threat detection, and full compliance
@@ -37,7 +36,6 @@ Security Standards Compliance:
 - CCPA for California creator privacy
 - Industry-specific content protection standards
 """
-
 import asyncio
 import hashlib
 import hmac
@@ -68,8 +66,7 @@ import geoip2.errors
 
 
 class SecurityLevel(Enum):
-    """Security levels for different types of content and operations"""
-    PUBLIC = "public"              # Public content, basic protection
+    """Security levels for different types of content and operations"""    PUBLIC = "public"              # Public content, basic protection
     PROTECTED = "protected"        # Creator content, standard encryption
     CONFIDENTIAL = "confidential"  # Personal data, high security
     RESTRICTED = "restricted"      # Financial data, ultra-secure
@@ -77,8 +74,7 @@ class SecurityLevel(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat detection levels"""
-    LOW = "low"
+    """Threat detection levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -86,8 +82,7 @@ class ThreatLevel(Enum):
 
 
 class AccessRole(Enum):
-    """Access roles for content creators and platform users"""
-    ANONYMOUS = "anonymous"
+    """Access roles for content creators and platform users"""    ANONYMOUS = "anonymous"
     CREATOR = "creator"
     VERIFIED_CREATOR = "verified_creator"
     PREMIUM_CREATOR = "premium_creator"
@@ -99,8 +94,7 @@ class AccessRole(Enum):
 
 
 class ComplianceRegion(Enum):
-    """Compliance regions for data protection laws"""
-    EU_GDPR = "eu_gdpr"
+    """Compliance regions for data protection laws"""    EU_GDPR = "eu_gdpr"
     US_CCPA = "us_ccpa"
     CANADA_PIPEDA = "canada_pipeda"
     AUSTRALIA_PRIVACY = "australia_privacy"
@@ -112,8 +106,7 @@ class ComplianceRegion(Enum):
 
 @dataclass
 class SecurityContext:
-    """Security context for cache operations"""
-    user_id: str
+    """Security context for cache operations"""    user_id: str
     role: AccessRole
     permissions: Set[str]
     security_level: SecurityLevel
@@ -131,8 +124,7 @@ class SecurityContext:
 
 @dataclass
 class ThreatDetectionResult:
-    """Result from threat detection analysis"""
-    threat_level: ThreatLevel
+    """Result from threat detection analysis"""    threat_level: ThreatLevel
     threat_type: str
     confidence: float
     indicators: List[str]
@@ -145,8 +137,7 @@ class ThreatDetectionResult:
 
 @dataclass
 class AuditLogEntry:
-    """Security audit log entry"""
-    timestamp: datetime
+    """Security audit log entry"""    timestamp: datetime
     event_type: str
     user_id: str
     resource_id: str
@@ -158,8 +149,7 @@ class AuditLogEntry:
 
 
 class EncryptionManager:
-    """Advanced encryption management for content security"""
-    
+    """Advanced encryption management for content security"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.password_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -169,8 +159,7 @@ class EncryptionManager:
         self._initialize_encryption_keys()
     
     def _generate_master_key(self) -> bytes:
-        """Generate or load master encryption key"""
-        master_key_file = self.config.get("master_key_file", "master.key")
+        """Generate or load master encryption key"""        master_key_file = self.config.get("master_key_file", "master.key")
         
         if os.path.exists(master_key_file):
             with open(master_key_file, "rb") as key_file:
@@ -184,8 +173,7 @@ class EncryptionManager:
             return master_key
     
     def _initialize_encryption_keys(self):
-        """Initialize encryption keys for different security levels"""
-        for security_level in SecurityLevel:
+        """Initialize encryption keys for different security levels"""        for security_level in SecurityLevel:
             key = Fernet.generate_key()
             self.encryption_keys[security_level.value] = Fernet(key)
     
@@ -195,8 +183,7 @@ class EncryptionManager:
         security_level: SecurityLevel,
         additional_metadata: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """Encrypt content based on security level"""
-        
+        """Encrypt content based on security level"""        
         try:
             encryption_key = self.encryption_keys[security_level.value]
             
@@ -240,8 +227,7 @@ class EncryptionManager:
         encrypted_data: Dict[str, Any],
         security_context: SecurityContext
     ) -> bytes:
-        """Decrypt content with security validation"""
-        
+        """Decrypt content with security validation"""        
         try:
             # Validate security context
             if not self._validate_decryption_permissions(encrypted_data, security_context):
@@ -279,8 +265,7 @@ class EncryptionManager:
             raise SecurityException(f"Content decryption failed: {e}")
     
     def _get_encryption_layers(self, security_level: SecurityLevel) -> int:
-        """Get number of encryption layers for security level"""
-        layer_map = {
+        """Get number of encryption layers for security level"""        layer_map = {
             SecurityLevel.PUBLIC: 0,
             SecurityLevel.PROTECTED: 1,
             SecurityLevel.CONFIDENTIAL: 1,
@@ -294,8 +279,7 @@ class EncryptionManager:
         encrypted_data: Dict[str, Any],
         security_context: SecurityContext
     ) -> bool:
-        """Validate if user has permissions to decrypt content"""
-        
+        """Validate if user has permissions to decrypt content"""        
         required_security_level = SecurityLevel(encrypted_data["security_level"])
         user_clearance = self._get_user_clearance_level(security_context.role)
         
@@ -311,8 +295,7 @@ class EncryptionManager:
         return security_hierarchy[user_clearance] >= security_hierarchy[required_security_level]
     
     def _get_user_clearance_level(self, role: AccessRole) -> SecurityLevel:
-        """Get user's security clearance level based on role"""
-        clearance_map = {
+        """Get user's security clearance level based on role"""        clearance_map = {
             AccessRole.ANONYMOUS: SecurityLevel.PUBLIC,
             AccessRole.CREATOR: SecurityLevel.PROTECTED,
             AccessRole.VERIFIED_CREATOR: SecurityLevel.CONFIDENTIAL,
@@ -327,8 +310,7 @@ class EncryptionManager:
 
 
 class ThreatDetectionEngine:
-    """AI-powered threat detection and response system"""
-    
+    """AI-powered threat detection and response system"""    
     def __init__(self):
         self.threat_patterns: Dict[str, Dict] = self._load_threat_patterns()
         self.behavioral_baselines: Dict[str, Dict] = {}
@@ -339,8 +321,7 @@ class ThreatDetectionEngine:
         }
     
     def _load_threat_patterns(self) -> Dict[str, Dict]:
-        """Load known threat patterns and indicators"""
-        return {
+        """Load known threat patterns and indicators"""        return {
             "brute_force": {
                 "indicators": ["repeated_failures", "rapid_requests", "multiple_ips"],
                 "threshold": 10,
@@ -369,8 +350,7 @@ class ThreatDetectionEngine:
         operation: str,
         resource_data: Dict[str, Any]
     ) -> ThreatDetectionResult:
-        """Analyze request for potential threats"""
-        
+        """Analyze request for potential threats"""        
         try:
             threat_indicators = []
             threat_level = ThreatLevel.LOW
@@ -444,8 +424,7 @@ class ThreatDetectionEngine:
         security_context: SecurityContext,
         operation: str
     ) -> Dict[str, Any]:
-        """Analyze request rate for potential abuse"""
-        
+        """Analyze request rate for potential abuse"""        
         # Implementation for rate limiting analysis
         # This would check Redis for recent request patterns
         
@@ -460,8 +439,7 @@ class ThreatDetectionEngine:
         self,
         security_context: SecurityContext
     ) -> Dict[str, Any]:
-        """Analyze geographic location for anomalies"""
-        
+        """Analyze geographic location for anomalies"""        
         # Implementation for geographic analysis
         # This would use GeoIP databases and user's typical locations
         
@@ -477,8 +455,7 @@ class ThreatDetectionEngine:
         security_context: SecurityContext,
         operation: str
     ) -> Dict[str, Any]:
-        """Analyze user behavior for anomalies"""
-        
+        """Analyze user behavior for anomalies"""        
         # Implementation for behavioral analysis
         # This would compare current behavior to established baselines
         
@@ -494,8 +471,7 @@ class ThreatDetectionEngine:
         security_context: SecurityContext,
         resource_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze threats specific to content protection"""
-        
+        """Analyze threats specific to content protection"""        
         # Implementation for content protection threat analysis
         # This would detect potential copyright infringement, scraping, etc.
         
@@ -507,8 +483,7 @@ class ThreatDetectionEngine:
         }
     
     def _classify_threat_type(self, indicators: List[str]) -> str:
-        """Classify threat type based on indicators"""
-        
+        """Classify threat type based on indicators"""        
         if not indicators:
             return "none"
         
@@ -529,8 +504,7 @@ class ThreatDetectionEngine:
         threat_level: ThreatLevel,
         indicators: List[str]
     ) -> List[str]:
-        """Generate recommended response actions"""
-        
+        """Generate recommended response actions"""        
         actions = []
         
         if threat_level == ThreatLevel.LOW:
@@ -548,16 +522,14 @@ class ThreatDetectionEngine:
 
 
 class SecurityException(Exception):
-    """Custom exception for security-related errors"""
-    pass
+    """Custom exception for security-related errors"""    pass
 
 
 class SecurityCacheManager:
 
 
 class AccessLevel(Enum):
-    """Access levels for cache content"""
-    PUBLIC = "public"
+    """Access levels for cache content"""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -565,8 +537,7 @@ class AccessLevel(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat levels for security incidents"""
-    LOW = "low"
+    """Threat levels for security incidents"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -575,8 +546,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class SecurityContext:
-    """Security context for cache operations"""
-    user_id: str
+    """Security context for cache operations"""    user_id: str
     tenant_id: str
     session_id: str
     ip_address: str
@@ -593,8 +563,7 @@ class SecurityContext:
 
 @dataclass
 class SecurityAuditLog:
-    """Security audit log entry"""
-    log_id: str
+    """Security audit log entry"""    log_id: str
     timestamp: datetime
     user_id: str
     tenant_id: str
@@ -611,8 +580,7 @@ class SecurityAuditLog:
 
 @dataclass
 class ThreatDetection:
-    """Threat detection result"""
-    threat_id: str
+    """Threat detection result"""    threat_id: str
     threat_type: str
     threat_level: ThreatLevel
     confidence_score: float
@@ -626,24 +594,20 @@ class ThreatDetection:
 
 
 class SecurityCacheManager:
-    """
-    Enterprise security manager for cache deployment with comprehensive
+    """    Enterprise security manager for cache deployment with comprehensive
     security controls, compliance monitoring, and threat detection.
     """
-
     def __init__(
         self,
         config: CacheConfiguration,
         metrics_collector: CacheMetricsCollector
     ):
-        """
-        Initialize security cache manager with enterprise security configuration.
+        """        Initialize security cache manager with enterprise security configuration.
         
         Args:
             config: Cache configuration instance
             metrics_collector: Metrics collection service
-        """
-        self.config = config
+        """        self.config = config
         self.metrics = metrics_collector
         self.logger = logging.getLogger(__name__)
         
@@ -686,8 +650,7 @@ class SecurityCacheManager:
         ip_address: str,
         user_agent: str
     ) -> Optional[SecurityContext]:
-        """
-        Authenticate user and create security context.
+        """        Authenticate user and create security context.
         
         Args:
             credentials: User credentials (username, password, token, etc.)
@@ -696,8 +659,7 @@ class SecurityCacheManager:
             
         Returns:
             SecurityContext if authentication successful, None otherwise
-        """
-        try:
+        """        try:
             start_time = time.time()
             self._security_metrics["authentication_attempts"] += 1
             
@@ -789,8 +751,7 @@ class SecurityCacheManager:
         content_type: ContentType,
         required_access_level: AccessLevel = AccessLevel.INTERNAL
     ) -> bool:
-        """
-        Authorize cache access based on security context and policies.
+        """        Authorize cache access based on security context and policies.
         
         Args:
             security_context: User security context
@@ -801,8 +762,7 @@ class SecurityCacheManager:
             
         Returns:
             bool: True if authorized, False otherwise
-        """
-        try:
+        """        try:
             # Check session validity
             if not await self._is_session_valid(security_context):
                 self._security_metrics["authorization_failures"] += 1
@@ -887,8 +847,7 @@ class SecurityCacheManager:
         content_id: str,
         security_level: SecurityLevel = SecurityLevel.STANDARD
     ) -> Tuple[bytes, Dict[str, Any]]:
-        """
-        Encrypt cache data with appropriate security level.
+        """        Encrypt cache data with appropriate security level.
         
         Args:
             data: Data to encrypt
@@ -897,8 +856,7 @@ class SecurityCacheManager:
             
         Returns:
             Tuple of (encrypted_data, encryption_metadata)
-        """
-        try:
+        """        try:
             start_time = time.time()
             self._security_metrics["encryption_operations"] += 1
             
@@ -951,8 +909,7 @@ class SecurityCacheManager:
         content_id: str,
         security_context: SecurityContext
     ) -> Optional[bytes]:
-        """
-        Decrypt cache data with security validation.
+        """        Decrypt cache data with security validation.
         
         Args:
             encrypted_data: Encrypted data
@@ -962,8 +919,7 @@ class SecurityCacheManager:
             
         Returns:
             Decrypted data if successful, None otherwise
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Validate security context
@@ -1024,16 +980,14 @@ class SecurityCacheManager:
         self,
         regulation: str = "GDPR"
     ) -> Dict[str, Any]:
-        """
-        Monitor compliance with data protection regulations.
+        """        Monitor compliance with data protection regulations.
         
         Args:
             regulation: Regulation to monitor (GDPR, CCPA, SOC2, etc.)
             
         Returns:
             Dict containing compliance status and violations
-        """
-        try:
+        """        try:
             compliance_status = {
                 "regulation": regulation,
                 "last_check": datetime.now(),
@@ -1086,16 +1040,14 @@ class SecurityCacheManager:
         self,
         time_window_hours: int = 1
     ) -> List[ThreatDetection]:
-        """
-        Detect security threats using AI-powered analysis.
+        """        Detect security threats using AI-powered analysis.
         
         Args:
             time_window_hours: Time window for threat detection
             
         Returns:
             List of detected threats
-        """
-        try:
+        """        try:
             detected_threats = []
             
             # Analyze authentication patterns
@@ -1133,16 +1085,14 @@ class SecurityCacheManager:
         self,
         time_period_hours: int = 24
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive security report.
+        """        Generate comprehensive security report.
         
         Args:
             time_period_hours: Time period for report generation
             
         Returns:
             Dict containing security report
-        """
-        try:
+        """        try:
             cutoff_time = datetime.now() - timedelta(hours=time_period_hours)
             
             # Filter audit logs for time period
@@ -1217,12 +1167,10 @@ class SecurityCacheManager:
     # Private helper methods
     
     def _generate_encryption_key(self) -> bytes:
-        """Generate encryption key for cache operations"""
-        return Fernet.generate_key()
+        """Generate encryption key for cache operations"""        return Fernet.generate_key()
     
     def _initialize_role_permissions(self) -> Dict[str, Set[str]]:
-        """Initialize role-based permissions"""
-        return {
+        """Initialize role-based permissions"""        return {
             "admin": {
                 "cache:read:*", "cache:write:*", "cache:delete:*",
                 "cache:admin:*", "system:admin:*"
@@ -1241,8 +1189,7 @@ class SecurityCacheManager:
         }
     
     def _initialize_threat_patterns(self) -> Dict[str, Any]:
-        """Initialize threat detection patterns"""
-        return {
+        """Initialize threat detection patterns"""        return {
             "brute_force": {
                 "max_failed_attempts": 5,
                 "time_window_minutes": 15,
@@ -1261,8 +1208,7 @@ class SecurityCacheManager:
         }
     
     async def _validate_credentials(self, credentials: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate user credentials"""
-        # This would integrate with actual authentication system
+        """Validate user credentials"""        # This would integrate with actual authentication system
         # For simulation, we'll return a successful result
         return {
             "success": True,
@@ -1276,8 +1222,7 @@ class SecurityCacheManager:
         }
     
     def _derive_content_key(self, content_id: str, security_level: SecurityLevel) -> bytes:
-        """Derive content-specific encryption key"""
-        # Use PBKDF2 to derive key from content ID and master key
+        """Derive content-specific encryption key"""        # Use PBKDF2 to derive key from content ID and master key
         kdf = PBKDF2HMAC(
             algorithm=hashes.SHA256(),
             length=32,
@@ -1287,37 +1232,31 @@ class SecurityCacheManager:
         return kdf.derive(self._encryption_key)
     
     def _encrypt_with_aes(self, data: bytes, key: bytes) -> bytes:
-        """Encrypt data with AES-256-GCM"""
-        # This would implement actual AES encryption
+        """Encrypt data with AES-256-GCM"""        # This would implement actual AES encryption
         # For simulation, we'll use Fernet
         f = Fernet(base64.urlsafe_b64encode(key))
         return f.encrypt(data)
     
     def _decrypt_with_aes(self, encrypted_data: bytes, key: bytes) -> bytes:
-        """Decrypt data with AES-256-GCM"""
-        # This would implement actual AES decryption
+        """Decrypt data with AES-256-GCM"""        # This would implement actual AES decryption
         # For simulation, we'll use Fernet
         f = Fernet(base64.urlsafe_b64encode(key))
         return f.decrypt(encrypted_data)
     
     async def _encrypt_with_hybrid(self, data: bytes, content_key: bytes) -> bytes:
-        """Encrypt with hybrid RSA+AES encryption"""
-        # For simulation, we'll use standard encryption
+        """Encrypt with hybrid RSA+AES encryption"""        # For simulation, we'll use standard encryption
         return self._encrypt_with_aes(data, content_key)
     
     async def _decrypt_with_hybrid(self, encrypted_data: bytes, content_key: bytes) -> bytes:
-        """Decrypt with hybrid RSA+AES decryption"""
-        # For simulation, we'll use standard decryption
+        """Decrypt with hybrid RSA+AES decryption"""        # For simulation, we'll use standard decryption
         return self._decrypt_with_aes(encrypted_data, content_key)
     
     async def _encrypt_with_quantum_resistant(self, data: bytes, content_key: bytes) -> bytes:
-        """Encrypt with quantum-resistant algorithms"""
-        # For simulation, we'll use standard encryption
+        """Encrypt with quantum-resistant algorithms"""        # For simulation, we'll use standard encryption
         return self._encrypt_with_aes(data, content_key)
     
     async def _decrypt_with_quantum_resistant(self, encrypted_data: bytes, content_key: bytes) -> bytes:
-        """Decrypt with quantum-resistant algorithms"""
-        # For simulation, we'll use standard decryption
+        """Decrypt with quantum-resistant algorithms"""        # For simulation, we'll use standard decryption
         return self._decrypt_with_aes(encrypted_data, content_key)
     
     async def _log_security_event(
@@ -1330,8 +1269,7 @@ class SecurityCacheManager:
         details: str,
         threat_level: ThreatLevel
     ) -> None:
-        """Log security event"""
-        audit_log = SecurityAuditLog(
+        """Log security event"""        audit_log = SecurityAuditLog(
             log_id=str(uuid.uuid4()),
             timestamp=datetime.now(),
             user_id=user_id or "anonymous",

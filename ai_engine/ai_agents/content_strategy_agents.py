@@ -1,5 +1,4 @@
-"""
-Content Strategy AI Agents
+"""Content Strategy AI Agents
 
 Specialized agents for content strategy, planning, and optimization.
 
@@ -9,7 +8,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 This module contains AI agents specialized in content strategy development,
 performance analysis, and strategic recommendations for content creators.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -25,8 +23,7 @@ from ..neural_networks.recommendation_networks import CollaborationRecommendatio
 
 @dataclass
 class ContentAnalysis:
-    """Content analysis results"""
-    engagement_score: float
+    """Content analysis results"""    engagement_score: float
     viral_potential: float
     audience_match: float
     quality_score: float
@@ -38,8 +35,7 @@ class ContentAnalysis:
 
 @dataclass
 class StrategyRecommendation:
-    """Strategic recommendation structure"""
-    priority: str  # high, medium, low
+    """Strategic recommendation structure"""    priority: str  # high, medium, low
     category: str  # content, timing, audience, platform
     title: str
     description: str
@@ -50,13 +46,11 @@ class StrategyRecommendation:
 
 
 class ContentStrategistAgent(BaseAIAgent):
-    """
-    AI agent specialized in content strategy development and optimization.
+    """    AI agent specialized in content strategy development and optimization.
     
     Provides comprehensive analysis of content performance, audience engagement,
     and strategic recommendations for growth and optimization.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_id="content_strategist", config=config)
         self.understanding_network = ContentUnderstandingNetwork()
@@ -83,16 +77,14 @@ class ContentStrategistAgent(BaseAIAgent):
         logging.info(f"ContentStrategistAgent initialized with {len(self.content_categories)} content categories")
 
     async def analyze_content_performance(self, content_data: Dict[str, Any]) -> ContentAnalysis:
-        """
-        Analyze content performance and provide detailed insights.
+        """        Analyze content performance and provide detailed insights.
         
         Args:
             content_data: Content metadata and performance metrics
             
         Returns:
             Comprehensive content analysis
-        """
-        try:
+        """        try:
             # Extract performance metrics
             views = content_data.get('views', 0)
             likes = content_data.get('likes', 0)
@@ -162,8 +154,7 @@ class ContentStrategistAgent(BaseAIAgent):
 
     async def develop_content_strategy(self, creator_profile: Dict[str, Any], 
                                      goals: Dict[str, Any]) -> List[StrategyRecommendation]:
-        """
-        Develop comprehensive content strategy based on creator profile and goals.
+        """        Develop comprehensive content strategy based on creator profile and goals.
         
         Args:
             creator_profile: Creator's profile, niche, and current performance
@@ -171,8 +162,7 @@ class ContentStrategistAgent(BaseAIAgent):
             
         Returns:
             List of strategic recommendations
-        """
-        try:
+        """        try:
             recommendations = []
             
             # Analyze creator's current position
@@ -287,16 +277,14 @@ class ContentStrategistAgent(BaseAIAgent):
             return []
 
     async def predict_content_trends(self, timeframe: str = "30_days") -> Dict[str, Any]:
-        """
-        Predict upcoming content trends based on current data and patterns.
+        """        Predict upcoming content trends based on current data and patterns.
         
         Args:
             timeframe: Prediction timeframe ("7_days", "30_days", "90_days")
             
         Returns:
             Trend predictions and recommendations
-        """
-        try:
+        """        try:
             # Analyze historical trend data
             trend_data = {
                 "emerging_hashtags": [
@@ -337,8 +325,7 @@ class ContentStrategistAgent(BaseAIAgent):
             return {"error": "Unable to predict trends", "prediction_confidence": 0.0}
 
     def _calculate_audience_match(self, target_audience: str, actual_demographics: Dict[str, Any]) -> float:
-        """Calculate how well content matches target audience"""
-        if not actual_demographics:
+        """Calculate how well content matches target audience"""        if not actual_demographics:
             return 0.5  # Default score when no data available
         
         # Simple audience matching logic (can be expanded)
@@ -352,8 +339,7 @@ class ContentStrategistAgent(BaseAIAgent):
     
     def _identify_trending_factors(self, content_features: Dict[str, Any], 
                                  content_data: Dict[str, Any]) -> List[str]:
-        """Identify factors contributing to content trending potential"""
-        factors = []
+        """Identify factors contributing to content trending potential"""        factors = []
         
         # Check for trending keywords
         if content_features.get('trending_keywords', []):
@@ -380,8 +366,7 @@ class ContentStrategistAgent(BaseAIAgent):
     def _generate_improvement_suggestions(self, engagement_rate: float, 
                                         content_features: Dict[str, Any],
                                         content_data: Dict[str, Any]) -> List[str]:
-        """Generate specific suggestions for content improvement"""
-        suggestions = []
+        """Generate specific suggestions for content improvement"""        suggestions = []
         
         if engagement_rate < 0.02:  # Less than 2%
             suggestions.append("Add call-to-action to encourage engagement")
@@ -402,8 +387,7 @@ class ContentStrategistAgent(BaseAIAgent):
         return suggestions[:6]  # Return top 6 suggestions
     
     def _calculate_optimal_timing(self, historical_performance: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate optimal posting times based on historical data"""
-        if not historical_performance:
+        """Calculate optimal posting times based on historical data"""        if not historical_performance:
             return {
                 "best_days": ["tuesday", "wednesday", "thursday"],
                 "best_hours": ["15:00", "19:00", "21:00"],
@@ -437,8 +421,7 @@ class ContentStrategistAgent(BaseAIAgent):
     
     def _generate_hashtag_recommendations(self, content_features: Dict[str, Any],
                                         content_data: Dict[str, Any]) -> List[str]:
-        """Generate relevant hashtag recommendations"""
-        category = content_data.get('category', 'general')
+        """Generate relevant hashtag recommendations"""        category = content_data.get('category', 'general')
         niche = content_data.get('niche', 'lifestyle')
         
         # Base hashtags by category

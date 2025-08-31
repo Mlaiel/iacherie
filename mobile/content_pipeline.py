@@ -1,5 +1,4 @@
-"""
-Mobile Content Processing Pipeline
+"""Mobile Content Processing Pipeline
 Production-ready mobile content processing pipeline following business logic:
 creators → upload multi-format → AI processing → protection → monetization → collaboration
 
@@ -13,7 +12,6 @@ without explicit written permission is strictly prohibited.
 Violations will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import uuid
@@ -51,8 +49,7 @@ logger = get_logger(__name__)
 
 
 class ContentFormat(Enum):
-    """Supported content formats for mobile processing."""
-    AUDIO = "audio"
+    """Supported content formats for mobile processing."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -60,8 +57,7 @@ class ContentFormat(Enum):
 
 
 class ProcessingStage(Enum):
-    """Content processing pipeline stages."""
-    UPLOAD = "upload"
+    """Content processing pipeline stages."""    UPLOAD = "upload"
     VALIDATION = "validation"
     AI_PROCESSING = "ai_processing"
     FINGERPRINTING = "fingerprinting"
@@ -75,8 +71,7 @@ class ProcessingStage(Enum):
 
 @dataclass
 class MobileContentMetadata:
-    """Mobile content metadata for processing."""
-    content_id: str
+    """Mobile content metadata for processing."""    content_id: str
     user_id: str
     device_id: str
     format: ContentFormat
@@ -91,8 +86,7 @@ class MobileContentMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Mobile content processing result."""
-    content_id: str
+    """Mobile content processing result."""    content_id: str
     stage: ProcessingStage
     success: bool
     processing_time: float
@@ -106,8 +100,7 @@ class ProcessingResult:
 
 
 class MobileContentPipeline:
-    """
-    Production-ready mobile content processing pipeline.
+    """    Production-ready mobile content processing pipeline.
     
     Handles the complete business flow:
     1. Upload validation and preprocessing
@@ -116,8 +109,7 @@ class MobileContentPipeline:
     4. Automated monetization setup
     5. Intelligent collaboration matching
     6. Multi-platform distribution preparation
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.logger = get_logger(__name__)
@@ -127,8 +119,7 @@ class MobileContentPipeline:
         self._initialize_engines()
     
     def _initialize_engines(self):
-        """Initialize all processing engines."""
-        try:
+        """Initialize all processing engines."""        try:
             self.content_processor = ContentProcessor()
             self.fingerprint_engine = FingerprintEngine()
             self.licensing_engine = LicensingEngine()
@@ -146,8 +137,7 @@ class MobileContentPipeline:
         metadata: MobileContentMetadata,
         content_data: bytes
     ) -> ProcessingResult:
-        """
-        Process mobile content through complete pipeline.
+        """        Process mobile content through complete pipeline.
         
         Args:
             metadata: Content metadata from mobile device
@@ -155,8 +145,7 @@ class MobileContentPipeline:
             
         Returns:
             ProcessingResult with complete processing information
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         content_id = metadata.content_id
         
         self.logger.info(f"Starting mobile content processing: {content_id}")
@@ -230,8 +219,7 @@ class MobileContentPipeline:
         content_data: bytes,
         result: ProcessingResult
     ):
-        """Validate mobile upload parameters."""
-        self.logger.debug(f"Validating upload: {metadata.content_id}")
+        """Validate mobile upload parameters."""        self.logger.debug(f"Validating upload: {metadata.content_id}")
         
         # Check file size limits
         max_size = self.settings.get("mobile_max_upload_size", 100 * 1024 * 1024)  # 100MB
@@ -259,8 +247,7 @@ class MobileContentPipeline:
         content_data: bytes,
         result: ProcessingResult
     ):
-        """Process content with AI enhancement."""
-        self.logger.debug(f"AI processing: {metadata.content_id}")
+        """Process content with AI enhancement."""        self.logger.debug(f"AI processing: {metadata.content_id}")
         
         if not self.content_processor:
             # Mock AI processing for testing
@@ -290,8 +277,7 @@ class MobileContentPipeline:
         content_data: bytes,
         result: ProcessingResult
     ):
-        """Generate content fingerprints for protection."""
-        self.logger.debug(f"Generating fingerprints: {metadata.content_id}")
+        """Generate content fingerprints for protection."""        self.logger.debug(f"Generating fingerprints: {metadata.content_id}")
         
         if not self.fingerprint_engine:
             # Mock fingerprinting
@@ -315,8 +301,7 @@ class MobileContentPipeline:
         metadata: MobileContentMetadata,
         result: ProcessingResult
     ):
-        """Setup content protection monitoring."""
-        self.logger.debug(f"Setting up protection: {metadata.content_id}")
+        """Setup content protection monitoring."""        self.logger.debug(f"Setting up protection: {metadata.content_id}")
         
         result.protection_status = {
             "monitoring_enabled": True,
@@ -337,8 +322,7 @@ class MobileContentPipeline:
         metadata: MobileContentMetadata,
         result: ProcessingResult
     ):
-        """Configure monetization options."""
-        self.logger.debug(f"Configuring monetization: {metadata.content_id}")
+        """Configure monetization options."""        self.logger.debug(f"Configuring monetization: {metadata.content_id}")
         
         if not self.licensing_engine:
             # Mock monetization options
@@ -375,8 +359,7 @@ class MobileContentPipeline:
         metadata: MobileContentMetadata,
         result: ProcessingResult
     ):
-        """Find potential collaboration matches."""
-        self.logger.debug(f"Finding collaboration matches: {metadata.content_id}")
+        """Find potential collaboration matches."""        self.logger.debug(f"Finding collaboration matches: {metadata.content_id}")
         
         if not self.collaboration_matcher:
             # Mock collaboration matches
@@ -411,16 +394,14 @@ class MobileContentPipeline:
         metadata: MobileContentMetadata,
         result: ProcessingResult
     ):
-        """Prepare content for multi-platform distribution."""
-        self.logger.debug(f"Preparing distribution: {metadata.content_id}")
+        """Prepare content for multi-platform distribution."""        self.logger.debug(f"Preparing distribution: {metadata.content_id}")
         
         # Distribution preparation is always successful in this implementation
         result.success = True
         self.logger.debug(f"Distribution preparation completed: {metadata.content_id}")
     
     def _is_supported_format(self, format: ContentFormat, mime_type: str) -> bool:
-        """Check if content format is supported."""
-        supported_mimes = {
+        """Check if content format is supported."""        supported_mimes = {
             ContentFormat.AUDIO: [
                 "audio/mpeg", "audio/wav", "audio/ogg", "audio/aac",
                 "audio/flac", "audio/m4a"
@@ -442,12 +423,10 @@ class MobileContentPipeline:
         return mime_type in supported_mimes.get(format, [])
     
     async def get_processing_status(self, content_id: str) -> Optional[ProcessingResult]:
-        """Get current processing status for content."""
-        return self.active_processes.get(content_id)
+        """Get current processing status for content."""        return self.active_processes.get(content_id)
     
     async def cancel_processing(self, content_id: str) -> bool:
-        """Cancel active content processing."""
-        if content_id in self.active_processes:
+        """Cancel active content processing."""        if content_id in self.active_processes:
             result = self.active_processes[content_id]
             result.stage = ProcessingStage.FAILED
             result.success = False
@@ -458,8 +437,7 @@ class MobileContentPipeline:
         return False
     
     def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get processing pipeline statistics."""
-        total_processes = len(self.active_processes)
+        """Get processing pipeline statistics."""        total_processes = len(self.active_processes)
         completed = sum(1 for r in self.active_processes.values() 
                        if r.stage == ProcessingStage.COMPLETED)
         failed = sum(1 for r in self.active_processes.values() 

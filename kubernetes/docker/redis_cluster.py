@@ -1,5 +1,4 @@
-"""
-🔧 Redis Cluster Configuration - IA-Influencer-Agent Platform
+"""🔧 Redis Cluster Configuration - IA-Influencer-Agent Platform
 =============================================================
 Expert: Backend Senior + Cache Specialist + Performance Engineer
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 High-performance Redis cluster configuration for caching,
 session management, and real-time data processing.
 """
-
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import logging
@@ -23,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RedisClusterDockerConfig:
-    """Production Redis Cluster Configuration"""
-    
+    """Production Redis Cluster Configuration"""    
     # Redis Configuration
     redis_version: str = "7.2.3-alpine"
     cluster_replicas: int = 1
@@ -47,9 +44,7 @@ class RedisClusterDockerConfig:
     log_level: str = "notice"
     
     def generate_redis_config(self) -> str:
-        """Generate Redis configuration file"""
-        config = f"""
-# Redis Configuration for IA-Influencer Platform
+        """Generate Redis configuration file"""        config = f"""# Redis Configuration for IA-Influencer Platform
 # High-performance caching and session management
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -77,14 +72,12 @@ maxmemory {self.max_memory}
 maxmemory-policy {self.max_memory_policy}
 
 # Persistence Configuration
-"""
-        
+"""        
         # Add save intervals
         for interval in self.save_intervals:
             config += f"save {interval}\n"
         
-        config += f"""
-stop-writes-on-bgsave-error yes
+        config += f"""stop-writes-on-bgsave-error yes
 rdbcompression yes
 rdbchecksum yes
 dbfilename dump.rdb
@@ -141,13 +134,11 @@ stream-node-max-entries 100
 # cluster-slave-validity-factor 10
 # cluster-migration-barrier 1
 # cluster-require-full-coverage yes
-"""
-        
+"""        
         return config.strip()
     
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate Redis Docker Compose service"""
-        service = {
+        """Generate Redis Docker Compose service"""        service = {
             "image": f"redis:{self.redis_version}",
             "container_name": "ia-influencer-redis",
             "restart": "unless-stopped",
@@ -198,8 +189,7 @@ stream-node-max-entries 100
         return service
     
     def generate_redis_sentinel_service(self) -> Dict[str, Any]:
-        """Generate Redis Sentinel service for high availability"""
-        return {
+        """Generate Redis Sentinel service for high availability"""        return {
             "image": f"redis:{self.redis_version}",
             "container_name": "ia-influencer-redis-sentinel",
             "restart": "unless-stopped",
@@ -231,9 +221,7 @@ stream-node-max-entries 100
         }
     
     def generate_sentinel_config(self) -> str:
-        """Generate Redis Sentinel configuration"""
-        return f"""
-# Redis Sentinel Configuration for IA-Influencer Platform
+        """Generate Redis Sentinel configuration"""        return f"""# Redis Sentinel Configuration for IA-Influencer Platform
 # High availability Redis monitoring
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -254,12 +242,9 @@ loglevel notice
 
 # Security
 {'requirepass ' + self.redis_password if self.enable_auth else '# No authentication'}
-"""
-    
+"""    
     def generate_dockerfile(self) -> str:
-        """Generate custom Redis Dockerfile with optimizations"""
-        return f"""
-# IA-Influencer Redis Cluster Dockerfile
+        """Generate custom Redis Dockerfile with optimizations"""        return f"""# IA-Influencer Redis Cluster Dockerfile
 # High-performance Redis with custom optimizations
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -301,11 +286,9 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=10s --retries=3 \\
 
 # Default command
 CMD ["redis-server", "/usr/local/etc/redis/redis.conf"]
-"""
-    
+"""    
     def generate_healthcheck_script(self) -> str:
-        """Generate Redis health check script"""
-        return f"""#!/bin/sh
+        """Generate Redis health check script"""        return f"""#!/bin/sh
 # Redis Health Check Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -334,11 +317,9 @@ else
     echo "Redis is not responding"
     exit 1
 fi
-"""
-    
+"""    
     def generate_redis_exporter_service(self) -> Dict[str, Any]:
-        """Generate Redis Exporter service for Prometheus monitoring"""
-        return {
+        """Generate Redis Exporter service for Prometheus monitoring"""        return {
             "image": "oliver006/redis_exporter:latest",
             "container_name": "ia-influencer-redis-exporter",
             "restart": "unless-stopped",
@@ -367,8 +348,7 @@ fi
         }
     
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all Redis configuration files"""
-        from pathlib import Path
+        """Save all Redis configuration files"""        from pathlib import Path
         
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)

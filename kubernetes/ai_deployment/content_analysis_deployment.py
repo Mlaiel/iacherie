@@ -1,5 +1,4 @@
-"""
-Content Analysis Deployment
+"""Content Analysis Deployment
 Enterprise AI-powered content analysis and processing system
 
 This module provides comprehensive content analysis capabilities including
@@ -13,7 +12,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -42,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for analysis"""
-    AUDIO = "audio"
+    """Content types for analysis"""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -52,8 +49,7 @@ class ContentType(Enum):
 
 
 class AnalysisType(Enum):
-    """Types of content analysis"""
-    CLASSIFICATION = "classification"
+    """Types of content analysis"""    CLASSIFICATION = "classification"
     SENTIMENT_ANALYSIS = "sentiment_analysis"
     OBJECT_DETECTION = "object_detection"
     TRANSCRIPTION = "transcription"
@@ -68,8 +64,7 @@ class AnalysisType(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels"""
-    LOW = "low"
+    """Processing priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -77,8 +72,7 @@ class ProcessingPriority(Enum):
 
 
 class QualityMetric(Enum):
-    """Content quality metrics"""
-    RESOLUTION = "resolution"
+    """Content quality metrics"""    RESOLUTION = "resolution"
     CLARITY = "clarity"
     AUDIO_QUALITY = "audio_quality"
     ENGAGEMENT_POTENTIAL = "engagement_potential"
@@ -89,8 +83,7 @@ class QualityMetric(Enum):
 
 @dataclass
 class ContentAnalysisConfig:
-    """Content analysis configuration"""
-    analysis_name: str = "ia-content-analysis"
+    """Content analysis configuration"""    analysis_name: str = "ia-content-analysis"
     supported_content_types: List[ContentType] = None
     analysis_types: List[AnalysisType] = None
     quality_metrics: List[QualityMetric] = None
@@ -135,8 +128,7 @@ class ContentAnalysisConfig:
 
 
 class ContentAnalysisDeployment:
-    """
-    Enterprise content analysis deployment system
+    """    Enterprise content analysis deployment system
     
     Provides comprehensive content analysis with:
     - Multi-modal content processing (audio, video, image, text)
@@ -147,16 +139,13 @@ class ContentAnalysisDeployment:
     - Brand and object detection
     - Trend analysis and insights
     - Privacy and copyright protection
-    """
-    
+    """    
     def __init__(self, namespace: str = "ia-content-analysis"):
-        """
-        Initialize content analysis deployment
+        """        Initialize content analysis deployment
         
         Args:
             namespace: Kubernetes namespace for content analysis infrastructure
-        """
-        self.namespace = namespace
+        """        self.namespace = namespace
         self.config = ContentAnalysisConfig()
         self.analysis_jobs = {}
         self.analysis_models = {}
@@ -169,8 +158,7 @@ class ContentAnalysisDeployment:
         self._initialize_ai_models()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and service clients"""
-        try:
+        """Initialize Kubernetes, Docker, and service clients"""        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -196,8 +184,7 @@ class ContentAnalysisDeployment:
             raise
     
     def _initialize_ai_models(self) -> None:
-        """Initialize AI models for content analysis"""
-        try:
+        """Initialize AI models for content analysis"""        try:
             # Text analysis models
             self.text_classifier = pipeline("text-classification", 
                                            model="cardiffnlp/twitter-roberta-base-sentiment-latest")
@@ -223,13 +210,11 @@ class ContentAnalysisDeployment:
             logger.warning(f"Some AI models failed to initialize: {e}")
     
     async def deploy_content_analysis_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete content analysis infrastructure
+        """        Deploy complete content analysis infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """
-        try:
+        """        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying content analysis infrastructure")
             
@@ -313,16 +298,14 @@ class ContentAnalysisDeployment:
             raise
     
     async def analyze_content(self, analysis_request: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Analyze content with specified analysis types
+        """        Analyze content with specified analysis types
         
         Args:
             analysis_request: Content analysis request
             
         Returns:
             Analysis results with insights and metrics
-        """
-        try:
+        """        try:
             content_url = analysis_request.get("content_url")
             content_type = ContentType(analysis_request.get("content_type"))
             analysis_types = [AnalysisType(t) for t in analysis_request.get("analysis_types", [])]
@@ -428,16 +411,14 @@ class ContentAnalysisDeployment:
             raise
     
     async def batch_analyze_content(self, batch_request: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """
-        Analyze multiple content items in batch
+        """        Analyze multiple content items in batch
         
         Args:
             batch_request: List of content analysis requests
             
         Returns:
             Batch analysis results
-        """
-        try:
+        """        try:
             batch_id = f"batch_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             logger.info(f"Starting batch content analysis: {batch_id}")
             
@@ -492,8 +473,7 @@ class ContentAnalysisDeployment:
             raise
     
     async def _deploy_analysis_workers(self) -> Dict[str, Any]:
-        """Deploy content analysis worker nodes"""
-        analysis_workers = {
+        """Deploy content analysis worker nodes"""        analysis_workers = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -567,8 +547,7 @@ class ContentAnalysisDeployment:
         }
     
     async def _deploy_analysis_api(self) -> Dict[str, Any]:
-        """Deploy content analysis API service"""
-        analysis_api = {
+        """Deploy content analysis API service"""        analysis_api = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -628,8 +607,7 @@ class ContentAnalysisDeployment:
         }
     
     async def _validate_and_prepare_content(self, content_url: str, content_type: ContentType) -> Dict[str, Any]:
-        """Validate and prepare content for analysis"""
-        try:
+        """Validate and prepare content for analysis"""        try:
             content_info = {
                 "url": content_url,
                 "type": content_type.value,
@@ -682,8 +660,7 @@ class ContentAnalysisDeployment:
             raise
     
     async def _create_analysis_plan(self, content_info: Dict[str, Any], analysis_types: List[AnalysisType], priority: ProcessingPriority) -> Dict[str, Any]:
-        """Create analysis execution plan"""
-        plan = {
+        """Create analysis execution plan"""        plan = {
             "content_info": content_info,
             "analysis_types": [t.value for t in analysis_types],
             "priority": priority.value,
@@ -711,8 +688,7 @@ class ContentAnalysisDeployment:
         return plan
     
     async def _analyze_classification(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform content classification analysis"""
-        try:
+        """Perform content classification analysis"""        try:
             if content_info["type"] == "text":
                 # Text classification using transformer model
                 result = self.text_classifier("This is sample text content")
@@ -766,8 +742,7 @@ class ContentAnalysisDeployment:
             return {"status": "failed", "error": str(e)}
     
     async def _analyze_sentiment(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform sentiment analysis"""
-        try:
+        """Perform sentiment analysis"""        try:
             if content_info["type"] in ["text", "video", "audio"]:
                 # For video/audio, this would analyze transcribed text
                 
@@ -801,8 +776,7 @@ class ContentAnalysisDeployment:
             return {"status": "failed", "error": str(e)}
     
     async def _analyze_objects(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform object detection analysis"""
-        try:
+        """Perform object detection analysis"""        try:
             if content_info["type"] in ["image", "video"]:
                 return {
                     "status": "success",
@@ -842,8 +816,7 @@ class ContentAnalysisDeployment:
             return {"status": "failed", "error": str(e)}
     
     async def _analyze_transcription(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform audio transcription"""
-        try:
+        """Perform audio transcription"""        try:
             if content_info["type"] in ["audio", "video"]:
                 # Using Whisper for transcription
                 return {
@@ -889,8 +862,7 @@ class ContentAnalysisDeployment:
             return {"status": "failed", "error": str(e)}
     
     async def _analyze_quality(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform quality assessment"""
-        try:
+        """Perform quality assessment"""        try:
             if content_info["type"] == "video":
                 return {
                     "status": "success",
@@ -979,8 +951,7 @@ class ContentAnalysisDeployment:
             return {"status": "failed", "error": str(e)}
     
     async def _analyze_moderation(self, content_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform content moderation analysis"""
-        try:
+        """Perform content moderation analysis"""        try:
             return {
                 "status": "success",
                 "moderation_result": "approved",
@@ -1014,8 +985,7 @@ class ContentAnalysisDeployment:
             return {"status": "failed", "error": str(e)}
     
     async def _generate_content_insights(self, content_info: Dict[str, Any], analysis_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive content insights"""
-        try:
+        """Generate comprehensive content insights"""        try:
             insights = {
                 "content_summary": {
                     "type": content_info["type"],
@@ -1060,8 +1030,7 @@ class ContentAnalysisDeployment:
             return {"status": "failed", "error": str(e)}
     
     async def _predict_engagement(self, content_info: Dict[str, Any], analysis_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict content engagement metrics"""
-        try:
+        """Predict content engagement metrics"""        try:
             # Simulate engagement prediction based on analysis results
             base_score = 0.7
             
@@ -1104,8 +1073,7 @@ class ContentAnalysisDeployment:
             return {"status": "failed", "error": str(e)}
     
     async def _generate_recommendations(self, analysis_results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate actionable recommendations"""
-        recommendations = [
+        """Generate actionable recommendations"""        recommendations = [
             {
                 "category": "technical",
                 "priority": "high",
@@ -1139,8 +1107,7 @@ class ContentAnalysisDeployment:
         return recommendations
     
     async def get_analysis_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive content analysis metrics"""
-        try:
+        """Get comprehensive content analysis metrics"""        try:
             completed_analyses = [job for job in self.analysis_jobs.values() if job.get("status") == "completed"]
             
             metrics = {
@@ -1170,8 +1137,7 @@ class ContentAnalysisDeployment:
             return {"error": str(e)}
     
     async def _ensure_content_analysis_namespace(self) -> None:
-        """Create content analysis namespace"""
-        try:
+        """Create content analysis namespace"""        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -1190,8 +1156,7 @@ class ContentAnalysisDeployment:
                 logger.info(f"Created content analysis namespace: {self.namespace}")
     
     async def _configure_analysis_networking(self) -> None:
-        """Configure networking for content analysis infrastructure"""
-        # Content analysis network policy
+        """Configure networking for content analysis infrastructure"""        # Content analysis network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1227,8 +1192,7 @@ class ContentAnalysisDeployment:
         logger.info("Configured content analysis networking policies")
     
     async def _validate_analysis_infrastructure(self) -> bool:
-        """Validate content analysis infrastructure deployment"""
-        try:
+        """Validate content analysis infrastructure deployment"""        try:
             # Check essential services
             essential_services = [
                 "content-analysis-workers", "content-analysis-api"
@@ -1255,8 +1219,7 @@ class ContentAnalysisDeployment:
             return False
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed content analysis infrastructure"""
-        try:
+        """Clean up failed content analysis infrastructure"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed content analysis infrastructure")
@@ -1264,8 +1227,7 @@ class ContentAnalysisDeployment:
             logger.error(f"Content analysis infrastructure cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire content analysis infrastructure"""
-        try:
+        """Clean up entire content analysis infrastructure"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

@@ -1,5 +1,4 @@
-"""
-Security Monitor for IA Influencer Agent Platform
+"""Security Monitor for IA Influencer Agent Platform
 ================================================
 
 Advanced security monitoring system with real-time threat detection,
@@ -17,7 +16,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
-
 import asyncio
 import logging
 import hashlib
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatLevel(Enum):
-    """Security threat levels"""
-    LOW = "low"
+    """Security threat levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -48,8 +45,7 @@ class ThreatLevel(Enum):
 
 
 class SecurityEventType(Enum):
-    """Types of security events"""
-    AUTHENTICATION_FAILURE = "authentication_failure"
+    """Types of security events"""    AUTHENTICATION_FAILURE = "authentication_failure"
     AUTHORIZATION_VIOLATION = "authorization_violation"
     RATE_LIMIT_EXCEEDED = "rate_limit_exceeded"
     SUSPICIOUS_API_USAGE = "suspicious_api_usage"
@@ -63,8 +59,7 @@ class SecurityEventType(Enum):
 
 @dataclass
 class SecurityEvent:
-    """Security event data structure"""
-    id: str
+    """Security event data structure"""    id: str
     event_type: SecurityEventType
     threat_level: ThreatLevel
     source_ip: str
@@ -80,8 +75,7 @@ class SecurityEvent:
 
 @dataclass
 class ThreatPattern:
-    """Threat pattern definition"""
-    name: str
+    """Threat pattern definition"""    name: str
     pattern_type: str
     indicators: List[str]
     threshold: int
@@ -92,8 +86,7 @@ class ThreatPattern:
 
 @dataclass
 class SecurityMetrics:
-    """Security monitoring metrics"""
-    total_events: int
+    """Security monitoring metrics"""    total_events: int
     events_by_type: Dict[SecurityEventType, int]
     events_by_threat_level: Dict[ThreatLevel, int]
     blocked_ips: int
@@ -104,11 +97,9 @@ class SecurityMetrics:
 
 
 class SecurityMonitor:
-    """
-    Advanced security monitoring system with real-time threat detection
+    """    Advanced security monitoring system with real-time threat detection
     and automated response capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -148,8 +139,7 @@ class SecurityMonitor:
         logger.info("Security Monitor initialized")
         
     async def start(self):
-        """Start security monitoring"""
-        if self._running:
+        """Start security monitoring"""        if self._running:
             logger.warning("Security monitor already running")
             return
             
@@ -170,8 +160,7 @@ class SecurityMonitor:
             raise
             
     async def stop(self):
-        """Stop security monitoring"""
-        self._running = False
+        """Stop security monitoring"""        self._running = False
         
         if self._monitoring_task:
             self._monitoring_task.cancel()
@@ -186,8 +175,7 @@ class SecurityMonitor:
         logger.info("Security monitoring stopped")
         
     def _initialize_threat_patterns(self):
-        """Initialize built-in threat patterns"""
-        
+        """Initialize built-in threat patterns"""        
         # Authentication failure pattern
         self._threat_patterns["auth_failure_burst"] = ThreatPattern(
             name="Authentication Failure Burst",
@@ -244,8 +232,7 @@ class SecurityMonitor:
         )
         
     async def _monitoring_loop(self):
-        """Main security monitoring loop"""
-        
+        """Main security monitoring loop"""        
         while self._running:
             try:
                 # Analyze security events
@@ -275,8 +262,7 @@ class SecurityMonitor:
                 await asyncio.sleep(30)  # Backoff on error
                 
     async def analyze_security_event(self, event_data: Dict[str, Any]):
-        """Analyze a security event in real-time"""
-        
+        """Analyze a security event in real-time"""        
         try:
             # Extract event information
             event_type = SecurityEventType(event_data.get('type', 'unusual_traffic_pattern'))
@@ -317,8 +303,7 @@ class SecurityMonitor:
             logger.error(f"Error analyzing security event: {e}")
             
     def _assess_threat_level(self, event_type: SecurityEventType, event_data: Dict[str, Any]) -> ThreatLevel:
-        """Assess threat level based on event type and context"""
-        
+        """Assess threat level based on event type and context"""        
         base_threat_levels = {
             SecurityEventType.AUTHENTICATION_FAILURE: ThreatLevel.LOW,
             SecurityEventType.AUTHORIZATION_VIOLATION: ThreatLevel.MEDIUM,
@@ -357,8 +342,7 @@ class SecurityMonitor:
         return base_level
         
     async def _immediate_response(self, event: SecurityEvent):
-        """Implement immediate response to high-threat events"""
-        
+        """Implement immediate response to high-threat events"""        
         try:
             # Block IP if auto-block is enabled
             if event.threat_level in [ThreatLevel.CRITICAL, ThreatLevel.EMERGENCY]:
@@ -381,8 +365,7 @@ class SecurityMonitor:
             logger.error(f"Error in immediate response: {e}")
             
     async def _block_ip(self, ip_address: str, reason: str, duration: Optional[int] = None):
-        """Block an IP address"""
-        
+        """Block an IP address"""        
         try:
             self._blocked_ips.add(ip_address)
             
@@ -402,8 +385,7 @@ class SecurityMonitor:
             # Store in database
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    await conn.execute(text("""
-                        INSERT INTO security_ip_blocks (ip_address, reason, blocked_at, expires_at)
+                    await conn.execute(text("""                        INSERT INTO security_ip_blocks (ip_address, reason, blocked_at, expires_at)
                         VALUES (:ip, :reason, :blocked_at, :expires_at)
                     """), {
                         'ip': ip_address,
@@ -418,8 +400,7 @@ class SecurityMonitor:
             logger.error(f"Error blocking IP {ip_address}: {e}")
             
     async def _suspend_user(self, user_id: str, reason: str, duration: Optional[int] = None):
-        """Suspend a user account"""
-        
+        """Suspend a user account"""        
         try:
             self._suspicious_users.add(user_id)
             
@@ -439,8 +420,7 @@ class SecurityMonitor:
             # Update user status in database
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    await conn.execute(text("""
-                        UPDATE users 
+                    await conn.execute(text("""                        UPDATE users 
                         SET status = 'suspended', 
                             suspended_reason = :reason,
                             suspended_at = :suspended_at
@@ -457,8 +437,7 @@ class SecurityMonitor:
             logger.error(f"Error suspending user {user_id}: {e}")
             
     async def _send_security_alert(self, event: SecurityEvent):
-        """Send security alert to administrators"""
-        
+        """Send security alert to administrators"""        
         try:
             alert_data = {
                 'type': 'security_alert',
@@ -486,23 +465,20 @@ class SecurityMonitor:
             logger.error(f"Error sending security alert: {e}")
             
     async def _send_external_alert(self, alert_data: Dict[str, Any]):
-        """Send alert to external systems"""
-        
+        """Send alert to external systems"""        
         # Implementation for external alerting
         # This could include webhooks, email, Slack, PagerDuty, etc.
         logger.info(f"External security alert: {alert_data['event_type']}")
         
     async def _analyze_security_events(self):
-        """Analyze recent security events for patterns"""
-        
+        """Analyze recent security events for patterns"""        
         if not self.db_engine:
             return
             
         try:
             async with self.db_engine.begin() as conn:
                 # Analyze events from last hour
-                result = await conn.execute(text("""
-                    SELECT event_type, source_ip, user_id, COUNT(*) as count
+                result = await conn.execute(text("""                    SELECT event_type, source_ip, user_id, COUNT(*) as count
                     FROM security_events 
                     WHERE timestamp > NOW() - INTERVAL '1 hour'
                     GROUP BY event_type, source_ip, user_id
@@ -527,8 +503,7 @@ class SecurityMonitor:
             logger.error(f"Error analyzing security events: {e}")
             
     async def _check_threat_patterns(self):
-        """Check for known threat patterns"""
-        
+        """Check for known threat patterns"""        
         try:
             current_time = datetime.utcnow()
             
@@ -566,16 +541,14 @@ class SecurityMonitor:
             logger.error(f"Error checking threat patterns: {e}")
             
     async def _update_behavioral_profiles(self):
-        """Update user behavioral profiles"""
-        
+        """Update user behavioral profiles"""        
         if not self.db_engine:
             return
             
         try:
             async with self.db_engine.begin() as conn:
                 # Analyze user behavior patterns
-                result = await conn.execute(text("""
-                    SELECT 
+                result = await conn.execute(text("""                    SELECT 
                         user_id,
                         source_ip,
                         user_agent,
@@ -629,8 +602,7 @@ class SecurityMonitor:
             logger.error(f"Error updating behavioral profiles: {e}")
             
     async def _check_behavioral_anomaly(self, event: SecurityEvent):
-        """Check for behavioral anomalies"""
-        
+        """Check for behavioral anomalies"""        
         if not event.user_id:
             return
             
@@ -678,8 +650,7 @@ class SecurityMonitor:
             logger.error(f"Error checking behavioral anomaly: {e}")
             
     async def _monitor_rate_limits(self):
-        """Monitor and enforce rate limits"""
-        
+        """Monitor and enforce rate limits"""        
         try:
             current_time = datetime.utcnow()
             
@@ -718,8 +689,7 @@ class SecurityMonitor:
             logger.error(f"Error monitoring rate limits: {e}")
             
     def _check_rate_limit_exceeded(self, limit_type: str, count: int) -> bool:
-        """Check if rate limit is exceeded"""
-        
+        """Check if rate limit is exceeded"""        
         rate_limits = {
             'api': 1000,  # requests per hour
             'download': 100,  # downloads per hour
@@ -731,8 +701,7 @@ class SecurityMonitor:
         return count > rate_limits.get(limit_type, 1000)
         
     async def _collect_security_metrics(self):
-        """Collect security monitoring metrics"""
-        
+        """Collect security monitoring metrics"""        
         try:
             current_time = datetime.utcnow()
             
@@ -743,8 +712,7 @@ class SecurityMonitor:
             # Get recent events from last hour
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    result = await conn.execute(text("""
-                        SELECT event_type, threat_level, COUNT(*)
+                    result = await conn.execute(text("""                        SELECT event_type, threat_level, COUNT(*)
                         FROM security_events 
                         WHERE timestamp > NOW() - INTERVAL '1 hour'
                         GROUP BY event_type, threat_level
@@ -791,8 +759,7 @@ class SecurityMonitor:
             logger.error(f"Error collecting security metrics: {e}")
             
     async def _cleanup_old_data(self):
-        """Cleanup old security data"""
-        
+        """Cleanup old security data"""        
         try:
             cutoff_time = datetime.utcnow() - timedelta(days=self.retention_days)
             
@@ -800,14 +767,12 @@ class SecurityMonitor:
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
                     # Delete old security events
-                    await conn.execute(text("""
-                        DELETE FROM security_events 
+                    await conn.execute(text("""                        DELETE FROM security_events 
                         WHERE timestamp < :cutoff_time
                     """), {'cutoff_time': cutoff_time})
                     
                     # Delete old blocked IPs
-                    await conn.execute(text("""
-                        DELETE FROM security_ip_blocks 
+                    await conn.execute(text("""                        DELETE FROM security_ip_blocks 
                         WHERE expires_at < :now
                     """), {'now': datetime.utcnow()})
                     
@@ -827,14 +792,12 @@ class SecurityMonitor:
             logger.error(f"Error cleaning up old data: {e}")
             
     async def _store_security_event(self, event: SecurityEvent):
-        """Store security event"""
-        
+        """Store security event"""        
         try:
             # Store in database
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    await conn.execute(text("""
-                        INSERT INTO security_events (
+                    await conn.execute(text("""                        INSERT INTO security_events (
                             id, event_type, threat_level, source_ip, user_id,
                             description, details, timestamp
                         ) VALUES (
@@ -874,8 +837,7 @@ class SecurityMonitor:
             logger.error(f"Error storing security event: {e}")
             
     async def _load_security_data(self):
-        """Load security data from storage"""
-        
+        """Load security data from storage"""        
         try:
             # Load blocked IPs from Redis
             if self.redis_client:
@@ -894,14 +856,12 @@ class SecurityMonitor:
             logger.error(f"Error loading security data: {e}")
             
     async def _save_security_data(self):
-        """Save security data to storage"""
-        
+        """Save security data to storage"""        
         # Data is automatically saved in real-time through Redis and database
         pass
         
     async def get_status(self) -> Dict[str, Any]:
-        """Get security monitoring status"""
-        
+        """Get security monitoring status"""        
         latest_metrics = self._security_metrics[-1] if self._security_metrics else None
         
         return {
@@ -919,8 +879,7 @@ class SecurityMonitor:
         }
         
     async def get_recent_events(self, hours: int = 24, threat_level: Optional[ThreatLevel] = None) -> List[SecurityEvent]:
-        """Get recent security events"""
-        
+        """Get recent security events"""        
         events = []
         
         if self.redis_client:
@@ -958,8 +917,7 @@ class SecurityMonitor:
         return events
         
     async def get_security_metrics(self, hours: int = 24) -> List[SecurityMetrics]:
-        """Get security metrics history"""
-        
+        """Get security metrics history"""        
         # Return recent metrics from memory
         cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
@@ -969,8 +927,7 @@ class SecurityMonitor:
         ]
         
     async def is_ip_blocked(self, ip_address: str) -> bool:
-        """Check if IP address is blocked"""
-        
+        """Check if IP address is blocked"""        
         if ip_address in self._blocked_ips:
             return True
             
@@ -985,8 +942,7 @@ class SecurityMonitor:
         return False
         
     async def is_user_suspended(self, user_id: str) -> bool:
-        """Check if user is suspended"""
-        
+        """Check if user is suspended"""        
         if user_id in self._suspicious_users:
             return True
             
@@ -1001,8 +957,7 @@ class SecurityMonitor:
         return False
         
     async def unblock_ip(self, ip_address: str, reason: str = "Manual unblock"):
-        """Unblock an IP address"""
-        
+        """Unblock an IP address"""        
         try:
             self._blocked_ips.discard(ip_address)
             
@@ -1013,8 +968,7 @@ class SecurityMonitor:
             # Update database
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    await conn.execute(text("""
-                        UPDATE security_ip_blocks 
+                    await conn.execute(text("""                        UPDATE security_ip_blocks 
                         SET expires_at = NOW(), unblocked_reason = :reason
                         WHERE ip_address = :ip_address AND expires_at > NOW()
                     """), {
@@ -1028,8 +982,7 @@ class SecurityMonitor:
             logger.error(f"Error unblocking IP {ip_address}: {e}")
             
     async def unsuspend_user(self, user_id: str, reason: str = "Manual unsuspension"):
-        """Unsuspend a user account"""
-        
+        """Unsuspend a user account"""        
         try:
             self._suspicious_users.discard(user_id)
             
@@ -1040,8 +993,7 @@ class SecurityMonitor:
             # Update database
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
-                    await conn.execute(text("""
-                        UPDATE users 
+                    await conn.execute(text("""                        UPDATE users 
                         SET status = 'active',
                             suspended_reason = NULL,
                             suspended_at = NULL,

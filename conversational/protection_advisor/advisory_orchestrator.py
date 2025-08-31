@@ -1,5 +1,4 @@
-"""
-Advisory Orchestrator - Central coordination system for protection advisory services.
+"""Advisory Orchestrator - Central coordination system for protection advisory services.
 
 Orchestrates all protection advisor components to provide unified,
 intelligent advisory services for content creators.
@@ -7,7 +6,6 @@ intelligent advisory services for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -33,8 +31,7 @@ logger = get_logger(__name__)
 
 
 class AdvisorySessionType(str, Enum):
-    """Types of advisory sessions."""
-    COMPREHENSIVE = "comprehensive"
+    """Types of advisory sessions."""    COMPREHENSIVE = "comprehensive"
     QUICK_SCAN = "quick_scan"
     THREAT_RESPONSE = "threat_response"
     COMPLIANCE_CHECK = "compliance_check"
@@ -43,8 +40,7 @@ class AdvisorySessionType(str, Enum):
 
 
 class SessionStatus(str, Enum):
-    """Advisory session status."""
-    INITIATED = "initiated"
+    """Advisory session status."""    INITIATED = "initiated"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -52,8 +48,7 @@ class SessionStatus(str, Enum):
 
 
 class Priority(str, Enum):
-    """Advisory request priority levels."""
-    LOW = "low"
+    """Advisory request priority levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -62,8 +57,7 @@ class Priority(str, Enum):
 
 @dataclass
 class AdvisoryRequest:
-    """Advisory service request."""
-    request_id: str
+    """Advisory service request."""    request_id: str
     user_id: str
     session_type: AdvisorySessionType
     priority: Priority
@@ -76,8 +70,7 @@ class AdvisoryRequest:
 
 @dataclass
 class AdvisorySession:
-    """Complete advisory session."""
-    session_id: str
+    """Complete advisory session."""    session_id: str
     request: AdvisoryRequest
     status: SessionStatus
     components_used: List[str]
@@ -93,8 +86,7 @@ class AdvisorySession:
 
 @dataclass
 class AdvisoryResponse:
-    """Advisory service response."""
-    session: AdvisorySession
+    """Advisory service response."""    session: AdvisorySession
     summary: str
     key_findings: List[str]
     immediate_actions: List[str]
@@ -107,8 +99,7 @@ class AdvisoryResponse:
 
 
 class AdvisoryOrchestrator:
-    """
-    Central orchestrator for protection advisory services.
+    """    Central orchestrator for protection advisory services.
     
     Coordinates all protection advisor components to provide:
     - Unified advisory sessions
@@ -118,7 +109,6 @@ class AdvisoryOrchestrator:
     - Priority-based execution
     - Performance optimization
     """
-
     def __init__(self):
         # Initialize all advisor components
         self.advisor_core = ProtectionAdvisorCore()
@@ -145,8 +135,7 @@ class AdvisoryOrchestrator:
         requirements: Optional[Dict[str, Any]] = None,
         priority: Priority = Priority.MEDIUM
     ) -> str:
-        """
-        Request comprehensive advisory service.
+        """        Request comprehensive advisory service.
         
         Args:
             user_id: Creator user ID
@@ -158,8 +147,7 @@ class AdvisoryOrchestrator:
             
         Returns:
             Session ID for tracking
-        """
-        try:
+        """        try:
             logger.info(f"Advisory service requested by user {user_id}, type: {session_type}")
             
             # Create advisory request
@@ -219,8 +207,7 @@ class AdvisoryOrchestrator:
         session_id: str,
         include_details: bool = True
     ) -> Optional[AdvisoryResponse]:
-        """
-        Get results from advisory session.
+        """        Get results from advisory session.
         
         Args:
             session_id: Session identifier
@@ -228,8 +215,7 @@ class AdvisoryOrchestrator:
             
         Returns:
             AdvisoryResponse if session is complete, None otherwise
-        """
-        try:
+        """        try:
             session = self.active_sessions.get(session_id)
             if not session:
                 logger.warning(f"Session {session_id} not found")
@@ -249,16 +235,14 @@ class AdvisoryOrchestrator:
             return None
     
     async def get_session_status(self, session_id: str) -> Dict[str, Any]:
-        """
-        Get current status of advisory session.
+        """        Get current status of advisory session.
         
         Args:
             session_id: Session identifier
             
         Returns:
             Session status information
-        """
-        try:
+        """        try:
             session = self.active_sessions.get(session_id)
             if not session:
                 return {"error": "Session not found"}
@@ -281,16 +265,14 @@ class AdvisoryOrchestrator:
             return {"error": str(e)}
     
     async def cancel_advisory_session(self, session_id: str) -> bool:
-        """
-        Cancel ongoing advisory session.
+        """        Cancel ongoing advisory session.
         
         Args:
             session_id: Session identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             session = self.active_sessions.get(session_id)
             if not session:
                 logger.warning(f"Session {session_id} not found")
@@ -319,8 +301,7 @@ class AdvisoryOrchestrator:
         user_id: str,
         time_period: Optional[timedelta] = None
     ) -> Dict[str, Any]:
-        """
-        Get insights from historical advisory sessions.
+        """        Get insights from historical advisory sessions.
         
         Args:
             user_id: Creator user ID
@@ -328,8 +309,7 @@ class AdvisoryOrchestrator:
             
         Returns:
             Advisory insights and analytics
-        """
-        try:
+        """        try:
             if time_period is None:
                 time_period = timedelta(days=30)
             
@@ -382,8 +362,7 @@ class AdvisoryOrchestrator:
     # Private helper methods
     
     async def _execute_advisory_session(self, session: AdvisorySession) -> None:
-        """Execute complete advisory session."""
-        try:
+        """Execute complete advisory session."""        try:
             session.status = SessionStatus.IN_PROGRESS
             start_time = datetime.utcnow()
             
@@ -439,8 +418,7 @@ class AdvisoryOrchestrator:
             session.completed_at = datetime.utcnow()
     
     async def _create_execution_plan(self, session: AdvisorySession) -> Dict[str, Any]:
-        """Create execution plan for advisory session."""
-        try:
+        """Create execution plan for advisory session."""        try:
             session_type = session.request.session_type
             scope = session.request.scope
             
@@ -498,8 +476,7 @@ class AdvisoryOrchestrator:
         session: AdvisorySession,
         execution_plan: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute advisory components according to plan."""
-        try:
+        """Execute advisory components according to plan."""        try:
             component_results = {}
             parallel_groups = execution_plan.get("parallel_groups", [])
             
@@ -535,8 +512,7 @@ class AdvisoryOrchestrator:
             return {}
     
     async def _execute_component(self, component: str, session: AdvisorySession) -> Dict[str, Any]:
-        """Execute individual advisory component."""
-        try:
+        """Execute individual advisory component."""        try:
             request = session.request
             user_id = request.user_id
             scope = request.scope
@@ -651,8 +627,7 @@ class AdvisoryOrchestrator:
     # Additional helper methods (simplified implementations)
     
     def _calculate_deadline(self, priority: Priority) -> datetime:
-        """Calculate deadline based on priority."""
-        base_time = datetime.utcnow()
+        """Calculate deadline based on priority."""        base_time = datetime.utcnow()
         
         deadline_map = {
             Priority.CRITICAL: timedelta(minutes=15),
@@ -665,8 +640,7 @@ class AdvisoryOrchestrator:
         return base_time + deadline_map.get(priority, timedelta(hours=24))
     
     async def _validate_advisory_request(self, request: AdvisoryRequest) -> Dict[str, Any]:
-        """Validate advisory request."""
-        if not request.user_id:
+        """Validate advisory request."""        if not request.user_id:
             return {"valid": False, "error": "User ID required"}
         
         if not request.scope:
@@ -675,20 +649,17 @@ class AdvisoryOrchestrator:
         return {"valid": True}
     
     async def _should_execute_immediately(self, session: AdvisorySession) -> bool:
-        """Determine if session should execute immediately."""
-        # Execute immediately for high priority or if queue is empty
+        """Determine if session should execute immediately."""        # Execute immediately for high priority or if queue is empty
         return (session.request.priority in [Priority.CRITICAL, Priority.URGENT] or
                 len(self.session_queue) == 0)
     
     async def _queue_advisory_session(self, session: AdvisorySession):
-        """Add session to execution queue."""
-        self.session_queue.append(session)
+        """Add session to execution queue."""        self.session_queue.append(session)
         # Sort queue by priority
         self.session_queue.sort(key=lambda s: self._priority_score(s.request.priority), reverse=True)
     
     def _priority_score(self, priority: Priority) -> int:
-        """Convert priority to numeric score."""
-        scores = {
+        """Convert priority to numeric score."""        scores = {
             Priority.CRITICAL: 5,
             Priority.URGENT: 4,
             Priority.HIGH: 3,
@@ -707,8 +678,7 @@ class AdvisoryOrchestrator:
         return "5-10 minutes"  # Simplified estimate
     
     async def _cleanup_session_resources(self, session: AdvisorySession):
-        """Clean up resources used during advisory session"""
-        try:
+        """Clean up resources used during advisory session"""        try:
             # Clean up temporary files
             if hasattr(session, 'temp_files') and session.temp_files:
                 for temp_file in session.temp_files:
@@ -746,8 +716,7 @@ class AdvisoryOrchestrator:
             logger.error(f"❌ Failed to cleanup session resources for {session.session_id}: {e}")
     
     async def _send_completion_notifications(self, session: AdvisorySession):
-        """Send notifications about session completion"""
-        try:
+        """Send notifications about session completion"""        try:
             # Prepare notification data
             notification_data = {
                 "session_id": session.session_id,
@@ -762,8 +731,7 @@ class AdvisoryOrchestrator:
             if hasattr(self, 'notification_manager') and self.notification_manager:
                 email_template = {
                     "subject": "🎯 Advisory Session Completed",
-                    "body": f"""
-                    Your advisory session has been completed successfully!
+                    "body": f"""                    Your advisory session has been completed successfully!
                     
                     Session ID: {session.session_id}
                     Status: {notification_data['status']}

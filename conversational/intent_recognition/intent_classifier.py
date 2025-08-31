@@ -1,5 +1,4 @@
-"""
-Intent Classification Engine
+"""Intent Classification Engine
 
 Core intent classification system with advanced ML models for creative industry
 professionals. Provides multi-modal intent recognition with confidence scoring
@@ -14,7 +13,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import json
 import pickle
@@ -47,8 +45,7 @@ from .exceptions import ClassificationError, ModelLoadError
 
 
 class IntentCategory(Enum):
-    """Primary intent categories for creative industry professionals"""
-    
+    """Primary intent categories for creative industry professionals"""    
     # Content Creation & Management
     CONTENT_UPLOAD = "content_upload"
     CONTENT_EDIT = "content_edit"
@@ -103,8 +100,7 @@ class IntentCategory(Enum):
 
 @dataclass
 class IntentConfidence:
-    """Intent classification confidence metrics"""
-    primary_score: float
+    """Intent classification confidence metrics"""    primary_score: float
     secondary_score: Optional[float] = None
     uncertainty: float = 0.0
     calibrated_confidence: float = 0.0
@@ -114,8 +110,7 @@ class IntentConfidence:
 
 @dataclass
 class ClassificationResult:
-    """Complete intent classification result"""
-    primary_intent: IntentCategory
+    """Complete intent classification result"""    primary_intent: IntentCategory
     secondary_intent: Optional[IntentCategory] = None
     confidence: IntentConfidence = field(default_factory=IntentConfidence)
     intent_parameters: Dict[str, Any] = field(default_factory=dict)
@@ -126,8 +121,7 @@ class ClassificationResult:
 
 
 class IntentClassifier(BaseService):
-    """
-    Advanced intent classification engine for creative industry workflows
+    """    Advanced intent classification engine for creative industry workflows
     
     Features:
     - Multi-model ensemble classification
@@ -135,8 +129,7 @@ class IntentClassifier(BaseService):
     - Confidence calibration and uncertainty quantification
     - Real-time performance optimization
     - Adaptive learning capabilities
-    """
-    
+    """    
     def __init__(self, config: IntentRecognitionConfig):
         super().__init__()
         self.config = config
@@ -159,8 +152,7 @@ class IntentClassifier(BaseService):
         self._initialize_models()
         
     async def _initialize_models(self) -> None:
-        """Initialize all classification models and components"""
-        try:
+        """Initialize all classification models and components"""        try:
             self.logger.info("Initializing intent classification models...")
             
             # Load transformer model for primary classification
@@ -182,8 +174,7 @@ class IntentClassifier(BaseService):
             raise ModelLoadError(f"Model initialization failed: {str(e)}")
     
     async def _load_transformer_model(self) -> None:
-        """Load fine-tuned transformer model for intent classification"""
-        try:
+        """Load fine-tuned transformer model for intent classification"""        try:
             model_name = self.config.transformer_model_name
             
             self.transformer_tokenizer = AutoTokenizer.from_pretrained(model_name)
@@ -208,8 +199,7 @@ class IntentClassifier(BaseService):
             raise ModelLoadError(f"Failed to load transformer model: {str(e)}")
     
     async def _load_ensemble_models(self) -> None:
-        """Load ensemble models for improved accuracy"""
-        try:
+        """Load ensemble models for improved accuracy"""        try:
             # TF-IDF + Random Forest for fallback classification
             self.tfidf_vectorizer = TfidfVectorizer(
                 max_features=self.config.tfidf_max_features,
@@ -236,8 +226,7 @@ class IntentClassifier(BaseService):
             self.logger.warning(f"Failed to load ensemble models: {str(e)}")
     
     async def _load_text_processors(self) -> None:
-        """Load NLP processing components"""
-        try:
+        """Load NLP processing components"""        try:
             # Load spaCy model for text preprocessing
             self.nlp_processor = spacy.load(self.config.spacy_model)
             
@@ -253,8 +242,7 @@ class IntentClassifier(BaseService):
             self.logger.warning(f"Failed to load text processors: {str(e)}")
     
     async def _load_calibration_data(self) -> None:
-        """Load confidence calibration data"""
-        try:
+        """Load confidence calibration data"""        try:
             if self.config.calibration_data_path:
                 with open(self.config.calibration_data_path, 'rb') as f:
                     self.calibration_data = pickle.load(f)
@@ -265,8 +253,7 @@ class IntentClassifier(BaseService):
             self.logger.warning(f"Failed to load calibration data: {str(e)}")
     
     def _get_creative_entity_patterns(self) -> List[Dict[str, Any]]:
-        """Get entity patterns specific to creative industry"""
-        return [
+        """Get entity patterns specific to creative industry"""        return [
             # Music-related patterns
             {"label": "MUSIC_GENRE", "pattern": [{"LOWER": {"IN": ["pop", "rock", "jazz", "classical", "electronic", "hip-hop", "country"]}}]},
             {"label": "INSTRUMENT", "pattern": [{"LOWER": {"IN": ["guitar", "piano", "drums", "violin", "saxophone", "bass"]}}]},
@@ -289,8 +276,7 @@ class IntentClassifier(BaseService):
         user_id: Optional[str] = None,
         session_id: Optional[str] = None
     ) -> ClassificationResult:
-        """
-        Classify user intent from text input
+        """        Classify user intent from text input
         
         Args:
             text: Input text to classify
@@ -300,8 +286,7 @@ class IntentClassifier(BaseService):
             
         Returns:
             ClassificationResult with intent and confidence scores
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Validate input
@@ -344,8 +329,7 @@ class IntentClassifier(BaseService):
             raise ClassificationError(f"Classification failed: {str(e)}")
     
     async def _preprocess_text(self, text: str) -> str:
-        """Preprocess input text for classification"""
-        try:
+        """Preprocess input text for classification"""        try:
             # Basic cleaning
             text = text.strip().lower()
             
@@ -371,8 +355,7 @@ class IntentClassifier(BaseService):
         text: str, 
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Extract classification features from text and context"""
-        features = {
+        """Extract classification features from text and context"""        features = {
             'text_length': len(text),
             'word_count': len(text.split()),
             'has_question': '?' in text,
@@ -406,8 +389,7 @@ class IntentClassifier(BaseService):
         text: str, 
         features: Dict[str, Any]
     ) -> Tuple[IntentCategory, float]:
-        """Classify intent using transformer model"""
-        try:
+        """Classify intent using transformer model"""        try:
             if not self.transformer_model or not self.transformer_tokenizer:
                 raise ModelLoadError("Transformer model not loaded")
             
@@ -442,8 +424,7 @@ class IntentClassifier(BaseService):
         text: str, 
         features: Dict[str, Any]
     ) -> Tuple[Optional[IntentCategory], float]:
-        """Classify intent using ensemble models"""
-        try:
+        """Classify intent using ensemble models"""        try:
             if not self.ensemble_models or not self.tfidf_vectorizer:
                 return None, 0.0
             
@@ -482,8 +463,7 @@ class IntentClassifier(BaseService):
         secondary_result: Tuple[Optional[IntentCategory], float],
         features: Dict[str, Any]
     ) -> ClassificationResult:
-        """Combine primary and secondary classification results"""
-        
+        """Combine primary and secondary classification results"""        
         primary_intent, primary_confidence = primary_result
         secondary_intent, secondary_confidence = secondary_result
         
@@ -527,8 +507,7 @@ class IntentClassifier(BaseService):
         return result
     
     def _calibrate_confidence(self, confidence: float, intent: IntentCategory) -> float:
-        """Calibrate confidence score using historical data"""
-        try:
+        """Calibrate confidence score using historical data"""        try:
             if not self.calibration_data:
                 return confidence
             
@@ -549,8 +528,7 @@ class IntentClassifier(BaseService):
             return confidence
     
     def _extract_intent_parameters(self, features: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract parameters specific to the identified intent"""
-        parameters = {}
+        """Extract parameters specific to the identified intent"""        parameters = {}
         
         # Extract relevant entities and context
         if 'entities' in features:
@@ -576,8 +554,7 @@ class IntentClassifier(BaseService):
         user_id: Optional[str],
         session_id: Optional[str]
     ) -> Dict[str, float]:
-        """Analyze contextual factors that influence intent classification"""
-        
+        """Analyze contextual factors that influence intent classification"""        
         factors = {
             'text_clarity': self._calculate_text_clarity(text),
             'context_relevance': 0.5,  # Default when no context
@@ -600,8 +577,7 @@ class IntentClassifier(BaseService):
         return factors
     
     def _calculate_text_clarity(self, text: str) -> float:
-        """Calculate clarity score for input text"""
-        try:
+        """Calculate clarity score for input text"""        try:
             # Simple heuristics for text clarity
             words = text.split()
             
@@ -630,8 +606,7 @@ class IntentClassifier(BaseService):
             return 0.5
     
     def _calculate_context_relevance(self, context: Dict[str, Any]) -> float:
-        """Calculate relevance of provided context"""
-        relevance = 0.5  # Base score
+        """Calculate relevance of provided context"""        relevance = 0.5  # Base score
         
         # Check for relevant context fields
         relevant_fields = ['previous_intent', 'conversation_stage', 'user_type', 'platform_context']
@@ -642,18 +617,15 @@ class IntentClassifier(BaseService):
         return min(1.0, relevance)
     
     async def _calculate_user_consistency(self, user_id: str, text: str) -> float:
-        """Calculate user intent consistency (placeholder for user history analysis)"""
-        # In production, this would analyze user's historical intent patterns
+        """Calculate user intent consistency (placeholder for user history analysis)"""        # In production, this would analyze user's historical intent patterns
         return 0.7  # Placeholder value
     
     async def _calculate_session_coherence(self, session_id: str, text: str) -> float:
-        """Calculate session coherence score (placeholder for session analysis)"""
-        # In production, this would analyze session conversation flow
+        """Calculate session coherence score (placeholder for session analysis)"""        # In production, this would analyze session conversation flow
         return 0.6  # Placeholder value
     
     async def _update_metrics(self, result: ClassificationResult, processing_time: float) -> None:
-        """Update performance metrics"""
-        try:
+        """Update performance metrics"""        try:
             # Record classification metrics
             self.metrics.record_counter('classifications_total')
             self.metrics.record_histogram('classification_time', processing_time)
@@ -689,8 +661,7 @@ class IntentClassifier(BaseService):
         contexts: Optional[List[Dict[str, Any]]] = None,
         user_ids: Optional[List[str]] = None
     ) -> List[ClassificationResult]:
-        """
-        Classify multiple intents in batch for improved performance
+        """        Classify multiple intents in batch for improved performance
         
         Args:
             texts: List of input texts
@@ -699,8 +670,7 @@ class IntentClassifier(BaseService):
             
         Returns:
             List of classification results
-        """
-        try:
+        """        try:
             # Prepare inputs
             if contexts is None:
                 contexts = [None] * len(texts)
@@ -741,8 +711,7 @@ class IntentClassifier(BaseService):
         intent: IntentCategory,
         time_window_hours: int = 24
     ) -> Dict[str, float]:
-        """Get confidence score distribution for specific intent"""
-        try:
+        """Get confidence score distribution for specific intent"""        try:
             # In production, this would query historical data
             # Placeholder implementation
             return {
@@ -761,8 +730,7 @@ class IntentClassifier(BaseService):
         self,
         feedback_data: List[Dict[str, Any]]
     ) -> None:
-        """Update model performance based on user feedback"""
-        try:
+        """Update model performance based on user feedback"""        try:
             # Process feedback for model improvement
             for feedback in feedback_data:
                 text = feedback.get('text')
@@ -787,8 +755,7 @@ class IntentClassifier(BaseService):
             self.logger.error(f"Failed to update model performance: {str(e)}")
     
     def get_model_info(self) -> Dict[str, Any]:
-        """Get information about loaded models and performance"""
-        return {
+        """Get information about loaded models and performance"""        return {
             'transformer_model': self.config.transformer_model_name,
             'model_version': self.config.model_version,
             'ensemble_models': list(self.ensemble_models.keys()),

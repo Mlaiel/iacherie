@@ -1,5 +1,4 @@
-"""
-Networking Management System
+"""Networking Management System
 
 Provides comprehensive networking infrastructure including VPC, subnets,
 security groups, service mesh, and network policies for Kubernetes.
@@ -9,7 +8,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
-
 import asyncio
 import logging
 import json
@@ -23,29 +21,25 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class NetworkType(Enum):
-    """Network types"""
-    VPC = "vpc"
+    """Network types"""    VPC = "vpc"
     SUBNET = "subnet"
     SECURITY_GROUP = "security_group"
     NETWORK_POLICY = "network_policy"
     SERVICE_MESH = "service_mesh"
 
 class ProtocolType(Enum):
-    """Network protocols"""
-    TCP = "tcp"
+    """Network protocols"""    TCP = "tcp"
     UDP = "udp"
     ICMP = "icmp"
     ALL = "all"
 
 class TrafficDirection(Enum):
-    """Traffic direction"""
-    INGRESS = "ingress"
+    """Traffic direction"""    INGRESS = "ingress"
     EGRESS = "egress"
 
 @dataclass
 class NetworkRule:
-    """Network security rule"""
-    direction: TrafficDirection
+    """Network security rule"""    direction: TrafficDirection
     protocol: ProtocolType
     port_range: str  # e.g., "80", "8000-8080", "all"
     source_destination: str  # CIDR block or security group ID
@@ -53,8 +47,7 @@ class NetworkRule:
 
 @dataclass
 class SecurityGroupSpec:
-    """Security group specification"""
-    name: str
+    """Security group specification"""    name: str
     description: str
     vpc_id: Optional[str] = None
     rules: List[NetworkRule] = field(default_factory=list)
@@ -62,8 +55,7 @@ class SecurityGroupSpec:
 
 @dataclass
 class SubnetSpec:
-    """Subnet specification"""
-    name: str
+    """Subnet specification"""    name: str
     cidr_block: str
     availability_zone: str
     vpc_id: str
@@ -73,8 +65,7 @@ class SubnetSpec:
 
 @dataclass
 class VPCSpec:
-    """VPC specification"""
-    name: str
+    """VPC specification"""    name: str
     cidr_block: str
     enable_dns_hostnames: bool = True
     enable_dns_support: bool = True
@@ -84,8 +75,7 @@ class VPCSpec:
 
 @dataclass
 class NetworkPolicySpec:
-    """Kubernetes Network Policy specification"""
-    name: str
+    """Kubernetes Network Policy specification"""    name: str
     namespace: str
     pod_selector: Dict[str, str]
     ingress_rules: List[Dict[str, Any]] = field(default_factory=list)
@@ -94,8 +84,7 @@ class NetworkPolicySpec:
 
 @dataclass
 class ServiceMeshSpec:
-    """Service mesh specification"""
-    name: str
+    """Service mesh specification"""    name: str
     mesh_type: str = "istio"  # istio, linkerd, consul
     namespace: str = "istio-system"
     enable_mtls: bool = True
@@ -103,8 +92,7 @@ class ServiceMeshSpec:
     enable_monitoring: bool = True
 
 class NetworkingManager:
-    """Main networking infrastructure manager"""
-    
+    """Main networking infrastructure manager"""    
     def __init__(self, k8s_client=None, cloud_provider=None):
         self.k8s_client = k8s_client
         self.cloud_provider = cloud_provider
@@ -113,8 +101,7 @@ class NetworkingManager:
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         
     async def create_vpc_infrastructure(self, vpc_spec: VPCSpec) -> Dict[str, Any]:
-        """Create complete VPC infrastructure"""
-        try:
+        """Create complete VPC infrastructure"""        try:
             results = {}
             
             # Create VPC
@@ -160,8 +147,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_vpc(self, vpc_spec: VPCSpec) -> Dict[str, Any]:
-        """Create VPC"""
-        try:
+        """Create VPC"""        try:
             if self.cloud_provider:
                 # Implementation depends on cloud provider (AWS, GCP, Azure)
                 logger.info(f"Creating VPC: {vpc_spec.name}")
@@ -182,8 +168,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_subnet(self, subnet_spec: SubnetSpec) -> Dict[str, Any]:
-        """Create subnet"""
-        try:
+        """Create subnet"""        try:
             logger.info(f"Creating subnet: {subnet_spec.name}")
             return {
                 'status': 'success',
@@ -196,8 +181,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_security_group(self, sg_spec: SecurityGroupSpec) -> Dict[str, Any]:
-        """Create security group"""
-        try:
+        """Create security group"""        try:
             logger.info(f"Creating security group: {sg_spec.name}")
             return {
                 'status': 'success',
@@ -209,8 +193,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_internet_gateway(self, vpc_id: str) -> Dict[str, Any]:
-        """Create internet gateway"""
-        try:
+        """Create internet gateway"""        try:
             logger.info(f"Creating internet gateway for VPC: {vpc_id}")
             return {
                 'status': 'success',
@@ -222,8 +205,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_route_tables(self, vpc_id: str, subnet_results: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Create route tables for subnets"""
-        try:
+        """Create route tables for subnets"""        try:
             logger.info(f"Creating route tables for VPC: {vpc_id}")
             return {
                 'status': 'success',
@@ -234,8 +216,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_network_policies(self, policies: List[NetworkPolicySpec]) -> Dict[str, Any]:
-        """Create Kubernetes network policies"""
-        try:
+        """Create Kubernetes network policies"""        try:
             results = []
             
             for policy_spec in policies:
@@ -253,8 +234,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _create_network_policy(self, policy_spec: NetworkPolicySpec) -> Dict[str, Any]:
-        """Create individual network policy"""
-        try:
+        """Create individual network policy"""        try:
             # Build ingress rules
             ingress_rules = []
             for rule in policy_spec.ingress_rules:
@@ -307,8 +287,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def deploy_service_mesh(self, mesh_spec: ServiceMeshSpec) -> Dict[str, Any]:
-        """Deploy service mesh infrastructure"""
-        try:
+        """Deploy service mesh infrastructure"""        try:
             if mesh_spec.mesh_type == "istio":
                 return await self._deploy_istio(mesh_spec)
             else:
@@ -319,8 +298,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_istio(self, mesh_spec: ServiceMeshSpec) -> Dict[str, Any]:
-        """Deploy Istio service mesh"""
-        try:
+        """Deploy Istio service mesh"""        try:
             # Create Istio namespace
             namespace = client.V1Namespace(
                 metadata=client.V1ObjectMeta(
@@ -476,8 +454,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def create_ia_influencer_networking(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Create networking setup for IA Influencer platform"""
-        try:
+        """Create networking setup for IA Influencer platform"""        try:
             results = {}
             
             # Create VPC for IA Influencer
@@ -657,8 +634,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def configure_network_monitoring(self, namespace: str = "monitoring") -> Dict[str, Any]:
-        """Configure network monitoring and observability"""
-        try:
+        """Configure network monitoring and observability"""        try:
             # Deploy network monitoring tools
             monitoring_deployments = []
             
@@ -712,8 +688,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def validate_network_connectivity(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Validate network connectivity between services"""
-        try:
+        """Validate network connectivity between services"""        try:
             connectivity_tests = []
             
             # Test connectivity from API to database
@@ -752,8 +727,7 @@ class NetworkingManager:
             return {'status': 'error', 'message': str(e)}
     
     async def get_network_status(self) -> Dict[str, Any]:
-        """Get comprehensive network status"""
-        try:
+        """Get comprehensive network status"""        try:
             status = {
                 'vpc': {'status': 'healthy'},
                 'subnets': {'count': 4, 'healthy': 4},

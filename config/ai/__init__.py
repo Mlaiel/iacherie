@@ -14,8 +14,7 @@ without explicit written permission is STRICTLY PROHIBITED and will be
 prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-# Core AI Configuration Imports
+"""# Core AI Configuration Imports
 from .model_config import AIModelConfig, ai_model_config
 from .fingerprint_config import FingerprintAIConfig, fingerprint_ai_config
 from .nlp_config import NLPConfig, nlp_config

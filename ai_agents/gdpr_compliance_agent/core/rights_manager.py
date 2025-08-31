@@ -1,5 +1,4 @@
-"""
-Data Rights Manager - Advanced GDPR Data Subject Rights Management
+"""Data Rights Manager - Advanced GDPR Data Subject Rights Management
 Comprehensive system for handling all GDPR data subject rights requests
 
 Project: IA-Influencer Agent
@@ -9,7 +8,6 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
-
 import asyncio
 import logging
 import json
@@ -37,8 +35,7 @@ from ...models.gdpr_models import DataSubjectRight, DataExportRecord, RightsRequ
 logger = get_logger(__name__)
 
 class DataSubjectRightType(Enum):
-    """GDPR Data Subject Rights"""
-    RIGHT_OF_ACCESS = "access"
+    """GDPR Data Subject Rights"""    RIGHT_OF_ACCESS = "access"
     RIGHT_OF_RECTIFICATION = "rectification"
     RIGHT_OF_ERASURE = "erasure"
     RIGHT_TO_RESTRICT_PROCESSING = "restriction"
@@ -48,8 +45,7 @@ class DataSubjectRightType(Enum):
     RIGHT_NOT_TO_BE_SUBJECT_TO_AUTOMATED_DECISION = "automated_decision"
 
 class RequestStatus(Enum):
-    """Status of rights requests"""
-    RECEIVED = "received"
+    """Status of rights requests"""    RECEIVED = "received"
     UNDER_REVIEW = "under_review"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
@@ -57,16 +53,14 @@ class RequestStatus(Enum):
     EXPIRED = "expired"
 
 class RequestPriority(Enum):
-    """Priority levels for rights requests"""
-    LOW = "low"
+    """Priority levels for rights requests"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
 
 @dataclass
 class RightsFulfillmentMetrics:
-    """Metrics for rights fulfillment performance"""
-    total_requests: int
+    """Metrics for rights fulfillment performance"""    total_requests: int
     completed_requests: int
     pending_requests: int
     rejected_requests: int
@@ -76,11 +70,9 @@ class RightsFulfillmentMetrics:
     requests_by_type: Dict[str, int]
 
 class DataRightsManager:
-    """
-    Advanced Data Subject Rights Manager
+    """    Advanced Data Subject Rights Manager
     Handles all GDPR data subject rights with automated processing and compliance tracking
-    """
-    
+    """    
     def __init__(self):
         # Response time limits (in hours)
         self._response_time_limits = {
@@ -110,8 +102,7 @@ class DataRightsManager:
         logger.info("Data Rights Manager initialized successfully")
     
     def _initialize_request_templates(self) -> Dict[DataSubjectRightType, Dict[str, str]]:
-        """Initialize request processing templates"""
-        return {
+        """Initialize request processing templates"""        return {
             DataSubjectRightType.RIGHT_OF_ACCESS: {
                 "title": "Data Access Request",
                 "description": "Request to access personal data we hold about you",
@@ -170,8 +161,7 @@ class DataRightsManager:
         request_details: Dict[str, Any],
         identity_verification: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Submit a new data subject rights request"""
-        try:
+        """Submit a new data subject rights request"""        try:
             request_id = str(uuid.uuid4())
             
             # Validate request type
@@ -254,8 +244,7 @@ class DataRightsManager:
         request_details: Dict[str, Any],
         request_id: str
     ) -> Dict[str, Any]:
-        """Process a data subject right request"""
-        try:
+        """Process a data subject right request"""        try:
             # Convert string to enum
             try:
                 right_type = DataSubjectRightType(request_type)
@@ -292,8 +281,7 @@ class DataRightsManager:
         request_id: str,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process right of access request"""
-        try:
+        """Process right of access request"""        try:
             # Collect all personal data
             personal_data = await self._collect_user_personal_data(user_id)
             
@@ -344,8 +332,7 @@ class DataRightsManager:
         request_id: str,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process right of rectification request"""
-        try:
+        """Process right of rectification request"""        try:
             corrections = request_details.get("corrections", {})
             corrected_fields = []
             
@@ -384,8 +371,7 @@ class DataRightsManager:
         request_id: str,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process right of erasure (right to be forgotten) request"""
-        try:
+        """Process right of erasure (right to be forgotten) request"""        try:
             erasure_scope = request_details.get("erasure_scope", "all")
             legal_basis_check = await self._check_erasure_legal_basis(user_id, request_details)
             
@@ -424,8 +410,7 @@ class DataRightsManager:
         request_id: str,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process right to data portability request"""
-        try:
+        """Process right to data portability request"""        try:
             export_format = request_details.get("format", "json")
             if export_format not in self._export_formats:
                 export_format = "json"
@@ -483,8 +468,7 @@ class DataRightsManager:
         request_id: str,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process right to restrict processing request"""
-        try:
+        """Process right to restrict processing request"""        try:
             restriction_scope = request_details.get("restriction_scope", {})
             
             # Apply processing restrictions
@@ -515,8 +499,7 @@ class DataRightsManager:
         request_id: str,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process right to object request"""
-        try:
+        """Process right to object request"""        try:
             objection_grounds = request_details.get("objection_grounds", "")
             processing_purposes = request_details.get("processing_purposes", [])
             
@@ -558,8 +541,7 @@ class DataRightsManager:
         request_id: str,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process consent withdrawal request"""
-        try:
+        """Process consent withdrawal request"""        try:
             consent_purposes = request_details.get("consent_purposes", [])
             
             # Withdraw consent through consent manager
@@ -591,8 +573,7 @@ class DataRightsManager:
             raise
     
     async def get_request_status(self, request_id: str, user_id: str) -> Dict[str, Any]:
-        """Get status of a data subject rights request"""
-        try:
+        """Get status of a data subject rights request"""        try:
             async with get_db() as db:
                 request_query = await db.execute(
                     select(DataSubjectRight).where(
@@ -634,8 +615,7 @@ class DataRightsManager:
             raise HTTPException(status_code=500, detail=f"Status retrieval failed: {str(e)}")
     
     async def get_rights_fulfillment_metrics(self, user_id: str = None) -> RightsFulfillmentMetrics:
-        """Get metrics for rights fulfillment performance"""
-        try:
+        """Get metrics for rights fulfillment performance"""        try:
             async with get_db() as db:
                 query = select(DataSubjectRight)
                 
@@ -701,8 +681,7 @@ class DataRightsManager:
         request_type: DataSubjectRightType,
         request_details: Dict[str, Any]
     ) -> RequestPriority:
-        """Determine priority level for rights request"""
-        # High priority requests
+        """Determine priority level for rights request"""        # High priority requests
         if request_type == DataSubjectRightType.RIGHT_TO_WITHDRAW_CONSENT:
             return RequestPriority.HIGH
         
@@ -724,8 +703,7 @@ class DataRightsManager:
         request_type: DataSubjectRightType,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Start automated processing for eligible requests"""
-        processing_steps = []
+        """Start automated processing for eligible requests"""        processing_steps = []
         
         if request_type == DataSubjectRightType.RIGHT_OF_ACCESS:
             processing_steps = [
@@ -752,8 +730,7 @@ class DataRightsManager:
         }
     
     async def _collect_user_personal_data(self, user_id: str) -> Dict[str, Any]:
-        """Collect all personal data for a user"""
-        # In production, this would query all relevant tables and systems
+        """Collect all personal data for a user"""        # In production, this would query all relevant tables and systems
         return {
             "identity_data": {
                 "user_id": user_id,
@@ -772,8 +749,7 @@ class DataRightsManager:
         user_id: str, 
         personal_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive data access report"""
-        return {
+        """Generate comprehensive data access report"""        return {
             "report_generated": datetime.utcnow().isoformat(),
             "user_id": user_id,
             "data_summary": {
@@ -806,8 +782,7 @@ class DataRightsManager:
         field_name: str, 
         new_value: Any
     ) -> Dict[str, Any]:
-        """Apply data correction to user record"""
-        # In production, this would update the actual data
+        """Apply data correction to user record"""        # In production, this would update the actual data
         return {
             "status": "corrected",
             "old_value": "[PREVIOUS_VALUE]",
@@ -819,8 +794,7 @@ class DataRightsManager:
         user_id: str, 
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check if erasure request has valid legal basis"""
-        # Simplified legal basis check
+        """Check if erasure request has valid legal basis"""        # Simplified legal basis check
         erasure_grounds = [
             "Data no longer necessary",
             "Consent withdrawn",
@@ -849,8 +823,7 @@ class DataRightsManager:
         user_id: str, 
         erasure_scope: str
     ) -> Dict[str, Any]:
-        """Execute data erasure according to scope"""
-        # In production, this would delete actual data
+        """Execute data erasure according to scope"""        # In production, this would delete actual data
         deleted_categories = [
             "identity_data",
             "consent_records",
@@ -871,8 +844,7 @@ class DataRightsManager:
         }
     
     async def _collect_portable_data(self, user_id: str) -> Dict[str, Any]:
-        """Collect data subject's portable personal data"""
-        # Only data provided by the user or generated through their use
+        """Collect data subject's portable personal data"""        # Only data provided by the user or generated through their use
         return {
             "profile_data": {
                 "user_id": user_id,
@@ -888,8 +860,7 @@ class DataRightsManager:
         portable_data: Dict[str, Any], 
         export_format: str
     ) -> bytes:
-        """Generate portable data package in specified format"""
-        if export_format == "json":
+        """Generate portable data package in specified format"""        if export_format == "json":
             return json.dumps(portable_data, indent=2).encode('utf-8')
         elif export_format == "csv":
             # Convert to CSV format
@@ -901,8 +872,7 @@ class DataRightsManager:
             return json.dumps(portable_data).encode('utf-8')
     
     async def _update_request_status(self, request_id: str, status: RequestStatus) -> None:
-        """Update status of rights request"""
-        try:
+        """Update status of rights request"""        try:
             async with get_db() as db:
                 await db.execute(
                     update(DataSubjectRight)
@@ -917,8 +887,7 @@ class DataRightsManager:
             logger.error(f"Error updating request status: {str(e)}")
     
     async def _calculate_request_progress(self, rights_request: DataSubjectRight) -> Dict[str, Any]:
-        """Calculate processing progress for request"""
-        status_progress = {
+        """Calculate processing progress for request"""        status_progress = {
             RequestStatus.RECEIVED.value: 10,
             RequestStatus.UNDER_REVIEW.value: 30,
             RequestStatus.IN_PROGRESS.value: 60,
@@ -945,8 +914,7 @@ class DataRightsManager:
         user_id: str, 
         corrected_fields: List[Dict[str, Any]]
     ) -> List[str]:
-        """Notify third parties of data corrections"""
-        # In production, this would notify relevant third parties
+        """Notify third parties of data corrections"""        # In production, this would notify relevant third parties
         return [
             "Analytics provider notified",
             "Email service provider notified"
@@ -957,8 +925,7 @@ class DataRightsManager:
         user_id: str, 
         restriction_scope: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply processing restrictions"""
-        return {
+        """Apply processing restrictions"""        return {
             "restricted_purposes": restriction_scope.get("purposes", []),
             "restriction_timestamp": datetime.utcnow().isoformat(),
             "affected_systems": ["analytics", "marketing"]
@@ -969,8 +936,7 @@ class DataRightsManager:
         user_id: str, 
         restriction_result: Dict[str, Any]
     ) -> List[str]:
-        """Assess impact of processing restrictions"""
-        return [
+        """Assess impact of processing restrictions"""        return [
             "Analytics collection stopped",
             "Marketing communications disabled",
             "Personalization features limited"
@@ -982,8 +948,7 @@ class DataRightsManager:
         objection_grounds: str,
         processing_purposes: List[str]
     ) -> Dict[str, Any]:
-        """Assess validity of processing objection"""
-        # Simplified assessment
+        """Assess validity of processing objection"""        # Simplified assessment
         valid_grounds = [
             "Direct marketing",
             "Profiling for direct marketing",
@@ -1005,8 +970,7 @@ class DataRightsManager:
         user_id: str, 
         processing_purposes: List[str]
     ) -> Dict[str, Any]:
-        """Stop processing for specified purposes"""
-        return {
+        """Stop processing for specified purposes"""        return {
             "stopped_purposes": processing_purposes,
             "stop_timestamp": datetime.utcnow().isoformat(),
             "affected_activities": len(processing_purposes) * 2
@@ -1017,8 +981,7 @@ class DataRightsManager:
         user_id: str, 
         consent_purposes: List[str]
     ) -> List[str]:
-        """Assess impact of consent withdrawal"""
-        impacts = []
+        """Assess impact of consent withdrawal"""        impacts = []
         for purpose in consent_purposes:
             if purpose == "content_protection":
                 impacts.append("Content protection monitoring disabled")
@@ -1035,8 +998,7 @@ class DataRightsManager:
         request_id: str,
         request_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle requests requiring manual review"""
-        # Update status to under review
+        """Handle requests requiring manual review"""        # Update status to under review
         await self._update_request_status(request_id, RequestStatus.UNDER_REVIEW)
         
         return {
@@ -1048,8 +1010,7 @@ class DataRightsManager:
         }
 
     async def download_data_export(self, export_id: str, user_id: str) -> Dict[str, Any]:
-        """Handle data export download"""
-        try:
+        """Handle data export download"""        try:
             async with get_db() as db:
                 export_query = await db.execute(
                     select(DataExportRecord).where(

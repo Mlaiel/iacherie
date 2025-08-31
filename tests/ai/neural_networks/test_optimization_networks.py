@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Test Suite for Optimization Networks
+"""Comprehensive Test Suite for Optimization Networks
 
 Ultra-advanced industrial-grade tests for AI optimization networks,
 covering SEO, monetization, engagement, and performance optimization
@@ -42,7 +39,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -68,8 +64,7 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def optimization_config():
-    """Configuration for optimization networks"""
-    return TransformerConfig(
+    """Configuration for optimization networks"""    return TransformerConfig(
         input_dim=512,
         hidden_dims=[512, 768, 1024, 768, 512],
         output_dim=256,
@@ -85,8 +80,7 @@ def optimization_config():
 
 @pytest.fixture
 def content_metadata():
-    """Sample content metadata for optimization testing"""
-    random.seed(42)
+    """Sample content metadata for optimization testing"""    random.seed(42)
     np.random.seed(42)
     
     return {
@@ -131,8 +125,7 @@ def content_metadata():
 
 @pytest.fixture
 def engagement_metrics():
-    """Sample engagement metrics for testing"""
-    random.seed(42)
+    """Sample engagement metrics for testing"""    random.seed(42)
     np.random.seed(42)
     
     return {
@@ -165,8 +158,7 @@ def engagement_metrics():
 
 @pytest.fixture
 def seo_data():
-    """Sample SEO data for testing"""
-    random.seed(42)
+    """Sample SEO data for testing"""    random.seed(42)
     
     return {
         "keywords": {
@@ -211,8 +203,7 @@ def seo_data():
 
 @pytest.fixture
 def monetization_data():
-    """Sample monetization data for testing"""
-    random.seed(42)
+    """Sample monetization data for testing"""    random.seed(42)
     
     return {
         "revenue_streams": {
@@ -249,11 +240,9 @@ def monetization_data():
 
 
 class TestSEOOptimizationNetwork:
-    """Test SEO Optimization Network functionality"""
-    
+    """Test SEO Optimization Network functionality"""    
     def test_seo_network_initialization(self, optimization_config):
-        """Test SEO network initialization"""
-        network = SEOOptimizationNetwork(optimization_config)
+        """Test SEO network initialization"""        network = SEOOptimizationNetwork(optimization_config)
         
         assert hasattr(network, 'keyword_analyzer')
         assert hasattr(network, 'content_optimizer')
@@ -262,8 +251,7 @@ class TestSEOOptimizationNetwork:
         assert hasattr(network, 'semantic_matcher')
     
     def test_keyword_optimization(self, optimization_config, content_metadata, seo_data):
-        """Test keyword optimization functionality"""
-        network = SEOOptimizationNetwork(optimization_config)
+        """Test keyword optimization functionality"""        network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
         content = content_metadata["video_content"][0]
@@ -292,8 +280,7 @@ class TestSEOOptimizationNetwork:
         assert all(0 <= score <= 1 for score in scores.values())
     
     def test_title_optimization(self, optimization_config, content_metadata, seo_data):
-        """Test title optimization"""
-        network = SEOOptimizationNetwork(optimization_config)
+        """Test title optimization"""        network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
         original_title = content_metadata["video_content"][0]["title"]
@@ -319,8 +306,7 @@ class TestSEOOptimizationNetwork:
             assert 0 <= title_option["score"] <= 1
     
     def test_meta_description_optimization(self, optimization_config, content_metadata, seo_data):
-        """Test meta description optimization"""
-        network = SEOOptimizationNetwork(optimization_config)
+        """Test meta description optimization"""        network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
         content = content_metadata["video_content"][0]
@@ -346,8 +332,7 @@ class TestSEOOptimizationNetwork:
             assert 0 <= desc_option["score"] <= 1
     
     def test_content_structure_optimization(self, optimization_config, content_metadata):
-        """Test content structure optimization"""
-        network = SEOOptimizationNetwork(optimization_config)
+        """Test content structure optimization"""        network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
         content_structure = {
@@ -371,8 +356,7 @@ class TestSEOOptimizationNetwork:
         assert isinstance(recommendations, list)
     
     def test_search_intent_matching(self, optimization_config, seo_data):
-        """Test search intent matching"""
-        network = SEOOptimizationNetwork(optimization_config)
+        """Test search intent matching"""        network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
         query_features = torch.randn(5, 128, optimization_config.d_model)  # 5 search queries
@@ -389,8 +373,7 @@ class TestSEOOptimizationNetwork:
         assert torch.all(intent_matches >= 0) and torch.all(intent_matches <= 1)
     
     def test_trending_topic_analysis(self, optimization_config, seo_data):
-        """Test trending topic analysis"""
-        network = SEOOptimizationNetwork(optimization_config)
+        """Test trending topic analysis"""        network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
         content_features = torch.randn(1, 512, optimization_config.d_model)
@@ -411,8 +394,7 @@ class TestSEOOptimizationNetwork:
         assert 0 <= alignment_score <= 1
     
     def test_competitor_analysis(self, optimization_config, content_metadata):
-        """Test competitor content analysis"""
-        network = SEOOptimizationNetwork(optimization_config)
+        """Test competitor content analysis"""        network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
         user_content = torch.randn(1, 512, optimization_config.d_model)
@@ -435,11 +417,9 @@ class TestSEOOptimizationNetwork:
 
 
 class TestMonetizationOptimizationNetwork:
-    """Test Monetization Optimization Network functionality"""
-    
+    """Test Monetization Optimization Network functionality"""    
     def test_monetization_network_initialization(self, optimization_config):
-        """Test monetization network initialization"""
-        network = MonetizationOptimizationNetwork(optimization_config)
+        """Test monetization network initialization"""        network = MonetizationOptimizationNetwork(optimization_config)
         
         assert hasattr(network, 'revenue_predictor')
         assert hasattr(network, 'pricing_optimizer')
@@ -448,8 +428,7 @@ class TestMonetizationOptimizationNetwork:
         assert hasattr(network, 'roi_calculator')
     
     def test_revenue_stream_optimization(self, optimization_config, monetization_data, engagement_metrics):
-        """Test revenue stream optimization"""
-        network = MonetizationOptimizationNetwork(optimization_config)
+        """Test revenue stream optimization"""        network = MonetizationOptimizationNetwork(optimization_config)
         network.eval()
         
         current_revenue = monetization_data["revenue_streams"]
@@ -475,8 +454,7 @@ class TestMonetizationOptimizationNetwork:
             assert projection >= 0
     
     def test_pricing_strategy_optimization(self, optimization_config, monetization_data):
-        """Test pricing strategy optimization"""
-        network = MonetizationOptimizationNetwork(optimization_config)
+        """Test pricing strategy optimization"""        network = MonetizationOptimizationNetwork(optimization_config)
         network.eval()
         
         current_pricing = monetization_data["pricing_data"]
@@ -505,8 +483,7 @@ class TestMonetizationOptimizationNetwork:
                 assert prices > 0
     
     def test_sponsorship_matching(self, optimization_config, content_metadata, engagement_metrics):
-        """Test sponsorship opportunity matching"""
-        network = MonetizationOptimizationNetwork(optimization_config)
+        """Test sponsorship opportunity matching"""        network = MonetizationOptimizationNetwork(optimization_config)
         network.eval()
         
         content_features = torch.randn(1, 512, optimization_config.d_model)
@@ -534,8 +511,7 @@ class TestMonetizationOptimizationNetwork:
             assert match["estimated_rate"] > 0
     
     def test_conversion_rate_optimization(self, optimization_config, engagement_metrics):
-        """Test conversion rate optimization"""
-        network = MonetizationOptimizationNetwork(optimization_config)
+        """Test conversion rate optimization"""        network = MonetizationOptimizationNetwork(optimization_config)
         network.eval()
         
         user_journey_data = torch.randn(100, 50, optimization_config.d_model)  # 100 user journeys
@@ -558,8 +534,7 @@ class TestMonetizationOptimizationNetwork:
         assert predicted_improvement >= 0
     
     def test_roi_calculation(self, optimization_config, monetization_data):
-        """Test ROI calculation and optimization"""
-        network = MonetizationOptimizationNetwork(optimization_config)
+        """Test ROI calculation and optimization"""        network = MonetizationOptimizationNetwork(optimization_config)
         network.eval()
         
         investment_data = {
@@ -591,8 +566,7 @@ class TestMonetizationOptimizationNetwork:
         assert optimized_roi >= current_roi  # Should improve or maintain ROI
     
     def test_audience_value_segmentation(self, optimization_config, engagement_metrics):
-        """Test audience value segmentation for monetization"""
-        network = MonetizationOptimizationNetwork(optimization_config)
+        """Test audience value segmentation for monetization"""        network = MonetizationOptimizationNetwork(optimization_config)
         network.eval()
         
         audience_features = torch.randn(1000, optimization_config.d_model)  # 1000 audience members
@@ -617,11 +591,9 @@ class TestMonetizationOptimizationNetwork:
 
 
 class TestEngagementOptimizationNetwork:
-    """Test Engagement Optimization Network functionality"""
-    
+    """Test Engagement Optimization Network functionality"""    
     def test_engagement_network_initialization(self, optimization_config):
-        """Test engagement network initialization"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test engagement network initialization"""        network = EngagementOptimizationNetwork(optimization_config)
         
         assert hasattr(network, 'engagement_predictor')
         assert hasattr(network, 'content_analyzer')
@@ -630,8 +602,7 @@ class TestEngagementOptimizationNetwork:
         assert hasattr(network, 'viral_predictor')
     
     def test_engagement_prediction(self, optimization_config, content_metadata, engagement_metrics):
-        """Test engagement prediction"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test engagement prediction"""        network = EngagementOptimizationNetwork(optimization_config)
         network.eval()
         
         content_features = torch.randn(5, 512, optimization_config.d_model)  # 5 content pieces
@@ -649,8 +620,7 @@ class TestEngagementOptimizationNetwork:
         assert torch.isfinite(engagement_predictions).all()
     
     def test_optimal_posting_time(self, optimization_config, engagement_metrics):
-        """Test optimal posting time prediction"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test optimal posting time prediction"""        network = EngagementOptimizationNetwork(optimization_config)
         network.eval()
         
         audience_timezone_data = {
@@ -685,8 +655,7 @@ class TestEngagementOptimizationNetwork:
             assert 0 <= time_slot["day_of_week"] <= 6
     
     def test_content_hook_optimization(self, optimization_config, content_metadata):
-        """Test content hook optimization for engagement"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test content hook optimization for engagement"""        network = EngagementOptimizationNetwork(optimization_config)
         network.eval()
         
         content_beginning = torch.randn(1, 100, optimization_config.d_model)  # First 100 tokens
@@ -711,8 +680,7 @@ class TestEngagementOptimizationNetwork:
         assert 0 <= predicted_retention <= 1
     
     def test_audience_targeting_optimization(self, optimization_config, engagement_metrics):
-        """Test audience targeting optimization"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test audience targeting optimization"""        network = EngagementOptimizationNetwork(optimization_config)
         network.eval()
         
         content_features = torch.randn(1, 512, optimization_config.d_model)
@@ -739,8 +707,7 @@ class TestEngagementOptimizationNetwork:
         assert all(0 <= score <= 1 for score in segment_scores)
     
     def test_viral_potential_analysis(self, optimization_config, content_metadata, engagement_metrics):
-        """Test viral potential analysis"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test viral potential analysis"""        network = EngagementOptimizationNetwork(optimization_config)
         network.eval()
         
         content_features = torch.randn(3, 512, optimization_config.d_model)  # 3 content pieces
@@ -762,8 +729,7 @@ class TestEngagementOptimizationNetwork:
         assert torch.isfinite(viral_analysis).all()
     
     def test_engagement_decay_modeling(self, optimization_config, engagement_metrics):
-        """Test engagement decay modeling"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test engagement decay modeling"""        network = EngagementOptimizationNetwork(optimization_config)
         network.eval()
         
         # Time series engagement data (engagement over time)
@@ -791,8 +757,7 @@ class TestEngagementOptimizationNetwork:
         assert torch.all(half_life_hours > 0)
     
     def test_cross_platform_engagement_sync(self, optimization_config, engagement_metrics):
-        """Test cross-platform engagement synchronization"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test cross-platform engagement synchronization"""        network = EngagementOptimizationNetwork(optimization_config)
         network.eval()
         
         platform_data = {
@@ -824,11 +789,9 @@ class TestEngagementOptimizationNetwork:
 
 
 class TestPerformancePredictionNetwork:
-    """Test Performance Prediction Network functionality"""
-    
+    """Test Performance Prediction Network functionality"""    
     def test_performance_network_initialization(self, optimization_config):
-        """Test performance network initialization"""
-        network = PerformancePredictionNetwork(optimization_config)
+        """Test performance network initialization"""        network = PerformancePredictionNetwork(optimization_config)
         
         assert hasattr(network, 'performance_predictor')
         assert hasattr(network, 'trend_analyzer')
@@ -837,8 +800,7 @@ class TestPerformancePredictionNetwork:
         assert hasattr(network, 'growth_forecaster')
     
     def test_performance_forecasting(self, optimization_config, engagement_metrics, content_metadata):
-        """Test performance forecasting"""
-        network = PerformancePredictionNetwork(optimization_config)
+        """Test performance forecasting"""        network = PerformancePredictionNetwork(optimization_config)
         network.eval()
         
         historical_performance = engagement_metrics["historical_data"]
@@ -866,8 +828,7 @@ class TestPerformancePredictionNetwork:
         assert "lower_bound" in confidence_bounds
     
     def test_benchmark_comparison(self, optimization_config, engagement_metrics):
-        """Test performance benchmarking"""
-        network = PerformancePredictionNetwork(optimization_config)
+        """Test performance benchmarking"""        network = PerformancePredictionNetwork(optimization_config)
         network.eval()
         
         user_performance = engagement_metrics["historical_data"][:20]  # User's performance
@@ -894,8 +855,7 @@ class TestPerformancePredictionNetwork:
         assert isinstance(performance_gaps, list)
     
     def test_anomaly_detection(self, optimization_config, engagement_metrics):
-        """Test performance anomaly detection"""
-        network = PerformancePredictionNetwork(optimization_config)
+        """Test performance anomaly detection"""        network = PerformancePredictionNetwork(optimization_config)
         network.eval()
         
         normal_performance = engagement_metrics["historical_data"][:80]
@@ -925,8 +885,7 @@ class TestPerformancePredictionNetwork:
         assert isinstance(anomalous_periods, list)
     
     def test_growth_trajectory_prediction(self, optimization_config, engagement_metrics):
-        """Test growth trajectory prediction"""
-        network = PerformancePredictionNetwork(optimization_config)
+        """Test growth trajectory prediction"""        network = PerformancePredictionNetwork(optimization_config)
         network.eval()
         
         growth_history = torch.cumsum(torch.randn(50, 5), dim=0)  # Cumulative growth metrics
@@ -952,8 +911,7 @@ class TestPerformancePredictionNetwork:
         assert isinstance(milestone_predictions, dict)
     
     def test_competitive_performance_analysis(self, optimization_config, engagement_metrics):
-        """Test competitive performance analysis"""
-        network = PerformancePredictionNetwork(optimization_config)
+        """Test competitive performance analysis"""        network = PerformancePredictionNetwork(optimization_config)
         network.eval()
         
         user_metrics = engagement_metrics["historical_data"][:30]
@@ -977,8 +935,7 @@ class TestPerformancePredictionNetwork:
         assert 1 <= competitive_position <= 6  # Ranking among 6 entities
     
     def test_roi_performance_correlation(self, optimization_config, monetization_data, engagement_metrics):
-        """Test ROI-performance correlation analysis"""
-        network = PerformancePredictionNetwork(optimization_config)
+        """Test ROI-performance correlation analysis"""        network = PerformancePredictionNetwork(optimization_config)
         network.eval()
         
         investment_data = torch.randn(30, 5)  # 30 periods, 5 investment categories
@@ -1004,11 +961,9 @@ class TestPerformancePredictionNetwork:
 
 
 class TestOptimizationNetworksPerformance:
-    """Performance tests for optimization networks"""
-    
+    """Performance tests for optimization networks"""    
     def test_seo_optimization_speed(self, optimization_config, content_metadata, seo_data):
-        """Test SEO optimization speed"""
-        network = SEOOptimizationNetwork(optimization_config)
+        """Test SEO optimization speed"""        network = SEOOptimizationNetwork(optimization_config)
         network.eval()
         
         content_features = torch.randn(10, 512, optimization_config.d_model)
@@ -1046,8 +1001,7 @@ class TestOptimizationNetworksPerformance:
         assert avg_time < 2000  # Less than 2 seconds per content piece
     
     def test_engagement_prediction_speed(self, optimization_config, content_metadata, engagement_metrics):
-        """Test engagement prediction speed"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test engagement prediction speed"""        network = EngagementOptimizationNetwork(optimization_config)
         network.eval()
         
         content_batch = torch.randn(20, 512, optimization_config.d_model)
@@ -1068,8 +1022,7 @@ class TestOptimizationNetworksPerformance:
         assert prediction_time < 3000  # Less than 3 seconds for 20 pieces
     
     def test_monetization_optimization_speed(self, optimization_config, monetization_data, engagement_metrics):
-        """Test monetization optimization speed"""
-        network = MonetizationOptimizationNetwork(optimization_config)
+        """Test monetization optimization speed"""        network = MonetizationOptimizationNetwork(optimization_config)
         network.eval()
         
         current_revenue = monetization_data["revenue_streams"]
@@ -1091,8 +1044,7 @@ class TestOptimizationNetworksPerformance:
     
     @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA not available")
     def test_gpu_acceleration_optimization_networks(self, optimization_config, content_metadata, engagement_metrics):
-        """Test GPU acceleration for optimization networks"""
-        network = EngagementOptimizationNetwork(optimization_config)
+        """Test GPU acceleration for optimization networks"""        network = EngagementOptimizationNetwork(optimization_config)
         content_features = torch.randn(10, 512, optimization_config.d_model)
         historical_patterns = engagement_metrics["historical_data"]
         
@@ -1133,11 +1085,9 @@ class TestOptimizationNetworksPerformance:
 
 
 class TestOptimizationNetworksIntegration:
-    """Integration tests for optimization networks"""
-    
+    """Integration tests for optimization networks"""    
     def test_comprehensive_content_optimization_pipeline(self, optimization_config, content_metadata, seo_data, engagement_metrics, monetization_data):
-        """Test complete content optimization pipeline"""
-        # Initialize all optimization networks
+        """Test complete content optimization pipeline"""        # Initialize all optimization networks
         seo_net = SEOOptimizationNetwork(optimization_config)
         engagement_net = EngagementOptimizationNetwork(optimization_config)
         monetization_net = MonetizationOptimizationNetwork(optimization_config)
@@ -1198,8 +1148,7 @@ class TestOptimizationNetworksIntegration:
         assert "forecasted_metrics" in performance_forecast
     
     def test_creator_growth_optimization_workflow(self, optimization_config, content_metadata, engagement_metrics, monetization_data, seo_data):
-        """Test typical creator growth optimization workflow"""
-        engagement_net = EngagementOptimizationNetwork(optimization_config)
+        """Test typical creator growth optimization workflow"""        engagement_net = EngagementOptimizationNetwork(optimization_config)
         performance_net = PerformancePredictionNetwork(optimization_config)
         monetization_net = MonetizationOptimizationNetwork(optimization_config)
         

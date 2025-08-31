@@ -1,5 +1,4 @@
-"""
-Shard Coordinator - Ultra-Industrial Distributed Database Management
+"""Shard Coordinator - Ultra-Industrial Distributed Database Management
 
 Enterprise-grade shard coordination system for ultra-scalable database operations.
 Manages distributed shards, load balancing, failover, replication, and consistency
@@ -23,7 +22,6 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
-
 import logging
 import asyncio
 import threading
@@ -48,8 +46,7 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class ShardStatus(Enum):
-    """Shard operational status"""
-    ACTIVE = "active"
+    """Shard operational status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
     DEGRADED = "degraded"
@@ -59,16 +56,14 @@ class ShardStatus(Enum):
     SPLITTING = "splitting"
 
 class ShardHealthStatus(Enum):
-    """Shard health indicators"""
-    HEALTHY = "healthy"
+    """Shard health indicators"""    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     UNKNOWN = "unknown"
     OFFLINE = "offline"
 
 class LoadBalancingStrategy(Enum):
-    """Load balancing strategies"""
-    ROUND_ROBIN = "round_robin"
+    """Load balancing strategies"""    ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
     LEAST_RESPONSE_TIME = "least_response_time"
@@ -77,8 +72,7 @@ class LoadBalancingStrategy(Enum):
     GEOGRAPHIC = "geographic"
 
 class ReplicationStrategy(Enum):
-    """Data replication strategies"""
-    SYNCHRONOUS = "synchronous"
+    """Data replication strategies"""    SYNCHRONOUS = "synchronous"
     ASYNCHRONOUS = "asynchronous"
     SEMI_SYNCHRONOUS = "semi_synchronous"
     MASTER_SLAVE = "master_slave"
@@ -86,8 +80,7 @@ class ReplicationStrategy(Enum):
     CHAIN_REPLICATION = "chain_replication"
 
 class ConsistencyLevel(Enum):
-    """Data consistency levels"""
-    STRONG = "strong"
+    """Data consistency levels"""    STRONG = "strong"
     EVENTUAL = "eventual"
     WEAK = "weak"
     BOUNDED_STALENESS = "bounded_staleness"
@@ -95,8 +88,7 @@ class ConsistencyLevel(Enum):
     CONSISTENT_PREFIX = "consistent_prefix"
 
 class FailoverStrategy(Enum):
-    """Failover strategies"""
-    AUTOMATIC = "automatic"
+    """Failover strategies"""    AUTOMATIC = "automatic"
     MANUAL = "manual"
     HYBRID = "hybrid"
     ACTIVE_PASSIVE = "active_passive"
@@ -104,8 +96,7 @@ class FailoverStrategy(Enum):
 
 @dataclass
 class ShardConfiguration:
-    """Configuration for individual shard"""
-    shard_id: str
+    """Configuration for individual shard"""    shard_id: str
     database_url: str
     weight: float = 1.0
     max_connections: int = 100
@@ -118,8 +109,7 @@ class ShardConfiguration:
 
 @dataclass
 class ShardMetrics:
-    """Real-time shard performance metrics"""
-    shard_id: str
+    """Real-time shard performance metrics"""    shard_id: str
     cpu_usage: float = 0.0
     memory_usage: float = 0.0
     disk_usage: float = 0.0
@@ -132,8 +122,7 @@ class ShardMetrics:
 
 @dataclass
 class ShardNode:
-    """Represents a database shard node"""
-    shard_id: str
+    """Represents a database shard node"""    shard_id: str
     config: ShardConfiguration
     status: ShardStatus = ShardStatus.INACTIVE
     health: ShardHealthStatus = ShardHealthStatus.UNKNOWN
@@ -149,8 +138,7 @@ class ShardNode:
             self.metrics = ShardMetrics(shard_id=self.shard_id)
 
 class ShardCoordinator:
-    """
-    Ultra-industrial shard coordinator for enterprise-grade distributed database management
+    """    Ultra-industrial shard coordinator for enterprise-grade distributed database management
     
     Manages distributed database shards with advanced features:
     - Intelligent load balancing and traffic distribution
@@ -161,16 +149,13 @@ class ShardCoordinator:
     - Real-time performance monitoring and alerting
     - Geographic distribution and disaster recovery
     - Security-enhanced inter-shard communication
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
-        """
-        Initialize shard coordinator
+        """        Initialize shard coordinator
         
         Args:
             config: Configuration dictionary with coordinator settings
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.shards: Dict[str, ShardNode] = {}
         self.shard_ring = []  # Consistent hashing ring
         self.load_balancer_strategy = LoadBalancingStrategy(
@@ -219,16 +204,14 @@ class ShardCoordinator:
         logger.info("ShardCoordinator initialized with advanced distributed management")
 
     def add_shard(self, shard_config: ShardConfiguration) -> bool:
-        """
-        Add new shard to the coordination system
+        """        Add new shard to the coordination system
         
         Args:
             shard_config: Configuration for the new shard
             
         Returns:
             bool: True if shard added successfully
-        """
-        try:
+        """        try:
             with self._lock:
                 shard_id = shard_config.shard_id
                 
@@ -284,8 +267,7 @@ class ShardCoordinator:
             return False
 
     def _test_shard_connection(self, shard_node: ShardNode) -> bool:
-        """Test connection to a shard node"""
-        try:
+        """Test connection to a shard node"""        try:
             with shard_node.session_factory() as session:
                 result = session.execute(text("SELECT 1")).scalar()
                 return result == 1
@@ -294,8 +276,7 @@ class ShardCoordinator:
             return False
 
     def _update_hash_ring(self):
-        """Update consistent hashing ring for load distribution"""
-        try:
+        """Update consistent hashing ring for load distribution"""        try:
             self.shard_ring.clear()
             
             # Add virtual nodes for each shard (based on weight)
@@ -318,16 +299,14 @@ class ShardCoordinator:
             logger.error(f"Failed to update hash ring: {e}")
 
     def get_shard_for_key(self, key: str) -> Optional[str]:
-        """
-        Get optimal shard for a given key using consistent hashing
+        """        Get optimal shard for a given key using consistent hashing
         
         Args:
             key: Key to hash for shard selection
             
         Returns:
             Optional[str]: Shard ID or None if no active shards
-        """
-        try:
+        """        try:
             if not self.shard_ring:
                 return None
             
@@ -357,8 +336,7 @@ class ShardCoordinator:
     def get_optimal_shard(self, operation_type: str = "read", 
                          geographic_preference: str = None,
                          consistency_requirement: ConsistencyLevel = None) -> Optional[str]:
-        """
-        Get optimal shard based on various factors
+        """        Get optimal shard based on various factors
         
         Args:
             operation_type: Type of operation (read, write, analytics)
@@ -367,8 +345,7 @@ class ShardCoordinator:
             
         Returns:
             Optional[str]: Optimal shard ID
-        """
-        try:
+        """        try:
             with self._lock:
                 active_shards = [
                     shard for shard in self.shards.values()
@@ -417,8 +394,7 @@ class ShardCoordinator:
             return None
 
     def _get_round_robin_shard(self, shards: List[ShardNode]) -> Optional[ShardNode]:
-        """Get shard using round-robin with weight consideration"""
-        if not shards:
+        """Get shard using round-robin with weight consideration"""        if not shards:
             return None
         
         # Simple round-robin for now (can be enhanced with weights)
@@ -430,8 +406,7 @@ class ShardCoordinator:
                      params: Dict[str, Any] = None,
                      operation_type: str = "read",
                      timeout: int = None) -> Any:
-        """
-        Execute query on optimal or specified shard with advanced error handling
+        """        Execute query on optimal or specified shard with advanced error handling
         
         Args:
             query: SQL query to execute
@@ -442,8 +417,7 @@ class ShardCoordinator:
             
         Returns:
             Query result or None if failed
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         params = params or {}
         timeout = timeout or 30
         
@@ -491,8 +465,7 @@ class ShardCoordinator:
 
     def _execute_on_shard(self, shard_node: ShardNode, query: str, 
                          params: Dict[str, Any], timeout: int) -> Any:
-        """Execute query on specific shard with proper resource management"""
-        try:
+        """Execute query on specific shard with proper resource management"""        try:
             with shard_node.session_factory() as session:
                 # Set query timeout
                 session.execute(text(f"SET statement_timeout = '{timeout}s'"))
@@ -520,8 +493,7 @@ class ShardCoordinator:
 
     def _attempt_failover_execution(self, query: str, params: Dict[str, Any], 
                                   failed_shard_id: str, timeout: int) -> Any:
-        """Attempt to execute query on backup shards"""
-        try:
+        """Attempt to execute query on backup shards"""        try:
             failed_shard = self.shards.get(failed_shard_id)
             if not failed_shard:
                 return None
@@ -568,8 +540,7 @@ class ShardCoordinator:
             return None
 
     def _should_retry_failed_shard(self, shard_node: ShardNode) -> bool:
-        """Determine if we should retry a failed shard (circuit breaker logic)"""
-        if not shard_node.last_health_check:
+        """Determine if we should retry a failed shard (circuit breaker logic)"""        if not shard_node.last_health_check:
             return True
         
         # Allow retry after exponential backoff
@@ -579,8 +550,7 @@ class ShardCoordinator:
         return time_since_last_check >= backoff_time
 
     def _update_query_metrics(self, shard_id: str, start_time: float, success: bool):
-        """Update query performance metrics"""
-        try:
+        """Update query performance metrics"""        try:
             execution_time = time.time() - start_time
             
             with self._lock:
@@ -610,8 +580,7 @@ class ShardCoordinator:
             logger.warning(f"Failed to update query metrics: {e}")
 
     def start_monitoring(self):
-        """Start comprehensive health monitoring for all shards"""
-        try:
+        """Start comprehensive health monitoring for all shards"""        try:
             if self._monitoring_active:
                 logger.warning("Monitoring is already active")
                 return
@@ -631,8 +600,7 @@ class ShardCoordinator:
             logger.error(f"Failed to start monitoring: {e}")
 
     def _health_monitor_loop(self):
-        """Main health monitoring loop"""
-        while self._monitoring_active:
+        """Main health monitoring loop"""        while self._monitoring_active:
             try:
                 self._perform_health_checks()
                 time.sleep(self.health_check_interval)
@@ -641,8 +609,7 @@ class ShardCoordinator:
                 time.sleep(5)  # Short sleep on error
 
     def _perform_health_checks(self):
-        """Perform health checks on all shards"""
-        try:
+        """Perform health checks on all shards"""        try:
             futures = []
             
             with self._executor as executor:
@@ -663,8 +630,7 @@ class ShardCoordinator:
             logger.error(f"Failed to perform health checks: {e}")
 
     def _check_shard_health(self, shard_node: ShardNode) -> ShardHealthStatus:
-        """Check health of individual shard"""
-        try:
+        """Check health of individual shard"""        try:
             start_time = time.time()
             
             # Basic connectivity test
@@ -689,8 +655,7 @@ class ShardCoordinator:
             return ShardHealthStatus.OFFLINE
 
     def _collect_shard_metrics(self, shard_node: ShardNode):
-        """Collect detailed performance metrics for shard"""
-        try:
+        """Collect detailed performance metrics for shard"""        try:
             metrics = shard_node.metrics
             
             # Update basic metrics
@@ -699,15 +664,13 @@ class ShardCoordinator:
             # Get database-specific metrics
             with shard_node.session_factory() as session:
                 # Active connections
-                conn_result = session.execute(text("""
-                    SELECT count(*) FROM pg_stat_activity 
+                conn_result = session.execute(text("""                    SELECT count(*) FROM pg_stat_activity 
                     WHERE state = 'active'
                 """)).scalar()
                 metrics.active_connections = conn_result or 0
                 
                 # Database size and stats
-                stats_result = session.execute(text("""
-                    SELECT 
+                stats_result = session.execute(text("""                    SELECT 
                         sum(xact_commit + xact_rollback) as total_transactions,
                         sum(tup_returned + tup_fetched) as total_tuples
                     FROM pg_stat_database
@@ -729,8 +692,7 @@ class ShardCoordinator:
             logger.debug(f"Failed to collect metrics for {shard_node.shard_id}: {e}")
 
     def _update_shard_health(self, shard_id: str, health_status: ShardHealthStatus):
-        """Update shard health status and take appropriate actions"""
-        try:
+        """Update shard health status and take appropriate actions"""        try:
             shard_node = self.shards.get(shard_id)
             if not shard_node:
                 return
@@ -762,8 +724,7 @@ class ShardCoordinator:
             logger.error(f"Failed to update shard health for {shard_id}: {e}")
 
     def _trigger_failover_actions(self, failed_shard_id: str):
-        """Trigger automated failover actions"""
-        try:
+        """Trigger automated failover actions"""        try:
             logger.info(f"Triggering failover actions for shard: {failed_shard_id}")
             
             # Remove from load balancing
@@ -785,8 +746,7 @@ class ShardCoordinator:
             logger.error(f"Failed to trigger failover actions: {e}")
 
     def _send_alert(self, message: str, severity: str = "error"):
-        """Send alert to monitoring systems"""
-        try:
+        """Send alert to monitoring systems"""        try:
             alert = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'message': message,
@@ -810,8 +770,7 @@ class ShardCoordinator:
             logger.error(f"Failed to send alert: {e}")
 
     def _schedule_health_check(self, shard_id: str):
-        """Schedule immediate health check for specific shard"""
-        def check_health():
+        """Schedule immediate health check for specific shard"""        def check_health():
             try:
                 shard_node = self.shards.get(shard_id)
                 if shard_node:
@@ -823,13 +782,11 @@ class ShardCoordinator:
         self._executor.submit(check_health)
 
     def get_coordinator_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive coordinator status and metrics
+        """        Get comprehensive coordinator status and metrics
         
         Returns:
             Dict containing detailed status information
-        """
-        try:
+        """        try:
             with self._lock:
                 active_shards = [s for s in self.shards.values() if s.status == ShardStatus.ACTIVE]
                 healthy_shards = [s for s in active_shards if s.health == ShardHealthStatus.HEALTHY]
@@ -891,13 +848,11 @@ class ShardCoordinator:
             return {'error': str(e)}
 
     def rebalance_shards(self) -> bool:
-        """
-        Perform intelligent shard rebalancing based on current load
+        """        Perform intelligent shard rebalancing based on current load
         
         Returns:
             bool: True if rebalancing was successful
-        """
-        try:
+        """        try:
             logger.info("Starting intelligent shard rebalancing...")
             
             with self._lock:
@@ -960,8 +915,7 @@ class ShardCoordinator:
             return False
 
     def remove_shard(self, shard_id: str, graceful: bool = True) -> bool:
-        """
-        Remove shard from coordination system
+        """        Remove shard from coordination system
         
         Args:
             shard_id: ID of shard to remove
@@ -969,8 +923,7 @@ class ShardCoordinator:
             
         Returns:
             bool: True if removal was successful
-        """
-        try:
+        """        try:
             with self._lock:
                 if shard_id not in self.shards:
                     logger.warning(f"Shard {shard_id} not found for removal")
@@ -1007,8 +960,7 @@ class ShardCoordinator:
             return False
 
     def shutdown(self):
-        """Gracefully shutdown shard coordinator"""
-        try:
+        """Gracefully shutdown shard coordinator"""        try:
             logger.info("Shutting down shard coordinator...")
             
             # Stop monitoring
@@ -1039,14 +991,11 @@ class ShardCoordinator:
             logger.error(f"Error during shard coordinator shutdown: {e}")
 
     def __enter__(self):
-        """Context manager entry"""
-        return self
+        """Context manager entry"""        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
-        self.shutdown()
-    """
-    Ultra-industrial shard coordination system
+        """Context manager exit"""        self.shutdown()
+    """    Ultra-industrial shard coordination system
     
     Manages distributed database shards with enterprise-grade features:
     - Intelligent load balancing and distribution
@@ -1054,16 +1003,13 @@ class ShardCoordinator:
     - Performance monitoring and optimization
     - Cross-shard transaction coordination
     - Dynamic scaling and rebalancing
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
-        """
-        Initialize shard coordinator
+        """        Initialize shard coordinator
         
         Args:
             config: Configuration dictionary
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.shards: Dict[str, ShardNode] = {}
         self.active_shards: Set[str] = set()
         self.failed_shards: Set[str] = set()
@@ -1110,8 +1056,7 @@ class ShardCoordinator:
         logger.info("ShardCoordinator initialized with strategy: %s", self.load_balancer_strategy)
 
     def _initialize_redis(self) -> Optional[redis.Redis]:
-        """Initialize Redis client for coordination"""
-        try:
+        """Initialize Redis client for coordination"""        try:
             redis_client = redis.Redis.from_url(
                 self.config['redis_url'],
                 decode_responses=True,
@@ -1125,16 +1070,14 @@ class ShardCoordinator:
             return None
 
     def add_shard(self, shard_config: ShardConfiguration) -> bool:
-        """
-        Add new shard to the coordinator
+        """        Add new shard to the coordinator
         
         Args:
             shard_config: Shard configuration
             
         Returns:
             bool: True if shard added successfully
-        """
-        try:
+        """        try:
             with self._lock:
                 if shard_config.shard_id in self.shards:
                     logger.warning(f"Shard {shard_config.shard_id} already exists")
@@ -1168,8 +1111,7 @@ class ShardCoordinator:
             return False
 
     def _initialize_shard_connection(self, shard_node: ShardNode) -> bool:
-        """Initialize database connection for shard"""
-        try:
+        """Initialize database connection for shard"""        try:
             # Create SQLAlchemy engine with connection pooling
             engine = create_engine(
                 shard_node.config.database_url,
@@ -1207,16 +1149,14 @@ class ShardCoordinator:
             return False
 
     def remove_shard(self, shard_id: str) -> bool:
-        """
-        Remove shard from coordinator
+        """        Remove shard from coordinator
         
         Args:
             shard_id: ID of shard to remove
             
         Returns:
             bool: True if shard removed successfully
-        """
-        try:
+        """        try:
             with self._lock:
                 if shard_id not in self.shards:
                     logger.warning(f"Shard {shard_id} not found")
@@ -1246,16 +1186,14 @@ class ShardCoordinator:
             return False
 
     def get_shard_for_key(self, key: str) -> Optional[ShardNode]:
-        """
-        Get appropriate shard for given key using consistent hashing
+        """        Get appropriate shard for given key using consistent hashing
         
         Args:
             key: Sharding key (e.g., user_id, fingerprint_hash)
             
         Returns:
             ShardNode: Selected shard node or None if no active shards
-        """
-        try:
+        """        try:
             if not self.active_shards:
                 logger.warning("No active shards available")
                 return None
@@ -1285,8 +1223,7 @@ class ShardCoordinator:
             return None
 
     def _get_shard_round_robin(self) -> Optional[ShardNode]:
-        """Get shard using round-robin load balancing"""
-        if not self.active_shards:
+        """Get shard using round-robin load balancing"""        if not self.active_shards:
             return None
         
         active_shard_list = list(self.active_shards)
@@ -1296,8 +1233,7 @@ class ShardCoordinator:
         return self.shards[shard_id]
 
     def _get_shard_least_connections(self) -> Optional[ShardNode]:
-        """Get shard with least active connections"""
-        if not self.active_shards:
+        """Get shard with least active connections"""        if not self.active_shards:
             return None
         
         min_connections = float('inf')
@@ -1312,8 +1248,7 @@ class ShardCoordinator:
         return selected_shard
 
     def _get_shard_least_response_time(self) -> Optional[ShardNode]:
-        """Get shard with lowest average response time"""
-        if not self.active_shards:
+        """Get shard with lowest average response time"""        if not self.active_shards:
             return None
         
         min_response_time = float('inf')
@@ -1330,8 +1265,7 @@ class ShardCoordinator:
         return selected_shard or self._get_shard_round_robin()
 
     def _get_shard_resource_based(self) -> Optional[ShardNode]:
-        """Get shard based on resource utilization"""
-        if not self.active_shards:
+        """Get shard based on resource utilization"""        if not self.active_shards:
             return None
         
         best_score = float('inf')
@@ -1356,8 +1290,7 @@ class ShardCoordinator:
         return selected_shard
 
     def execute_query(self, key: str, query: str, params: Dict[str, Any] = None) -> Any:
-        """
-        Execute query on appropriate shard
+        """        Execute query on appropriate shard
         
         Args:
             key: Sharding key to determine target shard
@@ -1366,16 +1299,14 @@ class ShardCoordinator:
             
         Returns:
             Query result
-        """
-        shard = self.get_shard_for_key(key)
+        """        shard = self.get_shard_for_key(key)
         if not shard:
             raise Exception("No available shard for query execution")
         
         return self._execute_on_shard(shard, query, params)
 
     def _execute_on_shard(self, shard: ShardNode, query: str, params: Dict[str, Any] = None) -> Any:
-        """Execute query on specific shard with monitoring"""
-        start_time = time.time()
+        """Execute query on specific shard with monitoring"""        start_time = time.time()
         
         try:
             # Track connection
@@ -1414,8 +1345,7 @@ class ShardCoordinator:
             self.connection_counts[shard.shard_id] -= 1
 
     def execute_cross_shard_query(self, query: str, params: Dict[str, Any] = None) -> List[Any]:
-        """
-        Execute query across all active shards
+        """        Execute query across all active shards
         
         Args:
             query: SQL query to execute
@@ -1423,8 +1353,7 @@ class ShardCoordinator:
             
         Returns:
             List of results from all shards
-        """
-        if not self.active_shards:
+        """        if not self.active_shards:
             return []
         
         results = []
@@ -1448,8 +1377,7 @@ class ShardCoordinator:
         return results
 
     def _handle_shard_failure(self, shard: ShardNode):
-        """Handle shard failure and initiate recovery"""
-        try:
+        """Handle shard failure and initiate recovery"""        try:
             with self._lock:
                 # Mark shard as failed
                 shard.status = ShardStatus.FAILED
@@ -1472,8 +1400,7 @@ class ShardCoordinator:
             logger.error(f"Failed to handle shard failure for {shard.shard_id}: {e}")
 
     def _schedule_recovery(self, shard: ShardNode):
-        """Schedule automatic recovery for failed shard"""
-        def recovery_task():
+        """Schedule automatic recovery for failed shard"""        def recovery_task():
             try:
                 time.sleep(30)  # Wait before attempting recovery
                 
@@ -1511,8 +1438,7 @@ class ShardCoordinator:
         self._executor.submit(recovery_task)
 
     def _start_health_monitoring(self):
-        """Start health monitoring for all shards"""
-        if self.health_check_thread and self.health_check_thread.is_alive():
+        """Start health monitoring for all shards"""        if self.health_check_thread and self.health_check_thread.is_alive():
             return
         
         def health_check_loop():
@@ -1529,16 +1455,14 @@ class ShardCoordinator:
         logger.info("Health monitoring started")
 
     def _perform_health_checks(self):
-        """Perform health checks on all shards"""
-        for shard_id, shard in self.shards.items():
+        """Perform health checks on all shards"""        for shard_id, shard in self.shards.items():
             try:
                 self._check_shard_health(shard)
             except Exception as e:
                 logger.error(f"Health check failed for shard {shard_id}: {e}")
 
     def _check_shard_health(self, shard: ShardNode):
-        """Check health of individual shard"""
-        try:
+        """Check health of individual shard"""        try:
             start_time = time.time()
             
             # Test database connection
@@ -1573,13 +1497,11 @@ class ShardCoordinator:
             logger.warning(f"Health check failed for shard {shard.shard_id}: {e}")
 
     def get_cluster_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive cluster status
+        """        Get comprehensive cluster status
         
         Returns:
             Dict containing cluster status information
-        """
-        try:
+        """        try:
             total_shards = len(self.shards)
             active_shards = len(self.active_shards)
             failed_shards = len(self.failed_shards)
@@ -1633,13 +1555,11 @@ class ShardCoordinator:
             return {'error': str(e)}
 
     def rebalance_shards(self) -> bool:
-        """
-        Rebalance data distribution across shards
+        """        Rebalance data distribution across shards
         
         Returns:
             bool: True if rebalancing completed successfully
-        """
-        try:
+        """        try:
             logger.info("Starting shard rebalancing...")
             
             # Analyze current distribution
@@ -1670,29 +1590,24 @@ class ShardCoordinator:
             return False
 
     def _analyze_shard_distribution(self) -> Dict[str, Any]:
-        """Analyze current data distribution across shards"""
-        # This would implement actual analysis logic
+        """Analyze current data distribution across shards"""        # This would implement actual analysis logic
         # For now, return placeholder
         return {}
 
     def _identify_imbalanced_shards(self, stats: Dict[str, Any]) -> List[str]:
-        """Identify shards that need rebalancing"""
-        # Implementation would analyze statistics and identify imbalanced shards
+        """Identify shards that need rebalancing"""        # Implementation would analyze statistics and identify imbalanced shards
         return []
 
     def _create_rebalance_plan(self, imbalanced_shards: List[str]) -> Dict[str, Any]:
-        """Create plan for rebalancing operations"""
-        # Implementation would create detailed rebalancing plan
+        """Create plan for rebalancing operations"""        # Implementation would create detailed rebalancing plan
         return {}
 
     def _execute_rebalance_plan(self, plan: Dict[str, Any]) -> bool:
-        """Execute rebalancing plan"""
-        # Implementation would execute actual data movement
+        """Execute rebalancing plan"""        # Implementation would execute actual data movement
         return True
 
     def shutdown(self):
-        """Shutdown shard coordinator gracefully"""
-        try:
+        """Shutdown shard coordinator gracefully"""        try:
             logger.info("Shutting down shard coordinator...")
             
             # Stop monitoring
@@ -1720,27 +1635,22 @@ class ShardCoordinator:
             logger.error(f"Error during shard coordinator shutdown: {e}")
 
 class ConsistentHashRing:
-    """Consistent hashing implementation for shard distribution"""
-    
+    """Consistent hashing implementation for shard distribution"""    
     def __init__(self, replicas: int = 100):
-        """
-        Initialize consistent hash ring
+        """        Initialize consistent hash ring
         
         Args:
             replicas: Number of virtual nodes per physical node
-        """
-        self.replicas = replicas
+        """        self.replicas = replicas
         self.ring: Dict[int, str] = {}
         self.sorted_keys: List[int] = []
         self.nodes: Set[str] = set()
     
     def _hash(self, key: str) -> int:
-        """Generate hash for key"""
-        return int(hashlib.md5(key.encode()).hexdigest(), 16)
+        """Generate hash for key"""        return int(hashlib.md5(key.encode()).hexdigest(), 16)
     
     def add_node(self, node: str, weight: float = 1.0):
-        """Add node to hash ring"""
-        if node in self.nodes:
+        """Add node to hash ring"""        if node in self.nodes:
             return
         
         self.nodes.add(node)
@@ -1756,8 +1666,7 @@ class ConsistentHashRing:
         self.sorted_keys.sort()
     
     def remove_node(self, node: str):
-        """Remove node from hash ring"""
-        if node not in self.nodes:
+        """Remove node from hash ring"""        if node not in self.nodes:
             return
         
         self.nodes.remove(node)
@@ -1769,8 +1678,7 @@ class ConsistentHashRing:
             self.sorted_keys.remove(key)
     
     def get_node(self, key: str) -> Optional[str]:
-        """Get node responsible for key"""
-        if not self.ring:
+        """Get node responsible for key"""        if not self.ring:
             return None
         
         hash_key = self._hash(key)

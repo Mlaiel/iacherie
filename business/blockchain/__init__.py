@@ -29,8 +29,7 @@ Team Specialties:
 - Audio/NFT Engineer: Audio fingerprinting on blockchain, music NFT standards
 - DevOps Engineer: Blockchain infrastructure deployment, node management, monitoring
 - IA Prompt Engineer: AI-powered smart contract generation, natural language blockchain queries
-"""
-from .smart_contracts import (
+"""from .smart_contracts import (
     ContentProtectionContract,
     LicensingContract,
     RoyaltyDistributionContract,

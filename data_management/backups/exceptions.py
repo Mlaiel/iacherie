@@ -1,5 +1,4 @@
-"""
-⚠️ Exceptions - Backup System Exception Classes
+"""⚠️ Exceptions - Backup System Exception Classes
 ==============================================
 Module: backend/data_management/backups/exceptions.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -13,20 +12,17 @@ Responsibility: Exceptions hiérarchiques pour système de sauvegarde
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Any, Optional
 from datetime import datetime
 
 
 class BackupException(Exception):
-    """
-    Exception de base pour le système de sauvegarde
+    """    Exception de base pour le système de sauvegarde
     
     Classe mère pour toutes les exceptions spécifiques au système de backup.
     Fournit des fonctionnalités communes comme les codes d'erreur,
     le contexte et la sérialisation.
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -34,16 +30,14 @@ class BackupException(Exception):
         context: Optional[Dict[str, Any]] = None,
         original_exception: Optional[Exception] = None
     ):
-        """
-        Initialise l'exception
+        """        Initialise l'exception
         
         Args:
             message: Message d'erreur principal
             error_code: Code d'erreur spécifique
             context: Contexte additionnel (métadonnées, IDs, etc.)
             original_exception: Exception originale si wrapping
-        """
-        super().__init__(message)
+        """        super().__init__(message)
         
         self.message = message
         self.error_code = error_code or self.__class__.__name__.upper()
@@ -60,13 +54,11 @@ class BackupException(Exception):
             }
     
     def to_dict(self) -> Dict[str, Any]:
-        """
-        Sérialise l'exception en dictionnaire
+        """        Sérialise l'exception en dictionnaire
         
         Returns:
             Dict[str, Any]: Représentation dictionnaire
-        """
-        return {
+        """        return {
             "exception_type": self.__class__.__name__,
             "message": self.message,
             "error_code": self.error_code,
@@ -79,8 +71,7 @@ class BackupException(Exception):
         }
     
     def __str__(self) -> str:
-        """Représentation string enrichie"""
-        base_msg = f"[{self.error_code}] {self.message}"
+        """Représentation string enrichie"""        base_msg = f"[{self.error_code}] {self.message}"
         
         if self.context:
             context_str = ", ".join(f"{k}={v}" for k, v in self.context.items())
@@ -95,8 +86,7 @@ class BackupException(Exception):
 # Exceptions de configuration et validation
 
 class ConfigurationException(BackupException):
-    """Exception de configuration du système de sauvegarde"""
-    
+    """Exception de configuration du système de sauvegarde"""    
     def __init__(self, message: str, config_key: Optional[str] = None, **kwargs):
         context = kwargs.get("context", {})
         if config_key:
@@ -106,8 +96,7 @@ class ConfigurationException(BackupException):
 
 
 class ValidationException(BackupException):
-    """Exception de validation des données ou paramètres"""
-    
+    """Exception de validation des données ou paramètres"""    
     def __init__(
         self,
         message: str,
@@ -127,8 +116,7 @@ class ValidationException(BackupException):
 # Exceptions de gestion des tâches et jobs
 
 class JobException(BackupException):
-    """Exception de base pour les tâches de sauvegarde"""
-    
+    """Exception de base pour les tâches de sauvegarde"""    
     def __init__(self, message: str, job_id: Optional[str] = None, **kwargs):
         context = kwargs.get("context", {})
         if job_id:
@@ -138,13 +126,11 @@ class JobException(BackupException):
 
 
 class JobCreationException(JobException):
-    """Exception lors de la création d'une tâche de sauvegarde"""
-    pass
+    """Exception lors de la création d'une tâche de sauvegarde"""    pass
 
 
 class JobExecutionException(JobException):
-    """Exception lors de l'exécution d'une tâche de sauvegarde"""
-    
+    """Exception lors de l'exécution d'une tâche de sauvegarde"""    
     def __init__(
         self,
         message: str,
@@ -160,8 +146,7 @@ class JobExecutionException(JobException):
 
 
 class JobTimeoutException(JobException):
-    """Exception de timeout lors de l'exécution d'une tâche"""
-    
+    """Exception de timeout lors de l'exécution d'une tâche"""    
     def __init__(
         self,
         message: str,
@@ -179,8 +164,7 @@ class JobTimeoutException(JobException):
 # Exceptions de stockage et I/O
 
 class StorageException(BackupException):
-    """Exception de base pour les opérations de stockage"""
-    
+    """Exception de base pour les opérations de stockage"""    
     def __init__(
         self,
         message: str,
@@ -198,18 +182,15 @@ class StorageException(BackupException):
 
 
 class StorageConnectionException(StorageException):
-    """Exception de connexion au stockage"""
-    pass
+    """Exception de connexion au stockage"""    pass
 
 
 class StorageAuthenticationException(StorageException):
-    """Exception d'authentification avec le stockage"""
-    pass
+    """Exception d'authentification avec le stockage"""    pass
 
 
 class StorageCapacityException(StorageException):
-    """Exception de capacité de stockage insuffisante"""
-    
+    """Exception de capacité de stockage insuffisante"""    
     def __init__(
         self,
         message: str,
@@ -227,13 +208,11 @@ class StorageCapacityException(StorageException):
 
 
 class StoragePermissionException(StorageException):
-    """Exception de permissions de stockage"""
-    pass
+    """Exception de permissions de stockage"""    pass
 
 
 class FileNotFoundException(StorageException):
-    """Exception de fichier non trouvé"""
-    
+    """Exception de fichier non trouvé"""    
     def __init__(self, message: str, file_path: Optional[str] = None, **kwargs):
         context = kwargs.get("context", {})
         if file_path:
@@ -243,8 +222,7 @@ class FileNotFoundException(StorageException):
 
 
 class FileAccessException(StorageException):
-    """Exception d'accès aux fichiers"""
-    
+    """Exception d'accès aux fichiers"""    
     def __init__(
         self,
         message: str,
@@ -264,8 +242,7 @@ class FileAccessException(StorageException):
 # Exceptions de compression
 
 class CompressionException(BackupException):
-    """Exception de base pour les opérations de compression"""
-    
+    """Exception de base pour les opérations de compression"""    
     def __init__(
         self,
         message: str,
@@ -283,13 +260,11 @@ class CompressionException(BackupException):
 
 
 class CompressionAlgorithmException(CompressionException):
-    """Exception d'algorithme de compression non supporté"""
-    pass
+    """Exception d'algorithme de compression non supporté"""    pass
 
 
 class CompressionRatioException(CompressionException):
-    """Exception de ratio de compression anormal"""
-    
+    """Exception de ratio de compression anormal"""    
     def __init__(
         self,
         message: str,
@@ -307,15 +282,13 @@ class CompressionRatioException(CompressionException):
 
 
 class DecompressionException(CompressionException):
-    """Exception lors de la décompression"""
-    pass
+    """Exception lors de la décompression"""    pass
 
 
 # Exceptions de chiffrement et sécurité
 
 class EncryptionException(BackupException):
-    """Exception de base pour les opérations de chiffrement"""
-    
+    """Exception de base pour les opérations de chiffrement"""    
     def __init__(
         self,
         message: str,
@@ -333,20 +306,17 @@ class EncryptionException(BackupException):
 
 
 class KeyManagementException(EncryptionException):
-    """Exception de gestion des clés de chiffrement"""
-    pass
+    """Exception de gestion des clés de chiffrement"""    pass
 
 
 class KeyNotFoundException(KeyManagementException):
-    """Exception de clé de chiffrement non trouvée"""
-    
+    """Exception de clé de chiffrement non trouvée"""    
     def __init__(self, message: str, key_id: Optional[str] = None, **kwargs):
         super().__init__(message, key_id=key_id, **kwargs)
 
 
 class KeyExpiredException(KeyManagementException):
-    """Exception de clé de chiffrement expirée"""
-    
+    """Exception de clé de chiffrement expirée"""    
     def __init__(
         self,
         message: str,
@@ -362,15 +332,13 @@ class KeyExpiredException(KeyManagementException):
 
 
 class DecryptionException(EncryptionException):
-    """Exception lors du déchiffrement"""
-    pass
+    """Exception lors du déchiffrement"""    pass
 
 
 # Exceptions de vérification et intégrité
 
 class VerificationException(BackupException):
-    """Exception de base pour les opérations de vérification"""
-    
+    """Exception de base pour les opérations de vérification"""    
     def __init__(
         self,
         message: str,
@@ -388,8 +356,7 @@ class VerificationException(BackupException):
 
 
 class IntegrityException(VerificationException):
-    """Exception d'intégrité des données"""
-    
+    """Exception d'intégrité des données"""    
     def __init__(
         self,
         message: str,
@@ -407,20 +374,17 @@ class IntegrityException(VerificationException):
 
 
 class CorruptionException(IntegrityException):
-    """Exception de corruption de données détectée"""
-    pass
+    """Exception de corruption de données détectée"""    pass
 
 
 class ChecksumMismatchException(IntegrityException):
-    """Exception de différence de checksum"""
-    pass
+    """Exception de différence de checksum"""    pass
 
 
 # Exceptions de récupération
 
 class RecoveryException(BackupException):
-    """Exception de base pour les opérations de récupération"""
-    
+    """Exception de base pour les opérations de récupération"""    
     def __init__(
         self,
         message: str,
@@ -438,13 +402,11 @@ class RecoveryException(BackupException):
 
 
 class RecoveryPlanException(RecoveryException):
-    """Exception de planification de récupération"""
-    pass
+    """Exception de planification de récupération"""    pass
 
 
 class RecoveryExecutionException(RecoveryException):
-    """Exception d'exécution de récupération"""
-    
+    """Exception d'exécution de récupération"""    
     def __init__(
         self,
         message: str,
@@ -460,15 +422,13 @@ class RecoveryExecutionException(RecoveryException):
 
 
 class RecoveryTimeoutException(RecoveryException):
-    """Exception de timeout lors de la récupération"""
-    pass
+    """Exception de timeout lors de la récupération"""    pass
 
 
 # Exceptions de monitoring et alertes
 
 class MonitoringException(BackupException):
-    """Exception de base pour le système de monitoring"""
-    
+    """Exception de base pour le système de monitoring"""    
     def __init__(
         self,
         message: str,
@@ -486,13 +446,11 @@ class MonitoringException(BackupException):
 
 
 class MetricCollectionException(MonitoringException):
-    """Exception de collection de métriques"""
-    pass
+    """Exception de collection de métriques"""    pass
 
 
 class AlertException(MonitoringException):
-    """Exception du système d'alertes"""
-    
+    """Exception du système d'alertes"""    
     def __init__(
         self,
         message: str,
@@ -512,8 +470,7 @@ class AlertException(MonitoringException):
 # Exceptions de rétention
 
 class RetentionException(BackupException):
-    """Exception de base pour les opérations de rétention"""
-    
+    """Exception de base pour les opérations de rétention"""    
     def __init__(
         self,
         message: str,
@@ -531,20 +488,17 @@ class RetentionException(BackupException):
 
 
 class RetentionPolicyException(RetentionException):
-    """Exception de politique de rétention"""
-    pass
+    """Exception de politique de rétention"""    pass
 
 
 class RetentionExecutionException(RetentionException):
-    """Exception d'exécution de rétention"""
-    pass
+    """Exception d'exécution de rétention"""    pass
 
 
 # Exceptions de planification
 
 class SchedulingException(BackupException):
-    """Exception de base pour la planification"""
-    
+    """Exception de base pour la planification"""    
     def __init__(
         self,
         message: str,
@@ -562,20 +516,17 @@ class SchedulingException(BackupException):
 
 
 class CronExpressionException(SchedulingException):
-    """Exception d'expression cron invalide"""
-    pass
+    """Exception d'expression cron invalide"""    pass
 
 
 class ScheduleConflictException(SchedulingException):
-    """Exception de conflit de planification"""
-    pass
+    """Exception de conflit de planification"""    pass
 
 
 # Exceptions de quotas et limites
 
 class QuotaException(BackupException):
-    """Exception de dépassement de quota"""
-    
+    """Exception de dépassement de quota"""    
     def __init__(
         self,
         message: str,
@@ -599,25 +550,21 @@ class QuotaException(BackupException):
 
 
 class StorageQuotaException(QuotaException):
-    """Exception de dépassement de quota de stockage"""
-    pass
+    """Exception de dépassement de quota de stockage"""    pass
 
 
 class BackupCountQuotaException(QuotaException):
-    """Exception de dépassement de quota de nombre de sauvegardes"""
-    pass
+    """Exception de dépassement de quota de nombre de sauvegardes"""    pass
 
 
 class BandwidthQuotaException(QuotaException):
-    """Exception de dépassement de quota de bande passante"""
-    pass
+    """Exception de dépassement de quota de bande passante"""    pass
 
 
 # Exceptions de réseau et connectivité
 
 class NetworkException(BackupException):
-    """Exception de base pour les problèmes réseau"""
-    
+    """Exception de base pour les problèmes réseau"""    
     def __init__(
         self,
         message: str,
@@ -635,13 +582,11 @@ class NetworkException(BackupException):
 
 
 class ConnectionException(NetworkException):
-    """Exception de connexion réseau"""
-    pass
+    """Exception de connexion réseau"""    pass
 
 
 class TimeoutException(NetworkException):
-    """Exception de timeout réseau"""
-    
+    """Exception de timeout réseau"""    
     def __init__(
         self,
         message: str,
@@ -663,8 +608,7 @@ def wrap_exception(
     message: Optional[str] = None,
     **kwargs
 ) -> BackupException:
-    """
-    Encapsule une exception générique dans une exception de backup
+    """    Encapsule une exception générique dans une exception de backup
     
     Args:
         original_exception: Exception originale
@@ -674,8 +618,7 @@ def wrap_exception(
         
     Returns:
         BackupException: Nouvelle exception encapsulée
-    """
-    if message is None:
+    """    if message is None:
         message = f"Backup operation failed: {str(original_exception)}"
     
     return new_exception_class(
@@ -686,16 +629,14 @@ def wrap_exception(
 
 
 def format_exception_for_logging(exception: BackupException) -> str:
-    """
-    Formate une exception pour le logging
+    """    Formate une exception pour le logging
     
     Args:
         exception: Exception à formater
         
     Returns:
         str: Format pour logging
-    """
-    lines = [
+    """    lines = [
         f"Exception: {exception.__class__.__name__}",
         f"Message: {exception.message}",
         f"Error Code: {exception.error_code}",
@@ -717,8 +658,7 @@ def create_error_response(
     exception: BackupException,
     include_stack_trace: bool = False
 ) -> Dict[str, Any]:
-    """
-    Crée une réponse d'erreur standardisée
+    """    Crée une réponse d'erreur standardisée
     
     Args:
         exception: Exception à convertir
@@ -726,8 +666,7 @@ def create_error_response(
         
     Returns:
         Dict[str, Any]: Réponse d'erreur
-    """
-    response = {
+    """    response = {
         "error": True,
         "error_code": exception.error_code,
         "message": exception.message,

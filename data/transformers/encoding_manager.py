@@ -1,5 +1,4 @@
-"""
-Encoding Manager - Professional encoding optimization for IA Influencer Agent Platform
+"""Encoding Manager - Professional encoding optimization for IA Influencer Agent Platform
 ======================================================================================
 
 Advanced encoding optimization and codec management for creator content workflows.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -22,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class EncodingProfile(Enum):
-    """Encoding profiles for different use cases."""
-    WEB_OPTIMIZED = "web_optimized"
+    """Encoding profiles for different use cases."""    WEB_OPTIMIZED = "web_optimized"
     MOBILE_OPTIMIZED = "mobile_optimized"
     STREAMING_OPTIMIZED = "streaming_optimized"
     ARCHIVE_QUALITY = "archive_quality"
@@ -33,8 +30,7 @@ class EncodingProfile(Enum):
 
 
 class CodecType(Enum):
-    """Codec types."""
-    VIDEO_H264 = "h264"
+    """Codec types."""    VIDEO_H264 = "h264"
     VIDEO_H265 = "h265"
     VIDEO_VP9 = "vp9"
     VIDEO_AV1 = "av1"
@@ -46,8 +42,7 @@ class CodecType(Enum):
 
 @dataclass
 class EncodingSettings:
-    """Encoding configuration settings."""
-    profile: EncodingProfile = EncodingProfile.WEB_OPTIMIZED
+    """Encoding configuration settings."""    profile: EncodingProfile = EncodingProfile.WEB_OPTIMIZED
     video_codec: Optional[CodecType] = None
     audio_codec: Optional[CodecType] = None
     
@@ -78,8 +73,7 @@ class EncodingSettings:
 
 @dataclass
 class EncodingResult:
-    """Encoding operation result."""
-    success: bool
+    """Encoding operation result."""    success: bool
     input_file: str
     output_file: str
     encoding_time: float
@@ -94,26 +88,22 @@ class EncodingResult:
 
 
 class EncodingManager:
-    """
-    Professional encoding manager for the IA Influencer Agent Platform.
+    """    Professional encoding manager for the IA Influencer Agent Platform.
     
     Provides intelligent encoding optimization and codec management
     for creator content workflows.
-    """
-    
+    """    
     def __init__(
         self,
         enable_gpu: bool = True,
         config: Optional[Dict[str, Any]] = None
     ):
-        """
-        Initialize encoding manager.
+        """        Initialize encoding manager.
         
         Args:
             enable_gpu: Enable GPU acceleration
             config: Configuration options
-        """
-        self.enable_gpu = enable_gpu
+        """        self.enable_gpu = enable_gpu
         self.config = config or {}
         
         # Initialize encoding profiles
@@ -131,8 +121,7 @@ class EncodingManager:
         logger.info(f"EncodingManager initialized (GPU: {enable_gpu})")
     
     def _init_encoding_profiles(self) -> Dict[str, EncodingSettings]:
-        """Initialize predefined encoding profiles."""
-        profiles = {}
+        """Initialize predefined encoding profiles."""        profiles = {}
         
         # Web optimized profile
         profiles[EncodingProfile.WEB_OPTIMIZED.value] = EncodingSettings(
@@ -229,8 +218,7 @@ class EncodingManager:
         return profiles
     
     def _init_codec_capabilities(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize codec capabilities and features."""
-        return {
+        """Initialize codec capabilities and features."""        return {
             CodecType.VIDEO_H264.value: {
                 "quality_range": (0, 51),
                 "presets": ["ultrafast", "superfast", "veryfast", "faster", "fast", "medium", "slow", "slower", "veryslow"],
@@ -287,8 +275,7 @@ class EncodingManager:
         }
     
     def _init_platform_specs(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific encoding specifications."""
-        return {
+        """Initialize platform-specific encoding specifications."""        return {
             "youtube": {
                 "video_codecs": ["h264", "h265"],
                 "audio_codecs": ["aac", "mp3"],
@@ -340,8 +327,7 @@ class EncodingManager:
         }
     
     def _detect_hardware(self) -> Dict[str, Any]:
-        """Detect available hardware acceleration."""
-        hardware_info = {
+        """Detect available hardware acceleration."""        hardware_info = {
             "gpu_available": False,
             "gpu_type": None,
             "cpu_cores": 1,
@@ -378,8 +364,7 @@ class EncodingManager:
         output_file: Optional[str] = None,
         custom_settings: Optional[Dict[str, Any]] = None
     ) -> EncodingResult:
-        """
-        Optimize encoding for specific profile.
+        """        Optimize encoding for specific profile.
         
         Args:
             input_file: Input file path
@@ -389,8 +374,7 @@ class EncodingManager:
             
         Returns:
             Encoding result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Get base settings
@@ -446,8 +430,7 @@ class EncodingManager:
         resolution: str = "1080p",
         output_file: Optional[str] = None
     ) -> EncodingResult:
-        """
-        Optimize encoding for specific platform.
+        """        Optimize encoding for specific platform.
         
         Args:
             input_file: Input file path
@@ -457,8 +440,7 @@ class EncodingManager:
             
         Returns:
             Encoding result
-        """
-        try:
+        """        try:
             platform_spec = self.platform_specs.get(platform.lower())
             if not platform_spec:
                 raise ValueError(f"Unknown platform: {platform}")
@@ -514,8 +496,7 @@ class EncodingManager:
         input_file: str,
         test_profiles: Optional[List[EncodingProfile]] = None
     ) -> Dict[str, Any]:
-        """
-        Analyze encoding efficiency across different profiles.
+        """        Analyze encoding efficiency across different profiles.
         
         Args:
             input_file: Input file to analyze
@@ -523,8 +504,7 @@ class EncodingManager:
             
         Returns:
             Analysis results
-        """
-        try:
+        """        try:
             if not test_profiles:
                 test_profiles = list(EncodingProfile)
             
@@ -592,8 +572,7 @@ class EncodingManager:
         content_type: str = "video",
         target_quality: str = "high"
     ) -> Dict[str, Any]:
-        """
-        Get encoding recommendations based on use case.
+        """        Get encoding recommendations based on use case.
         
         Args:
             use_case: Use case (streaming, archive, social, web, mobile)
@@ -602,8 +581,7 @@ class EncodingManager:
             
         Returns:
             Encoding recommendations
-        """
-        recommendations = {
+        """        recommendations = {
             "streaming": {
                 "profile": EncodingProfile.STREAMING_OPTIMIZED,
                 "codecs": {"video": CodecType.VIDEO_H264, "audio": CodecType.AUDIO_AAC},
@@ -654,8 +632,7 @@ class EncodingManager:
         }
     
     async def _optimize_for_hardware(self, settings: EncodingSettings) -> EncodingSettings:
-        """Optimize settings based on available hardware."""
-        optimized = settings
+        """Optimize settings based on available hardware."""        optimized = settings
         
         # GPU optimization
         if self.enable_gpu and self.hardware_info["gpu_available"]:
@@ -707,8 +684,7 @@ class EncodingManager:
         output_file: str,
         settings: EncodingSettings
     ) -> EncodingResult:
-        """Perform the actual encoding operation."""
-        try:
+        """Perform the actual encoding operation."""        try:
             # This would integrate with actual encoding tools (FFmpeg, etc.)
             # For now, we'll simulate the encoding process
             
@@ -754,8 +730,7 @@ class EncodingManager:
             )
     
     def _calculate_efficiency_score(self, result: EncodingResult) -> float:
-        """Calculate encoding efficiency score."""
-        try:
+        """Calculate encoding efficiency score."""        try:
             # Score based on compression ratio, quality, and speed
             compression_score = min(result.compression_ratio * 100, 100)
             quality_score = result.quality_score or 50
@@ -773,8 +748,7 @@ class EncodingManager:
 
 
 class CodecOptimizer:
-    """Codec-specific optimization utilities."""
-    
+    """Codec-specific optimization utilities."""    
     def __init__(self, encoding_manager: Optional[EncodingManager] = None):
         self.encoding_manager = encoding_manager or EncodingManager()
     
@@ -784,8 +758,7 @@ class CodecOptimizer:
         use_case: str,
         hardware_acceleration: bool = True
     ) -> CodecType:
-        """Get optimal codec for specific requirements."""
-        codec_recommendations = {
+        """Get optimal codec for specific requirements."""        codec_recommendations = {
             "video": {
                 "streaming": CodecType.VIDEO_H264,
                 "archive": CodecType.VIDEO_H265,
@@ -809,8 +782,7 @@ class CodecOptimizer:
 
 
 class QualityManager:
-    """Quality management and optimization."""
-    
+    """Quality management and optimization."""    
     def __init__(self, encoding_manager: Optional[EncodingManager] = None):
         self.encoding_manager = encoding_manager or EncodingManager()
     
@@ -820,8 +792,7 @@ class QualityManager:
         fps: int,
         content_complexity: str = "medium"
     ) -> int:
-        """Calculate optimal bitrate for given parameters."""
-        base_bitrates = {
+        """Calculate optimal bitrate for given parameters."""        base_bitrates = {
             "480p": 1000,
             "720p": 2500,
             "1080p": 5000,
@@ -849,8 +820,7 @@ class QualityManager:
         return optimal_bitrate
     
     def get_quality_presets(self) -> Dict[str, Dict[str, Any]]:
-        """Get quality presets for different use cases."""
-        return {
+        """Get quality presets for different use cases."""        return {
             "draft": {
                 "description": "Fast encoding for drafts and previews",
                 "video_quality": 30,

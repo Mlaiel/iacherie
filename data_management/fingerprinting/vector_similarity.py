@@ -1,5 +1,4 @@
-"""
-🔍 Vector Similarity Engine - IA Influencer Agent Platform Enterprise
+"""🔍 Vector Similarity Engine - IA Influencer Agent Platform Enterprise
 ====================================================================
 Module: backend/data_management/fingerprinting/vector_similarity.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -28,7 +27,6 @@ VECTOR SIMILARITY TECHNOLOGIES:
 ├── 🚀 Distributed Search (Multi-node)
 └── 🛡️ Real-time Monitoring (Instant Detection)
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
 from abc import ABC, abstractmethod
@@ -87,8 +85,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VectorSimilarityConfig:
-    """Configuration avancée pour la recherche de similarité vectorielle"""
-    
+    """Configuration avancée pour la recherche de similarité vectorielle"""    
     # Configuration FAISS
     faiss_enabled: bool = True
     faiss_index_type: str = "IVF"  # IVF, HNSW, Flat, LSH
@@ -129,29 +126,24 @@ class VectorSimilarityConfig:
     detailed_metrics: bool = True
 
 class SimilarityMetric(ABC):
-    """Classe de base pour les métriques de similarité"""
-    
+    """Classe de base pour les métriques de similarité"""    
     @abstractmethod
     def compute(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Compute similarity between two vectors"""
-        logger.warning(f"compute method not implemented in {self.__class__.__name__}")
+        """Compute similarity between two vectors"""        logger.warning(f"compute method not implemented in {self.__class__.__name__}")
         # Return default similarity (0.5 = neutral similarity)
         return 0.5
     
     @abstractmethod
     def batch_compute(self, vectors1: np.ndarray, vectors2: np.ndarray) -> np.ndarray:
-        """Compute similarity in batches"""
-        logger.warning(f"batch_compute method not implemented in {self.__class__.__name__}")
+        """Compute similarity in batches"""        logger.warning(f"batch_compute method not implemented in {self.__class__.__name__}")
         # Return array of default similarities
         import numpy as np
         return np.full((vectors1.shape[0],), 0.5)
 
 class CosineSimilarity(SimilarityMetric):
-    """Métrique de similarité cosinus"""
-    
+    """Métrique de similarité cosinus"""    
     def compute(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calcule la similarité cosinus entre deux vecteurs"""
-        if SCIPY_AVAILABLE:
+        """Calcule la similarité cosinus entre deux vecteurs"""        if SCIPY_AVAILABLE:
             return 1.0 - cosine(vector1, vector2)
         else:
             # Implémentation manuelle
@@ -165,8 +157,7 @@ class CosineSimilarity(SimilarityMetric):
             return dot_product / (norm1 * norm2)
     
     def batch_compute(self, vectors1: np.ndarray, vectors2: np.ndarray) -> np.ndarray:
-        """Calcule la similarité cosinus par lots"""
-        if SKLEARN_AVAILABLE:
+        """Calcule la similarité cosinus par lots"""        if SKLEARN_AVAILABLE:
             return cosine_similarity(vectors1, vectors2)
         else:
             # Implémentation manuelle pour lots
@@ -180,11 +171,9 @@ class CosineSimilarity(SimilarityMetric):
             return np.array(results)
 
 class EuclideanSimilarity(SimilarityMetric):
-    """Métrique de distance euclidienne (convertie en similarité)"""
-    
+    """Métrique de distance euclidienne (convertie en similarité)"""    
     def compute(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calcule la similarité basée sur la distance euclidienne"""
-        if SCIPY_AVAILABLE:
+        """Calcule la similarité basée sur la distance euclidienne"""        if SCIPY_AVAILABLE:
             distance = euclidean(vector1, vector2)
         else:
             distance = np.linalg.norm(vector1 - vector2)
@@ -193,8 +182,7 @@ class EuclideanSimilarity(SimilarityMetric):
         return 1.0 / (1.0 + distance)
     
     def batch_compute(self, vectors1: np.ndarray, vectors2: np.ndarray) -> np.ndarray:
-        """Calcule la distance euclidienne par lots"""
-        if SKLEARN_AVAILABLE:
+        """Calcule la distance euclidienne par lots"""        if SKLEARN_AVAILABLE:
             distances = euclidean_distances(vectors1, vectors2)
             # Conversion en similarité
             return 1.0 / (1.0 + distances)
@@ -209,11 +197,9 @@ class EuclideanSimilarity(SimilarityMetric):
             return np.array(results)
 
 class ManhattanSimilarity(SimilarityMetric):
-    """Métrique de distance de Manhattan (convertie en similarité)"""
-    
+    """Métrique de distance de Manhattan (convertie en similarité)"""    
     def compute(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calcule la similarité basée sur la distance de Manhattan"""
-        if SCIPY_AVAILABLE:
+        """Calcule la similarité basée sur la distance de Manhattan"""        if SCIPY_AVAILABLE:
             distance = cityblock(vector1, vector2)
         else:
             distance = np.sum(np.abs(vector1 - vector2))
@@ -222,8 +208,7 @@ class ManhattanSimilarity(SimilarityMetric):
         return 1.0 / (1.0 + distance)
     
     def batch_compute(self, vectors1: np.ndarray, vectors2: np.ndarray) -> np.ndarray:
-        """Calcule la distance de Manhattan par lots"""
-        results = []
+        """Calcule la distance de Manhattan par lots"""        results = []
         for v1 in vectors1:
             row = []
             for v2 in vectors2:
@@ -234,8 +219,7 @@ class ManhattanSimilarity(SimilarityMetric):
 
 @dataclass
 class SearchResult:
-    """Résultat d'une recherche de similarité"""
-    fingerprint_id: str
+    """Résultat d'une recherche de similarité"""    fingerprint_id: str
     content_id: str
     similarity_score: float
     distance: float
@@ -244,8 +228,7 @@ class SearchResult:
 
 @dataclass
 class IndexStats:
-    """Statistiques d'un index vectoriel"""
-    total_vectors: int
+    """Statistiques d'un index vectoriel"""    total_vectors: int
     dimension: int
     index_size_mb: float
     last_updated: str
@@ -253,8 +236,7 @@ class IndexStats:
     performance_metrics: Dict[str, float] = field(default_factory=dict)
 
 class FAISSIndexManager:
-    """Gestionnaire d'index FAISS pour la recherche vectorielle rapide"""
-    
+    """Gestionnaire d'index FAISS pour la recherche vectorielle rapide"""    
     def __init__(self, config: VectorSimilarityConfig):
         self.config = config
         self.indexes = {}  # Stockage des index par type de contenu
@@ -277,8 +259,7 @@ class FAISSIndexManager:
         logger.info("FAISS Index Manager initialized")
     
     def create_index(self, content_type: str, dimension: int) -> bool:
-        """Crée un nouvel index FAISS pour un type de contenu"""
-        if not FAISS_AVAILABLE:
+        """Crée un nouvel index FAISS pour un type de contenu"""        if not FAISS_AVAILABLE:
             return False
         
         try:
@@ -322,8 +303,7 @@ class FAISSIndexManager:
     
     def add_vectors(self, content_type: str, vectors: np.ndarray, 
                    fingerprint_ids: List[str], metadata: List[Dict[str, Any]]) -> bool:
-        """Ajoute des vecteurs à l'index"""
-        if not FAISS_AVAILABLE or content_type not in self.indexes:
+        """Ajoute des vecteurs à l'index"""        if not FAISS_AVAILABLE or content_type not in self.indexes:
             return False
         
         try:
@@ -359,8 +339,7 @@ class FAISSIndexManager:
     
     def search(self, content_type: str, query_vector: np.ndarray, 
               k: int = None) -> List[SearchResult]:
-        """Recherche les vecteurs les plus similaires"""
-        if not FAISS_AVAILABLE or content_type not in self.indexes:
+        """Recherche les vecteurs les plus similaires"""        if not FAISS_AVAILABLE or content_type not in self.indexes:
             return []
         
         k = k or self.config.max_results
@@ -420,8 +399,7 @@ class FAISSIndexManager:
             return []
     
     def save_index(self, content_type: str) -> bool:
-        """Sauvegarde un index sur disque"""
-        if not FAISS_AVAILABLE or content_type not in self.indexes:
+        """Sauvegarde un index sur disque"""        if not FAISS_AVAILABLE or content_type not in self.indexes:
             return False
         
         try:
@@ -452,8 +430,7 @@ class FAISSIndexManager:
             return False
     
     def load_index(self, content_type: str, dimension: int) -> bool:
-        """Charge un index depuis le disque"""
-        if not FAISS_AVAILABLE:
+        """Charge un index depuis le disque"""        if not FAISS_AVAILABLE:
             return False
         
         try:
@@ -490,8 +467,7 @@ class FAISSIndexManager:
             return self.create_index(content_type, dimension)
     
     def get_stats(self, content_type: str) -> Optional[IndexStats]:
-        """Retourne les statistiques d'un index"""
-        if content_type not in self.indexes:
+        """Retourne les statistiques d'un index"""        if content_type not in self.indexes:
             return None
         
         try:
@@ -513,8 +489,7 @@ class FAISSIndexManager:
             return None
 
 class ElasticsearchManager:
-    """Gestionnaire Elasticsearch pour la recherche hybride et métadonnées"""
-    
+    """Gestionnaire Elasticsearch pour la recherche hybride et métadonnées"""    
     def __init__(self, config: VectorSimilarityConfig):
         self.config = config
         self.client = None
@@ -528,8 +503,7 @@ class ElasticsearchManager:
         self._ensure_index_exists()
     
     def _initialize_client(self):
-        """Initialise le client Elasticsearch"""
-        try:
+        """Initialise le client Elasticsearch"""        try:
             self.client = Elasticsearch(
                 [{'host': self.config.elasticsearch_host, 'port': self.config.elasticsearch_port}],
                 timeout=self.config.elasticsearch_timeout
@@ -547,8 +521,7 @@ class ElasticsearchManager:
             self.client = None
     
     def _ensure_index_exists(self):
-        """Assure que l'index Elasticsearch existe"""
-        if not self.client:
+        """Assure que l'index Elasticsearch existe"""        if not self.client:
             return
         
         try:
@@ -580,8 +553,7 @@ class ElasticsearchManager:
             logger.error(f"Failed to create Elasticsearch index: {e}")
     
     def index_fingerprint(self, fingerprint_data: Dict[str, Any]) -> bool:
-        """Indexe un fingerprint dans Elasticsearch"""
-        if not self.client:
+        """Indexe un fingerprint dans Elasticsearch"""        if not self.client:
             return False
         
         try:
@@ -613,8 +585,7 @@ class ElasticsearchManager:
             return False
     
     def search_by_metadata(self, query: Dict[str, Any], size: int = 100) -> List[Dict[str, Any]]:
-        """Recherche par métadonnées et filtres"""
-        if not self.client:
+        """Recherche par métadonnées et filtres"""        if not self.client:
             return []
         
         try:
@@ -639,8 +610,7 @@ class ElasticsearchManager:
     
     def vector_search(self, query_vector: List[float], content_type: str = None,
                      size: int = 100) -> List[Dict[str, Any]]:
-        """Recherche vectorielle avec Elasticsearch"""
-        if not self.client:
+        """Recherche vectorielle avec Elasticsearch"""        if not self.client:
             return []
         
         try:
@@ -681,8 +651,7 @@ class ElasticsearchManager:
             return []
 
 class SimilarityCalculator:
-    """Calculateur de similarité avec multiple métriques"""
-    
+    """Calculateur de similarité avec multiple métriques"""    
     def __init__(self, config: VectorSimilarityConfig):
         self.config = config
         
@@ -698,21 +667,18 @@ class SimilarityCalculator:
     
     def compute_similarity(self, vector1: np.ndarray, vector2: np.ndarray, 
                           metric: str = None) -> float:
-        """Calcule la similarité entre deux vecteurs"""
-        metric_obj = self.metrics.get(metric, self.default_metric)
+        """Calcule la similarité entre deux vecteurs"""        metric_obj = self.metrics.get(metric, self.default_metric)
         return metric_obj.compute(vector1, vector2)
     
     def batch_similarity(self, vectors1: np.ndarray, vectors2: np.ndarray,
                         metric: str = None) -> np.ndarray:
-        """Calcule la similarité par lots"""
-        metric_obj = self.metrics.get(metric, self.default_metric)
+        """Calcule la similarité par lots"""        metric_obj = self.metrics.get(metric, self.default_metric)
         return metric_obj.batch_compute(vectors1, vectors2)
     
     def find_similar_vectors(self, query_vector: np.ndarray, 
                            candidate_vectors: np.ndarray,
                            threshold: float = None) -> List[Tuple[int, float]]:
-        """Trouve les vecteurs similaires dans un ensemble de candidats"""
-        threshold = threshold or self.config.similarity_threshold
+        """Trouve les vecteurs similaires dans un ensemble de candidats"""        threshold = threshold or self.config.similarity_threshold
         
         similarities = []
         for i, candidate in enumerate(candidate_vectors):
@@ -725,8 +691,7 @@ class SimilarityCalculator:
         return similarities[:self.config.max_results]
 
 class MatchingEngine:
-    """Moteur de matching avancé combinant FAISS et Elasticsearch"""
-    
+    """Moteur de matching avancé combinant FAISS et Elasticsearch"""    
     def __init__(self, config: VectorSimilarityConfig):
         self.config = config
         self.faiss_manager = FAISSIndexManager(config)
@@ -747,8 +712,7 @@ class MatchingEngine:
         }
     
     def index_fingerprint(self, fingerprint_data: Dict[str, Any]) -> bool:
-        """Indexe un fingerprint dans tous les systèmes"""
-        success = True
+        """Indexe un fingerprint dans tous les systèmes"""        success = True
         
         try:
             content_type = fingerprint_data.get("content_type")
@@ -784,8 +748,7 @@ class MatchingEngine:
     
     def find_matches(self, query_fingerprint: Dict[str, Any], 
                     content_type: str = None) -> List[SearchResult]:
-        """Trouve les matches pour un fingerprint donné"""
-        start_time = time.time()
+        """Trouve les matches pour un fingerprint donné"""        start_time = time.time()
         
         try:
             # Vérification du cache
@@ -856,8 +819,7 @@ class MatchingEngine:
             return []
     
     def _extract_similarity_vector(self, fingerprint_data: Dict[str, Any]) -> Optional[np.ndarray]:
-        """Extrait le vecteur de similarité d'un fingerprint"""
-        # Logique pour extraire/construire un vecteur de similarité
+        """Extrait le vecteur de similarité d'un fingerprint"""        # Logique pour extraire/construire un vecteur de similarité
         # basé sur les différents types de fingerprints
         
         fingerprints = fingerprint_data.get("fingerprints", {})
@@ -900,8 +862,7 @@ class MatchingEngine:
         return None
     
     def _generate_cache_key(self, fingerprint_data: Dict[str, Any], content_type: str) -> str:
-        """Génère une clé de cache pour une requête"""
-        key_data = {
+        """Génère une clé de cache pour une requête"""        key_data = {
             "fingerprint_hash": fingerprint_data.get("fingerprint_hash"),
             "content_type": content_type,
             "threshold": self.config.similarity_threshold
@@ -910,8 +871,7 @@ class MatchingEngine:
         return hashlib.md5(key_string.encode()).hexdigest()
     
     def _update_cache(self, key: str, results: List[SearchResult]):
-        """Met à jour le cache avec de nouveaux résultats"""
-        if not self.cache:
+        """Met à jour le cache avec de nouveaux résultats"""        if not self.cache:
             return
         
         # Nettoyage du cache si nécessaire
@@ -923,8 +883,7 @@ class MatchingEngine:
         self.cache[key] = results
     
     def _deduplicate_results(self, results: List[SearchResult]) -> List[SearchResult]:
-        """Supprime les doublons des résultats"""
-        seen_fingerprints = set()
+        """Supprime les doublons des résultats"""        seen_fingerprints = set()
         unique_results = []
         
         for result in results:
@@ -935,8 +894,7 @@ class MatchingEngine:
         return unique_results
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Retourne les métriques de performance"""
-        cache_hit_rate = (
+        """Retourne les métriques de performance"""        cache_hit_rate = (
             self.metrics["cache_hits"] / 
             max(self.metrics["cache_hits"] + self.metrics["cache_misses"], 1)
         )
@@ -948,8 +906,7 @@ class MatchingEngine:
         }
 
 class VectorSimilarityEngine:
-    """
-    Moteur principal de similarité vectorielle
+    """    Moteur principal de similarité vectorielle
     
     Fonctionnalités:
     - Indexation FAISS haute performance
@@ -958,8 +915,7 @@ class VectorSimilarityEngine:
     - Cache intelligent
     - Monitoring et métriques
     - Support GPU
-    """
-    
+    """    
     def __init__(self, config: Optional[VectorSimilarityConfig] = None):
         self.config = config or VectorSimilarityConfig()
         self.matching_engine = MatchingEngine(self.config)
@@ -972,38 +928,33 @@ class VectorSimilarityEngine:
         logger.info("VectorSimilarityEngine initialized successfully")
     
     async def index_fingerprint(self, fingerprint_data: Dict[str, Any]) -> bool:
-        """Indexe un fingerprint de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Indexe un fingerprint de manière asynchrone"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None, self.matching_engine.index_fingerprint, fingerprint_data
         )
     
     async def find_similar(self, query_fingerprint: Dict[str, Any],
                           content_type: str = None) -> List[SearchResult]:
-        """Trouve les fingerprints similaires de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Trouve les fingerprints similaires de manière asynchrone"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None, self.matching_engine.find_matches, query_fingerprint, content_type
         )
     
     def save_indexes(self) -> bool:
-        """Sauvegarde tous les index sur disque"""
-        success = True
+        """Sauvegarde tous les index sur disque"""        success = True
         for content_type in self.matching_engine.faiss_manager.indexes:
             success = success and self.matching_engine.faiss_manager.save_index(content_type)
         return success
     
     def load_indexes(self, content_types: List[str], dimensions: Dict[str, int]) -> bool:
-        """Charge les index depuis le disque"""
-        success = True
+        """Charge les index depuis le disque"""        success = True
         for content_type in content_types:
             dimension = dimensions.get(content_type, 512)  # Dimension par défaut
             success = success and self.matching_engine.faiss_manager.load_index(content_type, dimension)
         return success
     
     def get_comprehensive_metrics(self) -> Dict[str, Any]:
-        """Retourne des métriques complètes du système"""
-        matching_metrics = self.matching_engine.get_metrics()
+        """Retourne des métriques complètes du système"""        matching_metrics = self.matching_engine.get_metrics()
         
         # Statistiques des index
         index_stats = {}

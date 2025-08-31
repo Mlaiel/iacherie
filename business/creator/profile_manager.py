@@ -1,5 +1,4 @@
-"""
-Creator Profile Manager - Advanced Creator Profile Management System
+"""Creator Profile Manager - Advanced Creator Profile Management System
 
 Ultra-sophisticated creator profile management system for multi-format content creators.
 Handles complete profile lifecycle including creation, updates, verification, and optimization.
@@ -18,7 +17,6 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -54,8 +52,7 @@ logger = get_logger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of content creators supported by the platform"""
-    MUSICIAN = "musician"
+    """Types of content creators supported by the platform"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -73,8 +70,7 @@ class CreatorType(Enum):
 
 
 class VerificationLevel(Enum):
-    """Creator verification levels for trust and monetization"""
-    UNVERIFIED = "unverified"
+    """Creator verification levels for trust and monetization"""    UNVERIFIED = "unverified"
     EMAIL_VERIFIED = "email_verified"
     PHONE_VERIFIED = "phone_verified"
     IDENTITY_VERIFIED = "identity_verified"
@@ -84,8 +80,7 @@ class VerificationLevel(Enum):
 
 
 class ProfessionalTier(Enum):
-    """Professional tiers for creators"""
-    STARTER = "starter"
+    """Professional tiers for creators"""    STARTER = "starter"
     CREATOR = "creator"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
@@ -93,8 +88,7 @@ class ProfessionalTier(Enum):
 
 
 class ContentFocus(Enum):
-    """Primary content focus areas"""
-    ENTERTAINMENT = "entertainment"
+    """Primary content focus areas"""    ENTERTAINMENT = "entertainment"
     EDUCATION = "education"
     LIFESTYLE = "lifestyle"
     BUSINESS = "business"
@@ -107,8 +101,7 @@ class ContentFocus(Enum):
 
 
 class ProfileStatus(Enum):
-    """Creator profile status"""
-    ACTIVE = "active"
+    """Creator profile status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     PENDING_VERIFICATION = "pending_verification"
@@ -118,8 +111,7 @@ class ProfileStatus(Enum):
 
 @dataclass
 class CreatorPreferences:
-    """Creator preferences and settings"""
-    privacy_level: str = "public"
+    """Creator preferences and settings"""    privacy_level: str = "public"
     content_sharing: bool = True
     collaboration_open: bool = True
     monetization_enabled: bool = False
@@ -148,8 +140,7 @@ class CreatorPreferences:
 
 @dataclass
 class CreatorStats:
-    """Creator performance statistics"""
-    total_followers: int = 0
+    """Creator performance statistics"""    total_followers: int = 0
     total_content_items: int = 0
     total_collaborations: int = 0
     total_revenue: float = 0.0
@@ -174,8 +165,7 @@ class CreatorStats:
 
 @dataclass
 class SocialMediaProfile:
-    """Social media platform profile information"""
-    platform: str
+    """Social media platform profile information"""    platform: str
     username: str
     profile_url: str
     follower_count: int = 0
@@ -194,10 +184,8 @@ class SocialMediaProfile:
 
 
 class CreatorProfile(BaseModel):
-    """
-    Advanced creator profile model with comprehensive information
-    """
-    __tablename__ = "creator_profiles"
+    """    Advanced creator profile model with comprehensive information
+    """    __tablename__ = "creator_profiles"
     
     # Basic identification
     creator_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -275,8 +263,7 @@ class CreatorProfile(BaseModel):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert profile to dictionary format"""
-        return {
+        """Convert profile to dictionary format"""        return {
             "creator_id": self.creator_id,
             "user_id": self.user_id,
             "email": self.email,
@@ -309,8 +296,7 @@ class CreatorProfile(BaseModel):
 
 
 class CreatorProfileManager:
-    """
-    Advanced creator profile management system
+    """    Advanced creator profile management system
     
     Handles all aspects of creator profile management including:
     - Profile creation and updates
@@ -318,8 +304,7 @@ class CreatorProfileManager:
     - Performance tracking
     - Analytics and insights
     - Collaboration matching
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager, 
                  security_manager: SecurityManager):
         self.db = db_session
@@ -342,8 +327,7 @@ class CreatorProfileManager:
         creator_type: CreatorType,
         initial_data: Optional[Dict[str, Any]] = None
     ) -> CreatorProfile:
-        """
-        Create a new creator profile with comprehensive initialization
+        """        Create a new creator profile with comprehensive initialization
         
         Args:
             user_id: Unique user identifier
@@ -358,8 +342,7 @@ class CreatorProfileManager:
             
         Raises:
             HTTPException: If profile creation fails
-        """
-        try:
+        """        try:
             self.logger.info(f"Creating creator profile for user {user_id}")
             
             # Validate inputs
@@ -445,8 +428,7 @@ class CreatorProfileManager:
         profile_identifier: str,
         identifier_type: str = "creator_id"
     ) -> Optional[CreatorProfile]:
-        """
-        Retrieve creator profile by various identifiers
+        """        Retrieve creator profile by various identifiers
         
         Args:
             profile_identifier: Profile identifier (creator_id, user_id, username, email)
@@ -454,8 +436,7 @@ class CreatorProfileManager:
             
         Returns:
             CreatorProfile or None if not found
-        """
-        try:
+        """        try:
             # Check cache first
             cache_key = f"creator_profile:{identifier_type}:{profile_identifier}"
             cached_profile = await self.cache.get(cache_key)
@@ -492,8 +473,7 @@ class CreatorProfileManager:
         creator_id: str,
         update_data: Dict[str, Any]
     ) -> Optional[CreatorProfile]:
-        """
-        Update creator profile with new data
+        """        Update creator profile with new data
         
         Args:
             creator_id: Creator profile identifier
@@ -501,8 +481,7 @@ class CreatorProfileManager:
             
         Returns:
             Updated CreatorProfile or None if not found
-        """
-        try:
+        """        try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
                 return None
@@ -547,8 +526,7 @@ class CreatorProfileManager:
         creator_id: str,
         stats_update: Dict[str, Any]
     ) -> bool:
-        """
-        Update creator statistics
+        """        Update creator statistics
         
         Args:
             creator_id: Creator profile identifier
@@ -556,8 +534,7 @@ class CreatorProfileManager:
             
         Returns:
             True if successful, False otherwise
-        """
-        try:
+        """        try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
                 return False
@@ -588,8 +565,7 @@ class CreatorProfileManager:
         verification_level: VerificationLevel,
         verification_data: Dict[str, Any]
     ) -> bool:
-        """
-        Update creator verification status
+        """        Update creator verification status
         
         Args:
             creator_id: Creator profile identifier
@@ -598,8 +574,7 @@ class CreatorProfileManager:
             
         Returns:
             True if successful, False otherwise
-        """
-        try:
+        """        try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
                 return False
@@ -640,8 +615,7 @@ class CreatorProfileManager:
         creator_id: str,
         social_profile: SocialMediaProfile
     ) -> bool:
-        """
-        Add or update social media profile
+        """        Add or update social media profile
         
         Args:
             creator_id: Creator profile identifier
@@ -649,8 +623,7 @@ class CreatorProfileManager:
             
         Returns:
             True if successful, False otherwise
-        """
-        try:
+        """        try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
                 return False
@@ -683,8 +656,7 @@ class CreatorProfileManager:
         limit: int = 20,
         offset: int = 0
     ) -> List[CreatorProfile]:
-        """
-        Search for creators based on filters
+        """        Search for creators based on filters
         
         Args:
             filters: Search filters
@@ -693,8 +665,7 @@ class CreatorProfileManager:
             
         Returns:
             List of matching creator profiles
-        """
-        try:
+        """        try:
             # Build query
             query = select(CreatorProfile)
             
@@ -735,8 +706,7 @@ class CreatorProfileManager:
         creator_id: str,
         period: str = "30d"
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive creator analytics
+        """        Get comprehensive creator analytics
         
         Args:
             creator_id: Creator profile identifier
@@ -744,8 +714,7 @@ class CreatorProfileManager:
             
         Returns:
             Analytics data dictionary
-        """
-        try:
+        """        try:
             profile = await self.get_creator_profile(creator_id)
             if not profile:
                 return {}
@@ -786,8 +755,7 @@ class CreatorProfileManager:
         username: str,
         creator_type: CreatorType
     ) -> None:
-        """Validate profile creation data"""
-        if not email or "@" not in email:
+        """Validate profile creation data"""        if not email or "@" not in email:
             raise HTTPException(
                 status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
                 detail="Invalid email address"
@@ -806,27 +774,23 @@ class CreatorProfileManager:
             )
     
     async def _validate_profile_update_data(self, update_data: Dict[str, Any]) -> None:
-        """Validate profile update data"""
-        # Add validation logic for update data
+        """Validate profile update data"""        # Add validation logic for update data
         pass
     
     async def _get_profile_by_email(self, email: str) -> Optional[CreatorProfile]:
-        """Get profile by email"""
-        result = await self.db.execute(
+        """Get profile by email"""        result = await self.db.execute(
             select(CreatorProfile).where(CreatorProfile.email == email)
         )
         return result.scalar_one_or_none()
     
     async def _get_profile_by_username(self, username: str) -> Optional[CreatorProfile]:
-        """Get profile by username"""
-        result = await self.db.execute(
+        """Get profile by username"""        result = await self.db.execute(
             select(CreatorProfile).where(CreatorProfile.username == username)
         )
         return result.scalar_one_or_none()
     
     async def _cache_profile(self, profile: CreatorProfile) -> None:
-        """Cache profile data"""
-        try:
+        """Cache profile data"""        try:
             profile_dict = profile.to_dict()
             
             # Cache by different identifiers
@@ -848,8 +812,7 @@ class CreatorProfileManager:
             self.logger.warning(f"Failed to cache profile: {e}")
     
     async def _calculate_completion_score(self, profile: CreatorProfile) -> float:
-        """Calculate profile completion score"""
-        try:
+        """Calculate profile completion score"""        try:
             score = 0.0
             total_fields = 20
             
@@ -896,8 +859,7 @@ class CreatorProfileManager:
             return 0.0
     
     async def _calculate_quality_score(self, profile: CreatorProfile) -> float:
-        """Calculate profile quality score"""
-        try:
+        """Calculate profile quality score"""        try:
             score = 0.0
             
             # Bio quality (length, keywords, etc.)
@@ -939,8 +901,7 @@ class CreatorProfileManager:
             return 0.0
     
     async def _initialize_ai_profile(self, profile: CreatorProfile) -> None:
-        """Initialize AI personalization profile"""
-        try:
+        """Initialize AI personalization profile"""        try:
             # Create corresponding AI profile for personalization
             # This would integrate with the AI personalization system
             self.logger.info(f"AI profile initialization for creator {profile.creator_id}")

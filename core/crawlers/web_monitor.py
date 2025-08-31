@@ -1,5 +1,4 @@
-"""
-Web Content Monitor - Surveillance générale du contenu web
+"""Web Content Monitor - Surveillance générale du contenu web
 =========================================================
 
 Module principal de surveillance web pour détecter l'utilisation non autorisée
@@ -9,7 +8,6 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. Tous droits réservés.
 """
-
 import asyncio
 import logging
 import hashlib
@@ -33,8 +31,7 @@ from ...utils.proxy_manager import ProxyManager
 
 @dataclass
 class MonitoringTarget:
-    """Configuration d'une cible de surveillance"""
-    url: str
+    """Configuration d'une cible de surveillance"""    url: str
     content_type: str  # 'video', 'audio', 'image', 'text'
     owner_id: str
     fingerprint_hash: str
@@ -46,8 +43,7 @@ class MonitoringTarget:
 
 @dataclass
 class ViolationAlert:
-    """Alerte de violation détectée"""
-    target_url: str
+    """Alerte de violation détectée"""    target_url: str
     violation_url: str
     similarity_score: float
     violation_type: str  # 'exact_copy', 'partial_copy', 'modified'
@@ -57,18 +53,14 @@ class ViolationAlert:
 
 
 class WebContentMonitor:
-    """
-    Moniteur principal de contenu web avec capacités avancées de détection
-    """
-    
+    """    Moniteur principal de contenu web avec capacités avancées de détection
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialise le moniteur web
+        """        Initialise le moniteur web
         
         Args:
             config: Configuration du monitoring
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         self.rate_limiter = RateLimiter(
             max_requests=config.get('max_requests_per_minute', 60),
@@ -107,16 +99,14 @@ class WebContentMonitor:
         }
 
     async def add_monitoring_target(self, target: MonitoringTarget) -> bool:
-        """
-        Ajoute une nouvelle cible de surveillance
+        """        Ajoute une nouvelle cible de surveillance
         
         Args:
             target: Cible à surveiller
             
         Returns:
             bool: Succès de l'ajout
-        """
-        try:
+        """        try:
             # Génération de l'empreinte du contenu original
             fingerprint = await self._generate_content_fingerprint(target.url)
             if not fingerprint:
@@ -135,10 +125,8 @@ class WebContentMonitor:
             return False
 
     async def start_monitoring(self) -> None:
-        """
-        Démarre la surveillance continue
-        """
-        self.logger.info("Démarrage de la surveillance web continue")
+        """        Démarre la surveillance continue
+        """        self.logger.info("Démarrage de la surveillance web continue")
         
         while True:
             try:
@@ -159,10 +147,8 @@ class WebContentMonitor:
                 await asyncio.sleep(60)  # Pause en cas d'erreur
 
     async def _monitor_all_targets(self) -> None:
-        """
-        Surveille toutes les cibles configurées
-        """
-        tasks = []
+        """        Surveille toutes les cibles configurées
+        """        tasks = []
         for target in self.monitoring_targets:
             if self._should_check_target(target):
                 task = asyncio.create_task(self._monitor_single_target(target))
@@ -172,29 +158,25 @@ class WebContentMonitor:
             await asyncio.gather(*tasks, return_exceptions=True)
 
     def _should_check_target(self, target: MonitoringTarget) -> bool:
-        """
-        Détermine si une cible doit être vérifiée maintenant
+        """        Détermine si une cible doit être vérifiée maintenant
         
         Args:
             target: Cible à évaluer
             
         Returns:
             bool: True si la cible doit être vérifiée
-        """
-        if not target.last_checked:
+        """        if not target.last_checked:
             return True
         
         time_since_check = datetime.now() - target.last_checked
         return time_since_check >= timedelta(hours=target.monitoring_frequency)
 
     async def _monitor_single_target(self, target: MonitoringTarget) -> None:
-        """
-        Surveille une cible spécifique
+        """        Surveille une cible spécifique
         
         Args:
             target: Cible à surveiller
-        """
-        try:
+        """        try:
             # Recherche de contenus similaires
             search_queries = self._generate_search_queries(target)
             
@@ -212,16 +194,14 @@ class WebContentMonitor:
             self.logger.error(f"Erreur lors de la surveillance de {target.url}: {e}")
 
     def _generate_search_queries(self, target: MonitoringTarget) -> List[str]:
-        """
-        Génère des requêtes de recherche intelligentes
+        """        Génère des requêtes de recherche intelligentes
         
         Args:
             target: Cible à rechercher
             
         Returns:
             List[str]: Liste des requêtes de recherche
-        """
-        queries = []
+        """        queries = []
         
         # Extraction de métadonnées pour les requêtes
         parsed_url = urlparse(target.url)
@@ -250,16 +230,14 @@ class WebContentMonitor:
         return queries
 
     async def _search_content(self, query: str) -> List[str]:
-        """
-        Effectue une recherche de contenu
+        """        Effectue une recherche de contenu
         
         Args:
             query: Requête de recherche
             
         Returns:
             List[str]: URLs trouvées
-        """
-        results = []
+        """        results = []
         
         try:
             # Recherche sur les moteurs de recherche
@@ -288,16 +266,14 @@ class WebContentMonitor:
             return []
 
     def _extract_urls_from_search(self, html: str) -> List[str]:
-        """
-        Extrait les URLs des résultats de recherche
+        """        Extrait les URLs des résultats de recherche
         
         Args:
             html: HTML de la page de résultats
             
         Returns:
             List[str]: URLs extraites
-        """
-        urls = []
+        """        urls = []
         soup = BeautifulSoup(html, 'html.parser')
         
         # Extraction des liens de résultats
@@ -309,16 +285,14 @@ class WebContentMonitor:
         return urls
 
     def _is_relevant_platform_url(self, url: str) -> bool:
-        """
-        Vérifie si l'URL appartient à une plateforme pertinente
+        """        Vérifie si l'URL appartient à une plateforme pertinente
         
         Args:
             url: URL à vérifier
             
         Returns:
             bool: True si pertinente
-        """
-        try:
+        """        try:
             parsed = urlparse(url)
             domain = parsed.netloc.lower()
             
@@ -333,8 +307,7 @@ class WebContentMonitor:
             return False
 
     async def _is_potential_violation(self, target: MonitoringTarget, suspect_url: str) -> bool:
-        """
-        Évalue si une URL est une violation potentielle
+        """        Évalue si une URL est une violation potentielle
         
         Args:
             target: Cible originale
@@ -342,8 +315,7 @@ class WebContentMonitor:
             
         Returns:
             bool: True si violation potentielle
-        """
-        try:
+        """        try:
             # Vérification rapide par métadonnées
             if suspect_url == target.url:
                 return False
@@ -369,14 +341,12 @@ class WebContentMonitor:
         target: MonitoringTarget, 
         suspect_url: str
     ) -> None:
-        """
-        Investigate une violation potentielle en profondeur
+        """        Investigate une violation potentielle en profondeur
         
         Args:
             target: Cible originale
             suspect_url: URL suspecte
-        """
-        try:
+        """        try:
             # Génération de l'empreinte du contenu suspect
             suspect_fingerprint = await self._generate_content_fingerprint(suspect_url)
             if not suspect_fingerprint:
@@ -398,16 +368,14 @@ class WebContentMonitor:
             self.logger.error(f"Erreur lors de l'investigation de {suspect_url}: {e}")
 
     async def _generate_content_fingerprint(self, url: str) -> Optional[str]:
-        """
-        Génère l'empreinte digitale d'un contenu
+        """        Génère l'empreinte digitale d'un contenu
         
         Args:
             url: URL du contenu
             
         Returns:
             Optional[str]: Empreinte générée
-        """
-        try:
+        """        try:
             # Détection du type de contenu
             content_type = await self._detect_content_type(url)
             
@@ -427,16 +395,14 @@ class WebContentMonitor:
             return None
 
     async def _detect_content_type(self, url: str) -> str:
-        """
-        Détecte le type de contenu d'une URL
+        """        Détecte le type de contenu d'une URL
         
         Args:
             url: URL à analyser
             
         Returns:
             str: Type de contenu détecté
-        """
-        try:
+        """        try:
             async with aiohttp.ClientSession() as session:
                 async with session.head(url, timeout=aiohttp.ClientTimeout(total=10)) as response:
                     content_type = response.headers.get('content-type', '').lower()
@@ -462,56 +428,47 @@ class WebContentMonitor:
                 return 'text'
 
     async def _generate_video_fingerprint(self, url: str) -> Optional[str]:
-        """
-        Génère l'empreinte d'une vidéo
+        """        Génère l'empreinte d'une vidéo
         
         Args:
             url: URL de la vidéo
             
         Returns:
             Optional[str]: Empreinte vidéo
-        """
-        return await self.fingerprint_engine.generate_video_fingerprint(url)
+        """        return await self.fingerprint_engine.generate_video_fingerprint(url)
 
     async def _generate_audio_fingerprint(self, url: str) -> Optional[str]:
-        """
-        Génère l'empreinte d'un audio
+        """        Génère l'empreinte d'un audio
         
         Args:
             url: URL de l'audio
             
         Returns:
             Optional[str]: Empreinte audio
-        """
-        return await self.fingerprint_engine.generate_audio_fingerprint(url)
+        """        return await self.fingerprint_engine.generate_audio_fingerprint(url)
 
     async def _generate_image_fingerprint(self, url: str) -> Optional[str]:
-        """
-        Génère l'empreinte d'une image
+        """        Génère l'empreinte d'une image
         
         Args:
             url: URL de l'image
             
         Returns:
             Optional[str]: Empreinte image
-        """
-        return await self.fingerprint_engine.generate_image_fingerprint(url)
+        """        return await self.fingerprint_engine.generate_image_fingerprint(url)
 
     async def _generate_text_fingerprint(self, url: str) -> Optional[str]:
-        """
-        Génère l'empreinte d'un texte
+        """        Génère l'empreinte d'un texte
         
         Args:
             url: URL du texte
             
         Returns:
             Optional[str]: Empreinte texte
-        """
-        return await self.fingerprint_engine.generate_text_fingerprint(url)
+        """        return await self.fingerprint_engine.generate_text_fingerprint(url)
 
     async def _compare_fingerprints(self, original: str, suspect: str) -> float:
-        """
-        Compare deux empreintes digitales
+        """        Compare deux empreintes digitales
         
         Args:
             original: Empreinte originale
@@ -519,20 +476,17 @@ class WebContentMonitor:
             
         Returns:
             float: Score de similarité (0-1)
-        """
-        return await self.fingerprint_engine.compare_fingerprints(original, suspect)
+        """        return await self.fingerprint_engine.compare_fingerprints(original, suspect)
 
     async def _get_content_metadata(self, url: str) -> Optional[Dict[str, Any]]:
-        """
-        Récupère les métadonnées d'un contenu
+        """        Récupère les métadonnées d'un contenu
         
         Args:
             url: URL du contenu
             
         Returns:
             Optional[Dict]: Métadonnées extraites
-        """
-        try:
+        """        try:
             async with aiohttp.ClientSession() as session:
                 proxy = await self.proxy_manager.get_proxy()
                 
@@ -553,16 +507,14 @@ class WebContentMonitor:
             return None
 
     def _extract_metadata_from_html(self, html: str) -> Dict[str, Any]:
-        """
-        Extrait les métadonnées depuis le HTML
+        """        Extrait les métadonnées depuis le HTML
         
         Args:
             html: Code HTML
             
         Returns:
             Dict: Métadonnées extraites
-        """
-        soup = BeautifulSoup(html, 'html.parser')
+        """        soup = BeautifulSoup(html, 'html.parser')
         metadata = {}
         
         # Titre
@@ -594,8 +546,7 @@ class WebContentMonitor:
         target: MonitoringTarget, 
         content_info: Dict[str, Any]
     ) -> float:
-        """
-        Calcule la similarité entre métadonnées
+        """        Calcule la similarité entre métadonnées
         
         Args:
             target: Cible originale
@@ -603,8 +554,7 @@ class WebContentMonitor:
             
         Returns:
             float: Score de similarité
-        """
-        return await self.content_analyzer.calculate_metadata_similarity(
+        """        return await self.content_analyzer.calculate_metadata_similarity(
             target, content_info
         )
 
@@ -614,15 +564,13 @@ class WebContentMonitor:
         violation_url: str, 
         similarity_score: float
     ) -> None:
-        """
-        Crée une alerte de violation
+        """        Crée une alerte de violation
         
         Args:
             target: Cible originale
             violation_url: URL de la violation
             similarity_score: Score de similarité
-        """
-        try:
+        """        try:
             # Collecte des preuves
             evidence_path = await self._collect_evidence(target.url, violation_url)
             
@@ -652,16 +600,14 @@ class WebContentMonitor:
             self.logger.error(f"Erreur lors de la création d'alerte: {e}")
 
     def _classify_violation_type(self, similarity_score: float) -> str:
-        """
-        Classifie le type de violation
+        """        Classifie le type de violation
         
         Args:
             similarity_score: Score de similarité
             
         Returns:
             str: Type de violation
-        """
-        if similarity_score >= 0.95:
+        """        if similarity_score >= 0.95:
             return 'exact_copy'
         elif similarity_score >= 0.85:
             return 'partial_copy'
@@ -669,16 +615,14 @@ class WebContentMonitor:
             return 'modified'
 
     def _calculate_confidence_level(self, similarity_score: float) -> float:
-        """
-        Calcule le niveau de confiance
+        """        Calcule le niveau de confiance
         
         Args:
             similarity_score: Score de similarité
             
         Returns:
             float: Niveau de confiance
-        """
-        # Algorithme de calcul du niveau de confiance
+        """        # Algorithme de calcul du niveau de confiance
         if similarity_score >= 0.95:
             return 0.99
         elif similarity_score >= 0.90:
@@ -689,8 +633,7 @@ class WebContentMonitor:
             return 0.70
 
     async def _collect_evidence(self, original_url: str, violation_url: str) -> str:
-        """
-        Collecte les preuves de violation
+        """        Collecte les preuves de violation
         
         Args:
             original_url: URL originale
@@ -698,8 +641,7 @@ class WebContentMonitor:
             
         Returns:
             str: Chemin vers les preuves collectées
-        """
-        # Délégation à l'Evidence Collector
+        """        # Délégation à l'Evidence Collector
         from .evidence import EvidenceCollector
         
         evidence_collector = EvidenceCollector(self.config)
@@ -708,13 +650,11 @@ class WebContentMonitor:
         )
 
     async def _send_violation_notification(self, alert: ViolationAlert) -> None:
-        """
-        Envoie une notification de violation
+        """        Envoie une notification de violation
         
         Args:
             alert: Alerte de violation
-        """
-        # Notification système (email, webhook, etc.)
+        """        # Notification système (email, webhook, etc.)
         notification_data = {
             'type': 'violation_detected',
             'alert': {
@@ -731,21 +671,17 @@ class WebContentMonitor:
         await self._send_notification(notification_data)
 
     async def _send_notification(self, data: Dict[str, Any]) -> None:
-        """
-        Envoie une notification système
+        """        Envoie une notification système
         
         Args:
             data: Données de notification
-        """
-        # Implémentation du système de notification
+        """        # Implémentation du système de notification
         # (email, webhook, push notification, etc.)
         pass
 
     async def _proactive_search_monitoring(self) -> None:
-        """
-        Surveillance proactive par recherche automatique
-        """
-        try:
+        """        Surveillance proactive par recherche automatique
+        """        try:
             # Recherche de contenus similaires basée sur les empreintes existantes
             for target in self.monitoring_targets:
                 if target.violation_count > 0:  # Priorité aux contenus déjà violés
@@ -755,13 +691,11 @@ class WebContentMonitor:
             self.logger.error(f"Erreur lors de la surveillance proactive: {e}")
 
     async def _enhanced_search_monitoring(self, target: MonitoringTarget) -> None:
-        """
-        Surveillance renforcée pour les contenus à risque
+        """        Surveillance renforcée pour les contenus à risque
         
         Args:
             target: Cible à surveiller
-        """
-        # Recherche élargie avec variations de requêtes
+        """        # Recherche élargie avec variations de requêtes
         enhanced_queries = self._generate_enhanced_search_queries(target)
         
         for query in enhanced_queries:
@@ -773,16 +707,14 @@ class WebContentMonitor:
                     await self._investigate_potential_violation(target, result_url)
 
     def _generate_enhanced_search_queries(self, target: MonitoringTarget) -> List[str]:
-        """
-        Génère des requêtes de recherche renforcées
+        """        Génère des requêtes de recherche renforcées
         
         Args:
             target: Cible à rechercher
             
         Returns:
             List[str]: Requêtes de recherche renforcées
-        """
-        queries = self._generate_search_queries(target)
+        """        queries = self._generate_search_queries(target)
         
         # Ajout de requêtes avancées
         enhanced = [
@@ -798,10 +730,8 @@ class WebContentMonitor:
         return queries
 
     async def _cleanup_old_data(self) -> None:
-        """
-        Nettoie les anciennes données de surveillance
-        """
-        try:
+        """        Nettoie les anciennes données de surveillance
+        """        try:
             # Suppression des alertes anciennes
             cutoff_date = datetime.now() - timedelta(
                 days=self.config.get('alert_retention_days', 90)
@@ -818,13 +748,11 @@ class WebContentMonitor:
             self.logger.error(f"Erreur lors du nettoyage: {e}")
 
     def _get_random_headers(self) -> Dict[str, str]:
-        """
-        Génère des headers HTTP aléatoires
+        """        Génère des headers HTTP aléatoires
         
         Returns:
             Dict[str, str]: Headers HTTP
-        """
-        user_agents = [
+        """        user_agents = [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36',
             'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
             'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36'
@@ -840,13 +768,11 @@ class WebContentMonitor:
         }
 
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """
-        Retourne le statut de surveillance
+        """        Retourne le statut de surveillance
         
         Returns:
             Dict[str, Any]: Statut détaillé
-        """
-        return {
+        """        return {
             'targets_count': len(self.monitoring_targets),
             'violations_detected': len(self.violation_alerts),
             'last_violations': [
@@ -876,16 +802,12 @@ class WebContentMonitor:
         }
 
     async def stop_monitoring(self) -> None:
-        """
-        Arrête la surveillance
-        """
-        self.logger.info("Arrêt de la surveillance web")
+        """        Arrête la surveillance
+        """        self.logger.info("Arrêt de la surveillance web")
         # Sauvegarde des données avant arrêt
         await self._save_monitoring_data()
 
     async def _save_monitoring_data(self) -> None:
-        """
-        Sauvegarde les données de surveillance
-        """
-        # Implémentation de la sauvegarde des données
+        """        Sauvegarde les données de surveillance
+        """        # Implémentation de la sauvegarde des données
         pass

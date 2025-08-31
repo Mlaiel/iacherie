@@ -1,5 +1,4 @@
-"""
-Vector Database Configuration Module
+"""Vector Database Configuration Module
 ===================================
 
 Configuration management for vector database backends and operations.
@@ -14,7 +13,6 @@ Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in legal ac
 
 For licensing and authorization requests, contact: mlaiel@live.de
 """
-
 import os
 import json
 from typing import Dict, Any, Optional, List
@@ -26,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EmbeddingConfig:
-    """Configuration for embedding models and engines."""
-    text_model: str = "all-MiniLM-L6-v2"
+    """Configuration for embedding models and engines."""    text_model: str = "all-MiniLM-L6-v2"
     audio_model: str = "facebook/wav2vec2-base-960h"
     image_model: str = "openai/clip-vit-base-patch32"
     video_model: str = "microsoft/xclip-base-patch32"
@@ -38,8 +35,7 @@ class EmbeddingConfig:
 
 @dataclass 
 class FAISSConfig:
-    """Configuration for FAISS backend."""
-    index_type: str = "IVFFlat"  # Flat, IVFFlat, HNSW, IVF_PQ
+    """Configuration for FAISS backend."""    index_type: str = "IVFFlat"  # Flat, IVFFlat, HNSW, IVF_PQ
     nlist: int = 100  # Number of clusters for IVF
     nprobe: int = 10  # Number of clusters to search
     M: int = 8  # Number of subvectors for PQ
@@ -53,8 +49,7 @@ class FAISSConfig:
 
 @dataclass
 class ChromaConfig:
-    """Configuration for ChromaDB backend."""
-    persist_directory: str = "./chroma_db"
+    """Configuration for ChromaDB backend."""    persist_directory: str = "./chroma_db"
     collection_metadata: Dict[str, Any] = None
     distance_function: str = "cosine"  # cosine, l2, ip
     anonymized_telemetry: bool = False
@@ -64,8 +59,7 @@ class ChromaConfig:
 
 @dataclass
 class SearchConfig:
-    """Configuration for similarity search operations."""
-    default_k: int = 10
+    """Configuration for similarity search operations."""    default_k: int = 10
     max_k: int = 1000
     similarity_thresholds: Dict[str, float] = None
     rerank_enabled: bool = True
@@ -76,8 +70,7 @@ class SearchConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for performance optimization."""
-    batch_size: int = 100
+    """Configuration for performance optimization."""    batch_size: int = 100
     max_workers: int = 4
     timeout_seconds: int = 30
     memory_limit_mb: int = 2048
@@ -88,8 +81,7 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Configuration for security and access control."""
-    encryption_enabled: bool = True
+    """Configuration for security and access control."""    encryption_enabled: bool = True
     encryption_key_path: Optional[str] = None
     access_logs_enabled: bool = True
     rate_limiting_enabled: bool = True
@@ -99,8 +91,7 @@ class SecurityConfig:
 
 @dataclass
 class VectorDBConfig:
-    """Complete vector database configuration."""
-    backend: str = "faiss"  # faiss, chroma
+    """Complete vector database configuration."""    backend: str = "faiss"  # faiss, chroma
     data_directory: str = "./vector_data"
     embedding: EmbeddingConfig = None
     faiss: FAISSConfig = None
@@ -110,8 +101,7 @@ class VectorDBConfig:
     security: SecurityConfig = None
     
     def __post_init__(self):
-        """Initialize default sub-configurations."""
-        if self.embedding is None:
+        """Initialize default sub-configurations."""        if self.embedding is None:
             self.embedding = EmbeddingConfig()
         if self.faiss is None:
             self.faiss = FAISSConfig()
@@ -135,8 +125,7 @@ class VectorDBConfig:
             }
 
 class ConfigManager:
-    """Manager for vector database configuration."""
-    
+    """Manager for vector database configuration."""    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or os.getenv(
             'VECTOR_DB_CONFIG', 
@@ -145,8 +134,7 @@ class ConfigManager:
         self.config = self._load_config()
     
     def _load_config(self) -> VectorDBConfig:
-        """Load configuration from file or create default."""
-        try:
+        """Load configuration from file or create default."""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     config_dict = json.load(f)
@@ -178,8 +166,7 @@ class ConfigManager:
             return VectorDBConfig()
     
     def save_config(self) -> bool:
-        """Save current configuration to file."""
-        try:
+        """Save current configuration to file."""        try:
             # Create directory if it doesn't exist
             config_dir = os.path.dirname(self.config_path)
             if config_dir:
@@ -199,8 +186,7 @@ class ConfigManager:
             return False
     
     def update_config(self, **kwargs) -> bool:
-        """Update configuration parameters."""
-        try:
+        """Update configuration parameters."""        try:
             for key, value in kwargs.items():
                 if hasattr(self.config, key):
                     setattr(self.config, key, value)
@@ -214,8 +200,7 @@ class ConfigManager:
             return False
     
     def get_backend_config(self) -> Dict[str, Any]:
-        """Get configuration for the selected backend."""
-        if self.config.backend == 'faiss':
+        """Get configuration for the selected backend."""        if self.config.backend == 'faiss':
             return asdict(self.config.faiss)
         elif self.config.backend == 'chroma':
             return asdict(self.config.chroma)
@@ -223,16 +208,13 @@ class ConfigManager:
             raise ValueError(f"Unknown backend: {self.config.backend}")
     
     def get_embedding_config(self) -> Dict[str, Any]:
-        """Get embedding configuration."""
-        return asdict(self.config.embedding)
+        """Get embedding configuration."""        return asdict(self.config.embedding)
     
     def get_search_config(self) -> Dict[str, Any]:
-        """Get search configuration."""
-        return asdict(self.config.search)
+        """Get search configuration."""        return asdict(self.config.search)
     
     def validate_config(self) -> List[str]:
-        """Validate configuration and return list of issues."""
-        issues = []
+        """Validate configuration and return list of issues."""        issues = []
         
         # Validate backend
         if self.config.backend not in ['faiss', 'chroma']:
@@ -340,15 +322,13 @@ PRESETS = {
 }
 
 def load_preset(preset_name: str) -> VectorDBConfig:
-    """Load a configuration preset."""
-    if preset_name not in PRESETS:
+    """Load a configuration preset."""    if preset_name not in PRESETS:
         raise ValueError(f"Unknown preset: {preset_name}. Available: {list(PRESETS.keys())}")
     
     return PRESETS[preset_name]
 
 def create_config_from_env() -> VectorDBConfig:
-    """Create configuration from environment variables."""
-    config = VectorDBConfig()
+    """Create configuration from environment variables."""    config = VectorDBConfig()
     
     # Backend selection
     if 'VECTOR_DB_BACKEND' in os.environ:

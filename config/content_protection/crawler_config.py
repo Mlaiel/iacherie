@@ -1,5 +1,4 @@
-"""
-Web Crawler Configuration Module
+"""Web Crawler Configuration Module
 ===============================
 
 Professional web crawler configuration for content surveillance and monitoring.
@@ -15,7 +14,6 @@ Any unauthorized use, reproduction, modification, or distribution of this code
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
-
 from typing import Dict, Any, List, Optional, Set
 from dataclasses import dataclass, field
 from enum import Enum
@@ -23,15 +21,13 @@ import os
 
 
 class CrawlerType(str, Enum):
-    """Supported crawler types."""
-    API_BASED = "api_based"
+    """Supported crawler types."""    API_BASED = "api_based"
     SCRAPING = "scraping"
     HYBRID = "hybrid"
 
 
 class Platform(str, Enum):
-    """Supported platforms for content surveillance."""
-    YOUTUBE = "youtube"
+    """Supported platforms for content surveillance."""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -46,8 +42,7 @@ class Platform(str, Enum):
 
 
 class CrawlingStrategy(str, Enum):
-    """Crawling strategy types."""
-    BREADTH_FIRST = "breadth_first"
+    """Crawling strategy types."""    BREADTH_FIRST = "breadth_first"
     DEPTH_FIRST = "depth_first"
     TARGETED = "targeted"
     SMART_PRIORITY = "smart_priority"
@@ -55,8 +50,7 @@ class CrawlingStrategy(str, Enum):
 
 @dataclass
 class PlatformCredentials:
-    """API credentials for platform access."""
-    api_key: Optional[str] = None
+    """API credentials for platform access."""    api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
@@ -69,8 +63,7 @@ class PlatformCredentials:
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration."""
-    requests_per_minute: int = 60
+    """Rate limiting configuration."""    requests_per_minute: int = 60
     requests_per_hour: int = 1000
     requests_per_day: int = 10000
     burst_limit: int = 10
@@ -81,8 +74,7 @@ class RateLimitConfig:
 
 @dataclass
 class RetryConfig:
-    """Retry configuration for failed requests."""
-    max_retries: int = 3
+    """Retry configuration for failed requests."""    max_retries: int = 3
     initial_delay: float = 1.0
     exponential_backoff: bool = True
     retry_on_status_codes: Set[int] = field(default_factory=lambda: {429, 500, 502, 503, 504})
@@ -91,8 +83,7 @@ class RetryConfig:
 
 @dataclass
 class ScrapingConfig:
-    """Web scraping configuration."""
-    user_agents: List[str] = field(default_factory=lambda: [
+    """Web scraping configuration."""    user_agents: List[str] = field(default_factory=lambda: [
         "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
         "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
         "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
@@ -109,8 +100,7 @@ class ScrapingConfig:
 
 @dataclass
 class ContentFilterConfig:
-    """Content filtering and selection configuration."""
-    min_content_size_bytes: int = 1024
+    """Content filtering and selection configuration."""    min_content_size_bytes: int = 1024
     max_content_size_bytes: int = 100 * 1024 * 1024  # 100MB
     allowed_content_types: Set[str] = field(default_factory=lambda: {
         "audio/mpeg", "audio/wav", "audio/ogg", "audio/flac",
@@ -126,8 +116,7 @@ class ContentFilterConfig:
 
 @dataclass
 class StorageConfig:
-    """Crawler storage configuration."""
-    storage_backend: str = "s3"  # s3, local, gcs, azure
+    """Crawler storage configuration."""    storage_backend: str = "s3"  # s3, local, gcs, azure
     bucket_name: str = "ia-influencer-crawled-content"
     local_storage_path: str = "/tmp/crawler_storage"
     compression_enabled: bool = True
@@ -139,8 +128,7 @@ class StorageConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Crawler monitoring and logging configuration."""
-    enable_metrics: bool = True
+    """Crawler monitoring and logging configuration."""    enable_metrics: bool = True
     metrics_interval_seconds: int = 60
     log_level: str = "INFO"
     enable_performance_tracking: bool = True
@@ -152,8 +140,7 @@ class MonitoringConfig:
 
 @dataclass
 class YoutubeCrawlerConfig:
-    """YouTube-specific crawler configuration."""
-    api_version: str = "v3"
+    """YouTube-specific crawler configuration."""    api_version: str = "v3"
     search_order: str = "relevance"  # relevance, date, rating, viewCount
     max_results_per_query: int = 50
     video_duration_filter: str = "any"  # short, medium, long, any
@@ -168,8 +155,7 @@ class YoutubeCrawlerConfig:
 
 @dataclass
 class TiktokCrawlerConfig:
-    """TikTok-specific crawler configuration."""
-    api_version: str = "v1"
+    """TikTok-specific crawler configuration."""    api_version: str = "v1"
     hashtag_search_enabled: bool = True
     user_profile_crawl: bool = True
     video_download_enabled: bool = True
@@ -182,8 +168,7 @@ class TiktokCrawlerConfig:
 
 @dataclass
 class InstagramCrawlerConfig:
-    """Instagram-specific crawler configuration."""
-    api_version: str = "v12.0"
+    """Instagram-specific crawler configuration."""    api_version: str = "v12.0"
     story_crawl_enabled: bool = False
     reel_crawl_enabled: bool = True
     igtv_crawl_enabled: bool = True
@@ -196,8 +181,7 @@ class InstagramCrawlerConfig:
 
 @dataclass
 class TwitterCrawlerConfig:
-    """Twitter/X-specific crawler configuration."""
-    api_version: str = "2"
+    """Twitter/X-specific crawler configuration."""    api_version: str = "2"
     tweet_fields: List[str] = field(default_factory=lambda: [
         "created_at", "public_metrics", "lang", "context_annotations", "entities"
     ])
@@ -213,11 +197,9 @@ class TwitterCrawlerConfig:
 
 
 class WebCrawlerConfig:
-    """
-    Professional web crawler configuration manager.
+    """    Professional web crawler configuration manager.
     Provides industrial-grade configuration for multi-platform content surveillance.
-    """
-    
+    """    
     def __init__(self):
         # General crawler configuration
         self.crawler_type = CrawlerType.HYBRID
@@ -264,8 +246,7 @@ class WebCrawlerConfig:
         self._load_credentials()
     
     def _load_from_environment(self) -> None:
-        """Load configuration from environment variables."""
-        # General settings
+        """Load configuration from environment variables."""        # General settings
         self.max_concurrent_crawlers = int(os.getenv("CRAWLER_MAX_CONCURRENT", "10"))
         self.crawl_interval_minutes = int(os.getenv("CRAWLER_INTERVAL_MINUTES", "30"))
         
@@ -282,8 +263,7 @@ class WebCrawlerConfig:
         self.monitoring.alert_on_failure_rate = float(os.getenv("CRAWLER_ALERT_FAILURE_RATE", "0.1"))
     
     def _load_credentials(self) -> None:
-        """Load platform credentials from environment variables."""
-        platforms = [Platform.YOUTUBE, Platform.TIKTOK, Platform.INSTAGRAM, Platform.TWITTER, Platform.SPOTIFY]
+        """Load platform credentials from environment variables."""        platforms = [Platform.YOUTUBE, Platform.TIKTOK, Platform.INSTAGRAM, Platform.TWITTER, Platform.SPOTIFY]
         
         for platform in platforms:
             prefix = f"CRAWLER_{platform.upper()}_"
@@ -304,8 +284,7 @@ class WebCrawlerConfig:
                 self.credentials[platform] = credentials
     
     def get_platform_config(self, platform: Platform) -> Dict[str, Any]:
-        """Get configuration for specific platform."""
-        platform_configs = {
+        """Get configuration for specific platform."""        platform_configs = {
             Platform.YOUTUBE: self.youtube.__dict__,
             Platform.TIKTOK: self.tiktok.__dict__,
             Platform.INSTAGRAM: self.instagram.__dict__,
@@ -326,32 +305,25 @@ class WebCrawlerConfig:
         return base_config
     
     def get_credentials(self, platform: Platform) -> Optional[PlatformCredentials]:
-        """Get credentials for specific platform."""
-        return self.credentials.get(platform)
+        """Get credentials for specific platform."""        return self.credentials.get(platform)
     
     def set_credentials(self, platform: Platform, credentials: PlatformCredentials) -> None:
-        """Set credentials for specific platform."""
-        self.credentials[platform] = credentials
+        """Set credentials for specific platform."""        self.credentials[platform] = credentials
     
     def is_platform_enabled(self, platform: Platform) -> bool:
-        """Check if platform is enabled for crawling."""
-        return self.platforms.get(platform, False)
+        """Check if platform is enabled for crawling."""        return self.platforms.get(platform, False)
     
     def enable_platform(self, platform: Platform) -> None:
-        """Enable crawling for specific platform."""
-        self.platforms[platform] = True
+        """Enable crawling for specific platform."""        self.platforms[platform] = True
     
     def disable_platform(self, platform: Platform) -> None:
-        """Disable crawling for specific platform."""
-        self.platforms[platform] = False
+        """Disable crawling for specific platform."""        self.platforms[platform] = False
     
     def get_enabled_platforms(self) -> List[Platform]:
-        """Get list of enabled platforms."""
-        return [platform for platform, enabled in self.platforms.items() if enabled]
+        """Get list of enabled platforms."""        return [platform for platform, enabled in self.platforms.items() if enabled]
     
     def validate_configuration(self) -> List[str]:
-        """Validate current configuration and return any issues."""
-        issues = []
+        """Validate current configuration and return any issues."""        issues = []
         
         # Check if at least one platform is enabled
         if not any(self.platforms.values()):
@@ -389,8 +361,7 @@ class WebCrawlerConfig:
         return issues
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return {
+        """Convert configuration to dictionary."""        return {
             "crawler_type": self.crawler_type,
             "crawling_strategy": self.crawling_strategy,
             "max_concurrent_crawlers": self.max_concurrent_crawlers,
@@ -411,8 +382,7 @@ class WebCrawlerConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'WebCrawlerConfig':
-        """Create configuration from dictionary."""
-        config = cls()
+        """Create configuration from dictionary."""        config = cls()
         
         # Load basic settings
         if "crawler_type" in config_dict:

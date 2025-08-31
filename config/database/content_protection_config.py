@@ -1,5 +1,4 @@
-"""
-Content Protection Database Configuration Module for IA-Influencer Agent Platform
+"""Content Protection Database Configuration Module for IA-Influencer Agent Platform
 ================================================================================
 
 Professional content protection database configuration for multi-format fingerprinting,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -36,8 +34,7 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Supported content types for protection"""
-    AUDIO = "audio"
+    """Supported content types for protection"""    AUDIO = "audio"
     VIDEO = "video"  
     IMAGE = "image"
     TEXT = "text"
@@ -48,16 +45,14 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class ViolationStatus(Enum):
-    """Content violation status tracking"""
-    DETECTED = "detected"
+    """Content violation status tracking"""    DETECTED = "detected"
     ANALYZING = "analyzing"
     CONFIRMED = "confirmed"
     DMCA_SENT = "dmca_sent"
@@ -68,8 +63,7 @@ class ViolationStatus(Enum):
 
 
 class DetectionMethod(Enum):
-    """Content detection methodology"""
-    AUDIO_FINGERPRINT = "audio_fingerprint"
+    """Content detection methodology"""    AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_HASH = "image_hash"
     TEXT_SIMILARITY = "text_similarity"
@@ -81,8 +75,7 @@ class DetectionMethod(Enum):
 
 @dataclass
 class ContentProtectionCredentials:
-    """Content protection database authentication"""
-    database_url: str = os.getenv("CONTENT_PROTECTION_DATABASE_URL", "postgresql://user:pass@localhost:5432/content_protection")
+    """Content protection database authentication"""    database_url: str = os.getenv("CONTENT_PROTECTION_DATABASE_URL", "postgresql://user:pass@localhost:5432/content_protection")
     redis_url: str = os.getenv("CONTENT_PROTECTION_REDIS_URL", "redis://localhost:6379/2")
     elasticsearch_url: str = os.getenv("CONTENT_PROTECTION_ES_URL", "http://localhost:9200")
     vector_db_url: str = os.getenv("CONTENT_PROTECTION_VECTOR_URL", "http://localhost:8000")
@@ -92,8 +85,7 @@ class ContentProtectionCredentials:
 
 @dataclass
 class FingerprintConfiguration:
-    """Fingerprint generation and matching configuration"""
-    content_type: ContentType
+    """Fingerprint generation and matching configuration"""    content_type: ContentType
     similarity_threshold: float = 0.85
     quality_threshold: float = 0.70
     chunk_size: int = 1024
@@ -108,8 +100,7 @@ class FingerprintConfiguration:
 
 @dataclass
 class ViolationDetectionConfig:
-    """Violation detection configuration"""
-    scanning_enabled: bool = True
+    """Violation detection configuration"""    scanning_enabled: bool = True
     real_time_alerts: bool = True
     auto_dmca_enabled: bool = False
     confidence_threshold: float = 0.90
@@ -122,8 +113,7 @@ class ViolationDetectionConfig:
 
 @dataclass
 class DMCAConfiguration:
-    """DMCA takedown automation configuration"""
-    auto_dmca_enabled: bool = False
+    """DMCA takedown automation configuration"""    auto_dmca_enabled: bool = False
     confidence_threshold: float = 0.95
     template_path: str = "/templates/dmca/"
     sender_info: Dict[str, str] = field(default_factory=dict)
@@ -136,8 +126,7 @@ class DMCAConfiguration:
 
 
 class ContentProtectionDatabase(Base):
-    """Content fingerprints table"""
-    __tablename__ = 'content_fingerprints'
+    """Content fingerprints table"""    __tablename__ = 'content_fingerprints'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, nullable=False, index=True)
@@ -155,8 +144,7 @@ class ContentProtectionDatabase(Base):
 
 
 class ProtectionViolation(Base):
-    """Protection violations table"""
-    __tablename__ = 'protection_violations'
+    """Protection violations table"""    __tablename__ = 'protection_violations'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     fingerprint_id = Column(Integer, nullable=False, index=True)
@@ -177,8 +165,7 @@ class ProtectionViolation(Base):
 
 
 class DMCARequest(Base):
-    """DMCA takedown requests table"""
-    __tablename__ = 'dmca_requests'
+    """DMCA takedown requests table"""    __tablename__ = 'dmca_requests'
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     violation_id = Column(Integer, nullable=False, index=True)
@@ -198,8 +185,7 @@ class DMCARequest(Base):
 
 @dataclass
 class ContentProtectionConfig:
-    """Professional content protection configuration"""
-    
+    """Professional content protection configuration"""    
     # Database configuration
     credentials: ContentProtectionCredentials = field(default_factory=ContentProtectionCredentials)
     
@@ -226,8 +212,7 @@ class ContentProtectionConfig:
     automated_responses: bool = False
     
     def __post_init__(self):
-        """Initialize default fingerprint configurations"""
-        if not self.fingerprint_configs:
+        """Initialize default fingerprint configurations"""        if not self.fingerprint_configs:
             self.fingerprint_configs = {
                 ContentType.AUDIO: FingerprintConfiguration(
                     content_type=ContentType.AUDIO,
@@ -257,8 +242,7 @@ class ContentProtectionConfig:
 
 
 class ContentProtectionManager:
-    """Professional content protection database manager"""
-    
+    """Professional content protection database manager"""    
     def __init__(self, config: ContentProtectionConfig):
         self.config = config
         self._engine = None
@@ -267,8 +251,7 @@ class ContentProtectionManager:
         self._is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize content protection database connections"""
-        try:
+        """Initialize content protection database connections"""        try:
             # Initialize PostgreSQL connection
             self._engine = create_engine(
                 self.config.credentials.database_url,
@@ -303,8 +286,7 @@ class ContentProtectionManager:
             return False
     
     async def _test_connections(self):
-        """Test database connections"""
-        # Test PostgreSQL
+        """Test database connections"""        # Test PostgreSQL
         with self._engine.connect() as conn:
             conn.execute("SELECT 1")
         
@@ -317,8 +299,7 @@ class ContentProtectionManager:
                                          fingerprint_hash: str,
                                          metadata: Dict[str, Any],
                                          vector_embedding: Optional[str] = None) -> int:
-        """Register new content fingerprint for protection"""
-        try:
+        """Register new content fingerprint for protection"""        try:
             with self._session_factory() as session:
                 fingerprint = ContentProtectionDatabase(
                     user_id=user_id,
@@ -355,8 +336,7 @@ class ContentProtectionManager:
                              confidence_score: float,
                              detection_method: DetectionMethod,
                              evidence_data: Optional[Dict] = None) -> int:
-        """Register new content violation"""
-        try:
+        """Register new content violation"""        try:
             with self._session_factory() as session:
                 violation = ProtectionViolation(
                     fingerprint_id=fingerprint_id,
@@ -385,14 +365,12 @@ class ContentProtectionManager:
             raise
     
     async def _auto_escalate_violation(self, violation_id: int):
-        """Automatically escalate high-confidence violations"""
-        if self.config.dmca_config.auto_dmca_enabled:
+        """Automatically escalate high-confidence violations"""        if self.config.dmca_config.auto_dmca_enabled:
             # Auto-send DMCA if enabled and threshold met
             await self.send_dmca_request(violation_id)
     
     async def send_dmca_request(self, violation_id: int) -> int:
-        """Send DMCA takedown request"""
-        try:
+        """Send DMCA takedown request"""        try:
             with self._session_factory() as session:
                 violation = session.query(ProtectionViolation).filter_by(id=violation_id).first()
                 if not violation:
@@ -422,8 +400,7 @@ class ContentProtectionManager:
             raise
     
     async def get_protection_statistics(self, user_id: Optional[int] = None) -> Dict[str, Any]:
-        """Get content protection statistics"""
-        try:
+        """Get content protection statistics"""        try:
             with self._session_factory() as session:
                 base_query = session.query(ContentProtectionDatabase)
                 if user_id:
@@ -472,8 +449,7 @@ class ContentProtectionManager:
             return {"error": str(e)}
     
     async def cleanup_old_data(self, retention_days: int = 365):
-        """Cleanup old protection data based on retention policy"""
-        try:
+        """Cleanup old protection data based on retention policy"""        try:
             cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
             
             with self._session_factory() as session:
@@ -500,8 +476,7 @@ class ContentProtectionManager:
             logger.error(f"Failed to cleanup old data: {e}")
     
     async def shutdown(self):
-        """Shutdown content protection manager"""
-        try:
+        """Shutdown content protection manager"""        try:
             if self._redis_pool:
                 await self._redis_pool.close()
             
@@ -516,13 +491,11 @@ class ContentProtectionManager:
 
 
 def create_content_protection_config() -> ContentProtectionConfig:
-    """Create default content protection configuration"""
-    return ContentProtectionConfig()
+    """Create default content protection configuration"""    return ContentProtectionConfig()
 
 
 def create_content_protection_manager(config: Optional[ContentProtectionConfig] = None) -> ContentProtectionManager:
-    """Create content protection manager with configuration"""
-    if config is None:
+    """Create content protection manager with configuration"""    if config is None:
         config = create_content_protection_config()
     return ContentProtectionManager(config)
 

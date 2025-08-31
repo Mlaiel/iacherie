@@ -1,5 +1,4 @@
-"""
-Distribution Optimization Engine
+"""Distribution Optimization Engine
 
 AI-powered engine for optimizing content distribution strategies and performance.
 Uses machine learning to continuously improve distribution effectiveness.
@@ -7,7 +6,6 @@ Uses machine learning to continuously improve distribution effectiveness.
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationGoal(str, Enum):
-    """Optimization objectives"""
-    MAXIMIZE_REACH = "maximize_reach"
+    """Optimization objectives"""    MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     MAXIMIZE_REVENUE = "maximize_revenue"
     MAXIMIZE_CONVERSION = "maximize_conversion"
@@ -48,8 +45,7 @@ class OptimizationGoal(str, Enum):
 
 
 class OptimizationScope(str, Enum):
-    """Scope of optimization"""
-    SINGLE_POST = "single_post"
+    """Scope of optimization"""    SINGLE_POST = "single_post"
     CONTENT_SERIES = "content_series"
     PLATFORM_STRATEGY = "platform_strategy"
     OVERALL_STRATEGY = "overall_strategy"
@@ -57,8 +53,7 @@ class OptimizationScope(str, Enum):
 
 @dataclass
 class OptimizationFeature:
-    """Feature for optimization model"""
-    name: str
+    """Feature for optimization model"""    name: str
     value: float
     importance: float
     category: str  # content, timing, platform, audience
@@ -66,8 +61,7 @@ class OptimizationFeature:
 
 @dataclass
 class OptimizationResult:
-    """Optimization result with recommendations"""
-    goal: OptimizationGoal
+    """Optimization result with recommendations"""    goal: OptimizationGoal
     predicted_improvement: float
     confidence_score: float
     recommendations: List[str]
@@ -77,8 +71,7 @@ class OptimizationResult:
 
 
 class OptimizationRequest(BaseModel):
-    """Optimization request model"""
-    user_id: int
+    """Optimization request model"""    user_id: int
     content_id: Optional[int] = None
     goal: OptimizationGoal
     scope: OptimizationScope
@@ -89,10 +82,8 @@ class OptimizationRequest(BaseModel):
 
 
 class DistributionOptimizer:
-    """
-    AI-powered distribution optimization engine
-    """
-    
+    """    AI-powered distribution optimization engine
+    """    
     def __init__(self, db: Session):
         self.db = db
         self.models = self._initialize_models()
@@ -100,8 +91,7 @@ class DistributionOptimizer:
         self.optimization_strategies = self._initialize_optimization_strategies()
         
     def _initialize_models(self) -> Dict[str, Any]:
-        """Initialize ML models for optimization"""
-        models = {}
+        """Initialize ML models for optimization"""        models = {}
         
         try:
             # Load pre-trained models
@@ -121,8 +111,7 @@ class DistributionOptimizer:
         return models
     
     def _create_default_models(self) -> Dict[str, Any]:
-        """Create default optimization models"""
-        return {
+        """Create default optimization models"""        return {
             "reach_predictor": GradientBoostingRegressor(
                 n_estimators=100, learning_rate=0.1, max_depth=6
             ),
@@ -140,8 +129,7 @@ class DistributionOptimizer:
         }
     
     def _initialize_feature_extractors(self) -> Dict[str, callable]:
-        """Initialize feature extraction functions"""
-        return {
+        """Initialize feature extraction functions"""        return {
             "content_features": self._extract_content_features,
             "timing_features": self._extract_timing_features,
             "platform_features": self._extract_platform_features,
@@ -151,8 +139,7 @@ class DistributionOptimizer:
         }
     
     def _initialize_optimization_strategies(self) -> Dict[OptimizationGoal, callable]:
-        """Initialize optimization strategies for different goals"""
-        return {
+        """Initialize optimization strategies for different goals"""        return {
             OptimizationGoal.MAXIMIZE_REACH: self._optimize_for_reach,
             OptimizationGoal.MAXIMIZE_ENGAGEMENT: self._optimize_for_engagement,
             OptimizationGoal.MAXIMIZE_REVENUE: self._optimize_for_revenue,
@@ -164,16 +151,14 @@ class DistributionOptimizer:
     async def optimize_distribution(
         self, request: OptimizationRequest
     ) -> OptimizationResult:
-        """
-        Optimize distribution strategy based on request parameters
+        """        Optimize distribution strategy based on request parameters
         
         Args:
             request: Optimization request with goals and constraints
             
         Returns:
             Optimization result with recommendations
-        """
-        try:
+        """        try:
             # Validate request
             await self._validate_optimization_request(request)
             
@@ -204,8 +189,7 @@ class DistributionOptimizer:
             raise
     
     async def _validate_optimization_request(self, request: OptimizationRequest) -> None:
-        """Validate optimization request"""
-        # Check user exists
+        """Validate optimization request"""        # Check user exists
         user = self.db.query(UserModel).filter(UserModel.id == request.user_id).first()
         if not user:
             raise ValueError("User not found")
@@ -226,8 +210,7 @@ class DistributionOptimizer:
     async def _extract_optimization_features(
         self, request: OptimizationRequest
     ) -> Dict[str, List[OptimizationFeature]]:
-        """Extract features for optimization"""
-        all_features = {}
+        """Extract features for optimization"""        all_features = {}
         
         for feature_type, extractor in self.feature_extractors.items():
             features = await extractor(request)
@@ -238,8 +221,7 @@ class DistributionOptimizer:
     async def _extract_content_features(
         self, request: OptimizationRequest
     ) -> List[OptimizationFeature]:
-        """Extract content-related features"""
-        features = []
+        """Extract content-related features"""        features = []
         
         if request.content_id:
             content = self.db.query(ContentModel).filter(
@@ -331,8 +313,7 @@ class DistributionOptimizer:
     async def _extract_timing_features(
         self, request: OptimizationRequest
     ) -> List[OptimizationFeature]:
-        """Extract timing-related features"""
-        features = []
+        """Extract timing-related features"""        features = []
         
         now = datetime.utcnow()
         
@@ -380,8 +361,7 @@ class DistributionOptimizer:
         return features
     
     def _calculate_hour_score(self, hour: int) -> float:
-        """Calculate optimization score for hour of day"""
-        # Peak hours: 9-11 AM, 2-4 PM, 7-9 PM
+        """Calculate optimization score for hour of day"""        # Peak hours: 9-11 AM, 2-4 PM, 7-9 PM
         peak_hours = [9, 10, 11, 14, 15, 16, 19, 20, 21]
         if hour in peak_hours:
             return 1.0
@@ -393,8 +373,7 @@ class DistributionOptimizer:
             return 0.1  # Late night/early morning
     
     def _calculate_day_score(self, weekday: int) -> float:
-        """Calculate optimization score for day of week"""
-        # Tuesday-Thursday are typically best, weekends vary by platform
+        """Calculate optimization score for day of week"""        # Tuesday-Thursday are typically best, weekends vary by platform
         scores = {
             0: 0.7,  # Monday
             1: 1.0,  # Tuesday
@@ -407,8 +386,7 @@ class DistributionOptimizer:
         return scores.get(weekday, 0.5)
     
     def _calculate_month_score(self, month: int) -> float:
-        """Calculate optimization score for month (seasonality)"""
-        # Higher engagement typically in fall/winter
+        """Calculate optimization score for month (seasonality)"""        # Higher engagement typically in fall/winter
         scores = {
             1: 0.9,  # January
             2: 0.8,  # February
@@ -428,8 +406,7 @@ class DistributionOptimizer:
     async def _extract_platform_features(
         self, request: OptimizationRequest
     ) -> List[OptimizationFeature]:
-        """Extract platform-related features"""
-        features = []
+        """Extract platform-related features"""        features = []
         
         if request.platforms:
             # Platform diversity score
@@ -467,8 +444,7 @@ class DistributionOptimizer:
         return features
     
     def _calculate_platform_synergy(self, platforms: List[PlatformType]) -> float:
-        """Calculate how well platforms work together"""
-        synergy_matrix = {
+        """Calculate how well platforms work together"""        synergy_matrix = {
             # Platforms that work well together
             (PlatformType.YOUTUBE, PlatformType.INSTAGRAM): 0.9,
             (PlatformType.TIKTOK, PlatformType.INSTAGRAM): 0.8,
@@ -497,8 +473,7 @@ class DistributionOptimizer:
     async def _extract_audience_features(
         self, request: OptimizationRequest
     ) -> List[OptimizationFeature]:
-        """Extract audience-related features"""
-        features = []
+        """Extract audience-related features"""        features = []
         
         # Get user's historical audience data
         recent_analytics = self.db.query(DistributionAnalyticsModel).filter(
@@ -556,8 +531,7 @@ class DistributionOptimizer:
     async def _extract_historical_features(
         self, request: OptimizationRequest
     ) -> List[OptimizationFeature]:
-        """Extract historical performance features"""
-        features = []
+        """Extract historical performance features"""        features = []
         
         # Get historical performance data
         historical_data = await self._get_historical_performance(request)
@@ -612,8 +586,7 @@ class DistributionOptimizer:
     async def _extract_competitive_features(
         self, request: OptimizationRequest
     ) -> List[OptimizationFeature]:
-        """Extract competitive landscape features"""
-        # This would integrate with competitive analysis tools
+        """Extract competitive landscape features"""        # This would integrate with competitive analysis tools
         # For now, using estimated features
         
         features = [
@@ -636,8 +609,7 @@ class DistributionOptimizer:
     async def _get_historical_performance(
         self, request: OptimizationRequest
     ) -> List[DistributionAnalyticsModel]:
-        """Get historical performance data for analysis"""
-        lookback_days = min(request.optimization_horizon * 3, 180)  # Max 6 months
+        """Get historical performance data for analysis"""        lookback_days = min(request.optimization_horizon * 3, 180)  # Max 6 months
         start_date = datetime.utcnow() - timedelta(days=lookback_days)
         
         query = self.db.query(DistributionAnalyticsModel).filter(
@@ -657,8 +629,7 @@ class DistributionOptimizer:
     async def _update_models(
         self, historical_data: List[DistributionAnalyticsModel]
     ) -> None:
-        """Update ML models with recent data"""
-        try:
+        """Update ML models with recent data"""        try:
             # Prepare training data
             X, y_reach, y_engagement, y_revenue = self._prepare_training_data(historical_data)
             
@@ -702,8 +673,7 @@ class DistributionOptimizer:
     def _prepare_training_data(
         self, historical_data: List[DistributionAnalyticsModel]
     ) -> Tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
-        """Prepare training data from historical analytics"""
-        X = []
+        """Prepare training data from historical analytics"""        X = []
         y_reach = []
         y_engagement = []
         y_revenue = []
@@ -729,8 +699,7 @@ class DistributionOptimizer:
         )
     
     def _extract_record_features(self, record: DistributionAnalyticsModel) -> Optional[List[float]]:
-        """Extract feature vector from analytics record"""
-        try:
+        """Extract feature vector from analytics record"""        try:
             features = []
             
             # Platform encoding
@@ -794,8 +763,7 @@ class DistributionOptimizer:
             return None
     
     async def _save_models(self) -> None:
-        """Save trained models to disk"""
-        try:
+        """Save trained models to disk"""        try:
             joblib.dump(self.models["reach_predictor"], "models/reach_optimization.pkl")
             joblib.dump(self.models["engagement_predictor"], "models/engagement_optimization.pkl")
             joblib.dump(self.models["revenue_predictor"], "models/revenue_optimization.pkl")
@@ -815,8 +783,7 @@ class DistributionOptimizer:
         features: Dict[str, List[OptimizationFeature]],
         historical_data: List[DistributionAnalyticsModel]
     ) -> OptimizationResult:
-        """Optimize for maximum reach"""
-        
+        """Optimize for maximum reach"""        
         # Calculate current baseline
         baseline_reach = self._calculate_baseline_reach(historical_data)
         
@@ -880,8 +847,7 @@ class DistributionOptimizer:
         features: Dict[str, List[OptimizationFeature]],
         historical_data: List[DistributionAnalyticsModel]
     ) -> OptimizationResult:
-        """Optimize for maximum engagement"""
-        
+        """Optimize for maximum engagement"""        
         baseline_engagement = self._calculate_baseline_engagement(historical_data)
         
         engagement_important_features = [
@@ -940,8 +906,7 @@ class DistributionOptimizer:
         features: Dict[str, List[OptimizationFeature]],
         historical_data: List[DistributionAnalyticsModel]
     ) -> OptimizationResult:
-        """Optimize for maximum revenue"""
-        
+        """Optimize for maximum revenue"""        
         baseline_revenue = self._calculate_baseline_revenue(historical_data)
         
         revenue_important_features = [
@@ -991,8 +956,7 @@ class DistributionOptimizer:
         features: Dict[str, List[OptimizationFeature]],
         historical_data: List[DistributionAnalyticsModel]
     ) -> OptimizationResult:
-        """Optimize for conversion rates"""
-        
+        """Optimize for conversion rates"""        
         baseline_conversion = self._calculate_baseline_conversion(historical_data)
         
         recommendations = [
@@ -1028,8 +992,7 @@ class DistributionOptimizer:
         features: Dict[str, List[OptimizationFeature]],
         historical_data: List[DistributionAnalyticsModel]
     ) -> OptimizationResult:
-        """Optimize for cost efficiency"""
-        
+        """Optimize for cost efficiency"""        
         recommendations = [
             "Focus on organic reach strategies",
             "Use free platform features effectively",
@@ -1063,8 +1026,7 @@ class DistributionOptimizer:
         features: Dict[str, List[OptimizationFeature]],
         historical_data: List[DistributionAnalyticsModel]
     ) -> OptimizationResult:
-        """Optimize for balanced performance across all metrics"""
-        
+        """Optimize for balanced performance across all metrics"""        
         recommendations = [
             "Balance reach and engagement with strategic platform mix",
             "Maintain consistent posting schedule across platforms",
@@ -1094,8 +1056,7 @@ class DistributionOptimizer:
     
     # Helper methods for calculations
     def _calculate_baseline_reach(self, historical_data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate baseline reach from historical data"""
-        if not historical_data:
+        """Calculate baseline reach from historical data"""        if not historical_data:
             return 1000.0  # Default baseline
         
         reaches = [
@@ -1106,8 +1067,7 @@ class DistributionOptimizer:
         return np.mean(reaches) if reaches else 1000.0
     
     def _calculate_baseline_engagement(self, historical_data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate baseline engagement from historical data"""
-        if not historical_data:
+        """Calculate baseline engagement from historical data"""        if not historical_data:
             return 50.0  # Default baseline
         
         engagements = [
@@ -1118,8 +1078,7 @@ class DistributionOptimizer:
         return np.mean(engagements) if engagements else 50.0
     
     def _calculate_baseline_revenue(self, historical_data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate baseline revenue from historical data"""
-        if not historical_data:
+        """Calculate baseline revenue from historical data"""        if not historical_data:
             return 10.0  # Default baseline
         
         revenues = [
@@ -1130,8 +1089,7 @@ class DistributionOptimizer:
         return np.mean(revenues) if revenues else 10.0
     
     def _calculate_baseline_conversion(self, historical_data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate baseline conversion from historical data"""
-        if not historical_data:
+        """Calculate baseline conversion from historical data"""        if not historical_data:
             return 0.02  # Default 2% conversion
         
         total_clicks = sum(
@@ -1148,8 +1106,7 @@ class DistributionOptimizer:
     def _predict_reach_improvement(
         self, features: Dict[str, List[OptimizationFeature]], baseline: float
     ) -> float:
-        """Predict reach improvement based on features"""
-        # Simplified prediction based on feature scores
+        """Predict reach improvement based on features"""        # Simplified prediction based on feature scores
         improvement_factors = []
         
         for feature_list in features.values():
@@ -1167,8 +1124,7 @@ class DistributionOptimizer:
     def _predict_engagement_improvement(
         self, features: Dict[str, List[OptimizationFeature]], baseline: float
     ) -> float:
-        """Predict engagement improvement based on features"""
-        improvement_factors = []
+        """Predict engagement improvement based on features"""        improvement_factors = []
         
         for feature_list in features.values():
             for feature in feature_list:
@@ -1184,8 +1140,7 @@ class DistributionOptimizer:
     def _predict_revenue_improvement(
         self, features: Dict[str, List[OptimizationFeature]], baseline: float
     ) -> float:
-        """Predict revenue improvement based on features"""
-        # Revenue optimization typically has higher potential
+        """Predict revenue improvement based on features"""        # Revenue optimization typically has higher potential
         improvement_factors = []
         
         for feature_list in features.values():
@@ -1202,8 +1157,7 @@ class DistributionOptimizer:
     def _calculate_confidence(
         self, historical_data: List[DistributionAnalyticsModel], recommendation_count: int
     ) -> float:
-        """Calculate confidence score for optimization"""
-        # Base confidence on data availability and recommendation specificity
+        """Calculate confidence score for optimization"""        # Base confidence on data availability and recommendation specificity
         data_confidence = min(1.0, len(historical_data) / 50)  # More data = higher confidence
         recommendation_confidence = min(1.0, recommendation_count / 5)  # More specific recommendations
         
@@ -1212,8 +1166,7 @@ class DistributionOptimizer:
     async def _generate_ab_test_suggestions(
         self, request: OptimizationRequest, optimization_result: OptimizationResult
     ) -> List[Dict[str, Any]]:
-        """Generate A/B test suggestions based on optimization results"""
-        suggestions = []
+        """Generate A/B test suggestions based on optimization results"""        suggestions = []
         
         # Test different posting times
         suggestions.append({

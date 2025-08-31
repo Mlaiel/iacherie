@@ -1,5 +1,4 @@
-"""
-Audio Content Classification System
+"""Audio Content Classification System
 
 Advanced AI-powered audio classification for music, podcasts, and audio content.
 Provides genre detection, mood analysis, quality assessment, and similarity matching.
@@ -7,7 +6,6 @@ Provides genre detection, mood analysis, quality assessment, and similarity matc
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import numpy as np
 import librosa
 import torch
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class AudioContentClassifier:
-    """
-    Enterprise-grade audio content classification system.
+    """    Enterprise-grade audio content classification system.
     
     Features:
     - Genre classification with 95%+ accuracy
@@ -40,11 +37,9 @@ class AudioContentClassifier:
     - Quality assessment and scoring
     - Similarity matching for copyright detection
     - Real-time processing capabilities
-    """
-    
+    """    
     def __init__(self, model_path: Optional[str] = None):
-        """Initialize audio classifier with ML models."""
-        self.settings = get_settings()
+        """Initialize audio classifier with ML models."""        self.settings = get_settings()
         self.ml_engine = MLEngine()
         self.audio_processor = AudioProcessor()
         
@@ -67,8 +62,7 @@ class AudioContentClassifier:
         self._setup_feature_extractors()
         
     def _initialize_models(self, model_path: Optional[str] = None) -> None:
-        """Load pre-trained classification models."""
-        try:
+        """Load pre-trained classification models."""        try:
             base_path = Path(model_path) if model_path else Path(self.settings.MODEL_PATH) / 'audio'
             
             # Load genre classification model
@@ -100,8 +94,7 @@ class AudioContentClassifier:
             self._load_default_models()
     
     def _load_default_models(self) -> None:
-        """Load default pre-trained models if custom models unavailable."""
-        try:
+        """Load default pre-trained models if custom models unavailable."""        try:
             # Use Hugging Face models as fallback
             from transformers import pipeline
             
@@ -123,8 +116,7 @@ class AudioContentClassifier:
             logger.error(f"Error loading default models: {e}")
     
     def _setup_feature_extractors(self) -> None:
-        """Initialize Essentia feature extractors."""
-        try:
+        """Initialize Essentia feature extractors."""        try:
             # MFCC extractor for timbral features
             self.mfcc_extractor = es.MFCC(
                 numberBands=40,
@@ -155,8 +147,7 @@ class AudioContentClassifier:
         audio_path: str,
         analysis_type: str = "complete"
     ) -> Dict[str, Any]:
-        """
-        Classify audio content with comprehensive analysis.
+        """        Classify audio content with comprehensive analysis.
         
         Args:
             audio_path: Path to audio file
@@ -164,8 +155,7 @@ class AudioContentClassifier:
             
         Returns:
             Dictionary containing classification results
-        """
-        try:
+        """        try:
             # Load and preprocess audio
             audio_data = await self.audio_processor.load_audio(audio_path)
             features = await self._extract_features(audio_data)
@@ -205,8 +195,7 @@ class AudioContentClassifier:
             raise
     
     async def _extract_features(self, audio_data: Dict[str, Any]) -> Dict[str, np.ndarray]:
-        """Extract comprehensive audio features for classification."""
-        try:
+        """Extract comprehensive audio features for classification."""        try:
             y = audio_data['signal']
             sr = audio_data['sample_rate']
             
@@ -247,8 +236,7 @@ class AudioContentClassifier:
             raise
     
     async def _classify_genre(self, features: Dict[str, np.ndarray]) -> Dict[str, Any]:
-        """Classify music genre using extracted features."""
-        try:
+        """Classify music genre using extracted features."""        try:
             # Prepare feature vector
             feature_vector = self._prepare_feature_vector(features, 'genre')
             
@@ -286,8 +274,7 @@ class AudioContentClassifier:
             return {'error': str(e)}
     
     async def _analyze_mood(self, features: Dict[str, np.ndarray]) -> Dict[str, Any]:
-        """Analyze mood and emotional content of audio."""
-        try:
+        """Analyze mood and emotional content of audio."""        try:
             # Prepare feature vector for mood analysis
             feature_vector = self._prepare_feature_vector(features, 'mood')
             
@@ -324,8 +311,7 @@ class AudioContentClassifier:
             return {'error': str(e)}
     
     async def _assess_quality(self, features: Dict[str, np.ndarray]) -> Dict[str, Any]:
-        """Assess audio quality and technical characteristics."""
-        try:
+        """Assess audio quality and technical characteristics."""        try:
             quality_metrics = {}
             
             # Signal-to-noise ratio estimation
@@ -357,8 +343,7 @@ class AudioContentClassifier:
             return {'error': str(e)}
     
     async def _compute_similarity_hash(self, features: Dict[str, np.ndarray]) -> Dict[str, Any]:
-        """Compute perceptual hash for similarity matching."""
-        try:
+        """Compute perceptual hash for similarity matching."""        try:
             # Create compact feature representation
             similarity_features = self._create_similarity_features(features)
             
@@ -385,8 +370,7 @@ class AudioContentClassifier:
             return {'error': str(e)}
     
     def _prepare_feature_vector(self, features: Dict[str, np.ndarray], task: str) -> np.ndarray:
-        """Prepare feature vector for specific classification task."""
-        feature_list = []
+        """Prepare feature vector for specific classification task."""        feature_list = []
         
         # Common features for all tasks
         if 'mfcc' in features:
@@ -418,8 +402,7 @@ class AudioContentClassifier:
         return np.array(feature_list)
     
     def _heuristic_genre_classification(self, features: Dict[str, np.ndarray]) -> np.ndarray:
-        """Heuristic genre classification based on audio features."""
-        # Simple heuristic rules - in production, use trained models
+        """Heuristic genre classification based on audio features."""        # Simple heuristic rules - in production, use trained models
         genres = ['rock', 'pop', 'jazz', 'classical', 'electronic', 'hip-hop', 'folk', 'blues']
         probabilities = np.random.dirichlet(np.ones(len(genres)))  # Placeholder
         
@@ -436,8 +419,7 @@ class AudioContentClassifier:
         return probabilities
     
     def _heuristic_mood_analysis(self, features: Dict[str, np.ndarray]) -> np.ndarray:
-        """Heuristic mood analysis based on audio features."""
-        moods = ['happy', 'sad', 'energetic', 'calm', 'aggressive', 'romantic', 'melancholic', 'uplifting']
+        """Heuristic mood analysis based on audio features."""        moods = ['happy', 'sad', 'energetic', 'calm', 'aggressive', 'romantic', 'melancholic', 'uplifting']
         probabilities = np.random.dirichlet(np.ones(len(moods)))  # Placeholder
         
         # Apply feature-based heuristics
@@ -455,8 +437,7 @@ class AudioContentClassifier:
         return probabilities
     
     def _calculate_valence(self, features: Dict[str, np.ndarray]) -> float:
-        """Calculate valence (positive/negative emotion)."""
-        # Simplified valence calculation
+        """Calculate valence (positive/negative emotion)."""        # Simplified valence calculation
         valence = 0.5  # Neutral starting point
         
         if 'chroma' in features:
@@ -473,8 +454,7 @@ class AudioContentClassifier:
         return np.clip(valence, 0.0, 1.0)
     
     def _calculate_arousal(self, features: Dict[str, np.ndarray]) -> float:
-        """Calculate arousal (energy/activation level)."""
-        arousal = 0.5  # Neutral starting point
+        """Calculate arousal (energy/activation level)."""        arousal = 0.5  # Neutral starting point
         
         if 'tempo' in features:
             tempo = features['tempo']
@@ -487,8 +467,7 @@ class AudioContentClassifier:
         return np.clip(arousal, 0.0, 1.0)
     
     def _determine_emotional_quadrant(self, valence: float, arousal: float) -> str:
-        """Determine emotional quadrant based on valence and arousal."""
-        if valence > 0.5 and arousal > 0.5:
+        """Determine emotional quadrant based on valence and arousal."""        if valence > 0.5 and arousal > 0.5:
             return "happy/excited"
         elif valence > 0.5 and arousal <= 0.5:
             return "calm/peaceful"
@@ -498,8 +477,7 @@ class AudioContentClassifier:
             return "sad/depressed"
     
     def _estimate_snr(self, features: Dict[str, np.ndarray]) -> float:
-        """Estimate signal-to-noise ratio."""
-        if 'rms_energy' in features:
+        """Estimate signal-to-noise ratio."""        if 'rms_energy' in features:
             energy = features['rms_energy']
             signal_power = np.mean(energy)
             noise_power = np.std(energy)
@@ -511,8 +489,7 @@ class AudioContentClassifier:
         return 30.0  # Default moderate SNR
     
     def _analyze_frequency_balance(self, features: Dict[str, np.ndarray]) -> Dict[str, float]:
-        """Analyze frequency balance across spectrum."""
-        balance = {}
+        """Analyze frequency balance across spectrum."""        balance = {}
         
         if 'mfcc' in features:
             mfcc = features['mfcc']
@@ -529,16 +506,14 @@ class AudioContentClassifier:
         return balance
     
     def _detect_clipping(self, features: Dict[str, np.ndarray]) -> bool:
-        """Detect audio clipping artifacts."""
-        if 'dynamic_range' in features:
+        """Detect audio clipping artifacts."""        if 'dynamic_range' in features:
             # Simple clipping detection based on dynamic range
             return features['dynamic_range'] < 0.1
         
         return False
     
     def _calculate_quality_score(self, quality_metrics: Dict[str, Any]) -> float:
-        """Calculate overall quality score from metrics."""
-        score = 50.0  # Base score
+        """Calculate overall quality score from metrics."""        score = 50.0  # Base score
         
         # SNR contribution
         snr = quality_metrics.get('snr_estimate', 30)
@@ -555,8 +530,7 @@ class AudioContentClassifier:
         return float(np.clip(score, 0, 100))
     
     def _grade_quality(self, score: float) -> str:
-        """Convert quality score to letter grade."""
-        if score >= 90:
+        """Convert quality score to letter grade."""        if score >= 90:
             return "A"
         elif score >= 80:
             return "B"
@@ -568,8 +542,7 @@ class AudioContentClassifier:
             return "F"
     
     def _generate_quality_recommendations(self, quality_metrics: Dict[str, Any]) -> List[str]:
-        """Generate recommendations for improving audio quality."""
-        recommendations = []
+        """Generate recommendations for improving audio quality."""        recommendations = []
         
         snr = quality_metrics.get('snr_estimate', 30)
         if snr < 20:
@@ -589,8 +562,7 @@ class AudioContentClassifier:
         return recommendations
     
     def _create_similarity_features(self, features: Dict[str, np.ndarray]) -> np.ndarray:
-        """Create compact feature representation for similarity matching."""
-        similarity_features = []
+        """Create compact feature representation for similarity matching."""        similarity_features = []
         
         # Chromagram features (12 bins)
         if 'chroma' in features:
@@ -614,15 +586,13 @@ class AudioContentClassifier:
         return np.array(similarity_features)
     
     def _generate_perceptual_hash(self, features: np.ndarray) -> str:
-        """Generate perceptual hash from features."""
-        # Simple hash generation - in production use more sophisticated methods
+        """Generate perceptual hash from features."""        # Simple hash generation - in production use more sophisticated methods
         feature_bytes = (features * 255).astype(np.uint8)
         hash_value = hash(feature_bytes.tobytes())
         return f"{hash_value:016x}"
     
     def _calculate_overall_confidence(self, results: Dict[str, Any]) -> float:
-        """Calculate overall confidence score for classification."""
-        confidences = []
+        """Calculate overall confidence score for classification."""        confidences = []
         
         if 'genre' in results and 'confidence' in results['genre']:
             confidences.append(results['genre']['confidence'])
@@ -643,8 +613,7 @@ class AudioContentClassifier:
         audio_files: List[str],
         analysis_type: str = "complete"
     ) -> List[Dict[str, Any]]:
-        """Classify multiple audio files in batch."""
-        results = []
+        """Classify multiple audio files in batch."""        results = []
         
         for audio_file in audio_files:
             try:
@@ -666,8 +635,7 @@ class AudioContentClassifier:
         audio_file1: str,
         audio_file2: str
     ) -> Dict[str, Any]:
-        """Compare similarity between two audio files."""
-        try:
+        """Compare similarity between two audio files."""        try:
             # Classify both files
             result1 = await self.classify_audio(audio_file1, 'similarity')
             result2 = await self.classify_audio(audio_file2, 'similarity')
@@ -701,8 +669,7 @@ class AudioContentClassifier:
             raise
     
     def _calculate_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between perceptual hashes."""
-        # Hamming distance for hex hashes
+        """Calculate similarity between perceptual hashes."""        # Hamming distance for hex hashes
         if len(hash1) != len(hash2):
             return 0.0
         
@@ -711,8 +678,7 @@ class AudioContentClassifier:
         return similarity
     
     def _calculate_cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate cosine similarity between embedding vectors."""
-        dot_product = np.dot(vec1, vec2)
+        """Calculate cosine similarity between embedding vectors."""        dot_product = np.dot(vec1, vec2)
         norm1 = np.linalg.norm(vec1)
         norm2 = np.linalg.norm(vec2)
         
@@ -723,12 +689,10 @@ class AudioContentClassifier:
         return float(similarity)
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported audio formats."""
-        return ['mp3', 'wav', 'flac', 'aac', 'm4a', 'ogg', 'wma']
+        """Get list of supported audio formats."""        return ['mp3', 'wav', 'flac', 'aac', 'm4a', 'ogg', 'wma']
     
     def get_classification_categories(self) -> Dict[str, List[str]]:
-        """Get available classification categories."""
-        return {
+        """Get available classification categories."""        return {
             'genres': ['rock', 'pop', 'jazz', 'classical', 'electronic', 'hip-hop', 'folk', 'blues', 'country', 'reggae'],
             'moods': ['happy', 'sad', 'energetic', 'calm', 'aggressive', 'romantic', 'melancholic', 'uplifting'],
             'quality_grades': ['A', 'B', 'C', 'D', 'F']

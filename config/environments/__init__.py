@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 Gestionnaires de configuration multi-environnements enterprise.
 Support complet: Development, Staging, Testing, Production, Docker, K8s, Cloud.
 ==================================================================
-"""
-import os
+"""import os
 from typing import Dict, Any, Optional, Type, Union
 from enum import Enum
 

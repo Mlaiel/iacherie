@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for NLP SEO Module
+"""Comprehensive Tests for NLP SEO Module
 
 Industrial-grade tests for AdvancedSEOOptimizer covering keyword research,
 content optimization, ranking analysis, and social media SEO with real implementations.
@@ -26,7 +23,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
-
 import pytest
 import sys
 import os
@@ -49,12 +45,10 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestSEOOptimizer:
-    """Comprehensive tests for SEOOptimizer"""
-    
+    """Comprehensive tests for SEOOptimizer"""    
     @pytest.mark.asyncio
     async def test_optimizer_initialization(self, seo_optimizer):
-        """Test SEO optimizer initialization"""
-        assert seo_optimizer is not None
+        """Test SEO optimizer initialization"""        assert seo_optimizer is not None
         assert hasattr(seo_optimizer, 'config')
         assert hasattr(seo_optimizer, 'keyword_researcher')
         assert hasattr(seo_optimizer, 'content_optimizer')
@@ -69,8 +63,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_keyword_research(self, seo_optimizer):
-        """Test keyword research functionality"""
-        # Test single keyword research
+        """Test keyword research functionality"""        # Test single keyword research
         primary_keyword = "AI content creation"
         
         keyword_analysis = await seo_optimizer.research_keywords(
@@ -113,8 +106,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_multilingual_keyword_research(self, seo_optimizer):
-        """Test multilingual keyword research"""
-        keyword = "influencer marketing"
+        """Test multilingual keyword research"""        keyword = "influencer marketing"
         languages = [Language.ENGLISH, Language.GERMAN, Language.FRENCH]
         
         multilingual_research = await seo_optimizer.research_multilingual_keywords(
@@ -142,8 +134,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_content_seo_optimization(self, seo_optimizer, sample_social_content):
-        """Test content SEO optimization"""
-        content = sample_social_content['instagram']['post']
+        """Test content SEO optimization"""        content = sample_social_content['instagram']['post']
         target_keywords = ["social media marketing", "content strategy", "engagement"]
         
         optimization_result = await seo_optimizer.optimize_content(
@@ -182,8 +173,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_platform_specific_optimization(self, seo_optimizer):
-        """Test platform-specific SEO optimization"""
-        base_content = "Discover the power of AI in content creation and marketing automation!"
+        """Test platform-specific SEO optimization"""        base_content = "Discover the power of AI in content creation and marketing automation!"
         
         platforms = [
             Platform.INSTAGRAM,
@@ -227,8 +217,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_hashtag_optimization(self, seo_optimizer):
-        """Test hashtag optimization for social media SEO"""
-        content = "Just launched our new AI-powered content creation tool!"
+        """Test hashtag optimization for social media SEO"""        content = "Just launched our new AI-powered content creation tool!"
         niche = "artificial intelligence"
         
         hashtag_optimization = await seo_optimizer.optimize_hashtags(
@@ -265,8 +254,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_competitor_analysis(self, seo_optimizer):
-        """Test competitor SEO analysis"""
-        target_keywords = ["content marketing", "social media strategy"]
+        """Test competitor SEO analysis"""        target_keywords = ["content marketing", "social media strategy"]
         niche = "digital marketing"
         
         competitor_analysis = await seo_optimizer.analyze_competitors(
@@ -297,13 +285,10 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_content_readability_optimization(self, seo_optimizer):
-        """Test content readability optimization"""
-        complex_content = """
-        The utilization of artificial intelligence methodologies in contemporary 
+        """Test content readability optimization"""        complex_content = """        The utilization of artificial intelligence methodologies in contemporary 
         content creation paradigms necessitates comprehensive understanding of 
         algorithmic implementations and their subsequent optimization strategies.
-        """
-        
+        """        
         readability_optimization = await seo_optimizer.optimize_readability(
             content=complex_content,
             target_audience="general public",
@@ -331,8 +316,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_local_seo_optimization(self, seo_optimizer):
-        """Test local SEO optimization"""
-        content = "Best pizza restaurant in downtown area!"
+        """Test local SEO optimization"""        content = "Best pizza restaurant in downtown area!"
         location_info = {
             'city': 'Berlin',
             'country': 'Germany',
@@ -362,8 +346,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_seo_performance_tracking(self, seo_optimizer):
-        """Test SEO performance tracking and analysis"""
-        content = "How to create engaging social media content with AI tools"
+        """Test SEO performance tracking and analysis"""        content = "How to create engaging social media content with AI tools"
         keywords = ["AI content creation", "social media tools"]
         
         # Simulate content publication
@@ -403,8 +386,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_semantic_seo_optimization(self, seo_optimizer):
-        """Test semantic SEO optimization"""
-        content = "Tips for better content marketing strategy"
+        """Test semantic SEO optimization"""        content = "Tips for better content marketing strategy"
         primary_topic = "content marketing"
         
         semantic_optimization = await seo_optimizer.optimize_semantic_seo(
@@ -433,8 +415,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_content_gap_analysis(self, seo_optimizer):
-        """Test content gap analysis"""
-        target_keywords = [
+        """Test content gap analysis"""        target_keywords = [
             "AI marketing automation",
             "content personalization",
             "social media analytics"
@@ -472,8 +453,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_voice_search_optimization(self, seo_optimizer):
-        """Test voice search optimization"""
-        content = "What are the best AI tools for content creation?"
+        """Test voice search optimization"""        content = "What are the best AI tools for content creation?"
         
         voice_optimization = await seo_optimizer.optimize_for_voice_search(
             content=content,
@@ -498,8 +478,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_mobile_seo_optimization(self, seo_optimizer):
-        """Test mobile SEO optimization"""
-        content = "Complete guide to mobile-first content strategy"
+        """Test mobile SEO optimization"""        content = "Complete guide to mobile-first content strategy"
         
         mobile_optimization = await seo_optimizer.optimize_for_mobile(
             content=content,
@@ -521,8 +500,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_international_seo(self, seo_optimizer):
-        """Test international SEO optimization"""
-        content = "Global digital marketing trends for 2025"
+        """Test international SEO optimization"""        content = "Global digital marketing trends for 2025"
         target_markets = [
             {'country': 'US', 'language': 'en'},
             {'country': 'DE', 'language': 'de'},
@@ -555,8 +533,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_batch_seo_optimization(self, seo_optimizer, performance_test_data):
-        """Test batch SEO optimization"""
-        contents = performance_test_data['small_batch']
+        """Test batch SEO optimization"""        contents = performance_test_data['small_batch']
         keywords = ["AI content", "digital marketing", "social media"]
         
         start_time = time.time()
@@ -586,8 +563,7 @@ class TestSEOOptimizer:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, seo_optimizer):
-        """Test SEO optimizer error handling"""
-        # Test empty content
+        """Test SEO optimizer error handling"""        # Test empty content
         result = await seo_optimizer.optimize_content(
             content="",
             target_keywords=["test"],
@@ -612,19 +588,16 @@ class TestSEOOptimizer:
         assert result is not None  # Should default gracefully
 
 class TestKeywordResearcher:
-    """Test keyword researcher component"""
-    
+    """Test keyword researcher component"""    
     @pytest.mark.asyncio
     async def test_keyword_researcher_initialization(self):
-        """Test keyword researcher initialization"""
-        researcher = KeywordResearcher()
+        """Test keyword researcher initialization"""        researcher = KeywordResearcher()
         assert researcher is not None
         assert hasattr(researcher, 'research_keywords')
 
     @pytest.mark.asyncio
     async def test_trend_analysis(self):
-        """Test keyword trend analysis"""
-        researcher = KeywordResearcher()
+        """Test keyword trend analysis"""        researcher = KeywordResearcher()
         
         trends = await researcher.analyze_keyword_trends(
             keywords=["AI", "machine learning", "automation"],
@@ -635,41 +608,33 @@ class TestKeywordResearcher:
         assert isinstance(trends, dict)
 
 class TestContentOptimizer:
-    """Test content optimizer component"""
-    
+    """Test content optimizer component"""    
     @pytest.mark.asyncio
     async def test_content_optimizer_initialization(self):
-        """Test content optimizer initialization"""
-        optimizer = ContentOptimizer()
+        """Test content optimizer initialization"""        optimizer = ContentOptimizer()
         assert optimizer is not None
         assert hasattr(optimizer, 'optimize_content')
 
 class TestRankingAnalyzer:
-    """Test ranking analyzer component"""
-    
+    """Test ranking analyzer component"""    
     @pytest.mark.asyncio
     async def test_ranking_analyzer_initialization(self):
-        """Test ranking analyzer initialization"""
-        analyzer = RankingAnalyzer()
+        """Test ranking analyzer initialization"""        analyzer = RankingAnalyzer()
         assert analyzer is not None
         assert hasattr(analyzer, 'analyze_rankings')
 
 class TestSocialSEOOptimizer:
-    """Test social SEO optimizer component"""
-    
+    """Test social SEO optimizer component"""    
     @pytest.mark.asyncio
     async def test_social_seo_optimizer_initialization(self):
-        """Test social SEO optimizer initialization"""
-        optimizer = SocialSEOOptimizer()
+        """Test social SEO optimizer initialization"""        optimizer = SocialSEOOptimizer()
         assert optimizer is not None
         assert hasattr(optimizer, 'optimize_social_seo')
 
 class TestSEOConfig:
-    """Test SEO configuration"""
-    
+    """Test SEO configuration"""    
     def test_config_creation(self):
-        """Test SEO configuration creation"""
-        config = SEOConfig(
+        """Test SEO configuration creation"""        config = SEOConfig(
             target_languages=['en', 'de', 'fr'],
             optimization_level='advanced',
             platforms=[Platform.INSTAGRAM, Platform.LINKEDIN]

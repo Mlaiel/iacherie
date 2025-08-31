@@ -1,5 +1,4 @@
-"""
-Migrations Alembic pour le module de suivi des droits d'auteur.
+"""Migrations Alembic pour le module de suivi des droits d'auteur.
 
 Ce fichier contient les migrations de base de données pour créer
 et maintenir le schéma de la base de données du système de suivi
@@ -15,7 +14,6 @@ fera l'objet de poursuites judiciaires au maximum prévu par la loi.
 L'usage de ce code sans licence appropriée constitue une violation
 des droits de propriété intellectuelle.
 """
-
 from alembic import op
 import sqlalchemy as sa
 from sqlalchemy.dialects import postgresql
@@ -23,8 +21,7 @@ from datetime import datetime
 
 
 def upgrade():
-    """Migration vers la nouvelle version - création du schéma complet"""
-    
+    """Migration vers la nouvelle version - création du schéma complet"""    
     # === Table ContentMetadata ===
     op.create_table(
         'content_metadata',
@@ -393,8 +390,7 @@ def upgrade():
     # === Vues pour les requêtes communes ===
     
     # Vue pour les droits actifs avec détails des détenteurs
-    op.execute("""
-        CREATE VIEW active_rights_view AS
+    op.execute("""        CREATE VIEW active_rights_view AS
         SELECT 
             rr.id as rights_record_id,
             rr.content_id,
@@ -418,8 +414,7 @@ def upgrade():
     """)
     
     # Vue pour les licences actives avec performance
-    op.execute("""
-        CREATE VIEW active_licenses_view AS
+    op.execute("""        CREATE VIEW active_licenses_view AS
         SELECT 
             la.id as license_id,
             la.rights_record_id,
@@ -444,8 +439,7 @@ def upgrade():
     """)
     
     # Vue pour les violations non résolues
-    op.execute("""
-        CREATE VIEW unresolved_violations_view AS
+    op.execute("""        CREATE VIEW unresolved_violations_view AS
         SELECT 
             ue.id as usage_event_id,
             ue.content_id,
@@ -471,8 +465,7 @@ def upgrade():
     # === Triggers pour l'audit automatique ===
     
     # Fonction pour l'audit automatique
-    op.execute("""
-        CREATE OR REPLACE FUNCTION audit_trigger_function()
+    op.execute("""        CREATE OR REPLACE FUNCTION audit_trigger_function()
         RETURNS TRIGGER AS $$
         BEGIN
             IF TG_OP = 'DELETE' THEN
@@ -519,8 +512,7 @@ def upgrade():
     
     # Triggers d'audit pour les tables principales
     for table in ['content_metadata', 'rights_records', 'license_agreements', 'payment_records']:
-        op.execute(f"""
-            CREATE TRIGGER {table}_audit_trigger
+        op.execute(f"""            CREATE TRIGGER {table}_audit_trigger
             AFTER INSERT OR UPDATE OR DELETE ON {table}
             FOR EACH ROW EXECUTE FUNCTION audit_trigger_function();
         """)
@@ -533,8 +525,7 @@ def upgrade():
 
 
 def downgrade():
-    """Migration vers la version précédente - suppression du schéma"""
-    
+    """Migration vers la version précédente - suppression du schéma"""    
     # Suppression des triggers
     for table in ['content_metadata', 'rights_records', 'license_agreements', 'payment_records']:
         op.execute(f"DROP TRIGGER IF EXISTS {table}_audit_trigger ON {table};")

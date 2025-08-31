@@ -1,12 +1,10 @@
-"""
-Database Models for Web Monitoring Agent
+"""Database Models for Web Monitoring Agent
 
 Industrial-grade ORM models for surveillance targets and violation alerts.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel.
 """
-
 from datetime import datetime, timezone
 
 from sqlalchemy import (
@@ -33,7 +31,6 @@ except ImportError:
 
 class SurveillanceTargetModel(Base):
     """Persistent surveillance target configuration."""
-
     __tablename__ = "ai_surveillance_targets"
 
     target_id = Column(String(64), primary_key=True, index=True)
@@ -51,7 +48,6 @@ class SurveillanceTargetModel(Base):
 
 class ViolationAlertModel(Base):
     """Detected potential infringement alert record."""
-
     __tablename__ = "ai_violation_alerts"
 
     alert_id = Column(String(64), primary_key=True, index=True)

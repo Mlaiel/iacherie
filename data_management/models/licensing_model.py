@@ -1,5 +1,4 @@
-"""
-📋 Licensing Model - IA Influencer Agent Platform Enterprise
+"""📋 Licensing Model - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/data_management/models/licensing_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ BUSINESS LOGIC:
 Content Creation → Rights Definition → License Generation → 
 Contract Management → Revenue Distribution → Compliance Monitoring
 """
-
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -25,8 +23,7 @@ from enum import Enum
 import uuid
 
 class LicenseType(Enum):
-    """Types de licences disponibles"""
-    EXCLUSIVE = "exclusive"
+    """Types de licences disponibles"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
@@ -36,8 +33,7 @@ class LicenseType(Enum):
     CUSTOM = "custom"
 
 class LicenseStatus(Enum):
-    """Statuts des licences"""
-    DRAFT = "draft"
+    """Statuts des licences"""    DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -47,8 +43,7 @@ class LicenseStatus(Enum):
     REVOKED = "revoked"
 
 class PaymentStructure(Enum):
-    """Structures de paiement"""
-    ONE_TIME = "one_time"
+    """Structures de paiement"""    ONE_TIME = "one_time"
     ROYALTY = "royalty"
     SUBSCRIPTION = "subscription"
     PER_USE = "per_use"
@@ -56,8 +51,7 @@ class PaymentStructure(Enum):
 
 @dataclass
 class LicenseTerms:
-    """Termes et conditions de la licence"""
-    usage_rights: List[str] = field(default_factory=list)
+    """Termes et conditions de la licence"""    usage_rights: List[str] = field(default_factory=list)
     geographical_restrictions: List[str] = field(default_factory=list)
     duration_months: Optional[int] = None
     max_uses: Optional[int] = None
@@ -69,8 +63,7 @@ class LicenseTerms:
 
 @dataclass
 class RoyaltyStructure:
-    """Structure des royalties"""
-    percentage: float = 0.0
+    """Structure des royalties"""    percentage: float = 0.0
     minimum_amount: float = 0.0
     payment_frequency: str = "monthly"
     payment_threshold: float = 50.0
@@ -79,8 +72,7 @@ class RoyaltyStructure:
 
 @dataclass
 class LicensingModel:
-    """
-    🏛️ Modèle de licensing pour la gestion des droits de contenu
+    """    🏛️ Modèle de licensing pour la gestion des droits de contenu
     
     Architecture complète pour:
     - Gestion des licences de contenu
@@ -88,8 +80,7 @@ class LicensingModel:
     - Structures de paiement et royalties
     - Conformité légale
     - Suivi des performances
-    """
-    
+    """    
     # Identification
     license_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
@@ -132,16 +123,14 @@ class LicensingModel:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def __post_init__(self):
-        """Post-initialisation avec validations"""
-        if not self.start_date:
+        """Post-initialisation avec validations"""        if not self.start_date:
             self.start_date = datetime.now()
         
         if not self.end_date and self.terms.duration_months:
             self.end_date = self.start_date + timedelta(days=self.terms.duration_months * 30)
     
     def is_active(self) -> bool:
-        """Vérifie si la licence est active"""
-        now = datetime.now()
+        """Vérifie si la licence est active"""        now = datetime.now()
         return (
             self.status == LicenseStatus.ACTIVE and
             (not self.start_date or self.start_date <= now) and
@@ -149,22 +138,19 @@ class LicensingModel:
         )
     
     def is_expired(self) -> bool:
-        """Vérifie si la licence a expiré"""
-        if not self.end_date:
+        """Vérifie si la licence a expiré"""        if not self.end_date:
             return False
         return datetime.now() > self.end_date
     
     def calculate_royalty(self, revenue: float) -> float:
-        """Calcule les royalties basées sur le revenu"""
-        if not self.royalty_structure:
+        """Calcule les royalties basées sur le revenu"""        if not self.royalty_structure:
             return 0.0
         
         royalty = revenue * (self.royalty_structure.percentage / 100)
         return max(royalty, self.royalty_structure.minimum_amount)
     
     def can_be_used(self, use_case: str) -> bool:
-        """Vérifie si la licence permet un usage spécifique"""
-        if not self.is_active():
+        """Vérifie si la licence permet un usage spécifique"""        if not self.is_active():
             return False
         
         if self.terms.max_uses and self.usage_count >= self.terms.max_uses:
@@ -173,8 +159,7 @@ class LicensingModel:
         return use_case in self.terms.usage_rights
     
     def record_usage(self, revenue: float = 0.0):
-        """Enregistre un usage de la licence"""
-        self.usage_count += 1
+        """Enregistre un usage de la licence"""        self.usage_count += 1
         if revenue > 0:
             self.revenue_generated += revenue
             
@@ -183,8 +168,7 @@ class LicensingModel:
                 self.compliance_score *= 0.9  # Pénalité pour dépassement
     
     def renew_license(self, duration_months: int = None):
-        """Renouvelle la licence"""
-        if duration_months:
+        """Renouvelle la licence"""        if duration_months:
             self.terms.duration_months = duration_months
         
         self.start_date = datetime.now()
@@ -195,8 +179,7 @@ class LicensingModel:
         self.renewal_date = datetime.now()
     
     def get_compliance_report(self) -> Dict[str, Any]:
-        """Génère un rapport de conformité"""
-        return {
+        """Génère un rapport de conformité"""        return {
             "license_id": self.license_id,
             "status": self.status.value,
             "compliance_score": self.compliance_score,
@@ -211,8 +194,7 @@ class LicensingModel:
         }
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le modèle en dictionnaire"""
-        return {
+        """Convertit le modèle en dictionnaire"""        return {
             "license_id": self.license_id,
             "content_id": self.content_id,
             "creator_id": self.creator_id,
@@ -242,8 +224,7 @@ class LicensingModel:
 
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'LicensingModel':
-        """Crée une instance depuis un dictionnaire"""
-        # Conversion des enums
+        """Crée une instance depuis un dictionnaire"""        # Conversion des enums
         if 'license_type' in data:
             data['license_type'] = LicenseType(data['license_type'])
         if 'status' in data:

@@ -1,5 +1,4 @@
-"""
-Security Management and Audit API Endpoints
+"""Security Management and Audit API Endpoints
 ===========================================
 
 Comprehensive security management API for the Ainflue AI Platform.
@@ -18,7 +17,6 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union
 import logging
@@ -60,8 +58,7 @@ router = APIRouter(prefix="/security", tags=["Security Management"])
 # Request/Response Models
 
 class SecurityAuditRequest(BaseModel):
-    """Request model for security audit"""
-    audit_type: str = Field(
+    """Request model for security audit"""    audit_type: str = Field(
         default="full",
         description="Type of audit to perform",
         pattern="^(full|quick|compliance|targeted)$",
@@ -88,8 +85,7 @@ class SecurityAuditRequest(BaseModel):
     )
 
 class VulnerabilityScanRequest(BaseModel):
-    """Request model for vulnerability scanning"""
-    scan_type: str = Field(
+    """Request model for vulnerability scanning"""    scan_type: str = Field(
         ...,
         description="Type of vulnerability scan",
         pattern="^(dependencies|infrastructure|application|api|full)$",
@@ -107,8 +103,7 @@ class VulnerabilityScanRequest(BaseModel):
     )
 
 class SecurityConfigurationRequest(BaseModel):
-    """Request model for security configuration updates"""
-    component: str = Field(
+    """Request model for security configuration updates"""    component: str = Field(
         ...,
         description="Component to configure",
         example="firewall"
@@ -124,8 +119,7 @@ class SecurityConfigurationRequest(BaseModel):
     )
 
 class SecurityMetricsResponse(BaseModel):
-    """Response model for security metrics"""
-    timestamp: datetime = Field(..., description="Metrics timestamp")
+    """Response model for security metrics"""    timestamp: datetime = Field(..., description="Metrics timestamp")
     overall_security_score: float = Field(..., description="Overall security score (0-100)")
     vulnerability_count: Dict[str, int] = Field(..., description="Vulnerability count by severity")
     compliance_scores: Dict[str, float] = Field(..., description="Compliance scores by standard")
@@ -135,8 +129,7 @@ class SecurityMetricsResponse(BaseModel):
     next_audit_due: Optional[datetime] = Field(None, description="Next audit due date")
 
 class SecurityDashboardResponse(BaseModel):
-    """Response model for security dashboard data"""
-    metrics: SecurityMetricsResponse
+    """Response model for security dashboard data"""    metrics: SecurityMetricsResponse
     recent_findings: List[Dict[str, Any]]
     trending_threats: List[Dict[str, Any]]
     compliance_status: Dict[str, Any]
@@ -144,8 +137,7 @@ class SecurityDashboardResponse(BaseModel):
     recommendations: List[str]
 
 class ComplianceReportRequest(BaseModel):
-    """Request model for compliance reporting"""
-    standards: List[str] = Field(
+    """Request model for compliance reporting"""    standards: List[str] = Field(
         ...,
         description="Compliance standards to include in report",
         example=["gdpr", "soc2", "iso27001"]
@@ -170,8 +162,7 @@ class ComplianceReportRequest(BaseModel):
 @router.post(
     "/audit/start",
     summary="Start Security Audit",
-    description="""
-    **Initiate a comprehensive security audit of the platform.**
+    description="""    **Initiate a comprehensive security audit of the platform.**
     
     This endpoint starts a security audit that can include:
     - Infrastructure security assessment
@@ -222,8 +213,7 @@ async def start_security_audit(
     background_tasks: BackgroundTasks,
     current_user: str = Depends(lambda: "admin_user")  # Placeholder dependency
 ):
-    """Start a comprehensive security audit."""
-    try:
+    """Start a comprehensive security audit."""    try:
         # Generate audit ID
         audit_id = f"audit_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
@@ -275,8 +265,7 @@ async def start_security_audit(
 @router.get(
     "/audit/{audit_id}/status",
     summary="Get Audit Status",
-    description="""
-    **Get the current status of a running or completed security audit.**
+    description="""    **Get the current status of a running or completed security audit.**
     
     Returns real-time status information including:
     - Current audit phase
@@ -311,8 +300,7 @@ async def get_audit_status(
     audit_id: str = Path(..., description="Audit identifier"),
     current_user: str = Depends(lambda: "admin_user")
 ):
-    """Get the status of a security audit."""
-    try:
+    """Get the status of a security audit."""    try:
         # Simulate audit status (replace with actual implementation)
         audit_status = {
             "audit_id": audit_id,
@@ -347,8 +335,7 @@ async def get_audit_status(
 @router.get(
     "/audit/{audit_id}/report",
     summary="Get Audit Report",
-    description="""
-    **Retrieve the complete security audit report.**
+    description="""    **Retrieve the complete security audit report.**
     
     Returns a comprehensive security audit report including:
     - Executive summary
@@ -396,8 +383,7 @@ async def get_audit_report(
     format: str = Query("json", pattern="^(json|pdf|csv)$", description="Report format"),
     current_user: str = Depends(lambda: "admin_user")
 ):
-    """Get the complete security audit report."""
-    try:
+    """Get the complete security audit report."""    try:
         # Simulate completed audit report (replace with actual implementation)
         audit_report = {
             "audit_id": audit_id,
@@ -452,8 +438,7 @@ async def get_audit_report(
 @router.post(
     "/scan/vulnerabilities",
     summary="Scan for Vulnerabilities",
-    description="""
-    **Perform targeted vulnerability scanning.**
+    description="""    **Perform targeted vulnerability scanning.**
     
     Execute specific vulnerability scans on:
     - Dependencies (Python packages, npm modules)
@@ -502,8 +487,7 @@ async def scan_vulnerabilities(
     request: VulnerabilityScanRequest,
     current_user: str = Depends(lambda: "admin_user")
 ):
-    """Perform targeted vulnerability scanning."""
-    try:
+    """Perform targeted vulnerability scanning."""    try:
         scan_start = datetime.utcnow()
         scan_id = f"vuln_scan_{scan_start.strftime('%Y%m%d_%H%M%S')}"
         
@@ -565,8 +549,7 @@ async def scan_vulnerabilities(
     "/metrics",
     response_model=SecurityMetricsResponse,
     summary="Get Security Metrics",
-    description="""
-    **Retrieve current security metrics and KPIs.**
+    description="""    **Retrieve current security metrics and KPIs.**
     
     Returns comprehensive security metrics including:
     - Overall security posture score
@@ -585,8 +568,7 @@ async def scan_vulnerabilities(
 async def get_security_metrics(
     current_user: str = Depends(lambda: "admin_user")
 ):
-    """Get current security metrics and KPIs."""
-    try:
+    """Get current security metrics and KPIs."""    try:
         # Simulate security metrics (replace with actual implementation)
         metrics = SecurityMetricsResponse(
             timestamp=datetime.utcnow(),
@@ -623,8 +605,7 @@ async def get_security_metrics(
     "/dashboard",
     response_model=SecurityDashboardResponse,
     summary="Get Security Dashboard Data",
-    description="""
-    **Retrieve comprehensive security dashboard data.**
+    description="""    **Retrieve comprehensive security dashboard data.**
     
     Returns all data needed for a security operations dashboard:
     - Current security metrics
@@ -643,8 +624,7 @@ async def get_security_metrics(
 async def get_security_dashboard(
     current_user: str = Depends(lambda: "admin_user")
 ):
-    """Get comprehensive security dashboard data."""
-    try:
+    """Get comprehensive security dashboard data."""    try:
         # Get current metrics
         metrics = await get_security_metrics(current_user)
         
@@ -724,8 +704,7 @@ async def get_security_dashboard(
 @router.post(
     "/compliance/report",
     summary="Generate Compliance Report",
-    description="""
-    **Generate comprehensive compliance reports.**
+    description="""    **Generate comprehensive compliance reports.**
     
     Create detailed compliance reports for:
     - GDPR (General Data Protection Regulation)
@@ -769,8 +748,7 @@ async def generate_compliance_report(
     background_tasks: BackgroundTasks,
     current_user: str = Depends(lambda: "admin_user")
 ):
-    """Generate comprehensive compliance report."""
-    try:
+    """Generate comprehensive compliance report."""    try:
         report_id = f"compliance_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         
         # Validate compliance standards
@@ -842,8 +820,7 @@ async def generate_compliance_report(
 # Background task functions
 
 async def _execute_security_audit(audit_id: str, request: SecurityAuditRequest, user: str):
-    """Execute security audit as background task."""
-    try:
+    """Execute security audit as background task."""    try:
         logger.info(f"Starting security audit execution: {audit_id}")
         
         # Create auditor with appropriate configuration
@@ -869,8 +846,7 @@ async def _execute_security_audit(audit_id: str, request: SecurityAuditRequest, 
         logger.error(f"Security audit {audit_id} failed: {str(e)}")
 
 async def _generate_compliance_report_task(report_id: str, request: ComplianceReportRequest, user: str):
-    """Generate compliance report as background task."""
-    try:
+    """Generate compliance report as background task."""    try:
         logger.info(f"Starting compliance report generation: {report_id}")
         
         # Simulate report generation
@@ -893,8 +869,7 @@ async def _generate_compliance_report_task(report_id: str, request: ComplianceRe
     }
 )
 async def security_health_check():
-    """Check the health of security systems."""
-    try:
+    """Check the health of security systems."""    try:
         health_status = {
             "status": "healthy",
             "timestamp": datetime.utcnow().isoformat(),
@@ -928,8 +903,7 @@ async def security_health_check():
     }
 )
 async def list_compliance_standards():
-    """List all supported compliance standards."""
-    standards = {
+    """List all supported compliance standards."""    standards = {
         "gdpr": {
             "name": "General Data Protection Regulation",
             "description": "EU regulation on data protection and privacy",

@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Content Module Configuration and Setup Script
+"""Content Module Configuration and Setup Script
 =============================================
 
 Industrial-grade configuration setup for all content management engines
@@ -17,7 +16,6 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
-
 import os
 import sys
 import json
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentModuleSetup:
-    """Setup and configuration manager for content module."""
-    
+    """Setup and configuration manager for content module."""    
     def __init__(self):
         self.config = {}
         self.dependencies = {
@@ -87,8 +84,7 @@ class ContentModuleSetup:
         }
         
     def validate_environment(self) -> Dict[str, Any]:
-        """Validate system environment for content module."""
-        logger.info("🔍 Validating Environment...")
+        """Validate system environment for content module."""        logger.info("🔍 Validating Environment...")
         
         validation_results = {
             'python_version': self._check_python_version(),
@@ -112,8 +108,7 @@ class ContentModuleSetup:
         }
     
     def _check_python_version(self) -> Dict[str, Any]:
-        """Check Python version compatibility."""
-        current_version = sys.version_info
+        """Check Python version compatibility."""        current_version = sys.version_info
         required_version = (3, 9)
         
         is_compatible = current_version >= required_version
@@ -126,8 +121,7 @@ class ContentModuleSetup:
         }
     
     def _check_system_resources(self) -> Dict[str, Any]:
-        """Check system resource availability."""
-        try:
+        """Check system resource availability."""        try:
             import psutil
             
             # Check available memory (minimum 4GB)
@@ -159,8 +153,7 @@ class ContentModuleSetup:
             }
     
     def _check_external_services(self) -> Dict[str, Any]:
-        """Check external service connectivity."""
-        services = {
+        """Check external service connectivity."""        services = {
             'redis': self._check_redis_connection(),
             'database': self._check_database_connection(),
             'elasticsearch': self._check_elasticsearch_connection()
@@ -172,8 +165,7 @@ class ContentModuleSetup:
         }
     
     def _check_redis_connection(self) -> Dict[str, Any]:
-        """Check Redis connection."""
-        try:
+        """Check Redis connection."""        try:
             import redis
             client = redis.Redis(host='localhost', port=6379, decode_responses=True)
             client.ping()
@@ -182,8 +174,7 @@ class ContentModuleSetup:
             return {'available': False, 'error': str(e)}
     
     def _check_database_connection(self) -> Dict[str, Any]:
-        """Check database connection."""
-        try:
+        """Check database connection."""        try:
             # This would connect to your actual database
             # For demo, we'll simulate the check
             return {'available': True, 'type': 'postgresql'}
@@ -191,8 +182,7 @@ class ContentModuleSetup:
             return {'available': False, 'error': str(e)}
     
     def _check_elasticsearch_connection(self) -> Dict[str, Any]:
-        """Check Elasticsearch connection."""
-        try:
+        """Check Elasticsearch connection."""        try:
             # This would connect to your actual Elasticsearch
             # For demo, we'll simulate the check
             return {'available': False, 'error': 'Not configured'}
@@ -200,8 +190,7 @@ class ContentModuleSetup:
             return {'available': False, 'error': str(e)}
     
     def _check_directory_structure(self) -> Dict[str, Any]:
-        """Check required directory structure."""
-        required_dirs = [
+        """Check required directory structure."""        required_dirs = [
             'logs',
             'temp',
             'uploads',
@@ -228,8 +217,7 @@ class ContentModuleSetup:
         }
     
     def _check_permissions(self) -> Dict[str, Any]:
-        """Check file system permissions."""
-        test_paths = ['temp', 'uploads', 'logs', 'processed']
+        """Check file system permissions."""        test_paths = ['temp', 'uploads', 'logs', 'processed']
         permission_issues = []
         
         for path in test_paths:
@@ -246,8 +234,7 @@ class ContentModuleSetup:
         }
     
     def _check_dependencies(self) -> Dict[str, Any]:
-        """Check Python package dependencies."""
-        missing_packages = []
+        """Check Python package dependencies."""        missing_packages = []
         installed_packages = []
         
         for category, packages in self.dependencies.items():
@@ -270,8 +257,7 @@ class ContentModuleSetup:
         }
     
     def _generate_resource_recommendations(self, memory_gb: float, disk_gb: float, cpu_cores: int) -> List[str]:
-        """Generate system resource recommendations."""
-        recommendations = []
+        """Generate system resource recommendations."""        recommendations = []
         
         if memory_gb < 8:
             recommendations.append(f"Consider upgrading RAM to 8GB+ (current: {memory_gb:.1f}GB)")
@@ -286,15 +272,13 @@ class ContentModuleSetup:
         return recommendations
     
     def _generate_install_command(self, missing_packages: List[str]) -> str:
-        """Generate pip install command for missing packages."""
-        if not missing_packages:
+        """Generate pip install command for missing packages."""        if not missing_packages:
             return "All dependencies are installed"
         
         return f"pip install {' '.join(missing_packages)}"
     
     async def setup_configuration(self) -> Dict[str, Any]:
-        """Setup module configuration."""
-        logger.info("⚙️ Setting up Content Module Configuration...")
+        """Setup module configuration."""        logger.info("⚙️ Setting up Content Module Configuration...")
         
         config = {
             'module_info': {
@@ -399,9 +383,7 @@ class ContentModuleSetup:
         }
     
     async def _generate_env_template(self):
-        """Generate environment variables template."""
-        env_template = """
-# IA Influencer Agent - Content Management Module
+        """Generate environment variables template."""        env_template = """# IA Influencer Agent - Content Management Module
 # Environment Configuration Template
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -449,8 +431,7 @@ AUDIT_LOGGING_ENABLED=true
 # Enterprise Features
 ENTERPRISE_LICENSE_KEY=your_enterprise_license_key_here
 SUPPORT_EMAIL=mlaiel@live.de
-"""
-        
+"""        
         env_path = Path('.env.template')
         with open(env_path, 'w') as f:
             f.write(env_template.strip())
@@ -458,12 +439,10 @@ SUPPORT_EMAIL=mlaiel@live.de
         logger.info(f"✅ Environment template generated: {env_path}")
     
     def generate_deployment_scripts(self):
-        """Generate deployment scripts."""
-        logger.info("📦 Generating Deployment Scripts...")
+        """Generate deployment scripts."""        logger.info("📦 Generating Deployment Scripts...")
         
         # Docker Compose
-        docker_compose = """
-version: '3.8'
+        docker_compose = """version: '3.8'
 
 services:
   content-module:
@@ -515,11 +494,9 @@ services:
 volumes:
   postgres_data:
   grafana_data:
-"""
-        
+"""        
         # Dockerfile
-        dockerfile = """
-FROM python:3.11-slim
+        dockerfile = """FROM python:3.11-slim
 
 WORKDIR /app
 
@@ -548,8 +525,7 @@ EXPOSE 8000
 
 # Start application
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "4"]
-"""
-        
+"""        
         # Save deployment files
         Path('docker-compose.yml').write_text(docker_compose.strip())
         Path('Dockerfile').write_text(dockerfile.strip())
@@ -557,9 +533,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
         logger.info("✅ Deployment scripts generated")
     
     def print_setup_summary(self):
-        """Print setup completion summary."""
-        print("""
-    ╔══════════════════════════════════════════════════════════════════════════════╗
+        """Print setup completion summary."""        print("""    ╔══════════════════════════════════════════════════════════════════════════════╗
     ║                   CONTENT MODULE SETUP COMPLETED                            ║
     ║                                                                              ║
     ║  🏗️  Industrial-Grade Content Management System Ready                       ║
@@ -580,9 +554,7 @@ CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000", "--workers", 
 
 
 async def main():
-    """Main setup function."""
-    print("""
-    ╔══════════════════════════════════════════════════════════════════════════════╗
+    """Main setup function."""    print("""    ╔══════════════════════════════════════════════════════════════════════════════╗
     ║                 IA Influencer Agent - Content Module Setup                  ║
     ║                                                                              ║
     ║  Author: Fahed Mlaiel <mlaiel@live.de>                                      ║

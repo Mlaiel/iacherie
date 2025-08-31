@@ -1,5 +1,4 @@
-"""
-Adaptive Scheduler Module
+"""Adaptive Scheduler Module
 ========================
 
 Machine learning-powered adaptive scheduling system for crawler operations.
@@ -28,7 +27,6 @@ Continuous learning → Performance pattern recognition → Adaptive optimizatio
 Predictive scheduling → Business impact analysis → Revenue optimization → 
 User experience enhancement → Competitive advantage → Market leadership
 """
-
 import asyncio
 import logging
 import time
@@ -57,8 +55,7 @@ logger = logging.getLogger(__name__)
 
 
 class AdaptationStrategy(Enum):
-    """Adaptation strategy types."""
-    PERFORMANCE_BASED = "performance_based"
+    """Adaptation strategy types."""    PERFORMANCE_BASED = "performance_based"
     PATTERN_RECOGNITION = "pattern_recognition"
     REINFORCEMENT_LEARNING = "reinforcement_learning"
     MULTI_OBJECTIVE = "multi_objective"
@@ -68,8 +65,7 @@ class AdaptationStrategy(Enum):
 
 
 class LearningMode(Enum):
-    """Learning operation modes."""
-    EXPLORATION = "exploration"  # Try new strategies
+    """Learning operation modes."""    EXPLORATION = "exploration"  # Try new strategies
     EXPLOITATION = "exploitation"  # Use best known strategies
     BALANCED = "balanced"  # Mix of both
     CONSERVATIVE = "conservative"  # Minimal changes
@@ -77,8 +73,7 @@ class LearningMode(Enum):
 
 
 class OptimizationObjective(Enum):
-    """Optimization objectives."""
-    MINIMIZE_LATENCY = "minimize_latency"
+    """Optimization objectives."""    MINIMIZE_LATENCY = "minimize_latency"
     MAXIMIZE_THROUGHPUT = "maximize_throughput"
     OPTIMIZE_RESOURCES = "optimize_resources"
     IMPROVE_ACCURACY = "improve_accuracy"
@@ -90,8 +85,7 @@ class OptimizationObjective(Enum):
 
 @dataclass
 class PerformancePattern:
-    """Performance pattern identification."""
-    pattern_id: str
+    """Performance pattern identification."""    pattern_id: str
     pattern_type: str
     frequency: float
     confidence: float
@@ -105,8 +99,7 @@ class PerformancePattern:
 
 @dataclass
 class AdaptationDecision:
-    """Adaptation decision record."""
-    decision_id: str
+    """Adaptation decision record."""    decision_id: str
     strategy: AdaptationStrategy
     objective: OptimizationObjective
     learning_mode: LearningMode
@@ -121,8 +114,7 @@ class AdaptationDecision:
 
 @dataclass
 class LearningState:
-    """Current learning state."""
-    exploration_rate: float = 0.3
+    """Current learning state."""    exploration_rate: float = 0.3
     exploitation_rate: float = 0.7
     learning_rate: float = 0.01
     model_confidence: float = 0.5
@@ -135,8 +127,7 @@ class LearningState:
 
 @dataclass
 class ReinforcementState:
-    """Reinforcement learning state."""
-    state_vector: List[float]
+    """Reinforcement learning state."""    state_vector: List[float]
     action_space: List[str]
     reward_history: deque
     q_values: Dict[str, float] = field(default_factory=dict)
@@ -149,8 +140,7 @@ class ReinforcementState:
 
 
 class AdaptiveScheduler:
-    """
-    Machine learning-powered adaptive scheduler.
+    """    Machine learning-powered adaptive scheduler.
     
     Features:
     - Continuous performance monitoring and learning
@@ -161,8 +151,7 @@ class AdaptiveScheduler:
     - Real-time strategy adjustment
     - Self-healing and recovery
     - Competitive intelligence integration
-    """
-    
+    """    
     def __init__(
         self,
         adaptation_strategy: AdaptationStrategy = AdaptationStrategy.HYBRID,
@@ -173,8 +162,7 @@ class AdaptiveScheduler:
         adaptation_interval: int = 300,  # seconds
         learning_history_size: int = 10000
     ):
-        """Initialize adaptive scheduler."""
-        self.adaptation_strategy = adaptation_strategy
+        """Initialize adaptive scheduler."""        self.adaptation_strategy = adaptation_strategy
         self.learning_mode = learning_mode
         self.enable_reinforcement_learning = enable_reinforcement_learning
         self.enable_pattern_recognition = enable_pattern_recognition
@@ -246,8 +234,7 @@ class AdaptiveScheduler:
         logger.info(f"Adaptive scheduler initialized with strategy: {adaptation_strategy.value}")
     
     async def initialize(self) -> None:
-        """Initialize adaptive scheduler."""
-        try:
+        """Initialize adaptive scheduler."""        try:
             # Create model storage directory
             import os
             os.makedirs(self.config['model_storage_path'], exist_ok=True)
@@ -268,8 +255,7 @@ class AdaptiveScheduler:
             raise
     
     async def _initialize_models(self) -> None:
-        """Initialize machine learning models."""
-        try:
+        """Initialize machine learning models."""        try:
             # Performance prediction model
             self.performance_predictor = RandomForestRegressor(
                 n_estimators=100,
@@ -302,8 +288,7 @@ class AdaptiveScheduler:
             logger.error(f"Failed to initialize models: {e}")
     
     def _create_deep_learning_model(self) -> keras.Model:
-        """Create deep learning model for pattern recognition."""
-        model = keras.Sequential([
+        """Create deep learning model for pattern recognition."""        model = keras.Sequential([
             keras.layers.Dense(128, activation='relu', input_shape=(50,)),
             keras.layers.Dropout(0.3),
             keras.layers.Dense(64, activation='relu'),
@@ -322,8 +307,7 @@ class AdaptiveScheduler:
         return model
     
     def _create_reinforcement_agent(self) -> Dict[str, Any]:
-        """Create reinforcement learning agent."""
-        return {
+        """Create reinforcement learning agent."""        return {
             'q_table': defaultdict(lambda: defaultdict(float)),
             'state_action_counts': defaultdict(lambda: defaultdict(int)),
             'total_episodes': 0,
@@ -333,8 +317,7 @@ class AdaptiveScheduler:
         }
     
     async def start_learning(self) -> None:
-        """Start adaptive learning processes."""
-        if self.is_learning:
+        """Start adaptive learning processes."""        if self.is_learning:
             return
         
         self.is_learning = True
@@ -349,8 +332,7 @@ class AdaptiveScheduler:
         logger.info("Adaptive learning started")
     
     async def stop_learning(self) -> None:
-        """Stop adaptive learning processes."""
-        self.is_learning = False
+        """Stop adaptive learning processes."""        self.is_learning = False
         
         for task in [self.learning_task, self.adaptation_task, self.pattern_detection_task]:
             if task:
@@ -370,8 +352,7 @@ class AdaptiveScheduler:
         performance_data: Dict[str, Any],
         business_context: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Learn from performance data."""
-        try:
+        """Learn from performance data."""        try:
             # Enhance data with business context
             enhanced_data = {
                 **performance_data,
@@ -398,8 +379,7 @@ class AdaptiveScheduler:
             logger.error(f"Learning from performance failed: {e}")
     
     async def _learning_loop(self) -> None:
-        """Main learning loop."""
-        while self.is_learning:
+        """Main learning loop."""        while self.is_learning:
             try:
                 # Update models with recent data
                 await self._update_models()
@@ -417,8 +397,7 @@ class AdaptiveScheduler:
                 await asyncio.sleep(60)
     
     async def _adaptation_loop(self) -> None:
-        """Main adaptation loop."""
-        while self.is_learning:
+        """Main adaptation loop."""        while self.is_learning:
             try:
                 # Evaluate need for adaptation
                 if await self._should_adapt():
@@ -436,8 +415,7 @@ class AdaptiveScheduler:
                 await asyncio.sleep(60)
     
     async def _pattern_detection_loop(self) -> None:
-        """Pattern detection loop."""
-        while self.is_learning:
+        """Pattern detection loop."""        while self.is_learning:
             try:
                 # Analyze recent performance for patterns
                 await self._detect_performance_patterns()
@@ -455,8 +433,7 @@ class AdaptiveScheduler:
                 await asyncio.sleep(60)
     
     async def _update_models(self) -> None:
-        """Update ML models with recent data."""
-        try:
+        """Update ML models with recent data."""        try:
             if len(self.performance_history) < 100:
                 return
             
@@ -497,8 +474,7 @@ class AdaptiveScheduler:
             logger.error(f"Model update failed: {e}")
     
     async def _prepare_training_data(self, data: List[Dict[str, Any]]) -> Tuple[List[List[float]], List[float]]:
-        """Prepare training data from performance history."""
-        X = []
+        """Prepare training data from performance history."""        X = []
         y = []
         
         for item in data:
@@ -515,8 +491,7 @@ class AdaptiveScheduler:
         return X, y
     
     async def _extract_features(self, data: Dict[str, Any]) -> Optional[List[float]]:
-        """Extract feature vector from performance data."""
-        try:
+        """Extract feature vector from performance data."""        try:
             features = []
             
             # Basic performance metrics
@@ -555,8 +530,7 @@ class AdaptiveScheduler:
             return None
     
     def _calculate_performance_score(self, data: Dict[str, Any]) -> Optional[float]:
-        """Calculate performance score from data."""
-        try:
+        """Calculate performance score from data."""        try:
             # Weighted performance score
             execution_time = data.get('execution_time', 60)
             success_rate = data.get('success_rate', 0.9)
@@ -581,8 +555,7 @@ class AdaptiveScheduler:
             return None
     
     def _prepare_deep_learning_features(self, data: List[Dict[str, Any]]) -> List[List[float]]:
-        """Prepare features for deep learning model."""
-        features = []
+        """Prepare features for deep learning model."""        features = []
         
         for item in data:
             feature_vector = []
@@ -631,8 +604,7 @@ class AdaptiveScheduler:
         return features
     
     def _prepare_deep_learning_targets(self, data: List[Dict[str, Any]]) -> List[float]:
-        """Prepare targets for deep learning model."""
-        targets = []
+        """Prepare targets for deep learning model."""        targets = []
         
         for item in data:
             # Binary classification: good performance (1) or poor performance (0)
@@ -643,8 +615,7 @@ class AdaptiveScheduler:
         return targets
     
     async def _should_adapt(self) -> bool:
-        """Determine if adaptation is needed."""
-        try:
+        """Determine if adaptation is needed."""        try:
             # Check if enough time has passed since last adaptation
             if self.learning_state.last_adaptation:
                 time_since_last = (datetime.utcnow() - self.learning_state.last_adaptation).seconds
@@ -681,8 +652,7 @@ class AdaptiveScheduler:
             return False
     
     async def _evaluate_current_performance(self) -> float:
-        """Evaluate current system performance."""
-        if not self.performance_history:
+        """Evaluate current system performance."""        if not self.performance_history:
             return 0.5
         
         # Calculate average performance over recent window
@@ -696,8 +666,7 @@ class AdaptiveScheduler:
         return np.mean(scores) if scores else 0.5
     
     async def _get_baseline_performance(self) -> float:
-        """Get baseline performance for comparison."""
-        window_size = min(200, len(self.performance_history))
+        """Get baseline performance for comparison."""        window_size = min(200, len(self.performance_history))
         if window_size < 10:
             return 0.7  # Default baseline
         
@@ -712,12 +681,10 @@ class AdaptiveScheduler:
         return np.mean(scores) if scores else 0.7
     
     async def _has_new_patterns(self) -> bool:
-        """Check if new performance patterns have been discovered."""
-        return len(self.pattern_history) > len(self.discovered_patterns) * 10
+        """Check if new performance patterns have been discovered."""        return len(self.pattern_history) > len(self.discovered_patterns) * 10
     
     async def _generate_adaptation_decision(self) -> Optional[AdaptationDecision]:
-        """Generate adaptation decision based on current state."""
-        try:
+        """Generate adaptation decision based on current state."""        try:
             # Analyze current situation
             current_state = await self._analyze_current_state()
             
@@ -753,8 +720,7 @@ class AdaptiveScheduler:
             return None
     
     async def _analyze_current_state(self) -> Dict[str, Any]:
-        """Analyze current system state."""
-        state = {
+        """Analyze current system state."""        state = {
             'performance_trend': await self._calculate_performance_trend(),
             'resource_utilization': await self._get_resource_utilization(),
             'error_patterns': await self._analyze_error_patterns(),
@@ -767,8 +733,7 @@ class AdaptiveScheduler:
         return state
     
     async def _calculate_performance_trend(self) -> str:
-        """Calculate performance trend direction."""
-        if len(self.performance_history) < 20:
+        """Calculate performance trend direction."""        if len(self.performance_history) < 20:
             return "stable"
         
         recent_scores = [
@@ -792,8 +757,7 @@ class AdaptiveScheduler:
             return "stable"
     
     async def _get_resource_utilization(self) -> Dict[str, float]:
-        """Get current resource utilization."""
-        # This would integrate with the resource scheduler
+        """Get current resource utilization."""        # This would integrate with the resource scheduler
         return {
             'cpu': 0.6,
             'memory': 0.7,
@@ -802,8 +766,7 @@ class AdaptiveScheduler:
         }
     
     async def _analyze_error_patterns(self) -> Dict[str, Any]:
-        """Analyze error patterns in recent performance."""
-        if not self.performance_history:
+        """Analyze error patterns in recent performance."""        if not self.performance_history:
             return {}
         
         recent_data = list(self.performance_history)[-100:]
@@ -823,15 +786,13 @@ class AdaptiveScheduler:
         }
     
     def _get_user_satisfaction(self) -> float:
-        """Get current user satisfaction score."""
-        if not self.business_metrics:
+        """Get current user satisfaction score."""        if not self.business_metrics:
             return 0.8
         
         return self.business_metrics.get('user_satisfaction', 0.8)
     
     async def _generate_adaptation_options(self, current_state: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate adaptation options based on current state."""
-        options = []
+        """Generate adaptation options based on current state."""        options = []
         
         # Performance-based adaptations
         if current_state['performance_trend'] == 'degrading':
@@ -886,8 +847,7 @@ class AdaptiveScheduler:
         return options
     
     async def _select_best_adaptation(self, options: List[Dict[str, Any]]) -> Optional[Dict[str, Any]]:
-        """Select best adaptation option."""
-        if not options:
+        """Select best adaptation option."""        if not options:
             return None
         
         # Score options based on multiple criteria
@@ -925,8 +885,7 @@ class AdaptiveScheduler:
         return best_option
     
     def _aligns_with_strategy(self, option: Dict[str, Any]) -> bool:
-        """Check if option aligns with current adaptation strategy."""
-        if self.adaptation_strategy == AdaptationStrategy.PERFORMANCE_BASED:
+        """Check if option aligns with current adaptation strategy."""        if self.adaptation_strategy == AdaptationStrategy.PERFORMANCE_BASED:
             return option['objective'] in [
                 OptimizationObjective.MINIMIZE_LATENCY,
                 OptimizationObjective.MAXIMIZE_THROUGHPUT
@@ -940,8 +899,7 @@ class AdaptiveScheduler:
             return True  # Hybrid strategy accepts all
     
     async def _implement_adaptation(self, decision: AdaptationDecision) -> None:
-        """Implement adaptation decision."""
-        try:
+        """Implement adaptation decision."""        try:
             implementation = decision.decision_data.get('implementation', {})
             action = implementation.get('action')
             
@@ -976,34 +934,28 @@ class AdaptiveScheduler:
             decision.result = {'success': False, 'error': str(e)}
     
     async def _scale_up_resources(self, factor: float) -> None:
-        """Scale up resources by given factor."""
-        # This would integrate with the resource scheduler
+        """Scale up resources by given factor."""        # This would integrate with the resource scheduler
         logger.info(f"Scaling up resources by factor {factor}")
     
     async def _adjust_priority_strategy(self, strategy: str) -> None:
-        """Adjust priority scheduling strategy."""
-        # This would integrate with the priority scheduler
+        """Adjust priority scheduling strategy."""        # This would integrate with the priority scheduler
         logger.info(f"Adjusting priority strategy to {strategy}")
     
     async def _redistribute_load(self, target_utilization: float) -> None:
-        """Redistribute load to achieve target utilization."""
-        # This would integrate with the load balancer
+        """Redistribute load to achieve target utilization."""        # This would integrate with the load balancer
         logger.info(f"Redistributing load to achieve {target_utilization:.1%} utilization")
     
     async def _prioritize_user_tasks(self, weight: float) -> None:
-        """Increase priority weight for user tasks."""
-        # This would integrate with the task prioritization system
+        """Increase priority weight for user tasks."""        # This would integrate with the task prioritization system
         logger.info(f"Increasing user task priority weight to {weight}")
     
     async def _increase_exploration_rate(self, rate: float) -> None:
-        """Increase exploration rate for learning."""
-        self.learning_state.exploration_rate = min(1.0, rate)
+        """Increase exploration rate for learning."""        self.learning_state.exploration_rate = min(1.0, rate)
         self.learning_state.exploitation_rate = 1.0 - self.learning_state.exploration_rate
         logger.info(f"Increased exploration rate to {rate:.1%}")
     
     async def _update_reinforcement_learning(self, performance_data: Dict[str, Any]) -> None:
-        """Update reinforcement learning agent."""
-        if not self.enable_reinforcement_learning or not self.reinforcement_agent:
+        """Update reinforcement learning agent."""        if not self.enable_reinforcement_learning or not self.reinforcement_agent:
             return
         
         try:
@@ -1033,8 +985,7 @@ class AdaptiveScheduler:
             logger.error(f"Reinforcement learning update failed: {e}")
     
     def _calculate_reward(self, performance_data: Dict[str, Any]) -> float:
-        """Calculate reward for reinforcement learning."""
-        # Multi-objective reward function
+        """Calculate reward for reinforcement learning."""        # Multi-objective reward function
         performance_score = self._calculate_performance_score(performance_data) or 0.5
         
         # Business impact component
@@ -1059,8 +1010,7 @@ class AdaptiveScheduler:
         return min(1.0, max(-1.0, total_reward))
     
     def _update_q_values(self, state: List[float], action: str, reward: float, next_state: List[float]) -> None:
-        """Update Q-values using Q-learning algorithm."""
-        # Convert state to hashable representation
+        """Update Q-values using Q-learning algorithm."""        # Convert state to hashable representation
         state_key = tuple(round(x, 2) for x in state)
         next_state_key = tuple(round(x, 2) for x in next_state)
         
@@ -1082,8 +1032,7 @@ class AdaptiveScheduler:
         self.reinforcement_state.q_values[(state_key, action)] = new_q
     
     async def _extract_rl_state(self, performance_data: Dict[str, Any]) -> List[float]:
-        """Extract state vector for reinforcement learning."""
-        state = []
+        """Extract state vector for reinforcement learning."""        state = []
         
         # Performance metrics
         state.append(performance_data.get('execution_time', 60) / 300)  # Normalized
@@ -1105,8 +1054,7 @@ class AdaptiveScheduler:
         return state
     
     async def _detect_performance_patterns(self) -> None:
-        """Detect patterns in performance data."""
-        if not self.enable_pattern_recognition or len(self.performance_history) < 50:
+        """Detect patterns in performance data."""        if not self.enable_pattern_recognition or len(self.performance_history) < 50:
             return
         
         try:
@@ -1129,8 +1077,7 @@ class AdaptiveScheduler:
             logger.error(f"Pattern detection failed: {e}")
     
     async def _detect_temporal_patterns(self, data: List[Dict[str, Any]]) -> List[PerformancePattern]:
-        """Detect temporal patterns in performance."""
-        patterns = []
+        """Detect temporal patterns in performance."""        patterns = []
         
         # Group by hour of day
         hourly_performance = defaultdict(list)
@@ -1165,8 +1112,7 @@ class AdaptiveScheduler:
         return patterns
     
     async def _detect_performance_patterns_ml(self, data: List[Dict[str, Any]]) -> List[PerformancePattern]:
-        """Detect patterns using machine learning."""
-        patterns = []
+        """Detect patterns using machine learning."""        patterns = []
         
         try:
             # Prepare feature matrix
@@ -1220,8 +1166,7 @@ class AdaptiveScheduler:
         return patterns
     
     def _update_business_metrics(self, business_context: Dict[str, Any]) -> None:
-        """Update business metrics from context data."""
-        for key, value in business_context.items():
+        """Update business metrics from context data."""        for key, value in business_context.items():
             if isinstance(value, (int, float)):
                 # Use exponential moving average
                 alpha = 0.1
@@ -1229,8 +1174,7 @@ class AdaptiveScheduler:
                 self.business_metrics[key] = alpha * value + (1 - alpha) * current_value
     
     async def _save_models(self) -> None:
-        """Save ML models to storage."""
-        try:
+        """Save ML models to storage."""        try:
             storage_path = self.config['model_storage_path']
             
             # Save sklearn models
@@ -1266,8 +1210,7 @@ class AdaptiveScheduler:
             logger.error(f"Failed to save models: {e}")
     
     async def _load_models(self) -> None:
-        """Load existing ML models."""
-        try:
+        """Load existing ML models."""        try:
             storage_path = self.config['model_storage_path']
             
             # Load sklearn models
@@ -1337,8 +1280,7 @@ class AdaptiveScheduler:
             logger.error(f"Failed to load models: {e}")
     
     async def get_adaptation_status(self) -> Dict[str, Any]:
-        """Get comprehensive adaptation status."""
-        return {
+        """Get comprehensive adaptation status."""        return {
             'learning_enabled': self.is_learning,
             'adaptation_strategy': self.adaptation_strategy.value,
             'learning_mode': self.learning_mode.value,
@@ -1366,12 +1308,10 @@ class AdaptiveScheduler:
         }
     
     def add_callback(self, event_type: str, callback: Callable) -> None:
-        """Add event callback."""
-        self.event_callbacks[event_type].append(callback)
+        """Add event callback."""        self.event_callbacks[event_type].append(callback)
     
     async def _call_callbacks(self, event_type: str, *args) -> None:
-        """Call registered callbacks for an event."""
-        for callback in self.event_callbacks.get(event_type, []):
+        """Call registered callbacks for an event."""        for callback in self.event_callbacks.get(event_type, []):
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback(*args)

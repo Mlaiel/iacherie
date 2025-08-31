@@ -1,5 +1,4 @@
-"""
-Audio Upload Events - Industrial Grade Upload Event Management
+"""Audio Upload Events - Industrial Grade Upload Event Management
 ============================================================
 
 This module handles all events related to audio file uploads including validation,
@@ -8,7 +7,6 @@ processing, storage, and notification events for the IA Influencer Agent platfor
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any
@@ -19,13 +17,11 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 @dataclass
 class AudioUploadStartedEvent(BaseEvent):
-    """
-    Event triggered when an audio upload process begins.
+    """    Event triggered when an audio upload process begins.
     
     This event contains all necessary information about the upload session
     and is used to initialize tracking and processing pipelines.
-    """
-    user_id: UUID
+    """    user_id: UUID
     upload_id: UUID
     filename: str
     file_size: int
@@ -58,13 +54,11 @@ class AudioUploadStartedEvent(BaseEvent):
 
 @dataclass  
 class AudioUploadProgressEvent(BaseEvent):
-    """
-    Event triggered during audio upload progress updates.
+    """    Event triggered during audio upload progress updates.
     
     Provides real-time feedback about upload progress for UI updates
     and monitoring systems.
-    """
-    user_id: UUID
+    """    user_id: UUID
     upload_id: UUID
     upload_session_id: str
     bytes_uploaded: int
@@ -92,13 +86,11 @@ class AudioUploadProgressEvent(BaseEvent):
 
 @dataclass
 class AudioUploadCompletedEvent(BaseEvent):
-    """
-    Event triggered when an audio upload is successfully completed.
+    """    Event triggered when an audio upload is successfully completed.
     
     Contains comprehensive information about the uploaded file and
     triggers downstream processing pipelines.
-    """
-    user_id: UUID
+    """    user_id: UUID
     upload_id: UUID
     file_id: UUID
     filename: str
@@ -142,12 +134,10 @@ class AudioUploadCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioUploadFailedEvent(BaseEvent):
-    """
-    Event triggered when an audio upload fails.
+    """    Event triggered when an audio upload fails.
     
     Contains detailed error information for debugging and user notification.
-    """
-    user_id: UUID
+    """    user_id: UUID
     upload_id: UUID
     upload_session_id: str
     filename: str
@@ -181,12 +171,10 @@ class AudioUploadFailedEvent(BaseEvent):
 
 @dataclass
 class AudioUploadValidationEvent(BaseEvent):
-    """
-    Event triggered during audio file validation process.
+    """    Event triggered during audio file validation process.
     
     Contains validation results and any issues found with the uploaded file.
-    """
-    user_id: UUID
+    """    user_id: UUID
     upload_id: UUID
     file_id: UUID
     filename: str
@@ -220,12 +208,10 @@ class AudioUploadValidationEvent(BaseEvent):
 
 @dataclass
 class AudioUploadVirusScanEvent(BaseEvent):
-    """
-    Event triggered during virus/malware scanning of uploaded audio files.
+    """    Event triggered during virus/malware scanning of uploaded audio files.
     
     Ensures security compliance before file processing begins.
-    """
-    user_id: UUID
+    """    user_id: UUID
     upload_id: UUID
     file_id: UUID
     filename: str
@@ -256,13 +242,11 @@ class AudioUploadVirusScanEvent(BaseEvent):
 
 @dataclass
 class AudioUploadMetadataExtractedEvent(BaseEvent):
-    """
-    Event triggered when metadata extraction from audio file is completed.
+    """    Event triggered when metadata extraction from audio file is completed.
     
     Contains all extracted metadata including ID3 tags, technical properties,
     and embedded information.
-    """
-    user_id: UUID
+    """    user_id: UUID
     upload_id: UUID
     file_id: UUID
     filename: str
@@ -295,12 +279,10 @@ class AudioUploadMetadataExtractedEvent(BaseEvent):
 
 @dataclass
 class AudioUploadDuplicateDetectedEvent(BaseEvent):
-    """
-    Event triggered when a duplicate audio file is detected during upload.
+    """    Event triggered when a duplicate audio file is detected during upload.
     
     Prevents unnecessary storage and processing of identical content.
-    """
-    user_id: UUID
+    """    user_id: UUID
     upload_id: UUID
     filename: str
     duplicate_file_id: UUID
@@ -330,12 +312,10 @@ class AudioUploadDuplicateDetectedEvent(BaseEvent):
 
 @dataclass
 class AudioUploadQuotaExceededEvent(BaseEvent):
-    """
-    Event triggered when user upload quota is exceeded.
+    """    Event triggered when user upload quota is exceeded.
     
     Handles quota enforcement and upgrade suggestions.
-    """
-    user_id: UUID
+    """    user_id: UUID
     upload_id: UUID
     filename: str
     file_size: int

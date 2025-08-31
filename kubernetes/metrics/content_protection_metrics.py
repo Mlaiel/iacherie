@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Content Protection Performance Metrics
+"""IA Influencer Agent - Content Protection Performance Metrics
 Specialized metrics collection for content fingerprinting and protection systems
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -32,7 +31,6 @@ Features:
 - Processing speed optimization
 - False positive/negative tracking
 """
-
 import asyncio
 import time
 import json
@@ -54,8 +52,7 @@ metrics_config = get_metrics_config()
 
 
 class ContentType(Enum):
-    """Content types for protection metrics"""
-    AUDIO = "audio"
+    """Content types for protection metrics"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -63,8 +60,7 @@ class ContentType(Enum):
 
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithms"""
-    # Audio algorithms
+    """Fingerprinting algorithms"""    # Audio algorithms
     CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     MFCC = "mfcc"
@@ -86,8 +82,7 @@ class FingerprintAlgorithm(Enum):
 
 
 class MatchAccuracy(Enum):
-    """Match accuracy classifications"""
-    TRUE_POSITIVE = "true_positive"
+    """Match accuracy classifications"""    TRUE_POSITIVE = "true_positive"
     FALSE_POSITIVE = "false_positive"
     TRUE_NEGATIVE = "true_negative"
     FALSE_NEGATIVE = "false_negative"
@@ -95,8 +90,7 @@ class MatchAccuracy(Enum):
 
 @dataclass
 class FingerprintMetrics:
-    """Fingerprint processing metrics"""
-    content_type: ContentType
+    """Fingerprint processing metrics"""    content_type: ContentType
     algorithm: FingerprintAlgorithm
     processing_time: float
     file_size: int
@@ -110,8 +104,7 @@ class FingerprintMetrics:
 
 @dataclass
 class MatchMetrics:
-    """Content matching metrics"""
-    original_fingerprint_id: str
+    """Content matching metrics"""    original_fingerprint_id: str
     matched_content_url: str
     similarity_score: float
     algorithm_used: FingerprintAlgorithm
@@ -123,13 +116,11 @@ class MatchMetrics:
 
 
 class ContentProtectionMetricsCollector:
-    """
-    Specialized metrics collector for content protection systems
+    """    Specialized metrics collector for content protection systems
     
     Tracks fingerprinting performance, matching accuracy, and 
     protection effectiveness across all content types
-    """
-    
+    """    
     def __init__(self):
         self.redis_manager = RedisManager()
         self.logger = logger
@@ -161,8 +152,7 @@ class ContentProtectionMetricsCollector:
         success: bool,
         error_message: Optional[str] = None
     ) -> None:
-        """Track fingerprint creation metrics"""
-        
+        """Track fingerprint creation metrics"""        
         metrics = FingerprintMetrics(
             content_type=content_type,
             algorithm=algorithm,
@@ -211,8 +201,7 @@ class ContentProtectionMetricsCollector:
         platform: str,
         match_accuracy: Optional[MatchAccuracy] = None
     ) -> None:
-        """Track content matching metrics"""
-        
+        """Track content matching metrics"""        
         metrics = MatchMetrics(
             original_fingerprint_id=original_fingerprint_id,
             matched_content_url=matched_content_url,
@@ -256,8 +245,7 @@ class ContentProtectionMetricsCollector:
         content_type: Optional[ContentType] = None,
         time_range: str = "1h"
     ) -> Dict[str, Any]:
-        """Get fingerprinting performance metrics"""
-        
+        """Get fingerprinting performance metrics"""        
         try:
             # Parse time range
             if time_range == "15m":
@@ -280,8 +268,7 @@ class ContentProtectionMetricsCollector:
                     content_filter = "AND content_type = $3"
                     params.append(content_type.value)
                 
-                result = await session.fetchrow(f"""
-                    SELECT 
+                result = await session.fetchrow(f"""                    SELECT 
                         COUNT(*) as total_fingerprints,
                         COUNT(CASE WHEN success = true THEN 1 END) as successful_fingerprints,
                         AVG(processing_time) as avg_processing_time,
@@ -294,8 +281,7 @@ class ContentProtectionMetricsCollector:
                 """, *params)
                 
                 # Get algorithm breakdown
-                algorithm_stats = await session.fetch(f"""
-                    SELECT 
+                algorithm_stats = await session.fetch(f"""                    SELECT 
                         algorithm,
                         COUNT(*) as count,
                         AVG(processing_time) as avg_time,
@@ -339,8 +325,7 @@ class ContentProtectionMetricsCollector:
         platform: Optional[str] = None,
         time_range: str = "1h"
     ) -> Dict[str, Any]:
-        """Get content matching accuracy metrics"""
-        
+        """Get content matching accuracy metrics"""        
         try:
             # Parse time range
             if time_range == "15m":
@@ -363,8 +348,7 @@ class ContentProtectionMetricsCollector:
                     platform_filter = "AND platform = $3"
                     params.append(platform)
                 
-                result = await session.fetchrow(f"""
-                    SELECT 
+                result = await session.fetchrow(f"""                    SELECT 
                         COUNT(*) as total_matches,
                         COUNT(CASE WHEN match_accuracy = 'true_positive' THEN 1 END) as true_positives,
                         COUNT(CASE WHEN match_accuracy = 'false_positive' THEN 1 END) as false_positives,
@@ -393,8 +377,7 @@ class ContentProtectionMetricsCollector:
                     accuracy = precision = recall = f1_score = 0.0
                 
                 # Get platform breakdown
-                platform_stats = await session.fetch(f"""
-                    SELECT 
+                platform_stats = await session.fetch(f"""                    SELECT 
                         platform,
                         COUNT(*) as total_matches,
                         AVG(similarity_score) as avg_similarity,
@@ -438,8 +421,7 @@ class ContentProtectionMetricsCollector:
         self,
         tenant_id: str
     ) -> Dict[str, Any]:
-        """Get real-time protection system status"""
-        
+        """Get real-time protection system status"""        
         try:
             # Get recent metrics from Redis
             fingerprint_data = await self.redis_manager.list_range(
@@ -506,12 +488,10 @@ class ContentProtectionMetricsCollector:
             }
     
     async def _store_fingerprint_metrics(self, metrics: FingerprintMetrics) -> None:
-        """Store fingerprint metrics in database"""
-        try:
+        """Store fingerprint metrics in database"""        try:
             async with get_database_session() as session:
                 await session.execute(
-                    """
-                    INSERT INTO fingerprint_metrics 
+                    """                    INSERT INTO fingerprint_metrics 
                     (tenant_id, content_type, algorithm, processing_time, file_size, 
                      duration, quality_score, success, error_message, timestamp)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
@@ -533,12 +513,10 @@ class ContentProtectionMetricsCollector:
             self.logger.error(f"Error storing fingerprint metrics: {e}")
     
     async def _store_match_metrics(self, metrics: MatchMetrics) -> None:
-        """Store match metrics in database"""
-        try:
+        """Store match metrics in database"""        try:
             async with get_database_session() as session:
                 await session.execute(
-                    """
-                    INSERT INTO match_metrics 
+                    """                    INSERT INTO match_metrics 
                     (tenant_id, original_fingerprint_id, matched_content_url, 
                      similarity_score, algorithm_used, processing_time, match_accuracy, 
                      platform, timestamp)
@@ -560,8 +538,7 @@ class ContentProtectionMetricsCollector:
             self.logger.error(f"Error storing match metrics: {e}")
     
     async def _calculate_performance_metrics(self) -> None:
-        """Background task to calculate and cache performance metrics"""
-        while True:
+        """Background task to calculate and cache performance metrics"""        while True:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
                 
@@ -573,17 +550,14 @@ class ContentProtectionMetricsCollector:
                 await asyncio.sleep(60)  # Wait before retrying
     
     async def _aggregate_tenant_metrics(self) -> None:
-        """Aggregate metrics for all tenants"""
-        try:
+        """Aggregate metrics for all tenants"""        try:
             async with get_database_session() as session:
                 # Get list of active tenants
                 tenants = await session.fetch(
-                    """
-                    SELECT DISTINCT tenant_id 
+                    """                    SELECT DISTINCT tenant_id 
                     FROM fingerprint_metrics 
                     WHERE timestamp >= NOW() - INTERVAL '1 hour'
-                    """
-                )
+                    """                )
                 
                 for tenant_row in tenants:
                     tenant_id = tenant_row["tenant_id"]

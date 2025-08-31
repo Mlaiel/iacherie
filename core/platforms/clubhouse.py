@@ -1,5 +1,4 @@
-"""
-Clubhouse Platform Integration
+"""Clubhouse Platform Integration
 
 Clubhouse API integration for audio-based social networking.
 
@@ -7,7 +6,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -24,27 +22,23 @@ logger = logging.getLogger(__name__)
 
 
 class ClubhousePlatform(PlatformBase):
-    """Clubhouse platform integration"""
-    
+    """Clubhouse platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize Clubhouse platform"""
-        super().__init__(config)
+        """Initialize Clubhouse platform"""        super().__init__(config)
         # Note: Clubhouse doesn't have a public API yet
         # This is a placeholder implementation for future API
         self.api_base = "https://api.clubhouse.com/v1"  # Hypothetical
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Clubhouse (placeholder)"""
-        try:
+        """Authenticate with Clubhouse (placeholder)"""        try:
             # Clubhouse doesn't have public API yet
             logger.warning("Clubhouse doesn't have a public API available yet")
             
@@ -66,12 +60,10 @@ class ClubhousePlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Clubhouse token"""
-        return await self.authenticate()
+        """Refresh Clubhouse token"""        return await self.authenticate()
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make request to Clubhouse API (placeholder)"""
-        try:
+        """Make request to Clubhouse API (placeholder)"""        try:
             logger.warning("Clubhouse API not available - returning placeholder data")
             
             # Return placeholder response structure
@@ -87,8 +79,7 @@ class ClubhousePlatform(PlatformBase):
             return None
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Create Clubhouse room or event (placeholder)"""
-        try:
+        """Create Clubhouse room or event (placeholder)"""        try:
             # Clubhouse is primarily live audio - content would be room creation
             logger.warning("Clubhouse content creation requires live room hosting")
             
@@ -107,8 +98,7 @@ class ClubhousePlatform(PlatformBase):
             )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Clubhouse analytics (placeholder)"""
-        try:
+        """Get Clubhouse analytics (placeholder)"""        try:
             return AnalyticsData(
                 platform_id=self.platform_id,
                 content_id=content_id,
@@ -129,8 +119,7 @@ class ClubhousePlatform(PlatformBase):
             raise
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search Clubhouse rooms/users (placeholder)"""
-        try:
+        """Search Clubhouse rooms/users (placeholder)"""        try:
             logger.warning("Clubhouse search would find rooms and users")
             return []
             
@@ -139,8 +128,7 @@ class ClubhousePlatform(PlatformBase):
             return []
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's Clubhouse activity (placeholder)"""
-        try:
+        """Get user's Clubhouse activity (placeholder)"""        try:
             logger.warning("Clubhouse user content would show hosted/attended rooms")
             return []
             
@@ -149,8 +137,7 @@ class ClubhousePlatform(PlatformBase):
             return []
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete Clubhouse content (placeholder)"""
-        try:
+        """Delete Clubhouse content (placeholder)"""        try:
             logger.warning("Clubhouse rooms cannot be deleted after they end")
             return False
                 
@@ -159,8 +146,7 @@ class ClubhousePlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update Clubhouse content (placeholder)"""
-        try:
+        """Update Clubhouse content (placeholder)"""        try:
             logger.warning("Clubhouse room details can be updated during live session")
             return False
                 
@@ -169,8 +155,7 @@ class ClubhousePlatform(PlatformBase):
             return False
     
     async def create_room(self, title: str, description: str = "", is_private: bool = False) -> Optional[str]:
-        """Create Clubhouse room (placeholder)"""
-        try:
+        """Create Clubhouse room (placeholder)"""        try:
             logger.warning("Clubhouse room creation would require live hosting")
             return None
                 
@@ -179,8 +164,7 @@ class ClubhousePlatform(PlatformBase):
             return None
     
     async def join_room(self, room_id: str) -> bool:
-        """Join Clubhouse room (placeholder)"""
-        try:
+        """Join Clubhouse room (placeholder)"""        try:
             logger.warning("Clubhouse room joining would be real-time")
             return False
                 
@@ -189,6 +173,5 @@ class ClubhousePlatform(PlatformBase):
             return False
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

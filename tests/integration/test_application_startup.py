@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -15,13 +13,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 #!/usr/bin/env python3
-"""
-Test script to verify that the application meets the requirements:
+"""Test script to verify that the application meets the requirements:
 1. python main.py starts without error
 2. API responds on /health
 3. Tests pass without error configuration
 """
-
 import sys
 import subprocess
 import time
@@ -31,8 +27,7 @@ import os
 from pathlib import Path
 
 def test_main_py_starts():
-    """Test that python main.py starts without error"""
-    print("🧪 Testing: python main.py starts without error")
+    """Test that python main.py starts without error"""    print("🧪 Testing: python main.py starts without error")
     
     # Start main.py in background
     proc = subprocess.Popen(
@@ -66,8 +61,7 @@ def test_main_py_starts():
         return False
 
 def test_health_endpoint():
-    """Test that API responds on /health"""
-    print("🧪 Testing: API responds on /health")
+    """Test that API responds on /health"""    print("🧪 Testing: API responds on /health")
     
     # Start main.py in background
     proc = subprocess.Popen(
@@ -112,8 +106,7 @@ def test_health_endpoint():
             proc.wait()
 
 def test_configuration():
-    """Test that tests pass without error configuration"""
-    print("🧪 Testing: Configuration works without errors")
+    """Test that tests pass without error configuration"""    print("🧪 Testing: Configuration works without errors")
     
     try:
         # Test importing main modules
@@ -135,8 +128,7 @@ def test_configuration():
         return False
 
 def main():
-    """Run all tests"""
-    print("🚀 Starting Application Startup Tests")
+    """Run all tests"""    print("🚀 Starting Application Startup Tests")
     print("=" * 50)
     
     tests = [

@@ -1,5 +1,4 @@
-"""
-Real-time Queue Monitor - IA-Influencer-Agent
+"""Real-time Queue Monitor - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/queues/realtime_queue_monitor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Queue metrics collection → Real-time analysis → Anomaly detection → 
 Alert generation → Auto-recovery → Performance optimization → Predictive scaling
 """
-
 from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable, AsyncGenerator
 import logging
 import asyncio
@@ -41,24 +39,21 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringLevel(Enum):
-    """Monitoring detail levels"""
-    BASIC = "basic"
+    """Monitoring detail levels"""    BASIC = "basic"
     DETAILED = "detailed"
     COMPREHENSIVE = "comprehensive"
     DEBUG = "debug"
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 
 class MetricType(Enum):
-    """Types of metrics to monitor"""
-    QUEUE_SIZE = "queue_size"
+    """Types of metrics to monitor"""    QUEUE_SIZE = "queue_size"
     PROCESSING_RATE = "processing_rate"
     RESPONSE_TIME = "response_time"
     ERROR_RATE = "error_rate"
@@ -71,8 +66,7 @@ class MetricType(Enum):
 
 
 class AlertCondition(Enum):
-    """Alert trigger conditions"""
-    THRESHOLD_EXCEEDED = "threshold_exceeded"
+    """Alert trigger conditions"""    THRESHOLD_EXCEEDED = "threshold_exceeded"
     THRESHOLD_BELOW = "threshold_below"
     RATE_OF_CHANGE = "rate_of_change"
     ANOMALY_DETECTED = "anomaly_detected"
@@ -82,8 +76,7 @@ class AlertCondition(Enum):
 
 @dataclass
 class MetricDataPoint:
-    """Single metric data point"""
-    metric_type: MetricType
+    """Single metric data point"""    metric_type: MetricType
     value: float
     timestamp: datetime
     source: str
@@ -93,8 +86,7 @@ class MetricDataPoint:
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
-    rule_id: str
+    """Alert rule configuration"""    rule_id: str
     name: str
     metric_type: MetricType
     condition: AlertCondition
@@ -110,8 +102,7 @@ class AlertRule:
 
 @dataclass
 class MonitoringAlert:
-    """Monitoring alert instance"""
-    alert_id: str
+    """Monitoring alert instance"""    alert_id: str
     rule_id: str
     severity: AlertSeverity
     title: str
@@ -128,8 +119,7 @@ class MonitoringAlert:
 
 @dataclass
 class PerformanceSnapshot:
-    """Complete performance snapshot"""
-    timestamp: datetime
+    """Complete performance snapshot"""    timestamp: datetime
     queue_metrics: Dict[str, Any]
     worker_metrics: Dict[str, Any]
     distribution_metrics: Dict[str, Any]
@@ -141,8 +131,7 @@ class PerformanceSnapshot:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring system configuration"""
-    monitoring_level: MonitoringLevel = MonitoringLevel.DETAILED
+    """Monitoring system configuration"""    monitoring_level: MonitoringLevel = MonitoringLevel.DETAILED
     collection_interval_seconds: int = 30
     alert_evaluation_interval_seconds: int = 60
     metric_retention_hours: int = 72
@@ -155,8 +144,7 @@ class MonitoringConfig:
 
 
 class AnomalyDetector:
-    """Statistical anomaly detection for metrics"""
-    
+    """Statistical anomaly detection for metrics"""    
     def __init__(self, window_size: int = 100, sensitivity: float = 2.0):
         self.window_size = window_size
         self.sensitivity = sensitivity  # Z-score threshold
@@ -164,8 +152,7 @@ class AnomalyDetector:
         self.baseline_stats: Dict[str, Dict] = {}
         
     async def add_metric(self, metric_key: str, value: float):
-        """Add metric value for anomaly detection"""
-        
+        """Add metric value for anomaly detection"""        
         self.metric_history[metric_key].append(value)
         
         # Update baseline statistics
@@ -180,8 +167,7 @@ class AnomalyDetector:
             }
     
     async def detect_anomaly(self, metric_key: str, value: float) -> Tuple[bool, float]:
-        """Detect if value is anomalous"""
-        
+        """Detect if value is anomalous"""        
         if metric_key not in self.baseline_stats:
             return False, 0.0
         
@@ -198,8 +184,7 @@ class AnomalyDetector:
         return is_anomaly, z_score
     
     async def get_anomaly_score(self, metric_key: str) -> float:
-        """Get current anomaly score for metric"""
-        
+        """Get current anomaly score for metric"""        
         if metric_key not in self.metric_history or len(self.metric_history[metric_key]) < 2:
             return 0.0
         
@@ -223,23 +208,20 @@ class AnomalyDetector:
 
 
 class PredictiveAnalyzer:
-    """Predictive analysis for queue performance"""
-    
+    """Predictive analysis for queue performance"""    
     def __init__(self, history_size: int = 1000):
         self.history_size = history_size
         self.metric_trends: Dict[str, deque] = defaultdict(lambda: deque(maxlen=history_size))
         
     async def add_metric_trend(self, metric_key: str, timestamp: datetime, value: float):
-        """Add metric for trend analysis"""
-        
+        """Add metric for trend analysis"""        
         self.metric_trends[metric_key].append({
             'timestamp': timestamp,
             'value': value
         })
     
     async def predict_future_value(self, metric_key: str, minutes_ahead: int = 15) -> Optional[float]:
-        """Predict future metric value using simple linear regression"""
-        
+        """Predict future metric value using simple linear regression"""        
         if metric_key not in self.metric_trends or len(self.metric_trends[metric_key]) < 10:
             return None
         
@@ -273,8 +255,7 @@ class PredictiveAnalyzer:
         return max(0.0, predicted_value)  # Ensure non-negative
     
     async def detect_trend_direction(self, metric_key: str) -> Optional[str]:
-        """Detect if metric is trending up, down, or stable"""
-        
+        """Detect if metric is trending up, down, or stable"""        
         if metric_key not in self.metric_trends or len(self.metric_trends[metric_key]) < 5:
             return None
         
@@ -302,8 +283,7 @@ class PredictiveAnalyzer:
 
 
 class RealtimeQueueMonitor:
-    """Real-time queue monitoring system with intelligent alerting"""
-    
+    """Real-time queue monitoring system with intelligent alerting"""    
     def __init__(self, 
                  config: MonitoringConfig,
                  queue_manager: Optional[IntelligentQueueManager] = None,
@@ -343,8 +323,7 @@ class RealtimeQueueMonitor:
         logger.info("Real-time Queue Monitor initialized")
     
     def _setup_prometheus_metrics(self):
-        """Setup Prometheus metrics"""
-        
+        """Setup Prometheus metrics"""        
         self.prometheus_counters = {
             'tasks_processed': Counter('queue_tasks_processed_total', 'Total tasks processed', registry=self.prometheus_registry),
             'tasks_failed': Counter('queue_tasks_failed_total', 'Total tasks failed', registry=self.prometheus_registry),
@@ -364,8 +343,7 @@ class RealtimeQueueMonitor:
         }
     
     async def initialize(self):
-        """Initialize monitoring system"""
-        
+        """Initialize monitoring system"""        
         # Setup Redis connection if enabled
         if self.config.redis_enabled:
             try:
@@ -382,8 +360,7 @@ class RealtimeQueueMonitor:
         logger.info("Real-time Queue Monitor initialized successfully")
     
     async def _setup_default_alert_rules(self):
-        """Setup default monitoring alert rules"""
-        
+        """Setup default monitoring alert rules"""        
         default_rules = [
             AlertRule(
                 rule_id="high_queue_size",
@@ -451,8 +428,7 @@ class RealtimeQueueMonitor:
             self.alert_rules[rule.rule_id] = rule
     
     async def start_monitoring(self):
-        """Start real-time monitoring"""
-        
+        """Start real-time monitoring"""        
         if self.is_monitoring:
             logger.warning("Monitoring already started")
             return
@@ -476,8 +452,7 @@ class RealtimeQueueMonitor:
         logger.info("Real-time monitoring started")
     
     async def stop_monitoring(self):
-        """Stop real-time monitoring"""
-        
+        """Stop real-time monitoring"""        
         self.is_monitoring = False
         
         # Cancel all monitoring tasks
@@ -496,8 +471,7 @@ class RealtimeQueueMonitor:
         logger.info("Real-time monitoring stopped")
     
     async def _metrics_collection_loop(self):
-        """Background task for metrics collection"""
-        
+        """Background task for metrics collection"""        
         while self.is_monitoring:
             try:
                 await self._collect_metrics()
@@ -508,8 +482,7 @@ class RealtimeQueueMonitor:
                 await asyncio.sleep(self.config.collection_interval_seconds)
     
     async def _collect_metrics(self):
-        """Collect metrics from various sources"""
-        
+        """Collect metrics from various sources"""        
         timestamp = datetime.utcnow()
         collected_metrics = []
         
@@ -545,8 +518,7 @@ class RealtimeQueueMonitor:
         await self._broadcast_metrics(collected_metrics)
     
     async def _collect_queue_metrics(self, timestamp: datetime) -> List[MetricDataPoint]:
-        """Collect queue-specific metrics"""
-        
+        """Collect queue-specific metrics"""        
         metrics = []
         
         try:
@@ -589,8 +561,7 @@ class RealtimeQueueMonitor:
         return metrics
     
     async def _collect_distribution_metrics(self, timestamp: datetime) -> List[MetricDataPoint]:
-        """Collect distribution engine metrics"""
-        
+        """Collect distribution engine metrics"""        
         metrics = []
         
         try:
@@ -639,8 +610,7 @@ class RealtimeQueueMonitor:
         return metrics
     
     async def _store_metric(self, metric: MetricDataPoint):
-        """Store metric in various backends"""
-        
+        """Store metric in various backends"""        
         # Store in memory
         metric_key = f"{metric.metric_type.value}_{metric.source}"
         self.metric_history[metric_key].append({
@@ -669,8 +639,7 @@ class RealtimeQueueMonitor:
                 logger.error(f"Error storing metric to Redis: {e}")
     
     async def _update_prometheus_metrics(self, metrics: List[MetricDataPoint]):
-        """Update Prometheus metrics"""
-        
+        """Update Prometheus metrics"""        
         for metric in metrics:
             try:
                 if metric.metric_type == MetricType.QUEUE_SIZE:
@@ -689,8 +658,7 @@ class RealtimeQueueMonitor:
                 logger.error(f"Error updating Prometheus metric: {e}")
     
     async def _broadcast_metrics(self, metrics: List[MetricDataPoint]):
-        """Broadcast metrics to WebSocket clients"""
-        
+        """Broadcast metrics to WebSocket clients"""        
         if not self.websocket_connections:
             return
         
@@ -730,8 +698,7 @@ class RealtimeQueueMonitor:
             logger.error(f"Error broadcasting metrics: {e}")
     
     async def _alert_evaluation_loop(self):
-        """Background task for alert evaluation"""
-        
+        """Background task for alert evaluation"""        
         while self.is_monitoring:
             try:
                 await self._evaluate_alerts()
@@ -742,8 +709,7 @@ class RealtimeQueueMonitor:
                 await asyncio.sleep(self.config.alert_evaluation_interval_seconds)
     
     async def _evaluate_alerts(self):
-        """Evaluate alert rules against current metrics"""
-        
+        """Evaluate alert rules against current metrics"""        
         current_time = datetime.utcnow()
         
         for rule_id, rule in self.alert_rules.items():
@@ -763,8 +729,7 @@ class RealtimeQueueMonitor:
                 logger.error(f"Error evaluating alert rule {rule_id}: {e}")
     
     async def _evaluate_alert_rule(self, rule: AlertRule, current_time: datetime) -> bool:
-        """Evaluate a single alert rule"""
-        
+        """Evaluate a single alert rule"""        
         # Get recent metrics for the rule's metric type
         metric_key = f"{rule.metric_type.value}_queue_manager"
         if metric_key not in self.metric_history:
@@ -807,8 +772,7 @@ class RealtimeQueueMonitor:
         return False
     
     async def _trigger_alert(self, rule: AlertRule, trigger_time: datetime):
-        """Trigger an alert"""
-        
+        """Trigger an alert"""        
         # Check if alert already exists and is active
         existing_alert_key = f"{rule.rule_id}_active"
         if existing_alert_key in self.active_alerts:
@@ -850,8 +814,7 @@ class RealtimeQueueMonitor:
         logger.warning(f"Alert triggered: {alert.title} (ID: {alert.alert_id})")
     
     async def _check_alert_resolution(self, rule: AlertRule, current_time: datetime):
-        """Check if an active alert should be resolved"""
-        
+        """Check if an active alert should be resolved"""        
         alert_key = f"{rule.rule_id}_active"
         if alert_key not in self.active_alerts:
             return
@@ -873,8 +836,7 @@ class RealtimeQueueMonitor:
             logger.info(f"Alert resolved: {alert.title} (ID: {alert.alert_id})")
     
     async def _execute_recovery_actions(self, actions: List[str]) -> List[str]:
-        """Execute automatic recovery actions"""
-        
+        """Execute automatic recovery actions"""        
         executed_actions = []
         
         for action in actions:
@@ -913,8 +875,7 @@ class RealtimeQueueMonitor:
         return executed_actions
     
     async def _send_alert_notifications(self, alert: MonitoringAlert):
-        """Send alert notifications"""
-        
+        """Send alert notifications"""        
         # Broadcast to WebSocket clients
         alert_data = {
             'type': 'alert_triggered',
@@ -946,8 +907,7 @@ class RealtimeQueueMonitor:
         self.websocket_connections -= disconnected_clients
     
     async def _send_alert_resolution(self, alert: MonitoringAlert):
-        """Send alert resolution notification"""
-        
+        """Send alert resolution notification"""        
         resolution_data = {
             'type': 'alert_resolved',
             'timestamp': datetime.utcnow().isoformat(),
@@ -972,8 +932,7 @@ class RealtimeQueueMonitor:
         self.websocket_connections -= disconnected_clients
     
     async def _performance_analysis_loop(self):
-        """Background task for performance analysis"""
-        
+        """Background task for performance analysis"""        
         while self.is_monitoring:
             try:
                 await self._analyze_performance()
@@ -984,8 +943,7 @@ class RealtimeQueueMonitor:
                 await asyncio.sleep(300)
     
     async def _analyze_performance(self):
-        """Analyze current performance and generate insights"""
-        
+        """Analyze current performance and generate insights"""        
         timestamp = datetime.utcnow()
         
         # Collect current metrics
@@ -1022,8 +980,7 @@ class RealtimeQueueMonitor:
         await self._broadcast_performance_update(snapshot)
     
     async def _calculate_health_score(self) -> float:
-        """Calculate overall system health score"""
-        
+        """Calculate overall system health score"""        
         health_factors = []
         
         # Queue health (based on size and processing rate)
@@ -1059,8 +1016,7 @@ class RealtimeQueueMonitor:
         return 0.5  # Default moderate health
     
     async def _detect_bottlenecks(self) -> List[str]:
-        """Detect system bottlenecks"""
-        
+        """Detect system bottlenecks"""        
         bottlenecks = []
         
         # High queue size bottleneck
@@ -1094,8 +1050,7 @@ class RealtimeQueueMonitor:
         return bottlenecks
     
     async def _generate_recommendations(self) -> List[str]:
-        """Generate performance optimization recommendations"""
-        
+        """Generate performance optimization recommendations"""        
         recommendations = []
         
         # Analyze trends and suggest optimizations
@@ -1127,8 +1082,7 @@ class RealtimeQueueMonitor:
         return recommendations
     
     async def _broadcast_performance_update(self, snapshot: PerformanceSnapshot):
-        """Broadcast performance update to WebSocket clients"""
-        
+        """Broadcast performance update to WebSocket clients"""        
         performance_data = {
             'type': 'performance_update',
             'timestamp': snapshot.timestamp.isoformat(),
@@ -1151,8 +1105,7 @@ class RealtimeQueueMonitor:
         self.websocket_connections -= disconnected_clients
     
     async def _predictive_analysis_loop(self):
-        """Background task for predictive analysis"""
-        
+        """Background task for predictive analysis"""        
         while self.is_monitoring:
             try:
                 await self._perform_predictive_analysis()
@@ -1163,8 +1116,7 @@ class RealtimeQueueMonitor:
                 await asyncio.sleep(600)
     
     async def _perform_predictive_analysis(self):
-        """Perform predictive analysis and generate proactive alerts"""
-        
+        """Perform predictive analysis and generate proactive alerts"""        
         # Predict future queue size
         queue_size_key = "queue_size_queue_manager"
         predicted_queue_size = await self.predictive_analyzer.predict_future_value(queue_size_key, 15)
@@ -1200,8 +1152,7 @@ class RealtimeQueueMonitor:
             )
     
     async def _create_predictive_alert(self, title: str, description: str, severity: AlertSeverity):
-        """Create a predictive alert"""
-        
+        """Create a predictive alert"""        
         alert = MonitoringAlert(
             alert_id=str(uuid.uuid4()),
             rule_id="predictive_analysis",
@@ -1218,11 +1169,9 @@ class RealtimeQueueMonitor:
         logger.info(f"Predictive alert generated: {title}")
     
     async def _websocket_server(self):
-        """WebSocket server for real-time updates"""
-        
+        """WebSocket server for real-time updates"""        
         async def handle_client(websocket, path):
-            """Handle WebSocket client connection"""
-            
+            """Handle WebSocket client connection"""            
             logger.info(f"WebSocket client connected: {websocket.remote_address}")
             self.websocket_connections.add(websocket)
             
@@ -1269,8 +1218,7 @@ class RealtimeQueueMonitor:
             logger.error(f"WebSocket server error: {e}")
     
     async def _handle_websocket_message(self, websocket, data: Dict):
-        """Handle incoming WebSocket message"""
-        
+        """Handle incoming WebSocket message"""        
         message_type = data.get('type')
         
         if message_type == 'get_current_metrics':
@@ -1316,8 +1264,7 @@ class RealtimeQueueMonitor:
                 await websocket.send(json.dumps(snapshot_data))
     
     async def _get_current_metrics_summary(self) -> Dict[str, Any]:
-        """Get summary of current metrics"""
-        
+        """Get summary of current metrics"""        
         summary = {}
         
         for metric_key, history in self.metric_history.items():
@@ -1332,8 +1279,7 @@ class RealtimeQueueMonitor:
         return summary
     
     async def _cleanup_old_data_loop(self):
-        """Background task for cleaning up old data"""
-        
+        """Background task for cleaning up old data"""        
         while self.is_monitoring:
             try:
                 await self._cleanup_old_data()
@@ -1344,8 +1290,7 @@ class RealtimeQueueMonitor:
                 await asyncio.sleep(3600)
     
     async def _cleanup_old_data(self):
-        """Clean up old metrics and alerts"""
-        
+        """Clean up old metrics and alerts"""        
         cutoff_time = datetime.utcnow() - timedelta(hours=self.config.metric_retention_hours)
         
         # Clean up metric history
@@ -1363,29 +1308,25 @@ class RealtimeQueueMonitor:
         logger.debug("Old monitoring data cleaned up")
     
     async def get_prometheus_metrics(self) -> str:
-        """Get Prometheus metrics in text format"""
-        
+        """Get Prometheus metrics in text format"""        
         if not self.config.prometheus_enabled:
             return ""
         
         return generate_latest(self.prometheus_registry).decode('utf-8')
     
     async def add_alert_rule(self, rule: AlertRule):
-        """Add custom alert rule"""
-        
+        """Add custom alert rule"""        
         self.alert_rules[rule.rule_id] = rule
         logger.info(f"Alert rule added: {rule.name}")
     
     async def remove_alert_rule(self, rule_id: str):
-        """Remove alert rule"""
-        
+        """Remove alert rule"""        
         if rule_id in self.alert_rules:
             del self.alert_rules[rule_id]
             logger.info(f"Alert rule removed: {rule_id}")
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get current monitoring status"""
-        
+        """Get current monitoring status"""        
         return {
             'is_monitoring': self.is_monitoring,
             'config': {
@@ -1420,8 +1361,7 @@ def create_realtime_queue_monitor(
     queue_manager: Optional[IntelligentQueueManager] = None,
     distribution_engine: Optional[TaskDistributionEngine] = None
 ) -> RealtimeQueueMonitor:
-    """Create and configure real-time queue monitor"""
-    
+    """Create and configure real-time queue monitor"""    
     if config is None:
         config = MonitoringConfig()
     

@@ -1,5 +1,4 @@
-"""
-Content Compliance Engine - Advanced Content Safety and Compliance System
+"""Content Compliance Engine - Advanced Content Safety and Compliance System
 
 This module provides comprehensive content compliance validation for conversational AI,
 including harmful content detection, age-appropriate filtering, and brand safety compliance.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import re
 import logging
 from datetime import datetime, timedelta
@@ -24,8 +22,7 @@ from ..ml.content_classifier import ContentClassifier
 
 
 class ContentRiskLevel(Enum):
-    """Content risk severity levels"""
-    SAFE = "safe"
+    """Content risk severity levels"""    SAFE = "safe"
     LOW_RISK = "low_risk"
     MODERATE_RISK = "moderate_risk"
     HIGH_RISK = "high_risk"
@@ -33,8 +30,7 @@ class ContentRiskLevel(Enum):
 
 
 class ContentCategory(Enum):
-    """Content safety categories"""
-    TOXICITY = "toxicity"
+    """Content safety categories"""    TOXICITY = "toxicity"
     HARASSMENT = "harassment"
     HATE_SPEECH = "hate_speech"
     VIOLENCE = "violence"
@@ -49,8 +45,7 @@ class ContentCategory(Enum):
 
 
 class AgeRating(Enum):
-    """Age appropriateness ratings"""
-    ALL_AGES = "all_ages"
+    """Age appropriateness ratings"""    ALL_AGES = "all_ages"
     TEEN = "teen"
     MATURE = "mature"
     ADULT_ONLY = "adult_only"
@@ -58,8 +53,7 @@ class AgeRating(Enum):
 
 
 class BrandSafetyLevel(Enum):
-    """Brand safety compliance levels"""
-    BRAND_SAFE = "brand_safe"
+    """Brand safety compliance levels"""    BRAND_SAFE = "brand_safe"
     LOW_RISK = "low_risk"
     MODERATE_RISK = "moderate_risk"
     HIGH_RISK = "high_risk"
@@ -68,8 +62,7 @@ class BrandSafetyLevel(Enum):
 
 @dataclass
 class ContentViolation:
-    """Content safety violation structure"""
-    category: ContentCategory
+    """Content safety violation structure"""    category: ContentCategory
     risk_level: ContentRiskLevel
     confidence_score: float
     description: str
@@ -83,8 +76,7 @@ class ContentViolation:
 
 @dataclass
 class ContentSafetyResult:
-    """Content safety assessment result"""
-    overall_safety_score: float
+    """Content safety assessment result"""    overall_safety_score: float
     risk_level: ContentRiskLevel
     age_rating: AgeRating
     brand_safety_level: BrandSafetyLevel
@@ -99,8 +91,7 @@ class ContentSafetyResult:
 
 @dataclass
 class ContentModerationAction:
-    """Content moderation action structure"""
-    action_type: str
+    """Content moderation action structure"""    action_type: str
     content_segment: str
     replacement_text: Optional[str]
     warning_message: Optional[str]
@@ -110,13 +101,11 @@ class ContentModerationAction:
 
 
 class ContentComplianceEngine:
-    """
-    Advanced content safety and compliance validation system.
+    """    Advanced content safety and compliance validation system.
     
     Provides comprehensive content safety assessment including toxicity detection,
     age-appropriate filtering, brand safety validation, and automated content moderation.
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -145,8 +134,7 @@ class ContentComplianceEngine:
         self.logger.info("ContentComplianceEngine initialized with safety detection systems")
     
     def _load_safety_thresholds(self) -> Dict[ContentCategory, Dict[str, float]]:
-        """Load content safety thresholds"""
-        return {
+        """Load content safety thresholds"""        return {
             ContentCategory.TOXICITY: {
                 "safe": 0.2,
                 "low_risk": 0.4,
@@ -185,8 +173,7 @@ class ContentComplianceEngine:
         }
     
     def _load_content_patterns(self) -> Dict[ContentCategory, List[Dict[str, Any]]]:
-        """Load content detection patterns"""
-        return {
+        """Load content detection patterns"""        return {
             ContentCategory.PROFANITY: [
                 {
                     "pattern": r"\b(damn|hell|crap|shit|fuck|bitch|asshole|bastard)\b",
@@ -244,8 +231,7 @@ class ContentComplianceEngine:
         }
     
     def _load_brand_safety_rules(self) -> Dict[str, Any]:
-        """Load brand safety rules"""
-        return {
+        """Load brand safety rules"""        return {
             "unsafe_topics": [
                 "controversial_politics", "extremism", "adult_content", 
                 "violence", "illegal_activities", "hate_speech"
@@ -259,8 +245,7 @@ class ContentComplianceEngine:
         }
     
     def _load_age_rating_rules(self) -> Dict[AgeRating, Dict[str, Any]]:
-        """Load age rating classification rules"""
-        return {
+        """Load age rating classification rules"""        return {
             AgeRating.ALL_AGES: {
                 "max_toxicity": 0.1,
                 "allowed_topics": ["education", "entertainment", "general"],
@@ -289,8 +274,7 @@ class ContentComplianceEngine:
         ai_response: str,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive content safety validation.
+        """        Comprehensive content safety validation.
         
         Args:
             user_input: User's input text
@@ -299,8 +283,7 @@ class ContentComplianceEngine:
             
         Returns:
             Dict containing content safety assessment
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.debug("Starting content safety validation")
@@ -416,8 +399,7 @@ class ContentComplianceEngine:
             }
     
     async def _detect_pattern_violations(self, content: str) -> List[ContentViolation]:
-        """Detect content violations using pattern matching"""
-        violations = []
+        """Detect content violations using pattern matching"""        violations = []
         
         for category, patterns in self.content_patterns.items():
             for pattern_config in patterns:
@@ -461,8 +443,7 @@ class ContentComplianceEngine:
         content: str,
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Detect toxicity using ML models"""
-        violations = []
+        """Detect toxicity using ML models"""        violations = []
         
         try:
             # Get toxicity scores for different categories
@@ -510,8 +491,7 @@ class ContentComplianceEngine:
         return {"violations": violations}
     
     async def _analyze_content_sentiment(self, content: str) -> Dict[str, Any]:
-        """Analyze content sentiment for context"""
-        try:
+        """Analyze content sentiment for context"""        try:
             sentiment_result = await self.sentiment_analyzer.analyze(content)
             return {
                 "sentiment_score": sentiment_result.get("score", 0.0),
@@ -528,8 +508,7 @@ class ContentComplianceEngine:
         content: str,
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Classify content for safety assessment"""
-        try:
+        """Classify content for safety assessment"""        try:
             classification_result = await self.content_classifier.classify(content)
             return {
                 "primary_topic": classification_result.get("topic", "general"),
@@ -547,8 +526,7 @@ class ContentComplianceEngine:
         violations: List[ContentViolation],
         content_classification: Dict[str, Any]
     ) -> AgeRating:
-        """Assess age appropriateness rating"""
-        # Start with most permissive rating
+        """Assess age appropriateness rating"""        # Start with most permissive rating
         current_rating = AgeRating.ALL_AGES
         
         # Check violations against age rating rules
@@ -581,8 +559,7 @@ class ContentComplianceEngine:
         sentiment_analysis: Dict[str, Any],
         content_classification: Dict[str, Any]
     ) -> BrandSafetyLevel:
-        """Assess brand safety compliance level"""
-        # Check for brand-unsafe content
+        """Assess brand safety compliance level"""        # Check for brand-unsafe content
         brand_unsafe_categories = [
             ContentCategory.HATE_SPEECH,
             ContentCategory.HARASSMENT,
@@ -618,8 +595,7 @@ class ContentComplianceEngine:
         sentiment_analysis: Dict[str, Any],
         content_classification: Dict[str, Any]
     ) -> float:
-        """Calculate overall content safety score"""
-        base_score = 1.0
+        """Calculate overall content safety score"""        base_score = 1.0
         
         # Deduct for violations
         for violation in violations:
@@ -641,8 +617,7 @@ class ContentComplianceEngine:
         return max(0.0, min(1.0, base_score))
     
     def _determine_risk_level(self, safety_score: float) -> ContentRiskLevel:
-        """Determine risk level from safety score"""
-        if safety_score >= 0.8:
+        """Determine risk level from safety score"""        if safety_score >= 0.8:
             return ContentRiskLevel.SAFE
         elif safety_score >= 0.6:
             return ContentRiskLevel.LOW_RISK
@@ -654,8 +629,7 @@ class ContentComplianceEngine:
             return ContentRiskLevel.HARMFUL
     
     def _generate_safety_recommendations(self, result: ContentSafetyResult) -> List[str]:
-        """Generate safety compliance recommendations"""
-        recommendations = []
+        """Generate safety compliance recommendations"""        recommendations = []
         
         if result.violations:
             recommendations.append("Review and moderate flagged content")
@@ -687,8 +661,7 @@ class ContentComplianceEngine:
         return recommendations
     
     def _apply_content_moderation(self, violations: List[ContentViolation]) -> List[ContentModerationAction]:
-        """Apply automated content moderation"""
-        actions = []
+        """Apply automated content moderation"""        actions = []
         
         for violation in violations:
             if violation.auto_actionable:
@@ -708,16 +681,14 @@ class ContentComplianceEngine:
         return actions
     
     def _calculate_confidence_score(self, violations: List[ContentViolation]) -> float:
-        """Calculate confidence score for safety assessment"""
-        if not violations:
+        """Calculate confidence score for safety assessment"""        if not violations:
             return 1.0
         
         total_confidence = sum(v.confidence_score for v in violations)
         return total_confidence / len(violations)
     
     def _get_category_actions(self, category: ContentCategory) -> List[str]:
-        """Get recommended actions for violation category"""
-        actions = {
+        """Get recommended actions for violation category"""        actions = {
             ContentCategory.TOXICITY: [
                 "Filter toxic content",
                 "Warn user about toxic language",
@@ -753,15 +724,12 @@ class ContentComplianceEngine:
         user_input: str,
         ai_response: str
     ) -> None:
-        """Store content safety assessment results"""
-        try:
-            query = """
-                INSERT INTO content_safety_assessments 
+        """Store content safety assessment results"""        try:
+            query = """                INSERT INTO content_safety_assessments 
                 (safety_score, risk_level, age_rating, brand_safety_level,
                  violations_count, moderation_required, processing_time_ms, created_at)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-            """
-            
+            """            
             await self.db_manager.execute(
                 query,
                 result.overall_safety_score,
@@ -782,8 +750,7 @@ class ContentComplianceEngine:
         category: ContentCategory,
         new_thresholds: Dict[str, float]
     ) -> None:
-        """Update safety thresholds for specific category"""
-        self.safety_thresholds[category] = new_thresholds
+        """Update safety thresholds for specific category"""        self.safety_thresholds[category] = new_thresholds
         await self.cache_manager.clear_pattern("content_safety_*")
         self.logger.info(f"Safety thresholds updated for {category.value}")
     
@@ -792,8 +759,7 @@ class ContentComplianceEngine:
         category: ContentCategory,
         pattern_config: Dict[str, Any]
     ) -> None:
-        """Add new content detection pattern"""
-        if category not in self.content_patterns:
+        """Add new content detection pattern"""        if category not in self.content_patterns:
             self.content_patterns[category] = []
         
         self.content_patterns[category].append(pattern_config)
@@ -801,11 +767,9 @@ class ContentComplianceEngine:
         self.logger.info(f"Content pattern added for {category.value}")
     
     async def get_safety_statistics(self, days: int = 30) -> Dict[str, Any]:
-        """Get content safety statistics"""
-        try:
+        """Get content safety statistics"""        try:
             # Overall safety metrics
-            safety_query = """
-                SELECT 
+            safety_query = """                SELECT 
                     risk_level,
                     age_rating,
                     brand_safety_level,
@@ -815,23 +779,20 @@ class ContentComplianceEngine:
                 FROM content_safety_assessments 
                 WHERE created_at >= $1
                 GROUP BY risk_level, age_rating, brand_safety_level
-            """
-            
+            """            
             safety_stats = await self.db_manager.fetch_all(
                 safety_query,
                 datetime.now() - timedelta(days=days)
             )
             
             # Moderation metrics
-            moderation_query = """
-                SELECT 
+            moderation_query = """                SELECT 
                     moderation_required,
                     COUNT(*) as count
                 FROM content_safety_assessments 
                 WHERE created_at >= $1
                 GROUP BY moderation_required
-            """
-            
+            """            
             moderation_stats = await self.db_manager.fetch_all(
                 moderation_query,
                 datetime.now() - timedelta(days=days)
@@ -856,9 +817,7 @@ class ContentComplianceEngine:
             return {}
     
     def get_supported_categories(self) -> List[str]:
-        """Get list of supported content categories"""
-        return [category.value for category in ContentCategory]
+        """Get list of supported content categories"""        return [category.value for category in ContentCategory]
     
     def get_category_thresholds(self, category: ContentCategory) -> Dict[str, float]:
-        """Get safety thresholds for specific category"""
-        return self.safety_thresholds.get(category, {})
+        """Get safety thresholds for specific category"""        return self.safety_thresholds.get(category, {})

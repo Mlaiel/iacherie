@@ -1,5 +1,4 @@
-"""
-📊 Analytics Engine - Ultra-Professional DRM Analytics & Intelligence
+"""📊 Analytics Engine - Ultra-Professional DRM Analytics & Intelligence
 ==================================================================
 
 Advanced analytics and business intelligence system for digital rights
@@ -24,7 +23,6 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
-
 import asyncio
 import logging
 import json
@@ -40,8 +38,7 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
-    """Types of analytics metrics."""
-    USAGE = "usage"
+    """Types of analytics metrics."""    USAGE = "usage"
     REVENUE = "revenue"
     PERFORMANCE = "performance"
     SECURITY = "security"
@@ -51,8 +48,7 @@ class MetricType(str, Enum):
     GEOGRAPHIC = "geographic"
 
 class AggregationPeriod(str, Enum):
-    """Aggregation periods for analytics."""
-    MINUTE = "minute"
+    """Aggregation periods for analytics."""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -61,16 +57,14 @@ class AggregationPeriod(str, Enum):
     YEAR = "year"
 
 class TrendDirection(str, Enum):
-    """Trend direction indicators."""
-    UP = "up"
+    """Trend direction indicators."""    UP = "up"
     DOWN = "down"
     STABLE = "stable"
     VOLATILE = "volatile"
 
 @dataclass
 class MetricValue:
-    """Individual metric value with metadata."""
-    metric_id: str
+    """Individual metric value with metadata."""    metric_id: str
     metric_type: MetricType
     value: Union[int, float, str]
     timestamp: datetime
@@ -81,8 +75,7 @@ class MetricValue:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report."""
-    report_id: str
+    """Comprehensive analytics report."""    report_id: str
     report_type: str
     period_start: datetime
     period_end: datetime
@@ -96,8 +89,7 @@ class AnalyticsReport:
 
 @dataclass
 class UsagePattern:
-    """Content usage pattern analysis."""
-    pattern_id: str
+    """Content usage pattern analysis."""    pattern_id: str
     content_id: str
     user_segments: Dict[str, int]
     peak_hours: List[int]
@@ -110,8 +102,7 @@ class UsagePattern:
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis and forecasting."""
-    analysis_id: str
+    """Revenue analysis and forecasting."""    analysis_id: str
     period: str
     total_revenue: float
     revenue_by_content: Dict[str, float]
@@ -122,11 +113,9 @@ class RevenueAnalysis:
     optimization_opportunities: List[str]
 
 class AnalyticsEngine:
-    """Advanced DRM analytics and business intelligence system."""
-    
+    """Advanced DRM analytics and business intelligence system."""    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize analytics engine."""
-        self.config = config
+        """Initialize analytics engine."""        self.config = config
         self.metrics: List[MetricValue] = []
         self.usage_data: List[Dict[str, Any]] = []
         self.revenue_data: List[Dict[str, Any]] = []
@@ -146,8 +135,7 @@ class AnalyticsEngine:
         self.anomaly_detectors = {}
         
     async def initialize(self) -> bool:
-        """Initialize analytics engine."""
-        try:
+        """Initialize analytics engine."""        try:
             # Initialize prediction models
             await self._initialize_prediction_models()
             
@@ -166,8 +154,7 @@ class AnalyticsEngine:
             return False
     
     async def _initialize_prediction_models(self) -> None:
-        """Initialize machine learning models for predictions."""
-        # Revenue prediction model
+        """Initialize machine learning models for predictions."""        # Revenue prediction model
         self.prediction_models["revenue"] = {
             "model_type": "linear_regression",
             "features": ["historical_revenue", "user_growth", "content_volume"],
@@ -192,8 +179,7 @@ class AnalyticsEngine:
         }
     
     async def _initialize_anomaly_detection(self) -> None:
-        """Initialize anomaly detection systems."""
-        self.anomaly_detectors = {
+        """Initialize anomaly detection systems."""        self.anomaly_detectors = {
             "usage_anomalies": {
                 "threshold": 2.5,  # Standard deviations
                 "window_size": 168,  # 1 week in hours
@@ -219,8 +205,7 @@ class AnalyticsEngine:
         tags: Optional[Set[str]] = None,
         timestamp: Optional[datetime] = None
     ) -> str:
-        """Record a metric value."""
-        try:
+        """Record a metric value."""        try:
             metric_id = str(uuid.uuid4())
             
             metric = MetricValue(
@@ -255,8 +240,7 @@ class AnalyticsEngine:
         device_info: Optional[Dict[str, Any]] = None,
         location_info: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Record a content usage event."""
-        try:
+        """Record a content usage event."""        try:
             usage_event = {
                 "event_id": str(uuid.uuid4()),
                 "user_id": user_id,
@@ -297,8 +281,7 @@ class AnalyticsEngine:
         payment_method: Optional[str] = None,
         region: Optional[str] = None
     ) -> None:
-        """Record a revenue event."""
-        try:
+        """Record a revenue event."""        try:
             revenue_event = {
                 "transaction_id": transaction_id,
                 "user_id": user_id,
@@ -334,8 +317,7 @@ class AnalyticsEngine:
         content_ids: Optional[List[str]] = None,
         user_segments: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive usage analytics."""
-        try:
+        """Generate comprehensive usage analytics."""        try:
             # Filter usage data
             filtered_data = self._filter_usage_data(start_date, end_date, content_ids, user_segments)
             
@@ -403,8 +385,7 @@ class AnalyticsEngine:
         content_ids: Optional[List[str]] = None,
         regions: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive revenue analytics."""
-        try:
+        """Generate comprehensive revenue analytics."""        try:
             # Filter revenue data
             filtered_data = self._filter_revenue_data(start_date, end_date, content_ids, regions)
             
@@ -475,8 +456,7 @@ class AnalyticsEngine:
         user_segment: Optional[str] = None,
         lookback_days: int = 30
     ) -> List[UsagePattern]:
-        """Detect and analyze usage patterns."""
-        try:
+        """Detect and analyze usage patterns."""        try:
             patterns = []
             
             # Get recent usage data
@@ -510,8 +490,7 @@ class AnalyticsEngine:
         forecast_days: int = 30,
         content_ids: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Forecast future revenue using machine learning models."""
-        try:
+        """Forecast future revenue using machine learning models."""        try:
             # Get historical revenue data
             end_date = datetime.now(timezone.utc)
             start_date = end_date - timedelta(days=90)  # Use 3 months of history
@@ -564,8 +543,7 @@ class AnalyticsEngine:
         metric_types: Optional[List[MetricType]] = None,
         lookback_hours: int = 24
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in metrics and usage patterns."""
-        try:
+        """Detect anomalies in metrics and usage patterns."""        try:
             anomalies = []
             
             # Get recent metrics
@@ -602,8 +580,7 @@ class AnalyticsEngine:
         end_date: datetime,
         report_type: str = "monthly"
     ) -> AnalyticsReport:
-        """Generate a comprehensive analytics report."""
-        try:
+        """Generate a comprehensive analytics report."""        try:
             report_id = str(uuid.uuid4())
             
             # Generate usage analytics
@@ -692,8 +669,7 @@ class AnalyticsEngine:
         content_ids: Optional[List[str]] = None,
         user_segments: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Filter usage data by criteria."""
-        filtered = [
+        """Filter usage data by criteria."""        filtered = [
             event for event in self.usage_data
             if start_date <= event["timestamp"] <= end_date
         ]
@@ -716,8 +692,7 @@ class AnalyticsEngine:
         content_ids: Optional[List[str]] = None,
         regions: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """Filter revenue data by criteria."""
-        filtered = [
+        """Filter revenue data by criteria."""        filtered = [
             event for event in self.revenue_data
             if start_date <= event["timestamp"] <= end_date
         ]
@@ -734,14 +709,12 @@ class AnalyticsEngine:
         return filtered
     
     def _get_user_segment(self, user_id: str) -> str:
-        """Get user segment for analytics."""
-        # This would integrate with user management system
+        """Get user segment for analytics."""        # This would integrate with user management system
         # For now, return a placeholder
         return "standard"
     
     async def _analyze_sessions(self, usage_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze session patterns from usage data."""
-        # Group by session
+        """Analyze session patterns from usage data."""        # Group by session
         sessions = defaultdict(list)
         for event in usage_data:
             session_id = event.get("session_id", event["user_id"])
@@ -770,8 +743,7 @@ class AnalyticsEngine:
             return {"total_sessions": len(sessions), "average_duration_minutes": 0}
     
     async def _analyze_user_engagement(self, usage_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze user engagement patterns."""
-        # Group by user
+        """Analyze user engagement patterns."""        # Group by user
         user_events = defaultdict(list)
         for event in usage_data:
             user_events[event["user_id"]].append(event)
@@ -798,8 +770,7 @@ class AnalyticsEngine:
         content_id: str,
         events: List[Dict[str, Any]]
     ) -> UsagePattern:
-        """Analyze usage pattern for specific content."""
-        # User segments
+        """Analyze usage pattern for specific content."""        # User segments
         user_segments = defaultdict(int)
         for event in events:
             segment = self._get_user_segment(event["user_id"])
@@ -849,8 +820,7 @@ class AnalyticsEngine:
         )
     
     async def _calculate_growth_metrics(self, revenue_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate revenue growth metrics."""
-        if len(revenue_data) < 2:
+        """Calculate revenue growth metrics."""        if len(revenue_data) < 2:
             return {"growth_rate": 0, "trend": "insufficient_data"}
         
         # Sort by date
@@ -884,8 +854,7 @@ class AnalyticsEngine:
         historical_revenue: List[float],
         forecast_days: int
     ) -> Dict[str, Any]:
-        """Apply machine learning model for revenue forecasting."""
-        # Simplified forecasting using moving average and trend
+        """Apply machine learning model for revenue forecasting."""        # Simplified forecasting using moving average and trend
         if len(historical_revenue) < 7:
             return {
                 "predictions": [0] * forecast_days,
@@ -943,8 +912,7 @@ class AnalyticsEngine:
         metric_type: MetricType,
         metrics: List[MetricValue]
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in metrics using statistical methods."""
-        anomalies = []
+        """Detect anomalies in metrics using statistical methods."""        anomalies = []
         
         if len(metrics) < 10:  # Need minimum data for anomaly detection
             return anomalies
@@ -996,8 +964,7 @@ class AnalyticsEngine:
         usage_patterns: List[UsagePattern],
         anomalies: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate analytical insights from data."""
-        insights = []
+        """Generate analytical insights from data."""        insights = []
         
         # Usage insights
         if usage_analytics.get("total_events", 0) > 0:
@@ -1045,8 +1012,7 @@ class AnalyticsEngine:
         revenue_analytics: Dict[str, Any],
         usage_patterns: List[UsagePattern]
     ) -> List[str]:
-        """Generate actionable recommendations."""
-        recommendations = []
+        """Generate actionable recommendations."""        recommendations = []
         
         # Usage-based recommendations
         usage_by_device = usage_analytics.get("usage_by_device", {})
@@ -1072,8 +1038,7 @@ class AnalyticsEngine:
         return recommendations
     
     def _calculate_trend(self, analytics: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate trend information from analytics data."""
-        # Simplified trend calculation
+        """Calculate trend information from analytics data."""        # Simplified trend calculation
         daily_data = analytics.get("daily_revenue", analytics.get("usage_by_hour", {}))
         
         if len(daily_data) < 2:
@@ -1094,8 +1059,7 @@ class AnalyticsEngine:
         return {"direction": "stable", "confidence": 0.0}
     
     async def _analyze_realtime_metric(self, metric: MetricValue) -> None:
-        """Analyze real-time metric for immediate alerts."""
-        if metric.metric_type == MetricType.SECURITY:
+        """Analyze real-time metric for immediate alerts."""        if metric.metric_type == MetricType.SECURITY:
             # Alert on security metrics
             logger.warning(f"Security metric recorded: {metric.value}")
         elif metric.metric_type == MetricType.PERFORMANCE:
@@ -1104,8 +1068,7 @@ class AnalyticsEngine:
                 logger.warning(f"High performance metric: {metric.value}")
     
     async def _periodic_aggregation(self) -> None:
-        """Periodically aggregate metrics for efficiency."""
-        while True:
+        """Periodically aggregate metrics for efficiency."""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -1118,8 +1081,7 @@ class AnalyticsEngine:
                 logger.error(f"Error during periodic aggregation: {e}")
     
     async def _periodic_analysis(self) -> None:
-        """Periodically run analytical tasks."""
-        while True:
+        """Periodically run analytical tasks."""        while True:
             try:
                 await asyncio.sleep(21600)  # Run every 6 hours
                 
@@ -1137,18 +1099,15 @@ class AnalyticsEngine:
                 logger.error(f"Error during periodic analysis: {e}")
     
     async def _aggregate_metrics(self, period: AggregationPeriod) -> None:
-        """Aggregate metrics for specified period."""
-        # This would implement metric aggregation logic
+        """Aggregate metrics for specified period."""        # This would implement metric aggregation logic
         pass
     
     async def _update_prediction_models(self) -> None:
-        """Update machine learning prediction models."""
-        # This would implement model retraining logic
+        """Update machine learning prediction models."""        # This would implement model retraining logic
         pass
     
     async def get_analytics_statistics(self) -> Dict[str, Any]:
-        """Get analytics engine statistics."""
-        return {
+        """Get analytics engine statistics."""        return {
             "total_metrics": len(self.metrics),
             "usage_events": len(self.usage_data),
             "revenue_events": len(self.revenue_data),
@@ -1157,8 +1116,7 @@ class AnalyticsEngine:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup analytics engine resources."""
-        try:
+        """Cleanup analytics engine resources."""        try:
             # Archive old data
             cutoff_date = datetime.now(timezone.utc) - self.retention_period
             

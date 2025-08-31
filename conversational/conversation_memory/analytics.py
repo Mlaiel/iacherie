@@ -1,5 +1,4 @@
-"""
-Conversation Memory Analytics - Advanced Analytics and Insights
+"""Conversation Memory Analytics - Advanced Analytics and Insights
 
 Comprehensive analytics system for conversation memory providing insights,
 metrics, usage tracking, and performance monitoring for content creator
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -44,8 +42,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ConversationMetrics:
-    """Conversation metrics data structure"""
-    total_conversations: int = 0
+    """Conversation metrics data structure"""    total_conversations: int = 0
     active_conversations: int = 0
     archived_conversations: int = 0
     avg_conversation_length: float = 0.0
@@ -57,8 +54,7 @@ class ConversationMetrics:
     protection_inquiry_rate: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "total_conversations": self.total_conversations,
             "active_conversations": self.active_conversations,
             "archived_conversations": self.archived_conversations,
@@ -74,8 +70,7 @@ class ConversationMetrics:
 
 @dataclass
 class UserInsights:
-    """User-specific conversation insights"""
-    user_id: str
+    """User-specific conversation insights"""    user_id: str
     total_conversations: int = 0
     preferred_content_types: List[str] = field(default_factory=list)
     peak_activity_hours: List[int] = field(default_factory=list)
@@ -86,8 +81,7 @@ class UserInsights:
     generated_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "user_id": self.user_id,
             "total_conversations": self.total_conversations,
             "preferred_content_types": self.preferred_content_types,
@@ -101,13 +95,11 @@ class UserInsights:
 
 
 class ConversationAnalytics:
-    """
-    Advanced conversation analytics engine
+    """    Advanced conversation analytics engine
     
     Provides comprehensive analytics for conversation patterns,
     user behavior, content trends, and collaboration insights.
-    """
-    
+    """    
     def __init__(self):
         self.long_term_memory = LongTermMemory()
         self.cache_manager = CacheManager()
@@ -116,8 +108,7 @@ class ConversationAnalytics:
         logger.info("ConversationAnalytics initialized")
     
     async def initialize(self):
-        """Initialize analytics components"""
-        try:
+        """Initialize analytics components"""        try:
             await self.long_term_memory.initialize()
             logger.info("ConversationAnalytics initialized")
             
@@ -130,8 +121,7 @@ class ConversationAnalytics:
         user_id: str,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> UserInsights:
-        """
-        Generate comprehensive insights for a user
+        """        Generate comprehensive insights for a user
         
         Args:
             user_id: User identifier
@@ -139,8 +129,7 @@ class ConversationAnalytics:
             
         Returns:
             User insights
-        """
-        try:
+        """        try:
             # Check cache first
             cache_key = f"user_insights:{user_id}:{hash(str(time_range))}"
             cached_insights = await self.cache_manager.get(cache_key)
@@ -209,8 +198,7 @@ class ConversationAnalytics:
         time_range: Optional[Tuple[datetime, datetime]] = None,
         user_id: Optional[str] = None
     ) -> ConversationMetrics:
-        """
-        Generate conversation metrics
+        """        Generate conversation metrics
         
         Args:
             time_range: Optional time range for analysis
@@ -218,8 +206,7 @@ class ConversationAnalytics:
             
         Returns:
             Conversation metrics
-        """
-        try:
+        """        try:
             # Build query
             query = {}
             if user_id:
@@ -281,16 +268,14 @@ class ConversationAnalytics:
         self,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Analyze collaboration patterns across the platform
+        """        Analyze collaboration patterns across the platform
         
         Args:
             time_range: Optional time range for analysis
             
         Returns:
             Collaboration pattern analysis
-        """
-        try:
+        """        try:
             # Get collaboration conversations
             query = {"collaboration_only": True}
             if time_range:
@@ -355,16 +340,14 @@ class ConversationAnalytics:
         self,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Analyze content protection trends and patterns
+        """        Analyze content protection trends and patterns
         
         Args:
             time_range: Optional time range for analysis
             
         Returns:
             Content protection trend analysis
-        """
-        try:
+        """        try:
             # Get protection-related conversations
             query = {"protection_only": True}
             if time_range:
@@ -432,8 +415,7 @@ class ConversationAnalytics:
         user_id: str,
         time_range: Optional[Tuple[datetime, datetime]]
     ) -> List[ConversationRecord]:
-        """Get conversations for a specific user"""
-        query = {"user_id": user_id, "limit": 1000}
+        """Get conversations for a specific user"""        query = {"user_id": user_id, "limit": 1000}
         
         if time_range:
             query["start_date"] = time_range[0]
@@ -445,8 +427,7 @@ class ConversationAnalytics:
         self,
         conversations: List[ConversationRecord]
     ) -> List[str]:
-        """Analyze user's content type preferences"""
-        
+        """Analyze user's content type preferences"""        
         content_type_counts = Counter(conv.content_type for conv in conversations)
         
         # Sort by frequency and return top 3
@@ -457,8 +438,7 @@ class ConversationAnalytics:
         self,
         conversations: List[ConversationRecord]
     ) -> List[int]:
-        """Analyze user's peak activity hours"""
-        
+        """Analyze user's peak activity hours"""        
         hour_counts = Counter(conv.timestamp.hour for conv in conversations)
         
         # Sort by frequency and return top 3 hours
@@ -470,8 +450,7 @@ class ConversationAnalytics:
         conversations: List[ConversationRecord],
         user_id: str
     ) -> List[Dict[str, Any]]:
-        """Identify collaboration opportunities for user"""
-        
+        """Identify collaboration opportunities for user"""        
         opportunities = []
         
         # Analyze content types for cross-collaboration
@@ -507,8 +486,7 @@ class ConversationAnalytics:
         self,
         conversations: List[ConversationRecord]
     ) -> Dict[str, Any]:
-        """Analyze how user's content focus has evolved"""
-        
+        """Analyze how user's content focus has evolved"""        
         # Group conversations by month
         monthly_content = defaultdict(list)
         
@@ -550,8 +528,7 @@ class ConversationAnalytics:
         self,
         conversations: List[ConversationRecord]
     ) -> List[str]:
-        """Identify content protection concerns"""
-        
+        """Identify content protection concerns"""        
         protection_keywords = [
             "copyright", "stolen", "unauthorized", "piracy", "dmca",
             "infringement", "violation", "theft", "plagiarism"
@@ -580,8 +557,7 @@ class ConversationAnalytics:
         self,
         conversations: List[ConversationRecord]
     ) -> Dict[str, float]:
-        """Analyze user engagement patterns"""
-        
+        """Analyze user engagement patterns"""        
         patterns = {
             "avg_messages_per_conversation": 0.0,
             "response_consistency": 0.0,
@@ -621,8 +597,7 @@ class ConversationAnalytics:
         self,
         conversations: List[ConversationRecord]
     ) -> List[int]:
-        """Calculate most active hours from conversations"""
-        
+        """Calculate most active hours from conversations"""        
         hour_counts = Counter(conv.timestamp.hour for conv in conversations)
         sorted_hours = hour_counts.most_common(5)
         
@@ -632,8 +607,7 @@ class ConversationAnalytics:
         self,
         conversations: List[ConversationRecord]
     ) -> Dict[str, float]:
-        """Calculate sentiment distribution"""
-        
+        """Calculate sentiment distribution"""        
         sentiments = [
             conv.sentiment_score for conv in conversations
             if conv.sentiment_score is not None
@@ -659,8 +633,7 @@ class ConversationAnalytics:
         self,
         conversations: List[ConversationRecord]
     ) -> float:
-        """Calculate collaboration conversation rate"""
-        
+        """Calculate collaboration conversation rate"""        
         collaboration_count = sum(
             1 for conv in conversations
             if self._is_collaboration_conversation(conv)
@@ -673,8 +646,7 @@ class ConversationAnalytics:
         self,
         conversations: List[ConversationRecord]
     ) -> float:
-        """Calculate protection inquiry rate"""
-        
+        """Calculate protection inquiry rate"""        
         protection_count = sum(
             1 for conv in conversations
             if self._is_protection_conversation(conv)
@@ -684,8 +656,7 @@ class ConversationAnalytics:
         return protection_count / total if total > 0 else 0.0
     
     def _extract_conversation_text(self, conversation: ConversationRecord) -> str:
-        """Extract text content from conversation"""
-        text_parts = []
+        """Extract text content from conversation"""        text_parts = []
         
         if conversation.conversation_data and "messages" in conversation.conversation_data:
             for message in conversation.conversation_data["messages"]:
@@ -698,8 +669,7 @@ class ConversationAnalytics:
         return " ".join(text_parts)
     
     def _is_collaboration_conversation(self, conversation: ConversationRecord) -> bool:
-        """Check if conversation is collaboration-related"""
-        collaboration_keywords = [
+        """Check if conversation is collaboration-related"""        collaboration_keywords = [
             "collaboration", "collaborate", "partner", "team", "together",
             "joint", "cooperation", "alliance", "partnership"
         ]
@@ -708,8 +678,7 @@ class ConversationAnalytics:
         return any(keyword in text for keyword in collaboration_keywords)
     
     def _is_protection_conversation(self, conversation: ConversationRecord) -> bool:
-        """Check if conversation is protection-related"""
-        protection_keywords = [
+        """Check if conversation is protection-related"""        protection_keywords = [
             "copyright", "protection", "stolen", "unauthorized", "dmca",
             "piracy", "infringement", "rights", "legal", "violation"
         ]
@@ -719,76 +688,59 @@ class ConversationAnalytics:
     
     # Placeholder methods for collaboration and protection analysis
     async def _get_collaboration_conversations(self, query: Dict[str, Any]) -> List[ConversationRecord]:
-        """Get collaboration-related conversations"""
-        # Would implement actual filtering logic
+        """Get collaboration-related conversations"""        # Would implement actual filtering logic
         return []
     
     async def _get_protection_conversations(self, query: Dict[str, Any]) -> List[ConversationRecord]:
-        """Get protection-related conversations"""
-        # Would implement actual filtering logic
+        """Get protection-related conversations"""        # Would implement actual filtering logic
         return []
     
     async def _analyze_collaboration_types(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze collaboration types"""
-        return {}
+        """Analyze collaboration types"""        return {}
     
     async def _analyze_partner_networks(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze partner networks"""
-        return {}
+        """Analyze partner networks"""        return {}
     
     async def _calculate_collaboration_success_metrics(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Calculate collaboration success metrics"""
-        return {}
+        """Calculate collaboration success metrics"""        return {}
     
     async def _identify_trending_collaboration_areas(self, conversations: List[ConversationRecord]) -> List[str]:
-        """Identify trending collaboration areas"""
-        return []
+        """Identify trending collaboration areas"""        return []
     
     async def _analyze_collaboration_timeline(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze collaboration timeline"""
-        return {}
+        """Analyze collaboration timeline"""        return {}
     
     async def _analyze_cross_content_collaborations(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze cross-content collaborations"""
-        return {}
+        """Analyze cross-content collaborations"""        return {}
     
     async def _analyze_protection_types(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze protection types"""
-        return {}
+        """Analyze protection types"""        return {}
     
     async def _analyze_threat_levels(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze threat levels"""
-        return {}
+        """Analyze threat levels"""        return {}
     
     async def _analyze_affected_content_types(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze affected content types"""
-        return {}
+        """Analyze affected content types"""        return {}
     
     async def _analyze_violation_platforms(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze violation platforms"""
-        return {}
+        """Analyze violation platforms"""        return {}
     
     async def _analyze_resolution_patterns(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze resolution patterns"""
-        return {}
+        """Analyze resolution patterns"""        return {}
     
     async def _analyze_prevention_strategies(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze prevention strategies"""
-        return {}
+        """Analyze prevention strategies"""        return {}
     
     async def _analyze_financial_impact(self, conversations: List[ConversationRecord]) -> Dict[str, Any]:
-        """Analyze financial impact"""
-        return {}
+        """Analyze financial impact"""        return {}
 
 
 class MemoryMetrics:
-    """
-    Memory system performance metrics
+    """    Memory system performance metrics
     
     Tracks and analyzes memory system performance including
     storage efficiency, retrieval speed, and indexing effectiveness.
-    """
-    
+    """    
     def __init__(self):
         self.metrics = MetricsCollector("memory_metrics")
         self.cache_manager = CacheManager()
@@ -796,8 +748,7 @@ class MemoryMetrics:
         logger.info("MemoryMetrics initialized")
     
     async def collect_storage_metrics(self) -> Dict[str, Any]:
-        """Collect storage system metrics"""
-        try:
+        """Collect storage system metrics"""        try:
             metrics = {
                 "storage_utilization": {},
                 "performance_metrics": {},
@@ -845,66 +796,51 @@ class MemoryMetrics:
     
     # Placeholder methods for metrics calculations
     async def _count_total_conversations(self) -> int:
-        """Count total conversations"""
-        return 0
+        """Count total conversations"""        return 0
     
     async def _calculate_storage_size(self) -> float:
-        """Calculate storage size in MB"""
-        return 0.0
+        """Calculate storage size in MB"""        return 0.0
     
     async def _calculate_index_size(self) -> float:
-        """Calculate index size in MB"""
-        return 0.0
+        """Calculate index size in MB"""        return 0.0
     
     async def _calculate_cache_hit_rate(self) -> float:
-        """Calculate cache hit rate"""
-        return 0.0
+        """Calculate cache hit rate"""        return 0.0
     
     async def _calculate_avg_storage_time(self) -> float:
-        """Calculate average storage time"""
-        return 0.0
+        """Calculate average storage time"""        return 0.0
     
     async def _calculate_avg_retrieval_time(self) -> float:
-        """Calculate average retrieval time"""
-        return 0.0
+        """Calculate average retrieval time"""        return 0.0
     
     async def _calculate_avg_search_time(self) -> float:
-        """Calculate average search time"""
-        return 0.0
+        """Calculate average search time"""        return 0.0
     
     async def _calculate_indexing_throughput(self) -> float:
-        """Calculate indexing throughput"""
-        return 0.0
+        """Calculate indexing throughput"""        return 0.0
     
     async def _calculate_storage_error_rate(self) -> float:
-        """Calculate storage error rate"""
-        return 0.0
+        """Calculate storage error rate"""        return 0.0
     
     async def _calculate_retrieval_error_rate(self) -> float:
-        """Calculate retrieval error rate"""
-        return 0.0
+        """Calculate retrieval error rate"""        return 0.0
     
     async def _calculate_search_error_rate(self) -> float:
-        """Calculate search error rate"""
-        return 0.0
+        """Calculate search error rate"""        return 0.0
     
     async def _calculate_cache_miss_rate(self) -> float:
-        """Calculate cache miss rate"""
-        return 0.0
+        """Calculate cache miss rate"""        return 0.0
     
     async def _calculate_cache_eviction_rate(self) -> float:
-        """Calculate cache eviction rate"""
-        return 0.0
+        """Calculate cache eviction rate"""        return 0.0
 
 
 class UsageTracker:
-    """
-    Usage tracking for conversation memory system
+    """    Usage tracking for conversation memory system
     
     Tracks user behavior, feature usage, and system utilization
     for optimization and insights.
-    """
-    
+    """    
     def __init__(self):
         self.metrics = MetricsCollector("usage_tracker")
         
@@ -916,8 +852,7 @@ class UsageTracker:
         action: str,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Track user action"""
-        try:
+        """Track user action"""        try:
             # Record action
             self.metrics.increment(f"user_action_{action}")
             
@@ -934,27 +869,23 @@ class UsageTracker:
         action: str,
         metadata: Dict[str, Any]
     ):
-        """Store action metadata for analysis"""
-        # Would implement detailed action tracking
+        """Store action metadata for analysis"""        # Would implement detailed action tracking
         pass
 
 
 class PerformanceMonitor:
-    """
-    Performance monitoring for conversation memory system
+    """    Performance monitoring for conversation memory system
     
     Monitors system performance, identifies bottlenecks,
     and provides optimization recommendations.
-    """
-    
+    """    
     def __init__(self):
         self.metrics = MetricsCollector("performance_monitor")
         
         logger.info("PerformanceMonitor initialized")
     
     async def monitor_system_performance(self) -> Dict[str, Any]:
-        """Monitor overall system performance"""
-        try:
+        """Monitor overall system performance"""        try:
             performance_data = {
                 "response_times": await self._monitor_response_times(),
                 "throughput": await self._monitor_throughput(),
@@ -970,42 +901,34 @@ class PerformanceMonitor:
             return {}
     
     async def _monitor_response_times(self) -> Dict[str, float]:
-        """Monitor response times"""
-        return {}
+        """Monitor response times"""        return {}
     
     async def _monitor_throughput(self) -> Dict[str, float]:
-        """Monitor system throughput"""
-        return {}
+        """Monitor system throughput"""        return {}
     
     async def _monitor_resource_utilization(self) -> Dict[str, float]:
-        """Monitor resource utilization"""
-        return {}
+        """Monitor resource utilization"""        return {}
     
     async def _identify_bottlenecks(self) -> List[str]:
-        """Identify system bottlenecks"""
-        return []
+        """Identify system bottlenecks"""        return []
     
     async def _generate_recommendations(self) -> List[str]:
-        """Generate optimization recommendations"""
-        return []
+        """Generate optimization recommendations"""        return []
 
 
 class InsightGenerator:
-    """
-    AI-powered insight generation for conversation memory
+    """    AI-powered insight generation for conversation memory
     
     Generates actionable insights and recommendations
     for content creators and platform optimization.
-    """
-    
+    """    
     def __init__(self):
         self.metrics = MetricsCollector("insight_generator")
         
         logger.info("InsightGenerator initialized")
     
     async def generate_platform_insights(self) -> Dict[str, Any]:
-        """Generate platform-wide insights"""
-        try:
+        """Generate platform-wide insights"""        try:
             insights = {
                 "content_trends": await self._analyze_content_trends(),
                 "collaboration_patterns": await self._analyze_collaboration_patterns(),
@@ -1021,24 +944,19 @@ class InsightGenerator:
             return {}
     
     async def _analyze_content_trends(self) -> Dict[str, Any]:
-        """Analyze content trends"""
-        return {}
+        """Analyze content trends"""        return {}
     
     async def _analyze_collaboration_patterns(self) -> Dict[str, Any]:
-        """Analyze collaboration patterns"""
-        return {}
+        """Analyze collaboration patterns"""        return {}
     
     async def _analyze_user_behavior(self) -> Dict[str, Any]:
-        """Analyze user behavior"""
-        return {}
+        """Analyze user behavior"""        return {}
     
     async def _identify_growth_opportunities(self) -> List[Dict[str, Any]]:
-        """Identify growth opportunities"""
-        return []
+        """Identify growth opportunities"""        return []
     
     async def _generate_optimization_recommendations(self) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""
-        return []
+        """Generate optimization recommendations"""        return []
 
 
 # Export all analytics classes

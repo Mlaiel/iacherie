@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Security Events Module
+"""Ultra-Advanced Security Events Module
 
 Revolutionary enterprise-grade security event logging for IA Influencer Agent platform.
 Provides comprehensive tracking for security incidents, cyber threats, advanced persistent
@@ -15,7 +14,6 @@ Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
-
 from typing import List, Dict, Any, Optional, Union
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -34,8 +32,7 @@ Base = declarative_base()
 
 
 class SecurityEventType(Enum):
-    """Security event types for tracking."""
-    
+    """Security event types for tracking."""    
     # Authentication Security
     SUSPICIOUS_LOGIN = "suspicious_login"
     FAILED_LOGIN_ATTEMPT = "failed_login_attempt"
@@ -105,8 +102,7 @@ class SecurityEventType(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat level classification."""
-    
+    """Threat level classification."""    
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -115,8 +111,7 @@ class ThreatLevel(Enum):
 
 
 class SecurityEventStatus(Enum):
-    """Security event status."""
-    
+    """Security event status."""    
     ACTIVE = "active"
     INVESTIGATING = "investigating"
     MITIGATED = "mitigated"
@@ -126,8 +121,7 @@ class SecurityEventStatus(Enum):
 
 
 class AttackVector(Enum):
-    """Attack vector types."""
-    
+    """Attack vector types."""    
     WEB_APPLICATION = "web_application"
     API = "api"
     MOBILE_APP = "mobile_app"
@@ -141,8 +135,7 @@ class AttackVector(Enum):
 
 @dataclass
 class SecurityContext:
-    """Security context information."""
-    
+    """Security context information."""    
     source_ip: str
     user_agent: str
     country: Optional[str]
@@ -156,8 +149,7 @@ class SecurityContext:
 
 
 class SecurityEventLog(Base):
-    """Security event log model."""
-    
+    """Security event log model."""    
     __tablename__ = "security_event_logs"
     
     # Primary identifiers
@@ -265,8 +257,7 @@ class SecurityEventLog(Base):
     )
     
     def to_dict(self, include_sensitive: bool = False) -> Dict[str, Any]:
-        """Convert model to dictionary."""
-        result = {
+        """Convert model to dictionary."""        result = {
             "id": str(self.id),
             "event_id": self.event_id,
             "incident_id": self.incident_id,
@@ -339,17 +330,14 @@ class SecurityEventLog(Base):
 
 
 class SecurityEventLogger:
-    """Enterprise security event logger."""
-    
+    """Enterprise security event logger."""    
     def __init__(self, db_session, service_name: str = "ia_influencer_agent"):
-        """
-        Initialize security event logger.
+        """        Initialize security event logger.
         
         Args:
             db_session: Database session
             service_name: Name of the service
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.service_name = service_name
         self.logger = logging.getLogger(f"{__name__}.{service_name}")
     
@@ -373,8 +361,7 @@ class SecurityEventLogger:
         incident_id: Optional[str] = None,
         automated_response: Optional[List[str]] = None
     ) -> str:
-        """
-        Log a security event.
+        """        Log a security event.
         
         Args:
             event_type: Type of security event
@@ -397,8 +384,7 @@ class SecurityEventLogger:
             
         Returns:
             str: Generated event ID
-        """
-        try:
+        """        try:
             event_id = f"sec_{uuid.uuid4().hex[:16]}"
             
             # Generate incident ID if not provided
@@ -503,8 +489,7 @@ class SecurityEventLogger:
         time_window_minutes: int,
         user_agent: Optional[str] = None
     ) -> str:
-        """Log brute force attack detection."""
-        return self.log_security_event(
+        """Log brute force attack detection."""        return self.log_security_event(
             event_type=SecurityEventType.BRUTE_FORCE_ATTACK,
             event_name="Brute Force Attack Detected",
             threat_level=ThreatLevel.HIGH,
@@ -532,8 +517,7 @@ class SecurityEventLogger:
         detected_platform: str,
         user_agent: Optional[str] = None
     ) -> str:
-        """Log content piracy detection."""
-        threat_level = ThreatLevel.HIGH if fingerprint_match_confidence > 0.8 else ThreatLevel.MEDIUM
+        """Log content piracy detection."""        threat_level = ThreatLevel.HIGH if fingerprint_match_confidence > 0.8 else ThreatLevel.MEDIUM
         
         return self.log_security_event(
             event_type=SecurityEventType.CONTENT_PIRACY_DETECTED,
@@ -562,8 +546,7 @@ class SecurityEventLogger:
         target_endpoint: str,
         attack_type: str = "volumetric"
     ) -> str:
-        """Log DDoS attack detection."""
-        return self.log_security_event(
+        """Log DDoS attack detection."""        return self.log_security_event(
             event_type=SecurityEventType.DDOS_ATTACK,
             event_name="DDoS Attack Detected",
             threat_level=ThreatLevel.CRITICAL,
@@ -590,8 +573,7 @@ class SecurityEventLogger:
         user_agent: Optional[str] = None,
         user_id: Optional[str] = None
     ) -> str:
-        """Log SQL injection attempt."""
-        payload_hash = hashlib.sha256(malicious_payload.encode()).hexdigest()[:16]
+        """Log SQL injection attempt."""        payload_hash = hashlib.sha256(malicious_payload.encode()).hexdigest()[:16]
         
         return self.log_security_event(
             event_type=SecurityEventType.SQL_INJECTION,
@@ -625,8 +607,7 @@ class SecurityEventLogger:
         access_method: str,
         user_agent: Optional[str] = None
     ) -> str:
-        """Log unauthorized data access attempt."""
-        threat_level = ThreatLevel.CRITICAL if data_sensitivity == "pii" else ThreatLevel.HIGH
+        """Log unauthorized data access attempt."""        threat_level = ThreatLevel.CRITICAL if data_sensitivity == "pii" else ThreatLevel.HIGH
         
         return self.log_security_event(
             event_type=SecurityEventType.UNAUTHORIZED_DATA_ACCESS,
@@ -661,8 +642,7 @@ class SecurityEventLogger:
         mitigation_steps: Optional[str] = None,
         manual_response: Optional[List[str]] = None
     ) -> bool:
-        """
-        Update security event status and investigation details.
+        """        Update security event status and investigation details.
         
         Args:
             event_id: Event ID to update
@@ -674,8 +654,7 @@ class SecurityEventLogger:
             
         Returns:
             bool: True if successfully updated
-        """
-        try:
+        """        try:
             event = self.db_session.query(SecurityEventLog).filter_by(event_id=event_id).first()
             
             if event:
@@ -722,8 +701,7 @@ class SecurityEventLogger:
         hours: int = 24,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """
-        Get active security threats.
+        """        Get active security threats.
         
         Args:
             threat_level: Filter by threat level
@@ -732,8 +710,7 @@ class SecurityEventLogger:
             
         Returns:
             List[Dict[str, Any]]: List of active threats
-        """
-        try:
+        """        try:
             start_time = datetime.now(timezone.utc) - timedelta(hours=hours)
             
             query = self.db_session.query(SecurityEventLog).filter(
@@ -756,16 +733,14 @@ class SecurityEventLogger:
             return []
     
     def get_threat_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """
-        Get threat summary for the specified time period.
+        """        Get threat summary for the specified time period.
         
         Args:
             hours: Hours to analyze
             
         Returns:
             Dict[str, Any]: Threat summary
-        """
-        try:
+        """        try:
             start_time = datetime.now(timezone.utc) - timedelta(hours=hours)
             
             events = self.db_session.query(SecurityEventLog).filter(
@@ -836,8 +811,7 @@ class SecurityEventLogger:
 
 
 def create_security_event_logger(db_session, service_name: str = "ia_influencer_agent") -> SecurityEventLogger:
-    """
-    Factory function to create security event logger.
+    """    Factory function to create security event logger.
     
     Args:
         db_session: Database session
@@ -845,8 +819,7 @@ def create_security_event_logger(db_session, service_name: str = "ia_influencer_
         
     Returns:
         SecurityEventLogger: Configured security event logger
-    """
-    return SecurityEventLogger(db_session, service_name)
+    """    return SecurityEventLogger(db_session, service_name)
 
 
 # Export main classes and functions

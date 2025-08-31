@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-ML Pipeline Tests - Enterprise Grade Test Suite
+"""ML Pipeline Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for ML pipeline management, orchestration, workflow automation,
 model lifecycle management, and production deployment systems.
@@ -26,7 +23,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
-
 import pytest
 import sys
 import os
@@ -62,11 +58,9 @@ from ai.ml.pipeline import (
 
 
 class TestMLPipeline:
-    """Tests for basic ML pipeline functionality"""
-    
+    """Tests for basic ML pipeline functionality"""    
     def test_init_ml_pipeline(self):
-        """Test ML pipeline initialization"""
-        pipeline = MLPipeline(
+        """Test ML pipeline initialization"""        pipeline = MLPipeline(
             name="content_analysis_pipeline",
             stages=["data_ingestion", "preprocessing", "training", "validation", "deployment"],
             config={
@@ -84,8 +78,7 @@ class TestMLPipeline:
         assert pipeline.enable_versioning
 
     def test_pipeline_stage_definition(self):
-        """Test pipeline stage definition and configuration"""
-        pipeline = MLPipeline(name="test_pipeline")
+        """Test pipeline stage definition and configuration"""        pipeline = MLPipeline(name="test_pipeline")
         
         # Define data ingestion stage
         data_stage = DataPipelineStage(
@@ -106,8 +99,7 @@ class TestMLPipeline:
         assert "batch_size" in pipeline.stages[0].parameters
 
     def test_pipeline_execution_flow(self, sample_pipeline_config):
-        """Test pipeline execution flow"""
-        pipeline = MLPipeline(name="test_execution_pipeline")
+        """Test pipeline execution flow"""        pipeline = MLPipeline(name="test_execution_pipeline")
         
         # Mock stage execution
         with patch.object(pipeline, 'execute_stage') as mock_execute:
@@ -123,8 +115,7 @@ class TestMLPipeline:
             assert execution_result["status"] == "success" or mock_execute.call_count >= 1
 
     def test_pipeline_stage_dependencies(self):
-        """Test pipeline stage dependencies and execution order"""
-        pipeline = MLPipeline(name="dependency_test_pipeline")
+        """Test pipeline stage dependencies and execution order"""        pipeline = MLPipeline(name="dependency_test_pipeline")
         
         # Define stages with dependencies
         stages = [
@@ -144,8 +135,7 @@ class TestMLPipeline:
         assert execution_order == expected_order
 
     def test_pipeline_parallel_execution(self):
-        """Test parallel execution of independent stages"""
-        pipeline = MLPipeline(name="parallel_test_pipeline", enable_parallel=True)
+        """Test parallel execution of independent stages"""        pipeline = MLPipeline(name="parallel_test_pipeline", enable_parallel=True)
         
         # Define independent parallel stages
         parallel_stages = [
@@ -170,8 +160,7 @@ class TestMLPipeline:
             assert all(result["status"] == "success" for result in parallel_results.values())
 
     def test_pipeline_error_handling(self):
-        """Test pipeline error handling and recovery"""
-        pipeline = MLPipeline(name="error_handling_test", enable_retry=True, max_retries=3)
+        """Test pipeline error handling and recovery"""        pipeline = MLPipeline(name="error_handling_test", enable_retry=True, max_retries=3)
         
         # Mock stage failure
         with patch.object(pipeline, 'execute_stage') as mock_execute:
@@ -187,8 +176,7 @@ class TestMLPipeline:
             assert mock_execute.call_count == 3  # Initial + 2 retries
 
     def test_pipeline_checkpointing(self, temp_dir):
-        """Test pipeline checkpointing and resume functionality"""
-        pipeline = MLPipeline(
+        """Test pipeline checkpointing and resume functionality"""        pipeline = MLPipeline(
             name="checkpoint_test_pipeline",
             checkpoint_dir=str(temp_dir),
             enable_checkpointing=True
@@ -215,8 +203,7 @@ class TestMLPipeline:
         assert len(loaded_checkpoint["completed_stages"]) == 2
 
     def test_pipeline_configuration_validation(self):
-        """Test pipeline configuration validation"""
-        pipeline = MLPipeline(name="validation_test")
+        """Test pipeline configuration validation"""        pipeline = MLPipeline(name="validation_test")
         
         # Valid configuration
         valid_config = {
@@ -241,11 +228,9 @@ class TestMLPipeline:
 
 
 class TestPipelineOrchestrator:
-    """Tests for pipeline orchestration functionality"""
-    
+    """Tests for pipeline orchestration functionality"""    
     def test_init_pipeline_orchestrator(self):
-        """Test pipeline orchestrator initialization"""
-        orchestrator = PipelineOrchestrator(
+        """Test pipeline orchestrator initialization"""        orchestrator = PipelineOrchestrator(
             orchestration_backend="airflow",
             default_resources={"cpu": "2", "memory": "4Gi"},
             enable_distributed_execution=True,
@@ -257,8 +242,7 @@ class TestPipelineOrchestrator:
         assert "metrics_endpoint" in orchestrator.monitoring_config
 
     def test_airflow_dag_generation(self, sample_pipeline):
-        """Test Airflow DAG generation from pipeline"""
-        orchestrator = PipelineOrchestrator(orchestration_backend="airflow")
+        """Test Airflow DAG generation from pipeline"""        orchestrator = PipelineOrchestrator(orchestration_backend="airflow")
         
         with patch.object(orchestrator, 'generate_airflow_dag') as mock_dag:
             mock_dag.return_value = {
@@ -282,8 +266,7 @@ class TestPipelineOrchestrator:
             assert len(dag_config["tasks"]) >= 1
 
     def test_kubernetes_orchestration(self, sample_pipeline):
-        """Test Kubernetes-based orchestration"""
-        orchestrator = PipelineOrchestrator(
+        """Test Kubernetes-based orchestration"""        orchestrator = PipelineOrchestrator(
             orchestration_backend="kubernetes",
             enable_distributed_execution=True
         )
@@ -302,8 +285,7 @@ class TestPipelineOrchestrator:
             mock_k8s.return_value.create_namespaced_job.assert_called_once()
 
     def test_distributed_pipeline_execution(self, sample_pipeline):
-        """Test distributed pipeline execution across multiple nodes"""
-        orchestrator = PipelineOrchestrator(enable_distributed_execution=True)
+        """Test distributed pipeline execution across multiple nodes"""        orchestrator = PipelineOrchestrator(enable_distributed_execution=True)
         
         # Mock distributed execution
         with patch.object(orchestrator, 'execute_distributed') as mock_distributed:
@@ -325,8 +307,7 @@ class TestPipelineOrchestrator:
             assert len(execution_result["nodes"]) == 3
 
     def test_pipeline_resource_management(self):
-        """Test pipeline resource allocation and management"""
-        orchestrator = PipelineOrchestrator()
+        """Test pipeline resource allocation and management"""        orchestrator = PipelineOrchestrator()
         
         resource_requirements = {
             "data_processing": {"cpu": "2", "memory": "4Gi"},
@@ -342,8 +323,7 @@ class TestPipelineOrchestrator:
         assert "gpu_count" in allocated_resources
 
     def test_pipeline_scheduling(self):
-        """Test pipeline scheduling functionality"""
-        orchestrator = PipelineOrchestrator()
+        """Test pipeline scheduling functionality"""        orchestrator = PipelineOrchestrator()
         
         schedule_config = {
             "schedule_type": "cron",
@@ -368,11 +348,9 @@ class TestPipelineOrchestrator:
 
 
 class TestWorkflowManager:
-    """Tests for workflow management functionality"""
-    
+    """Tests for workflow management functionality"""    
     def test_init_workflow_manager(self):
-        """Test workflow manager initialization"""
-        manager = WorkflowManager(
+        """Test workflow manager initialization"""        manager = WorkflowManager(
             workflow_engine="airflow",
             enable_versioning=True,
             enable_rollback=True,
@@ -384,8 +362,7 @@ class TestWorkflowManager:
         assert manager.enable_rollback
 
     def test_workflow_definition(self):
-        """Test workflow definition and validation"""
-        manager = WorkflowManager()
+        """Test workflow definition and validation"""        manager = WorkflowManager()
         
         workflow_definition = {
             "name": "ml_training_workflow",
@@ -416,8 +393,7 @@ class TestWorkflowManager:
         assert validation_result["stage_count"] == 3
 
     def test_workflow_execution_tracking(self):
-        """Test workflow execution tracking and monitoring"""
-        manager = WorkflowManager(enable_versioning=True)
+        """Test workflow execution tracking and monitoring"""        manager = WorkflowManager(enable_versioning=True)
         
         # Mock workflow execution
         with patch.object(manager, 'track_execution') as mock_track:
@@ -440,8 +416,7 @@ class TestWorkflowManager:
             assert len(tracking_result["stages"]) == 3
 
     def test_workflow_rollback(self):
-        """Test workflow rollback functionality"""
-        manager = WorkflowManager(enable_rollback=True)
+        """Test workflow rollback functionality"""        manager = WorkflowManager(enable_rollback=True)
         
         # Mock rollback scenario
         with patch.object(manager, 'rollback_workflow') as mock_rollback:
@@ -467,8 +442,7 @@ class TestWorkflowManager:
             assert "affected_components" in rollback_result
 
     def test_workflow_branching_merging(self):
-        """Test workflow branching and merging capabilities"""
-        manager = WorkflowManager()
+        """Test workflow branching and merging capabilities"""        manager = WorkflowManager()
         
         # Define branching workflow
         branching_workflow = {
@@ -505,11 +479,9 @@ class TestWorkflowManager:
 
 
 class TestModelLifecycleManager:
-    """Tests for model lifecycle management"""
-    
+    """Tests for model lifecycle management"""    
     def test_init_lifecycle_manager(self):
-        """Test model lifecycle manager initialization"""
-        manager = ModelLifecycleManager(
+        """Test model lifecycle manager initialization"""        manager = ModelLifecycleManager(
             model_registry="mlflow",
             version_control="git",
             deployment_targets=["staging", "production"],
@@ -522,8 +494,7 @@ class TestModelLifecycleManager:
         assert manager.enable_automated_deployment
 
     def test_model_registration(self, trained_model_artifacts):
-        """Test model registration in registry"""
-        manager = ModelLifecycleManager(model_registry="mlflow")
+        """Test model registration in registry"""        manager = ModelLifecycleManager(model_registry="mlflow")
         
         model_metadata = {
             "model_name": "content_classifier",
@@ -555,8 +526,7 @@ class TestModelLifecycleManager:
             assert registration_result["status"] == "registered"
 
     def test_model_promotion_workflow(self):
-        """Test model promotion across environments"""
-        manager = ModelLifecycleManager(
+        """Test model promotion across environments"""        manager = ModelLifecycleManager(
             deployment_targets=["dev", "staging", "production"]
         )
         
@@ -587,8 +557,7 @@ class TestModelLifecycleManager:
             assert promotion_result["status"] == "pending_approval"
 
     def test_model_versioning_and_lineage(self):
-        """Test model versioning and lineage tracking"""
-        manager = ModelLifecycleManager(version_control="git")
+        """Test model versioning and lineage tracking"""        manager = ModelLifecycleManager(version_control="git")
         
         version_info = {
             "model_name": "sentiment_analyzer",
@@ -611,8 +580,7 @@ class TestModelLifecycleManager:
         assert "code_dependencies" in lineage_info
 
     def test_automated_model_deployment(self):
-        """Test automated model deployment"""
-        manager = ModelLifecycleManager(enable_automated_deployment=True)
+        """Test automated model deployment"""        manager = ModelLifecycleManager(enable_automated_deployment=True)
         
         deployment_config = {
             "model_id": "model_123",
@@ -646,8 +614,7 @@ class TestModelLifecycleManager:
             assert "monitoring_dashboard" in deployment_result
 
     def test_model_retirement_and_archival(self):
-        """Test model retirement and archival process"""
-        manager = ModelLifecycleManager()
+        """Test model retirement and archival process"""        manager = ModelLifecycleManager()
         
         retirement_config = {
             "model_id": "model_old_001",
@@ -677,11 +644,9 @@ class TestModelLifecycleManager:
 
 
 class TestAutoMLPipeline:
-    """Tests for automated ML pipeline functionality"""
-    
+    """Tests for automated ML pipeline functionality"""    
     def test_init_automl_pipeline(self):
-        """Test AutoML pipeline initialization"""
-        automl = AutoMLPipeline(
+        """Test AutoML pipeline initialization"""        automl = AutoMLPipeline(
             task_type="classification",
             time_budget_minutes=60,
             model_types=["random_forest", "xgboost", "neural_network"],
@@ -695,8 +660,7 @@ class TestAutoMLPipeline:
         assert automl.enable_feature_engineering
 
     def test_automated_feature_selection(self, sample_features, sample_targets):
-        """Test automated feature selection"""
-        automl = AutoMLPipeline(enable_feature_engineering=True)
+        """Test automated feature selection"""        automl = AutoMLPipeline(enable_feature_engineering=True)
         
         with patch.object(automl, 'auto_feature_selection') as mock_selection:
             mock_selection.return_value = {
@@ -722,8 +686,7 @@ class TestAutoMLPipeline:
             assert "feature_scores" in selection_result
 
     def test_automated_model_selection(self, sample_features, sample_targets):
-        """Test automated model selection and comparison"""
-        automl = AutoMLPipeline(
+        """Test automated model selection and comparison"""        automl = AutoMLPipeline(
             model_types=["random_forest", "xgboost", "neural_network"]
         )
         
@@ -749,8 +712,7 @@ class TestAutoMLPipeline:
             assert model_comparison["best_model"] == "xgboost"
 
     def test_automated_hyperparameter_tuning(self, sample_model_config):
-        """Test automated hyperparameter tuning"""
-        automl = AutoMLPipeline(enable_hyperparameter_tuning=True)
+        """Test automated hyperparameter tuning"""        automl = AutoMLPipeline(enable_hyperparameter_tuning=True)
         
         with patch.object(automl, 'tune_hyperparameters') as mock_tune:
             mock_tune.return_value = {
@@ -780,8 +742,7 @@ class TestAutoMLPipeline:
             assert tuning_result["best_score"] == 0.95
 
     def test_automated_pipeline_generation(self):
-        """Test automated ML pipeline generation"""
-        automl = AutoMLPipeline(task_type="classification")
+        """Test automated ML pipeline generation"""        automl = AutoMLPipeline(task_type="classification")
         
         with patch.object(automl, 'generate_pipeline') as mock_generate:
             mock_generate.return_value = {
@@ -820,12 +781,10 @@ class TestAutoMLPipeline:
 
 @pytest.mark.integration
 class TestPipelineIntegration:
-    """Integration tests for ML pipeline systems"""
-    
+    """Integration tests for ML pipeline systems"""    
     @pytest.mark.slow
     def test_end_to_end_ml_pipeline(self, sample_dataset, temp_dir):
-        """Test complete end-to-end ML pipeline"""
-        # Initialize pipeline components
+        """Test complete end-to-end ML pipeline"""        # Initialize pipeline components
         pipeline = MLPipeline(
             name="integration_test_pipeline",
             stages=["data_validation", "preprocessing", "training", "validation", "deployment"]
@@ -865,8 +824,7 @@ class TestPipelineIntegration:
             assert "model_artifacts" in execution_result
 
     def test_kubernetes_pipeline_deployment(self, sample_pipeline):
-        """Test pipeline deployment on Kubernetes"""
-        k8s_runner = KubernetesPipelineRunner(
+        """Test pipeline deployment on Kubernetes"""        k8s_runner = KubernetesPipelineRunner(
             namespace="ml-pipelines",
             resource_limits={"cpu": "8", "memory": "16Gi", "gpu": "2"}
         )
@@ -882,8 +840,7 @@ class TestPipelineIntegration:
             mock_k8s.return_value.create_namespaced_job.assert_called_once()
 
     def test_docker_pipeline_containerization(self, sample_pipeline, temp_dir):
-        """Test pipeline containerization with Docker"""
-        docker_runner = DockerPipelineRunner(
+        """Test pipeline containerization with Docker"""        docker_runner = DockerPipelineRunner(
             base_image="python:3.9-slim",
             registry="gcr.io/project/ml-pipelines"
         )
@@ -903,8 +860,7 @@ class TestPipelineIntegration:
             mock_client.images.build.assert_called_once()
 
     def test_mlflow_integration(self, sample_pipeline):
-        """Test MLflow integration for experiment tracking"""
-        with patch('mlflow.start_run') as mock_mlflow:
+        """Test MLflow integration for experiment tracking"""        with patch('mlflow.start_run') as mock_mlflow:
             mock_run = Mock()
             mock_mlflow.return_value.__enter__.return_value = mock_run
             

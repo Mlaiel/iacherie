@@ -1,12 +1,10 @@
-"""
-Performance Analyzer - Advanced Performance Analysis and Optimization
+"""Performance Analyzer - Advanced Performance Analysis and Optimization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive performance analysis, monitoring, and optimization
 recommendations for the IA Influencer Agent platform.
 """
-
 import logging
 import time
 import psutil
@@ -22,8 +20,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class PerformanceMetric(Enum):
-    """Types of performance metrics"""
-    CPU_USAGE = "cpu_usage"
+    """Types of performance metrics"""    CPU_USAGE = "cpu_usage"
     MEMORY_USAGE = "memory_usage"
     DISK_USAGE = "disk_usage"
     NETWORK_IO = "network_io"
@@ -40,24 +37,21 @@ class PerformanceMetric(Enum):
     CONCURRENT_USERS = "concurrent_users"
 
 class PerformanceLevel(Enum):
-    """Performance level classifications"""
-    EXCELLENT = "excellent"
+    """Performance level classifications"""    EXCELLENT = "excellent"
     GOOD = "good"
     AVERAGE = "average"
     POOR = "poor"
     CRITICAL = "critical"
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 @dataclass
 class PerformanceData:
-    """Individual performance measurement"""
-    metric: PerformanceMetric
+    """Individual performance measurement"""    metric: PerformanceMetric
     value: Union[int, float]
     timestamp: datetime = field(default_factory=datetime.utcnow)
     tags: Dict[str, str] = field(default_factory=dict)
@@ -67,8 +61,7 @@ class PerformanceData:
 
 @dataclass
 class PerformanceThreshold:
-    """Performance threshold configuration"""
-    metric: PerformanceMetric
+    """Performance threshold configuration"""    metric: PerformanceMetric
     warning_threshold: float
     critical_threshold: float
     comparison_operator: str = ">"  # >, <, ==, !=, >=, <=
@@ -78,8 +71,7 @@ class PerformanceThreshold:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert"""
-    alert_id: str
+    """Performance alert"""    alert_id: str
     metric: PerformanceMetric
     severity: AlertSeverity
     current_value: float
@@ -93,8 +85,7 @@ class PerformanceAlert:
 
 @dataclass
 class PerformanceReport:
-    """Performance analysis report"""
-    report_id: str
+    """Performance analysis report"""    report_id: str
     analysis_period: Dict[str, datetime]
     overall_performance_level: PerformanceLevel
     metric_summaries: Dict[str, Dict[str, Any]] = field(default_factory=dict)
@@ -106,8 +97,7 @@ class PerformanceReport:
 
 @dataclass
 class SystemResource:
-    """System resource information"""
-    cpu_count: int
+    """System resource information"""    cpu_count: int
     cpu_frequency: Dict[str, float]
     memory_total: int
     memory_available: int
@@ -123,8 +113,7 @@ class SystemResource:
     process_count: int = 0
 
 class PerformanceAnalyzer:
-    """Main performance analysis engine"""
-    
+    """Main performance analysis engine"""    
     def __init__(self, history_size: int = 10000, monitoring_interval: int = 30):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.history_size = history_size
@@ -154,8 +143,7 @@ class PerformanceAnalyzer:
         self.logger.info("PerformanceAnalyzer initialized successfully")
     
     def _initialize_default_thresholds(self):
-        """Initialize default performance thresholds"""
-        default_thresholds = [
+        """Initialize default performance thresholds"""        default_thresholds = [
             PerformanceThreshold(
                 PerformanceMetric.CPU_USAGE,
                 warning_threshold=70.0,
@@ -198,8 +186,7 @@ class PerformanceAnalyzer:
             self.thresholds[threshold.metric] = threshold
     
     def start_monitoring(self) -> bool:
-        """Start automatic performance monitoring"""
-        try:
+        """Start automatic performance monitoring"""        try:
             if self.monitoring_active:
                 self.logger.warning("Monitoring is already active")
                 return False
@@ -216,8 +203,7 @@ class PerformanceAnalyzer:
             return False
     
     def stop_monitoring(self) -> bool:
-        """Stop automatic performance monitoring"""
-        try:
+        """Stop automatic performance monitoring"""        try:
             if not self.monitoring_active:
                 self.logger.warning("Monitoring is not active")
                 return False
@@ -235,8 +221,7 @@ class PerformanceAnalyzer:
             return False
     
     def _monitoring_loop(self):
-        """Main monitoring loop"""
-        while self.monitoring_active:
+        """Main monitoring loop"""        while self.monitoring_active:
             try:
                 # Collect system metrics
                 self._collect_system_metrics()
@@ -252,8 +237,7 @@ class PerformanceAnalyzer:
                 time.sleep(5)  # Wait before retrying
     
     def _collect_system_metrics(self):
-        """Collect system performance metrics"""
-        try:
+        """Collect system performance metrics"""        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             self.record_metric(PerformanceMetric.CPU_USAGE, cpu_percent, unit="percent")
@@ -310,8 +294,7 @@ class PerformanceAnalyzer:
                      source: Optional[str] = None,
                      unit: Optional[str] = None,
                      metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Record a performance metric"""
-        try:
+        """Record a performance metric"""        try:
             data_point = PerformanceData(
                 metric=metric,
                 value=value,
@@ -330,8 +313,7 @@ class PerformanceAnalyzer:
             return False
     
     def _check_thresholds(self):
-        """Check performance thresholds and generate alerts"""
-        try:
+        """Check performance thresholds and generate alerts"""        try:
             for metric, threshold in self.thresholds.items():
                 if not threshold.enabled:
                     continue
@@ -366,14 +348,12 @@ class PerformanceAnalyzer:
             self.logger.error(f"Failed to check thresholds: {e}")
     
     def _get_recent_data(self, metric: PerformanceMetric, seconds: int) -> List[PerformanceData]:
-        """Get recent data points for a metric"""
-        cutoff = datetime.utcnow() - timedelta(seconds=seconds)
+        """Get recent data points for a metric"""        cutoff = datetime.utcnow() - timedelta(seconds=seconds)
         data = self.performance_data[metric]
         return [d for d in data if d.timestamp >= cutoff]
     
     def _evaluate_threshold(self, value: float, threshold: float, operator: str) -> bool:
-        """Evaluate if a value crosses a threshold"""
-        try:
+        """Evaluate if a value crosses a threshold"""        try:
             if operator == ">":
                 return value > threshold
             elif operator == "<":
@@ -394,8 +374,7 @@ class PerformanceAnalyzer:
     
     def _create_alert(self, metric: PerformanceMetric, severity: AlertSeverity, 
                      current_value: float, threshold_value: float):
-        """Create a performance alert"""
-        try:
+        """Create a performance alert"""        try:
             alert_key = f"{metric.value}_{severity.value}"
             
             # Check if alert already exists and is recent
@@ -429,8 +408,7 @@ class PerformanceAnalyzer:
             self.logger.error(f"Failed to create alert: {e}")
     
     def _check_alert_resolution(self, metric: PerformanceMetric):
-        """Check if alerts should be resolved"""
-        try:
+        """Check if alerts should be resolved"""        try:
             alerts_to_resolve = []
             
             for alert_key, alert in self.active_alerts.items():
@@ -474,8 +452,7 @@ class PerformanceAnalyzer:
             self.logger.error(f"Failed to check alert resolution: {e}")
     
     def analyze_performance(self, hours_back: int = 24) -> PerformanceReport:
-        """Generate comprehensive performance analysis report"""
-        try:
+        """Generate comprehensive performance analysis report"""        try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=hours_back)
             
@@ -536,8 +513,7 @@ class PerformanceAnalyzer:
     
     def _analyze_metric(self, metric: PerformanceMetric, 
                        start_time: datetime, end_time: datetime) -> Optional[Dict[str, Any]]:
-        """Analyze a specific metric"""
-        try:
+        """Analyze a specific metric"""        try:
             data = [d for d in self.performance_data[metric] 
                    if start_time <= d.timestamp <= end_time]
             
@@ -588,8 +564,7 @@ class PerformanceAnalyzer:
             return None
     
     def _determine_overall_performance(self, performance_levels: List[str]) -> str:
-        """Determine overall performance level from individual metric levels"""
-        if not performance_levels:
+        """Determine overall performance level from individual metric levels"""        if not performance_levels:
             return 'average'
         
         level_counts = {
@@ -615,8 +590,7 @@ class PerformanceAnalyzer:
         return 'average'
     
     def _summarize_alerts(self, start_time: datetime, end_time: datetime) -> Dict[str, int]:
-        """Summarize alerts within time period"""
-        try:
+        """Summarize alerts within time period"""        try:
             period_alerts = [
                 a for a in self.alert_history
                 if start_time <= a.timestamp <= end_time
@@ -635,8 +609,7 @@ class PerformanceAnalyzer:
             return {}
     
     def get_current_metrics(self) -> Dict[str, float]:
-        """Get current values for all metrics"""
-        try:
+        """Get current values for all metrics"""        try:
             current_metrics = {}
             
             for metric in PerformanceMetric:
@@ -653,12 +626,10 @@ class PerformanceAnalyzer:
             return {}
     
     def get_system_resources(self) -> Optional[SystemResource]:
-        """Get current system resource information"""
-        return self.system_resources
+        """Get current system resource information"""        return self.system_resources
     
     def add_threshold(self, threshold: PerformanceThreshold) -> bool:
-        """Add or update a performance threshold"""
-        try:
+        """Add or update a performance threshold"""        try:
             self.thresholds[threshold.metric] = threshold
             self.logger.info(f"Added threshold for {threshold.metric.value}")
             return True
@@ -667,8 +638,7 @@ class PerformanceAnalyzer:
             return False
     
     def remove_threshold(self, metric: PerformanceMetric) -> bool:
-        """Remove a performance threshold"""
-        try:
+        """Remove a performance threshold"""        try:
             if metric in self.thresholds:
                 del self.thresholds[metric]
                 self.logger.info(f"Removed threshold for {metric.value}")
@@ -679,8 +649,7 @@ class PerformanceAnalyzer:
             return False
     
     def export_data(self, format_type: str = "json") -> Union[str, Dict[str, Any]]:
-        """Export performance data"""
-        try:
+        """Export performance data"""        try:
             export_data = {
                 "export_timestamp": datetime.utcnow().isoformat(),
                 "system_resources": self.system_resources.__dict__ if self.system_resources else {},
@@ -710,11 +679,9 @@ class PerformanceAnalyzer:
             return {"error": str(e)}
 
 class TrendAnalyzer:
-    """Analyzes performance trends"""
-    
+    """Analyzes performance trends"""    
     def analyze_trends(self, performance_data: Dict, start_time: datetime, end_time: datetime) -> Dict[str, str]:
-        """Analyze performance trends"""
-        trends = {}
+        """Analyze performance trends"""        trends = {}
         
         for metric, data in performance_data.items():
             try:
@@ -755,11 +722,9 @@ class TrendAnalyzer:
         return trends
 
 class BottleneckDetector:
-    """Detects performance bottlenecks"""
-    
+    """Detects performance bottlenecks"""    
     def detect_bottlenecks(self, metric_summaries: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Detect performance bottlenecks"""
-        bottlenecks = []
+        """Detect performance bottlenecks"""        bottlenecks = []
         
         # Check for high resource utilization
         for metric_name, summary in metric_summaries.items():
@@ -769,13 +734,11 @@ class BottleneckDetector:
         return bottlenecks
 
 class RecommendationEngine:
-    """Generates performance optimization recommendations"""
-    
+    """Generates performance optimization recommendations"""    
     def generate_recommendations(self, metric_summaries: Dict[str, Dict[str, Any]], 
                                bottlenecks: List[str], 
                                system_resources: Optional[SystemResource]) -> List[str]:
-        """Generate performance optimization recommendations"""
-        recommendations = []
+        """Generate performance optimization recommendations"""        recommendations = []
         
         try:
             # CPU-related recommendations

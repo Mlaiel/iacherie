@@ -1,5 +1,4 @@
-"""
-Database Data Masking Engine
+"""Database Data Masking Engine
 
 Enterprise-grade data masking and anonymization system for protecting sensitive
 information in non-production environments and compliance with privacy regulations.
@@ -24,7 +23,6 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
-
 import asyncio
 import logging
 import json
@@ -48,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class MaskingTechnique(Enum):
-    """Data masking techniques"""
-    REDACTION = "redaction"  # Replace with asterisks or X's
+    """Data masking techniques"""    REDACTION = "redaction"  # Replace with asterisks or X's
     SUBSTITUTION = "substitution"  # Replace with realistic fake data
     SHUFFLING = "shuffling"  # Randomize order within column
     ENCRYPTION = "encryption"  # Encrypt with key
@@ -62,8 +59,7 @@ class MaskingTechnique(Enum):
 
 
 class DataType(Enum):
-    """Supported data types for masking"""
-    EMAIL = "email"
+    """Supported data types for masking"""    EMAIL = "email"
     PHONE = "phone"
     SSN = "ssn"
     CREDIT_CARD = "credit_card"
@@ -80,8 +76,7 @@ class DataType(Enum):
 
 
 class SensitivityLevel(Enum):
-    """Data sensitivity levels"""
-    PUBLIC = 1
+    """Data sensitivity levels"""    PUBLIC = 1
     INTERNAL = 2
     CONFIDENTIAL = 3
     RESTRICTED = 4
@@ -90,8 +85,7 @@ class SensitivityLevel(Enum):
 
 @dataclass
 class MaskingRule:
-    """Data masking rule definition"""
-    rule_id: str
+    """Data masking rule definition"""    rule_id: str
     table_name: str
     column_name: str
     data_type: DataType
@@ -108,8 +102,7 @@ class MaskingRule:
 
 @dataclass
 class MaskingJob:
-    """Data masking job definition"""
-    job_id: str
+    """Data masking job definition"""    job_id: str
     name: str
     description: str
     source_database: str
@@ -125,8 +118,7 @@ class MaskingJob:
 
 @dataclass
 class MaskingResult:
-    """Data masking operation result"""
-    job_id: str
+    """Data masking operation result"""    job_id: str
     rule_id: str
     table_name: str
     column_name: str
@@ -139,19 +131,16 @@ class MaskingResult:
 
 
 class DataMasker(ABC):
-    """Abstract data masker interface"""
-    
+    """Abstract data masker interface"""    
     @property
     @abstractmethod
     def supported_data_types(self) -> List[DataType]:
-        """List of supported data types"""
-        pass
+        """List of supported data types"""        pass
     
     @property
     @abstractmethod
     def technique(self) -> MaskingTechnique:
-        """Masking technique this masker implements"""
-        pass
+        """Masking technique this masker implements"""        pass
     
     @abstractmethod
     async def mask_value(
@@ -160,18 +149,15 @@ class DataMasker(ABC):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask a single value according to the rule"""
-        pass
+        """Mask a single value according to the rule"""        pass
     
     @abstractmethod
     async def validate_rule(self, rule: MaskingRule) -> bool:
-        """Validate if rule is compatible with this masker"""
-        pass
+        """Validate if rule is compatible with this masker"""        pass
 
 
 class RedactionMasker(DataMasker):
-    """Redaction-based data masker"""
-    
+    """Redaction-based data masker"""    
     @property
     def supported_data_types(self) -> List[DataType]:
         return list(DataType)  # Supports all data types
@@ -186,8 +172,7 @@ class RedactionMasker(DataMasker):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask value using redaction technique"""
-        if value is None and rule.preserve_null:
+        """Mask value using redaction technique"""        if value is None and rule.preserve_null:
             return None
         
         if not isinstance(value, str):
@@ -208,8 +193,7 @@ class RedactionMasker(DataMasker):
             return await self._mask_generic(value, replacement_char, rule)
     
     async def _mask_email(self, email: str, replacement_char: str, rule: MaskingRule) -> str:
-        """Mask email address"""
-        if "@" in email:
+        """Mask email address"""        if "@" in email:
             local, domain = email.split("@", 1)
             # Keep first and last character of local part
             if len(local) > 2:
@@ -221,8 +205,7 @@ class RedactionMasker(DataMasker):
             return replacement_char * len(email)
     
     async def _mask_phone(self, phone: str, replacement_char: str, rule: MaskingRule) -> str:
-        """Mask phone number"""
-        # Keep format but mask digits
+        """Mask phone number"""        # Keep format but mask digits
         masked = ""
         for char in phone:
             if char.isdigit():
@@ -232,8 +215,7 @@ class RedactionMasker(DataMasker):
         return masked
     
     async def _mask_ssn(self, ssn: str, replacement_char: str, rule: MaskingRule) -> str:
-        """Mask Social Security Number"""
-        # Typical format: XXX-XX-1234 (keep last 4 digits)
+        """Mask Social Security Number"""        # Typical format: XXX-XX-1234 (keep last 4 digits)
         cleaned = re.sub(r'\D', '', ssn)
         if len(cleaned) >= 4:
             masked_part = replacement_char * (len(cleaned) - 4)
@@ -248,8 +230,7 @@ class RedactionMasker(DataMasker):
         return result
     
     async def _mask_credit_card(self, card: str, replacement_char: str, rule: MaskingRule) -> str:
-        """Mask credit card number"""
-        # Keep last 4 digits
+        """Mask credit card number"""        # Keep last 4 digits
         cleaned = re.sub(r'\D', '', card)
         if len(cleaned) >= 4:
             masked_part = replacement_char * (len(cleaned) - 4)
@@ -264,8 +245,7 @@ class RedactionMasker(DataMasker):
         return result
     
     async def _mask_generic(self, value: str, replacement_char: str, rule: MaskingRule) -> str:
-        """Generic masking for text"""
-        if rule.custom_pattern:
+        """Generic masking for text"""        if rule.custom_pattern:
             # Apply custom pattern masking
             pattern = rule.custom_pattern
             # Simple pattern: 'show_first_2' -> show first 2 chars
@@ -291,13 +271,11 @@ class RedactionMasker(DataMasker):
             return replacement_char * 8  # Fixed length
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
-        """Validate redaction rule"""
-        return rule.masking_technique == self.technique
+        """Validate redaction rule"""        return rule.masking_technique == self.technique
 
 
 class SubstitutionMasker(DataMasker):
-    """Substitution-based data masker using realistic fake data"""
-    
+    """Substitution-based data masker using realistic fake data"""    
     def __init__(self, locale: str = "en_US"):
         self.faker = Faker(locale)
         self.faker.seed_instance(42)  # For reproducible results
@@ -319,8 +297,7 @@ class SubstitutionMasker(DataMasker):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask value using substitution technique"""
-        if value is None and rule.preserve_null:
+        """Mask value using substitution technique"""        if value is None and rule.preserve_null:
             return None
         
         # Generate realistic fake data based on data type
@@ -342,14 +319,12 @@ class SubstitutionMasker(DataMasker):
             return str(value)  # Fallback
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
-        """Validate substitution rule"""
-        return (rule.masking_technique == self.technique and 
+        """Validate substitution rule"""        return (rule.masking_technique == self.technique and 
                 rule.data_type in self.supported_data_types)
 
 
 class EncryptionMasker(DataMasker):
-    """Encryption-based data masker"""
-    
+    """Encryption-based data masker"""    
     def __init__(self, encryption_key: Optional[str] = None):
         self.encryption_key = encryption_key or secrets.token_hex(32)
     
@@ -367,8 +342,7 @@ class EncryptionMasker(DataMasker):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask value using encryption"""
-        if value is None and rule.preserve_null:
+        """Mask value using encryption"""        if value is None and rule.preserve_null:
             return None
         
         # Simple encryption using hash (for demo purposes)
@@ -383,13 +357,11 @@ class EncryptionMasker(DataMasker):
         return encrypted
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
-        """Validate encryption rule"""
-        return rule.masking_technique == self.technique
+        """Validate encryption rule"""        return rule.masking_technique == self.technique
 
 
 class ShufflingMasker(DataMasker):
-    """Shuffling-based data masker"""
-    
+    """Shuffling-based data masker"""    
     def __init__(self):
         self.column_values: Dict[str, List[Any]] = {}
     
@@ -407,8 +379,7 @@ class ShufflingMasker(DataMasker):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask value using shuffling technique"""
-        if value is None and rule.preserve_null:
+        """Mask value using shuffling technique"""        if value is None and rule.preserve_null:
             return None
         
         # For shuffling, we need all column values
@@ -426,13 +397,11 @@ class ShufflingMasker(DataMasker):
         return value
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
-        """Validate shuffling rule"""
-        return rule.masking_technique == self.technique
+        """Validate shuffling rule"""        return rule.masking_technique == self.technique
 
 
 class TokenizationMasker(DataMasker):
-    """Tokenization-based data masker"""
-    
+    """Tokenization-based data masker"""    
     def __init__(self):
         self.token_map: Dict[str, str] = {}
         self.reverse_map: Dict[str, str] = {}
@@ -451,8 +420,7 @@ class TokenizationMasker(DataMasker):
         rule: MaskingRule,
         context: Dict[str, Any] = None
     ) -> Any:
-        """Mask value using tokenization"""
-        if value is None and rule.preserve_null:
+        """Mask value using tokenization"""        if value is None and rule.preserve_null:
             return None
         
         value_str = str(value)
@@ -484,17 +452,14 @@ class TokenizationMasker(DataMasker):
         return token
     
     async def validate_rule(self, rule: MaskingRule) -> bool:
-        """Validate tokenization rule"""
-        return rule.masking_technique == self.technique
+        """Validate tokenization rule"""        return rule.masking_technique == self.technique
     
     def detokenize(self, token: str) -> Optional[str]:
-        """Reverse tokenization to get original value"""
-        return self.reverse_map.get(token)
+        """Reverse tokenization to get original value"""        return self.reverse_map.get(token)
 
 
 class DataMaskingEngine:
-    """
-    Enterprise-grade data masking engine
+    """    Enterprise-grade data masking engine
     
     Provides comprehensive data masking capabilities including:
     - Multiple masking techniques (redaction, substitution, encryption, etc.)
@@ -502,11 +467,9 @@ class DataMaskingEngine:
     - Configurable masking rules
     - Batch processing capabilities
     - Quality validation and reporting
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize data masking engine"""
-        self.config = config or {}
+        """Initialize data masking engine"""        self.config = config or {}
         self.maskers: Dict[MaskingTechnique, DataMasker] = {}
         self.masking_rules: Dict[str, MaskingRule] = {}
         self.masking_jobs: Dict[str, MaskingJob] = {}
@@ -523,8 +486,7 @@ class DataMaskingEngine:
         logger.info("Data masking engine initialized successfully")
     
     def _initialize_maskers(self):
-        """Initialize data masking implementations"""
-        try:
+        """Initialize data masking implementations"""        try:
             # Register built-in maskers
             self.maskers[MaskingTechnique.REDACTION] = RedactionMasker()
             self.maskers[MaskingTechnique.SUBSTITUTION] = SubstitutionMasker()
@@ -539,16 +501,14 @@ class DataMaskingEngine:
             raise
     
     async def add_masking_rule(self, rule: MaskingRule) -> bool:
-        """
-        Add data masking rule
+        """        Add data masking rule
         
         Args:
             rule: Masking rule definition
             
         Returns:
             True if rule added successfully, False otherwise
-        """
-        try:
+        """        try:
             # Validate rule
             if not await self._validate_masking_rule(rule):
                 logger.error(f"Invalid masking rule: {rule.rule_id}")
@@ -565,8 +525,7 @@ class DataMaskingEngine:
             return False
     
     async def _validate_masking_rule(self, rule: MaskingRule) -> bool:
-        """Validate masking rule"""
-        try:
+        """Validate masking rule"""        try:
             # Check if masker exists for technique
             if rule.masking_technique not in self.maskers:
                 logger.error(f"No masker available for technique: {rule.masking_technique}")
@@ -589,8 +548,7 @@ class DataMaskingEngine:
         rule_ids: List[str],
         scheduled_at: Optional[datetime] = None
     ) -> str:
-        """
-        Create data masking job
+        """        Create data masking job
         
         Args:
             name: Job name
@@ -602,8 +560,7 @@ class DataMaskingEngine:
             
         Returns:
             Job ID
-        """
-        try:
+        """        try:
             # Validate rules exist
             job_rules = []
             for rule_id in rule_ids:
@@ -637,8 +594,7 @@ class DataMaskingEngine:
             raise
     
     async def _execute_masking_job(self, job: MaskingJob):
-        """Execute data masking job"""
-        try:
+        """Execute data masking job"""        try:
             # Update job status
             job.status = "running"
             job.statistics = {
@@ -688,8 +644,7 @@ class DataMaskingEngine:
             logger.error(f"Masking job failed: {job.job_id} - {e}")
     
     async def _mask_table(self, job: MaskingJob, table_name: str, rules: List[MaskingRule]):
-        """Mask data in a specific table"""
-        try:
+        """Mask data in a specific table"""        try:
             # In a real implementation, this would:
             # 1. Connect to source database
             # 2. Read data in batches
@@ -732,8 +687,7 @@ class DataMaskingEngine:
             raise
     
     async def _generate_sample_values(self, data_type: DataType, count: int) -> List[Any]:
-        """Generate sample values for testing (development only)"""
-        faker = Faker()
+        """Generate sample values for testing (development only)"""        faker = Faker()
         values = []
         
         for _ in range(count):
@@ -755,8 +709,7 @@ class DataMaskingEngine:
         return values
     
     async def test_masking_rule(self, rule_id: str, sample_values: List[Any]) -> Dict[str, Any]:
-        """
-        Test masking rule with sample values
+        """        Test masking rule with sample values
         
         Args:
             rule_id: Masking rule ID
@@ -764,8 +717,7 @@ class DataMaskingEngine:
             
         Returns:
             Test results including original and masked values
-        """
-        try:
+        """        try:
             if rule_id not in self.masking_rules:
                 raise ValueError(f"Masking rule not found: {rule_id}")
             
@@ -825,8 +777,7 @@ class DataMaskingEngine:
         masked: Any, 
         rule: MaskingRule
     ) -> float:
-        """Calculate quality score for masked value"""
-        score = 0.0
+        """Calculate quality score for masked value"""        score = 0.0
         
         if original is None and masked is None:
             return 1.0  # Perfect for null preservation
@@ -855,8 +806,7 @@ class DataMaskingEngine:
         return min(score, 1.0)
     
     def _has_similar_format(self, original: Any, masked: Any, data_type: DataType) -> bool:
-        """Check if masked value preserves format of original"""
-        orig_str = str(original)
+        """Check if masked value preserves format of original"""        orig_str = str(original)
         masked_str = str(masked)
         
         if data_type == DataType.EMAIL:
@@ -874,23 +824,19 @@ class DataMaskingEngine:
         return True  # Default to true for other types
     
     def get_job_status(self, job_id: str) -> Optional[MaskingJob]:
-        """Get masking job status"""
-        return self.masking_jobs.get(job_id)
+        """Get masking job status"""        return self.masking_jobs.get(job_id)
     
     def list_masking_rules(self) -> List[MaskingRule]:
-        """List all masking rules"""
-        return list(self.masking_rules.values())
+        """List all masking rules"""        return list(self.masking_rules.values())
     
     def list_active_jobs(self) -> List[MaskingJob]:
-        """List active masking jobs"""
-        return [
+        """List active masking jobs"""        return [
             job for job in self.masking_jobs.values()
             if job.status in ["pending", "running"]
         ]
     
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel running masking job"""
-        try:
+        """Cancel running masking job"""        try:
             if job_id in self.masking_jobs:
                 job = self.masking_jobs[job_id]
                 if job.status in ["pending", "running"]:
@@ -905,8 +851,7 @@ class DataMaskingEngine:
             return False
     
     def get_masking_metrics(self) -> Dict[str, Any]:
-        """Get data masking metrics"""
-        total_jobs = len(self.masking_jobs)
+        """Get data masking metrics"""        total_jobs = len(self.masking_jobs)
         completed_jobs = sum(
             1 for job in self.masking_jobs.values() 
             if job.status == "completed"

@@ -13,8 +13,7 @@ prosecuted to the full extent of the law.
 Module: backend.deployment.kubernetes
 Purpose: Kubernetes orchestration for microservices architecture
 Architecture: Cloud-native, scalable, enterprise deployment
-"""
-from .cluster_orchestrator import (
+"""from .cluster_orchestrator import (
     KubernetesClusterOrchestrator,
     ClusterConfig,
     DeploymentStatus,

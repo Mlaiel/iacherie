@@ -1,11 +1,9 @@
-"""
-Advanced Image Fingerprinting Engine
+"""Advanced Image Fingerprinting Engine
 Image fingerprinting with CLIP embeddings, perceptual hashing, and SIFT features.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import numpy as np
 import hashlib
@@ -36,8 +34,7 @@ from ...config import settings
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint data structure"""
-    file_id: str
+    """Image fingerprint data structure"""    file_id: str
     clip_embedding: List[float]
     perceptual_hashes: Dict[str, str]
     sift_features: Dict[str, Any]
@@ -52,8 +49,7 @@ class ImageFingerprint:
 
 
 class ImageFingerprintEngine:
-    """
-    Advanced image fingerprinting engine supporting:
+    """    Advanced image fingerprinting engine supporting:
     - CLIP embeddings for semantic similarity
     - Multiple perceptual hashing algorithms
     - SIFT feature detection
@@ -61,8 +57,7 @@ class ImageFingerprintEngine:
     - Texture analysis (LBP, Gabor filters)
     - Edge detection features
     - Geometric feature analysis
-    """
-    
+    """    
     def __init__(self):
         self.clip_model = None
         self.clip_preprocess = None
@@ -78,8 +73,7 @@ class ImageFingerprintEngine:
         logger.info(f"ImageFingerprintEngine initialized on {self.device}")
     
     def _init_clip_model(self):
-        """Initialize CLIP model for semantic embeddings"""
-        try:
+        """Initialize CLIP model for semantic embeddings"""        try:
             self.clip_model, self.clip_preprocess = clip.load("ViT-B/32", device=self.device)
             self.clip_model.eval()
             logger.info("CLIP model loaded successfully")
@@ -89,8 +83,7 @@ class ImageFingerprintEngine:
             self.clip_model = None
     
     async def generate_fingerprint(self, image_file_path: str, metadata: Optional[Dict] = None) -> ImageFingerprint:
-        """
-        Generate comprehensive image fingerprint
+        """        Generate comprehensive image fingerprint
         
         Args:
             image_file_path: Path to image file
@@ -98,8 +91,7 @@ class ImageFingerprintEngine:
             
         Returns:
             ImageFingerprint: Complete fingerprint data
-        """
-        try:
+        """        try:
             logger.info(f"Generating image fingerprint for: {image_file_path}")
             
             # Load image
@@ -156,15 +148,13 @@ class ImageFingerprintEngine:
             raise
     
     async def _generate_file_id(self, file_path: str, image: Image.Image) -> str:
-        """Generate unique file ID"""
-        image_bytes = io.BytesIO()
+        """Generate unique file ID"""        image_bytes = io.BytesIO()
         image.save(image_bytes, format='PNG')
         content_hash = hashlib.sha256(image_bytes.getvalue()).hexdigest()
         return f"image_{content_hash[:16]}"
     
     async def _generate_clip_embedding(self, image: Image.Image) -> List[float]:
-        """Generate CLIP embedding for semantic similarity"""
-        try:
+        """Generate CLIP embedding for semantic similarity"""        try:
             if self.clip_model is None:
                 return []
             
@@ -184,8 +174,7 @@ class ImageFingerprintEngine:
             return []
     
     async def _generate_perceptual_hashes(self, image: Image.Image) -> Dict[str, str]:
-        """Generate multiple perceptual hashes for robustness"""
-        try:
+        """Generate multiple perceptual hashes for robustness"""        try:
             hashes = {}
             
             # pHash (perceptual hash)
@@ -210,8 +199,7 @@ class ImageFingerprintEngine:
             return {}
     
     async def _extract_sift_features(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Extract SIFT features for geometric matching"""
-        try:
+        """Extract SIFT features for geometric matching"""        try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
             # Initialize SIFT detector
@@ -247,8 +235,7 @@ class ImageFingerprintEngine:
             return {}
     
     async def _extract_color_histogram(self, image: np.ndarray) -> Dict[str, List[float]]:
-        """Extract color histograms in multiple color spaces"""
-        try:
+        """Extract color histograms in multiple color spaces"""        try:
             histograms = {}
             
             # RGB histogram
@@ -296,8 +283,7 @@ class ImageFingerprintEngine:
             return {}
     
     async def _get_dominant_colors(self, image: np.ndarray, k: int = 5) -> List[List[int]]:
-        """Get dominant colors using K-means clustering"""
-        try:
+        """Get dominant colors using K-means clustering"""        try:
             data = image.reshape((-1, 3))
             data = np.float32(data)
             
@@ -312,8 +298,7 @@ class ImageFingerprintEngine:
             return []
     
     async def _extract_texture_features(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Extract texture features using LBP and statistical measures"""
-        try:
+        """Extract texture features using LBP and statistical measures"""        try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
             texture_features = {}
@@ -366,31 +351,27 @@ class ImageFingerprintEngine:
             return {}
     
     def _calculate_skewness(self, image: np.ndarray) -> float:
-        """Calculate skewness of pixel intensity distribution"""
-        mean = np.mean(image)
+        """Calculate skewness of pixel intensity distribution"""        mean = np.mean(image)
         std = np.std(image)
         if std == 0:
             return 0.0
         return np.mean(((image - mean) / std) ** 3)
     
     def _calculate_kurtosis(self, image: np.ndarray) -> float:
-        """Calculate kurtosis of pixel intensity distribution"""
-        mean = np.mean(image)
+        """Calculate kurtosis of pixel intensity distribution"""        mean = np.mean(image)
         std = np.std(image)
         if std == 0:
             return 0.0
         return np.mean(((image - mean) / std) ** 4) - 3
     
     def _calculate_entropy(self, image: np.ndarray) -> float:
-        """Calculate entropy of pixel intensity distribution"""
-        hist, _ = np.histogram(image, bins=256, range=(0, 256))
+        """Calculate entropy of pixel intensity distribution"""        hist, _ = np.histogram(image, bins=256, range=(0, 256))
         hist = hist / hist.sum()
         hist = hist[hist > 0]  # Remove zeros
         return -np.sum(hist * np.log2(hist))
     
     async def _extract_edge_features(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Extract edge detection features"""
-        try:
+        """Extract edge detection features"""        try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
             edge_features = {}
@@ -425,8 +406,7 @@ class ImageFingerprintEngine:
             return {}
     
     async def _extract_geometric_features(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Extract geometric features like contours and shapes"""
-        try:
+        """Extract geometric features like contours and shapes"""        try:
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
             geometric_features = {}
@@ -487,8 +467,7 @@ class ImageFingerprintEngine:
             return {}
     
     async def _extract_visual_features(self, image: Image.Image) -> Dict[str, Any]:
-        """Extract high-level visual features"""
-        try:
+        """Extract high-level visual features"""        try:
             visual_features = {}
             
             # Image properties
@@ -529,8 +508,7 @@ class ImageFingerprintEngine:
             return {}
     
     async def _extract_image_properties(self, image: Image.Image) -> Dict[str, Any]:
-        """Extract basic image properties and metadata"""
-        try:
+        """Extract basic image properties and metadata"""        try:
             properties = {}
             
             # Basic properties
@@ -570,8 +548,7 @@ class ImageFingerprintEngine:
             return {}
     
     async def _calculate_confidence_score(self, results: List[Any]) -> float:
-        """Calculate overall confidence score"""
-        try:
+        """Calculate overall confidence score"""        try:
             confidence_factors = []
             
             # CLIP embedding quality
@@ -609,8 +586,7 @@ class ImageFingerprintEngine:
             return 0.5
     
     async def compare_fingerprints(self, fp1: ImageFingerprint, fp2: ImageFingerprint) -> float:
-        """
-        Compare two image fingerprints and return similarity score (0-1)
+        """        Compare two image fingerprints and return similarity score (0-1)
         
         Args:
             fp1: First fingerprint
@@ -618,8 +594,7 @@ class ImageFingerprintEngine:
             
         Returns:
             float: Similarity score between 0 and 1
-        """
-        try:
+        """        try:
             similarities = []
             
             # Compare CLIP embeddings (semantic similarity)
@@ -653,8 +628,7 @@ class ImageFingerprintEngine:
             return 0.0
     
     async def _compare_clip_embeddings(self, emb1: List[float], emb2: List[float]) -> float:
-        """Compare CLIP embeddings using cosine similarity"""
-        try:
+        """Compare CLIP embeddings using cosine similarity"""        try:
             if not emb1 or not emb2:
                 return 0.0
             
@@ -675,8 +649,7 @@ class ImageFingerprintEngine:
             return 0.0
     
     async def _compare_perceptual_hashes(self, hashes1: Dict[str, str], hashes2: Dict[str, str]) -> float:
-        """Compare perceptual hashes"""
-        try:
+        """Compare perceptual hashes"""        try:
             similarities = []
             
             for hash_type in ['phash', 'ahash', 'dhash', 'whash']:
@@ -699,8 +672,7 @@ class ImageFingerprintEngine:
             return 0.0
     
     async def _compare_sift_features(self, sift1: Dict[str, Any], sift2: Dict[str, Any]) -> float:
-        """Compare SIFT features"""
-        try:
+        """Compare SIFT features"""        try:
             # Compare number of keypoints
             kp1_count = sift1.get('num_keypoints', 0)
             kp2_count = sift2.get('num_keypoints', 0)
@@ -733,8 +705,7 @@ class ImageFingerprintEngine:
             return 0.0
     
     async def _compare_color_histograms(self, hist1: Dict[str, Any], hist2: Dict[str, Any]) -> float:
-        """Compare color histograms"""
-        try:
+        """Compare color histograms"""        try:
             similarities = []
             
             # Compare RGB histograms

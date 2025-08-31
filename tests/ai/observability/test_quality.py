@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Ultra-Industrial Test Suite for Quality Module
+"""Ultra-Industrial Test Suite for Quality Module
 
 This module provides comprehensive testing for data quality validation,
 metrics quality checking, and compliance validation.
@@ -51,7 +48,6 @@ copyright law, financial damages claims, and criminal prosecution where applicab
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import json
 import numpy as np
@@ -85,12 +81,10 @@ from ai.observability.quality import (
 
 
 class TestDataQualityValidator:
-    """Ultra-industrial tests for DataQualityValidator class"""
-    
+    """Ultra-industrial tests for DataQualityValidator class"""    
     @pytest.fixture
     def data_quality_validator(self):
-        """Create DataQualityValidator instance for testing"""
-        config = {
+        """Create DataQualityValidator instance for testing"""        config = {
             "quality_dimensions": [
                 "completeness", "accuracy", "consistency", "validity", 
                 "timeliness", "uniqueness", "integrity"
@@ -108,8 +102,7 @@ class TestDataQualityValidator:
     
     @pytest.fixture
     def sample_dataset(self):
-        """Generate sample dataset with various quality issues"""
-        data = []
+        """Generate sample dataset with various quality issues"""        data = []
         
         # Generate 1000 records with intentional quality issues
         for i in range(1000):
@@ -151,16 +144,14 @@ class TestDataQualityValidator:
         return data
     
     def test_initialization(self, data_quality_validator):
-        """Test DataQualityValidator initialization"""
-        assert data_quality_validator is not None
+        """Test DataQualityValidator initialization"""        assert data_quality_validator is not None
         assert len(data_quality_validator.config["quality_dimensions"]) == 7
         assert hasattr(data_quality_validator, 'validation_engine')
         assert hasattr(data_quality_validator, 'quality_rules')
         assert hasattr(data_quality_validator, 'correction_engine')
     
     def test_completeness_validation(self, data_quality_validator, sample_dataset):
-        """Test data completeness validation"""
-        # Validate completeness
+        """Test data completeness validation"""        # Validate completeness
         completeness_result = data_quality_validator.validate_completeness(sample_dataset)
         
         assert "overall_completeness_score" in completeness_result
@@ -184,8 +175,7 @@ class TestDataQualityValidator:
         assert "validation_rule_suggestions" in improvement_suggestions
     
     def test_accuracy_validation(self, data_quality_validator, sample_dataset):
-        """Test data accuracy validation"""
-        # Define accuracy rules
+        """Test data accuracy validation"""        # Define accuracy rules
         accuracy_rules = {
             "email": {"pattern": r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"},
             "age": {"min_value": 0, "max_value": 120},
@@ -221,8 +211,7 @@ class TestDataQualityValidator:
         assert "correction_success_rate" in correction_result
     
     def test_consistency_validation(self, data_quality_validator, sample_dataset):
-        """Test data consistency validation"""
-        # Define consistency rules
+        """Test data consistency validation"""        # Define consistency rules
         consistency_rules = {
             "phone_format": {
                 "field": "phone",
@@ -263,8 +252,7 @@ class TestDataQualityValidator:
         assert "business_rule_violations" in cross_field_result
     
     def test_uniqueness_validation(self, data_quality_validator, sample_dataset):
-        """Test data uniqueness validation"""
-        # Define uniqueness constraints
+        """Test data uniqueness validation"""        # Define uniqueness constraints
         uniqueness_constraints = {
             "record_id": {"unique": True, "primary_key": True},
             "user_id": {"unique": True, "allow_null": True},
@@ -302,8 +290,7 @@ class TestDataQualityValidator:
         assert "duplicates_removed" in deduplication_result
     
     def test_timeliness_validation(self, data_quality_validator, sample_dataset):
-        """Test data timeliness validation"""
-        # Define timeliness requirements
+        """Test data timeliness validation"""        # Define timeliness requirements
         timeliness_requirements = {
             "registration_date": {
                 "max_age_days": 30,
@@ -340,8 +327,7 @@ class TestDataQualityValidator:
         assert "freshness_alerts" in freshness_monitoring
     
     def test_validity_validation(self, data_quality_validator, sample_dataset):
-        """Test data validity validation"""
-        # Define validity constraints
+        """Test data validity validation"""        # Define validity constraints
         validity_constraints = {
             "email": {
                 "format": "email",
@@ -388,8 +374,7 @@ class TestDataQualityValidator:
         assert "type_violations" in data_type_result
     
     def test_integrity_validation(self, data_quality_validator, sample_dataset):
-        """Test data integrity validation"""
-        # Create related dataset for referential integrity testing
+        """Test data integrity validation"""        # Create related dataset for referential integrity testing
         related_data = {
             "users": [{"user_id": f"user_{i}", "name": f"User {i}"} for i in range(500)],
             "categories": [
@@ -438,8 +423,7 @@ class TestDataQualityValidator:
         assert "violated_constraints" in constraint_result
     
     def test_comprehensive_quality_assessment(self, data_quality_validator, sample_dataset):
-        """Test comprehensive data quality assessment"""
-        # Perform complete quality assessment
+        """Test comprehensive data quality assessment"""        # Perform complete quality assessment
         quality_assessment = data_quality_validator.assess_data_quality(sample_dataset)
         
         assert "overall_quality_score" in quality_assessment
@@ -471,12 +455,10 @@ class TestDataQualityValidator:
 
 
 class TestMetricsQualityChecker:
-    """Ultra-industrial tests for MetricsQualityChecker class"""
-    
+    """Ultra-industrial tests for MetricsQualityChecker class"""    
     @pytest.fixture
     def metrics_quality_checker(self):
-        """Create MetricsQualityChecker instance for testing"""
-        config = {
+        """Create MetricsQualityChecker instance for testing"""        config = {
             "metric_validation_rules": {
                 "value_range_checks": True,
                 "temporal_consistency_checks": True,
@@ -494,8 +476,7 @@ class TestMetricsQualityChecker:
     
     @pytest.fixture
     def sample_metrics(self):
-        """Generate sample metrics with quality issues"""
-        metrics = []
+        """Generate sample metrics with quality issues"""        metrics = []
         base_time = datetime.now()
         
         for i in range(1000):
@@ -550,15 +531,13 @@ class TestMetricsQualityChecker:
         return metrics
     
     def test_initialization(self, metrics_quality_checker):
-        """Test MetricsQualityChecker initialization"""
-        assert metrics_quality_checker is not None
+        """Test MetricsQualityChecker initialization"""        assert metrics_quality_checker is not None
         assert hasattr(metrics_quality_checker, 'validation_engine')
         assert hasattr(metrics_quality_checker, 'anomaly_detector')
         assert hasattr(metrics_quality_checker, 'correlation_analyzer')
     
     def test_metric_value_validation(self, metrics_quality_checker, sample_metrics):
-        """Test metric value validation"""
-        # Define value constraints for different metrics
+        """Test metric value validation"""        # Define value constraints for different metrics
         value_constraints = {
             "cpu_usage": {"min": 0, "max": 100, "unit": "percentage"},
             "memory_usage": {"min": 0, "max": 100, "unit": "percentage"},
@@ -587,8 +566,7 @@ class TestMetricsQualityChecker:
         assert "statistical_summary" in range_analysis
     
     def test_temporal_consistency_validation(self, metrics_quality_checker, sample_metrics):
-        """Test temporal consistency validation"""
-        # Validate temporal consistency
+        """Test temporal consistency validation"""        # Validate temporal consistency
         temporal_validation = metrics_quality_checker.validate_temporal_consistency(sample_metrics)
         
         assert "timestamp_ordering_issues" in temporal_validation
@@ -608,8 +586,7 @@ class TestMetricsQualityChecker:
         assert "out_of_order_points" in sequence_validation
     
     def test_metric_completeness_validation(self, metrics_quality_checker, sample_metrics):
-        """Test metric completeness validation"""
-        # Validate completeness
+        """Test metric completeness validation"""        # Validate completeness
         completeness_validation = metrics_quality_checker.validate_completeness(sample_metrics)
         
         assert "overall_completeness_score" in completeness_validation
@@ -630,8 +607,7 @@ class TestMetricsQualityChecker:
         assert "missing_metric_types" in coverage_analysis
     
     def test_metric_correlation_validation(self, metrics_quality_checker, sample_metrics):
-        """Test metric correlation validation"""
-        # Validate correlations between related metrics
+        """Test metric correlation validation"""        # Validate correlations between related metrics
         correlation_validation = metrics_quality_checker.validate_metric_correlations(sample_metrics)
         
         assert "correlation_matrix" in correlation_validation
@@ -653,8 +629,7 @@ class TestMetricsQualityChecker:
         assert "correlation_confidence_scores" in correlation_check
     
     def test_metric_anomaly_detection(self, metrics_quality_checker, sample_metrics):
-        """Test metric anomaly detection"""
-        # Detect anomalies in metric values
+        """Test metric anomaly detection"""        # Detect anomalies in metric values
         anomaly_detection = metrics_quality_checker.detect_metric_anomalies(sample_metrics)
         
         assert "anomalous_metrics" in anomaly_detection
@@ -676,8 +651,7 @@ class TestMetricsQualityChecker:
         assert "collective_anomalies" in timeseries_anomalies
     
     def test_unit_consistency_validation(self, metrics_quality_checker, sample_metrics):
-        """Test unit consistency validation"""
-        # Validate unit consistency
+        """Test unit consistency validation"""        # Validate unit consistency
         unit_validation = metrics_quality_checker.validate_unit_consistency(sample_metrics)
         
         assert "unit_consistency_score" in unit_validation
@@ -699,8 +673,7 @@ class TestMetricsQualityChecker:
         assert "normalization_applied" in normalization_result
     
     def test_comprehensive_metrics_quality_assessment(self, metrics_quality_checker, sample_metrics):
-        """Test comprehensive metrics quality assessment"""
-        # Perform complete metrics quality assessment
+        """Test comprehensive metrics quality assessment"""        # Perform complete metrics quality assessment
         quality_assessment = metrics_quality_checker.assess_metrics_quality(sample_metrics)
         
         assert "overall_quality_score" in quality_assessment
@@ -723,12 +696,10 @@ class TestMetricsQualityChecker:
 
 
 class TestLogQualityValidator:
-    """Ultra-industrial tests for LogQualityValidator class"""
-    
+    """Ultra-industrial tests for LogQualityValidator class"""    
     @pytest.fixture
     def log_quality_validator(self):
-        """Create LogQualityValidator instance for testing"""
-        config = {
+        """Create LogQualityValidator instance for testing"""        config = {
             "log_format_validation": True,
             "log_level_validation": True,
             "structured_logging_enforcement": True,
@@ -739,8 +710,7 @@ class TestLogQualityValidator:
     
     @pytest.fixture
     def sample_logs(self):
-        """Generate sample logs with various quality issues"""
-        logs = []
+        """Generate sample logs with various quality issues"""        logs = []
         base_time = datetime.now()
         
         log_levels = ["DEBUG", "INFO", "WARN", "ERROR", "FATAL"]
@@ -800,15 +770,13 @@ class TestLogQualityValidator:
         return logs
     
     def test_initialization(self, log_quality_validator):
-        """Test LogQualityValidator initialization"""
-        assert log_quality_validator is not None
+        """Test LogQualityValidator initialization"""        assert log_quality_validator is not None
         assert hasattr(log_quality_validator, 'format_validator')
         assert hasattr(log_quality_validator, 'pii_detector')
         assert hasattr(log_quality_validator, 'structure_validator')
     
     def test_log_format_validation(self, log_quality_validator, sample_logs):
-        """Test log format validation"""
-        # Define expected log format
+        """Test log format validation"""        # Define expected log format
         expected_format = {
             "required_fields": ["timestamp", "level", "service", "message", "request_id"],
             "timestamp_format": "ISO8601",
@@ -836,8 +804,7 @@ class TestLogQualityValidator:
         assert len(invalid_timestamps) > 0
     
     def test_log_level_validation(self, log_quality_validator, sample_logs):
-        """Test log level validation"""
-        # Validate log levels
+        """Test log level validation"""        # Validate log levels
         level_validation = log_quality_validator.validate_log_levels(sample_logs)
         
         assert "level_distribution" in level_validation
@@ -856,8 +823,7 @@ class TestLogQualityValidator:
         assert "distribution_anomalies" in distribution_analysis
     
     def test_structured_logging_validation(self, log_quality_validator, sample_logs):
-        """Test structured logging validation"""
-        # Define structured logging schema
+        """Test structured logging validation"""        # Define structured logging schema
         schema = {
             "timestamp": {"type": "datetime", "required": True},
             "level": {"type": "string", "required": True, "enum": ["DEBUG", "INFO", "WARN", "ERROR", "FATAL"]},
@@ -893,8 +859,7 @@ class TestLogQualityValidator:
         assert len(schema_violations) > 0
     
     def test_pii_detection(self, log_quality_validator, sample_logs):
-        """Test PII detection in logs"""
-        # Detect PII in logs
+        """Test PII detection in logs"""        # Detect PII in logs
         pii_detection = log_quality_validator.detect_pii_in_logs(sample_logs)
         
         assert "pii_violations" in pii_detection
@@ -919,8 +884,7 @@ class TestLogQualityValidator:
         assert "masking_applied_count" in masking_result
     
     def test_log_completeness_validation(self, log_quality_validator, sample_logs):
-        """Test log completeness validation"""
-        # Define completeness requirements
+        """Test log completeness validation"""        # Define completeness requirements
         completeness_requirements = {
             "expected_log_rate": {
                 "per_service": {"auth_service": 100, "content_service": 200},  # logs per hour
@@ -950,8 +914,7 @@ class TestLogQualityValidator:
         assert "orphaned_logs" in correlation_validation
     
     def test_comprehensive_log_quality_assessment(self, log_quality_validator, sample_logs):
-        """Test comprehensive log quality assessment"""
-        # Perform complete log quality assessment
+        """Test comprehensive log quality assessment"""        # Perform complete log quality assessment
         quality_assessment = log_quality_validator.assess_log_quality(sample_logs)
         
         assert "overall_quality_score" in quality_assessment
@@ -969,12 +932,10 @@ class TestLogQualityValidator:
 
 
 class TestComplianceValidator:
-    """Ultra-industrial tests for ComplianceValidator class"""
-    
+    """Ultra-industrial tests for ComplianceValidator class"""    
     @pytest.fixture
     def compliance_validator(self):
-        """Create ComplianceValidator instance for testing"""
-        config = {
+        """Create ComplianceValidator instance for testing"""        config = {
             "compliance_standards": ["GDPR", "HIPAA", "SOX", "PCI_DSS", "ISO_27001"],
             "audit_trail_enabled": True,
             "automated_reporting_enabled": True,
@@ -984,8 +945,7 @@ class TestComplianceValidator:
     
     @pytest.fixture
     def compliance_test_data(self):
-        """Generate test data for compliance validation"""
-        return {
+        """Generate test data for compliance validation"""        return {
             "personal_data": [
                 {
                     "record_id": f"record_{i}",
@@ -1031,16 +991,14 @@ class TestComplianceValidator:
         }
     
     def test_initialization(self, compliance_validator):
-        """Test ComplianceValidator initialization"""
-        assert compliance_validator is not None
+        """Test ComplianceValidator initialization"""        assert compliance_validator is not None
         assert len(compliance_validator.config["compliance_standards"]) == 5
         assert hasattr(compliance_validator, 'compliance_engines')
         assert hasattr(compliance_validator, 'audit_logger')
         assert hasattr(compliance_validator, 'violation_detector')
     
     def test_gdpr_compliance_validation(self, compliance_validator, compliance_test_data):
-        """Test GDPR compliance validation"""
-        # Validate GDPR compliance
+        """Test GDPR compliance validation"""        # Validate GDPR compliance
         gdpr_validation = compliance_validator.validate_gdpr_compliance(
             personal_data=compliance_test_data["personal_data"]
         )
@@ -1068,8 +1026,7 @@ class TestComplianceValidator:
         assert "data_requiring_deletion" in retention_validation
     
     def test_hipaa_compliance_validation(self, compliance_validator, compliance_test_data):
-        """Test HIPAA compliance validation"""
-        # Validate HIPAA compliance
+        """Test HIPAA compliance validation"""        # Validate HIPAA compliance
         hipaa_validation = compliance_validator.validate_hipaa_compliance(
             health_data=compliance_test_data["health_data"]
         )
@@ -1090,8 +1047,7 @@ class TestComplianceValidator:
         assert "access_control_effectiveness" in phi_validation
     
     def test_sox_compliance_validation(self, compliance_validator, compliance_test_data):
-        """Test SOX compliance validation"""
-        # Validate SOX compliance
+        """Test SOX compliance validation"""        # Validate SOX compliance
         sox_validation = compliance_validator.validate_sox_compliance(
             financial_data=compliance_test_data["financial_data"]
         )
@@ -1112,8 +1068,7 @@ class TestComplianceValidator:
         assert "tamper_evidence_score" in integrity_validation
     
     def test_pci_dss_compliance_validation(self, compliance_validator):
-        """Test PCI DSS compliance validation"""
-        # Generate payment card data for testing
+        """Test PCI DSS compliance validation"""        # Generate payment card data for testing
         payment_data = [
             {
                 "transaction_id": f"pay_{i}",
@@ -1148,8 +1103,7 @@ class TestComplianceValidator:
         assert any("cvv_stored" in str(v) for v in violations)
     
     def test_cross_standard_compliance(self, compliance_validator, compliance_test_data):
-        """Test compliance across multiple standards"""
-        # Validate compliance across all configured standards
+        """Test compliance across multiple standards"""        # Validate compliance across all configured standards
         cross_compliance = compliance_validator.validate_cross_standard_compliance(
             data_sources=compliance_test_data
         )
@@ -1167,8 +1121,7 @@ class TestComplianceValidator:
         assert "priority_recommendations" in conflict_resolution
     
     def test_audit_trail_validation(self, compliance_validator, compliance_test_data):
-        """Test audit trail validation"""
-        # Generate audit trail data
+        """Test audit trail validation"""        # Generate audit trail data
         audit_data = [
             {
                 "event_id": f"audit_{i}",
@@ -1199,8 +1152,7 @@ class TestComplianceValidator:
         assert "chronological_consistency" in integrity_check
     
     def test_compliance_reporting(self, compliance_validator, compliance_test_data):
-        """Test compliance reporting functionality"""
-        # Generate comprehensive compliance report
+        """Test compliance reporting functionality"""        # Generate comprehensive compliance report
         compliance_report = compliance_validator.generate_compliance_report(
             data_sources=compliance_test_data,
             reporting_period="quarterly",

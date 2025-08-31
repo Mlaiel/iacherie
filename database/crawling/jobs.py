@@ -1,5 +1,4 @@
-"""
-Enterprise Crawling Jobs Manager
+"""Enterprise Crawling Jobs Manager
 
 Advanced job scheduling and execution management for distributed
 crawling operations with priority queuing and failure recovery.
@@ -12,7 +11,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
 """
-
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -36,8 +34,7 @@ from ..core.exceptions import (
 
 
 class CrawlingJobManager(DatabaseManager):
-    """
-    Enterprise-grade crawling job manager for distributed
+    """    Enterprise-grade crawling job manager for distributed
     scheduling and execution of crawling operations.
     
     Handles:
@@ -46,16 +43,13 @@ class CrawlingJobManager(DatabaseManager):
     - Progress tracking and reporting
     - Failure recovery and retry logic
     - Performance optimization
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize crawling job manager.
+        """        Initialize crawling job manager.
         
         Args:
             db_session: SQLAlchemy database session
-        """
-        super().__init__(db_session)
+        """        super().__init__(db_session)
         self.table = CrawlingJob
     
     async def create_job(
@@ -70,8 +64,7 @@ class CrawlingJobManager(DatabaseManager):
         estimated_duration: Optional[int] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Create a new crawling job with comprehensive configuration.
+        """        Create a new crawling job with comprehensive configuration.
         
         Args:
             session_id: Associated crawling session ID
@@ -90,8 +83,7 @@ class CrawlingJobManager(DatabaseManager):
         Raises:
             CrawlingJobError: If job creation fails
             ValidationError: If invalid parameters provided
-        """
-        try:
+        """        try:
             # Validate job type
             if job_type not in [jt.value for jt in JobType]:
                 raise ValidationError(f"Invalid job type: {job_type}")
@@ -166,8 +158,7 @@ class CrawlingJobManager(DatabaseManager):
             raise CrawlingJobError(f"Failed to create job: {str(e)}")
     
     def _estimate_job_duration(self, job_type: str, targets_count: int) -> int:
-        """
-        Estimate job duration based on type and target count.
+        """        Estimate job duration based on type and target count.
         
         Args:
             job_type: Type of crawling job
@@ -175,8 +166,7 @@ class CrawlingJobManager(DatabaseManager):
             
         Returns:
             Estimated duration in seconds
-        """
-        # Base time per target in seconds
+        """        # Base time per target in seconds
         base_times = {
             JobType.DISCOVERY.value: 30,      # 30s per discovery target
             JobType.MONITORING.value: 15,     # 15s per monitoring target
@@ -189,16 +179,14 @@ class CrawlingJobManager(DatabaseManager):
         return base_time * targets_count + 60  # Add 1 minute overhead
     
     async def get_job(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve job details by ID.
+        """        Retrieve job details by ID.
         
         Args:
             job_id: Job identifier
             
         Returns:
             Dict containing job data or None if not found
-        """
-        try:
+        """        try:
             job = await self.db.query(CrawlingJob).filter(
                 CrawlingJob.job_id == job_id
             ).first()
@@ -242,8 +230,7 @@ class CrawlingJobManager(DatabaseManager):
         status: JobStatus,
         error_message: Optional[str] = None
     ) -> bool:
-        """
-        Update job status with proper timestamp tracking.
+        """        Update job status with proper timestamp tracking.
         
         Args:
             job_id: Job identifier
@@ -252,8 +239,7 @@ class CrawlingJobManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             update_data = {
                 'status': status.value,
                 'updated_at': datetime.utcnow()
@@ -297,8 +283,7 @@ class CrawlingJobManager(DatabaseManager):
         discoveries_increment: int = 0,
         errors_increment: int = 0
     ) -> bool:
-        """
-        Update job progress metrics.
+        """        Update job progress metrics.
         
         Args:
             job_id: Job identifier
@@ -308,11 +293,9 @@ class CrawlingJobManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                UPDATE crawling_jobs 
+                text("""                UPDATE crawling_jobs 
                 SET progress_percentage = :progress,
                     discoveries_count = discoveries_count + :discoveries,
                     errors_count = errors_count + :errors,
@@ -336,8 +319,7 @@ class CrawlingJobManager(DatabaseManager):
             raise DatabaseError(f"Failed to update job progress: {str(e)}")
     
     async def increment_discoveries(self, job_id: str, count: int = 1) -> bool:
-        """
-        Increment discovery count for job.
+        """        Increment discovery count for job.
         
         Args:
             job_id: Job identifier
@@ -345,11 +327,9 @@ class CrawlingJobManager(DatabaseManager):
             
         Returns:
             bool indicating success
-        """
-        try:
+        """        try:
             result = await self.db.execute(
-                text("""
-                UPDATE crawling_jobs 
+                text("""                UPDATE crawling_jobs 
                 SET discoveries_count = discoveries_count + :count,
                     updated_at = :now
                 WHERE job_id = :job_id
@@ -373,8 +353,7 @@ class CrawlingJobManager(DatabaseManager):
         limit: int = 50,
         platform: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Get pending jobs ordered by priority and schedule time.
+        """        Get pending jobs ordered by priority and schedule time.
         
         Args:
             limit: Maximum number of jobs to return
@@ -382,8 +361,7 @@ class CrawlingJobManager(DatabaseManager):
             
         Returns:
             List of pending job dictionaries
-        """
-        try:
+        """        try:
             query = self.db.query(CrawlingJob).filter(
                 and_(
                     CrawlingJob.status == JobStatus.PENDING.value,
@@ -422,20 +400,17 @@ class CrawlingJobManager(DatabaseManager):
             raise DatabaseError(f"Failed to get pending jobs: {str(e)}")
     
     async def get_user_queue_status(self, user_id: str) -> Dict[str, int]:
-        """
-        Get job queue status for a specific user.
+        """        Get job queue status for a specific user.
         
         Args:
             user_id: User identifier
             
         Returns:
             Dict containing job counts by status
-        """
-        try:
+        """        try:
             # Query job counts by status for user's sessions
             result = await self.db.execute(
-                text("""
-                SELECT cj.status, COUNT(*) as count
+                text("""                SELECT cj.status, COUNT(*) as count
                 FROM crawling_jobs cj
                 JOIN crawling_sessions cs ON cj.session_id = cs.session_id
                 WHERE cs.user_id = :user_id
@@ -466,22 +441,19 @@ class CrawlingJobManager(DatabaseManager):
         self,
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive job analytics for dashboard.
+        """        Get comprehensive job analytics for dashboard.
         
         Args:
             time_range: Time range for analytics
             
         Returns:
             Dict containing job analytics
-        """
-        try:
+        """        try:
             since_time = datetime.utcnow() - time_range
             
             # Get job counts by status
             status_counts = await self.db.execute(
-                text("""
-                SELECT status, COUNT(*) as count
+                text("""                SELECT status, COUNT(*) as count
                 FROM crawling_jobs
                 WHERE created_at >= :since_time
                 GROUP BY status
@@ -491,8 +463,7 @@ class CrawlingJobManager(DatabaseManager):
             
             # Get job type breakdown
             type_counts = await self.db.execute(
-                text("""
-                SELECT job_type, COUNT(*) as count,
+                text("""                SELECT job_type, COUNT(*) as count,
                        AVG(actual_duration) as avg_duration,
                        AVG(discoveries_count) as avg_discoveries
                 FROM crawling_jobs
@@ -508,8 +479,7 @@ class CrawlingJobManager(DatabaseManager):
             
             # Get performance metrics
             performance = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     COUNT(*) as total_jobs,
                     SUM(discoveries_count) as total_discoveries,
                     AVG(actual_duration) as avg_duration,
@@ -560,16 +530,14 @@ class CrawlingJobManager(DatabaseManager):
             raise DatabaseError(f"Failed to get job analytics: {str(e)}")
     
     async def retry_failed_job(self, job_id: str) -> bool:
-        """
-        Retry a failed job if retry count hasn't exceeded maximum.
+        """        Retry a failed job if retry count hasn't exceeded maximum.
         
         Args:
             job_id: Job identifier
             
         Returns:
             bool indicating if retry was scheduled
-        """
-        try:
+        """        try:
             job_data = await self.get_job(job_id)
             if not job_data:
                 raise CrawlingJobError(f"Job not found: {job_id}")
@@ -582,8 +550,7 @@ class CrawlingJobManager(DatabaseManager):
             
             # Reset job for retry
             result = await self.db.execute(
-                text("""
-                UPDATE crawling_jobs 
+                text("""                UPDATE crawling_jobs 
                 SET status = :status,
                     retry_count = retry_count + 1,
                     scheduled_for = :schedule_time,
@@ -611,16 +578,14 @@ class CrawlingJobManager(DatabaseManager):
             raise CrawlingJobError(f"Failed to retry job: {str(e)}")
     
     async def cleanup_session_jobs(self, session_id: str) -> int:
-        """
-        Clean up all jobs for a specific session.
+        """        Clean up all jobs for a specific session.
         
         Args:
             session_id: Session identifier
             
         Returns:
             Number of jobs cleaned up
-        """
-        try:
+        """        try:
             result = await self.db.execute(
                 text("DELETE FROM crawling_jobs WHERE session_id = :session_id"),
                 {'session_id': session_id}
@@ -634,13 +599,11 @@ class CrawlingJobManager(DatabaseManager):
             raise DatabaseError(f"Failed to cleanup session jobs: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check of job management system.
+        """        Perform health check of job management system.
         
         Returns:
             Dict containing health status
-        """
-        try:
+        """        try:
             # Check pending jobs count
             pending_count = await self.db.query(func.count(CrawlingJob.job_id)).filter(
                 CrawlingJob.status == JobStatus.PENDING.value

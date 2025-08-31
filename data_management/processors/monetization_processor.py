@@ -1,5 +1,4 @@
-"""
-💰 Monetization Processor - IA Influencer Agent Platform Enterprise
+"""💰 Monetization Processor - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/processors/monetization_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,7 +17,6 @@ LOGIQUE MÉTIER MONETIZATION:
 Content Usage Detection → Revenue Calculation → Platform API Integration → 
 Payment Processing → Analytics Generation → Tax Compliance → Distribution Automation
 """
-
 import json
 import logging
 import asyncio
@@ -39,8 +37,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class MonetizationProcessor(BaseProcessor):
-    """Processeur de monétisation avancé - Production Enterprise"""
-    
+    """Processeur de monétisation avancé - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -181,8 +178,7 @@ class MonetizationProcessor(BaseProcessor):
         self._initialize_payment_processors()
     
     def _initialize_payment_processors(self):
-        """Initialise les processeurs de paiement"""
-        try:
+        """Initialise les processeurs de paiement"""        try:
             # Initialize Stripe
             if self.payment_processors['stripe']['api_key']:
                 stripe.api_key = self.payment_processors['stripe']['api_key']
@@ -195,8 +191,7 @@ class MonetizationProcessor(BaseProcessor):
             self.logger.error(f"Failed to initialize payment processors: {e}")
     
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite les données de monétisation"""
-        user_id = input_data.get('user_id')
+        """Traite les données de monétisation"""        user_id = input_data.get('user_id')
         content_id = input_data.get('content_id')
         platform_data = input_data.get('platform_data', {})
         time_period = input_data.get('time_period', {})
@@ -254,8 +249,7 @@ class MonetizationProcessor(BaseProcessor):
         return monetization_result
     
     def _collect_platform_revenues(self, user_id: str, content_id: str, platform_data: Dict, time_period: Dict) -> Dict[str, Any]:
-        """Collecte les données de revenus de toutes les plateformes"""
-        revenues = {}
+        """Collecte les données de revenus de toutes les plateformes"""        revenues = {}
         
         for platform, data in platform_data.items():
             if platform not in self.platform_apis:
@@ -278,8 +272,7 @@ class MonetizationProcessor(BaseProcessor):
         return revenues
     
     def _get_platform_revenue(self, platform: str, user_id: str, content_id: str, data: Dict, time_period: Dict) -> Dict[str, Any]:
-        """Récupère les données de revenus d'une plateforme spécifique"""
-        platform_config = self.platform_apis[platform]
+        """Récupère les données de revenus d'une plateforme spécifique"""        platform_config = self.platform_apis[platform]
         
         # Simulate API call to platform
         # In production, this would make actual API calls
@@ -300,8 +293,7 @@ class MonetizationProcessor(BaseProcessor):
         return revenue_data
     
     def _simulate_platform_metrics(self, platform: str, data: Dict) -> Dict[str, Any]:
-        """Simule les métriques de plateforme (remplacé par vraies APIs en production)"""
-        base_metrics = {
+        """Simule les métriques de plateforme (remplacé par vraies APIs en production)"""        base_metrics = {
             'youtube': {
                 'views': data.get('views', np.random.randint(1000, 100000)),
                 'likes': data.get('likes', np.random.randint(50, 5000)),
@@ -343,8 +335,7 @@ class MonetizationProcessor(BaseProcessor):
         return base_metrics.get(platform, {})
     
     def _calculate_platform_revenue(self, platform: str, metrics: Dict[str, Any]) -> Decimal:
-        """Calcule le revenu basé sur les métriques de la plateforme"""
-        revenue = Decimal('0.00')
+        """Calcule le revenu basé sur les métriques de la plateforme"""        revenue = Decimal('0.00')
         
         try:
             if platform == 'youtube':
@@ -418,8 +409,7 @@ class MonetizationProcessor(BaseProcessor):
         return revenue.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     def _calculate_total_revenue(self, platform_revenues: Dict[str, Any]) -> Decimal:
-        """Calcule le revenu total de toutes les plateformes"""
-        total = Decimal('0.00')
+        """Calcule le revenu total de toutes les plateformes"""        total = Decimal('0.00')
         
         for platform, data in platform_revenues.items():
             if 'revenue' in data and not data.get('error'):
@@ -429,8 +419,7 @@ class MonetizationProcessor(BaseProcessor):
         return total.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     def _analyze_revenue_patterns(self, platform_revenues: Dict[str, Any], time_period: Dict) -> Dict[str, Any]:
-        """Analyse les patterns de revenus"""
-        analysis = {
+        """Analyse les patterns de revenus"""        analysis = {
             'top_performing_platform': '',
             'revenue_distribution': {},
             'growth_trends': {},
@@ -481,8 +470,7 @@ class MonetizationProcessor(BaseProcessor):
         return analysis
     
     def _calculate_average_cpm(self, platform_revenues: Dict[str, Any]) -> float:
-        """Calcule le CPM moyen sur toutes les plateformes"""
-        total_revenue = 0.0
+        """Calcule le CPM moyen sur toutes les plateformes"""        total_revenue = 0.0
         total_impressions = 0
         
         for platform, data in platform_revenues.items():
@@ -510,8 +498,7 @@ class MonetizationProcessor(BaseProcessor):
         return 0.0
     
     def _calculate_engagement_score(self, platform_revenues: Dict[str, Any]) -> float:
-        """Calcule le score d'engagement global"""
-        total_engagement = 0
+        """Calcule le score d'engagement global"""        total_engagement = 0
         total_reach = 0
         
         for platform, data in platform_revenues.items():
@@ -537,8 +524,7 @@ class MonetizationProcessor(BaseProcessor):
         return 0.0
     
     def _calculate_revenue_per_follower(self, platform_revenues: Dict[str, Any]) -> float:
-        """Calcule le revenu par follower"""
-        total_revenue = 0.0
+        """Calcule le revenu par follower"""        total_revenue = 0.0
         total_followers = 0
         
         for platform, data in platform_revenues.items():
@@ -559,8 +545,7 @@ class MonetizationProcessor(BaseProcessor):
         return 0.0
     
     def _identify_optimization_opportunities(self, platform_revenues: Dict[str, Any]) -> List[str]:
-        """Identifie les opportunités d'optimisation"""
-        opportunities = []
+        """Identifie les opportunités d'optimisation"""        opportunities = []
         
         for platform, data in platform_revenues.items():
             if data.get('error'):
@@ -591,8 +576,7 @@ class MonetizationProcessor(BaseProcessor):
         return opportunities[:5]  # Return top 5 opportunities
     
     def _calculate_taxes_and_fees(self, revenue: Decimal, user_location: Optional[str]) -> Dict[str, Any]:
-        """Calcule les taxes et frais"""
-        tax_calc = {
+        """Calcule les taxes et frais"""        tax_calc = {
             'gross_revenue': float(revenue),
             'vat_rate': 0.0,
             'vat_amount': 0.0,
@@ -644,8 +628,7 @@ class MonetizationProcessor(BaseProcessor):
         return tax_calc
     
     def _process_payment(self, user_id: str, amount: Decimal, tax_calc: Dict, payment_method: Optional[str]) -> Dict[str, Any]:
-        """Traite le paiement vers l'utilisateur"""
-        payment_result = {
+        """Traite le paiement vers l'utilisateur"""        payment_result = {
             'payment_id': self._generate_payment_id(),
             'user_id': user_id,
             'amount': float(amount),
@@ -690,14 +673,12 @@ class MonetizationProcessor(BaseProcessor):
         return payment_result
     
     def _generate_payment_id(self) -> str:
-        """Génère un ID unique pour le paiement"""
-        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
+        """Génère un ID unique pour le paiement"""        timestamp = datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')
         random_part = hashlib.md5(str(datetime.now().timestamp()).encode()).hexdigest()[:8]
         return f"PAY_{timestamp}_{random_part}"
     
     def _process_stripe_payment(self, user_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Traite un paiement via Stripe"""
-        try:
+        """Traite un paiement via Stripe"""        try:
             # This would create actual Stripe transfer in production
             # For now, simulate the process
             
@@ -723,8 +704,7 @@ class MonetizationProcessor(BaseProcessor):
             }
     
     def _process_paypal_payment(self, user_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Traite un paiement via PayPal"""
-        try:
+        """Traite un paiement via PayPal"""        try:
             fee_rate = Decimal(str(self.payment_processors['paypal']['fee_rate']))
             fixed_fee = Decimal(str(self.payment_processors['paypal']['fixed_fee']))
             transaction_fee = (amount * fee_rate) + fixed_fee
@@ -747,8 +727,7 @@ class MonetizationProcessor(BaseProcessor):
             }
     
     def _process_wise_payment(self, user_id: str, amount: Decimal) -> Dict[str, Any]:
-        """Traite un paiement via Wise"""
-        try:
+        """Traite un paiement via Wise"""        try:
             fee_rate = Decimal(str(self.payment_processors['wise']['fee_rate']))
             fixed_fee = Decimal(str(self.payment_processors['wise']['fixed_fee']))
             transaction_fee = (amount * fee_rate) + fixed_fee
@@ -771,8 +750,7 @@ class MonetizationProcessor(BaseProcessor):
             }
     
     def _generate_monetization_recommendations(self, platform_revenues: Dict, analysis: Dict) -> List[Dict[str, Any]]:
-        """Génère des recommandations pour optimiser la monétisation"""
-        recommendations = []
+        """Génère des recommandations pour optimiser la monétisation"""        recommendations = []
         
         try:
             # Revenue-based recommendations
@@ -865,8 +843,7 @@ class MonetizationProcessor(BaseProcessor):
         return recommendations[:4]  # Return top 4 recommendations
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour le traitement de monétisation"""
-        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour le traitement de monétisation"""        if not isinstance(input_data, dict):
             return False
         
         required_fields = ['user_id', 'platform_data']
@@ -883,16 +860,14 @@ class MonetizationProcessor(BaseProcessor):
 
 
 class AsyncMonetizationProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur de monétisation"""
-    
+    """Version asynchrone du processeur de monétisation"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = MonetizationProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=6)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone de la monétisation"""
-        loop = asyncio.get_event_loop()
+        """Traitement asynchrone de la monétisation"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process_with_stats, 
@@ -900,12 +875,10 @@ class AsyncMonetizationProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
-        return self.sync_processor.validate_input(input_data)
+        """Validation asynchrone"""        return self.sync_processor.validate_input(input_data)
     
     async def collect_platform_revenues(self, user_id: str, content_id: str, platform_data: Dict, time_period: Dict) -> Dict[str, Any]:
-        """Collection asynchrone des revenus de plateformes"""
-        loop = asyncio.get_event_loop()
+        """Collection asynchrone des revenus de plateformes"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor,
             self.sync_processor._collect_platform_revenues,

@@ -1,5 +1,4 @@
-"""
-Text Specialist Agent
+"""Text Specialist Agent
 
 AI-powered text content creation, editing, and optimization agent for influencers.
 
@@ -12,7 +11,6 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -29,8 +27,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Text content types"""
-    SOCIAL_MEDIA_POST = "social_media_post"
+    """Text content types"""    SOCIAL_MEDIA_POST = "social_media_post"
     BLOG_ARTICLE = "blog_article"
     VIDEO_SCRIPT = "video_script"
     PODCAST_SCRIPT = "podcast_script"
@@ -42,8 +39,7 @@ class ContentType(Enum):
     BIO = "bio"
 
 class WritingStyle(Enum):
-    """Writing style categories"""
-    CONVERSATIONAL = "conversational"
+    """Writing style categories"""    CONVERSATIONAL = "conversational"
     PROFESSIONAL = "professional"
     CASUAL = "casual"
     EDUCATIONAL = "educational"
@@ -55,8 +51,7 @@ class WritingStyle(Enum):
     DRAMATIC = "dramatic"
 
 class ToneOfVoice(Enum):
-    """Tone of voice options"""
-    FRIENDLY = "friendly"
+    """Tone of voice options"""    FRIENDLY = "friendly"
     AUTHORITATIVE = "authoritative"
     EMPATHETIC = "empathetic"
     ENTHUSIASTIC = "enthusiastic"
@@ -69,8 +64,7 @@ class ToneOfVoice(Enum):
 
 @dataclass
 class TextProject:
-    """Text content project"""
-    project_id: str
+    """Text content project"""    project_id: str
     title: str
     content_type: ContentType
     style: WritingStyle
@@ -86,8 +80,7 @@ class TextProject:
 
 @dataclass
 class ContentRequirements:
-    """Content creation requirements"""
-    topic: str
+    """Content creation requirements"""    topic: str
     key_points: List[str]
     target_length: int
     seo_keywords: List[str] = field(default_factory=list)
@@ -96,16 +89,14 @@ class ContentRequirements:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization suggestions"""
-    readability_score: float
+    """Content optimization suggestions"""    readability_score: float
     seo_score: float
     engagement_score: float
     suggestions: List[str]
     optimized_version: str = ""
 
 class TextSpecialistAgent(BaseAIAgent):
-    """AI agent for text content creation, editing, and optimization"""
-    
+    """AI agent for text content creation, editing, and optimization"""    
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
         self.name = "TextSpecialistAgent"
@@ -131,8 +122,7 @@ class TextSpecialistAgent(BaseAIAgent):
     async def create_text_project(self, title: str, content_type: ContentType, style: WritingStyle,
                                 tone: ToneOfVoice, target_audience: str, target_platforms: List[str],
                                 word_count: int) -> TextProject:
-        """Create a new text content project"""
-        try:
+        """Create a new text content project"""        try:
             project = TextProject(
                 project_id=f"text_project_{datetime.now().timestamp()}",
                 title=title,
@@ -154,8 +144,7 @@ class TextSpecialistAgent(BaseAIAgent):
             return None
     
     async def generate_content(self, project_id: str, requirements: ContentRequirements) -> str:
-        """Generate text content based on project and requirements"""
-        try:
+        """Generate text content based on project and requirements"""        try:
             if project_id not in self.active_projects:
                 return ""
             
@@ -187,8 +176,7 @@ class TextSpecialistAgent(BaseAIAgent):
             return ""
     
     async def optimize_content(self, content: str, platform: str, objectives: List[str]) -> ContentOptimization:
-        """Optimize content for specific platform and objectives"""
-        try:
+        """Optimize content for specific platform and objectives"""        try:
             optimization = ContentOptimization(
                 readability_score=await self._calculate_readability(content),
                 seo_score=await self._calculate_seo_score(content, platform),
@@ -207,8 +195,7 @@ class TextSpecialistAgent(BaseAIAgent):
             return ContentOptimization(0.0, 0.0, 0.0, [])
     
     async def generate_hashtags(self, content: str, platform: str, count: int = 20) -> List[str]:
-        """Generate relevant hashtags for content"""
-        try:
+        """Generate relevant hashtags for content"""        try:
             # Extract key topics and themes
             key_topics = await self._extract_key_topics(content)
             
@@ -239,8 +226,7 @@ class TextSpecialistAgent(BaseAIAgent):
             return []
     
     async def create_content_variations(self, base_content: str, variation_count: int = 3) -> List[str]:
-        """Create variations of base content for A/B testing"""
-        try:
+        """Create variations of base content for A/B testing"""        try:
             variations = []
             
             for i in range(variation_count):
@@ -264,8 +250,7 @@ class TextSpecialistAgent(BaseAIAgent):
             return []
     
     async def analyze_content_performance(self, content: str, engagement_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content performance and provide insights"""
-        try:
+        """Analyze content performance and provide insights"""        try:
             analysis = {
                 "content_metrics": await self._analyze_content_metrics(content),
                 "engagement_analysis": await self._analyze_engagement_patterns(engagement_data),
@@ -281,8 +266,7 @@ class TextSpecialistAgent(BaseAIAgent):
             return {}
     
     async def create_content_series(self, theme: str, series_length: int, content_type: ContentType) -> List[TextProject]:
-        """Create a series of related content pieces"""
-        try:
+        """Create a series of related content pieces"""        try:
             series_projects = []
             
             # Generate series outline
@@ -317,8 +301,7 @@ class TextSpecialistAgent(BaseAIAgent):
     
     # Helper methods for content generation
     async def _create_content_outline(self, project: TextProject, requirements: ContentRequirements) -> List[str]:
-        """Create content outline based on project and requirements"""
-        if project.content_type == ContentType.BLOG_ARTICLE:
+        """Create content outline based on project and requirements"""        if project.content_type == ContentType.BLOG_ARTICLE:
             return [
                 "Introduction",
                 "Main Point 1",
@@ -336,8 +319,7 @@ class TextSpecialistAgent(BaseAIAgent):
             return ["Opening", "Body", "Closing"]
     
     async def _generate_content_section(self, section: str, project: TextProject, requirements: ContentRequirements) -> str:
-        """Generate content for a specific section"""
-        # Simulate content generation based on section type
+        """Generate content for a specific section"""        # Simulate content generation based on section type
         if section == "Hook":
             return f"🔥 Did you know that {requirements.topic} can change everything? Here's what you need to know..."
         elif section == "Introduction":
@@ -355,8 +337,7 @@ class TextSpecialistAgent(BaseAIAgent):
             return f"Content for {section} related to {requirements.topic}..."
     
     async def _combine_content_sections(self, sections: List[str], project: TextProject) -> str:
-        """Combine content sections into cohesive text"""
-        if project.content_type == ContentType.SOCIAL_MEDIA_POST:
+        """Combine content sections into cohesive text"""        if project.content_type == ContentType.SOCIAL_MEDIA_POST:
             return "\n\n".join(sections)
         elif project.content_type == ContentType.BLOG_ARTICLE:
             return "\n\n".join(sections)
@@ -364,8 +345,7 @@ class TextSpecialistAgent(BaseAIAgent):
             return " ".join(sections)
     
     async def _apply_style_and_tone(self, content: str, project: TextProject) -> str:
-        """Apply writing style and tone to content"""
-        # Simulate style and tone application
+        """Apply writing style and tone to content"""        # Simulate style and tone application
         if project.style == WritingStyle.CONVERSATIONAL:
             # Add conversational elements
             content = content.replace("you should", "you might want to")
@@ -379,8 +359,7 @@ class TextSpecialistAgent(BaseAIAgent):
         return content
     
     async def _calculate_readability(self, content: str) -> float:
-        """Calculate readability score"""
-        # Simple readability calculation
+        """Calculate readability score"""        # Simple readability calculation
         sentences = len([s for s in content.split('.') if s.strip()])
         words = len(content.split())
         
@@ -392,14 +371,12 @@ class TextSpecialistAgent(BaseAIAgent):
         return min(1.0, readability)
     
     async def _calculate_seo_score(self, content: str, platform: str) -> float:
-        """Calculate SEO optimization score"""
-        # Simulate SEO score calculation
+        """Calculate SEO optimization score"""        # Simulate SEO score calculation
         import random
         return random.uniform(0.6, 0.95)
     
     async def _predict_engagement(self, content: str, platform: str) -> float:
-        """Predict engagement potential"""
-        # Simple engagement prediction based on content features
+        """Predict engagement potential"""        # Simple engagement prediction based on content features
         score = 0.5
         
         # Check for engagement elements
@@ -415,8 +392,7 @@ class TextSpecialistAgent(BaseAIAgent):
         return min(1.0, score)
     
     async def _extract_key_topics(self, content: str) -> List[str]:
-        """Extract key topics from content"""
-        # Simple keyword extraction
+        """Extract key topics from content"""        # Simple keyword extraction
         words = content.lower().split()
         
         # Remove common words
@@ -430,8 +406,7 @@ class TextSpecialistAgent(BaseAIAgent):
         return [topic for topic, count in topic_counts.most_common(5)]
     
     async def _generate_topic_hashtags(self, topic: str, platform: str) -> List[str]:
-        """Generate hashtags for a specific topic"""
-        base_hashtags = [
+        """Generate hashtags for a specific topic"""        base_hashtags = [
             f"#{topic}",
             f"#{topic}tips",
             f"#{topic}guide",
@@ -441,8 +416,7 @@ class TextSpecialistAgent(BaseAIAgent):
         return base_hashtags
     
     async def _get_trending_hashtags(self, platform: str) -> List[str]:
-        """Get trending hashtags for platform"""
-        trending_map = {
+        """Get trending hashtags for platform"""        trending_map = {
             "instagram": ["#instagood", "#photooftheday", "#love", "#beautiful", "#happy"],
             "twitter": ["#trending", "#viral", "#breaking", "#news", "#update"],
             "linkedin": ["#professional", "#career", "#business", "#networking", "#growth"],
@@ -451,12 +425,10 @@ class TextSpecialistAgent(BaseAIAgent):
         return trending_map.get(platform, ["#trending", "#viral"])
     
     async def _get_generic_hashtags(self, platform: str) -> List[str]:
-        """Get generic engagement hashtags"""
-        return ["#follow", "#like", "#comment", "#share", "#engage", "#community"]
+        """Get generic engagement hashtags"""        return ["#follow", "#like", "#comment", "#share", "#engage", "#community"]
     
     def _load_writing_guidelines(self) -> Dict[str, Dict[str, Any]]:
-        """Load writing guidelines for different content types"""
-        return {
+        """Load writing guidelines for different content types"""        return {
             "social_media_post": {
                 "max_length": 280,
                 "use_emojis": True,
@@ -478,8 +450,7 @@ class TextSpecialistAgent(BaseAIAgent):
         }
     
     def _load_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific content requirements"""
-        return {
+        """Load platform-specific content requirements"""        return {
             "instagram": {
                 "max_caption_length": 2200,
                 "max_hashtags": 30,
@@ -498,8 +469,7 @@ class TextSpecialistAgent(BaseAIAgent):
         }
     
     def _initialize_content_formulas(self) -> Dict[str, str]:
-        """Initialize proven content formulas"""
-        return {
+        """Initialize proven content formulas"""        return {
             "problem_solution": "Problem + Agitation + Solution + Call to Action",
             "story_formula": "Context + Conflict + Resolution + Lesson",
             "list_format": "Number + Benefit + List Items + Summary",

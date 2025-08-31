@@ -1,5 +1,4 @@
-"""
-AI Core Module Usage Examples
+"""AI Core Module Usage Examples
 
 Comprehensive examples demonstrating how to use the AI core module
 for different creator types and business scenarios.
@@ -9,7 +8,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
-
 import asyncio
 import logging
 from pathlib import Path
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 def example_basic_setup():
-    """Example: Basic module setup and configuration"""
-    print("=== AI Core Module Setup Example ===")
+    """Example: Basic module setup and configuration"""    print("=== AI Core Module Setup Example ===")
     
     # Quick setup with default configuration
     print("1. Running quick setup...")
@@ -56,8 +53,7 @@ def example_basic_setup():
 
 
 def example_content_validation():
-    """Example: Content validation for different creator types"""
-    print("\n=== Content Validation Examples ===")
+    """Example: Content validation for different creator types"""    print("\n=== Content Validation Examples ===")
     
     # Get validator instance
     validator = validation.content_validator
@@ -111,8 +107,7 @@ def example_content_validation():
 
 
 def example_performance_monitoring():
-    """Example: Performance monitoring during content processing"""
-    print("\n=== Performance Monitoring Example ===")
+    """Example: Performance monitoring during content processing"""    print("\n=== Performance Monitoring Example ===")
     
     # Get performance monitor
     monitor = performance.performance_monitor
@@ -161,8 +156,7 @@ def example_performance_monitoring():
 
 
 def example_ai_engine_usage():
-    """Example: AI engine for content analysis"""
-    print("\n=== AI Engine Usage Example ===")
+    """Example: AI engine for content analysis"""    print("\n=== AI Engine Usage Example ===")
     
     # Get AI engine
     engine = ai_engine.ai_engine
@@ -199,8 +193,7 @@ def example_ai_engine_usage():
 
 
 async def example_content_pipeline():
-    """Example: Complete content processing pipeline"""
-    print("\n=== Content Processing Pipeline Example ===")
+    """Example: Complete content processing pipeline"""    print("\n=== Content Processing Pipeline Example ===")
     
     # Get pipeline
     pipeline = content_processor.content_pipeline
@@ -246,8 +239,7 @@ async def example_content_pipeline():
 
 
 def example_business_metrics():
-    """Example: Business metrics tracking"""
-    print("\n=== Business Metrics Example ===")
+    """Example: Business metrics tracking"""    print("\n=== Business Metrics Example ===")
     
     # Get business metrics tracker
     business_tracker = metrics.BusinessMetricsTracker()
@@ -287,8 +279,7 @@ def example_business_metrics():
 
 
 def example_seo_optimization():
-    """Example: SEO optimization for content"""
-    print("\n=== SEO Optimization Example ===")
+    """Example: SEO optimization for content"""    print("\n=== SEO Optimization Example ===")
     
     # Get validator for SEO checks
     validator = validation.content_validator
@@ -330,8 +321,7 @@ def example_seo_optimization():
 
 
 def example_error_handling():
-    """Example: Error handling and recovery"""
-    print("\n=== Error Handling Example ===")
+    """Example: Error handling and recovery"""    print("\n=== Error Handling Example ===")
     
     try:
         # Simulate various error scenarios
@@ -365,8 +355,7 @@ def example_error_handling():
 
 
 def example_configuration_management():
-    """Example: Configuration management"""
-    print("\n=== Configuration Management Example ===")
+    """Example: Configuration management"""    print("\n=== Configuration Management Example ===")
     
     # Get current configuration
     current_config = config.get_config()
@@ -399,8 +388,7 @@ def example_configuration_management():
 
 
 def run_all_examples():
-    """Run all usage examples"""
-    print("🚀 AI Core Module - Usage Examples")
+    """Run all usage examples"""    print("🚀 AI Core Module - Usage Examples")
     print("=" * 50)
     
     try:
@@ -431,8 +419,7 @@ def run_all_examples():
 
 
 def run_quick_demo():
-    """Run a quick demonstration of key features"""
-    print("⚡ AI Core Module - Quick Demo")
+    """Run a quick demonstration of key features"""    print("⚡ AI Core Module - Quick Demo")
     print("=" * 30)
     
     # Quick setup

@@ -1,5 +1,4 @@
-"""
-High-Performance Fingerprint Cache Manager
+"""High-Performance Fingerprint Cache Manager
 
 Advanced caching system for fingerprint data with multi-level caching,
 intelligent invalidation, and enterprise-grade performance optimization.
@@ -7,7 +6,6 @@ intelligent invalidation, and enterprise-grade performance optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import json
 import hashlib
@@ -34,15 +32,13 @@ logger = logging.getLogger(__name__)
 
 
 class CacheLevel(Enum):
-    """Cache levels for different data types"""
-    L1_MEMORY = "l1_memory"      # In-memory cache for hot data
+    """Cache levels for different data types"""    L1_MEMORY = "l1_memory"      # In-memory cache for hot data
     L2_REDIS = "l2_redis"        # Redis cache for warm data
     L3_DISK = "l3_disk"          # Disk cache for cold data
 
 
 class CacheStrategy(Enum):
-    """Cache strategies for different access patterns"""
-    LRU = "lru"                  # Least Recently Used
+    """Cache strategies for different access patterns"""    LRU = "lru"                  # Least Recently Used
     LFU = "lfu"                  # Least Frequently Used
     TTL = "ttl"                  # Time To Live
     ADAPTIVE = "adaptive"        # Adaptive based on access patterns
@@ -50,8 +46,7 @@ class CacheStrategy(Enum):
 
 @dataclass
 class CacheConfiguration:
-    """Configuration for cache behavior"""
-    # Memory cache settings
+    """Configuration for cache behavior"""    # Memory cache settings
     memory_cache_size: int = 1000           # Max items in L1 cache
     memory_ttl: int = 300                   # 5 minutes
     
@@ -81,8 +76,7 @@ class CacheConfiguration:
 
 @dataclass
 class CacheMetrics:
-    """Cache performance metrics"""
-    l1_hits: int = 0
+    """Cache performance metrics"""    l1_hits: int = 0
     l1_misses: int = 0
     l2_hits: int = 0
     l2_misses: int = 0
@@ -100,20 +94,17 @@ class CacheMetrics:
     cache_size_bytes: int = 0
     
     def hit_rate(self) -> float:
-        """Calculate overall hit rate"""
-        total_hits = self.l1_hits + self.l2_hits + self.l3_hits
+        """Calculate overall hit rate"""        total_hits = self.l1_hits + self.l2_hits + self.l3_hits
         total_requests = total_hits + self.l1_misses + self.l2_misses + self.l3_misses
         return total_hits / total_requests if total_requests > 0 else 0.0
     
     def l1_hit_rate(self) -> float:
-        """Calculate L1 cache hit rate"""
-        total_l1 = self.l1_hits + self.l1_misses
+        """Calculate L1 cache hit rate"""        total_l1 = self.l1_hits + self.l1_misses
         return self.l1_hits / total_l1 if total_l1 > 0 else 0.0
 
 
 class MemoryCache:
-    """High-performance in-memory cache with LRU/LFU support"""
-    
+    """High-performance in-memory cache with LRU/LFU support"""    
     def __init__(self, max_size: int, strategy: CacheStrategy, ttl: int = 300):
         self.max_size = max_size
         self.strategy = strategy
@@ -132,8 +123,7 @@ class MemoryCache:
         self.logger = logging.getLogger(f"{__name__}.MemoryCache")
     
     def get(self, key: str) -> Optional[Any]:
-        """Get item from memory cache"""
-        try:
+        """Get item from memory cache"""        try:
             # Check if key exists and not expired
             if key not in self._cache:
                 self.misses += 1
@@ -157,8 +147,7 @@ class MemoryCache:
             return None
     
     def set(self, key: str, value: Any) -> bool:
-        """Set item in memory cache"""
-        try:
+        """Set item in memory cache"""        try:
             # Check if we need to evict
             if len(self._cache) >= self.max_size and key not in self._cache:
                 self._evict_item()
@@ -180,8 +169,7 @@ class MemoryCache:
             return False
     
     def delete(self, key: str) -> bool:
-        """Delete item from memory cache"""
-        try:
+        """Delete item from memory cache"""        try:
             if key in self._cache:
                 self._remove_key(key)
                 return True
@@ -192,15 +180,13 @@ class MemoryCache:
             return False
     
     def clear(self) -> None:
-        """Clear all items from memory cache"""
-        self._cache.clear()
+        """Clear all items from memory cache"""        self._cache.clear()
         self._timestamps.clear()
         self._access_counts.clear()
         self._access_order.clear()
     
     def _update_access(self, key: str) -> None:
-        """Update access patterns for cache strategy"""
-        self._access_counts[key] = self._access_counts.get(key, 0) + 1
+        """Update access patterns for cache strategy"""        self._access_counts[key] = self._access_counts.get(key, 0) + 1
         
         if self.strategy == CacheStrategy.LRU:
             if key in self._access_order:
@@ -208,8 +194,7 @@ class MemoryCache:
             self._access_order.append(key)
     
     def _evict_item(self) -> None:
-        """Evict item based on cache strategy"""
-        if not self._cache:
+        """Evict item based on cache strategy"""        if not self._cache:
             return
         
         if self.strategy == CacheStrategy.LRU:
@@ -225,26 +210,22 @@ class MemoryCache:
         self._remove_key(key_to_remove)
     
     def _remove_key(self, key: str) -> None:
-        """Remove key from all data structures"""
-        self._cache.pop(key, None)
+        """Remove key from all data structures"""        self._cache.pop(key, None)
         self._timestamps.pop(key, None)
         self._access_counts.pop(key, None)
         if key in self._access_order:
             self._access_order.remove(key)
     
     def size(self) -> int:
-        """Get current cache size"""
-        return len(self._cache)
+        """Get current cache size"""        return len(self._cache)
     
     def hit_rate(self) -> float:
-        """Get cache hit rate"""
-        total = self.hits + self.misses
+        """Get cache hit rate"""        total = self.hits + self.misses
         return self.hits / total if total > 0 else 0.0
 
 
 class RedisCache:
-    """High-performance Redis cache with advanced features"""
-    
+    """High-performance Redis cache with advanced features"""    
     def __init__(self, redis_client: Redis, config: CacheConfiguration):
         self.redis = redis_client
         self.config = config
@@ -259,8 +240,7 @@ class RedisCache:
         self.index_prefix = "idx:"
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get item from Redis cache"""
-        try:
+        """Get item from Redis cache"""        try:
             # Get data from Redis
             data = await self.redis.get(self._make_key(key))
             
@@ -289,8 +269,7 @@ class RedisCache:
         ttl: Optional[int] = None,
         tags: Optional[List[str]] = None
     ) -> bool:
-        """Set item in Redis cache"""
-        try:
+        """Set item in Redis cache"""        try:
             # Serialize data
             data = pickle.dumps(value)
             
@@ -320,8 +299,7 @@ class RedisCache:
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete item from Redis cache"""
-        try:
+        """Delete item from Redis cache"""        try:
             redis_key = self._make_key(key)
             result = await self.redis.delete(redis_key)
             
@@ -336,8 +314,7 @@ class RedisCache:
             return False
     
     async def mget(self, keys: List[str]) -> List[Optional[Any]]:
-        """Get multiple items from Redis cache"""
-        try:
+        """Get multiple items from Redis cache"""        try:
             redis_keys = [self._make_key(key) for key in keys]
             data_list = await self.redis.mget(redis_keys)
             
@@ -369,8 +346,7 @@ class RedisCache:
             return [None] * len(keys)
     
     async def mset(self, items: Dict[str, Any], ttl: Optional[int] = None) -> bool:
-        """Set multiple items in Redis cache"""
-        try:
+        """Set multiple items in Redis cache"""        try:
             if not items:
                 return True
             
@@ -408,8 +384,7 @@ class RedisCache:
             return False
     
     async def invalidate_by_tags(self, tags: List[str]) -> int:
-        """Invalidate cache entries by tags"""
-        try:
+        """Invalidate cache entries by tags"""        try:
             if not self.config.dependency_tracking:
                 return 0
             
@@ -440,8 +415,7 @@ class RedisCache:
             return 0
     
     async def _store_tags(self, key: str, tags: List[str]) -> None:
-        """Store tags for a cache key"""
-        try:
+        """Store tags for a cache key"""        try:
             redis_key = self._make_key(key)
             
             async with self.redis.pipeline() as pipe:
@@ -456,8 +430,7 @@ class RedisCache:
             self.logger.error(f"Failed to store tags for key {key}: {e}")
     
     async def _remove_tags(self, key: str) -> None:
-        """Remove tags for a cache key"""
-        try:
+        """Remove tags for a cache key"""        try:
             redis_key = self._make_key(key)
             
             # Find all tag sets containing this key
@@ -475,12 +448,10 @@ class RedisCache:
             self.logger.error(f"Failed to remove tags for key {key}: {e}")
     
     def _make_key(self, key: str) -> str:
-        """Create Redis key with prefix"""
-        return f"{self.fingerprint_prefix}{key}"
+        """Create Redis key with prefix"""        return f"{self.fingerprint_prefix}{key}"
     
     async def size(self) -> int:
-        """Get approximate cache size"""
-        try:
+        """Get approximate cache size"""        try:
             info = await self.redis.info('memory')
             return info.get('used_memory', 0)
         except Exception:
@@ -488,11 +459,9 @@ class RedisCache:
 
 
 class FingerprintCacheManager:
-    """
-    Comprehensive fingerprint cache manager with multi-level caching,
+    """    Comprehensive fingerprint cache manager with multi-level caching,
     intelligent invalidation, and enterprise-grade performance optimization.
-    """
-    
+    """    
     def __init__(self, redis_client: Redis, config: Optional[CacheConfiguration] = None):
         self.config = config or CacheConfiguration()
         self.redis_client = redis_client
@@ -519,8 +488,7 @@ class FingerprintCacheManager:
         fingerprint_id: str,
         include_vectors: bool = False
     ) -> Optional[ContentFingerprint]:
-        """
-        Get fingerprint from cache with multi-level lookup
+        """        Get fingerprint from cache with multi-level lookup
         
         Args:
             fingerprint_id: Fingerprint identifier
@@ -528,8 +496,7 @@ class FingerprintCacheManager:
             
         Returns:
             ContentFingerprint object or None
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         cache_key = self._make_cache_key("fingerprint", fingerprint_id, include_vectors)
         
         try:
@@ -571,8 +538,7 @@ class FingerprintCacheManager:
         ttl: Optional[int] = None,
         tags: Optional[List[str]] = None
     ) -> bool:
-        """
-        Store fingerprint in cache with multi-level storage
+        """        Store fingerprint in cache with multi-level storage
         
         Args:
             fingerprint: ContentFingerprint object
@@ -582,8 +548,7 @@ class FingerprintCacheManager:
             
         Returns:
             True if stored successfully
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             self.metrics.total_sets += 1
@@ -615,8 +580,7 @@ class FingerprintCacheManager:
         query_hash: str,
         content_type: Optional[str] = None
     ) -> Optional[List[Any]]:
-        """Get cached match results"""
-        cache_key = self._make_cache_key("match", query_hash, content_type)
+        """Get cached match results"""        cache_key = self._make_cache_key("match", query_hash, content_type)
         
         # Try L1 first
         result = self.l1_cache.get(cache_key)
@@ -642,8 +606,7 @@ class FingerprintCacheManager:
         content_type: Optional[str] = None,
         ttl: int = 1800  # 30 minutes default
     ) -> bool:
-        """Store match results in cache"""
-        cache_key = self._make_cache_key("match", query_hash, content_type)
+        """Store match results in cache"""        cache_key = self._make_cache_key("match", query_hash, content_type)
         tags = ["matches", f"content_type:{content_type}"] if content_type else ["matches"]
         
         # Store in both levels
@@ -651,8 +614,7 @@ class FingerprintCacheManager:
         return await self.l2_cache.set(cache_key, match_results, ttl, tags)
     
     async def invalidate_fingerprint(self, fingerprint_id: str) -> bool:
-        """Invalidate all cache entries for a fingerprint"""
-        try:
+        """Invalidate all cache entries for a fingerprint"""        try:
             # Remove from L1 cache
             l1_deleted = False
             for include_vectors in [True, False]:
@@ -672,8 +634,7 @@ class FingerprintCacheManager:
             return False
     
     async def invalidate_by_content_type(self, content_type: str) -> int:
-        """Invalidate all cache entries for a content type"""
-        try:
+        """Invalidate all cache entries for a content type"""        try:
             # Clear L1 cache (no tag support, so clear all)
             self.l1_cache.clear()
             
@@ -689,8 +650,7 @@ class FingerprintCacheManager:
             return 0
     
     async def invalidate_by_user(self, user_id: str) -> int:
-        """Invalidate all cache entries for a user"""
-        try:
+        """Invalidate all cache entries for a user"""        try:
             # Clear L1 cache
             self.l1_cache.clear()
             
@@ -710,8 +670,7 @@ class FingerprintCacheManager:
         fingerprint_ids: List[str],
         batch_size: int = 50
     ) -> int:
-        """Warm cache with specified fingerprints"""
-        try:
+        """Warm cache with specified fingerprints"""        try:
             warmed_count = 0
             
             # Process in batches
@@ -742,8 +701,7 @@ class FingerprintCacheManager:
             return 0
     
     async def _warm_fingerprint(self, fingerprint_id: str) -> bool:
-        """Warm cache for a single fingerprint"""
-        try:
+        """Warm cache for a single fingerprint"""        try:
             # This would typically fetch from database and store in cache
             # For now, we'll simulate the warming process
             
@@ -765,8 +723,7 @@ class FingerprintCacheManager:
             return False
     
     async def clear_all_caches(self) -> bool:
-        """Clear all cache levels"""
-        try:
+        """Clear all cache levels"""        try:
             # Clear L1 cache
             self.l1_cache.clear()
             
@@ -781,16 +738,14 @@ class FingerprintCacheManager:
             return False
     
     def get_cache_metrics(self) -> CacheMetrics:
-        """Get comprehensive cache metrics"""
-        # Update L1 metrics
+        """Get comprehensive cache metrics"""        # Update L1 metrics
         self.metrics.l1_hits = self.l1_cache.hits
         self.metrics.l1_misses = self.l1_cache.misses
         
         return self.metrics
     
     async def get_cache_statistics(self) -> Dict[str, Any]:
-        """Get detailed cache statistics"""
-        try:
+        """Get detailed cache statistics"""        try:
             metrics = self.get_cache_metrics()
             
             l1_size = self.l1_cache.size()
@@ -825,8 +780,7 @@ class FingerprintCacheManager:
             return {"error": str(e)}
     
     def _make_cache_key(self, prefix: str, key: str, suffix: Any = None) -> str:
-        """Generate cache key with consistent format"""
-        parts = [prefix, key]
+        """Generate cache key with consistent format"""        parts = [prefix, key]
         if suffix is not None:
             parts.append(str(suffix))
         
@@ -839,8 +793,7 @@ class FingerprintCacheManager:
         return cache_key
     
     def _generate_fingerprint_tags(self, fingerprint: ContentFingerprint) -> List[str]:
-        """Generate cache tags for a fingerprint"""
-        tags = [
+        """Generate cache tags for a fingerprint"""        tags = [
             f"fingerprint_id:{fingerprint.fingerprint_id}",
             f"content_id:{fingerprint.content_id}",
             f"content_type:{fingerprint.content_type}",
@@ -854,8 +807,7 @@ class FingerprintCacheManager:
         return tags
     
     def _update_average_time(self, operation: str, start_time: float) -> None:
-        """Update average operation time"""
-        elapsed = time.time() - start_time
+        """Update average operation time"""        elapsed = time.time() - start_time
         
         if operation == "get":
             # Simple moving average
@@ -876,8 +828,7 @@ class FingerprintCacheManager:
                 )
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on cache components"""
-        try:
+        """Perform health check on cache components"""        try:
             health = {
                 "status": "healthy",
                 "components": {},

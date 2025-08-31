@@ -1,5 +1,4 @@
-"""
-Enterprise Crawler Performance Optimization Database Module
+"""Enterprise Crawler Performance Optimization Database Module
 
 Advanced database layer for crawler performance monitoring, optimization,
 resource management, and intelligent scaling operations.
@@ -14,7 +13,6 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -36,8 +34,7 @@ from ..core.exceptions import (
 
 
 class MetricType(Enum):
-    """Types of performance metrics."""
-    THROUGHPUT = "throughput"              # Items processed per time unit
+    """Types of performance metrics."""    THROUGHPUT = "throughput"              # Items processed per time unit
     LATENCY = "latency"                    # Response time metrics
     ERROR_RATE = "error_rate"              # Error percentage
     RESOURCE_USAGE = "resource_usage"      # CPU, memory, disk usage
@@ -48,8 +45,7 @@ class MetricType(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Performance optimization strategies."""
-    SCALE_UP = "scale_up"                  # Increase resources per instance
+    """Performance optimization strategies."""    SCALE_UP = "scale_up"                  # Increase resources per instance
     SCALE_OUT = "scale_out"                # Increase number of instances
     LOAD_BALANCE = "load_balance"          # Redistribute workload
     CACHE_OPTIMIZE = "cache_optimize"      # Optimize caching strategy
@@ -60,8 +56,7 @@ class OptimizationStrategy(Enum):
 
 
 class ResourceType(Enum):
-    """Types of system resources."""
-    CPU = "cpu"
+    """Types of system resources."""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -72,8 +67,7 @@ class ResourceType(Enum):
 
 
 class PerformanceStatus(Enum):
-    """Performance status levels."""
-    OPTIMAL = "optimal"          # 90-100% efficiency
+    """Performance status levels."""    OPTIMAL = "optimal"          # 90-100% efficiency
     GOOD = "good"               # 75-89% efficiency
     ACCEPTABLE = "acceptable"    # 60-74% efficiency
     DEGRADED = "degraded"       # 40-59% efficiency
@@ -81,8 +75,7 @@ class PerformanceStatus(Enum):
 
 
 class CrawlerOptimizationManager(DatabaseManager):
-    """
-    Enterprise crawler performance optimization and resource management system.
+    """    Enterprise crawler performance optimization and resource management system.
     
     Manages:
     - Real-time performance monitoring and metrics collection
@@ -91,11 +84,9 @@ class CrawlerOptimizationManager(DatabaseManager):
     - Benchmark tracking and performance regression detection
     - Predictive scaling based on usage patterns
     - Comprehensive performance analytics and reporting
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize crawler optimization manager."""
-        super().__init__(db_session)
+        """Initialize crawler optimization manager."""        super().__init__(db_session)
         self.performance_baselines = {}
         self.optimization_rules = {}
         self.resource_allocations = {}
@@ -110,8 +101,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         collection_timestamp: Optional[datetime] = None,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Record a performance metric for analysis and optimization.
+        """        Record a performance metric for analysis and optimization.
         
         Args:
             crawler_id: Crawler identifier
@@ -126,8 +116,7 @@ class CrawlerOptimizationManager(DatabaseManager):
             
         Raises:
             PerformanceOptimizationError: If metric recording fails
-        """
-        try:
+        """        try:
             metric_id = str(uuid4())
             timestamp = collection_timestamp or datetime.utcnow()
             
@@ -179,8 +168,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         cooldown_minutes: int,
         user_id: str
     ) -> str:
-        """
-        Create an automated optimization rule for performance management.
+        """        Create an automated optimization rule for performance management.
         
         Args:
             rule_name: Human-readable rule name
@@ -192,8 +180,7 @@ class CrawlerOptimizationManager(DatabaseManager):
             
         Returns:
             Optimization rule ID
-        """
-        try:
+        """        try:
             rule_id = str(uuid4())
             
             # Validate rule configuration
@@ -237,8 +224,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         duration_minutes: Optional[int] = None,
         allocation_reason: str = "performance_optimization"
     ) -> str:
-        """
-        Allocate system resources to a specific crawler.
+        """        Allocate system resources to a specific crawler.
         
         Args:
             crawler_id: Crawler identifier
@@ -252,8 +238,7 @@ class CrawlerOptimizationManager(DatabaseManager):
             
         Raises:
             ResourceAllocationError: If allocation fails
-        """
-        try:
+        """        try:
             allocation_id = str(uuid4())
             
             # Check resource availability
@@ -304,8 +289,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         target_performance_level: float,
         max_scale_factor: float = 3.0
     ) -> str:
-        """
-        Execute intelligent scaling based on performance requirements.
+        """        Execute intelligent scaling based on performance requirements.
         
         Args:
             crawler_id: Crawler identifier
@@ -315,8 +299,7 @@ class CrawlerOptimizationManager(DatabaseManager):
             
         Returns:
             Scaling event ID
-        """
-        try:
+        """        try:
             event_id = str(uuid4())
             
             # Analyze current performance
@@ -365,8 +348,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         test_configuration: Dict[str, Any],
         user_id: str
     ) -> str:
-        """
-        Create a performance benchmark for crawler evaluation.
+        """        Create a performance benchmark for crawler evaluation.
         
         Args:
             benchmark_name: Human-readable benchmark name
@@ -377,8 +359,7 @@ class CrawlerOptimizationManager(DatabaseManager):
             
         Returns:
             Benchmark ID
-        """
-        try:
+        """        try:
             benchmark_id = str(uuid4())
             
             # Create performance benchmark record
@@ -411,8 +392,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         crawler_id: str,
         test_duration_minutes: int = 60
     ) -> Dict[str, Any]:
-        """
-        Execute a performance benchmark test for a crawler.
+        """        Execute a performance benchmark test for a crawler.
         
         Args:
             benchmark_id: Benchmark identifier
@@ -421,8 +401,7 @@ class CrawlerOptimizationManager(DatabaseManager):
             
         Returns:
             Benchmark results and analysis
-        """
-        try:
+        """        try:
             benchmark = await self.db_session.query(PerformanceBenchmark).filter(
                 PerformanceBenchmark.benchmark_id == benchmark_id
             ).first()
@@ -471,8 +450,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         crawler_id: str,
         analysis_period: timedelta = timedelta(hours=24)
     ) -> List[Dict[str, Any]]:
-        """
-        Generate intelligent optimization recommendations for a crawler.
+        """        Generate intelligent optimization recommendations for a crawler.
         
         Args:
             crawler_id: Crawler identifier
@@ -480,8 +458,7 @@ class CrawlerOptimizationManager(DatabaseManager):
             
         Returns:
             List of optimization recommendations
-        """
-        try:
+        """        try:
             cutoff_time = datetime.utcnow() - analysis_period
             
             # Get performance metrics within analysis period
@@ -512,8 +489,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         check_type: str = "comprehensive",
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive system health check and analysis.
+        """        Perform comprehensive system health check and analysis.
         
         Args:
             check_type: Type of health check to perform
@@ -521,8 +497,7 @@ class CrawlerOptimizationManager(DatabaseManager):
             
         Returns:
             System health report
-        """
-        try:
+        """        try:
             health_check_id = str(uuid4())
             
             # Collect system metrics
@@ -585,8 +560,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         metric_type: MetricType,
         metric_value: float
     ) -> float:
-        """Calculate percentile ranking for a metric value."""
-        # Get historical values for this metric type
+        """Calculate percentile ranking for a metric value."""        # Get historical values for this metric type
         historical_metrics = await self.db_session.query(CrawlerPerformanceMetric).filter(
             and_(
                 CrawlerPerformanceMetric.crawler_id == crawler_id,
@@ -613,8 +587,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         metric_type: MetricType,
         metric_value: float
     ) -> bool:
-        """Detect if a metric value represents a performance anomaly."""
-        # Get recent metrics for statistical analysis
+        """Detect if a metric value represents a performance anomaly."""        # Get recent metrics for statistical analysis
         recent_metrics = await self.db_session.query(CrawlerPerformanceMetric).filter(
             and_(
                 CrawlerPerformanceMetric.crawler_id == crawler_id,
@@ -643,8 +616,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         metric_type: MetricType,
         metric_value: float
     ) -> None:
-        """Trigger optimization analysis for anomalous metrics."""
-        # Implementation would trigger automated optimization analysis
+        """Trigger optimization analysis for anomalous metrics."""        # Implementation would trigger automated optimization analysis
         pass
     
     async def _validate_optimization_rule(
@@ -652,8 +624,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         conditions: Dict[str, Any],
         actions: List[Dict[str, Any]]
     ) -> bool:
-        """Validate optimization rule configuration."""
-        required_condition_fields = ["metric_type", "threshold", "comparison"]
+        """Validate optimization rule configuration."""        required_condition_fields = ["metric_type", "threshold", "comparison"]
         required_action_fields = ["action_type", "parameters"]
         
         for field in required_condition_fields:
@@ -677,8 +648,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         conditions: Dict[str, Any],
         actions: List[Dict[str, Any]]
     ) -> None:
-        """Activate optimization rule in the optimization engine."""
-        self.optimization_rules[rule_id] = {
+        """Activate optimization rule in the optimization engine."""        self.optimization_rules[rule_id] = {
             "conditions": conditions,
             "actions": actions,
             "activated_at": datetime.utcnow()
@@ -688,8 +658,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         self,
         requirements: Dict[ResourceType, float]
     ) -> bool:
-        """Check if required resources are available."""
-        # Implementation would check actual system resource availability
+        """Check if required resources are available."""        # Implementation would check actual system resource availability
         return True  # Simplified for now
     
     async def _apply_resource_allocation(
@@ -697,15 +666,13 @@ class CrawlerOptimizationManager(DatabaseManager):
         allocation_id: str,
         requirements: Dict[ResourceType, float]
     ) -> None:
-        """Apply resource allocation to system."""
-        self.resource_allocations[allocation_id] = {
+        """Apply resource allocation to system."""        self.resource_allocations[allocation_id] = {
             "requirements": {rt.value: val for rt, val in requirements.items()},
             "allocated_at": datetime.utcnow()
         }
     
     async def _analyze_current_performance(self, crawler_id: str) -> Dict[str, Any]:
-        """Analyze current performance metrics for a crawler."""
-        # Get recent performance metrics
+        """Analyze current performance metrics for a crawler."""        # Get recent performance metrics
         recent_metrics = await self.db_session.query(CrawlerPerformanceMetric).filter(
             and_(
                 CrawlerPerformanceMetric.crawler_id == crawler_id,
@@ -735,8 +702,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         target_performance: float,
         max_scale_factor: float
     ) -> Dict[str, Any]:
-        """Calculate optimal scaling strategy."""
-        current_score = current_performance.get("average_throughput", 0) / 100  # Normalized
+        """Calculate optimal scaling strategy."""        current_score = current_performance.get("average_throughput", 0) / 100  # Normalized
         performance_gap = target_performance - current_score
         
         if performance_gap <= 0:
@@ -768,8 +734,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         event_id: str,
         scaling_strategy: Dict[str, Any]
     ) -> None:
-        """Execute scaling operations based on strategy."""
-        # Implementation would execute actual scaling operations
+        """Execute scaling operations based on strategy."""        # Implementation would execute actual scaling operations
         pass
     
     async def _execute_benchmark_test(
@@ -778,8 +743,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         crawler_id: str,
         duration_minutes: int
     ) -> Dict[str, Any]:
-        """Execute performance benchmark test."""
-        # Simplified benchmark execution
+        """Execute performance benchmark test."""        # Simplified benchmark execution
         return {
             "throughput": 85.5,
             "latency": 1.2,
@@ -793,8 +757,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         results: Dict[str, Any],
         targets: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Analyze benchmark results against targets."""
-        analysis = {"metric_analysis": {}, "overall_pass": True}
+        """Analyze benchmark results against targets."""        analysis = {"metric_analysis": {}, "overall_pass": True}
         
         for metric, target in targets.items():
             actual = results.get(metric, 0)
@@ -816,8 +779,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         self,
         metrics: List
     ) -> Dict[str, Any]:
-        """Analyze performance patterns from metrics."""
-        if not metrics:
+        """Analyze performance patterns from metrics."""        if not metrics:
             return {"status": "insufficient_data"}
         
         # Group metrics by type
@@ -845,8 +807,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         crawler_id: str,
         patterns: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations based on performance patterns."""
-        recommendations = []
+        """Generate optimization recommendations based on performance patterns."""        recommendations = []
         
         for metric_type, pattern in patterns.items():
             if metric_type == "throughput" and pattern["average"] < 50:
@@ -870,8 +831,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         return recommendations
     
     async def _collect_system_metrics(self) -> Dict[str, Any]:
-        """Collect comprehensive system performance metrics."""
-        return {
+        """Collect comprehensive system performance metrics."""        return {
             "cpu_usage": 45.2,
             "memory_usage": 67.8,
             "disk_usage": 34.1,
@@ -881,8 +841,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         }
     
     async def _analyze_all_crawler_performance(self) -> Dict[str, Any]:
-        """Analyze performance across all active crawlers."""
-        return {
+        """Analyze performance across all active crawlers."""        return {
             "total_active_crawlers": 25,
             "average_throughput": 78.5,
             "average_error_rate": 2.1,
@@ -894,8 +853,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         }
     
     async def _check_resource_utilization(self) -> Dict[str, Any]:
-        """Check current resource utilization across system."""
-        return {
+        """Check current resource utilization across system."""        return {
             "cpu_utilization": 68.5,
             "memory_utilization": 75.2,
             "disk_utilization": 45.8,
@@ -904,8 +862,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         }
     
     async def _identify_system_bottlenecks(self) -> List[Dict[str, Any]]:
-        """Identify current system bottlenecks."""
-        return [
+        """Identify current system bottlenecks."""        return [
             {
                 "type": "resource_bottleneck",
                 "resource": "memory",
@@ -921,8 +878,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         crawler_analysis: Dict[str, Any],
         resource_utilization: Dict[str, Any]
     ) -> float:
-        """Calculate overall system health score."""
-        # Weighted health score calculation
+        """Calculate overall system health score."""        # Weighted health score calculation
         performance_score = crawler_analysis.get("average_throughput", 0)
         reliability_score = 100 - crawler_analysis.get("average_error_rate", 0) * 10
         resource_score = 100 - max(resource_utilization.values())
@@ -931,8 +887,7 @@ class CrawlerOptimizationManager(DatabaseManager):
         return max(0, min(100, weighted_score))
     
     def _determine_health_status(self, health_score: float) -> str:
-        """Determine health status based on score."""
-        if health_score >= 90:
+        """Determine health status based on score."""        if health_score >= 90:
             return PerformanceStatus.OPTIMAL.value
         elif health_score >= 75:
             return PerformanceStatus.GOOD.value
@@ -944,8 +899,7 @@ class CrawlerOptimizationManager(DatabaseManager):
             return PerformanceStatus.CRITICAL.value
     
     async def _generate_performance_predictions(self) -> Dict[str, Any]:
-        """Generate predictive performance analysis."""
-        return {
+        """Generate predictive performance analysis."""        return {
             "predicted_load_increase": "15% over next 7 days",
             "scaling_recommendations": ["Add 2 crawler instances by day 5"],
             "resource_forecast": {
@@ -956,7 +910,6 @@ class CrawlerOptimizationManager(DatabaseManager):
         }
     
     def _initialize_optimization_system(self) -> None:
-        """Initialize performance optimization system."""
-        self.performance_baselines = {}
+        """Initialize performance optimization system."""        self.performance_baselines = {}
         self.optimization_rules = {}
         self.resource_allocations = {}

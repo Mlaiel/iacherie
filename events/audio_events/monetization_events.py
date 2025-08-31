@@ -1,5 +1,4 @@
-"""
-Audio Monetization Events - Industrial Grade Revenue & Licensing Management
+"""Audio Monetization Events - Industrial Grade Revenue & Licensing Management
 ==========================================================================
 
 This module handles all events related to audio monetization, licensing,
@@ -8,7 +7,6 @@ revenue tracking, and automated payment distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -20,8 +18,7 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class LicenseType(Enum):
-    """Types of music licenses"""
-    SYNC_LICENSE = "sync_license"
+    """Types of music licenses"""    SYNC_LICENSE = "sync_license"
     MECHANICAL_LICENSE = "mechanical_license"
     PERFORMANCE_LICENSE = "performance_license"
     MASTER_LICENSE = "master_license"
@@ -34,8 +31,7 @@ class LicenseType(Enum):
 
 
 class RevenueSource(Enum):
-    """Sources of audio revenue"""
-    STREAMING = "streaming"
+    """Sources of audio revenue"""    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
     SYNC_DEALS = "sync_deals"
@@ -48,8 +44,7 @@ class RevenueSource(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing statuses"""
-    PENDING = "pending"
+    """Payment processing statuses"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -61,12 +56,10 @@ class PaymentStatus(Enum):
 
 @dataclass
 class AudioMonetizationStartedEvent(BaseEvent):
-    """
-    Event triggered when monetization setup for audio content begins.
+    """    Event triggered when monetization setup for audio content begins.
     
     Initializes revenue tracking and licensing workflows.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     monetization_id: UUID
     filename: str
@@ -103,12 +96,10 @@ class AudioMonetizationStartedEvent(BaseEvent):
 
 @dataclass
 class AudioLicenseCreatedEvent(BaseEvent):
-    """
-    Event triggered when a new audio license is created.
+    """    Event triggered when a new audio license is created.
     
     Contains comprehensive license terms and conditions.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     license_id: UUID
     license_type: LicenseType
@@ -149,12 +140,10 @@ class AudioLicenseCreatedEvent(BaseEvent):
 
 @dataclass
 class AudioRevenueGeneratedEvent(BaseEvent):
-    """
-    Event triggered when revenue is generated from audio content.
+    """    Event triggered when revenue is generated from audio content.
     
     Tracks all revenue streams and payment processing.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     revenue_id: UUID
     revenue_source: RevenueSource
@@ -194,12 +183,10 @@ class AudioRevenueGeneratedEvent(BaseEvent):
 
 @dataclass
 class AudioRoyaltyDistributedEvent(BaseEvent):
-    """
-    Event triggered when royalties are distributed to rights holders.
+    """    Event triggered when royalties are distributed to rights holders.
     
     Handles automated royalty calculations and payments.
-    """
-    file_id: UUID
+    """    file_id: UUID
     distribution_id: UUID
     total_revenue: Decimal
     currency: str = "EUR"
@@ -235,12 +222,10 @@ class AudioRoyaltyDistributedEvent(BaseEvent):
 
 @dataclass
 class AudioSaleCompletedEvent(BaseEvent):
-    """
-    Event triggered when an audio sale transaction is completed.
+    """    Event triggered when an audio sale transaction is completed.
     
     Handles individual sales and purchase confirmations.
-    """
-    seller_id: UUID
+    """    seller_id: UUID
     buyer_id: UUID
     file_id: UUID
     sale_id: UUID
@@ -281,12 +266,10 @@ class AudioSaleCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioStreamingRevenueEvent(BaseEvent):
-    """
-    Event triggered when streaming revenue is calculated and attributed.
+    """    Event triggered when streaming revenue is calculated and attributed.
     
     Handles streaming platform revenue attribution and distribution.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     streaming_period_start: datetime
     streaming_period_end: datetime
@@ -325,12 +308,10 @@ class AudioStreamingRevenueEvent(BaseEvent):
 
 @dataclass
 class AudioSyncLicenseRequestEvent(BaseEvent):
-    """
-    Event triggered when a sync license is requested for media placement.
+    """    Event triggered when a sync license is requested for media placement.
     
     Handles synchronization licensing for films, TV, ads, games, etc.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     sync_request_id: UUID
     requestor_id: UUID
@@ -370,12 +351,10 @@ class AudioSyncLicenseRequestEvent(BaseEvent):
 
 @dataclass
 class AudioPerformanceRoyaltyEvent(BaseEvent):
-    """
-    Event triggered when performance royalties are generated.
+    """    Event triggered when performance royalties are generated.
     
     Tracks public performance revenue from radio, live venues, streaming.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     performance_period_start: datetime
     performance_period_end: datetime
@@ -413,12 +392,10 @@ class AudioPerformanceRoyaltyEvent(BaseEvent):
 
 @dataclass
 class AudioMonetizationAnalyticsEvent(BaseEvent):
-    """
-    Event triggered for comprehensive monetization analytics updates.
+    """    Event triggered for comprehensive monetization analytics updates.
     
     Provides insights and predictions for revenue optimization.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     analytics_period_start: datetime
     analytics_period_end: datetime

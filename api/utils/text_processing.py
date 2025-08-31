@@ -1,5 +1,4 @@
-"""
-Text Processing Utilities for IA Influencer Agent Platform
+"""Text Processing Utilities for IA Influencer Agent Platform
 Advanced text analysis, natural language processing, and content optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +6,6 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import re
 import string
 import nltk
@@ -60,8 +58,7 @@ except Exception as e:
 
 @dataclass
 class TextStats:
-    """Text statistics container"""
-    character_count: int
+    """Text statistics container"""    character_count: int
     word_count: int
     sentence_count: int
     paragraph_count: int
@@ -76,8 +73,7 @@ class TextStats:
     reading_time_minutes: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'character_count': self.character_count,
             'word_count': self.word_count,
             'sentence_count': self.sentence_count,
@@ -96,16 +92,14 @@ class TextStats:
 
 @dataclass
 class SentimentAnalysis:
-    """Sentiment analysis results"""
-    polarity: float  # -1 (negative) to 1 (positive)
+    """Sentiment analysis results"""    polarity: float  # -1 (negative) to 1 (positive)
     subjectivity: float  # 0 (objective) to 1 (subjective)
     sentiment_label: str  # 'positive', 'negative', 'neutral'
     confidence: float
     emotions: Dict[str, float] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'polarity': round(self.polarity, 3),
             'subjectivity': round(self.subjectivity, 3),
             'sentiment_label': self.sentiment_label,
@@ -116,8 +110,7 @@ class SentimentAnalysis:
 
 @dataclass
 class KeywordAnalysis:
-    """Keyword extraction results"""
-    keywords: List[Dict[str, Any]]
+    """Keyword extraction results"""    keywords: List[Dict[str, Any]]
     key_phrases: List[Dict[str, Any]]
     named_entities: List[Dict[str, Any]]
     hashtags: List[str]
@@ -125,8 +118,7 @@ class KeywordAnalysis:
     urls: List[str]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'keywords': self.keywords,
             'key_phrases': self.key_phrases,
             'named_entities': self.named_entities,
@@ -138,15 +130,13 @@ class KeywordAnalysis:
 
 @dataclass
 class LanguageAnalysis:
-    """Language detection and analysis"""
-    detected_language: str
+    """Language detection and analysis"""    detected_language: str
     confidence: float
     supported_languages: List[str]
     mixed_languages: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'detected_language': self.detected_language,
             'confidence': round(self.confidence, 3),
             'supported_languages': self.supported_languages,
@@ -156,8 +146,7 @@ class LanguageAnalysis:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization suggestions"""
-    seo_score: float
+    """Content optimization suggestions"""    seo_score: float
     readability_score: float
     engagement_score: float
     suggestions: List[str]
@@ -166,8 +155,7 @@ class ContentOptimization:
     recommended_hashtags: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'seo_score': round(self.seo_score, 2),
             'readability_score': round(self.readability_score, 2),
             'engagement_score': round(self.engagement_score, 2),
@@ -179,8 +167,7 @@ class ContentOptimization:
 
 
 class TextPreprocessor:
-    """Advanced text preprocessing and cleaning"""
-    
+    """Advanced text preprocessing and cleaning"""    
     def __init__(self, language: str = 'english'):
         self.language = language
         self.stemmer = PorterStemmer()
@@ -205,8 +192,7 @@ class TextPreprocessor:
                    remove_stopwords: bool = True,
                    lowercase: bool = True,
                    remove_extra_whitespace: bool = True) -> str:
-        """Comprehensive text cleaning"""
-        if not text:
+        """Comprehensive text cleaning"""        if not text:
             return ""
         
         # Remove URLs
@@ -248,8 +234,7 @@ class TextPreprocessor:
         return text
     
     def extract_social_elements(self, text: str) -> Dict[str, List[str]]:
-        """Extract hashtags, mentions, and URLs from text"""
-        hashtags = re.findall(r'#\w+', text)
+        """Extract hashtags, mentions, and URLs from text"""        hashtags = re.findall(r'#\w+', text)
         mentions = re.findall(r'@\w+', text)
         urls = re.findall(r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+', text)
         
@@ -260,36 +245,29 @@ class TextPreprocessor:
         }
     
     def tokenize_sentences(self, text: str) -> List[str]:
-        """Tokenize text into sentences"""
-        return sent_tokenize(text)
+        """Tokenize text into sentences"""        return sent_tokenize(text)
     
     def tokenize_words(self, text: str) -> List[str]:
-        """Tokenize text into words"""
-        return word_tokenize(text)
+        """Tokenize text into words"""        return word_tokenize(text)
     
     def stem_words(self, words: List[str]) -> List[str]:
-        """Stem words using Porter Stemmer"""
-        return [self.stemmer.stem(word) for word in words]
+        """Stem words using Porter Stemmer"""        return [self.stemmer.stem(word) for word in words]
     
     def lemmatize_words(self, words: List[str]) -> List[str]:
-        """Lemmatize words"""
-        return [self.lemmatizer.lemmatize(word) for word in words]
+        """Lemmatize words"""        return [self.lemmatizer.lemmatize(word) for word in words]
     
     def _remove_emojis(self, text: str) -> str:
-        """Remove emojis from text"""
-        return emoji.demojize(text, delimiters=("", ""))
+        """Remove emojis from text"""        return emoji.demojize(text, delimiters=("", ""))
 
 
 class TextAnalyzer:
-    """Advanced text analysis and statistics"""
-    
+    """Advanced text analysis and statistics"""    
     def __init__(self, language: str = 'english'):
         self.language = language
         self.preprocessor = TextPreprocessor(language)
     
     def analyze_text(self, text: str) -> TextStats:
-        """Comprehensive text analysis"""
-        if not text:
+        """Comprehensive text analysis"""        if not text:
             return TextStats(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
         
         # Basic counts
@@ -333,8 +311,7 @@ class TextAnalyzer:
         )
     
     def analyze_sentiment(self, text: str) -> SentimentAnalysis:
-        """Analyze sentiment using TextBlob and advanced techniques"""
-        if not text:
+        """Analyze sentiment using TextBlob and advanced techniques"""        if not text:
             return SentimentAnalysis(0, 0, 'neutral', 0)
         
         blob = TextBlob(text)
@@ -364,8 +341,7 @@ class TextAnalyzer:
         )
     
     def extract_keywords(self, text: str, max_keywords: int = 20) -> KeywordAnalysis:
-        """Extract keywords, key phrases, and named entities"""
-        if not text:
+        """Extract keywords, key phrases, and named entities"""        if not text:
             return KeywordAnalysis([], [], [], [], [], [])
         
         # Extract social elements
@@ -393,8 +369,7 @@ class TextAnalyzer:
         )
     
     def detect_language(self, text: str) -> LanguageAnalysis:
-        """Detect language of text"""
-        if not text or len(text.strip()) < 10:
+        """Detect language of text"""        if not text or len(text.strip()) < 10:
             return LanguageAnalysis('unknown', 0, [])
         
         try:
@@ -413,8 +388,7 @@ class TextAnalyzer:
             return LanguageAnalysis('unknown', 0, [])
     
     def calculate_similarity(self, text1: str, text2: str) -> float:
-        """Calculate cosine similarity between two texts"""
-        if not text1 or not text2:
+        """Calculate cosine similarity between two texts"""        if not text1 or not text2:
             return 0.0
         
         # Clean texts
@@ -432,8 +406,7 @@ class TextAnalyzer:
             return 0.0
     
     def _extract_tfidf_keywords(self, text: str, max_keywords: int) -> List[Dict[str, Any]]:
-        """Extract keywords using TF-IDF"""
-        try:
+        """Extract keywords using TF-IDF"""        try:
             vectorizer = TfidfVectorizer(max_features=max_keywords, ngram_range=(1, 2))
             tfidf_matrix = vectorizer.fit_transform([text])
             
@@ -457,8 +430,7 @@ class TextAnalyzer:
             return []
     
     def _extract_key_phrases(self, text: str, max_phrases: int) -> List[Dict[str, Any]]:
-        """Extract key phrases using N-grams"""
-        try:
+        """Extract key phrases using N-grams"""        try:
             # Extract 2-gram and 3-gram phrases
             vectorizer = CountVectorizer(ngram_range=(2, 3), max_features=max_phrases)
             count_matrix = vectorizer.fit_transform([text])
@@ -483,8 +455,7 @@ class TextAnalyzer:
             return []
     
     def _extract_named_entities(self, text: str) -> List[Dict[str, Any]]:
-        """Extract named entities"""
-        entities = []
+        """Extract named entities"""        entities = []
         
         if self.preprocessor.nlp:
             # Use spaCy for named entity recognition
@@ -520,8 +491,7 @@ class TextAnalyzer:
         return entities
     
     def _detect_emotions(self, text: str) -> Dict[str, float]:
-        """Basic emotion detection using keyword matching"""
-        emotion_keywords = {
+        """Basic emotion detection using keyword matching"""        emotion_keywords = {
             'joy': ['happy', 'joy', 'excited', 'amazing', 'wonderful', 'great', 'love', 'awesome'],
             'sadness': ['sad', 'depressed', 'unhappy', 'disappointed', 'down', 'upset'],
             'anger': ['angry', 'mad', 'furious', 'irritated', 'annoyed', 'hate'],
@@ -541,8 +511,7 @@ class TextAnalyzer:
 
 
 class ContentOptimizer:
-    """Content optimization for SEO and engagement"""
-    
+    """Content optimization for SEO and engagement"""    
     def __init__(self):
         self.text_analyzer = TextAnalyzer()
         
@@ -559,8 +528,7 @@ class ContentOptimizer:
     def optimize_content(self, title: str, description: str, 
                         category: Optional[str] = None,
                         target_keywords: Optional[List[str]] = None) -> ContentOptimization:
-        """Optimize content for better engagement and SEO"""
-        suggestions = []
+        """Optimize content for better engagement and SEO"""        suggestions = []
         
         # Analyze current content
         title_stats = self.text_analyzer.analyze_text(title)
@@ -614,8 +582,7 @@ class ContentOptimizer:
         )
     
     def generate_variations(self, text: str, count: int = 5) -> List[str]:
-        """Generate content variations"""
-        variations = []
+        """Generate content variations"""        variations = []
         
         # Synonym replacement variations
         blob = TextBlob(text)
@@ -641,8 +608,7 @@ class ContentOptimizer:
         return variations
     
     def analyze_hashtag_performance(self, hashtags: List[str]) -> Dict[str, Any]:
-        """Analyze hashtag performance (simplified simulation)"""
-        performance_data = {}
+        """Analyze hashtag performance (simplified simulation)"""        performance_data = {}
         
         for hashtag in hashtags:
             # Simulate performance metrics
@@ -662,8 +628,7 @@ class ContentOptimizer:
     
     def _calculate_seo_score(self, title: str, description: str, 
                            target_keywords: Optional[List[str]]) -> float:
-        """Calculate SEO score"""
-        score = 0
+        """Calculate SEO score"""        score = 0
         
         # Title length (6-10 words is optimal)
         title_words = len(word_tokenize(title))
@@ -706,8 +671,7 @@ class ContentOptimizer:
         return min(score, 100)  # Cap at 100
     
     def _calculate_readability_score(self, text_stats: TextStats) -> float:
-        """Calculate readability score"""
-        # Use Flesch Reading Ease as base
+        """Calculate readability score"""        # Use Flesch Reading Ease as base
         flesch_score = text_stats.flesch_reading_ease
         
         # Adjust based on other factors
@@ -722,8 +686,7 @@ class ContentOptimizer:
     def _calculate_engagement_score(self, title: str, description: str,
                                   title_sentiment: SentimentAnalysis,
                                   desc_sentiment: SentimentAnalysis) -> float:
-        """Calculate engagement score"""
-        score = 0
+        """Calculate engagement score"""        score = 0
         
         # Sentiment bonus
         if title_sentiment.polarity > 0.2:
@@ -759,8 +722,7 @@ class ContentOptimizer:
     
     def _optimize_title(self, title: str, stats: TextStats, 
                        keywords: Optional[List[str]]) -> str:
-        """Generate optimized title"""
-        # If title is already good, make minor improvements
+        """Generate optimized title"""        # If title is already good, make minor improvements
         words = word_tokenize(title)
         
         # Add emotional words if missing
@@ -778,8 +740,7 @@ class ContentOptimizer:
     
     def _optimize_description(self, description: str, stats: TextStats,
                             keywords: Optional[List[str]]) -> str:
-        """Generate optimized description"""
-        # Add keywords naturally if provided
+        """Generate optimized description"""        # Add keywords naturally if provided
         optimized = description
         
         if keywords:
@@ -800,8 +761,7 @@ class ContentOptimizer:
         return optimized
     
     def _recommend_hashtags(self, text: str, category: Optional[str]) -> List[str]:
-        """Recommend hashtags based on content"""
-        recommended = []
+        """Recommend hashtags based on content"""        recommended = []
         
         # Add category-specific hashtags
         if category and category.lower() in self.popular_hashtags:
@@ -826,15 +786,13 @@ class ContentOptimizer:
 
 
 class TextModerator:
-    """Content moderation and filtering"""
-    
+    """Content moderation and filtering"""    
     def __init__(self):
         self.inappropriate_words = self._load_inappropriate_words()
         self.spam_patterns = self._load_spam_patterns()
     
     def moderate_content(self, text: str) -> Dict[str, Any]:
-        """Moderate text content for inappropriate material"""
-        issues = []
+        """Moderate text content for inappropriate material"""        issues = []
         severity = 'clean'
         
         # Check for inappropriate words
@@ -871,16 +829,14 @@ class TextModerator:
         }
     
     def _load_inappropriate_words(self) -> Set[str]:
-        """Load inappropriate words list"""
-        # In a real implementation, load from a comprehensive database
+        """Load inappropriate words list"""        # In a real implementation, load from a comprehensive database
         return {
             'spam', 'scam', 'fake', 'hate', 'offensive'
             # Add more words as needed
         }
     
     def _load_spam_patterns(self) -> List[str]:
-        """Load spam detection patterns"""
-        return [
+        """Load spam detection patterns"""        return [
             r'(?:click|visit|check).{0,20}(?:link|url|website)',
             r'(?:buy|purchase|order).{0,20}(?:now|today|immediately)',
             r'(?:free|win|prize).{0,20}(?:money|cash|gift)',
@@ -888,8 +844,7 @@ class TextModerator:
         ]
     
     def _check_inappropriate_words(self, text: str) -> List[str]:
-        """Check for inappropriate words"""
-        text_lower = text.lower()
+        """Check for inappropriate words"""        text_lower = text.lower()
         found = []
         
         for word in self.inappropriate_words:
@@ -899,8 +854,7 @@ class TextModerator:
         return found
     
     def _check_spam_patterns(self, text: str) -> List[str]:
-        """Check for spam patterns"""
-        issues = []
+        """Check for spam patterns"""        issues = []
         
         for pattern in self.spam_patterns:
             if re.search(pattern, text, re.IGNORECASE):
@@ -910,8 +864,7 @@ class TextModerator:
 
 
 class WordCloudGenerator:
-    """Generate word clouds from text"""
-    
+    """Generate word clouds from text"""    
     def __init__(self):
         self.preprocessor = TextPreprocessor()
     
@@ -920,8 +873,7 @@ class WordCloudGenerator:
                           height: int = 400,
                           max_words: int = 100,
                           background_color: str = 'white') -> str:
-        """Generate word cloud and return as base64 image"""
-        if not text:
+        """Generate word cloud and return as base64 image"""        if not text:
             return ""
         
         try:
@@ -966,8 +918,7 @@ class WordCloudGenerator:
 
 
 class TextProcessor:
-    """Main text processing coordinator"""
-    
+    """Main text processing coordinator"""    
     def __init__(self, language: str = 'english'):
         self.language = language
         self.analyzer = TextAnalyzer(language)
@@ -979,8 +930,7 @@ class TextProcessor:
                                        title: Optional[str] = None,
                                        category: Optional[str] = None,
                                        target_keywords: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Comprehensive text processing"""
-        if not text:
+        """Comprehensive text processing"""        if not text:
             return {'error': 'No text provided'}
         
         try:
@@ -1019,8 +969,7 @@ class TextProcessor:
             return {'error': str(e)}
     
     def calculate_content_similarity(self, text1: str, text2: str) -> Dict[str, Any]:
-        """Calculate similarity between two pieces of content"""
-        similarity_score = self.analyzer.calculate_similarity(text1, text2)
+        """Calculate similarity between two pieces of content"""        similarity_score = self.analyzer.calculate_similarity(text1, text2)
         
         # Determine similarity level
         if similarity_score > 0.8:
@@ -1041,8 +990,7 @@ class TextProcessor:
         }
     
     def batch_process_texts(self, texts: List[str]) -> List[Dict[str, Any]]:
-        """Process multiple texts efficiently"""
-        results = []
+        """Process multiple texts efficiently"""        results = []
         
         for i, text in enumerate(texts):
             try:
@@ -1063,5 +1011,4 @@ class TextProcessor:
 
 
 class TextProcessingError(Exception):
-    """Custom exception for text processing errors"""
-    pass
+    """Custom exception for text processing errors"""    pass

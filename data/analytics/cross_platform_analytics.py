@@ -1,5 +1,4 @@
-"""
-Cross-Platform Analytics Engine
+"""Cross-Platform Analytics Engine
 ===============================
 
 Advanced cross-platform analytics for unified performance tracking across
@@ -17,7 +16,6 @@ Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,8 +40,7 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    SPOTIFY = "spotify"
+    """Supported platform types"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -61,8 +58,7 @@ class PlatformType(Enum):
 
 
 class MetricCategory(Enum):
-    """Cross-platform metric categories"""
-    ENGAGEMENT = "engagement"
+    """Cross-platform metric categories"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
     REVENUE = "revenue"
@@ -74,8 +70,7 @@ class MetricCategory(Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific metrics structure"""
-    platform: PlatformType
+    """Platform-specific metrics structure"""    platform: PlatformType
     content_id: str
     views: int
     likes: int
@@ -98,8 +93,7 @@ class PlatformMetrics:
 
 @dataclass
 class CrossPlatformReport:
-    """Comprehensive cross-platform analytics report"""
-    user_id: str
+    """Comprehensive cross-platform analytics report"""    user_id: str
     content_id: str
     report_period: Dict[str, datetime]
     total_platforms: int
@@ -115,8 +109,7 @@ class CrossPlatformReport:
 
 @dataclass
 class PlatformBenchmark:
-    """Platform benchmarking data"""
-    platform: PlatformType
+    """Platform benchmarking data"""    platform: PlatformType
     content_type: str
     industry_averages: Dict[str, float]
     percentile_rankings: Dict[str, float]
@@ -126,25 +119,21 @@ class PlatformBenchmark:
 
 
 class CrossPlatformAnalytics:
-    """
-    Professional cross-platform analytics engine for IA Influencer Agent platform.
+    """    Professional cross-platform analytics engine for IA Influencer Agent platform.
     
     Provides unified analytics across all major content distribution platforms,
     enabling comprehensive performance tracking and optimization strategies.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager: StorageManager, vector_db: VectorDBManager):
-        """
-        Initialize Cross-Platform Analytics engine.
+        """        Initialize Cross-Platform Analytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             storage_manager: Storage management service
             vector_db: Vector database manager
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis_client = redis_client
         self.storage_manager = storage_manager
         self.vector_db = vector_db
@@ -174,20 +163,17 @@ class CrossPlatformAnalytics:
         }
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.http_session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.http_session = aiohttp.ClientSession()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.http_session:
+        """Async context manager exit"""        if self.http_session:
             await self.http_session.close()
     
     async def generate_cross_platform_report(self, user_id: str, content_id: str,
                                            platforms: List[PlatformType] = None,
                                            timeframe_days: int = 30) -> CrossPlatformReport:
-        """
-        Generate comprehensive cross-platform analytics report.
+        """        Generate comprehensive cross-platform analytics report.
         
         Args:
             user_id: User identifier
@@ -197,8 +183,7 @@ class CrossPlatformAnalytics:
             
         Returns:
             CrossPlatformReport with unified analytics
-        """
-        try:
+        """        try:
             if platforms is None:
                 platforms = await self._get_user_active_platforms(user_id)
             
@@ -281,8 +266,7 @@ class CrossPlatformAnalytics:
     
     async def track_real_time_metrics(self, user_id: str, platforms: List[PlatformType],
                                     callback_url: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Track real-time metrics across platforms.
+        """        Track real-time metrics across platforms.
         
         Args:
             user_id: User identifier
@@ -291,8 +275,7 @@ class CrossPlatformAnalytics:
             
         Returns:
             Real-time tracking session data
-        """
-        try:
+        """        try:
             session_id = hashlib.md5(f"{user_id}_{datetime.now()}".encode()).hexdigest()
             
             # Initialize tracking session
@@ -330,8 +313,7 @@ class CrossPlatformAnalytics:
     async def get_platform_benchmarks(self, platform: PlatformType,
                                     content_type: str,
                                     industry: str = "music") -> PlatformBenchmark:
-        """
-        Get platform-specific benchmarks and industry averages.
+        """        Get platform-specific benchmarks and industry averages.
         
         Args:
             platform: Platform to benchmark
@@ -340,8 +322,7 @@ class CrossPlatformAnalytics:
             
         Returns:
             PlatformBenchmark with industry data
-        """
-        try:
+        """        try:
             # Cache check
             cache_key = f"platform_benchmark:{platform.value}:{content_type}:{industry}"
             cached_benchmark = await self._get_cached_result(cache_key)
@@ -394,8 +375,7 @@ class CrossPlatformAnalytics:
     
     async def optimize_cross_platform_strategy(self, user_id: str,
                                              optimization_goals: List[str]) -> Dict[str, Any]:
-        """
-        Generate cross-platform optimization strategy.
+        """        Generate cross-platform optimization strategy.
         
         Args:
             user_id: User identifier
@@ -403,8 +383,7 @@ class CrossPlatformAnalytics:
             
         Returns:
             Comprehensive optimization strategy
-        """
-        try:
+        """        try:
             # Analyze current cross-platform performance
             current_performance = await self._analyze_current_cross_platform_performance(user_id)
             
@@ -455,8 +434,7 @@ class CrossPlatformAnalytics:
                                        source_platform: PlatformType,
                                        target_platforms: List[PlatformType],
                                        timeframe_days: int = 90) -> Dict[str, Any]:
-        """
-        Analyze audience migration patterns between platforms.
+        """        Analyze audience migration patterns between platforms.
         
         Args:
             user_id: User identifier
@@ -466,8 +444,7 @@ class CrossPlatformAnalytics:
             
         Returns:
             Audience migration analysis
-        """
-        try:
+        """        try:
             # Get source platform audience data
             source_audience = await self._get_platform_audience_data(
                 user_id, source_platform, timeframe_days
@@ -522,8 +499,7 @@ class CrossPlatformAnalytics:
     # Private helper methods
     
     def _initialize_platform_configs(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize platform-specific configurations"""
-        return {
+        """Initialize platform-specific configurations"""        return {
             PlatformType.SPOTIFY: {
                 "api_base": "https://api.spotify.com/v1",
                 "rate_limit": 100,
@@ -553,8 +529,7 @@ class CrossPlatformAnalytics:
     
     async def _collect_platform_metrics(self, platform: PlatformType, user_id: str,
                                        content_id: str, timeframe_days: int) -> Optional[PlatformMetrics]:
-        """Collect metrics from specific platform"""
-        try:
+        """Collect metrics from specific platform"""        try:
             # Check if user has connected this platform
             if not await self._is_platform_connected(user_id, platform):
                 return None
@@ -576,8 +551,7 @@ class CrossPlatformAnalytics:
     
     async def _fetch_platform_data(self, platform: PlatformType, user_id: str,
                                  content_id: str, timeframe_days: int) -> Optional[Dict[str, Any]]:
-        """Fetch data from platform API"""
-        try:
+        """Fetch data from platform API"""        try:
             config = self.platform_configs.get(platform)
             if not config:
                 return None
@@ -607,8 +581,7 @@ class CrossPlatformAnalytics:
     def _standardize_platform_metrics(self, platform: PlatformType, 
                                     platform_data: Dict[str, Any],
                                     content_id: str) -> PlatformMetrics:
-        """Standardize platform-specific metrics to common format"""
-        
+        """Standardize platform-specific metrics to common format"""        
         # Platform-specific metric mapping
         metric_mappings = {
             PlatformType.SPOTIFY: {
@@ -657,8 +630,7 @@ class CrossPlatformAnalytics:
         )
     
     def _calculate_engagement_rate(self, platform_data: Dict[str, Any]) -> float:
-        """Calculate engagement rate from platform data"""
-        views = platform_data.get("views", platform_data.get("streams", 0))
+        """Calculate engagement rate from platform data"""        views = platform_data.get("views", platform_data.get("streams", 0))
         likes = platform_data.get("likes", platform_data.get("saves", 0))
         comments = platform_data.get("comments", 0)
         shares = platform_data.get("shares", 0)
@@ -670,8 +642,7 @@ class CrossPlatformAnalytics:
         return (total_engagement / views) * 100
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict[str, Any]]:
-        """Get cached result from Redis"""
-        try:
+        """Get cached result from Redis"""        try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
@@ -682,8 +653,7 @@ class CrossPlatformAnalytics:
     
     async def _cache_result(self, cache_key: str, data: Dict[str, Any], 
                           ttl: int = None) -> None:
-        """Cache result in Redis"""
-        try:
+        """Cache result in Redis"""        try:
             if ttl is None:
                 ttl = self.cache_ttl
             serialized_data = json.dumps(data, default=str)

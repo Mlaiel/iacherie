@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-Real-time Surveillance Intelligence System - IA Influencer Agent
+"""Real-time Surveillance Intelligence System - IA Influencer Agent
 
 ⚠️ PROPRIETARY SOFTWARE - UNAUTHORIZED ACCESS PROHIBITED
 
@@ -23,7 +22,6 @@ Advanced real-time surveillance system with sub-second detection capabilities,
 streaming analytics, and intelligent event correlation for comprehensive
 content protection across all digital platforms and creator types.
 """
-
 import asyncio
 import logging
 import time
@@ -43,16 +41,14 @@ logger = logging.getLogger(__name__)
 
 
 class StreamingMode(Enum):
-    """Real-time streaming modes."""
-    CONTINUOUS = "continuous"
+    """Real-time streaming modes."""    CONTINUOUS = "continuous"
     BURST = "burst"
     ON_DEMAND = "on_demand"
     ADAPTIVE = "adaptive"
 
 
 class EventSeverity(Enum):
-    """Real-time event severity levels."""
-    DEBUG = "debug"
+    """Real-time event severity levels."""    DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -60,8 +56,7 @@ class EventSeverity(Enum):
 
 
 class StreamingStatus(Enum):
-    """Streaming connection status."""
-    CONNECTING = "connecting"
+    """Streaming connection status."""    CONNECTING = "connecting"
     CONNECTED = "connected"
     STREAMING = "streaming"
     PAUSED = "paused"
@@ -70,8 +65,7 @@ class StreamingStatus(Enum):
 
 
 class EventType(Enum):
-    """Types of real-time events."""
-    CONTENT_UPLOAD = "content_upload"
+    """Types of real-time events."""    CONTENT_UPLOAD = "content_upload"
     VIOLATION_DETECTED = "violation_detected"
     SUSPICIOUS_ACTIVITY = "suspicious_activity"
     ENGAGEMENT_SPIKE = "engagement_spike"
@@ -85,8 +79,7 @@ class EventType(Enum):
 
 @dataclass
 class RealTimeEvent:
-    """Real-time surveillance event."""
-    event_id: str
+    """Real-time surveillance event."""    event_id: str
     event_type: EventType
     severity: EventSeverity
     timestamp: datetime = field(default_factory=datetime.now)
@@ -120,8 +113,7 @@ class RealTimeEvent:
 
 @dataclass
 class StreamingMetrics:
-    """Real-time streaming metrics."""
-    events_per_second: float = 0.0
+    """Real-time streaming metrics."""    events_per_second: float = 0.0
     processing_latency_ms: float = 0.0
     detection_accuracy: float = 0.0
     false_positive_rate: float = 0.0
@@ -135,8 +127,7 @@ class StreamingMetrics:
 
 @dataclass
 class StreamingSubscription:
-    """Real-time streaming subscription."""
-    subscription_id: str
+    """Real-time streaming subscription."""    subscription_id: str
     creator_id: str
     event_types: Set[EventType]
     platforms: Set[str]
@@ -149,18 +140,15 @@ class StreamingSubscription:
 
 
 class EventBuffer:
-    """High-performance circular buffer for real-time events."""
-    
+    """High-performance circular buffer for real-time events."""    
     def __init__(self, max_size: int = 10000):
-        """Initialize event buffer."""
-        self.max_size = max_size
+        """Initialize event buffer."""        self.max_size = max_size
         self.buffer = deque(maxlen=max_size)
         self.index = {}  # Fast lookup by event_id
         self.lock = asyncio.Lock()
     
     async def add_event(self, event: RealTimeEvent) -> None:
-        """Add event to buffer."""
-        async with self.lock:
+        """Add event to buffer."""        async with self.lock:
             # Remove oldest event if buffer is full
             if len(self.buffer) >= self.max_size and self.buffer:
                 old_event = self.buffer[0]
@@ -178,8 +166,7 @@ class EventBuffer:
         event_types: Optional[Set[EventType]] = None,
         severity_min: Optional[EventSeverity] = None
     ) -> List[RealTimeEvent]:
-        """Get events with filtering."""
-        async with self.lock:
+        """Get events with filtering."""        async with self.lock:
             events = list(self.buffer)
             
             # Apply filters
@@ -205,21 +192,17 @@ class EventBuffer:
             return events[:limit]
     
     async def get_event(self, event_id: str) -> Optional[RealTimeEvent]:
-        """Get specific event by ID."""
-        async with self.lock:
+        """Get specific event by ID."""        async with self.lock:
             return self.index.get(event_id)
     
     def get_size(self) -> int:
-        """Get current buffer size."""
-        return len(self.buffer)
+        """Get current buffer size."""        return len(self.buffer)
 
 
 class EventCorrelator:
-    """Real-time event correlation engine."""
-    
+    """Real-time event correlation engine."""    
     def __init__(self):
-        """Initialize event correlator."""
-        self.correlation_rules: List[Dict] = []
+        """Initialize event correlator."""        self.correlation_rules: List[Dict] = []
         self.correlation_windows: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         self.active_correlations: Dict[str, Dict] = {}
         
@@ -227,8 +210,7 @@ class EventCorrelator:
         self._setup_correlation_rules()
     
     def _setup_correlation_rules(self) -> None:
-        """Setup default correlation rules."""
-        self.correlation_rules = [
+        """Setup default correlation rules."""        self.correlation_rules = [
             {
                 'rule_id': 'multi_platform_violation',
                 'event_types': [EventType.VIOLATION_DETECTED],
@@ -256,8 +238,7 @@ class EventCorrelator:
         ]
     
     async def correlate_event(self, event: RealTimeEvent) -> Optional[Dict[str, Any]]:
-        """Correlate incoming event with historical events."""
-        correlations = []
+        """Correlate incoming event with historical events."""        correlations = []
         
         for rule in self.correlation_rules:
             if event.event_type not in rule['event_types']:
@@ -285,8 +266,7 @@ class EventCorrelator:
         return None
     
     async def _check_correlation_rule(self, event: RealTimeEvent, rule: Dict) -> Optional[Dict[str, Any]]:
-        """Check if event matches correlation rule."""
-        window_key = f"{rule['rule_id']}_{event.creator_id or 'global'}"
+        """Check if event matches correlation rule."""        window_key = f"{rule['rule_id']}_{event.creator_id or 'global'}"
         window = self.correlation_windows[window_key]
         
         # Add current event to window
@@ -327,8 +307,7 @@ class EventCorrelator:
         event2: RealTimeEvent,
         fields: List[str]
     ) -> bool:
-        """Check if events match on correlation fields."""
-        for field in fields:
+        """Check if events match on correlation fields."""        for field in fields:
             value1 = getattr(event1, field, None) or event1.data.get(field) or event1.metadata.get(field)
             value2 = getattr(event2, field, None) or event2.data.get(field) or event2.metadata.get(field)
             
@@ -339,11 +318,9 @@ class EventCorrelator:
 
 
 class StreamingProcessor:
-    """High-performance streaming event processor."""
-    
+    """High-performance streaming event processor."""    
     def __init__(self, redis_url: str = "redis://localhost:6379"):
-        """Initialize streaming processor."""
-        self.redis_url = redis_url
+        """Initialize streaming processor."""        self.redis_url = redis_url
         self.redis: Optional[aioredis.Redis] = None
         
         # Processing pipelines
@@ -359,8 +336,7 @@ class StreamingProcessor:
         self._setup_default_processors()
     
     async def initialize(self) -> None:
-        """Initialize streaming processor."""
-        try:
+        """Initialize streaming processor."""        try:
             # Connect to Redis for pub/sub
             self.redis = aioredis.from_url(self.redis_url)
             await self.redis.ping()
@@ -372,8 +348,7 @@ class StreamingProcessor:
             raise
     
     async def process_event(self, event: RealTimeEvent) -> Dict[str, Any]:
-        """Process a real-time event through all pipelines."""
-        start_time = time.time()
+        """Process a real-time event through all pipelines."""        start_time = time.time()
         
         try:
             # Global processing
@@ -422,8 +397,7 @@ class StreamingProcessor:
             }
     
     async def _publish_event(self, event: RealTimeEvent) -> None:
-        """Publish event to Redis channels."""
-        try:
+        """Publish event to Redis channels."""        try:
             # Global channel
             await self.redis.publish('surveillance:events:all', json.dumps({
                 'event_id': event.event_id,
@@ -466,16 +440,13 @@ class StreamingProcessor:
             logger.error(f"Error publishing event to Redis: {e}")
     
     def add_processor(self, event_type: EventType, processor: Callable) -> None:
-        """Add event processor for specific event type."""
-        self.processing_pipelines[event_type].append(processor)
+        """Add event processor for specific event type."""        self.processing_pipelines[event_type].append(processor)
     
     def add_global_processor(self, processor: Callable) -> None:
-        """Add global event processor."""
-        self.global_processors.append(processor)
+        """Add global event processor."""        self.global_processors.append(processor)
     
     def get_performance_metrics(self) -> Dict[str, float]:
-        """Get processing performance metrics."""
-        current_time = time.time()
+        """Get processing performance metrics."""        current_time = time.time()
         time_diff = current_time - self.last_throughput_check
         
         if time_diff >= 1.0:  # Update every second
@@ -499,8 +470,7 @@ class StreamingProcessor:
         }
     
     def _setup_default_processors(self) -> None:
-        """Setup default event processors."""
-        # Violation detection processor
+        """Setup default event processors."""        # Violation detection processor
         async def violation_processor(event: RealTimeEvent) -> None:
             if event.event_type == EventType.VIOLATION_DETECTED:
                 # Add response action
@@ -541,14 +511,12 @@ class StreamingProcessor:
         self.add_processor(EventType.SECURITY_INCIDENT, security_processor)
     
     async def shutdown(self) -> None:
-        """Shutdown streaming processor."""
-        if self.redis:
+        """Shutdown streaming processor."""        if self.redis:
             await self.redis.close()
 
 
 class RealTimeSurveillanceEngine:
-    """
-    Professional real-time surveillance engine with sub-second response capabilities.
+    """    Professional real-time surveillance engine with sub-second response capabilities.
     
     Features:
     - Real-time event streaming and processing
@@ -561,11 +529,9 @@ class RealTimeSurveillanceEngine:
     - Multi-platform coordination
     - Scalable architecture
     - Performance monitoring
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize real-time surveillance engine."""
-        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize real-time surveillance engine."""        self._logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration
         self.config = config or {}
@@ -596,8 +562,7 @@ class RealTimeSurveillanceEngine:
         self.start_time: Optional[datetime] = None
     
     async def initialize(self) -> None:
-        """Initialize real-time surveillance engine."""
-        try:
+        """Initialize real-time surveillance engine."""        try:
             self._logger.info("Initializing Real-Time Surveillance Engine...")
             
             # Initialize streaming processor
@@ -630,8 +595,7 @@ class RealTimeSurveillanceEngine:
         creator_id: Optional[str] = None,
         content_id: Optional[str] = None
     ) -> str:
-        """Ingest a real-time event for processing."""
-        try:
+        """Ingest a real-time event for processing."""        try:
             event = RealTimeEvent(
                 event_id=f"evt_{uuid.uuid4().hex[:8]}",
                 event_type=event_type,
@@ -669,8 +633,7 @@ class RealTimeSurveillanceEngine:
         websocket: Optional[Any] = None,
         filters: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Subscribe to real-time events."""
-        try:
+        """Subscribe to real-time events."""        try:
             subscription_id = f"sub_{uuid.uuid4().hex[:8]}"
             
             subscription = StreamingSubscription(
@@ -693,8 +656,7 @@ class RealTimeSurveillanceEngine:
             raise
     
     async def unsubscribe(self, subscription_id: str) -> bool:
-        """Unsubscribe from real-time events."""
-        if subscription_id in self.subscriptions:
+        """Unsubscribe from real-time events."""        if subscription_id in self.subscriptions:
             subscription = self.subscriptions[subscription_id]
             subscription.active = False
             
@@ -720,8 +682,7 @@ class RealTimeSurveillanceEngine:
         severity_min: Optional[EventSeverity] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get real-time events with filtering."""
-        events = await self.event_buffer.get_events(
+        """Get real-time events with filtering."""        events = await self.event_buffer.get_events(
             limit=limit,
             since=since,
             event_types=event_types,
@@ -754,8 +715,7 @@ class RealTimeSurveillanceEngine:
         ]
     
     async def get_streaming_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive streaming metrics."""
-        processor_metrics = self.processor.get_performance_metrics()
+        """Get comprehensive streaming metrics."""        processor_metrics = self.processor.get_performance_metrics()
         
         # Update metrics
         self.metrics.events_per_second = processor_metrics['events_per_second']
@@ -786,16 +746,14 @@ class RealTimeSurveillanceEngine:
         }
     
     async def _start_workers(self) -> None:
-        """Start event processing workers."""
-        for i in range(self.max_workers):
+        """Start event processing workers."""        for i in range(self.max_workers):
             worker = asyncio.create_task(self._worker_task(f"worker-{i}"))
             self.workers.append(worker)
         
         self._logger.debug(f"Started {len(self.workers)} real-time processing workers")
     
     async def _worker_task(self, worker_id: str) -> None:
-        """Worker task for processing real-time events."""
-        self._logger.debug(f"Real-time worker {worker_id} started")
+        """Worker task for processing real-time events."""        self._logger.debug(f"Real-time worker {worker_id} started")
         
         try:
             while True:
@@ -833,8 +791,7 @@ class RealTimeSurveillanceEngine:
         self._logger.debug(f"Real-time worker {worker_id} stopped")
     
     async def _handle_correlation(self, correlation: Dict[str, Any], trigger_event: RealTimeEvent) -> None:
-        """Handle event correlation."""
-        try:
+        """Handle event correlation."""        try:
             # Create correlation event
             correlation_event = RealTimeEvent(
                 event_id=correlation['correlation_id'],
@@ -863,8 +820,7 @@ class RealTimeSurveillanceEngine:
             self._logger.error(f"Error handling correlation: {e}")
     
     async def _notify_subscribers(self, event: RealTimeEvent) -> None:
-        """Notify all relevant subscribers of an event."""
-        for subscription in list(self.subscriptions.values()):
+        """Notify all relevant subscribers of an event."""        for subscription in list(self.subscriptions.values()):
             try:
                 if not subscription.active:
                     continue
@@ -896,8 +852,7 @@ class RealTimeSurveillanceEngine:
                 self._logger.error(f"Error notifying subscriber: {e}")
     
     def _event_matches_subscription(self, event: RealTimeEvent, subscription: StreamingSubscription) -> bool:
-        """Check if event matches subscription criteria."""
-        # Check creator
+        """Check if event matches subscription criteria."""        # Check creator
         if subscription.creator_id != event.creator_id:
             return False
         
@@ -918,8 +873,7 @@ class RealTimeSurveillanceEngine:
         return True
     
     async def _send_websocket_event(self, websocket: Any, event: RealTimeEvent) -> None:
-        """Send event via WebSocket."""
-        message = {
+        """Send event via WebSocket."""        message = {
             'type': 'event',
             'event_id': event.event_id,
             'event_type': event.event_type.value,
@@ -936,14 +890,12 @@ class RealTimeSurveillanceEngine:
         await websocket.send(json.dumps(message))
     
     async def _setup_websocket_server(self) -> None:
-        """Setup WebSocket server for real-time notifications."""
-        # This would set up an actual WebSocket server
+        """Setup WebSocket server for real-time notifications."""        # This would set up an actual WebSocket server
         # For now, just log that it would be setup
         self._logger.info("WebSocket server would be setup here for real-time notifications")
     
     async def _metrics_collector(self) -> None:
-        """Collect and update metrics periodically."""
-        while self.running:
+        """Collect and update metrics periodically."""        while self.running:
             try:
                 await asyncio.sleep(self.metrics_update_interval)
                 
@@ -956,8 +908,7 @@ class RealTimeSurveillanceEngine:
                 self._logger.error(f"Metrics collector error: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown real-time surveillance engine."""
-        self._logger.info("Shutting down Real-Time Surveillance Engine...")
+        """Shutdown real-time surveillance engine."""        self._logger.info("Shutting down Real-Time Surveillance Engine...")
         
         try:
             self.running = False

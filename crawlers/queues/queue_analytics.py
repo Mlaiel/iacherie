@@ -1,5 +1,4 @@
-"""
-Queue Analytics - IA-Influencer-Agent
+"""Queue Analytics - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/queues/queue_analytics.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Data collection → Metrics aggregation → Pattern analysis → Performance insights → 
 Prediction modeling → Optimization recommendations → Automated reporting
 """
-
 from typing import Any, Dict, List, Optional, Tuple, Set
 import logging
 import asyncio
@@ -41,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
-    REAL_TIME = "real_time"          # Last 5 minutes
+    """Analytics timeframe options"""    REAL_TIME = "real_time"          # Last 5 minutes
     HOURLY = "hourly"                # Last hour
     DAILY = "daily"                  # Last 24 hours
     WEEKLY = "weekly"                # Last 7 days
@@ -52,8 +49,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Types of metrics to analyze"""
-    THROUGHPUT = "throughput"
+    """Types of metrics to analyze"""    THROUGHPUT = "throughput"
     LATENCY = "latency"
     ERROR_RATE = "error_rate"
     QUEUE_SIZE = "queue_size"
@@ -65,8 +61,7 @@ class MetricType(Enum):
 
 @dataclass
 class AnalyticsDataPoint:
-    """Single analytics data point"""
-    timestamp: datetime
+    """Single analytics data point"""    timestamp: datetime
     metric_type: MetricType
     value: float
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -75,8 +70,7 @@ class AnalyticsDataPoint:
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight with recommendations"""
-    insight_type: str
+    """Performance insight with recommendations"""    insight_type: str
     severity: str  # low, medium, high, critical
     title: str
     description: str
@@ -90,8 +84,7 @@ class PerformanceInsight:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    report_id: str
+    """Comprehensive analytics report"""    report_id: str
     timeframe: AnalyticsTimeframe
     generated_at: datetime
     
@@ -115,8 +108,7 @@ class AnalyticsReport:
 
 
 class QueueAnalyticsEngine:
-    """
-    📊 Advanced Queue Analytics Engine - IA-Influencer-Agent
+    """    📊 Advanced Queue Analytics Engine - IA-Influencer-Agent
     
     Enterprise-grade analytics engine featuring:
     - Real-time performance monitoring
@@ -126,8 +118,7 @@ class QueueAnalyticsEngine:
     - Performance bottleneck detection
     - Optimization recommendations
     - Comprehensive reporting
-    """
-    
+    """    
     def __init__(self, retention_days: int = 90):
         self.retention_days = retention_days
         
@@ -161,8 +152,7 @@ class QueueAnalyticsEngine:
         self._analytics_tasks: List[asyncio.Task] = []
     
     async def initialize(self) -> bool:
-        """Initialize analytics engine"""
-        try:
+        """Initialize analytics engine"""        try:
             self._is_running = True
             
             # Initialize insight generators
@@ -191,8 +181,7 @@ class QueueAnalyticsEngine:
         metadata: Optional[Dict[str, Any]] = None,
         tags: Optional[List[str]] = None
     ):
-        """Record a metric data point"""
-        try:
+        """Record a metric data point"""        try:
             data_point = AnalyticsDataPoint(
                 timestamp=datetime.now(),
                 metric_type=metric_type,
@@ -207,8 +196,7 @@ class QueueAnalyticsEngine:
             logger.error(f"❌ Failed to record metric: {e}")
     
     async def get_real_time_metrics(self) -> Dict[str, Any]:
-        """Get real-time performance metrics"""
-        try:
+        """Get real-time performance metrics"""        try:
             current_time = datetime.now()
             five_minutes_ago = current_time - timedelta(minutes=5)
             
@@ -257,8 +245,7 @@ class QueueAnalyticsEngine:
         include_predictions: bool = True,
         include_charts: bool = True
     ) -> AnalyticsReport:
-        """Generate comprehensive analytics report"""
-        try:
+        """Generate comprehensive analytics report"""        try:
             report_id = f"report_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
             # Calculate timeframe boundaries
@@ -317,8 +304,7 @@ class QueueAnalyticsEngine:
         metric_type: Optional[MetricType] = None,
         sensitivity: float = 2.0
     ) -> List[Dict[str, Any]]:
-        """Detect performance anomalies using statistical analysis"""
-        try:
+        """Detect performance anomalies using statistical analysis"""        try:
             anomalies = []
             
             metric_types = [metric_type] if metric_type else list(MetricType)
@@ -365,8 +351,7 @@ class QueueAnalyticsEngine:
         self,
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY
     ) -> List[PerformanceInsight]:
-        """Get performance insights for timeframe"""
-        try:
+        """Get performance insights for timeframe"""        try:
             cache_key = f"insights_{timeframe.value}_{datetime.now().strftime('%Y%m%d_%H')}"
             
             # Check cache
@@ -406,8 +391,7 @@ class QueueAnalyticsEngine:
         self,
         forecast_hours: int = 24
     ) -> Dict[str, Any]:
-        """Predict queue performance for next N hours"""
-        try:
+        """Predict queue performance for next N hours"""        try:
             predictions = {}
             
             for metric_type in [MetricType.THROUGHPUT, MetricType.LATENCY, MetricType.QUEUE_SIZE]:
@@ -438,8 +422,7 @@ class QueueAnalyticsEngine:
             return {"error": str(e)}
     
     async def get_optimization_recommendations(self) -> List[Dict[str, Any]]:
-        """Get optimization recommendations based on current performance"""
-        try:
+        """Get optimization recommendations based on current performance"""        try:
             recommendations = []
             
             # Get recent insights
@@ -471,8 +454,7 @@ class QueueAnalyticsEngine:
         timeframe: AnalyticsTimeframe,
         format_type: str = "json"
     ) -> Dict[str, Any]:
-        """Export analytics data in specified format"""
-        try:
+        """Export analytics data in specified format"""        try:
             end_time = datetime.now()
             start_time = await self._get_timeframe_start(timeframe, end_time)
             
@@ -522,8 +504,7 @@ class QueueAnalyticsEngine:
             return {"error": str(e)}
     
     async def shutdown(self):
-        """Gracefully shutdown analytics engine"""
-        try:
+        """Gracefully shutdown analytics engine"""        try:
             self._is_running = False
             
             # Cancel background tasks
@@ -542,13 +523,11 @@ class QueueAnalyticsEngine:
     # Private helper methods
     
     async def _initialize_insight_generators(self):
-        """Initialize insight generation algorithms"""
-        # Would initialize ML models and algorithms for insight generation
+        """Initialize insight generation algorithms"""        # Would initialize ML models and algorithms for insight generation
         pass
     
     async def _get_timeframe_start(self, timeframe: AnalyticsTimeframe, end_time: datetime) -> datetime:
-        """Calculate start time for timeframe"""
-        if timeframe == AnalyticsTimeframe.REAL_TIME:
+        """Calculate start time for timeframe"""        if timeframe == AnalyticsTimeframe.REAL_TIME:
             return end_time - timedelta(minutes=5)
         elif timeframe == AnalyticsTimeframe.HOURLY:
             return end_time - timedelta(hours=1)
@@ -570,8 +549,7 @@ class QueueAnalyticsEngine:
         start_time: datetime, 
         end_time: datetime
     ) -> Dict[MetricType, List[AnalyticsDataPoint]]:
-        """Collect data for specific timeframe"""
-        timeframe_data = {}
+        """Collect data for specific timeframe"""        timeframe_data = {}
         
         for metric_type in MetricType:
             timeframe_data[metric_type] = [
@@ -582,8 +560,7 @@ class QueueAnalyticsEngine:
         return timeframe_data
     
     async def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for values"""
-        if len(values) < 2:
+        """Calculate trend direction for values"""        if len(values) < 2:
             return "stable"
         
         # Simple trend calculation
@@ -598,8 +575,7 @@ class QueueAnalyticsEngine:
             return "stable"
     
     async def _calculate_health_score(self) -> float:
-        """Calculate overall system health score (0-100)"""
-        health_score = 100.0
+        """Calculate overall system health score (0-100)"""        health_score = 100.0
         
         # Check each metric against baseline
         for metric_type in MetricType:
@@ -632,8 +608,7 @@ class QueueAnalyticsEngine:
         timeframe_data: Dict[MetricType, List[AnalyticsDataPoint]], 
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Generate summary for timeframe data"""
-        summary = {
+        """Generate summary for timeframe data"""        summary = {
             "timeframe": timeframe.value,
             "data_points": sum(len(data) for data in timeframe_data.values()),
             "metrics": {}
@@ -657,16 +632,14 @@ class QueueAnalyticsEngine:
         timeframe_data: Dict[MetricType, List[AnalyticsDataPoint]], 
         timeframe: AnalyticsTimeframe
     ) -> List[PerformanceInsight]:
-        """Generate insights from timeframe data"""
-        # Implementation would include sophisticated insight generation
+        """Generate insights from timeframe data"""        # Implementation would include sophisticated insight generation
         return []
     
     async def _generate_detailed_metrics(
         self, 
         timeframe_data: Dict[MetricType, List[AnalyticsDataPoint]]
     ) -> Dict[str, Any]:
-        """Generate detailed metrics analysis"""
-        detailed = {}
+        """Generate detailed metrics analysis"""        detailed = {}
         
         for metric_type, data_points in timeframe_data.items():
             if data_points:
@@ -696,8 +669,7 @@ class QueueAnalyticsEngine:
         timeframe_data: Dict[MetricType, List[AnalyticsDataPoint]], 
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, str]:
-        """Generate charts as base64 encoded images"""
-        charts = {}
+        """Generate charts as base64 encoded images"""        charts = {}
         
         try:
             # Set style
@@ -734,8 +706,7 @@ class QueueAnalyticsEngine:
         return charts
     
     async def _generate_recommendations(self, insights: List[PerformanceInsight]) -> List[str]:
-        """Generate recommendations from insights"""
-        recommendations = []
+        """Generate recommendations from insights"""        recommendations = []
         
         for insight in insights:
             if insight.severity in ["high", "critical"]:
@@ -748,8 +719,7 @@ class QueueAnalyticsEngine:
         self, 
         timeframe_data: Dict[MetricType, List[AnalyticsDataPoint]]
     ) -> Dict[str, Any]:
-        """Generate predictions from timeframe data"""
-        predictions = {}
+        """Generate predictions from timeframe data"""        predictions = {}
         
         for metric_type, data_points in timeframe_data.items():
             if len(data_points) < 10:
@@ -778,8 +748,7 @@ class QueueAnalyticsEngine:
         return predictions
     
     async def _data_collector(self):
-        """Background data collection task"""
-        while self._is_running:
+        """Background data collection task"""        while self._is_running:
             try:
                 # Periodic data collection and aggregation
                 await asyncio.sleep(60)  # Collect every minute
@@ -789,8 +758,7 @@ class QueueAnalyticsEngine:
                 await asyncio.sleep(60)
     
     async def _insight_generator(self):
-        """Background insight generation task"""
-        while self._is_running:
+        """Background insight generation task"""        while self._is_running:
             try:
                 # Generate insights periodically
                 await asyncio.sleep(300)  # Generate every 5 minutes
@@ -800,8 +768,7 @@ class QueueAnalyticsEngine:
                 await asyncio.sleep(300)
     
     async def _anomaly_detector(self):
-        """Background anomaly detection task"""
-        while self._is_running:
+        """Background anomaly detection task"""        while self._is_running:
             try:
                 # Run anomaly detection
                 await self.detect_performance_anomalies()
@@ -812,8 +779,7 @@ class QueueAnalyticsEngine:
                 await asyncio.sleep(120)
     
     async def _data_cleaner(self):
-        """Background data cleaning task"""
-        while self._is_running:
+        """Background data cleaning task"""        while self._is_running:
             try:
                 # Clean old data based on retention policy
                 cutoff_time = datetime.now() - timedelta(days=self.retention_days)
@@ -832,8 +798,7 @@ class QueueAnalyticsEngine:
                 await asyncio.sleep(3600)
     
     async def _cache_manager(self):
-        """Background cache management task"""
-        while self._is_running:
+        """Background cache management task"""        while self._is_running:
             try:
                 # Clear expired cache entries
                 current_time = datetime.now()
@@ -865,8 +830,7 @@ class QueueAnalyticsEngine:
     # Additional helper methods for analysis
     
     async def _classify_anomaly_severity(self, anomaly_score: float) -> str:
-        """Classify anomaly severity based on score"""
-        if anomaly_score > 4.0:
+        """Classify anomaly severity based on score"""        if anomaly_score > 4.0:
             return "critical"
         elif anomaly_score > 3.0:
             return "high"
@@ -876,8 +840,7 @@ class QueueAnalyticsEngine:
             return "low"
     
     async def _describe_anomaly(self, metric_type: MetricType, value: float, mean_value: float) -> str:
-        """Generate human-readable anomaly description"""
-        deviation = "higher" if value > mean_value else "lower"
+        """Generate human-readable anomaly description"""        deviation = "higher" if value > mean_value else "lower"
         return f"{metric_type.value} is significantly {deviation} than expected ({value:.2f} vs average {mean_value:.2f})"
     
     async def _predict_metric_trend(
@@ -886,8 +849,7 @@ class QueueAnalyticsEngine:
         values: List[float], 
         forecast_hours: int
     ) -> Dict[str, Any]:
-        """Predict metric trend using linear regression"""
-        try:
+        """Predict metric trend using linear regression"""        try:
             # Convert timestamps to numerical values
             base_time = timestamps[0]
             x = [(ts - base_time).total_seconds() / 3600 for ts in timestamps]  # Hours
@@ -913,8 +875,7 @@ class QueueAnalyticsEngine:
             return {"error": str(e)}
     
     async def _analyze_trend_detailed(self, values: List[float]) -> Dict[str, Any]:
-        """Perform detailed trend analysis"""
-        if len(values) < 2:
+        """Perform detailed trend analysis"""        if len(values) < 2:
             return {"trend": "insufficient_data"}
         
         try:
@@ -947,53 +908,41 @@ class QueueAnalyticsEngine:
         self, 
         data_points: List[AnalyticsDataPoint]
     ) -> List[Dict[str, Any]]:
-        """Detect anomalies in metric data points"""
-        # Implementation for metric-specific anomaly detection
+        """Detect anomalies in metric data points"""        # Implementation for metric-specific anomaly detection
         return []
     
     async def _generate_throughput_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate throughput-specific insights"""
-        return []
+        """Generate throughput-specific insights"""        return []
     
     async def _generate_latency_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate latency-specific insights"""
-        return []
+        """Generate latency-specific insights"""        return []
     
     async def _generate_error_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate error-specific insights"""
-        return []
+        """Generate error-specific insights"""        return []
     
     async def _generate_capacity_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate capacity-specific insights"""
-        return []
+        """Generate capacity-specific insights"""        return []
     
     async def _generate_platform_insights(self, timeframe_data) -> List[PerformanceInsight]:
-        """Generate platform-specific insights"""
-        return []
+        """Generate platform-specific insights"""        return []
     
     async def _generate_throughput_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
-        """Generate throughput optimization recommendations"""
-        return []
+        """Generate throughput optimization recommendations"""        return []
     
     async def _generate_latency_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
-        """Generate latency optimization recommendations"""
-        return []
+        """Generate latency optimization recommendations"""        return []
     
     async def _generate_capacity_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
-        """Generate capacity optimization recommendations"""
-        return []
+        """Generate capacity optimization recommendations"""        return []
     
     async def _generate_error_recommendations(self, current_metrics) -> List[Dict[str, Any]]:
-        """Generate error reduction recommendations"""
-        return []
+        """Generate error reduction recommendations"""        return []
     
     async def _calculate_recommendation_priority(self, recommendation) -> float:
-        """Calculate priority score for recommendation"""
-        # Implementation for priority calculation
+        """Calculate priority score for recommendation"""        # Implementation for priority calculation
         return 1.0
 
 
 # Factory function
 def create_analytics_engine(retention_days: int = 90) -> QueueAnalyticsEngine:
-    """Create and return configured analytics engine"""
-    return QueueAnalyticsEngine(retention_days)
+    """Create and return configured analytics engine"""    return QueueAnalyticsEngine(retention_days)

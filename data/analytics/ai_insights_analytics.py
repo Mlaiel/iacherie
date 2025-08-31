@@ -1,5 +1,4 @@
-"""
-AI Insights Analytics Engine
+"""AI Insights Analytics Engine
 ==========================
 
 Advanced AI-powered analytics insights and intelligent recommendations.
@@ -17,7 +16,6 @@ Any unauthorized copying, distribution, or modification without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -45,8 +43,7 @@ from ..vector_db.vector_db_manager import VectorDBManager
 
 
 class InsightType(Enum):
-    """AI insight categories"""
-    CONTENT_OPTIMIZATION = "content_optimization"
+    """AI insight categories"""    CONTENT_OPTIMIZATION = "content_optimization"
     PERFORMANCE_PREDICTION = "performance_prediction"
     TREND_ANALYSIS = "trend_analysis"
     AUDIENCE_INSIGHTS = "audience_insights"
@@ -57,8 +54,7 @@ class InsightType(Enum):
 
 
 class ContentIntelligenceLevel(Enum):
-    """Content intelligence complexity levels"""
-    BASIC = "basic"
+    """Content intelligence complexity levels"""    BASIC = "basic"
     ADVANCED = "advanced"
     EXPERT = "expert"
     MASTER = "master"
@@ -66,8 +62,7 @@ class ContentIntelligenceLevel(Enum):
 
 @dataclass
 class AIInsight:
-    """AI-generated insight structure"""
-    insight_id: str
+    """AI-generated insight structure"""    insight_id: str
     insight_type: InsightType
     title: str
     description: str
@@ -82,8 +77,7 @@ class AIInsight:
 
 @dataclass
 class ContentIntelligence:
-    """Advanced content intelligence analysis"""
-    content_id: str
+    """Advanced content intelligence analysis"""    content_id: str
     intelligence_level: ContentIntelligenceLevel
     quality_score: float
     uniqueness_score: float
@@ -98,8 +92,7 @@ class ContentIntelligence:
 
 @dataclass
 class AudiencePersona:
-    """AI-generated audience persona"""
-    persona_id: str
+    """AI-generated audience persona"""    persona_id: str
     name: str
     demographics: Dict[str, Any]
     interests: List[str]
@@ -112,25 +105,21 @@ class AudiencePersona:
 
 
 class AIInsightsAnalytics:
-    """
-    Professional AI insights analytics engine for IA Influencer Agent platform.
+    """    Professional AI insights analytics engine for IA Influencer Agent platform.
     
     Provides advanced AI-powered analytics insights, content intelligence,
     and intelligent recommendations for content optimization and growth.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  storage_manager: StorageManager, vector_db: VectorDBManager):
-        """
-        Initialize AI Insights Analytics engine.
+        """        Initialize AI Insights Analytics engine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             storage_manager: Storage management service
             vector_db: Vector database manager
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis_client = redis_client
         self.storage_manager = storage_manager
         self.vector_db = vector_db
@@ -154,8 +143,7 @@ class AIInsightsAnalytics:
         
     async def generate_content_intelligence(self, content_id: str, 
                                           user_id: str) -> ContentIntelligence:
-        """
-        Generate comprehensive AI-powered content intelligence analysis.
+        """        Generate comprehensive AI-powered content intelligence analysis.
         
         Args:
             content_id: Content identifier
@@ -163,8 +151,7 @@ class AIInsightsAnalytics:
             
         Returns:
             ContentIntelligence with detailed analysis
-        """
-        try:
+        """        try:
             # Cache check
             cache_key = f"{self.insights_cache_key}:content_intelligence:{content_id}"
             cached_result = await self._get_cached_result(cache_key)
@@ -236,8 +223,7 @@ class AIInsightsAnalytics:
     async def generate_ai_insights(self, user_id: str, 
                                  insight_types: List[InsightType] = None,
                                  timeframe_days: int = 30) -> List[AIInsight]:
-        """
-        Generate comprehensive AI insights for user content and performance.
+        """        Generate comprehensive AI insights for user content and performance.
         
         Args:
             user_id: User identifier
@@ -246,8 +232,7 @@ class AIInsightsAnalytics:
             
         Returns:
             List of AI-generated insights
-        """
-        try:
+        """        try:
             if insight_types is None:
                 insight_types = list(InsightType)
             
@@ -271,8 +256,7 @@ class AIInsightsAnalytics:
     
     async def create_audience_personas(self, user_id: str, 
                                      num_personas: int = 5) -> List[AudiencePersona]:
-        """
-        Create AI-generated audience personas based on user data.
+        """        Create AI-generated audience personas based on user data.
         
         Args:
             user_id: User identifier
@@ -280,8 +264,7 @@ class AIInsightsAnalytics:
             
         Returns:
             List of audience personas
-        """
-        try:
+        """        try:
             # Get user engagement data
             engagement_data = await self._get_user_engagement_data(user_id)
             
@@ -312,8 +295,7 @@ class AIInsightsAnalytics:
     
     async def analyze_content_performance_patterns(self, user_id: str,
                                                  timeframe_days: int = 90) -> Dict[str, Any]:
-        """
-        Analyze content performance patterns using AI.
+        """        Analyze content performance patterns using AI.
         
         Args:
             user_id: User identifier
@@ -321,8 +303,7 @@ class AIInsightsAnalytics:
             
         Returns:
             Performance pattern analysis
-        """
-        try:
+        """        try:
             # Get content performance data
             performance_data = await self._get_content_performance_data(user_id, timeframe_days)
             
@@ -347,8 +328,7 @@ class AIInsightsAnalytics:
     
     async def predict_content_success(self, content_metadata: Dict[str, Any],
                                     user_id: str) -> Dict[str, float]:
-        """
-        Predict content success metrics using AI models.
+        """        Predict content success metrics using AI models.
         
         Args:
             content_metadata: Content metadata
@@ -356,8 +336,7 @@ class AIInsightsAnalytics:
             
         Returns:
             Success prediction scores
-        """
-        try:
+        """        try:
             # Extract features
             features = await self._extract_prediction_features(content_metadata, user_id)
             
@@ -382,8 +361,7 @@ class AIInsightsAnalytics:
     
     async def detect_anomalies(self, user_id: str, 
                               metric_type: str = "all") -> Dict[str, Any]:
-        """
-        Detect anomalies in content performance using AI.
+        """        Detect anomalies in content performance using AI.
         
         Args:
             user_id: User identifier
@@ -391,8 +369,7 @@ class AIInsightsAnalytics:
             
         Returns:
             Anomaly detection results
-        """
-        try:
+        """        try:
             # Get metrics data
             metrics_data = await self._get_metrics_data(user_id, metric_type)
             
@@ -431,16 +408,14 @@ class AIInsightsAnalytics:
             raise
     
     async def generate_growth_recommendations(self, user_id: str) -> Dict[str, Any]:
-        """
-        Generate AI-powered growth recommendations.
+        """        Generate AI-powered growth recommendations.
         
         Args:
             user_id: User identifier
             
         Returns:
             Growth recommendations
-        """
-        try:
+        """        try:
             # Analyze current performance
             current_performance = await self._analyze_current_performance(user_id)
             
@@ -475,8 +450,7 @@ class AIInsightsAnalytics:
     # Private helper methods
     
     async def _get_content_data(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content data from database"""
-        try:
+        """Get content data from database"""        try:
             stmt = select(ContentModel).where(ContentModel.id == content_id)
             result = await self.db_session.execute(stmt)
             content = result.scalar_one_or_none()
@@ -499,8 +473,7 @@ class AIInsightsAnalytics:
             return None
     
     async def _analyze_content_quality(self, content_data: Dict[str, Any]) -> float:
-        """Analyze content quality using AI"""
-        try:
+        """Analyze content quality using AI"""        try:
             quality_factors = {
                 "metadata_completeness": self._check_metadata_completeness(content_data),
                 "title_quality": await self._analyze_title_quality(content_data.get("title", "")),
@@ -526,8 +499,7 @@ class AIInsightsAnalytics:
             return 0.5  # Default score
     
     def _check_metadata_completeness(self, content_data: Dict[str, Any]) -> float:
-        """Check metadata completeness"""
-        required_fields = ["title", "description", "content_type"]
+        """Check metadata completeness"""        required_fields = ["title", "description", "content_type"]
         optional_fields = ["tags", "category", "duration", "file_size"]
         
         required_score = sum(1 for field in required_fields if content_data.get(field))
@@ -537,8 +509,7 @@ class AIInsightsAnalytics:
         return (required_score + optional_score) / total_possible
     
     async def _analyze_title_quality(self, title: str) -> float:
-        """Analyze title quality using NLP"""
-        if not title:
+        """Analyze title quality using NLP"""        if not title:
             return 0.0
         
         # Basic quality checks
@@ -549,8 +520,7 @@ class AIInsightsAnalytics:
         return (length_score + sentiment_score + keyword_score) / 3
     
     async def _analyze_description_quality(self, description: str) -> float:
-        """Analyze description quality"""
-        if not description:
+        """Analyze description quality"""        if not description:
             return 0.0
         
         length_score = 1.0 if 50 <= len(description) <= 500 else 0.5
@@ -560,8 +530,7 @@ class AIInsightsAnalytics:
         return (length_score + sentiment_score + structure_score) / 3
     
     async def _analyze_sentiment_score(self, text: str) -> float:
-        """Analyze text sentiment"""
-        try:
+        """Analyze text sentiment"""        try:
             result = self.text_analyzer(text)[0]
             # Convert to positive score (higher is better)
             if result["label"] == "POSITIVE":
@@ -574,8 +543,7 @@ class AIInsightsAnalytics:
             return 0.5
     
     def _analyze_keyword_density(self, text: str) -> float:
-        """Analyze keyword density"""
-        words = text.lower().split()
+        """Analyze keyword density"""        words = text.lower().split()
         if len(words) < 3:
             return 0.3
         
@@ -593,8 +561,7 @@ class AIInsightsAnalytics:
         return min(diversity_score * 2, 1.0)
     
     def _analyze_text_structure(self, text: str) -> float:
-        """Analyze text structure quality"""
-        sentences = text.split(".")
+        """Analyze text structure quality"""        sentences = text.split(".")
         if len(sentences) < 2:
             return 0.4
         
@@ -609,8 +576,7 @@ class AIInsightsAnalytics:
             return 0.5
     
     async def _get_cached_result(self, cache_key: str) -> Optional[Dict[str, Any]]:
-        """Get cached result from Redis"""
-        try:
+        """Get cached result from Redis"""        try:
             cached_data = self.redis_client.get(cache_key)
             if cached_data:
                 return json.loads(cached_data)
@@ -620,8 +586,7 @@ class AIInsightsAnalytics:
             return None
     
     async def _cache_result(self, cache_key: str, data: Dict[str, Any]) -> None:
-        """Cache result in Redis"""
-        try:
+        """Cache result in Redis"""        try:
             serialized_data = json.dumps(data, default=str)
             self.redis_client.setex(cache_key, self.cache_ttl, serialized_data)
         except Exception as e:

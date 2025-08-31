@@ -1,5 +1,4 @@
-"""
-Performance Metrics - AI Engines Database Module
+"""Performance Metrics - AI Engines Database Module
 
 This module provides comprehensive performance monitoring and metrics collection
 for the IA Influencer Agent platform, including model performance tracking,
@@ -21,7 +20,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple, Callable
 import json
 import logging
@@ -45,8 +43,7 @@ from pydantic import BaseModel, Field, validator
 logger = logging.getLogger(__name__)
 
 class MetricType(str, Enum):
-    """Metric type enumeration."""
-    ACCURACY = "accuracy"
+    """Metric type enumeration."""    ACCURACY = "accuracy"
     PRECISION = "precision"
     RECALL = "recall"
     F1_SCORE = "f1_score"
@@ -61,23 +58,20 @@ class MetricType(str, Enum):
     GPU_USAGE = "gpu_usage"
 
 class DriftType(str, Enum):
-    """Drift type enumeration."""
-    DATA_DRIFT = "data_drift"
+    """Drift type enumeration."""    DATA_DRIFT = "data_drift"
     CONCEPT_DRIFT = "concept_drift"
     PREDICTION_DRIFT = "prediction_drift"
     PERFORMANCE_DRIFT = "performance_drift"
 
 class AlertLevel(str, Enum):
-    """Alert level enumeration."""
-    INFO = "info"
+    """Alert level enumeration."""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric structure."""
-    metric_id: str
+    """Performance metric structure."""    metric_id: str
     model_id: str
     metric_type: MetricType
     value: float
@@ -88,8 +82,7 @@ class PerformanceMetric:
 
 @dataclass
 class InferenceMetrics:
-    """Inference metrics structure."""
-    request_id: str
+    """Inference metrics structure."""    request_id: str
     model_id: str
     latency_ms: float
     memory_usage_mb: float
@@ -105,8 +98,7 @@ class InferenceMetrics:
 
 @dataclass
 class TrainingMetrics:
-    """Training metrics structure."""
-    job_id: str
+    """Training metrics structure."""    job_id: str
     model_id: str
     epoch: int
     step: int
@@ -122,8 +114,7 @@ class TrainingMetrics:
 
 @dataclass
 class DriftAlert:
-    """Drift detection alert structure."""
-    alert_id: str
+    """Drift detection alert structure."""    alert_id: str
     model_id: str
     drift_type: DriftType
     alert_level: AlertLevel
@@ -135,16 +126,13 @@ class DriftAlert:
     metadata: Dict[str, Any]
 
 class ModelPerformanceTracker:
-    """
-    Real-time model performance tracker.
+    """    Real-time model performance tracker.
     
     Monitors model performance metrics in real-time, providing alerts
     for performance degradation and maintaining performance history.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the model performance tracker."""
-        self.performance_history = defaultdict(list)
+        """Initialize the model performance tracker."""        self.performance_history = defaultdict(list)
         self.alert_thresholds = {}
         self.active_alerts = {}
         self.performance_baselines = {}
@@ -152,13 +140,11 @@ class ModelPerformanceTracker:
         self.initialized = False
         
     async def initialize(self) -> Dict[str, Any]:
-        """
-        Initialize the performance tracker.
+        """        Initialize the performance tracker.
         
         Returns:
             Dict[str, Any]: Initialization status
-        """
-        try:
+        """        try:
             # Load performance baselines
             await self._load_performance_baselines()
             
@@ -187,16 +173,14 @@ class ModelPerformanceTracker:
             }
     
     async def track_performance(self, metric: PerformanceMetric) -> Dict[str, Any]:
-        """
-        Track a performance metric.
+        """        Track a performance metric.
         
         Args:
             metric: Performance metric to track
             
         Returns:
             Dict[str, Any]: Tracking result
-        """
-        try:
+        """        try:
             # Store metric
             self.performance_history[metric.model_id].append(metric)
             
@@ -224,8 +208,7 @@ class ModelPerformanceTracker:
     
     async def get_performance_summary(self, model_id: str,
                                     time_range: Optional[timedelta] = None) -> Dict[str, Any]:
-        """
-        Get performance summary for a model.
+        """        Get performance summary for a model.
         
         Args:
             model_id: Model identifier
@@ -233,8 +216,7 @@ class ModelPerformanceTracker:
             
         Returns:
             Dict[str, Any]: Performance summary
-        """
-        try:
+        """        try:
             if time_range is None:
                 time_range = timedelta(hours=24)
             
@@ -298,8 +280,7 @@ class ModelPerformanceTracker:
     
     async def set_alert_threshold(self, model_id: str, metric_type: MetricType,
                                 threshold_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Set alert threshold for a model metric.
+        """        Set alert threshold for a model metric.
         
         Args:
             model_id: Model identifier
@@ -308,8 +289,7 @@ class ModelPerformanceTracker:
             
         Returns:
             Dict[str, Any]: Threshold setting result
-        """
-        try:
+        """        try:
             if model_id not in self.alert_thresholds:
                 self.alert_thresholds[model_id] = {}
             
@@ -337,8 +317,7 @@ class ModelPerformanceTracker:
             }
     
     async def get_resource_utilization(self) -> Dict[str, Any]:
-        """Get current resource utilization metrics."""
-        try:
+        """Get current resource utilization metrics."""        try:
             # Mock resource utilization data
             return {
                 "cpu": {
@@ -375,13 +354,11 @@ class ModelPerformanceTracker:
             }
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check on performance tracker.
+        """        Perform health check on performance tracker.
         
         Returns:
             Dict[str, Any]: Health status
-        """
-        try:
+        """        try:
             if not self.initialized:
                 return {
                     "status": "unhealthy",
@@ -413,13 +390,11 @@ class ModelPerformanceTracker:
     # Private helper methods
     
     async def _load_performance_baselines(self):
-        """Load performance baselines for models."""
-        # Mock baseline loading
+        """Load performance baselines for models."""        # Mock baseline loading
         logger.info("Loading performance baselines")
     
     async def _initialize_alert_thresholds(self):
-        """Initialize default alert thresholds."""
-        default_thresholds = {
+        """Initialize default alert thresholds."""        default_thresholds = {
             MetricType.ACCURACY: {"min": 0.8, "alert_level": AlertLevel.WARNING},
             MetricType.LATENCY: {"max": 1000, "alert_level": AlertLevel.WARNING},
             MetricType.MEMORY_USAGE: {"max": 80, "alert_level": AlertLevel.CRITICAL}
@@ -430,8 +405,7 @@ class ModelPerformanceTracker:
             self.alert_thresholds[model_id] = default_thresholds.copy()
     
     async def _check_performance_alerts(self, metric: PerformanceMetric) -> List[DriftAlert]:
-        """Check if metric triggers any alerts."""
-        alerts = []
+        """Check if metric triggers any alerts."""        alerts = []
         
         if metric.model_id in self.alert_thresholds:
             thresholds = self.alert_thresholds[metric.model_id]
@@ -479,13 +453,11 @@ class ModelPerformanceTracker:
         return alerts
     
     async def _update_performance_stats(self, metric: PerformanceMetric):
-        """Update performance statistics."""
-        # Update running statistics for the model
+        """Update performance statistics."""        # Update running statistics for the model
         logger.debug(f"Updated performance stats for {metric.model_id}")
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for a series of values."""
-        if len(values) < 2:
+        """Calculate trend direction for a series of values."""        if len(values) < 2:
             return "stable"
         
         # Calculate linear regression slope
@@ -501,8 +473,7 @@ class ModelPerformanceTracker:
     
     async def _compare_with_baseline(self, model_id: str, 
                                    recent_metrics: List[PerformanceMetric]) -> Dict[str, Any]:
-        """Compare recent metrics with baseline performance."""
-        if model_id not in self.performance_baselines:
+        """Compare recent metrics with baseline performance."""        if model_id not in self.performance_baselines:
             return {"status": "no_baseline"}
         
         baseline = self.performance_baselines[model_id]
@@ -526,8 +497,7 @@ class ModelPerformanceTracker:
         return comparison
     
     async def _monitor_performance(self):
-        """Background performance monitoring."""
-        while True:
+        """Background performance monitoring."""        while True:
             try:
                 # Clean up old alerts
                 await self._cleanup_old_alerts()
@@ -542,8 +512,7 @@ class ModelPerformanceTracker:
                 await asyncio.sleep(300)
     
     async def _cleanup_old_alerts(self):
-        """Clean up old alerts."""
-        cutoff_time = datetime.utcnow() - timedelta(hours=24)
+        """Clean up old alerts."""        cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
         for model_id in self.active_alerts:
             self.active_alerts[model_id] = [
@@ -552,36 +521,30 @@ class ModelPerformanceTracker:
             ]
     
     async def _aggregate_performance_data(self):
-        """Aggregate performance data for reporting."""
-        # Implement performance data aggregation
+        """Aggregate performance data for reporting."""        # Implement performance data aggregation
         logger.debug("Aggregating performance data")
 
 class InferenceMetricsCollector:
-    """
-    Inference metrics collector.
+    """    Inference metrics collector.
     
     Collects and analyzes inference performance metrics including
     latency, throughput, resource usage, and error rates.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the inference metrics collector."""
-        self.inference_metrics = defaultdict(list)
+        """Initialize the inference metrics collector."""        self.inference_metrics = defaultdict(list)
         self.latency_buckets = defaultdict(lambda: defaultdict(int))
         self.throughput_data = defaultdict(list)
         self.error_counts = defaultdict(int)
         
     async def collect_inference_metric(self, metrics: InferenceMetrics) -> Dict[str, Any]:
-        """
-        Collect inference metrics.
+        """        Collect inference metrics.
         
         Args:
             metrics: Inference metrics to collect
             
         Returns:
             Dict[str, Any]: Collection result
-        """
-        try:
+        """        try:
             # Store metrics
             self.inference_metrics[metrics.model_id].append(metrics)
             
@@ -616,8 +579,7 @@ class InferenceMetricsCollector:
     
     async def get_inference_summary(self, model_id: str,
                                   time_range: Optional[timedelta] = None) -> Dict[str, Any]:
-        """
-        Get inference performance summary.
+        """        Get inference performance summary.
         
         Args:
             model_id: Model identifier
@@ -625,8 +587,7 @@ class InferenceMetricsCollector:
             
         Returns:
             Dict[str, Any]: Inference summary
-        """
-        try:
+        """        try:
             if time_range is None:
                 time_range = timedelta(hours=1)
             
@@ -698,8 +659,7 @@ class InferenceMetricsCollector:
             }
     
     def _get_latency_bucket(self, latency_ms: float) -> str:
-        """Get latency bucket for histogram."""
-        if latency_ms < 10:
+        """Get latency bucket for histogram."""        if latency_ms < 10:
             return "0-10ms"
         elif latency_ms < 50:
             return "10-50ms"
@@ -713,30 +673,25 @@ class InferenceMetricsCollector:
             return ">1s"
 
 class TrainingMetricsStore:
-    """
-    Training metrics storage and analysis.
+    """    Training metrics storage and analysis.
     
     Stores and analyzes training metrics including loss curves,
     validation metrics, and training progress tracking.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the training metrics store."""
-        self.training_metrics = defaultdict(list)
+        """Initialize the training metrics store."""        self.training_metrics = defaultdict(list)
         self.loss_curves = defaultdict(list)
         self.validation_curves = defaultdict(list)
         
     async def store_training_metric(self, metrics: TrainingMetrics) -> Dict[str, Any]:
-        """
-        Store training metrics.
+        """        Store training metrics.
         
         Args:
             metrics: Training metrics to store
             
         Returns:
             Dict[str, Any]: Storage result
-        """
-        try:
+        """        try:
             # Store metrics
             self.training_metrics[metrics.job_id].append(metrics)
             
@@ -772,16 +727,14 @@ class TrainingMetricsStore:
             }
     
     async def get_training_progress(self, job_id: str) -> Dict[str, Any]:
-        """
-        Get training progress for a job.
+        """        Get training progress for a job.
         
         Args:
             job_id: Training job identifier
             
         Returns:
             Dict[str, Any]: Training progress
-        """
-        try:
+        """        try:
             if job_id not in self.training_metrics:
                 return {
                     "status": "error",
@@ -831,8 +784,7 @@ class TrainingMetricsStore:
             }
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend for a series of values."""
-        if len(values) < 2:
+        """Calculate trend for a series of values."""        if len(values) < 2:
             return "stable"
         
         # Calculate slope using linear regression
@@ -847,22 +799,18 @@ class TrainingMetricsStore:
             return "stable"
 
 class ModelDriftDetector:
-    """
-    Model drift detection system.
+    """    Model drift detection system.
     
     Detects data drift, concept drift, and performance drift
     using statistical methods and machine learning techniques.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the drift detector."""
-        self.reference_data = {}
+        """Initialize the drift detector."""        self.reference_data = {}
         self.drift_history = defaultdict(list)
         self.drift_thresholds = {}
         
     async def set_reference_data(self, model_id: str, reference_data: np.ndarray) -> Dict[str, Any]:
-        """
-        Set reference data for drift detection.
+        """        Set reference data for drift detection.
         
         Args:
             model_id: Model identifier
@@ -870,8 +818,7 @@ class ModelDriftDetector:
             
         Returns:
             Dict[str, Any]: Setting result
-        """
-        try:
+        """        try:
             # Store reference data statistics
             self.reference_data[model_id] = {
                 "mean": np.mean(reference_data, axis=0),
@@ -899,8 +846,7 @@ class ModelDriftDetector:
     
     async def detect_drift(self, model_id: str, new_data: np.ndarray,
                           drift_type: DriftType = DriftType.DATA_DRIFT) -> Dict[str, Any]:
-        """
-        Detect drift in new data.
+        """        Detect drift in new data.
         
         Args:
             model_id: Model identifier
@@ -909,8 +855,7 @@ class ModelDriftDetector:
             
         Returns:
             Dict[str, Any]: Drift detection result
-        """
-        try:
+        """        try:
             if model_id not in self.reference_data:
                 return {
                     "status": "error",
@@ -976,8 +921,7 @@ class ModelDriftDetector:
     
     async def _detect_data_drift(self, reference: Dict[str, Any], 
                                new_data: np.ndarray) -> Dict[str, Any]:
-        """Detect data drift using statistical tests."""
-        # Kolmogorov-Smirnov test for each feature
+        """Detect data drift using statistical tests."""        # Kolmogorov-Smirnov test for each feature
         drift_scores = []
         affected_features = []
         
@@ -1013,8 +957,7 @@ class ModelDriftDetector:
     
     async def _detect_concept_drift(self, reference: Dict[str, Any],
                                   new_data: np.ndarray) -> Dict[str, Any]:
-        """Detect concept drift using model predictions."""
-        # Mock concept drift detection
+        """Detect concept drift using model predictions."""        # Mock concept drift detection
         drift_score = np.random.random() * 0.1  # Low drift for demo
         drift_detected = drift_score > 0.05
         
@@ -1027,8 +970,7 @@ class ModelDriftDetector:
     
     async def _detect_prediction_drift(self, reference: Dict[str, Any],
                                      new_data: np.ndarray) -> Dict[str, Any]:
-        """Detect prediction drift using prediction distributions."""
-        # Mock prediction drift detection
+        """Detect prediction drift using prediction distributions."""        # Mock prediction drift detection
         drift_score = np.random.random() * 0.08  # Low drift for demo
         drift_detected = drift_score > 0.06
         
@@ -1040,29 +982,24 @@ class ModelDriftDetector:
         }
 
 class PerformanceBenchmark:
-    """
-    Performance benchmarking system.
+    """    Performance benchmarking system.
     
     Provides model performance benchmarking and comparison
     capabilities for evaluating model improvements.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the performance benchmark."""
-        self.benchmarks = {}
+        """Initialize the performance benchmark."""        self.benchmarks = {}
         self.benchmark_results = defaultdict(list)
         
     async def create_benchmark(self, benchmark_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Create a performance benchmark.
+        """        Create a performance benchmark.
         
         Args:
             benchmark_config: Benchmark configuration
             
         Returns:
             Dict[str, Any]: Benchmark creation result
-        """
-        try:
+        """        try:
             benchmark_id = f"benchmark_{int(time.time())}_{str(uuid.uuid4())[:8]}"
             
             benchmark = {
@@ -1093,8 +1030,7 @@ class PerformanceBenchmark:
             }
     
     async def run_benchmark(self, benchmark_id: str, model_id: str) -> Dict[str, Any]:
-        """
-        Run benchmark for a model.
+        """        Run benchmark for a model.
         
         Args:
             benchmark_id: Benchmark identifier
@@ -1102,8 +1038,7 @@ class PerformanceBenchmark:
             
         Returns:
             Dict[str, Any]: Benchmark result
-        """
-        try:
+        """        try:
             if benchmark_id not in self.benchmarks:
                 return {
                     "status": "error",
@@ -1153,8 +1088,7 @@ class PerformanceBenchmark:
             }
     
     async def compare_models(self, benchmark_id: str, model_ids: List[str]) -> Dict[str, Any]:
-        """
-        Compare multiple models on a benchmark.
+        """        Compare multiple models on a benchmark.
         
         Args:
             benchmark_id: Benchmark identifier
@@ -1162,8 +1096,7 @@ class PerformanceBenchmark:
             
         Returns:
             Dict[str, Any]: Model comparison result
-        """
-        try:
+        """        try:
             if benchmark_id not in self.benchmarks:
                 return {
                     "status": "error",

@@ -1,5 +1,4 @@
-"""
-🏷️ Metadata Transformation Engine - IA Influencer Agent Platform Enterprise
+"""🏷️ Metadata Transformation Engine - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/data_management/transformers/metadata_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -13,7 +12,6 @@ AVERTISSEMENT: Toute tentative de vol, copie ou utilisation non autorisée
 de ce code ou de cette technologie est strictement interdite et sera
 poursuivie selon les lois allemandes et internationales.
 """
-
 import asyncio
 import logging
 import time
@@ -48,8 +46,7 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class MetadataStandard(Enum):
-    """Standards de métadonnées supportés"""
-    DUBLIN_CORE = "dublin_core"
+    """Standards de métadonnées supportés"""    DUBLIN_CORE = "dublin_core"
     ID3V2 = "id3v2"
     EXIF = "exif"
     XMP = "xmp"
@@ -59,8 +56,7 @@ class MetadataStandard(Enum):
     CUSTOM = "custom"
 
 class MetadataField(Enum):
-    """Champs de métadonnées standardisés"""
-    # Identification
+    """Champs de métadonnées standardisés"""    # Identification
     TITLE = "title"
     CREATOR = "creator"
     AUTHOR = "author"
@@ -100,8 +96,7 @@ class MetadataField(Enum):
     SOCIAL_MEDIA_HANDLE = "social_media_handle"
 
 class EnrichmentType(Enum):
-    """Types d'enrichissement de métadonnées"""
-    AI_TAGGING = "ai_tagging"
+    """Types d'enrichissement de métadonnées"""    AI_TAGGING = "ai_tagging"
     GEO_ENRICHMENT = "geo_enrichment"
     CONTENT_ANALYSIS = "content_analysis"
     FACE_RECOGNITION = "face_recognition"
@@ -112,8 +107,7 @@ class EnrichmentType(Enum):
 
 @dataclass
 class MetadataProcessingResult:
-    """Résultat du traitement de métadonnées"""
-    success: bool
+    """Résultat du traitement de métadonnées"""    success: bool
     input_file: str
     output_file: Optional[str]
     original_metadata: Dict[str, Any]
@@ -125,15 +119,13 @@ class MetadataProcessingResult:
     errors: List[str]
 
 class MetadataExtractor:
-    """Extracteur de métadonnées multi-format pour créateurs de contenu"""
-    
+    """Extracteur de métadonnées multi-format pour créateurs de contenu"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.file_manager = FileManager()
     
     def extract_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait toutes les métadonnées disponibles d'un fichier"""
-        
+        """Extrait toutes les métadonnées disponibles d'un fichier"""        
         try:
             file_path_obj = Path(file_path)
             file_extension = file_path_obj.suffix.lower()
@@ -164,8 +156,7 @@ class MetadataExtractor:
             raise MetadataProcessingError(f"Échec extraction métadonnées: {str(e)}")
     
     def _extract_filesystem_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées du système de fichiers"""
-        
+        """Extrait les métadonnées du système de fichiers"""        
         file_stats = Path(file_path).stat()
         
         return {
@@ -180,8 +171,7 @@ class MetadataExtractor:
         }
     
     def _extract_image_metadata(self, image_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées d'image (EXIF, IPTC, XMP)"""
-        
+        """Extrait les métadonnées d'image (EXIF, IPTC, XMP)"""        
         metadata = {}
         
         try:
@@ -230,16 +220,14 @@ class MetadataExtractor:
         return metadata
     
     def _extract_gps_info(self, exif_data: Dict) -> Optional[Dict[str, float]]:
-        """Extrait les informations GPS des données EXIF"""
-        
+        """Extrait les informations GPS des données EXIF"""        
         try:
             gps_info = exif_data.get(34853)  # GPS tag
             if not gps_info:
                 return None
             
             def convert_to_degrees(value):
-                """Convertit les coordonnées GPS en degrés décimaux"""
-                d, m, s = value
+                """Convertit les coordonnées GPS en degrés décimaux"""                d, m, s = value
                 return d + (m / 60.0) + (s / 3600.0)
             
             gps_data = {}
@@ -265,8 +253,7 @@ class MetadataExtractor:
             return None
     
     def _extract_audio_metadata(self, audio_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées audio (ID3, Vorbis, etc.)"""
-        
+        """Extrait les métadonnées audio (ID3, Vorbis, etc.)"""        
         metadata = {}
         
         try:
@@ -301,8 +288,7 @@ class MetadataExtractor:
         return metadata
     
     def _extract_standard_audio_fields(self, metadata: Dict, tags: Any) -> None:
-        """Extrait les champs audio standardisés"""
-        
+        """Extrait les champs audio standardisés"""        
         # Mapping des tags communs
         field_mapping = {
             'title': ['TIT2', 'TITLE', '\xa9nam'],
@@ -325,8 +311,7 @@ class MetadataExtractor:
                     break
     
     def _extract_video_metadata(self, video_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées vidéo"""
-        
+        """Extrait les métadonnées vidéo"""        
         metadata = {}
         
         try:
@@ -358,8 +343,7 @@ class MetadataExtractor:
         return metadata
     
     def _extract_pdf_metadata(self, pdf_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées PDF"""
-        
+        """Extrait les métadonnées PDF"""        
         metadata = {}
         
         try:
@@ -396,8 +380,7 @@ class MetadataExtractor:
         return metadata
     
     def _extract_document_metadata(self, doc_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées de document Office"""
-        
+        """Extrait les métadonnées de document Office"""        
         metadata = {}
         
         try:
@@ -428,8 +411,7 @@ class MetadataExtractor:
         return metadata
     
     def _calculate_content_hash(self, file_path: str) -> str:
-        """Calcule un hash SHA-256 du contenu du fichier"""
-        
+        """Calcule un hash SHA-256 du contenu du fichier"""        
         try:
             sha256_hash = hashlib.sha256()
             with open(file_path, "rb") as f:
@@ -441,8 +423,7 @@ class MetadataExtractor:
             return ""
 
 class MetadataEnricher:
-    """Enrichisseur de métadonnées IA pour créateurs de contenu"""
-    
+    """Enrichisseur de métadonnées IA pour créateurs de contenu"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -465,8 +446,7 @@ class MetadataEnricher:
         metadata: Dict[str, Any],
         enrichment_types: List[EnrichmentType]
     ) -> Dict[str, Any]:
-        """Enrichit les métadonnées avec des analyses IA"""
-        
+        """Enrichit les métadonnées avec des analyses IA"""        
         enriched_metadata = metadata.copy()
         enrichment_results = []
         
@@ -500,8 +480,7 @@ class MetadataEnricher:
         return enriched_metadata
     
     def _ai_tag_content(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Génère des tags automatiques basés sur le contenu"""
-        
+        """Génère des tags automatiques basés sur le contenu"""        
         file_extension = Path(file_path).suffix.lower()
         tags = []
         confidence_scores = {}
@@ -559,8 +538,7 @@ class MetadataEnricher:
             return {}
     
     def _generate_color_tags(self, image_path: str) -> List[str]:
-        """Génère des tags basés sur les couleurs dominantes"""
-        
+        """Génère des tags basés sur les couleurs dominantes"""        
         try:
             from PIL import Image
             import colorsys
@@ -616,8 +594,7 @@ class MetadataEnricher:
             return []
     
     def _analyze_content(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse approfondie du contenu"""
-        
+        """Analyse approfondie du contenu"""        
         file_extension = Path(file_path).suffix.lower()
         analysis_results = {}
         
@@ -646,8 +623,7 @@ class MetadataEnricher:
             return {}
     
     def _analyze_image_content(self, image_path: str) -> Dict[str, Any]:
-        """Analyse spécialisée d'image"""
-        
+        """Analyse spécialisée d'image"""        
         analysis = {}
         
         try:
@@ -686,8 +662,7 @@ class MetadataEnricher:
         return analysis
     
     def _categorize_resolution(self, width: int, height: int) -> str:
-        """Catégorise la résolution de l'image"""
-        
+        """Catégorise la résolution de l'image"""        
         total_pixels = width * height
         
         if total_pixels >= 8000000:  # 8MP+
@@ -700,8 +675,7 @@ class MetadataEnricher:
             return 'low'
     
     def _analyze_audio_content(self, audio_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse spécialisée audio"""
-        
+        """Analyse spécialisée audio"""        
         analysis = {}
         
         try:
@@ -744,8 +718,7 @@ class MetadataEnricher:
         return analysis
     
     def _analyze_video_content(self, video_path: str) -> Dict[str, Any]:
-        """Analyse spécialisée vidéo"""
-        
+        """Analyse spécialisée vidéo"""        
         analysis = {}
         
         try:
@@ -800,8 +773,7 @@ class MetadataEnricher:
         return analysis
     
     def _detect_faces(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Détection et analyse des visages"""
-        
+        """Détection et analyse des visages"""        
         if not self.face_recognition_available:
             return {}
         
@@ -853,8 +825,7 @@ class MetadataEnricher:
             return {}
     
     def _detect_objects(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Détection d'objets avec YOLO"""
-        
+        """Détection d'objets avec YOLO"""        
         if not self.yolo_model:
             return {}
         
@@ -904,8 +875,7 @@ class MetadataEnricher:
             return {}
     
     def _enrich_geolocation(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Enrichissement géographique basé sur les coordonnées GPS"""
-        
+        """Enrichissement géographique basé sur les coordonnées GPS"""        
         gps_data = metadata.get('gps')
         if not gps_data or 'latitude' not in gps_data or 'longitude' not in gps_data:
             return {}
@@ -941,8 +911,7 @@ class MetadataEnricher:
             return {}
     
     def _estimate_timezone(self, lat: float, lon: float) -> str:
-        """Estimation approximative du fuseau horaire"""
-        
+        """Estimation approximative du fuseau horaire"""        
         # Estimation basique basée sur la longitude
         # (15 degrés = 1 heure)
         utc_offset = round(lon / 15)
@@ -953,8 +922,7 @@ class MetadataEnricher:
             return f"UTC{utc_offset}"
     
     def _detect_copyright_info(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Détection d'informations de copyright"""
-        
+        """Détection d'informations de copyright"""        
         copyright_info = {}
         
         try:
@@ -995,8 +963,7 @@ class MetadataEnricher:
             return {}
 
 class MetadataNormalizer:
-    """Normalisateur de métadonnées selon standards internationaux"""
-    
+    """Normalisateur de métadonnées selon standards internationaux"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -1024,8 +991,7 @@ class MetadataNormalizer:
         metadata: Dict[str, Any],
         target_standard: MetadataStandard
     ) -> Dict[str, Any]:
-        """Normalise les métadonnées vers un standard spécifique"""
-        
+        """Normalise les métadonnées vers un standard spécifique"""        
         try:
             if target_standard == MetadataStandard.DUBLIN_CORE:
                 return self._normalize_to_dublin_core(metadata)
@@ -1041,8 +1007,7 @@ class MetadataNormalizer:
             return metadata
     
     def _normalize_to_dublin_core(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalise vers Dublin Core"""
-        
+        """Normalise vers Dublin Core"""        
         dublin_core = {}
         
         for dc_field, source_fields in self.dublin_core_mapping.items():
@@ -1077,8 +1042,7 @@ class MetadataNormalizer:
         return dublin_core
     
     def _normalize_to_id3v2(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalise vers ID3v2 pour audio"""
-        
+        """Normalise vers ID3v2 pour audio"""        
         id3_mapping = {
             'TIT2': ['title', 'filename'],  # Title
             'TPE1': ['artist', 'creator'],  # Artist
@@ -1104,8 +1068,7 @@ class MetadataNormalizer:
         return id3_metadata
     
     def _normalize_to_exif(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Normalise vers EXIF pour images"""
-        
+        """Normalise vers EXIF pour images"""        
         exif_mapping = {
             'DateTime': ['date_created', 'creation_time'],
             'Artist': ['artist', 'creator', 'photographer'],
@@ -1127,8 +1090,7 @@ class MetadataNormalizer:
         return exif_metadata
 
 class MetadataTransformer:
-    """Transformateur de métadonnées principal pour créateurs de contenu"""
-    
+    """Transformateur de métadonnées principal pour créateurs de contenu"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.file_manager = FileManager()
@@ -1142,8 +1104,7 @@ class MetadataTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation de métadonnées selon configuration"""
-        
+        """Transformation de métadonnées selon configuration"""        
         start_time = time.time()
         operations = []
         warnings = []
@@ -1219,8 +1180,7 @@ class MetadataTransformer:
         metadata: Dict[str, Any],
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Normalise les métadonnées selon les standards spécifiés"""
-        
+        """Normalise les métadonnées selon les standards spécifiés"""        
         standards = params.get('standards', ['dublin_core'])
         normalized_metadata = metadata.copy()
         
@@ -1240,8 +1200,7 @@ class MetadataTransformer:
         metadata: Dict[str, Any],
         params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Enrichit les métadonnées avec des analyses IA"""
-        
+        """Enrichit les métadonnées avec des analyses IA"""        
         enrichment_types_str = params.get('enrichment_types', ['ai_tagging'])
         enrichment_types = []
         
@@ -1266,8 +1225,7 @@ class MetadataTransformer:
         output_path: str,
         config: 'TransformationConfig'
     ) -> None:
-        """Sauvegarde les métadonnées traitées"""
-        
+        """Sauvegarde les métadonnées traitées"""        
         # Création du répertoire si nécessaire
         Path(output_path).parent.mkdir(parents=True, exist_ok=True)
         
@@ -1289,8 +1247,7 @@ class MetadataTransformer:
                 json.dump(metadata, f, indent=2, ensure_ascii=False, default=str)
     
     def _save_as_xml(self, metadata: Dict[str, Any], output_path: str) -> None:
-        """Sauvegarde en format XML"""
-        
+        """Sauvegarde en format XML"""        
         def dict_to_xml(tag, d):
             elem = ET.Element(tag)
             for key, val in d.items():
@@ -1315,8 +1272,7 @@ class MetadataTransformer:
         tree.write(output_path, encoding='utf-8', xml_declaration=True)
     
     def _save_as_csv(self, metadata: Dict[str, Any], output_path: str) -> None:
-        """Sauvegarde en format CSV (aplati)"""
-        
+        """Sauvegarde en format CSV (aplati)"""        
         import csv
         
         def flatten_dict(d, parent_key='', sep='_'):
@@ -1340,8 +1296,7 @@ class MetadataTransformer:
                 writer.writerow([key, value])
     
     def _generate_output_path(self, input_path: str, config: 'TransformationConfig') -> str:
-        """Génère le chemin de sortie automatiquement"""
-        
+        """Génère le chemin de sortie automatiquement"""        
         input_path_obj = Path(input_path)
         output_format = config.output_format or 'json'
         
@@ -1352,8 +1307,7 @@ class MetadataTransformer:
         return str(input_path_obj.parent / new_name)
 
 class AsyncMetadataTransformer:
-    """Version asynchrone du transformateur de métadonnées"""
-    
+    """Version asynchrone du transformateur de métadonnées"""    
     def __init__(self):
         self.sync_transformer = MetadataTransformer()
         self.logger = logging.getLogger(__name__)
@@ -1364,8 +1318,7 @@ class AsyncMetadataTransformer:
         config: 'TransformationConfig',
         output_path: Optional[str] = None
     ) -> 'TransformationResult':
-        """Transformation de métadonnées asynchrone"""
-        
+        """Transformation de métadonnées asynchrone"""        
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,
@@ -1380,8 +1333,7 @@ class AsyncMetadataTransformer:
         inputs: List[Tuple[str, 'TransformationConfig']],
         max_concurrent: int = 8  # Plus de concurrence pour métadonnées
     ) -> List['TransformationResult']:
-        """Transformation en lot asynchrone"""
-        
+        """Transformation en lot asynchrone"""        
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def transform_single(input_config_tuple):

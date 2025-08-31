@@ -1,5 +1,4 @@
-"""
-Pipeline Index
+"""Pipeline Index
 
 Centralized import index for easy access to all pipeline components
 with comprehensive utility functions and health validation.
@@ -9,7 +8,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Central Access → Component Discovery → Health Validation → Quick Utilities
 """
-
 import logging
 from typing import Dict, List, Any, Optional, Type
 from datetime import datetime
@@ -107,16 +105,13 @@ COMPONENT_REGISTRY = {
 
 # Quick access functions
 def get_component(component_name: str) -> Optional[Type]:
-    """Get component class by name"""
-    return COMPONENT_REGISTRY.get(component_name)
+    """Get component class by name"""    return COMPONENT_REGISTRY.get(component_name)
 
 def list_components() -> List[str]:
-    """List all available components"""
-    return list(COMPONENT_REGISTRY.keys())
+    """List all available components"""    return list(COMPONENT_REGISTRY.keys())
 
 def get_component_info(component_name: str) -> Dict[str, Any]:
-    """Get component information"""
-    component = get_component(component_name)
+    """Get component information"""    component = get_component(component_name)
     if not component:
         return {}
     
@@ -129,8 +124,7 @@ def get_component_info(component_name: str) -> Dict[str, Any]:
     }
 
 def create_default_pipeline() -> Optional[MasterPipelineOrchestrator]:
-    """Create pipeline with default configuration"""
-    if not IMPORT_SUCCESS:
+    """Create pipeline with default configuration"""    if not IMPORT_SUCCESS:
         logger.error("Cannot create pipeline - import errors exist")
         return None
     
@@ -143,8 +137,7 @@ def create_default_pipeline() -> Optional[MasterPipelineOrchestrator]:
         return None
 
 def validate_pipeline_health() -> Dict[str, Any]:
-    """Validate overall pipeline health"""
-    health_report = {
+    """Validate overall pipeline health"""    health_report = {
         'timestamp': datetime.now().isoformat(),
         'overall_status': 'healthy',
         'import_status': IMPORT_SUCCESS,
@@ -187,8 +180,7 @@ def validate_pipeline_health() -> Dict[str, Any]:
     return health_report
 
 def get_pipeline_status() -> Dict[str, Any]:
-    """Get comprehensive pipeline status"""
-    return {
+    """Get comprehensive pipeline status"""    return {
         'version': '3.0.0',
         'author': 'Fahed Mlaiel',
         'import_success': IMPORT_SUCCESS,
@@ -623,20 +615,16 @@ __license__ = "Proprietary - All rights reserved"
 
 # Quick access functions for common operations
 def create_content_workflow(content_type: str) -> WorkflowDefinition:
-    """Quick function to create content processing workflow"""
-    return WorkflowFactory.create_content_processing_workflow(content_type)
+    """Quick function to create content processing workflow"""    return WorkflowFactory.create_content_processing_workflow(content_type)
 
 def create_protection_workflow() -> WorkflowDefinition:
-    """Quick function to create protection workflow"""
-    return WorkflowFactory.create_protection_workflow()
+    """Quick function to create protection workflow"""    return WorkflowFactory.create_protection_workflow()
 
 def create_distribution_workflow() -> WorkflowDefinition:
-    """Quick function to create distribution workflow"""
-    return WorkflowFactory.create_distribution_workflow()
+    """Quick function to create distribution workflow"""    return WorkflowFactory.create_distribution_workflow()
 
 def get_all_pipeline_components():
-    """Get all available pipeline components"""
-    return {
+    """Get all available pipeline components"""    return {
         'orchestrators': [MasterPipelineOrchestrator],
         'pipelines': [
             ContentProcessingPipeline,
@@ -668,8 +656,7 @@ def get_all_pipeline_components():
 
 # Development and debugging helpers
 def get_pipeline_health_status():
-    """Get overall pipeline health status"""
-    return {
+    """Get overall pipeline health status"""    return {
         'status': 'healthy',
         'components_loaded': len(__all__),
         'version': __version__,
@@ -677,8 +664,7 @@ def get_pipeline_health_status():
     }
 
 def validate_pipeline_setup():
-    """Validate pipeline setup and dependencies"""
-    validation_results = {
+    """Validate pipeline setup and dependencies"""    validation_results = {
         'dependencies_available': True,
         'configurations_valid': True,
         'components_initialized': True,

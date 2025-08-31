@@ -1,5 +1,4 @@
-"""
-🚨 API Integration Example for Intelligent Alert System
+"""🚨 API Integration Example for Intelligent Alert System
 ======================================================
 
 Example showing how to integrate the new intelligent alert system
@@ -8,7 +7,6 @@ with the existing Ainflue API infrastructure.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from fastapi import APIRouter, HTTPException, BackgroundTasks
 from fastapi.responses import JSONResponse
 from typing import Dict, List, Any, Optional
@@ -35,8 +33,7 @@ router = APIRouter(prefix="/api/v1/alerts", tags=["Intelligent Alerts"])
 
 # Pydantic models for API requests
 class BusinessMetricsRequest(BaseModel):
-    """Request model for business metrics"""
-    current_revenue: float
+    """Request model for business metrics"""    current_revenue: float
     previous_revenue: float
     daily_revenue: List[float]
     weekly_revenue: List[float]
@@ -54,8 +51,7 @@ class BusinessMetricsRequest(BaseModel):
 
 
 class TechnicalMetricsRequest(BaseModel):
-    """Request model for technical metrics"""
-    cpu_usage: float
+    """Request model for technical metrics"""    cpu_usage: float
     memory_usage: float
     disk_usage: float
     network_latency: float
@@ -74,8 +70,7 @@ class TechnicalMetricsRequest(BaseModel):
 
 
 class ModelMetricsRequest(BaseModel):
-    """Request model for AI model metrics"""
-    model_id: str
+    """Request model for AI model metrics"""    model_id: str
     model_name: str
     model_type: str
     accuracy: float
@@ -104,8 +99,7 @@ class ModelMetricsRequest(BaseModel):
 
 
 class SecurityEventRequest(BaseModel):
-    """Request model for security events"""
-    event_type: str
+    """Request model for security events"""    event_type: str
     threat_level: str
     source_ip: str
     target_resource: str
@@ -118,13 +112,11 @@ class SecurityEventRequest(BaseModel):
 
 @router.post("/evaluate/business")
 async def evaluate_business_metrics(metrics: BusinessMetricsRequest):
-    """
-    Evaluate business metrics and trigger alerts
+    """    Evaluate business metrics and trigger alerts
     
     This endpoint processes business metrics such as revenue, user engagement,
     and payment processing to detect anomalies and trigger appropriate alerts.
-    """
-    try:
+    """    try:
         # Convert request to BusinessMetrics
         business_metrics = BusinessMetrics(
             timestamp=datetime.utcnow(),
@@ -165,13 +157,11 @@ async def evaluate_business_metrics(metrics: BusinessMetricsRequest):
 
 @router.post("/evaluate/technical")
 async def evaluate_technical_metrics(metrics: TechnicalMetricsRequest):
-    """
-    Evaluate technical metrics and trigger alerts
+    """    Evaluate technical metrics and trigger alerts
     
     This endpoint processes infrastructure and security metrics to detect
     system issues, performance problems, and security threats.
-    """
-    try:
+    """    try:
         # Convert request to TechnicalMetrics
         technical_metrics = TechnicalMetrics(
             timestamp=datetime.utcnow(),
@@ -213,13 +203,11 @@ async def evaluate_technical_metrics(metrics: TechnicalMetricsRequest):
 
 @router.post("/evaluate/ai")
 async def evaluate_ai_metrics(metrics: List[ModelMetricsRequest]):
-    """
-    Evaluate AI/ML model metrics and trigger alerts
+    """    Evaluate AI/ML model metrics and trigger alerts
     
     This endpoint processes AI model performance metrics to detect
     model drift, accuracy degradation, and operational issues.
-    """
-    try:
+    """    try:
         # Convert requests to ModelMetrics
         ai_metrics = []
         for metric_req in metrics:
@@ -279,13 +267,11 @@ async def evaluate_comprehensive_metrics(
     technical_metrics: Optional[TechnicalMetricsRequest] = None,
     ai_metrics: Optional[List[ModelMetricsRequest]] = None
 ):
-    """
-    Comprehensive evaluation across all metric categories
+    """    Comprehensive evaluation across all metric categories
     
     This endpoint provides unified evaluation across business, technical,
     and AI metrics with cross-category correlation analysis.
-    """
-    try:
+    """    try:
         # Convert requests to metric objects
         business_data = None
         if business_metrics:
@@ -394,13 +380,11 @@ async def evaluate_comprehensive_metrics(
 
 @router.post("/security/event")
 async def process_security_event(event: SecurityEventRequest):
-    """
-    Process a security event and trigger appropriate alerts
+    """    Process a security event and trigger appropriate alerts
     
     This endpoint handles security events and triggers immediate
     security alerts based on threat level and event type.
-    """
-    try:
+    """    try:
         # Convert request to SecurityEvent
         security_event = SecurityEvent(
             event_id=f"sec_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
@@ -432,13 +416,11 @@ async def process_security_event(event: SecurityEventRequest):
 
 @router.get("/status")
 async def get_comprehensive_status():
-    """
-    Get comprehensive system status across all alert categories
+    """    Get comprehensive system status across all alert categories
     
     This endpoint provides a complete overview of system health,
     active alerts, trends, and recommendations.
-    """
-    try:
+    """    try:
         status = await alert_coordinator.get_comprehensive_status()
         return status
         
@@ -451,13 +433,11 @@ async def get_active_alerts(
     category: Optional[str] = None,
     severity: Optional[str] = None
 ):
-    """
-    Get currently active alerts with optional filtering
+    """    Get currently active alerts with optional filtering
     
     Filter by category (business, technical, ai_ml, security, infrastructure)
     and/or severity (emergency, critical, warning, info)
-    """
-    try:
+    """    try:
         # Parse filters
         category_filter = AlertCategory(category) if category else None
         severity_filter = AlertSeverity(severity) if severity else None
@@ -497,12 +477,10 @@ async def get_active_alerts(
 
 @router.put("/alerts/{alert_id}/acknowledge")
 async def acknowledge_alert(alert_id: str, acknowledged_by: str):
-    """
-    Acknowledge an active alert
+    """    Acknowledge an active alert
     
     This stops the escalation process for the alert and marks it as acknowledged.
-    """
-    try:
+    """    try:
         result = await alert_coordinator.acknowledge_alert(alert_id, acknowledged_by)
         
         if result:
@@ -524,12 +502,10 @@ async def acknowledge_alert(alert_id: str, acknowledged_by: str):
 
 @router.put("/alerts/{alert_id}/resolve")
 async def resolve_alert(alert_id: str):
-    """
-    Resolve an active alert
+    """    Resolve an active alert
     
     This marks the alert as resolved and removes it from active alerts.
-    """
-    try:
+    """    try:
         result = await alert_coordinator.resolve_alert(alert_id, auto_resolved=False)
         
         if result:
@@ -550,10 +526,8 @@ async def resolve_alert(alert_id: str):
 
 @router.get("/health")
 async def health_check():
-    """
-    Health check endpoint for the intelligent alert system
-    """
-    try:
+    """    Health check endpoint for the intelligent alert system
+    """    try:
         # Quick health check
         status = await alert_coordinator.get_comprehensive_status()
         
@@ -576,8 +550,7 @@ async def health_check():
 
 
 # Example usage in main API app:
-"""
-from fastapi import FastAPI
+"""from fastapi import FastAPI
 from api.intelligent_alerts import router as alerts_router
 
 app = FastAPI()

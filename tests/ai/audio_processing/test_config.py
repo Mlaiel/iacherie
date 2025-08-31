@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-⚙️ Config Tests - Industrial-Grade Configuration Management Testing Suite
+"""⚙️ Config Tests - Industrial-Grade Configuration Management Testing Suite
 
 Comprehensive testing for configuration management including:
 - ConfigManager validation
@@ -27,7 +24,6 @@ Comprehensive testing for configuration management including:
 Created by Expert Team: DevOps Engineer + Configuration Specialist + Backend Senior
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -60,8 +56,7 @@ from . import TEST_CONFIG, setup_test_environment
 
 
 class TestConfigManager:
-    """
-    Industrial-grade testing for ConfigManager class
+    """    Industrial-grade testing for ConfigManager class
     
     Test Coverage:
     - Configuration initialization
@@ -69,26 +64,22 @@ class TestConfigManager:
     - Configuration validation
     - Environment-specific overrides
     - Runtime configuration updates
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
-        setup_test_environment()
+        """Setup test environment before each test"""        setup_test_environment()
         
         # Create temporary config directory
         self.temp_config_dir = tempfile.mkdtemp()
         self.config_manager = ConfigManager(config_dir=self.temp_config_dir)
     
     def teardown_method(self):
-        """Cleanup test environment"""
-        import shutil
+        """Cleanup test environment"""        import shutil
         if os.path.exists(self.temp_config_dir):
             shutil.rmtree(self.temp_config_dir)
     
     def test_initialization(self):
-        """Test ConfigManager initialization"""
-        manager = ConfigManager()
+        """Test ConfigManager initialization"""        manager = ConfigManager()
         
         assert manager is not None
         assert hasattr(manager, 'configs')
@@ -97,8 +88,7 @@ class TestConfigManager:
         assert hasattr(manager, 'config_loader')
     
     def test_load_default_configuration(self):
-        """Test loading default configuration"""
-        # Load default configuration
+        """Test loading default configuration"""        # Load default configuration
         config = self.config_manager.load_default_config()
         
         # Verify default configuration structure
@@ -126,8 +116,7 @@ class TestConfigManager:
         assert "enable_preprocessing" in processing_config
     
     def test_load_config_from_file(self):
-        """Test loading configuration from file"""
-        # Create test configuration file
+        """Test loading configuration from file"""        # Create test configuration file
         test_config = {
             "audio": {
                 "sample_rate": 48000,
@@ -154,10 +143,8 @@ class TestConfigManager:
         assert loaded_config["processing"]["enable_noise_reduction"] is True
     
     def test_load_config_from_yaml(self):
-        """Test loading configuration from YAML file"""
-        # Create test YAML configuration
-        yaml_config = """
-        audio:
+        """Test loading configuration from YAML file"""        # Create test YAML configuration
+        yaml_config = """        audio:
           sample_rate: 44100
           channels: 1
           bit_depth: 16
@@ -175,8 +162,7 @@ class TestConfigManager:
           default_model: "cnn1d"
           model_path: "/models"
           cache_models: true
-        """
-        
+        """        
         yaml_file = os.path.join(self.temp_config_dir, "test_config.yaml")
         with open(yaml_file, 'w') as f:
             f.write(yaml_config)
@@ -191,8 +177,7 @@ class TestConfigManager:
         assert loaded_config["ml_models"]["cache_models"] is True
     
     def test_environment_specific_config(self):
-        """Test environment-specific configuration loading"""
-        # Create base configuration
+        """Test environment-specific configuration loading"""        # Create base configuration
         base_config = {
             "audio": {"sample_rate": 44100},
             "processing": {"buffer_size": 512}
@@ -234,8 +219,7 @@ class TestConfigManager:
         assert prod_merged["performance"]["max_threads"] == 8  # From prod
     
     def test_config_validation(self):
-        """Test configuration validation"""
-        # Valid configuration
+        """Test configuration validation"""        # Valid configuration
         valid_config = {
             "audio": {
                 "sample_rate": 44100,
@@ -273,8 +257,7 @@ class TestConfigManager:
         assert any("channels" in error for error in invalid_result.errors)
     
     def test_runtime_config_updates(self):
-        """Test runtime configuration updates"""
-        # Load initial configuration
+        """Test runtime configuration updates"""        # Load initial configuration
         initial_config = {
             "processing": {
                 "buffer_size": 512,
@@ -304,8 +287,7 @@ class TestConfigManager:
         assert current_config["processing"]["new_parameter"] == "added"
     
     def test_config_change_notifications(self):
-        """Test configuration change notifications"""
-        change_notifications = []
+        """Test configuration change notifications"""        change_notifications = []
         
         def config_change_handler(section, key, old_value, new_value):
             change_notifications.append({
@@ -341,24 +323,20 @@ class TestConfigManager:
 
 
 class TestAudioConfig:
-    """
-    Industrial-grade testing for AudioConfig class
+    """    Industrial-grade testing for AudioConfig class
     
     Test Coverage:
     - Audio parameter validation
     - Format support validation
     - Quality settings validation
     - Compatibility checks
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_audio_config_creation(self):
-        """Test AudioConfig creation and validation"""
-        config = AudioConfig(
+        """Test AudioConfig creation and validation"""        config = AudioConfig(
             sample_rate=44100,
             channels=2,
             bit_depth=16,
@@ -373,8 +351,7 @@ class TestAudioConfig:
         assert config.default_format == "wav"
     
     def test_sample_rate_validation(self):
-        """Test sample rate validation"""
-        # Valid sample rates
+        """Test sample rate validation"""        # Valid sample rates
         valid_rates = [8000, 16000, 22050, 44100, 48000, 96000, 192000]
         
         for rate in valid_rates:
@@ -390,8 +367,7 @@ class TestAudioConfig:
                 AudioConfig(sample_rate=rate)
     
     def test_channel_configuration(self):
-        """Test channel configuration validation"""
-        # Valid channel configurations
+        """Test channel configuration validation"""        # Valid channel configurations
         valid_channels = [1, 2, 6, 8]  # Mono, stereo, 5.1, 7.1
         
         for channels in valid_channels:
@@ -406,8 +382,7 @@ class TestAudioConfig:
                 AudioConfig(channels=channels)
     
     def test_bit_depth_validation(self):
-        """Test bit depth validation"""
-        # Valid bit depths
+        """Test bit depth validation"""        # Valid bit depths
         valid_depths = [8, 16, 24, 32]
         
         for depth in valid_depths:
@@ -422,8 +397,7 @@ class TestAudioConfig:
                 AudioConfig(bit_depth=depth)
     
     def test_format_support_validation(self):
-        """Test format support validation"""
-        # Valid formats
+        """Test format support validation"""        # Valid formats
         valid_formats = ["wav", "mp3", "flac", "ogg", "aac", "m4a"]
         
         config = AudioConfig(supported_formats=valid_formats)
@@ -436,8 +410,7 @@ class TestAudioConfig:
             AudioConfig(supported_formats=invalid_formats)
     
     def test_quality_settings(self):
-        """Test audio quality settings"""
-        # High quality configuration
+        """Test audio quality settings"""        # High quality configuration
         high_quality = AudioConfig(
             sample_rate=96000,
             channels=2,
@@ -460,24 +433,20 @@ class TestAudioConfig:
 
 
 class TestProcessingConfig:
-    """
-    Industrial-grade testing for ProcessingConfig class
+    """    Industrial-grade testing for ProcessingConfig class
     
     Test Coverage:
     - Processing parameter validation
     - Algorithm configuration
     - Performance settings
     - Feature extraction settings
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_processing_config_creation(self):
-        """Test ProcessingConfig creation"""
-        config = ProcessingConfig(
+        """Test ProcessingConfig creation"""        config = ProcessingConfig(
             buffer_size=1024,
             window_size=2048,
             overlap_ratio=0.5,
@@ -492,8 +461,7 @@ class TestProcessingConfig:
         assert config.enable_noise_reduction is True
     
     def test_buffer_size_validation(self):
-        """Test buffer size validation"""
-        # Valid buffer sizes (powers of 2)
+        """Test buffer size validation"""        # Valid buffer sizes (powers of 2)
         valid_sizes = [64, 128, 256, 512, 1024, 2048, 4096]
         
         for size in valid_sizes:
@@ -508,8 +476,7 @@ class TestProcessingConfig:
                 ProcessingConfig(buffer_size=size)
     
     def test_window_function_validation(self):
-        """Test window function validation"""
-        # Valid window functions
+        """Test window function validation"""        # Valid window functions
         valid_windows = ["hann", "hamming", "blackman", "bartlett", "rectangular"]
         
         for window in valid_windows:
@@ -521,8 +488,7 @@ class TestProcessingConfig:
             ProcessingConfig(window_function="invalid_window")
     
     def test_overlap_ratio_validation(self):
-        """Test overlap ratio validation"""
-        # Valid overlap ratios
+        """Test overlap ratio validation"""        # Valid overlap ratios
         valid_ratios = [0.0, 0.25, 0.5, 0.75, 0.875]
         
         for ratio in valid_ratios:
@@ -537,8 +503,7 @@ class TestProcessingConfig:
                 ProcessingConfig(overlap_ratio=ratio)
     
     def test_feature_extraction_config(self):
-        """Test feature extraction configuration"""
-        config = ProcessingConfig(
+        """Test feature extraction configuration"""        config = ProcessingConfig(
             enable_mfcc=True,
             mfcc_coefficients=13,
             enable_spectral_features=True,
@@ -556,24 +521,20 @@ class TestProcessingConfig:
 
 
 class TestMLModelConfig:
-    """
-    Industrial-grade testing for MLModelConfig class
+    """    Industrial-grade testing for MLModelConfig class
     
     Test Coverage:
     - Model parameter validation
     - Training configuration
     - Model architecture settings
     - Performance tuning parameters
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_ml_model_config_creation(self):
-        """Test MLModelConfig creation"""
-        config = MLModelConfig(
+        """Test MLModelConfig creation"""        config = MLModelConfig(
             model_type="cnn1d",
             model_path="/models",
             input_dim=128,
@@ -590,8 +551,7 @@ class TestMLModelConfig:
         assert config.learning_rate == 0.001
     
     def test_model_architecture_validation(self):
-        """Test model architecture validation"""
-        # Valid architectures
+        """Test model architecture validation"""        # Valid architectures
         valid_architectures = ["cnn1d", "cnn2d", "lstm", "transformer", "resnet"]
         
         for arch in valid_architectures:
@@ -604,8 +564,7 @@ class TestMLModelConfig:
             MLModelConfig(model_type="invalid_architecture")
     
     def test_training_parameters_validation(self):
-        """Test training parameters validation"""
-        # Valid training parameters
+        """Test training parameters validation"""        # Valid training parameters
         config = MLModelConfig(
             batch_size=32,
             learning_rate=0.001,
@@ -629,8 +588,7 @@ class TestMLModelConfig:
                 MLModelConfig(**invalid_params)
     
     def test_hyperparameter_optimization(self):
-        """Test hyperparameter optimization configuration"""
-        config = MLModelConfig(
+        """Test hyperparameter optimization configuration"""        config = MLModelConfig(
             enable_hyperparameter_tuning=True,
             tuning_method="grid_search",
             parameter_ranges={
@@ -647,24 +605,20 @@ class TestMLModelConfig:
 
 
 class TestSecurityConfig:
-    """
-    Industrial-grade testing for SecurityConfig class
+    """    Industrial-grade testing for SecurityConfig class
     
     Test Coverage:
     - Security parameter validation
     - Encryption settings
     - Access control configuration
     - Audit logging settings
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_security_config_creation(self):
-        """Test SecurityConfig creation"""
-        config = SecurityConfig(
+        """Test SecurityConfig creation"""        config = SecurityConfig(
             enable_encryption=True,
             encryption_algorithm="AES-256",
             enable_access_control=True,
@@ -679,8 +633,7 @@ class TestSecurityConfig:
         assert config.max_file_size_mb == 100
     
     def test_encryption_algorithm_validation(self):
-        """Test encryption algorithm validation"""
-        # Valid encryption algorithms
+        """Test encryption algorithm validation"""        # Valid encryption algorithms
         valid_algorithms = ["AES-128", "AES-256", "ChaCha20", "RSA-2048"]
         
         for algorithm in valid_algorithms:
@@ -693,8 +646,7 @@ class TestSecurityConfig:
             SecurityConfig(encryption_algorithm="WEAK_CIPHER")
     
     def test_access_control_validation(self):
-        """Test access control validation"""
-        config = SecurityConfig(
+        """Test access control validation"""        config = SecurityConfig(
             enable_access_control=True,
             allowed_users=["user1", "user2"],
             allowed_roles=["admin", "operator"],
@@ -708,8 +660,7 @@ class TestSecurityConfig:
         assert config.is_access_control_valid()
     
     def test_file_size_limits(self):
-        """Test file size limit validation"""
-        # Valid file size limits
+        """Test file size limit validation"""        # Valid file size limits
         valid_limits = [1, 10, 100, 1000]  # MB
         
         for limit in valid_limits:
@@ -725,24 +676,20 @@ class TestSecurityConfig:
 
 
 class TestPerformanceConfig:
-    """
-    Industrial-grade testing for PerformanceConfig class
+    """    Industrial-grade testing for PerformanceConfig class
     
     Test Coverage:
     - Performance parameter validation
     - Resource allocation settings
     - Optimization configuration
     - Monitoring settings
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_performance_config_creation(self):
-        """Test PerformanceConfig creation"""
-        config = PerformanceConfig(
+        """Test PerformanceConfig creation"""        config = PerformanceConfig(
             max_threads=8,
             max_memory_mb=2048,
             enable_gpu_acceleration=True,
@@ -757,8 +704,7 @@ class TestPerformanceConfig:
         assert config.enable_performance_monitoring is True
     
     def test_thread_count_validation(self):
-        """Test thread count validation"""
-        import multiprocessing
+        """Test thread count validation"""        import multiprocessing
         
         # Valid thread counts
         cpu_count = multiprocessing.cpu_count()
@@ -777,8 +723,7 @@ class TestPerformanceConfig:
                 PerformanceConfig(max_threads=count)
     
     def test_memory_limit_validation(self):
-        """Test memory limit validation"""
-        # Valid memory limits (MB)
+        """Test memory limit validation"""        # Valid memory limits (MB)
         valid_limits = [128, 512, 1024, 2048, 4096]
         
         for limit in valid_limits:
@@ -793,8 +738,7 @@ class TestPerformanceConfig:
                 PerformanceConfig(max_memory_mb=limit)
     
     def test_optimization_settings(self):
-        """Test optimization settings"""
-        config = PerformanceConfig(
+        """Test optimization settings"""        config = PerformanceConfig(
             enable_vectorization=True,
             enable_parallel_processing=True,
             optimization_level="O3",
@@ -809,17 +753,14 @@ class TestPerformanceConfig:
 
 
 class TestConfigValidator:
-    """Test ConfigValidator functionality"""
-    
+    """Test ConfigValidator functionality"""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         self.validator = ConfigValidator()
     
     def test_validation_rules(self):
-        """Test validation rules"""
-        # Add custom validation rule
+        """Test validation rules"""        # Add custom validation rule
         def validate_positive_number(value):
             return isinstance(value, (int, float)) and value > 0
         
@@ -831,8 +772,7 @@ class TestConfigValidator:
         assert self.validator.validate("positive_number", "invalid") is False
     
     def test_schema_validation(self):
-        """Test schema-based validation"""
-        # Define schema
+        """Test schema-based validation"""        # Define schema
         schema = {
             "audio": {
                 "sample_rate": {"type": "int", "min": 8000, "max": 192000},
@@ -866,17 +806,14 @@ class TestConfigValidator:
 
 
 class TestConfigMerger:
-    """Test ConfigMerger functionality"""
-    
+    """Test ConfigMerger functionality"""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         self.merger = ConfigMerger()
     
     def test_simple_merge(self):
-        """Test simple configuration merging"""
-        base_config = {
+        """Test simple configuration merging"""        base_config = {
             "audio": {"sample_rate": 44100, "channels": 2},
             "processing": {"buffer_size": 512}
         }
@@ -895,8 +832,7 @@ class TestConfigMerger:
         assert merged["ml_models"]["default_model"] == "cnn1d"  # Added
     
     def test_deep_merge(self):
-        """Test deep configuration merging"""
-        base_config = {
+        """Test deep configuration merging"""        base_config = {
             "nested": {
                 "level1": {
                     "level2": {
@@ -926,8 +862,7 @@ class TestConfigMerger:
         assert merged["nested"]["level1"]["level2"]["param3"] == "value3"  # Added
     
     def test_list_merge_strategies(self):
-        """Test different list merge strategies"""
-        base_config = {"formats": ["wav", "mp3"]}
+        """Test different list merge strategies"""        base_config = {"formats": ["wav", "mp3"]}
         override_config = {"formats": ["flac", "ogg"]}
         
         # Replace strategy
@@ -948,25 +883,20 @@ class TestConfigMerger:
 
 
 class TestConfigIntegration:
-    """
-    Integration tests for complete configuration workflows
-    """
-    
+    """    Integration tests for complete configuration workflows
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         self.temp_dir = tempfile.mkdtemp()
     
     def teardown_method(self):
-        """Cleanup test environment"""
-        import shutil
+        """Cleanup test environment"""        import shutil
         if os.path.exists(self.temp_dir):
             shutil.rmtree(self.temp_dir)
     
     def test_complete_config_workflow(self):
-        """Test complete configuration workflow"""
-        # Create configuration manager
+        """Test complete configuration workflow"""        # Create configuration manager
         manager = ConfigManager(config_dir=self.temp_dir)
         
         # Create comprehensive configuration
@@ -1028,8 +958,7 @@ class TestConfigIntegration:
         assert loaded_config["security"]["enable_encryption"] is True
     
     def test_multi_environment_config(self):
-        """Test multi-environment configuration management"""
-        manager = ConfigManager(config_dir=self.temp_dir)
+        """Test multi-environment configuration management"""        manager = ConfigManager(config_dir=self.temp_dir)
         
         # Base configuration
         base_config = {

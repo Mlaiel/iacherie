@@ -1,5 +1,4 @@
-"""
-Service Mesh Configuration for IA-Influencer Agent Platform
+"""Service Mesh Configuration for IA-Influencer Agent Platform
 ===========================================================
 
 Professional service mesh configuration for microservices communication.
@@ -15,7 +14,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -25,8 +23,7 @@ import yaml
 
 
 class ServiceMeshType(str, Enum):
-    """Service mesh implementation types."""
-    ISTIO = "istio"
+    """Service mesh implementation types."""    ISTIO = "istio"
     LINKERD = "linkerd"
     CONSUL_CONNECT = "consul_connect"
     AWS_APP_MESH = "aws_app_mesh"
@@ -34,24 +31,21 @@ class ServiceMeshType(str, Enum):
 
 
 class TrafficPolicyType(str, Enum):
-    """Traffic policy types."""
-    ROUND_ROBIN = "round_robin"
+    """Traffic policy types."""    ROUND_ROBIN = "round_robin"
     LEAST_CONN = "least_conn"
     RANDOM = "random"
     PASSTHROUGH = "passthrough"
 
 
 class SecurityMode(str, Enum):
-    """Security modes for service communication."""
-    PERMISSIVE = "permissive"
+    """Security modes for service communication."""    PERMISSIVE = "permissive"
     STRICT = "strict"
     DISABLE = "disable"
 
 
 @dataclass
 class ServiceMeshService:
-    """Service configuration for service mesh."""
-    name: str
+    """Service configuration for service mesh."""    name: str
     namespace: str = "default"
     version: str = "v1"
     labels: Dict[str, str] = field(default_factory=dict)
@@ -61,8 +55,7 @@ class ServiceMeshService:
     metrics_path: str = "/metrics"
     
     def to_kubernetes_service(self) -> Dict[str, Any]:
-        """Convert to Kubernetes service manifest."""
-        return {
+        """Convert to Kubernetes service manifest."""        return {
             "apiVersion": "v1",
             "kind": "Service",
             "metadata": {
@@ -86,8 +79,7 @@ class ServiceMeshService:
 
 @dataclass
 class VirtualService:
-    """Virtual service configuration for traffic routing."""
-    name: str
+    """Virtual service configuration for traffic routing."""    name: str
     namespace: str = "default"
     hosts: List[str] = field(default_factory=list)
     gateways: List[str] = field(default_factory=list)
@@ -96,8 +88,7 @@ class VirtualService:
     tls_routes: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_istio_virtual_service(self) -> Dict[str, Any]:
-        """Convert to Istio VirtualService manifest."""
-        spec = {
+        """Convert to Istio VirtualService manifest."""        spec = {
             "hosts": self.hosts
         }
         
@@ -126,16 +117,14 @@ class VirtualService:
 
 @dataclass
 class DestinationRule:
-    """Destination rule configuration for traffic policies."""
-    name: str
+    """Destination rule configuration for traffic policies."""    name: str
     host: str
     namespace: str = "default"
     traffic_policy: Optional[Dict[str, Any]] = None
     subsets: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_istio_destination_rule(self) -> Dict[str, Any]:
-        """Convert to Istio DestinationRule manifest."""
-        spec = {
+        """Convert to Istio DestinationRule manifest."""        spec = {
             "host": self.host
         }
         
@@ -158,15 +147,13 @@ class DestinationRule:
 
 @dataclass
 class Gateway:
-    """Gateway configuration for ingress traffic."""
-    name: str
+    """Gateway configuration for ingress traffic."""    name: str
     namespace: str = "default"
     selector: Dict[str, str] = field(default_factory=dict)
     servers: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_istio_gateway(self) -> Dict[str, Any]:
-        """Convert to Istio Gateway manifest."""
-        return {
+        """Convert to Istio Gateway manifest."""        return {
             "apiVersion": "networking.istio.io/v1beta1",
             "kind": "Gateway",
             "metadata": {
@@ -182,16 +169,14 @@ class Gateway:
 
 @dataclass
 class PeerAuthentication:
-    """Peer authentication configuration for mTLS."""
-    name: str
+    """Peer authentication configuration for mTLS."""    name: str
     namespace: str = "default"
     selector: Optional[Dict[str, str]] = None
     mtls_mode: SecurityMode = SecurityMode.STRICT
     port_level_mtls: Dict[int, SecurityMode] = field(default_factory=dict)
     
     def to_istio_peer_authentication(self) -> Dict[str, Any]:
-        """Convert to Istio PeerAuthentication manifest."""
-        spec = {
+        """Convert to Istio PeerAuthentication manifest."""        spec = {
             "mtls": {
                 "mode": self.mtls_mode.value.upper()
             }
@@ -219,16 +204,14 @@ class PeerAuthentication:
 
 @dataclass
 class AuthorizationPolicy:
-    """Authorization policy configuration for access control."""
-    name: str
+    """Authorization policy configuration for access control."""    name: str
     namespace: str = "default"
     selector: Optional[Dict[str, str]] = None
     action: str = "ALLOW"  # ALLOW, DENY, AUDIT, CUSTOM
     rules: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_istio_authorization_policy(self) -> Dict[str, Any]:
-        """Convert to Istio AuthorizationPolicy manifest."""
-        spec = {
+        """Convert to Istio AuthorizationPolicy manifest."""        spec = {
             "action": self.action,
             "rules": self.rules
         }
@@ -248,11 +231,9 @@ class AuthorizationPolicy:
 
 
 class ServiceMeshConfig(BaseSettings):
-    """
-    Centralized service mesh configuration for microservices architecture.
+    """    Centralized service mesh configuration for microservices architecture.
     Supports Istio, Linkerd, Consul Connect, and AWS App Mesh.
-    """
-    
+    """    
     # Service mesh type
     mesh_type: ServiceMeshType = Field(ServiceMeshType.ISTIO, env="SERVICE_MESH_TYPE")
     
@@ -325,8 +306,7 @@ class ServiceMeshConfig(BaseSettings):
         case_sensitive = False
     
     def get_default_traffic_policy(self) -> Dict[str, Any]:
-        """Get default traffic policy configuration."""
-        policy = {
+        """Get default traffic policy configuration."""        policy = {
             "loadBalancer": {
                 "simple": self.load_balancer_simple.value.upper()
             },
@@ -354,8 +334,7 @@ class ServiceMeshConfig(BaseSettings):
         return policy
     
     def get_default_retry_policy(self) -> Dict[str, Any]:
-        """Get default retry policy configuration."""
-        if not self.enable_retries:
+        """Get default retry policy configuration."""        if not self.enable_retries:
             return {}
         
         return {
@@ -365,8 +344,7 @@ class ServiceMeshConfig(BaseSettings):
         }
     
     def get_mesh_config(self) -> Dict[str, Any]:
-        """Get complete service mesh configuration."""
-        return {
+        """Get complete service mesh configuration."""        return {
             "mesh_type": self.mesh_type,
             "enabled": self.enabled,
             "namespace": self.namespace,

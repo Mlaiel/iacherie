@@ -1,5 +1,4 @@
-"""
-Local Storage Configuration for IA-Influencer Agent Platform
+"""Local Storage Configuration for IA-Influencer Agent Platform
 ===========================================================
 
 Professional local file system storage configuration for development and self-hosted deployments.
@@ -15,7 +14,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import shutil
 import stat
@@ -27,8 +25,7 @@ import json
 
 @dataclass
 class LocalDirectoryConfig:
-    """Local directory configuration for specific content types."""
-    
+    """Local directory configuration for specific content types."""    
     path: str
     permissions: int = 0o755
     max_size_gb: Optional[float] = None
@@ -38,11 +35,9 @@ class LocalDirectoryConfig:
 
 @dataclass
 class LocalStorageConfig:
-    """
-    Comprehensive Local Storage configuration for IA-Influencer Agent platform.
+    """    Comprehensive Local Storage configuration for IA-Influencer Agent platform.
     Provides enterprise-grade local file system management with security and optimization.
-    """
-    
+    """    
     # Base storage settings
     base_path: str = os.getenv('LOCAL_STORAGE_PATH', '/var/lib/ia-influencer')
     temp_path: str = os.getenv('TEMP_STORAGE_PATH', '/tmp/ia-influencer')
@@ -72,16 +67,14 @@ class LocalStorageConfig:
     max_storage_size_gb: float = 100.0
     
     def __post_init__(self):
-        """Initialize directory configurations if not provided."""
-        if self.directories is None:
+        """Initialize directory configurations if not provided."""        if self.directories is None:
             self.directories = self._get_default_directory_config()
         
         # Ensure base paths exist
         self._ensure_base_directories()
     
     def _get_default_directory_config(self) -> Dict[str, LocalDirectoryConfig]:
-        """Default directory configuration for different content types."""
-        env = os.getenv('ENVIRONMENT', 'development')
+        """Default directory configuration for different content types."""        env = os.getenv('ENVIRONMENT', 'development')
         
         return {
             'audio_files': LocalDirectoryConfig(
@@ -180,8 +173,7 @@ class LocalStorageConfig:
         }
     
     def _ensure_base_directories(self):
-        """Ensure all base directories exist with proper permissions."""
-        for dir_config in self.directories.values():
+        """Ensure all base directories exist with proper permissions."""        for dir_config in self.directories.values():
             path = Path(dir_config.path)
             path.mkdir(parents=True, exist_ok=True)
             
@@ -189,8 +181,7 @@ class LocalStorageConfig:
             path.chmod(dir_config.permissions)
     
     def get_directory_path(self, content_type: str) -> str:
-        """Get directory path for specific content type."""
-        # Map content types to directory keys
+        """Get directory path for specific content type."""        # Map content types to directory keys
         content_mapping = {
             'audio': 'audio_files',
             'video': 'video_files',
@@ -210,14 +201,12 @@ class LocalStorageConfig:
         return self.directories[dir_key].path
     
     def get_content_types(self) -> List[str]:
-        """Get list of supported content types."""
-        return ['audio', 'video', 'image', 'document', 'model', 
+        """Get list of supported content types."""        return ['audio', 'video', 'image', 'document', 'model', 
                 'fingerprint', 'upload', 'processed', 'backup', 
                 'temp', 'log', 'cache']
     
     def validate_configuration(self) -> bool:
-        """Validate local storage configuration and accessibility."""
-        try:
+        """Validate local storage configuration and accessibility."""        try:
             for content_type, dir_config in self.directories.items():
                 path = Path(dir_config.path)
                 
@@ -243,8 +232,7 @@ class LocalStorageConfig:
     
     def get_file_path(self, content_type: str, filename: str, 
                       user_id: Optional[str] = None) -> str:
-        """Generate full file path with optional user segregation."""
-        base_dir = self.get_directory_path(content_type)
+        """Generate full file path with optional user segregation."""        base_dir = self.get_directory_path(content_type)
         
         if user_id:
             # Create user-specific subdirectory
@@ -255,8 +243,7 @@ class LocalStorageConfig:
         return os.path.join(base_dir, filename)
     
     def calculate_file_checksum(self, file_path: str) -> str:
-        """Calculate file checksum for integrity verification."""
-        hash_func = hashlib.new(self.checksum_algorithm)
+        """Calculate file checksum for integrity verification."""        hash_func = hashlib.new(self.checksum_algorithm)
         
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(self.chunk_size), b""):
@@ -265,8 +252,7 @@ class LocalStorageConfig:
         return hash_func.hexdigest()
     
     def get_directory_size(self, directory_path: str) -> float:
-        """Get directory size in GB."""
-        total_size = 0
+        """Get directory size in GB."""        total_size = 0
         for dirpath, dirnames, filenames in os.walk(directory_path):
             for filename in filenames:
                 filepath = os.path.join(dirpath, filename)
@@ -276,8 +262,7 @@ class LocalStorageConfig:
         return total_size / (1024**3)  # Convert to GB
     
     def cleanup_old_files(self, content_type: str, force: bool = False):
-        """Clean up old files based on directory configuration."""
-        dir_config = self.directories.get(f"{content_type}_files")
+        """Clean up old files based on directory configuration."""        dir_config = self.directories.get(f"{content_type}_files")
         if not dir_config or (not dir_config.auto_cleanup and not force):
             return
         
@@ -299,8 +284,7 @@ class LocalStorageConfig:
                         print(f"Error cleaning up {file_path}: {e}")
     
     def get_storage_statistics(self) -> Dict[str, Dict[str, Union[float, int]]]:
-        """Get storage statistics for all directories."""
-        stats = {}
+        """Get storage statistics for all directories."""        stats = {}
         
         for content_type, dir_config in self.directories.items():
             directory_path = dir_config.path
@@ -329,8 +313,7 @@ class LocalStorageConfig:
         return stats
     
     def export_configuration(self) -> Dict:
-        """Export configuration to JSON-serializable format."""
-        return {
+        """Export configuration to JSON-serializable format."""        return {
             'base_path': self.base_path,
             'temp_path': self.temp_path,
             'enable_encryption': self.enable_encryption,

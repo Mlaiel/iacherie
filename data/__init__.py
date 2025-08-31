@@ -1,5 +1,4 @@
-"""
-🚀 Data Management Module - IA Influencer Agent Platform Enterprise
+"""🚀 Data Management Module - IA Influencer Agent Platform Enterprise
 ==================================================================
 
 Système de gestion de données professionnel pour créateurs multi-format :
@@ -19,7 +18,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 ⚠️ PROPRIÉTÉ INTELLECTUELLE EXCLUSIVE - Usage non autorisé strictement interdit
 """
-
 # Core Data Management Imports - Architecture Enterprise
 from .analytics import *
 from .content_protection import *

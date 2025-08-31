@@ -1,5 +1,4 @@
-"""
-Blockchain Security Module
+"""Blockchain Security Module
 Enterprise blockchain integration for immutable content protection and verification
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -29,7 +28,6 @@ Violators will face:
 
 Contact: mlaiel@live.de for any authorization requests.
 """
-
 import hashlib
 import json
 import secrets
@@ -56,8 +54,7 @@ settings = get_settings()
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
-    ETHEREUM = "ethereum"
+    """Supported blockchain networks"""    ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE = "binance_smart_chain"
     AVALANCHE = "avalanche"
@@ -66,16 +63,14 @@ class BlockchainNetwork(Enum):
 
 
 class TransactionStatus(Enum):
-    """Blockchain transaction status"""
-    PENDING = "pending"
+    """Blockchain transaction status"""    PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
     FINALIZED = "finalized"
 
 
 class SmartContractType(Enum):
-    """Smart contract types"""
-    COPYRIGHT_REGISTRATION = "copyright_registration"
+    """Smart contract types"""    COPYRIGHT_REGISTRATION = "copyright_registration"
     LICENSE_AGREEMENT = "license_agreement"
     REVENUE_SHARING = "revenue_sharing"
     CONTENT_VERIFICATION = "content_verification"
@@ -84,8 +79,7 @@ class SmartContractType(Enum):
 
 @dataclass
 class BlockchainRecord:
-    """Blockchain record for content protection"""
-    record_id: str = field(default_factory=lambda: secrets.token_hex(16))
+    """Blockchain record for content protection"""    record_id: str = field(default_factory=lambda: secrets.token_hex(16))
     content_id: str = ""
     creator_id: str = ""
     
@@ -109,8 +103,7 @@ class BlockchainRecord:
     gas_fee: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "record_id": self.record_id,
             "content_id": self.content_id,
             "creator_id": self.creator_id,
@@ -130,8 +123,7 @@ class BlockchainRecord:
 
 @dataclass
 class SmartContract:
-    """Smart contract configuration"""
-    contract_id: str = field(default_factory=lambda: secrets.token_hex(12))
+    """Smart contract configuration"""    contract_id: str = field(default_factory=lambda: secrets.token_hex(12))
     contract_type: SmartContractType = SmartContractType.COPYRIGHT_REGISTRATION
     blockchain_network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     
@@ -148,8 +140,7 @@ class SmartContract:
     parameters: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "contract_id": self.contract_id,
             "contract_type": self.contract_type.value,
             "blockchain_network": self.blockchain_network.value,
@@ -162,8 +153,7 @@ class SmartContract:
 
 
 class BlockchainSecurityManager:
-    """Enterprise blockchain security and verification manager"""
-    
+    """Enterprise blockchain security and verification manager"""    
     def __init__(self):
         self.cache = CacheManager()
         self.records: Dict[str, BlockchainRecord] = {}
@@ -172,8 +162,7 @@ class BlockchainSecurityManager:
         self._setup_cryptographic_keys()
     
     def _setup_blockchain_connections(self):
-        """Initialize blockchain network connections"""
-        self.network_configs = {
+        """Initialize blockchain network connections"""        self.network_configs = {
             BlockchainNetwork.ETHEREUM: {
                 "rpc_url": settings.ETHEREUM_RPC_URL or "https://mainnet.infura.io/v3/",
                 "chain_id": 1,
@@ -192,8 +181,7 @@ class BlockchainSecurityManager:
         }
     
     def _setup_cryptographic_keys(self):
-        """Initialize cryptographic keys for blockchain operations"""
-        # Generate or load keys (in production, these would be securely managed)
+        """Initialize cryptographic keys for blockchain operations"""        # Generate or load keys (in production, these would be securely managed)
         self.signing_keys = {
             'private_key': rsa.generate_private_key(
                 public_exponent=65537,
@@ -211,8 +199,7 @@ class BlockchainSecurityManager:
         metadata: Dict[str, Any],
         network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     ) -> BlockchainRecord:
-        """Register content ownership on blockchain"""
-        try:
+        """Register content ownership on blockchain"""        try:
             # Create content fingerprint hash
             fingerprint_data = {
                 "content_id": content_id,
@@ -271,8 +258,7 @@ class BlockchainSecurityManager:
         record: BlockchainRecord,
         network: BlockchainNetwork
     ) -> Optional[str]:
-        """Submit transaction to blockchain network"""
-        try:
+        """Submit transaction to blockchain network"""        try:
             # In a real implementation, this would interact with blockchain APIs
             # For now, we'll simulate the transaction
             
@@ -302,8 +288,7 @@ class BlockchainSecurityManager:
             return None
     
     async def _monitor_transaction(self, record: BlockchainRecord):
-        """Monitor blockchain transaction status"""
-        try:
+        """Monitor blockchain transaction status"""        try:
             # Simulate transaction confirmation after delay
             await asyncio.sleep(30)  # Simulate network confirmation time
             
@@ -331,8 +316,7 @@ class BlockchainSecurityManager:
         network: BlockchainNetwork,
         parameters: Dict[str, Any]
     ) -> SmartContract:
-        """Deploy smart contract for content protection"""
-        try:
+        """Deploy smart contract for content protection"""        try:
             contract = SmartContract(
                 contract_type=contract_type,
                 blockchain_network=network,
@@ -366,8 +350,7 @@ class BlockchainSecurityManager:
             raise
     
     def _generate_contract_abi(self, contract_type: SmartContractType) -> List[Dict]:
-        """Generate ABI for smart contract type"""
-        base_abi = [
+        """Generate ABI for smart contract type"""        base_abi = [
             {
                 "type": "constructor",
                 "inputs": [],
@@ -424,8 +407,7 @@ class BlockchainSecurityManager:
         content_hash: str,
         network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
     ) -> Optional[Dict[str, Any]]:
-        """Verify content ownership on blockchain"""
-        try:
+        """Verify content ownership on blockchain"""        try:
             # Find blockchain record
             for record in self.records.values():
                 if (record.content_hash == content_hash and 
@@ -465,8 +447,7 @@ class BlockchainSecurityManager:
         content_data: bytes,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create immutable copyright proof on blockchain"""
-        try:
+        """Create immutable copyright proof on blockchain"""        try:
             # Generate content hash
             content_hash = hashlib.sha256(content_data).hexdigest()
             
@@ -519,8 +500,7 @@ class BlockchainSecurityManager:
         creator_id: str,
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create cryptographic digital signature"""
-        try:
+        """Create cryptographic digital signature"""        try:
             # Create message to sign
             message_data = {
                 "content_hash": content_hash,
@@ -559,8 +539,7 @@ class BlockchainSecurityManager:
             return {}
     
     async def get_blockchain_status(self, record_id: str) -> Dict[str, Any]:
-        """Get blockchain record status"""
-        try:
+        """Get blockchain record status"""        try:
             record = self.records.get(record_id)
             if not record:
                 return {"status": "not_found", "record_id": record_id}
@@ -587,8 +566,7 @@ class BlockchainSecurityManager:
             return {"status": "error", "record_id": record_id}
     
     async def _check_network_status(self, network: BlockchainNetwork) -> Dict[str, Any]:
-        """Check blockchain network status"""
-        try:
+        """Check blockchain network status"""        try:
             network_config = self.network_configs.get(network)
             if not network_config:
                 return {"status": "unsupported"}
@@ -610,8 +588,7 @@ class BlockchainSecurityManager:
         content_id: str,
         violation_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate blockchain-verified evidence for legal proceedings"""
-        try:
+        """Generate blockchain-verified evidence for legal proceedings"""        try:
             # Find blockchain records for content
             content_records = [
                 record for record in self.records.values()
@@ -668,8 +645,7 @@ async def register_content_blockchain(
     metadata: Dict[str, Any],
     network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
 ) -> BlockchainRecord:
-    """Register content on blockchain"""
-    return await blockchain_manager.register_content_on_blockchain(
+    """Register content on blockchain"""    return await blockchain_manager.register_content_on_blockchain(
         content_id, creator_id, content_hash, metadata, network
     )
 
@@ -677,8 +653,7 @@ async def verify_ownership(
     content_hash: str,
     network: BlockchainNetwork = BlockchainNetwork.ETHEREUM
 ) -> Optional[Dict[str, Any]]:
-    """Verify content ownership on blockchain"""
-    return await blockchain_manager.verify_content_ownership(content_hash, network)
+    """Verify content ownership on blockchain"""    return await blockchain_manager.verify_content_ownership(content_hash, network)
 
 async def create_copyright_certificate(
     content_id: str,
@@ -686,8 +661,7 @@ async def create_copyright_certificate(
     content_data: bytes,
     metadata: Dict[str, Any]
 ) -> Dict[str, Any]:
-    """Create blockchain copyright certificate"""
-    return await blockchain_manager.create_copyright_proof(
+    """Create blockchain copyright certificate"""    return await blockchain_manager.create_copyright_proof(
         content_id, creator_id, content_data, metadata
     )
 
@@ -696,7 +670,6 @@ async def deploy_protection_contract(
     network: BlockchainNetwork,
     parameters: Dict[str, Any]
 ) -> SmartContract:
-    """Deploy smart contract for protection"""
-    return await blockchain_manager.deploy_smart_contract(
+    """Deploy smart contract for protection"""    return await blockchain_manager.deploy_smart_contract(
         contract_type, network, parameters
     )

@@ -1,5 +1,4 @@
-"""
-Context Analyzer - Advanced conversation context analysis
+"""Context Analyzer - Advanced conversation context analysis
 ========================================================
 
 Analyzes conversation context, user intent, and session state to provide
@@ -7,7 +6,6 @@ rich contextual understanding for optimal response generation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -21,8 +19,7 @@ from backend.ai.models import ConversationalAI
 
 
 class ConversationStage(Enum):
-    """Stages of conversation progression"""
-    INITIAL = "initial"
+    """Stages of conversation progression"""    INITIAL = "initial"
     EXPLORATION = "exploration"
     DEEP_DIVE = "deep_dive"
     PROBLEM_SOLVING = "problem_solving"
@@ -31,16 +28,14 @@ class ConversationStage(Enum):
 
 
 class UserExpertiseLevel(Enum):
-    """User expertise levels"""
-    BEGINNER = "beginner"
+    """User expertise levels"""    BEGINNER = "beginner"
     INTERMEDIATE = "intermediate"
     ADVANCED = "advanced"
     EXPERT = "expert"
 
 
 class ContextDimension(Enum):
-    """Different dimensions of context analysis"""
-    EMOTIONAL = "emotional"
+    """Different dimensions of context analysis"""    EMOTIONAL = "emotional"
     TECHNICAL = "technical"
     BUSINESS = "business"
     CREATIVE = "creative"
@@ -50,8 +45,7 @@ class ContextDimension(Enum):
 
 @dataclass
 class ContextAnalysisResult:
-    """Complete context analysis results"""
-    conversation_stage: ConversationStage
+    """Complete context analysis results"""    conversation_stage: ConversationStage
     user_expertise_level: UserExpertiseLevel
     emotional_state: Dict[str, float]
     technical_complexity: float
@@ -66,12 +60,10 @@ class ContextAnalysisResult:
 
 
 class ContextAnalyzer:
-    """
-    Advanced context analysis system that deeply understands conversation
+    """    Advanced context analysis system that deeply understands conversation
     flow, user intent, expertise level, and multi-dimensional context for
     optimal AI response generation.
-    """
-    
+    """    
     def __init__(self, ai_engine: ConversationalAI):
         self.ai_engine = ai_engine
         self.logger = logging.getLogger(__name__)
@@ -89,8 +81,7 @@ class ContextAnalyzer:
         current_message: Any,
         creator_type: Any
     ) -> ContextAnalysisResult:
-        """
-        Perform comprehensive context analysis of the conversation
+        """        Perform comprehensive context analysis of the conversation
         
         Args:
             conversation_history: Previous messages in conversation
@@ -99,8 +90,7 @@ class ContextAnalyzer:
             
         Returns:
             ContextAnalysisResult: Complete context analysis
-        """
-        try:
+        """        try:
             # Initialize analysis components
             message_content = current_message.processed_content
             conversation_length = len(conversation_history)
@@ -222,8 +212,7 @@ class ContextAnalyzer:
         current_message: str,
         conversation_length: int
     ) -> ConversationStage:
-        """Determine current stage of conversation"""
-        try:
+        """Determine current stage of conversation"""        try:
             # Stage determination based on conversation length and patterns
             if conversation_length == 0:
                 return ConversationStage.INITIAL
@@ -285,8 +274,7 @@ class ContextAnalyzer:
         current_message: str,
         creator_type: Any
     ) -> UserExpertiseLevel:
-        """Determine user's expertise level"""
-        try:
+        """Determine user's expertise level"""        try:
             expertise_score = 0.5  # Start with intermediate assumption
             
             # Beginner indicators
@@ -368,8 +356,7 @@ class ContextAnalyzer:
         current_message: str,
         history: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Analyze emotional dimensions of the conversation"""
-        try:
+        """Analyze emotional dimensions of the conversation"""        try:
             emotional_indicators = {
                 "frustration": [
                     "frustrated", "annoying", "not working", "broken", "terrible",
@@ -439,8 +426,7 @@ class ContextAnalyzer:
         creator_type: Any,
         user_expertise: UserExpertiseLevel
     ) -> float:
-        """Assess technical complexity of the user's request"""
-        try:
+        """Assess technical complexity of the user's request"""        try:
             complexity_indicators = {
                 "low": ["simple", "basic", "easy", "quick", "straightforward"],
                 "medium": ["configure", "setup", "implement", "integrate", "customize"],
@@ -496,8 +482,7 @@ class ContextAnalyzer:
         history: List[Dict[str, Any]],
         creator_type: Any
     ) -> Dict[str, Any]:
-        """Analyze business-related intent and context"""
-        try:
+        """Analyze business-related intent and context"""        try:
             business_indicators = {
                 "monetization": [
                     "money", "revenue", "income", "profit", "earn", "make money",
@@ -550,8 +535,7 @@ class ContextAnalyzer:
         history: List[Dict[str, Any]],
         creator_type: Any
     ) -> Dict[str, Any]:
-        """Analyze creative direction and artistic intent"""
-        try:
+        """Analyze creative direction and artistic intent"""        try:
             creative_indicators = {
                 "inspiration": [
                     "inspire", "creative", "idea", "concept", "vision", "artistic",
@@ -605,8 +589,7 @@ class ContextAnalyzer:
         message: str,
         history: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Extract temporal context and urgency indicators"""
-        try:
+        """Extract temporal context and urgency indicators"""        try:
             temporal_patterns = {
                 "immediate": ["now", "today", "asap", "immediately", "urgent", "right away"],
                 "short_term": ["tomorrow", "this week", "soon", "quickly", "few days"],
@@ -648,8 +631,7 @@ class ContextAnalyzer:
         history: List[Dict[str, Any]],
         creator_type: Any
     ) -> Dict[str, Any]:
-        """Detect signals indicating interest in collaboration"""
-        try:
+        """Detect signals indicating interest in collaboration"""        try:
             collaboration_indicators = {
                 "seeking_collaborators": [
                     "looking for", "seeking", "need help", "want to work",
@@ -703,8 +685,7 @@ class ContextAnalyzer:
         history: List[Dict[str, Any]],
         current_message: str
     ) -> List[str]:
-        """Track how topics have evolved throughout the conversation"""
-        try:
+        """Track how topics have evolved throughout the conversation"""        try:
             topics = []
             
             # Extract topics from conversation history
@@ -741,8 +722,7 @@ class ContextAnalyzer:
         history: List[Dict[str, Any]],
         creator_type: Any
     ) -> List[str]:
-        """Identify what the user is currently focused on"""
-        try:
+        """Identify what the user is currently focused on"""        try:
             focus_areas = []
             message_lower = message.lower()
             
@@ -793,8 +773,7 @@ class ContextAnalyzer:
             return []
     
     def _create_fallback_analysis(self) -> ContextAnalysisResult:
-        """Create fallback analysis when main analysis fails"""
-        return ContextAnalysisResult(
+        """Create fallback analysis when main analysis fails"""        return ContextAnalysisResult(
             conversation_stage=ConversationStage.EXPLORATION,
             user_expertise_level=UserExpertiseLevel.INTERMEDIATE,
             emotional_state={"neutral": 0.8},
@@ -811,8 +790,7 @@ class ContextAnalyzer:
     
     # Helper methods
     def _calculate_urgency_score(self, timeframe: str) -> float:
-        """Calculate urgency score based on timeframe"""
-        urgency_mapping = {
+        """Calculate urgency score based on timeframe"""        urgency_mapping = {
             "immediate": 1.0,
             "short_term": 0.8,
             "medium_term": 0.5,
@@ -822,8 +800,7 @@ class ContextAnalyzer:
         return urgency_mapping.get(timeframe, 0.5)
     
     async def _extract_business_goals(self, message: str, creator_type: Any) -> List[str]:
-        """Extract specific business goals from message"""
-        goals = []
+        """Extract specific business goals from message"""        goals = []
         message_lower = message.lower()
         
         goal_patterns = {
@@ -841,8 +818,7 @@ class ContextAnalyzer:
         return goals
     
     async def _analyze_creator_specific_creativity(self, message: str, creator_type: str) -> Dict[str, Any]:
-        """Analyze creativity aspects specific to creator type"""
-        message_lower = message.lower()
+        """Analyze creativity aspects specific to creator type"""        message_lower = message.lower()
         
         creativity_aspects = {
             "musician": {
@@ -872,8 +848,7 @@ class ContextAnalyzer:
         return detected_aspects
     
     async def _identify_collaboration_types(self, message: str, creator_type: str) -> List[str]:
-        """Identify specific types of collaboration interest"""
-        collaboration_types = []
+        """Identify specific types of collaboration interest"""        collaboration_types = []
         message_lower = message.lower()
         
         general_types = {
@@ -896,8 +871,7 @@ class ContextAnalyzer:
         emotional_state: Dict[str, float],
         technical_complexity: float
     ) -> float:
-        """Calculate overall confidence in context analysis"""
-        confidence_factors = []
+        """Calculate overall confidence in context analysis"""        confidence_factors = []
         
         # Stage confidence - higher for clear stages
         if stage in [ConversationStage.INITIAL, ConversationStage.CONCLUSION]:
@@ -926,8 +900,7 @@ class ContextAnalyzer:
         creative_direction: Dict[str, Any],
         creator_type: Any
     ) -> Dict[str, Any]:
-        """Generate updated context for session state"""
-        updated_context = {
+        """Generate updated context for session state"""        updated_context = {
             "conversation_stage": stage.value,
             "user_expertise_level": expertise.value,
             "has_business_intent": len(business_intent) > 0,
@@ -946,8 +919,7 @@ class ContextAnalyzer:
         return updated_context
     
     def _setup_expertise_indicators(self):
-        """Setup patterns for expertise level detection"""
-        self.expertise_patterns = {
+        """Setup patterns for expertise level detection"""        self.expertise_patterns = {
             "beginner": ["how do i", "what is", "new to", "beginner", "basic"],
             "intermediate": ["improve", "better", "optimize", "learn more"],
             "advanced": ["advanced", "complex", "professional", "enterprise"],
@@ -955,24 +927,21 @@ class ContextAnalyzer:
         }
     
     def _setup_emotional_patterns(self):
-        """Setup patterns for emotional state detection"""
-        self.emotional_patterns = {
+        """Setup patterns for emotional state detection"""        self.emotional_patterns = {
             "positive": ["great", "awesome", "love", "excited", "happy"],
             "negative": ["frustrated", "hate", "terrible", "awful", "broken"],
             "neutral": ["okay", "fine", "alright", "normal", "standard"]
         }
     
     def _setup_business_indicators(self):
-        """Setup business intent indicators"""
-        self.business_indicators = {
+        """Setup business intent indicators"""        self.business_indicators = {
             "monetization": ["money", "revenue", "profit", "income", "earn"],
             "growth": ["grow", "scale", "expand", "increase", "more"],
             "efficiency": ["faster", "automate", "efficient", "save time"]
         }
     
     def _setup_technical_patterns(self):
-        """Setup technical complexity patterns"""
-        self.technical_patterns = {
+        """Setup technical complexity patterns"""        self.technical_patterns = {
             "low": ["simple", "basic", "easy"],
             "medium": ["configure", "setup", "implement"],
             "high": ["optimize", "advanced", "complex"],
@@ -980,8 +949,7 @@ class ContextAnalyzer:
         }
     
     def _setup_collaboration_signals(self):
-        """Setup collaboration detection patterns"""
-        self.collaboration_patterns = {
+        """Setup collaboration detection patterns"""        self.collaboration_patterns = {
             "seeking": ["looking for", "need", "want to work"],
             "offering": ["can help", "willing to", "available"],
             "networking": ["connect", "meet", "community"]

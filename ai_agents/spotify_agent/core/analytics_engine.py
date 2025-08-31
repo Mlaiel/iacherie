@@ -1,5 +1,4 @@
-"""
-Analytics Engine - Advanced Spotify Streaming Analytics & Intelligence
+"""Analytics Engine - Advanced Spotify Streaming Analytics & Intelligence
 
 Industrial-grade analytics engine providing comprehensive streaming analytics, audience insights,
 trend analysis, and machine learning-powered predictions for Spotify data.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -47,15 +45,13 @@ from ...utils.performance_monitor import PerformanceMonitor
 logger = logging.getLogger(__name__)
 
 class AnalyticsTimeRange(Enum):
-    """Time range options for analytics"""
-    SHORT_TERM = "short_term"      # ~4 weeks
+    """Time range options for analytics"""    SHORT_TERM = "short_term"      # ~4 weeks
     MEDIUM_TERM = "medium_term"    # ~6 months  
     LONG_TERM = "long_term"        # ~years
     CUSTOM = "custom"
 
 class MetricType(Enum):
-    """Types of metrics for analysis"""
-    STREAMS = "streams"
+    """Types of metrics for analysis"""    STREAMS = "streams"
     LISTENERS = "listeners"
     SAVES = "saves"
     SHARES = "shares"
@@ -66,8 +62,7 @@ class MetricType(Enum):
 
 @dataclass
 class StreamingData:
-    """Comprehensive streaming data structure"""
-    date: datetime
+    """Comprehensive streaming data structure"""    date: datetime
     streams: int = 0
     listeners: int = 0
     saves: int = 0
@@ -83,8 +78,7 @@ class StreamingData:
 
 @dataclass
 class TrendAnalysisResult:
-    """Trend analysis results"""
-    metric: str
+    """Trend analysis results"""    metric: str
     trend_direction: str  # "increasing", "decreasing", "stable"
     trend_strength: float  # 0-1
     growth_rate: float
@@ -94,8 +88,7 @@ class TrendAnalysisResult:
     analysis_period: str
 
 class StreamingAnalytics:
-    """Advanced streaming analytics engine"""
-    
+    """Advanced streaming analytics engine"""    
     def __init__(self):
         self.cache_manager = CacheManager(prefix="streaming_analytics")
         self.performance_monitor = PerformanceMonitor("streaming_analytics")
@@ -106,8 +99,7 @@ class StreamingAnalytics:
         
     async def get_artist_streaming_data(self, artist_id: str, time_range: str = "medium_term",
                                       market: Optional[str] = None) -> Dict[str, Any]:
-        """Get comprehensive streaming data for artist"""
-        cache_key = f"streaming_data:{artist_id}:{time_range}:{market or 'global'}"
+        """Get comprehensive streaming data for artist"""        cache_key = f"streaming_data:{artist_id}:{time_range}:{market or 'global'}"
         cached_data = await self.cache_manager.get(cache_key)
         if cached_data:
             return cached_data
@@ -151,8 +143,7 @@ class StreamingAnalytics:
     
     async def _fetch_streaming_data(self, artist_id: str, time_range: str,
                                   market: Optional[str]) -> List[StreamingData]:
-        """Fetch raw streaming data from various sources"""
-        # In production, this would integrate with:
+        """Fetch raw streaming data from various sources"""        # In production, this would integrate with:
         # - Spotify for Artists API
         # - Internal analytics database
         # - Third-party analytics services
@@ -228,8 +219,7 @@ class StreamingAnalytics:
         return streaming_data
     
     def _calculate_advanced_streaming_metrics(self, streaming_data: List[StreamingData]) -> Dict[str, Any]:
-        """Calculate advanced streaming performance metrics"""
-        if not streaming_data:
+        """Calculate advanced streaming performance metrics"""        if not streaming_data:
             return {}
         
         # Convert to pandas for easier analysis
@@ -315,8 +305,7 @@ class StreamingAnalytics:
         }
     
     async def _analyze_streaming_trends(self, streaming_data: List[StreamingData]) -> Dict[str, Any]:
-        """Analyze trends in streaming data"""
-        if len(streaming_data) < 7:
+        """Analyze trends in streaming data"""        if len(streaming_data) < 7:
             return {"error": "Insufficient data for trend analysis"}
         
         # Convert to DataFrame
@@ -395,8 +384,7 @@ class StreamingAnalytics:
     
     async def _calculate_performance_benchmarks(self, artist_id: str, streaming_data: List[StreamingData],
                                               market: Optional[str]) -> Dict[str, Any]:
-        """Calculate performance benchmarks against industry standards"""
-        
+        """Calculate performance benchmarks against industry standards"""        
         # In production, these would be calculated from industry data
         industry_benchmarks = {
             "average_daily_streams": {
@@ -481,8 +469,7 @@ class StreamingAnalytics:
         }
     
     def _calculate_performance_score(self, value: float, benchmarks: Dict[str, float]) -> Dict[str, Any]:
-        """Calculate performance score against benchmarks"""
-        if value >= benchmarks["excellent"]:
+        """Calculate performance score against benchmarks"""        if value >= benchmarks["excellent"]:
             category = "excellent"
             score = 95 + (value - benchmarks["excellent"]) / benchmarks["excellent"] * 5
         elif value >= benchmarks["good"]:
@@ -502,8 +489,7 @@ class StreamingAnalytics:
         }
     
     def _estimate_percentile_ranking(self, value: float, metric_type: str, tier: str) -> float:
-        """Estimate percentile ranking within tier"""
-        # Simplified percentile estimation
+        """Estimate percentile ranking within tier"""        # Simplified percentile estimation
         # In production, this would use actual industry distribution data
         
         tier_multipliers = {
@@ -531,8 +517,7 @@ class StreamingAnalytics:
     async def _generate_streaming_insights(self, metrics: Dict[str, Any],
                                          trends: Dict[str, Any],
                                          benchmarks: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate actionable insights from streaming analytics"""
-        insights = []
+        """Generate actionable insights from streaming analytics"""        insights = []
         
         # Performance insights
         overall_performance = metrics.get("performance_scores", {}).get("overall_performance", 0)
@@ -598,14 +583,12 @@ class StreamingAnalytics:
         return insights
 
 class AudienceInsights:
-    """Advanced audience analytics and demographic insights"""
-    
+    """Advanced audience analytics and demographic insights"""    
     def __init__(self):
         self.cache_manager = CacheManager(prefix="audience_insights")
         
     async def get_comprehensive_audience_data(self, artist_id: str, time_range: str) -> Dict[str, Any]:
-        """Get comprehensive audience analytics"""
-        cache_key = f"audience_data:{artist_id}:{time_range}"
+        """Get comprehensive audience analytics"""        cache_key = f"audience_data:{artist_id}:{time_range}"
         cached_data = await self.cache_manager.get(cache_key)
         if cached_data:
             return cached_data
@@ -632,8 +615,7 @@ class AudienceInsights:
         return audience_data
     
     async def analyze_listener_behavior(self, artist_id: str, time_range: str) -> Dict[str, Any]:
-        """Analyze detailed listener behavior patterns"""
-        
+        """Analyze detailed listener behavior patterns"""        
         behavior_data = {
             "listening_sessions": {
                 "average_duration": np.random.uniform(15, 45),  # minutes
@@ -665,8 +647,7 @@ class AudienceInsights:
         return behavior_data
     
     async def get_demographic_breakdown(self, artist_id: str, time_range: str) -> Dict[str, Any]:
-        """Get detailed demographic breakdown of listeners"""
-        
+        """Get detailed demographic breakdown of listeners"""        
         demographics = {
             "age_distribution": {
                 "13-17": np.random.uniform(0.05, 0.25),
@@ -701,8 +682,7 @@ class AudienceInsights:
         return demographics
     
     async def analyze_geographic_distribution(self, artist_id: str, time_range: str) -> Dict[str, Any]:
-        """Analyze geographic distribution and regional performance"""
-        
+        """Analyze geographic distribution and regional performance"""        
         geographic_data = {
             "market_penetration": {
                 "north_america": {"penetration": 0.65, "growth_rate": 0.15},
@@ -726,14 +706,12 @@ class AudienceInsights:
         return geographic_data
 
 class TrendAnalyzer:
-    """Advanced trend analysis and prediction engine"""
-    
+    """Advanced trend analysis and prediction engine"""    
     def __init__(self):
         self.cache_manager = CacheManager(prefix="trend_analyzer")
         
     async def analyze_artist_trends(self, artist_id: str, days: int = 30) -> Dict[str, Any]:
-        """Analyze comprehensive trends for artist"""
-        
+        """Analyze comprehensive trends for artist"""        
         trend_analysis = {
             "momentum_analysis": {
                 "current_momentum": np.random.uniform(0.3, 1.5),
@@ -756,8 +734,7 @@ class TrendAnalyzer:
     
     async def analyze_seasonal_patterns(self, historical_data: Dict[str, Any], 
                                       artist_id: str) -> Dict[str, Any]:
-        """Analyze seasonal patterns and identify optimal timing"""
-        
+        """Analyze seasonal patterns and identify optimal timing"""        
         seasonal_analysis = {
             "monthly_performance": {
                 f"month_{i}": np.random.uniform(0.7, 1.3) for i in range(1, 13)

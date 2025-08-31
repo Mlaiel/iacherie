@@ -1,11 +1,9 @@
-"""
-Internationalization (i18n) Manager for Ainflue Platform
+"""Internationalization (i18n) Manager for Ainflue Platform
 Supports 195+ languages with automatic translation and localization.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import json
 import logging
@@ -20,8 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class LanguageRegion(Enum):
-    """Language regions for proper localization"""
-    AFRICA = "africa"
+    """Language regions for proper localization"""    AFRICA = "africa"
     ASIA = "asia"
     EUROPE = "europe"
     NORTH_AMERICA = "north_america"
@@ -30,8 +27,7 @@ class LanguageRegion(Enum):
 
 
 class LanguageScript(Enum):
-    """Writing system scripts"""
-    LATIN = "latin"
+    """Writing system scripts"""    LATIN = "latin"
     CYRILLIC = "cyrillic"
     ARABIC = "arabic"
     CHINESE = "chinese"
@@ -45,8 +41,7 @@ class LanguageScript(Enum):
 
 @dataclass
 class LanguageInfo:
-    """Complete language information"""
-    code: str  # ISO 639-1/639-3 code
+    """Complete language information"""    code: str  # ISO 639-1/639-3 code
     name: str  # English name
     native_name: str  # Native name
     region: LanguageRegion
@@ -64,8 +59,7 @@ class LanguageInfo:
 
 
 class InternationalizationManager:
-    """Advanced internationalization manager supporting 195+ languages"""
-    
+    """Advanced internationalization manager supporting 195+ languages"""    
     def __init__(self):
         self.languages: Dict[str, LanguageInfo] = {}
         self.translations: Dict[str, Dict[str, str]] = {}
@@ -78,8 +72,7 @@ class InternationalizationManager:
         self._initialize_languages()
         
     def _initialize_languages(self):
-        """Initialize comprehensive language support (195+ languages)"""
-        
+        """Initialize comprehensive language support (195+ languages)"""        
         # Major languages (Tier 1 - Human translated)
         major_languages = [
             # European languages
@@ -160,8 +153,7 @@ class InternationalizationManager:
         logger.info(f"Initialized {len(self.languages)} languages")
     
     def _add_extended_languages(self):
-        """Add extended language support for comprehensive coverage"""
-        
+        """Add extended language support for comprehensive coverage"""        
         # Additional European languages
         extended_european = [
             ("is", "Icelandic", "Íslenska"),
@@ -451,8 +443,7 @@ class InternationalizationManager:
             self.languages[code] = lang_info
     
     def _determine_region(self, code: str) -> LanguageRegion:
-        """Determine language region based on language code"""
-        european = ["is", "mt", "ga", "cy", "eu", "ca", "gl", "br", "co", "sc", "rm", "fy", "lb", "mk", "sq", "sr", "bs", "me"]
+        """Determine language region based on language code"""        european = ["is", "mt", "ga", "cy", "eu", "ca", "gl", "br", "co", "sc", "rm", "fy", "lb", "mk", "sq", "sr", "bs", "me"]
         asian = ["tr", "az", "kk", "ky", "uz", "tk", "tg", "mn", "ne", "si", "my", "km", "lo", "ka", "hy", "ku", "ps", "sd", "dv"]
         african = ["ar-MA", "ar-EG", "ar-SA", "fr-SN", "pt-AO", "pt-MZ", "rw", "lg", "om", "ti", "so", "mg", "ny", "sn", "st", "tn", "ve", "ts", "ss", "nr"]
         american = ["qu", "gn", "ay", "ht", "nv", "chr", "iu", "kl"]
@@ -472,8 +463,7 @@ class InternationalizationManager:
             return LanguageRegion.EUROPE  # Default
     
     def _determine_script(self, code: str) -> LanguageScript:
-        """Determine writing script based on language code"""
-        cyrillic = ["mk", "sr", "kk", "ky", "tg", "mn"]
+        """Determine writing script based on language code"""        cyrillic = ["mk", "sr", "kk", "ky", "tg", "mn"]
         arabic = ["ar-MA", "ar-EG", "ar-SA", "ku", "ps", "sd", "dv"] + \
                 [f"ar-{country}-{city}" for country in ["TN", "DZ", "MA", "LY", "SD", "MR"] 
                  for city in ["tunis", "sfax", "algiers", "oran", "casablanca", "fes", "tripoli", "benghazi", "khartoum", "nouakchott"]]
@@ -497,13 +487,11 @@ class InternationalizationManager:
             return LanguageScript.LATIN
     
     def _is_rtl_language(self, code: str) -> bool:
-        """Check if language is right-to-left"""
-        rtl_languages = ["ar-MA", "ar-EG", "ar-SA", "ku", "ps", "sd", "dv"]
+        """Check if language is right-to-left"""        rtl_languages = ["ar-MA", "ar-EG", "ar-SA", "ku", "ps", "sd", "dv"]
         return code in rtl_languages
     
     def _determine_fallback(self, code: str) -> str:
-        """Determine fallback language based on region"""
-        if code.startswith("ar"):
+        """Determine fallback language based on region"""        if code.startswith("ar"):
             return "ar"
         elif code.startswith("es"):
             return "es"
@@ -521,8 +509,7 @@ class InternationalizationManager:
         default: Optional[str] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Get translation for a key in specified language"""
-        try:
+        """Get translation for a key in specified language"""        try:
             # Check if language is supported
             if language not in self.languages:
                 language = self.default_language
@@ -551,8 +538,7 @@ class InternationalizationManager:
             return default or key
     
     async def _load_translation(self, key: str, language: str) -> Optional[str]:
-        """Load translation from storage or translation service"""
-        try:
+        """Load translation from storage or translation service"""        try:
             # Try to load from local translation files
             translation_file = Path(f"translations/{language}.json")
             if translation_file.exists():
@@ -572,8 +558,7 @@ class InternationalizationManager:
             return None
     
     async def _auto_translate(self, text: str, target_language: str) -> Optional[str]:
-        """Auto-translate text using AI translation services"""
-        try:
+        """Auto-translate text using AI translation services"""        try:
             # This would integrate with translation services like:
             # - Google Translate API
             # - DeepL API
@@ -601,8 +586,7 @@ class InternationalizationManager:
             return None
     
     async def _get_fallback_translation(self, key: str, language: str) -> Optional[str]:
-        """Get translation using fallback language chain"""
-        lang_info = self.languages.get(language)
+        """Get translation using fallback language chain"""        lang_info = self.languages.get(language)
         if lang_info and lang_info.fallback_language != language:
             return await self.get_translation(key, lang_info.fallback_language)
         
@@ -616,8 +600,7 @@ class InternationalizationManager:
         return None
     
     def _apply_context(self, translation: str, context: Dict[str, Any]) -> str:
-        """Apply context variables to translation"""
-        try:
+        """Apply context variables to translation"""        try:
             # Simple variable substitution
             for key, value in context.items():
                 translation = translation.replace(f"{{{key}}}", str(value))
@@ -629,26 +612,21 @@ class InternationalizationManager:
             return translation
     
     def get_language_info(self, language: str) -> Optional[LanguageInfo]:
-        """Get detailed language information"""
-        return self.languages.get(language)
+        """Get detailed language information"""        return self.languages.get(language)
     
     def get_supported_languages(self) -> List[LanguageInfo]:
-        """Get list of all supported languages"""
-        return [lang for lang in self.languages.values() if lang.enabled]
+        """Get list of all supported languages"""        return [lang for lang in self.languages.values() if lang.enabled]
     
     def get_languages_by_region(self, region: LanguageRegion) -> List[LanguageInfo]:
-        """Get languages by region"""
-        return [lang for lang in self.languages.values() 
+        """Get languages by region"""        return [lang for lang in self.languages.values() 
                 if lang.region == region and lang.enabled]
     
     def get_rtl_languages(self) -> List[str]:
-        """Get list of right-to-left languages"""
-        return [code for code, lang in self.languages.items() 
+        """Get list of right-to-left languages"""        return [code for code, lang in self.languages.items() 
                 if lang.rtl and lang.enabled]
     
     async def detect_language(self, text: str) -> Optional[str]:
-        """Detect language of given text"""
-        try:
+        """Detect language of given text"""        try:
             # This would integrate with language detection services
             # For now, return a simple heuristic
             
@@ -680,8 +658,7 @@ class InternationalizationManager:
         currency: str, 
         language: str
     ) -> str:
-        """Format currency according to language conventions"""
-        try:
+        """Format currency according to language conventions"""        try:
             lang_info = self.languages.get(language)
             if not lang_info:
                 lang_info = self.languages[self.default_language]
@@ -704,8 +681,7 @@ class InternationalizationManager:
         date: datetime, 
         language: str
     ) -> str:
-        """Format date according to language conventions"""
-        try:
+        """Format date according to language conventions"""        try:
             lang_info = self.languages.get(language)
             if not lang_info:
                 lang_info = self.languages[self.default_language]
@@ -721,8 +697,7 @@ class InternationalizationManager:
         number: Union[int, float], 
         language: str
     ) -> str:
-        """Format number according to language conventions"""
-        try:
+        """Format number according to language conventions"""        try:
             lang_info = self.languages.get(language)
             if not lang_info:
                 lang_info = self.languages[self.default_language]
@@ -738,8 +713,7 @@ class InternationalizationManager:
             return str(number)
     
     def get_language_statistics(self) -> Dict[str, Any]:
-        """Get statistics about language support"""
-        total_languages = len(self.languages)
+        """Get statistics about language support"""        total_languages = len(self.languages)
         enabled_languages = len([l for l in self.languages.values() if l.enabled])
         rtl_languages = len([l for l in self.languages.values() if l.rtl])
         auto_translate_languages = len([l for l in self.languages.values() if l.auto_translate])

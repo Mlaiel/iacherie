@@ -1,5 +1,4 @@
-"""
-Revenue Management Manager - IA-Influencer-Agent
+"""Revenue Management Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/revenue_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Upload créateur → Protection contenu → Distribution multi-plateformes → 
 Tracking revenus temps réel → Analytics IA → Optimisation stratégique → Paiements automatiques
 """
-
 from typing import Any, Dict, List, Optional, Union, Callable, Tuple, Set
 import logging
 import asyncio
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Sources de revenus supportées"""
-    STREAMING = "streaming"  # Spotify, Apple Music, etc.
+    """Sources de revenus supportées"""    STREAMING = "streaming"  # Spotify, Apple Music, etc.
     SOCIAL_MEDIA = "social_media"  # Instagram, TikTok, YouTube
     LICENSING = "licensing"  # Content licensing
     MERCHANDISE = "merchandise"  # Produits dérivés
@@ -51,8 +48,7 @@ class RevenueSource(Enum):
 
 
 class RevenueStatus(Enum):
-    """Statut des revenus"""
-    PENDING = "pending"
+    """Statut des revenus"""    PENDING = "pending"
     CONFIRMED = "confirmed"
     PROCESSING = "processing"
     PAID = "paid"
@@ -62,8 +58,7 @@ class RevenueStatus(Enum):
 
 
 class PaymentMethod(Enum):
-    """Méthodes de paiement"""
-    BANK_TRANSFER = "bank_transfer"
+    """Méthodes de paiement"""    BANK_TRANSFER = "bank_transfer"
     STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
@@ -73,8 +68,7 @@ class PaymentMethod(Enum):
 
 
 class Currency(Enum):
-    """Devises supportées"""
-    EUR = "EUR"
+    """Devises supportées"""    EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
     CAD = "CAD"
@@ -86,8 +80,7 @@ class Currency(Enum):
 
 @dataclass
 class RevenueConfig:
-    """Configuration avancée du gestionnaire de revenus"""
-    # Core revenue settings
+    """Configuration avancée du gestionnaire de revenus"""    # Core revenue settings
     enabled_sources: Set[RevenueSource] = field(
         default_factory=lambda: set(RevenueSource)
     )
@@ -134,8 +127,7 @@ class RevenueConfig:
 
 @dataclass
 class RevenueTransaction:
-    """Transaction de revenu détaillée"""
-    id: str
+    """Transaction de revenu détaillée"""    id: str
     user_id: str
     content_id: Optional[str]
     
@@ -183,8 +175,7 @@ class RevenueTransaction:
 
 @dataclass
 class RevenueForecast:
-    """Prévision de revenus avec IA"""
-    id: str
+    """Prévision de revenus avec IA"""    id: str
     user_id: str
     forecast_period: str  # daily, weekly, monthly, quarterly, yearly
     
@@ -217,8 +208,7 @@ class RevenueForecast:
 
 @dataclass
 class RevenueAnalytics:
-    """Analytics avancés des revenus"""
-    user_id: str
+    """Analytics avancés des revenus"""    user_id: str
     period_start: datetime
     period_end: datetime
     
@@ -250,8 +240,7 @@ class RevenueAnalytics:
 
 
 class RevenueManager(ABC):
-    """
-    💰 Advanced Revenue Management Manager - IA-Influencer-Agent
+    """    💰 Advanced Revenue Management Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel de revenus avec tracking multi-plateformes et IA
@@ -274,8 +263,7 @@ class RevenueManager(ABC):
     - Détection fraude et anomalies
     - Dashboard financier complet
     - API REST/GraphQL pour intégrations
-    """
-    
+    """    
     def __init__(self, config: RevenueConfig = None):
         self.config = config or RevenueConfig()
         self._transactions: Dict[str, RevenueTransaction] = {}
@@ -309,13 +297,11 @@ class RevenueManager(ABC):
     
     @abstractmethod
     async def initialize_pool(self) -> bool:
-        """
-        Initialize revenue tracking pool and platform connections
+        """        Initialize revenue tracking pool and platform connections
         
         Returns:
             bool: True if initialization successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def connect_platform(
@@ -323,8 +309,7 @@ class RevenueManager(ABC):
         platform: str,
         credentials: Dict[str, Any]
     ) -> bool:
-        """
-        Connect to revenue platform API
+        """        Connect to revenue platform API
         
         Args:
             platform: Platform name (spotify, youtube, instagram, etc.)
@@ -332,8 +317,7 @@ class RevenueManager(ABC):
             
         Returns:
             bool: True if connection successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def sync_platform_revenue(
@@ -342,8 +326,7 @@ class RevenueManager(ABC):
         user_id: str,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> List[RevenueTransaction]:
-        """
-        Sync revenue data from platform API
+        """        Sync revenue data from platform API
         
         Args:
             platform: Platform to sync from
@@ -352,8 +335,7 @@ class RevenueManager(ABC):
             
         Returns:
             List[RevenueTransaction]: Synced transactions
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def generate_revenue_forecast(
@@ -362,8 +344,7 @@ class RevenueManager(ABC):
         forecast_period: str,
         historical_months: int = 12
     ) -> RevenueForecast:
-        """
-        Generate AI-powered revenue forecast
+        """        Generate AI-powered revenue forecast
         
         Args:
             user_id: User to forecast for
@@ -372,8 +353,7 @@ class RevenueManager(ABC):
             
         Returns:
             RevenueForecast: Generated forecast with confidence metrics
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def process_payout(
@@ -383,8 +363,7 @@ class RevenueManager(ABC):
         payment_method: PaymentMethod,
         metadata: Dict[str, Any] = None
     ) -> bool:
-        """
-        Process automated payout to creator
+        """        Process automated payout to creator
         
         Args:
             user_id: User to pay
@@ -394,8 +373,7 @@ class RevenueManager(ABC):
             
         Returns:
             bool: True if payout successful
-        """
-        pass
+        """        pass
     
     async def track_revenue(
         self,
@@ -406,8 +384,7 @@ class RevenueManager(ABC):
         content_id: Optional[str] = None,
         metadata: Dict[str, Any] = None
     ) -> RevenueTransaction:
-        """
-        Track new revenue transaction
+        """        Track new revenue transaction
         
         Args:
             user_id: User earning revenue
@@ -419,8 +396,7 @@ class RevenueManager(ABC):
             
         Returns:
             RevenueTransaction: Created transaction record
-        """
-        try:
+        """        try:
             # Create transaction
             transaction = RevenueTransaction(
                 id=str(uuid.uuid4()),
@@ -468,8 +444,7 @@ class RevenueManager(ABC):
         user_id: str,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, List[RevenueTransaction]]:
-        """
-        Sync revenue from all connected platforms
+        """        Sync revenue from all connected platforms
         
         Args:
             user_id: User to sync for
@@ -477,8 +452,7 @@ class RevenueManager(ABC):
             
         Returns:
             Dict: Revenue transactions by platform
-        """
-        results = {}
+        """        results = {}
         
         try:
             # Sync from all connected platforms concurrently
@@ -521,8 +495,7 @@ class RevenueManager(ABC):
         period_end: datetime,
         include_forecasts: bool = True
     ) -> RevenueAnalytics:
-        """
-        Generate comprehensive revenue analytics
+        """        Generate comprehensive revenue analytics
         
         Args:
             user_id: User to analyze
@@ -532,8 +505,7 @@ class RevenueManager(ABC):
             
         Returns:
             RevenueAnalytics: Complete analytics report
-        """
-        cache_key = f"{user_id}_{period_start.isoformat()}_{period_end.isoformat()}"
+        """        cache_key = f"{user_id}_{period_start.isoformat()}_{period_end.isoformat()}"
         
         # Check cache first
         if cache_key in self._analytics_cache:
@@ -654,8 +626,7 @@ class RevenueManager(ABC):
         user_id: str,
         historical_months: int = 6
     ) -> Dict[str, Any]:
-        """
-        Generate AI-powered revenue optimization strategy
+        """        Generate AI-powered revenue optimization strategy
         
         Args:
             user_id: User to optimize for
@@ -663,8 +634,7 @@ class RevenueManager(ABC):
             
         Returns:
             Dict: Optimization strategy and recommendations
-        """
-        try:
+        """        try:
             # Get historical data
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=historical_months * 30)
@@ -726,8 +696,7 @@ class RevenueManager(ABC):
             return {"error": str(e)}
     
     async def _calculate_transaction_fees(self, transaction: RevenueTransaction) -> None:
-        """Calculate platform fees and net amount"""
-        # Platform-specific fee calculation
+        """Calculate platform fees and net amount"""        # Platform-specific fee calculation
         platform_fee_rate = 0.30  # 30% default platform fee
         service_fee_rate = 0.05   # 5% service fee
         
@@ -752,8 +721,7 @@ class RevenueManager(ABC):
         ).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     async def _detect_transaction_anomalies(self, transaction: RevenueTransaction) -> None:
-        """Detect suspicious transaction patterns"""
-        # Simple anomaly detection based on amount and frequency
+        """Detect suspicious transaction patterns"""        # Simple anomaly detection based on amount and frequency
         user_transactions = [
             tx for tx in self._transactions.values()
             if tx.user_id == transaction.user_id
@@ -770,8 +738,7 @@ class RevenueManager(ABC):
                 transaction.metadata["anomaly_detected"] = True
     
     async def _check_payout_eligibility(self, user_id: str) -> None:
-        """Check if user is eligible for automatic payout"""
-        # Calculate pending earnings
+        """Check if user is eligible for automatic payout"""        # Calculate pending earnings
         pending_transactions = [
             tx for tx in self._transactions.values()
             if tx.user_id == user_id and tx.status == RevenueStatus.CONFIRMED
@@ -784,8 +751,7 @@ class RevenueManager(ABC):
             logger.info(f"💰 Payout eligible for user {user_id}: {total_pending}")
     
     async def _analyze_revenue_patterns(self, transactions: List[RevenueTransaction]) -> Dict[str, float]:
-        """Analyze revenue patterns in historical data"""
-        if not transactions:
+        """Analyze revenue patterns in historical data"""        if not transactions:
             return {}
         
         # Group by month for trend analysis
@@ -818,8 +784,7 @@ class RevenueManager(ABC):
         self, 
         transactions: List[RevenueTransaction]
     ) -> List[str]:
-        """Identify revenue optimization opportunities"""
-        opportunities = []
+        """Identify revenue optimization opportunities"""        opportunities = []
         
         # Analyze revenue sources
         source_revenue = {}
@@ -846,8 +811,7 @@ class RevenueManager(ABC):
         return opportunities
     
     async def _analyze_revenue_risks(self, transactions: List[RevenueTransaction]) -> List[str]:
-        """Analyze revenue risks"""
-        risks = []
+        """Analyze revenue risks"""        risks = []
         
         # Platform concentration risk
         platform_revenue = {}
@@ -880,8 +844,7 @@ class RevenueManager(ABC):
         revenue_by_source: Dict[RevenueSource, Decimal],
         revenue_by_platform: Dict[str, Decimal]
     ) -> List[str]:
-        """Generate AI-powered optimization suggestions"""
-        suggestions = []
+        """Generate AI-powered optimization suggestions"""        suggestions = []
         
         total_revenue = sum(revenue_by_source.values())
         
@@ -903,8 +866,7 @@ class RevenueManager(ABC):
         opportunities: List[str],
         risks: List[str]
     ) -> List[str]:
-        """Generate high-level strategic recommendations"""
-        recommendations = []
+        """Generate high-level strategic recommendations"""        recommendations = []
         
         # Growth-based recommendations
         growth_rate = patterns.get("growth_rate", 0.0)
@@ -926,8 +888,7 @@ class RevenueManager(ABC):
         return recommendations
     
     async def _cleanup_analytics_cache(self) -> None:
-        """Clean up old analytics cache entries"""
-        # Remove oldest 50% of cache entries
+        """Clean up old analytics cache entries"""        # Remove oldest 50% of cache entries
         cache_items = list(self._analytics_cache.items())
         cache_items.sort(key=lambda x: x[1].period_end)
         
@@ -937,8 +898,7 @@ class RevenueManager(ABC):
     
     @asynccontextmanager
     async def get_revenue_session(self):
-        """Context manager for revenue operations"""
-        session_id = str(uuid.uuid4())
+        """Context manager for revenue operations"""        session_id = str(uuid.uuid4())
         try:
             logger.info(f"💰 Revenue session started: {session_id}")
             yield session_id
@@ -946,8 +906,7 @@ class RevenueManager(ABC):
             logger.info(f"💰 Revenue session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup revenue management resources"""
-        try:
+        """Cleanup revenue management resources"""        try:
             # Cancel sync tasks
             for task in self._sync_tasks.values():
                 task.cancel()
@@ -981,8 +940,7 @@ class RevenueManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get revenue management statistics"""
-        with self._lock:
+        """Get revenue management statistics"""        with self._lock:
             return {
                 "transactions_count": len(self._transactions),
                 "forecasts_count": len(self._forecasts),
@@ -1014,13 +972,11 @@ revenue_manager = None
 
 
 def get_revenue_manager() -> RevenueManager:
-    """
-    Get the global revenue manager instance
+    """    Get the global revenue manager instance
     
     Returns:
         RevenueManager: Global revenue manager
-    """
-    global revenue_manager
+    """    global revenue_manager
     if revenue_manager is None:
         from ..implementations.revenue_manager_impl import RevenueManagerImpl
         revenue_manager = RevenueManagerImpl()

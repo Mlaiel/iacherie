@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Direct Test Runner for Critical Unit Tests
+"""Direct Test Runner for Critical Unit Tests
 ==========================================
 
 Run critical unit tests directly without conftest dependencies.
@@ -9,7 +8,6 @@ This addresses the immediate testing gap while bypassing configuration issues.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Validate critical unit tests implementation
 """
-
 import sys
 import asyncio
 import traceback
@@ -19,8 +17,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 async def run_fingerprinting_tests():
-    """Run fingerprinting agent tests"""
-    print("🔍 Testing Fingerprinting Agent...")
+    """Run fingerprinting agent tests"""    print("🔍 Testing Fingerprinting Agent...")
     
     # Import and run tests
     from tests.unit.test_fingerprinting_agent import TestFingerprintingAgent, MockFingerprintingEngine
@@ -72,8 +69,7 @@ async def run_fingerprinting_tests():
         return False
 
 async def run_monetization_tests():
-    """Run monetization agent tests"""
-    print("\n💰 Testing Monetization Agent...")
+    """Run monetization agent tests"""    print("\n💰 Testing Monetization Agent...")
     
     from tests.unit.test_monetization_agent import TestMonetizationAgent, MockMonetizationEngine
     
@@ -133,8 +129,7 @@ async def run_monetization_tests():
         return False
 
 async def run_crawler_tests():
-    """Run critical crawler tests"""
-    print("\n🕷️ Testing Critical Crawlers...")
+    """Run critical crawler tests"""    print("\n🕷️ Testing Critical Crawlers...")
     
     from tests.unit.test_critical_platform_crawlers import (
         TestCriticalCrawlers, MockSpotifyCrawler, MockYouTubeCrawler, MockPlatformIntegrationEngine
@@ -188,8 +183,7 @@ async def run_crawler_tests():
         return False
 
 async def run_api_tests():
-    """Run API endpoint tests"""
-    print("\n🔌 Testing Critical API Endpoints...")
+    """Run API endpoint tests"""    print("\n🔌 Testing Critical API Endpoints...")
     
     from tests.unit.test_core_api_authentication import TestCriticalAPIEndpoints, MockAuthenticationAPI
     
@@ -246,8 +240,7 @@ async def run_api_tests():
         return False
 
 async def run_integration_tests():
-    """Run integration workflow tests"""
-    print("\n🔄 Testing Integration Workflows...")
+    """Run integration workflow tests"""    print("\n🔄 Testing Integration Workflows...")
     
     from tests.integration.test_full_workflow_validation import TestFullWorkflowIntegration, MockContentProtectionWorkflow
     
@@ -309,8 +302,7 @@ async def run_integration_tests():
         return False
 
 async def main():
-    """Run all critical tests"""
-    print("🚀 Running Critical Unit Tests for Ainflue Platform")
+    """Run all critical tests"""    print("🚀 Running Critical Unit Tests for Ainflue Platform")
     print("=" * 60)
     
     results = []

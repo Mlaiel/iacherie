@@ -1,5 +1,4 @@
-"""
-Twitch Crawler
+"""Twitch Crawler
 ==============
 
 Professional Twitch content crawler for live streaming and gaming content monitoring.
@@ -23,7 +22,6 @@ Project Team Specialties:
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, AsyncGenerator
@@ -54,8 +52,7 @@ settings = get_settings()
 
 @dataclass
 class TwitchStream:
-    """Twitch stream data structure."""
-    stream_id: str
+    """Twitch stream data structure."""    stream_id: str
     user_id: str
     user_login: str
     user_name: str
@@ -73,8 +70,7 @@ class TwitchStream:
 
 @dataclass
 class TwitchClip:
-    """Twitch clip data structure."""
-    clip_id: str
+    """Twitch clip data structure."""    clip_id: str
     url: str
     embed_url: str
     broadcaster_id: str
@@ -93,8 +89,7 @@ class TwitchClip:
 
 @dataclass
 class TwitchVideo:
-    """Twitch video/VOD data structure."""
-    video_id: str
+    """Twitch video/VOD data structure."""    video_id: str
     stream_id: Optional[str]
     user_id: str
     user_login: str
@@ -114,8 +109,7 @@ class TwitchVideo:
 
 @dataclass
 class TwitchUser:
-    """Twitch user/channel data structure."""
-    user_id: str
+    """Twitch user/channel data structure."""    user_id: str
     login: str
     display_name: str
     type: str  # staff, admin, global_mod, ""
@@ -128,8 +122,7 @@ class TwitchUser:
     email: Optional[str]
 
 class TwitchCrawler:
-    """
-    Professional Twitch crawler implementation.
+    """    Professional Twitch crawler implementation.
     
     Features:
     - Twitch Helix API integration
@@ -142,11 +135,9 @@ class TwitchCrawler:
     - Content categorization
     - Audience engagement metrics
     - Gaming trend analysis
-    """
-    
+    """    
     def __init__(self):
-        """Initialize Twitch crawler."""
-        self.client_id = settings.TWITCH_CLIENT_ID
+        """Initialize Twitch crawler."""        self.client_id = settings.TWITCH_CLIENT_ID
         self.client_secret = settings.TWITCH_CLIENT_SECRET
         self.access_token = None
         self.rate_limiter = TwitchRateLimiter()
@@ -178,8 +169,7 @@ class TwitchCrawler:
         }
     
     async def authenticate(self):
-        """Authenticate with Twitch API using client credentials."""
-        try:
+        """Authenticate with Twitch API using client credentials."""        try:
             async with aiohttp.ClientSession() as session:
                 auth_data = {
                     "client_id": self.client_id,
@@ -206,8 +196,7 @@ class TwitchCrawler:
         language: Optional[str] = None,
         max_results: int = 100
     ) -> AsyncGenerator[TwitchStream, None]:
-        """
-        Search live streams with filtering options.
+        """        Search live streams with filtering options.
         
         Args:
             game_name: Filter by game/category name
@@ -216,8 +205,7 @@ class TwitchCrawler:
             
         Yields:
             TwitchStream: Stream data
-        """
-        if not self.access_token:
+        """        if not self.access_token:
             await self.authenticate()
         
         await self.rate_limiter.wait_if_needed("streams")
@@ -260,8 +248,7 @@ class TwitchCrawler:
         channel_name: str,
         check_interval: int = 300
     ) -> AsyncGenerator[TwitchStream, None]:
-        """
-        Monitor Twitch channel for live streams.
+        """        Monitor Twitch channel for live streams.
         
         Args:
             channel_name: Twitch channel username
@@ -269,8 +256,7 @@ class TwitchCrawler:
             
         Yields:
             TwitchStream: Live stream when channel goes live
-        """
-        if not self.access_token:
+        """        if not self.access_token:
             await self.authenticate()
         
         user_id = await self._get_user_id(channel_name)
@@ -320,8 +306,7 @@ class TwitchCrawler:
         period: str = "week",
         max_results: int = 50
     ) -> List[TwitchClip]:
-        """
-        Get clips from Twitch channel.
+        """        Get clips from Twitch channel.
         
         Args:
             channel_name: Twitch channel username
@@ -330,8 +315,7 @@ class TwitchCrawler:
             
         Returns:
             List[TwitchClip]: Channel clips
-        """
-        if not self.access_token:
+        """        if not self.access_token:
             await self.authenticate()
         
         user_id = await self._get_user_id(channel_name)
@@ -389,8 +373,7 @@ class TwitchCrawler:
         video_type: str = "all",
         max_results: int = 50
     ) -> List[TwitchVideo]:
-        """
-        Get videos/VODs from Twitch channel.
+        """        Get videos/VODs from Twitch channel.
         
         Args:
             channel_name: Twitch channel username
@@ -399,8 +382,7 @@ class TwitchCrawler:
             
         Returns:
             List[TwitchVideo]: Channel videos
-        """
-        if not self.access_token:
+        """        if not self.access_token:
             await self.authenticate()
         
         user_id = await self._get_user_id(channel_name)
@@ -446,16 +428,14 @@ class TwitchCrawler:
         self,
         channel_name: str
     ) -> AsyncGenerator[Dict, None]:
-        """
-        Monitor Twitch chat in real-time using IRC.
+        """        Monitor Twitch chat in real-time using IRC.
         
         Args:
             channel_name: Twitch channel to monitor
             
         Yields:
             Dict: Chat message data
-        """
-        try:
+        """        try:
             import websockets
             
             # Connect to Twitch IRC WebSocket
@@ -497,8 +477,7 @@ class TwitchCrawler:
         search_query: str,
         max_scroll: int = 3
     ) -> List[TwitchStream]:
-        """
-        Scrape Twitch using Selenium as fallback.
+        """        Scrape Twitch using Selenium as fallback.
         
         Args:
             search_query: Search query
@@ -506,8 +485,7 @@ class TwitchCrawler:
             
         Returns:
             List[TwitchStream]: Scraped streams
-        """
-        chrome_options = Options()
+        """        chrome_options = Options()
         chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
@@ -560,8 +538,7 @@ class TwitchCrawler:
                 driver.quit()
     
     async def _get_user_id(self, username: str) -> Optional[str]:
-        """Get Twitch user ID from username."""
-        try:
+        """Get Twitch user ID from username."""        try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_api_url}/users"
                 params = {"login": username.lower()}
@@ -580,8 +557,7 @@ class TwitchCrawler:
             return None
     
     async def _get_game_id(self, game_name: str) -> Optional[str]:
-        """Get Twitch game ID from game name."""
-        try:
+        """Get Twitch game ID from game name."""        try:
             async with aiohttp.ClientSession() as session:
                 url = f"{self.base_api_url}/games"
                 params = {"name": game_name}
@@ -600,8 +576,7 @@ class TwitchCrawler:
             return None
     
     def _parse_stream_data(self, stream_data: Dict) -> Optional[TwitchStream]:
-        """Parse Twitch stream data from API response."""
-        try:
+        """Parse Twitch stream data from API response."""        try:
             return TwitchStream(
                 stream_id=stream_data["id"],
                 user_id=stream_data["user_id"],
@@ -625,8 +600,7 @@ class TwitchCrawler:
             return None
     
     def _parse_clip_data(self, clip_data: Dict) -> Optional[TwitchClip]:
-        """Parse Twitch clip data from API response."""
-        try:
+        """Parse Twitch clip data from API response."""        try:
             return TwitchClip(
                 clip_id=clip_data["id"],
                 url=clip_data["url"],
@@ -651,8 +625,7 @@ class TwitchCrawler:
             return None
     
     def _parse_video_data(self, video_data: Dict) -> Optional[TwitchVideo]:
-        """Parse Twitch video data from API response."""
-        try:
+        """Parse Twitch video data from API response."""        try:
             return TwitchVideo(
                 video_id=video_data["id"],
                 stream_id=video_data.get("stream_id"),
@@ -678,8 +651,7 @@ class TwitchCrawler:
             return None
     
     def _parse_irc_message(self, message: str) -> Optional[Dict]:
-        """Parse IRC message from Twitch chat."""
-        try:
+        """Parse IRC message from Twitch chat."""        try:
             if "PRIVMSG" not in message:
                 return None
             
@@ -727,8 +699,7 @@ class TwitchCrawler:
             return None
     
     def _extract_stream_from_element(self, element) -> Optional[TwitchStream]:
-        """Extract stream data from Selenium web element."""
-        try:
+        """Extract stream data from Selenium web element."""        try:
             # This would be implemented based on Twitch's current HTML structure
             title_element = element.find_element(By.CSS_SELECTOR, "[data-a-target='preview-card-title-link']")
             title = title_element.text if title_element else ""
@@ -756,8 +727,7 @@ class TwitchCrawler:
             return None
     
     async def close(self):
-        """Clean up resources."""
-        if self.websocket:
+        """Clean up resources."""        if self.websocket:
             await self.websocket.close()
         
         logger.info("Twitch crawler closed")

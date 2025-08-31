@@ -1,5 +1,4 @@
-"""
-🤝 Collaboration Models - IA Influencer Agent Platform Enterprise
+"""🤝 Collaboration Models - IA Influencer Agent Platform Enterprise
 =================================================================
 Module: backend/data_management/models/collaboration_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -10,7 +9,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timezone
 from enum import Enum

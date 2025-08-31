@@ -1,5 +1,4 @@
-"""
-Monetization Analyzer
+"""Monetization Analyzer
 ====================
 
 Advanced monetization analysis and revenue optimization system.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -37,8 +35,7 @@ from decimal import Decimal, ROUND_HALF_UP
 logger = logging.getLogger(__name__)
 
 class MonetizationChannel(Enum):
-    """Monetization channels and revenue streams."""
-    BRAND_PARTNERSHIPS = "brand_partnerships"
+    """Monetization channels and revenue streams."""    BRAND_PARTNERSHIPS = "brand_partnerships"
     SPONSORED_CONTENT = "sponsored_content"
     AFFILIATE_MARKETING = "affiliate_marketing"
     PRODUCT_PLACEMENT = "product_placement"
@@ -52,16 +49,14 @@ class MonetizationChannel(Enum):
     DIGITAL_PRODUCTS = "digital_products"
 
 class RevenueCategory(Enum):
-    """Revenue categorization."""
-    ACTIVE_REVENUE = "active_revenue"      # Direct content monetization
+    """Revenue categorization."""    ACTIVE_REVENUE = "active_revenue"      # Direct content monetization
     PASSIVE_REVENUE = "passive_revenue"    # Ongoing revenue streams
     ONE_TIME_REVENUE = "one_time_revenue"  # Single transactions
     RECURRING_REVENUE = "recurring_revenue"  # Subscription-based
     PERFORMANCE_REVENUE = "performance_revenue"  # Commission-based
 
 class MonetizationPotential(Enum):
-    """Monetization potential levels."""
-    VERY_HIGH = "very_high"    # >$10K monthly potential
+    """Monetization potential levels."""    VERY_HIGH = "very_high"    # >$10K monthly potential
     HIGH = "high"              # $5K-$10K monthly potential
     MEDIUM = "medium"          # $1K-$5K monthly potential
     LOW = "low"                # $100-$1K monthly potential
@@ -69,8 +64,7 @@ class MonetizationPotential(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue tracking and metrics."""
-    total_revenue: Decimal
+    """Revenue tracking and metrics."""    total_revenue: Decimal
     monthly_revenue: Decimal
     revenue_growth_rate: float
     
@@ -95,8 +89,7 @@ class RevenueMetrics:
 
 @dataclass
 class MonetizationOpportunity:
-    """Identified monetization opportunity."""
-    opportunity_id: str
+    """Identified monetization opportunity."""    opportunity_id: str
     channel: MonetizationChannel
     potential_revenue: Decimal
     implementation_difficulty: float  # 0-1 scale
@@ -121,8 +114,7 @@ class MonetizationOpportunity:
 
 @dataclass
 class BrandCollaborationAnalysis:
-    """Brand collaboration and partnership analysis."""
-    brand_compatibility_score: float
+    """Brand collaboration and partnership analysis."""    brand_compatibility_score: float
     audience_alignment_score: float
     engagement_quality_score: float
     
@@ -143,8 +135,7 @@ class BrandCollaborationAnalysis:
 
 @dataclass
 class MonetizationAnalysisResult:
-    """Complete monetization analysis result."""
-    content_id: str
+    """Complete monetization analysis result."""    content_id: str
     analysis_timestamp: datetime
     
     # Current monetization state
@@ -176,8 +167,7 @@ class MonetizationAnalysisResult:
     data_sources: List[str] = field(default_factory=list)
 
 class MonetizationAnalyzer:
-    """
-    Advanced monetization analysis and revenue optimization system.
+    """    Advanced monetization analysis and revenue optimization system.
     
     Features:
     - Revenue tracking and analysis across all channels
@@ -188,8 +178,7 @@ class MonetizationAnalyzer:
     - Revenue diversification planning
     - Risk assessment and mitigation
     - Performance benchmarking
-    """
-    
+    """    
     def __init__(
         self,
         enable_revenue_tracking: bool = True,
@@ -197,16 +186,14 @@ class MonetizationAnalyzer:
         currency: str = "USD",
         market_region: str = "global"
     ):
-        """
-        Initialize monetization analyzer.
+        """        Initialize monetization analyzer.
         
         Args:
             enable_revenue_tracking: Enable revenue tracking and analytics
             enable_opportunity_detection: Enable opportunity identification
             currency: Currency for revenue calculations
             market_region: Market region for analysis
-        """
-        self.enable_revenue_tracking = enable_revenue_tracking
+        """        self.enable_revenue_tracking = enable_revenue_tracking
         self.enable_opportunity_detection = enable_opportunity_detection
         self.currency = currency
         self.market_region = market_region
@@ -233,8 +220,7 @@ class MonetizationAnalyzer:
         logger.info(f"MonetizationAnalyzer initialized for {market_region} market in {currency}")
     
     def _load_market_intelligence(self) -> None:
-        """Load market intelligence and pricing data."""
-        # Industry standard rates (per 1000 followers)
+        """Load market intelligence and pricing data."""        # Industry standard rates (per 1000 followers)
         self.market_rates = {
             "instagram": {
                 "sponsored_post": {"min": 10, "max": 100, "average": 50},
@@ -280,8 +266,7 @@ class MonetizationAnalyzer:
         }
     
     def _initialize_pricing_models(self) -> None:
-        """Initialize pricing models and calculators."""
-        # Base pricing multipliers
+        """Initialize pricing models and calculators."""        # Base pricing multipliers
         self.pricing_multipliers = {
             "niche_authority": 1.5,     # Niche expert premium
             "high_engagement": 1.3,     # High engagement premium
@@ -308,8 +293,7 @@ class MonetizationAnalyzer:
         engagement_data: Dict[str, Any],
         revenue_data: Optional[Dict[str, Any]] = None
     ) -> MonetizationAnalysisResult:
-        """
-        Analyze monetization potential and opportunities.
+        """        Analyze monetization potential and opportunities.
         
         Args:
             content_id: Unique content identifier
@@ -320,8 +304,7 @@ class MonetizationAnalyzer:
             
         Returns:
             MonetizationAnalysisResult: Complete monetization analysis
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             revenue_data = revenue_data or {}
@@ -448,8 +431,7 @@ class MonetizationAnalyzer:
         revenue_data: Dict[str, Any],
         creator_profile: Dict[str, Any]
     ) -> RevenueMetrics:
-        """Calculate comprehensive revenue metrics."""
-        try:
+        """Calculate comprehensive revenue metrics."""        try:
             # Extract revenue data
             total_revenue = Decimal(str(revenue_data.get('total_revenue', 0)))
             monthly_revenue = Decimal(str(revenue_data.get('monthly_revenue', 0)))
@@ -536,8 +518,7 @@ class MonetizationAnalyzer:
         engagement_data: Dict[str, Any],
         revenue_metrics: RevenueMetrics
     ) -> MonetizationPotential:
-        """Assess overall monetization potential."""
-        try:
+        """Assess overall monetization potential."""        try:
             followers = creator_profile.get('follower_count', 0)
             engagement_rate = engagement_data.get('engagement_rate', 0.0)
             niche_authority = creator_profile.get('niche_authority_score', 0.5)
@@ -605,8 +586,7 @@ class MonetizationAnalyzer:
         content_data: Dict[str, Any],
         engagement_data: Dict[str, Any]
     ) -> List[MonetizationOpportunity]:
-        """Identify monetization opportunities."""
-        opportunities = []
+        """Identify monetization opportunities."""        opportunities = []
         
         try:
             followers = creator_profile.get('follower_count', 0)
@@ -669,8 +649,7 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any],
         engagement_data: Dict[str, Any]
     ) -> MonetizationOpportunity:
-        """Create brand partnership opportunity."""
-        followers = creator_profile.get('follower_count', 0)
+        """Create brand partnership opportunity."""        followers = creator_profile.get('follower_count', 0)
         engagement_rate = engagement_data.get('engagement_rate', 0.0)
         
         # Calculate potential revenue
@@ -701,8 +680,7 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any],
         content_data: Dict[str, Any]
     ) -> MonetizationOpportunity:
-        """Create affiliate marketing opportunity."""
-        followers = creator_profile.get('follower_count', 0)
+        """Create affiliate marketing opportunity."""        followers = creator_profile.get('follower_count', 0)
         niche = creator_profile.get('niche', 'general')
         
         # Estimate conversion and commission
@@ -734,8 +712,7 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any],
         niche: str
     ) -> MonetizationOpportunity:
-        """Create digital products opportunity."""
-        followers = creator_profile.get('follower_count', 0)
+        """Create digital products opportunity."""        followers = creator_profile.get('follower_count', 0)
         
         # Product pricing based on niche
         product_prices = {
@@ -774,8 +751,7 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any],
         engagement_data: Dict[str, Any]
     ) -> MonetizationOpportunity:
-        """Create subscription/membership opportunity."""
-        followers = creator_profile.get('follower_count', 0)
+        """Create subscription/membership opportunity."""        followers = creator_profile.get('follower_count', 0)
         engagement_rate = engagement_data.get('engagement_rate', 0.0)
         
         # Subscription pricing and conversion
@@ -807,8 +783,7 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any],
         engagement_data: Dict[str, Any]
     ) -> MonetizationOpportunity:
-        """Create merchandise opportunity."""
-        followers = creator_profile.get('follower_count', 0)
+        """Create merchandise opportunity."""        followers = creator_profile.get('follower_count', 0)
         
         # Merchandise economics
         average_product_price = 25
@@ -840,8 +815,7 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any],
         niche: str
     ) -> MonetizationOpportunity:
-        """Create course/training opportunity."""
-        followers = creator_profile.get('follower_count', 0)
+        """Create course/training opportunity."""        followers = creator_profile.get('follower_count', 0)
         
         # Course pricing by niche
         course_prices = {
@@ -880,8 +854,7 @@ class MonetizationAnalyzer:
         content_data: Dict[str, Any],
         engagement_data: Dict[str, Any]
     ) -> BrandCollaborationAnalysis:
-        """Analyze brand collaboration potential."""
-        try:
+        """Analyze brand collaboration potential."""        try:
             followers = creator_profile.get('follower_count', 0)
             engagement_rate = engagement_data.get('engagement_rate', 0.0)
             niche = creator_profile.get('niche', 'general')
@@ -949,8 +922,7 @@ class MonetizationAnalyzer:
             )
     
     def _get_recommended_brands(self, niche: str, followers: int) -> List[str]:
-        """Get recommended brands for collaboration."""
-        brand_recommendations = {
+        """Get recommended brands for collaboration."""        brand_recommendations = {
             'technology': ['Tech Startups', 'SaaS Companies', 'Hardware Brands', 'Mobile Apps'],
             'fitness': ['Supplement Brands', 'Athletic Wear', 'Fitness Equipment', 'Health Foods'],
             'lifestyle': ['Fashion Brands', 'Home Decor', 'Travel Companies', 'Food Brands'],
@@ -974,8 +946,7 @@ class MonetizationAnalyzer:
         engagement_rate: float,
         niche: str
     ) -> List[str]:
-        """Get optimal partnership types."""
-        partnership_types = []
+        """Get optimal partnership types."""        partnership_types = []
         
         # Basic partnerships
         partnership_types.append("Sponsored Posts")
@@ -1007,8 +978,7 @@ class MonetizationAnalyzer:
         potential: MonetizationPotential,
         opportunities: List[MonetizationOpportunity]
     ) -> List[str]:
-        """Generate revenue optimization strategies."""
-        strategies = []
+        """Generate revenue optimization strategies."""        strategies = []
         
         # Diversification strategy
         if revenue_metrics.revenue_diversification_score < 0.5:
@@ -1042,8 +1012,7 @@ class MonetizationAnalyzer:
         revenue_metrics: RevenueMetrics,
         opportunities: List[MonetizationOpportunity]
     ) -> List[str]:
-        """Generate revenue diversification recommendations."""
-        recommendations = []
+        """Generate revenue diversification recommendations."""        recommendations = []
         
         # Analyze current channel concentration
         total_revenue = revenue_metrics.total_revenue
@@ -1081,8 +1050,7 @@ class MonetizationAnalyzer:
         engagement_data: Dict[str, Any],
         brand_analysis: BrandCollaborationAnalysis
     ) -> Dict[str, Any]:
-        """Optimize pricing strategies."""
-        followers = creator_profile.get('follower_count', 0)
+        """Optimize pricing strategies."""        followers = creator_profile.get('follower_count', 0)
         engagement_rate = engagement_data.get('engagement_rate', 0.0)
         niche = creator_profile.get('niche', 'general')
         
@@ -1142,8 +1110,7 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any],
         revenue_metrics: RevenueMetrics
     ) -> Dict[str, Any]:
-        """Analyze market positioning."""
-        followers = creator_profile.get('follower_count', 0)
+        """Analyze market positioning."""        followers = creator_profile.get('follower_count', 0)
         
         # Determine influencer tier
         if followers >= 1000000:
@@ -1175,8 +1142,7 @@ class MonetizationAnalyzer:
         }
     
     def _get_market_opportunities(self, tier: str) -> List[str]:
-        """Get market opportunities by tier."""
-        opportunities = {
+        """Get market opportunities by tier."""        opportunities = {
             "nano_influencer": ["Local partnerships", "Niche products", "Micro-influencer networks"],
             "micro_influencer": ["Small brand partnerships", "Affiliate programs", "Digital products"],
             "mid_tier_influencer": ["Brand campaigns", "Product lines", "Speaking engagements"],
@@ -1187,8 +1153,7 @@ class MonetizationAnalyzer:
         return opportunities.get(tier, ["General opportunities"])
     
     def _get_competitive_advantages(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Get competitive advantages."""
-        advantages = []
+        """Get competitive advantages."""        advantages = []
         
         engagement_rate = creator_profile.get('engagement_rate', 0.0)
         if engagement_rate > 0.05:
@@ -1213,8 +1178,7 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any],
         content_data: Dict[str, Any]
     ) -> Dict[str, Decimal]:
-        """Analyze competitive pricing in the market."""
-        niche = creator_profile.get('niche', 'general')
+        """Analyze competitive pricing in the market."""        niche = creator_profile.get('niche', 'general')
         followers = creator_profile.get('follower_count', 0)
         
         # Get market rates for similar creators
@@ -1246,8 +1210,7 @@ class MonetizationAnalyzer:
         creator_profile: Dict[str, Any],
         revenue_metrics: RevenueMetrics
     ) -> Dict[str, Any]:
-        """Benchmark against industry standards."""
-        followers = creator_profile.get('follower_count', 0)
+        """Benchmark against industry standards."""        followers = creator_profile.get('follower_count', 0)
         
         # Determine tier
         if followers >= 1000000:
@@ -1284,8 +1247,7 @@ class MonetizationAnalyzer:
         }
     
     def _get_industry_trends(self) -> List[str]:
-        """Get current industry trends."""
-        return [
+        """Get current industry trends."""        return [
             "Increased focus on authentic partnerships",
             "Growing demand for video content",
             "Rise of micro-influencer marketing",
@@ -1294,8 +1256,7 @@ class MonetizationAnalyzer:
         ]
     
     def _get_improvement_areas(self, performance_level: str) -> List[str]:
-        """Get improvement areas based on performance."""
-        if performance_level == "below_average":
+        """Get improvement areas based on performance."""        if performance_level == "below_average":
             return [
                 "Improve content quality and consistency",
                 "Increase audience engagement",
@@ -1318,8 +1279,7 @@ class MonetizationAnalyzer:
             ]
     
     def _assess_revenue_risks(self, revenue_metrics: RevenueMetrics) -> List[str]:
-        """Assess revenue-related risks."""
-        risks = []
+        """Assess revenue-related risks."""        risks = []
         
         # Concentration risk
         if revenue_metrics.revenue_diversification_score < 0.3:
@@ -1340,8 +1300,7 @@ class MonetizationAnalyzer:
         return risks
     
     def _assess_dependency_risks(self, revenue_metrics: RevenueMetrics) -> List[str]:
-        """Assess dependency risks."""
-        risks = []
+        """Assess dependency risks."""        risks = []
         
         # Platform dependency
         total_revenue = revenue_metrics.total_revenue
@@ -1367,8 +1326,7 @@ class MonetizationAnalyzer:
         return risks
     
     def _assess_market_risks(self, creator_profile: Dict[str, Any]) -> List[str]:
-        """Assess market-related risks."""
-        risks = []
+        """Assess market-related risks."""        risks = []
         
         niche = creator_profile.get('niche', 'general')
         
@@ -1395,8 +1353,7 @@ class MonetizationAnalyzer:
         revenue_data: Dict[str, Any],
         opportunity_count: int
     ) -> float:
-        """Calculate analysis confidence score."""
-        confidence_factors = []
+        """Calculate analysis confidence score."""        confidence_factors = []
         
         # Data completeness factor
         required_fields = ['follower_count', 'engagement_rate', 'niche']
@@ -1427,8 +1384,7 @@ class MonetizationAnalyzer:
         return np.mean(confidence_factors)
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get monetization analysis analytics and performance metrics."""
-        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
+        """Get monetization analysis analytics and performance metrics."""        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {
             "total_analyses": self.analysis_count,
@@ -1447,8 +1403,7 @@ class MonetizationAnalyzer:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources and clear caches."""
-        self.revenue_history.clear()
+        """Cleanup resources and clear caches."""        self.revenue_history.clear()
         self.monetization_tracking.clear()
         self.partnership_history.clear()
         self.processing_times.clear()

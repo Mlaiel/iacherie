@@ -1,5 +1,4 @@
-"""
-Compliance Agent Index - Centralized Export System
+"""Compliance Agent Index - Centralized Export System
 
 Enterprise-grade compliance management module exports for the IA-Influencer-Agent platform.
 Provides centralized access to all compliance management components and systems.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 from typing import Dict, List, Any, Optional
 
 # Core Compliance Management Components
@@ -122,14 +120,11 @@ COMPLIANCE_DATA_MODELS = [
 
 # Centralized Module Interface
 class ComplianceModuleInterface:
-    """
-    Centralized interface for compliance module operations.
+    """    Centralized interface for compliance module operations.
     Provides unified access to all compliance management capabilities.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize compliance module interface"""
-        self.components = {
+        """Initialize compliance module interface"""        self.components = {
             'agent': ComplianceAgent,
             'manager': ComplianceAgentManager,
             'regulatory_monitor': RegulatoryMonitor,
@@ -143,16 +138,13 @@ class ComplianceModuleInterface:
         }
     
     def get_component(self, component_name: str) -> Optional[Any]:
-        """Get compliance component by name"""
-        return self.components.get(component_name)
+        """Get compliance component by name"""        return self.components.get(component_name)
     
     def list_components(self) -> List[str]:
-        """List all available compliance components"""
-        return list(self.components.keys())
+        """List all available compliance components"""        return list(self.components.keys())
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get module information"""
-        return {
+        """Get module information"""        return {
             'name': 'compliance_agent',
             'version': __version__,
             'author': __author__,

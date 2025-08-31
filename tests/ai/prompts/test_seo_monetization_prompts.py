@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced SEO & Monetization Prompts Tests
+"""Advanced SEO & Monetization Prompts Tests
 Ultra-professional test suite for SEO & Monetization Prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -26,7 +23,6 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
-
 import pytest
 import sys
 import os
@@ -47,20 +43,17 @@ from ai.prompts.seo_monetization_prompts import (
 
 
 class TestSEOMonetizationPrompts:
-    """Ultra-comprehensive test suite for SEO & Monetization Prompts"""
-    
+    """Ultra-comprehensive test suite for SEO & Monetization Prompts"""    
     @pytest.fixture
     async def seo_monetization_prompts(self):
-        """Create a fresh SEOMonetizationPrompts instance for each test"""
-        prompts = SEOMonetizationPrompts()
+        """Create a fresh SEOMonetizationPrompts instance for each test"""        prompts = SEOMonetizationPrompts()
         await prompts.initialize()
         yield prompts
         await prompts.cleanup()
     
     @pytest.fixture
     def sample_blog_seo_context(self):
-        """Create sample blog SEO context for testing"""
-        return SEOMonetizationContext(
+        """Create sample blog SEO context for testing"""        return SEOMonetizationContext(
             seo_strategy=SEOStrategy.ADVANCED,
             monetization_models=[MonetizationModel.ADVERTISING, MonetizationModel.AFFILIATE],
             platforms=[Platform.GOOGLE, Platform.BING],
@@ -95,8 +88,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.fixture
     def sample_music_monetization_context(self):
-        """Create sample music monetization context for testing"""
-        return SEOMonetizationContext(
+        """Create sample music monetization context for testing"""        return SEOMonetizationContext(
             seo_strategy=SEOStrategy.CONTENT_SEO,
             monetization_models=[MonetizationModel.LICENSING, MonetizationModel.SUBSCRIPTION, MonetizationModel.MERCHANDISE],
             platforms=[Platform.SPOTIFY, Platform.YOUTUBE, Platform.APPLE_MUSIC],
@@ -130,8 +122,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.fixture 
     def sample_video_monetization_context(self):
-        """Create sample video monetization context for testing"""
-        return SEOMonetizationContext(
+        """Create sample video monetization context for testing"""        return SEOMonetizationContext(
             seo_strategy=SEOStrategy.ENTERPRISE,
             monetization_models=[MonetizationModel.ADVERTISING, MonetizationModel.SPONSORSHIP, MonetizationModel.CROWDFUNDING],
             platforms=[Platform.YOUTUBE, Platform.TIKTOK, Platform.INSTAGRAM],
@@ -168,8 +159,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_seo_monetization_prompts_initialization(self, seo_monetization_prompts):
-        """Test SEOMonetizationPrompts initialization"""
-        assert seo_monetization_prompts is not None
+        """Test SEOMonetizationPrompts initialization"""        assert seo_monetization_prompts is not None
         assert hasattr(seo_monetization_prompts, 'seo_templates')
         assert hasattr(seo_monetization_prompts, 'monetization_strategies')
         assert hasattr(seo_monetization_prompts, 'keyword_research_engine')
@@ -180,8 +170,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_seo_monetization_registry_loading(self, seo_monetization_prompts):
-        """Test that SEO monetization registry is properly loaded"""
-        registry = SEO_MONETIZATION_REGISTRY
+        """Test that SEO monetization registry is properly loaded"""        registry = SEO_MONETIZATION_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)
         
@@ -200,8 +189,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_blog_advanced_seo_prompts(self, seo_monetization_prompts, sample_blog_seo_context):
-        """Test advanced blog SEO prompts generation"""
-        result = await seo_monetization_prompts.generate_seo_prompt(sample_blog_seo_context)
+        """Test advanced blog SEO prompts generation"""        result = await seo_monetization_prompts.generate_seo_prompt(sample_blog_seo_context)
         
         assert result["success"] is True
         assert "prompt" in result
@@ -228,8 +216,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_blog_keyword_research_prompts(self, seo_monetization_prompts):
-        """Test blog keyword research prompts"""
-        keyword_context = SEOMonetizationContext(
+        """Test blog keyword research prompts"""        keyword_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.CONTENT_SEO,
             monetization_models=[MonetizationModel.AFFILIATE],
             platforms=[Platform.GOOGLE],
@@ -264,8 +251,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_blog_content_optimization_prompts(self, seo_monetization_prompts):
-        """Test blog content optimization prompts"""
-        content_optimization_context = SEOMonetizationContext(
+        """Test blog content optimization prompts"""        content_optimization_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.CONTENT_SEO,
             monetization_models=[MonetizationModel.ADVERTISING],
             platforms=[Platform.GOOGLE],
@@ -311,8 +297,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_music_streaming_monetization_prompts(self, seo_monetization_prompts, sample_music_monetization_context):
-        """Test music streaming monetization prompts generation"""
-        result = await seo_monetization_prompts.generate_monetization_prompt(sample_music_monetization_context)
+        """Test music streaming monetization prompts generation"""        result = await seo_monetization_prompts.generate_monetization_prompt(sample_music_monetization_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -334,8 +319,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_music_licensing_optimization_prompts(self, seo_monetization_prompts):
-        """Test music licensing optimization prompts"""
-        licensing_context = SEOMonetizationContext(
+        """Test music licensing optimization prompts"""        licensing_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.TECHNICAL_SEO,
             monetization_models=[MonetizationModel.LICENSING],
             platforms=[Platform.SYNC_LICENSING_PLATFORMS],
@@ -385,8 +369,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_youtube_monetization_prompts(self, seo_monetization_prompts, sample_video_monetization_context):
-        """Test YouTube monetization prompts generation"""
-        result = await seo_monetization_prompts.generate_platform_specific_prompt(
+        """Test YouTube monetization prompts generation"""        result = await seo_monetization_prompts.generate_platform_specific_prompt(
             sample_video_monetization_context, 
             Platform.YOUTUBE
         )
@@ -413,8 +396,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_video_seo_optimization_prompts(self, seo_monetization_prompts):
-        """Test video SEO optimization prompts"""
-        video_seo_context = SEOMonetizationContext(
+        """Test video SEO optimization prompts"""        video_seo_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.ENTERPRISE,
             monetization_models=[MonetizationModel.ADVERTISING],
             platforms=[Platform.YOUTUBE, Platform.TIKTOK],
@@ -466,8 +448,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_affiliate_marketing_prompts(self, seo_monetization_prompts):
-        """Test affiliate marketing prompts generation"""
-        affiliate_context = SEOMonetizationContext(
+        """Test affiliate marketing prompts generation"""        affiliate_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.ADVANCED,
             monetization_models=[MonetizationModel.AFFILIATE],
             platforms=[Platform.GOOGLE, Platform.BING],
@@ -519,8 +500,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_affiliate_disclosure_compliance_prompts(self, seo_monetization_prompts):
-        """Test affiliate disclosure compliance prompts"""
-        compliance_context = SEOMonetizationContext(
+        """Test affiliate disclosure compliance prompts"""        compliance_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.BASIC,
             monetization_models=[MonetizationModel.AFFILIATE],
             platforms=[Platform.GOOGLE],
@@ -558,8 +538,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_technical_seo_prompts(self, seo_monetization_prompts):
-        """Test technical SEO prompts generation"""
-        technical_seo_context = SEOMonetizationContext(
+        """Test technical SEO prompts generation"""        technical_seo_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.TECHNICAL_SEO,
             monetization_models=[MonetizationModel.SUBSCRIPTION],
             platforms=[Platform.GOOGLE],
@@ -602,8 +581,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_local_seo_prompts(self, seo_monetization_prompts):
-        """Test local SEO prompts generation"""
-        local_seo_context = SEOMonetizationContext(
+        """Test local SEO prompts generation"""        local_seo_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.LOCAL_SEO,
             monetization_models=[MonetizationModel.ADVERTISING],
             platforms=[Platform.GOOGLE],
@@ -655,8 +633,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_subscription_model_prompts(self, seo_monetization_prompts):
-        """Test subscription model prompts generation"""
-        subscription_context = SEOMonetizationContext(
+        """Test subscription model prompts generation"""        subscription_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.CONTENT_SEO,
             monetization_models=[MonetizationModel.SUBSCRIPTION],
             platforms=[Platform.DIRECT_WEBSITE],
@@ -710,8 +687,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_seo_analytics_prompts(self, seo_monetization_prompts):
-        """Test SEO analytics prompts generation"""
-        analytics_context = SEOMonetizationContext(
+        """Test SEO analytics prompts generation"""        analytics_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.ADVANCED,
             monetization_models=[MonetizationModel.ADVERTISING, MonetizationModel.AFFILIATE],
             platforms=[Platform.GOOGLE],
@@ -757,8 +733,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_invalid_seo_strategy_error(self, seo_monetization_prompts):
-        """Test error handling for invalid SEO strategy"""
-        with pytest.raises(ValueError) or pytest.raises(TypeError):
+        """Test error handling for invalid SEO strategy"""        with pytest.raises(ValueError) or pytest.raises(TypeError):
             invalid_context = SEOMonetizationContext(
                 seo_strategy="invalid_strategy",
                 monetization_models=[MonetizationModel.ADVERTISING],
@@ -774,8 +749,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_missing_monetization_goals_handling(self, seo_monetization_prompts):
-        """Test handling of missing monetization goals"""
-        minimal_context = SEOMonetizationContext(
+        """Test handling of missing monetization goals"""        minimal_context = SEOMonetizationContext(
             seo_strategy=SEOStrategy.BASIC,
             monetization_models=[MonetizationModel.ADVERTISING],
             platforms=[Platform.GOOGLE],
@@ -799,8 +773,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_seo_prompt_generation_performance(self, seo_monetization_prompts, sample_blog_seo_context):
-        """Test SEO prompt generation performance"""
-        # Test single generation performance
+        """Test SEO prompt generation performance"""        # Test single generation performance
         start_time = datetime.now()
         result = await seo_monetization_prompts.generate_seo_prompt(sample_blog_seo_context)
         single_duration = (datetime.now() - start_time).total_seconds()
@@ -823,8 +796,7 @@ class TestSEOMonetizationPrompts:
     
     @pytest.mark.asyncio
     async def test_comprehensive_seo_monetization_workflow(self, seo_monetization_prompts):
-        """Test comprehensive SEO and monetization workflow integration"""
-        # Step 1: Market research and keyword analysis
+        """Test comprehensive SEO and monetization workflow integration"""        # Step 1: Market research and keyword analysis
         market_research_result = await seo_monetization_prompts.conduct_market_research({
             "industry": "AI tools and software",
             "target_audience": "content creators and marketers",

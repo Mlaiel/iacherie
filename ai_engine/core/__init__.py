@@ -26,8 +26,7 @@ Business Logic Flow:
 User (Créateur) → Upload Multi-Format → IA Protection Droits → SEO Pro → 
 Matching Collaboration → Distribution Multi-Plateformes → Revenue Optimization →
 Performance Monitoring → Predictive Insights → Automated Optimization
-"""
-# Core AI orchestration system
+"""# Core AI orchestration system
 from .ai_orchestrator import (
     AIComponentManager,
     WorkflowOrchestrator,

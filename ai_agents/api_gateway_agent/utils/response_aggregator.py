@@ -1,5 +1,4 @@
-"""
-Response Aggregator - Multi-Service Response Processing
+"""Response Aggregator - Multi-Service Response Processing
 
 Advanced response aggregation, transformation, and optimization for distributed
 microservices responses with intelligent caching and streaming capabilities.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 import asyncio
 import logging
 import json
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ServiceResponse:
-    """Individual service response data"""
-    service_name: str
+    """Individual service response data"""    service_name: str
     status_code: int
     headers: Dict[str, str]
     content: bytes
@@ -42,8 +39,7 @@ class ServiceResponse:
 
 @dataclass
 class AggregationRule:
-    """Response aggregation configuration"""
-    pattern: str
+    """Response aggregation configuration"""    pattern: str
     services: List[str]
     aggregation_type: str  # merge, concat, transform
     timeout: float = 30.0
@@ -52,8 +48,7 @@ class AggregationRule:
 
 
 class ResponseAggregator:
-    """
-    Enterprise Response Aggregator
+    """    Enterprise Response Aggregator
     
     Features:
     - Multi-service response aggregation
@@ -63,11 +58,9 @@ class ResponseAggregator:
     - Response caching
     - Error handling and fallbacks
     - Performance optimization
-    """
-    
+    """    
     def __init__(self, redis_url: Optional[str] = None):
-        """Initialize response aggregator"""
-        self.redis_url = redis_url
+        """Initialize response aggregator"""        self.redis_url = redis_url
         self.redis = None
         
         # Aggregation rules
@@ -93,8 +86,7 @@ class ResponseAggregator:
         service_responses: Dict[str, ServiceResponse],
         aggregation_type: str = "merge"
     ) -> Response:
-        """
-        Aggregate multiple service responses
+        """        Aggregate multiple service responses
         
         Args:
             request_path: Original request path
@@ -103,8 +95,7 @@ class ResponseAggregator:
             
         Returns:
             Aggregated FastAPI Response
-        """
-        try:
+        """        try:
             # Check for cached response
             cache_key = self._generate_cache_key(request_path, service_responses.keys())
             cached_response = await self._get_cached_response(cache_key)
@@ -139,8 +130,7 @@ class ResponseAggregator:
         service_responses: Dict[str, ServiceResponse],
         rule: Optional[AggregationRule] = None
     ) -> Dict[str, Any]:
-        """Merge responses into single JSON object"""
-        try:
+        """Merge responses into single JSON object"""        try:
             merged_data = {
                 "data": {},
                 "metadata": {
@@ -194,8 +184,7 @@ class ResponseAggregator:
         service_responses: Dict[str, ServiceResponse],
         rule: Optional[AggregationRule] = None
     ) -> Dict[str, Any]:
-        """Concatenate responses into single array"""
-        try:
+        """Concatenate responses into single array"""        try:
             concatenated_data = {
                 "items": [],
                 "metadata": {
@@ -262,8 +251,7 @@ class ResponseAggregator:
         service_responses: Dict[str, ServiceResponse],
         rule: Optional[AggregationRule] = None
     ) -> Dict[str, Any]:
-        """Transform responses using custom logic"""
-        try:
+        """Transform responses using custom logic"""        try:
             # This would contain custom transformation logic
             # For now, implement a generic transformation
             
@@ -309,8 +297,7 @@ class ResponseAggregator:
         service_responses: Dict[str, ServiceResponse],
         rule: Optional[AggregationRule] = None
     ) -> Dict[str, Any]:
-        """Collect responses with minimal processing"""
-        try:
+        """Collect responses with minimal processing"""        try:
             collection = {
                 "responses": {},
                 "summary": {
@@ -346,8 +333,7 @@ class ResponseAggregator:
             raise
     
     def _transform_analytics_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Transform analytics service data"""
-        # Implement analytics-specific transformations
+        """Transform analytics service data"""        # Implement analytics-specific transformations
         return {
             "metrics": data.get("metrics", {}),
             "insights": data.get("insights", []),
@@ -355,8 +341,7 @@ class ResponseAggregator:
         }
     
     def _transform_content_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Transform content service data"""
-        # Implement content-specific transformations
+        """Transform content service data"""        # Implement content-specific transformations
         return {
             "content_items": data.get("items", []),
             "total_count": data.get("total", 0),
@@ -364,8 +349,7 @@ class ResponseAggregator:
         }
     
     def _transform_protection_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Transform protection service data"""
-        # Implement protection-specific transformations
+        """Transform protection service data"""        # Implement protection-specific transformations
         return {
             "protection_status": data.get("status", "unknown"),
             "violations": data.get("violations", []),
@@ -373,15 +357,13 @@ class ResponseAggregator:
         }
     
     def _get_aggregation_rule(self, request_path: str) -> Optional[AggregationRule]:
-        """Get aggregation rule for request path"""
-        for pattern, rule in self.aggregation_rules.items():
+        """Get aggregation rule for request path"""        for pattern, rule in self.aggregation_rules.items():
             if self._match_pattern(request_path, pattern):
                 return rule
         return None
     
     def _match_pattern(self, path: str, pattern: str) -> bool:
-        """Match request path against pattern"""
-        # Simple pattern matching - could be enhanced with regex
+        """Match request path against pattern"""        # Simple pattern matching - could be enhanced with regex
         if pattern.endswith("*"):
             return path.startswith(pattern[:-1])
         return path == pattern
@@ -391,8 +373,7 @@ class ResponseAggregator:
         aggregated_data: Dict[str, Any],
         service_responses: Dict[str, ServiceResponse]
     ) -> Response:
-        """Create FastAPI response from aggregated data"""
-        try:
+        """Create FastAPI response from aggregated data"""        try:
             # Determine appropriate status code
             status_code = self._determine_status_code(service_responses)
             
@@ -421,8 +402,7 @@ class ResponseAggregator:
             return self._create_error_response("Aggregation failed", 500)
     
     def _determine_status_code(self, service_responses: Dict[str, ServiceResponse]) -> int:
-        """Determine appropriate HTTP status code for aggregated response"""
-        try:
+        """Determine appropriate HTTP status code for aggregated response"""        try:
             if not service_responses:
                 return 204  # No Content
             
@@ -453,8 +433,7 @@ class ResponseAggregator:
             return 500
     
     def _create_error_response(self, error_message: str, status_code: int) -> Response:
-        """Create error response"""
-        return JSONResponse(
+        """Create error response"""        return JSONResponse(
             content={
                 "error": error_message,
                 "status_code": status_code,
@@ -464,8 +443,7 @@ class ResponseAggregator:
         )
     
     def _generate_cache_key(self, request_path: str, service_names: List[str]) -> str:
-        """Generate cache key for response"""
-        import hashlib
+        """Generate cache key for response"""        import hashlib
         
         key_parts = [request_path] + sorted(service_names)
         key_string = "|".join(key_parts)
@@ -473,8 +451,7 @@ class ResponseAggregator:
         return hashlib.md5(key_string.encode()).hexdigest()
     
     async def _get_cached_response(self, cache_key: str) -> Optional[Dict[str, Any]]:
-        """Get cached response"""
-        try:
+        """Get cached response"""        try:
             # Check in-memory cache first
             if cache_key in self.response_cache:
                 cache_entry = self.response_cache[cache_key]
@@ -502,8 +479,7 @@ class ResponseAggregator:
         response: Response, 
         ttl: int
     ):
-        """Cache response"""
-        try:
+        """Cache response"""        try:
             # Prepare cache data
             cache_data = {
                 "content": response.body.decode() if hasattr(response, 'body') else None,
@@ -530,16 +506,14 @@ class ResponseAggregator:
             logger.error(f"Error caching response: {e}")
     
     def _create_response_from_cache(self, cached_data: Dict[str, Any]) -> Response:
-        """Create response from cached data"""
-        return JSONResponse(
+        """Create response from cached data"""        return JSONResponse(
             content=json.loads(cached_data["content"]) if cached_data.get("content") else {},
             status_code=cached_data.get("status_code", 200),
             headers=cached_data.get("headers", {})
         )
     
     def add_aggregation_rule(self, rule: AggregationRule) -> bool:
-        """Add aggregation rule"""
-        try:
+        """Add aggregation rule"""        try:
             self.aggregation_rules[rule.pattern] = rule
             logger.info(f"Added aggregation rule: {rule.pattern} -> {rule.aggregation_type}")
             return True
@@ -549,8 +523,7 @@ class ResponseAggregator:
             return False
     
     def remove_aggregation_rule(self, pattern: str) -> bool:
-        """Remove aggregation rule"""
-        try:
+        """Remove aggregation rule"""        try:
             if pattern in self.aggregation_rules:
                 del self.aggregation_rules[pattern]
                 logger.info(f"Removed aggregation rule: {pattern}")
@@ -562,8 +535,7 @@ class ResponseAggregator:
             return False
     
     async def clear_cache(self, pattern: Optional[str] = None) -> bool:
-        """Clear response cache"""
-        try:
+        """Clear response cache"""        try:
             if pattern:
                 # Clear specific pattern
                 keys_to_remove = [
@@ -593,8 +565,7 @@ class ResponseAggregator:
             return False
     
     def get_aggregator_stats(self) -> Dict[str, Any]:
-        """Get aggregator statistics"""
-        try:
+        """Get aggregator statistics"""        try:
             return {
                 "aggregation_rules": len(self.aggregation_rules),
                 "cached_responses": len(self.response_cache),

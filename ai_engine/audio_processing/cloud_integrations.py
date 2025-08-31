@@ -1,5 +1,4 @@
-"""
-Cloud Integrations Module - Multi-Platform Audio Distribution Engine
+"""Cloud Integrations Module - Multi-Platform Audio Distribution Engine
 Advanced cloud services integration for professional audio processing and distribution.
 
 Created by: Fahed Mlaiel (mlaiel@live.de)
@@ -12,7 +11,6 @@ without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is
 STRICTLY PROHIBITED and will result in immediate legal action.
 All rights reserved. Patent pending.
 """
-
 import asyncio
 import aiohttp
 import logging
@@ -51,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
-    AWS_S3 = "aws_s3"
+    """Supported cloud providers"""    AWS_S3 = "aws_s3"
     GOOGLE_CLOUD = "google_cloud"
     AZURE_BLOB = "azure_blob"
     DROPBOX = "dropbox"
@@ -65,8 +62,7 @@ class CloudProvider(Enum):
 
 
 class DistributionStatus(Enum):
-    """Distribution status states"""
-    PENDING = "pending"
+    """Distribution status states"""    PENDING = "pending"
     UPLOADING = "uploading"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -77,8 +73,7 @@ class DistributionStatus(Enum):
 
 @dataclass
 class CloudCredentials:
-    """Cloud service credentials"""
-    provider: CloudProvider
+    """Cloud service credentials"""    provider: CloudProvider
     api_key: Optional[str] = None
     secret_key: Optional[str] = None
     token: Optional[str] = None
@@ -92,8 +87,7 @@ class CloudCredentials:
 
 @dataclass
 class AudioMetadata:
-    """Audio metadata for distribution"""
-    title: str
+    """Audio metadata for distribution"""    title: str
     artist: str
     album: Optional[str] = None
     genre: Optional[str] = None
@@ -110,8 +104,7 @@ class AudioMetadata:
 
 @dataclass
 class DistributionResult:
-    """Distribution operation result"""
-    provider: CloudProvider
+    """Distribution operation result"""    provider: CloudProvider
     status: DistributionStatus
     url: Optional[str] = None
     track_id: Optional[str] = None
@@ -122,16 +115,14 @@ class DistributionResult:
 
 
 class CloudStorageManager:
-    """Advanced cloud storage management"""
-    
+    """Advanced cloud storage management"""    
     def __init__(self, credentials: Dict[CloudProvider, CloudCredentials]):
         self.credentials = credentials
         self.clients = {}
         self._initialize_clients()
         
     def _initialize_clients(self):
-        """Initialize cloud service clients"""
-        for provider, creds in self.credentials.items():
+        """Initialize cloud service clients"""        for provider, creds in self.credentials.items():
             try:
                 if provider == CloudProvider.AWS_S3:
                     self.clients[provider] = boto3.client(
@@ -166,8 +157,7 @@ class CloudStorageManager:
                           provider: CloudProvider,
                           metadata: AudioMetadata,
                           folder_path: Optional[str] = None) -> DistributionResult:
-        """Upload audio file to cloud storage"""
-        try:
+        """Upload audio file to cloud storage"""        try:
             start_time = datetime.now()
             
             # Generate unique filename
@@ -204,8 +194,7 @@ class CloudStorageManager:
     
     async def _upload_to_s3(self, file_path: Path, remote_path: str, 
                            metadata: AudioMetadata, start_time: datetime) -> DistributionResult:
-        """Upload to AWS S3"""
-        client = self.clients[CloudProvider.AWS_S3]
+        """Upload to AWS S3"""        client = self.clients[CloudProvider.AWS_S3]
         bucket = self.credentials[CloudProvider.AWS_S3].bucket_name
         
         try:
@@ -249,8 +238,7 @@ class CloudStorageManager:
     
     async def _upload_to_gcs(self, file_path: Path, remote_path: str,
                             metadata: AudioMetadata, start_time: datetime) -> DistributionResult:
-        """Upload to Google Cloud Storage"""
-        client = self.clients[CloudProvider.GOOGLE_CLOUD]
+        """Upload to Google Cloud Storage"""        client = self.clients[CloudProvider.GOOGLE_CLOUD]
         bucket_name = self.credentials[CloudProvider.GOOGLE_CLOUD].bucket_name
         
         try:
@@ -291,8 +279,7 @@ class CloudStorageManager:
     
     async def _upload_to_azure(self, file_path: Path, remote_path: str,
                               metadata: AudioMetadata, start_time: datetime) -> DistributionResult:
-        """Upload to Azure Blob Storage"""
-        client = self.clients[CloudProvider.AZURE_BLOB]
+        """Upload to Azure Blob Storage"""        client = self.clients[CloudProvider.AZURE_BLOB]
         container = self.credentials[CloudProvider.AZURE_BLOB].bucket_name
         
         try:
@@ -337,8 +324,7 @@ class CloudStorageManager:
     
     async def _upload_to_dropbox(self, file_path: Path, remote_path: str,
                                 metadata: AudioMetadata, start_time: datetime) -> DistributionResult:
-        """Upload to Dropbox"""
-        client = self.clients[CloudProvider.DROPBOX]
+        """Upload to Dropbox"""        client = self.clients[CloudProvider.DROPBOX]
         
         try:
             with open(file_path, 'rb') as f:
@@ -379,16 +365,14 @@ class CloudStorageManager:
 
 
 class MusicPlatformDistributor:
-    """Advanced music platform distribution manager"""
-    
+    """Advanced music platform distribution manager"""    
     def __init__(self, credentials: Dict[CloudProvider, CloudCredentials]):
         self.credentials = credentials
         self.api_clients = {}
         self._initialize_api_clients()
     
     def _initialize_api_clients(self):
-        """Initialize music platform API clients"""
-        for provider, creds in self.credentials.items():
+        """Initialize music platform API clients"""        for provider, creds in self.credentials.items():
             try:
                 if provider == CloudProvider.SPOTIFY:
                     self.api_clients[provider] = self._create_spotify_client(creds)
@@ -402,8 +386,7 @@ class MusicPlatformDistributor:
                 logger.error(f"Failed to initialize {provider.value} API client: {e}")
     
     def _create_spotify_client(self, creds: CloudCredentials):
-        """Create Spotify API client"""
-        # Note: Spotify doesn't allow direct uploads via API for most users
+        """Create Spotify API client"""        # Note: Spotify doesn't allow direct uploads via API for most users
         # This would integrate with Spotify for Developers/Artists program
         return {
             'client_id': creds.api_key,
@@ -413,8 +396,7 @@ class MusicPlatformDistributor:
         }
     
     def _create_soundcloud_client(self, creds: CloudCredentials):
-        """Create SoundCloud API client"""
-        return {
+        """Create SoundCloud API client"""        return {
             'client_id': creds.api_key,
             'client_secret': creds.secret_key,
             'oauth_token': creds.token
@@ -425,8 +407,7 @@ class MusicPlatformDistributor:
                                    platform: CloudProvider,
                                    metadata: AudioMetadata,
                                    additional_options: Optional[Dict[str, Any]] = None) -> DistributionResult:
-        """Distribute audio to specific music platform"""
-        try:
+        """Distribute audio to specific music platform"""        try:
             start_time = datetime.now()
             
             if platform == CloudProvider.SOUNDCLOUD:
@@ -446,8 +427,7 @@ class MusicPlatformDistributor:
     
     async def _distribute_to_soundcloud(self, file_path: Path, metadata: AudioMetadata,
                                        start_time: datetime, options: Optional[Dict[str, Any]] = None) -> DistributionResult:
-        """Distribute to SoundCloud"""
-        client_config = self.api_clients[CloudProvider.SOUNDCLOUD]
+        """Distribute to SoundCloud"""        client_config = self.api_clients[CloudProvider.SOUNDCLOUD]
         
         try:
             # Prepare track data
@@ -480,8 +460,7 @@ class MusicPlatformDistributor:
     
     async def _prepare_for_manual_distribution(self, file_path: Path, platform: CloudProvider,
                                               metadata: AudioMetadata, start_time: datetime) -> DistributionResult:
-        """Prepare files and metadata for manual distribution"""
-        try:
+        """Prepare files and metadata for manual distribution"""        try:
             # Create distribution package
             distribution_folder = Path(tempfile.mkdtemp(prefix=f"{platform.value}_distribution_"))
             
@@ -527,8 +506,7 @@ class MusicPlatformDistributor:
             raise Exception(f"Distribution preparation failed: {e}")
     
     def _get_platform_requirements(self, platform: CloudProvider) -> Dict[str, Any]:
-        """Get platform-specific requirements"""
-        requirements = {
+        """Get platform-specific requirements"""        requirements = {
             CloudProvider.SPOTIFY: {
                 'format': 'WAV or FLAC (recommended)',
                 'quality': '44.1kHz/16-bit minimum',
@@ -554,8 +532,7 @@ class MusicPlatformDistributor:
         return requirements.get(platform, {})
     
     def _generate_distribution_guide(self, platform: CloudProvider, metadata: AudioMetadata) -> str:
-        """Generate platform-specific distribution guide"""
-        requirements = self._get_platform_requirements(platform)
+        """Generate platform-specific distribution guide"""        requirements = self._get_platform_requirements(platform)
         
         guide = f"""# {platform.value.replace('_', ' ').title()} Distribution Guide
 
@@ -565,13 +542,11 @@ class MusicPlatformDistributor:
 - **Genre**: {metadata.genre or 'Not specified'}
 
 ## Platform Requirements
-"""
-        
+"""        
         for key, value in requirements.items():
             guide += f"- **{key.replace('_', ' ').title()}**: {value}\n"
         
-        guide += f"""
-## Distribution Steps
+        guide += f"""## Distribution Steps
 1. Ensure your audio file meets the quality requirements
 2. Prepare high-resolution artwork
 3. {"Use a digital distributor service" if requirements.get('distributor_required') else "Upload directly via platform"}
@@ -583,14 +558,12 @@ class MusicPlatformDistributor:
 - This guide: For reference
 
 Generated on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
-"""
-        
+"""        
         return guide
 
 
 class MultiPlatformDistributionManager:
-    """Comprehensive multi-platform distribution management"""
-    
+    """Comprehensive multi-platform distribution management"""    
     def __init__(self, 
                  cloud_credentials: Dict[CloudProvider, CloudCredentials],
                  platform_credentials: Dict[CloudProvider, CloudCredentials]):
@@ -603,8 +576,7 @@ class MultiPlatformDistributionManager:
                                         metadata: AudioMetadata,
                                         target_platforms: List[CloudProvider],
                                         storage_providers: Optional[List[CloudProvider]] = None) -> Dict[CloudProvider, DistributionResult]:
-        """Distribute to multiple platforms simultaneously"""
-        results = {}
+        """Distribute to multiple platforms simultaneously"""        results = {}
         
         # First, upload to storage providers
         if storage_providers:
@@ -640,14 +612,12 @@ class MultiPlatformDistributionManager:
         return results
     
     async def get_distribution_status(self, track_id: str) -> List[DistributionResult]:
-        """Get distribution status for a track"""
-        return [result for result in self.distribution_history if result.track_id == track_id]
+        """Get distribution status for a track"""        return [result for result in self.distribution_history if result.track_id == track_id]
     
     async def retry_failed_distributions(self, 
                                        file_path: Path,
                                        metadata: AudioMetadata) -> Dict[CloudProvider, DistributionResult]:
-        """Retry failed distributions"""
-        failed_providers = [
+        """Retry failed distributions"""        failed_providers = [
             result.provider for result in self.distribution_history
             if result.status == DistributionStatus.FAILED
         ]
@@ -664,8 +634,7 @@ class MultiPlatformDistributionManager:
         )
     
     def get_distribution_analytics(self) -> Dict[str, Any]:
-        """Get distribution analytics and statistics"""
-        total_distributions = len(self.distribution_history)
+        """Get distribution analytics and statistics"""        total_distributions = len(self.distribution_history)
         
         if total_distributions == 0:
             return {'total_distributions': 0}
@@ -705,8 +674,7 @@ class MultiPlatformDistributionManager:
 
 # Factory functions for common distribution scenarios
 async def create_music_distributor(config_path: Optional[Path] = None) -> MultiPlatformDistributionManager:
-    """Create a configured music distributor"""
-    if config_path and config_path.exists():
+    """Create a configured music distributor"""    if config_path and config_path.exists():
         with open(config_path, 'r') as f:
             config = json.load(f)
     else:
@@ -734,8 +702,7 @@ async def create_music_distributor(config_path: Optional[Path] = None) -> MultiP
 async def quick_upload_to_storage(file_path: Path,
                                  metadata: AudioMetadata,
                                  provider: CloudProvider = CloudProvider.AWS_S3) -> DistributionResult:
-    """Quick upload to a single storage provider"""
-    # This would need actual credentials configuration
+    """Quick upload to a single storage provider"""    # This would need actual credentials configuration
     credentials = {
         provider: CloudCredentials(
             provider=provider,

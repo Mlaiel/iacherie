@@ -1,5 +1,4 @@
-"""
-Personalization Engine - AI-Powered Notification Content Personalization
+"""Personalization Engine - AI-Powered Notification Content Personalization
 
 Advanced AI-driven personalization engine for IA Influencer Agent notifications.
 Provides intelligent content adaptation, multi-language support, user behavior analysis,
@@ -30,7 +29,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -49,8 +47,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Creator types for personalization."""
-    MUSICIAN = "musician"
+    """Creator types for personalization."""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -62,8 +59,7 @@ class CreatorType(Enum):
 
 
 class PersonalizationStyle(Enum):
-    """Content personalization styles."""
-    PROFESSIONAL = "professional"      # Formal, business-focused
+    """Content personalization styles."""    PROFESSIONAL = "professional"      # Formal, business-focused
     CASUAL = "casual"                  # Friendly, conversational
     ENTHUSIASTIC = "enthusiastic"     # Energetic, motivational
     EDUCATIONAL = "educational"       # Informative, instructional
@@ -72,8 +68,7 @@ class PersonalizationStyle(Enum):
 
 
 class CommunicationTone(Enum):
-    """Communication tone options."""
-    FORMAL = "formal"
+    """Communication tone options."""    FORMAL = "formal"
     FRIENDLY = "friendly"
     ENCOURAGING = "encouraging"
     URGENT = "urgent"
@@ -85,8 +80,7 @@ class CommunicationTone(Enum):
 
 @dataclass
 class UserProfile:
-    """User profile for personalization."""
-    user_id: str
+    """User profile for personalization."""    user_id: str
     creator_type: CreatorType
     preferred_language: str
     timezone: str
@@ -101,8 +95,7 @@ class UserProfile:
 
 @dataclass
 class PersonalizationContext:
-    """Context for content personalization."""
-    user_profile: UserProfile
+    """Context for content personalization."""    user_profile: UserProfile
     notification_type: str
     business_context: Dict[str, Any]
     temporal_context: Dict[str, Any]
@@ -113,8 +106,7 @@ class PersonalizationContext:
 
 @dataclass
 class PersonalizationResult:
-    """Result of content personalization."""
-    personalized_content: NotificationContent
+    """Result of content personalization."""    personalized_content: NotificationContent
     personalization_factors: Dict[str, Any]
     confidence_score: float
     ab_test_variant: Optional[str]
@@ -124,16 +116,13 @@ class PersonalizationResult:
 
 
 class PersonalizationEngine:
-    """
-    AI-powered notification content personalization engine.
+    """    AI-powered notification content personalization engine.
     
     Provides intelligent content adaptation based on user profiles,
     behavioral patterns, cultural preferences, and business context.
-    """
-    
+    """    
     def __init__(self, config: NotificationConfig):
-        """Initialize personalization engine with configuration."""
-        self.config = config
+        """Initialize personalization engine with configuration."""        self.config = config
         self.personalization_rules = PERSONALIZATION_RULES
         self.creator_types = CREATOR_TYPES
         self.language_codes = LANGUAGE_CODES
@@ -167,8 +156,7 @@ class PersonalizationEngine:
         request: NotificationRequest,
         context: Optional[PersonalizationContext] = None
     ) -> PersonalizationResult:
-        """
-        Personalize notification content based on user profile and context.
+        """        Personalize notification content based on user profile and context.
         
         Args:
             request: Notification request to personalize
@@ -176,8 +164,7 @@ class PersonalizationEngine:
             
         Returns:
             PersonalizationResult with personalized content
-        """
-        start_time = datetime.now(timezone.utc)
+        """        start_time = datetime.now(timezone.utc)
         
         try:
             # Get or build personalization context
@@ -240,8 +227,7 @@ class PersonalizationEngine:
             )
     
     async def _build_personalization_context(self, request: NotificationRequest) -> PersonalizationContext:
-        """Build personalization context from notification request."""
-        try:
+        """Build personalization context from notification request."""        try:
             # Get user profile
             user_profile = await self._get_user_profile(request.recipient_id)
             
@@ -284,8 +270,7 @@ class PersonalizationEngine:
             )
     
     async def _get_user_profile(self, user_id: str) -> UserProfile:
-        """Get user profile for personalization."""
-        try:
+        """Get user profile for personalization."""        try:
             # Check cache first
             if user_id in self._profile_cache:
                 cached_profile = self._profile_cache[user_id]
@@ -305,8 +290,7 @@ class PersonalizationEngine:
             return self._get_default_user_profile(user_id)
     
     async def _build_user_profile(self, user_id: str) -> UserProfile:
-        """Build comprehensive user profile."""
-        try:
+        """Build comprehensive user profile."""        try:
             # In production, this would query various data sources:
             # - User account information
             # - Content creation history
@@ -357,8 +341,7 @@ class PersonalizationEngine:
             return self._get_default_user_profile(user_id)
     
     async def _enhance_user_profile(self, profile: UserProfile) -> UserProfile:
-        """Enhance user profile with additional data sources."""
-        try:
+        """Enhance user profile with additional data sources."""        try:
             # Creator type detection based on content history
             creator_type = await self._detect_creator_type(profile.user_id)
             if creator_type:
@@ -391,8 +374,7 @@ class PersonalizationEngine:
             return profile
     
     def _get_default_user_profile(self, user_id: str) -> UserProfile:
-        """Get default user profile when data is unavailable."""
-        return UserProfile(
+        """Get default user profile when data is unavailable."""        return UserProfile(
             user_id=user_id,
             creator_type=CreatorType.CONTENT_CREATOR,
             preferred_language="en",
@@ -429,8 +411,7 @@ class PersonalizationEngine:
         content: NotificationContent,
         context: PersonalizationContext
     ) -> NotificationContent:
-        """Apply personalization transformations to notification content."""
-        try:
+        """Apply personalization transformations to notification content."""        try:
             # Start with original content
             personalized_content = NotificationContent(
                 title=content.title,
@@ -486,8 +467,7 @@ class PersonalizationEngine:
         content: NotificationContent,
         context: PersonalizationContext
     ) -> NotificationContent:
-        """Apply language localization to content."""
-        try:
+        """Apply language localization to content."""        try:
             target_language = context.user_profile.preferred_language
             
             # Skip if already in target language or localization disabled
@@ -515,8 +495,7 @@ class PersonalizationEngine:
             return content
     
     async def _localize_text(self, text: str, target_language: str) -> str:
-        """Localize text to target language."""
-        try:
+        """Localize text to target language."""        try:
             # In production, this would use a translation service
             # For now, return original text with language marker
             
@@ -539,8 +518,7 @@ class PersonalizationEngine:
         content: NotificationContent,
         context: PersonalizationContext
     ) -> NotificationContent:
-        """Apply tone adaptation based on user preferences."""
-        try:
+        """Apply tone adaptation based on user preferences."""        try:
             preferred_tone = context.user_profile.preferred_tone
             
             # Skip if tone adaptation disabled
@@ -566,8 +544,7 @@ class PersonalizationEngine:
             return content
     
     def _adapt_message_tone(self, message: str, tone: CommunicationTone) -> str:
-        """Adapt message tone based on preference."""
-        try:
+        """Adapt message tone based on preference."""        try:
             # Tone-specific adaptations
             if tone == CommunicationTone.FORMAL:
                 # Make more formal
@@ -614,8 +591,7 @@ class PersonalizationEngine:
         content: NotificationContent,
         context: PersonalizationContext
     ) -> NotificationContent:
-        """Apply creator type-specific customizations."""
-        try:
+        """Apply creator type-specific customizations."""        try:
             creator_type = context.user_profile.creator_type
             
             # Creator type-specific terminology
@@ -676,8 +652,7 @@ class PersonalizationEngine:
         content: NotificationContent,
         context: PersonalizationContext
     ) -> NotificationContent:
-        """Apply cultural adaptations to content."""
-        try:
+        """Apply cultural adaptations to content."""        try:
             cultural_context = context.user_profile.cultural_context
             
             # Skip if cultural adaptation disabled
@@ -717,8 +692,7 @@ class PersonalizationEngine:
         content: NotificationContent,
         context: PersonalizationContext
     ) -> NotificationContent:
-        """Apply temporal optimization based on user patterns."""
-        try:
+        """Apply temporal optimization based on user patterns."""        try:
             temporal_context = context.temporal_context
             engagement_patterns = context.user_profile.engagement_patterns
             
@@ -748,8 +722,7 @@ class PersonalizationEngine:
         content: NotificationContent,
         context: PersonalizationContext
     ) -> NotificationContent:
-        """Apply platform-specific optimizations."""
-        try:
+        """Apply platform-specific optimizations."""        try:
             platform_context = context.platform_context
             
             # Platform-specific formatting
@@ -783,8 +756,7 @@ class PersonalizationEngine:
         content: NotificationContent,
         context: PersonalizationContext
     ) -> NotificationContent:
-        """Apply engagement optimization based on historical data."""
-        try:
+        """Apply engagement optimization based on historical data."""        try:
             engagement_history = context.engagement_history
             
             # Get engagement patterns
@@ -817,8 +789,7 @@ class PersonalizationEngine:
         content: NotificationContent,
         context: PersonalizationContext
     ) -> NotificationContent:
-        """Apply A/B test variant modifications."""
-        try:
+        """Apply A/B test variant modifications."""        try:
             variant = context.ab_test_variant
             
             if variant == "variant_a":
@@ -845,8 +816,7 @@ class PersonalizationEngine:
             return content
     
     def _shorten_message(self, message: str, max_length: int) -> str:
-        """Shorten message for character-limited platforms."""
-        if len(message) <= max_length:
+        """Shorten message for character-limited platforms."""        if len(message) <= max_length:
             return message
         
         # Try to shorten intelligently
@@ -860,8 +830,7 @@ class PersonalizationEngine:
         return shortened
     
     def _optimize_for_push(self, message: str) -> str:
-        """Optimize message for push notifications."""
-        # Keep it concise and actionable
+        """Optimize message for push notifications."""        # Keep it concise and actionable
         if len(message) > 100:
             message = self._shorten_message(message, 100)
         
@@ -874,8 +843,7 @@ class PersonalizationEngine:
         return message
     
     def _format_for_email(self, message: str) -> str:
-        """Format message for email delivery."""
-        # Add proper email formatting
+        """Format message for email delivery."""        # Add proper email formatting
         if not message.startswith(("Hi", "Hello", "Dear")):
             message = f"Hi there,\n\n{message}"
         
@@ -885,8 +853,7 @@ class PersonalizationEngine:
         return message
     
     def _extract_business_context(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Extract business context from notification request."""
-        context = {
+        """Extract business context from notification request."""        context = {
             "notification_type": request.type,
             "priority": getattr(request, 'priority', 'medium'),
             "business_category": self._categorize_business_notification(request.type)
@@ -898,8 +865,7 @@ class PersonalizationEngine:
         return context
     
     def _categorize_business_notification(self, notification_type: str) -> str:
-        """Categorize notification for business context."""
-        categories = {
+        """Categorize notification for business context."""        categories = {
             "revenue": ["monetization", "revenue", "payment", "earnings"],
             "protection": ["copyright", "infringement", "protection", "security"],
             "collaboration": ["collaboration", "partnership", "network"],
@@ -914,8 +880,7 @@ class PersonalizationEngine:
         return "general"
     
     def _extract_temporal_context(self, request: NotificationRequest, profile: UserProfile) -> Dict[str, Any]:
-        """Extract temporal context for personalization."""
-        now = datetime.now(timezone.utc)
+        """Extract temporal context for personalization."""        now = datetime.now(timezone.utc)
         
         return {
             "current_time": now,
@@ -926,8 +891,7 @@ class PersonalizationEngine:
         }
     
     def _get_time_of_day_category(self, hour: int) -> str:
-        """Get time of day category."""
-        if 5 <= hour < 12:
+        """Get time of day category."""        if 5 <= hour < 12:
             return "morning"
         elif 12 <= hour < 17:
             return "afternoon"
@@ -937,12 +901,10 @@ class PersonalizationEngine:
             return "night"
     
     def _is_business_hours(self, timestamp: datetime) -> bool:
-        """Check if timestamp is during business hours."""
-        return timestamp.weekday() < 5 and 9 <= timestamp.hour < 17
+        """Check if timestamp is during business hours."""        return timestamp.weekday() < 5 and 9 <= timestamp.hour < 17
     
     def _extract_platform_context(self, request: NotificationRequest) -> Dict[str, Any]:
-        """Extract platform context from request."""
-        context = {
+        """Extract platform context from request."""        context = {
             "primary_platform": "email",  # Default
             "preferred_channels": ["email"],
             "mobile_optimized": False
@@ -958,8 +920,7 @@ class PersonalizationEngine:
         return context
     
     async def _get_engagement_history(self, user_id: str) -> Dict[str, Any]:
-        """Get user engagement history for optimization."""
-        try:
+        """Get user engagement history for optimization."""        try:
             # In production, this would query engagement analytics
             return {
                 "average_open_rate": 0.75,
@@ -979,8 +940,7 @@ class PersonalizationEngine:
             return {}
     
     def _select_ab_test_variant(self, request: NotificationRequest, profile: UserProfile) -> Optional[str]:
-        """Select A/B test variant for personalization."""
-        try:
+        """Select A/B test variant for personalization."""        try:
             # Simple hash-based variant selection
             user_hash = hash(profile.user_id) % 100
             
@@ -999,8 +959,7 @@ class PersonalizationEngine:
         personalized: NotificationContent,
         context: PersonalizationContext
     ) -> float:
-        """Calculate confidence score for personalization quality."""
-        try:
+        """Calculate confidence score for personalization quality."""        try:
             confidence_factors = []
             
             # Profile completeness factor
@@ -1035,8 +994,7 @@ class PersonalizationEngine:
             return 0.5
     
     def _calculate_profile_completeness(self, profile: UserProfile) -> float:
-        """Calculate user profile completeness score."""
-        completeness_factors = [
+        """Calculate user profile completeness score."""        completeness_factors = [
             1.0 if profile.creator_type != CreatorType.CONTENT_CREATOR else 0.5,
             1.0 if profile.preferred_language != "en" else 0.8,
             1.0 if profile.timezone != "UTC" else 0.5,
@@ -1053,8 +1011,7 @@ class PersonalizationEngine:
         original: NotificationContent,
         personalized: NotificationContent
     ) -> int:
-        """Count number of personalization changes made."""
-        changes = 0
+        """Count number of personalization changes made."""        changes = 0
         
         if original.title != personalized.title:
             changes += 1
@@ -1074,8 +1031,7 @@ class PersonalizationEngine:
         return changes
     
     def _get_applied_personalization_rules(self, context: PersonalizationContext) -> List[str]:
-        """Get list of applied personalization rules."""
-        rules = []
+        """Get list of applied personalization rules."""        rules = []
         
         if context.user_profile.personalization_settings.get("enable_localization"):
             rules.append("language_localization")
@@ -1097,8 +1053,7 @@ class PersonalizationEngine:
         return rules
     
     def _extract_personalization_factors(self, context: PersonalizationContext) -> Dict[str, Any]:
-        """Extract personalization factors for transparency."""
-        return {
+        """Extract personalization factors for transparency."""        return {
             "creator_type": context.user_profile.creator_type.value,
             "preferred_language": context.user_profile.preferred_language,
             "communication_style": context.user_profile.communication_style.value,
@@ -1112,8 +1067,7 @@ class PersonalizationEngine:
         }
     
     def _load_personalization_templates(self) -> Dict[str, Any]:
-        """Load personalization templates."""
-        # In production, this would load from database or files
+        """Load personalization templates."""        # In production, this would load from database or files
         return {
             "creator_type_templates": {},
             "tone_templates": {},
@@ -1122,8 +1076,7 @@ class PersonalizationEngine:
         }
     
     def _initialize_ab_test_variants(self) -> Dict[str, Any]:
-        """Initialize A/B test variants."""
-        return {
+        """Initialize A/B test variants."""        return {
             "variant_a": {
                 "name": "Formal Communication",
                 "description": "More formal and professional tone"
@@ -1135,8 +1088,7 @@ class PersonalizationEngine:
         }
     
     def _load_language_resources(self) -> Dict[str, Dict[str, str]]:
-        """Load language resources for localization."""
-        return {
+        """Load language resources for localization."""        return {
             "de": {
                 "Hello": "Hallo",
                 "Thanks": "Danke",
@@ -1161,39 +1113,32 @@ class PersonalizationEngine:
         }
     
     async def _detect_creator_type(self, user_id: str) -> Optional[CreatorType]:
-        """Detect user's creator type from content history."""
-        # This would analyze user's content history
+        """Detect user's creator type from content history."""        # This would analyze user's content history
         # For now, return None to use default
         return None
     
     async def _detect_preferred_language(self, user_id: str) -> Optional[str]:
-        """Detect user's preferred language."""
-        # This would analyze user's language patterns
+        """Detect user's preferred language."""        # This would analyze user's language patterns
         return None
     
     async def _detect_user_timezone(self, user_id: str) -> Optional[str]:
-        """Detect user's timezone from activity patterns."""
-        # This would analyze user's activity timing
+        """Detect user's timezone from activity patterns."""        # This would analyze user's activity timing
         return None
     
     async def _analyze_communication_style(self, user_id: str) -> Optional[PersonalizationStyle]:
-        """Analyze user's preferred communication style."""
-        # This would analyze user's response patterns
+        """Analyze user's preferred communication style."""        # This would analyze user's response patterns
         return None
     
     async def _analyze_engagement_patterns(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Analyze user's engagement patterns."""
-        # This would analyze user's interaction history
+        """Analyze user's engagement patterns."""        # This would analyze user's interaction history
         return None
     
     def _is_profile_cache_valid(self, profile: UserProfile) -> bool:
-        """Check if cached profile is still valid."""
-        # For now, assume profiles are valid for 1 hour
+        """Check if cached profile is still valid."""        # For now, assume profiles are valid for 1 hour
         return True
     
     def _update_personalization_stats(self, processing_time: float):
-        """Update personalization performance statistics."""
-        self.personalization_stats["total_personalizations"] += 1
+        """Update personalization performance statistics."""        self.personalization_stats["total_personalizations"] += 1
         
         # Update average processing time
         total_time = (
@@ -1206,10 +1151,8 @@ class PersonalizationEngine:
         )
     
     def get_personalization_stats(self) -> Dict[str, Any]:
-        """Get personalization performance statistics."""
-        return self.personalization_stats.copy()
+        """Get personalization performance statistics."""        return self.personalization_stats.copy()
     
     def clear_profile_cache(self):
-        """Clear user profile cache."""
-        self._profile_cache.clear()
+        """Clear user profile cache."""        self._profile_cache.clear()
         logger.info("User profile cache cleared")

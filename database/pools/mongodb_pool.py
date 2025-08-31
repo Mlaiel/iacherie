@@ -1,5 +1,4 @@
-"""
-MongoDB Connection Pool - IA Influencer Agent + Content Protection Platform
+"""MongoDB Connection Pool - IA Influencer Agent + Content Protection Platform
 
 Enterprise MongoDB connection pool implementation for content metadata,
 fingerprints, analytics data, and multi-media content processing.
@@ -31,7 +30,6 @@ Contact: mlaiel@live.de for licensing inquiries.
 
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -59,8 +57,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MongoDBPoolConfig(PoolConfig):
-    """Extended MongoDB pool configuration"""
-    # MongoDB specific settings
+    """Extended MongoDB pool configuration"""    # MongoDB specific settings
     replica_set: Optional[str] = None
     read_preference: str = "primaryPreferred"
     write_concern_w: Union[int, str] = 1
@@ -89,8 +86,7 @@ class MongoDBPoolConfig(PoolConfig):
 # =============== MONGODB CONNECTION POOL ===============
 
 class MongoDBConnectionPool(IConnectionPool):
-    """MongoDB connection pool with enterprise features"""
-    
+    """MongoDB connection pool with enterprise features"""    
     def __init__(self, config: MongoDBPoolConfig, connection_info: DatabaseConnectionInfo):
         self.config = config
         self.connection_info = connection_info
@@ -121,8 +117,7 @@ class MongoDBConnectionPool(IConnectionPool):
         self._change_stream_tasks: Dict[str, asyncio.Task] = {}
     
     async def initialize(self) -> bool:
-        """Initialize MongoDB connection and database"""
-        try:
+        """Initialize MongoDB connection and database"""        try:
             # Build connection URI
             connection_uri = self._build_connection_uri()
             
@@ -188,8 +183,7 @@ class MongoDBConnectionPool(IConnectionPool):
             return False
     
     def _build_connection_uri(self) -> str:
-        """Build MongoDB connection URI"""
-        # Encode credentials
+        """Build MongoDB connection URI"""        # Encode credentials
         username = quote_plus(self.connection_info.username)
         password = quote_plus(self.connection_info.password)
         
@@ -220,8 +214,7 @@ class MongoDBConnectionPool(IConnectionPool):
         return uri
     
     def _get_read_preference(self) -> ReadPreference:
-        """Get MongoDB read preference"""
-        preference_map = {
+        """Get MongoDB read preference"""        preference_map = {
             "primary": ReadPreference.PRIMARY,
             "primaryPreferred": ReadPreference.PRIMARY_PREFERRED,
             "secondary": ReadPreference.SECONDARY,
@@ -231,8 +224,7 @@ class MongoDBConnectionPool(IConnectionPool):
         return preference_map.get(self.config.read_preference, ReadPreference.PRIMARY_PREFERRED)
     
     async def _initialize_collections(self) -> None:
-        """Initialize collections for content protection platform"""
-        collection_configs = {
+        """Initialize collections for content protection platform"""        collection_configs = {
             # Content fingerprinting collections
             "content_fingerprints": {
                 "indexes": [
@@ -372,8 +364,7 @@ class MongoDBConnectionPool(IConnectionPool):
                 logger.error(f"Failed to initialize collection {collection_name}: {e}")
     
     async def _start_change_streams(self) -> None:
-        """Start change streams for real-time monitoring"""
-        if not self.config.enable_change_streams:
+        """Start change streams for real-time monitoring"""        if not self.config.enable_change_streams:
             return
         
         # Monitor protection alerts for real-time notifications
@@ -410,8 +401,7 @@ class MongoDBConnectionPool(IConnectionPool):
                     logger.error(f"Failed to start change stream for {collection_name}: {e}")
     
     async def _monitor_change_stream(self, collection_name: str, pipeline: List[Dict], callback: callable) -> None:
-        """Monitor change stream for a collection"""
-        collection = self.collections[collection_name]
+        """Monitor change stream for a collection"""        collection = self.collections[collection_name]
         
         while self.state == ConnectionState.ACTIVE:
             try:
@@ -427,8 +417,7 @@ class MongoDBConnectionPool(IConnectionPool):
                 await asyncio.sleep(5)  # Wait before retrying
     
     async def _handle_protection_alert(self, change: Dict) -> None:
-        """Handle new protection alert"""
-        try:
+        """Handle new protection alert"""        try:
             document = change.get("fullDocument", {})
             logger.info(f"🚨 New protection alert: {document.get('detected_url')} on {document.get('platform')}")
             # Add notification logic here
@@ -436,8 +425,7 @@ class MongoDBConnectionPool(IConnectionPool):
             logger.error(f"Error handling protection alert: {e}")
     
     async def _handle_revenue_update(self, change: Dict) -> None:
-        """Handle revenue update"""
-        try:
+        """Handle revenue update"""        try:
             document = change.get("fullDocument", {})
             logger.info(f"💰 Revenue update: {document.get('revenue_amount')} {document.get('currency', 'EUR')}")
             # Add revenue processing logic here
@@ -445,20 +433,17 @@ class MongoDBConnectionPool(IConnectionPool):
             logger.error(f"Error handling revenue update: {e}")
     
     async def acquire(self, timeout: Optional[float] = None) -> motor.motor_asyncio.AsyncIOMotorDatabase:
-        """Acquire database connection"""
-        if not self.database:
+        """Acquire database connection"""        if not self.database:
             raise Exception("MongoDB pool not initialized")
         
         self.stats["active_connections"] += 1
         return self.database
     
     async def release(self, connection: motor.motor_asyncio.AsyncIOMotorDatabase) -> None:
-        """Release database connection (no-op for MongoDB)"""
-        self.stats["active_connections"] = max(0, self.stats["active_connections"] - 1)
+        """Release database connection (no-op for MongoDB)"""        self.stats["active_connections"] = max(0, self.stats["active_connections"] - 1)
     
     async def get_collection(self, collection_name: str) -> motor.motor_asyncio.AsyncIOMotorCollection:
-        """Get collection by name"""
-        if collection_name in self.collections:
+        """Get collection by name"""        if collection_name in self.collections:
             return self.collections[collection_name]
         
         # Return collection from database if not in cache
@@ -467,8 +452,7 @@ class MongoDBConnectionPool(IConnectionPool):
         return collection
     
     async def insert_content_fingerprint(self, fingerprint_data: Dict[str, Any]) -> bson.ObjectId:
-        """Insert content fingerprint with validation"""
-        try:
+        """Insert content fingerprint with validation"""        try:
             collection = await self.get_collection("content_fingerprints")
             result = await collection.insert_one(fingerprint_data)
             
@@ -484,8 +468,7 @@ class MongoDBConnectionPool(IConnectionPool):
     
     async def find_similar_fingerprints(self, vector_embedding: List[float], 
                                        content_type: str, threshold: float = 0.8) -> List[Dict]:
-        """Find similar content fingerprints using vector similarity"""
-        try:
+        """Find similar content fingerprints using vector similarity"""        try:
             collection = await self.get_collection("content_fingerprints")
             
             # This is a simplified similarity search - in production you'd use vector databases
@@ -536,8 +519,7 @@ class MongoDBConnectionPool(IConnectionPool):
             raise
     
     async def store_large_file(self, file_data: bytes, filename: str, metadata: Dict[str, Any]) -> bson.ObjectId:
-        """Store large file using GridFS"""
-        if not self.gridfs:
+        """Store large file using GridFS"""        if not self.gridfs:
             raise Exception("GridFS not enabled")
         
         try:
@@ -555,8 +537,7 @@ class MongoDBConnectionPool(IConnectionPool):
             raise
     
     async def retrieve_large_file(self, file_id: bson.ObjectId) -> Tuple[bytes, Dict[str, Any]]:
-        """Retrieve large file from GridFS"""
-        if not self.gridfs:
+        """Retrieve large file from GridFS"""        if not self.gridfs:
             raise Exception("GridFS not enabled")
         
         try:
@@ -572,8 +553,7 @@ class MongoDBConnectionPool(IConnectionPool):
     
     async def aggregate_revenue_stats(self, user_id: bson.ObjectId, 
                                     start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Aggregate revenue statistics for user"""
-        try:
+        """Aggregate revenue statistics for user"""        try:
             collection = await self.get_collection("revenue_tracking")
             
             pipeline = [
@@ -628,8 +608,7 @@ class MongoDBConnectionPool(IConnectionPool):
             raise
     
     async def health_check(self) -> bool:
-        """Check MongoDB health"""
-        try:
+        """Check MongoDB health"""        try:
             # Ping the database
             await self.client.admin.command('ping')
             
@@ -644,8 +623,7 @@ class MongoDBConnectionPool(IConnectionPool):
             return False
     
     async def _health_monitor(self) -> None:
-        """Background health monitoring"""
-        while self.state == ConnectionState.ACTIVE:
+        """Background health monitoring"""        while self.state == ConnectionState.ACTIVE:
             try:
                 is_healthy = await self.health_check()
                 if not is_healthy:
@@ -663,8 +641,7 @@ class MongoDBConnectionPool(IConnectionPool):
                 await asyncio.sleep(5)
     
     async def _update_collection_stats(self) -> None:
-        """Update collection statistics"""
-        try:
+        """Update collection statistics"""        try:
             for collection_name in self.collections:
                 collection = self.collections[collection_name]
                 stats = await self.database.command("collStats", collection_name)
@@ -680,8 +657,7 @@ class MongoDBConnectionPool(IConnectionPool):
             logger.error(f"Failed to update collection stats: {e}")
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get MongoDB pool statistics"""
-        pool_stats = {
+        """Get MongoDB pool statistics"""        pool_stats = {
             "client_info": str(self.client) if self.client else None,
             "database_name": self.connection_info.database,
             "collections_count": len(self.collections),
@@ -693,8 +669,7 @@ class MongoDBConnectionPool(IConnectionPool):
         return pool_stats
     
     async def close(self) -> None:
-        """Close MongoDB pool"""
-        try:
+        """Close MongoDB pool"""        try:
             self.state = ConnectionState.CLOSED
             
             # Cancel change stream tasks

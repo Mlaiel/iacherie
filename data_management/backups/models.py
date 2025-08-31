@@ -1,5 +1,4 @@
-"""
-📋 Models - Backup System Data Models
+"""📋 Models - Backup System Data Models
 ====================================
 Module: backend/data_management/backups/models.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -13,7 +12,6 @@ Responsibility: Modèles de données centralisés pour système de sauvegarde
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 from datetime import datetime, timedelta
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, field
@@ -23,8 +21,7 @@ from pathlib import Path
 
 
 class BackupType(Enum):
-    """Types de sauvegarde"""
-    FULL = "full"                    # Sauvegarde complète
+    """Types de sauvegarde"""    FULL = "full"                    # Sauvegarde complète
     INCREMENTAL = "incremental"      # Sauvegarde incrémentale
     DIFFERENTIAL = "differential"    # Sauvegarde différentielle
     SNAPSHOT = "snapshot"            # Instantané
@@ -34,8 +31,7 @@ class BackupType(Enum):
 
 
 class BackupStatus(Enum):
-    """États de sauvegarde"""
-    PENDING = "pending"             # En attente
+    """États de sauvegarde"""    PENDING = "pending"             # En attente
     RUNNING = "running"             # En cours
     PAUSED = "paused"              # En pause
     COMPLETED = "completed"         # Terminée avec succès
@@ -47,8 +43,7 @@ class BackupStatus(Enum):
 
 
 class BackupPriority(Enum):
-    """Priorités de sauvegarde"""
-    CRITICAL = "critical"          # Critique (immédiat)
+    """Priorités de sauvegarde"""    CRITICAL = "critical"          # Critique (immédiat)
     HIGH = "high"                  # Haute priorité
     NORMAL = "normal"              # Priorité normale
     LOW = "low"                    # Basse priorité
@@ -56,8 +51,7 @@ class BackupPriority(Enum):
 
 
 class StorageClass(Enum):
-    """Classes de stockage"""
-    HOT = "hot"                    # Accès immédiat (SSD)
+    """Classes de stockage"""    HOT = "hot"                    # Accès immédiat (SSD)
     WARM = "warm"                  # Accès rapide (HDD)
     COLD = "cold"                  # Accès lent (tape/cloud)
     FROZEN = "frozen"              # Archivage long terme
@@ -65,8 +59,7 @@ class StorageClass(Enum):
 
 
 class CompressionAlgorithm(Enum):
-    """Algorithmes de compression"""
-    NONE = "none"
+    """Algorithmes de compression"""    NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
@@ -75,8 +68,7 @@ class CompressionAlgorithm(Enum):
 
 
 class EncryptionAlgorithm(Enum):
-    """Algorithmes de chiffrement"""
-    NONE = "none"
+    """Algorithmes de chiffrement"""    NONE = "none"
     AES_128 = "aes-128"
     AES_256 = "aes-256"
     RSA_2048 = "rsa-2048"
@@ -85,8 +77,7 @@ class EncryptionAlgorithm(Enum):
 
 @dataclass
 class FileMetadata:
-    """Métadonnées d'un fichier"""
-    path: str
+    """Métadonnées d'un fichier"""    path: str
     size: int
     checksum: str
     checksum_algorithm: str = "sha256"
@@ -107,8 +98,7 @@ class FileMetadata:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "path": self.path,
             "size": self.size,
             "checksum": self.checksum,
@@ -132,8 +122,7 @@ class FileMetadata:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'FileMetadata':
-        """Crée depuis un dictionnaire"""
-        return cls(
+        """Crée depuis un dictionnaire"""        return cls(
             path=data["path"],
             size=data["size"],
             checksum=data["checksum"],
@@ -158,8 +147,7 @@ class FileMetadata:
 
 @dataclass
 class BackupJob:
-    """Tâche de sauvegarde"""
-    job_id: str
+    """Tâche de sauvegarde"""    job_id: str
     user_id: str
     backup_type: BackupType
     priority: BackupPriority = BackupPriority.NORMAL
@@ -182,8 +170,7 @@ class BackupJob:
     created_at: datetime = field(default_factory=datetime.now)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "job_id": self.job_id,
             "user_id": self.user_id,
             "backup_type": self.backup_type.value,
@@ -210,8 +197,7 @@ class BackupJob:
 
 @dataclass
 class BackupProgress:
-    """Progression d'une sauvegarde"""
-    backup_id: str
+    """Progression d'une sauvegarde"""    backup_id: str
     job_id: str
     status: BackupStatus
     files_total: int = 0
@@ -232,29 +218,25 @@ class BackupProgress:
     
     @property
     def progress_percentage(self) -> float:
-        """Pourcentage de progression"""
-        if self.files_total == 0:
+        """Pourcentage de progression"""        if self.files_total == 0:
             return 0.0
         return (self.files_processed / self.files_total) * 100
     
     @property
     def bytes_percentage(self) -> float:
-        """Pourcentage de bytes traités"""
-        if self.bytes_total == 0:
+        """Pourcentage de bytes traités"""        if self.bytes_total == 0:
             return 0.0
         return (self.bytes_processed / self.bytes_total) * 100
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Durée d'exécution"""
-        if not self.started_at:
+        """Durée d'exécution"""        if not self.started_at:
             return None
         end_time = self.completed_at or datetime.now()
         return end_time - self.started_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "backup_id": self.backup_id,
             "job_id": self.job_id,
             "status": self.status.value,
@@ -281,8 +263,7 @@ class BackupProgress:
 
 @dataclass
 class BackupMetadata:
-    """Métadonnées complètes d'une sauvegarde"""
-    backup_id: str
+    """Métadonnées complètes d'une sauvegarde"""    backup_id: str
     user_id: str
     job_id: Optional[str] = None
     backup_type: BackupType = BackupType.FULL
@@ -341,40 +322,33 @@ class BackupMetadata:
     
     @property
     def is_completed(self) -> bool:
-        """Vérifie si la sauvegarde est terminée"""
-        return self.status == BackupStatus.COMPLETED
+        """Vérifie si la sauvegarde est terminée"""        return self.status == BackupStatus.COMPLETED
     
     @property
     def is_failed(self) -> bool:
-        """Vérifie si la sauvegarde a échoué"""
-        return self.status in [BackupStatus.FAILED, BackupStatus.CORRUPTED]
+        """Vérifie si la sauvegarde a échoué"""        return self.status in [BackupStatus.FAILED, BackupStatus.CORRUPTED]
     
     @property
     def is_running(self) -> bool:
-        """Vérifie si la sauvegarde est en cours"""
-        return self.status in [BackupStatus.RUNNING, BackupStatus.VERIFYING]
+        """Vérifie si la sauvegarde est en cours"""        return self.status in [BackupStatus.RUNNING, BackupStatus.VERIFYING]
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Durée d'exécution"""
-        if not self.started_at:
+        """Durée d'exécution"""        if not self.started_at:
             return None
         end_time = self.completed_at or datetime.now()
         return end_time - self.started_at
     
     @property
     def size_gb(self) -> float:
-        """Taille en GB"""
-        return self.total_size / (1024**3)
+        """Taille en GB"""        return self.total_size / (1024**3)
     
     @property
     def compressed_size_gb(self) -> float:
-        """Taille compressée en GB"""
-        return self.compressed_size / (1024**3)
+        """Taille compressée en GB"""        return self.compressed_size / (1024**3)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "backup_id": self.backup_id,
             "user_id": self.user_id,
             "job_id": self.job_id,
@@ -420,8 +394,7 @@ class BackupMetadata:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'BackupMetadata':
-        """Crée depuis un dictionnaire"""
-        return cls(
+        """Crée depuis un dictionnaire"""        return cls(
             backup_id=data["backup_id"],
             user_id=data["user_id"],
             job_id=data.get("job_id"),
@@ -465,8 +438,7 @@ class BackupMetadata:
 
 @dataclass
 class BackupSchedule:
-    """Planning de sauvegarde"""
-    schedule_id: str
+    """Planning de sauvegarde"""    schedule_id: str
     user_id: str
     name: str
     enabled: bool = True
@@ -507,8 +479,7 @@ class BackupSchedule:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "schedule_id": self.schedule_id,
             "user_id": self.user_id,
             "name": self.name,
@@ -541,8 +512,7 @@ class BackupSchedule:
 
 @dataclass
 class BackupStats:
-    """Statistiques globales des sauvegardes"""
-    total_backups: int = 0
+    """Statistiques globales des sauvegardes"""    total_backups: int = 0
     successful_backups: int = 0
     failed_backups: int = 0
     pending_backups: int = 0
@@ -567,25 +537,21 @@ class BackupStats:
     
     @property
     def success_rate(self) -> float:
-        """Taux de réussite en pourcentage"""
-        total = self.total_backups
+        """Taux de réussite en pourcentage"""        total = self.total_backups
         if total == 0:
             return 0.0
         return (self.successful_backups / total) * 100
     
     @property
     def total_size_gb(self) -> float:
-        """Taille totale en GB"""
-        return self.total_size_bytes / (1024**3)
+        """Taille totale en GB"""        return self.total_size_bytes / (1024**3)
     
     @property
     def compressed_size_gb(self) -> float:
-        """Taille compressée en GB"""
-        return self.compressed_size_bytes / (1024**3)
+        """Taille compressée en GB"""        return self.compressed_size_bytes / (1024**3)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "total_backups": self.total_backups,
             "successful_backups": self.successful_backups,
             "failed_backups": self.failed_backups,
@@ -616,8 +582,7 @@ def create_backup_job(
     backup_type: BackupType = BackupType.INCREMENTAL,
     **kwargs
 ) -> BackupJob:
-    """
-    Crée une nouvelle tâche de sauvegarde
+    """    Crée une nouvelle tâche de sauvegarde
     
     Args:
         user_id: ID de l'utilisateur
@@ -627,8 +592,7 @@ def create_backup_job(
         
     Returns:
         BackupJob: Nouvelle tâche
-    """
-    import secrets
+    """    import secrets
     
     job_id = f"job_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{secrets.token_hex(8)}"
     
@@ -646,8 +610,7 @@ def create_backup_metadata(
     backup_type: BackupType = BackupType.FULL,
     **kwargs
 ) -> BackupMetadata:
-    """
-    Crée de nouvelles métadonnées de sauvegarde
+    """    Crée de nouvelles métadonnées de sauvegarde
     
     Args:
         user_id: ID de l'utilisateur
@@ -656,8 +619,7 @@ def create_backup_metadata(
         
     Returns:
         BackupMetadata: Nouvelles métadonnées
-    """
-    import secrets
+    """    import secrets
     
     backup_id = f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{secrets.token_hex(8)}"
     
@@ -670,8 +632,7 @@ def create_backup_metadata(
 
 
 def calculate_compression_ratio(original_size: int, compressed_size: int) -> float:
-    """
-    Calcule le ratio de compression
+    """    Calcule le ratio de compression
     
     Args:
         original_size: Taille originale en bytes
@@ -679,8 +640,7 @@ def calculate_compression_ratio(original_size: int, compressed_size: int) -> flo
         
     Returns:
         float: Ratio de compression (0.0 à 1.0)
-    """
-    if original_size == 0:
+    """    if original_size == 0:
         return 0.0
     
     return 1.0 - (compressed_size / original_size)
@@ -691,8 +651,7 @@ def estimate_backup_duration(
     transfer_speed: float,
     compression_factor: float = 0.5
 ) -> int:
-    """
-    Estime la durée d'une sauvegarde
+    """    Estime la durée d'une sauvegarde
     
     Args:
         total_size: Taille totale en bytes
@@ -701,8 +660,7 @@ def estimate_backup_duration(
         
     Returns:
         int: Durée estimée en secondes
-    """
-    if transfer_speed <= 0:
+    """    if transfer_speed <= 0:
         return 0
     
     effective_size = total_size * compression_factor

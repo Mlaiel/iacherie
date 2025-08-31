@@ -1,5 +1,4 @@
-"""
-Content Protection Manager
+"""Content Protection Manager
 =========================
 
 Advanced content protection and rights management system for multi-format content.
@@ -8,7 +7,6 @@ Handles detection, enforcement, and automated protection workflows.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,16 +27,14 @@ from ..crawlers.platform_crawler import PlatformCrawler
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class ViolationType(Enum):
-    """Types of content violations"""
-    DIRECT_COPY = "direct_copy"
+    """Types of content violations"""    DIRECT_COPY = "direct_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -46,8 +42,7 @@ class ViolationType(Enum):
 
 
 class ProtectionStatus(Enum):
-    """Protection status enumeration"""
-    ACTIVE = "active"
+    """Protection status enumeration"""    ACTIVE = "active"
     PENDING = "pending"
     VIOLATED = "violated"
     RESOLVED = "resolved"
@@ -56,8 +51,7 @@ class ProtectionStatus(Enum):
 
 @dataclass
 class ProtectionConfig:
-    """Content protection configuration"""
-    content_id: str
+    """Content protection configuration"""    content_id: str
     protection_level: ProtectionLevel
     enable_automated_takedown: bool
     similarity_threshold: float
@@ -69,8 +63,7 @@ class ProtectionConfig:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""
-    violation_id: str
+    """Content violation alert"""    violation_id: str
     content_id: str
     detected_url: str
     platform: str
@@ -84,8 +77,7 @@ class ViolationAlert:
 
 @dataclass
 class ProtectionReport:
-    """Protection effectiveness report"""
-    content_id: str
+    """Protection effectiveness report"""    content_id: str
     protection_period: int
     total_scans: int
     violations_detected: int
@@ -96,25 +88,21 @@ class ProtectionReport:
 
 
 class ContentProtectionManager:
-    """
-    Professional content protection manager for IA Influencer Agent platform.
+    """    Professional content protection manager for IA Influencer Agent platform.
     
     Provides comprehensive protection for audio, video, image, and text content
     across multiple platforms with AI-powered detection and automated enforcement.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  vector_matcher: VectorMatcher, platform_crawler: PlatformCrawler):
-        """
-        Initialize ContentProtectionManager.
+        """        Initialize ContentProtectionManager.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             vector_matcher: Vector matching service for similarity detection
             platform_crawler: Platform crawler for content monitoring
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.vector_matcher = vector_matcher
         self.platform_crawler = platform_crawler
@@ -135,8 +123,7 @@ class ContentProtectionManager:
     
     async def enable_content_protection(self, content_id: str, 
                                       config: ProtectionConfig) -> bool:
-        """
-        Enable protection for specific content.
+        """        Enable protection for specific content.
         
         Args:
             content_id: Content identifier
@@ -144,8 +131,7 @@ class ContentProtectionManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Validate content exists
             content = await self._get_content_by_id(content_id)
             if not content:
@@ -189,16 +175,14 @@ class ContentProtectionManager:
             return False
     
     async def scan_for_violations(self, content_id: str) -> List[ViolationAlert]:
-        """
-        Scan for content violations across monitored platforms.
+        """        Scan for content violations across monitored platforms.
         
         Args:
             content_id: Content identifier to scan for
             
         Returns:
             List of detected violations
-        """
-        try:
+        """        try:
             # Get protection config
             protection = await self._get_protection_config(content_id)
             if not protection:
@@ -240,16 +224,14 @@ class ContentProtectionManager:
             return []
     
     async def get_protection_status(self, content_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive protection status for content.
+        """        Get comprehensive protection status for content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Protection status information
-        """
-        try:
+        """        try:
             # Check cache first
             cache_key = f"protection_status:{content_id}"
             cached_status = await self._get_from_cache(cache_key)
@@ -297,8 +279,7 @@ class ContentProtectionManager:
     
     async def generate_protection_report(self, content_id: str, 
                                        period_days: int = 30) -> ProtectionReport:
-        """
-        Generate comprehensive protection report.
+        """        Generate comprehensive protection report.
         
         Args:
             content_id: Content identifier
@@ -306,8 +287,7 @@ class ContentProtectionManager:
             
         Returns:
             Protection report
-        """
-        try:
+        """        try:
             # Calculate date range
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -351,16 +331,14 @@ class ContentProtectionManager:
             raise
     
     async def disable_protection(self, content_id: str) -> bool:
-        """
-        Disable protection for content.
+        """        Disable protection for content.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Update protection status
             query = select(ProtectionModel).where(ProtectionModel.content_id == content_id)
             result = await self.db_session.execute(query)
@@ -389,16 +367,14 @@ class ContentProtectionManager:
             return False
     
     async def bulk_enable_protection(self, content_configs: List[Tuple[str, ProtectionConfig]]) -> Dict[str, bool]:
-        """
-        Enable protection for multiple content items.
+        """        Enable protection for multiple content items.
         
         Args:
             content_configs: List of (content_id, config) tuples
             
         Returns:
             Dictionary mapping content_id to success status
-        """
-        results = {}
+        """        results = {}
         
         for content_id, config in content_configs:
             try:
@@ -411,8 +387,7 @@ class ContentProtectionManager:
         return results
     
     async def get_violation_alerts(self, user_id: str, limit: int = 50) -> List[ViolationAlert]:
-        """
-        Get recent violation alerts for user.
+        """        Get recent violation alerts for user.
         
         Args:
             user_id: User identifier
@@ -420,17 +395,14 @@ class ContentProtectionManager:
             
         Returns:
             List of violation alerts
-        """
-        try:
+        """        try:
             # Query violations for user's content
-            query = """
-                SELECT v.* FROM violations v
+            query = """                SELECT v.* FROM violations v
                 JOIN content c ON v.content_id = c.id
                 WHERE c.user_id = :user_id
                 ORDER BY v.detected_at DESC
                 LIMIT :limit
-            """
-            
+            """            
             result = await self.db_session.execute(
                 query, {'user_id': user_id, 'limit': limit}
             )
@@ -462,14 +434,12 @@ class ContentProtectionManager:
     # Private helper methods
     
     async def _get_content_by_id(self, content_id: str) -> Optional[ContentModel]:
-        """Get content by ID"""
-        query = select(ContentModel).where(ContentModel.id == content_id)
+        """Get content by ID"""        query = select(ContentModel).where(ContentModel.id == content_id)
         result = await self.db_session.execute(query)
         return result.scalar_one_or_none()
     
     async def _get_protection_config(self, content_id: str) -> Optional[ProtectionModel]:
-        """Get protection configuration"""
-        query = select(ProtectionModel).where(
+        """Get protection configuration"""        query = select(ProtectionModel).where(
             and_(
                 ProtectionModel.content_id == content_id,
                 ProtectionModel.status != ProtectionStatus.DISABLED.value
@@ -479,14 +449,12 @@ class ContentProtectionManager:
         return result.scalar_one_or_none()
     
     async def _initialize_fingerprinting(self, content_id: str, config: ProtectionConfig):
-        """Initialize fingerprinting for content"""
-        # This would integrate with the fingerprinting module
+        """Initialize fingerprinting for content"""        # This would integrate with the fingerprinting module
         # to create initial fingerprints for the content
         pass
     
     async def _schedule_monitoring(self, content_id: str, config: ProtectionConfig):
-        """Schedule regular monitoring for content"""
-        # Add to monitoring queue
+        """Schedule regular monitoring for content"""        # Add to monitoring queue
         monitoring_data = {
             'content_id': content_id,
             'platforms': config.platforms_to_monitor,
@@ -503,8 +471,7 @@ class ContentProtectionManager:
     
     async def _scan_platform_violations(self, content_id: str, platform: str, 
                                       fingerprints: Dict, threshold: float) -> List[ViolationAlert]:
-        """Scan specific platform for violations"""
-        violations = []
+        """Scan specific platform for violations"""        violations = []
         
         try:
             # Use platform crawler to search for similar content
@@ -534,8 +501,7 @@ class ContentProtectionManager:
         return violations
     
     async def _get_content_fingerprints(self, content_id: str) -> Dict[str, Any]:
-        """Get content fingerprints from database"""
-        # This would query the fingerprinting database
+        """Get content fingerprints from database"""        # This would query the fingerprinting database
         # Placeholder implementation
         return {
             'audio_fingerprint': 'audio_hash_placeholder',
@@ -545,18 +511,15 @@ class ContentProtectionManager:
         }
     
     async def _store_violation(self, violation: ViolationAlert):
-        """Store violation in database"""
-        # Implementation to store violation record
+        """Store violation in database"""        # Implementation to store violation record
         pass
     
     async def _trigger_automated_response(self, violation: ViolationAlert):
-        """Trigger automated takedown response"""
-        # Implementation for automated DMCA takedown
+        """Trigger automated takedown response"""        # Implementation for automated DMCA takedown
         pass
     
     async def _classify_violation_type(self, result: Dict) -> ViolationType:
-        """Classify the type of violation"""
-        similarity = result['similarity_score']
+        """Classify the type of violation"""        similarity = result['similarity_score']
         
         if similarity >= 0.95:
             return ViolationType.DIRECT_COPY
@@ -568,8 +531,7 @@ class ContentProtectionManager:
             return ViolationType.UNAUTHORIZED_USE
     
     async def _calculate_severity(self, similarity_score: float) -> str:
-        """Calculate violation severity"""
-        if similarity_score >= 0.95:
+        """Calculate violation severity"""        if similarity_score >= 0.95:
             return 'critical'
         elif similarity_score >= 0.85:
             return 'high'
@@ -579,29 +541,25 @@ class ContentProtectionManager:
             return 'low'
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""
-        try:
+        """Get data from cache"""        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
-        try:
+        """Save data to cache"""        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
             self.logger.warning(f"Cache save failed: {str(e)}")
     
     async def _cache_protection_status(self, content_id: str, protected: bool):
-        """Cache protection status"""
-        cache_key = f"protection_enabled:{content_id}"
+        """Cache protection status"""        cache_key = f"protection_enabled:{content_id}"
         await self.redis.setex(cache_key, self.cache_ttl, str(protected))
     
     async def _get_violation_statistics(self, content_id: str) -> Dict[str, int]:
-        """Get violation statistics for content"""
-        # Implementation would query violation database
+        """Get violation statistics for content"""        # Implementation would query violation database
         return {
             'total_violations': 5,
             'resolved_violations': 3,
@@ -609,31 +567,26 @@ class ContentProtectionManager:
         }
     
     async def _get_latest_scan_info(self, content_id: str) -> Dict[str, Any]:
-        """Get latest scan information"""
-        # Implementation would get scan timestamps
+        """Get latest scan information"""        # Implementation would get scan timestamps
         return {
             'timestamp': datetime.utcnow() - timedelta(hours=1),
             'next_scheduled': datetime.utcnow() + timedelta(hours=1)
         }
     
     async def _calculate_protection_effectiveness(self, content_id: str) -> float:
-        """Calculate protection effectiveness percentage"""
-        # Implementation would calculate based on violations detected vs resolved
+        """Calculate protection effectiveness percentage"""        # Implementation would calculate based on violations detected vs resolved
         return 0.94  # 94% effectiveness placeholder
     
     async def _update_last_scan(self, content_id: str):
-        """Update last scan timestamp"""
-        scan_key = f"last_scan:{content_id}"
+        """Update last scan timestamp"""        scan_key = f"last_scan:{content_id}"
         await self.redis.setex(scan_key, 86400, datetime.utcnow().isoformat())
     
     async def _remove_from_monitoring(self, content_id: str):
-        """Remove content from monitoring schedule"""
-        monitoring_key = f"monitoring_schedule:{content_id}"
+        """Remove content from monitoring schedule"""        monitoring_key = f"monitoring_schedule:{content_id}"
         await self.redis.delete(monitoring_key)
     
     async def _clear_protection_cache(self, content_id: str):
-        """Clear all cached protection data"""
-        cache_keys = [
+        """Clear all cached protection data"""        cache_keys = [
             f"protection_status:{content_id}",
             f"protection_enabled:{content_id}",
             f"last_scan:{content_id}"
@@ -644,14 +597,12 @@ class ContentProtectionManager:
     
     async def _get_scan_statistics(self, content_id: str, start_date: datetime, 
                                  end_date: datetime) -> Dict[str, int]:
-        """Get scan statistics for period"""
-        # Implementation would query scan logs
+        """Get scan statistics for period"""        # Implementation would query scan logs
         return {'total_scans': 24}  # Placeholder
     
     async def _get_violation_statistics_period(self, content_id: str, start_date: datetime,
                                              end_date: datetime) -> Dict[str, int]:
-        """Get violation statistics for period"""
-        # Implementation would query violations in period
+        """Get violation statistics for period"""        # Implementation would query violations in period
         return {
             'total_violations': 8,
             'resolved_violations': 6
@@ -660,6 +611,5 @@ class ContentProtectionManager:
     async def _calculate_protection_effectiveness_period(self, content_id: str, 
                                                        start_date: datetime,
                                                        end_date: datetime) -> float:
-        """Calculate protection effectiveness for period"""
-        # Implementation would calculate effectiveness for specific period
+        """Calculate protection effectiveness for period"""        # Implementation would calculate effectiveness for specific period
         return 0.92  # 92% effectiveness placeholder

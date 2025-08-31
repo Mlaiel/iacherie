@@ -1,5 +1,4 @@
-"""
-Alerting Configuration Module for IA-Influencer Agent Platform
+"""Alerting Configuration Module for IA-Influencer Agent Platform
 ==============================================================
 
 Professional alerting and notification system configuration for
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -25,15 +23,13 @@ import yaml
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     WARNING = "warning"
     INFO = "info"
 
 
 class NotificationChannel(Enum):
-    """Notification channels"""
-    SLACK = "slack"
+    """Notification channels"""    SLACK = "slack"
     EMAIL = "email"
     WEBHOOK = "webhook"
     PAGERDUTY = "pagerduty"
@@ -43,8 +39,7 @@ class NotificationChannel(Enum):
 
 @dataclass
 class AlertRule:
-    """Prometheus alert rule configuration"""
-    alert_name: str
+    """Prometheus alert rule configuration"""    alert_name: str
     expression: str
     duration: str
     severity: AlertSeverity
@@ -56,8 +51,7 @@ class AlertRule:
 
 @dataclass
 class NotificationReceiver:
-    """Alertmanager notification receiver configuration"""
-    name: str
+    """Alertmanager notification receiver configuration"""    name: str
     channel: NotificationChannel
     config: Dict[str, Any]
     send_resolved: bool = True
@@ -65,8 +59,7 @@ class NotificationReceiver:
 
 @dataclass
 class AlertRoute:
-    """Alertmanager routing configuration"""
-    receiver: str
+    """Alertmanager routing configuration"""    receiver: str
     group_by: List[str] = field(default_factory=list)
     group_wait: str = "10s"
     group_interval: str = "10s"
@@ -76,8 +69,7 @@ class AlertRoute:
 
 
 class AlertingConfig:
-    """Professional alerting configuration for IA-Influencer platform"""
-    
+    """Professional alerting configuration for IA-Influencer platform"""    
     def __init__(self):
         self.alertmanager_port = int(os.getenv("ALERTMANAGER_PORT", "9093"))
         self.smtp_host = os.getenv("SMTP_HOST", "smtp.gmail.com")
@@ -90,8 +82,7 @@ class AlertingConfig:
         self.telegram_chat_id = os.getenv("TELEGRAM_CHAT_ID", "")
     
     def get_system_alert_rules(self) -> List[AlertRule]:
-        """Get system-level alert rules"""
-        return [
+        """Get system-level alert rules"""        return [
             AlertRule(
                 alert_name="ServiceDown",
                 expression="up == 0",
@@ -129,8 +120,7 @@ class AlertingConfig:
         ]
     
     def get_application_alert_rules(self) -> List[AlertRule]:
-        """Get application-level alert rules"""
-        return [
+        """Get application-level alert rules"""        return [
             AlertRule(
                 alert_name="HighErrorRate",
                 expression="rate(http_requests_total{status=~\"5..\"}[5m]) / rate(http_requests_total[5m]) > 0.1",
@@ -167,8 +157,7 @@ class AlertingConfig:
         ]
     
     def get_ai_services_alert_rules(self) -> List[AlertRule]:
-        """Get AI services alert rules"""
-        return [
+        """Get AI services alert rules"""        return [
             AlertRule(
                 alert_name="AIModelInferenceLatency",
                 expression="histogram_quantile(0.95, rate(ai_inference_duration_seconds_bucket[5m])) > 10",
@@ -206,8 +195,7 @@ class AlertingConfig:
         ]
     
     def get_content_protection_alert_rules(self) -> List[AlertRule]:
-        """Get content protection alert rules"""
-        return [
+        """Get content protection alert rules"""        return [
             AlertRule(
                 alert_name="ContentProtectionDown",
                 expression="up{job=\"content-protection\"} == 0",
@@ -244,8 +232,7 @@ class AlertingConfig:
         ]
     
     def get_security_alert_rules(self) -> List[AlertRule]:
-        """Get security alert rules"""
-        return [
+        """Get security alert rules"""        return [
             AlertRule(
                 alert_name="AuthenticationFailureSpike",
                 expression="rate(auth_attempts_total{status=\"failure\"}[5m]) > 10",
@@ -283,8 +270,7 @@ class AlertingConfig:
         ]
     
     def get_business_alert_rules(self) -> List[AlertRule]:
-        """Get business-level alert rules"""
-        return [
+        """Get business-level alert rules"""        return [
             AlertRule(
                 alert_name="RevenueDropSignificant",
                 expression="(rate(revenue_generated_total[1h]) / rate(revenue_generated_total[1h] offset 24h)) < 0.7",
@@ -321,8 +307,7 @@ class AlertingConfig:
         ]
     
     def get_notification_receivers(self) -> List[NotificationReceiver]:
-        """Get notification receiver configurations"""
-        receivers = []
+        """Get notification receiver configurations"""        receivers = []
         
         # Email receiver
         if self.smtp_username and self.smtp_password:
@@ -336,8 +321,7 @@ class AlertingConfig:
                     "auth_username": self.smtp_username,
                     "auth_password": self.smtp_password,
                     "subject": "🚨 {{ .GroupLabels.alertname }} - {{ .GroupLabels.severity }}",
-                    "body": """
-Alert: {{ .GroupLabels.alertname }}
+                    "body": """Alert: {{ .GroupLabels.alertname }}
 Severity: {{ .GroupLabels.severity }}
 Description: {{ .CommonAnnotations.description }}
 Runbook: {{ .CommonAnnotations.runbook_url }}
@@ -347,8 +331,7 @@ Details:
 - Instance: {{ .Labels.instance }}
 - Value: {{ .Annotations.value }}
 {{ end }}
-"""
-                }
+"""                }
             ))
         
         # Slack receiver
@@ -393,8 +376,7 @@ Details:
         return receivers
     
     def get_alert_routes(self) -> List[AlertRoute]:
-        """Get alert routing configuration"""
-        routes = [
+        """Get alert routing configuration"""        routes = [
             # Critical alerts to PagerDuty and email
             AlertRoute(
                 receiver="pagerduty-critical",
@@ -439,8 +421,7 @@ Details:
         return routes
     
     def get_alertmanager_config(self) -> Dict[str, Any]:
-        """Get complete Alertmanager configuration"""
-        receivers = self.get_notification_receivers()
+        """Get complete Alertmanager configuration"""        receivers = self.get_notification_receivers()
         routes = self.get_alert_routes()
         
         # Convert receivers to Alertmanager format
@@ -503,8 +484,7 @@ Details:
         }
     
     def get_all_alert_rules(self) -> Dict[str, List[AlertRule]]:
-        """Get all alert rules organized by category"""
-        return {
+        """Get all alert rules organized by category"""        return {
             "system": self.get_system_alert_rules(),
             "application": self.get_application_alert_rules(),
             "ai_services": self.get_ai_services_alert_rules(),
@@ -514,8 +494,7 @@ Details:
         }
     
     def export_prometheus_rules(self) -> str:
-        """Export all alert rules in Prometheus format"""
-        all_rules = self.get_all_alert_rules()
+        """Export all alert rules in Prometheus format"""        all_rules = self.get_all_alert_rules()
         
         groups = []
         for category, rules in all_rules.items():

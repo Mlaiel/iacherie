@@ -1,5 +1,4 @@
-"""
-🔐 Digital Rights Management (DRM) System
+"""🔐 Digital Rights Management (DRM) System
 ========================================
 
 Ultra-advanced DRM protection and license management system:
@@ -14,7 +13,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Cryptography Expert + DRM Specialist + Security Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union
@@ -41,16 +39,14 @@ import aiohttp
 logger = logging.getLogger(__name__)
 
 class DRMProtectionLevel(Enum):
-    """DRM protection levels"""
-    BASIC = "basic"
+    """DRM protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
     MILITARY_GRADE = "military_grade"
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    AUDIO_MP3 = "audio_mp3"
+    """Supported content formats"""    AUDIO_MP3 = "audio_mp3"
     AUDIO_FLAC = "audio_flac"
     AUDIO_WAV = "audio_wav"
     VIDEO_MP4 = "video_mp4"
@@ -62,8 +58,7 @@ class ContentFormat(Enum):
     EBOOK_EPUB = "ebook_epub"
 
 class LicenseType(Enum):
-    """License types"""
-    SINGLE_USE = "single_use"
+    """License types"""    SINGLE_USE = "single_use"
     TIME_LIMITED = "time_limited"
     DEVICE_BOUND = "device_bound"
     USER_BOUND = "user_bound"
@@ -72,8 +67,7 @@ class LicenseType(Enum):
     ENTERPRISE = "enterprise"
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithms"""
-    AES_256_GCM = "aes_256_gcm"
+    """Encryption algorithms"""    AES_256_GCM = "aes_256_gcm"
     AES_256_CBC = "aes_256_cbc"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     RSA_4096 = "rsa_4096"
@@ -81,8 +75,7 @@ class EncryptionAlgorithm(Enum):
 
 @dataclass
 class DRMProtectedContent:
-    """DRM protected content structure"""
-    content_id: str
+    """DRM protected content structure"""    content_id: str
     original_format: ContentFormat
     protection_level: DRMProtectionLevel
     encryption_algorithm: EncryptionAlgorithm
@@ -96,8 +89,7 @@ class DRMProtectedContent:
 
 @dataclass
 class DRMLicense:
-    """DRM license structure"""
-    license_id: str
+    """DRM license structure"""    license_id: str
     content_id: str
     user_id: str
     license_type: LicenseType
@@ -113,8 +105,7 @@ class DRMLicense:
 
 @dataclass
 class ContentKey:
-    """Content encryption key structure"""
-    key_id: str
+    """Content encryption key structure"""    key_id: str
     content_id: str
     algorithm: EncryptionAlgorithm
     key_data: bytes
@@ -126,10 +117,8 @@ class ContentKey:
     rotation_required: bool
 
 class AdvancedDRMSystem:
-    """
-    Ultra-advanced Digital Rights Management system
-    """
-    
+    """    Ultra-advanced Digital Rights Management system
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.protected_content = {}
@@ -203,8 +192,7 @@ class AdvancedDRMSystem:
         logger.info("Advanced DRM System initialized")
     
     def _initialize_crypto_components(self):
-        """Initialize cryptographic components"""
-        try:
+        """Initialize cryptographic components"""        try:
             # Generate master keys
             self.master_key = self._generate_master_key()
             self.signing_key = self._generate_signing_key()
@@ -224,8 +212,7 @@ class AdvancedDRMSystem:
             raise
     
     def _start_background_tasks(self):
-        """Start background maintenance tasks"""
-        try:
+        """Start background maintenance tasks"""        try:
             # Key rotation task
             asyncio.create_task(self._key_rotation_task())
             
@@ -241,8 +228,7 @@ class AdvancedDRMSystem:
             logger.error(f"Failed to start background tasks: {str(e)}")
     
     async def protect_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply DRM protection to content"""
-        try:
+        """Apply DRM protection to content"""        try:
             content_id = content_data['content_id']
             content_path = content_data['content_path']
             protection_level = DRMProtectionLevel(content_data['protection_level'])
@@ -318,8 +304,7 @@ class AdvancedDRMSystem:
             raise
     
     async def generate_license(self, license_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate DRM license for content access"""
-        try:
+        """Generate DRM license for content access"""        try:
             content_id = license_request['content_id']
             user_id = license_request['user_id']
             license_type = LicenseType(license_request['license_type'])
@@ -396,8 +381,7 @@ class AdvancedDRMSystem:
             raise
     
     async def decrypt_content(self, access_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Decrypt and provide access to protected content"""
-        try:
+        """Decrypt and provide access to protected content"""        try:
             license_token = access_request['license_token']
             content_id = access_request['content_id']
             device_info = access_request.get('device_info', {})
@@ -474,8 +458,7 @@ class AdvancedDRMSystem:
             raise
     
     async def revoke_license(self, revocation_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Revoke DRM license"""
-        try:
+        """Revoke DRM license"""        try:
             license_id = revocation_request['license_id']
             revocation_reason = revocation_request.get('reason', 'user_request')
             
@@ -516,8 +499,7 @@ class AdvancedDRMSystem:
             raise
     
     async def generate_usage_report(self, report_request: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive DRM usage report"""
-        try:
+        """Generate comprehensive DRM usage report"""        try:
             content_id = report_request.get('content_id')
             user_id = report_request.get('user_id')
             time_period = report_request.get('time_period', 'month')
@@ -570,8 +552,7 @@ class AdvancedDRMSystem:
     # Encryption and decryption methods
     async def _encrypt_content(self, content: bytes, content_key: 'ContentKey', 
                              algorithm: EncryptionAlgorithm) -> bytes:
-        """Encrypt content using specified algorithm"""
-        try:
+        """Encrypt content using specified algorithm"""        try:
             if algorithm == EncryptionAlgorithm.AES_256_GCM:
                 return await self._encrypt_aes_gcm(content, content_key)
             elif algorithm == EncryptionAlgorithm.AES_256_CBC:
@@ -588,8 +569,7 @@ class AdvancedDRMSystem:
             raise
     
     async def _encrypt_aes_gcm(self, content: bytes, content_key: 'ContentKey') -> bytes:
-        """Encrypt content using AES-256-GCM"""
-        try:
+        """Encrypt content using AES-256-GCM"""        try:
             # Generate nonce
             nonce = os.urandom(12)
             
@@ -613,8 +593,7 @@ class AdvancedDRMSystem:
             raise
     
     async def _encrypt_aes_cbc(self, content: bytes, content_key: 'ContentKey') -> bytes:
-        """Encrypt content using AES-256-CBC"""
-        try:
+        """Encrypt content using AES-256-CBC"""        try:
             # Pad content to block size
             block_size = 16
             padding_length = block_size - (len(content) % block_size)
@@ -640,8 +619,7 @@ class AdvancedDRMSystem:
             raise
     
     async def _encrypt_chacha20(self, content: bytes, content_key: 'ContentKey') -> bytes:
-        """Encrypt content using ChaCha20-Poly1305"""
-        try:
+        """Encrypt content using ChaCha20-Poly1305"""        try:
             from cryptography.hazmat.primitives.ciphers.aead import ChaCha20Poly1305
             
             # Create ChaCha20Poly1305 instance
@@ -664,8 +642,7 @@ class AdvancedDRMSystem:
     
     async def _decrypt_content(self, encrypted_content: bytes, content_key: 'ContentKey',
                              algorithm: EncryptionAlgorithm) -> bytes:
-        """Decrypt content using specified algorithm"""
-        try:
+        """Decrypt content using specified algorithm"""        try:
             if algorithm == EncryptionAlgorithm.AES_256_GCM:
                 return await self._decrypt_aes_gcm(encrypted_content, content_key)
             elif algorithm == EncryptionAlgorithm.AES_256_CBC:
@@ -684,8 +661,7 @@ class AdvancedDRMSystem:
     # Key management methods
     async def _generate_content_key(self, content_id: str, 
                                   algorithm: EncryptionAlgorithm) -> ContentKey:
-        """Generate content encryption key"""
-        try:
+        """Generate content encryption key"""        try:
             key_id = str(uuid.uuid4())
             
             if algorithm in [EncryptionAlgorithm.AES_256_GCM, EncryptionAlgorithm.AES_256_CBC]:
@@ -730,17 +706,14 @@ class AdvancedDRMSystem:
             raise
     
     def _generate_master_key(self) -> bytes:
-        """Generate master encryption key"""
-        return os.urandom(32)  # 256-bit key
+        """Generate master encryption key"""        return os.urandom(32)  # 256-bit key
     
     def _generate_signing_key(self) -> bytes:
-        """Generate signing key for license tokens"""
-        return os.urandom(64)  # 512-bit key
+        """Generate signing key for license tokens"""        return os.urandom(64)  # 512-bit key
     
     # Device and session management
     def _generate_device_fingerprint(self, device_info: Dict[str, Any]) -> str:
-        """Generate unique device fingerprint"""
-        try:
+        """Generate unique device fingerprint"""        try:
             # Combine device characteristics
             fingerprint_data = [
                 device_info.get('hardware_id', ''),
@@ -767,8 +740,7 @@ class AdvancedDRMSystem:
     async def _validate_license_request(self, request: Dict[str, Any], 
                                       protected_content: DRMProtectedContent,
                                       device_fingerprint: str) -> Dict[str, Any]:
-        """Validate license request"""
-        errors = []
+        """Validate license request"""        errors = []
         
         # Check content availability
         if protected_content.expires_at and protected_content.expires_at < datetime.utcnow():
@@ -800,8 +772,7 @@ class AdvancedDRMSystem:
         }
     
     def _generate_license_token(self, license_record: DRMLicense) -> str:
-        """Generate JWT token for license"""
-        try:
+        """Generate JWT token for license"""        try:
             payload = {
                 'license_id': license_record.license_id,
                 'content_id': license_record.content_id,
@@ -822,8 +793,7 @@ class AdvancedDRMSystem:
             raise
     
     def _validate_license_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Validate and decode license token"""
-        try:
+        """Validate and decode license token"""        try:
             payload = jwt.decode(token, self.signing_key, algorithms=['HS256'])
             return payload
             
@@ -836,8 +806,7 @@ class AdvancedDRMSystem:
     
     # Background tasks
     async def _key_rotation_task(self):
-        """Background task for key rotation"""
-        while True:
+        """Background task for key rotation"""        while True:
             try:
                 await asyncio.sleep(3600)  # Check every hour
                 
@@ -854,8 +823,7 @@ class AdvancedDRMSystem:
                 logger.error(f"Key rotation task failed: {str(e)}")
     
     async def _license_validation_task(self):
-        """Background task for license validation"""
-        while True:
+        """Background task for license validation"""        while True:
             try:
                 await asyncio.sleep(self.drm_config['license_validation_interval'])
                 
@@ -877,8 +845,7 @@ class AdvancedDRMSystem:
                 logger.error(f"License validation task failed: {str(e)}")
     
     async def _usage_monitoring_task(self):
-        """Background task for usage monitoring"""
-        while True:
+        """Background task for usage monitoring"""        while True:
             try:
                 await asyncio.sleep(300)  # Monitor every 5 minutes
                 
@@ -895,8 +862,7 @@ class AdvancedDRMSystem:
     
     # Helper methods
     def _get_user_devices(self, user_id: str) -> List[str]:
-        """Get list of devices for user"""
-        user_devices = []
+        """Get list of devices for user"""        user_devices = []
         for license in self.licenses.values():
             if (license.user_id == user_id and 
                 license.device_fingerprint and 
@@ -905,8 +871,7 @@ class AdvancedDRMSystem:
         return user_devices
     
     def _validate_geographic_access(self, location: Dict[str, Any]) -> bool:
-        """Validate geographic access restrictions"""
-        # Implement geographic validation logic
+        """Validate geographic access restrictions"""        # Implement geographic validation logic
         # This is a placeholder implementation
         allowed_countries = self.config.get('allowed_countries', [])
         if allowed_countries:

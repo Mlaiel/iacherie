@@ -1,5 +1,4 @@
 """Enterprise push notification service with multi-platform support and rich content."""
-
 import os
 import json
 import aiohttp
@@ -19,8 +18,7 @@ from app.utils.metrics import MetricsCollector
 
 
 class PushPlatform(str, Enum):
-    """Supported push notification platforms."""
-    FIREBASE_ANDROID = "firebase_android"
+    """Supported push notification platforms."""    FIREBASE_ANDROID = "firebase_android"
     FIREBASE_IOS = "firebase_ios"
     FIREBASE_WEB = "firebase_web"
     APNS_IOS = "apns_ios"
@@ -30,8 +28,7 @@ class PushPlatform(str, Enum):
 
 
 class NotificationPriority(str, Enum):
-    """Push notification priority levels."""
-    LOW = "low"
+    """Push notification priority levels."""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -39,8 +36,7 @@ class NotificationPriority(str, Enum):
 
 @dataclass
 class PushContent:
-    """Rich push notification content structure."""
-    title: str
+    """Rich push notification content structure."""    title: str
     body: str
     icon: Optional[str] = None
     image: Optional[str] = None
@@ -57,8 +53,7 @@ class PushContent:
 
 @dataclass
 class PushMessage:
-    """Enterprise push notification message with advanced targeting."""
-    content: PushContent
+    """Enterprise push notification message with advanced targeting."""    content: PushContent
     device_token: Optional[str] = None
     device_tokens: Optional[List[str]] = None
     topic: Optional[str] = None
@@ -77,8 +72,7 @@ class PushMessage:
 
 @dataclass
 class PushDeliveryResult:
-    """Push notification delivery tracking result."""
-    message_id: str
+    """Push notification delivery tracking result."""    message_id: str
     platform: PushPlatform
     status: str  # sent, delivered, failed, clicked, dismissed
     device_token: Optional[str] = None
@@ -94,7 +88,6 @@ class PushDeliveryResult:
 
 class PushNotifier:
     """Enterprise push notification service with multi-platform support and analytics."""
-
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.metrics = MetricsCollector()
@@ -151,8 +144,7 @@ class PushNotifier:
         self.timeout_seconds = 30
 
     async def send_push(self, message: PushMessage) -> Union[PushDeliveryResult, List[PushDeliveryResult]]:
-        """Send push notification with intelligent platform routing."""
-        start_time = datetime.utcnow()
+        """Send push notification with intelligent platform routing."""        start_time = datetime.utcnow()
         
         try:
             # Validate message
@@ -185,8 +177,7 @@ class PushNotifier:
             raise
 
     async def send_multicast(self, messages: List[PushMessage]) -> List[PushDeliveryResult]:
-        """Send multiple push notifications efficiently."""
-        results = []
+        """Send multiple push notifications efficiently."""        results = []
         
         # Group by platform for optimal batch processing
         platform_groups = self._group_by_platform(messages)
@@ -198,8 +189,7 @@ class PushNotifier:
         return results
 
     async def send_to_topic(self, topic: str, content: PushContent, platform: PushPlatform) -> PushDeliveryResult:
-        """Send push notification to a topic/channel."""
-        message = PushMessage(
+        """Send push notification to a topic/channel."""        message = PushMessage(
             content=content,
             topic=topic,
             platform=platform
@@ -208,22 +198,19 @@ class PushNotifier:
         return await self.send_push(message)
 
     async def subscribe_to_topic(self, device_tokens: List[str], topic: str, platform: PushPlatform) -> Dict[str, Any]:
-        """Subscribe device tokens to a topic."""
-        if platform in [PushPlatform.FIREBASE_ANDROID, PushPlatform.FIREBASE_IOS, PushPlatform.FIREBASE_WEB]:
+        """Subscribe device tokens to a topic."""        if platform in [PushPlatform.FIREBASE_ANDROID, PushPlatform.FIREBASE_IOS, PushPlatform.FIREBASE_WEB]:
             return await self._firebase_topic_subscription(device_tokens, topic, "subscribe")
         
         raise ValueError(f"Topic subscription not supported for {platform}")
 
     async def unsubscribe_from_topic(self, device_tokens: List[str], topic: str, platform: PushPlatform) -> Dict[str, Any]:
-        """Unsubscribe device tokens from a topic."""
-        if platform in [PushPlatform.FIREBASE_ANDROID, PushPlatform.FIREBASE_IOS, PushPlatform.FIREBASE_WEB]:
+        """Unsubscribe device tokens from a topic."""        if platform in [PushPlatform.FIREBASE_ANDROID, PushPlatform.FIREBASE_IOS, PushPlatform.FIREBASE_WEB]:
             return await self._firebase_topic_subscription(device_tokens, topic, "unsubscribe")
         
         raise ValueError(f"Topic unsubscription not supported for {platform}")
 
     async def schedule_push(self, message: PushMessage, scheduled_at: datetime) -> str:
-        """Schedule push notification for future delivery."""
-        message.scheduled_at = scheduled_at
+        """Schedule push notification for future delivery."""        message.scheduled_at = scheduled_at
         
         # Generate scheduling ID
         scheduling_id = f"push_scheduled_{hashlib.md5(f'{message.device_token}_{scheduled_at}'.encode()).hexdigest()[:12]}"
@@ -234,19 +221,16 @@ class PushNotifier:
         return scheduling_id
 
     async def cancel_scheduled_push(self, scheduling_id: str) -> bool:
-        """Cancel a scheduled push notification."""
-        # Implementation would remove from scheduling queue
+        """Cancel a scheduled push notification."""        # Implementation would remove from scheduling queue
         self.logger.info(f"Cancelled scheduled push: {scheduling_id}")
         return True
 
     async def get_delivery_status(self, message_id: str, platform: PushPlatform) -> Optional[PushDeliveryResult]:
-        """Get delivery status for a specific push notification."""
-        # Implementation would query delivery status from provider or database
+        """Get delivery status for a specific push notification."""        # Implementation would query delivery status from provider or database
         return None
 
     async def validate_device_tokens(self, device_tokens: List[str], platform: PushPlatform) -> Dict[str, bool]:
-        """Validate device tokens and return their validity status."""
-        valid_tokens = {}
+        """Validate device tokens and return their validity status."""        valid_tokens = {}
         
         # Implementation would validate tokens with platform APIs
         for token in device_tokens:
@@ -255,8 +239,7 @@ class PushNotifier:
         return valid_tokens
 
     async def get_analytics(self, start_date: datetime, end_date: datetime, filters: Optional[Dict] = None) -> Dict[str, Any]:
-        """Get comprehensive push notification analytics."""
-        return {
+        """Get comprehensive push notification analytics."""        return {
             "total_sent": await self._get_total_sent(start_date, end_date, filters),
             "delivery_rate": await self._get_delivery_rate(start_date, end_date, filters),
             "click_through_rate": await self._get_click_through_rate(start_date, end_date, filters),
@@ -267,8 +250,7 @@ class PushNotifier:
         }
 
     async def _send_single(self, platform: PushPlatform, message: PushMessage) -> PushDeliveryResult:
-        """Send single push notification via specified platform."""
-        if platform in [PushPlatform.FIREBASE_ANDROID, PushPlatform.FIREBASE_IOS, PushPlatform.FIREBASE_WEB]:
+        """Send single push notification via specified platform."""        if platform in [PushPlatform.FIREBASE_ANDROID, PushPlatform.FIREBASE_IOS, PushPlatform.FIREBASE_WEB]:
             return await self._send_via_firebase(platform, message)
         elif platform == PushPlatform.APNS_IOS:
             return await self._send_via_apns(message)
@@ -282,8 +264,7 @@ class PushNotifier:
             raise ValueError(f"Unsupported platform: {platform}")
 
     async def _send_batch(self, platform: PushPlatform, message: PushMessage) -> List[PushDeliveryResult]:
-        """Send push notification to multiple devices."""
-        device_tokens = message.device_tokens or []
+        """Send push notification to multiple devices."""        device_tokens = message.device_tokens or []
         results = []
         
         # Split into batches
@@ -305,8 +286,7 @@ class PushNotifier:
         return results
 
     async def _send_via_firebase(self, platform: PushPlatform, message: PushMessage) -> PushDeliveryResult:
-        """Send push notification via Firebase Cloud Messaging."""
-        config = self.platforms[platform]
+        """Send push notification via Firebase Cloud Messaging."""        config = self.platforms[platform]
         
         # Build Firebase payload
         payload = {
@@ -379,8 +359,7 @@ class PushNotifier:
                 )
 
     async def _send_via_apns(self, message: PushMessage) -> PushDeliveryResult:
-        """Send push notification via Apple Push Notification Service."""
-        # This would require proper JWT token generation and HTTP/2 connection
+        """Send push notification via Apple Push Notification Service."""        # This would require proper JWT token generation and HTTP/2 connection
         # Simplified implementation
         
         message_id = f"apns_{hashlib.md5(f'{message.device_token}_{message.content.title}'.encode()).hexdigest()[:12]}"
@@ -395,8 +374,7 @@ class PushNotifier:
         )
 
     async def _send_via_web_push(self, message: PushMessage) -> PushDeliveryResult:
-        """Send web push notification using Web Push Protocol."""
-        # This would require proper VAPID authentication and encryption
+        """Send web push notification using Web Push Protocol."""        # This would require proper VAPID authentication and encryption
         # Simplified implementation
         
         message_id = f"webpush_{hashlib.md5(f'{message.device_token}_{message.content.title}'.encode()).hexdigest()[:12]}"
@@ -411,8 +389,7 @@ class PushNotifier:
         )
 
     async def _send_via_huawei_hms(self, message: PushMessage) -> PushDeliveryResult:
-        """Send push notification via Huawei Mobile Services."""
-        # Simplified implementation
+        """Send push notification via Huawei Mobile Services."""        # Simplified implementation
         message_id = f"hms_{hashlib.md5(f'{message.device_token}_{message.content.title}'.encode()).hexdigest()[:12]}"
         
         return PushDeliveryResult(
@@ -425,8 +402,7 @@ class PushNotifier:
         )
 
     async def _send_via_xiaomi_mipush(self, message: PushMessage) -> PushDeliveryResult:
-        """Send push notification via Xiaomi Mi Push."""
-        # Simplified implementation
+        """Send push notification via Xiaomi Mi Push."""        # Simplified implementation
         message_id = f"mipush_{hashlib.md5(f'{message.device_token}_{message.content.title}'.encode()).hexdigest()[:12]}"
         
         return PushDeliveryResult(
@@ -439,8 +415,7 @@ class PushNotifier:
         )
 
     async def _firebase_topic_subscription(self, device_tokens: List[str], topic: str, action: str) -> Dict[str, Any]:
-        """Subscribe or unsubscribe device tokens to/from Firebase topic."""
-        config = self.platforms[PushPlatform.FIREBASE_ANDROID]  # Use Android config as default
+        """Subscribe or unsubscribe device tokens to/from Firebase topic."""        config = self.platforms[PushPlatform.FIREBASE_ANDROID]  # Use Android config as default
         
         endpoint = f"https://iid.googleapis.com/iid/v1:batch{action.capitalize()}"
         
@@ -460,8 +435,7 @@ class PushNotifier:
                 return result
 
     def _validate_message(self, message: PushMessage):
-        """Validate push notification message."""
-        if not message.content.title:
+        """Validate push notification message."""        if not message.content.title:
             raise ValueError("Push notification title is required")
         
         if not message.content.body:
@@ -471,13 +445,11 @@ class PushNotifier:
             raise ValueError("At least one target (device token, topic, or condition) is required")
 
     async def _detect_platform(self, message: PushMessage) -> PushPlatform:
-        """Detect platform based on device token format or other indicators."""
-        # Simplified detection - in production would use more sophisticated logic
+        """Detect platform based on device token format or other indicators."""        # Simplified detection - in production would use more sophisticated logic
         return PushPlatform.FIREBASE_ANDROID
 
     def _group_by_platform(self, messages: List[PushMessage]) -> Dict[PushPlatform, List[PushMessage]]:
-        """Group messages by platform for batch processing."""
-        groups = {}
+        """Group messages by platform for batch processing."""        groups = {}
         
         for message in messages:
             platform = message.platform or PushPlatform.FIREBASE_ANDROID
@@ -488,8 +460,7 @@ class PushNotifier:
         return groups
 
     async def _send_platform_batch(self, platform: PushPlatform, messages: List[PushMessage]) -> List[PushDeliveryResult]:
-        """Send batch of messages for a specific platform."""
-        results = []
+        """Send batch of messages for a specific platform."""        results = []
         
         # Use semaphore to limit concurrent requests
         semaphore = asyncio.Semaphore(self.max_concurrent_requests)
@@ -512,8 +483,7 @@ class PushNotifier:
         return results
 
     def _is_token_format_valid(self, token: str, platform: PushPlatform) -> bool:
-        """Validate device token format for specific platform."""
-        if not token:
+        """Validate device token format for specific platform."""        if not token:
             return False
         
         # Simplified validation - would use platform-specific validation in production
@@ -525,8 +495,7 @@ class PushNotifier:
         return True
 
     async def _track_delivery_metrics(self, result: PushDeliveryResult):
-        """Track push notification delivery metrics."""
-        await self.metrics.increment(
+        """Track push notification delivery metrics."""        await self.metrics.increment(
             "push_sent_total",
             tags={
                 "platform": result.platform.value,

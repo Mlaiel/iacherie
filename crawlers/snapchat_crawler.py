@@ -1,5 +1,4 @@
-"""
-Snapchat Platform Crawler - Ultra-Advanced Implementation
+"""Snapchat Platform Crawler - Ultra-Advanced Implementation
 Ephemeral Content Monitoring System
 
 This module provides comprehensive crawling capabilities for Snapchat platform,
@@ -13,7 +12,6 @@ WARNING: This code is the exclusive property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Violators will be prosecuted to the full extent of the law.
 """
-
 import asyncio
 import aiohttp
 import json
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class SnapchatContentType(str, Enum):
-    """Snapchat content types"""
-    STORY = "story"
+    """Snapchat content types"""    STORY = "story"
     DISCOVER = "discover"
     SPOTLIGHT = "spotlight"
     SNAP_MAP = "snap_map"
@@ -49,8 +46,7 @@ class SnapchatContentType(str, Enum):
 
 
 class SnapchatMediaType(str, Enum):
-    """Snapchat media types"""
-    PHOTO = "photo"
+    """Snapchat media types"""    PHOTO = "photo"
     VIDEO = "video"
     GIF = "gif"
     STICKER = "sticker"
@@ -58,24 +54,21 @@ class SnapchatMediaType(str, Enum):
 
 
 class SnapchatVisibility(str, Enum):
-    """Snapchat content visibility"""
-    PUBLIC = "public"
+    """Snapchat content visibility"""    PUBLIC = "public"
     FRIENDS = "friends"
     CUSTOM = "custom"
     PRIVATE = "private"
 
 
 class SnapchatStoryType(str, Enum):
-    """Snapchat story types"""
-    USER_STORY = "user_story"
+    """Snapchat story types"""    USER_STORY = "user_story"
     OUR_STORY = "our_story"
     LIVE_STORY = "live_story"
     BRAND_STORY = "brand_story"
 
 
 class SnapchatMedia(BaseModel):
-    """Snapchat media data model"""
-    media_id: str
+    """Snapchat media data model"""    media_id: str
     media_type: SnapchatMediaType
     url: str
     thumbnail_url: Optional[str] = None
@@ -95,8 +88,7 @@ class SnapchatMedia(BaseModel):
 
 
 class SnapchatUser(BaseModel):
-    """Snapchat user data model"""
-    user_id: str
+    """Snapchat user data model"""    user_id: str
     username: str
     display_name: str
     bitmoji_avatar: Optional[str] = None
@@ -116,8 +108,7 @@ class SnapchatUser(BaseModel):
 
 
 class SnapchatStory(BaseModel):
-    """Snapchat story data model"""
-    story_id: str
+    """Snapchat story data model"""    story_id: str
     user: SnapchatUser
     story_type: SnapchatStoryType
     title: Optional[str] = None
@@ -138,8 +129,7 @@ class SnapchatStory(BaseModel):
 
 
 class SnapchatDiscover(BaseModel):
-    """Snapchat Discover content data model"""
-    discover_id: str
+    """Snapchat Discover content data model"""    discover_id: str
     publisher: str
     publisher_logo: Optional[str] = None
     title: str
@@ -158,8 +148,7 @@ class SnapchatDiscover(BaseModel):
 
 
 class SnapchatSpotlight(BaseModel):
-    """Snapchat Spotlight content data model"""
-    spotlight_id: str
+    """Snapchat Spotlight content data model"""    spotlight_id: str
     creator: SnapchatUser
     media: SnapchatMedia
     caption: Optional[str] = None
@@ -177,8 +166,7 @@ class SnapchatSpotlight(BaseModel):
 
 
 class SnapchatLens(BaseModel):
-    """Snapchat lens data model"""
-    lens_id: str
+    """Snapchat lens data model"""    lens_id: str
     name: str
     creator: str
     description: Optional[str] = None
@@ -195,8 +183,7 @@ class SnapchatLens(BaseModel):
 
 
 class SnapchatSearchResults(BaseModel):
-    """Snapchat search results data model"""
-    query: str
+    """Snapchat search results data model"""    query: str
     total_results: int
     users: List[SnapchatUser] = Field(default_factory=list)
     stories: List[SnapchatStory] = Field(default_factory=list)
@@ -211,8 +198,7 @@ class SnapchatSearchResults(BaseModel):
 
 
 class SnapchatAnalytics(BaseModel):
-    """Snapchat analytics data model"""
-    user_id: str
+    """Snapchat analytics data model"""    user_id: str
     analysis_period: Tuple[datetime, datetime]
     total_stories_posted: int
     total_story_views: int
@@ -233,13 +219,11 @@ class SnapchatAnalytics(BaseModel):
 
 
 class SnapchatCrawler(BaseCrawler):
-    """
-    Ultra-Advanced Snapchat Platform Crawler
+    """    Ultra-Advanced Snapchat Platform Crawler
     
     Provides comprehensive crawling and monitoring capabilities for Snapchat platform,
     specializing in ephemeral content, Stories, and Discover content monitoring.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -283,8 +267,7 @@ class SnapchatCrawler(BaseCrawler):
         logger.info("Snapchat crawler initialized with ultra-advanced ephemeral content monitoring")
 
     async def authenticate(self, session_token: str, user_id: str = None) -> bool:
-        """
-        Authenticate with Snapchat platform
+        """        Authenticate with Snapchat platform
         
         Args:
             session_token: Session authentication token
@@ -292,8 +275,7 @@ class SnapchatCrawler(BaseCrawler):
             
         Returns:
             bool: Authentication success status
-        """
-        try:
+        """        try:
             self.session_token = session_token
             self.user_id = user_id
             
@@ -326,8 +308,7 @@ class SnapchatCrawler(BaseCrawler):
         media_type: Optional[SnapchatMediaType] = None,
         limit: int = 50
     ) -> SnapchatSearchResults:
-        """
-        Search Snapchat content with advanced filtering
+        """        Search Snapchat content with advanced filtering
         
         Args:
             query: Search query
@@ -337,8 +318,7 @@ class SnapchatCrawler(BaseCrawler):
             
         Returns:
             SnapchatSearchResults: Comprehensive search results
-        """
-        await self.rate_limiter.acquire()
+        """        await self.rate_limiter.acquire()
         
         try:
             results = SnapchatSearchResults(
@@ -406,8 +386,7 @@ class SnapchatCrawler(BaseCrawler):
         keywords: List[str] = None,
         check_interval: int = 180  # 3 minutes for ephemeral content
     ) -> AsyncGenerator[SnapchatStory, None]:
-        """
-        Real-time content monitoring for Snapchat
+        """        Real-time content monitoring for Snapchat
         
         Args:
             usernames: Users to monitor
@@ -416,8 +395,7 @@ class SnapchatCrawler(BaseCrawler):
             
         Yields:
             SnapchatStory: New stories detected
-        """
-        usernames = usernames or []
+        """        usernames = usernames or []
         keywords = keywords or []
         
         self.monitored_users.update(usernames)
@@ -466,8 +444,7 @@ class SnapchatCrawler(BaseCrawler):
         comparison_set: List[SnapchatStory],
         threshold: float = None
     ) -> List[Tuple[SnapchatStory, float]]:
-        """
-        Detect story similarity for ephemeral content protection
+        """        Detect story similarity for ephemeral content protection
         
         Args:
             target_story: Story to compare
@@ -476,8 +453,7 @@ class SnapchatCrawler(BaseCrawler):
             
         Returns:
             List[Tuple[SnapchatStory, float]]: Similar stories with scores
-        """
-        threshold = threshold or self.similarity_threshold
+        """        threshold = threshold or self.similarity_threshold
         similar_stories = []
         
         try:
@@ -509,8 +485,7 @@ class SnapchatCrawler(BaseCrawler):
         user_id: str,
         analysis_period: Tuple[datetime, datetime]
     ) -> SnapchatAnalytics:
-        """
-        Generate comprehensive analytics for Snapchat user
+        """        Generate comprehensive analytics for Snapchat user
         
         Args:
             user_id: User ID to analyze
@@ -518,8 +493,7 @@ class SnapchatCrawler(BaseCrawler):
             
         Returns:
             SnapchatAnalytics: Comprehensive analytics data
-        """
-        try:
+        """        try:
             start_time, end_time = analysis_period
             
             # Get user's stories in the period
@@ -645,8 +619,7 @@ class SnapchatCrawler(BaseCrawler):
     # Helper methods
     
     async def _search_users(self, query: str, limit: int) -> List[SnapchatUser]:
-        """Search for Snapchat users"""
-        try:
+        """Search for Snapchat users"""        try:
             params = {
                 "query": query,
                 "limit": limit
@@ -670,13 +643,11 @@ class SnapchatCrawler(BaseCrawler):
             return []
 
     async def _search_stories(self, query: str, media_type: Optional[SnapchatMediaType], limit: int) -> List[SnapchatStory]:
-        """Search for Snapchat stories"""
-        # Implementation would depend on available search API
+        """Search for Snapchat stories"""        # Implementation would depend on available search API
         return []
 
     async def _search_discover(self, query: str, limit: int) -> List[SnapchatDiscover]:
-        """Search Discover content"""
-        try:
+        """Search Discover content"""        try:
             params = {
                 "query": query,
                 "limit": limit
@@ -700,13 +671,11 @@ class SnapchatCrawler(BaseCrawler):
             return []
 
     async def _search_spotlight(self, query: str, limit: int) -> List[SnapchatSpotlight]:
-        """Search Spotlight content"""
-        # Implementation would depend on available search API
+        """Search Spotlight content"""        # Implementation would depend on available search API
         return []
 
     async def _search_lenses(self, query: str, limit: int) -> List[SnapchatLens]:
-        """Search for lenses"""
-        try:
+        """Search for lenses"""        try:
             params = {
                 "query": query,
                 "limit": limit
@@ -730,8 +699,7 @@ class SnapchatCrawler(BaseCrawler):
             return []
 
     async def _get_user_recent_stories(self, username: str) -> List[SnapchatStory]:
-        """Get recent stories from user"""
-        try:
+        """Get recent stories from user"""        try:
             async with self.session.get(f"{self.api_base}/users/{username}/stories") as response:
                 if response.status == 200:
                     data = await response.json()
@@ -751,8 +719,7 @@ class SnapchatCrawler(BaseCrawler):
             return []
 
     async def _parse_user_data(self, data: Dict[str, Any]) -> SnapchatUser:
-        """Parse user data from API response"""
-        return SnapchatUser(
+        """Parse user data from API response"""        return SnapchatUser(
             user_id=str(data.get("id", "")),
             username=data.get("username", ""),
             display_name=data.get("display_name", ""),
@@ -766,8 +733,7 @@ class SnapchatCrawler(BaseCrawler):
         )
 
     async def _parse_story_data(self, data: Dict[str, Any]) -> SnapchatStory:
-        """Parse story data from API response"""
-        # Parse media
+        """Parse story data from API response"""        # Parse media
         media = []
         for media_data in data.get("media", []):
             media_item = SnapchatMedia(
@@ -817,8 +783,7 @@ class SnapchatCrawler(BaseCrawler):
         )
 
     async def _parse_discover_data(self, data: Dict[str, Any]) -> SnapchatDiscover:
-        """Parse Discover content data"""
-        media_data = data.get("media", {})
+        """Parse Discover content data"""        media_data = data.get("media", {})
         media = SnapchatMedia(
             media_id=str(media_data.get("id", "")),
             media_type=SnapchatMediaType(media_data.get("type", "video")),
@@ -845,8 +810,7 @@ class SnapchatCrawler(BaseCrawler):
         )
 
     async def _parse_lens_data(self, data: Dict[str, Any]) -> SnapchatLens:
-        """Parse lens data"""
-        return SnapchatLens(
+        """Parse lens data"""        return SnapchatLens(
             lens_id=str(data.get("id", "")),
             name=data.get("name", ""),
             creator=data.get("creator", ""),
@@ -863,8 +827,7 @@ class SnapchatCrawler(BaseCrawler):
         )
 
     async def _extract_story_features(self, story: SnapchatStory) -> Dict[str, Any]:
-        """Extract features for similarity comparison"""
-        features = {
+        """Extract features for similarity comparison"""        features = {
             "title": (story.title or "").lower(),
             "user_id": story.user.user_id,
             "media_count": len(story.media),
@@ -886,8 +849,7 @@ class SnapchatCrawler(BaseCrawler):
         features1: Dict[str, Any],
         features2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between story features"""
-        try:
+        """Calculate similarity between story features"""        try:
             scores = []
             
             # Title similarity
@@ -933,8 +895,7 @@ class SnapchatCrawler(BaseCrawler):
             return 0.0
 
     async def _preserve_ephemeral_content(self, story: SnapchatStory):
-        """Preserve ephemeral content before it expires"""
-        if self.preserve_expired_content:
+        """Preserve ephemeral content before it expires"""        if self.preserve_expired_content:
             try:
                 # Encrypt and store story data
                 story_data = story.dict()
@@ -953,8 +914,7 @@ class SnapchatCrawler(BaseCrawler):
                 logger.error(f"Error preserving content: {str(e)}")
 
     async def _cleanup_expired_content(self):
-        """Clean up expired content from cache"""
-        try:
+        """Clean up expired content from cache"""        try:
             # Implementation would clean up expired stories
             current_time = datetime.utcnow()
             # Clean up logic here
@@ -969,8 +929,7 @@ class SnapchatCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[SnapchatStory]:
-        """Get user's stories in specific time period"""
-        # Implementation would require accessing stored story data
+        """Get user's stories in specific time period"""        # Implementation would require accessing stored story data
         return []
 
     async def _get_user_spotlight_in_period(
@@ -979,24 +938,20 @@ class SnapchatCrawler(BaseCrawler):
         start_time: datetime,
         end_time: datetime
     ) -> List[SnapchatSpotlight]:
-        """Get user's Spotlight posts in specific time period"""
-        # Implementation would require accessing Spotlight data
+        """Get user's Spotlight posts in specific time period"""        # Implementation would require accessing Spotlight data
         return []
 
     async def _calculate_similarity(self, story: SnapchatStory) -> float:
-        """Calculate similarity score against protected content"""
-        # Simplified similarity calculation
+        """Calculate similarity score against protected content"""        # Simplified similarity calculation
         return 0.0
 
     async def _check_protection_status(self, story: SnapchatStory) -> str:
-        """Check protection status of story"""
-        if story.story_id in self.protected_content:
+        """Check protection status of story"""        if story.story_id in self.protected_content:
             return "protected"
         return "unprotected"
 
     async def close(self):
-        """Close crawler and cleanup resources"""
-        try:
+        """Close crawler and cleanup resources"""        try:
             await self.cache_manager.close()
             await super().close()
             logger.info("Snapchat crawler closed successfully")

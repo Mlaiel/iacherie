@@ -1,5 +1,4 @@
-"""
-Vector Store Manager
+"""Vector Store Manager
 
 This module provides unified management for multiple vector store implementations.
 Orchestrates FAISS, Elasticsearch, and Pinecone vector stores with intelligent routing.
@@ -12,7 +11,6 @@ WARNING: This code is proprietary to Fahed Mlaiel. Any unauthorized copying, mod
 or distribution without explicit written permission is strictly prohibited and will result 
 in legal action under German and international copyright law.
 """
-
 import os
 import json
 import logging
@@ -41,15 +39,13 @@ settings = get_settings()
 
 
 class VectorStoreType(Enum):
-    """Vector store implementation types"""
-    FAISS = "faiss"
+    """Vector store implementation types"""    FAISS = "faiss"
     ELASTICSEARCH = "elasticsearch"
     PINECONE = "pinecone"
 
 
 class SearchStrategy(Enum):
-    """Search strategy options"""
-    SINGLE_STORE = "single_store"
+    """Search strategy options"""    SINGLE_STORE = "single_store"
     PARALLEL_SEARCH = "parallel_search"
     CASCADING_SEARCH = "cascading_search"
     CONSENSUS_SEARCH = "consensus_search"
@@ -57,8 +53,7 @@ class SearchStrategy(Enum):
 
 @dataclass
 class UnifiedSearchResult:
-    """Unified search result across all vector stores"""
-    content_id: str
+    """Unified search result across all vector stores"""    content_id: str
     fingerprint_id: int
     similarity_score: float
     content_type: str
@@ -70,8 +65,7 @@ class UnifiedSearchResult:
 
 @dataclass
 class VectorStoreHealth:
-    """Health status of vector store"""
-    store_type: str
+    """Health status of vector store"""    store_type: str
     is_healthy: bool
     response_time_ms: float
     error_rate: float
@@ -82,8 +76,7 @@ class VectorStoreHealth:
 
 @dataclass
 class SearchPerformanceMetrics:
-    """Performance metrics for search operations"""
-    total_searches: int
+    """Performance metrics for search operations"""    total_searches: int
     avg_response_time_ms: float
     success_rate: float
     error_count: int
@@ -92,8 +85,7 @@ class SearchPerformanceMetrics:
 
 
 class VectorStoreManager:
-    """
-    Unified vector store manager for multi-store operations.
+    """    Unified vector store manager for multi-store operations.
     
     Features:
     - Multi-store orchestration (FAISS, Elasticsearch, Pinecone)
@@ -102,8 +94,7 @@ class VectorStoreManager:
     - Automatic failover and load balancing
     - Performance monitoring and health checks
     - Consistent API across all implementations
-    """
-    
+    """    
     def __init__(
         self,
         primary_store: VectorStoreType = VectorStoreType.FAISS,
@@ -112,8 +103,7 @@ class VectorStoreManager:
         enable_redundancy: bool = True,
         health_check_interval: int = 60
     ):
-        """
-        Initialize vector store manager
+        """        Initialize vector store manager
         
         Args:
             primary_store: Primary vector store for operations
@@ -121,8 +111,7 @@ class VectorStoreManager:
             fallback_store: Fallback store for high availability
             enable_redundancy: Enable multi-store redundancy
             health_check_interval: Health check interval in seconds
-        """
-        self.primary_store = primary_store
+        """        self.primary_store = primary_store
         self.secondary_store = secondary_store
         self.fallback_store = fallback_store
         self.enable_redundancy = enable_redundancy
@@ -148,8 +137,7 @@ class VectorStoreManager:
         )
     
     async def initialize(self) -> None:
-        """Initialize all vector stores and start health monitoring"""
-        try:
+        """Initialize all vector stores and start health monitoring"""        try:
             # Initialize FAISS store
             if VectorStoreType.FAISS in [self.primary_store, self.secondary_store, self.fallback_store]:
                 self.stores[VectorStoreType.FAISS] = FAISSVectorStore(
@@ -197,8 +185,7 @@ class VectorStoreManager:
         vectors: List[Tuple[str, np.ndarray, Dict[str, Any]]],
         strategy: str = "primary_with_backup"
     ) -> Dict[str, Any]:
-        """
-        Add vectors to vector stores
+        """        Add vectors to vector stores
         
         Args:
             content_type: Content type (audio, video, image, text)
@@ -207,8 +194,7 @@ class VectorStoreManager:
             
         Returns:
             Storage operation results
-        """
-        try:
+        """        try:
             results = {}
             errors = []
             
@@ -289,8 +275,7 @@ class VectorStoreManager:
         metadata_filter: Dict[str, Any] = None,
         text_query: str = None
     ) -> List[UnifiedSearchResult]:
-        """
-        Search for similar vectors across stores
+        """        Search for similar vectors across stores
         
         Args:
             content_type: Content type to search
@@ -303,8 +288,7 @@ class VectorStoreManager:
             
         Returns:
             Unified search results
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             if search_strategy == SearchStrategy.SINGLE_STORE:
@@ -354,8 +338,7 @@ class VectorStoreManager:
         content_type: str,
         content_ids: List[str]
     ) -> Dict[str, Any]:
-        """
-        Remove vectors from all stores
+        """        Remove vectors from all stores
         
         Args:
             content_type: Content type
@@ -363,8 +346,7 @@ class VectorStoreManager:
             
         Returns:
             Removal operation results
-        """
-        try:
+        """        try:
             results = {}
             errors = []
             
@@ -409,8 +391,7 @@ class VectorStoreManager:
             raise VectorStoreError(f"Vector removal failed: {str(e)}")
     
     async def get_health_status(self) -> Dict[str, VectorStoreHealth]:
-        """Get health status of all vector stores"""
-        try:
+        """Get health status of all vector stores"""        try:
             health_status = {}
             
             for store_type, store in self.stores.items():
@@ -467,12 +448,10 @@ class VectorStoreManager:
             return {}
     
     async def get_performance_metrics(self) -> Dict[str, SearchPerformanceMetrics]:
-        """Get performance metrics for all content types"""
-        return self.search_metrics.copy()
+        """Get performance metrics for all content types"""        return self.search_metrics.copy()
     
     async def optimize_stores(self) -> Dict[str, bool]:
-        """Optimize all vector stores"""
-        try:
+        """Optimize all vector stores"""        try:
             optimization_results = {}
             
             for store_type, store in self.stores.items():
@@ -502,8 +481,7 @@ class VectorStoreManager:
         similarity_threshold: float, metadata_filter: Dict[str, Any],
         text_query: str
     ) -> List[UnifiedSearchResult]:
-        """Search using only the primary store"""
-        store = self.stores[self.primary_store]
+        """Search using only the primary store"""        store = self.stores[self.primary_store]
         results = []
         
         try:
@@ -547,8 +525,7 @@ class VectorStoreManager:
         similarity_threshold: float, metadata_filter: Dict[str, Any],
         text_query: str
     ) -> List[UnifiedSearchResult]:
-        """Search all stores in parallel and merge results"""
-        tasks = []
+        """Search all stores in parallel and merge results"""        tasks = []
         
         for store_type, store in self.stores.items():
             task = asyncio.create_task(
@@ -576,8 +553,7 @@ class VectorStoreManager:
         similarity_threshold: float, metadata_filter: Dict[str, Any],
         text_query: str
     ) -> List[UnifiedSearchResult]:
-        """Search stores in cascading order until sufficient results found"""
-        stores_to_try = [self.primary_store, self.secondary_store, self.fallback_store]
+        """Search stores in cascading order until sufficient results found"""        stores_to_try = [self.primary_store, self.secondary_store, self.fallback_store]
         
         for store_type in stores_to_try:
             if store_type not in self.stores:
@@ -603,8 +579,7 @@ class VectorStoreManager:
         similarity_threshold: float, metadata_filter: Dict[str, Any],
         text_query: str
     ) -> List[UnifiedSearchResult]:
-        """Search all stores and use consensus scoring"""
-        all_results = await self._parallel_search(
+        """Search all stores and use consensus scoring"""        all_results = await self._parallel_search(
             content_type, query_vector, k * 2, similarity_threshold,
             metadata_filter, text_query
         )
@@ -643,8 +618,7 @@ class VectorStoreManager:
         query_vector: np.ndarray, k: int, similarity_threshold: float,
         metadata_filter: Dict[str, Any], text_query: str
     ) -> List[UnifiedSearchResult]:
-        """Search a single store and convert results"""
-        results = []
+        """Search a single store and convert results"""        results = []
         start_time = datetime.now()
         
         try:
@@ -686,8 +660,7 @@ class VectorStoreManager:
         return results
     
     def _convert_faiss_result(self, result: VectorSearchResult) -> UnifiedSearchResult:
-        """Convert FAISS result to unified format"""
-        return UnifiedSearchResult(
+        """Convert FAISS result to unified format"""        return UnifiedSearchResult(
             content_id=result.content_id,
             fingerprint_id=result.fingerprint_id,
             similarity_score=result.similarity_score,
@@ -699,8 +672,7 @@ class VectorStoreManager:
         )
     
     def _convert_elasticsearch_result(self, result: HybridSearchResult) -> UnifiedSearchResult:
-        """Convert Elasticsearch result to unified format"""
-        return UnifiedSearchResult(
+        """Convert Elasticsearch result to unified format"""        return UnifiedSearchResult(
             content_id=result.content_id,
             fingerprint_id=result.fingerprint_id,
             similarity_score=result.combined_score,
@@ -712,8 +684,7 @@ class VectorStoreManager:
         )
     
     def _convert_pinecone_result(self, result: PineconeSearchResult) -> UnifiedSearchResult:
-        """Convert Pinecone result to unified format"""
-        return UnifiedSearchResult(
+        """Convert Pinecone result to unified format"""        return UnifiedSearchResult(
             content_id=result.content_id,
             fingerprint_id=result.fingerprint_id,
             similarity_score=result.similarity_score,
@@ -727,8 +698,7 @@ class VectorStoreManager:
     def _merge_results(
         self, all_results: List[UnifiedSearchResult], k: int
     ) -> List[UnifiedSearchResult]:
-        """Merge and deduplicate results from multiple stores"""
-        # Group by content_id
+        """Merge and deduplicate results from multiple stores"""        # Group by content_id
         content_groups = {}
         for result in all_results:
             content_id = result.content_id
@@ -747,8 +717,7 @@ class VectorStoreManager:
         return merged_results[:k]
     
     def _get_target_stores(self, strategy: str) -> List[VectorStoreType]:
-        """Get target stores based on strategy"""
-        if strategy == "primary_only":
+        """Get target stores based on strategy"""        if strategy == "primary_only":
             return [self.primary_store]
         elif strategy == "primary_with_backup":
             stores = [self.primary_store]
@@ -761,8 +730,7 @@ class VectorStoreManager:
             return [self.primary_store]
     
     def _initialize_routing_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize content type routing rules"""
-        return {
+        """Initialize content type routing rules"""        return {
             "audio": {
                 "primary": VectorStoreType.FAISS,
                 "features": ["real_time", "high_precision"],
@@ -788,8 +756,7 @@ class VectorStoreManager:
     def _update_search_metrics(
         self, content_type: str, response_time_ms: float, result_count: int
     ) -> None:
-        """Update search performance metrics"""
-        if content_type not in self.search_metrics:
+        """Update search performance metrics"""        if content_type not in self.search_metrics:
             self.search_metrics[content_type] = SearchPerformanceMetrics(
                 total_searches=0,
                 avg_response_time_ms=0.0,
@@ -812,8 +779,7 @@ class VectorStoreManager:
             metrics.success_rate = success_count / metrics.total_searches
     
     async def _health_monitor(self) -> None:
-        """Background health monitoring task"""
-        while True:
+        """Background health monitoring task"""        while True:
             try:
                 await asyncio.sleep(self.health_check_interval)
                 health_status = await self.get_health_status()
@@ -830,8 +796,7 @@ class VectorStoreManager:
                 logger.error(f"Health monitoring error: {str(e)}")
     
     async def close(self) -> None:
-        """Close all vector stores and cleanup"""
-        try:
+        """Close all vector stores and cleanup"""        try:
             # Stop health monitoring
             if self._health_check_task:
                 self._health_check_task.cancel()

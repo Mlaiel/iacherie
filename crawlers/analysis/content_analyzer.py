@@ -1,5 +1,4 @@
-"""
-Advanced Content Analyzer
+"""Advanced Content Analyzer
 ==========================
 
 Professional multi-modal content analysis system with AI-powered detection.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 import hashlib
@@ -49,8 +47,7 @@ import soundfile as sf
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration."""
-    AUDIO = "audio"
+    """Content type enumeration."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -60,16 +57,14 @@ class ContentType(Enum):
     STREAM = "stream"
 
 class AnalysisStatus(Enum):
-    """Analysis status enumeration."""
-    PENDING = "pending"
+    """Analysis status enumeration."""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
     SKIPPED = "skipped"
 
 class ThreatLevel(Enum):
-    """Threat level enumeration."""
-    NONE = 0
+    """Threat level enumeration."""    NONE = 0
     LOW = 1
     MEDIUM = 2
     HIGH = 3
@@ -77,8 +72,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class ContentFeatures:
-    """Content feature extraction result."""
-    content_id: str
+    """Content feature extraction result."""    content_id: str
     content_type: ContentType
     text_features: Optional[Dict[str, Any]] = None
     audio_features: Optional[Dict[str, Any]] = None
@@ -90,8 +84,7 @@ class ContentFeatures:
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive analysis result."""
-    content_id: str
+    """Comprehensive analysis result."""    content_id: str
     analysis_id: str
     content_type: ContentType
     status: AnalysisStatus
@@ -107,8 +100,7 @@ class AnalysisResult:
     processing_time: float = 0.0
 
 class ContentAnalyzer:
-    """
-    Advanced content analyzer with AI-powered multi-modal detection.
+    """    Advanced content analyzer with AI-powered multi-modal detection.
     
     Features:
     - Multi-modal content analysis (audio, video, image, text)
@@ -116,8 +108,7 @@ class ContentAnalyzer:
     - Real-time similarity detection and violation assessment
     - Scalable architecture with async processing
     - Enterprise-grade security and performance optimization
-    """
-    
+    """    
     def __init__(
         self,
         model_cache_dir: str = "/tmp/models",
@@ -125,16 +116,14 @@ class ContentAnalyzer:
         enable_gpu: bool = True,
         max_concurrent_analyses: int = 10
     ):
-        """
-        Initialize content analyzer.
+        """        Initialize content analyzer.
         
         Args:
             model_cache_dir: Directory for caching AI models
             similarity_threshold: Minimum similarity for violation detection
             enable_gpu: Enable GPU acceleration if available
             max_concurrent_analyses: Maximum concurrent analysis tasks
-        """
-        self.model_cache_dir = Path(model_cache_dir)
+        """        self.model_cache_dir = Path(model_cache_dir)
         self.model_cache_dir.mkdir(parents=True, exist_ok=True)
         
         self.similarity_threshold = similarity_threshold
@@ -159,8 +148,7 @@ class ContentAnalyzer:
         logger.info(f"ContentAnalyzer initialized with GPU: {self.enable_gpu}")
     
     def _initialize_models(self) -> None:
-        """Initialize AI models for content analysis."""
-        try:
+        """Initialize AI models for content analysis."""        try:
             # Text analysis models
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
             self.tokenizer = AutoTokenizer.from_pretrained('distilbert-base-uncased')
@@ -186,8 +174,7 @@ class ContentAnalyzer:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> AnalysisResult:
-        """
-        Analyze content for features, similarity, and violations.
+        """        Analyze content for features, similarity, and violations.
         
         Args:
             content_id: Unique content identifier
@@ -197,8 +184,7 @@ class ContentAnalyzer:
             
         Returns:
             AnalysisResult: Comprehensive analysis result
-        """
-        async with self.semaphore:
+        """        async with self.semaphore:
             start_time = datetime.now()
             analysis_id = hashlib.sha256(f"{content_id}_{start_time}".encode()).hexdigest()[:16]
             
@@ -267,8 +253,7 @@ class ContentAnalyzer:
         content_data: Union[str, bytes, Path],
         content_type: ContentType
     ) -> ContentFeatures:
-        """Extract features from content based on type."""
-        start_time = datetime.now()
+        """Extract features from content based on type."""        start_time = datetime.now()
         features = ContentFeatures(content_id, content_type)
         
         try:
@@ -296,8 +281,7 @@ class ContentAnalyzer:
         return features
     
     async def _extract_text_features(self, text_data: Union[str, bytes]) -> Dict[str, Any]:
-        """Extract features from text content."""
-        if isinstance(text_data, bytes):
+        """Extract features from text content."""        if isinstance(text_data, bytes):
             text_data = text_data.decode('utf-8', errors='ignore')
         
         # Generate text embeddings
@@ -328,8 +312,7 @@ class ContentAnalyzer:
         }
     
     async def _extract_image_features(self, image_data: Union[str, bytes, Path]) -> Dict[str, Any]:
-        """Extract features from image content."""
-        try:
+        """Extract features from image content."""        try:
             # Load image
             if isinstance(image_data, (str, Path)):
                 image = Image.open(image_data)
@@ -381,8 +364,7 @@ class ContentAnalyzer:
             return {}
     
     async def _extract_audio_features(self, audio_data: Union[str, bytes, Path]) -> Dict[str, Any]:
-        """Extract features from audio content."""
-        try:
+        """Extract features from audio content."""        try:
             # Load audio
             if isinstance(audio_data, (str, Path)):
                 y, sr = librosa.load(audio_data)
@@ -431,8 +413,7 @@ class ContentAnalyzer:
             return {}
     
     async def _extract_video_features(self, video_data: Union[str, Path]) -> Dict[str, Any]:
-        """Extract features from video content."""
-        try:
+        """Extract features from video content."""        try:
             # Open video
             cap = cv2.VideoCapture(str(video_data))
             
@@ -493,8 +474,7 @@ class ContentAnalyzer:
             return {}
     
     async def _extract_video_audio_features(self, video_data: Union[str, Path]) -> Dict[str, Any]:
-        """Extract audio features from video content."""
-        try:
+        """Extract audio features from video content."""        try:
             # Extract audio from video using librosa
             y, sr = librosa.load(str(video_data))
             
@@ -510,8 +490,7 @@ class ContentAnalyzer:
         content_data: Union[str, bytes, Path],
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Extract metadata features from content."""
-        metadata = {
+        """Extract metadata features from content."""        metadata = {
             "content_type": content_type.value,
             "extracted_at": datetime.now().isoformat(),
             "data_type": type(content_data).__name__
@@ -534,8 +513,7 @@ class ContentAnalyzer:
         return metadata
     
     async def _detect_similarity(self, features: ContentFeatures) -> List[Dict[str, Any]]:
-        """Detect similarity with existing content."""
-        matches = []
+        """Detect similarity with existing content."""        matches = []
         
         for existing_id, existing_features in self.feature_database.items():
             if existing_features.content_type == features.content_type:
@@ -552,8 +530,7 @@ class ContentAnalyzer:
         return sorted(matches, key=lambda x: x["similarity_score"], reverse=True)
     
     def _calculate_similarity(self, features1: ContentFeatures, features2: ContentFeatures) -> float:
-        """Calculate similarity between two content features."""
-        if features1.content_type != features2.content_type:
+        """Calculate similarity between two content features."""        if features1.content_type != features2.content_type:
             return 0.0
         
         similarities = []
@@ -585,8 +562,7 @@ class ContentAnalyzer:
         return float(np.mean(similarities)) if similarities else 0.0
     
     def _get_compared_features(self, features1: ContentFeatures, features2: ContentFeatures) -> List[str]:
-        """Get list of features that were compared."""
-        compared = []
+        """Get list of features that were compared."""        compared = []
         
         if features1.text_features and features2.text_features:
             compared.append("text_embeddings")
@@ -604,8 +580,7 @@ class ContentAnalyzer:
         features: ContentFeatures,
         similarity_matches: List[Dict[str, Any]]
     ) -> Tuple[ThreatLevel, List[Dict[str, Any]]]:
-        """Assess threat level and identify violations."""
-        violations = []
+        """Assess threat level and identify violations."""        violations = []
         
         # Check for exact matches (potential copyright violation)
         exact_matches = [m for m in similarity_matches if m["similarity_score"] > 0.95]
@@ -647,8 +622,7 @@ class ContentAnalyzer:
         threat_level: ThreatLevel,
         violations: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate actionable recommendations based on analysis."""
-        recommendations = []
+        """Generate actionable recommendations based on analysis."""        recommendations = []
         
         if threat_level == ThreatLevel.CRITICAL:
             recommendations.extend([
@@ -683,8 +657,7 @@ class ContentAnalyzer:
         features: ContentFeatures,
         similarity_matches: List[Dict[str, Any]]
     ) -> float:
-        """Calculate confidence score for the analysis."""
-        confidence_factors = []
+        """Calculate confidence score for the analysis."""        confidence_factors = []
         
         # Feature completeness
         feature_count = sum([
@@ -708,8 +681,7 @@ class ContentAnalyzer:
         return float(np.mean(confidence_factors))
     
     async def _update_similarity_index(self, content_id: str, features: ContentFeatures) -> None:
-        """Update similarity index for faster future searches."""
-        # This would integrate with a vector database like FAISS in production
+        """Update similarity index for faster future searches."""        # This would integrate with a vector database like FAISS in production
         # For now, we'll just track in memory
         if features.text_features and "embeddings" in features.text_features:
             if "text" not in self.similarity_index:
@@ -722,8 +694,7 @@ class ContentAnalyzer:
             self.similarity_index["image"][content_id] = features.image_features["clip_embeddings"]
     
     def _detect_language(self, text: str) -> str:
-        """Detect language of text content."""
-        # Simplified language detection - in production use langdetect
+        """Detect language of text content."""        # Simplified language detection - in production use langdetect
         english_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by', 'from'}
         french_words = {'le', 'la', 'les', 'et', 'ou', 'mais', 'dans', 'sur', 'à', 'pour', 'de', 'avec', 'par'}
         german_words = {'der', 'die', 'das', 'und', 'oder', 'aber', 'in', 'auf', 'zu', 'für', 'von', 'mit', 'durch'}
@@ -742,8 +713,7 @@ class ContentAnalyzer:
             return "de"
     
     def _calculate_sentiment(self, text: str) -> float:
-        """Calculate sentiment score for text."""
-        # Simplified sentiment analysis - in production use VADER or transformers
+        """Calculate sentiment score for text."""        # Simplified sentiment analysis - in production use VADER or transformers
         positive_words = {'good', 'great', 'excellent', 'amazing', 'love', 'like', 'best', 'awesome'}
         negative_words = {'bad', 'terrible', 'awful', 'hate', 'dislike', 'worst', 'horrible'}
         
@@ -757,8 +727,7 @@ class ContentAnalyzer:
         return (positive_count - negative_count) / (positive_count + negative_count)
     
     def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score for text."""
-        # Simplified Flesch Reading Ease score
+        """Calculate readability score for text."""        # Simplified Flesch Reading Ease score
         sentences = len([s for s in text.split('.') if s.strip()])
         words = len(text.split())
         syllables = sum([self._count_syllables(word) for word in text.split()])
@@ -770,8 +739,7 @@ class ContentAnalyzer:
         return max(0.0, min(100.0, score)) / 100.0  # Normalize to 0-1
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word."""
-        word = word.lower()
+        """Count syllables in a word."""        word = word.lower()
         vowels = 'aeiouy'
         syllable_count = 0
         previous_char_was_vowel = False
@@ -794,8 +762,7 @@ class ContentAnalyzer:
         self,
         content_batch: List[Tuple[str, Union[str, bytes, Path], ContentType, Optional[Dict[str, Any]]]]
     ) -> List[AnalysisResult]:
-        """Analyze multiple content items in batch."""
-        tasks = []
+        """Analyze multiple content items in batch."""        tasks = []
         
         for content_id, content_data, content_type, metadata in content_batch:
             task = asyncio.create_task(
@@ -812,8 +779,7 @@ class ContentAnalyzer:
         return valid_results
     
     def get_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive analytics about the analyzer performance."""
-        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
+        """Get comprehensive analytics about the analyzer performance."""        avg_processing_time = np.mean(self.processing_times) if self.processing_times else 0
         
         return {
             "total_analyses": self.analysis_count,
@@ -832,8 +798,7 @@ class ContentAnalyzer:
         }
     
     async def cleanup(self) -> None:
-        """Cleanup resources and models."""
-        # Clear caches
+        """Cleanup resources and models."""        # Clear caches
         self.feature_database.clear()
         self.similarity_index.clear()
         self.processing_times.clear()

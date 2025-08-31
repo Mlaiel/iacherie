@@ -1,5 +1,4 @@
-"""
-Royalty Calculations - Advanced Royalty and Revenue Calculation Engine
+"""Royalty Calculations - Advanced Royalty and Revenue Calculation Engine
 
 Ultra-sophisticated royalty calculation system with multi-tiered rates,
 complex revenue sharing, automated payments, and financial compliance.
@@ -26,7 +25,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
-
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, func,
@@ -46,8 +44,7 @@ Base = declarative_base()
 
 
 class CalculationMethod(Enum):
-    """Royalty calculation methods"""
-    SIMPLE_PERCENTAGE = "simple_percentage"
+    """Royalty calculation methods"""    SIMPLE_PERCENTAGE = "simple_percentage"
     TIERED_PERCENTAGE = "tiered_percentage"
     FLAT_FEE = "flat_fee"
     PER_UNIT = "per_unit"
@@ -59,8 +56,7 @@ class CalculationMethod(Enum):
 
 
 class TierCriteria(Enum):
-    """Criteria for tiered calculations"""
-    REVENUE_AMOUNT = "revenue_amount"
+    """Criteria for tiered calculations"""    REVENUE_AMOUNT = "revenue_amount"
     USAGE_COUNT = "usage_count"
     TIME_PERIOD = "time_period"
     GEOGRAPHIC_REACH = "geographic_reach"
@@ -71,8 +67,7 @@ class TierCriteria(Enum):
 
 
 class DeductionType(Enum):
-    """Types of deductions from royalty calculations"""
-    PLATFORM_FEE = "platform_fee"
+    """Types of deductions from royalty calculations"""    PLATFORM_FEE = "platform_fee"
     SERVICE_FEE = "service_fee"
     PROCESSING_FEE = "processing_fee"
     TRANSACTION_FEE = "transaction_fee"
@@ -88,8 +83,7 @@ class DeductionType(Enum):
 
 
 class CalculationStatus(Enum):
-    """Status of royalty calculations"""
-    PENDING = "pending"
+    """Status of royalty calculations"""    PENDING = "pending"
     CALCULATING = "calculating"
     COMPLETED = "completed"
     VERIFIED = "verified"
@@ -100,13 +94,11 @@ class CalculationStatus(Enum):
 
 
 class RoyaltyCalculationRule(Base):
-    """
-    Royalty Calculation Rule Model
+    """    Royalty Calculation Rule Model
     
     Defines complex royalty calculation rules with support for
     multi-tiered rates, performance bonuses, and custom formulas.
-    """
-    __tablename__ = "royalty_calculation_rules"
+    """    __tablename__ = "royalty_calculation_rules"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -196,13 +188,11 @@ class RoyaltyCalculationRule(Base):
 
 
 class RoyaltyCalculation(Base):
-    """
-    Royalty Calculation Model
+    """    Royalty Calculation Model
     
     Records individual royalty calculations with detailed breakdown,
     audit trail, and verification status for transparency and compliance.
-    """
-    __tablename__ = "royalty_calculations"
+    """    __tablename__ = "royalty_calculations"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -320,27 +310,23 @@ class RoyaltyCalculation(Base):
     
     @property
     def effective_rate(self) -> float:
-        """Calculate the effective royalty rate as percentage of gross revenue"""
-        if self.gross_revenue == 0:
+        """Calculate the effective royalty rate as percentage of gross revenue"""        if self.gross_revenue == 0:
             return 0.0
         return float((self.gross_royalty_amount / self.gross_revenue) * 100)
     
     @property
     def deduction_percentage(self) -> float:
-        """Calculate total deductions as percentage of gross royalty"""
-        if self.gross_royalty_amount == 0:
+        """Calculate total deductions as percentage of gross royalty"""        if self.gross_royalty_amount == 0:
             return 0.0
         return float((self.total_deductions / self.gross_royalty_amount) * 100)
 
 
 class TierDefinition(Base):
-    """
-    Tier Definition Model
+    """    Tier Definition Model
     
     Defines tiered royalty structures with dynamic rate adjustments
     based on performance metrics and revenue thresholds.
-    """
-    __tablename__ = "tier_definitions"
+    """    __tablename__ = "tier_definitions"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -398,13 +384,11 @@ class TierDefinition(Base):
 
 
 class DeductionRule(Base):
-    """
-    Deduction Rule Model
+    """    Deduction Rule Model
     
     Defines automatic deduction rules for fees, taxes, and other
     charges applied to royalty calculations.
-    """
-    __tablename__ = "deduction_rules"
+    """    __tablename__ = "deduction_rules"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -467,13 +451,11 @@ class DeductionRule(Base):
 
 
 class CalculationAudit(Base):
-    """
-    Calculation Audit Model
+    """    Calculation Audit Model
     
     Comprehensive audit trail for all royalty calculations with
     detailed change tracking and compliance monitoring.
-    """
-    __tablename__ = "calculation_audits"
+    """    __tablename__ = "calculation_audits"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -521,8 +503,7 @@ def calculate_tiered_royalty(
     tier_definitions: List[Dict[str, Any]],
     criteria_value: Decimal
 ) -> Tuple[Decimal, str, Decimal]:
-    """
-    Calculate royalty using tiered structure.
+    """    Calculate royalty using tiered structure.
     
     Args:
         base_amount: Base amount to calculate royalty on
@@ -531,8 +512,7 @@ def calculate_tiered_royalty(
         
     Returns:
         Tuple of (calculated_amount, tier_applied, rate_used)
-    """
-    applicable_tier = None
+    """    applicable_tier = None
     
     # Sort tiers by threshold
     sorted_tiers = sorted(tier_definitions, key=lambda x: x['threshold_min'])
@@ -565,8 +545,7 @@ def apply_deductions(
     gross_amount: Decimal,
     deduction_rules: List[Dict[str, Any]]
 ) -> Tuple[Decimal, Dict[str, Decimal]]:
-    """
-    Apply deduction rules to gross amount.
+    """    Apply deduction rules to gross amount.
     
     Args:
         gross_amount: Gross amount to apply deductions to
@@ -574,8 +553,7 @@ def apply_deductions(
         
     Returns:
         Tuple of (net_amount, deduction_breakdown)
-    """
-    current_amount = gross_amount
+    """    current_amount = gross_amount
     breakdown = {}
     
     # Sort by cascade order

@@ -1,5 +1,4 @@
-"""
-⏰ TEMPORAL CONTEXT ANALYZER - ENTERPRISE AI TIME INTELLIGENCE SYSTEM
+"""⏰ TEMPORAL CONTEXT ANALYZER - ENTERPRISE AI TIME INTELLIGENCE SYSTEM
 ======================================================================
 
 Ultra-advanced temporal context analysis engine for multi-format content creators
@@ -54,7 +53,6 @@ Temporal Data Collection → Pattern Recognition → Seasonal Analysis →
 Timing Optimization → Performance Prediction → Global Scheduling → 
 Revenue Timing → Audience Behavior → Trend Forecasting → Strategic Planning
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -82,8 +80,7 @@ from ...ai.recommendation.timing_optimizer import TimingOptimizer
 
 
 class TimeGranularity(Enum):
-    """Time analysis granularity levels"""
-    MINUTE = "minute"
+    """Time analysis granularity levels"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -93,8 +90,7 @@ class TimeGranularity(Enum):
 
 
 class SeasonalPattern(Enum):
-    """Seasonal pattern types"""
-    DAILY = "daily"
+    """Seasonal pattern types"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -105,8 +101,7 @@ class SeasonalPattern(Enum):
 
 
 class TimeZoneContext(Enum):
-    """Time zone context for optimization"""
-    LOCAL = "local"
+    """Time zone context for optimization"""    LOCAL = "local"
     AUDIENCE_PRIMARY = "audience_primary"
     GLOBAL_OPTIMAL = "global_optimal"
     PLATFORM_OPTIMAL = "platform_optimal"
@@ -114,8 +109,7 @@ class TimeZoneContext(Enum):
 
 
 class TemporalTrend(Enum):
-    """Types of temporal trends"""
-    INCREASING = "increasing"
+    """Types of temporal trends"""    INCREASING = "increasing"
     DECREASING = "decreasing"
     CYCLICAL = "cyclical"
     STABLE = "stable"
@@ -126,8 +120,7 @@ class TemporalTrend(Enum):
 
 @dataclass
 class TimeSlot:
-    """Represents an optimal time slot for content posting"""
-    start_time: time
+    """Represents an optimal time slot for content posting"""    start_time: time
     end_time: time
     timezone: str
     confidence_score: float
@@ -139,8 +132,7 @@ class TimeSlot:
 
 @dataclass
 class SeasonalInsight:
-    """Seasonal pattern analysis insight"""
-    pattern_type: SeasonalPattern
+    """Seasonal pattern analysis insight"""    pattern_type: SeasonalPattern
     pattern_name: str
     impact_score: float
     peak_periods: List[Dict[str, Any]]
@@ -152,8 +144,7 @@ class SeasonalInsight:
 
 @dataclass
 class TemporalProfile:
-    """Comprehensive temporal behavior profile"""
-    user_id: str
+    """Comprehensive temporal behavior profile"""    user_id: str
     timezone: str
     activity_patterns: Dict[str, Any]
     optimal_posting_times: List[TimeSlot]
@@ -168,8 +159,7 @@ class TemporalProfile:
 
 @dataclass
 class TimingRecommendation:
-    """Specific timing recommendation for content or activity"""
-    recommendation_id: str
+    """Specific timing recommendation for content or activity"""    recommendation_id: str
     user_id: str
     content_type: str
     recommended_time: datetime
@@ -186,14 +176,12 @@ class TimingRecommendation:
 
 
 class TemporalContextAnalyzer:
-    """
-    Ultra-advanced temporal context analysis engine
+    """    Ultra-advanced temporal context analysis engine
     
     Provides sophisticated time-based intelligence for content creators,
     including optimal timing strategies, seasonal optimization, and
     temporal behavior analysis.
-    """
-    
+    """    
     def __init__(self, 
                  cache_manager: CacheManager,
                  security_manager: SecurityManager,
@@ -270,8 +258,7 @@ class TemporalContextAnalyzer:
                                      user_id: str,
                                      analysis_period: timedelta = timedelta(days=90),
                                      timezone: str = "UTC") -> TemporalProfile:
-        """
-        Analyze comprehensive temporal context for user
+        """        Analyze comprehensive temporal context for user
         
         Args:
             user_id: User identifier
@@ -280,8 +267,7 @@ class TemporalContextAnalyzer:
             
         Returns:
             TemporalProfile: Comprehensive temporal analysis
-        """
-        try:
+        """        try:
             # Validate inputs
             await self._validate_temporal_analysis_input(user_id, timezone)
             
@@ -359,8 +345,7 @@ class TemporalContextAnalyzer:
                                             content_type: str,
                                             target_platforms: List[str] = None,
                                             optimization_goals: Dict[str, Any] = None) -> List[TimingRecommendation]:
-        """
-        Generate specific timing recommendations for content posting
+        """        Generate specific timing recommendations for content posting
         
         Args:
             user_id: User identifier
@@ -370,8 +355,7 @@ class TemporalContextAnalyzer:
             
         Returns:
             List of timing recommendations
-        """
-        try:
+        """        try:
             # Get temporal profile
             temporal_profile = await self._get_temporal_profile(user_id)
             if not temporal_profile:
@@ -453,8 +437,7 @@ class TemporalContextAnalyzer:
     async def analyze_seasonal_opportunities(self, 
                                            user_id: str,
                                            forecast_period: timedelta = timedelta(days=90)) -> Dict[str, Any]:
-        """
-        Analyze upcoming seasonal opportunities and trends
+        """        Analyze upcoming seasonal opportunities and trends
         
         Args:
             user_id: User identifier
@@ -462,8 +445,7 @@ class TemporalContextAnalyzer:
             
         Returns:
             Seasonal opportunities analysis
-        """
-        try:
+        """        try:
             # Get temporal profile
             temporal_profile = await self._get_temporal_profile(user_id)
             if not temporal_profile:
@@ -541,8 +523,7 @@ class TemporalContextAnalyzer:
     async def optimize_cross_timezone_strategy(self, 
                                              user_id: str,
                                              target_timezones: List[str] = None) -> Dict[str, Any]:
-        """
-        Optimize content strategy across multiple time zones
+        """        Optimize content strategy across multiple time zones
         
         Args:
             user_id: User identifier
@@ -550,8 +531,7 @@ class TemporalContextAnalyzer:
             
         Returns:
             Cross-timezone optimization strategy
-        """
-        try:
+        """        try:
             # Get temporal profile
             temporal_profile = await self._get_temporal_profile(user_id)
             if not temporal_profile:
@@ -630,8 +610,7 @@ class TemporalContextAnalyzer:
     # Private helper methods
 
     async def _validate_temporal_analysis_input(self, user_id: str, timezone: str):
-        """Validate temporal analysis input parameters"""
-        if not user_id:
+        """Validate temporal analysis input parameters"""        if not user_id:
             raise ValidationError("User ID is required for temporal analysis")
         
         try:
@@ -642,8 +621,7 @@ class TemporalContextAnalyzer:
     async def _get_historical_activity_data(self, 
                                           user_id: str,
                                           period: timedelta) -> List[Dict[str, Any]]:
-        """Retrieve historical activity data for temporal analysis"""
-        # This would query actual database for user's historical activity
+        """Retrieve historical activity data for temporal analysis"""        # This would query actual database for user's historical activity
         # For now, returning sample data structure
         end_date = datetime.utcnow()
         start_date = end_date - period
@@ -672,8 +650,7 @@ class TemporalContextAnalyzer:
     async def _analyze_activity_patterns(self, 
                                        historical_data: List[Dict[str, Any]],
                                        timezone: str) -> Dict[str, Any]:
-        """Analyze user activity patterns from historical data"""
-        if not historical_data:
+        """Analyze user activity patterns from historical data"""        if not historical_data:
             return {"status": "insufficient_data"}
         
         # Convert to pandas DataFrame for analysis
@@ -703,8 +680,7 @@ class TemporalContextAnalyzer:
                                              user_id: str,
                                              activity_patterns: Dict[str, Any],
                                              timezone: str) -> List[TimeSlot]:
-        """Determine optimal posting times based on analysis"""
-        optimal_times = []
+        """Determine optimal posting times based on analysis"""        optimal_times = []
         
         # Get platform-specific optimal times
         for platform, times in self.platform_optimal_times.items():
@@ -731,8 +707,7 @@ class TemporalContextAnalyzer:
         return optimal_times[:10]  # Return top 10 time slots
 
     async def _get_temporal_profile(self, user_id: str) -> Optional[TemporalProfile]:
-        """Retrieve cached temporal profile"""
-        cache_key = f"temporal_profile:{user_id}"
+        """Retrieve cached temporal profile"""        cache_key = f"temporal_profile:{user_id}"
         cached_data = await self.cache_manager.get(cache_key)
         
         if cached_data:
@@ -745,8 +720,7 @@ class TemporalContextAnalyzer:
         return None
 
     async def _cache_temporal_profile(self, user_id: str, profile: TemporalProfile):
-        """Cache temporal profile"""
-        cache_key = f"temporal_profile:{user_id}"
+        """Cache temporal profile"""        cache_key = f"temporal_profile:{user_id}"
         
         # Convert to JSON-serializable format
         profile_data = {
@@ -792,8 +766,7 @@ class TemporalContextAnalyzer:
         )
 
     async def _analyze_seasonal_preferences(self, historical_data: List[Dict[str, Any]], timezone: str) -> Dict[str, SeasonalInsight]:
-        """Analyze seasonal preferences from historical data with ML intelligence"""
-        try:
+        """Analyze seasonal preferences from historical data with ML intelligence"""        try:
             seasonal_insights = {}
             
             # Convert data to DataFrame for analysis
@@ -846,8 +819,7 @@ class TemporalContextAnalyzer:
             return {}
     
     async def _analyze_daily_seasonal_pattern(self, df: pd.DataFrame) -> Optional[SeasonalInsight]:
-        """Analyze daily hour-by-hour patterns"""
-        try:
+        """Analyze daily hour-by-hour patterns"""        try:
             # Group by hour and calculate performance metrics
             hourly_stats = df.groupby('hour').agg({
                 'engagement_rate': ['mean', 'std', 'count'],
@@ -886,8 +858,7 @@ class TemporalContextAnalyzer:
             return None
 
     async def _analyze_weekly_seasonal_pattern(self, df: pd.DataFrame) -> Optional[SeasonalInsight]:
-        """Analyze weekly day-by-day patterns"""
-        try:
+        """Analyze weekly day-by-day patterns"""        try:
             # Group by day of week
             weekly_stats = df.groupby('day_of_week').agg({
                 'engagement_rate': ['mean', 'std', 'count'],
@@ -936,8 +907,7 @@ class TemporalContextAnalyzer:
             return None
 
     async def _analyze_audience_temporal_behavior(self, user_id: str, timezone: str) -> Dict[str, Any]:
-        """Analyze audience temporal behavior patterns with advanced analytics"""
-        try:
+        """Analyze audience temporal behavior patterns with advanced analytics"""        try:
             # Get audience activity data
             audience_data = await self._get_audience_activity_data(user_id)
             if not audience_data:
@@ -994,8 +964,7 @@ class TemporalContextAnalyzer:
             return {'status': 'analysis_failed', 'error': str(e)}
     
     async def _analyze_content_performance_by_time(self, historical_data: List[Dict[str, Any]], timezone: str) -> Dict[str, Any]:
-        """Analyze content performance by time periods with comprehensive metrics"""
-        try:
+        """Analyze content performance by time periods with comprehensive metrics"""        try:
             df = pd.DataFrame(historical_data)
             if df.empty:
                 return {'status': 'no_data'}
@@ -1044,8 +1013,7 @@ class TemporalContextAnalyzer:
             return {'status': 'analysis_failed', 'error': str(e)}
 
     def _calculate_pattern_confidence(self, sample_counts: pd.Series) -> float:
-        """Calculate confidence score for temporal patterns"""
-        min_samples = 5  # Minimum samples needed for confidence
+        """Calculate confidence score for temporal patterns"""        min_samples = 5  # Minimum samples needed for confidence
         total_samples = sample_counts.sum()
         
         if total_samples < min_samples:
@@ -1062,8 +1030,7 @@ class TemporalContextAnalyzer:
         return (size_confidence * 0.6 + distribution_confidence * 0.4)
 
     def _identify_hour_patterns(self, hourly_stats: pd.DataFrame) -> Dict[str, Any]:
-        """Identify specific hour-based patterns"""
-        engagement_by_hour = hourly_stats[('engagement_rate', 'mean')]
+        """Identify specific hour-based patterns"""        engagement_by_hour = hourly_stats[('engagement_rate', 'mean')]
         
         patterns = {
             'morning_peak': engagement_by_hour[6:12].max() > engagement_by_hour.mean(),
@@ -1077,8 +1044,7 @@ class TemporalContextAnalyzer:
         return patterns
 
     async def _calculate_temporal_optimization_score(self, profile: TemporalProfile) -> float:
-        """Calculate comprehensive temporal optimization score"""
-        try:
+        """Calculate comprehensive temporal optimization score"""        try:
             optimization_factors = {
                 'timing_precision': self._assess_timing_precision(profile),
                 'seasonal_alignment': self._assess_seasonal_alignment(profile),
@@ -1105,8 +1071,7 @@ class TemporalContextAnalyzer:
             return 0.5
 
     def _assess_timing_precision(self, profile: TemporalProfile) -> float:
-        """Assess precision of optimal timing identification"""
-        if not profile.optimal_posting_times:
+        """Assess precision of optimal timing identification"""        if not profile.optimal_posting_times:
             return 0.2
         
         avg_confidence = sum(slot.confidence_score for slot in profile.optimal_posting_times) / len(profile.optimal_posting_times)
@@ -1115,8 +1080,7 @@ class TemporalContextAnalyzer:
         return (avg_confidence * 0.7 + precision_score * 0.3)
 
     def _assess_seasonal_alignment(self, profile: TemporalProfile) -> float:
-        """Assess alignment with seasonal patterns"""
-        if not profile.seasonal_preferences:
+        """Assess alignment with seasonal patterns"""        if not profile.seasonal_preferences:
             return 0.3
         
         total_confidence = sum(insight.confidence_score for insight in profile.seasonal_preferences.values())
@@ -1126,8 +1090,7 @@ class TemporalContextAnalyzer:
         return (avg_confidence * 0.8 + coverage_score * 0.2)
 
     async def _generate_temporal_insights_recommendations(self, profile: TemporalProfile) -> List[Dict[str, Any]]:
-        """Generate actionable temporal insights recommendations"""
-        try:
+        """Generate actionable temporal insights recommendations"""        try:
             recommendations = []
             
             # Optimal timing recommendations

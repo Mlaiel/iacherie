@@ -1,5 +1,4 @@
-"""
-Multimedia Factory - Enterprise Component Factory
+"""Multimedia Factory - Enterprise Component Factory
 
 Advanced factory system for creating multimedia processing components.
 Provides dynamic component instantiation and configuration management.
@@ -12,7 +11,6 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Type, Callable, Union
@@ -40,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class FactoryMode(Enum):
-    """Factory creation modes"""
-    SINGLETON = "singleton"
+    """Factory creation modes"""    SINGLETON = "singleton"
     PROTOTYPE = "prototype"
     POOLED = "pooled"
     LAZY = "lazy"
@@ -49,8 +46,7 @@ class FactoryMode(Enum):
 
 @dataclass
 class ComponentBlueprint:
-    """Component creation blueprint"""
-    component_id: str
+    """Component creation blueprint"""    component_id: str
     component_class: Type[MultimediaComponent]
     creation_mode: FactoryMode = FactoryMode.SINGLETON
     initialization_config: Dict[str, Any] = field(default_factory=dict)
@@ -62,8 +58,7 @@ class ComponentBlueprint:
 
 @dataclass
 class ComponentInstance:
-    """Component instance wrapper"""
-    instance_id: str
+    """Component instance wrapper"""    instance_id: str
     component: MultimediaComponent
     blueprint: ComponentBlueprint
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
@@ -73,8 +68,7 @@ class ComponentInstance:
 
 
 class MultimediaFactory:
-    """Enterprise multimedia component factory"""
-    
+    """Enterprise multimedia component factory"""    
     def __init__(self, config: Dict[str, Any], registry: Optional[MultimediaRegistry] = None):
         self.config = config
         self.registry = registry or MultimediaRegistry(config.get("registry", {}))
@@ -103,8 +97,7 @@ class MultimediaFactory:
         self._setup_default_blueprints()
         
     async def initialize(self):
-        """Initialize factory"""
-        try:
+        """Initialize factory"""        try:
             await self.registry.initialize()
             
             # Pre-create singleton instances if not lazy
@@ -126,8 +119,7 @@ class MultimediaFactory:
         config: Dict[str, Any] = None,
         force_new: bool = False
     ) -> MultimediaComponent:
-        """Create multimedia component"""
-        try:
+        """Create multimedia component"""        try:
             blueprint = self.blueprints.get(component_id)
             if not blueprint or not blueprint.enabled:
                 raise ValueError(f"Component blueprint not found or disabled: {component_id}")
@@ -147,8 +139,7 @@ class MultimediaFactory:
             raise
             
     async def get_component(self, component_id: str) -> Optional[MultimediaComponent]:
-        """Get existing component instance"""
-        try:
+        """Get existing component instance"""        try:
             blueprint = self.blueprints.get(component_id)
             if not blueprint:
                 return None
@@ -165,8 +156,7 @@ class MultimediaFactory:
             return None
             
     async def destroy_component(self, instance_id: str) -> bool:
-        """Destroy component instance"""
-        try:
+        """Destroy component instance"""        try:
             instance = self.instances.get(instance_id)
             if not instance:
                 return False
@@ -204,8 +194,7 @@ class MultimediaFactory:
             return False
             
     def register_blueprint(self, blueprint: ComponentBlueprint) -> bool:
-        """Register component blueprint"""
-        try:
+        """Register component blueprint"""        try:
             # Validate blueprint
             if not self._validate_blueprint(blueprint):
                 return False
@@ -224,8 +213,7 @@ class MultimediaFactory:
             return False
             
     def unregister_blueprint(self, component_id: str) -> bool:
-        """Unregister component blueprint"""
-        try:
+        """Unregister component blueprint"""        try:
             if component_id not in self.blueprints:
                 return False
                 
@@ -253,8 +241,7 @@ class MultimediaFactory:
             return False
             
     def list_blueprints(self) -> List[Dict[str, Any]]:
-        """List registered blueprints"""
-        return [
+        """List registered blueprints"""        return [
             {
                 "component_id": blueprint.component_id,
                 "component_class": blueprint.component_class.__name__,
@@ -267,8 +254,7 @@ class MultimediaFactory:
         ]
         
     def get_component_instances(self, component_id: str) -> List[Dict[str, Any]]:
-        """Get instances of specific component"""
-        instances = [
+        """Get instances of specific component"""        instances = [
             {
                 "instance_id": inst.instance_id,
                 "created_at": inst.created_at.isoformat(),
@@ -283,8 +269,7 @@ class MultimediaFactory:
         return instances
         
     async def get_factory_stats(self) -> Dict[str, Any]:
-        """Get factory statistics"""
-        pool_stats = {}
+        """Get factory statistics"""        pool_stats = {}
         for component_id, pool in self.pools.items():
             pool_stats[component_id] = {
                 "size": len(pool),
@@ -302,8 +287,7 @@ class MultimediaFactory:
         }
         
     async def health_check(self) -> Dict[str, Any]:
-        """Factory health check"""
-        try:
+        """Factory health check"""        try:
             # Check registry health
             registry_health = await self.registry.health_check()
             
@@ -347,8 +331,7 @@ class MultimediaFactory:
     # Private methods
     
     async def _get_singleton(self, blueprint: ComponentBlueprint, config: Dict[str, Any]) -> MultimediaComponent:
-        """Get or create singleton instance"""
-        if blueprint.component_id in self.singletons:
+        """Get or create singleton instance"""        if blueprint.component_id in self.singletons:
             instance = self.singletons[blueprint.component_id]
             instance.last_used = datetime.now(timezone.utc)
             instance.usage_count += 1
@@ -359,8 +342,7 @@ class MultimediaFactory:
         return component
         
     async def _get_pooled_instance(self, blueprint: ComponentBlueprint, config: Dict[str, Any]) -> MultimediaComponent:
-        """Get instance from pool"""
-        pool = self.pools.get(blueprint.component_id, [])
+        """Get instance from pool"""        pool = self.pools.get(blueprint.component_id, [])
         
         # Find idle instance
         for instance in pool:
@@ -382,8 +364,7 @@ class MultimediaFactory:
         return await self._get_pooled_instance(blueprint, config)
         
     async def _create_new_instance(self, blueprint: ComponentBlueprint, config: Dict[str, Any]) -> MultimediaComponent:
-        """Create new component instance"""
-        start_time = datetime.now(timezone.utc)
+        """Create new component instance"""        start_time = datetime.now(timezone.utc)
         
         try:
             # Resolve dependencies
@@ -451,8 +432,7 @@ class MultimediaFactory:
             raise
             
     async def _resolve_dependencies(self, dependencies: List[str]) -> Dict[str, MultimediaComponent]:
-        """Resolve component dependencies"""
-        resolved = {}
+        """Resolve component dependencies"""        resolved = {}
         
         for dep_id in dependencies:
             dep_component = await self.get_component(dep_id)
@@ -464,8 +444,7 @@ class MultimediaFactory:
         return resolved
         
     def _setup_default_blueprints(self):
-        """Setup default component blueprints"""
-        default_blueprints = [
+        """Setup default component blueprints"""        default_blueprints = [
             ComponentBlueprint(
                 component_id="multimedia_converter",
                 component_class=MultimediaConverter,
@@ -545,8 +524,7 @@ class MultimediaFactory:
                 self.pools[blueprint.component_id] = []
                 
     def _validate_blueprint(self, blueprint: ComponentBlueprint) -> bool:
-        """Validate component blueprint"""
-        try:
+        """Validate component blueprint"""        try:
             # Basic validation
             if not blueprint.component_id:
                 logger.error("Blueprint component_id is required")
@@ -573,8 +551,7 @@ class MultimediaFactory:
             return False
             
     async def _precreate_singletons(self):
-        """Pre-create singleton instances"""
-        for blueprint in self.blueprints.values():
+        """Pre-create singleton instances"""        for blueprint in self.blueprints.values():
             if blueprint.creation_mode == FactoryMode.SINGLETON and blueprint.enabled:
                 try:
                     await self._create_new_instance(blueprint, {})
@@ -582,8 +559,7 @@ class MultimediaFactory:
                     logger.error(f"Failed to precreate singleton {blueprint.component_id}: {e}")
                     
     async def _cleanup_worker(self):
-        """Background cleanup worker"""
-        while True:
+        """Background cleanup worker"""        while True:
             try:
                 await asyncio.sleep(self.cleanup_interval)
                 await self._cleanup_expired_instances()
@@ -595,8 +571,7 @@ class MultimediaFactory:
                 logger.error(f"Cleanup worker error: {e}")
                 
     async def _cleanup_expired_instances(self):
-        """Cleanup expired instances"""
-        current_time = datetime.now(timezone.utc)
+        """Cleanup expired instances"""        current_time = datetime.now(timezone.utc)
         expired_instances = []
         
         for instance_id, instance in self.instances.items():
@@ -613,8 +588,7 @@ class MultimediaFactory:
             logger.info(f"Cleaned up {len(expired_instances)} expired instances")
             
     async def _optimize_pools(self):
-        """Optimize pool sizes"""
-        for component_id, pool in self.pools.items():
+        """Optimize pool sizes"""        for component_id, pool in self.pools.items():
             blueprint = self.blueprints.get(component_id)
             if not blueprint:
                 continue

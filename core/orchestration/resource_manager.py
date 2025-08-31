@@ -1,5 +1,4 @@
-"""
-Resource Manager - Enterprise Resource Allocation & Optimization System
+"""Resource Manager - Enterprise Resource Allocation & Optimization System
 
 Advanced resource management system for intelligent allocation, monitoring, and optimization
 of system resources across distributed content processing workflows.
@@ -12,7 +11,6 @@ This code is the EXCLUSIVE INTELLECTUAL PROPERTY of Fahed Mlaiel.
 Unauthorized use, copying, or distribution is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,8 +25,7 @@ from backend.core.utils.event_dispatcher import EventDispatcher
 
 
 class ResourceType(Enum):
-    """System resource types."""
-    CPU = "cpu"
+    """System resource types."""    CPU = "cpu"
     MEMORY = "memory"
     GPU = "gpu"
     STORAGE = "storage"
@@ -39,8 +36,7 @@ class ResourceType(Enum):
 
 
 class ResourceStatus(Enum):
-    """Resource status enumeration."""
-    AVAILABLE = "available"
+    """Resource status enumeration."""    AVAILABLE = "available"
     ALLOCATED = "allocated"
     RESERVED = "reserved"
     OVERCOMMITTED = "overcommitted"
@@ -49,8 +45,7 @@ class ResourceStatus(Enum):
 
 
 class AllocationStrategy(Enum):
-    """Resource allocation strategy options."""
-    FIRST_FIT = "first_fit"
+    """Resource allocation strategy options."""    FIRST_FIT = "first_fit"
     BEST_FIT = "best_fit"
     WORST_FIT = "worst_fit"
     LOAD_BALANCED = "load_balanced"
@@ -61,8 +56,7 @@ class AllocationStrategy(Enum):
 
 @dataclass
 class ResourceMetrics:
-    """Resource performance and usage metrics."""
-    utilization: float = 0.0
+    """Resource performance and usage metrics."""    utilization: float = 0.0
     throughput: float = 0.0
     latency: float = 0.0
     error_rate: float = 0.0
@@ -73,8 +67,7 @@ class ResourceMetrics:
 
 @dataclass
 class ResourceCapacity:
-    """Resource capacity specification."""
-    total: float
+    """Resource capacity specification."""    total: float
     allocated: float = 0.0
     reserved: float = 0.0
     available: float = 0.0
@@ -89,8 +82,7 @@ class ResourceCapacity:
 
 @dataclass
 class ResourceNode:
-    """Individual resource node definition."""
-    node_id: str
+    """Individual resource node definition."""    node_id: str
     name: str
     resource_type: ResourceType
     capacity: ResourceCapacity
@@ -110,8 +102,7 @@ class ResourceNode:
 
 @dataclass
 class ResourcePool:
-    """Collection of related resource nodes."""
-    pool_id: str
+    """Collection of related resource nodes."""    pool_id: str
     name: str
     resource_type: ResourceType
     nodes: Dict[str, ResourceNode] = field(default_factory=dict)
@@ -125,8 +116,7 @@ class ResourcePool:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation tracking."""
-    allocation_id: str
+    """Resource allocation tracking."""    allocation_id: str
     requester_id: str
     resource_type: ResourceType
     amount: float
@@ -141,8 +131,7 @@ class ResourceAllocation:
 
 @dataclass
 class ResourceRequest:
-    """Resource allocation request."""
-    request_id: str
+    """Resource allocation request."""    request_id: str
     requester_id: str
     resource_requirements: Dict[ResourceType, float]
     duration: Optional[timedelta] = None
@@ -155,8 +144,7 @@ class ResourceRequest:
 
 @dataclass
 class ScalingDecision:
-    """Auto-scaling decision information."""
-    pool_id: str
+    """Auto-scaling decision information."""    pool_id: str
     action: str  # "scale_up", "scale_down", "no_action"
     current_nodes: int
     target_nodes: int
@@ -167,8 +155,7 @@ class ScalingDecision:
 
 
 class ResourceManager:
-    """
-    Enterprise-grade resource management system with intelligent allocation and optimization.
+    """    Enterprise-grade resource management system with intelligent allocation and optimization.
     
     Provides comprehensive resource management capabilities including:
     - Multi-type resource allocation and tracking
@@ -176,8 +163,7 @@ class ResourceManager:
     - Auto-scaling based on demand patterns
     - Performance monitoring and health checking
     - Cost optimization and resource efficiency
-    """
-    
+    """    
     def __init__(self, allocation_strategy: AllocationStrategy = AllocationStrategy.AI_OPTIMIZED):
         self.logger = logging.getLogger(__name__)
         self.metrics_collector = MetricsCollector()
@@ -220,16 +206,14 @@ class ResourceManager:
         self.logger.info(f"ResourceManager initialized with strategy: {allocation_strategy.value}")
     
     async def register_resource_pool(self, pool: ResourcePool) -> bool:
-        """
-        Register a new resource pool.
+        """        Register a new resource pool.
         
         Args:
             pool: Resource pool configuration
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Validate pool configuration
             if not await self._validate_resource_pool(pool):
                 return False
@@ -256,8 +240,7 @@ class ResourceManager:
             return False
     
     async def register_resource_node(self, node: ResourceNode, pool_id: Optional[str] = None) -> bool:
-        """
-        Register a new resource node.
+        """        Register a new resource node.
         
         Args:
             node: Resource node configuration
@@ -265,8 +248,7 @@ class ResourceManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Validate node configuration
             if not await self._validate_resource_node(node):
                 return False
@@ -293,16 +275,14 @@ class ResourceManager:
             return False
     
     async def request_resources(self, request: ResourceRequest) -> Optional[str]:
-        """
-        Request resource allocation.
+        """        Request resource allocation.
         
         Args:
             request: Resource request specification
             
         Returns:
             Optional[str]: Allocation ID if successful
-        """
-        try:
+        """        try:
             # Validate request
             if not await self._validate_resource_request(request):
                 return None
@@ -343,16 +323,14 @@ class ResourceManager:
             return None
     
     async def _allocate_resources(self, request: ResourceRequest) -> Optional[ResourceAllocation]:
-        """
-        Internal resource allocation logic.
+        """        Internal resource allocation logic.
         
         Args:
             request: Resource request
             
         Returns:
             Optional[ResourceAllocation]: Allocation result
-        """
-        allocation_id = str(uuid.uuid4())
+        """        allocation_id = str(uuid.uuid4())
         allocated_nodes = []
         
         try:
@@ -408,8 +386,7 @@ class ResourceManager:
         amount: float,
         constraints: Dict[str, Any]
     ) -> List[ResourceNode]:
-        """Find nodes that can satisfy resource requirements."""
-        suitable_nodes = []
+        """Find nodes that can satisfy resource requirements."""        suitable_nodes = []
         
         for node in self.resource_nodes.values():
             if (node.resource_type == resource_type and
@@ -428,8 +405,7 @@ class ResourceManager:
         amount: float,
         request: ResourceRequest
     ) -> Dict[str, float]:
-        """Select optimal nodes based on allocation strategy."""
-        if self.allocation_strategy == AllocationStrategy.AI_OPTIMIZED:
+        """Select optimal nodes based on allocation strategy."""        if self.allocation_strategy == AllocationStrategy.AI_OPTIMIZED:
             return await self._ai_optimized_selection(suitable_nodes, amount, request)
         elif self.allocation_strategy == AllocationStrategy.BEST_FIT:
             return await self._best_fit_selection(suitable_nodes, amount)
@@ -446,8 +422,7 @@ class ResourceManager:
         amount: float,
         request: ResourceRequest
     ) -> Dict[str, float]:
-        """AI-powered optimal node selection."""
-        selected_nodes = {}
+        """AI-powered optimal node selection."""        selected_nodes = {}
         remaining_amount = amount
         
         # Score nodes based on multiple criteria
@@ -475,8 +450,7 @@ class ResourceManager:
         suitable_nodes: List[ResourceNode],
         amount: float
     ) -> Dict[str, float]:
-        """Best fit allocation strategy."""
-        # Find node with smallest available capacity that can fit the request
+        """Best fit allocation strategy."""        # Find node with smallest available capacity that can fit the request
         best_node = None
         best_fit_size = float('inf')
         
@@ -495,8 +469,7 @@ class ResourceManager:
         suitable_nodes: List[ResourceNode],
         amount: float
     ) -> Dict[str, float]:
-        """Load balanced allocation strategy."""
-        # Distribute load evenly across multiple nodes
+        """Load balanced allocation strategy."""        # Distribute load evenly across multiple nodes
         selected_nodes = {}
         remaining_amount = amount
         available_nodes = [node for node in suitable_nodes if node.capacity.available > 0]
@@ -537,8 +510,7 @@ class ResourceManager:
         suitable_nodes: List[ResourceNode],
         amount: float
     ) -> Dict[str, float]:
-        """Performance optimized allocation strategy."""
-        # Select nodes with best performance metrics
+        """Performance optimized allocation strategy."""        # Select nodes with best performance metrics
         performance_scored = []
         for node in suitable_nodes:
             performance_score = (
@@ -571,15 +543,13 @@ class ResourceManager:
         suitable_nodes: List[ResourceNode],
         amount: float
     ) -> Dict[str, float]:
-        """First fit allocation strategy."""
-        for node in suitable_nodes:
+        """First fit allocation strategy."""        for node in suitable_nodes:
             if node.capacity.available >= amount:
                 return {node.node_id: amount}
         return {}
     
     async def _calculate_node_score(self, node: ResourceNode, request: ResourceRequest) -> float:
-        """Calculate comprehensive node score for AI optimization."""
-        # Base score components
+        """Calculate comprehensive node score for AI optimization."""        # Base score components
         utilization_score = 1.0 - node.metrics.utilization
         health_score = node.health_score
         availability_score = node.metrics.availability / 100.0
@@ -610,16 +580,14 @@ class ResourceManager:
         return overall_score
     
     async def release_resources(self, allocation_id: str) -> bool:
-        """
-        Release allocated resources.
+        """        Release allocated resources.
         
         Args:
             allocation_id: Allocation identifier
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if allocation_id not in self.active_allocations:
                 return False
             
@@ -664,8 +632,7 @@ class ResourceManager:
             return False
     
     async def _resource_monitor_loop(self) -> None:
-        """Background resource monitoring loop."""
-        while self._manager_running:
+        """Background resource monitoring loop."""        while self._manager_running:
             try:
                 await self._update_resource_metrics()
                 await self._check_resource_health()
@@ -678,8 +645,7 @@ class ResourceManager:
                 await asyncio.sleep(60)
     
     async def _auto_scaling_loop(self) -> None:
-        """Background auto-scaling loop."""
-        while self._manager_running and self.auto_scaling_enabled:
+        """Background auto-scaling loop."""        while self._manager_running and self.auto_scaling_enabled:
             try:
                 for pool in self.resource_pools.values():
                     if pool.auto_scaling:
@@ -694,8 +660,7 @@ class ResourceManager:
                 await asyncio.sleep(600)
     
     async def _evaluate_scaling_need(self, pool: ResourcePool) -> ScalingDecision:
-        """Evaluate if pool needs scaling."""
-        current_nodes = len(pool.nodes)
+        """Evaluate if pool needs scaling."""        current_nodes = len(pool.nodes)
         
         # Calculate average utilization
         total_utilization = sum(node.metrics.utilization for node in pool.nodes.values())
@@ -733,8 +698,7 @@ class ResourceManager:
             )
     
     async def _execute_scaling_decision(self, decision: ScalingDecision) -> bool:
-        """Execute scaling decision."""
-        try:
+        """Execute scaling decision."""        try:
             await self.event_dispatcher.emit('scaling_decision', {
                 'pool_id': decision.pool_id,
                 'action': decision.action,
@@ -753,8 +717,7 @@ class ResourceManager:
             return False
     
     async def _validate_resource_pool(self, pool: ResourcePool) -> bool:
-        """Validate resource pool configuration."""
-        try:
+        """Validate resource pool configuration."""        try:
             if not pool.pool_id or not pool.name:
                 return False
             
@@ -767,8 +730,7 @@ class ResourceManager:
             return False
     
     async def _validate_resource_node(self, node: ResourceNode) -> bool:
-        """Validate resource node configuration."""
-        try:
+        """Validate resource node configuration."""        try:
             if not node.node_id or not node.name:
                 return False
             
@@ -781,8 +743,7 @@ class ResourceManager:
             return False
     
     async def _validate_resource_request(self, request: ResourceRequest) -> bool:
-        """Validate resource request."""
-        try:
+        """Validate resource request."""        try:
             if not request.request_id or not request.requester_id:
                 return False
             
@@ -798,8 +759,7 @@ class ResourceManager:
             return False
     
     async def _check_node_constraints(self, node: ResourceNode, constraints: Dict[str, Any]) -> bool:
-        """Check if node satisfies request constraints."""
-        # Location constraint
+        """Check if node satisfies request constraints."""        # Location constraint
         if 'location' in constraints:
             if node.location != constraints['location']:
                 return False
@@ -818,8 +778,7 @@ class ResourceManager:
         return True
     
     async def _rollback_allocation(self, allocated_nodes: List[str]) -> None:
-        """Rollback partial resource allocation."""
-        for node_id in allocated_nodes:
+        """Rollback partial resource allocation."""        for node_id in allocated_nodes:
             if node_id in self.resource_nodes:
                 # This is simplified - in reality we'd need to track exact amounts
                 node = self.resource_nodes[node_id]
@@ -827,8 +786,7 @@ class ResourceManager:
                 pass
     
     async def _update_resource_metrics(self) -> None:
-        """Update resource performance metrics."""
-        for node in self.resource_nodes.values():
+        """Update resource performance metrics."""        for node in self.resource_nodes.values():
             # Simulate metric updates (in reality, these would come from monitoring systems)
             node.metrics.last_updated = datetime.now()
             
@@ -846,8 +804,7 @@ class ResourceManager:
                 node.metrics.historical_data = node.metrics.historical_data[-1440:]
     
     async def _check_resource_health(self) -> None:
-        """Check health status of all resources."""
-        for node in self.resource_nodes.values():
+        """Check health status of all resources."""        for node in self.resource_nodes.values():
             # Health check logic (simplified)
             if node.last_heartbeat:
                 time_since_heartbeat = (datetime.now() - node.last_heartbeat).total_seconds()
@@ -859,8 +816,7 @@ class ResourceManager:
                     node.health_score = max(0.1, 1.0 - (time_since_heartbeat / 3600))
     
     async def _cleanup_expired_allocations(self) -> None:
-        """Cleanup expired resource allocations."""
-        current_time = datetime.now()
+        """Cleanup expired resource allocations."""        current_time = datetime.now()
         expired_allocations = []
         
         for allocation_id, allocation in self.active_allocations.items():
@@ -871,8 +827,7 @@ class ResourceManager:
             await self.release_resources(allocation_id)
     
     async def _update_management_stats(self) -> None:
-        """Update resource management statistics."""
-        # Calculate resource utilization
+        """Update resource management statistics."""        # Calculate resource utilization
         total_capacity = sum(node.capacity.total for node in self.resource_nodes.values())
         total_allocated = sum(node.capacity.allocated for node in self.resource_nodes.values())
         
@@ -895,20 +850,16 @@ class ResourceManager:
             self.management_stats['availability_score'] = healthy_nodes / total_nodes
     
     async def get_resource_status(self, node_id: str) -> Optional[ResourceNode]:
-        """Get current resource node status."""
-        return self.resource_nodes.get(node_id)
+        """Get current resource node status."""        return self.resource_nodes.get(node_id)
     
     async def get_pool_status(self, pool_id: str) -> Optional[ResourcePool]:
-        """Get current resource pool status."""
-        return self.resource_pools.get(pool_id)
+        """Get current resource pool status."""        return self.resource_pools.get(pool_id)
     
     async def get_allocation_status(self, allocation_id: str) -> Optional[ResourceAllocation]:
-        """Get current allocation status."""
-        return self.active_allocations.get(allocation_id)
+        """Get current allocation status."""        return self.active_allocations.get(allocation_id)
     
     async def get_management_stats(self) -> Dict[str, Any]:
-        """Get resource management statistics."""
-        return {
+        """Get resource management statistics."""        return {
             **self.management_stats,
             'active_allocations': len(self.active_allocations),
             'pending_requests': len(self.pending_requests),
@@ -918,8 +869,7 @@ class ResourceManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown resource manager gracefully."""
-        self._manager_running = False
+        """Shutdown resource manager gracefully."""        self._manager_running = False
         
         # Release all active allocations
         for allocation_id in list(self.active_allocations.keys()):

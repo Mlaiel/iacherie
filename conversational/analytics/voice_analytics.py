@@ -1,5 +1,4 @@
-"""
-Voice Analytics Engine for IA Influencer Agent Platform
+"""Voice Analytics Engine for IA Influencer Agent Platform
 Advanced voice processing, speech analytics, and audio intelligence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,7 +10,6 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -37,8 +35,7 @@ import base64
 
 
 class VoiceMetricType(Enum):
-    """Types of voice metrics for analysis."""
-    PITCH = "pitch"
+    """Types of voice metrics for analysis."""    PITCH = "pitch"
     TONE = "tone"
     PACE = "pace"
     VOLUME = "volume"
@@ -53,8 +50,7 @@ class VoiceMetricType(Enum):
 
 
 class EmotionalState(Enum):
-    """Emotional states detectable through voice."""
-    HAPPY = "happy"
+    """Emotional states detectable through voice."""    HAPPY = "happy"
     SAD = "sad"
     ANGRY = "angry"
     EXCITED = "excited"
@@ -68,8 +64,7 @@ class EmotionalState(Enum):
 
 @dataclass
 class VoiceFeatures:
-    """Voice feature extraction results."""
-    audio_id: str
+    """Voice feature extraction results."""    audio_id: str
     duration: float
     sample_rate: int
     mfcc: np.ndarray
@@ -83,8 +78,7 @@ class VoiceFeatures:
 
 @dataclass
 class VoiceAnalysisResult:
-    """Complete voice analysis result."""
-    analysis_id: str
+    """Complete voice analysis result."""    analysis_id: str
     user_id: Optional[str]
     audio_duration: float
     transcription: str
@@ -99,11 +93,9 @@ class VoiceAnalysisResult:
 
 
 class VoiceAnalytics:
-    """
-    Enterprise-grade voice analytics engine for comprehensive
+    """    Enterprise-grade voice analytics engine for comprehensive
     speech analysis, emotion detection, and voice intelligence.
-    """
-    
+    """    
     def __init__(self, model_cache_dir: str = "./voice_models"):
         self.model_cache_dir = model_cache_dir
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -163,8 +155,7 @@ class VoiceAnalytics:
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def initialize_voice_models(self):
-        """Initialize voice processing and analysis models."""
-        try:
+        """Initialize voice processing and analysis models."""        try:
             self.logger.info("Initializing voice analytics models")
             
             # Initialize speech recognition
@@ -187,8 +178,7 @@ class VoiceAnalytics:
             raise
     
     async def analyze_voice_audio(self, audio_data: bytes, user_id: Optional[str] = None) -> VoiceAnalysisResult:
-        """Perform comprehensive voice analysis on audio data."""
-        try:
+        """Perform comprehensive voice analysis on audio data."""        try:
             analysis_id = f"voice_{int(datetime.utcnow().timestamp())}"
             
             # Convert audio data to numpy array
@@ -242,8 +232,7 @@ class VoiceAnalytics:
             raise
     
     async def analyze_conversation_voice_dynamics(self, audio_segments: List[bytes]) -> Dict[str, Any]:
-        """Analyze voice dynamics throughout a conversation."""
-        try:
+        """Analyze voice dynamics throughout a conversation."""        try:
             conversation_analysis = {
                 'total_segments': len(audio_segments),
                 'analysis_timestamp': datetime.utcnow().isoformat(),
@@ -289,8 +278,7 @@ class VoiceAnalytics:
             return {}
     
     async def generate_voice_insights_report(self, user_id: str, time_period: int = 30) -> Dict[str, Any]:
-        """Generate comprehensive voice insights report for a user."""
-        try:
+        """Generate comprehensive voice insights report for a user."""        try:
             # Get user's voice data for the period
             voice_analyses = await self._get_user_voice_analyses(user_id, time_period)
             
@@ -333,8 +321,7 @@ class VoiceAnalytics:
             return {}
     
     async def real_time_voice_feedback(self, audio_stream: bytes) -> Dict[str, Any]:
-        """Provide real-time voice feedback during conversation."""
-        try:
+        """Provide real-time voice feedback during conversation."""        try:
             # Quick voice analysis for real-time feedback
             audio_array, sample_rate = await self._process_audio_data(audio_stream)
             
@@ -371,8 +358,7 @@ class VoiceAnalytics:
     # Private helper methods
     
     async def _process_audio_data(self, audio_data: bytes) -> Tuple[np.ndarray, int]:
-        """Process audio data and convert to numpy array."""
-        try:
+        """Process audio data and convert to numpy array."""        try:
             # Convert bytes to audio segment
             audio_segment = AudioSegment.from_raw(
                 io.BytesIO(audio_data),
@@ -394,8 +380,7 @@ class VoiceAnalytics:
             raise
     
     async def _extract_voice_features(self, audio_array: np.ndarray, sample_rate: int) -> VoiceFeatures:
-        """Extract comprehensive voice features from audio."""
-        try:
+        """Extract comprehensive voice features from audio."""        try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(
                 y=audio_array,
@@ -438,8 +423,7 @@ class VoiceAnalytics:
             raise
     
     async def _transcribe_audio(self, audio_data: bytes) -> Tuple[str, float]:
-        """Transcribe audio to text with confidence score."""
-        try:
+        """Transcribe audio to text with confidence score."""        try:
             # Convert audio data for speech recognition
             audio_segment = AudioSegment.from_raw(
                 io.BytesIO(audio_data),
@@ -481,8 +465,7 @@ class VoiceAnalytics:
             return "", 0.0
     
     async def _detect_emotional_state(self, voice_features: VoiceFeatures) -> Tuple[EmotionalState, float]:
-        """Detect emotional state from voice features."""
-        try:
+        """Detect emotional state from voice features."""        try:
             # Extract key emotional indicators
             pitch_mean = np.mean(voice_features.prosodic_features.get('pitch', [0]))
             pitch_variance = np.var(voice_features.prosodic_features.get('pitch', [0]))
@@ -530,8 +513,7 @@ class VoiceAnalytics:
             return EmotionalState.CALM, 0.0
     
     async def _extract_prosodic_features(self, audio_array: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract prosodic features (pitch, rhythm, stress)."""
-        try:
+        """Extract prosodic features (pitch, rhythm, stress)."""        try:
             # Extract pitch using librosa
             pitches, magnitudes = librosa.piptrack(y=audio_array, sr=sample_rate)
             pitch_values = []
@@ -560,8 +542,7 @@ class VoiceAnalytics:
             return {}
     
     def _calculate_speaking_rate(self, audio_array: np.ndarray, sample_rate: int) -> float:
-        """Calculate speaking rate (words per minute)."""
-        try:
+        """Calculate speaking rate (words per minute)."""        try:
             # Estimate speaking rate based on voice activity
             frame_length = int(0.025 * sample_rate)  # 25ms frames
             frame_shift = int(0.010 * sample_rate)   # 10ms shift

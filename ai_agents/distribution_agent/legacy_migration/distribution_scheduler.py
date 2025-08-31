@@ -1,5 +1,4 @@
-"""
-Distribution Scheduler - Professional Content Scheduling and Automation System
+"""Distribution Scheduler - Professional Content Scheduling and Automation System
 
 Enterprise-grade scheduling engine with advanced timing optimization, cross-platform coordination,
 and comprehensive business logic for the IA Influencer Agent ecosystem.
@@ -15,7 +14,6 @@ immediate legal action under German and International IP law.
 
 For licensing inquiries: mlaiel@live.de
 """
-
 import asyncio
 import json
 import logging
@@ -51,8 +49,7 @@ from ...models.distribution import DistributionPlan, PlatformConfig
 
 
 class ScheduleFrequency(Enum):
-    """Schedule frequency enumeration"""
-    ONCE = "once"
+    """Schedule frequency enumeration"""    ONCE = "once"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -60,8 +57,7 @@ class ScheduleFrequency(Enum):
 
 
 class SchedulePriority(Enum):
-    """Schedule priority enumeration"""
-    LOW = 1
+    """Schedule priority enumeration"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
@@ -69,8 +65,7 @@ class SchedulePriority(Enum):
 
 
 class ScheduleStatus(Enum):
-    """Schedule status enumeration"""
-    PENDING = "pending"
+    """Schedule status enumeration"""    PENDING = "pending"
     ACTIVE = "active"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -80,8 +75,7 @@ class ScheduleStatus(Enum):
 
 
 class OptimalTimingStrategy(Enum):
-    """Optimal timing strategy enumeration"""
-    AUDIENCE_PEAK = "audience_peak"
+    """Optimal timing strategy enumeration"""    AUDIENCE_PEAK = "audience_peak"
     ENGAGEMENT_MAX = "engagement_max"
     COMPETITION_MIN = "competition_min"
     TRENDING_WINDOW = "trending_window"
@@ -90,8 +84,7 @@ class OptimalTimingStrategy(Enum):
 
 @dataclass
 class ScheduleEntry:
-    """Schedule entry data structure"""
-    id: str
+    """Schedule entry data structure"""    id: str
     content_id: str
     platform: str
     scheduled_time: datetime
@@ -116,8 +109,7 @@ class ScheduleEntry:
 
 @dataclass
 class OptimalTimingAnalysis:
-    """Optimal timing analysis result"""
-    recommended_times: List[datetime]
+    """Optimal timing analysis result"""    recommended_times: List[datetime]
     audience_activity: Dict[str, float]
     engagement_predictions: Dict[str, float]
     competition_analysis: Dict[str, int]
@@ -127,8 +119,7 @@ class OptimalTimingAnalysis:
 
 
 class DistributionScheduler(BaseAgent):
-    """
-    Professional distribution scheduler with advanced features
+    """    Professional distribution scheduler with advanced features
     
     Capabilities:
     - Multi-platform scheduling coordination
@@ -141,16 +132,13 @@ class DistributionScheduler(BaseAgent):
     - Performance monitoring
     - Load balancing and throttling
     - Campaign orchestration
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize distribution scheduler
+        """        Initialize distribution scheduler
         
         Args:
             config: Scheduler configuration and settings
-        """
-        super().__init__(config)
+        """        super().__init__(config)
         
         # Core configuration
         self.timezone = config.get('timezone', 'UTC')
@@ -187,8 +175,7 @@ class DistributionScheduler(BaseAgent):
         self.logger = logging.getLogger(__name__)
     
     async def initialize(self) -> bool:
-        """Initialize distribution scheduler"""
-        try:
+        """Initialize distribution scheduler"""        try:
             # Initialize scheduler
             self.scheduler = AsyncIOScheduler(
                 timezone=self.timezone,
@@ -226,8 +213,7 @@ class DistributionScheduler(BaseAgent):
         content: ContentItem,
         schedule_config: Dict[str, Any]
     ) -> ScheduleEntry:
-        """
-        Schedule content for distribution
+        """        Schedule content for distribution
         
         Args:
             content: Content to schedule
@@ -235,8 +221,7 @@ class DistributionScheduler(BaseAgent):
             
         Returns:
             Created schedule entry
-        """
-        try:
+        """        try:
             # Validate scheduling parameters
             await self._validate_schedule_config(schedule_config)
             
@@ -289,8 +274,7 @@ class DistributionScheduler(BaseAgent):
         content_items: List[ContentItem],
         campaign_config: Dict[str, Any]
     ) -> List[ScheduleEntry]:
-        """
-        Schedule entire campaign with coordination
+        """        Schedule entire campaign with coordination
         
         Args:
             campaign_id: Campaign identifier
@@ -299,8 +283,7 @@ class DistributionScheduler(BaseAgent):
             
         Returns:
             List of created schedule entries
-        """
-        try:
+        """        try:
             schedule_entries = []
             
             # Analyze campaign timing strategy
@@ -349,8 +332,7 @@ class DistributionScheduler(BaseAgent):
         schedule_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """Update existing schedule entry"""
-        try:
+        """Update existing schedule entry"""        try:
             # Load existing schedule
             schedule_entry = await self._load_schedule_entry(schedule_id)
             if not schedule_entry:
@@ -380,8 +362,7 @@ class DistributionScheduler(BaseAgent):
             return False
     
     async def cancel_schedule(self, schedule_id: str) -> bool:
-        """Cancel scheduled content distribution"""
-        try:
+        """Cancel scheduled content distribution"""        try:
             # Load schedule
             schedule_entry = await self._load_schedule_entry(schedule_id)
             if not schedule_entry:
@@ -405,8 +386,7 @@ class DistributionScheduler(BaseAgent):
             return False
     
     async def get_schedule_status(self, schedule_id: str) -> Optional[ScheduleEntry]:
-        """Get current status of scheduled item"""
-        try:
+        """Get current status of scheduled item"""        try:
             return await self._load_schedule_entry(schedule_id)
         except Exception as e:
             self.logger.error(f"Failed to get schedule status for {schedule_id}: {str(e)}")
@@ -416,16 +396,14 @@ class DistributionScheduler(BaseAgent):
         self,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[ScheduleEntry]:
-        """List scheduled items with optional filters"""
-        try:
+        """List scheduled items with optional filters"""        try:
             return await self._query_schedules(filters or {})
         except Exception as e:
             self.logger.error(f"Failed to list schedules: {str(e)}")
             return []
     
     async def register_platform_adapter(self, platform: str, adapter: Any) -> None:
-        """Register platform adapter for distribution"""
-        self.platform_adapters[platform] = adapter
+        """Register platform adapter for distribution"""        self.platform_adapters[platform] = adapter
         self.logger.info(f"Registered platform adapter for {platform}")
     
     async def _analyze_optimal_timing(
@@ -433,8 +411,7 @@ class DistributionScheduler(BaseAgent):
         content: ContentItem,
         config: Dict[str, Any]
     ) -> OptimalTimingAnalysis:
-        """Analyze optimal timing for content distribution"""
-        try:
+        """Analyze optimal timing for content distribution"""        try:
             platform = config['platform']
             current_time = datetime.utcnow()
             
@@ -505,8 +482,7 @@ class DistributionScheduler(BaseAgent):
         schedule_entry: ScheduleEntry,
         content: ContentItem
     ) -> None:
-        """Execute scheduled content distribution"""
-        try:
+        """Execute scheduled content distribution"""        try:
             # Update status
             schedule_entry.status = ScheduleStatus.RUNNING
             await self._save_schedule_entry(schedule_entry)
@@ -567,8 +543,7 @@ class DistributionScheduler(BaseAgent):
             await self._save_schedule_entry(schedule_entry)
     
     async def _validate_schedule_config(self, config: Dict[str, Any]) -> None:
-        """Validate scheduling configuration"""
-        required_fields = ['platform', 'scheduled_time']
+        """Validate scheduling configuration"""        required_fields = ['platform', 'scheduled_time']
         
         for field in required_fields:
             if field not in config:
@@ -583,9 +558,7 @@ class DistributionScheduler(BaseAgent):
             raise SchedulingError(f"Unsupported platform: {config['platform']}")
     
     async def _create_schedule_tables(self) -> None:
-        """Create database tables for schedules"""
-        create_table_sql = """
-        CREATE TABLE IF NOT EXISTS schedules (
+        """Create database tables for schedules"""        create_table_sql = """        CREATE TABLE IF NOT EXISTS schedules (
             id TEXT PRIMARY KEY,
             content_id TEXT NOT NULL,
             platform TEXT NOT NULL,
@@ -604,33 +577,27 @@ class DistributionScheduler(BaseAgent):
             expiration_date TIMESTAMP,
             dependencies JSON
         )
-        """
-        await self.db.execute(create_table_sql)
+        """        await self.db.execute(create_table_sql)
     
     def _generate_schedule_id(self) -> str:
-        """Generate unique schedule ID"""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique schedule ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         import uuid
         return f"schedule_{timestamp}_{str(uuid.uuid4())[:8]}"
     
     async def _save_schedule_entry(self, entry: ScheduleEntry) -> None:
-        """Save schedule entry to database"""
-        # Implementation would save to database
+        """Save schedule entry to database"""        # Implementation would save to database
         pass
     
     async def _load_schedule_entry(self, schedule_id: str) -> Optional[ScheduleEntry]:
-        """Load schedule entry from database"""
-        # Implementation would load from database
+        """Load schedule entry from database"""        # Implementation would load from database
         return None
     
     async def _add_scheduler_job(self, entry: ScheduleEntry, content: ContentItem) -> None:
-        """Add job to APScheduler"""
-        # Implementation would add job to scheduler
+        """Add job to APScheduler"""        # Implementation would add job to scheduler
         pass
     
     async def _monitor_schedules(self) -> None:
-        """Background task to monitor schedules"""
-        while True:
+        """Background task to monitor schedules"""        while True:
             try:
                 # Monitor active schedules
                 await self._check_expired_schedules()
@@ -643,8 +610,7 @@ class DistributionScheduler(BaseAgent):
     # Additional helper methods would be implemented here...
     
     async def cleanup(self) -> None:
-        """Cleanup scheduler resources"""
-        if self.scheduler and self.scheduler.running:
+        """Cleanup scheduler resources"""        if self.scheduler and self.scheduler.running:
             self.scheduler.shutdown()
         
         await self.db.cleanup()

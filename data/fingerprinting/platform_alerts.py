@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Platform Alerts System
+"""IA Influencer Agent - Platform Alerts System
 ==========================================
 
 Advanced platform-specific alerting system for content protection and violation detection.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import json
@@ -51,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types for alerts"""
-    YOUTUBE = "youtube"
+    """Supported platform types for alerts"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -68,8 +65,7 @@ class PlatformType(Enum):
 
 
 class AlertChannel(Enum):
-    """Alert delivery channels"""
-    EMAIL = "email"
+    """Alert delivery channels"""    EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
     SLACK = "slack"
@@ -81,8 +77,7 @@ class AlertChannel(Enum):
 
 
 class AlertActionType(Enum):
-    """Types of automated actions"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of automated actions"""    DMCA_TAKEDOWN = "dmca_takedown"
     PLATFORM_REPORT = "platform_report"
     LEGAL_NOTICE = "legal_notice"
     CEASE_DESIST = "cease_desist"
@@ -93,8 +88,7 @@ class AlertActionType(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert processing status"""
-    PENDING = "pending"
+    """Alert processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -106,8 +100,7 @@ class AlertStatus(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""
-    platform: PlatformType
+    """Platform API credentials"""    platform: PlatformType
     api_key: Optional[str] = None
     secret_key: Optional[str] = None
     access_token: Optional[str] = None
@@ -122,8 +115,7 @@ class PlatformCredentials:
 
 @dataclass
 class AlertTemplate:
-    """Alert message template"""
-    template_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Alert message template"""    template_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     platform: PlatformType = PlatformType.GENERIC_WEB
     channel: AlertChannel = AlertChannel.EMAIL
@@ -137,8 +129,7 @@ class AlertTemplate:
 
 @dataclass
 class AlertRule:
-    """Alert routing and escalation rule"""
-    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Alert routing and escalation rule"""    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     conditions: Dict[str, Any] = field(default_factory=dict)
     platforms: List[PlatformType] = field(default_factory=list)
@@ -153,8 +144,7 @@ class AlertRule:
 
 @dataclass
 class PlatformAlert:
-    """Platform-specific alert"""
-    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Platform-specific alert"""    alert_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     platform: PlatformType
     channel: AlertChannel
     fingerprint_id: str = ""
@@ -193,8 +183,7 @@ class PlatformAlert:
 
 @dataclass
 class AlertResponse:
-    """Alert delivery response"""
-    alert_id: str
+    """Alert delivery response"""    alert_id: str
     channel: AlertChannel
     success: bool
     response_code: Optional[int] = None
@@ -206,8 +195,7 @@ class AlertResponse:
 
 
 class PlatformAlertsManager:
-    """Advanced platform alerts management system"""
-    
+    """Advanced platform alerts management system"""    
     def __init__(self, config: FingerprintingSystemConfig):
         self.config = config
         self.credentials: Dict[PlatformType, PlatformCredentials] = {}
@@ -242,15 +230,13 @@ class PlatformAlertsManager:
         logger.info("Platform Alerts Manager initialized")
     
     def _initialize_default_templates(self):
-        """Initialize default alert templates"""
-        # DMCA Takedown Template
+        """Initialize default alert templates"""        # DMCA Takedown Template
         dmca_template = AlertTemplate(
             name="DMCA Takedown Notice",
             platform=PlatformType.GENERIC_WEB,
             channel=AlertChannel.EMAIL,
             subject_template="DMCA Takedown Notice - Copyright Infringement",
-            message_template="""
-Dear {platform_name} Content Team,
+            message_template="""Dear {platform_name} Content Team,
 
 This is a formal DMCA takedown notice under the Digital Millennium Copyright Act (17 U.S.C. § 512).
 
@@ -298,8 +284,7 @@ Sincerely,
             platform=PlatformType.GENERIC_WEB,
             channel=AlertChannel.PLATFORM_API,
             subject_template="Copyright Violation Report",
-            message_template="""
-Automated copyright violation report:
+            message_template="""Automated copyright violation report:
 
 Content URL: {violation_url}
 Violation Type: Copyright Infringement
@@ -319,8 +304,7 @@ Please review and take appropriate action.
             platform=PlatformType.GENERIC_WEB,
             channel=AlertChannel.SLACK,
             subject_template="🚨 Copyright Violation Detected",
-            message_template="""
-🚨 **COPYRIGHT VIOLATION DETECTED** 🚨
+            message_template="""🚨 **COPYRIGHT VIOLATION DETECTED** 🚨
 
 📍 **Platform:** {platform_name}
 🔗 **URL:** {violation_url}
@@ -342,8 +326,7 @@ Please review and take appropriate action.
         self.templates[slack_template.template_id] = slack_template
     
     def _initialize_default_rules(self):
-        """Initialize default alert rules"""
-        # High priority violations
+        """Initialize default alert rules"""        # High priority violations
         high_priority_rule = AlertRule(
             name="High Priority Violations",
             conditions={
@@ -376,8 +359,7 @@ Please review and take appropriate action.
         self.rules[medium_priority_rule.rule_id] = medium_priority_rule
     
     def _setup_channel_handlers(self):
-        """Setup handlers for different alert channels"""
-        self.channel_handlers = {
+        """Setup handlers for different alert channels"""        self.channel_handlers = {
             AlertChannel.EMAIL: self._send_email_alert,
             AlertChannel.SMS: self._send_sms_alert,
             AlertChannel.WEBHOOK: self._send_webhook_alert,
@@ -389,8 +371,7 @@ Please review and take appropriate action.
         }
     
     async def start(self):
-        """Start alert processing system"""
-        if self.running:
+        """Start alert processing system"""        if self.running:
             logger.warning("Platform alerts system already running")
             return
         
@@ -402,8 +383,7 @@ Please review and take appropriate action.
         logger.info("Platform alerts system started")
     
     async def stop(self):
-        """Stop alert processing system"""
-        if not self.running:
+        """Stop alert processing system"""        if not self.running:
             return
         
         self.running = False
@@ -428,8 +408,7 @@ Please review and take appropriate action.
         evidence: Dict[str, Any],
         **kwargs
     ) -> List[str]:
-        """Send platform-specific alert"""
-        try:
+        """Send platform-specific alert"""        try:
             # Determine alert level
             if similarity_score >= 0.95:
                 alert_level = AlertLevel.EMERGENCY
@@ -488,8 +467,7 @@ Please review and take appropriate action.
         alert_level: AlertLevel,
         evidence: Dict[str, Any]
     ) -> List[AlertRule]:
-        """Find alert rules that match the violation"""
-        matching_rules = []
+        """Find alert rules that match the violation"""        matching_rules = []
         
         for rule in self.rules.values():
             if not rule.active:
@@ -530,16 +508,14 @@ Please review and take appropriate action.
         return matching_rules
     
     async def _generate_alert_content(self, alert: PlatformAlert, rule: AlertRule):
-        """Generate alert message content using templates"""
-        try:
+        """Generate alert message content using templates"""        try:
             # Find appropriate template
             template = self._find_template(alert.platform, alert.channel)
             
             if not template:
                 # Use default template
                 alert.subject = f"Copyright Violation Detected - {alert.similarity_score:.1%} similarity"
-                alert.message = f"""
-A potential copyright violation has been detected:
+                alert.message = f"""A potential copyright violation has been detected:
 
 Platform: {alert.platform.value}
 URL: {alert.violation_url}
@@ -548,8 +524,7 @@ Content ID: {alert.content_id}
 Detection Time: {alert.created_at.isoformat()}
 
 Please review and take appropriate action.
-                """
-                return
+                """                return
             
             # Prepare template variables
             variables = {
@@ -578,8 +553,7 @@ Please review and take appropriate action.
             alert.message = f"Violation detected at {alert.violation_url}"
     
     def _find_template(self, platform: PlatformType, channel: AlertChannel) -> Optional[AlertTemplate]:
-        """Find appropriate template for platform and channel"""
-        # First try platform-specific template
+        """Find appropriate template for platform and channel"""        # First try platform-specific template
         for template in self.templates.values():
             if template.platform == platform and template.channel == channel:
                 return template
@@ -592,8 +566,7 @@ Please review and take appropriate action.
         return None
     
     def _summarize_evidence(self, evidence: Dict[str, Any]) -> str:
-        """Create a summary of evidence"""
-        summary_parts = []
+        """Create a summary of evidence"""        summary_parts = []
         
         if "screenshot_url" in evidence:
             summary_parts.append("Screenshot captured")
@@ -613,8 +586,7 @@ Please review and take appropriate action.
         return "; ".join(summary_parts) if summary_parts else "Automated detection"
     
     def _format_evidence(self, evidence: Dict[str, Any]) -> str:
-        """Format detailed evidence for legal notices"""
-        formatted = []
+        """Format detailed evidence for legal notices"""        formatted = []
         
         for key, value in evidence.items():
             if key == "screenshot_url":
@@ -636,8 +608,7 @@ Please review and take appropriate action.
         alert: PlatformAlert,
         evidence: Dict[str, Any]
     ):
-        """Execute automated action"""
-        try:
+        """Execute automated action"""        try:
             if action == AlertActionType.EVIDENCE_COLLECTION:
                 await self._collect_additional_evidence(alert, evidence)
             
@@ -656,28 +627,23 @@ Please review and take appropriate action.
             logger.error(f"Failed to execute auto action {action.value}: {str(e)}")
     
     async def _collect_additional_evidence(self, alert: PlatformAlert, evidence: Dict[str, Any]):
-        """Collect additional evidence for the violation"""
-        # This would implement screenshot capture, metadata extraction, etc.
+        """Collect additional evidence for the violation"""        # This would implement screenshot capture, metadata extraction, etc.
         logger.info(f"Collecting additional evidence for {alert.violation_url}")
     
     async def _submit_platform_report(self, alert: PlatformAlert):
-        """Submit report to platform"""
-        # This would implement platform-specific reporting APIs
+        """Submit report to platform"""        # This would implement platform-specific reporting APIs
         logger.info(f"Submitting platform report for {alert.platform.value}")
     
     async def _initiate_dmca_takedown(self, alert: PlatformAlert):
-        """Initiate DMCA takedown process"""
-        # This would implement DMCA notice submission
+        """Initiate DMCA takedown process"""        # This would implement DMCA notice submission
         logger.info(f"Initiating DMCA takedown for {alert.violation_url}")
     
     async def _submit_content_claim(self, alert: PlatformAlert):
-        """Submit content claim"""
-        # This would implement content claiming (YouTube Content ID, etc.)
+        """Submit content claim"""        # This would implement content claiming (YouTube Content ID, etc.)
         logger.info(f"Submitting content claim for {alert.content_id}")
     
     async def _process_alerts_loop(self):
-        """Background loop to process pending alerts"""
-        while self.running:
+        """Background loop to process pending alerts"""        while self.running:
             try:
                 await self._process_pending_alerts()
                 await asyncio.sleep(10)  # Process every 10 seconds
@@ -686,8 +652,7 @@ Please review and take appropriate action.
                 await asyncio.sleep(30)
     
     async def _process_pending_alerts(self):
-        """Process all pending alerts"""
-        current_time = datetime.utcnow()
+        """Process all pending alerts"""        current_time = datetime.utcnow()
         
         alerts_to_process = []
         for alert in self.pending_alerts.values():
@@ -704,8 +669,7 @@ Please review and take appropriate action.
             await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _process_single_alert(self, alert: PlatformAlert):
-        """Process a single alert"""
-        try:
+        """Process a single alert"""        try:
             alert.status = AlertStatus.PROCESSING
             alert.attempts += 1
             alert.last_attempt = datetime.utcnow()
@@ -756,8 +720,7 @@ Please review and take appropriate action.
             alert.response_data = {'error': str(e)}
     
     async def _check_rate_limit(self, platform: PlatformType, channel: AlertChannel) -> bool:
-        """Check if request is within rate limits"""
-        key = f"{platform.value}_{channel.value}"
+        """Check if request is within rate limits"""        key = f"{platform.value}_{channel.value}"
         current_time = datetime.utcnow()
         
         if key not in self.rate_limiters:
@@ -786,8 +749,7 @@ Please review and take appropriate action.
     
     # Channel handlers
     async def _send_email_alert(self, alert: PlatformAlert) -> AlertResponse:
-        """Send email alert"""
-        try:
+        """Send email alert"""        try:
             # Configure SMTP (these would come from config)
             smtp_server = getattr(self.config, 'smtp_server', 'localhost')
             smtp_port = getattr(self.config, 'smtp_port', 587)
@@ -824,8 +786,7 @@ Please review and take appropriate action.
             )
     
     async def _send_webhook_alert(self, alert: PlatformAlert) -> AlertResponse:
-        """Send webhook alert"""
-        try:
+        """Send webhook alert"""        try:
             if not alert.webhook_url:
                 return AlertResponse(
                     alert_id=alert.alert_id,
@@ -878,8 +839,7 @@ Please review and take appropriate action.
             )
     
     async def _send_slack_alert(self, alert: PlatformAlert) -> AlertResponse:
-        """Send Slack alert"""
-        try:
+        """Send Slack alert"""        try:
             slack_webhook = getattr(self.config, 'slack_webhook_url', '')
             if not slack_webhook:
                 return AlertResponse(
@@ -928,8 +888,7 @@ Please review and take appropriate action.
             )
     
     async def _send_sms_alert(self, alert: PlatformAlert) -> AlertResponse:
-        """Send SMS alert"""
-        # This would integrate with SMS providers like Twilio
+        """Send SMS alert"""        # This would integrate with SMS providers like Twilio
         return AlertResponse(
             alert_id=alert.alert_id,
             channel=AlertChannel.SMS,
@@ -938,8 +897,7 @@ Please review and take appropriate action.
         )
     
     async def _send_discord_alert(self, alert: PlatformAlert) -> AlertResponse:
-        """Send Discord alert"""
-        # This would integrate with Discord webhooks
+        """Send Discord alert"""        # This would integrate with Discord webhooks
         return AlertResponse(
             alert_id=alert.alert_id,
             channel=AlertChannel.DISCORD,
@@ -948,8 +906,7 @@ Please review and take appropriate action.
         )
     
     async def _send_telegram_alert(self, alert: PlatformAlert) -> AlertResponse:
-        """Send Telegram alert"""
-        # This would integrate with Telegram Bot API
+        """Send Telegram alert"""        # This would integrate with Telegram Bot API
         return AlertResponse(
             alert_id=alert.alert_id,
             channel=AlertChannel.TELEGRAM,
@@ -958,8 +915,7 @@ Please review and take appropriate action.
         )
     
     async def _send_platform_api_alert(self, alert: PlatformAlert) -> AlertResponse:
-        """Send alert via platform API"""
-        # This would implement platform-specific API calls for reporting
+        """Send alert via platform API"""        # This would implement platform-specific API calls for reporting
         return AlertResponse(
             alert_id=alert.alert_id,
             channel=AlertChannel.PLATFORM_API,
@@ -968,8 +924,7 @@ Please review and take appropriate action.
         )
     
     async def _send_legal_notice(self, alert: PlatformAlert) -> AlertResponse:
-        """Send legal notice"""
-        # This would integrate with legal document generation and delivery
+        """Send legal notice"""        # This would integrate with legal document generation and delivery
         return AlertResponse(
             alert_id=alert.alert_id,
             channel=AlertChannel.LEGAL_NOTICE,
@@ -978,8 +933,7 @@ Please review and take appropriate action.
         )
     
     def get_alert_status(self, alert_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of specific alert"""
-        alert = self.pending_alerts.get(alert_id)
+        """Get status of specific alert"""        alert = self.pending_alerts.get(alert_id)
         if not alert:
             return None
         
@@ -997,8 +951,7 @@ Please review and take appropriate action.
         }
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get alert system statistics"""
-        return {
+        """Get alert system statistics"""        return {
             **self.stats,
             'pending_alerts': len([a for a in self.pending_alerts.values() if a.status == AlertStatus.PENDING]),
             'processing_alerts': len([a for a in self.pending_alerts.values() if a.status == AlertStatus.PROCESSING]),
@@ -1015,8 +968,7 @@ _platform_alerts_manager: Optional[PlatformAlertsManager] = None
 
 
 def get_platform_alerts_manager(config: Optional[FingerprintingSystemConfig] = None) -> PlatformAlertsManager:
-    """Get or create platform alerts manager instance"""
-    global _platform_alerts_manager
+    """Get or create platform alerts manager instance"""    global _platform_alerts_manager
     
     if _platform_alerts_manager is None:
         if config is None:
@@ -1028,8 +980,7 @@ def get_platform_alerts_manager(config: Optional[FingerprintingSystemConfig] = N
 
 
 def reset_platform_alerts_manager():
-    """Reset platform alerts manager (for testing)"""
-    global _platform_alerts_manager
+    """Reset platform alerts manager (for testing)"""    global _platform_alerts_manager
     if _platform_alerts_manager:
         asyncio.create_task(_platform_alerts_manager.stop())
     _platform_alerts_manager = None
@@ -1045,8 +996,7 @@ async def send_violation_alert(
     evidence: Dict[str, Any],
     **kwargs
 ) -> List[str]:
-    """Send violation alert convenience function"""
-    manager = get_platform_alerts_manager()
+    """Send violation alert convenience function"""    manager = get_platform_alerts_manager()
     return await manager.send_platform_alert(
         fingerprint_id, content_id, platform, violation_url, 
         similarity_score, evidence, **kwargs

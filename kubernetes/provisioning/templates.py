@@ -1,5 +1,4 @@
-"""
-Infrastructure as Code Templates Module
+"""Infrastructure as Code Templates Module
 
 Enterprise-grade IaC templates for the IA Influencer Agent + Content Protection Platform.
 Provides Terraform, Ansible, Pulumi, and Helm templates for automated infrastructure deployment.
@@ -16,7 +15,6 @@ Business Logic Flow:
 Content Creator → Upload Multi-format → AI Protection → SEO Optimization → 
 Collaboration Matching → Multi-platform Distribution
 """
-
 import os
 import json
 import yaml
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class TemplateType(Enum):
-    """Infrastructure template types"""
-    TERRAFORM = "terraform"
+    """Infrastructure template types"""    TERRAFORM = "terraform"
     ANSIBLE = "ansible"
     PULUMI = "pulumi"
     HELM = "helm"
@@ -45,8 +42,7 @@ class TemplateType(Enum):
 
 
 class DeploymentTarget(Enum):
-    """Deployment target environments"""
-    DEVELOPMENT = "development"
+    """Deployment target environments"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     DISASTER_RECOVERY = "disaster_recovery"
@@ -54,8 +50,7 @@ class DeploymentTarget(Enum):
 
 @dataclass
 class TemplateConfig:
-    """Template configuration parameters"""
-    name: str
+    """Template configuration parameters"""    name: str
     template_type: TemplateType
     deployment_target: DeploymentTarget
     cloud_provider: str
@@ -65,8 +60,7 @@ class TemplateConfig:
     tags: Dict[str, str]
     
     def __post_init__(self):
-        """Add default tags"""
-        self.tags.update({
+        """Add default tags"""        self.tags.update({
             'Project': 'IA-Influencer-Agent',
             'Environment': self.deployment_target.value,
             'Owner': 'Fahed-Mlaiel',
@@ -75,8 +69,7 @@ class TemplateConfig:
 
 
 class BaseTemplate(ABC):
-    """Abstract base class for infrastructure templates"""
-    
+    """Abstract base class for infrastructure templates"""    
     def __init__(self, config: TemplateConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -87,27 +80,22 @@ class BaseTemplate(ABC):
         
     @abstractmethod
     def generate_template(self) -> str:
-        """Generate the infrastructure template"""
-        pass
+        """Generate the infrastructure template"""        pass
     
     @abstractmethod
     def validate_template(self) -> Dict[str, bool]:
-        """Validate the generated template"""
-        pass
+        """Validate the generated template"""        pass
     
     @abstractmethod
     def deploy_template(self) -> Dict[str, Any]:
-        """Deploy the infrastructure using the template"""
-        pass
+        """Deploy the infrastructure using the template"""        pass
     
     def render_template(self, template_content: str, variables: Dict[str, Any]) -> str:
-        """Render Jinja2 template with variables"""
-        template = self.template_env.from_string(template_content)
+        """Render Jinja2 template with variables"""        template = self.template_env.from_string(template_content)
         return template.render(**variables)
     
     def generate_secure_password(self, length: int = 32) -> str:
-        """Generate a secure random password"""
-        import secrets
+        """Generate a secure random password"""        import secrets
         import string
         alphabet = string.ascii_letters + string.digits + "!@#$%^&*"
         password = ''.join(secrets.choice(alphabet) for i in range(length))
@@ -115,17 +103,14 @@ class BaseTemplate(ABC):
 
 
 class TerraformTemplate(BaseTemplate):
-    """Terraform infrastructure templates"""
-    
+    """Terraform infrastructure templates"""    
     def generate_template(self) -> str:
-        """Generate Terraform configuration for IA Influencer platform"""
-        template_content = self._get_terraform_main_template()
+        """Generate Terraform configuration for IA Influencer platform"""        template_content = self._get_terraform_main_template()
         variables = self._prepare_terraform_variables()
         return self.render_template(template_content, variables)
     
     def _get_terraform_main_template(self) -> str:
-        """Get main Terraform template"""
-        return '''
+        """Get main Terraform template"""        return '''
 # IA Influencer Agent Infrastructure - Terraform Configuration
 # Generated for: {{ deployment_target }} environment
 # Cloud Provider: {{ cloud_provider }}
@@ -684,8 +669,7 @@ output "s3_buckets" {
 '''
     
     def _prepare_terraform_variables(self) -> Dict[str, Any]:
-        """Prepare variables for Terraform template"""
-        return {
+        """Prepare variables for Terraform template"""        return {
             'deployment_target': self.config.deployment_target.value,
             'cloud_provider': self.config.cloud_provider,
             'region': self.config.region,
@@ -728,28 +712,23 @@ output "s3_buckets" {
         }
     
     def validate_template(self) -> Dict[str, bool]:
-        """Validate Terraform template syntax"""
-        # Implementation would use terraform validate
+        """Validate Terraform template syntax"""        # Implementation would use terraform validate
         return {'syntax_valid': True, 'variables_valid': True}
     
     def deploy_template(self) -> Dict[str, Any]:
-        """Deploy infrastructure using Terraform"""
-        # Implementation would execute terraform plan and apply
+        """Deploy infrastructure using Terraform"""        # Implementation would execute terraform plan and apply
         return {'status': 'deployed', 'resources_created': 25}
 
 
 class AnsiblePlaybook(BaseTemplate):
-    """Ansible playbook templates for configuration management"""
-    
+    """Ansible playbook templates for configuration management"""    
     def generate_template(self) -> str:
-        """Generate Ansible playbook for IA Influencer platform"""
-        template_content = self._get_ansible_playbook_template()
+        """Generate Ansible playbook for IA Influencer platform"""        template_content = self._get_ansible_playbook_template()
         variables = self._prepare_ansible_variables()
         return self.render_template(template_content, variables)
     
     def _get_ansible_playbook_template(self) -> str:
-        """Get main Ansible playbook template"""
-        return '''---
+        """Get main Ansible playbook template"""        return '''---
 # IA Influencer Agent Platform Configuration Playbook
 # Environment: {{ environment }}
 # Target: {{ deployment_target }}
@@ -998,8 +977,7 @@ class AnsiblePlaybook(BaseTemplate):
 '''
     
     def _prepare_ansible_variables(self) -> Dict[str, Any]:
-        """Prepare variables for Ansible playbook"""
-        return {
+        """Prepare variables for Ansible playbook"""        return {
             'environment': self.config.deployment_target.value,
             'deployment_target': self.config.deployment_target.value,
             'project_name': 'IA-Influencer-Agent',
@@ -1023,22 +1001,18 @@ class AnsiblePlaybook(BaseTemplate):
         }
     
     def validate_template(self) -> Dict[str, bool]:
-        """Validate Ansible playbook syntax"""
-        # Implementation would use ansible-playbook --syntax-check
+        """Validate Ansible playbook syntax"""        # Implementation would use ansible-playbook --syntax-check
         return {'syntax_valid': True, 'tasks_valid': True}
     
     def deploy_template(self) -> Dict[str, Any]:
-        """Deploy configuration using Ansible"""
-        # Implementation would execute ansible-playbook
+        """Deploy configuration using Ansible"""        # Implementation would execute ansible-playbook
         return {'status': 'configured', 'hosts_configured': 10}
 
 
 class HelmChart(BaseTemplate):
-    """Helm chart templates for Kubernetes applications"""
-    
+    """Helm chart templates for Kubernetes applications"""    
     def generate_template(self) -> str:
-        """Generate Helm chart for IA Influencer platform"""
-        chart_yaml = self._generate_chart_yaml()
+        """Generate Helm chart for IA Influencer platform"""        chart_yaml = self._generate_chart_yaml()
         values_yaml = self._generate_values_yaml()
         templates = self._generate_kubernetes_templates()
         
@@ -1049,8 +1023,7 @@ class HelmChart(BaseTemplate):
         }
     
     def _generate_chart_yaml(self) -> str:
-        """Generate Chart.yaml for Helm chart"""
-        return '''apiVersion: v2
+        """Generate Chart.yaml for Helm chart"""        return '''apiVersion: v2
 name: ia-influencer-platform
 description: IA Influencer Agent + Content Protection Platform
 type: application
@@ -1095,8 +1068,7 @@ dependencies:
 '''
     
     def _generate_values_yaml(self) -> str:
-        """Generate values.yaml for Helm chart"""
-        return f'''# IA Influencer Platform Helm Chart Values
+        """Generate values.yaml for Helm chart"""        return f'''# IA Influencer Platform Helm Chart Values
 # Environment: {self.config.deployment_target.value}
 
 global:
@@ -1349,8 +1321,7 @@ serviceMesh:
 '''
     
     def _generate_kubernetes_templates(self) -> Dict[str, str]:
-        """Generate Kubernetes template files"""
-        return {
+        """Generate Kubernetes template files"""        return {
             'deployment.yaml': self._get_deployment_template(),
             'service.yaml': self._get_service_template(),
             'ingress.yaml': self._get_ingress_template(),
@@ -1363,8 +1334,7 @@ serviceMesh:
         }
     
     def _get_deployment_template(self) -> str:
-        """Get Kubernetes deployment template"""
-        return '''apiVersion: apps/v1
+        """Get Kubernetes deployment template"""        return '''apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "ia-influencer-platform.fullname" . }}
@@ -1486,51 +1456,43 @@ spec:
 '''
     
     def validate_template(self) -> Dict[str, bool]:
-        """Validate Helm chart templates"""
-        # Implementation would use helm lint
+        """Validate Helm chart templates"""        # Implementation would use helm lint
         return {'template_valid': True, 'values_valid': True}
     
     def deploy_template(self) -> Dict[str, Any]:
-        """Deploy application using Helm"""
-        # Implementation would execute helm install
+        """Deploy application using Helm"""        # Implementation would execute helm install
         return {'status': 'deployed', 'release_name': 'ia-influencer-platform'}
 
 
 class TemplateManager:
-    """Manager for infrastructure templates"""
-    
+    """Manager for infrastructure templates"""    
     def __init__(self):
         self.templates: Dict[str, BaseTemplate] = {}
         self.logger = logging.getLogger(__name__)
         
     def register_template(self, name: str, template: BaseTemplate):
-        """Register a template"""
-        self.templates[name] = template
+        """Register a template"""        self.templates[name] = template
         
     def generate_template(self, name: str) -> str:
-        """Generate a specific template"""
-        if name not in self.templates:
+        """Generate a specific template"""        if name not in self.templates:
             raise ValueError(f"Template {name} not found")
         
         return self.templates[name].generate_template()
     
     def validate_template(self, name: str) -> Dict[str, bool]:
-        """Validate a specific template"""
-        if name not in self.templates:
+        """Validate a specific template"""        if name not in self.templates:
             raise ValueError(f"Template {name} not found")
         
         return self.templates[name].validate_template()
     
     def deploy_template(self, name: str) -> Dict[str, Any]:
-        """Deploy using a specific template"""
-        if name not in self.templates:
+        """Deploy using a specific template"""        if name not in self.templates:
             raise ValueError(f"Template {name} not found")
         
         return self.templates[name].deploy_template()
     
     def generate_all_templates(self) -> Dict[str, str]:
-        """Generate all registered templates"""
-        results = {}
+        """Generate all registered templates"""        results = {}
         
         for name, template in self.templates.items():
             try:
@@ -1543,8 +1505,7 @@ class TemplateManager:
         return results
     
     def validate_all_templates(self) -> Dict[str, Dict[str, bool]]:
-        """Validate all registered templates"""
-        results = {}
+        """Validate all registered templates"""        results = {}
         
         for name, template in self.templates.items():
             try:
@@ -1559,8 +1520,7 @@ class TemplateManager:
 
 # Factory function for creating templates
 def create_template(template_type: TemplateType, config: TemplateConfig) -> BaseTemplate:
-    """Factory function to create appropriate template"""
-    if template_type == TemplateType.TERRAFORM:
+    """Factory function to create appropriate template"""    if template_type == TemplateType.TERRAFORM:
         return TerraformTemplate(config)
     elif template_type == TemplateType.ANSIBLE:
         return AnsiblePlaybook(config)
@@ -1574,8 +1534,7 @@ def create_template(template_type: TemplateType, config: TemplateConfig) -> Base
 def create_default_config(name: str, template_type: TemplateType, 
                          deployment_target: DeploymentTarget, 
                          cloud_provider: str, region: str) -> TemplateConfig:
-    """Create a default template configuration"""
-    return TemplateConfig(
+    """Create a default template configuration"""    return TemplateConfig(
         name=name,
         template_type=template_type,
         deployment_target=deployment_target,

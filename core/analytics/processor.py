@@ -1,5 +1,4 @@
-"""
-Analytics Processor - Advanced Analytics Processing Engine
+"""Analytics Processor - Advanced Analytics Processing Engine
 
 High-performance analytics processing system with real-time data processing,
 advanced algorithms, and comprehensive data transformation capabilities.
@@ -24,7 +23,6 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union, Callable, Set, Tuple
@@ -47,24 +45,21 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingMode(Enum):
-    """Processing modes for analytics data"""
-    REALTIME = "realtime"
+    """Processing modes for analytics data"""    REALTIME = "realtime"
     BATCH = "batch"
     STREAM = "stream"
     HYBRID = "hybrid"
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels"""
-    LOW = 1
+    """Processing priority levels"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
 
 
 class DataQuality(Enum):
-    """Data quality levels"""
-    EXCELLENT = "excellent"
+    """Data quality levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -73,8 +68,7 @@ class DataQuality(Enum):
 
 @dataclass
 class ProcessingTask:
-    """Processing task data structure"""
-    task_id: str
+    """Processing task data structure"""    task_id: str
     task_type: str
     data: Any
     priority: ProcessingPriority
@@ -84,8 +78,7 @@ class ProcessingTask:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert task to dictionary"""
-        return {
+        """Convert task to dictionary"""        return {
             'task_id': self.task_id,
             'task_type': self.task_type,
             'priority': self.priority.value,
@@ -98,8 +91,7 @@ class ProcessingTask:
 
 @dataclass
 class ProcessingResult:
-    """Processing result data structure"""
-    task_id: str
+    """Processing result data structure"""    task_id: str
     result_type: str
     data: Any
     processing_time: float
@@ -108,8 +100,7 @@ class ProcessingResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""
-        return {
+        """Convert result to dictionary"""        return {
             'task_id': self.task_id,
             'result_type': self.result_type,
             'processing_time': self.processing_time,
@@ -120,13 +111,11 @@ class ProcessingResult:
 
 
 class AnalyticsProcessor:
-    """
-    Advanced analytics processing engine.
+    """    Advanced analytics processing engine.
     
     Provides high-performance data processing with real-time and batch capabilities,
     advanced algorithms, and comprehensive data transformation.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -165,8 +154,7 @@ class AnalyticsProcessor:
         self._register_default_processors()
     
     async def initialize(self) -> None:
-        """Initialize analytics processor"""
-        try:
+        """Initialize analytics processor"""        try:
             self.logger.info("Initializing AnalyticsProcessor...")
             
             # Start processing workers
@@ -182,8 +170,7 @@ class AnalyticsProcessor:
             raise ProcessingError(f"Initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown analytics processor"""
-        try:
+        """Shutdown analytics processor"""        try:
             self.logger.info("Shutting down AnalyticsProcessor...")
             
             # Complete pending tasks
@@ -207,8 +194,7 @@ class AnalyticsProcessor:
         mode: ProcessingMode = ProcessingMode.REALTIME,
         parameters: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Submit processing task"""
-        try:
+        """Submit processing task"""        try:
             # Generate task ID
             task_id = f"task_{datetime.now().timestamp()}_{hash(str(data)) % 10000:04d}"
             
@@ -247,8 +233,7 @@ class AnalyticsProcessor:
         task_id: str,
         timeout: Optional[float] = None
     ) -> Optional[ProcessingResult]:
-        """Get processing result"""
-        try:
+        """Get processing result"""        try:
             timeout = timeout or self.processing_timeout
             start_time = datetime.now()
             
@@ -270,8 +255,7 @@ class AnalyticsProcessor:
         data: Any,
         parameters: Optional[Dict[str, Any]] = None
     ) -> ProcessingResult:
-        """Process data in real-time"""
-        try:
+        """Process data in real-time"""        try:
             if processor_type not in self.processors:
                 raise ValueError(f"Unknown processor type: {processor_type}")
             
@@ -313,8 +297,7 @@ class AnalyticsProcessor:
         data_batch: List[Any],
         parameters: Optional[Dict[str, Any]] = None
     ) -> List[ProcessingResult]:
-        """Process batch of data"""
-        try:
+        """Process batch of data"""        try:
             if processor_type not in self.processors:
                 raise ValueError(f"Unknown processor type: {processor_type}")
             
@@ -343,8 +326,7 @@ class AnalyticsProcessor:
         processor_type: str,
         processor_func: Callable
     ) -> None:
-        """Register custom processor"""
-        try:
+        """Register custom processor"""        try:
             self.processors[processor_type] = processor_func
             self.logger.info(f"Registered processor: {processor_type}")
             
@@ -353,8 +335,7 @@ class AnalyticsProcessor:
             raise ProcessingError(f"Processor registration failed: {str(e)}")
     
     async def get_processing_metrics(self) -> Dict[str, Any]:
-        """Get processing performance metrics"""
-        try:
+        """Get processing performance metrics"""        try:
             return {
                 'timestamp': datetime.now().isoformat(),
                 'queue_size': self.processing_queue.qsize(),
@@ -378,8 +359,7 @@ class AnalyticsProcessor:
     # Private Methods
     
     def _register_default_processors(self) -> None:
-        """Register default data processors"""
-        self.processors.update({
+        """Register default data processors"""        self.processors.update({
             'statistical_analysis': self._statistical_processor,
             'trend_analysis': self._trend_processor,
             'anomaly_detection': self._anomaly_processor,
@@ -397,8 +377,7 @@ class AnalyticsProcessor:
         data: List[float],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Statistical analysis processor"""
-        try:
+        """Statistical analysis processor"""        try:
             if not data:
                 return {'error': 'No data provided'}
             
@@ -439,8 +418,7 @@ class AnalyticsProcessor:
         data: List[Dict[str, Any]],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Trend analysis processor"""
-        try:
+        """Trend analysis processor"""        try:
             if not data:
                 return {'error': 'No data provided'}
             
@@ -487,8 +465,7 @@ class AnalyticsProcessor:
         data: List[float],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Anomaly detection processor"""
-        try:
+        """Anomaly detection processor"""        try:
             if not data or len(data) < 3:
                 return {'error': 'Insufficient data for anomaly detection'}
             
@@ -550,8 +527,7 @@ class AnalyticsProcessor:
         data: Dict[str, List[float]],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Correlation analysis processor"""
-        try:
+        """Correlation analysis processor"""        try:
             if not data or len(data) < 2:
                 return {'error': 'Need at least 2 variables for correlation'}
             
@@ -595,8 +571,7 @@ class AnalyticsProcessor:
         data: List[List[float]],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Clustering analysis processor"""
-        try:
+        """Clustering analysis processor"""        try:
             if not data or len(data) < 2:
                 return {'error': 'Insufficient data for clustering'}
             
@@ -654,8 +629,7 @@ class AnalyticsProcessor:
         data: List[float],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Time series forecasting processor"""
-        try:
+        """Time series forecasting processor"""        try:
             if not data or len(data) < 3:
                 return {'error': 'Insufficient data for forecasting'}
             
@@ -720,8 +694,7 @@ class AnalyticsProcessor:
         data: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Data classification processor"""
-        try:
+        """Data classification processor"""        try:
             classification_type = parameters.get('type', 'value_based')
             
             if classification_type == 'value_based':
@@ -771,8 +744,7 @@ class AnalyticsProcessor:
         data: Dict[str, Any],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Feature extraction processor"""
-        try:
+        """Feature extraction processor"""        try:
             extraction_type = parameters.get('type', 'statistical')
             
             if extraction_type == 'statistical':
@@ -809,8 +781,7 @@ class AnalyticsProcessor:
         data: Any,
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Data quality assessment processor"""
-        try:
+        """Data quality assessment processor"""        try:
             quality_metrics = {
                 'completeness': 0.0,
                 'accuracy': 0.0,
@@ -896,8 +867,7 @@ class AnalyticsProcessor:
         data: List[Dict[str, Any]],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Data aggregation processor"""
-        try:
+        """Data aggregation processor"""        try:
             if not data:
                 return {'error': 'No data to aggregate'}
             
@@ -965,8 +935,7 @@ class AnalyticsProcessor:
     # Utility Methods
     
     def _calculate_skewness(self, data: List[float]) -> float:
-        """Calculate skewness of data"""
-        if len(data) < 3:
+        """Calculate skewness of data"""        if len(data) < 3:
             return 0.0
         
         mean = statistics.mean(data)
@@ -979,8 +948,7 @@ class AnalyticsProcessor:
         return skewness
     
     def _calculate_kurtosis(self, data: List[float]) -> float:
-        """Calculate kurtosis of data"""
-        if len(data) < 4:
+        """Calculate kurtosis of data"""        if len(data) < 4:
             return 0.0
         
         mean = statistics.mean(data)
@@ -993,8 +961,7 @@ class AnalyticsProcessor:
         return kurtosis
     
     def _calculate_trend_direction(self, values: List[float]) -> str:
-        """Calculate trend direction"""
-        if len(values) < 2:
+        """Calculate trend direction"""        if len(values) < 2:
             return 'unknown'
         
         # Simple linear regression slope
@@ -1009,8 +976,7 @@ class AnalyticsProcessor:
             return 'stable'
     
     def _calculate_trend_strength(self, values: List[float]) -> float:
-        """Calculate trend strength (0-1)"""
-        if len(values) < 3:
+        """Calculate trend strength (0-1)"""        if len(values) < 3:
             return 0.0
         
         # Calculate R-squared for linear trend
@@ -1026,8 +992,7 @@ class AnalyticsProcessor:
         return max(0, min(1, r_squared))
     
     def _detect_seasonality(self, values: List[float]) -> Optional[Dict[str, Any]]:
-        """Simple seasonality detection"""
-        if len(values) < 12:
+        """Simple seasonality detection"""        if len(values) < 12:
             return None
         
         # Check for monthly seasonality (12-period cycle)
@@ -1050,8 +1015,7 @@ class AnalyticsProcessor:
         x: List[float],
         y: List[float]
     ) -> Tuple[float, float]:
-        """Calculate linear regression parameters"""
-        n = len(x)
+        """Calculate linear regression parameters"""        n = len(x)
         if n == 0:
             return 0.0, 0.0
         
@@ -1070,8 +1034,7 @@ class AnalyticsProcessor:
         return slope, intercept
     
     def _linear_regression(self, values: List[float]) -> Dict[str, float]:
-        """Perform linear regression on values"""
-        x = list(range(len(values)))
+        """Perform linear regression on values"""        x = list(range(len(values)))
         slope, intercept = self._linear_regression_params(x, values)
         
         return {
@@ -1081,8 +1044,7 @@ class AnalyticsProcessor:
         }
     
     def _moving_average(self, values: List[float], window: int) -> List[float]:
-        """Calculate moving average"""
-        if len(values) < window:
+        """Calculate moving average"""        if len(values) < window:
             return values[:]
         
         ma = []
@@ -1093,15 +1055,13 @@ class AnalyticsProcessor:
         return ma
     
     def _calculate_growth_rate(self, values: List[float]) -> float:
-        """Calculate overall growth rate"""
-        if len(values) < 2 or values[0] == 0:
+        """Calculate overall growth rate"""        if len(values) < 2 or values[0] == 0:
             return 0.0
         
         return (values[-1] - values[0]) / values[0]
     
     def _classify_correlation_strength(self, correlation: float) -> str:
-        """Classify correlation strength"""
-        abs_corr = abs(correlation)
+        """Classify correlation strength"""        abs_corr = abs(correlation)
         
         if abs_corr >= 0.8:
             return 'very_strong'
@@ -1115,8 +1075,7 @@ class AnalyticsProcessor:
             return 'very_weak'
     
     def _autocorrelation(self, values: List[float], lag: int) -> float:
-        """Calculate autocorrelation at given lag"""
-        if len(values) <= lag:
+        """Calculate autocorrelation at given lag"""        if len(values) <= lag:
             return 0.0
         
         n = len(values) - lag
@@ -1135,8 +1094,7 @@ class AnalyticsProcessor:
         self,
         quality_metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate data quality improvement recommendations"""
-        recommendations = []
+        """Generate data quality improvement recommendations"""        recommendations = []
         
         if quality_metrics['completeness'] < 0.8:
             recommendations.append("Improve data completeness by reducing missing values")
@@ -1162,8 +1120,7 @@ class AnalyticsProcessor:
         processor_type: str,
         parameters: Dict[str, Any]
     ) -> List[ProcessingResult]:
-        """Process data chunk"""
-        results = []
+        """Process data chunk"""        results = []
         
         for i, item in enumerate(chunk):
             try:
@@ -1198,8 +1155,7 @@ class AnalyticsProcessor:
         return results
     
     async def _calculate_quality_score(self, result_data: Any) -> float:
-        """Calculate quality score for result data"""
-        try:
+        """Calculate quality score for result data"""        try:
             if isinstance(result_data, dict):
                 if 'error' in result_data:
                     return 0.0
@@ -1233,8 +1189,7 @@ class AnalyticsProcessor:
         result_data: Any,
         quality_score: float
     ) -> float:
-        """Calculate confidence score for result"""
-        try:
+        """Calculate confidence score for result"""        try:
             # Base confidence on quality score
             confidence = quality_score
             
@@ -1252,8 +1207,7 @@ class AnalyticsProcessor:
             return 0.0
     
     async def _calculate_throughput(self) -> float:
-        """Calculate processing throughput per minute"""
-        try:
+        """Calculate processing throughput per minute"""        try:
             # Simple throughput calculation based on recent completions
             if self.processing_stats['last_processed']:
                 time_diff = (datetime.now() - self.processing_stats['last_processed']).total_seconds()
@@ -1266,8 +1220,7 @@ class AnalyticsProcessor:
             return 0.0
     
     async def _realtime_processing_worker(self) -> None:
-        """Real-time processing worker"""
-        while True:
+        """Real-time processing worker"""        while True:
             try:
                 if not self.processing_queue.empty():
                     priority, task = self.processing_queue.get_nowait()
@@ -1286,8 +1239,7 @@ class AnalyticsProcessor:
                 await asyncio.sleep(1)
     
     async def _batch_processing_worker(self) -> None:
-        """Batch processing worker"""
-        while True:
+        """Batch processing worker"""        while True:
             try:
                 # Collect batch tasks
                 batch_tasks = []
@@ -1311,8 +1263,7 @@ class AnalyticsProcessor:
                 await asyncio.sleep(5)
     
     async def _monitoring_worker(self) -> None:
-        """Performance monitoring worker"""
-        while True:
+        """Performance monitoring worker"""        while True:
             try:
                 # Update processing statistics
                 self.processing_stats['queue_size'] = self.processing_queue.qsize()
@@ -1334,8 +1285,7 @@ class AnalyticsProcessor:
                 await asyncio.sleep(60)
     
     async def _execute_task(self, task: ProcessingTask) -> None:
-        """Execute single processing task"""
-        try:
+        """Execute single processing task"""        try:
             start_time = datetime.now()
             
             if task.task_type in self.processors:
@@ -1390,8 +1340,7 @@ class AnalyticsProcessor:
             self.processing_stats['failed_tasks'] += 1
     
     async def _execute_batch(self, tasks: List[ProcessingTask]) -> None:
-        """Execute batch of processing tasks"""
-        try:
+        """Execute batch of processing tasks"""        try:
             # Group tasks by type
             task_groups = defaultdict(list)
             for task in tasks:
@@ -1415,8 +1364,7 @@ class AnalyticsProcessor:
             self.processing_stats['failed_tasks'] += len(tasks)
     
     async def _complete_pending_tasks(self) -> None:
-        """Complete all pending tasks before shutdown"""
-        try:
+        """Complete all pending tasks before shutdown"""        try:
             pending_count = self.processing_queue.qsize()
             if pending_count > 0:
                 self.logger.info(f"Completing {pending_count} pending tasks...")

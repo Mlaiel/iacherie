@@ -1,5 +1,4 @@
-"""
-Apple Music Crawling Engine
+"""Apple Music Crawling Engine
 ==========================
 
 Advanced Apple Music crawler for music discovery, artist analytics, and playlist data.
@@ -13,7 +12,6 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -51,8 +49,7 @@ settings = get_settings()
 
 @dataclass
 class AppleMusicTrack:
-    """Apple Music track data structure"""
-    id: str
+    """Apple Music track data structure"""    id: str
     name: str
     artist_name: str
     artist_id: str
@@ -73,8 +70,7 @@ class AppleMusicTrack:
 
 @dataclass
 class AppleMusicArtist:
-    """Apple Music artist data structure"""
-    id: str
+    """Apple Music artist data structure"""    id: str
     name: str
     artwork_url: Optional[str]
     genre: List[str]
@@ -90,8 +86,7 @@ class AppleMusicArtist:
 
 @dataclass
 class AppleMusicPlaylist:
-    """Apple Music playlist data structure"""
-    id: str
+    """Apple Music playlist data structure"""    id: str
     name: str
     description: Optional[str]
     curator_name: str
@@ -104,8 +99,7 @@ class AppleMusicPlaylist:
 
 
 class AppleMusicCrawlerEngine(BaseCrawlerEngine):
-    """
-    Professional Apple Music crawler engine for comprehensive music data extraction.
+    """    Professional Apple Music crawler engine for comprehensive music data extraction.
     
     Features:
     - Apple Music API integration
@@ -114,11 +108,9 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
     - Playlist data analysis
     - Advanced rate limiting
     - Content protection monitoring
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Apple Music crawler engine"""
-        super().__init__(platform="apple_music", config=config)
+        """Initialize Apple Music crawler engine"""        super().__init__(platform="apple_music", config=config)
         
         # Apple Music API configuration
         self.team_id = self.config.get("apple_team_id")
@@ -148,8 +140,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         logger.info("Apple Music crawler engine initialized")
     
     async def initialize(self) -> None:
-        """Initialize the crawler engine"""
-        try:
+        """Initialize the crawler engine"""        try:
             await self._generate_jwt_token()
             await self._create_session()
             logger.info("Apple Music engine initialized successfully")
@@ -158,8 +149,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Initialization failed: {e}")
     
     async def _generate_jwt_token(self) -> None:
-        """Generate JWT token for Apple Music API authentication"""
-        try:
+        """Generate JWT token for Apple Music API authentication"""        try:
             if not all([self.team_id, self.key_id, self.private_key_path]):
                 raise AuthenticationError("Missing Apple Music API credentials")
             
@@ -194,8 +184,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
             raise AuthenticationError(f"JWT generation failed: {e}")
     
     async def _create_session(self) -> None:
-        """Create HTTP session with proper headers"""
-        headers = {
+        """Create HTTP session with proper headers"""        headers = {
             'Authorization': f'Bearer {self.auth_token}',
             'User-Agent': self.config.get('user_agent', 'IA-Influencer-Agent/1.0'),
             'Accept': 'application/json',
@@ -215,8 +204,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         limit: int = 25,
         offset: int = 0
     ) -> List[AppleMusicTrack]:
-        """
-        Search for tracks on Apple Music
+        """        Search for tracks on Apple Music
         
         Args:
             query: Search query
@@ -225,8 +213,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of track data
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -272,16 +259,14 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Track search failed: {e}")
     
     async def get_track_details(self, track_id: str) -> Optional[AppleMusicTrack]:
-        """
-        Get detailed information about a specific track
+        """        Get detailed information about a specific track
         
         Args:
             track_id: Apple Music track ID
             
         Returns:
             Track details or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -317,16 +302,14 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Track details retrieval failed: {e}")
     
     async def get_artist_info(self, artist_id: str) -> Optional[AppleMusicArtist]:
-        """
-        Get detailed information about an artist
+        """        Get detailed information about an artist
         
         Args:
             artist_id: Apple Music artist ID
             
         Returns:
             Artist information or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -362,16 +345,14 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Artist info retrieval failed: {e}")
     
     async def get_playlist_info(self, playlist_id: str) -> Optional[AppleMusicPlaylist]:
-        """
-        Get detailed information about a playlist
+        """        Get detailed information about a playlist
         
         Args:
             playlist_id: Apple Music playlist ID
             
         Returns:
             Playlist information or None if not found
-        """
-        try:
+        """        try:
             await self.rate_limiter.acquire()
             
             # Check cache
@@ -407,8 +388,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Playlist info retrieval failed: {e}")
     
     def _parse_track_data(self, track_data: Dict[str, Any]) -> AppleMusicTrack:
-        """Parse Apple Music track data"""
-        attributes = track_data.get('attributes', {})
+        """Parse Apple Music track data"""        attributes = track_data.get('attributes', {})
         
         return AppleMusicTrack(
             id=track_data.get('id', ''),
@@ -431,8 +411,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _parse_artist_data(self, artist_data: Dict[str, Any]) -> AppleMusicArtist:
-        """Parse Apple Music artist data"""
-        attributes = artist_data.get('attributes', {})
+        """Parse Apple Music artist data"""        attributes = artist_data.get('attributes', {})
         
         return AppleMusicArtist(
             id=artist_data.get('id', ''),
@@ -450,8 +429,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         )
     
     def _parse_playlist_data(self, playlist_data: Dict[str, Any]) -> AppleMusicPlaylist:
-        """Parse Apple Music playlist data"""
-        attributes = playlist_data.get('attributes', {})
+        """Parse Apple Music playlist data"""        attributes = playlist_data.get('attributes', {})
         
         return AppleMusicPlaylist(
             id=playlist_data.get('id', ''),
@@ -471,8 +449,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         artist_name: str,
         track_title: str
     ) -> Dict[str, Any]:
-        """
-        Monitor for unauthorized use of artist content
+        """        Monitor for unauthorized use of artist content
         
         Args:
             artist_name: Name of the artist
@@ -480,8 +457,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             Protection monitoring results
-        """
-        try:
+        """        try:
             # Search for potential unauthorized use
             search_queries = [
                 f"{artist_name} {track_title}",
@@ -521,8 +497,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Content protection monitoring failed: {e}")
     
     def _calculate_similarity(self, original: str, candidate: str) -> float:
-        """Calculate similarity score between two strings"""
-        original_words = set(original.lower().split())
+        """Calculate similarity score between two strings"""        original_words = set(original.lower().split())
         candidate_words = set(candidate.lower().split())
         
         if not original_words:
@@ -532,8 +507,7 @@ class AppleMusicCrawlerEngine(BaseCrawlerEngine):
         return len(intersection) / len(original_words)
     
     async def cleanup(self) -> None:
-        """Clean up resources"""
-        try:
+        """Clean up resources"""        try:
             if self.session:
                 await self.session.close()
             await super().cleanup()

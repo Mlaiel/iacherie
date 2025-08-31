@@ -1,5 +1,4 @@
-"""
-GDPR Policy Engine - Advanced Privacy Policy Management System
+"""GDPR Policy Engine - Advanced Privacy Policy Management System
 Dynamic policy generation, compliance checking, and automated updates
 
 Project: IA-Influencer Agent
@@ -9,7 +8,6 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
-
 import asyncio
 import logging
 import json
@@ -43,8 +41,7 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class PolicyType(Enum):
-    """Types of privacy policies"""
-    PRIVACY_POLICY = "privacy_policy"
+    """Types of privacy policies"""    PRIVACY_POLICY = "privacy_policy"
     COOKIE_POLICY = "cookie_policy"
     DATA_RETENTION_POLICY = "data_retention_policy"
     CONSENT_POLICY = "consent_policy"
@@ -52,8 +49,7 @@ class PolicyType(Enum):
     DATA_PROCESSING_POLICY = "data_processing_policy"
 
 class PolicyStatus(Enum):
-    """Policy lifecycle status"""
-    DRAFT = "draft"
+    """Policy lifecycle status"""    DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
     ACTIVE = "active"
@@ -61,16 +57,14 @@ class PolicyStatus(Enum):
     ARCHIVED = "archived"
 
 class ComplianceFramework(Enum):
-    """Regulatory compliance frameworks"""
-    GDPR = "gdpr"
+    """Regulatory compliance frameworks"""    GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
     LGPD = "lgpd"
     PDPA = "pdpa"
 
 class PolicyLanguage(Enum):
-    """Supported policy languages"""
-    ENGLISH = "en"
+    """Supported policy languages"""    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -78,8 +72,7 @@ class PolicyLanguage(Enum):
 
 @dataclass
 class PolicyValidationResult:
-    """Result of policy validation"""
-    is_valid: bool
+    """Result of policy validation"""    is_valid: bool
     compliance_score: float
     validation_errors: List[Dict[str, str]] = field(default_factory=list)
     missing_sections: List[str] = field(default_factory=list)
@@ -88,8 +81,7 @@ class PolicyValidationResult:
 
 @dataclass
 class PolicyMetrics:
-    """Policy management metrics"""
-    total_policies: int
+    """Policy management metrics"""    total_policies: int
     active_policies: int
     outdated_policies: int
     compliance_rate: float
@@ -98,11 +90,9 @@ class PolicyMetrics:
     last_compliance_check: str
 
 class PolicyEngine:
-    """
-    Advanced GDPR Policy Engine
+    """    Advanced GDPR Policy Engine
     Comprehensive privacy policy management with dynamic generation and compliance checking
-    """
-    
+    """    
     def __init__(self):
         # Policy templates by type and framework
         self._policy_templates = self._initialize_policy_templates()
@@ -121,8 +111,7 @@ class PolicyEngine:
         logger.info("GDPR Policy Engine initialized with multi-language support")
     
     def _initialize_policy_templates(self) -> Dict[str, Any]:
-        """Initialize policy templates for different types and frameworks"""
-        return {
+        """Initialize policy templates for different types and frameworks"""        return {
             PolicyType.PRIVACY_POLICY.value: {
                 ComplianceFramework.GDPR.value: {
                     "template_id": "gdpr_privacy_policy_v2024",
@@ -195,8 +184,7 @@ class PolicyEngine:
         }
     
     def _initialize_compliance_rules(self) -> Dict[str, Any]:
-        """Initialize compliance validation rules"""
-        return {
+        """Initialize compliance validation rules"""        return {
             ComplianceFramework.GDPR.value: {
                 "article_6_legal_basis": {
                     "required": True,
@@ -243,8 +231,7 @@ class PolicyEngine:
         }
     
     def _initialize_required_sections(self) -> Dict[str, List[str]]:
-        """Initialize required policy sections by type"""
-        return {
+        """Initialize required policy sections by type"""        return {
             PolicyType.PRIVACY_POLICY.value: [
                 "data_controller_information",
                 "personal_data_collected",
@@ -265,8 +252,7 @@ class PolicyEngine:
         }
     
     def _initialize_translations(self) -> Dict[str, Dict[str, str]]:
-        """Initialize policy section translations"""
-        return {
+        """Initialize policy section translations"""        return {
             "section_titles": {
                 "en": {
                     "introduction": "Introduction",
@@ -302,8 +288,7 @@ class PolicyEngine:
         compliance_framework: ComplianceFramework = ComplianceFramework.GDPR,
         language: str = "en"
     ) -> Dict[str, Any]:
-        """Generate comprehensive privacy policy based on configuration"""
-        try:
+        """Generate comprehensive privacy policy based on configuration"""        try:
             policy_id = str(uuid.uuid4())
             
             # Get appropriate template
@@ -373,8 +358,7 @@ class PolicyEngine:
         updates: Dict[str, Any],
         reason: str = "Regular update"
     ) -> Dict[str, Any]:
-        """Update existing privacy policy with change tracking"""
-        try:
+        """Update existing privacy policy with change tracking"""        try:
             async with get_db() as db:
                 # Get existing policy
                 policy_query = await db.execute(
@@ -450,8 +434,7 @@ class PolicyEngine:
         policy_id: str,
         compliance_framework: ComplianceFramework = ComplianceFramework.GDPR
     ) -> PolicyValidationResult:
-        """Validate policy compliance against regulatory requirements"""
-        try:
+        """Validate policy compliance against regulatory requirements"""        try:
             async with get_db() as db:
                 policy_query = await db.execute(
                     select(PrivacyPolicy).where(PrivacyPolicy.policy_id == policy_id)
@@ -485,8 +468,7 @@ class PolicyEngine:
         self, 
         data_processing_changes: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Check if policy updates are needed based on processing changes"""
-        try:
+        """Check if policy updates are needed based on processing changes"""        try:
             async with get_db() as db:
                 # Get all active policies
                 policies_query = await db.execute(
@@ -536,8 +518,7 @@ class PolicyEngine:
         policy_config: Dict[str, Any],
         languages: List[str] = None
     ) -> Dict[str, Any]:
-        """Generate privacy policies in multiple languages"""
-        try:
+        """Generate privacy policies in multiple languages"""        try:
             if languages is None:
                 languages = ["en", "de", "fr"]  # Default languages
             
@@ -573,8 +554,7 @@ class PolicyEngine:
             raise HTTPException(status_code=500, detail=f"Multilingual generation failed: {str(e)}")
     
     async def get_policy_metrics(self) -> PolicyMetrics:
-        """Get comprehensive policy management metrics"""
-        try:
+        """Get comprehensive policy management metrics"""        try:
             async with get_db() as db:
                 # Get all policies
                 policies_query = await db.execute(select(PrivacyPolicy))
@@ -639,8 +619,7 @@ class PolicyEngine:
         policy_type: PolicyType,
         compliance_framework: ComplianceFramework
     ) -> Dict[str, Any]:
-        """Get appropriate policy template"""
-        templates = self._policy_templates.get(policy_type.value, {})
+        """Get appropriate policy template"""        templates = self._policy_templates.get(policy_type.value, {})
         template = templates.get(compliance_framework.value)
         
         if not template:
@@ -658,8 +637,7 @@ class PolicyEngine:
         config: Dict[str, Any],
         language: str
     ) -> Dict[str, Any]:
-        """Generate policy content from template and configuration"""
-        sections = {}
+        """Generate policy content from template and configuration"""        sections = {}
         
         # Generate title
         company_name = config.get("company_name", "Ultra-Industrial AI Solutions")
@@ -690,8 +668,7 @@ class PolicyEngine:
         config: Dict[str, Any],
         language: str
     ) -> Dict[str, Any]:
-        """Generate content for specific policy section"""
-        section_templates = {
+        """Generate content for specific policy section"""        section_templates = {
             "introduction": {
                 "en": f"This privacy policy explains how {config.get('company_name', 'we')} collect, use, and protect your personal data in accordance with the General Data Protection Regulation (GDPR).",
                 "de": f"Diese Datenschutzerklärung erklärt, wie {config.get('company_name', 'wir')} Ihre personenbezogenen Daten gemäß der Datenschutz-Grundverordnung (DSGVO) erheben, verwenden und schützen.",
@@ -713,8 +690,7 @@ class PolicyEngine:
         }
     
     async def _get_section_title(self, section_key: str, language: str) -> str:
-        """Get localized section title"""
-        translations = self._policy_translations.get("section_titles", {})
+        """Get localized section title"""        translations = self._policy_translations.get("section_titles", {})
         language_translations = translations.get(language, {})
         return language_translations.get(section_key, section_key.replace("_", " ").title())
     
@@ -724,8 +700,7 @@ class PolicyEngine:
         policy_type: PolicyType,
         compliance_framework: ComplianceFramework
     ) -> PolicyValidationResult:
-        """Validate policy compliance against regulatory requirements"""
-        validation_errors = []
+        """Validate policy compliance against regulatory requirements"""        validation_errors = []
         missing_sections = []
         recommendations = []
         regulatory_requirements_met = {}
@@ -778,8 +753,7 @@ class PolicyEngine:
         )
     
     async def _check_element_presence(self, sections: Dict[str, Any], element: str) -> bool:
-        """Check if required element is present in policy sections"""
-        element_keywords = {
+        """Check if required element is present in policy sections"""        element_keywords = {
             "controller_identity": ["controller", "company", "organization"],
             "processing_purposes": ["purpose", "use", "process"],
             "legal_basis": ["legal basis", "lawful", "grounds"],
@@ -800,8 +774,7 @@ class PolicyEngine:
         return False
     
     async def _increment_version(self, current_version: str) -> str:
-        """Increment policy version number"""
-        try:
+        """Increment policy version number"""        try:
             parts = current_version.split(".")
             major, minor = int(parts[0]), int(parts[1]) if len(parts) > 1 else 0
             return f"{major}.{minor + 1}"
@@ -813,8 +786,7 @@ class PolicyEngine:
         current_content: Dict[str, Any],
         updates: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply updates to policy content"""
-        updated_content = current_content.copy()
+        """Apply updates to policy content"""        updated_content = current_content.copy()
         
         for section_key, update_value in updates.items():
             if section_key in updated_content:
@@ -828,8 +800,7 @@ class PolicyEngine:
         return updated_content
     
     async def _requires_user_notification(self, updates: Dict[str, Any]) -> bool:
-        """Determine if policy updates require user notification"""
-        significant_changes = [
+        """Determine if policy updates require user notification"""        significant_changes = [
             "data_collection_changes",
             "new_processing_purposes",
             "third_party_sharing",
@@ -839,8 +810,7 @@ class PolicyEngine:
         return any(change in updates for change in significant_changes)
     
     async def _is_policy_outdated(self, policy: PrivacyPolicy) -> bool:
-        """Check if policy is outdated and needs review"""
-        if policy.review_date and datetime.utcnow() > policy.review_date:
+        """Check if policy is outdated and needs review"""        if policy.review_date and datetime.utcnow() > policy.review_date:
             return True
         
         if policy.last_updated:
@@ -851,8 +821,7 @@ class PolicyEngine:
         return False
     
     async def _get_update_recommendations(self, policy: PrivacyPolicy) -> List[str]:
-        """Get update recommendations for outdated policy"""
-        recommendations = []
+        """Get update recommendations for outdated policy"""        recommendations = []
         
         if policy.review_date and datetime.utcnow() > policy.review_date:
             recommendations.append("Conduct scheduled policy review")
@@ -876,8 +845,7 @@ class PolicyEngine:
         policy: PrivacyPolicy, 
         changes: Dict[str, Any]
     ) -> bool:
-        """Check if policy is affected by processing changes"""
-        # Simplified check - in production would be more sophisticated
+        """Check if policy is affected by processing changes"""        # Simplified check - in production would be more sophisticated
         affected_areas = [
             "new_data_types",
             "new_processing_purposes",
@@ -892,8 +860,7 @@ class PolicyEngine:
         policy: PrivacyPolicy, 
         changes: Dict[str, Any]
     ) -> List[str]:
-        """Identify policy sections affected by changes"""
-        affected_sections = []
+        """Identify policy sections affected by changes"""        affected_sections = []
         
         if "new_data_types" in changes:
             affected_sections.append("personal_data_collected")
@@ -910,8 +877,7 @@ class PolicyEngine:
         return list(set(affected_sections))
     
     async def _estimate_reading_time(self, policy_content: Dict[str, Any]) -> int:
-        """Estimate reading time for policy in minutes"""
-        total_words = 0
+        """Estimate reading time for policy in minutes"""        total_words = 0
         sections = policy_content.get("sections", {})
         
         for section in sections.values():
@@ -925,8 +891,7 @@ class PolicyEngine:
         return reading_time
 
     async def approve_policy(self, policy_id: str, approver_id: str) -> Dict[str, Any]:
-        """Approve a policy and make it active"""
-        try:
+        """Approve a policy and make it active"""        try:
             async with get_db() as db:
                 policy_query = await db.execute(
                     select(PrivacyPolicy).where(PrivacyPolicy.policy_id == policy_id)
@@ -976,8 +941,7 @@ class PolicyEngine:
             raise HTTPException(status_code=500, detail=f"Policy approval failed: {str(e)}")
     
     async def get_policy_by_id(self, policy_id: str) -> Dict[str, Any]:
-        """Get policy details by ID"""
-        try:
+        """Get policy details by ID"""        try:
             async with get_db() as db:
                 policy_query = await db.execute(
                     select(PrivacyPolicy).where(PrivacyPolicy.policy_id == policy_id)

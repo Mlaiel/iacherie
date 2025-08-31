@@ -1,5 +1,4 @@
-"""
-Content Creator Communication Specialist - Multilingual Content Creator Support
+"""Content Creator Communication Specialist - Multilingual Content Creator Support
 
 Enterprise-grade multilingual communication system optimized specifically for 
 content creators, influencers, musicians, and digital artists working globally.
@@ -15,7 +14,6 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class CreatorType(Enum):
-    """Types of content creators supported"""
-    MUSICIAN = "musician"
+    """Types of content creators supported"""    MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
     VIDEO_CREATOR = "video_creator"
@@ -48,8 +45,7 @@ class CreatorType(Enum):
 
 
 class ContentCategory(Enum):
-    """Categories of content for specialized translation"""
-    MUSIC_PRODUCTION = "music_production"
+    """Categories of content for specialized translation"""    MUSIC_PRODUCTION = "music_production"
     BRAND_COLLABORATION = "brand_collaboration"
     RIGHTS_PROTECTION = "rights_protection"
     MONETIZATION = "monetization"
@@ -62,8 +58,7 @@ class ContentCategory(Enum):
 
 
 class PlatformType(Enum):
-    """Supported social media and content platforms"""
-    SPOTIFY = "spotify"
+    """Supported social media and content platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -79,8 +74,7 @@ class PlatformType(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Profile information for content creators"""
-    creator_id: str
+    """Profile information for content creators"""    creator_id: str
     creator_type: CreatorType
     primary_language: SupportedLanguage
     target_markets: List[SupportedLanguage]
@@ -94,8 +88,7 @@ class CreatorProfile:
 
 @dataclass
 class ContentCreatorMessage:
-    """Specialized message for content creator communications"""
-    message_id: str
+    """Specialized message for content creator communications"""    message_id: str
     creator_profile: CreatorProfile
     content: str
     category: ContentCategory
@@ -110,8 +103,7 @@ class ContentCreatorMessage:
 
 
 class ContentCreatorCommunicationSpecialist:
-    """
-    Specialized multilingual communication system for content creators.
+    """    Specialized multilingual communication system for content creators.
     
     Optimizes translations and cultural adaptations specifically for:
     - Music industry terminology
@@ -120,8 +112,7 @@ class ContentCreatorCommunicationSpecialist:
     - Monetization discussions
     - SEO-optimized content
     - Platform-specific messaging
-    """
-    
+    """    
     def __init__(self, multilingual_orchestrator: MultilingualOrchestrator):
         self.orchestrator = multilingual_orchestrator
         self.creator_profiles: Dict[str, CreatorProfile] = {}
@@ -144,15 +135,13 @@ class ContentCreatorCommunicationSpecialist:
         message: ContentCreatorMessage,
         target_languages: List[SupportedLanguage]
     ) -> Dict[SupportedLanguage, str]:
-        """
-        Process a content creator message with specialized handling for:
+        """        Process a content creator message with specialized handling for:
         - Music industry context
         - Brand collaboration requirements
         - Rights protection sensitivity
         - Monetization optimization
         - SEO preservation
-        """
-        results = {}
+        """        results = {}
         
         for target_lang in target_languages:
             try:
@@ -199,8 +188,7 @@ class ContentCreatorCommunicationSpecialist:
         source_lang: SupportedLanguage,
         target_lang: SupportedLanguage
     ) -> str:
-        """Optimize content for music industry communications"""
-        
+        """Optimize content for music industry communications"""        
         # Preserve music terminology
         music_terms = self._extract_music_terms(content)
         
@@ -224,8 +212,7 @@ class ContentCreatorCommunicationSpecialist:
         creator_profile: CreatorProfile,
         target_lang: SupportedLanguage
     ) -> str:
-        """Optimize content for brand collaboration communications"""
-        
+        """Optimize content for brand collaboration communications"""        
         # Apply brand collaboration terminology
         optimized_content = content
         
@@ -253,8 +240,7 @@ class ContentCreatorCommunicationSpecialist:
         content: str,
         target_lang: SupportedLanguage
     ) -> str:
-        """Optimize content for rights protection communications"""
-        
+        """Optimize content for rights protection communications"""        
         # Apply legal terminology precision
         legal_terms = self.rights_protection_terms.get(target_lang.value, {})
         
@@ -282,8 +268,7 @@ class ContentCreatorCommunicationSpecialist:
         creator_profile: CreatorProfile,
         target_lang: SupportedLanguage
     ) -> str:
-        """Optimize content for monetization discussions"""
-        
+        """Optimize content for monetization discussions"""        
         # Apply monetization terminology
         monetization_terms = self.monetization_terms.get(target_lang.value, {})
         
@@ -310,8 +295,7 @@ class ContentCreatorCommunicationSpecialist:
         keywords: List[str],
         target_lang: SupportedLanguage
     ) -> str:
-        """Optimize content for SEO in target language"""
-        
+        """Optimize content for SEO in target language"""        
         seo_patterns = self.seo_patterns.get(target_lang.value, {})
         optimized_content = content
         
@@ -340,8 +324,7 @@ class ContentCreatorCommunicationSpecialist:
         return optimized_content
     
     def _load_music_terminology(self) -> Dict[str, Dict[str, str]]:
-        """Load music industry terminology database"""
-        return {
+        """Load music industry terminology database"""        return {
             "royalties": {
                 "es": "regalías",
                 "fr": "redevances",
@@ -395,8 +378,7 @@ class ContentCreatorCommunicationSpecialist:
         }
     
     def _load_brand_collaboration_terms(self) -> Dict[str, Dict[str, str]]:
-        """Load brand collaboration terminology"""
-        return {
+        """Load brand collaboration terminology"""        return {
             "sponsorship": {
                 "es": "patrocinio",
                 "fr": "parrainage",
@@ -430,8 +412,7 @@ class ContentCreatorCommunicationSpecialist:
         }
     
     def _load_rights_protection_terms(self) -> Dict[str, Dict[str, str]]:
-        """Load rights protection terminology"""
-        return {
+        """Load rights protection terminology"""        return {
             "en": {
                 "copyright": "copyright",
                 "intellectual property": "intellectual property",
@@ -467,8 +448,7 @@ class ContentCreatorCommunicationSpecialist:
         }
     
     def _load_monetization_terms(self) -> Dict[str, Dict[str, str]]:
-        """Load monetization terminology"""
-        return {
+        """Load monetization terminology"""        return {
             "en": {
                 "revenue": "revenue",
                 "monetization": "monetization",
@@ -496,8 +476,7 @@ class ContentCreatorCommunicationSpecialist:
         }
     
     def _load_platform_specific_terms(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific terminology and requirements"""
-        return {
+        """Load platform-specific terminology and requirements"""        return {
             "spotify": {
                 "character_limit": None,
                 "hashtag_support": False,
@@ -521,8 +500,7 @@ class ContentCreatorCommunicationSpecialist:
         }
     
     def _load_seo_patterns(self) -> Dict[str, Dict[str, Any]]:
-        """Load SEO optimization patterns by language"""
-        return {
+        """Load SEO optimization patterns by language"""        return {
             "en": {
                 "keyword_density": 0.02,
                 "title_patterns": ["{keyword} - {brand}", "{keyword} by {creator}"],
@@ -541,8 +519,7 @@ class ContentCreatorCommunicationSpecialist:
         }
     
     def _load_brand_voice_patterns(self) -> Dict[str, Dict[str, Any]]:
-        """Load brand voice preservation patterns"""
-        return {
+        """Load brand voice preservation patterns"""        return {
             "professional": {
                 "tone_markers": ["respectfully", "professionally", "cordially"],
                 "avoid_casual": True,
@@ -565,8 +542,7 @@ class ContentCreatorCommunicationSpecialist:
         message: ContentCreatorMessage,
         target_lang: SupportedLanguage
     ) -> TranslationRequest:
-        """Create specialized translation request for creator content"""
-        
+        """Create specialized translation request for creator content"""        
         context_parts = [
             f"creator_type:{message.creator_profile.creator_type.value}",
             f"category:{message.category.value}",
@@ -596,8 +572,7 @@ class ContentCreatorCommunicationSpecialist:
         message: ContentCreatorMessage,
         target_lang: SupportedLanguage
     ) -> str:
-        """Apply pre-translation optimizations"""
-        
+        """Apply pre-translation optimizations"""        
         content = message.content
         
         # Preserve hashtags
@@ -624,8 +599,7 @@ class ContentCreatorCommunicationSpecialist:
         message: ContentCreatorMessage,
         target_lang: SupportedLanguage
     ) -> str:
-        """Apply post-translation enhancements"""
-        
+        """Apply post-translation enhancements"""        
         enhanced_content = translated_content
         
         # Apply category-specific optimizations
@@ -669,8 +643,7 @@ class ContentCreatorCommunicationSpecialist:
         creator_profile: CreatorProfile,
         target_lang: SupportedLanguage
     ) -> str:
-        """Preserve brand voice in translated content"""
-        
+        """Preserve brand voice in translated content"""        
         brand_voice_patterns = self.brand_voice_patterns.get(
             creator_profile.brand_voice, 
             self.brand_voice_patterns["professional"]
@@ -688,22 +661,19 @@ class ContentCreatorCommunicationSpecialist:
         return preserved_content
     
     async def _apply_business_etiquette_asian(self, content: str) -> str:
-        """Apply Asian business etiquette patterns"""
-        # Add respectful language patterns
+        """Apply Asian business etiquette patterns"""        # Add respectful language patterns
         if not any(respectful in content.lower() for respectful in ['please', 'kindly', 'respectfully']):
             content = f"Respectfully, {content}"
         return content
     
     async def _apply_business_etiquette_german(self, content: str) -> str:
-        """Apply German business etiquette patterns"""
-        # Ensure formal addressing and structure
+        """Apply German business etiquette patterns"""        # Ensure formal addressing and structure
         if not content.startswith(('Sehr geehrte', 'Liebe', 'Hallo')):
             content = f"Sehr geehrte Damen und Herren, {content}"
         return content
     
     def _extract_music_terms(self, content: str) -> List[str]:
-        """Extract music-related terms from content"""
-        music_keywords = [
+        """Extract music-related terms from content"""        music_keywords = [
             'beat', 'melody', 'harmony', 'rhythm', 'chord', 'scale',
             'producer', 'mixing', 'mastering', 'recording', 'studio',
             'album', 'track', 'single', 'ep', 'mixtape', 'playlist'
@@ -717,8 +687,7 @@ class ContentCreatorCommunicationSpecialist:
         return found_terms
     
     def _get_legal_disclaimer(self, target_lang: SupportedLanguage) -> Optional[str]:
-        """Get legal disclaimer text for target language"""
-        disclaimers = {
+        """Get legal disclaimer text for target language"""        disclaimers = {
             SupportedLanguage.ENGLISH: "This content is protected by copyright law.",
             SupportedLanguage.GERMAN: "Dieser Inhalt ist durch das Urheberrecht geschützt.",
             SupportedLanguage.FRENCH: "Ce contenu est protégé par le droit d'auteur.",
@@ -732,8 +701,7 @@ class ContentCreatorCommunicationSpecialist:
         content: str,
         target_lang: SupportedLanguage
     ) -> str:
-        """Format financial terms according to local conventions"""
-        
+        """Format financial terms according to local conventions"""        
         # Currency formatting by language/region
         currency_formats = {
             SupportedLanguage.GERMAN: {"symbol": "€", "position": "after", "separator": ","},
@@ -767,8 +735,7 @@ class ContentCreatorCommunicationSpecialist:
         keyword: str,
         seo_patterns: Dict[str, Any]
     ) -> str:
-        """Integrate SEO keyword naturally into content"""
-        
+        """Integrate SEO keyword naturally into content"""        
         # Simple integration at the beginning if not present
         if keyword.lower() not in content.lower():
             # Add keyword naturally at the beginning

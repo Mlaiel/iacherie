@@ -1,5 +1,4 @@
-"""
-🌐 Multi-Platform Distribution Configuration Manager - IA-Influencer-Agent
+"""🌐 Multi-Platform Distribution Configuration Manager - IA-Influencer-Agent
 =========================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de
 Enterprise-grade multi-platform distribution configuration management system.
 =========================================================================
 """
-
 from typing import Dict, Any, Optional, List, Union, Tuple
 from enum import Enum
 from dataclasses import dataclass, field
@@ -32,8 +30,7 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class Platform(Enum):
-    """Supported content distribution platforms"""
-    SPOTIFY = "spotify"
+    """Supported content distribution platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -55,8 +52,7 @@ class Platform(Enum):
     REDDIT = "reddit"
 
 class ContentType(Enum):
-    """Content types for distribution"""
-    AUDIO = "audio"
+    """Content types for distribution"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -70,8 +66,7 @@ class ContentType(Enum):
     PLAYLIST = "playlist"
 
 class DistributionStrategy(Enum):
-    """Distribution strategies"""
-    SIMULTANEOUS = "simultaneous"
+    """Distribution strategies"""    SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     SCHEDULED = "scheduled"
     PRIORITY_BASED = "priority_based"
@@ -80,16 +75,14 @@ class DistributionStrategy(Enum):
     REVENUE_OPTIMIZED = "revenue_optimized"
 
 class OptimizationLevel(Enum):
-    """Content optimization levels"""
-    BASIC = "basic"
+    """Content optimization levels"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
 
 class PublicationStatus(Enum):
-    """Publication status"""
-    DRAFT = "draft"
+    """Publication status"""    DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
@@ -99,8 +92,7 @@ class PublicationStatus(Enum):
 
 @dataclass
 class PlatformConfiguration:
-    """Individual platform configuration"""
-    platform: Platform
+    """Individual platform configuration"""    platform: Platform
     enabled: bool = True
     priority: int = 1
     
@@ -166,8 +158,7 @@ class PlatformConfiguration:
 
 @dataclass
 class ContentOptimizationConfig:
-    """Content optimization configuration"""
-    enabled: bool = True
+    """Content optimization configuration"""    enabled: bool = True
     optimization_level: OptimizationLevel = OptimizationLevel.PROFESSIONAL
     
     # Image optimization
@@ -223,8 +214,7 @@ class ContentOptimizationConfig:
 
 @dataclass
 class SchedulingConfig:
-    """Content scheduling configuration"""
-    enabled: bool = True
+    """Content scheduling configuration"""    enabled: bool = True
     
     # Scheduling algorithms
     optimization_algorithm: str = "ai_driven"
@@ -275,8 +265,7 @@ class SchedulingConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Analytics and reporting configuration"""
-    enabled: bool = True
+    """Analytics and reporting configuration"""    enabled: bool = True
     
     # Data collection
     real_time_analytics: bool = True
@@ -330,8 +319,7 @@ class AnalyticsConfig:
 
 @dataclass
 class CrossPlatformSyncConfig:
-    """Cross-platform synchronization configuration"""
-    enabled: bool = True
+    """Cross-platform synchronization configuration"""    enabled: bool = True
     
     # Sync strategies
     sync_strategy: str = "intelligent"
@@ -370,8 +358,7 @@ class CrossPlatformSyncConfig:
 
 @dataclass
 class MultiPlatformDistributionConfiguration:
-    """Master multi-platform distribution configuration"""
-    # Platform configurations
+    """Master multi-platform distribution configuration"""    # Platform configurations
     platform_configs: Dict[Platform, PlatformConfiguration] = field(default_factory=dict)
     
     # Core configurations
@@ -422,16 +409,13 @@ class MultiPlatformDistributionConfiguration:
     contact_email: str = "mlaiel@live.de"
 
 class MultiPlatformDistributionConfigManager:
-    """
-    Enterprise-grade multi-platform distribution configuration manager.
+    """    Enterprise-grade multi-platform distribution configuration manager.
     
     Manages comprehensive configuration for content distribution across multiple
     social media and streaming platforms with optimization, scheduling, and analytics.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize multi-platform distribution configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize multi-platform distribution configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
         self.config_path = config_path or os.getenv(
@@ -456,8 +440,7 @@ class MultiPlatformDistributionConfigManager:
         self.logger.info("Multi-platform distribution configuration manager initialized")
     
     def _initialize_default_platforms(self) -> None:
-        """Initialize default platform configurations"""
-        default_platforms = [
+        """Initialize default platform configurations"""        default_platforms = [
             Platform.SPOTIFY, Platform.YOUTUBE, Platform.INSTAGRAM,
             Platform.TIKTOK, Platform.TWITTER, Platform.FACEBOOK,
             Platform.SOUNDCLOUD, Platform.APPLE_MUSIC
@@ -472,8 +455,7 @@ class MultiPlatformDistributionConfigManager:
             )
     
     def _get_default_content_types(self, platform: Platform) -> List[ContentType]:
-        """Get default content types for platform"""
-        content_type_mapping = {
+        """Get default content types for platform"""        content_type_mapping = {
             Platform.SPOTIFY: [ContentType.AUDIO, ContentType.PODCAST],
             Platform.YOUTUBE: [ContentType.VIDEO, ContentType.AUDIO, ContentType.LIVE_STREAM],
             Platform.INSTAGRAM: [ContentType.IMAGE, ContentType.VIDEO, ContentType.STORY, ContentType.REEL],
@@ -486,8 +468,7 @@ class MultiPlatformDistributionConfigManager:
         return content_type_mapping.get(platform, [])
     
     def _load_configuration(self) -> bool:
-        """Load configuration from file"""
-        try:
+        """Load configuration from file"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
@@ -507,8 +488,7 @@ class MultiPlatformDistributionConfigManager:
             return False
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]) -> None:
-        """Update configuration from dictionary"""
-        for key, value in config_data.items():
+        """Update configuration from dictionary"""        for key, value in config_data.items():
             if hasattr(self._config, key):
                 setattr(self._config, key, value)
         
@@ -516,8 +496,7 @@ class MultiPlatformDistributionConfigManager:
         self.last_updated = datetime.now()
     
     def add_platform(self, platform: Platform, config: PlatformConfiguration) -> bool:
-        """Add platform configuration"""
-        try:
+        """Add platform configuration"""        try:
             self._config.platform_configs[platform] = config
             self._config.updated_at = datetime.now()
             self.last_updated = datetime.now()
@@ -528,8 +507,7 @@ class MultiPlatformDistributionConfigManager:
             return False
     
     def remove_platform(self, platform: Platform) -> bool:
-        """Remove platform configuration"""
-        try:
+        """Remove platform configuration"""        try:
             if platform in self._config.platform_configs:
                 del self._config.platform_configs[platform]
                 self._config.updated_at = datetime.now()
@@ -544,8 +522,7 @@ class MultiPlatformDistributionConfigManager:
             return False
     
     def update_platform_config(self, platform: Platform, **kwargs) -> bool:
-        """Update platform configuration"""
-        try:
+        """Update platform configuration"""        try:
             if platform not in self._config.platform_configs:
                 self.logger.error(f"Platform {platform.value} not found in configuration")
                 return False
@@ -564,26 +541,22 @@ class MultiPlatformDistributionConfigManager:
             return False
     
     def get_platform_config(self, platform: Platform) -> Optional[PlatformConfiguration]:
-        """Get platform configuration"""
-        return self._config.platform_configs.get(platform)
+        """Get platform configuration"""        return self._config.platform_configs.get(platform)
     
     def get_enabled_platforms(self) -> List[Platform]:
-        """Get list of enabled platforms"""
-        return [
+        """Get list of enabled platforms"""        return [
             platform for platform, config in self._config.platform_configs.items()
             if config.enabled
         ]
     
     def get_platforms_for_content_type(self, content_type: ContentType) -> List[Platform]:
-        """Get platforms that support specific content type"""
-        return [
+        """Get platforms that support specific content type"""        return [
             platform for platform, config in self._config.platform_configs.items()
             if config.enabled and content_type in config.supported_content_types
         ]
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of errors"""
-        errors = []
+        """Validate configuration and return list of errors"""        errors = []
         
         try:
             # Validate platform configurations
@@ -620,8 +593,7 @@ class MultiPlatformDistributionConfigManager:
             return [error_msg]
     
     def get_configuration_status(self) -> Dict[str, Any]:
-        """Get configuration status and metadata"""
-        return {
+        """Get configuration status and metadata"""        return {
             "initialized": self.initialized,
             "last_updated": self.last_updated,
             "config_path": self.config_path,

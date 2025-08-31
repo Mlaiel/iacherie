@@ -1,5 +1,4 @@
-"""
-Twitch TV Crawler Implementation
+"""Twitch TV Crawler Implementation
 ===============================
 
 Advanced Twitch streaming platform crawler for live content monitoring.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import json
 import logging
@@ -46,8 +44,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class TwitchStream:
-    """Twitch stream information"""
-    stream_id: str
+    """Twitch stream information"""    stream_id: str
     channel_name: str
     channel_id: str
     title: str
@@ -81,8 +78,7 @@ class TwitchStream:
 
 @dataclass
 class TwitchChannel:
-    """Twitch channel information"""
-    channel_id: str
+    """Twitch channel information"""    channel_id: str
     username: str
     display_name: str
     description: str
@@ -118,8 +114,7 @@ class TwitchChannel:
 
 @dataclass
 class TwitchVideo:
-    """Twitch video (VOD/Clip) information"""
-    video_id: str
+    """Twitch video (VOD/Clip) information"""    video_id: str
     title: str
     description: str
     channel_name: str
@@ -150,8 +145,7 @@ class TwitchVideo:
 
 @dataclass
 class TwitchClip:
-    """Twitch clip information"""
-    clip_id: str
+    """Twitch clip information"""    clip_id: str
     title: str
     broadcaster_name: str
     broadcaster_id: str
@@ -178,8 +172,7 @@ class TwitchClip:
 
 
 class TwitchCrawler(PlatformCrawler):
-    """
-    Advanced Twitch crawler for streaming content monitoring and discovery.
+    """    Advanced Twitch crawler for streaming content monitoring and discovery.
     
     Features:
     - Live stream monitoring
@@ -191,8 +184,7 @@ class TwitchCrawler(PlatformCrawler):
     - Content scheduling analysis
     - Monetization tracking
     - Audience engagement metrics
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, client_id: str = None, client_secret: str = None):
         super().__init__(config, vector_matcher)
         self.platform_name = "twitch"
@@ -235,8 +227,7 @@ class TwitchCrawler(PlatformCrawler):
         asyncio.create_task(self._authenticate())
     
     async def _authenticate(self):
-        """Authenticate with Twitch API"""
-        try:
+        """Authenticate with Twitch API"""        try:
             if not self.client_id or not self.client_secret:
                 self.logger.warning("Twitch API credentials not provided")
                 return
@@ -271,8 +262,7 @@ class TwitchCrawler(PlatformCrawler):
             self.logger.error(f"Error authenticating with Twitch API: {str(e)}")
     
     async def _refresh_token_if_needed(self):
-        """Refresh access token if needed"""
-        try:
+        """Refresh access token if needed"""        try:
             if (self.token_expires_at and 
                 datetime.utcnow() >= self.token_expires_at - timedelta(minutes=5)):
                 await self._authenticate()
@@ -281,8 +271,7 @@ class TwitchCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "streams", 
                            max_results: int = 50) -> List[CrawlerResult]:
-        """
-        Search for content on Twitch.
+        """        Search for content on Twitch.
         
         Args:
             query: Search query
@@ -291,8 +280,7 @@ class TwitchCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._refresh_token_if_needed()
             await self._check_rate_limit()
             
@@ -311,8 +299,7 @@ class TwitchCrawler(PlatformCrawler):
             return []
     
     async def _crawl_streams(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl live streams"""
-        try:
+        """Crawl live streams"""        try:
             results = []
             
             # Search for live streams
@@ -373,8 +360,7 @@ class TwitchCrawler(PlatformCrawler):
             return []
     
     async def _crawl_channels(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Twitch channels"""
-        try:
+        """Crawl Twitch channels"""        try:
             results = []
             
             # Search for channels
@@ -431,8 +417,7 @@ class TwitchCrawler(PlatformCrawler):
             return []
     
     async def _crawl_videos(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Twitch videos (VODs)"""
-        try:
+        """Crawl Twitch videos (VODs)"""        try:
             results = []
             
             # First get channels matching the query, then get their videos
@@ -498,8 +483,7 @@ class TwitchCrawler(PlatformCrawler):
             return []
     
     async def _crawl_clips(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Twitch clips"""
-        try:
+        """Crawl Twitch clips"""        try:
             results = []
             
             # Get channels for the query, then get their clips
@@ -567,8 +551,7 @@ class TwitchCrawler(PlatformCrawler):
             return []
     
     async def _crawl_games(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Twitch games/categories"""
-        try:
+        """Crawl Twitch games/categories"""        try:
             results = []
             
             # Search for games
@@ -619,8 +602,7 @@ class TwitchCrawler(PlatformCrawler):
             return []
     
     async def _crawl_categories(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Twitch categories"""
-        try:
+        """Crawl Twitch categories"""        try:
             results = []
             
             # Get top games as categories
@@ -666,8 +648,7 @@ class TwitchCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """General Twitch search"""
-        try:
+        """General Twitch search"""        try:
             results = []
             
             # Search across different content types
@@ -690,8 +671,7 @@ class TwitchCrawler(PlatformCrawler):
     # Helper methods
     
     async def _get_channel_info(self, user_id: str) -> Optional[Dict[str, Any]]:
-        """Get basic channel information"""
-        try:
+        """Get basic channel information"""        try:
             api_url = f"{self.api_base_url}/users"
             params = {'id': user_id}
             
@@ -710,8 +690,7 @@ class TwitchCrawler(PlatformCrawler):
             return None
     
     async def _get_detailed_channel_info(self, channel_id: str) -> Optional[TwitchChannel]:
-        """Get detailed channel information"""
-        try:
+        """Get detailed channel information"""        try:
             # Get basic user info
             user_info = await self._get_channel_info(channel_id)
             if not user_info:
@@ -765,8 +744,7 @@ class TwitchCrawler(PlatformCrawler):
             return None
     
     async def _get_channel_followers(self, channel_id: str) -> int:
-        """Get channel follower count"""
-        try:
+        """Get channel follower count"""        try:
             api_url = f"{self.api_base_url}/users/follows"
             params = {'to_id': channel_id, 'first': 1}
             
@@ -784,8 +762,7 @@ class TwitchCrawler(PlatformCrawler):
             return 0
     
     async def _get_channel_videos(self, channel_id: str, limit: int = 20) -> List[Dict[str, Any]]:
-        """Get channel videos"""
-        try:
+        """Get channel videos"""        try:
             api_url = f"{self.api_base_url}/videos"
             params = {
                 'user_id': channel_id,
@@ -807,8 +784,7 @@ class TwitchCrawler(PlatformCrawler):
             return []
     
     async def _get_streams_for_game(self, game_id: str) -> List[Dict[str, Any]]:
-        """Get live streams for a specific game"""
-        try:
+        """Get live streams for a specific game"""        try:
             api_url = f"{self.api_base_url}/streams"
             params = {
                 'game_id': game_id,
@@ -829,8 +805,7 @@ class TwitchCrawler(PlatformCrawler):
             return []
     
     def _parse_stream_data(self, stream_data: Dict[str, Any], channel_info: Optional[Dict[str, Any]] = None) -> TwitchStream:
-        """Parse stream data from API response"""
-        try:
+        """Parse stream data from API response"""        try:
             started_at = datetime.fromisoformat(stream_data.get('started_at', '').replace('Z', '+00:00'))
             
             stream = TwitchStream(
@@ -873,8 +848,7 @@ class TwitchCrawler(PlatformCrawler):
             return None
     
     def _parse_video_data(self, video_data: Dict[str, Any]) -> TwitchVideo:
-        """Parse video data from API response"""
-        try:
+        """Parse video data from API response"""        try:
             created_at = datetime.fromisoformat(video_data.get('created_at', '').replace('Z', '+00:00'))
             published_at = datetime.fromisoformat(video_data.get('published_at', '').replace('Z', '+00:00'))
             
@@ -919,8 +893,7 @@ class TwitchCrawler(PlatformCrawler):
             return None
     
     def _parse_clip_data(self, clip_data: Dict[str, Any]) -> TwitchClip:
-        """Parse clip data from API response"""
-        try:
+        """Parse clip data from API response"""        try:
             created_at = datetime.fromisoformat(clip_data.get('created_at', '').replace('Z', '+00:00'))
             
             clip = TwitchClip(
@@ -957,8 +930,7 @@ class TwitchCrawler(PlatformCrawler):
             return None
     
     def _parse_duration(self, duration_str: str) -> int:
-        """Parse Twitch duration string to seconds"""
-        try:
+        """Parse Twitch duration string to seconds"""        try:
             total_seconds = 0
             
             # Extract hours, minutes, seconds
@@ -980,8 +952,7 @@ class TwitchCrawler(PlatformCrawler):
             return 0
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -996,8 +967,7 @@ class TwitchCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Twitch content"""
-        try:
+        """Extract metadata from Twitch content"""        try:
             # Parse URL to determine content type
             parsed_url = urlparse(url)
             path_parts = parsed_url.path.strip('/').split('/')
@@ -1041,8 +1011,7 @@ class TwitchCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     async def _get_video_by_id(self, video_id: str) -> Optional[TwitchVideo]:
-        """Get video by ID"""
-        try:
+        """Get video by ID"""        try:
             api_url = f"{self.api_base_url}/videos"
             params = {'id': video_id}
             
@@ -1062,8 +1031,7 @@ class TwitchCrawler(PlatformCrawler):
             return None
     
     async def _get_channel_by_name(self, channel_name: str) -> Optional[TwitchChannel]:
-        """Get channel by name"""
-        try:
+        """Get channel by name"""        try:
             api_url = f"{self.api_base_url}/users"
             params = {'login': channel_name}
             
@@ -1083,8 +1051,7 @@ class TwitchCrawler(PlatformCrawler):
             return None
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Twitch platform information"""
-        return {
+        """Get Twitch platform information"""        return {
             'platform_name': 'Twitch',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

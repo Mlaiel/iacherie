@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Content Filter Engine
+"""IA Influencer Agent - Content Filter Engine
 ==========================================
 
 Ultra-advanced professional content filtering engine for multimedia processing.
@@ -29,7 +28,6 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
-
 import asyncio
 import logging
 import time
@@ -57,8 +55,7 @@ from .duplicate_filters import DuplicateContentFilter
 
 
 class FilterResult(str, Enum):
-    """Filter result enumeration."""
-    PASSED = "passed"
+    """Filter result enumeration."""    PASSED = "passed"
     FAILED = "failed"
     WARNING = "warning"
     BLOCKED = "blocked"
@@ -67,8 +64,7 @@ class FilterResult(str, Enum):
 
 @dataclass
 class FilterResponse:
-    """Filter response data structure."""
-    filter_type: FilterType
+    """Filter response data structure."""    filter_type: FilterType
     result: FilterResult
     score: float
     confidence: float
@@ -81,8 +77,7 @@ class FilterResponse:
 
 @dataclass
 class ContentItem:
-    """Content item data structure."""
-    content_id: str
+    """Content item data structure."""    content_id: str
     content_type: str
     content_data: Union[bytes, str, Dict[str, Any]]
     metadata: Dict[str, Any]
@@ -93,11 +88,9 @@ class ContentItem:
 
 
 class ContentFilterEngine:
-    """Enterprise-grade content filtering engine."""
-    
+    """Enterprise-grade content filtering engine."""    
     def __init__(self, config_manager: Optional[FilterConfigManager] = None):
-        """Initialize the content filter engine."""
-        self.config = config_manager or filter_config
+        """Initialize the content filter engine."""        self.config = config_manager or filter_config
         self.logger = logging.getLogger(__name__)
         
         # Initialize filter modules
@@ -115,8 +108,7 @@ class ContentFilterEngine:
         self.logger.info("Content filter engine initialized successfully")
     
     def _initialize_filters(self) -> None:
-        """Initialize all filter modules."""
-        try:
+        """Initialize all filter modules."""        try:
             self.audio_filter = AudioContentFilter(self.config.audio_config)
             self.video_filter = VideoContentFilter(self.config.video_config)
             self.image_filter = ImageContentFilter(self.config.image_config)
@@ -139,8 +131,7 @@ class ContentFilterEngine:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> Dict[str, FilterResponse]:
-        """
-        Filter content through specified filters.
+        """        Filter content through specified filters.
         
         Args:
             content: Content item to filter
@@ -150,8 +141,7 @@ class ContentFilterEngine:
             
         Returns:
             Dictionary of filter responses
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         if filter_types is None:
             filter_types = [FilterType.QUALITY, FilterType.SECURITY]
@@ -225,8 +215,7 @@ class ContentFilterEngine:
         ai_validation: bool,
         strict_mode: bool
     ) -> FilterResponse:
-        """Apply specific filter to content."""
-        start_time = time.time()
+        """Apply specific filter to content."""        start_time = time.time()
         
         try:
             filter_map = {
@@ -271,8 +260,7 @@ class ContentFilterEngine:
             )
     
     async def _pre_filter_validation(self, content: ContentItem) -> Dict[str, Any]:
-        """Pre-filtering validation checks."""
-        validation_result = {
+        """Pre-filtering validation checks."""        validation_result = {
             'valid': True,
             'checks': {},
             'warnings': []
@@ -320,8 +308,7 @@ class ContentFilterEngine:
             }
     
     def _detect_content_type(self, content: ContentItem) -> str:
-        """Detect content type from file path or content."""
-        if content.file_path:
+        """Detect content type from file path or content."""        if content.file_path:
             mime_type, _ = mimetypes.guess_type(content.file_path)
             if mime_type:
                 return mime_type
@@ -343,8 +330,7 @@ class ContentFilterEngine:
         return 'application/octet-stream'
     
     def _update_stats(self, results: Dict[str, FilterResponse], processing_time: float) -> None:
-        """Update engine statistics."""
-        self.stats['total_processed'] += 1
+        """Update engine statistics."""        self.stats['total_processed'] += 1
         
         # Count passed/failed
         passed_filters = sum(1 for r in results.values() if r.result == FilterResult.PASSED)
@@ -363,8 +349,7 @@ class ContentFilterEngine:
         filter_types: List[FilterType] = None,
         max_concurrent: int = None
     ) -> List[Dict[str, FilterResponse]]:
-        """Filter multiple content items concurrently."""
-        if max_concurrent is None:
+        """Filter multiple content items concurrently."""        if max_concurrent is None:
             max_concurrent = self.config.performance_config.max_concurrent_filters
         
         semaphore = asyncio.Semaphore(max_concurrent)
@@ -397,8 +382,7 @@ class ContentFilterEngine:
         return processed_results
     
     def get_filter_statistics(self) -> Dict[str, Any]:
-        """Get filtering engine statistics."""
-        return {
+        """Get filtering engine statistics."""        return {
             'engine_stats': self.stats.copy(),
             'config_summary': self.config.get_summary(),
             'filter_modules': {
@@ -415,8 +399,7 @@ class ContentFilterEngine:
         }
     
     async def validate_engine_health(self) -> Dict[str, Any]:
-        """Validate engine health and configuration."""
-        health_status = {
+        """Validate engine health and configuration."""        health_status = {
             'status': 'healthy',
             'checks': {},
             'warnings': [],
@@ -461,8 +444,7 @@ class ContentFilterEngine:
             }
     
     def reset_statistics(self) -> None:
-        """Reset engine statistics."""
-        self.stats = {
+        """Reset engine statistics."""        self.stats = {
             'total_processed': 0,
             'total_passed': 0,
             'total_failed': 0,

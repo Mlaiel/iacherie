@@ -13,8 +13,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-# Redis Configuration
+"""# Redis Configuration
 from .redis_cache_config import (
     RedisCacheConfig,
     RedisConnectionConfig,

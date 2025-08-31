@@ -1,5 +1,4 @@
-"""
-Keyword Generator AI - Intelligent Keyword Generation and Research
+"""Keyword Generator AI - Intelligent Keyword Generation and Research
 
 This module provides AI-powered keyword generation, research, and analysis
 for SEO optimization across different platforms and languages.
@@ -7,7 +6,6 @@ for SEO optimization across different platforms and languages.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import re
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -20,8 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class KeywordType(Enum):
-    """Types of keywords"""
-    PRIMARY = "primary"
+    """Types of keywords"""    PRIMARY = "primary"
     SECONDARY = "secondary"
     LONG_TAIL = "long_tail"
     SEMANTIC = "semantic"
@@ -30,8 +27,7 @@ class KeywordType(Enum):
 
 
 class SearchIntent(Enum):
-    """Search intent classification"""
-    INFORMATIONAL = "informational"
+    """Search intent classification"""    INFORMATIONAL = "informational"
     NAVIGATIONAL = "navigational"
     TRANSACTIONAL = "transactional"
     COMMERCIAL = "commercial"
@@ -39,8 +35,7 @@ class SearchIntent(Enum):
 
 @dataclass
 class KeywordMetrics:
-    """Keyword performance metrics"""
-    search_volume: int
+    """Keyword performance metrics"""    search_volume: int
     competition_level: float  # 0-1 scale
     cpc: float  # Cost per click
     difficulty: float  # SEO difficulty 0-100
@@ -50,8 +45,7 @@ class KeywordMetrics:
 
 @dataclass
 class KeywordSuggestion:
-    """Individual keyword suggestion"""
-    keyword: str
+    """Individual keyword suggestion"""    keyword: str
     keyword_type: KeywordType
     search_intent: SearchIntent
     metrics: KeywordMetrics
@@ -61,8 +55,7 @@ class KeywordSuggestion:
 
 @dataclass
 class KeywordResearchResult:
-    """Complete keyword research result"""
-    primary_keywords: List[KeywordSuggestion]
+    """Complete keyword research result"""    primary_keywords: List[KeywordSuggestion]
     secondary_keywords: List[KeywordSuggestion]
     long_tail_keywords: List[KeywordSuggestion]
     semantic_keywords: List[KeywordSuggestion]
@@ -73,20 +66,16 @@ class KeywordResearchResult:
 
 
 class KeywordGeneratorAI:
-    """
-    AI-powered keyword generator that creates comprehensive keyword strategies
+    """    AI-powered keyword generator that creates comprehensive keyword strategies
     for content optimization and SEO campaigns.
     """
-
     def __init__(self, language: str = "en", region: str = "US"):
-        """
-        Initialize the keyword generator.
+        """        Initialize the keyword generator.
         
         Args:
             language: Target language for keywords
             region: Target region for search data
-        """
-        self.language = language
+        """        self.language = language
         self.region = region
         self.keyword_database = self._initialize_keyword_database()
         self.stop_words = self._get_stop_words(language)
@@ -101,8 +90,7 @@ class KeywordGeneratorAI:
         platform: str = "general",
         max_keywords: int = 100
     ) -> KeywordResearchResult:
-        """
-        Generate comprehensive keyword research based on seed keywords and content.
+        """        Generate comprehensive keyword research based on seed keywords and content.
         
         Args:
             seed_keywords: Initial keywords to expand from
@@ -114,8 +102,7 @@ class KeywordGeneratorAI:
             
         Returns:
             KeywordResearchResult with categorized keywords
-        """
-        try:
+        """        try:
             logger.info(f"Starting keyword generation for {len(seed_keywords)} seed keywords")
             
             # Extract keywords from content
@@ -180,8 +167,7 @@ class KeywordGeneratorAI:
             raise
 
     def _extract_keywords_from_content(self, content: str) -> List[str]:
-        """Extract potential keywords from content"""
-        if not content:
+        """Extract potential keywords from content"""        if not content:
             return []
         
         # Clean and tokenize content
@@ -222,8 +208,7 @@ class KeywordGeneratorAI:
         return keywords
 
     def _is_valid_phrase(self, phrase: str) -> bool:
-        """Check if a phrase is valid for keyword extraction"""
-        words = phrase.split()
+        """Check if a phrase is valid for keyword extraction"""        words = phrase.split()
         
         # Skip if too many stop words
         stop_word_count = sum(1 for word in words if word in self.stop_words)
@@ -237,8 +222,7 @@ class KeywordGeneratorAI:
         return True
 
     def _generate_primary_keywords(self, seed_keywords: List[str], industry: str) -> List[KeywordSuggestion]:
-        """Generate primary keywords from seed keywords"""
-        primary_keywords = []
+        """Generate primary keywords from seed keywords"""        primary_keywords = []
         
         for seed in seed_keywords:
             # Direct seed keyword
@@ -282,8 +266,7 @@ class KeywordGeneratorAI:
         seed_keywords: List[str], 
         content_keywords: List[str]
     ) -> List[KeywordSuggestion]:
-        """Generate secondary keywords"""
-        secondary_keywords = []
+        """Generate secondary keywords"""        secondary_keywords = []
         
         # Variations of seed keywords
         for seed in seed_keywords:
@@ -327,8 +310,7 @@ class KeywordGeneratorAI:
         return secondary_keywords
 
     def _generate_long_tail_keywords(self, seed_keywords: List[str], content: str) -> List[KeywordSuggestion]:
-        """Generate long-tail keywords"""
-        long_tail_keywords = []
+        """Generate long-tail keywords"""        long_tail_keywords = []
         
         # Question-based long-tail keywords
         question_starters = [
@@ -377,8 +359,7 @@ class KeywordGeneratorAI:
         return long_tail_keywords[:25]  # Limit to top 25
 
     def _generate_semantic_keywords(self, seed_keywords: List[str], content: str) -> List[KeywordSuggestion]:
-        """Generate semantically related keywords"""
-        semantic_keywords = []
+        """Generate semantically related keywords"""        semantic_keywords = []
         
         # Use built-in semantic relationships
         for seed in seed_keywords:
@@ -400,8 +381,7 @@ class KeywordGeneratorAI:
         return semantic_keywords
 
     def _generate_trending_keywords(self, seed_keywords: List[str], industry: str) -> List[KeywordSuggestion]:
-        """Generate trending keywords"""
-        trending_keywords = []
+        """Generate trending keywords"""        trending_keywords = []
         
         # Combine seed keywords with trending topics
         for seed in seed_keywords:
@@ -424,8 +404,7 @@ class KeywordGeneratorAI:
         return trending_keywords
 
     def _generate_competitor_keywords(self, seed_keywords: List[str], industry: str) -> List[KeywordSuggestion]:
-        """Generate competitor-based keywords"""
-        competitor_keywords = []
+        """Generate competitor-based keywords"""        competitor_keywords = []
         
         # Comparative keywords
         comparative_patterns = [
@@ -453,8 +432,7 @@ class KeywordGeneratorAI:
         return competitor_keywords[:10]  # Limit to top 10
 
     def _calculate_keyword_metrics(self, keyword: str, keyword_type: KeywordType) -> KeywordMetrics:
-        """Calculate metrics for a keyword (simulated data for demo)"""
-        # In a real implementation, this would query actual search data APIs
+        """Calculate metrics for a keyword (simulated data for demo)"""        # In a real implementation, this would query actual search data APIs
         
         word_count = len(keyword.split())
         
@@ -494,8 +472,7 @@ class KeywordGeneratorAI:
         )
 
     def _classify_search_intent(self, keyword: str) -> SearchIntent:
-        """Classify the search intent of a keyword"""
-        keyword_lower = keyword.lower()
+        """Classify the search intent of a keyword"""        keyword_lower = keyword.lower()
         
         # Informational intent indicators
         if any(word in keyword_lower for word in [
@@ -522,8 +499,7 @@ class KeywordGeneratorAI:
         return SearchIntent.NAVIGATIONAL
 
     def _get_related_terms(self, keyword: str) -> List[str]:
-        """Get related terms for a keyword"""
-        # Simplified related terms generation
+        """Get related terms for a keyword"""        # Simplified related terms generation
         base_terms = keyword.split()
         related = []
         
@@ -547,8 +523,7 @@ class KeywordGeneratorAI:
         return related[:5]  # Limit to 5 related terms
 
     def _get_semantic_related_terms(self, keyword: str) -> List[str]:
-        """Get semantically related terms"""
-        # Simplified semantic relationships
+        """Get semantically related terms"""        # Simplified semantic relationships
         semantic_map = {
             'marketing': ['seo', 'content marketing', 'email marketing', 'social media marketing'],
             'business': ['entrepreneurship', 'startup', 'revenue', 'growth'],
@@ -568,8 +543,7 @@ class KeywordGeneratorAI:
         return related[:8]
 
     def _filter_for_platform(self, keywords: List[KeywordSuggestion], platform: str) -> List[KeywordSuggestion]:
-        """Filter keywords for specific platform"""
-        platform_keywords = {
+        """Filter keywords for specific platform"""        platform_keywords = {
             'instagram': ['photo', 'visual', 'story', 'reel', 'hashtag'],
             'youtube': ['video', 'tutorial', 'how to', 'watch', 'channel'],
             'twitter': ['news', 'trending', 'update', 'breaking'],
@@ -597,8 +571,7 @@ class KeywordGeneratorAI:
         return filtered
 
     def _initialize_keyword_database(self) -> Dict[str, Any]:
-        """Initialize internal keyword database"""
-        return {
+        """Initialize internal keyword database"""        return {
             'high_volume_terms': [
                 'marketing', 'business', 'social media', 'content', 'digital',
                 'strategy', 'tips', 'guide', 'best', 'how to'
@@ -609,8 +582,7 @@ class KeywordGeneratorAI:
         }
 
     def _get_stop_words(self, language: str) -> Set[str]:
-        """Get stop words for the specified language"""
-        # Simplified stop words list
+        """Get stop words for the specified language"""        # Simplified stop words list
         if language == "en":
             return {
                 'a', 'an', 'and', 'are', 'as', 'at', 'be', 'by', 'for', 'from',
@@ -622,8 +594,7 @@ class KeywordGeneratorAI:
         return set()  # Return empty set for other languages
 
     def _get_trending_topics(self) -> List[str]:
-        """Get current trending topics"""
-        # Simplified trending topics
+        """Get current trending topics"""        # Simplified trending topics
         return [
             'ai', 'artificial intelligence', 'machine learning', '2025',
             'sustainability', 'remote work', 'digital transformation',
@@ -631,8 +602,7 @@ class KeywordGeneratorAI:
         ]
 
     def analyze_keyword_competition(self, keyword: str) -> Dict[str, Any]:
-        """Analyze competition for a specific keyword"""
-        metrics = self._calculate_keyword_metrics(keyword, KeywordType.PRIMARY)
+        """Analyze competition for a specific keyword"""        metrics = self._calculate_keyword_metrics(keyword, KeywordType.PRIMARY)
         
         return {
             'keyword': keyword,
@@ -644,8 +614,7 @@ class KeywordGeneratorAI:
         }
 
     def _get_competition_recommendation(self, difficulty: float) -> str:
-        """Get recommendation based on keyword difficulty"""
-        if difficulty < 30:
+        """Get recommendation based on keyword difficulty"""        if difficulty < 30:
             return "Low competition - Good opportunity for quick ranking"
         elif difficulty < 60:
             return "Medium competition - Achievable with consistent effort"
@@ -655,8 +624,7 @@ class KeywordGeneratorAI:
             return "Very high competition - Consider long-tail alternatives"
 
     def export_keywords(self, result: KeywordResearchResult, format: str = "json") -> str:
-        """Export keyword research results in specified format"""
-        if format == "json":
+        """Export keyword research results in specified format"""        if format == "json":
             return self._export_to_json(result)
         elif format == "csv":
             return self._export_to_csv(result)
@@ -664,8 +632,7 @@ class KeywordGeneratorAI:
             raise ValueError(f"Unsupported export format: {format}")
 
     def _export_to_json(self, result: KeywordResearchResult) -> str:
-        """Export results to JSON format"""
-        export_data = {
+        """Export results to JSON format"""        export_data = {
             'metadata': result.research_metadata,
             'total_keywords': result.total_keywords,
             'primary_keywords': [self._keyword_to_dict(kw) for kw in result.primary_keywords],
@@ -678,8 +645,7 @@ class KeywordGeneratorAI:
         return json.dumps(export_data, indent=2)
 
     def _keyword_to_dict(self, keyword_suggestion: KeywordSuggestion) -> Dict[str, Any]:
-        """Convert KeywordSuggestion to dictionary"""
-        return {
+        """Convert KeywordSuggestion to dictionary"""        return {
             'keyword': keyword_suggestion.keyword,
             'type': keyword_suggestion.keyword_type.value,
             'search_intent': keyword_suggestion.search_intent.value,
@@ -693,8 +659,7 @@ class KeywordGeneratorAI:
         }
 
     def _export_to_csv(self, result: KeywordResearchResult) -> str:
-        """Export results to CSV format"""
-        csv_lines = ["Keyword,Type,Search Intent,Search Volume,Competition,Difficulty,CPC,Relevance,Confidence"]
+        """Export results to CSV format"""        csv_lines = ["Keyword,Type,Search Intent,Search Volume,Competition,Difficulty,CPC,Relevance,Confidence"]
         
         all_keywords = (
             result.primary_keywords + result.secondary_keywords + 

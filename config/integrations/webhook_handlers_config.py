@@ -1,5 +1,4 @@
-"""
-Webhook Handlers Configuration Module for IA-Influencer Agent Platform
+"""Webhook Handlers Configuration Module for IA-Influencer Agent Platform
 ======================================================================
 
 Professional webhook event handlers for processing real-time notifications.
@@ -15,7 +14,6 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, Any, Optional, List, Callable, Awaitable, Union
 from pydantic import BaseSettings, Field
@@ -28,8 +26,7 @@ import logging
 
 
 class HandlerPriority(int, Enum):
-    """Handler execution priority levels."""
-    CRITICAL = 1
+    """Handler execution priority levels."""    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
@@ -37,8 +34,7 @@ class HandlerPriority(int, Enum):
 
 
 class HandlerStatus(str, Enum):
-    """Handler execution status."""
-    PENDING = "pending"
+    """Handler execution status."""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -48,8 +44,7 @@ class HandlerStatus(str, Enum):
 
 @dataclass
 class HandlerResult:
-    """Webhook handler execution result."""
-    success: bool
+    """Webhook handler execution result."""    success: bool
     message: str
     data: Optional[Dict[str, Any]] = None
     execution_time: float = 0.0
@@ -59,8 +54,7 @@ class HandlerResult:
 
 @dataclass
 class HandlerConfig:
-    """Webhook handler configuration."""
-    name: str
+    """Webhook handler configuration."""    name: str
     handler_func: Callable[[Dict[str, Any]], Awaitable[HandlerResult]]
     priority: HandlerPriority = HandlerPriority.MEDIUM
     timeout: float = 30.0
@@ -72,8 +66,7 @@ class HandlerConfig:
 
 
 class WebhookHandlersConfig(BaseSettings):
-    """Webhook handlers configuration."""
-    
+    """Webhook handlers configuration."""    
     # Handler execution settings
     max_concurrent_handlers: int = Field(default=50, env="WEBHOOK_MAX_CONCURRENT_HANDLERS")
     default_handler_timeout: float = Field(default=30.0, env="WEBHOOK_DEFAULT_HANDLER_TIMEOUT")
@@ -119,8 +112,7 @@ class WebhookHandlersConfig(BaseSettings):
 
 
 class WebhookHandlerRegistry:
-    """Registry for webhook handlers with professional execution management."""
-    
+    """Registry for webhook handlers with professional execution management."""    
     def __init__(self, config: WebhookHandlersConfig):
         self.config = config
         self.handlers: Dict[str, List[HandlerConfig]] = {}
@@ -132,8 +124,7 @@ class WebhookHandlerRegistry:
         event_type: str, 
         handler_config: HandlerConfig
     ) -> None:
-        """Register a webhook handler for specific event type."""
-        if event_type not in self.handlers:
+        """Register a webhook handler for specific event type."""        if event_type not in self.handlers:
             self.handlers[event_type] = []
             
         self.handlers[event_type].append(handler_config)
@@ -144,16 +135,14 @@ class WebhookHandlerRegistry:
         self.logger.info(f"Registered handler '{handler_config.name}' for event '{event_type}'")
     
     def get_handlers(self, event_type: str) -> List[HandlerConfig]:
-        """Get all handlers for a specific event type."""
-        return self.handlers.get(event_type, [])
+        """Get all handlers for a specific event type."""        return self.handlers.get(event_type, [])
     
     async def execute_handlers(
         self, 
         event_type: str, 
         payload: Dict[str, Any]
     ) -> List[HandlerResult]:
-        """Execute all handlers for a specific event type."""
-        handlers = self.get_handlers(event_type)
+        """Execute all handlers for a specific event type."""        handlers = self.get_handlers(event_type)
         if not handlers:
             self.logger.warning(f"No handlers registered for event type: {event_type}")
             return []
@@ -188,8 +177,7 @@ class WebhookHandlerRegistry:
         handler: HandlerConfig, 
         payload: Dict[str, Any]
     ) -> HandlerResult:
-        """Execute a single handler with proper error handling and retries."""
-        async with self._semaphore:
+        """Execute a single handler with proper error handling and retries."""        async with self._semaphore:
             start_time = datetime.now()
             
             try:
@@ -247,8 +235,7 @@ class WebhookHandlerRegistry:
                 )
     
     def get_handler_stats(self) -> Dict[str, Any]:
-        """Get statistics about registered handlers."""
-        total_handlers = sum(len(handlers) for handlers in self.handlers.values())
+        """Get statistics about registered handlers."""        total_handlers = sum(len(handlers) for handlers in self.handlers.values())
         enabled_handlers = sum(
             len([h for h in handlers if h.enabled]) 
             for handlers in self.handlers.values()
@@ -274,12 +261,10 @@ class WebhookHandlerRegistry:
 
 # Pre-defined handler configurations for common webhook events
 class DefaultHandlerConfigs:
-    """Default handler configurations for common webhook events."""
-    
+    """Default handler configurations for common webhook events."""    
     @staticmethod
     async def spotify_track_handler(payload: Dict[str, Any]) -> HandlerResult:
-        """Handle Spotify track events."""
-        # Implementation would process Spotify track updates
+        """Handle Spotify track events."""        # Implementation would process Spotify track updates
         return HandlerResult(
             success=True,
             message="Spotify track processed successfully",
@@ -288,8 +273,7 @@ class DefaultHandlerConfigs:
     
     @staticmethod
     async def youtube_video_handler(payload: Dict[str, Any]) -> HandlerResult:
-        """Handle YouTube video events."""
-        # Implementation would process YouTube video updates
+        """Handle YouTube video events."""        # Implementation would process YouTube video updates
         return HandlerResult(
             success=True,
             message="YouTube video processed successfully",
@@ -298,8 +282,7 @@ class DefaultHandlerConfigs:
     
     @staticmethod
     async def stripe_payment_handler(payload: Dict[str, Any]) -> HandlerResult:
-        """Handle Stripe payment events."""
-        # Implementation would process payment notifications
+        """Handle Stripe payment events."""        # Implementation would process payment notifications
         return HandlerResult(
             success=True,
             message="Stripe payment processed successfully",
@@ -308,8 +291,7 @@ class DefaultHandlerConfigs:
     
     @staticmethod
     async def fingerprint_match_handler(payload: Dict[str, Any]) -> HandlerResult:
-        """Handle content fingerprint match events."""
-        # Implementation would process fingerprint matches
+        """Handle content fingerprint match events."""        # Implementation would process fingerprint matches
         return HandlerResult(
             success=True,
             message="Fingerprint match processed successfully",
@@ -318,8 +300,7 @@ class DefaultHandlerConfigs:
     
     @staticmethod
     async def copyright_violation_handler(payload: Dict[str, Any]) -> HandlerResult:
-        """Handle copyright violation events."""
-        # Implementation would process copyright violations
+        """Handle copyright violation events."""        # Implementation would process copyright violations
         return HandlerResult(
             success=True,
             message="Copyright violation processed successfully",
@@ -328,8 +309,7 @@ class DefaultHandlerConfigs:
     
     @staticmethod
     def get_default_configs() -> List[HandlerConfig]:
-        """Get default handler configurations."""
-        return [
+        """Get default handler configurations."""        return [
             HandlerConfig(
                 name="spotify_track_handler",
                 handler_func=DefaultHandlerConfigs.spotify_track_handler,

@@ -1,5 +1,4 @@
-"""
-Template Manager
+"""Template Manager
 
 Advanced template management system for DMCA notices and legal documents
 with multi-jurisdiction support, dynamic content generation, and compliance validation.
@@ -10,7 +9,6 @@ Email: mlaiel@live.de
 ⚠️ COPYRIGHT WARNING ⚠️
 Unauthorized copying or distribution prohibited. All rights reserved © 2025 Fahed Mlaiel
 """
-
 import asyncio
 import logging
 import json
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class TemplateType(Enum):
-    """Types of legal templates"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Types of legal templates"""    DMCA_TAKEDOWN = "dmca_takedown"
     DMCA_COUNTER_NOTICE = "dmca_counter_notice"
     COPYRIGHT_NOTICE = "copyright_notice"
     CEASE_DESIST = "cease_desist"
@@ -47,8 +44,7 @@ class TemplateType(Enum):
 
 
 class TemplateFormat(Enum):
-    """Template output formats"""
-    HTML = "html"
+    """Template output formats"""    HTML = "html"
     PDF = "pdf"
     PLAIN_TEXT = "plain_text"
     DOCX = "docx"
@@ -57,8 +53,7 @@ class TemplateFormat(Enum):
 
 
 class Jurisdiction(Enum):
-    """Legal jurisdictions with specific requirements"""
-    US_FEDERAL = "us_federal"
+    """Legal jurisdictions with specific requirements"""    US_FEDERAL = "us_federal"
     US_CALIFORNIA = "us_california"
     US_NEW_YORK = "us_new_york"
     EU_GENERAL = "eu_general"
@@ -78,8 +73,7 @@ class Jurisdiction(Enum):
 
 @dataclass
 class TemplateMetadata:
-    """Template metadata and configuration"""
-    template_id: str
+    """Template metadata and configuration"""    template_id: str
     name: str
     description: str
     template_type: TemplateType
@@ -100,8 +94,7 @@ class TemplateMetadata:
 
 @dataclass
 class TemplateValidationResult:
-    """Template validation result"""
-    is_valid: bool
+    """Template validation result"""    is_valid: bool
     validation_score: float
     compliance_issues: List[str]
     recommendations: List[str]
@@ -111,8 +104,7 @@ class TemplateValidationResult:
 
 @dataclass
 class GeneratedDocument:
-    """Generated document result"""
-    document_id: str
+    """Generated document result"""    document_id: str
     template_id: str
     content: str
     format: TemplateFormat
@@ -123,8 +115,7 @@ class GeneratedDocument:
 
 
 class TemplateManager:
-    """
-    Advanced template management system for legal documents
+    """    Advanced template management system for legal documents
     
     Features:
     - Multi-jurisdiction template support
@@ -134,11 +125,9 @@ class TemplateManager:
     - Performance tracking
     - Localization support
     - Platform-specific formatting
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize template manager"""
-        self.config = config or {}
+        """Initialize template manager"""        self.config = config or {}
         self.db = get_database()
         self.validation_service = ValidationService(config)
         self.localization_service = LocalizationService(config)
@@ -214,8 +203,7 @@ class TemplateManager:
     async def create_template(self, 
                             template_data: Dict[str, Any],
                             template_content: str) -> Dict[str, Any]:
-        """
-        Create new legal document template
+        """        Create new legal document template
         
         Args:
             template_data: Template metadata and configuration
@@ -223,8 +211,7 @@ class TemplateManager:
             
         Returns:
             Created template information
-        """
-        try:
+        """        try:
             self.logger.info(f"Creating new template: {template_data.get('name')}")
             
             # Generate template ID
@@ -286,8 +273,7 @@ class TemplateManager:
                               variables: Dict[str, Any],
                               output_format: TemplateFormat = TemplateFormat.HTML,
                               platform_id: Optional[str] = None) -> GeneratedDocument:
-        """
-        Generate document from template with provided variables
+        """        Generate document from template with provided variables
         
         Args:
             template_id: ID of the template to use
@@ -297,8 +283,7 @@ class TemplateManager:
             
         Returns:
             Generated document with validation
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating document from template: {template_id}")
             
             # Load template metadata
@@ -366,16 +351,14 @@ class TemplateManager:
     
     async def get_template_library(self, 
                                  filters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """
-        Get available templates with optional filtering
+        """        Get available templates with optional filtering
         
         Args:
             filters: Optional filters for template search
             
         Returns:
             Template library with metadata
-        """
-        try:
+        """        try:
             self.logger.info("Retrieving template library")
             
             # Apply default filters
@@ -417,8 +400,7 @@ class TemplateManager:
     async def update_template(self, 
                             template_id: str,
                             updates: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Update existing template with new content or metadata
+        """        Update existing template with new content or metadata
         
         Args:
             template_id: ID of template to update
@@ -426,8 +408,7 @@ class TemplateManager:
             
         Returns:
             Update result
-        """
-        try:
+        """        try:
             self.logger.info(f"Updating template: {template_id}")
             
             # Load current template
@@ -487,8 +468,7 @@ class TemplateManager:
     async def validate_template_compliance(self, 
                                          template_id: str,
                                          jurisdiction: Optional[Jurisdiction] = None) -> Dict[str, Any]:
-        """
-        Validate template compliance with legal requirements
+        """        Validate template compliance with legal requirements
         
         Args:
             template_id: Template to validate
@@ -496,8 +476,7 @@ class TemplateManager:
             
         Returns:
             Comprehensive compliance validation
-        """
-        try:
+        """        try:
             self.logger.info(f"Validating template compliance: {template_id}")
             
             # Load template
@@ -553,8 +532,7 @@ class TemplateManager:
     # Custom Jinja2 filters
     
     def _legal_format_filter(self, value: str) -> str:
-        """Format text for legal documents"""
-        if not value:
+        """Format text for legal documents"""        if not value:
             return ""
         
         # Capitalize first letter of each sentence
@@ -563,8 +541,7 @@ class TemplateManager:
         return '. '.join(formatted_sentences)
     
     def _jurisdiction_format_filter(self, value: str, jurisdiction: str) -> str:
-        """Format content based on jurisdiction requirements"""
-        if jurisdiction == Jurisdiction.US_FEDERAL.value:
+        """Format content based on jurisdiction requirements"""        if jurisdiction == Jurisdiction.US_FEDERAL.value:
             # US formatting: use "shall" instead of "will"
             value = value.replace(' will ', ' shall ')
             value = value.replace(' Will ', ' Shall ')
@@ -576,8 +553,7 @@ class TemplateManager:
         return value
     
     def _date_legal_filter(self, value: datetime, jurisdiction: str = 'us') -> str:
-        """Format dates for legal documents"""
-        if jurisdiction.startswith('us'):
+        """Format dates for legal documents"""        if jurisdiction.startswith('us'):
             return value.strftime("%B %d, %Y")  # "January 1, 2025"
         elif jurisdiction == 'uk':
             return value.strftime("%d %B %Y")   # "1 January 2025"
@@ -585,8 +561,7 @@ class TemplateManager:
             return value.strftime("%Y-%m-%d")   # "2025-01-01"
     
     def _currency_format_filter(self, value: float, currency: str = 'USD') -> str:
-        """Format currency for legal documents"""
-        if currency == 'USD':
+        """Format currency for legal documents"""        if currency == 'USD':
             return f"${value:,.2f}"
         elif currency == 'EUR':
             return f"€{value:,.2f}"
@@ -596,8 +571,7 @@ class TemplateManager:
             return f"{value:,.2f} {currency}"
     
     def _escape_legal_filter(self, value: str) -> str:
-        """Escape special characters for legal documents"""
-        # Escape common problematic characters
+        """Escape special characters for legal documents"""        # Escape common problematic characters
         value = value.replace('&', '&amp;')
         value = value.replace('<', '&lt;')
         value = value.replace('>', '&gt;')
@@ -610,8 +584,7 @@ class TemplateManager:
     async def _validate_template_content(self, 
                                        content: str,
                                        template_data: Dict[str, Any]) -> TemplateValidationResult:
-        """Validate template content for legal compliance"""
-        issues = []
+        """Validate template content for legal compliance"""        issues = []
         recommendations = []
         risks = []
         formatting_issues = []
@@ -650,8 +623,7 @@ class TemplateManager:
         )
     
     async def _extract_required_variables(self, content: str) -> List[str]:
-        """Extract required template variables"""
-        import re
+        """Extract required template variables"""        import re
         
         # Find all {{ variable }} patterns
         variable_pattern = r'\{\{\s*([^}|]+)(?:\|[^}]*)?\s*\}\}'
@@ -667,8 +639,7 @@ class TemplateManager:
         return cleaned_vars
     
     async def _extract_optional_variables(self, content: str) -> List[str]:
-        """Extract optional template variables (with default values)"""
-        import re
+        """Extract optional template variables (with default values)"""        import re
         
         # Find variables with default values: {{ variable|default("value") }}
         default_pattern = r'\{\{\s*([^}|]+)\|default\([^)]*\)\s*\}\}'

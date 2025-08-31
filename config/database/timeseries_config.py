@@ -1,5 +1,4 @@
-"""
-Time Series Database Configuration Module for IA-Influencer Agent Platform
+"""Time Series Database Configuration Module for IA-Influencer Agent Platform
 =========================================================================
 
 Professional time series database configuration for analytics, monitoring,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -33,16 +31,14 @@ logger = logging.getLogger(__name__)
 
 
 class TimeSeriesDBType(Enum):
-    """Supported time series database types"""
-    INFLUXDB = "influxdb"
+    """Supported time series database types"""    INFLUXDB = "influxdb"
     PROMETHEUS = "prometheus"
     TIMESCALE = "timescale"
     REDIS_TIMESERIES = "redis_timeseries"
 
 
 class MetricType(Enum):
-    """Metric types for different business domains"""
-    CONTENT_PERFORMANCE = "content_performance"
+    """Metric types for different business domains"""    CONTENT_PERFORMANCE = "content_performance"
     REVENUE_ANALYTICS = "revenue_analytics"
     PLATFORM_METRICS = "platform_metrics"
     PROTECTION_ALERTS = "protection_alerts"
@@ -51,8 +47,7 @@ class MetricType(Enum):
 
 
 class AggregationType(Enum):
-    """Data aggregation types"""
-    SUM = "sum"
+    """Data aggregation types"""    SUM = "sum"
     AVERAGE = "avg"
     COUNT = "count"
     MAX = "max"
@@ -63,8 +58,7 @@ class AggregationType(Enum):
 
 @dataclass
 class TimeSeriesCredentials:
-    """Time series database authentication"""
-    username: Optional[str] = None
+    """Time series database authentication"""    username: Optional[str] = None
     password: Optional[str] = None
     token: Optional[str] = None
     organization: Optional[str] = None
@@ -74,8 +68,7 @@ class TimeSeriesCredentials:
 
 @dataclass
 class RetentionPolicy:
-    """Data retention configuration"""
-    raw_data_retention: str = "30d"  # Raw data retention
+    """Data retention configuration"""    raw_data_retention: str = "30d"  # Raw data retention
     hourly_aggregation_retention: str = "90d"  # Hourly aggregates
     daily_aggregation_retention: str = "1y"  # Daily aggregates
     monthly_aggregation_retention: str = "5y"  # Monthly aggregates
@@ -85,8 +78,7 @@ class RetentionPolicy:
 
 @dataclass
 class MetricDefinition:
-    """Definition of time series metric"""
-    name: str
+    """Definition of time series metric"""    name: str
     metric_type: MetricType
     tags: List[str] = field(default_factory=list)
     fields: List[str] = field(default_factory=list)
@@ -97,8 +89,7 @@ class MetricDefinition:
 
 @dataclass
 class TimeSeriesConfig:
-    """Professional time series database configuration"""
-    # Database configuration
+    """Professional time series database configuration"""    # Database configuration
     db_type: TimeSeriesDBType = TimeSeriesDBType.INFLUXDB
     credentials: TimeSeriesCredentials = field(default_factory=TimeSeriesCredentials)
     
@@ -196,8 +187,7 @@ class TimeSeriesConfig:
 
 
 class TimeSeriesManager:
-    """Professional time series database manager"""
-    
+    """Professional time series database manager"""    
     def __init__(self, config: TimeSeriesConfig):
         self.config = config
         self.client = None
@@ -206,8 +196,7 @@ class TimeSeriesManager:
         self._connection_pool = None
         
     async def initialize(self) -> bool:
-        """Initialize time series database connection"""
-        try:
+        """Initialize time series database connection"""        try:
             if self.config.db_type == TimeSeriesDBType.INFLUXDB:
                 await self._initialize_influxdb()
             elif self.config.db_type == TimeSeriesDBType.REDIS_TIMESERIES:
@@ -224,8 +213,7 @@ class TimeSeriesManager:
             return False
             
     async def _initialize_influxdb(self):
-        """Initialize InfluxDB connection"""
-        self.client = InfluxDBClient(
+        """Initialize InfluxDB connection"""        self.client = InfluxDBClient(
             url=self.config.credentials.url,
             token=self.config.credentials.token,
             org=self.config.credentials.organization
@@ -240,8 +228,7 @@ class TimeSeriesManager:
             raise ConnectionError("InfluxDB health check failed")
             
     async def _initialize_redis_timeseries(self):
-        """Initialize Redis TimeSeries connection"""
-        self._connection_pool = aioredis.ConnectionPool.from_url(
+        """Initialize Redis TimeSeries connection"""        self._connection_pool = aioredis.ConnectionPool.from_url(
             self.config.credentials.url,
             max_connections=self.config.connection_pool_size
         )
@@ -254,8 +241,7 @@ class TimeSeriesManager:
         fields: Dict[str, Union[int, float]],
         timestamp: Optional[datetime] = None
     ) -> bool:
-        """Write metrics to time series database"""
-        try:
+        """Write metrics to time series database"""        try:
             if not timestamp:
                 timestamp = datetime.utcnow()
                 
@@ -282,8 +268,7 @@ class TimeSeriesManager:
         fields: Dict[str, Union[int, float]],
         timestamp: datetime
     ) -> bool:
-        """Write metrics to InfluxDB"""
-        try:
+        """Write metrics to InfluxDB"""        try:
             point = Point(metric_name)
             
             # Add tags
@@ -316,8 +301,7 @@ class TimeSeriesManager:
         fields: Dict[str, Union[int, float]],
         timestamp: datetime
     ) -> bool:
-        """Write metrics to Redis TimeSeries"""
-        try:
+        """Write metrics to Redis TimeSeries"""        try:
             timestamp_ms = int(timestamp.timestamp() * 1000)
             
             for field_name, value in fields.items():
@@ -346,8 +330,7 @@ class TimeSeriesManager:
         aggregation: Optional[AggregationType] = None,
         interval: str = "1m"
     ) -> pd.DataFrame:
-        """Query metrics from time series database"""
-        try:
+        """Query metrics from time series database"""        try:
             if self.config.db_type == TimeSeriesDBType.INFLUXDB:
                 return await self._query_influxdb_metrics(
                     metric_name, start_time, end_time, tags, aggregation, interval
@@ -373,8 +356,7 @@ class TimeSeriesManager:
         aggregation: Optional[AggregationType],
         interval: str
     ) -> pd.DataFrame:
-        """Query metrics from InfluxDB"""
-        try:
+        """Query metrics from InfluxDB"""        try:
             # Build Flux query
             query_parts = [
                 f'from(bucket: "{self.config.credentials.bucket}")',
@@ -420,8 +402,7 @@ class TimeSeriesManager:
         aggregation: Optional[AggregationType],
         interval: str
     ) -> pd.DataFrame:
-        """Query metrics from Redis TimeSeries"""
-        # Redis TimeSeries query implementation
+        """Query metrics from Redis TimeSeries"""        # Redis TimeSeries query implementation
         # This would require Redis TimeSeries specific query logic
         logger.info("Redis TimeSeries query not fully implemented")
         return pd.DataFrame()
@@ -432,8 +413,7 @@ class TimeSeriesManager:
         start_time: datetime,
         end_time: datetime
     ) -> Dict[str, Any]:
-        """Get comprehensive content performance metrics"""
-        try:
+        """Get comprehensive content performance metrics"""        try:
             # Query multiple metrics for content performance
             views_df = await self.query_metrics(
                 "content_views",
@@ -489,8 +469,7 @@ class TimeSeriesManager:
         end_time: datetime,
         user_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get content protection analytics"""
-        try:
+        """Get content protection analytics"""        try:
             tags = {}
             if user_id:
                 tags["user_id"] = user_id
@@ -523,8 +502,7 @@ class TimeSeriesManager:
             return {"error": str(e)}
             
     async def close(self):
-        """Close database connections"""
-        try:
+        """Close database connections"""        try:
             if self.client:
                 if hasattr(self.client, 'close'):
                     self.client.close()
@@ -542,8 +520,7 @@ def create_timeseries_config(
     environment: str = "development",
     custom_settings: Optional[Dict[str, Any]] = None
 ) -> TimeSeriesConfig:
-    """Factory function to create time series configuration"""
-    
+    """Factory function to create time series configuration"""    
     # Environment-specific defaults
     config_defaults = {
         "development": {

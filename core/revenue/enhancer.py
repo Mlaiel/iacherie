@@ -1,5 +1,4 @@
-"""
-Revenue Enhancer - Advanced revenue growth and enhancement system
+"""Revenue Enhancer - Advanced revenue growth and enhancement system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -26,7 +25,6 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -47,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class EnhancementStrategy(Enum):
-    """Revenue enhancement strategies"""
-    CONTENT_OPTIMIZATION = "content_optimization"
+    """Revenue enhancement strategies"""    CONTENT_OPTIMIZATION = "content_optimization"
     PLATFORM_DIVERSIFICATION = "platform_diversification"
     AUDIENCE_EXPANSION = "audience_expansion"
     ENGAGEMENT_IMPROVEMENT = "engagement_improvement"
@@ -61,8 +58,7 @@ class EnhancementStrategy(Enum):
 
 
 class GrowthVector(Enum):
-    """Growth vectors for enhancement"""
-    ORGANIC_GROWTH = "organic_growth"
+    """Growth vectors for enhancement"""    ORGANIC_GROWTH = "organic_growth"
     PAID_ACQUISITION = "paid_acquisition"
     VIRAL_EXPANSION = "viral_expansion"
     PARTNERSHIP_GROWTH = "partnership_growth"
@@ -73,8 +69,7 @@ class GrowthVector(Enum):
 
 
 class EnhancementPriority(Enum):
-    """Enhancement priority levels"""
-    CRITICAL = "critical"
+    """Enhancement priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -83,8 +78,7 @@ class EnhancementPriority(Enum):
 
 @dataclass
 class GrowthMetrics:
-    """Growth metrics tracking"""
-    baseline_revenue: Decimal
+    """Growth metrics tracking"""    baseline_revenue: Decimal
     current_revenue: Decimal
     target_revenue: Decimal
     growth_rate: Decimal
@@ -95,20 +89,17 @@ class GrowthMetrics:
     
     @property
     def growth_percentage(self) -> Decimal:
-        """Calculate growth percentage from baseline"""
-        if self.baseline_revenue == 0:
+        """Calculate growth percentage from baseline"""        if self.baseline_revenue == 0:
             return Decimal('0')
         return ((self.current_revenue - self.baseline_revenue) / self.baseline_revenue) * 100
     
     @property
     def target_gap(self) -> Decimal:
-        """Calculate remaining gap to target"""
-        return max(Decimal('0'), self.target_revenue - self.current_revenue)
+        """Calculate remaining gap to target"""        return max(Decimal('0'), self.target_revenue - self.current_revenue)
     
     @property
     def progress_percentage(self) -> Decimal:
-        """Calculate progress towards target"""
-        if self.target_revenue == self.baseline_revenue:
+        """Calculate progress towards target"""        if self.target_revenue == self.baseline_revenue:
             return Decimal('100')
         total_growth_needed = self.target_revenue - self.baseline_revenue
         achieved_growth = self.current_revenue - self.baseline_revenue
@@ -117,8 +108,7 @@ class GrowthMetrics:
 
 @dataclass
 class EnhancementOpportunity:
-    """Revenue enhancement opportunity"""
-    opportunity_id: str
+    """Revenue enhancement opportunity"""    opportunity_id: str
     strategy: EnhancementStrategy
     vector: GrowthVector
     priority: EnhancementPriority
@@ -135,21 +125,18 @@ class EnhancementOpportunity:
     
     @property
     def expected_roi(self) -> Decimal:
-        """Calculate expected ROI"""
-        if self.implementation_cost == 0:
+        """Calculate expected ROI"""        if self.implementation_cost == 0:
             return Decimal('0')
         return (self.expected_impact / self.implementation_cost) * 100
     
     @property
     def risk_adjusted_impact(self) -> Decimal:
-        """Calculate risk-adjusted impact"""
-        return self.expected_impact * Decimal(str(self.success_probability))
+        """Calculate risk-adjusted impact"""        return self.expected_impact * Decimal(str(self.success_probability))
 
 
 @dataclass
 class EnhancementPlan:
-    """Comprehensive enhancement plan"""
-    plan_id: str
+    """Comprehensive enhancement plan"""    plan_id: str
     name: str
     opportunities: List[EnhancementOpportunity]
     total_investment: Decimal
@@ -161,20 +148,17 @@ class EnhancementPlan:
     
     @property
     def expected_roi(self) -> Decimal:
-        """Calculate plan's expected ROI"""
-        if self.total_investment == 0:
+        """Calculate plan's expected ROI"""        if self.total_investment == 0:
             return Decimal('0')
         return (self.expected_return / self.total_investment) * 100
     
     @property
     def opportunity_count(self) -> int:
-        """Get number of opportunities in plan"""
-        return len(self.opportunities)
+        """Get number of opportunities in plan"""        return len(self.opportunities)
 
 
 class RevenueEnhancer:
-    """Advanced revenue enhancement and growth optimization system"""
-    
+    """Advanced revenue enhancement and growth optimization system"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.enhancement_history = []
@@ -184,8 +168,7 @@ class RevenueEnhancer:
         self.growth_patterns = {}
         
     async def initialize(self) -> None:
-        """Initialize revenue enhancer"""
-        try:
+        """Initialize revenue enhancer"""        try:
             # Initialize ML models
             await self._initialize_ml_models()
             
@@ -202,8 +185,7 @@ class RevenueEnhancer:
             raise
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models"""
-        # Revenue prediction model
+        """Initialize machine learning models"""        # Revenue prediction model
         self.ml_models['revenue_predictor'] = RandomForestRegressor(
             n_estimators=100,
             random_state=42,
@@ -225,8 +207,7 @@ class RevenueEnhancer:
         )
     
     async def _load_opportunity_database(self) -> None:
-        """Load enhancement opportunities database"""
-        # In production, load from comprehensive database
+        """Load enhancement opportunities database"""        # In production, load from comprehensive database
         sample_opportunities = [
             {
                 'strategy': EnhancementStrategy.CONTENT_OPTIMIZATION,
@@ -261,8 +242,7 @@ class RevenueEnhancer:
             self.opportunity_database.append(opp_template)
     
     async def _load_growth_patterns(self) -> None:
-        """Load historical growth patterns"""
-        # Sample growth patterns for different strategies
+        """Load historical growth patterns"""        # Sample growth patterns for different strategies
         self.growth_patterns = {
             EnhancementStrategy.CONTENT_OPTIMIZATION: {
                 'avg_growth_rate': 0.15,  # 15% monthly growth
@@ -289,8 +269,7 @@ class RevenueEnhancer:
         current_metrics: Dict[str, Any],
         historical_data: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
-        """Analyze revenue enhancement potential"""
-        try:
+        """Analyze revenue enhancement potential"""        try:
             current_revenue = Decimal(str(current_metrics.get('monthly_revenue', 0)))
             
             # Analyze current performance
@@ -326,8 +305,7 @@ class RevenueEnhancer:
             raise
     
     async def _analyze_current_performance(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze current performance metrics"""
-        analysis = {
+        """Analyze current performance metrics"""        analysis = {
             'revenue_streams': [],
             'engagement_metrics': {},
             'platform_performance': {},
@@ -390,8 +368,7 @@ class RevenueEnhancer:
         return analysis
     
     def _determine_performance_tier(self, contribution_percentage: float) -> str:
-        """Determine performance tier based on contribution"""
-        if contribution_percentage >= 50:
+        """Determine performance tier based on contribution"""        if contribution_percentage >= 50:
             return "Primary"
         elif contribution_percentage >= 20:
             return "Secondary"
@@ -401,8 +378,7 @@ class RevenueEnhancer:
             return "Minimal"
     
     async def _compare_to_benchmark(self, metric: str, value: float) -> str:
-        """Compare metric to industry benchmark"""
-        # Simplified benchmark comparison
+        """Compare metric to industry benchmark"""        # Simplified benchmark comparison
         benchmarks = {
             'engagement_rate': {'excellent': 5.0, 'good': 3.0, 'average': 1.5},
             'monthly_growth_rate': {'excellent': 0.15, 'good': 0.08, 'average': 0.03},
@@ -423,8 +399,7 @@ class RevenueEnhancer:
         return "No benchmark available"
     
     async def _calculate_improvement_potential(self, metric: str, current_value: float) -> str:
-        """Calculate improvement potential for metric"""
-        # Simplified improvement potential calculation
+        """Calculate improvement potential for metric"""        # Simplified improvement potential calculation
         improvement_targets = {
             'engagement_rate': 5.0,
             'monthly_growth_rate': 0.12,
@@ -447,8 +422,7 @@ class RevenueEnhancer:
         current_metrics: Dict[str, Any],
         performance_analysis: Dict[str, Any]
     ) -> List[EnhancementOpportunity]:
-        """Identify growth opportunities based on current state"""
-        opportunities = []
+        """Identify growth opportunities based on current state"""        opportunities = []
         
         # Generate opportunities based on bottlenecks and potential
         bottlenecks = performance_analysis.get('bottlenecks', [])
@@ -477,8 +451,7 @@ class RevenueEnhancer:
         current_metrics: Dict[str, Any],
         bottlenecks: List[str]
     ) -> float:
-        """Calculate relevance score for opportunity template"""
-        relevance_score = 0.5  # Base relevance
+        """Calculate relevance score for opportunity template"""        relevance_score = 0.5  # Base relevance
         
         strategy = template['strategy']
         
@@ -513,8 +486,7 @@ class RevenueEnhancer:
         current_metrics: Dict[str, Any],
         relevance_score: float
     ) -> EnhancementOpportunity:
-        """Create specific opportunity from template"""
-        current_revenue = Decimal(str(current_metrics.get('monthly_revenue', 0)))
+        """Create specific opportunity from template"""        current_revenue = Decimal(str(current_metrics.get('monthly_revenue', 0)))
         
         # Scale impact based on current revenue and relevance
         impact_range = template['expected_impact_range']
@@ -565,8 +537,7 @@ class RevenueEnhancer:
         return opportunity
     
     async def _identify_dependencies(self, strategy: EnhancementStrategy) -> List[str]:
-        """Identify dependencies for strategy"""
-        dependencies_map = {
+        """Identify dependencies for strategy"""        dependencies_map = {
             EnhancementStrategy.CONTENT_OPTIMIZATION: [
                 "Content creation resources",
                 "SEO knowledge or expertise",
@@ -587,8 +558,7 @@ class RevenueEnhancer:
         return dependencies_map.get(strategy, [])
     
     async def _identify_risks(self, strategy: EnhancementStrategy) -> List[str]:
-        """Identify risks for strategy"""
-        risks_map = {
+        """Identify risks for strategy"""        risks_map = {
             EnhancementStrategy.CONTENT_OPTIMIZATION: [
                 "Algorithm changes affecting reach",
                 "Content saturation in niche",
@@ -609,8 +579,7 @@ class RevenueEnhancer:
         return risks_map.get(strategy, [])
     
     async def _identify_kpis(self, strategy: EnhancementStrategy) -> List[str]:
-        """Identify KPIs for strategy"""
-        kpis_map = {
+        """Identify KPIs for strategy"""        kpis_map = {
             EnhancementStrategy.CONTENT_OPTIMIZATION: [
                 "Content engagement rate",
                 "Organic reach growth",
@@ -638,8 +607,7 @@ class RevenueEnhancer:
         current_revenue: Decimal,
         opportunities: List[EnhancementOpportunity]
     ) -> Dict[str, Any]:
-        """Calculate potential revenue ranges"""
-        if not opportunities:
+        """Calculate potential revenue ranges"""        if not opportunities:
             return {
                 'conservative': str(current_revenue),
                 'realistic': str(current_revenue * Decimal('1.1')),
@@ -680,8 +648,7 @@ class RevenueEnhancer:
         opportunities: List[EnhancementOpportunity],
         historical_data: Optional[List[Dict[str, Any]]]
     ) -> List[Dict[str, Any]]:
-        """Generate growth scenarios"""
-        scenarios = []
+        """Generate growth scenarios"""        scenarios = []
         
         # Baseline scenario (no enhancements)
         scenarios.append({
@@ -751,8 +718,7 @@ class RevenueEnhancer:
         budget_limit: Optional[Decimal] = None,
         timeframe_limit: Optional[int] = None
     ) -> EnhancementPlan:
-        """Create comprehensive enhancement plan"""
-        try:
+        """Create comprehensive enhancement plan"""        try:
             plan_id = str(uuid.uuid4())
             
             # Filter opportunities based on selection
@@ -810,8 +776,7 @@ class RevenueEnhancer:
         budget_limit: Optional[Decimal],
         timeframe_limit: Optional[int]
     ) -> List[EnhancementOpportunity]:
-        """Optimize opportunity selection using constraints"""
-        # Simple greedy optimization based on ROI
+        """Optimize opportunity selection using constraints"""        # Simple greedy optimization based on ROI
         available_opportunities = []
         
         # Create sample opportunities for optimization
@@ -847,8 +812,7 @@ class RevenueEnhancer:
         plan: EnhancementPlan,
         current_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Track progress of enhancement plan"""
-        try:
+        """Track progress of enhancement plan"""        try:
             current_revenue = Decimal(str(current_metrics.get('monthly_revenue', 0)))
             
             # Calculate progress for each opportunity
@@ -908,8 +872,7 @@ class RevenueEnhancer:
         current_revenue: Decimal,
         implemented_impact: Decimal
     ) -> List[str]:
-        """Generate insights from progress tracking"""
-        insights = []
+        """Generate insights from progress tracking"""        insights = []
         
         # Progress insights
         completed_opportunities = len([
@@ -947,8 +910,7 @@ class RevenueEnhancer:
         plan: EnhancementPlan,
         progress_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Export comprehensive enhancement report"""
-        try:
+        """Export comprehensive enhancement report"""        try:
             report = {
                 'plan_info': {
                     'id': plan.plan_id,
@@ -997,8 +959,7 @@ class RevenueEnhancer:
             raise
     
     async def _generate_risk_analysis(self, plan: EnhancementPlan) -> Dict[str, Any]:
-        """Generate risk analysis for plan"""
-        all_risks = []
+        """Generate risk analysis for plan"""        all_risks = []
         for opp in plan.opportunities:
             all_risks.extend(opp.risks)
         
@@ -1018,8 +979,7 @@ class RevenueEnhancer:
         }
     
     async def _generate_mitigation_strategies(self, top_risks: List[Tuple[str, int]]) -> List[str]:
-        """Generate risk mitigation strategies"""
-        strategies = []
+        """Generate risk mitigation strategies"""        strategies = []
         
         for risk, _ in top_risks[:3]:  # Top 3 risks
             if 'algorithm' in risk.lower():
@@ -1036,8 +996,7 @@ class RevenueEnhancer:
         return strategies
     
     async def _generate_implementation_timeline(self, plan: EnhancementPlan) -> List[Dict[str, Any]]:
-        """Generate implementation timeline"""
-        timeline = []
+        """Generate implementation timeline"""        timeline = []
         
         # Sort opportunities by priority and timeframe
         sorted_opps = sorted(
@@ -1063,8 +1022,7 @@ class RevenueEnhancer:
         return timeline
     
     async def _identify_success_factors(self, plan: EnhancementPlan) -> List[str]:
-        """Identify key success factors for plan"""
-        factors = [
+        """Identify key success factors for plan"""        factors = [
             "Consistent execution of planned activities",
             "Regular monitoring and adjustment of strategies",
             "Adequate resource allocation across opportunities",
@@ -1087,7 +1045,6 @@ class RevenueEnhancer:
 
 
 async def create_revenue_enhancer(config: Optional[Dict[str, Any]] = None) -> RevenueEnhancer:
-    """Factory function to create and initialize revenue enhancer"""
-    enhancer = RevenueEnhancer(config)
+    """Factory function to create and initialize revenue enhancer"""    enhancer = RevenueEnhancer(config)
     await enhancer.initialize()
     return enhancer

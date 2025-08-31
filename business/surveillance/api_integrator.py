@@ -1,5 +1,4 @@
-"""
-🔌 API Integrator - IA Influencer Agent Surveillance Module
+"""🔌 API Integrator - IA Influencer Agent Surveillance Module
 =========================================================
 
 Advanced API integration system for connecting with platform APIs,
@@ -8,7 +7,6 @@ content detection services, and third-party surveillance tools.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import aiohttp
 import logging
@@ -28,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class APIProvider(Enum):
-    """API providers"""
-    YOUTUBE = "youtube"
+    """API providers"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -48,8 +45,7 @@ class APIProvider(Enum):
 
 
 class APIMethod(Enum):
-    """API HTTP methods"""
-    GET = "GET"
+    """API HTTP methods"""    GET = "GET"
     POST = "POST"
     PUT = "PUT"
     DELETE = "DELETE"
@@ -57,8 +53,7 @@ class APIMethod(Enum):
 
 
 class AuthType(Enum):
-    """API authentication types"""
-    NONE = "none"
+    """API authentication types"""    NONE = "none"
     API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER = "bearer"
@@ -69,8 +64,7 @@ class AuthType(Enum):
 
 @dataclass
 class APICredentials:
-    """API credentials configuration"""
-    provider: APIProvider
+    """API credentials configuration"""    provider: APIProvider
     auth_type: AuthType
     
     # Basic credentials
@@ -105,8 +99,7 @@ class APICredentials:
 
 @dataclass
 class APIRequest:
-    """API request structure"""
-    request_id: str
+    """API request structure"""    request_id: str
     provider: APIProvider
     method: APIMethod
     endpoint: str
@@ -128,8 +121,7 @@ class APIRequest:
 
 @dataclass
 class APIResponse:
-    """API response structure"""
-    request_id: str
+    """API response structure"""    request_id: str
     status_code: int
     headers: Dict[str, str] = field(default_factory=dict)
     data: Optional[Union[Dict[str, Any], str, bytes]] = None
@@ -147,8 +139,7 @@ class APIResponse:
 
 
 class BaseAPIConnector:
-    """Base class for API connectors"""
-    
+    """Base class for API connectors"""    
     def __init__(self, provider: APIProvider, credentials: APICredentials):
         self.provider = provider
         self.credentials = credentials
@@ -156,8 +147,7 @@ class BaseAPIConnector:
         self.rate_limiter = RateLimiter(credentials.rate_limit or 100)
     
     async def initialize(self) -> None:
-        """Initialize connector"""
-        self.session = aiohttp.ClientSession(
+        """Initialize connector"""        self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=self.credentials.timeout)
         )
         
@@ -166,8 +156,7 @@ class BaseAPIConnector:
             await self._refresh_oauth_token()
     
     async def _refresh_oauth_token(self) -> None:
-        """Refresh OAuth2 token if needed"""
-        if not self.credentials.refresh_token:
+        """Refresh OAuth2 token if needed"""        if not self.credentials.refresh_token:
             return
         
         if (self.credentials.token_expires_at and 
@@ -178,8 +167,7 @@ class BaseAPIConnector:
         logger.info(f"Refreshing OAuth2 token for {self.provider.value}")
     
     async def make_request(self, request: APIRequest) -> APIResponse:
-        """Make an API request"""
-        if not self.session:
+        """Make an API request"""        if not self.session:
             await self.initialize()
         
         # Check rate limits
@@ -270,13 +258,11 @@ class BaseAPIConnector:
         )
     
     def _build_url(self, request: APIRequest) -> str:
-        """Build full URL for request"""
-        base_url = self.credentials.base_url or self._get_default_base_url()
+        """Build full URL for request"""        base_url = self.credentials.base_url or self._get_default_base_url()
         return f"{base_url.rstrip('/')}/{request.endpoint.lstrip('/')}"
     
     def _get_default_base_url(self) -> str:
-        """Get default base URL for provider"""
-        urls = {
+        """Get default base URL for provider"""        urls = {
             APIProvider.YOUTUBE: "https://www.googleapis.com/youtube/v3",
             APIProvider.INSTAGRAM: "https://graph.instagram.com",
             APIProvider.FACEBOOK: "https://graph.facebook.com/v12.0",
@@ -289,8 +275,7 @@ class BaseAPIConnector:
         return urls.get(self.provider, "https://api.example.com")
     
     async def _prepare_headers(self, request: APIRequest) -> Dict[str, str]:
-        """Prepare request headers with authentication"""
-        headers = request.headers.copy()
+        """Prepare request headers with authentication"""        headers = request.headers.copy()
         
         # Add authentication headers
         if self.credentials.auth_type == AuthType.API_KEY:
@@ -325,8 +310,7 @@ class BaseAPIConnector:
         return headers
     
     async def _generate_hmac_signature(self, request: APIRequest) -> str:
-        """Generate HMAC signature for request"""
-        # Simplified HMAC signature generation
+        """Generate HMAC signature for request"""        # Simplified HMAC signature generation
         message = f"{request.method.value}{request.endpoint}{json.dumps(request.body or {})}"
         signature = hmac.new(
             self.credentials.api_secret.encode(),
@@ -337,20 +321,17 @@ class BaseAPIConnector:
         return signature
     
     async def shutdown(self) -> None:
-        """Shutdown connector"""
-        if self.session:
+        """Shutdown connector"""        if self.session:
             await self.session.close()
 
 
 class YouTubeAPIConnector(BaseAPIConnector):
-    """YouTube Data API connector"""
-    
+    """YouTube Data API connector"""    
     def __init__(self, credentials: APICredentials):
         super().__init__(APIProvider.YOUTUBE, credentials)
     
     async def search_videos(self, query: str, max_results: int = 50) -> APIResponse:
-        """Search for videos"""
-        request = APIRequest(
+        """Search for videos"""        request = APIRequest(
             request_id=f"yt_search_{uuid.uuid4().hex[:8]}",
             provider=self.provider,
             method=APIMethod.GET,
@@ -367,8 +348,7 @@ class YouTubeAPIConnector(BaseAPIConnector):
         return await self.make_request(request)
     
     async def get_video_details(self, video_id: str) -> APIResponse:
-        """Get video details"""
-        request = APIRequest(
+        """Get video details"""        request = APIRequest(
             request_id=f"yt_details_{uuid.uuid4().hex[:8]}",
             provider=self.provider,
             method=APIMethod.GET,
@@ -384,14 +364,12 @@ class YouTubeAPIConnector(BaseAPIConnector):
 
 
 class InstagramAPIConnector(BaseAPIConnector):
-    """Instagram Basic Display API connector"""
-    
+    """Instagram Basic Display API connector"""    
     def __init__(self, credentials: APICredentials):
         super().__init__(APIProvider.INSTAGRAM, credentials)
     
     async def get_user_media(self, user_id: str) -> APIResponse:
-        """Get user media"""
-        request = APIRequest(
+        """Get user media"""        request = APIRequest(
             request_id=f"ig_media_{uuid.uuid4().hex[:8]}",
             provider=self.provider,
             method=APIMethod.GET,
@@ -406,14 +384,12 @@ class InstagramAPIConnector(BaseAPIConnector):
 
 
 class TikTokAPIConnector(BaseAPIConnector):
-    """TikTok API connector"""
-    
+    """TikTok API connector"""    
     def __init__(self, credentials: APICredentials):
         super().__init__(APIProvider.TIKTOK, credentials)
     
     async def search_videos(self, query: str, count: int = 20) -> APIResponse:
-        """Search for videos"""
-        request = APIRequest(
+        """Search for videos"""        request = APIRequest(
             request_id=f"tt_search_{uuid.uuid4().hex[:8]}",
             provider=self.provider,
             method=APIMethod.POST,
@@ -432,14 +408,12 @@ class TikTokAPIConnector(BaseAPIConnector):
 
 
 class SpotifyAPIConnector(BaseAPIConnector):
-    """Spotify Web API connector"""
-    
+    """Spotify Web API connector"""    
     def __init__(self, credentials: APICredentials):
         super().__init__(APIProvider.SPOTIFY, credentials)
     
     async def search_tracks(self, query: str, limit: int = 50) -> APIResponse:
-        """Search for tracks"""
-        request = APIRequest(
+        """Search for tracks"""        request = APIRequest(
             request_id=f"spotify_search_{uuid.uuid4().hex[:8]}",
             provider=self.provider,
             method=APIMethod.GET,
@@ -455,16 +429,14 @@ class SpotifyAPIConnector(BaseAPIConnector):
 
 
 class RateLimiter:
-    """Rate limiting helper"""
-    
+    """Rate limiting helper"""    
     def __init__(self, requests_per_minute: int):
         self.requests_per_minute = requests_per_minute
         self.requests = []
         self.lock = asyncio.Lock()
     
     async def wait_if_needed(self):
-        """Wait if rate limit would be exceeded"""
-        async with self.lock:
+        """Wait if rate limit would be exceeded"""        async with self.lock:
             now = time.time()
             
             # Remove old requests (older than 1 minute)
@@ -484,11 +456,9 @@ class RateLimiter:
 
 
 class APIIntegrator:
-    """
-    Advanced API integration system for connecting with platform APIs,
+    """    Advanced API integration system for connecting with platform APIs,
     content detection services, and third-party surveillance tools
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.connectors: Dict[APIProvider, BaseAPIConnector] = {}
@@ -497,8 +467,7 @@ class APIIntegrator:
         self.initialized = False
     
     async def initialize(self) -> None:
-        """Initialize API integrator"""
-        try:
+        """Initialize API integrator"""        try:
             # Load credentials from config
             await self._load_credentials()
             
@@ -513,8 +482,7 @@ class APIIntegrator:
             raise
     
     async def _load_credentials(self) -> None:
-        """Load API credentials from configuration"""
-        credentials_config = self.config.get("api_credentials", {})
+        """Load API credentials from configuration"""        credentials_config = self.config.get("api_credentials", {})
         
         for provider_name, creds_config in credentials_config.items():
             try:
@@ -532,8 +500,7 @@ class APIIntegrator:
                 logger.warning(f"Invalid credentials configuration for {provider_name}: {e}")
     
     async def _initialize_connectors(self) -> None:
-        """Initialize API connectors"""
-        for provider, credentials in self.credentials_store.items():
+        """Initialize API connectors"""        for provider, credentials in self.credentials_store.items():
             if not credentials.active:
                 continue
             
@@ -568,8 +535,7 @@ class APIIntegrator:
         body: Optional[Union[Dict[str, Any], str, bytes]] = None,
         **kwargs
     ) -> APIResponse:
-        """Make an API request through the appropriate connector"""
-        if provider not in self.connectors:
+        """Make an API request through the appropriate connector"""        if provider not in self.connectors:
             return APIResponse(
                 request_id=f"error_{uuid.uuid4().hex[:8]}",
                 status_code=404,
@@ -611,8 +577,7 @@ class APIIntegrator:
         platforms: Optional[List[APIProvider]] = None,
         max_results_per_platform: int = 20
     ) -> Dict[APIProvider, APIResponse]:
-        """Search for content across multiple platforms"""
-        platforms = platforms or list(self.connectors.keys())
+        """Search for content across multiple platforms"""        platforms = platforms or list(self.connectors.keys())
         results = {}
         
         # Create tasks for parallel execution
@@ -650,32 +615,28 @@ class APIIntegrator:
         return results
     
     async def _search_youtube(self, query: str, max_results: int) -> APIResponse:
-        """Search YouTube"""
-        if APIProvider.YOUTUBE not in self.connectors:
+        """Search YouTube"""        if APIProvider.YOUTUBE not in self.connectors:
             raise ValueError("YouTube connector not available")
         
         connector = self.connectors[APIProvider.YOUTUBE]
         return await connector.search_videos(query, max_results)
     
     async def _search_spotify(self, query: str, max_results: int) -> APIResponse:
-        """Search Spotify"""
-        if APIProvider.SPOTIFY not in self.connectors:
+        """Search Spotify"""        if APIProvider.SPOTIFY not in self.connectors:
             raise ValueError("Spotify connector not available")
         
         connector = self.connectors[APIProvider.SPOTIFY]
         return await connector.search_tracks(query, max_results)
     
     async def _search_tiktok(self, query: str, max_results: int) -> APIResponse:
-        """Search TikTok"""
-        if APIProvider.TIKTOK not in self.connectors:
+        """Search TikTok"""        if APIProvider.TIKTOK not in self.connectors:
             raise ValueError("TikTok connector not available")
         
         connector = self.connectors[APIProvider.TIKTOK]
         return await connector.search_videos(query, max_results)
     
     async def _search_generic(self, provider: APIProvider, query: str, max_results: int) -> APIResponse:
-        """Generic search for other platforms"""
-        return await self.make_request(
+        """Generic search for other platforms"""        return await self.make_request(
             provider=provider,
             method=APIMethod.GET,
             endpoint="search",
@@ -683,8 +644,7 @@ class APIIntegrator:
         )
     
     async def get_request_statistics(self) -> Dict[str, Any]:
-        """Get API request statistics"""
-        if not self.request_history:
+        """Get API request statistics"""        if not self.request_history:
             return {"total_requests": 0}
         
         total_requests = len(self.request_history)
@@ -720,8 +680,7 @@ class APIIntegrator:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on API integrator"""
-        connector_status = {}
+        """Perform health check on API integrator"""        connector_status = {}
         
         for provider, connector in self.connectors.items():
             # Simple health check - attempt a basic request
@@ -740,8 +699,7 @@ class APIIntegrator:
         }
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown API integrator"""
-        logger.info("Shutting down API Integrator")
+        """Gracefully shutdown API integrator"""        logger.info("Shutting down API Integrator")
         
         # Shutdown all connectors
         for provider, connector in self.connectors.items():

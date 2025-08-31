@@ -1,5 +1,4 @@
-"""
-Quality Assessor - Advanced Content Quality Assessment Engine
+"""Quality Assessor - Advanced Content Quality Assessment Engine
 
 Comprehensive quality assessment system for multi-format content analysis.
 Provides detailed scoring, metrics calculation, and quality benchmarking.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import time
@@ -59,8 +57,7 @@ from ..quality_agent import QualityScore, QualityLevel, ContentType
 logger = logging.getLogger(__name__)
 
 class AssessmentCategory(Enum):
-    """Quality assessment categories"""
-    TECHNICAL = "technical"
+    """Quality assessment categories"""    TECHNICAL = "technical"
     CREATIVE = "creative"
     COMMERCIAL = "commercial"
     COMPLIANCE = "compliance"
@@ -69,8 +66,7 @@ class AssessmentCategory(Enum):
 
 @dataclass
 class AssessmentCriteria:
-    """Quality assessment criteria definition"""
-    category: AssessmentCategory
+    """Quality assessment criteria definition"""    category: AssessmentCategory
     name: str
     weight: float
     min_threshold: float
@@ -82,8 +78,7 @@ class AssessmentCriteria:
 
 @dataclass
 class AssessmentResult:
-    """Individual assessment result"""
-    criteria_name: str
+    """Individual assessment result"""    criteria_name: str
     score: float
     max_score: float
     percentage: float
@@ -95,8 +90,7 @@ class AssessmentResult:
 
 @dataclass
 class DetailedAssessment:
-    """Comprehensive assessment results"""
-    content_id: str
+    """Comprehensive assessment results"""    content_id: str
     content_type: ContentType
     overall_score: float
     category_scores: Dict[str, float]
@@ -110,8 +104,7 @@ class DetailedAssessment:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class QualityAssessor:
-    """
-    Advanced Quality Assessor for comprehensive content evaluation.
+    """    Advanced Quality Assessor for comprehensive content evaluation.
     
     Features:
     - Multi-dimensional quality assessment
@@ -122,8 +115,7 @@ class QualityAssessor:
     - Performance optimization analysis
     - Accessibility compliance validation
     - Commercial viability assessment
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None
@@ -158,8 +150,7 @@ class QualityAssessor:
         custom_criteria: Optional[List[AssessmentCriteria]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> DetailedAssessment:
-        """
-        Perform comprehensive quality assessment of content.
+        """        Perform comprehensive quality assessment of content.
         
         Args:
             content_id: Unique identifier for the content
@@ -171,8 +162,7 @@ class QualityAssessor:
             
         Returns:
             DetailedAssessment: Complete quality assessment results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             self.logger.info(f"Starting quality assessment for {content_id}")
@@ -260,8 +250,7 @@ class QualityAssessor:
         criteria: List[AssessmentCriteria],
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[AssessmentResult]:
-        """Assess specific quality category"""
-        
+        """Assess specific quality category"""        
         results = []
         
         for criterion in criteria:
@@ -327,8 +316,7 @@ class QualityAssessor:
         criterion: AssessmentCriteria,
         metadata: Optional[Dict[str, Any]] = None
     ) -> AssessmentResult:
-        """Assess technical quality aspects"""
-        
+        """Assess technical quality aspects"""        
         try:
             if content_type in [ContentType.AUDIO, ContentType.MUSIC]:
                 return await self._assess_audio_technical_quality(content_path, criterion)
@@ -353,8 +341,7 @@ class QualityAssessor:
         content_path: str,
         criterion: AssessmentCriteria
     ) -> AssessmentResult:
-        """Assess audio technical quality"""
-        
+        """Assess audio technical quality"""        
         try:
             # Load audio file
             y, sr = librosa.load(content_path)
@@ -428,8 +415,7 @@ class QualityAssessor:
         content_path: str,
         criterion: AssessmentCriteria
     ) -> AssessmentResult:
-        """Assess video technical quality"""
-        
+        """Assess video technical quality"""        
         try:
             # Open video file
             cap = cv2.VideoCapture(content_path)
@@ -510,8 +496,7 @@ class QualityAssessor:
         criterion: AssessmentCriteria,
         metadata: Optional[Dict[str, Any]] = None
     ) -> AssessmentResult:
-        """Assess creative and artistic quality"""
-        
+        """Assess creative and artistic quality"""        
         try:
             metrics = {}
             
@@ -581,8 +566,7 @@ class QualityAssessor:
 
     # Helper methods for specific analysis tasks
     def _calculate_video_stability(self, frames: List[np.ndarray]) -> float:
-        """Calculate video stability score"""
-        try:
+        """Calculate video stability score"""        try:
             if len(frames) < 2:
                 return 0.5
                 
@@ -609,8 +593,7 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_image_composition(self, image: np.ndarray) -> float:
-        """Analyze image composition quality"""
-        try:
+        """Analyze image composition quality"""        try:
             # Rule of thirds analysis
             height, width = image.shape[:2]
             thirds_h = height // 3
@@ -649,8 +632,7 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_color_harmony(self, image: np.ndarray) -> float:
-        """Analyze color harmony in image"""
-        try:
+        """Analyze color harmony in image"""        try:
             if len(image.shape) != 3:
                 return 0.5
                 
@@ -686,8 +668,7 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_text_creativity(self, text: str) -> float:
-        """Analyze text creativity and originality"""
-        try:
+        """Analyze text creativity and originality"""        try:
             # Vocabulary diversity
             words = text.lower().split()
             unique_words = set(words)
@@ -714,8 +695,7 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_musical_harmony(self, y: np.ndarray, sr: int) -> float:
-        """Analyze musical harmony and chord progressions"""
-        try:
+        """Analyze musical harmony and chord progressions"""        try:
             # Chromagram analysis
             chromagram = librosa.feature.chroma_stft(y=y, sr=sr)
             
@@ -732,8 +712,7 @@ class QualityAssessor:
             return 0.5
 
     def _analyze_rhythm_complexity(self, y: np.ndarray, sr: int) -> float:
-        """Analyze rhythmic complexity and patterns"""
-        try:
+        """Analyze rhythmic complexity and patterns"""        try:
             # Tempo and beat tracking
             tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
             
@@ -759,8 +738,7 @@ class QualityAssessor:
         percentage: float, 
         criterion: AssessmentCriteria
     ) -> str:
-        """Determine assessment status based on thresholds"""
-        
+        """Determine assessment status based on thresholds"""        
         if percentage >= criterion.target_threshold * 100:
             return "pass"
         elif percentage >= criterion.min_threshold * 100:
@@ -775,8 +753,7 @@ class QualityAssessor:
         max_score: float,
         metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate audio quality improvement recommendations"""
-        
+        """Generate audio quality improvement recommendations"""        
         recommendations = []
         percentage = (score / max_score) * 100
         
@@ -810,8 +787,7 @@ class QualityAssessor:
         max_score: float,
         metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate video quality improvement recommendations"""
-        
+        """Generate video quality improvement recommendations"""        
         recommendations = []
         percentage = (score / max_score) * 100
         
@@ -839,8 +815,7 @@ class QualityAssessor:
         max_score: float,
         metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate creative quality improvement recommendations"""
-        
+        """Generate creative quality improvement recommendations"""        
         recommendations = []
         percentage = (score / max_score) * 100
         
@@ -873,8 +848,7 @@ class QualityAssessor:
         category_scores: Dict[str, float], 
         categories: List[AssessmentCategory]
     ) -> float:
-        """Calculate weighted overall quality score"""
-        
+        """Calculate weighted overall quality score"""        
         # Default weights for categories
         default_weights = {
             AssessmentCategory.TECHNICAL: 0.30,
@@ -898,8 +872,7 @@ class QualityAssessor:
         return weighted_sum / max(total_weight, 1.0) if total_weight > 0 else 0.0
 
     def _determine_quality_grade(self, overall_score: float) -> str:
-        """Determine quality grade from overall score"""
-        
+        """Determine quality grade from overall score"""        
         if overall_score >= 90:
             return "A+"
         elif overall_score >= 85:
@@ -920,8 +893,7 @@ class QualityAssessor:
             return "F"
 
     def _check_compliance_status(self, results: List[AssessmentResult]) -> str:
-        """Check overall compliance status"""
-        
+        """Check overall compliance status"""        
         compliance_results = [r for r in results if "compliance" in r.criteria_name.lower()]
         
         if not compliance_results:
@@ -938,8 +910,7 @@ class QualityAssessor:
             return "compliant"
 
     def _calculate_improvement_potential(self, results: List[AssessmentResult]) -> float:
-        """Calculate improvement potential percentage"""
-        
+        """Calculate improvement potential percentage"""        
         if not results:
             return 0.0
             
@@ -953,8 +924,7 @@ class QualityAssessor:
             return 0.0
 
     def _initialize_nlp_models(self):
-        """Initialize NLP models for text analysis"""
-        try:
+        """Initialize NLP models for text analysis"""        try:
             # Download required NLTK data
             import nltk
             nltk.download('punkt', quiet=True)
@@ -972,8 +942,7 @@ class QualityAssessor:
             self.logger.warning(f"NLP model initialization failed: {str(e)}")
 
     def _load_assessment_criteria(self) -> Dict[str, List[AssessmentCriteria]]:
-        """Load assessment criteria for different content types"""
-        
+        """Load assessment criteria for different content types"""        
         criteria = {
             "audio": [
                 AssessmentCriteria(
@@ -1049,8 +1018,7 @@ class QualityAssessor:
         return criteria
 
     def _load_industry_benchmarks(self) -> Dict[str, Dict[str, float]]:
-        """Load industry quality benchmarks"""
-        
+        """Load industry quality benchmarks"""        
         return {
             "audio": {
                 "professional": 90.0,
@@ -1084,8 +1052,7 @@ class QualityAssessor:
         categories: List[AssessmentCategory],
         custom_criteria: Optional[List[AssessmentCriteria]] = None
     ) -> List[AssessmentCriteria]:
-        """Get assessment criteria for content type and categories"""
-        
+        """Get assessment criteria for content type and categories"""        
         criteria = []
         
         # Get standard criteria
@@ -1107,8 +1074,7 @@ class QualityAssessor:
         category_scores: Dict[str, float],
         overall_score: float
     ) -> Dict[str, Any]:
-        """Compare scores with industry benchmarks"""
-        
+        """Compare scores with industry benchmarks"""        
         content_benchmarks = self.benchmarks.get(content_type.value.lower(), {})
         
         comparison = {
@@ -1142,8 +1108,7 @@ class QualityAssessor:
         return comparison
 
     async def _update_assessment_metrics(self, assessment: DetailedAssessment) -> None:
-        """Update performance metrics for assessment"""
-        
+        """Update performance metrics for assessment"""        
         # Update processing time metrics
         content_type = assessment.content_type.value
         if content_type not in self.performance_metrics:
@@ -1165,10 +1130,8 @@ class QualityAssessor:
             metrics["score_distribution"] = metrics["score_distribution"][-1000:]
 
 class ContentScorer:
-    """
-    Specialized content scoring engine for rapid quality evaluation.
-    """
-    
+    """    Specialized content scoring engine for rapid quality evaluation.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -1177,8 +1140,7 @@ class ContentScorer:
         content_path: str,
         content_type: ContentType
     ) -> float:
-        """Generate quick quality score (0-100)"""
-        
+        """Generate quick quality score (0-100)"""        
         try:
             if content_type in [ContentType.AUDIO, ContentType.MUSIC]:
                 return await self._quick_audio_score(content_path)
@@ -1196,8 +1158,7 @@ class ContentScorer:
             return 0.0
 
     async def _quick_audio_score(self, content_path: str) -> float:
-        """Quick audio quality score"""
-        try:
+        """Quick audio quality score"""        try:
             y, sr = librosa.load(content_path, duration=30)  # Analyze first 30 seconds
             
             # Basic quality indicators
@@ -1215,8 +1176,7 @@ class ContentScorer:
             return 25.0
 
     async def _quick_video_score(self, content_path: str) -> float:
-        """Quick video quality score"""
-        try:
+        """Quick video quality score"""        try:
             cap = cv2.VideoCapture(content_path)
             
             # Basic video properties
@@ -1236,8 +1196,7 @@ class ContentScorer:
             return 25.0
 
     async def _quick_image_score(self, content_path: str) -> float:
-        """Quick image quality score"""
-        try:
+        """Quick image quality score"""        try:
             image = cv2.imread(content_path)
             height, width = image.shape[:2]
             
@@ -1255,8 +1214,7 @@ class ContentScorer:
             return 25.0
 
     async def _quick_text_score(self, content_path: str) -> float:
-        """Quick text quality score"""
-        try:
+        """Quick text quality score"""        try:
             with open(content_path, 'r', encoding='utf-8') as f:
                 text = f.read()
                 

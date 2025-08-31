@@ -52,8 +52,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class WatermarkType(Enum):
-    """Types of watermarks"""
-    VISIBLE = "visible"
+    """Types of watermarks"""    VISIBLE = "visible"
     INVISIBLE = "invisible"
     ROBUST = "robust"
     FRAGILE = "fragile"
@@ -62,8 +61,7 @@ class WatermarkType(Enum):
     SPATIAL_DOMAIN = "spatial_domain"
 
 class SecurityLevel(Enum):
-    """Security levels for content protection"""
-    BASIC = "basic"
+    """Security levels for content protection"""    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     MILITARY = "military"
@@ -71,8 +69,7 @@ class SecurityLevel(Enum):
 
 @dataclass
 class ProtectionConfig:
-    """Configuration for content protection"""
-    watermark_type: WatermarkType
+    """Configuration for content protection"""    watermark_type: WatermarkType
     security_level: SecurityLevel
     author_info: Dict[str, str]
     copyright_text: str
@@ -91,8 +88,7 @@ class ProtectionConfig:
 
 @dataclass
 class WatermarkData:
-    """Watermark payload data"""
-    creator_id: str
+    """Watermark payload data"""    creator_id: str
     creation_timestamp: datetime
     content_hash: str
     license_type: str
@@ -104,8 +100,7 @@ class WatermarkData:
     digital_signature: Optional[str] = None
 
 class ContentProtector:
-    """Advanced content protection and digital rights management system"""
-    
+    """Advanced content protection and digital rights management system"""    
     def __init__(self, master_key: Optional[bytes] = None):
         self.master_key = master_key or self._generate_master_key()
         self.protection_algorithms = self._init_protection_algorithms()
@@ -113,12 +108,10 @@ class ContentProtector:
         self.fingerprint_extractors = self._init_fingerprint_extractors()
         
     def _generate_master_key(self) -> bytes:
-        """Generate cryptographically secure master key"""
-        return secrets.token_bytes(32)  # 256-bit key
+        """Generate cryptographically secure master key"""        return secrets.token_bytes(32)  # 256-bit key
     
     def _init_protection_algorithms(self) -> Dict[str, Any]:
-        """Initialize protection algorithms"""
-        return {
+        """Initialize protection algorithms"""        return {
             'aes_encryption': self._setup_aes_encryption(),
             'steganography': self._setup_steganography(),
             'frequency_watermark': self._setup_frequency_watermarking(),
@@ -127,8 +120,7 @@ class ContentProtector:
         }
     
     def _init_watermark_generators(self) -> Dict[str, Any]:
-        """Initialize watermark generation systems"""
-        return {
+        """Initialize watermark generation systems"""        return {
             'text_watermark': TextWatermarkGenerator(),
             'logo_watermark': LogoWatermarkGenerator(),
             'qr_watermark': QRWatermarkGenerator(),
@@ -137,8 +129,7 @@ class ContentProtector:
         }
     
     def _init_fingerprint_extractors(self) -> Dict[str, Any]:
-        """Initialize fingerprint extraction systems"""
-        return {
+        """Initialize fingerprint extraction systems"""        return {
             'perceptual_hash': PerceptualHashExtractor(),
             'robust_hash': RobustHashExtractor(),
             'deep_features': DeepFeatureExtractor(),
@@ -147,8 +138,7 @@ class ContentProtector:
     
     def protect_content(self, image: np.ndarray, config: ProtectionConfig, 
                        watermark_data: WatermarkData) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply comprehensive content protection"""
-        protected_image = image.copy()
+        """Apply comprehensive content protection"""        protected_image = image.copy()
         protection_metadata = {
             'protection_timestamp': datetime.now().isoformat(),
             'protection_config': config,
@@ -217,8 +207,7 @@ class ContentProtector:
     
     def _apply_invisible_watermark(self, image: np.ndarray, watermark_data: WatermarkData, 
                                   config: ProtectionConfig) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply invisible watermark using LSB steganography"""
-        watermarked = image.copy()
+        """Apply invisible watermark using LSB steganography"""        watermarked = image.copy()
         
         # Prepare watermark payload
         payload = self._prepare_watermark_payload(watermark_data)
@@ -255,8 +244,7 @@ class ContentProtector:
     
     def _apply_robust_watermark(self, image: np.ndarray, watermark_data: WatermarkData, 
                                config: ProtectionConfig) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply robust watermark in DCT domain"""
-        watermarked = image.copy().astype(np.float32)
+        """Apply robust watermark in DCT domain"""        watermarked = image.copy().astype(np.float32)
         
         # Convert to YUV for luminance channel processing
         yuv = cv2.cvtColor(watermarked, cv2.COLOR_RGB2YUV)
@@ -311,8 +299,7 @@ class ContentProtector:
     
     def _apply_visible_watermark(self, image: np.ndarray, watermark_data: WatermarkData, 
                                 config: ProtectionConfig) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply visible watermark overlay"""
-        watermarked = image.copy()
+        """Apply visible watermark overlay"""        watermarked = image.copy()
         h, w = watermarked.shape[:2]
         
         # Create watermark overlay
@@ -376,8 +363,7 @@ class ContentProtector:
     
     def _apply_frequency_watermark(self, image: np.ndarray, watermark_data: WatermarkData, 
                                   config: ProtectionConfig) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply watermark in frequency domain using FFT"""
-        watermarked = image.copy().astype(np.float32)
+        """Apply watermark in frequency domain using FFT"""        watermarked = image.copy().astype(np.float32)
         
         # Convert to grayscale for frequency domain processing
         gray = cv2.cvtColor(watermarked, cv2.COLOR_RGB2GRAY)
@@ -421,8 +407,7 @@ class ContentProtector:
         return watermarked_rgb, metadata
     
     def _apply_encryption_layer(self, image: np.ndarray, config: ProtectionConfig) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply encryption layer for additional security"""
-        if config.security_level == SecurityLevel.BASIC:
+        """Apply encryption layer for additional security"""        if config.security_level == SecurityLevel.BASIC:
             # Simple XOR encryption
             key = secrets.token_bytes(1)[0]
             encrypted = image ^ key
@@ -457,8 +442,7 @@ class ContentProtector:
         return encrypted, metadata
     
     def _generate_content_fingerprints(self, image: np.ndarray) -> Dict[str, str]:
-        """Generate multiple content fingerprints"""
-        fingerprints = {}
+        """Generate multiple content fingerprints"""        fingerprints = {}
         
         # Perceptual hash
         pil_image = Image.fromarray(image)
@@ -477,8 +461,7 @@ class ContentProtector:
         return fingerprints
     
     def _generate_robust_hash(self, image: np.ndarray) -> str:
-        """Generate robust hash resistant to minor modifications"""
-        # Resize to standard size
+        """Generate robust hash resistant to minor modifications"""        # Resize to standard size
         resized = cv2.resize(image, (64, 64))
         
         # Convert to grayscale
@@ -502,8 +485,7 @@ class ContentProtector:
         return hash_bytes.hex()
     
     def _prepare_watermark_payload(self, watermark_data: WatermarkData) -> str:
-        """Prepare watermark payload for embedding"""
-        payload = {
+        """Prepare watermark payload for embedding"""        payload = {
             'creator_id': watermark_data.creator_id,
             'timestamp': watermark_data.creation_timestamp.isoformat(),
             'hash': watermark_data.content_hash,
@@ -515,12 +497,10 @@ class ContentProtector:
         return json.dumps(payload, separators=(',', ':'))
     
     def _string_to_bits(self, s: str) -> str:
-        """Convert string to binary representation"""
-        return ''.join(format(ord(c), '08b') for c in s)
+        """Convert string to binary representation"""        return ''.join(format(ord(c), '08b') for c in s)
     
     def _generate_watermark_pattern(self, watermark_data: WatermarkData, shape: Tuple[int, int]) -> np.ndarray:
-        """Generate pseudo-random watermark pattern based on data"""
-        # Use creator_id and timestamp as seed
+        """Generate pseudo-random watermark pattern based on data"""        # Use creator_id and timestamp as seed
         seed_string = f"{watermark_data.creator_id}{watermark_data.creation_timestamp.isoformat()}"
         seed = int(hashlib.md5(seed_string.encode()).hexdigest()[:8], 16)
         
@@ -531,8 +511,7 @@ class ContentProtector:
     
     def _generate_frequency_watermark_pattern(self, watermark_data: WatermarkData, 
                                             shape: Tuple[int, int]) -> np.ndarray:
-        """Generate frequency domain watermark pattern"""
-        h, w = shape
+        """Generate frequency domain watermark pattern"""        h, w = shape
         
         # Create circular pattern based on creator ID
         y, x = np.ogrid[:h, :w]
@@ -552,16 +531,14 @@ class ContentProtector:
         return pattern
     
     def _setup_aes_encryption(self) -> Dict[str, Any]:
-        """Setup AES encryption configuration"""
-        return {
+        """Setup AES encryption configuration"""        return {
             'key_size': 256,
             'block_size': 16,
             'mode': 'CBC'
         }
     
     def _apply_aes_encryption(self, data: np.ndarray) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply AES encryption to image data"""
-        # Convert image to bytes
+        """Apply AES encryption to image data"""        # Convert image to bytes
         data_bytes = data.tobytes()
         
         # Generate random IV
@@ -601,32 +578,28 @@ class ContentProtector:
         return encrypted_image, metadata
     
     def _setup_steganography(self) -> Dict[str, Any]:
-        """Setup steganography configuration"""
-        return {
+        """Setup steganography configuration"""        return {
             'method': 'lsb',
             'channels': ['r', 'g', 'b'],
             'bit_planes': [0, 1]
         }
     
     def _setup_frequency_watermarking(self) -> Dict[str, Any]:
-        """Setup frequency domain watermarking"""
-        return {
+        """Setup frequency domain watermarking"""        return {
             'transform': 'dct',
             'block_size': 8,
             'embedding_regions': 'mid_frequency'
         }
     
     def _setup_robust_watermarking(self) -> Dict[str, Any]:
-        """Setup robust watermarking configuration"""
-        return {
+        """Setup robust watermarking configuration"""        return {
             'redundancy_factor': 3,
             'error_correction': 'reed_solomon',
             'attack_resistance': ['compression', 'rotation', 'scaling', 'noise']
         }
     
     def _setup_blockchain_integration(self) -> Dict[str, Any]:
-        """Setup blockchain integration for copyright registration"""
-        return {
+        """Setup blockchain integration for copyright registration"""        return {
             'blockchain': 'ethereum',
             'smart_contract': 'copyright_registry',
             'gas_limit': 100000
@@ -634,8 +607,7 @@ class ContentProtector:
     
     def _register_on_blockchain(self, watermark_data: WatermarkData, 
                                protection_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Register content on blockchain using smart contracts"""
-        
+        """Register content on blockchain using smart contracts"""        
         try:
             # Prepare blockchain transaction data
             registration_data = {
@@ -684,8 +656,7 @@ class ContentProtector:
             }
     
     def _create_digital_signature(self, data: Dict[str, Any]) -> str:
-        """Create digital signature for blockchain registration"""
-        # In production, use proper cryptographic signing
+        """Create digital signature for blockchain registration"""        # In production, use proper cryptographic signing
         data_string = json.dumps(data, sort_keys=True)
         signature = hashlib.sha512(
             f"{data_string}{self.blockchain_config['private_key_hash']}".encode()
@@ -693,15 +664,13 @@ class ContentProtector:
         return signature
         
     def _upload_to_ipfs_simulation(self, metadata: Dict[str, Any]) -> str:
-        """Simulate IPFS upload for metadata storage"""
-        metadata_hash = hashlib.sha256(json.dumps(metadata, sort_keys=True).encode()).hexdigest()
+        """Simulate IPFS upload for metadata storage"""        metadata_hash = hashlib.sha256(json.dumps(metadata, sort_keys=True).encode()).hexdigest()
         ipfs_hash = f"Qm{metadata_hash[:44]}"  # IPFS-style hash
         return ipfs_hash
 
     def _generate_protection_certificate(self, original: np.ndarray, protected: np.ndarray, 
                                        metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate digital certificate for content protection"""
-        certificate = {
+        """Generate digital certificate for content protection"""        certificate = {
             'certificate_id': secrets.token_hex(16),
             'issuer': 'IA Influencer Agent Protection System',
             'issued_date': datetime.now().isoformat(),
@@ -724,8 +693,7 @@ class ContentProtector:
         return certificate
     
     def _generate_digital_signature(self, data: Dict[str, Any]) -> str:
-        """Generate digital signature for verification"""
-        # Serialize data
+        """Generate digital signature for verification"""        # Serialize data
         data_string = json.dumps(data, sort_keys=True, separators=(',', ':'))
         
         # Generate HMAC signature
@@ -738,19 +706,15 @@ class ContentProtector:
         return signature
 
 class WatermarkGenerator(ABC):
-    """Abstract base class for watermark generators"""
-    
+    """Abstract base class for watermark generators"""    
     @abstractmethod
     def generate_watermark(self, data: WatermarkData, config: ProtectionConfig) -> np.ndarray:
-        """Generate watermark overlay"""
-        pass
+        """Generate watermark overlay"""        pass
 
 class TextWatermarkGenerator(WatermarkGenerator):
-    """Text-based watermark generator"""
-    
+    """Text-based watermark generator"""    
     def generate_watermark(self, data: WatermarkData, config: ProtectionConfig) -> np.ndarray:
-        """Generate text watermark"""
-        # Create watermark text
+        """Generate text watermark"""        # Create watermark text
         text = f"© {data.copyright_holder} | {data.creation_timestamp.strftime('%Y-%m-%d')}"
         
         # Create watermark image
@@ -772,11 +736,9 @@ class TextWatermarkGenerator(WatermarkGenerator):
         return np.array(pil_watermark)
 
 class LogoWatermarkGenerator(WatermarkGenerator):
-    """Logo-based watermark generator"""
-    
+    """Logo-based watermark generator"""    
     def generate_watermark(self, data: WatermarkData, config: ProtectionConfig) -> np.ndarray:
-        """Generate logo watermark"""
-        # Create placeholder logo
+        """Generate logo watermark"""        # Create placeholder logo
         size = 100
         logo = np.zeros((size, size, 4), dtype=np.uint8)
         
@@ -793,11 +755,9 @@ class LogoWatermarkGenerator(WatermarkGenerator):
         return logo
 
 class QRWatermarkGenerator(WatermarkGenerator):
-    """QR code watermark generator"""
-    
+    """QR code watermark generator"""    
     def generate_watermark(self, data: WatermarkData, config: ProtectionConfig) -> np.ndarray:
-        """Generate QR code watermark"""
-        # Create QR code data
+        """Generate QR code watermark"""        # Create QR code data
         qr_data = {
             'creator': data.creator_id,
             'copyright': data.copyright_holder,
@@ -828,11 +788,9 @@ class QRWatermarkGenerator(WatermarkGenerator):
         return qr_array
 
 class InvisibleWatermarkGenerator(WatermarkGenerator):
-    """Invisible watermark generator using steganography"""
-    
+    """Invisible watermark generator using steganography"""    
     def generate_watermark(self, data: WatermarkData, config: ProtectionConfig) -> np.ndarray:
-        """Generate invisible watermark pattern"""
-        # Create pseudo-random pattern based on creator data
+        """Generate invisible watermark pattern"""        # Create pseudo-random pattern based on creator data
         seed_string = f"{data.creator_id}{data.content_hash}"
         seed = int(hashlib.md5(seed_string.encode()).hexdigest()[:8], 16)
         
@@ -849,11 +807,9 @@ class InvisibleWatermarkGenerator(WatermarkGenerator):
         return watermark
 
 class FrequencyWatermarkGenerator(WatermarkGenerator):
-    """Frequency domain watermark generator"""
-    
+    """Frequency domain watermark generator"""    
     def generate_watermark(self, data: WatermarkData, config: ProtectionConfig) -> np.ndarray:
-        """Generate frequency domain watermark"""
-        size = 256
+        """Generate frequency domain watermark"""        size = 256
         
         # Create frequency pattern
         y, x = np.ogrid[:size, :size]
@@ -878,27 +834,21 @@ class FrequencyWatermarkGenerator(WatermarkGenerator):
         return watermark
 
 class FingerprintExtractor(ABC):
-    """Abstract base class for fingerprint extractors"""
-    
+    """Abstract base class for fingerprint extractors"""    
     @abstractmethod
     def extract_fingerprint(self, image: np.ndarray) -> str:
-        """Extract content fingerprint"""
-        pass
+        """Extract content fingerprint"""        pass
 
 class PerceptualHashExtractor(FingerprintExtractor):
-    """Perceptual hash fingerprint extractor"""
-    
+    """Perceptual hash fingerprint extractor"""    
     def extract_fingerprint(self, image: np.ndarray) -> str:
-        """Extract perceptual hash"""
-        pil_image = Image.fromarray(image)
+        """Extract perceptual hash"""        pil_image = Image.fromarray(image)
         return str(imagehash.phash(pil_image, hash_size=16))
 
 class RobustHashExtractor(FingerprintExtractor):
-    """Robust hash extractor resistant to attacks"""
-    
+    """Robust hash extractor resistant to attacks"""    
     def extract_fingerprint(self, image: np.ndarray) -> str:
-        """Extract robust hash"""
-        # Preprocessing for robustness
+        """Extract robust hash"""        # Preprocessing for robustness
         gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         resized = cv2.resize(gray, (64, 64))
         blurred = cv2.GaussianBlur(resized, (3, 3), 0)
@@ -916,11 +866,9 @@ class RobustHashExtractor(FingerprintExtractor):
         return hash_bytes.hex()
 
 class DeepFeatureExtractor(FingerprintExtractor):
-    """Deep learning-based feature extractor using advanced CNN architectures"""
-    
+    """Deep learning-based feature extractor using advanced CNN architectures"""    
     def __init__(self):
-        """Initialize deep feature extraction model"""
-        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        """Initialize deep feature extraction model"""        self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
         self.model = self._build_feature_extraction_model()
         self.transform = transforms.Compose([
             transforms.Resize((224, 224)),
@@ -929,11 +877,9 @@ class DeepFeatureExtractor(FingerprintExtractor):
         ])
     
     def _build_feature_extraction_model(self):
-        """Build advanced feature extraction model"""
-        
+        """Build advanced feature extraction model"""        
         class DeepFingerprintCNN(nn.Module):
-            """Convolutional Neural Network for robust feature extraction"""
-            
+            """Convolutional Neural Network for robust feature extraction"""            
             def __init__(self, feature_dim=2048):
                 super().__init__()
                 
@@ -981,8 +927,7 @@ class DeepFeatureExtractor(FingerprintExtractor):
                 )
                 
             def _make_stage(self, in_channels, out_channels, num_blocks, stride):
-                """Create ResNet stage with multiple residual blocks"""
-                layers = []
+                """Create ResNet stage with multiple residual blocks"""                layers = []
                 
                 # First block with potential downsampling
                 layers.append(self._residual_block(in_channels, out_channels, stride))
@@ -994,8 +939,7 @@ class DeepFeatureExtractor(FingerprintExtractor):
                 return nn.Sequential(*layers)
                 
             def _residual_block(self, in_channels, out_channels, stride):
-                """Residual block with skip connection"""
-                return nn.Sequential(
+                """Residual block with skip connection"""                return nn.Sequential(
                     nn.Conv2d(in_channels, out_channels, 3, stride, 1, bias=False),
                     nn.BatchNorm2d(out_channels),
                     nn.ReLU(inplace=True),
@@ -1005,8 +949,7 @@ class DeepFeatureExtractor(FingerprintExtractor):
                 )
                 
             def forward(self, x):
-                """Forward pass through feature extraction network"""
-                # Extract backbone features
+                """Forward pass through feature extraction network"""                # Extract backbone features
                 features = self.backbone(x)
                 features = features.view(features.size(0), -1)  # Flatten
                 
@@ -1043,8 +986,7 @@ class DeepFeatureExtractor(FingerprintExtractor):
         return model
 
     def extract_fingerprint(self, image: np.ndarray) -> str:
-        """Extract deep learning-based robust fingerprint"""
-        try:
+        """Extract deep learning-based robust fingerprint"""        try:
             # Preprocess image
             if len(image.shape) == 3:
                 pil_image = Image.fromarray(image)
@@ -1077,8 +1019,7 @@ class DeepFeatureExtractor(FingerprintExtractor):
             return self._fallback_fingerprint(image)
     
     def _extract_robust_features(self, image: np.ndarray) -> str:
-        """Extract additional robust features for enhanced fingerprinting"""
-        try:
+        """Extract additional robust features for enhanced fingerprinting"""        try:
             # Color histogram features
             hist_r = cv2.calcHist([image], [0], None, [64], [0, 256])
             hist_g = cv2.calcHist([image], [1], None, [64], [0, 256])
@@ -1102,8 +1043,7 @@ class DeepFeatureExtractor(FingerprintExtractor):
             return "fallback_features"
     
     def _compute_lbp(self, gray_image: np.ndarray) -> np.ndarray:
-        """Compute Local Binary Pattern for texture features"""
-        h, w = gray_image.shape
+        """Compute Local Binary Pattern for texture features"""        h, w = gray_image.shape
         lbp = np.zeros_like(gray_image, dtype=np.uint8)
         
         for i in range(1, h-1):
@@ -1127,8 +1067,7 @@ class DeepFeatureExtractor(FingerprintExtractor):
         return lbp
     
     def _fallback_fingerprint(self, image: np.ndarray) -> str:
-        """Fallback fingerprinting using traditional methods"""
-        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
+        """Fallback fingerprinting using traditional methods"""        gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
         resized = cv2.resize(gray, (64, 64))
         
         # DCT-based hash
@@ -1146,11 +1085,9 @@ class DeepFeatureExtractor(FingerprintExtractor):
         return hashlib.sha256(hash_input.tobytes()).hexdigest()[:32]
 
 class ForensicHashExtractor(FingerprintExtractor):
-    """Forensic-grade hash extractor"""
-    
+    """Forensic-grade hash extractor"""    
     def extract_fingerprint(self, image: np.ndarray) -> str:
-        """Extract forensic hash"""
-        # Multi-scale analysis
+        """Extract forensic hash"""        # Multi-scale analysis
         scales = [0.5, 1.0, 2.0]
         features = []
         
@@ -1182,8 +1119,7 @@ class ForensicHashExtractor(FingerprintExtractor):
         return hashlib.sha512(combined_features.tobytes()).hexdigest()[:64]
     
     def _compute_texture_features(self, gray: np.ndarray) -> np.ndarray:
-        """Compute texture features"""
-        # Simple texture operator
+        """Compute texture features"""        # Simple texture operator
         h, w = gray.shape
         texture = np.zeros_like(gray)
         
@@ -1205,8 +1141,7 @@ class ForensicHashExtractor(FingerprintExtractor):
         return hist.flatten()
 
 class CopyrightValidator:
-    """Copyright validation and verification system"""
-    
+    """Copyright validation and verification system"""    
     def __init__(self):
         self.validation_methods = [
             'fingerprint_matching',
@@ -1216,8 +1151,7 @@ class CopyrightValidator:
         ]
     
     def validate_copyright(self, image: np.ndarray, claimed_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate copyright claims"""
-        validation_results = {
+        """Validate copyright claims"""        validation_results = {
             'valid': False,
             'confidence': 0.0,
             'verification_methods': {},
@@ -1268,8 +1202,7 @@ class CopyrightValidator:
         return validation_results
     
     def _validate_fingerprints(self, image: np.ndarray, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate content fingerprints"""
-        if 'fingerprints' not in metadata:
+        """Validate content fingerprints"""        if 'fingerprints' not in metadata:
             return {'confidence': 0.0, 'message': 'No fingerprints provided'}
         
         # Extract current fingerprints
@@ -1301,8 +1234,7 @@ class CopyrightValidator:
         }
     
     def _extract_watermarks(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract and decode watermarks"""
-        result = {
+        """Extract and decode watermarks"""        result = {
             'confidence': 0.0,
             'extracted_data': None,
             'watermark_types': []
@@ -1335,8 +1267,7 @@ class CopyrightValidator:
         return result
     
     def _extract_lsb_watermark(self, image: np.ndarray) -> Optional[Dict[str, Any]]:
-        """Extract LSB steganographic watermark"""
-        try:
+        """Extract LSB steganographic watermark"""        try:
             h, w, c = image.shape
             bits = []
             
@@ -1381,18 +1312,15 @@ class CopyrightValidator:
         return None
     
     def _extract_frequency_watermark(self, image: np.ndarray) -> Optional[Dict[str, Any]]:
-        """Extract frequency domain watermark"""
-        # Placeholder implementation
+        """Extract frequency domain watermark"""        # Placeholder implementation
         return None
     
     def _extract_robust_watermark(self, image: np.ndarray) -> Optional[Dict[str, Any]]:
-        """Extract robust DCT watermark"""
-        # Placeholder implementation
+        """Extract robust DCT watermark"""        # Placeholder implementation
         return None
     
     def _verify_digital_signature(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Verify digital signature"""
-        if 'certificate' not in metadata:
+        """Verify digital signature"""        if 'certificate' not in metadata:
             return {'confidence': 0.0, 'message': 'No certificate provided'}
         
         certificate = metadata['certificate']
@@ -1408,8 +1336,7 @@ class CopyrightValidator:
         }
     
     def _verify_blockchain_registration(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Verify blockchain registration"""
-        if 'blockchain' not in metadata:
+        """Verify blockchain registration"""        if 'blockchain' not in metadata:
             return {'confidence': 0.0, 'message': 'No blockchain registration'}
         
         blockchain_data = metadata['blockchain']

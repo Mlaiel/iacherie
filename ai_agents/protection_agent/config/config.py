@@ -1,5 +1,4 @@
-"""
-Configuration Management for Advanced Protection Agent
+"""Configuration Management for Advanced Protection Agent
 Professional configuration handling for all protection services
 
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -30,7 +29,6 @@ property of Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying,
 modification, distribution, or reverse engineering of this code or its concepts
 is strictly prohibited and will result in legal action.
 """
-
 from typing import Dict, Any, List, Optional
 from dataclasses import dataclass, field
 from enum import Enum
@@ -39,16 +37,14 @@ import json
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types"""
-    DEVELOPMENT = "development"
+    """Deployment environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     ENTERPRISE = "enterprise"
 
 
 class PerformanceProfile(Enum):
-    """Performance optimization profiles"""
-    BALANCED = "balanced"
+    """Performance optimization profiles"""    BALANCED = "balanced"
     SPEED_OPTIMIZED = "speed_optimized"
     ACCURACY_OPTIMIZED = "accuracy_optimized"
     RESOURCE_CONSERVATIVE = "resource_conservative"
@@ -56,8 +52,7 @@ class PerformanceProfile(Enum):
 
 @dataclass
 class ContentAnalysisConfig:
-    """Configuration for content analysis services"""
-    enable_audio_fingerprinting: bool = True
+    """Configuration for content analysis services"""    enable_audio_fingerprinting: bool = True
     enable_video_analysis: bool = True
     enable_image_analysis: bool = True
     enable_text_analysis: bool = True
@@ -87,8 +82,7 @@ class ContentAnalysisConfig:
 
 @dataclass
 class CopyrightConfig:
-    """Configuration for copyright management"""
-    auto_registration: bool = True
+    """Configuration for copyright management"""    auto_registration: bool = True
     enable_dmca_automation: bool = True
     dmca_response_time_hours: int = 24
     
@@ -112,8 +106,7 @@ class CopyrightConfig:
 
 @dataclass
 class RightsManagementConfig:
-    """Configuration for rights management"""
-    enable_licensing: bool = True
+    """Configuration for rights management"""    enable_licensing: bool = True
     auto_monetization: bool = True
     revenue_sharing: bool = True
     
@@ -135,8 +128,7 @@ class RightsManagementConfig:
 
 @dataclass
 class WatermarkingConfig:
-    """Configuration for watermarking services"""
-    enable_visible_watermarking: bool = False
+    """Configuration for watermarking services"""    enable_visible_watermarking: bool = False
     enable_invisible_watermarking: bool = True
     enable_digital_signatures: bool = True
     
@@ -158,8 +150,7 @@ class WatermarkingConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for monitoring and alerting"""
-    real_time_monitoring: bool = True
+    """Configuration for monitoring and alerting"""    real_time_monitoring: bool = True
     alert_notifications: bool = True
     performance_tracking: bool = True
     
@@ -179,8 +170,7 @@ class MonitoringConfig:
 
 @dataclass
 class SecurityConfig:
-    """Configuration for security settings"""
-    encryption_enabled: bool = True
+    """Configuration for security settings"""    encryption_enabled: bool = True
     encryption_algorithm: str = "aes_256"
     
     # Authentication
@@ -201,8 +191,7 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for performance optimization"""
-    profile: PerformanceProfile = PerformanceProfile.BALANCED
+    """Configuration for performance optimization"""    profile: PerformanceProfile = PerformanceProfile.BALANCED
     
     # Resource limits
     max_memory_mb: int = 4096
@@ -225,8 +214,7 @@ class PerformanceConfig:
 
 @dataclass
 class AdvancedProtectionConfig:
-    """Complete configuration for Advanced Protection Agent"""
-    
+    """Complete configuration for Advanced Protection Agent"""    
     # Environment
     environment: DeploymentEnvironment = DeploymentEnvironment.PRODUCTION
     debug_mode: bool = False
@@ -253,8 +241,7 @@ class AdvancedProtectionConfig:
     
     @classmethod
     def from_environment(cls) -> 'AdvancedProtectionConfig':
-        """Create configuration from environment variables"""
-        config = cls()
+        """Create configuration from environment variables"""        config = cls()
         
         # Environment detection
         env_name = os.getenv('PROTECTION_ENVIRONMENT', 'production').lower()
@@ -272,8 +259,7 @@ class AdvancedProtectionConfig:
     
     @classmethod
     def from_file(cls, config_file: str) -> 'AdvancedProtectionConfig':
-        """Load configuration from JSON file"""
-        try:
+        """Load configuration from JSON file"""        try:
             with open(config_file, 'r') as f:
                 data = json.load(f)
             
@@ -290,8 +276,7 @@ class AdvancedProtectionConfig:
             raise ValueError(f"Failed to load configuration from {config_file}: {str(e)}")
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        result = {}
+        """Convert configuration to dictionary"""        result = {}
         
         for key, value in self.__dict__.items():
             if hasattr(value, '__dict__'):
@@ -305,16 +290,14 @@ class AdvancedProtectionConfig:
         return result
     
     def save_to_file(self, config_file: str):
-        """Save configuration to JSON file"""
-        try:
+        """Save configuration to JSON file"""        try:
             with open(config_file, 'w') as f:
                 json.dump(self.to_dict(), f, indent=2, default=str)
         except Exception as e:
             raise ValueError(f"Failed to save configuration to {config_file}: {str(e)}")
     
     def validate(self) -> List[str]:
-        """Validate configuration settings"""
-        errors = []
+        """Validate configuration settings"""        errors = []
         
         # Validate content analysis
         if self.content_analysis.max_file_size_mb <= 0:
@@ -341,8 +324,7 @@ class AdvancedProtectionConfig:
         return errors
     
     def optimize_for_environment(self):
-        """Optimize configuration based on environment"""
-        if self.environment == DeploymentEnvironment.DEVELOPMENT:
+        """Optimize configuration based on environment"""        if self.environment == DeploymentEnvironment.DEVELOPMENT:
             self.debug_mode = True
             self.verbose_logging = True
             self.security.rate_limiting = False
@@ -389,8 +371,7 @@ ENTERPRISE_CONFIG.optimize_for_environment()
 
 
 def get_default_config(environment: str = "production") -> AdvancedProtectionConfig:
-    """Get default configuration for specified environment"""
-    env_map = {
+    """Get default configuration for specified environment"""    env_map = {
         "development": DEVELOPMENT_CONFIG,
         "production": PRODUCTION_CONFIG,
         "enterprise": ENTERPRISE_CONFIG
@@ -400,8 +381,7 @@ def get_default_config(environment: str = "production") -> AdvancedProtectionCon
 
 
 def create_custom_config(**kwargs) -> AdvancedProtectionConfig:
-    """Create custom configuration with overrides"""
-    config = AdvancedProtectionConfig()
+    """Create custom configuration with overrides"""    config = AdvancedProtectionConfig()
     
     for key, value in kwargs.items():
         if hasattr(config, key):

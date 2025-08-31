@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Commission Services - Advanced Commission Business Services and Analytics
+"""Commission Services - Advanced Commission Business Services and Analytics
 ========================================================================
 
 Professional commission service layer providing business logic, analytics, reporting,
@@ -16,7 +15,6 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -52,8 +50,7 @@ from ...database.connection import get_async_session
 logger = get_structured_logger(__name__)
 
 class ReportType(str, Enum):
-    """Report type enumeration"""
-    COMMISSION_SUMMARY = "commission_summary"
+    """Report type enumeration"""    COMMISSION_SUMMARY = "commission_summary"
     REVENUE_ANALYSIS = "revenue_analysis"
     TIER_PERFORMANCE = "tier_performance"
     PLATFORM_COMPARISON = "platform_comparison"
@@ -63,8 +60,7 @@ class ReportType(str, Enum):
     FINANCIAL_RECONCILIATION = "financial_reconciliation"
 
 class TimeFrame(str, Enum):
-    """Time frame enumeration"""
-    DAILY = "daily"
+    """Time frame enumeration"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -72,8 +68,7 @@ class TimeFrame(str, Enum):
     CUSTOM = "custom"
 
 class MetricType(str, Enum):
-    """Metric type enumeration"""
-    TOTAL_COMMISSION = "total_commission"
+    """Metric type enumeration"""    TOTAL_COMMISSION = "total_commission"
     AVERAGE_COMMISSION = "average_commission"
     COMMISSION_COUNT = "commission_count"
     REVENUE_GENERATED = "revenue_generated"
@@ -83,8 +78,7 @@ class MetricType(str, Enum):
     FRAUD_RATE = "fraud_rate"
 
 class CommissionServiceRequest(BaseModel):
-    """Commission service request model"""
-    
+    """Commission service request model"""    
     request_id: str = Field(default_factory=lambda: f"svc_req_{uuid.uuid4().hex}")
     service_type: str = Field(..., min_length=1)
     
@@ -107,8 +101,7 @@ class CommissionServiceRequest(BaseModel):
         }
 
 class CommissionServiceResponse(BaseModel):
-    """Commission service response model"""
-    
+    """Commission service response model"""    
     response_id: str = Field(..., min_length=1)
     request: CommissionServiceRequest
     
@@ -131,16 +124,13 @@ class CommissionServiceResponse(BaseModel):
         }
 
 class CommissionAnalyticsService:
-    """
-    Commission Analytics Service
+    """    Commission Analytics Service
     
     Provides comprehensive analytics and reporting capabilities for
     commission data analysis and business intelligence.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Commission Analytics Service"""
-        self.config = config or {}
+        """Initialize Commission Analytics Service"""        self.config = config or {}
         
         # Dependencies
         self._commission_manager: Optional[CommissionManager] = None
@@ -158,8 +148,7 @@ class CommissionAnalyticsService:
         logger.info("CommissionAnalyticsService initialized")
     
     async def initialize(self, commission_manager: CommissionManager) -> None:
-        """Initialize analytics service"""
-        try:
+        """Initialize analytics service"""        try:
             self._commission_manager = commission_manager
             
             # Initialize report generators
@@ -180,8 +169,7 @@ class CommissionAnalyticsService:
         filters: Optional[Dict[str, Any]] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate analytical report"""
-        try:
+        """Generate analytical report"""        try:
             logger.info(f"Generating report: {report_type.value}")
             
             # Check cache
@@ -238,8 +226,7 @@ class CommissionAnalyticsService:
         date_range: Tuple[datetime, datetime], 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate commission summary report"""
-        try:
+        """Generate commission summary report"""        try:
             async with self._session_factory() as session:
                 # Build base query
                 query = select(CommissionTransaction)
@@ -316,8 +303,7 @@ class CommissionAnalyticsService:
         date_range: Tuple[datetime, datetime], 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate revenue analysis report"""
-        try:
+        """Generate revenue analysis report"""        try:
             # Mock revenue analysis
             return {
                 "summary": {
@@ -348,8 +334,7 @@ class CommissionAnalyticsService:
         date_range: Tuple[datetime, datetime], 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate tier performance report"""
-        try:
+        """Generate tier performance report"""        try:
             # Mock tier performance analysis
             return {
                 "summary": {
@@ -417,8 +402,7 @@ class CommissionAnalyticsService:
         date_range: Tuple[datetime, datetime], 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate platform comparison report"""
-        try:
+        """Generate platform comparison report"""        try:
             return {
                 "summary": {
                     "total_platforms": 8,
@@ -475,8 +459,7 @@ class CommissionAnalyticsService:
         date_range: Tuple[datetime, datetime], 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate creator performance report"""
-        try:
+        """Generate creator performance report"""        try:
             return {
                 "summary": {
                     "total_creators": 1820,
@@ -524,8 +507,7 @@ class CommissionAnalyticsService:
         date_range: Tuple[datetime, datetime], 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate fraud analysis report"""
-        try:
+        """Generate fraud analysis report"""        try:
             return {
                 "summary": {
                     "total_transactions_analyzed": 50000,
@@ -559,8 +541,7 @@ class CommissionAnalyticsService:
         date_range: Tuple[datetime, datetime], 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate trend analysis report"""
-        try:
+        """Generate trend analysis report"""        try:
             return {
                 "summary": {
                     "overall_trend": "positive",
@@ -596,8 +577,7 @@ class CommissionAnalyticsService:
         date_range: Tuple[datetime, datetime], 
         filters: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate financial reconciliation report"""
-        try:
+        """Generate financial reconciliation report"""        try:
             return {
                 "summary": {
                     "total_commissions_due": 150000.0,
@@ -635,8 +615,7 @@ class CommissionAnalyticsService:
         time_frame: TimeFrame, 
         options: Optional[Dict[str, Any]]
     ) -> Tuple[datetime, datetime]:
-        """Generate date range for analysis"""
-        now = datetime.utcnow()
+        """Generate date range for analysis"""        now = datetime.utcnow()
         
         if time_frame == TimeFrame.DAILY:
             start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -674,21 +653,18 @@ class CommissionAnalyticsService:
         return start_date, end_date
     
     def _setup_report_generators(self) -> None:
-        """Setup report generators"""
-        # Report generators would be initialized here
+        """Setup report generators"""        # Report generators would be initialized here
         # This is a placeholder for extensibility
         pass
     
     def _setup_metric_calculators(self) -> None:
-        """Setup metric calculators"""
-        # Metric calculators would be initialized here
+        """Setup metric calculators"""        # Metric calculators would be initialized here
         # This is a placeholder for extensibility
         pass
     
     # Cache methods
     async def _get_cached_report(self, cache_key: str) -> Optional[Dict[str, Any]]:
-        """Get cached report"""
-        try:
+        """Get cached report"""        try:
             if not self._redis_client:
                 return None
             
@@ -702,8 +678,7 @@ class CommissionAnalyticsService:
         return None
     
     async def _cache_report(self, cache_key: str, report: Dict[str, Any]) -> None:
-        """Cache report"""
-        try:
+        """Cache report"""        try:
             if not self._redis_client:
                 return
             
@@ -718,16 +693,13 @@ class CommissionAnalyticsService:
             logger.warning(f"Cache storage failed: {e}")
 
 class CommissionBusinessService:
-    """
-    Commission Business Service
+    """    Commission Business Service
     
     High-level business service providing comprehensive commission
     management functionality and business logic coordination.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Commission Business Service"""
-        self.config = config or {}
+        """Initialize Commission Business Service"""        self.config = config or {}
         
         # Core components
         self._commission_manager: Optional[CommissionManager] = None
@@ -744,8 +716,7 @@ class CommissionBusinessService:
         commission_manager: CommissionManager,
         processor_manager: ProcessorManager
     ) -> None:
-        """Initialize business service"""
-        try:
+        """Initialize business service"""        try:
             self._commission_manager = commission_manager
             self._processor_manager = processor_manager
             
@@ -762,8 +733,7 @@ class CommissionBusinessService:
     
     @performance_monitor
     async def process_service_request(self, request: CommissionServiceRequest) -> CommissionServiceResponse:
-        """Process service request"""
-        start_time = datetime.utcnow()
+        """Process service request"""        start_time = datetime.utcnow()
         
         try:
             if not self._initialized:
@@ -819,8 +789,7 @@ class CommissionBusinessService:
             )
     
     async def _handle_calculate_commission(self, request: CommissionServiceRequest) -> Dict[str, Any]:
-        """Handle commission calculation request"""
-        if not self._commission_manager:
+        """Handle commission calculation request"""        if not self._commission_manager:
             raise CommissionError("Commission manager not available")
         
         # Extract parameters
@@ -836,8 +805,7 @@ class CommissionBusinessService:
         return {"calculation_result": result.dict()}
     
     async def _handle_process_payment(self, request: CommissionServiceRequest) -> Dict[str, Any]:
-        """Handle payment processing request"""
-        if not self._processor_manager:
+        """Handle payment processing request"""        if not self._processor_manager:
             raise CommissionError("Processor manager not available")
         
         # Extract parameters
@@ -853,8 +821,7 @@ class CommissionBusinessService:
         return {"payment_result": result.dict()}
     
     async def _handle_generate_report(self, request: CommissionServiceRequest) -> Dict[str, Any]:
-        """Handle report generation request"""
-        if not self._analytics_service:
+        """Handle report generation request"""        if not self._analytics_service:
             raise CommissionError("Analytics service not available")
         
         # Extract parameters
@@ -872,8 +839,7 @@ class CommissionBusinessService:
         return {"report": report}
     
     async def _handle_get_analytics(self, request: CommissionServiceRequest) -> Dict[str, Any]:
-        """Handle analytics request"""
-        # This would provide various analytics endpoints
+        """Handle analytics request"""        # This would provide various analytics endpoints
         params = request.parameters
         metric_type = params.get("metric_type", "commission_summary")
         
@@ -888,8 +854,7 @@ class CommissionBusinessService:
         return {"analytics": analytics}
     
     async def _handle_manage_tier(self, request: CommissionServiceRequest) -> Dict[str, Any]:
-        """Handle tier management request"""
-        # This would interface with tier management
+        """Handle tier management request"""        # This would interface with tier management
         params = request.parameters
         action = params.get("action")  # upgrade, downgrade, evaluate
         creator_id = params.get("creator_id")
@@ -905,8 +870,7 @@ class CommissionBusinessService:
         return {"tier_result": result}
     
     async def _handle_fraud_check(self, request: CommissionServiceRequest) -> Dict[str, Any]:
-        """Handle fraud check request"""
-        # This would interface with fraud detection
+        """Handle fraud check request"""        # This would interface with fraud detection
         params = request.parameters
         transaction_data = params.get("transaction_data")
         
@@ -921,8 +885,7 @@ class CommissionBusinessService:
         return {"fraud_result": result}
     
     async def _handle_optimize_pricing(self, request: CommissionServiceRequest) -> Dict[str, Any]:
-        """Handle pricing optimization request"""
-        # This would interface with pricing optimizer
+        """Handle pricing optimization request"""        # This would interface with pricing optimizer
         params = request.parameters
         pricing_request = params.get("pricing_request")
         
@@ -940,8 +903,7 @@ class CommissionBusinessService:
         return {"pricing_result": result}
     
     async def get_service_health(self) -> Dict[str, Any]:
-        """Get service health status"""
-        try:
+        """Get service health status"""        try:
             health = {
                 "service": "commission_business_service",
                 "status": "healthy" if self._initialized else "unhealthy",
@@ -966,8 +928,7 @@ class CommissionBusinessService:
             }
     
     async def shutdown(self) -> None:
-        """Shutdown business service"""
-        try:
+        """Shutdown business service"""        try:
             logger.info("Shutting down Commission Business Service...")
             
             if self._analytics_service:
@@ -980,8 +941,7 @@ class CommissionBusinessService:
         except Exception as e:
             logger.error(f"Business service shutdown error: {e}")
 
-"""
-Professional Commission Services
+"""Professional Commission Services
 © 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This module provides comprehensive commission business services including analytics,

@@ -27,8 +27,7 @@ Collaboration Matching → Multi-platform Distribution → Revenue Tracking → 
 
 This module ensures industrial-grade API configuration, rate limiting, authentication,
 error handling, and monitoring for the IA Influencer Agent platform.
-"""
-import logging
+"""import logging
 from typing import Dict, List, Any, Optional
 from .platform_apis import PlatformAPIConfig, PLATFORM_CONFIGS
 from .payment_apis import PaymentAPIConfig, PAYMENT_CONFIGS
@@ -278,8 +277,7 @@ Any unauthorized use, reproduction, or distribution of this code
 without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from .spotify_config import SpotifyAPIConfig
+"""from .spotify_config import SpotifyAPIConfig
 from .youtube_config import YouTubeAPIConfig
 from .instagram_config import InstagramAPIConfig
 from .tiktok_config import TikTokAPIConfig

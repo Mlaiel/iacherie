@@ -1,5 +1,4 @@
-"""
-Partition Optimizer - Performance Optimization Engine
+"""Partition Optimizer - Performance Optimization Engine
 
 Ultra-industrial partition optimization system for maximum database performance.
 Provides intelligent partition optimization, index management, query planning,
@@ -23,7 +22,6 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, or distribution is strictly prohibited.
 """
-
 import logging
 import time
 import threading
@@ -44,8 +42,7 @@ import psutil
 logger = logging.getLogger(__name__)
 
 class OptimizationStrategy(Enum):
-    """Optimization strategy types"""
-    AGGRESSIVE = "aggressive"
+    """Optimization strategy types"""    AGGRESSIVE = "aggressive"
     BALANCED = "balanced"
     CONSERVATIVE = "conservative"
     MAINTENANCE_ONLY = "maintenance_only"
@@ -53,8 +50,7 @@ class OptimizationStrategy(Enum):
     STORAGE_OPTIMIZED = "storage_optimized"
 
 class OptimizationMetric(Enum):
-    """Performance metrics to optimize"""
-    QUERY_RESPONSE_TIME = "query_response_time"
+    """Performance metrics to optimize"""    QUERY_RESPONSE_TIME = "query_response_time"
     THROUGHPUT = "throughput"
     STORAGE_EFFICIENCY = "storage_efficiency"
     INDEX_EFFICIENCY = "index_efficiency"
@@ -63,23 +59,20 @@ class OptimizationMetric(Enum):
     CONNECTION_UTILIZATION = "connection_utilization"
 
 class PerformanceThreshold(Enum):
-    """Performance threshold levels"""
-    CRITICAL = "critical"
+    """Performance threshold levels"""    CRITICAL = "critical"
     WARNING = "warning"
     OPTIMAL = "optimal"
     EXCELLENT = "excellent"
 
 class IndexStrategy(Enum):
-    """Index creation strategies"""
-    MINIMAL = "minimal"
+    """Index creation strategies"""    MINIMAL = "minimal"
     STANDARD = "standard"
     COMPREHENSIVE = "comprehensive"
     QUERY_DRIVEN = "query_driven"
     WORKLOAD_ADAPTIVE = "workload_adaptive"
 
 class VacuumStrategy(Enum):
-    """Vacuum operation strategies"""
-    FULL_VACUUM = "full_vacuum"
+    """Vacuum operation strategies"""    FULL_VACUUM = "full_vacuum"
     INCREMENTAL = "incremental"
     ANALYZE_ONLY = "analyze_only"
     SMART_VACUUM = "smart_vacuum"
@@ -87,8 +80,7 @@ class VacuumStrategy(Enum):
 
 @dataclass
 class PartitionStatistics:
-    """Comprehensive partition statistics"""
-    partition_name: str
+    """Comprehensive partition statistics"""    partition_name: str
     table_name: str
     row_count: int = 0
     table_size_bytes: int = 0
@@ -112,8 +104,7 @@ class PartitionStatistics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation with detailed analysis"""
-    partition_name: str
+    """Optimization recommendation with detailed analysis"""    partition_name: str
     recommendation_type: str
     priority: str  # HIGH, MEDIUM, LOW
     description: str
@@ -128,8 +119,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class QueryPerformanceMetrics:
-    """Query performance analysis metrics"""
-    query_hash: str
+    """Query performance analysis metrics"""    query_hash: str
     query_text: str
     execution_count: int
     total_time: float
@@ -144,8 +134,7 @@ class QueryPerformanceMetrics:
     last_executed: datetime = field(default_factory=datetime.utcnow)
 
 class StatisticsCollector:
-    """Advanced statistics collection and analysis system"""
-    
+    """Advanced statistics collection and analysis system"""    
     def __init__(self, session_factory):
         self.session_factory = session_factory
         self.statistics_cache = {}
@@ -154,12 +143,10 @@ class StatisticsCollector:
         self.max_history_points = 288  # 24 hours of 5-minute intervals
         
     def collect_partition_statistics(self, partition_name: str) -> PartitionStatistics:
-        """Collect comprehensive statistics for a partition"""
-        try:
+        """Collect comprehensive statistics for a partition"""        try:
             with self.session_factory() as session:
                 # Basic table statistics
-                basic_stats = session.execute(text(f"""
-                    SELECT 
+                basic_stats = session.execute(text(f"""                    SELECT 
                         schemaname,
                         tablename,
                         n_tup_ins,
@@ -181,16 +168,14 @@ class StatisticsCollector:
                 """)).fetchone()
                 
                 # Table size information
-                size_stats = session.execute(text(f"""
-                    SELECT 
+                size_stats = session.execute(text(f"""                    SELECT 
                         pg_total_relation_size('{partition_name}') as total_size,
                         pg_relation_size('{partition_name}') as table_size,
                         pg_indexes_size('{partition_name}') as index_size
                 """)).fetchone()
                 
                 # Cache hit ratios
-                cache_stats = session.execute(text(f"""
-                    SELECT 
+                cache_stats = session.execute(text(f"""                    SELECT 
                         CASE 
                             WHEN heap_blks_read + heap_blks_hit = 0 THEN 0
                             ELSE heap_blks_hit::float / (heap_blks_read + heap_blks_hit) * 100
@@ -205,8 +190,7 @@ class StatisticsCollector:
                 """)).fetchone()
                 
                 # Bloat estimation
-                bloat_stats = session.execute(text(f"""
-                    WITH table_stats AS (
+                bloat_stats = session.execute(text(f"""                    WITH table_stats AS (
                         SELECT 
                             schemaname,
                             tablename,
@@ -226,8 +210,7 @@ class StatisticsCollector:
                 """)).fetchone()
                 
                 # Query performance metrics
-                query_stats = session.execute(text(f"""
-                    SELECT 
+                query_stats = session.execute(text(f"""                    SELECT 
                         COUNT(*) as query_count,
                         AVG(total_time) as avg_time,
                         SUM(calls) as total_calls
@@ -280,8 +263,7 @@ class StatisticsCollector:
             return PartitionStatistics(partition_name=partition_name, table_name=partition_name)
     
     def _calculate_fragmentation_level(self, stats: PartitionStatistics) -> float:
-        """Calculate table fragmentation level"""
-        if stats.live_tuples == 0:
+        """Calculate table fragmentation level"""        if stats.live_tuples == 0:
             return 0.0
         
         # Fragmentation based on dead tuples ratio and table bloat
@@ -291,8 +273,7 @@ class StatisticsCollector:
         return min(fragmentation * 100, 100.0)
     
     def _calculate_hotspot_score(self, stats: PartitionStatistics) -> float:
-        """Calculate partition hotspot score based on activity"""
-        # Normalize metrics to 0-1 scale
+        """Calculate partition hotspot score based on activity"""        # Normalize metrics to 0-1 scale
         normalized_qps = min(stats.queries_per_second / 1000, 1.0)  # Max 1000 QPS
         normalized_size = min(stats.total_size_bytes / (1024**3), 1.0)  # Max 1GB
         
@@ -306,8 +287,7 @@ class StatisticsCollector:
         return hotspot_score * 100
 
 class PartitionOptimizer:
-    """
-    Ultra-industrial partition optimizer for maximum database performance
+    """    Ultra-industrial partition optimizer for maximum database performance
     
     Provides intelligent optimization strategies including:
     - Automated partition analysis and optimization
@@ -317,17 +297,14 @@ class PartitionOptimizer:
     - Performance threshold monitoring
     - Cost-based optimization recommendations
     - Automated vacuum and analyze operations
-    """
-    
+    """    
     def __init__(self, session_factory, config: Dict[str, Any] = None):
-        """
-        Initialize partition optimizer
+        """        Initialize partition optimizer
         
         Args:
             session_factory: SQLAlchemy session factory
             config: Configuration dictionary
-        """
-        self.session_factory = session_factory
+        """        self.session_factory = session_factory
         self.config = config or {}
         
         # Optimization configuration
@@ -362,16 +339,14 @@ class PartitionOptimizer:
         logger.info(f"PartitionOptimizer initialized with {self.strategy.value} strategy")
 
     def analyze_partition_performance(self, partition_name: str) -> Dict[str, Any]:
-        """
-        Perform comprehensive performance analysis of a partition
+        """        Perform comprehensive performance analysis of a partition
         
         Args:
             partition_name: Name of the partition to analyze
             
         Returns:
             Dict containing detailed performance analysis
-        """
-        try:
+        """        try:
             # Collect current statistics
             stats = self.statistics_collector.collect_partition_statistics(partition_name)
             
@@ -416,8 +391,7 @@ class PartitionOptimizer:
             return {'error': str(e)}
 
     def _assess_performance_status(self, stats: PartitionStatistics) -> Dict[str, str]:
-        """Assess overall performance status based on thresholds"""
-        status = {}
+        """Assess overall performance status based on thresholds"""        status = {}
         
         # Response time assessment
         if stats.avg_query_time > self.thresholds['response_time_critical']:
@@ -465,8 +439,7 @@ class PartitionOptimizer:
         return status
 
     def _generate_recommendations(self, stats: PartitionStatistics) -> List[OptimizationRecommendation]:
-        """Generate intelligent optimization recommendations"""
-        recommendations = []
+        """Generate intelligent optimization recommendations"""        recommendations = []
         
         try:
             # Vacuum recommendation
@@ -606,8 +579,7 @@ class PartitionOptimizer:
         return recommendations
 
     def _estimate_vacuum_time(self, stats: PartitionStatistics, vacuum_type: str) -> int:
-        """Estimate vacuum operation time in minutes"""
-        base_time = stats.total_size_bytes / (1024**3) * 5  # 5 minutes per GB
+        """Estimate vacuum operation time in minutes"""        base_time = stats.total_size_bytes / (1024**3) * 5  # 5 minutes per GB
         
         if vacuum_type == "FULL":
             base_time *= 3  # Full vacuum takes 3x longer
@@ -618,8 +590,7 @@ class PartitionOptimizer:
         return max(int(base_time * bloat_factor), 1)
 
     def _analyze_performance_trends(self, partition_name: str) -> Dict[str, Any]:
-        """Analyze performance trends over time"""
-        try:
+        """Analyze performance trends over time"""        try:
             historical_data = self.historical_data[partition_name]
             
             if len(historical_data) < 2:
@@ -656,12 +627,10 @@ class PartitionOptimizer:
             return {'error': str(e)}
 
     def _analyze_indexes(self, partition_name: str) -> Dict[str, Any]:
-        """Analyze index usage and efficiency"""
-        try:
+        """Analyze index usage and efficiency"""        try:
             with self.session_factory() as session:
                 # Get index usage statistics
-                index_stats = session.execute(text(f"""
-                    SELECT 
+                index_stats = session.execute(text(f"""                    SELECT 
                         schemaname,
                         tablename,
                         indexname,
@@ -708,8 +677,7 @@ class PartitionOptimizer:
             return {'error': str(e)}
 
     def _generate_index_recommendations(self, unused_indexes: List[Dict], heavy_indexes: List[Dict]) -> List[str]:
-        """Generate index optimization recommendations"""
-        recommendations = []
+        """Generate index optimization recommendations"""        recommendations = []
         
         if unused_indexes:
             recommendations.append(f"Consider dropping {len(unused_indexes)} unused indexes to save space and improve write performance")
@@ -722,12 +690,10 @@ class PartitionOptimizer:
         return recommendations
 
     def _analyze_query_patterns(self, partition_name: str) -> Dict[str, Any]:
-        """Analyze query patterns and performance"""
-        try:
+        """Analyze query patterns and performance"""        try:
             with self.session_factory() as session:
                 # Get query statistics from pg_stat_statements
-                query_stats = session.execute(text(f"""
-                    SELECT 
+                query_stats = session.execute(text(f"""                    SELECT 
                         LEFT(query, 100) as query_sample,
                         calls,
                         total_time,
@@ -775,8 +741,7 @@ class PartitionOptimizer:
             return {'error': str(e)}
 
     def _generate_query_recommendations(self, slow_queries: List[Dict]) -> List[str]:
-        """Generate query optimization recommendations"""
-        recommendations = []
+        """Generate query optimization recommendations"""        recommendations = []
         
         if slow_queries:
             recommendations.append(f"Optimize {len(slow_queries)} slow queries identified")
@@ -793,8 +758,7 @@ class PartitionOptimizer:
         return recommendations
 
     def optimize_partition(self, partition_name: str, strategy: OptimizationStrategy = None) -> Dict[str, Any]:
-        """
-        Execute comprehensive partition optimization
+        """        Execute comprehensive partition optimization
         
         Args:
             partition_name: Name of partition to optimize
@@ -802,8 +766,7 @@ class PartitionOptimizer:
             
         Returns:
             Dict containing optimization results
-        """
-        try:
+        """        try:
             strategy = strategy or self.strategy
             logger.info(f"Starting optimization for partition {partition_name} with {strategy.value} strategy")
             
@@ -851,8 +814,7 @@ class PartitionOptimizer:
 
     def _should_execute_recommendation(self, recommendation: OptimizationRecommendation, 
                                      strategy: OptimizationStrategy) -> bool:
-        """Determine if a recommendation should be executed based on strategy"""
-        
+        """Determine if a recommendation should be executed based on strategy"""        
         if strategy == OptimizationStrategy.CONSERVATIVE:
             return recommendation.priority == "LOW" and "ANALYZE" in recommendation.recommendation_type
         
@@ -874,8 +836,7 @@ class PartitionOptimizer:
         return False
 
     def _execute_optimization(self, recommendation: OptimizationRecommendation) -> Dict[str, Any]:
-        """Execute a specific optimization recommendation"""
-        start_time = time.time()
+        """Execute a specific optimization recommendation"""        start_time = time.time()
         result = {
             'recommendation_type': recommendation.recommendation_type,
             'partition_name': recommendation.partition_name,
@@ -915,8 +876,7 @@ class PartitionOptimizer:
         return result
 
     def _is_maintenance_window(self) -> bool:
-        """Check if current time is within maintenance window"""
-        current_hour = datetime.now().hour
+        """Check if current time is within maintenance window"""        current_hour = datetime.now().hour
         start_hour, end_hour = self.maintenance_window_hours
         
         if start_hour <= end_hour:
@@ -925,16 +885,14 @@ class PartitionOptimizer:
             return current_hour >= start_hour or current_hour <= end_hour
 
     def get_optimization_report(self, partition_name: str = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive optimization report
+        """        Generate comprehensive optimization report
         
         Args:
             partition_name: Optional specific partition, otherwise all partitions
             
         Returns:
             Dict containing detailed optimization report
-        """
-        try:
+        """        try:
             report = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'summary': {},
@@ -990,8 +948,7 @@ class PartitionOptimizer:
             return {'error': str(e)}
 
     def _generate_system_recommendations(self) -> List[str]:
-        """Generate system-wide optimization recommendations"""
-        recommendations = []
+        """Generate system-wide optimization recommendations"""        recommendations = []
         
         # Analyze optimization history patterns
         if len(self.optimization_history) > 5:
@@ -1018,8 +975,7 @@ class PartitionOptimizer:
         return recommendations
 
     def start_continuous_optimization(self):
-        """Start continuous optimization monitoring"""
-        try:
+        """Start continuous optimization monitoring"""        try:
             if self._optimization_active:
                 logger.warning("Continuous optimization is already active")
                 return
@@ -1045,13 +1001,11 @@ class PartitionOptimizer:
             logger.error(f"Failed to start continuous optimization: {e}")
 
     def stop_continuous_optimization(self):
-        """Stop continuous optimization monitoring"""
-        self._optimization_active = False
+        """Stop continuous optimization monitoring"""        self._optimization_active = False
         logger.info("Continuous optimization stopped")
 
     def shutdown(self):
-        """Shutdown optimizer gracefully"""
-        try:
+        """Shutdown optimizer gracefully"""        try:
             logger.info("Shutting down partition optimizer...")
             
             # Stop continuous optimization
@@ -1066,12 +1020,10 @@ class PartitionOptimizer:
             logger.error(f"Error during optimizer shutdown: {e}")
 
     def __enter__(self):
-        """Context manager entry"""
-        return self
+        """Context manager entry"""        return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit"""
-        self.shutdown()
+        """Context manager exit"""        self.shutdown()
     index_scan_ratio: float = 0.0
     sequential_scan_ratio: float = 0.0
     last_vacuum: Optional[datetime] = None
@@ -1080,8 +1032,7 @@ class PartitionOptimizer:
 
 @dataclass
 class OptimizationTask:
-    """Optimization task definition"""
-    task_id: str
+    """Optimization task definition"""    task_id: str
     partition_name: str
     operation_type: str
     priority: int = 5
@@ -1094,8 +1045,7 @@ class OptimizationTask:
 
 @dataclass
 class PerformanceReport:
-    """Performance analysis report"""
-    partition_name: str
+    """Performance analysis report"""    partition_name: str
     performance_score: float = 0.0
     threshold_level: PerformanceThreshold = PerformanceThreshold.OPTIMAL
     recommendations: List[str] = field(default_factory=list)
@@ -1105,8 +1055,7 @@ class PerformanceReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class StatisticsCollector:
-    """Collects and analyzes partition statistics"""
-    
+    """Collects and analyzes partition statistics"""    
     def __init__(self, session_factory):
         self.session_factory = session_factory
         self.statistics_cache: Dict[str, PartitionStatistics] = {}
@@ -1114,12 +1063,10 @@ class StatisticsCollector:
         self.max_cache_age = 3600  # 1 hour
     
     def collect_partition_statistics(self, partition_name: str) -> PartitionStatistics:
-        """Collect comprehensive statistics for a partition"""
-        try:
+        """Collect comprehensive statistics for a partition"""        try:
             with self.session_factory() as session:
                 # Get basic table statistics
-                basic_stats_query = text(f"""
-                    SELECT 
+                basic_stats_query = text(f"""                    SELECT 
                         schemaname,
                         tablename,
                         attname,
@@ -1137,8 +1084,7 @@ class StatisticsCollector:
                 basic_stats = session.execute(basic_stats_query, {'partition_name': partition_name}).fetchall()
                 
                 # Get table size information
-                size_query = text(f"""
-                    SELECT 
+                size_query = text(f"""                    SELECT 
                         pg_total_relation_size('{partition_name}') as total_size,
                         pg_relation_size('{partition_name}') as table_size,
                         pg_indexes_size('{partition_name}') as index_size
@@ -1147,8 +1093,7 @@ class StatisticsCollector:
                 size_result = session.execute(size_query).fetchone()
                 
                 # Get row count and vacuum statistics
-                vacuum_stats_query = text(f"""
-                    SELECT 
+                vacuum_stats_query = text(f"""                    SELECT 
                         schemaname,
                         tablename,
                         n_tup_ins,
@@ -1171,8 +1116,7 @@ class StatisticsCollector:
                 vacuum_stats = session.execute(vacuum_stats_query, {'partition_name': partition_name}).fetchone()
                 
                 # Get query performance statistics
-                query_stats_query = text(f"""
-                    SELECT 
+                query_stats_query = text(f"""                    SELECT 
                         seq_scan,
                         seq_tup_read,
                         idx_scan,
@@ -1217,15 +1161,13 @@ class StatisticsCollector:
             return PartitionStatistics(partition_name=partition_name, table_name="unknown")
     
     def get_cached_statistics(self, partition_name: str) -> Optional[PartitionStatistics]:
-        """Get cached statistics if available and fresh"""
-        stats = self.statistics_cache.get(partition_name)
+        """Get cached statistics if available and fresh"""        stats = self.statistics_cache.get(partition_name)
         if stats and (datetime.utcnow() - stats.last_updated).seconds < self.max_cache_age:
             return stats
         return None
     
     def collect_all_statistics(self, partition_names: List[str]) -> Dict[str, PartitionStatistics]:
-        """Collect statistics for multiple partitions in parallel"""
-        results = {}
+        """Collect statistics for multiple partitions in parallel"""        results = {}
         
         with ThreadPoolExecutor(max_workers=8) as executor:
             future_to_partition = {
@@ -1244,8 +1186,7 @@ class StatisticsCollector:
         return results
 
 class PartitionOptimizer:
-    """
-    Ultra-industrial partition optimization engine
+    """    Ultra-industrial partition optimization engine
     
     Provides comprehensive partition optimization including:
     - Performance analysis and recommendations
@@ -1253,17 +1194,14 @@ class PartitionOptimizer:
     - Vacuum and maintenance scheduling
     - Query optimization suggestions
     - Resource utilization optimization
-    """
-    
+    """    
     def __init__(self, session_factory, config: Dict[str, Any] = None):
-        """
-        Initialize partition optimizer
+        """        Initialize partition optimizer
         
         Args:
             session_factory: SQLAlchemy session factory
             config: Configuration dictionary
-        """
-        self.session_factory = session_factory
+        """        self.session_factory = session_factory
         self.config = config or {}
         
         # Optimization configuration
@@ -1320,16 +1258,14 @@ class PartitionOptimizer:
         logger.info(f"PartitionOptimizer initialized with strategy: {self.strategy}")
     
     def optimize_partition(self, partition_name: str) -> PerformanceReport:
-        """
-        Perform comprehensive optimization for a partition
+        """        Perform comprehensive optimization for a partition
         
         Args:
             partition_name: Name of partition to optimize
             
         Returns:
             PerformanceReport: Optimization results and recommendations
-        """
-        try:
+        """        try:
             logger.info(f"Starting optimization for partition: {partition_name}")
             
             # Collect current statistics
@@ -1370,8 +1306,7 @@ class PartitionOptimizer:
             )
     
     def _analyze_partition_performance(self, partition_name: str, stats: PartitionStatistics) -> PerformanceReport:
-        """Analyze partition performance and generate report"""
-        report = PerformanceReport(partition_name=partition_name)
+        """Analyze partition performance and generate report"""        report = PerformanceReport(partition_name=partition_name)
         
         # Calculate performance metrics
         metrics = {}
@@ -1461,8 +1396,7 @@ class PartitionOptimizer:
     
     def _generate_optimization_plan(self, partition_name: str, stats: PartitionStatistics, 
                                   report: PerformanceReport) -> List[OptimizationTask]:
-        """Generate optimization plan based on analysis"""
-        tasks = []
+        """Generate optimization plan based on analysis"""        tasks = []
         task_counter = 0
         
         # High priority: Critical performance issues
@@ -1540,8 +1474,7 @@ class PartitionOptimizer:
         return tasks
     
     def _execute_optimizations(self, partition_name: str, tasks: List[OptimizationTask]) -> List[str]:
-        """Execute optimization tasks"""
-        applied_optimizations = []
+        """Execute optimization tasks"""        applied_optimizations = []
         
         # Sort tasks by priority
         tasks.sort(key=lambda t: t.priority)
@@ -1567,8 +1500,7 @@ class PartitionOptimizer:
         return applied_optimizations
     
     def _execute_optimization_task(self, task: OptimizationTask) -> bool:
-        """Execute individual optimization task"""
-        try:
+        """Execute individual optimization task"""        try:
             with self.session_factory() as session:
                 if task.operation_type == "VACUUM":
                     session.execute(text(f"VACUUM {task.partition_name}"))
@@ -1593,11 +1525,9 @@ class PartitionOptimizer:
             return False
     
     def _optimize_indexes(self, session: Session, partition_name: str) -> bool:
-        """Optimize indexes for partition"""
-        try:
+        """Optimize indexes for partition"""        try:
             # Get current indexes
-            indexes_query = text(f"""
-                SELECT 
+            indexes_query = text(f"""                SELECT 
                     indexname,
                     indexdef,
                     pg_relation_size(indexname::regclass) as size_bytes
@@ -1611,8 +1541,7 @@ class PartitionOptimizer:
             # Analyze index usage
             for index in indexes:
                 # Get index usage statistics
-                usage_query = text(f"""
-                    SELECT 
+                usage_query = text(f"""                    SELECT 
                         idx_scan,
                         idx_tup_read,
                         idx_tup_fetch
@@ -1637,14 +1566,12 @@ class PartitionOptimizer:
             return False
     
     def _create_missing_indexes(self, session: Session, partition_name: str):
-        """Create missing indexes based on table structure and usage patterns"""
-        try:
+        """Create missing indexes based on table structure and usage patterns"""        try:
             # This is a simplified implementation
             # In practice, you would analyze query logs and execution plans
             
             # Get table columns
-            columns_query = text(f"""
-                SELECT 
+            columns_query = text(f"""                SELECT 
                     column_name,
                     data_type,
                     is_nullable
@@ -1673,8 +1600,7 @@ class PartitionOptimizer:
                     # Check if index already exists
                     index_name = f"idx_{partition_name}_{'_'.join(pattern_columns)}"
                     
-                    existing_query = text(f"""
-                        SELECT 1 FROM pg_indexes 
+                    existing_query = text(f"""                        SELECT 1 FROM pg_indexes 
                         WHERE tablename = '{partition_name}' 
                         AND indexname = '{index_name}'
                     """)
@@ -1683,11 +1609,9 @@ class PartitionOptimizer:
                     
                     if not exists:
                         try:
-                            create_index_sql = f"""
-                                CREATE INDEX IF NOT EXISTS {index_name} 
+                            create_index_sql = f"""                                CREATE INDEX IF NOT EXISTS {index_name} 
                                 ON {partition_name} ({', '.join(pattern_columns)})
-                            """
-                            session.execute(text(create_index_sql))
+                            """                            session.execute(text(create_index_sql))
                             logger.info(f"Created index: {index_name}")
                         except Exception as e:
                             logger.warning(f"Failed to create index {index_name}: {e}")
@@ -1696,8 +1620,7 @@ class PartitionOptimizer:
             logger.error(f"Failed to create missing indexes for {partition_name}: {e}")
     
     def optimize_multiple_partitions(self, partition_names: List[str]) -> Dict[str, PerformanceReport]:
-        """Optimize multiple partitions in parallel"""
-        reports = {}
+        """Optimize multiple partitions in parallel"""        reports = {}
         
         with ThreadPoolExecutor(max_workers=4) as executor:
             future_to_partition = {
@@ -1721,8 +1644,7 @@ class PartitionOptimizer:
         return reports
     
     def get_optimization_summary(self) -> Dict[str, Any]:
-        """Get comprehensive optimization summary"""
-        try:
+        """Get comprehensive optimization summary"""        try:
             total_partitions = len(self.performance_reports)
             
             # Count by threshold level
@@ -1768,8 +1690,7 @@ class PartitionOptimizer:
             return {'error': str(e)}
     
     def _generate_global_recommendations(self) -> List[str]:
-        """Generate global optimization recommendations"""
-        recommendations = []
+        """Generate global optimization recommendations"""        recommendations = []
         
         if not self.performance_reports:
             return ["No partition data available for analysis"]
@@ -1799,8 +1720,7 @@ class PartitionOptimizer:
         return recommendations
     
     def start_continuous_optimization(self, interval_hours: int = 24):
-        """Start continuous optimization monitoring"""
-        def optimization_loop():
+        """Start continuous optimization monitoring"""        def optimization_loop():
             while self.monitoring_enabled:
                 try:
                     # Get all partitions that need optimization
@@ -1830,15 +1750,13 @@ class PartitionOptimizer:
             logger.info("Continuous optimization monitoring started")
     
     def stop_continuous_optimization(self):
-        """Stop continuous optimization monitoring"""
-        self.monitoring_enabled = False
+        """Stop continuous optimization monitoring"""        self.monitoring_enabled = False
         if self.monitoring_thread and self.monitoring_thread.is_alive():
             self.monitoring_thread.join(timeout=10)
         logger.info("Continuous optimization monitoring stopped")
     
     def shutdown(self):
-        """Shutdown optimizer gracefully"""
-        try:
+        """Shutdown optimizer gracefully"""        try:
             logger.info("Shutting down partition optimizer...")
             
             # Stop monitoring

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit Tests for Monetization Agent
+"""Unit Tests for Monetization Agent
 =================================
 
 Critical unit tests for the AI-powered monetization agent module.
@@ -25,7 +22,6 @@ and monetization strategy optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Purpose: Address critical testing gap - "Tests Manquants: Pas de tests unitaires centralisés"
 """
-
 import pytest
 import sys
 import os
@@ -39,8 +35,7 @@ import uuid
 
 
 class MockMonetizationEngine:
-    """Mock implementation of monetization engine for testing"""
-    
+    """Mock implementation of monetization engine for testing"""    
     def __init__(self):
         self.revenue_history = []
         self.active_subscriptions = {}
@@ -52,8 +47,7 @@ class MockMonetizationEngine:
         }
         
     async def calculate_revenue(self, content_id: str, metrics: Dict) -> Dict[str, Any]:
-        """Calculate revenue based on content performance metrics"""
-        views = metrics.get("views", 0)
+        """Calculate revenue based on content performance metrics"""        views = metrics.get("views", 0)
         likes = metrics.get("likes", 0)
         shares = metrics.get("shares", 0)
         watch_time = metrics.get("watch_time_minutes", 0)
@@ -97,8 +91,7 @@ class MockMonetizationEngine:
         return revenue_data
     
     async def process_payment(self, payment_data: Dict) -> Dict[str, Any]:
-        """Process payment transaction"""
-        payment_id = str(uuid.uuid4())
+        """Process payment transaction"""        payment_id = str(uuid.uuid4())
         amount = Decimal(str(payment_data.get("amount", 0)))
         
         # Validate payment data
@@ -129,8 +122,7 @@ class MockMonetizationEngine:
         return payment_result
     
     async def manage_subscription(self, action: str, subscription_data: Dict) -> Dict[str, Any]:
-        """Manage user subscriptions"""
-        user_id = subscription_data.get("user_id")
+        """Manage user subscriptions"""        user_id = subscription_data.get("user_id")
         plan_type = subscription_data.get("plan_type", "basic")
         
         # Define plan prices for all actions
@@ -180,8 +172,7 @@ class MockMonetizationEngine:
                 raise ValueError("Subscription not found")
     
     def _get_plan_features(self, plan_type: str) -> List[str]:
-        """Get features for subscription plan"""
-        features_map = {
+        """Get features for subscription plan"""        features_map = {
             "basic": [
                 "Basic content protection",
                 "5 uploads per month",
@@ -206,8 +197,7 @@ class MockMonetizationEngine:
         return features_map.get(plan_type, features_map["basic"])
     
     async def generate_revenue_report(self, user_id: str, period_days: int = 30) -> Dict[str, Any]:
-        """Generate revenue report for a user"""
-        end_date = datetime.utcnow()
+        """Generate revenue report for a user"""        end_date = datetime.utcnow()
         start_date = end_date - timedelta(days=period_days)
         
         # Filter revenue history for the user and period
@@ -245,8 +235,7 @@ class MockMonetizationEngine:
         }
     
     async def validate_payment_method(self, payment_method: Dict) -> bool:
-        """Validate payment method"""
-        required_fields = ["type", "details"]
+        """Validate payment method"""        required_fields = ["type", "details"]
         
         for field in required_fields:
             if field not in payment_method:
@@ -268,17 +257,14 @@ class MockMonetizationEngine:
 
 
 class TestMonetizationAgent:
-    """Test suite for monetization agent functionality"""
-    
+    """Test suite for monetization agent functionality"""    
     @pytest.fixture
     def monetization_engine(self):
-        """Create monetization engine fixture"""
-        return MockMonetizationEngine()
+        """Create monetization engine fixture"""        return MockMonetizationEngine()
     
     @pytest.fixture
     def sample_content_metrics(self):
-        """Sample content performance metrics"""
-        return {
+        """Sample content performance metrics"""        return {
             "views": 10000,
             "likes": 500,
             "shares": 150,
@@ -289,8 +275,7 @@ class TestMonetizationAgent:
     
     @pytest.fixture
     def sample_payment_data(self):
-        """Sample payment data"""
-        return {
+        """Sample payment data"""        return {
             "user_id": "user_123",
             "amount": 25.99,
             "payment_method": "credit_card",
@@ -299,16 +284,14 @@ class TestMonetizationAgent:
     
     @pytest.fixture
     def sample_subscription_data(self):
-        """Sample subscription data"""
-        return {
+        """Sample subscription data"""        return {
             "user_id": "user_456",
             "plan_type": "premium"
         }
     
     @pytest.mark.asyncio
     async def test_revenue_calculation(self, monetization_engine, sample_content_metrics):
-        """Test revenue calculation functionality"""
-        content_id = "content_123"
+        """Test revenue calculation functionality"""        content_id = "content_123"
         
         revenue_data = await monetization_engine.calculate_revenue(
             content_id, sample_content_metrics
@@ -342,8 +325,7 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_payment_processing(self, monetization_engine, sample_payment_data):
-        """Test payment processing functionality"""
-        payment_result = await monetization_engine.process_payment(sample_payment_data)
+        """Test payment processing functionality"""        payment_result = await monetization_engine.process_payment(sample_payment_data)
         
         # Validate payment result structure
         assert "payment_id" in payment_result
@@ -366,8 +348,7 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_payment_validation(self, monetization_engine):
-        """Test payment validation"""
-        # Test missing required fields
+        """Test payment validation"""        # Test missing required fields
         invalid_payment = {"user_id": "user_123"}
         
         with pytest.raises(ValueError, match="Missing required field"):
@@ -385,8 +366,7 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_subscription_creation(self, monetization_engine, sample_subscription_data):
-        """Test subscription creation"""
-        subscription = await monetization_engine.manage_subscription(
+        """Test subscription creation"""        subscription = await monetization_engine.manage_subscription(
             "create", sample_subscription_data
         )
         
@@ -414,8 +394,7 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_subscription_cancellation(self, monetization_engine, sample_subscription_data):
-        """Test subscription cancellation"""
-        # First create a subscription
+        """Test subscription cancellation"""        # First create a subscription
         await monetization_engine.manage_subscription("create", sample_subscription_data)
         
         # Then cancel it
@@ -435,8 +414,7 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_subscription_upgrade(self, monetization_engine, sample_subscription_data):
-        """Test subscription upgrade"""
-        # Create basic subscription first
+        """Test subscription upgrade"""        # Create basic subscription first
         basic_data = {**sample_subscription_data, "plan_type": "basic"}
         await monetization_engine.manage_subscription("create", basic_data)
         
@@ -460,8 +438,7 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_revenue_report_generation(self, monetization_engine):
-        """Test revenue report generation"""
-        user_id = "test_user_789"
+        """Test revenue report generation"""        user_id = "test_user_789"
         
         # Generate some revenue history
         test_metrics = [
@@ -494,8 +471,7 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_payment_method_validation(self, monetization_engine):
-        """Test payment method validation"""
-        # Valid credit card
+        """Test payment method validation"""        # Valid credit card
         valid_credit_card = {
             "type": "credit_card",
             "details": {
@@ -541,8 +517,7 @@ class TestMonetizationAgent:
     
     @pytest.mark.asyncio
     async def test_commission_rate_tiers(self, monetization_engine):
-        """Test different commission rates for creator tiers"""
-        content_id = "tier_test_content"
+        """Test different commission rates for creator tiers"""        content_id = "tier_test_content"
         base_metrics = {
             "views": 1000,
             "likes": 50,
@@ -571,8 +546,7 @@ class TestMonetizationAgent:
         assert enterprise_revenue["creator_revenue"] > premium_revenue["creator_revenue"]
     
     def test_engine_initialization(self):
-        """Test monetization engine initialization"""
-        engine = MockMonetizationEngine()
+        """Test monetization engine initialization"""        engine = MockMonetizationEngine()
         
         assert engine.revenue_history == []
         assert engine.active_subscriptions == {}

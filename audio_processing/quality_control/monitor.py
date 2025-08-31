@@ -1,5 +1,4 @@
-"""
-🎯 Quality Monitor - Real-time Quality Monitoring System
+"""🎯 Quality Monitor - Real-time Quality Monitoring System
 
 Professional audio quality monitoring system for continuous quality tracking,
 alerting, and performance analysis. Provides real-time monitoring, historical
@@ -15,7 +14,6 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable
@@ -34,24 +32,21 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringLevel(Enum):
-    """Monitoring detail levels"""
-    BASIC = "basic"           # Basic metrics only
+    """Monitoring detail levels"""    BASIC = "basic"           # Basic metrics only
     STANDARD = "standard"     # Standard monitoring
     DETAILED = "detailed"     # Detailed analysis
     DIAGNOSTIC = "diagnostic" # Full diagnostic monitoring
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class AlertType(Enum):
-    """Types of quality alerts"""
-    QUALITY_DEGRADATION = "quality_degradation"
+    """Types of quality alerts"""    QUALITY_DEGRADATION = "quality_degradation"
     THRESHOLD_BREACH = "threshold_breach"
     SYSTEM_ERROR = "system_error"
     PERFORMANCE_ISSUE = "performance_issue"
@@ -60,8 +55,7 @@ class AlertType(Enum):
 
 @dataclass
 class QualityAlert:
-    """Quality monitoring alert"""
-    alert_type: AlertType
+    """Quality monitoring alert"""    alert_type: AlertType
     severity: AlertSeverity
     message: str
     details: Dict[str, Any]
@@ -73,8 +67,7 @@ class QualityAlert:
 
 @dataclass
 class MonitoringMetrics:
-    """Real-time monitoring metrics"""
-    average_score: float
+    """Real-time monitoring metrics"""    average_score: float
     minimum_score: float
     maximum_score: float
     score_trend: float  # Positive = improving, negative = degrading
@@ -90,8 +83,7 @@ class MonitoringMetrics:
 
 @dataclass
 class QualityTrend:
-    """Quality trend analysis"""
-    period: str
+    """Quality trend analysis"""    period: str
     trend_direction: str  # "improving", "stable", "degrading"
     trend_strength: float  # 0.0 to 1.0
     average_change: float
@@ -100,8 +92,7 @@ class QualityTrend:
 
 
 class QualityMonitor:
-    """
-    🎯 Professional Audio Quality Monitor
+    """    🎯 Professional Audio Quality Monitor
     
     Real-time quality monitoring system:
     - Continuous quality tracking
@@ -110,8 +101,7 @@ class QualityMonitor:
     - Trend analysis
     - Historical reporting
     - Automated notifications
-    """
-    
+    """    
     def __init__(self, monitoring_level: MonitoringLevel = MonitoringLevel.STANDARD):
         self.monitoring_level = monitoring_level
         
@@ -160,8 +150,7 @@ class QualityMonitor:
         logger.info(f"QualityMonitor initialized with {monitoring_level.value} level")
     
     async def start_monitoring(self):
-        """Start background monitoring"""
-        if self.is_monitoring:
+        """Start background monitoring"""        if self.is_monitoring:
             logger.warning("Monitoring already active")
             return
         
@@ -170,8 +159,7 @@ class QualityMonitor:
         logger.info("Quality monitoring started")
     
     async def stop_monitoring(self):
-        """Stop background monitoring"""
-        self.is_monitoring = False
+        """Stop background monitoring"""        self.is_monitoring = False
         if self.monitoring_task:
             self.monitoring_task.cancel()
             try:
@@ -187,8 +175,7 @@ class QualityMonitor:
         success: bool = True,
         error_details: Optional[str] = None
     ):
-        """Record a quality assessment result"""
-        
+        """Record a quality assessment result"""        
         timestamp = datetime.now()
         
         # Store quality data
@@ -220,21 +207,18 @@ class QualityMonitor:
                     f"time={processing_time:.2f}s, success={success}")
     
     async def record_quality_decision(self, decision, validation_result: QualityReport):
-        """Record a quality control decision"""
-        await self.record_quality_result(
+        """Record a quality control decision"""        await self.record_quality_result(
             validation_result,
             decision.processing_time,
             success=decision.action.value != "reject"
         )
     
     async def get_current_metrics(self) -> MonitoringMetrics:
-        """Get current monitoring metrics"""
-        await self._update_metrics()
+        """Get current monitoring metrics"""        await self._update_metrics()
         return self.current_metrics
     
     async def get_quality_trends(self, period: timedelta = None) -> QualityTrend:
-        """Analyze quality trends over specified period"""
-        if period is None:
+        """Analyze quality trends over specified period"""        if period is None:
             period = self.trend_window
         
         cutoff_time = datetime.now() - period
@@ -300,8 +284,7 @@ class QualityMonitor:
         )
     
     async def get_performance_report(self, hours: int = 24) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
-        
+        """Generate comprehensive performance report"""        
         cutoff_time = datetime.now() - timedelta(hours=hours)
         recent_data = [d for d in self.quality_history if d['timestamp'] >= cutoff_time]
         
@@ -393,13 +376,11 @@ class QualityMonitor:
         }
     
     async def add_alert_handler(self, handler: Callable[[QualityAlert], None]):
-        """Add custom alert handler"""
-        self.alert_handlers.append(handler)
+        """Add custom alert handler"""        self.alert_handlers.append(handler)
         logger.info("Added custom alert handler")
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve an active alert"""
-        if alert_id in self.active_alerts:
+        """Resolve an active alert"""        if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
             alert.resolved = True
             alert.resolution_time = datetime.now()
@@ -414,17 +395,14 @@ class QualityMonitor:
         return False
     
     async def get_active_alerts(self) -> List[QualityAlert]:
-        """Get all active alerts"""
-        return list(self.active_alerts.values())
+        """Get all active alerts"""        return list(self.active_alerts.values())
     
     async def get_alert_history(self, hours: int = 24) -> List[QualityAlert]:
-        """Get alert history for specified period"""
-        cutoff_time = datetime.now() - timedelta(hours=hours)
+        """Get alert history for specified period"""        cutoff_time = datetime.now() - timedelta(hours=hours)
         return [alert for alert in self.alert_history if alert.timestamp >= cutoff_time]
     
     async def _monitoring_loop(self):
-        """Background monitoring loop"""
-        while self.is_monitoring:
+        """Background monitoring loop"""        while self.is_monitoring:
             try:
                 await self._update_metrics()
                 await self._cleanup_old_data()
@@ -436,8 +414,7 @@ class QualityMonitor:
                 await asyncio.sleep(30)  # Back off on error
     
     async def _update_metrics(self):
-        """Update current monitoring metrics"""
-        now = datetime.now()
+        """Update current monitoring metrics"""        now = datetime.now()
         window_start = now - self.performance_window
         
         # Get recent data within performance window
@@ -488,8 +465,7 @@ class QualityMonitor:
         processing_time: float,
         success: bool
     ):
-        """Check for alert conditions"""
-        
+        """Check for alert conditions"""        
         # Critical quality threshold
         if success and quality_report.overall_score < self.quality_thresholds['critical_min']:
             await self._create_alert(
@@ -571,8 +547,7 @@ class QualityMonitor:
         message: str,
         details: Dict[str, Any]
     ):
-        """Create and process a new alert"""
-        
+        """Create and process a new alert"""        
         alert = QualityAlert(
             alert_type=alert_type,
             severity=severity,
@@ -611,8 +586,7 @@ class QualityMonitor:
                 logger.error(f"Alert handler failed: {e}")
     
     async def _cleanup_old_data(self):
-        """Clean up old monitoring data"""
-        # Auto-resolve old alerts (24 hours)
+        """Clean up old monitoring data"""        # Auto-resolve old alerts (24 hours)
         cutoff_time = datetime.now() - timedelta(hours=24)
         
         expired_alerts = [
@@ -624,13 +598,11 @@ class QualityMonitor:
             await self.resolve_alert(alert_id)
     
     def configure_thresholds(self, thresholds: Dict[str, float]):
-        """Configure alert thresholds"""
-        self.quality_thresholds.update(thresholds)
+        """Configure alert thresholds"""        self.quality_thresholds.update(thresholds)
         logger.info(f"Updated quality thresholds: {thresholds}")
     
     async def export_metrics(self, format: str = "json") -> str:
-        """Export monitoring metrics"""
-        data = {
+        """Export monitoring metrics"""        data = {
             'current_metrics': {
                 'average_score': self.current_metrics.average_score,
                 'minimum_score': self.current_metrics.minimum_score,
@@ -665,8 +637,7 @@ class QualityMonitor:
             raise ValueError(f"Unsupported export format: {format}")
     
     async def health_check(self) -> bool:
-        """Perform monitor health check"""
-        try:
+        """Perform monitor health check"""        try:
             # Check if monitoring is active
             if not self.is_monitoring:
                 return False

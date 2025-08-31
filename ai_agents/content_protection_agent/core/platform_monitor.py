@@ -1,5 +1,4 @@
 """Platform Monitor - Multi-Platform Content Scanning"""
-
 import asyncio
 import logging
 from typing import Dict, List, Set, Optional, Any
@@ -8,24 +7,21 @@ from datetime import datetime, timezone
 logger = logging.getLogger(__name__)
 
 class PlatformMonitor:
-    """
-    Multi-platform content monitoring system
+    """    Multi-platform content monitoring system
     
     Supports 35+ platforms including:
     - Video: YouTube, Vimeo, TikTok, Twitch, etc.
     - Social: Instagram, Facebook, Twitter, etc.
     - Music: Spotify, SoundCloud, etc.
     - Professional: LinkedIn, Behance, etc.
-    """
-    
+    """    
     def __init__(self, enabled_platforms: Set[str]):
         self.enabled_platforms = enabled_platforms
         self.platform_configs = self._load_platform_configs()
         self.scan_statistics = {}
         
     async def initialize(self):
-        """Initialize platform connections and API clients"""
-        logger.info(f"Initializing monitoring for {len(self.enabled_platforms)} platforms")
+        """Initialize platform connections and API clients"""        logger.info(f"Initializing monitoring for {len(self.enabled_platforms)} platforms")
         
         # Initialize platform-specific clients
         for platform in self.enabled_platforms:
@@ -45,8 +41,7 @@ class PlatformMonitor:
                 }
     
     def _load_platform_configs(self) -> Dict[str, Dict]:
-        """Load configuration for each platform"""
-        return {
+        """Load configuration for each platform"""        return {
             # Video Platforms
             'youtube': {
                 'api_endpoint': 'https://www.googleapis.com/youtube/v3',
@@ -131,8 +126,7 @@ class PlatformMonitor:
         }
     
     async def _initialize_platform_client(self, platform: str):
-        """Initialize API client for specific platform"""
-        config = self.platform_configs.get(platform, {})
+        """Initialize API client for specific platform"""        config = self.platform_configs.get(platform, {})
         
         # This would initialize actual API clients
         # For now, we'll simulate initialization
@@ -148,8 +142,7 @@ class PlatformMonitor:
         platform: str, 
         fingerprints: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Scan specific platform for content violations"""
-        if platform not in self.enabled_platforms:
+        """Scan specific platform for content violations"""        if platform not in self.enabled_platforms:
             logger.warning(f"Platform {platform} not enabled for scanning")
             return None
         
@@ -197,8 +190,7 @@ class PlatformMonitor:
         fingerprints: Dict[str, Any],
         search_method: str
     ) -> List[Dict[str, Any]]:
-        """Perform actual search on platform"""
-        violations = []
+        """Perform actual search on platform"""        violations = []
         
         try:
             if search_method == 'content_id':
@@ -222,8 +214,7 @@ class PlatformMonitor:
         return violations
     
     async def _search_by_content_id(self, platform: str, fingerprints: Dict) -> List[Dict]:
-        """Search using platform's Content ID system"""
-        # Simulate Content ID search (YouTube-style)
+        """Search using platform's Content ID system"""        # Simulate Content ID search (YouTube-style)
         await asyncio.sleep(0.2)  # Simulate API call
         
         # Mock violation detection
@@ -241,8 +232,7 @@ class PlatformMonitor:
         return violations
     
     async def _search_by_fingerprint(self, platform: str, fingerprints: Dict) -> List[Dict]:
-        """Search using general fingerprint matching"""
-        await asyncio.sleep(0.3)  # Simulate API call
+        """Search using general fingerprint matching"""        await asyncio.sleep(0.3)  # Simulate API call
         
         violations = []
         for fingerprint_type, fingerprint_data in fingerprints.items():
@@ -262,8 +252,7 @@ class PlatformMonitor:
         return violations
     
     async def _search_by_visual_similarity(self, platform: str, fingerprints: Dict) -> List[Dict]:
-        """Search using visual similarity algorithms"""
-        await asyncio.sleep(0.4)  # Simulate processing time
+        """Search using visual similarity algorithms"""        await asyncio.sleep(0.4)  # Simulate processing time
         
         violations = []
         if fingerprints.get('image_hash') or fingerprints.get('video_fingerprint'):
@@ -279,8 +268,7 @@ class PlatformMonitor:
         return violations
     
     async def _search_by_audio_fingerprint(self, platform: str, fingerprints: Dict) -> List[Dict]:
-        """Search using audio fingerprinting"""
-        await asyncio.sleep(0.5)  # Simulate audio processing
+        """Search using audio fingerprinting"""        await asyncio.sleep(0.5)  # Simulate audio processing
         
         violations = []
         if fingerprints.get('audio_fingerprint'):
@@ -296,8 +284,7 @@ class PlatformMonitor:
         return violations
     
     async def _search_by_text_similarity(self, platform: str, fingerprints: Dict) -> List[Dict]:
-        """Search using text similarity algorithms"""
-        await asyncio.sleep(0.2)  # Simulate text processing
+        """Search using text similarity algorithms"""        await asyncio.sleep(0.2)  # Simulate text processing
         
         violations = []
         if fingerprints.get('text_hash') or fingerprints.get('text_embedding'):
@@ -313,8 +300,7 @@ class PlatformMonitor:
         return violations
     
     async def _search_by_image_hash(self, platform: str, fingerprints: Dict) -> List[Dict]:
-        """Search using perceptual image hashing"""
-        await asyncio.sleep(0.3)  # Simulate image processing
+        """Search using perceptual image hashing"""        await asyncio.sleep(0.3)  # Simulate image processing
         
         violations = []
         if fingerprints.get('image_hash'):
@@ -330,8 +316,7 @@ class PlatformMonitor:
         return violations
     
     async def _search_generic(self, platform: str, fingerprints: Dict) -> List[Dict]:
-        """Generic search method for platforms without specific APIs"""
-        await asyncio.sleep(0.4)  # Simulate generic search
+        """Generic search method for platforms without specific APIs"""        await asyncio.sleep(0.4)  # Simulate generic search
         
         violations = []
         # Simulate basic content matching
@@ -347,14 +332,11 @@ class PlatformMonitor:
         return violations
     
     def get_scan_statistics(self) -> Dict[str, Dict]:
-        """Get scanning statistics for all platforms"""
-        return self.scan_statistics.copy()
+        """Get scanning statistics for all platforms"""        return self.scan_statistics.copy()
     
     def get_supported_platforms(self) -> Set[str]:
-        """Get list of all supported platforms"""
-        return set(self.platform_configs.keys())
+        """Get list of all supported platforms"""        return set(self.platform_configs.keys())
     
     def is_platform_healthy(self, platform: str) -> bool:
-        """Check if platform monitoring is healthy"""
-        stats = self.scan_statistics.get(platform, {})
+        """Check if platform monitoring is healthy"""        stats = self.scan_statistics.get(platform, {})
         return stats.get('status') == 'active'

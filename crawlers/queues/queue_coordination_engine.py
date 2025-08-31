@@ -1,5 +1,4 @@
-"""
-Queue Coordination Engine - IA-Influencer-Agent
+"""Queue Coordination Engine - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/queues/queue_coordination_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Queue discovery → Resource mapping → Coordination planning → Synchronized execution →
 Load balancing → Conflict resolution → Performance optimization → Global analytics
 """
-
 from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 import logging
 import asyncio
@@ -35,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class CoordinationMode(Enum):
-    """Queue coordination modes"""
-    INDEPENDENT = "independent"
+    """Queue coordination modes"""    INDEPENDENT = "independent"
     COOPERATIVE = "cooperative"
     CENTRALIZED = "centralized"
     FEDERATED = "federated"
@@ -44,8 +41,7 @@ class CoordinationMode(Enum):
 
 
 class SynchronizationType(Enum):
-    """Synchronization types between queues"""
-    NONE = "none"
+    """Synchronization types between queues"""    NONE = "none"
     LOOSE = "loose"
     STRICT = "strict"
     REAL_TIME = "real_time"
@@ -53,8 +49,7 @@ class SynchronizationType(Enum):
 
 
 class ResourceSharingMode(Enum):
-    """Resource sharing modes"""
-    NO_SHARING = "no_sharing"
+    """Resource sharing modes"""    NO_SHARING = "no_sharing"
     WORKER_SHARING = "worker_sharing"
     CAPACITY_SHARING = "capacity_sharing"
     FULL_SHARING = "full_sharing"
@@ -62,8 +57,7 @@ class ResourceSharingMode(Enum):
 
 
 class PriorityResolutionStrategy(Enum):
-    """Priority conflict resolution strategies"""
-    FIRST_COME_FIRST_SERVE = "fcfs"
+    """Priority conflict resolution strategies"""    FIRST_COME_FIRST_SERVE = "fcfs"
     HIGHEST_PRIORITY_WINS = "highest_priority"
     WEIGHTED_FAIR_QUEUING = "weighted_fair"
     ROUND_ROBIN_PRIORITY = "round_robin"
@@ -72,8 +66,7 @@ class PriorityResolutionStrategy(Enum):
 
 @dataclass
 class QueueNode:
-    """Queue node representation in coordination network"""
-    node_id: str
+    """Queue node representation in coordination network"""    node_id: str
     queue_manager: Any
     node_type: str  # primary, secondary, worker, coordinator
     capabilities: List[str]
@@ -89,8 +82,7 @@ class QueueNode:
 
 @dataclass
 class CoordinationTask:
-    """Task for coordination across multiple queues"""
-    coordination_id: str
+    """Task for coordination across multiple queues"""    coordination_id: str
     original_task: Any
     target_queues: List[str]
     coordination_requirements: Dict[str, Any]
@@ -106,8 +98,7 @@ class CoordinationTask:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation across queue nodes"""
-    allocation_id: str
+    """Resource allocation across queue nodes"""    allocation_id: str
     requesting_node: str
     resource_type: str
     requested_amount: Union[int, float]
@@ -122,8 +113,7 @@ class ResourceAllocation:
 
 @dataclass
 class CoordinationPlan:
-    """Coordination execution plan"""
-    plan_id: str
+    """Coordination execution plan"""    plan_id: str
     coordination_task: CoordinationTask
     execution_steps: List[Dict[str, Any]]
     resource_allocations: List[ResourceAllocation]
@@ -136,8 +126,7 @@ class CoordinationPlan:
 
 
 class CrossQueueLoadBalancer:
-    """Advanced load balancer for multiple queue systems"""
-    
+    """Advanced load balancer for multiple queue systems"""    
     def __init__(self, balancing_algorithm: str = "weighted_round_robin"):
         self.balancing_algorithm = balancing_algorithm
         self.queue_weights = {}
@@ -150,8 +139,7 @@ class CrossQueueLoadBalancer:
         queue_nodes: List[QueueNode],
         incoming_tasks: List[CoordinationTask]
     ) -> Dict[str, List[CoordinationTask]]:
-        """Balance load across multiple queue nodes"""
-        
+        """Balance load across multiple queue nodes"""        
         # Update queue weights based on current performance
         await self._update_queue_weights(queue_nodes)
         
@@ -181,8 +169,7 @@ class CrossQueueLoadBalancer:
         return task_distribution
     
     async def _update_queue_weights(self, queue_nodes: List[QueueNode]):
-        """Update queue weights based on performance"""
-        
+        """Update queue weights based on performance"""        
         for node in queue_nodes:
             if not node.is_active:
                 self.queue_weights[node.node_id] = 0.0
@@ -201,8 +188,7 @@ class CrossQueueLoadBalancer:
         queue_nodes: List[QueueNode],
         tasks: List[CoordinationTask]
     ) -> Dict[str, List[CoordinationTask]]:
-        """Implement weighted round-robin load balancing"""
-        
+        """Implement weighted round-robin load balancing"""        
         distribution = defaultdict(list)
         active_nodes = [node for node in queue_nodes if node.is_active]
         
@@ -227,8 +213,7 @@ class CrossQueueLoadBalancer:
         queue_nodes: List[QueueNode],
         tasks: List[CoordinationTask]
     ) -> Dict[str, List[CoordinationTask]]:
-        """Implement least-loaded balancing"""
-        
+        """Implement least-loaded balancing"""        
         distribution = defaultdict(list)
         active_nodes = [node for node in queue_nodes if node.is_active]
         
@@ -249,8 +234,7 @@ class CrossQueueLoadBalancer:
         queue_nodes: List[QueueNode],
         tasks: List[CoordinationTask]
     ) -> Dict[str, List[CoordinationTask]]:
-        """Implement performance-based balancing"""
-        
+        """Implement performance-based balancing"""        
         distribution = defaultdict(list)
         active_nodes = [node for node in queue_nodes if node.is_active]
         
@@ -274,8 +258,7 @@ class CrossQueueLoadBalancer:
         queue_nodes: List[QueueNode],
         tasks: List[CoordinationTask]
     ) -> Dict[str, List[CoordinationTask]]:
-        """Implement adaptive balancing based on historical performance"""
-        
+        """Implement adaptive balancing based on historical performance"""        
         distribution = defaultdict(list)
         
         # Analyze task characteristics and match with node capabilities
@@ -291,8 +274,7 @@ class CrossQueueLoadBalancer:
         task: CoordinationTask,
         queue_nodes: List[QueueNode]
     ) -> Optional[QueueNode]:
-        """Find best node for specific task"""
-        
+        """Find best node for specific task"""        
         active_nodes = [node for node in queue_nodes if node.is_active]
         if not active_nodes:
             return None
@@ -328,8 +310,7 @@ class CrossQueueLoadBalancer:
         task: CoordinationTask,
         node: QueueNode
     ) -> float:
-        """Calculate resource availability score for task-node match"""
-        
+        """Calculate resource availability score for task-node match"""        
         required_resources = task.resource_requirements
         available_resources = node.available_resources
         
@@ -357,8 +338,7 @@ class CrossQueueLoadBalancer:
         queue_nodes: List[QueueNode],
         task_distribution: Dict[str, List[CoordinationTask]]
     ):
-        """Update load history for performance tracking"""
-        
+        """Update load history for performance tracking"""        
         timestamp = datetime.now()
         
         for node in queue_nodes:
@@ -378,8 +358,7 @@ class CrossQueueLoadBalancer:
 
 
 class QueueCoordinationEngine:
-    """Enterprise-grade queue coordination and synchronization engine"""
-    
+    """Enterprise-grade queue coordination and synchronization engine"""    
     def __init__(
         self,
         coordination_mode: CoordinationMode = CoordinationMode.COOPERATIVE,
@@ -418,8 +397,7 @@ class QueueCoordinationEngine:
         logger.info(f"QueueCoordinationEngine initialized with mode: {coordination_mode.value}")
     
     async def initialize(self):
-        """Initialize coordination engine"""
-        
+        """Initialize coordination engine"""        
         # Start coordination services
         if self.auto_discovery_enabled:
             await self._start_queue_discovery()
@@ -440,8 +418,7 @@ class QueueCoordinationEngine:
         node_type: str = "worker",
         capabilities: List[str] = None
     ) -> bool:
-        """Register a queue node for coordination"""
-        
+        """Register a queue node for coordination"""        
         try:
             # Collect node information
             node_info = await self._collect_node_information(queue_manager)
@@ -467,8 +444,7 @@ class QueueCoordinationEngine:
             return False
     
     async def unregister_queue_node(self, node_id: str) -> bool:
-        """Unregister a queue node"""
-        
+        """Unregister a queue node"""        
         if node_id in self.queue_nodes:
             # Gracefully handle ongoing tasks
             await self._handle_node_removal(node_id)
@@ -486,8 +462,7 @@ class QueueCoordinationEngine:
         coordination_requirements: Dict[str, Any] = None,
         priority_level: int = 5
     ) -> str:
-        """Submit task for coordination across multiple queues"""
-        
+        """Submit task for coordination across multiple queues"""        
         coordination_id = f"coord_{uuid.uuid4().hex[:8]}"
         
         # Determine target queues if not specified
@@ -521,8 +496,7 @@ class QueueCoordinationEngine:
         operation_type: str,
         parameters: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Coordinate operations across all registered queues"""
-        
+        """Coordinate operations across all registered queues"""        
         if not self.coordination_enabled:
             return {'status': 'disabled', 'message': 'Coordination is disabled'}
         
@@ -557,8 +531,7 @@ class QueueCoordinationEngine:
         }
     
     async def get_coordination_status(self) -> Dict[str, Any]:
-        """Get comprehensive coordination status"""
-        
+        """Get comprehensive coordination status"""        
         active_nodes = [node for node in self.queue_nodes.values() if node.is_active]
         pending_tasks = [task for task in self.coordination_tasks.values() if task.status == 'pending']
         active_plans = [plan for plan in self.coordination_plans.values()]
@@ -590,8 +563,7 @@ class QueueCoordinationEngine:
     # Private methods
     
     async def _start_queue_discovery(self):
-        """Start automatic queue discovery"""
-        
+        """Start automatic queue discovery"""        
         async def discovery_loop():
             while self.auto_discovery_enabled:
                 try:
@@ -604,8 +576,7 @@ class QueueCoordinationEngine:
         asyncio.create_task(discovery_loop())
     
     async def _start_health_monitoring(self):
-        """Start queue health monitoring"""
-        
+        """Start queue health monitoring"""        
         async def health_monitoring_loop():
             while self.health_monitoring_enabled:
                 try:
@@ -618,8 +589,7 @@ class QueueCoordinationEngine:
         asyncio.create_task(health_monitoring_loop())
     
     async def _collect_node_information(self, queue_manager: Any) -> Dict[str, Any]:
-        """Collect information from a queue node"""
-        
+        """Collect information from a queue node"""        
         node_info = {}
         
         try:
@@ -651,8 +621,7 @@ class QueueCoordinationEngine:
         task: Any,
         requirements: Dict[str, Any]
     ) -> List[str]:
-        """Determine optimal queues for task execution"""
-        
+        """Determine optimal queues for task execution"""        
         active_nodes = [node for node in self.queue_nodes.values() if node.is_active]
         
         if not active_nodes:
@@ -678,8 +647,7 @@ class QueueCoordinationEngine:
         return suitable_nodes[:3]
     
     async def _extract_resource_requirements(self, task: Any) -> Dict[str, Union[int, float]]:
-        """Extract resource requirements from task"""
-        
+        """Extract resource requirements from task"""        
         # Default resource requirements
         requirements = {
             'cpu': 1,
@@ -696,8 +664,7 @@ class QueueCoordinationEngine:
         return requirements
     
     async def _create_coordination_plan(self, coordination_task: CoordinationTask) -> Optional[CoordinationPlan]:
-        """Create execution plan for coordination task"""
-        
+        """Create execution plan for coordination task"""        
         plan_id = f"plan_{uuid.uuid4().hex[:8]}"
         
         # Create execution steps
@@ -753,8 +720,7 @@ class QueueCoordinationEngine:
         self,
         coordination_task: CoordinationTask
     ) -> List[ResourceAllocation]:
-        """Plan resource allocations for coordination task"""
-        
+        """Plan resource allocations for coordination task"""        
         allocations = []
         
         for queue_id in coordination_task.target_queues:
@@ -786,8 +752,7 @@ class QueueCoordinationEngine:
         return allocations
     
     async def _execute_coordination_plan(self, plan: CoordinationPlan):
-        """Execute coordination plan"""
-        
+        """Execute coordination plan"""        
         logger.info(f"Executing coordination plan: {plan.plan_id}")
         
         try:
@@ -810,8 +775,7 @@ class QueueCoordinationEngine:
         self.coordination_metrics['total_coordinated_tasks'] += 1
     
     async def _execute_parallel_coordination(self, plan: CoordinationPlan):
-        """Execute parallel coordination"""
-        
+        """Execute parallel coordination"""        
         tasks = []
         
         for step in plan.execution_steps:
@@ -829,8 +793,7 @@ class QueueCoordinationEngine:
             await asyncio.gather(*tasks, return_exceptions=True)
     
     async def _execute_sequential_coordination(self, plan: CoordinationPlan):
-        """Execute sequential coordination"""
-        
+        """Execute sequential coordination"""        
         for step in plan.execution_steps:
             if step['type'] == 'sequential_submit':
                 await self._submit_task_to_queue(
@@ -839,8 +802,7 @@ class QueueCoordinationEngine:
                 )
     
     async def _submit_task_to_queue(self, queue_id: str, task_data: Any):
-        """Submit task to specific queue"""
-        
+        """Submit task to specific queue"""        
         if queue_id not in self.queue_nodes:
             raise ValueError(f"Queue node not found: {queue_id}")
         
@@ -856,8 +818,7 @@ class QueueCoordinationEngine:
             logger.warning(f"Queue {queue_id} does not support task submission")
     
     async def _handle_node_removal(self, node_id: str):
-        """Handle graceful removal of queue node"""
-        
+        """Handle graceful removal of queue node"""        
         # Cancel ongoing tasks for this node
         affected_tasks = [
             task for task in self.coordination_tasks.values()
@@ -873,15 +834,13 @@ class QueueCoordinationEngine:
                 task.status = "failed"
     
     async def _discover_available_queues(self):
-        """Discover available queue systems"""
-        
+        """Discover available queue systems"""        
         # Placeholder for queue discovery logic
         # In production, this would use service discovery mechanisms
         logger.debug("Performing queue discovery")
     
     async def _monitor_queue_health(self):
-        """Monitor health of all registered queues"""
-        
+        """Monitor health of all registered queues"""        
         for node_id, node in self.queue_nodes.items():
             try:
                 # Update last heartbeat
@@ -904,8 +863,7 @@ class QueueCoordinationEngine:
                     node.is_active = False
     
     async def _coordinate_health_check(self, active_nodes: List[QueueNode]) -> Dict[str, Any]:
-        """Coordinate health check across all nodes"""
-        
+        """Coordinate health check across all nodes"""        
         health_results = {}
         
         for node in active_nodes:
@@ -925,8 +883,7 @@ class QueueCoordinationEngine:
         active_nodes: List[QueueNode],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Coordinate load balancing across nodes"""
-        
+        """Coordinate load balancing across nodes"""        
         # Get pending tasks from parameters or discover them
         pending_tasks = parameters.get('pending_tasks', [])
         
@@ -942,8 +899,7 @@ class QueueCoordinationEngine:
         }
     
     async def _coordinate_resource_optimization(self, active_nodes: List[QueueNode]) -> Dict[str, Any]:
-        """Coordinate resource optimization across nodes"""
-        
+        """Coordinate resource optimization across nodes"""        
         optimization_results = {}
         
         # Analyze resource utilization across nodes
@@ -976,8 +932,7 @@ class QueueCoordinationEngine:
         active_nodes: List[QueueNode],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Coordinate synchronized scaling across nodes"""
-        
+        """Coordinate synchronized scaling across nodes"""        
         scaling_action = parameters.get('action', 'scale_up')
         scaling_factor = parameters.get('factor', 1.2)
         
@@ -1000,8 +955,7 @@ class QueueCoordinationEngine:
         }
     
     async def _coordinate_cross_queue_analytics(self, active_nodes: List[QueueNode]) -> Dict[str, Any]:
-        """Coordinate analytics collection across all queues"""
-        
+        """Coordinate analytics collection across all queues"""        
         analytics_results = {}
         
         for node in active_nodes:
@@ -1028,8 +982,7 @@ class QueueCoordinationEngine:
         }
     
     def _count_node_types(self) -> Dict[str, int]:
-        """Count nodes by type"""
-        
+        """Count nodes by type"""        
         type_counts = defaultdict(int)
         for node in self.queue_nodes.values():
             type_counts[node.node_type] += 1
@@ -1037,16 +990,14 @@ class QueueCoordinationEngine:
         return dict(type_counts)
     
     def _calculate_success_rate(self) -> float:
-        """Calculate coordination success rate"""
-        
+        """Calculate coordination success rate"""        
         total = self.coordination_metrics['total_coordinated_tasks']
         successful = self.coordination_metrics['successful_coordinations']
         
         return successful / total if total > 0 else 0.0
     
     async def _calculate_network_resource_utilization(self) -> Dict[str, float]:
-        """Calculate network-wide resource utilization"""
-        
+        """Calculate network-wide resource utilization"""        
         total_resources = defaultdict(float)
         used_resources = defaultdict(float)
         
@@ -1066,8 +1017,7 @@ class QueueCoordinationEngine:
         return utilization
     
     def _update_coordination_metrics(self, operation_type: str, results: Dict[str, Any]):
-        """Update coordination performance metrics"""
-        
+        """Update coordination performance metrics"""        
         # Update basic metrics
         if results.get('status') == 'completed':
             self.coordination_metrics['successful_coordinations'] += 1
@@ -1080,8 +1030,7 @@ class QueueCoordinationEngine:
             self.coordination_metrics['total_coordinated_tasks'] += distributed_tasks
     
     def _generate_optimization_suggestions(self, utilization_ratios: Dict[str, float]) -> List[str]:
-        """Generate optimization suggestions based on resource utilization"""
-        
+        """Generate optimization suggestions based on resource utilization"""        
         suggestions = []
         
         for resource_type, ratio in utilization_ratios.items():
@@ -1093,8 +1042,7 @@ class QueueCoordinationEngine:
         return suggestions
     
     def _aggregate_analytics(self, analytics_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Aggregate analytics from all nodes"""
-        
+        """Aggregate analytics from all nodes"""        
         aggregated = {
             'total_nodes': len(analytics_results),
             'total_load': 0,
@@ -1139,8 +1087,7 @@ def create_queue_coordination_engine(
     synchronization_type: SynchronizationType = SynchronizationType.LOOSE,
     resource_sharing_mode: ResourceSharingMode = ResourceSharingMode.DYNAMIC_SHARING
 ) -> QueueCoordinationEngine:
-    """Create queue coordination engine instance"""
-    
+    """Create queue coordination engine instance"""    
     return QueueCoordinationEngine(
         coordination_mode=coordination_mode,
         synchronization_type=synchronization_type,

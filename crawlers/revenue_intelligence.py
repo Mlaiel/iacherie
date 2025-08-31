@@ -1,5 +1,4 @@
-"""
-Revenue Intelligence Engine
+"""Revenue Intelligence Engine
 ==========================
 
 Enterprise-grade revenue analytics and performance monitoring for content creators.
@@ -21,7 +20,6 @@ Business Logic Integration:
 - Creator collaboration revenue modeling
 - Multi-format content value assessment
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -42,8 +40,7 @@ from .intelligent_orchestration import ContentType, CreatorType
 logger = logging.getLogger(__name__)
 
 class RevenueStream(Enum):
-    """Revenue stream types."""
-    PLATFORM_ADVERTISING = "platform_advertising"
+    """Revenue stream types."""    PLATFORM_ADVERTISING = "platform_advertising"
     DIRECT_MONETIZATION = "direct_monetization"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     MERCHANDISE = "merchandise"
@@ -55,8 +52,7 @@ class RevenueStream(Enum):
     PRODUCT_SALES = "product_sales"
 
 class PerformanceMetric(Enum):
-    """Performance metric types."""
-    VIEWS = "views"
+    """Performance metric types."""    VIEWS = "views"
     ENGAGEMENT_RATE = "engagement_rate"
     CLICK_THROUGH_RATE = "click_through_rate"
     CONVERSION_RATE = "conversion_rate"
@@ -67,8 +63,7 @@ class PerformanceMetric(Enum):
 
 @dataclass
 class RevenueData:
-    """Revenue data structure."""
-    content_id: str
+    """Revenue data structure."""    content_id: str
     platform: str
     revenue_stream: RevenueStream
     amount: Decimal
@@ -80,8 +75,7 @@ class RevenueData:
 
 @dataclass
 class PerformanceData:
-    """Performance data structure."""
-    content_id: str
+    """Performance data structure."""    content_id: str
     platform: str
     metric: PerformanceMetric
     value: float
@@ -91,8 +85,7 @@ class PerformanceData:
 
 @dataclass
 class BusinessInsight:
-    """Business insight structure."""
-    id: str
+    """Business insight structure."""    id: str
     type: str
     title: str
     description: str
@@ -104,8 +97,7 @@ class BusinessInsight:
 
 @dataclass
 class RevenueOptimization:
-    """Revenue optimization recommendation."""
-    content_id: str
+    """Revenue optimization recommendation."""    content_id: str
     current_revenue: Decimal
     optimized_revenue: Decimal
     optimization_strategies: List[str]
@@ -114,8 +106,7 @@ class RevenueOptimization:
     confidence_level: float
 
 class AdvancedRevenueAnalyticsEngine:
-    """
-    Enterprise-grade revenue and performance analytics engine.
+    """    Enterprise-grade revenue and performance analytics engine.
     
     Core Features:
     - Real-time revenue tracking across 30+ platforms
@@ -132,11 +123,9 @@ class AdvancedRevenueAnalyticsEngine:
     - Market trend analysis
     - Monetization effectiveness scoring
     - ROI optimization recommendations
-    """
-    
+    """    
     def __init__(self):
-        """Initialize revenue analytics engine."""
-        self.ml_engine = MLEngine()
+        """Initialize revenue analytics engine."""        self.ml_engine = MLEngine()
         self.revenue_calculator = RevenueCalculator()
         self.analytics_repo = AnalyticsRepository()
         
@@ -159,8 +148,7 @@ class AdvancedRevenueAnalyticsEngine:
         logger.info("Advanced Revenue Analytics Engine initialized")
     
     def _initialize_platform_configs(self) -> Dict[str, Dict]:
-        """Initialize platform-specific revenue configurations."""
-        return {
+        """Initialize platform-specific revenue configurations."""        return {
             "youtube": {
                 "revenue_streams": [
                     RevenueStream.PLATFORM_ADVERTISING,
@@ -231,8 +219,7 @@ class AdvancedRevenueAnalyticsEngine:
         currency: str = "EUR",
         metadata: Optional[Dict] = None
     ) -> str:
-        """Track revenue for specific content and platform."""
-        try:
+        """Track revenue for specific content and platform."""        try:
             # Create revenue data entry
             revenue_data = RevenueData(
                 content_id=content_id,
@@ -277,8 +264,7 @@ class AdvancedRevenueAnalyticsEngine:
         audience_segment: Optional[str] = None,
         metadata: Optional[Dict] = None
     ):
-        """Track performance metrics for content."""
-        try:
+        """Track performance metrics for content."""        try:
             performance_entries = []
             
             for metric, value in metrics.items():
@@ -323,8 +309,7 @@ class AdvancedRevenueAnalyticsEngine:
         platforms: Optional[List[str]] = None,
         currency: str = "EUR"
     ) -> Dict[str, Any]:
-        """Calculate total revenue for content with detailed breakdown."""
-        try:
+        """Calculate total revenue for content with detailed breakdown."""        try:
             # Set default period (last 30 days)
             if not period_start:
                 period_start = datetime.utcnow() - timedelta(days=30)
@@ -412,8 +397,7 @@ class AdvancedRevenueAnalyticsEngine:
         content_id: str,
         target_revenue_increase: float = 0.25  # 25% increase target
     ) -> RevenueOptimization:
-        """Generate AI-powered revenue optimization recommendations."""
-        try:
+        """Generate AI-powered revenue optimization recommendations."""        try:
             # Check cache first
             if content_id in self.optimization_cache:
                 cached_optimization = self.optimization_cache[content_id]
@@ -482,8 +466,7 @@ class AdvancedRevenueAnalyticsEngine:
         content_ids: List[str],
         benchmark_against_market: bool = True
     ) -> Dict[str, Any]:
-        """Comprehensive creator performance analysis."""
-        try:
+        """Comprehensive creator performance analysis."""        try:
             # Aggregate revenue and performance data
             total_revenue = Decimal("0")
             platform_performance = {}
@@ -583,8 +566,7 @@ class AdvancedRevenueAnalyticsEngine:
         time_horizon_days: int = 90,
         confidence_interval: float = 0.95
     ) -> Dict[str, Any]:
-        """AI-powered revenue potential prediction."""
-        try:
+        """AI-powered revenue potential prediction."""        try:
             # Extract content features
             content_features = await self._extract_content_features(content_profile)
             
@@ -665,8 +647,7 @@ class AdvancedRevenueAnalyticsEngine:
         creator_type: Optional[CreatorType] = None,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Generate comprehensive business intelligence report."""
-        try:
+        """Generate comprehensive business intelligence report."""        try:
             period_start = datetime.utcnow() - timedelta(days=period_days)
             period_end = datetime.utcnow()
             
@@ -752,8 +733,7 @@ class AdvancedRevenueAnalyticsEngine:
         period_end: datetime,
         platforms: Optional[List[str]] = None
     ) -> List[RevenueData]:
-        """Get filtered revenue data."""
-        revenue_data = self.revenue_streams.get(content_id, [])
+        """Get filtered revenue data."""        revenue_data = self.revenue_streams.get(content_id, [])
         
         filtered_data = [
             data for data in revenue_data
@@ -774,8 +754,7 @@ class AdvancedRevenueAnalyticsEngine:
         period_start: Optional[datetime] = None,
         period_end: Optional[datetime] = None
     ) -> List[PerformanceData]:
-        """Get filtered performance data."""
-        performance_data = self.performance_metrics.get(content_id, [])
+        """Get filtered performance data."""        performance_data = self.performance_metrics.get(content_id, [])
         
         if period_start and period_end:
             performance_data = [
@@ -791,8 +770,7 @@ class AdvancedRevenueAnalyticsEngine:
         from_currency: str,
         to_currency: str
     ) -> Decimal:
-        """Convert currency (simplified implementation)."""
-        if from_currency == to_currency:
+        """Convert currency (simplified implementation)."""        if from_currency == to_currency:
             return amount
         
         # Simplified exchange rates (in production, use real API)
@@ -807,14 +785,12 @@ class AdvancedRevenueAnalyticsEngine:
         return amount * rate
     
     def _calculate_growth_rate(self, current: float, previous: float) -> float:
-        """Calculate growth rate."""
-        if previous == 0:
+        """Calculate growth rate."""        if previous == 0:
             return 1.0 if current > 0 else 0.0
         return (current - previous) / previous
     
     async def _update_revenue_cache(self, content_id: str, platform: str):
-        """Update revenue cache for faster access."""
-        cache_key = f"{content_id}_{platform}"
+        """Update revenue cache for faster access."""        cache_key = f"{content_id}_{platform}"
         
         # Calculate aggregated metrics
         revenue_data = self.revenue_streams.get(content_id, [])
@@ -833,8 +809,7 @@ class AdvancedRevenueAnalyticsEngine:
         }
     
     async def _update_performance_cache(self, content_id: str, platform: str):
-        """Update performance cache for faster access."""
-        cache_key = f"{content_id}_{platform}"
+        """Update performance cache for faster access."""        cache_key = f"{content_id}_{platform}"
         
         # Calculate aggregated performance metrics
         performance_data = self.performance_metrics.get(content_id, [])
@@ -867,8 +842,7 @@ class AdvancedRevenueAnalyticsEngine:
     # (Implementation details for AI analysis, market trends, etc.)
     
     async def get_analytics_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive analytics dashboard."""
-        return {
+        """Get comprehensive analytics dashboard."""        return {
             "revenue_analytics": {
                 "total_tracked_content": len(self.revenue_streams),
                 "total_revenue": sum(
@@ -927,5 +901,4 @@ __all__ = [
 RevenueIntelligenceEngine = AdvancedRevenueAnalyticsEngine
 
 def create_revenue_intelligence_engine() -> RevenueIntelligenceEngine:
-    """Create and return a revenue intelligence engine instance."""
-    return RevenueIntelligenceEngine()
+    """Create and return a revenue intelligence engine instance."""    return RevenueIntelligenceEngine()

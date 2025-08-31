@@ -1,5 +1,4 @@
-"""
-Backup Configuration Management for IA Influencer Agent Platform.
+"""Backup Configuration Management for IA Influencer Agent Platform.
 
 Provides comprehensive configuration management for all backup operations
 including storage, encryption, scheduling, and monitoring settings.
@@ -12,7 +11,6 @@ WARNING: This code and concept are the exclusive intellectual property of Fahed 
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
 """
-
 import os
 import yaml
 import json
@@ -28,8 +26,7 @@ from ...core.exceptions import ConfigurationError
 
 
 class StorageBackend(Enum):
-    """Storage backend types."""
-    LOCAL_FILESYSTEM = "local_filesystem"
+    """Storage backend types."""    LOCAL_FILESYSTEM = "local_filesystem"
     AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
     GOOGLE_CLOUD = "google_cloud_storage"
@@ -38,8 +35,7 @@ class StorageBackend(Enum):
 
 
 class CompressionAlgorithm(Enum):
-    """Compression algorithm types."""
-    GZIP = "gzip"
+    """Compression algorithm types."""    GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
     ZSTD = "zstd"
@@ -48,8 +44,7 @@ class CompressionAlgorithm(Enum):
 
 @dataclass
 class StorageConfig:
-    """Storage configuration."""
-    backend: StorageBackend
+    """Storage configuration."""    backend: StorageBackend
     connection_params: Dict[str, Any] = field(default_factory=dict)
     path_prefix: str = "ia_influencer_backups"
     max_storage_gb: int = 1000
@@ -62,8 +57,7 @@ class StorageConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration."""
-    enabled: bool = True
+    """Encryption configuration."""    enabled: bool = True
     algorithm: str = "AES-256-GCM"
     key_derivation_method: str = "PBKDF2"
     key_rotation_enabled: bool = True
@@ -75,8 +69,7 @@ class EncryptionConfig:
 
 @dataclass
 class SchedulingConfig:
-    """Backup scheduling configuration."""
-    enabled: bool = True
+    """Backup scheduling configuration."""    enabled: bool = True
     full_backup_cron: str = "0 2 * * 0"  # Weekly at 2 AM Sunday
     incremental_backup_cron: str = "0 2 * * 1-6"  # Daily at 2 AM Mon-Sat
     content_backup_cron: str = "0 4 * * *"  # Daily at 4 AM
@@ -89,8 +82,7 @@ class SchedulingConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Backup monitoring configuration."""
-    enabled: bool = True
+    """Backup monitoring configuration."""    enabled: bool = True
     metrics_enabled: bool = True
     alerting_enabled: bool = True
     prometheus_endpoint: Optional[str] = None
@@ -104,8 +96,7 @@ class MonitoringConfig:
 
 @dataclass
 class ValidationConfig:
-    """Backup validation configuration."""
-    enabled: bool = True
+    """Backup validation configuration."""    enabled: bool = True
     integrity_checks: bool = True
     checksum_algorithm: str = "SHA-256"
     deep_validation: bool = True
@@ -116,8 +107,7 @@ class ValidationConfig:
 
 @dataclass
 class RecoveryConfig:
-    """Recovery configuration."""
-    point_in_time_enabled: bool = True
+    """Recovery configuration."""    point_in_time_enabled: bool = True
     rollback_enabled: bool = True
     emergency_recovery_enabled: bool = True
     recovery_verification: bool = True
@@ -128,8 +118,7 @@ class RecoveryConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration."""
-    parallel_backups: bool = True
+    """Performance optimization configuration."""    parallel_backups: bool = True
     max_parallel_operations: int = 3
     chunk_size_mb: int = 64
     memory_limit_gb: int = 8
@@ -140,21 +129,17 @@ class PerformanceConfig:
 
 
 class BackupConfig(BaseConfig):
-    """
-    Comprehensive backup configuration management.
+    """    Comprehensive backup configuration management.
     
     Manages all backup-related configurations including storage, encryption,
     scheduling, monitoring, validation, and performance settings.
     """
-
     def __init__(self, config_path: Optional[str] = None):
-        """
-        Initialize backup configuration.
+        """        Initialize backup configuration.
         
         Args:
             config_path: Path to configuration file
-        """
-        super().__init__()
+        """        super().__init__()
         self.logger = logging.getLogger(__name__)
         self.config_path = config_path or self._get_default_config_path()
         
@@ -171,8 +156,7 @@ class BackupConfig(BaseConfig):
         self._load_configuration()
 
     def _get_default_config_path(self) -> str:
-        """Get default configuration file path."""
-        return os.path.join(
+        """Get default configuration file path."""        return os.path.join(
             os.path.dirname(__file__),
             "..",
             "..",
@@ -181,8 +165,7 @@ class BackupConfig(BaseConfig):
         )
 
     def _load_configuration(self) -> None:
-        """Load configuration from file."""
-        try:
+        """Load configuration from file."""        try:
             if Path(self.config_path).exists():
                 with open(self.config_path, 'r') as f:
                     if self.config_path.endswith('.yml') or self.config_path.endswith('.yaml'):
@@ -201,8 +184,7 @@ class BackupConfig(BaseConfig):
             raise ConfigurationError(f"Configuration loading failed: {e}")
 
     def _apply_configuration(self, config_data: Dict[str, Any]) -> None:
-        """Apply configuration data to settings."""
-        # Storage configuration
+        """Apply configuration data to settings."""        # Storage configuration
         if "storage" in config_data:
             storage_data = config_data["storage"]
             self.storage = StorageConfig(
@@ -303,8 +285,7 @@ class BackupConfig(BaseConfig):
             )
 
     def _create_default_configuration(self) -> None:
-        """Create default configuration file."""
-        try:
+        """Create default configuration file."""        try:
             default_config = self.get_default_configuration()
             
             # Ensure directory exists
@@ -325,8 +306,7 @@ class BackupConfig(BaseConfig):
             raise ConfigurationError(f"Default configuration creation failed: {e}")
 
     def get_default_configuration(self) -> Dict[str, Any]:
-        """Get default configuration dictionary."""
-        return {
+        """Get default configuration dictionary."""        return {
             "storage": asdict(self.storage),
             "encryption": asdict(self.encryption),
             "scheduling": asdict(self.scheduling),
@@ -337,13 +317,11 @@ class BackupConfig(BaseConfig):
         }
 
     def validate_configuration(self) -> List[str]:
-        """
-        Validate current configuration.
+        """        Validate current configuration.
         
         Returns:
             List of validation errors
-        """
-        errors = []
+        """        errors = []
         
         # Validate storage configuration
         if not self.storage.connection_params and self.storage.backend != StorageBackend.LOCAL_FILESYSTEM:
@@ -379,13 +357,11 @@ class BackupConfig(BaseConfig):
         return errors
 
     def save_configuration(self, path: Optional[str] = None) -> None:
-        """
-        Save current configuration to file.
+        """        Save current configuration to file.
         
         Args:
             path: Optional custom save path
-        """
-        save_path = path or self.config_path
+        """        save_path = path or self.config_path
         
         try:
             config_data = {
@@ -420,8 +396,7 @@ class BackupConfig(BaseConfig):
             raise ConfigurationError(f"Configuration save failed: {e}")
 
     def get_storage_connection_string(self) -> str:
-        """Get storage connection string based on backend."""
-        if self.storage.backend == StorageBackend.LOCAL_FILESYSTEM:
+        """Get storage connection string based on backend."""        if self.storage.backend == StorageBackend.LOCAL_FILESYSTEM:
             return self.storage.connection_params.get("path", "/var/backups/ia_influencer")
         
         elif self.storage.backend == StorageBackend.AWS_S3:
@@ -442,8 +417,7 @@ class BackupConfig(BaseConfig):
             return f"{self.storage.backend.value}://{self.storage.path_prefix}"
 
     def get_environment_variables(self) -> Dict[str, str]:
-        """Get environment variables for backup configuration."""
-        env_vars = {
+        """Get environment variables for backup configuration."""        env_vars = {
             "BACKUP_STORAGE_BACKEND": self.storage.backend.value,
             "BACKUP_COMPRESSION": self.storage.compression.value,
             "BACKUP_COMPRESSION_LEVEL": str(self.storage.compression_level),
@@ -478,8 +452,7 @@ class BackupConfig(BaseConfig):
         return env_vars
 
     def update_from_environment(self) -> None:
-        """Update configuration from environment variables."""
-        # Storage backend
+        """Update configuration from environment variables."""        # Storage backend
         if "BACKUP_STORAGE_BACKEND" in os.environ:
             self.storage.backend = StorageBackend(os.environ["BACKUP_STORAGE_BACKEND"])
         
@@ -508,8 +481,7 @@ class BackupConfig(BaseConfig):
             self.performance.memory_limit_gb = int(os.environ["BACKUP_MEMORY_LIMIT_GB"])
 
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get configuration summary for monitoring."""
-        return {
+        """Get configuration summary for monitoring."""        return {
             "storage_backend": self.storage.backend.value,
             "encryption_enabled": self.encryption.enabled,
             "scheduling_enabled": self.scheduling.enabled,
@@ -528,12 +500,10 @@ backup_config = BackupConfig()
 
 
 def get_backup_config() -> BackupConfig:
-    """Get global backup configuration instance."""
-    return backup_config
+    """Get global backup configuration instance."""    return backup_config
 
 
 def reload_backup_config(config_path: Optional[str] = None) -> BackupConfig:
-    """Reload backup configuration from file."""
-    global backup_config
+    """Reload backup configuration from file."""    global backup_config
     backup_config = BackupConfig(config_path)
     return backup_config

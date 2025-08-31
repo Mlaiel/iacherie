@@ -1,5 +1,4 @@
-"""
-User Behavior Events Module
+"""User Behavior Events Module
 
 Advanced user behavior analysis and journey tracking for multi-format content creators.
 Provides comprehensive user interaction analysis, personalization, and retention optimization.
@@ -13,7 +12,6 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import json
 import numpy as np
@@ -47,8 +45,7 @@ logger = get_logger(__name__)
 
 
 class BehaviorType(Enum):
-    """Types of user behaviors to track"""
-    CONTENT_VIEW = "content_view"
+    """Types of user behaviors to track"""    CONTENT_VIEW = "content_view"
     CONTENT_INTERACTION = "content_interaction"
     PROFILE_VISIT = "profile_visit"
     SEARCH = "search"
@@ -66,8 +63,7 @@ class BehaviorType(Enum):
 
 
 class UserSegment(Enum):
-    """User behavior segments"""
-    POWER_USER = "power_user"
+    """User behavior segments"""    POWER_USER = "power_user"
     CASUAL_CONSUMER = "casual_consumer"
     DISCOVERY_FOCUSED = "discovery_focused"
     LOYALTY_FOCUSED = "loyalty_focused"
@@ -80,8 +76,7 @@ class UserSegment(Enum):
 
 
 class JourneyStage(Enum):
-    """Stages in user journey"""
-    DISCOVERY = "discovery"
+    """Stages in user journey"""    DISCOVERY = "discovery"
     FIRST_INTERACTION = "first_interaction"
     EXPLORATION = "exploration"
     ENGAGEMENT = "engagement"
@@ -93,8 +88,7 @@ class JourneyStage(Enum):
 
 
 class PersonalizationDimension(Enum):
-    """Dimensions for user personalization"""
-    CONTENT_PREFERENCE = "content_preference"
+    """Dimensions for user personalization"""    CONTENT_PREFERENCE = "content_preference"
     TIMING_PREFERENCE = "timing_preference"
     FORMAT_PREFERENCE = "format_preference"
     PLATFORM_PREFERENCE = "platform_preference"
@@ -106,8 +100,7 @@ class PersonalizationDimension(Enum):
 
 @dataclass
 class UserBehaviorEvent(BaseEvent):
-    """Represents a user behavior event"""
-    user_id: str
+    """Represents a user behavior event"""    user_id: str
     creator_id: str
     behavior_type: BehaviorType
     session_id: str
@@ -124,8 +117,7 @@ class UserBehaviorEvent(BaseEvent):
     ab_test_variant: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert user behavior event to dictionary"""
-        return {
+        """Convert user behavior event to dictionary"""        return {
             **asdict(self),
             'behavior_type': self.behavior_type.value,
             'timestamp': self.timestamp.isoformat()
@@ -134,8 +126,7 @@ class UserBehaviorEvent(BaseEvent):
 
 @dataclass
 class UserJourney:
-    """Represents a user's complete journey"""
-    user_id: str
+    """Represents a user's complete journey"""    user_id: str
     creator_id: str
     journey_id: str
     start_timestamp: datetime
@@ -152,8 +143,7 @@ class UserJourney:
 
 @dataclass
 class UserPersonalizationProfile:
-    """User personalization profile"""
-    user_id: str
+    """User personalization profile"""    user_id: str
     creator_id: str
     segment: UserSegment
     preferences: Dict[str, Any]
@@ -167,8 +157,7 @@ class UserPersonalizationProfile:
 
 
 class UserBehaviorEventHandler(BaseEventHandler):
-    """Handles user behavior events with advanced analytics"""
-    
+    """Handles user behavior events with advanced analytics"""    
     def __init__(self):
         super().__init__()
         self.cache_manager = CacheManager()
@@ -179,8 +168,7 @@ class UserBehaviorEventHandler(BaseEventHandler):
         self.retention_analyzer = UserRetentionAnalyzer()
         
     async def handle(self, event: UserBehaviorEvent) -> Dict[str, Any]:
-        """Process user behavior event with comprehensive analysis"""
-        try:
+        """Process user behavior event with comprehensive analysis"""        try:
             # Validate event data
             await self._validate_event(event)
             
@@ -226,8 +214,7 @@ class UserBehaviorEventHandler(BaseEventHandler):
             raise
     
     async def _validate_event(self, event: UserBehaviorEvent) -> None:
-        """Validate user behavior event data"""
-        required_fields = ['user_id', 'creator_id', 'behavior_type', 'session_id', 'platform']
+        """Validate user behavior event data"""        required_fields = ['user_id', 'creator_id', 'behavior_type', 'session_id', 'platform']
         for field in required_fields:
             if not getattr(event, field):
                 raise ValueError(f"Missing required field: {field}")
@@ -239,11 +226,9 @@ class UserBehaviorEventHandler(BaseEventHandler):
             raise ValueError("Duration cannot be negative")
     
     async def _store_behavior_data(self, event: UserBehaviorEvent) -> None:
-        """Store user behavior data in database"""
-        async with self.db_manager.get_session() as session:
+        """Store user behavior data in database"""        async with self.db_manager.get_session() as session:
             await session.execute(
-                """
-                INSERT INTO user_behavior_events 
+                """                INSERT INTO user_behavior_events 
                 (event_id, user_id, creator_id, behavior_type, session_id, platform,
                  content_id, behavior_data, timestamp, duration_seconds, sequence_position,
                  referrer_source, device_info, location_data, context_data, ab_test_variant)
@@ -260,8 +245,7 @@ class UserBehaviorEventHandler(BaseEventHandler):
             )
     
     async def _calculate_behavior_insights(self, event: UserBehaviorEvent) -> Dict[str, Any]:
-        """Calculate insights from user behavior"""
-        # Get user's historical behavior
+        """Calculate insights from user behavior"""        # Get user's historical behavior
         user_history = await self._get_user_behavior_history(event.user_id, event.creator_id)
         
         # Calculate behavior patterns
@@ -286,16 +270,14 @@ class UserBehaviorEventHandler(BaseEventHandler):
 
 
 class UserBehaviorTracker:
-    """Tracks and analyzes user behavior patterns"""
-    
+    """Tracks and analyzes user behavior patterns"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager()
         self.metrics_calculator = MetricsCalculator()
         
     async def track_behavior(self, event: UserBehaviorEvent) -> Dict[str, Any]:
-        """Track comprehensive user behavior metrics"""
-        # Session-level analysis
+        """Track comprehensive user behavior metrics"""        # Session-level analysis
         session_analysis = await self._analyze_session_behavior(event)
         
         # Interaction patterns
@@ -324,8 +306,7 @@ class UserBehaviorTracker:
         }
     
     async def _analyze_session_behavior(self, event: UserBehaviorEvent) -> Dict[str, Any]:
-        """Analyze user behavior within the current session"""
-        # Get all events in current session
+        """Analyze user behavior within the current session"""        # Get all events in current session
         session_events = await self._get_session_events(event.session_id)
         
         # Calculate session metrics
@@ -357,8 +338,7 @@ class UserBehaviorTracker:
         }
     
     async def _analyze_interaction_patterns(self, event: UserBehaviorEvent) -> Dict[str, Any]:
-        """Analyze how user interacts with content"""
-        # Get user's interaction history
+        """Analyze how user interacts with content"""        # Get user's interaction history
         user_interactions = await self._get_user_interactions(event.user_id, event.creator_id)
         
         # Analyze interaction types
@@ -385,14 +365,12 @@ class UserBehaviorTracker:
 
 
 class UserJourneyAnalyzer:
-    """Analyzes user journey and touchpoint optimization"""
-    
+    """Analyzes user journey and touchpoint optimization"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         
     async def analyze_journey(self, event: UserBehaviorEvent) -> Dict[str, Any]:
-        """Analyze user's complete journey"""
-        # Get user's complete journey
+        """Analyze user's complete journey"""        # Get user's complete journey
         journey_data = await self._get_user_journey(event.user_id, event.creator_id)
         
         # Identify journey stage
@@ -420,11 +398,9 @@ class UserJourneyAnalyzer:
         }
     
     async def _get_user_journey(self, user_id: str, creator_id: str) -> List[Dict[str, Any]]:
-        """Get complete user journey data"""
-        async with self.db_manager.get_session() as session:
+        """Get complete user journey data"""        async with self.db_manager.get_session() as session:
             result = await session.execute(
-                """
-                SELECT behavior_type, behavior_data, timestamp, platform, content_id,
+                """                SELECT behavior_type, behavior_data, timestamp, platform, content_id,
                        duration_seconds, referrer_source, session_id
                 FROM user_behavior_events 
                 WHERE user_id = %s AND creator_id = %s
@@ -449,8 +425,7 @@ class UserJourneyAnalyzer:
             return journey
     
     async def _identify_journey_stage(self, event: UserBehaviorEvent, journey_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Identify current stage in user journey"""
-        if not journey_data:
+        """Identify current stage in user journey"""        if not journey_data:
             return {
                 'stage': JourneyStage.DISCOVERY.value,
                 'confidence': 0.9,
@@ -500,8 +475,7 @@ class UserJourneyAnalyzer:
 
 
 class UserPersonalizationEngine:
-    """Manages user personalization profiles and recommendations"""
-    
+    """Manages user personalization profiles and recommendations"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.personalizer = UserPersonalizer()
@@ -509,8 +483,7 @@ class UserPersonalizationEngine:
         self.scaler = StandardScaler()
         
     async def update_profile(self, event: UserBehaviorEvent) -> Dict[str, Any]:
-        """Update user personalization profile"""
-        # Get current profile
+        """Update user personalization profile"""        # Get current profile
         current_profile = await self._get_current_profile(event.user_id, event.creator_id)
         
         # Update behavioral patterns
@@ -543,15 +516,13 @@ class UserPersonalizationEngine:
 
 
 class UserRetentionAnalyzer:
-    """Analyzes user retention patterns and predicts churn"""
-    
+    """Analyzes user retention patterns and predicts churn"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.churn_predictor = BehaviorPredictor()
         
     async def analyze_retention(self, event: UserBehaviorEvent) -> Dict[str, Any]:
-        """Analyze user retention factors"""
-        # Calculate retention metrics
+        """Analyze user retention factors"""        # Calculate retention metrics
         retention_metrics = await self._calculate_retention_metrics(event)
         
         # Predict churn probability
@@ -576,8 +547,7 @@ class UserRetentionAnalyzer:
         }
     
     async def _predict_churn_probability(self, event: UserBehaviorEvent) -> Dict[str, Any]:
-        """Predict probability of user churn"""
-        # Get user behavior features
+        """Predict probability of user churn"""        # Get user behavior features
         behavior_features = await self._extract_churn_features(event)
         
         # Use ML model to predict churn
@@ -607,8 +577,7 @@ class UserRetentionAnalyzer:
             }
     
     def _get_churn_risk_level(self, probability: float) -> str:
-        """Convert churn probability to risk level"""
-        if probability >= 0.8:
+        """Convert churn probability to risk level"""        if probability >= 0.8:
             return 'critical'
         elif probability >= 0.6:
             return 'high'

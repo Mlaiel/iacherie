@@ -1,11 +1,9 @@
-"""
-Advanced Revenue Calculation Engine
+"""Advanced Revenue Calculation Engine
 Multi-platform revenue tracking and analysis with AI-powered predictions
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,8 +23,7 @@ from ..analytics.metrics_calculator import MetricsCalculator
 
 
 class RevenueSource(Enum):
-    """Revenue sources"""
-    STREAMING = "streaming"
+    """Revenue sources"""    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
     ADVERTISING = "advertising"
@@ -39,8 +36,7 @@ class RevenueSource(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platforms"""
-    SPOTIFY = "spotify"
+    """Supported platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -53,8 +49,7 @@ class PlatformType(Enum):
 
 
 class RevenuePeriod(Enum):
-    """Revenue calculation periods"""
-    DAILY = "daily"
+    """Revenue calculation periods"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -63,8 +58,7 @@ class RevenuePeriod(Enum):
 
 @dataclass
 class PlatformRevenue:
-    """Platform-specific revenue data"""
-    platform: PlatformType
+    """Platform-specific revenue data"""    platform: PlatformType
     gross_revenue: Decimal
     platform_fee: Decimal
     net_revenue: Decimal
@@ -74,8 +68,7 @@ class PlatformRevenue:
     currency: str = "EUR"
     
     def __post_init__(self):
-        """Calculate derived metrics"""
-        if self.plays_count > 0:
+        """Calculate derived metrics"""        if self.plays_count > 0:
             self.revenue_per_play = self.net_revenue / self.plays_count
         else:
             self.revenue_per_play = Decimal("0")
@@ -83,8 +76,7 @@ class PlatformRevenue:
 
 @dataclass
 class RevenueMetrics:
-    """Comprehensive revenue metrics"""
-    user_id: int
+    """Comprehensive revenue metrics"""    user_id: int
     period_start: datetime
     period_end: datetime
     total_gross_revenue: Decimal = Decimal("0")
@@ -98,8 +90,7 @@ class RevenueMetrics:
     predicted_next_period: Optional[Decimal] = None
     
     def calculate_totals(self):
-        """Calculate total metrics from platform data"""
-        self.total_gross_revenue = sum(
+        """Calculate total metrics from platform data"""        self.total_gross_revenue = sum(
             pr.gross_revenue for pr in self.platform_revenues.values()
         )
         self.total_net_revenue = sum(
@@ -117,8 +108,7 @@ class RevenueMetrics:
 
 
 class RevenueCalculationRules:
-    """Platform-specific revenue calculation rules"""
-    
+    """Platform-specific revenue calculation rules"""    
     PLATFORM_RULES = {
         PlatformType.SPOTIFY: {
             "payout_per_stream": Decimal("0.003"),
@@ -148,8 +138,7 @@ class RevenueCalculationRules:
 
 
 class RevenueCalculator:
-    """Advanced revenue calculation engine with ML predictions"""
-    
+    """Advanced revenue calculation engine with ML predictions"""    
     def __init__(self, metrics_calculator: MetricsCalculator):
         self.metrics_calculator = metrics_calculator
         self.logger = logging.getLogger(__name__)
@@ -163,8 +152,7 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> RevenueMetrics:
-        """Calculate comprehensive revenue metrics for user"""
-        try:
+        """Calculate comprehensive revenue metrics for user"""        try:
             metrics = RevenueMetrics(
                 user_id=user_id,
                 period_start=period_start,
@@ -218,8 +206,7 @@ class RevenueCalculator:
         user_id: int, 
         session: AsyncSession
     ) -> List[Content]:
-        """Get user's content for revenue calculation"""
-        result = await session.execute(
+        """Get user's content for revenue calculation"""        result = await session.execute(
             select(Content).where(Content.user_id == user_id)
         )
         return result.scalars().all()
@@ -231,8 +218,7 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> Dict[PlatformType, PlatformRevenue]:
-        """Calculate revenue for content across platforms"""
-        platform_revenues = {}
+        """Calculate revenue for content across platforms"""        platform_revenues = {}
         
         # Get platform performance data
         platforms_data = await self._get_platform_performance(
@@ -256,8 +242,7 @@ class RevenueCalculator:
         platform: PlatformType,
         platform_data: Any
     ) -> PlatformRevenue:
-        """Calculate revenue for single platform"""
-        rules = self.rules.PLATFORM_RULES.get(platform, {})
+        """Calculate revenue for single platform"""        rules = self.rules.PLATFORM_RULES.get(platform, {})
         
         if platform == PlatformType.SPOTIFY:
             return self._calculate_spotify_revenue(platform_data, rules)
@@ -275,8 +260,7 @@ class RevenueCalculator:
         platform_data: Any, 
         rules: Dict[str, Any]
     ) -> PlatformRevenue:
-        """Calculate Spotify revenue based on streams"""
-        payout_per_stream = rules.get("payout_per_stream", Decimal("0.003"))
+        """Calculate Spotify revenue based on streams"""        payout_per_stream = rules.get("payout_per_stream", Decimal("0.003"))
         platform_fee_rate = rules.get("platform_fee_rate", Decimal("0.30"))
         
         gross_revenue = Decimal(str(platform_data.plays_count)) * payout_per_stream
@@ -303,8 +287,7 @@ class RevenueCalculator:
         platform_data: Any, 
         rules: Dict[str, Any]
     ) -> PlatformRevenue:
-        """Calculate YouTube revenue based on views and CPM"""
-        cpm_range = rules.get("cpm_range", (Decimal("1.00"), Decimal("5.00")))
+        """Calculate YouTube revenue based on views and CPM"""        cpm_range = rules.get("cpm_range", (Decimal("1.00"), Decimal("5.00")))
         platform_fee_rate = rules.get("platform_fee_rate", Decimal("0.45"))
         
         # Estimate CPM based on engagement and content quality
@@ -331,8 +314,7 @@ class RevenueCalculator:
         platform_data: Any, 
         rules: Dict[str, Any]
     ) -> PlatformRevenue:
-        """Calculate Instagram revenue from creator fund and brand deals"""
-        cpm_range = rules.get("cpm_range", (Decimal("2.00"), Decimal("8.00")))
+        """Calculate Instagram revenue from creator fund and brand deals"""        cpm_range = rules.get("cpm_range", (Decimal("2.00"), Decimal("8.00")))
         platform_fee_rate = rules.get("platform_fee_rate", Decimal("0.30"))
         
         engagement_rate = Decimal(str(platform_data.engagement_rate or 0.03))
@@ -365,8 +347,7 @@ class RevenueCalculator:
         platform_data: Any, 
         rules: Dict[str, Any]
     ) -> PlatformRevenue:
-        """Calculate TikTok Creator Fund revenue"""
-        creator_fund_rate = rules.get("creator_fund_rate", Decimal("0.02"))
+        """Calculate TikTok Creator Fund revenue"""        creator_fund_rate = rules.get("creator_fund_rate", Decimal("0.02"))
         platform_fee_rate = rules.get("platform_fee_rate", Decimal("0.50"))
         
         # TikTok pays based on views and engagement
@@ -395,8 +376,7 @@ class RevenueCalculator:
         platform: PlatformType, 
         platform_data: Any
     ) -> PlatformRevenue:
-        """Calculate revenue for platforms without specific rules"""
-        # Generic calculation based on industry averages
+        """Calculate revenue for platforms without specific rules"""        # Generic calculation based on industry averages
         estimated_cpm = Decimal("2.50")
         platform_fee_rate = Decimal("0.30")
         
@@ -421,8 +401,7 @@ class RevenueCalculator:
         engagement_rate: Decimal, 
         cpm_range: Tuple[Decimal, Decimal]
     ) -> Decimal:
-        """Estimate CPM based on engagement rate"""
-        min_cpm, max_cpm = cpm_range
+        """Estimate CPM based on engagement rate"""        min_cpm, max_cpm = cpm_range
         
         # Higher engagement = higher CPM
         if engagement_rate >= Decimal("0.10"):
@@ -439,8 +418,7 @@ class RevenueCalculator:
         existing: PlatformRevenue, 
         new: PlatformRevenue
     ) -> PlatformRevenue:
-        """Merge platform revenue data"""
-        return PlatformRevenue(
+        """Merge platform revenue data"""        return PlatformRevenue(
             platform=existing.platform,
             gross_revenue=existing.gross_revenue + new.gross_revenue,
             platform_fee=existing.platform_fee + new.platform_fee,
@@ -458,8 +436,7 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> Dict[RevenueSource, Decimal]:
-        """Calculate revenue breakdown by source"""
-        # Get revenue records by source
+        """Calculate revenue breakdown by source"""        # Get revenue records by source
         result = await session.execute(
             select(
                 RevenueRecord.source,
@@ -485,8 +462,7 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> Optional[Decimal]:
-        """Calculate revenue growth rate compared to previous period"""
-        try:
+        """Calculate revenue growth rate compared to previous period"""        try:
             period_length = period_end - period_start
             previous_period_start = period_start - period_length
             previous_period_end = period_start
@@ -518,8 +494,7 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> Decimal:
-        """Get total revenue for a specific period"""
-        result = await session.execute(
+        """Get total revenue for a specific period"""        result = await session.execute(
             select(func.sum(RevenueRecord.amount)).where(
                 RevenueRecord.user_id == user_id,
                 RevenueRecord.date >= period_start,
@@ -536,8 +511,7 @@ class RevenueCalculator:
         current_metrics: RevenueMetrics,
         session: AsyncSession
     ) -> Optional[Decimal]:
-        """Predict next period revenue using ML model"""
-        try:
+        """Predict next period revenue using ML model"""        try:
             # Get historical data for prediction
             historical_data = await self._get_historical_revenue_data(user_id, session)
             
@@ -562,8 +536,7 @@ class RevenueCalculator:
         user_id: int, 
         session: AsyncSession
     ) -> List[Dict[str, Any]]:
-        """Get historical revenue data for ML prediction"""
-        # Get last 12 months of revenue data
+        """Get historical revenue data for ML prediction"""        # Get last 12 months of revenue data
         end_date = datetime.now()
         start_date = end_date - timedelta(days=365)
         
@@ -602,15 +575,13 @@ class RevenueCalculator:
         period_end: datetime,
         session: AsyncSession
     ) -> List[Any]:
-        """Get platform performance data for content"""
-        # This would typically query platform-specific analytics tables
+        """Get platform performance data for content"""        # This would typically query platform-specific analytics tables
         # For now, return mock data structure
         return []
 
 
 class RevenueReportGenerator:
-    """Generate comprehensive revenue reports"""
-    
+    """Generate comprehensive revenue reports"""    
     def __init__(self, revenue_calculator: RevenueCalculator):
         self.revenue_calculator = revenue_calculator
         self.logger = logging.getLogger(__name__)
@@ -622,8 +593,7 @@ class RevenueReportGenerator:
         month: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate detailed monthly revenue report"""
-        period_start = datetime(year, month, 1)
+        """Generate detailed monthly revenue report"""        period_start = datetime(year, month, 1)
         if month == 12:
             period_end = datetime(year + 1, 1, 1) - timedelta(days=1)
         else:

@@ -1,11 +1,9 @@
-"""
-AI Agent API Routes
+"""AI Agent API Routes
 AI-powered musical and content creation assistant endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 from enum import Enum
@@ -144,8 +142,7 @@ style_transfer_engine = StyleTransferEngine()
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Get current authenticated user"""
-    if not credentials:
+    """Get current authenticated user"""    if not credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required"
@@ -168,14 +165,12 @@ async def compose_music(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Generate AI-composed music based on parameters"""
-    try:
+    """Generate AI-composed music based on parameters"""    try:
         task_id = str(uuid.uuid4())
         
         # Create task record
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO ai_agent_tasks (task_id, user_id, agent_type, request_data,
+            await session.execute("""                INSERT INTO ai_agent_tasks (task_id, user_id, agent_type, request_data,
                                           status, progress, created_at, updated_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -213,12 +208,10 @@ async def analyze_music(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Analyze music content using AI"""
-    try:
+    """Analyze music content using AI"""    try:
         # Verify file ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT file_path, content_type
+            result = await session.execute("""                SELECT file_path, content_type
                 FROM uploaded_files
                 WHERE file_id = %s AND user_id = %s AND content_type = 'audio'
             """, (request.audio_file_id, user['user_id']))
@@ -234,8 +227,7 @@ async def analyze_music(
         
         # Create task record
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO ai_agent_tasks (task_id, user_id, agent_type, request_data,
+            await session.execute("""                INSERT INTO ai_agent_tasks (task_id, user_id, agent_type, request_data,
                                           status, progress, created_at, updated_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -272,12 +264,10 @@ async def get_ai_recommendations(
     request: RecommendationRequest,
     user: dict = Depends(get_current_user)
 ):
-    """Get AI-powered recommendations"""
-    try:
+    """Get AI-powered recommendations"""    try:
         # Get user's content history
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT file_id, metadata, upload_timestamp
+            result = await session.execute("""                SELECT file_id, metadata, upload_timestamp
                 FROM uploaded_files
                 WHERE user_id = %s AND content_type = 'audio'
                 ORDER BY upload_timestamp DESC
@@ -301,8 +291,7 @@ async def get_ai_recommendations(
         # Store recommendation session
         session_id = str(uuid.uuid4())
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO recommendation_sessions (session_id, user_id, request_data,
+            await session.execute("""                INSERT INTO recommendation_sessions (session_id, user_id, request_data,
                                                    recommendations, created_at)
                 VALUES (%s, %s, %s, %s, %s)
             """, (
@@ -341,14 +330,12 @@ async def generate_content(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Generate AI content (lyrics, descriptions, etc.)"""
-    try:
+    """Generate AI content (lyrics, descriptions, etc.)"""    try:
         task_id = str(uuid.uuid4())
         
         # Create task record
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO ai_agent_tasks (task_id, user_id, agent_type, request_data,
+            await session.execute("""                INSERT INTO ai_agent_tasks (task_id, user_id, agent_type, request_data,
                                           status, progress, created_at, updated_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -387,12 +374,10 @@ async def transfer_style(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Apply style transfer to content"""
-    try:
+    """Apply style transfer to content"""    try:
         # Verify source content ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT file_path, content_type
+            result = await session.execute("""                SELECT file_path, content_type
                 FROM uploaded_files
                 WHERE file_id = %s AND user_id = %s
             """, (request.source_content_id, user['user_id']))
@@ -406,8 +391,7 @@ async def transfer_style(
             
             # Verify style reference if provided
             if request.style_reference_id:
-                result = await session.execute("""
-                    SELECT file_path FROM uploaded_files
+                result = await session.execute("""                    SELECT file_path FROM uploaded_files
                     WHERE file_id = %s AND user_id = %s
                 """, (request.style_reference_id, user['user_id']))
                 
@@ -421,8 +405,7 @@ async def transfer_style(
         
         # Create task record
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO ai_agent_tasks (task_id, user_id, agent_type, request_data,
+            await session.execute("""                INSERT INTO ai_agent_tasks (task_id, user_id, agent_type, request_data,
                                           status, progress, created_at, updated_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -461,11 +444,9 @@ async def get_task_status(
     task_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Get AI agent task status"""
-    try:
+    """Get AI agent task status"""    try:
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT task_id, agent_type, request_data, status, progress,
+            result = await session.execute("""                SELECT task_id, agent_type, request_data, status, progress,
                        result, error_message, created_at, updated_at, estimated_completion
                 FROM ai_agent_tasks
                 WHERE task_id = %s AND user_id = %s
@@ -506,15 +487,12 @@ async def get_user_tasks(
     limit: int = Field(default=20, ge=1, le=100),
     user: dict = Depends(get_current_user)
 ):
-    """Get user's AI agent tasks"""
-    try:
-        query = """
-            SELECT task_id, agent_type, request_data, status, progress,
+    """Get user's AI agent tasks"""    try:
+        query = """            SELECT task_id, agent_type, request_data, status, progress,
                    result, error_message, created_at, updated_at, estimated_completion
             FROM ai_agent_tasks
             WHERE user_id = %s
-        """
-        params = [user['user_id']]
+        """        params = [user['user_id']]
         
         if agent_type:
             query += " AND agent_type = %s"
@@ -561,12 +539,10 @@ async def cancel_task(
     task_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Cancel an AI agent task"""
-    try:
+    """Cancel an AI agent task"""    try:
         async with database_manager.get_postgres_session() as session:
             # Check if task exists and belongs to user
-            result = await session.execute("""
-                SELECT status FROM ai_agent_tasks
+            result = await session.execute("""                SELECT status FROM ai_agent_tasks
                 WHERE task_id = %s AND user_id = %s
             """, (task_id, user['user_id']))
             
@@ -584,8 +560,7 @@ async def cancel_task(
                 )
             
             # Cancel task
-            await session.execute("""
-                UPDATE ai_agent_tasks 
+            await session.execute("""                UPDATE ai_agent_tasks 
                 SET status = %s, updated_at = %s
                 WHERE task_id = %s
             """, (TaskStatus.CANCELLED.value, datetime.utcnow(), task_id))
@@ -605,8 +580,7 @@ async def cancel_task(
 
 @router.get("/capabilities", response_model=Dict[str, Any])
 async def get_ai_capabilities():
-    """Get available AI agent capabilities and models"""
-    try:
+    """Get available AI agent capabilities and models"""    try:
         capabilities = {
             "music_composition": {
                 "supported_genres": [
@@ -689,8 +663,7 @@ async def get_ai_capabilities():
 
 # Background processing functions
 async def _process_music_composition(task_id: str, request: MusicCompositionRequest, user: dict):
-    """Process music composition task"""
-    try:
+    """Process music composition task"""    try:
         # Update status to processing
         await _update_task_status(task_id, TaskStatus.PROCESSING, 10.0, "Initializing composition")
         
@@ -741,8 +714,7 @@ async def _process_music_composition(task_id: str, request: MusicCompositionRequ
 
 async def _process_music_analysis(task_id: str, request: MusicAnalysisRequest, 
                                   file_path: str, user: dict):
-    """Process music analysis task"""
-    try:
+    """Process music analysis task"""    try:
         await _update_task_status(task_id, TaskStatus.PROCESSING, 20.0, "Loading audio file")
         
         # Analyze music using AI
@@ -788,8 +760,7 @@ async def _process_music_analysis(task_id: str, request: MusicAnalysisRequest,
 
 
 async def _process_content_generation(task_id: str, request: ContentGenerationRequest, user: dict):
-    """Process content generation task"""
-    try:
+    """Process content generation task"""    try:
         await _update_task_status(task_id, TaskStatus.PROCESSING, 30.0, "Generating content")
         
         # Generate content using AI
@@ -839,8 +810,7 @@ async def _process_content_generation(task_id: str, request: ContentGenerationRe
 
 async def _process_style_transfer(task_id: str, request: StyleTransferRequest, 
                                   source_info: tuple, user: dict):
-    """Process style transfer task"""
-    try:
+    """Process style transfer task"""    try:
         await _update_task_status(task_id, TaskStatus.PROCESSING, 20.0, "Loading source content")
         
         source_path, content_type = source_info
@@ -887,19 +857,16 @@ async def _process_style_transfer(task_id: str, request: StyleTransferRequest,
 
 async def _update_task_status(task_id: str, status: TaskStatus, progress: float, 
                              step: str, result: Optional[Dict[str, Any]] = None):
-    """Update AI agent task status"""
-    try:
+    """Update AI agent task status"""    try:
         async with database_manager.get_postgres_session() as session:
             if result:
-                await session.execute("""
-                    UPDATE ai_agent_tasks 
+                await session.execute("""                    UPDATE ai_agent_tasks 
                     SET status = %s, progress = %s, processing_step = %s, 
                         result = %s, updated_at = %s
                     WHERE task_id = %s
                 """, (status.value, progress, step, result, datetime.utcnow(), task_id))
             else:
-                await session.execute("""
-                    UPDATE ai_agent_tasks 
+                await session.execute("""                    UPDATE ai_agent_tasks 
                     SET status = %s, progress = %s, processing_step = %s, 
                         updated_at = %s
                     WHERE task_id = %s

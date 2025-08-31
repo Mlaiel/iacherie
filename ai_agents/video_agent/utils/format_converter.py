@@ -1,5 +1,4 @@
-"""
-Video Format Converter - Advanced Multi-Format Video Conversion System
+"""Video Format Converter - Advanced Multi-Format Video Conversion System
 
 Industrial-grade video format conversion engine with optimized encoding,
 compression algorithms, and professional-quality output for all major formats.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import os
@@ -49,8 +47,7 @@ from ...models.video_models import ConversionJob, FormatProfile
 logger = logging.getLogger(__name__)
 
 class SupportedFormat:
-    """Comprehensive list of supported video formats"""
-    # Standard formats
+    """Comprehensive list of supported video formats"""    # Standard formats
     MP4 = "mp4"
     AVI = "avi" 
     MOV = "mov"
@@ -74,8 +71,7 @@ class SupportedFormat:
     RGB = "rgb"
 
 class VideoCodecProfile:
-    """Video codec profiles with optimized settings"""
-    
+    """Video codec profiles with optimized settings"""    
     H264_BASELINE = {
         "codec": "libx264",
         "profile": "baseline",
@@ -125,8 +121,7 @@ class VideoCodecProfile:
     }
 
 class AudioCodecProfile:
-    """Audio codec profiles for different use cases"""
-    
+    """Audio codec profiles for different use cases"""    
     AAC_LC = {
         "codec": "aac",
         "profile": "aac_low",
@@ -169,8 +164,7 @@ class AudioCodecProfile:
     }
 
 class ConversionPreset:
-    """Pre-configured conversion presets for common use cases"""
-    
+    """Pre-configured conversion presets for common use cases"""    
     SOCIAL_MEDIA = {
         "name": "Social Media",
         "video_codec": VideoCodecProfile.H264_MAIN,
@@ -232,21 +226,17 @@ class ConversionPreset:
     }
 
 class VideoFormatConverter:
-    """
-    Advanced video format conversion system with optimized encoding algorithms.
+    """    Advanced video format conversion system with optimized encoding algorithms.
     
     Provides comprehensive format conversion capabilities with professional-quality
     output, intelligent codec selection, and platform-specific optimizations.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize VideoFormatConverter with advanced configuration.
+        """        Initialize VideoFormatConverter with advanced configuration.
         
         Args:
             config: Optional configuration dictionary
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.temp_dir = Path(tempfile.gettempdir()) / "video_converter" / str(uuid.uuid4())
         self.temp_dir.mkdir(parents=True, exist_ok=True)
         
@@ -275,8 +265,7 @@ class VideoFormatConverter:
         logger.info("VideoFormatConverter initialized with hardware acceleration support")
     
     def _detect_hardware_encoders(self) -> Dict[str, bool]:
-        """Detect available hardware encoders"""
-        encoders = {
+        """Detect available hardware encoders"""        encoders = {
             "nvenc": False,    # NVIDIA
             "qsv": False,      # Intel QuickSync
             "vaapi": False,    # Intel/AMD VAAPI
@@ -308,8 +297,7 @@ class VideoFormatConverter:
                           output_path: Optional[str] = None,
                           preset: Optional[str] = None,
                           custom_settings: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """
-        Convert video to specified format with optimized settings.
+        """        Convert video to specified format with optimized settings.
         
         Args:
             input_path: Path to input video file
@@ -320,8 +308,7 @@ class VideoFormatConverter:
             
         Returns:
             Conversion result with detailed metadata
-        """
-        if not os.path.exists(input_path):
+        """        if not os.path.exists(input_path):
             raise FileNotFoundError(f"Input video not found: {input_path}")
         
         # Validate file size
@@ -384,16 +371,14 @@ class VideoFormatConverter:
             raise
     
     async def batch_convert(self, conversion_jobs: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """
-        Convert multiple videos in batch with optimal resource utilization.
+        """        Convert multiple videos in batch with optimal resource utilization.
         
         Args:
             conversion_jobs: List of conversion job configurations
             
         Returns:
             List of conversion results
-        """
-        if not conversion_jobs:
+        """        if not conversion_jobs:
             return []
         
         # Limit concurrent jobs
@@ -442,8 +427,7 @@ class VideoFormatConverter:
                                    output_dir: str,
                                    resolutions: List[str] = None,
                                    format_type: str = "hls") -> Dict[str, Any]:
-        """
-        Create adaptive streaming formats (HLS/DASH) with multiple resolutions.
+        """        Create adaptive streaming formats (HLS/DASH) with multiple resolutions.
         
         Args:
             input_path: Path to input video
@@ -453,8 +437,7 @@ class VideoFormatConverter:
             
         Returns:
             Adaptive streaming creation result
-        """
-        if not os.path.exists(input_path):
+        """        if not os.path.exists(input_path):
             raise FileNotFoundError(f"Input video not found: {input_path}")
         
         resolutions = resolutions or ["240p", "360p", "480p", "720p", "1080p"]
@@ -513,8 +496,7 @@ class VideoFormatConverter:
             raise
     
     async def _analyze_input_video(self, video_path: str) -> Dict[str, Any]:
-        """Analyze input video properties using ffprobe"""
-        try:
+        """Analyze input video properties using ffprobe"""        try:
             probe = ffmpeg.probe(video_path)
             
             # Extract format information
@@ -571,8 +553,7 @@ class VideoFormatConverter:
             raise
     
     def _parse_fps(self, fps_string: str) -> float:
-        """Parse FPS from fraction string"""
-        try:
+        """Parse FPS from fraction string"""        try:
             if "/" in fps_string:
                 numerator, denominator = fps_string.split("/")
                 return float(numerator) / float(denominator) if float(denominator) != 0 else 0
@@ -585,8 +566,7 @@ class VideoFormatConverter:
                                           output_format: str,
                                           preset: Optional[str],
                                           custom_settings: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Optimize conversion settings based on input and target requirements"""
-        
+        """Optimize conversion settings based on input and target requirements"""        
         # Start with preset if provided
         if preset:
             settings = self._get_preset_settings(preset).copy()
@@ -639,8 +619,7 @@ class VideoFormatConverter:
         return settings
     
     def _get_preset_settings(self, preset: str) -> Dict[str, Any]:
-        """Get settings for predefined presets"""
-        presets = {
+        """Get settings for predefined presets"""        presets = {
             "social_media": ConversionPreset.SOCIAL_MEDIA,
             "streaming_hd": ConversionPreset.STREAMING_HD,
             "streaming_4k": ConversionPreset.STREAMING_4K,
@@ -652,8 +631,7 @@ class VideoFormatConverter:
         return presets.get(preset, ConversionPreset.SOCIAL_MEDIA)
     
     def _get_default_settings(self, output_format: str) -> Dict[str, Any]:
-        """Get default settings for specific output formats"""
-        format_defaults = {
+        """Get default settings for specific output formats"""        format_defaults = {
             "mp4": {
                 "video_codec": "libx264",
                 "audio_codec": "aac",
@@ -683,8 +661,7 @@ class VideoFormatConverter:
         return format_defaults.get(output_format, format_defaults["mp4"])
     
     def _get_resolution_settings(self, resolution: str) -> Dict[str, Any]:
-        """Get width, height, and bitrate for resolution preset"""
-        resolutions = {
+        """Get width, height, and bitrate for resolution preset"""        resolutions = {
             "240p": {"width": 426, "height": 240, "bitrate": "400k"},
             "360p": {"width": 640, "height": 360, "bitrate": "800k"},
             "480p": {"width": 854, "height": 480, "bitrate": "1200k"},
@@ -698,8 +675,7 @@ class VideoFormatConverter:
     
     def _select_optimal_video_codec(self, output_format: str, input_info: Dict[str, Any], 
                                    settings: Dict[str, Any]) -> str:
-        """Select optimal video codec based on format and requirements"""
-        
+        """Select optimal video codec based on format and requirements"""        
         # Format-specific codec preferences
         codec_preferences = {
             "mp4": ["libx264", "libx265"],
@@ -721,8 +697,7 @@ class VideoFormatConverter:
     
     def _select_optimal_audio_codec(self, output_format: str, input_info: Dict[str, Any],
                                    settings: Dict[str, Any]) -> str:
-        """Select optimal audio codec based on format"""
-        
+        """Select optimal audio codec based on format"""        
         codec_preferences = {
             "mp4": ["aac", "mp3"],
             "mkv": ["aac", "flac", "mp3"],
@@ -735,8 +710,7 @@ class VideoFormatConverter:
         return preferred_codecs[0]
     
     def _get_hardware_codec(self, software_codec: str) -> Optional[str]:
-        """Get hardware-accelerated equivalent of software codec"""
-        
+        """Get hardware-accelerated equivalent of software codec"""        
         hw_codec_map = {
             "libx264": {
                 "nvenc": "h264_nvenc",
@@ -766,8 +740,7 @@ class VideoFormatConverter:
     
     async def _execute_conversion(self, input_path: str, output_path: str, 
                                 settings: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute the actual video conversion"""
-        
+        """Execute the actual video conversion"""        
         try:
             # Build ffmpeg command
             input_stream = ffmpeg.input(input_path)
@@ -822,8 +795,7 @@ class VideoFormatConverter:
             raise
     
     def _filter_valid_resolutions(self, resolutions: List[str], input_height: int) -> List[str]:
-        """Filter resolutions that are smaller or equal to input resolution"""
-        
+        """Filter resolutions that are smaller or equal to input resolution"""        
         resolution_heights = {
             "240p": 240, "360p": 360, "480p": 480,
             "720p": 720, "1080p": 1080, "1440p": 1440, "2160p": 2160
@@ -833,8 +805,7 @@ class VideoFormatConverter:
     
     async def _create_stream_variant(self, input_path: str, output_path: str,
                                    resolution_settings: Dict[str, Any], format_type: str) -> bool:
-        """Create a single streaming variant"""
-        
+        """Create a single streaming variant"""        
         try:
             input_stream = ffmpeg.input(input_path)
             
@@ -874,8 +845,7 @@ class VideoFormatConverter:
     
     async def _create_hls_master_playlist(self, stream_paths: List[Dict[str, Any]], 
                                         output_dir: Path) -> str:
-        """Create HLS master playlist"""
-        
+        """Create HLS master playlist"""        
         master_playlist_path = output_dir / "master.m3u8"
         
         try:
@@ -903,8 +873,7 @@ class VideoFormatConverter:
     
     async def _create_dash_manifest(self, stream_paths: List[Dict[str, Any]], 
                                   output_dir: Path) -> str:
-        """Create DASH manifest file"""
-        
+        """Create DASH manifest file"""        
         manifest_path = output_dir / "manifest.mpd"
         
         # This would create a proper DASH MPD file
@@ -923,8 +892,7 @@ class VideoFormatConverter:
             return ""
     
     async def cleanup(self):
-        """Cleanup temporary files and resources"""
-        try:
+        """Cleanup temporary files and resources"""        try:
             if self.temp_dir.exists():
                 import shutil
                 shutil.rmtree(self.temp_dir)
@@ -936,13 +904,10 @@ class VideoFormatConverter:
 
 
 class CompressionOptimizer:
-    """
-    Advanced video compression optimizer with intelligent bitrate allocation.
-    """
-    
+    """    Advanced video compression optimizer with intelligent bitrate allocation.
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize CompressionOptimizer"""
-        self.config = config or {}
+        """Initialize CompressionOptimizer"""        self.config = config or {}
         self.temp_dir = Path(tempfile.gettempdir()) / "compression_optimizer" / str(uuid.uuid4())
         self.temp_dir.mkdir(parents=True, exist_ok=True)
         
@@ -952,8 +917,7 @@ class CompressionOptimizer:
                                  target_size_mb: Optional[float] = None,
                                  target_quality: Optional[str] = None,
                                  output_path: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Optimize video compression for target size or quality.
+        """        Optimize video compression for target size or quality.
         
         Args:
             input_path: Path to input video
@@ -963,8 +927,7 @@ class CompressionOptimizer:
             
         Returns:
             Compression optimization result
-        """
-        if not os.path.exists(input_path):
+        """        if not os.path.exists(input_path):
             raise FileNotFoundError(f"Input video not found: {input_path}")
         
         if not output_path:
@@ -1003,8 +966,7 @@ class CompressionOptimizer:
             raise
     
     async def _analyze_video_complexity(self, video_path: str) -> Dict[str, Any]:
-        """Analyze video complexity for compression optimization"""
-        
+        """Analyze video complexity for compression optimization"""        
         try:
             # Basic video properties
             probe = ffmpeg.probe(video_path)
@@ -1033,8 +995,7 @@ class CompressionOptimizer:
             return {"error": str(e)}
     
     async def _calculate_complexity_score(self, video_path: str) -> float:
-        """Calculate video complexity score based on motion and detail"""
-        
+        """Calculate video complexity score based on motion and detail"""        
         try:
             # Sample a few frames for analysis
             cap = cv2.VideoCapture(video_path)
@@ -1063,8 +1024,7 @@ class CompressionOptimizer:
             return 0.5  # Default medium complexity
     
     def _calculate_recommended_bitrate(self, width: int, height: int, complexity: float) -> int:
-        """Calculate recommended bitrate based on resolution and complexity"""
-        
+        """Calculate recommended bitrate based on resolution and complexity"""        
         # Base bitrate per pixel (bits per second per pixel)
         base_bpp = 0.05  # Conservative estimate
         
@@ -1083,8 +1043,7 @@ class CompressionOptimizer:
     
     async def _optimize_for_size(self, input_path: str, output_path: str, 
                                target_size_mb: float, video_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize video for specific target file size"""
-        
+        """Optimize video for specific target file size"""        
         try:
             duration = video_info.get("duration", 0)
             if duration == 0:
@@ -1150,8 +1109,7 @@ class CompressionOptimizer:
     
     async def _optimize_for_quality(self, input_path: str, output_path: str,
                                   target_quality: str, video_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize video for target quality level"""
-        
+        """Optimize video for target quality level"""        
         quality_settings = {
             "low": {"crf": 28, "preset": "fast"},
             "medium": {"crf": 23, "preset": "medium"},
@@ -1195,8 +1153,7 @@ class CompressionOptimizer:
     
     async def _optimize_default(self, input_path: str, output_path: str, 
                               video_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply default optimization balancing size and quality"""
-        
+        """Apply default optimization balancing size and quality"""        
         # Use recommended bitrate from analysis
         recommended_bitrate = video_info.get("recommended_bitrate", 2000000)
         
@@ -1234,8 +1191,7 @@ class CompressionOptimizer:
             raise
     
     async def cleanup(self):
-        """Cleanup temporary files"""
-        try:
+        """Cleanup temporary files"""        try:
             if self.temp_dir.exists():
                 import shutil
                 shutil.rmtree(self.temp_dir)

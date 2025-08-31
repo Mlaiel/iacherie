@@ -23,8 +23,7 @@ without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-# Import all core components
+"""# Import all core components
 from .manager import DataStreamManager, StreamType, StreamStatus, StreamEvent, StreamMetrics
 from .processor import RealTimeProcessor, ProcessingJob, ProcessingPriority, ProcessingStage, ProcessingMetrics, ProcessingResult, ContentFormat
 from .events import EventStreamer

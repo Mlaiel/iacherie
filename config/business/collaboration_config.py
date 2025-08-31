@@ -1,5 +1,4 @@
-"""
-Collaboration Configuration Module
+"""Collaboration Configuration Module
 ==================================
 
 Manages creator collaboration matching, partnership workflows, and revenue sharing.
@@ -14,7 +13,6 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
-
 from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Tuple
 from dataclasses import dataclass
@@ -23,8 +21,7 @@ import uuid
 
 
 class CollaborationType(str, Enum):
-    """Types of collaborations supported."""
-    MUSIC_COLLAB = "music_collaboration"
+    """Types of collaborations supported."""    MUSIC_COLLAB = "music_collaboration"
     VIDEO_COLLAB = "video_collaboration"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_PROJECT = "joint_project"
@@ -39,8 +36,7 @@ class CollaborationType(str, Enum):
 
 
 class CollaborationStatus(str, Enum):
-    """Collaboration request and project status."""
-    PENDING = "pending"
+    """Collaboration request and project status."""    PENDING = "pending"
     ACCEPTED = "accepted"
     DECLINED = "declined"
     IN_PROGRESS = "in_progress"
@@ -52,8 +48,7 @@ class CollaborationStatus(str, Enum):
 
 
 class MatchingCriteria(str, Enum):
-    """Criteria for collaboration matching."""
-    GENRE_SIMILARITY = "genre_similarity"
+    """Criteria for collaboration matching."""    GENRE_SIMILARITY = "genre_similarity"
     AUDIENCE_OVERLAP = "audience_overlap"
     LOCATION_PROXIMITY = "location_proximity"
     EXPERIENCE_LEVEL = "experience_level"
@@ -68,8 +63,7 @@ class MatchingCriteria(str, Enum):
 
 
 class RevenueShareModel(str, Enum):
-    """Revenue sharing models for collaborations."""
-    EQUAL_SPLIT = "equal_split"
+    """Revenue sharing models for collaborations."""    EQUAL_SPLIT = "equal_split"
     WEIGHTED_CONTRIBUTION = "weighted_contribution"
     FOLLOWER_BASED = "follower_based"
     TIME_BASED = "time_based"
@@ -81,8 +75,7 @@ class RevenueShareModel(str, Enum):
 
 @dataclass
 class CollaborationTerms:
-    """Terms and conditions for collaboration."""
-    duration_days: int
+    """Terms and conditions for collaboration."""    duration_days: int
     revenue_share_model: RevenueShareModel
     revenue_split_percentage: Dict[str, float]
     deliverables: List[str]
@@ -96,8 +89,7 @@ class CollaborationTerms:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for collaboration matching."""
-    creator_id: str
+    """Creator profile for collaboration matching."""    creator_id: str
     creator_type: str
     genres: List[str]
     skills: List[str]
@@ -116,7 +108,6 @@ class CreatorProfile:
 
 class CollaborationConfig:
     """Enterprise collaboration management configuration."""
-
     # Collaboration type configurations
     COLLABORATION_TYPES = {
         CollaborationType.MUSIC_COLLAB: {
@@ -369,8 +360,7 @@ class CollaborationConfig:
     @classmethod
     def calculate_collaboration_score(cls, creator1: CreatorProfile, creator2: CreatorProfile, 
                                     collab_type: CollaborationType) -> float:
-        """Calculate compatibility score between two creators."""
-        type_config = cls.COLLABORATION_TYPES.get(collab_type)
+        """Calculate compatibility score between two creators."""        type_config = cls.COLLABORATION_TYPES.get(collab_type)
         if not type_config:
             return 0.0
         
@@ -386,8 +376,7 @@ class CollaborationConfig:
     @classmethod
     def _calculate_criteria_score(cls, creator1: CreatorProfile, creator2: CreatorProfile, 
                                 criteria: MatchingCriteria) -> float:
-        """Calculate score for specific matching criteria."""
-        if criteria == MatchingCriteria.GENRE_SIMILARITY:
+        """Calculate score for specific matching criteria."""        if criteria == MatchingCriteria.GENRE_SIMILARITY:
             common_genres = set(creator1.genres) & set(creator2.genres)
             total_genres = set(creator1.genres) | set(creator2.genres)
             return len(common_genres) / len(total_genres) if total_genres else 0.0
@@ -412,8 +401,7 @@ class CollaborationConfig:
 
     @classmethod
     def get_collaboration_terms_template(cls, collab_type: CollaborationType) -> CollaborationTerms:
-        """Get default terms template for collaboration type."""
-        type_config = cls.COLLABORATION_TYPES.get(collab_type)
+        """Get default terms template for collaboration type."""        type_config = cls.COLLABORATION_TYPES.get(collab_type)
         if not type_config:
             return None
         
@@ -437,8 +425,7 @@ class CollaborationConfig:
     @classmethod
     def validate_collaboration_request(cls, creator_id: str, target_creator_id: str, 
                                      collab_type: CollaborationType) -> Tuple[bool, str]:
-        """Validate collaboration request before processing."""
-        # Basic validation logic
+        """Validate collaboration request before processing."""        # Basic validation logic
         if creator_id == target_creator_id:
             return False, "Cannot collaborate with yourself"
         
@@ -457,8 +444,7 @@ class CollaborationConfig:
     @classmethod
     def calculate_revenue_split(cls, total_revenue: float, model: RevenueShareModel, 
                               participants: List[Dict], **kwargs) -> Dict[str, float]:
-        """Calculate revenue distribution based on sharing model."""
-        if model == RevenueShareModel.EQUAL_SPLIT:
+        """Calculate revenue distribution based on sharing model."""        if model == RevenueShareModel.EQUAL_SPLIT:
             split_amount = total_revenue / len(participants)
             return {p["creator_id"]: split_amount for p in participants}
         
@@ -485,8 +471,7 @@ class CollaborationConfig:
 
     @classmethod
     def get_matching_preferences(cls, creator_type: str, location: str) -> Dict:
-        """Get matching preferences based on creator profile."""
-        base_preferences = {
+        """Get matching preferences based on creator profile."""        base_preferences = {
             "max_distance_km": 100,
             "timezone_difference_hours": 3,
             "language_match_required": False,

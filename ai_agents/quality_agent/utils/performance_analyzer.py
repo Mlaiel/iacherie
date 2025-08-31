@@ -1,5 +1,4 @@
-"""
-Performance Analyzer - Advanced Content Performance Analysis Engine
+"""Performance Analyzer - Advanced Content Performance Analysis Engine
 
 Comprehensive performance analysis system for content optimization and metrics calculation.
 Provides detailed performance insights, bottleneck detection, and optimization recommendations.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import time
@@ -56,8 +54,7 @@ from ..quality_agent import ContentType
 logger = logging.getLogger(__name__)
 
 class PerformanceCategory(Enum):
-    """Performance analysis categories"""
-    PROCESSING_SPEED = "processing_speed"
+    """Performance analysis categories"""    PROCESSING_SPEED = "processing_speed"
     MEMORY_USAGE = "memory_usage"
     STORAGE_EFFICIENCY = "storage_efficiency"
     NETWORK_PERFORMANCE = "network_performance"
@@ -67,8 +64,7 @@ class PerformanceCategory(Enum):
     OPTIMIZATION = "optimization"
 
 class MetricType(Enum):
-    """Types of performance metrics"""
-    LATENCY = "latency"
+    """Types of performance metrics"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     BANDWIDTH = "bandwidth"
     CPU_USAGE = "cpu_usage"
@@ -80,8 +76,7 @@ class MetricType(Enum):
     AVAILABILITY = "availability"
 
 class PerformanceLevel(Enum):
-    """Performance quality levels"""
-    EXCELLENT = "excellent"
+    """Performance quality levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -89,8 +84,7 @@ class PerformanceLevel(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Individual performance metric"""
-    metric_id: str
+    """Individual performance metric"""    metric_id: str
     metric_type: MetricType
     category: PerformanceCategory
     name: str
@@ -107,8 +101,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceBottleneck:
-    """Identified performance bottleneck"""
-    bottleneck_id: str
+    """Identified performance bottleneck"""    bottleneck_id: str
     category: PerformanceCategory
     severity: str  # critical, high, medium, low
     title: str
@@ -125,8 +118,7 @@ class PerformanceBottleneck:
 
 @dataclass
 class OptimizationRecommendation:
-    """Performance optimization recommendation"""
-    recommendation_id: str
+    """Performance optimization recommendation"""    recommendation_id: str
     category: PerformanceCategory
     title: str
     description: str
@@ -142,8 +134,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class PerformanceAnalysisResult:
-    """Complete performance analysis result"""
-    analysis_id: str
+    """Complete performance analysis result"""    analysis_id: str
     content_id: str
     content_type: ContentType
     analysis_timestamp: datetime
@@ -159,8 +150,7 @@ class PerformanceAnalysisResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class PerformanceAnalyzer:
-    """
-    Advanced Performance Analyzer for comprehensive content performance evaluation.
+    """    Advanced Performance Analyzer for comprehensive content performance evaluation.
     
     Features:
     - Multi-dimensional performance analysis
@@ -171,8 +161,7 @@ class PerformanceAnalyzer:
     - Benchmark comparison
     - Scalability assessment
     - Resource utilization analysis
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None
@@ -206,8 +195,7 @@ class PerformanceAnalyzer:
         include_recommendations: bool = True,
         metadata: Optional[Dict[str, Any]] = None
     ) -> PerformanceAnalysisResult:
-        """
-        Perform comprehensive performance analysis of content.
+        """        Perform comprehensive performance analysis of content.
         
         Args:
             content_id: Unique identifier for the content
@@ -220,8 +208,7 @@ class PerformanceAnalyzer:
             
         Returns:
             PerformanceAnalysisResult: Complete performance analysis
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             self.logger.info(f"Starting performance analysis for {content_id}")
@@ -314,8 +301,7 @@ class PerformanceAnalyzer:
         categories: List[PerformanceCategory],
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[PerformanceMetric]:
-        """Collect performance metrics for all categories"""
-        
+        """Collect performance metrics for all categories"""        
         all_metrics = []
         
         try:
@@ -337,8 +323,7 @@ class PerformanceAnalyzer:
         category: PerformanceCategory,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[PerformanceMetric]:
-        """Collect metrics for a specific performance category"""
-        
+        """Collect metrics for a specific performance category"""        
         metrics = []
         
         try:
@@ -382,8 +367,7 @@ class PerformanceAnalyzer:
         content_path: str,
         content_type: ContentType
     ) -> List[PerformanceMetric]:
-        """Collect processing speed metrics"""
-        
+        """Collect processing speed metrics"""        
         metrics = []
         
         try:
@@ -514,8 +498,7 @@ class PerformanceAnalyzer:
         content_path: str,
         content_type: ContentType
     ) -> List[PerformanceMetric]:
-        """Collect memory usage metrics"""
-        
+        """Collect memory usage metrics"""        
         metrics = []
         
         try:
@@ -594,8 +577,7 @@ class PerformanceAnalyzer:
         content_path: str,
         content_type: ContentType
     ) -> List[PerformanceMetric]:
-        """Collect storage efficiency metrics"""
-        
+        """Collect storage efficiency metrics"""        
         metrics = []
         
         try:
@@ -703,8 +685,7 @@ class PerformanceAnalyzer:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[PerformanceMetric]:
-        """Collect user experience performance metrics"""
-        
+        """Collect user experience performance metrics"""        
         metrics = []
         
         try:
@@ -830,8 +811,7 @@ class PerformanceAnalyzer:
         return metrics
 
     async def _simulate_content_load_time(self, content_path: str, content_type: ContentType) -> float:
-        """Simulate content loading time based on file size and type"""
-        
+        """Simulate content loading time based on file size and type"""        
         try:
             file_size = Path(content_path).stat().st_size
             
@@ -860,8 +840,7 @@ class PerformanceAnalyzer:
         metrics: List[PerformanceMetric],
         categories: List[PerformanceCategory]
     ) -> Dict[PerformanceCategory, float]:
-        """Calculate performance scores for each category"""
-        
+        """Calculate performance scores for each category"""        
         category_scores = {}
         
         for category in categories:
@@ -902,8 +881,7 @@ class PerformanceAnalyzer:
         category_scores: Dict[PerformanceCategory, float],
         content_type: ContentType
     ) -> float:
-        """Calculate weighted overall performance score"""
-        
+        """Calculate weighted overall performance score"""        
         # Category weights based on content type
         default_weights = {
             PerformanceCategory.PROCESSING_SPEED: 0.25,
@@ -942,8 +920,7 @@ class PerformanceAnalyzer:
         return weighted_sum / max(total_weight, 1.0) if total_weight > 0 else 50.0
 
     def _determine_performance_level(self, overall_score: float) -> PerformanceLevel:
-        """Determine performance level from overall score"""
-        
+        """Determine performance level from overall score"""        
         if overall_score >= 90:
             return PerformanceLevel.EXCELLENT
         elif overall_score >= 75:
@@ -961,8 +938,7 @@ class PerformanceAnalyzer:
         category_scores: Dict[PerformanceCategory, float],
         content_type: ContentType
     ) -> List[PerformanceBottleneck]:
-        """Detect performance bottlenecks from metrics"""
-        
+        """Detect performance bottlenecks from metrics"""        
         bottlenecks = []
         
         try:
@@ -1033,8 +1009,7 @@ class PerformanceAnalyzer:
         category_scores: Dict[PerformanceCategory, float],
         content_type: ContentType
     ) -> List[OptimizationRecommendation]:
-        """Generate performance optimization recommendations"""
-        
+        """Generate performance optimization recommendations"""        
         recommendations = []
         
         try:
@@ -1142,8 +1117,7 @@ class PerformanceAnalyzer:
         return recommendations
 
     def _load_performance_baselines(self) -> Dict[str, Dict[str, float]]:
-        """Load performance baselines for comparison"""
-        
+        """Load performance baselines for comparison"""        
         return {
             "audio": {
                 "load_time_baseline": 2.0,  # seconds
@@ -1172,8 +1146,7 @@ class PerformanceAnalyzer:
         }
 
     def _load_performance_thresholds(self) -> Dict[str, Dict[str, Dict[str, float]]]:
-        """Load performance thresholds for different metrics"""
-        
+        """Load performance thresholds for different metrics"""        
         return {
             "audio": {
                 "load_time": {"warning": 5.0, "critical": 10.0},
@@ -1201,8 +1174,7 @@ class PerformanceAnalyzer:
         overall_score: float,
         metrics: List[PerformanceMetric]
     ) -> Dict[str, Any]:
-        """Compare performance with industry benchmarks"""
-        
+        """Compare performance with industry benchmarks"""        
         benchmark_comparison = {
             "content_type": content_type.value,
             "overall_score": overall_score,
@@ -1260,8 +1232,7 @@ class PerformanceAnalyzer:
         metrics: List[PerformanceMetric],
         category_scores: Dict[PerformanceCategory, float]
     ) -> Dict[str, Any]:
-        """Analyze performance trends over time"""
-        
+        """Analyze performance trends over time"""        
         trend_analysis = {
             "content_id": content_id,
             "trend_period": "recent",
@@ -1320,8 +1291,7 @@ class PerformanceAnalyzer:
         content_id: str,
         analysis_result: PerformanceAnalysisResult
     ) -> None:
-        """Update performance history for trend analysis"""
-        
+        """Update performance history for trend analysis"""        
         try:
             if content_id not in self.performance_history:
                 self.performance_history[content_id] = []
@@ -1345,10 +1315,8 @@ class PerformanceAnalyzer:
             self.logger.warning(f"Performance history update failed: {str(e)}")
 
 class MetricsCalculator:
-    """
-    Specialized metrics calculator for performance analysis.
-    """
-    
+    """    Specialized metrics calculator for performance analysis.
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -1358,8 +1326,7 @@ class MetricsCalculator:
         content_type: ContentType,
         operation: str = "load"
     ) -> Dict[str, float]:
-        """Calculate basic performance metrics for content"""
-        
+        """Calculate basic performance metrics for content"""        
         try:
             metrics = {}
             
@@ -1412,8 +1379,7 @@ class MetricsCalculator:
         metrics: Dict[str, float],
         content_type: ContentType
     ) -> float:
-        """Calculate efficiency score from metrics"""
-        
+        """Calculate efficiency score from metrics"""        
         try:
             efficiency_factors = []
             

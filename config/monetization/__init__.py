@@ -21,8 +21,7 @@ LEGAL WARNING: Violation of this copyright will result in:
 - Permanent ban from all related projects and services
 
 Contact: mlaiel@live.de for licensing inquiries and authorization.
-"""
-# Core Revenue Management
+"""# Core Revenue Management
 from .revenue_config import RevenueTrackingConfig, revenue_config
 
 # Payment Processing

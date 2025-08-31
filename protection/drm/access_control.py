@@ -1,5 +1,4 @@
-"""
-🔒 Advanced Access Control System - Ultra-Professional DRM Security
+"""🔒 Advanced Access Control System - Ultra-Professional DRM Security
 ================================================================
 
 Comprehensive multi-level access control system for digital content protection
@@ -24,7 +23,6 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
-
 import asyncio
 import logging
 import hashlib
@@ -43,8 +41,7 @@ import bcrypt
 logger = logging.getLogger(__name__)
 
 class AccessLevel(str, Enum):
-    """Hierarchical access levels."""
-    NONE = "none"
+    """Hierarchical access levels."""    NONE = "none"
     READ_ONLY = "read_only"
     LIMITED = "limited"
     STANDARD = "standard"
@@ -54,8 +51,7 @@ class AccessLevel(str, Enum):
     SUPER_ADMIN = "super_admin"
 
 class ResourceType(str, Enum):
-    """Types of protected resources."""
-    CONTENT = "content"
+    """Types of protected resources."""    CONTENT = "content"
     METADATA = "metadata"
     ANALYTICS = "analytics"
     REVENUE = "revenue"
@@ -64,8 +60,7 @@ class ResourceType(str, Enum):
     SYSTEM = "system"
 
 class PermissionType(str, Enum):
-    """Granular permission types."""
-    VIEW = "view"
+    """Granular permission types."""    VIEW = "view"
     DOWNLOAD = "download"
     STREAM = "stream"
     SHARE = "share"
@@ -78,8 +73,7 @@ class PermissionType(str, Enum):
     ADMIN = "admin"
 
 class SecurityLevel(str, Enum):
-    """Security enforcement levels."""
-    BASIC = "basic"
+    """Security enforcement levels."""    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     MAXIMUM = "maximum"
@@ -87,8 +81,7 @@ class SecurityLevel(str, Enum):
 
 @dataclass
 class AccessRule:
-    """Individual access control rule."""
-    rule_id: str
+    """Individual access control rule."""    rule_id: str
     resource_type: ResourceType
     resource_id: Optional[str] = None
     access_level: AccessLevel = AccessLevel.NONE
@@ -101,8 +94,7 @@ class AccessRule:
 
 @dataclass
 class SecurityContext:
-    """Security context for access requests."""
-    user_id: int
+    """Security context for access requests."""    user_id: int
     session_id: str
     ip_address: str
     user_agent: str
@@ -117,8 +109,7 @@ class SecurityContext:
 
 @dataclass
 class AccessAuditEntry:
-    """Access control audit entry."""
-    timestamp: datetime
+    """Access control audit entry."""    timestamp: datetime
     user_id: int
     resource_type: ResourceType
     resource_id: str
@@ -129,8 +120,7 @@ class AccessAuditEntry:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class AccessController:
-    """
-    Ultra-Advanced Access Control System for DRM
+    """    Ultra-Advanced Access Control System for DRM
     
     Features:
     - Multi-level hierarchical access control
@@ -143,11 +133,9 @@ class AccessController:
     - AI-powered anomaly detection and risk assessment
     - Zero-trust security architecture
     - Quantum-resistant encryption standards
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Access Controller."""
-        self.config = config
+        """Initialize the Access Controller."""        self.config = config
         self._initialized = False
         
         # Access control storage
@@ -176,8 +164,7 @@ class AccessController:
         logger.info("Access Controller initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the Access Controller."""
-        try:
+        """Initialize the Access Controller."""        try:
             # Load default roles and permissions
             await self._initialize_default_roles()
             
@@ -199,8 +186,7 @@ class AccessController:
             return False
 
     async def _initialize_default_roles(self) -> None:
-        """Initialize default role hierarchy and permissions."""
-        # Define role hierarchy and permissions
+        """Initialize default role hierarchy and permissions."""        # Define role hierarchy and permissions
         default_roles = {
             "viewer": {
                 ResourceType.CONTENT: {PermissionType.VIEW, PermissionType.STREAM},
@@ -247,18 +233,15 @@ class AccessController:
         logger.debug(f"Initialized {len(default_roles)} default roles")
 
     async def _load_access_rules(self) -> None:
-        """Load existing access rules from storage."""
-        # Placeholder for database loading
+        """Load existing access rules from storage."""        # Placeholder for database loading
         logger.debug("Loading access rules from storage")
 
     async def _initialize_threat_detection(self) -> None:
-        """Initialize AI-powered threat detection."""
-        # Placeholder for ML model initialization
+        """Initialize AI-powered threat detection."""        # Placeholder for ML model initialization
         logger.debug("Initializing threat detection system")
 
     async def _start_security_monitoring(self) -> None:
-        """Start real-time security monitoring."""
-        # Placeholder for security monitoring service
+        """Start real-time security monitoring."""        # Placeholder for security monitoring service
         logger.debug("Starting security monitoring")
 
     async def create_security_context(
@@ -267,8 +250,7 @@ class AccessController:
         session_data: Dict[str, Any],
         authentication_method: str = "password"
     ) -> SecurityContext:
-        """Create security context for user session."""
-        session_id = f"sess_{secrets.token_hex(16)}"
+        """Create security context for user session."""        session_id = f"sess_{secrets.token_hex(16)}"
         
         # Calculate risk score
         risk_score = await self._calculate_risk_score(user_id, session_data)
@@ -294,8 +276,7 @@ class AccessController:
         return context
 
     async def _calculate_risk_score(self, user_id: int, session_data: Dict[str, Any]) -> float:
-        """Calculate security risk score for user session."""
-        risk_score = 0.0
+        """Calculate security risk score for user session."""        risk_score = 0.0
         
         # IP address risk
         ip_address = session_data.get('ip_address', '')
@@ -327,28 +308,23 @@ class AccessController:
         return min(risk_score, 1.0)  # Cap at 1.0
 
     async def _is_suspicious_ip(self, ip_address: str) -> bool:
-        """Check if IP address is flagged as suspicious."""
-        # Placeholder for IP reputation checking
+        """Check if IP address is flagged as suspicious."""        # Placeholder for IP reputation checking
         return False
 
     async def _is_tor_ip(self, ip_address: str) -> bool:
-        """Check if IP address is from Tor network."""
-        # Placeholder for Tor detection
+        """Check if IP address is from Tor network."""        # Placeholder for Tor detection
         return False
 
     async def _is_high_risk_location(self, location: str) -> bool:
-        """Check if location is considered high risk."""
-        high_risk_countries = ['XX', 'YY']  # Placeholder
+        """Check if location is considered high risk."""        high_risk_countries = ['XX', 'YY']  # Placeholder
         return location in high_risk_countries
 
     async def _is_trusted_device(self, user_id: int, device_id: str) -> bool:
-        """Check if device is trusted for user."""
-        # Placeholder for device trust checking
+        """Check if device is trusted for user."""        # Placeholder for device trust checking
         return True
 
     async def _has_recent_suspicious_activity(self, user_id: int) -> bool:
-        """Check for recent suspicious activity by user."""
-        # Check recent audit entries for suspicious patterns
+        """Check for recent suspicious activity by user."""        # Check recent audit entries for suspicious patterns
         cutoff_time = datetime.utcnow() - timedelta(hours=24)
         
         recent_entries = [
@@ -366,8 +342,7 @@ class AccessController:
         permission: PermissionType,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> Tuple[bool, str]:
-        """
-        Check if access should be granted for resource and permission.
+        """        Check if access should be granted for resource and permission.
         
         Args:
             security_context: User's security context
@@ -378,8 +353,7 @@ class AccessController:
             
         Returns:
             Tuple[bool, str]: (access_granted, reason)
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             return False, "Access controller not initialized"
         
         # Validate session
@@ -450,8 +424,7 @@ class AccessController:
         return access_granted, reason
 
     async def _validate_session(self, security_context: SecurityContext) -> Tuple[bool, str]:
-        """Validate user session."""
-        # Check if session exists
+        """Validate user session."""        # Check if session exists
         if security_context.session_id not in self.active_sessions:
             return False, "Invalid session"
         
@@ -479,8 +452,7 @@ class AccessController:
         resource_type: ResourceType,
         permission: PermissionType
     ) -> Tuple[bool, str]:
-        """Enforce security level requirements."""
-        if self.security_level == SecurityLevel.BASIC:
+        """Enforce security level requirements."""        if self.security_level == SecurityLevel.BASIC:
             return True, "Basic security level passed"
         
         # High-risk operations require higher security
@@ -516,8 +488,7 @@ class AccessController:
         resource_type: ResourceType,
         permission: PermissionType
     ) -> Tuple[bool, str]:
-        """Check role-based access control."""
-        user_roles = self.user_roles.get(user_id, set())
+        """Check role-based access control."""        user_roles = self.user_roles.get(user_id, set())
         
         if not user_roles:
             return False, "No roles assigned to user"
@@ -539,8 +510,7 @@ class AccessController:
         resource_id: str,
         permission: PermissionType
     ) -> Tuple[bool, str]:
-        """Check custom access rules."""
-        applicable_rules = []
+        """Check custom access rules."""        applicable_rules = []
         
         # Find applicable rules
         for rule in self.access_rules.values():
@@ -581,8 +551,7 @@ class AccessController:
         return False, "Access denied by rules"
 
     async def _evaluate_rule_conditions(self, rule: AccessRule, security_context: SecurityContext) -> bool:
-        """Evaluate rule conditions against security context."""
-        conditions = rule.conditions
+        """Evaluate rule conditions against security context."""        conditions = rule.conditions
         
         # IP address conditions
         if 'allowed_ips' in conditions:
@@ -612,8 +581,7 @@ class AccessController:
         return True
 
     def _get_permissions_for_access_level(self, access_level: AccessLevel) -> Set[PermissionType]:
-        """Get permissions granted by access level."""
-        level_permissions = {
+        """Get permissions granted by access level."""        level_permissions = {
             AccessLevel.NONE: set(),
             AccessLevel.READ_ONLY: {PermissionType.VIEW},
             AccessLevel.LIMITED: {PermissionType.VIEW, PermissionType.STREAM},
@@ -635,8 +603,7 @@ class AccessController:
         permission: PermissionType,
         additional_context: Optional[Dict[str, Any]]
     ) -> Tuple[bool, str]:
-        """Check attribute-based access control."""
-        # Placeholder for advanced ABAC logic
+        """Check attribute-based access control."""        # Placeholder for advanced ABAC logic
         # In production, this would evaluate complex attribute policies
         return True, "ABAC policies satisfied"
 
@@ -646,8 +613,7 @@ class AccessController:
         resource_type: ResourceType,
         permission: PermissionType
     ) -> Tuple[bool, str]:
-        """Check context-based constraints."""
-        # Time-based constraints
+        """Check context-based constraints."""        # Time-based constraints
         current_time = datetime.utcnow()
         current_hour = current_time.hour
         
@@ -666,8 +632,7 @@ class AccessController:
         return True, "Context constraints satisfied"
 
     async def _track_failed_attempt(self, user_id: int) -> None:
-        """Track failed access attempts."""
-        current_time = datetime.utcnow()
+        """Track failed access attempts."""        current_time = datetime.utcnow()
         
         if user_id not in self.failed_attempts:
             self.failed_attempts[user_id] = []
@@ -696,8 +661,7 @@ class AccessController:
         activity_type: str,
         details: Dict[str, Any]
     ) -> None:
-        """Flag suspicious activity for investigation."""
-        activity_record = {
+        """Flag suspicious activity for investigation."""        activity_record = {
             "timestamp": datetime.utcnow().isoformat(),
             "user_id": user_id,
             "activity_type": activity_type,
@@ -717,8 +681,7 @@ class AccessController:
         access_granted: bool,
         reason: str
     ) -> None:
-        """Record access audit entry."""
-        audit_entry = AccessAuditEntry(
+        """Record access audit entry."""        audit_entry = AccessAuditEntry(
             timestamp=datetime.utcnow(),
             user_id=security_context.user_id,
             resource_type=resource_type,
@@ -740,8 +703,7 @@ class AccessController:
             ]
 
     async def assign_role(self, user_id: int, role: str) -> bool:
-        """Assign role to user."""
-        if role not in self.role_permissions:
+        """Assign role to user."""        if role not in self.role_permissions:
             logger.error(f"Unknown role: {role}")
             return False
         
@@ -753,8 +715,7 @@ class AccessController:
         return True
 
     async def revoke_role(self, user_id: int, role: str) -> bool:
-        """Revoke role from user."""
-        if user_id not in self.user_roles:
+        """Revoke role from user."""        if user_id not in self.user_roles:
             return False
         
         self.user_roles[user_id].discard(role)
@@ -771,8 +732,7 @@ class AccessController:
         resource_id: Optional[str] = None,
         expires_at: Optional[datetime] = None
     ) -> bool:
-        """Create custom access rule."""
-        if rule_id in self.access_rules:
+        """Create custom access rule."""        if rule_id in self.access_rules:
             logger.error(f"Access rule {rule_id} already exists")
             return False
         
@@ -795,8 +755,7 @@ class AccessController:
         user_id: int,
         resource_type: Optional[ResourceType] = None
     ) -> Dict[ResourceType, Set[PermissionType]]:
-        """Get all permissions for user."""
-        user_permissions: Dict[ResourceType, Set[PermissionType]] = {}
+        """Get all permissions for user."""        user_permissions: Dict[ResourceType, Set[PermissionType]] = {}
         
         # Get permissions from roles
         user_roles = self.user_roles.get(user_id, set())
@@ -818,8 +777,7 @@ class AccessController:
         resource_type: Optional[ResourceType] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """Get access control analytics."""
-        filtered_entries = self.access_audit
+        """Get access control analytics."""        filtered_entries = self.access_audit
         
         # Apply filters
         if user_id:
@@ -865,8 +823,7 @@ class AccessController:
         }
 
     async def cleanup_expired_sessions(self) -> int:
-        """Clean up expired sessions."""
-        current_time = datetime.utcnow()
+        """Clean up expired sessions."""        current_time = datetime.utcnow()
         expired_sessions = []
         
         for session_id, context in self.active_sessions.items():
@@ -880,8 +837,7 @@ class AccessController:
         return len(expired_sessions)
 
     async def shutdown(self) -> None:
-        """Shutdown the Access Controller."""
-        logger.info("Shutting down Access Controller...")
+        """Shutdown the Access Controller."""        logger.info("Shutting down Access Controller...")
         
         # Save state
         await self._save_state()
@@ -893,6 +849,5 @@ class AccessController:
         logger.info("Access Controller shutdown complete")
 
     async def _save_state(self) -> None:
-        """Save controller state to persistent storage."""
-        # Placeholder for database persistence
+        """Save controller state to persistent storage."""        # Placeholder for database persistence
         logger.debug("Saving Access Controller state")

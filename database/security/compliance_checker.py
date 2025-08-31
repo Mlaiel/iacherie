@@ -1,5 +1,4 @@
-"""
-Database Compliance Checker
+"""Database Compliance Checker
 
 Enterprise-grade compliance verification system for database operations
 with support for GDPR, CCPA, HIPAA, SOX, PCI-DSS and other frameworks.
@@ -24,7 +23,6 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
-
 import asyncio
 import logging
 import json
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"  # General Data Protection Regulation
+    """Supported compliance frameworks"""    GDPR = "gdpr"  # General Data Protection Regulation
     CCPA = "ccpa"  # California Consumer Privacy Act
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
     SOX = "sox"  # Sarbanes-Oxley Act
@@ -56,8 +53,7 @@ class ComplianceFramework(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance check status"""
-    COMPLIANT = "compliant"
+    """Compliance check status"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     NOT_APPLICABLE = "not_applicable"
@@ -65,8 +61,7 @@ class ComplianceStatus(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Compliance violation severity"""
-    INFO = 1
+    """Compliance violation severity"""    INFO = 1
     LOW = 2
     MEDIUM = 3
     HIGH = 4
@@ -74,8 +69,7 @@ class ViolationSeverity(Enum):
 
 
 class DataCategory(Enum):
-    """Data classification categories"""
-    PUBLIC = "public"
+    """Data classification categories"""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -87,8 +81,7 @@ class DataCategory(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Compliance rule definition"""
-    rule_id: str
+    """Compliance rule definition"""    rule_id: str
     framework: ComplianceFramework
     category: str
     title: str
@@ -104,8 +97,7 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
-    violation_id: str
+    """Compliance violation record"""    violation_id: str
     rule: ComplianceRule
     severity: ViolationSeverity
     description: str
@@ -121,8 +113,7 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""
-    assessment_id: str
+    """Compliance assessment result"""    assessment_id: str
     framework: ComplianceFramework
     assessed_at: datetime
     overall_status: ComplianceStatus
@@ -138,8 +129,7 @@ class ComplianceAssessment:
 
 @dataclass
 class DataInventoryItem:
-    """Data inventory item for compliance tracking"""
-    item_id: str
+    """Data inventory item for compliance tracking"""    item_id: str
     table_name: str
     column_name: str
     data_type: str
@@ -155,19 +145,16 @@ class DataInventoryItem:
 
 
 class ComplianceChecker(ABC):
-    """Abstract compliance checker interface"""
-    
+    """Abstract compliance checker interface"""    
     @property
     @abstractmethod
     def framework(self) -> ComplianceFramework:
-        """Compliance framework this checker handles"""
-        pass
+        """Compliance framework this checker handles"""        pass
     
     @property
     @abstractmethod
     def rules(self) -> List[ComplianceRule]:
-        """List of compliance rules to check"""
-        pass
+        """List of compliance rules to check"""        pass
     
     @abstractmethod
     async def check_compliance(
@@ -175,21 +162,18 @@ class ComplianceChecker(ABC):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> ComplianceAssessment:
-        """Check compliance and return assessment"""
-        pass
+        """Check compliance and return assessment"""        pass
 
 
 class GDPRComplianceChecker(ComplianceChecker):
-    """GDPR compliance checker implementation"""
-    
+    """GDPR compliance checker implementation"""    
     @property
     def framework(self) -> ComplianceFramework:
         return ComplianceFramework.GDPR
     
     @property
     def rules(self) -> List[ComplianceRule]:
-        """GDPR compliance rules"""
-        return [
+        """GDPR compliance rules"""        return [
             ComplianceRule(
                 rule_id="gdpr_art_32_encryption",
                 framework=ComplianceFramework.GDPR,
@@ -245,8 +229,7 @@ class GDPRComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> ComplianceAssessment:
-        """Check GDPR compliance"""
-        violations = []
+        """Check GDPR compliance"""        violations = []
         
         # Check each rule
         for rule in self.rules:
@@ -290,8 +273,7 @@ class GDPRComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Check specific GDPR rule"""
-        violations = []
+        """Check specific GDPR rule"""        violations = []
         
         if rule.rule_id == "gdpr_art_32_encryption":
             violations.extend(await self._check_encryption_requirements(
@@ -318,8 +300,7 @@ class GDPRComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Check encryption requirements for PII data"""
-        violations = []
+        """Check encryption requirements for PII data"""        violations = []
         
         # Check for PII data without encryption
         pii_items = [item for item in data_inventory if item.contains_pii]
@@ -354,8 +335,7 @@ class GDPRComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Check audit logging requirements"""
-        violations = []
+        """Check audit logging requirements"""        violations = []
         
         if not system_config.get("audit_logging_enabled", False):
             violation = ComplianceViolation(
@@ -384,8 +364,7 @@ class GDPRComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Check data deletion capabilities"""
-        violations = []
+        """Check data deletion capabilities"""        violations = []
         
         if not system_config.get("data_deletion_procedures", False):
             violation = ComplianceViolation(
@@ -414,8 +393,7 @@ class GDPRComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Check privacy by design implementation"""
-        violations = []
+        """Check privacy by design implementation"""        violations = []
         
         # Check for privacy impact assessments
         if not system_config.get("privacy_impact_assessment", False):
@@ -446,8 +424,7 @@ class GDPRComplianceChecker(ComplianceChecker):
         self, 
         violations: List[ComplianceViolation]
     ) -> List[str]:
-        """Generate GDPR-specific recommendations"""
-        recommendations = []
+        """Generate GDPR-specific recommendations"""        recommendations = []
         
         # Group violations by category
         violation_categories = {}
@@ -482,16 +459,14 @@ class GDPRComplianceChecker(ComplianceChecker):
 
 
 class PCIDSSComplianceChecker(ComplianceChecker):
-    """PCI-DSS compliance checker implementation"""
-    
+    """PCI-DSS compliance checker implementation"""    
     @property
     def framework(self) -> ComplianceFramework:
         return ComplianceFramework.PCI_DSS
     
     @property
     def rules(self) -> List[ComplianceRule]:
-        """PCI-DSS compliance rules"""
-        return [
+        """PCI-DSS compliance rules"""        return [
             ComplianceRule(
                 rule_id="pci_req_3_encryption",
                 framework=ComplianceFramework.PCI_DSS,
@@ -535,8 +510,7 @@ class PCIDSSComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> ComplianceAssessment:
-        """Check PCI-DSS compliance"""
-        violations = []
+        """Check PCI-DSS compliance"""        violations = []
         
         # Check each rule
         for rule in self.rules:
@@ -578,8 +552,7 @@ class PCIDSSComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Check specific PCI-DSS rule"""
-        violations = []
+        """Check specific PCI-DSS rule"""        violations = []
         
         if rule.rule_id == "pci_req_3_encryption":
             violations.extend(await self._check_cardholder_encryption(
@@ -602,8 +575,7 @@ class PCIDSSComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Check encryption for cardholder data"""
-        violations = []
+        """Check encryption for cardholder data"""        violations = []
         
         # Check for PCI data without encryption
         pci_items = [item for item in data_inventory if item.contains_pci]
@@ -638,8 +610,7 @@ class PCIDSSComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Check access control requirements"""
-        violations = []
+        """Check access control requirements"""        violations = []
         
         if not system_config.get("role_based_access_control", False):
             violation = ComplianceViolation(
@@ -668,8 +639,7 @@ class PCIDSSComplianceChecker(ComplianceChecker):
         data_inventory: List[DataInventoryItem],
         system_config: Dict[str, Any]
     ) -> List[ComplianceViolation]:
-        """Check monitoring and logging requirements"""
-        violations = []
+        """Check monitoring and logging requirements"""        violations = []
         
         if not system_config.get("comprehensive_logging", False):
             violation = ComplianceViolation(
@@ -696,8 +666,7 @@ class PCIDSSComplianceChecker(ComplianceChecker):
         self, 
         violations: List[ComplianceViolation]
     ) -> List[str]:
-        """Generate PCI-DSS specific recommendations"""
-        recommendations = []
+        """Generate PCI-DSS specific recommendations"""        recommendations = []
         
         if any(v.rule.category == "data_protection" for v in violations):
             recommendations.append(
@@ -718,42 +687,34 @@ class PCIDSSComplianceChecker(ComplianceChecker):
 
 
 class ComplianceCheckerRegistry:
-    """Registry for compliance checker implementations"""
-    
+    """Registry for compliance checker implementations"""    
     def __init__(self):
         self.checkers: Dict[ComplianceFramework, ComplianceChecker] = {}
         self._register_default_checkers()
     
     def _register_default_checkers(self):
-        """Register default compliance checkers"""
-        self.register_checker(GDPRComplianceChecker())
+        """Register default compliance checkers"""        self.register_checker(GDPRComplianceChecker())
         self.register_checker(PCIDSSComplianceChecker())
     
     def register_checker(self, checker: ComplianceChecker):
-        """Register a compliance checker"""
-        self.checkers[checker.framework] = checker
+        """Register a compliance checker"""        self.checkers[checker.framework] = checker
     
     def get_checker(self, framework: ComplianceFramework) -> Optional[ComplianceChecker]:
-        """Get compliance checker for framework"""
-        return self.checkers.get(framework)
+        """Get compliance checker for framework"""        return self.checkers.get(framework)
     
     def list_supported_frameworks(self) -> List[ComplianceFramework]:
-        """List supported compliance frameworks"""
-        return list(self.checkers.keys())
+        """List supported compliance frameworks"""        return list(self.checkers.keys())
 
 
 class DatabaseComplianceChecker:
-    """
-    Enterprise-grade database compliance checker
+    """    Enterprise-grade database compliance checker
     
     Provides comprehensive compliance verification for multiple frameworks
     including GDPR, CCPA, HIPAA, SOX, PCI-DSS and others with automated
     assessment, violation tracking, and remediation guidance.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize compliance checker"""
-        self.config = config or {}
+        """Initialize compliance checker"""        self.config = config or {}
         self.checker_registry = ComplianceCheckerRegistry()
         self.data_inventory: List[DataInventoryItem] = []
         self.assessments: Dict[str, ComplianceAssessment] = {}
@@ -766,8 +727,7 @@ class DatabaseComplianceChecker:
         logger.info("Database compliance checker initialized successfully")
     
     async def add_data_inventory_item(self, item: DataInventoryItem):
-        """Add item to data inventory"""
-        # Remove existing item with same ID if exists
+        """Add item to data inventory"""        # Remove existing item with same ID if exists
         self.data_inventory = [
             existing for existing in self.data_inventory 
             if existing.item_id != item.item_id
@@ -778,13 +738,11 @@ class DatabaseComplianceChecker:
         logger.info(f"Added data inventory item: {item.table_name}.{item.column_name}")
     
     async def update_data_inventory(self, items: List[DataInventoryItem]):
-        """Update complete data inventory"""
-        self.data_inventory = items
+        """Update complete data inventory"""        self.data_inventory = items
         logger.info(f"Updated data inventory with {len(items)} items")
     
     async def classify_data_automatically(self, table_schemas: List[Dict[str, Any]]):
-        """Automatically classify data based on column names and types"""
-        inventory_items = []
+        """Automatically classify data based on column names and types"""        inventory_items = []
         
         # Common PII patterns
         pii_patterns = [
@@ -850,8 +808,7 @@ class DatabaseComplianceChecker:
         frameworks: List[ComplianceFramework],
         system_config: Dict[str, Any]
     ) -> Dict[ComplianceFramework, ComplianceAssessment]:
-        """
-        Assess compliance for specified frameworks
+        """        Assess compliance for specified frameworks
         
         Args:
             frameworks: List of compliance frameworks to assess
@@ -859,8 +816,7 @@ class DatabaseComplianceChecker:
             
         Returns:
             Dictionary mapping frameworks to their assessments
-        """
-        assessments = {}
+        """        assessments = {}
         
         for framework in frameworks:
             try:
@@ -889,8 +845,7 @@ class DatabaseComplianceChecker:
         return assessments
     
     async def get_compliance_summary(self) -> Dict[str, Any]:
-        """Get overall compliance summary"""
-        if not self.assessments:
+        """Get overall compliance summary"""        if not self.assessments:
             return {"status": "no_assessments", "frameworks": []}
         
         # Get latest assessment for each framework
@@ -948,8 +903,7 @@ class DatabaseComplianceChecker:
         framework: Optional[ComplianceFramework] = None,
         severity: Optional[ViolationSeverity] = None
     ) -> List[ComplianceViolation]:
-        """Get filtered violation report"""
-        violations = []
+        """Get filtered violation report"""        violations = []
         
         for assessment in self.assessments.values():
             # Filter by framework
@@ -975,8 +929,7 @@ class DatabaseComplianceChecker:
         self, 
         frameworks: List[ComplianceFramework]
     ) -> Dict[str, Any]:
-        """Generate comprehensive remediation plan"""
-        plan = {
+        """Generate comprehensive remediation plan"""        plan = {
             "plan_id": str(uuid.uuid4()),
             "generated_at": datetime.now().isoformat(),
             "frameworks": [f.value for f in frameworks],
@@ -1051,12 +1004,10 @@ class DatabaseComplianceChecker:
         return plan
     
     def get_supported_frameworks(self) -> List[ComplianceFramework]:
-        """Get list of supported compliance frameworks"""
-        return self.checker_registry.list_supported_frameworks()
+        """Get list of supported compliance frameworks"""        return self.checker_registry.list_supported_frameworks()
     
     def get_compliance_metrics(self) -> Dict[str, Any]:
-        """Get compliance checking metrics"""
-        if not self.assessments:
+        """Get compliance checking metrics"""        if not self.assessments:
             return {"total_assessments": 0, "frameworks": []}
         
         return {

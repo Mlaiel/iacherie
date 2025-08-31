@@ -1,5 +1,4 @@
-"""
-Crawling Agent Exceptions - Specialized Error Handling & Recovery
+"""Crawling Agent Exceptions - Specialized Error Handling & Recovery
 
 Advanced exception handling system with categorized errors, recovery strategies,
 and detailed error context for debugging and monitoring.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 from enum import Enum
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime
@@ -28,8 +26,7 @@ import json
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels for monitoring and alerting"""
-    LOW = "low"
+    """Error severity levels for monitoring and alerting"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -37,8 +34,7 @@ class ErrorSeverity(Enum):
 
 
 class ErrorCategory(Enum):
-    """Categories of errors for better organization"""
-    NETWORK = "network"
+    """Categories of errors for better organization"""    NETWORK = "network"
     AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     VALIDATION = "validation"
@@ -56,8 +52,7 @@ class ErrorCategory(Enum):
 
 
 class RecoveryStrategy(Enum):
-    """Recovery strategies for different error types"""
-    RETRY_IMMEDIATE = "retry_immediate"
+    """Recovery strategies for different error types"""    RETRY_IMMEDIATE = "retry_immediate"
     RETRY_EXPONENTIAL_BACKOFF = "retry_exponential_backoff"
     RETRY_AFTER_DELAY = "retry_after_delay"
     SKIP_AND_CONTINUE = "skip_and_continue"
@@ -69,12 +64,10 @@ class RecoveryStrategy(Enum):
 
 
 class CrawlingAgentException(Exception):
-    """
-    Base exception class for all crawling agent errors
+    """    Base exception class for all crawling agent errors
     
     Provides comprehensive error context and recovery information
-    """
-    
+    """    
     def __init__(self, 
                  message: str,
                  error_code: str = "GENERAL_ERROR",
@@ -99,8 +92,7 @@ class CrawlingAgentException(Exception):
         self.error_id = f"{category.value}_{error_code}_{int(self.timestamp.timestamp())}"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/monitoring"""
-        return {
+        """Convert exception to dictionary for logging/monitoring"""        return {
             "error_id": self.error_id,
             "message": self.message,
             "error_code": self.error_code,
@@ -114,13 +106,11 @@ class CrawlingAgentException(Exception):
         }
     
     def to_json(self) -> str:
-        """Convert exception to JSON string"""
-        return json.dumps(self.to_dict(), default=str, indent=2)
+        """Convert exception to JSON string"""        return json.dumps(self.to_dict(), default=str, indent=2)
 
 
 class CrawlingError(CrawlingAgentException):
-    """Generic crawling operation errors"""
-    
+    """Generic crawling operation errors"""    
     def __init__(self, message: str, url: str = "", **kwargs):
         super().__init__(
             message,
@@ -132,8 +122,7 @@ class CrawlingError(CrawlingAgentException):
 
 
 class NetworkError(CrawlingAgentException):
-    """Network connectivity and communication errors"""
-    
+    """Network connectivity and communication errors"""    
     def __init__(self, message: str, url: str = "", status_code: int = 0, **kwargs):
         super().__init__(
             message,
@@ -146,8 +135,7 @@ class NetworkError(CrawlingAgentException):
 
 
 class TimeoutError(CrawlingAgentException):
-    """Request timeout errors"""
-    
+    """Request timeout errors"""    
     def __init__(self, message: str, timeout_seconds: int = 0, **kwargs):
         super().__init__(
             message,
@@ -160,8 +148,7 @@ class TimeoutError(CrawlingAgentException):
 
 
 class AuthenticationError(CrawlingAgentException):
-    """API authentication failures"""
-    
+    """API authentication failures"""    
     def __init__(self, message: str, platform: str = "", api_key_hash: str = "", **kwargs):
         super().__init__(
             message,
@@ -175,8 +162,7 @@ class AuthenticationError(CrawlingAgentException):
 
 
 class AuthorizationError(CrawlingAgentException):
-    """API authorization/permission errors"""
-    
+    """API authorization/permission errors"""    
     def __init__(self, message: str, platform: str = "", required_permission: str = "", **kwargs):
         super().__init__(
             message,
@@ -190,8 +176,7 @@ class AuthorizationError(CrawlingAgentException):
 
 
 class RateLimitError(CrawlingAgentException):
-    """Rate limiting errors from APIs or servers"""
-    
+    """Rate limiting errors from APIs or servers"""    
     def __init__(self, message: str, platform: str = "", limit_reset_time: int = 0, **kwargs):
         super().__init__(
             message,
@@ -204,8 +189,7 @@ class RateLimitError(CrawlingAgentException):
 
 
 class ValidationError(CrawlingAgentException):
-    """Data validation and format errors"""
-    
+    """Data validation and format errors"""    
     def __init__(self, message: str, field_name: str = "", invalid_value: str = "", **kwargs):
         super().__init__(
             message,
@@ -218,8 +202,7 @@ class ValidationError(CrawlingAgentException):
 
 
 class ParsingError(CrawlingAgentException):
-    """HTML, JSON, or other content parsing errors"""
-    
+    """HTML, JSON, or other content parsing errors"""    
     def __init__(self, message: str, content_type: str = "", parser_used: str = "", **kwargs):
         super().__init__(
             message,
@@ -232,8 +215,7 @@ class ParsingError(CrawlingAgentException):
 
 
 class ContentProcessingError(CrawlingAgentException):
-    """Content analysis and processing errors"""
-    
+    """Content analysis and processing errors"""    
     def __init__(self, message: str, content_id: str = "", processing_stage: str = "", **kwargs):
         super().__init__(
             message,
@@ -246,8 +228,7 @@ class ContentProcessingError(CrawlingAgentException):
 
 
 class SimilarityDetectionError(CrawlingAgentException):
-    """Content similarity detection and comparison errors"""
-    
+    """Content similarity detection and comparison errors"""    
     def __init__(self, message: str, content_id1: str = "", content_id2: str = "", **kwargs):
         super().__init__(
             message,
@@ -260,8 +241,7 @@ class SimilarityDetectionError(CrawlingAgentException):
 
 
 class SurveillanceError(CrawlingAgentException):
-    """Surveillance and monitoring system errors"""
-    
+    """Surveillance and monitoring system errors"""    
     def __init__(self, message: str, target_id: str = "", surveillance_type: str = "", **kwargs):
         super().__init__(
             message,
@@ -275,8 +255,7 @@ class SurveillanceError(CrawlingAgentException):
 
 
 class PlatformAPIError(CrawlingAgentException):
-    """Platform-specific API errors"""
-    
+    """Platform-specific API errors"""    
     def __init__(self, message: str, platform: str = "", api_endpoint: str = "", 
                  api_response_code: int = 0, **kwargs):
         super().__init__(
@@ -294,8 +273,7 @@ class PlatformAPIError(CrawlingAgentException):
 
 
 class DatabaseError(CrawlingAgentException):
-    """Database connection and operation errors"""
-    
+    """Database connection and operation errors"""    
     def __init__(self, message: str, operation: str = "", table: str = "", **kwargs):
         super().__init__(
             message,
@@ -309,8 +287,7 @@ class DatabaseError(CrawlingAgentException):
 
 
 class StorageError(CrawlingAgentException):
-    """File storage and retrieval errors"""
-    
+    """File storage and retrieval errors"""    
     def __init__(self, message: str, storage_backend: str = "", file_path: str = "", **kwargs):
         super().__init__(
             message,
@@ -323,8 +300,7 @@ class StorageError(CrawlingAgentException):
 
 
 class ConfigurationError(CrawlingAgentException):
-    """Configuration and setup errors"""
-    
+    """Configuration and setup errors"""    
     def __init__(self, message: str, config_key: str = "", config_value: str = "", **kwargs):
         super().__init__(
             message,
@@ -338,8 +314,7 @@ class ConfigurationError(CrawlingAgentException):
 
 
 class SecurityError(CrawlingAgentException):
-    """Security and encryption errors"""
-    
+    """Security and encryption errors"""    
     def __init__(self, message: str, security_context: str = "", **kwargs):
         super().__init__(
             message,
@@ -353,8 +328,7 @@ class SecurityError(CrawlingAgentException):
 
 
 class ResourceExhaustionError(CrawlingAgentException):
-    """System resource exhaustion errors"""
-    
+    """System resource exhaustion errors"""    
     def __init__(self, message: str, resource_type: str = "", usage_percent: float = 0, **kwargs):
         super().__init__(
             message,
@@ -368,8 +342,7 @@ class ResourceExhaustionError(CrawlingAgentException):
 
 
 class ProxyError(CrawlingAgentException):
-    """Proxy connection and configuration errors"""
-    
+    """Proxy connection and configuration errors"""    
     def __init__(self, message: str, proxy_url: str = "", proxy_type: str = "", **kwargs):
         super().__init__(
             message,
@@ -382,8 +355,7 @@ class ProxyError(CrawlingAgentException):
 
 
 class AlertError(CrawlingAgentException):
-    """Alert system and notification errors"""
-    
+    """Alert system and notification errors"""    
     def __init__(self, message: str, alert_type: str = "", recipient: str = "", **kwargs):
         super().__init__(
             message,
@@ -397,8 +369,7 @@ class AlertError(CrawlingAgentException):
 
 
 class CacheError(CrawlingAgentException):
-    """Caching system errors"""
-    
+    """Caching system errors"""    
     def __init__(self, message: str, cache_key: str = "", cache_backend: str = "", **kwargs):
         super().__init__(
             message,
@@ -411,8 +382,7 @@ class CacheError(CrawlingAgentException):
 
 
 class ContentViolationError(CrawlingAgentException):
-    """Content policy violation detection errors"""
-    
+    """Content policy violation detection errors"""    
     def __init__(self, message: str, content_id: str = "", violation_type: str = "", 
                  similarity_score: float = 0, **kwargs):
         super().__init__(
@@ -446,21 +416,17 @@ HTTP_STATUS_EXCEPTIONS = {
 
 
 def create_exception_from_http_status(status_code: int, message: str, **kwargs) -> CrawlingAgentException:
-    """
-    Create appropriate exception based on HTTP status code
-    """
-    exception_class = HTTP_STATUS_EXCEPTIONS.get(status_code, NetworkError)
+    """    Create appropriate exception based on HTTP status code
+    """    exception_class = HTTP_STATUS_EXCEPTIONS.get(status_code, NetworkError)
     return exception_class(message, **kwargs)
 
 
 def handle_exception_with_recovery(exception: CrawlingAgentException, 
                                  recovery_context: Dict[str, Any] = None) -> Dict[str, Any]:
-    """
-    Handle exception based on its recovery strategy
+    """    Handle exception based on its recovery strategy
     
     Returns recovery action details
-    """
-    recovery_context = recovery_context or {}
+    """    recovery_context = recovery_context or {}
     
     recovery_action = {
         "action": exception.recovery_strategy.value,

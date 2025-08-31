@@ -1,5 +1,4 @@
-"""
-Configuration pytest principale pour le projet Ainflue
+"""Configuration pytest principale pour le projet Ainflue
 ====================================================
 
 Configuration centralisée pour tous les tests du projet,
@@ -8,7 +7,6 @@ importée et adaptée de l'ancien projet IA-Influencer.
 Author: GitHub Copilot (adapté du projet original)
 Date: 2025-08-31
 """
-
 import pytest
 import asyncio
 import logging

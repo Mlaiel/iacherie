@@ -1,5 +1,4 @@
-"""
-Audio Processor Module
+"""Audio Processor Module
 =====================
 
 Enterprise-grade audio processing for music creators and influencers.
@@ -16,7 +15,6 @@ Features:
 - Audio quality assessment and improvement
 - Batch processing for large audio collections
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -48,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Audio metadata container"""
-    duration: float
+    """Audio metadata container"""    duration: float
     sample_rate: int
     channels: int
     bit_depth: int
@@ -60,8 +57,7 @@ class AudioMetadata:
 
 @dataclass
 class AudioFeatures:
-    """Audio feature extraction results"""
-    mfcc: np.ndarray
+    """Audio feature extraction results"""    mfcc: np.ndarray
     spectral_centroid: np.ndarray
     spectral_rolloff: np.ndarray
     zero_crossing_rate: np.ndarray
@@ -73,16 +69,14 @@ class AudioFeatures:
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint data"""
-    chromaprint_hash: Optional[str] = None
+    """Audio fingerprint data"""    chromaprint_hash: Optional[str] = None
     spectral_hash: Optional[str] = None
     mfcc_hash: Optional[str] = None
     duration_hash: Optional[str] = None
     combined_hash: Optional[str] = None
 
 class AudioProcessor:
-    """Professional audio processing engine"""
-    
+    """Professional audio processing engine"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._get_default_config()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -91,8 +85,7 @@ class AudioProcessor:
         self._initialize_engines()
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default audio processing configuration"""
-        return {
+        """Get default audio processing configuration"""        return {
             'sample_rate': 44100,
             'bit_depth': 16,
             'channels': 2,
@@ -111,8 +104,7 @@ class AudioProcessor:
         }
     
     def _initialize_engines(self):
-        """Initialize audio processing engines"""
-        try:
+        """Initialize audio processing engines"""        try:
             # Initialize Essentia algorithms if available
             if ESSENTIA_AVAILABLE:
                 self.windowing = es.Windowing(type='hann')
@@ -139,8 +131,7 @@ class AudioProcessor:
         format_hint: Optional[str] = None,
         config: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Main audio processing pipeline
+        """        Main audio processing pipeline
         
         Args:
             audio_data: Audio data as bytes, numpy array, or file path
@@ -149,8 +140,7 @@ class AudioProcessor:
         
         Returns:
             Dict containing processed audio data and analysis results
-        """
-        try:
+        """        try:
             # Merge configuration
             processing_config = self.config.copy()
             if config:
@@ -213,8 +203,7 @@ class AudioProcessor:
         audio_data: Union[bytes, np.ndarray, str],
         format_hint: Optional[str] = None
     ) -> Tuple[np.ndarray, int]:
-        """Load audio data from various sources"""
-        try:
+        """Load audio data from various sources"""        try:
             if isinstance(audio_data, str):
                 # Load from file path
                 audio_array, sample_rate = librosa.load(
@@ -268,8 +257,7 @@ class AudioProcessor:
         audio_array: np.ndarray,
         sample_rate: int
     ) -> AudioMetadata:
-        """Extract comprehensive audio metadata"""
-        try:
+        """Extract comprehensive audio metadata"""        try:
             duration = audio_array.shape[-1] / sample_rate
             channels = audio_array.shape[0] if audio_array.ndim > 1 else 1
             
@@ -294,8 +282,7 @@ class AudioProcessor:
         audio_array: np.ndarray,
         sample_rate: int
     ) -> Dict[str, Any]:
-        """Apply audio enhancement algorithms"""
-        try:
+        """Apply audio enhancement algorithms"""        try:
             enhanced_audio = audio_array.copy()
             
             # Noise reduction using spectral gating
@@ -333,8 +320,7 @@ class AudioProcessor:
         audio_array: np.ndarray,
         sample_rate: int
     ) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""
-        try:
+        """Extract comprehensive audio features"""        try:
             # Convert to mono for feature extraction
             if audio_array.ndim > 1:
                 audio_mono = np.mean(audio_array, axis=0)
@@ -419,8 +405,7 @@ class AudioProcessor:
         audio_array: np.ndarray,
         sample_rate: int
     ) -> Dict[str, Any]:
-        """Generate comprehensive audio fingerprint"""
-        try:
+        """Generate comprehensive audio fingerprint"""        try:
             fingerprint = AudioFingerprint()
             
             # Convert to mono for fingerprinting
@@ -491,8 +476,7 @@ class AudioProcessor:
         audio_array: np.ndarray,
         sample_rate: int
     ) -> Dict[str, Any]:
-        """Perform detailed spectral analysis"""
-        try:
+        """Perform detailed spectral analysis"""        try:
             # Convert to mono
             if audio_array.ndim > 1:
                 audio_mono = np.mean(audio_array, axis=0)
@@ -551,8 +535,7 @@ class AudioProcessor:
         sample_rate: int,
         noise_factor: float = 0.1
     ) -> np.ndarray:
-        """Apply noise reduction using spectral gating"""
-        try:
+        """Apply noise reduction using spectral gating"""        try:
             # Professional spectral subtraction noise reduction
             stft = librosa.stft(audio_array)
             magnitude = np.abs(stft)
@@ -576,8 +559,7 @@ class AudioProcessor:
             return audio_array
     
     async def _normalize_audio(self, audio_array: np.ndarray) -> np.ndarray:
-        """Normalize audio to prevent clipping"""
-        try:
+        """Normalize audio to prevent clipping"""        try:
             max_val = np.max(np.abs(audio_array))
             if max_val > 0:
                 return audio_array / max_val * 0.95
@@ -594,8 +576,7 @@ class AudioProcessor:
         threshold: float = 0.5,
         ratio: float = 4.0
     ) -> np.ndarray:
-        """Apply dynamic range compression"""
-        try:
+        """Apply dynamic range compression"""        try:
             # Professional compression algorithm
             compressed = audio_array.copy()
             
@@ -619,8 +600,7 @@ class AudioProcessor:
         audio_array: np.ndarray,
         sample_rate: int
     ) -> np.ndarray:
-        """Apply EQ enhancement"""
-        try:
+        """Apply EQ enhancement"""        try:
             # Professional EQ using filtering
             # This is a placeholder for more sophisticated EQ
             enhanced = audio_array.copy()
@@ -635,8 +615,7 @@ class AudioProcessor:
             return audio_array
     
     async def _detect_key(self, audio_mono: np.ndarray, sample_rate: int) -> str:
-        """Detect musical key (simplified implementation)"""
-        try:
+        """Detect musical key (simplified implementation)"""        try:
             if ESSENTIA_AVAILABLE:
                 # Use Essentia for key detection
                 key_extractor = es.KeyExtractor()
@@ -662,8 +641,7 @@ class AudioProcessor:
         target_format: str,
         output_path: Optional[str] = None
     ) -> Union[bytes, str]:
-        """Convert audio to different format"""
-        try:
+        """Convert audio to different format"""        try:
             if output_path:
                 # Save to file
                 sf.write(output_path, audio_array.T, sample_rate)
@@ -684,8 +662,7 @@ class AudioProcessor:
         audio_files: List[str],
         config: Optional[Dict[str, Any]] = None
     ) -> List[Dict[str, Any]]:
-        """Process multiple audio files in batch"""
-        tasks = []
+        """Process multiple audio files in batch"""        tasks = []
         for file_path in audio_files:
             task = self.process(file_path, config=config)
             tasks.append(task)

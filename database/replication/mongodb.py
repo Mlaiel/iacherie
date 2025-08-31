@@ -1,5 +1,4 @@
-"""
-MongoDB Replication Handler - IA Influencer Agent Platform
+"""MongoDB Replication Handler - IA Influencer Agent Platform
 
 Comprehensive MongoDB replication management with replica sets, sharding,
 and cross-cluster replication for content creator platform data.
@@ -11,7 +10,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set
@@ -25,8 +23,7 @@ from .config import ReplicationConfig
 
 
 class MongoDBReplicationHandler:
-    """
-    MongoDB replication handler for comprehensive replica set and sharding management.
+    """    MongoDB replication handler for comprehensive replica set and sharding management.
     
     Provides robust MongoDB replication capabilities including:
     - Replica set configuration and management
@@ -35,17 +32,14 @@ class MongoDBReplicationHandler:
     - Oplog tailing and processing
     - Conflict resolution
     - Performance monitoring
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any], replication_config: ReplicationConfig):
-        """
-        Initialize MongoDB replication handler.
+        """        Initialize MongoDB replication handler.
         
         Args:
             config: MongoDB-specific configuration
             replication_config: Global replication configuration
-        """
-        self.config = config
+        """        self.config = config
         self.replication_config = replication_config
         self.logger = logging.getLogger(f"{__name__}.MongoDBReplicationHandler")
         
@@ -79,13 +73,11 @@ class MongoDBReplicationHandler:
         self.logger.info("MongoDBReplicationHandler initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize MongoDB replication connections and configuration.
+        """        Initialize MongoDB replication connections and configuration.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing MongoDB replication handler...")
             
             # Initialize primary connection
@@ -108,8 +100,7 @@ class MongoDBReplicationHandler:
             return False
     
     async def _initialize_primary_connection(self) -> None:
-        """Initialize connection to primary MongoDB instance"""
-        try:
+        """Initialize connection to primary MongoDB instance"""        try:
             connection_string = self._build_connection_string(self.config)
             
             self.primary_client = AsyncIOMotorClient(
@@ -140,8 +131,7 @@ class MongoDBReplicationHandler:
             raise
     
     async def _initialize_secondary_connections(self) -> None:
-        """Initialize connections to secondary MongoDB instances"""
-        secondary_configs = self.config.get("secondaries", [])
+        """Initialize connections to secondary MongoDB instances"""        secondary_configs = self.config.get("secondaries", [])
         
         for idx, secondary_config in enumerate(secondary_configs):
             try:
@@ -166,8 +156,7 @@ class MongoDBReplicationHandler:
                 self.logger.warning(f"Failed to connect to secondary {idx}: {e}")
     
     def _build_connection_string(self, config: Dict[str, Any]) -> str:
-        """Build MongoDB connection string from configuration"""
-        host = config.get("host", "localhost")
+        """Build MongoDB connection string from configuration"""        host = config.get("host", "localhost")
         port = config.get("port", 27017)
         username = config.get("username")
         password = config.get("password")
@@ -192,8 +181,7 @@ class MongoDBReplicationHandler:
         return f"mongodb://{auth_string}{host}:{port}/{database}{param_string}"
     
     async def _verify_replica_set_config(self) -> None:
-        """Verify and configure replica set if needed"""
-        try:
+        """Verify and configure replica set if needed"""        try:
             # Check replica set status
             rs_status = await self.primary_client.admin.command("replSetGetStatus")
             
@@ -210,8 +198,7 @@ class MongoDBReplicationHandler:
                 self.logger.error(f"Error verifying replica set config: {e}")
     
     async def _configure_replica_set(self) -> None:
-        """Configure MongoDB replica set"""
-        try:
+        """Configure MongoDB replica set"""        try:
             self.logger.info("Configuring MongoDB replica set...")
             
             # Basic replica set configuration
@@ -247,8 +234,7 @@ class MongoDBReplicationHandler:
             raise
     
     async def _setup_monitoring(self) -> None:
-        """Setup MongoDB replication monitoring"""
-        self.is_monitoring = True
+        """Setup MongoDB replication monitoring"""        self.is_monitoring = True
         
         # Start oplog monitoring
         self.oplog_processor_task = asyncio.create_task(self._monitor_oplog())
@@ -261,8 +247,7 @@ class MongoDBReplicationHandler:
         target_config: Dict[str, Any], 
         mode: str = "replica_set"
     ) -> bool:
-        """
-        Start MongoDB replication process.
+        """        Start MongoDB replication process.
         
         Args:
             source_config: Source database configuration
@@ -271,8 +256,7 @@ class MongoDBReplicationHandler:
             
         Returns:
             bool: True if replication started successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting MongoDB replication in {mode} mode")
             
             if mode == "replica_set":
@@ -294,8 +278,7 @@ class MongoDBReplicationHandler:
         source_config: Dict[str, Any], 
         target_config: Dict[str, Any]
     ) -> bool:
-        """Start replica set replication"""
-        try:
+        """Start replica set replication"""        try:
             # Replica set replication is automatic in MongoDB
             # We just need to ensure proper configuration
             
@@ -323,8 +306,7 @@ class MongoDBReplicationHandler:
         source_config: Dict[str, Any], 
         target_config: Dict[str, Any]
     ) -> bool:
-        """Start sharded cluster replication"""
-        try:
+        """Start sharded cluster replication"""        try:
             # Configure sharding if not already done
             databases_to_shard = source_config.get("databases", [])
             
@@ -358,8 +340,7 @@ class MongoDBReplicationHandler:
         source_config: Dict[str, Any], 
         target_config: Dict[str, Any]
     ) -> bool:
-        """Start cross-cluster replication using Change Streams"""
-        try:
+        """Start cross-cluster replication using Change Streams"""        try:
             databases = source_config.get("databases", [])
             
             for db_name in databases:
@@ -376,8 +357,7 @@ class MongoDBReplicationHandler:
             return False
     
     async def _process_change_stream(self, database_name: str, target_config: Dict[str, Any]) -> None:
-        """Process change stream for cross-cluster replication"""
-        try:
+        """Process change stream for cross-cluster replication"""        try:
             # Connect to target cluster
             target_client = AsyncIOMotorClient(
                 self._build_connection_string(target_config)
@@ -397,8 +377,7 @@ class MongoDBReplicationHandler:
         target_client: AsyncIOMotorClient, 
         database_name: str
     ) -> None:
-        """Replicate a single change to target cluster"""
-        try:
+        """Replicate a single change to target cluster"""        try:
             operation_type = change.get("operationType")
             ns = change.get("ns", {})
             collection_name = ns.get("coll")
@@ -441,8 +420,7 @@ class MongoDBReplicationHandler:
             self.metrics["error_count"] += 1
     
     async def _monitor_oplog(self) -> None:
-        """Monitor MongoDB oplog for replication lag and health"""
-        while self.is_monitoring:
+        """Monitor MongoDB oplog for replication lag and health"""        while self.is_monitoring:
             try:
                 # Get oplog statistics
                 oplog_stats = await self.primary_client.local.oplog.rs.find().sort([("$natural", -1)]).limit(1).to_list(1)
@@ -482,16 +460,14 @@ class MongoDBReplicationHandler:
                 await asyncio.sleep(30)
     
     async def stop_replication(self, graceful: bool = True) -> bool:
-        """
-        Stop MongoDB replication.
+        """        Stop MongoDB replication.
         
         Args:
             graceful: Whether to perform graceful shutdown
             
         Returns:
             bool: True if stopped successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Stopping MongoDB replication (graceful={graceful})")
             
             # Stop monitoring
@@ -516,13 +492,11 @@ class MongoDBReplicationHandler:
             return False
     
     async def pause_replication(self) -> bool:
-        """
-        Pause MongoDB replication.
+        """        Pause MongoDB replication.
         
         Returns:
             bool: True if paused successfully
-        """
-        try:
+        """        try:
             self.logger.info("Pausing MongoDB replication")
             
             # For MongoDB, we can step down the primary to pause writes
@@ -536,13 +510,11 @@ class MongoDBReplicationHandler:
             return False
     
     async def resume_replication(self) -> bool:
-        """
-        Resume MongoDB replication.
+        """        Resume MongoDB replication.
         
         Returns:
             bool: True if resumed successfully
-        """
-        try:
+        """        try:
             self.logger.info("Resuming MongoDB replication")
             
             # MongoDB will automatically elect a new primary
@@ -564,16 +536,14 @@ class MongoDBReplicationHandler:
             return False
     
     async def trigger_sync(self, force: bool = False) -> bool:
-        """
-        Trigger manual synchronization.
+        """        Trigger manual synchronization.
         
         Args:
             force: Whether to force synchronization
             
         Returns:
             bool: True if sync triggered successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Triggering MongoDB sync (force={force})")
             
             # Force replica set to sync by stepping down and back up
@@ -592,16 +562,14 @@ class MongoDBReplicationHandler:
             return False
     
     async def prepare_maintenance(self, duration: timedelta) -> bool:
-        """
-        Prepare for maintenance mode.
+        """        Prepare for maintenance mode.
         
         Args:
             duration: Expected maintenance duration
             
         Returns:
             bool: True if preparation successful
-        """
-        try:
+        """        try:
             self.logger.info(f"Preparing MongoDB for maintenance (duration: {duration})")
             
             # Set replica set to maintenance mode
@@ -619,13 +587,11 @@ class MongoDBReplicationHandler:
             return False
     
     async def exit_maintenance(self) -> bool:
-        """
-        Exit maintenance mode.
+        """        Exit maintenance mode.
         
         Returns:
             bool: True if exit successful
-        """
-        try:
+        """        try:
             self.logger.info("Exiting MongoDB maintenance mode")
             
             # MongoDB will automatically elect a new primary
@@ -647,8 +613,7 @@ class MongoDBReplicationHandler:
             return False
     
     async def _wait_for_replication_sync(self, timeout: int = 300) -> bool:
-        """Wait for all replicas to sync"""
-        start_time = datetime.utcnow()
+        """Wait for all replicas to sync"""        start_time = datetime.utcnow()
         
         while (datetime.utcnow() - start_time).total_seconds() < timeout:
             try:
@@ -672,13 +637,11 @@ class MongoDBReplicationHandler:
         return False
     
     async def get_replication_metrics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive replication metrics.
+        """        Get comprehensive replication metrics.
         
         Returns:
             Dict containing replication metrics
-        """
-        try:
+        """        try:
             # Get replica set status
             rs_status = await self.primary_client.admin.command("replSetGetStatus")
             
@@ -704,13 +667,11 @@ class MongoDBReplicationHandler:
             return self.metrics
     
     async def check_health(self) -> Dict[str, Any]:
-        """
-        Check MongoDB replication health.
+        """        Check MongoDB replication health.
         
         Returns:
             Dict containing health status
-        """
-        health = {
+        """        health = {
             "healthy": False,
             "primary_available": False,
             "secondaries_healthy": 0,
@@ -759,13 +720,11 @@ class MongoDBReplicationHandler:
         return health
     
     async def get_status(self) -> Dict[str, Any]:
-        """
-        Get detailed MongoDB replication status.
+        """        Get detailed MongoDB replication status.
         
         Returns:
             Dict containing detailed status information
-        """
-        try:
+        """        try:
             rs_status = await self.primary_client.admin.command("replSetGetStatus")
             
             status = {
@@ -791,8 +750,7 @@ class MongoDBReplicationHandler:
             }
     
     async def shutdown(self) -> None:
-        """Shutdown MongoDB replication handler"""
-        try:
+        """Shutdown MongoDB replication handler"""        try:
             self.logger.info("Shutting down MongoDB replication handler...")
             
             # Stop monitoring

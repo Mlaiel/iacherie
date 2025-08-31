@@ -1,5 +1,4 @@
-"""
-Real-time Violation Detector
+"""Real-time Violation Detector
 ============================
 
 Advanced real-time content violation detection system with AI-powered monitoring.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 import hashlib
@@ -53,8 +51,7 @@ import xxhash
 logger = logging.getLogger(__name__)
 
 class ViolationType(Enum):
-    """Violation type enumeration."""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Violation type enumeration."""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     CONTENT_THEFT = "content_theft"
@@ -64,16 +61,14 @@ class ViolationType(Enum):
     COUNTERFEIT_CONTENT = "counterfeit_content"
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    LOW = 1
+    """Alert severity levels."""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
     EMERGENCY = 5
 
 class DetectionStatus(Enum):
-    """Detection status enumeration."""
-    MONITORING = "monitoring"
+    """Detection status enumeration."""    MONITORING = "monitoring"
     DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
@@ -81,8 +76,7 @@ class DetectionStatus(Enum):
     RESOLVED = "resolved"
 
 class MonitoringChannel(Enum):
-    """Monitoring channel types."""
-    WEB_CRAWLER = "web_crawler"
+    """Monitoring channel types."""    WEB_CRAWLER = "web_crawler"
     SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     MARKETPLACE = "marketplace"
@@ -92,8 +86,7 @@ class MonitoringChannel(Enum):
 
 @dataclass
 class ViolationAlert:
-    """Real-time violation alert structure."""
-    alert_id: str
+    """Real-time violation alert structure."""    alert_id: str
     violation_type: ViolationType
     severity: AlertSeverity
     status: DetectionStatus
@@ -110,8 +103,7 @@ class ViolationAlert:
     false_positive_probability: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert alert to dictionary."""
-        return {
+        """Convert alert to dictionary."""        return {
             'alert_id': self.alert_id,
             'violation_type': self.violation_type.value,
             'severity': self.severity.value,
@@ -131,8 +123,7 @@ class ViolationAlert:
 
 @dataclass
 class MonitoringTarget:
-    """Content monitoring target."""
-    target_id: str
+    """Content monitoring target."""    target_id: str
     content_id: str
     content_type: str
     fingerprints: Dict[str, Any]
@@ -146,8 +137,7 @@ class MonitoringTarget:
 
 @dataclass
 class DetectionRule:
-    """Violation detection rule."""
-    rule_id: str
+    """Violation detection rule."""    rule_id: str
     name: str
     violation_type: ViolationType
     conditions: Dict[str, Any]
@@ -159,8 +149,7 @@ class DetectionRule:
     active: bool = True
 
 class RealTimeViolationDetector:
-    """
-    Professional real-time violation detection system.
+    """    Professional real-time violation detection system.
     
     Features:
     - Real-time content monitoring across multiple platforms
@@ -171,11 +160,9 @@ class RealTimeViolationDetector:
     - Configurable detection rules and thresholds
     - Real-time notification and webhook systems
     - Evidence collection and preservation
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the real-time violation detector."""
-        self.config = config or {}
+        """Initialize the real-time violation detector."""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Initialize core components
@@ -208,8 +195,7 @@ class RealTimeViolationDetector:
         self.logger.info("RealTimeViolationDetector initialized successfully")
     
     def _init_storage(self) -> None:
-        """Initialize storage systems."""
-        try:
+        """Initialize storage systems."""        try:
             # Redis for real-time data
             redis_config = self.config.get('redis', {})
             self.redis_client = redis.Redis(
@@ -229,8 +215,7 @@ class RealTimeViolationDetector:
             self.redis_client = None
     
     def _init_ai_models(self) -> None:
-        """Initialize AI models for detection."""
-        try:
+        """Initialize AI models for detection."""        try:
             # CLIP model for visual similarity
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -254,8 +239,7 @@ class RealTimeViolationDetector:
             raise
     
     def _init_monitoring_system(self) -> None:
-        """Initialize monitoring system components."""
-        try:
+        """Initialize monitoring system components."""        try:
             # Initialize monitoring channels
             self.monitoring_channels = {
                 MonitoringChannel.WEB_CRAWLER: self._init_web_crawler,
@@ -274,8 +258,7 @@ class RealTimeViolationDetector:
             raise
     
     def _load_default_detection_rules(self) -> None:
-        """Load default detection rules."""
-        default_rules = [
+        """Load default detection rules."""        default_rules = [
             DetectionRule(
                 rule_id="copyright_high_similarity",
                 name="High Similarity Copyright Detection",
@@ -309,8 +292,7 @@ class RealTimeViolationDetector:
             self.detection_rules[rule.rule_id] = rule
     
     async def add_monitoring_target(self, target: MonitoringTarget) -> bool:
-        """Add content for monitoring."""
-        try:
+        """Add content for monitoring."""        try:
             # Store target
             self.monitoring_targets[target.target_id] = target
             
@@ -347,8 +329,7 @@ class RealTimeViolationDetector:
             return False
     
     async def start_monitoring(self) -> None:
-        """Start real-time monitoring."""
-        if self.monitoring_active:
+        """Start real-time monitoring."""        if self.monitoring_active:
             self.logger.warning("Monitoring is already active")
             return
         
@@ -359,8 +340,7 @@ class RealTimeViolationDetector:
         self.logger.info("Real-time monitoring started")
     
     async def stop_monitoring(self) -> None:
-        """Stop real-time monitoring."""
-        self.monitoring_active = False
+        """Stop real-time monitoring."""        self.monitoring_active = False
         
         if self.monitoring_thread and self.monitoring_thread.is_alive():
             self.monitoring_thread.join(timeout=5)
@@ -368,8 +348,7 @@ class RealTimeViolationDetector:
         self.logger.info("Real-time monitoring stopped")
     
     def _monitoring_loop(self) -> None:
-        """Main monitoring loop running in separate thread."""
-        while self.monitoring_active:
+        """Main monitoring loop running in separate thread."""        while self.monitoring_active:
             try:
                 # Check each monitoring target
                 for target in list(self.monitoring_targets.values()):
@@ -388,16 +367,14 @@ class RealTimeViolationDetector:
                 time.sleep(30)  # Wait longer on error
     
     def _should_scan_target(self, target: MonitoringTarget) -> bool:
-        """Check if target should be scanned."""
-        if target.last_scan is None:
+        """Check if target should be scanned."""        if target.last_scan is None:
             return True
         
         time_since_scan = (datetime.now() - target.last_scan).total_seconds()
         return time_since_scan >= target.scan_frequency
     
     async def _scan_target(self, target: MonitoringTarget) -> None:
-        """Scan a specific monitoring target."""
-        try:
+        """Scan a specific monitoring target."""        try:
             target.last_scan = datetime.now()
             
             # Scan across different channels
@@ -409,28 +386,23 @@ class RealTimeViolationDetector:
             self.logger.error(f"Failed to scan target {target.target_id}: {e}")
     
     async def _init_web_crawler(self, target: MonitoringTarget) -> None:
-        """Initialize web crawler monitoring."""
-        # Implementation for web crawler
+        """Initialize web crawler monitoring."""        # Implementation for web crawler
         await self._perform_web_search(target)
     
     async def _init_social_media_monitor(self, target: MonitoringTarget) -> None:
-        """Initialize social media monitoring."""
-        # Implementation for social media monitoring
+        """Initialize social media monitoring."""        # Implementation for social media monitoring
         await self._perform_social_media_search(target)
     
     async def _init_video_platform_monitor(self, target: MonitoringTarget) -> None:
-        """Initialize video platform monitoring."""
-        # Implementation for video platform monitoring
+        """Initialize video platform monitoring."""        # Implementation for video platform monitoring
         await self._perform_video_platform_search(target)
     
     async def _init_webhook_monitor(self, target: MonitoringTarget) -> None:
-        """Initialize webhook monitoring."""
-        # Webhook monitoring is passive - handled by receive_webhook
+        """Initialize webhook monitoring."""        # Webhook monitoring is passive - handled by receive_webhook
         pass
     
     async def _perform_web_search(self, target: MonitoringTarget) -> None:
-        """Perform web search for potential violations."""
-        try:
+        """Perform web search for potential violations."""        try:
             # Search using keywords
             for keyword in target.keywords:
                 search_results = await self._search_web(keyword, target.content_type)
@@ -442,8 +414,7 @@ class RealTimeViolationDetector:
             self.logger.error(f"Web search failed for target {target.target_id}: {e}")
     
     async def _perform_social_media_search(self, target: MonitoringTarget) -> None:
-        """Perform social media search."""
-        # Implementation depends on available APIs
+        """Perform social media search."""        # Implementation depends on available APIs
         platforms = ['twitter', 'instagram', 'facebook', 'tiktok']
         
         for platform in platforms:
@@ -457,8 +428,7 @@ class RealTimeViolationDetector:
                 self.logger.error(f"Social media search failed for {platform}: {e}")
     
     async def _perform_video_platform_search(self, target: MonitoringTarget) -> None:
-        """Perform video platform search."""
-        platforms = ['youtube', 'vimeo', 'dailymotion']
+        """Perform video platform search."""        platforms = ['youtube', 'vimeo', 'dailymotion']
         
         for platform in platforms:
             try:
@@ -471,8 +441,7 @@ class RealTimeViolationDetector:
                 self.logger.error(f"Video platform search failed for {platform}: {e}")
     
     async def _search_web(self, query: str, content_type: str) -> List[Dict[str, Any]]:
-        """Search the web for content."""
-        # Implement web search using search engines or custom crawlers
+        """Search the web for content."""        # Implement web search using search engines or custom crawlers
         # This is a simplified version
         search_results = []
         
@@ -488,8 +457,7 @@ class RealTimeViolationDetector:
         return search_results
     
     async def _search_social_platform(self, platform: str, keywords: List[str]) -> List[Dict[str, Any]]:
-        """Search social media platform."""
-        # Implement platform-specific search
+        """Search social media platform."""        # Implement platform-specific search
         # This would use platform APIs or web scraping
         results = []
         
@@ -503,8 +471,7 @@ class RealTimeViolationDetector:
         return results
     
     async def _search_video_platform(self, platform: str, keywords: List[str]) -> List[Dict[str, Any]]:
-        """Search video platform."""
-        # Implement video platform search
+        """Search video platform."""        # Implement video platform search
         results = []
         
         try:
@@ -522,8 +489,7 @@ class RealTimeViolationDetector:
         result: Dict[str, Any],
         detection_method: str
     ) -> None:
-        """Analyze search result for potential violations."""
-        try:
+        """Analyze search result for potential violations."""        try:
             result_url = result.get('url', '')
             
             # Check cooldown period
@@ -552,16 +518,14 @@ class RealTimeViolationDetector:
             self.logger.error(f"Failed to analyze search result: {e}")
     
     def _is_in_cooldown(self, url: str) -> bool:
-        """Check if URL is in alert cooldown period."""
-        if url not in self.recent_alerts:
+        """Check if URL is in alert cooldown period."""        if url not in self.recent_alerts:
             return False
         
         time_since_alert = (datetime.now() - self.recent_alerts[url]).total_seconds()
         return time_since_alert < self.alert_cooldown
     
     async def _extract_content_from_result(self, result: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Extract content from search result."""
-        content_data = {}
+        """Extract content from search result."""        content_data = {}
         
         try:
             # Extract text content
@@ -589,8 +553,7 @@ class RealTimeViolationDetector:
             return None
     
     async def _download_image(self, image_url: str) -> Optional[bytes]:
-        """Download image from URL."""
-        try:
+        """Download image from URL."""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(image_url, timeout=10) as response:
                     if response.status == 200:
@@ -602,8 +565,7 @@ class RealTimeViolationDetector:
         return None
     
     async def _extract_video_frames(self, video_url: str) -> Optional[List[bytes]]:
-        """Extract key frames from video."""
-        # Implementation would extract key frames from video
+        """Extract key frames from video."""        # Implementation would extract key frames from video
         # This is a simplified placeholder
         return None
     
@@ -612,8 +574,7 @@ class RealTimeViolationDetector:
         target: MonitoringTarget,
         content_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate similarity scores between target and found content."""
-        similarity_scores = {}
+        """Calculate similarity scores between target and found content."""        similarity_scores = {}
         
         try:
             # Text similarity
@@ -650,8 +611,7 @@ class RealTimeViolationDetector:
         target_embedding: List[float],
         found_text: str
     ) -> float:
-        """Calculate text similarity using embeddings."""
-        try:
+        """Calculate text similarity using embeddings."""        try:
             # Generate embedding for found text
             found_embedding = self.sentence_model.encode([found_text])[0]
             
@@ -682,8 +642,7 @@ class RealTimeViolationDetector:
         target_embedding: List[float],
         found_image: bytes
     ) -> float:
-        """Calculate image similarity using CLIP embeddings."""
-        try:
+        """Calculate image similarity using CLIP embeddings."""        try:
             # Load image
             image = Image.open(io.BytesIO(found_image))
             
@@ -717,8 +676,7 @@ class RealTimeViolationDetector:
             return 0.0
     
     def _calculate_keyword_similarity(self, target_keywords: List[str], found_text: str) -> float:
-        """Calculate keyword-based similarity."""
-        if not target_keywords or not found_text:
+        """Calculate keyword-based similarity."""        if not target_keywords or not found_text:
             return 0.0
         
         found_text_lower = found_text.lower()
@@ -736,8 +694,7 @@ class RealTimeViolationDetector:
         result: Dict[str, Any],
         similarity_scores: Dict[str, float]
     ) -> List[DetectionRule]:
-        """Check similarity scores against detection rules."""
-        violations = []
+        """Check similarity scores against detection rules."""        violations = []
         
         for rule in self.detection_rules.values():
             if not rule.active:
@@ -755,8 +712,7 @@ class RealTimeViolationDetector:
         result: Dict[str, Any],
         similarity_scores: Dict[str, float]
     ) -> bool:
-        """Check if a detection rule matches."""
-        try:
+        """Check if a detection rule matches."""        try:
             conditions = rule.conditions
             
             # Check similarity threshold
@@ -788,8 +744,7 @@ class RealTimeViolationDetector:
         detection_method: str,
         similarity_scores: Dict[str, float]
     ) -> None:
-        """Generate violation alert."""
-        try:
+        """Generate violation alert."""        try:
             alert_id = self._generate_alert_id()
             detected_url = result.get('url', '')
             platform = result.get('platform', 'unknown')
@@ -852,8 +807,7 @@ class RealTimeViolationDetector:
             self.logger.error(f"Failed to generate violation alert: {e}")
     
     def _generate_alert_id(self) -> str:
-        """Generate unique alert ID."""
-        timestamp = str(int(time.time() * 1000))
+        """Generate unique alert ID."""        timestamp = str(int(time.time() * 1000))
         random_suffix = xxhash.xxh32(timestamp).hexdigest()[:8]
         return f"alert_{timestamp}_{random_suffix}"
     
@@ -862,8 +816,7 @@ class RealTimeViolationDetector:
         similarity_scores: Dict[str, float],
         rule: DetectionRule
     ) -> float:
-        """Calculate overall confidence score for detection."""
-        if not similarity_scores:
+        """Calculate overall confidence score for detection."""        if not similarity_scores:
             return 0.0
         
         # Weight different similarity types
@@ -909,8 +862,7 @@ class RealTimeViolationDetector:
         result: Dict[str, Any],
         similarity_scores: Dict[str, float]
     ) -> float:
-        """Calculate probability of false positive."""
-        # This would use ML models trained on historical data
+        """Calculate probability of false positive."""        # This would use ML models trained on historical data
         # For now, use heuristic approach
         
         factors = []
@@ -933,8 +885,7 @@ class RealTimeViolationDetector:
         return sum(factors) / len(factors) if factors else 0.5
     
     async def _trigger_alert_handlers(self, alert: ViolationAlert) -> None:
-        """Trigger all registered alert handlers."""
-        try:
+        """Trigger all registered alert handlers."""        try:
             # Call registered handlers
             for handler in self.alert_handlers:
                 try:
@@ -949,8 +900,7 @@ class RealTimeViolationDetector:
             self.logger.error(f"Failed to trigger alert handlers: {e}")
     
     async def _send_webhook_notifications(self, alert: ViolationAlert) -> None:
-        """Send webhook notifications for alert."""
-        if not self.webhook_urls:
+        """Send webhook notifications for alert."""        if not self.webhook_urls:
             return
         
         webhook_data = alert.to_dict()
@@ -972,16 +922,13 @@ class RealTimeViolationDetector:
                 self.logger.error(f"Webhook notification error: {e}")
     
     def add_alert_handler(self, handler: Callable[[ViolationAlert], None]) -> None:
-        """Add alert handler function."""
-        self.alert_handlers.append(handler)
+        """Add alert handler function."""        self.alert_handlers.append(handler)
     
     def add_webhook_url(self, url: str) -> None:
-        """Add webhook URL for notifications."""
-        self.webhook_urls.append(url)
+        """Add webhook URL for notifications."""        self.webhook_urls.append(url)
     
     async def receive_webhook(self, webhook_data: Dict[str, Any]) -> None:
-        """Receive webhook data for processing."""
-        try:
+        """Receive webhook data for processing."""        try:
             # Process webhook data for potential violations
             # This would be called by webhook endpoints
             
@@ -1018,8 +965,7 @@ class RealTimeViolationDetector:
         severity_filter: Optional[AlertSeverity] = None,
         status_filter: Optional[DetectionStatus] = None
     ) -> List[ViolationAlert]:
-        """Get active alerts with optional filtering."""
-        alerts = list(self.active_alerts.values())
+        """Get active alerts with optional filtering."""        alerts = list(self.active_alerts.values())
         
         if severity_filter:
             alerts = [alert for alert in alerts if alert.severity == severity_filter]
@@ -1030,8 +976,7 @@ class RealTimeViolationDetector:
         return sorted(alerts, key=lambda x: x.detection_timestamp, reverse=True)
     
     async def update_alert_status(self, alert_id: str, new_status: DetectionStatus) -> bool:
-        """Update alert status."""
-        try:
+        """Update alert status."""        try:
             if alert_id in self.active_alerts:
                 self.active_alerts[alert_id].status = new_status
                 
@@ -1049,8 +994,7 @@ class RealTimeViolationDetector:
             return False
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection system statistics."""
-        try:
+        """Get detection system statistics."""        try:
             total_alerts = len(self.alert_history)
             active_alerts = len(self.active_alerts)
             monitoring_targets = len([t for t in self.monitoring_targets.values() if t.active])
@@ -1082,13 +1026,11 @@ class RealTimeViolationDetector:
             return {}
     
     def _get_system_uptime(self) -> str:
-        """Get system uptime."""
-        # This would track actual uptime
+        """Get system uptime."""        # This would track actual uptime
         return "N/A"
     
     def __del__(self):
-        """Cleanup resources."""
-        try:
+        """Cleanup resources."""        try:
             if self.monitoring_active:
                 self.monitoring_active = False
             

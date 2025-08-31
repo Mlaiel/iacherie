@@ -1,5 +1,4 @@
-"""
-Platform Adapters Database Module - Enterprise Multi-Platform Integration System
+"""Platform Adapters Database Module - Enterprise Multi-Platform Integration System
 
 Advanced database architecture for managing platform adapters, API integrations,
 and platform-specific content adaptation within the IA Influencer Agent ecosystem.
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Security Specialist + Microservices Architect + Platform Integration Expert + API Engineer
 """
-
 import asyncio
 import json
 import uuid
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class PlatformType(str, Enum):
-    """Supported platform types"""
-    YOUTUBE = "youtube"
+    """Supported platform types"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     SPOTIFY = "spotify"
@@ -63,8 +60,7 @@ class PlatformType(str, Enum):
     AUDIOMACK = "audiomack"
 
 class AdapterStatus(str, Enum):
-    """Platform adapter operational status"""
-    ACTIVE = "active"
+    """Platform adapter operational status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     MAINTENANCE = "maintenance"
     ERROR = "error"
@@ -73,16 +69,14 @@ class AdapterStatus(str, Enum):
     DEPRECATED = "deprecated"
 
 class IntegrationLevel(str, Enum):
-    """Platform integration capability levels"""
-    BASIC = "basic"              # Read-only access
+    """Platform integration capability levels"""    BASIC = "basic"              # Read-only access
     STANDARD = "standard"        # Read/Write content
     ADVANCED = "advanced"        # Full API access
     ENTERPRISE = "enterprise"    # Custom enterprise features
     PREMIUM = "premium"          # White-glove service
 
 class AuthenticationMethod(str, Enum):
-    """Platform authentication methods"""
-    OAUTH2 = "oauth2"
+    """Platform authentication methods"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -91,8 +85,7 @@ class AuthenticationMethod(str, Enum):
 
 @dataclass
 class PlatformCapabilities:
-    """Platform technical capabilities and limitations"""
-    max_file_size: int = 0
+    """Platform technical capabilities and limitations"""    max_file_size: int = 0
     supported_formats: List[str] = field(default_factory=list)
     max_concurrent_uploads: int = 1
     supports_scheduling: bool = False
@@ -108,8 +101,7 @@ class PlatformCapabilities:
 
 @dataclass
 class ContentRequirements:
-    """Platform-specific content requirements"""
-    min_duration: Optional[int] = None
+    """Platform-specific content requirements"""    min_duration: Optional[int] = None
     max_duration: Optional[int] = None
     aspect_ratios: List[str] = field(default_factory=list)
     resolutions: List[str] = field(default_factory=list)
@@ -123,8 +115,7 @@ class ContentRequirements:
     hashtags_max_count: int = 30
 
 class PlatformAdapter(Base):
-    """Platform adapter database model"""
-    __tablename__ = "platform_adapters"
+    """Platform adapter database model"""    __tablename__ = "platform_adapters"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     platform_name = Column(String(50), nullable=False, unique=True)
@@ -175,8 +166,7 @@ class PlatformAdapter(Base):
     deprecation_date = Column(DateTime(timezone=True), nullable=True)
 
 class PlatformCredential(Base):
-    """Platform credentials database model"""
-    __tablename__ = "platform_credentials"
+    """Platform credentials database model"""    __tablename__ = "platform_credentials"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -223,8 +213,7 @@ class PlatformCredential(Base):
     last_used = Column(DateTime(timezone=True), nullable=True)
 
 class PlatformOperation(Base):
-    """Platform operation tracking database model"""
-    __tablename__ = "platform_operations"
+    """Platform operation tracking database model"""    __tablename__ = "platform_operations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     platform_id = Column(UUID(as_uuid=True), ForeignKey('platform_adapters.id'), nullable=False)
@@ -261,8 +250,7 @@ class PlatformOperation(Base):
     session_id = Column(String(100), nullable=True)
 
 class PlatformAnalytics(Base):
-    """Platform analytics and insights database model"""
-    __tablename__ = "platform_analytics"
+    """Platform analytics and insights database model"""    __tablename__ = "platform_analytics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     platform_id = Column(UUID(as_uuid=True), ForeignKey('platform_adapters.id'), nullable=False)
@@ -325,8 +313,7 @@ class PlatformAnalytics(Base):
 
 # Pydantic Models for API
 class PlatformAdapterRequest(BaseModel):
-    """Request model for platform adapters"""
-    platform_name: str
+    """Request model for platform adapters"""    platform_name: str
     platform_type: PlatformType
     api_base_url: str
     api_version: Optional[str] = None
@@ -339,8 +326,7 @@ class PlatformAdapterRequest(BaseModel):
     configuration: Optional[Dict[str, Any]] = None
 
 class CredentialRequest(BaseModel):
-    """Request model for platform credentials"""
-    platform_id: str
+    """Request model for platform credentials"""    platform_id: str
     credential_name: str
     access_token: Optional[str] = None
     refresh_token: Optional[str] = None
@@ -350,16 +336,14 @@ class CredentialRequest(BaseModel):
     granted_permissions: Optional[List[str]] = None
 
 class PlatformOperationRequest(BaseModel):
-    """Request model for platform operations"""
-    platform_id: str
+    """Request model for platform operations"""    platform_id: str
     content_id: Optional[str] = None
     operation_type: str
     request_data: Optional[Dict[str, Any]] = None
     correlation_id: Optional[str] = None
 
 class PlatformAdapterManager:
-    """Enterprise platform adapter management system"""
-    
+    """Enterprise platform adapter management system"""    
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -370,8 +354,7 @@ class PlatformAdapterManager:
         self,
         adapter_request: PlatformAdapterRequest
     ) -> PlatformAdapter:
-        """Register new platform adapter"""
-        try:
+        """Register new platform adapter"""        try:
             # Validate platform requirements
             await self._validate_platform_configuration(adapter_request)
             
@@ -417,8 +400,7 @@ class PlatformAdapterManager:
         user_id: str,
         credential_request: CredentialRequest
     ) -> PlatformCredential:
-        """Add platform credentials for user"""
-        try:
+        """Add platform credentials for user"""        try:
             # Encrypt sensitive data before storage
             encrypted_data = await self._encrypt_credential_data(credential_request)
             
@@ -468,8 +450,7 @@ class PlatformAdapterManager:
         user_id: str,
         operation_request: PlatformOperationRequest
     ) -> PlatformOperation:
-        """Execute operation on platform"""
-        try:
+        """Execute operation on platform"""        try:
             # Get platform adapter and credentials
             adapter = await self._get_adapter_by_id(operation_request.platform_id)
             credentials = await self._get_user_credentials(user_id, operation_request.platform_id)
@@ -545,8 +526,7 @@ class PlatformAdapterManager:
         content_id: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> List[PlatformAnalytics]:
-        """Get platform analytics data"""
-        try:
+        """Get platform analytics data"""        try:
             # Build query
             query = self.db_session.query(PlatformAnalytics).filter(
                 PlatformAnalytics.user_id == uuid.UUID(user_id),
@@ -574,8 +554,7 @@ class PlatformAdapterManager:
             return []
     
     async def update_adapter_health(self, adapter_id: str) -> Dict[str, Any]:
-        """Update platform adapter health status"""
-        try:
+        """Update platform adapter health status"""        try:
             adapter = await self._get_adapter_by_id(adapter_id)
             if not adapter:
                 raise ValueError(f"Adapter {adapter_id} not found")
@@ -612,8 +591,7 @@ class PlatformAdapterManager:
             raise
     
     async def _validate_platform_configuration(self, request: PlatformAdapterRequest):
-        """Validate platform adapter configuration"""
-        # Validate URL format
+        """Validate platform adapter configuration"""        # Validate URL format
         parsed_url = urlparse(request.api_base_url)
         if not parsed_url.scheme or not parsed_url.netloc:
             raise ValueError("Invalid API base URL")
@@ -631,8 +609,7 @@ class PlatformAdapterManager:
                 raise ValueError(f"Invalid operation: {operation}")
     
     async def _perform_health_check(self, adapter: PlatformAdapter) -> Dict[str, Any]:
-        """Perform health check on platform adapter"""
-        try:
+        """Perform health check on platform adapter"""        try:
             start_time = datetime.utcnow()
             
             # Attempt API call to platform
@@ -669,8 +646,7 @@ class PlatformAdapterManager:
             }
     
     async def _cache_adapter(self, adapter: PlatformAdapter):
-        """Cache adapter data in Redis"""
-        try:
+        """Cache adapter data in Redis"""        try:
             cache_key = f"adapter:{adapter.id}"
             adapter_data = {
                 'id': str(adapter.id),
@@ -692,8 +668,7 @@ class PlatformAdapterManager:
             logger.warning(f"Error caching adapter: {str(e)}")
     
     async def _get_adapter_by_id(self, adapter_id: str) -> Optional[PlatformAdapter]:
-        """Get adapter by ID with caching"""
-        try:
+        """Get adapter by ID with caching"""        try:
             # Try cache first
             cache_key = f"adapter:{adapter_id}"
             cached_data = await self.redis_client.get(cache_key)

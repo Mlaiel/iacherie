@@ -1,5 +1,4 @@
-"""
-WebSocket Connection Management Database
+"""WebSocket Connection Management Database
 
 Enterprise WebSocket connection management with real-time message routing,
 connection pooling, and collaboration coordination for multi-format creators.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 import uuid
 import json
 import asyncio
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class ConnectionStatus(Enum):
-    """WebSocket connection status"""
-    CONNECTING = "connecting"
+    """WebSocket connection status"""    CONNECTING = "connecting"
     CONNECTED = "connected"
     AUTHENTICATED = "authenticated"
     ACTIVE = "active"
@@ -57,8 +54,7 @@ class ConnectionStatus(Enum):
 
 
 class MessageType(Enum):
-    """Real-time message types"""
-    CHAT = "chat"
+    """Real-time message types"""    CHAT = "chat"
     COLLABORATION = "collaboration"
     NOTIFICATION = "notification"
     SYSTEM = "system"
@@ -71,8 +67,7 @@ class MessageType(Enum):
 
 
 class RoomType(Enum):
-    """Collaboration room types"""
-    PROJECT = "project"
+    """Collaboration room types"""    PROJECT = "project"
     MUSIC_SESSION = "music_session"
     LIVE_STREAM = "live_stream"
     EDITORIAL = "editorial"
@@ -84,8 +79,7 @@ class RoomType(Enum):
 
 @dataclass
 class ConnectionInfo:
-    """WebSocket connection information"""
-    connection_id: str
+    """WebSocket connection information"""    connection_id: str
     user_id: str
     creator_type: str
     device_info: Dict[str, Any]
@@ -98,10 +92,8 @@ class ConnectionInfo:
 
 
 class WebSocketConnection(Base):
-    """
-    Database model for WebSocket connection tracking
-    """
-    __tablename__ = "websocket_connections"
+    """    Database model for WebSocket connection tracking
+    """    __tablename__ = "websocket_connections"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     connection_id = Column(String(128), unique=True, nullable=False, index=True)
@@ -150,10 +142,8 @@ class WebSocketConnection(Base):
 
 
 class MessageHistory(Base):
-    """
-    Database model for real-time message history
-    """
-    __tablename__ = "message_history"
+    """    Database model for real-time message history
+    """    __tablename__ = "message_history"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     message_id = Column(String(128), unique=True, nullable=False, index=True)
@@ -198,10 +188,8 @@ class MessageHistory(Base):
 
 
 class CollaborationRoom(Base):
-    """
-    Database model for real-time collaboration rooms
-    """
-    __tablename__ = "collaboration_rooms"
+    """    Database model for real-time collaboration rooms
+    """    __tablename__ = "collaboration_rooms"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     room_id = Column(String(128), unique=True, nullable=False, index=True)
@@ -249,10 +237,8 @@ class CollaborationRoom(Base):
 
 
 class ConnectionPool:
-    """
-    WebSocket connection pool management
-    """
-    
+    """    WebSocket connection pool management
+    """    
     def __init__(self):
         self.connections: Dict[str, WebSocketServerProtocol] = {}
         self.user_connections: Dict[str, Set[str]] = {}
@@ -269,8 +255,7 @@ class ConnectionPool:
         device_info: Dict[str, Any],
         location: Dict[str, Any]
     ):
-        """Add new WebSocket connection to pool"""
-        self.connections[connection_id] = websocket
+        """Add new WebSocket connection to pool"""        self.connections[connection_id] = websocket
         
         if user_id not in self.user_connections:
             self.user_connections[user_id] = set()
@@ -293,8 +278,7 @@ class ConnectionPool:
         logger.info(f"Added WebSocket connection: {connection_id} for user: {user_id}")
     
     async def remove_connection(self, connection_id: str):
-        """Remove connection from pool"""
-        if connection_id in self.connections:
+        """Remove connection from pool"""        if connection_id in self.connections:
             connection_info = self.connection_info.get(connection_id)
             if connection_info:
                 # Remove from user connections
@@ -318,20 +302,16 @@ class ConnectionPool:
             logger.info(f"Removed WebSocket connection: {connection_id}")
     
     def get_connection(self, connection_id: str) -> Optional[WebSocketServerProtocol]:
-        """Get WebSocket connection by ID"""
-        return self.connections.get(connection_id)
+        """Get WebSocket connection by ID"""        return self.connections.get(connection_id)
     
     def get_user_connections(self, user_id: str) -> List[str]:
-        """Get all connection IDs for a user"""
-        return list(self.user_connections.get(user_id, set()))
+        """Get all connection IDs for a user"""        return list(self.user_connections.get(user_id, set()))
     
     def get_room_connections(self, room_id: str) -> List[str]:
-        """Get all connection IDs in a room"""
-        return list(self.room_connections.get(room_id, set()))
+        """Get all connection IDs in a room"""        return list(self.room_connections.get(room_id, set()))
     
     async def join_room(self, connection_id: str, room_id: str):
-        """Add connection to a collaboration room"""
-        if connection_id in self.connection_info:
+        """Add connection to a collaboration room"""        if connection_id in self.connection_info:
             self.connection_info[connection_id].rooms.add(room_id)
             
             if room_id not in self.room_connections:
@@ -339,8 +319,7 @@ class ConnectionPool:
             self.room_connections[room_id].add(connection_id)
     
     async def leave_room(self, connection_id: str, room_id: str):
-        """Remove connection from a collaboration room"""
-        if connection_id in self.connection_info:
+        """Remove connection from a collaboration room"""        if connection_id in self.connection_info:
             self.connection_info[connection_id].rooms.discard(room_id)
             
             if room_id in self.room_connections:
@@ -349,17 +328,14 @@ class ConnectionPool:
                     del self.room_connections[room_id]
     
     def update_activity(self, connection_id: str):
-        """Update last activity timestamp"""
-        if connection_id in self.connection_info:
+        """Update last activity timestamp"""        if connection_id in self.connection_info:
             self.connection_info[connection_id].last_activity = datetime.now(timezone.utc)
     
     def get_connection_count(self) -> int:
-        """Get total number of active connections"""
-        return len(self.connections)
+        """Get total number of active connections"""        return len(self.connections)
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get connection pool statistics"""
-        creator_types = {}
+        """Get connection pool statistics"""        creator_types = {}
         for info in self.connection_info.values():
             creator_type = info.creator_type
             creator_types[creator_type] = creator_types.get(creator_type, 0) + 1
@@ -374,10 +350,8 @@ class ConnectionPool:
 
 
 class WebSocketManager:
-    """
-    Enterprise WebSocket connection manager with database persistence
-    """
-    
+    """    Enterprise WebSocket connection manager with database persistence
+    """    
     def __init__(
         self,
         db_session: Session,
@@ -398,8 +372,7 @@ class WebSocketManager:
         device_info: Dict[str, Any],
         auth_context: Dict[str, Any]
     ) -> str:
-        """
-        Register new WebSocket connection with full tracking
+        """        Register new WebSocket connection with full tracking
         
         Args:
             websocket: WebSocket connection
@@ -410,8 +383,7 @@ class WebSocketManager:
             
         Returns:
             Connection ID
-        """
-        connection_id = str(uuid.uuid4())
+        """        connection_id = str(uuid.uuid4())
         
         # Add to connection pool
         await self.connection_pool.add_connection(
@@ -446,14 +418,12 @@ class WebSocketManager:
         return connection_id
     
     async def unregister_connection(self, connection_id: str, reason: str = "normal"):
-        """
-        Unregister WebSocket connection with cleanup
+        """        Unregister WebSocket connection with cleanup
         
         Args:
             connection_id: Connection to unregister
             reason: Disconnection reason
-        """
-        # Update database
+        """        # Update database
         connection_record = self.db_session.query(WebSocketConnection).filter(
             WebSocketConnection.connection_id == connection_id
         ).first()
@@ -484,8 +454,7 @@ class WebSocketManager:
         content: Dict[str, Any],
         room_id: Optional[str] = None
     ) -> bool:
-        """
-        Send message to specific connection
+        """        Send message to specific connection
         
         Args:
             connection_id: Target connection
@@ -495,8 +464,7 @@ class WebSocketManager:
             
         Returns:
             Success status
-        """
-        websocket = self.connection_pool.get_connection(connection_id)
+        """        websocket = self.connection_pool.get_connection(connection_id)
         if not websocket:
             return False
         
@@ -537,16 +505,14 @@ class WebSocketManager:
         content: Dict[str, Any],
         exclude_connection: Optional[str] = None
     ):
-        """
-        Broadcast message to all connections in a room
+        """        Broadcast message to all connections in a room
         
         Args:
             room_id: Target room
             message_type: Type of message
             content: Message content
             exclude_connection: Connection to exclude from broadcast
-        """
-        room_connections = self.connection_pool.get_room_connections(room_id)
+        """        room_connections = self.connection_pool.get_room_connections(room_id)
         
         for connection_id in room_connections:
             if connection_id != exclude_connection:
@@ -558,15 +524,13 @@ class WebSocketManager:
         message_type: MessageType,
         content: Dict[str, Any]
     ):
-        """
-        Broadcast message to all user connections
+        """        Broadcast message to all user connections
         
         Args:
             user_id: Target user
             message_type: Type of message
             content: Message content
-        """
-        user_connections = self.connection_pool.get_user_connections(user_id)
+        """        user_connections = self.connection_pool.get_user_connections(user_id)
         
         for connection_id in user_connections:
             await self.send_message(connection_id, message_type, content)
@@ -578,8 +542,7 @@ class WebSocketManager:
         creator_user_id: str,
         config: Dict[str, Any]
     ) -> str:
-        """
-        Create new collaboration room
+        """        Create new collaboration room
         
         Args:
             room_name: Name of the room
@@ -589,8 +552,7 @@ class WebSocketManager:
             
         Returns:
             Room ID
-        """
-        room_id = str(uuid.uuid4())
+        """        room_id = str(uuid.uuid4())
         
         room_record = CollaborationRoom(
             room_id=room_id,
@@ -622,8 +584,7 @@ class WebSocketManager:
         room_id: str,
         user_id: str
     ) -> bool:
-        """
-        Join user connection to collaboration room
+        """        Join user connection to collaboration room
         
         Args:
             connection_id: Connection to add
@@ -632,8 +593,7 @@ class WebSocketManager:
             
         Returns:
             Success status
-        """
-        # Check room exists and permissions
+        """        # Check room exists and permissions
         room_record = self.db_session.query(CollaborationRoom).filter(
             CollaborationRoom.room_id == room_id,
             CollaborationRoom.is_active == True
@@ -679,15 +639,13 @@ class WebSocketManager:
         room_id: str,
         user_id: str
     ):
-        """
-        Remove user connection from collaboration room
+        """        Remove user connection from collaboration room
         
         Args:
             connection_id: Connection to remove
             room_id: Room to leave
             user_id: User identifier
-        """
-        # Remove from connection pool
+        """        # Remove from connection pool
         await self.connection_pool.leave_room(connection_id, room_id)
         
         # Update room participants if no other connections from same user
@@ -725,8 +683,7 @@ class WebSocketManager:
             )
     
     async def get_room_participants(self, room_id: str) -> List[Dict[str, Any]]:
-        """Get list of room participants with status"""
-        room_record = self.db_session.query(CollaborationRoom).filter(
+        """Get list of room participants with status"""        room_record = self.db_session.query(CollaborationRoom).filter(
             CollaborationRoom.room_id == room_id
         ).first()
         
@@ -755,8 +712,7 @@ class WebSocketManager:
         user_id: str,
         creator_type: str
     ):
-        """Cache connection info in Redis"""
-        connection_data = {
+        """Cache connection info in Redis"""        connection_data = {
             'user_id': user_id,
             'creator_type': creator_type,
             'connected_at': datetime.now(timezone.utc).isoformat()
@@ -769,8 +725,7 @@ class WebSocketManager:
         )
     
     async def _cache_room_in_redis(self, room_id: str, room_record: CollaborationRoom):
-        """Cache room info in Redis"""
-        room_data = {
+        """Cache room info in Redis"""        room_data = {
             'room_name': room_record.room_name,
             'room_type': room_record.room_type,
             'creator_user_id': str(room_record.creator_user_id),
@@ -793,8 +748,7 @@ class WebSocketManager:
         content: Dict[str, Any],
         room_id: Optional[str]
     ):
-        """Log message to database"""
-        connection_info = self.connection_pool.connection_info.get(connection_id)
+        """Log message to database"""        connection_info = self.connection_pool.connection_info.get(connection_id)
         if not connection_info:
             return
         
@@ -817,8 +771,7 @@ class WebSocketManager:
         message_type: MessageType,
         handler: Callable
     ):
-        """Register message handler for specific message type"""
-        if message_type not in self.message_handlers:
+        """Register message handler for specific message type"""        if message_type not in self.message_handlers:
             self.message_handlers[message_type] = []
         self.message_handlers[message_type].append(handler)
     
@@ -827,8 +780,7 @@ class WebSocketManager:
         connection_id: str,
         raw_message: str
     ):
-        """Process incoming WebSocket message"""
-        try:
+        """Process incoming WebSocket message"""        try:
             message_data = json.loads(raw_message)
             message_type = MessageType(message_data.get('type'))
             
@@ -844,8 +796,7 @@ class WebSocketManager:
             logger.error(f"Invalid message from {connection_id}: {str(e)}")
     
     async def cleanup_inactive_connections(self, timeout_minutes: int = 30):
-        """Clean up inactive connections"""
-        timeout = timedelta(minutes=timeout_minutes)
+        """Clean up inactive connections"""        timeout = timedelta(minutes=timeout_minutes)
         cutoff_time = datetime.now(timezone.utc) - timeout
         
         inactive_connections = []

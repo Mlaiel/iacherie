@@ -1,5 +1,4 @@
-"""
-Vector Store Connection Handler - IA Influencer Agent Platform
+"""Vector Store Connection Handler - IA Influencer Agent Platform
 
 Manages vector database connections for content similarity and AI operations:
 - Content fingerprint similarity search
@@ -12,7 +11,6 @@ Manages vector database connections for content similarity and AI operations:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -29,8 +27,7 @@ import hnswlib
 
 @dataclass
 class VectorStoreConfig:
-    """Vector store connection configuration"""
-    provider: str = "faiss"  # faiss, pinecone, hnswlib
+    """Vector store connection configuration"""    provider: str = "faiss"  # faiss, pinecone, hnswlib
     dimension: int = 512
     # FAISS specific
     faiss_index_type: str = "IndexFlatL2"  # IndexFlatL2, IndexIVFFlat, IndexHNSWFlat
@@ -52,8 +49,7 @@ class VectorStoreConfig:
 
 
 class VectorStoreConnectionHandler:
-    """
-    Vector store connection handler for IA Influencer platform.
+    """    Vector store connection handler for IA Influencer platform.
     
     Manages vector databases for:
     - Content fingerprint similarity matching
@@ -62,8 +58,7 @@ class VectorStoreConnectionHandler:
     - Content discovery and matching
     - User preference learning
     - Cross-platform content correlation
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = VectorStoreConfig(**config)
         self.logger = logging.getLogger(__name__)
@@ -86,8 +81,7 @@ class VectorStoreConnectionHandler:
         self.index_metadata: Dict[str, Dict[str, Any]] = {}
     
     async def initialize(self) -> None:
-        """Initialize vector store connections"""
-        try:
+        """Initialize vector store connections"""        try:
             self.logger.info(f"Initializing {self.config.provider} vector store...")
             
             if self.config.provider == "faiss":
@@ -112,28 +106,24 @@ class VectorStoreConnectionHandler:
             raise
     
     async def _initialize_faiss(self) -> None:
-        """Initialize FAISS vector store"""
-        import os
+        """Initialize FAISS vector store"""        import os
         os.makedirs(self.config.faiss_storage_path, exist_ok=True)
         self.logger.info("FAISS vector store initialized")
     
     async def _initialize_pinecone(self) -> None:
-        """Initialize Pinecone vector store"""
-        if not self.config.pinecone_api_key:
+        """Initialize Pinecone vector store"""        if not self.config.pinecone_api_key:
             raise ValueError("Pinecone API key required")
         
         self.pinecone_client = Pinecone(api_key=self.config.pinecone_api_key)
         self.logger.info("Pinecone vector store initialized")
     
     async def _initialize_hnswlib(self) -> None:
-        """Initialize HNSWLIB vector store"""
-        import os
+        """Initialize HNSWLIB vector store"""        import os
         os.makedirs(self.config.hnswlib_storage_path, exist_ok=True)
         self.logger.info("HNSWLIB vector store initialized")
     
     async def _create_default_indexes(self) -> None:
-        """Create default indexes for different content types"""
-        default_indexes = [
+        """Create default indexes for different content types"""        default_indexes = [
             "content_fingerprints",
             "user_embeddings", 
             "content_embeddings",
@@ -148,8 +138,7 @@ class VectorStoreConnectionHandler:
                          index_name: str, 
                          dimension: int,
                          tenant_id: Optional[str] = None) -> bool:
-        """Create a new vector index"""
-        try:
+        """Create a new vector index"""        try:
             full_index_name = self._get_full_index_name(index_name, tenant_id)
             
             if self.config.provider == "faiss":
@@ -176,14 +165,12 @@ class VectorStoreConnectionHandler:
             raise
     
     def _get_full_index_name(self, index_name: str, tenant_id: Optional[str] = None) -> str:
-        """Get full index name with tenant prefix if applicable"""
-        if tenant_id and self.config.tenant_isolation:
+        """Get full index name with tenant prefix if applicable"""        if tenant_id and self.config.tenant_isolation:
             return f"tenant_{tenant_id}_{index_name}"
         return index_name
     
     async def _create_faiss_index(self, index_name: str, dimension: int) -> None:
-        """Create FAISS index"""
-        if self.config.faiss_index_type == "IndexFlatL2":
+        """Create FAISS index"""        if self.config.faiss_index_type == "IndexFlatL2":
             index = faiss.IndexFlatL2(dimension)
         elif self.config.faiss_index_type == "IndexIVFFlat":
             quantizer = faiss.IndexFlatL2(dimension)
@@ -196,8 +183,7 @@ class VectorStoreConnectionHandler:
         self.faiss_indexes[index_name] = index
     
     async def _create_pinecone_index(self, index_name: str, dimension: int) -> None:
-        """Create Pinecone index"""
-        if not self.pinecone_client:
+        """Create Pinecone index"""        if not self.pinecone_client:
             raise RuntimeError("Pinecone client not initialized")
         
         # Check if index exists
@@ -214,8 +200,7 @@ class VectorStoreConnectionHandler:
             )
     
     async def _create_hnswlib_index(self, index_name: str, dimension: int) -> None:
-        """Create HNSWLIB index"""
-        space = 'cosine' if self.config.metric == 'cosine' else 'l2'
+        """Create HNSWLIB index"""        space = 'cosine' if self.config.metric == 'cosine' else 'l2'
         
         index = hnswlib.Index(space=space, dim=dimension)
         index.init_index(
@@ -232,8 +217,7 @@ class VectorStoreConnectionHandler:
                          ids: Optional[List[str]] = None,
                          metadata: Optional[List[Dict[str, Any]]] = None,
                          tenant_id: Optional[str] = None) -> bool:
-        """Add vectors to index"""
-        try:
+        """Add vectors to index"""        try:
             full_index_name = self._get_full_index_name(index_name, tenant_id)
             
             if full_index_name not in self._get_available_indexes():
@@ -260,8 +244,7 @@ class VectorStoreConnectionHandler:
             raise
     
     def _get_available_indexes(self) -> List[str]:
-        """Get list of available indexes"""
-        indexes = []
+        """Get list of available indexes"""        indexes = []
         if self.config.provider == "faiss":
             indexes.extend(self.faiss_indexes.keys())
         elif self.config.provider == "pinecone":
@@ -275,8 +258,7 @@ class VectorStoreConnectionHandler:
                                index_name: str, 
                                vectors: np.ndarray, 
                                ids: Optional[List[str]]) -> None:
-        """Add vectors to FAISS index"""
-        if index_name not in self.faiss_indexes:
+        """Add vectors to FAISS index"""        if index_name not in self.faiss_indexes:
             raise ValueError(f"FAISS index {index_name} not found")
         
         index = self.faiss_indexes[index_name]
@@ -295,8 +277,7 @@ class VectorStoreConnectionHandler:
                                   vectors: np.ndarray,
                                   ids: Optional[List[str]],
                                   metadata: Optional[List[Dict[str, Any]]]) -> None:
-        """Add vectors to Pinecone index"""
-        if not self.pinecone_client:
+        """Add vectors to Pinecone index"""        if not self.pinecone_client:
             raise RuntimeError("Pinecone client not initialized")
         
         index = self.pinecone_client.Index(index_name)
@@ -321,8 +302,7 @@ class VectorStoreConnectionHandler:
                                  index_name: str, 
                                  vectors: np.ndarray,
                                  ids: Optional[List[str]]) -> None:
-        """Add vectors to HNSWLIB index"""
-        if index_name not in self.hnswlib_indexes:
+        """Add vectors to HNSWLIB index"""        if index_name not in self.hnswlib_indexes:
             raise ValueError(f"HNSWLIB index {index_name} not found")
         
         index = self.hnswlib_indexes[index_name]
@@ -344,8 +324,7 @@ class VectorStoreConnectionHandler:
                            query_vector: np.ndarray,
                            k: int = 10,
                            tenant_id: Optional[str] = None) -> List[Tuple[str, float]]:
-        """Search for similar vectors"""
-        try:
+        """Search for similar vectors"""        try:
             full_index_name = self._get_full_index_name(index_name, tenant_id)
             
             if self.config.provider == "faiss":
@@ -369,8 +348,7 @@ class VectorStoreConnectionHandler:
                           index_name: str, 
                           query_vector: np.ndarray, 
                           k: int) -> List[Tuple[str, float]]:
-        """Search FAISS index"""
-        if index_name not in self.faiss_indexes:
+        """Search FAISS index"""        if index_name not in self.faiss_indexes:
             raise ValueError(f"FAISS index {index_name} not found")
         
         index = self.faiss_indexes[index_name]
@@ -392,8 +370,7 @@ class VectorStoreConnectionHandler:
                              index_name: str, 
                              query_vector: np.ndarray, 
                              k: int) -> List[Tuple[str, float]]:
-        """Search Pinecone index"""
-        if not self.pinecone_client:
+        """Search Pinecone index"""        if not self.pinecone_client:
             raise RuntimeError("Pinecone client not initialized")
         
         index = self.pinecone_client.Index(index_name)
@@ -414,8 +391,7 @@ class VectorStoreConnectionHandler:
                             index_name: str, 
                             query_vector: np.ndarray, 
                             k: int) -> List[Tuple[str, float]]:
-        """Search HNSWLIB index"""
-        if index_name not in self.hnswlib_indexes:
+        """Search HNSWLIB index"""        if index_name not in self.hnswlib_indexes:
             raise ValueError(f"HNSWLIB index {index_name} not found")
         
         index = self.hnswlib_indexes[index_name]
@@ -429,14 +405,12 @@ class VectorStoreConnectionHandler:
         return results
     
     async def _save_faiss_index(self, index_name: str, index: faiss.Index) -> None:
-        """Save FAISS index to disk"""
-        import os
+        """Save FAISS index to disk"""        import os
         file_path = os.path.join(self.config.faiss_storage_path, f"{index_name}.index")
         faiss.write_index(index, file_path)
     
     async def _save_hnswlib_index(self, index_name: str, index: hnswlib.Index) -> None:
-        """Save HNSWLIB index to disk"""
-        import os
+        """Save HNSWLIB index to disk"""        import os
         file_path = os.path.join(self.config.hnswlib_storage_path, f"{index_name}.bin")
         index.save_index(file_path)
     
@@ -444,8 +418,7 @@ class VectorStoreConnectionHandler:
                            index_name: str, 
                            vector_ids: List[str],
                            tenant_id: Optional[str] = None) -> bool:
-        """Delete vectors from index"""
-        try:
+        """Delete vectors from index"""        try:
             full_index_name = self._get_full_index_name(index_name, tenant_id)
             
             if self.config.provider == "pinecone":
@@ -464,16 +437,14 @@ class VectorStoreConnectionHandler:
             raise
     
     async def _delete_vectors_pinecone(self, index_name: str, vector_ids: List[str]) -> None:
-        """Delete vectors from Pinecone index"""
-        if not self.pinecone_client:
+        """Delete vectors from Pinecone index"""        if not self.pinecone_client:
             raise RuntimeError("Pinecone client not initialized")
         
         index = self.pinecone_client.Index(index_name)
         index.delete(ids=vector_ids)
     
     async def get_connection(self) -> Dict[str, Any]:
-        """Get vector store connection info"""
-        self.connection_count += 1
+        """Get vector store connection info"""        self.connection_count += 1
         
         return {
             "provider": self.config.provider,
@@ -482,8 +453,7 @@ class VectorStoreConnectionHandler:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Check vector store health"""
-        try:
+        """Check vector store health"""        try:
             start_time = datetime.utcnow()
             
             # Test basic operations based on provider
@@ -536,8 +506,7 @@ class VectorStoreConnectionHandler:
             }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get detailed vector store metrics"""
-        try:
+        """Get detailed vector store metrics"""        try:
             metrics = {
                 "provider": self.config.provider,
                 "configuration": {
@@ -567,8 +536,7 @@ class VectorStoreConnectionHandler:
             return {"error": str(e)}
     
     async def shutdown(self) -> None:
-        """Shutdown vector store connections"""
-        self.logger.info("Shutting down vector store connections...")
+        """Shutdown vector store connections"""        self.logger.info("Shutting down vector store connections...")
         
         # Save FAISS indexes
         for index_name, index in self.faiss_indexes.items():

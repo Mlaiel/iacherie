@@ -1,5 +1,4 @@
-"""
-AI Agents Compliance System
+"""AI Agents Compliance System
 
 Advanced compliance management system for AI agents with regulatory framework support.
 
@@ -17,7 +16,6 @@ and will result in legal action. This includes but is not limited to:
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import logging
 import asyncio
 from datetime import datetime, timedelta
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Regulatory frameworks for compliance checking"""
-    GDPR = "gdpr"
+    """Regulatory frameworks for compliance checking"""    GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
     PIPEDA = "pipeda"
@@ -53,8 +50,7 @@ class ComplianceFramework(Enum):
 
 
 class ComplianceLevel(IntEnum):
-    """Compliance requirement levels"""
-    MINIMAL = 1
+    """Compliance requirement levels"""    MINIMAL = 1
     BASIC = 2
     STANDARD = 3
     ENHANCED = 4
@@ -62,8 +58,7 @@ class ComplianceLevel(IntEnum):
 
 
 class ViolationType(Enum):
-    """Types of compliance violations"""
-    DATA_PRIVACY = "data_privacy"
+    """Types of compliance violations"""    DATA_PRIVACY = "data_privacy"
     CONSENT_MISSING = "consent_missing"
     RETENTION_VIOLATION = "retention_violation"
     ACCESS_UNAUTHORIZED = "access_unauthorized"
@@ -76,8 +71,7 @@ class ViolationType(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
@@ -87,8 +81,7 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule definition"""
-    rule_id: str
+    """Individual compliance rule definition"""    rule_id: str
     framework: ComplianceFramework
     title: str
     description: str
@@ -104,8 +97,7 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
-    violation_id: str
+    """Compliance violation record"""    violation_id: str
     rule_id: str
     violation_type: ViolationType
     severity: ComplianceLevel
@@ -121,8 +113,7 @@ class ComplianceViolation:
 
 @dataclass
 class RegulatoryFramework:
-    """Regulatory framework configuration"""
-    framework_id: str
+    """Regulatory framework configuration"""    framework_id: str
     name: str
     jurisdiction: str
     version: str
@@ -135,8 +126,7 @@ class RegulatoryFramework:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""
-    assessment_id: str
+    """Compliance assessment result"""    assessment_id: str
     framework: ComplianceFramework
     assessed_at: datetime
     overall_status: ComplianceStatus
@@ -149,27 +139,23 @@ class ComplianceAssessment:
 
 
 class ComplianceChecker:
-    """
-    Advanced AI agents compliance management system
+    """    Advanced AI agents compliance management system
     
     Provides comprehensive compliance checking, monitoring, and reporting
     for multiple regulatory frameworks with automated violation detection
     and remediation guidance.
-    """
-    
+    """    
     def __init__(self, 
                  frameworks: List[ComplianceFramework] = None,
                  jurisdiction: str = "EU",
                  auto_remediation: bool = False):
-        """
-        Initialize compliance checker
+        """        Initialize compliance checker
         
         Args:
             frameworks: List of regulatory frameworks to check against
             jurisdiction: Legal jurisdiction for compliance
             auto_remediation: Whether to automatically attempt remediation
-        """
-        self.frameworks = frameworks or [ComplianceFramework.GDPR]
+        """        self.frameworks = frameworks or [ComplianceFramework.GDPR]
         self.jurisdiction = jurisdiction
         self.auto_remediation = auto_remediation
         
@@ -190,8 +176,7 @@ class ComplianceChecker:
         logger.info(f"Compliance checker initialized for frameworks: {[f.value for f in self.frameworks]}")
     
     def _load_default_rules(self):
-        """Load default compliance rules for supported frameworks"""
-        
+        """Load default compliance rules for supported frameworks"""        
         # GDPR Rules
         gdpr_rules = [
             ComplianceRule(
@@ -262,8 +247,7 @@ class ComplianceChecker:
                               resource_id: str,
                               data_context: Dict[str, Any],
                               framework: Optional[ComplianceFramework] = None) -> ComplianceAssessment:
-        """
-        Perform comprehensive compliance check
+        """        Perform comprehensive compliance check
         
         Args:
             resource_id: ID of resource being checked
@@ -272,8 +256,7 @@ class ComplianceChecker:
             
         Returns:
             ComplianceAssessment with results
-        """
-        try:
+        """        try:
             assessment_id = str(uuid.uuid4())
             target_frameworks = [framework] if framework else self.frameworks
             
@@ -338,8 +321,7 @@ class ComplianceChecker:
                          rule: ComplianceRule,
                          resource_id: str, 
                          data_context: Dict[str, Any]) -> Optional[ComplianceViolation]:
-        """Check a specific compliance rule"""
-        try:
+        """Check a specific compliance rule"""        try:
             # Rule-specific checks
             if rule.rule_id == "GDPR_001":
                 return await self._check_lawful_basis(rule, resource_id, data_context)
@@ -361,8 +343,7 @@ class ComplianceChecker:
                                  rule: ComplianceRule,
                                  resource_id: str,
                                  data_context: Dict[str, Any]) -> Optional[ComplianceViolation]:
-        """Check GDPR lawful basis requirement"""
-        lawful_basis = data_context.get("lawful_basis")
+        """Check GDPR lawful basis requirement"""        lawful_basis = data_context.get("lawful_basis")
         
         if not lawful_basis or lawful_basis not in [
             "consent", "contract", "legal_obligation", 
@@ -386,8 +367,7 @@ class ComplianceChecker:
                             rule: ComplianceRule,
                             resource_id: str,
                             data_context: Dict[str, Any]) -> Optional[ComplianceViolation]:
-        """Check GDPR consent requirements"""
-        consent_status = data_context.get("consent_status")
+        """Check GDPR consent requirements"""        consent_status = data_context.get("consent_status")
         lawful_basis = data_context.get("lawful_basis")
         
         if lawful_basis == "consent" and consent_status != "valid":
@@ -409,8 +389,7 @@ class ComplianceChecker:
                                         rule: ComplianceRule,
                                         resource_id: str,
                                         data_context: Dict[str, Any]) -> Optional[ComplianceViolation]:
-        """Check right to be forgotten capability"""
-        deletion_capability = data_context.get("deletion_capability", False)
+        """Check right to be forgotten capability"""        deletion_capability = data_context.get("deletion_capability", False)
         
         if not deletion_capability:
             return ComplianceViolation(
@@ -431,8 +410,7 @@ class ComplianceChecker:
                                  rule: ComplianceRule,
                                  resource_id: str,
                                  data_context: Dict[str, Any]) -> Optional[ComplianceViolation]:
-        """Check CCPA transparency requirements"""
-        privacy_policy = data_context.get("privacy_policy_available", False)
+        """Check CCPA transparency requirements"""        privacy_policy = data_context.get("privacy_policy_available", False)
         data_collection_disclosed = data_context.get("data_collection_disclosed", False)
         
         if not privacy_policy or not data_collection_disclosed:
@@ -457,8 +435,7 @@ class ComplianceChecker:
                                  rule: ComplianceRule,
                                  resource_id: str,
                                  data_context: Dict[str, Any]) -> Optional[ComplianceViolation]:
-        """Generic compliance rule check"""
-        # Simple heuristic-based check
+        """Generic compliance rule check"""        # Simple heuristic-based check
         compliance_indicators = data_context.get("compliance_indicators", {})
         rule_specific_indicator = compliance_indicators.get(rule.rule_id, True)
         
@@ -479,8 +456,7 @@ class ComplianceChecker:
     def _determine_overall_status(self, 
                                  compliance_score: float,
                                  violations: List[ComplianceViolation]) -> ComplianceStatus:
-        """Determine overall compliance status"""
-        if compliance_score == 100:
+        """Determine overall compliance status"""        if compliance_score == 100:
             return ComplianceStatus.COMPLIANT
         
         critical_violations = [v for v in violations if v.severity >= ComplianceLevel.ENHANCED]
@@ -495,8 +471,7 @@ class ComplianceChecker:
             return ComplianceStatus.NON_COMPLIANT
     
     def _generate_recommendations(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Generate compliance recommendations"""
-        recommendations = []
+        """Generate compliance recommendations"""        recommendations = []
         
         # Group violations by type
         violation_types = defaultdict(list)
@@ -520,8 +495,7 @@ class ComplianceChecker:
         return recommendations[:10]  # Limit to top 10 recommendations
     
     async def _attempt_auto_remediation(self, violations: List[ComplianceViolation]):
-        """Attempt automatic remediation of violations"""
-        remediated_count = 0
+        """Attempt automatic remediation of violations"""        remediated_count = 0
         
         for violation in violations:
             try:
@@ -537,8 +511,7 @@ class ComplianceChecker:
         logger.info(f"Auto-remediated {remediated_count}/{len(violations)} violations")
     
     async def _remediate_violation(self, violation: ComplianceViolation) -> bool:
-        """Attempt to remediate a specific violation"""
-        # Placeholder for actual remediation logic
+        """Attempt to remediate a specific violation"""        # Placeholder for actual remediation logic
         # In practice, this would implement specific fixes based on violation type
         
         if violation.violation_type == ViolationType.CONSENT_MISSING:
@@ -554,8 +527,7 @@ class ComplianceChecker:
     async def generate_compliance_report(self, 
                                        framework: Optional[ComplianceFramework] = None,
                                        format_type: str = "json") -> Dict[str, Any]:
-        """Generate comprehensive compliance report"""
-        try:
+        """Generate comprehensive compliance report"""        try:
             target_frameworks = [framework] if framework else self.frameworks
             
             # Collect assessment data
@@ -621,8 +593,7 @@ class ComplianceChecker:
             raise
     
     def _generate_report_recommendations(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Generate strategic recommendations for compliance report"""
-        recommendations = []
+        """Generate strategic recommendations for compliance report"""        recommendations = []
         
         critical_violations = [v for v in violations if v.severity >= ComplianceLevel.ENHANCED]
         overdue_violations = [v for v in violations 
@@ -644,8 +615,7 @@ class ComplianceChecker:
         return recommendations
     
     def _generate_next_actions(self, violations: List[ComplianceViolation]) -> List[str]:
-        """Generate specific next actions"""
-        actions = []
+        """Generate specific next actions"""        actions = []
         
         # Prioritize by deadline and severity
         urgent_violations = sorted(
@@ -664,8 +634,7 @@ class ComplianceChecker:
         return actions
     
     def get_compliance_metrics(self) -> Dict[str, Any]:
-        """Get current compliance system metrics"""
-        return {
+        """Get current compliance system metrics"""        return {
             "checks_performed": self.checks_performed,
             "violations_detected": self.violations_detected,
             "violations_remediated": self.violations_remediated,

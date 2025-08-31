@@ -1,5 +1,4 @@
-"""
-Streaming Coordinator Database Management
+"""Streaming Coordinator Database Management
 
 Enterprise streaming coordination system for live content delivery,
 multi-platform broadcasting, and real-time performance monitoring.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 import uuid
 import json
 import asyncio
@@ -46,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class StreamType(Enum):
-    """Types of streaming content"""
-    LIVE_MUSIC = "live_music"
+    """Types of streaming content"""    LIVE_MUSIC = "live_music"
     PODCAST = "podcast"
     GAMING = "gaming"
     TUTORIAL = "tutorial"
@@ -60,8 +57,7 @@ class StreamType(Enum):
 
 
 class StreamStatus(Enum):
-    """Stream session status"""
-    SCHEDULED = "scheduled"
+    """Stream session status"""    SCHEDULED = "scheduled"
     PREPARING = "preparing"
     STARTING = "starting"
     LIVE = "live"
@@ -73,8 +69,7 @@ class StreamStatus(Enum):
 
 
 class StreamQuality(Enum):
-    """Stream quality settings"""
-    LOW = "low"          # 480p, 30fps, 1Mbps
+    """Stream quality settings"""    LOW = "low"          # 480p, 30fps, 1Mbps
     MEDIUM = "medium"    # 720p, 30fps, 2.5Mbps
     HIGH = "high"        # 1080p, 30fps, 5Mbps
     ULTRA = "ultra"      # 1080p, 60fps, 8Mbps
@@ -82,8 +77,7 @@ class StreamQuality(Enum):
 
 
 class PlatformType(Enum):
-    """Streaming platforms"""
-    YOUTUBE = "youtube"
+    """Streaming platforms"""    YOUTUBE = "youtube"
     TWITCH = "twitch"
     FACEBOOK = "facebook"
     INSTAGRAM = "instagram"
@@ -94,8 +88,7 @@ class PlatformType(Enum):
 
 
 class StreamEventType(Enum):
-    """Stream event types"""
-    START = "start"
+    """Stream event types"""    START = "start"
     STOP = "stop"
     PAUSE = "pause"
     RESUME = "resume"
@@ -112,8 +105,7 @@ class StreamEventType(Enum):
 
 @dataclass
 class StreamSettings:
-    """Stream configuration settings"""
-    title: str
+    """Stream configuration settings"""    title: str
     description: str
     quality: StreamQuality = StreamQuality.HIGH
     max_viewers: int = 1000
@@ -129,8 +121,7 @@ class StreamSettings:
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""
-    platform: PlatformType
+    """Platform-specific configuration"""    platform: PlatformType
     api_key: str
     secret: str
     stream_key: str
@@ -141,8 +132,7 @@ class PlatformConfig:
 
 
 class StreamSession(Base):
-    """Stream session model"""
-    __tablename__ = "stream_sessions"
+    """Stream session model"""    __tablename__ = "stream_sessions"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id = Column(String(255), nullable=False, unique=True, index=True)
@@ -204,8 +194,7 @@ class StreamSession(Base):
 
 
 class StreamViewer(Base):
-    """Stream viewer tracking"""
-    __tablename__ = "stream_viewers"
+    """Stream viewer tracking"""    __tablename__ = "stream_viewers"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id = Column(String(255), nullable=False, index=True)
@@ -248,8 +237,7 @@ class StreamViewer(Base):
 
 
 class StreamEvent(Base):
-    """Stream event tracking"""
-    __tablename__ = "stream_events"
+    """Stream event tracking"""    __tablename__ = "stream_events"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id = Column(String(255), nullable=False, index=True)
@@ -285,8 +273,7 @@ class StreamEvent(Base):
 
 
 class StreamAnalytics(Base):
-    """Stream analytics aggregation"""
-    __tablename__ = "stream_analytics"
+    """Stream analytics aggregation"""    __tablename__ = "stream_analytics"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id = Column(String(255), nullable=False, index=True)
@@ -334,8 +321,7 @@ class StreamAnalytics(Base):
 
 
 class PlatformStream(Base):
-    """Platform-specific stream instances"""
-    __tablename__ = "platform_streams"
+    """Platform-specific stream instances"""    __tablename__ = "platform_streams"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id = Column(String(255), nullable=False, index=True)
@@ -382,8 +368,7 @@ class PlatformStream(Base):
 
 
 class StreamingCoordinator:
-    """Enterprise streaming coordination system"""
-    
+    """Enterprise streaming coordination system"""    
     def __init__(self, redis_client: redis.Redis, db_session: Session):
         self.redis = redis_client
         self.db = db_session
@@ -394,8 +379,7 @@ class StreamingCoordinator:
         self.worker_tasks: List[asyncio.Task] = []
     
     async def initialize(self):
-        """Initialize streaming coordinator"""
-        try:
+        """Initialize streaming coordinator"""        try:
             # Load active streams
             await self._load_active_streams()
             
@@ -413,8 +397,7 @@ class StreamingCoordinator:
             raise
     
     async def shutdown(self):
-        """Graceful shutdown"""
-        self.running = False
+        """Graceful shutdown"""        self.running = False
         
         # End all active streams
         for session_id in list(self.active_streams.keys()):
@@ -439,8 +422,7 @@ class StreamingCoordinator:
         scheduled_start: Optional[datetime] = None,
         scheduled_end: Optional[datetime] = None
     ) -> str:
-        """Create new stream session"""
-        try:
+        """Create new stream session"""        try:
             session_id = f"stream_{uuid.uuid4().hex[:12]}"
             
             # Create stream session
@@ -496,8 +478,7 @@ class StreamingCoordinator:
             raise
     
     async def start_stream(self, session_id: str, streamer_id: str) -> bool:
-        """Start stream session"""
-        try:
+        """Start stream session"""        try:
             # Get stream
             stream = self.db.query(StreamSession).filter(
                 StreamSession.session_id == session_id,
@@ -563,8 +544,7 @@ class StreamingCoordinator:
             return False
     
     async def stop_stream(self, session_id: str, streamer_id: str) -> bool:
-        """Stop stream session"""
-        try:
+        """Stop stream session"""        try:
             # Get stream
             stream = self.db.query(StreamSession).filter(
                 StreamSession.session_id == session_id,
@@ -630,8 +610,7 @@ class StreamingCoordinator:
         device_info: Optional[Dict[str, Any]] = None,
         platform: Optional[str] = None
     ) -> str:
-        """Add viewer to stream"""
-        try:
+        """Add viewer to stream"""        try:
             # Generate viewer ID if anonymous
             if not viewer_id:
                 viewer_id = f"anon_{uuid.uuid4().hex[:8]}"
@@ -691,8 +670,7 @@ class StreamingCoordinator:
             raise
     
     async def remove_viewer(self, session_id: str, viewer_id: str) -> bool:
-        """Remove viewer from stream"""
-        try:
+        """Remove viewer from stream"""        try:
             # Update viewer record
             viewer = self.db.query(StreamViewer).filter(
                 StreamViewer.session_id == session_id,
@@ -734,8 +712,7 @@ class StreamingCoordinator:
             return False
     
     async def get_stream_stats(self, session_id: str) -> Dict[str, Any]:
-        """Get real-time stream statistics"""
-        try:
+        """Get real-time stream statistics"""        try:
             # Get stream info
             stream = self.db.query(StreamSession).filter(
                 StreamSession.session_id == session_id
@@ -790,8 +767,7 @@ class StreamingCoordinator:
             return {}
     
     async def subscribe_to_stream(self, session_id: str, callback: Callable):
-        """Subscribe to stream events"""
-        if session_id not in self.stream_subscribers:
+        """Subscribe to stream events"""        if session_id not in self.stream_subscribers:
             self.stream_subscribers[session_id] = set()
         
         self.stream_subscribers[session_id].add(callback)
@@ -802,8 +778,7 @@ class StreamingCoordinator:
         logger.info(f"Subscribed to stream events: {session_id}")
     
     async def unsubscribe_from_stream(self, session_id: str, callback: Callable):
-        """Unsubscribe from stream events"""
-        if session_id in self.stream_subscribers:
+        """Unsubscribe from stream events"""        if session_id in self.stream_subscribers:
             self.stream_subscribers[session_id].discard(callback)
             
             if not self.stream_subscribers[session_id]:
@@ -813,8 +788,7 @@ class StreamingCoordinator:
     # Private methods
     
     async def _load_active_streams(self):
-        """Load active streams from database"""
-        active = self.db.query(StreamSession).filter(
+        """Load active streams from database"""        active = self.db.query(StreamSession).filter(
             StreamSession.status.in_([StreamStatus.LIVE.value, StreamStatus.STARTING.value])
         ).all()
         
@@ -826,8 +800,7 @@ class StreamingCoordinator:
             }
     
     async def _initialize_platform_handlers(self):
-        """Initialize platform-specific handlers"""
-        try:
+        """Initialize platform-specific handlers"""        try:
             # YouTube Live handler
             self.platform_handlers[StreamPlatform.YOUTUBE] = await self._create_youtube_handler()
             
@@ -853,8 +826,7 @@ class StreamingCoordinator:
             raise
     
     async def _create_youtube_handler(self):
-        """Create YouTube Live streaming handler"""
-        return {
+        """Create YouTube Live streaming handler"""        return {
             'api_endpoint': 'https://www.googleapis.com/youtube/v3/liveStreams',
             'rtmp_base': 'rtmp://a.rtmp.youtube.com/live2',
             'max_bitrate': 8000000,  # 8 Mbps
@@ -863,8 +835,7 @@ class StreamingCoordinator:
         }
     
     async def _create_twitch_handler(self):
-        """Create Twitch streaming handler"""
-        return {
+        """Create Twitch streaming handler"""        return {
             'api_endpoint': 'https://api.twitch.tv/helix/streams',
             'rtmp_base': 'rtmp://live.twitch.tv/app',
             'max_bitrate': 6000000,  # 6 Mbps
@@ -873,8 +844,7 @@ class StreamingCoordinator:
         }
     
     async def _create_facebook_handler(self):
-        """Create Facebook Live streaming handler"""
-        return {
+        """Create Facebook Live streaming handler"""        return {
             'api_endpoint': 'https://graph.facebook.com/v18.0/live_videos',
             'rtmp_base': 'rtmps://live-api-s.facebook.com:443/rtmp',
             'max_bitrate': 4000000,  # 4 Mbps
@@ -883,8 +853,7 @@ class StreamingCoordinator:
         }
     
     async def _create_instagram_handler(self):
-        """Create Instagram Live streaming handler"""
-        return {
+        """Create Instagram Live streaming handler"""        return {
             'api_endpoint': 'https://graph.instagram.com/live_media',
             'rtmp_base': 'rtmps://live-upload.instagram.com:443/rtmp',
             'max_bitrate': 3500000,  # 3.5 Mbps
@@ -893,8 +862,7 @@ class StreamingCoordinator:
         }
     
     async def _create_tiktok_handler(self):
-        """Create TikTok Live streaming handler"""
-        return {
+        """Create TikTok Live streaming handler"""        return {
             'api_endpoint': 'https://open-api.tiktok.com/live/create',
             'rtmp_base': 'rtmp://push.tiktokcdn.com/live',
             'max_bitrate': 3000000,  # 3 Mbps
@@ -903,8 +871,7 @@ class StreamingCoordinator:
         }
     
     async def _create_linkedin_handler(self):
-        """Create LinkedIn Live streaming handler"""
-        return {
+        """Create LinkedIn Live streaming handler"""        return {
             'api_endpoint': 'https://api.linkedin.com/v2/liveVideoSessions',
             'rtmp_base': 'rtmp://linkedin-live.com/live',
             'max_bitrate': 2500000,  # 2.5 Mbps
@@ -913,16 +880,14 @@ class StreamingCoordinator:
         }
     
     async def _start_workers(self):
-        """Start background worker tasks"""
-        self.worker_tasks.extend([
+        """Start background worker tasks"""        self.worker_tasks.extend([
             asyncio.create_task(self._stream_health_monitor()),
             asyncio.create_task(self._analytics_aggregator()),
             asyncio.create_task(self._platform_sync_worker())
         ])
     
     async def _initialize_stream_redis(self, session_id: str):
-        """Initialize Redis structures for stream"""
-        await self.redis.delete(f"stream:{session_id}:viewers")
+        """Initialize Redis structures for stream"""        await self.redis.delete(f"stream:{session_id}:viewers")
         await self.redis.setex(
             f"stream:{session_id}:created",
             86400,
@@ -930,30 +895,25 @@ class StreamingCoordinator:
         )
     
     async def _start_platform_stream(self, platform_stream: PlatformStream):
-        """Start stream on specific platform"""
-        # Platform-specific implementation
+        """Start stream on specific platform"""        # Platform-specific implementation
         platform_stream.started_at = datetime.now(timezone.utc)
         platform_stream.status = StreamStatus.LIVE.value
         self.db.commit()
     
     async def _stop_platform_stream(self, platform_stream: PlatformStream):
-        """Stop stream on specific platform"""
-        platform_stream.ended_at = datetime.now(timezone.utc)
+        """Stop stream on specific platform"""        platform_stream.ended_at = datetime.now(timezone.utc)
         platform_stream.status = StreamStatus.ENDED.value
         self.db.commit()
     
     async def _start_stream_monitoring(self, session_id: str):
-        """Start monitoring stream health"""
-        await self.redis.setex(f"stream:{session_id}:monitoring", 3600, "active")
+        """Start monitoring stream health"""        await self.redis.setex(f"stream:{session_id}:monitoring", 3600, "active")
     
     async def _stop_stream_monitoring(self, session_id: str):
-        """Stop monitoring stream"""
-        await self.redis.delete(f"stream:{session_id}:monitoring")
+        """Stop monitoring stream"""        await self.redis.delete(f"stream:{session_id}:monitoring")
         await self.redis.delete(f"stream:{session_id}:viewers")
     
     async def _emergency_stop_stream(self, session_id: str):
-        """Emergency stop for stream"""
-        try:
+        """Emergency stop for stream"""        try:
             stream = self.db.query(StreamSession).filter(
                 StreamSession.session_id == session_id
             ).first()
@@ -978,8 +938,7 @@ class StreamingCoordinator:
         actor_type: Optional[str] = None,
         details: Optional[Dict[str, Any]] = None
     ):
-        """Log stream event"""
-        event = StreamEvent(
+        """Log stream event"""        event = StreamEvent(
             session_id=session_id,
             event_type=event_type.value,
             description=description,
@@ -993,8 +952,7 @@ class StreamingCoordinator:
         self.db.commit()
     
     async def _broadcast_viewer_update(self, session_id: str, viewer_count: int):
-        """Broadcast viewer count update"""
-        message = {
+        """Broadcast viewer count update"""        message = {
             "type": "viewer_update",
             "session_id": session_id,
             "viewer_count": viewer_count,
@@ -1013,8 +971,7 @@ class StreamingCoordinator:
                     logger.error(f"Stream subscriber callback failed: {e}")
     
     async def _stream_health_monitor(self):
-        """Monitor stream health"""
-        while self.running:
+        """Monitor stream health"""        while self.running:
             try:
                 await asyncio.sleep(30)
                 # Monitor stream health metrics
@@ -1024,8 +981,7 @@ class StreamingCoordinator:
                 await asyncio.sleep(10)
     
     async def _analytics_aggregator(self):
-        """Aggregate streaming analytics"""
-        while self.running:
+        """Aggregate streaming analytics"""        while self.running:
             try:
                 await asyncio.sleep(60)
                 # Aggregate analytics data
@@ -1035,8 +991,7 @@ class StreamingCoordinator:
                 await asyncio.sleep(30)
     
     async def _platform_sync_worker(self):
-        """Sync with platform APIs"""
-        while self.running:
+        """Sync with platform APIs"""        while self.running:
             try:
                 await asyncio.sleep(120)
                 # Sync platform data
@@ -1048,8 +1003,7 @@ class StreamingCoordinator:
 
 @asynccontextmanager
 async def get_streaming_coordinator(redis_client: redis.Redis, db_session: Session):
-    """Context manager for streaming coordinator"""
-    coordinator = StreamingCoordinator(redis_client, db_session)
+    """Context manager for streaming coordinator"""    coordinator = StreamingCoordinator(redis_client, db_session)
     try:
         await coordinator.initialize()
         yield coordinator

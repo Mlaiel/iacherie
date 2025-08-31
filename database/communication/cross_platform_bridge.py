@@ -1,5 +1,4 @@
-"""
-Cross-Platform Communication Bridge Database
+"""Cross-Platform Communication Bridge Database
 
 Enterprise cross-platform communication bridge for seamless integration with
 social media platforms, streaming services, and external collaboration tools.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 import uuid
 import json
 import asyncio
@@ -49,8 +47,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    YOUTUBE = "youtube"
+    """Supported platform types"""    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -68,8 +65,7 @@ class PlatformType(Enum):
 
 
 class BridgeStatus(Enum):
-    """Communication bridge status"""
-    INACTIVE = "inactive"
+    """Communication bridge status"""    INACTIVE = "inactive"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     AUTHENTICATING = "authenticating"
@@ -82,15 +78,13 @@ class BridgeStatus(Enum):
 
 
 class MessageDirection(Enum):
-    """Message flow direction"""
-    INBOUND = "inbound"
+    """Message flow direction"""    INBOUND = "inbound"
     OUTBOUND = "outbound"
     BIDIRECTIONAL = "bidirectional"
 
 
 class ContentFormat(Enum):
-    """Content format types"""
-    TEXT = "text"
+    """Content format types"""    TEXT = "text"
     RICH_TEXT = "rich_text"
     MARKDOWN = "markdown"
     HTML = "html"
@@ -104,8 +98,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform authentication credentials"""
-    platform: PlatformType
+    """Platform authentication credentials"""    platform: PlatformType
     client_id: str
     client_secret: str
     access_token: Optional[str] = None
@@ -119,8 +112,7 @@ class PlatformCredentials:
 
 @dataclass
 class CrossPlatformMessage:
-    """Cross-platform message structure"""
-    message_id: str
+    """Cross-platform message structure"""    message_id: str
     source_platform: PlatformType
     target_platforms: List[PlatformType]
     content: Dict[str, Any]
@@ -137,8 +129,7 @@ class CrossPlatformMessage:
 
 
 class PlatformIntegration(Base):
-    """Database model for platform integrations"""
-    __tablename__ = "platform_integrations"
+    """Database model for platform integrations"""    __tablename__ = "platform_integrations"
     __table_args__ = (
         Index('idx_platform_user_id', 'user_id'),
         Index('idx_platform_type', 'platform_type'),
@@ -164,8 +155,7 @@ class PlatformIntegration(Base):
 
 
 class CrossPlatformMessageLog(Base):
-    """Database model for cross-platform message logs"""
-    __tablename__ = "cross_platform_message_logs"
+    """Database model for cross-platform message logs"""    __tablename__ = "cross_platform_message_logs"
     __table_args__ = (
         Index('idx_message_user_id', 'user_id'),
         Index('idx_message_source_platform', 'source_platform'),
@@ -191,11 +181,9 @@ class CrossPlatformMessageLog(Base):
 
 
 class CrossPlatformBridge:
-    """
-    Enterprise cross-platform communication bridge for seamless integration
+    """    Enterprise cross-platform communication bridge for seamless integration
     with social media platforms, streaming services, and collaboration tools.
-    """
-    
+    """    
     def __init__(self, db_session: Session, redis_client: redis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -208,8 +196,7 @@ class CrossPlatformBridge:
         self.message_queue = asyncio.Queue()
         
     async def initialize_platform_bridges(self) -> bool:
-        """Initialize all platform communication bridges"""
-        try:
+        """Initialize all platform communication bridges"""        try:
             # Initialize platform adapters
             await self._initialize_platform_adapters()
             
@@ -240,8 +227,7 @@ class CrossPlatformBridge:
         credentials: PlatformCredentials,
         configuration: Dict[str, Any] = None
     ) -> str:
-        """Register new platform integration"""
-        try:
+        """Register new platform integration"""        try:
             # Encrypt credentials
             encrypted_credentials = await self._encrypt_credentials(credentials)
             
@@ -290,8 +276,7 @@ class CrossPlatformBridge:
         message_type: str = "general",
         metadata: Dict[str, Any] = None
     ) -> str:
-        """Send message across multiple platforms"""
-        try:
+        """Send message across multiple platforms"""        try:
             message_id = str(uuid.uuid4())
             
             # Create cross-platform message
@@ -326,8 +311,7 @@ class CrossPlatformBridge:
             raise
     
     async def _process_message_delivery(self, message: CrossPlatformMessage) -> None:
-        """Process cross-platform message delivery"""
-        try:
+        """Process cross-platform message delivery"""        try:
             delivery_tasks = []
             
             for platform in message.target_platforms:
@@ -374,8 +358,7 @@ class CrossPlatformBridge:
         platform: PlatformType,
         integration: PlatformIntegration
     ) -> bool:
-        """Deliver message to specific platform"""
-        try:
+        """Deliver message to specific platform"""        try:
             # Get platform adapter
             adapter = self.platform_adapters.get(platform)
             if not adapter:
@@ -415,8 +398,7 @@ class CrossPlatformBridge:
         webhook_data: Dict[str, Any],
         signature: str = None
     ) -> bool:
-        """Receive and process platform webhook"""
-        try:
+        """Receive and process platform webhook"""        try:
             # Verify webhook signature
             if signature and not await self._verify_webhook_signature(
                 platform, webhook_data, signature
@@ -456,8 +438,7 @@ class CrossPlatformBridge:
         platform: PlatformType,
         sync_type: str = "full"
     ) -> Dict[str, Any]:
-        """Sync data from platform"""
-        try:
+        """Sync data from platform"""        try:
             # Get platform integration
             integration = await self._get_platform_integration(user_id, platform)
             if not integration:
@@ -497,8 +478,7 @@ class CrossPlatformBridge:
         date_range: Dict[str, datetime],
         metrics: List[str] = None
     ) -> Dict[str, Any]:
-        """Get platform-specific analytics"""
-        try:
+        """Get platform-specific analytics"""        try:
             # Get platform integration
             integration = await self._get_platform_integration(user_id, platform)
             if not integration:
@@ -537,8 +517,7 @@ class CrossPlatformBridge:
             return {'success': False, 'error': str(e)}
     
     async def get_integration_status(self, user_id: str) -> Dict[str, Any]:
-        """Get status of all platform integrations for user"""
-        try:
+        """Get status of all platform integrations for user"""        try:
             integrations = self.db_session.query(PlatformIntegration).filter(
                 PlatformIntegration.user_id == user_id
             ).all()
@@ -569,8 +548,7 @@ class CrossPlatformBridge:
             return {'success': False, 'error': str(e)}
     
     async def _initialize_platform_adapters(self) -> None:
-        """Initialize platform-specific adapters"""
-        try:
+        """Initialize platform-specific adapters"""        try:
             # YouTube adapter
             self.platform_adapters[PlatformType.YOUTUBE] = await self._create_youtube_adapter()
             
@@ -599,8 +577,7 @@ class CrossPlatformBridge:
             raise
     
     async def _encrypt_credentials(self, credentials: PlatformCredentials) -> Dict[str, Any]:
-        """Encrypt platform credentials"""
-        try:
+        """Encrypt platform credentials"""        try:
             credentials_dict = asdict(credentials)
             credentials_json = json.dumps(credentials_dict)
             encrypted_data = self.cipher_suite.encrypt(credentials_json.encode())
@@ -616,8 +593,7 @@ class CrossPlatformBridge:
             raise
     
     async def _decrypt_credentials(self, encrypted_credentials: Dict[str, Any]) -> PlatformCredentials:
-        """Decrypt platform credentials"""
-        try:
+        """Decrypt platform credentials"""        try:
             encrypted_data = encrypted_credentials['encrypted_data'].encode()
             decrypted_data = self.cipher_suite.decrypt(encrypted_data)
             credentials_dict = json.loads(decrypted_data.decode())
@@ -629,8 +605,7 @@ class CrossPlatformBridge:
             raise
     
     async def cleanup_old_message_logs(self, days_to_keep: int = 90) -> int:
-        """Cleanup old cross-platform message logs"""
-        try:
+        """Cleanup old cross-platform message logs"""        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
             
             deleted_count = self.db_session.query(CrossPlatformMessageLog).filter(
@@ -648,8 +623,7 @@ class CrossPlatformBridge:
 
 
 class PlatformAdapter:
-    """Base class for platform-specific adapters"""
-    
+    """Base class for platform-specific adapters"""    
     def __init__(self, platform: PlatformType):
         self.platform = platform
         self.session = aiohttp.ClientSession()
@@ -660,8 +634,7 @@ class PlatformAdapter:
         credentials: PlatformCredentials,
         configuration: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Deliver message to platform"""
-        logger.info(f"Delivering message to {self.platform.value} platform")
+        """Deliver message to platform"""        logger.info(f"Delivering message to {self.platform.value} platform")
         
         # Basic implementation for cross-platform message delivery
         message_id = f"{self.platform.value}_{datetime.utcnow().timestamp()}"
@@ -705,8 +678,7 @@ class PlatformAdapter:
         configuration: Dict[str, Any],
         sync_type: str
     ) -> Dict[str, Any]:
-        """Sync data from platform"""
-        logger.info(f"Syncing data from {self.platform.value} platform, type: {sync_type}")
+        """Sync data from platform"""        logger.info(f"Syncing data from {self.platform.value} platform, type: {sync_type}")
         
         # Basic implementation for cross-platform data synchronization
         sync_id = f"sync_{self.platform.value}_{datetime.utcnow().timestamp()}"
@@ -776,8 +748,7 @@ class PlatformAdapter:
         date_range: Dict[str, datetime],
         metrics: List[str]
     ) -> Dict[str, Any]:
-        """Get platform analytics"""
-        logger.info(f"Retrieving analytics from {self.platform.value} platform")
+        """Get platform analytics"""        logger.info(f"Retrieving analytics from {self.platform.value} platform")
         
         # Basic implementation for cross-platform analytics retrieval
         analytics_id = f"analytics_{self.platform.value}_{datetime.utcnow().timestamp()}"
@@ -879,7 +850,6 @@ async def get_cross_platform_bridge(
     db_session: Session,
     redis_client: redis.Redis
 ) -> CrossPlatformBridge:
-    """Get configured cross-platform bridge instance"""
-    bridge = CrossPlatformBridge(db_session, redis_client)
+    """Get configured cross-platform bridge instance"""    bridge = CrossPlatformBridge(db_session, redis_client)
     await bridge.initialize_platform_bridges()
     return bridge

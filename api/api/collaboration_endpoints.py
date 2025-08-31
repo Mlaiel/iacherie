@@ -1,5 +1,4 @@
-"""
-Collaboration endpoints for IA Influencer Agent platform.
+"""Collaboration endpoints for IA Influencer Agent platform.
 
 This module handles collaboration features between content creators,
 matching, partnerships, and joint content creation.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 from datetime import datetime
 from typing import List, Optional, Dict, Any
 from fastapi import APIRouter, Depends, HTTPException, status, Query, Body
@@ -34,24 +32,21 @@ router = APIRouter(prefix="/collaboration", tags=["Collaboration"])
 
 # Request/Response models
 class CollaborationSearchRequest(BaseModel):
-    """Request model for collaboration search"""
-    skills_needed: List[str]
+    """Request model for collaboration search"""    skills_needed: List[str]
     content_types: List[str]
     experience_level: Optional[str] = None
     location_preference: Optional[str] = None
     budget_range: Optional[Dict[str, float]] = None
 
 class PartnershipProposal(BaseModel):
-    """Model for partnership proposals"""
-    target_user_id: str
+    """Model for partnership proposals"""    target_user_id: str
     project_description: str
     proposed_terms: Dict[str, Any]
     duration_days: int
     collaboration_type: str  # "content_creation", "cross_promotion", "skill_exchange"
 
 class CollaborationInvite(BaseModel):
-    """Model for collaboration invites"""
-    collaboration_id: str
+    """Model for collaboration invites"""    collaboration_id: str
     invited_users: List[str]
     message: Optional[str] = None
     role_assignments: Dict[str, str]
@@ -67,8 +62,7 @@ async def discover_collaborators(
     current_user: User = Depends(AuthManager.get_current_user),
     matching_service: MatchingService = Depends()
 ):
-    """
-    Discover potential collaborators based on complementary skills and needs.
+    """    Discover potential collaborators based on complementary skills and needs.
     
     AI-powered matching system considers:
     - Skill complementarity
@@ -76,8 +70,7 @@ async def discover_collaborators(
     - Experience levels
     - Geographic proximity (optional)
     - Past collaboration success rates
-    """
-    try:
+    """    try:
         # Parse skills from query parameter
         skills_list = skills.split(",") if skills else []
         
@@ -139,10 +132,8 @@ async def propose_partnership(
     collaboration_service: CollaborationService = Depends(),
     notification_service: NotificationService = Depends()
 ):
-    """
-    Propose partnership to another user with project details and terms.
-    """
-    try:
+    """    Propose partnership to another user with project details and terms.
+    """    try:
         # Validate target user exists and is not the current user
         if proposal.target_user_id == str(current_user.id):
             raise HTTPException(
@@ -210,10 +201,8 @@ async def get_collaboration_requests(
     current_user: User = Depends(AuthManager.get_current_user),
     collaboration_service: CollaborationService = Depends()
 ):
-    """
-    Get user's collaboration requests (sent and received).
-    """
-    try:
+    """    Get user's collaboration requests (sent and received).
+    """    try:
         # Get both sent and received collaboration requests
         sent_requests = await collaboration_service.get_user_sent_collaborations(
             user_id=current_user.id,
@@ -289,10 +278,8 @@ async def respond_to_collaboration(
     collaboration_service: CollaborationService = Depends(),
     notification_service: NotificationService = Depends()
 ):
-    """
-    Respond to collaboration request (accept/reject/negotiate).
-    """
-    try:
+    """    Respond to collaboration request (accept/reject/negotiate).
+    """    try:
         action = response_data.get("action")  # "accept", "reject", "negotiate"
         message = response_data.get("message", "")
         counter_terms = response_data.get("counter_terms")
@@ -376,10 +363,8 @@ async def get_collaboration_details(
     current_user: User = Depends(AuthManager.get_current_user),
     collaboration_service: CollaborationService = Depends()
 ):
-    """
-    Get detailed information about a specific collaboration.
-    """
-    try:
+    """    Get detailed information about a specific collaboration.
+    """    try:
         collaboration = await collaboration_service.get_collaboration_with_details(collaboration_id)
         if not collaboration:
             raise HTTPException(
@@ -451,10 +436,8 @@ async def invite_users_to_collaboration(
     collaboration_service: CollaborationService = Depends(),
     notification_service: NotificationService = Depends()
 ):
-    """
-    Invite additional users to an active collaboration.
-    """
-    try:
+    """    Invite additional users to an active collaboration.
+    """    try:
         # Verify user is collaboration creator or has admin role
         collaboration = await collaboration_service.get_collaboration_by_id(collaboration_id)
         if not collaboration:
@@ -541,10 +524,8 @@ async def update_collaboration(
     current_user: User = Depends(AuthManager.get_current_user),
     collaboration_service: CollaborationService = Depends()
 ):
-    """
-    Update collaboration details and progress.
-    """
-    try:
+    """    Update collaboration details and progress.
+    """    try:
         # Verify user has permission to update
         collaboration = await collaboration_service.get_collaboration_by_id(collaboration_id)
         if not collaboration:
@@ -598,10 +579,8 @@ async def complete_collaboration(
     collaboration_service: CollaborationService = Depends(),
     notification_service: NotificationService = Depends()
 ):
-    """
-    Mark collaboration as completed and handle final deliverables.
-    """
-    try:
+    """    Mark collaboration as completed and handle final deliverables.
+    """    try:
         # Verify user has permission to complete
         if not await collaboration_service.user_can_complete(collaboration_id, current_user.id):
             raise HTTPException(

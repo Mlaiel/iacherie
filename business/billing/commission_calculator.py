@@ -1,5 +1,4 @@
-"""
-Commission Calculator Engine - Advanced commission calculation system
+"""Commission Calculator Engine - Advanced commission calculation system
 =====================================================================
 
 Sophisticated commission calculation engine with tier-based structures,
@@ -8,7 +7,6 @@ performance bonuses, and automated distribution for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -25,16 +23,14 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class CommissionTier(Enum):
-    """Commission tier levels"""
-    BRONZE = "bronze"
+    """Commission tier levels"""    BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
     PLATINUM = "platinum"
     DIAMOND = "diamond"
 
 class CommissionType(Enum):
-    """Types of commissions"""
-    CONTENT_SALES = "content_sales"
+    """Types of commissions"""    CONTENT_SALES = "content_sales"
     LICENSING_REVENUE = "licensing_revenue"
     SUBSCRIPTION_REVENUE = "subscription_revenue"
     ADVERTISING_REVENUE = "advertising_revenue"
@@ -44,8 +40,7 @@ class CommissionType(Enum):
 
 @dataclass
 class CommissionRule:
-    """Commission calculation rule"""
-    tier: CommissionTier
+    """Commission calculation rule"""    tier: CommissionTier
     commission_type: CommissionType
     base_rate: Decimal
     min_threshold: Decimal
@@ -56,8 +51,7 @@ class CommissionRule:
 
 @dataclass
 class CommissionData:
-    """Commission calculation result"""
-    commission_id: str
+    """Commission calculation result"""    commission_id: str
     creator_id: str
     revenue_amount: Decimal
     commission_rate: Decimal
@@ -70,19 +64,16 @@ class CommissionData:
     currency: str
 
 class CommissionCalculatorEngine:
-    """
-    Advanced commission calculation system with performance-based tiers,
+    """    Advanced commission calculation system with performance-based tiers,
     automated calculations, and real-time tracking for content creators.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         self.commission_rules = {}
         
     async def initialize(self) -> None:
-        """Initialize commission calculator engine"""
-        try:
+        """Initialize commission calculator engine"""        try:
             await self._setup_database_tables()
             await self._load_commission_rules()
             await self._initialize_tier_thresholds()
@@ -92,10 +83,8 @@ class CommissionCalculatorEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for commission management"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS commission_tiers (
+        """Setup database tables for commission management"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS commission_tiers (
                     id SERIAL PRIMARY KEY,
                     tier_name VARCHAR(20) NOT NULL,
                     min_revenue DECIMAL(15,2) NOT NULL,
@@ -106,8 +95,7 @@ class CommissionCalculatorEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS commission_rules (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS commission_rules (
                     id SERIAL PRIMARY KEY,
                     tier VARCHAR(20) NOT NULL,
                     commission_type VARCHAR(30) NOT NULL,
@@ -121,8 +109,7 @@ class CommissionCalculatorEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS commission_calculations (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS commission_calculations (
                     id SERIAL PRIMARY KEY,
                     commission_id VARCHAR(100) UNIQUE NOT NULL,
                     creator_id VARCHAR(255) NOT NULL,
@@ -143,8 +130,7 @@ class CommissionCalculatorEngine:
                 );
             """)
             
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS creator_performance_metrics (
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS creator_performance_metrics (
                     id SERIAL PRIMARY KEY,
                     creator_id VARCHAR(255) NOT NULL,
                     metric_period DATE NOT NULL,
@@ -160,8 +146,7 @@ class CommissionCalculatorEngine:
             """)
 
     async def _load_commission_rules(self) -> None:
-        """Load commission rules into memory"""
-        try:
+        """Load commission rules into memory"""        try:
             # Initialize default commission rules
             default_rules = [
                 # Content Sales Commissions
@@ -188,8 +173,7 @@ class CommissionCalculatorEngine:
             logger.error(f"Failed to load commission rules: {e}")
 
     async def _initialize_tier_thresholds(self) -> None:
-        """Initialize creator tier thresholds"""
-        try:
+        """Initialize creator tier thresholds"""        try:
             tier_thresholds = {
                 CommissionTier.BRONZE: {'min_revenue': 0, 'min_sales': 0, 'multiplier': 1.0},
                 CommissionTier.SILVER: {'min_revenue': 1000, 'min_sales': 10, 'multiplier': 1.1},
@@ -208,8 +192,7 @@ class CommissionCalculatorEngine:
     async def calculate_commission(self, creator_id: str, revenue_data: Dict[str, Any],
                                  commission_type: CommissionType,
                                  calculation_period: tuple[datetime, datetime]) -> CommissionData:
-        """Calculate commission for creator based on revenue and performance"""
-        try:
+        """Calculate commission for creator based on revenue and performance"""        try:
             # Get creator's current tier
             creator_tier = await self._get_creator_tier(creator_id, calculation_period[1])
             
@@ -276,12 +259,10 @@ class CommissionCalculatorEngine:
             raise HTTPException(status_code=500, detail="Commission calculation failed")
 
     async def _get_creator_tier(self, creator_id: str, as_of_date: datetime) -> CommissionTier:
-        """Get creator's current tier based on performance"""
-        try:
+        """Get creator's current tier based on performance"""        try:
             async with self.db_pool.acquire() as conn:
                 # Get creator's performance metrics
-                performance = await conn.fetchrow("""
-                    SELECT 
+                performance = await conn.fetchrow("""                    SELECT 
                         COALESCE(SUM(total_revenue), 0) as total_revenue,
                         COALESCE(SUM(content_sales_count), 0) as total_sales,
                         COALESCE(AVG(engagement_score), 0) as avg_engagement,
@@ -315,11 +296,9 @@ class CommissionCalculatorEngine:
             return CommissionTier.BRONZE
 
     async def _get_creator_performance(self, creator_id: str, calculation_period: tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get creator performance metrics for period"""
-        try:
+        """Get creator performance metrics for period"""        try:
             async with self.db_pool.acquire() as conn:
-                metrics = await conn.fetchrow("""
-                    SELECT 
+                metrics = await conn.fetchrow("""                    SELECT 
                         COALESCE(AVG(engagement_score), 0) as engagement_score,
                         COALESCE(AVG(customer_satisfaction), 0) as customer_satisfaction,
                         COALESCE(AVG(quality_score), 0) as quality_score,
@@ -341,8 +320,7 @@ class CommissionCalculatorEngine:
             return {}
 
     def _calculate_performance_multiplier(self, performance_metrics: Dict[str, Any], rule: CommissionRule) -> Decimal:
-        """Calculate performance-based multiplier"""
-        try:
+        """Calculate performance-based multiplier"""        try:
             base_multiplier = rule.performance_multiplier
             
             # Engagement score impact (0-20% bonus)
@@ -367,8 +345,7 @@ class CommissionCalculatorEngine:
 
     async def _calculate_performance_bonus(self, creator_id: str, revenue_amount: Decimal,
                                          performance_metrics: Dict[str, Any], tier: CommissionTier) -> Decimal:
-        """Calculate additional performance bonus"""
-        try:
+        """Calculate additional performance bonus"""        try:
             bonus = Decimal('0.00')
             
             # Tier-based bonus rates
@@ -411,11 +388,9 @@ class CommissionCalculatorEngine:
             return Decimal('0.00')
 
     async def _store_commission_calculation(self, commission_data: CommissionData) -> None:
-        """Store commission calculation in database"""
-        try:
+        """Store commission calculation in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO commission_calculations 
+                await conn.execute("""                    INSERT INTO commission_calculations 
                     (commission_id, creator_id, revenue_amount, commission_rate, commission_amount,
                      tier, commission_type, calculation_period_start, calculation_period_end,
                      performance_bonus, total_payout, currency)
@@ -438,12 +413,10 @@ class CommissionCalculatorEngine:
             logger.error(f"Failed to store commission calculation: {e}")
 
     async def calculate_bulk_commissions(self, calculation_date: datetime) -> Dict[str, List[CommissionData]]:
-        """Calculate commissions for all creators for a specific period"""
-        try:
+        """Calculate commissions for all creators for a specific period"""        try:
             # Get all active creators
             async with self.db_pool.acquire() as conn:
-                creators = await conn.fetch("""
-                    SELECT DISTINCT creator_id 
+                creators = await conn.fetch("""                    SELECT DISTINCT creator_id 
                     FROM creator_performance_metrics 
                     WHERE metric_period = $1
                 """, calculation_date.date())
@@ -494,11 +467,9 @@ class CommissionCalculatorEngine:
             return {'successful': [], 'failed': []}
 
     async def _get_creator_revenue_data(self, creator_id: str, period: tuple[datetime, datetime]) -> Dict[str, float]:
-        """Get revenue data by type for creator"""
-        try:
+        """Get revenue data by type for creator"""        try:
             async with self.db_pool.acquire() as conn:
-                revenue_data = await conn.fetchrow("""
-                    SELECT 
+                revenue_data = await conn.fetchrow("""                    SELECT 
                         COALESCE(SUM(CASE WHEN revenue_type = 'content_sales' THEN amount ELSE 0 END), 0) as content_sales,
                         COALESCE(SUM(CASE WHEN revenue_type = 'licensing_revenue' THEN amount ELSE 0 END), 0) as licensing_revenue,
                         COALESCE(SUM(CASE WHEN revenue_type = 'subscription_revenue' THEN amount ELSE 0 END), 0) as subscription_revenue,
@@ -516,12 +487,10 @@ class CommissionCalculatorEngine:
             return {}
 
     async def get_commission_dashboard_data(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive commission dashboard data"""
-        try:
+        """Get comprehensive commission dashboard data"""        try:
             async with self.db_pool.acquire() as conn:
                 # Commission summary
-                summary = await conn.fetchrow("""
-                    SELECT 
+                summary = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as total_calculations,
                         COALESCE(SUM(total_payout), 0) as total_earned,
                         COALESCE(SUM(performance_bonus), 0) as total_bonuses,
@@ -533,8 +502,7 @@ class CommissionCalculatorEngine:
                 """, creator_id)
                 
                 # Monthly commission trends
-                monthly_trends = await conn.fetch("""
-                    SELECT 
+                monthly_trends = await conn.fetch("""                    SELECT 
                         DATE_TRUNC('month', calculation_period_end) as month,
                         SUM(total_payout) as total_payout,
                         AVG(commission_rate) as avg_rate,
@@ -547,8 +515,7 @@ class CommissionCalculatorEngine:
                 """, creator_id)
                 
                 # Commission by type
-                by_type = await conn.fetch("""
-                    SELECT 
+                by_type = await conn.fetch("""                    SELECT 
                         commission_type,
                         SUM(total_payout) as total_payout,
                         COUNT(*) as count

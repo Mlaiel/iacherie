@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Optimization - Performance Analysis and Optimization Engine
+"""Cache Optimization - Performance Analysis and Optimization Engine
 ================================================================
 
 Advanced optimization system for cache performance analysis,
@@ -10,7 +9,6 @@ tuning, and automatic optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import time
@@ -28,8 +26,7 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Optimization types."""
-    SIZE = "size"
+    """Optimization types."""    SIZE = "size"
     SPEED = "speed"
     HIT_RATE = "hit_rate"
     MEMORY = "memory"
@@ -37,8 +34,7 @@ class OptimizationType(Enum):
     BALANCED = "balanced"
 
 class MetricType(Enum):
-    """Performance metric types."""
-    HIT_RATE = "hit_rate"
+    """Performance metric types."""    HIT_RATE = "hit_rate"
     MISS_RATE = "miss_rate"
     RESPONSE_TIME = "response_time"
     MEMORY_USAGE = "memory_usage"
@@ -49,16 +45,14 @@ class MetricType(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data point."""
-    metric_type: MetricType
+    """Performance metric data point."""    metric_type: MetricType
     value: float
     timestamp: datetime
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation."""
-    recommendation_id: str
+    """Optimization recommendation."""    recommendation_id: str
     optimization_type: OptimizationType
     description: str
     impact_score: float
@@ -69,8 +63,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class CacheProfile:
-    """Cache usage profile."""
-    access_patterns: Dict[str, int]
+    """Cache usage profile."""    access_patterns: Dict[str, int]
     hot_keys: List[str]
     cold_keys: List[str]
     size_distribution: Dict[str, int]
@@ -78,8 +71,7 @@ class CacheProfile:
     performance_characteristics: Dict[str, float]
 
 class CacheOptimizer:
-    """
-    Advanced cache optimization engine.
+    """    Advanced cache optimization engine.
     
     Features:
     - Performance monitoring
@@ -87,16 +79,13 @@ class CacheOptimizer:
     - Pattern analysis
     - Recommendation generation
     - A/B testing framework
-    """
-    
+    """    
     def __init__(self, optimization_type: OptimizationType = OptimizationType.BALANCED):
-        """
-        Initialize cache optimizer.
+        """        Initialize cache optimizer.
         
         Args:
             optimization_type: Default optimization strategy
-        """
-        self.optimization_type = optimization_type
+        """        self.optimization_type = optimization_type
         self.logger = logging.getLogger(f"{__name__}.CacheOptimizer")
         
         # Performance tracking
@@ -129,8 +118,7 @@ class CacheOptimizer:
     async def record_metric(self, metric_type: MetricType, 
                           value: float, 
                           metadata: Optional[Dict[str, Any]] = None) -> None:
-        """Record performance metric."""
-        try:
+        """Record performance metric."""        try:
             metric = PerformanceMetric(
                 metric_type=metric_type,
                 value=value,
@@ -154,8 +142,7 @@ class CacheOptimizer:
     async def record_cache_access(self, key: str, operation: str, 
                                 hit: bool, response_time: float,
                                 size: Optional[int] = None) -> None:
-        """Record cache access for pattern analysis."""
-        try:
+        """Record cache access for pattern analysis."""        try:
             await self.access_tracker.record_access(key, operation, hit, response_time, size)
             
             # Record metrics
@@ -170,8 +157,7 @@ class CacheOptimizer:
             self.logger.error(f"Error recording cache access: {e}")
     
     async def analyze_performance(self) -> Dict[str, Any]:
-        """Analyze current cache performance."""
-        try:
+        """Analyze current cache performance."""        try:
             analysis = {}
             
             # Calculate aggregate metrics
@@ -203,8 +189,7 @@ class CacheOptimizer:
             return {}
     
     async def generate_recommendations(self) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations."""
-        try:
+        """Generate optimization recommendations."""        try:
             # Analyze current performance
             performance_analysis = await self.analyze_performance()
             
@@ -233,8 +218,7 @@ class CacheOptimizer:
     
     async def _score_recommendation(self, recommendation: OptimizationRecommendation,
                                   performance_analysis: Dict[str, Any]) -> float:
-        """Score recommendation impact."""
-        try:
+        """Score recommendation impact."""        try:
             base_score = 0.5
             
             # Adjust score based on optimization type
@@ -267,8 +251,7 @@ class CacheOptimizer:
             return 0.0
     
     async def apply_optimization(self, recommendation_id: str) -> bool:
-        """Apply optimization recommendation."""
-        try:
+        """Apply optimization recommendation."""        try:
             # Find recommendation
             recommendation = None
             for rec in self.recommendations:
@@ -309,16 +292,14 @@ class CacheOptimizer:
             return False
     
     async def _capture_current_state(self) -> Dict[str, Any]:
-        """Capture current optimization state for rollback."""
-        return {
+        """Capture current optimization state for rollback."""        return {
             'timestamp': datetime.now(),
             'metrics_snapshot': await self.analyze_performance(),
             'configuration': {}  # Add current configuration here
         }
     
     async def _apply_optimization_parameters(self, parameters: Dict[str, Any]) -> bool:
-        """Apply optimization parameters to cache system."""
-        try:
+        """Apply optimization parameters to cache system."""        try:
             # This would integrate with the actual cache implementation
             # For now, we just log the parameters
             self.logger.info(f"Applying optimization parameters: {parameters}")
@@ -333,8 +314,7 @@ class CacheOptimizer:
             return False
     
     async def rollback_optimization(self, recommendation_id: str) -> bool:
-        """Rollback applied optimization."""
-        try:
+        """Rollback applied optimization."""        try:
             if recommendation_id not in self.applied_optimizations:
                 self.logger.error(f"Optimization {recommendation_id} not found in applied optimizations")
                 return False
@@ -356,8 +336,7 @@ class CacheOptimizer:
             return False
     
     async def _restore_state(self, state: Dict[str, Any]) -> bool:
-        """Restore previous optimization state."""
-        try:
+        """Restore previous optimization state."""        try:
             # This would restore the actual cache configuration
             self.logger.info(f"Restoring state from {state['timestamp']}")
             return True
@@ -367,8 +346,7 @@ class CacheOptimizer:
             return False
     
     async def start_continuous_optimization(self) -> None:
-        """Start continuous optimization process."""
-        if self.analysis_task is not None:
+        """Start continuous optimization process."""        if self.analysis_task is not None:
             return
         
         async def optimization_loop():
@@ -397,8 +375,7 @@ class CacheOptimizer:
         self.logger.info("Started continuous optimization")
     
     async def stop_continuous_optimization(self) -> None:
-        """Stop continuous optimization process."""
-        if self.analysis_task:
+        """Stop continuous optimization process."""        if self.analysis_task:
             self.analysis_task.cancel()
             try:
                 await self.analysis_task
@@ -408,8 +385,7 @@ class CacheOptimizer:
             self.logger.info("Stopped continuous optimization")
     
     async def get_optimization_status(self) -> Dict[str, Any]:
-        """Get optimization status."""
-        try:
+        """Get optimization status."""        try:
             recent_metrics = {}
             for metric_type in MetricType:
                 metrics = self.metrics[metric_type]
@@ -435,19 +411,16 @@ class CacheOptimizer:
             return {}
 
 class AccessPatternTracker:
-    """Track and analyze cache access patterns."""
-    
+    """Track and analyze cache access patterns."""    
     def __init__(self):
-        """Initialize access pattern tracker."""
-        self.access_log: List[Dict[str, Any]] = []
+        """Initialize access pattern tracker."""        self.access_log: List[Dict[str, Any]] = []
         self.key_stats: Dict[str, Dict[str, Any]] = {}
         self.lock = threading.Lock()
     
     async def record_access(self, key: str, operation: str, 
                           hit: bool, response_time: float,
                           size: Optional[int] = None) -> None:
-        """Record cache access."""
-        try:
+        """Record cache access."""        try:
             access_record = {
                 'key': key,
                 'operation': operation,
@@ -485,8 +458,7 @@ class AccessPatternTracker:
             logger.error(f"Error recording access: {e}")
     
     async def analyze_patterns(self) -> Dict[str, Any]:
-        """Analyze access patterns."""
-        try:
+        """Analyze access patterns."""        try:
             with self.lock:
                 if not self.access_log:
                     return {}
@@ -521,11 +493,9 @@ class AccessPatternTracker:
             return {}
 
 class PerformanceAnalyzer:
-    """Analyze performance trends and anomalies."""
-    
+    """Analyze performance trends and anomalies."""    
     async def analyze_trends(self, metrics: Dict[MetricType, List[PerformanceMetric]]) -> Dict[str, Any]:
-        """Analyze performance trends."""
-        try:
+        """Analyze performance trends."""        try:
             trends = {}
             
             for metric_type, metric_list in metrics.items():
@@ -560,12 +530,10 @@ class PerformanceAnalyzer:
             return {}
 
 class RecommendationEngine:
-    """Generate optimization recommendations."""
-    
+    """Generate optimization recommendations."""    
     async def generate_recommendations(self, performance_analysis: Dict[str, Any],
                                      optimization_type: OptimizationType) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations."""
-        try:
+        """Generate optimization recommendations."""        try:
             recommendations = []
             
             # Analyze hit rate

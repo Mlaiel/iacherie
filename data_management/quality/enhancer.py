@@ -1,5 +1,4 @@
-"""
-Quality Enhancer - Automated Quality Enhancement Engine
+"""Quality Enhancer - Automated Quality Enhancement Engine
 ====================================================
 
 Enterprise-grade automated quality enhancement engine with AI-powered optimization,
@@ -16,7 +15,6 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: Quality analysis → Enhancement strategy → AI optimization → 
 Automated improvements → Quality verification → Adaptive learning → Continuous enhancement
 """
-
 import logging
 import asyncio
 import numpy as np
@@ -67,8 +65,7 @@ from ..models.quality_models import QualityAssessment, EnhancementJob, Enhanceme
 
 
 class EnhancementStrategy(Enum):
-    """Quality enhancement strategies"""
-    CONSERVATIVE = "conservative"
+    """Quality enhancement strategies"""    CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
     AI_GUIDED = "ai_guided"
@@ -76,8 +73,7 @@ class EnhancementStrategy(Enum):
 
 
 class EnhancementType(Enum):
-    """Types of quality enhancements"""
-    TECHNICAL = "technical"
+    """Types of quality enhancements"""    TECHNICAL = "technical"
     AESTHETIC = "aesthetic"
     SEMANTIC = "semantic"
     PERFORMANCE = "performance"
@@ -87,8 +83,7 @@ class EnhancementType(Enum):
 
 
 class EnhancementStatus(Enum):
-    """Enhancement job status"""
-    PENDING = "pending"
+    """Enhancement job status"""    PENDING = "pending"
     ANALYZING = "analyzing"
     ENHANCING = "enhancing"
     VERIFYING = "verifying"
@@ -99,8 +94,7 @@ class EnhancementStatus(Enum):
 
 @dataclass
 class EnhancementPlan:
-    """Quality enhancement plan structure"""
-    plan_id: str
+    """Quality enhancement plan structure"""    plan_id: str
     content_id: str
     content_type: str
     strategy: EnhancementStrategy
@@ -117,8 +111,7 @@ class EnhancementPlan:
 
 @dataclass
 class EnhancementOperation:
-    """Individual enhancement operation"""
-    operation_id: str
+    """Individual enhancement operation"""    operation_id: str
     operation_type: str
     parameters: Dict[str, Any]
     expected_improvement: float
@@ -129,8 +122,7 @@ class EnhancementOperation:
 
 
 class AIContentAnalyzer:
-    """AI-powered content analysis for enhancement planning"""
-    
+    """AI-powered content analysis for enhancement planning"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AIContentAnalyzer")
@@ -144,8 +136,7 @@ class AIContentAnalyzer:
         self.cache_ttl = config.get('cache_ttl', 3600)
     
     def load_ai_models(self):
-        """Load AI models for content analysis."""
-        try:
+        """Load AI models for content analysis."""        try:
             if HAS_AI_LIBS:
                 # Text analysis model
                 self.models['text_sentiment'] = pipeline(
@@ -177,8 +168,7 @@ class AIContentAnalyzer:
         content_path: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze content semantics using AI."""
-        try:
+        """Analyze content semantics using AI."""        try:
             analysis = {
                 'semantic_quality': 0.0,
                 'content_structure': {},
@@ -202,8 +192,7 @@ class AIContentAnalyzer:
             return {'error': str(e)}
     
     async def _analyze_text_semantics(self, content_path: str) -> Dict[str, Any]:
-        """Analyze text content semantics."""
-        try:
+        """Analyze text content semantics."""        try:
             # Read text content
             with open(content_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -267,8 +256,7 @@ class AIContentAnalyzer:
             return {'error': str(e)}
     
     def _calculate_readability_score(self, text: str) -> float:
-        """Calculate simplified readability score."""
-        sentences = [s for s in text.split('.') if s.strip()]
+        """Calculate simplified readability score."""        sentences = [s for s in text.split('.') if s.strip()]
         words = text.split()
         
         if not sentences or not words:
@@ -287,8 +275,7 @@ class AIContentAnalyzer:
         return readability
     
     async def _analyze_image_semantics(self, content_path: str) -> Dict[str, Any]:
-        """Analyze image content semantics."""
-        try:
+        """Analyze image content semantics."""        try:
             analysis = {
                 'semantic_quality': 0.7,
                 'content_structure': {},
@@ -344,8 +331,7 @@ class AIContentAnalyzer:
             return {'error': str(e)}
     
     async def _analyze_audio_semantics(self, content_path: str) -> Dict[str, Any]:
-        """Analyze audio content semantics."""
-        try:
+        """Analyze audio content semantics."""        try:
             analysis = {
                 'semantic_quality': 0.7,
                 'content_structure': {},
@@ -391,8 +377,7 @@ class AIContentAnalyzer:
             return {'error': str(e)}
     
     async def _analyze_video_semantics(self, content_path: str) -> Dict[str, Any]:
-        """Analyze video content semantics."""
-        # Simplified video analysis - would implement more sophisticated analysis
+        """Analyze video content semantics."""        # Simplified video analysis - would implement more sophisticated analysis
         return {
             'semantic_quality': 0.7,
             'content_structure': {'placeholder': True},
@@ -402,8 +387,7 @@ class AIContentAnalyzer:
 
 
 class AdaptiveEnhancementEngine:
-    """Adaptive enhancement engine that learns from results"""
-    
+    """Adaptive enhancement engine that learns from results"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AdaptiveEnhancementEngine")
@@ -424,8 +408,7 @@ class AdaptiveEnhancementEngine:
         processing_time: float,
         success: bool
     ):
-        """Learn from enhancement results to improve future plans."""
-        result_data = {
+        """Learn from enhancement results to improve future plans."""        result_data = {
             'content_type': enhancement_plan.content_type,
             'strategy': enhancement_plan.strategy.value,
             'operations': [op['type'] for op in enhancement_plan.enhancement_operations],
@@ -455,8 +438,7 @@ class AdaptiveEnhancementEngine:
         await self._adapt_strategies()
     
     async def _adapt_strategies(self):
-        """Adapt enhancement strategies based on historical performance."""
-        if len(self.enhancement_history) < self.min_samples:
+        """Adapt enhancement strategies based on historical performance."""        if len(self.enhancement_history) < self.min_samples:
             return
         
         # Analyze recent performance
@@ -489,8 +471,7 @@ class AdaptiveEnhancementEngine:
         content_type: str,
         current_score: float
     ) -> Dict[str, Any]:
-        """Get adaptive recommendations based on learning."""
-        recommendations = {
+        """Get adaptive recommendations based on learning."""        recommendations = {
             'preferred_strategy': EnhancementStrategy.MODERATE,
             'confidence_adjustment': 0.0,
             'operation_preferences': {},
@@ -553,13 +534,11 @@ class AdaptiveEnhancementEngine:
 
 
 class QualityEnhancer:
-    """
-    Enterprise automated quality enhancement engine.
+    """    Enterprise automated quality enhancement engine.
     
     Provides AI-powered quality analysis, adaptive enhancement planning,
     automated improvement execution, and continuous learning capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: sessionmaker,
@@ -605,8 +584,7 @@ class QualityEnhancer:
         strategy: Optional[EnhancementStrategy] = None,
         session: Optional[AsyncSession] = None
     ) -> EnhancementPlan:
-        """
-        Create comprehensive enhancement plan for content.
+        """        Create comprehensive enhancement plan for content.
         
         Args:
             content_id: Unique content identifier
@@ -619,8 +597,7 @@ class QualityEnhancer:
             
         Returns:
             EnhancementPlan: Comprehensive enhancement plan
-        """
-        try:
+        """        try:
             self.logger.info(f"Creating enhancement plan for content {content_id}")
             
             # Use provided strategy or default
@@ -705,8 +682,7 @@ class QualityEnhancer:
         output_path: str,
         session: Optional[AsyncSession] = None
     ) -> Dict[str, Any]:
-        """
-        Execute enhancement plan and improve content quality.
+        """        Execute enhancement plan and improve content quality.
         
         Args:
             plan: Enhancement plan to execute
@@ -716,8 +692,7 @@ class QualityEnhancer:
             
         Returns:
             Dict: Enhancement execution results
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Executing enhancement plan {plan.plan_id}")
@@ -879,8 +854,7 @@ class QualityEnhancer:
         adaptive_recommendations: Dict[str, Any],
         strategy: EnhancementStrategy
     ) -> List[Dict[str, Any]]:
-        """Generate list of enhancement operations based on analysis."""
-        operations = []
+        """Generate list of enhancement operations based on analysis."""        operations = []
         
         # Get quality issues from assessment
         issues = current_assessment.get('issues_found', [])
@@ -944,8 +918,7 @@ class QualityEnhancer:
         semantic_analysis: Dict[str, Any],
         intensity: float
     ) -> List[Dict[str, Any]]:
-        """Generate image-specific enhancement operations."""
-        operations = []
+        """Generate image-specific enhancement operations."""        operations = []
         
         # Brightness/contrast issues
         if any(issue.get('type') == 'brightness' for issue in issues):
@@ -1006,8 +979,7 @@ class QualityEnhancer:
         semantic_analysis: Dict[str, Any],
         intensity: float
     ) -> List[Dict[str, Any]]:
-        """Generate audio-specific enhancement operations."""
-        operations = []
+        """Generate audio-specific enhancement operations."""        operations = []
         
         # Noise reduction
         if any(issue.get('type') == 'noise' for issue in issues):
@@ -1066,8 +1038,7 @@ class QualityEnhancer:
         semantic_analysis: Dict[str, Any],
         intensity: float
     ) -> List[Dict[str, Any]]:
-        """Generate video-specific enhancement operations."""
-        operations = []
+        """Generate video-specific enhancement operations."""        operations = []
         
         # Video stabilization
         if any(issue.get('type') == 'stability' for issue in issues):
@@ -1112,8 +1083,7 @@ class QualityEnhancer:
         semantic_analysis: Dict[str, Any],
         intensity: float
     ) -> List[Dict[str, Any]]:
-        """Generate text-specific enhancement operations."""
-        operations = []
+        """Generate text-specific enhancement operations."""        operations = []
         
         # Grammar and spelling corrections
         if any(issue.get('type') in ['grammar', 'spelling'] for issue in issues):
@@ -1165,8 +1135,7 @@ class QualityEnhancer:
         output_path: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """Execute a single enhancement operation."""
-        try:
+        """Execute a single enhancement operation."""        try:
             operation_type = operation.get('type')
             parameters = operation.get('parameters', {})
             
@@ -1202,8 +1171,7 @@ class QualityEnhancer:
         input_path: str,
         output_path: str
     ) -> Dict[str, Any]:
-        """Execute image enhancement operation."""
-        try:
+        """Execute image enhancement operation."""        try:
             if not HAS_ADVANCED_IMAGE_LIBS:
                 return {'success': False, 'error': 'Image processing libraries not available'}
             
@@ -1267,8 +1235,7 @@ class QualityEnhancer:
         input_path: str,
         output_path: str
     ) -> Dict[str, Any]:
-        """Execute audio enhancement operation."""
-        try:
+        """Execute audio enhancement operation."""        try:
             if not HAS_ADVANCED_AUDIO_LIBS:
                 return {'success': False, 'error': 'Audio processing libraries not available'}
             
@@ -1349,8 +1316,7 @@ class QualityEnhancer:
         input_path: str,
         output_path: str
     ) -> Dict[str, Any]:
-        """Execute video enhancement operation."""
-        # Simplified video operations - would require more sophisticated implementation
+        """Execute video enhancement operation."""        # Simplified video operations - would require more sophisticated implementation
         try:
             # Copy file as placeholder (real implementation would use ffmpeg)
             import shutil
@@ -1374,8 +1340,7 @@ class QualityEnhancer:
         input_path: str,
         output_path: str
     ) -> Dict[str, Any]:
-        """Execute text enhancement operation."""
-        try:
+        """Execute text enhancement operation."""        try:
             # Read text content
             with open(input_path, 'r', encoding='utf-8') as f:
                 content = f.read()
@@ -1444,8 +1409,7 @@ class QualityEnhancer:
         current_score: float,
         target_score: float
     ) -> float:
-        """Estimate total quality improvement from operations."""
-        total_improvement = 0.0
+        """Estimate total quality improvement from operations."""        total_improvement = 0.0
         
         for operation in operations:
             expected_improvement = operation.get('expected_improvement', 0.05)
@@ -1464,8 +1428,7 @@ class QualityEnhancer:
         operations: List[Dict[str, Any]],
         content_type: str
     ) -> float:
-        """Estimate total processing time for operations."""
-        # Base processing times by content type (seconds)
+        """Estimate total processing time for operations."""        # Base processing times by content type (seconds)
         base_times = {
             'image': 2.0,
             'audio': 5.0,
@@ -1490,8 +1453,7 @@ class QualityEnhancer:
         adaptive_recommendations: Dict[str, Any],
         semantic_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate confidence score for enhancement plan."""
-        confidence_factors = []
+        """Calculate confidence score for enhancement plan."""        confidence_factors = []
         
         # Operation confidence
         if operations:
@@ -1514,8 +1476,7 @@ class QualityEnhancer:
         return 0.5  # Default confidence
     
     def _calculate_priority(self, current_score: float, target_score: float) -> int:
-        """Calculate enhancement priority (1-10, higher is more urgent)."""
-        improvement_needed = target_score - current_score
+        """Calculate enhancement priority (1-10, higher is more urgent)."""        improvement_needed = target_score - current_score
         
         if current_score < 0.4:
             return 9  # Critical quality
@@ -1531,8 +1492,7 @@ class QualityEnhancer:
         execution_context: Dict[str, Any],
         success: bool
     ) -> List[str]:
-        """Generate recommendations based on enhancement results."""
-        recommendations = []
+        """Generate recommendations based on enhancement results."""        recommendations = []
         
         if success:
             recommendations.append("Enhancement completed successfully")
@@ -1557,8 +1517,7 @@ class QualityEnhancer:
         return recommendations
     
     async def get_enhancement_statistics(self) -> Dict[str, Any]:
-        """Get enhancement engine statistics."""
-        stats = self.stats.copy()
+        """Get enhancement engine statistics."""        stats = self.stats.copy()
         
         if stats['successful_enhancements'] > 0:
             stats['success_rate'] = stats['successful_enhancements'] / stats['total_enhancements'] * 100
@@ -1579,8 +1538,7 @@ class QualityEnhancer:
         content_type: str,
         current_score: float
     ) -> Dict[str, Any]:
-        """Get enhancement recommendations for specific content."""
-        adaptive_recs = await self.adaptive_engine.get_adaptive_recommendations(
+        """Get enhancement recommendations for specific content."""        adaptive_recs = await self.adaptive_engine.get_adaptive_recommendations(
             content_type, current_score
         )
         
@@ -1604,8 +1562,7 @@ class QualityEnhancer:
         }
     
     async def cleanup_temporary_files(self, max_age_hours: int = 24):
-        """Clean up temporary enhancement files."""
-        try:
+        """Clean up temporary enhancement files."""        try:
             temp_dir = self.config.get('temp_directory', '/tmp')
             cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
             
@@ -1623,8 +1580,7 @@ class QualityEnhancer:
             self.logger.error(f"Error cleaning temporary files: {str(e)}")
     
     async def shutdown(self):
-        """Shutdown the enhancement engine."""
-        self.logger.info("Shutting down QualityEnhancer")
+        """Shutdown the enhancement engine."""        self.logger.info("Shutting down QualityEnhancer")
         
         await self.cleanup_temporary_files()
         self.executor.shutdown(wait=True)

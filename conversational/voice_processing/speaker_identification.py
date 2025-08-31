@@ -1,5 +1,4 @@
-"""
-Speaker Identification Module - IA Influencer Agent
+"""Speaker Identification Module - IA Influencer Agent
 
 Advanced speaker identification, verification, and voice biometrics system
 for voice authentication, content protection, and speaker analytics.
@@ -16,7 +15,6 @@ Features:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 import numpy as np
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SpeakerEmbedding:
-    """Speaker voice embedding representation"""
-    speaker_id: str
+    """Speaker voice embedding representation"""    speaker_id: str
     embedding_vector: np.ndarray
     confidence_score: float
     extraction_timestamp: str
@@ -44,8 +41,7 @@ class SpeakerEmbedding:
 
 @dataclass
 class IdentificationResult:
-    """Speaker identification result"""
-    identified_speaker: Optional[SpeakerProfile]
+    """Speaker identification result"""    identified_speaker: Optional[SpeakerProfile]
     confidence_score: float
     similarity_scores: Dict[str, float]
     verification_status: str  # verified, rejected, unknown
@@ -54,8 +50,7 @@ class IdentificationResult:
 
 @dataclass
 class VerificationResult:
-    """Speaker verification result"""
-    is_verified: bool
+    """Speaker verification result"""    is_verified: bool
     confidence_score: float
     threshold_used: float
     decision_score: float
@@ -63,8 +58,7 @@ class VerificationResult:
     anti_spoofing_score: float
 
 class SpeakerIdentifier:
-    """
-    Advanced speaker identification and verification system
+    """    Advanced speaker identification and verification system
     
     Capabilities:
     - Real-time speaker identification from voice samples
@@ -73,11 +67,9 @@ class SpeakerIdentifier:
     - Multi-speaker detection and clustering
     - Anti-spoofing and liveness detection
     - Speaker analytics and profiling
-    """
-    
+    """    
     def __init__(self, config: SpeakerConfig):
-        """Initialize speaker identifier"""
-        self.config = config
+        """Initialize speaker identifier"""        self.config = config
         self.is_initialized = False
         
         # Models and processors
@@ -107,8 +99,7 @@ class SpeakerIdentifier:
         logger.info("SpeakerIdentifier initialized")
     
     async def initialize(self) -> bool:
-        """Initialize speaker identification components"""
-        try:
+        """Initialize speaker identification components"""        try:
             logger.info("Initializing speaker identification system...")
             
             # Initialize identification model
@@ -135,8 +126,7 @@ class SpeakerIdentifier:
             return False
     
     async def _initialize_identification_model(self) -> None:
-        """Initialize speaker identification model"""
-        try:
+        """Initialize speaker identification model"""        try:
             # Mock implementation - in real system would load actual model
             self.identification_model = {
                 "provider": self.config.identification_model.provider.value,
@@ -157,8 +147,7 @@ class SpeakerIdentifier:
             raise
     
     async def _initialize_embedding_extractor(self) -> None:
-        """Initialize voice embedding extractor"""
-        try:
+        """Initialize voice embedding extractor"""        try:
             # Mock implementation
             self.embedding_extractor = {
                 "frame_length": self.config.frame_length,
@@ -173,8 +162,7 @@ class SpeakerIdentifier:
             raise
     
     async def _initialize_anti_spoofing_detector(self) -> None:
-        """Initialize anti-spoofing detection system"""
-        try:
+        """Initialize anti-spoofing detection system"""        try:
             # Mock implementation
             self.anti_spoofing_detector = {
                 "algorithms": ["spectral_analysis", "liveness_detection", "replay_detection"],
@@ -186,8 +174,7 @@ class SpeakerIdentifier:
             logger.warning(f"Failed to initialize anti-spoofing detector: {e}")
     
     async def _load_enrolled_speakers(self) -> None:
-        """Load enrolled speaker profiles"""
-        try:
+        """Load enrolled speaker profiles"""        try:
             # Mock enrolled speakers for demonstration
             demo_speakers = [
                 SpeakerProfile(
@@ -221,8 +208,7 @@ class SpeakerIdentifier:
             logger.error(f"Failed to load enrolled speakers: {e}")
     
     async def _warm_up_models(self) -> None:
-        """Warm up identification models"""
-        try:
+        """Warm up identification models"""        try:
             # Generate dummy audio for warm-up
             dummy_audio = np.random.randn(16000).astype(np.float32)  # 1 second at 16kHz
             
@@ -235,16 +221,14 @@ class SpeakerIdentifier:
             logger.warning(f"Model warm-up failed: {e}")
     
     async def warm_up(self, audio_data: np.ndarray) -> None:
-        """Public warm-up method"""
-        await self._warm_up_models()
+        """Public warm-up method"""        await self._warm_up_models()
     
     async def identify_speaker(self,
                              audio_data: np.ndarray,
                              sample_rate: int = 16000,
                              reference_profiles: Optional[List[str]] = None,
                              confidence_threshold: float = None) -> IdentificationResult:
-        """
-        Identify speaker from voice sample
+        """        Identify speaker from voice sample
         
         Args:
             audio_data: Audio samples for identification
@@ -254,8 +238,7 @@ class SpeakerIdentifier:
             
         Returns:
             IdentificationResult with speaker information
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RuntimeError("Speaker identifier not initialized")
         
         start_time = time.time()
@@ -316,8 +299,7 @@ class SpeakerIdentifier:
                            claimed_speaker_id: str,
                            sample_rate: int = 16000,
                            threshold: float = None) -> VerificationResult:
-        """
-        Verify if audio matches claimed speaker identity
+        """        Verify if audio matches claimed speaker identity
         
         Args:
             audio_data: Audio samples for verification
@@ -327,8 +309,7 @@ class SpeakerIdentifier:
             
         Returns:
             VerificationResult with verification decision
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         threshold = threshold or self.config.verification_threshold
         
         try:
@@ -391,8 +372,7 @@ class SpeakerIdentifier:
                            audio_samples: List[np.ndarray],
                            speaker_info: Dict[str, Any],
                            sample_rate: int = 16000) -> SpeakerProfile:
-        """
-        Enroll a new speaker with multiple audio samples
+        """        Enroll a new speaker with multiple audio samples
         
         Args:
             speaker_id: Unique speaker identifier
@@ -402,8 +382,7 @@ class SpeakerIdentifier:
             
         Returns:
             SpeakerProfile of enrolled speaker
-        """
-        try:
+        """        try:
             logger.info(f"Enrolling speaker: {speaker_id}")
             
             if speaker_id in self.enrolled_speakers:
@@ -450,8 +429,7 @@ class SpeakerIdentifier:
                                         audio_data: np.ndarray,
                                         sample_rate: int,
                                         is_warmup: bool = False) -> SpeakerEmbedding:
-        """Extract speaker embedding from audio"""
-        try:
+        """Extract speaker embedding from audio"""        try:
             # Preprocess audio
             audio_data = self._preprocess_audio(audio_data, sample_rate)
             
@@ -480,8 +458,7 @@ class SpeakerIdentifier:
             raise
     
     def _generate_mock_embedding(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Generate mock speaker embedding for demonstration"""
-        # Use simple spectral features as mock embedding
+        """Generate mock speaker embedding for demonstration"""        # Use simple spectral features as mock embedding
         # In real implementation would use trained neural network
         
         # Calculate spectral features
@@ -509,8 +486,7 @@ class SpeakerIdentifier:
     async def _compare_embeddings(self,
                                 test_embedding: SpeakerEmbedding,
                                 reference_speakers: Optional[List[str]]) -> Dict[str, float]:
-        """Compare test embedding against enrolled speakers"""
-        try:
+        """Compare test embedding against enrolled speakers"""        try:
             similarity_scores = {}
             
             # Determine which speakers to compare against
@@ -544,8 +520,7 @@ class SpeakerIdentifier:
             return {}
     
     def _calculate_embedding_similarity(self, embedding1: np.ndarray, embedding2: np.ndarray) -> float:
-        """Calculate similarity between two embeddings"""
-        try:
+        """Calculate similarity between two embeddings"""        try:
             # Cosine similarity
             dot_product = np.dot(embedding1, embedding2)
             norm1 = np.linalg.norm(embedding1)
@@ -566,8 +541,7 @@ class SpeakerIdentifier:
             return 0.0
     
     async def _detect_spoofing(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Detect potential voice spoofing"""
-        try:
+        """Detect potential voice spoofing"""        try:
             # Mock anti-spoofing detection
             # In real implementation would use sophisticated spoofing detection
             
@@ -600,8 +574,7 @@ class SpeakerIdentifier:
             return 0.5  # Neutral score
     
     def _preprocess_audio(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Preprocess audio for speaker identification"""
-        # Ensure minimum duration
+        """Preprocess audio for speaker identification"""        # Ensure minimum duration
         min_samples = int(self.config.min_audio_duration * sample_rate)
         if len(audio_data) < min_samples:
             # Pad with zeros
@@ -619,8 +592,7 @@ class SpeakerIdentifier:
         return audio_data
     
     def _validate_audio_input(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Validate audio input"""
-        if not isinstance(audio_data, np.ndarray):
+        """Validate audio input"""        if not isinstance(audio_data, np.ndarray):
             raise ValueError("Audio data must be numpy array")
         
         if len(audio_data) == 0:
@@ -637,8 +609,7 @@ class SpeakerIdentifier:
         return audio_data.astype(np.float32)
     
     def _calculate_embedding_quality(self, audio_data: np.ndarray, embedding: np.ndarray) -> float:
-        """Calculate quality score for embedding"""
-        try:
+        """Calculate quality score for embedding"""        try:
             # Mock quality calculation
             # In real implementation would use sophisticated quality metrics
             
@@ -661,8 +632,7 @@ class SpeakerIdentifier:
     async def _analyze_speaker_characteristics(self,
                                              audio_data: np.ndarray,
                                              sample_rate: int) -> Dict[str, float]:
-        """Analyze speaker voice characteristics"""
-        try:
+        """Analyze speaker voice characteristics"""        try:
             characteristics = {}
             
             # Fundamental frequency analysis
@@ -706,8 +676,7 @@ class SpeakerIdentifier:
             return {}
     
     async def _generate_mock_reference_embedding(self, speaker_id: str) -> SpeakerEmbedding:
-        """Generate mock reference embedding for enrolled speaker"""
-        # Generate consistent embedding based on speaker ID
+        """Generate mock reference embedding for enrolled speaker"""        # Generate consistent embedding based on speaker ID
         np.random.seed(hash(speaker_id) % 2**32)
         embedding_vector = np.random.randn(self.config.embedding_dimension).astype(np.float32)
         
@@ -721,8 +690,7 @@ class SpeakerIdentifier:
         )
     
     def _update_identification_stats(self, result: IdentificationResult) -> None:
-        """Update identification statistics"""
-        try:
+        """Update identification statistics"""        try:
             self.identification_stats["total_identifications"] += 1
             
             if result.verification_status == "verified":
@@ -738,8 +706,7 @@ class SpeakerIdentifier:
             logger.warning(f"Failed to update identification stats: {e}")
     
     def _update_verification_stats(self, result: VerificationResult) -> None:
-        """Update verification statistics"""
-        try:
+        """Update verification statistics"""        try:
             self.identification_stats["verification_attempts"] += 1
             
             if result.is_verified:
@@ -749,8 +716,7 @@ class SpeakerIdentifier:
             logger.warning(f"Failed to update verification stats: {e}")
     
     def get_enrolled_speakers(self) -> List[Dict[str, Any]]:
-        """Get list of enrolled speakers"""
-        return [
+        """Get list of enrolled speakers"""        return [
             {
                 "speaker_id": profile.speaker_id,
                 "name": profile.name,
@@ -764,15 +730,13 @@ class SpeakerIdentifier:
         ]
     
     def get_identification_statistics(self) -> Dict[str, Any]:
-        """Get identification performance statistics"""
-        stats = self.identification_stats.copy()
+        """Get identification performance statistics"""        stats = self.identification_stats.copy()
         stats["enrolled_speakers"] = len(self.enrolled_speakers)
         stats["total_embeddings"] = sum(len(embeddings) for embeddings in self.speaker_embeddings.values())
         return stats
     
     async def shutdown(self) -> None:
-        """Shutdown speaker identifier"""
-        try:
+        """Shutdown speaker identifier"""        try:
             logger.info("Shutting down speaker identifier...")
             
             # Clear caches and data
@@ -789,37 +753,31 @@ class SpeakerIdentifier:
 
 # Support classes
 class VoiceBiometrics:
-    """Voice biometric analysis utilities"""
-    def __init__(self, identifier: SpeakerIdentifier):
+    """Voice biometric analysis utilities"""    def __init__(self, identifier: SpeakerIdentifier):
         self.identifier = identifier
     
     async def extract_biometric_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract biometric features from voice"""
-        embedding = await self.identifier._extract_embedding_internal(audio_data, sample_rate)
+        """Extract biometric features from voice"""        embedding = await self.identifier._extract_embedding_internal(audio_data, sample_rate)
         characteristics = await self.identifier._analyze_speaker_characteristics(audio_data, sample_rate)
         return characteristics
 
 class SpeakerVerifier:
-    """Speaker verification utilities"""
-    def __init__(self, identifier: SpeakerIdentifier):
+    """Speaker verification utilities"""    def __init__(self, identifier: SpeakerIdentifier):
         self.identifier = identifier
     
     async def batch_verify(self, audio_samples: List[np.ndarray], speaker_id: str) -> List[VerificationResult]:
-        """Verify multiple audio samples"""
-        results = []
+        """Verify multiple audio samples"""        results = []
         for audio in audio_samples:
             result = await self.identifier.verify_speaker(audio, speaker_id)
             results.append(result)
         return results
 
 class VoiceSignatureExtractor:
-    """Voice signature extraction utilities"""
-    def __init__(self, identifier: SpeakerIdentifier):
+    """Voice signature extraction utilities"""    def __init__(self, identifier: SpeakerIdentifier):
         self.identifier = identifier
     
     async def extract_signature(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract unique voice signature"""
-        embedding = await self.identifier._extract_embedding_internal(audio_data, sample_rate)
+        """Extract unique voice signature"""        embedding = await self.identifier._extract_embedding_internal(audio_data, sample_rate)
         return {
             "embedding": embedding.embedding_vector,
             "confidence": embedding.confidence_score,
@@ -827,11 +785,9 @@ class VoiceSignatureExtractor:
         }
 
 class IdentityValidator:
-    """Identity validation utilities"""
-    def __init__(self, identifier: SpeakerIdentifier):
+    """Identity validation utilities"""    def __init__(self, identifier: SpeakerIdentifier):
         self.identifier = identifier
     
     async def validate_identity(self, audio_data: np.ndarray, claimed_identity: str) -> bool:
-        """Validate claimed identity against voice"""
-        result = await self.identifier.verify_speaker(audio_data, claimed_identity)
+        """Validate claimed identity against voice"""        result = await self.identifier.verify_speaker(audio_data, claimed_identity)
         return result.is_verified and result.anti_spoofing_score > 0.7

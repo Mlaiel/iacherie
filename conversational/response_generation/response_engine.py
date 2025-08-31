@@ -1,5 +1,4 @@
-"""
-Response Engine - Core Response Generation System
+"""Response Engine - Core Response Generation System
 
 Advanced enterprise-grade response generation engine for IA Influencer Agent
 with multi-modal support, contextual intelligence, and business optimization.
@@ -7,7 +6,6 @@ with multi-modal support, contextual intelligence, and business optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -28,8 +26,7 @@ from ...core.cache import CacheManager
 
 
 class ResponseType(Enum):
-    """Response type enumeration for classification"""
-    TEXT = "text"
+    """Response type enumeration for classification"""    TEXT = "text"
     AUDIO = "audio"
     VISUAL = "visual"
     MULTIMODAL = "multimodal"
@@ -40,8 +37,7 @@ class ResponseType(Enum):
 
 
 class ResponsePriority(Enum):
-    """Response priority levels"""
-    CRITICAL = "critical"
+    """Response priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -49,8 +45,7 @@ class ResponsePriority(Enum):
 
 
 class ResponseContext(BaseModel):
-    """Response context data structure"""
-    user_id: str
+    """Response context data structure"""    user_id: str
     session_id: str
     conversation_id: str
     user_type: str = "content_creator"
@@ -72,8 +67,7 @@ class ResponseContext(BaseModel):
 
 
 class ResponseRequest(BaseModel):
-    """Response generation request structure"""
-    context: ResponseContext
+    """Response generation request structure"""    context: ResponseContext
     input_text: str = Field(..., min_length=1, max_length=10000)
     response_type: ResponseType = ResponseType.TEXT
     target_length: Optional[int] = None
@@ -84,8 +78,7 @@ class ResponseRequest(BaseModel):
 
 
 class GeneratedResponse(BaseModel):
-    """Generated response data structure"""
-    response_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Generated response data structure"""    response_id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     text: str
     response_type: ResponseType
     confidence_score: float = Field(..., ge=0.0, le=1.0)
@@ -101,8 +94,7 @@ class GeneratedResponse(BaseModel):
 
 
 class ResponseValidator:
-    """Advanced response validation and quality assurance"""
-    
+    """Advanced response validation and quality assurance"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.security_manager = SecurityManager()
@@ -114,13 +106,11 @@ class ResponseValidator:
         context: ResponseContext,
         response_type: ResponseType
     ) -> Tuple[bool, Dict[str, Any]]:
-        """
-        Comprehensive response validation
+        """        Comprehensive response validation
         
         Returns:
             Tuple[bool, Dict]: (is_valid, validation_details)
-        """
-        try:
+        """        try:
             validation_results = {
                 "security_check": await self._security_validation(response),
                 "content_quality": await self._content_quality_check(response, context),
@@ -147,16 +137,14 @@ class ResponseValidator:
             return False, {"error": str(e)}
     
     async def _security_validation(self, response: str) -> float:
-        """Security validation for response content"""
-        try:
+        """Security validation for response content"""        try:
             security_checks = await self.security_manager.validate_content(response)
             return security_checks.get("safety_score", 0.0)
         except Exception:
             return 0.0
     
     async def _content_quality_check(self, response: str, context: ResponseContext) -> float:
-        """Content quality assessment"""
-        quality_factors = {
+        """Content quality assessment"""        quality_factors = {
             "coherence": self._assess_coherence(response),
             "relevance": self._assess_relevance(response, context),
             "clarity": self._assess_clarity(response),
@@ -165,8 +153,7 @@ class ResponseValidator:
         return sum(quality_factors.values()) / len(quality_factors)
     
     async def _business_alignment_check(self, response: str, context: ResponseContext) -> float:
-        """Business logic alignment validation"""
-        # Check alignment with content creator workflow
+        """Business logic alignment validation"""        # Check alignment with content creator workflow
         business_keywords = {
             "monetization": ["revenue", "income", "monetize", "earnings"],
             "protection": ["protect", "copyright", "rights", "security"],
@@ -185,8 +172,7 @@ class ResponseValidator:
         return alignment_score
     
     async def _personalization_validation(self, response: str, context: ResponseContext) -> float:
-        """Personalization fit assessment"""
-        profile = context.personalization_profile
+        """Personalization fit assessment"""        profile = context.personalization_profile
         if not profile:
             return 0.5  # Neutral score if no profile
         
@@ -200,8 +186,7 @@ class ResponseValidator:
         return sum(personalization_factors.values()) / len(personalization_factors)
     
     def _length_validation(self, response: str, response_type: ResponseType) -> float:
-        """Response length validation based on type"""
-        length = len(response)
+        """Response length validation based on type"""        length = len(response)
         
         optimal_ranges = {
             ResponseType.TEXT: (50, 500),
@@ -221,15 +206,13 @@ class ResponseValidator:
             return max(0.3, max_len / length)
     
     async def _language_validation(self, response: str, language: str) -> float:
-        """Language quality and consistency validation"""
-        # Simplified language validation - in production, use proper NLP tools
+        """Language quality and consistency validation"""        # Simplified language validation - in production, use proper NLP tools
         if language == "en":
             return 1.0 if response.isascii() else 0.8
         return 0.9  # Assume good quality for other languages
     
     def _assess_coherence(self, response: str) -> float:
-        """Assess response coherence"""
-        sentences = response.split('.')
+        """Assess response coherence"""        sentences = response.split('.')
         if len(sentences) < 2:
             return 0.8
         
@@ -242,8 +225,7 @@ class ResponseValidator:
         return max(0.0, coherence_score)
     
     def _assess_relevance(self, response: str, context: ResponseContext) -> float:
-        """Assess response relevance to context"""
-        if not context.current_intent:
+        """Assess response relevance to context"""        if not context.current_intent:
             return 0.5
         
         intent_keywords = {
@@ -263,8 +245,7 @@ class ResponseValidator:
         return min(matches / len(relevant_keywords), 1.0)
     
     def _assess_clarity(self, response: str) -> float:
-        """Assess response clarity"""
-        # Simple clarity metrics
+        """Assess response clarity"""        # Simple clarity metrics
         avg_sentence_length = len(response.split()) / max(len(response.split('.')), 1)
         
         if 10 <= avg_sentence_length <= 25:
@@ -275,16 +256,14 @@ class ResponseValidator:
             return max(0.4, 25 / avg_sentence_length)
     
     def _assess_completeness(self, response: str, context: ResponseContext) -> float:
-        """Assess response completeness"""
-        # Check if response addresses the main points
+        """Assess response completeness"""        # Check if response addresses the main points
         if len(response.split()) < 10:
             return 0.5
         
         return 0.9 if len(response.split()) >= 20 else 0.7
     
     def _assess_tone_match(self, response: str, preferred_tone: str) -> float:
-        """Assess tone matching with user preferences"""
-        tone_indicators = {
+        """Assess tone matching with user preferences"""        tone_indicators = {
             "professional": ["professional", "business", "formal", "enterprise"],
             "casual": ["casual", "friendly", "relaxed", "informal"],
             "technical": ["technical", "advanced", "detailed", "specific"],
@@ -298,8 +277,7 @@ class ResponseValidator:
         return min(matches / max(len(indicators), 1), 1.0) if indicators else 0.5
     
     def _assess_complexity_match(self, response: str, complexity_level: str) -> float:
-        """Assess complexity level matching"""
-        word_count = len(response.split())
+        """Assess complexity level matching"""        word_count = len(response.split())
         
         complexity_ranges = {
             "simple": (10, 50),
@@ -318,8 +296,7 @@ class ResponseValidator:
             return max(0.4, max_words / word_count)
     
     def _assess_format_preference(self, response: str, format_preference: str) -> float:
-        """Assess format preference matching"""
-        format_characteristics = {
+        """Assess format preference matching"""        format_characteristics = {
             "bullet_points": ["•", "-", "*", "1.", "2."],
             "paragraphs": [". ", "\n\n"],
             "detailed": ["specifically", "detailed", "comprehensive"],
@@ -332,8 +309,7 @@ class ResponseValidator:
         return min(matches / max(len(characteristics), 1), 1.0) if characteristics else 0.7
     
     async def _generate_improvement_recommendations(self, validation_results: Dict[str, float]) -> List[str]:
-        """Generate improvement recommendations based on validation results"""
-        recommendations = []
+        """Generate improvement recommendations based on validation results"""        recommendations = []
         
         for aspect, score in validation_results.items():
             if score < 0.6:
@@ -354,8 +330,7 @@ class ResponseValidator:
 
 
 class ResponseOptimizer:
-    """Advanced response optimization engine"""
-    
+    """Advanced response optimization engine"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.cache = CacheManager()
@@ -367,8 +342,7 @@ class ResponseOptimizer:
         context: ResponseContext,
         optimization_goals: Dict[str, float]
     ) -> str:
-        """
-        Optimize response based on goals and context
+        """        Optimize response based on goals and context
         
         Args:
             response: Original response text
@@ -377,8 +351,7 @@ class ResponseOptimizer:
             
         Returns:
             Optimized response text
-        """
-        try:
+        """        try:
             optimization_steps = [
                 self._optimize_for_personalization,
                 self._optimize_for_business_alignment,
@@ -409,8 +382,7 @@ class ResponseOptimizer:
         context: ResponseContext,
         goals: Dict[str, float]
     ) -> str:
-        """Optimize response for personalization"""
-        profile = context.personalization_profile
+        """Optimize response for personalization"""        profile = context.personalization_profile
         if not profile:
             return response
         
@@ -437,8 +409,7 @@ class ResponseOptimizer:
         context: ResponseContext,
         goals: Dict[str, float]
     ) -> str:
-        """Optimize response for business alignment"""
-        if not context.business_context:
+        """Optimize response for business alignment"""        if not context.business_context:
             return response
         
         business_enhancements = {
@@ -452,8 +423,7 @@ class ResponseOptimizer:
         return response + enhancement
     
     async def _optimize_for_clarity(self, response: str, context: ResponseContext, goals: Dict[str, float]) -> str:
-        """Optimize response for clarity"""
-        # Simplify complex sentences
+        """Optimize response for clarity"""        # Simplify complex sentences
         sentences = response.split('.')
         clear_sentences = []
         
@@ -472,8 +442,7 @@ class ResponseOptimizer:
         return ' '.join(clear_sentences).replace('..', '.')
     
     async def _optimize_for_engagement(self, response: str, context: ResponseContext, goals: Dict[str, float]) -> str:
-        """Optimize response for engagement"""
-        engagement_phrases = [
+        """Optimize response for engagement"""        engagement_phrases = [
             "Here's what I recommend:",
             "Let me help you with that:",
             "This is particularly important for your content:",
@@ -489,8 +458,7 @@ class ResponseOptimizer:
         return response
     
     async def _optimize_for_length(self, response: str, context: ResponseContext, goals: Dict[str, float]) -> str:
-        """Optimize response length"""
-        target_length = goals.get("target_length", 200)
+        """Optimize response length"""        target_length = goals.get("target_length", 200)
         current_length = len(response)
         
         if current_length > target_length * 1.5:
@@ -515,8 +483,7 @@ class ResponseOptimizer:
         return response
     
     def _apply_casual_tone(self, response: str) -> str:
-        """Apply casual tone modifications"""
-        casual_replacements = {
+        """Apply casual tone modifications"""        casual_replacements = {
             "You should": "You might want to",
             "It is recommended": "I'd suggest",
             "Furthermore": "Also",
@@ -531,8 +498,7 @@ class ResponseOptimizer:
         return modified
     
     def _apply_technical_tone(self, response: str) -> str:
-        """Apply technical tone modifications"""
-        technical_enhancements = {
+        """Apply technical tone modifications"""        technical_enhancements = {
             "use": "utilize",
             "help": "facilitate",
             "make": "generate",
@@ -548,8 +514,7 @@ class ResponseOptimizer:
 
 
 class ResponseEngine:
-    """Core response generation engine"""
-    
+    """Core response generation engine"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.validator = ResponseValidator()
@@ -559,16 +524,14 @@ class ResponseEngine:
         self.performance_tracker = PerformanceTracker()
     
     async def generate_response(self, request: ResponseRequest) -> GeneratedResponse:
-        """
-        Generate optimized response based on request
+        """        Generate optimized response based on request
         
         Args:
             request: Response generation request
             
         Returns:
             Generated response with metadata
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Check cache first
@@ -640,8 +603,7 @@ class ResponseEngine:
             raise ResponseGenerationError(f"Failed to generate response: {str(e)}")
     
     async def _generate_base_response(self, request: ResponseRequest) -> str:
-        """Generate base response using multiple strategies"""
-        strategies = [
+        """Generate base response using multiple strategies"""        strategies = [
             self._neural_generation_strategy,
             self._template_based_strategy,
             self._rule_based_strategy
@@ -661,8 +623,7 @@ class ResponseEngine:
         return await self._fallback_response(request)
     
     async def _neural_generation_strategy(self, request: ResponseRequest) -> str:
-        """Neural network-based response generation"""
-        # Placeholder for neural generation - would integrate with actual AI models
+        """Neural network-based response generation"""        # Placeholder for neural generation - would integrate with actual AI models
         prompt = self._construct_neural_prompt(request)
         
         # Simulate neural generation (replace with actual model)
@@ -687,8 +648,7 @@ class ResponseEngine:
             return f"I understand you're looking for guidance with your {context.content_format or 'content'} creation. As your AI assistant, I can help you optimize workflows, enhance protection, improve monetization, and facilitate collaborations. What specific area would you like to focus on?"
     
     async def _template_based_strategy(self, request: ResponseRequest) -> str:
-        """Template-based response generation"""
-        templates = {
+        """Template-based response generation"""        templates = {
             "help_request": "I'm here to assist you with {topic}. Based on your {user_type} profile, I recommend {recommendation}. Would you like specific guidance on {area}?",
             "information_request": "Here's what you need to know about {topic}: {information}. This is particularly relevant for {user_type}s working with {content_format}.",
             "monetization_inquiry": "For monetization optimization, I suggest focusing on {strategy}. This can increase your revenue by {benefit}. Let me walk you through the process.",
@@ -703,8 +663,7 @@ class ResponseEngine:
         return self._fill_template(template, request)
     
     async def _rule_based_strategy(self, request: ResponseRequest) -> str:
-        """Rule-based response generation"""
-        input_lower = request.input_text.lower()
+        """Rule-based response generation"""        input_lower = request.input_text.lower()
         context = request.context
         
         # Business logic rules
@@ -720,12 +679,10 @@ class ResponseEngine:
         return "I'm ready to help you with your content creation journey. Please let me know what specific area you'd like assistance with."
     
     async def _fallback_response(self, request: ResponseRequest) -> str:
-        """Fallback response when other strategies fail"""
-        return f"I'm here to help you as a {request.context.user_type.replace('_', ' ')}. While I process your request, please know that I can assist with content creation, protection, monetization, and collaboration strategies. How can I best support your goals today?"
+        """Fallback response when other strategies fail"""        return f"I'm here to help you as a {request.context.user_type.replace('_', ' ')}. While I process your request, please know that I can assist with content creation, protection, monetization, and collaboration strategies. How can I best support your goals today?"
     
     def _construct_neural_prompt(self, request: ResponseRequest) -> str:
-        """Construct prompt for neural generation"""
-        context = request.context
+        """Construct prompt for neural generation"""        context = request.context
         prompt_parts = [
             f"You are an AI assistant for {context.user_type.replace('_', ' ')}s.",
             f"User input: {request.input_text}",
@@ -737,8 +694,7 @@ class ResponseEngine:
         return " ".join(prompt_parts)
     
     def _select_template(self, request: ResponseRequest) -> str:
-        """Select appropriate template based on request analysis"""
-        input_lower = request.input_text.lower()
+        """Select appropriate template based on request analysis"""        input_lower = request.input_text.lower()
         
         if any(word in input_lower for word in ["help", "assist", "guide"]):
             return "help_request"
@@ -752,8 +708,7 @@ class ResponseEngine:
             return "help_request"
     
     def _fill_template(self, template: str, request: ResponseRequest) -> str:
-        """Fill template with contextual information"""
-        context = request.context
+        """Fill template with contextual information"""        context = request.context
         
         replacements = {
             "{topic}": self._extract_topic(request.input_text),
@@ -775,8 +730,7 @@ class ResponseEngine:
         return filled_template
     
     def _extract_topic(self, input_text: str) -> str:
-        """Extract main topic from input text"""
-        topics = {
+        """Extract main topic from input text"""        topics = {
             "monetization": ["money", "revenue", "monetize", "earn", "income"],
             "protection": ["protect", "copyright", "secure", "safety", "rights"],
             "collaboration": ["collaborate", "partner", "team", "work together"],
@@ -792,8 +746,7 @@ class ResponseEngine:
         return "content optimization"
     
     def _generate_recommendation(self, context: ResponseContext) -> str:
-        """Generate context-specific recommendation"""
-        recommendations = {
+        """Generate context-specific recommendation"""        recommendations = {
             "musician": "focusing on audio quality optimization and multi-platform distribution",
             "influencer": "enhancing content engagement and brand collaboration opportunities",
             "photographer": "protecting image rights and optimizing visual content monetization",
@@ -804,8 +757,7 @@ class ResponseEngine:
         return recommendations.get(context.user_type, "optimizing your content workflow and protection strategies")
     
     def _suggest_focus_area(self, context: ResponseContext) -> str:
-        """Suggest focus area based on context"""
-        if context.business_context:
+        """Suggest focus area based on context"""        if context.business_context:
             return context.business_context
         elif context.content_format:
             return f"{context.content_format} optimization"
@@ -813,8 +765,7 @@ class ResponseEngine:
             return "workflow optimization"
     
     def _suggest_monetization_strategy(self, context: ResponseContext) -> str:
-        """Suggest monetization strategy based on user type"""
-        strategies = {
+        """Suggest monetization strategy based on user type"""        strategies = {
             "musician": "streaming optimization, licensing, and live performance promotion",
             "influencer": "brand partnerships, sponsored content, and affiliate marketing",
             "photographer": "stock licensing, client acquisition, and print sales",
@@ -829,8 +780,7 @@ class ResponseEngine:
         request: ResponseRequest, 
         validation_details: Dict[str, Any]
     ) -> str:
-        """Regenerate response with improvements based on validation feedback"""
-        improvements = validation_details.get("recommendations", [])
+        """Regenerate response with improvements based on validation feedback"""        improvements = validation_details.get("recommendations", [])
         
         # Apply specific improvements
         improved_request = request.copy(deep=True)
@@ -849,8 +799,7 @@ class ResponseEngine:
         return await self._generate_base_response(improved_request)
     
     def _extract_optimization_goals(self, request: ResponseRequest) -> Dict[str, float]:
-        """Extract optimization goals from request"""
-        goals = {
+        """Extract optimization goals from request"""        goals = {
             "personalization": 0.8,
             "business_alignment": 0.7,
             "clarity": 0.9,
@@ -866,8 +815,7 @@ class ResponseEngine:
         return goals
     
     async def _generate_follow_up_actions(self, context: ResponseContext) -> List[Dict[str, Any]]:
-        """Generate relevant follow-up actions"""
-        actions = []
+        """Generate relevant follow-up actions"""        actions = []
         
         # Business context-based actions
         if context.business_context == "monetization":
@@ -902,8 +850,7 @@ class ResponseEngine:
         return actions
     
     def _generate_cache_key(self, request: ResponseRequest) -> str:
-        """Generate cache key for request"""
-        key_components = [
+        """Generate cache key for request"""        key_components = [
             request.input_text[:100],  # First 100 chars of input
             request.context.user_type,
             request.context.content_format or "none",
@@ -916,8 +863,7 @@ class ResponseEngine:
 
 
 class ResponseOrchestrator:
-    """High-level response orchestration and coordination"""
-    
+    """High-level response orchestration and coordination"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.response_engine = ResponseEngine()
@@ -931,8 +877,7 @@ class ResponseOrchestrator:
         conversation_id: str,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> GeneratedResponse:
-        """
-        Process a complete conversation request with context building
+        """        Process a complete conversation request with context building
         
         Args:
             user_input: User's input text
@@ -943,8 +888,7 @@ class ResponseOrchestrator:
             
         Returns:
             Generated response
-        """
-        try:
+        """        try:
             # Build comprehensive context
             context = await self._build_conversation_context(
                 user_id, session_id, conversation_id, additional_context
@@ -985,8 +929,7 @@ class ResponseOrchestrator:
         conversation_id: str,
         additional_context: Optional[Dict[str, Any]]
     ) -> ResponseContext:
-        """Build comprehensive conversation context"""
-        
+        """Build comprehensive conversation context"""        
         # Get user profile (placeholder - would fetch from database)
         user_profile = await self._get_user_profile(user_id)
         
@@ -1013,8 +956,7 @@ class ResponseOrchestrator:
         return context
     
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Get user profile from database"""
-        # Placeholder implementation - would fetch from actual database
+        """Get user profile from database"""        # Placeholder implementation - would fetch from actual database
         return {
             "user_type": "musician",
             "primary_content_format": "audio",
@@ -1028,13 +970,11 @@ class ResponseOrchestrator:
         }
     
     async def _get_conversation_history(self, conversation_id: str) -> List[Dict[str, Any]]:
-        """Get conversation history from database"""
-        # Placeholder implementation - would fetch from actual database
+        """Get conversation history from database"""        # Placeholder implementation - would fetch from actual database
         return []
     
     async def _determine_response_type(self, user_input: str, context: ResponseContext) -> ResponseType:
-        """Determine appropriate response type"""
-        input_lower = user_input.lower()
+        """Determine appropriate response type"""        input_lower = user_input.lower()
         
         if any(word in input_lower for word in ["alert", "warning", "urgent", "critical"]):
             return ResponseType.ALERT
@@ -1048,8 +988,7 @@ class ResponseOrchestrator:
             return ResponseType.TEXT
     
     async def _determine_target_length(self, context: ResponseContext) -> int:
-        """Determine target response length"""
-        if context.urgency_level == ResponsePriority.CRITICAL:
+        """Determine target response length"""        if context.urgency_level == ResponsePriority.CRITICAL:
             return 100
         elif context.urgency_level == ResponsePriority.HIGH:
             return 150
@@ -1058,8 +997,7 @@ class ResponseOrchestrator:
             return {"simple": 100, "medium": 200, "advanced": 300, "expert": 400}.get(complexity, 200)
     
     async def _determine_style_preferences(self, context: ResponseContext) -> Dict[str, Any]:
-        """Determine style preferences from context"""
-        profile = context.personalization_profile
+        """Determine style preferences from context"""        profile = context.personalization_profile
         return {
             "tone": profile.get("preferred_tone", "professional"),
             "complexity": profile.get("complexity_level", "medium"),
@@ -1070,8 +1008,7 @@ class ResponseOrchestrator:
         }
     
     async def _determine_constraints(self, context: ResponseContext) -> Dict[str, Any]:
-        """Determine response constraints"""
-        constraints = {
+        """Determine response constraints"""        constraints = {
             "max_length": 1000,
             "min_length": 20,
             "language": context.language_preference,
@@ -1085,8 +1022,7 @@ class ResponseOrchestrator:
         return constraints
     
     async def _enhance_response(self, response: GeneratedResponse, context: ResponseContext) -> GeneratedResponse:
-        """Enhance response with additional features"""
-        # Add context-specific enhancements
+        """Enhance response with additional features"""        # Add context-specific enhancements
         enhanced_text = response.text
         
         # Add personalized greeting if appropriate

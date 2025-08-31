@@ -1,5 +1,4 @@
-"""
-Database Integration Tests
+"""Database Integration Tests
 
 Tests for database operations including:
 - CRUD operations across all models

@@ -1,5 +1,4 @@
-"""
-Chat Analytics - Advanced analytics and insights for chat orchestration
+"""Chat Analytics - Advanced analytics and insights for chat orchestration
 =======================================================================
 
 Provides comprehensive analytics, metrics, and insights for chat sessions,
@@ -7,7 +6,6 @@ user interactions, and system performance optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -22,8 +20,7 @@ from backend.core.database import DatabaseManager
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
-    HOUR = "hour"
+    """Analytics timeframe options"""    HOUR = "hour"
     DAY = "day"
     WEEK = "week"
     MONTH = "month"
@@ -33,8 +30,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Types of metrics tracked"""
-    SESSION_COUNT = "session_count"
+    """Types of metrics tracked"""    SESSION_COUNT = "session_count"
     MESSAGE_COUNT = "message_count"
     USER_ENGAGEMENT = "user_engagement"
     RESPONSE_TIME = "response_time"
@@ -46,8 +42,7 @@ class MetricType(Enum):
 
 @dataclass
 class SessionMetrics:
-    """Metrics for individual chat session"""
-    session_id: str
+    """Metrics for individual chat session"""    session_id: str
     user_id: str
     creator_type: str
     start_time: datetime
@@ -63,8 +58,7 @@ class SessionMetrics:
 
 @dataclass
 class SystemMetrics:
-    """Overall system performance metrics"""
-    timeframe: AnalyticsTimeframe
+    """Overall system performance metrics"""    timeframe: AnalyticsTimeframe
     total_sessions: int
     active_users: int
     total_messages: int
@@ -80,8 +74,7 @@ class SystemMetrics:
 
 @dataclass
 class UserBehaviorInsights:
-    """User behavior analysis insights"""
-    user_id: str
+    """User behavior analysis insights"""    user_id: str
     creator_type: str
     session_frequency: float
     avg_session_length: float
@@ -94,12 +87,10 @@ class UserBehaviorInsights:
 
 
 class ChatAnalytics:
-    """
-    Advanced analytics system for chat orchestration providing comprehensive
+    """    Advanced analytics system for chat orchestration providing comprehensive
     insights into user behavior, system performance, and optimization
     opportunities.
-    """
-    
+    """    
     def __init__(self, db_manager: DatabaseManager):
         self.db = db_manager
         self.logger = logging.getLogger(__name__)
@@ -117,16 +108,14 @@ class ChatAnalytics:
         }
     
     async def track_session_created(self, session: Any) -> bool:
-        """
-        Track new session creation
+        """        Track new session creation
         
         Args:
             session: ChatSession object
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             session_data = {
                 "session_id": session.session_id,
                 "user_id": session.user_id,
@@ -156,8 +145,7 @@ class ChatAnalytics:
         intent_classification: Dict[str, Any],
         confidence: float
     ) -> bool:
-        """
-        Track message processing and intent classification
+        """        Track message processing and intent classification
         
         Args:
             session_id: Session identifier
@@ -166,8 +154,7 @@ class ChatAnalytics:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             message_data = {
                 "session_id": session_id,
                 "event_type": "message_processed",
@@ -196,8 +183,7 @@ class ChatAnalytics:
         session: Any,
         end_reason: str
     ) -> bool:
-        """
-        Track session termination and calculate session metrics
+        """        Track session termination and calculate session metrics
         
         Args:
             session: ChatSession object
@@ -205,8 +191,7 @@ class ChatAnalytics:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Calculate session metrics
             session_duration = (session.updated_at - session.created_at).total_seconds()
             message_count = len(session.messages)
@@ -243,8 +228,7 @@ class ChatAnalytics:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> SystemMetrics:
-        """
-        Get comprehensive system metrics for specified timeframe
+        """        Get comprehensive system metrics for specified timeframe
         
         Args:
             timeframe: Analytics timeframe
@@ -253,8 +237,7 @@ class ChatAnalytics:
             
         Returns:
             SystemMetrics: Comprehensive system metrics
-        """
-        try:
+        """        try:
             # Determine date range
             end_date = end_date or datetime.utcnow()
             start_date = start_date or self._calculate_start_date(timeframe, end_date)
@@ -292,8 +275,7 @@ class ChatAnalytics:
         user_id: str,
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH
     ) -> UserBehaviorInsights:
-        """
-        Get detailed user behavior insights and recommendations
+        """        Get detailed user behavior insights and recommendations
         
         Args:
             user_id: User identifier
@@ -301,8 +283,7 @@ class ChatAnalytics:
             
         Returns:
             UserBehaviorInsights: Comprehensive user insights
-        """
-        try:
+        """        try:
             # Fetch user activity data
             user_sessions = await self._fetch_user_sessions(user_id, timeframe)
             user_messages = await self._fetch_user_messages(user_id, timeframe)
@@ -358,8 +339,7 @@ class ChatAnalytics:
         creator_type: str,
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.WEEK
     ) -> Dict[str, Any]:
-        """
-        Get analytics specific to creator type
+        """        Get analytics specific to creator type
         
         Args:
             creator_type: Type of content creator
@@ -367,8 +347,7 @@ class ChatAnalytics:
             
         Returns:
             Dict containing creator-specific analytics
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = self._calculate_start_date(timeframe, end_date)
             
@@ -401,16 +380,14 @@ class ChatAnalytics:
         self,
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAY
     ) -> Dict[str, Any]:
-        """
-        Analyze conversation flows and patterns
+        """        Analyze conversation flows and patterns
         
         Args:
             timeframe: Analysis timeframe
             
         Returns:
             Dict containing conversation flow analysis
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = self._calculate_start_date(timeframe, end_date)
             
@@ -439,8 +416,7 @@ class ChatAnalytics:
         timeframe: AnalyticsTimeframe,
         format_type: str = "json"
     ) -> Dict[str, Any]:
-        """
-        Export comprehensive analytics report
+        """        Export comprehensive analytics report
         
         Args:
             report_type: Type of report (system, user, creator, conversation)
@@ -449,8 +425,7 @@ class ChatAnalytics:
             
         Returns:
             Dict containing exported report data
-        """
-        try:
+        """        try:
             report_data = {
                 "report_type": report_type,
                 "timeframe": timeframe.value,
@@ -475,18 +450,15 @@ class ChatAnalytics:
     # Internal analytics calculation methods
     
     async def _store_analytics_event(self, event_data: Dict[str, Any]) -> bool:
-        """Store analytics event in database"""
-        try:
-            query = """
-                INSERT INTO chat_analytics_events (
+        """Store analytics event in database"""        try:
+            query = """                INSERT INTO chat_analytics_events (
                     session_id, user_id, event_type, timestamp, 
                     event_data, metadata
                 ) VALUES (
                     %(session_id)s, %(user_id)s, %(event_type)s, %(timestamp)s,
                     %(event_data)s, %(metadata)s
                 )
-            """
-            
+            """            
             params = {
                 "session_id": event_data.get("session_id"),
                 "user_id": event_data.get("user_id"),
@@ -504,8 +476,7 @@ class ChatAnalytics:
             return False
     
     async def _update_real_time_metrics(self, event_type: str, event_data: Dict[str, Any]):
-        """Update real-time metrics cache"""
-        try:
+        """Update real-time metrics cache"""        try:
             current_hour = datetime.utcnow().replace(minute=0, second=0, microsecond=0)
             cache_key = f"{event_type}_{current_hour.isoformat()}"
             
@@ -528,8 +499,7 @@ class ChatAnalytics:
             self.logger.error(f"Failed to update real-time metrics: {str(e)}")
     
     async def _calculate_session_metrics(self, session: Any) -> SessionMetrics:
-        """Calculate comprehensive metrics for a session"""
-        try:
+        """Calculate comprehensive metrics for a session"""        try:
             # Extract session data
             duration = (session.updated_at - session.created_at).total_seconds()
             message_count = len(session.messages)
@@ -585,8 +555,7 @@ class ChatAnalytics:
             return None
     
     def _calculate_engagement_score(self, session: Any, message_count: int, duration: float) -> float:
-        """Calculate engagement score for session"""
-        try:
+        """Calculate engagement score for session"""        try:
             # Base score from message count and duration
             base_score = min(1.0, message_count / 10)  # Normalize to max 10 messages
             duration_score = min(1.0, duration / 1800)  # Normalize to max 30 minutes
@@ -608,10 +577,8 @@ class ChatAnalytics:
             return 0.5
     
     async def _store_session_metrics(self, metrics: SessionMetrics) -> bool:
-        """Store session metrics in database"""
-        try:
-            query = """
-                INSERT INTO chat_session_metrics (
+        """Store session metrics in database"""        try:
+            query = """                INSERT INTO chat_session_metrics (
                     session_id, user_id, creator_type, start_time, end_time,
                     message_count, avg_response_time, engagement_score,
                     intents_classified, features_used, metrics_data
@@ -620,8 +587,7 @@ class ChatAnalytics:
                     %(message_count)s, %(avg_response_time)s, %(engagement_score)s,
                     %(intents_classified)s, %(features_used)s, %(metrics_data)s
                 )
-            """
-            
+            """            
             params = {
                 "session_id": metrics.session_id,
                 "user_id": metrics.user_id,
@@ -646,8 +612,7 @@ class ChatAnalytics:
     # Helper methods for data fetching and calculations
     
     def _calculate_start_date(self, timeframe: AnalyticsTimeframe, end_date: datetime) -> datetime:
-        """Calculate start date based on timeframe"""
-        if timeframe == AnalyticsTimeframe.HOUR:
+        """Calculate start date based on timeframe"""        if timeframe == AnalyticsTimeframe.HOUR:
             return end_date - timedelta(hours=1)
         elif timeframe == AnalyticsTimeframe.DAY:
             return end_date - timedelta(days=1)
@@ -663,8 +628,7 @@ class ChatAnalytics:
             return datetime(2020, 1, 1)  # Platform start date
     
     def _get_timeframe_days(self, timeframe: AnalyticsTimeframe) -> int:
-        """Get number of days in timeframe"""
-        timeframe_days = {
+        """Get number of days in timeframe"""        timeframe_days = {
             AnalyticsTimeframe.HOUR: 1/24,
             AnalyticsTimeframe.DAY: 1,
             AnalyticsTimeframe.WEEK: 7,
@@ -676,16 +640,13 @@ class ChatAnalytics:
         return timeframe_days.get(timeframe, 30)
     
     async def _fetch_sessions_metrics(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch session metrics from database"""
-        try:
-            query = """
-                SELECT session_id, user_id, creator_type, start_time, end_time,
+        """Fetch session metrics from database"""        try:
+            query = """                SELECT session_id, user_id, creator_type, start_time, end_time,
                        message_count, avg_response_time, engagement_score
                 FROM chat_session_metrics
                 WHERE start_time >= %(start_date)s AND start_time <= %(end_date)s
                 ORDER BY start_time DESC
-            """
-            
+            """            
             results = await self.db.fetch_all(query, {
                 "start_date": start_date,
                 "end_date": end_date
@@ -698,8 +659,7 @@ class ChatAnalytics:
             return []
     
     def _create_empty_system_metrics(self, timeframe: AnalyticsTimeframe) -> SystemMetrics:
-        """Create empty system metrics for fallback"""
-        return SystemMetrics(
+        """Create empty system metrics for fallback"""        return SystemMetrics(
             timeframe=timeframe,
             total_sessions=0,
             active_users=0,
@@ -715,8 +675,7 @@ class ChatAnalytics:
         )
     
     def _create_empty_user_insights(self, user_id: str) -> UserBehaviorInsights:
-        """Create empty user insights for fallback"""
-        return UserBehaviorInsights(
+        """Create empty user insights for fallback"""        return UserBehaviorInsights(
             user_id=user_id,
             creator_type="unknown",
             session_frequency=0.0,
@@ -732,16 +691,13 @@ class ChatAnalytics:
     # Placeholder methods for complex calculations (to be implemented)
     
     async def _fetch_messages_metrics(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch message metrics"""
-        return []
+        """Fetch message metrics"""        return []
     
     async def _fetch_users_metrics(self, start_date: datetime, end_date: datetime) -> List[Dict[str, Any]]:
-        """Fetch user metrics"""
-        return []
+        """Fetch user metrics"""        return []
     
     def _calculate_avg_session_duration(self, sessions_data: List[Dict[str, Any]]) -> float:
-        """Calculate average session duration"""
-        if not sessions_data:
+        """Calculate average session duration"""        if not sessions_data:
             return 0.0
         
         durations = []
@@ -758,36 +714,29 @@ class ChatAnalytics:
         return statistics.mean(durations) if durations else 0.0
     
     def _calculate_avg_messages_per_session(self, sessions_data: List[Dict[str, Any]]) -> float:
-        """Calculate average messages per session"""
-        if not sessions_data:
+        """Calculate average messages per session"""        if not sessions_data:
             return 0.0
         
         message_counts = [session.get("message_count", 0) for session in sessions_data]
         return statistics.mean(message_counts) if message_counts else 0.0
     
     def _calculate_creator_distribution(self, sessions_data: List[Dict[str, Any]]) -> Dict[str, int]:
-        """Calculate creator type distribution"""
-        distribution = Counter(session.get("creator_type", "unknown") for session in sessions_data)
+        """Calculate creator type distribution"""        distribution = Counter(session.get("creator_type", "unknown") for session in sessions_data)
         return dict(distribution)
     
     # Additional placeholder methods for comprehensive analytics
     
     async def _calculate_intent_accuracy(self, start_date: datetime, end_date: datetime) -> float:
-        """Calculate intent classification accuracy"""
-        return 0.85  # Placeholder
+        """Calculate intent classification accuracy"""        return 0.85  # Placeholder
     
     async def _calculate_avg_response_time(self, start_date: datetime, end_date: datetime) -> float:
-        """Calculate average system response time"""
-        return 1.2  # Placeholder
+        """Calculate average system response time"""        return 1.2  # Placeholder
     
     async def _calculate_user_satisfaction(self, start_date: datetime, end_date: datetime) -> float:
-        """Calculate user satisfaction average"""
-        return 4.2  # Placeholder
+        """Calculate user satisfaction average"""        return 4.2  # Placeholder
     
     async def _get_top_intents(self, start_date: datetime, end_date: datetime) -> List[Tuple[str, int]]:
-        """Get top intents by frequency"""
-        return [("content_analysis", 150), ("monetization_question", 120)]  # Placeholder
+        """Get top intents by frequency"""        return [("content_analysis", 150), ("monetization_question", 120)]  # Placeholder
     
     async def _calculate_feature_adoption(self, start_date: datetime, end_date: datetime) -> Dict[str, float]:
-        """Calculate feature adoption rates"""
-        return {"content_upload": 0.75, "analytics": 0.60}  # Placeholder
+        """Calculate feature adoption rates"""        return {"content_upload": 0.75, "analytics": 0.60}  # Placeholder

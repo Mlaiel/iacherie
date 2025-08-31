@@ -1,5 +1,4 @@
-"""
-Regulatory Monitor - Advanced Regulatory Compliance Monitoring System
+"""Regulatory Monitor - Advanced Regulatory Compliance Monitoring System
 
 This module provides comprehensive regulatory compliance monitoring for conversational AI,
 including real-time regulatory updates, compliance requirement tracking, and policy change notifications.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel
 Contact: mlaiel@live.de
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -22,8 +20,7 @@ from ..integrations.regulatory_apis import RegulatoryAPIClient
 
 
 class RegulatoryFramework(Enum):
-    """Major regulatory frameworks"""
-    GDPR = "gdpr"
+    """Major regulatory frameworks"""    GDPR = "gdpr"
     CCPA = "ccpa"
     COPPA = "coppa"
     AI_ACT_EU = "ai_act_eu"
@@ -36,8 +33,7 @@ class RegulatoryFramework(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIAL_COMPLIANCE = "partial_compliance"
     UNDER_REVIEW = "under_review"
@@ -45,8 +41,7 @@ class ComplianceStatus(Enum):
 
 
 class RegulatoryRequirementType(Enum):
-    """Types of regulatory requirements"""
-    DATA_PROTECTION = "data_protection"
+    """Types of regulatory requirements"""    DATA_PROTECTION = "data_protection"
     CONTENT_MODERATION = "content_moderation"
     TRANSPARENCY = "transparency"
     ALGORITHMIC_ACCOUNTABILITY = "algorithmic_accountability"
@@ -57,8 +52,7 @@ class RegulatoryRequirementType(Enum):
 
 
 class Jurisdiction(Enum):
-    """Regulatory jurisdictions"""
-    EU = "eu"
+    """Regulatory jurisdictions"""    EU = "eu"
     US = "us"
     UK = "uk"
     CANADA = "canada"
@@ -73,8 +67,7 @@ class Jurisdiction(Enum):
 
 @dataclass
 class RegulatoryRequirement:
-    """Regulatory requirement structure"""
-    requirement_id: str
+    """Regulatory requirement structure"""    requirement_id: str
     framework: RegulatoryFramework
     jurisdiction: Jurisdiction
     requirement_type: RegulatoryRequirementType
@@ -91,8 +84,7 @@ class RegulatoryRequirement:
 
 @dataclass
 class ComplianceAssessment:
-    """Compliance assessment result"""
-    requirement_id: str
+    """Compliance assessment result"""    requirement_id: str
     status: ComplianceStatus
     compliance_score: float
     findings: List[str]
@@ -106,8 +98,7 @@ class ComplianceAssessment:
 
 @dataclass
 class RegulatoryUpdate:
-    """Regulatory update notification"""
-    update_id: str
+    """Regulatory update notification"""    update_id: str
     framework: RegulatoryFramework
     jurisdiction: Jurisdiction
     update_type: str
@@ -122,8 +113,7 @@ class RegulatoryUpdate:
 
 @dataclass
 class ComplianceReport:
-    """Comprehensive compliance report"""
-    report_id: str
+    """Comprehensive compliance report"""    report_id: str
     reporting_period: Tuple[datetime, datetime]
     overall_compliance_score: float
     framework_compliance: Dict[RegulatoryFramework, ComplianceStatus]
@@ -136,13 +126,11 @@ class ComplianceReport:
 
 
 class RegulatoryMonitor:
-    """
-    Advanced regulatory compliance monitoring system.
+    """    Advanced regulatory compliance monitoring system.
     
     Provides comprehensive regulatory compliance monitoring including real-time updates,
     requirement tracking, automated assessments, and compliance reporting.
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -169,8 +157,7 @@ class RegulatoryMonitor:
         self.logger.info("RegulatoryMonitor initialized with compliance monitoring systems")
     
     def _load_monitored_frameworks(self) -> Dict[Jurisdiction, List[RegulatoryFramework]]:
-        """Load monitored regulatory frameworks by jurisdiction"""
-        return {
+        """Load monitored regulatory frameworks by jurisdiction"""        return {
             Jurisdiction.EU: [
                 RegulatoryFramework.GDPR,
                 RegulatoryFramework.AI_ACT_EU,
@@ -200,8 +187,7 @@ class RegulatoryMonitor:
         }
     
     async def _initialize_regulatory_data(self) -> None:
-        """Initialize regulatory requirements and assessment data"""
-        try:
+        """Initialize regulatory requirements and assessment data"""        try:
             # Load regulatory requirements from database
             requirements_data = await self.db_manager.fetch_all(
                 "SELECT * FROM regulatory_requirements WHERE active = true"
@@ -235,11 +221,9 @@ class RegulatoryMonitor:
             self.logger.error(f"Error initializing regulatory data: {str(e)}")
     
     async def _load_assessment_schedule(self) -> None:
-        """Load compliance assessment schedule"""
-        try:
+        """Load compliance assessment schedule"""        try:
             schedule_data = await self.db_manager.fetch_all(
-                """
-                SELECT requirement_id, next_assessment_date, frequency_days
+                """                SELECT requirement_id, next_assessment_date, frequency_days
                 FROM compliance_assessment_schedule
                 WHERE next_assessment_date >= $1
                 """,
@@ -261,8 +245,7 @@ class RegulatoryMonitor:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """
-        Validate regulatory compliance for conversational interactions.
+        """        Validate regulatory compliance for conversational interactions.
         
         Args:
             conversation_data: Full conversation context
@@ -271,8 +254,7 @@ class RegulatoryMonitor:
             
         Returns:
             Dict containing regulatory compliance assessment
-        """
-        try:
+        """        try:
             self.logger.debug("Starting regulatory compliance validation")
             
             # Determine applicable jurisdictions
@@ -324,8 +306,7 @@ class RegulatoryMonitor:
             }
     
     def _determine_applicable_jurisdictions(self, conversation_data: Dict[str, Any]) -> List[Jurisdiction]:
-        """Determine applicable jurisdictions based on conversation context"""
-        jurisdictions = []
+        """Determine applicable jurisdictions based on conversation context"""        jurisdictions = []
         
         # Check user location
         user_location = conversation_data.get("user_location", {})
@@ -376,8 +357,7 @@ class RegulatoryMonitor:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """Assess compliance with specific regulatory framework"""
-        try:
+        """Assess compliance with specific regulatory framework"""        try:
             framework_requirements = [
                 req for req in self.compliance_requirements.values()
                 if req.framework == framework
@@ -434,8 +414,7 @@ class RegulatoryMonitor:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """Check compliance with specific regulatory requirement"""
-        try:
+        """Check compliance with specific regulatory requirement"""        try:
             # Implement specific compliance checks based on requirement type
             if requirement.requirement_type == RegulatoryRequirementType.DATA_PROTECTION:
                 return await self._check_data_protection_compliance(
@@ -483,8 +462,7 @@ class RegulatoryMonitor:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """Check data protection compliance (GDPR, CCPA, etc.)"""
-        # Check for personal data processing
+        """Check data protection compliance (GDPR, CCPA, etc.)"""        # Check for personal data processing
         has_personal_data = conversation_data.get("has_personal_data", False)
         user_consent = conversation_data.get("user_consent", {})
         
@@ -517,8 +495,7 @@ class RegulatoryMonitor:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """Check content moderation compliance (DSA, Online Safety Act, etc.)"""
-        content_safety_score = conversation_data.get("content_safety_score", 1.0)
+        """Check content moderation compliance (DSA, Online Safety Act, etc.)"""        content_safety_score = conversation_data.get("content_safety_score", 1.0)
         content_violations = conversation_data.get("content_violations", [])
         
         violations = []
@@ -552,8 +529,7 @@ class RegulatoryMonitor:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """Check transparency compliance (AI Act, FTC requirements, etc.)"""
-        ai_disclosure_provided = conversation_data.get("ai_disclosure_provided", False)
+        """Check transparency compliance (AI Act, FTC requirements, etc.)"""        ai_disclosure_provided = conversation_data.get("ai_disclosure_provided", False)
         algorithmic_explanation = conversation_data.get("algorithmic_explanation", False)
         
         violations = []
@@ -588,8 +564,7 @@ class RegulatoryMonitor:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """Check algorithmic accountability compliance"""
-        bias_assessment_conducted = conversation_data.get("bias_assessment_conducted", False)
+        """Check algorithmic accountability compliance"""        bias_assessment_conducted = conversation_data.get("bias_assessment_conducted", False)
         fairness_metrics_available = conversation_data.get("fairness_metrics_available", False)
         
         violations = []
@@ -616,8 +591,7 @@ class RegulatoryMonitor:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """Check user rights compliance"""
-        user_rights_info_provided = conversation_data.get("user_rights_info_provided", False)
+        """Check user rights compliance"""        user_rights_info_provided = conversation_data.get("user_rights_info_provided", False)
         data_subject_request_mechanism = conversation_data.get("data_subject_request_mechanism", False)
         
         violations = []
@@ -644,8 +618,7 @@ class RegulatoryMonitor:
         user_input: str,
         ai_response: str
     ) -> Dict[str, Any]:
-        """Generic compliance check for unspecified requirement types"""
-        # Basic compliance check - assume compliant unless specific violations found
+        """Generic compliance check for unspecified requirement types"""        # Basic compliance check - assume compliant unless specific violations found
         return {
             "compliant": True,
             "violations": [],
@@ -658,8 +631,7 @@ class RegulatoryMonitor:
         self,
         compliance_results: Dict[str, Dict[str, Any]]
     ) -> List[str]:
-        """Generate regulatory compliance recommendations"""
-        recommendations = []
+        """Generate regulatory compliance recommendations"""        recommendations = []
         
         for framework, result in compliance_results.items():
             if not result.get("compliant", True):
@@ -682,19 +654,16 @@ class RegulatoryMonitor:
         self,
         frameworks: List[RegulatoryFramework]
     ) -> List[Dict[str, Any]]:
-        """Check for pending regulatory updates"""
-        pending_updates = []
+        """Check for pending regulatory updates"""        pending_updates = []
         
         try:
             # Query recent regulatory updates
-            updates_query = """
-                SELECT * FROM regulatory_updates 
+            updates_query = """                SELECT * FROM regulatory_updates 
                 WHERE framework = ANY($1) 
                 AND effective_date > $2 
                 AND action_required = true
                 ORDER BY effective_date ASC
-            """
-            
+            """            
             framework_values = [f.value for f in frameworks]
             updates_data = await self.db_manager.fetch_all(
                 updates_query,
@@ -722,8 +691,7 @@ class RegulatoryMonitor:
         requirement_id: str,
         assessor: str
     ) -> ComplianceAssessment:
-        """Conduct comprehensive compliance assessment for specific requirement"""
-        try:
+        """Conduct comprehensive compliance assessment for specific requirement"""        try:
             requirement = self.compliance_requirements.get(requirement_id)
             if not requirement:
                 raise ValueError(f"Requirement {requirement_id} not found")
@@ -760,8 +728,7 @@ class RegulatoryMonitor:
             raise
     
     async def _gather_compliance_evidence(self, requirement: RegulatoryRequirement) -> List[str]:
-        """Gather evidence for compliance assessment"""
-        evidence = []
+        """Gather evidence for compliance assessment"""        evidence = []
         
         try:
             # Query relevant system data based on requirement type
@@ -775,8 +742,7 @@ class RegulatoryMonitor:
             elif requirement.requirement_type == RegulatoryRequirementType.CONTENT_MODERATION:
                 # Gather content moderation evidence
                 moderation_data = await self.db_manager.fetch_all(
-                    """
-                    SELECT COUNT(*) as total_assessments, 
+                    """                    SELECT COUNT(*) as total_assessments, 
                            AVG(safety_score) as avg_safety_score
                     FROM content_safety_assessments 
                     WHERE created_at >= $1
@@ -800,8 +766,7 @@ class RegulatoryMonitor:
         requirement: RegulatoryRequirement,
         evidence: List[str]
     ) -> Dict[str, Any]:
-        """Perform compliance assessment based on evidence"""
-        findings = []
+        """Perform compliance assessment based on evidence"""        findings = []
         gaps = []
         remediation_actions = []
         
@@ -841,15 +806,12 @@ class RegulatoryMonitor:
         }
     
     async def _store_compliance_assessment(self, assessment: ComplianceAssessment) -> None:
-        """Store compliance assessment results"""
-        try:
-            query = """
-                INSERT INTO compliance_assessments 
+        """Store compliance assessment results"""        try:
+            query = """                INSERT INTO compliance_assessments 
                 (requirement_id, status, compliance_score, findings, evidence,
                  gaps, remediation_actions, next_review_date, assessor, assessment_date)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
-            """
-            
+            """            
             await self.db_manager.execute(
                 query,
                 assessment.requirement_id,
@@ -872,11 +834,9 @@ class RegulatoryMonitor:
         requirement_id: str,
         next_review_date: datetime
     ) -> None:
-        """Update compliance assessment schedule"""
-        try:
+        """Update compliance assessment schedule"""        try:
             await self.db_manager.execute(
-                """
-                UPDATE compliance_assessment_schedule 
+                """                UPDATE compliance_assessment_schedule 
                 SET next_assessment_date = $1, last_updated = $2
                 WHERE requirement_id = $3
                 """,
@@ -897,14 +857,12 @@ class RegulatoryMonitor:
         reporting_period: Tuple[datetime, datetime],
         generated_by: str
     ) -> ComplianceReport:
-        """Generate comprehensive compliance report"""
-        try:
+        """Generate comprehensive compliance report"""        try:
             start_date, end_date = reporting_period
             
             # Gather assessments for reporting period
             assessments_data = await self.db_manager.fetch_all(
-                """
-                SELECT * FROM compliance_assessments 
+                """                SELECT * FROM compliance_assessments 
                 WHERE assessment_date BETWEEN $1 AND $2
                 ORDER BY assessment_date DESC
                 """,
@@ -997,16 +955,13 @@ class RegulatoryMonitor:
             raise
     
     async def _store_compliance_report(self, report: ComplianceReport) -> None:
-        """Store compliance report"""
-        try:
-            query = """
-                INSERT INTO compliance_reports 
+        """Store compliance report"""        try:
+            query = """                INSERT INTO compliance_reports 
                 (report_id, reporting_period_start, reporting_period_end, 
                  overall_compliance_score, framework_compliance, requirements_count,
                  risks_count, generated_by, generated_at)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-            """
-            
+            """            
             await self.db_manager.execute(
                 query,
                 report.report_id,
@@ -1024,16 +979,13 @@ class RegulatoryMonitor:
             self.logger.error(f"Error storing compliance report: {str(e)}")
     
     async def add_regulatory_requirement(self, requirement: RegulatoryRequirement) -> None:
-        """Add new regulatory requirement"""
-        try:
-            query = """
-                INSERT INTO regulatory_requirements 
+        """Add new regulatory requirement"""        try:
+            query = """                INSERT INTO regulatory_requirements 
                 (requirement_id, framework, jurisdiction, requirement_type, title,
                  description, compliance_criteria, assessment_methods, penalties,
                  effective_date, review_frequency, source_reference, active)
                 VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-            """
-            
+            """            
             await self.db_manager.execute(
                 query,
                 requirement.requirement_id,
@@ -1068,11 +1020,9 @@ class RegulatoryMonitor:
         requirement_id: str,
         assessment_date: datetime
     ) -> None:
-        """Schedule compliance assessment"""
-        try:
+        """Schedule compliance assessment"""        try:
             await self.db_manager.execute(
-                """
-                INSERT INTO compliance_assessment_schedule 
+                """                INSERT INTO compliance_assessment_schedule 
                 (requirement_id, next_assessment_date, frequency_days, created_at)
                 VALUES ($1, $2, $3, $4)
                 ON CONFLICT (requirement_id) DO UPDATE SET
@@ -1094,12 +1044,10 @@ class RegulatoryMonitor:
             self.logger.error(f"Error scheduling assessment: {str(e)}")
     
     async def get_compliance_dashboard_data(self) -> Dict[str, Any]:
-        """Get compliance dashboard data"""
-        try:
+        """Get compliance dashboard data"""        try:
             # Overall compliance metrics
             recent_assessments = await self.db_manager.fetch_all(
-                """
-                SELECT status, COUNT(*) as count, AVG(compliance_score) as avg_score
+                """                SELECT status, COUNT(*) as count, AVG(compliance_score) as avg_score
                 FROM compliance_assessments 
                 WHERE assessment_date >= $1
                 GROUP BY status
@@ -1146,9 +1094,7 @@ class RegulatoryMonitor:
             return {}
     
     def get_supported_frameworks(self) -> List[str]:
-        """Get list of supported regulatory frameworks"""
-        return [framework.value for framework in RegulatoryFramework]
+        """Get list of supported regulatory frameworks"""        return [framework.value for framework in RegulatoryFramework]
     
     def get_monitored_jurisdictions(self) -> List[str]:
-        """Get list of monitored jurisdictions"""
-        return [jurisdiction.value for jurisdiction in self.monitored_frameworks.keys()]
+        """Get list of monitored jurisdictions"""        return [jurisdiction.value for jurisdiction in self.monitored_frameworks.keys()]

@@ -1,5 +1,4 @@
-"""
-Automated licensing engine for content monetization and rights management.
+"""Automated licensing engine for content monetization and rights management.
 
 This module implements sophisticated content licensing workflows including:
 - Automated license generation and management
@@ -25,7 +24,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -51,8 +49,7 @@ from ..core.exceptions import LicensingException, ContractException
 
 
 class LicenseType(Enum):
-    """Types of content licenses available."""
-    EXCLUSIVE = "exclusive"
+    """Types of content licenses available."""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNC_LICENSE = "sync_license"
     MECHANICAL = "mechanical"
@@ -67,8 +64,7 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License agreement status."""
-    DRAFT = "draft"
+    """License agreement status."""    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -78,8 +74,7 @@ class LicenseStatus(Enum):
 
 
 class Territory(Enum):
-    """Geographic territories for licensing."""
-    WORLDWIDE = "worldwide"
+    """Geographic territories for licensing."""    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -96,8 +91,7 @@ class Territory(Enum):
 
 
 class UsageType(Enum):
-    """Types of licensed content usage."""
-    COMMERCIAL_ADVERTISING = "commercial_advertising"
+    """Types of licensed content usage."""    COMMERCIAL_ADVERTISING = "commercial_advertising"
     FILM_TV = "film_tv"
     DOCUMENTARY = "documentary"
     CORPORATE_VIDEO = "corporate_video"
@@ -113,8 +107,7 @@ class UsageType(Enum):
 
 @dataclass
 class LicenseTerms:
-    """Licensing terms and conditions."""
-    license_type: LicenseType
+    """Licensing terms and conditions."""    license_type: LicenseType
     territory: Territory
     usage_type: UsageType
     duration_months: int
@@ -137,8 +130,7 @@ class LicenseTerms:
 
 @dataclass
 class RevenueShare:
-    """Revenue sharing configuration."""
-    creator_percentage: Decimal
+    """Revenue sharing configuration."""    creator_percentage: Decimal
     platform_percentage: Decimal
     publisher_percentage: Decimal
     distributor_percentage: Decimal
@@ -152,8 +144,7 @@ class RevenueShare:
 
 @dataclass
 class LicenseAgreement:
-    """Complete license agreement structure."""
-    agreement_id: str
+    """Complete license agreement structure."""    agreement_id: str
     creator_id: str
     licensee_id: str
     content_id: str
@@ -179,8 +170,7 @@ class LicenseAgreement:
 
 @dataclass
 class LicenseRequest:
-    """Incoming license request from potential licensee."""
-    request_id: str
+    """Incoming license request from potential licensee."""    request_id: str
     licensee_id: str
     content_id: str
     requested_terms: LicenseTerms
@@ -196,8 +186,7 @@ class LicenseRequest:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment tracking."""
-    payment_id: str
+    """Royalty payment tracking."""    payment_id: str
     agreement_id: str
     creator_id: str
     licensee_id: str
@@ -215,8 +204,7 @@ class RoyaltyPayment:
 
 
 class AutomatedLicensingEngine:
-    """
-    Advanced automated licensing and rights management system.
+    """    Advanced automated licensing and rights management system.
     
     Provides comprehensive licensing workflow automation including:
     - Intelligent license term generation
@@ -224,8 +212,7 @@ class AutomatedLicensingEngine:
     - Revenue sharing and royalty calculations
     - Multi-territory licensing support
     - Legal compliance and contract enforcement
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger("monetization.licensing_engine")
@@ -263,8 +250,7 @@ class AutomatedLicensingEngine:
         self.logger.info("AutomatedLicensingEngine initialized successfully")
     
     def _initialize_pricing_matrix(self) -> Dict[LicenseType, Dict[str, Decimal]]:
-        """Initialize base pricing matrix for different license types."""
-        return {
+        """Initialize base pricing matrix for different license types."""        return {
             LicenseType.EXCLUSIVE: {
                 "base_fee": Decimal("5000.00"),
                 "royalty_rate": Decimal("0.15"),  # 15%
@@ -298,8 +284,7 @@ class AutomatedLicensingEngine:
         }
     
     def _initialize_territory_multipliers(self) -> Dict[Territory, Decimal]:
-        """Initialize territory-based pricing multipliers."""
-        return {
+        """Initialize territory-based pricing multipliers."""        return {
             Territory.WORLDWIDE: Decimal("3.0"),
             Territory.NORTH_AMERICA: Decimal("1.8"),
             Territory.EUROPE: Decimal("1.6"),
@@ -316,8 +301,7 @@ class AutomatedLicensingEngine:
         }
     
     def _initialize_usage_multipliers(self) -> Dict[UsageType, Decimal]:
-        """Initialize usage-based pricing multipliers."""
-        return {
+        """Initialize usage-based pricing multipliers."""        return {
             UsageType.COMMERCIAL_ADVERTISING: Decimal("2.5"),
             UsageType.FILM_TV: Decimal("2.0"),
             UsageType.DOCUMENTARY: Decimal("1.2"),
@@ -333,8 +317,7 @@ class AutomatedLicensingEngine:
         }
     
     def _initialize_default_revenue_shares(self) -> Dict[str, RevenueShare]:
-        """Initialize default revenue sharing configurations."""
-        return {
+        """Initialize default revenue sharing configurations."""        return {
             "standard": RevenueShare(
                 creator_percentage=Decimal("70.00"),
                 platform_percentage=Decimal("20.00"),
@@ -365,8 +348,7 @@ class AutomatedLicensingEngine:
         }
     
     def _initialize_encryption_key(self) -> Fernet:
-        """Initialize encryption key for contract security."""
-        try:
+        """Initialize encryption key for contract security."""        try:
             # In production, this should come from secure key management
             password = self.config.get("encryption_password", "default_password").encode()
             salt = self.config.get("encryption_salt", "default_salt").encode()
@@ -394,8 +376,7 @@ class AutomatedLicensingEngine:
         license_terms: LicenseTerms,
         revenue_share_type: str = "standard"
     ) -> LicenseAgreement:
-        """
-        Create new license agreement with automated terms generation.
+        """        Create new license agreement with automated terms generation.
         
         Args:
             creator_id: Content creator identifier
@@ -406,8 +387,7 @@ class AutomatedLicensingEngine:
             
         Returns:
             Complete license agreement with generated contract
-        """
-        try:
+        """        try:
             self.logger.info(f"Creating license agreement for content: {content_id}")
             
             # Generate unique agreement ID
@@ -469,8 +449,7 @@ class AutomatedLicensingEngine:
             raise LicensingException(f"Agreement creation error: {e}")
     
     async def _calculate_license_pricing(self, terms: LicenseTerms) -> Dict[str, Decimal]:
-        """Calculate comprehensive licensing pricing."""
-        try:
+        """Calculate comprehensive licensing pricing."""        try:
             # Get base pricing for license type
             base_pricing = self.base_pricing_matrix.get(terms.license_type)
             if not base_pricing:
@@ -531,8 +510,7 @@ class AutomatedLicensingEngine:
             raise LicensingException(f"Pricing calculation error: {e}")
     
     def _calculate_duration_multiplier(self, duration_months: int) -> Decimal:
-        """Calculate duration-based pricing multiplier."""
-        if duration_months <= 3:
+        """Calculate duration-based pricing multiplier."""        if duration_months <= 3:
             return Decimal("0.8")  # Short-term discount
         elif duration_months <= 6:
             return Decimal("1.0")  # Standard rate
@@ -544,8 +522,7 @@ class AutomatedLicensingEngine:
             return Decimal("2.0")  # Long-term premium
     
     async def _generate_contract(self, agreement: LicenseAgreement) -> Dict[str, str]:
-        """Generate legal contract document from agreement."""
-        try:
+        """Generate legal contract document from agreement."""        try:
             # Select appropriate contract template
             template_name = self._get_contract_template(agreement.license_terms.license_type)
             
@@ -574,8 +551,7 @@ class AutomatedLicensingEngine:
             raise ContractException(f"Contract generation error: {e}")
     
     def _get_contract_template(self, license_type: LicenseType) -> str:
-        """Get appropriate contract template for license type."""
-        template_mapping = {
+        """Get appropriate contract template for license type."""        template_mapping = {
             LicenseType.EXCLUSIVE: "exclusive_license_agreement.html",
             LicenseType.NON_EXCLUSIVE: "non_exclusive_license_agreement.html",
             LicenseType.SYNC_LICENSE: "sync_license_agreement.html",
@@ -587,8 +563,7 @@ class AutomatedLicensingEngine:
         return template_mapping.get(license_type, "standard_license_agreement.html")
     
     async def _prepare_contract_context(self, agreement: LicenseAgreement) -> Dict[str, Any]:
-        """Prepare template context for contract generation."""
-        try:
+        """Prepare template context for contract generation."""        try:
             # Get creator and licensee information
             creator_info = await self._get_creator_info(agreement.creator_id)
             licensee_info = await self._get_licensee_info(agreement.licensee_id)
@@ -615,17 +590,14 @@ class AutomatedLicensingEngine:
             return {}
     
     async def _get_creator_info(self, creator_id: str) -> Dict[str, Any]:
-        """Get creator information for contract."""
-        try:
-            query = """
-            SELECT 
+        """Get creator information for contract."""        try:
+            query = """            SELECT 
                 name, email, legal_name, business_name,
                 address, city, state, country, postal_code,
                 tax_id, business_type
             FROM creators 
             WHERE creator_id = $1
-            """
-            
+            """            
             result = await self.db.fetchrow(query, creator_id)
             
             if result:
@@ -643,17 +615,14 @@ class AutomatedLicensingEngine:
             return {"name": "Creator", "email": "creator@example.com"}
     
     async def _get_licensee_info(self, licensee_id: str) -> Dict[str, Any]:
-        """Get licensee information for contract."""
-        try:
-            query = """
-            SELECT 
+        """Get licensee information for contract."""        try:
+            query = """            SELECT 
                 company_name, contact_name, email, legal_name,
                 address, city, state, country, postal_code,
                 tax_id, business_type, industry
             FROM licensees 
             WHERE licensee_id = $1
-            """
-            
+            """            
             result = await self.db.fetchrow(query, licensee_id)
             
             if result:
@@ -671,17 +640,14 @@ class AutomatedLicensingEngine:
             return {"company_name": "Licensee", "email": "licensee@example.com"}
     
     async def _get_content_info(self, content_id: str) -> Dict[str, Any]:
-        """Get content information for contract."""
-        try:
-            query = """
-            SELECT 
+        """Get content information for contract."""        try:
+            query = """            SELECT 
                 title, description, duration, genre, release_date,
                 isrc, upc, composer, lyricist, publisher,
                 recording_date, master_owner
             FROM content_catalog 
             WHERE content_id = $1
-            """
-            
+            """            
             result = await self.db.fetchrow(query, content_id)
             
             if result:
@@ -703,10 +669,8 @@ class AutomatedLicensingEngine:
         agreement: LicenseAgreement,
         context: Dict[str, Any]
     ) -> str:
-        """Generate default contract when template is not available."""
-        
-        contract_template = f"""
-<!DOCTYPE html>
+        """Generate default contract when template is not available."""        
+        contract_template = f"""<!DOCTYPE html>
 <html>
 <head>
     <title>License Agreement - {agreement.agreement_id}</title>
@@ -812,15 +776,12 @@ class AutomatedLicensingEngine:
     </div>
 </body>
 </html>
-        """
-        
+        """        
         return contract_template
     
     async def _store_license_agreement(self, agreement: LicenseAgreement):
-        """Store license agreement in database."""
-        try:
-            query = """
-            INSERT INTO license_agreements (
+        """Store license agreement in database."""        try:
+            query = """            INSERT INTO license_agreements (
                 agreement_id, creator_id, licensee_id, content_id,
                 license_type, territory, usage_type, duration_months,
                 base_fee, royalty_percentage, minimum_guarantee, advance_payment,
@@ -842,8 +803,7 @@ class AutomatedLicensingEngine:
                       $23, $24, $25, $26, $27, $28, $29, $30, $31, $32,
                       $33, $34, $35, $36, $37, $38, $39, $40, $41, $42,
                       $43, $44, $45, $46, $47, $48, $49, $50)
-            """
-            
+            """            
             await self.db.execute(
                 query,
                 agreement.agreement_id,
@@ -904,8 +864,7 @@ class AutomatedLicensingEngine:
             raise LicensingException(f"Agreement storage error: {e}")
     
     async def _store_contract_document(self, agreement_id: str, contract_content: str):
-        """Store encrypted contract document."""
-        try:
+        """Store encrypted contract document."""        try:
             # Encrypt contract content
             encrypted_content = self.encryption_key.encrypt(contract_content.encode())
             
@@ -916,13 +875,11 @@ class AutomatedLicensingEngine:
                 await f.write(encrypted_content)
             
             # Store metadata in database
-            query = """
-            INSERT INTO contract_documents (
+            query = """            INSERT INTO contract_documents (
                 agreement_id, file_path, file_size, content_hash,
                 encryption_method, created_at
             ) VALUES ($1, $2, $3, $4, $5, $6)
-            """
-            
+            """            
             content_hash = hashlib.sha256(contract_content.encode()).hexdigest()
             
             await self.db.execute(
@@ -942,8 +899,7 @@ class AutomatedLicensingEngine:
             raise ContractException(f"Document storage error: {e}")
     
     async def _send_agreement_notifications(self, agreement: LicenseAgreement):
-        """Send notifications about new agreement."""
-        try:
+        """Send notifications about new agreement."""        try:
             # This would integrate with notification service
             # For now, just log the notification
             self.logger.info(
@@ -958,16 +914,14 @@ class AutomatedLicensingEngine:
         self,
         license_request: LicenseRequest
     ) -> Dict[str, Any]:
-        """
-        Process incoming license request with automated evaluation.
+        """        Process incoming license request with automated evaluation.
         
         Args:
             license_request: Incoming license request to process
             
         Returns:
             Processing result with recommendation and pricing
-        """
-        try:
+        """        try:
             self.logger.info(f"Processing license request: {license_request.request_id}")
             
             # Evaluate request feasibility
@@ -1023,8 +977,7 @@ class AutomatedLicensingEngine:
             raise LicensingException(f"Request processing error: {e}")
     
     async def _evaluate_license_request(self, request: LicenseRequest) -> Dict[str, Any]:
-        """Evaluate license request quality and feasibility."""
-        try:
+        """Evaluate license request quality and feasibility."""        try:
             evaluation_score = 0.0
             evaluation_factors = {}
             
@@ -1093,8 +1046,7 @@ class AutomatedLicensingEngine:
         proposed_budget: Decimal,
         requested_terms: LicenseTerms
     ) -> float:
-        """Evaluate if proposed budget is adequate for requested terms."""
-        try:
+        """Evaluate if proposed budget is adequate for requested terms."""        try:
             # Calculate expected pricing for requested terms
             expected_pricing = await self._calculate_license_pricing(requested_terms)
             expected_total = expected_pricing["total_value"]
@@ -1122,18 +1074,15 @@ class AutomatedLicensingEngine:
             return 0.5  # Default score
     
     async def _evaluate_licensee_reputation(self, licensee_id: str) -> float:
-        """Evaluate licensee reputation and payment history."""
-        try:
-            query = """
-            SELECT 
+        """Evaluate licensee reputation and payment history."""        try:
+            query = """            SELECT 
                 COUNT(*) as total_agreements,
                 AVG(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as completion_rate,
                 AVG(CASE WHEN payment_status = 'paid_on_time' THEN 1 ELSE 0 END) as payment_rate,
                 AVG(rating) as average_rating
             FROM licensee_history 
             WHERE licensee_id = $1
-            """
-            
+            """            
             result = await self.db.fetchrow(query, licensee_id)
             
             if not result or result["total_agreements"] == 0:
@@ -1158,15 +1107,12 @@ class AutomatedLicensingEngine:
         intended_usage: str,
         usage_type: UsageType
     ) -> float:
-        """Evaluate how well content fits intended usage."""
-        try:
+        """Evaluate how well content fits intended usage."""        try:
             # Get content metadata
-            query = """
-            SELECT genre, mood, tempo, explicit_content, content_tags
+            query = """            SELECT genre, mood, tempo, explicit_content, content_tags
             FROM content_catalog 
             WHERE content_id = $1
-            """
-            
+            """            
             result = await self.db.fetchrow(query, content_id)
             
             if not result:
@@ -1199,8 +1145,7 @@ class AutomatedLicensingEngine:
             return 0.5
     
     def _is_genre_usage_match(self, genre: str, usage_type: UsageType) -> bool:
-        """Check if genre matches well with usage type."""
-        genre_usage_matches = {
+        """Check if genre matches well with usage type."""        genre_usage_matches = {
             "electronic": [UsageType.COMMERCIAL_ADVERTISING, UsageType.CORPORATE_VIDEO],
             "classical": [UsageType.DOCUMENTARY, UsageType.FILM_TV],
             "pop": [UsageType.COMMERCIAL_ADVERTISING, UsageType.SOCIAL_MEDIA],
@@ -1215,8 +1160,7 @@ class AutomatedLicensingEngine:
         return usage_type in matching_usages
     
     def _evaluate_request_completeness(self, request: LicenseRequest) -> float:
-        """Evaluate completeness of license request."""
-        completeness_score = 0.0
+        """Evaluate completeness of license request."""        completeness_score = 0.0
         total_fields = 10
         
         # Check required fields
@@ -1254,8 +1198,7 @@ class AutomatedLicensingEngine:
         return min(1.0, completeness_score)
     
     def _evaluate_urgency_factor(self, urgency_level: str) -> float:
-        """Evaluate urgency factor impact on approval."""
-        urgency_scores = {
+        """Evaluate urgency factor impact on approval."""        urgency_scores = {
             "low": 0.7,      # Standard processing, slight bonus
             "normal": 0.8,   # Normal processing
             "high": 0.6,     # Rushed processing, slight penalty
@@ -1268,5 +1211,4 @@ class AutomatedLicensingEngine:
 
 # Factory function for easy instantiation
 def create_licensing_engine(config: Optional[Dict[str, Any]] = None) -> AutomatedLicensingEngine:
-    """Create and return configured licensing engine instance."""
-    return AutomatedLicensingEngine(config)
+    """Create and return configured licensing engine instance."""    return AutomatedLicensingEngine(config)

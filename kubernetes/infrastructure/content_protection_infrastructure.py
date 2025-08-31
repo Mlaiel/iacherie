@@ -1,5 +1,4 @@
-"""
-Content Protection Infrastructure Manager
+"""Content Protection Infrastructure Manager
 
 Enterprise-grade infrastructure for AI-powered content protection, fingerprinting,
 and violation detection across multiple platforms and media types.
@@ -13,7 +12,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 ⚠️  prohibited and may result in severe civil and criminal penalties.  ⚠️
 ⚠️  All rights reserved to Fahed Mlaiel (mlaiel@live.de).             ⚠️
 """
-
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -42,8 +40,7 @@ except ImportError as e:
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for protection"""
-    AUDIO = "audio"
+    """Supported content types for protection"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -53,16 +50,14 @@ class ContentType(Enum):
     SOCIAL_MEDIA = "social_media"
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
     ULTRA_SECURE = "ultra_secure"
 
 class ViolationType(Enum):
-    """Types of content violations"""
-    EXACT_COPY = "exact_copy"
+    """Types of content violations"""    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -70,8 +65,7 @@ class ViolationType(Enum):
     COPYRIGHT_INFRINGEMENT = "copyright_infringement"
 
 class Platform(Enum):
-    """Platforms to monitor for violations"""
-    YOUTUBE = "youtube"
+    """Platforms to monitor for violations"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -85,8 +79,7 @@ class Platform(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint data structure"""
-    content_id: str
+    """Content fingerprint data structure"""    content_id: str
     user_id: str
     content_type: ContentType
     fingerprint_hash: str
@@ -101,8 +94,7 @@ class ContentFingerprint:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""
-    alert_id: str
+    """Content violation alert"""    alert_id: str
     fingerprint_id: str
     detected_url: str
     platform: Platform
@@ -117,8 +109,7 @@ class ViolationAlert:
 
 @dataclass
 class ProtectionInfrastructureSpec:
-    """Content protection infrastructure specification"""
-    fingerprinting_engines: List[str] = field(default_factory=lambda: [
+    """Content protection infrastructure specification"""    fingerprinting_engines: List[str] = field(default_factory=lambda: [
         "audio_chromaprint", "video_opencv", "image_clip", "text_bert"
     ])
     vector_databases: List[str] = field(default_factory=lambda: [
@@ -137,16 +128,14 @@ class ProtectionInfrastructureSpec:
     legal_integration: bool = True
 
 class AudioFingerprintEngine:
-    """Advanced audio fingerprinting engine using Chromaprint + Essentia"""
-    
+    """Advanced audio fingerprinting engine using Chromaprint + Essentia"""    
     def __init__(self):
         self.sample_rate = 22050
         self.hop_size = 512
         self.frame_size = 1024
         
     async def generate_audio_fingerprint(self, audio_file_path: str) -> Tuple[str, np.ndarray]:
-        """Generate audio fingerprint using multiple algorithms"""
-        try:
+        """Generate audio fingerprint using multiple algorithms"""        try:
             # Chromaprint fingerprinting
             duration, raw_fingerprints = chromaprint.decode_fingerprint(
                 chromaprint.fingerprint_file(audio_file_path)[1]
@@ -183,15 +172,13 @@ class AudioFingerprintEngine:
             raise
 
 class VideoFingerprintEngine:
-    """Advanced video fingerprinting using OpenCV + perceptual hashing"""
-    
+    """Advanced video fingerprinting using OpenCV + perceptual hashing"""    
     def __init__(self):
         self.frame_sample_rate = 1.0  # Sample 1 frame per second
         self.hash_size = 64
         
     async def generate_video_fingerprint(self, video_file_path: str) -> Tuple[str, np.ndarray]:
-        """Generate video fingerprint using frame analysis and perceptual hashing"""
-        try:
+        """Generate video fingerprint using frame analysis and perceptual hashing"""        try:
             cap = cv2.VideoCapture(video_file_path)
             fps = cap.get(cv2.CAP_PROP_FPS)
             frame_interval = int(fps / self.frame_sample_rate)
@@ -246,8 +233,7 @@ class VideoFingerprintEngine:
             raise
 
 class ImageFingerprintEngine:
-    """Advanced image fingerprinting using CLIP embeddings + perceptual hashing"""
-    
+    """Advanced image fingerprinting using CLIP embeddings + perceptual hashing"""    
     def __init__(self):
         try:
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -258,8 +244,7 @@ class ImageFingerprintEngine:
             self.clip_processor = None
     
     async def generate_image_fingerprint(self, image_file_path: str) -> Tuple[str, np.ndarray]:
-        """Generate image fingerprint using CLIP embeddings and perceptual hashing"""
-        try:
+        """Generate image fingerprint using CLIP embeddings and perceptual hashing"""        try:
             # Load image
             image = cv2.imread(image_file_path)
             if image is None:
@@ -309,8 +294,7 @@ class ImageFingerprintEngine:
             raise
 
 class TextFingerprintEngine:
-    """Advanced text fingerprinting using BERT embeddings + n-gram analysis"""
-    
+    """Advanced text fingerprinting using BERT embeddings + n-gram analysis"""    
     def __init__(self):
         try:
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
@@ -319,8 +303,7 @@ class TextFingerprintEngine:
             self.sentence_model = None
     
     async def generate_text_fingerprint(self, text_content: str) -> Tuple[str, np.ndarray]:
-        """Generate text fingerprint using semantic embeddings and stylistic features"""
-        try:
+        """Generate text fingerprint using semantic embeddings and stylistic features"""        try:
             features = []
             
             # Sentence embeddings if available
@@ -367,13 +350,11 @@ class TextFingerprintEngine:
             raise
 
 class ContentProtectionInfrastructureManager:
-    """
-    Enterprise Content Protection Infrastructure Manager
+    """    Enterprise Content Protection Infrastructure Manager
     
     Manages AI-powered content fingerprinting, violation detection,
     and automated protection workflows for multi-format content.
-    """
-    
+    """    
     def __init__(self, spec: ProtectionInfrastructureSpec):
         self.spec = spec
         self.audio_engine = AudioFingerprintEngine()
@@ -386,8 +367,7 @@ class ContentProtectionInfrastructureManager:
         self.monitoring_active = False
         
     async def initialize_protection_infrastructure(self) -> Dict[str, Any]:
-        """Initialize complete content protection infrastructure"""
-        try:
+        """Initialize complete content protection infrastructure"""        try:
             logger.info("Initializing content protection infrastructure...")
             
             # Initialize vector databases
@@ -428,8 +408,7 @@ class ContentProtectionInfrastructureManager:
                                          content_type: ContentType,
                                          user_id: str,
                                          protection_level: ProtectionLevel = ProtectionLevel.STANDARD) -> ContentFingerprint:
-        """Generate comprehensive content fingerprint"""
-        try:
+        """Generate comprehensive content fingerprint"""        try:
             content_id = str(uuid.uuid4())
             
             # Select appropriate fingerprinting engine
@@ -475,8 +454,7 @@ class ContentProtectionInfrastructureManager:
             raise
 
     async def scan_for_violations(self, platforms: Optional[List[Platform]] = None) -> List[ViolationAlert]:
-        """Scan platforms for content violations"""
-        try:
+        """Scan platforms for content violations"""        try:
             platforms = platforms or self.spec.monitoring_platforms
             violations = []
             
@@ -495,8 +473,7 @@ class ContentProtectionInfrastructureManager:
             raise
 
     async def start_real_time_monitoring(self) -> Dict[str, Any]:
-        """Start real-time content monitoring across all platforms"""
-        try:
+        """Start real-time content monitoring across all platforms"""        try:
             if self.monitoring_active:
                 return {"status": "already_active", "message": "Real-time monitoring already running"}
             
@@ -521,16 +498,14 @@ class ContentProtectionInfrastructureManager:
             raise
 
     async def stop_real_time_monitoring(self) -> Dict[str, Any]:
-        """Stop real-time content monitoring"""
-        self.monitoring_active = False
+        """Stop real-time content monitoring"""        self.monitoring_active = False
         return {
             "status": "stopped",
             "stopped_at": datetime.utcnow().isoformat()
         }
 
     async def process_violation_alert(self, alert: ViolationAlert) -> Dict[str, Any]:
-        """Process and handle violation alert with automated actions"""
-        try:
+        """Process and handle violation alert with automated actions"""        try:
             # Verify violation with additional checks
             verification_result = await self._verify_violation(alert)
             
@@ -573,8 +548,7 @@ class ContentProtectionInfrastructureManager:
     # Private helper methods
     
     async def _setup_vector_databases(self) -> Dict[str, Any]:
-        """Setup vector databases for fingerprint storage"""
-        results = {}
+        """Setup vector databases for fingerprint storage"""        results = {}
         
         for db_type in self.spec.vector_databases:
             if db_type == "faiss":
@@ -587,8 +561,7 @@ class ContentProtectionInfrastructureManager:
         return results
 
     async def _setup_faiss_database(self) -> Dict[str, Any]:
-        """Setup FAISS vector database for fingerprint similarity search"""
-        try:
+        """Setup FAISS vector database for fingerprint similarity search"""        try:
             import faiss
             
             # Create FAISS index for different embedding dimensions
@@ -610,8 +583,7 @@ class ContentProtectionInfrastructureManager:
             return {"status": "skipped", "reason": "FAISS not available"}
 
     async def _setup_monitoring_infrastructure(self) -> Dict[str, Any]:
-        """Setup monitoring infrastructure"""
-        return {
+        """Setup monitoring infrastructure"""        return {
             "status": "configured",
             "platforms": [p.value for p in self.spec.monitoring_platforms],
             "scan_frequency": str(self.spec.crawling_frequency),
@@ -619,8 +591,7 @@ class ContentProtectionInfrastructureManager:
         }
 
     async def _setup_crawling_engines(self) -> Dict[str, Any]:
-        """Setup web crawling engines for each platform"""
-        return {
+        """Setup web crawling engines for each platform"""        return {
             "status": "configured",
             "engines": {
                 "youtube": "YouTube Data API v3 + Selenium",
@@ -632,8 +603,7 @@ class ContentProtectionInfrastructureManager:
         }
 
     async def _setup_alert_system(self) -> Dict[str, Any]:
-        """Setup real-time alert system"""
-        return {
+        """Setup real-time alert system"""        return {
             "status": "configured",
             "real_time_alerts": self.spec.enable_real_time_alerts,
             "alert_channels": ["webhook", "email", "websocket", "slack"],
@@ -641,8 +611,7 @@ class ContentProtectionInfrastructureManager:
         }
 
     async def _setup_legal_integration(self) -> Dict[str, Any]:
-        """Setup legal integration for automated DMCA and takedowns"""
-        return {
+        """Setup legal integration for automated DMCA and takedowns"""        return {
             "status": "configured" if self.spec.legal_integration else "disabled",
             "dmca_automation": True,
             "legal_templates": ["dmca_takedown", "cease_desist", "infringement_notice"],
@@ -650,16 +619,14 @@ class ContentProtectionInfrastructureManager:
         }
 
     def _calculate_file_checksum(self, file_path: str) -> str:
-        """Calculate SHA-256 checksum of file"""
-        sha256_hash = hashlib.sha256()
+        """Calculate SHA-256 checksum of file"""        sha256_hash = hashlib.sha256()
         with open(file_path, "rb") as f:
             for byte_block in iter(lambda: f.read(4096), b""):
                 sha256_hash.update(byte_block)
         return sha256_hash.hexdigest()
 
     def _get_protection_features(self, protection_level: ProtectionLevel) -> List[str]:
-        """Get protection features based on protection level"""
-        base_features = ["fingerprinting", "monitoring"]
+        """Get protection features based on protection level"""        base_features = ["fingerprinting", "monitoring"]
         
         if protection_level == ProtectionLevel.BASIC:
             return base_features
@@ -673,23 +640,19 @@ class ContentProtectionInfrastructureManager:
             return base_features + ["real_time_alerts", "evidence_collection", "automated_takedowns", "legal_integration", "advanced_analytics", "ai_prediction"]
 
     async def _store_fingerprint(self, fingerprint: ContentFingerprint):
-        """Store fingerprint in vector database"""
-        # In production, store in actual vector database
+        """Store fingerprint in vector database"""        # In production, store in actual vector database
         self.fingerprint_storage[fingerprint.content_id] = fingerprint
 
     async def _scan_platform_for_violations(self, platform: Platform) -> List[ViolationAlert]:
-        """Scan specific platform for violations"""
-        # Placeholder implementation - in production, implement actual crawling
+        """Scan specific platform for violations"""        # Placeholder implementation - in production, implement actual crawling
         return []
 
     async def _process_violation_alerts(self, violations: List[ViolationAlert]) -> List[ViolationAlert]:
-        """Process and rank violation alerts"""
-        # Sort by similarity score and confidence level
+        """Process and rank violation alerts"""        # Sort by similarity score and confidence level
         return sorted(violations, key=lambda x: (x.similarity_score, x.confidence_level), reverse=True)
 
     async def _monitor_platform_continuously(self, platform: Platform):
-        """Continuously monitor a platform for violations"""
-        while self.monitoring_active:
+        """Continuously monitor a platform for violations"""        while self.monitoring_active:
             try:
                 violations = await self._scan_platform_for_violations(platform)
                 for violation in violations:
@@ -701,28 +664,24 @@ class ContentProtectionInfrastructureManager:
                 await asyncio.sleep(60)  # Wait 1 minute before retrying
 
     async def _verify_violation(self, alert: ViolationAlert) -> Dict[str, Any]:
-        """Verify violation with additional checks"""
-        return {"is_valid": True, "verification_score": 0.95}
+        """Verify violation with additional checks"""        return {"is_valid": True, "verification_score": 0.95}
 
     async def _collect_violation_evidence(self, alert: ViolationAlert) -> Dict[str, Any]:
-        """Collect evidence for violation"""
-        return {
+        """Collect evidence for violation"""        return {
             "screenshot_url": f"evidence/{alert.alert_id}/screenshot.png",
             "metadata_captured": True,
             "timestamp": datetime.utcnow().isoformat()
         }
 
     async def _determine_response_actions(self, alert: ViolationAlert) -> Dict[str, Any]:
-        """Determine appropriate response actions"""
-        return {
+        """Determine appropriate response actions"""        return {
             "notify_user": True,
             "collect_evidence": True,
             "recommend_takedown": alert.similarity_score >= 0.9
         }
 
     async def _execute_automated_takedown(self, alert: ViolationAlert) -> Dict[str, Any]:
-        """Execute automated takedown request"""
-        return {
+        """Execute automated takedown request"""        return {
             "status": "submitted",
             "platform": alert.platform.value,
             "takedown_id": str(uuid.uuid4()),
@@ -730,8 +689,7 @@ class ContentProtectionInfrastructureManager:
         }
 
     async def _initiate_legal_process(self, alert: ViolationAlert) -> Dict[str, Any]:
-        """Initiate legal process for serious violations"""
-        return {
+        """Initiate legal process for serious violations"""        return {
             "status": "initiated",
             "legal_case_id": str(uuid.uuid4()),
             "action_type": "dmca_takedown",

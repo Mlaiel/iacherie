@@ -1,5 +1,4 @@
-"""
-Cloud Infrastructure Management Module
+"""Cloud Infrastructure Management Module
 
 Enterprise-grade cloud infrastructure managers for the IA Influencer Agent + Content Protection Platform.
 Manages multi-cloud deployments, resource provisioning, and infrastructure automation.
@@ -12,7 +11,6 @@ Any unauthorized use, reproduction, distribution, or appropriation of this code,
 or business idea without explicit written permission from Fahed Mlaiel (mlaiel@live.de) 
 is strictly prohibited and will result in immediate legal action. All rights reserved.
 """
-
 import boto3
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class CloudProvider(Enum):
-    """Supported cloud providers for infrastructure deployment"""
-    AWS = "aws"
+    """Supported cloud providers for infrastructure deployment"""    AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
     MULTICLOUD = "multicloud"
@@ -40,8 +37,7 @@ class CloudProvider(Enum):
 
 @dataclass
 class InfrastructureConfig:
-    """Infrastructure configuration for cloud deployments"""
-    environment: str
+    """Infrastructure configuration for cloud deployments"""    environment: str
     region: str
     availability_zones: List[str]
     instance_types: Dict[str, str]
@@ -57,8 +53,7 @@ class InfrastructureConfig:
 
 @dataclass
 class ClusterConfig:
-    """Kubernetes cluster configuration"""
-    cluster_name: str
+    """Kubernetes cluster configuration"""    cluster_name: str
     node_count: int
     node_type: str
     kubernetes_version: str
@@ -72,16 +67,14 @@ class ClusterConfig:
 
 
 class BaseCloudManager:
-    """Base class for cloud infrastructure management"""
-    
+    """Base class for cloud infrastructure management"""    
     def __init__(self, config: InfrastructureConfig):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.resource_tracker = {}
         
     async def provision_infrastructure(self) -> Dict[str, Any]:
-        """Provision complete infrastructure stack"""
-        # Default implementation for cloud managers without provisioning support
+        """Provision complete infrastructure stack"""        # Default implementation for cloud managers without provisioning support
         logging.warning(f"Infrastructure provisioning not implemented for {self.__class__.__name__}")
         return {
             "status": "not_implemented",
@@ -90,25 +83,21 @@ class BaseCloudManager:
         }
         
     async def destroy_infrastructure(self) -> bool:
-        """Destroy infrastructure stack safely"""
-        # Default implementation for cloud managers without destruction support
+        """Destroy infrastructure stack safely"""        # Default implementation for cloud managers without destruction support
         logging.warning(f"Infrastructure destruction not implemented for {self.__class__.__name__}")
         return False
         
     async def validate_infrastructure(self) -> Dict[str, bool]:
-        """Validate infrastructure deployment"""
-        # Default implementation for cloud managers without validation support
+        """Validate infrastructure deployment"""        # Default implementation for cloud managers without validation support
         logging.warning(f"Infrastructure validation not implemented for {self.__class__.__name__}")
         return {"validation_supported": False}
         
     def get_resource_status(self) -> Dict[str, str]:
-        """Get status of all managed resources"""
-        return self.resource_tracker
+        """Get status of all managed resources"""        return self.resource_tracker
 
 
 class AWSInfrastructureManager(BaseCloudManager):
-    """AWS-specific infrastructure management"""
-    
+    """AWS-specific infrastructure management"""    
     def __init__(self, config: InfrastructureConfig, credentials: Dict[str, str]):
         super().__init__(config)
         self.session = boto3.Session(
@@ -123,8 +112,7 @@ class AWSInfrastructureManager(BaseCloudManager):
         self.cloudformation = self.session.client('cloudformation')
         
     async def provision_infrastructure(self) -> Dict[str, Any]:
-        """Provision complete AWS infrastructure for IA Influencer platform"""
-        try:
+        """Provision complete AWS infrastructure for IA Influencer platform"""        try:
             self.logger.info(f"Starting AWS infrastructure provisioning for {self.config.environment}")
             
             # 1. Create VPC and networking
@@ -175,8 +163,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _provision_vpc(self) -> Dict[str, Any]:
-        """Create VPC with public/private subnets"""
-        try:
+        """Create VPC with public/private subnets"""        try:
             # Create VPC
             vpc_response = self.ec2.create_vpc(
                 CidrBlock=self.config.network_cidr,
@@ -264,8 +251,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _provision_eks_cluster(self, vpc_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Create EKS cluster for microservices deployment"""
-        try:
+        """Create EKS cluster for microservices deployment"""        try:
             cluster_config = ClusterConfig(
                 cluster_name=f'ia-influencer-{self.config.environment}',
                 node_count=3,
@@ -334,8 +320,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _provision_databases(self, vpc_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Create RDS instances for PostgreSQL, Redis and vector storage"""
-        try:
+        """Create RDS instances for PostgreSQL, Redis and vector storage"""        try:
             # Create DB subnet group
             private_subnets = [s['id'] for s in vpc_info['subnets'] if s['type'] == 'private']
             
@@ -389,8 +374,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _provision_storage(self) -> Dict[str, Any]:
-        """Create S3 buckets for content storage"""
-        try:
+        """Create S3 buckets for content storage"""        try:
             buckets = {}
             
             # Main content storage bucket
@@ -463,8 +447,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _provision_elasticsearch(self, vpc_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Create Elasticsearch domain for search and analytics"""
-        try:
+        """Create Elasticsearch domain for search and analytics"""        try:
             es_client = self.session.client('es')
             
             domain_name = f'ia-influencer-search-{self.config.environment}'
@@ -516,8 +499,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _provision_redis_cluster(self, vpc_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Create ElastiCache Redis cluster for caching"""
-        try:
+        """Create ElastiCache Redis cluster for caching"""        try:
             elasticache = self.session.client('elasticache')
             
             # Create cache subnet group
@@ -563,8 +545,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _setup_monitoring(self) -> Dict[str, Any]:
-        """Setup CloudWatch monitoring and alarms"""
-        try:
+        """Setup CloudWatch monitoring and alarms"""        try:
             cloudwatch = self.session.client('cloudwatch')
             
             # Create log groups
@@ -621,8 +602,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _configure_security(self) -> Dict[str, Any]:
-        """Configure security groups and IAM roles"""
-        try:
+        """Configure security groups and IAM roles"""        try:
             # Security groups are created by individual services
             # This method configures additional security policies
             
@@ -662,8 +642,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _wait_for_cluster_active(self, cluster_name: str, max_wait: int = 1800):
-        """Wait for EKS cluster to become active"""
-        start_time = time.time()
+        """Wait for EKS cluster to become active"""        start_time = time.time()
         while time.time() - start_time < max_wait:
             response = self.eks.describe_cluster(name=cluster_name)
             status = response['cluster']['status']
@@ -679,8 +658,7 @@ class AWSInfrastructureManager(BaseCloudManager):
         raise Exception(f"EKS cluster {cluster_name} did not become active within {max_wait} seconds")
     
     async def _get_or_create_eks_role(self) -> str:
-        """Get or create EKS service role"""
-        iam = self.session.client('iam')
+        """Get or create EKS service role"""        iam = self.session.client('iam')
         role_name = f'IAInfluencerEKSRole-{self.config.environment}'
         
         try:
@@ -715,8 +693,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             return role_response['Role']['Arn']
     
     async def _get_or_create_node_role(self) -> str:
-        """Get or create EKS node group role"""
-        iam = self.session.client('iam')
+        """Get or create EKS node group role"""        iam = self.session.client('iam')
         role_name = f'IAInfluencerNodeRole-{self.config.environment}'
         
         try:
@@ -753,8 +730,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             return role_response['Role']['Arn']
     
     async def _create_db_security_group(self, vpc_id: str) -> str:
-        """Create security group for RDS databases"""
-        sg_name = f'ia-influencer-db-sg-{self.config.environment}'
+        """Create security group for RDS databases"""        sg_name = f'ia-influencer-db-sg-{self.config.environment}'
         
         try:
             response = self.ec2.create_security_group(
@@ -784,8 +760,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _create_es_security_group(self, vpc_id: str) -> str:
-        """Create security group for Elasticsearch"""
-        sg_name = f'ia-influencer-es-sg-{self.config.environment}'
+        """Create security group for Elasticsearch"""        sg_name = f'ia-influencer-es-sg-{self.config.environment}'
         
         try:
             response = self.ec2.create_security_group(
@@ -815,8 +790,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _create_cache_security_group(self, vpc_id: str) -> str:
-        """Create security group for Redis cache"""
-        sg_name = f'ia-influencer-cache-sg-{self.config.environment}'
+        """Create security group for Redis cache"""        sg_name = f'ia-influencer-cache-sg-{self.config.environment}'
         
         try:
             response = self.ec2.create_security_group(
@@ -846,8 +820,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             raise
     
     async def _setup_mongodb_atlas(self) -> Dict[str, Any]:
-        """Setup MongoDB Atlas cluster (external service)"""
-        return {
+        """Setup MongoDB Atlas cluster (external service)"""        return {
             'provider': 'MongoDB Atlas',
             'cluster_name': f'ia-influencer-{self.config.environment}',
             'tier': 'M10',
@@ -857,14 +830,12 @@ class AWSInfrastructureManager(BaseCloudManager):
         }
     
     async def _rollback_failed_resources(self):
-        """Rollback any resources created during failed provisioning"""
-        self.logger.warning("Rolling back failed AWS infrastructure provisioning")
+        """Rollback any resources created during failed provisioning"""        self.logger.warning("Rolling back failed AWS infrastructure provisioning")
         # Implementation would clean up any partially created resources
         pass
     
     async def destroy_infrastructure(self) -> bool:
-        """Safely destroy AWS infrastructure"""
-        try:
+        """Safely destroy AWS infrastructure"""        try:
             self.logger.info(f"Starting AWS infrastructure destruction for {self.config.environment}")
             
             # Delete resources in reverse order of creation
@@ -884,8 +855,7 @@ class AWSInfrastructureManager(BaseCloudManager):
             return False
     
     async def validate_infrastructure(self) -> Dict[str, bool]:
-        """Validate AWS infrastructure deployment"""
-        validation_results = {}
+        """Validate AWS infrastructure deployment"""        validation_results = {}
         
         try:
             # Validate VPC
@@ -932,8 +902,7 @@ class AWSInfrastructureManager(BaseCloudManager):
 
 
 class GCPInfrastructureManager(BaseCloudManager):
-    """Google Cloud Platform infrastructure management"""
-    
+    """Google Cloud Platform infrastructure management"""    
     def __init__(self, config: InfrastructureConfig, project_id: str, credentials_path: str):
         super().__init__(config)
         self.project_id = project_id
@@ -942,8 +911,7 @@ class GCPInfrastructureManager(BaseCloudManager):
         self.container_client = container_v1.ClusterManagerClient()
         
     async def provision_infrastructure(self) -> Dict[str, Any]:
-        """Provision complete GCP infrastructure for IA Influencer platform"""
-        try:
+        """Provision complete GCP infrastructure for IA Influencer platform"""        try:
             self.logger.info(f"Starting GCP infrastructure provisioning for {self.config.environment}")
             
             # 1. Create VPC network
@@ -982,8 +950,7 @@ class GCPInfrastructureManager(BaseCloudManager):
 
 
 class AzureInfrastructureManager(BaseCloudManager):
-    """Microsoft Azure infrastructure management"""
-    
+    """Microsoft Azure infrastructure management"""    
     def __init__(self, config: InfrastructureConfig, subscription_id: str, 
                  resource_group: str, credentials: DefaultAzureCredential):
         super().__init__(config)
@@ -994,8 +961,7 @@ class AzureInfrastructureManager(BaseCloudManager):
         self.container_client = ContainerServiceClient(credentials, subscription_id)
         
     async def provision_infrastructure(self) -> Dict[str, Any]:
-        """Provision complete Azure infrastructure for IA Influencer platform"""
-        try:
+        """Provision complete Azure infrastructure for IA Influencer platform"""        try:
             self.logger.info(f"Starting Azure infrastructure provisioning for {self.config.environment}")
             
             # 1. Create resource group
@@ -1038,8 +1004,7 @@ class AzureInfrastructureManager(BaseCloudManager):
 
 
 class MultiCloudInfrastructureManager:
-    """Multi-cloud infrastructure orchestrator for hybrid deployments"""
-    
+    """Multi-cloud infrastructure orchestrator for hybrid deployments"""    
     def __init__(self, aws_config: InfrastructureConfig, gcp_config: InfrastructureConfig, 
                  azure_config: InfrastructureConfig):
         self.aws_manager = None
@@ -1049,8 +1014,7 @@ class MultiCloudInfrastructureManager:
         
     async def provision_hybrid_infrastructure(self, primary_cloud: CloudProvider, 
                                             secondary_clouds: List[CloudProvider]) -> Dict[str, Any]:
-        """Provision infrastructure across multiple cloud providers"""
-        try:
+        """Provision infrastructure across multiple cloud providers"""        try:
             self.logger.info(f"Starting multi-cloud infrastructure provisioning")
             
             results = {}
@@ -1098,26 +1062,22 @@ class MultiCloudInfrastructureManager:
             raise
     
     async def _provision_secondary_aws(self) -> Dict[str, Any]:
-        """Provision secondary AWS infrastructure for disaster recovery"""
-        if self.aws_manager:
+        """Provision secondary AWS infrastructure for disaster recovery"""        if self.aws_manager:
             return await self.aws_manager.provision_infrastructure()
         return {}
     
     async def _provision_secondary_gcp(self) -> Dict[str, Any]:
-        """Provision secondary GCP infrastructure for disaster recovery"""
-        if self.gcp_manager:
+        """Provision secondary GCP infrastructure for disaster recovery"""        if self.gcp_manager:
             return await self.gcp_manager.provision_infrastructure()
         return {}
     
     async def _provision_secondary_azure(self) -> Dict[str, Any]:
-        """Provision secondary Azure infrastructure for disaster recovery"""
-        if self.azure_manager:
+        """Provision secondary Azure infrastructure for disaster recovery"""        if self.azure_manager:
             return await self.azure_manager.provision_infrastructure()
         return {}
     
     async def _setup_cross_cloud_connectivity(self) -> Dict[str, Any]:
-        """Setup VPN connections and data replication between clouds"""
-        return {
+        """Setup VPN connections and data replication between clouds"""        return {
             'vpn_connections': [],
             'data_replication': 'configured',
             'backup_strategy': 'cross_cloud',
@@ -1128,8 +1088,7 @@ class MultiCloudInfrastructureManager:
 # Factory function for creating cloud managers
 def create_cloud_manager(provider: CloudProvider, config: InfrastructureConfig, 
                         **kwargs) -> BaseCloudManager:
-    """Factory function to create appropriate cloud manager"""
-    if provider == CloudProvider.AWS:
+    """Factory function to create appropriate cloud manager"""    if provider == CloudProvider.AWS:
         return AWSInfrastructureManager(config, kwargs.get('credentials', {}))
     elif provider == CloudProvider.GCP:
         return GCPInfrastructureManager(

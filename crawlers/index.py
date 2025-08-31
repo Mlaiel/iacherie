@@ -1,5 +1,4 @@
-"""
-Crawlers Module Index
+"""Crawlers Module Index
 ====================
 
 Central index for all crawler modules and intelligence engines.
@@ -13,7 +12,6 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
-
 from typing import Dict, List, Optional, Any, Type
 import logging
 
@@ -33,19 +31,16 @@ from .crawler_manager import CrawlerManager
 logger = logging.getLogger(__name__)
 
 class CrawlerModuleIndex:
-    """
-    Central index for all crawler modules and intelligence engines.
+    """    Central index for all crawler modules and intelligence engines.
     Provides factory methods and unified access to all crawling capabilities.
-    """
-    
+    """    
     def __init__(self):
         self._engines = {}
         self._crawlers = {}
         self._initialized = False
     
     async def initialize(self):
-        """Initialize all engines and crawlers."""
-        if self._initialized:
+        """Initialize all engines and crawlers."""        if self._initialized:
             return
         
         try:
@@ -72,38 +67,32 @@ class CrawlerModuleIndex:
             raise
     
     def get_content_intelligence_engine(self) -> ContentIntelligenceEngine:
-        """Get content intelligence engine."""
-        if not self._initialized:
+        """Get content intelligence engine."""        if not self._initialized:
             raise RuntimeError("Module index not initialized. Call initialize() first.")
         return self._engines['content_intelligence']
     
     def get_trend_detection_engine(self) -> TrendDetectionEngine:
-        """Get trend detection engine."""
-        if not self._initialized:
+        """Get trend detection engine."""        if not self._initialized:
             raise RuntimeError("Module index not initialized. Call initialize() first.")
         return self._engines['trend_detection']
     
     def get_collaboration_matching_engine(self) -> CollaborationMatchingEngine:
-        """Get collaboration matching engine."""
-        if not self._initialized:
+        """Get collaboration matching engine."""        if not self._initialized:
             raise RuntimeError("Module index not initialized. Call initialize() first.")
         return self._engines['collaboration_matching']
     
     def get_orchestration_engine(self) -> OrchestrationEngine:
-        """Get orchestration engine."""
-        if not self._initialized:
+        """Get orchestration engine."""        if not self._initialized:
             raise RuntimeError("Module index not initialized. Call initialize() first.")
         return self._engines['orchestration']
     
     def get_revenue_intelligence_engine(self) -> RevenueIntelligenceEngine:
-        """Get revenue intelligence engine."""
-        if not self._initialized:
+        """Get revenue intelligence engine."""        if not self._initialized:
             raise RuntimeError("Module index not initialized. Call initialize() first.")
         return self._engines['revenue_intelligence']
     
     def get_platform_crawler(self, platform: str):
-        """Get platform-specific crawler."""
-        if not self._initialized:
+        """Get platform-specific crawler."""        if not self._initialized:
             raise RuntimeError("Module index not initialized. Call initialize() first.")
         
         platform_lower = platform.lower()
@@ -113,56 +102,45 @@ class CrawlerModuleIndex:
         return self._crawlers[platform_lower]
     
     def get_all_engines(self) -> Dict[str, Any]:
-        """Get all intelligence engines."""
-        if not self._initialized:
+        """Get all intelligence engines."""        if not self._initialized:
             raise RuntimeError("Module index not initialized. Call initialize() first.")
         return self._engines.copy()
     
     def get_all_crawlers(self) -> Dict[str, Any]:
-        """Get all platform crawlers."""
-        if not self._initialized:
+        """Get all platform crawlers."""        if not self._initialized:
             raise RuntimeError("Module index not initialized. Call initialize() first.")
         return self._crawlers.copy()
     
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms."""
-        return list(self._crawlers.keys()) if self._initialized else []
+        """Get list of supported platforms."""        return list(self._crawlers.keys()) if self._initialized else []
     
     def get_available_engines(self) -> List[str]:
-        """Get list of available intelligence engines."""
-        return list(self._engines.keys()) if self._initialized else []
+        """Get list of available intelligence engines."""        return list(self._engines.keys()) if self._initialized else []
 
 # Global module index instance
 crawler_index = CrawlerModuleIndex()
 
 # Convenience functions
 async def initialize_crawlers():
-    """Initialize the global crawler index."""
-    await crawler_index.initialize()
+    """Initialize the global crawler index."""    await crawler_index.initialize()
 
 def get_content_intelligence() -> ContentIntelligenceEngine:
-    """Get content intelligence engine."""
-    return crawler_index.get_content_intelligence_engine()
+    """Get content intelligence engine."""    return crawler_index.get_content_intelligence_engine()
 
 def get_trend_detection() -> TrendDetectionEngine:
-    """Get trend detection engine."""
-    return crawler_index.get_trend_detection_engine()
+    """Get trend detection engine."""    return crawler_index.get_trend_detection_engine()
 
 def get_collaboration_matching() -> CollaborationMatchingEngine:
-    """Get collaboration matching engine."""
-    return crawler_index.get_collaboration_matching_engine()
+    """Get collaboration matching engine."""    return crawler_index.get_collaboration_matching_engine()
 
 def get_orchestration() -> OrchestrationEngine:
-    """Get orchestration engine."""
-    return crawler_index.get_orchestration_engine()
+    """Get orchestration engine."""    return crawler_index.get_orchestration_engine()
 
 def get_revenue_intelligence() -> RevenueIntelligenceEngine:
-    """Get revenue intelligence engine."""
-    return crawler_index.get_revenue_intelligence_engine()
+    """Get revenue intelligence engine."""    return crawler_index.get_revenue_intelligence_engine()
 
 def get_platform_crawler(platform: str):
-    """Get platform-specific crawler."""
-    return crawler_index.get_platform_crawler(platform)
+    """Get platform-specific crawler."""    return crawler_index.get_platform_crawler(platform)
 
 # Module exports
 __all__ = [

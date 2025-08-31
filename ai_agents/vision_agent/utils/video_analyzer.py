@@ -1,5 +1,4 @@
-"""
-Video Analyzer - Enterprise Video Processing & Analysis System
+"""Video Analyzer - Enterprise Video Processing & Analysis System
 ==============================================================
 
 Advanced video analysis system with AI-powered scene detection, motion tracking,
@@ -14,7 +13,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import cv2
@@ -62,16 +60,14 @@ from .image_processor import ImageProcessor
 logger = logging.getLogger(__name__)
 
 class VideoQuality(Enum):
-    """Video quality levels"""
-    EXCELLENT = "excellent"
+    """Video quality levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
     UNACCEPTABLE = "unacceptable"
 
 class SceneType(Enum):
-    """Types of scenes detected in video"""
-    STATIC = "static"
+    """Types of scenes detected in video"""    STATIC = "static"
     LOW_MOTION = "low_motion"
     HIGH_MOTION = "high_motion"
     TRANSITION = "transition"
@@ -80,16 +76,14 @@ class SceneType(Enum):
     WIPE = "wipe"
 
 class VideoAnalysisType(Enum):
-    """Types of video analysis"""
-    BASIC = "basic"
+    """Types of video analysis"""    BASIC = "basic"
     COMPREHENSIVE = "comprehensive"
     PROFESSIONAL = "professional"
     FORENSIC = "forensic"
 
 @dataclass
 class VideoFrame:
-    """Represents a single video frame"""
-    frame_number: int
+    """Represents a single video frame"""    frame_number: int
     timestamp: float
     image: np.ndarray
     quality_score: float
@@ -100,8 +94,7 @@ class VideoFrame:
 
 @dataclass
 class VideoSegment:
-    """Represents a video segment/scene"""
-    start_frame: int
+    """Represents a video segment/scene"""    start_frame: int
     end_frame: int
     start_time: float
     end_time: float
@@ -115,8 +108,7 @@ class VideoSegment:
 
 @dataclass
 class VideoMetrics:
-    """Comprehensive video quality and content metrics"""
-    resolution: Tuple[int, int]
+    """Comprehensive video quality and content metrics"""    resolution: Tuple[int, int]
     fps: float
     duration: float
     bitrate: int
@@ -146,8 +138,7 @@ class VideoMetrics:
 
 @dataclass
 class VideoAnalysisResult:
-    """Complete video analysis result"""
-    video_path: str
+    """Complete video analysis result"""    video_path: str
     analysis_type: VideoAnalysisType
     processing_time: float
     success: bool
@@ -176,12 +167,10 @@ class VideoAnalysisResult:
     errors: List[str] = None
 
 class VideoAnalyzer(BaseAgent):
-    """
-    Enterprise-grade video analysis system providing comprehensive
+    """    Enterprise-grade video analysis system providing comprehensive
     video processing, temporal analysis, content understanding, and
     professional-grade video intelligence capabilities.
-    """
-    
+    """    
     def __init__(self, config: Optional[VisionAgentConfig] = None):
         super().__init__(
             agent_id="video_analyzer",
@@ -258,8 +247,7 @@ class VideoAnalyzer(BaseAgent):
         }
 
     async def initialize(self) -> bool:
-        """Initialize video analysis components with advanced ML models"""
-        try:
+        """Initialize video analysis components with advanced ML models"""        try:
             logger.info("Initializing Enterprise Video Analyzer...")
             
             # Initialize device and GPU optimization
@@ -301,8 +289,7 @@ class VideoAnalyzer(BaseAgent):
             return False
     
     def _init_motion_detection(self):
-        """Initialize motion detection algorithms"""
-        try:
+        """Initialize motion detection algorithms"""        try:
             # Background subtractor for motion detection
             self.bg_subtractors = {
                 'mog2': cv2.createBackgroundSubtractorMOG2(
@@ -329,8 +316,7 @@ class VideoAnalyzer(BaseAgent):
             logger.warning(f"Motion detection initialization failed: {e}")
     
     def _init_scene_detection(self):
-        """Initialize scene detection algorithms"""
-        try:
+        """Initialize scene detection algorithms"""        try:
             # Initialize histogram comparators
             self.histogram_comparators = [
                 cv2.HISTCMP_CORREL,
@@ -349,8 +335,7 @@ class VideoAnalyzer(BaseAgent):
             logger.warning(f"Scene detection initialization failed: {e}")
     
     def _init_audio_analysis(self):
-        """Initialize audio analysis capabilities"""
-        try:
+        """Initialize audio analysis capabilities"""        try:
             # Audio analysis parameters
             self.audio_params = {
                 'sample_rate': 22050,
@@ -370,8 +355,7 @@ class VideoAnalyzer(BaseAgent):
             logger.warning(f"Audio analysis initialization failed: {e}")
     
     def _init_object_tracking(self):
-        """Initialize object tracking algorithms"""
-        try:
+        """Initialize object tracking algorithms"""        try:
             # Initialize various trackers for robust tracking
             self.tracker_types = {
                 'CSRT': cv2.TrackerCSRT_create,
@@ -391,8 +375,7 @@ class VideoAnalyzer(BaseAgent):
             self.tracker_types = {}
     
     async def _warm_up_models(self):
-        """Warm up models with sample data"""
-        try:
+        """Warm up models with sample data"""        try:
             # Create dummy video frame for warm-up
             dummy_frame = np.random.randint(0, 255, (480, 640, 3), dtype=np.uint8)
             
@@ -410,8 +393,7 @@ class VideoAnalyzer(BaseAgent):
             logger.warning(f"Model warm-up failed: {e}")
     
     def _ensure_directories(self):
-        """Ensure all necessary directories exist"""
-        directories = [
+        """Ensure all necessary directories exist"""        directories = [
             self.config.storage.temp_path,
             self.config.storage.cache_path,
             f"{self.config.storage.temp_path}/video_frames",
@@ -428,8 +410,7 @@ class VideoAnalyzer(BaseAgent):
                           extract_audio: bool = True,
                           generate_thumbnails: bool = True,
                           custom_options: Optional[Dict[str, Any]] = None) -> VideoAnalysisResult:
-        """
-        Comprehensive video analysis with temporal understanding
+        """        Comprehensive video analysis with temporal understanding
         
         Args:
             video_input: Video file path or bytes
@@ -440,8 +421,7 @@ class VideoAnalyzer(BaseAgent):
             
         Returns:
             VideoAnalysisResult with comprehensive analysis data
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Load and validate video
@@ -552,8 +532,7 @@ class VideoAnalyzer(BaseAgent):
         video_input: Union[str, bytes],
         analysis_options: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive video analysis
+        """        Comprehensive video analysis
         
         Args:
             video_input: Video file path or binary data
@@ -561,8 +540,7 @@ class VideoAnalyzer(BaseAgent):
             
         Returns:
             Complete video analysis results
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             logger.info("Starting comprehensive video analysis...")
@@ -635,8 +613,7 @@ class VideoAnalyzer(BaseAgent):
             }
 
     async def _load_video(self, video_input: Union[str, bytes]) -> cv2.VideoCapture:
-        """Load video from file path or binary data"""
-        if isinstance(video_input, str):
+        """Load video from file path or binary data"""        if isinstance(video_input, str):
             # Load from file path
             cap = cv2.VideoCapture(video_input)
             if not cap.isOpened():
@@ -659,8 +636,7 @@ class VideoAnalyzer(BaseAgent):
             raise ValidationError("Video input must be file path or binary data")
 
     async def _extract_video_properties(self, video_capture: cv2.VideoCapture) -> Dict[str, Any]:
-        """Extract comprehensive video properties"""
-        try:
+        """Extract comprehensive video properties"""        try:
             properties = {
                 'frame_count': int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT)),
                 'fps': video_capture.get(cv2.CAP_PROP_FPS),
@@ -706,8 +682,7 @@ class VideoAnalyzer(BaseAgent):
             
     
     async def _prepare_video_input(self, video_input: Union[str, bytes]) -> str:
-        """Prepare video input for processing"""
-        
+        """Prepare video input for processing"""        
         if isinstance(video_input, str):
             # File path provided
             if not os.path.exists(video_input):
@@ -731,8 +706,7 @@ class VideoAnalyzer(BaseAgent):
             raise ValidationError("Unsupported video input type")
 
     async def _extract_video_info(self, video_path: str) -> Optional[Dict[str, Any]]:
-        """Extract comprehensive video information using FFmpeg"""
-        try:
+        """Extract comprehensive video information using FFmpeg"""        try:
             # Use ffprobe to get detailed video information
             probe_result = ffmpeg.probe(video_path)
             
@@ -781,8 +755,7 @@ class VideoAnalyzer(BaseAgent):
             return None
 
     async def _validate_video(self, video_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate video against constraints"""
-        validation_result = {'valid': True, 'errors': [], 'warnings': []}
+        """Validate video against constraints"""        validation_result = {'valid': True, 'errors': [], 'warnings': []}
         
         # Check file size
         if video_info['file_size'] > self.max_file_size:
@@ -826,8 +799,7 @@ class VideoAnalyzer(BaseAgent):
                                    video_path: str,
                                    analysis_type: VideoAnalysisType,
                                    custom_options: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze video frames comprehensively"""
-        
+        """Analyze video frames comprehensively"""        
         sampling_rate = self.frame_sampling_rates[analysis_type]
         
         # Open video
@@ -918,8 +890,7 @@ class VideoAnalyzer(BaseAgent):
             cap.release()
 
     async def _analyze_frame_quality(self, frame: np.ndarray) -> float:
-        """Analyze quality of individual frame"""
-        try:
+        """Analyze quality of individual frame"""        try:
             # Use image processor for detailed quality analysis
             metrics = await self.image_processor.assess_quality(frame)
             
@@ -941,8 +912,7 @@ class VideoAnalyzer(BaseAgent):
             return min(laplacian_var / 1000, 1.0)
 
     async def _calculate_motion_score(self, frame: np.ndarray, bg_subtractor) -> float:
-        """Calculate motion intensity in frame"""
-        try:
+        """Calculate motion intensity in frame"""        try:
             if bg_subtractor is None:
                 return 0.0
             
@@ -959,8 +929,7 @@ class VideoAnalyzer(BaseAgent):
             return 0.0
 
     def _classify_scene_type(self, motion_score: float) -> SceneType:
-        """Classify scene type based on motion score"""
-        if motion_score < 0.01:
+        """Classify scene type based on motion score"""        if motion_score < 0.01:
             return SceneType.STATIC
         elif motion_score < 0.05:
             return SceneType.LOW_MOTION
@@ -970,14 +939,12 @@ class VideoAnalyzer(BaseAgent):
             return SceneType.TRANSITION
 
     async def _detect_objects_in_frame(self, frame: np.ndarray) -> List[Dict]:
-        """Detect objects in frame (simplified implementation)"""
-        # In production, this would use actual YOLO or other object detection model
+        """Detect objects in frame (simplified implementation)"""        # In production, this would use actual YOLO or other object detection model
         # For now, return placeholder data
         return []
 
     async def _detect_faces_in_frame(self, frame: np.ndarray) -> List[Dict]:
-        """Detect faces in frame"""
-        try:
+        """Detect faces in frame"""        try:
             if not hasattr(self, 'face_detector') or self.face_detector is None:
                 return []
             
@@ -999,8 +966,7 @@ class VideoAnalyzer(BaseAgent):
             return []
 
     def _is_key_frame(self, current_frame: VideoFrame, frames_history: List[VideoFrame]) -> bool:
-        """Determine if current frame is a key frame"""
-        if len(frames_history) < 2:
+        """Determine if current frame is a key frame"""        if len(frames_history) < 2:
             return True
         
         # Key frame criteria
@@ -1023,8 +989,7 @@ class VideoAnalyzer(BaseAgent):
         return any(criteria)
 
     async def _perform_temporal_analysis(self, frames_analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform temporal analysis to identify patterns and segments"""
-        
+        """Perform temporal analysis to identify patterns and segments"""        
         frames_data = frames_analysis['frames_data']
         fps = frames_analysis['fps']
         
@@ -1048,8 +1013,7 @@ class VideoAnalyzer(BaseAgent):
         }
 
     async def _segment_video(self, frames_data: List[VideoFrame], fps: float) -> List[VideoSegment]:
-        """Segment video into coherent scenes"""
-        
+        """Segment video into coherent scenes"""        
         segments = []
         current_segment_start = 0
         
@@ -1082,8 +1046,7 @@ class VideoAnalyzer(BaseAgent):
         return segments
 
     def _is_segment_boundary(self, current_frame: VideoFrame, prev_frame: VideoFrame) -> bool:
-        """Determine if there's a segment boundary between frames"""
-        
+        """Determine if there's a segment boundary between frames"""        
         # Scene type change
         if current_frame.scene_type != prev_frame.scene_type:
             return True
@@ -1103,8 +1066,7 @@ class VideoAnalyzer(BaseAgent):
                             start_idx: int,
                             end_idx: int,
                             fps: float) -> VideoSegment:
-        """Create VideoSegment from frame data"""
-        
+        """Create VideoSegment from frame data"""        
         if not segment_frames:
             return None
         
@@ -1138,14 +1100,12 @@ class VideoAnalyzer(BaseAgent):
         )
 
     def _determine_segment_scene_type(self, frames: List[VideoFrame]) -> SceneType:
-        """Determine overall scene type for segment"""
-        scene_types = [f.scene_type for f in frames]
+        """Determine overall scene type for segment"""        scene_types = [f.scene_type for f in frames]
         # Return most common scene type
         return max(set(scene_types), key=scene_types.count)
 
     def _extract_dominant_colors(self, frames: List[VideoFrame]) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors from segment frames"""
-        try:
+        """Extract dominant colors from segment frames"""        try:
             if not frames:
                 return []
             
@@ -1184,8 +1144,7 @@ class VideoAnalyzer(BaseAgent):
             return []
 
     async def _analyze_dominant_themes(self, frames_data: List[VideoFrame]) -> List[str]:
-        """Analyze dominant themes in video content"""
-        
+        """Analyze dominant themes in video content"""        
         themes = []
         
         # Analyze object presence
@@ -1221,8 +1180,7 @@ class VideoAnalyzer(BaseAgent):
         return themes
 
     async def _create_mood_timeline(self, frames_data: List[VideoFrame]) -> List[Tuple[float, str, float]]:
-        """Create mood timeline based on visual analysis"""
-        
+        """Create mood timeline based on visual analysis"""        
         mood_timeline = []
         
         # Analyze in 10-second windows
@@ -1248,8 +1206,7 @@ class VideoAnalyzer(BaseAgent):
         return mood_timeline
 
     def _analyze_window_mood(self, frames: List[VideoFrame]) -> Tuple[str, float]:
-        """Analyze mood for a window of frames"""
-        
+        """Analyze mood for a window of frames"""        
         if not frames:
             return "neutral", 0.0
         
@@ -1274,8 +1231,7 @@ class VideoAnalyzer(BaseAgent):
         return mood, confidence
 
     async def _analyze_temporal_patterns(self, frames_data: List[VideoFrame]) -> Dict[str, Any]:
-        """Analyze temporal patterns in video"""
-        
+        """Analyze temporal patterns in video"""        
         patterns = {
             'motion_trends': self._analyze_motion_trends(frames_data),
             'quality_trends': self._analyze_quality_trends(frames_data),
@@ -1286,8 +1242,7 @@ class VideoAnalyzer(BaseAgent):
         return patterns
 
     def _analyze_motion_trends(self, frames_data: List[VideoFrame]) -> Dict[str, Any]:
-        """Analyze motion trends over time"""
-        
+        """Analyze motion trends over time"""        
         motion_scores = [f.motion_score for f in frames_data]
         timestamps = [f.timestamp for f in frames_data]
         
@@ -1302,8 +1257,7 @@ class VideoAnalyzer(BaseAgent):
         }
 
     def _analyze_quality_trends(self, frames_data: List[VideoFrame]) -> Dict[str, Any]:
-        """Analyze quality trends over time"""
-        
+        """Analyze quality trends over time"""        
         quality_scores = [f.quality_score for f in frames_data]
         
         return {
@@ -1313,8 +1267,7 @@ class VideoAnalyzer(BaseAgent):
         }
 
     def _analyze_scene_transitions(self, frames_data: List[VideoFrame]) -> Dict[str, Any]:
-        """Analyze scene transition patterns"""
-        
+        """Analyze scene transition patterns"""        
         scene_types = [f.scene_type for f in frames_data]
         
         transitions = []
@@ -1333,8 +1286,7 @@ class VideoAnalyzer(BaseAgent):
         }
 
     def _analyze_rhythmic_patterns(self, frames_data: List[VideoFrame]) -> Dict[str, Any]:
-        """Analyze rhythmic patterns in motion and cuts"""
-        
+        """Analyze rhythmic patterns in motion and cuts"""        
         # This would implement more sophisticated rhythm analysis
         # For now, return basic pattern information
         
@@ -1363,8 +1315,7 @@ class VideoAnalyzer(BaseAgent):
             'rhythm_consistency': rhythm_consistency,
     
     async def _analyze_audio_track(self, video_path: str) -> Optional[Dict[str, Any]]:
-        """Analyze audio track of video"""
-        try:
+        """Analyze audio track of video"""        try:
             # Extract audio using moviepy
             audio_clip = AudioFileClip(video_path)
             
@@ -1397,8 +1348,7 @@ class VideoAnalyzer(BaseAgent):
                                      frames_analysis: Dict[str, Any],
                                      temporal_analysis: Dict[str, Any],
                                      audio_analysis: Optional[Dict[str, Any]]) -> VideoMetrics:
-        """Generate comprehensive video metrics"""
-        
+        """Generate comprehensive video metrics"""        
         frames_data = frames_analysis['frames_data']
         
         # Calculate quality metrics
@@ -1491,8 +1441,7 @@ class VideoAnalyzer(BaseAgent):
         )
 
     def _calculate_color_variance(self, frames_data: List[VideoFrame]) -> float:
-        """Calculate color variance across frames"""
-        try:
+        """Calculate color variance across frames"""        try:
             if not frames_data:
                 return 0.0
             
@@ -1516,8 +1465,7 @@ class VideoAnalyzer(BaseAgent):
             return 0.0
 
     def _calculate_compression_efficiency(self, video_info: Dict[str, Any]) -> float:
-        """Calculate compression efficiency score"""
-        
+        """Calculate compression efficiency score"""        
         # Theoretical uncompressed size
         width, height = video_info['width'], video_info['height']
         fps = video_info['fps']
@@ -1536,8 +1484,7 @@ class VideoAnalyzer(BaseAgent):
         return 0.5
 
     def _assess_encoding_quality(self, video_info: Dict[str, Any]) -> float:
-        """Assess encoding quality based on technical parameters"""
-        
+        """Assess encoding quality based on technical parameters"""        
         codec = video_info['codec'].lower()
         bitrate = video_info['bitrate']
         resolution = video_info['width'] * video_info['height']
@@ -1563,8 +1510,7 @@ class VideoAnalyzer(BaseAgent):
         return (codec_score + bitrate_ratio) / 2
 
     async def _generate_video_thumbnails(self, video_path: str, key_frames: List[VideoFrame]) -> List[str]:
-        """Generate thumbnail images from key frames"""
-        
+        """Generate thumbnail images from key frames"""        
         thumbnails = []
         thumbnail_dir = Path(self.config.storage.temp_path) / "thumbnails"
         thumbnail_dir.mkdir(exist_ok=True)
@@ -1586,8 +1532,7 @@ class VideoAnalyzer(BaseAgent):
             return []
 
     def _generate_video_cache_key(self, video_path: str, analysis_type: VideoAnalysisType) -> str:
-        """Generate cache key for video analysis results"""
-        
+        """Generate cache key for video analysis results"""        
         # Include file modification time for cache invalidation
         try:
             mtime = os.path.getmtime(video_path)
@@ -1602,8 +1547,7 @@ class VideoAnalyzer(BaseAgent):
                            frame_numbers: Optional[List[int]] = None,
                            timestamps: Optional[List[float]] = None,
                            interval_seconds: Optional[float] = None) -> List[np.ndarray]:
-        """
-        Extract specific frames from video
+        """        Extract specific frames from video
         
         Args:
             video_path: Path to video file
@@ -1613,8 +1557,7 @@ class VideoAnalyzer(BaseAgent):
             
         Returns:
             List of extracted frames as numpy arrays
-        """
-        
+        """        
         frames = []
         
         cap = cv2.VideoCapture(video_path)
@@ -1659,16 +1602,14 @@ class VideoAnalyzer(BaseAgent):
             cap.release()
 
     async def generate_video_summary(self, video_path: str) -> Dict[str, Any]:
-        """
-        Generate a comprehensive video summary
+        """        Generate a comprehensive video summary
         
         Args:
             video_path: Path to video file
             
         Returns:
             Dictionary containing video summary information
-        """
-        
+        """        
         try:
             # Perform basic analysis
             analysis_result = await self.analyze_video(
@@ -1722,8 +1663,7 @@ class VideoAnalyzer(BaseAgent):
             return {'error': str(e)}
 
     async def cleanup(self):
-        """Cleanup resources and temporary files"""
-        try:
+        """Cleanup resources and temporary files"""        try:
             # Close thread pool
             if hasattr(self, 'thread_pool'):
                 self.thread_pool.shutdown(wait=True)
@@ -1757,8 +1697,7 @@ class VideoAnalyzer(BaseAgent):
             logger.error(f"Cleanup failed: {e}")
 
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get video analyzer statistics"""
-        return {
+        """Get video analyzer statistics"""        return {
             'status': self.status.value,
             'version': self.version,
             'device': str(self.device) if hasattr(self, 'device') else 'unknown',
@@ -1774,8 +1713,7 @@ class VideoAnalyzer(BaseAgent):
             return []
 
     async def _analyze_motion(self, video_capture: cv2.VideoCapture) -> Dict[str, Any]:
-        """Analyze motion patterns in video"""
-        motion_data = {
+        """Analyze motion patterns in video"""        motion_data = {
             'total_motion': 0,
             'motion_intensity': [],
             'motion_direction': [],
@@ -1857,8 +1795,7 @@ class VideoAnalyzer(BaseAgent):
             return motion_data
 
     async def _detect_objects_in_video(self, video_capture: cv2.VideoCapture) -> Dict[str, Any]:
-        """Detect objects across video frames"""
-        object_detections = {
+        """Detect objects across video frames"""        object_detections = {
             'total_detections': 0,
             'unique_objects': set(),
             'detection_timeline': [],
@@ -1917,8 +1854,7 @@ class VideoAnalyzer(BaseAgent):
             return object_detections
 
     async def _assess_video_quality(self, video_capture: cv2.VideoCapture) -> Dict[str, Any]:
-        """Assess technical quality of video"""
-        quality_metrics = {
+        """Assess technical quality of video"""        quality_metrics = {
             'overall_score': 0.0,
             'resolution_score': 0.0,
             'framerate_score': 0.0,
@@ -2041,8 +1977,7 @@ class VideoAnalyzer(BaseAgent):
         video_capture: cv2.VideoCapture,
         count: int = 5
     ) -> List[Dict[str, Any]]:
-        """Generate video thumbnails"""
-        thumbnails = []
+        """Generate video thumbnails"""        thumbnails = []
         
         try:
             frame_count = int(video_capture.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -2088,8 +2023,7 @@ class VideoAnalyzer(BaseAgent):
             return []
 
     async def _analyze_audio_track(self, video_path: str) -> Dict[str, Any]:
-        """Analyze audio track of video (placeholder for audio analysis)"""
-        try:
+        """Analyze audio track of video (placeholder for audio analysis)"""        try:
             # This would typically use librosa or similar audio processing library
             # For now, return placeholder data
             audio_analysis = {
@@ -2108,8 +2042,7 @@ class VideoAnalyzer(BaseAgent):
             return {'has_audio': False, 'error': str(e)}
 
     async def _generate_video_fingerprint(self, video_capture: cv2.VideoCapture) -> str:
-        """Generate unique fingerprint for video content"""
-        try:
+        """Generate unique fingerprint for video content"""        try:
             fingerprint_data = []
             
             # Sample frames for fingerprinting
@@ -2153,8 +2086,7 @@ class VideoAnalyzer(BaseAgent):
         frame_interval: int = 30,
         max_frames: int = 100
     ) -> List[np.ndarray]:
-        """Extract frames from video at specified intervals"""
-        try:
+        """Extract frames from video at specified intervals"""        try:
             video_capture = await self._load_video(video_input)
             frames = []
             frame_number = 0
@@ -2177,8 +2109,7 @@ class VideoAnalyzer(BaseAgent):
             return []
 
     async def get_video_duration(self, video_input: Union[str, bytes]) -> float:
-        """Get video duration in seconds"""
-        try:
+        """Get video duration in seconds"""        try:
             video_capture = await self._load_video(video_input)
             frame_count = video_capture.get(cv2.CAP_PROP_FRAME_COUNT)
             fps = video_capture.get(cv2.CAP_PROP_FPS)
@@ -2190,8 +2121,7 @@ class VideoAnalyzer(BaseAgent):
             return 0.0
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             await self.performance_monitor.close()
             await self.content_validator.cleanup()
             logger.info("Video Analyzer cleanup completed")
@@ -2199,9 +2129,7 @@ class VideoAnalyzer(BaseAgent):
             logger.error(f"Video Analyzer cleanup failed: {e}")
 
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported video formats"""
-        return self.supported_formats.copy()
+        """Get list of supported video formats"""        return self.supported_formats.copy()
 
     def get_analysis_capabilities(self) -> Dict[str, bool]:
-        """Get available analysis capabilities"""
-        return self.analysis_capabilities.copy()
+        """Get available analysis capabilities"""        return self.analysis_capabilities.copy()

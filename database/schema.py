@@ -1,23 +1,19 @@
-"""
-Database Schema Creation
+"""Database Schema Creation
 SQL schema for PostgreSQL database.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from sqlalchemy import text
 from ..core.database import database_manager
 from ..core.logging import logger
 
 
 async def create_tables():
-    """Create all database tables"""
-    try:
+    """Create all database tables"""    try:
         async with database_manager.get_postgres_session() as session:
             # Users table
-            await session.execute(text("""
-                CREATE TABLE IF NOT EXISTS users (
+            await session.execute(text("""                CREATE TABLE IF NOT EXISTS users (
                     id VARCHAR(32) PRIMARY KEY,
                     email VARCHAR(255) UNIQUE NOT NULL,
                     username VARCHAR(50) UNIQUE NOT NULL,
@@ -35,8 +31,7 @@ async def create_tables():
             """))
             
             # Content table
-            await session.execute(text("""
-                CREATE TABLE IF NOT EXISTS content (
+            await session.execute(text("""                CREATE TABLE IF NOT EXISTS content (
                     id VARCHAR(36) PRIMARY KEY,
                     user_id VARCHAR(32) REFERENCES users(id),
                     title VARCHAR(255) NOT NULL,
@@ -53,8 +48,7 @@ async def create_tables():
             """))
             
             # Content monitoring table
-            await session.execute(text("""
-                CREATE TABLE IF NOT EXISTS content_monitoring (
+            await session.execute(text("""                CREATE TABLE IF NOT EXISTS content_monitoring (
                     id SERIAL PRIMARY KEY,
                     user_id VARCHAR(32) REFERENCES users(id),
                     content_id VARCHAR(36) REFERENCES content(id),
@@ -70,8 +64,7 @@ async def create_tables():
             """))
             
             # Protection violations table
-            await session.execute(text("""
-                CREATE TABLE IF NOT EXISTS protection_violations (
+            await session.execute(text("""                CREATE TABLE IF NOT EXISTS protection_violations (
                     id VARCHAR(36) PRIMARY KEY DEFAULT gen_random_uuid(),
                     original_content_id VARCHAR(36) REFERENCES content(id),
                     user_id VARCHAR(32) REFERENCES users(id),
@@ -86,8 +79,7 @@ async def create_tables():
             """))
             
             # Platform connections table
-            await session.execute(text("""
-                CREATE TABLE IF NOT EXISTS platform_connections (
+            await session.execute(text("""                CREATE TABLE IF NOT EXISTS platform_connections (
                     id SERIAL PRIMARY KEY,
                     user_id VARCHAR(32) REFERENCES users(id),
                     platform VARCHAR(50) NOT NULL,
@@ -121,8 +113,7 @@ async def create_tables():
 
 
 async def drop_tables():
-    """Drop all database tables (use with caution)"""
-    try:
+    """Drop all database tables (use with caution)"""    try:
         async with database_manager.get_postgres_session() as session:
             await session.execute(text("DROP TABLE IF EXISTS platform_connections CASCADE"))
             await session.execute(text("DROP TABLE IF EXISTS protection_violations CASCADE"))

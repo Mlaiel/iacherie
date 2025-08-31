@@ -1,5 +1,4 @@
-"""
-IA-Influencer-Agent - Webhook Management System
+"""IA-Influencer-Agent - Webhook Management System
 Module: backend/core/events/webhook_manager.py
 Architecture: Webhook Processing and External Integrations
 Auteur: Fahed Mlaiel <mlaiel@live.de>
@@ -11,7 +10,6 @@ Description:
     Système de gestion de webhooks pour intégrations externes avec retry,
     signature et transformation pour la plateforme IA-Influencer-Agent.
 """
-
 from typing import Any, Dict, List, Optional, Union, Callable
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class WebhookEvent(Enum):
-    """Types d'événements webhook"""
-    DELIVERY_SUCCESS = "delivery.success"
+    """Types d'événements webhook"""    DELIVERY_SUCCESS = "delivery.success"
     DELIVERY_FAILED = "delivery.failed"
     DELIVERY_RETRY = "delivery.retry"
     ENDPOINT_DISABLED = "endpoint.disabled"
@@ -41,8 +38,7 @@ class WebhookEvent(Enum):
 
 
 class WebhookStatus(Enum):
-    """Statut des webhooks"""
-    ACTIVE = "active"
+    """Statut des webhooks"""    ACTIVE = "active"
     DISABLED = "disabled"
     FAILED = "failed"
     SUSPENDED = "suspended"
@@ -50,8 +46,7 @@ class WebhookStatus(Enum):
 
 @dataclass
 class WebhookEndpoint:
-    """Point de terminaison webhook"""
-    endpoint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Point de terminaison webhook"""    endpoint_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     url: str = ""
     name: str = ""
     description: str = ""
@@ -105,8 +100,7 @@ class WebhookEndpoint:
         }
     
     def matches_event(self, event: Event) -> bool:
-        """Vérifie si l'endpoint doit recevoir cet événement"""
-        if self.status != WebhookStatus.ACTIVE:
+        """Vérifie si l'endpoint doit recevoir cet événement"""        if self.status != WebhookStatus.ACTIVE:
             return False
         
         # Vérification types d'événements
@@ -139,8 +133,7 @@ class WebhookEndpoint:
 
 @dataclass
 class WebhookDelivery:
-    """Livraison de webhook"""
-    delivery_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Livraison de webhook"""    delivery_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     endpoint_id: str = ""
     event_id: str = ""
     url: str = ""
@@ -185,20 +178,17 @@ class WebhookDelivery:
 
 
 class WebhookTransformer:
-    """Transformateur de payload webhook"""
-    
+    """Transformateur de payload webhook"""    
     @staticmethod
     def transform_event(event: Event, template: Optional[str] = None) -> Dict[str, Any]:
-        """Transforme un événement en payload webhook"""
-        if template:
+        """Transforme un événement en payload webhook"""        if template:
             return WebhookTransformer._apply_template(event, template)
         else:
             return WebhookTransformer._default_transform(event)
     
     @staticmethod
     def _default_transform(event: Event) -> Dict[str, Any]:
-        """Transformation par défaut"""
-        return {
+        """Transformation par défaut"""        return {
             "webhook_version": "1.0",
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "event": {
@@ -217,8 +207,7 @@ class WebhookTransformer:
     
     @staticmethod
     def _apply_template(event: Event, template: str) -> Dict[str, Any]:
-        """Applique un template de transformation"""
-        try:
+        """Applique un template de transformation"""        try:
             # Variables disponibles
             variables = {
                 "event_id": event.id,
@@ -250,12 +239,10 @@ class WebhookTransformer:
 
 
 class WebhookSigner:
-    """Générateur de signatures webhook"""
-    
+    """Générateur de signatures webhook"""    
     @staticmethod
     def generate_signature(payload: bytes, secret: str) -> str:
-        """Génère une signature HMAC-SHA256"""
-        signature = hmac.new(
+        """Génère une signature HMAC-SHA256"""        signature = hmac.new(
             secret.encode('utf-8'),
             payload,
             hashlib.sha256
@@ -264,28 +251,24 @@ class WebhookSigner:
     
     @staticmethod
     def verify_signature(payload: bytes, signature: str, secret: str) -> bool:
-        """Vérifie une signature webhook"""
-        expected_signature = WebhookSigner.generate_signature(payload, secret)
+        """Vérifie une signature webhook"""        expected_signature = WebhookSigner.generate_signature(payload, secret)
         return hmac.compare_digest(signature, expected_signature)
 
 
 class WebhookProcessor:
-    """Processeur de livraison de webhooks"""
-    
+    """Processeur de livraison de webhooks"""    
     def __init__(self, max_concurrent: int = 10):
         self.max_concurrent = max_concurrent
         self._semaphore = asyncio.Semaphore(max_concurrent)
         self._session: Optional[aiohttp.ClientSession] = None
     
     async def start(self):
-        """Démarre le processeur"""
-        if self._session is None:
+        """Démarre le processeur"""        if self._session is None:
             timeout = aiohttp.ClientTimeout(total=60)
             self._session = aiohttp.ClientSession(timeout=timeout)
     
     async def stop(self):
-        """Arrête le processeur"""
-        if self._session:
+        """Arrête le processeur"""        if self._session:
             await self._session.close()
             self._session = None
     
@@ -294,8 +277,7 @@ class WebhookProcessor:
         endpoint: WebhookEndpoint, 
         delivery: WebhookDelivery
     ) -> bool:
-        """Livre un webhook"""
-        async with self._semaphore:
+        """Livre un webhook"""        async with self._semaphore:
             return await self._attempt_delivery(endpoint, delivery)
     
     async def _attempt_delivery(
@@ -303,8 +285,7 @@ class WebhookProcessor:
         endpoint: WebhookEndpoint, 
         delivery: WebhookDelivery
     ) -> bool:
-        """Tente la livraison d'un webhook"""
-        if not self._session:
+        """Tente la livraison d'un webhook"""        if not self._session:
             await self.start()
         
         delivery.attempts += 1
@@ -372,10 +353,8 @@ class WebhookProcessor:
 
 
 class WebhookManager:
-    """
-    Gestionnaire principal des webhooks
-    """
-    
+    """    Gestionnaire principal des webhooks
+    """    
     def __init__(self, processor: Optional[WebhookProcessor] = None):
         self.processor = processor or WebhookProcessor()
         
@@ -400,8 +379,7 @@ class WebhookManager:
         logger.info("WebhookManager initialized")
     
     async def start(self):
-        """Démarre le gestionnaire de webhooks"""
-        if self._processing:
+        """Démarre le gestionnaire de webhooks"""        if self._processing:
             return
         
         await self.processor.start()
@@ -411,8 +389,7 @@ class WebhookManager:
         logger.info("WebhookManager started")
     
     async def stop(self):
-        """Arrête le gestionnaire de webhooks"""
-        if not self._processing:
+        """Arrête le gestionnaire de webhooks"""        if not self._processing:
             return
         
         self._processing = False
@@ -423,8 +400,7 @@ class WebhookManager:
         logger.info("WebhookManager stopped")
     
     def register_endpoint(self, endpoint: WebhookEndpoint) -> str:
-        """Enregistre un endpoint webhook"""
-        try:
+        """Enregistre un endpoint webhook"""        try:
             # Validation de l'URL
             parsed_url = urlparse(endpoint.url)
             if not parsed_url.scheme or not parsed_url.netloc:
@@ -445,8 +421,7 @@ class WebhookManager:
             raise
     
     def unregister_endpoint(self, endpoint_id: str) -> bool:
-        """Supprime un endpoint webhook"""
-        if endpoint_id in self._endpoints:
+        """Supprime un endpoint webhook"""        if endpoint_id in self._endpoints:
             endpoint = self._endpoints[endpoint_id]
             endpoint.status = WebhookStatus.DISABLED
             del self._endpoints[endpoint_id]
@@ -458,16 +433,14 @@ class WebhookManager:
         return False
     
     def get_endpoint(self, endpoint_id: str) -> Optional[WebhookEndpoint]:
-        """Récupère un endpoint par ID"""
-        return self._endpoints.get(endpoint_id)
+        """Récupère un endpoint par ID"""        return self._endpoints.get(endpoint_id)
     
     def get_endpoints(
         self, 
         status: Optional[WebhookStatus] = None,
         event_type: Optional[str] = None
     ) -> List[WebhookEndpoint]:
-        """Récupère les endpoints selon critères"""
-        endpoints = list(self._endpoints.values())
+        """Récupère les endpoints selon critères"""        endpoints = list(self._endpoints.values())
         
         if status:
             endpoints = [e for e in endpoints if e.status == status]
@@ -483,8 +456,7 @@ class WebhookManager:
         return endpoints
     
     async def process_event(self, event: Event) -> List[str]:
-        """Traite un événement et crée les livraisons webhook"""
-        delivery_ids = []
+        """Traite un événement et crée les livraisons webhook"""        delivery_ids = []
         
         # Recherche des endpoints correspondants
         matching_endpoints = [
@@ -516,8 +488,7 @@ class WebhookManager:
         return delivery_ids
     
     async def _create_delivery(self, event: Event, endpoint: WebhookEndpoint) -> WebhookDelivery:
-        """Crée une livraison webhook"""
-        # Transformation du payload
+        """Crée une livraison webhook"""        # Transformation du payload
         payload = WebhookTransformer.transform_event(event, endpoint.transform_template)
         
         # Création de la livraison
@@ -542,8 +513,7 @@ class WebhookManager:
         return delivery
     
     async def _process_deliveries(self):
-        """Traitement continu des livraisons en queue"""
-        while self._processing:
+        """Traitement continu des livraisons en queue"""        while self._processing:
             try:
                 # Récupération de la prochaine livraison
                 delivery = await asyncio.wait_for(
@@ -559,8 +529,7 @@ class WebhookManager:
                 logger.error("Error in webhook delivery processing: %s", e)
     
     async def _handle_delivery(self, delivery: WebhookDelivery):
-        """Traite une livraison webhook"""
-        try:
+        """Traite une livraison webhook"""        try:
             endpoint = self._endpoints.get(delivery.endpoint_id)
             if not endpoint:
                 logger.error("Endpoint not found for delivery %s", delivery.delivery_id)
@@ -607,8 +576,7 @@ class WebhookManager:
             logger.error("Error handling webhook delivery %s: %s", delivery.delivery_id, e)
     
     async def _schedule_retry(self, delivery: WebhookDelivery, endpoint: WebhookEndpoint):
-        """Planifie un retry de livraison"""
-        # Calcul du délai (backoff exponentiel)
+        """Planifie un retry de livraison"""        # Calcul du délai (backoff exponentiel)
         delay = endpoint.retry_delay * (2 ** (delivery.attempts - 1))
         delivery.next_attempt = datetime.now(timezone.utc) + timedelta(seconds=delay)
         delivery.status = "retrying"
@@ -618,8 +586,7 @@ class WebhookManager:
         await self._delivery_queue.put(delivery)
     
     def get_delivery(self, delivery_id: str) -> Optional[WebhookDelivery]:
-        """Récupère une livraison par ID"""
-        return self._deliveries.get(delivery_id)
+        """Récupère une livraison par ID"""        return self._deliveries.get(delivery_id)
     
     def get_deliveries(
         self,
@@ -627,8 +594,7 @@ class WebhookManager:
         status: Optional[str] = None,
         limit: int = 100
     ) -> List[WebhookDelivery]:
-        """Récupère les livraisons selon critères"""
-        deliveries = list(self._deliveries.values())
+        """Récupère les livraisons selon critères"""        deliveries = list(self._deliveries.values())
         
         if endpoint_id:
             deliveries = [d for d in deliveries if d.endpoint_id == endpoint_id]
@@ -642,8 +608,7 @@ class WebhookManager:
         return deliveries[:limit]
     
     def get_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques"""
-        return {
+        """Retourne les statistiques"""        return {
             "stats": self._stats.copy(),
             "queue_size": self._delivery_queue.qsize(),
             "processing": self._processing

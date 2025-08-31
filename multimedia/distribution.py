@@ -1,5 +1,4 @@
-"""
-Professional Content Distribution and Monetization Engine
+"""Professional Content Distribution and Monetization Engine
 Enterprise-grade multi-platform distribution with revenue tracking and analytics
 
 Project Team: Lead AI Developer + Backend Senior Engineer + ML Engineer + 
@@ -16,7 +15,6 @@ extent of the law. All rights reserved.
 
 Contact: mlaiel@live.de for licensing and authorization inquiries.
 """
-
 import asyncio
 import logging
 import json
@@ -45,8 +43,7 @@ settings = get_settings()
 
 
 class PlatformType(Enum):
-    """Supported distribution platforms"""
-    YOUTUBE = "youtube"
+    """Supported distribution platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -59,8 +56,7 @@ class PlatformType(Enum):
 
 
 class ContentType(Enum):
-    """Content types for distribution"""
-    VIDEO = "video"
+    """Content types for distribution"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -71,8 +67,7 @@ class ContentType(Enum):
 
 
 class MonetizationModel(Enum):
-    """Revenue generation models"""
-    ADVERTISING = "advertising"
+    """Revenue generation models"""    ADVERTISING = "advertising"
     SUBSCRIPTION = "subscription" 
     SPONSORSHIP = "sponsorship"
     MERCHANDISE = "merchandise"
@@ -84,8 +79,7 @@ class MonetizationModel(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform API credentials"""
-    platform: PlatformType
+    """Platform API credentials"""    platform: PlatformType
     api_key: str
     api_secret: str
     access_token: Optional[str] = None
@@ -97,8 +91,7 @@ class PlatformCredentials:
 
 @dataclass
 class DistributionConfig:
-    """Content distribution configuration"""
-    platforms: List[PlatformType]
+    """Content distribution configuration"""    platforms: List[PlatformType]
     schedule_time: Optional[datetime] = None
     auto_optimize: bool = True
     enable_analytics: bool = True
@@ -111,8 +104,7 @@ class DistributionConfig:
 
 @dataclass
 class MonetizationConfig:
-    """Monetization configuration"""
-    models: List[MonetizationModel]
+    """Monetization configuration"""    models: List[MonetizationModel]
     revenue_split: Dict[str, Decimal] = field(default_factory=dict)
     minimum_payout: Decimal = Decimal("50.00")
     currency: str = "EUR"
@@ -128,8 +120,7 @@ class MonetizationConfig:
 
 @dataclass
 class DistributionResult:
-    """Result of content distribution"""
-    success: bool
+    """Result of content distribution"""    success: bool
     platform: PlatformType
     content_id: str
     platform_url: Optional[str] = None
@@ -146,8 +137,7 @@ class DistributionResult:
 
 @dataclass
 class RevenueData:
-    """Revenue tracking data"""
-    platform: PlatformType
+    """Revenue tracking data"""    platform: PlatformType
     content_id: str
     monetization_model: MonetizationModel
     gross_revenue: Decimal
@@ -171,8 +161,7 @@ class RevenueData:
 
 
 class BasePlatformIntegration(ABC):
-    """Base class for platform integrations"""
-    
+    """Base class for platform integrations"""    
     def __init__(self, credentials: PlatformCredentials):
         self.credentials = credentials
         self.session = None
@@ -180,8 +169,7 @@ class BasePlatformIntegration(ABC):
         
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform"""
-        pass
+        """Authenticate with the platform"""        pass
         
     @abstractmethod
     async def upload_content(
@@ -190,8 +178,7 @@ class BasePlatformIntegration(ABC):
         content_type: ContentType,
         metadata: Dict[str, Any]
     ) -> DistributionResult:
-        """Upload content to platform"""
-        pass
+        """Upload content to platform"""        pass
         
     @abstractmethod
     async def get_analytics(
@@ -200,8 +187,7 @@ class BasePlatformIntegration(ABC):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get content analytics"""
-        pass
+        """Get content analytics"""        pass
         
     @abstractmethod
     async def get_revenue_data(
@@ -209,12 +195,10 @@ class BasePlatformIntegration(ABC):
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Get revenue data"""
-        pass
+        """Get revenue data"""        pass
     
     async def _init_session(self):
-        """Initialize HTTP session with proper configuration"""
-        if not self.session:
+        """Initialize HTTP session with proper configuration"""        if not self.session:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session = aiohttp.ClientSession(
                 timeout=timeout,
@@ -225,21 +209,18 @@ class BasePlatformIntegration(ABC):
             )
     
     async def _close_session(self):
-        """Close HTTP session"""
-        if self.session:
+        """Close HTTP session"""        if self.session:
             await self.session.close()
             self.session = None
 
 
 class YouTubeIntegration(BasePlatformIntegration):
-    """YouTube API integration for content distribution"""
-    
+    """YouTube API integration for content distribution"""    
     API_BASE_URL = "https://www.googleapis.com/youtube/v3"
     UPLOAD_URL = "https://www.googleapis.com/upload/youtube/v3/videos"
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API"""
-        try:
+        """Authenticate with YouTube API"""        try:
             await self._init_session()
             
             # Verify API key and access token
@@ -272,8 +253,7 @@ class YouTubeIntegration(BasePlatformIntegration):
         content_type: ContentType,
         metadata: Dict[str, Any]
     ) -> DistributionResult:
-        """Upload video content to YouTube"""
-        start_time = datetime.utcnow()
+        """Upload video content to YouTube"""        start_time = datetime.utcnow()
         
         try:
             await self._init_session()
@@ -325,8 +305,7 @@ class YouTubeIntegration(BasePlatformIntegration):
             )
     
     async def _initiate_resumable_upload(self, metadata: Dict[str, Any]) -> str:
-        """Initiate resumable upload session"""
-        headers = {
+        """Initiate resumable upload session"""        headers = {
             "Authorization": f"Bearer {self.credentials.access_token}",
             "Content-Type": "application/json",
             "X-Upload-Content-Type": "video/*"
@@ -350,8 +329,7 @@ class YouTubeIntegration(BasePlatformIntegration):
                 raise DistributionError(f"Failed to initiate upload: {response.status}")
     
     async def _perform_resumable_upload(self, upload_url: str, content: bytes) -> str:
-        """Perform the actual file upload"""
-        headers = {
+        """Perform the actual file upload"""        headers = {
             "Content-Type": "video/*",
             "Content-Length": str(len(content))
         }
@@ -369,8 +347,7 @@ class YouTubeIntegration(BasePlatformIntegration):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get YouTube Analytics data"""
-        try:
+        """Get YouTube Analytics data"""        try:
             await self._init_session()
             
             url = "https://youtubeanalytics.googleapis.com/v2/reports"
@@ -404,8 +381,7 @@ class YouTubeIntegration(BasePlatformIntegration):
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Get YouTube revenue data"""
-        try:
+        """Get YouTube revenue data"""        try:
             await self._init_session()
             
             url = "https://youtubeanalytics.googleapis.com/v2/reports"
@@ -439,8 +415,7 @@ class YouTubeIntegration(BasePlatformIntegration):
         start_date: datetime, 
         end_date: datetime
     ) -> List[RevenueData]:
-        """Parse YouTube revenue data"""
-        revenue_data = []
+        """Parse YouTube revenue data"""        revenue_data = []
         
         if "rows" in data:
             for row in data["rows"]:
@@ -467,19 +442,16 @@ class YouTubeIntegration(BasePlatformIntegration):
         return revenue_data
     
     async def _get_channel_id(self) -> str:
-        """Get the authenticated channel ID"""
-        # This would be cached from authentication
+        """Get the authenticated channel ID"""        # This would be cached from authentication
         return "MINE"  # Placeholder for actual channel ID
 
 
 class InstagramIntegration(BasePlatformIntegration):
-    """Instagram Graph API integration"""
-    
+    """Instagram Graph API integration"""    
     API_BASE_URL = "https://graph.facebook.com/v18.0"
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram Graph API"""
-        try:
+        """Authenticate with Instagram Graph API"""        try:
             await self._init_session()
             
             url = f"{self.API_BASE_URL}/me"
@@ -506,8 +478,7 @@ class InstagramIntegration(BasePlatformIntegration):
         content_type: ContentType,
         metadata: Dict[str, Any]
     ) -> DistributionResult:
-        """Upload content to Instagram"""
-        start_time = datetime.utcnow()
+        """Upload content to Instagram"""        start_time = datetime.utcnow()
         
         try:
             await self._init_session()
@@ -540,8 +511,7 @@ class InstagramIntegration(BasePlatformIntegration):
             )
     
     async def _upload_image(self, content: bytes, metadata: Dict[str, Any]) -> DistributionResult:
-        """Upload image to Instagram"""
-        # First, upload the image to get a media ID
+        """Upload image to Instagram"""        # First, upload the image to get a media ID
         upload_url = await self._upload_media(content, "IMAGE")
         
         # Then create the post
@@ -557,8 +527,7 @@ class InstagramIntegration(BasePlatformIntegration):
         )
     
     async def _upload_video(self, content: bytes, metadata: Dict[str, Any]) -> DistributionResult:
-        """Upload video to Instagram"""
-        # Similar to image but for video content
+        """Upload video to Instagram"""        # Similar to image but for video content
         upload_url = await self._upload_media(content, "VIDEO")
         post_id = await self._create_media_post(upload_url, metadata)
         
@@ -572,8 +541,7 @@ class InstagramIntegration(BasePlatformIntegration):
         )
     
     async def _upload_story(self, content: bytes, metadata: Dict[str, Any]) -> DistributionResult:
-        """Upload story to Instagram"""
-        # Stories have different API endpoints
+        """Upload story to Instagram"""        # Stories have different API endpoints
         upload_url = await self._upload_media(content, "STORY")
         story_id = await self._create_story_post(upload_url, metadata)
         
@@ -586,19 +554,16 @@ class InstagramIntegration(BasePlatformIntegration):
         )
     
     async def _upload_media(self, content: bytes, media_type: str) -> str:
-        """Upload media file and return media URL"""
-        # This would implement the actual Instagram media upload
+        """Upload media file and return media URL"""        # This would implement the actual Instagram media upload
         # Placeholder implementation
         return "https://example.com/uploaded_media.jpg"
     
     async def _create_media_post(self, media_url: str, metadata: Dict[str, Any]) -> str:
-        """Create a media post from uploaded content"""
-        # Placeholder implementation
+        """Create a media post from uploaded content"""        # Placeholder implementation
         return "post_id_123"
     
     async def _create_story_post(self, media_url: str, metadata: Dict[str, Any]) -> str:
-        """Create a story post from uploaded content"""
-        # Placeholder implementation
+        """Create a story post from uploaded content"""        # Placeholder implementation
         return "story_id_456"
     
     async def get_analytics(
@@ -607,8 +572,7 @@ class InstagramIntegration(BasePlatformIntegration):
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get Instagram analytics"""
-        try:
+        """Get Instagram analytics"""        try:
             await self._init_session()
             
             url = f"{self.API_BASE_URL}/{content_id}/insights"
@@ -632,15 +596,13 @@ class InstagramIntegration(BasePlatformIntegration):
         start_date: datetime,
         end_date: datetime
     ) -> List[RevenueData]:
-        """Get Instagram revenue data"""
-        # Instagram doesn't have direct revenue API like YouTube
+        """Get Instagram revenue data"""        # Instagram doesn't have direct revenue API like YouTube
         # This would integrate with Instagram Creator Fund or branded content APIs
         return []
 
 
 class ContentDistributor:
-    """Main content distribution orchestrator"""
-    
+    """Main content distribution orchestrator"""    
     def __init__(self):
         self.platform_integrations: Dict[PlatformType, BasePlatformIntegration] = {}
         self.scheduler = None
@@ -650,8 +612,7 @@ class ContentDistributor:
         platform: PlatformType, 
         credentials: PlatformCredentials
     ) -> bool:
-        """Register a platform integration"""
-        try:
+        """Register a platform integration"""        try:
             if platform == PlatformType.YOUTUBE:
                 integration = YouTubeIntegration(credentials)
             elif platform == PlatformType.INSTAGRAM:
@@ -681,8 +642,7 @@ class ContentDistributor:
         config: DistributionConfig,
         user_id: str
     ) -> Dict[PlatformType, DistributionResult]:
-        """Distribute content to multiple platforms"""
-        results = {}
+        """Distribute content to multiple platforms"""        results = {}
         
         # Determine content type from format
         if content_format.is_video():
@@ -732,8 +692,7 @@ class ContentDistributor:
         config: DistributionConfig,
         user_id: str
     ) -> DistributionResult:
-        """Distribute content to a specific platform"""
-        try:
+        """Distribute content to a specific platform"""        try:
             integration = self.platform_integrations[platform]
             
             # Prepare platform-specific metadata
@@ -771,8 +730,7 @@ class ContentDistributor:
         user_id: str, 
         results: Dict[PlatformType, DistributionResult]
     ):
-        """Store distribution records in database"""
-        try:
+        """Store distribution records in database"""        try:
             async with get_session() as session:
                 for platform, result in results.items():
                     if result.success:
@@ -804,8 +762,7 @@ class ContentDistributor:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Get comprehensive analytics summary"""
-        try:
+        """Get comprehensive analytics summary"""        try:
             summary = {
                 "total_distributions": 0,
                 "successful_distributions": 0,
@@ -858,8 +815,7 @@ class ContentDistributor:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Get user distributions for a platform in date range"""
-        try:
+        """Get user distributions for a platform in date range"""        try:
             async with get_session() as session:
                 stmt = select("content_distributions").where(
                     "user_id" == user_id,
@@ -876,8 +832,7 @@ class ContentDistributor:
 
 
 class MonetizationEngine:
-    """Revenue tracking and monetization management"""
-    
+    """Revenue tracking and monetization management"""    
     def __init__(self, distributor: ContentDistributor):
         self.distributor = distributor
         self.payment_processors = {}
@@ -888,8 +843,7 @@ class MonetizationEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Track revenue across all platforms"""
-        try:
+        """Track revenue across all platforms"""        try:
             revenue_summary = {
                 "total_gross_revenue": Decimal("0.00"),
                 "total_net_revenue": Decimal("0.00"), 
@@ -947,8 +901,7 @@ class MonetizationEngine:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate revenue projections based on current performance"""
-        try:
+        """Generate revenue projections based on current performance"""        try:
             # Simple projection based on current trend
             period_days = (end_date - start_date).days
             daily_average = current_data["total_net_revenue"] / period_days if period_days > 0 else Decimal("0.00")
@@ -969,8 +922,7 @@ class MonetizationEngine:
         user_id: str,
         config: MonetizationConfig
     ) -> bool:
-        """Setup automated payout system"""
-        try:
+        """Setup automated payout system"""        try:
             # Store payout configuration
             async with get_session() as session:
                 payout_config = {
@@ -996,8 +948,7 @@ class MonetizationEngine:
             return False
     
     async def process_scheduled_payouts(self) -> Dict[str, Any]:
-        """Process all scheduled payouts"""
-        try:
+        """Process all scheduled payouts"""        try:
             processed_payouts = {
                 "successful": 0,
                 "failed": 0,
@@ -1030,8 +981,7 @@ class MonetizationEngine:
             return {"successful": 0, "failed": 0, "total_amount": Decimal("0.00"), "details": []}
     
     async def _get_payout_eligible_users(self) -> List[Dict[str, Any]]:
-        """Get users eligible for payout based on their configuration"""
-        try:
+        """Get users eligible for payout based on their configuration"""        try:
             async with get_session() as session:
                 # Get users with auto_withdraw enabled and sufficient balance
                 stmt = select("user_payout_configs").where(
@@ -1045,8 +995,7 @@ class MonetizationEngine:
             return []
     
     async def _process_user_payout(self, user_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process payout for a specific user"""
-        try:
+        """Process payout for a specific user"""        try:
             user_id = user_config["user_id"]
             minimum_payout = Decimal(user_config["minimum_payout"])
             
@@ -1090,13 +1039,11 @@ class MonetizationEngine:
             return {"success": False, "user_id": user_id, "error": str(e)}
     
     async def _get_user_balance(self, user_id: str) -> Decimal:
-        """Get user's current revenue balance"""
-        # This would calculate based on revenue data and previous payouts
+        """Get user's current revenue balance"""        # This would calculate based on revenue data and previous payouts
         return Decimal("100.00")  # Placeholder
     
     async def _update_user_balance(self, user_id: str, new_balance: Decimal) -> bool:
-        """Update user's balance after payout"""
-        # Implementation would update balance in database
+        """Update user's balance after payout"""        # Implementation would update balance in database
         return True
     
     async def _execute_payout(
@@ -1105,7 +1052,6 @@ class MonetizationEngine:
         amount: Decimal, 
         config: Dict[str, Any]
     ) -> bool:
-        """Execute the actual payout through payment processor"""
-        # This would integrate with Stripe, Wise, PayPal, etc.
+        """Execute the actual payout through payment processor"""        # This would integrate with Stripe, Wise, PayPal, etc.
         logger.info(f"Processing payout of {amount} {config['currency']} for user {user_id}")
         return True  # Placeholder for successful payout

@@ -1,5 +1,4 @@
-"""
-Content Protection & Fingerprinting Schemas for IA Influencer Agent Platform
+"""Content Protection & Fingerprinting Schemas for IA Influencer Agent Platform
 Professional AI-powered content protection, fingerprinting, and rights management schemas
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -8,7 +7,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
-
 from datetime import datetime
 from decimal import Decimal
 from typing import Any, Dict, List, Optional, Set
@@ -20,8 +18,7 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class ProtectionRequest(BaseSchema):
-    """Content protection request schema."""
-    
+    """Content protection request schema."""    
     content_id: UUID = Field(description="Content to protect")
     protection_level: str = Field(description="Protection level (basic, standard, premium, enterprise)")
     protection_methods: List[str] = Field(description="Protection methods to apply")
@@ -45,16 +42,14 @@ class ProtectionRequest(BaseSchema):
     
     @validator('protection_level')
     def validate_protection_level(cls, v):
-        """Validate protection level."""
-        allowed_levels = {"basic", "standard", "premium", "enterprise", "custom"}
+        """Validate protection level."""        allowed_levels = {"basic", "standard", "premium", "enterprise", "custom"}
         if v not in allowed_levels:
             raise ValueError(f'Protection level must be one of: {", ".join(allowed_levels)}')
         return v
 
 
 class ProtectionOut(UUIDSchema, TimestampSchema):
-    """Content protection status and information schema."""
-    
+    """Content protection status and information schema."""    
     content_id: UUID
     protection_level: str
     protection_methods: List[str]
@@ -89,15 +84,13 @@ class ProtectionOut(UUIDSchema, TimestampSchema):
     
     @property
     def takedown_success_rate(self) -> float:
-        """Calculate takedown success rate."""
-        if self.takedowns_issued == 0:
+        """Calculate takedown success rate."""        if self.takedowns_issued == 0:
             return 0.0
         return self.takedowns_successful / self.takedowns_issued
 
 
 class FingerprintCreate(BaseSchema):
-    """Content fingerprint creation request schema."""
-    
+    """Content fingerprint creation request schema."""    
     content_id: UUID = Field(description="Content to fingerprint")
     fingerprint_type: str = Field(description="Type of fingerprint to generate")
     quality_level: str = Field(default="high", description="Fingerprint quality level")
@@ -113,8 +106,7 @@ class FingerprintCreate(BaseSchema):
     
     @validator('fingerprint_type')
     def validate_fingerprint_type(cls, v):
-        """Validate fingerprint type."""
-        allowed_types = {
+        """Validate fingerprint type."""        allowed_types = {
             "audio_chromaprint", "audio_spectral", "video_perceptual", "video_structural",
             "image_perceptual", "image_phash", "text_semantic", "text_syntactic",
             "multimodal_combined", "hash_sha256", "hash_md5"
@@ -125,8 +117,7 @@ class FingerprintCreate(BaseSchema):
 
 
 class FingerprintOut(UUIDSchema, TimestampSchema):
-    """Content fingerprint information schema."""
-    
+    """Content fingerprint information schema."""    
     content_id: UUID
     fingerprint_type: str
     algorithm_version: str
@@ -160,8 +151,7 @@ class FingerprintOut(UUIDSchema, TimestampSchema):
 
 
 class WatermarkRequest(BaseSchema):
-    """Digital watermark application request schema."""
-    
+    """Digital watermark application request schema."""    
     content_id: UUID = Field(description="Content to watermark")
     watermark_type: str = Field(description="Type of watermark to apply")
     watermark_strength: str = Field(default="medium", description="Watermark strength")
@@ -187,8 +177,7 @@ class WatermarkRequest(BaseSchema):
     
     @validator('watermark_type')
     def validate_watermark_type(cls, v):
-        """Validate watermark type."""
-        allowed_types = {
+        """Validate watermark type."""        allowed_types = {
             "visible_text", "visible_logo", "invisible_digital", "audio_spectral",
             "video_frame", "steganographic", "forensic", "blockchain_hash"
         }
@@ -198,8 +187,7 @@ class WatermarkRequest(BaseSchema):
 
 
 class WatermarkOut(UUIDSchema, TimestampSchema):
-    """Digital watermark information schema."""
-    
+    """Digital watermark information schema."""    
     content_id: UUID
     watermark_type: str
     watermark_strength: str
@@ -227,8 +215,7 @@ class WatermarkOut(UUIDSchema, TimestampSchema):
 
 
 class ViolationReport(UUIDSchema, TimestampSchema):
-    """Content violation report schema."""
-    
+    """Content violation report schema."""    
     content_id: UUID = Field(description="Original protected content")
     violation_type: str = Field(description="Type of violation detected")
     severity_level: str = Field(description="Violation severity level")
@@ -263,8 +250,7 @@ class ViolationReport(UUIDSchema, TimestampSchema):
     
     @validator('violation_type')
     def validate_violation_type(cls, v):
-        """Validate violation type."""
-        allowed_types = {
+        """Validate violation type."""        allowed_types = {
             "copyright_infringement", "unauthorized_distribution", "piracy",
             "trademark_violation", "counterfeiting", "plagiarism", "deepfake",
             "unauthorized_modification", "commercial_use", "attribution_missing"
@@ -275,8 +261,7 @@ class ViolationReport(UUIDSchema, TimestampSchema):
 
 
 class TakedownRequest(UUIDSchema, TimestampSchema, AuditSchema):
-    """DMCA/Legal takedown request schema."""
-    
+    """DMCA/Legal takedown request schema."""    
     violation_report_id: UUID = Field(description="Associated violation report")
     takedown_type: str = Field(description="Type of takedown request")
     legal_basis: str = Field(description="Legal basis for takedown")
@@ -315,8 +300,7 @@ class TakedownRequest(UUIDSchema, TimestampSchema, AuditSchema):
     
     @validator('takedown_type')
     def validate_takedown_type(cls, v):
-        """Validate takedown type."""
-        allowed_types = {
+        """Validate takedown type."""        allowed_types = {
             "dmca", "european_copyright_directive", "national_copyright",
             "trademark", "privacy", "defamation", "custom_legal"
         }
@@ -326,8 +310,7 @@ class TakedownRequest(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class LegalAction(UUIDSchema, TimestampSchema, AuditSchema):
-    """Legal action tracking schema."""
-    
+    """Legal action tracking schema."""    
     violation_report_id: UUID
     action_type: str = Field(description="Type of legal action")
     legal_status: str = Field(description="Current legal status")
@@ -362,8 +345,7 @@ class LegalAction(UUIDSchema, TimestampSchema, AuditSchema):
 
 
 class SecurityScan(UUIDSchema, TimestampSchema):
-    """Content security scan results schema."""
-    
+    """Content security scan results schema."""    
     content_id: UUID
     scan_type: str = Field(description="Type of security scan")
     scan_scope: str = Field(description="Scope of the scan")
@@ -396,8 +378,7 @@ class SecurityScan(UUIDSchema, TimestampSchema):
 
 
 class ThreatAnalysis(UUIDSchema, TimestampSchema):
-    """Advanced threat analysis schema."""
-    
+    """Advanced threat analysis schema."""    
     content_id: UUID
     analysis_type: str = Field(description="Type of threat analysis")
     threat_intelligence_sources: List[str] = Field(default_factory=list)

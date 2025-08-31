@@ -1,5 +1,4 @@
-"""
-Business Metrics Module for Crawler Reports
+"""Business Metrics Module for Crawler Reports
 ===========================================
 
 Ultra-advanced business metrics calculation engine specifically designed for the 
@@ -56,7 +55,6 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
-
 import logging
 import asyncio
 import numpy as np
@@ -91,8 +89,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type enumeration for multi-format support."""
-    AUDIO = "audio"
+    """Content type enumeration for multi-format support."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -105,8 +102,7 @@ class ContentType(Enum):
 
 
 class PlatformType(Enum):
-    """Platform type enumeration for multi-platform support."""
-    INSTAGRAM = "instagram"
+    """Platform type enumeration for multi-platform support."""    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     TWITTER = "twitter"
@@ -119,8 +115,7 @@ class PlatformType(Enum):
 
 
 class CreatorCategory(Enum):
-    """Creator category enumeration according to business logic."""
-    MUSICIAN = "musician"
+    """Creator category enumeration according to business logic."""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -134,8 +129,7 @@ class CreatorCategory(Enum):
 
 @dataclass
 class MetricResult:
-    """Result container for calculated metrics."""
-    metric_name: str
+    """Result container for calculated metrics."""    metric_name: str
     value: Union[float, int, Dict[str, Any]]
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -146,8 +140,7 @@ class MetricResult:
 
 @dataclass
 class BusinessKPI:
-    """Business KPI definition and calculation parameters."""
-    kpi_id: str
+    """Business KPI definition and calculation parameters."""    kpi_id: str
     name: str
     category: str
     description: str
@@ -160,11 +153,9 @@ class BusinessKPI:
 
 
 class BaseMetricsCalculator(ABC):
-    """Base class for all metrics calculators."""
-    
+    """Base class for all metrics calculators."""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the metrics calculator."""
-        self.config = config or {}
+        """Initialize the metrics calculator."""        self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
         self._cache = {}
         self._scalers = {}
@@ -176,22 +167,18 @@ class BaseMetricsCalculator(ABC):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> List[MetricResult]:
-        """Calculate metrics from the provided data."""
-        pass
+        """Calculate metrics from the provided data."""        pass
     
     def _normalize_score(self, value: float, min_val: float = 0.0, max_val: float = 100.0) -> float:
-        """Normalize a score to a 0-100 range."""
-        return max(0.0, min(100.0, ((value - min_val) / (max_val - min_val)) * 100))
+        """Normalize a score to a 0-100 range."""        return max(0.0, min(100.0, ((value - min_val) / (max_val - min_val)) * 100))
     
     def _calculate_growth_rate(self, current: float, previous: float) -> float:
-        """Calculate growth rate percentage."""
-        if previous == 0:
+        """Calculate growth rate percentage."""        if previous == 0:
             return 0.0 if current == 0 else 100.0
         return ((current - previous) / previous) * 100
     
     def _detect_trend(self, values: List[float]) -> str:
-        """Detect trend direction from a series of values."""
-        if len(values) < 2:
+        """Detect trend direction from a series of values."""        if len(values) < 2:
             return "insufficient_data"
         
         # Calculate correlation with time indices
@@ -207,8 +194,7 @@ class BaseMetricsCalculator(ABC):
 
 
 class CreatorSuccessMetrics(BaseMetricsCalculator):
-    """
-    Calculator for comprehensive creator success metrics.
+    """    Calculator for comprehensive creator success metrics.
     
     Implements the core creator success KPIs according to the business logic:
     - Content creation effectiveness
@@ -216,11 +202,9 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
     - Monetization success
     - Cross-platform performance
     - Collaboration success rate
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize creator success metrics calculator."""
-        super().__init__(config)
+        """Initialize creator success metrics calculator."""        super().__init__(config)
         
         # Creator success benchmarks
         self.success_benchmarks = {
@@ -236,8 +220,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         time_range: Dict[str, datetime],
         **kwargs
     ) -> List[MetricResult]:
-        """Calculate comprehensive creator success metrics."""
-        try:
+        """Calculate comprehensive creator success metrics."""        try:
             metrics = []
             
             # Overall creator success score
@@ -276,8 +259,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
             raise
     
     async def _calculate_overall_success_score(self, data: Dict[str, Any]) -> float:
-        """Calculate overall creator success score (0-100)."""
-        try:
+        """Calculate overall creator success score (0-100)."""        try:
             weights = {
                 'content_quality': 0.25,
                 'engagement_rate': 0.25,
@@ -322,8 +304,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
             return 0.0
     
     async def _calculate_content_performance(self, data: Dict[str, Any]) -> List[MetricResult]:
-        """Calculate content performance metrics."""
-        metrics = []
+        """Calculate content performance metrics."""        metrics = []
         
         try:
             # Content quality score
@@ -358,8 +339,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return metrics
     
     async def _calculate_engagement_metrics(self, data: Dict[str, Any]) -> List[MetricResult]:
-        """Calculate audience engagement metrics."""
-        metrics = []
+        """Calculate audience engagement metrics."""        metrics = []
         
         try:
             # Overall engagement rate
@@ -398,8 +378,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         data: Dict[str, Any],
         time_range: Dict[str, datetime]
     ) -> List[MetricResult]:
-        """Calculate growth trajectory metrics."""
-        metrics = []
+        """Calculate growth trajectory metrics."""        metrics = []
         
         try:
             # Follower growth rate
@@ -434,8 +413,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return metrics
     
     async def _calculate_monetization_effectiveness(self, data: Dict[str, Any]) -> List[MetricResult]:
-        """Calculate monetization effectiveness metrics."""
-        metrics = []
+        """Calculate monetization effectiveness metrics."""        metrics = []
         
         try:
             # Revenue per follower
@@ -470,8 +448,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return metrics
     
     async def _calculate_cross_platform_performance(self, data: Dict[str, Any]) -> List[MetricResult]:
-        """Calculate cross-platform performance metrics."""
-        metrics = []
+        """Calculate cross-platform performance metrics."""        metrics = []
         
         try:
             # Platform diversity score
@@ -506,14 +483,12 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return metrics
     
     def _calculate_engagement_rate(self, engagement_data: Dict[str, Any]) -> float:
-        """Calculate overall engagement rate."""
-        total_engagements = sum(engagement_data.get(key, 0) for key in ['likes', 'comments', 'shares'])
+        """Calculate overall engagement rate."""        total_engagements = sum(engagement_data.get(key, 0) for key in ['likes', 'comments', 'shares'])
         total_reach = engagement_data.get('reach', 1)
         return (total_engagements / total_reach) * 100
     
     def _benchmark_engagement_rate(self, engagement_rate: float) -> Dict[str, Any]:
-        """Benchmark engagement rate against industry standards."""
-        benchmarks = self.success_benchmarks['engagement_rate']
+        """Benchmark engagement rate against industry standards."""        benchmarks = self.success_benchmarks['engagement_rate']
         
         if engagement_rate >= benchmarks['excellent']:
             tier = "excellent"
@@ -531,8 +506,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         }
     
     def _calculate_posting_consistency(self, posting_frequency: List[int]) -> float:
-        """Calculate posting consistency score based on frequency data."""
-        if not posting_frequency:
+        """Calculate posting consistency score based on frequency data."""        if not posting_frequency:
             return 0.0
         
         # Calculate coefficient of variation (lower is more consistent)
@@ -548,8 +522,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return consistency_score
     
     def _calculate_follower_growth_rate(self, follower_history: List[Dict[str, Any]]) -> float:
-        """Calculate follower growth rate over time."""
-        if len(follower_history) < 2:
+        """Calculate follower growth rate over time."""        if len(follower_history) < 2:
             return 0.0
         
         start_count = follower_history[0]['count']
@@ -558,15 +531,13 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return self._calculate_growth_rate(end_count, start_count)
     
     def _calculate_reach_growth(self, reach_data: Dict[str, Any]) -> float:
-        """Calculate reach expansion rate."""
-        current_reach = reach_data.get('current', 0)
+        """Calculate reach expansion rate."""        current_reach = reach_data.get('current', 0)
         previous_reach = reach_data.get('previous', 0)
         
         return self._calculate_growth_rate(current_reach, previous_reach)
     
     async def _predict_growth_trajectory(self, historical_metrics: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Predict growth trajectory using time series analysis."""
-        try:
+        """Predict growth trajectory using time series analysis."""        try:
             # Extract follower count time series
             dates = [datetime.fromisoformat(m['date']) for m in historical_metrics]
             followers = [m['follower_count'] for m in historical_metrics]
@@ -603,8 +574,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
             return {'predicted_growth_rate': 0.0}
     
     def _calculate_partnership_effectiveness(self, partnerships: List[Dict[str, Any]]) -> float:
-        """Calculate brand partnership effectiveness score."""
-        if not partnerships:
+        """Calculate brand partnership effectiveness score."""        if not partnerships:
             return 0.0
         
         total_score = 0.0
@@ -621,8 +591,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return total_score / len(partnerships)
     
     def _calculate_platform_diversity(self, platform_data: Dict[str, Any]) -> float:
-        """Calculate platform diversity score (0-100)."""
-        active_platforms = len([p for p in platform_data.values() if p.get('active', False)])
+        """Calculate platform diversity score (0-100)."""        active_platforms = len([p for p in platform_data.values() if p.get('active', False)])
         max_platforms = len(PlatformType)
         
         # Base diversity score
@@ -637,8 +606,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return min(100, diversity_score)
     
     def _calculate_platform_synergy(self, platform_metrics: Dict[str, Any]) -> float:
-        """Calculate cross-platform synergy score."""
-        # Analyze correlation between platform performances
+        """Calculate cross-platform synergy score."""        # Analyze correlation between platform performances
         platform_scores = []
         for platform, metrics in platform_metrics.items():
             platform_scores.append([
@@ -660,8 +628,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
         return max(0, min(100, synergy_score))
     
     def _calculate_percentile(self, value: float, benchmarks: Dict[str, float]) -> float:
-        """Calculate percentile ranking against benchmarks."""
-        # Simple percentile calculation based on benchmarks
+        """Calculate percentile ranking against benchmarks."""        # Simple percentile calculation based on benchmarks
         if value >= benchmarks['excellent']:
             return 95.0
         elif value >= benchmarks['good']:
@@ -672,8 +639,7 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
             return 25.0
     
     def _get_engagement_recommendation(self, tier: str) -> str:
-        """Get engagement improvement recommendation based on tier."""
-        recommendations = {
+        """Get engagement improvement recommendation based on tier."""        recommendations = {
             'excellent': "Maintain current strategy and explore advanced growth tactics",
             'good': "Focus on consistency and explore new content formats",
             'average': "Increase posting frequency and improve content quality",
@@ -683,21 +649,18 @@ class CreatorSuccessMetrics(BaseMetricsCalculator):
 
 
 class ContentProtectionMetrics(BaseMetricsCalculator):
-    """
-    Calculator for AI fingerprinting and content protection effectiveness metrics.
+    """    Calculator for AI fingerprinting and content protection effectiveness metrics.
     
     Implements protection metrics according to the business logic:
     Upload multi-format → IA protection rights → Content monitoring
-    """
-    
+    """    
     async def calculate_metrics(
         self,
         data: Dict[str, Any],
         time_range: Dict[str, datetime],
         **kwargs
     ) -> List[MetricResult]:
-        """Calculate content protection metrics."""
-        metrics = []
+        """Calculate content protection metrics."""        metrics = []
         
         try:
             # Fingerprinting accuracy
@@ -741,8 +704,7 @@ class ContentProtectionMetrics(BaseMetricsCalculator):
         return metrics
     
     def _calculate_fingerprinting_accuracy(self, results: List[Dict[str, Any]]) -> float:
-        """Calculate overall fingerprinting accuracy."""
-        if not results:
+        """Calculate overall fingerprinting accuracy."""        if not results:
             return 0.0
         
         true_positives = sum(1 for r in results if r.get('match') and r.get('verified_match'))
@@ -756,21 +718,18 @@ class ContentProtectionMetrics(BaseMetricsCalculator):
 
 
 class MonetizationMetrics(BaseMetricsCalculator):
-    """
-    Calculator for revenue optimization and monetization effectiveness metrics.
+    """    Calculator for revenue optimization and monetization effectiveness metrics.
     
     Implements monetization metrics according to the business logic:
     Content protection → SEO optimization → Collaboration → Revenue generation
-    """
-    
+    """    
     async def calculate_metrics(
         self,
         data: Dict[str, Any],
         time_range: Dict[str, datetime],
         **kwargs
     ) -> List[MetricResult]:
-        """Calculate monetization metrics."""
-        metrics = []
+        """Calculate monetization metrics."""        metrics = []
         
         try:
             # Revenue per content piece
@@ -817,8 +776,7 @@ class MonetizationMetrics(BaseMetricsCalculator):
 
 # Factory function for creating metric calculators
 def create_metrics_calculator(calculator_type: str, config: Optional[Dict[str, Any]] = None) -> BaseMetricsCalculator:
-    """Create a metrics calculator instance."""
-    calculators = {
+    """Create a metrics calculator instance."""    calculators = {
         'creator_success': CreatorSuccessMetrics,
         'content_protection': ContentProtectionMetrics,
         'monetization': MonetizationMetrics

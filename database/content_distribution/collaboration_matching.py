@@ -1,5 +1,4 @@
-"""
-Collaboration Matching Module - Ultra-Industrial Creator Collaboration System
+"""Collaboration Matching Module - Ultra-Industrial Creator Collaboration System
 Enterprise-Grade Collaboration Matching & Partnership Platform for IA Influencer Agent
 
 Advanced AI-powered collaboration system that intelligently matches creators
@@ -28,7 +27,6 @@ LEGAL CONSEQUENCES: Violation will result in immediate legal action including:
 - Permanent injunction against unauthorized use
 - Full recovery of legal costs and fees
 """
-
 import asyncio
 import json
 import uuid
@@ -56,8 +54,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class CollaborationType(str, Enum):
-    """Types of creator collaborations"""
-    CONTENT_COLLAB = "content_collaboration"
+    """Types of creator collaborations"""    CONTENT_COLLAB = "content_collaboration"
     CROSS_PROMOTION = "cross_promotion"
     JOINT_CREATION = "joint_creation"
     REMIX_COLLABORATION = "remix_collaboration"
@@ -69,8 +66,7 @@ class CollaborationType(str, Enum):
     REVENUE_SHARING = "revenue_sharing"
 
 class CollaborationStatus(str, Enum):
-    """Status of collaboration proposals and projects"""
-    PROPOSED = "proposed"
+    """Status of collaboration proposals and projects"""    PROPOSED = "proposed"
     PENDING_REVIEW = "pending_review"
     ACCEPTED = "accepted"
     REJECTED = "rejected"
@@ -80,8 +76,7 @@ class CollaborationStatus(str, Enum):
     DISPUTED = "disputed"
 
 class MatchingCriteria(str, Enum):
-    """AI matching criteria for creator partnerships"""
-    GENRE_COMPATIBILITY = "genre_compatibility"
+    """AI matching criteria for creator partnerships"""    GENRE_COMPATIBILITY = "genre_compatibility"
     AUDIENCE_OVERLAP = "audience_overlap"
     ENGAGEMENT_SYNERGY = "engagement_synergy"
     CONTENT_STYLE = "content_style"
@@ -91,10 +86,8 @@ class MatchingCriteria(str, Enum):
     GEOGRAPHIC_ALIGNMENT = "geographic_alignment"
 
 class CollaborationProposal(Base):
-    """
-    Enterprise model for creator collaboration proposals and matching
-    """
-    __tablename__ = "collaboration_proposals"
+    """    Enterprise model for creator collaboration proposals and matching
+    """    __tablename__ = "collaboration_proposals"
     
     proposal_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     initiator_creator_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -153,10 +146,8 @@ class CollaborationProposal(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class CreatorProfile(Base):
-    """
-    Enterprise model for creator profiles for collaboration matching
-    """
-    __tablename__ = "creator_collaboration_profiles"
+    """    Enterprise model for creator profiles for collaboration matching
+    """    __tablename__ = "creator_collaboration_profiles"
     
     profile_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     creator_id = Column(UUID(as_uuid=True), nullable=False, unique=True, index=True)
@@ -219,10 +210,8 @@ class CreatorProfile(Base):
     last_updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class CollaborationProject(Base):
-    """
-    Enterprise model for active collaboration projects
-    """
-    __tablename__ = "collaboration_projects"
+    """    Enterprise model for active collaboration projects
+    """    __tablename__ = "collaboration_projects"
     
     project_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     proposal_id = Column(UUID(as_uuid=True), ForeignKey('collaboration_proposals.proposal_id'), nullable=False)
@@ -277,8 +266,7 @@ class CollaborationProject(Base):
 
 @dataclass
 class MatchingRequest:
-    """Request for AI-powered creator matching"""
-    creator_id: str
+    """Request for AI-powered creator matching"""    creator_id: str
     collaboration_type: CollaborationType
     content_type: str
     target_platforms: List[str]
@@ -289,25 +277,21 @@ class MatchingRequest:
 
 @dataclass
 class MatchingResult:
-    """Result of AI creator matching"""
-    matched_creators: List[Dict[str, Any]]
+    """Result of AI creator matching"""    matched_creators: List[Dict[str, Any]]
     matching_scores: Dict[str, float]
     compatibility_analysis: Dict[str, Any]
     collaboration_recommendations: List[str]
     success_predictions: Dict[str, float]
 
 class CollaborationMatchingManager:
-    """
-    Ultra-Industrial Collaboration Matching Manager
+    """    Ultra-Industrial Collaboration Matching Manager
     
     Orchestrates AI-powered creator collaboration matching, proposal management,
     project coordination, and success optimization for multi-creator partnerships
     across the entire content creation and distribution ecosystem.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the collaboration matching manager"""
-        self.config = config or {}
+        """Initialize the collaboration matching manager"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         self.redis_client = None
         self.db_session = None
@@ -333,8 +317,7 @@ class CollaborationMatchingManager:
         self.logger.info("Collaboration Matching Manager initialized")
     
     async def initialize_async_components(self):
-        """Initialize async components (Redis, DB, AI models)"""
-        try:
+        """Initialize async components (Redis, DB, AI models)"""        try:
             # Initialize Redis connection
             self.redis_client = await aioredis.from_url(
                 self.config.get('redis_url', 'redis://localhost:6379')
@@ -359,13 +342,11 @@ class CollaborationMatchingManager:
         self,
         request: MatchingRequest
     ) -> MatchingResult:
-        """
-        Find optimal collaboration matches using AI-powered analysis
+        """        Find optimal collaboration matches using AI-powered analysis
         
         This implements the core matching logic:
         Creator Analysis → Compatibility Assessment → AI Matching → Success Prediction
-        """
-        try:
+        """        try:
             # Get creator profile for matching
             creator_profile = await self._get_creator_profile(request.creator_id)
             if not creator_profile:
@@ -442,13 +423,11 @@ class CollaborationMatchingManager:
         target_creator_id: str,
         proposal_data: Dict[str, Any]
     ) -> CollaborationProposal:
-        """
-        Create intelligent collaboration proposal with AI insights
+        """        Create intelligent collaboration proposal with AI insights
         
         Generates comprehensive collaboration proposals with AI-powered
         insights, success predictions, and optimization recommendations.
-        """
-        try:
+        """        try:
             # Get creator profiles for both parties
             initiator_profile = await self._get_creator_profile(initiator_id)
             target_profile = await self._get_creator_profile(target_creator_id)
@@ -543,13 +522,11 @@ class CollaborationMatchingManager:
         proposal_id: str,
         project_data: Dict[str, Any]
     ) -> CollaborationProject:
-        """
-        Create and manage active collaboration project
+        """        Create and manage active collaboration project
         
         Orchestrates collaboration project lifecycle including project
         planning, milestone tracking, performance monitoring, and success optimization.
-        """
-        try:
+        """        try:
             # Get approved proposal
             proposal = await self._get_proposal_by_id(proposal_id)
             if not proposal or proposal.collaboration_status != CollaborationStatus.ACCEPTED:
@@ -601,13 +578,11 @@ class CollaborationMatchingManager:
         creator_id: str,
         timeframe_days: int = 90
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive collaboration analytics and insights
+        """        Generate comprehensive collaboration analytics and insights
         
         Provides detailed analytics on collaboration performance, partner
         compatibility, revenue impact, and optimization opportunities.
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=timeframe_days)
             
             # Get creator's collaboration history
@@ -673,13 +648,11 @@ class CollaborationMatchingManager:
     # Private helper methods for collaboration operations
     
     async def _load_matching_ai_models(self):
-        """Load AI models for collaboration matching"""
-        # Placeholder for actual AI model loading
+        """Load AI models for collaboration matching"""        # Placeholder for actual AI model loading
         self.logger.info("AI collaboration matching models loaded")
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Get creator collaboration profile"""
-        try:
+        """Get creator collaboration profile"""        try:
             result = await self.db_session.execute(
                 f"SELECT * FROM creator_collaboration_profiles WHERE creator_id = '{creator_id}'"
             )
@@ -693,8 +666,7 @@ class CollaborationMatchingManager:
         request: MatchingRequest, 
         creator_profile: CreatorProfile
     ) -> List[CreatorProfile]:
-        """Find potential collaboration candidates"""
-        # Mock implementation - would use sophisticated filtering and AI
+        """Find potential collaboration candidates"""        # Mock implementation - would use sophisticated filtering and AI
         try:
             # Filter by basic criteria
             candidates = await self.db_session.execute(
@@ -714,8 +686,7 @@ class CollaborationMatchingManager:
         candidate: CreatorProfile, 
         request: MatchingRequest
     ) -> float:
-        """Calculate comprehensive AI matching score"""
-        # Mock implementation - would use advanced AI algorithms
+        """Calculate comprehensive AI matching score"""        # Mock implementation - would use advanced AI algorithms
         scores = []
         
         # Content similarity
@@ -741,8 +712,7 @@ class CollaborationMatchingManager:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Calculate content similarity score"""
-        # Mock implementation
+        """Calculate content similarity score"""        # Mock implementation
         common_categories = set(creator1.content_categories) & set(creator2.content_categories)
         total_categories = set(creator1.content_categories) | set(creator2.content_categories)
         
@@ -756,8 +726,7 @@ class CollaborationMatchingManager:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Analyze audience compatibility"""
-        # Mock implementation - would analyze demographic overlap
+        """Analyze audience compatibility"""        # Mock implementation - would analyze demographic overlap
         return 0.75  # Mock score
     
     async def _predict_engagement_synergy(
@@ -765,8 +734,7 @@ class CollaborationMatchingManager:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Predict engagement synergy potential"""
-        # Mock implementation - would use ML models
+        """Predict engagement synergy potential"""        # Mock implementation - would use ML models
         return 0.80  # Mock score
     
     async def _estimate_revenue_potential(
@@ -775,8 +743,7 @@ class CollaborationMatchingManager:
         creator2: CreatorProfile, 
         request: MatchingRequest
     ) -> float:
-        """Estimate collaboration revenue potential"""
-        # Mock implementation - would analyze revenue data
+        """Estimate collaboration revenue potential"""        # Mock implementation - would analyze revenue data
         return 0.70  # Mock score
     
     async def _assess_collaboration_chemistry(
@@ -784,8 +751,7 @@ class CollaborationMatchingManager:
         creator1: CreatorProfile, 
         creator2: CreatorProfile
     ) -> float:
-        """Assess collaboration chemistry and working compatibility"""
-        # Mock implementation - would analyze communication styles, work preferences
+        """Assess collaboration chemistry and working compatibility"""        # Mock implementation - would analyze communication styles, work preferences
         return 0.85  # Mock score
     
     # Additional helper methods would continue with:

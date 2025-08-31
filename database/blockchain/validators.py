@@ -1,5 +1,4 @@
-"""
-Content Authenticity Validation Module
+"""Content Authenticity Validation Module
 
 Enterprise-grade blockchain-based content authenticity verification and validation
 for the IA Influencer Agent content protection ecosystem with advanced AI-powered
@@ -26,7 +25,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -45,16 +43,14 @@ from cryptography.hazmat.primitives import serialization
 logger = logging.getLogger(__name__)
 
 class ValidationStatus(Enum):
-    """Status of content validation."""
-    PENDING = "pending"
+    """Status of content validation."""    PENDING = "pending"
     AUTHENTIC = "authentic"
     SUSPICIOUS = "suspicious"
     FRAUDULENT = "fraudulent"
     INCONCLUSIVE = "inconclusive"
 
 class ValidationType(Enum):
-    """Types of validation performed."""
-    OWNERSHIP_PROOF = "ownership_proof"
+    """Types of validation performed."""    OWNERSHIP_PROOF = "ownership_proof"
     CREATION_TIMESTAMP = "creation_timestamp"
     INTEGRITY_CHECK = "integrity_check"
     SIGNATURE_VERIFICATION = "signature_verification"
@@ -62,8 +58,7 @@ class ValidationType(Enum):
     FINGERPRINT_MATCH = "fingerprint_match"
 
 class TrustLevel(Enum):
-    """Trust levels for validation results."""
-    VERY_LOW = "very_low"
+    """Trust levels for validation results."""    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -71,8 +66,7 @@ class TrustLevel(Enum):
 
 @dataclass
 class ValidationCriteria:
-    """Criteria for content validation."""
-    check_ownership: bool = True
+    """Criteria for content validation."""    check_ownership: bool = True
     check_timestamp: bool = True
     check_integrity: bool = True
     check_signature: bool = True
@@ -83,8 +77,7 @@ class ValidationCriteria:
 
 @dataclass
 class ValidationEvidence:
-    """Evidence collected during validation."""
-    evidence_type: ValidationType
+    """Evidence collected during validation."""    evidence_type: ValidationType
     result: bool
     confidence_score: float
     metadata: Dict[str, Any]
@@ -93,8 +86,7 @@ class ValidationEvidence:
 
 @dataclass
 class ValidationResult:
-    """Result of content validation process."""
-    validation_id: str
+    """Result of content validation process."""    validation_id: str
     content_hash: str
     status: ValidationStatus
     trust_level: TrustLevel
@@ -107,11 +99,9 @@ class ValidationResult:
     metadata: Dict[str, Any]
 
 class TimestampValidator:
-    """Validator for creation timestamp authenticity."""
-    
+    """Validator for creation timestamp authenticity."""    
     def __init__(self):
-        """Initialize timestamp validator."""
-        self.trusted_sources = [
+        """Initialize timestamp validator."""        self.trusted_sources = [
             "blockchain",
             "trusted_timestamping_authority",
             "content_protection_platform"
@@ -123,8 +113,7 @@ class TimestampValidator:
         claimed_timestamp: datetime,
         metadata: Dict[str, Any]
     ) -> ValidationEvidence:
-        """
-        Validate the authenticity of a content creation timestamp.
+        """        Validate the authenticity of a content creation timestamp.
         
         Args:
             content_hash: Hash of the content
@@ -133,8 +122,7 @@ class TimestampValidator:
             
         Returns:
             Validation evidence for timestamp check
-        """
-        try:
+        """        try:
             confidence_score = 0.0
             evidence_metadata = {}
             
@@ -190,8 +178,7 @@ class TimestampValidator:
             )
 
     async def _get_blockchain_timestamp(self, content_hash: str) -> Optional[datetime]:
-        """Get timestamp from blockchain registration."""
-        try:
+        """Get timestamp from blockchain registration."""        try:
             # This would query the blockchain for the registration transaction
             # For now, return None as placeholder
             return None
@@ -201,11 +188,9 @@ class TimestampValidator:
             return None
 
 class OwnershipValidator:
-    """Validator for content ownership claims."""
-    
+    """Validator for content ownership claims."""    
     def __init__(self):
-        """Initialize ownership validator."""
-        self.verification_methods = [
+        """Initialize ownership validator."""        self.verification_methods = [
             "digital_signature",
             "blockchain_registration",
             "platform_verification",
@@ -218,8 +203,7 @@ class OwnershipValidator:
         claimed_owner: str,
         proof_data: Dict[str, Any]
     ) -> ValidationEvidence:
-        """
-        Validate ownership claim for content.
+        """        Validate ownership claim for content.
         
         Args:
             content_hash: Hash of the content
@@ -228,8 +212,7 @@ class OwnershipValidator:
             
         Returns:
             Validation evidence for ownership check
-        """
-        try:
+        """        try:
             confidence_score = 0.0
             evidence_metadata = {}
             
@@ -294,8 +277,7 @@ class OwnershipValidator:
         owner_address: str,
         signature_data: Dict[str, Any]
     ) -> bool:
-        """Verify digital signature for ownership proof."""
-        try:
+        """Verify digital signature for ownership proof."""        try:
             # Implementation would verify the digital signature
             # For now, return mock result
             return True
@@ -310,8 +292,7 @@ class OwnershipValidator:
         owner_address: str,
         registration_data: Dict[str, Any]
     ) -> bool:
-        """Verify blockchain registration for ownership."""
-        try:
+        """Verify blockchain registration for ownership."""        try:
             # Implementation would check blockchain for registration
             # For now, return mock result
             return True
@@ -325,8 +306,7 @@ class OwnershipValidator:
         owner_address: str,
         verification_data: Dict[str, Any]
     ) -> bool:
-        """Verify platform-specific ownership verification."""
-        try:
+        """Verify platform-specific ownership verification."""        try:
             # Implementation would check platform verification
             # For now, return mock result
             return True
@@ -336,8 +316,7 @@ class OwnershipValidator:
             return False
 
     async def _get_ownership_history(self, content_hash: str) -> List[str]:
-        """Get ownership history for content."""
-        try:
+        """Get ownership history for content."""        try:
             # Implementation would retrieve ownership history
             # For now, return empty list
             return []
@@ -347,11 +326,9 @@ class OwnershipValidator:
             return []
 
 class FingerprintValidator:
-    """Validator for content fingerprint matching."""
-    
+    """Validator for content fingerprint matching."""    
     def __init__(self):
-        """Initialize fingerprint validator."""
-        self.similarity_threshold = 0.9
+        """Initialize fingerprint validator."""        self.similarity_threshold = 0.9
         
     async def validate_fingerprint(
         self,
@@ -359,8 +336,7 @@ class FingerprintValidator:
         provided_fingerprint: Dict[str, Any],
         reference_fingerprints: List[Dict[str, Any]]
     ) -> ValidationEvidence:
-        """
-        Validate content fingerprint against references.
+        """        Validate content fingerprint against references.
         
         Args:
             content_hash: Hash of the content
@@ -369,8 +345,7 @@ class FingerprintValidator:
             
         Returns:
             Validation evidence for fingerprint check
-        """
-        try:
+        """        try:
             confidence_score = 0.0
             evidence_metadata = {}
             best_match_score = 0.0
@@ -421,8 +396,7 @@ class FingerprintValidator:
         fingerprint1: Dict[str, Any],
         fingerprint2: Dict[str, Any]
     ) -> float:
-        """Calculate similarity between two fingerprints."""
-        try:
+        """Calculate similarity between two fingerprints."""        try:
             # Implementation would depend on fingerprint type
             # For now, return mock similarity
             return 0.95
@@ -432,21 +406,17 @@ class FingerprintValidator:
             return 0.0
 
 class ContentValidator:
-    """
-    Enterprise content authenticity validator for the IA Influencer Agent platform.
+    """    Enterprise content authenticity validator for the IA Influencer Agent platform.
     
     Provides comprehensive validation of content authenticity using multiple
     verification methods including blockchain, digital signatures, and fingerprints.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize content validator.
+        """        Initialize content validator.
         
         Args:
             config: Configuration for validation services
-        """
-        self.config = config
+        """        self.config = config
         self.timestamp_validator = TimestampValidator()
         self.ownership_validator = OwnershipValidator()
         self.fingerprint_validator = FingerprintValidator()
@@ -460,8 +430,7 @@ class ContentValidator:
         proof_data: Dict[str, Any],
         criteria: Optional[ValidationCriteria] = None
     ) -> ValidationResult:
-        """
-        Perform comprehensive content authenticity validation.
+        """        Perform comprehensive content authenticity validation.
         
         Args:
             content_hash: Hash of the content to validate
@@ -472,8 +441,7 @@ class ContentValidator:
             
         Returns:
             Comprehensive validation result
-        """
-        try:
+        """        try:
             validation_id = str(uuid.uuid4())
             criteria = criteria or ValidationCriteria()
             evidence = []
@@ -563,8 +531,7 @@ class ContentValidator:
         content_hash: str,
         integrity_data: Dict[str, Any]
     ) -> ValidationEvidence:
-        """Validate content integrity using checksums and hashes."""
-        try:
+        """Validate content integrity using checksums and hashes."""        try:
             confidence_score = 0.0
             evidence_metadata = {}
             
@@ -616,8 +583,7 @@ class ContentValidator:
         content_hash: str,
         claimed_owner: str
     ) -> ValidationEvidence:
-        """Validate blockchain registration for content."""
-        try:
+        """Validate blockchain registration for content."""        try:
             # This would query the blockchain for registration
             # For now, return mock evidence
             return ValidationEvidence(
@@ -645,8 +611,7 @@ class ContentValidator:
         evidence: List[ValidationEvidence],
         criteria: ValidationCriteria
     ) -> float:
-        """Calculate overall confidence score from evidence."""
-        if not evidence:
+        """Calculate overall confidence score from evidence."""        if not evidence:
             return 0.0
             
         if criteria.require_all_checks:
@@ -664,8 +629,7 @@ class ContentValidator:
         criteria: ValidationCriteria,
         overall_confidence: float
     ) -> ValidationStatus:
-        """Determine overall validation status."""
-        if overall_confidence >= 0.9:
+        """Determine overall validation status."""        if overall_confidence >= 0.9:
             return ValidationStatus.AUTHENTIC
         elif overall_confidence >= 0.7:
             return ValidationStatus.SUSPICIOUS if any(not ev.result for ev in evidence) else ValidationStatus.AUTHENTIC
@@ -681,8 +645,7 @@ class ContentValidator:
         overall_confidence: float,
         evidence: List[ValidationEvidence]
     ) -> TrustLevel:
-        """Calculate trust level based on confidence and evidence quality."""
-        if overall_confidence >= 0.95:
+        """Calculate trust level based on confidence and evidence quality."""        if overall_confidence >= 0.95:
             return TrustLevel.VERY_HIGH
         elif overall_confidence >= 0.8:
             return TrustLevel.HIGH
@@ -699,8 +662,7 @@ class ContentValidator:
         status: ValidationStatus,
         trust_level: TrustLevel
     ) -> Tuple[List[str], List[str]]:
-        """Generate recommendations and warnings based on validation results."""
-        recommendations = []
+        """Generate recommendations and warnings based on validation results."""        recommendations = []
         warnings = []
         
         if status == ValidationStatus.SUSPICIOUS:
@@ -724,12 +686,10 @@ class ContentValidator:
         return recommendations, warnings
 
     def get_validation_result(self, validation_id: str) -> Optional[ValidationResult]:
-        """Get validation result by ID."""
-        return self.validation_history.get(validation_id)
+        """Get validation result by ID."""        return self.validation_history.get(validation_id)
 
     def list_validations_by_content(self, content_hash: str) -> List[ValidationResult]:
-        """List all validations for a specific content hash."""
-        return [
+        """List all validations for a specific content hash."""        return [
             result for result in self.validation_history.values()
             if result.content_hash == content_hash
         ]

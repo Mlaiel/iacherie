@@ -11,8 +11,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from .vision_orchestrator import VisionOrchestrator
+"""from .vision_orchestrator import VisionOrchestrator
 from .image_processor import ImageProcessor
 from .video_analyzer import VideoAnalyzer
 from .object_detector import ObjectDetector
@@ -205,8 +204,7 @@ Unauthorized use may result in:
 
 By accessing this code, you acknowledge that you have read, understood, and agree to 
 be bound by these terms.
-"""
-def print_legal_notice():
+"""def print_legal_notice():
     """Print the legal notice and licensing information"""    print(LEGAL_NOTICE)
 
 def get_legal_notice():

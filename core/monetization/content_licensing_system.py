@@ -1,11 +1,9 @@
-"""
-Content Licensing System
+"""Content Licensing System
 AI-powered content licensing, rights management and automated deal processing
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,8 +21,7 @@ from .revenue_calculator import RevenueCalculator
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
-    EXCLUSIVE = "exclusive"
+    """Types of content licenses"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SYNC_LICENSE = "sync_license"
     MECHANICAL = "mechanical"
@@ -37,8 +34,7 @@ class LicenseType(Enum):
 
 
 class ContentType(Enum):
-    """Types of content that can be licensed"""
-    MUSIC = "music"
+    """Types of content that can be licensed"""    MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
     AUDIO = "audio"
@@ -49,8 +45,7 @@ class ContentType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License agreement status"""
-    DRAFT = "draft"
+    """License agreement status"""    DRAFT = "draft"
     PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
@@ -60,8 +55,7 @@ class LicenseStatus(Enum):
 
 
 class UsageRights(Enum):
-    """Permitted usage rights"""
-    COMMERCIAL_USE = "commercial_use"
+    """Permitted usage rights"""    COMMERCIAL_USE = "commercial_use"
     EDITORIAL_USE = "editorial_use"
     PERSONAL_USE = "personal_use"
     EDUCATIONAL_USE = "educational_use"
@@ -75,8 +69,7 @@ class UsageRights(Enum):
 
 @dataclass
 class LicenseTerms:
-    """License agreement terms"""
-    license_type: LicenseType
+    """License agreement terms"""    license_type: LicenseType
     usage_rights: List[UsageRights]
     territory: List[str]  # Countries/regions
     duration_months: int
@@ -88,8 +81,7 @@ class LicenseTerms:
     restrictions: List[str] = field(default_factory=list)
     
     def calculate_total_value(self) -> Decimal:
-        """Calculate total license value"""
-        total = self.payment_amount
+        """Calculate total license value"""        total = self.payment_amount
         
         if self.advance_payment:
             total += self.advance_payment
@@ -102,8 +94,7 @@ class LicenseTerms:
 
 @dataclass
 class LicenseOffer:
-    """License offer from potential licensee"""
-    offer_id: str
+    """License offer from potential licensee"""    offer_id: str
     licensee_name: str
     licensee_email: str
     content_id: str
@@ -116,12 +107,10 @@ class LicenseOffer:
     status: str = "pending"
     
     def is_expired(self) -> bool:
-        """Check if offer has expired"""
-        return datetime.now() > self.expiry_date
+        """Check if offer has expired"""        return datetime.now() > self.expiry_date
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "offer_id": self.offer_id,
             "licensee_name": self.licensee_name,
             "licensee_email": self.licensee_email,
@@ -149,8 +138,7 @@ class LicenseOffer:
 
 @dataclass
 class LicenseAgreement:
-    """Executed license agreement"""
-    agreement_id: str
+    """Executed license agreement"""    agreement_id: str
     licensor_id: int
     licensee_name: str
     licensee_email: str
@@ -165,24 +153,21 @@ class LicenseAgreement:
     usage_reports: List[Dict[str, Any]] = field(default_factory=list)
     
     def is_active(self) -> bool:
-        """Check if license is currently active"""
-        now = datetime.now()
+        """Check if license is currently active"""        now = datetime.now()
         return (
             self.status == LicenseStatus.ACTIVE and
             self.start_date <= now <= self.end_date
         )
     
     def days_remaining(self) -> int:
-        """Calculate days remaining in license"""
-        if not self.is_active():
+        """Calculate days remaining in license"""        if not self.is_active():
             return 0
         
         remaining = self.end_date - datetime.now()
         return max(0, remaining.days)
     
     def calculate_earned_revenue(self) -> Decimal:
-        """Calculate revenue earned from this license"""
-        total_revenue = Decimal("0")
+        """Calculate revenue earned from this license"""        total_revenue = Decimal("0")
         
         # Fixed payment
         total_revenue += self.license_terms.payment_amount
@@ -202,8 +187,7 @@ class LicenseAgreement:
 
 
 class PricingEngine:
-    """AI-powered license pricing engine"""
-    
+    """AI-powered license pricing engine"""    
     def __init__(self, revenue_calculator: RevenueCalculator):
         self.revenue_calculator = revenue_calculator
         self.logger = logging.getLogger(__name__)
@@ -217,8 +201,7 @@ class PricingEngine:
         licensee_industry: Optional[str] = None,
         historical_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Calculate AI-suggested licensing price"""
-        try:
+        """Calculate AI-suggested licensing price"""        try:
             base_price = await self._get_base_price(content_type, usage_rights)
             
             # Territory multiplier
@@ -277,8 +260,7 @@ class PricingEngine:
         content_type: ContentType,
         usage_rights: List[UsageRights]
     ) -> Decimal:
-        """Get base price for content type and usage rights"""
-        
+        """Get base price for content type and usage rights"""        
         # Base pricing matrix
         base_prices = {
             ContentType.MUSIC: Decimal("500"),
@@ -309,8 +291,7 @@ class PricingEngine:
         return base_price * usage_multiplier
     
     def _calculate_territory_multiplier(self, territory: List[str]) -> Decimal:
-        """Calculate territory-based price multiplier"""
-        
+        """Calculate territory-based price multiplier"""        
         # Premium territories
         premium_territories = ['US', 'DE', 'UK', 'FR', 'CA', 'AU', 'JP']
         emerging_territories = ['IN', 'BR', 'MX', 'TR', 'ZA', 'ID']
@@ -332,8 +313,7 @@ class PricingEngine:
         return min(multiplier, Decimal("3.0"))  # Cap at 3x
     
     def _calculate_duration_multiplier(self, duration_months: int) -> Decimal:
-        """Calculate duration-based price multiplier"""
-        
+        """Calculate duration-based price multiplier"""        
         if duration_months <= 3:
             return Decimal("0.8")
         elif duration_months <= 12:
@@ -349,8 +329,7 @@ class PricingEngine:
         self,
         licensee_industry: Optional[str]
     ) -> Decimal:
-        """Calculate industry-based price multiplier"""
-        
+        """Calculate industry-based price multiplier"""        
         if not licensee_industry:
             return Decimal("1.0")
         
@@ -376,8 +355,7 @@ class PricingEngine:
         usage_rights: List[UsageRights],
         historical_data: Optional[Dict[str, Any]]
     ) -> Decimal:
-        """Calculate market demand multiplier using historical data"""
-        
+        """Calculate market demand multiplier using historical data"""        
         if not historical_data:
             return Decimal("1.0")
         
@@ -404,8 +382,7 @@ class PricingEngine:
 
 
 class LicensingEngine:
-    """Advanced content licensing engine"""
-    
+    """Advanced content licensing engine"""    
     def __init__(
         self,
         pricing_engine: PricingEngine,
@@ -425,8 +402,7 @@ class LicensingEngine:
         message: Optional[str] = None,
         expiry_days: int = 30
     ) -> LicenseOffer:
-        """Create a new license offer"""
-        
+        """Create a new license offer"""        
         offer = LicenseOffer(
             offer_id=str(uuid.uuid4()),
             licensee_name=licensee_name,
@@ -448,8 +424,7 @@ class LicensingEngine:
         content_owner_id: int,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Evaluate license offer using AI pricing"""
-        
+        """Evaluate license offer using AI pricing"""        
         try:
             # Get suggested pricing
             pricing_data = await self.pricing_engine.calculate_suggested_price(
@@ -486,8 +461,7 @@ class LicensingEngine:
             return {"error": str(e)}
     
     def _get_recommendation(self, price_ratio: Decimal) -> str:
-        """Get recommendation based on price ratio"""
-        
+        """Get recommendation based on price ratio"""        
         if price_ratio >= Decimal("1.2"):
             return "STRONGLY_ACCEPT"
         elif price_ratio >= Decimal("1.0"):
@@ -500,8 +474,7 @@ class LicensingEngine:
             return "DECLINE"
     
     async def _analyze_risk_factors(self, offer: LicenseOffer) -> List[str]:
-        """Analyze potential risk factors in the offer"""
-        
+        """Analyze potential risk factors in the offer"""        
         risk_factors = []
         
         # Expiry risk
@@ -538,8 +511,7 @@ class LicensingEngine:
         custom_terms: Optional[LicenseTerms] = None,
         session: AsyncSession
     ) -> LicenseAgreement:
-        """Generate executable license agreement"""
-        
+        """Generate executable license agreement"""        
         try:
             # Use custom terms if provided, otherwise use offer terms
             terms = custom_terms or offer.proposed_terms
@@ -571,8 +543,7 @@ class LicensingEngine:
         self,
         agreement: LicenseAgreement
     ) -> List[Dict[str, Any]]:
-        """Generate payment schedule for license agreement"""
-        
+        """Generate payment schedule for license agreement"""        
         schedule = []
         terms = agreement.license_terms
         
@@ -623,8 +594,7 @@ class LicensingEngine:
         digital_signature: str,
         session: AsyncSession
     ) -> bool:
-        """Execute and activate license agreement"""
-        
+        """Execute and activate license agreement"""        
         try:
             # Verify digital signature
             signature_valid = await self.security_manager.verify_digital_signature(
@@ -670,8 +640,7 @@ class LicensingEngine:
         licensor_id: int,
         session: AsyncSession
     ) -> List[LicenseAgreement]:
-        """Get all active licenses for a licensor"""
-        
+        """Get all active licenses for a licensor"""        
         try:
             result = await session.execute(
                 select(ContentLicense).where(
@@ -717,8 +686,7 @@ class LicensingEngine:
         end_date: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Calculate total licensing revenue for period"""
-        
+        """Calculate total licensing revenue for period"""        
         try:
             result = await session.execute(
                 select(
@@ -757,15 +725,13 @@ class LicensingEngine:
 
 
 class LicenseMonitor:
-    """License monitoring and compliance system"""
-    
+    """License monitoring and compliance system"""    
     def __init__(self, licensing_engine: LicensingEngine):
         self.licensing_engine = licensing_engine
         self.logger = logging.getLogger(__name__)
     
     async def monitor_license_compliance(self, session: AsyncSession):
-        """Monitor all licenses for compliance issues"""
-        
+        """Monitor all licenses for compliance issues"""        
         try:
             # Get all active licenses
             result = await session.execute(
@@ -791,8 +757,7 @@ class LicenseMonitor:
         self,
         license_record: ContentLicense
     ) -> List[Dict[str, Any]]:
-        """Check individual license for compliance issues"""
-        
+        """Check individual license for compliance issues"""        
         issues = []
         
         # Check expiry

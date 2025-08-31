@@ -1,5 +1,4 @@
-"""
-Advanced Alert Configuration Management
+"""Advanced Alert Configuration Management
 Created by: Fahed Mlaiel (mlaiel@live.de)
 
 WARNING: This code is proprietary and confidential.
@@ -9,7 +8,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 Dynamic configuration management for alert system with hot-reload capabilities,
 environment-specific settings, and runtime optimization.
 """
-
 import asyncio
 import logging
 import json
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class ConfigurationSource(str, Enum):
-    """Configuration source types."""
-    FILE_SYSTEM = "file_system"
+    """Configuration source types."""    FILE_SYSTEM = "file_system"
     ENVIRONMENT = "environment"
     DATABASE = "database"
     REDIS = "redis"
@@ -46,8 +43,7 @@ class ConfigurationSource(str, Enum):
 
 
 class ConfigurationScope(str, Enum):
-    """Configuration scope levels."""
-    GLOBAL = "global"
+    """Configuration scope levels."""    GLOBAL = "global"
     ENVIRONMENT = "environment"
     TENANT = "tenant"
     USER = "user"
@@ -56,8 +52,7 @@ class ConfigurationScope(str, Enum):
 
 @dataclass
 class NotificationChannelConfig:
-    """Configuration for notification channels."""
-    enabled: bool = True
+    """Configuration for notification channels."""    enabled: bool = True
     rate_limit_per_minute: int = 100
     retry_attempts: int = 3
     retry_backoff_seconds: int = 5
@@ -69,8 +64,7 @@ class NotificationChannelConfig:
 
 @dataclass
 class EscalationConfig:
-    """Configuration for alert escalation."""
-    enabled: bool = True
+    """Configuration for alert escalation."""    enabled: bool = True
     auto_escalate: bool = True
     escalation_intervals: Dict[str, int] = field(default_factory=lambda: {
         "level_0_to_1": 30,  # minutes
@@ -85,8 +79,7 @@ class EscalationConfig:
 
 @dataclass
 class MLClassifierConfig:
-    """Configuration for ML classification."""
-    enabled: bool = True
+    """Configuration for ML classification."""    enabled: bool = True
     model_update_interval_hours: int = 24
     confidence_threshold: float = 0.8
     auto_retrain: bool = True
@@ -97,8 +90,7 @@ class MLClassifierConfig:
 
 @dataclass
 class EvidenceCollectionConfig:
-    """Configuration for evidence collection."""
-    enabled: bool = True
+    """Configuration for evidence collection."""    enabled: bool = True
     auto_collect: bool = True
     collection_timeout_seconds: int = 60
     max_evidence_size_mb: int = 100
@@ -110,8 +102,7 @@ class EvidenceCollectionConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for performance optimization."""
-    max_concurrent_alerts: int = 1000
+    """Configuration for performance optimization."""    max_concurrent_alerts: int = 1000
     batch_processing_size: int = 100
     cache_ttl_seconds: int = 3600
     database_connection_pool_size: int = 20
@@ -122,8 +113,7 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Configuration for security settings."""
-    encryption_enabled: bool = True
+    """Configuration for security settings."""    encryption_enabled: bool = True
     audit_logging_enabled: bool = True
     rate_limiting_enabled: bool = True
     ip_whitelist: List[str] = field(default_factory=list)
@@ -134,8 +124,7 @@ class SecurityConfig:
 
 
 class AlertSystemConfiguration(BaseModel):
-    """Complete alert system configuration."""
-    
+    """Complete alert system configuration."""    
     # Basic settings
     environment: str = Field(default="production")
     debug_mode: bool = Field(default=False)
@@ -185,11 +174,9 @@ class AlertSystemConfiguration(BaseModel):
 
 
 class ConfigurationManager:
-    """
-    Advanced configuration management system with hot-reload, validation,
+    """    Advanced configuration management system with hot-reload, validation,
     and multi-source configuration merging.
-    """
-    
+    """    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -218,8 +205,7 @@ class ConfigurationManager:
         logger.info("Configuration Manager initialized")
 
     async def initialize(self):
-        """Initialize the configuration manager."""
-        try:
+        """Initialize the configuration manager."""        try:
             # Load configurations from all sources
             await self._load_configurations()
             
@@ -241,8 +227,7 @@ class ConfigurationManager:
         scope: ConfigurationScope = ConfigurationScope.GLOBAL,
         scope_id: Optional[str] = None
     ) -> AlertSystemConfiguration:
-        """Get configuration for specific scope."""
-        try:
+        """Get configuration for specific scope."""        try:
             config_key = self._build_config_key(scope, scope_id)
             
             # Try cache first
@@ -278,8 +263,7 @@ class ConfigurationManager:
         scope_id: Optional[str] = None,
         updated_by: str = "system"
     ) -> bool:
-        """Update configuration for specific scope."""
-        try:
+        """Update configuration for specific scope."""        try:
             # Update metadata
             config.last_updated = datetime.now(timezone.utc)
             config.updated_by = updated_by
@@ -305,8 +289,7 @@ class ConfigurationManager:
             return False
 
     async def register_change_callback(self, callback: Callable):
-        """Register callback for configuration changes."""
-        self._configuration_callbacks.append(callback)
+        """Register callback for configuration changes."""        self._configuration_callbacks.append(callback)
 
     async def export_configuration(
         self,
@@ -314,8 +297,7 @@ class ConfigurationManager:
         scope_id: Optional[str] = None,
         format_type: str = "json"
     ) -> str:
-        """Export configuration in specified format."""
-        try:
+        """Export configuration in specified format."""        try:
             config = await self.get_configuration(scope, scope_id)
             
             if format_type.lower() == "json":
@@ -337,8 +319,7 @@ class ConfigurationManager:
         scope_id: Optional[str] = None,
         updated_by: str = "import"
     ) -> bool:
-        """Import configuration from data string."""
-        try:
+        """Import configuration from data string."""        try:
             if format_type.lower() == "json":
                 config_dict = json.loads(config_data)
             elif format_type.lower() == "yaml":
@@ -359,8 +340,7 @@ class ConfigurationManager:
         scope_id: Optional[str] = None,
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """Get configuration change history."""
-        try:
+        """Get configuration change history."""        try:
             config_key = self._build_config_key(scope, scope_id)
             history_key = f"alert_config_history:{config_key}"
             
@@ -373,8 +353,7 @@ class ConfigurationManager:
             return []
 
     async def _load_configurations(self):
-        """Load configurations from all sources."""
-        for source in self.config_sources:
+        """Load configurations from all sources."""        for source in self.config_sources:
             try:
                 if source == ConfigurationSource.FILE_SYSTEM:
                     await self._load_from_filesystem()
@@ -391,8 +370,7 @@ class ConfigurationManager:
                 logger.warning(f"Failed to load configuration from {source.value}: {e}")
 
     async def _load_from_filesystem(self):
-        """Load configuration from filesystem."""
-        config_files = list(self.config_dir.glob("*.json")) + list(self.config_dir.glob("*.yaml"))
+        """Load configuration from filesystem."""        config_files = list(self.config_dir.glob("*.json")) + list(self.config_dir.glob("*.yaml"))
         
         for config_file in config_files:
             try:
@@ -416,8 +394,7 @@ class ConfigurationManager:
                 logger.error(f"Failed to load config file {config_file}: {e}")
 
     async def _load_from_environment(self):
-        """Load configuration from environment variables."""
-        try:
+        """Load configuration from environment variables."""        try:
             # Build configuration from environment variables
             env_config = {}
             
@@ -436,8 +413,7 @@ class ConfigurationManager:
             logger.error(f"Failed to load configuration from environment: {e}")
 
     async def _load_from_redis(self):
-        """Load configuration from Redis."""
-        try:
+        """Load configuration from Redis."""        try:
             # Get all configuration keys
             pattern = "alert_config:*"
             keys = await self.redis_client.keys(pattern)
@@ -453,8 +429,7 @@ class ConfigurationManager:
             logger.error(f"Failed to load configuration from Redis: {e}")
 
     async def _load_from_database(self):
-        """Load configuration from database."""
-        # Implementation would depend on your database schema
+        """Load configuration from database."""        # Implementation would depend on your database schema
         # This is a placeholder for database-backed configuration
         pass
 
@@ -464,8 +439,7 @@ class ConfigurationManager:
         scope_id: Optional[str],
         config: AlertSystemConfiguration
     ):
-        """Store configuration to all applicable sources."""
-        config_key = self._build_config_key(scope, scope_id)
+        """Store configuration to all applicable sources."""        config_key = self._build_config_key(scope, scope_id)
         
         # Store in memory
         self._configurations[config_key] = config
@@ -484,8 +458,7 @@ class ConfigurationManager:
         await self._add_to_history(config_key, config)
 
     async def _save_to_filesystem(self, config_key: str, config: AlertSystemConfiguration):
-        """Save configuration to filesystem."""
-        try:
+        """Save configuration to filesystem."""        try:
             config_file = self.config_dir / f"{config_key}.json"
             
             async with aiofiles.open(config_file, 'w') as f:
@@ -495,8 +468,7 @@ class ConfigurationManager:
             logger.error(f"Failed to save configuration to filesystem: {e}")
 
     async def _add_to_history(self, config_key: str, config: AlertSystemConfiguration):
-        """Add configuration change to history."""
-        try:
+        """Add configuration change to history."""        try:
             history_entry = {
                 "timestamp": datetime.now(timezone.utc).isoformat(),
                 "config": config.dict(),
@@ -514,16 +486,14 @@ class ConfigurationManager:
             logger.error(f"Failed to add configuration to history: {e}")
 
     async def _validate_configurations(self):
-        """Validate all loaded configurations."""
-        for config_key, config in self._configurations.items():
+        """Validate all loaded configurations."""        for config_key, config in self._configurations.items():
             try:
                 await self._validate_single_configuration(config)
             except Exception as e:
                 logger.error(f"Configuration validation failed for {config_key}: {e}")
 
     async def _validate_single_configuration(self, config: AlertSystemConfiguration):
-        """Validate a single configuration."""
-        # Validate severity thresholds
+        """Validate a single configuration."""        # Validate severity thresholds
         thresholds = config.severity_thresholds
         if not all(0 <= v <= 1 for v in thresholds.values()):
             raise ValueError("Severity thresholds must be between 0 and 1")
@@ -545,8 +515,7 @@ class ConfigurationManager:
         scope_id: Optional[str],
         config: AlertSystemConfiguration
     ):
-        """Notify registered callbacks of configuration changes."""
-        for callback in self._configuration_callbacks:
+        """Notify registered callbacks of configuration changes."""        for callback in self._configuration_callbacks:
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback(scope, scope_id, config)
@@ -556,8 +525,7 @@ class ConfigurationManager:
                 logger.error(f"Configuration change callback failed: {e}")
 
     async def _setup_file_watcher(self):
-        """Setup file system watcher for hot-reload."""
-        try:
+        """Setup file system watcher for hot-reload."""        try:
             event_handler = ConfigFileEventHandler(self)
             self._file_observer = Observer()
             self._file_observer.schedule(event_handler, str(self.config_dir), recursive=True)
@@ -569,14 +537,12 @@ class ConfigurationManager:
             logger.error(f"Failed to setup file watcher: {e}")
 
     def _build_config_key(self, scope: ConfigurationScope, scope_id: Optional[str] = None) -> str:
-        """Build configuration key from scope and ID."""
-        if scope_id:
+        """Build configuration key from scope and ID."""        if scope_id:
             return f"{scope.value}:{scope_id}"
         return scope.value
 
     def _parse_config_filename(self, filename: str) -> Dict[str, Any]:
-        """Parse configuration filename to extract scope information."""
-        parts = filename.split('_')
+        """Parse configuration filename to extract scope information."""        parts = filename.split('_')
         
         if len(parts) == 1:
             return {'scope': ConfigurationScope.GLOBAL, 'scope_id': None}
@@ -588,8 +554,7 @@ class ConfigurationManager:
             return {'scope': ConfigurationScope.GLOBAL, 'scope_id': None}
 
     def _set_nested_value(self, dictionary: Dict, path: List[str], value: str):
-        """Set nested dictionary value from path list."""
-        current = dictionary
+        """Set nested dictionary value from path list."""        current = dictionary
         for key in path[:-1]:
             if key not in current:
                 current[key] = {}
@@ -600,8 +565,7 @@ class ConfigurationManager:
         current[path[-1]] = final_value
 
     def _convert_env_value(self, value: str) -> Any:
-        """Convert environment variable string to appropriate type."""
-        # Boolean conversion
+        """Convert environment variable string to appropriate type."""        # Boolean conversion
         if value.lower() in ('true', 'false'):
             return value.lower() == 'true'
         
@@ -624,20 +588,17 @@ class ConfigurationManager:
         return value
 
     async def _get_default_configuration(self) -> AlertSystemConfiguration:
-        """Get default configuration."""
-        return AlertSystemConfiguration()
+        """Get default configuration."""        return AlertSystemConfiguration()
 
 
 class ConfigFileEventHandler(FileSystemEventHandler):
-    """File system event handler for configuration hot-reload."""
-    
+    """File system event handler for configuration hot-reload."""    
     def __init__(self, config_manager: ConfigurationManager):
         self.config_manager = config_manager
         self._last_modified = {}
     
     def on_modified(self, event):
-        """Handle file modification events."""
-        if event.is_directory:
+        """Handle file modification events."""        if event.is_directory:
             return
         
         file_path = Path(event.src_path)
@@ -656,8 +617,7 @@ class ConfigFileEventHandler(FileSystemEventHandler):
         asyncio.create_task(self._reload_config_file(file_path))
     
     async def _reload_config_file(self, file_path: Path):
-        """Reload configuration from modified file."""
-        try:
+        """Reload configuration from modified file."""        try:
             async with aiofiles.open(file_path, 'r') as f:
                 content = await f.read()
             

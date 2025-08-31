@@ -18,7 +18,6 @@ Features:
 - Historical pattern analysis
 - Risk level calculation
 """
-
 from .manager import ViolationScoringManager
 from .core.scoring_engine import ScoringEngine
 from .core.pattern_analyzer import PatternAnalyzer

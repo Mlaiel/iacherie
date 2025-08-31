@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test Suite for Intelligent Alerting System
+"""Test Suite for Intelligent Alerting System
 
 Comprehensive test suite for the alerting system ensuring proper functionality,
 performance, security, and business logic compliance.
@@ -56,7 +53,6 @@ Contact: mlaiel@live.de pour les demandes de licence.
 
 Contact: mlaiel@live.de
 """
-
 import pytest
 import sys
 import os
@@ -83,11 +79,9 @@ from core.exceptions import ValidationError, ConfigurationError
 
 
 class TestAlertRule:
-    """Test cases for AlertRule dataclass"""
-    
+    """Test cases for AlertRule dataclass"""    
     def test_alert_rule_creation(self):
-        """Test AlertRule creation with all parameters"""
-        rule = AlertRule(
+        """Test AlertRule creation with all parameters"""        rule = AlertRule(
             rule_id="cpu_high",
             name="High CPU Usage",
             description="Alert when CPU usage exceeds 80%",
@@ -118,8 +112,7 @@ class TestAlertRule:
         assert rule.created_at is not None
     
     def test_alert_rule_to_dict(self):
-        """Test AlertRule serialization to dictionary"""
-        rule = AlertRule(
+        """Test AlertRule serialization to dictionary"""        rule = AlertRule(
             rule_id="test_rule",
             name="Test Rule",
             description="Test alert rule",
@@ -141,8 +134,7 @@ class TestAlertRule:
         assert rule_dict['threshold'] == 50
     
     def test_alert_rule_default_values(self):
-        """Test AlertRule with default values"""
-        rule = AlertRule(
+        """Test AlertRule with default values"""        rule = AlertRule(
             rule_id="default_test",
             name="Default Test",
             description="Test with defaults",
@@ -165,17 +157,14 @@ class TestAlertRule:
 
 
 class TestAlertManager:
-    """Test cases for AlertManager class"""
-    
+    """Test cases for AlertManager class"""    
     @pytest.fixture
     def alert_manager(self):
-        """Create AlertManager instance for testing"""
-        return AlertManager()
+        """Create AlertManager instance for testing"""        return AlertManager()
     
     @pytest.fixture
     def sample_alert_rule(self):
-        """Create sample alert rule for testing"""
-        return AlertRule(
+        """Create sample alert rule for testing"""        return AlertRule(
             rule_id="test_rule",
             name="Test Alert Rule",
             description="Test alert for unit testing",
@@ -190,8 +179,7 @@ class TestAlertManager:
         )
     
     def test_alert_manager_initialization(self, alert_manager):
-        """Test AlertManager initialization"""
-        assert isinstance(alert_manager.rules, dict)
+        """Test AlertManager initialization"""        assert isinstance(alert_manager.rules, dict)
         assert isinstance(alert_manager.active_alerts, dict)
         assert isinstance(alert_manager.alert_history, list)
         assert isinstance(alert_manager.suppression_cache, dict)
@@ -199,37 +187,32 @@ class TestAlertManager:
         assert alert_manager.notification_hub is not None
     
     def test_add_alert_rule(self, alert_manager, sample_alert_rule):
-        """Test adding an alert rule"""
-        result = alert_manager.add_rule(sample_alert_rule)
+        """Test adding an alert rule"""        result = alert_manager.add_rule(sample_alert_rule)
         
         assert result is True
         assert "test_rule" in alert_manager.rules
         assert alert_manager.rules["test_rule"] == sample_alert_rule
     
     def test_add_duplicate_alert_rule(self, alert_manager, sample_alert_rule):
-        """Test adding duplicate alert rule"""
-        alert_manager.add_rule(sample_alert_rule)
+        """Test adding duplicate alert rule"""        alert_manager.add_rule(sample_alert_rule)
         
         # Adding same rule again should return False
         result = alert_manager.add_rule(sample_alert_rule)
         assert result is False
     
     def test_remove_alert_rule(self, alert_manager, sample_alert_rule):
-        """Test removing an alert rule"""
-        alert_manager.add_rule(sample_alert_rule)
+        """Test removing an alert rule"""        alert_manager.add_rule(sample_alert_rule)
         
         result = alert_manager.remove_rule("test_rule")
         assert result is True
         assert "test_rule" not in alert_manager.rules
     
     def test_remove_nonexistent_alert_rule(self, alert_manager):
-        """Test removing non-existent alert rule"""
-        result = alert_manager.remove_rule("nonexistent_rule")
+        """Test removing non-existent alert rule"""        result = alert_manager.remove_rule("nonexistent_rule")
         assert result is False
     
     def test_update_alert_rule(self, alert_manager, sample_alert_rule):
-        """Test updating an alert rule"""
-        alert_manager.add_rule(sample_alert_rule)
+        """Test updating an alert rule"""        alert_manager.add_rule(sample_alert_rule)
         
         # Update the rule
         updated_rule = AlertRule(
@@ -253,8 +236,7 @@ class TestAlertManager:
         assert stored_rule.severity == AlertSeverity.CRITICAL
     
     def test_evaluate_single_rule_trigger(self, alert_manager, sample_alert_rule):
-        """Test evaluating rule that should trigger"""
-        alert_manager.add_rule(sample_alert_rule)
+        """Test evaluating rule that should trigger"""        alert_manager.add_rule(sample_alert_rule)
         
         # Create metric that exceeds threshold
         metric = MetricPoint(
@@ -273,8 +255,7 @@ class TestAlertManager:
             assert mock_send.called
     
     def test_evaluate_single_rule_no_trigger(self, alert_manager, sample_alert_rule):
-        """Test evaluating rule that should not trigger"""
-        alert_manager.add_rule(sample_alert_rule)
+        """Test evaluating rule that should not trigger"""        alert_manager.add_rule(sample_alert_rule)
         
         # Create metric below threshold
         metric = MetricPoint(
@@ -289,8 +270,7 @@ class TestAlertManager:
     
     @pytest.mark.asyncio
     async def test_start_stop_monitoring(self, alert_manager):
-        """Test starting and stopping the monitoring loop"""
-        assert alert_manager.is_running is False
+        """Test starting and stopping the monitoring loop"""        assert alert_manager.is_running is False
         
         # Start monitoring
         alert_manager.start_monitoring()
@@ -305,8 +285,7 @@ class TestAlertManager:
         assert alert_manager.is_running is False
     
     def test_suppress_alert(self, alert_manager, sample_alert_rule):
-        """Test alert suppression"""
-        alert_manager.add_rule(sample_alert_rule)
+        """Test alert suppression"""        alert_manager.add_rule(sample_alert_rule)
         
         # Suppress the alert
         result = alert_manager.suppress_alert("test_rule", 1800)  # 30 minutes
@@ -319,15 +298,13 @@ class TestAlertManager:
         assert isinstance(suppression_info['until'], datetime)
     
     def test_is_suppressed_active(self, alert_manager):
-        """Test checking if alert is currently suppressed"""
-        # Suppress alert for 30 minutes
+        """Test checking if alert is currently suppressed"""        # Suppress alert for 30 minutes
         alert_manager.suppress_alert("test_rule", 1800)
         
         assert alert_manager.is_suppressed("test_rule") is True
     
     def test_is_suppressed_expired(self, alert_manager):
-        """Test checking if alert suppression has expired"""
-        # Suppress alert for very short time
+        """Test checking if alert suppression has expired"""        # Suppress alert for very short time
         alert_manager.suppress_alert("test_rule", 0.001)
         
         # Wait for suppression to expire
@@ -336,8 +313,7 @@ class TestAlertManager:
         assert alert_manager.is_suppressed("test_rule") is False
     
     def test_get_alert_statistics(self, alert_manager, sample_alert_rule):
-        """Test getting alert statistics"""
-        alert_manager.add_rule(sample_alert_rule)
+        """Test getting alert statistics"""        alert_manager.add_rule(sample_alert_rule)
         
         # Add some test alert history
         alert_manager.alert_history.extend([
@@ -361,22 +337,18 @@ class TestAlertManager:
 
 
 class TestThresholdMonitor:
-    """Test cases for ThresholdMonitor class"""
-    
+    """Test cases for ThresholdMonitor class"""    
     @pytest.fixture
     def threshold_monitor(self):
-        """Create ThresholdMonitor instance for testing"""
-        return ThresholdMonitor()
+        """Create ThresholdMonitor instance for testing"""        return ThresholdMonitor()
     
     def test_threshold_monitor_initialization(self, threshold_monitor):
-        """Test ThresholdMonitor initialization"""
-        assert isinstance(threshold_monitor.thresholds, dict)
+        """Test ThresholdMonitor initialization"""        assert isinstance(threshold_monitor.thresholds, dict)
         assert isinstance(threshold_monitor.metric_history, dict)
         assert isinstance(threshold_monitor.breach_history, list)
     
     def test_add_threshold(self, threshold_monitor):
-        """Test adding a threshold"""
-        result = threshold_monitor.add_threshold(
+        """Test adding a threshold"""        result = threshold_monitor.add_threshold(
             metric_name="cpu_usage",
             threshold_value=80.0,
             comparison="greater_than",
@@ -394,8 +366,7 @@ class TestThresholdMonitor:
         assert threshold['min_breaches'] == 2
     
     def test_check_threshold_breach(self, threshold_monitor):
-        """Test checking for threshold breach"""
-        threshold_monitor.add_threshold(
+        """Test checking for threshold breach"""        threshold_monitor.add_threshold(
             metric_name="memory_usage",
             threshold_value=90.0,
             comparison="greater_than",
@@ -419,8 +390,7 @@ class TestThresholdMonitor:
         assert breach_record['actual_value'] == 95.0
     
     def test_check_threshold_no_breach(self, threshold_monitor):
-        """Test checking threshold with no breach"""
-        threshold_monitor.add_threshold(
+        """Test checking threshold with no breach"""        threshold_monitor.add_threshold(
             metric_name="disk_usage",
             threshold_value=85.0,
             comparison="greater_than",
@@ -439,8 +409,7 @@ class TestThresholdMonitor:
         assert len(threshold_monitor.breach_history) == 0
     
     def test_threshold_with_min_breaches(self, threshold_monitor):
-        """Test threshold requiring multiple breaches"""
-        threshold_monitor.add_threshold(
+        """Test threshold requiring multiple breaches"""        threshold_monitor.add_threshold(
             metric_name="error_rate",
             threshold_value=5.0,
             comparison="greater_than",
@@ -463,8 +432,7 @@ class TestThresholdMonitor:
         assert breach3 is True
     
     def test_get_breach_statistics(self, threshold_monitor):
-        """Test getting breach statistics"""
-        threshold_monitor.add_threshold("test_metric", 50.0, "greater_than", 300, 1)
+        """Test getting breach statistics"""        threshold_monitor.add_threshold("test_metric", 50.0, "greater_than", 300, 1)
         
         # Add some breach history
         now = datetime.now(timezone.utc)
@@ -498,23 +466,19 @@ class TestThresholdMonitor:
 
 
 class TestSecurityAlerts:
-    """Test cases for SecurityAlerts class"""
-    
+    """Test cases for SecurityAlerts class"""    
     @pytest.fixture
     def security_alerts(self):
-        """Create SecurityAlerts instance for testing"""
-        return SecurityAlerts()
+        """Create SecurityAlerts instance for testing"""        return SecurityAlerts()
     
     def test_security_alerts_initialization(self, security_alerts):
-        """Test SecurityAlerts initialization"""
-        assert isinstance(security_alerts.security_rules, dict)
+        """Test SecurityAlerts initialization"""        assert isinstance(security_alerts.security_rules, dict)
         assert isinstance(security_alerts.threat_patterns, list)
         assert isinstance(security_alerts.security_incidents, list)
         assert len(security_alerts.threat_patterns) > 0  # Should have default patterns
     
     def test_add_security_rule(self, security_alerts):
-        """Test adding a security rule"""
-        rule = {
+        """Test adding a security rule"""        rule = {
             'rule_id': 'failed_login_attempts',
             'name': 'Multiple Failed Logins',
             'description': 'Detect multiple failed login attempts',
@@ -530,8 +494,7 @@ class TestSecurityAlerts:
         assert 'failed_login_attempts' in security_alerts.security_rules
     
     def test_detect_security_threat_basic(self, security_alerts):
-        """Test basic security threat detection"""
-        # Add a security rule
+        """Test basic security threat detection"""        # Add a security rule
         rule = {
             'rule_id': 'suspicious_activity',
             'name': 'Suspicious Activity',
@@ -559,8 +522,7 @@ class TestSecurityAlerts:
         assert threats[0]['source_ip'] == '192.168.1.100'
     
     def test_analyze_threat_patterns(self, security_alerts):
-        """Test threat pattern analysis"""
-        # Add security incidents
+        """Test threat pattern analysis"""        # Add security incidents
         now = datetime.now(timezone.utc)
         security_alerts.security_incidents.extend([
             {
@@ -600,8 +562,7 @@ class TestSecurityAlerts:
         assert 'data_exfiltration' in analysis['incidents_by_type']
     
     def test_get_security_recommendations(self, security_alerts):
-        """Test getting security recommendations"""
-        # Add some incidents to analyze
+        """Test getting security recommendations"""        # Add some incidents to analyze
         now = datetime.now(timezone.utc)
         security_alerts.security_incidents.extend([
             {'type': 'sql_injection', 'severity': AlertSeverity.CRITICAL, 'timestamp': now},
@@ -623,23 +584,19 @@ class TestSecurityAlerts:
 
 
 class TestBusinessKPIAlerts:
-    """Test cases for BusinessKPIAlerts class"""
-    
+    """Test cases for BusinessKPIAlerts class"""    
     @pytest.fixture
     def business_alerts(self):
-        """Create BusinessKPIAlerts instance for testing"""
-        return BusinessKPIAlerts()
+        """Create BusinessKPIAlerts instance for testing"""        return BusinessKPIAlerts()
     
     def test_business_alerts_initialization(self, business_alerts):
-        """Test BusinessKPIAlerts initialization"""
-        assert isinstance(business_alerts.kpi_rules, dict)
+        """Test BusinessKPIAlerts initialization"""        assert isinstance(business_alerts.kpi_rules, dict)
         assert isinstance(business_alerts.kpi_history, dict)
         assert isinstance(business_alerts.business_events, list)
         assert len(business_alerts.kpi_rules) > 0  # Should have default KPI rules
     
     def test_add_kpi_rule(self, business_alerts):
-        """Test adding a KPI rule"""
-        kpi_rule = {
+        """Test adding a KPI rule"""        kpi_rule = {
             'kpi_id': 'user_engagement_rate',
             'name': 'User Engagement Rate',
             'description': 'Monitor user engagement rate',
@@ -657,8 +614,7 @@ class TestBusinessKPIAlerts:
         assert 'user_engagement_rate' in business_alerts.kpi_rules
     
     def test_evaluate_kpi_below_threshold(self, business_alerts):
-        """Test KPI evaluation below threshold"""
-        # Add KPI rule
+        """Test KPI evaluation below threshold"""        # Add KPI rule
         kpi_rule = {
             'kpi_id': 'conversion_rate',
             'name': 'Conversion Rate',
@@ -682,8 +638,7 @@ class TestBusinessKPIAlerts:
         assert alerts[0]['severity'] == AlertSeverity.HIGH
     
     def test_evaluate_kpi_within_threshold(self, business_alerts):
-        """Test KPI evaluation within threshold"""
-        # Add KPI rule
+        """Test KPI evaluation within threshold"""        # Add KPI rule
         kpi_rule = {
             'kpi_id': 'revenue_growth',
             'name': 'Revenue Growth',
@@ -704,8 +659,7 @@ class TestBusinessKPIAlerts:
         assert len(alerts) == 0  # No alerts should be generated
     
     def test_generate_business_insights(self, business_alerts):
-        """Test business insights generation"""
-        # Add some KPI history
+        """Test business insights generation"""        # Add some KPI history
         now = datetime.now(timezone.utc)
         business_alerts.kpi_history = {
             'user_acquisition': [
@@ -728,8 +682,7 @@ class TestBusinessKPIAlerts:
         assert 'growth_metrics' in insights
     
     def test_get_stakeholder_alerts(self, business_alerts):
-        """Test getting alerts for specific stakeholders"""
-        # Add business events for different stakeholders
+        """Test getting alerts for specific stakeholders"""        # Add business events for different stakeholders
         now = datetime.now(timezone.utc)
         business_alerts.business_events.extend([
             {
@@ -766,22 +719,18 @@ class TestBusinessKPIAlerts:
 
 
 class TestEscalationManager:
-    """Test cases for EscalationManager class"""
-    
+    """Test cases for EscalationManager class"""    
     @pytest.fixture
     def escalation_manager(self):
-        """Create EscalationManager instance for testing"""
-        return EscalationManager()
+        """Create EscalationManager instance for testing"""        return EscalationManager()
     
     def test_escalation_manager_initialization(self, escalation_manager):
-        """Test EscalationManager initialization"""
-        assert isinstance(escalation_manager.escalation_rules, dict)
+        """Test EscalationManager initialization"""        assert isinstance(escalation_manager.escalation_rules, dict)
         assert isinstance(escalation_manager.active_escalations, dict)
         assert isinstance(escalation_manager.escalation_history, list)
     
     def test_add_escalation_rule(self, escalation_manager):
-        """Test adding an escalation rule"""
-        rule = {
+        """Test adding an escalation rule"""        rule = {
             'rule_id': 'critical_system_alert',
             'name': 'Critical System Alert Escalation',
             'trigger_severity': AlertSeverity.CRITICAL,
@@ -800,8 +749,7 @@ class TestEscalationManager:
     
     @pytest.mark.asyncio
     async def test_trigger_escalation(self, escalation_manager):
-        """Test triggering an escalation"""
-        # Add escalation rule
+        """Test triggering an escalation"""        # Add escalation rule
         rule = {
             'rule_id': 'high_priority_alert',
             'name': 'High Priority Alert',
@@ -835,8 +783,7 @@ class TestEscalationManager:
             assert escalation['escalation_rule_id'] == 'high_priority_alert'
     
     def test_resolve_escalation(self, escalation_manager):
-        """Test resolving an escalation"""
-        # Add active escalation
+        """Test resolving an escalation"""        # Add active escalation
         escalation_manager.active_escalations['alert_456'] = {
             'alert_id': 'alert_456',
             'escalation_rule_id': 'test_escalation',
@@ -856,8 +803,7 @@ class TestEscalationManager:
         assert history_entry['status'] == 'resolved'
     
     def test_get_escalation_statistics(self, escalation_manager):
-        """Test getting escalation statistics"""
-        # Add escalation history
+        """Test getting escalation statistics"""        # Add escalation history
         now = datetime.now(timezone.utc)
         escalation_manager.escalation_history.extend([
             {
@@ -891,23 +837,19 @@ class TestEscalationManager:
 
 
 class TestNotificationHub:
-    """Test cases for NotificationHub class"""
-    
+    """Test cases for NotificationHub class"""    
     @pytest.fixture
     def notification_hub(self):
-        """Create NotificationHub instance for testing"""
-        return NotificationHub()
+        """Create NotificationHub instance for testing"""        return NotificationHub()
     
     def test_notification_hub_initialization(self, notification_hub):
-        """Test NotificationHub initialization"""
-        assert isinstance(notification_hub.channels, dict)
+        """Test NotificationHub initialization"""        assert isinstance(notification_hub.channels, dict)
         assert isinstance(notification_hub.notification_queue, list)
         assert isinstance(notification_hub.sent_notifications, list)
         assert notification_hub.is_running is False
     
     def test_configure_email_channel(self, notification_hub):
-        """Test configuring email channel"""
-        email_config = {
+        """Test configuring email channel"""        email_config = {
             'smtp_server': 'smtp.gmail.com',
             'smtp_port': 587,
             'username': 'alerts@example.com',
@@ -920,8 +862,7 @@ class TestNotificationHub:
         assert AlertChannel.EMAIL in notification_hub.channels
     
     def test_configure_slack_channel(self, notification_hub):
-        """Test configuring Slack channel"""
-        slack_config = {
+        """Test configuring Slack channel"""        slack_config = {
             'webhook_url': 'https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX',
             'default_channel': '#alerts',
             'username': 'AlertBot'
@@ -933,8 +874,7 @@ class TestNotificationHub:
     
     @patch('smtplib.SMTP')
     def test_send_email_notification(self, mock_smtp, notification_hub):
-        """Test sending email notification"""
-        # Configure email channel
+        """Test sending email notification"""        # Configure email channel
         email_config = {
             'smtp_server': 'smtp.example.com',
             'smtp_port': 587,
@@ -970,8 +910,7 @@ class TestNotificationHub:
     
     @patch('requests.post')
     def test_send_slack_notification(self, mock_post, notification_hub):
-        """Test sending Slack notification"""
-        # Configure Slack channel
+        """Test sending Slack notification"""        # Configure Slack channel
         slack_config = {
             'webhook_url': 'https://hooks.slack.com/services/TEST/WEBHOOK/URL',
             'default_channel': '#alerts',
@@ -1008,8 +947,7 @@ class TestNotificationHub:
         assert alert['alert_id'] in payload['text']
     
     def test_queue_notification(self, notification_hub):
-        """Test queuing a notification"""
-        alert = {
+        """Test queuing a notification"""        alert = {
             'alert_id': 'queued_alert',
             'rule_id': 'queue_test_rule',
             'severity': AlertSeverity.MEDIUM,
@@ -1033,8 +971,7 @@ class TestNotificationHub:
         assert queued_notification['priority'] == 1
     
     def test_get_notification_statistics(self, notification_hub):
-        """Test getting notification statistics"""
-        # Add some sent notifications
+        """Test getting notification statistics"""        # Add some sent notifications
         now = datetime.now(timezone.utc)
         notification_hub.sent_notifications.extend([
             {
@@ -1076,12 +1013,10 @@ class TestNotificationHub:
 
 # Integration Tests
 class TestAlertingSystemIntegration:
-    """Integration tests for the complete alerting system"""
-    
+    """Integration tests for the complete alerting system"""    
     @pytest.fixture
     def full_alerting_system(self):
-        """Create complete alerting system for integration testing"""
-        alert_manager = AlertManager()
+        """Create complete alerting system for integration testing"""        alert_manager = AlertManager()
         
         # Configure notification hub
         notification_hub = alert_manager.notification_hub
@@ -1131,8 +1066,7 @@ class TestAlertingSystemIntegration:
     
     @patch('smtplib.SMTP')
     def test_end_to_end_alert_flow(self, mock_smtp, full_alerting_system):
-        """Test complete end-to-end alert flow"""
-        alert_manager = full_alerting_system
+        """Test complete end-to-end alert flow"""        alert_manager = full_alerting_system
         
         # Mock SMTP server
         mock_server = MagicMock()
@@ -1169,8 +1103,7 @@ class TestAlertingSystemIntegration:
         assert mock_server.send_message.call_count >= 1
     
     def test_alert_suppression_integration(self, full_alerting_system):
-        """Test alert suppression in integration scenario"""
-        alert_manager = full_alerting_system
+        """Test alert suppression in integration scenario"""        alert_manager = full_alerting_system
         
         # Suppress high CPU alerts for 30 minutes
         alert_manager.suppress_alert("high_cpu", 1800)
@@ -1194,8 +1127,7 @@ class TestAlertingSystemIntegration:
         assert alert_manager.is_suppressed("high_cpu") is True
     
     def test_multiple_metrics_single_rule(self, full_alerting_system):
-        """Test multiple metrics triggering the same rule"""
-        alert_manager = full_alerting_system
+        """Test multiple metrics triggering the same rule"""        alert_manager = full_alerting_system
         
         # Create multiple high CPU metrics from different hosts
         metrics = [
@@ -1219,8 +1151,7 @@ class TestAlertingSystemIntegration:
         assert len(set(hosts)) == 5  # All unique hosts
     
     def test_alerting_performance_under_load(self, full_alerting_system):
-        """Test alerting system performance under high load"""
-        alert_manager = full_alerting_system
+        """Test alerting system performance under high load"""        alert_manager = full_alerting_system
         
         # Generate large number of metrics
         start_time = time.time()
@@ -1249,8 +1180,7 @@ class TestAlertingSystemIntegration:
         assert len(triggered_alerts) < 1000  # Not all metrics should trigger
     
     def test_alert_history_and_statistics(self, full_alerting_system):
-        """Test alert history tracking and statistics generation"""
-        alert_manager = full_alerting_system
+        """Test alert history tracking and statistics generation"""        alert_manager = full_alerting_system
         
         # Generate alerts over time
         now = datetime.now(timezone.utc)

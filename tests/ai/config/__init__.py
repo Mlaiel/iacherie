@@ -35,8 +35,7 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 
 Comprehensive test package for AI configuration modules supporting multi-format content creators.
 Ensures 100% reliability, security, and performance across all configuration components.
-"""
-import sys
+"""import sys
 import os
 from pathlib import Path
 from typing import Dict, List, Any, Optional, Union

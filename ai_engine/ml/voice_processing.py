@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Voice Processing Module for IA-Influencer-Agent
+"""Voice Processing Module for IA-Influencer-Agent
 ===============================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,7 +19,6 @@ Features:
 - Speaker verification
 - Voice biometric analysis
 """
-
 import logging
 import numpy as np
 import torch
@@ -60,8 +58,7 @@ except ImportError:
 
 
 class VoiceEmotion(Enum):
-    """Voice emotional states"""
-    NEUTRAL = "neutral"
+    """Voice emotional states"""    NEUTRAL = "neutral"
     HAPPY = "happy"
     SAD = "sad"
     ANGRY = "angry"
@@ -74,16 +71,14 @@ class VoiceEmotion(Enum):
 
 
 class VoiceGender(Enum):
-    """Voice gender classification"""
-    MALE = "male"
+    """Voice gender classification"""    MALE = "male"
     FEMALE = "female"
     CHILD = "child"
     UNKNOWN = "unknown"
 
 
 class VoiceAccent(Enum):
-    """Voice accent types"""
-    AMERICAN = "american"
+    """Voice accent types"""    AMERICAN = "american"
     BRITISH = "british"
     AUSTRALIAN = "australian"
     CANADIAN = "canadian"
@@ -96,8 +91,7 @@ class VoiceAccent(Enum):
 
 
 class SpeakerAge(Enum):
-    """Speaker age groups"""
-    CHILD = "child"      # 5-12
+    """Speaker age groups"""    CHILD = "child"      # 5-12
     TEENAGER = "teenager"  # 13-19
     YOUNG_ADULT = "young_adult"  # 20-35
     MIDDLE_AGED = "middle_aged"  # 36-55
@@ -106,8 +100,7 @@ class SpeakerAge(Enum):
 
 @dataclass
 class VoiceProfile:
-    """Voice characteristics profile"""
-    speaker_id: str
+    """Voice characteristics profile"""    speaker_id: str
     gender: VoiceGender
     age_group: SpeakerAge
     accent: VoiceAccent
@@ -121,8 +114,7 @@ class VoiceProfile:
 
 @dataclass
 class VoiceCloningResult:
-    """Result from voice cloning"""
-    cloned_audio: np.ndarray
+    """Result from voice cloning"""    cloned_audio: np.ndarray
     sample_rate: int
     target_text: str
     source_voice_id: str
@@ -134,8 +126,7 @@ class VoiceCloningResult:
 
 @dataclass
 class SpeakerIdentificationResult:
-    """Result from speaker identification"""
-    identified_speakers: List[Dict[str, Any]]
+    """Result from speaker identification"""    identified_speakers: List[Dict[str, Any]]
     confidence: float
     processing_time: float
     voice_segments: List[Dict[str, Any]]
@@ -145,8 +136,7 @@ class SpeakerIdentificationResult:
 
 @dataclass
 class EmotionalAnalysisResult:
-    """Result from emotional voice analysis"""
-    dominant_emotion: VoiceEmotion
+    """Result from emotional voice analysis"""    dominant_emotion: VoiceEmotion
     emotion_probabilities: Dict[VoiceEmotion, float]
     emotional_intensity: float
     emotional_stability: float
@@ -157,8 +147,7 @@ class EmotionalAnalysisResult:
 
 @dataclass
 class VoiceFeatures:
-    """Comprehensive voice features"""
-    fundamental_frequency: np.ndarray
+    """Comprehensive voice features"""    fundamental_frequency: np.ndarray
     formants: np.ndarray
     spectral_features: Dict[str, np.ndarray]
     prosodic_features: Dict[str, float]
@@ -168,8 +157,7 @@ class VoiceFeatures:
 
 
 class BaseVoiceProcessor(ABC):
-    """Base class for voice processors"""
-    
+    """Base class for voice processors"""    
     def __init__(self, processor_name: str = "base_voice"):
         self.processor_name = processor_name
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -179,12 +167,10 @@ class BaseVoiceProcessor(ABC):
         
     @abstractmethod
     def load_model(self) -> bool:
-        """Load the voice processing model"""
-        pass
+        """Load the voice processing model"""        pass
         
     def load_audio(self, file_path: str) -> Tuple[np.ndarray, int]:
-        """Load audio file for voice processing"""
-        try:
+        """Load audio file for voice processing"""        try:
             if LIBROSA_AVAILABLE:
                 audio, sr = librosa.load(file_path, sr=self.sample_rate)
                 return audio, sr
@@ -215,8 +201,7 @@ class BaseVoiceProcessor(ABC):
             return audio, self.sample_rate
     
     def save_audio(self, audio: np.ndarray, file_path: str, sample_rate: int = None):
-        """Save audio to file"""
-        sr = sample_rate or self.sample_rate
+        """Save audio to file"""        sr = sample_rate or self.sample_rate
         
         try:
             if SOUNDFILE_AVAILABLE:
@@ -232,16 +217,14 @@ class BaseVoiceProcessor(ABC):
 
 
 class VoiceCloner(BaseVoiceProcessor):
-    """Advanced voice cloning and synthesis"""
-    
+    """Advanced voice cloning and synthesis"""    
     def __init__(self, model_name: str = "voice_cloner_v1"):
         super().__init__(f"cloner_{model_name}")
         self.voice_database = {}  # Speaker embeddings
         self.min_training_duration = 30.0  # seconds
         
     def load_model(self) -> bool:
-        """Load voice cloning model"""
-        try:
+        """Load voice cloning model"""        try:
             # Create voice cloning models
             self.encoder = self._create_voice_encoder()
             self.decoder = self._create_voice_decoder()
@@ -264,8 +247,7 @@ class VoiceCloner(BaseVoiceProcessor):
             return False
     
     def _create_voice_encoder(self):
-        """Create voice encoder model"""
-        class VoiceEncoder(nn.Module):
+        """Create voice encoder model"""        class VoiceEncoder(nn.Module):
             def __init__(self, input_size=80, embedding_size=256):
                 super().__init__()
                 
@@ -295,8 +277,7 @@ class VoiceCloner(BaseVoiceProcessor):
         return VoiceEncoder()
     
     def _create_voice_decoder(self):
-        """Create voice decoder model"""
-        class VoiceDecoder(nn.Module):
+        """Create voice decoder model"""        class VoiceDecoder(nn.Module):
             def __init__(self, text_embedding_size=256, speaker_embedding_size=256, mel_size=80):
                 super().__init__()
                 
@@ -335,8 +316,7 @@ class VoiceCloner(BaseVoiceProcessor):
         return VoiceDecoder()
     
     def _create_vocoder(self):
-        """Create vocoder model"""
-        class SimpleVocoder(nn.Module):
+        """Create vocoder model"""        class SimpleVocoder(nn.Module):
             def __init__(self, mel_size=80, audio_size=1024):
                 super().__init__()
                 
@@ -356,8 +336,7 @@ class VoiceCloner(BaseVoiceProcessor):
     
     def train_voice_profile(self, audio_samples: List[Union[str, np.ndarray]], 
                            speaker_id: str, sample_rate: int = None) -> VoiceProfile:
-        """Train a voice profile from audio samples"""
-        try:
+        """Train a voice profile from audio samples"""        try:
             if not self.is_loaded:
                 if not self.load_model():
                     raise RuntimeError("Failed to load voice cloner")
@@ -432,8 +411,7 @@ class VoiceCloner(BaseVoiceProcessor):
     
     def clone_voice(self, target_text: str, source_speaker_id: str,
                    target_emotion: VoiceEmotion = VoiceEmotion.NEUTRAL) -> VoiceCloningResult:
-        """Clone voice to speak target text"""
-        start_time = time.time()
+        """Clone voice to speak target text"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -498,8 +476,7 @@ class VoiceCloner(BaseVoiceProcessor):
             )
     
     def _extract_voice_features(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract voice features for speaker embedding"""
-        try:
+        """Extract voice features for speaker embedding"""        try:
             if LIBROSA_AVAILABLE:
                 # Extract mel spectrogram
                 mel_spec = librosa.feature.melspectrogram(
@@ -528,8 +505,7 @@ class VoiceCloner(BaseVoiceProcessor):
             return np.random.normal(0, 1, (80, 100))  # Fallback
     
     def _generate_speaker_embedding(self, features: np.ndarray) -> np.ndarray:
-        """Generate speaker embedding from features"""
-        try:
+        """Generate speaker embedding from features"""        try:
             with torch.no_grad():
                 # Ensure proper shape for model
                 if features.shape[1] > 1000:
@@ -545,8 +521,7 @@ class VoiceCloner(BaseVoiceProcessor):
     
     def _analyze_voice_characteristics(self, embeddings: List[np.ndarray], 
                                      audio_samples: List, sample_rate: int = None) -> Dict[str, Any]:
-        """Analyze voice characteristics from embeddings and audio"""
-        try:
+        """Analyze voice characteristics from embeddings and audio"""        try:
             characteristics = {
                 'gender': VoiceGender.UNKNOWN,
                 'age_group': SpeakerAge.YOUNG_ADULT,
@@ -593,8 +568,7 @@ class VoiceCloner(BaseVoiceProcessor):
             }
     
     def _text_to_indices(self, text: str) -> List[int]:
-        """Convert text to token indices"""
-        # Simple character-based tokenization
+        """Convert text to token indices"""        # Simple character-based tokenization
         char_to_idx = {chr(i): i-32 for i in range(32, 127)}  # ASCII characters
         indices = []
         for char in text.lower():
@@ -607,8 +581,7 @@ class VoiceCloner(BaseVoiceProcessor):
     def _generate_mel_spectrogram(self, text_indices: List[int], 
                                  speaker_embedding: np.ndarray, 
                                  emotion: VoiceEmotion) -> np.ndarray:
-        """Generate mel spectrogram from text and speaker embedding"""
-        try:
+        """Generate mel spectrogram from text and speaker embedding"""        try:
             with torch.no_grad():
                 text_tensor = torch.LongTensor(text_indices).unsqueeze(0).to(self.device)
                 speaker_tensor = torch.FloatTensor(speaker_embedding).unsqueeze(0).to(self.device)
@@ -622,8 +595,7 @@ class VoiceCloner(BaseVoiceProcessor):
             return np.random.normal(0, 1, (80, len(text_indices) * 2))
     
     def _mel_to_audio(self, mel_spec: np.ndarray) -> np.ndarray:
-        """Convert mel spectrogram to audio"""
-        try:
+        """Convert mel spectrogram to audio"""        try:
             with torch.no_grad():
                 mel_tensor = torch.FloatTensor(mel_spec).unsqueeze(0).to(self.device)
                 
@@ -655,8 +627,7 @@ class VoiceCloner(BaseVoiceProcessor):
             return 0.3 * np.sin(2 * np.pi * 200 * t)
     
     def _post_process_audio(self, audio: np.ndarray, emotion: VoiceEmotion) -> np.ndarray:
-        """Post-process audio based on emotion"""
-        try:
+        """Post-process audio based on emotion"""        try:
             # Apply emotion-based modifications
             if emotion == VoiceEmotion.HAPPY:
                 # Slightly increase pitch and energy
@@ -687,8 +658,7 @@ class VoiceCloner(BaseVoiceProcessor):
     
     def _calculate_similarity_score(self, generated_audio: np.ndarray, 
                                    target_embedding: np.ndarray) -> float:
-        """Calculate similarity score between generated audio and target voice"""
-        try:
+        """Calculate similarity score between generated audio and target voice"""        try:
             # Extract features from generated audio
             generated_features = self._extract_voice_features(generated_audio, self.sample_rate)
             generated_embedding = self._generate_speaker_embedding(generated_features)
@@ -705,8 +675,7 @@ class VoiceCloner(BaseVoiceProcessor):
             return 0.5
     
     def _calculate_quality_score(self, audio: np.ndarray) -> float:
-        """Calculate audio quality score"""
-        try:
+        """Calculate audio quality score"""        try:
             # Simple quality metrics
             
             # Dynamic range
@@ -737,16 +706,14 @@ class VoiceCloner(BaseVoiceProcessor):
 
 
 class SpeakerIdentification(BaseVoiceProcessor):
-    """Speaker identification and verification system"""
-    
+    """Speaker identification and verification system"""    
     def __init__(self, model_name: str = "speaker_id_v1"):
         super().__init__(f"speaker_id_{model_name}")
         self.speaker_database = {}
         self.identification_threshold = 0.7
         
     def load_model(self) -> bool:
-        """Load speaker identification model"""
-        try:
+        """Load speaker identification model"""        try:
             # Create speaker identification model
             self.model = self._create_speaker_id_model()
             self.model.to(self.device)
@@ -761,8 +728,7 @@ class SpeakerIdentification(BaseVoiceProcessor):
             return False
     
     def _create_speaker_id_model(self):
-        """Create speaker identification model"""
-        class SpeakerIDModel(nn.Module):
+        """Create speaker identification model"""        class SpeakerIDModel(nn.Module):
             def __init__(self, input_size=80, embedding_size=512):
                 super().__init__()
                 
@@ -799,8 +765,7 @@ class SpeakerIdentification(BaseVoiceProcessor):
     
     def register_speaker(self, audio_samples: List[Union[str, np.ndarray]], 
                         speaker_id: str, sample_rate: int = None) -> bool:
-        """Register a new speaker in the database"""
-        try:
+        """Register a new speaker in the database"""        try:
             if not self.is_loaded:
                 if not self.load_model():
                     return False
@@ -838,8 +803,7 @@ class SpeakerIdentification(BaseVoiceProcessor):
     
     def identify_speakers(self, audio: Union[str, np.ndarray], 
                          sample_rate: int = None) -> SpeakerIdentificationResult:
-        """Identify speakers in audio"""
-        start_time = time.time()
+        """Identify speakers in audio"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -937,8 +901,7 @@ class SpeakerIdentification(BaseVoiceProcessor):
             )
     
     def _extract_speaker_embedding(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract speaker embedding from audio"""
-        try:
+        """Extract speaker embedding from audio"""        try:
             # Extract mel spectrogram features
             if LIBROSA_AVAILABLE:
                 mel_spec = librosa.feature.melspectrogram(
@@ -981,8 +944,7 @@ class SpeakerIdentification(BaseVoiceProcessor):
             return np.random.normal(0, 1, 512)  # Default embedding size
     
     def _segment_audio(self, audio: np.ndarray, sample_rate: int) -> List[Dict[str, Any]]:
-        """Segment audio into voice activity regions"""
-        segment_duration = 3.0  # 3 seconds per segment
+        """Segment audio into voice activity regions"""        segment_duration = 3.0  # 3 seconds per segment
         overlap = 0.5  # 50% overlap
         
         segment_samples = int(segment_duration * sample_rate)
@@ -1008,8 +970,7 @@ class SpeakerIdentification(BaseVoiceProcessor):
         return segments
     
     def _match_speaker(self, embedding: np.ndarray) -> Tuple[Optional[str], float]:
-        """Match embedding to registered speakers"""
-        if not self.speaker_database:
+        """Match embedding to registered speakers"""        if not self.speaker_database:
             return None, 0.0
         
         best_match = None
@@ -1031,15 +992,13 @@ class SpeakerIdentification(BaseVoiceProcessor):
 
 
 class EmotionalVoiceAnalysis(BaseVoiceProcessor):
-    """Emotional analysis of voice and speech"""
-    
+    """Emotional analysis of voice and speech"""    
     def __init__(self, model_name: str = "emotion_analyzer_v1"):
         super().__init__(f"emotion_{model_name}")
         self.emotions = [emotion.value for emotion in VoiceEmotion]
         
     def load_model(self) -> bool:
-        """Load emotional voice analysis model"""
-        try:
+        """Load emotional voice analysis model"""        try:
             # Create emotion analysis model
             self.model = self._create_emotion_model()
             self.model.to(self.device)
@@ -1054,8 +1013,7 @@ class EmotionalVoiceAnalysis(BaseVoiceProcessor):
             return False
     
     def _create_emotion_model(self):
-        """Create emotion analysis model"""
-        class EmotionAnalysisModel(nn.Module):
+        """Create emotion analysis model"""        class EmotionAnalysisModel(nn.Module):
             def __init__(self, input_size=128, num_emotions=len(VoiceEmotion)):
                 super().__init__()
                 
@@ -1094,8 +1052,7 @@ class EmotionalVoiceAnalysis(BaseVoiceProcessor):
     
     def analyze_emotion(self, audio: Union[str, np.ndarray], 
                        sample_rate: int = None) -> EmotionalAnalysisResult:
-        """Analyze emotional content in voice"""
-        start_time = time.time()
+        """Analyze emotional content in voice"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -1167,8 +1124,7 @@ class EmotionalVoiceAnalysis(BaseVoiceProcessor):
             )
     
     def _extract_emotional_features(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract features relevant for emotion analysis"""
-        features = []
+        """Extract features relevant for emotion analysis"""        features = []
         
         try:
             if LIBROSA_AVAILABLE:
@@ -1220,8 +1176,7 @@ class EmotionalVoiceAnalysis(BaseVoiceProcessor):
             return np.random.normal(0.5, 0.2, 128)  # Neutral-ish features
     
     def _simple_emotional_features(self, audio: np.ndarray, sample_rate: int) -> List[float]:
-        """Extract simple emotional features without advanced libraries"""
-        features = []
+        """Extract simple emotional features without advanced libraries"""        features = []
         
         # Energy-based features
         energy = np.mean(audio ** 2)
@@ -1264,8 +1219,7 @@ class EmotionalVoiceAnalysis(BaseVoiceProcessor):
         return features
     
     def _analyze_temporal_emotions(self, audio: np.ndarray, sample_rate: int) -> List[Dict[str, Any]]:
-        """Analyze emotions over time"""
-        window_duration = 2.0  # 2 seconds
+        """Analyze emotions over time"""        window_duration = 2.0  # 2 seconds
         overlap = 0.5  # 50% overlap
         
         window_samples = int(window_duration * sample_rate)
@@ -1313,8 +1267,7 @@ class EmotionalVoiceAnalysis(BaseVoiceProcessor):
         return temporal_emotions
     
     def _calculate_emotional_stability(self, temporal_emotions: List[Dict[str, Any]]) -> float:
-        """Calculate emotional stability over time"""
-        if len(temporal_emotions) < 2:
+        """Calculate emotional stability over time"""        if len(temporal_emotions) < 2:
             return 1.0  # Perfect stability with insufficient data
         
         try:

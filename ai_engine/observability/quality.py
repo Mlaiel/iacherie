@@ -1,5 +1,4 @@
-"""
-Quality Assurance Module - Enterprise Testing and Validation Framework
+"""Quality Assurance Module - Enterprise Testing and Validation Framework
 
 Provides comprehensive quality assurance for observability systems including
 automated testing, validation frameworks, performance benchmarking,
@@ -14,7 +13,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import asyncio
 import json
 import logging
@@ -58,8 +56,7 @@ except ImportError:
 
 
 class TestType(Enum):
-    """Types of quality tests"""
-    UNIT = "unit"
+    """Types of quality tests"""    UNIT = "unit"
     INTEGRATION = "integration"
     PERFORMANCE = "performance"
     LOAD = "load"
@@ -72,8 +69,7 @@ class TestType(Enum):
 
 
 class TestStatus(Enum):
-    """Test execution status"""
-    PENDING = "pending"
+    """Test execution status"""    PENDING = "pending"
     RUNNING = "running"
     PASSED = "passed"
     FAILED = "failed"
@@ -83,8 +79,7 @@ class TestStatus(Enum):
 
 
 class TestSeverity(Enum):
-    """Test failure severity"""
-    CRITICAL = "critical"
+    """Test failure severity"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -92,8 +87,7 @@ class TestSeverity(Enum):
 
 
 class QualityMetricType(Enum):
-    """Types of quality metrics"""
-    AVAILABILITY = "availability"
+    """Types of quality metrics"""    AVAILABILITY = "availability"
     RELIABILITY = "reliability"
     PERFORMANCE = "performance"
     ACCURACY = "accuracy"
@@ -106,8 +100,7 @@ class QualityMetricType(Enum):
 
 @dataclass
 class TestResult:
-    """Result of a quality test"""
-    test_id: str
+    """Result of a quality test"""    test_id: str
     test_name: str
     test_type: TestType
     status: TestStatus
@@ -139,8 +132,7 @@ class TestResult:
     network_io: Optional[Dict[str, float]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        result = asdict(self)
+        """Convert to dictionary"""        result = asdict(self)
         result['test_type'] = self.test_type.value
         result['status'] = self.status.value
         result['severity'] = self.severity.value
@@ -150,24 +142,20 @@ class TestResult:
         return result
     
     def is_passed(self) -> bool:
-        """Check if test passed"""
-        return self.status == TestStatus.PASSED
+        """Check if test passed"""        return self.status == TestStatus.PASSED
     
     def is_failed(self) -> bool:
-        """Check if test failed"""
-        return self.status in [TestStatus.FAILED, TestStatus.ERROR, TestStatus.TIMEOUT]
+        """Check if test failed"""        return self.status in [TestStatus.FAILED, TestStatus.ERROR, TestStatus.TIMEOUT]
     
     def get_success_rate(self) -> float:
-        """Get success rate (for load tests with multiple runs)"""
-        if "success_count" in self.metrics and "total_count" in self.metrics:
+        """Get success rate (for load tests with multiple runs)"""        if "success_count" in self.metrics and "total_count" in self.metrics:
             return self.metrics["success_count"] / self.metrics["total_count"]
         return 1.0 if self.is_passed() else 0.0
 
 
 @dataclass
 class QualityMetric:
-    """Quality metric measurement"""
-    metric_id: str
+    """Quality metric measurement"""    metric_id: str
     name: str
     metric_type: QualityMetricType
     value: float
@@ -185,8 +173,7 @@ class QualityMetric:
     tags: Dict[str, str] = field(default_factory=dict)
     
     def is_healthy(self) -> bool:
-        """Check if metric is within healthy range"""
-        if self.critical_threshold is not None:
+        """Check if metric is within healthy range"""        if self.critical_threshold is not None:
             if self.metric_type in [QualityMetricType.AVAILABILITY, QualityMetricType.ACCURACY]:
                 # Higher is better
                 return self.value >= self.critical_threshold
@@ -196,8 +183,7 @@ class QualityMetric:
         return True
     
     def get_status(self) -> str:
-        """Get metric status"""
-        if not self.is_healthy():
+        """Get metric status"""        if not self.is_healthy():
             return "critical"
         elif self.warning_threshold is not None:
             if self.metric_type in [QualityMetricType.AVAILABILITY, QualityMetricType.ACCURACY]:
@@ -209,8 +195,7 @@ class QualityMetric:
         return "healthy"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        result = asdict(self)
+        """Convert to dictionary"""        result = asdict(self)
         result['metric_type'] = self.metric_type.value
         result['timestamp'] = self.timestamp.isoformat()
         result['status'] = self.get_status()
@@ -218,8 +203,7 @@ class QualityMetric:
 
 
 class BaseQualityTest(ABC):
-    """Abstract base class for quality tests"""
-    
+    """Abstract base class for quality tests"""    
     def __init__(self, test_id: str, test_name: str, test_type: TestType, 
                  severity: TestSeverity = TestSeverity.MEDIUM):
         self.test_id = test_id
@@ -234,22 +218,18 @@ class BaseQualityTest(ABC):
     
     @abstractmethod
     async def setup(self):
-        """Setup test environment"""
-        pass
+        """Setup test environment"""        pass
     
     @abstractmethod
     async def execute(self) -> TestResult:
-        """Execute the test"""
-        pass
+        """Execute the test"""        pass
     
     @abstractmethod
     async def teardown(self):
-        """Cleanup test environment"""
-        pass
+        """Cleanup test environment"""        pass
     
     async def run_test(self) -> TestResult:
-        """Run the complete test with setup and teardown"""
-        start_time = datetime.utcnow()
+        """Run the complete test with setup and teardown"""        start_time = datetime.utcnow()
         test_result = TestResult(
             test_id=self.test_id,
             test_name=self.test_name,
@@ -296,8 +276,7 @@ class BaseQualityTest(ABC):
 
 
 class LoggingSystemTest(BaseQualityTest):
-    """Test logging system functionality"""
-    
+    """Test logging system functionality"""    
     def __init__(self, logging_component):
         super().__init__("logging_system_test", "Logging System Functionality", 
                         TestType.FUNCTIONAL, TestSeverity.HIGH)
@@ -305,13 +284,11 @@ class LoggingSystemTest(BaseQualityTest):
         self.test_logs = []
     
     async def setup(self):
-        """Setup logging test environment"""
-        self.test_logs = []
+        """Setup logging test environment"""        self.test_logs = []
         self.logger.info("Setting up logging system test")
     
     async def execute(self) -> TestResult:
-        """Test logging system functionality"""
-        result = TestResult(
+        """Test logging system functionality"""        result = TestResult(
             test_id=self.test_id,
             test_name=self.test_name,
             test_type=self.test_type,
@@ -415,14 +392,12 @@ class LoggingSystemTest(BaseQualityTest):
         return result
     
     async def teardown(self):
-        """Cleanup logging test"""
-        self.test_logs.clear()
+        """Cleanup logging test"""        self.test_logs.clear()
         self.logger.info("Logging system test cleanup completed")
 
 
 class MetricsSystemTest(BaseQualityTest):
-    """Test metrics collection and analysis system"""
-    
+    """Test metrics collection and analysis system"""    
     def __init__(self, metrics_component):
         super().__init__("metrics_system_test", "Metrics System Functionality",
                         TestType.FUNCTIONAL, TestSeverity.HIGH)
@@ -430,13 +405,11 @@ class MetricsSystemTest(BaseQualityTest):
         self.test_metrics = []
     
     async def setup(self):
-        """Setup metrics test environment"""
-        self.test_metrics = []
+        """Setup metrics test environment"""        self.test_metrics = []
         self.logger.info("Setting up metrics system test")
     
     async def execute(self) -> TestResult:
-        """Test metrics system functionality"""
-        result = TestResult(
+        """Test metrics system functionality"""        result = TestResult(
             test_id=self.test_id,
             test_name=self.test_name,
             test_type=self.test_type,
@@ -538,13 +511,11 @@ class MetricsSystemTest(BaseQualityTest):
         return result
     
     async def teardown(self):
-        """Cleanup metrics test"""
-        self.test_metrics.clear()
+        """Cleanup metrics test"""        self.test_metrics.clear()
 
 
 class PerformanceTest(BaseQualityTest):
-    """Performance testing for observability components"""
-    
+    """Performance testing for observability components"""    
     def __init__(self, component, test_config: Dict[str, Any]):
         super().__init__("performance_test", "Performance Benchmark Test",
                         TestType.PERFORMANCE, TestSeverity.MEDIUM)
@@ -555,12 +526,10 @@ class PerformanceTest(BaseQualityTest):
         self.target_rps = test_config.get("target_rps", 100)
     
     async def setup(self):
-        """Setup performance test environment"""
-        self.logger.info(f"Setting up performance test with {self.concurrent_users} users for {self.duration_seconds}s")
+        """Setup performance test environment"""        self.logger.info(f"Setting up performance test with {self.concurrent_users} users for {self.duration_seconds}s")
     
     async def execute(self) -> TestResult:
-        """Execute performance test"""
-        result = TestResult(
+        """Execute performance test"""        result = TestResult(
             test_id=self.test_id,
             test_name=self.test_name,
             test_type=self.test_type,
@@ -659,8 +628,7 @@ class PerformanceTest(BaseQualityTest):
         return result
     
     async def _simulate_user_load(self, user_id: int, response_times: List[float]):
-        """Simulate load from a single user"""
-        while True:
+        """Simulate load from a single user"""        while True:
             try:
                 start_time = time.time()
                 
@@ -686,8 +654,7 @@ class PerformanceTest(BaseQualityTest):
                 self.logger.error(f"Error in user {user_id} simulation: {str(e)}")
     
     async def _monitor_resources(self, result: TestResult):
-        """Monitor system resources during performance test"""
-        cpu_readings = []
+        """Monitor system resources during performance test"""        cpu_readings = []
         memory_readings = []
         
         try:
@@ -711,13 +678,11 @@ class PerformanceTest(BaseQualityTest):
                 result.metrics["max_memory_usage"] = max(memory_readings)
     
     async def teardown(self):
-        """Cleanup performance test"""
-        self.logger.info("Performance test cleanup completed")
+        """Cleanup performance test"""        self.logger.info("Performance test cleanup completed")
 
 
 class ReliabilityTest(BaseQualityTest):
-    """Reliability testing with chaos engineering"""
-    
+    """Reliability testing with chaos engineering"""    
     def __init__(self, system_components: List[Any]):
         super().__init__("reliability_test", "System Reliability Test",
                         TestType.RELIABILITY, TestSeverity.CRITICAL)
@@ -731,12 +696,10 @@ class ReliabilityTest(BaseQualityTest):
         ]
     
     async def setup(self):
-        """Setup reliability test"""
-        self.logger.info("Setting up reliability test with chaos scenarios")
+        """Setup reliability test"""        self.logger.info("Setting up reliability test with chaos scenarios")
     
     async def execute(self) -> TestResult:
-        """Execute reliability test"""
-        result = TestResult(
+        """Execute reliability test"""        result = TestResult(
             test_id=self.test_id,
             test_name=self.test_name,
             test_type=self.test_type,
@@ -806,8 +769,7 @@ class ReliabilityTest(BaseQualityTest):
         return result
     
     async def _execute_chaos_scenario(self, scenario: str) -> bool:
-        """Execute a specific chaos scenario"""
-        try:
+        """Execute a specific chaos scenario"""        try:
             self.logger.info(f"Executing chaos scenario: {scenario}")
             
             if scenario == "component_failure":
@@ -828,45 +790,38 @@ class ReliabilityTest(BaseQualityTest):
             return False
     
     async def _test_component_failure(self) -> bool:
-        """Test system behavior when a component fails"""
-        # Simulate component failure and test recovery
+        """Test system behavior when a component fails"""        # Simulate component failure and test recovery
         # This would involve temporarily disabling a component
         # and verifying the system continues to function
         await asyncio.sleep(2)  # Simulate test time
         return True
     
     async def _test_network_partition(self) -> bool:
-        """Test system behavior during network partition"""
-        # Simulate network partition between components
+        """Test system behavior during network partition"""        # Simulate network partition between components
         await asyncio.sleep(2)
         return True
     
     async def _test_high_latency(self) -> bool:
-        """Test system behavior under high latency conditions"""
-        # Simulate high latency and verify timeouts/retries work
+        """Test system behavior under high latency conditions"""        # Simulate high latency and verify timeouts/retries work
         await asyncio.sleep(3)
         return True
     
     async def _test_resource_exhaustion(self) -> bool:
-        """Test system behavior under resource exhaustion"""
-        # Simulate resource exhaustion (memory, CPU, disk)
+        """Test system behavior under resource exhaustion"""        # Simulate resource exhaustion (memory, CPU, disk)
         await asyncio.sleep(2)
         return True
     
     async def _test_dependency_failure(self) -> bool:
-        """Test system behavior when dependencies fail"""
-        # Simulate external dependency failures
+        """Test system behavior when dependencies fail"""        # Simulate external dependency failures
         await asyncio.sleep(2)
         return True
     
     async def teardown(self):
-        """Cleanup reliability test"""
-        self.logger.info("Reliability test cleanup completed")
+        """Cleanup reliability test"""        self.logger.info("Reliability test cleanup completed")
 
 
 class QualityAssuranceEngine:
-    """Main quality assurance engine"""
-    
+    """Main quality assurance engine"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger("quality.engine")
@@ -890,38 +845,32 @@ class QualityAssuranceEngine:
         }
     
     def register_test(self, test: BaseQualityTest):
-        """Register a quality test"""
-        self.tests[test.test_id] = test
+        """Register a quality test"""        self.tests[test.test_id] = test
         self.stats["tests_registered"] += 1
         self.logger.info(f"Registered quality test: {test.test_id}")
     
     def create_logging_test(self, logging_component) -> LoggingSystemTest:
-        """Create and register logging system test"""
-        test = LoggingSystemTest(logging_component)
+        """Create and register logging system test"""        test = LoggingSystemTest(logging_component)
         self.register_test(test)
         return test
     
     def create_metrics_test(self, metrics_component) -> MetricsSystemTest:
-        """Create and register metrics system test"""
-        test = MetricsSystemTest(metrics_component)
+        """Create and register metrics system test"""        test = MetricsSystemTest(metrics_component)
         self.register_test(test)
         return test
     
     def create_performance_test(self, component, config: Dict[str, Any]) -> PerformanceTest:
-        """Create and register performance test"""
-        test = PerformanceTest(component, config)
+        """Create and register performance test"""        test = PerformanceTest(component, config)
         self.register_test(test)
         return test
     
     def create_reliability_test(self, components: List[Any]) -> ReliabilityTest:
-        """Create and register reliability test"""
-        test = ReliabilityTest(components)
+        """Create and register reliability test"""        test = ReliabilityTest(components)
         self.register_test(test)
         return test
     
     async def run_test(self, test_id: str) -> TestResult:
-        """Run a specific test"""
-        if test_id not in self.tests:
+        """Run a specific test"""        if test_id not in self.tests:
             raise ValueError(f"Test {test_id} not registered")
         
         test = self.tests[test_id]
@@ -969,8 +918,7 @@ class QualityAssuranceEngine:
     
     async def run_test_suite(self, test_types: List[TestType] = None,
                            parallel: bool = True) -> List[TestResult]:
-        """Run multiple tests as a suite"""
-        tests_to_run = []
+        """Run multiple tests as a suite"""        tests_to_run = []
         
         for test_id, test in self.tests.items():
             if not test_types or test.test_type in test_types:
@@ -1016,8 +964,7 @@ class QualityAssuranceEngine:
             return results
     
     async def run_continuous_testing(self, interval_minutes: int = 60):
-        """Start continuous testing"""
-        if self.running:
+        """Start continuous testing"""        if self.running:
             return
         
         self.running = True
@@ -1027,8 +974,7 @@ class QualityAssuranceEngine:
         self.logger.info(f"Started continuous testing (interval: {interval_minutes} minutes)")
     
     async def stop_continuous_testing(self):
-        """Stop continuous testing"""
-        self.running = False
+        """Stop continuous testing"""        self.running = False
         if self.scheduler_task:
             self.scheduler_task.cancel()
             try:
@@ -1038,8 +984,7 @@ class QualityAssuranceEngine:
         self.logger.info("Stopped continuous testing")
     
     async def _continuous_testing_worker(self, interval_minutes: int):
-        """Background worker for continuous testing"""
-        while self.running:
+        """Background worker for continuous testing"""        while self.running:
             try:
                 # Run functional tests
                 functional_results = await self.run_test_suite([TestType.FUNCTIONAL])
@@ -1064,8 +1009,7 @@ class QualityAssuranceEngine:
                 await asyncio.sleep(300)  # Wait 5 minutes before retry
     
     async def _generate_quality_metrics(self):
-        """Generate quality metrics based on test results"""
-        if not self.test_results:
+        """Generate quality metrics based on test results"""        if not self.test_results:
             return
         
         # Get recent test results (last 24 hours)
@@ -1135,8 +1079,7 @@ class QualityAssuranceEngine:
                 self.quality_metrics.append(performance)
     
     def get_quality_report(self, hours: int = 24) -> Dict[str, Any]:
-        """Generate comprehensive quality report"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Generate comprehensive quality report"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         # Filter recent results and metrics
         recent_results = [r for r in self.test_results if r.start_time >= cutoff_time]
@@ -1219,8 +1162,7 @@ class QualityAssuranceEngine:
     
     def _generate_recommendations(self, results: List[TestResult], 
                                 metrics: List[QualityMetric]) -> List[str]:
-        """Generate improvement recommendations"""
-        recommendations = []
+        """Generate improvement recommendations"""        recommendations = []
         
         # Analyze test failures
         failed_tests = [r for r in results if r.is_failed()]
@@ -1268,8 +1210,7 @@ class QualityAssuranceEngine:
         return recommendations[:10]  # Limit to top 10 recommendations
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get quality assurance statistics"""
-        return {
+        """Get quality assurance statistics"""        return {
             "registered_tests": len(self.tests),
             "continuous_testing_active": self.running,
             "test_results_count": len(self.test_results),
@@ -1280,8 +1221,7 @@ class QualityAssuranceEngine:
 
 # Factory function
 def create_quality_assurance_engine(config: Dict[str, Any] = None) -> QualityAssuranceEngine:
-    """Factory function to create quality assurance engine"""
-    return QualityAssuranceEngine(config)
+    """Factory function to create quality assurance engine"""    return QualityAssuranceEngine(config)
 
 
 # Export quality assurance components

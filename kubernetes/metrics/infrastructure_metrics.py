@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Infrastructure Performance Metrics
+"""IA Influencer Agent - Infrastructure Performance Metrics
 Enterprise infrastructure monitoring and optimization metrics
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -33,7 +32,6 @@ Features:
 - Auto-scaling metrics
 - Service mesh monitoring
 """
-
 import asyncio
 import psutil
 import time
@@ -59,8 +57,7 @@ metrics_config = get_metrics_config()
 
 
 class ServiceType(Enum):
-    """Infrastructure service types"""
-    API_GATEWAY = "api_gateway"
+    """Infrastructure service types"""    API_GATEWAY = "api_gateway"
     DATABASE = "database"
     REDIS_CACHE = "redis_cache"
     FILE_STORAGE = "file_storage"
@@ -73,8 +70,7 @@ class ServiceType(Enum):
 
 
 class ResourceType(Enum):
-    """System resource types"""
-    CPU = "cpu"
+    """System resource types"""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -82,8 +78,7 @@ class ResourceType(Enum):
 
 
 class PerformanceStatus(Enum):
-    """Performance status levels"""
-    OPTIMAL = "optimal"
+    """Performance status levels"""    OPTIMAL = "optimal"
     GOOD = "good"
     WARNING = "warning"
     CRITICAL = "critical"
@@ -92,8 +87,7 @@ class PerformanceStatus(Enum):
 
 @dataclass
 class SystemMetrics:
-    """System resource metrics"""
-    timestamp: datetime
+    """System resource metrics"""    timestamp: datetime
     cpu_usage_percent: float
     memory_usage_percent: float
     disk_usage_percent: float
@@ -107,8 +101,7 @@ class SystemMetrics:
 
 @dataclass
 class ServiceMetrics:
-    """Service-specific metrics"""
-    service_type: ServiceType
+    """Service-specific metrics"""    service_type: ServiceType
     timestamp: datetime
     response_time_ms: float
     throughput_rps: float
@@ -121,8 +114,7 @@ class ServiceMetrics:
 
 @dataclass
 class DatabaseMetrics:
-    """Database performance metrics"""
-    timestamp: datetime
+    """Database performance metrics"""    timestamp: datetime
     active_connections: int
     max_connections: int
     queries_per_second: float
@@ -135,13 +127,11 @@ class DatabaseMetrics:
 
 
 class InfrastructureMetricsCollector:
-    """
-    Enterprise infrastructure performance metrics collector
+    """    Enterprise infrastructure performance metrics collector
     
     Monitors all aspects of the infrastructure including system resources,
     service performance, database optimization, and auto-scaling metrics
-    """
-    
+    """    
     def __init__(self):
         self.redis_manager = RedisManager()
         self.logger = logger
@@ -165,8 +155,7 @@ class InfrastructureMetricsCollector:
         ]
     
     async def collect_system_metrics(self) -> SystemMetrics:
-        """Collect comprehensive system metrics"""
-        
+        """Collect comprehensive system metrics"""        
         try:
             # CPU metrics
             cpu_usage = psutil.cpu_percent(interval=1)
@@ -230,8 +219,7 @@ class InfrastructureMetricsCollector:
         service_type: ServiceType,
         custom_metrics: Optional[Dict[str, Any]] = None
     ) -> ServiceMetrics:
-        """Collect service-specific metrics"""
-        
+        """Collect service-specific metrics"""        
         try:
             # Get service-specific metrics based on type
             if service_type == ServiceType.API_GATEWAY:
@@ -261,13 +249,11 @@ class InfrastructureMetricsCollector:
             raise
     
     async def collect_database_metrics(self) -> DatabaseMetrics:
-        """Collect comprehensive database metrics"""
-        
+        """Collect comprehensive database metrics"""        
         try:
             async with get_database_session() as session:
                 # Connection metrics
-                connections_result = await session.fetchrow("""
-                    SELECT 
+                connections_result = await session.fetchrow("""                    SELECT 
                         count(*) as active_connections,
                         (SELECT setting::int FROM pg_settings WHERE name = 'max_connections') as max_connections
                     FROM pg_stat_activity 
@@ -275,8 +261,7 @@ class InfrastructureMetricsCollector:
                 """)
                 
                 # Query performance metrics
-                query_stats = await session.fetchrow("""
-                    SELECT 
+                query_stats = await session.fetchrow("""                    SELECT 
                         sum(calls) / extract(epoch from (now() - stats_reset)) as queries_per_second,
                         sum(calls) filter (where mean_exec_time > 1000) as slow_queries_count
                     FROM pg_stat_statements 
@@ -284,23 +269,20 @@ class InfrastructureMetricsCollector:
                 """)
                 
                 # Cache metrics
-                cache_stats = await session.fetchrow("""
-                    SELECT 
+                cache_stats = await session.fetchrow("""                    SELECT 
                         sum(heap_blks_hit) / (sum(heap_blks_hit) + sum(heap_blks_read) + 1) as cache_hit_ratio
                     FROM pg_statio_user_tables
                 """)
                 
                 # Lock metrics
-                lock_stats = await session.fetchrow("""
-                    SELECT 
+                lock_stats = await session.fetchrow("""                    SELECT 
                         count(*) filter (where wait_event_type = 'Lock') as lock_waits,
                         0 as deadlocks  -- Would need custom tracking
                     FROM pg_stat_activity
                 """)
                 
                 # Disk usage
-                disk_stats = await session.fetchrow("""
-                    SELECT 
+                disk_stats = await session.fetchrow("""                    SELECT 
                         pg_database_size(current_database()) / (1024*1024*1024) as disk_usage_gb
                 """)
                 
@@ -327,8 +309,7 @@ class InfrastructureMetricsCollector:
             raise
     
     async def get_infrastructure_health_summary(self) -> Dict[str, Any]:
-        """Get comprehensive infrastructure health summary"""
-        
+        """Get comprehensive infrastructure health summary"""        
         try:
             # Get latest system metrics
             system_metrics = await self.collect_system_metrics()
@@ -407,8 +388,7 @@ class InfrastructureMetricsCollector:
         time_range: str = "24h",
         service_type: Optional[ServiceType] = None
     ) -> Dict[str, Any]:
-        """Get performance trends over time"""
-        
+        """Get performance trends over time"""        
         try:
             # Parse time range
             if time_range == "1h":
@@ -429,8 +409,7 @@ class InfrastructureMetricsCollector:
             
             async with get_database_session() as session:
                 # System metrics trends
-                system_trends = await session.fetch(f"""
-                    SELECT 
+                system_trends = await session.fetch(f"""                    SELECT 
                         date_trunc('{interval}', timestamp) as time_bucket,
                         AVG(cpu_usage_percent) as avg_cpu,
                         AVG(memory_usage_percent) as avg_memory,
@@ -445,8 +424,7 @@ class InfrastructureMetricsCollector:
                 # Service metrics trends (if specific service requested)
                 service_trends = []
                 if service_type:
-                    service_trends = await session.fetch(f"""
-                        SELECT 
+                    service_trends = await session.fetch(f"""                        SELECT 
                             date_trunc('{interval}', timestamp) as time_bucket,
                             AVG(response_time_ms) as avg_response_time,
                             AVG(throughput_rps) as avg_throughput,
@@ -460,8 +438,7 @@ class InfrastructureMetricsCollector:
                     """, start_time, service_type.value)
                 
                 # Database metrics trends
-                database_trends = await session.fetch(f"""
-                    SELECT 
+                database_trends = await session.fetch(f"""                    SELECT 
                         date_trunc('{interval}', timestamp) as time_bucket,
                         AVG(active_connections) as avg_connections,
                         AVG(queries_per_second) as avg_qps,
@@ -515,8 +492,7 @@ class InfrastructureMetricsCollector:
             return {}
     
     async def _collect_api_gateway_metrics(self) -> ServiceMetrics:
-        """Collect API gateway specific metrics"""
-        # Get metrics from Redis or service
+        """Collect API gateway specific metrics"""        # Get metrics from Redis or service
         response_times = self.response_times[ServiceType.API_GATEWAY.value]
         error_rates = self.error_rates[ServiceType.API_GATEWAY.value]
         
@@ -536,8 +512,7 @@ class InfrastructureMetricsCollector:
         )
     
     async def _collect_redis_metrics(self) -> ServiceMetrics:
-        """Collect Redis cache metrics"""
-        try:
+        """Collect Redis cache metrics"""        try:
             # Get Redis info
             redis_info = await self.redis_manager.get_redis_info()
             
@@ -573,8 +548,7 @@ class InfrastructureMetricsCollector:
             )
     
     async def _collect_ml_inference_metrics(self) -> ServiceMetrics:
-        """Collect ML inference service metrics"""
-        # This would integrate with actual ML model metrics
+        """Collect ML inference service metrics"""        # This would integrate with actual ML model metrics
         return ServiceMetrics(
             service_type=ServiceType.ML_INFERENCE,
             timestamp=datetime.now(timezone.utc),
@@ -592,8 +566,7 @@ class InfrastructureMetricsCollector:
         )
     
     async def _collect_audio_processing_metrics(self) -> ServiceMetrics:
-        """Collect audio processing service metrics"""
-        return ServiceMetrics(
+        """Collect audio processing service metrics"""        return ServiceMetrics(
             service_type=ServiceType.AUDIO_PROCESSING,
             timestamp=datetime.now(timezone.utc),
             response_time_ms=0,
@@ -610,8 +583,7 @@ class InfrastructureMetricsCollector:
         )
     
     async def _collect_database_service_metrics(self) -> ServiceMetrics:
-        """Collect database service metrics"""
-        db_metrics = await self.collect_database_metrics()
+        """Collect database service metrics"""        db_metrics = await self.collect_database_metrics()
         
         return ServiceMetrics(
             service_type=ServiceType.DATABASE,
@@ -630,8 +602,7 @@ class InfrastructureMetricsCollector:
         )
     
     async def _collect_generic_service_metrics(self, service_type: ServiceType) -> ServiceMetrics:
-        """Collect generic service metrics"""
-        return ServiceMetrics(
+        """Collect generic service metrics"""        return ServiceMetrics(
             service_type=service_type,
             timestamp=datetime.now(timezone.utc),
             response_time_ms=0,
@@ -650,8 +621,7 @@ class InfrastructureMetricsCollector:
         critical_threshold: float,
         invert: bool = False
     ) -> float:
-        """Calculate health score based on value and thresholds"""
-        if invert:
+        """Calculate health score based on value and thresholds"""        if invert:
             if value >= critical_threshold:
                 return 0
             elif value >= warning_threshold:
@@ -667,8 +637,7 @@ class InfrastructureMetricsCollector:
                 return 100
     
     def _get_status_from_score(self, score: float) -> str:
-        """Get status string from health score"""
-        if score >= 80:
+        """Get status string from health score"""        if score >= 80:
             return "optimal"
         elif score >= 60:
             return "good"
@@ -678,8 +647,7 @@ class InfrastructureMetricsCollector:
             return "critical"
     
     async def _get_service_statuses(self) -> Dict[str, Any]:
-        """Get status summary for all services"""
-        statuses = {}
+        """Get status summary for all services"""        statuses = {}
         
         for service_type in ServiceType:
             try:
@@ -701,8 +669,7 @@ class InfrastructureMetricsCollector:
         return statuses
     
     async def _get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get list of active infrastructure alerts"""
-        alerts = []
+        """Get list of active infrastructure alerts"""        alerts = []
         
         # System resource alerts
         system_metrics = await self.collect_system_metrics()
@@ -757,12 +724,10 @@ class InfrastructureMetricsCollector:
         return alerts
     
     async def _store_system_metrics(self, metrics: SystemMetrics) -> None:
-        """Store system metrics in database"""
-        try:
+        """Store system metrics in database"""        try:
             async with get_database_session() as session:
                 await session.execute(
-                    """
-                    INSERT INTO system_metrics 
+                    """                    INSERT INTO system_metrics 
                     (timestamp, cpu_usage_percent, memory_usage_percent, disk_usage_percent,
                      network_bytes_sent, network_bytes_recv, load_average_1m, load_average_5m, 
                      load_average_15m, process_count, open_files, connections)
@@ -787,12 +752,10 @@ class InfrastructureMetricsCollector:
             self.logger.error(f"Error storing system metrics: {e}")
     
     async def _store_service_metrics(self, metrics: ServiceMetrics) -> None:
-        """Store service metrics in database"""
-        try:
+        """Store service metrics in database"""        try:
             async with get_database_session() as session:
                 await session.execute(
-                    """
-                    INSERT INTO service_metrics 
+                    """                    INSERT INTO service_metrics 
                     (service_type, timestamp, response_time_ms, throughput_rps, 
                      error_rate_percent, cpu_usage_percent, memory_usage_mb, 
                      status, custom_metrics)
@@ -814,12 +777,10 @@ class InfrastructureMetricsCollector:
             self.logger.error(f"Error storing service metrics: {e}")
     
     async def _store_database_metrics(self, metrics: DatabaseMetrics) -> None:
-        """Store database metrics in database"""
-        try:
+        """Store database metrics in database"""        try:
             async with get_database_session() as session:
                 await session.execute(
-                    """
-                    INSERT INTO database_metrics 
+                    """                    INSERT INTO database_metrics 
                     (timestamp, active_connections, max_connections, queries_per_second,
                      slow_queries_count, cache_hit_ratio, lock_waits, deadlocks,
                      replication_lag_ms, disk_usage_gb)
@@ -842,8 +803,7 @@ class InfrastructureMetricsCollector:
             self.logger.error(f"Error storing database metrics: {e}")
     
     async def _monitor_system_resources(self) -> None:
-        """Background task to monitor system resources"""
-        while True:
+        """Background task to monitor system resources"""        while True:
             try:
                 await self.collect_system_metrics()
                 await asyncio.sleep(self.system_metrics_interval)
@@ -852,8 +812,7 @@ class InfrastructureMetricsCollector:
                 await asyncio.sleep(10)
     
     async def _monitor_services(self) -> None:
-        """Background task to monitor services"""
-        while True:
+        """Background task to monitor services"""        while True:
             try:
                 for service_type in ServiceType:
                     await self.collect_service_metrics(service_type)
@@ -863,8 +822,7 @@ class InfrastructureMetricsCollector:
                 await asyncio.sleep(10)
     
     async def _monitor_database_performance(self) -> None:
-        """Background task to monitor database performance"""
-        while True:
+        """Background task to monitor database performance"""        while True:
             try:
                 await self.collect_database_metrics()
                 await asyncio.sleep(self.database_metrics_interval)
@@ -873,8 +831,7 @@ class InfrastructureMetricsCollector:
                 await asyncio.sleep(10)
     
     async def _monitor_network_performance(self) -> None:
-        """Background task to monitor network performance"""
-        while True:
+        """Background task to monitor network performance"""        while True:
             try:
                 # Monitor network latency, bandwidth, etc.
                 # This would implement ping tests, bandwidth tests, etc.

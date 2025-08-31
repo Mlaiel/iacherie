@@ -1,5 +1,4 @@
-"""
-Elasticsearch Replication Handler - IA Influencer Agent Platform
+"""Elasticsearch Replication Handler - IA Influencer Agent Platform
 
 Advanced Elasticsearch cluster replication and cross-cluster search for content
 protection, fingerprinting data, and analytics across multiple regions.
@@ -11,7 +10,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set
@@ -27,8 +25,7 @@ from .config import ReplicationConfig
 
 
 class ElasticsearchReplicationHandler:
-    """
-    Elasticsearch replication handler for cross-cluster search and replication.
+    """    Elasticsearch replication handler for cross-cluster search and replication.
     
     Provides comprehensive Elasticsearch replication capabilities including:
     - Cross-cluster replication (CCR)
@@ -37,17 +34,14 @@ class ElasticsearchReplicationHandler:
     - Snapshot and restore
     - Shard allocation control
     - Real-time monitoring and alerting
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any], replication_config: ReplicationConfig):
-        """
-        Initialize Elasticsearch replication handler.
+        """        Initialize Elasticsearch replication handler.
         
         Args:
             config: Elasticsearch-specific configuration
             replication_config: Global replication configuration
-        """
-        self.config = config
+        """        self.config = config
         self.replication_config = replication_config
         self.logger = logging.getLogger(f"{__name__}.ElasticsearchReplicationHandler")
         
@@ -86,13 +80,11 @@ class ElasticsearchReplicationHandler:
         self.logger.info("ElasticsearchReplicationHandler initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize Elasticsearch replication connections and configuration.
+        """        Initialize Elasticsearch replication connections and configuration.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing Elasticsearch replication handler...")
             
             # Initialize primary connection
@@ -118,8 +110,7 @@ class ElasticsearchReplicationHandler:
             return False
     
     async def _initialize_primary_connection(self) -> None:
-        """Initialize connection to primary Elasticsearch cluster"""
-        try:
+        """Initialize connection to primary Elasticsearch cluster"""        try:
             # Build connection configuration
             hosts = self._build_hosts_config(self.config)
             
@@ -179,8 +170,7 @@ class ElasticsearchReplicationHandler:
             raise
     
     async def _initialize_secondary_connections(self) -> None:
-        """Initialize connections to secondary Elasticsearch clusters"""
-        for cluster_name, cluster_config in self.remote_clusters.items():
+        """Initialize connections to secondary Elasticsearch clusters"""        for cluster_name, cluster_config in self.remote_clusters.items():
             try:
                 hosts = self._build_hosts_config(cluster_config)
                 
@@ -217,8 +207,7 @@ class ElasticsearchReplicationHandler:
                 self.logger.warning(f"Failed to connect to secondary cluster {cluster_name}: {e}")
     
     def _build_hosts_config(self, config: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Build Elasticsearch hosts configuration"""
-        hosts = []
+        """Build Elasticsearch hosts configuration"""        hosts = []
         
         # Single host configuration
         if "host" in config and "port" in config:
@@ -243,8 +232,7 @@ class ElasticsearchReplicationHandler:
         return hosts or [{"host": "localhost", "port": 9200}]
     
     async def _setup_cluster_configuration(self) -> None:
-        """Setup cluster-level configuration"""
-        try:
+        """Setup cluster-level configuration"""        try:
             # Set cluster-level settings
             cluster_settings = {
                 "persistent": {
@@ -268,8 +256,7 @@ class ElasticsearchReplicationHandler:
             self.logger.error(f"Failed to setup cluster configuration: {e}")
     
     async def _setup_index_templates(self) -> None:
-        """Setup index templates for the platform"""
-        templates = [
+        """Setup index templates for the platform"""        templates = [
             {
                 "name": "fingerprints-template",
                 "index_patterns": ["fingerprints-*"],
@@ -355,8 +342,7 @@ class ElasticsearchReplicationHandler:
                 self.logger.error(f"Failed to create template {template['name']}: {e}")
     
     async def _configure_cross_cluster_replication(self) -> None:
-        """Configure cross-cluster replication"""
-        try:
+        """Configure cross-cluster replication"""        try:
             # Configure remote clusters
             for cluster_name, cluster_config in self.remote_clusters.items():
                 remote_settings = {
@@ -377,8 +363,7 @@ class ElasticsearchReplicationHandler:
             self.logger.error(f"Failed to configure cross-cluster replication: {e}")
     
     async def _setup_follower_index(self, pattern: Dict[str, Any]) -> None:
-        """Setup a follower index for cross-cluster replication"""
-        try:
+        """Setup a follower index for cross-cluster replication"""        try:
             leader_index = pattern["leader_index"]
             follower_index = pattern["follower_index"]
             remote_cluster = pattern["remote_cluster"]
@@ -409,8 +394,7 @@ class ElasticsearchReplicationHandler:
             self.logger.error(f"Failed to setup follower index {pattern}: {e}")
     
     async def _setup_monitoring(self) -> None:
-        """Setup Elasticsearch replication monitoring"""
-        self.is_monitoring = True
+        """Setup Elasticsearch replication monitoring"""        self.is_monitoring = True
         self.monitoring_task = asyncio.create_task(self._monitor_replication())
         self.logger.info("Elasticsearch replication monitoring started")
     
@@ -420,8 +404,7 @@ class ElasticsearchReplicationHandler:
         target_config: Dict[str, Any], 
         mode: str = "cross_cluster"
     ) -> bool:
-        """
-        Start Elasticsearch replication process.
+        """        Start Elasticsearch replication process.
         
         Args:
             source_config: Source cluster configuration
@@ -430,8 +413,7 @@ class ElasticsearchReplicationHandler:
             
         Returns:
             bool: True if replication started successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting Elasticsearch replication in {mode} mode")
             
             if mode == "cross_cluster":
@@ -453,8 +435,7 @@ class ElasticsearchReplicationHandler:
         source_config: Dict[str, Any], 
         target_config: Dict[str, Any]
     ) -> bool:
-        """Start cross-cluster replication"""
-        try:
+        """Start cross-cluster replication"""        try:
             indices_to_replicate = source_config.get("indices", [])
             
             for index_config in indices_to_replicate:
@@ -487,8 +468,7 @@ class ElasticsearchReplicationHandler:
         source_config: Dict[str, Any], 
         target_config: Dict[str, Any]
     ) -> bool:
-        """Start snapshot-based replication"""
-        try:
+        """Start snapshot-based replication"""        try:
             repository_name = source_config.get("repository", "backup-repo")
             indices = source_config.get("indices", ["*"])
             
@@ -528,8 +508,7 @@ class ElasticsearchReplicationHandler:
         source_config: Dict[str, Any], 
         target_config: Dict[str, Any]
     ) -> bool:
-        """Start index copy replication using reindex API"""
-        try:
+        """Start index copy replication using reindex API"""        try:
             target_cluster = target_config.get("cluster_name")
             target_client = self.secondary_clients.get(target_cluster)
             
@@ -574,8 +553,7 @@ class ElasticsearchReplicationHandler:
         repository_name: str, 
         target_config: Dict[str, Any]
     ) -> None:
-        """Restore snapshot on target cluster"""
-        try:
+        """Restore snapshot on target cluster"""        try:
             # Wait for snapshot to complete
             await self._wait_for_snapshot_completion(snapshot_name, repository_name)
             
@@ -606,8 +584,7 @@ class ElasticsearchReplicationHandler:
             self.logger.error(f"Failed to restore snapshot on target: {e}")
     
     async def _wait_for_snapshot_completion(self, snapshot_name: str, repository_name: str) -> None:
-        """Wait for snapshot to complete"""
-        while True:
+        """Wait for snapshot to complete"""        while True:
             try:
                 response = await self.primary_client.snapshot.get(
                     repository=repository_name,
@@ -629,8 +606,7 @@ class ElasticsearchReplicationHandler:
                 await asyncio.sleep(30)
     
     async def _monitor_reindex_task(self, client: AsyncElasticsearch, task_id: str) -> None:
-        """Monitor reindex task progress"""
-        while True:
+        """Monitor reindex task progress"""        while True:
             try:
                 response = await client.tasks.get(task_id=task_id)
                 
@@ -657,8 +633,7 @@ class ElasticsearchReplicationHandler:
                 await asyncio.sleep(60)
     
     async def _monitor_replication(self) -> None:
-        """Monitor Elasticsearch replication health and metrics"""
-        while self.is_monitoring:
+        """Monitor Elasticsearch replication health and metrics"""        while self.is_monitoring:
             try:
                 # Get cluster health
                 health = await self.primary_client.cluster.health()
@@ -688,8 +663,7 @@ class ElasticsearchReplicationHandler:
                 await asyncio.sleep(60)
     
     async def _monitor_ccr_stats(self) -> None:
-        """Monitor Cross-Cluster Replication statistics"""
-        try:
+        """Monitor Cross-Cluster Replication statistics"""        try:
             # Get CCR stats
             ccr_stats = await self.primary_client.ccr.stats()
             
@@ -717,16 +691,14 @@ class ElasticsearchReplicationHandler:
             self.logger.error(f"Error monitoring CCR stats: {e}")
     
     async def stop_replication(self, graceful: bool = True) -> bool:
-        """
-        Stop Elasticsearch replication.
+        """        Stop Elasticsearch replication.
         
         Args:
             graceful: Whether to perform graceful shutdown
             
         Returns:
             bool: True if stopped successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Stopping Elasticsearch replication (graceful={graceful})")
             
             # Stop monitoring
@@ -761,13 +733,11 @@ class ElasticsearchReplicationHandler:
             return False
     
     async def pause_replication(self) -> bool:
-        """
-        Pause Elasticsearch replication.
+        """        Pause Elasticsearch replication.
         
         Returns:
             bool: True if paused successfully
-        """
-        try:
+        """        try:
             self.logger.info("Pausing Elasticsearch replication")
             
             # Pause CCR followers
@@ -783,13 +753,11 @@ class ElasticsearchReplicationHandler:
             return False
     
     async def resume_replication(self) -> bool:
-        """
-        Resume Elasticsearch replication.
+        """        Resume Elasticsearch replication.
         
         Returns:
             bool: True if resumed successfully
-        """
-        try:
+        """        try:
             self.logger.info("Resuming Elasticsearch replication")
             
             # Resume CCR followers
@@ -805,16 +773,14 @@ class ElasticsearchReplicationHandler:
             return False
     
     async def trigger_sync(self, force: bool = False) -> bool:
-        """
-        Trigger manual synchronization.
+        """        Trigger manual synchronization.
         
         Args:
             force: Whether to force synchronization
             
         Returns:
             bool: True if sync triggered successfully
-        """
-        try:
+        """        try:
             self.logger.info(f"Triggering Elasticsearch sync (force={force})")
             
             if force:
@@ -838,16 +804,14 @@ class ElasticsearchReplicationHandler:
             return False
     
     async def prepare_maintenance(self, duration: timedelta) -> bool:
-        """
-        Prepare for maintenance mode.
+        """        Prepare for maintenance mode.
         
         Args:
             duration: Expected maintenance duration
             
         Returns:
             bool: True if preparation successful
-        """
-        try:
+        """        try:
             self.logger.info(f"Preparing Elasticsearch for maintenance (duration: {duration})")
             
             # Disable shard allocation
@@ -870,13 +834,11 @@ class ElasticsearchReplicationHandler:
             return False
     
     async def exit_maintenance(self) -> bool:
-        """
-        Exit maintenance mode.
+        """        Exit maintenance mode.
         
         Returns:
             bool: True if exit successful
-        """
-        try:
+        """        try:
             self.logger.info("Exiting Elasticsearch maintenance mode")
             
             # Re-enable shard allocation
@@ -906,13 +868,11 @@ class ElasticsearchReplicationHandler:
             return False
     
     async def get_replication_metrics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive replication metrics.
+        """        Get comprehensive replication metrics.
         
         Returns:
             Dict containing replication metrics
-        """
-        try:
+        """        try:
             # Get cluster stats
             cluster_stats = await self.primary_client.cluster.stats()
             nodes_stats = await self.primary_client.nodes.stats()
@@ -935,13 +895,11 @@ class ElasticsearchReplicationHandler:
             return self.metrics
     
     async def check_health(self) -> Dict[str, Any]:
-        """
-        Check Elasticsearch replication health.
+        """        Check Elasticsearch replication health.
         
         Returns:
             Dict containing health status
-        """
-        health = {
+        """        health = {
             "healthy": False,
             "cluster_available": False,
             "replication_active": False,
@@ -992,13 +950,11 @@ class ElasticsearchReplicationHandler:
         return health
     
     async def get_status(self) -> Dict[str, Any]:
-        """
-        Get detailed Elasticsearch replication status.
+        """        Get detailed Elasticsearch replication status.
         
         Returns:
             Dict containing detailed status information
-        """
-        try:
+        """        try:
             cluster_health = await self.primary_client.cluster.health()
             
             status = {
@@ -1025,8 +981,7 @@ class ElasticsearchReplicationHandler:
             }
     
     async def shutdown(self) -> None:
-        """Shutdown Elasticsearch replication handler"""
-        try:
+        """Shutdown Elasticsearch replication handler"""        try:
             self.logger.info("Shutting down Elasticsearch replication handler...")
             
             # Stop monitoring

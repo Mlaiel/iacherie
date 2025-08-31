@@ -1,5 +1,4 @@
-"""
-Revenue Models - Enterprise Database Models for Revenue Tracking
+"""Revenue Models - Enterprise Database Models for Revenue Tracking
 
 Ultra-advanced SQLAlchemy models for comprehensive revenue tracking across all platforms
 and content types with advanced analytics and financial management capabilities.
@@ -26,7 +25,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
-
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
@@ -45,8 +43,7 @@ Base = declarative_base()
 
 
 class RevenueType(Enum):
-    """Comprehensive revenue stream types for content creators"""
-    # Streaming revenue
+    """Comprehensive revenue stream types for content creators"""    # Streaming revenue
     MUSIC_STREAMING = "music_streaming"
     VIDEO_STREAMING = "video_streaming"
     PODCAST_STREAMING = "podcast_streaming"
@@ -114,8 +111,7 @@ class RevenueType(Enum):
 
 
 class PlatformType(Enum):
-    """Comprehensive platform types for revenue generation"""
-    # Music platforms
+    """Comprehensive platform types for revenue generation"""    # Music platforms
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     AMAZON_MUSIC = "amazon_music"
@@ -179,8 +175,7 @@ class PlatformType(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies for international revenue tracking"""
-    USD = "USD"  # US Dollar
+    """Supported currencies for international revenue tracking"""    USD = "USD"  # US Dollar
     EUR = "EUR"  # Euro
     GBP = "GBP"  # British Pound
     JPY = "JPY"  # Japanese Yen
@@ -228,8 +223,7 @@ class Currency(Enum):
 
 
 class RevenueStatus(Enum):
-    """Revenue record status lifecycle"""
-    PENDING = "pending"
+    """Revenue record status lifecycle"""    PENDING = "pending"
     ESTIMATED = "estimated"
     CONFIRMED = "confirmed"
     VERIFIED = "verified"
@@ -242,8 +236,7 @@ class RevenueStatus(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING_APPROVAL = "pending_approval"
+    """Payment processing status"""    PENDING_APPROVAL = "pending_approval"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -256,8 +249,7 @@ class PaymentStatus(Enum):
 
 
 class TaxStatus(Enum):
-    """Tax processing and compliance status"""
-    NOT_APPLICABLE = "not_applicable"
+    """Tax processing and compliance status"""    NOT_APPLICABLE = "not_applicable"
     PENDING_CALCULATION = "pending_calculation"
     CALCULATED = "calculated"
     DEDUCTED = "deducted"
@@ -268,13 +260,11 @@ class TaxStatus(Enum):
 
 
 class RevenueRecord(Base):
-    """
-    Enterprise Revenue Record Model
+    """    Enterprise Revenue Record Model
     
     Core model for tracking individual revenue transactions with comprehensive
     metadata, performance analytics, and financial management capabilities.
-    """
-    __tablename__ = "revenue_records"
+    """    __tablename__ = "revenue_records"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -416,8 +406,7 @@ class RevenueRecord(Base):
     
     @property
     def total_deductions(self) -> Decimal:
-        """Calculate total deductions from gross amount"""
-        return (
+        """Calculate total deductions from gross amount"""        return (
             self.platform_fee + self.service_fee + self.processing_fee + 
             self.distribution_fee + self.transaction_fee + self.other_deductions +
             self.gross_tax_amount
@@ -425,27 +414,23 @@ class RevenueRecord(Base):
     
     @property
     def profit_margin(self) -> float:
-        """Calculate profit margin percentage"""
-        if self.gross_amount == 0:
+        """Calculate profit margin percentage"""        if self.gross_amount == 0:
             return 0.0
         return float((self.net_amount / self.gross_amount) * 100)
     
     @property
     def effective_tax_rate(self) -> float:
-        """Calculate effective tax rate"""
-        if self.gross_amount == 0:
+        """Calculate effective tax rate"""        if self.gross_amount == 0:
             return 0.0
         return float((self.gross_tax_amount / self.gross_amount) * 100)
 
 
 class RevenueAggregation(Base):
-    """
-    Revenue Aggregation Model
+    """    Revenue Aggregation Model
     
     Pre-calculated aggregations for fast analytics and reporting.
     Optimized for dashboard queries and performance metrics.
-    """
-    __tablename__ = "revenue_aggregations"
+    """    __tablename__ = "revenue_aggregations"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -498,8 +483,7 @@ class RevenueAggregation(Base):
 @event.listens_for(RevenueRecord, 'before_insert')
 @event.listens_for(RevenueRecord, 'before_update')
 def calculate_derived_fields(mapper, connection, target):
-    """Automatically calculate derived fields before database operations"""
-    # Calculate base currency amount if not provided
+    """Automatically calculate derived fields before database operations"""    # Calculate base currency amount if not provided
     if target.base_currency_amount is None and target.exchange_rate:
         target.base_currency_amount = target.net_amount * target.exchange_rate
     

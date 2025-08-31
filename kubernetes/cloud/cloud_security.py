@@ -1,5 +1,4 @@
-"""
-Cloud Security Management - Enterprise Multi-Cloud Security Platform
+"""Cloud Security Management - Enterprise Multi-Cloud Security Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -15,7 +14,6 @@ This module provides comprehensive security management for the IA Influencer
 Agent platform across multiple cloud providers, including threat detection,
 compliance monitoring, identity management, and security automation.
 """
-
 import logging
 import asyncio
 import hashlib
@@ -38,16 +36,14 @@ import ipaddress
 logger = logging.getLogger(__name__)
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
-    CRITICAL = "critical"
+    """Threat severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class SecurityEventType(Enum):
-    """Security event types"""
-    AUTHENTICATION_FAILURE = "auth_failure"
+    """Security event types"""    AUTHENTICATION_FAILURE = "auth_failure"
     AUTHORIZATION_VIOLATION = "authz_violation"
     SUSPICIOUS_ACTIVITY = "suspicious_activity"
     DATA_BREACH_ATTEMPT = "data_breach_attempt"
@@ -59,8 +55,7 @@ class SecurityEventType(Enum):
     VULNERABILITY_EXPLOIT = "vulnerability_exploit"
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks"""
-    SOC2 = "soc2"
+    """Compliance frameworks"""    SOC2 = "soc2"
     GDPR = "gdpr"
     HIPAA = "hipaa"
     PCI_DSS = "pci_dss"
@@ -70,8 +65,7 @@ class ComplianceFramework(Enum):
     CUSTOM = "custom"
 
 class EncryptionAlgorithm(Enum):
-    """Encryption algorithms"""
-    AES_256_GCM = "aes_256_gcm"
+    """Encryption algorithms"""    AES_256_GCM = "aes_256_gcm"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
     ECDSA_P256 = "ecdsa_p256"
@@ -79,8 +73,7 @@ class EncryptionAlgorithm(Enum):
 
 @dataclass
 class SecurityEvent:
-    """Security event"""
-    event_id: str
+    """Security event"""    event_id: str
     event_type: SecurityEventType
     threat_level: ThreatLevel
     source_ip: str
@@ -94,8 +87,7 @@ class SecurityEvent:
 
 @dataclass
 class ThreatIntelligence:
-    """Threat intelligence data"""
-    indicator: str
+    """Threat intelligence data"""    indicator: str
     indicator_type: str  # ip, domain, hash, etc.
     threat_level: ThreatLevel
     source: str
@@ -107,8 +99,7 @@ class ThreatIntelligence:
 
 @dataclass
 class SecurityPolicy:
-    """Security policy definition"""
-    policy_id: str
+    """Security policy definition"""    policy_id: str
     name: str
     description: str
     framework: ComplianceFramework
@@ -119,8 +110,7 @@ class SecurityPolicy:
 
 @dataclass
 class IdentityProfile:
-    """User/service identity profile"""
-    identity_id: str
+    """User/service identity profile"""    identity_id: str
     identity_type: str  # user, service, admin
     permissions: Set[str]
     roles: Set[str]
@@ -132,8 +122,7 @@ class IdentityProfile:
 
 @dataclass
 class VulnerabilityAssessment:
-    """Vulnerability assessment result"""
-    vulnerability_id: str
+    """Vulnerability assessment result"""    vulnerability_id: str
     cve_id: Optional[str]
     severity: ThreatLevel
     resource_type: str
@@ -144,11 +133,9 @@ class VulnerabilityAssessment:
     patched_at: Optional[datetime] = None
 
 class CloudSecurityManager:
-    """Enterprise cloud security management system"""
-    
+    """Enterprise cloud security management system"""    
     def __init__(self):
-        """Initialize cloud security manager"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize cloud security manager"""        self.logger = logging.getLogger(self.__class__.__name__)
         self.security_events: List[SecurityEvent] = []
         self.threat_intelligence: List[ThreatIntelligence] = []
         self.security_policies: Dict[str, SecurityPolicy] = {}
@@ -172,8 +159,7 @@ class CloudSecurityManager:
         self.compliance_status: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self) -> bool:
-        """Initialize security manager"""
-        try:
+        """Initialize security manager"""        try:
             self.logger.info("Initializing cloud security manager")
             
             # Generate encryption keys
@@ -200,8 +186,7 @@ class CloudSecurityManager:
             return False
     
     async def create_security_policy(self, policy: SecurityPolicy) -> bool:
-        """Create security policy"""
-        try:
+        """Create security policy"""        try:
             # Validate policy
             validation_result = await self._validate_security_policy(policy)
             if not validation_result['valid']:
@@ -220,8 +205,7 @@ class CloudSecurityManager:
             return False
     
     async def detect_threat(self, event_data: Dict[str, Any]) -> Optional[SecurityEvent]:
-        """Detect security threats from event data"""
-        try:
+        """Detect security threats from event data"""        try:
             # Extract event information
             source_ip = event_data.get('source_ip', '')
             target_resource = event_data.get('target_resource', '')
@@ -281,8 +265,7 @@ class CloudSecurityManager:
             return None
     
     async def manage_identity(self, identity_id: str, action: str, **kwargs) -> bool:
-        """Manage identity and access"""
-        try:
+        """Manage identity and access"""        try:
             if action == "create":
                 profile = IdentityProfile(
                     identity_id=identity_id,
@@ -367,8 +350,7 @@ class CloudSecurityManager:
     
     async def encrypt_data(self, data: Union[str, bytes], key_id: str = "default", 
                           algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM) -> str:
-        """Encrypt data using specified algorithm"""
-        try:
+        """Encrypt data using specified algorithm"""        try:
             if isinstance(data, str):
                 data = data.encode('utf-8')
             
@@ -403,8 +385,7 @@ class CloudSecurityManager:
     
     async def decrypt_data(self, encrypted_data: str, key_id: str = "default", 
                           algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM) -> bytes:
-        """Decrypt data using specified algorithm"""
-        try:
+        """Decrypt data using specified algorithm"""        try:
             if key_id not in self.encryption_keys:
                 raise ValueError(f"Encryption key not found: {key_id}")
             
@@ -436,8 +417,7 @@ class CloudSecurityManager:
             raise
     
     async def scan_vulnerabilities(self, target: str, scan_type: str = "comprehensive") -> List[VulnerabilityAssessment]:
-        """Scan for vulnerabilities"""
-        try:
+        """Scan for vulnerabilities"""        try:
             vulnerabilities = []
             
             if scan_type == "network":
@@ -483,8 +463,7 @@ class CloudSecurityManager:
             return []
     
     async def check_compliance(self, framework: ComplianceFramework) -> Dict[str, Any]:
-        """Check compliance with security framework"""
-        try:
+        """Check compliance with security framework"""        try:
             compliance_result = {
                 "framework": framework.value,
                 "overall_score": 0.0,
@@ -530,8 +509,7 @@ class CloudSecurityManager:
             return {"error": str(e)}
     
     async def configure_firewall(self, rules: List[Dict[str, Any]]) -> bool:
-        """Configure firewall rules"""
-        try:
+        """Configure firewall rules"""        try:
             validated_rules = []
             
             for rule in rules:
@@ -552,8 +530,7 @@ class CloudSecurityManager:
             return False
     
     async def generate_security_report(self, report_type: str = "comprehensive") -> Dict[str, Any]:
-        """Generate security report"""
-        try:
+        """Generate security report"""        try:
             report = {
                 "report_type": report_type,
                 "generated_at": datetime.now().isoformat(),
@@ -631,16 +608,14 @@ class CloudSecurityManager:
             return {"error": str(e)}
     
     async def _generate_encryption_keys(self) -> None:
-        """Generate encryption keys"""
-        # Generate default AES key
+        """Generate encryption keys"""        # Generate default AES key
         await self._generate_encryption_key("default", EncryptionAlgorithm.AES_256_GCM)
         
         # Generate RSA key pair
         await self._generate_encryption_key("rsa_default", EncryptionAlgorithm.RSA_2048)
     
     async def _generate_encryption_key(self, key_id: str, algorithm: EncryptionAlgorithm) -> None:
-        """Generate encryption key for specific algorithm"""
-        if algorithm == EncryptionAlgorithm.AES_256_GCM:
+        """Generate encryption key for specific algorithm"""        if algorithm == EncryptionAlgorithm.AES_256_GCM:
             key = Fernet.generate_key()
             self.encryption_keys[key_id] = {"key": key, "algorithm": algorithm}
         
@@ -671,8 +646,7 @@ class CloudSecurityManager:
             }
     
     async def _load_security_policies(self) -> None:
-        """Load security policies"""
-        # Load default security policies
+        """Load security policies"""        # Load default security policies
         default_policies = [
             {
                 "policy_id": "auth_policy",
@@ -702,8 +676,7 @@ class CloudSecurityManager:
             self.security_policies[policy.policy_id] = policy
     
     async def _initialize_threat_intelligence(self) -> None:
-        """Initialize threat intelligence"""
-        # Load threat intelligence feeds
+        """Initialize threat intelligence"""        # Load threat intelligence feeds
         malicious_ips = [
             "192.168.1.100",  # Example malicious IP
             "10.0.0.50"
@@ -724,8 +697,7 @@ class CloudSecurityManager:
             self.threat_intelligence.append(threat)
     
     async def _setup_behavioral_baselines(self) -> None:
-        """Setup behavioral baselines for anomaly detection"""
-        # Initialize baselines for different identity types
+        """Setup behavioral baselines for anomaly detection"""        # Initialize baselines for different identity types
         for identity_id, profile in self.identity_profiles.items():
             self.behavioral_baselines[identity_id] = {
                 "typical_login_hours": [],
@@ -736,8 +708,7 @@ class CloudSecurityManager:
             }
     
     async def _check_threat_intelligence(self, event_data: Dict[str, Any]) -> List[ThreatIntelligence]:
-        """Check event against threat intelligence"""
-        matches = []
+        """Check event against threat intelligence"""        matches = []
         
         source_ip = event_data.get('source_ip', '')
         target_resource = event_data.get('target_resource', '')
@@ -751,8 +722,7 @@ class CloudSecurityManager:
         return matches
     
     async def _detect_behavioral_anomaly(self, event_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Detect behavioral anomalies"""
-        user_identity = event_data.get('user_identity')
+        """Detect behavioral anomalies"""        user_identity = event_data.get('user_identity')
         
         if not user_identity or user_identity not in self.behavioral_baselines:
             return None
@@ -784,8 +754,7 @@ class CloudSecurityManager:
         return None
     
     async def _detect_attack_patterns(self, event_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Detect known attack patterns"""
-        action = event_data.get('action', '')
+        """Detect known attack patterns"""        action = event_data.get('action', '')
         source_ip = event_data.get('source_ip', '')
         user_identity = event_data.get('user_identity', '')
         
@@ -818,8 +787,7 @@ class CloudSecurityManager:
         return None
     
     async def _handle_security_event(self, event: SecurityEvent) -> None:
-        """Handle security event"""
-        # Log event
+        """Handle security event"""        # Log event
         self.logger.warning(f"Security event detected: {event.event_type.value} - {event.description}")
         
         # Auto-response based on threat level
@@ -832,8 +800,7 @@ class CloudSecurityManager:
         await self._send_security_notification(event)
     
     async def _critical_threat_response(self, event: SecurityEvent) -> None:
-        """Handle critical threat"""
-        # Block source IP
+        """Handle critical threat"""        # Block source IP
         if event.source_ip:
             await self._block_ip_address(event.source_ip)
         
@@ -843,8 +810,7 @@ class CloudSecurityManager:
             profile.permissions.clear()  # Revoke all permissions
     
     async def _high_threat_response(self, event: SecurityEvent) -> None:
-        """Handle high threat"""
-        # Increase monitoring for source IP
+        """Handle high threat"""        # Increase monitoring for source IP
         if event.source_ip:
             await self._increase_monitoring(event.source_ip)
         
@@ -854,20 +820,17 @@ class CloudSecurityManager:
             profile.mfa_enabled = True
     
     async def _verify_credentials(self, identity_id: str, credentials: Any) -> bool:
-        """Verify user credentials"""
-        # Simplified credential verification
+        """Verify user credentials"""        # Simplified credential verification
         # Real implementation would use proper password hashing
         return credentials is not None
     
     async def _verify_mfa(self, identity_id: str, mfa_code: str) -> bool:
-        """Verify MFA code"""
-        # Simplified MFA verification
+        """Verify MFA code"""        # Simplified MFA verification
         # Real implementation would verify TOTP/SMS codes
         return mfa_code is not None and len(mfa_code) == 6
     
     async def _update_risk_score(self, profile: IdentityProfile, login_data: Dict[str, Any]) -> None:
-        """Update user risk score based on login behavior"""
-        risk_factors = 0
+        """Update user risk score based on login behavior"""        risk_factors = 0
         
         # Check for unusual login time
         current_hour = datetime.now().hour
@@ -885,8 +848,7 @@ class CloudSecurityManager:
         profile.risk_score = min(1.0, risk_factors)
     
     async def _scan_network_vulnerabilities(self, target: str) -> List[VulnerabilityAssessment]:
-        """Scan for network vulnerabilities"""
-        vulnerabilities = []
+        """Scan for network vulnerabilities"""        vulnerabilities = []
         
         # Simulate network vulnerability scan
         # Real implementation would use nmap, nessus, etc.
@@ -894,8 +856,7 @@ class CloudSecurityManager:
         return vulnerabilities
     
     async def _scan_application_vulnerabilities(self, target: str) -> List[VulnerabilityAssessment]:
-        """Scan for application vulnerabilities"""
-        vulnerabilities = []
+        """Scan for application vulnerabilities"""        vulnerabilities = []
         
         # Simulate application vulnerability scan
         # Real implementation would use OWASP ZAP, Burp Suite, etc.
@@ -903,8 +864,7 @@ class CloudSecurityManager:
         return vulnerabilities
     
     async def _scan_configuration_vulnerabilities(self, target: str) -> List[VulnerabilityAssessment]:
-        """Scan for configuration vulnerabilities"""
-        vulnerabilities = []
+        """Scan for configuration vulnerabilities"""        vulnerabilities = []
         
         # Check for common misconfigurations
         config_checks = [
@@ -936,8 +896,7 @@ class CloudSecurityManager:
         return vulnerabilities
     
     async def _validate_security_policy(self, policy: SecurityPolicy) -> Dict[str, Any]:
-        """Validate security policy"""
-        errors = []
+        """Validate security policy"""        errors = []
         
         if not policy.name:
             errors.append("Policy name is required")
@@ -948,13 +907,11 @@ class CloudSecurityManager:
         return {"valid": len(errors) == 0, "errors": errors}
     
     async def _apply_policy_rules(self, policy: SecurityPolicy) -> None:
-        """Apply security policy rules"""
-        # Implementation would apply rules to system
+        """Apply security policy rules"""        # Implementation would apply rules to system
         pass
     
     async def _get_compliance_rules(self, framework: ComplianceFramework) -> List[Dict[str, Any]]:
-        """Get compliance rules for framework"""
-        rules = {
+        """Get compliance rules for framework"""        rules = {
             ComplianceFramework.SOC2: [
                 {
                     "id": "CC6.1",
@@ -974,8 +931,7 @@ class CloudSecurityManager:
         return rules.get(framework, [])
     
     async def _check_compliance_rule(self, rule: Dict[str, Any]) -> Dict[str, Any]:
-        """Check compliance rule"""
-        # Simplified compliance check
+        """Check compliance rule"""        # Simplified compliance check
         return {
             "passed": True,
             "failure_reason": None,
@@ -983,18 +939,15 @@ class CloudSecurityManager:
         }
     
     async def _validate_firewall_rule(self, rule: Dict[str, Any]) -> bool:
-        """Validate firewall rule"""
-        required_fields = ["source", "destination", "port", "protocol", "action"]
+        """Validate firewall rule"""        required_fields = ["source", "destination", "port", "protocol", "action"]
         return all(field in rule for field in required_fields)
     
     async def _apply_firewall_rules(self, rules: List[Dict[str, Any]]) -> None:
-        """Apply firewall rules to cloud providers"""
-        # Implementation would apply rules to actual cloud firewalls
+        """Apply firewall rules to cloud providers"""        # Implementation would apply rules to actual cloud firewalls
         pass
     
     async def _generate_security_recommendations(self) -> List[str]:
-        """Generate security recommendations"""
-        recommendations = []
+        """Generate security recommendations"""        recommendations = []
         
         # Check for high-risk identities
         high_risk_identities = [
@@ -1017,30 +970,25 @@ class CloudSecurityManager:
         return recommendations
     
     def _ip_in_range(self, ip: str, ip_range: str) -> bool:
-        """Check if IP is in range"""
-        try:
+        """Check if IP is in range"""        try:
             return ipaddress.ip_address(ip) in ipaddress.ip_network(ip_range, strict=False)
         except:
             return False
     
     async def _block_ip_address(self, ip: str) -> None:
-        """Block IP address"""
-        self.logger.info(f"Blocking IP address: {ip}")
+        """Block IP address"""        self.logger.info(f"Blocking IP address: {ip}")
         # Implementation would add IP to firewall blacklist
     
     async def _increase_monitoring(self, ip: str) -> None:
-        """Increase monitoring for IP"""
-        self.logger.info(f"Increasing monitoring for IP: {ip}")
+        """Increase monitoring for IP"""        self.logger.info(f"Increasing monitoring for IP: {ip}")
         # Implementation would adjust monitoring rules
     
     async def _send_security_notification(self, event: SecurityEvent) -> None:
-        """Send security notification"""
-        self.logger.info(f"Sending security notification for event: {event.event_id}")
+        """Send security notification"""        self.logger.info(f"Sending security notification for event: {event.event_id}")
         # Implementation would send notifications via email, Slack, etc.
     
     async def _security_monitoring_loop(self) -> None:
-        """Security monitoring loop"""
-        while True:
+        """Security monitoring loop"""        while True:
             try:
                 # Continuous security monitoring
                 await asyncio.sleep(60)
@@ -1049,8 +997,7 @@ class CloudSecurityManager:
                 await asyncio.sleep(60)
     
     async def _compliance_monitoring_loop(self) -> None:
-        """Compliance monitoring loop"""
-        while True:
+        """Compliance monitoring loop"""        while True:
             try:
                 # Check compliance periodically
                 for framework in ComplianceFramework:
@@ -1062,8 +1009,7 @@ class CloudSecurityManager:
                 await asyncio.sleep(3600)
     
     async def _vulnerability_scanning_loop(self) -> None:
-        """Vulnerability scanning loop"""
-        while True:
+        """Vulnerability scanning loop"""        while True:
             try:
                 # Periodic vulnerability scanning
                 await asyncio.sleep(86400)  # Scan daily

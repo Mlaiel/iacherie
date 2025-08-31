@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Marketplace Catalog Management
+"""IA Influencer Agent - Marketplace Catalog Management
 Enterprise-grade catalog system for content, creators, and services.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ WARNING: This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -27,8 +25,7 @@ from ...security.protection import ContentProtector
 
 
 class ContentType(Enum):
-    """Content type enumeration for marketplace catalog."""
-    MUSIC = "music"
+    """Content type enumeration for marketplace catalog."""    MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
     BLOG = "blog"
@@ -39,8 +36,7 @@ class ContentType(Enum):
 
 
 class CreatorTier(Enum):
-    """Creator tier classification for marketplace."""
-    EMERGING = "emerging"
+    """Creator tier classification for marketplace."""    EMERGING = "emerging"
     RISING = "rising"
     ESTABLISHED = "established"
     PREMIUM = "premium"
@@ -49,8 +45,7 @@ class CreatorTier(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure for catalog entries."""
-    title: str
+    """Content metadata structure for catalog entries."""    title: str
     description: str
     tags: List[str]
     duration: Optional[int]
@@ -67,8 +62,7 @@ class ContentMetadata:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile structure for marketplace catalog."""
-    username: str
+    """Creator profile structure for marketplace catalog."""    username: str
     display_name: str
     bio: str
     specialties: List[str]
@@ -84,11 +78,9 @@ class CreatorProfile:
 
 
 class ContentCatalog:
-    """
-    Enterprise content catalog management system.
+    """    Enterprise content catalog management system.
     Handles content discovery, categorization, and metadata management.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -103,8 +95,7 @@ class ContentCatalog:
         metadata: ContentMetadata,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """
-        Register new content in marketplace catalog with AI analysis.
+        """        Register new content in marketplace catalog with AI analysis.
         
         Args:
             creator_id: Creator identifier
@@ -114,8 +105,7 @@ class ContentCatalog:
             
         Returns:
             Registration result with content ID and analysis
-        """
-        try:
+        """        try:
             # AI-powered content analysis
             analysis = await self.analyzer.analyze_content(
                 content_data, content_type.value
@@ -170,8 +160,7 @@ class ContentCatalog:
         sort_by: str = "relevance",
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """
-        Advanced content search with AI-powered ranking.
+        """        Advanced content search with AI-powered ranking.
         
         Args:
             query: Search query
@@ -181,8 +170,7 @@ class ContentCatalog:
             
         Returns:
             List of matching content entries
-        """
-        try:
+        """        try:
             # AI-powered semantic search
             semantic_results = await self.analyzer.semantic_search(query)
             
@@ -202,8 +190,7 @@ class ContentCatalog:
         time_window: timedelta = timedelta(hours=24),
         category: Optional[str] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Get trending content based on engagement and AI analysis.
+        """        Get trending content based on engagement and AI analysis.
         
         Args:
             time_window: Time window for trend analysis
@@ -211,8 +198,7 @@ class ContentCatalog:
             
         Returns:
             List of trending content
-        """
-        try:
+        """        try:
             cache_key = f"trending:{category or 'all'}:{int(time_window.total_seconds())}"
             
             # Check cache first
@@ -239,8 +225,7 @@ class ContentCatalog:
         metadata: ContentMetadata, 
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate SEO optimization data for content."""
-        seo_data = {
+        """Generate SEO optimization data for content."""        seo_data = {
             'optimized_title': await self._optimize_title(metadata.title),
             'meta_description': await self._generate_meta_description(
                 metadata.description, analysis
@@ -258,8 +243,7 @@ class ContentCatalog:
         analysis: Dict[str, Any], 
         metadata: ContentMetadata
     ) -> float:
-        """Calculate collaboration potential score."""
-        base_score = metadata.collaboration_potential
+        """Calculate collaboration potential score."""        base_score = metadata.collaboration_potential
         
         # AI analysis factors
         quality_factor = analysis.get('quality_score', 0.5)
@@ -282,8 +266,7 @@ class ContentCatalog:
         filters: Dict[str, Any],
         sort_by: str
     ) -> List[Dict[str, Any]]:
-        """Apply filters and sorting to search results."""
-        if not filters:
+        """Apply filters and sorting to search results."""        if not filters:
             return results
         
         filtered = results
@@ -323,15 +306,13 @@ class ContentCatalog:
         time_window: timedelta,
         category: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Calculate trending scores for content."""
-        # Implementation for trending calculation
+        """Calculate trending scores for content."""        # Implementation for trending calculation
         # This would involve engagement metrics, view counts, shares, etc.
         trending_content = []
         return trending_content
     
     async def _optimize_title(self, title: str) -> str:
-        """Optimize content title for SEO."""
-        # AI-powered title optimization
+        """Optimize content title for SEO."""        # AI-powered title optimization
         return title
     
     async def _generate_meta_description(
@@ -339,32 +320,26 @@ class ContentCatalog:
         description: str, 
         analysis: Dict[str, Any]
     ) -> str:
-        """Generate SEO meta description."""
-        return description[:160]  # SEO best practice
+        """Generate SEO meta description."""        return description[:160]  # SEO best practice
     
     async def _extract_seo_keywords(
         self, 
         tags: List[str], 
         analysis: Dict[str, Any]
     ) -> List[str]:
-        """Extract SEO keywords from content."""
-        return tags
+        """Extract SEO keywords from content."""        return tags
     
     async def _generate_hashtags(self, tags: List[str]) -> List[str]:
-        """Generate social media hashtags."""
-        return [f"#{tag.replace(' ', '').lower()}" for tag in tags]
+        """Generate social media hashtags."""        return [f"#{tag.replace(' ', '').lower()}" for tag in tags]
     
     async def _suggest_platforms(self, analysis: Dict[str, Any]) -> List[str]:
-        """Suggest optimal platforms for content distribution."""
-        return ['instagram', 'tiktok', 'youtube', 'twitter']
+        """Suggest optimal platforms for content distribution."""        return ['instagram', 'tiktok', 'youtube', 'twitter']
 
 
 class CreatorCatalog:
-    """
-    Enterprise creator catalog management system.
+    """    Enterprise creator catalog management system.
     Handles creator profiles, verification, and matchmaking.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -375,8 +350,7 @@ class CreatorCatalog:
         user_id: str,
         profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """
-        Register new creator in marketplace catalog.
+        """        Register new creator in marketplace catalog.
         
         Args:
             user_id: User identifier
@@ -384,8 +358,7 @@ class CreatorCatalog:
             
         Returns:
             Registration result with creator ID
-        """
-        try:
+        """        try:
             # Validate creator profile
             validation_result = await self._validate_creator_profile(profile)
             
@@ -432,8 +405,7 @@ class CreatorCatalog:
         sort_by: str = "score",
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """
-        Advanced creator search with matching algorithms.
+        """        Advanced creator search with matching algorithms.
         
         Args:
             query: Search query
@@ -443,8 +415,7 @@ class CreatorCatalog:
             
         Returns:
             List of matching creators
-        """
-        try:
+        """        try:
             # AI-powered creator matching
             matching_results = await self._match_creators(query, filters)
             
@@ -465,8 +436,7 @@ class CreatorCatalog:
         category: Optional[str] = None,
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """
-        Get creator recommendations for collaboration.
+        """        Get creator recommendations for collaboration.
         
         Args:
             creator_id: Source creator ID
@@ -475,8 +445,7 @@ class CreatorCatalog:
             
         Returns:
             List of recommended creators
-        """
-        try:
+        """        try:
             cache_key = f"recommendations:{creator_id}:{category or 'all'}"
             
             # Check cache
@@ -502,8 +471,7 @@ class CreatorCatalog:
         self, 
         profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Validate creator profile data."""
-        errors = []
+        """Validate creator profile data."""        errors = []
         
         if not profile.username:
             errors.append("Username is required")
@@ -523,8 +491,7 @@ class CreatorCatalog:
         }
     
     async def _calculate_creator_score(self, profile: CreatorProfile) -> float:
-        """Calculate overall creator score."""
-        # Follower count factor
+        """Calculate overall creator score."""        # Follower count factor
         follower_factor = min(profile.follower_count / 100000, 1.0)
         
         # Engagement rate factor
@@ -555,8 +522,7 @@ class CreatorCatalog:
         profile: CreatorProfile, 
         score: float
     ) -> CreatorTier:
-        """Determine creator tier based on profile and score."""
-        if score >= 0.9 and profile.verified:
+        """Determine creator tier based on profile and score."""        if score >= 0.9 and profile.verified:
             return CreatorTier.EXCLUSIVE
         elif score >= 0.75:
             return CreatorTier.PREMIUM
@@ -572,8 +538,7 @@ class CreatorCatalog:
         query: str,
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Match creators based on query and filters."""
-        # Implementation for creator matching algorithm
+        """Match creators based on query and filters."""        # Implementation for creator matching algorithm
         return []
     
     async def _sort_creator_results(
@@ -581,8 +546,7 @@ class CreatorCatalog:
         results: List[Dict[str, Any]],
         sort_by: str
     ) -> List[Dict[str, Any]]:
-        """Sort creator search results."""
-        if sort_by == "score":
+        """Sort creator search results."""        if sort_by == "score":
             results.sort(key=lambda x: x.get('creator_score', 0), reverse=True)
         elif sort_by == "followers":
             results.sort(key=lambda x: x.get('profile', {}).get('follower_count', 0), reverse=True)
@@ -596,17 +560,14 @@ class CreatorCatalog:
         creator_id: str,
         category: Optional[str]
     ) -> List[Dict[str, Any]]:
-        """Generate creator recommendations using ML algorithms."""
-        # Implementation for recommendation algorithm
+        """Generate creator recommendations using ML algorithms."""        # Implementation for recommendation algorithm
         return []
 
 
 class ServiceCatalog:
-    """
-    Enterprise service catalog for marketplace offerings.
+    """    Enterprise service catalog for marketplace offerings.
     Manages AI services, tools, and collaboration services.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -617,8 +578,7 @@ class ServiceCatalog:
         provider_id: str,
         service_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Register new service in marketplace catalog.
+        """        Register new service in marketplace catalog.
         
         Args:
             provider_id: Service provider ID
@@ -626,8 +586,7 @@ class ServiceCatalog:
             
         Returns:
             Service registration result
-        """
-        try:
+        """        try:
             # Validate service data
             validation_result = await self._validate_service_data(service_data)
             
@@ -663,8 +622,7 @@ class ServiceCatalog:
         category: Optional[str] = None,
         filters: Dict[str, Any] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Get available services from catalog.
+        """        Get available services from catalog.
         
         Args:
             category: Service category filter
@@ -672,8 +630,7 @@ class ServiceCatalog:
             
         Returns:
             List of available services
-        """
-        try:
+        """        try:
             cache_key = f"services:{category or 'all'}:{hash(str(filters))}"
             
             # Check cache
@@ -697,8 +654,7 @@ class ServiceCatalog:
         self, 
         service_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate service registration data."""
-        errors = []
+        """Validate service registration data."""        errors = []
         required_fields = ['name', 'description', 'category', 'pricing']
         
         for field in required_fields:
@@ -715,6 +671,5 @@ class ServiceCatalog:
         category: Optional[str],
         filters: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Query services from database."""
-        # Implementation for service querying
+        """Query services from database."""        # Implementation for service querying
         return []

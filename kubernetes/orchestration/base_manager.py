@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Base Deployment Manager
+"""IA Influencer Agent - Base Deployment Manager
 Base class for all orchestration managers
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,7 +10,6 @@ Features:
 - Metrics collection base
 - Health monitoring utilities
 """
-
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -22,16 +20,13 @@ import json
 
 
 class BaseDeploymentManager(ABC):
-    """
-    Base class for all deployment managers.
+    """    Base class for all deployment managers.
     
     Provides common functionality for orchestration operations
     including logging, error handling, and metrics collection.
     """
-
     def __init__(self):
-        """Initialize base deployment manager."""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize base deployment manager."""        self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.setLevel(logging.INFO)
         
         # Create handler if not exists
@@ -54,13 +49,11 @@ class BaseDeploymentManager(ABC):
         self.metadata: Dict[str, Any] = {}
 
     async def initialize(self) -> bool:
-        """
-        Initialize the deployment manager.
+        """        Initialize the deployment manager.
         
         Returns:
             True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             self.logger.info(f"Initializing {self.__class__.__name__}")
             
             # Override in child classes
@@ -79,23 +72,19 @@ class BaseDeploymentManager(ABC):
             return False
 
     async def _perform_initialization(self) -> bool:
-        """
-        Perform manager-specific initialization.
+        """        Perform manager-specific initialization.
         Override in child classes.
         
         Returns:
             True if successful, False otherwise
-        """
-        return True
+        """        return True
 
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check.
+        """        Perform health check.
         
         Returns:
             Health status information
-        """
-        try:
+        """        try:
             uptime = datetime.now() - self.start_time
             
             health_info = {
@@ -124,33 +113,27 @@ class BaseDeploymentManager(ABC):
             }
 
     async def _get_specific_health(self) -> Dict[str, Any]:
-        """
-        Get manager-specific health information.
+        """        Get manager-specific health information.
         Override in child classes.
         
         Returns:
             Manager-specific health data
-        """
-        return {}
+        """        return {}
 
     def increment_error_count(self) -> None:
-        """Increment error counter."""
-        self.error_count += 1
+        """Increment error counter."""        self.error_count += 1
 
     def increment_warning_count(self) -> None:
-        """Increment warning counter."""
-        self.warning_count += 1
+        """Increment warning counter."""        self.warning_count += 1
 
     def log_operation(self, operation: str, success: bool, details: Optional[str] = None) -> None:
-        """
-        Log operation result.
+        """        Log operation result.
         
         Args:
             operation: Operation name
             success: Whether operation was successful
             details: Optional operation details
-        """
-        level = logging.INFO if success else logging.ERROR
+        """        level = logging.INFO if success else logging.ERROR
         status = "succeeded" if success else "failed"
         
         message = f"Operation '{operation}' {status}"
@@ -163,13 +146,11 @@ class BaseDeploymentManager(ABC):
             self.increment_error_count()
 
     async def cleanup(self) -> bool:
-        """
-        Cleanup resources and connections.
+        """        Cleanup resources and connections.
         
         Returns:
             True if cleanup successful, False otherwise
-        """
-        try:
+        """        try:
             self.logger.info(f"Cleaning up {self.__class__.__name__}")
             
             # Perform manager-specific cleanup
@@ -188,26 +169,22 @@ class BaseDeploymentManager(ABC):
             return False
 
     async def _perform_cleanup(self) -> bool:
-        """
-        Perform manager-specific cleanup.
+        """        Perform manager-specific cleanup.
         Override in child classes.
         
         Returns:
             True if successful, False otherwise
-        """
-        return True
+        """        return True
 
     def validate_config(self, config: Dict[str, Any]) -> bool:
-        """
-        Validate configuration.
+        """        Validate configuration.
         
         Args:
             config: Configuration to validate
             
         Returns:
             True if valid, False otherwise
-        """
-        try:
+        """        try:
             # Basic validation
             if not isinstance(config, dict):
                 self.logger.error("Configuration must be a dictionary")
@@ -221,8 +198,7 @@ class BaseDeploymentManager(ABC):
             return False
 
     def _validate_specific_config(self, config: Dict[str, Any]) -> bool:
-        """
-        Validate manager-specific configuration.
+        """        Validate manager-specific configuration.
         Override in child classes.
         
         Args:
@@ -230,17 +206,14 @@ class BaseDeploymentManager(ABC):
             
         Returns:
             True if valid, False otherwise
-        """
-        return True
+        """        return True
 
     async def get_status(self) -> Dict[str, Any]:
-        """
-        Get manager status.
+        """        Get manager status.
         
         Returns:
             Manager status information
-        """
-        try:
+        """        try:
             uptime = datetime.now() - self.start_time
             
             status = {
@@ -269,26 +242,22 @@ class BaseDeploymentManager(ABC):
             }
 
     async def _get_specific_status(self) -> Dict[str, Any]:
-        """
-        Get manager-specific status information.
+        """        Get manager-specific status information.
         Override in child classes.
         
         Returns:
             Manager-specific status data
-        """
-        return {}
+        """        return {}
 
     def set_config(self, config: Dict[str, Any]) -> bool:
-        """
-        Set manager configuration.
+        """        Set manager configuration.
         
         Args:
             config: Configuration to set
             
         Returns:
             True if set successfully, False otherwise
-        """
-        try:
+        """        try:
             if self.validate_config(config):
                 self.config = config.copy()
                 self.logger.info("Configuration updated successfully")
@@ -302,27 +271,22 @@ class BaseDeploymentManager(ABC):
             return False
 
     def get_config(self) -> Dict[str, Any]:
-        """
-        Get manager configuration.
+        """        Get manager configuration.
         
         Returns:
             Manager configuration
-        """
-        return self.config.copy()
+        """        return self.config.copy()
 
     def set_metadata(self, key: str, value: Any) -> None:
-        """
-        Set metadata value.
+        """        Set metadata value.
         
         Args:
             key: Metadata key
             value: Metadata value
-        """
-        self.metadata[key] = value
+        """        self.metadata[key] = value
 
     def get_metadata(self, key: str, default: Any = None) -> Any:
-        """
-        Get metadata value.
+        """        Get metadata value.
         
         Args:
             key: Metadata key
@@ -330,8 +294,7 @@ class BaseDeploymentManager(ABC):
             
         Returns:
             Metadata value or default
-        """
-        return self.metadata.get(key, default)
+        """        return self.metadata.get(key, default)
 
     async def wait_for_condition(
         self,
@@ -341,8 +304,7 @@ class BaseDeploymentManager(ABC):
         *args,
         **kwargs
     ) -> bool:
-        """
-        Wait for a condition to be met.
+        """        Wait for a condition to be met.
         
         Args:
             condition_func: Function to check condition
@@ -353,8 +315,7 @@ class BaseDeploymentManager(ABC):
             
         Returns:
             True if condition met, False if timeout
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         while (datetime.now() - start_time).total_seconds() < timeout:
             try:
@@ -368,8 +329,7 @@ class BaseDeploymentManager(ABC):
         return False
 
     def format_resource_name(self, base_name: str, suffix: Optional[str] = None) -> str:
-        """
-        Format resource name with consistent naming convention.
+        """        Format resource name with consistent naming convention.
         
         Args:
             base_name: Base resource name
@@ -377,8 +337,7 @@ class BaseDeploymentManager(ABC):
             
         Returns:
             Formatted resource name
-        """
-        # Normalize base name
+        """        # Normalize base name
         normalized = base_name.lower().replace("_", "-")
         
         # Add suffix if provided
@@ -392,16 +351,14 @@ class BaseDeploymentManager(ABC):
         return normalized
 
     def parse_resource_requirements(self, requirements: Dict[str, str]) -> Dict[str, str]:
-        """
-        Parse and validate resource requirements.
+        """        Parse and validate resource requirements.
         
         Args:
             requirements: Resource requirements dict
             
         Returns:
             Validated resource requirements
-        """
-        validated = {}
+        """        validated = {}
         
         for resource, value in requirements.items():
             if resource in ["cpu", "memory"]:
@@ -412,16 +369,14 @@ class BaseDeploymentManager(ABC):
         return validated
 
     def generate_labels(self, base_labels: Optional[Dict[str, str]] = None) -> Dict[str, str]:
-        """
-        Generate standard labels for resources.
+        """        Generate standard labels for resources.
         
         Args:
             base_labels: Base labels to include
             
         Returns:
             Generated labels
-        """
-        labels = {
+        """        labels = {
             "app.kubernetes.io/name": "ia-influencer-agent",
             "app.kubernetes.io/managed-by": self.__class__.__name__.lower(),
             "app.kubernetes.io/version": "2.0.0",
@@ -434,16 +389,14 @@ class BaseDeploymentManager(ABC):
         return labels
 
     def generate_annotations(self, base_annotations: Optional[Dict[str, str]] = None) -> Dict[str, str]:
-        """
-        Generate standard annotations for resources.
+        """        Generate standard annotations for resources.
         
         Args:
             base_annotations: Base annotations to include
             
         Returns:
             Generated annotations
-        """
-        annotations = {
+        """        annotations = {
             "deployment.kubernetes.io/revision": "1",
             "meta.helm.sh/release-name": "ia-influencer-agent",
             "meta.helm.sh/release-namespace": "default"

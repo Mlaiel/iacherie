@@ -6,7 +6,6 @@ is properly configured and operational.
 Built by Fahed Mlaiel and the IA Influencer Agent Team.
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional
@@ -19,14 +18,12 @@ from .index import create_notification_system
 
 class NotificationSystemValidator:
     """Comprehensive validation and health checks for the notification system."""
-
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.notification_system = create_notification_system()
 
     async def validate_system(self) -> Dict[str, Any]:
-        """Run comprehensive system validation."""
-        results = {
+        """Run comprehensive system validation."""        results = {
             "timestamp": datetime.utcnow().isoformat(),
             "overall_status": "unknown",
             "components": {},
@@ -75,8 +72,7 @@ class NotificationSystemValidator:
         return results
 
     async def _test_orchestrator(self) -> Dict[str, Any]:
-        """Test notification orchestrator functionality."""
-        result = {
+        """Test notification orchestrator functionality."""        result = {
             "component": "orchestrator",
             "status": "unknown",
             "tests_run": 0,
@@ -132,8 +128,7 @@ class NotificationSystemValidator:
         return result
 
     async def _test_template_engine(self) -> Dict[str, Any]:
-        """Test template engine functionality."""
-        result = {
+        """Test template engine functionality."""        result = {
             "component": "template_engine",
             "status": "unknown",
             "tests_run": 0,
@@ -186,8 +181,7 @@ class NotificationSystemValidator:
         return result
 
     async def _test_notifiers(self) -> Dict[str, Any]:
-        """Test individual notification channels."""
-        result = {
+        """Test individual notification channels."""        result = {
             "component": "notifiers",
             "status": "unknown",
             "tests_run": 0,
@@ -235,8 +229,7 @@ class NotificationSystemValidator:
         return result
 
     async def _test_business_logic(self) -> Dict[str, Any]:
-        """Test business logic integration."""
-        result = {
+        """Test business logic integration."""        result = {
             "component": "business_logic",
             "status": "unknown",
             "tests_run": 0,
@@ -313,8 +306,7 @@ class NotificationSystemValidator:
         return result
 
     async def quick_health_check(self) -> bool:
-        """Quick health check for system monitoring."""
-        try:
+        """Quick health check for system monitoring."""        try:
             # Test basic system creation
             system = create_notification_system()
             
@@ -337,14 +329,12 @@ class NotificationSystemValidator:
 
 # Global validation functions
 async def validate_notification_system() -> Dict[str, Any]:
-    """Run full system validation."""
-    validator = NotificationSystemValidator()
+    """Run full system validation."""    validator = NotificationSystemValidator()
     return await validator.validate_system()
 
 
 async def health_check() -> bool:
-    """Quick health check."""
-    validator = NotificationSystemValidator()
+    """Quick health check."""    validator = NotificationSystemValidator()
     return await validator.quick_health_check()
 
 

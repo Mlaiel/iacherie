@@ -1,5 +1,4 @@
-"""
-⚡ Cache Storage Provider - IA Influencer Agent Platform Enterprise
+"""⚡ Cache Storage Provider - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/storage/cache_storage.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ Ce code est la propriété exclusive de Fahed Mlaiel. Toute utilisation,
 reproduction, modification ou distribution non autorisée est strictement
 interdite et fera l'objet de poursuites judiciaires.
 """
-
 from typing import Dict, List, Optional, Any, Union, BinaryIO, AsyncGenerator, Tuple
 import logging
 import asyncio
@@ -37,15 +35,13 @@ import base64
 logger = logging.getLogger(__name__)
 
 class CacheProvider(Enum):
-    """Supported cache providers"""
-    REDIS = "redis"
+    """Supported cache providers"""    REDIS = "redis"
     MEMCACHED = "memcached"
     IN_MEMORY = "in_memory"
     HYBRID = "hybrid"
 
 class CacheStrategy(Enum):
-    """Cache eviction strategies"""
-    LRU = "lru"          # Least Recently Used
+    """Cache eviction strategies"""    LRU = "lru"          # Least Recently Used
     LFU = "lfu"          # Least Frequently Used
     TTL = "ttl"          # Time To Live
     FIFO = "fifo"        # First In First Out
@@ -53,8 +49,7 @@ class CacheStrategy(Enum):
 
 @dataclass
 class CacheConfig:
-    """Cache storage configuration"""
-    provider: CacheProvider = CacheProvider.REDIS
+    """Cache storage configuration"""    provider: CacheProvider = CacheProvider.REDIS
     
     # Redis configuration
     redis_host: str = "localhost"
@@ -93,8 +88,7 @@ class CacheConfig:
     cluster_nodes: List[str] = field(default_factory=list)
 
 class CacheStorageManager:
-    """
-    Enterprise cache storage manager for ultra-fast content retrieval.
+    """    Enterprise cache storage manager for ultra-fast content retrieval.
     
     Features:
     - Multi-provider support (Redis, Memcached, In-Memory)
@@ -103,11 +97,9 @@ class CacheStorageManager:
     - Hot/warm/cold cache tiers
     - Real-time analytics and monitoring
     - Cluster support for high availability
-    """
-    
+    """    
     def __init__(self, config: CacheConfig):
-        """Initialize cache storage manager"""
-        self.config = config
+        """Initialize cache storage manager"""        self.config = config
         self.redis_client = None
         self.memcached_client = None
         self.in_memory_cache = None
@@ -137,8 +129,7 @@ class CacheStorageManager:
         logger.info(f"CacheStorageManager initialized with {config.provider.value}")
     
     async def _initialize_providers(self) -> None:
-        """Initialize cache providers based on configuration"""
-        try:
+        """Initialize cache providers based on configuration"""        try:
             if self.config.provider in [CacheProvider.REDIS, CacheProvider.HYBRID]:
                 await self._initialize_redis()
             
@@ -155,8 +146,7 @@ class CacheStorageManager:
             raise
     
     async def _initialize_redis(self) -> None:
-        """Initialize Redis client"""
-        try:
+        """Initialize Redis client"""        try:
             if self.config.enable_clustering:
                 # Redis Cluster
                 from aioredis import RedisCluster
@@ -184,8 +174,7 @@ class CacheStorageManager:
             raise
     
     async def _initialize_memcached(self) -> None:
-        """Initialize Memcached client"""
-        try:
+        """Initialize Memcached client"""        try:
             import aiomcache
             
             # Use first server for simplicity
@@ -200,8 +189,7 @@ class CacheStorageManager:
             raise
     
     async def _initialize_in_memory(self) -> None:
-        """Initialize in-memory cache"""
-        try:
+        """Initialize in-memory cache"""        try:
             self.in_memory_cache = InMemoryCache(
                 max_size=self.config.max_memory,
                 eviction_strategy=self.config.eviction_strategy
@@ -221,8 +209,7 @@ class CacheStorageManager:
         ttl: Optional[int] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Store content in cache with intelligent optimization.
+        """        Store content in cache with intelligent optimization.
         
         Business Logic:
         1. Determine optimal cache tier based on content type
@@ -230,8 +217,7 @@ class CacheStorageManager:
         3. Serialize content appropriately
         4. Set content-specific TTL
         5. Update analytics and metrics
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Determine TTL based on content type
@@ -297,8 +283,7 @@ class CacheStorageManager:
         key: str,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Retrieve content from cache with automatic decompression"""
-        start_time = time.time()
+        """Retrieve content from cache with automatic decompression"""        start_time = time.time()
         
         try:
             # Retrieve from appropriate cache tier
@@ -374,8 +359,7 @@ class CacheStorageManager:
             }
     
     async def delete(self, key: str) -> Dict[str, Any]:
-        """Delete content from cache"""
-        try:
+        """Delete content from cache"""        try:
             # Delete from appropriate cache tier
             if self.config.provider == CacheProvider.HYBRID:
                 result = await self._delete_hybrid(key)
@@ -405,8 +389,7 @@ class CacheStorageManager:
             }
     
     async def clear(self, pattern: Optional[str] = None) -> Dict[str, Any]:
-        """Clear cache items with optional pattern matching"""
-        try:
+        """Clear cache items with optional pattern matching"""        try:
             cleared_count = 0
             
             if self.config.provider == CacheProvider.REDIS and self.redis_client:
@@ -434,8 +417,7 @@ class CacheStorageManager:
             }
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""
-        try:
+        """Get comprehensive cache statistics"""        try:
             stats = {
                 'provider': self.config.provider.value,
                 'metrics': self.metrics.copy(),
@@ -475,8 +457,7 @@ class CacheStorageManager:
             return {'error': str(e)}
     
     async def optimize(self) -> Dict[str, Any]:
-        """Run cache optimization tasks"""
-        try:
+        """Run cache optimization tasks"""        try:
             optimization_results = {}
             
             # Clean expired items
@@ -508,8 +489,7 @@ class CacheStorageManager:
         metadata: Dict[str, Any],
         ttl: int
     ) -> bool:
-        """Store content in Redis"""
-        try:
+        """Store content in Redis"""        try:
             # Store content and metadata separately for efficiency
             content_key = f"content:{key}"
             metadata_key = f"metadata:{key}"
@@ -527,8 +507,7 @@ class CacheStorageManager:
             return False
     
     async def _retrieve_redis(self, key: str) -> Dict[str, Any]:
-        """Retrieve content from Redis"""
-        try:
+        """Retrieve content from Redis"""        try:
             content_key = f"content:{key}"
             metadata_key = f"metadata:{key}"
             
@@ -556,8 +535,7 @@ class CacheStorageManager:
             return {'found': False}
     
     async def _delete_redis(self, key: str) -> bool:
-        """Delete content from Redis"""
-        try:
+        """Delete content from Redis"""        try:
             content_key = f"content:{key}"
             metadata_key = f"metadata:{key}"
             
@@ -575,8 +553,7 @@ class CacheStorageManager:
         metadata: Dict[str, Any],
         ttl: int
     ) -> bool:
-        """Store content in Memcached"""
-        try:
+        """Store content in Memcached"""        try:
             # Combine content and metadata
             cache_data = {
                 'content': base64.b64encode(content).decode('utf-8'),
@@ -593,8 +570,7 @@ class CacheStorageManager:
             return False
     
     async def _retrieve_memcached(self, key: str) -> Dict[str, Any]:
-        """Retrieve content from Memcached"""
-        try:
+        """Retrieve content from Memcached"""        try:
             data = await self.memcached_client.get(key.encode('utf-8'))
             
             if data is None:
@@ -615,8 +591,7 @@ class CacheStorageManager:
             return {'found': False}
     
     async def _delete_memcached(self, key: str) -> bool:
-        """Delete content from Memcached"""
-        try:
+        """Delete content from Memcached"""        try:
             result = await self.memcached_client.delete(key.encode('utf-8'))
             return result
             
@@ -631,8 +606,7 @@ class CacheStorageManager:
         metadata: Dict[str, Any],
         ttl: int
     ) -> bool:
-        """Store content in in-memory cache"""
-        try:
+        """Store content in in-memory cache"""        try:
             cache_item = {
                 'content': content,
                 'metadata': metadata,
@@ -646,8 +620,7 @@ class CacheStorageManager:
             return False
     
     async def _retrieve_in_memory(self, key: str) -> Dict[str, Any]:
-        """Retrieve content from in-memory cache"""
-        try:
+        """Retrieve content from in-memory cache"""        try:
             cache_item = await self.in_memory_cache.get(key)
             
             if cache_item is None:
@@ -669,8 +642,7 @@ class CacheStorageManager:
             return {'found': False}
     
     async def _delete_in_memory(self, key: str) -> bool:
-        """Delete content from in-memory cache"""
-        try:
+        """Delete content from in-memory cache"""        try:
             return await self.in_memory_cache.delete(key)
             
         except Exception as e:
@@ -686,8 +658,7 @@ class CacheStorageManager:
         metadata: Dict[str, Any],
         ttl: int
     ) -> bool:
-        """Store content in hybrid cache (multiple tiers)"""
-        try:
+        """Store content in hybrid cache (multiple tiers)"""        try:
             # Store in fast tier (in-memory) for hot content
             if metadata.get('content_type') in ['fingerprint', 'embedding']:
                 if self.in_memory_cache:
@@ -704,8 +675,7 @@ class CacheStorageManager:
             return False
     
     async def _retrieve_hybrid(self, key: str) -> Dict[str, Any]:
-        """Retrieve content from hybrid cache (check tiers in order)"""
-        try:
+        """Retrieve content from hybrid cache (check tiers in order)"""        try:
             # Check fast tier first (in-memory)
             if self.in_memory_cache:
                 result = await self._retrieve_in_memory(key)
@@ -734,8 +704,7 @@ class CacheStorageManager:
             return {'found': False}
     
     async def _delete_hybrid(self, key: str) -> bool:
-        """Delete content from all hybrid cache tiers"""
-        try:
+        """Delete content from all hybrid cache tiers"""        try:
             success = True
             
             # Delete from all tiers
@@ -758,8 +727,7 @@ class CacheStorageManager:
         content: Union[bytes, str, Dict[str, Any], List[Any]],
         content_type: str
     ) -> bytes:
-        """Serialize content for caching"""
-        try:
+        """Serialize content for caching"""        try:
             if isinstance(content, bytes):
                 return content
             
@@ -786,8 +754,7 @@ class CacheStorageManager:
         data: bytes,
         content_type: str
     ) -> Any:
-        """Deserialize content from cache"""
-        try:
+        """Deserialize content from cache"""        try:
             if self.config.serialization_format == "json":
                 return json.loads(data.decode('utf-8'))
             
@@ -808,8 +775,7 @@ class CacheStorageManager:
             return data
     
     async def _compress_content(self, content: bytes, content_type: str) -> bytes:
-        """Apply compression if beneficial"""
-        try:
+        """Apply compression if beneficial"""        try:
             if not self.config.compression_enabled:
                 return content
             
@@ -833,8 +799,7 @@ class CacheStorageManager:
             return content
     
     async def _decompress_content(self, content: bytes) -> bytes:
-        """Decompress content"""
-        try:
+        """Decompress content"""        try:
             return zlib.decompress(content)
             
         except Exception as e:
@@ -844,8 +809,7 @@ class CacheStorageManager:
     # Analytics and optimization methods
     
     async def _update_access_stats(self, key: str, metadata: Dict[str, Any]) -> None:
-        """Update access statistics for cache items"""
-        try:
+        """Update access statistics for cache items"""        try:
             # Update access count in metadata
             metadata['access_count'] = metadata.get('access_count', 0) + 1
             metadata['last_accessed'] = datetime.now().isoformat()
@@ -859,8 +823,7 @@ class CacheStorageManager:
             logger.warning(f"Failed to update access stats: {str(e)}")
     
     async def _analyze_access_patterns(self) -> Tuple[List[str], List[str]]:
-        """Analyze access patterns to identify hot and cold content"""
-        hot_keys = []
+        """Analyze access patterns to identify hot and cold content"""        hot_keys = []
         cold_keys = []
         
         try:
@@ -887,8 +850,7 @@ class CacheStorageManager:
         return hot_keys, cold_keys
     
     async def _generate_optimization_suggestions(self) -> List[str]:
-        """Generate cache optimization suggestions"""
-        suggestions = []
+        """Generate cache optimization suggestions"""        suggestions = []
         
         try:
             # Analyze hit ratio
@@ -917,8 +879,7 @@ class CacheStorageManager:
         return suggestions
     
     def _update_metrics(self, operation: str, size: int, processing_time: float) -> None:
-        """Update performance metrics"""
-        with self.lock:
+        """Update performance metrics"""        with self.lock:
             if operation == 'hit':
                 self.metrics['hits'] += 1
             elif operation == 'miss':
@@ -941,8 +902,7 @@ class CacheStorageManager:
                 self.metrics['avg_set_time'] = (current_avg * (total_writes - 1) + processing_time) / total_writes
     
     def _update_content_stats(self, content_type: str, operation: str, size: int) -> None:
-        """Update content-specific statistics"""
-        with self.lock:
+        """Update content-specific statistics"""        with self.lock:
             if content_type not in self.content_stats:
                 self.content_stats[content_type] = {
                     'hits': 0,
@@ -968,8 +928,7 @@ class CacheStorageManager:
                 stats['hit_ratio'] = stats['hits'] / total_ops
 
 class InMemoryCache:
-    """High-performance in-memory cache with LRU eviction"""
-    
+    """High-performance in-memory cache with LRU eviction"""    
     def __init__(self, max_size: int, eviction_strategy: CacheStrategy = CacheStrategy.LRU):
         self.max_size = max_size
         self.eviction_strategy = eviction_strategy
@@ -978,8 +937,7 @@ class InMemoryCache:
         self.current_size = 0
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get item from cache"""
-        with self.lock:
+        """Get item from cache"""        with self.lock:
             if key in self.cache:
                 # Move to end (most recently used)
                 self.cache.move_to_end(key)
@@ -987,8 +945,7 @@ class InMemoryCache:
             return None
     
     async def set(self, key: str, value: Any) -> bool:
-        """Set item in cache"""
-        with self.lock:
+        """Set item in cache"""        with self.lock:
             # Calculate item size
             item_size = len(pickle.dumps(value))
             
@@ -1011,8 +968,7 @@ class InMemoryCache:
             return True
     
     async def delete(self, key: str) -> bool:
-        """Delete item from cache"""
-        with self.lock:
+        """Delete item from cache"""        with self.lock:
             if key in self.cache:
                 item_size = len(pickle.dumps(self.cache[key]))
                 del self.cache[key]
@@ -1021,8 +977,7 @@ class InMemoryCache:
             return False
     
     async def clear(self, pattern: Optional[str] = None) -> int:
-        """Clear cache items"""
-        with self.lock:
+        """Clear cache items"""        with self.lock:
             if pattern:
                 import fnmatch
                 keys_to_remove = [key for key in self.cache.keys() if fnmatch.fnmatch(key, pattern)]
@@ -1036,8 +991,7 @@ class InMemoryCache:
                 return count
     
     async def cleanup_expired(self) -> int:
-        """Clean up expired items"""
-        expired_count = 0
+        """Clean up expired items"""        expired_count = 0
         current_time = datetime.now()
         
         with self.lock:
@@ -1057,8 +1011,7 @@ class InMemoryCache:
         return expired_count
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        with self.lock:
+        """Get cache statistics"""        with self.lock:
             return {
                 'item_count': len(self.cache),
                 'current_size': self.current_size,
@@ -1067,8 +1020,7 @@ class InMemoryCache:
             }
     
     def _evict_item(self) -> None:
-        """Evict an item based on eviction strategy"""
-        if not self.cache:
+        """Evict an item based on eviction strategy"""        if not self.cache:
             return
         
         if self.eviction_strategy == CacheStrategy.LRU:
@@ -1086,8 +1038,7 @@ class InMemoryCache:
         self.current_size -= item_size
 
 class AsyncCacheStorageManager:
-    """Async wrapper for high-performance concurrent cache operations"""
-    
+    """Async wrapper for high-performance concurrent cache operations"""    
     def __init__(self, config: CacheConfig):
         self.sync_manager = CacheStorageManager(config)
         self.semaphore = asyncio.Semaphore(100)  # Allow high concurrency for cache
@@ -1096,8 +1047,7 @@ class AsyncCacheStorageManager:
         self,
         items: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Store multiple items concurrently"""
-        
+        """Store multiple items concurrently"""        
         async def store_single(item):
             async with self.semaphore:
                 return await self.sync_manager.store(
@@ -1120,8 +1070,7 @@ class AsyncCacheStorageManager:
         self,
         keys: List[str]
     ) -> List[Dict[str, Any]]:
-        """Retrieve multiple items concurrently"""
-        
+        """Retrieve multiple items concurrently"""        
         async def retrieve_single(key):
             async with self.semaphore:
                 return await self.sync_manager.retrieve(key)

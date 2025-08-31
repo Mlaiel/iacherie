@@ -1,5 +1,4 @@
-"""
-Microservices Configuration Validation Module for IA-Influencer Agent Platform
+"""Microservices Configuration Validation Module for IA-Influencer Agent Platform
 ============================================================================
 
 Comprehensive validation suite for all microservices configurations,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple
@@ -57,16 +55,14 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Validation severity levels"""
-    INFO = "info"
+    """Validation severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class ValidationCategory(Enum):
-    """Validation categories"""
-    CONFIGURATION = "configuration"
+    """Validation categories"""    CONFIGURATION = "configuration"
     CONNECTIVITY = "connectivity"
     SECURITY = "security"
     PERFORMANCE = "performance"
@@ -76,8 +72,7 @@ class ValidationCategory(Enum):
 
 @dataclass
 class ValidationResult:
-    """Validation result structure"""
-    category: ValidationCategory
+    """Validation result structure"""    category: ValidationCategory
     level: ValidationLevel
     component: str
     message: str
@@ -90,16 +85,13 @@ class ValidationResult:
 
 
 class MicroservicesValidator:
-    """Comprehensive microservices configuration validator"""
-    
+    """Comprehensive microservices configuration validator"""    
     def __init__(self):
-        """Initialize validator"""
-        self.results: List[ValidationResult] = []
+        """Initialize validator"""        self.results: List[ValidationResult] = []
         self.logger = logging.getLogger(__name__)
     
     async def run_full_validation(self) -> Tuple[bool, List[ValidationResult]]:
-        """Run complete validation suite"""
-        self.logger.info("Starting comprehensive microservices validation...")
+        """Run complete validation suite"""        self.logger.info("Starting comprehensive microservices validation...")
         self.results.clear()
         
         # Core microservices validation
@@ -127,8 +119,7 @@ class MicroservicesValidator:
         return validation_passed, self.results
     
     async def _validate_core_configurations(self):
-        """Validate core microservices configurations"""
-        self.logger.info("Validating core configurations...")
+        """Validate core microservices configurations"""        self.logger.info("Validating core configurations...")
         
         # Service Discovery validation
         if service_discovery_config.discovery_type in ["consul", "etcd", "kubernetes", "redis"]:
@@ -162,8 +153,7 @@ class MicroservicesValidator:
         self.logger.info("Core configurations validation completed")
     
     async def _validate_core_connectivity(self):
-        """Validate core system connectivity"""
-        self.logger.info("Validating core connectivity...")
+        """Validate core system connectivity"""        self.logger.info("Validating core connectivity...")
         
         try:
             # Test orchestrator initialization status
@@ -179,8 +169,7 @@ class MicroservicesValidator:
                            "orchestrator", f"Orchestrator connectivity error: {e}")
     
     async def _validate_content_protection_system(self):
-        """Validate content protection system configuration"""
-        self.logger.info("Validating content protection system...")
+        """Validate content protection system configuration"""        self.logger.info("Validating content protection system...")
         
         # Content Protection Engine validation
         if content_protection_config.protection_mode.value in ["passive", "active", "aggressive", "forensic"]:
@@ -230,8 +219,7 @@ class MicroservicesValidator:
                            "licensing_engine", "Blockchain integration configured for transparency")
     
     async def _validate_platform_integrations(self):
-        """Validate platform integration configurations"""
-        self.logger.info("Validating platform integrations...")
+        """Validate platform integration configurations"""        self.logger.info("Validating platform integrations...")
         
         platform_count = len(platform_integration_config.platforms)
         if platform_count >= 5:
@@ -262,8 +250,7 @@ class MicroservicesValidator:
                            "platform_integration", "Credential encryption DISABLED - SECURITY RISK")
     
     async def _validate_analytics_system(self):
-        """Validate analytics system configuration"""
-        self.logger.info("Validating analytics system...")
+        """Validate analytics system configuration"""        self.logger.info("Validating analytics system...")
         
         if analytics_engine_config.enable_real_time_streaming:
             self._add_result(ValidationCategory.PERFORMANCE, ValidationLevel.INFO,
@@ -291,8 +278,7 @@ class MicroservicesValidator:
                            "analytics_engine", "All storage backends configured")
     
     async def _validate_event_system(self):
-        """Validate event-driven architecture"""
-        self.logger.info("Validating event system...")
+        """Validate event-driven architecture"""        self.logger.info("Validating event system...")
         
         if event_driven_config.enable_encryption:
             self._add_result(ValidationCategory.SECURITY, ValidationLevel.INFO,
@@ -313,8 +299,7 @@ class MicroservicesValidator:
                            "event_system", "Consider using Kafka or Redis for production")
     
     async def _validate_system_integration(self):
-        """Validate cross-system integration"""
-        self.logger.info("Validating system integration...")
+        """Validate cross-system integration"""        self.logger.info("Validating system integration...")
         
         # Check if all major systems are properly configured
         systems = {
@@ -337,16 +322,14 @@ class MicroservicesValidator:
         self._validate_service_communication()
     
     def _validate_service_communication(self):
-        """Validate inter-service communication configuration"""
-        # This would validate that services can communicate with each other
+        """Validate inter-service communication configuration"""        # This would validate that services can communicate with each other
         # through the configured message brokers, API gateways, etc.
         
         self._add_result(ValidationCategory.CONNECTIVITY, ValidationLevel.INFO,
                        "service_communication", "Service communication paths configured")
     
     async def _validate_security_compliance(self):
-        """Validate security and compliance settings"""
-        self.logger.info("Validating security compliance...")
+        """Validate security and compliance settings"""        self.logger.info("Validating security compliance...")
         
         security_checks = [
             (platform_integration_config.encrypt_credentials, "Platform credentials encryption"),
@@ -364,8 +347,7 @@ class MicroservicesValidator:
                                "security_compliance", f"{check_name} DISABLED - SECURITY RISK")
     
     async def _validate_business_logic(self):
-        """Validate business logic alignment"""
-        self.logger.info("Validating business logic...")
+        """Validate business logic alignment"""        self.logger.info("Validating business logic...")
         
         # Content creator workflow validation
         workflow_components = [
@@ -389,8 +371,7 @@ class MicroservicesValidator:
     
     def _add_result(self, category: ValidationCategory, level: ValidationLevel, 
                    component: str, message: str, details: Optional[Dict[str, Any]] = None):
-        """Add validation result"""
-        result = ValidationResult(
+        """Add validation result"""        result = ValidationResult(
             category=category,
             level=level,
             component=component,
@@ -400,8 +381,7 @@ class MicroservicesValidator:
         self.results.append(result)
     
     def get_validation_summary(self) -> Dict[str, Any]:
-        """Get validation summary statistics"""
-        level_counts = {}
+        """Get validation summary statistics"""        level_counts = {}
         category_counts = {}
         
         for result in self.results:
@@ -424,13 +404,11 @@ microservices_validator = MicroservicesValidator()
 
 
 async def run_full_validation() -> Tuple[bool, List[ValidationResult]]:
-    """Run comprehensive microservices validation"""
-    return await microservices_validator.run_full_validation()
+    """Run comprehensive microservices validation"""    return await microservices_validator.run_full_validation()
 
 
 def get_validation_summary() -> Dict[str, Any]:
-    """Get validation summary"""
-    return microservices_validator.get_validation_summary()
+    """Get validation summary"""    return microservices_validator.get_validation_summary()
 
 
 # Export for convenience

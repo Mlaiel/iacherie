@@ -1,5 +1,4 @@
-"""
-Pipeline Exceptions
+"""Pipeline Exceptions
 
 Ultra-advanced exception handling system for pipeline executions
 with detailed error context, recovery strategies, and monitoring.
@@ -9,7 +8,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Business Logic: Error Detection → Classification → Context Collection → Recovery Strategy → Monitoring → Escalation
 """
-
 import logging
 import traceback
 import json
@@ -21,8 +19,7 @@ from enum import Enum
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""
-    LOW = "low"
+    """Error severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -30,8 +27,7 @@ class ErrorSeverity(Enum):
 
 
 class ErrorCategory(Enum):
-    """Error categories"""
-    SYSTEM = "system"
+    """Error categories"""    SYSTEM = "system"
     BUSINESS_LOGIC = "business_logic"
     VALIDATION = "validation"
     RESOURCE = "resource"
@@ -48,8 +44,7 @@ class ErrorCategory(Enum):
 
 
 class RecoveryStrategy(Enum):
-    """Error recovery strategies"""
-    RETRY = "retry"
+    """Error recovery strategies"""    RETRY = "retry"
     FALLBACK = "fallback"
     SKIP = "skip"
     ESCALATE = "escalate"
@@ -60,8 +55,7 @@ class RecoveryStrategy(Enum):
 
 
 class ErrorImpact(Enum):
-    """Error impact levels"""
-    NONE = "none"
+    """Error impact levels"""    NONE = "none"
     MINIMAL = "minimal"
     MODERATE = "moderate"
     SIGNIFICANT = "significant"
@@ -71,8 +65,7 @@ class ErrorImpact(Enum):
 
 @dataclass
 class ErrorContext:
-    """Detailed error context"""
-    timestamp: datetime = field(default_factory=datetime.now)
+    """Detailed error context"""    timestamp: datetime = field(default_factory=datetime.now)
     error_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     operation: str = ""
     stage: str = ""
@@ -92,8 +85,7 @@ class ErrorContext:
 
 @dataclass
 class RecoveryAttempt:
-    """Recovery attempt information"""
-    attempt_number: int = 0
+    """Recovery attempt information"""    attempt_number: int = 0
     strategy: RecoveryStrategy = RecoveryStrategy.RETRY
     timestamp: datetime = field(default_factory=datetime.now)
     success: bool = False
@@ -105,8 +97,7 @@ class RecoveryAttempt:
 
 @dataclass
 class ErrorMetrics:
-    """Error metrics and statistics"""
-    occurrence_count: int = 1
+    """Error metrics and statistics"""    occurrence_count: int = 1
     first_occurrence: datetime = field(default_factory=datetime.now)
     last_occurrence: datetime = field(default_factory=datetime.now)
     total_recovery_attempts: int = 0
@@ -118,8 +109,7 @@ class ErrorMetrics:
 
 
 class PipelineError(Exception):
-    """
-    Base pipeline exception with advanced error handling capabilities
+    """    Base pipeline exception with advanced error handling capabilities
     
     Features:
     - Comprehensive error context and metadata
@@ -128,8 +118,7 @@ class PipelineError(Exception):
     - Business impact assessment
     - Monitoring and alerting integration
     - Detailed error analytics
-    """
-    
+    """    
     def __init__(
         self, 
         message: str,
@@ -193,13 +182,11 @@ class PipelineError(Exception):
         self._log_error()
     
     def _generate_fingerprint(self) -> str:
-        """Generate error fingerprint for deduplication"""
-        fingerprint_data = f"{self.error_code}:{self.category.value}:{self.context.operation}:{self.context.stage}"
+        """Generate error fingerprint for deduplication"""        fingerprint_data = f"{self.error_code}:{self.category.value}:{self.context.operation}:{self.context.stage}"
         return str(hash(fingerprint_data))
     
     def _log_error(self):
-        """Log error with appropriate level"""
-        log_data = self.to_dict()
+        """Log error with appropriate level"""        log_data = self.to_dict()
         
         if self.severity in [ErrorSeverity.EMERGENCY, ErrorSeverity.CRITICAL]:
             self.logger.critical(f"Critical error: {self.message}", extra={"error_data": log_data})
@@ -211,8 +198,7 @@ class PipelineError(Exception):
             self.logger.info(f"Low severity error: {self.message}", extra={"error_data": log_data})
     
     def add_recovery_attempt(self, attempt: RecoveryAttempt):
-        """Add recovery attempt"""
-        self.recovery_attempts.append(attempt)
+        """Add recovery attempt"""        self.recovery_attempts.append(attempt)
         self.metrics.total_recovery_attempts += 1
         
         if attempt.success:
@@ -228,8 +214,7 @@ class PipelineError(Exception):
             ) / len(self.recovery_attempts)
     
     def can_retry(self) -> bool:
-        """Check if error can be retried"""
-        return (
+        """Check if error can be retried"""        return (
             self.is_recoverable and 
             self.recovery_strategy in [RecoveryStrategy.RETRY, RecoveryStrategy.CIRCUIT_BREAKER] and
             len(self.recovery_attempts) < self.max_retry_attempts and
@@ -237,8 +222,7 @@ class PipelineError(Exception):
         )
     
     def get_next_retry_delay(self) -> float:
-        """Calculate next retry delay with exponential backoff"""
-        if not self.recovery_attempts:
+        """Calculate next retry delay with exponential backoff"""        if not self.recovery_attempts:
             return 1.0
         
         attempt_count = len(self.recovery_attempts)
@@ -247,8 +231,7 @@ class PipelineError(Exception):
         return base_delay * (self.retry_backoff_factor ** attempt_count)
     
     def should_escalate(self) -> bool:
-        """Check if error should be escalated"""
-        return (
+        """Check if error should be escalated"""        return (
             self.severity in [ErrorSeverity.CRITICAL, ErrorSeverity.EMERGENCY] or
             self.impact in [ErrorImpact.SEVERE, ErrorImpact.CATASTROPHIC] or
             (len(self.recovery_attempts) >= self.max_retry_attempts and not self.resolved) or
@@ -256,18 +239,15 @@ class PipelineError(Exception):
         )
     
     def mark_as_escalated(self):
-        """Mark error as escalated"""
-        self.escalated = True
+        """Mark error as escalated"""        self.escalated = True
         self.logger.warning(f"Error {self.error_code} has been escalated")
     
     def suppress_alerts(self):
-        """Suppress alerts for this error"""
-        self.suppressed = True
+        """Suppress alerts for this error"""        self.suppressed = True
         self.logger.info(f"Alerts suppressed for error {self.error_code}")
     
     def update_metrics(self):
-        """Update error metrics"""
-        self.metrics.last_occurrence = datetime.now()
+        """Update error metrics"""        self.metrics.last_occurrence = datetime.now()
         self.metrics.occurrence_count += 1
         
         # Calculate frequency
@@ -278,16 +258,13 @@ class PipelineError(Exception):
             )
     
     def get_correlation_id(self) -> str:
-        """Get correlation ID for error tracking"""
-        return self.context.correlation_id or self.context.error_id
+        """Get correlation ID for error tracking"""        return self.context.correlation_id or self.context.error_id
     
     def add_context_data(self, key: str, value: Any):
-        """Add additional context data"""
-        self.context.additional_data[key] = value
+        """Add additional context data"""        self.context.additional_data[key] = value
     
     def get_business_impact_description(self) -> str:
-        """Get business impact description"""
-        impact_descriptions = {
+        """Get business impact description"""        impact_descriptions = {
             ErrorImpact.NONE: "No business impact",
             ErrorImpact.MINIMAL: "Minimal impact on operations",
             ErrorImpact.MODERATE: "Moderate impact on user experience",
@@ -298,8 +275,7 @@ class PipelineError(Exception):
         return impact_descriptions.get(self.impact, "Unknown impact")
     
     def get_resolution_recommendations(self) -> List[str]:
-        """Get resolution recommendations"""
-        recommendations = self.resolution_steps.copy()
+        """Get resolution recommendations"""        recommendations = self.resolution_steps.copy()
         
         # Add common recovery strategies
         if self.recovery_strategy == RecoveryStrategy.RETRY:
@@ -312,8 +288,7 @@ class PipelineError(Exception):
         return recommendations
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert error to dictionary"""
-        return {
+        """Convert error to dictionary"""        return {
             "error_id": self.context.error_id,
             "error_code": self.error_code,
             "message": self.message,
@@ -362,8 +337,7 @@ class PipelineError(Exception):
         }
     
     def to_alert_payload(self) -> Dict[str, Any]:
-        """Convert to alert payload for monitoring systems"""
-        return {
+        """Convert to alert payload for monitoring systems"""        return {
             "alert_type": "error",
             "error_id": self.context.error_id,
             "error_code": self.error_code,
@@ -390,8 +364,7 @@ class PipelineError(Exception):
 # Specialized Pipeline Exceptions
 
 class StageExecutionError(PipelineError):
-    """Pipeline stage execution error"""
-    
+    """Pipeline stage execution error"""    
     def __init__(
         self, 
         stage: str, 
@@ -412,8 +385,7 @@ class StageExecutionError(PipelineError):
 
 
 class ValidationError(PipelineError):
-    """Data validation error"""
-    
+    """Data validation error"""    
     def __init__(
         self, 
         field: str, 
@@ -437,8 +409,7 @@ class ValidationError(PipelineError):
 
 
 class ResourceError(PipelineError):
-    """Resource availability error"""
-    
+    """Resource availability error"""    
     def __init__(
         self, 
         resource_type: str, 
@@ -461,8 +432,7 @@ class ResourceError(PipelineError):
 
 
 class TimeoutError(PipelineError):
-    """Operation timeout error"""
-    
+    """Operation timeout error"""    
     def __init__(
         self, 
         operation: str, 
@@ -484,8 +454,7 @@ class TimeoutError(PipelineError):
 
 
 class ConfigurationError(PipelineError):
-    """Configuration error"""
-    
+    """Configuration error"""    
     def __init__(
         self, 
         config_key: str, 
@@ -507,8 +476,7 @@ class ConfigurationError(PipelineError):
 
 
 class DependencyError(PipelineError):
-    """Dependency resolution error"""
-    
+    """Dependency resolution error"""    
     def __init__(
         self, 
         dependency: str, 
@@ -529,8 +497,7 @@ class DependencyError(PipelineError):
 
 
 class ContentProcessingError(PipelineError):
-    """Content processing error"""
-    
+    """Content processing error"""    
     def __init__(
         self,
         content_type: str,
@@ -553,8 +520,7 @@ class ContentProcessingError(PipelineError):
 
 
 class AIProcessingError(PipelineError):
-    """AI processing error"""
-    
+    """AI processing error"""    
     def __init__(
         self,
         model_name: str,
@@ -577,8 +543,7 @@ class AIProcessingError(PipelineError):
 
 
 class ProtectionError(PipelineError):
-    """Content protection error"""
-    
+    """Content protection error"""    
     def __init__(
         self,
         protection_type: str,
@@ -599,8 +564,7 @@ class ProtectionError(PipelineError):
 
 
 class DistributionError(PipelineError):
-    """Content distribution error"""
-    
+    """Content distribution error"""    
     def __init__(
         self,
         platform: str,
@@ -621,8 +585,7 @@ class DistributionError(PipelineError):
 
 
 class MonetizationError(PipelineError):
-    """Monetization error"""
-    
+    """Monetization error"""    
     def __init__(
         self,
         monetization_type: str,
@@ -644,8 +607,7 @@ class MonetizationError(PipelineError):
 
 
 class SecurityError(PipelineError):
-    """Security error"""
-    
+    """Security error"""    
     def __init__(
         self,
         security_issue: str,
@@ -666,8 +628,7 @@ class SecurityError(PipelineError):
 
 
 class ExternalServiceError(PipelineError):
-    """External service error"""
-    
+    """External service error"""    
     def __init__(
         self,
         service_name: str,
@@ -688,8 +649,7 @@ class ExternalServiceError(PipelineError):
 
 
 class NetworkError(PipelineError):
-    """Network connectivity error"""
-    
+    """Network connectivity error"""    
     def __init__(
         self,
         endpoint: str,
@@ -708,8 +668,7 @@ class NetworkError(PipelineError):
 
 
 class AnalyticsError(PipelineError):
-    """Analytics processing error"""
-    
+    """Analytics processing error"""    
     def __init__(
         self,
         analytics_type: str,
@@ -730,8 +689,7 @@ class AnalyticsError(PipelineError):
 
 
 class QualityGateError(PipelineError):
-    """Quality gate validation error"""
-    
+    """Quality gate validation error"""    
     def __init__(
         self,
         gate_name: str,
@@ -755,8 +713,7 @@ class QualityGateError(PipelineError):
 
 
 class CircuitBreakerError(PipelineError):
-    """Circuit breaker triggered error"""
-    
+    """Circuit breaker triggered error"""    
     def __init__(
         self,
         service_name: str,
@@ -778,8 +735,7 @@ class CircuitBreakerError(PipelineError):
 
 
 class RateLimitError(PipelineError):
-    """Rate limit exceeded error"""
-    
+    """Rate limit exceeded error"""    
     def __init__(
         self,
         service_name: str,
@@ -804,26 +760,22 @@ class RateLimitError(PipelineError):
 
 # Error Handler Registry
 class ErrorHandlerRegistry:
-    """Registry for error handlers and recovery strategies"""
-    
+    """Registry for error handlers and recovery strategies"""    
     def __init__(self):
         self.handlers: Dict[str, Callable] = {}
         self.recovery_strategies: Dict[RecoveryStrategy, Callable] = {}
         self.logger = logging.getLogger(f"{__name__}.ErrorHandlerRegistry")
     
     def register_handler(self, error_code: str, handler: Callable):
-        """Register error handler"""
-        self.handlers[error_code] = handler
+        """Register error handler"""        self.handlers[error_code] = handler
         self.logger.info(f"Registered handler for error code: {error_code}")
     
     def register_recovery_strategy(self, strategy: RecoveryStrategy, handler: Callable):
-        """Register recovery strategy handler"""
-        self.recovery_strategies[strategy] = handler
+        """Register recovery strategy handler"""        self.recovery_strategies[strategy] = handler
         self.logger.info(f"Registered recovery strategy: {strategy.value}")
     
     async def handle_error(self, error: PipelineError) -> bool:
-        """Handle error using registered handlers"""
-        handler = self.handlers.get(error.error_code)
+        """Handle error using registered handlers"""        handler = self.handlers.get(error.error_code)
         if handler:
             try:
                 return await handler(error)
@@ -832,8 +784,7 @@ class ErrorHandlerRegistry:
         return False
     
     async def execute_recovery_strategy(self, error: PipelineError) -> bool:
-        """Execute recovery strategy"""
-        strategy_handler = self.recovery_strategies.get(error.recovery_strategy)
+        """Execute recovery strategy"""        strategy_handler = self.recovery_strategies.get(error.recovery_strategy)
         if strategy_handler:
             try:
                 return await strategy_handler(error)
@@ -857,16 +808,14 @@ import asyncio
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""
-    LOW = "low"
+    """Error severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ErrorCategory(Enum):
-    """Error categories"""
-    SYSTEM = "system"
+    """Error categories"""    SYSTEM = "system"
     PIPELINE = "pipeline"
     CONTENT = "content"
     AI = "ai"
@@ -884,8 +833,7 @@ class ErrorCategory(Enum):
 
 
 class RecoveryStrategy(Enum):
-    """Recovery strategies"""
-    NONE = "none"
+    """Recovery strategies"""    NONE = "none"
     RETRY = "retry"
     FALLBACK = "fallback"
     SKIP = "skip"
@@ -897,8 +845,7 @@ class RecoveryStrategy(Enum):
 
 @dataclass
 class ErrorContext:
-    """Error context information"""
-    pipeline_id: str = ""
+    """Error context information"""    pipeline_id: str = ""
     stage_name: str = ""
     component_name: str = ""
     operation: str = ""
@@ -922,8 +869,7 @@ class ErrorContext:
 
 @dataclass
 class ErrorDetails:
-    """Detailed error information"""
-    error_id: str = ""
+    """Detailed error information"""    error_id: str = ""
     error_type: str = ""
     error_message: str = ""
     error_code: Optional[str] = None
@@ -956,8 +902,7 @@ class ErrorDetails:
     business_impact: str = ""
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "error_id": self.error_id,
             "error_type": self.error_type,
             "error_message": self.error_message,
@@ -988,8 +933,7 @@ class ErrorDetails:
 
 # Base Pipeline Exception
 class PipelineException(Exception):
-    """Base pipeline exception"""
-    
+    """Base pipeline exception"""    
     def __init__(
         self,
         message: str,
@@ -1016,8 +960,7 @@ class PipelineException(Exception):
 
 # System Exceptions
 class SystemResourceException(PipelineException):
-    """System resource related exceptions"""
-    
+    """System resource related exceptions"""    
     def __init__(self, message: str, resource_type: str = "", **kwargs):
         super().__init__(
             message,
@@ -1030,8 +973,7 @@ class SystemResourceException(PipelineException):
 
 
 class DatabaseException(PipelineException):
-    """Database related exceptions"""
-    
+    """Database related exceptions"""    
     def __init__(self, message: str, operation: str = "", **kwargs):
         super().__init__(
             message,
@@ -1044,8 +986,7 @@ class DatabaseException(PipelineException):
 
 
 class NetworkException(PipelineException):
-    """Network related exceptions"""
-    
+    """Network related exceptions"""    
     def __init__(self, message: str, endpoint: str = "", **kwargs):
         super().__init__(
             message,
@@ -1058,8 +999,7 @@ class NetworkException(PipelineException):
 
 
 class TimeoutException(PipelineException):
-    """Timeout related exceptions"""
-    
+    """Timeout related exceptions"""    
     def __init__(self, message: str, timeout_duration: float = 0.0, **kwargs):
         super().__init__(
             message,
@@ -1073,8 +1013,7 @@ class TimeoutException(PipelineException):
 
 # Content Processing Exceptions
 class ContentProcessingException(PipelineException):
-    """Content processing related exceptions"""
-    
+    """Content processing related exceptions"""    
     def __init__(self, message: str, content_type: str = "", **kwargs):
         super().__init__(
             message,
@@ -1087,8 +1026,7 @@ class ContentProcessingException(PipelineException):
 
 
 class ContentValidationException(PipelineException):
-    """Content validation related exceptions"""
-    
+    """Content validation related exceptions"""    
     def __init__(self, message: str, validation_rule: str = "", **kwargs):
         super().__init__(
             message,
@@ -1101,8 +1039,7 @@ class ContentValidationException(PipelineException):
 
 
 class ContentFormatException(PipelineException):
-    """Content format related exceptions"""
-    
+    """Content format related exceptions"""    
     def __init__(self, message: str, expected_format: str = "", actual_format: str = "", **kwargs):
         super().__init__(
             message,
@@ -1117,8 +1054,7 @@ class ContentFormatException(PipelineException):
 
 # AI Processing Exceptions
 class AIProcessingException(PipelineException):
-    """AI processing related exceptions"""
-    
+    """AI processing related exceptions"""    
     def __init__(self, message: str, model_name: str = "", **kwargs):
         super().__init__(
             message,
@@ -1131,8 +1067,7 @@ class AIProcessingException(PipelineException):
 
 
 class AIModelException(PipelineException):
-    """AI model related exceptions"""
-    
+    """AI model related exceptions"""    
     def __init__(self, message: str, model_name: str = "", model_version: str = "", **kwargs):
         super().__init__(
             message,
@@ -1146,8 +1081,7 @@ class AIModelException(PipelineException):
 
 
 class AIAnalysisException(PipelineException):
-    """AI analysis related exceptions"""
-    
+    """AI analysis related exceptions"""    
     def __init__(self, message: str, analysis_type: str = "", **kwargs):
         super().__init__(
             message,
@@ -1161,8 +1095,7 @@ class AIAnalysisException(PipelineException):
 
 # Protection Exceptions
 class ProtectionException(PipelineException):
-    """Protection related exceptions"""
-    
+    """Protection related exceptions"""    
     def __init__(self, message: str, protection_type: str = "", **kwargs):
         super().__init__(
             message,
@@ -1175,8 +1108,7 @@ class ProtectionException(PipelineException):
 
 
 class FingerprintingException(PipelineException):
-    """Fingerprinting related exceptions"""
-    
+    """Fingerprinting related exceptions"""    
     def __init__(self, message: str, fingerprint_type: str = "", **kwargs):
         super().__init__(
             message,
@@ -1189,8 +1121,7 @@ class FingerprintingException(PipelineException):
 
 
 class CopyrightException(PipelineException):
-    """Copyright related exceptions"""
-    
+    """Copyright related exceptions"""    
     def __init__(self, message: str, copyright_issue: str = "", **kwargs):
         super().__init__(
             message,
@@ -1204,8 +1135,7 @@ class CopyrightException(PipelineException):
 
 # Monetization Exceptions
 class MonetizationException(PipelineException):
-    """Monetization related exceptions"""
-    
+    """Monetization related exceptions"""    
     def __init__(self, message: str, monetization_type: str = "", **kwargs):
         super().__init__(
             message,
@@ -1218,8 +1148,7 @@ class MonetizationException(PipelineException):
 
 
 class PaymentException(PipelineException):
-    """Payment related exceptions"""
-    
+    """Payment related exceptions"""    
     def __init__(self, message: str, payment_provider: str = "", **kwargs):
         super().__init__(
             message,
@@ -1232,8 +1161,7 @@ class PaymentException(PipelineException):
 
 
 class RevenueException(PipelineException):
-    """Revenue related exceptions"""
-    
+    """Revenue related exceptions"""    
     def __init__(self, message: str, revenue_stream: str = "", **kwargs):
         super().__init__(
             message,
@@ -1247,8 +1175,7 @@ class RevenueException(PipelineException):
 
 # Distribution Exceptions
 class DistributionException(PipelineException):
-    """Distribution related exceptions"""
-    
+    """Distribution related exceptions"""    
     def __init__(self, message: str, platform: str = "", **kwargs):
         super().__init__(
             message,
@@ -1261,8 +1188,7 @@ class DistributionException(PipelineException):
 
 
 class PlatformException(PipelineException):
-    """Platform integration related exceptions"""
-    
+    """Platform integration related exceptions"""    
     def __init__(self, message: str, platform: str = "", api_endpoint: str = "", **kwargs):
         super().__init__(
             message,
@@ -1276,8 +1202,7 @@ class PlatformException(PipelineException):
 
 
 class DeliveryException(PipelineException):
-    """Content delivery related exceptions"""
-    
+    """Content delivery related exceptions"""    
     def __init__(self, message: str, delivery_method: str = "", **kwargs):
         super().__init__(
             message,
@@ -1291,8 +1216,7 @@ class DeliveryException(PipelineException):
 
 # Security Exceptions
 class SecurityException(PipelineException):
-    """Security related exceptions"""
-    
+    """Security related exceptions"""    
     def __init__(self, message: str, security_issue: str = "", **kwargs):
         super().__init__(
             message,
@@ -1305,8 +1229,7 @@ class SecurityException(PipelineException):
 
 
 class AuthenticationException(PipelineException):
-    """Authentication related exceptions"""
-    
+    """Authentication related exceptions"""    
     def __init__(self, message: str, auth_method: str = "", **kwargs):
         super().__init__(
             message,
@@ -1319,8 +1242,7 @@ class AuthenticationException(PipelineException):
 
 
 class AuthorizationException(PipelineException):
-    """Authorization related exceptions"""
-    
+    """Authorization related exceptions"""    
     def __init__(self, message: str, required_permission: str = "", **kwargs):
         super().__init__(
             message,
@@ -1334,8 +1256,7 @@ class AuthorizationException(PipelineException):
 
 # Configuration Exceptions
 class ConfigurationException(PipelineException):
-    """Configuration related exceptions"""
-    
+    """Configuration related exceptions"""    
     def __init__(self, message: str, config_key: str = "", **kwargs):
         super().__init__(
             message,
@@ -1348,8 +1269,7 @@ class ConfigurationException(PipelineException):
 
 
 class ErrorHandler:
-    """Advanced error handling system"""
-    
+    """Advanced error handling system"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ErrorHandler")
@@ -1368,8 +1288,7 @@ class ErrorHandler:
         self._initialize_recovery_handlers()
     
     def _initialize_recovery_handlers(self):
-        """Initialize default recovery handlers"""
-        self.recovery_handlers = {
+        """Initialize default recovery handlers"""        self.recovery_handlers = {
             RecoveryStrategy.RETRY: self._handle_retry_recovery,
             RecoveryStrategy.FALLBACK: self._handle_fallback_recovery,
             RecoveryStrategy.SKIP: self._handle_skip_recovery,
@@ -1385,8 +1304,7 @@ class ErrorHandler:
         context: Optional[ErrorContext] = None,
         auto_recover: bool = True
     ) -> ErrorDetails:
-        """Handle exception with intelligent classification and recovery"""
-        
+        """Handle exception with intelligent classification and recovery"""        
         # Create error details
         error_details = self._create_error_details(exception, context)
         
@@ -1420,8 +1338,7 @@ class ErrorHandler:
         exception: Exception,
         context: Optional[ErrorContext] = None
     ) -> ErrorDetails:
-        """Create error details from exception"""
-        
+        """Create error details from exception"""        
         # Extract information from exception
         error_type = type(exception).__name__
         error_message = str(exception)
@@ -1459,8 +1376,7 @@ class ErrorHandler:
         return error_details
     
     def _classify_error(self, error_details: ErrorDetails, exception: Exception):
-        """Classify error for better handling"""
-        
+        """Classify error for better handling"""        
         # Skip classification for PipelineException (already classified)
         if isinstance(exception, PipelineException):
             return
@@ -1501,13 +1417,11 @@ class ErrorHandler:
             error_details.recovery_strategy = RecoveryStrategy.NONE
     
     def _update_error_patterns(self, error_details: ErrorDetails):
-        """Update error patterns for trend analysis"""
-        pattern_key = f"{error_details.category.value}_{error_details.error_type}"
+        """Update error patterns for trend analysis"""        pattern_key = f"{error_details.category.value}_{error_details.error_type}"
         self.error_patterns[pattern_key] = self.error_patterns.get(pattern_key, 0) + 1
     
     def _log_error(self, error_details: ErrorDetails):
-        """Log error with appropriate level"""
-        log_message = f"[{error_details.error_id}] {error_details.error_type}: {error_details.error_message}"
+        """Log error with appropriate level"""        log_message = f"[{error_details.error_id}] {error_details.error_type}: {error_details.error_message}"
         
         if error_details.context.pipeline_id:
             log_message += f" (Pipeline: {error_details.context.pipeline_id})"
@@ -1529,8 +1443,7 @@ class ErrorHandler:
             self.logger.debug(f"Stacktrace for {error_details.error_id}:\n{error_details.stacktrace}")
     
     async def _attempt_recovery(self, error_details: ErrorDetails) -> bool:
-        """Attempt error recovery"""
-        if error_details.recovery_attempts >= error_details.max_recovery_attempts:
+        """Attempt error recovery"""        if error_details.recovery_attempts >= error_details.max_recovery_attempts:
             self.logger.warning(f"Max recovery attempts reached for {error_details.error_id}")
             return False
         
@@ -1550,8 +1463,7 @@ class ErrorHandler:
             return False
     
     async def _handle_retry_recovery(self, error_details: ErrorDetails) -> bool:
-        """Handle retry recovery strategy"""
-        # Wait before retry (exponential backoff)
+        """Handle retry recovery strategy"""        # Wait before retry (exponential backoff)
         wait_time = min(2 ** error_details.recovery_attempts, 60)
         await asyncio.sleep(wait_time)
         
@@ -1559,44 +1471,37 @@ class ErrorHandler:
         return True
     
     async def _handle_fallback_recovery(self, error_details: ErrorDetails) -> bool:
-        """Handle fallback recovery strategy"""
-        # Implement fallback logic (placeholder)
+        """Handle fallback recovery strategy"""        # Implement fallback logic (placeholder)
         self.logger.info(f"Fallback recovery executed for {error_details.error_id}")
         return True
     
     async def _handle_skip_recovery(self, error_details: ErrorDetails) -> bool:
-        """Handle skip recovery strategy"""
-        # Skip the failed operation
+        """Handle skip recovery strategy"""        # Skip the failed operation
         self.logger.info(f"Skip recovery executed for {error_details.error_id}")
         return True
     
     async def _handle_rollback_recovery(self, error_details: ErrorDetails) -> bool:
-        """Handle rollback recovery strategy"""
-        # Implement rollback logic (placeholder)
+        """Handle rollback recovery strategy"""        # Implement rollback logic (placeholder)
         self.logger.info(f"Rollback recovery executed for {error_details.error_id}")
         return True
     
     async def _handle_escalate_recovery(self, error_details: ErrorDetails) -> bool:
-        """Handle escalate recovery strategy"""
-        # Escalate to human intervention
+        """Handle escalate recovery strategy"""        # Escalate to human intervention
         self.logger.warning(f"Escalating error {error_details.error_id} for manual intervention")
         return False  # Requires manual intervention
     
     async def _handle_restart_recovery(self, error_details: ErrorDetails) -> bool:
-        """Handle restart recovery strategy"""
-        # Implement restart logic (placeholder)
+        """Handle restart recovery strategy"""        # Implement restart logic (placeholder)
         self.logger.info(f"Restart recovery executed for {error_details.error_id}")
         return True
     
     async def _handle_manual_recovery(self, error_details: ErrorDetails) -> bool:
-        """Handle manual recovery strategy"""
-        # Requires manual intervention
+        """Handle manual recovery strategy"""        # Requires manual intervention
         self.logger.warning(f"Manual recovery required for {error_details.error_id}")
         return False
     
     async def _send_error_notifications(self, error_details: ErrorDetails):
-        """Send error notifications"""
-        for handler in self.notification_handlers:
+        """Send error notifications"""        for handler in self.notification_handlers:
             try:
                 if asyncio.iscoroutinefunction(handler):
                     await handler(error_details)
@@ -1606,16 +1511,13 @@ class ErrorHandler:
                 self.logger.error(f"Notification handler failed: {e}")
     
     def add_notification_handler(self, handler: Callable):
-        """Add error notification handler"""
-        self.notification_handlers.append(handler)
+        """Add error notification handler"""        self.notification_handlers.append(handler)
     
     def add_recovery_handler(self, strategy: RecoveryStrategy, handler: Callable):
-        """Add custom recovery handler"""
-        self.recovery_handlers[strategy] = handler
+        """Add custom recovery handler"""        self.recovery_handlers[strategy] = handler
     
     def get_error_statistics(self) -> Dict[str, Any]:
-        """Get error statistics"""
-        if not self.error_history:
+        """Get error statistics"""        if not self.error_history:
             return {}
         
         total_errors = len(self.error_history)
@@ -1657,8 +1559,7 @@ def handle_pipeline_errors(
     max_retries: int = 3,
     error_handler: Optional[ErrorHandler] = None
 ):
-    """Decorator for pipeline error handling"""
-    def decorator(func):
+    """Decorator for pipeline error handling"""    def decorator(func):
         async def wrapper(*args, **kwargs):
             retries = 0
             last_exception = None
@@ -1699,8 +1600,7 @@ def catch_and_log(
     reraise: bool = True,
     default_return=None
 ):
-    """Decorator for catching and logging exceptions"""
-    def decorator(func):
+    """Decorator for catching and logging exceptions"""    def decorator(func):
         async def wrapper(*args, **kwargs):
             try:
                 return await func(*args, **kwargs) if asyncio.iscoroutinefunction(func) else func(*args, **kwargs)

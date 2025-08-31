@@ -1,5 +1,4 @@
-"""
-User business service for IA Influencer Agent platform.
+"""User business service for IA Influencer Agent platform.
 
 This service handles all user-related business logic including registration,
 authentication, profile management, and role-based operations.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
@@ -26,20 +24,17 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class UserService:
-    """
-    Comprehensive user management service for multi-role content creators.
+    """    Comprehensive user management service for multi-role content creators.
     
     Supports: Musicians, Bloggers, Photographers, Influencers, Actors
-    """
-    
+    """    
     def __init__(self):
         self.pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
         self.email_sender = EmailSender()
         self.profile_validator = ProfileValidator()
     
     async def create_user(self, user_data: UserCreate, db: Session = None) -> User:
-        """
-        Create new user with role-specific initialization.
+        """        Create new user with role-specific initialization.
         
         Args:
             user_data: User creation data with role and content preferences
@@ -47,8 +42,7 @@ class UserService:
             
         Returns:
             Created user instance
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -94,8 +88,7 @@ class UserService:
             raise
     
     async def authenticate_user(self, email: str, password: str, db: Session = None) -> Optional[User]:
-        """
-        Authenticate user with email and password.
+        """        Authenticate user with email and password.
         
         Args:
             email: User email
@@ -104,8 +97,7 @@ class UserService:
             
         Returns:
             Authenticated user or None
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -128,12 +120,10 @@ class UserService:
             return None
     
     def verify_password(self, plain_password: str, hashed_password: str) -> bool:
-        """Verify password against hash"""
-        return self.pwd_context.verify(plain_password, hashed_password)
+        """Verify password against hash"""        return self.pwd_context.verify(plain_password, hashed_password)
     
     async def get_user_by_email(self, email: str, db: Session = None) -> Optional[User]:
-        """Get user by email address"""
-        try:
+        """Get user by email address"""        try:
             if not db:
                 db = next(get_db())
             
@@ -144,8 +134,7 @@ class UserService:
             return None
     
     async def get_user_by_id(self, user_id: str, db: Session = None) -> Optional[User]:
-        """Get user by ID"""
-        try:
+        """Get user by ID"""        try:
             if not db:
                 db = next(get_db())
             
@@ -156,10 +145,8 @@ class UserService:
             return None
     
     async def update_user(self, user_id: str, user_update: UserUpdate, db: Session = None) -> Optional[User]:
-        """
-        Update user profile with role-specific validation.
-        """
-        try:
+        """        Update user profile with role-specific validation.
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -199,8 +186,7 @@ class UserService:
             raise
     
     async def verify_user_email(self, email: str, db: Session = None) -> Optional[User]:
-        """Verify user email address"""
-        try:
+        """Verify user email address"""        try:
             if not db:
                 db = next(get_db())
             
@@ -223,8 +209,7 @@ class UserService:
             return None
     
     async def reset_user_password(self, email: str, new_password: str, db: Session = None) -> Optional[User]:
-        """Reset user password"""
-        try:
+        """Reset user password"""        try:
             if not db:
                 db = next(get_db())
             
@@ -249,8 +234,7 @@ class UserService:
             return None
     
     async def update_user_password(self, user_id: str, new_password: str, db: Session = None) -> bool:
-        """Update user password"""
-        try:
+        """Update user password"""        try:
             if not db:
                 db = next(get_db())
             
@@ -273,8 +257,7 @@ class UserService:
             return False
     
     async def update_last_login(self, user_id: str, db: Session = None) -> None:
-        """Update user's last login timestamp"""
-        try:
+        """Update user's last login timestamp"""        try:
             if not db:
                 db = next(get_db())
             
@@ -287,8 +270,7 @@ class UserService:
             logger.error(f"Update last login error: {str(e)}")
     
     async def get_users(self, skip: int = 0, limit: int = 100, db: Session = None) -> List[User]:
-        """Get list of users with pagination"""
-        try:
+        """Get list of users with pagination"""        try:
             if not db:
                 db = next(get_db())
             
@@ -299,8 +281,7 @@ class UserService:
             return []
     
     async def send_verification_email(self, email: str, token: str) -> bool:
-        """Send email verification link"""
-        try:
+        """Send email verification link"""        try:
             verification_url = f"{settings.frontend_url}/verify-email?token={token}"
             
             await self.email_sender.send_verification_email(
@@ -316,8 +297,7 @@ class UserService:
             return False
     
     async def send_password_reset_email(self, email: str, token: str) -> bool:
-        """Send password reset link"""
-        try:
+        """Send password reset link"""        try:
             reset_url = f"{settings.frontend_url}/reset-password?token={token}"
             
             await self.email_sender.send_password_reset_email(
@@ -333,8 +313,7 @@ class UserService:
             return False
     
     async def get_user_statistics(self, user_id: str, db: Session = None) -> Dict[str, Any]:
-        """Get user statistics and metrics"""
-        try:
+        """Get user statistics and metrics"""        try:
             if not db:
                 db = next(get_db())
             
@@ -361,8 +340,7 @@ class UserService:
             return {}
     
     def _get_role_content_formats(self, role: str) -> List[str]:
-        """Get supported content formats based on user role"""
-        role_formats = {
+        """Get supported content formats based on user role"""        role_formats = {
             "musician": ["audio", "video", "image"],
             "blogger": ["text", "image", "video", "document"],
             "photographer": ["image", "video"],
@@ -372,8 +350,7 @@ class UserService:
         return role_formats.get(role.lower(), ["text", "image"])
     
     async def _initialize_role_specific_data(self, user: User, user_data: UserCreate) -> None:
-        """Initialize role-specific user data and preferences"""
-        try:
+        """Initialize role-specific user data and preferences"""        try:
             role_config = {
                 "musician": {
                     "preferred_genres": getattr(user_data, 'genres', []),
@@ -408,8 +385,7 @@ class UserService:
             logger.error(f"Role-specific initialization error: {str(e)}")
     
     def _check_profile_completion(self, user: User) -> bool:
-        """Check if user profile is complete based on role requirements"""
-        required_fields = ['full_name', 'role']
+        """Check if user profile is complete based on role requirements"""        required_fields = ['full_name', 'role']
         
         for field in required_fields:
             if not getattr(user, field, None):
@@ -426,8 +402,7 @@ class UserService:
         return True
     
     def _calculate_profile_completion(self, user: User) -> float:
-        """Calculate profile completion percentage"""
-        total_fields = 10
+        """Calculate profile completion percentage"""        total_fields = 10
         completed_fields = 0
         
         # Basic fields

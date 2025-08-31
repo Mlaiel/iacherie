@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Creator Matching Analytics
+"""IA Influencer Agent - Advanced Creator Matching Analytics
 ========================================================
 
 Professional Multi-Format Creator Matching Analytics & Intelligence
@@ -35,7 +34,6 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -79,8 +77,7 @@ from .matching_models import (
 
 
 class AnalyticsTimeframe(str, Enum):
-    """Time frames for analytics calculations"""
-    HOUR = "1h"
+    """Time frames for analytics calculations"""    HOUR = "1h"
     DAY = "1d"
     WEEK = "1w"
     MONTH = "1m"
@@ -90,8 +87,7 @@ class AnalyticsTimeframe(str, Enum):
 
 
 class MetricType(str, Enum):
-    """Types of metrics tracked in analytics"""
-    MATCH_ACCURACY = "match_accuracy"
+    """Types of metrics tracked in analytics"""    MATCH_ACCURACY = "match_accuracy"
     SUCCESS_RATE = "success_rate"
     ENGAGEMENT_BOOST = "engagement_boost"
     REVENUE_IMPACT = "revenue_impact"
@@ -103,8 +99,7 @@ class MetricType(str, Enum):
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report structure"""
-    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive analytics report structure"""    report_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     report_type: str = "matching_analytics"
     timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH
     generated_at: datetime = field(default_factory=datetime.utcnow)
@@ -134,8 +129,7 @@ class AnalyticsReport:
 
 
 class MatchingAnalytics(BaseAnalyticsEngine):
-    """
-    Comprehensive matching analytics and business intelligence engine
+    """    Comprehensive matching analytics and business intelligence engine
     
     Features:
     - Real-time performance monitoring and KPI tracking
@@ -143,8 +137,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
     - Predictive analytics for success optimization
     - Market intelligence and opportunity identification
     - Automated insights and recommendation generation
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "MatchingAnalytics"
@@ -162,8 +155,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize analytics engine"""
-        try:
+        """Initialize analytics engine"""        try:
             self.logger.info("Initializing Matching Analytics Engine...")
             
             # Initialize Redis for caching
@@ -189,8 +181,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH,
         filters: Optional[Dict[str, Any]] = None
     ) -> AnalyticsReport:
-        """Generate comprehensive matching analytics report"""
-        try:
+        """Generate comprehensive matching analytics report"""        try:
             start_time = datetime.utcnow()
             
             # Check cache first
@@ -243,8 +234,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
         end_date: datetime,
         filters: Optional[Dict[str, Any]]
     ) -> None:
-        """Calculate core matching metrics"""
-        try:
+        """Calculate core matching metrics"""        try:
             async with get_async_session() as session:
                 # Base query
                 query = select(MatchResultDB).where(
@@ -292,8 +282,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
         end_date: datetime,
         filters: Optional[Dict[str, Any]]
     ) -> None:
-        """Calculate performance breakdowns by various dimensions"""
-        try:
+        """Calculate performance breakdowns by various dimensions"""        try:
             # Performance by creator type
             report.performance_by_creator_type = {
                 "musician": {"success_rate": 85.2, "avg_score": 0.78, "total_matches": 1247},
@@ -330,8 +319,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
         end_date: datetime,
         filters: Optional[Dict[str, Any]]
     ) -> None:
-        """Calculate time-based trend analysis"""
-        try:
+        """Calculate time-based trend analysis"""        try:
             # Time series data (daily aggregates)
             daily_data = []
             current_date = start_date
@@ -378,8 +366,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
         end_date: datetime,
         filters: Optional[Dict[str, Any]]
     ) -> None:
-        """Generate advanced insights and recommendations"""
-        try:
+        """Generate advanced insights and recommendations"""        try:
             # Top performing segments
             report.top_performing_segments = [
                 {
@@ -446,8 +433,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
             self.logger.error(f"Error generating advanced insights: {e}")
     
     def _calculate_start_date(self, end_date: datetime, timeframe: AnalyticsTimeframe) -> datetime:
-        """Calculate start date based on timeframe"""
-        if timeframe == AnalyticsTimeframe.HOUR:
+        """Calculate start date based on timeframe"""        if timeframe == AnalyticsTimeframe.HOUR:
             return end_date - timedelta(hours=1)
         elif timeframe == AnalyticsTimeframe.DAY:
             return end_date - timedelta(days=1)
@@ -463,8 +449,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
             return datetime(2024, 1, 1)  # Platform start date
     
     async def get_creator_analytics(self, creator_id: str, timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Get analytics specific to a creator"""
-        try:
+        """Get analytics specific to a creator"""        try:
             cache_key = f"creator_analytics:{creator_id}:{timeframe.value}"
             cached_data = await self.redis_client.get(cache_key)
             
@@ -491,8 +476,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
         creator_id: str,
         timeframe: AnalyticsTimeframe
     ) -> Dict[str, Any]:
-        """Calculate analytics specific to a creator"""
-        try:
+        """Calculate analytics specific to a creator"""        try:
             end_date = datetime.utcnow()
             start_date = self._calculate_start_date(end_date, timeframe)
             
@@ -542,8 +526,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
             return {}
     
     async def get_platform_performance_report(self, platform: str) -> Dict[str, Any]:
-        """Generate platform-specific performance report"""
-        try:
+        """Generate platform-specific performance report"""        try:
             # Implementation for platform-specific analytics
             return {
                 "platform": platform,
@@ -559,8 +542,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
             return {}
     
     async def shutdown(self) -> None:
-        """Shutdown analytics engine"""
-        try:
+        """Shutdown analytics engine"""        try:
             if self.redis_client:
                 self.redis_client.close()
                 await self.redis_client.wait_closed()
@@ -572,8 +554,7 @@ class MatchingAnalytics(BaseAnalyticsEngine):
 
 
 class CollaborationMetrics:
-    """Metrics tracking for collaboration success and performance"""
-    
+    """Metrics tracking for collaboration success and performance"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -583,8 +564,7 @@ class CollaborationMetrics:
         collaboration_id: str,
         outcome_data: Dict[str, Any]
     ) -> None:
-        """Track collaboration outcome metrics"""
-        try:
+        """Track collaboration outcome metrics"""        try:
             # Implementation for outcome tracking
             pass
             
@@ -592,8 +572,7 @@ class CollaborationMetrics:
             self.logger.error(f"Error tracking collaboration outcome: {e}")
     
     async def calculate_success_metrics(self, collaboration_id: str) -> Dict[str, Any]:
-        """Calculate success metrics for a specific collaboration"""
-        try:
+        """Calculate success metrics for a specific collaboration"""        try:
             # Implementation for success metrics calculation
             return {
                 "engagement_boost": 32.1,
@@ -609,15 +588,13 @@ class CollaborationMetrics:
 
 
 class NetworkInsights:
-    """Network analysis and insights generation"""
-    
+    """Network analysis and insights generation"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def analyze_creator_network(self, creator_id: str) -> Dict[str, Any]:
-        """Analyze creator's network and connections"""
-        try:
+        """Analyze creator's network and connections"""        try:
             # Implementation for network analysis
             return {
                 "network_size": 247,
@@ -634,15 +611,13 @@ class NetworkInsights:
 
 
 class PerformanceTracker:
-    """Real-time performance tracking and monitoring"""
-    
+    """Real-time performance tracking and monitoring"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def track_real_time_metrics(self) -> Dict[str, Any]:
-        """Track real-time system performance metrics"""
-        try:
+        """Track real-time system performance metrics"""        try:
             # Implementation for real-time tracking
             return {
                 "active_matches": 1247,
@@ -658,8 +633,7 @@ class PerformanceTracker:
 
 
 class SuccessPredictor:
-    """ML-powered success prediction for collaborations"""
-    
+    """ML-powered success prediction for collaborations"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -670,8 +644,7 @@ class SuccessPredictor:
         creator_b_id: str,
         collaboration_type: str
     ) -> Dict[str, Any]:
-        """Predict success probability for a potential collaboration"""
-        try:
+        """Predict success probability for a potential collaboration"""        try:
             # Implementation for ML-based success prediction
             return {
                 "success_probability": 0.847,
@@ -702,59 +675,49 @@ class SuccessPredictor:
 
 # Additional helper classes for specialized analytics
 class StatisticalAnalysisEngine:
-    """Advanced statistical analysis engine"""
-    
+    """Advanced statistical analysis engine"""    
     def __init__(self):
         self.analysis_cache = {}
         self.models = {}
     
     async def initialize(self): 
-        """Initialize statistical analysis engine"""
-        logger.info("StatisticalAnalysisEngine initialized")
+        """Initialize statistical analysis engine"""        logger.info("StatisticalAnalysisEngine initialized")
         return True
     
     def correlation_analysis(self, data: pd.DataFrame) -> Dict[str, float]:
-        """Perform correlation analysis on metrics"""
-        return data.corr().to_dict()
+        """Perform correlation analysis on metrics"""        return data.corr().to_dict()
     
     def trend_analysis(self, time_series: List[float]) -> Dict[str, Any]:
-        """Analyze trends in time series data"""
-        return {"trend": "increasing", "slope": 0.05, "r_squared": 0.78}
+        """Analyze trends in time series data"""        return {"trend": "increasing", "slope": 0.05, "r_squared": 0.78}
 
 
 class PredictiveAnalyticsEngine:
-    """Predictive analytics using ML models"""
-    
+    """Predictive analytics using ML models"""    
     def __init__(self):
         self.models = {}
         self.training_data = {}
     
     async def initialize(self): 
-        """Initialize predictive analytics engine"""
-        logger.info("PredictiveAnalyticsEngine initialized")
+        """Initialize predictive analytics engine"""        logger.info("PredictiveAnalyticsEngine initialized")
         return True
     
     def forecast_metrics(self, historical_data: List[float], periods: int) -> List[float]:
-        """Forecast future metric values"""
-        # Placeholder implementation
+        """Forecast future metric values"""        # Placeholder implementation
         return [x * 1.05 for x in historical_data[-periods:]]
 
 
 class VisualizationEngine:
-    """Visualization generation for analytics"""
-    
+    """Visualization generation for analytics"""    
     def __init__(self):
         self.chart_templates = {}
         self.visualization_cache = {}
     
     async def initialize(self): 
-        """Initialize visualization engine"""
-        logger.info("VisualizationEngine initialized")
+        """Initialize visualization engine"""        logger.info("VisualizationEngine initialized")
         return True
     
     def generate_dashboard_charts(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate chart configurations for dashboard"""
-        return {"charts": ["line", "bar", "pie"], "config": {}}
+        """Generate chart configurations for dashboard"""        return {"charts": ["line", "bar", "pie"], "config": {}}
 
 
 # Export all analytics classes

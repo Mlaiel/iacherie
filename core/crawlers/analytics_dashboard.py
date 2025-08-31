@@ -1,11 +1,9 @@
-"""
-Advanced Analytics Dashboard - Ultra-Advanced Implementation
+"""Advanced Analytics Dashboard - Ultra-Advanced Implementation
 AI-Powered Analytics and Real-Time Dashboard System
 
 This module provides comprehensive analytics dashboard with real-time visualizations,
 advanced metrics, AI-powered insights, and interactive reporting capabilities.
 """
-
 import asyncio
 import aiohttp
 import json
@@ -40,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class ChartType(str, Enum):
-    """Types of charts"""
-    LINE_CHART = "line_chart"
+    """Types of charts"""    LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
     SCATTER_PLOT = "scatter_plot"
@@ -56,8 +53,7 @@ class ChartType(str, Enum):
 
 
 class MetricCategory(str, Enum):
-    """Metric categories"""
-    PERFORMANCE = "performance"
+    """Metric categories"""    PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     CONTENT = "content"
     AUDIENCE = "audience"
@@ -70,8 +66,7 @@ class MetricCategory(str, Enum):
 
 
 class DashboardTheme(str, Enum):
-    """Dashboard themes"""
-    LIGHT = "light"
+    """Dashboard themes"""    LIGHT = "light"
     DARK = "dark"
     CORPORATE = "corporate"
     MODERN = "modern"
@@ -79,8 +74,7 @@ class DashboardTheme(str, Enum):
 
 
 class VisualizationType(str, Enum):
-    """Visualization types"""
-    REAL_TIME = "real_time"
+    """Visualization types"""    REAL_TIME = "real_time"
     HISTORICAL = "historical"
     COMPARATIVE = "comparative"
     PREDICTIVE = "predictive"
@@ -89,8 +83,7 @@ class VisualizationType(str, Enum):
 
 
 class DashboardWidget(BaseModel):
-    """Dashboard widget configuration"""
-    widget_id: str
+    """Dashboard widget configuration"""    widget_id: str
     widget_type: str
     title: str
     description: str = ""
@@ -135,8 +128,7 @@ class DashboardWidget(BaseModel):
 
 
 class DashboardLayout(BaseModel):
-    """Dashboard layout configuration"""
-    layout_id: str
+    """Dashboard layout configuration"""    layout_id: str
     name: str
     description: str = ""
     
@@ -166,8 +158,7 @@ class DashboardLayout(BaseModel):
 
 
 class AnalyticsMetric(BaseModel):
-    """Analytics metric definition"""
-    metric_id: str
+    """Analytics metric definition"""    metric_id: str
     name: str
     description: str
     category: MetricCategory
@@ -196,8 +187,7 @@ class AnalyticsMetric(BaseModel):
 
 
 class AnalyticsReport(BaseModel):
-    """Analytics report"""
-    report_id: str
+    """Analytics report"""    report_id: str
     name: str
     description: str = ""
     
@@ -231,8 +221,7 @@ class AnalyticsReport(BaseModel):
 
 
 class DataVisualization(BaseModel):
-    """Data visualization configuration"""
-    visualization_id: str
+    """Data visualization configuration"""    visualization_id: str
     name: str
     description: str = ""
     
@@ -270,8 +259,7 @@ class DataVisualization(BaseModel):
 
 
 class DashboardInsight(BaseModel):
-    """AI-generated dashboard insight"""
-    insight_id: str
+    """AI-generated dashboard insight"""    insight_id: str
     title: str
     description: str
     category: str = "general"
@@ -300,13 +288,11 @@ class DashboardInsight(BaseModel):
 
 
 class AdvancedAnalyticsDashboard(BaseCrawler):
-    """
-    Ultra-Advanced Analytics Dashboard
+    """    Ultra-Advanced Analytics Dashboard
     
     Provides comprehensive analytics dashboard with real-time visualizations,
     AI-powered insights, interactive reporting, and advanced data exploration.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -406,8 +392,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         logger.info("Advanced Analytics Dashboard initialized with AI-powered insights")
 
     async def initialize_dashboard(self):
-        """Initialize dashboard components"""
-        try:
+        """Initialize dashboard components"""        try:
             # Initialize database connections
             await self._initialize_database()
             
@@ -429,8 +414,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             logger.error(f"Error initializing dashboard: {str(e)}")
 
     async def start_dashboard_server(self):
-        """Start dashboard server"""
-        try:
+        """Start dashboard server"""        try:
             if not self.dashboard_enabled:
                 return
             
@@ -457,8 +441,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             logger.error(f"Error starting dashboard server: {str(e)}")
 
     async def stop_dashboard_server(self):
-        """Stop dashboard server"""
-        try:
+        """Stop dashboard server"""        try:
             self.dashboard_active = False
             
             # Cancel update tasks
@@ -480,8 +463,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         description: str = "",
         widgets: List[Dict[str, Any]] = None
     ) -> DashboardLayout:
-        """
-        Create new dashboard layout
+        """        Create new dashboard layout
         
         Args:
             name: Layout name
@@ -490,8 +472,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             
         Returns:
             DashboardLayout: Created dashboard layout
-        """
-        try:
+        """        try:
             layout_id = str(uuid.uuid4())
             
             # Create widgets
@@ -538,8 +519,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         layout_id: str,
         widget_config: Dict[str, Any]
     ) -> DashboardWidget:
-        """
-        Add widget to dashboard layout
+        """        Add widget to dashboard layout
         
         Args:
             layout_id: Target layout ID
@@ -547,8 +527,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             
         Returns:
             DashboardWidget: Created widget
-        """
-        try:
+        """        try:
             if layout_id not in self.dashboard_layouts:
                 raise ValueError(f"Layout {layout_id} not found")
             
@@ -586,8 +565,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         data_query: str,
         chart_config: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Generate chart visualization
+        """        Generate chart visualization
         
         Args:
             chart_type: Type of chart to generate
@@ -596,8 +574,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             
         Returns:
             Dict[str, Any]: Chart configuration and data
-        """
-        try:
+        """        try:
             config = chart_config or {}
             
             # Execute data query
@@ -656,8 +633,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         filters: Dict[str, Any] = None,
         groupby: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get analytics data for specified metrics
+        """        Get analytics data for specified metrics
         
         Args:
             metrics: List of metric names
@@ -667,8 +643,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             
         Returns:
             Dict[str, Any]: Analytics data
-        """
-        try:
+        """        try:
             filters = filters or {}
             groupby = groupby or []
             
@@ -714,8 +689,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         data: Dict[str, Any],
         insight_types: List[str] = None
     ) -> List[DashboardInsight]:
-        """
-        Generate AI-powered insights from data
+        """        Generate AI-powered insights from data
         
         Args:
             data: Analytics data
@@ -723,8 +697,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             
         Returns:
             List[DashboardInsight]: Generated insights
-        """
-        try:
+        """        try:
             if not self.ai_insights_enabled or not self.insights_endpoint:
                 return []
             
@@ -780,8 +753,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         time_range: str = "7d",
         report_config: Dict[str, Any] = None
     ) -> AnalyticsReport:
-        """
-        Create analytics report
+        """        Create analytics report
         
         Args:
             name: Report name
@@ -791,8 +763,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             
         Returns:
             AnalyticsReport: Created report
-        """
-        try:
+        """        try:
             config = report_config or {}
             
             report = AnalyticsReport(
@@ -824,8 +795,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         export_format: str = "json",
         include_data: bool = True
     ) -> Dict[str, Any]:
-        """
-        Export dashboard data
+        """        Export dashboard data
         
         Args:
             layout_id: Dashboard layout ID
@@ -834,8 +804,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             
         Returns:
             Dict[str, Any]: Exported dashboard data
-        """
-        try:
+        """        try:
             if layout_id not in self.dashboard_layouts:
                 return {'error': f'Layout {layout_id} not found'}
             
@@ -877,8 +846,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
     # Database and data management methods
     
     async def _initialize_database(self):
-        """Initialize database connection"""
-        try:
+        """Initialize database connection"""        try:
             from sqlalchemy import create_engine
             self.db_engine = create_engine(self.primary_database)
             
@@ -891,8 +859,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             logger.error(f"Error initializing database: {str(e)}")
 
     async def _initialize_redis(self):
-        """Initialize Redis connection"""
-        try:
+        """Initialize Redis connection"""        try:
             import redis.asyncio as aioredis
             self.redis_client = aioredis.Redis(
                 host=self.redis_host,
@@ -911,10 +878,8 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             self.redis_client = None
 
     async def _create_database_tables(self):
-        """Create necessary database tables"""
-        try:
-            create_tables_sql = """
-            CREATE TABLE IF NOT EXISTS analytics_metrics (
+        """Create necessary database tables"""        try:
+            create_tables_sql = """            CREATE TABLE IF NOT EXISTS analytics_metrics (
                 metric_id VARCHAR(255) PRIMARY KEY,
                 name VARCHAR(255) NOT NULL,
                 category VARCHAR(100),
@@ -940,8 +905,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
                 metadata JSON,
                 created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             );
-            """
-            
+            """            
             with self.db_engine.connect() as conn:
                 for statement in create_tables_sql.split(';'):
                     if statement.strip():
@@ -952,8 +916,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             logger.error(f"Error creating database tables: {str(e)}")
 
     async def _execute_data_query(self, query: str) -> List[Dict[str, Any]]:
-        """Execute data query"""
-        try:
+        """Execute data query"""        try:
             # Check cache first
             query_hash = hashlib.md5(query.encode()).hexdigest()
             cached_result = await self.cache_manager.get(f"query:{query_hash}")
@@ -982,8 +945,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
     # Chart generation methods
     
     def _create_line_chart(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create line chart"""
-        fig = go.Figure()
+        """Create line chart"""        fig = go.Figure()
         
         x_col = config.get('x_column', df.columns[0])
         y_cols = config.get('y_columns', [df.columns[1]] if len(df.columns) > 1 else [])
@@ -1007,8 +969,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_bar_chart(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create bar chart"""
-        fig = go.Figure()
+        """Create bar chart"""        fig = go.Figure()
         
         x_col = config.get('x_column', df.columns[0])
         y_col = config.get('y_column', df.columns[1] if len(df.columns) > 1 else df.columns[0])
@@ -1028,8 +989,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_pie_chart(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create pie chart"""
-        fig = go.Figure()
+        """Create pie chart"""        fig = go.Figure()
         
         labels_col = config.get('labels_column', df.columns[0])
         values_col = config.get('values_column', df.columns[1] if len(df.columns) > 1 else df.columns[0])
@@ -1048,8 +1008,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_scatter_plot(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create scatter plot"""
-        fig = go.Figure()
+        """Create scatter plot"""        fig = go.Figure()
         
         x_col = config.get('x_column', df.columns[0])
         y_col = config.get('y_column', df.columns[1] if len(df.columns) > 1 else df.columns[0])
@@ -1073,8 +1032,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_heatmap(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create heatmap"""
-        fig = go.Figure()
+        """Create heatmap"""        fig = go.Figure()
         
         # Create correlation matrix if not specified
         if 'z_values' not in config:
@@ -1106,8 +1064,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_histogram(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create histogram"""
-        fig = go.Figure()
+        """Create histogram"""        fig = go.Figure()
         
         column = config.get('column', df.columns[0])
         
@@ -1126,8 +1083,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_box_plot(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create box plot"""
-        fig = go.Figure()
+        """Create box plot"""        fig = go.Figure()
         
         y_col = config.get('y_column', df.columns[0])
         
@@ -1155,8 +1111,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _create_gauge_chart(self, df: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create gauge chart"""
-        fig = go.Figure()
+        """Create gauge chart"""        fig = go.Figure()
         
         value = config.get('value', df.iloc[0, 0] if not df.empty else 0)
         max_value = config.get('max_value', 100)
@@ -1185,8 +1140,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return fig
 
     def _apply_chart_theme(self, figure: go.Figure, theme: DashboardTheme) -> go.Figure:
-        """Apply theme to chart"""
-        theme_config = self.available_themes.get(theme, self.available_themes[DashboardTheme.MODERN])
+        """Apply theme to chart"""        theme_config = self.available_themes.get(theme, self.available_themes[DashboardTheme.MODERN])
         
         figure.update_layout(
             paper_bgcolor=theme_config['paper'],
@@ -1200,8 +1154,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
     # Data processing and utility methods
     
     def _parse_time_range(self, time_range: str) -> Dict[str, Any]:
-        """Parse time range string into filter conditions"""
-        now = datetime.utcnow()
+        """Parse time range string into filter conditions"""        now = datetime.utcnow()
         
         if time_range == "1h":
             start_time = now - timedelta(hours=1)
@@ -1230,8 +1183,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         filters: Dict[str, Any],
         groupby: List[str]
     ) -> str:
-        """Build SQL query for metric"""
-        # Simplified query building
+        """Build SQL query for metric"""        # Simplified query building
         query = f"SELECT {metric_def.source_column} FROM {metric_def.source_table}"
         
         # Add time filter
@@ -1252,8 +1204,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return query
 
     def _process_metric_data(self, data: List[Dict[str, Any]], metric_def: AnalyticsMetric) -> Dict[str, Any]:
-        """Process metric data according to definition"""
-        if not data:
+        """Process metric data according to definition"""        if not data:
             return {'values': [], 'total': 0, 'average': 0}
         
         values = [row.get(metric_def.source_column, 0) for row in data]
@@ -1280,8 +1231,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
     # Real-time update methods
     
     async def _real_time_update_loop(self):
-        """Real-time data update loop"""
-        while self.dashboard_active:
+        """Real-time data update loop"""        while self.dashboard_active:
             try:
                 # Update real-time data for all active widgets
                 for layout in self.dashboard_layouts.values():
@@ -1296,8 +1246,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
                 await asyncio.sleep(30)
 
     async def _insights_generation_loop(self):
-        """AI insights generation loop"""
-        while self.dashboard_active:
+        """AI insights generation loop"""        while self.dashboard_active:
             try:
                 if self.ai_insights_enabled:
                     # Generate insights for main dashboard
@@ -1316,8 +1265,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
                 await asyncio.sleep(3600)
 
     async def _report_generation_loop(self):
-        """Automated report generation loop"""
-        while self.dashboard_active:
+        """Automated report generation loop"""        while self.dashboard_active:
             try:
                 if self.auto_report_generation:
                     for report in self.active_reports.values():
@@ -1335,8 +1283,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
     # Initialization helper methods
     
     def _initialize_metric_definitions(self) -> Dict[str, AnalyticsMetric]:
-        """Initialize predefined metric definitions"""
-        metrics = {}
+        """Initialize predefined metric definitions"""        metrics = {}
         
         # Performance metrics
         metrics['page_views'] = AnalyticsMetric(
@@ -1366,8 +1313,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return metrics
 
     def _initialize_chart_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize chart templates"""
-        return {
+        """Initialize chart templates"""        return {
             'performance_overview': {
                 'chart_type': ChartType.LINE_CHART,
                 'title': 'Performance Overview',
@@ -1386,13 +1332,11 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         }
 
     async def _create_default_metrics(self):
-        """Create default analytics metrics"""
-        for metric_id, metric in self.metric_definitions.items():
+        """Create default analytics metrics"""        for metric_id, metric in self.metric_definitions.items():
             self.analytics_metrics[metric_id] = metric
 
     async def _create_default_layouts(self):
-        """Create default dashboard layouts"""
-        # Main dashboard layout
+        """Create default dashboard layouts"""        # Main dashboard layout
         main_widgets = [
             {
                 'widget_type': 'chart',
@@ -1423,8 +1367,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         )
 
     def _initialize_dash_app(self):
-        """Initialize Dash application"""
-        try:
+        """Initialize Dash application"""        try:
             self.dash_app = dash.Dash(__name__)
             
             # Define layout
@@ -1450,8 +1393,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             logger.error(f"Error initializing Dash app: {str(e)}")
 
     def _run_dash_server(self):
-        """Run Dash server"""
-        try:
+        """Run Dash server"""        try:
             if self.dash_app:
                 self.dash_app.run_server(
                     host=self.dashboard_host,
@@ -1462,8 +1404,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             logger.error(f"Error running Dash server: {str(e)}")
 
     def _generate_dashboard_layout(self):
-        """Generate dashboard layout for Dash"""
-        try:
+        """Generate dashboard layout for Dash"""        try:
             # Get main dashboard layout
             main_layout = None
             for layout in self.dashboard_layouts.values():
@@ -1488,8 +1429,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             return html.Div(f"Error: {str(e)}")
 
     def _create_dash_component(self, widget: DashboardWidget):
-        """Create Dash component for widget"""
-        try:
+        """Create Dash component for widget"""        try:
             if widget.chart_type == ChartType.GAUGE_CHART:
                 # Simple metric display
                 return html.Div([
@@ -1510,8 +1450,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
     # Helper methods for advanced features
     
     async def _update_widget_data(self, widget: DashboardWidget):
-        """Update data for a specific widget"""
-        try:
+        """Update data for a specific widget"""        try:
             if widget.metrics:
                 data = await self.get_analytics_data(
                     metrics=widget.metrics,
@@ -1533,8 +1472,7 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             logger.error(f"Error updating widget data: {str(e)}")
 
     async def _generate_local_insights(self, data: Dict[str, Any]) -> List[DashboardInsight]:
-        """Generate local insights without AI service"""
-        insights = []
+        """Generate local insights without AI service"""        insights = []
         
         try:
             # Simple trend analysis
@@ -1567,15 +1505,13 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
         return insights
 
     async def _is_report_due(self, report: AnalyticsReport) -> bool:
-        """Check if report generation is due"""
-        if not report.next_generation:
+        """Check if report generation is due"""        if not report.next_generation:
             return True
         
         return datetime.utcnow() >= report.next_generation
 
     async def _generate_report(self, report: AnalyticsReport):
-        """Generate analytics report"""
-        try:
+        """Generate analytics report"""        try:
             # Get data for report
             data = await self.get_analytics_data(
                 metrics=report.metrics,
@@ -1618,18 +1554,15 @@ class AdvancedAnalyticsDashboard(BaseCrawler):
             logger.error(f"Error generating report: {str(e)}")
 
     def _convert_to_csv(self, export_data: Dict[str, Any]) -> str:
-        """Convert export data to CSV format"""
-        # Simplified CSV conversion
+        """Convert export data to CSV format"""        # Simplified CSV conversion
         return "CSV export not yet implemented"
 
     async def _generate_pdf_export(self, export_data: Dict[str, Any]) -> bytes:
-        """Generate PDF export"""
-        # Simplified PDF generation
+        """Generate PDF export"""        # Simplified PDF generation
         return b"PDF export not yet implemented"
 
     async def close(self):
-        """Close dashboard and cleanup resources"""
-        try:
+        """Close dashboard and cleanup resources"""        try:
             await self.stop_dashboard_server()
             await self.cache_manager.close()
             

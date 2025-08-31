@@ -1,5 +1,4 @@
-"""
-Notification Engine - Advanced Multi-Channel Notification Processing Engine
+"""Notification Engine - Advanced Multi-Channel Notification Processing Engine
 
 Core processing engine for IA Influencer Agent notification system.
 Handles intelligent routing, AI-powered optimization, template processing,
@@ -30,7 +29,6 @@ Architecture Components:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 import logging
 import asyncio
@@ -59,13 +57,11 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationEngineError(Exception):
-    """Custom exception for notification engine errors."""
-    pass
+    """Custom exception for notification engine errors."""    pass
 
 
 class ProcessingResult:
-    """Result container for notification processing stages."""
-    
+    """Result container for notification processing stages."""    
     def __init__(
         self,
         stage: ProcessingStage,
@@ -83,13 +79,11 @@ class ProcessingResult:
 
 
 class NotificationEngine:
-    """
-    Advanced notification processing engine with AI-powered optimization.
+    """    Advanced notification processing engine with AI-powered optimization.
     
     Provides comprehensive notification processing including intelligent routing,
     template personalization, workflow orchestration, and analytics collection.
-    """
-    
+    """    
     def __init__(
         self,
         channel_manager: ChannelManager,
@@ -100,8 +94,7 @@ class NotificationEngine:
         analytics_engine: Optional[AnalyticsEngine] = None,
         config: Optional[NotificationConfig] = None
     ):
-        """
-        Initialize notification engine with processing components.
+        """        Initialize notification engine with processing components.
         
         Args:
             channel_manager: Multi-channel delivery management
@@ -111,8 +104,7 @@ class NotificationEngine:
             workflow_orchestrator: Workflow automation and orchestration
             analytics_engine: Performance monitoring and analytics
             config: Engine configuration
-        """
-        self.channel_manager = channel_manager
+        """        self.channel_manager = channel_manager
         self.template_processor = template_processor
         self.priority_classifier = priority_classifier
         self.personalization_engine = personalization_engine
@@ -142,8 +134,7 @@ class NotificationEngine:
         request: NotificationRequest,
         processing_options: Optional[Dict[str, Any]] = None
     ) -> NotificationResponse:
-        """
-        Process notification through complete pipeline with AI optimization.
+        """        Process notification through complete pipeline with AI optimization.
         
         Args:
             request: Notification request to process
@@ -154,8 +145,7 @@ class NotificationEngine:
         
         Raises:
             NotificationEngineError: If processing fails
-        """
-        try:
+        """        try:
             start_time = datetime.now(timezone.utc)
             processing_results = []
             
@@ -253,8 +243,7 @@ class NotificationEngine:
         requests: List[NotificationRequest],
         batch_options: Optional[Dict[str, Any]] = None
     ) -> List[NotificationResponse]:
-        """
-        Process multiple notifications with intelligent batching and optimization.
+        """        Process multiple notifications with intelligent batching and optimization.
         
         Args:
             requests: List of notification requests
@@ -262,8 +251,7 @@ class NotificationEngine:
         
         Returns:
             List of notification responses
-        """
-        try:
+        """        try:
             batch_size = batch_options.get("batch_size", 50) if batch_options else 50
             concurrent_limit = batch_options.get("concurrent_limit", 10) if batch_options else 10
             
@@ -305,13 +293,11 @@ class NotificationEngine:
             raise NotificationEngineError(f"Batch processing error: {e}")
     
     async def get_processing_queue_status(self) -> Dict[str, Any]:
-        """
-        Get current processing queue status and metrics.
+        """        Get current processing queue status and metrics.
         
         Returns:
             Queue status information
-        """
-        try:
+        """        try:
             return {
                 "queue_length": len(self._processing_queue),
                 "active_deliveries": len(self._active_deliveries),
@@ -332,16 +318,14 @@ class NotificationEngine:
             return {"error": str(e)}
     
     async def optimize_performance(self, optimization_config: Dict[str, Any]) -> bool:
-        """
-        Optimize engine performance based on analytics and configuration.
+        """        Optimize engine performance based on analytics and configuration.
         
         Args:
             optimization_config: Performance optimization parameters
         
         Returns:
             True if optimization successful, False otherwise
-        """
-        try:
+        """        try:
             # Optimize channel performance
             if "channel_optimization" in optimization_config:
                 await self.channel_manager.optimize_channels(
@@ -374,8 +358,7 @@ class NotificationEngine:
     async def _validate_and_prepare_request(
         self, request: NotificationRequest
     ) -> ProcessingResult:
-        """Validate and prepare notification request."""
-        try:
+        """Validate and prepare notification request."""        try:
             start_time = datetime.now(timezone.utc)
             
             # Basic validation
@@ -422,8 +405,7 @@ class NotificationEngine:
     async def _classify_priority(
         self, request: NotificationRequest
     ) -> ProcessingResult:
-        """Classify notification priority using AI."""
-        try:
+        """Classify notification priority using AI."""        try:
             start_time = datetime.now(timezone.utc)
             
             # Get priority classification
@@ -448,8 +430,7 @@ class NotificationEngine:
     async def _process_template(
         self, request: NotificationRequest
     ) -> ProcessingResult:
-        """Process and optimize notification template."""
-        try:
+        """Process and optimize notification template."""        try:
             start_time = datetime.now(timezone.utc)
             
             # Check template cache
@@ -480,8 +461,7 @@ class NotificationEngine:
     async def _personalize_content(
         self, request: NotificationRequest, template: NotificationTemplate
     ) -> ProcessingResult:
-        """Personalize notification content."""
-        try:
+        """Personalize notification content."""        try:
             start_time = datetime.now(timezone.utc)
             
             # Personalize content
@@ -508,8 +488,7 @@ class NotificationEngine:
     async def _select_and_optimize_channels(
         self, request: NotificationRequest
     ) -> ProcessingResult:
-        """Select and optimize delivery channels."""
-        try:
+        """Select and optimize delivery channels."""        try:
             start_time = datetime.now(timezone.utc)
             
             # Select optimal channels
@@ -537,8 +516,7 @@ class NotificationEngine:
         template: NotificationTemplate,
         channels: List[str]
     ) -> ProcessingResult:
-        """Execute multi-channel delivery."""
-        try:
+        """Execute multi-channel delivery."""        try:
             start_time = datetime.now(timezone.utc)
             
             # Track active delivery
@@ -585,8 +563,7 @@ class NotificationEngine:
     async def _collect_analytics(
         self, request: NotificationRequest, processing_results: List[ProcessingResult]
     ) -> ProcessingResult:
-        """Collect and record analytics data."""
-        try:
+        """Collect and record analytics data."""        try:
             start_time = datetime.now(timezone.utc)
             
             # Prepare analytics data
@@ -633,8 +610,7 @@ class NotificationEngine:
         processing_results: List[ProcessingResult],
         total_processing_time: float
     ) -> NotificationResponse:
-        """Create notification response from processing results."""
-        try:
+        """Create notification response from processing results."""        try:
             # Determine overall status
             if delivery_result.success:
                 if all(result.success for result in processing_results):
@@ -680,8 +656,7 @@ class NotificationEngine:
     async def _update_processing_metrics(
         self, processing_results: List[ProcessingResult], total_processing_time: float
     ):
-        """Update processing metrics."""
-        try:
+        """Update processing metrics."""        try:
             # Update counters
             self._processing_metrics["total_processed"] += 1
             
@@ -712,8 +687,7 @@ class NotificationEngine:
             logger.error(f"Failed to update metrics: {e}")
     
     async def _get_engine_health(self) -> Dict[str, Any]:
-        """Get comprehensive engine health status."""
-        try:
+        """Get comprehensive engine health status."""        try:
             total_processed = self._processing_metrics["total_processed"]
             successful = self._processing_metrics["successful_deliveries"]
             
@@ -733,8 +707,7 @@ class NotificationEngine:
             return {"status": "error", "error": str(e)}
     
     def _optimize_caching(self, cache_config: Dict[str, Any]):
-        """Optimize caching strategies."""
-        try:
+        """Optimize caching strategies."""        try:
             # Template cache optimization
             max_template_cache = cache_config.get("template_cache_size", 1000)
             if len(self._template_cache) > max_template_cache:
@@ -748,8 +721,7 @@ class NotificationEngine:
             logger.error(f"Cache optimization failed: {e}")
     
     def _optimize_concurrency(self, concurrency_config: Dict[str, Any]):
-        """Optimize concurrent processing."""
-        try:
+        """Optimize concurrent processing."""        try:
             # Update processing limits based on performance
             max_concurrent = concurrency_config.get("max_concurrent_deliveries", 50)
             batch_size = concurrency_config.get("optimal_batch_size", 25)

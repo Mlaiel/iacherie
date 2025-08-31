@@ -1,5 +1,4 @@
-"""
-Compatibility Analyzer for Content Creator Matching
+"""Compatibility Analyzer for Content Creator Matching
 
 This module provides advanced compatibility analysis between content creators,
 evaluating multiple dimensions including content style, audience demographics,
@@ -9,7 +8,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, reproduction, or distribution of this code is strictly prohibited.
 """
-
 import logging
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
@@ -27,8 +25,7 @@ from backend.core.cache.strategies import CacheManager
 
 
 class CompatibilityDimension(Enum):
-    """Compatibility analysis dimensions"""
-    CONTENT_STYLE = "content_style"
+    """Compatibility analysis dimensions"""    CONTENT_STYLE = "content_style"
     AUDIENCE_DEMOGRAPHICS = "audience_demographics"
     BRAND_ALIGNMENT = "brand_alignment"
     ENGAGEMENT_PATTERNS = "engagement_patterns"
@@ -42,8 +39,7 @@ class CompatibilityDimension(Enum):
 
 @dataclass
 class CompatibilityScore:
-    """Compatibility score with detailed breakdown"""
-    overall_score: float
+    """Compatibility score with detailed breakdown"""    overall_score: float
     dimension_scores: Dict[CompatibilityDimension, float]
     confidence_level: float
     compatibility_factors: List[str]
@@ -54,8 +50,7 @@ class CompatibilityScore:
 
 @dataclass
 class CreatorCompatibilityProfile:
-    """Extended creator profile for compatibility analysis"""
-    user_id: int
+    """Extended creator profile for compatibility analysis"""    user_id: int
     content_style_vector: np.ndarray
     audience_profile: Dict[str, Any]
     brand_attributes: Dict[str, Any]
@@ -70,14 +65,12 @@ class CreatorCompatibilityProfile:
 
 
 class CompatibilityAnalyzer:
-    """
-    Advanced compatibility analyzer for content creator matching
+    """    Advanced compatibility analyzer for content creator matching
     
     This class implements sophisticated algorithms to analyze compatibility
     between content creators across multiple dimensions using AI models
     and statistical analysis.
-    """
-    
+    """    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -120,8 +113,7 @@ class CompatibilityAnalyzer:
         creator_b_profile: CreatorCompatibilityProfile,
         dimensions: Optional[List[CompatibilityDimension]] = None
     ) -> CompatibilityScore:
-        """
-        Analyze comprehensive compatibility between two creators
+        """        Analyze comprehensive compatibility between two creators
         
         Args:
             creator_a_profile: First creator's compatibility profile
@@ -130,8 +122,7 @@ class CompatibilityAnalyzer:
             
         Returns:
             Detailed compatibility score with breakdown
-        """
-        try:
+        """        try:
             # Use all dimensions if none specified
             if dimensions is None:
                 dimensions = list(CompatibilityDimension)
@@ -202,8 +193,7 @@ class CompatibilityAnalyzer:
         creator_b: CreatorCompatibilityProfile,
         dimension: CompatibilityDimension
     ) -> float:
-        """Analyze specific compatibility dimension"""
-        try:
+        """Analyze specific compatibility dimension"""        try:
             if dimension == CompatibilityDimension.CONTENT_STYLE:
                 return self._analyze_content_style_compatibility(creator_a, creator_b)
             
@@ -247,8 +237,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze content style compatibility using vector similarity"""
-        try:
+        """Analyze content style compatibility using vector similarity"""        try:
             # Calculate cosine similarity between content style vectors
             similarity = cosine_similarity(
                 creator_a.content_style_vector.reshape(1, -1),
@@ -269,8 +258,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze audience demographic compatibility"""
-        try:
+        """Analyze audience demographic compatibility"""        try:
             audience_a = creator_a.audience_profile
             audience_b = creator_b.audience_profile
             
@@ -324,8 +312,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze brand values and aesthetic alignment"""
-        try:
+        """Analyze brand values and aesthetic alignment"""        try:
             brand_a = creator_a.brand_attributes
             brand_b = creator_b.brand_attributes
             
@@ -370,8 +357,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze engagement pattern compatibility"""
-        try:
+        """Analyze engagement pattern compatibility"""        try:
             patterns_a = creator_a.engagement_patterns
             patterns_b = creator_b.engagement_patterns
             
@@ -416,8 +402,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze content quality standards compatibility"""
-        try:
+        """Analyze content quality standards compatibility"""        try:
             quality_a = creator_a.quality_metrics
             quality_b = creator_b.quality_metrics
             
@@ -445,8 +430,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze platform presence compatibility"""
-        try:
+        """Analyze platform presence compatibility"""        try:
             platforms_a = set(creator_a.platform_analytics.keys())
             platforms_b = set(creator_b.platform_analytics.keys())
             
@@ -475,8 +459,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze communication style compatibility"""
-        try:
+        """Analyze communication style compatibility"""        try:
             comm_a = creator_a.communication_preferences
             comm_b = creator_b.communication_preferences
             
@@ -521,8 +504,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze collaboration history and success patterns"""
-        try:
+        """Analyze collaboration history and success patterns"""        try:
             # Check if creators have collaborated before
             past_collaborations = self._find_past_collaborations(creator_a, creator_b)
             
@@ -545,8 +527,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze geographic compatibility for collaboration"""
-        try:
+        """Analyze geographic compatibility for collaboration"""        try:
             geo_a = creator_a.geographic_info
             geo_b = creator_b.geographic_info
             
@@ -577,8 +558,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorCompatibilityProfile,
         creator_b: CreatorCompatibilityProfile
     ) -> float:
-        """Analyze schedule and availability alignment"""
-        try:
+        """Analyze schedule and availability alignment"""        try:
             schedule_a = creator_a.schedule_preferences
             schedule_b = creator_b.schedule_preferences
             
@@ -619,8 +599,7 @@ class CompatibilityAnalyzer:
         dist_a: Dict[str, float],
         dist_b: Dict[str, float]
     ) -> float:
-        """Calculate overlap between two distributions"""
-        try:
+        """Calculate overlap between two distributions"""        try:
             all_keys = set(dist_a.keys()).union(set(dist_b.keys()))
             overlap = 0.0
             
@@ -639,8 +618,7 @@ class CompatibilityAnalyzer:
         interests_a: List[str],
         interests_b: List[str]
     ) -> float:
-        """Calculate interest overlap using Jaccard similarity"""
-        try:
+        """Calculate interest overlap using Jaccard similarity"""        try:
             set_a = set(interests_a)
             set_b = set(interests_b)
             
@@ -656,8 +634,7 @@ class CompatibilityAnalyzer:
         self,
         dimension_scores: Dict[CompatibilityDimension, float]
     ) -> float:
-        """Calculate confidence level based on score consistency"""
-        try:
+        """Calculate confidence level based on score consistency"""        try:
             scores = list(dimension_scores.values())
             if not scores:
                 return 0.0
@@ -679,8 +656,7 @@ class CompatibilityAnalyzer:
         creator_b: CreatorCompatibilityProfile,
         dimension_scores: Dict[CompatibilityDimension, float]
     ) -> List[str]:
-        """Identify key compatibility factors"""
-        factors = []
+        """Identify key compatibility factors"""        factors = []
         
         for dimension, score in dimension_scores.items():
             if score > 0.75:
@@ -700,8 +676,7 @@ class CompatibilityAnalyzer:
         creator_b: CreatorCompatibilityProfile,
         dimension_scores: Dict[CompatibilityDimension, float]
     ) -> List[str]:
-        """Identify potential incompatibility risks"""
-        risks = []
+        """Identify potential incompatibility risks"""        risks = []
         
         for dimension, score in dimension_scores.items():
             if score < 0.40:
@@ -721,8 +696,7 @@ class CompatibilityAnalyzer:
         creator_b: CreatorCompatibilityProfile,
         dimension_scores: Dict[CompatibilityDimension, float]
     ) -> List[str]:
-        """Generate recommendations to improve compatibility"""
-        recommendations = []
+        """Generate recommendations to improve compatibility"""        recommendations = []
         
         for dimension, score in dimension_scores.items():
             if 0.40 <= score < 0.70:

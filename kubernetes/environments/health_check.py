@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Environment Health Check Utility - IA Influencer Agent
+"""Environment Health Check Utility - IA Influencer Agent
 ======================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -17,7 +16,6 @@ Comprehensive health check utility for deployment environments.
 Provides real-time monitoring, diagnostics, and alerting.
 ======================================================
 """
-
 import os
 import sys
 import asyncio
@@ -51,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status enumeration"""
-    HEALTHY = "healthy"
+    """Health status enumeration"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     CRITICAL = "critical"
@@ -60,8 +57,7 @@ class HealthStatus(Enum):
 
 
 class CheckSeverity(Enum):
-    """Check severity enumeration"""
-    LOW = "low"
+    """Check severity enumeration"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -69,8 +65,7 @@ class CheckSeverity(Enum):
 
 @dataclass
 class HealthCheckResult:
-    """Health check result data structure"""
-    check_name: str
+    """Health check result data structure"""    check_name: str
     status: HealthStatus
     severity: CheckSeverity
     message: str
@@ -81,8 +76,7 @@ class HealthCheckResult:
 
 
 class EnvironmentHealthChecker:
-    """
-    Comprehensive health checker for deployment environments.
+    """    Comprehensive health checker for deployment environments.
     
     Features:
     - Real-time health monitoring
@@ -92,8 +86,7 @@ class EnvironmentHealthChecker:
     - Security posture assessment
     - Compliance validation
     - Alerting and notification
-    """
-    
+    """    
     def __init__(self):
         self.coordinator = EnvironmentCoordinator()
         self.check_results: List[HealthCheckResult] = []
@@ -102,8 +95,7 @@ class EnvironmentHealthChecker:
     async def run_comprehensive_health_check(self, 
                                            environments: Optional[List[str]] = None,
                                            quick_check: bool = False) -> Dict[str, Any]:
-        """Run comprehensive health check across environments"""
-        try:
+        """Run comprehensive health check across environments"""        try:
             logger.info("Starting comprehensive health check...")
             
             # Initialize environments
@@ -178,8 +170,7 @@ class EnvironmentHealthChecker:
             }
     
     async def _check_environment_health(self, env_name: str, quick_check: bool) -> Dict[str, Any]:
-        """Check health of specific environment"""
-        try:
+        """Check health of specific environment"""        try:
             env_type = EnvironmentType(env_name)
             manager = EnvironmentManagerFactory.create_manager(env_type)
             
@@ -230,8 +221,7 @@ class EnvironmentHealthChecker:
             }
     
     async def _run_global_checks(self, quick_check: bool) -> Dict[str, Any]:
-        """Run global system checks"""
-        try:
+        """Run global system checks"""        try:
             global_checks = {
                 'system_resources': {},
                 'network_connectivity': {},
@@ -268,8 +258,7 @@ class EnvironmentHealthChecker:
             return {'error': str(e)}
     
     async def _check_configuration_health(self, manager) -> Dict[str, Any]:
-        """Check configuration health"""
-        try:
+        """Check configuration health"""        try:
             start_time = time.time()
             
             config = manager.load_configuration()
@@ -315,8 +304,7 @@ class EnvironmentHealthChecker:
             }
     
     async def _check_connectivity(self, env_name: str) -> Dict[str, Any]:
-        """Check environment connectivity"""
-        try:
+        """Check environment connectivity"""        try:
             connectivity_check = {
                 'status': HealthStatus.HEALTHY.value,
                 'endpoints': {},
@@ -369,8 +357,7 @@ class EnvironmentHealthChecker:
             }
     
     async def _check_resource_utilization(self, env_name: str) -> Dict[str, Any]:
-        """Check resource utilization"""
-        try:
+        """Check resource utilization"""        try:
             resource_check = {
                 'status': HealthStatus.HEALTHY.value,
                 'cpu_usage_percent': 0,
@@ -421,8 +408,7 @@ class EnvironmentHealthChecker:
             }
     
     async def _check_performance_metrics(self, env_name: str) -> Dict[str, Any]:
-        """Check performance metrics"""
-        try:
+        """Check performance metrics"""        try:
             performance_check = {
                 'status': HealthStatus.HEALTHY.value,
                 'response_time_avg_ms': 0,
@@ -474,8 +460,7 @@ class EnvironmentHealthChecker:
             }
     
     async def _check_security_posture(self, env_name: str) -> Dict[str, Any]:
-        """Check security posture"""
-        try:
+        """Check security posture"""        try:
             security_check = {
                 'status': HealthStatus.HEALTHY.value,
                 'ssl_enabled': True,
@@ -510,8 +495,7 @@ class EnvironmentHealthChecker:
             }
     
     async def _check_compliance_status(self, env_name: str) -> Dict[str, Any]:
-        """Check compliance status"""
-        try:
+        """Check compliance status"""        try:
             compliance_check = {
                 'status': HealthStatus.HEALTHY.value,
                 'gdpr_compliant': True,
@@ -550,8 +534,7 @@ class EnvironmentHealthChecker:
             }
     
     async def _check_cross_environment_health(self) -> Dict[str, Any]:
-        """Check cross-environment health"""
-        try:
+        """Check cross-environment health"""        try:
             cross_env_check = {
                 'status': HealthStatus.HEALTHY.value,
                 'environment_synchronization': True,
@@ -581,8 +564,7 @@ class EnvironmentHealthChecker:
     
     # System check helper methods
     async def _check_system_resources(self) -> Dict[str, Any]:
-        """Check system resources"""
-        return {
+        """Check system resources"""        return {
             'status': HealthStatus.HEALTHY.value,
             'cpu_available': True,
             'memory_available': True,
@@ -590,8 +572,7 @@ class EnvironmentHealthChecker:
         }
     
     async def _check_network_health(self) -> Dict[str, Any]:
-        """Check network health"""
-        return {
+        """Check network health"""        return {
             'status': HealthStatus.HEALTHY.value,
             'connectivity': True,
             'latency_ms': 50,
@@ -599,16 +580,14 @@ class EnvironmentHealthChecker:
         }
     
     async def _check_external_dependencies(self) -> Dict[str, Any]:
-        """Check external dependencies"""
-        return {
+        """Check external dependencies"""        return {
             'status': HealthStatus.HEALTHY.value,
             'apis_reachable': True,
             'third_party_services': True
         }
     
     async def _check_database_health(self) -> Dict[str, Any]:
-        """Check database health"""
-        return {
+        """Check database health"""        return {
             'status': HealthStatus.HEALTHY.value,
             'connection_pool_healthy': True,
             'query_performance': True,
@@ -616,8 +595,7 @@ class EnvironmentHealthChecker:
         }
     
     async def _check_cache_health(self) -> Dict[str, Any]:
-        """Check cache health"""
-        return {
+        """Check cache health"""        return {
             'status': HealthStatus.HEALTHY.value,
             'redis_healthy': True,
             'cache_hit_rate': 95,
@@ -626,8 +604,7 @@ class EnvironmentHealthChecker:
     
     # Utility methods
     def _get_environment_endpoints(self, env_name: str) -> Dict[str, str]:
-        """Get endpoints for environment"""
-        base_endpoints = {
+        """Get endpoints for environment"""        base_endpoints = {
             'health': f"https://{env_name}.ia-influencer.com/health",
             'api': f"https://{env_name}.ia-influencer.com/api/v1",
             'metrics': f"https://{env_name}.ia-influencer.com/metrics"
@@ -635,32 +612,28 @@ class EnvironmentHealthChecker:
         return base_endpoints
     
     def _get_cpu_usage(self) -> float:
-        """Get CPU usage percentage"""
-        try:
+        """Get CPU usage percentage"""        try:
             import psutil
             return psutil.cpu_percent(interval=1)
         except:
             return 25.0  # Mock value
     
     def _get_memory_usage(self) -> float:
-        """Get memory usage percentage"""
-        try:
+        """Get memory usage percentage"""        try:
             import psutil
             return psutil.virtual_memory().percent
         except:
             return 45.0  # Mock value
     
     def _get_disk_usage(self) -> float:
-        """Get disk usage percentage"""
-        try:
+        """Get disk usage percentage"""        try:
             import psutil
             return psutil.disk_usage('/').percent
         except:
             return 35.0  # Mock value
     
     def _calculate_environment_status(self, checks: Dict[str, Any]) -> HealthStatus:
-        """Calculate overall environment status"""
-        statuses = []
+        """Calculate overall environment status"""        statuses = []
         for check_name, check_result in checks.items():
             if isinstance(check_result, dict) and 'status' in check_result:
                 statuses.append(HealthStatus(check_result['status']))
@@ -683,8 +656,7 @@ class EnvironmentHealthChecker:
         return HealthStatus.HEALTHY
     
     def _calculate_overall_status(self, check_results: Dict[str, Any]) -> HealthStatus:
-        """Calculate overall system status"""
-        env_statuses = []
+        """Calculate overall system status"""        env_statuses = []
         
         for env_name, env_result in check_results.get('environments', {}).items():
             if isinstance(env_result, dict) and 'status' in env_result:
@@ -718,8 +690,7 @@ class EnvironmentHealthChecker:
         return HealthStatus.HEALTHY
     
     def _generate_health_summary(self, check_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate health summary"""
-        summary = {
+        """Generate health summary"""        summary = {
             'total_environments': len(check_results.get('environments', {})),
             'healthy_environments': 0,
             'degraded_environments': 0,
@@ -746,8 +717,7 @@ class EnvironmentHealthChecker:
         return summary
     
     def _generate_alerts(self, check_results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate alerts based on check results"""
-        alerts = []
+        """Generate alerts based on check results"""        alerts = []
         
         # Check for critical issues
         for env_name, env_result in check_results.get('environments', {}).items():
@@ -775,8 +745,7 @@ class EnvironmentHealthChecker:
         return alerts
     
     def _generate_recommendations(self, check_results: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on check results"""
-        recommendations = []
+        """Generate recommendations based on check results"""        recommendations = []
         
         # General recommendations
         summary = check_results.get('summary', {})
@@ -812,8 +781,7 @@ class EnvironmentHealthChecker:
 
 
 async def main():
-    """Main health check function"""
-    parser = argparse.ArgumentParser(description='IA Influencer Agent Environment Health Check')
+    """Main health check function"""    parser = argparse.ArgumentParser(description='IA Influencer Agent Environment Health Check')
     parser.add_argument(
         '--environments',
         nargs='*',

@@ -1,5 +1,4 @@
-"""
-Content Ingestion Pipeline for Multi-Format Creator Content
+"""Content Ingestion Pipeline for Multi-Format Creator Content
 ===========================================================
 
 Professional content ingestion system handling upload, validation, and initial
@@ -19,7 +18,6 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Unauthorized use, copying, or theft of this code is strictly prohibited.
 Legal action will be taken against violators.
 """
-
 import asyncio
 import logging
 import mimetypes
@@ -53,8 +51,7 @@ settings = get_settings()
 
 
 class ContentUploadRequest(BaseModel):
-    """Content upload request model"""
-    user_id: int
+    """Content upload request model"""    user_id: int
     content_type: str  # audio, video, image, text
     filename: str
     file_size: int
@@ -66,8 +63,7 @@ class ContentUploadRequest(BaseModel):
 
 
 class ContentUploadResponse(BaseModel):
-    """Content upload response model"""
-    content_id: str
+    """Content upload response model"""    content_id: str
     upload_url: str
     status: str
     metadata: Dict[str, Any]
@@ -75,10 +71,8 @@ class ContentUploadResponse(BaseModel):
 
 
 class MultiFormatProcessor:
-    """
-    Professional multi-format content processor for creator uploads
-    """
-    
+    """    Professional multi-format content processor for creator uploads
+    """    
     def __init__(self):
         self.storage_manager = StorageManager()
         self.content_validator = ContentValidator()
@@ -105,10 +99,8 @@ class MultiFormatProcessor:
         file_path: Path, 
         request: ContentUploadRequest
     ) -> Dict[str, Any]:
-        """
-        Validate uploaded content for security and format compliance
-        """
-        try:
+        """        Validate uploaded content for security and format compliance
+        """        try:
             # Basic file validation
             if not file_path.exists():
                 raise ContentValidationError("File not found")
@@ -162,10 +154,8 @@ class MultiFormatProcessor:
         file_path: Path, 
         content_type: str
     ) -> Dict[str, Any]:
-        """
-        Extract comprehensive metadata from uploaded content
-        """
-        try:
+        """        Extract comprehensive metadata from uploaded content
+        """        try:
             metadata = {
                 "file_info": {
                     "filename": file_path.name,
@@ -195,8 +185,7 @@ class MultiFormatProcessor:
             raise MetadataExtractionError(f"Metadata extraction failed: {str(e)}")
 
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract audio-specific metadata"""
-        try:
+        """Extract audio-specific metadata"""        try:
             # Load audio for analysis
             y, sr = librosa.load(str(file_path), sr=None)
             duration = librosa.get_duration(y=y, sr=sr)
@@ -225,8 +214,7 @@ class MultiFormatProcessor:
             return {"audio": {"error": str(e)}}
 
     async def _extract_video_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract video-specific metadata"""
-        try:
+        """Extract video-specific metadata"""        try:
             cap = cv2.VideoCapture(str(file_path))
             
             # Basic video properties
@@ -276,8 +264,7 @@ class MultiFormatProcessor:
             return {"video": {"error": str(e)}}
 
     async def _extract_image_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract image-specific metadata"""
-        try:
+        """Extract image-specific metadata"""        try:
             with Image.open(file_path) as img:
                 # Basic image properties
                 width, height = img.size
@@ -323,8 +310,7 @@ class MultiFormatProcessor:
             return {"image": {"error": str(e)}}
 
     async def _extract_text_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract text-specific metadata"""
-        try:
+        """Extract text-specific metadata"""        try:
             async with aiofiles.open(file_path, 'r', encoding='utf-8') as f:
                 content = await f.read()
             
@@ -360,11 +346,9 @@ class MultiFormatProcessor:
 
 
 class ContentIngestionPipeline:
-    """
-    Professional content ingestion pipeline orchestrating the complete
+    """    Professional content ingestion pipeline orchestrating the complete
     upload, validation, processing, and storage workflow
-    """
-    
+    """    
     def __init__(self):
         self.processor = MultiFormatProcessor()
         self.storage_manager = StorageManager()
@@ -374,10 +358,8 @@ class ContentIngestionPipeline:
         file_data: bytes, 
         request: ContentUploadRequest
     ) -> ContentUploadResponse:
-        """
-        Complete content upload processing pipeline
-        """
-        processing_id = str(uuid4())
+        """        Complete content upload processing pipeline
+        """        processing_id = str(uuid4())
         content_id = str(uuid4())
         
         try:
@@ -446,8 +428,7 @@ class ContentIngestionPipeline:
         filename: str, 
         processing_id: str
     ) -> Path:
-        """Create temporary file for processing"""
-        temp_dir = Path(settings.TEMP_UPLOAD_DIR)
+        """Create temporary file for processing"""        temp_dir = Path(settings.TEMP_UPLOAD_DIR)
         temp_dir.mkdir(parents=True, exist_ok=True)
         
         # Generate unique temporary filename
@@ -462,8 +443,7 @@ class ContentIngestionPipeline:
         return temp_file_path
 
     async def _cleanup_temp_file(self, temp_file_path: Path):
-        """Cleanup temporary file"""
-        try:
+        """Cleanup temporary file"""        try:
             if temp_file_path.exists():
                 temp_file_path.unlink()
         except Exception as e:
@@ -476,8 +456,7 @@ class ContentIngestionPipeline:
         metadata: Dict[str, Any],
         storage_path: str
     ) -> ContentModel:
-        """Save content record to database"""
-        async with AsyncDatabaseSession() as session:
+        """Save content record to database"""        async with AsyncDatabaseSession() as session:
             content_metadata = ContentMetadata(
                 **metadata,
                 processing_version="2.0.0",
@@ -508,8 +487,7 @@ class ContentIngestionPipeline:
             return content_model
 
     async def get_ingestion_status(self, processing_id: str) -> Dict[str, Any]:
-        """Get ingestion processing status"""
-        # Implementation would check processing status from cache/database
+        """Get ingestion processing status"""        # Implementation would check processing status from cache/database
         # This is a simplified version
         return {
             "processing_id": processing_id,
@@ -525,8 +503,7 @@ class ContentIngestionPipeline:
         limit: int = 20,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """List user's uploaded content"""
-        async with AsyncDatabaseSession() as session:
+        """List user's uploaded content"""        async with AsyncDatabaseSession() as session:
             query = session.query(ContentModel).filter(
                 ContentModel.user_id == user_id,
                 ContentModel.status == "active"

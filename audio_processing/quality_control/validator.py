@@ -1,5 +1,4 @@
-"""
-🎯 Audio Quality Validator - Professional Audio Validation System
+"""🎯 Audio Quality Validator - Professional Audio Validation System
 
 Advanced audio quality validation engine for comprehensive audio content
 assessment. Provides detailed quality analysis, scoring, and validation
@@ -15,7 +14,6 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -34,16 +32,14 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationLevel(Enum):
-    """Validation strictness levels"""
-    BASIC = "basic"           # Basic quality checks
+    """Validation strictness levels"""    BASIC = "basic"           # Basic quality checks
     STANDARD = "standard"     # Standard professional validation
     STRICT = "strict"         # Strict validation requirements
     BROADCAST = "broadcast"   # Broadcast quality standards
 
 
 class ValidationCategory(Enum):
-    """Audio validation categories"""
-    TECHNICAL = "technical"
+    """Audio validation categories"""    TECHNICAL = "technical"
     PERCEPTUAL = "perceptual"
     CONTENT = "content"
     COMPLIANCE = "compliance"
@@ -52,8 +48,7 @@ class ValidationCategory(Enum):
 
 @dataclass
 class ValidationResult:
-    """Individual validation result"""
-    category: ValidationCategory
+    """Individual validation result"""    category: ValidationCategory
     test_name: str
     passed: bool
     score: float
@@ -65,8 +60,7 @@ class ValidationResult:
 
 
 class AudioQualityValidator:
-    """
-    🎯 Professional Audio Quality Validator
+    """    🎯 Professional Audio Quality Validator
     
     Comprehensive audio validation system:
     - Technical quality analysis
@@ -74,8 +68,7 @@ class AudioQualityValidator:
     - Content validation
     - Platform compliance checking
     - Professional standards enforcement
-    """
-    
+    """    
     def __init__(self):
         self.quality_standards = QualityStandards()
         
@@ -124,8 +117,7 @@ class AudioQualityValidator:
         quality_profile: QualityProfile,
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> QualityReport:
-        """
-        Perform comprehensive audio validation
+        """        Perform comprehensive audio validation
         
         Args:
             audio_data: Audio data array
@@ -135,8 +127,7 @@ class AudioQualityValidator:
             
         Returns:
             QualityReport with validation results
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Get validation thresholds
@@ -215,8 +206,7 @@ class AudioQualityValidator:
         sample_rate: int,
         thresholds: Dict[str, float]
     ) -> List[ValidationResult]:
-        """Validate technical audio quality parameters"""
-        results = []
+        """Validate technical audio quality parameters"""        results = []
         
         try:
             # Sample rate validation
@@ -334,8 +324,7 @@ class AudioQualityValidator:
         sample_rate: int,
         quality_profile: QualityProfile
     ) -> List[ValidationResult]:
-        """Validate perceptual audio quality aspects"""
-        results = []
+        """Validate perceptual audio quality aspects"""        results = []
         
         try:
             # Frequency response analysis
@@ -413,8 +402,7 @@ class AudioQualityValidator:
         sample_rate: int,
         quality_profile: QualityProfile
     ) -> List[ValidationResult]:
-        """Validate content-specific characteristics"""
-        results = []
+        """Validate content-specific characteristics"""        results = []
         
         try:
             # Duration validation
@@ -487,8 +475,7 @@ class AudioQualityValidator:
         sample_rate: int,
         quality_profile: QualityProfile
     ) -> List[ValidationResult]:
-        """Validate platform-specific compliance requirements"""
-        results = []
+        """Validate platform-specific compliance requirements"""        results = []
         
         try:
             # Platform-specific requirements from profile
@@ -555,13 +542,11 @@ class AudioQualityValidator:
         return results
     
     def _calculate_clipping_ratio(self, audio_data: np.ndarray, threshold: float = 0.99) -> float:
-        """Calculate ratio of clipped samples"""
-        clipped_samples = np.sum(np.abs(audio_data) >= threshold)
+        """Calculate ratio of clipped samples"""        clipped_samples = np.sum(np.abs(audio_data) >= threshold)
         return clipped_samples / len(audio_data)
     
     def _calculate_snr(self, audio_data: np.ndarray) -> float:
-        """Calculate signal-to-noise ratio"""
-        # Simple SNR estimation using signal power vs noise floor
+        """Calculate signal-to-noise ratio"""        # Simple SNR estimation using signal power vs noise floor
         signal_power = np.mean(audio_data ** 2)
         
         # Estimate noise as difference from median filtered signal
@@ -575,8 +560,7 @@ class AudioQualityValidator:
         return 10 * np.log10(snr_linear + 1e-10)
     
     def _calculate_thd(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate total harmonic distortion"""
-        # Find dominant frequency
+        """Calculate total harmonic distortion"""        # Find dominant frequency
         fft = np.fft.fft(audio_data[:min(len(audio_data), sample_rate)])  # Use 1 second max
         freqs = np.fft.fftfreq(len(fft), 1/sample_rate)
         
@@ -616,8 +600,7 @@ class AudioQualityValidator:
         return min(thd, 100.0)  # Cap at 100%
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Calculate dynamic range"""
-        if len(audio_data) == 0:
+        """Calculate dynamic range"""        if len(audio_data) == 0:
             return 0.0
         
         # Calculate RMS in overlapping windows
@@ -643,8 +626,7 @@ class AudioQualityValidator:
         return min(dynamic_range, 120.0)  # Cap at 120 dB
     
     def _analyze_frequency_balance(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Analyze frequency balance quality"""
-        # Calculate spectral centroid and spread
+        """Analyze frequency balance quality"""        # Calculate spectral centroid and spread
         spectral_centroids = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)[0]
         spectral_rolloff = librosa.feature.spectral_rolloff(y=audio_data, sr=sample_rate)[0]
         
@@ -691,8 +673,7 @@ class AudioQualityValidator:
         return max(0.0, (centroid_score + balance_score) / 2.0)
     
     def _analyze_loudness_quality(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Analyze loudness quality"""
-        # Calculate LUFS-style loudness
+        """Analyze loudness quality"""        # Calculate LUFS-style loudness
         try:
             import pyloudnorm as pyln
             meter = pyln.Meter(sample_rate)
@@ -725,8 +706,7 @@ class AudioQualityValidator:
                 return max(0.0, 1.0 - (rms_db + 12) / 20)
     
     def _analyze_stereo_imaging(self, audio_data: np.ndarray) -> float:
-        """Analyze stereo imaging quality"""
-        if audio_data.ndim == 1:
+        """Analyze stereo imaging quality"""        if audio_data.ndim == 1:
             return 1.0  # Mono audio, no stereo issues
         
         if audio_data.shape[0] < 2:
@@ -757,8 +737,7 @@ class AudioQualityValidator:
         return (correlation_score + width_score) / 2.0
     
     def _analyze_temporal_consistency(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Analyze temporal consistency"""
-        # Calculate RMS in overlapping windows
+        """Analyze temporal consistency"""        # Calculate RMS in overlapping windows
         window_size = min(len(audio_data) // 20, sample_rate // 4)  # 250ms windows max
         if window_size < 100:
             return 1.0
@@ -790,13 +769,11 @@ class AudioQualityValidator:
         return consistency_score
     
     def _calculate_silence_ratio(self, audio_data: np.ndarray, threshold: float = 0.001) -> float:
-        """Calculate ratio of silent samples"""
-        silent_samples = np.sum(np.abs(audio_data) < threshold)
+        """Calculate ratio of silent samples"""        silent_samples = np.sum(np.abs(audio_data) < threshold)
         return silent_samples / len(audio_data)
     
     def _detect_content_type(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Detect audio content type"""
-        # Basic content type detection based on spectral characteristics
+        """Detect audio content type"""        # Basic content type detection based on spectral characteristics
         
         # Calculate spectral features
         spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate))
@@ -814,8 +791,7 @@ class AudioQualityValidator:
             return "general_audio"
     
     def _calculate_overall_score(self, validation_results: List[ValidationResult]) -> float:
-        """Calculate overall validation score"""
-        if not validation_results:
+        """Calculate overall validation score"""        if not validation_results:
             return 0.0
         
         # Weight different categories
@@ -839,8 +815,7 @@ class AudioQualityValidator:
         return overall_score / max(total_weight, 1.0)
     
     def _calculate_category_scores(self, validation_results: List[ValidationResult]) -> Dict[ValidationCategory, float]:
-        """Calculate scores by category"""
-        category_scores = {}
+        """Calculate scores by category"""        category_scores = {}
         category_counts = {}
         
         for result in validation_results:
@@ -860,8 +835,7 @@ class AudioQualityValidator:
         return category_scores
     
     def _generate_recommendations(self, validation_results: List[ValidationResult]) -> List[str]:
-        """Generate improvement recommendations"""
-        recommendations = []
+        """Generate improvement recommendations"""        recommendations = []
         
         # Collect all recommendations from failed tests
         for result in validation_results:

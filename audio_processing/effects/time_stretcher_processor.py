@@ -1,5 +1,4 @@
-"""
-⏰ Time Stretcher Processor - Advanced Time Manipulation Engine
+"""⏰ Time Stretcher Processor - Advanced Time Manipulation Engine
 
 Professional time stretching with pitch preservation, WSOLA algorithms,
 phase vocoder processing, and high-quality temporal modification.
@@ -7,7 +6,6 @@ phase vocoder processing, and high-quality temporal modification.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import numpy as np
 import logging
 from typing import Optional, Tuple
@@ -17,16 +15,14 @@ import scipy.fft
 
 
 class TimeStretchAlgorithm(Enum):
-    """Time stretching algorithm types"""
-    PHASE_VOCODER = "phase_vocoder"
+    """Time stretching algorithm types"""    PHASE_VOCODER = "phase_vocoder"
     WSOLA = "wsola"  # Waveform Similarity Overlap-Add
     GRANULAR = "granular"
     SPECTRAL = "spectral"
 
 
 class TimeStretcherProcessor:
-    """Professional time stretcher processor"""
-    
+    """Professional time stretcher processor"""    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -52,8 +48,7 @@ class TimeStretcherProcessor:
         self.logger.info("TimeStretcherProcessor initialized")
     
     def _init_buffers(self):
-        """Initialize processing buffers"""
-        self.input_buffer = np.zeros(self.frame_size * 2)
+        """Initialize processing buffers"""        self.input_buffer = np.zeros(self.frame_size * 2)
         self.output_buffer = np.zeros(self.frame_size * 2)
         
         # Phase vocoder state
@@ -72,8 +67,7 @@ class TimeStretcherProcessor:
         self.grain_overlap = 0.75
     
     def _normalize_synthesis_window(self) -> np.ndarray:
-        """Normalize synthesis window for perfect reconstruction"""
-        window = np.hanning(self.frame_size)
+        """Normalize synthesis window for perfect reconstruction"""        window = np.hanning(self.frame_size)
         
         # Calculate normalization factor
         hop_size = self.frame_size // self.overlap_factor
@@ -88,8 +82,7 @@ class TimeStretcherProcessor:
         return window / normalization
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply time stretching processing"""
-        try:
+        """Apply time stretching processing"""        try:
             if abs(self.time_stretch_factor - 1.0) < 1e-6:
                 return audio_data  # No processing needed
             
@@ -109,8 +102,7 @@ class TimeStretcherProcessor:
             return audio_data
     
     def _phase_vocoder_stretch(self, audio_data: np.ndarray) -> np.ndarray:
-        """Phase vocoder based time stretching"""
-        synthesis_hop = int(self.hop_size * self.time_stretch_factor)
+        """Phase vocoder based time stretching"""        synthesis_hop = int(self.hop_size * self.time_stretch_factor)
         
         # Calculate output length
         num_frames = (len(audio_data) - self.frame_size) // self.hop_size + 1
@@ -182,8 +174,7 @@ class TimeStretcherProcessor:
     
     def _preserve_pitch_content(self, spectrum: np.ndarray, 
                                magnitude: np.ndarray) -> np.ndarray:
-        """Preserve pitch content during time stretching"""
-        # Simple spectral envelope preservation
+        """Preserve pitch content during time stretching"""        # Simple spectral envelope preservation
         # This maintains the harmonic structure while allowing time modification
         
         # Calculate spectral centroid to maintain timbral balance
@@ -199,8 +190,7 @@ class TimeStretcherProcessor:
         return preserved_spectrum
     
     def _wsola_stretch(self, audio_data: np.ndarray) -> np.ndarray:
-        """WSOLA (Waveform Similarity Overlap-Add) time stretching"""
-        synthesis_hop = int(self.hop_size * self.time_stretch_factor)
+        """WSOLA (Waveform Similarity Overlap-Add) time stretching"""        synthesis_hop = int(self.hop_size * self.time_stretch_factor)
         
         # Initialize output
         output_length = int(len(audio_data) * self.time_stretch_factor)
@@ -265,8 +255,7 @@ class TimeStretcherProcessor:
     
     def _find_best_match(self, audio_data: np.ndarray, template: np.ndarray,
                         search_start: int, search_end: int) -> int:
-        """Find best waveform match for WSOLA"""
-        best_correlation = -1
+        """Find best waveform match for WSOLA"""        best_correlation = -1
         best_position = search_start
         
         for pos in range(search_start, search_end):
@@ -285,8 +274,7 @@ class TimeStretcherProcessor:
         return best_position
     
     def _granular_stretch(self, audio_data: np.ndarray) -> np.ndarray:
-        """Granular synthesis based time stretching"""
-        grain_hop_input = int(self.grain_size * (1 - self.grain_overlap))
+        """Granular synthesis based time stretching"""        grain_hop_input = int(self.grain_size * (1 - self.grain_overlap))
         grain_hop_output = int(grain_hop_input * self.time_stretch_factor)
         
         # Calculate output length
@@ -321,8 +309,7 @@ class TimeStretcherProcessor:
         return processed_audio
     
     def _spectral_stretch(self, audio_data: np.ndarray) -> np.ndarray:
-        """Spectral domain time stretching"""
-        # Simple spectral interpolation approach
+        """Spectral domain time stretching"""        # Simple spectral interpolation approach
         spectrum = scipy.fft.rfft(audio_data)
         
         # Calculate new length
@@ -346,14 +333,12 @@ class TimeStretcherProcessor:
         return processed_audio
     
     def set_time_stretch_factor(self, factor: float):
-        """Set time stretch factor (0.25 to 4.0)"""
-        self.time_stretch_factor = np.clip(factor, 0.25, 4.0)
+        """Set time stretch factor (0.25 to 4.0)"""        self.time_stretch_factor = np.clip(factor, 0.25, 4.0)
         self.logger.debug(f"Time stretch factor set to {factor}")
     
     def set_parameters(self, preserve_pitch: bool = None,
                       quality: str = None, algorithm: TimeStretchAlgorithm = None):
-        """Set time stretcher parameters"""
-        if preserve_pitch is not None:
+        """Set time stretcher parameters"""        if preserve_pitch is not None:
             self.preserve_pitch = preserve_pitch
         if quality is not None and quality in ["low", "medium", "high", "ultra"]:
             self.quality = quality
@@ -364,8 +349,7 @@ class TimeStretcherProcessor:
         self.logger.debug(f"Time stretcher parameters updated")
     
     def _update_quality_settings(self):
-        """Update processing parameters based on quality setting"""
-        if self.quality == "low":
+        """Update processing parameters based on quality setting"""        if self.quality == "low":
             self.frame_size = 1024
             self.overlap_factor = 2
         elif self.quality == "medium":
@@ -382,8 +366,7 @@ class TimeStretcherProcessor:
         self._init_buffers()
     
     def get_current_settings(self) -> dict:
-        """Get current time stretcher settings"""
-        return {
+        """Get current time stretcher settings"""        return {
             "time_stretch_factor": self.time_stretch_factor,
             "preserve_pitch": self.preserve_pitch,
             "quality": self.quality,

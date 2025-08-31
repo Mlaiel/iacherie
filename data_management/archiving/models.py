@@ -1,5 +1,4 @@
-"""
-Archival Data Models
+"""Archival Data Models
 
 Defines core data models and structures for the archival system
 including archive entries, configurations, and metadata schemas.
@@ -13,7 +12,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -24,8 +22,7 @@ from .archival_manager import ArchivalStatus, ArchivalTier
 
 @dataclass
 class ArchiveEntry:
-    """Core archive entry model"""
-    archive_id: str
+    """Core archive entry model"""    archive_id: str
     content_id: str
     content_type: str
     
@@ -58,8 +55,7 @@ class ArchiveEntry:
     integrity_checks: List[Dict[str, Any]] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
-        return {
+        """Convert to dictionary representation"""        return {
             "archive_id": self.archive_id,
             "content_id": self.content_id,
             "content_type": self.content_type,
@@ -84,8 +80,7 @@ class ArchiveEntry:
 
 @dataclass
 class ArchivalConfiguration:
-    """Global archival configuration"""
-    
+    """Global archival configuration"""    
     # Storage settings
     default_tier: ArchivalTier = ArchivalTier.HOT
     max_file_size_gb: float = 100.0
@@ -136,8 +131,7 @@ class ArchivalConfiguration:
 
 @dataclass
 class StorageQuota:
-    """Storage quota configuration for a tier"""
-    tier: ArchivalTier
+    """Storage quota configuration for a tier"""    tier: ArchivalTier
     limit_bytes: int
     used_bytes: int = 0
     warning_threshold: float = 0.8  # 80%
@@ -145,31 +139,26 @@ class StorageQuota:
     
     @property
     def usage_percentage(self) -> float:
-        """Calculate usage percentage"""
-        if self.limit_bytes == 0:
+        """Calculate usage percentage"""        if self.limit_bytes == 0:
             return 0.0
         return self.used_bytes / self.limit_bytes
     
     @property
     def is_warning(self) -> bool:
-        """Check if usage exceeds warning threshold"""
-        return self.usage_percentage >= self.warning_threshold
+        """Check if usage exceeds warning threshold"""        return self.usage_percentage >= self.warning_threshold
     
     @property
     def is_critical(self) -> bool:
-        """Check if usage exceeds critical threshold"""
-        return self.usage_percentage >= self.critical_threshold
+        """Check if usage exceeds critical threshold"""        return self.usage_percentage >= self.critical_threshold
     
     @property
     def available_bytes(self) -> int:
-        """Calculate available bytes"""
-        return max(0, self.limit_bytes - self.used_bytes)
+        """Calculate available bytes"""        return max(0, self.limit_bytes - self.used_bytes)
 
 
 @dataclass
 class AccessPattern:
-    """Content access pattern tracking"""
-    content_id: str
+    """Content access pattern tracking"""    content_id: str
     archive_id: str
     
     # Access statistics
@@ -194,8 +183,7 @@ class AccessPattern:
     tier_recommendation: Optional[ArchivalTier] = None
     
     def update_access(self, access_time: datetime = None):
-        """Update access statistics"""
-        access_time = access_time or datetime.utcnow()
+        """Update access statistics"""        access_time = access_time or datetime.utcnow()
         
         self.total_accesses += 1
         self.last_access = access_time
@@ -212,8 +200,7 @@ class AccessPattern:
                 self.access_frequency = len(self.access_history) / (time_span / 86400)  # 86400 seconds in a day
     
     def calculate_business_value(self, creator_metrics: Dict[str, Any] = None) -> float:
-        """Calculate business value score based on access patterns"""
-        score = 0.0
+        """Calculate business value score based on access patterns"""        score = 0.0
         
         # Access frequency component (0-0.4)
         if self.access_frequency > 10:  # High frequency
@@ -245,8 +232,7 @@ class AccessPattern:
         return self.business_value_score
     
     def recommend_tier(self) -> ArchivalTier:
-        """Recommend storage tier based on access patterns"""
-        if self.access_frequency > 5:  # Very frequent access
+        """Recommend storage tier based on access patterns"""        if self.access_frequency > 5:  # Very frequent access
             return ArchivalTier.HOT
         elif self.access_frequency > 1:  # Regular access
             return ArchivalTier.WARM

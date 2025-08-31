@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Grafana Dashboard Manager
+"""IA Influencer Agent - Grafana Dashboard Manager
 Enterprise-grade visualization and monitoring dashboards for multi-tenant AI platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -15,7 +14,6 @@ Features:
 - Infrastructure monitoring
 - Alert integration and visualization
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -38,8 +36,7 @@ settings = get_settings()
 
 @dataclass
 class DashboardConfig:
-    """Dashboard configuration structure"""
-    title: str
+    """Dashboard configuration structure"""    title: str
     description: str
     tags: List[str] = field(default_factory=list)
     time_range: Dict[str, str] = field(default_factory=lambda: {"from": "now-1h", "to": "now"})
@@ -51,8 +48,7 @@ class DashboardConfig:
 
 @dataclass
 class PanelConfig:
-    """Panel configuration structure"""
-    title: str
+    """Panel configuration structure"""    title: str
     panel_type: str  # graph, stat, table, heatmap, etc.
     targets: List[Dict[str, Any]]
     grid_pos: Dict[str, int]  # x, y, w, h
@@ -62,8 +58,7 @@ class PanelConfig:
 
 
 class GrafanaManager:
-    """
-    Enterprise Grafana dashboard manager with multi-tenant support
+    """    Enterprise Grafana dashboard manager with multi-tenant support
     
     Handles:
     - Dashboard creation and management
@@ -72,8 +67,7 @@ class GrafanaManager:
     - Alert rule integration
     - Template variable management
     - Multi-tenant dashboard isolation
-    """
-    
+    """    
     def __init__(self):
         self.base_url = settings.GRAFANA_URL
         self.api_key = settings.GRAFANA_API_KEY
@@ -85,8 +79,7 @@ class GrafanaManager:
         self._initialize_templates()
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession(
+        """Async context manager entry"""        self.session = aiohttp.ClientSession(
             headers={
                 'Authorization': f'Bearer {self.api_key}',
                 'Content-Type': 'application/json'
@@ -95,13 +88,11 @@ class GrafanaManager:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     def _initialize_templates(self) -> None:
-        """Initialize dashboard templates"""
-        self._dashboard_templates = {
+        """Initialize dashboard templates"""        self._dashboard_templates = {
             'application_overview': self._get_application_overview_template(),
             'ai_model_performance': self._get_ai_model_performance_template(),
             'content_protection': self._get_content_protection_template(),
@@ -119,8 +110,7 @@ class GrafanaManager:
         template_name: Optional[str] = None,
         custom_panels: Optional[List[PanelConfig]] = None
     ) -> Dict[str, Any]:
-        """Create new dashboard"""
-        try:
+        """Create new dashboard"""        try:
             if template_name and template_name in self._dashboard_templates:
                 dashboard_json = self._dashboard_templates[template_name].copy()
                 dashboard_json['dashboard']['title'] = config.title
@@ -159,8 +149,7 @@ class GrafanaManager:
         config: DashboardConfig,
         panels: Optional[List[PanelConfig]] = None
     ) -> Dict[str, Any]:
-        """Update existing dashboard"""
-        try:
+        """Update existing dashboard"""        try:
             # Get current dashboard
             current_dashboard = await self.get_dashboard(dashboard_id)
             
@@ -196,8 +185,7 @@ class GrafanaManager:
             raise
     
     async def get_dashboard(self, dashboard_id: int) -> Optional[Dict[str, Any]]:
-        """Get dashboard by ID"""
-        try:
+        """Get dashboard by ID"""        try:
             async with self.session.get(
                 f"{self.base_url}/api/dashboards/id/{dashboard_id}"
             ) as response:
@@ -214,8 +202,7 @@ class GrafanaManager:
             return None
     
     async def delete_dashboard(self, dashboard_uid: str) -> bool:
-        """Delete dashboard by UID"""
-        try:
+        """Delete dashboard by UID"""        try:
             async with self.session.delete(
                 f"{self.base_url}/api/dashboards/uid/{dashboard_uid}"
             ) as response:
@@ -232,8 +219,7 @@ class GrafanaManager:
             return False
     
     async def get_tenant_dashboards(self, tenant_id: str) -> List[Dict[str, Any]]:
-        """Get all dashboards for specific tenant"""
-        try:
+        """Get all dashboards for specific tenant"""        try:
             # Get from cache first
             cached_dashboards = await self.redis_manager.get_json(f"dashboards:tenant:{tenant_id}")
             if cached_dashboards:
@@ -273,8 +259,7 @@ class GrafanaManager:
         password: Optional[str] = None,
         tenant_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Create new data source"""
-        try:
+        """Create new data source"""        try:
             data_source_config = {
                 "name": name,
                 "type": source_type,
@@ -319,8 +304,7 @@ class GrafanaManager:
         frequency: str = "60s",
         notifications: Optional[List[Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
-        """Create alert rule for dashboard panel"""
-        try:
+        """Create alert rule for dashboard panel"""        try:
             alert_config = {
                 "dashboardId": dashboard_id,
                 "panelId": panel_id,
@@ -352,8 +336,7 @@ class GrafanaManager:
             raise
     
     async def setup_tenant_dashboards(self, tenant_id: str) -> List[Dict[str, Any]]:
-        """Setup default dashboards for new tenant"""
-        try:
+        """Setup default dashboards for new tenant"""        try:
             created_dashboards = []
             
             # Create default dashboards for tenant
@@ -376,8 +359,7 @@ class GrafanaManager:
             return []
     
     def _get_application_overview_template(self) -> Dict[str, Any]:
-        """Application overview dashboard template"""
-        return {
+        """Application overview dashboard template"""        return {
             "dashboard": {
                 "title": "Application Overview",
                 "description": "High-level application performance metrics",
@@ -429,8 +411,7 @@ class GrafanaManager:
         }
     
     def _get_ai_model_performance_template(self) -> Dict[str, Any]:
-        """AI model performance dashboard template"""
-        return {
+        """AI model performance dashboard template"""        return {
             "dashboard": {
                 "title": "AI Model Performance",
                 "description": "AI model inference and accuracy metrics",
@@ -472,8 +453,7 @@ class GrafanaManager:
         }
     
     def _get_content_protection_template(self) -> Dict[str, Any]:
-        """Content protection dashboard template"""
-        return {
+        """Content protection dashboard template"""        return {
             "dashboard": {
                 "title": "Content Protection",
                 "description": "Content fingerprinting and protection metrics",
@@ -515,8 +495,7 @@ class GrafanaManager:
         }
     
     def _get_revenue_analytics_template(self) -> Dict[str, Any]:
-        """Revenue analytics dashboard template"""
-        return {
+        """Revenue analytics dashboard template"""        return {
             "dashboard": {
                 "title": "Revenue Analytics",
                 "description": "Revenue tracking and business metrics",
@@ -598,8 +577,7 @@ class GrafanaManager:
         }
     
     def _get_infrastructure_monitoring_template(self) -> Dict[str, Any]:
-        """Infrastructure monitoring dashboard template"""
-        return {
+        """Infrastructure monitoring dashboard template"""        return {
             "dashboard": {
                 "title": "Infrastructure Monitoring",
                 "description": "System resources and infrastructure metrics",
@@ -687,8 +665,7 @@ class GrafanaManager:
         }
     
     def _get_user_activity_template(self) -> Dict[str, Any]:
-        """User activity dashboard template"""
-        return {
+        """User activity dashboard template"""        return {
             "dashboard": {
                 "title": "User Activity",
                 "description": "User engagement and activity metrics",
@@ -770,8 +747,7 @@ class GrafanaManager:
         }
     
     def _get_security_monitoring_template(self) -> Dict[str, Any]:
-        """Security monitoring dashboard template"""
-        return {
+        """Security monitoring dashboard template"""        return {
             "dashboard": {
                 "title": "Security Monitoring",
                 "description": "Security events and threat detection",
@@ -843,8 +819,7 @@ class GrafanaManager:
         }
     
     def _get_business_intelligence_template(self) -> Dict[str, Any]:
-        """Business intelligence dashboard template"""
-        return {
+        """Business intelligence dashboard template"""        return {
             "dashboard": {
                 "title": "Business Overview",
                 "description": "High-level business metrics and KPIs",
@@ -936,8 +911,7 @@ class GrafanaManager:
         }
     
     def _get_api_analytics_template(self) -> Dict[str, Any]:
-        """API analytics dashboard template"""
-        return {
+        """API analytics dashboard template"""        return {
             "dashboard": {
                 "title": "API Analytics",
                 "description": "API usage, performance, and endpoint analytics",
@@ -1026,8 +1000,7 @@ class GrafanaManager:
         config: DashboardConfig,
         panels: Optional[List[PanelConfig]] = None
     ) -> Dict[str, Any]:
-        """Create custom dashboard from configuration"""
-        dashboard_json = {
+        """Create custom dashboard from configuration"""        dashboard_json = {
             "dashboard": {
                 "title": config.title,
                 "description": config.description,
@@ -1049,8 +1022,7 @@ class GrafanaManager:
         return dashboard_json
     
     def _panel_config_to_json(self, panel: PanelConfig) -> Dict[str, Any]:
-        """Convert panel configuration to Grafana JSON format"""
-        panel_json = {
+        """Convert panel configuration to Grafana JSON format"""        panel_json = {
             "title": panel.title,
             "type": panel.panel_type,
             "targets": panel.targets,
@@ -1069,8 +1041,7 @@ class GrafanaManager:
         return panel_json
     
     def _apply_tenant_isolation(self, dashboard_json: Dict[str, Any], tenant_id: str) -> None:
-        """Apply tenant isolation to dashboard"""
-        # Add tenant tag
+        """Apply tenant isolation to dashboard"""        # Add tenant tag
         if "tags" not in dashboard_json["dashboard"]:
             dashboard_json["dashboard"]["tags"] = []
         
@@ -1094,8 +1065,7 @@ class GrafanaManager:
         dashboard_result: Dict[str, Any],
         tenant_id: Optional[str] = None
     ) -> None:
-        """Cache dashboard information"""
-        try:
+        """Cache dashboard information"""        try:
             cache_key = f"dashboard:{dashboard_result['id']}"
             dashboard_info = {
                 "id": dashboard_result["id"],

@@ -1,5 +1,4 @@
-"""
-Audit Log Repository Module
+"""Audit Log Repository Module
 
 Enterprise-grade repository for comprehensive audit logging with security
 compliance, forensic analysis, and automated threat detection.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc, text
@@ -47,14 +45,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 class AuditLogRepository(BaseRepository[AuditLog]):
-    """
-    Repository for audit log operations with enterprise-grade security compliance,
+    """    Repository for audit log operations with enterprise-grade security compliance,
     forensic capabilities, threat detection, and comprehensive audit trails.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize audit log repository"""
-        super().__init__(db_session, AuditLog)
+        """Initialize audit log repository"""        super().__init__(db_session, AuditLog)
         
     def log_action(self,
                   user_id: Optional[int],
@@ -69,8 +64,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
                   log_level: LogLevel = LogLevel.INFO,
                   compliance_category: ComplianceCategory = ComplianceCategory.OPERATIONAL,
                   access_type: AccessType = AccessType.WEB) -> AuditLog:
-        """
-        Create comprehensive audit log entry with security context
+        """        Create comprehensive audit log entry with security context
         
         Args:
             user_id: User performing the action (None for system actions)
@@ -88,8 +82,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
             
         Returns:
             Created AuditLog instance
-        """
-        try:
+        """        try:
             # Generate log entry ID and hash
             log_id = str(uuid.uuid4())
             
@@ -141,8 +134,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
                             action_type: ActionType,
                             security_classification: SecurityClassification,
                             user_id: Optional[int]) -> int:
-        """
-        Calculate risk score for the action
+        """        Calculate risk score for the action
         
         Args:
             action_type: Type of action
@@ -151,8 +143,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
             
         Returns:
             Risk score (0-100)
-        """
-        base_scores = {
+        """        base_scores = {
             ActionType.CREATE: 20,
             ActionType.READ: 10,
             ActionType.UPDATE: 30,
@@ -186,13 +177,11 @@ class AuditLogRepository(BaseRepository[AuditLog]):
         return final_score
         
     def _trigger_security_alert(self, audit_log: AuditLog) -> None:
-        """
-        Trigger security alert for high-risk actions
+        """        Trigger security alert for high-risk actions
         
         Args:
             audit_log: High-risk audit log entry
-        """
-        try:
+        """        try:
             # In production, this would integrate with security monitoring systems
             alert_data = {
                 'alert_type': 'HIGH_RISK_ACTION',
@@ -216,8 +205,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
                          action_types: Optional[List[ActionType]] = None,
                          limit: Optional[int] = None,
                          offset: Optional[int] = None) -> List[AuditLog]:
-        """
-        Get user activity logs with comprehensive filtering
+        """        Get user activity logs with comprehensive filtering
         
         Args:
             user_id: User ID to get activity for
@@ -229,8 +217,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
             
         Returns:
             List of AuditLog instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(AuditLog).filter(
                 AuditLog.user_id == user_id
             )
@@ -272,8 +259,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
                           min_risk_score: int = 50,
                           security_classification: Optional[SecurityClassification] = None,
                           limit: Optional[int] = None) -> List[AuditLog]:
-        """
-        Get security-relevant events for monitoring and analysis
+        """        Get security-relevant events for monitoring and analysis
         
         Args:
             start_date: Optional start date filter
@@ -284,8 +270,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
             
         Returns:
             List of security-relevant AuditLog instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(AuditLog).filter(
                 AuditLog.risk_score >= min_risk_score
             )
@@ -324,8 +309,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
                    start_date: Optional[datetime] = None,
                    end_date: Optional[datetime] = None,
                    limit: int = 100) -> List[AuditLog]:
-        """
-        Advanced search through audit logs with flexible criteria
+        """        Advanced search through audit logs with flexible criteria
         
         Args:
             search_criteria: Dictionary of search criteria
@@ -335,8 +319,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
             
         Returns:
             List of matching AuditLog instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(AuditLog)
             
             # Apply date filters
@@ -390,8 +373,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
                             start_date: datetime,
                             end_date: datetime,
                             compliance_category: Optional[ComplianceCategory] = None) -> Dict[str, Any]:
-        """
-        Generate compliance audit report for regulatory requirements
+        """        Generate compliance audit report for regulatory requirements
         
         Args:
             start_date: Report start date
@@ -400,8 +382,7 @@ class AuditLogRepository(BaseRepository[AuditLog]):
             
         Returns:
             Comprehensive compliance report
-        """
-        try:
+        """        try:
             query = self.db_session.query(AuditLog).filter(
                 and_(
                     AuditLog.timestamp >= start_date,
@@ -521,16 +502,14 @@ class AuditLogRepository(BaseRepository[AuditLog]):
             return {'error': str(e)}
             
     def _generate_report_hash(self, audit_logs: List[AuditLog]) -> str:
-        """
-        Generate integrity hash for compliance report
+        """        Generate integrity hash for compliance report
         
         Args:
             audit_logs: List of audit logs in the report
             
         Returns:
             SHA-256 hash of report data
-        """
-        try:
+        """        try:
             # Create concatenated string of all log IDs and hashes
             log_data = ''.join(
                 f"{log.log_id}{log.details_hash}" 
@@ -544,16 +523,14 @@ class AuditLogRepository(BaseRepository[AuditLog]):
             return 'hash_generation_failed'
             
     def verify_log_integrity(self, log_id: str) -> bool:
-        """
-        Verify integrity of an audit log entry
+        """        Verify integrity of an audit log entry
         
         Args:
             log_id: Log ID to verify
             
         Returns:
             True if integrity is verified, False otherwise
-        """
-        try:
+        """        try:
             audit_log = self.db_session.query(AuditLog).filter(
                 AuditLog.log_id == log_id
             ).first()
@@ -572,16 +549,14 @@ class AuditLogRepository(BaseRepository[AuditLog]):
             return False
             
     def cleanup_old_logs(self, retention_days: int = 2555) -> int:  # 7 years default
-        """
-        Clean up old audit logs beyond retention period
+        """        Clean up old audit logs beyond retention period
         
         Args:
             retention_days: Number of days to retain logs
             
         Returns:
             Number of archived/deleted logs
-        """
-        try:
+        """        try:
             cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
             
             # For compliance, we archive rather than delete

@@ -1,5 +1,4 @@
-"""
-Multi-Format Content Processing Module for IA Influencer Agent Platform
+"""Multi-Format Content Processing Module for IA Influencer Agent Platform
 
 Advanced processing capabilities for multiple content formats including audio,
 video, images, and text content for creators, influencers, and multimedia platforms.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import io
@@ -36,8 +34,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    TEXT = "text"
+    """Supported content formats"""    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -45,8 +42,7 @@ class ContentFormat(Enum):
     MIXED_MEDIA = "mixed_media"
 
 class ProcessingPipeline(Enum):
-    """Processing pipeline types"""
-    TRANSCRIPTION = "transcription"
+    """Processing pipeline types"""    TRANSCRIPTION = "transcription"
     DESCRIPTION = "description"
     EXTRACTION = "extraction"
     CLASSIFICATION = "classification"
@@ -56,8 +52,7 @@ class ProcessingPipeline(Enum):
 
 @dataclass
 class MediaMetadata:
-    """Media file metadata"""
-    format: ContentFormat
+    """Media file metadata"""    format: ContentFormat
     file_size: int
     duration: Optional[float] = None  # for audio/video
     dimensions: Optional[Tuple[int, int]] = None  # for images/video
@@ -69,8 +64,7 @@ class MediaMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Multi-format content processing result"""
-    content_id: str
+    """Multi-format content processing result"""    content_id: str
     original_format: ContentFormat
     processed_content: Dict[str, Any] = field(default_factory=dict)
     extracted_text: Optional[str] = None
@@ -87,25 +81,21 @@ class ProcessingResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class ContentProcessor(ABC):
-    """Abstract base class for content processors"""
-    
+    """Abstract base class for content processors"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.name = self.__class__.__name__
         
     @abstractmethod
     async def process(self, content: Any, metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process content and return result"""
-        pass
+        """Process content and return result"""        pass
     
     @abstractmethod
     def supports_format(self, format: ContentFormat) -> bool:
-        """Check if processor supports the given format"""
-        pass
+        """Check if processor supports the given format"""        pass
 
 class MultiFormatProcessor:
-    """
-    Advanced multi-format content processor
+    """    Advanced multi-format content processor
     
     Capabilities:
     - Audio transcription and analysis
@@ -115,8 +105,7 @@ class MultiFormatProcessor:
     - Cross-format content linking
     - Platform-specific optimization
     - Real-time processing pipeline
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or self._get_default_config()
         self.processors: Dict[ContentFormat, ContentProcessor] = {}
@@ -124,8 +113,7 @@ class MultiFormatProcessor:
         self.is_initialized = False
         
     async def initialize(self):
-        """Initialize all processors and models"""
-        try:
+        """Initialize all processors and models"""        try:
             logger.info("Initializing multi-format processor...")
             
             # Initialize text processor
@@ -154,8 +142,7 @@ class MultiFormatProcessor:
             raise
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration"""
-        return {
+        """Get default configuration"""        return {
             'max_file_size': 100 * 1024 * 1024,  # 100MB
             'supported_image_formats': ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp'],
             'supported_audio_formats': ['.mp3', '.wav', '.ogg', '.m4a', '.flac'],
@@ -178,8 +165,7 @@ class MultiFormatProcessor:
         metadata: Dict[str, Any] = None,
         pipeline: List[ProcessingPipeline] = None
     ) -> ProcessingResult:
-        """Process content based on format and pipeline"""
-        try:
+        """Process content based on format and pipeline"""        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -216,8 +202,7 @@ class MultiFormatProcessor:
         content_items: List[Tuple[Any, ContentFormat]],
         metadata: Dict[str, Any] = None
     ) -> ProcessingResult:
-        """Process multiple content items as mixed media"""
-        try:
+        """Process multiple content items as mixed media"""        try:
             mixed_result = ProcessingResult(
                 content_id=f"mixed_{int(datetime.utcnow().timestamp())}",
                 original_format=ContentFormat.MIXED_MEDIA
@@ -241,15 +226,13 @@ class MultiFormatProcessor:
             )
 
 class TextProcessor(ContentProcessor):
-    """Advanced text content processor"""
-    
+    """Advanced text content processor"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.nlp_pipeline = None
         
     async def initialize(self):
-        """Initialize NLP pipeline"""
-        try:
+        """Initialize NLP pipeline"""        try:
             from ..core import AdvancedNLPEngine
             self.nlp_engine = AdvancedNLPEngine(self.config)
             await self.nlp_engine.initialize()
@@ -260,8 +243,7 @@ class TextProcessor(ContentProcessor):
         return format == ContentFormat.TEXT
     
     async def process(self, content: str, metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process text content"""
-        try:
+        """Process text content"""        try:
             start_time = datetime.utcnow()
             
             result = ProcessingResult(
@@ -299,8 +281,7 @@ class TextProcessor(ContentProcessor):
             return ProcessingResult(content_id="", original_format=ContentFormat.TEXT)
     
     def _calculate_text_quality(self, text: str) -> Dict[str, float]:
-        """Calculate text quality metrics"""
-        try:
+        """Calculate text quality metrics"""        try:
             import textstat
             
             metrics = {
@@ -317,8 +298,7 @@ class TextProcessor(ContentProcessor):
             return {'overall_quality': 0.5}
     
     def _calculate_coherence(self, text: str) -> float:
-        """Calculate text coherence score"""
-        sentences = text.split('.')
+        """Calculate text coherence score"""        sentences = text.split('.')
         if len(sentences) < 2:
             return 1.0
         
@@ -334,16 +314,14 @@ class TextProcessor(ContentProcessor):
         return min(coherence, 1.0)
 
 class ImageProcessor(ContentProcessor):
-    """Advanced image content processor"""
-    
+    """Advanced image content processor"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.image_captioning_model = None
         self.image_captioning_processor = None
         
     async def initialize(self):
-        """Initialize image processing models"""
-        try:
+        """Initialize image processing models"""        try:
             # Initialize image captioning model
             model_name = self.config.get('image_description_model', 'Salesforce/blip-image-captioning-base')
             self.image_captioning_processor = BlipProcessor.from_pretrained(model_name)
@@ -358,8 +336,7 @@ class ImageProcessor(ContentProcessor):
         return format == ContentFormat.IMAGE
     
     async def process(self, content: Union[str, bytes, Image.Image], metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process image content"""
-        try:
+        """Process image content"""        try:
             start_time = datetime.utcnow()
             
             # Convert content to PIL Image
@@ -422,8 +399,7 @@ class ImageProcessor(ContentProcessor):
             return ProcessingResult(content_id="", original_format=ContentFormat.IMAGE)
     
     def _extract_image_metadata(self, image: Image.Image) -> MediaMetadata:
-        """Extract image metadata"""
-        try:
+        """Extract image metadata"""        try:
             return MediaMetadata(
                 format=ContentFormat.IMAGE,
                 file_size=len(image.tobytes()),
@@ -436,8 +412,7 @@ class ImageProcessor(ContentProcessor):
             return MediaMetadata(format=ContentFormat.IMAGE, file_size=0)
     
     async def _generate_image_description(self, image: Image.Image) -> str:
-        """Generate image description using AI model"""
-        try:
+        """Generate image description using AI model"""        try:
             inputs = self.image_captioning_processor(image, return_tensors="pt")
             out = self.image_captioning_model.generate(**inputs, max_length=50)
             description = self.image_captioning_processor.decode(out[0], skip_special_tokens=True)
@@ -447,8 +422,7 @@ class ImageProcessor(ContentProcessor):
             return "Unable to generate description"
     
     async def _extract_text_from_image(self, image: Image.Image) -> str:
-        """Extract text from image using OCR"""
-        try:
+        """Extract text from image using OCR"""        try:
             # Convert PIL image to OpenCV format
             cv_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
             
@@ -460,8 +434,7 @@ class ImageProcessor(ContentProcessor):
             return ""
     
     async def _detect_objects(self, image: Image.Image) -> List[Dict[str, Any]]:
-        """Detect objects in image"""
-        try:
+        """Detect objects in image"""        try:
             # Simple object detection using OpenCV (placeholder)
             # In production, use more advanced models like YOLO or COCO
             cv_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
@@ -491,8 +464,7 @@ class ImageProcessor(ContentProcessor):
             return []
     
     async def _detect_faces(self, image: Image.Image) -> List[Dict[str, Any]]:
-        """Detect faces in image"""
-        try:
+        """Detect faces in image"""        try:
             cv_image = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
             
@@ -513,8 +485,7 @@ class ImageProcessor(ContentProcessor):
             return []
     
     def _calculate_image_quality(self, image: Image.Image) -> Dict[str, float]:
-        """Calculate image quality metrics"""
-        try:
+        """Calculate image quality metrics"""        try:
             # Convert to grayscale for analysis
             gray = image.convert('L')
             img_array = np.array(gray)
@@ -545,21 +516,18 @@ class ImageProcessor(ContentProcessor):
             return {'overall_quality': 0.5}
     
     def _calculate_image_quality_score(self, image: Image.Image) -> float:
-        """Calculate overall image quality score"""
-        quality_metrics = self._calculate_image_quality(image)
+        """Calculate overall image quality score"""        quality_metrics = self._calculate_image_quality(image)
         return quality_metrics.get('overall_quality', 0.5)
 
 class AudioProcessor(ContentProcessor):
-    """Advanced audio content processor"""
-    
+    """Advanced audio content processor"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.whisper_model = None
         self.speech_recognizer = None
         
     async def initialize(self):
-        """Initialize audio processing models"""
-        try:
+        """Initialize audio processing models"""        try:
             # Initialize Whisper model for transcription
             model_name = self.config.get('whisper_model', 'base')
             self.whisper_model = whisper.load_model(model_name)
@@ -576,8 +544,7 @@ class AudioProcessor(ContentProcessor):
         return format == ContentFormat.AUDIO
     
     async def process(self, content: Union[str, bytes], metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process audio content"""
-        try:
+        """Process audio content"""        try:
             start_time = datetime.utcnow()
             
             # Load audio data
@@ -636,8 +603,7 @@ class AudioProcessor(ContentProcessor):
             return ProcessingResult(content_id="", original_format=ContentFormat.AUDIO)
     
     def _extract_audio_metadata(self, audio_data: np.ndarray, sample_rate: int) -> MediaMetadata:
-        """Extract audio metadata"""
-        try:
+        """Extract audio metadata"""        try:
             duration = len(audio_data) / sample_rate
             file_size = audio_data.nbytes
             
@@ -653,8 +619,7 @@ class AudioProcessor(ContentProcessor):
             return MediaMetadata(format=ContentFormat.AUDIO, file_size=0)
     
     async def _transcribe_audio(self, content: Union[str, bytes]) -> str:
-        """Transcribe audio using Whisper"""
-        try:
+        """Transcribe audio using Whisper"""        try:
             if isinstance(content, str):
                 # File path
                 result = self.whisper_model.transcribe(content)
@@ -670,8 +635,7 @@ class AudioProcessor(ContentProcessor):
             return "Transcription failed"
     
     async def _analyze_audio_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze audio features"""
-        try:
+        """Analyze audio features"""        try:
             features = {}
             
             # Tempo
@@ -703,8 +667,7 @@ class AudioProcessor(ContentProcessor):
             return {}
     
     async def _generate_audio_description(self, audio_features: Dict[str, Any]) -> str:
-        """Generate audio description based on features"""
-        try:
+        """Generate audio description based on features"""        try:
             tempo = audio_features.get('tempo', 0)
             brightness = audio_features.get('brightness', 0)
             loudness = audio_features.get('loudness', 0)
@@ -741,8 +704,7 @@ class AudioProcessor(ContentProcessor):
             return "Audio content"
     
     def _calculate_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Calculate audio quality metrics"""
-        try:
+        """Calculate audio quality metrics"""        try:
             # Signal-to-noise ratio estimation
             signal_power = np.mean(audio_data ** 2)
             noise_power = np.var(audio_data - np.mean(audio_data))
@@ -770,19 +732,16 @@ class AudioProcessor(ContentProcessor):
             return {'overall_quality': 0.5}
     
     def _calculate_audio_quality_score(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate overall audio quality score"""
-        quality_metrics = self._calculate_audio_quality(audio_data, sample_rate)
+        """Calculate overall audio quality score"""        quality_metrics = self._calculate_audio_quality(audio_data, sample_rate)
         return quality_metrics.get('overall_quality', 0.5)
 
 class VideoProcessor(ContentProcessor):
-    """Advanced video content processor"""
-    
+    """Advanced video content processor"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         
     async def initialize(self):
-        """Initialize video processing capabilities"""
-        try:
+        """Initialize video processing capabilities"""        try:
             logger.info("Video processor initialized successfully")
         except Exception as e:
             logger.error(f"Error initializing video processor: {e}")
@@ -791,8 +750,7 @@ class VideoProcessor(ContentProcessor):
         return format == ContentFormat.VIDEO
     
     async def process(self, content: str, metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process video content"""
-        try:
+        """Process video content"""        try:
             start_time = datetime.utcnow()
             
             # Load video
@@ -853,8 +811,7 @@ class VideoProcessor(ContentProcessor):
             return ProcessingResult(content_id="", original_format=ContentFormat.VIDEO)
     
     def _extract_video_metadata(self, video: VideoFileClip) -> MediaMetadata:
-        """Extract video metadata"""
-        try:
+        """Extract video metadata"""        try:
             return MediaMetadata(
                 format=ContentFormat.VIDEO,
                 file_size=0,  # Would need to calculate from file
@@ -868,8 +825,7 @@ class VideoProcessor(ContentProcessor):
             return MediaMetadata(format=ContentFormat.VIDEO, file_size=0)
     
     async def _extract_key_frames(self, video: VideoFileClip, num_frames: int = 5) -> List[Image.Image]:
-        """Extract key frames from video"""
-        try:
+        """Extract key frames from video"""        try:
             key_frames = []
             duration = video.duration
             
@@ -885,8 +841,7 @@ class VideoProcessor(ContentProcessor):
             return []
     
     async def _analyze_video_features(self, video: VideoFileClip) -> Dict[str, Any]:
-        """Analyze video features"""
-        try:
+        """Analyze video features"""        try:
             features = {
                 'duration': video.duration,
                 'fps': video.fps,
@@ -920,8 +875,7 @@ class VideoProcessor(ContentProcessor):
             return {}
     
     def _calculate_video_quality(self, video: VideoFileClip) -> Dict[str, float]:
-        """Calculate video quality metrics"""
-        try:
+        """Calculate video quality metrics"""        try:
             # Resolution score
             total_pixels = video.w * video.h
             resolution_score = min(total_pixels / (1920 * 1080), 1.0)  # Normalize to 1080p
@@ -949,19 +903,16 @@ class VideoProcessor(ContentProcessor):
             return {'overall_quality': 0.5}
     
     def _calculate_video_quality_score(self, video: VideoFileClip) -> float:
-        """Calculate overall video quality score"""
-        quality_metrics = self._calculate_video_quality(video)
+        """Calculate overall video quality score"""        quality_metrics = self._calculate_video_quality(video)
         return quality_metrics.get('overall_quality', 0.5)
 
 class DocumentProcessor(ContentProcessor):
-    """Advanced document content processor"""
-    
+    """Advanced document content processor"""    
     def supports_format(self, format: ContentFormat) -> bool:
         return format == ContentFormat.DOCUMENT
     
     async def process(self, content: str, metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process document content"""
-        try:
+        """Process document content"""        try:
             start_time = datetime.utcnow()
             
             result = ProcessingResult(
@@ -996,8 +947,7 @@ class DocumentProcessor(ContentProcessor):
             return ProcessingResult(content_id="", original_format=ContentFormat.DOCUMENT)
     
     async def _extract_document_text(self, file_path: str, metadata: Dict[str, Any] = None) -> str:
-        """Extract text from document based on file type"""
-        try:
+        """Extract text from document based on file type"""        try:
             file_extension = file_path.lower().split('.')[-1]
             
             if file_extension == 'pdf':
@@ -1014,8 +964,7 @@ class DocumentProcessor(ContentProcessor):
             return ""
     
     async def _extract_pdf_text(self, file_path: str) -> str:
-        """Extract text from PDF"""
-        try:
+        """Extract text from PDF"""        try:
             import PyPDF2
             with open(file_path, 'rb') as file:
                 pdf_reader = PyPDF2.PdfReader(file)
@@ -1028,8 +977,7 @@ class DocumentProcessor(ContentProcessor):
             return ""
     
     async def _extract_docx_text(self, file_path: str) -> str:
-        """Extract text from DOCX"""
-        try:
+        """Extract text from DOCX"""        try:
             import docx
             doc = docx.Document(file_path)
             text = ""
@@ -1041,8 +989,7 @@ class DocumentProcessor(ContentProcessor):
             return ""
     
     async def _extract_txt_text(self, file_path: str) -> str:
-        """Extract text from TXT"""
-        try:
+        """Extract text from TXT"""        try:
             with open(file_path, 'r', encoding='utf-8') as file:
                 return file.read()
         except Exception as e:

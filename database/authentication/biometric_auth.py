@@ -1,5 +1,4 @@
-"""
-Biometric Authentication Database Components
+"""Biometric Authentication Database Components
 
 Enterprise biometric authentication with template storage, verification algorithms,
 liveness detection, and multi-modal biometric support for content creators.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 import uuid
 import json
 import hashlib
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class BiometricType(Enum):
-    """Biometric modality types"""
-    FINGERPRINT = "fingerprint"
+    """Biometric modality types"""    FINGERPRINT = "fingerprint"
     FACE = "face"
     VOICE = "voice"
     IRIS = "iris"
@@ -57,8 +54,7 @@ class BiometricType(Enum):
 
 
 class BiometricQuality(Enum):
-    """Biometric template quality levels"""
-    EXCELLENT = "excellent"
+    """Biometric template quality levels"""    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
@@ -66,8 +62,7 @@ class BiometricQuality(Enum):
 
 
 class VerificationStatus(Enum):
-    """Verification attempt status"""
-    SUCCESS = "success"
+    """Verification attempt status"""    SUCCESS = "success"
     FAILURE = "failure"
     LIVENESS_FAILED = "liveness_failed"
     QUALITY_TOO_LOW = "quality_too_low"
@@ -77,8 +72,7 @@ class VerificationStatus(Enum):
 
 @dataclass
 class BiometricFeatures:
-    """Biometric feature vector structure"""
-    feature_vector: List[float]
+    """Biometric feature vector structure"""    feature_vector: List[float]
     quality_score: float
     extraction_algorithm: str
     template_version: str
@@ -88,8 +82,7 @@ class BiometricFeatures:
 
 
 class BiometricTemplate(Base):
-    """Biometric template storage"""
-    __tablename__ = "biometric_templates"
+    """Biometric template storage"""    __tablename__ = "biometric_templates"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -119,8 +112,7 @@ class BiometricTemplate(Base):
 
 
 class BiometricVerification(Base):
-    """Biometric verification attempts log"""
-    __tablename__ = "biometric_verifications"
+    """Biometric verification attempts log"""    __tablename__ = "biometric_verifications"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -152,8 +144,7 @@ class BiometricVerification(Base):
 
 
 class BiometricPolicy(Base):
-    """Biometric authentication policies"""
-    __tablename__ = "biometric_policies"
+    """Biometric authentication policies"""    __tablename__ = "biometric_policies"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     policy_name = Column(String(255), nullable=False, unique=True)
@@ -175,8 +166,7 @@ class BiometricPolicy(Base):
 
 
 class BiometricDevice(Base):
-    """Registered biometric devices"""
-    __tablename__ = "biometric_devices"
+    """Registered biometric devices"""    __tablename__ = "biometric_devices"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -200,16 +190,14 @@ class BiometricDevice(Base):
 
 
 class BiometricAuthManager:
-    """Enterprise biometric authentication manager"""
-    
+    """Enterprise biometric authentication manager"""    
     def __init__(self, db_session: Session, encryption_key: bytes):
         self.db = db_session
         self.fernet = Fernet(encryption_key)
         self.default_policy = self._get_default_policy()
     
     def _get_default_policy(self) -> Dict[str, Any]:
-        """Get default biometric policy"""
-        policy = self.db.query(BiometricPolicy).filter(
+        """Get default biometric policy"""        policy = self.db.query(BiometricPolicy).filter(
             BiometricPolicy.is_default == True
         ).first()
         
@@ -240,21 +228,17 @@ class BiometricAuthManager:
         }
     
     def _encrypt_template(self, template_data: bytes) -> bytes:
-        """Encrypt biometric template"""
-        return self.fernet.encrypt(template_data)
+        """Encrypt biometric template"""        return self.fernet.encrypt(template_data)
     
     def _decrypt_template(self, encrypted_template: bytes) -> bytes:
-        """Decrypt biometric template"""
-        return self.fernet.decrypt(encrypted_template)
+        """Decrypt biometric template"""        return self.fernet.decrypt(encrypted_template)
     
     def _calculate_feature_hash(self, features: BiometricFeatures) -> str:
-        """Calculate hash of feature vector for indexing"""
-        feature_str = json.dumps(features.feature_vector, sort_keys=True)
+        """Calculate hash of feature vector for indexing"""        feature_str = json.dumps(features.feature_vector, sort_keys=True)
         return hashlib.sha256(feature_str.encode()).hexdigest()
     
     def _calculate_quality_score(self, features: BiometricFeatures) -> int:
-        """Calculate overall quality score from biometric features"""
-        base_quality = int(features.quality_score * 100)
+        """Calculate overall quality score from biometric features"""        base_quality = int(features.quality_score * 100)
         confidence_bonus = int(features.confidence_level * 10)
         liveness_bonus = int((features.liveness_score or 0) * 5)
         
@@ -269,8 +253,7 @@ class BiometricAuthManager:
         device_info: Dict[str, Any],
         template_name: Optional[str] = None
     ) -> Optional[str]:
-        """Enroll new biometric template"""
-        try:
+        """Enroll new biometric template"""        try:
             # Validate quality
             quality_score = self._calculate_quality_score(features)
             if quality_score < self.default_policy["minimum_quality_score"]:
@@ -332,8 +315,7 @@ class BiometricAuthManager:
         device_info: Dict[str, Any],
         session_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Verify biometric against enrolled templates"""
-        verification_start = datetime.now(timezone.utc)
+        """Verify biometric against enrolled templates"""        verification_start = datetime.now(timezone.utc)
         
         try:
             # Get user's active templates for this biometric type
@@ -461,8 +443,7 @@ class BiometricAuthManager:
             return {"success": False, "reason": "System error during verification"}
     
     def _calculate_match_score(self, input_features: BiometricFeatures, stored_features: BiometricFeatures) -> int:
-        """Calculate biometric match score between templates"""
-        try:
+        """Calculate biometric match score between templates"""        try:
             # Convert feature vectors to numpy arrays
             input_vector = np.array(input_features.feature_vector)
             stored_vector = np.array(stored_features.feature_vector)
@@ -502,8 +483,7 @@ class BiometricAuthManager:
         failure_reason: Optional[str] = None,
         session_id: Optional[str] = None
     ):
-        """Log biometric verification attempt"""
-        try:
+        """Log biometric verification attempt"""        try:
             elapsed_ms = int((datetime.now(timezone.utc) - verification_time).total_seconds() * 1000)
             
             verification_log = BiometricVerification(
@@ -531,8 +511,7 @@ class BiometricAuthManager:
             logger.error(f"Failed to log verification: {e}")
     
     async def get_user_biometrics(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user's enrolled biometric templates"""
-        try:
+        """Get user's enrolled biometric templates"""        try:
             templates = self.db.query(BiometricTemplate).filter(
                 BiometricTemplate.user_id == uuid.UUID(user_id),
                 BiometricTemplate.is_active == True
@@ -558,8 +537,7 @@ class BiometricAuthManager:
             return []
     
     async def delete_biometric_template(self, user_id: str, template_id: str) -> bool:
-        """Delete biometric template"""
-        try:
+        """Delete biometric template"""        try:
             template = self.db.query(BiometricTemplate).filter(
                 BiometricTemplate.id == uuid.UUID(template_id),
                 BiometricTemplate.user_id == uuid.UUID(user_id)
@@ -587,8 +565,7 @@ class BiometricAuthManager:
         supported_biometrics: List[str],
         device_capabilities: Dict[str, Any]
     ) -> bool:
-        """Register biometric-capable device"""
-        try:
+        """Register biometric-capable device"""        try:
             device = BiometricDevice(
                 user_id=uuid.UUID(user_id),
                 device_fingerprint=device_fingerprint,
@@ -612,32 +589,27 @@ class BiometricAuthManager:
 
 
 class BiometricVerification:
-    """Biometric verification helper class"""
-    
+    """Biometric verification helper class"""    
     @staticmethod
     def extract_face_features(image_data: bytes) -> Optional[BiometricFeatures]:
-        """Extract facial features from image data"""
-        # Implementation would use face recognition libraries
+        """Extract facial features from image data"""        # Implementation would use face recognition libraries
         # like dlib, face_recognition, or OpenCV
         pass
     
     @staticmethod
     def extract_fingerprint_features(image_data: bytes) -> Optional[BiometricFeatures]:
-        """Extract fingerprint minutiae from image data"""
-        # Implementation would use fingerprint libraries
+        """Extract fingerprint minutiae from image data"""        # Implementation would use fingerprint libraries
         # like NIST NBIS or commercial SDKs
         pass
     
     @staticmethod
     def extract_voice_features(audio_data: bytes) -> Optional[BiometricFeatures]:
-        """Extract voice features from audio data"""
-        # Implementation would use speaker recognition libraries
+        """Extract voice features from audio data"""        # Implementation would use speaker recognition libraries
         # like speechbrain, pyannote, or commercial SDKs
         pass
     
     @staticmethod
     def perform_liveness_detection(image_data: bytes, biometric_type: BiometricType) -> float:
-        """Perform liveness detection on biometric sample"""
-        # Implementation would use anti-spoofing algorithms
+        """Perform liveness detection on biometric sample"""        # Implementation would use anti-spoofing algorithms
         # to detect if the biometric is from a live person
         pass

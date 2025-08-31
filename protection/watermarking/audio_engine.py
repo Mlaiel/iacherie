@@ -1,5 +1,4 @@
-"""
-Professional Audio Watermarking Engine
+"""Professional Audio Watermarking Engine
 Advanced digital watermarking for audio content with multiple embedding techniques
 
 Developed by: Fahed Mlaiel (mlaiel@live.de)
@@ -12,7 +11,6 @@ property of Fahed Mlaiel. Any unauthorized use, copying, modification, or distri
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly 
 prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -41,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class AudioWatermarkTechnique(Enum):
-    """Audio watermarking techniques"""
-    SPECTRAL_SPREADING = "spectral_spreading"
+    """Audio watermarking techniques"""    SPECTRAL_SPREADING = "spectral_spreading"
     LSB_EMBEDDING = "lsb_embedding"
     ECHO_HIDING = "echo_hiding"
     PHASE_CODING = "phase_coding"
@@ -52,8 +49,7 @@ class AudioWatermarkTechnique(Enum):
 
 
 class AudioWatermarkStrength(Enum):
-    """Audio watermark strength levels"""
-    TRANSPARENT = "transparent"    # Completely inaudible
+    """Audio watermark strength levels"""    TRANSPARENT = "transparent"    # Completely inaudible
     LIGHT = "light"               # Very light, high quality
     MEDIUM = "medium"             # Balanced strength/quality
     STRONG = "strong"             # Strong protection
@@ -62,8 +58,7 @@ class AudioWatermarkStrength(Enum):
 
 @dataclass
 class AudioWatermarkConfig:
-    """Configuration for audio watermarking"""
-    sample_rate: int = 44100
+    """Configuration for audio watermarking"""    sample_rate: int = 44100
     frame_size: int = 2048
     hop_length: int = 512
     window_type: str = "hann"
@@ -76,8 +71,7 @@ class AudioWatermarkConfig:
 
 @dataclass
 class AudioWatermarkMetrics:
-    """Audio watermarking quality metrics"""
-    snr_db: float
+    """Audio watermarking quality metrics"""    snr_db: float
     thd_percent: float
     imperceptibility_score: float
     robustness_score: float
@@ -87,16 +81,14 @@ class AudioWatermarkMetrics:
 
 
 class PsychoacousticModel:
-    """Psychoacoustic masking model for audio watermarking"""
-    
+    """Psychoacoustic masking model for audio watermarking"""    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         self.bark_scale = self._generate_bark_scale()
         self.masking_thresholds = {}
     
     def _generate_bark_scale(self) -> np.ndarray:
-        """Generate Bark scale frequency mapping"""
-        freqs = np.linspace(0, self.sample_rate // 2, 1025)
+        """Generate Bark scale frequency mapping"""        freqs = np.linspace(0, self.sample_rate // 2, 1025)
         bark = 13 * np.arctan(0.00076 * freqs) + 3.5 * np.arctan((freqs / 7500) ** 2)
         return bark
     
@@ -105,8 +97,7 @@ class PsychoacousticModel:
         audio_spectrum: np.ndarray,
         frequencies: np.ndarray
     ) -> np.ndarray:
-        """Calculate psychoacoustic masking threshold"""
-        try:
+        """Calculate psychoacoustic masking threshold"""        try:
             # Convert to dB
             spectrum_db = 20 * np.log10(np.abs(audio_spectrum) + 1e-10)
             
@@ -134,8 +125,7 @@ class PsychoacousticModel:
 
 
 class SpectralWatermarkEngine:
-    """Advanced spectral domain watermarking"""
-    
+    """Advanced spectral domain watermarking"""    
     def __init__(self, config: AudioWatermarkConfig):
         self.config = config
         self.psychoacoustic = PsychoacousticModel(config.sample_rate)
@@ -146,8 +136,7 @@ class SpectralWatermarkEngine:
         watermark_bits: List[int],
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Embed watermark using spread spectrum technique"""
-        try:
+        """Embed watermark using spread spectrum technique"""        try:
             if not AUDIO_AVAILABLE:
                 raise ValueError("Audio libraries not available")
             
@@ -258,8 +247,7 @@ class SpectralWatermarkEngine:
         original_audio: Optional[np.ndarray],
         expected_bits: int
     ) -> Tuple[List[int], float]:
-        """Detect spread spectrum watermark"""
-        try:
+        """Detect spread spectrum watermark"""        try:
             if not AUDIO_AVAILABLE:
                 return [], 0.0
             
@@ -339,8 +327,7 @@ class SpectralWatermarkEngine:
         bits_embedded: int,
         frames_modified: int
     ) -> AudioWatermarkMetrics:
-        """Calculate audio watermarking quality metrics"""
-        try:
+        """Calculate audio watermarking quality metrics"""        try:
             # Ensure same length
             min_len = min(len(original), len(watermarked))
             original = original[:min_len]
@@ -385,8 +372,7 @@ class SpectralWatermarkEngine:
 
 
 class WaveletWatermarkEngine:
-    """Wavelet domain watermarking engine"""
-    
+    """Wavelet domain watermarking engine"""    
     def __init__(self, config: AudioWatermarkConfig):
         self.config = config
         self.wavelet_type = 'db4'
@@ -398,8 +384,7 @@ class WaveletWatermarkEngine:
         watermark_bits: List[int],
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Embed watermark in wavelet domain"""
-        try:
+        """Embed watermark in wavelet domain"""        try:
             if not AUDIO_AVAILABLE:
                 raise ValueError("Audio libraries not available")
             
@@ -474,8 +459,7 @@ class WaveletWatermarkEngine:
         original_audio: np.ndarray,
         expected_bits: int
     ) -> Tuple[List[int], float]:
-        """Detect watermark in wavelet domain"""
-        try:
+        """Detect watermark in wavelet domain"""        try:
             # Decompose both signals
             watermarked_coeffs = pywt.wavedec(watermarked_audio, self.wavelet_type, level=self.decomposition_levels)
             original_coeffs = pywt.wavedec(original_audio, self.wavelet_type, level=self.decomposition_levels)
@@ -521,8 +505,7 @@ class WaveletWatermarkEngine:
 
 
 class AudioWatermarkEngine:
-    """
-    Professional Audio Watermarking Engine
+    """    Professional Audio Watermarking Engine
     
     Comprehensive audio watermarking system supporting multiple techniques:
     - Spread Spectrum
@@ -531,8 +514,7 @@ class AudioWatermarkEngine:
     - Phase Coding
     - LSB Embedding
     - Psychoacoustic Model
-    """
-    
+    """    
     def __init__(self, config: Optional[AudioWatermarkConfig] = None):
         self.config = config or AudioWatermarkConfig()
         self.spectral_engine = SpectralWatermarkEngine(self.config)
@@ -562,8 +544,7 @@ class AudioWatermarkEngine:
         technique: AudioWatermarkTechnique,
         strength: AudioWatermarkStrength = AudioWatermarkStrength.MEDIUM
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """
-        Embed watermark using specified technique
+        """        Embed watermark using specified technique
         
         Args:
             audio_data: Input audio signal
@@ -573,8 +554,7 @@ class AudioWatermarkEngine:
             
         Returns:
             Tuple of (watermarked_audio, embedding_info)
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Convert watermark data to bits
@@ -634,8 +614,7 @@ class AudioWatermarkEngine:
         original_audio: Optional[np.ndarray] = None,
         expected_data_length: Optional[int] = None
     ) -> Tuple[Optional[bytes], float, Dict[str, Any]]:
-        """
-        Detect and extract watermark using specified technique
+        """        Detect and extract watermark using specified technique
         
         Args:
             watermarked_audio: Audio signal containing watermark
@@ -645,8 +624,7 @@ class AudioWatermarkEngine:
             
         Returns:
             Tuple of (extracted_data, confidence, detection_info)
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Estimate expected bits if not provided
@@ -724,8 +702,7 @@ class AudioWatermarkEngine:
         watermark_bits: List[int],
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """LSB embedding implementation"""
-        try:
+        """LSB embedding implementation"""        try:
             # Convert to 16-bit integers for LSB manipulation
             audio_int = (audio_data * 32767).astype(np.int16)
             
@@ -789,8 +766,7 @@ class AudioWatermarkEngine:
         original_audio: Optional[np.ndarray],
         expected_bits: int
     ) -> Tuple[List[int], float]:
-        """LSB detection implementation"""
-        try:
+        """LSB detection implementation"""        try:
             audio_int = (watermarked_audio * 32767).astype(np.int16)
             
             extracted_bits = []
@@ -827,8 +803,7 @@ class AudioWatermarkEngine:
         watermark_bits: List[int],
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Echo hiding implementation"""
-        try:
+        """Echo hiding implementation"""        try:
             strength_params = {
                 AudioWatermarkStrength.TRANSPARENT: {"delay_0": 0.3, "delay_1": 0.6, "alpha": 0.05},
                 AudioWatermarkStrength.LIGHT: {"delay_0": 0.5, "delay_1": 1.0, "alpha": 0.1},
@@ -882,8 +857,7 @@ class AudioWatermarkEngine:
         original_audio: Optional[np.ndarray],
         expected_bits: int
     ) -> Tuple[List[int], float]:
-        """Echo detection implementation"""
-        try:
+        """Echo detection implementation"""        try:
             # Simplified echo detection - would need autocorrelation analysis
             extracted_bits = [0] * expected_bits  # Placeholder
             confidence = 0.5  # Placeholder
@@ -901,8 +875,7 @@ class AudioWatermarkEngine:
         watermark_bits: List[int],
         strength: AudioWatermarkStrength
     ) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Phase coding implementation"""
-        try:
+        """Phase coding implementation"""        try:
             # STFT for phase manipulation
             stft = librosa.stft(audio_data, n_fft=self.config.frame_size, hop_length=self.config.hop_length)
             magnitude = np.abs(stft)
@@ -960,8 +933,7 @@ class AudioWatermarkEngine:
         original_audio: Optional[np.ndarray],
         expected_bits: int
     ) -> Tuple[List[int], float]:
-        """Phase detection implementation"""
-        try:
+        """Phase detection implementation"""        try:
             if original_audio is None:
                 logger.warning("Phase detection requires original audio")
                 return [], 0.0
@@ -999,16 +971,14 @@ class AudioWatermarkEngine:
     # Utility methods
     
     def _data_to_bits(self, data: bytes) -> List[int]:
-        """Convert bytes to bit list"""
-        bits = []
+        """Convert bytes to bit list"""        bits = []
         for byte in data:
             for i in range(8):
                 bits.append((byte >> (7 - i)) & 1)
         return bits
     
     def _bits_to_data(self, bits: List[int]) -> bytes:
-        """Convert bit list to bytes"""
-        data = bytearray()
+        """Convert bit list to bytes"""        data = bytearray()
         for i in range(0, len(bits), 8):
             if i + 8 <= len(bits):
                 byte = 0
@@ -1018,15 +988,13 @@ class AudioWatermarkEngine:
         return bytes(data)
     
     def _add_error_correction(self, bits: List[int]) -> List[int]:
-        """Add simple error correction (duplication)"""
-        corrected_bits = []
+        """Add simple error correction (duplication)"""        corrected_bits = []
         for bit in bits:
             corrected_bits.extend([bit, bit])  # Simple duplication
         return corrected_bits
     
     def _apply_error_correction(self, bits: List[int]) -> List[int]:
-        """Apply error correction (majority voting)"""
-        corrected_bits = []
+        """Apply error correction (majority voting)"""        corrected_bits = []
         for i in range(0, len(bits), 2):
             if i + 1 < len(bits):
                 # Majority voting between duplicated bits
@@ -1039,8 +1007,7 @@ class AudioWatermarkEngine:
         return corrected_bits
     
     def _remove_redundancy(self, bits: List[int], factor: int) -> List[int]:
-        """Remove redundancy by majority voting"""
-        if factor <= 1:
+        """Remove redundancy by majority voting"""        if factor <= 1:
             return bits
         
         chunk_size = len(bits) // factor
@@ -1066,10 +1033,8 @@ def create_audio_watermark_engine(
     technique: AudioWatermarkTechnique = AudioWatermarkTechnique.SPECTRAL_SPREADING,
     strength: AudioWatermarkStrength = AudioWatermarkStrength.MEDIUM
 ) -> AudioWatermarkEngine:
-    """
-    Factory function to create audio watermark engine with common configurations
-    """
-    config = AudioWatermarkConfig(
+    """    Factory function to create audio watermark engine with common configurations
+    """    config = AudioWatermarkConfig(
         sample_rate=sample_rate,
         frame_size=2048,
         hop_length=512,

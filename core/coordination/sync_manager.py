@@ -1,5 +1,4 @@
-"""
-Sync Manager - Enterprise Synchronization & Conflict Resolution System
+"""Sync Manager - Enterprise Synchronization & Conflict Resolution System
 
 Advanced synchronization management system providing data consistency,
 conflict resolution, and coordination across distributed components.
@@ -15,7 +14,6 @@ Contact: mlaiel@live.de for authorization.
 🎯 BUSINESS LOGIC:
 Data Change → Conflict Detection → Resolution Strategy → Sync Execution → Verification
 """
-
 import asyncio
 import uuid
 import threading
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class SyncType(Enum):
-    """Types of synchronization operations"""
-    REAL_TIME = "real_time"
+    """Types of synchronization operations"""    REAL_TIME = "real_time"
     BATCH = "batch"
     PERIODIC = "periodic"
     EVENT_DRIVEN = "event_driven"
@@ -44,8 +41,7 @@ class SyncType(Enum):
 
 
 class ConflictResolution(Enum):
-    """Conflict resolution strategies"""
-    LAST_WRITE_WINS = "last_write_wins"
+    """Conflict resolution strategies"""    LAST_WRITE_WINS = "last_write_wins"
     FIRST_WRITE_WINS = "first_write_wins"
     MERGE = "merge"
     MANUAL = "manual"
@@ -55,8 +51,7 @@ class ConflictResolution(Enum):
 
 
 class SyncStatus(Enum):
-    """Synchronization status"""
-    PENDING = "pending"
+    """Synchronization status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -66,8 +61,7 @@ class SyncStatus(Enum):
 
 
 class DataSourceType(Enum):
-    """Types of data sources"""
-    DATABASE = "database"
+    """Types of data sources"""    DATABASE = "database"
     API = "api"
     FILE_SYSTEM = "file_system"
     CACHE = "cache"
@@ -78,8 +72,7 @@ class DataSourceType(Enum):
 
 @dataclass
 class DataSource:
-    """Data source configuration"""
-    source_id: str
+    """Data source configuration"""    source_id: str
     name: str
     source_type: DataSourceType
     connection_config: Dict[str, Any]
@@ -91,8 +84,7 @@ class DataSource:
 
 @dataclass
 class SyncConfiguration:
-    """Synchronization configuration"""
-    sync_id: str
+    """Synchronization configuration"""    sync_id: str
     name: str
     sync_type: SyncType
     source_config: DataSource
@@ -111,8 +103,7 @@ class SyncConfiguration:
 
 @dataclass
 class DataRecord:
-    """Individual data record"""
-    record_id: str
+    """Individual data record"""    record_id: str
     source_id: str
     data: Dict[str, Any]
     version: int
@@ -125,15 +116,13 @@ class DataRecord:
             self.checksum = self._calculate_checksum()
     
     def _calculate_checksum(self) -> str:
-        """Calculate data checksum"""
-        data_str = json.dumps(self.data, sort_keys=True)
+        """Calculate data checksum"""        data_str = json.dumps(self.data, sort_keys=True)
         return hashlib.sha256(data_str.encode()).hexdigest()
 
 
 @dataclass
 class ConflictRecord:
-    """Data conflict record"""
-    conflict_id: str
+    """Data conflict record"""    conflict_id: str
     sync_id: str
     record_id: str
     source_data: DataRecord
@@ -149,8 +138,7 @@ class ConflictRecord:
 
 @dataclass
 class SyncExecution:
-    """Synchronization execution tracking"""
-    execution_id: str
+    """Synchronization execution tracking"""    execution_id: str
     sync_id: str
     started_at: datetime
     completed_at: Optional[datetime] = None
@@ -163,8 +151,7 @@ class SyncExecution:
 
 
 class SyncManager:
-    """Enterprise synchronization and conflict resolution system"""
-    
+    """Enterprise synchronization and conflict resolution system"""    
     def __init__(self, max_concurrent_syncs: int = 10):
         self.max_concurrent_syncs = max_concurrent_syncs
         
@@ -210,15 +197,13 @@ class SyncManager:
         logger.info("SyncManager initialized successfully")
     
     def _initialize_conflict_resolvers(self):
-        """Initialize standard conflict resolution strategies"""
-        self.conflict_resolvers[ConflictResolution.LAST_WRITE_WINS] = self._resolve_last_write_wins
+        """Initialize standard conflict resolution strategies"""        self.conflict_resolvers[ConflictResolution.LAST_WRITE_WINS] = self._resolve_last_write_wins
         self.conflict_resolvers[ConflictResolution.FIRST_WRITE_WINS] = self._resolve_first_write_wins
         self.conflict_resolvers[ConflictResolution.MERGE] = self._resolve_merge
         self.conflict_resolvers[ConflictResolution.ABORT] = self._resolve_abort
     
     def _initialize_standard_sources(self):
-        """Initialize standard data source configurations"""
-        # User data source
+        """Initialize standard data source configurations"""        # User data source
         user_source = DataSource(
             source_id="user_database",
             name="User Database",
@@ -285,8 +270,7 @@ class SyncManager:
         self._configure_standard_syncs()
     
     def _configure_standard_syncs(self):
-        """Configure standard synchronization relationships"""
-        # User data synchronization
+        """Configure standard synchronization relationships"""        # User data synchronization
         user_sync = SyncConfiguration(
             sync_id="user_data_sync",
             name="User Data Synchronization",
@@ -328,8 +312,7 @@ class SyncManager:
         self.register_sync_configuration(protection_sync)
     
     def register_data_source(self, data_source: DataSource) -> bool:
-        """Register a new data source"""
-        try:
+        """Register a new data source"""        try:
             # Validate data source
             if not self._validate_data_source(data_source):
                 return False
@@ -343,8 +326,7 @@ class SyncManager:
             return False
     
     def _validate_data_source(self, data_source: DataSource) -> bool:
-        """Validate data source configuration"""
-        try:
+        """Validate data source configuration"""        try:
             # Required fields
             if not all([data_source.source_id, data_source.name, data_source.source_type]):
                 logger.error("Missing required data source fields")
@@ -362,8 +344,7 @@ class SyncManager:
             return False
     
     def register_sync_configuration(self, sync_config: SyncConfiguration) -> bool:
-        """Register a new synchronization configuration"""
-        try:
+        """Register a new synchronization configuration"""        try:
             # Validate sync configuration
             if not self._validate_sync_configuration(sync_config):
                 return False
@@ -377,8 +358,7 @@ class SyncManager:
             return False
     
     def _validate_sync_configuration(self, sync_config: SyncConfiguration) -> bool:
-        """Validate synchronization configuration"""
-        try:
+        """Validate synchronization configuration"""        try:
             # Required fields
             if not all([sync_config.sync_id, sync_config.name, sync_config.sync_type]):
                 logger.error("Missing required sync configuration fields")
@@ -401,8 +381,7 @@ class SyncManager:
             return False
     
     async def start_sync(self, sync_id: str, manual: bool = False) -> str:
-        """Start synchronization process"""
-        try:
+        """Start synchronization process"""        try:
             if sync_id not in self.sync_configurations:
                 raise ValueError(f"Sync configuration not found: {sync_id}")
             
@@ -439,8 +418,7 @@ class SyncManager:
             raise
     
     def start_scheduler(self):
-        """Start synchronization scheduler"""
-        if not self.scheduler_active:
+        """Start synchronization scheduler"""        if not self.scheduler_active:
             self.scheduler_active = True
             self.scheduler_thread = threading.Thread(
                 target=self._scheduler_loop,
@@ -454,15 +432,13 @@ class SyncManager:
             logger.info("Sync scheduler started")
     
     def stop_scheduler(self):
-        """Stop synchronization scheduler"""
-        self.scheduler_active = False
+        """Stop synchronization scheduler"""        self.scheduler_active = False
         if self.scheduler_thread:
             self.scheduler_thread.join(timeout=5)
         logger.info("Sync scheduler stopped")
     
     def _scheduler_loop(self):
-        """Synchronization scheduler loop"""
-        while self.scheduler_active:
+        """Synchronization scheduler loop"""        while self.scheduler_active:
             try:
                 current_time = datetime.now(timezone.utc)
                 
@@ -481,8 +457,7 @@ class SyncManager:
                 logger.error(f"Scheduler loop error: {e}")
     
     def _is_sync_due(self, sync_config: SyncConfiguration, current_time: datetime) -> bool:
-        """Check if synchronization is due"""
-        try:
+        """Check if synchronization is due"""        try:
             # Get last sync time
             last_sync_time = self._get_last_sync_time(sync_config.sync_id)
             
@@ -499,8 +474,7 @@ class SyncManager:
             return False
     
     def _get_last_sync_time(self, sync_id: str) -> Optional[datetime]:
-        """Get last synchronization time"""
-        # Look for completed sync executions
+        """Get last synchronization time"""        # Look for completed sync executions
         for execution in self.completed_syncs.values():
             if execution.sync_id == sync_id and execution.completed_at:
                 return execution.completed_at
@@ -508,8 +482,7 @@ class SyncManager:
         return None
     
     async def _sync_processor(self):
-        """Process synchronization queue"""
-        while True:
+        """Process synchronization queue"""        while True:
             try:
                 # Get sync from queue
                 sync_config, execution = await self.sync_queue.get()
@@ -524,8 +497,7 @@ class SyncManager:
                 logger.error(f"Sync processor error: {e}")
     
     async def _execute_sync(self, sync_config: SyncConfiguration, execution: SyncExecution):
-        """Execute synchronization process"""
-        try:
+        """Execute synchronization process"""        try:
             start_time = datetime.now(timezone.utc)
             execution.status = SyncStatus.IN_PROGRESS
             
@@ -609,8 +581,7 @@ class SyncManager:
         source_config: DataSource, 
         sync_config: SyncConfiguration
     ) -> Dict[str, DataRecord]:
-        """Fetch data from source"""
-        try:
+        """Fetch data from source"""        try:
             # Simulate data fetching based on source type
             if source_config.source_type == DataSourceType.DATABASE:
                 return await self._fetch_database_data(source_config, sync_config)
@@ -631,8 +602,7 @@ class SyncManager:
         target_config: DataSource, 
         sync_config: SyncConfiguration
     ) -> Dict[str, DataRecord]:
-        """Fetch data from target"""
-        try:
+        """Fetch data from target"""        try:
             # Use cached data if available
             cache_key = f"{target_config.source_id}:{sync_config.sync_id}"
             if cache_key in self.data_cache:
@@ -653,8 +623,7 @@ class SyncManager:
         source_config: DataSource, 
         sync_config: SyncConfiguration
     ) -> Dict[str, DataRecord]:
-        """Fetch data from database source"""
-        # Simulate database query
+        """Fetch data from database source"""        # Simulate database query
         await asyncio.sleep(0.1)
         
         sample_data = {}
@@ -680,8 +649,7 @@ class SyncManager:
         source_config: DataSource, 
         sync_config: SyncConfiguration
     ) -> Dict[str, DataRecord]:
-        """Fetch data from API source"""
-        # Simulate API call
+        """Fetch data from API source"""        # Simulate API call
         await asyncio.sleep(0.2)
         
         sample_data = {}
@@ -708,8 +676,7 @@ class SyncManager:
         source_config: DataSource, 
         sync_config: SyncConfiguration
     ) -> Dict[str, DataRecord]:
-        """Fetch data from filesystem source"""
-        # Simulate file system read
+        """Fetch data from filesystem source"""        # Simulate file system read
         await asyncio.sleep(0.05)
         
         sample_data = {}
@@ -736,8 +703,7 @@ class SyncManager:
         source_config: DataSource, 
         sync_config: SyncConfiguration
     ) -> Dict[str, DataRecord]:
-        """Fetch data from generic source"""
-        # Simulate generic data access
+        """Fetch data from generic source"""        # Simulate generic data access
         await asyncio.sleep(0.1)
         
         sample_data = {}
@@ -764,8 +730,7 @@ class SyncManager:
         target_data: Dict[str, DataRecord],
         sync_config: SyncConfiguration
     ) -> List[Dict[str, Any]]:
-        """Identify changes between source and target data"""
-        changes = []
+        """Identify changes between source and target data"""        changes = []
         
         # Find new and updated records
         for record_id, source_record in source_data.items():
@@ -806,8 +771,7 @@ class SyncManager:
         change: Dict[str, Any], 
         sync_config: SyncConfiguration
     ) -> Optional[ConflictRecord]:
-        """Detect conflicts in data changes"""
-        try:
+        """Detect conflicts in data changes"""        try:
             if change["type"] != "update":
                 return None  # No conflict for create/delete
             
@@ -842,8 +806,7 @@ class SyncManager:
             return None
     
     async def _handle_conflict(self, conflict: ConflictRecord, sync_config: SyncConfiguration):
-        """Handle detected conflict"""
-        try:
+        """Handle detected conflict"""        try:
             # Get conflict resolver
             resolver = self.conflict_resolvers.get(conflict.resolution_strategy)
             
@@ -877,8 +840,7 @@ class SyncManager:
         conflict: ConflictRecord, 
         sync_config: SyncConfiguration
     ) -> Optional[DataRecord]:
-        """Resolve conflict using last-write-wins strategy"""
-        if conflict.source_data.timestamp > conflict.target_data.timestamp:
+        """Resolve conflict using last-write-wins strategy"""        if conflict.source_data.timestamp > conflict.target_data.timestamp:
             return conflict.source_data
         else:
             return conflict.target_data
@@ -888,8 +850,7 @@ class SyncManager:
         conflict: ConflictRecord, 
         sync_config: SyncConfiguration
     ) -> Optional[DataRecord]:
-        """Resolve conflict using first-write-wins strategy"""
-        if conflict.source_data.timestamp < conflict.target_data.timestamp:
+        """Resolve conflict using first-write-wins strategy"""        if conflict.source_data.timestamp < conflict.target_data.timestamp:
             return conflict.source_data
         else:
             return conflict.target_data
@@ -899,8 +860,7 @@ class SyncManager:
         conflict: ConflictRecord, 
         sync_config: SyncConfiguration
     ) -> Optional[DataRecord]:
-        """Resolve conflict using merge strategy"""
-        try:
+        """Resolve conflict using merge strategy"""        try:
             # Create merged data
             merged_data = conflict.target_data.data.copy()
             merged_data.update(conflict.source_data.data)
@@ -925,12 +885,10 @@ class SyncManager:
         conflict: ConflictRecord, 
         sync_config: SyncConfiguration
     ) -> Optional[DataRecord]:
-        """Resolve conflict by aborting (no changes)"""
-        return None
+        """Resolve conflict by aborting (no changes)"""        return None
     
     async def _apply_change(self, change: Dict[str, Any], sync_config: SyncConfiguration) -> bool:
-        """Apply data change to target"""
-        try:
+        """Apply data change to target"""        try:
             # Simulate applying change
             await asyncio.sleep(0.01)
             
@@ -947,8 +905,7 @@ class SyncManager:
             return False
     
     async def _apply_resolution(self, conflict: ConflictRecord, sync_config: SyncConfiguration):
-        """Apply conflict resolution"""
-        try:
+        """Apply conflict resolution"""        try:
             if conflict.resolution_data:
                 # Update version tracking
                 self.version_tracking[sync_config.sync_id][conflict.record_id] = conflict.resolution_data.version
@@ -959,8 +916,7 @@ class SyncManager:
             logger.error(f"Resolution application failed: {e}")
     
     async def _emit_sync_event(self, event_type: str, execution: SyncExecution):
-        """Emit synchronization events"""
-        try:
+        """Emit synchronization events"""        try:
             event_data = {
                 "event_type": event_type,
                 "execution_id": execution.execution_id,
@@ -980,8 +936,7 @@ class SyncManager:
             logger.error(f"Event emission failed: {e}")
     
     def get_sync_status(self, sync_id: str) -> Optional[Dict[str, Any]]:
-        """Get synchronization status"""
-        # Check active syncs
+        """Get synchronization status"""        # Check active syncs
         if sync_id in self.active_syncs:
             execution = self.active_syncs[sync_id]
             return {
@@ -1010,8 +965,7 @@ class SyncManager:
         return None
     
     def get_conflict_status(self, conflict_id: str) -> Optional[Dict[str, Any]]:
-        """Get conflict status"""
-        conflict = self.conflicts.get(conflict_id)
+        """Get conflict status"""        conflict = self.conflicts.get(conflict_id)
         if not conflict:
             return None
         
@@ -1027,8 +981,7 @@ class SyncManager:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get synchronization system metrics"""
-        active_syncs = len(self.active_syncs)
+        """Get synchronization system metrics"""        active_syncs = len(self.active_syncs)
         total_conflicts = len(self.conflicts)
         resolved_conflicts = len([c for c in self.conflicts.values() if c.resolved])
         
@@ -1044,26 +997,21 @@ class SyncManager:
         }
     
     def register_conflict_resolver(self, strategy: ConflictResolution, resolver: Callable):
-        """Register custom conflict resolver"""
-        self.conflict_resolvers[strategy] = resolver
+        """Register custom conflict resolver"""        self.conflict_resolvers[strategy] = resolver
         logger.info(f"Conflict resolver registered: {strategy.value}")
     
     def register_data_transformer(self, name: str, transformer: Callable):
-        """Register data transformer"""
-        self.data_transformers[name] = transformer
+        """Register data transformer"""        self.data_transformers[name] = transformer
         logger.info(f"Data transformer registered: {name}")
     
     def register_event_handler(self, event_type: str, handler: Callable):
-        """Register event handler for sync events"""
-        self.event_handlers[event_type].append(handler)
+        """Register event handler for sync events"""        self.event_handlers[event_type].append(handler)
     
     def register_conflict_listener(self, listener: Callable):
-        """Register conflict event listener"""
-        self.conflict_listeners.append(listener)
+        """Register conflict event listener"""        self.conflict_listeners.append(listener)
     
     def shutdown(self):
-        """Shutdown sync manager and cleanup"""
-        try:
+        """Shutdown sync manager and cleanup"""        try:
             self.stop_scheduler()
             
             # Cancel all active syncs

@@ -1,5 +1,4 @@
-"""
-Distribution Service - Content distribution and publishing service
+"""Distribution Service - Content distribution and publishing service
 
 Professional service for distributing and publishing content across
 multiple platforms with advanced scheduling and optimization.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -29,8 +27,7 @@ from .content_models import (
 
 
 class PublishingStatus(str, Enum):
-    """Publishing status enumeration"""
-    SCHEDULED = "scheduled"
+    """Publishing status enumeration"""    SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
     FAILED = "failed"
@@ -40,8 +37,7 @@ class PublishingStatus(str, Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform configuration for publishing"""
-    platform: Platform
+    """Platform configuration for publishing"""    platform: Platform
     api_endpoint: str
     auth_type: str
     credentials: Dict[str, Any]
@@ -53,8 +49,7 @@ class PlatformConfig:
 
 @dataclass
 class PublishingTask:
-    """Publishing task definition"""
-    task_id: str
+    """Publishing task definition"""    task_id: str
     content_id: str
     platform: Platform
     content: str
@@ -73,8 +68,7 @@ class PublishingTask:
 
 
 class DistributionService:
-    """
-    Professional content distribution service for multi-platform publishing
+    """    Professional content distribution service for multi-platform publishing
     
     Features:
     - Multi-platform publishing with API integrations
@@ -84,8 +78,7 @@ class DistributionService:
     - Automated retry and error handling
     - Batch publishing capabilities
     - Performance tracking and optimization
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.executor = ThreadPoolExecutor(max_workers=10)
@@ -107,8 +100,7 @@ class DistributionService:
         self.logger.info("DistributionService initialized successfully")
     
     def _initialize_platform_configs(self) -> Dict[Platform, PlatformConfig]:
-        """Initialize platform configurations"""
-        configs = {}
+        """Initialize platform configurations"""        configs = {}
         
         # Instagram configuration
         configs[Platform.INSTAGRAM] = PlatformConfig(
@@ -207,8 +199,7 @@ class DistributionService:
         auto_optimize: bool = True,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, str]:
-        """
-        Schedule content publication across multiple platforms
+        """        Schedule content publication across multiple platforms
         
         Args:
             content_id: Unique content identifier
@@ -220,8 +211,7 @@ class DistributionService:
             
         Returns:
             Dictionary of platform -> task_id mappings
-        """
-        try:
+        """        try:
             task_ids = {}
             
             if scheduled_time is None:
@@ -288,8 +278,7 @@ class DistributionService:
         auto_optimize: bool = True,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Dict[str, Any]]:
-        """
-        Publish content immediately across platforms
+        """        Publish content immediately across platforms
         
         Args:
             content_id: Unique content identifier
@@ -300,8 +289,7 @@ class DistributionService:
             
         Returns:
             Dictionary of platform -> publication result
-        """
-        try:
+        """        try:
             results = {}
             
             # Create immediate publishing tasks
@@ -339,8 +327,7 @@ class DistributionService:
         auto_optimize: bool = True,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Publish content to a specific platform"""
-        try:
+        """Publish content to a specific platform"""        try:
             # Optimize content for platform
             if auto_optimize:
                 optimized_content = await self._optimize_for_platform(content, platform)
@@ -397,8 +384,7 @@ class DistributionService:
             }
     
     async def _optimize_for_platform(self, content: str, platform: Platform) -> str:
-        """Optimize content for specific platform"""
-        config = self.platform_configs.get(platform)
+        """Optimize content for specific platform"""        config = self.platform_configs.get(platform)
         if not config:
             return content
         
@@ -439,8 +425,7 @@ class DistributionService:
         return optimized_content
     
     def _add_instagram_formatting(self, content: str) -> str:
-        """Add Instagram-specific formatting"""
-        # Add line breaks for better readability
+        """Add Instagram-specific formatting"""        # Add line breaks for better readability
         paragraphs = content.split('\n\n')
         formatted_paragraphs = []
         
@@ -451,8 +436,7 @@ class DistributionService:
         return '\n\n'.join(formatted_paragraphs)
     
     def _add_linkedin_formatting(self, content: str) -> str:
-        """Add LinkedIn-specific formatting"""
-        # Professional formatting with proper spacing
+        """Add LinkedIn-specific formatting"""        # Professional formatting with proper spacing
         lines = content.split('\n')
         formatted_lines = []
         
@@ -467,8 +451,7 @@ class DistributionService:
     async def _validate_content_for_platform(
         self, content: str, platform: Platform
     ) -> Dict[str, Any]:
-        """Validate content for platform requirements"""
-        config = self.platform_configs.get(platform)
+        """Validate content for platform requirements"""        config = self.platform_configs.get(platform)
         if not config:
             return {"valid": False, "errors": [f"Platform {platform} not configured"]}
         
@@ -519,8 +502,7 @@ class DistributionService:
     def _get_optimal_publishing_time(
         self, platform: Platform, requested_time: datetime
     ) -> datetime:
-        """Get optimal publishing time for platform"""
-        config = self.platform_configs.get(platform)
+        """Get optimal publishing time for platform"""        config = self.platform_configs.get(platform)
         if not config or not config.optimal_times:
             return requested_time
         
@@ -545,8 +527,7 @@ class DistributionService:
     async def _call_platform_api(
         self, platform: Platform, content: str, metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Call platform API to publish content"""
-        # This is a mock implementation
+        """Call platform API to publish content"""        # This is a mock implementation
         # In production, implement actual API calls for each platform
         
         config = self.platform_configs.get(platform)
@@ -575,8 +556,7 @@ class DistributionService:
     async def _track_publication(
         self, content_id: str, platform: Platform, result: Dict[str, Any]
     ) -> None:
-        """Track successful publication for analytics"""
-        try:
+        """Track successful publication for analytics"""        try:
             # Store publication metrics
             metrics = PerformanceMetrics(
                 content_id=content_id,
@@ -593,8 +573,7 @@ class DistributionService:
             self.logger.error(f"Error tracking publication: {str(e)}")
     
     async def _run_scheduler(self) -> None:
-        """Run the publication scheduler"""
-        self.scheduler_running = True
+        """Run the publication scheduler"""        self.scheduler_running = True
         
         try:
             while self.scheduler_running:
@@ -624,8 +603,7 @@ class DistributionService:
             self.scheduler_running = False
     
     async def _execute_scheduled_task(self, task: PublishingTask) -> None:
-        """Execute a scheduled publishing task"""
-        try:
+        """Execute a scheduled publishing task"""        try:
             result = await self._publish_to_platform(
                 task.content_id,
                 task.content,
@@ -663,8 +641,7 @@ class DistributionService:
             self.logger.error(f"Error executing task {task.task_id}: {str(e)}")
     
     async def get_publication_status(self, task_id: str) -> Dict[str, Any]:
-        """Get status of a publication task"""
-        # Check active tasks
+        """Get status of a publication task"""        # Check active tasks
         if task_id in self.active_tasks:
             task = self.active_tasks[task_id]
         # Check completed tasks
@@ -693,8 +670,7 @@ class DistributionService:
         }
     
     async def cancel_publication(self, task_id: str) -> bool:
-        """Cancel a scheduled publication"""
-        # Find and remove from queue
+        """Cancel a scheduled publication"""        # Find and remove from queue
         for task in self.publishing_queue:
             if task.task_id == task_id:
                 task.status = PublishingStatus.CANCELLED
@@ -706,8 +682,7 @@ class DistributionService:
         return False
     
     async def get_platform_analytics(self, platform: Platform) -> Dict[str, Any]:
-        """Get analytics for a specific platform"""
-        platform_metrics = [
+        """Get analytics for a specific platform"""        platform_metrics = [
             metrics for metrics in self.metrics_cache.values()
             if metrics.platform == platform
         ]
@@ -735,8 +710,7 @@ class DistributionService:
         platforms: List[Platform],
         auto_schedule: bool = True
     ) -> Dict[str, Any]:
-        """Publish multiple content items across platforms"""
-        try:
+        """Publish multiple content items across platforms"""        try:
             batch_id = f"batch_{int(datetime.now().timestamp())}"
             results = {"batch_id": batch_id, "results": []}
             
@@ -773,8 +747,7 @@ class DistributionService:
             raise
     
     def get_queue_status(self) -> Dict[str, Any]:
-        """Get current queue status"""
-        return {
+        """Get current queue status"""        return {
             "scheduled_tasks": len(self.publishing_queue),
             "active_tasks": len(self.active_tasks),
             "completed_tasks": len(self.completed_tasks),

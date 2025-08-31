@@ -1,5 +1,4 @@
-"""
-Collaboration Analytics Database Module
+"""Collaboration Analytics Database Module
 
 Enterprise-grade analytics system for collaboration performance tracking,
 team efficiency measurement, and project success metrics.
@@ -10,7 +9,6 @@ Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Micros
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
 """
-
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class AnalyticsMetricType(Enum):
-    """Analytics metric types for collaboration tracking"""
-    PROJECT_PERFORMANCE = "project_performance"
+    """Analytics metric types for collaboration tracking"""    PROJECT_PERFORMANCE = "project_performance"
     TEAM_EFFICIENCY = "team_efficiency"
     REVENUE_ANALYTICS = "revenue_analytics"
     CONTENT_QUALITY = "content_quality"
@@ -48,8 +45,7 @@ class AnalyticsMetricType(Enum):
     RESOURCE_UTILIZATION = "resource_utilization"
 
 class MetricAggregationType(Enum):
-    """Metric aggregation methods"""
-    SUM = "sum"
+    """Metric aggregation methods"""    SUM = "sum"
     AVERAGE = "average"
     MEDIAN = "median"
     MAX = "max"
@@ -59,11 +55,9 @@ class MetricAggregationType(Enum):
     RATIO = "ratio"
 
 class CollaborationAnalytics(Base):
-    """
-    Core analytics model for tracking collaboration metrics and performance indicators.
+    """    Core analytics model for tracking collaboration metrics and performance indicators.
     Provides comprehensive analytics for project success and team efficiency.
-    """
-    __tablename__ = 'collaboration_analytics'
+    """    __tablename__ = 'collaboration_analytics'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -103,10 +97,8 @@ class CollaborationAnalytics(Base):
     )
 
 class ProjectPerformanceMetrics(Base):
-    """
-    Detailed project performance tracking with comprehensive KPIs.
-    """
-    __tablename__ = 'project_performance_metrics'
+    """    Detailed project performance tracking with comprehensive KPIs.
+    """    __tablename__ = 'project_performance_metrics'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     project_id = Column(UUID(as_uuid=True), ForeignKey('collaboration_projects.id'), nullable=False)
@@ -149,10 +141,8 @@ class ProjectPerformanceMetrics(Base):
     measured_at = Column(DateTime, default=datetime.utcnow)
 
 class TeamEfficiencyMetrics(Base):
-    """
-    Team efficiency and collaboration effectiveness metrics.
-    """
-    __tablename__ = 'team_efficiency_metrics'
+    """    Team efficiency and collaboration effectiveness metrics.
+    """    __tablename__ = 'team_efficiency_metrics'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     team_id = Column(UUID(as_uuid=True), nullable=False)
@@ -189,10 +179,8 @@ class TeamEfficiencyMetrics(Base):
     measured_at = Column(DateTime, default=datetime.utcnow)
 
 class CreatorPerformanceMetrics(Base):
-    """
-    Individual creator performance tracking and analytics.
-    """
-    __tablename__ = 'creator_performance_metrics'
+    """    Individual creator performance tracking and analytics.
+    """    __tablename__ = 'creator_performance_metrics'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     creator_id = Column(UUID(as_uuid=True), nullable=False)
@@ -235,8 +223,7 @@ class CreatorPerformanceMetrics(Base):
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query configuration for data retrieval"""
-    metric_types: List[AnalyticsMetricType]
+    """Analytics query configuration for data retrieval"""    metric_types: List[AnalyticsMetricType]
     start_date: datetime
     end_date: datetime
     project_ids: Optional[List[str]] = None
@@ -246,27 +233,23 @@ class AnalyticsQuery:
     group_by: Optional[List[str]] = None
 
 class CollaborationAnalyticsEngine:
-    """
-    Advanced analytics engine for collaboration performance analysis.
+    """    Advanced analytics engine for collaboration performance analysis.
     Provides comprehensive metrics, insights, and predictive analytics.
-    """
-    
+    """    
     def __init__(self, db_session, redis_client=None):
         self.db_session = db_session
         self.redis_client = redis_client
         self.logger = logging.getLogger(__name__)
     
     async def calculate_project_performance(self, project_id: str) -> Dict[str, Any]:
-        """
-        Calculate comprehensive project performance metrics.
+        """        Calculate comprehensive project performance metrics.
         
         Args:
             project_id: Project identifier
             
         Returns:
             Dictionary containing performance metrics
-        """
-        try:
+        """        try:
             # Get project performance data
             performance = self.db_session.query(ProjectPerformanceMetrics).filter(
                 ProjectPerformanceMetrics.project_id == project_id
@@ -323,8 +306,7 @@ class CollaborationAnalyticsEngine:
             raise
     
     async def calculate_team_efficiency(self, team_id: str, period_days: int = 30) -> Dict[str, Any]:
-        """
-        Calculate team efficiency metrics for a specified period.
+        """        Calculate team efficiency metrics for a specified period.
         
         Args:
             team_id: Team identifier
@@ -332,8 +314,7 @@ class CollaborationAnalyticsEngine:
             
         Returns:
             Dictionary containing efficiency metrics
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -381,8 +362,7 @@ class CollaborationAnalyticsEngine:
             raise
     
     async def calculate_creator_performance(self, creator_id: str, period_days: int = 90) -> Dict[str, Any]:
-        """
-        Calculate individual creator performance metrics.
+        """        Calculate individual creator performance metrics.
         
         Args:
             creator_id: Creator identifier
@@ -390,8 +370,7 @@ class CollaborationAnalyticsEngine:
             
         Returns:
             Dictionary containing creator performance metrics
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -444,16 +423,14 @@ class CollaborationAnalyticsEngine:
             raise
     
     async def generate_collaboration_insights(self, query: AnalyticsQuery) -> Dict[str, Any]:
-        """
-        Generate advanced insights from collaboration analytics data.
+        """        Generate advanced insights from collaboration analytics data.
         
         Args:
             query: Analytics query configuration
             
         Returns:
             Dictionary containing insights and recommendations
-        """
-        try:
+        """        try:
             # Get analytics data
             analytics_data = await self._query_analytics_data(query)
             
@@ -473,8 +450,7 @@ class CollaborationAnalyticsEngine:
             raise
     
     def _calculate_overall_performance_score(self, performance: ProjectPerformanceMetrics) -> float:
-        """Calculate overall project performance score"""
-        scores = []
+        """Calculate overall project performance score"""        scores = []
         
         # Timeline score (inverse of variance)
         if performance.schedule_variance_percentage is not None:
@@ -505,8 +481,7 @@ class CollaborationAnalyticsEngine:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _calculate_team_efficiency_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall team efficiency score"""
-        scores = []
+        """Calculate overall team efficiency score"""        scores = []
         
         # Productivity component (40%)
         productivity_score = (
@@ -544,8 +519,7 @@ class CollaborationAnalyticsEngine:
         return min(100, max(0, total_score))
     
     def _calculate_creator_performance_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall creator performance score"""
-        scores = []
+        """Calculate overall creator performance score"""        scores = []
         
         # Content quality (25%)
         content_score = metrics.get("avg_quality", 0)
@@ -581,8 +555,7 @@ class CollaborationAnalyticsEngine:
         return min(100, max(0, total_score))
     
     async def _query_analytics_data(self, query: AnalyticsQuery) -> List[CollaborationAnalytics]:
-        """Query analytics data based on configuration"""
-        try:
+        """Query analytics data based on configuration"""        try:
             base_query = self.db_session.query(CollaborationAnalytics).filter(
                 CollaborationAnalytics.metric_type.in_(query.metric_types),
                 CollaborationAnalytics.measurement_date >= query.start_date,
@@ -611,8 +584,7 @@ class CollaborationAnalyticsEngine:
             raise
 
     async def export_analytics_report(self, query: AnalyticsQuery, format_type: str = "json") -> Union[Dict, str]:
-        """
-        Export comprehensive analytics report in specified format.
+        """        Export comprehensive analytics report in specified format.
         
         Args:
             query: Analytics query configuration
@@ -620,8 +592,7 @@ class CollaborationAnalyticsEngine:
             
         Returns:
             Formatted report data
-        """
-        try:
+        """        try:
             # Generate insights
             insights = await self.generate_collaboration_insights(query)
             

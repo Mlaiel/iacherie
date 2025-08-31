@@ -1,12 +1,10 @@
-"""
-Data Models Index - IA Influencer Agent Platform
+"""Data Models Index - IA Influencer Agent Platform
 Main entry point for all data models and schemas
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 # Domain models
 from .domain import (
     User,
@@ -98,8 +96,7 @@ from .factories import (
 
 
 def get_user_models():
-    """Get all user-related models"""
-    return {
+    """Get all user-related models"""    return {
         'domain': User,
         'database': UserModel,
         'response': UserResponse,
@@ -110,8 +107,7 @@ def get_user_models():
 
 
 def get_creator_models():
-    """Get all creator-related models"""
-    return {
+    """Get all creator-related models"""    return {
         'domain': Creator,
         'database': CreatorModel,
         'response': CreatorResponse,
@@ -120,8 +116,7 @@ def get_creator_models():
 
 
 def get_content_models():
-    """Get all content-related models"""
-    return {
+    """Get all content-related models"""    return {
         'domain': Content,
         'database': ContentModel,
         'response': ContentResponse,
@@ -132,8 +127,7 @@ def get_content_models():
 
 
 def get_media_models():
-    """Get all media-related models"""
-    return {
+    """Get all media-related models"""    return {
         'domain': MediaFile,
         'database': MediaFileModel,
         'response': MediaResponse,
@@ -142,8 +136,7 @@ def get_media_models():
 
 
 def get_collaboration_models():
-    """Get all collaboration-related models"""
-    return {
+    """Get all collaboration-related models"""    return {
         'domain': Collaboration,
         'database': CollaborationModel,
         'response': CollaborationResponse,
@@ -153,8 +146,7 @@ def get_collaboration_models():
 
 
 def get_project_models():
-    """Get all project-related models"""
-    return {
+    """Get all project-related models"""    return {
         'domain': Project,
         'database': ProjectModel,
         'response': ProjectResponse,
@@ -164,8 +156,7 @@ def get_project_models():
 
 
 def get_copyright_models():
-    """Get all copyright-related models"""
-    return {
+    """Get all copyright-related models"""    return {
         'domain': Copyright,
         'database': CopyrightModel,
         'response': CopyrightResponse
@@ -173,8 +164,7 @@ def get_copyright_models():
 
 
 def get_license_models():
-    """Get all license-related models"""
-    return {
+    """Get all license-related models"""    return {
         'domain': License,
         'database': LicenseModel,
         'response': LicenseResponse,
@@ -183,8 +173,7 @@ def get_license_models():
 
 
 def get_revenue_models():
-    """Get all revenue-related models"""
-    return {
+    """Get all revenue-related models"""    return {
         'domain': Revenue,
         'database': RevenueModel,
         'response': RevenueResponse
@@ -192,8 +181,7 @@ def get_revenue_models():
 
 
 def get_distribution_models():
-    """Get all distribution-related models"""
-    return {
+    """Get all distribution-related models"""    return {
         'domain': Distribution,
         'database': DistributionModel,
         'response': DistributionResponse,
@@ -202,8 +190,7 @@ def get_distribution_models():
 
 
 def get_all_models_by_category():
-    """Get all models organized by category"""
-    return {
+    """Get all models organized by category"""    return {
         'user': get_user_models(),
         'creator': get_creator_models(),
         'content': get_content_models(),

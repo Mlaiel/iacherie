@@ -1,5 +1,4 @@
-"""
-Hashtag Intelligence - AI-Powered Hashtag Generation and Analytics
+"""Hashtag Intelligence - AI-Powered Hashtag Generation and Analytics
 
 This module provides intelligent hashtag generation, analysis, and optimization
 for social media content across different platforms with trend analysis and performance tracking.
@@ -7,7 +6,6 @@ for social media content across different platforms with trend analysis and perf
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import re
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -20,8 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class HashtagCategory(Enum):
-    """Categories of hashtags"""
-    TRENDING = "trending"
+    """Categories of hashtags"""    TRENDING = "trending"
     NICHE = "niche"
     BRANDED = "branded"
     COMMUNITY = "community"
@@ -32,8 +29,7 @@ class HashtagCategory(Enum):
 
 
 class Platform(Enum):
-    """Social media platforms for hashtag optimization"""
-    INSTAGRAM = "instagram"
+    """Social media platforms for hashtag optimization"""    INSTAGRAM = "instagram"
     TWITTER = "twitter"
     TIKTOK = "tiktok"
     LINKEDIN = "linkedin"
@@ -43,8 +39,7 @@ class Platform(Enum):
 
 @dataclass
 class HashtagMetrics:
-    """Performance metrics for hashtags"""
-    usage_count: int
+    """Performance metrics for hashtags"""    usage_count: int
     engagement_rate: float
     reach_potential: int
     competition_level: float  # 0-1 scale
@@ -54,8 +49,7 @@ class HashtagMetrics:
 
 @dataclass
 class HashtagSuggestion:
-    """Individual hashtag suggestion"""
-    hashtag: str
+    """Individual hashtag suggestion"""    hashtag: str
     category: HashtagCategory
     metrics: HashtagMetrics
     platforms: List[Platform]
@@ -65,8 +59,7 @@ class HashtagSuggestion:
 
 @dataclass
 class HashtagStrategy:
-    """Complete hashtag strategy for content"""
-    primary_hashtags: List[HashtagSuggestion]
+    """Complete hashtag strategy for content"""    primary_hashtags: List[HashtagSuggestion]
     secondary_hashtags: List[HashtagSuggestion]
     trending_hashtags: List[HashtagSuggestion]
     niche_hashtags: List[HashtagSuggestion]
@@ -78,20 +71,16 @@ class HashtagStrategy:
 
 
 class HashtagIntelligence:
-    """
-    AI-powered hashtag intelligence system that generates optimized hashtag strategies
+    """    AI-powered hashtag intelligence system that generates optimized hashtag strategies
     for social media content across multiple platforms.
     """
-
     def __init__(self, language: str = "en", region: str = "US"):
-        """
-        Initialize the hashtag intelligence system.
+        """        Initialize the hashtag intelligence system.
         
         Args:
             language: Target language for hashtags
             region: Target region for localization
-        """
-        self.language = language
+        """        self.language = language
         self.region = region
         self.trending_hashtags = self._initialize_trending_hashtags()
         self.platform_limits = self._get_platform_limits()
@@ -109,8 +98,7 @@ class HashtagIntelligence:
         location: str = "",
         max_hashtags: int = 30
     ) -> HashtagStrategy:
-        """
-        Generate comprehensive hashtag strategy for content.
+        """        Generate comprehensive hashtag strategy for content.
         
         Args:
             content: Content to generate hashtags for
@@ -125,8 +113,7 @@ class HashtagIntelligence:
             
         Returns:
             HashtagStrategy with categorized hashtag recommendations
-        """
-        try:
+        """        try:
             logger.info(f"Generating hashtag strategy for {len(target_platforms)} platforms")
             
             # Extract hashtags from content
@@ -198,14 +185,12 @@ class HashtagIntelligence:
             raise
 
     def _extract_hashtags_from_content(self, content: str) -> List[str]:
-        """Extract existing hashtags from content"""
-        hashtag_pattern = r'#[a-zA-Z0-9_]+'
+        """Extract existing hashtags from content"""        hashtag_pattern = r'#[a-zA-Z0-9_]+'
         hashtags = re.findall(hashtag_pattern, content)
         return [tag.lower() for tag in hashtags]
 
     def _generate_primary_hashtags(self, keywords: List[str], industry: str) -> List[HashtagSuggestion]:
-        """Generate primary hashtags from keywords"""
-        primary_hashtags = []
+        """Generate primary hashtags from keywords"""        primary_hashtags = []
         
         for keyword in keywords[:5]:  # Limit to top 5 keywords
             # Direct keyword hashtag
@@ -248,8 +233,7 @@ class HashtagIntelligence:
         return primary_hashtags
 
     def _generate_secondary_hashtags(self, content: str, keywords: List[str]) -> List[HashtagSuggestion]:
-        """Generate secondary hashtags from content analysis"""
-        secondary_hashtags = []
+        """Generate secondary hashtags from content analysis"""        secondary_hashtags = []
         
         # Extract meaningful words from content
         words = re.findall(r'\b[a-zA-Z]{4,}\b', content.lower())
@@ -296,8 +280,7 @@ class HashtagIntelligence:
         return secondary_hashtags
 
     def _generate_trending_hashtags(self, keywords: List[str], industry: str) -> List[HashtagSuggestion]:
-        """Generate trending hashtags"""
-        trending_hashtags = []
+        """Generate trending hashtags"""        trending_hashtags = []
         
         # Get trending hashtags for the industry
         industry_trending = self.trending_hashtags.get(industry.lower(), [])
@@ -346,8 +329,7 @@ class HashtagIntelligence:
         return trending_hashtags
 
     def _generate_niche_hashtags(self, industry: str, target_audience: str) -> List[HashtagSuggestion]:
-        """Generate niche and community hashtags"""
-        niche_hashtags = []
+        """Generate niche and community hashtags"""        niche_hashtags = []
         
         # Industry-specific community hashtags
         if industry:
@@ -414,8 +396,7 @@ class HashtagIntelligence:
         return niche_hashtags
 
     def _generate_branded_hashtags(self, brand_name: str, campaign_name: str) -> List[HashtagSuggestion]:
-        """Generate branded and campaign hashtags"""
-        branded_hashtags = []
+        """Generate branded and campaign hashtags"""        branded_hashtags = []
         
         if brand_name:
             brand_tag = f"#{brand_name.replace(' ', '').lower()}"
@@ -450,8 +431,7 @@ class HashtagIntelligence:
         return branded_hashtags
 
     def _generate_location_hashtags(self, location: str) -> List[HashtagSuggestion]:
-        """Generate location-based hashtags"""
-        location_hashtags = []
+        """Generate location-based hashtags"""        location_hashtags = []
         
         location_parts = location.replace(',', ' ').split()
         
@@ -478,8 +458,7 @@ class HashtagIntelligence:
         hashtags: List[HashtagSuggestion], 
         target_platforms: List[Platform]
     ) -> Dict[Platform, List[str]]:
-        """Optimize hashtag selection for specific platforms"""
-        
+        """Optimize hashtag selection for specific platforms"""        
         platform_specific = {}
         
         for platform in target_platforms:
@@ -531,8 +510,7 @@ class HashtagIntelligence:
         return platform_specific
 
     def _filter_and_deduplicate(self, hashtags: List[HashtagSuggestion]) -> List[HashtagSuggestion]:
-        """Filter banned hashtags and remove duplicates"""
-        
+        """Filter banned hashtags and remove duplicates"""        
         seen_hashtags = set()
         filtered_hashtags = []
         
@@ -557,8 +535,7 @@ class HashtagIntelligence:
         return filtered_hashtags
 
     def _prioritize_hashtags(self, hashtags: List[HashtagSuggestion], max_count: int) -> List[HashtagSuggestion]:
-        """Prioritize hashtags when limiting total count"""
-        
+        """Prioritize hashtags when limiting total count"""        
         # Calculate priority score for each hashtag
         for hashtag in hashtags:
             priority_score = (
@@ -575,8 +552,7 @@ class HashtagIntelligence:
         return hashtags[:max_count]
 
     def _calculate_hashtag_metrics(self, hashtag: str, category: HashtagCategory) -> HashtagMetrics:
-        """Calculate metrics for a hashtag (simulated data for demo)"""
-        
+        """Calculate metrics for a hashtag (simulated data for demo)"""        
         hashtag_length = len(hashtag)
         
         # Simulate usage count based on hashtag characteristics
@@ -627,8 +603,7 @@ class HashtagIntelligence:
         branded_hashtags: List[HashtagSuggestion],
         target_platforms: List[Platform]
     ) -> float:
-        """Calculate overall strategy score"""
-        
+        """Calculate overall strategy score"""        
         score = 0.0
         
         # Diversity score (25 points)
@@ -669,8 +644,7 @@ class HashtagIntelligence:
         target_platforms: List[Platform],
         strategy_score: float
     ) -> List[str]:
-        """Generate strategy recommendations"""
-        
+        """Generate strategy recommendations"""        
         recommendations = []
         
         # Strategy score recommendations
@@ -710,8 +684,7 @@ class HashtagIntelligence:
         return recommendations
 
     def _is_valid_hashtag(self, hashtag: str) -> bool:
-        """Validate hashtag format and content"""
-        
+        """Validate hashtag format and content"""        
         # Must start with #
         if not hashtag.startswith('#'):
             return False
@@ -738,8 +711,7 @@ class HashtagIntelligence:
         return True
 
     def _get_related_hashtags(self, hashtag: str) -> List[str]:
-        """Get related hashtags (simplified implementation)"""
-        
+        """Get related hashtags (simplified implementation)"""        
         # Simple related hashtag generation based on the hashtag content
         related = []
         
@@ -764,8 +736,7 @@ class HashtagIntelligence:
         return related[:5]
 
     def _initialize_trending_hashtags(self) -> Dict[str, List[str]]:
-        """Initialize trending hashtags database"""
-        
+        """Initialize trending hashtags database"""        
         return {
             "general": [
                 "#trending", "#viral", "#2025", "#new", "#popular", "#hot",
@@ -790,8 +761,7 @@ class HashtagIntelligence:
         }
 
     def _get_platform_limits(self) -> Dict[Platform, int]:
-        """Get hashtag limits for each platform"""
-        
+        """Get hashtag limits for each platform"""        
         return {
             Platform.INSTAGRAM: 30,
             Platform.TWITTER: 2,
@@ -802,8 +772,7 @@ class HashtagIntelligence:
         }
 
     def _get_banned_hashtags(self) -> Dict[Platform, List[str]]:
-        """Get banned hashtags for each platform"""
-        
+        """Get banned hashtags for each platform"""        
         # Simplified banned hashtags list
         common_banned = ["#followme", "#like4like", "#follow4follow"]
         
@@ -817,8 +786,7 @@ class HashtagIntelligence:
         }
 
     def analyze_hashtag_performance(self, hashtags: List[str]) -> Dict[str, Any]:
-        """Analyze performance of given hashtags"""
-        
+        """Analyze performance of given hashtags"""        
         analysis = {
             "hashtag_count": len(hashtags),
             "valid_hashtags": [],
@@ -863,8 +831,7 @@ class HashtagIntelligence:
         return analysis
 
     def export_hashtag_strategy(self, strategy: HashtagStrategy, format: str = "json") -> str:
-        """Export hashtag strategy in specified format"""
-        
+        """Export hashtag strategy in specified format"""        
         if format == "json":
             return self._export_strategy_to_json(strategy)
         elif format == "csv":
@@ -875,8 +842,7 @@ class HashtagIntelligence:
             raise ValueError(f"Unsupported export format: {format}")
 
     def _export_strategy_to_json(self, strategy: HashtagStrategy) -> str:
-        """Export strategy to JSON format"""
-        
+        """Export strategy to JSON format"""        
         export_data = {
             "strategy_score": strategy.strategy_score,
             "total_hashtags": strategy.total_hashtags,
@@ -892,8 +858,7 @@ class HashtagIntelligence:
         return json.dumps(export_data, indent=2)
 
     def _hashtag_to_dict(self, hashtag_suggestion: HashtagSuggestion) -> Dict[str, Any]:
-        """Convert HashtagSuggestion to dictionary"""
-        
+        """Convert HashtagSuggestion to dictionary"""        
         return {
             "hashtag": hashtag_suggestion.hashtag,
             "category": hashtag_suggestion.category.value,
@@ -909,8 +874,7 @@ class HashtagIntelligence:
         }
 
     def _export_strategy_to_csv(self, strategy: HashtagStrategy) -> str:
-        """Export strategy to CSV format"""
-        
+        """Export strategy to CSV format"""        
         csv_lines = ["Hashtag,Category,Usage Count,Engagement Rate,Competition,Trend Score,Confidence"]
         
         all_hashtags = (
@@ -927,8 +891,7 @@ class HashtagIntelligence:
         return '\n'.join(csv_lines)
 
     def _export_strategy_to_text(self, strategy: HashtagStrategy) -> str:
-        """Export strategy to readable text format"""
-        
+        """Export strategy to readable text format"""        
         lines = []
         lines.append(f"Hashtag Strategy (Score: {strategy.strategy_score:.1f}/100)")
         lines.append("=" * 50)

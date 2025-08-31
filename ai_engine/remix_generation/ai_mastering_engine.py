@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent AI Mastering Engine
+"""IA-Influencer-Agent AI Mastering Engine
 ================================================================================
 Module: ai_engine/remix_generation/ai_mastering_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -19,7 +18,6 @@ MISSION: Engine de mastering automatique professionnel avec IA ultra-avancée
 TECHNOLOGIES: Deep Learning Mastering, Dynamic Range Control, Spectral Enhancement, Loudness Optimization
 LOGIQUE MÉTIER: Audio input → Analysis → AI Processing → Professional Mastering → Quality Validation
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -40,8 +38,7 @@ import pyloudnorm as pyln
 logger = logging.getLogger(__name__)
 
 class MasteringTarget(Enum):
-    """Mastering target standards"""
-    STREAMING = "streaming"  # -14 LUFS, high dynamic range
+    """Mastering target standards"""    STREAMING = "streaming"  # -14 LUFS, high dynamic range
     RADIO = "radio"  # -12 LUFS, moderate compression
     CLUB = "club"  # -8 LUFS, heavy compression
     BROADCAST = "broadcast"  # -23 LUFS, broadcast standard
@@ -50,15 +47,13 @@ class MasteringTarget(Enum):
     AUDIOPHILE = "audiophile"  # Maximum dynamic range
 
 class ProcessingQuality(Enum):
-    """Processing quality levels"""
-    DRAFT = "draft"
+    """Processing quality levels"""    DRAFT = "draft"
     STANDARD = "standard"
     HIGH = "high"
     AUDIOPHILE = "audiophile"
 
 class MasteringMode(Enum):
-    """Mastering processing modes"""
-    AUTOMATIC = "automatic"
+    """Mastering processing modes"""    AUTOMATIC = "automatic"
     TRANSPARENT = "transparent"
     AGGRESSIVE = "aggressive"
     WARM = "warm"
@@ -67,8 +62,7 @@ class MasteringMode(Enum):
 
 @dataclass
 class MasteringParameters:
-    """Professional mastering parameters"""
-    target_lufs: float
+    """Professional mastering parameters"""    target_lufs: float
     target_lra: float  # Loudness Range
     target_tp: float   # True Peak
     dynamic_range_target: float
@@ -84,8 +78,7 @@ class MasteringParameters:
 
 @dataclass
 class MasteringResult:
-    """Mastering processing result"""
-    mastered_audio: np.ndarray
+    """Mastering processing result"""    mastered_audio: np.ndarray
     original_lufs: float
     mastered_lufs: float
     dynamic_range_improvement: float
@@ -97,8 +90,7 @@ class MasteringResult:
     success: bool
 
 class LoudnessMeterNetwork(nn.Module):
-    """Neural network for intelligent loudness analysis"""
-    
+    """Neural network for intelligent loudness analysis"""    
     def __init__(self, input_features: int = 128):
         super(LoudnessMeterNetwork, self).__init__()
         
@@ -131,8 +123,7 @@ class LoudnessMeterNetwork(nn.Module):
         return loudness, dynamic_range, quality
 
 class MasteringProcessorNetwork(nn.Module):
-    """Neural network for intelligent mastering processing"""
-    
+    """Neural network for intelligent mastering processing"""    
     def __init__(self, audio_features: int = 512):
         super(MasteringProcessorNetwork, self).__init__()
         
@@ -182,8 +173,7 @@ class MasteringProcessorNetwork(nn.Module):
         return processed, parameters
 
 class MultibandCompressor:
-    """Professional multiband compressor"""
-    
+    """Professional multiband compressor"""    
     def __init__(self, num_bands: int = 4, sample_rate: int = 44100):
         self.num_bands = num_bands
         self.sample_rate = sample_rate
@@ -199,8 +189,7 @@ class MultibandCompressor:
     
     async def process_multiband(self, audio: np.ndarray, 
                               band_settings: List[Dict[str, float]]) -> np.ndarray:
-        """Process audio with multiband compression"""
-        try:
+        """Process audio with multiband compression"""        try:
             # Split into frequency bands
             bands = await self._split_frequency_bands(audio)
             
@@ -236,8 +225,7 @@ class MultibandCompressor:
             return audio
     
     async def _split_frequency_bands(self, audio: np.ndarray) -> List[np.ndarray]:
-        """Split audio into frequency bands"""
-        bands = []
+        """Split audio into frequency bands"""        bands = []
         
         # Design filters for each band
         sos_filters = []
@@ -266,13 +254,11 @@ class MultibandCompressor:
         return bands
     
     async def _combine_frequency_bands(self, bands: List[np.ndarray]) -> np.ndarray:
-        """Combine frequency bands back to full spectrum"""
-        # Simple addition - in production, would use linear phase reconstruction
+        """Combine frequency bands back to full spectrum"""        # Simple addition - in production, would use linear phase reconstruction
         return sum(bands)
 
 class DynamicRangeProcessor:
-    """Advanced dynamic range processor"""
-    
+    """Advanced dynamic range processor"""    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         self.envelope_follower = EnvelopeFollower()
@@ -280,8 +266,7 @@ class DynamicRangeProcessor:
     async def compress(self, audio: np.ndarray, ratio: float = 4.0, 
                      threshold: float = -12.0, attack_ms: float = 10.0,
                      release_ms: float = 100.0) -> np.ndarray:
-        """Apply compression to audio"""
-        try:
+        """Apply compression to audio"""        try:
             # Convert to dB
             audio_db = 20 * np.log10(np.abs(audio) + 1e-8)
             
@@ -307,8 +292,7 @@ class DynamicRangeProcessor:
     
     async def expand(self, audio: np.ndarray, ratio: float = 2.0,
                     threshold: float = -40.0) -> np.ndarray:
-        """Apply expansion to increase dynamic range"""
-        try:
+        """Apply expansion to increase dynamic range"""        try:
             # Similar to compression but with expansion ratio
             audio_db = 20 * np.log10(np.abs(audio) + 1e-8)
             
@@ -326,12 +310,10 @@ class DynamicRangeProcessor:
             return audio
 
 class EnvelopeFollower:
-    """Envelope follower for dynamic processing"""
-    
+    """Envelope follower for dynamic processing"""    
     async def process(self, signal: np.ndarray, attack_ms: float, 
                      release_ms: float, sample_rate: int) -> np.ndarray:
-        """Process signal with attack/release envelope"""
-        try:
+        """Process signal with attack/release envelope"""        try:
             # Convert time constants to coefficients
             attack_coeff = np.exp(-1 / (attack_ms * 0.001 * sample_rate))
             release_coeff = np.exp(-1 / (release_ms * 0.001 * sample_rate))
@@ -354,14 +336,12 @@ class EnvelopeFollower:
             return signal
 
 class ParametricEQ:
-    """Professional parametric equalizer"""
-    
+    """Professional parametric equalizer"""    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
     
     async def apply_eq(self, audio: np.ndarray, eq_params: Dict[str, Any]) -> np.ndarray:
-        """Apply parametric EQ to audio"""
-        try:
+        """Apply parametric EQ to audio"""        try:
             processed_audio = audio.copy()
             
             # Standard EQ bands
@@ -386,8 +366,7 @@ class ParametricEQ:
     
     async def _apply_eq_band(self, audio: np.ndarray, frequency: float,
                            gain: float, q_factor: float, filter_type: str) -> np.ndarray:
-        """Apply single EQ band"""
-        try:
+        """Apply single EQ band"""        try:
             # Design filter based on type
             if filter_type == 'peak':
                 # Peaking filter
@@ -452,13 +431,11 @@ class ParametricEQ:
             return audio
 
 class NoiseGate:
-    """Professional noise gate"""
-    
+    """Professional noise gate"""    
     async def apply_gate(self, audio: np.ndarray, threshold: float = -40.0,
                         ratio: float = 10.0, attack_ms: float = 5.0,
                         release_ms: float = 50.0, hold_ms: float = 10.0) -> np.ndarray:
-        """Apply noise gate to audio"""
-        try:
+        """Apply noise gate to audio"""        try:
             # Convert to envelope
             envelope = np.abs(audio)
             envelope_db = 20 * np.log10(envelope + 1e-8)
@@ -483,12 +460,10 @@ class NoiseGate:
             return audio
 
 class StereoEnhancer:
-    """Professional stereo enhancement"""
-    
+    """Professional stereo enhancement"""    
     async def enhance_stereo(self, audio: np.ndarray, width: float = 1.0,
                            bass_mono_freq: float = 120.0) -> np.ndarray:
-        """Enhance stereo width while preserving mono compatibility"""
-        try:
+        """Enhance stereo width while preserving mono compatibility"""        try:
             if audio.ndim == 1:
                 return audio  # Mono audio, no enhancement needed
             
@@ -532,8 +507,7 @@ class StereoEnhancer:
             return audio
 
 class BrickwallLimiter:
-    """Professional brickwall limiter"""
-    
+    """Professional brickwall limiter"""    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         self.lookahead_samples = 0
@@ -541,8 +515,7 @@ class BrickwallLimiter:
     
     async def limit(self, audio: np.ndarray, ceiling_db: float = -0.1,
                    lookahead_ms: float = 5.0, release_ms: float = 50.0) -> np.ndarray:
-        """Apply brick-wall limiting"""
-        try:
+        """Apply brick-wall limiting"""        try:
             # Setup lookahead delay
             self.lookahead_samples = int(lookahead_ms * 0.001 * self.sample_rate)
             
@@ -570,8 +543,7 @@ class BrickwallLimiter:
     
     async def _detect_peaks_lookahead(self, audio: np.ndarray, 
                                      ceiling_db: float) -> np.ndarray:
-        """Detect peaks with lookahead"""
-        ceiling_linear = 10 ** (ceiling_db / 20)
+        """Detect peaks with lookahead"""        ceiling_linear = 10 ** (ceiling_db / 20)
         
         # Add lookahead buffer
         padded_audio = np.concatenate([self.delay_buffer, audio])
@@ -586,8 +558,7 @@ class BrickwallLimiter:
     
     async def _calculate_gain_reduction(self, peaks: np.ndarray, 
                                       release_ms: float) -> np.ndarray:
-        """Calculate smooth gain reduction"""
-        release_coeff = np.exp(-1 / (release_ms * 0.001 * self.sample_rate))
+        """Calculate smooth gain reduction"""        release_coeff = np.exp(-1 / (release_ms * 0.001 * self.sample_rate))
         
         gain_reduction = np.ones_like(peaks, dtype=float)
         
@@ -601,16 +572,14 @@ class BrickwallLimiter:
         return gain_reduction
 
 class MasteringAnalyzer:
-    """Advanced audio analysis for mastering"""
-    
+    """Advanced audio analysis for mastering"""    
     def __init__(self):
         self.loudness_meter = pyln.Meter(44100)  # ITU-R BS.1770-4
         self.analysis_cache = {}
     
     async def analyze_audio(self, audio: np.ndarray, 
                           sample_rate: int = 44100) -> Dict[str, Any]:
-        """Comprehensive audio analysis"""
-        try:
+        """Comprehensive audio analysis"""        try:
             analysis = {}
             
             # Loudness analysis
@@ -639,8 +608,7 @@ class MasteringAnalyzer:
     
     async def _analyze_loudness(self, audio: np.ndarray, 
                               sample_rate: int) -> Dict[str, float]:
-        """Analyze loudness characteristics"""
-        try:
+        """Analyze loudness characteristics"""        try:
             # Ensure stereo for loudness measurement
             if audio.ndim == 1:
                 audio_stereo = np.array([audio, audio])
@@ -674,8 +642,7 @@ class MasteringAnalyzer:
             }
     
     async def _analyze_dynamic_range(self, audio: np.ndarray) -> Dict[str, float]:
-        """Analyze dynamic range characteristics"""
-        try:
+        """Analyze dynamic range characteristics"""        try:
             # RMS analysis
             rms = np.sqrt(np.mean(audio ** 2))
             rms_db = 20 * np.log10(rms + 1e-8)
@@ -723,8 +690,7 @@ class MasteringAnalyzer:
     
     async def _analyze_frequency_response(self, audio: np.ndarray, 
                                         sample_rate: int) -> Dict[str, Any]:
-        """Analyze frequency response characteristics"""
-        try:
+        """Analyze frequency response characteristics"""        try:
             # FFT analysis
             fft = np.fft.rfft(audio)
             freqs = np.fft.rfftfreq(len(audio), 1/sample_rate)
@@ -777,8 +743,7 @@ class MasteringAnalyzer:
             }
     
     async def _analyze_stereo_field(self, audio: np.ndarray) -> Dict[str, float]:
-        """Analyze stereo field characteristics"""
-        try:
+        """Analyze stereo field characteristics"""        try:
             if audio.ndim == 1:
                 return {
                     'stereo_width': 0.0,
@@ -826,8 +791,7 @@ class MasteringAnalyzer:
     
     async def _analyze_transients(self, audio: np.ndarray, 
                                 sample_rate: int) -> Dict[str, Any]:
-        """Analyze transient characteristics"""
-        try:
+        """Analyze transient characteristics"""        try:
             # Onset detection
             onset_frames = librosa.onset.onset_detect(y=audio, sr=sample_rate)
             onset_times = librosa.frames_to_time(onset_frames, sr=sample_rate)
@@ -863,8 +827,7 @@ class MasteringAnalyzer:
             }
     
     async def _calculate_frequency_balance_score(self, band_energies: Dict[str, float]) -> float:
-        """Calculate frequency balance score"""
-        try:
+        """Calculate frequency balance score"""        try:
             if not band_energies:
                 return 0.5
             
@@ -888,8 +851,7 @@ class MasteringAnalyzer:
             return 0.5
     
     async def _calculate_quality_score(self, analysis: Dict[str, Any]) -> float:
-        """Calculate overall quality score"""
-        try:
+        """Calculate overall quality score"""        try:
             scores = []
             
             # Dynamic range quality
@@ -919,8 +881,7 @@ class MasteringAnalyzer:
             return 0.5
 
 class AIMasteringEngine:
-    """Main AI mastering engine"""
-    
+    """Main AI mastering engine"""    
     def __init__(self):
         self.analyzer = MasteringAnalyzer()
         self.multiband_compressor = MultibandCompressor()
@@ -943,8 +904,7 @@ class AIMasteringEngine:
         logger.info("AIMasteringEngine initialized successfully")
     
     def _initialize_target_profiles(self) -> Dict[MasteringTarget, MasteringParameters]:
-        """Initialize mastering target profiles"""
-        return {
+        """Initialize mastering target profiles"""        return {
             MasteringTarget.STREAMING: MasteringParameters(
                 target_lufs=-14.0,
                 target_lra=7.0,
@@ -996,8 +956,7 @@ class AIMasteringEngine:
                           mode: MasteringMode = MasteringMode.AUTOMATIC,
                           quality: ProcessingQuality = ProcessingQuality.HIGH,
                           custom_params: Optional[MasteringParameters] = None) -> MasteringResult:
-        """Master audio with AI processing"""
-        try:
+        """Master audio with AI processing"""        try:
             start_time = datetime.now()
             
             # Get target parameters
@@ -1066,8 +1025,7 @@ class AIMasteringEngine:
                                      params: MasteringParameters,
                                      mode: MasteringMode,
                                      quality: ProcessingQuality) -> np.ndarray:
-        """Process complete mastering chain"""
-        try:
+        """Process complete mastering chain"""        try:
             processed = audio.copy()
             
             # 1. Noise gate (if needed)
@@ -1119,8 +1077,7 @@ class AIMasteringEngine:
     async def _generate_eq_params(self, audio: np.ndarray, 
                                 params: MasteringParameters,
                                 mode: MasteringMode) -> Dict[str, Any]:
-        """Generate EQ parameters based on audio analysis and mode"""
-        try:
+        """Generate EQ parameters based on audio analysis and mode"""        try:
             analysis = await self.analyzer.analyze_audio(audio)
             band_energies = analysis.get('frequency', {}).get('band_energies', {})
             
@@ -1174,8 +1131,7 @@ class AIMasteringEngine:
     
     async def _generate_multiband_settings(self, params: MasteringParameters,
                                          mode: MasteringMode) -> List[Dict[str, float]]:
-        """Generate multiband compression settings"""
-        base_settings = [
+        """Generate multiband compression settings"""        base_settings = [
             # Low band
             {'ratio': 3.0, 'threshold': -15.0, 'attack_ms': 30.0, 'release_ms': 200.0},
             # Low-mid band
@@ -1201,8 +1157,7 @@ class AIMasteringEngine:
     async def _apply_dynamic_processing(self, audio: np.ndarray,
                                       params: MasteringParameters,
                                       mode: MasteringMode) -> np.ndarray:
-        """Apply dynamic range processing"""
-        try:
+        """Apply dynamic range processing"""        try:
             if mode == MasteringMode.AUTOMATIC:
                 # Gentle compression
                 return await self.dynamic_processor.compress(
@@ -1230,8 +1185,7 @@ class AIMasteringEngine:
     
     async def _apply_harmonic_enhancement(self, audio: np.ndarray,
                                         params: MasteringParameters) -> np.ndarray:
-        """Apply harmonic enhancement (simplified)"""
-        try:
+        """Apply harmonic enhancement (simplified)"""        try:
             if params.harmonic_enhancement <= 0:
                 return audio
             
@@ -1250,8 +1204,7 @@ class AIMasteringEngine:
     
     async def _match_target_loudness(self, audio: np.ndarray, 
                                    target_lufs: float) -> np.ndarray:
-        """Match target loudness"""
-        try:
+        """Match target loudness"""        try:
             # Measure current loudness
             if audio.ndim == 1:
                 audio_stereo = np.array([audio, audio])
@@ -1280,8 +1233,7 @@ class AIMasteringEngine:
     
     async def _calculate_improvements(self, original: Dict[str, Any],
                                     final: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate improvements from mastering"""
-        try:
+        """Calculate improvements from mastering"""        try:
             improvements = {}
             
             # Dynamic range improvement
@@ -1306,8 +1258,7 @@ class AIMasteringEngine:
             return {}
     
     async def _get_processing_chain_summary(self) -> List[str]:
-        """Get summary of processing chain"""
-        return [
+        """Get summary of processing chain"""        return [
             "Noise Gate",
             "Parametric EQ",
             "Multiband Compression",
@@ -1319,8 +1270,7 @@ class AIMasteringEngine:
         ]
     
     async def get_mastering_recommendations(self, audio: np.ndarray) -> List[Dict[str, Any]]:
-        """Get mastering recommendations based on audio analysis"""
-        try:
+        """Get mastering recommendations based on audio analysis"""        try:
             analysis = await self.analyzer.analyze_audio(audio)
             recommendations = []
             
@@ -1348,8 +1298,7 @@ class AIMasteringEngine:
     
     async def _calculate_target_compatibility(self, analysis: Dict[str, Any],
                                             profile: MasteringParameters) -> float:
-        """Calculate compatibility between audio and target profile"""
-        try:
+        """Calculate compatibility between audio and target profile"""        try:
             compatibility_factors = []
             
             # Loudness compatibility
@@ -1375,8 +1324,7 @@ class AIMasteringEngine:
     
     async def _estimate_processing_complexity(self, analysis: Dict[str, Any],
                                             profile: MasteringParameters) -> str:
-        """Estimate processing complexity"""
-        try:
+        """Estimate processing complexity"""        try:
             complexity_score = 0
             
             # Check if multiband compression needed

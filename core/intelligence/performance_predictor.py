@@ -1,5 +1,4 @@
-"""
-🎯 Performance Predictor - IA Influencer Agent
+"""🎯 Performance Predictor - IA Influencer Agent
 ============================================
 
 Advanced performance prediction system for content creators to forecast
@@ -12,7 +11,6 @@ Copyright © 2025 Fahed Mlaiel - All rights reserved
 WARNING: Any unauthorized copying, modification, distribution or use of this code
 without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Any, Union
@@ -45,8 +43,7 @@ from ..cache.redis_cache import RedisCache
 
 
 class MetricType(Enum):
-    """Types of performance metrics"""
-    VIEWS = "views"
+    """Types of performance metrics"""    VIEWS = "views"
     LIKES = "likes"
     COMMENTS = "comments"
     SHARES = "shares"
@@ -61,8 +58,7 @@ class MetricType(Enum):
 
 
 class PredictionHorizon(Enum):
-    """Prediction time horizons"""
-    HOURS_1 = "1h"
+    """Prediction time horizons"""    HOURS_1 = "1h"
     HOURS_6 = "6h"
     HOURS_24 = "24h"
     DAYS_3 = "3d"
@@ -72,8 +68,7 @@ class PredictionHorizon(Enum):
 
 
 class ConfidenceLevel(Enum):
-    """Prediction confidence levels"""
-    LOW = "low"
+    """Prediction confidence levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     VERY_HIGH = "very_high"
@@ -81,8 +76,7 @@ class ConfidenceLevel(Enum):
 
 @dataclass
 class PerformancePrediction:
-    """Performance prediction data structure"""
-    prediction_id: str
+    """Performance prediction data structure"""    prediction_id: str
     content_id: str
     platform: str
     metric_type: MetricType
@@ -106,8 +100,7 @@ class PerformancePrediction:
 
 @dataclass
 class SuccessMetrics:
-    """Success metrics analysis"""
-    metrics_id: str
+    """Success metrics analysis"""    metrics_id: str
     creator_id: str
     timeframe: str
     overall_performance_score: float
@@ -127,8 +120,7 @@ class SuccessMetrics:
 
 @dataclass
 class OptimizationRecommendation:
-    """Content optimization recommendation"""
-    recommendation_id: str
+    """Content optimization recommendation"""    recommendation_id: str
     recommendation_type: str
     title: str
     description: str
@@ -144,8 +136,7 @@ class OptimizationRecommendation:
 
 
 class PerformancePredictor:
-    """
-    Advanced performance prediction engine for content creators
+    """    Advanced performance prediction engine for content creators
     
     Provides comprehensive performance forecasting including:
     - Multi-metric performance prediction
@@ -154,11 +145,9 @@ class PerformancePredictor:
     - ROI forecasting and analysis
     - Competitive benchmarking
     - Risk assessment and mitigation
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize performance predictor"""
-        self.config = config
+        """Initialize performance predictor"""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -191,8 +180,7 @@ class PerformancePredictor:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for performance prediction"""
-        try:
+        """Initialize ML models for performance prediction"""        try:
             # Initialize models for each metric type
             for metric_type in MetricType:
                 self.regression_models[metric_type] = self._create_regression_ensemble()
@@ -247,8 +235,7 @@ class PerformancePredictor:
             raise
     
     def _create_regression_ensemble(self) -> Dict[str, Any]:
-        """Create ensemble of regression models"""
-        return {
+        """Create ensemble of regression models"""        return {
             'random_forest': RandomForestRegressor(
                 n_estimators=100,
                 max_depth=15,
@@ -272,8 +259,7 @@ class PerformancePredictor:
         }
     
     def _create_time_series_model(self) -> Dict[str, Any]:
-        """Create time series models"""
-        return {
+        """Create time series models"""        return {
             'arima': None,  # Will be fitted per prediction
             'exponential_smoothing': None,  # Will be fitted per prediction
             'seasonal_decompose': None  # Will be fitted per prediction
@@ -286,8 +272,7 @@ class PerformancePredictor:
         prediction_horizons: List[PredictionHorizon] = None,
         metrics: List[MetricType] = None
     ) -> Dict[str, List[PerformancePrediction]]:
-        """
-        Predict content performance across multiple metrics and horizons
+        """        Predict content performance across multiple metrics and horizons
         
         Args:
             content_data: Content metadata and features
@@ -297,8 +282,7 @@ class PerformancePredictor:
             
         Returns:
             Dictionary mapping horizons to predictions
-        """
-        try:
+        """        try:
             content_id = content_data.get('content_id', 'unknown')
             platform = content_data.get('platform', 'unknown')
             
@@ -377,8 +361,7 @@ class PerformancePredictor:
         historical_data: Dict[str, Any],
         content_data: Dict[str, Any]
     ) -> Optional[PerformancePrediction]:
-        """Predict performance for a specific metric"""
-        try:
+        """Predict performance for a specific metric"""        try:
             # Get baseline performance
             baseline_value = await self._calculate_baseline_performance(
                 metric, historical_data, content_data
@@ -508,8 +491,7 @@ class PerformancePredictor:
         content_data: Dict[str, Any],
         creator_profile: Dict[str, Any]
     ) -> np.ndarray:
-        """Extract features for performance prediction"""
-        try:
+        """Extract features for performance prediction"""        try:
             features = []
             
             # Content features
@@ -546,8 +528,7 @@ class PerformancePredictor:
             return np.zeros(100)
     
     async def _extract_content_features(self, content_data: Dict[str, Any]) -> List[float]:
-        """Extract content-specific features"""
-        features = []
+        """Extract content-specific features"""        features = []
         
         # Content type
         content_type = content_data.get('type', 'image')
@@ -584,8 +565,7 @@ class PerformancePredictor:
         return features
     
     async def _extract_creator_features(self, creator_profile: Dict[str, Any]) -> List[float]:
-        """Extract creator-specific features"""
-        features = []
+        """Extract creator-specific features"""        features = []
         
         # Follower count (log-normalized)
         follower_count = creator_profile.get('follower_count', 0)
@@ -621,8 +601,7 @@ class PerformancePredictor:
         return features
     
     async def _extract_temporal_features(self, content_data: Dict[str, Any]) -> List[float]:
-        """Extract temporal features"""
-        features = []
+        """Extract temporal features"""        features = []
         
         # Posting time
         posting_time = content_data.get('posting_time', datetime.now())
@@ -656,8 +635,7 @@ class PerformancePredictor:
         return features
     
     async def _extract_platform_features(self, platform: str) -> List[float]:
-        """Extract platform-specific features"""
-        features = []
+        """Extract platform-specific features"""        features = []
         
         # Platform encoding (one-hot)
         platforms = ['instagram', 'tiktok', 'youtube', 'twitter', 'facebook']
@@ -678,8 +656,7 @@ class PerformancePredictor:
         return features
     
     async def _extract_trending_features(self, content_data: Dict[str, Any]) -> List[float]:
-        """Extract trending-related features"""
-        features = []
+        """Extract trending-related features"""        features = []
         
         # Uses trending audio
         features.append(1.0 if content_data.get('uses_trending_audio', False) else 0.0)
@@ -709,8 +686,7 @@ class PerformancePredictor:
         baseline: float,
         horizon: PredictionHorizon
     ) -> float:
-        """Apply domain-specific constraints to predictions"""
-        try:
+        """Apply domain-specific constraints to predictions"""        try:
             # Ensure non-negative values
             prediction = max(0, prediction)
             
@@ -758,8 +734,7 @@ class PerformancePredictor:
         historical_data: Dict[str, Any],
         metric: MetricType
     ) -> ConfidenceLevel:
-        """Determine confidence level for prediction"""
-        try:
+        """Determine confidence level for prediction"""        try:
             # Calculate prediction variance
             if len(predictions) > 1:
                 prediction_variance = np.var(predictions)
@@ -791,21 +766,17 @@ class PerformancePredictor:
             return ConfidenceLevel.MEDIUM
     
     def _generate_id(self) -> str:
-        """Generate unique ID"""
-        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
+        """Generate unique ID"""        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
 
 
 class SuccessMetricsEngine:
-    """
-    Success metrics analysis engine for comprehensive performance evaluation
+    """    Success metrics analysis engine for comprehensive performance evaluation
     
     Provides holistic analysis of creator performance across multiple dimensions
     including growth, engagement, monetization, and competitive positioning.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize success metrics engine"""
-        self.config = config
+        """Initialize success metrics engine"""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         self.performance_predictor = PerformancePredictor(config)
@@ -826,8 +797,7 @@ class SuccessMetricsEngine:
         timeframe: str = "30d",
         benchmark_group: str = "similar_creators"
     ) -> SuccessMetrics:
-        """
-        Perform comprehensive success metrics analysis
+        """        Perform comprehensive success metrics analysis
         
         Args:
             creator_id: Creator ID for analysis
@@ -836,8 +806,7 @@ class SuccessMetricsEngine:
             
         Returns:
             Comprehensive success metrics analysis
-        """
-        try:
+        """        try:
             self.logger.info(f"Analyzing success metrics for creator {creator_id}")
             
             # This would implement comprehensive success metrics analysis
@@ -892,5 +861,4 @@ class SuccessMetricsEngine:
             )
     
     def _generate_id(self) -> str:
-        """Generate unique ID"""
-        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]
+        """Generate unique ID"""        return hashlib.md5(f"{datetime.now().isoformat()}{hash(self)}".encode()).hexdigest()[:12]

@@ -1,5 +1,4 @@
-"""
-🏛️ Governance Model - IA Influencer Agent Platform Enterprise
+"""🏛️ Governance Model - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/data_management/models/governance_model.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -10,7 +9,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timezone
 from dataclasses import dataclass, field

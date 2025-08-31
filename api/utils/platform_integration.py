@@ -1,5 +1,4 @@
-"""
-Platform Integration Utilities for IA Influencer Agent Platform
+"""Platform Integration Utilities for IA Influencer Agent Platform
 Advanced integrations with social media platforms and streaming services
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +6,6 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import aiohttp
 import asyncio
 import json
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    SPOTIFY = "spotify"
+    """Supported platform types"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -46,8 +43,7 @@ class PlatformType(Enum):
 
 
 class AuthType(Enum):
-    """Authentication methods"""
-    OAUTH2 = "oauth2"
+    """Authentication methods"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BEARER_TOKEN = "bearer_token"
@@ -56,8 +52,7 @@ class AuthType(Enum):
 
 
 class ContentType(Enum):
-    """Content types for platform posting"""
-    AUDIO = "audio"
+    """Content types for platform posting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -68,8 +63,7 @@ class ContentType(Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform authentication credentials"""
-    platform: PlatformType
+    """Platform authentication credentials"""    platform: PlatformType
     auth_type: AuthType
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -84,14 +78,12 @@ class PlatformCredentials:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def is_expired(self) -> bool:
-        """Check if credentials are expired"""
-        if self.expires_at:
+        """Check if credentials are expired"""        if self.expires_at:
             return datetime.utcnow() >= self.expires_at
         return False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'platform': self.platform.value,
             'auth_type': self.auth_type.value,
             'client_id': self.client_id,
@@ -106,8 +98,7 @@ class PlatformCredentials:
 
 @dataclass
 class PlatformProfile:
-    """User profile from platform"""
-    platform: PlatformType
+    """User profile from platform"""    platform: PlatformType
     user_id: str
     username: str
     display_name: str
@@ -124,8 +115,7 @@ class PlatformProfile:
 
 @dataclass
 class PlatformContent:
-    """Content posted on platform"""
-    content_id: str
+    """Content posted on platform"""    content_id: str
     platform: PlatformType
     content_type: ContentType
     title: Optional[str] = None
@@ -147,8 +137,7 @@ class PlatformContent:
 
 @dataclass
 class PostingResult:
-    """Result of content posting"""
-    success: bool
+    """Result of content posting"""    success: bool
     platform: PlatformType
     content_id: Optional[str] = None
     platform_url: Optional[str] = None
@@ -159,56 +148,46 @@ class PostingResult:
 
 
 class BasePlatformAPI(ABC):
-    """Abstract base class for platform API integrations"""
-    
+    """Abstract base class for platform API integrations"""    
     def __init__(self, credentials: PlatformCredentials):
         self.credentials = credentials
         self.session = None
         self.rate_limiter = RateLimiter()
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with platform API"""
-        pass
+        """Authenticate with platform API"""        pass
     
     @abstractmethod
     async def refresh_token(self) -> bool:
-        """Refresh authentication token"""
-        pass
+        """Refresh authentication token"""        pass
     
     @abstractmethod
     async def get_profile(self) -> Optional[PlatformProfile]:
-        """Get user profile"""
-        pass
+        """Get user profile"""        pass
     
     @abstractmethod
     async def post_content(self, content_data: Dict[str, Any]) -> PostingResult:
-        """Post content to platform"""
-        pass
+        """Post content to platform"""        pass
     
     @abstractmethod
     async def get_content_analytics(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get analytics for specific content"""
-        pass
+        """Get analytics for specific content"""        pass
     
     @abstractmethod
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content from platform"""
-        pass
+        """Delete content from platform"""        pass
     
     def _prepare_headers(self, additional_headers: Optional[Dict[str, str]] = None) -> Dict[str, str]:
-        """Prepare authentication headers"""
-        headers = {'User-Agent': 'IA-Influencer-Agent/1.0'}
+        """Prepare authentication headers"""        headers = {'User-Agent': 'IA-Influencer-Agent/1.0'}
         
         if self.credentials.auth_type == AuthType.BEARER_TOKEN:
             headers['Authorization'] = f'Bearer {self.credentials.access_token}'
@@ -225,8 +204,7 @@ class BasePlatformAPI(ABC):
                           data: Optional[Dict[str, Any]] = None,
                           json_data: Optional[Dict[str, Any]] = None,
                           params: Optional[Dict[str, Any]] = None) -> Tuple[bool, Dict[str, Any]]:
-        """Make authenticated API request with rate limiting"""
-        await self.rate_limiter.wait(self.credentials.platform)
+        """Make authenticated API request with rate limiting"""        await self.rate_limiter.wait(self.credentials.platform)
         
         try:
             request_headers = self._prepare_headers(headers)
@@ -258,15 +236,13 @@ class BasePlatformAPI(ABC):
 
 
 class SpotifyAPI(BasePlatformAPI):
-    """Spotify Web API integration"""
-    
+    """Spotify Web API integration"""    
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(credentials)
         self.base_url = "https://api.spotify.com/v1"
         
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify using Client Credentials flow"""
-        try:
+        """Authenticate with Spotify using Client Credentials flow"""        try:
             auth_url = "https://accounts.spotify.com/api/token"
             
             auth_data = {
@@ -292,8 +268,7 @@ class SpotifyAPI(BasePlatformAPI):
         return False
     
     async def get_profile(self) -> Optional[PlatformProfile]:
-        """Get Spotify user profile"""
-        success, response = await self._make_request('GET', f"{self.base_url}/me")
+        """Get Spotify user profile"""        success, response = await self._make_request('GET', f"{self.base_url}/me")
         
         if success:
             return PlatformProfile(
@@ -310,8 +285,7 @@ class SpotifyAPI(BasePlatformAPI):
         return None
     
     async def get_user_playlists(self) -> List[Dict[str, Any]]:
-        """Get user's Spotify playlists"""
-        success, response = await self._make_request('GET', f"{self.base_url}/me/playlists")
+        """Get user's Spotify playlists"""        success, response = await self._make_request('GET', f"{self.base_url}/me/playlists")
         
         if success and 'items' in response:
             return response['items']
@@ -320,8 +294,7 @@ class SpotifyAPI(BasePlatformAPI):
     
     async def create_playlist(self, name: str, description: str = "", 
                             public: bool = False) -> Optional[str]:
-        """Create a new Spotify playlist"""
-        user_profile = await self.get_profile()
+        """Create a new Spotify playlist"""        user_profile = await self.get_profile()
         if not user_profile:
             return None
         
@@ -343,8 +316,7 @@ class SpotifyAPI(BasePlatformAPI):
         return None
     
     async def add_tracks_to_playlist(self, playlist_id: str, track_uris: List[str]) -> bool:
-        """Add tracks to Spotify playlist"""
-        track_data = {'uris': track_uris}
+        """Add tracks to Spotify playlist"""        track_data = {'uris': track_uris}
         
         success, _ = await self._make_request(
             'POST',
@@ -356,15 +328,13 @@ class SpotifyAPI(BasePlatformAPI):
 
 
 class YouTubeAPI(BasePlatformAPI):
-    """YouTube Data API integration"""
-    
+    """YouTube Data API integration"""    
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(credentials)
         self.base_url = "https://www.googleapis.com/youtube/v3"
         
     async def get_profile(self) -> Optional[PlatformProfile]:
-        """Get YouTube channel profile"""
-        params = {
+        """Get YouTube channel profile"""        params = {
             'part': 'snippet,statistics',
             'mine': 'true'
         }
@@ -395,8 +365,7 @@ class YouTubeAPI(BasePlatformAPI):
     
     async def upload_video(self, video_file: str, title: str, description: str = "",
                           tags: List[str] = None, privacy_status: str = "private") -> PostingResult:
-        """Upload video to YouTube"""
-        # Note: This is a simplified version. Full YouTube upload requires multipart upload
+        """Upload video to YouTube"""        # Note: This is a simplified version. Full YouTube upload requires multipart upload
         try:
             # Video snippet metadata
             video_metadata = {
@@ -429,8 +398,7 @@ class YouTubeAPI(BasePlatformAPI):
             )
     
     async def get_video_analytics(self, video_id: str) -> Optional[Dict[str, Any]]:
-        """Get YouTube video analytics"""
-        params = {
+        """Get YouTube video analytics"""        params = {
             'part': 'statistics,snippet',
             'id': video_id
         }
@@ -452,15 +420,13 @@ class YouTubeAPI(BasePlatformAPI):
 
 
 class InstagramAPI(BasePlatformAPI):
-    """Instagram Basic Display API integration"""
-    
+    """Instagram Basic Display API integration"""    
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(credentials)
         self.base_url = "https://graph.instagram.com"
         
     async def get_profile(self) -> Optional[PlatformProfile]:
-        """Get Instagram user profile"""
-        params = {
+        """Get Instagram user profile"""        params = {
             'fields': 'id,username,account_type,media_count'
         }
         
@@ -479,8 +445,7 @@ class InstagramAPI(BasePlatformAPI):
         return None
     
     async def get_media(self, limit: int = 25) -> List[PlatformContent]:
-        """Get user's Instagram media"""
-        params = {
+        """Get user's Instagram media"""        params = {
             'fields': 'id,caption,media_type,media_url,permalink,timestamp',
             'limit': limit
         }
@@ -511,15 +476,13 @@ class InstagramAPI(BasePlatformAPI):
 
 
 class TikTokAPI(BasePlatformAPI):
-    """TikTok API integration (Business API)"""
-    
+    """TikTok API integration (Business API)"""    
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(credentials)
         self.base_url = "https://business-api.tiktok.com/open_api/v1.3"
         
     async def get_profile(self) -> Optional[PlatformProfile]:
-        """Get TikTok user profile"""
-        # TikTok Business API endpoint for user info
+        """Get TikTok user profile"""        # TikTok Business API endpoint for user info
         success, response = await self._make_request('GET', f"{self.base_url}/user/info")
         
         if success and response.get('data'):
@@ -539,15 +502,13 @@ class TikTokAPI(BasePlatformAPI):
 
 
 class TwitterAPI(BasePlatformAPI):
-    """Twitter API v2 integration"""
-    
+    """Twitter API v2 integration"""    
     def __init__(self, credentials: PlatformCredentials):
         super().__init__(credentials)
         self.base_url = "https://api.twitter.com/2"
         
     async def get_profile(self) -> Optional[PlatformProfile]:
-        """Get Twitter user profile"""
-        params = {
+        """Get Twitter user profile"""        params = {
             'user.fields': 'created_at,description,entities,id,location,name,pinned_tweet_id,profile_image_url,protected,public_metrics,url,username,verified'
         }
         
@@ -574,8 +535,7 @@ class TwitterAPI(BasePlatformAPI):
         return None
     
     async def post_tweet(self, text: str, media_ids: List[str] = None) -> PostingResult:
-        """Post a tweet"""
-        tweet_data = {'text': text}
+        """Post a tweet"""        tweet_data = {'text': text}
         
         if media_ids:
             tweet_data['media'] = {'media_ids': media_ids}
@@ -599,8 +559,7 @@ class TwitterAPI(BasePlatformAPI):
 
 
 class RateLimiter:
-    """Rate limiter for API requests"""
-    
+    """Rate limiter for API requests"""    
     def __init__(self):
         self.limits = {
             PlatformType.SPOTIFY: {'requests': 0, 'reset_time': datetime.utcnow(), 'max_per_minute': 100},
@@ -612,8 +571,7 @@ class RateLimiter:
         self._lock = threading.Lock()
     
     async def wait(self, platform: PlatformType):
-        """Wait if rate limit would be exceeded"""
-        with self._lock:
+        """Wait if rate limit would be exceeded"""        with self._lock:
             if platform not in self.limits:
                 return
             
@@ -637,16 +595,14 @@ class RateLimiter:
 
 
 class CredentialsManager:
-    """Manage platform credentials securely"""
-    
+    """Manage platform credentials securely"""    
     def __init__(self, database_path: str = "platform_credentials.db"):
         self.database_path = database_path
         self._init_database()
         self._lock = threading.Lock()
     
     def _init_database(self):
-        """Initialize credentials database"""
-        with sqlite3.connect(self.database_path) as conn:
+        """Initialize credentials database"""        with sqlite3.connect(self.database_path) as conn:
             conn.execute('''
                 CREATE TABLE IF NOT EXISTS platform_credentials (
                     credential_id TEXT PRIMARY KEY,
@@ -675,8 +631,7 @@ class CredentialsManager:
             ''')
     
     def save_credentials(self, credentials: PlatformCredentials) -> bool:
-        """Save platform credentials"""
-        try:
+        """Save platform credentials"""        try:
             with self._lock:
                 with sqlite3.connect(self.database_path) as conn:
                     credential_id = str(uuid.uuid4())
@@ -709,8 +664,7 @@ class CredentialsManager:
             return False
     
     def get_credentials(self, platform: PlatformType, user_id: str) -> Optional[PlatformCredentials]:
-        """Get platform credentials for user"""
-        try:
+        """Get platform credentials for user"""        try:
             with sqlite3.connect(self.database_path) as conn:
                 conn.row_factory = sqlite3.Row
                 cursor = conn.execute('''
@@ -743,8 +697,7 @@ class CredentialsManager:
 
 
 class PlatformIntegrationManager:
-    """Main platform integration management system"""
-    
+    """Main platform integration management system"""    
     def __init__(self, credentials_manager: CredentialsManager):
         self.credentials_manager = credentials_manager
         self.api_classes = {
@@ -757,8 +710,7 @@ class PlatformIntegrationManager:
         self.active_sessions = {}
     
     async def get_platform_api(self, platform: PlatformType, user_id: str) -> Optional[BasePlatformAPI]:
-        """Get authenticated platform API instance"""
-        try:
+        """Get authenticated platform API instance"""        try:
             # Get credentials
             credentials = self.credentials_manager.get_credentials(platform, user_id)
             if not credentials:
@@ -793,8 +745,7 @@ class PlatformIntegrationManager:
             return None
     
     async def get_all_profiles(self, user_id: str) -> Dict[str, PlatformProfile]:
-        """Get profiles from all connected platforms"""
-        profiles = {}
+        """Get profiles from all connected platforms"""        profiles = {}
         
         for platform in PlatformType:
             try:
@@ -813,8 +764,7 @@ class PlatformIntegrationManager:
     async def cross_post_content(self, user_id: str, 
                                platforms: List[PlatformType],
                                content_data: Dict[str, Any]) -> Dict[str, PostingResult]:
-        """Post content to multiple platforms"""
-        results = {}
+        """Post content to multiple platforms"""        results = {}
         
         # Create posting tasks
         tasks = []
@@ -841,8 +791,7 @@ class PlatformIntegrationManager:
     
     async def _post_to_platform(self, platform: PlatformType, user_id: str,
                               content_data: Dict[str, Any]) -> PostingResult:
-        """Post content to specific platform"""
-        try:
+        """Post content to specific platform"""        try:
             api = await self.get_platform_api(platform, user_id)
             if not api:
                 return PostingResult(
@@ -879,8 +828,7 @@ class PlatformIntegrationManager:
             )
     
     async def sync_analytics(self, user_id: str) -> Dict[str, Dict[str, Any]]:
-        """Sync analytics from all connected platforms"""
-        analytics = {}
+        """Sync analytics from all connected platforms"""        analytics = {}
         
         for platform in PlatformType:
             try:
@@ -912,8 +860,7 @@ class PlatformIntegrationManager:
         return analytics
     
     def get_platform_statistics(self, user_id: str) -> Dict[str, Any]:
-        """Get aggregated statistics across all platforms"""
-        # This would typically pull from a database of synced analytics
+        """Get aggregated statistics across all platforms"""        # This would typically pull from a database of synced analytics
         # For now, return a placeholder structure
         return {
             'total_platforms_connected': len([p for p in PlatformType if self.credentials_manager.get_credentials(p, user_id)]),
@@ -927,8 +874,7 @@ class PlatformIntegrationManager:
 
 
 class WebhookHandler:
-    """Handle webhooks from various platforms"""
-    
+    """Handle webhooks from various platforms"""    
     def __init__(self, credentials_manager: CredentialsManager):
         self.credentials_manager = credentials_manager
         self.webhook_handlers = {
@@ -942,8 +888,7 @@ class WebhookHandler:
     async def handle_webhook(self, platform: PlatformType, 
                            request_data: Dict[str, Any],
                            headers: Dict[str, str]) -> Dict[str, Any]:
-        """Handle incoming webhook from platform"""
-        try:
+        """Handle incoming webhook from platform"""        try:
             handler = self.webhook_handlers.get(platform)
             if not handler:
                 return {'error': f'No webhook handler for platform {platform.value}'}
@@ -962,42 +907,35 @@ class WebhookHandler:
     async def _verify_webhook_signature(self, platform: PlatformType,
                                       request_data: Dict[str, Any],
                                       headers: Dict[str, str]) -> bool:
-        """Verify webhook signature"""
-        # This would implement signature verification for each platform
+        """Verify webhook signature"""        # This would implement signature verification for each platform
         # For now, return True (implement based on platform requirements)
         return True
     
     async def _handle_spotify_webhook(self, data: Dict[str, Any], 
                                     headers: Dict[str, str]) -> Dict[str, Any]:
-        """Handle Spotify webhook"""
-        # Process Spotify-specific webhook events
+        """Handle Spotify webhook"""        # Process Spotify-specific webhook events
         return {'status': 'processed', 'platform': 'spotify'}
     
     async def _handle_youtube_webhook(self, data: Dict[str, Any],
                                     headers: Dict[str, str]) -> Dict[str, Any]:
-        """Handle YouTube webhook"""
-        # Process YouTube-specific webhook events
+        """Handle YouTube webhook"""        # Process YouTube-specific webhook events
         return {'status': 'processed', 'platform': 'youtube'}
     
     async def _handle_instagram_webhook(self, data: Dict[str, Any],
                                       headers: Dict[str, str]) -> Dict[str, Any]:
-        """Handle Instagram webhook"""
-        # Process Instagram-specific webhook events
+        """Handle Instagram webhook"""        # Process Instagram-specific webhook events
         return {'status': 'processed', 'platform': 'instagram'}
     
     async def _handle_tiktok_webhook(self, data: Dict[str, Any],
                                    headers: Dict[str, str]) -> Dict[str, Any]:
-        """Handle TikTok webhook"""
-        # Process TikTok-specific webhook events
+        """Handle TikTok webhook"""        # Process TikTok-specific webhook events
         return {'status': 'processed', 'platform': 'tiktok'}
     
     async def _handle_twitter_webhook(self, data: Dict[str, Any],
                                     headers: Dict[str, str]) -> Dict[str, Any]:
-        """Handle Twitter webhook"""
-        # Process Twitter-specific webhook events
+        """Handle Twitter webhook"""        # Process Twitter-specific webhook events
         return {'status': 'processed', 'platform': 'twitter'}
 
 
 class PlatformIntegrationError(Exception):
-    """Custom exception for platform integration errors"""
-    pass
+    """Custom exception for platform integration errors"""    pass

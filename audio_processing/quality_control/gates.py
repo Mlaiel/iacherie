@@ -1,5 +1,4 @@
-"""
-🎯 Quality Gates - Automated Quality Gate System
+"""🎯 Quality Gates - Automated Quality Gate System
 
 Professional quality gate system for automated quality control checkpoints.
 Implements configurable quality gates with pass/fail criteria and automated
@@ -15,7 +14,6 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class GateType(Enum):
-    """Quality gate types"""
-    THRESHOLD = "threshold"       # Simple threshold check
+    """Quality gate types"""    THRESHOLD = "threshold"       # Simple threshold check
     RANGE = "range"              # Value within range
     COMPARISON = "comparison"    # Compare multiple values
     COMPOSITE = "composite"      # Multiple criteria
@@ -42,8 +39,7 @@ class GateType(Enum):
 
 
 class GateSeverity(Enum):
-    """Gate failure severity levels"""
-    INFO = "info"               # Informational only
+    """Gate failure severity levels"""    INFO = "info"               # Informational only
     WARNING = "warning"         # Warning but can pass
     ERROR = "error"            # Error, blocks progression
     CRITICAL = "critical"       # Critical failure
@@ -51,8 +47,7 @@ class GateSeverity(Enum):
 
 @dataclass
 class QualityGateResult:
-    """Quality gate evaluation result"""
-    gate_name: str
+    """Quality gate evaluation result"""    gate_name: str
     gate_type: GateType
     passed: bool
     score: Optional[float] = None
@@ -67,16 +62,14 @@ class QualityGateResult:
 
 
 class QualityGate(ABC):
-    """
-    🎯 Abstract Quality Gate Base Class
+    """    🎯 Abstract Quality Gate Base Class
     
     Base class for all quality gates:
     - Configurable pass/fail criteria
     - Detailed evaluation results
     - Performance monitoring
     - Extensible design
-    """
-    
+    """    
     def __init__(
         self,
         name: str,
@@ -103,12 +96,10 @@ class QualityGate(ABC):
         quality_report: QualityReport,
         quality_profile: QualityProfile
     ) -> QualityGateResult:
-        """Evaluate quality gate against audio data"""
-        pass
+        """Evaluate quality gate against audio data"""        pass
     
     def get_statistics(self) -> Dict[str, Any]:
-        """Get gate evaluation statistics"""
-        return {
+        """Get gate evaluation statistics"""        return {
             'name': self.name,
             'type': self.gate_type.value,
             'enabled': self.enabled,
@@ -120,15 +111,13 @@ class QualityGate(ABC):
         }
     
     def reset_statistics(self):
-        """Reset gate statistics"""
-        self.evaluation_count = 0
+        """Reset gate statistics"""        self.evaluation_count = 0
         self.pass_count = 0
         self.fail_count = 0
         self.total_processing_time = 0.0
     
     def _update_statistics(self, result: QualityGateResult):
-        """Update gate statistics"""
-        self.evaluation_count += 1
+        """Update gate statistics"""        self.evaluation_count += 1
         if result.passed:
             self.pass_count += 1
         else:
@@ -137,8 +126,7 @@ class QualityGate(ABC):
 
 
 class ThresholdGate(QualityGate):
-    """Simple threshold-based quality gate"""
-    
+    """Simple threshold-based quality gate"""    
     def __init__(
         self,
         name: str,
@@ -210,8 +198,7 @@ class ThresholdGate(QualityGate):
         return result
     
     def _extract_parameter_value(self, quality_report: QualityReport, parameter: str) -> Optional[float]:
-        """Extract parameter value from quality report"""
-        
+        """Extract parameter value from quality report"""        
         # Check metrics first
         for score in quality_report.metrics.scores:
             if score.name == parameter:
@@ -236,8 +223,7 @@ class ThresholdGate(QualityGate):
         return None
     
     def _evaluate_threshold(self, value: float, threshold: float, operator: str) -> bool:
-        """Evaluate threshold condition"""
-        if operator == ">=":
+        """Evaluate threshold condition"""        if operator == ">=":
             return value >= threshold
         elif operator == "<=":
             return value <= threshold
@@ -253,8 +239,7 @@ class ThresholdGate(QualityGate):
             return False
     
     def _get_recommendations(self, passed: bool, actual: float, threshold: float) -> List[str]:
-        """Get recommendations based on threshold evaluation"""
-        if passed:
+        """Get recommendations based on threshold evaluation"""        if passed:
             return []
         
         recommendations = []
@@ -274,8 +259,7 @@ class ThresholdGate(QualityGate):
 
 
 class RangeGate(QualityGate):
-    """Range-based quality gate"""
-    
+    """Range-based quality gate"""    
     def __init__(
         self,
         name: str,
@@ -349,8 +333,7 @@ class RangeGate(QualityGate):
         return result
     
     def _extract_parameter_value(self, quality_report: QualityReport, parameter: str) -> Optional[float]:
-        """Extract parameter value from quality report"""
-        # Same logic as ThresholdGate
+        """Extract parameter value from quality report"""        # Same logic as ThresholdGate
         for score in quality_report.metrics.scores:
             if score.name == parameter:
                 return score.value
@@ -371,8 +354,7 @@ class RangeGate(QualityGate):
         return None
     
     def _get_range_recommendations(self, passed: bool, actual: float) -> List[str]:
-        """Get recommendations for range violations"""
-        if passed:
+        """Get recommendations for range violations"""        if passed:
             return []
         
         recommendations = []
@@ -398,8 +380,7 @@ class RangeGate(QualityGate):
 
 
 class CompositeGate(QualityGate):
-    """Composite quality gate with multiple criteria"""
-    
+    """Composite quality gate with multiple criteria"""    
     def __init__(
         self,
         name: str,
@@ -482,8 +463,7 @@ class CompositeGate(QualityGate):
         criterion: Dict[str, Any],
         quality_report: QualityReport
     ) -> Dict[str, Any]:
-        """Evaluate individual criterion"""
-        
+        """Evaluate individual criterion"""        
         parameter = criterion.get('parameter')
         operator = criterion.get('operator', '>=')
         threshold = criterion.get('threshold')
@@ -542,8 +522,7 @@ class CompositeGate(QualityGate):
         criterion_results: List[Dict[str, Any]],
         overall_passed: bool
     ) -> List[str]:
-        """Get recommendations for composite gate"""
-        if overall_passed:
+        """Get recommendations for composite gate"""        if overall_passed:
             return []
         
         recommendations = []
@@ -564,8 +543,7 @@ class CompositeGate(QualityGate):
 # Predefined Quality Gates
 
 class MinimumQualityGate(ThresholdGate):
-    """Minimum overall quality gate"""
-    
+    """Minimum overall quality gate"""    
     def __init__(self, name: str = "minimum_quality", threshold: float = 0.6):
         super().__init__(
             name=name,
@@ -578,8 +556,7 @@ class MinimumQualityGate(ThresholdGate):
 
 
 class NoiseGate(ThresholdGate):
-    """Signal-to-noise ratio gate"""
-    
+    """Signal-to-noise ratio gate"""    
     def __init__(self, name: str = "noise_gate", min_snr: float = 40.0):
         super().__init__(
             name=name,
@@ -592,8 +569,7 @@ class NoiseGate(ThresholdGate):
 
 
 class DistortionGate(ThresholdGate):
-    """Total harmonic distortion gate"""
-    
+    """Total harmonic distortion gate"""    
     def __init__(self, name: str = "distortion_gate", max_thd: float = 5.0):
         super().__init__(
             name=name,
@@ -606,8 +582,7 @@ class DistortionGate(ThresholdGate):
 
 
 class DynamicRangeGate(ThresholdGate):
-    """Dynamic range gate"""
-    
+    """Dynamic range gate"""    
     def __init__(self, name: str = "dynamic_range_gate", min_range: float = 20.0):
         super().__init__(
             name=name,
@@ -620,8 +595,7 @@ class DynamicRangeGate(ThresholdGate):
 
 
 class FrequencyResponseGate(RangeGate):
-    """Frequency response balance gate"""
-    
+    """Frequency response balance gate"""    
     def __init__(self, name: str = "frequency_response_gate"):
         super().__init__(
             name=name,
@@ -634,8 +608,7 @@ class FrequencyResponseGate(RangeGate):
 
 
 class ClippingGate(ThresholdGate):
-    """Audio clipping prevention gate"""
-    
+    """Audio clipping prevention gate"""    
     def __init__(self, name: str = "clipping_gate", max_clipping: float = 0.005):
         super().__init__(
             name=name,
@@ -648,8 +621,7 @@ class ClippingGate(ThresholdGate):
 
 
 class LoudnessGate(RangeGate):
-    """Loudness compliance gate"""
-    
+    """Loudness compliance gate"""    
     def __init__(self, name: str = "loudness_gate", target_lufs: float = -14.0, tolerance: float = 2.0):
         super().__init__(
             name=name,
@@ -662,8 +634,7 @@ class LoudnessGate(RangeGate):
 
 
 class DurationGate(RangeGate):
-    """Content duration gate"""
-    
+    """Content duration gate"""    
     def __init__(self, name: str = "duration_gate", min_duration: float = 5.0, max_duration: float = 600.0):
         super().__init__(
             name=name,
@@ -676,8 +647,7 @@ class DurationGate(RangeGate):
 
 
 class CustomGate(QualityGate):
-    """Custom quality gate with user-defined evaluation function"""
-    
+    """Custom quality gate with user-defined evaluation function"""    
     def __init__(
         self,
         name: str,
@@ -728,16 +698,14 @@ class CustomGate(QualityGate):
 
 
 class QualityGateManager:
-    """
-    🎯 Quality Gate Manager
+    """    🎯 Quality Gate Manager
     
     Manages collection of quality gates:
     - Gate registration and configuration
     - Batch gate evaluation
     - Gate performance monitoring
     - Gate result aggregation
-    """
-    
+    """    
     def __init__(self):
         self.gates: Dict[str, QualityGate] = {}
         self.gate_groups: Dict[str, List[str]] = {}
@@ -746,21 +714,18 @@ class QualityGateManager:
         logger.info("QualityGateManager initialized")
     
     def add_gate(self, gate: QualityGate):
-        """Add quality gate"""
-        self.gates[gate.name] = gate
+        """Add quality gate"""        self.gates[gate.name] = gate
         logger.info(f"Added quality gate: {gate.name}")
     
     def remove_gate(self, gate_name: str):
-        """Remove quality gate"""
-        if gate_name in self.gates:
+        """Remove quality gate"""        if gate_name in self.gates:
             del self.gates[gate_name]
             logger.info(f"Removed quality gate: {gate_name}")
         else:
             logger.warning(f"Gate not found: {gate_name}")
     
     def create_gate_group(self, group_name: str, gate_names: List[str]):
-        """Create named group of gates"""
-        valid_gates = [name for name in gate_names if name in self.gates]
+        """Create named group of gates"""        valid_gates = [name for name in gate_names if name in self.gates]
         self.gate_groups[group_name] = valid_gates
         logger.info(f"Created gate group '{group_name}' with {len(valid_gates)} gates")
     
@@ -773,8 +738,7 @@ class QualityGateManager:
         gate_names: Optional[List[str]] = None,
         group_name: Optional[str] = None
     ) -> List[QualityGateResult]:
-        """Evaluate specified gates or gate group"""
-        
+        """Evaluate specified gates or gate group"""        
         # Determine gates to evaluate
         if group_name:
             gates_to_evaluate = self.gate_groups.get(group_name, [])
@@ -814,8 +778,7 @@ class QualityGateManager:
         return results
     
     def get_gate_statistics(self, gate_name: Optional[str] = None) -> Dict[str, Any]:
-        """Get gate performance statistics"""
-        if gate_name:
+        """Get gate performance statistics"""        if gate_name:
             if gate_name in self.gates:
                 return self.gates[gate_name].get_statistics()
             else:
@@ -824,8 +787,7 @@ class QualityGateManager:
             return {name: gate.get_statistics() for name, gate in self.gates.items()}
     
     def get_evaluation_summary(self, hours: int = 24) -> Dict[str, Any]:
-        """Get evaluation summary for specified period"""
-        from datetime import timedelta
+        """Get evaluation summary for specified period"""        from datetime import timedelta
         
         cutoff_time = datetime.now() - timedelta(hours=hours)
         recent_evaluations = [
@@ -868,8 +830,7 @@ class QualityGateManager:
         }
     
     def configure_standard_gates(self, profile: QualityProfile):
-        """Configure standard gates based on quality profile"""
-        
+        """Configure standard gates based on quality profile"""        
         # Clear existing gates
         self.gates.clear()
         
@@ -915,15 +876,12 @@ class QualityGateManager:
         logger.info(f"Configured {len(self.gates)} standard gates for profile: {profile.name}")
     
     def enable_gate(self, gate_name: str, enabled: bool = True):
-        """Enable or disable a gate"""
-        if gate_name in self.gates:
+        """Enable or disable a gate"""        if gate_name in self.gates:
             self.gates[gate_name].enabled = enabled
             logger.info(f"Gate {gate_name} {'enabled' if enabled else 'disabled'}")
     
     def list_gates(self) -> List[str]:
-        """List all registered gates"""
-        return list(self.gates.keys())
+        """List all registered gates"""        return list(self.gates.keys())
     
     def list_enabled_gates(self) -> List[str]:
-        """List enabled gates"""
-        return [name for name, gate in self.gates.items() if gate.enabled]
+        """List enabled gates"""        return [name for name, gate in self.gates.items() if gate.enabled]

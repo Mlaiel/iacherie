@@ -1,5 +1,4 @@
-"""
-🔬 Audio Fingerprinting Module - Advanced Content Identification Engine
+"""🔬 Audio Fingerprinting Module - Advanced Content Identification Engine
 
 Professional audio fingerprinting and content matching system for the IA Influencer Agent platform.
 Implements state-of-the-art audio identification algorithms for copyright protection and content discovery.
@@ -7,7 +6,6 @@ Implements state-of-the-art audio identification algorithms for copyright protec
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any, Set
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Audio fingerprint algorithm types"""
-    CHROMAPRINT = "chromaprint"
+    """Audio fingerprint algorithm types"""    CHROMAPRINT = "chromaprint"
     LANDMARK = "landmark"
     SPECTRAL_HASH = "spectral_hash"
     MFCC_HASH = "mfcc_hash"
@@ -41,8 +38,7 @@ class FingerprintType(Enum):
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint representation"""
-    fingerprint_data: Union[np.ndarray, str, bytes]
+    """Audio fingerprint representation"""    fingerprint_data: Union[np.ndarray, str, bytes]
     fingerprint_type: FingerprintType
     audio_id: str
     duration: float
@@ -52,8 +48,7 @@ class AudioFingerprint:
     confidence: float = 1.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert fingerprint to dictionary for storage"""
-        return {
+        """Convert fingerprint to dictionary for storage"""        return {
             'fingerprint_data': self._serialize_fingerprint_data(),
             'fingerprint_type': self.fingerprint_type.value,
             'audio_id': self.audio_id,
@@ -65,8 +60,7 @@ class AudioFingerprint:
         }
     
     def _serialize_fingerprint_data(self) -> str:
-        """Serialize fingerprint data for storage"""
-        if isinstance(self.fingerprint_data, np.ndarray):
+        """Serialize fingerprint data for storage"""        if isinstance(self.fingerprint_data, np.ndarray):
             return pickle.dumps(self.fingerprint_data).hex()
         elif isinstance(self.fingerprint_data, bytes):
             return self.fingerprint_data.hex()
@@ -75,8 +69,7 @@ class AudioFingerprint:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'AudioFingerprint':
-        """Create fingerprint from dictionary"""
-        fingerprint_type = FingerprintType(data['fingerprint_type'])
+        """Create fingerprint from dictionary"""        fingerprint_type = FingerprintType(data['fingerprint_type'])
         
         # Deserialize fingerprint data
         fingerprint_data = data['fingerprint_data']
@@ -99,8 +92,7 @@ class AudioFingerprint:
 
 @dataclass
 class MatchResult:
-    """Audio content matching result"""
-    matched_audio_id: str
+    """Audio content matching result"""    matched_audio_id: str
     similarity_score: float
     confidence: float
     match_type: FingerprintType
@@ -110,16 +102,14 @@ class MatchResult:
 
 
 class SpectralLandmarkExtractor:
-    """
-    🗺️ Spectral Landmark Extraction Engine
+    """    🗺️ Spectral Landmark Extraction Engine
     
     Advanced landmark-based fingerprinting similar to Shazam algorithm:
     - Peak detection in spectral domain
     - Combinatorial hash generation
     - Time-frequency constellation mapping
     - Robust to noise and distortion
-    """
-    
+    """    
     def __init__(self, 
                  sample_rate: int = 44100,
                  window_size: int = 4096,
@@ -138,16 +128,14 @@ class SpectralLandmarkExtractor:
                     f"sr={sample_rate}, win={window_size}, hop={hop_length}")
     
     async def extract_landmarks(self, audio_data: np.ndarray) -> List[Tuple[int, int, int]]:
-        """
-        Extract spectral landmarks from audio
+        """        Extract spectral landmarks from audio
         
         Args:
             audio_data: Input audio samples
             
         Returns:
             List of landmarks as (time_frame, freq_bin, target_time_frame) tuples
-        """
-        try:
+        """        try:
             # Compute spectrogram
             stft = librosa.stft(
                 audio_data, 
@@ -203,8 +191,7 @@ class SpectralLandmarkExtractor:
                              anchor_time: int, 
                              anchor_freq: int, 
                              magnitude_db: np.ndarray) -> List[Tuple[int, int, int]]:
-        """Create landmark pairs from anchor point"""
-        landmarks = []
+        """Create landmark pairs from anchor point"""        landmarks = []
         
         # Define target zone (future time frames)
         start_time = anchor_time + 1
@@ -242,8 +229,7 @@ class SpectralLandmarkExtractor:
         return landmarks
     
     def landmarks_to_hashes(self, landmarks: List[Tuple[int, int, int]]) -> Set[int]:
-        """Convert landmarks to hash set for fast matching"""
-        hashes = set()
+        """Convert landmarks to hash set for fast matching"""        hashes = set()
         
         for anchor_time, anchor_freq, target_time in landmarks:
             # Create combinatorial hash
@@ -263,8 +249,7 @@ class SpectralLandmarkExtractor:
 
 
 class AudioFingerprinter:
-    """
-    🔍 Professional Audio Fingerprinting Engine
+    """    🔍 Professional Audio Fingerprinting Engine
     
     Advanced multi-algorithm fingerprinting system:
     - Multiple fingerprinting algorithms
@@ -272,8 +257,7 @@ class AudioFingerprinter:
     - Real-time processing capabilities
     - Database integration
     - Copyright protection support
-    """
-    
+    """    
     def __init__(self, 
                  config: Optional[AudioProcessingConfig] = None,
                  database_path: Optional[Path] = None):
@@ -290,8 +274,7 @@ class AudioFingerprinter:
         logger.info(f"AudioFingerprinter initialized with database: {self.database_path}")
     
     def _init_database(self):
-        """Initialize fingerprint database"""
-        try:
+        """Initialize fingerprint database"""        try:
             with sqlite3.connect(str(self.database_path)) as conn:
                 cursor = conn.cursor()
                 
@@ -334,8 +317,7 @@ class AudioFingerprinter:
                                  sample_rate: int,
                                  audio_id: str,
                                  fingerprint_type: FingerprintType = FingerprintType.COMBINED) -> AudioFingerprint:
-        """
-        Generate audio fingerprint using specified algorithm
+        """        Generate audio fingerprint using specified algorithm
         
         Args:
             audio_data: Input audio samples
@@ -345,8 +327,7 @@ class AudioFingerprinter:
             
         Returns:
             AudioFingerprint object
-        """
-        try:
+        """        try:
             duration = len(audio_data) / sample_rate
             
             if fingerprint_type == FingerprintType.LANDMARK:
@@ -379,16 +360,14 @@ class AudioFingerprinter:
             raise
     
     async def _generate_landmark_fingerprint(self, audio_data: np.ndarray) -> Set[int]:
-        """Generate landmark-based fingerprint"""
-        landmarks = await self.landmark_extractor.extract_landmarks(audio_data)
+        """Generate landmark-based fingerprint"""        landmarks = await self.landmark_extractor.extract_landmarks(audio_data)
         hashes = self.landmark_extractor.landmarks_to_hashes(landmarks)
         return hashes
     
     async def _generate_spectral_hash_fingerprint(self, 
                                                 audio_data: np.ndarray, 
                                                 sample_rate: int) -> np.ndarray:
-        """Generate spectral hash fingerprint"""
-        try:
+        """Generate spectral hash fingerprint"""        try:
             # Compute mel spectrogram
             mel_spec = librosa.feature.melspectrogram(
                 y=audio_data,
@@ -419,8 +398,7 @@ class AudioFingerprinter:
     async def _generate_mfcc_hash_fingerprint(self, 
                                             audio_data: np.ndarray, 
                                             sample_rate: int) -> np.ndarray:
-        """Generate MFCC-based hash fingerprint"""
-        try:
+        """Generate MFCC-based hash fingerprint"""        try:
             # Extract MFCC features
             mfcc = librosa.feature.mfcc(
                 y=audio_data,
@@ -445,8 +423,7 @@ class AudioFingerprinter:
     async def _generate_chromaprint_fingerprint(self, 
                                               audio_data: np.ndarray, 
                                               sample_rate: int) -> bytes:
-        """Generate Chromaprint-style fingerprint"""
-        try:
+        """Generate Chromaprint-style fingerprint"""        try:
             # Extract chroma features
             chroma = librosa.feature.chroma_cqt(
                 y=audio_data,
@@ -488,8 +465,7 @@ class AudioFingerprinter:
     async def _generate_combined_fingerprint(self, 
                                            audio_data: np.ndarray, 
                                            sample_rate: int) -> Dict[str, Any]:
-        """Generate combined fingerprint using multiple algorithms"""
-        try:
+        """Generate combined fingerprint using multiple algorithms"""        try:
             combined = {}
             
             # Generate multiple fingerprints
@@ -505,8 +481,7 @@ class AudioFingerprinter:
             return {}
     
     async def store_fingerprint(self, fingerprint: AudioFingerprint) -> bool:
-        """Store fingerprint in database"""
-        try:
+        """Store fingerprint in database"""        try:
             with sqlite3.connect(str(self.database_path)) as conn:
                 cursor = conn.cursor()
                 
@@ -540,8 +515,7 @@ class AudioFingerprinter:
     async def load_fingerprint(self, 
                              audio_id: str, 
                              fingerprint_type: FingerprintType) -> Optional[AudioFingerprint]:
-        """Load fingerprint from database"""
-        try:
+        """Load fingerprint from database"""        try:
             with sqlite3.connect(str(self.database_path)) as conn:
                 cursor = conn.cursor()
                 
@@ -578,8 +552,7 @@ class AudioFingerprinter:
                                            sample_rate: int,
                                            audio_id: str,
                                            fingerprint_type: FingerprintType = FingerprintType.COMBINED) -> AudioFingerprint:
-        """Generate and store fingerprint in one operation"""
-        fingerprint = await self.generate_fingerprint(
+        """Generate and store fingerprint in one operation"""        fingerprint = await self.generate_fingerprint(
             audio_data, sample_rate, audio_id, fingerprint_type
         )
         
@@ -589,8 +562,7 @@ class AudioFingerprinter:
 
 
 class ContentMatcher:
-    """
-    🎯 Advanced Audio Content Matching Engine
+    """    🎯 Advanced Audio Content Matching Engine
     
     High-performance content matching system:
     - Multi-algorithm matching strategies
@@ -598,8 +570,7 @@ class ContentMatcher:
     - Similarity scoring and ranking
     - Copyright violation detection
     - Content discovery and recommendation
-    """
-    
+    """    
     def __init__(self, 
                  fingerprinter: AudioFingerprinter,
                  config: Optional[AudioProcessingConfig] = None):
@@ -621,8 +592,7 @@ class ContentMatcher:
                          query_fingerprint: AudioFingerprint,
                          max_results: int = 10,
                          min_similarity: Optional[float] = None) -> List[MatchResult]:
-        """
-        Find matching content for query fingerprint
+        """        Find matching content for query fingerprint
         
         Args:
             query_fingerprint: Query audio fingerprint
@@ -631,8 +601,7 @@ class ContentMatcher:
             
         Returns:
             List of match results sorted by similarity
-        """
-        try:
+        """        try:
             if min_similarity is None:
                 min_similarity = self.similarity_thresholds.get(
                     query_fingerprint.fingerprint_type, 0.5
@@ -684,8 +653,7 @@ class ContentMatcher:
     
     async def _load_candidate_fingerprints(self, 
                                          fingerprint_type: FingerprintType) -> List[AudioFingerprint]:
-        """Load candidate fingerprints from database"""
-        try:
+        """Load candidate fingerprints from database"""        try:
             candidates = []
             
             with sqlite3.connect(str(self.fingerprinter.database_path)) as conn:
@@ -724,8 +692,7 @@ class ContentMatcher:
     async def _calculate_similarity(self,
                                   query_fp: AudioFingerprint,
                                   candidate_fp: AudioFingerprint) -> float:
-        """Calculate similarity between two fingerprints"""
-        try:
+        """Calculate similarity between two fingerprints"""        try:
             fingerprint_type = query_fp.fingerprint_type
             
             if fingerprint_type == FingerprintType.LANDMARK:
@@ -759,8 +726,7 @@ class ContentMatcher:
     def _calculate_landmark_similarity(self, 
                                      query_hashes: Set[int], 
                                      candidate_hashes: Set[int]) -> float:
-        """Calculate similarity for landmark fingerprints"""
-        if not query_hashes or not candidate_hashes:
+        """Calculate similarity for landmark fingerprints"""        if not query_hashes or not candidate_hashes:
             return 0.0
         
         # Jaccard similarity
@@ -772,8 +738,7 @@ class ContentMatcher:
     def _calculate_hash_similarity(self, 
                                  query_hash: np.ndarray, 
                                  candidate_hash: np.ndarray) -> float:
-        """Calculate similarity for binary hash fingerprints"""
-        if len(query_hash) == 0 or len(candidate_hash) == 0:
+        """Calculate similarity for binary hash fingerprints"""        if len(query_hash) == 0 or len(candidate_hash) == 0:
             return 0.0
         
         # Ensure same length (pad or truncate)
@@ -788,8 +753,7 @@ class ContentMatcher:
     def _calculate_chromaprint_similarity(self, 
                                         query_bytes: bytes, 
                                         candidate_bytes: bytes) -> float:
-        """Calculate similarity for Chromaprint fingerprints"""
-        if not query_bytes or not candidate_bytes:
+        """Calculate similarity for Chromaprint fingerprints"""        if not query_bytes or not candidate_bytes:
             return 0.0
         
         # Convert bytes to bit arrays
@@ -802,8 +766,7 @@ class ContentMatcher:
     def _calculate_combined_similarity(self, 
                                      query_combined: Dict[str, Any], 
                                      candidate_combined: Dict[str, Any]) -> float:
-        """Calculate similarity for combined fingerprints"""
-        if not query_combined or not candidate_combined:
+        """Calculate similarity for combined fingerprints"""        if not query_combined or not candidate_combined:
             return 0.0
         
         similarities = []
@@ -843,8 +806,7 @@ class ContentMatcher:
     async def detect_copyright_violation(self,
                                        query_fingerprint: AudioFingerprint,
                                        copyright_threshold: float = 0.8) -> List[MatchResult]:
-        """
-        Detect potential copyright violations
+        """        Detect potential copyright violations
         
         Args:
             query_fingerprint: Query audio fingerprint
@@ -852,8 +814,7 @@ class ContentMatcher:
             
         Returns:
             List of potential copyright violations
-        """
-        try:
+        """        try:
             # Find high-similarity matches
             matches = await self.find_matches(
                 query_fingerprint,
@@ -877,8 +838,7 @@ class ContentMatcher:
     async def batch_content_matching(self,
                                    query_fingerprints: List[AudioFingerprint],
                                    max_results_per_query: int = 5) -> Dict[str, List[MatchResult]]:
-        """Perform batch content matching for multiple queries"""
-        try:
+        """Perform batch content matching for multiple queries"""        try:
             results = {}
             
             for query_fp in query_fingerprints:
@@ -896,8 +856,7 @@ class ContentMatcher:
             return {}
     
     def get_database_statistics(self) -> Dict[str, Any]:
-        """Get fingerprint database statistics"""
-        try:
+        """Get fingerprint database statistics"""        try:
             stats = {}
             
             with sqlite3.connect(str(self.fingerprinter.database_path)) as conn:

@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Metrics - Performance Monitoring and Analytics
+"""Cache Metrics - Performance Monitoring and Analytics
 ===================================================
 
 Advanced metrics collection and analysis for cache performance
@@ -10,7 +9,6 @@ with real-time monitoring, alerting, and optimization insights.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import time
@@ -27,31 +25,27 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Cache metric types."""
-    COUNTER = "counter"
+    """Cache metric types."""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     TIMER = "timer"
 
 class MetricSeverity(Enum):
-    """Metric alert severity levels."""
-    INFO = "info"
+    """Metric alert severity levels."""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 @dataclass
 class MetricValue:
-    """Individual metric measurement."""
-    timestamp: datetime
+    """Individual metric measurement."""    timestamp: datetime
     value: Union[int, float]
     tags: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
 class MetricAlert:
-    """Metric alert configuration."""
-    alert_id: str
+    """Metric alert configuration."""    alert_id: str
     metric_name: str
     condition: str  # e.g., "> 0.9", "< 1000"
     severity: MetricSeverity
@@ -62,8 +56,7 @@ class MetricAlert:
 
 @dataclass
 class CachePerformanceSnapshot:
-    """Cache performance snapshot."""
-    timestamp: datetime
+    """Cache performance snapshot."""    timestamp: datetime
     hit_rate: float
     miss_rate: float
     total_operations: int
@@ -74,8 +67,7 @@ class CachePerformanceSnapshot:
     throughput: float
 
 class CacheMetrics:
-    """
-    Cache metrics collection and analysis.
+    """    Cache metrics collection and analysis.
     
     Features:
     - Real-time metrics collection
@@ -83,17 +75,14 @@ class CacheMetrics:
     - Alert management
     - Historical trending
     - Optimization insights
-    """
-    
+    """    
     def __init__(self, retention_hours: int = 24, collection_interval: int = 60):
-        """
-        Initialize cache metrics.
+        """        Initialize cache metrics.
         
         Args:
             retention_hours: How long to keep metrics data
             collection_interval: Metrics collection interval in seconds
-        """
-        self.retention_hours = retention_hours
+        """        self.retention_hours = retention_hours
         self.collection_interval = collection_interval
         self.logger = logging.getLogger(f"{__name__}.CacheMetrics")
         
@@ -120,12 +109,10 @@ class CacheMetrics:
         self.logger.info("Cache metrics initialized")
     
     def _max_samples(self) -> int:
-        """Calculate maximum samples to keep."""
-        return int(self.retention_hours * 3600 / self.collection_interval)
+        """Calculate maximum samples to keep."""        return int(self.retention_hours * 3600 / self.collection_interval)
     
     async def start_collection(self) -> None:
-        """Start metrics collection."""
-        if self._collection_task is not None:
+        """Start metrics collection."""        if self._collection_task is not None:
             return
         
         self._running = True
@@ -133,8 +120,7 @@ class CacheMetrics:
         self.logger.info("Started metrics collection")
     
     async def stop_collection(self) -> None:
-        """Stop metrics collection."""
-        self._running = False
+        """Stop metrics collection."""        self._running = False
         if self._collection_task:
             self._collection_task.cancel()
             try:
@@ -145,8 +131,7 @@ class CacheMetrics:
         self.logger.info("Stopped metrics collection")
     
     async def _collection_loop(self) -> None:
-        """Main metrics collection loop."""
-        try:
+        """Main metrics collection loop."""        try:
             while self._running:
                 await self._collect_metrics()
                 await self._check_alerts()
@@ -157,8 +142,7 @@ class CacheMetrics:
             self.logger.error(f"Metrics collection error: {e}")
     
     async def _collect_metrics(self) -> None:
-        """Collect current metrics snapshot."""
-        try:
+        """Collect current metrics snapshot."""        try:
             timestamp = datetime.now()
             
             # Calculate derived metrics
@@ -186,8 +170,7 @@ class CacheMetrics:
     
     def _record_metric(self, name: str, value: Union[int, float], 
                       timestamp: datetime, tags: Optional[Dict[str, str]] = None) -> None:
-        """Record a metric value."""
-        metric_value = MetricValue(
+        """Record a metric value."""        metric_value = MetricValue(
             timestamp=timestamp,
             value=value,
             tags=tags or {}
@@ -196,8 +179,7 @@ class CacheMetrics:
     
     def increment_counter(self, name: str, value: int = 1, 
                          tags: Optional[Dict[str, str]] = None) -> None:
-        """Increment a counter metric."""
-        self.counters[name] += value
+        """Increment a counter metric."""        self.counters[name] += value
         self.total_operations += value
         
         # Record for trending
@@ -205,14 +187,12 @@ class CacheMetrics:
     
     def set_gauge(self, name: str, value: Union[int, float],
                  tags: Optional[Dict[str, str]] = None) -> None:
-        """Set a gauge metric value."""
-        self.gauges[name] = value
+        """Set a gauge metric value."""        self.gauges[name] = value
         self._record_metric(name, value, datetime.now(), tags)
     
     def record_timer(self, name: str, duration: float,
                     tags: Optional[Dict[str, str]] = None) -> None:
-        """Record a timer metric."""
-        self.timers[name].append(duration)
+        """Record a timer metric."""        self.timers[name].append(duration)
         self.operation_times.append(duration)
         
         # Keep only recent timer values
@@ -223,8 +203,7 @@ class CacheMetrics:
     
     def record_operation(self, operation: str, duration: float, 
                         success: bool = True, tags: Optional[Dict[str, str]] = None) -> None:
-        """Record a cache operation."""
-        self.total_operations += 1
+        """Record a cache operation."""        self.total_operations += 1
         
         # Record timing
         self.record_timer(f"{operation}_time", duration, tags)
@@ -237,22 +216,18 @@ class CacheMetrics:
             self.error_count += 1
     
     def record_hit(self, key: str, cache_level: str = "default") -> None:
-        """Record a cache hit."""
-        self.increment_counter("cache_hits", tags={"level": cache_level})
+        """Record a cache hit."""        self.increment_counter("cache_hits", tags={"level": cache_level})
         self.increment_counter("cache_operations")
     
     def record_miss(self, key: str, cache_level: str = "default") -> None:
-        """Record a cache miss."""
-        self.increment_counter("cache_misses", tags={"level": cache_level})
+        """Record a cache miss."""        self.increment_counter("cache_misses", tags={"level": cache_level})
         self.increment_counter("cache_operations")
     
     def record_eviction(self, key: str, reason: str = "lru") -> None:
-        """Record a cache eviction."""
-        self.increment_counter("cache_evictions", tags={"reason": reason})
+        """Record a cache eviction."""        self.increment_counter("cache_evictions", tags={"reason": reason})
     
     def _calculate_hit_rate(self) -> float:
-        """Calculate current hit rate."""
-        hits = self.counters.get("cache_hits", 0)
+        """Calculate current hit rate."""        hits = self.counters.get("cache_hits", 0)
         misses = self.counters.get("cache_misses", 0)
         total = hits + misses
         
@@ -262,15 +237,13 @@ class CacheMetrics:
         return hits / total
     
     def _calculate_error_rate(self) -> float:
-        """Calculate current error rate."""
-        if self.total_operations == 0:
+        """Calculate current error rate."""        if self.total_operations == 0:
             return 0.0
         
         return self.error_count / self.total_operations
     
     def _calculate_throughput(self) -> float:
-        """Calculate operations per second."""
-        uptime = (datetime.now() - self.start_time).total_seconds()
+        """Calculate operations per second."""        uptime = (datetime.now() - self.start_time).total_seconds()
         
         if uptime == 0:
             return 0.0
@@ -278,8 +251,7 @@ class CacheMetrics:
         return self.total_operations / uptime
     
     def _calculate_average_response_time(self) -> float:
-        """Calculate average response time."""
-        if not self.operation_times:
+        """Calculate average response time."""        if not self.operation_times:
             return 0.0
         
         return sum(self.operation_times) / len(self.operation_times)
@@ -287,8 +259,7 @@ class CacheMetrics:
     async def get_metrics(self, metric_names: Optional[List[str]] = None,
                          start_time: Optional[datetime] = None,
                          end_time: Optional[datetime] = None) -> Dict[str, List[MetricValue]]:
-        """
-        Get metrics data.
+        """        Get metrics data.
         
         Args:
             metric_names: Specific metrics to retrieve
@@ -297,8 +268,7 @@ class CacheMetrics:
             
         Returns:
             Metrics data
-        """
-        result = {}
+        """        result = {}
         
         metrics_to_get = metric_names or list(self.metrics.keys())
         
@@ -324,8 +294,7 @@ class CacheMetrics:
         return result
     
     async def get_performance_snapshot(self) -> CachePerformanceSnapshot:
-        """Get current performance snapshot."""
-        return CachePerformanceSnapshot(
+        """Get current performance snapshot."""        return CachePerformanceSnapshot(
             timestamp=datetime.now(),
             hit_rate=self._calculate_hit_rate(),
             miss_rate=1.0 - self._calculate_hit_rate(),
@@ -338,8 +307,7 @@ class CacheMetrics:
         )
     
     async def add_alert(self, alert: MetricAlert) -> bool:
-        """Add metric alert."""
-        try:
+        """Add metric alert."""        try:
             self.alerts[alert.alert_id] = alert
             self.logger.info(f"Added alert: {alert.alert_id}")
             return True
@@ -348,8 +316,7 @@ class CacheMetrics:
             return False
     
     async def remove_alert(self, alert_id: str) -> bool:
-        """Remove metric alert."""
-        try:
+        """Remove metric alert."""        try:
             if alert_id in self.alerts:
                 del self.alerts[alert_id]
                 self.logger.info(f"Removed alert: {alert_id}")
@@ -360,8 +327,7 @@ class CacheMetrics:
             return False
     
     async def _check_alerts(self) -> None:
-        """Check all configured alerts."""
-        for alert in self.alerts.values():
+        """Check all configured alerts."""        for alert in self.alerts.values():
             if not alert.enabled:
                 continue
             
@@ -371,8 +337,7 @@ class CacheMetrics:
                 self.logger.error(f"Error evaluating alert {alert.alert_id}: {e}")
     
     async def _evaluate_alert(self, alert: MetricAlert) -> None:
-        """Evaluate individual alert condition."""
-        # Check cooldown
+        """Evaluate individual alert condition."""        # Check cooldown
         if alert.last_triggered:
             cooldown_expires = alert.last_triggered + timedelta(seconds=alert.cooldown_seconds)
             if datetime.now() < cooldown_expires:
@@ -405,8 +370,7 @@ class CacheMetrics:
             self.logger.error(f"Error evaluating condition for {alert.alert_id}: {e}")
     
     def _evaluate_condition(self, value: Union[int, float], condition: str) -> bool:
-        """Evaluate alert condition."""
-        # Simple condition evaluation
+        """Evaluate alert condition."""        # Simple condition evaluation
         # In production, use a proper expression evaluator
         try:
             return eval(f"{value} {condition}")
@@ -414,8 +378,7 @@ class CacheMetrics:
             return False
     
     async def _trigger_alert(self, alert: MetricAlert, current_value: Union[int, float]) -> None:
-        """Trigger alert notification."""
-        alert.last_triggered = datetime.now()
+        """Trigger alert notification."""        alert.last_triggered = datetime.now()
         
         alert_event = {
             "alert_id": alert.alert_id,
@@ -436,12 +399,10 @@ class CacheMetrics:
         self.logger.warning(f"ALERT [{alert.severity.value}] {alert.message} (value: {current_value})")
     
     async def get_alert_history(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """Get recent alert history."""
-        return self.alert_history[-limit:]
+        """Get recent alert history."""        return self.alert_history[-limit:]
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics."""
-        snapshot = await self.get_performance_snapshot()
+        """Get comprehensive cache statistics."""        snapshot = await self.get_performance_snapshot()
         
         return {
             "performance": {
@@ -474,15 +435,12 @@ class CacheMetrics:
         }
 
 class PerformanceMonitor:
-    """
-    Advanced performance monitoring for cache systems.
+    """    Advanced performance monitoring for cache systems.
     
     Provides detailed performance analysis and optimization recommendations.
-    """
-    
+    """    
     def __init__(self, metrics: CacheMetrics):
-        """Initialize performance monitor."""
-        self.metrics = metrics
+        """Initialize performance monitor."""        self.metrics = metrics
         self.logger = logging.getLogger(f"{__name__}.PerformanceMonitor")
         
         # Performance thresholds
@@ -500,8 +458,7 @@ class PerformanceMonitor:
         self.logger.info("Performance monitor initialized")
     
     async def analyze_performance(self) -> Dict[str, Any]:
-        """Analyze current cache performance."""
-        snapshot = await self.metrics.get_performance_snapshot()
+        """Analyze current cache performance."""        snapshot = await self.metrics.get_performance_snapshot()
         
         analysis = {
             "overall_health": "healthy",
@@ -535,8 +492,7 @@ class PerformanceMonitor:
         return analysis
     
     def _analyze_hit_rate(self, hit_rate: float, analysis: Dict[str, Any]) -> float:
-        """Analyze cache hit rate."""
-        if hit_rate < self.thresholds["hit_rate_critical"]:
+        """Analyze cache hit rate."""        if hit_rate < self.thresholds["hit_rate_critical"]:
             analysis["issues"].append({
                 "type": "critical",
                 "metric": "hit_rate",
@@ -562,8 +518,7 @@ class PerformanceMonitor:
             return min(hit_rate / self.thresholds["hit_rate_warning"], 1.0)
     
     def _analyze_response_time(self, response_time: float, analysis: Dict[str, Any]) -> float:
-        """Analyze cache response time."""
-        response_time_ms = response_time * 1000  # Convert to milliseconds
+        """Analyze cache response time."""        response_time_ms = response_time * 1000  # Convert to milliseconds
         
         if response_time_ms > self.thresholds["response_time_critical"]:
             analysis["issues"].append({
@@ -593,8 +548,7 @@ class PerformanceMonitor:
             return min(normalized, 1.0)
     
     def _analyze_error_rate(self, error_rate: float, analysis: Dict[str, Any]) -> float:
-        """Analyze cache error rate."""
-        if error_rate > self.thresholds["error_rate_critical"]:
+        """Analyze cache error rate."""        if error_rate > self.thresholds["error_rate_critical"]:
             analysis["issues"].append({
                 "type": "critical",
                 "metric": "error_rate",

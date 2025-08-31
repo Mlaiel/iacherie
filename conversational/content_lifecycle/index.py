@@ -1,5 +1,4 @@
-"""
-Content Lifecycle Management System - Main Index & Entry Point
+"""Content Lifecycle Management System - Main Index & Entry Point
 
 Enterprise Creator Economy Platform - Central Orchestration Hub
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -30,7 +29,6 @@ Multi-Platform Distribution (Spotify/YouTube/Instagram/TikTok)
     ↓
 Monetization & Analytics
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union
@@ -53,22 +51,18 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class ContentLifecycleIndex:
-    """
-    Main orchestration hub for the Content Lifecycle Management System.
+    """    Main orchestration hub for the Content Lifecycle Management System.
     
     This class serves as the central entry point and coordinator for all
     creator economy workflow operations, managing the complete pipeline
     from content upload to multi-platform monetization.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Content Lifecycle Management System.
+        """        Initialize the Content Lifecycle Management System.
         
         Args:
             config (Optional[Dict[str, Any]]): System configuration parameters
-        """
-        self.config = config or self._get_default_config()
+        """        self.config = config or self._get_default_config()
         self.system_id = f"content_lifecycle_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
         
         # Initialize all enterprise modules
@@ -94,8 +88,7 @@ class ContentLifecycleIndex:
         logger.info("🎯 Creator Economy Workflow Ready")
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default system configuration."""
-        return {
+        """Get default system configuration."""        return {
             "format_processor": {
                 "max_file_size": "500MB",
                 "supported_formats": ["mp3", "mp4", "jpg", "png", "txt", "md"],
@@ -135,8 +128,7 @@ class ContentLifecycleIndex:
         metadata: Dict[str, Any],
         workflow_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Process creator content through the complete lifecycle workflow.
+        """        Process creator content through the complete lifecycle workflow.
         
         Args:
             creator_id (str): Unique creator identifier
@@ -147,8 +139,7 @@ class ContentLifecycleIndex:
             
         Returns:
             Dict[str, Any]: Complete processing results and metrics
-        """
-        workflow_id = f"workflow_{creator_id}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
+        """        workflow_id = f"workflow_{creator_id}_{datetime.now(timezone.utc).strftime('%Y%m%d_%H%M%S')}"
         
         logger.info(f"🎬 Starting creator content workflow - ID: {workflow_id}")
         logger.info(f"👤 Creator: {creator_id} | Type: {content_type}")
@@ -267,16 +258,14 @@ class ContentLifecycleIndex:
             return results
     
     async def get_creator_analytics(self, creator_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive analytics for a creator.
+        """        Get comprehensive analytics for a creator.
         
         Args:
             creator_id (str): Creator identifier
             
         Returns:
             Dict[str, Any]: Creator analytics and performance metrics
-        """
-        logger.info(f"📊 Generating analytics for creator: {creator_id}")
+        """        logger.info(f"📊 Generating analytics for creator: {creator_id}")
         
         # Aggregate data from all modules
         analytics = {
@@ -292,13 +281,11 @@ class ContentLifecycleIndex:
         return analytics
     
     def get_system_health(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system health and status information.
+        """        Get comprehensive system health and status information.
         
         Returns:
             Dict[str, Any]: System health metrics and module status
-        """
-        current_time = datetime.now(timezone.utc)
+        """        current_time = datetime.now(timezone.utc)
         uptime = (current_time - self.metrics["system_uptime"]).total_seconds()
         
         health = {
@@ -340,13 +327,11 @@ class ContentLifecycleIndex:
         return health
     
     def get_supported_creator_types(self) -> List[Dict[str, Any]]:
-        """
-        Get list of supported creator types and their capabilities.
+        """        Get list of supported creator types and their capabilities.
         
         Returns:
             List[Dict[str, Any]]: Supported creator demographics and features
-        """
-        return [
+        """        return [
             {
                 "type": "Musicians & Audio Creators",
                 "icon": "🎵",
@@ -398,13 +383,11 @@ class ContentLifecycleIndex:
         ]
 
 def get_system_info() -> Dict[str, Any]:
-    """
-    Get comprehensive system information and capabilities.
+    """    Get comprehensive system information and capabilities.
     
     Returns:
         Dict[str, Any]: System information and metadata
-    """
-    return {
+    """    return {
         "system_name": "Content Lifecycle Management System",
         "version": "2.1.0",
         "author": "Fahed Mlaiel",
@@ -434,11 +417,9 @@ def get_system_info() -> Dict[str, Any]:
     }
 
 async def main():
-    """
-    Main entry point for the Content Lifecycle Management System.
+    """    Main entry point for the Content Lifecycle Management System.
     Demonstrates the complete creator economy workflow.
-    """
-    print("🚀 Content Lifecycle Management System - Creator Economy Platform")
+    """    print("🚀 Content Lifecycle Management System - Creator Economy Platform")
     print("=" * 80)
     print(f"👨‍💻 Author: Fahed Mlaiel (mlaiel@live.de)")
     print(f"📅 Date: {datetime.now(timezone.utc).strftime('%Y-%m-%d %H:%M:%S UTC')}")

@@ -1,5 +1,4 @@
-"""
-Revenue Recovery and Monetization Tracking System
+"""Revenue Recovery and Monetization Tracking System
 
 Automated revenue claim management, payment recovery tracking,
 and monetization optimization for copyright enforcement.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class ClaimStatus(str, Enum):
-    """Revenue claim status enumeration"""
-    INITIATED = "initiated"
+    """Revenue claim status enumeration"""    INITIATED = "initiated"
     PROCESSING = "processing"
     APPROVED = "approved"
     PAID = "paid"
@@ -44,8 +41,7 @@ class ClaimStatus(str, Enum):
 
 
 class RevenueType(str, Enum):
-    """Types of revenue streams"""
-    AD_REVENUE = "ad_revenue"
+    """Types of revenue streams"""    AD_REVENUE = "ad_revenue"
     SUBSCRIPTION = "subscription"
     DONATION = "donation"
     MERCHANDISE = "merchandise"
@@ -56,8 +52,7 @@ class RevenueType(str, Enum):
 
 
 class PaymentMethod(str, Enum):
-    """Payment recovery methods"""
-    PLATFORM_SPLIT = "platform_split"
+    """Payment recovery methods"""    PLATFORM_SPLIT = "platform_split"
     DIRECT_PAYMENT = "direct_payment"
     ESCROW = "escrow"
     LEGAL_SETTLEMENT = "legal_settlement"
@@ -66,8 +61,7 @@ class PaymentMethod(str, Enum):
 
 @dataclass
 class RevenueClaimRequest:
-    """Revenue claim creation request"""
-    content_id: str
+    """Revenue claim creation request"""    content_id: str
     violation_url: str
     platform: str
     copyright_owner: str
@@ -82,8 +76,7 @@ class RevenueClaimRequest:
 
 @dataclass
 class MonetizationMetrics:
-    """Monetization tracking metrics"""
-    total_claims: int
+    """Monetization tracking metrics"""    total_claims: int
     total_recovered: Decimal
     average_recovery_time: float
     success_rate: float
@@ -92,8 +85,7 @@ class MonetizationMetrics:
 
 
 class RevenueClaimManager:
-    """Advanced revenue claim management system"""
-    
+    """Advanced revenue claim management system"""    
     def __init__(self):
         self.payment_processor = PaymentProcessor()
         self.platform_api = PlatformAPIManager()
@@ -105,13 +97,11 @@ class RevenueClaimManager:
         request: RevenueClaimRequest,
         session: AsyncSession
     ) -> Tuple[bool, str, Optional[str]]:
-        """
-        Initiate revenue claim for copyright violation
+        """        Initiate revenue claim for copyright violation
         
         Returns:
             Tuple[success, message, claim_id]
-        """
-        try:
+        """        try:
             # Validate claim request
             is_valid, validation_errors = await self._validate_claim_request(request)
             if not is_valid:
@@ -157,8 +147,7 @@ class RevenueClaimManager:
         claim_id: str,
         session: AsyncSession
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Process revenue sharing with platform"""
-        try:
+        """Process revenue sharing with platform"""        try:
             # Get claim details
             claim = await self._get_claim_by_id(claim_id, session)
             if not claim:
@@ -205,8 +194,7 @@ class RevenueClaimManager:
         claim_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Track payment recovery progress"""
-        try:
+        """Track payment recovery progress"""        try:
             claim = await self._get_claim_by_id(claim_id, session)
             if not claim:
                 return {"error": "Claim not found"}
@@ -244,8 +232,7 @@ class RevenueClaimManager:
         claim_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Optimize revenue recovery strategy"""
-        try:
+        """Optimize revenue recovery strategy"""        try:
             claim = await self._get_claim_by_id(claim_id, session)
             if not claim:
                 return {"error": "Claim not found"}
@@ -276,8 +263,7 @@ class RevenueClaimManager:
             return {"error": str(e)}
     
     async def _validate_claim_request(self, request: RevenueClaimRequest) -> Tuple[bool, List[str]]:
-        """Validate revenue claim request"""
-        errors = []
+        """Validate revenue claim request"""        errors = []
         
         if not request.content_id:
             errors.append("Content ID is required")
@@ -295,8 +281,7 @@ class RevenueClaimManager:
         return len(errors) == 0, errors
     
     async def _calculate_recovery_estimate(self, request: RevenueClaimRequest) -> Dict[str, Any]:
-        """Calculate estimated recovery amount"""
-        base_estimate = request.estimated_loss
+        """Calculate estimated recovery amount"""        base_estimate = request.estimated_loss
         
         # Platform-specific recovery rates
         platform_rates = {
@@ -325,8 +310,7 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Start automated claim processing workflow"""
-        try:
+        """Start automated claim processing workflow"""        try:
             # Submit claim to platform
             platform_submission = await self._submit_claim_to_platform(claim)
             
@@ -347,8 +331,7 @@ class RevenueClaimManager:
             return {"error": str(e)}
     
     async def _get_claim_by_id(self, claim_id: str, session: AsyncSession) -> Optional[RevenueClaim]:
-        """Get revenue claim by ID"""
-        result = await session.execute(
+        """Get revenue claim by ID"""        result = await session.execute(
             select(RevenueClaim).where(RevenueClaim.id == claim_id)
         )
         return result.scalar_one_or_none()
@@ -358,8 +341,7 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         revenue_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate revenue split between parties"""
-        total_revenue = Decimal(str(revenue_data.get("total_revenue", 0)))
+        """Calculate revenue split between parties"""        total_revenue = Decimal(str(revenue_data.get("total_revenue", 0)))
         
         # Standard splits (configurable per platform)
         splits = {
@@ -383,8 +365,7 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         split_calculation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Initiate revenue sharing with platform"""
-        try:
+        """Initiate revenue sharing with platform"""        try:
             # Submit revenue sharing request to platform
             sharing_request = await self.platform_api.request_revenue_sharing(
                 claim.platform,
@@ -412,8 +393,7 @@ class RevenueClaimManager:
         claim_id: str,
         session: AsyncSession
     ) -> List[PaymentRecovery]:
-        """Get payment recovery records for claim"""
-        result = await session.execute(
+        """Get payment recovery records for claim"""        result = await session.execute(
             select(PaymentRecovery)
             .where(PaymentRecovery.claim_id == claim_id)
             .order_by(PaymentRecovery.received_at)
@@ -421,8 +401,7 @@ class RevenueClaimManager:
         return result.scalars().all()
     
     async def _check_platform_payment_status(self, claim: RevenueClaim) -> Dict[str, Any]:
-        """Check payment status on platform"""
-        try:
+        """Check payment status on platform"""        try:
             status_response = await self.platform_api.check_payment_status(
                 claim.platform,
                 str(claim.id)
@@ -436,8 +415,7 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         recovery_records: List[PaymentRecovery]
     ) -> Dict[str, Any]:
-        """Calculate time-based metrics"""
-        now = datetime.utcnow()
+        """Calculate time-based metrics"""        now = datetime.utcnow()
         claim_age = (now - claim.created_at).days
         
         metrics = {
@@ -471,8 +449,7 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Analyze claim performance"""
-        recovery_records = await self._get_payment_recoveries(str(claim.id), session)
+        """Analyze claim performance"""        recovery_records = await self._get_payment_recoveries(str(claim.id), session)
         total_recovered = sum(r.amount for r in recovery_records)
         
         performance = {
@@ -491,8 +468,7 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         performance: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""
-        recommendations = []
+        """Generate optimization recommendations"""        recommendations = []
         
         if performance["recovery_rate"] < 50:
             recommendations.append({
@@ -527,8 +503,7 @@ class RevenueClaimManager:
         recommendations: List[Dict[str, Any]],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Apply optimization recommendations"""
-        results = {
+        """Apply optimization recommendations"""        results = {
             "applied": [],
             "failed": [],
             "skipped": []
@@ -558,8 +533,7 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         recovery_records: List[PaymentRecovery]
     ) -> float:
-        """Calculate claim efficiency score"""
-        if not recovery_records:
+        """Calculate claim efficiency score"""        if not recovery_records:
             return 0.0
         
         # Factors: recovery rate, time efficiency, payment consistency
@@ -575,8 +549,7 @@ class RevenueClaimManager:
         return min(efficiency, 1.0)
     
     async def _assess_platform_responsiveness(self, claim: RevenueClaim) -> float:
-        """Assess platform responsiveness score"""
-        # This would analyze platform communication patterns
+        """Assess platform responsiveness score"""        # This would analyze platform communication patterns
         return 0.75  # Placeholder
     
     async def _identify_bottlenecks(
@@ -584,8 +557,7 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         recovery_records: List[PaymentRecovery]
     ) -> List[Dict[str, Any]]:
-        """Identify process bottlenecks"""
-        bottlenecks = []
+        """Identify process bottlenecks"""        bottlenecks = []
         
         # Check for long delays
         if not recovery_records and (datetime.utcnow() - claim.created_at).days > 30:
@@ -613,8 +585,7 @@ class RevenueClaimManager:
         status: str,
         session: AsyncSession
     ) -> None:
-        """Update claim status"""
-        await session.execute(
+        """Update claim status"""        await session.execute(
             update(RevenueClaim)
             .where(RevenueClaim.id == claim_id)
             .values(status=status, updated_at=datetime.utcnow())
@@ -622,24 +593,20 @@ class RevenueClaimManager:
         await session.commit()
     
     async def _submit_claim_to_platform(self, claim: RevenueClaim) -> Dict[str, Any]:
-        """Submit claim to platform"""
-        return {"success": True, "platform_reference": "PLAT-12345"}
+        """Submit claim to platform"""        return {"success": True, "platform_reference": "PLAT-12345"}
     
     async def _setup_claim_monitoring(self, claim: RevenueClaim) -> Dict[str, Any]:
-        """Setup claim monitoring"""
-        return {"monitoring_active": True, "check_interval": "daily"}
+        """Setup claim monitoring"""        return {"monitoring_active": True, "check_interval": "daily"}
     
     async def _schedule_claim_followups(
         self,
         claim: RevenueClaim,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Schedule claim follow-up actions"""
-        return {"follow_ups_scheduled": 3, "next_followup": "7 days"}
+        """Schedule claim follow-up actions"""        return {"follow_ups_scheduled": 3, "next_followup": "7 days"}
     
     async def _escalate_claim(self, claim: RevenueClaim, reason: str, session: AsyncSession) -> None:
-        """Escalate claim to higher priority"""
-        await session.execute(
+        """Escalate claim to higher priority"""        await session.execute(
             update(RevenueClaim)
             .where(RevenueClaim.id == claim.id)
             .values(
@@ -650,8 +617,7 @@ class RevenueClaimManager:
         await session.commit()
     
     async def _increase_communication_frequency(self, claim: RevenueClaim) -> None:
-        """Increase communication frequency with platform"""
-        # Implementation for increasing communication
+        """Increase communication frequency with platform"""        # Implementation for increasing communication
         pass
     
     async def _implement_process_improvement(
@@ -659,14 +625,12 @@ class RevenueClaimManager:
         claim: RevenueClaim,
         recommendation: Dict[str, Any]
     ) -> None:
-        """Implement process improvement"""
-        # Implementation for process improvements
+        """Implement process improvement"""        # Implementation for process improvements
         pass
 
 
 class MonetizationTracker:
-    """Advanced monetization tracking and analytics"""
-    
+    """Advanced monetization tracking and analytics"""    
     def __init__(self):
         self.settings = get_settings()
     
@@ -677,8 +641,7 @@ class MonetizationTracker:
         period_end: datetime,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Generate comprehensive monetization report"""
-        try:
+        """Generate comprehensive monetization report"""        try:
             # Get all claims for user in period
             claims_result = await session.execute(
                 select(RevenueClaim)
@@ -722,8 +685,7 @@ class MonetizationTracker:
         claims: List[RevenueClaim],
         session: AsyncSession
     ) -> MonetizationMetrics:
-        """Calculate comprehensive monetization metrics"""
-        total_claims = len(claims)
+        """Calculate comprehensive monetization metrics"""        total_claims = len(claims)
         total_recovered = Decimal("0")
         recovery_times = []
         successful_claims = 0
@@ -763,8 +725,7 @@ class MonetizationTracker:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, List[Tuple[datetime, Decimal]]]:
-        """Calculate revenue trends over time"""
-        trends = {
+        """Calculate revenue trends over time"""        trends = {
             "daily": [],
             "weekly": [],
             "monthly": []
@@ -784,8 +745,7 @@ class MonetizationTracker:
         claims: List[RevenueClaim],
         session: AsyncSession
     ) -> Dict[str, Dict[str, Union[int, Decimal]]]:
-        """Calculate platform-wise breakdown"""
-        breakdown = {}
+        """Calculate platform-wise breakdown"""        breakdown = {}
         
         for claim in claims:
             platform = claim.platform
@@ -816,8 +776,7 @@ class MonetizationTracker:
 
 
 class PaymentRecovery:
-    """Payment recovery tracking and automation"""
-    
+    """Payment recovery tracking and automation"""    
     def __init__(self):
         self.payment_processor = PaymentProcessor()
         self.settings = get_settings()
@@ -828,8 +787,7 @@ class PaymentRecovery:
         payment_data: Dict[str, Any],
         session: AsyncSession
     ) -> Tuple[bool, str]:
-        """Process incoming payment recovery"""
-        try:
+        """Process incoming payment recovery"""        try:
             # Validate payment data
             if not self._validate_payment_data(payment_data):
                 return False, "Invalid payment data"
@@ -862,13 +820,11 @@ class PaymentRecovery:
             return False, f"Processing failed: {str(e)}"
     
     def _validate_payment_data(self, data: Dict[str, Any]) -> bool:
-        """Validate payment recovery data"""
-        required_fields = ["amount", "payment_method"]
+        """Validate payment recovery data"""        required_fields = ["amount", "payment_method"]
         return all(field in data for field in required_fields)
     
     async def _check_claim_completion(self, claim_id: str, session: AsyncSession) -> None:
-        """Check if claim is fully recovered"""
-        # Get claim and calculate total recovery
+        """Check if claim is fully recovered"""        # Get claim and calculate total recovery
         claim_result = await session.execute(
             select(RevenueClaim).where(RevenueClaim.id == claim_id)
         )
@@ -901,6 +857,5 @@ class PaymentRecovery:
         recovery: PaymentRecovery,
         session: AsyncSession
     ) -> None:
-        """Send payment recovery notifications"""
-        # Implementation for sending notifications
+        """Send payment recovery notifications"""        # Implementation for sending notifications
         logger.info(f"Payment notification sent for claim {claim_id}")

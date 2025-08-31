@@ -1,5 +1,4 @@
-"""
-🎯 Creator Management - IA-Influencer-Agent
+"""🎯 Creator Management - IA-Influencer-Agent
 ==================================================================
 Expert: AI_SPECIALIST + ML_ENGINEER
 Type: INFLUENCER_AI
@@ -9,7 +8,6 @@ Module business optimisé avec architecture 3 niveaux maximum.
 Consolidation intelligente de 936 classes et 3428 fonctions.
 ==================================================================
 """
-
 from typing import Dict, List, Optional, Any, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -24,16 +22,14 @@ logger = logging.getLogger(__name__)
 # =============== CONFIGURATION & ENUMS ===============
 
 class CreatorManagementStatus(Enum):
-    """Statuts du module Creator Management"""
-    ACTIVE = "active"
+    """Statuts du module Creator Management"""    ACTIVE = "active"
     INACTIVE = "inactive"
     PROCESSING = "processing"
     ERROR = "error"
 
 @dataclass
 class CreatorManagementConfig:
-    """Configuration du module Creator Management"""
-    enabled: bool = True
+    """Configuration du module Creator Management"""    enabled: bool = True
     max_concurrent_tasks: int = 10
     timeout_seconds: int = 30
     debug_mode: bool = False
@@ -41,36 +37,30 @@ class CreatorManagementConfig:
 # =============== INTERFACES BUSINESS ===============
 
 class ICreatorManagementService(ABC):
-    """Interface du service Creator Management"""
-    
+    """Interface du service Creator Management"""    
     @abstractmethod
     async def initialize(self) -> bool:
-        """Initialisation du service"""
-        pass
+        """Initialisation du service"""        pass
     
     @abstractmethod
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal"""
-        pass
+        """Traitement principal"""        pass
     
     @abstractmethod
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données"""
-        pass
+        """Validation des données"""        pass
 
 # =============== CLASSES BUSINESS PRINCIPALES ===============
 
 class CreatorManagementManager:
-    """Gestionnaire principal Creator Management"""
-    
+    """Gestionnaire principal Creator Management"""    
     def __init__(self, config: CreatorManagementConfig):
         self.config = config
         self.status = CreatorManagementStatus.INACTIVE
         self.logger = logging.getLogger(f"{__name__}.CreatorManagement")
         
     async def start(self) -> bool:
-        """Démarrage du gestionnaire"""
-        try:
+        """Démarrage du gestionnaire"""        try:
             self.status = CreatorManagementStatus.ACTIVE
             self.logger.info(f"🚀 Creator Management Manager démarré")
             return True
@@ -80,21 +70,18 @@ class CreatorManagementManager:
             return False
     
     async def stop(self) -> bool:
-        """Arrêt du gestionnaire"""
-        self.status = CreatorManagementStatus.INACTIVE
+        """Arrêt du gestionnaire"""        self.status = CreatorManagementStatus.INACTIVE
         self.logger.info(f"⏹️ Creator Management Manager arrêté")
         return True
 
 class CreatorManagementService(ICreatorManagementService):
-    """Service principal Creator Management"""
-    
+    """Service principal Creator Management"""    
     def __init__(self, manager: CreatorManagementManager):
         self.manager = manager
         self.logger = logging.getLogger(f"{__name__}.Service")
     
     async def initialize(self) -> bool:
-        """Initialisation du service"""
-        try:
+        """Initialisation du service"""        try:
             self.logger.info(f"🔧 Initialisation Creator Management Service")
             return True
         except Exception as e:
@@ -102,8 +89,7 @@ class CreatorManagementService(ICreatorManagementService):
             return False
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traitement principal des données"""
-        try:
+        """Traitement principal des données"""        try:
             self.logger.info(f"⚡ Traitement Creator Management")
             
             # Validation des données
@@ -128,16 +114,14 @@ class CreatorManagementService(ICreatorManagementService):
             }
     
     async def validate(self, input_data: Any) -> bool:
-        """Validation des données d'entrée"""
-        if not input_data:
+        """Validation des données d'entrée"""        if not input_data:
             return False
         
         # Validation spécifique au module
         return True
     
     async def _execute_business_logic(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Exécution de la logique métier spécifique"""
-        try:
+        """Exécution de la logique métier spécifique"""        try:
             # Gestion complète des créateurs de contenu
             result = {
                 "processed": True,
@@ -193,8 +177,7 @@ class CreatorManagementService(ICreatorManagementService):
             }
 
     async def _handle_creator_onboarding(self, onboarding_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Gestion de l'onboarding des nouveaux créateurs"""
-        try:
+        """Gestion de l'onboarding des nouveaux créateurs"""        try:
             creator_profile = {
                 "creator_id": onboarding_data.get("creator_id"),
                 "profile_analysis": await self._analyze_creator_profile(onboarding_data),
@@ -219,8 +202,7 @@ class CreatorManagementService(ICreatorManagementService):
             return {"error": str(e), "onboarding_complete": False}
 
     async def _manage_creator_portfolio(self, portfolio_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Gestion intelligente du portfolio créateur"""
-        try:
+        """Gestion intelligente du portfolio créateur"""        try:
             # Analyse du portfolio existant
             portfolio_analysis = {
                 "content_diversity": self._analyze_content_diversity(portfolio_data),
@@ -249,8 +231,7 @@ class CreatorManagementService(ICreatorManagementService):
             return {"error": str(e)}
 
     async def _generate_creator_recommendations(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Génération de recommandations personnalisées"""
-        try:
+        """Génération de recommandations personnalisées"""        try:
             recommendation_type = request_data.get("type", "general")
             
             if recommendation_type == "content":
@@ -269,8 +250,7 @@ class CreatorManagementService(ICreatorManagementService):
             return {"error": str(e)}
 
     async def _manage_collaborations(self, collaboration_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Gestion des collaborations entre créateurs"""
-        try:
+        """Gestion des collaborations entre créateurs"""        try:
             collaboration_type = collaboration_data.get("type", "content_creation")
             
             # Matching intelligent de créateurs
@@ -294,8 +274,7 @@ class CreatorManagementService(ICreatorManagementService):
             return {"error": str(e)}
 
     def _analyze_creator_profile(self, profile_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyse du profil créateur"""
-        return {
+        """Analyse du profil créateur"""        return {
             "content_style": profile_data.get("style", "undefined"),
             "target_audience": profile_data.get("audience", "general"),
             "expertise_areas": profile_data.get("expertise", []),
@@ -304,8 +283,7 @@ class CreatorManagementService(ICreatorManagementService):
         }
 
     def _calculate_experience_level(self, profile_data: Dict[str, Any]) -> str:
-        """Calcul du niveau d'expérience"""
-        followers = profile_data.get("followers", 0)
+        """Calcul du niveau d'expérience"""        followers = profile_data.get("followers", 0)
         content_count = profile_data.get("content_count", 0)
         years_active = profile_data.get("years_active", 0)
         
@@ -323,8 +301,7 @@ class CreatorManagementService(ICreatorManagementService):
 # =============== FONCTIONS UTILITAIRES ===============
 
 async def create_creatormanagement_service(config: Optional[CreatorManagementConfig] = None) -> CreatorManagementService:
-    """Factory pour créer le service Creator Management"""
-    if config is None:
+    """Factory pour créer le service Creator Management"""    if config is None:
         config = CreatorManagementConfig()
     
     manager = CreatorManagementManager(config)
@@ -336,8 +313,7 @@ async def create_creatormanagement_service(config: Optional[CreatorManagementCon
     return service
 
 def get_creatormanagement_status() -> Dict[str, Any]:
-    """Récupération du statut du module"""
-    return {
+    """Récupération du statut du module"""    return {
         "module": "Creator Management",
         "version": "1.0.0",
         "expert": "AI_SPECIALIST + ML_ENGINEER",
@@ -348,14 +324,12 @@ def get_creatormanagement_status() -> Dict[str, Any]:
 # =============== POINTS D'ENTRÉE API ===============
 
 class CreatorManagementAPI:
-    """Points d'entrée API pour Creator Management"""
-    
+    """Points d'entrée API pour Creator Management"""    
     def __init__(self, service: CreatorManagementService):
         self.service = service
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérification de santé du module"""
-        return {
+        """Vérification de santé du module"""        return {
             "status": "healthy",
             "module": "Creator Management",
             "timestamp": datetime.now().isoformat()

@@ -12,8 +12,7 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited 
 and will result in legal action under applicable copyright laws.
-"""
-from .automated_licensing_engine import AutomatedLicensingEngine
+"""from .automated_licensing_engine import AutomatedLicensingEngine
 from .copyright_enforcement import CopyrightEnforcementService
 from .contract_management import ContractManagementService
 from .distribution_rights_engine import DistributionRightsEngine

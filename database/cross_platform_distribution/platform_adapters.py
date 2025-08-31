@@ -1,5 +1,4 @@
-"""
-Platform Adapter - Cross-Platform API Integration System
+"""Platform Adapter - Cross-Platform API Integration System
 
 Ultra-advanced enterprise-grade platform adapters for seamless integration with 25+ major content 
 distribution platforms. Provides unified interface for platform-specific operations with intelligent 
@@ -45,7 +44,6 @@ All violations will be prosecuted to the FULL EXTENT of international copyright 
 Legal action will be taken immediately against any infringement.
 Contact: mlaiel@live.de for authorized licensing only.
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
@@ -64,16 +62,14 @@ import os
 logger = logging.getLogger(__name__)
 
 class PlatformType(str, Enum):
-    """Supported platform types"""
-    MUSIC_STREAMING = "music_streaming"
+    """Supported platform types"""    MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORM = "video_platform"
     SOCIAL_MEDIA = "social_media"
     PODCAST_PLATFORM = "podcast_platform"
     BLOG_PLATFORM = "blog_platform"
 
 class AuthenticationType(str, Enum):
-    """Authentication methods"""
-    OAUTH2 = "oauth2"
+    """Authentication methods"""    OAUTH2 = "oauth2"
     API_KEY = "api_key"
     JWT = "jwt"
     BASIC_AUTH = "basic_auth"
@@ -81,8 +77,7 @@ class AuthenticationType(str, Enum):
     CUSTOM = "custom"
 
 class UploadStatus(str, Enum):
-    """Upload operation status"""
-    PENDING = "pending"
+    """Upload operation status"""    PENDING = "pending"
     UPLOADING = "uploading"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -91,8 +86,7 @@ class UploadStatus(str, Enum):
 
 @dataclass
 class PlatformCredentials:
-    """Platform authentication credentials"""
-    platform_name: str
+    """Platform authentication credentials"""    platform_name: str
     auth_type: AuthenticationType
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -106,8 +100,7 @@ class PlatformCredentials:
 
 @dataclass
 class UploadResult:
-    """Result of platform upload operation"""
-    success: bool
+    """Result of platform upload operation"""    success: bool
     platform_id: Optional[str] = None
     platform_url: Optional[str] = None
     status: UploadStatus = UploadStatus.PENDING
@@ -117,8 +110,7 @@ class UploadResult:
 
 @dataclass
 class ContentMetadata:
-    """Metadata for content upload"""
-    title: str
+    """Metadata for content upload"""    title: str
     description: Optional[str] = None
     tags: Optional[List[str]] = None
     category: Optional[str] = None
@@ -129,13 +121,11 @@ class ContentMetadata:
     custom_fields: Optional[Dict[str, Any]] = None
 
 class BasePlatformAdapter(ABC):
-    """
-    Abstract base class for platform adapters
+    """    Abstract base class for platform adapters
     
     Provides common functionality for all platform integrations
     including authentication, rate limiting, and error handling.
-    """
-    
+    """    
     def __init__(self, credentials: PlatformCredentials):
         self.credentials = credentials
         self.session: Optional[aiohttp.ClientSession] = None
@@ -143,19 +133,16 @@ class BasePlatformAdapter(ABC):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with the platform"""
-        pass
+        """Authenticate with the platform"""        pass
     
     @abstractmethod
     async def upload_content(
@@ -163,22 +150,18 @@ class BasePlatformAdapter(ABC):
         file_path: str, 
         metadata: ContentMetadata
     ) -> UploadResult:
-        """Upload content to the platform"""
-        pass
+        """Upload content to the platform"""        pass
     
     @abstractmethod
     async def get_upload_status(self, platform_id: str) -> UploadStatus:
-        """Get the status of an uploaded content"""
-        pass
+        """Get the status of an uploaded content"""        pass
     
     @abstractmethod
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete content from the platform"""
-        pass
+        """Delete content from the platform"""        pass
     
     async def check_rate_limit(self, endpoint: str) -> bool:
-        """Check if rate limit allows request"""
-        # Simple rate limiting implementation
+        """Check if rate limit allows request"""        # Simple rate limiting implementation
         now = datetime.utcnow()
         if endpoint not in self.rate_limiter:
             self.rate_limiter[endpoint] = []
@@ -197,8 +180,7 @@ class BasePlatformAdapter(ABC):
         return False
     
     async def refresh_authentication(self) -> bool:
-        """Refresh authentication tokens if needed"""
-        if self.credentials.auth_type != AuthenticationType.OAUTH2:
+        """Refresh authentication tokens if needed"""        if self.credentials.auth_type != AuthenticationType.OAUTH2:
             return True
         
         if not self.credentials.expires_at:
@@ -211,20 +193,17 @@ class BasePlatformAdapter(ABC):
         return await self._refresh_oauth_token()
     
     async def _refresh_oauth_token(self) -> bool:
-        """Refresh OAuth2 token"""
-        # This would be implemented by each platform adapter
+        """Refresh OAuth2 token"""        # This would be implemented by each platform adapter
         self.logger.warning("OAuth2 token refresh not implemented for this platform")
         return False
 
 class YouTubeAdapter(BasePlatformAdapter):
-    """YouTube API adapter for video content distribution"""
-    
+    """YouTube API adapter for video content distribution"""    
     API_BASE_URL = "https://www.googleapis.com/youtube/v3"
     UPLOAD_URL = "https://www.googleapis.com/upload/youtube/v3/videos"
     
     async def authenticate(self) -> bool:
-        """Authenticate with YouTube API"""
-        try:
+        """Authenticate with YouTube API"""        try:
             if not self.credentials.access_token:
                 self.logger.error("YouTube access token not provided")
                 return False
@@ -254,8 +233,7 @@ class YouTubeAdapter(BasePlatformAdapter):
         file_path: str, 
         metadata: ContentMetadata
     ) -> UploadResult:
-        """Upload video content to YouTube"""
-        try:
+        """Upload video content to YouTube"""        try:
             if not await self.check_rate_limit("upload"):
                 return UploadResult(
                     success=False, 
@@ -311,8 +289,7 @@ class YouTubeAdapter(BasePlatformAdapter):
             )
     
     async def get_upload_status(self, platform_id: str) -> UploadStatus:
-        """Get video upload status from YouTube"""
-        try:
+        """Get video upload status from YouTube"""        try:
             url = f"{self.API_BASE_URL}/videos"
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}"
@@ -345,8 +322,7 @@ class YouTubeAdapter(BasePlatformAdapter):
             return UploadStatus.FAILED
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete video from YouTube"""
-        try:
+        """Delete video from YouTube"""        try:
             url = f"{self.API_BASE_URL}/videos"
             headers = {
                 "Authorization": f"Bearer {self.credentials.access_token}"
@@ -361,13 +337,11 @@ class YouTubeAdapter(BasePlatformAdapter):
             return False
 
 class SpotifyAdapter(BasePlatformAdapter):
-    """Spotify API adapter for music content distribution"""
-    
+    """Spotify API adapter for music content distribution"""    
     API_BASE_URL = "https://api.spotify.com/v1"
     
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify API"""
-        try:
+        """Authenticate with Spotify API"""        try:
             if not self.credentials.client_id or not self.credentials.client_secret:
                 self.logger.error("Spotify credentials not provided")
                 return False
@@ -407,8 +381,7 @@ class SpotifyAdapter(BasePlatformAdapter):
         file_path: str, 
         metadata: ContentMetadata
     ) -> UploadResult:
-        """Upload music content to Spotify"""
-        # Note: Spotify doesn't allow direct uploads via API
+        """Upload music content to Spotify"""        # Note: Spotify doesn't allow direct uploads via API
         # This would typically integrate with Spotify for Artists or a distributor
         
         try:
@@ -435,24 +408,20 @@ class SpotifyAdapter(BasePlatformAdapter):
             )
     
     async def get_upload_status(self, platform_id: str) -> UploadStatus:
-        """Get music upload status from Spotify"""
-        # Simulate status check
+        """Get music upload status from Spotify"""        # Simulate status check
         return UploadStatus.PUBLISHED
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete content from Spotify"""
-        # Spotify doesn't allow deletion via API
+        """Delete content from Spotify"""        # Spotify doesn't allow deletion via API
         self.logger.warning("Spotify content deletion not supported via API")
         return False
 
 class InstagramAdapter(BasePlatformAdapter):
-    """Instagram API adapter for social media content distribution"""
-    
+    """Instagram API adapter for social media content distribution"""    
     API_BASE_URL = "https://graph.facebook.com/v18.0"
     
     async def authenticate(self) -> bool:
-        """Authenticate with Instagram API"""
-        try:
+        """Authenticate with Instagram API"""        try:
             if not self.credentials.access_token:
                 self.logger.error("Instagram access token not provided")
                 return False
@@ -478,8 +447,7 @@ class InstagramAdapter(BasePlatformAdapter):
         file_path: str, 
         metadata: ContentMetadata
     ) -> UploadResult:
-        """Upload content to Instagram"""
-        try:
+        """Upload content to Instagram"""        try:
             if not await self.check_rate_limit("upload"):
                 return UploadResult(
                     success=False,
@@ -510,12 +478,10 @@ class InstagramAdapter(BasePlatformAdapter):
             )
     
     async def get_upload_status(self, platform_id: str) -> UploadStatus:
-        """Get upload status from Instagram"""
-        return UploadStatus.PUBLISHED
+        """Get upload status from Instagram"""        return UploadStatus.PUBLISHED
     
     async def delete_content(self, platform_id: str) -> bool:
-        """Delete content from Instagram"""
-        try:
+        """Delete content from Instagram"""        try:
             url = f"{self.API_BASE_URL}/{platform_id}"
             params = {"access_token": self.credentials.access_token}
             
@@ -527,8 +493,7 @@ class InstagramAdapter(BasePlatformAdapter):
             return False
 
 class PlatformAdapterFactory:
-    """Factory for creating platform adapters"""
-    
+    """Factory for creating platform adapters"""    
     _adapters = {
         "youtube": YouTubeAdapter,
         "spotify": SpotifyAdapter,
@@ -542,8 +507,7 @@ class PlatformAdapterFactory:
         platform_name: str, 
         credentials: PlatformCredentials
     ) -> BasePlatformAdapter:
-        """Create appropriate platform adapter"""
-        
+        """Create appropriate platform adapter"""        
         adapter_class = self._adapters.get(platform_name.lower())
         if not adapter_class:
             raise ValueError(f"Unsupported platform: {platform_name}")
@@ -552,8 +516,7 @@ class PlatformAdapterFactory:
     
     @classmethod
     def get_supported_platforms(cls) -> List[str]:
-        """Get list of supported platforms"""
-        return list(cls._adapters.keys())
+        """Get list of supported platforms"""        return list(cls._adapters.keys())
 
 # Export all classes for external use
 __all__ = [

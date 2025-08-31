@@ -1,5 +1,4 @@
-"""
-🎵 Audio Processing Core Module - Professional Audio Intelligence Engine
+"""🎵 Audio Processing Core Module - Professional Audio Intelligence Engine
 
 Advanced core components for high-performance audio processing in the IA Influencer Agent platform.
 Implements industrial-grade audio analysis, enhancement, and processing capabilities.
@@ -7,7 +6,6 @@ Implements industrial-grade audio analysis, enhancement, and processing capabili
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Comprehensive audio metadata structure"""
-    sample_rate: int
+    """Comprehensive audio metadata structure"""    sample_rate: int
     channels: int
     duration: float
     bit_depth: Optional[int] = None
@@ -46,8 +43,7 @@ class AudioMetadata:
 
 @dataclass
 class AudioFeatures:
-    """Rich audio feature representation"""
-    mfcc: np.ndarray
+    """Rich audio feature representation"""    mfcc: np.ndarray
     spectral_centroid: np.ndarray
     spectral_rolloff: np.ndarray
     zero_crossing_rate: np.ndarray
@@ -62,8 +58,7 @@ class AudioFeatures:
 
 @dataclass
 class AudioAnalysisResult:
-    """Comprehensive audio analysis output"""
-    metadata: AudioMetadata
+    """Comprehensive audio analysis output"""    metadata: AudioMetadata
     features: AudioFeatures
     quality_score: float
     predicted_genre: str
@@ -82,8 +77,7 @@ class AudioAnalysisResult:
 
 
 class AudioProcessor:
-    """
-    🎵 Professional Audio Processor
+    """    🎵 Professional Audio Processor
     
     High-performance audio processing engine with advanced capabilities:
     - Multi-format support (WAV, MP3, FLAC, AAC, OGG)
@@ -91,8 +85,7 @@ class AudioProcessor:
     - Batch processing with parallel execution
     - Memory-efficient streaming for large files
     - GPU acceleration when available
-    """
-    
+    """    
     def __init__(self, config: Optional[AudioProcessingConfig] = None):
         self.config = config or AudioProcessingConfig()
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -102,8 +95,7 @@ class AudioProcessor:
         logger.info(f"AudioProcessor initialized with device: {self.device}")
     
     def _setup_processing_environment(self):
-        """Setup optimal processing environment"""
-        if self.device.type == "cuda":
+        """Setup optimal processing environment"""        if self.device.type == "cuda":
             torch.backends.cudnn.benchmark = True
             torch.backends.cudnn.deterministic = False
         
@@ -115,8 +107,7 @@ class AudioProcessor:
                         target_sr: Optional[int] = None,
                         mono: bool = True,
                         normalize: bool = True) -> Tuple[np.ndarray, int]:
-        """
-        Load audio file with advanced preprocessing
+        """        Load audio file with advanced preprocessing
         
         Args:
             file_path: Path to audio file
@@ -126,8 +117,7 @@ class AudioProcessor:
             
         Returns:
             Tuple of (audio_data, sample_rate)
-        """
-        try:
+        """        try:
             file_path = Path(file_path)
             
             if not file_path.exists():
@@ -162,8 +152,7 @@ class AudioProcessor:
                         output_path: Union[str, Path],
                         format: str = "wav",
                         quality: str = "high") -> bool:
-        """
-        Save audio with optimized quality settings
+        """        Save audio with optimized quality settings
         
         Args:
             audio_data: Audio samples
@@ -171,8 +160,7 @@ class AudioProcessor:
             output_path: Output file path
             format: Output format (wav, mp3, flac, etc.)
             quality: Quality setting (low, medium, high, lossless)
-        """
-        try:
+        """        try:
             output_path = Path(output_path)
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -206,8 +194,7 @@ class AudioProcessor:
                            original_sr: int,
                            target_sr: int,
                            method: str = "soxr_hq") -> np.ndarray:
-        """High-quality audio resampling"""
-        if original_sr == target_sr:
+        """High-quality audio resampling"""        if original_sr == target_sr:
             return audio_data
         
         try:
@@ -230,8 +217,7 @@ class AudioProcessor:
                           sample_rate: int,
                           threshold_db: float = -40.0,
                           frame_length: int = 2048) -> np.ndarray:
-        """Intelligent silence trimming"""
-        try:
+        """Intelligent silence trimming"""        try:
             # Convert dB threshold to amplitude
             threshold_amp = librosa.db_to_amplitude(threshold_db)
             
@@ -253,8 +239,7 @@ class AudioProcessor:
 
 
 class AudioAnalyzer:
-    """
-    🔍 Advanced Audio Analyzer
+    """    🔍 Advanced Audio Analyzer
     
     Comprehensive audio analysis engine providing:
     - Spectral analysis and feature extraction
@@ -262,8 +247,7 @@ class AudioAnalyzer:
     - Audio quality assessment
     - Genre and mood prediction
     - Tempo and key detection
-    """
-    
+    """    
     def __init__(self, config: Optional[AudioProcessingConfig] = None):
         self.config = config or AudioProcessingConfig()
         self.scaler = StandardScaler()
@@ -271,8 +255,7 @@ class AudioAnalyzer:
     async def extract_features(self,
                              audio_data: np.ndarray,
                              sample_rate: int) -> AudioFeatures:
-        """Extract comprehensive audio features"""
-        try:
+        """Extract comprehensive audio features"""        try:
             # Basic spectral features
             mfcc = librosa.feature.mfcc(
                 y=audio_data, 
@@ -351,8 +334,7 @@ class AudioAnalyzer:
                                         audio_data: np.ndarray,
                                         sample_rate: int,
                                         file_path: Optional[Path] = None) -> AudioAnalysisResult:
-        """Perform comprehensive audio analysis"""
-        try:
+        """Perform comprehensive audio analysis"""        try:
             # Extract features
             features = await self.extract_features(audio_data, sample_rate)
             
@@ -409,8 +391,7 @@ class AudioAnalyzer:
             raise
     
     def _calculate_quality_score(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate audio quality score (0-100)"""
-        try:
+        """Calculate audio quality score (0-100)"""        try:
             # SNR estimation
             signal_power = np.mean(audio_data ** 2)
             noise_floor = np.percentile(np.abs(audio_data), 5) ** 2
@@ -440,8 +421,7 @@ class AudioAnalyzer:
             return 50.0  # Default quality score
     
     def _predict_genre(self, features: AudioFeatures) -> str:
-        """Predict musical genre based on features"""
-        # Simplified genre prediction based on feature analysis
+        """Predict musical genre based on features"""        # Simplified genre prediction based on feature analysis
         mean_mfcc = np.mean(features.mfcc, axis=1)
         spectral_centroid_mean = np.mean(features.spectral_centroid)
         tempo = features.tempo
@@ -460,8 +440,7 @@ class AudioAnalyzer:
             return "Rock"
     
     def _predict_mood(self, features: AudioFeatures) -> str:
-        """Predict emotional mood from audio features"""
-        energy = np.mean(features.rms_energy)
+        """Predict emotional mood from audio features"""        energy = np.mean(features.rms_energy)
         valence_proxy = np.mean(features.chroma)
         tempo = features.tempo
         
@@ -477,51 +456,42 @@ class AudioAnalyzer:
             return "Neutral"
     
     def _calculate_energy(self, features: AudioFeatures) -> float:
-        """Calculate energy level (0-1)"""
-        rms_mean = np.mean(features.rms_energy)
+        """Calculate energy level (0-1)"""        rms_mean = np.mean(features.rms_energy)
         spectral_centroid_mean = np.mean(features.spectral_centroid)
         return min(1.0, (rms_mean * 10 + spectral_centroid_mean / 5000) / 2)
     
     def _calculate_danceability(self, features: AudioFeatures) -> float:
-        """Calculate danceability score (0-1)"""
-        tempo_factor = 1.0 if 90 <= features.tempo <= 140 else 0.5
+        """Calculate danceability score (0-1)"""        tempo_factor = 1.0 if 90 <= features.tempo <= 140 else 0.5
         rhythm_regularity = 1.0 - np.std(np.diff(features.onset_frames)) / 100
         return min(1.0, tempo_factor * rhythm_regularity)
     
     def _calculate_valence(self, features: AudioFeatures) -> float:
-        """Calculate musical valence/positivity (0-1)"""
-        chroma_brightness = np.mean(features.chroma[:7])  # Major scale notes
+        """Calculate musical valence/positivity (0-1)"""        chroma_brightness = np.mean(features.chroma[:7])  # Major scale notes
         spectral_rolloff_mean = np.mean(features.spectral_rolloff)
         return min(1.0, (chroma_brightness + spectral_rolloff_mean / 5000) / 2)
     
     def _calculate_acousticness(self, features: AudioFeatures) -> float:
-        """Calculate acousticness score (0-1)"""
-        spectral_contrast_var = np.var(features.spectral_contrast)
+        """Calculate acousticness score (0-1)"""        spectral_contrast_var = np.var(features.spectral_contrast)
         return max(0.0, 1.0 - spectral_contrast_var / 10)
     
     def _calculate_instrumentalness(self, features: AudioFeatures) -> float:
-        """Calculate instrumentalness score (0-1)"""
-        mfcc_variance = np.var(features.mfcc)
+        """Calculate instrumentalness score (0-1)"""        mfcc_variance = np.var(features.mfcc)
         return min(1.0, mfcc_variance / 50)
     
     def _calculate_liveness(self, features: AudioFeatures) -> float:
-        """Calculate liveness score (0-1)"""
-        spectral_bandwidth_var = np.var(features.spectral_bandwidth)
+        """Calculate liveness score (0-1)"""        spectral_bandwidth_var = np.var(features.spectral_bandwidth)
         return min(1.0, spectral_bandwidth_var / 1000000)
     
     def _calculate_speechiness(self, features: AudioFeatures) -> float:
-        """Calculate speechiness score (0-1)"""
-        zcr_mean = np.mean(features.zero_crossing_rate)
+        """Calculate speechiness score (0-1)"""        zcr_mean = np.mean(features.zero_crossing_rate)
         return min(1.0, zcr_mean * 20)
     
     def _calculate_loudness(self, audio_data: np.ndarray) -> float:
-        """Calculate loudness in dB"""
-        rms = np.sqrt(np.mean(audio_data ** 2))
+        """Calculate loudness in dB"""        rms = np.sqrt(np.mean(audio_data ** 2))
         return 20 * np.log10(rms + 1e-10)
     
     def _analyze_key_mode(self, chroma: np.ndarray) -> Tuple[str, str]:
-        """Analyze musical key and mode"""
-        chroma_mean = np.mean(chroma, axis=1)
+        """Analyze musical key and mode"""        chroma_mean = np.mean(chroma, axis=1)
         key_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         
         # Find dominant pitch class
@@ -540,8 +510,7 @@ class AudioAnalyzer:
         return key, mode
     
     def _detect_time_signature(self, audio_data: np.ndarray, sample_rate: int) -> int:
-        """Detect time signature"""
-        try:
+        """Detect time signature"""        try:
             tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sample_rate)
             beat_intervals = np.diff(beats)
             
@@ -556,8 +525,7 @@ class AudioAnalyzer:
 
 
 class AudioEnhancer:
-    """
-    ✨ Professional Audio Enhancer
+    """    ✨ Professional Audio Enhancer
     
     Advanced audio enhancement capabilities:
     - Noise reduction and restoration
@@ -565,8 +533,7 @@ class AudioEnhancer:
     - Spectral enhancement
     - Mastering-grade processing
     - Real-time enhancement
-    """
-    
+    """    
     def __init__(self, config: Optional[AudioProcessingConfig] = None):
         self.config = config or AudioProcessingConfig()
     
@@ -574,8 +541,7 @@ class AudioEnhancer:
                           audio_data: np.ndarray,
                           sample_rate: int,
                           noise_floor_db: float = -40.0) -> np.ndarray:
-        """Advanced noise reduction using spectral gating"""
-        try:
+        """Advanced noise reduction using spectral gating"""        try:
             # Convert to frequency domain
             stft = librosa.stft(audio_data, hop_length=512)
             magnitude = np.abs(stft)
@@ -607,8 +573,7 @@ class AudioEnhancer:
     async def normalize_loudness(self,
                                audio_data: np.ndarray,
                                target_lufs: float = -23.0) -> np.ndarray:
-        """Normalize audio to target loudness (LUFS)"""
-        try:
+        """Normalize audio to target loudness (LUFS)"""        try:
             # Calculate current RMS (approximation of LUFS)
             current_rms = np.sqrt(np.mean(audio_data ** 2))
             current_db = 20 * np.log10(current_rms + 1e-10)
@@ -636,8 +601,7 @@ class AudioEnhancer:
                             audio_data: np.ndarray,
                             sample_rate: int,
                             enhancement_factor: float = 1.5) -> np.ndarray:
-        """Enhance audio clarity and presence"""
-        try:
+        """Enhance audio clarity and presence"""        try:
             # Apply subtle high-frequency enhancement
             nyquist = sample_rate // 2
             high_freq = 5000  # 5kHz and above
@@ -671,8 +635,7 @@ class AudioEnhancer:
                               attack_ms: float = 10.0,
                               release_ms: float = 100.0,
                               sample_rate: int = 44100) -> np.ndarray:
-        """Apply dynamic range compression"""
-        try:
+        """Apply dynamic range compression"""        try:
             # Convert time constants to samples
             attack_samples = int(attack_ms * sample_rate / 1000)
             release_samples = int(release_ms * sample_rate / 1000)

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced AI Performance Monitoring Tests - Industrial Grade
+"""Advanced AI Performance Monitoring Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for AI performance monitoring system.
 Tests all aspects of AI model performance tracking, optimization, and alerting with real data scenarios.
@@ -28,7 +25,6 @@ Any unauthorized copying, distribution, or use of this code without explicit wri
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
-
 import pytest
 import sys
 import os
@@ -72,12 +68,10 @@ from .fixtures import (
 
 
 class TestAIPerformanceMonitorCore:
-    """Core functionality tests for AI Performance Monitor."""
-    
+    """Core functionality tests for AI Performance Monitor."""    
     @pytest.fixture
     async def performance_monitor(self):
-        """Create and initialize AI Performance Monitor instance."""
-        monitor = AIPerformanceMonitor(
+        """Create and initialize AI Performance Monitor instance."""        monitor = AIPerformanceMonitor(
             config={
                 "max_models": 100,
                 "metrics_buffer_size": 10000,
@@ -96,12 +90,10 @@ class TestAIPerformanceMonitorCore:
     
     @pytest.fixture
     def real_model_data(self, ai_performance_data):
-        """Generate realistic AI model performance data."""
-        return ai_performance_data["production_scenarios"]
+        """Generate realistic AI model performance data."""        return ai_performance_data["production_scenarios"]
     
     async def test_monitor_initialization_complete(self, performance_monitor):
-        """Test comprehensive initialization of performance monitor."""
-        # Verify core components
+        """Test comprehensive initialization of performance monitor."""        # Verify core components
         assert performance_monitor is not None
         assert performance_monitor.is_initialized
         assert performance_monitor.model_trackers is not None
@@ -125,8 +117,7 @@ class TestAIPerformanceMonitorCore:
         assert performance_monitor.alert_system.is_configured
     
     async def test_model_registration_comprehensive(self, performance_monitor, model_configurations):
-        """Test comprehensive AI model registration with all supported types."""
-        registration_results = []
+        """Test comprehensive AI model registration with all supported types."""        registration_results = []
         
         for model_config in model_configurations:
             model_id = model_config["model_id"]
@@ -164,8 +155,7 @@ class TestAIPerformanceMonitorCore:
         assert len(performance_monitor.model_trackers) == len(model_configurations)
     
     async def test_inference_time_tracking_real_scenarios(self, performance_monitor, real_model_data):
-        """Test inference time measurement with realistic production scenarios."""
-        model_id = "content_generator_v2_prod"
+        """Test inference time measurement with realistic production scenarios."""        model_id = "content_generator_v2_prod"
         
         # Register production model
         await performance_monitor.register_model(
@@ -218,8 +208,7 @@ class TestAIPerformanceMonitorCore:
         assert len(stats["inference_history"]) == len(real_model_data["inference_scenarios"])
     
     async def test_throughput_analysis_high_load(self, performance_monitor):
-        """Test throughput analysis under high load conditions."""
-        model_id = "high_throughput_model"
+        """Test throughput analysis under high load conditions."""        model_id = "high_throughput_model"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -276,8 +265,7 @@ class TestAIPerformanceMonitorCore:
         assert throughput_stats["actual_throughput"] >= expected_min_throughput
     
     async def test_accuracy_monitoring_real_time(self, performance_monitor):
-        """Test real-time accuracy monitoring and degradation detection."""
-        model_id = "accuracy_critical_model"
+        """Test real-time accuracy monitoring and degradation detection."""        model_id = "accuracy_critical_model"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -325,8 +313,7 @@ class TestAIPerformanceMonitorCore:
         assert len(accuracy_alerts) > 0
     
     async def test_resource_monitoring_comprehensive(self, performance_monitor):
-        """Test comprehensive resource monitoring (CPU, Memory, GPU)."""
-        model_id = "resource_intensive_model"
+        """Test comprehensive resource monitoring (CPU, Memory, GPU)."""        model_id = "resource_intensive_model"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -382,12 +369,10 @@ class TestAIPerformanceMonitorCore:
 
 
 class TestAIPerformancePipelineMonitoring:
-    """Tests for complete pipeline performance monitoring."""
-    
+    """Tests for complete pipeline performance monitoring."""    
     @pytest.fixture
     async def pipeline_monitor(self):
-        """Create pipeline-focused performance monitor."""
-        monitor = AIPerformanceMonitor(
+        """Create pipeline-focused performance monitor."""        monitor = AIPerformanceMonitor(
             config={
                 "pipeline_tracking": True,
                 "stage_timing": True,
@@ -399,8 +384,7 @@ class TestAIPerformancePipelineMonitoring:
         await monitor.shutdown()
     
     async def test_end_to_end_pipeline_monitoring(self, pipeline_monitor, pipeline_scenarios):
-        """Test end-to-end pipeline performance monitoring."""
-        for scenario in pipeline_scenarios:
+        """Test end-to-end pipeline performance monitoring."""        for scenario in pipeline_scenarios:
             pipeline_id = scenario["pipeline_id"]
             
             # Start pipeline monitoring
@@ -452,8 +436,7 @@ class TestAIPerformancePipelineMonitoring:
                 assert abs(recorded_duration - expected_duration) < 0.1  # 100ms tolerance
     
     async def test_pipeline_bottleneck_detection(self, pipeline_monitor):
-        """Test automatic bottleneck detection in processing pipelines."""
-        pipeline_id = "bottleneck_test_pipeline"
+        """Test automatic bottleneck detection in processing pipelines."""        pipeline_id = "bottleneck_test_pipeline"
         
         # Define stages with intentional bottleneck
         stages = [
@@ -501,12 +484,10 @@ class TestAIPerformancePipelineMonitoring:
 
 
 class TestAIPerformanceOptimization:
-    """Tests for AI performance optimization capabilities."""
-    
+    """Tests for AI performance optimization capabilities."""    
     @pytest.fixture
     async def optimizer(self):
-        """Create performance optimizer instance."""
-        optimizer = PerformanceOptimizer(
+        """Create performance optimizer instance."""        optimizer = PerformanceOptimizer(
             config={
                 "auto_optimization": True,
                 "optimization_strategies": ["caching", "batching", "model_switching"],
@@ -522,8 +503,7 @@ class TestAIPerformanceOptimization:
         await optimizer.shutdown()
     
     async def test_automatic_performance_optimization(self, optimizer):
-        """Test automatic performance optimization strategies."""
-        model_id = "optimization_target_model"
+        """Test automatic performance optimization strategies."""        model_id = "optimization_target_model"
         
         # Register model with performance issues
         await optimizer.register_model(
@@ -562,8 +542,7 @@ class TestAIPerformanceOptimization:
         assert optimization_results["improvements"]["throughput_increase"] > 0
     
     async def test_model_load_balancing(self, optimizer):
-        """Test intelligent model load balancing."""
-        # Register multiple models of same type
+        """Test intelligent model load balancing."""        # Register multiple models of same type
         models = [
             {"id": "model_1", "current_load": 0.8, "performance": 0.95},
             {"id": "model_2", "current_load": 0.3, "performance": 0.93},
@@ -597,12 +576,10 @@ class TestAIPerformanceOptimization:
 
 
 class TestAIPerformanceAlerts:
-    """Tests for performance alerting and notification system."""
-    
+    """Tests for performance alerting and notification system."""    
     @pytest.fixture
     async def alert_monitor(self):
-        """Create performance monitor with alerting enabled."""
-        monitor = AIPerformanceMonitor(
+        """Create performance monitor with alerting enabled."""        monitor = AIPerformanceMonitor(
             config={
                 "alerting_enabled": True,
                 "alert_thresholds": {
@@ -620,8 +597,7 @@ class TestAIPerformanceAlerts:
         await monitor.shutdown()
     
     async def test_performance_degradation_alerts(self, alert_monitor):
-        """Test alerts for performance degradation scenarios."""
-        model_id = "alert_test_model"
+        """Test alerts for performance degradation scenarios."""        model_id = "alert_test_model"
         
         await alert_monitor.register_model(
             model_id=model_id,
@@ -661,8 +637,7 @@ class TestAIPerformanceAlerts:
         assert len(warning_alerts) >= 1   # At least one warning
     
     async def test_alert_escalation_and_recovery(self, alert_monitor):
-        """Test alert escalation and recovery notification."""
-        model_id = "escalation_test_model"
+        """Test alert escalation and recovery notification."""        model_id = "escalation_test_model"
         
         await alert_monitor.register_model(
             model_id=model_id,
@@ -715,12 +690,10 @@ class TestAIPerformanceAlerts:
 
 
 class TestAIPerformanceReporting:
-    """Tests for performance reporting and analytics."""
-    
+    """Tests for performance reporting and analytics."""    
     @pytest.fixture
     async def reporting_monitor(self):
-        """Create monitor with advanced reporting capabilities."""
-        monitor = AIPerformanceMonitor(
+        """Create monitor with advanced reporting capabilities."""        monitor = AIPerformanceMonitor(
             config={
                 "reporting_enabled": True,
                 "report_intervals": ["hourly", "daily", "weekly"],
@@ -732,8 +705,7 @@ class TestAIPerformanceReporting:
         await monitor.shutdown()
     
     async def test_comprehensive_performance_reporting(self, reporting_monitor, performance_benchmarks):
-        """Test comprehensive performance report generation."""
-        # Register and run performance data
+        """Test comprehensive performance report generation."""        # Register and run performance data
         for benchmark in performance_benchmarks:
             model_id = benchmark["model_id"]
             
@@ -786,8 +758,7 @@ class TestAIPerformanceReporting:
             assert "resource_stats" in perf_data
     
     async def test_performance_trend_analysis(self, reporting_monitor):
-        """Test performance trend analysis and prediction."""
-        model_id = "trend_analysis_model"
+        """Test performance trend analysis and prediction."""        model_id = "trend_analysis_model"
         
         await reporting_monitor.register_model(
             model_id=model_id,
@@ -840,12 +811,10 @@ class TestAIPerformanceReporting:
 
 @pytest.mark.performance
 class TestAIPerformanceLoadTesting:
-    """Load testing for AI performance monitoring system."""
-    
+    """Load testing for AI performance monitoring system."""    
     @pytest.fixture
     async def load_test_monitor(self):
-        """Create monitor optimized for load testing."""
-        monitor = AIPerformanceMonitor(
+        """Create monitor optimized for load testing."""        monitor = AIPerformanceMonitor(
             config={
                 "max_models": 1000,
                 "metrics_buffer_size": 100000,
@@ -860,8 +829,7 @@ class TestAIPerformanceLoadTesting:
     
     @pytest.mark.asyncio
     async def test_high_concurrency_monitoring(self, load_test_monitor):
-        """Test monitoring system under high concurrency load."""
-        # Register multiple models
+        """Test monitoring system under high concurrency load."""        # Register multiple models
         num_models = 50
         models = []
         
@@ -879,8 +847,7 @@ class TestAIPerformanceLoadTesting:
         inferences_per_task = 100
         
         async def concurrent_inference_task(task_id):
-            """Single concurrent inference task."""
-            results = []
+            """Single concurrent inference task."""            results = []
             
             for i in range(inferences_per_task):
                 model_id = models[i % len(models)]
@@ -939,8 +906,7 @@ class TestAIPerformanceLoadTesting:
     
     @pytest.mark.asyncio
     async def test_sustained_load_monitoring(self, load_test_monitor):
-        """Test monitoring system under sustained load over time."""
-        model_id = "sustained_load_model"
+        """Test monitoring system under sustained load over time."""        model_id = "sustained_load_model"
         
         await load_test_monitor.register_model(
             model_id=model_id,
@@ -1017,8 +983,7 @@ if __name__ == "__main__":
     ])
     
     async def test_accuracy_tracking(self, performance_monitor):
-        """Test AI model accuracy measurement and tracking."""
-        model_id = "test_content_protector_001"
+        """Test AI model accuracy measurement and tracking."""        model_id = "test_content_protector_001"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -1054,8 +1019,7 @@ if __name__ == "__main__":
         assert result.success
     
     async def test_throughput_measurement(self, performance_monitor):
-        """Test throughput measurement and optimization."""
-        model_id = "test_seo_optimizer_001"
+        """Test throughput measurement and optimization."""        model_id = "test_seo_optimizer_001"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -1102,8 +1066,7 @@ if __name__ == "__main__":
         assert result.success
     
     async def test_resource_utilization_tracking(self, performance_monitor):
-        """Test system resource utilization monitoring."""
-        model_id = "test_resource_tracking_001"
+        """Test system resource utilization monitoring."""        model_id = "test_resource_tracking_001"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -1141,8 +1104,7 @@ if __name__ == "__main__":
         assert memory_result.success
     
     async def test_performance_alerting(self, performance_monitor):
-        """Test performance-based alerting system."""
-        model_id = "test_alerting_001"
+        """Test performance-based alerting system."""        model_id = "test_alerting_001"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -1200,8 +1162,7 @@ if __name__ == "__main__":
         assert "high_memory_usage" in alert_types
     
     async def test_performance_optimization_suggestions(self, performance_monitor):
-        """Test automatic performance optimization suggestions."""
-        model_id = "test_optimization_001"
+        """Test automatic performance optimization suggestions."""        model_id = "test_optimization_001"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -1245,8 +1206,7 @@ if __name__ == "__main__":
             assert "implementation" in suggestion
     
     async def test_model_comparison(self, performance_monitor):
-        """Test AI model performance comparison capabilities."""
-        # Register multiple models
+        """Test AI model performance comparison capabilities."""        # Register multiple models
         models = [
             ("model_v1", "1.0.0"),
             ("model_v2", "2.0.0"),
@@ -1306,8 +1266,7 @@ if __name__ == "__main__":
         assert comparison["best_model"]["accuracy"] == "model_v3"
     
     async def test_load_testing(self, performance_monitor):
-        """Test performance under high load conditions."""
-        model_id = "test_load_001"
+        """Test performance under high load conditions."""        model_id = "test_load_001"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -1344,8 +1303,7 @@ if __name__ == "__main__":
         assert metrics["inference_time"]["count"] >= 950  # Most requests recorded
     
     async def test_real_time_monitoring(self, performance_monitor):
-        """Test real-time performance monitoring capabilities."""
-        model_id = "test_realtime_001"
+        """Test real-time performance monitoring capabilities."""        model_id = "test_realtime_001"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -1388,8 +1346,7 @@ if __name__ == "__main__":
             assert inference_times[-1] > inference_times[0]
     
     async def test_historical_analysis(self, performance_monitor):
-        """Test historical performance analysis capabilities."""
-        model_id = "test_historical_001"
+        """Test historical performance analysis capabilities."""        model_id = "test_historical_001"
         
         await performance_monitor.register_model(
             model_id=model_id,
@@ -1449,8 +1406,7 @@ if __name__ == "__main__":
         assert len(patterns) >= 1  # Should detect daily patterns
     
     async def test_performance_reporting(self, performance_monitor):
-        """Test comprehensive performance reporting."""
-        model_id = "test_reporting_001"
+        """Test comprehensive performance reporting."""        model_id = "test_reporting_001"
         
         await performance_monitor.register_model(
             model_id=model_id,

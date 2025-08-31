@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Comprehensive Tests for Content Protection Configuration
+"""Comprehensive Tests for Content Protection Configuration
 
 Expert Team Specifications:
 - Lead Dev + AI Architect: Fahed Mlaiel
@@ -37,7 +36,6 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test suite for ProtectionConfig module ensuring 100% copyright
 protection, watermarking, and anti-piracy capabilities for content creators.
 """
-
 import pytest
 import sys
 import os
@@ -70,12 +68,10 @@ except ImportError as e:
     pytest.skip("ProtectionConfig module not available", allow_module_level=True)
 
 class TestProtectionConfig:
-    """Tests complets pour la configuration de protection de contenu."""
-    
+    """Tests complets pour la configuration de protection de contenu."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.config = ProtectionConfig()
+        """Configuration avant chaque test."""        self.config = ProtectionConfig()
         self.test_env = test_environment
         self.sample_image_data = self._generate_sample_image()
         self.sample_audio_data = self._generate_sample_audio()
@@ -83,27 +79,21 @@ class TestProtectionConfig:
         logger.info("TestProtectionConfig setup completed")
     
     def _generate_sample_image(self) -> bytes:
-        """Génère des données d'image de test."""
-        # Simulation d'une image RGB 100x100
+        """Génère des données d'image de test."""        # Simulation d'une image RGB 100x100
         return b'\x89PNG\r\n\x1a\n' + b'0' * 1000  # PNG header + data
     
     def _generate_sample_audio(self) -> bytes:
-        """Génère des données audio de test."""
-        # Simulation d'un fichier WAV
+        """Génère des données audio de test."""        # Simulation d'un fichier WAV
         return b'RIFF' + b'0' * 1000 + b'WAVE'
     
     def _generate_sample_text(self) -> str:
-        """Génère du texte de test."""
-        return """
-        Test article for copyright protection validation.
+        """Génère du texte de test."""        return """        Test article for copyright protection validation.
         This content is created for testing purposes only.
         It contains various elements that should trigger protection mechanisms.
-        """
-    
+        """    
     @pytest_marks["unit"]
     def test_config_initialization(self):
-        """Test l'initialisation de base de la configuration de protection."""
-        assert self.config is not None
+        """Test l'initialisation de base de la configuration de protection."""        assert self.config is not None
         assert hasattr(self.config, 'watermark_engine')
         assert hasattr(self.config, 'copyright_detector')
         assert hasattr(self.config, 'rights_manager')
@@ -113,8 +103,7 @@ class TestProtectionConfig:
     
     @pytest_marks["unit"]
     def test_watermark_engine_functionality(self):
-        """Test la fonctionnalité du moteur de filigrane."""
-        # Test filigrane pour image
+        """Test la fonctionnalité du moteur de filigrane."""        # Test filigrane pour image
         watermarked_image = self.config.add_image_watermark(
             image_data=self.sample_image_data,
             watermark_text="© 2025 Test Creator",
@@ -155,8 +144,7 @@ class TestProtectionConfig:
     
     @pytest_marks["unit"]
     def test_watermark_detection_accuracy(self):
-        """Test la précision de détection des filigranes."""
-        # Créer un contenu avec filigrane
+        """Test la précision de détection des filigranes."""        # Créer un contenu avec filigrane
         watermarked_result = self.config.add_image_watermark(
             image_data=self.sample_image_data,
             watermark_text="© Test Creator 2025",
@@ -188,8 +176,7 @@ class TestProtectionConfig:
     
     @pytest_marks["security"]
     def test_copyright_detection_accuracy(self):
-        """Test la précision de détection des droits d'auteur."""
-        # Test avec contenu original
+        """Test la précision de détection des droits d'auteur."""        # Test avec contenu original
         original_content = {
             "type": "text",
             "content": "This is completely original content created for testing.",
@@ -230,8 +217,7 @@ class TestProtectionConfig:
     
     @pytest_marks["business_logic"]
     def test_rights_management_workflow(self):
-        """Test le workflow de gestion des droits."""
-        # Test création de profil de droits pour musicien
+        """Test le workflow de gestion des droits."""        # Test création de profil de droits pour musicien
         musician_rights = self.config.create_rights_profile(
             creator_id="musician_001",
             creator_type="musician",
@@ -286,8 +272,7 @@ class TestProtectionConfig:
     
     @pytest_marks["integration"]
     async def test_anti_piracy_monitoring(self):
-        """Test le monitoring anti-piratage."""
-        # Configuration du monitoring
+        """Test le monitoring anti-piratage."""        # Configuration du monitoring
         monitoring_config = {
             "platforms": ["youtube", "instagram", "tiktok", "soundcloud"],
             "scan_frequency": "daily",
@@ -343,8 +328,7 @@ class TestProtectionConfig:
     
     @pytest_marks["security"]
     def test_legal_compliance_validation(self):
-        """Test la validation de conformité légale."""
-        # Test conformité DMCA
+        """Test la validation de conformité légale."""        # Test conformité DMCA
         dmca_compliance = self.config.validate_dmca_compliance(
             content_type="music",
             creator_location="US",
@@ -383,8 +367,7 @@ class TestProtectionConfig:
     
     @pytest_marks["performance"]
     def test_content_fingerprinting_performance(self):
-        """Test les performances de génération d'empreintes de contenu."""
-        start_time = time.time()
+        """Test les performances de génération d'empreintes de contenu."""        start_time = time.time()
         
         # Test fingerprinting pour 100 contenus
         fingerprints = []
@@ -414,8 +397,7 @@ class TestProtectionConfig:
     
     @pytest_marks["unit"]
     def test_watermark_robustness(self):
-        """Test la robustesse des filigranes contre les attaques."""
-        # Créer un contenu avec filigrane robuste
+        """Test la robustesse des filigranes contre les attaques."""        # Créer un contenu avec filigrane robuste
         robust_watermark = self.config.add_robust_watermark(
             content_data=self.sample_image_data,
             content_type="image",
@@ -454,8 +436,7 @@ class TestProtectionConfig:
         logger.info("Watermark robustness test passed")
     
     def _simulate_compression(self, data: bytes, quality: int) -> bytes:
-        """Simule la compression d'image."""
-        # Simulation simplifiée
+        """Simule la compression d'image."""        # Simulation simplifiée
         return data[::2] + b'\x00' * (len(data) // 2)
     
     def _simulate_resize(self, data: bytes, scale: float) -> bytes:
@@ -465,15 +446,13 @@ class TestProtectionConfig:
         return data[:new_size]
     
     def _add_noise(self, data: bytes, noise_level: float) -> bytes:
-        """Ajoute du bruit aux données."""
-        # Simulation simplifiée
+        """Ajoute du bruit aux données."""        # Simulation simplifiée
         noise_bytes = int(len(data) * noise_level)
         return data + b'\xFF' * noise_bytes
     
     @pytest_marks["business_logic"]
     def test_creator_type_specific_protection(self):
-        """Test la protection spécifique par type de créateur."""
-        # Test protection pour musiciens
+        """Test la protection spécifique par type de créateur."""        # Test protection pour musiciens
         musician_protection = self.config.configure_creator_protection(
             creator_type="musician",
             content_types=["audio", "lyrics", "album_covers"],
@@ -515,8 +494,7 @@ class TestProtectionConfig:
     
     @pytest_marks["integration"]
     def test_protection_analytics_integration(self):
-        """Test l'intégration avec les analytics de protection."""
-        # Configuration des analytics
+        """Test l'intégration avec les analytics de protection."""        # Configuration des analytics
         analytics_config = self.config.setup_protection_analytics(
             creator_id="analytics_test_001",
             metrics_to_track=[
@@ -555,8 +533,7 @@ class TestProtectionConfig:
     
     @pytest_marks["security"]
     def test_advanced_copyright_detection(self):
-        """Test la détection avancée de droits d'auteur."""
-        # Test détection sur contenu modifié
+        """Test la détection avancée de droits d'auteur."""        # Test détection sur contenu modifié
         original_text = "This is an original piece of creative writing about technology."
         modified_text = "This is a original piece of creative content about technology."
         
@@ -592,8 +569,7 @@ class TestProtectionConfig:
     
     @pytest_marks["performance"]
     def test_bulk_protection_processing(self):
-        """Test le traitement en masse de protection."""
-        # Préparation de contenu en masse
+        """Test le traitement en masse de protection."""        # Préparation de contenu en masse
         bulk_content = []
         for i in range(50):
             content_item = {
@@ -625,8 +601,7 @@ class TestProtectionConfig:
     
     @pytest_marks["security"]
     def test_protection_security_measures(self):
-        """Test les mesures de sécurité de protection."""
-        # Test chiffrement des métadonnées de protection
+        """Test les mesures de sécurité de protection."""        # Test chiffrement des métadonnées de protection
         protection_metadata = {
             "creator_id": "secure_creator_001",
             "content_hash": "abc123def456",
@@ -661,24 +636,20 @@ class TestProtectionConfig:
         logger.info("Protection security measures test passed")
 
 class TestWatermarkEngine:
-    """Tests spécifiques pour le moteur de filigrane."""
-    
+    """Tests spécifiques pour le moteur de filigrane."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.watermark_engine = WatermarkEngine()
+        """Configuration avant chaque test."""        self.watermark_engine = WatermarkEngine()
     
     @pytest_marks["unit"]
     def test_watermark_engine_initialization(self):
-        """Test l'initialisation du moteur de filigrane."""
-        assert self.watermark_engine is not None
+        """Test l'initialisation du moteur de filigrane."""        assert self.watermark_engine is not None
         assert hasattr(self.watermark_engine, 'supported_formats')
         assert hasattr(self.watermark_engine, 'watermark_algorithms')
         
     @pytest_marks["unit"]
     def test_multiple_watermark_algorithms(self):
-        """Test différents algorithmes de filigrane."""
-        test_data = b"test_image_data_123"
+        """Test différents algorithmes de filigrane."""        test_data = b"test_image_data_123"
         
         # Test LSB (Least Significant Bit)
         lsb_result = self.watermark_engine.apply_lsb_watermark(
@@ -706,17 +677,14 @@ class TestWatermarkEngine:
         assert spread_spectrum_result["imperceptibility_score"] > 0.9
 
 class TestCopyrightDetector:
-    """Tests spécifiques pour le détecteur de droits d'auteur."""
-    
+    """Tests spécifiques pour le détecteur de droits d'auteur."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.copyright_detector = CopyrightDetector()
+        """Configuration avant chaque test."""        self.copyright_detector = CopyrightDetector()
     
     @pytest_marks["unit"]
     def test_copyright_database_integration(self):
-        """Test l'intégration avec la base de données de droits d'auteur."""
-        # Test recherche dans la base de données
+        """Test l'intégration avec la base de données de droits d'auteur."""        # Test recherche dans la base de données
         search_result = self.copyright_detector.search_copyright_database(
             content_fingerprint="test_fingerprint_123",
             content_type="music"
@@ -727,8 +695,7 @@ class TestCopyrightDetector:
         
     @pytest_marks["unit"]
     def test_similarity_algorithms(self):
-        """Test les algorithmes de similarité."""
-        text1 = "This is original content created by the author."
+        """Test les algorithmes de similarité."""        text1 = "This is original content created by the author."
         text2 = "This is original content created by an author."
         
         similarity_score = self.copyright_detector.calculate_text_similarity(
@@ -741,13 +708,11 @@ class TestCopyrightDetector:
         assert similarity_score > 0.8  # Très similaire
 
 class TestPerformanceAndScalability:
-    """Tests de performance et scalabilité pour la protection."""
-    
+    """Tests de performance et scalabilité pour la protection."""    
     @pytest_marks["performance"]
     @pytest.mark.slow
     def test_large_scale_watermarking(self):
-        """Test de filigrane à grande échelle."""
-        config = ProtectionConfig()
+        """Test de filigrane à grande échelle."""        config = ProtectionConfig()
         
         # Simuler le traitement de 1000 images
         start_time = time.time()
@@ -771,8 +736,7 @@ class TestPerformanceAndScalability:
 
 # Configuration pytest pour les tests de protection
 def pytest_configure(config):
-    """Configuration pytest pour les tests de protection."""
-    config.addinivalue_line(
+    """Configuration pytest pour les tests de protection."""    config.addinivalue_line(
         "markers", "watermark: Watermark functionality tests"
     )
     config.addinivalue_line(

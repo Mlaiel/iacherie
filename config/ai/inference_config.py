@@ -1,5 +1,4 @@
-"""
-Inference Configuration for IA-Influencer Agent Platform
+"""Inference Configuration for IA-Influencer Agent Platform
 ========================================================
 
 Professional AI Model Inference and Deployment configuration.
@@ -16,7 +15,6 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -25,8 +23,7 @@ import os
 
 
 class InferenceBackend(str, Enum):
-    """Supported inference backends."""
-    
+    """Supported inference backends."""    
     PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     ONNX = "onnx"
@@ -38,8 +35,7 @@ class InferenceBackend(str, Enum):
 
 
 class BatchingStrategy(str, Enum):
-    """Batching strategies for inference optimization."""
-    
+    """Batching strategies for inference optimization."""    
     DYNAMIC = "dynamic"
     STATIC = "static"
     ADAPTIVE = "adaptive"
@@ -47,8 +43,7 @@ class BatchingStrategy(str, Enum):
 
 
 class CachingStrategy(str, Enum):
-    """Caching strategies for inference results."""
-    
+    """Caching strategies for inference results."""    
     MEMORY = "memory"
     REDIS = "redis"
     DISK = "disk"
@@ -58,8 +53,7 @@ class CachingStrategy(str, Enum):
 
 @dataclass
 class InferenceEndpoint:
-    """Configuration for inference endpoint."""
-    
+    """Configuration for inference endpoint."""    
     name: str
     model_path: str
     backend: InferenceBackend
@@ -78,8 +72,7 @@ class InferenceEndpoint:
 
 @dataclass
 class InferenceOptimization:
-    """Optimization settings for inference."""
-    
+    """Optimization settings for inference."""    
     quantization_enabled: bool = False
     quantization_method: str = "dynamic"  # dynamic, static, qat
     pruning_enabled: bool = False
@@ -93,13 +86,11 @@ class InferenceOptimization:
 
 
 class InferenceConfig(BaseSettings):
-    """
-    Professional Inference Configuration for IA-Influencer Agent Platform.
+    """    Professional Inference Configuration for IA-Influencer Agent Platform.
     
     Manages model inference, deployment, optimization, and serving configurations
     for production-ready AI model deployment.
-    """
-    
+    """    
     # Core Inference Configuration
     INFERENCE_BACKEND: InferenceBackend = InferenceBackend.PYTORCH
     DEFAULT_DEVICE: str = "auto"
@@ -181,8 +172,7 @@ class InferenceConfig(BaseSettings):
         env_file = ".env"
     
     def get_inference_endpoint(self, model_name: str, task_type: str) -> InferenceEndpoint:
-        """Get inference endpoint configuration for a specific model and task."""
-        
+        """Get inference endpoint configuration for a specific model and task."""        
         endpoint_configs = {
             "text_classification": InferenceEndpoint(
                 name=f"{model_name}_text_classifier",
@@ -256,8 +246,7 @@ class InferenceConfig(BaseSettings):
         return endpoint_configs.get(task_type, self._get_default_endpoint(model_name, task_type))
     
     def _get_default_endpoint(self, model_name: str, task_type: str) -> InferenceEndpoint:
-        """Get default inference endpoint configuration."""
-        return InferenceEndpoint(
+        """Get default inference endpoint configuration."""        return InferenceEndpoint(
             name=f"{model_name}_default",
             model_path=f"/models/{model_name}",
             backend=self.INFERENCE_BACKEND,
@@ -267,8 +256,7 @@ class InferenceConfig(BaseSettings):
         )
     
     def get_optimization_config(self, model_type: str) -> InferenceOptimization:
-        """Get optimization configuration for specific model type."""
-        optimizations = {
+        """Get optimization configuration for specific model type."""        optimizations = {
             "lightweight": InferenceOptimization(
                 quantization_enabled=True,
                 quantization_method="dynamic",
@@ -298,8 +286,7 @@ class InferenceConfig(BaseSettings):
         return optimizations.get(model_type, optimizations["balanced"])
     
     def get_serving_config(self) -> Dict[str, Any]:
-        """Get model serving configuration."""
-        return {
+        """Get model serving configuration."""        return {
             "server": {
                 "host": self.MODEL_SERVING_HOST,
                 "port": self.MODEL_SERVING_PORT,
@@ -329,8 +316,7 @@ class InferenceConfig(BaseSettings):
         }
     
     def get_caching_config(self) -> Dict[str, Any]:
-        """Get caching configuration."""
-        return {
+        """Get caching configuration."""        return {
             "strategy": self.CACHING_STRATEGY,
             "default_ttl": self.CACHE_TTL_DEFAULT,
             "max_size_mb": self.CACHE_MAX_SIZE_MB,
@@ -355,8 +341,7 @@ class InferenceConfig(BaseSettings):
         }
     
     def get_monitoring_config(self) -> Dict[str, Any]:
-        """Get monitoring and observability configuration."""
-        return {
+        """Get monitoring and observability configuration."""        return {
             "metrics": {
                 "enabled": self.METRICS_ENABLED,
                 "detailed_logging": self.DETAILED_LOGGING,
@@ -382,8 +367,7 @@ class InferenceConfig(BaseSettings):
         }
     
     def get_load_balancing_config(self) -> Dict[str, Any]:
-        """Get load balancing configuration."""
-        return {
+        """Get load balancing configuration."""        return {
             "enabled": self.LOAD_BALANCING_ENABLED,
             "strategy": self.LOAD_BALANCER_STRATEGY,
             "health_checks": {
@@ -402,8 +386,7 @@ class InferenceConfig(BaseSettings):
         }
     
     def get_batching_config(self) -> Dict[str, Any]:
-        """Get request batching configuration."""
-        return {
+        """Get request batching configuration."""        return {
             "strategy": self.BATCHING_STRATEGY,
             "default_batch_size": self.DEFAULT_BATCH_SIZE,
             "max_batch_size": self.MAX_BATCH_SIZE,
@@ -421,8 +404,7 @@ class InferenceConfig(BaseSettings):
         }
     
     def estimate_inference_latency(self, task_type: str, batch_size: int = 1) -> Dict[str, float]:
-        """Estimate inference latency for different task types."""
-        # Base latency estimates in milliseconds
+        """Estimate inference latency for different task types."""        # Base latency estimates in milliseconds
         base_latencies = {
             "text_classification": 10,
             "image_classification": 15,

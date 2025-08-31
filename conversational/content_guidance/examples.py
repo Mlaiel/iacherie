@@ -1,5 +1,4 @@
-"""
-Content Guidance Usage Examples - Industrial Implementation Guide
+"""Content Guidance Usage Examples - Industrial Implementation Guide
 ================================================================
 
 Practical examples demonstrating how to use the Content Guidance Orchestrator
@@ -10,7 +9,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
-
 import asyncio
 import json
 from datetime import datetime
@@ -26,13 +24,11 @@ from backend.conversational.content_guidance.index import (
 
 
 async def example_comprehensive_content_analysis():
-    """
-    Example 1: Comprehensive Content Analysis
+    """    Example 1: Comprehensive Content Analysis
     
     Scenario: A YouTube creator wants complete guidance for their new video content
     including optimization, monetization, and performance strategies.
-    """
-    
+    """    
     print("🎯 Example 1: Comprehensive Content Analysis")
     print("=" * 60)
     
@@ -74,13 +70,11 @@ async def example_comprehensive_content_analysis():
 
 
 async def example_platform_specific_optimization():
-    """
-    Example 2: Platform-Specific Content Optimization
+    """    Example 2: Platform-Specific Content Optimization
     
     Scenario: An influencer wants to optimize existing content for different platforms
     with specific requirements for each platform.
-    """
-    
+    """    
     print("\n🎯 Example 2: Platform-Specific Optimization")
     print("=" * 60)
     
@@ -126,13 +120,11 @@ async def example_platform_specific_optimization():
 
 
 async def example_monetization_strategy():
-    """
-    Example 3: Advanced Monetization Strategy
+    """    Example 3: Advanced Monetization Strategy
     
     Scenario: A content creator with established audience wants to maximize
     revenue through strategic monetization guidance.
-    """
-    
+    """    
     print("\n🎯 Example 3: Advanced Monetization Strategy")
     print("=" * 60)
     
@@ -169,13 +161,11 @@ async def example_monetization_strategy():
 
 
 async def example_trend_based_content_creation():
-    """
-    Example 4: Trend-Based Content Creation
+    """    Example 4: Trend-Based Content Creation
     
     Scenario: Creator wants to capitalize on current trends while maintaining
     brand alignment and optimal timing.
-    """
-    
+    """    
     print("\n🎯 Example 4: Trend-Based Content Creation")
     print("=" * 60)
     
@@ -222,13 +212,11 @@ async def example_trend_based_content_creation():
 
 
 async def example_brand_safety_compliance():
-    """
-    Example 5: Brand Safety and Compliance Check
+    """    Example 5: Brand Safety and Compliance Check
     
     Scenario: Enterprise client needs thorough brand safety analysis
     before approving content for publication.
-    """
-    
+    """    
     print("\n🎯 Example 5: Brand Safety & Compliance Check")
     print("=" * 60)
     
@@ -268,13 +256,11 @@ async def example_brand_safety_compliance():
 
 
 async def example_collaboration_discovery():
-    """
-    Example 6: Strategic Collaboration Discovery
+    """    Example 6: Strategic Collaboration Discovery
     
     Scenario: Creator looking for collaboration opportunities to expand
     reach and access new audiences.
-    """
-    
+    """    
     print("\n🎯 Example 6: Strategic Collaboration Discovery")
     print("=" * 60)
     
@@ -310,13 +296,11 @@ async def example_collaboration_discovery():
 
 
 async def example_performance_tracking():
-    """
-    Example 7: Comprehensive Performance Tracking
+    """    Example 7: Comprehensive Performance Tracking
     
     Scenario: Established creator wants detailed performance analysis
     and optimization recommendations based on historical data.
-    """
-    
+    """    
     print("\n🎯 Example 7: Comprehensive Performance Tracking")
     print("=" * 60)
     
@@ -355,13 +339,11 @@ async def example_performance_tracking():
 
 
 async def example_creative_content_generation():
-    """
-    Example 8: AI-Powered Creative Content Generation
+    """    Example 8: AI-Powered Creative Content Generation
     
     Scenario: Creator experiencing creative block needs fresh ideas
     and innovative content concepts.
-    """
-    
+    """    
     print("\n🎯 Example 8: AI-Powered Creative Content Generation")
     print("=" * 60)
     
@@ -400,13 +382,11 @@ async def example_creative_content_generation():
 
 
 async def example_orchestrator_direct_usage():
-    """
-    Example 9: Direct Orchestrator Usage for Advanced Workflows
+    """    Example 9: Direct Orchestrator Usage for Advanced Workflows
     
     Scenario: Advanced user wants direct access to orchestrator for
     custom workflows and detailed control.
-    """
-    
+    """    
     print("\n🎯 Example 9: Direct Orchestrator Usage")
     print("=" * 60)
     
@@ -482,11 +462,9 @@ async def example_orchestrator_direct_usage():
 
 
 async def run_all_examples():
-    """
-    Execute all content guidance examples to demonstrate the full capability
+    """    Execute all content guidance examples to demonstrate the full capability
     of the content guidance system.
-    """
-    
+    """    
     print("🚀 CONTENT GUIDANCE SYSTEM - COMPREHENSIVE EXAMPLES")
     print("=" * 80)
     print(f"Started at: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
@@ -561,12 +539,10 @@ async def run_all_examples():
 
 
 if __name__ == "__main__":
-    """
-    Run the comprehensive content guidance examples.
+    """    Run the comprehensive content guidance examples.
     
     This demonstrates the industrial-grade capabilities of the content guidance
     system across all major use cases and scenarios.
-    """
-    
+    """    
     # Run all examples
     asyncio.run(run_all_examples())

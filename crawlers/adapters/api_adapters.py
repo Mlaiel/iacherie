@@ -1,5 +1,4 @@
-"""
-API Adapters - Ultra-Advanced Multi-Protocol API Integration System
+"""API Adapters - Ultra-Advanced Multi-Protocol API Integration System
 ================================================================
 
 Enterprise-grade API communication adapters for the IA-Influencer Agent platform.
@@ -41,7 +40,6 @@ Expert Development Team Specialties:
 - Database Administrator (DBA) - API data caching and persistence strategies
 - Network Engineer - Protocol optimization and performance tuning
 """
-
 import asyncio
 import logging
 import json
@@ -89,8 +87,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class APIRequest:
-    """Advanced API request configuration with enterprise features."""
-    method: str
+    """Advanced API request configuration with enterprise features."""    method: str
     url: str
     headers: Dict[str, str] = field(default_factory=dict)
     params: Dict[str, Any] = field(default_factory=dict)
@@ -107,8 +104,7 @@ class APIRequest:
     
 @dataclass
 class APIResponse:
-    """Comprehensive API response with advanced metadata."""
-    status_code: int
+    """Comprehensive API response with advanced metadata."""    status_code: int
     headers: Dict[str, str]
     data: Union[Dict, List, str, bytes]
     raw_response: Optional[Any] = None
@@ -122,8 +118,7 @@ class APIResponse:
     
 @dataclass
 class RateLimitConfig:
-    """Advanced rate limiting configuration."""
-    requests_per_second: float = 10.0
+    """Advanced rate limiting configuration."""    requests_per_second: float = 10.0
     requests_per_minute: float = 600.0
     requests_per_hour: float = 36000.0
     burst_size: int = 50
@@ -135,8 +130,7 @@ class RateLimitConfig:
 
 @dataclass
 class CacheConfig:
-    """Intelligent caching configuration."""
-    enabled: bool = True
+    """Intelligent caching configuration."""    enabled: bool = True
     ttl: int = 3600  # seconds
     max_size: int = 10000  # number of items
     strategy: str = "lru"  # lru, lfu, ttl
@@ -145,8 +139,7 @@ class CacheConfig:
     warm_up: bool = False
     
 class CircuitBreaker:
-    """Advanced circuit breaker for API protection."""
-    
+    """Advanced circuit breaker for API protection."""    
     def __init__(self, failure_threshold: int = 5, recovery_timeout: int = 60, expected_exception: tuple = (Exception,)):
         self.failure_threshold = failure_threshold
         self.recovery_timeout = recovery_timeout
@@ -157,8 +150,7 @@ class CircuitBreaker:
         self._lock = threading.Lock()
     
     def call(self, func, *args, **kwargs):
-        """Execute function with circuit breaker protection."""
-        with self._lock:
+        """Execute function with circuit breaker protection."""        with self._lock:
             if self.state == "OPEN":
                 if self._should_attempt_reset():
                     self.state = "HALF_OPEN"
@@ -174,28 +166,24 @@ class CircuitBreaker:
                 raise e
     
     def _should_attempt_reset(self) -> bool:
-        """Check if circuit breaker should attempt reset."""
-        return (
+        """Check if circuit breaker should attempt reset."""        return (
             self.last_failure_time and
             time.time() - self.last_failure_time >= self.recovery_timeout
         )
     
     def _on_success(self):
-        """Handle successful call."""
-        self.failure_count = 0
+        """Handle successful call."""        self.failure_count = 0
         self.state = "CLOSED"
     
     def _on_failure(self):
-        """Handle failed call."""
-        self.failure_count += 1
+        """Handle failed call."""        self.failure_count += 1
         self.last_failure_time = time.time()
         
         if self.failure_count >= self.failure_threshold:
             self.state = "OPEN"
 
 class RateLimiter:
-    """Advanced rate limiter with multiple strategies."""
-    
+    """Advanced rate limiter with multiple strategies."""    
     def __init__(self, config: RateLimitConfig):
         self.config = config
         self.tokens = config.burst_size
@@ -204,8 +192,7 @@ class RateLimiter:
         self._lock = threading.Lock()
     
     async def acquire(self, tokens: int = 1) -> bool:
-        """Acquire tokens from rate limiter."""
-        if self.config.strategy == "token_bucket":
+        """Acquire tokens from rate limiter."""        if self.config.strategy == "token_bucket":
             return await self._token_bucket_acquire(tokens)
         elif self.config.strategy == "sliding_window":
             return await self._sliding_window_acquire(tokens)
@@ -213,8 +200,7 @@ class RateLimiter:
             return await self._fixed_window_acquire(tokens)
     
     async def _token_bucket_acquire(self, tokens: int) -> bool:
-        """Token bucket rate limiting algorithm."""
-        with self._lock:
+        """Token bucket rate limiting algorithm."""        with self._lock:
             now = time.time()
             time_passed = now - self.last_update
             
@@ -235,8 +221,7 @@ class RateLimiter:
                 return False
     
     async def _sliding_window_acquire(self, tokens: int) -> bool:
-        """Sliding window rate limiting algorithm."""
-        with self._lock:
+        """Sliding window rate limiting algorithm."""        with self._lock:
             now = time.time()
             window_start = now - self.config.window_size
             
@@ -260,13 +245,11 @@ class RateLimiter:
             return False
     
     async def _fixed_window_acquire(self, tokens: int) -> bool:
-        """Fixed window rate limiting algorithm."""
-        # Simplified implementation
+        """Fixed window rate limiting algorithm."""        # Simplified implementation
         return await self._token_bucket_acquire(tokens)
 
 class APICache:
-    """Advanced API response caching system."""
-    
+    """Advanced API response caching system."""    
     def __init__(self, config: CacheConfig):
         self.config = config
         self.cache: Dict[str, Dict[str, Any]] = {}
@@ -283,8 +266,7 @@ class APICache:
                 logger.warning(f"Failed to connect to Redis: {str(e)}")
     
     async def get(self, key: str) -> Optional[Dict[str, Any]]:
-        """Get cached response."""
-        if not self.config.enabled:
+        """Get cached response."""        if not self.config.enabled:
             return None
         
         # Try Redis first
@@ -321,8 +303,7 @@ class APICache:
         return None
     
     async def set(self, key: str, data: Dict[str, Any], ttl: Optional[int] = None) -> None:
-        """Cache response data."""
-        if not self.config.enabled:
+        """Cache response data."""        if not self.config.enabled:
             return
         
         cache_ttl = ttl or self.config.ttl
@@ -355,8 +336,7 @@ class APICache:
             self.access_order.append(key)
     
     def _evict_cache_entry(self):
-        """Evict cache entry based on strategy."""
-        if not self.access_order:
+        """Evict cache entry based on strategy."""        if not self.access_order:
             return
         
         if self.config.strategy == "lru":
@@ -383,8 +363,7 @@ class APICache:
                 del self.access_count[key_to_remove]
     
     def generate_cache_key(self, request: APIRequest) -> str:
-        """Generate cache key for request."""
-        key_components = [
+        """Generate cache key for request."""        key_components = [
             request.method,
             request.url,
             json.dumps(request.params, sort_keys=True),
@@ -401,13 +380,11 @@ class APICache:
         return hashlib.sha256(key_string.encode()).hexdigest()
 
 class BaseAPIAdapter(ABC):
-    """
-    Ultra-advanced base class for API adapters with enterprise-grade functionality.
+    """    Ultra-advanced base class for API adapters with enterprise-grade functionality.
     
     Provides standardized interface for all API communications including intelligent
     retry logic, advanced caching, comprehensive monitoring, and security features.
-    """
-    
+    """    
     def __init__(self, base_url: str = "", default_headers: Optional[Dict[str, str]] = None):
         self.base_url = base_url.rstrip('/')
         self.default_headers = default_headers or {}
@@ -441,8 +418,7 @@ class BaseAPIAdapter(ABC):
         }
     
     async def initialize(self) -> None:
-        """Initialize API adapter with advanced connection pooling."""
-        try:
+        """Initialize API adapter with advanced connection pooling."""        try:
             # SSL context configuration
             ssl_context = ssl.create_default_context()
             if not self.config["enable_ssl_verification"]:
@@ -485,8 +461,7 @@ class BaseAPIAdapter(ABC):
             raise
     
     async def cleanup(self) -> None:
-        """Cleanup resources and close connections."""
-        try:
+        """Cleanup resources and close connections."""        try:
             if self.session:
                 await self.session.close()
                 self.session = None
@@ -501,8 +476,7 @@ class BaseAPIAdapter(ABC):
     
     @asynccontextmanager
     async def session_context(self):
-        """Context manager for session lifecycle."""
-        if not self.session:
+        """Context manager for session lifecycle."""        if not self.session:
             await self.initialize()
         try:
             yield self.session
@@ -511,8 +485,7 @@ class BaseAPIAdapter(ABC):
             pass
     
     async def make_request(self, request: APIRequest) -> APIResponse:
-        """Make API request with advanced features."""
-        start_time = time.time()
+        """Make API request with advanced features."""        start_time = time.time()
         request_id = hashlib.sha256(f"{request.url}{time.time()}".encode()).hexdigest()[:16]
         
         try:
@@ -580,8 +553,7 @@ class BaseAPIAdapter(ABC):
     )
     async def _execute_request(self, session: aiohttp.ClientSession, 
                              request: APIRequest, request_id: str) -> APIResponse:
-        """Execute the actual HTTP request with retry logic."""
-        
+        """Execute the actual HTTP request with retry logic."""        
         # Prepare URL
         url = urljoin(self.base_url, request.url) if self.base_url else request.url
         
@@ -659,8 +631,7 @@ class BaseAPIAdapter(ABC):
             )
     
     def _update_average_response_time(self, response_time: float):
-        """Update running average of response time."""
-        total_requests = self.metrics["total_requests"]
+        """Update running average of response time."""        total_requests = self.metrics["total_requests"]
         if total_requests == 1:
             self.metrics["average_response_time"] = response_time
         else:
@@ -670,12 +641,10 @@ class BaseAPIAdapter(ABC):
             )
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get current adapter metrics."""
-        return self.metrics.copy()
+        """Get current adapter metrics."""        return self.metrics.copy()
     
     def reset_metrics(self) -> None:
-        """Reset all metrics."""
-        self.metrics = {
+        """Reset all metrics."""        self.metrics = {
             "total_requests": 0,
             "successful_requests": 0,
             "failed_requests": 0,
@@ -686,8 +655,7 @@ class BaseAPIAdapter(ABC):
         }
 
 class RESTAPIAdapter(BaseAPIAdapter):
-    """
-    Ultra-advanced REST API adapter with comprehensive HTTP protocol support.
+    """    Ultra-advanced REST API adapter with comprehensive HTTP protocol support.
     
     Features:
     - HTTP/1.1, HTTP/2, HTTP/3 support
@@ -695,8 +663,7 @@ class RESTAPIAdapter(BaseAPIAdapter):
     - Intelligent pagination handling
     - Request/response transformation
     - Comprehensive error handling
-    """
-    
+    """    
     def __init__(self, base_url: str = "", auth_config: Optional[Dict[str, Any]] = None):
         super().__init__(base_url)
         self.auth_config = auth_config or {}
@@ -704,8 +671,7 @@ class RESTAPIAdapter(BaseAPIAdapter):
         self.token_expires_at: Optional[datetime] = None
     
     async def authenticate(self) -> bool:
-        """Perform authentication based on configuration."""
-        try:
+        """Perform authentication based on configuration."""        try:
             auth_type = self.auth_config.get("type", "none")
             
             if auth_type == "oauth2":
@@ -724,8 +690,7 @@ class RESTAPIAdapter(BaseAPIAdapter):
             return False
     
     async def _oauth2_authenticate(self) -> bool:
-        """OAuth2 authentication flow."""
-        try:
+        """OAuth2 authentication flow."""        try:
             token_url = self.auth_config.get("token_url")
             client_id = self.auth_config.get("client_id")
             client_secret = self.auth_config.get("client_secret")
@@ -760,8 +725,7 @@ class RESTAPIAdapter(BaseAPIAdapter):
             return False
     
     async def _jwt_authenticate(self) -> bool:
-        """JWT authentication."""
-        try:
+        """JWT authentication."""        try:
             token = self.auth_config.get("token")
             if token:
                 self.auth_token = token
@@ -774,8 +738,7 @@ class RESTAPIAdapter(BaseAPIAdapter):
             return False
     
     async def _api_key_authenticate(self) -> bool:
-        """API key authentication."""
-        try:
+        """API key authentication."""        try:
             api_key = self.auth_config.get("api_key")
             header_name = self.auth_config.get("header_name", "X-API-Key")
             
@@ -789,8 +752,7 @@ class RESTAPIAdapter(BaseAPIAdapter):
             return False
     
     async def _bearer_authenticate(self) -> bool:
-        """Bearer token authentication."""
-        try:
+        """Bearer token authentication."""        try:
             token = self.auth_config.get("token")
             if token:
                 self.default_headers["Authorization"] = f"Bearer {token}"
@@ -803,8 +765,7 @@ class RESTAPIAdapter(BaseAPIAdapter):
     
     async def paginated_request(self, request: APIRequest, 
                               pagination_config: Dict[str, Any]) -> AsyncGenerator[APIResponse, None]:
-        """Handle paginated API requests automatically."""
-        try:
+        """Handle paginated API requests automatically."""        try:
             page_param = pagination_config.get("page_param", "page")
             per_page_param = pagination_config.get("per_page_param", "per_page")
             max_pages = pagination_config.get("max_pages", 100)
@@ -859,33 +820,27 @@ class RESTAPIAdapter(BaseAPIAdapter):
             raise
     
     async def get(self, url: str, params: Optional[Dict] = None, **kwargs) -> APIResponse:
-        """Convenience method for GET requests."""
-        request = APIRequest(method="GET", url=url, params=params or {}, **kwargs)
+        """Convenience method for GET requests."""        request = APIRequest(method="GET", url=url, params=params or {}, **kwargs)
         return await self.make_request(request)
     
     async def post(self, url: str, data: Optional[Union[Dict, str]] = None, **kwargs) -> APIResponse:
-        """Convenience method for POST requests."""
-        request = APIRequest(method="POST", url=url, data=data, **kwargs)
+        """Convenience method for POST requests."""        request = APIRequest(method="POST", url=url, data=data, **kwargs)
         return await self.make_request(request)
     
     async def put(self, url: str, data: Optional[Union[Dict, str]] = None, **kwargs) -> APIResponse:
-        """Convenience method for PUT requests."""
-        request = APIRequest(method="PUT", url=url, data=data, **kwargs)
+        """Convenience method for PUT requests."""        request = APIRequest(method="PUT", url=url, data=data, **kwargs)
         return await self.make_request(request)
     
     async def patch(self, url: str, data: Optional[Union[Dict, str]] = None, **kwargs) -> APIResponse:
-        """Convenience method for PATCH requests."""
-        request = APIRequest(method="PATCH", url=url, data=data, **kwargs)
+        """Convenience method for PATCH requests."""        request = APIRequest(method="PATCH", url=url, data=data, **kwargs)
         return await self.make_request(request)
     
     async def delete(self, url: str, **kwargs) -> APIResponse:
-        """Convenience method for DELETE requests."""
-        request = APIRequest(method="DELETE", url=url, **kwargs)
+        """Convenience method for DELETE requests."""        request = APIRequest(method="DELETE", url=url, **kwargs)
         return await self.make_request(request)
 
 class GraphQLAPIAdapter(BaseAPIAdapter):
-    """
-    Advanced GraphQL API adapter with comprehensive GraphQL support.
+    """    Advanced GraphQL API adapter with comprehensive GraphQL support.
     
     Features:
     - Query optimization and batching
@@ -893,8 +848,7 @@ class GraphQLAPIAdapter(BaseAPIAdapter):
     - Schema introspection
     - Fragment handling
     - Real-time updates via WebSocket
-    """
-    
+    """    
     def __init__(self, endpoint: str, websocket_endpoint: Optional[str] = None):
         super().__init__(endpoint)
         self.endpoint = endpoint
@@ -903,8 +857,7 @@ class GraphQLAPIAdapter(BaseAPIAdapter):
         self.schema = None
         
     async def initialize(self) -> None:
-        """Initialize GraphQL client."""
-        try:
+        """Initialize GraphQL client."""        try:
             await super().initialize()
             
             if GRAPHQL_AVAILABLE:
@@ -928,8 +881,7 @@ class GraphQLAPIAdapter(BaseAPIAdapter):
             raise
     
     async def execute_query(self, query: str, variables: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Execute GraphQL query."""
-        try:
+        """Execute GraphQL query."""        try:
             if not GRAPHQL_AVAILABLE or not self.client:
                 raise Exception("GraphQL client not available")
             
@@ -944,12 +896,10 @@ class GraphQLAPIAdapter(BaseAPIAdapter):
             raise
     
     async def execute_mutation(self, mutation: str, variables: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Execute GraphQL mutation."""
-        return await self.execute_query(mutation, variables)
+        """Execute GraphQL mutation."""        return await self.execute_query(mutation, variables)
     
     async def subscribe(self, subscription: str, variables: Optional[Dict[str, Any]] = None) -> AsyncGenerator[Dict[str, Any], None]:
-        """Subscribe to GraphQL subscription."""
-        try:
+        """Subscribe to GraphQL subscription."""        try:
             if not GRAPHQL_AVAILABLE or not self.websocket_endpoint:
                 raise Exception("GraphQL subscriptions not available")
             
@@ -968,8 +918,7 @@ class GraphQLAPIAdapter(BaseAPIAdapter):
     
     def build_query(self, fields: List[str], query_name: str = "query", 
                    filters: Optional[Dict[str, Any]] = None) -> str:
-        """Build GraphQL query from field list."""
-        try:
+        """Build GraphQL query from field list."""        try:
             filter_string = ""
             if filters:
                 filter_parts = []
@@ -982,12 +931,10 @@ class GraphQLAPIAdapter(BaseAPIAdapter):
             
             fields_string = "\n    ".join(fields)
             
-            query = f"""
-            {query_name}{filter_string} {{
+            query = f"""            {query_name}{filter_string} {{
                 {fields_string}
             }}
-            """
-            
+            """            
             return query.strip()
             
         except Exception as e:
@@ -995,8 +942,7 @@ class GraphQLAPIAdapter(BaseAPIAdapter):
             raise
     
     def get_schema_info(self) -> Optional[Dict[str, Any]]:
-        """Get GraphQL schema information."""
-        if self.schema:
+        """Get GraphQL schema information."""        if self.schema:
             return {
                 "types": [str(type_def) for type_def in self.schema.type_map.values()],
                 "queries": list(self.schema.query_type.fields.keys()) if self.schema.query_type else [],
@@ -1006,8 +952,7 @@ class GraphQLAPIAdapter(BaseAPIAdapter):
         return None
 
 class WebSocketAPIAdapter:
-    """
-    Advanced WebSocket API adapter with comprehensive real-time communication.
+    """    Advanced WebSocket API adapter with comprehensive real-time communication.
     
     Features:
     - Bidirectional real-time communication
@@ -1015,8 +960,7 @@ class WebSocketAPIAdapter:
     - Connection health monitoring
     - Automatic reconnection with backoff
     - Message queuing and replay
-    """
-    
+    """    
     def __init__(self, url: str, protocols: Optional[List[str]] = None):
         self.url = url
         self.protocols = protocols
@@ -1031,8 +975,7 @@ class WebSocketAPIAdapter:
         self.last_heartbeat = time.time()
         
     async def connect(self) -> bool:
-        """Establish WebSocket connection."""
-        try:
+        """Establish WebSocket connection."""        try:
             extra_headers = {}
             if hasattr(self, 'default_headers'):
                 extra_headers = self.default_headers
@@ -1068,8 +1011,7 @@ class WebSocketAPIAdapter:
             return False
     
     async def disconnect(self):
-        """Close WebSocket connection."""
-        try:
+        """Close WebSocket connection."""        try:
             self.is_connected = False
             if self.connection:
                 await self.connection.close()
@@ -1080,8 +1022,7 @@ class WebSocketAPIAdapter:
             logger.error(f"WebSocket disconnect failed: {str(e)}")
     
     async def send_message(self, message: Dict[str, Any]) -> bool:
-        """Send message through WebSocket."""
-        try:
+        """Send message through WebSocket."""        try:
             if not self.is_connected or not self.connection:
                 # Queue message for later
                 self.message_queue.append(message)
@@ -1098,12 +1039,10 @@ class WebSocketAPIAdapter:
             return False
     
     def register_handler(self, message_type: str, handler: Callable):
-        """Register message handler for specific message type."""
-        self.message_handlers[message_type] = handler
+        """Register message handler for specific message type."""        self.message_handlers[message_type] = handler
     
     async def _handle_messages(self):
-        """Handle incoming WebSocket messages."""
-        try:
+        """Handle incoming WebSocket messages."""        try:
             async for message in self.connection:
                 if isinstance(message, str):
                     try:
@@ -1136,8 +1075,7 @@ class WebSocketAPIAdapter:
             await self._handle_disconnect()
     
     async def _heartbeat_task(self):
-        """Monitor connection health with heartbeat."""
-        while self.is_connected:
+        """Monitor connection health with heartbeat."""        while self.is_connected:
             try:
                 current_time = time.time()
                 
@@ -1159,16 +1097,14 @@ class WebSocketAPIAdapter:
                 break
     
     async def _handle_disconnect(self):
-        """Handle WebSocket disconnection."""
-        self.is_connected = False
+        """Handle WebSocket disconnection."""        self.is_connected = False
         self.connection = None
         
         # Attempt reconnection
         await self._attempt_reconnect()
     
     async def _attempt_reconnect(self):
-        """Attempt to reconnect with exponential backoff."""
-        if self.reconnect_attempts >= self.max_reconnect_attempts:
+        """Attempt to reconnect with exponential backoff."""        if self.reconnect_attempts >= self.max_reconnect_attempts:
             logger.error("Max reconnection attempts reached")
             return
         
@@ -1181,8 +1117,7 @@ class WebSocketAPIAdapter:
         await self.connect()
     
     async def _replay_queued_messages(self):
-        """Replay queued messages after reconnection."""
-        if not self.message_queue:
+        """Replay queued messages after reconnection."""        if not self.message_queue:
             return
         
         logger.info(f"Replaying {len(self.message_queue)} queued messages")
@@ -1194,8 +1129,7 @@ class WebSocketAPIAdapter:
                 break  # Connection lost again
 
 class WebhookAPIAdapter:
-    """
-    Advanced webhook processing adapter with comprehensive event handling.
+    """    Advanced webhook processing adapter with comprehensive event handling.
     
     Features:
     - Signature verification and validation
@@ -1203,8 +1137,7 @@ class WebhookAPIAdapter:
     - Retry handling with exponential backoff
     - Event replay and recovery
     - Rate limiting and security
-    """
-    
+    """    
     def __init__(self, secret_key: Optional[str] = None):
         self.secret_key = secret_key
         self.event_handlers: Dict[str, Callable] = {}
@@ -1213,12 +1146,10 @@ class WebhookAPIAdapter:
         self.max_payload_size = 10 * 1024 * 1024  # 10MB
         
     def register_handler(self, event_type: str, handler: Callable):
-        """Register event handler for specific webhook event type."""
-        self.event_handlers[event_type] = handler
+        """Register event handler for specific webhook event type."""        self.event_handlers[event_type] = handler
     
     async def process_webhook(self, payload: Union[str, bytes], headers: Dict[str, str]) -> Dict[str, Any]:
-        """Process incoming webhook with comprehensive validation."""
-        try:
+        """Process incoming webhook with comprehensive validation."""        try:
             # Validate payload size
             payload_size = len(payload)
             if payload_size > self.max_payload_size:
@@ -1283,8 +1214,7 @@ class WebhookAPIAdapter:
             }
     
     def _verify_signature(self, payload: Union[str, bytes], headers: Dict[str, str]) -> bool:
-        """Verify webhook signature."""
-        try:
+        """Verify webhook signature."""        try:
             # Common signature headers
             signature_headers = [
                 "X-Hub-Signature-256",
@@ -1340,8 +1270,7 @@ class WebhookAPIAdapter:
     
     async def _process_event(self, event_type: str, event_data: Dict[str, Any], 
                            headers: Dict[str, str]) -> Any:
-        """Process webhook event."""
-        try:
+        """Process webhook event."""        try:
             # Find appropriate handler
             handler = None
             if event_type in self.event_handlers:
@@ -1373,8 +1302,7 @@ class WebhookAPIAdapter:
             raise
     
     async def retry_failed_events(self, max_retries: int = 3):
-        """Retry failed webhook events."""
-        for event in self.failed_events.copy():
+        """Retry failed webhook events."""        for event in self.failed_events.copy():
             try:
                 if event["retry_count"] >= max_retries:
                     logger.warning(f"Event max retries exceeded: {event}")
@@ -1403,12 +1331,10 @@ class WebhookAPIAdapter:
 
 # Factory class for creating appropriate adapters
 class APIAdapterFactory:
-    """Factory for creating appropriate API adapters."""
-    
+    """Factory for creating appropriate API adapters."""    
     @staticmethod
     def create_adapter(adapter_type: str, **kwargs) -> BaseAPIAdapter:
-        """Create API adapter based on type."""
-        if adapter_type.lower() == "rest":
+        """Create API adapter based on type."""        if adapter_type.lower() == "rest":
             return RESTAPIAdapter(**kwargs)
         elif adapter_type.lower() == "graphql":
             return GraphQLAPIAdapter(**kwargs)
@@ -1435,8 +1361,7 @@ __all__ = [
     "RateLimiter",
     "APICache"
 ]
-    """API response container."""
-    status_code: int
+    """API response container."""    status_code: int
     headers: Dict[str, str]
     data: Any
     raw_response: str
@@ -1446,11 +1371,9 @@ __all__ = [
     error_message: Optional[str] = None
 
 class APIAdapter(ABC):
-    """Base class for all API adapters."""
-    
+    """Base class for all API adapters."""    
     def __init__(self, base_url: str, **config):
-        """Initialize API adapter."""
-        self.base_url = base_url.rstrip('/')
+        """Initialize API adapter."""        self.base_url = base_url.rstrip('/')
         self.config = config
         self.session = None
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -1474,8 +1397,7 @@ class APIAdapter(ABC):
         self._setup_authentication()
     
     def _setup_authentication(self):
-        """Setup authentication headers."""
-        auth_config = self.config.get('auth', {})
+        """Setup authentication headers."""        auth_config = self.config.get('auth', {})
         auth_type = auth_config.get('type')
         
         if auth_type == 'bearer':
@@ -1498,8 +1420,7 @@ class APIAdapter(ABC):
                 self.auth_headers['Authorization'] = f'Basic {credentials}'
     
     async def initialize(self):
-        """Initialize the adapter."""
-        connector = aiohttp.TCPConnector(
+        """Initialize the adapter."""        connector = aiohttp.TCPConnector(
             ssl=ssl.create_default_context() if self.enable_ssl_verify else False
         )
         timeout = aiohttp.ClientTimeout(total=self.timeout)
@@ -1511,15 +1432,13 @@ class APIAdapter(ABC):
         self.logger.info(f"Initialized {self.__class__.__name__}")
     
     async def cleanup(self):
-        """Cleanup adapter resources."""
-        if self.session:
+        """Cleanup adapter resources."""        if self.session:
             await self.session.close()
         self.logger.info(f"Cleaned up {self.__class__.__name__}")
     
     @abstractmethod
     async def request(self, api_request: APIRequest) -> APIResponse:
-        """Execute API request."""
-        pass
+        """Execute API request."""        pass
     
     async def _execute_request_with_retry(
         self,
@@ -1527,8 +1446,7 @@ class APIAdapter(ABC):
         url: str,
         **kwargs
     ) -> aiohttp.ClientResponse:
-        """Execute request with retry logic."""
-        last_exception = None
+        """Execute request with retry logic."""        last_exception = None
         
         for attempt in range(self.max_retries + 1):
             try:
@@ -1548,11 +1466,9 @@ class APIAdapter(ABC):
         raise last_exception
 
 class RESTAPIAdapter(APIAdapter):
-    """Adapter for REST API integration."""
-    
+    """Adapter for REST API integration."""    
     def __init__(self, base_url: str, **config):
-        """Initialize REST API adapter."""
-        super().__init__(base_url, **config)
+        """Initialize REST API adapter."""        super().__init__(base_url, **config)
         
         # REST-specific configuration
         self.pagination_style = config.get('pagination_style', 'offset')  # offset, cursor, page
@@ -1560,8 +1476,7 @@ class RESTAPIAdapter(APIAdapter):
         self.rate_limit_reset_header = config.get('rate_limit_reset_header', 'X-RateLimit-Reset')
     
     async def request(self, api_request: APIRequest) -> APIResponse:
-        """Execute REST API request."""
-        start_time = datetime.now()
+        """Execute REST API request."""        start_time = datetime.now()
         
         try:
             url = f"{self.base_url}{api_request.url}"
@@ -1623,8 +1538,7 @@ class RESTAPIAdapter(APIAdapter):
             )
     
     async def get(self, endpoint: str, params: Optional[Dict] = None, **kwargs) -> APIResponse:
-        """Execute GET request."""
-        request = APIRequest(
+        """Execute GET request."""        request = APIRequest(
             method='GET',
             url=endpoint,
             params=params or {},
@@ -1633,8 +1547,7 @@ class RESTAPIAdapter(APIAdapter):
         return await self.request(request)
     
     async def post(self, endpoint: str, data: Any = None, **kwargs) -> APIResponse:
-        """Execute POST request."""
-        request = APIRequest(
+        """Execute POST request."""        request = APIRequest(
             method='POST',
             url=endpoint,
             data=data,
@@ -1643,8 +1556,7 @@ class RESTAPIAdapter(APIAdapter):
         return await self.request(request)
     
     async def put(self, endpoint: str, data: Any = None, **kwargs) -> APIResponse:
-        """Execute PUT request."""
-        request = APIRequest(
+        """Execute PUT request."""        request = APIRequest(
             method='PUT',
             url=endpoint,
             data=data,
@@ -1653,8 +1565,7 @@ class RESTAPIAdapter(APIAdapter):
         return await self.request(request)
     
     async def patch(self, endpoint: str, data: Any = None, **kwargs) -> APIResponse:
-        """Execute PATCH request."""
-        request = APIRequest(
+        """Execute PATCH request."""        request = APIRequest(
             method='PATCH',
             url=endpoint,
             data=data,
@@ -1663,8 +1574,7 @@ class RESTAPIAdapter(APIAdapter):
         return await self.request(request)
     
     async def delete(self, endpoint: str, **kwargs) -> APIResponse:
-        """Execute DELETE request."""
-        request = APIRequest(
+        """Execute DELETE request."""        request = APIRequest(
             method='DELETE',
             url=endpoint,
             **kwargs
@@ -1678,8 +1588,7 @@ class RESTAPIAdapter(APIAdapter):
         limit: Optional[int] = None,
         **kwargs
     ) -> List[Dict]:
-        """Execute paginated request to get all results."""
-        all_results = []
+        """Execute paginated request to get all results."""        all_results = []
         current_params = params.copy() if params else {}
         
         if self.pagination_style == 'offset':
@@ -1741,11 +1650,9 @@ class RESTAPIAdapter(APIAdapter):
         return all_results[:limit] if limit else all_results
 
 class GraphQLAdapter(APIAdapter):
-    """Adapter for GraphQL API integration."""
-    
+    """Adapter for GraphQL API integration."""    
     def __init__(self, base_url: str, **config):
-        """Initialize GraphQL adapter."""
-        super().__init__(base_url, **config)
+        """Initialize GraphQL adapter."""        super().__init__(base_url, **config)
         
         if not GRAPHQL_AVAILABLE:
             raise ImportError("GraphQL dependencies not available. Install with: pip install gql[aiohttp]")
@@ -1754,8 +1661,7 @@ class GraphQLAdapter(APIAdapter):
         self.introspection_enabled = config.get('introspection', True)
     
     async def initialize(self):
-        """Initialize GraphQL client."""
-        await super().initialize()
+        """Initialize GraphQL client."""        await super().initialize()
         
         # Setup GraphQL transport
         transport = AIOHTTPTransport(
@@ -1771,8 +1677,7 @@ class GraphQLAdapter(APIAdapter):
         self.logger.info("GraphQL client initialized")
     
     async def request(self, api_request: APIRequest) -> APIResponse:
-        """Execute GraphQL request."""
-        start_time = datetime.now()
+        """Execute GraphQL request."""        start_time = datetime.now()
         
         try:
             if not self.client:
@@ -1816,8 +1721,7 @@ class GraphQLAdapter(APIAdapter):
             )
     
     async def query(self, query_string: str, variables: Optional[Dict] = None) -> APIResponse:
-        """Execute GraphQL query."""
-        request = APIRequest(
+        """Execute GraphQL query."""        request = APIRequest(
             method='POST',
             url='/graphql',
             data={'query': query_string},
@@ -1826,8 +1730,7 @@ class GraphQLAdapter(APIAdapter):
         return await self.request(request)
     
     async def mutation(self, mutation_string: str, variables: Optional[Dict] = None) -> APIResponse:
-        """Execute GraphQL mutation."""
-        request = APIRequest(
+        """Execute GraphQL mutation."""        request = APIRequest(
             method='POST',
             url='/graphql',
             data={'query': mutation_string},
@@ -1836,11 +1739,9 @@ class GraphQLAdapter(APIAdapter):
         return await self.request(request)
 
 class WebSocketAdapter(APIAdapter):
-    """Adapter for WebSocket API integration."""
-    
+    """Adapter for WebSocket API integration."""    
     def __init__(self, base_url: str, **config):
-        """Initialize WebSocket adapter."""
-        super().__init__(base_url, **config)
+        """Initialize WebSocket adapter."""        super().__init__(base_url, **config)
         
         # Convert HTTP URL to WebSocket URL
         self.ws_url = base_url.replace('http://', 'ws://').replace('https://', 'wss://')
@@ -1856,12 +1757,10 @@ class WebSocketAdapter(APIAdapter):
         self.max_reconnect_attempts = config.get('max_reconnect_attempts', 5)
     
     async def initialize(self):
-        """Initialize WebSocket connection."""
-        await self.connect()
+        """Initialize WebSocket connection."""        await self.connect()
     
     async def connect(self) -> bool:
-        """Connect to WebSocket."""
-        try:
+        """Connect to WebSocket."""        try:
             # Prepare headers
             headers = {**self.default_headers, **self.auth_headers}
             
@@ -1887,15 +1786,13 @@ class WebSocketAdapter(APIAdapter):
             return False
     
     async def disconnect(self):
-        """Disconnect from WebSocket."""
-        if self.websocket:
+        """Disconnect from WebSocket."""        if self.websocket:
             await self.websocket.close()
             self.is_connected = False
             self.logger.info("Disconnected from WebSocket")
     
     async def request(self, api_request: APIRequest) -> APIResponse:
-        """Send WebSocket message."""
-        start_time = datetime.now()
+        """Send WebSocket message."""        start_time = datetime.now()
         
         try:
             if not self.is_connected:
@@ -1939,8 +1836,7 @@ class WebSocketAdapter(APIAdapter):
             )
     
     async def _message_listener(self):
-        """Listen for incoming WebSocket messages."""
-        try:
+        """Listen for incoming WebSocket messages."""        try:
             async for message in self.websocket:
                 try:
                     # Parse message
@@ -1973,8 +1869,7 @@ class WebSocketAdapter(APIAdapter):
             self.is_connected = False
     
     async def _reconnect(self):
-        """Attempt to reconnect to WebSocket."""
-        for attempt in range(self.max_reconnect_attempts):
+        """Attempt to reconnect to WebSocket."""        for attempt in range(self.max_reconnect_attempts):
             try:
                 await asyncio.sleep(2 ** attempt)  # Exponential backoff
                 if await self.connect():
@@ -1986,16 +1881,13 @@ class WebSocketAdapter(APIAdapter):
         self.logger.error("Failed to reconnect after maximum attempts")
     
     def add_message_handler(self, message_type: str, handler: Callable):
-        """Add handler for specific message type."""
-        self.message_handlers[message_type] = handler
+        """Add handler for specific message type."""        self.message_handlers[message_type] = handler
     
     def remove_message_handler(self, message_type: str):
-        """Remove handler for message type."""
-        self.message_handlers.pop(message_type, None)
+        """Remove handler for message type."""        self.message_handlers.pop(message_type, None)
     
     async def send_message(self, message: Union[str, Dict]) -> APIResponse:
-        """Send message via WebSocket."""
-        request = APIRequest(
+        """Send message via WebSocket."""        request = APIRequest(
             method='SEND',
             url='',
             data=message
@@ -2003,11 +1895,9 @@ class WebSocketAdapter(APIAdapter):
         return await self.request(request)
 
 class WebhookAdapter(APIAdapter):
-    """Adapter for Webhook integration."""
-    
+    """Adapter for Webhook integration."""    
     def __init__(self, base_url: str, **config):
-        """Initialize Webhook adapter."""
-        super().__init__(base_url, **config)
+        """Initialize Webhook adapter."""        super().__init__(base_url, **config)
         
         self.webhook_handlers: Dict[str, Callable] = {}
         self.signature_verification = config.get('verify_signature', True)
@@ -2015,12 +1905,10 @@ class WebhookAdapter(APIAdapter):
         self.signature_header = config.get('signature_header', 'X-Signature')
     
     async def request(self, api_request: APIRequest) -> APIResponse:
-        """Execute webhook request (typically for sending)."""
-        return await super().request(api_request)
+        """Execute webhook request (typically for sending)."""        return await super().request(api_request)
     
     async def register_webhook(self, endpoint: str, webhook_url: str) -> APIResponse:
-        """Register webhook endpoint."""
-        data = {
+        """Register webhook endpoint."""        data = {
             'url': webhook_url,
             'events': self.config.get('events', ['*'])
         }
@@ -2034,8 +1922,7 @@ class WebhookAdapter(APIAdapter):
         return await self.request(request)
     
     async def unregister_webhook(self, endpoint: str, webhook_id: str) -> APIResponse:
-        """Unregister webhook endpoint."""
-        request = APIRequest(
+        """Unregister webhook endpoint."""        request = APIRequest(
             method='DELETE',
             url=f"{endpoint}/{webhook_id}"
         )
@@ -2043,12 +1930,10 @@ class WebhookAdapter(APIAdapter):
         return await self.request(request)
     
     def add_webhook_handler(self, event_type: str, handler: Callable):
-        """Add handler for webhook event."""
-        self.webhook_handlers[event_type] = handler
+        """Add handler for webhook event."""        self.webhook_handlers[event_type] = handler
     
     async def handle_webhook(self, headers: Dict[str, str], body: bytes) -> bool:
-        """Handle incoming webhook."""
-        try:
+        """Handle incoming webhook."""        try:
             # Verify signature if enabled
             if self.signature_verification and self.secret_key:
                 if not self._verify_signature(headers, body):
@@ -2078,8 +1963,7 @@ class WebhookAdapter(APIAdapter):
             return False
     
     def _verify_signature(self, headers: Dict[str, str], body: bytes) -> bool:
-        """Verify webhook signature."""
-        try:
+        """Verify webhook signature."""        try:
             import hmac
             import hashlib
             
@@ -2102,19 +1986,16 @@ class WebhookAdapter(APIAdapter):
             return False
 
 class StreamingAdapter(APIAdapter):
-    """Adapter for streaming API integration."""
-    
+    """Adapter for streaming API integration."""    
     def __init__(self, base_url: str, **config):
-        """Initialize Streaming adapter."""
-        super().__init__(base_url, **config)
+        """Initialize Streaming adapter."""        super().__init__(base_url, **config)
         
         self.stream_handlers: Dict[str, Callable] = {}
         self.active_streams: Dict[str, Any] = {}
         self.buffer_size = config.get('buffer_size', 8192)
     
     async def request(self, api_request: APIRequest) -> APIResponse:
-        """Execute streaming request."""
-        start_time = datetime.now()
+        """Execute streaming request."""        start_time = datetime.now()
         
         try:
             url = f"{self.base_url}{api_request.url}"
@@ -2162,8 +2043,7 @@ class StreamingAdapter(APIAdapter):
             )
     
     async def _process_stream(self, stream_id: str, response: aiohttp.ClientResponse):
-        """Process streaming response."""
-        try:
+        """Process streaming response."""        try:
             buffer = ""
             
             async for chunk in response.content.iter_chunked(self.buffer_size):
@@ -2197,8 +2077,7 @@ class StreamingAdapter(APIAdapter):
             self.logger.info(f"Stream {stream_id} ended")
     
     async def _handle_stream_data(self, stream_id: str, data: Any):
-        """Handle individual stream data item."""
-        try:
+        """Handle individual stream data item."""        try:
             # Determine data type and call appropriate handler
             data_type = 'default'
             if isinstance(data, dict):
@@ -2214,16 +2093,13 @@ class StreamingAdapter(APIAdapter):
             self.logger.error(f"Stream data handling error: {e}")
     
     def add_stream_handler(self, data_type: str, handler: Callable):
-        """Add handler for stream data type."""
-        self.stream_handlers[data_type] = handler
+        """Add handler for stream data type."""        self.stream_handlers[data_type] = handler
     
     def remove_stream_handler(self, data_type: str):
-        """Remove handler for stream data type."""
-        self.stream_handlers.pop(data_type, None)
+        """Remove handler for stream data type."""        self.stream_handlers.pop(data_type, None)
     
     async def stop_stream(self, stream_id: str) -> bool:
-        """Stop active stream."""
-        try:
+        """Stop active stream."""        try:
             if stream_id in self.active_streams:
                 response = self.active_streams[stream_id]
                 response.close()
@@ -2239,8 +2115,7 @@ class StreamingAdapter(APIAdapter):
             return False
     
     def get_active_streams(self) -> List[str]:
-        """Get list of active stream IDs."""
-        return list(self.active_streams.keys())
+        """Get list of active stream IDs."""        return list(self.active_streams.keys())
 
 # Export all adapters
 __all__ = [

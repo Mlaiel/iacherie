@@ -1,5 +1,4 @@
-"""
-Configuration Management for AI Agents Module
+"""Configuration Management for AI Agents Module
 
 Centralized configuration system for the IA Influencer AI Agents.
 Provides environment-specific settings, security configurations, and performance tuning.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
-
 import os
 from typing import Dict, Any, Optional
 from dataclasses import dataclass, field
@@ -22,8 +20,7 @@ import yaml
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration settings"""
-    host: str = "localhost"
+    """Database configuration settings"""    host: str = "localhost"
     port: int = 5432
     database: str = "ia_influencer"
     username: str = "postgres"
@@ -36,8 +33,7 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration settings"""
-    host: str = "localhost"
+    """Redis configuration settings"""    host: str = "localhost"
     port: int = 6379
     database: int = 0
     password: Optional[str] = None
@@ -50,8 +46,7 @@ class RedisConfig:
 
 @dataclass
 class AIConfig:
-    """AI/ML configuration settings"""
-    openai_api_key: str = ""
+    """AI/ML configuration settings"""    openai_api_key: str = ""
     openai_model: str = "gpt-4"
     max_tokens: int = 4000
     temperature: float = 0.7
@@ -72,8 +67,7 @@ class AIConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration settings"""
-    encryption_key: str = ""
+    """Security configuration settings"""    encryption_key: str = ""
     jwt_secret: str = ""
     jwt_expiration_hours: int = 24
     
@@ -94,8 +88,7 @@ class SecurityConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability settings"""
-    enabled: bool = True
+    """Monitoring and observability settings"""    enabled: bool = True
     log_level: str = "INFO"
     metrics_enabled: bool = True
     tracing_enabled: bool = True
@@ -116,8 +109,7 @@ class MonitoringConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization settings"""
-    # Async settings
+    """Performance optimization settings"""    # Async settings
     max_concurrent_tasks: int = 100
     task_timeout_seconds: int = 300
     retry_attempts: int = 3
@@ -138,8 +130,7 @@ class PerformanceConfig:
 
 @dataclass
 class PlatformConfig:
-    """Social media platform configurations"""
-    # Instagram
+    """Social media platform configurations"""    # Instagram
     instagram_enabled: bool = True
     instagram_client_id: str = ""
     instagram_client_secret: str = ""
@@ -175,8 +166,7 @@ class PlatformConfig:
 
 @dataclass
 class AIAgentsConfig:
-    """Complete AI Agents configuration"""
-    # Environment
+    """Complete AI Agents configuration"""    # Environment
     environment: str = "development"  # development, staging, production
     debug: bool = True
     
@@ -197,16 +187,14 @@ class AIAgentsConfig:
 
 
 class ConfigManager:
-    """Configuration management system"""
-    
+    """Configuration management system"""    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path
         self._config: Optional[AIAgentsConfig] = None
         self._config_files = []
     
     def load_config(self, config_path: Optional[str] = None) -> AIAgentsConfig:
-        """Load configuration from files and environment variables"""
-        if config_path:
+        """Load configuration from files and environment variables"""        if config_path:
             self.config_path = config_path
         
         # Load base configuration
@@ -228,8 +216,7 @@ class ConfigManager:
         return config
     
     def _find_config_files(self) -> list:
-        """Find configuration files in order of priority"""
-        config_files = []
+        """Find configuration files in order of priority"""        config_files = []
         
         # Check specific path first
         if self.config_path and Path(self.config_path).exists():
@@ -254,8 +241,7 @@ class ConfigManager:
         return config_files
     
     def _load_config_file(self, file_path: str) -> Dict[str, Any]:
-        """Load configuration from a file"""
-        try:
+        """Load configuration from a file"""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 if file_path.endswith('.json'):
                     return json.load(f)
@@ -266,8 +252,7 @@ class ConfigManager:
             return {}
     
     def _merge_configs(self, base_config: AIAgentsConfig, file_config: Dict[str, Any]) -> AIAgentsConfig:
-        """Merge file configuration into base configuration"""
-        # This is a simplified merge - in production, use deep merge
+        """Merge file configuration into base configuration"""        # This is a simplified merge - in production, use deep merge
         for key, value in file_config.items():
             if hasattr(base_config, key):
                 if isinstance(value, dict) and hasattr(getattr(base_config, key), '__dict__'):
@@ -282,8 +267,7 @@ class ConfigManager:
         return base_config
     
     def _load_environment_variables(self, config: AIAgentsConfig) -> AIAgentsConfig:
-        """Load configuration from environment variables"""
-        # Database
+        """Load configuration from environment variables"""        # Database
         if os.getenv('IA_DB_HOST'):
             config.database.host = os.getenv('IA_DB_HOST')
         if os.getenv('IA_DB_PORT'):
@@ -339,8 +323,7 @@ class ConfigManager:
         return config
     
     def _validate_config(self, config: AIAgentsConfig) -> None:
-        """Validate configuration values"""
-        errors = []
+        """Validate configuration values"""        errors = []
         
         # Required fields in production
         if config.environment == "production":
@@ -362,19 +345,16 @@ class ConfigManager:
             raise ValueError(f"Configuration validation failed: {'; '.join(errors)}")
     
     def get_config(self) -> AIAgentsConfig:
-        """Get the current configuration"""
-        if self._config is None:
+        """Get the current configuration"""        if self._config is None:
             self._config = self.load_config()
         return self._config
     
     def reload_config(self) -> AIAgentsConfig:
-        """Reload configuration from sources"""
-        self._config = None
+        """Reload configuration from sources"""        self._config = None
         return self.load_config()
     
     def save_config(self, file_path: str, format: str = "yaml") -> None:
-        """Save current configuration to file"""
-        if self._config is None:
+        """Save current configuration to file"""        if self._config is None:
             raise ValueError("No configuration loaded")
         
         # Convert dataclass to dict
@@ -387,8 +367,7 @@ class ConfigManager:
                 yaml.dump(config_dict, f, default_flow_style=False, indent=2)
     
     def _dataclass_to_dict(self, obj) -> Dict[str, Any]:
-        """Convert dataclass to dictionary recursively"""
-        if hasattr(obj, '__dict__'):
+        """Convert dataclass to dictionary recursively"""        if hasattr(obj, '__dict__'):
             result = {}
             for key, value in obj.__dict__.items():
                 if hasattr(value, '__dict__'):
@@ -405,27 +384,23 @@ _config_manager: Optional[ConfigManager] = None
 
 
 def get_config_manager() -> ConfigManager:
-    """Get the global configuration manager"""
-    global _config_manager
+    """Get the global configuration manager"""    global _config_manager
     if _config_manager is None:
         _config_manager = ConfigManager()
     return _config_manager
 
 
 def get_config() -> AIAgentsConfig:
-    """Get the current configuration"""
-    return get_config_manager().get_config()
+    """Get the current configuration"""    return get_config_manager().get_config()
 
 
 def load_config(config_path: Optional[str] = None) -> AIAgentsConfig:
-    """Load configuration from files and environment"""
-    return get_config_manager().load_config(config_path)
+    """Load configuration from files and environment"""    return get_config_manager().load_config(config_path)
 
 
 # Default configuration for development
 def get_default_config() -> AIAgentsConfig:
-    """Get default configuration for development"""
-    config = AIAgentsConfig()
+    """Get default configuration for development"""    config = AIAgentsConfig()
     config.environment = "development"
     config.debug = True
     

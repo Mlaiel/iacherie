@@ -1,5 +1,4 @@
-"""
-Base AI Agent Framework
+"""Base AI Agent Framework
 
 Foundation classes and interfaces for all AI agents in the IA Influencer platform.
 Provides standardized capabilities, status management, and communication protocols.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
-
 import asyncio
 import json
 import uuid
@@ -27,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class AgentCapability(Enum):
-    """Standardized agent capabilities"""
-    # Content Creation
+    """Standardized agent capabilities"""    # Content Creation
     TEXT_GENERATION = "text_generation"
     IMAGE_GENERATION = "image_generation"
     AUDIO_GENERATION = "audio_generation"
@@ -77,8 +74,7 @@ class AgentCapability(Enum):
 
 
 class AgentStatus(Enum):
-    """Agent lifecycle status"""
-    INITIALIZING = "initializing"
+    """Agent lifecycle status"""    INITIALIZING = "initializing"
     READY = "ready"
     BUSY = "busy"
     PROCESSING = "processing"
@@ -90,8 +86,7 @@ class AgentStatus(Enum):
 
 
 class AgentPriority(Enum):
-    """Task priority levels"""
-    LOW = 1
+    """Task priority levels"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     URGENT = 4
@@ -100,8 +95,7 @@ class AgentPriority(Enum):
 
 @dataclass
 class AgentMetrics:
-    """Performance metrics for agents"""
-    total_tasks: int = 0
+    """Performance metrics for agents"""    total_tasks: int = 0
     successful_tasks: int = 0
     failed_tasks: int = 0
     average_response_time: float = 0.0
@@ -114,16 +108,14 @@ class AgentMetrics:
     
     @property
     def success_rate(self) -> float:
-        """Calculate success rate percentage"""
-        if self.total_tasks == 0:
+        """Calculate success rate percentage"""        if self.total_tasks == 0:
             return 0.0
         return (self.successful_tasks / self.total_tasks) * 100
 
 
 @dataclass
 class AgentTask:
-    """Task definition for agents"""
-    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Task definition for agents"""    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     task_type: str = ""
     priority: AgentPriority = AgentPriority.MEDIUM
     context: Dict[str, Any] = field(default_factory=dict)
@@ -138,15 +130,13 @@ class AgentTask:
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Calculate task duration"""
-        if self.started_at and self.completed_at:
+        """Calculate task duration"""        if self.started_at and self.completed_at:
             return self.completed_at - self.started_at
         return None
     
     @property
     def is_expired(self) -> bool:
-        """Check if task has expired"""
-        if not self.timeout_seconds:
+        """Check if task has expired"""        if not self.timeout_seconds:
             return False
         if not self.started_at:
             return False
@@ -155,8 +145,7 @@ class AgentTask:
 
 @dataclass
 class AgentConfiguration:
-    """Agent configuration settings"""
-    agent_id: str
+    """Agent configuration settings"""    agent_id: str
     agent_name: str
     capabilities: Set[AgentCapability]
     max_concurrent_tasks: int = 5
@@ -170,8 +159,7 @@ class AgentConfiguration:
 
 
 class BaseAIAgent(ABC):
-    """
-    Base class for all AI agents in the IA Influencer platform
+    """    Base class for all AI agents in the IA Influencer platform
     
     Provides:
     - Standardized lifecycle management
@@ -179,8 +167,7 @@ class BaseAIAgent(ABC):
     - Performance monitoring
     - Error handling and recovery
     - Communication protocols
-    """
-    
+    """    
     def __init__(self, config: AgentConfiguration):
         self.config = config
         self.agent_id = config.agent_id
@@ -201,8 +188,7 @@ class BaseAIAgent(ABC):
         self.logger = logging.getLogger(f"agent.{self.agent_name}")
         
     async def initialize(self) -> bool:
-        """Initialize the agent"""
-        try:
+        """Initialize the agent"""        try:
             self.logger.info(f"Initializing agent {self.agent_name}")
             
             # Custom initialization
@@ -223,13 +209,11 @@ class BaseAIAgent(ABC):
             return False
     
     async def _custom_initialize(self) -> None:
-        """
-        Custom initialization logic for specific agents
+        """        Custom initialization logic for specific agents
         
         Base implementation provides standard validation and setup.
         Subclasses can override this method for specialized initialization.
-        """
-        self.logger.debug(f"Base initialization for {self.agent_name}")
+        """        self.logger.debug(f"Base initialization for {self.agent_name}")
         
         # Validate required configuration
         if not self.config.agent_id:
@@ -258,8 +242,7 @@ class BaseAIAgent(ABC):
         self.logger.debug(f"Agent {self.agent_name} base initialization complete with {len(self.capabilities)} capabilities")
     
     async def execute_task(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute a task with proper error handling and metrics"""
-        task.started_at = datetime.now(timezone.utc)
+        """Execute a task with proper error handling and metrics"""        task.started_at = datetime.now(timezone.utc)
         self.active_tasks[task.task_id] = task
         
         try:
@@ -309,8 +292,7 @@ class BaseAIAgent(ABC):
             self.status = AgentStatus.READY if not self.active_tasks else AgentStatus.BUSY
     
     async def _execute_task_impl(self, task: AgentTask) -> Dict[str, Any]:
-        """
-        Default implementation of task execution with basic capability routing
+        """        Default implementation of task execution with basic capability routing
         
         Args:
             task: The task to execute with context and parameters
@@ -320,8 +302,7 @@ class BaseAIAgent(ABC):
             
         Raises:
             NotImplementedError: If task type not supported by agent capabilities
-        """
-        # Basic task execution framework with capability-based routing
+        """        # Basic task execution framework with capability-based routing
         task_type = task.task_type
         context = task.context
         
@@ -364,8 +345,7 @@ class BaseAIAgent(ABC):
             return await self._execute_generic_task(task)
     
     def _map_task_to_capability(self, task_type: str) -> Optional[AgentCapability]:
-        """Map task type to required capability"""
-        task_capability_map = {
+        """Map task type to required capability"""        task_capability_map = {
             "text_generation": AgentCapability.TEXT_GENERATION,
             "image_generation": AgentCapability.IMAGE_GENERATION,
             "audio_generation": AgentCapability.AUDIO_GENERATION,
@@ -390,8 +370,7 @@ class BaseAIAgent(ABC):
         return task_capability_map.get(task_type)
     
     async def _execute_health_check_task(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute health check task"""
-        health_status = await self.get_health_status()
+        """Execute health check task"""        health_status = await self.get_health_status()
         return {
             "task_type": "health_check",
             "agent_health": health_status,
@@ -402,8 +381,7 @@ class BaseAIAgent(ABC):
         }
     
     async def _execute_capability_assessment_task(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute capability assessment task"""
-        return {
+        """Execute capability assessment task"""        return {
             "task_type": "capability_assessment",
             "agent_id": self.agent_id,
             "agent_name": self.agent_name,
@@ -419,8 +397,7 @@ class BaseAIAgent(ABC):
         }
     
     async def _execute_status_report_task(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute status report task"""
-        uptime = datetime.now(timezone.utc) - self._startup_time
+        """Execute status report task"""        uptime = datetime.now(timezone.utc) - self._startup_time
         return {
             "task_type": "status_report",
             "agent_status": {
@@ -443,8 +420,7 @@ class BaseAIAgent(ABC):
         }
     
     async def _execute_configuration_update_task(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute configuration update task"""
-        new_config = task.context.get("configuration", {})
+        """Execute configuration update task"""        new_config = task.context.get("configuration", {})
         updated_fields = []
         
         # Update allowable configuration fields
@@ -482,8 +458,7 @@ class BaseAIAgent(ABC):
         }
     
     async def _execute_content_generation_task(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute content generation task (basic implementation)"""
-        if AgentCapability.TEXT_GENERATION not in self.capabilities:
+        """Execute content generation task (basic implementation)"""        if AgentCapability.TEXT_GENERATION not in self.capabilities:
             self.logger.warning(f"Agent {self.agent_name} does not support content generation")
             # Return a basic fallback instead of raising an error
             return {
@@ -514,8 +489,7 @@ class BaseAIAgent(ABC):
         }
     
     async def _execute_analysis_task(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute analysis task (basic implementation)"""
-        analysis_type = task.context.get("analysis_type", "general")
+        """Execute analysis task (basic implementation)"""        analysis_type = task.context.get("analysis_type", "general")
         data = task.context.get("data", {})
         
         # Basic analysis implementation
@@ -552,8 +526,7 @@ class BaseAIAgent(ABC):
         }
     
     async def _execute_platform_task(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute platform-related task (basic implementation)"""
-        platform = task.context.get("platform", "unknown")
+        """Execute platform-related task (basic implementation)"""        platform = task.context.get("platform", "unknown")
         action = task.context.get("action", "unknown")
         content = task.context.get("content", {})
         
@@ -567,8 +540,7 @@ class BaseAIAgent(ABC):
         }
     
     async def _execute_generic_task(self, task: AgentTask) -> Dict[str, Any]:
-        """Execute generic task when no specific handler exists"""
-        self.logger.warning(f"Executing generic task handler for task type: {task.task_type}")
+        """Execute generic task when no specific handler exists"""        self.logger.warning(f"Executing generic task handler for task type: {task.task_type}")
         
         return {
             "task_type": task.task_type,
@@ -581,13 +553,11 @@ class BaseAIAgent(ABC):
         }
     
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle a specific task"""
-        # Base implementation - can be overridden
+        """Check if agent can handle a specific task"""        # Base implementation - can be overridden
         return True
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get agent health and status information"""
-        uptime = datetime.now(timezone.utc) - self._startup_time
+        """Get agent health and status information"""        uptime = datetime.now(timezone.utc) - self._startup_time
         
         return {
             "agent_id": self.agent_id,
@@ -604,8 +574,7 @@ class BaseAIAgent(ABC):
         }
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of the agent"""
-        self.logger.info(f"Shutting down agent {self.agent_name}")
+        """Graceful shutdown of the agent"""        self.logger.info(f"Shutting down agent {self.agent_name}")
         self.status = AgentStatus.SHUTDOWN
         self.shutdown_event.set()
         
@@ -625,8 +594,7 @@ class BaseAIAgent(ABC):
         self.logger.info(f"Agent {self.agent_name} shutdown complete")
     
     async def _custom_shutdown(self) -> None:
-        """Custom shutdown logic for specific agents"""
-        # Base implementation - can be overridden by subclasses
+        """Custom shutdown logic for specific agents"""        # Base implementation - can be overridden by subclasses
         self.logger.debug(f"Base shutdown for {self.agent_name}")
         
         # Clean up any base resources
@@ -643,8 +611,7 @@ class BaseAIAgent(ABC):
         self.logger.debug(f"Agent {self.agent_name} base shutdown complete")
     
     async def _task_processor(self) -> None:
-        """Background task processor"""
-        while not self.shutdown_event.is_set():
+        """Background task processor"""        while not self.shutdown_event.is_set():
             try:
                 # Get task from queue with timeout
                 task = await asyncio.wait_for(self.task_queue.get(), timeout=1.0)
@@ -658,8 +625,7 @@ class BaseAIAgent(ABC):
                 self.logger.error(f"Error in task processor: {str(e)}")
     
     async def _heartbeat_monitor(self) -> None:
-        """Background heartbeat monitor"""
-        while not self.shutdown_event.is_set():
+        """Background heartbeat monitor"""        while not self.shutdown_event.is_set():
             self._last_heartbeat = datetime.now(timezone.utc)
             self.metrics.last_activity = self._last_heartbeat
             
@@ -670,8 +636,7 @@ class BaseAIAgent(ABC):
             await asyncio.sleep(30)  # Heartbeat every 30 seconds
     
     async def _metrics_collector(self) -> None:
-        """Background metrics collection"""
-        while not self.shutdown_event.is_set():
+        """Background metrics collection"""        while not self.shutdown_event.is_set():
             try:
                 # Update throughput
                 if self.metrics.total_tasks > 0:
@@ -725,8 +690,7 @@ class BaseAIAgent(ABC):
             await asyncio.sleep(60)  # Collect metrics every minute
     
     def _update_response_time(self, task: AgentTask) -> None:
-        """Update average response time"""
-        if task.duration:
+        """Update average response time"""        if task.duration:
             duration_seconds = task.duration.total_seconds()
             
             # Moving average calculation
@@ -746,8 +710,7 @@ class BaseAIAgent(ABC):
 
 @asynccontextmanager
 async def agent_lifecycle(agent: BaseAIAgent):
-    """Context manager for agent lifecycle management"""
-    try:
+    """Context manager for agent lifecycle management"""    try:
         # Initialize agent
         success = await agent.initialize()
         if not success:
@@ -761,8 +724,7 @@ async def agent_lifecycle(agent: BaseAIAgent):
 
 
 class AgentRegistry:
-    """Registry for managing multiple agents"""
-    
+    """Registry for managing multiple agents"""    
     def __init__(self):
         self.agents: Dict[str, BaseAIAgent] = {}
         self.capabilities_map: Dict[AgentCapability, List[str]] = {}
@@ -770,8 +732,7 @@ class AgentRegistry:
         self.logger = logging.getLogger(f"{__name__}.AgentRegistry")
     
     async def register_agent(self, agent: BaseAIAgent) -> None:
-        """Register an agent in the registry"""
-        async with self._lock:
+        """Register an agent in the registry"""        async with self._lock:
             if agent.agent_id in self.agents:
                 raise ValueError(f"Agent with ID {agent.agent_id} already registered")
             
@@ -786,8 +747,7 @@ class AgentRegistry:
             self.logger.info(f"Registered agent {agent.agent_name} ({agent.agent_id}) with {len(agent.capabilities)} capabilities")
     
     async def unregister_agent(self, agent_id: str) -> None:
-        """Unregister an agent from the registry"""
-        async with self._lock:
+        """Unregister an agent from the registry"""        async with self._lock:
             if agent_id not in self.agents:
                 self.logger.warning(f"Agent {agent_id} not found in registry")
                 return
@@ -807,24 +767,20 @@ class AgentRegistry:
             self.logger.info(f"Unregistered agent {agent.agent_name} ({agent_id})")
     
     def get_agents_by_capability(self, capability: AgentCapability) -> List[BaseAIAgent]:
-        """Get all agents that have a specific capability"""
-        agent_ids = self.capabilities_map.get(capability, [])
+        """Get all agents that have a specific capability"""        agent_ids = self.capabilities_map.get(capability, [])
         return [self.agents[agent_id] for agent_id in agent_ids if agent_id in self.agents]
     
     def get_available_agents(self) -> List[BaseAIAgent]:
-        """Get all agents that are ready to handle tasks"""
-        return [
+        """Get all agents that are ready to handle tasks"""        return [
             agent for agent in self.agents.values() 
             if agent.status in [AgentStatus.READY, AgentStatus.BUSY]
         ]
     
     def get_agent_by_id(self, agent_id: str) -> Optional[BaseAIAgent]:
-        """Get agent by ID"""
-        return self.agents.get(agent_id)
+        """Get agent by ID"""        return self.agents.get(agent_id)
     
     def get_agent_by_name(self, agent_name: str) -> Optional[BaseAIAgent]:
-        """Get agent by name"""
-        for agent in self.agents.values():
+        """Get agent by name"""        for agent in self.agents.values():
             if agent.agent_name == agent_name:
                 return agent
         return None
@@ -832,8 +788,7 @@ class AgentRegistry:
     async def find_best_agent(self, 
                              capability: AgentCapability, 
                              task_context: Dict[str, Any] = None) -> Optional[BaseAIAgent]:
-        """Find the best agent for a specific capability and task"""
-        candidates = self.get_agents_by_capability(capability)
+        """Find the best agent for a specific capability and task"""        candidates = self.get_agents_by_capability(capability)
         
         if not candidates:
             return None
@@ -872,8 +827,7 @@ class AgentRegistry:
         return best_agent
     
     def _calculate_agent_score(self, agent: BaseAIAgent) -> float:
-        """Calculate agent performance score"""
-        # Factors: success rate, response time, current load
+        """Calculate agent performance score"""        # Factors: success rate, response time, current load
         success_rate = agent.metrics.success_rate / 100.0  # 0-1
         
         # Inverse response time (faster is better)
@@ -888,8 +842,7 @@ class AgentRegistry:
         return score
     
     async def get_registry_status(self) -> Dict[str, Any]:
-        """Get comprehensive registry status"""
-        total_agents = len(self.agents)
+        """Get comprehensive registry status"""        total_agents = len(self.agents)
         available_agents = len(self.get_available_agents())
         
         status_breakdown = {}
@@ -922,8 +875,7 @@ class AgentRegistry:
         }
     
     async def shutdown_all(self) -> None:
-        """Shutdown all registered agents"""
-        self.logger.info(f"Shutting down {len(self.agents)} agents")
+        """Shutdown all registered agents"""        self.logger.info(f"Shutting down {len(self.agents)} agents")
         
         shutdown_tasks = [agent.shutdown() for agent in self.agents.values()]
         results = await asyncio.gather(*shutdown_tasks, return_exceptions=True)
@@ -940,22 +892,19 @@ class AgentRegistry:
 
 
 class AgentFactory:
-    """Factory for creating specialized agents"""
-    
+    """Factory for creating specialized agents"""    
     _agent_classes: Dict[str, type] = {}
     
     @classmethod
     def register_agent_class(cls, agent_type: str, agent_class: type) -> None:
-        """Register an agent class with the factory"""
-        if not issubclass(agent_class, BaseAIAgent):
+        """Register an agent class with the factory"""        if not issubclass(agent_class, BaseAIAgent):
             raise ValueError(f"Agent class must inherit from BaseAIAgent")
         
         cls._agent_classes[agent_type] = agent_class
     
     @classmethod
     def create_agent(cls, agent_type: str, config: AgentConfiguration) -> BaseAIAgent:
-        """Create an agent of the specified type"""
-        if agent_type not in cls._agent_classes:
+        """Create an agent of the specified type"""        if agent_type not in cls._agent_classes:
             raise ValueError(f"Unknown agent type: {agent_type}")
         
         agent_class = cls._agent_classes[agent_type]
@@ -963,8 +912,7 @@ class AgentFactory:
     
     @classmethod
     def get_available_types(cls) -> List[str]:
-        """Get list of available agent types"""
-        return list(cls._agent_classes.keys())
+        """Get list of available agent types"""        return list(cls._agent_classes.keys())
 
 
 # Utility functions for agent management
@@ -974,8 +922,7 @@ async def create_agent_config(
     capabilities: List[AgentCapability],
     **kwargs
 ) -> AgentConfiguration:
-    """Create agent configuration with validation"""
-    if not agent_id or not agent_name:
+    """Create agent configuration with validation"""    if not agent_id or not agent_name:
         raise ValueError("agent_id and agent_name are required")
     
     if not capabilities:
@@ -990,8 +937,7 @@ async def create_agent_config(
 
 
 async def deploy_agent(agent: BaseAIAgent, registry: AgentRegistry) -> bool:
-    """Deploy an agent to the registry"""
-    try:
+    """Deploy an agent to the registry"""    try:
         # Initialize the agent
         success = await agent.initialize()
         if not success:

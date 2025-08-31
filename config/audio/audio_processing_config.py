@@ -1,5 +1,4 @@
-"""
-Audio Processing Configuration Module for IA-Influencer Agent Platform
+"""Audio Processing Configuration Module for IA-Influencer Agent Platform
 =====================================================================
 
 Professional audio processing configuration management for multi-format content creators.
@@ -19,7 +18,6 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -31,16 +29,14 @@ logger = logging.getLogger(__name__)
 
 
 class AudioProcessingMode(Enum):
-    """Audio processing operational modes"""
-    REALTIME = "realtime"
+    """Audio processing operational modes"""    REALTIME = "realtime"
     BATCH = "batch"
     STREAMING = "streaming"
     OFFLINE = "offline"
 
 
 class AudioQualityTier(Enum):
-    """Audio quality processing tiers"""
-    BROADCAST = "broadcast"      # 96kHz/24bit - Professional broadcast
+    """Audio quality processing tiers"""    BROADCAST = "broadcast"      # 96kHz/24bit - Professional broadcast
     STUDIO = "studio"           # 48kHz/24bit - Studio recording
     STREAMING = "streaming"     # 44.1kHz/16bit - High quality streaming
     PODCAST = "podcast"         # 22kHz/16bit - Speech optimized
@@ -48,16 +44,14 @@ class AudioQualityTier(Enum):
 
 
 class ProcessingComplexity(Enum):
-    """Audio processing complexity levels"""
-    MINIMAL = "minimal"         # Basic processing only
+    """Audio processing complexity levels"""    MINIMAL = "minimal"         # Basic processing only
     STANDARD = "standard"       # Standard processing pipeline
     ADVANCED = "advanced"       # Advanced ML-enhanced processing
     ULTRA = "ultra"            # Full AI-powered processing
 
 
 class AudioBufferStrategy(Enum):
-    """Audio buffer management strategies"""
-    FIXED = "fixed"             # Fixed buffer size
+    """Audio buffer management strategies"""    FIXED = "fixed"             # Fixed buffer size
     ADAPTIVE = "adaptive"       # Adaptive buffer sizing
     PREDICTIVE = "predictive"   # ML-based buffer prediction
     REALTIME = "realtime"       # Ultra-low latency
@@ -65,8 +59,7 @@ class AudioBufferStrategy(Enum):
 
 @dataclass
 class PerformanceMetrics:
-    """Audio processing performance metrics configuration"""
-    max_latency_ms: float = 10.0
+    """Audio processing performance metrics configuration"""    max_latency_ms: float = 10.0
     target_cpu_usage: float = 0.7
     memory_limit_mb: int = 512
     throughput_target: int = 1000  # files per hour
@@ -76,8 +69,7 @@ class PerformanceMetrics:
 
 @dataclass
 class AudioProcessingLimits:
-    """Audio processing resource limits"""
-    max_file_size_mb: int = 500
+    """Audio processing resource limits"""    max_file_size_mb: int = 500
     max_duration_seconds: int = 3600
     max_sample_rate: int = 192000
     max_bit_depth: int = 32
@@ -89,8 +81,7 @@ class AudioProcessingLimits:
 
 @dataclass
 class MLProcessingConfig:
-    """Machine learning audio processing configuration"""
-    enable_ai_enhancement: bool = True
+    """Machine learning audio processing configuration"""    enable_ai_enhancement: bool = True
     enable_noise_reduction: bool = True
     enable_auto_mastering: bool = False
     enable_vocal_isolation: bool = True
@@ -103,8 +94,7 @@ class MLProcessingConfig:
 
 @dataclass
 class SecurityConfig:
-    """Audio processing security configuration"""
-    enable_content_scanning: bool = True
+    """Audio processing security configuration"""    enable_content_scanning: bool = True
     enable_copyright_detection: bool = True
     enable_malware_scanning: bool = True
     max_upload_rate: int = 10  # files per minute
@@ -114,16 +104,13 @@ class SecurityConfig:
 
 
 class AudioProcessingConfig:
-    """
-    Comprehensive audio processing configuration manager
+    """    Comprehensive audio processing configuration manager
     
     Manages all aspects of audio processing configuration for the IA-Influencer platform,
     supporting multiple content creator types and use cases.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize audio processing configuration"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize audio processing configuration"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Core configuration
         self._processing_mode = AudioProcessingMode.BATCH
@@ -156,8 +143,7 @@ class AudioProcessingConfig:
         self.logger.info("AudioProcessingConfig initialized successfully")
     
     def _initialize_pipeline_config(self) -> Dict[str, Any]:
-        """Initialize processing pipeline configuration"""
-        return {
+        """Initialize processing pipeline configuration"""        return {
             "preprocessing": {
                 "normalize_audio": True,
                 "remove_silence": True,
@@ -192,8 +178,7 @@ class AudioProcessingConfig:
         }
     
     def _initialize_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific configurations"""
-        return {
+        """Initialize platform-specific configurations"""        return {
             "spotify": {
                 "target_lufs": -14.0,
                 "peak_limit": -1.0,
@@ -239,8 +224,7 @@ class AudioProcessingConfig:
     def get_processing_config(self, 
                             content_type: str = "music",
                             platform: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get optimized processing configuration
+        """        Get optimized processing configuration
         
         Args:
             content_type: Type of content (music, speech, podcast, etc.)
@@ -248,8 +232,7 @@ class AudioProcessingConfig:
             
         Returns:
             Optimized processing configuration
-        """
-        try:
+        """        try:
             base_config = {
                 "mode": self._processing_mode.value,
                 "quality_tier": self._quality_tier.value,
@@ -302,8 +285,7 @@ class AudioProcessingConfig:
             return self._get_fallback_config()
     
     def _get_fallback_config(self) -> Dict[str, Any]:
-        """Get fallback configuration for error scenarios"""
-        return {
+        """Get fallback configuration for error scenarios"""        return {
             "mode": AudioProcessingMode.BATCH.value,
             "quality_tier": AudioQualityTier.STREAMING.value,
             "complexity": ProcessingComplexity.STANDARD.value,
@@ -315,16 +297,14 @@ class AudioProcessingConfig:
         }
     
     def validate_processing_config(self, config: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """
-        Validate processing configuration
+        """        Validate processing configuration
         
         Args:
             config: Configuration to validate
             
         Returns:
             Tuple of (is_valid, error_messages)
-        """
-        errors = []
+        """        errors = []
         is_valid = True
         
         try:
@@ -376,16 +356,14 @@ class AudioProcessingConfig:
         return is_valid, errors
     
     def get_performance_profile(self, target_latency: float) -> Dict[str, Any]:
-        """
-        Get performance-optimized configuration profile
+        """        Get performance-optimized configuration profile
         
         Args:
             target_latency: Target latency in milliseconds
             
         Returns:
             Performance-optimized configuration
-        """
-        try:
+        """        try:
             if target_latency <= 5.0:
                 # Ultra-low latency profile
                 return {
@@ -425,16 +403,14 @@ class AudioProcessingConfig:
             return self._get_fallback_config()
     
     def update_ml_config(self, **kwargs) -> bool:
-        """
-        Update machine learning configuration
+        """        Update machine learning configuration
         
         Args:
             **kwargs: ML configuration parameters
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             for key, value in kwargs.items():
                 if hasattr(self.ml_config, key):
                     setattr(self.ml_config, key, value)
@@ -449,20 +425,16 @@ class AudioProcessingConfig:
             return False
     
     def get_supported_formats(self) -> List[str]:
-        """Get list of supported audio formats"""
-        return self._supported_formats.copy()
+        """Get list of supported audio formats"""        return self._supported_formats.copy()
     
     def is_format_supported(self, format_name: str) -> bool:
-        """Check if audio format is supported"""
-        return format_name.lower() in self._supported_formats
+        """Check if audio format is supported"""        return format_name.lower() in self._supported_formats
     
     def get_platform_config(self, platform: str) -> Optional[Dict[str, Any]]:
-        """Get platform-specific configuration"""
-        return self._platform_configs.get(platform.lower())
+        """Get platform-specific configuration"""        return self._platform_configs.get(platform.lower())
     
     def add_custom_platform(self, platform: str, config: Dict[str, Any]) -> bool:
-        """
-        Add custom platform configuration
+        """        Add custom platform configuration
         
         Args:
             platform: Platform name
@@ -470,8 +442,7 @@ class AudioProcessingConfig:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             required_keys = ["target_lufs", "peak_limit", "sample_rate", 
                            "bit_depth", "format"]
             
@@ -490,24 +461,20 @@ class AudioProcessingConfig:
     
     @property
     def processing_mode(self) -> AudioProcessingMode:
-        """Get current processing mode"""
-        return self._processing_mode
+        """Get current processing mode"""        return self._processing_mode
     
     @processing_mode.setter
     def processing_mode(self, mode: AudioProcessingMode):
-        """Set processing mode"""
-        self._processing_mode = mode
+        """Set processing mode"""        self._processing_mode = mode
         self.logger.info(f"Processing mode set to: {mode.value}")
     
     @property
     def quality_tier(self) -> AudioQualityTier:
-        """Get current quality tier"""
-        return self._quality_tier
+        """Get current quality tier"""        return self._quality_tier
     
     @quality_tier.setter
     def quality_tier(self, tier: AudioQualityTier):
-        """Set quality tier"""
-        self._quality_tier = tier
+        """Set quality tier"""        self._quality_tier = tier
         self.logger.info(f"Quality tier set to: {tier.value}")
     
     def get_memory_usage_estimate(self, 
@@ -515,8 +482,7 @@ class AudioProcessingConfig:
                                  duration: float,
                                  bit_depth: int,
                                  channels: int) -> Dict[str, float]:
-        """
-        Estimate memory usage for audio processing
+        """        Estimate memory usage for audio processing
         
         Args:
             sample_rate: Audio sample rate
@@ -526,8 +492,7 @@ class AudioProcessingConfig:
             
         Returns:
             Memory usage estimates in MB
-        """
-        try:
+        """        try:
             # Raw audio memory
             samples = sample_rate * duration * channels
             bytes_per_sample = bit_depth / 8
@@ -563,8 +528,7 @@ class AudioProcessingConfig:
             return {"total_estimated": 512.0}  # Fallback estimate
     
     def export_config(self) -> Dict[str, Any]:
-        """Export complete configuration as dictionary"""
-        try:
+        """Export complete configuration as dictionary"""        try:
             return {
                 "processing_mode": self._processing_mode.value,
                 "quality_tier": self._quality_tier.value,

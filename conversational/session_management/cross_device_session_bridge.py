@@ -1,5 +1,4 @@
-"""
-Cross-Device Session Bridge - IA Influencer Agent
+"""Cross-Device Session Bridge - IA Influencer Agent
 
 Enterprise-grade cross-device session synchronization with seamless continuity,
 device state management, and intelligent session handoff for multi-format
@@ -25,7 +24,6 @@ Team Specialists:
 - DevOps: Cross-Platform Scalability & Performance
 - IA Prompt Engineer: Multi-Device Conversational Experience
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -57,8 +55,7 @@ logger = get_logger(__name__)
 
 
 class DeviceType(Enum):
-    """Device type classifications"""
-    MOBILE_PHONE = "mobile_phone"
+    """Device type classifications"""    MOBILE_PHONE = "mobile_phone"
     TABLET = "tablet"
     DESKTOP = "desktop"
     LAPTOP = "laptop"
@@ -70,8 +67,7 @@ class DeviceType(Enum):
 
 
 class DeviceCapability(Enum):
-    """Device capability flags"""
-    AUDIO_RECORDING = "audio_recording"
+    """Device capability flags"""    AUDIO_RECORDING = "audio_recording"
     VIDEO_RECORDING = "video_recording"
     IMAGE_CAPTURE = "image_capture"
     FILE_UPLOAD = "file_upload"
@@ -84,8 +80,7 @@ class DeviceCapability(Enum):
 
 
 class SyncStatus(Enum):
-    """Session synchronization status"""
-    SYNCED = "synced"
+    """Session synchronization status"""    SYNCED = "synced"
     PENDING = "pending"
     CONFLICT = "conflict"
     FAILED = "failed"
@@ -94,8 +89,7 @@ class SyncStatus(Enum):
 
 
 class HandoffReason(Enum):
-    """Reasons for session handoff"""
-    USER_INITIATED = "user_initiated"
+    """Reasons for session handoff"""    USER_INITIATED = "user_initiated"
     DEVICE_SWITCH = "device_switch"
     NETWORK_OPTIMIZATION = "network_optimization"
     CAPABILITY_REQUIREMENT = "capability_requirement"
@@ -105,8 +99,7 @@ class HandoffReason(Enum):
 
 
 class DeviceInfo(BaseModel):
-    """Device information structure"""
-    device_id: str
+    """Device information structure"""    device_id: str
     device_type: DeviceType
     device_name: str
     platform: str  # iOS, Android, Windows, macOS, Linux, Web
@@ -129,8 +122,7 @@ class DeviceInfo(BaseModel):
 
 
 class SessionState(BaseModel):
-    """Cross-device session state"""
-    session_id: str
+    """Cross-device session state"""    session_id: str
     user_id: str
     primary_device_id: str
     active_devices: Set[str] = Field(default_factory=set)
@@ -151,8 +143,7 @@ class SessionState(BaseModel):
 
 
 class DeviceSessionInfo(BaseModel):
-    """Device-specific session information"""
-    device_id: str
+    """Device-specific session information"""    device_id: str
     session_id: str
     local_state: Dict[str, Any] = Field(default_factory=dict)
     last_activity: datetime = Field(default_factory=datetime.utcnow)
@@ -171,8 +162,7 @@ class DeviceSessionInfo(BaseModel):
 
 @dataclass
 class CrossDeviceConfig:
-    """Cross-device synchronization configuration"""
-    sync_interval: int = 30  # seconds
+    """Cross-device synchronization configuration"""    sync_interval: int = 30  # seconds
     max_devices_per_session: int = 5
     handoff_timeout: int = 60  # seconds
     conflict_resolution_strategy: str = "timestamp_priority"
@@ -185,8 +175,7 @@ class CrossDeviceConfig:
 
 
 class DeviceSessionSynchronizer:
-    """Handles device session synchronization"""
-    
+    """Handles device session synchronization"""    
     def __init__(self, config: CrossDeviceConfig):
         self.config = config
         self.cache_manager = CacheManager()
@@ -211,16 +200,14 @@ class DeviceSessionSynchronizer:
         self.cleanup_task: Optional[asyncio.Task] = None
     
     async def start_synchronization(self):
-        """Start background synchronization tasks"""
-        
+        """Start background synchronization tasks"""        
         self.sync_task = asyncio.create_task(self._sync_loop())
         self.cleanup_task = asyncio.create_task(self._cleanup_loop())
         
         self.logger.info("Device session synchronization started")
     
     async def stop_synchronization(self):
-        """Stop background synchronization tasks"""
-        
+        """Stop background synchronization tasks"""        
         if self.sync_task:
             self.sync_task.cancel()
             try:
@@ -243,8 +230,7 @@ class DeviceSessionSynchronizer:
         device_info: Dict[str, Any],
         user_id: str
     ) -> bool:
-        """Register device for cross-device sessions"""
-        
+        """Register device for cross-device sessions"""        
         try:
             # Detect device capabilities
             capabilities = await self._detect_device_capabilities(device_info)
@@ -300,8 +286,7 @@ class DeviceSessionSynchronizer:
         device_id: str,
         user_id: str
     ) -> bool:
-        """Start session on specific device"""
-        
+        """Start session on specific device"""        
         try:
             # Get or create session state
             if session_id not in self.session_states:
@@ -354,8 +339,7 @@ class DeviceSessionSynchronizer:
         source_device_id: str,
         state_changes: Dict[str, Any]
     ) -> bool:
-        """Synchronize session state changes across devices"""
-        
+        """Synchronize session state changes across devices"""        
         try:
             session_state = self.session_states.get(session_id)
             
@@ -396,8 +380,7 @@ class DeviceSessionSynchronizer:
         to_device_id: str,
         reason: HandoffReason
     ) -> bool:
-        """Handoff session from one device to another"""
-        
+        """Handoff session from one device to another"""        
         try:
             session_state = self.session_states.get(session_id)
             
@@ -451,8 +434,7 @@ class DeviceSessionSynchronizer:
             return False
     
     async def _sync_loop(self):
-        """Background sync processing loop"""
-        
+        """Background sync processing loop"""        
         try:
             while True:
                 try:
@@ -476,8 +458,7 @@ class DeviceSessionSynchronizer:
             self.logger.info("Sync loop cancelled")
     
     async def _process_sync_operation(self, operation: Dict[str, Any]):
-        """Process individual sync operation"""
-        
+        """Process individual sync operation"""        
         try:
             session_id = operation["session_id"]
             source_device_id = operation["source_device_id"]
@@ -510,8 +491,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Sync operation processing failed: {str(e)}")
     
     async def _apply_state_changes(self, session_state: SessionState, changes: Dict[str, Any]):
-        """Apply state changes to session"""
-        
+        """Apply state changes to session"""        
         try:
             for change_type, change_data in changes.items():
                 if change_type == "conversation_update":
@@ -529,8 +509,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"State changes application failed: {str(e)}")
     
     async def _send_sync_update(self, device_id: str, operation: Dict[str, Any]):
-        """Send sync update to specific device"""
-        
+        """Send sync update to specific device"""        
         try:
             # Check if device is online
             device_session = await self._get_device_session(device_id)
@@ -552,8 +531,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Sync update send failed: {str(e)}")
     
     async def _periodic_sync(self):
-        """Periodic synchronization for all active sessions"""
-        
+        """Periodic synchronization for all active sessions"""        
         try:
             current_time = datetime.utcnow()
             
@@ -569,8 +547,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Periodic sync failed: {str(e)}")
     
     async def _sync_session_across_devices(self, session_id: str):
-        """Sync session state across all active devices"""
-        
+        """Sync session state across all active devices"""        
         try:
             session_state = self.session_states.get(session_id)
             
@@ -604,8 +581,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Session sync across devices failed: {str(e)}")
     
     async def _detect_device_capabilities(self, device_info: Dict[str, Any]) -> List[DeviceCapability]:
-        """Detect device capabilities based on device info"""
-        
+        """Detect device capabilities based on device info"""        
         capabilities = []
         
         try:
@@ -663,8 +639,7 @@ class DeviceSessionSynchronizer:
         to_device: DeviceInfo,
         session_state: SessionState
     ) -> bool:
-        """Validate if handoff is compatible between devices"""
-        
+        """Validate if handoff is compatible between devices"""        
         try:
             # Check basic compatibility
             if not to_device.is_active:
@@ -692,8 +667,7 @@ class DeviceSessionSynchronizer:
             return False
     
     def _get_session_required_capabilities(self, session_state: SessionState) -> List[DeviceCapability]:
-        """Get required capabilities for current session state"""
-        
+        """Get required capabilities for current session state"""        
         required = []
         
         try:
@@ -718,8 +692,7 @@ class DeviceSessionSynchronizer:
         return required
     
     def _is_content_type_supported(self, content_type: str, device: DeviceInfo) -> bool:
-        """Check if content type is supported on device"""
-        
+        """Check if content type is supported on device"""        
         support_matrix = {
             "audio": [DeviceCapability.AUDIO_RECORDING],
             "video": [DeviceCapability.VIDEO_RECORDING],
@@ -732,8 +705,7 @@ class DeviceSessionSynchronizer:
         return all(cap in device.capabilities for cap in required_capabilities)
     
     async def _prepare_handoff_data(self, session_id: str, from_device_id: str) -> Dict[str, Any]:
-        """Prepare data for session handoff"""
-        
+        """Prepare data for session handoff"""        
         try:
             session_state = self.session_states.get(session_id)
             device_session = await self._get_device_session(from_device_id)
@@ -762,8 +734,7 @@ class DeviceSessionSynchronizer:
         handoff_data: Dict[str, Any],
         reason: HandoffReason
     ) -> bool:
-        """Execute session handoff"""
-        
+        """Execute session handoff"""        
         try:
             # Send handoff data to target device
             handoff_message = {
@@ -806,8 +777,7 @@ class DeviceSessionSynchronizer:
         to_device_id: str,
         timeout: int
     ) -> bool:
-        """Wait for handoff confirmation from target device"""
-        
+        """Wait for handoff confirmation from target device"""        
         try:
             # This would typically wait for a WebSocket message or event
             # For now, we'll simulate a successful confirmation
@@ -819,8 +789,7 @@ class DeviceSessionSynchronizer:
             return False
     
     async def _complete_handoff(self, session_id: str, from_device_id: str, to_device_id: str):
-        """Complete session handoff process"""
-        
+        """Complete session handoff process"""        
         try:
             session_state = self.session_states.get(session_id)
             
@@ -847,8 +816,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Handoff completion failed: {str(e)}")
     
     async def _cleanup_loop(self):
-        """Background cleanup task"""
-        
+        """Background cleanup task"""        
         try:
             while True:
                 await asyncio.sleep(300)  # Run every 5 minutes
@@ -865,8 +833,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Cleanup loop error: {str(e)}")
     
     async def _cleanup_inactive_sessions(self):
-        """Clean up inactive session states"""
-        
+        """Clean up inactive session states"""        
         try:
             current_time = datetime.utcnow()
             inactive_sessions = []
@@ -887,8 +854,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Inactive session cleanup failed: {str(e)}")
     
     async def _cleanup_offline_devices(self):
-        """Clean up offline device registrations"""
-        
+        """Clean up offline device registrations"""        
         try:
             current_time = datetime.utcnow()
             offline_devices = []
@@ -909,8 +875,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Offline device cleanup failed: {str(e)}")
     
     async def _store_session_state(self, session_state: SessionState):
-        """Store session state in cache and database"""
-        
+        """Store session state in cache and database"""        
         # Store in memory
         self.session_states[session_state.session_id] = session_state
         
@@ -921,8 +886,7 @@ class DeviceSessionSynchronizer:
         asyncio.create_task(self._persist_session_state(session_state))
     
     async def _cache_session_state(self, session_state: SessionState):
-        """Cache session state in Redis"""
-        
+        """Cache session state in Redis"""        
         try:
             cache_key = f"cross_device_session:{session_state.session_id}"
             
@@ -940,8 +904,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Session state caching failed: {str(e)}")
     
     async def _persist_session_state(self, session_state: SessionState):
-        """Persist session state to database"""
-        
+        """Persist session state to database"""        
         try:
             async with get_async_session() as session:
                 # Update or create device session record
@@ -986,8 +949,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Session state persistence failed: {str(e)}")
     
     async def _cache_device_info(self, device_id: str, device_info: DeviceInfo):
-        """Cache device information"""
-        
+        """Cache device information"""        
         try:
             cache_key = f"device_info:{device_id}"
             await self.cache_manager.set(
@@ -1000,14 +962,12 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Device info caching failed: {str(e)}")
     
     async def _persist_device_info(self, user_id: str, device_info: DeviceInfo):
-        """Persist device information to database"""
-        
+        """Persist device information to database"""        
         # Implementation would store device info in user devices table
         pass
     
     async def _cache_device_session(self, device_id: str, device_session: DeviceSessionInfo):
-        """Cache device session information"""
-        
+        """Cache device session information"""        
         try:
             cache_key = f"device_session:{device_id}"
             await self.cache_manager.set(
@@ -1020,8 +980,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Device session caching failed: {str(e)}")
     
     async def _get_device_session(self, device_id: str) -> Optional[DeviceSessionInfo]:
-        """Get device session information"""
-        
+        """Get device session information"""        
         try:
             cache_key = f"device_session:{device_id}"
             cached_data = await self.cache_manager.get(cache_key)
@@ -1036,8 +995,7 @@ class DeviceSessionSynchronizer:
             return None
     
     async def _queue_offline_sync(self, device_id: str, operation: Dict[str, Any]):
-        """Queue operation for offline device sync"""
-        
+        """Queue operation for offline device sync"""        
         try:
             offline_queue_key = f"offline_sync:{device_id}"
             
@@ -1063,8 +1021,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Offline sync queueing failed: {str(e)}")
     
     async def _initialize_device_sync(self, session_id: str, device_id: str):
-        """Initialize sync for new device"""
-        
+        """Initialize sync for new device"""        
         try:
             session_state = self.session_states.get(session_id)
             
@@ -1088,8 +1045,7 @@ class DeviceSessionSynchronizer:
             self.logger.error(f"Device sync initialization failed: {str(e)}")
     
     async def _notify_device_joined(self, session_id: str, device_id: str):
-        """Notify other devices about new device joining"""
-        
+        """Notify other devices about new device joining"""        
         try:
             session_state = self.session_states.get(session_id)
             
@@ -1112,16 +1068,14 @@ class DeviceSessionSynchronizer:
 
 
 class MobileDesktopSessionSync:
-    """Specialized sync for mobile-desktop session continuity"""
-    
+    """Specialized sync for mobile-desktop session continuity"""    
     def __init__(self, config: CrossDeviceConfig):
         self.config = config
         self.synchronizer = DeviceSessionSynchronizer(config)
         self.logger = get_logger(self.__class__.__name__)
     
     async def optimize_mobile_sync(self, session_id: str, device_id: str) -> bool:
-        """Optimize sync for mobile devices (battery, network)"""
-        
+        """Optimize sync for mobile devices (battery, network)"""        
         try:
             device_info = self.synchronizer.device_registry.get(device_id)
             
@@ -1145,19 +1099,16 @@ class MobileDesktopSessionSync:
             return False
     
     async def _reduce_sync_frequency(self, session_id: str, device_id: str):
-        """Reduce sync frequency for battery optimization"""
-        # Implementation would adjust sync intervals
+        """Reduce sync frequency for battery optimization"""        # Implementation would adjust sync intervals
         pass
     
     async def _enable_aggressive_compression(self, session_id: str, device_id: str):
-        """Enable aggressive compression for cellular networks"""
-        # Implementation would enable compression
+        """Enable aggressive compression for cellular networks"""        # Implementation would enable compression
         pass
 
 
 class SessionContinuityManager:
-    """Manages session continuity across device switches"""
-    
+    """Manages session continuity across device switches"""    
     def __init__(self, config: CrossDeviceConfig):
         self.config = config
         self.synchronizer = DeviceSessionSynchronizer(config)
@@ -1165,8 +1116,7 @@ class SessionContinuityManager:
         self.logger = get_logger(self.__class__.__name__)
     
     async def ensure_continuity(self, session_id: str) -> bool:
-        """Ensure session continuity across all devices"""
-        
+        """Ensure session continuity across all devices"""        
         try:
             session_state = self.synchronizer.session_states.get(session_id)
             
@@ -1190,8 +1140,7 @@ class SessionContinuityManager:
             return False
     
     async def _check_sync_issues(self, session_id: str) -> List[Dict[str, Any]]:
-        """Check for synchronization issues"""
-        
+        """Check for synchronization issues"""        
         issues = []
         
         try:
@@ -1215,8 +1164,7 @@ class SessionContinuityManager:
         return issues
     
     async def _resolve_sync_issues(self, session_id: str, issues: List[Dict[str, Any]]):
-        """Resolve synchronization issues"""
-        
+        """Resolve synchronization issues"""        
         for issue in issues:
             try:
                 device_id = issue["device_id"]
@@ -1231,18 +1179,15 @@ class SessionContinuityManager:
                 self.logger.error(f"Sync issue resolution failed: {str(e)}")
     
     async def _resolve_sync_conflict(self, session_id: str, device_id: str):
-        """Resolve sync conflict for device"""
-        # Implementation would resolve conflicts based on strategy
+        """Resolve sync conflict for device"""        # Implementation would resolve conflicts based on strategy
         pass
     
     async def _retry_failed_sync(self, session_id: str, device_id: str):
-        """Retry failed sync for device"""
-        # Implementation would retry sync operations
+        """Retry failed sync for device"""        # Implementation would retry sync operations
         pass
     
     async def _validate_state_consistency(self, session_id: str) -> bool:
-        """Validate state consistency across devices"""
-        
+        """Validate state consistency across devices"""        
         try:
             session_state = self.synchronizer.session_states.get(session_id)
             
@@ -1270,8 +1215,7 @@ class SessionContinuityManager:
 
 
 class CrossDeviceSessionBridge:
-    """Main cross-device session bridge controller"""
-    
+    """Main cross-device session bridge controller"""    
     def __init__(self, config: Optional[CrossDeviceConfig] = None):
         self.config = config or CrossDeviceConfig()
         self.synchronizer = DeviceSessionSynchronizer(self.config)
@@ -1280,14 +1224,12 @@ class CrossDeviceSessionBridge:
         self.logger = get_logger(self.__class__.__name__)
     
     async def initialize(self):
-        """Initialize cross-device session bridge"""
-        
+        """Initialize cross-device session bridge"""        
         await self.synchronizer.start_synchronization()
         self.logger.info("Cross-device session bridge initialized")
     
     async def shutdown(self):
-        """Shutdown cross-device session bridge"""
-        
+        """Shutdown cross-device session bridge"""        
         await self.synchronizer.stop_synchronization()
         self.logger.info("Cross-device session bridge shutdown")
     
@@ -1308,19 +1250,16 @@ class CrossDeviceSessionBridge:
         return await self.continuity_manager.ensure_continuity(session_id)
     
     async def get_session_devices(self, session_id: str) -> List[str]:
-        """Get list of devices active in session"""
-        
+        """Get list of devices active in session"""        
         session_state = self.synchronizer.session_states.get(session_id)
         return list(session_state.active_devices) if session_state else []
     
     async def get_device_info(self, device_id: str) -> Optional[DeviceInfo]:
-        """Get device information"""
-        
+        """Get device information"""        
         return self.synchronizer.device_registry.get(device_id)
     
     async def get_bridge_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive bridge statistics"""
-        
+        """Get comprehensive bridge statistics"""        
         try:
             return {
                 "active_sessions": len(self.synchronizer.session_states),

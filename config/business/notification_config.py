@@ -1,5 +1,4 @@
-"""
-Notification Configuration Module
+"""Notification Configuration Module
 =================================
 
 Enterprise notification system configuration for multi-channel communication.
@@ -14,7 +13,6 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
-
 from enum import Enum
 from typing import Dict, List, Optional, Set, Union, Any
 from dataclasses import dataclass
@@ -22,8 +20,7 @@ from datetime import datetime, timedelta
 
 
 class NotificationType(str, Enum):
-    """Types of notifications in the system."""
-    # Content-related notifications
+    """Types of notifications in the system."""    # Content-related notifications
     CONTENT_UPLOADED = "content_uploaded"
     CONTENT_PROCESSED = "content_processed"
     CONTENT_PUBLISHED = "content_published"
@@ -72,8 +69,7 @@ class NotificationType(str, Enum):
 
 
 class NotificationChannel(str, Enum):
-    """Available notification delivery channels."""
-    EMAIL = "email"
+    """Available notification delivery channels."""    EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
     IN_APP = "in_app"
@@ -85,8 +81,7 @@ class NotificationChannel(str, Enum):
 
 
 class NotificationPriority(str, Enum):
-    """Priority levels for notifications."""
-    CRITICAL = "critical"
+    """Priority levels for notifications."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -94,8 +89,7 @@ class NotificationPriority(str, Enum):
 
 
 class NotificationFrequency(str, Enum):
-    """Frequency settings for recurring notifications."""
-    IMMEDIATE = "immediate"
+    """Frequency settings for recurring notifications."""    IMMEDIATE = "immediate"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -105,8 +99,7 @@ class NotificationFrequency(str, Enum):
 
 @dataclass
 class NotificationTemplate:
-    """Template definition for notifications."""
-    subject: str
+    """Template definition for notifications."""    subject: str
     body_text: str
     body_html: Optional[str] = None
     variables: List[str] = None
@@ -115,8 +108,7 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationRule:
-    """Business rule for notification triggering."""
-    notification_type: NotificationType
+    """Business rule for notification triggering."""    notification_type: NotificationType
     trigger_conditions: Dict[str, Any]
     channels: List[NotificationChannel]
     priority: NotificationPriority
@@ -130,7 +122,6 @@ class NotificationRule:
 
 class NotificationConfig:
     """Enterprise notification system configuration."""
-
     # Notification type configurations
     NOTIFICATION_CONFIGS = {
         NotificationType.CONTENT_UPLOADED: {
@@ -351,8 +342,7 @@ class NotificationConfig:
     TEMPLATES = {
         "content_upload_success": NotificationTemplate(
             subject="Content Upload Successful - {content_title}",
-            body_text="""
-            Hi {user_name},
+            body_text="""            Hi {user_name},
 
             Your content "{content_title}" has been successfully uploaded to IA-Influencer Agent.
 
@@ -373,8 +363,7 @@ class NotificationConfig:
         ),
         "protection_violation_alert": NotificationTemplate(
             subject="URGENT: Copyright Protection Violation Detected",
-            body_text="""
-            Hi {user_name},
+            body_text="""            Hi {user_name},
 
             We've detected a potential copyright violation of your protected content:
 
@@ -398,8 +387,7 @@ class NotificationConfig:
         ),
         "collaboration_invite": NotificationTemplate(
             subject="Collaboration Invitation from {inviter_name}",
-            body_text="""
-            Hi {recipient_name},
+            body_text="""            Hi {recipient_name},
 
             You've received a collaboration invitation!
 
@@ -470,24 +458,20 @@ class NotificationConfig:
 
     @classmethod
     def get_notification_config(cls, notification_type: NotificationType) -> Dict[str, Any]:
-        """Get configuration for specific notification type."""
-        return cls.NOTIFICATION_CONFIGS.get(notification_type, {})
+        """Get configuration for specific notification type."""        return cls.NOTIFICATION_CONFIGS.get(notification_type, {})
 
     @classmethod
     def get_channel_config(cls, channel: NotificationChannel) -> Dict[str, Any]:
-        """Get configuration for specific notification channel."""
-        return cls.CHANNEL_CONFIGS.get(channel, {})
+        """Get configuration for specific notification channel."""        return cls.CHANNEL_CONFIGS.get(channel, {})
 
     @classmethod
     def get_user_preferences(cls, user_role: str) -> Dict[str, Any]:
-        """Get default notification preferences for user role."""
-        return cls.USER_PREFERENCE_TEMPLATES.get(user_role, cls.USER_PREFERENCE_TEMPLATES["creator_standard"])
+        """Get default notification preferences for user role."""        return cls.USER_PREFERENCE_TEMPLATES.get(user_role, cls.USER_PREFERENCE_TEMPLATES["creator_standard"])
 
     @classmethod
     def should_send_notification(cls, notification_type: NotificationType, user_id: str, 
                                current_time: datetime, last_sent: Optional[datetime] = None) -> bool:
-        """Determine if notification should be sent based on business rules."""
-        config = cls.get_notification_config(notification_type)
+        """Determine if notification should be sent based on business rules."""        config = cls.get_notification_config(notification_type)
         rules = cls.BUSINESS_RULES["rate_limiting"]
         
         # Check cooldown period
@@ -510,14 +494,12 @@ class NotificationConfig:
 
     @classmethod
     def get_template(cls, template_key: str) -> Optional[NotificationTemplate]:
-        """Get notification template by key."""
-        return cls.TEMPLATES.get(template_key)
+        """Get notification template by key."""        return cls.TEMPLATES.get(template_key)
 
     @classmethod
     def validate_notification_channels(cls, channels: List[NotificationChannel], 
                                      user_preferences: Dict[str, Any]) -> List[NotificationChannel]:
-        """Validate and filter notification channels based on user preferences."""
-        valid_channels = []
+        """Validate and filter notification channels based on user preferences."""        valid_channels = []
         
         for channel in channels:
             # Check if channel is available
@@ -533,8 +515,7 @@ class NotificationConfig:
     @classmethod
     def calculate_notification_priority(cls, notification_type: NotificationType, 
                                       context: Dict[str, Any]) -> NotificationPriority:
-        """Calculate dynamic notification priority based on context."""
-        base_priority = cls.NOTIFICATION_CONFIGS.get(notification_type, {}).get("priority", NotificationPriority.MEDIUM)
+        """Calculate dynamic notification priority based on context."""        base_priority = cls.NOTIFICATION_CONFIGS.get(notification_type, {}).get("priority", NotificationPriority.MEDIUM)
         
         # Upgrade priority based on context
         if context.get("security_threat", False):

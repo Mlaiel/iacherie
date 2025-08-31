@@ -1,5 +1,4 @@
-"""
-Lifecycle Orchestrator Module - Content Lifecycle Management System
+"""Lifecycle Orchestrator Module - Content Lifecycle Management System
 
 Enterprise-grade lifecycle orchestration for content management
 providing automated state transitions, workflow execution, and optimization.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentLifecycleState(Enum):
-    """Content lifecycle states"""
-    DRAFT = "draft"
+    """Content lifecycle states"""    DRAFT = "draft"
     IN_REVIEW = "in_review"
     APPROVED = "approved"
     SCHEDULED = "scheduled"
@@ -47,8 +44,7 @@ class ContentLifecycleState(Enum):
 
 
 class WorkflowType(Enum):
-    """Workflow types for content lifecycle"""
-    CREATION = "creation"
+    """Workflow types for content lifecycle"""    CREATION = "creation"
     REVIEW = "review"
     APPROVAL = "approval"
     PUBLISHING = "publishing"
@@ -59,8 +55,7 @@ class WorkflowType(Enum):
 
 
 class AutomationTrigger(Enum):
-    """Automation trigger types"""
-    TIME_BASED = "time_based"
+    """Automation trigger types"""    TIME_BASED = "time_based"
     PERFORMANCE_BASED = "performance_based"
     EVENT_BASED = "event_based"
     METRIC_THRESHOLD = "metric_threshold"
@@ -70,8 +65,7 @@ class AutomationTrigger(Enum):
 
 @dataclass
 class LifecycleEvent:
-    """Lifecycle event structure"""
-    event_id: str
+    """Lifecycle event structure"""    event_id: str
     content_id: str
     event_type: str
     from_state: ContentLifecycleState
@@ -86,8 +80,7 @@ class LifecycleEvent:
 
 @dataclass
 class WorkflowDefinition:
-    """Workflow definition structure"""
-    workflow_id: str
+    """Workflow definition structure"""    workflow_id: str
     name: str
     description: str
     workflow_type: WorkflowType
@@ -104,8 +97,7 @@ class WorkflowDefinition:
 
 @dataclass
 class LifecycleMetrics:
-    """Lifecycle performance metrics"""
-    content_id: str
+    """Lifecycle performance metrics"""    content_id: str
     current_state: ContentLifecycleState
     time_in_current_state: timedelta
     total_lifecycle_duration: timedelta
@@ -119,8 +111,7 @@ class LifecycleMetrics:
 
 
 class LifecycleOrchestrator:
-    """
-    Enterprise-grade content lifecycle orchestrator
+    """    Enterprise-grade content lifecycle orchestrator
     
     Features:
     - Automated state transitions
@@ -131,8 +122,7 @@ class LifecycleOrchestrator:
     - Event-driven architecture
     - Rollback and recovery
     - Audit trail maintenance
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.event_emitter = EventEmitter()
@@ -144,8 +134,7 @@ class LifecycleOrchestrator:
         self._initialize_state_handlers()
         
     async def initialize(self):
-        """Initialize the lifecycle orchestrator"""
-        try:
+        """Initialize the lifecycle orchestrator"""        try:
             # Load active workflows
             await self._load_active_workflows()
             
@@ -169,8 +158,7 @@ class LifecycleOrchestrator:
         user_id: Optional[str] = None,
         force: bool = False
     ) -> LifecycleEvent:
-        """
-        Transition content to a new lifecycle state
+        """        Transition content to a new lifecycle state
         
         Args:
             content_id: Content identifier
@@ -181,8 +169,7 @@ class LifecycleOrchestrator:
             
         Returns:
             LifecycleEvent: Details of the state transition
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Get current content state
                 current_state = await self._get_current_content_state(session, content_id)
@@ -244,8 +231,7 @@ class LifecycleOrchestrator:
         content_id: str,
         parameters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Execute a predefined workflow for content
+        """        Execute a predefined workflow for content
         
         Args:
             workflow_id: Workflow identifier
@@ -254,8 +240,7 @@ class LifecycleOrchestrator:
             
         Returns:
             Dict containing workflow execution results
-        """
-        try:
+        """        try:
             # Get workflow definition
             workflow = await self._get_workflow_definition(workflow_id)
             
@@ -303,8 +288,7 @@ class LifecycleOrchestrator:
         rule_definition: Dict[str, Any],
         user_id: str
     ) -> str:
-        """
-        Create a new automation rule
+        """        Create a new automation rule
         
         Args:
             rule_definition: Rule definition structure
@@ -312,8 +296,7 @@ class LifecycleOrchestrator:
             
         Returns:
             str: Rule identifier
-        """
-        try:
+        """        try:
             # Validate rule definition
             await self._validate_rule_definition(rule_definition)
             
@@ -346,8 +329,7 @@ class LifecycleOrchestrator:
         content_ids: Optional[List[str]] = None,
         period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """
-        Analyze lifecycle performance metrics
+        """        Analyze lifecycle performance metrics
         
         Args:
             content_ids: Specific content to analyze
@@ -355,8 +337,7 @@ class LifecycleOrchestrator:
             
         Returns:
             Dict containing performance analysis
-        """
-        try:
+        """        try:
             async with get_db_session() as session:
                 # Get lifecycle data
                 lifecycle_data = await self._fetch_lifecycle_data(
@@ -395,8 +376,7 @@ class LifecycleOrchestrator:
         content_type: Optional[str] = None,
         performance_threshold: float = 0.8
     ) -> List[Dict[str, Any]]:
-        """
-        Optimize lifecycle automation rules and workflows
+        """        Optimize lifecycle automation rules and workflows
         
         Args:
             content_type: Specific content type to optimize
@@ -404,8 +384,7 @@ class LifecycleOrchestrator:
             
         Returns:
             List of optimization recommendations
-        """
-        try:
+        """        try:
             # Analyze current automation performance
             performance_data = await self._analyze_automation_performance(content_type)
             
@@ -439,8 +418,7 @@ class LifecycleOrchestrator:
     
     # Private helper methods
     def _initialize_state_handlers(self):
-        """Initialize state-specific handlers"""
-        self.state_handlers = {
+        """Initialize state-specific handlers"""        self.state_handlers = {
             ContentLifecycleState.DRAFT: self._handle_draft_state,
             ContentLifecycleState.IN_REVIEW: self._handle_review_state,
             ContentLifecycleState.APPROVED: self._handle_approved_state,
@@ -452,18 +430,15 @@ class LifecycleOrchestrator:
         }
     
     async def _load_active_workflows(self):
-        """Load active workflow definitions"""
-        # Implementation for loading workflows
+        """Load active workflow definitions"""        # Implementation for loading workflows
         pass
     
     async def _load_automation_rules(self):
-        """Load automation rules"""
-        # Implementation for loading rules
+        """Load automation rules"""        # Implementation for loading rules
         pass
     
     async def _setup_event_listeners(self):
-        """Setup event listeners"""
-        # Implementation for event listeners
+        """Setup event listeners"""        # Implementation for event listeners
         pass
     
     async def _get_current_content_state(
@@ -471,8 +446,7 @@ class LifecycleOrchestrator:
         session: AsyncSession,
         content_id: str
     ) -> ContentLifecycleState:
-        """Get current content lifecycle state"""
-        # Implementation for getting current state
+        """Get current content lifecycle state"""        # Implementation for getting current state
         pass
     
     async def _validate_state_transition(
@@ -481,60 +455,49 @@ class LifecycleOrchestrator:
         target_state: ContentLifecycleState,
         content_id: str
     ):
-        """Validate if state transition is allowed"""
-        # Implementation for transition validation
+        """Validate if state transition is allowed"""        # Implementation for transition validation
         pass
     
     # State handler methods
     async def _handle_draft_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle draft state operations"""
-        # Implementation for draft state handling
+        """Handle draft state operations"""        # Implementation for draft state handling
         pass
     
     async def _handle_review_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle review state operations"""
-        # Implementation for review state handling
+        """Handle review state operations"""        # Implementation for review state handling
         pass
     
     async def _handle_approved_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle approved state operations"""
-        # Implementation for approved state handling
+        """Handle approved state operations"""        # Implementation for approved state handling
         pass
     
     async def _handle_scheduled_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle scheduled state operations"""
-        # Implementation for scheduled state handling
+        """Handle scheduled state operations"""        # Implementation for scheduled state handling
         pass
     
     async def _handle_published_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle published state operations"""
-        # Implementation for published state handling
+        """Handle published state operations"""        # Implementation for published state handling
         pass
     
     async def _handle_promoted_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle promoted state operations"""
-        # Implementation for promoted state handling
+        """Handle promoted state operations"""        # Implementation for promoted state handling
         pass
     
     async def _handle_optimized_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle optimized state operations"""
-        # Implementation for optimized state handling
+        """Handle optimized state operations"""        # Implementation for optimized state handling
         pass
     
     async def _handle_archived_state(self, content_id: str, event_data: Dict[str, Any]):
-        """Handle archived state operations"""
-        # Implementation for archived state handling
+        """Handle archived state operations"""        # Implementation for archived state handling
         pass
 
 
 # Lifecycle Orchestrator Factory
 class LifecycleOrchestratorFactory:
-    """Factory for creating lifecycle orchestrator instances"""
-    
+    """Factory for creating lifecycle orchestrator instances"""    
     @staticmethod
     async def create_orchestrator() -> LifecycleOrchestrator:
-        """Create and initialize a new lifecycle orchestrator"""
-        orchestrator = LifecycleOrchestrator()
+        """Create and initialize a new lifecycle orchestrator"""        orchestrator = LifecycleOrchestrator()
         await orchestrator.initialize()
         return orchestrator
 

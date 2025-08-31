@@ -1,5 +1,4 @@
-"""
-Database integration layer for audio fingerprinting system.
+"""Database integration layer for audio fingerprinting system.
 Professional database operations with advanced indexing and performance optimization.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ WARNING: This code is proprietary and protected by copyright.
 Any unauthorized use, reproduction, or distribution is strictly prohibited.
 Contact: Fahed Mlaiel (mlaiel@live.de) for licensing agreements.
 """
-
 import asyncio
 import asyncpg
 import numpy as np
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FingerprintRecord:
-    """Database record for audio fingerprints."""
-    
+    """Database record for audio fingerprints."""    
     id: Optional[int] = None
     user_id: int = None
     content_type: str = "audio"
@@ -58,8 +55,7 @@ class FingerprintRecord:
 
 @dataclass
 class MatchRecord:
-    """Database record for fingerprint matches."""
-    
+    """Database record for fingerprint matches."""    
     id: Optional[int] = None
     query_fingerprint_id: int = None
     matched_fingerprint_id: int = None
@@ -75,8 +71,7 @@ class MatchRecord:
 
 @dataclass
 class QueryPerformanceRecord:
-    """Database record for query performance tracking."""
-    
+    """Database record for query performance tracking."""    
     id: Optional[int] = None
     query_type: str = None
     execution_time_ms: float = None
@@ -88,14 +83,11 @@ class QueryPerformanceRecord:
 
 
 class FingerprintDatabaseManager:
-    """
-    Advanced database manager for audio fingerprint storage and retrieval.
+    """    Advanced database manager for audio fingerprint storage and retrieval.
     Handles PostgreSQL operations with vector indexing for efficient matching.
-    """
-    
+    """    
     def __init__(self, database_url: str, config: Optional[Dict] = None):
-        """Initialize the database manager."""
-        self.database_url = database_url
+        """Initialize the database manager."""        self.database_url = database_url
         self.config = config or self._default_config()
         
         # Database connection management
@@ -114,8 +106,7 @@ class FingerprintDatabaseManager:
         logger.info("FingerprintDatabaseManager initialized")
     
     def _default_config(self) -> Dict:
-        """Default configuration for database operations."""
-        return {
+        """Default configuration for database operations."""        return {
             'pool_size': 20,
             'max_overflow': 30,
             'pool_timeout': 30,
@@ -129,8 +120,7 @@ class FingerprintDatabaseManager:
         }
     
     async def initialize(self):
-        """Initialize database connections and create tables if needed."""
-        try:
+        """Initialize database connections and create tables if needed."""        try:
             # Create async engine
             self.engine = create_async_engine(
                 self.database_url,
@@ -161,9 +151,7 @@ class FingerprintDatabaseManager:
             raise
     
     async def _initialize_schema(self):
-        """Create database tables and extensions."""
-        schema_sql = """
-        -- Enable required extensions
+        """Create database tables and extensions."""        schema_sql = """        -- Enable required extensions
         CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
         CREATE EXTENSION IF NOT EXISTS "pg_trgm";
         
@@ -227,8 +215,7 @@ class FingerprintDatabaseManager:
             storage_used_bytes BIGINT DEFAULT 0,
             UNIQUE(user_id)
         );
-        """
-        
+        """        
         async with self.engine.begin() as conn:
             await conn.execute(text(schema_sql))
             await conn.commit()
@@ -236,9 +223,7 @@ class FingerprintDatabaseManager:
         logger.info("Database schema initialized")
     
     async def _create_indexes(self):
-        """Create performance indexes."""
-        indexes_sql = """
-        -- Performance indexes
+        """Create performance indexes."""        indexes_sql = """        -- Performance indexes
         CREATE INDEX IF NOT EXISTS idx_fingerprints_hash ON audio_fingerprints(fingerprint_hash);
         CREATE INDEX IF NOT EXISTS idx_fingerprints_user ON audio_fingerprints(user_id);
         CREATE INDEX IF NOT EXISTS idx_fingerprints_content_type ON audio_fingerprints(content_type);
@@ -260,8 +245,7 @@ class FingerprintDatabaseManager:
         -- Performance tracking indexes
         CREATE INDEX IF NOT EXISTS idx_performance_type ON query_performance(query_type);
         CREATE INDEX IF NOT EXISTS idx_performance_timestamp ON query_performance(timestamp);
-        """
-        
+        """        
         async with self.engine.begin() as conn:
             await conn.execute(text(indexes_sql))
             await conn.commit()
@@ -270,8 +254,7 @@ class FingerprintDatabaseManager:
     
     @asynccontextmanager
     async def get_session(self):
-        """Get an async database session with proper error handling."""
-        session = self.session_factory()
+        """Get an async database session with proper error handling."""        session = self.session_factory()
         try:
             yield session
             await session.commit()
@@ -283,16 +266,14 @@ class FingerprintDatabaseManager:
             await session.close()
     
     async def store_fingerprint(self, fingerprint_record: FingerprintRecord) -> int:
-        """
-        Store a new fingerprint record in the database.
+        """        Store a new fingerprint record in the database.
         
         Args:
             fingerprint_record: FingerprintRecord to store
             
         Returns:
             ID of the stored record
-        """
-        try:
+        """        try:
             # Serialize spectral features if present
             spectral_data = None
             if fingerprint_record.spectral_features is not None:
@@ -305,8 +286,7 @@ class FingerprintDatabaseManager:
             
             async with self.get_session() as session:
                 # Insert record
-                stmt = """
-                INSERT INTO audio_fingerprints (
+                stmt = """                INSERT INTO audio_fingerprints (
                     user_id, content_type, original_filename, fingerprint_hash,
                     chromaprint_data, spectral_features, perceptual_hash, metadata,
                     file_size_bytes, duration_seconds, sample_rate, channels, bit_rate,
@@ -317,8 +297,7 @@ class FingerprintDatabaseManager:
                     :file_size_bytes, :duration_seconds, :sample_rate, :channels, :bit_rate,
                     :format_info, :creation_timestamp, :last_modified, :is_active, :protection_level
                 ) RETURNING id
-                """
-                
+                """                
                 result = await session.execute(text(stmt), {
                     'user_id': fingerprint_record.user_id,
                     'content_type': fingerprint_record.content_type,
@@ -353,21 +332,17 @@ class FingerprintDatabaseManager:
             raise
     
     async def get_fingerprint(self, fingerprint_id: int) -> Optional[FingerprintRecord]:
-        """
-        Retrieve a fingerprint record by ID.
+        """        Retrieve a fingerprint record by ID.
         
         Args:
             fingerprint_id: ID of the fingerprint record
             
         Returns:
             FingerprintRecord or None if not found
-        """
-        try:
+        """        try:
             async with self.get_session() as session:
-                stmt = """
-                SELECT * FROM audio_fingerprints WHERE id = :id AND is_active = TRUE
-                """
-                
+                stmt = """                SELECT * FROM audio_fingerprints WHERE id = :id AND is_active = TRUE
+                """                
                 result = await session.execute(text(stmt), {'id': fingerprint_id})
                 row = result.fetchone()
                 
@@ -388,8 +363,7 @@ class FingerprintDatabaseManager:
         user_id: Optional[int] = None,
         content_type: Optional[str] = None
     ) -> List[FingerprintRecord]:
-        """
-        Find fingerprints similar to the query hash.
+        """        Find fingerprints similar to the query hash.
         
         Args:
             query_hash: Hash to match against
@@ -400,8 +374,7 @@ class FingerprintDatabaseManager:
             
         Returns:
             List of similar FingerprintRecord objects
-        """
-        try:
+        """        try:
             # Build dynamic query
             conditions = ["is_active = TRUE"]
             params = {'query_hash': query_hash, 'limit': limit}
@@ -418,13 +391,11 @@ class FingerprintDatabaseManager:
             
             # For now, using simple hash matching
             # In production, would use vector similarity functions
-            stmt = f"""
-            SELECT * FROM audio_fingerprints 
+            stmt = f"""            SELECT * FROM audio_fingerprints 
             WHERE {where_clause}
             ORDER BY creation_timestamp DESC
             LIMIT :limit
-            """
-            
+            """            
             async with self.get_session() as session:
                 result = await session.execute(text(stmt), params)
                 rows = result.fetchall()
@@ -439,21 +410,18 @@ class FingerprintDatabaseManager:
             return []
     
     async def store_match(self, match_record: MatchRecord) -> int:
-        """
-        Store a fingerprint match record.
+        """        Store a fingerprint match record.
         
         Args:
             match_record: MatchRecord to store
             
         Returns:
             ID of the stored match record
-        """
-        try:
+        """        try:
             match_record.detection_timestamp = datetime.now(timezone.utc)
             
             async with self.get_session() as session:
-                stmt = """
-                INSERT INTO fingerprint_matches (
+                stmt = """                INSERT INTO fingerprint_matches (
                     query_fingerprint_id, matched_fingerprint_id, similarity_score,
                     match_algorithm, confidence_score, false_positive_probability,
                     match_metadata, detection_timestamp, is_verified, verification_method
@@ -462,8 +430,7 @@ class FingerprintDatabaseManager:
                     :match_algorithm, :confidence_score, :false_positive_probability,
                     :match_metadata, :detection_timestamp, :is_verified, :verification_method
                 ) RETURNING id
-                """
-                
+                """                
                 result = await session.execute(text(stmt), {
                     'query_fingerprint_id': match_record.query_fingerprint_id,
                     'matched_fingerprint_id': match_record.matched_fingerprint_id,
@@ -492,8 +459,7 @@ class FingerprintDatabaseManager:
         limit: int = 100, 
         offset: int = 0
     ) -> List[FingerprintRecord]:
-        """
-        Get all fingerprints for a specific user.
+        """        Get all fingerprints for a specific user.
         
         Args:
             user_id: User ID to filter by
@@ -502,16 +468,13 @@ class FingerprintDatabaseManager:
             
         Returns:
             List of FingerprintRecord objects
-        """
-        try:
+        """        try:
             async with self.get_session() as session:
-                stmt = """
-                SELECT * FROM audio_fingerprints 
+                stmt = """                SELECT * FROM audio_fingerprints 
                 WHERE user_id = :user_id AND is_active = TRUE
                 ORDER BY creation_timestamp DESC
                 LIMIT :limit OFFSET :offset
-                """
-                
+                """                
                 result = await session.execute(text(stmt), {
                     'user_id': user_id,
                     'limit': limit,
@@ -529,14 +492,12 @@ class FingerprintDatabaseManager:
             return []
     
     async def delete_fingerprint(self, fingerprint_id: int, user_id: Optional[int] = None):
-        """
-        Soft delete a fingerprint record.
+        """        Soft delete a fingerprint record.
         
         Args:
             fingerprint_id: ID of the fingerprint to delete
             user_id: Optional user ID for authorization
-        """
-        try:
+        """        try:
             async with self.get_session() as session:
                 conditions = ["id = :fingerprint_id"]
                 params = {'fingerprint_id': fingerprint_id}
@@ -547,12 +508,10 @@ class FingerprintDatabaseManager:
                 
                 where_clause = " AND ".join(conditions)
                 
-                stmt = f"""
-                UPDATE audio_fingerprints 
+                stmt = f"""                UPDATE audio_fingerprints 
                 SET is_active = FALSE, last_modified = NOW()
                 WHERE {where_clause}
-                """
-                
+                """                
                 result = await session.execute(text(stmt), params)
                 
                 if result.rowcount > 0:
@@ -569,8 +528,7 @@ class FingerprintDatabaseManager:
         fingerprint_id: int, 
         limit: int = 50
     ) -> List[MatchRecord]:
-        """
-        Get match history for a specific fingerprint.
+        """        Get match history for a specific fingerprint.
         
         Args:
             fingerprint_id: ID of the fingerprint
@@ -578,16 +536,13 @@ class FingerprintDatabaseManager:
             
         Returns:
             List of MatchRecord objects
-        """
-        try:
+        """        try:
             async with self.get_session() as session:
-                stmt = """
-                SELECT * FROM fingerprint_matches 
+                stmt = """                SELECT * FROM fingerprint_matches 
                 WHERE query_fingerprint_id = :fingerprint_id OR matched_fingerprint_id = :fingerprint_id
                 ORDER BY detection_timestamp DESC
                 LIMIT :limit
-                """
-                
+                """                
                 result = await session.execute(text(stmt), {
                     'fingerprint_id': fingerprint_id,
                     'limit': limit
@@ -620,8 +575,7 @@ class FingerprintDatabaseManager:
             return []
     
     def _serialize_features(self, features: np.ndarray) -> bytes:
-        """Serialize numpy array features for database storage."""
-        try:
+        """Serialize numpy array features for database storage."""        try:
             # Pickle and compress the features
             pickled = pickle.dumps(features)
             compressed = zlib.compress(pickled, self.config['compression_level'])
@@ -631,8 +585,7 @@ class FingerprintDatabaseManager:
             return b''
     
     def _deserialize_features(self, data: bytes) -> Optional[np.ndarray]:
-        """Deserialize features from database."""
-        try:
+        """Deserialize features from database."""        try:
             if not data:
                 return None
             
@@ -645,8 +598,7 @@ class FingerprintDatabaseManager:
             return None
     
     def _row_to_fingerprint_record(self, row) -> FingerprintRecord:
-        """Convert database row to FingerprintRecord."""
-        return FingerprintRecord(
+        """Convert database row to FingerprintRecord."""        return FingerprintRecord(
             id=row.id,
             user_id=row.user_id,
             content_type=row.content_type,
@@ -669,27 +621,22 @@ class FingerprintDatabaseManager:
         )
     
     async def _update_user_stats(self, session: AsyncSession, user_id: int, action: str):
-        """Update user content statistics."""
-        try:
+        """Update user content statistics."""        try:
             if action == 'fingerprint_added':
-                stmt = """
-                INSERT INTO user_content_stats (user_id, total_fingerprints, last_activity)
+                stmt = """                INSERT INTO user_content_stats (user_id, total_fingerprints, last_activity)
                 VALUES (:user_id, 1, NOW())
                 ON CONFLICT (user_id) 
                 DO UPDATE SET 
                     total_fingerprints = user_content_stats.total_fingerprints + 1,
                     last_activity = NOW()
-                """
-            elif action == 'match_found':
-                stmt = """
-                INSERT INTO user_content_stats (user_id, total_matches_found, last_activity)
+                """            elif action == 'match_found':
+                stmt = """                INSERT INTO user_content_stats (user_id, total_matches_found, last_activity)
                 VALUES (:user_id, 1, NOW())
                 ON CONFLICT (user_id) 
                 DO UPDATE SET 
                     total_matches_found = user_content_stats.total_matches_found + 1,
                     last_activity = NOW()
-                """
-            else:
+                """            else:
                 return
             
             await session.execute(text(stmt), {'user_id': user_id})
@@ -698,8 +645,7 @@ class FingerprintDatabaseManager:
             logger.warning("Error updating user stats: %s", str(e))
     
     async def cleanup(self):
-        """Cleanup database connections."""
-        try:
+        """Cleanup database connections."""        try:
             if self.engine:
                 await self.engine.dispose()
             

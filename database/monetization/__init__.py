@@ -24,8 +24,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
-"""
-# Revenue tracking and analytics
+"""# Revenue tracking and analytics
 from .revenue_models import *
 from .revenue_analytics import *
 from .revenue_aggregation import *

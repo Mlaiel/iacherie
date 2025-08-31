@@ -1,5 +1,4 @@
-"""
-Fraud Detection System
+"""Fraud Detection System
 
 Système avancé de détection et prévention des fraudes financières
 pour la plateforme IA Influencer Agent avec intelligence artificielle.
@@ -13,7 +12,6 @@ Ce code et concept sont la propriété exclusive de Fahed Mlaiel (mlaiel@live.de
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Violation = Poursuites judiciaires selon le droit allemand et international.
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -44,8 +42,7 @@ Base = declarative_base()
 
 
 class FraudType(Enum):
-    """Types de fraudes détectées"""
-    FAKE_STREAMS = "fake_streams"
+    """Types de fraudes détectées"""    FAKE_STREAMS = "fake_streams"
     BOT_TRAFFIC = "bot_traffic"
     CLICK_FRAUD = "click_fraud"
     REVENUE_MANIPULATION = "revenue_manipulation"
@@ -60,16 +57,14 @@ class FraudType(Enum):
 
 
 class FraudSeverity(Enum):
-    """Niveaux de sévérité des fraudes"""
-    LOW = "low"
+    """Niveaux de sévérité des fraudes"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class FraudStatus(Enum):
-    """Status des incidents de fraude"""
-    DETECTED = "detected"
+    """Status des incidents de fraude"""    DETECTED = "detected"
     INVESTIGATING = "investigating"
     CONFIRMED = "confirmed"
     FALSE_POSITIVE = "false_positive"
@@ -78,8 +73,7 @@ class FraudStatus(Enum):
 
 
 class ActionTaken(Enum):
-    """Actions prises contre les fraudes"""
-    MONITORING = "monitoring"
+    """Actions prises contre les fraudes"""    MONITORING = "monitoring"
     WARNING_ISSUED = "warning_issued"
     ACCOUNT_SUSPENDED = "account_suspended"
     REVENUE_FROZEN = "revenue_frozen"
@@ -90,10 +84,8 @@ class ActionTaken(Enum):
 
 @dataclass
 class FraudDetectionRuleModel(BaseModel, TimestampMixin):
-    """
-    Modèle des règles de détection de fraude
-    """
-    __tablename__ = "fraud_detection_rules"
+    """    Modèle des règles de détection de fraude
+    """    __tablename__ = "fraud_detection_rules"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     rule_name = Column(String(255), nullable=False, index=True)
@@ -129,10 +121,8 @@ class FraudDetectionRuleModel(BaseModel, TimestampMixin):
 
 @dataclass
 class FraudIncidentModel(BaseModel, TimestampMixin):
-    """
-    Modèle des incidents de fraude détectés
-    """
-    __tablename__ = "fraud_incidents"
+    """    Modèle des incidents de fraude détectés
+    """    __tablename__ = "fraud_incidents"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     incident_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -184,10 +174,8 @@ class FraudIncidentModel(BaseModel, TimestampMixin):
 
 @dataclass
 class FraudAnalyticsModel(BaseModel, TimestampMixin):
-    """
-    Modèle d'analyse des fraudes
-    """
-    __tablename__ = "fraud_analytics"
+    """    Modèle d'analyse des fraudes
+    """    __tablename__ = "fraud_analytics"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     analysis_id = Column(String(255), unique=True, nullable=False, index=True)
@@ -228,10 +216,8 @@ class FraudAnalyticsModel(BaseModel, TimestampMixin):
 
 
 class FraudDetectionEngine:
-    """
-    Moteur principal de détection des fraudes par IA
-    """
-    
+    """    Moteur principal de détection des fraudes par IA
+    """    
     def __init__(self, db_session: Session, cache_manager: CacheManager):
         self.db_session = db_session
         self.cache_manager = cache_manager
@@ -249,10 +235,8 @@ class FraudDetectionEngine:
         user_id: uuid.UUID,
         real_time: bool = True
     ) -> List[FraudIncidentModel]:
-        """
-        Analyse complète d'un enregistrement de revenus pour détecter les fraudes
-        """
-        try:
+        """        Analyse complète d'un enregistrement de revenus pour détecter les fraudes
+        """        try:
             # Récupération des données
             revenue_record = await self._get_revenue_record(revenue_record_id)
             user_profile = await self._get_user_profile(user_id)
@@ -316,10 +300,8 @@ class FraudDetectionEngine:
         revenue_record,
         historical_data: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """
-        Détecte les anomalies dans les patterns de revenus
-        """
-        anomalies = []
+        """        Détecte les anomalies dans les patterns de revenus
+        """        anomalies = []
         
         if not historical_data:
             return anomalies
@@ -363,10 +345,8 @@ class FraudDetectionEngine:
         revenue_record,
         user_id: uuid.UUID
     ) -> List[Dict[str, Any]]:
-        """
-        Détecte les fraudes spécifiques au streaming (bots, faux streams)
-        """
-        anomalies = []
+        """        Détecte les fraudes spécifiques au streaming (bots, faux streams)
+        """        anomalies = []
         
         # Récupération des données de streaming détaillées
         streaming_data = await self._get_detailed_streaming_data(revenue_record.id)
@@ -411,10 +391,8 @@ class FraudDetectionEngine:
         user_profile: Dict[str, Any],
         revenue_record
     ) -> List[Dict[str, Any]]:
-        """
-        Détecte les anomalies comportementales de l'utilisateur
-        """
-        anomalies = []
+        """        Détecte les anomalies comportementales de l'utilisateur
+        """        anomalies = []
         
         # 1. Analyse des changements de comportement soudains
         behavior_changes = await self._analyze_behavior_changes(user_profile, revenue_record)
@@ -445,10 +423,8 @@ class FraudDetectionEngine:
         self,
         streaming_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Analyse les patterns pour détecter les bots
-        """
-        indicators = {
+        """        Analyse les patterns pour détecter les bots
+        """        indicators = {
             'probability': 0.0,
             'patterns_detected': [],
             'metrics': {}
@@ -504,10 +480,8 @@ class FraudDetectionEngine:
         revenue_record_id: uuid.UUID,
         user_id: uuid.UUID
     ) -> FraudIncidentModel:
-        """
-        Crée un incident de fraude
-        """
-        # Détermination de la sévérité
+        """        Crée un incident de fraude
+        """        # Détermination de la sévérité
         severity = self._calculate_fraud_severity(anomaly['confidence_score'])
         
         # Calcul du score de risque
@@ -544,10 +518,8 @@ class FraudDetectionEngine:
         return incident
     
     def _calculate_fraud_severity(self, confidence_score: float) -> FraudSeverity:
-        """
-        Calcule la sévérité de la fraude basée sur le score de confiance
-        """
-        if confidence_score >= 0.9:
+        """        Calcule la sévérité de la fraude basée sur le score de confiance
+        """        if confidence_score >= 0.9:
             return FraudSeverity.CRITICAL
         elif confidence_score >= 0.8:
             return FraudSeverity.HIGH
@@ -558,10 +530,8 @@ class FraudDetectionEngine:
 
 
 class FraudResponseEngine:
-    """
-    Moteur de réponse automatique aux fraudes
-    """
-    
+    """    Moteur de réponse automatique aux fraudes
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.event_emitter = EventEmitter()
@@ -571,10 +541,8 @@ class FraudResponseEngine:
         incident: FraudIncidentModel,
         auto_action: bool = True
     ) -> Dict[str, Any]:
-        """
-        Traite un incident de fraude et prend les actions appropriées
-        """
-        response_actions = []
+        """        Traite un incident de fraude et prend les actions appropriées
+        """        response_actions = []
         
         # Détermination des actions basées sur la sévérité et le type
         recommended_actions = await self._determine_response_actions(incident)
@@ -606,10 +574,8 @@ class FraudResponseEngine:
         self,
         incident: FraudIncidentModel
     ) -> List[Dict[str, Any]]:
-        """
-        Détermine les actions de réponse appropriées
-        """
-        actions = []
+        """        Détermine les actions de réponse appropriées
+        """        actions = []
         
         # Actions basées sur la sévérité
         if incident.fraud_severity == FraudSeverity.CRITICAL.value:
@@ -648,10 +614,8 @@ class FraudResponseEngine:
 
 
 class FraudAnalyticsEngine:
-    """
-    Moteur d'analyse et reporting des fraudes
-    """
-    
+    """    Moteur d'analyse et reporting des fraudes
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -660,10 +624,8 @@ class FraudAnalyticsEngine:
         analysis_period_days: int = 30,
         analysis_type: str = "comprehensive"
     ) -> FraudAnalyticsModel:
-        """
-        Génère une analyse complète des fraudes
-        """
-        end_date = datetime.utcnow()
+        """        Génère une analyse complète des fraudes
+        """        end_date = datetime.utcnow()
         start_date = end_date - timedelta(days=analysis_period_days)
         
         # Récupération des incidents de la période
@@ -694,10 +656,8 @@ class FraudAnalyticsEngine:
 
 
 class FraudPreventionManager:
-    """
-    Gestionnaire principal de prévention des fraudes
-    """
-    
+    """    Gestionnaire principal de prévention des fraudes
+    """    
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
         self.cache_manager = CacheManager()
@@ -714,10 +674,8 @@ class FraudPreventionManager:
         user_id: uuid.UUID,
         real_time_response: bool = True
     ) -> Dict[str, Any]:
-        """
-        Surveillance complète d'une transaction de revenus
-        """
-        # Détection des fraudes
+        """        Surveillance complète d'une transaction de revenus
+        """        # Détection des fraudes
         detected_incidents = await self.detector.analyze_revenue_record(
             revenue_record_id, user_id, real_time_response
         )
@@ -751,10 +709,8 @@ class FraudPreventionManager:
         fraud_type: FraudType,
         detection_config: Dict[str, Any]
     ) -> FraudDetectionRuleModel:
-        """
-        Configure une nouvelle règle de détection de fraude
-        """
-        rule = FraudDetectionRuleModel(
+        """        Configure une nouvelle règle de détection de fraude
+        """        rule = FraudDetectionRuleModel(
             rule_name=rule_name,
             fraud_type=fraud_type.value,
             detection_algorithm=detection_config['algorithm'],
@@ -776,10 +732,8 @@ class FraudPreventionManager:
         self,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Génère un rapport de sécurité complet
-        """
-        analytics = await self.analyzer.generate_fraud_analytics(period_days)
+        """        Génère un rapport de sécurité complet
+        """        analytics = await self.analyzer.generate_fraud_analytics(period_days)
         
         # Recommandations de sécurité
         security_recommendations = await self._generate_security_recommendations(analytics)

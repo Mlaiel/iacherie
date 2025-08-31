@@ -10,8 +10,7 @@
 # STRICTLY PROHIBITED and will result in immediate legal action.
 # All rights reserved. Patent pending.
 
-"""
-👁️ Computer Vision Module Index
+"""👁️ Computer Vision Module Index
 
 Complete navigation and overview of the industrial-grade computer vision system
 for the IA Influencer Agent platform. This module provides enterprise-level
@@ -47,7 +46,6 @@ Core Capabilities:
 🎥 Live Streaming & Real-Time Processing
 ⚡ High-Performance Processing Pipeline
 """
-
 # Import all major components for easy access
 from .core import (
     VisionProcessor,
@@ -135,32 +133,25 @@ from .streaming import (
 
 # Quick access factory functions
 def create_vision_processor(config=None):
-    """Create a configured VisionProcessor instance"""
-    return VisionProcessor(config)
+    """Create a configured VisionProcessor instance"""    return VisionProcessor(config)
 
 def create_live_streamer(streaming_config=None):
-    """Create a configured LiveStreamProcessor instance"""
-    return LiveStreamProcessor(streaming_config or StreamingConfig())
+    """Create a configured LiveStreamProcessor instance"""    return LiveStreamProcessor(streaming_config or StreamingConfig())
 
 def create_realtime_analyzer(config=None):
-    """Create a configured RealTimeAnalyzer instance"""
-    return RealTimeAnalyzer(config or StreamingConfig())
+    """Create a configured RealTimeAnalyzer instance"""    return RealTimeAnalyzer(config or StreamingConfig())
 
 def create_object_detector(model_name="yolov8x"):
-    """Create a configured ObjectDetector instance"""
-    return ObjectDetector(model_name=model_name)
+    """Create a configured ObjectDetector instance"""    return ObjectDetector(model_name=model_name)
 
 def create_image_enhancer(settings=None):
-    """Create a configured ImageEnhancer instance"""
-    return ImageEnhancer(settings)
+    """Create a configured ImageEnhancer instance"""    return ImageEnhancer(settings)
 
 def create_content_protector(config=None):
-    """Create a configured ContentProtector instance"""
-    return ContentProtector(config)
+    """Create a configured ContentProtector instance"""    return ContentProtector(config)
 
 def create_seo_optimizer(settings=None):
-    """Create a configured SEOOptimizer instance"""
-    return SEOOptimizer(settings)
+    """Create a configured SEOOptimizer instance"""    return SEOOptimizer(settings)
 
 # Module information
 MODULE_INFO = {
@@ -241,20 +232,16 @@ __all__ = [
 ]
 
 def get_module_overview():
-    """Get a comprehensive overview of the module capabilities"""
-    return MODULE_INFO
+    """Get a comprehensive overview of the module capabilities"""    return MODULE_INFO
 
 def list_available_models():
-    """List all available AI models in the module"""
-    return MODULE_INFO["ai_models"]
+    """List all available AI models in the module"""    return MODULE_INFO["ai_models"]
 
 def get_performance_specs():
-    """Get performance specifications and limitations"""
-    return MODULE_INFO["performance_specs"]
+    """Get performance specifications and limitations"""    return MODULE_INFO["performance_specs"]
 
 def get_supported_formats():
-    """Get list of supported file formats"""
-    return MODULE_INFO["supported_formats"]
+    """Get list of supported file formats"""    return MODULE_INFO["supported_formats"]
 
 if __name__ == "__main__":
     print("=== Computer Vision Module - IA Influencer Agent ===")

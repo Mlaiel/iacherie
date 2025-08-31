@@ -49,8 +49,7 @@ UNAUTHORIZED USE CONSTITUTES CRIMINAL IP THEFT:
 
 Contact mlaiel@live.de for MANDATORY licensing before any usage.
 All crawler activities are logged and legally monitored.
-"""
-import asyncio
+"""import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass

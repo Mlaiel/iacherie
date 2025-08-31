@@ -1,5 +1,4 @@
-"""
-🗄️ Data Management Module - IA Influencer Agent Platform Enterprise
+"""🗄️ Data Management Module - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -25,7 +24,6 @@ SUPPORTS FORMATS:
 📝 Texte: TXT, MD, HTML, PDF, DOCX (Blogueurs)
 📊 Données: JSON, CSV, XML, YAML (Analytics)
 """
-
 __version__ = "3.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 __team__ = "Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices"
@@ -55,8 +53,7 @@ from .seeds import *
 logger = logging.getLogger(__name__)
 
 class DataManagementConfig:
-    """Configuration avancée du module data management"""
-    
+    """Configuration avancée du module data management"""    
     # Formats supportés par type de créateur
     CREATOR_FORMATS = {
         "musician": {
@@ -167,8 +164,7 @@ __all__ = [
 ]
 
 def get_data_management_info() -> Dict[str, Any]:
-    """Retourne les informations du module data management"""
-    return {
+    """Retourne les informations du module data management"""    return {
         "version": __version__,
         "author": __author__,
         "team": __team__,

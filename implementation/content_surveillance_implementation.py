@@ -1,12 +1,10 @@
-"""
-Content Surveillance Platform Implementation
+"""Content Surveillance Platform Implementation
 
 Concrete implementation of content surveillance methods for platform monitoring,
 content detection, and evidence collection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 import hashlib
@@ -21,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for surveillance"""
-    AUDIO = "audio"
+    """Content types for surveillance"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -31,8 +28,7 @@ class ContentType(Enum):
 
 @dataclass
 class DetectionResult:
-    """Result of content detection"""
-    content_id: str
+    """Result of content detection"""    content_id: str
     platform: str
     url: str
     content_type: ContentType
@@ -43,10 +39,8 @@ class DetectionResult:
 
 
 class PlatformContentSurveillance:
-    """
-    Concrete implementation of content surveillance for various platforms
-    """
-    
+    """    Concrete implementation of content surveillance for various platforms
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -77,8 +71,7 @@ class PlatformContentSurveillance:
         }
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession(
+        """Async context manager entry"""        self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
             headers={
                 "User-Agent": "Ainflue-ContentSurveillance/1.0"
@@ -87,8 +80,7 @@ class PlatformContentSurveillance:
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     async def search_content(
@@ -98,8 +90,7 @@ class PlatformContentSurveillance:
         platforms: List[str] = None,
         limit: int = 100
     ) -> List[DetectionResult]:
-        """
-        Search for content across multiple platforms
+        """        Search for content across multiple platforms
         
         Args:
             query: Search query (can be content hash, title, etc.)
@@ -109,8 +100,7 @@ class PlatformContentSurveillance:
             
         Returns:
             List of detection results
-        """
-        if platforms is None:
+        """        if platforms is None:
             platforms = ["youtube", "soundcloud", "instagram", "tiktok"]
         
         results = []
@@ -129,16 +119,14 @@ class PlatformContentSurveillance:
         return results
     
     async def extract_content_info(self, url: str) -> Dict[str, Any]:
-        """
-        Extract content information from URL
+        """        Extract content information from URL
         
         Args:
             url: URL to extract information from
             
         Returns:
             Dictionary with extracted content information
-        """
-        try:
+        """        try:
             # Determine platform from URL
             platform = self._detect_platform_from_url(url)
             
@@ -162,8 +150,7 @@ class PlatformContentSurveillance:
             }
     
     def _detect_platform_from_url(self, url: str) -> str:
-        """Detect platform from URL"""
-        url_lower = url.lower()
+        """Detect platform from URL"""        url_lower = url.lower()
         
         if "youtube.com" in url_lower or "youtu.be" in url_lower:
             return "youtube"
@@ -177,16 +164,14 @@ class PlatformContentSurveillance:
             return "generic"
     
     async def take_screenshot(self, url: str) -> Optional[str]:
-        """
-        Take screenshot of content for evidence
+        """        Take screenshot of content for evidence
         
         Args:
             url: URL to take screenshot of
             
         Returns:
             Path to screenshot file or None if failed
-        """
-        try:
+        """        try:
             # Generate unique filename
             url_hash = hashlib.md5(url.encode()).hexdigest()
             timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")

@@ -1,5 +1,4 @@
-"""
-Log Aggregator for IA Influencer Agent Platform
+"""Log Aggregator for IA Influencer Agent Platform
 ===============================================
 
 Industrial-grade log aggregation with AI-powered pattern recognition,
@@ -20,7 +19,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
-
 import asyncio
 import logging
 import time
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class LogLevel(Enum):
-    """Enhanced log levels with business context"""
-    DEBUG = "debug"
+    """Enhanced log levels with business context"""    DEBUG = "debug"
     INFO = "info"
     WARNING = "warning"
     ERROR = "error"
@@ -55,8 +52,7 @@ class LogLevel(Enum):
 
 
 class LogSource(Enum):
-    """Enhanced log sources for IA Influencer Agent Platform"""
-    APPLICATION = "application"
+    """Enhanced log sources for IA Influencer Agent Platform"""    APPLICATION = "application"
     SYSTEM = "system"
     SECURITY = "security"
     BUSINESS = "business"
@@ -73,8 +69,7 @@ class LogSource(Enum):
 
 
 class LogCategory(Enum):
-    """Business-specific log categories"""
-    USER_ACTION = "user_action"
+    """Business-specific log categories"""    USER_ACTION = "user_action"
     CONTENT_UPLOAD = "content_upload"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     PROTECTION_ALERT = "protection_alert"
@@ -88,8 +83,7 @@ class LogCategory(Enum):
 
 @dataclass
 class LogEntry:
-    """Enhanced structured log entry with business context"""
-    timestamp: datetime
+    """Enhanced structured log entry with business context"""    timestamp: datetime
     level: LogLevel
     source: LogSource
     category: LogCategory
@@ -113,8 +107,7 @@ class LogEntry:
 
 @dataclass
 class LogPattern:
-    """Enhanced log pattern with AI-powered detection"""
-    name: str
+    """Enhanced log pattern with AI-powered detection"""    name: str
     pattern: str
     level: LogLevel
     category: LogCategory
@@ -130,8 +123,7 @@ class LogPattern:
 
 @dataclass
 class LogAlert:
-    """Enhanced log-based alert with correlation"""
-    pattern_name: str
+    """Enhanced log-based alert with correlation"""    pattern_name: str
     count: int
     window_start: datetime
     window_end: datetime
@@ -146,8 +138,7 @@ class LogAlert:
 
 @dataclass
 class SecurityEvent:
-    """Security event extracted from logs"""
-    event_type: str
+    """Security event extracted from logs"""    event_type: str
     severity: str
     timestamp: datetime
     source_ip: Optional[str] = None
@@ -162,8 +153,7 @@ class SecurityEvent:
 
 @dataclass
 class BusinessInsight:
-    """Business intelligence extracted from logs"""
-    insight_type: str
+    """Business intelligence extracted from logs"""    insight_type: str
     category: LogCategory
     timestamp: datetime
     value: float
@@ -175,16 +165,14 @@ class BusinessInsight:
 
 
 class AILogAnalyzer:
-    """AI-powered log analysis and pattern recognition"""
-    
+    """AI-powered log analysis and pattern recognition"""    
     def __init__(self):
         self.pattern_baselines: Dict[str, Dict[str, float]] = {}
         self.anomaly_thresholds: Dict[str, Tuple[float, float]] = {}
         self.correlation_patterns: Dict[str, List[str]] = {}
         
     def detect_anomalies(self, entries: List[LogEntry]) -> List[Dict[str, Any]]:
-        """Detect anomalies in log patterns using AI"""
-        anomalies = []
+        """Detect anomalies in log patterns using AI"""        anomalies = []
         
         # Group entries by service and level
         service_level_counts = defaultdict(lambda: defaultdict(int))
@@ -231,8 +219,7 @@ class AILogAnalyzer:
         return anomalies
     
     def extract_business_insights(self, entries: List[LogEntry]) -> List[BusinessInsight]:
-        """Extract business intelligence from log data"""
-        insights = []
+        """Extract business intelligence from log data"""        insights = []
         
         # Content protection insights
         protection_events = [e for e in entries if e.category == LogCategory.PROTECTION_ALERT]
@@ -306,8 +293,7 @@ class AILogAnalyzer:
         return insights
     
     def correlate_events(self, entries: List[LogEntry]) -> List[Dict[str, Any]]:
-        """Find correlations between different log events"""
-        correlations = []
+        """Find correlations between different log events"""        correlations = []
         
         # Group events by correlation_id and request_id
         correlation_groups = defaultdict(list)
@@ -363,15 +349,13 @@ class AILogAnalyzer:
 
 
 class SecurityEventProcessor:
-    """Process security-related log events"""
-    
+    """Process security-related log events"""    
     def __init__(self):
         self.threat_patterns = self._load_threat_patterns()
         self.ip_reputation_cache: Dict[str, str] = {}
         
     def _load_threat_patterns(self) -> Dict[str, List[str]]:
-        """Load threat detection patterns"""
-        return {
+        """Load threat detection patterns"""        return {
             "brute_force": [
                 r"Failed login attempt.*user_id.*",
                 r"Authentication failed.*attempts.*",
@@ -400,8 +384,7 @@ class SecurityEventProcessor:
         }
     
     def process_security_events(self, entries: List[LogEntry]) -> List[SecurityEvent]:
-        """Process log entries to extract security events"""
-        security_events = []
+        """Process log entries to extract security events"""        security_events = []
         
         for entry in entries:
             if entry.level == LogLevel.SECURITY or entry.source == LogSource.SECURITY:
@@ -429,8 +412,7 @@ class SecurityEventProcessor:
         return security_events
     
     def _extract_security_event(self, entry: LogEntry) -> Optional[SecurityEvent]:
-        """Extract security event from a log entry"""
-        if not entry.metadata:
+        """Extract security event from a log entry"""        if not entry.metadata:
             return None
             
         return SecurityEvent(
@@ -447,16 +429,14 @@ class SecurityEventProcessor:
         )
     
     def _detect_threat_pattern(self, message: str) -> Optional[str]:
-        """Detect threat patterns in log messages"""
-        for threat_type, patterns in self.threat_patterns.items():
+        """Detect threat patterns in log messages"""        for threat_type, patterns in self.threat_patterns.items():
             for pattern in patterns:
                 if re.search(pattern, message, re.IGNORECASE):
                     return threat_type
         return None
     
     def _calculate_threat_severity(self, threat_type: str, entry: LogEntry) -> str:
-        """Calculate threat severity based on type and context"""
-        severity_map = {
+        """Calculate threat severity based on type and context"""        severity_map = {
             "brute_force": "medium",
             "sql_injection": "high",
             "api_abuse": "medium",
@@ -466,8 +446,7 @@ class SecurityEventProcessor:
         return severity_map.get(threat_type, "low")
     
     def _assess_threat_level(self, threat_type: str) -> str:
-        """Assess overall threat level"""
-        threat_levels = {
+        """Assess overall threat level"""        threat_levels = {
             "brute_force": "medium",
             "sql_injection": "high",
             "api_abuse": "low",
@@ -478,11 +457,9 @@ class SecurityEventProcessor:
 
 
 class LogAggregator:
-    """
-    Industrial-grade log aggregation system with AI-powered analytics,
+    """    Industrial-grade log aggregation system with AI-powered analytics,
     specialized for content protection, revenue tracking, and platform operations.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -536,8 +513,7 @@ class LogAggregator:
         self._register_default_patterns()
         
     def _register_default_patterns(self):
-        """Register default log patterns"""
-        
+        """Register default log patterns"""        
         # Error patterns
         self.register_pattern(LogPattern(
             name="application_errors",
@@ -604,8 +580,7 @@ class LogAggregator:
         ))
         
     async def start_aggregation(self):
-        """Start log aggregation"""
-        if self._aggregating:
+        """Start log aggregation"""        if self._aggregating:
             logger.warning("Log aggregation already running")
             return
             
@@ -626,8 +601,7 @@ class LogAggregator:
         logger.info("Log aggregation started")
         
     async def stop_aggregation(self):
-        """Stop log aggregation"""
-        self._aggregating = False
+        """Stop log aggregation"""        self._aggregating = False
         
         # Stop main tasks
         if self._aggregator_task:
@@ -658,8 +632,7 @@ class LogAggregator:
         logger.info("Log aggregation stopped")
         
     async def _aggregation_loop(self):
-        """Main aggregation loop"""
-        while self._aggregating:
+        """Main aggregation loop"""        while self._aggregating:
             try:
                 await self._process_log_buffer()
                 await self._compress_old_logs()
@@ -673,8 +646,7 @@ class LogAggregator:
                 await asyncio.sleep(5)
                 
     async def _pattern_matching_loop(self):
-        """Pattern matching loop"""
-        while self._aggregating:
+        """Pattern matching loop"""        while self._aggregating:
             try:
                 await self._process_pattern_matching()
                 await asyncio.sleep(5)
@@ -686,8 +658,7 @@ class LogAggregator:
                 await asyncio.sleep(5)
                 
     async def _watch_log_directory(self, directory: str):
-        """Watch log directory for new entries"""
-        log_dir = Path(directory)
+        """Watch log directory for new entries"""        log_dir = Path(directory)
         
         # This is a simplified implementation
         # In production, use libraries like watchdog for file system monitoring
@@ -717,8 +688,7 @@ class LogAggregator:
                 await asyncio.sleep(10)
                 
     async def _process_log_file(self, log_file: Path):
-        """Process entire log file"""
-        try:
+        """Process entire log file"""        try:
             async with aiofiles.open(log_file, 'r') as f:
                 async for line in f:
                     line = line.strip()
@@ -729,14 +699,12 @@ class LogAggregator:
             logger.error(f"Error processing log file {log_file}: {e}")
             
     async def _process_log_file_incremental(self, log_file: Path):
-        """Process new lines in modified log file"""
-        # This is a simplified implementation
+        """Process new lines in modified log file"""        # This is a simplified implementation
         # In production, maintain file positions for each watched file
         await self._process_log_file(log_file)
         
     async def _process_log_line(self, line: str, source_file: str):
-        """Process a single log line"""
-        try:
+        """Process a single log line"""        try:
             # Determine parser based on file or content
             parser = self._get_parser_for_source(source_file)
             
@@ -758,8 +726,7 @@ class LogAggregator:
             logger.error(f"Error processing log line: {e}")
             
     def _get_parser_for_source(self, source_file: str) -> Callable:
-        """Get appropriate parser for log source"""
-        file_name = Path(source_file).name
+        """Get appropriate parser for log source"""        file_name = Path(source_file).name
         
         # Check registered parsers
         for pattern, parser in self._log_parsers.items():
@@ -769,8 +736,7 @@ class LogAggregator:
         return self._default_parser
         
     def _parse_structured_log(self, line: str, source_file: str) -> Optional[LogEntry]:
-        """Parse structured log entry"""
-        try:
+        """Parse structured log entry"""        try:
             # Try to parse as JSON first
             if line.startswith('{'):
                 data = json.loads(line)
@@ -841,8 +807,7 @@ class LogAggregator:
         )
         
     def _parse_log_level(self, level_str: str) -> LogLevel:
-        """Parse log level string"""
-        level_map = {
+        """Parse log level string"""        level_map = {
             'debug': LogLevel.DEBUG,
             'info': LogLevel.INFO,
             'warn': LogLevel.WARNING,
@@ -857,8 +822,7 @@ class LogAggregator:
         return level_map.get(level_str.lower(), LogLevel.INFO)
         
     def _detect_log_source(self, source_file: str, message: str) -> LogSource:
-        """Detect log source from file and content"""
-        file_name = Path(source_file).name.lower()
+        """Detect log source from file and content"""        file_name = Path(source_file).name.lower()
         message_lower = message.lower()
         
         if 'security' in file_name or any(word in message_lower for word in ['security', 'auth', 'login']):
@@ -875,8 +839,7 @@ class LogAggregator:
             return LogSource.APPLICATION
             
     def _update_log_index(self, log_entry: LogEntry):
-        """Update log index for fast searching"""
-        # Index by time buckets (5-minute intervals)
+        """Update log index for fast searching"""        # Index by time buckets (5-minute intervals)
         time_bucket = log_entry.timestamp.replace(second=0, microsecond=0)
         time_bucket = time_bucket.replace(minute=(time_bucket.minute // 5) * 5)
         bucket_key = time_bucket.isoformat()
@@ -888,8 +851,7 @@ class LogAggregator:
             self._log_index[bucket_key] = self._log_index[bucket_key][-500:]
             
     async def _process_log_buffer(self):
-        """Process log buffer"""
-        if not self._log_buffer:
+        """Process log buffer"""        if not self._log_buffer:
             return
             
         # Store logs in Redis
@@ -904,8 +866,7 @@ class LogAggregator:
                 self._log_buffer.popleft()
                 
     async def _store_logs_to_redis(self):
-        """Store logs to Redis"""
-        try:
+        """Store logs to Redis"""        try:
             pipeline = self.redis_client.pipeline()
             
             # Store recent logs
@@ -938,8 +899,7 @@ class LogAggregator:
             logger.error(f"Error storing logs to Redis: {e}")
             
     async def _process_pattern_matching(self):
-        """Process pattern matching on recent logs"""
-        for pattern_name, pattern in self._patterns.items():
+        """Process pattern matching on recent logs"""        for pattern_name, pattern in self._patterns.items():
             if not pattern.enabled:
                 continue
                 
@@ -949,8 +909,7 @@ class LogAggregator:
                 logger.error(f"Error checking pattern {pattern_name}: {e}")
                 
     async def _check_pattern_matches(self, pattern: LogPattern):
-        """Check for pattern matches in recent logs"""
-        now = datetime.utcnow()
+        """Check for pattern matches in recent logs"""        now = datetime.utcnow()
         window_start = now - timedelta(seconds=pattern.window) if pattern.window > 0 else now
         
         matches = []
@@ -975,8 +934,7 @@ class LogAggregator:
         window_start: datetime,
         window_end: datetime
     ):
-        """Handle pattern match"""
-        self._stats["patterns_matched"] += 1
+        """Handle pattern match"""        self._stats["patterns_matched"] += 1
         
         if pattern.action == "alert":
             alert = LogAlert(
@@ -999,8 +957,7 @@ class LogAggregator:
             pass
             
     def _determine_alert_severity(self, pattern: LogPattern, match_count: int) -> str:
-        """Determine alert severity based on pattern and count"""
-        if pattern.level == LogLevel.CRITICAL:
+        """Determine alert severity based on pattern and count"""        if pattern.level == LogLevel.CRITICAL:
             return "critical"
         elif pattern.level == LogLevel.ERROR:
             return "high"
@@ -1012,8 +969,7 @@ class LogAggregator:
             return "low"
             
     async def _fire_log_alert(self, alert: LogAlert):
-        """Fire log alert"""
-        self._stats["alerts_generated"] += 1
+        """Fire log alert"""        self._stats["alerts_generated"] += 1
         
         logger.warning(f"Log alert: {alert.pattern_name} - {alert.count} matches")
         
@@ -1048,8 +1004,7 @@ class LogAggregator:
                 logger.error(f"Error in alert callback: {e}")
                 
     async def _compress_old_logs(self):
-        """Compress old log files"""
-        cutoff = datetime.utcnow() - timedelta(hours=self.compression_age_hours)
+        """Compress old log files"""        cutoff = datetime.utcnow() - timedelta(hours=self.compression_age_hours)
         
         for log_dir in self.log_directories:
             log_path = Path(log_dir)
@@ -1074,8 +1029,7 @@ class LogAggregator:
                     logger.error(f"Error compressing log file {log_file}: {e}")
                     
     async def _cleanup_old_logs(self):
-        """Clean up old compressed logs"""
-        cutoff = datetime.utcnow() - timedelta(days=self.retention_days)
+        """Clean up old compressed logs"""        cutoff = datetime.utcnow() - timedelta(days=self.retention_days)
         
         for log_dir in self.log_directories:
             log_path = Path(log_dir)
@@ -1093,18 +1047,15 @@ class LogAggregator:
                     
     # Public interface methods
     def register_pattern(self, pattern: LogPattern):
-        """Register a log pattern"""
-        self._patterns[pattern.name] = pattern
+        """Register a log pattern"""        self._patterns[pattern.name] = pattern
         logger.info(f"Registered log pattern: {pattern.name}")
         
     def register_parser(self, file_pattern: str, parser: Callable):
-        """Register a custom log parser"""
-        self._log_parsers[file_pattern] = parser
+        """Register a custom log parser"""        self._log_parsers[file_pattern] = parser
         logger.info(f"Registered log parser for pattern: {file_pattern}")
         
     def register_alert_callback(self, callback: Callable):
-        """Register alert callback"""
-        self._alert_callbacks.append(callback)
+        """Register alert callback"""        self._alert_callbacks.append(callback)
         logger.info("Registered log alert callback")
         
     async def search_logs(
@@ -1117,8 +1068,7 @@ class LogAggregator:
         service: Optional[str] = None,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Search logs with filters"""
-        if not self.redis_client:
+        """Search logs with filters"""        if not self.redis_client:
             return []
             
         try:
@@ -1165,8 +1115,7 @@ class LogAggregator:
             return []
             
     async def get_log_summary(self) -> Dict[str, Any]:
-        """Get log summary statistics"""
-        return {
+        """Get log summary statistics"""        return {
             "total_processed": self._stats["total_processed"],
             "errors_detected": self._stats["errors_detected"],
             "patterns_matched": self._stats["patterns_matched"],
@@ -1178,8 +1127,7 @@ class LogAggregator:
         }
         
     async def get_recent_alerts(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get recent log alerts"""
-        if not self.redis_client:
+        """Get recent log alerts"""        if not self.redis_client:
             return []
             
         try:

@@ -1,5 +1,4 @@
-"""
-SoundCloud Crawler Implementation
+"""SoundCloud Crawler Implementation
 =================================
 
 Advanced SoundCloud audio platform crawler for music content discovery.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import json
 import logging
@@ -49,8 +47,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class SoundCloudTrack:
-    """SoundCloud track information"""
-    track_id: str
+    """SoundCloud track information"""    track_id: str
     title: str
     description: str
     permalink_url: str
@@ -94,8 +91,7 @@ class SoundCloudTrack:
 
 @dataclass
 class SoundCloudUser:
-    """SoundCloud user/artist information"""
-    user_id: str
+    """SoundCloud user/artist information"""    user_id: str
     username: str
     permalink: str
     permalink_url: str
@@ -143,8 +139,7 @@ class SoundCloudUser:
 
 @dataclass
 class SoundCloudPlaylist:
-    """SoundCloud playlist information"""
-    playlist_id: str
+    """SoundCloud playlist information"""    playlist_id: str
     title: str
     description: Optional[str]
     permalink_url: str
@@ -182,8 +177,7 @@ class SoundCloudPlaylist:
 
 @dataclass
 class SoundCloudComment:
-    """SoundCloud comment information"""
-    comment_id: str
+    """SoundCloud comment information"""    comment_id: str
     user_id: str
     username: str
     user_avatar_url: Optional[str]
@@ -196,8 +190,7 @@ class SoundCloudComment:
 
 
 class SoundCloudCrawler(PlatformCrawler):
-    """
-    Advanced SoundCloud crawler for audio content monitoring and discovery.
+    """    Advanced SoundCloud crawler for audio content monitoring and discovery.
     
     Features:
     - Track discovery and metadata extraction
@@ -209,8 +202,7 @@ class SoundCloudCrawler(PlatformCrawler):
     - Music collaboration network mapping
     - Audio quality assessment
     - Copyright detection
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, client_id: str = None):
         super().__init__(config, vector_matcher)
         self.platform_name = "soundcloud"
@@ -249,8 +241,7 @@ class SoundCloudCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup SoundCloud-specific headers"""
-        self.session_headers.update({
+        """Setup SoundCloud-specific headers"""        self.session_headers.update({
             'Accept': 'application/json, text/javascript, */*; q=0.01',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -264,8 +255,7 @@ class SoundCloudCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "tracks", 
                            max_results: int = 50) -> List[CrawlerResult]:
-        """
-        Search for content on SoundCloud.
+        """        Search for content on SoundCloud.
         
         Args:
             query: Search query
@@ -274,8 +264,7 @@ class SoundCloudCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -293,8 +282,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return []
     
     async def _crawl_tracks(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl SoundCloud tracks"""
-        try:
+        """Crawl SoundCloud tracks"""        try:
             results = []
             
             # Search for tracks
@@ -358,8 +346,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl SoundCloud users"""
-        try:
+        """Crawl SoundCloud users"""        try:
             results = []
             
             # Search for users
@@ -417,8 +404,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return []
     
     async def _crawl_playlists(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl SoundCloud playlists"""
-        try:
+        """Crawl SoundCloud playlists"""        try:
             results = []
             
             # Search for playlists
@@ -476,8 +462,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """General SoundCloud search"""
-        try:
+        """General SoundCloud search"""        try:
             results = []
             
             # Search across different content types
@@ -496,8 +481,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return []
     
     async def _crawl_trending(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl trending content"""
-        try:
+        """Crawl trending content"""        try:
             results = []
             
             # Get trending tracks (SoundCloud's "Hot & New")
@@ -551,8 +535,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return []
     
     async def _crawl_genres(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl content by genre"""
-        try:
+        """Crawl content by genre"""        try:
             results = []
             
             # Get tracks by genre
@@ -603,8 +586,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return []
     
     async def _crawl_tags(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl content by tags"""
-        try:
+        """Crawl content by tags"""        try:
             results = []
             
             # Get tracks by tag
@@ -657,8 +639,7 @@ class SoundCloudCrawler(PlatformCrawler):
     # Helper methods
     
     async def _parse_track_data(self, track_data: Dict[str, Any]) -> Optional[SoundCloudTrack]:
-        """Parse track data from API response"""
-        try:
+        """Parse track data from API response"""        try:
             created_at = datetime.fromisoformat(track_data.get('created_at', '').replace('Z', '+00:00'))
             
             # Parse user information
@@ -724,8 +705,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return None
     
     async def _parse_playlist_data(self, playlist_data: Dict[str, Any]) -> Optional[SoundCloudPlaylist]:
-        """Parse playlist data from API response"""
-        try:
+        """Parse playlist data from API response"""        try:
             created_at = datetime.fromisoformat(playlist_data.get('created_at', '').replace('Z', '+00:00'))
             last_modified = datetime.fromisoformat(playlist_data.get('last_modified', '').replace('Z', '+00:00'))
             
@@ -788,8 +768,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return None
     
     async def _get_detailed_user_info(self, user_id: str) -> Optional[SoundCloudUser]:
-        """Get detailed user information"""
-        try:
+        """Get detailed user information"""        try:
             api_url = f"{self.api_base_url}/users/{user_id}"
             params = {'client_id': self.client_id}
             
@@ -807,8 +786,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[SoundCloudUser]:
-        """Parse user data from API response"""
-        try:
+        """Parse user data from API response"""        try:
             created_at = datetime.fromisoformat(user_data.get('created_at', '').replace('Z', '+00:00'))
             last_modified = datetime.fromisoformat(user_data.get('last_modified', '').replace('Z', '+00:00'))
             
@@ -866,8 +844,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return None
     
     async def _extract_audio_fingerprint(self, stream_url: str) -> Optional[Dict[str, Any]]:
-        """Extract audio fingerprint from track"""
-        try:
+        """Extract audio fingerprint from track"""        try:
             # Download a sample of the audio
             async with self.session.get(stream_url) as response:
                 if response.status == 200:
@@ -913,8 +890,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return None
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -930,8 +906,7 @@ class SoundCloudCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from SoundCloud content"""
-        try:
+        """Extract metadata from SoundCloud content"""        try:
             # Parse URL to determine content type
             parsed_url = urlparse(url)
             path_parts = parsed_url.path.strip('/').split('/')
@@ -982,8 +957,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     async def _get_track_by_permalink(self, username: str, track_permalink: str) -> Optional[SoundCloudTrack]:
-        """Get track by permalink"""
-        try:
+        """Get track by permalink"""        try:
             track_url = f"{self.base_url}/{username}/{track_permalink}"
             
             # Resolve URL to get track ID
@@ -1006,8 +980,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return None
     
     async def _get_playlist_by_permalink(self, username: str, playlist_permalink: str) -> Optional[SoundCloudPlaylist]:
-        """Get playlist by permalink"""
-        try:
+        """Get playlist by permalink"""        try:
             playlist_url = f"{self.base_url}/{username}/sets/{playlist_permalink}"
             
             # Resolve URL to get playlist ID
@@ -1030,8 +1003,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return None
     
     async def _get_user_by_permalink(self, username: str) -> Optional[SoundCloudUser]:
-        """Get user by permalink"""
-        try:
+        """Get user by permalink"""        try:
             user_url = f"{self.base_url}/{username}"
             
             # Resolve URL to get user ID
@@ -1054,8 +1026,7 @@ class SoundCloudCrawler(PlatformCrawler):
             return None
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get SoundCloud platform information"""
-        return {
+        """Get SoundCloud platform information"""        return {
             'platform_name': 'SoundCloud',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

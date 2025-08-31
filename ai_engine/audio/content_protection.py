@@ -1,5 +1,4 @@
-"""
-Content Protection - Advanced AI Content Protection and Rights Management
+"""Content Protection - Advanced AI Content Protection and Rights Management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -13,7 +12,6 @@ Email: mlaiel@live.de
 This module provides advanced content protection capabilities including
 digital rights management, piracy detection, and automated copyright enforcement.
 """
-
 import logging
 import hashlib
 import uuid
@@ -33,16 +31,14 @@ from .signal_processing import AudioData
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard" 
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
     MILITARY_GRADE = "military_grade"
 
 class ProtectionMethod(Enum):
-    """Content protection methods"""
-    DIGITAL_WATERMARK = "digital_watermark"
+    """Content protection methods"""    DIGITAL_WATERMARK = "digital_watermark"
     BLOCKCHAIN_HASH = "blockchain_hash"
     ENCRYPTED_FINGERPRINT = "encrypted_fingerprint"
     STEGANOGRAPHIC_EMBED = "steganographic_embed"
@@ -50,8 +46,7 @@ class ProtectionMethod(Enum):
     BIOMETRIC_LOCK = "biometric_lock"
 
 class InfringementType(Enum):
-    """Types of content infringement"""
-    EXACT_COPY = "exact_copy"
+    """Types of content infringement"""    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     MODIFIED_COPY = "modified_copy"
     DERIVATIVE_WORK = "derivative_work"
@@ -61,8 +56,7 @@ class InfringementType(Enum):
     RE_ENCODED = "re_encoded"
 
 class EnforcementAction(Enum):
-    """Copyright enforcement actions"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Copyright enforcement actions"""    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     REVENUE_CLAIM = "revenue_claim"
     CONTENT_BLOCK = "content_block"
@@ -72,8 +66,7 @@ class EnforcementAction(Enum):
 
 @dataclass
 class ProtectionSettings:
-    """Content protection configuration"""
-    protection_level: ProtectionLevel = ProtectionLevel.STANDARD
+    """Content protection configuration"""    protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     protection_methods: List[ProtectionMethod] = field(default_factory=lambda: [ProtectionMethod.DIGITAL_WATERMARK])
     enable_monitoring: bool = True
     auto_enforcement: bool = False
@@ -85,8 +78,7 @@ class ProtectionSettings:
 
 @dataclass
 class ProtectionResult:
-    """Content protection result"""
-    protection_id: str
+    """Content protection result"""    protection_id: str
     original_fingerprint: AudioFingerprint
     protected_fingerprint: AudioFingerprint
     protection_methods_applied: List[ProtectionMethod]
@@ -105,8 +97,7 @@ class ProtectionResult:
 
 @dataclass
 class InfringementDetection:
-    """Detected content infringement"""
-    detection_id: str
+    """Detected content infringement"""    detection_id: str
     original_protection_id: str
     infringing_content_url: str
     infringement_type: InfringementType
@@ -122,8 +113,7 @@ class InfringementDetection:
 
 @dataclass
 class EnforcementResult:
-    """Copyright enforcement result"""
-    enforcement_id: str
+    """Copyright enforcement result"""    enforcement_id: str
     detection_id: str
     actions_executed: List[EnforcementAction]
     success_rate: float
@@ -137,8 +127,7 @@ class EnforcementResult:
     notes: str = ""
 
 class ContentProtector:
-    """
-    Advanced AI Content Protection and Rights Management System
+    """    Advanced AI Content Protection and Rights Management System
     
     Provides comprehensive content protection including:
     - Digital watermarking and steganography
@@ -146,8 +135,7 @@ class ContentProtector:
     - Real-time infringement monitoring
     - Automated copyright enforcement
     - Revenue recovery tracking
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.config = config or {}
@@ -175,8 +163,7 @@ class ContentProtector:
         self.logger.info("ContentProtector initialized successfully")
     
     def _initialize_protection_algorithms(self):
-        """Initialize advanced protection algorithms"""
-        self.watermark_generator = DigitalWatermarkGenerator()
+        """Initialize advanced protection algorithms"""        self.watermark_generator = DigitalWatermarkGenerator()
         self.steganography_engine = SteganographyEngine()
         self.blockchain_interface = BlockchainInterface(self.config.get('blockchain'))
         self.monitoring_crawler = ContentMonitoringCrawler()
@@ -190,8 +177,7 @@ class ContentProtector:
         user_id: str = "",
         settings: Optional[ProtectionSettings] = None
     ) -> ProtectionResult:
-        """
-        Apply comprehensive content protection to audio
+        """        Apply comprehensive content protection to audio
         
         Args:
             audio_data: Audio data to protect
@@ -202,8 +188,7 @@ class ContentProtector:
             
         Returns:
             ProtectionResult with protection details
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         protection_id = str(uuid.uuid4())
         
         try:
@@ -301,8 +286,7 @@ class ContentProtector:
         protection_id: str,
         custom_watermark: Optional[str] = None
     ) -> Tuple[np.ndarray, str]:
-        """Apply digital watermark to audio"""
-        watermark_data = custom_watermark or f"{user_id}:{protection_id}:{datetime.utcnow().timestamp()}"
+        """Apply digital watermark to audio"""        watermark_data = custom_watermark or f"{user_id}:{protection_id}:{datetime.utcnow().timestamp()}"
         
         # Advanced watermarking using spread spectrum technique
         watermarked_audio = self.watermark_generator.embed_watermark(
@@ -322,8 +306,7 @@ class ContentProtector:
         audio_samples: np.ndarray,
         metadata: Dict[str, Any]
     ) -> Tuple[np.ndarray, bytes]:
-        """Apply steganographic embedding"""
-        payload = json.dumps(metadata, default=str).encode()
+        """Apply steganographic embedding"""        payload = json.dumps(metadata, default=str).encode()
         
         # LSB steganography in frequency domain
         steg_audio = self.steganography_engine.embed_data(
@@ -338,8 +321,7 @@ class ContentProtector:
         self,
         fingerprint: AudioFingerprint
     ) -> AudioFingerprint:
-        """Encrypt fingerprint data"""
-        if isinstance(fingerprint.fingerprint_data, str):
+        """Encrypt fingerprint data"""        if isinstance(fingerprint.fingerprint_data, str):
             encrypted_data = self.cipher_suite.encrypt(fingerprint.fingerprint_data.encode())
         else:
             # Handle numpy arrays and other data types
@@ -365,8 +347,7 @@ class ContentProtector:
         user_id: str,
         protection_id: str
     ) -> str:
-        """Register content on blockchain"""
-        # Prepare blockchain registration data
+        """Register content on blockchain"""        # Prepare blockchain registration data
         registration_data = {
             'fingerprint_id': fingerprint.fingerprint_id,
             'owner_id': user_id,
@@ -381,16 +362,14 @@ class ContentProtector:
         return blockchain_hash
     
     async def _start_content_monitoring(self, protection_result: ProtectionResult):
-        """Start monitoring for content infringement"""
-        monitoring_task = asyncio.create_task(
+        """Start monitoring for content infringement"""        monitoring_task = asyncio.create_task(
             self._monitor_content_infringement(protection_result)
         )
         
         self.logger.info(f"Content monitoring started: {protection_result.protection_id}")
     
     async def _monitor_content_infringement(self, protection_result: ProtectionResult):
-        """Monitor for content infringement across platforms"""
-        while self.monitoring_active:
+        """Monitor for content infringement across platforms"""        while self.monitoring_active:
             try:
                 # Scan each platform for potential infringements
                 for platform in self.platforms_monitored:
@@ -411,8 +390,7 @@ class ContentProtector:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
     
     async def _process_infringement_detection(self, detection: InfringementDetection):
-        """Process detected content infringement"""
-        self.infringement_detections[detection.detection_id] = detection
+        """Process detected content infringement"""        self.infringement_detections[detection.detection_id] = detection
         
         self.logger.warning(
             f"Content infringement detected: {detection.detection_id}, "
@@ -426,8 +404,7 @@ class ContentProtector:
                 await self._execute_enforcement_actions(detection)
     
     async def _execute_enforcement_actions(self, detection: InfringementDetection):
-        """Execute automated enforcement actions"""
-        enforcement_id = str(uuid.uuid4())
+        """Execute automated enforcement actions"""        enforcement_id = str(uuid.uuid4())
         actions_executed = []
         platform_responses = []
         
@@ -475,15 +452,13 @@ class ContentProtector:
             self.logger.error(f"Enforcement action failed: {str(e)}")
     
     def get_protection_status(self, protection_id: str) -> Optional[ProtectionResult]:
-        """Get protection status by ID"""
-        return self.protected_content.get(protection_id)
+        """Get protection status by ID"""        return self.protected_content.get(protection_id)
     
     def get_infringement_detections(
         self,
         protection_id: str
     ) -> List[InfringementDetection]:
-        """Get infringement detections for protected content"""
-        return [
+        """Get infringement detections for protected content"""        return [
             detection for detection in self.infringement_detections.values()
             if detection.original_protection_id == protection_id
         ]
@@ -492,8 +467,7 @@ class ContentProtector:
         self,
         user_id: str
     ) -> List[EnforcementResult]:
-        """Get enforcement history for user"""
-        user_protections = [
+        """Get enforcement history for user"""        user_protections = [
             pid for pid, result in self.protected_content.items()
             if result.owner_id == user_id
         ]
@@ -513,8 +487,7 @@ class ContentProtector:
         detection_id: str,
         actions: List[EnforcementAction]
     ) -> EnforcementResult:
-        """Manually trigger enforcement actions"""
-        detection = self.infringement_detections.get(detection_id)
+        """Manually trigger enforcement actions"""        detection = self.infringement_detections.get(detection_id)
         if not detection:
             raise ValueError(f"Detection not found: {detection_id}")
         
@@ -556,8 +529,7 @@ class ContentProtector:
 
 
 class DigitalWatermarkGenerator:
-    """Advanced digital watermarking for audio content"""
-    
+    """Advanced digital watermarking for audio content"""    
     def embed_watermark(
         self,
         audio: np.ndarray,
@@ -565,8 +537,7 @@ class DigitalWatermarkGenerator:
         strength: float = 0.1,
         method: str = 'spread_spectrum'
     ) -> np.ndarray:
-        """Embed digital watermark in audio"""
-        # Implementation of spread spectrum watermarking
+        """Embed digital watermark in audio"""        # Implementation of spread spectrum watermarking
         # This is a simplified version - real implementation would be more complex
         watermarked = audio.copy()
         
@@ -585,16 +556,14 @@ class DigitalWatermarkGenerator:
 
 
 class SteganographyEngine:
-    """Advanced steganography for audio content"""
-    
+    """Advanced steganography for audio content"""    
     def embed_data(
         self,
         audio: np.ndarray,
         data: bytes,
         method: str = 'frequency_lsb'
     ) -> np.ndarray:
-        """Embed data using steganography"""
-        # Implementation of frequency domain LSB steganography
+        """Embed data using steganography"""        # Implementation of frequency domain LSB steganography
         # This is simplified - real implementation would use FFT
         steg_audio = audio.copy()
         
@@ -613,15 +582,13 @@ class SteganographyEngine:
 
 
 class BlockchainInterface:
-    """Interface for blockchain content registration"""
-    
+    """Interface for blockchain content registration"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def register_content(self, data: Dict[str, Any]) -> str:
-        """Register content on blockchain"""
-        # Mock implementation - replace with actual blockchain integration
+        """Register content on blockchain"""        # Mock implementation - replace with actual blockchain integration
         content_hash = hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
         
         # Simulate blockchain transaction
@@ -633,16 +600,14 @@ class BlockchainInterface:
 
 
 class ContentMonitoringCrawler:
-    """Crawler for monitoring content across platforms"""
-    
+    """Crawler for monitoring content across platforms"""    
     async def scan_platform(
         self,
         platform: str,
         fingerprint: AudioFingerprint,
         protection_id: str
     ) -> List[InfringementDetection]:
-        """Scan platform for potential infringements"""
-        # Mock implementation - replace with actual platform APIs
+        """Scan platform for potential infringements"""        # Mock implementation - replace with actual platform APIs
         detections = []
         
         # Simulate detection
@@ -662,15 +627,13 @@ class ContentMonitoringCrawler:
 
 
 class AutomatedEnforcementEngine:
-    """Engine for automated copyright enforcement"""
-    
+    """Engine for automated copyright enforcement"""    
     async def send_dmca_takedown(
         self,
         content_url: str,
         evidence: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Send DMCA takedown request"""
-        # Mock implementation
+        """Send DMCA takedown request"""        # Mock implementation
         return {
             "success": True,
             "request_id": str(uuid.uuid4()),
@@ -683,8 +646,7 @@ class AutomatedEnforcementEngine:
         content_url: str,
         protection_id: str
     ) -> Dict[str, Any]:
-        """Submit revenue claim"""
-        # Mock implementation
+        """Submit revenue claim"""        # Mock implementation
         return {
             "success": True,
             "claim_id": str(uuid.uuid4()),
@@ -696,8 +658,7 @@ class AutomatedEnforcementEngine:
         self,
         content_url: str
     ) -> Dict[str, Any]:
-        """Request content block"""
-        # Mock implementation
+        """Request content block"""        # Mock implementation
         return {
             "success": True,
             "block_id": str(uuid.uuid4()),
@@ -710,8 +671,7 @@ class AutomatedEnforcementEngine:
         user_id: str,
         evidence: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Send cease and desist notice"""
-        # Mock implementation
+        """Send cease and desist notice"""        # Mock implementation
         return {
             "success": True,
             "notice_id": str(uuid.uuid4()),

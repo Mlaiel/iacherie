@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Crawler Implementation Verification Tool
+"""Crawler Implementation Verification Tool
 ========================================
 
 This tool analyzes all crawler implementations to distinguish between:
@@ -10,7 +9,6 @@ This tool analyzes all crawler implementations to distinguish between:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import os
 import ast
 import re
@@ -29,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CrawlerAnalysis:
-    """Data structure for crawler analysis results."""
-    name: str
+    """Data structure for crawler analysis results."""    name: str
     file_path: str
     implementation_type: str  # 'real', 'stub', 'abstract', 'incomplete'
     line_count: int
@@ -44,8 +41,7 @@ class CrawlerAnalysis:
     test_file_exists: bool
 
 class CrawlerVerifier:
-    """Comprehensive crawler implementation analyzer."""
-    
+    """Comprehensive crawler implementation analyzer."""    
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
         self.crawlers_path = self.project_root / "crawlers"
@@ -91,8 +87,7 @@ class CrawlerVerifier:
         ]
 
     def analyze_file(self, file_path: Path) -> CrawlerAnalysis:
-        """Analyze a single crawler file."""
-        try:
+        """Analyze a single crawler file."""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
         except Exception as e:
@@ -155,8 +150,7 @@ class CrawlerVerifier:
         )
     
     def _count_methods(self, content: str) -> int:
-        """Count methods in the file."""
-        try:
+        """Count methods in the file."""        try:
             tree = ast.parse(content)
             method_count = 0
             for node in ast.walk(tree):
@@ -170,8 +164,7 @@ class CrawlerVerifier:
     def _classify_implementation(self, content: str, stub_indicators: List[str], 
                                real_indicators: List[str], has_api_calls: bool,
                                method_count: int, line_count: int) -> Tuple[str, float]:
-        """Classify implementation type and calculate confidence score."""
-        
+        """Classify implementation type and calculate confidence score."""        
         # Abstract base classes
         if 'ABC' in content or '@abstractmethod' in content:
             return 'abstract', 0.9
@@ -193,8 +186,7 @@ class CrawlerVerifier:
             return 'incomplete', 0.4
     
     def _has_test_file(self, crawler_path: Path) -> bool:
-        """Check if a test file exists for the crawler."""
-        test_name = f"test_{crawler_path.stem}.py"
+        """Check if a test file exists for the crawler."""        test_name = f"test_{crawler_path.stem}.py"
         test_locations = [
             self.tests_path / test_name,
             self.tests_path / "test_crawlers" / test_name,
@@ -204,8 +196,7 @@ class CrawlerVerifier:
         return any(path.exists() for path in test_locations)
     
     def _create_error_analysis(self, file_path: Path, error: str) -> CrawlerAnalysis:
-        """Create analysis for files that couldn't be read."""
-        return CrawlerAnalysis(
+        """Create analysis for files that couldn't be read."""        return CrawlerAnalysis(
             name=file_path.stem,
             file_path=str(file_path),
             implementation_type='error',
@@ -221,8 +212,7 @@ class CrawlerVerifier:
         )
     
     def find_crawler_files(self) -> List[Path]:
-        """Find all crawler Python files."""
-        crawler_files = []
+        """Find all crawler Python files."""        crawler_files = []
         
         # Find files in main crawlers directory
         if self.crawlers_path.exists():
@@ -239,8 +229,7 @@ class CrawlerVerifier:
         return [f for f in unique_files if f.name != "__init__.py"]
     
     def analyze_all_crawlers(self) -> List[CrawlerAnalysis]:
-        """Analyze all crawler implementations."""
-        crawler_files = self.find_crawler_files()
+        """Analyze all crawler implementations."""        crawler_files = self.find_crawler_files()
         logger.info(f"Found {len(crawler_files)} crawler files to analyze")
         
         analyses = []
@@ -252,8 +241,7 @@ class CrawlerVerifier:
         return analyses
     
     def generate_report(self, analyses: List[CrawlerAnalysis]) -> Dict[str, Any]:
-        """Generate comprehensive analysis report."""
-        
+        """Generate comprehensive analysis report."""        
         # Categorize results
         real_crawlers = [a for a in analyses if a.implementation_type == 'real']
         stub_crawlers = [a for a in analyses if a.implementation_type == 'stub']
@@ -327,8 +315,7 @@ class CrawlerVerifier:
     
     def _generate_recommendations(self, analyses: List[CrawlerAnalysis], 
                                 priority_crawlers: Dict[str, CrawlerAnalysis]) -> List[str]:
-        """Generate actionable recommendations."""
-        recommendations = []
+        """Generate actionable recommendations."""        recommendations = []
         
         # Check priority crawlers
         for name, crawler in priority_crawlers.items():
@@ -357,8 +344,7 @@ class CrawlerVerifier:
         return recommendations
 
 def main():
-    """Main execution function."""
-    print("🔍 Crawler Implementation Verification Analysis")
+    """Main execution function."""    print("🔍 Crawler Implementation Verification Analysis")
     print("=" * 50)
     
     # Initialize verifier

@@ -1,5 +1,4 @@
-"""
-🔍 CONTENT EXPLORER - Multi-Format Content Discovery Engine
+"""🔍 CONTENT EXPLORER - Multi-Format Content Discovery Engine
 =========================================================
 
 Team Specialties:
@@ -32,7 +31,6 @@ Features:
 - SEO optimization analysis
 - Monetization potential assessment
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -62,8 +60,7 @@ import imagehash
 logger = logging.getLogger(__name__)
 
 class ContentCategory(Enum):
-    """Content category enumeration"""
-    MUSIC = "music"
+    """Content category enumeration"""    MUSIC = "music"
     VIDEO = "video"
     PODCAST = "podcast"
     BLOG_POST = "blog_post"
@@ -85,8 +82,7 @@ class ContentCategory(Enum):
     ORIGINAL = "original"
 
 class ContentFormat(Enum):
-    """Content format enumeration"""
-    AUDIO = "audio"
+    """Content format enumeration"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -96,16 +92,14 @@ class ContentFormat(Enum):
     MIXED_MEDIA = "mixed_media"
 
 class ContentQuality(Enum):
-    """Content quality levels"""
-    PROFESSIONAL = "professional"
+    """Content quality levels"""    PROFESSIONAL = "professional"
     HIGH = "high"
     MEDIUM = "medium"
     BASIC = "basic"
     POOR = "poor"
 
 class TrendStatus(Enum):
-    """Trending status enumeration"""
-    VIRAL = "viral"
+    """Trending status enumeration"""    VIRAL = "viral"
     TRENDING = "trending"
     RISING = "rising"
     STABLE = "stable"
@@ -114,8 +108,7 @@ class TrendStatus(Enum):
 
 @dataclass
 class ContentFilter:
-    """Content discovery filter configuration"""
-    categories: List[ContentCategory] = field(default_factory=list)
+    """Content discovery filter configuration"""    categories: List[ContentCategory] = field(default_factory=list)
     formats: List[ContentFormat] = field(default_factory=list)
     quality_minimum: ContentQuality = ContentQuality.BASIC
     date_range: Optional[Tuple[datetime, datetime]] = None
@@ -136,8 +129,7 @@ class ContentFilter:
 
 @dataclass
 class ContentMetrics:
-    """Content performance metrics"""
-    view_count: int = 0
+    """Content performance metrics"""    view_count: int = 0
     like_count: int = 0
     comment_count: int = 0
     share_count: int = 0
@@ -158,8 +150,7 @@ class ContentMetrics:
 
 @dataclass
 class TrendingContent:
-    """Trending content information"""
-    content_id: str
+    """Trending content information"""    content_id: str
     title: str
     creator_id: str
     creator_name: str
@@ -180,8 +171,7 @@ class TrendingContent:
 
 @dataclass
 class ExplorationResult:
-    """Content exploration result"""
-    content_id: str
+    """Content exploration result"""    content_id: str
     title: str
     description: str
     creator_id: str
@@ -212,8 +202,7 @@ class ExplorationResult:
 
 
 class ContentExplorer:
-    """
-    Advanced multi-format content discovery and exploration engine
+    """    Advanced multi-format content discovery and exploration engine
     
     This class provides comprehensive content discovery capabilities including:
     - Multi-format content analysis and indexing
@@ -224,11 +213,9 @@ class ContentExplorer:
     - SEO optimization and keyword analysis
     - Monetization potential assessment
     - Geographic and demographic targeting
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content explorer with configuration"""
-        self.config = config or {}
+        """Initialize content explorer with configuration"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # AI/ML Models
@@ -270,8 +257,7 @@ class ContentExplorer:
         self._index_optimization_task = None
 
     async def initialize(self) -> bool:
-        """Initialize all content exploration components"""
-        try:
+        """Initialize all content exploration components"""        try:
             self.logger.info("Initializing ContentExplorer...")
             
             # Initialize AI/ML models
@@ -302,8 +288,7 @@ class ContentExplorer:
         sort_by: str = "relevance",
         include_analytics: bool = True
     ) -> List[ExplorationResult]:
-        """
-        Explore and discover content based on query and filters
+        """        Explore and discover content based on query and filters
         
         Args:
             query: Search query string
@@ -315,8 +300,7 @@ class ContentExplorer:
             
         Returns:
             List of exploration results matching criteria
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Validate inputs
@@ -407,16 +391,14 @@ class ContentExplorer:
             raise
 
     async def analyze_content_quality(self, content_id: str) -> Dict[str, Any]:
-        """
-        Perform comprehensive quality analysis of content
+        """        Perform comprehensive quality analysis of content
         
         Args:
             content_id: Unique content identifier
             
         Returns:
             Detailed quality analysis results
-        """
-        try:
+        """        try:
             # Get content information
             content_info = await self._get_content_info(content_id)
             if not content_info:
@@ -478,8 +460,7 @@ class ContentExplorer:
         limit: int = 50,
         region: Optional[str] = None
     ) -> List[TrendingContent]:
-        """
-        Get trending content based on criteria
+        """        Get trending content based on criteria
         
         Args:
             category: Content category to filter by
@@ -489,8 +470,7 @@ class ContentExplorer:
             
         Returns:
             List of trending content items
-        """
-        try:
+        """        try:
             cache_key = f"trending_{category}_{timeframe}_{region}_{limit}"
             
             # Check cache first
@@ -558,8 +538,7 @@ class ContentExplorer:
         limit: int = 20,
         include_metadata: bool = True
     ) -> List[ExplorationResult]:
-        """
-        Find content similar to the specified content
+        """        Find content similar to the specified content
         
         Args:
             content_id: Reference content ID
@@ -569,8 +548,7 @@ class ContentExplorer:
             
         Returns:
             List of similar content items
-        """
-        try:
+        """        try:
             # Get reference content information
             reference_content = await self._get_content_info(content_id)
             if not reference_content:
@@ -629,16 +607,14 @@ class ContentExplorer:
             return []
 
     async def classify_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Classify content using AI models
+        """        Classify content using AI models
         
         Args:
             content_data: Content information and metadata
             
         Returns:
             Classification results with confidence scores
-        """
-        try:
+        """        try:
             classification_result = {
                 'content_id': content_data.get('id'),
                 'predicted_category': None,
@@ -697,8 +673,7 @@ class ContentExplorer:
         content_ids: List[str],
         metrics_to_track: List[str] = None
     ) -> Dict[str, Dict[str, Any]]:
-        """
-        Monitor performance metrics for specified content
+        """        Monitor performance metrics for specified content
         
         Args:
             content_ids: List of content IDs to monitor
@@ -706,8 +681,7 @@ class ContentExplorer:
             
         Returns:
             Performance data for each content item
-        """
-        try:
+        """        try:
             if not metrics_to_track:
                 metrics_to_track = [
                     'view_count', 'engagement_rate', 'trending_score',
@@ -763,8 +737,7 @@ class ContentExplorer:
     # Private helper methods for internal processing
     
     async def _initialize_ai_models(self):
-        """Initialize AI/ML models for content analysis"""
-        try:
+        """Initialize AI/ML models for content analysis"""        try:
             # Text classification model
             self.text_classifier = pipeline(
                 "text-classification",
@@ -818,8 +791,7 @@ class ContentExplorer:
             raise
 
     async def _initialize_search_infrastructure(self):
-        """Initialize search and indexing infrastructure"""
-        try:
+        """Initialize search and indexing infrastructure"""        try:
             # Elasticsearch client initialization
             elasticsearch_config = self.config.get('elasticsearch', {})
             if elasticsearch_config:
@@ -847,8 +819,7 @@ class ContentExplorer:
             raise
 
     async def _initialize_content_processors(self):
-        """Initialize content processing engines"""
-        try:
+        """Initialize content processing engines"""        try:
             # Audio fingerprinting
             self.audio_fingerprinter = {
                 'chromaprint_duration': 30,  # seconds
@@ -881,8 +852,7 @@ class ContentExplorer:
             raise
 
     async def _start_background_tasks(self):
-        """Start background tasks for optimization and updates"""
-        try:
+        """Start background tasks for optimization and updates"""        try:
             # Trending content update task
             self._trending_update_task = asyncio.create_task(self._trending_update_loop())
             
@@ -895,8 +865,7 @@ class ContentExplorer:
             self.logger.error(f"Failed to start background tasks: {e}")
 
     async def get_content_statistics(self) -> Dict[str, Any]:
-        """Get content exploration statistics"""
-        try:
+        """Get content exploration statistics"""        try:
             stats = {
                 'exploration_metrics': self.exploration_metrics.copy(),
                 'cache_statistics': {
@@ -919,8 +888,7 @@ class ContentExplorer:
             return {}
 
     async def shutdown(self):
-        """Shutdown content explorer and cleanup resources"""
-        try:
+        """Shutdown content explorer and cleanup resources"""        try:
             # Cancel background tasks
             if self._trending_update_task:
                 self._trending_update_task.cancel()
@@ -944,8 +912,7 @@ class ContentExplorer:
     # Private implementation methods for complete industrial-grade functionality
 
     async def _build_search_query(self, query: str, filters: ContentFilter) -> Dict[str, Any]:
-        """Build Elasticsearch query from search parameters"""
-        try:
+        """Build Elasticsearch query from search parameters"""        try:
             es_query = {
                 "query": {
                     "bool": {
@@ -1055,8 +1022,7 @@ class ContentExplorer:
         offset: int, 
         sort_by: str
     ) -> List[Dict[str, Any]]:
-        """Execute content search using Elasticsearch"""
-        try:
+        """Execute content search using Elasticsearch"""        try:
             # Add sorting
             sort_config = await self._build_sort_config(sort_by)
             search_query["sort"] = sort_config
@@ -1078,8 +1044,7 @@ class ContentExplorer:
             return []
 
     async def _create_exploration_result(self, raw_result: Dict[str, Any]) -> ExplorationResult:
-        """Create exploration result from raw search data"""
-        try:
+        """Create exploration result from raw search data"""        try:
             metrics = ContentMetrics(
                 view_count=raw_result.get('view_count', 0),
                 like_count=raw_result.get('like_count', 0),
@@ -1124,8 +1089,7 @@ class ContentExplorer:
         query: str, 
         filters: ContentFilter
     ) -> float:
-        """Calculate relevance score for search result"""
-        try:
+        """Calculate relevance score for search result"""        try:
             score = 0.0
             
             # Text relevance (40%)
@@ -1156,8 +1120,7 @@ class ContentExplorer:
             return 0.0
 
     async def _calculate_similarity_score(self, content_id1: str, content_id2: str) -> float:
-        """Calculate similarity score between two content items"""
-        try:
+        """Calculate similarity score between two content items"""        try:
             cache_key = f"{content_id1}_{content_id2}"
             if cache_key in self.analysis_cache:
                 return self.analysis_cache[cache_key]
@@ -1182,8 +1145,7 @@ class ContentExplorer:
             return 0.0
 
     async def _calculate_trending_score(self, result: ExplorationResult) -> float:
-        """Calculate trending score for content"""
-        try:
+        """Calculate trending score for content"""        try:
             # Weighted combination of trending factors
             viral_weight = 0.3
             engagement_weight = 0.2
@@ -1222,8 +1184,7 @@ class ContentExplorer:
             return 0.0
 
     async def _calculate_collaboration_potential(self, result: ExplorationResult) -> float:
-        """Calculate collaboration potential for content"""
-        try:
+        """Calculate collaboration potential for content"""        try:
             # Factors that influence collaboration potential
             quality_factor = await self._quality_to_score_value(result.quality)
             engagement_factor = min(result.metrics.engagement_rate / 0.1, 1.0)
@@ -1244,8 +1205,7 @@ class ContentExplorer:
             return 0.0
 
     async def _calculate_monetization_potential(self, result: ExplorationResult) -> float:
-        """Calculate monetization potential for content"""
-        try:
+        """Calculate monetization potential for content"""        try:
             # Factors affecting monetization
             view_factor = min(result.metrics.view_count / 10000, 1.0)
             engagement_factor = min(result.metrics.engagement_rate / 0.05, 1.0)
@@ -1268,8 +1228,7 @@ class ContentExplorer:
             return 0.0
 
     async def _verify_content_rights(self, result: ExplorationResult) -> str:
-        """Verify content rights and protection status"""
-        try:
+        """Verify content rights and protection status"""        try:
             # Check if content has proper licensing
             metadata = result.metadata
             
@@ -1287,8 +1246,7 @@ class ContentExplorer:
             return "unknown"
 
     async def _generate_protection_fingerprint(self, result: ExplorationResult) -> Optional[str]:
-        """Generate protection fingerprint for content"""
-        try:
+        """Generate protection fingerprint for content"""        try:
             if result.format == ContentFormat.AUDIO:
                 return await self._generate_audio_fingerprint(result.file_url)
             elif result.format == ContentFormat.VIDEO:
@@ -1305,8 +1263,7 @@ class ContentExplorer:
             return None
 
     async def _extract_seo_keywords(self, result: ExplorationResult) -> List[str]:
-        """Extract SEO keywords from content"""
-        try:
+        """Extract SEO keywords from content"""        try:
             keywords = []
             
             # Extract from title
@@ -1328,8 +1285,7 @@ class ContentExplorer:
             return []
 
     async def _calculate_audience_match(self, result: ExplorationResult, query: str) -> float:
-        """Calculate audience match score"""
-        try:
+        """Calculate audience match score"""        try:
             # Simple keyword matching for audience relevance
             query_words = set(query.lower().split())
             content_words = set((result.title + " " + result.description).lower().split())
@@ -1347,8 +1303,7 @@ class ContentExplorer:
             return 0.0
 
     async def _determine_geographic_relevance(self, result: ExplorationResult) -> List[str]:
-        """Determine geographic relevance for content"""
-        try:
+        """Determine geographic relevance for content"""        try:
             relevance = []
             
             # Check metadata for geographic information
@@ -1371,8 +1326,7 @@ class ContentExplorer:
     # Additional helper methods for complete functionality
 
     async def _quality_to_score(self, quality: ContentQuality) -> float:
-        """Convert quality enum to numeric score"""
-        quality_mapping = {
+        """Convert quality enum to numeric score"""        quality_mapping = {
             ContentQuality.PROFESSIONAL: 0.9,
             ContentQuality.HIGH: 0.7,
             ContentQuality.MEDIUM: 0.5,
@@ -1382,12 +1336,10 @@ class ContentExplorer:
         return quality_mapping.get(quality, 0.5)
 
     async def _quality_to_score_value(self, quality: ContentQuality) -> float:
-        """Convert quality enum to numeric score for calculations"""
-        return await self._quality_to_score(quality)
+        """Convert quality enum to numeric score for calculations"""        return await self._quality_to_score(quality)
 
     async def _get_category_monetization_factor(self, category: ContentCategory) -> float:
-        """Get monetization factor for content category"""
-        high_monetization = [ContentCategory.MUSIC, ContentCategory.VIDEO, ContentCategory.TUTORIAL]
+        """Get monetization factor for content category"""        high_monetization = [ContentCategory.MUSIC, ContentCategory.VIDEO, ContentCategory.TUTORIAL]
         medium_monetization = [ContentCategory.PHOTOGRAPHY, ContentCategory.BLOG_POST, ContentCategory.REVIEW]
         
         if category in high_monetization:
@@ -1398,8 +1350,7 @@ class ContentExplorer:
             return 0.4
 
     async def _trending_update_loop(self):
-        """Background task for updating trending content"""
-        while True:
+        """Background task for updating trending content"""        while True:
             try:
                 await asyncio.sleep(300)  # Update every 5 minutes
                 await self._update_trending_cache()
@@ -1407,8 +1358,7 @@ class ContentExplorer:
                 self.logger.error(f"Error in trending update loop: {e}")
 
     async def _index_optimization_loop(self):
-        """Background task for index optimization"""
-        while True:
+        """Background task for index optimization"""        while True:
             try:
                 await asyncio.sleep(3600)  # Optimize every hour
                 await self._optimize_search_indices()
@@ -1416,8 +1366,7 @@ class ContentExplorer:
                 self.logger.error(f"Error in index optimization loop: {e}")
 
     async def _update_exploration_metrics(self, result_count: int, processing_time: float, success: bool):
-        """Update exploration performance metrics"""
-        try:
+        """Update exploration performance metrics"""        try:
             self.exploration_metrics['total_explorations'] += 1
             
             if success:
@@ -1433,8 +1382,7 @@ class ContentExplorer:
             self.logger.error(f"Failed to update exploration metrics: {e}")
 
     async def _mock_content_search(self, query: Dict[str, Any], limit: int, offset: int) -> List[Dict[str, Any]]:
-        """Mock content search for demonstration when Elasticsearch is not available"""
-        # This would be replaced with actual database/search implementation
+        """Mock content search for demonstration when Elasticsearch is not available"""        # This would be replaced with actual database/search implementation
         mock_results = []
         for i in range(limit):
             mock_results.append({
@@ -1483,10 +1431,8 @@ class ContentExplorer:
         limit: int = 20,
         offset: int = 0
     ) -> List[ExplorationResult]:
-        """
-        Explore content based on query and filters
-        """
-        start_time = datetime.now()
+        """        Explore content based on query and filters
+        """        start_time = datetime.now()
         
         try:
             # Validate input
@@ -1541,10 +1487,8 @@ class ContentExplorer:
         time_window: timedelta = timedelta(hours=24),
         limit: int = 50
     ) -> List[TrendingContent]:
-        """
-        Discover trending content across categories
-        """
-        try:
+        """        Discover trending content across categories
+        """        try:
             # Analyze trending patterns
             trending_data = await self._analyze_trending_patterns(
                 category, time_window
@@ -1576,10 +1520,8 @@ class ContentExplorer:
         similarity_threshold: float = 0.7,
         limit: int = 10
     ) -> List[ExplorationResult]:
-        """
-        Find content similar to given content
-        """
-        try:
+        """        Find content similar to given content
+        """        try:
             # Get content fingerprint
             fingerprint = await self._get_content_fingerprint(content_id)
             
@@ -1604,10 +1546,8 @@ class ContentExplorer:
         self,
         content_id: str
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive content quality analysis
-        """
-        try:
+        """        Perform comprehensive content quality analysis
+        """        try:
             # Get content metadata
             content_data = await self._get_content_data(content_id)
             
@@ -1649,10 +1589,8 @@ class ContentExplorer:
         self,
         content_id: str
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive content insights and analytics
-        """
-        try:
+        """        Get comprehensive content insights and analytics
+        """        try:
             # Basic content data
             content_data = await self._get_content_data(content_id)
             
@@ -1695,8 +1633,7 @@ class ContentExplorer:
     # Private methods for internal processing
 
     async def _load_ai_models(self):
-        """Load AI models for content analysis"""
-        try:
+        """Load AI models for content analysis"""        try:
             # NLP model for text analysis
             self._nlp_model = pipeline(
                 "text-classification", 
@@ -1723,8 +1660,7 @@ class ContentExplorer:
             raise
 
     async def _setup_search_indices(self):
-        """Setup search indices and connections"""
-        try:
+        """Setup search indices and connections"""        try:
             # Elasticsearch setup
             self._elasticsearch_client = elasticsearch.Elasticsearch(
                 hosts=[self.config.get('elasticsearch_url', 'localhost:9200')]
@@ -1740,12 +1676,10 @@ class ContentExplorer:
             raise
 
     async def _setup_content_pipeline(self):
-        """Setup content processing pipeline"""
-        self.logger.info("Content processing pipeline setup completed")
+        """Setup content processing pipeline"""        self.logger.info("Content processing pipeline setup completed")
 
     async def _setup_monitoring(self):
-        """Setup monitoring and metrics collection"""
-        self.logger.info("Monitoring setup completed")
+        """Setup monitoring and metrics collection"""        self.logger.info("Monitoring setup completed")
 
     async def _perform_content_search(
         self,
@@ -1754,8 +1688,7 @@ class ContentExplorer:
         limit: int,
         offset: int
     ) -> List[Dict[str, Any]]:
-        """Perform content search with filters"""
-        # Simulated search results
+        """Perform content search with filters"""        # Simulated search results
         mock_results = []
         for i in range(min(limit, 10)):
             mock_results.append({
@@ -1786,8 +1719,7 @@ class ContentExplorer:
         self,
         results: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Enhance search results with AI analysis"""
-        enhanced = []
+        """Enhance search results with AI analysis"""        enhanced = []
         
         for result in results:
             # Add AI analysis
@@ -1813,8 +1745,7 @@ class ContentExplorer:
         query: str,
         filters: ContentFilter
     ) -> List[Dict[str, Any]]:
-        """Calculate relevance scores for search results"""
-        scored = []
+        """Calculate relevance scores for search results"""        scored = []
         
         for result in results:
             # Calculate relevance based on title, description, tags
@@ -1829,16 +1760,14 @@ class ContentExplorer:
         results: List[Dict[str, Any]],
         filters: ContentFilter
     ) -> List[Dict[str, Any]]:
-        """Apply quality filters to results"""
-        # For now, return all results
+        """Apply quality filters to results"""        # For now, return all results
         return results
 
     async def _sort_and_rank_results(
         self,
         results: List[Dict[str, Any]]
     ) -> List[ExplorationResult]:
-        """Sort and rank final results"""
-        # Sort by relevance score
+        """Sort and rank final results"""        # Sort by relevance score
         sorted_results = sorted(
             results,
             key=lambda x: x.get('relevance_score', 0),
@@ -1890,8 +1819,7 @@ class ContentExplorer:
         category: Optional[ContentCategory],
         time_window: timedelta
     ) -> List[Dict[str, Any]]:
-        """Analyze trending patterns"""
-        # Mock trending data
+        """Analyze trending patterns"""        # Mock trending data
         return [
             {
                 'content_id': f"trending_{i}",
@@ -1905,15 +1833,13 @@ class ContentExplorer:
         self,
         trending_data: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Calculate viral metrics"""
-        return trending_data  # Simplified for now
+        """Calculate viral metrics"""        return trending_data  # Simplified for now
 
     async def _predict_trending_potential(
         self,
         viral_content: List[Dict[str, Any]]
     ) -> List[TrendingContent]:
-        """Predict trending potential"""
-        trending_items = []
+        """Predict trending potential"""        trending_items = []
         
         for i, item in enumerate(viral_content):
             trending_item = TrendingContent(
@@ -1941,8 +1867,7 @@ class ContentExplorer:
         return trending_items
 
     async def _get_content_fingerprint(self, content_id: str) -> str:
-        """Get content fingerprint for similarity matching"""
-        return hashlib.md5(content_id.encode()).hexdigest()
+        """Get content fingerprint for similarity matching"""        return hashlib.md5(content_id.encode()).hexdigest()
 
     async def _search_similar_content(
         self,
@@ -1950,8 +1875,7 @@ class ContentExplorer:
         threshold: float,
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Search for similar content"""
-        # Mock similar content
+        """Search for similar content"""        # Mock similar content
         return [
             {
                 'content_id': f"similar_{i}",
@@ -1965,13 +1889,11 @@ class ContentExplorer:
         original_id: str,
         similar_items: List[Dict[str, Any]]
     ) -> List[ExplorationResult]:
-        """Analyze content similarity in detail"""
-        # Simplified implementation
+        """Analyze content similarity in detail"""        # Simplified implementation
         return []
 
     async def _get_content_data(self, content_id: str) -> Dict[str, Any]:
-        """Get content data from database"""
-        return {
+        """Get content data from database"""        return {
             'content_id': content_id,
             'title': f"Content {content_id}",
             'description': "Sample content description",
@@ -1982,8 +1904,7 @@ class ContentExplorer:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze technical quality metrics"""
-        return {
+        """Analyze technical quality metrics"""        return {
             'audio_quality': 0.85,
             'video_quality': 0.88,
             'encoding_efficiency': 0.90,
@@ -1994,8 +1915,7 @@ class ContentExplorer:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze content quality"""
-        return {
+        """Analyze content quality"""        return {
             'originality': 0.92,
             'creativity': 0.88,
             'production_value': 0.85,
@@ -2006,8 +1926,7 @@ class ContentExplorer:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze engagement quality"""
-        return {
+        """Analyze engagement quality"""        return {
             'viewer_retention': 0.75,
             'interaction_rate': 0.08,
             'sharing_frequency': 0.15,
@@ -2018,8 +1937,7 @@ class ContentExplorer:
         self,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze SEO quality"""
-        return {
+        """Analyze SEO quality"""        return {
             'keyword_optimization': 0.78,
             'metadata_completeness': 0.85,
             'searchability': 0.80,
@@ -2033,8 +1951,7 @@ class ContentExplorer:
         engagement: Dict[str, Any],
         seo: Dict[str, Any]
     ) -> float:
-        """Calculate overall quality score"""
-        weights = {'technical': 0.25, 'content': 0.35, 'engagement': 0.25, 'seo': 0.15}
+        """Calculate overall quality score"""        weights = {'technical': 0.25, 'content': 0.35, 'engagement': 0.25, 'seo': 0.15}
         
         technical_avg = sum(technical.values()) / len(technical)
         content_avg = sum(content.values()) / len(content)
@@ -2057,8 +1974,7 @@ class ContentExplorer:
         engagement: Dict[str, Any],
         seo: Dict[str, Any]
     ) -> List[str]:
-        """Generate quality improvement recommendations"""
-        recommendations = []
+        """Generate quality improvement recommendations"""        recommendations = []
         
         if technical.get('audio_quality', 0) < 0.8:
             recommendations.append("Improve audio quality with better recording equipment")
@@ -2075,8 +1991,7 @@ class ContentExplorer:
         return recommendations
 
     async def _get_content_performance(self, content_id: str) -> Dict[str, Any]:
-        """Get content performance metrics"""
-        return {
+        """Get content performance metrics"""        return {
             'views_24h': 1500,
             'views_7d': 8500,
             'views_30d': 25000,
@@ -2086,8 +2001,7 @@ class ContentExplorer:
         }
 
     async def _analyze_content_audience(self, content_id: str) -> Dict[str, Any]:
-        """Analyze content audience"""
-        return {
+        """Analyze content audience"""        return {
             'demographics': {
                 'age_groups': {'18-24': 0.35, '25-34': 0.40, '35-44': 0.25},
                 'gender': {'male': 0.55, 'female': 0.45},
@@ -2101,8 +2015,7 @@ class ContentExplorer:
         }
 
     async def _analyze_content_competition(self, content_id: str) -> Dict[str, Any]:
-        """Analyze content competition"""
-        return {
+        """Analyze content competition"""        return {
             'similar_content_count': 45,
             'competitive_ranking': 8,
             'market_saturation': 0.65,
@@ -2110,8 +2023,7 @@ class ContentExplorer:
         }
 
     async def _analyze_monetization_potential(self, content_id: str) -> Dict[str, Any]:
-        """Analyze monetization potential"""
-        return {
+        """Analyze monetization potential"""        return {
             'revenue_potential': 0.82,
             'sponsorship_value': 250.0,
             'licensing_opportunities': 3,
@@ -2119,8 +2031,7 @@ class ContentExplorer:
         }
 
     async def _find_collaboration_opportunities(self, content_id: str) -> List[Dict[str, Any]]:
-        """Find collaboration opportunities"""
-        return [
+        """Find collaboration opportunities"""        return [
             {
                 'creator_id': 'creator_123',
                 'collaboration_type': 'remix',
@@ -2141,8 +2052,7 @@ class ContentExplorer:
         performance: Dict[str, Any],
         audience: Dict[str, Any]
     ) -> List[str]:
-        """Generate optimization recommendations"""
-        return [
+        """Generate optimization recommendations"""        return [
             "Optimize posting time for better engagement",
             "Add closed captions for accessibility",
             "Create shorter clips for social media",
@@ -2154,8 +2064,7 @@ class ContentExplorer:
         processing_time: float,
         success: bool
     ):
-        """Update exploration metrics"""
-        self.metrics['total_explorations'] += 1
+        """Update exploration metrics"""        self.metrics['total_explorations'] += 1
         
         if success:
             self.metrics['successful_discoveries'] += 1
@@ -2171,8 +2080,7 @@ class ContentExplorer:
         )
 
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get explorer performance metrics"""
-        return {
+        """Get explorer performance metrics"""        return {
             'explorer_metrics': self.metrics,
             'cache_statistics': {
                 'content_cache_size': len(self._content_cache),
@@ -2183,8 +2091,7 @@ class ContentExplorer:
         }
 
     async def shutdown(self):
-        """Cleanup and shutdown explorer"""
-        try:
+        """Cleanup and shutdown explorer"""        try:
             # Clear caches
             self._content_cache.clear()
             self._similarity_cache.clear()

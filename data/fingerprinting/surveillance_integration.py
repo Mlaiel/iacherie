@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Surveillance Integration System
+"""IA Influencer Agent - Surveillance Integration System
 ===================================================
 
 Advanced surveillance integration system connecting fingerprinting with real-time web monitoring.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import json
@@ -47,8 +45,7 @@ logger = logging.getLogger(__name__)
 
 
 class SurveillanceChannel(Enum):
-    """Surveillance integration channels"""
-    WEB_MONITORING = "web_monitoring"
+    """Surveillance integration channels"""    WEB_MONITORING = "web_monitoring"
     PLATFORM_CRAWLER = "platform_crawler"
     SOCIAL_MEDIA = "social_media"
     CONTENT_DETECTOR = "content_detector"
@@ -57,8 +54,7 @@ class SurveillanceChannel(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Integration connection status"""
-    CONNECTED = "connected"
+    """Integration connection status"""    CONNECTED = "connected"
     DISCONNECTED = "disconnected"
     ERROR = "error"
     INITIALIZING = "initializing"
@@ -66,8 +62,7 @@ class IntegrationStatus(Enum):
 
 
 class SurveillanceEvent(Enum):
-    """Types of surveillance events"""
-    CONTENT_DETECTED = "content_detected"
+    """Types of surveillance events"""    CONTENT_DETECTED = "content_detected"
     SIMILARITY_MATCH = "similarity_match"
     VIOLATION_SUSPECTED = "violation_suspected"
     PLATFORM_SCAN = "platform_scan"
@@ -77,8 +72,7 @@ class SurveillanceEvent(Enum):
 
 @dataclass
 class SurveillanceMessage:
-    """Message format for surveillance communications"""
-    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Message format for surveillance communications"""    message_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     event_type: SurveillanceEvent = SurveillanceEvent.CONTENT_DETECTED
     source_channel: SurveillanceChannel = SurveillanceChannel.WEB_MONITORING
     target_channel: Optional[SurveillanceChannel] = None
@@ -93,8 +87,7 @@ class SurveillanceMessage:
 
 @dataclass
 class SurveillanceConnection:
-    """Surveillance system connection details"""
-    channel: SurveillanceChannel
+    """Surveillance system connection details"""    channel: SurveillanceChannel
     status: IntegrationStatus = IntegrationStatus.DISCONNECTED
     endpoint_url: Optional[str] = None
     api_key: Optional[str] = None
@@ -106,8 +99,7 @@ class SurveillanceConnection:
 
 @dataclass
 class MonitoringRequest:
-    """Request for content monitoring"""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Request for content monitoring"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     fingerprint_id: str = ""
     content_metadata: Optional[ContentMetadata] = None
     platforms_to_monitor: List[str] = field(default_factory=list)
@@ -120,8 +112,7 @@ class MonitoringRequest:
 
 
 class SurveillanceIntegrationManager:
-    """Advanced surveillance integration management system"""
-    
+    """Advanced surveillance integration management system"""    
     def __init__(self, config: FingerprintingSystemConfig):
         self.config = config
         self.connections: Dict[SurveillanceChannel, SurveillanceConnection] = {}
@@ -141,8 +132,7 @@ class SurveillanceIntegrationManager:
         logger.info("Surveillance Integration Manager initialized")
     
     def _initialize_connections(self):
-        """Initialize surveillance channel connections"""
-        default_connections = {
+        """Initialize surveillance channel connections"""        default_connections = {
             SurveillanceChannel.WEB_MONITORING: SurveillanceConnection(
                 channel=SurveillanceChannel.WEB_MONITORING,
                 endpoint_url="http://localhost:8080/api/v1/monitoring"
@@ -165,8 +155,7 @@ class SurveillanceIntegrationManager:
             self.connections[channel] = connection
     
     def _setup_default_handlers(self):
-        """Setup default message handlers"""
-        self.register_handler(
+        """Setup default message handlers"""        self.register_handler(
             SurveillanceEvent.CONTENT_DETECTED,
             self._handle_content_detected
         )
@@ -184,8 +173,7 @@ class SurveillanceIntegrationManager:
         )
     
     async def start(self):
-        """Start surveillance integration system"""
-        if self.running:
+        """Start surveillance integration system"""        if self.running:
             logger.warning("Surveillance integration already running")
             return
         
@@ -211,8 +199,7 @@ class SurveillanceIntegrationManager:
             raise
     
     async def stop(self):
-        """Stop surveillance integration system"""
-        if not self.running:
+        """Stop surveillance integration system"""        if not self.running:
             return
         
         self.running = False
@@ -229,8 +216,7 @@ class SurveillanceIntegrationManager:
         logger.info("Surveillance integration system stopped")
     
     async def _start_connection_monitoring(self):
-        """Start monitoring surveillance connections"""
-        async def monitor_connections():
+        """Start monitoring surveillance connections"""        async def monitor_connections():
             while self.running:
                 try:
                     await self._check_connections()
@@ -243,8 +229,7 @@ class SurveillanceIntegrationManager:
         self.message_processing_tasks.append(task)
     
     async def _start_message_processing(self):
-        """Start processing surveillance messages"""
-        async def process_messages():
+        """Start processing surveillance messages"""        async def process_messages():
             while self.running:
                 try:
                     await self._process_pending_messages()
@@ -257,8 +242,7 @@ class SurveillanceIntegrationManager:
         self.message_processing_tasks.append(task)
     
     async def _check_connections(self):
-        """Check and maintain surveillance connections"""
-        for channel, connection in self.connections.items():
+        """Check and maintain surveillance connections"""        for channel, connection in self.connections.items():
             try:
                 if connection.status == IntegrationStatus.DISCONNECTED:
                     await self._attempt_connection(connection)
@@ -270,8 +254,7 @@ class SurveillanceIntegrationManager:
                 connection.status = IntegrationStatus.ERROR
     
     async def _attempt_connection(self, connection: SurveillanceConnection):
-        """Attempt to establish connection to surveillance system"""
-        if connection.connection_attempts >= connection.max_retries:
+        """Attempt to establish connection to surveillance system"""        if connection.connection_attempts >= connection.max_retries:
             logger.warning(f"Max retries reached for {connection.channel}")
             return
         
@@ -303,8 +286,7 @@ class SurveillanceIntegrationManager:
             connection.status = IntegrationStatus.ERROR
     
     async def _send_heartbeat(self, connection: SurveillanceConnection):
-        """Send heartbeat to maintain connection"""
-        try:
+        """Send heartbeat to maintain connection"""        try:
             if not connection.endpoint_url:
                 return
             
@@ -333,8 +315,7 @@ class SurveillanceIntegrationManager:
         message: SurveillanceMessage,
         target_channel: Optional[SurveillanceChannel] = None
     ) -> bool:
-        """Send message to surveillance system"""
-        try:
+        """Send message to surveillance system"""        try:
             if target_channel:
                 message.target_channel = target_channel
                 connection = self.connections.get(target_channel)
@@ -363,8 +344,7 @@ class SurveillanceIntegrationManager:
         message: SurveillanceMessage, 
         connection: SurveillanceConnection
     ) -> bool:
-        """Send message to specific connection"""
-        try:
+        """Send message to specific connection"""        try:
             if not connection.endpoint_url:
                 return False
             
@@ -398,8 +378,7 @@ class SurveillanceIntegrationManager:
             return False
     
     async def _process_pending_messages(self):
-        """Process queued messages for disconnected channels"""
-        for connection in self.connections.values():
+        """Process queued messages for disconnected channels"""        for connection in self.connections.values():
             if (connection.status == IntegrationStatus.CONNECTED and 
                 connection.message_queue):
                 
@@ -417,15 +396,13 @@ class SurveillanceIntegrationManager:
         event_type: SurveillanceEvent, 
         handler: Callable[[SurveillanceMessage], None]
     ):
-        """Register message handler for specific event type"""
-        if event_type not in self.message_handlers:
+        """Register message handler for specific event type"""        if event_type not in self.message_handlers:
             self.message_handlers[event_type] = []
         self.message_handlers[event_type].append(handler)
         logger.debug(f"Registered handler for {event_type}")
     
     async def handle_incoming_message(self, message_data: Dict[str, Any]):
-        """Handle incoming surveillance message"""
-        try:
+        """Handle incoming surveillance message"""        try:
             message = SurveillanceMessage(
                 message_id=message_data.get('message_id', str(uuid.uuid4())),
                 event_type=SurveillanceEvent(message_data.get('event_type')),
@@ -455,8 +432,7 @@ class SurveillanceIntegrationManager:
             logger.error(f"Failed to handle incoming message: {str(e)}")
     
     async def _send_response(self, original_message: SurveillanceMessage):
-        """Send response to message that requires it"""
-        response_message = SurveillanceMessage(
+        """Send response to message that requires it"""        response_message = SurveillanceMessage(
             event_type=SurveillanceEvent.CONTENT_DETECTED,  # Default response type
             source_channel=SurveillanceChannel.CONTENT_DETECTOR,
             target_channel=original_message.source_channel,
@@ -476,8 +452,7 @@ class SurveillanceIntegrationManager:
         metadata: Optional[ContentMetadata] = None,
         **kwargs
     ) -> str:
-        """Request content monitoring across surveillance networks"""
-        request = MonitoringRequest(
+        """Request content monitoring across surveillance networks"""        request = MonitoringRequest(
             fingerprint_id=fingerprint_id,
             content_metadata=metadata,
             platforms_to_monitor=platforms,
@@ -513,8 +488,7 @@ class SurveillanceIntegrationManager:
         return request.request_id
     
     async def stop_monitoring(self, request_id: str) -> bool:
-        """Stop content monitoring"""
-        if request_id not in self.active_monitors:
+        """Stop content monitoring"""        if request_id not in self.active_monitors:
             return False
         
         request = self.active_monitors.pop(request_id)
@@ -539,8 +513,7 @@ class SurveillanceIntegrationManager:
     
     # Message handlers
     async def _handle_content_detected(self, message: SurveillanceMessage):
-        """Handle content detection notification"""
-        logger.info(f"Content detected: {message.content_id}")
+        """Handle content detection notification"""        logger.info(f"Content detected: {message.content_id}")
         
         # Store detection data
         if self.redis_client:
@@ -551,16 +524,14 @@ class SurveillanceIntegrationManager:
             )
     
     async def _handle_similarity_match(self, message: SurveillanceMessage):
-        """Handle similarity match notification"""
-        logger.warning(f"Similarity match found for: {message.fingerprint_id}")
+        """Handle similarity match notification"""        logger.warning(f"Similarity match found for: {message.fingerprint_id}")
         
         # Update monitoring statistics
         if self.redis_client:
             await self.redis_client.incr(f"matches:{message.fingerprint_id}")
     
     async def _handle_violation_suspected(self, message: SurveillanceMessage):
-        """Handle suspected violation notification"""
-        logger.critical(f"Suspected violation: {message.content_id}")
+        """Handle suspected violation notification"""        logger.critical(f"Suspected violation: {message.content_id}")
         
         # Trigger high-priority alert
         alert_message = SurveillanceMessage(
@@ -581,16 +552,14 @@ class SurveillanceIntegrationManager:
         await self.send_message(alert_message, SurveillanceChannel.REAL_TIME_ALERTS)
     
     async def _handle_monitoring_request(self, message: SurveillanceMessage):
-        """Handle monitoring request from external systems"""
-        logger.info(f"Monitoring request received: {message.payload.get('request_id')}")
+        """Handle monitoring request from external systems"""        logger.info(f"Monitoring request received: {message.payload.get('request_id')}")
         
         # Process monitoring request
         # This would typically integrate with the fingerprint manager
         # to validate the request and setup monitoring
     
     def get_connection_status(self) -> Dict[str, Any]:
-        """Get current connection status"""
-        status = {
+        """Get current connection status"""        status = {
             'total_connections': len(self.connections),
             'connected': 0,
             'disconnected': 0,
@@ -616,8 +585,7 @@ class SurveillanceIntegrationManager:
         return status
     
     def get_monitoring_statistics(self) -> Dict[str, Any]:
-        """Get monitoring statistics"""
-        return {
+        """Get monitoring statistics"""        return {
             'active_monitors': len(self.active_monitors),
             'total_handlers': sum(len(handlers) for handlers in self.message_handlers.values()),
             'running': self.running,
@@ -638,8 +606,7 @@ _surveillance_manager: Optional[SurveillanceIntegrationManager] = None
 
 
 def get_surveillance_manager(config: Optional[FingerprintingSystemConfig] = None) -> SurveillanceIntegrationManager:
-    """Get or create surveillance integration manager instance"""
-    global _surveillance_manager
+    """Get or create surveillance integration manager instance"""    global _surveillance_manager
     
     if _surveillance_manager is None:
         if config is None:
@@ -651,8 +618,7 @@ def get_surveillance_manager(config: Optional[FingerprintingSystemConfig] = None
 
 
 def reset_surveillance_manager():
-    """Reset surveillance integration manager (for testing)"""
-    global _surveillance_manager
+    """Reset surveillance integration manager (for testing)"""    global _surveillance_manager
     if _surveillance_manager:
         asyncio.create_task(_surveillance_manager.stop())
     _surveillance_manager = None
@@ -667,8 +633,7 @@ async def send_surveillance_message(
     target_channel: Optional[SurveillanceChannel] = None,
     priority: int = 5
 ) -> bool:
-    """Send surveillance message convenience function"""
-    manager = get_surveillance_manager()
+    """Send surveillance message convenience function"""    manager = get_surveillance_manager()
     
     message = SurveillanceMessage(
         event_type=event_type,
@@ -687,14 +652,12 @@ async def request_monitoring(
     platforms: List[str],
     **kwargs
 ) -> str:
-    """Request content monitoring convenience function"""
-    manager = get_surveillance_manager()
+    """Request content monitoring convenience function"""    manager = get_surveillance_manager()
     return await manager.request_content_monitoring(
         fingerprint_id, platforms, **kwargs
     )
 
 
 async def stop_monitoring(request_id: str) -> bool:
-    """Stop monitoring convenience function"""
-    manager = get_surveillance_manager()
+    """Stop monitoring convenience function"""    manager = get_surveillance_manager()
     return await manager.stop_monitoring(request_id)

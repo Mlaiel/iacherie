@@ -1,5 +1,4 @@
-"""
-AI Processing Deployment Module - Enterprise Index
+"""AI Processing Deployment Module - Enterprise Index
 =================================================
 
 Comprehensive entry point for enterprise-grade AI processing deployment system
@@ -32,7 +31,6 @@ permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import os
@@ -151,8 +149,7 @@ def create_deployment_config(
     security_enabled: bool = True,
     tenant_isolation: bool = True
 ) -> ProcessingConfig:
-    """
-    Create optimized processing configuration for deployment.
+    """    Create optimized processing configuration for deployment.
     
     Args:
         max_workers: Maximum number of processing workers
@@ -166,8 +163,7 @@ def create_deployment_config(
         
     Returns:
         ProcessingConfig: Configured processing settings
-    """
-    return ProcessingConfig(
+    """    return ProcessingConfig(
         max_workers=max_workers,
         gpu_enabled=gpu_enabled,
         memory_limit=memory_limit,
@@ -185,8 +181,7 @@ async def create_orchestrator(
     kubernetes_enabled: bool = True,
     monitoring_enabled: bool = True
 ) -> ProcessingOrchestrator:
-    """
-    Create and initialize processing orchestrator.
+    """    Create and initialize processing orchestrator.
     
     Args:
         mode: Orchestrator operation mode
@@ -196,8 +191,7 @@ async def create_orchestrator(
         
     Returns:
         ProcessingOrchestrator: Initialized orchestrator instance
-    """
-    orchestrator = ProcessingOrchestrator(
+    """    orchestrator = ProcessingOrchestrator(
         mode=mode,
         redis_url=redis_url,
         kubernetes_enabled=kubernetes_enabled,
@@ -215,8 +209,7 @@ def create_pipeline(
     quality_checks: bool = True,
     monitoring: bool = True
 ) -> ProcessingPipeline:
-    """
-    Create content processing pipeline with specified formats.
+    """    Create content processing pipeline with specified formats.
     
     Args:
         content_formats: List of content formats to support
@@ -227,8 +220,7 @@ def create_pipeline(
         
     Returns:
         ProcessingPipeline: Configured processing pipeline
-    """
-    config = PipelineConfig(
+    """    config = PipelineConfig(
         supported_formats=content_formats,
         gpu_enabled=enable_gpu,
         batch_size=batch_size,
@@ -244,8 +236,7 @@ def create_scheduler(
     max_concurrent_tasks: int = 100,
     resource_optimization: bool = True
 ) -> AIProcessingScheduler:
-    """
-    Create AI processing scheduler with specified strategy.
+    """    Create AI processing scheduler with specified strategy.
     
     Args:
         strategy: Task scheduling strategy
@@ -254,8 +245,7 @@ def create_scheduler(
         
     Returns:
         AIProcessingScheduler: Configured scheduler instance
-    """
-    config = SchedulingConfig(
+    """    config = SchedulingConfig(
         strategy=strategy,
         max_concurrent_tasks=max_concurrent_tasks,
         resource_optimization_enabled=resource_optimization,
@@ -272,8 +262,7 @@ def create_deployment_manager(
     monitoring: bool = True,
     security: bool = True
 ) -> DeploymentManager:
-    """
-    Create deployment manager for infrastructure management.
+    """    Create deployment manager for infrastructure management.
     
     Args:
         environment: Deployment environment (production/staging/development)
@@ -283,8 +272,7 @@ def create_deployment_manager(
         
     Returns:
         DeploymentManager: Configured deployment manager
-    """
-    config = DeploymentConfig(
+    """    config = DeploymentConfig(
         environment=environment,
         auto_scaling_enabled=auto_scaling,
         monitoring_enabled=monitoring,
@@ -301,8 +289,7 @@ async def create_enterprise_deployment(
     config: Optional[ProcessingConfig] = None,
     orchestrator_mode: OrchestratorMode = OrchestratorMode.PRODUCTION
 ) -> Dict[str, Any]:
-    """
-    Create complete enterprise deployment stack.
+    """    Create complete enterprise deployment stack.
     
     This factory function creates and configures all necessary components
     for a production-ready AI processing deployment including:
@@ -324,8 +311,7 @@ async def create_enterprise_deployment(
         - pipeline: ProcessingPipeline instance
         - scheduler: AIProcessingScheduler instance
         - manager: DeploymentManager instance
-    """
-    logger.info(f"Creating enterprise deployment for tenant: {tenant_id}")
+    """    logger.info(f"Creating enterprise deployment for tenant: {tenant_id}")
     
     # Use default config if not provided
     if config is None:
@@ -434,8 +420,7 @@ __all__ = [
 
 
 def create_complete_deployment(deployment_id: str, config_path: str = None):
-    """
-    Create a complete AI processing deployment with all components.
+    """    Create a complete AI processing deployment with all components.
     
     Args:
         deployment_id: Unique identifier for the deployment
@@ -443,13 +428,11 @@ def create_complete_deployment(deployment_id: str, config_path: str = None):
         
     Returns:
         DeploymentManager: Fully configured deployment manager
-    """
-    return create_deployment_manager(deployment_id, config_path)
+    """    return create_deployment_manager(deployment_id, config_path)
 
 
 def get_deployment_info():
-    """Get information about the AI processing deployment module."""
-    return {
+    """Get information about the AI processing deployment module."""    return {
         "module": "ai_processing_deployment",
         "version": "2.0.0",
         "author": "Fahed Mlaiel",

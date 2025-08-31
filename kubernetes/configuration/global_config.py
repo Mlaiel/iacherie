@@ -1,5 +1,4 @@
-"""
-🌐 Global Configuration Manager - IA-Influencer-Agent
+"""🌐 Global Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de
 Enterprise-grade global configuration orchestrator for unified system management.
 ==================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Union
@@ -59,8 +57,7 @@ from .legal_licensing_config import LegalLicensingConfigManager
 logger = logging.getLogger(__name__)
 
 class SystemMode(Enum):
-    """System operation modes"""
-    DEVELOPMENT = "development"
+    """System operation modes"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -68,8 +65,7 @@ class SystemMode(Enum):
     EMERGENCY = "emergency"
 
 class ConfigurationCategory(Enum):
-    """Configuration categories"""
-    CORE_INFRASTRUCTURE = "core_infrastructure"
+    """Configuration categories"""    CORE_INFRASTRUCTURE = "core_infrastructure"
     AI_PROTECTION = "ai_protection"
     BUSINESS_LOGIC = "business_logic"
     OPERATIONS = "operations"
@@ -78,8 +74,7 @@ class ConfigurationCategory(Enum):
 
 @dataclass
 class SystemHealthStatus:
-    """System health status information"""
-    overall_status: str
+    """System health status information"""    overall_status: str
     timestamp: datetime
     components_healthy: int
     components_degraded: int
@@ -91,8 +86,7 @@ class SystemHealthStatus:
 
 @dataclass
 class GlobalConfiguration:
-    """Global system configuration"""
-    # System identification
+    """Global system configuration"""    # System identification
     system_name: str = "IA-Influencer-Agent"
     system_version: str = "2.0.0"
     environment: str = "production"
@@ -156,8 +150,7 @@ class GlobalConfiguration:
     contact_email: str = "mlaiel@live.de"
 
 class GlobalConfigurationManager:
-    """
-    Global configuration orchestrator for the entire IA-Influencer-Agent platform.
+    """    Global configuration orchestrator for the entire IA-Influencer-Agent platform.
     
     Provides unified management of all configuration aspects:
     - System-wide configuration coordination
@@ -170,11 +163,9 @@ class GlobalConfigurationManager:
     - Resource allocation optimization
     - Configuration drift detection
     - Automated remediation
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize global configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize global configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Configuration path
         self.config_path = config_path or os.getenv(
@@ -202,8 +193,7 @@ class GlobalConfigurationManager:
         self.logger.info("Global configuration manager initialized")
     
     def _initialize_managers(self) -> None:
-        """Initialize all configuration managers"""
-        
+        """Initialize all configuration managers"""        
         # Core infrastructure managers
         self.base_config = BaseConfigurationManager()
         self.environment_manager = EnvironmentManager()
@@ -263,8 +253,7 @@ class GlobalConfigurationManager:
             self.all_managers.extend(manager_list)
     
     def _load_global_configuration(self) -> bool:
-        """Load global configuration from file"""
-        try:
+        """Load global configuration from file"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r', encoding='utf-8') as f:
                     if self.config_path.endswith('.yaml') or self.config_path.endswith('.yml'):
@@ -288,13 +277,11 @@ class GlobalConfigurationManager:
             return False
     
     async def initialize_system(self) -> bool:
-        """
-        Initialize the entire system with all configurations.
+        """        Initialize the entire system with all configurations.
         
         Returns:
             bool: True if all components initialized successfully
-        """
-        try:
+        """        try:
             self.logger.info("Starting global system initialization...")
             
             # Phase 1: Core Infrastructure
@@ -369,13 +356,11 @@ class GlobalConfigurationManager:
             return False
     
     async def validate_system_configuration(self) -> Dict[str, Any]:
-        """
-        Validate entire system configuration for consistency and compliance.
+        """        Validate entire system configuration for consistency and compliance.
         
         Returns:
             Dict containing validation results
-        """
-        try:
+        """        try:
             validation_result = {
                 "valid": True,
                 "errors": [],
@@ -443,8 +428,7 @@ class GlobalConfigurationManager:
             }
     
     async def _perform_cross_system_validation(self) -> List[str]:
-        """Perform cross-system validation checks"""
-        errors = []
+        """Perform cross-system validation checks"""        errors = []
         
         try:
             # Check AI fingerprinting and content protection integration
@@ -476,8 +460,7 @@ class GlobalConfigurationManager:
         return errors
     
     async def _validate_business_logic_flow(self) -> List[str]:
-        """Validate business logic flow integrity"""
-        errors = []
+        """Validate business logic flow integrity"""        errors = []
         
         try:
             # Validate creator workflow: Upload → Protection → SEO → Collaboration → Distribution
@@ -510,13 +493,11 @@ class GlobalConfigurationManager:
         return errors
     
     async def perform_health_check(self) -> SystemHealthStatus:
-        """
-        Perform comprehensive system health check.
+        """        Perform comprehensive system health check.
         
         Returns:
             SystemHealthStatus containing health information
-        """
-        try:
+        """        try:
             self.logger.info("Performing comprehensive system health check...")
             
             healthy_count = 0
@@ -592,8 +573,7 @@ class GlobalConfigurationManager:
             )
     
     def _assess_manager_health(self, status: Dict[str, Any]) -> str:
-        """Assess individual manager health from status"""
-        
+        """Assess individual manager health from status"""        
         # Check for critical indicators
         if 'error' in status or status.get('initialized') == False:
             return "critical"
@@ -609,13 +589,11 @@ class GlobalConfigurationManager:
         return "healthy"
     
     async def get_system_overview(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system overview.
+        """        Get comprehensive system overview.
         
         Returns:
             Dict containing complete system information
-        """
-        try:
+        """        try:
             # Perform health check if needed
             if not self.last_health_check or (datetime.now() - self.last_health_check).seconds > 300:
                 await self.perform_health_check()
@@ -696,13 +674,11 @@ class GlobalConfigurationManager:
             }
     
     async def emergency_shutdown(self) -> bool:
-        """
-        Perform emergency system shutdown with proper cleanup.
+        """        Perform emergency system shutdown with proper cleanup.
         
         Returns:
             bool: True if shutdown successful
-        """
-        try:
+        """        try:
             self.logger.warning("Initiating emergency shutdown...")
             
             # Set emergency mode
@@ -728,8 +704,7 @@ class GlobalConfigurationManager:
             return False
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get high-level configuration summary"""
-        return {
+        """Get high-level configuration summary"""        return {
             "system_name": self._global_config.system_name,
             "version": self._global_config.system_version,
             "environment": self._global_config.environment,

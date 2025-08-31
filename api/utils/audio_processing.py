@@ -1,5 +1,4 @@
-"""
-Audio Processing Utilities for IA Influencer Agent Platform
+"""Audio Processing Utilities for IA Influencer Agent Platform
 Comprehensive audio analysis, fingerprinting and feature extraction
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +6,6 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import librosa
 import numpy as np
 import hashlib
@@ -23,8 +21,7 @@ import essentia.standard as es
 
 @dataclass
 class AudioFeatures:
-    """Comprehensive audio feature representation"""
-    tempo: float
+    """Comprehensive audio feature representation"""    tempo: float
     key: str
     energy: float
     valence: float
@@ -41,16 +38,14 @@ class AudioFeatures:
 
 
 class AudioAnalyzer:
-    """Professional audio analysis engine for content protection and insights"""
-    
+    """Professional audio analysis engine for content protection and insights"""    
     def __init__(self, sample_rate: int = 22050, hop_length: int = 512):
         self.sample_rate = sample_rate
         self.hop_length = hop_length
         self.frame_length = hop_length * 2
         
     def analyze_audio_file(self, file_path: str) -> AudioFeatures:
-        """Complete audio analysis with feature extraction"""
-        try:
+        """Complete audio analysis with feature extraction"""        try:
             # Load audio file
             y, sr = librosa.load(file_path, sr=self.sample_rate)
             
@@ -81,8 +76,7 @@ class AudioAnalyzer:
             raise AudioProcessingError(f"Failed to analyze audio file: {str(e)}")
     
     def _extract_all_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""
-        features = {}
+        """Extract comprehensive audio features"""        features = {}
         
         # Tempo and beat tracking
         tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
@@ -120,8 +114,7 @@ class AudioAnalyzer:
         return features
     
     def _detect_key(self, chroma: np.ndarray) -> str:
-        """Detect musical key from chroma features"""
-        key_profiles = {
+        """Detect musical key from chroma features"""        key_profiles = {
             'C': [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
             'C#': [1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0],
             'D': [0, 1, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
@@ -146,8 +139,7 @@ class AudioAnalyzer:
         return max(correlations, key=correlations.get)
     
     def _calculate_valence(self, y: np.ndarray, sr: int) -> float:
-        """Calculate audio valence (positivity/negativity)"""
-        # Use spectral features as proxy for valence
+        """Calculate audio valence (positivity/negativity)"""        # Use spectral features as proxy for valence
         spectral_centroid = np.mean(librosa.feature.spectral_centroid(y=y, sr=sr))
         spectral_rolloff = np.mean(librosa.feature.spectral_rolloff(y=y, sr=sr))
         
@@ -156,8 +148,7 @@ class AudioAnalyzer:
         return float(np.clip(valence, 0, 1))
     
     def _generate_fingerprint(self, y: np.ndarray, sr: int) -> str:
-        """Generate audio fingerprint hash"""
-        # Combine multiple fingerprinting techniques
+        """Generate audio fingerprint hash"""        # Combine multiple fingerprinting techniques
         mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
         chroma = librosa.feature.chroma_stft(y=y, sr=sr)
         spectral_contrast = librosa.feature.spectral_contrast(y=y, sr=sr)
@@ -175,16 +166,14 @@ class AudioAnalyzer:
 
 
 class AudioFingerprinter:
-    """Advanced audio fingerprinting for copyright protection"""
-    
+    """Advanced audio fingerprinting for copyright protection"""    
     def __init__(self):
         self.sample_rate = 22050
         self.frame_size = 2048
         self.hop_size = 1024
         
     def create_fingerprint(self, audio_path: str) -> Dict[str, Any]:
-        """Create comprehensive audio fingerprint"""
-        try:
+        """Create comprehensive audio fingerprint"""        try:
             y, sr = librosa.load(audio_path, sr=self.sample_rate)
             
             fingerprint_data = {
@@ -201,8 +190,7 @@ class AudioFingerprinter:
             raise AudioProcessingError(f"Failed to create fingerprint: {str(e)}")
     
     def _generate_chromaprint(self, y: np.ndarray, sr: int) -> str:
-        """Generate Chromaprint-style fingerprint"""
-        # Simplified chromaprint implementation
+        """Generate Chromaprint-style fingerprint"""        # Simplified chromaprint implementation
         chroma = librosa.feature.chroma_stft(
             y=y, sr=sr, hop_length=self.hop_size, n_fft=self.frame_size
         )
@@ -215,8 +203,7 @@ class AudioFingerprinter:
         return hashlib.md5(chroma_bytes).hexdigest()
     
     def _generate_spectral_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate spectral-based hash"""
-        # Compute STFT
+        """Generate spectral-based hash"""        # Compute STFT
         stft = librosa.stft(y, hop_length=self.hop_size, n_fft=self.frame_size)
         magnitude = np.abs(stft)
         
@@ -228,8 +215,7 @@ class AudioFingerprinter:
         return hashlib.sha256(peak_bytes).hexdigest()
     
     def _generate_perceptual_hash(self, y: np.ndarray, sr: int) -> str:
-        """Generate perceptual hash for similarity matching"""
-        # Use mel-spectrogram for perceptual similarity
+        """Generate perceptual hash for similarity matching"""        # Use mel-spectrogram for perceptual similarity
         mel_spec = librosa.feature.melspectrogram(
             y=y, sr=sr, hop_length=self.hop_size, n_fft=self.frame_size
         )
@@ -250,8 +236,7 @@ class AudioFingerprinter:
         return format(hash_int, 'x')
     
     def _extract_onset_patterns(self, y: np.ndarray, sr: int) -> List[float]:
-        """Extract onset timing patterns"""
-        onset_frames = librosa.onset.onset_detect(
+        """Extract onset timing patterns"""        onset_frames = librosa.onset.onset_detect(
             y=y, sr=sr, hop_length=self.hop_size
         )
         onset_times = librosa.frames_to_time(
@@ -263,8 +248,7 @@ class AudioFingerprinter:
         return intervals.tolist()
     
     def _extract_harmonic_features(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Extract harmonic content features"""
-        # Separate harmonic and percussive components
+        """Extract harmonic content features"""        # Separate harmonic and percussive components
         y_harmonic, y_percussive = librosa.effects.hpss(y)
         
         # Calculate harmonic/percussive ratio
@@ -285,15 +269,13 @@ class AudioFingerprinter:
 
 
 class SpectralAnalyzer:
-    """Advanced spectral analysis for audio content"""
-    
+    """Advanced spectral analysis for audio content"""    
     def __init__(self, n_fft: int = 2048, hop_length: int = 512):
         self.n_fft = n_fft
         self.hop_length = hop_length
         
     def analyze_spectrum(self, audio_path: str) -> Dict[str, Any]:
-        """Comprehensive spectral analysis"""
-        y, sr = librosa.load(audio_path)
+        """Comprehensive spectral analysis"""        y, sr = librosa.load(audio_path)
         
         analysis = {
             'spectral_centroid': self._calculate_spectral_centroid(y, sr),
@@ -308,33 +290,27 @@ class SpectralAnalyzer:
         return analysis
     
     def _calculate_spectral_centroid(self, y: np.ndarray, sr: int) -> float:
-        """Calculate spectral centroid"""
-        centroid = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
+        """Calculate spectral centroid"""        centroid = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
         return float(np.mean(centroid))
     
     def _calculate_spectral_bandwidth(self, y: np.ndarray, sr: int) -> float:
-        """Calculate spectral bandwidth"""
-        bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr)[0]
+        """Calculate spectral bandwidth"""        bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr)[0]
         return float(np.mean(bandwidth))
     
     def _calculate_spectral_contrast(self, y: np.ndarray, sr: int) -> List[float]:
-        """Calculate spectral contrast"""
-        contrast = librosa.feature.spectral_contrast(y=y, sr=sr)
+        """Calculate spectral contrast"""        contrast = librosa.feature.spectral_contrast(y=y, sr=sr)
         return np.mean(contrast, axis=1).tolist()
     
     def _calculate_spectral_flatness(self, y: np.ndarray, sr: int) -> float:
-        """Calculate spectral flatness"""
-        flatness = librosa.feature.spectral_flatness(y=y)[0]
+        """Calculate spectral flatness"""        flatness = librosa.feature.spectral_flatness(y=y)[0]
         return float(np.mean(flatness))
     
     def _calculate_spectral_rolloff(self, y: np.ndarray, sr: int) -> float:
-        """Calculate spectral rolloff"""
-        rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)[0]
+        """Calculate spectral rolloff"""        rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)[0]
         return float(np.mean(rolloff))
     
     def _find_frequency_peaks(self, y: np.ndarray, sr: int) -> List[float]:
-        """Find dominant frequency peaks"""
-        # Compute FFT
+        """Find dominant frequency peaks"""        # Compute FFT
         fft = np.fft.fft(y)
         magnitude = np.abs(fft)
         
@@ -350,8 +326,7 @@ class SpectralAnalyzer:
         return peak_freqs[peak_freqs > 0].tolist()[:10]  # Top 10 peaks
     
     def _calculate_hpr(self, y: np.ndarray) -> float:
-        """Calculate harmonic-percussive ratio"""
-        y_harmonic, y_percussive = librosa.effects.hpss(y)
+        """Calculate harmonic-percussive ratio"""        y_harmonic, y_percussive = librosa.effects.hpss(y)
         
         harmonic_energy = np.sum(y_harmonic**2)
         percussive_energy = np.sum(y_percussive**2)
@@ -363,16 +338,14 @@ class SpectralAnalyzer:
 
 
 class ChromaprintProcessor:
-    """Chromaprint-compatible fingerprinting processor"""
-    
+    """Chromaprint-compatible fingerprinting processor"""    
     def __init__(self):
         self.sample_rate = 11025  # Chromaprint standard
         self.frame_size = 4096
         self.overlap = 0.75
         
     def generate_chromaprint(self, audio_path: str) -> str:
-        """Generate Chromaprint-compatible fingerprint"""
-        try:
+        """Generate Chromaprint-compatible fingerprint"""        try:
             y, sr = librosa.load(audio_path, sr=self.sample_rate)
             
             # Preprocess audio
@@ -390,8 +363,7 @@ class ChromaprintProcessor:
             raise AudioProcessingError(f"Failed to generate Chromaprint: {str(e)}")
     
     def _preprocess_audio(self, y: np.ndarray) -> np.ndarray:
-        """Preprocess audio for fingerprinting"""
-        # Apply pre-emphasis filter
+        """Preprocess audio for fingerprinting"""        # Apply pre-emphasis filter
         y_emphasized = np.append(y[0], y[1:] - 0.97 * y[:-1])
         
         # Normalize
@@ -400,8 +372,7 @@ class ChromaprintProcessor:
         return y_normalized
     
     def _extract_chroma_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extract chroma features compatible with Chromaprint"""
-        # Calculate hop length
+        """Extract chroma features compatible with Chromaprint"""        # Calculate hop length
         hop_length = int(self.frame_size * (1 - self.overlap))
         
         # Extract chroma
@@ -416,8 +387,7 @@ class ChromaprintProcessor:
         return chroma
     
     def _quantize_and_encode(self, chroma: np.ndarray) -> str:
-        """Quantize chroma features and encode as fingerprint"""
-        # Quantize to 3 bits per coefficient
+        """Quantize chroma features and encode as fingerprint"""        # Quantize to 3 bits per coefficient
         quantized = np.round(chroma * 7).astype(np.uint8)
         
         # Flatten and convert to bytes
@@ -431,14 +401,12 @@ class ChromaprintProcessor:
 
 
 class AudioFeatureExtractor:
-    """Comprehensive audio feature extraction for ML models"""
-    
+    """Comprehensive audio feature extraction for ML models"""    
     def __init__(self, sample_rate: int = 22050):
         self.sample_rate = sample_rate
         
     def extract_features(self, audio_path: str) -> Dict[str, Any]:
-        """Extract all available audio features"""
-        y, sr = librosa.load(audio_path, sr=self.sample_rate)
+        """Extract all available audio features"""        y, sr = librosa.load(audio_path, sr=self.sample_rate)
         
         features = {}
         
@@ -460,8 +428,7 @@ class AudioFeatureExtractor:
         return features
     
     def _extract_basic_features(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Extract basic audio features"""
-        return {
+        """Extract basic audio features"""        return {
             'duration': len(y) / sr,
             'rms_energy': float(np.mean(librosa.feature.rms(y=y))),
             'zero_crossing_rate': float(np.mean(librosa.feature.zero_crossing_rate(y))),
@@ -469,8 +436,7 @@ class AudioFeatureExtractor:
         }
     
     def _extract_spectral_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract spectral features"""
-        spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
+        """Extract spectral features"""        spectral_centroids = librosa.feature.spectral_centroid(y=y, sr=sr)[0]
         spectral_rolloff = librosa.feature.spectral_rolloff(y=y, sr=sr)[0]
         spectral_bandwidth = librosa.feature.spectral_bandwidth(y=y, sr=sr)[0]
         
@@ -484,8 +450,7 @@ class AudioFeatureExtractor:
         }
     
     def _extract_rhythmic_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract rhythmic features"""
-        tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
+        """Extract rhythmic features"""        tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
         
         return {
             'tempo': float(tempo),
@@ -494,8 +459,7 @@ class AudioFeatureExtractor:
         }
     
     def _extract_harmonic_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract harmonic features"""
-        y_harmonic, y_percussive = librosa.effects.hpss(y)
+        """Extract harmonic features"""        y_harmonic, y_percussive = librosa.effects.hpss(y)
         
         return {
             'harmonic_energy': float(np.sum(y_harmonic**2)),
@@ -506,8 +470,7 @@ class AudioFeatureExtractor:
         }
     
     def _extract_advanced_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract advanced features"""
-        mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
+        """Extract advanced features"""        mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=13)
         chroma = librosa.feature.chroma_stft(y=y, sr=sr)
         contrast = librosa.feature.spectral_contrast(y=y, sr=sr)
         
@@ -531,8 +494,7 @@ class AudioFeatureExtractor:
         return features
     
     def _calculate_rhythm_regularity(self, beats: np.ndarray, sr: int) -> float:
-        """Calculate rhythm regularity measure"""
-        if len(beats) < 2:
+        """Calculate rhythm regularity measure"""        if len(beats) < 2:
             return 0.0
             
         # Convert beats to time
@@ -552,5 +514,4 @@ class AudioFeatureExtractor:
 
 
 class AudioProcessingError(Exception):
-    """Custom exception for audio processing errors"""
-    pass
+    """Custom exception for audio processing errors"""    pass

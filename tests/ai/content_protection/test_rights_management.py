@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Tests Ultra-Industriels Avancés pour le Module Rights Management
+"""Tests Ultra-Industriels Avancés pour le Module Rights Management
 
 🚨 AVERTISSEMENT : Ce code, concept et architecture sont la propriété intellectuelle exclusive de Fahed Mlaiel (mlaiel@live.de). 
 Toute utilisation, copie, distribution ou exploitation sans autorisation écrite explicite est STRICTEMENT INTERDITE et poursuivie.
@@ -33,7 +30,6 @@ IA Prompt Engineer
 
 Contact : Fahed Mlaiel <mlaiel@live.de>
 """
-
 import pytest
 import sys
 import os
@@ -69,8 +65,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EnterpriseRightsProfile:
-    """Enterprise-grade rights profile for comprehensive testing"""
-    profile_id: str
+    """Enterprise-grade rights profile for comprehensive testing"""    profile_id: str
     content_id: str
     owner_id: str
     rights_bundle: Set[UsageRight]
@@ -83,8 +78,7 @@ class EnterpriseRightsProfile:
 
 @dataclass
 class LicenseAgreementTemplate:
-    """Template for complex licensing agreements"""
-    template_id: str
+    """Template for complex licensing agreements"""    template_id: str
     template_name: str
     license_type: LicenseType
     base_terms: Dict[str, Any]
@@ -95,8 +89,7 @@ class LicenseAgreementTemplate:
 
 
 class TestUltraIndustrialRightsManagement:
-    """
-    Ultra-Industrial Grade Test Suite for Digital Rights Management
+    """    Ultra-Industrial Grade Test Suite for Digital Rights Management
     
     Tests réels et industriels couvrant:
     - Gestion avancée des droits numériques multi-juridictionnels
@@ -106,11 +99,9 @@ class TestUltraIndustrialRightsManagement:
     - Analytics prédictifs de valorisation des droits
     - Automatisation des négociations contractuelles
     """
-
     @pytest.fixture
     def enterprise_rights_config(self):
-        """Configuration ultra-avancée pour la gestion des droits"""
-        return {
+        """Configuration ultra-avancée pour la gestion des droits"""        return {
             'legal_frameworks': {
                 'copyright_jurisdictions': [
                     'US', 'EU', 'UK', 'CA', 'AU', 'JP', 'CN', 'IN', 'BR', 'MX'
@@ -178,20 +169,17 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.fixture
     def enterprise_rights_manager(self, enterprise_rights_config):
-        """Create enterprise-grade rights manager"""
-        rights_manager = RightsManager(enterprise_rights_config)
+        """Create enterprise-grade rights manager"""        rights_manager = RightsManager(enterprise_rights_config)
         return rights_manager
 
     @pytest.fixture
     def enterprise_license_manager(self, enterprise_rights_config):
-        """Create enterprise-grade license manager"""
-        license_manager = LicenseManager(enterprise_rights_config)
+        """Create enterprise-grade license manager"""        license_manager = LicenseManager(enterprise_rights_config)
         return license_manager
 
     @pytest.fixture
     def comprehensive_rights_profiles(self):
-        """Generate comprehensive rights profiles for testing"""
-        profiles = []
+        """Generate comprehensive rights profiles for testing"""        profiles = []
         
         # Premium music rights profile
         profiles.append(EnterpriseRightsProfile(
@@ -258,8 +246,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.fixture
     def complex_license_templates(self):
-        """Generate complex licensing agreement templates"""
-        templates = []
+        """Generate complex licensing agreement templates"""        templates = []
         
         # Streaming platform license template
         templates.append(LicenseAgreementTemplate(
@@ -352,8 +339,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_ultra_advanced_rights_registration_comprehensive(self, enterprise_rights_manager, comprehensive_rights_profiles):
-        """Test ultra-advanced comprehensive rights registration system"""
-        logger.info("Testing ultra-advanced rights registration system")
+        """Test ultra-advanced comprehensive rights registration system"""        logger.info("Testing ultra-advanced rights registration system")
         
         await enterprise_rights_manager.initialize()
         
@@ -432,8 +418,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_complex_licensing_engine_advanced(self, enterprise_license_manager, complex_license_templates, comprehensive_rights_profiles):
-        """Test advanced complex licensing engine with real-world scenarios"""
-        logger.info("Testing complex licensing engine")
+        """Test advanced complex licensing engine with real-world scenarios"""        logger.info("Testing complex licensing engine")
         
         await enterprise_license_manager.initialize()
         
@@ -527,8 +512,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_automated_royalty_distribution_system(self, enterprise_license_manager, enterprise_rights_manager):
-        """Test automated royalty distribution system with real-world complexity"""
-        logger.info("Testing automated royalty distribution system")
+        """Test automated royalty distribution system with real-world complexity"""        logger.info("Testing automated royalty distribution system")
         
         await enterprise_license_manager.initialize()
         await enterprise_rights_manager.initialize()
@@ -659,8 +643,7 @@ class TestUltraIndustrialRightsManagement:
         assert verification_result['blockchain_verified'] is True
 
     def _is_compatible_licensing(self, template: LicenseAgreementTemplate, profile: EnterpriseRightsProfile) -> bool:
-        """Check if license template is compatible with rights profile"""
-        # Check if required rights are available
+        """Check if license template is compatible with rights profile"""        # Check if required rights are available
         if template.license_type == LicenseType.EXCLUSIVE:
             return UsageRight.SUBLICENSE in profile.rights_bundle
         
@@ -672,8 +655,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_rights_verification(self, rights_manager, sample_content_rights):
-        """Test rights verification and validation"""
-        
+        """Test rights verification and validation"""        
         # Register rights first
         await rights_manager.register_content_rights(sample_content_rights)
         
@@ -710,8 +692,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_rights_transfer(self, rights_manager, sample_content_rights):
-        """Test rights transfer between parties"""
-        
+        """Test rights transfer between parties"""        
         # Register original rights
         await rights_manager.register_content_rights(sample_content_rights)
         
@@ -766,8 +747,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_rights_assignment_and_licensing(self, rights_manager, sample_content_rights, sample_license_data):
-        """Test rights assignment and licensing workflows"""
-        
+        """Test rights assignment and licensing workflows"""        
         # Register content rights
         await rights_manager.register_content_rights(sample_content_rights)
         
@@ -807,8 +787,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_territorial_rights_management(self, rights_manager, sample_content_rights):
-        """Test territorial rights restrictions and validation"""
-        
+        """Test territorial rights restrictions and validation"""        
         # Register content with worldwide rights
         await rights_manager.register_content_rights(sample_content_rights)
         
@@ -878,8 +857,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_rights_expiration_and_renewal(self, rights_manager, sample_content_rights):
-        """Test rights expiration handling and renewal processes"""
-        
+        """Test rights expiration handling and renewal processes"""        
         # Create rights with short duration for testing
         short_duration_rights = sample_content_rights
         short_duration_rights.rights_duration_years = 0  # Will expire soon
@@ -941,8 +919,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_usage_tracking_and_analytics(self, rights_manager, sample_content_rights, sample_license_data):
-        """Test usage tracking and analytics for rights management"""
-        
+        """Test usage tracking and analytics for rights management"""        
         # Setup rights and license
         await rights_manager.register_content_rights(sample_content_rights)
         
@@ -1021,8 +998,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_compliance_monitoring(self, rights_manager, sample_content_rights, sample_license_data):
-        """Test compliance monitoring and violation detection"""
-        
+        """Test compliance monitoring and violation detection"""        
         # Setup rights and license
         await rights_manager.register_content_rights(sample_content_rights)
         
@@ -1089,8 +1065,7 @@ class TestUltraIndustrialRightsManagement:
 
     @pytest.mark.asyncio
     async def test_bulk_rights_operations(self, rights_manager):
-        """Test bulk operations for rights management"""
-        
+        """Test bulk operations for rights management"""        
         # Generate multiple content rights
         bulk_rights = []
         for i in range(10):
@@ -1154,8 +1129,7 @@ class TestUltraIndustrialRightsManagement:
     @pytest.mark.performance
     @pytest.mark.asyncio
     async def test_rights_management_performance(self, rights_manager):
-        """Test performance of rights management operations under load"""
-        
+        """Test performance of rights management operations under load"""        
         import time
         
         # Test rights registration performance
@@ -1224,16 +1198,13 @@ class TestUltraIndustrialRightsManagement:
 
 class TestLicenseManager:
     """Comprehensive tests for LicenseManager class"""
-
     @pytest.fixture
     def license_manager(self, test_config):
-        """Create LicenseManager instance for testing"""
-        return LicenseManager(test_config.get('license_management', {}))
+        """Create LicenseManager instance for testing"""        return LicenseManager(test_config.get('license_management', {}))
 
     @pytest.fixture
     def sample_license(self, sample_content_metadata, sample_license_data):
-        """Generate sample license object"""
-        return License(
+        """Generate sample license object"""        return License(
             license_id=str(uuid.uuid4()),
             content_id=sample_content_metadata['content_id'],
             licensor_id=sample_content_metadata['creator_id'],
@@ -1253,8 +1224,7 @@ class TestLicenseManager:
 
     @pytest.mark.asyncio
     async def test_license_creation_and_management(self, license_manager, sample_license):
-        """Test license creation, storage, and retrieval"""
-        
+        """Test license creation, storage, and retrieval"""        
         # Create license
         creation_result = await license_manager.create_license(sample_license)
         
@@ -1292,8 +1262,7 @@ class TestLicenseManager:
 
     @pytest.mark.asyncio
     async def test_license_validation_and_compliance(self, license_manager, sample_license):
-        """Test license validation and compliance checking"""
-        
+        """Test license validation and compliance checking"""        
         # Create license
         await license_manager.create_license(sample_license)
         
@@ -1345,8 +1314,7 @@ class TestLicenseManager:
 
     @pytest.mark.asyncio
     async def test_royalty_calculation_and_payment(self, license_manager, sample_license):
-        """Test royalty calculation and payment processing"""
-        
+        """Test royalty calculation and payment processing"""        
         # Create license
         await license_manager.create_license(sample_license)
         
@@ -1418,8 +1386,7 @@ class TestLicenseManager:
 
     @pytest.mark.asyncio
     async def test_license_templates_and_automation(self, license_manager):
-        """Test license templates and automated license generation"""
-        
+        """Test license templates and automated license generation"""        
         # Create license templates
         templates = {
             'streaming_standard': {
@@ -1471,8 +1438,7 @@ class TestLicenseManager:
 
     @pytest.mark.asyncio
     async def test_license_workflow_automation(self, license_manager):
-        """Test automated license workflows and approvals"""
-        
+        """Test automated license workflows and approvals"""        
         # Define workflow rules
         workflow_rules = {
             'auto_approve_conditions': {
@@ -1542,8 +1508,7 @@ class TestLicenseManager:
 
     @pytest.mark.asyncio
     async def test_license_analytics_and_reporting(self, license_manager, sample_license):
-        """Test license analytics and reporting functionality"""
-        
+        """Test license analytics and reporting functionality"""        
         # Create multiple licenses for analytics
         licenses = []
         for i in range(5):

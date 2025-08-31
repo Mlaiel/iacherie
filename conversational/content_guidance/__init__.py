@@ -10,8 +10,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
-"""
-# Content Optimization
+"""# Content Optimization
 from .content_optimizer import (
     ContentOptimizer,
     OptimizationEngine,

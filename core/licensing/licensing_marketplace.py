@@ -1,5 +1,4 @@
-"""
-Licensing Marketplace Engine - Advanced Digital Rights Trading & Distribution Platform
+"""Licensing Marketplace Engine - Advanced Digital Rights Trading & Distribution Platform
 ===================================================================================
 
 Ultra-sophisticated licensing marketplace providing advanced digital rights trading,
@@ -19,7 +18,6 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
-
 import asyncio
 import numpy as np
 from datetime import datetime, timedelta
@@ -41,8 +39,7 @@ from ..utils.ai_optimization import AIOptimizationEngine
 
 
 class LicenseType(Enum):
-    """Types of licenses available in marketplace"""
-    EXCLUSIVE = "exclusive"
+    """Types of licenses available in marketplace"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
     CREATIVE_COMMONS = "creative_commons"
@@ -57,8 +54,7 @@ class LicenseType(Enum):
 
 
 class MarketplaceStatus(Enum):
-    """Marketplace listing status"""
-    DRAFT = "draft"
+    """Marketplace listing status"""    DRAFT = "draft"
     PENDING_REVIEW = "pending_review"
     ACTIVE = "active"
     SOLD = "sold"
@@ -71,8 +67,7 @@ class MarketplaceStatus(Enum):
 
 
 class TradingMode(Enum):
-    """Trading modes for marketplace"""
-    FIXED_PRICE = "fixed_price"
+    """Trading modes for marketplace"""    FIXED_PRICE = "fixed_price"
     AUCTION = "auction"
     BEST_OFFER = "best_offer"
     NEGOTIABLE = "negotiable"
@@ -85,8 +80,7 @@ class TradingMode(Enum):
 
 
 class PaymentMethod(Enum):
-    """Payment methods supported"""
-    CREDIT_CARD = "credit_card"
+    """Payment methods supported"""    CREDIT_CARD = "credit_card"
     BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     CRYPTOCURRENCY = "cryptocurrency"
@@ -99,8 +93,7 @@ class PaymentMethod(Enum):
 
 
 class DistributionChannel(Enum):
-    """Distribution channels for licensed content"""
-    SOCIAL_MEDIA = "social_media"
+    """Distribution channels for licensed content"""    SOCIAL_MEDIA = "social_media"
     STREAMING_PLATFORMS = "streaming_platforms"
     BROADCAST_TV = "broadcast_tv"
     RADIO = "radio"
@@ -116,8 +109,7 @@ class DistributionChannel(Enum):
 
 @dataclass
 class LicenseListing:
-    """Marketplace license listing"""
-    listing_id: str
+    """Marketplace license listing"""    listing_id: str
     content_id: str
     seller_id: str
     title: str
@@ -184,8 +176,7 @@ class LicenseListing:
 
 @dataclass
 class TradingTransaction:
-    """Marketplace trading transaction"""
-    transaction_id: str
+    """Marketplace trading transaction"""    transaction_id: str
     listing_id: str
     buyer_id: str
     seller_id: str
@@ -251,8 +242,7 @@ class TradingTransaction:
 
 @dataclass
 class MarketplaceAnalytics:
-    """Marketplace performance analytics"""
-    analytics_id: str
+    """Marketplace performance analytics"""    analytics_id: str
     analysis_period: Tuple[datetime, datetime]
     analysis_timestamp: datetime
     total_listings: int
@@ -310,8 +300,7 @@ class MarketplaceAnalytics:
 
 @dataclass
 class SmartContract:
-    """Smart contract for automated licensing"""
-    contract_id: str
+    """Smart contract for automated licensing"""    contract_id: str
     contract_address: str
     blockchain_network: str
     contract_type: str
@@ -369,11 +358,9 @@ class SmartContract:
 
 
 class LicensingMarketplaceEngine:
-    """
-    Ultra-sophisticated licensing marketplace providing advanced digital rights
+    """    Ultra-sophisticated licensing marketplace providing advanced digital rights
     trading, automated contract execution, and intelligent marketplace optimization.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -403,8 +390,7 @@ class LicensingMarketplaceEngine:
         self.category_taxonomy: Dict[str, Any] = {}
         
     async def initialize_marketplace(self, config: Dict[str, Any]):
-        """Initialize licensing marketplace"""
-        try:
+        """Initialize licensing marketplace"""        try:
             # Initialize blockchain connection
             await self._initialize_blockchain_connection(config.get('blockchain_config', {}))
             
@@ -438,8 +424,7 @@ class LicensingMarketplaceEngine:
         content_id: str,
         listing_data: Dict[str, Any]
     ) -> LicenseListing:
-        """Create new license listing in marketplace"""
-        try:
+        """Create new license listing in marketplace"""        try:
             # Validate seller and content
             await self._validate_seller_permissions(seller_id, content_id)
             await self._validate_content_eligibility(content_id)
@@ -552,8 +537,7 @@ class LicensingMarketplaceEngine:
         sort_options: Optional[Dict[str, str]] = None,
         pagination: Optional[Dict[str, int]] = None
     ) -> Dict[str, Any]:
-        """Search marketplace listings with advanced filtering"""
-        try:
+        """Search marketplace listings with advanced filtering"""        try:
             # Parse search query
             parsed_query = await self._parse_search_query(search_query)
             
@@ -604,8 +588,7 @@ class LicensingMarketplaceEngine:
         listing_id: str,
         transaction_data: Dict[str, Any]
     ) -> TradingTransaction:
-        """Initiate licensing transaction"""
-        try:
+        """Initiate licensing transaction"""        try:
             # Validate listing and buyer
             if listing_id not in self.active_listings:
                 raise MarketplaceError(f"Listing not found: {listing_id}")
@@ -727,8 +710,7 @@ class LicensingMarketplaceEngine:
         contract_id: str,
         execution_parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute smart contract with specified parameters"""
-        try:
+        """Execute smart contract with specified parameters"""        try:
             if contract_id not in self.smart_contracts:
                 raise ContractError(f"Smart contract not found: {contract_id}")
             
@@ -776,8 +758,7 @@ class LicensingMarketplaceEngine:
         analysis_period: Optional[Tuple[datetime, datetime]] = None,
         include_predictions: bool = True
     ) -> MarketplaceAnalytics:
-        """Generate comprehensive marketplace analytics"""
-        try:
+        """Generate comprehensive marketplace analytics"""        try:
             if analysis_period is None:
                 end_date = datetime.utcnow()
                 start_date = end_date - timedelta(days=30)
@@ -889,8 +870,7 @@ class LicensingMarketplaceEngine:
     
     # Private helper methods
     async def _initialize_blockchain_connection(self, config: Dict[str, Any]):
-        """Initialize blockchain connection for smart contracts"""
-        try:
+        """Initialize blockchain connection for smart contracts"""        try:
             if config.get('enabled', False):
                 self.web3_client = Web3(Web3.HTTPProvider(config.get('rpc_url', 'http://localhost:8545')))
                 self.logger.info("Blockchain connection initialized")
@@ -898,41 +878,33 @@ class LicensingMarketplaceEngine:
             self.logger.warning(f"Blockchain initialization failed: {str(e)}")
     
     async def _load_marketplace_data(self):
-        """Load existing marketplace data"""
-        # Implementation would load from database
+        """Load existing marketplace data"""        # Implementation would load from database
         pass
     
     async def _initialize_ai_models(self, config: Dict[str, Any]):
-        """Initialize AI models for recommendations and optimization"""
-        # Implementation would initialize ML models
+        """Initialize AI models for recommendations and optimization"""        # Implementation would initialize ML models
         pass
     
     async def _setup_search_infrastructure(self, config: Dict[str, Any]):
-        """Setup search and discovery infrastructure"""
-        # Implementation would setup search indices
+        """Setup search and discovery infrastructure"""        # Implementation would setup search indices
         pass
     
     async def _validate_seller_permissions(self, seller_id: str, content_id: str):
-        """Validate seller has permission to list content"""
-        # Implementation would check permissions
+        """Validate seller has permission to list content"""        # Implementation would check permissions
         pass
     
     async def _validate_content_eligibility(self, content_id: str):
-        """Validate content is eligible for marketplace listing"""
-        # Implementation would check content eligibility
+        """Validate content is eligible for marketplace listing"""        # Implementation would check content eligibility
         pass
     
     async def _save_license_listing(self, listing: LicenseListing):
-        """Save license listing to database"""
-        # Implementation would save to database
+        """Save license listing to database"""        # Implementation would save to database
         pass
     
     async def _save_trading_transaction(self, transaction: TradingTransaction):
-        """Save trading transaction to database"""
-        # Implementation would save to database
+        """Save trading transaction to database"""        # Implementation would save to database
         pass
     
     async def _save_marketplace_analytics(self, analytics: MarketplaceAnalytics):
-        """Save marketplace analytics to database"""
-        # Implementation would save to database
+        """Save marketplace analytics to database"""        # Implementation would save to database
         pass

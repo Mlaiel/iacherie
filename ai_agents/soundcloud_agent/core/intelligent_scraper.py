@@ -1,5 +1,4 @@
-"""
-Intelligent Scraper for SoundCloud Content Discovery
+"""Intelligent Scraper for SoundCloud Content Discovery
 ===================================================
 
 Advanced scraping system for intelligent content discovery and analysis.
@@ -7,7 +6,6 @@ Advanced scraping system for intelligent content discovery and analysis.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: 2025 - All Rights Reserved
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,29 +16,24 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ScrapingResult:
-    """Result from intelligent scraping operation"""
-    content_type: str
+    """Result from intelligent scraping operation"""    content_type: str
     content_id: str
     data: Dict[str, Any]
     confidence: float
     timestamp: datetime
 
 class IntelligentScraper:
-    """
-    Intelligent scraper for advanced SoundCloud content discovery
-    """
-    
+    """    Intelligent scraper for advanced SoundCloud content discovery
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.session = None
         
     async def initialize(self):
-        """Initialize the scraper"""
-        logger.info("Intelligent scraper initialized")
+        """Initialize the scraper"""        logger.info("Intelligent scraper initialized")
         
     async def shutdown(self):
-        """Shutdown the scraper"""
-        if self.session:
+        """Shutdown the scraper"""        if self.session:
             await self.session.close()
     
     async def discover_similar_content(
@@ -50,8 +43,7 @@ class IntelligentScraper:
         mood: Optional[str] = None,
         limit: int = 20
     ) -> List[Any]:
-        """Discover similar content using intelligent analysis"""
-        # Mock implementation for now
+        """Discover similar content using intelligent analysis"""        # Mock implementation for now
         from .soundcloud_engine import SoundCloudTrack
         
         mock_tracks = []

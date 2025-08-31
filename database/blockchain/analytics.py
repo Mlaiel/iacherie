@@ -1,5 +1,4 @@
-"""
-Blockchain Analytics and Intelligence Module
+"""Blockchain Analytics and Intelligence Module
 
 Advanced blockchain analytics, monitoring, and intelligence system for the
 IA Influencer Agent platform providing comprehensive insights into content
@@ -27,7 +26,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -48,8 +46,7 @@ from sklearn.ensemble import IsolationForest
 logger = logging.getLogger(__name__)
 
 class AnalyticsMetric(Enum):
-    """Types of analytics metrics tracked."""
-    TRANSACTION_VOLUME = "transaction_volume"
+    """Types of analytics metrics tracked."""    TRANSACTION_VOLUME = "transaction_volume"
     REVENUE_PERFORMANCE = "revenue_performance"
     PROTECTION_EFFECTIVENESS = "protection_effectiveness"
     USER_ENGAGEMENT = "user_engagement"
@@ -59,8 +56,7 @@ class AnalyticsMetric(Enum):
     MARKET_TRENDS = "market_trends"
 
 class TimeFrame(Enum):
-    """Time frames for analytics reporting."""
-    REALTIME = "realtime"
+    """Time frames for analytics reporting."""    REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -69,16 +65,14 @@ class TimeFrame(Enum):
     YEARLY = "yearly"
 
 class AlertSeverity(Enum):
-    """Severity levels for analytics alerts."""
-    INFO = "info"
+    """Severity levels for analytics alerts."""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     URGENT = "urgent"
 
 @dataclass
 class AnalyticsConfig:
-    """Configuration for blockchain analytics system."""
-    enabled_metrics: List[AnalyticsMetric]
+    """Configuration for blockchain analytics system."""    enabled_metrics: List[AnalyticsMetric]
     update_intervals: Dict[AnalyticsMetric, int]  # seconds
     data_retention_days: int = 365
     alert_thresholds: Dict[str, float] = field(default_factory=dict)
@@ -88,8 +82,7 @@ class AnalyticsConfig:
 
 @dataclass
 class MetricDataPoint:
-    """Individual metric data point."""
-    metric_type: AnalyticsMetric
+    """Individual metric data point."""    metric_type: AnalyticsMetric
     timestamp: datetime
     value: Union[float, int, str]
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -97,8 +90,7 @@ class MetricDataPoint:
 
 @dataclass
 class AnalyticsAlert:
-    """Analytics alert notification."""
-    alert_id: str
+    """Analytics alert notification."""    alert_id: str
     metric_type: AnalyticsMetric
     severity: AlertSeverity
     title: str
@@ -111,8 +103,7 @@ class AnalyticsAlert:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report."""
-    report_id: str
+    """Comprehensive analytics report."""    report_id: str
     report_type: str
     time_period: Tuple[datetime, datetime]
     metrics_summary: Dict[AnalyticsMetric, Dict[str, Any]]
@@ -123,19 +114,15 @@ class AnalyticsReport:
     data_sources: List[str]
 
 class BlockchainAnalytics:
-    """
-    Advanced blockchain analytics engine providing comprehensive insights
+    """    Advanced blockchain analytics engine providing comprehensive insights
     into platform performance, security, and business intelligence.
-    """
-    
+    """    
     def __init__(self, config: AnalyticsConfig):
-        """
-        Initialize blockchain analytics system.
+        """        Initialize blockchain analytics system.
         
         Args:
             config: Analytics configuration
-        """
-        self.config = config
+        """        self.config = config
         self.metric_data: Dict[AnalyticsMetric, List[MetricDataPoint]] = defaultdict(list)
         self.alerts: List[AnalyticsAlert] = []
         self.ml_models: Dict[str, Any] = {}
@@ -143,8 +130,7 @@ class BlockchainAnalytics:
         self._initialize_ml_models()
     
     def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for analytics."""
-        if not self.config.ml_models_enabled:
+        """Initialize machine learning models for analytics."""        if not self.config.ml_models_enabled:
             return
         
         try:
@@ -169,8 +155,7 @@ class BlockchainAnalytics:
             logger.error(f"Failed to initialize ML models: {e}")
     
     async def start_monitoring(self) -> None:
-        """Start continuous analytics monitoring."""
-        try:
+        """Start continuous analytics monitoring."""        try:
             for metric in self.config.enabled_metrics:
                 interval = self.config.update_intervals.get(metric, 60)
                 task = asyncio.create_task(
@@ -192,8 +177,7 @@ class BlockchainAnalytics:
         metric: AnalyticsMetric, 
         interval: int
     ) -> None:
-        """Monitor a specific metric continuously."""
-        while True:
+        """Monitor a specific metric continuously."""        while True:
             try:
                 data_point = await self._collect_metric_data(metric)
                 if data_point:
@@ -213,8 +197,7 @@ class BlockchainAnalytics:
         self, 
         metric: AnalyticsMetric
     ) -> Optional[MetricDataPoint]:
-        """Collect data for a specific metric."""
-        try:
+        """Collect data for a specific metric."""        try:
             if metric == AnalyticsMetric.TRANSACTION_VOLUME:
                 return await self._collect_transaction_volume()
             elif metric == AnalyticsMetric.REVENUE_PERFORMANCE:
@@ -239,8 +222,7 @@ class BlockchainAnalytics:
             return None
     
     async def _collect_transaction_volume(self) -> MetricDataPoint:
-        """Collect blockchain transaction volume metrics."""
-        # Mock implementation - in production, would query blockchain nodes
+        """Collect blockchain transaction volume metrics."""        # Mock implementation - in production, would query blockchain nodes
         current_time = datetime.utcnow()
         
         # Simulate transaction volume calculation
@@ -260,8 +242,7 @@ class BlockchainAnalytics:
         )
     
     async def _collect_revenue_performance(self) -> MetricDataPoint:
-        """Collect revenue performance metrics."""
-        current_time = datetime.utcnow()
+        """Collect revenue performance metrics."""        current_time = datetime.utcnow()
         
         revenue_data = {
             "total_revenue_24h": np.random.uniform(1000, 10000),
@@ -279,8 +260,7 @@ class BlockchainAnalytics:
         )
     
     async def _collect_protection_effectiveness(self) -> MetricDataPoint:
-        """Collect content protection effectiveness metrics."""
-        current_time = datetime.utcnow()
+        """Collect content protection effectiveness metrics."""        current_time = datetime.utcnow()
         
         protection_data = {
             "content_items_protected": np.random.randint(1000, 5000),
@@ -298,8 +278,7 @@ class BlockchainAnalytics:
         )
     
     async def _collect_user_engagement(self) -> MetricDataPoint:
-        """Collect user engagement metrics."""
-        current_time = datetime.utcnow()
+        """Collect user engagement metrics."""        current_time = datetime.utcnow()
         
         engagement_data = {
             "active_users_24h": np.random.randint(500, 2000),
@@ -317,8 +296,7 @@ class BlockchainAnalytics:
         )
     
     async def _collect_network_health(self) -> MetricDataPoint:
-        """Collect blockchain network health metrics."""
-        current_time = datetime.utcnow()
+        """Collect blockchain network health metrics."""        current_time = datetime.utcnow()
         
         health_data = {
             "node_connectivity": np.random.uniform(0.95, 1.0),
@@ -336,8 +314,7 @@ class BlockchainAnalytics:
         )
     
     async def _collect_fraud_metrics(self) -> MetricDataPoint:
-        """Collect fraud detection metrics."""
-        current_time = datetime.utcnow()
+        """Collect fraud detection metrics."""        current_time = datetime.utcnow()
         
         fraud_data = {
             "suspicious_transactions": np.random.randint(0, 50),
@@ -355,8 +332,7 @@ class BlockchainAnalytics:
         )
     
     async def _collect_compliance_status(self) -> MetricDataPoint:
-        """Collect compliance monitoring metrics."""
-        current_time = datetime.utcnow()
+        """Collect compliance monitoring metrics."""        current_time = datetime.utcnow()
         
         compliance_data = {
             "kyc_completion_rate": np.random.uniform(0.8, 0.95),
@@ -374,8 +350,7 @@ class BlockchainAnalytics:
         )
     
     async def _collect_market_trends(self) -> MetricDataPoint:
-        """Collect market trends and intelligence."""
-        current_time = datetime.utcnow()
+        """Collect market trends and intelligence."""        current_time = datetime.utcnow()
         
         market_data = {
             "nft_market_volume": np.random.uniform(10000, 100000),
@@ -397,8 +372,7 @@ class BlockchainAnalytics:
         metric: AnalyticsMetric, 
         data_point: MetricDataPoint
     ) -> None:
-        """Check if metric data point triggers any alerts."""
-        try:
+        """Check if metric data point triggers any alerts."""        try:
             threshold_key = f"{metric.value}_threshold"
             threshold = self.config.alert_thresholds.get(threshold_key)
             
@@ -448,8 +422,7 @@ class BlockchainAnalytics:
         metric: AnalyticsMetric, 
         severity: AlertSeverity
     ) -> List[str]:
-        """Get recommended actions for metric alerts."""
-        actions = []
+        """Get recommended actions for metric alerts."""        actions = []
         
         if metric == AnalyticsMetric.FRAUD_DETECTION:
             actions.extend([
@@ -476,8 +449,7 @@ class BlockchainAnalytics:
         return actions
     
     async def _process_alerts(self) -> None:
-        """Process and manage analytics alerts."""
-        while True:
+        """Process and manage analytics alerts."""        while True:
             try:
                 # Clean up old alerts
                 cutoff_time = datetime.utcnow() - timedelta(days=7)
@@ -503,15 +475,13 @@ class BlockchainAnalytics:
                 await asyncio.sleep(60)
     
     async def _send_alert_notification(self, alert: AnalyticsAlert) -> None:
-        """Send notification for critical alerts."""
-        # Mock implementation - in production, would send to notification service
+        """Send notification for critical alerts."""        # Mock implementation - in production, would send to notification service
         logger.critical(
             f"CRITICAL ALERT: {alert.title} - {alert.description}"
         )
     
     async def _cleanup_old_data(self, metric: AnalyticsMetric) -> None:
-        """Clean up old metric data based on retention policy."""
-        cutoff_time = datetime.utcnow() - timedelta(days=self.config.data_retention_days)
+        """Clean up old metric data based on retention policy."""        cutoff_time = datetime.utcnow() - timedelta(days=self.config.data_retention_days)
         
         self.metric_data[metric] = [
             dp for dp in self.metric_data[metric]
@@ -523,8 +493,7 @@ class BlockchainAnalytics:
         metric: AnalyticsMetric, 
         time_frame: TimeFrame = TimeFrame.DAILY
     ) -> Dict[str, Any]:
-        """Get summary statistics for a metric over a time frame."""
-        try:
+        """Get summary statistics for a metric over a time frame."""        try:
             # Calculate time range
             now = datetime.utcnow()
             if time_frame == TimeFrame.HOURLY:
@@ -577,8 +546,7 @@ class BlockchainAnalytics:
             return {"error": str(e)}
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction for metric values."""
-        if len(values) < 2:
+        """Calculate trend direction for metric values."""        if len(values) < 2:
             return "insufficient_data"
         
         # Simple trend calculation based on first and last quartile
@@ -605,8 +573,7 @@ class BlockchainAnalytics:
         report_type: str = "comprehensive",
         time_period: Optional[Tuple[datetime, datetime]] = None
     ) -> AnalyticsReport:
-        """Generate comprehensive analytics report."""
-        try:
+        """Generate comprehensive analytics report."""        try:
             if time_period is None:
                 end_time = datetime.utcnow()
                 start_time = end_time - timedelta(days=7)
@@ -647,8 +614,7 @@ class BlockchainAnalytics:
             raise
     
     def _generate_insights(self, metrics_summary: Dict[AnalyticsMetric, Dict[str, Any]]) -> List[str]:
-        """Generate key insights from metrics data."""
-        insights = []
+        """Generate key insights from metrics data."""        insights = []
         
         for metric, summary in metrics_summary.items():
             if "error" in summary:
@@ -673,8 +639,7 @@ class BlockchainAnalytics:
         return insights
     
     def _generate_recommendations(self, metrics_summary: Dict[AnalyticsMetric, Dict[str, Any]]) -> List[str]:
-        """Generate actionable recommendations from metrics data."""
-        recommendations = []
+        """Generate actionable recommendations from metrics data."""        recommendations = []
         
         for metric, summary in metrics_summary.items():
             if "error" in summary:
@@ -700,8 +665,7 @@ class BlockchainAnalytics:
         return recommendations
     
     async def stop_monitoring(self) -> None:
-        """Stop analytics monitoring and clean up resources."""
-        try:
+        """Stop analytics monitoring and clean up resources."""        try:
             for task in self.running_tasks:
                 task.cancel()
             
@@ -714,8 +678,7 @@ class BlockchainAnalytics:
             logger.error(f"Error stopping analytics monitoring: {e}")
     
     def get_active_alerts(self, severity: Optional[AlertSeverity] = None) -> List[AnalyticsAlert]:
-        """Get active alerts, optionally filtered by severity."""
-        alerts = [
+        """Get active alerts, optionally filtered by severity."""        alerts = [
             alert for alert in self.alerts
             if alert.timestamp > datetime.utcnow() - timedelta(hours=24)
         ]
@@ -726,8 +689,7 @@ class BlockchainAnalytics:
         return alerts
     
     def get_fraud_analysis(self) -> Dict[str, Any]:
-        """Get specialized fraud analysis using ML models."""
-        if not self.config.fraud_detection_enabled:
+        """Get specialized fraud analysis using ML models."""        if not self.config.fraud_detection_enabled:
             return {"error": "Fraud detection not enabled"}
         
         try:

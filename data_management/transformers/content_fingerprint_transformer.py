@@ -1,5 +1,4 @@
-"""
-🔐 Content Fingerprint Transformer - IA Influencer Agent Platform Enterprise
+"""🔐 Content Fingerprint Transformer - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/data_management/transformers/content_fingerprint_transformer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -22,7 +21,6 @@ poursuivie selon les lois allemandes et internationales.
 - DBA: Fahed Mlaiel (mlaiel@live.de)
 - Sécurité Expert: Fahed Mlaiel (mlaiel@live.de)
 """
-
 import asyncio
 import logging
 import time
@@ -63,8 +61,7 @@ settings = get_settings()
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types d'empreintes supportées"""
-    AUDIO_CHROMAPRINT = "audio_chromaprint"
+    """Types d'empreintes supportées"""    AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_SPECTRAL = "audio_spectral"
     AUDIO_MFCC = "audio_mfcc"
     VIDEO_PHASH = "video_phash"
@@ -80,8 +77,7 @@ class FingerprintType(Enum):
     TEXT_STRUCTURAL = "text_structural"
 
 class FingerprintAlgorithm(Enum):
-    """Algorithmes d'empreintes supportés"""
-    CHROMAPRINT = "chromaprint"
+    """Algorithmes d'empreintes supportés"""    CHROMAPRINT = "chromaprint"
     ESSENTIA = "essentia"
     PERCEPTUAL_HASH = "perceptual_hash"
     DIFFERENCE_HASH = "difference_hash"
@@ -94,8 +90,7 @@ class FingerprintAlgorithm(Enum):
 
 @dataclass
 class FingerprintConfig:
-    """Configuration pour l'empreinte digitale"""
-    algorithm: FingerprintAlgorithm
+    """Configuration pour l'empreinte digitale"""    algorithm: FingerprintAlgorithm
     fingerprint_type: FingerprintType
     parameters: Dict[str, Any]
     similarity_threshold: float = 0.85
@@ -104,8 +99,7 @@ class FingerprintConfig:
 
 @dataclass
 class ContentFingerprintResult:
-    """Résultat d'empreinte de contenu"""
-    success: bool
+    """Résultat d'empreinte de contenu"""    success: bool
     content_path: str
     fingerprint_type: FingerprintType
     algorithm: FingerprintAlgorithm
@@ -117,8 +111,7 @@ class ContentFingerprintResult:
     errors: List[str]
 
 class AudioFingerprintTransformer:
-    """Transformateur d'empreintes audio professionnel"""
-    
+    """Transformateur d'empreintes audio professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.supported_formats = {'.mp3', '.wav', '.flac', '.ogg', '.m4a', '.aac'}
@@ -127,8 +120,7 @@ class AudioFingerprintTransformer:
         self._init_audio_models()
     
     def _init_audio_models(self):
-        """Initialise les modèles pour l'analyse audio"""
-        try:
+        """Initialise les modèles pour l'analyse audio"""        try:
             # Essentia algorithms
             self.onset_detector = es.OnsetDetection(method='hfc')
             self.spectral_peaks = es.SpectralPeaks()
@@ -149,8 +141,7 @@ class AudioFingerprintTransformer:
         audio_path: str,
         config: FingerprintConfig
     ) -> ContentFingerprintResult:
-        """Génère une empreinte Chromaprint"""
-        
+        """Génère une empreinte Chromaprint"""        
         start_time = time.time()
         
         try:
@@ -211,8 +202,7 @@ class AudioFingerprintTransformer:
         audio_path: str,
         config: FingerprintConfig
     ) -> ContentFingerprintResult:
-        """Génère une empreinte spectrale avancée"""
-        
+        """Génère une empreinte spectrale avancée"""        
         start_time = time.time()
         
         try:
@@ -272,8 +262,7 @@ class AudioFingerprintTransformer:
             )
     
     def _extract_spectral_features(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Extrait les caractéristiques spectrales"""
-        
+        """Extrait les caractéristiques spectrales"""        
         # Chroma features
         chroma = librosa.feature.chroma_stft(y=y, sr=sr)
         chroma_mean = np.mean(chroma, axis=1)
@@ -297,8 +286,7 @@ class AudioFingerprintTransformer:
         return features
     
     def _create_unified_audio_vector(self, features: Dict[str, Any]) -> np.ndarray:
-        """Crée un vecteur unifié à partir des caractéristiques audio"""
-        
+        """Crée un vecteur unifié à partir des caractéristiques audio"""        
         vectors = []
         
         for key, value in features.items():
@@ -313,8 +301,7 @@ class AudioFingerprintTransformer:
         return np.concatenate(vectors)
 
 class VideoFingerprintTransformer:
-    """Transformateur d'empreintes vidéo professionnel"""
-    
+    """Transformateur d'empreintes vidéo professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.supported_formats = {'.mp4', '.avi', '.mov', '.mkv', '.webm', '.flv'}
@@ -323,8 +310,7 @@ class VideoFingerprintTransformer:
         self._init_video_models()
     
     def _init_video_models(self):
-        """Initialise les modèles pour l'analyse vidéo"""
-        try:
+        """Initialise les modèles pour l'analyse vidéo"""        try:
             # Détecteur de caractéristiques
             self.feature_detector = cv2.SIFT_create()
             self.orb_detector = cv2.ORB_create()
@@ -343,8 +329,7 @@ class VideoFingerprintTransformer:
         video_path: str,
         config: FingerprintConfig
     ) -> ContentFingerprintResult:
-        """Génère un hash perceptuel vidéo"""
-        
+        """Génère un hash perceptuel vidéo"""        
         start_time = time.time()
         
         try:
@@ -419,8 +404,7 @@ class VideoFingerprintTransformer:
             )
     
     def _compute_perceptual_hash(self, frame: np.ndarray) -> str:
-        """Calcule le hash perceptuel d'une frame"""
-        
+        """Calcule le hash perceptuel d'une frame"""        
         # Réduction à 8x8 pixels
         resized = cv2.resize(frame, (8, 8))
         
@@ -440,14 +424,12 @@ class VideoFingerprintTransformer:
         return hex_hash
     
     def _combine_frame_hashes(self, frame_hashes: List[str]) -> str:
-        """Combine les hashes de frames en un hash vidéo global"""
-        
+        """Combine les hashes de frames en un hash vidéo global"""        
         combined = ''.join(frame_hashes)
         return hashlib.sha256(combined.encode()).hexdigest()
 
 class ImageFingerprintTransformer:
-    """Transformateur d'empreintes image professionnel"""
-    
+    """Transformateur d'empreintes image professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.supported_formats = {'.jpg', '.jpeg', '.png', '.tiff', '.bmp', '.webp', '.gif'}
@@ -456,8 +438,7 @@ class ImageFingerprintTransformer:
         self._init_image_models()
     
     def _init_image_models(self):
-        """Initialise les modèles pour l'analyse d'images"""
-        try:
+        """Initialise les modèles pour l'analyse d'images"""        try:
             # Détecteur de visages
             self.face_cascade = cv2.CascadeClassifier(
                 cv2.data.haarcascades + 'haarcascade_frontalface_default.xml'
@@ -478,8 +459,7 @@ class ImageFingerprintTransformer:
         image_path: str,
         config: FingerprintConfig
     ) -> ContentFingerprintResult:
-        """Génère plusieurs types de hashes pour robustesse"""
-        
+        """Génère plusieurs types de hashes pour robustesse"""        
         start_time = time.time()
         
         try:
@@ -544,8 +524,7 @@ class ImageFingerprintTransformer:
             )
     
     def _extract_face_encodings(self, image_path: str) -> List[np.ndarray]:
-        """Extrait les encodages de visages"""
-        
+        """Extrait les encodages de visages"""        
         try:
             # Chargement de l'image pour face_recognition
             image = face_recognition.load_image_file(image_path)
@@ -568,8 +547,7 @@ class ImageFingerprintTransformer:
         hashes: Dict[str, str],
         face_encodings: List[np.ndarray]
     ) -> np.ndarray:
-        """Crée un vecteur de caractéristiques d'image"""
-        
+        """Crée un vecteur de caractéristiques d'image"""        
         features = []
         
         # Conversion des hashes en valeurs numériques
@@ -596,8 +574,7 @@ class ImageFingerprintTransformer:
         return np.array(features, dtype=np.float32)
 
 class TextFingerprintTransformer:
-    """Transformateur d'empreintes texte professionnel"""
-    
+    """Transformateur d'empreintes texte professionnel"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -605,8 +582,7 @@ class TextFingerprintTransformer:
         self._init_text_models()
     
     def _init_text_models(self):
-        """Initialise les modèles pour l'analyse de texte"""
-        try:
+        """Initialise les modèles pour l'analyse de texte"""        try:
             # Modèle de sentence embeddings
             self.sentence_model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -621,8 +597,7 @@ class TextFingerprintTransformer:
         text_content: str,
         config: FingerprintConfig
     ) -> ContentFingerprintResult:
-        """Génère une empreinte sémantique du texte"""
-        
+        """Génère une empreinte sémantique du texte"""        
         start_time = time.time()
         
         try:
@@ -681,8 +656,7 @@ class TextFingerprintTransformer:
             )
     
     def _clean_text(self, text: str) -> str:
-        """Nettoie le texte pour l'analyse"""
-        
+        """Nettoie le texte pour l'analyse"""        
         # Suppression des caractères spéciaux en excès
         import re
         
@@ -695,8 +669,7 @@ class TextFingerprintTransformer:
         return text.strip()
     
     def _extract_structural_features(self, text: str) -> np.ndarray:
-        """Extrait les caractéristiques structurelles du texte"""
-        
+        """Extrait les caractéristiques structurelles du texte"""        
         import re
         
         features = []
@@ -728,8 +701,7 @@ class TextFingerprintTransformer:
         return np.array(features, dtype=np.float32)
     
     def _detect_language(self, text: str) -> str:
-        """Détection simple de la langue"""
-        
+        """Détection simple de la langue"""        
         # Détection basique basée sur les caractères fréquents
         if re.search(r'[àâäçéèêëïîôùûüÿñæœ]', text.lower()):
             return 'fr'
@@ -741,8 +713,7 @@ class TextFingerprintTransformer:
             return 'en'
 
 class ContentFingerprintTransformer:
-    """Gestionnaire principal des empreintes de contenu"""
-    
+    """Gestionnaire principal des empreintes de contenu"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -757,8 +728,7 @@ class ContentFingerprintTransformer:
         self._init_vector_search()
     
     def _init_vector_search(self):
-        """Initialise l'index FAISS pour la recherche vectorielle"""
-        try:
+        """Initialise l'index FAISS pour la recherche vectorielle"""        try:
             # Index FAISS pour la similarité cosinus
             dimension = 512  # Dimension par défaut
             self.vector_index = faiss.IndexFlatIP(dimension)
@@ -774,8 +744,7 @@ class ContentFingerprintTransformer:
         fingerprint_config: FingerprintConfig,
         creator_type: Optional[str] = None
     ) -> ContentFingerprintResult:
-        """Génère une empreinte pour tout type de contenu"""
-        
+        """Génère une empreinte pour tout type de contenu"""        
         try:
             # Validation du fichier
             if not Path(content_path).exists():
@@ -812,8 +781,7 @@ class ContentFingerprintTransformer:
             )
     
     def _detect_content_type(self, content_path: str) -> str:
-        """Détecte le type de contenu basé sur l'extension"""
-        
+        """Détecte le type de contenu basé sur l'extension"""        
         ext = Path(content_path).suffix.lower()
         
         audio_exts = {'.mp3', '.wav', '.flac', '.ogg', '.m4a', '.aac'}
@@ -837,8 +805,7 @@ class ContentFingerprintTransformer:
         audio_path: str,
         config: FingerprintConfig
     ) -> ContentFingerprintResult:
-        """Génère une empreinte audio"""
-        
+        """Génère une empreinte audio"""        
         if config.fingerprint_type == FingerprintType.AUDIO_CHROMAPRINT:
             return self.audio_transformer.generate_chromaprint_fingerprint(audio_path, config)
         elif config.fingerprint_type == FingerprintType.AUDIO_SPECTRAL:
@@ -851,8 +818,7 @@ class ContentFingerprintTransformer:
         video_path: str,
         config: FingerprintConfig
     ) -> ContentFingerprintResult:
-        """Génère une empreinte vidéo"""
-        
+        """Génère une empreinte vidéo"""        
         if config.fingerprint_type == FingerprintType.VIDEO_PHASH:
             return self.video_transformer.generate_perceptual_hash(video_path, config)
         else:
@@ -863,8 +829,7 @@ class ContentFingerprintTransformer:
         image_path: str,
         config: FingerprintConfig
     ) -> ContentFingerprintResult:
-        """Génère une empreinte image"""
-        
+        """Génère une empreinte image"""        
         if config.fingerprint_type in [
             FingerprintType.IMAGE_PHASH,
             FingerprintType.IMAGE_DHASH,
@@ -880,8 +845,7 @@ class ContentFingerprintTransformer:
         text_path: str,
         config: FingerprintConfig
     ) -> ContentFingerprintResult:
-        """Génère une empreinte texte"""
-        
+        """Génère une empreinte texte"""        
         # Lecture du contenu textuel
         with open(text_path, 'r', encoding='utf-8') as f:
             text_content = f.read()
@@ -897,8 +861,7 @@ class ContentFingerprintTransformer:
         fingerprint2: ContentFingerprintResult,
         similarity_threshold: float = 0.85
     ) -> Dict[str, Any]:
-        """Compare deux empreintes pour déterminer la similarité"""
-        
+        """Compare deux empreintes pour déterminer la similarité"""        
         if fingerprint1.fingerprint_type != fingerprint2.fingerprint_type:
             return {
                 'similarity_score': 0.0,
@@ -947,8 +910,7 @@ class ContentFingerprintTransformer:
         vector1: np.ndarray,
         vector2: np.ndarray
     ) -> float:
-        """Calcule la similarité entre deux vecteurs"""
-        
+        """Calcule la similarité entre deux vecteurs"""        
         # Normalisation des vecteurs
         v1_norm = vector1 / np.linalg.norm(vector1)
         v2_norm = vector2 / np.linalg.norm(vector2)
@@ -963,8 +925,7 @@ class ContentFingerprintTransformer:
         hash1: Union[str, bytes],
         hash2: Union[str, bytes]
     ) -> float:
-        """Calcule la similarité entre deux hashes"""
-        
+        """Calcule la similarité entre deux hashes"""        
         if hash1 == hash2:
             return 1.0
         
@@ -988,8 +949,7 @@ class ContentFingerprintTransformer:
         config: FingerprintConfig,
         creator_type: Optional[str] = None
     ) -> List[ContentFingerprintResult]:
-        """Génère des empreintes en lot de manière asynchrone"""
-        
+        """Génère des empreintes en lot de manière asynchrone"""        
         tasks = []
         for path in content_paths:
             task = asyncio.create_task(
@@ -1027,8 +987,7 @@ class ContentFingerprintTransformer:
         config: FingerprintConfig,
         creator_type: Optional[str] = None
     ) -> ContentFingerprintResult:
-        """Version asynchrone de la génération d'empreinte"""
-        
+        """Version asynchrone de la génération d'empreinte"""        
         loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             None,

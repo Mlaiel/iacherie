@@ -33,8 +33,7 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 - Permanent legal documentation and public disclosure of violation
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
-"""
-from .matching_engine import (
+"""from .matching_engine import (
     CreatorMatchingEngine,
     CompatibilityAnalyzer,
     CollaborationMatcher,

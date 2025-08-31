@@ -1,5 +1,4 @@
-"""
-🚀 Pricing Models - Industrial-Grade Data Models for Pricing System
+"""🚀 Pricing Models - Industrial-Grade Data Models for Pricing System
 ================================================================
 
 Advanced data models and database schemas for comprehensive pricing management.
@@ -37,7 +36,6 @@ Creator Registration → Content Upload → Pricing Analysis → Dynamic Optimiz
 Revenue Tracking → Performance Analytics → Tier Management
 ================================================================
 """
-
 from sqlalchemy import Column, Integer, String, DateTime, Decimal, Boolean, JSON, Text, ForeignKey, Index
 from sqlalchemy.dialects.postgresql import UUID, JSONB, ARRAY
 from sqlalchemy.ext.declarative import declarative_base
@@ -52,8 +50,7 @@ Base = declarative_base()
 
 
 class PricingStrategy(Base):
-    """Pricing strategies configuration table"""
-    __tablename__ = 'pricing_strategies'
+    """Pricing strategies configuration table"""    __tablename__ = 'pricing_strategies'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     strategy_name = Column(String(100), unique=True, nullable=False)
@@ -75,8 +72,7 @@ class PricingStrategy(Base):
 
 
 class PricingTierModel(Base):
-    """Pricing tiers configuration table"""
-    __tablename__ = 'pricing_tiers'
+    """Pricing tiers configuration table"""    __tablename__ = 'pricing_tiers'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     tier_name = Column(String(50), unique=True, nullable=False)
@@ -107,8 +103,7 @@ class PricingTierModel(Base):
 
 
 class UserSubscription(Base):
-    """User subscription management table"""
-    __tablename__ = 'user_subscriptions'
+    """User subscription management table"""    __tablename__ = 'user_subscriptions'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
@@ -143,8 +138,7 @@ class UserSubscription(Base):
 
 
 class PricingCalculation(Base):
-    """Pricing calculations and recommendations table"""
-    __tablename__ = 'pricing_calculations'
+    """Pricing calculations and recommendations table"""    __tablename__ = 'pricing_calculations'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), ForeignKey('content.id'), nullable=False)
@@ -180,8 +174,7 @@ class PricingCalculation(Base):
 
 
 class UsageRecord(Base):
-    """Usage tracking for subscription limits"""
-    __tablename__ = 'usage_records'
+    """Usage tracking for subscription limits"""    __tablename__ = 'usage_records'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     subscription_id = Column(UUID(as_uuid=True), ForeignKey('user_subscriptions.id'), nullable=False)
@@ -207,8 +200,7 @@ class UsageRecord(Base):
 
 
 class TierUpgrade(Base):
-    """Tier upgrade recommendations and history"""
-    __tablename__ = 'tier_upgrades'
+    """Tier upgrade recommendations and history"""    __tablename__ = 'tier_upgrades'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey('users.id'), nullable=False)
@@ -236,8 +228,7 @@ class TierUpgrade(Base):
 
 
 class BillingEvent(Base):
-    """Billing events and payment history"""
-    __tablename__ = 'billing_events'
+    """Billing events and payment history"""    __tablename__ = 'billing_events'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     subscription_id = Column(UUID(as_uuid=True), ForeignKey('user_subscriptions.id'), nullable=False)
@@ -274,8 +265,7 @@ class BillingEvent(Base):
 
 
 class PricingAuditLog(Base):
-    """Audit log for pricing changes and decisions"""
-    __tablename__ = 'pricing_audit_logs'
+    """Audit log for pricing changes and decisions"""    __tablename__ = 'pricing_audit_logs'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     entity_type = Column(String(50), nullable=False)  # content, tier, strategy
@@ -301,8 +291,7 @@ class PricingAuditLog(Base):
 
 
 class MarketIntelligence(Base):
-    """Market intelligence data for pricing decisions"""
-    __tablename__ = 'market_intelligence'
+    """Market intelligence data for pricing decisions"""    __tablename__ = 'market_intelligence'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     market_segment = Column(String(100), nullable=False)
@@ -335,8 +324,7 @@ class MarketIntelligence(Base):
 
 
 class PricingExperiment(Base):
-    """A/B testing for pricing strategies"""
-    __tablename__ = 'pricing_experiments'
+    """A/B testing for pricing strategies"""    __tablename__ = 'pricing_experiments'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     experiment_name = Column(String(200), nullable=False)
@@ -370,8 +358,7 @@ class PricingExperiment(Base):
 
 
 class DynamicPricingRule(Base):
-    """Dynamic pricing rules and triggers"""
-    __tablename__ = 'dynamic_pricing_rules'
+    """Dynamic pricing rules and triggers"""    __tablename__ = 'dynamic_pricing_rules'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     rule_name = Column(String(200), nullable=False)

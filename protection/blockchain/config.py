@@ -1,5 +1,4 @@
-"""
-Blockchain Module Configuration
+"""Blockchain Module Configuration
 Professional configuration management for all blockchain services
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,7 +19,6 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, Any, List, Optional
 from enum import Enum
 import os
@@ -28,8 +26,7 @@ from dataclasses import dataclass
 
 
 class Environment(Enum):
-    """Deployment environments"""
-    DEVELOPMENT = "development"
+    """Deployment environments"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -37,8 +34,7 @@ class Environment(Enum):
 
 @dataclass
 class BlockchainConfig:
-    """Complete blockchain module configuration"""
-    
+    """Complete blockchain module configuration"""    
     # Environment settings
     environment: Environment = Environment.DEVELOPMENT
     debug_mode: bool = True
@@ -65,8 +61,7 @@ class BlockchainConfig:
     cache_ttl: int = 3600
     
     def __post_init__(self):
-        """Initialize default configurations"""
-        if self.ethereum_config is None:
+        """Initialize default configurations"""        if self.ethereum_config is None:
             self.ethereum_config = self._get_default_ethereum_config()
         
         if self.polygon_config is None:
@@ -88,8 +83,7 @@ class BlockchainConfig:
             self.api_keys = {}
     
     def _get_default_ethereum_config(self) -> Dict[str, Any]:
-        """Default Ethereum configuration"""
-        if self.environment == Environment.PRODUCTION:
+        """Default Ethereum configuration"""        if self.environment == Environment.PRODUCTION:
             return {
                 'name': 'Ethereum Mainnet',
                 'chain_id': 1,
@@ -111,8 +105,7 @@ class BlockchainConfig:
             }
     
     def _get_default_polygon_config(self) -> Dict[str, Any]:
-        """Default Polygon configuration"""
-        if self.environment == Environment.PRODUCTION:
+        """Default Polygon configuration"""        if self.environment == Environment.PRODUCTION:
             return {
                 'name': 'Polygon Mainnet',
                 'chain_id': 137,
@@ -134,8 +127,7 @@ class BlockchainConfig:
             }
     
     def _get_default_bsc_config(self) -> Dict[str, Any]:
-        """Default Binance Smart Chain configuration"""
-        if self.environment == Environment.PRODUCTION:
+        """Default Binance Smart Chain configuration"""        if self.environment == Environment.PRODUCTION:
             return {
                 'name': 'BSC Mainnet',
                 'chain_id': 56,
@@ -157,8 +149,7 @@ class BlockchainConfig:
             }
     
     def _get_default_ipfs_config(self) -> Dict[str, Any]:
-        """Default IPFS configuration"""
-        return {
+        """Default IPFS configuration"""        return {
             'api_url': '/ip4/127.0.0.1/tcp/5001',
             'gateway_url': 'https://ipfs.io/ipfs/',
             'timeout': 30,
@@ -171,8 +162,7 @@ class BlockchainConfig:
         }
     
     def _get_default_arweave_config(self) -> Dict[str, Any]:
-        """Default Arweave configuration"""
-        return {
+        """Default Arweave configuration"""        return {
             'host': 'arweave.net',
             'port': 443,
             'protocol': 'https',
@@ -182,8 +172,7 @@ class BlockchainConfig:
 
 
 def load_config_from_env() -> BlockchainConfig:
-    """Load configuration from environment variables"""
-    config = BlockchainConfig()
+    """Load configuration from environment variables"""    config = BlockchainConfig()
     
     # Environment detection
     env_name = os.getenv('BLOCKCHAIN_ENV', 'development').lower()
@@ -230,8 +219,7 @@ def load_config_from_env() -> BlockchainConfig:
 
 
 def get_production_config() -> BlockchainConfig:
-    """Get production-ready configuration"""
-    config = BlockchainConfig(
+    """Get production-ready configuration"""    config = BlockchainConfig(
         environment=Environment.PRODUCTION,
         debug_mode=False,
         max_concurrent_transactions=20,
@@ -249,8 +237,7 @@ def get_production_config() -> BlockchainConfig:
 
 
 def get_development_config() -> BlockchainConfig:
-    """Get development configuration"""
-    return BlockchainConfig(
+    """Get development configuration"""    return BlockchainConfig(
         environment=Environment.DEVELOPMENT,
         debug_mode=True,
         max_concurrent_transactions=5,
@@ -260,8 +247,7 @@ def get_development_config() -> BlockchainConfig:
 
 
 def get_testing_config() -> BlockchainConfig:
-    """Get testing configuration"""
-    return BlockchainConfig(
+    """Get testing configuration"""    return BlockchainConfig(
         environment=Environment.TESTING,
         debug_mode=True,
         max_concurrent_transactions=3,

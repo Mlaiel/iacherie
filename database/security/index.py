@@ -1,5 +1,4 @@
-"""
-Database Security Module Index
+"""Database Security Module Index
 
 Central index file for database security module components providing
 enterprise-grade security features for the IA Influencer Agent platform.
@@ -24,7 +23,6 @@ Contact: mlaiel@live.de
 of this code without explicit written permission from Fahed Mlaiel is strictly 
 prohibited and will result in immediate legal action.
 """
-
 # Core security components
 from .encryption_manager import (
     DatabaseEncryptionManager,
@@ -247,13 +245,11 @@ __all__ = [
 
 
 def get_security_suite():
-    """
-    Get complete database security suite with all components configured
+    """    Get complete database security suite with all components configured
     
     Returns:
         Dictionary containing all security components ready for use
-    """
-    return {
+    """    return {
         "encryption_manager": DatabaseEncryptionManager,
         "access_control": DatabaseAccessControl,
         "audit_logger": DatabaseAuditLogger, 
@@ -266,13 +262,11 @@ def get_security_suite():
 
 
 def get_module_info():
-    """
-    Get module information and metadata
+    """    Get module information and metadata
     
     Returns:
         Dictionary containing module metadata
-    """
-    return {
+    """    return {
         "name": "Database Security Module",
         "version": __version__,
         "author": __author__,

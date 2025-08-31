@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Business Metrics Analysis Tests
+"""Business Metrics Analysis Tests
 
 Comprehensive test suite for professional business metrics analysis with advanced ROI calculation,
 revenue optimization, audience analytics, and strategic business intelligence validation.
@@ -46,7 +43,6 @@ AND WRITTEN AUTHORIZATION WILL FACE SEVERE LEGAL CONSEQUENCES.
 
 Contact: Fahed Mlaiel - mlaiel@live.de
 """
-
 import pytest
 import sys
 import os
@@ -69,11 +65,9 @@ from ai.quality_assessment.business_metrics import (
 
 
 class TestBusinessMetricsAnalyzer(TestCase):
-    """Comprehensive test suite for BusinessMetricsAnalyzer with professional business intelligence."""
-    
+    """Comprehensive test suite for BusinessMetricsAnalyzer with professional business intelligence."""    
     def setUp(self):
-        """Set up test fixtures with comprehensive business data."""
-        self.analyzer = BusinessMetricsAnalyzer()
+        """Set up test fixtures with comprehensive business data."""        self.analyzer = BusinessMetricsAnalyzer()
         
         # Sample business data for different creator types
         self.influencer_data = {
@@ -194,8 +188,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_comprehensive_business_analysis(self):
-        """Test comprehensive business metrics analysis."""
-        analysis_result = await self.analyzer.analyze_business_metrics(
+        """Test comprehensive business metrics analysis."""        analysis_result = await self.analyzer.analyze_business_metrics(
             self.influencer_data,
             industry='lifestyle',
             analysis_period='monthly'
@@ -228,8 +221,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_revenue_analysis_detailed(self):
-        """Test detailed revenue analysis functionality."""
-        revenue_result = await self.analyzer.analyze_revenue(
+        """Test detailed revenue analysis functionality."""        revenue_result = await self.analyzer.analyze_revenue(
             self.influencer_data,
             historical_data=self.historical_data
         )
@@ -271,8 +263,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_roi_calculation_comprehensive(self):
-        """Test comprehensive ROI calculation analysis."""
-        # Define investment data
+        """Test comprehensive ROI calculation analysis."""        # Define investment data
         investment_data = {
             'content_creation_costs': 2500.0,
             'equipment_depreciation': 800.0,
@@ -322,8 +313,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_audience_metrics_analysis(self):
-        """Test comprehensive audience metrics analysis."""
-        audience_result = await self.analyzer.analyze_audience_metrics(self.influencer_data)
+        """Test comprehensive audience metrics analysis."""        audience_result = await self.analyzer.analyze_audience_metrics(self.influencer_data)
         
         # Validate audience metrics structure
         self.assertIsInstance(audience_result, AudienceMetrics)
@@ -365,8 +355,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_engagement_analysis_detailed(self):
-        """Test detailed engagement analysis functionality."""
-        engagement_result = await self.analyzer.analyze_engagement(
+        """Test detailed engagement analysis functionality."""        engagement_result = await self.analyzer.analyze_engagement(
             self.influencer_data,
             platform_specific=True
         )
@@ -409,8 +398,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_growth_metrics_analysis(self):
-        """Test growth metrics analysis functionality."""
-        growth_result = await self.analyzer.analyze_growth_metrics(
+        """Test growth metrics analysis functionality."""        growth_result = await self.analyzer.analyze_growth_metrics(
             self.influencer_data,
             historical_data=self.historical_data
         )
@@ -454,8 +442,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_monetization_analysis(self):
-        """Test monetization analysis functionality."""
-        monetization_result = await self.analyzer.analyze_monetization(
+        """Test monetization analysis functionality."""        monetization_result = await self.analyzer.analyze_monetization(
             self.influencer_data,
             industry_benchmarks=self.industry_benchmarks['lifestyle_influencer']
         )
@@ -501,8 +488,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_competitive_position_analysis(self):
-        """Test competitive position analysis functionality."""
-        competitive_result = await self.analyzer.analyze_competitive_position(
+        """Test competitive position analysis functionality."""        competitive_result = await self.analyzer.analyze_competitive_position(
             self.influencer_data,
             industry='lifestyle',
             competitor_data=[
@@ -547,8 +533,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
     
     @pytest.mark.asyncio
     async def test_cross_platform_business_analysis(self):
-        """Test business analysis across multiple platforms."""
-        platform_results = {}
+        """Test business analysis across multiple platforms."""        platform_results = {}
         
         # Test different creator types
         test_data = {
@@ -587,8 +572,7 @@ class TestBusinessMetricsAnalyzer(TestCase):
         self.assertGreater(musician_engagement, business_engagement)
     
     def test_business_metrics_data_models(self):
-        """Test business metrics data model validation."""
-        # Test RevenueAnalysis model
+        """Test business metrics data model validation."""        # Test RevenueAnalysis model
         revenue_analysis = RevenueAnalysis(
             total_monthly_revenue=8500.0,
             revenue_per_follower=0.068,

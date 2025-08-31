@@ -1,5 +1,4 @@
-"""
-Text Detection Engine Module
+"""Text Detection Engine Module
 ===========================
 
 Advanced text fingerprinting and detection engine for textual content surveillance.
@@ -12,7 +11,6 @@ WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TextFingerprint:
-    """Text fingerprint data structure."""
-    fingerprint_id: str
+    """Text fingerprint data structure."""    fingerprint_id: str
     user_id: str
     title: str
     content_length: int
@@ -55,8 +52,7 @@ class TextFingerprint:
 
 @dataclass
 class TextMatch:
-    """Text match result structure."""
-    original_fingerprint_id: str
+    """Text match result structure."""    original_fingerprint_id: str
     detected_url: str
     similarity_score: float
     confidence_level: float
@@ -69,8 +65,7 @@ class TextMatch:
 
 
 class TextFeatureExtractor:
-    """Advanced text feature extraction for fingerprinting."""
-    
+    """Advanced text feature extraction for fingerprinting."""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.max_length = config.get("max_length", 10000)
@@ -97,8 +92,7 @@ class TextFeatureExtractor:
             pass
     
     async def initialize(self) -> bool:
-        """Initialize NLP models."""
-        try:
+        """Initialize NLP models."""        try:
             # Load sentence transformer
             self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -116,8 +110,7 @@ class TextFeatureExtractor:
             return False
     
     async def extract_features(self, text: str) -> Dict[str, Any]:
-        """Extract comprehensive text features from text content."""
-        try:
+        """Extract comprehensive text features from text content."""        try:
             # Preprocess text
             cleaned_text = self._preprocess_text(text)
             
@@ -162,8 +155,7 @@ class TextFeatureExtractor:
             raise
     
     def _preprocess_text(self, text: str) -> str:
-        """Preprocess text for feature extraction."""
-        # Remove extra whitespace
+        """Preprocess text for feature extraction."""        # Remove extra whitespace
         text = re.sub(r'\s+', ' ', text)
         
         # Remove special characters but keep punctuation
@@ -176,8 +168,7 @@ class TextFeatureExtractor:
         return text.strip()
     
     async def _extract_basic_features(self, text: str) -> Dict[str, Any]:
-        """Extract basic text statistics."""
-        features = {}
+        """Extract basic text statistics."""        features = {}
         
         # Character-level features
         features["char_count"] = len(text)
@@ -210,8 +201,7 @@ class TextFeatureExtractor:
         return features
     
     async def _extract_linguistic_features(self, text: str) -> Dict[str, Any]:
-        """Extract linguistic features using NLP."""
-        features = {}
+        """Extract linguistic features using NLP."""        features = {}
         
         try:
             # POS tagging with NLTK
@@ -248,8 +238,7 @@ class TextFeatureExtractor:
         return features
     
     async def _extract_semantic_features(self, text: str) -> Dict[str, Any]:
-        """Extract semantic features using embeddings."""
-        features = {}
+        """Extract semantic features using embeddings."""        features = {}
         
         try:
             if self.sentence_transformer:
@@ -281,8 +270,7 @@ class TextFeatureExtractor:
         return features
     
     async def _extract_stylistic_features(self, text: str) -> Dict[str, Any]:
-        """Extract stylistic features."""
-        features = {}
+        """Extract stylistic features."""        features = {}
         
         try:
             # Vocabulary richness
@@ -328,8 +316,7 @@ class TextFeatureExtractor:
         return features
     
     async def _extract_ngram_features(self, text: str) -> Dict[str, Any]:
-        """Extract n-gram based features."""
-        features = {}
+        """Extract n-gram based features."""        features = {}
         
         try:
             # Character n-grams
@@ -353,8 +340,7 @@ class TextFeatureExtractor:
         return features
     
     async def _extract_hash_features(self, text: str) -> Dict[str, Any]:
-        """Extract hash-based signatures."""
-        features = {}
+        """Extract hash-based signatures."""        features = {}
         
         try:
             # MD5 hash
@@ -387,8 +373,7 @@ class TextFeatureExtractor:
 
 
 class TextSimilarityCalculator:
-    """Advanced text similarity calculation engine."""
-    
+    """Advanced text similarity calculation engine."""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.feature_weights = config.get("feature_weights", {
@@ -403,8 +388,7 @@ class TextSimilarityCalculator:
         features1: Dict[str, Any], 
         features2: Dict[str, Any]
     ) -> Tuple[float, Dict[str, float]]:
-        """Calculate comprehensive similarity between two text feature sets."""
-        try:
+        """Calculate comprehensive similarity between two text feature sets."""        try:
             similarities = {}
             weighted_sum = 0.0
             total_weight = 0.0
@@ -448,8 +432,7 @@ class TextSimilarityCalculator:
             return 0.0, {}
     
     async def _calculate_semantic_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate semantic similarity using embeddings."""
-        try:
+        """Calculate semantic similarity using embeddings."""        try:
             semantic_similarities = []
             
             # Document embedding similarity
@@ -469,8 +452,7 @@ class TextSimilarityCalculator:
             return None
     
     async def _calculate_lexical_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate lexical similarity using statistical features."""
-        try:
+        """Calculate lexical similarity using statistical features."""        try:
             lexical_similarities = []
             
             # Basic statistics similarity
@@ -498,8 +480,7 @@ class TextSimilarityCalculator:
             return None
     
     async def _calculate_stylistic_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate stylistic similarity."""
-        try:
+        """Calculate stylistic similarity."""        try:
             stylistic_similarities = []
             
             # Stylistic features
@@ -520,8 +501,7 @@ class TextSimilarityCalculator:
             return None
     
     async def _calculate_ngram_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Optional[float]:
-        """Calculate n-gram similarity."""
-        try:
+        """Calculate n-gram similarity."""        try:
             ngram_similarities = []
             
             # Character n-gram overlap
@@ -552,13 +532,11 @@ class TextSimilarityCalculator:
 
 
 class TextDetectionEngine:
-    """
-    Advanced text detection engine for content surveillance.
+    """    Advanced text detection engine for content surveillance.
     
     Implements sophisticated text fingerprinting, matching, and detection
     algorithms for protecting textual content across platforms.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.feature_extractor = TextFeatureExtractor(config.get("feature_extraction", {}))
@@ -581,8 +559,7 @@ class TextDetectionEngine:
         }
         
     async def initialize(self) -> bool:
-        """Initialize the text detection engine."""
-        try:
+        """Initialize the text detection engine."""        try:
             # Initialize feature extractor
             await self.feature_extractor.initialize()
             
@@ -612,8 +589,7 @@ class TextDetectionEngine:
         text: str, 
         metadata: Dict[str, Any]
     ) -> TextFingerprint:
-        """Create text fingerprint from text content."""
-        try:
+        """Create text fingerprint from text content."""        try:
             start_time = datetime.utcnow()
             
             # Extract text features
@@ -661,8 +637,7 @@ class TextDetectionEngine:
             raise
     
     async def _store_fingerprint(self, fingerprint: TextFingerprint) -> None:
-        """Store fingerprint in vector database."""
-        try:
+        """Store fingerprint in vector database."""        try:
             # Create embedding vector from semantic features
             embedding_features = []
             
@@ -721,8 +696,7 @@ class TextDetectionEngine:
         text: str, 
         detection_metadata: Dict[str, Any]
     ) -> List[TextMatch]:
-        """Detect text matches against stored fingerprints."""
-        try:
+        """Detect text matches against stored fingerprints."""        try:
             start_time = datetime.utcnow()
             
             # Extract features from input text
@@ -836,8 +810,7 @@ class TextDetectionEngine:
             return []
     
     async def _load_fingerprint(self, fingerprint_id: str) -> Optional[TextFingerprint]:
-        """Load full fingerprint data (placeholder - implement with your storage system)."""
-        # This would load the full fingerprint data from your database
+        """Load full fingerprint data (placeholder - implement with your storage system)."""        # This would load the full fingerprint data from your database
         # For now, return None to indicate not found
         return None
     
@@ -848,8 +821,7 @@ class TextDetectionEngine:
         input_features: Dict[str, Any],
         stored_features: Dict[str, Any]
     ) -> float:
-        """Calculate confidence level for match."""
-        try:
+        """Calculate confidence level for match."""        try:
             # Base confidence from overall similarity
             confidence = similarity_score
             
@@ -879,8 +851,7 @@ class TextDetectionEngine:
         stored_features: Dict[str, Any],
         feature_similarities: Dict[str, float]
     ) -> str:
-        """Determine the type of plagiarism based on feature similarities."""
-        try:
+        """Determine the type of plagiarism based on feature similarities."""        try:
             semantic_sim = feature_similarities.get("semantic", 0)
             lexical_sim = feature_similarities.get("lexical", 0)
             stylistic_sim = feature_similarities.get("stylistic", 0)
@@ -915,8 +886,7 @@ class TextDetectionEngine:
             return "unknown"
     
     async def get_detection_statistics(self) -> Dict[str, Any]:
-        """Get detection engine statistics."""
-        return {
+        """Get detection engine statistics."""        return {
             "engine_type": "text",
             "status": "active",
             "statistics": self.detection_stats,
@@ -928,8 +898,7 @@ class TextDetectionEngine:
         }
     
     def _detect_language(self, text: str) -> str:
-        """Detect the language of the input text."""
-        try:
+        """Detect the language of the input text."""        try:
             # Simple heuristic-based language detection
             text_lower = text.lower()
             
@@ -974,8 +943,7 @@ class TextDetectionEngine:
             return 'en'
     
     async def cleanup(self) -> None:
-        """Cleanup resources."""
-        try:
+        """Cleanup resources."""        try:
             if self.chroma_client:
                 # ChromaDB cleanup if needed
                 pass

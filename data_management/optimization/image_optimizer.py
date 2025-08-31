@@ -1,11 +1,9 @@
-"""
-Image Optimization Pipeline - Content Performance Enhancement
+"""Image Optimization Pipeline - Content Performance Enhancement
 Advanced image processing and optimization for web delivery
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import io
 import hashlib
 from typing import Dict, Any, Optional, List, Tuple, Union
@@ -18,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 
 class ImageOptimizer:
-    """
-    Comprehensive image optimization pipeline
+    """    Comprehensive image optimization pipeline
     
     Features:
     - Multiple output formats (WebP, AVIF, JPEG, PNG)
@@ -28,8 +25,7 @@ class ImageOptimizer:
     - Lossless compression
     - Metadata stripping
     - Progressive JPEG support
-    """
-    
+    """    
     def __init__(self):
         self.supported_formats = ['JPEG', 'PNG', 'WebP', 'AVIF', 'GIF']
         self.quality_settings = {
@@ -57,8 +53,7 @@ class ImageOptimizer:
         image_data: Union[bytes, str],
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Optimize image with multiple format outputs
+        """        Optimize image with multiple format outputs
         
         Args:
             image_data: Raw image bytes or base64 string
@@ -66,8 +61,7 @@ class ImageOptimizer:
             
         Returns:
             Dictionary with optimized image variants
-        """
-        
+        """        
         # Default options
         default_options = {
             'quality': 'medium',
@@ -126,8 +120,7 @@ class ImageOptimizer:
             }
     
     def _get_image_info(self, image: Image.Image) -> Dict[str, Any]:
-        """Extract image information"""
-        
+        """Extract image information"""        
         info = {
             'format': image.format,
             'mode': image.mode,
@@ -153,8 +146,7 @@ class ImageOptimizer:
         return info
     
     def _optimize_original_format(self, image: Image.Image, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize image in its original format"""
-        
+        """Optimize image in its original format"""        
         try:
             # Create copy for optimization
             optimized_image = image.copy()
@@ -197,8 +189,7 @@ class ImageOptimizer:
             return None
     
     def _generate_webp_variants(self, image: Image.Image, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate WebP variants"""
-        
+        """Generate WebP variants"""        
         try:
             variants = {}
             
@@ -218,8 +209,7 @@ class ImageOptimizer:
             return None
     
     def _generate_avif_variants(self, image: Image.Image, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate AVIF variants (if supported)"""
-        
+        """Generate AVIF variants (if supported)"""        
         try:
             # AVIF support may not be available in all PIL installations
             # This is a placeholder for AVIF optimization
@@ -231,8 +221,7 @@ class ImageOptimizer:
             return None
     
     def _generate_responsive_variants(self, image: Image.Image, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate responsive image variants"""
-        
+        """Generate responsive image variants"""        
         try:
             variants = {}
             
@@ -261,8 +250,7 @@ class ImageOptimizer:
             return None
     
     def _resize_image(self, image: Image.Image, size_config: Dict[str, Any]) -> Optional[Image.Image]:
-        """Resize image according to size configuration"""
-        
+        """Resize image according to size configuration"""        
         try:
             target_width = size_config['width']
             target_height = size_config.get('height')
@@ -287,8 +275,7 @@ class ImageOptimizer:
             return None
     
     def _save_webp(self, image: Image.Image, quality_key: str, options: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Save image as WebP"""
-        
+        """Save image as WebP"""        
         try:
             # Convert to RGB if necessary
             if image.mode == 'P':
@@ -320,8 +307,7 @@ class ImageOptimizer:
             return None
     
     def _save_resized_image(self, image: Image.Image, original_format: str, options: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Save resized image in original format"""
-        
+        """Save resized image in original format"""        
         try:
             # Strip metadata if requested
             if options['strip_metadata']:
@@ -356,8 +342,7 @@ class ImageOptimizer:
             return None
     
     def _strip_metadata(self, image: Image.Image) -> Image.Image:
-        """Strip metadata from image"""
-        
+        """Strip metadata from image"""        
         try:
             # Create new image without metadata
             stripped_image = Image.new(image.mode, image.size)
@@ -370,8 +355,7 @@ class ImageOptimizer:
             return image
     
     def _calculate_optimization_stats(self, original_data: bytes, variants: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate optimization statistics"""
-        
+        """Calculate optimization statistics"""        
         try:
             original_size = len(original_data)
             total_variants = 0
@@ -414,18 +398,15 @@ class ImageOptimizer:
 
 
 class BatchImageOptimizer:
-    """
-    Batch processing for multiple images
-    """
-    
+    """    Batch processing for multiple images
+    """    
     def __init__(self):
         self.optimizer = ImageOptimizer()
         self.processed_count = 0
         self.failed_count = 0
         
     def optimize_batch(self, images: List[Dict[str, Any]], options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """
-        Optimize multiple images in batch
+        """        Optimize multiple images in batch
         
         Args:
             images: List of image data dictionaries
@@ -433,8 +414,7 @@ class BatchImageOptimizer:
             
         Returns:
             Batch optimization results
-        """
-        
+        """        
         results = []
         self.processed_count = 0
         self.failed_count = 0

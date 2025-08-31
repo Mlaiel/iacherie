@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Web Surveillance Metrics Collector
+"""IA Influencer Agent - Web Surveillance Metrics Collector
 Enterprise metrics for web crawling and content surveillance operations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -30,7 +29,6 @@ Features:
 - Anti-piracy effectiveness metrics
 - Real-time threat detection
 """
-
 import time
 import asyncio
 import logging
@@ -47,8 +45,7 @@ logger = get_logger(__name__)
 
 
 class CrawlerPlatform(Enum):
-    """Supported crawler platforms"""
-    YOUTUBE = "youtube"
+    """Supported crawler platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -59,8 +56,7 @@ class CrawlerPlatform(Enum):
 
 
 class SurveillanceStatus(Enum):
-    """Surveillance operation status"""
-    ACTIVE = "active"
+    """Surveillance operation status"""    ACTIVE = "active"
     PAUSED = "paused"
     FAILED = "failed"
     COMPLETED = "completed"
@@ -68,8 +64,7 @@ class SurveillanceStatus(Enum):
 
 
 class ThreatLevel(Enum):
-    """Content threat level classification"""
-    LOW = "low"
+    """Content threat level classification"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -77,8 +72,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class CrawlerSession:
-    """Crawler session information"""
-    session_id: str
+    """Crawler session information"""    session_id: str
     platform: CrawlerPlatform
     start_time: datetime
     user_id: str
@@ -89,8 +83,7 @@ class CrawlerSession:
 
 @dataclass
 class ContentMatch:
-    """Detected content match information"""
-    match_id: str
+    """Detected content match information"""    match_id: str
     original_content_id: str
     detected_url: str
     platform: CrawlerPlatform
@@ -101,8 +94,7 @@ class ContentMatch:
 
 
 class WebSurveillanceMetricsCollector:
-    """
-    Comprehensive metrics collector for web surveillance and crawler operations
+    """    Comprehensive metrics collector for web surveillance and crawler operations
     
     Tracks:
     - Crawler performance and reliability
@@ -110,8 +102,7 @@ class WebSurveillanceMetricsCollector:
     - Platform-specific metrics
     - Threat detection effectiveness
     - Anti-piracy operation success rates
-    """
-    
+    """    
     def __init__(self, prometheus_manager=None):
         self.prometheus_manager = prometheus_manager
         self.redis_manager = RedisManager()
@@ -120,8 +111,7 @@ class WebSurveillanceMetricsCollector:
         self._initialize_metrics()
     
     def _initialize_metrics(self) -> None:
-        """Initialize Prometheus metrics for web surveillance"""
-        
+        """Initialize Prometheus metrics for web surveillance"""        
         if not self.prometheus_manager:
             self.logger.warning("No Prometheus manager provided, metrics disabled")
             return
@@ -256,8 +246,7 @@ class WebSurveillanceMetricsCollector:
         self.logger.info("Web surveillance metrics initialized")
     
     def _register_metrics(self) -> None:
-        """Register all metrics with Prometheus manager"""
-        
+        """Register all metrics with Prometheus manager"""        
         metrics_to_register = [
             self.crawler_sessions_total,
             self.crawler_requests_total,
@@ -292,8 +281,7 @@ class WebSurveillanceMetricsCollector:
         search_terms: List[str],
         tenant_id: str = "default"
     ) -> None:
-        """Record start of crawler session"""
-        
+        """Record start of crawler session"""        
         session = CrawlerSession(
             session_id=session_id,
             platform=platform,
@@ -336,8 +324,7 @@ class WebSurveillanceMetricsCollector:
         matches_found: int = 0,
         tenant_id: str = "default"
     ) -> None:
-        """Record end of crawler session"""
-        
+        """Record end of crawler session"""        
         if session_id not in self._active_sessions:
             self.logger.warning(f"Session {session_id} not found in active sessions")
             return
@@ -383,8 +370,7 @@ class WebSurveillanceMetricsCollector:
         endpoint_type: str = "api",
         response_time: float = None
     ) -> None:
-        """Record individual crawler HTTP request"""
-        
+        """Record individual crawler HTTP request"""        
         self.crawler_requests_total.labels(
             platform=platform.value,
             response_code=str(response_code),
@@ -413,8 +399,7 @@ class WebSurveillanceMetricsCollector:
         processing_time: float,
         tenant_id: str = "default"
     ) -> None:
-        """Record detected content match"""
-        
+        """Record detected content match"""        
         # Update detection metrics
         self.content_matches_detected_total.labels(
             platform=match.platform.value,
@@ -465,8 +450,7 @@ class WebSurveillanceMetricsCollector:
         response_time_hours: Optional[float] = None,
         priority: str = "normal"
     ) -> None:
-        """Record takedown request and response"""
-        
+        """Record takedown request and response"""        
         self.takedown_requests_sent_total.labels(
             platform=platform.value,
             request_type=request_type,
@@ -489,8 +473,7 @@ class WebSurveillanceMetricsCollector:
         quota_type: str,
         usage_percent: float
     ) -> None:
-        """Update API quota usage metrics"""
-        
+        """Update API quota usage metrics"""        
         self.platform_api_quota_usage.labels(
             platform=platform.value,
             quota_type=quota_type
@@ -512,8 +495,7 @@ class WebSurveillanceMetricsCollector:
         accuracy_percent: float,
         time_window: str = "1h"
     ) -> None:
-        """Update threat detection accuracy metrics"""
-        
+        """Update threat detection accuracy metrics"""        
         self.threat_detection_accuracy.labels(
             platform=platform.value,
             threat_level=threat_level.value,
@@ -527,8 +509,7 @@ class WebSurveillanceMetricsCollector:
         false_positive_rate: float,
         time_window: str = "1h"
     ) -> None:
-        """Update false positive rate metrics"""
-        
+        """Update false positive rate metrics"""        
         self.false_positive_rate.labels(
             platform=platform.value,
             content_type=content_type,
@@ -541,8 +522,7 @@ class WebSurveillanceMetricsCollector:
         instance_id: str,
         health_score: float
     ) -> None:
-        """Update crawler instance health score"""
-        
+        """Update crawler instance health score"""        
         self.crawler_health_score.labels(
             platform=platform.value,
             instance_id=instance_id
@@ -564,8 +544,7 @@ class WebSurveillanceMetricsCollector:
         platform: CrawlerPlatform,
         details: Dict[str, Any]
     ) -> None:
-        """Trigger surveillance alert"""
-        
+        """Trigger surveillance alert"""        
         self.surveillance_alerts_triggered_total.labels(
             alert_type=alert_type,
             severity=severity,
@@ -593,8 +572,7 @@ class WebSurveillanceMetricsCollector:
         platform: CrawlerPlatform,
         time_window_hours: int = 24
     ) -> Dict[str, Any]:
-        """Get comprehensive statistics for a platform"""
-        
+        """Get comprehensive statistics for a platform"""        
         # This would typically query metrics storage
         # For now, return computed statistics
         
@@ -615,8 +593,7 @@ class WebSurveillanceMetricsCollector:
         return stats
     
     async def get_surveillance_summary(self) -> Dict[str, Any]:
-        """Get overall surveillance operations summary"""
-        
+        """Get overall surveillance operations summary"""        
         summary = {
             "timestamp": datetime.utcnow().isoformat(),
             "active_sessions": len(self._active_sessions),
@@ -636,8 +613,7 @@ class WebSurveillanceMetricsCollector:
         return summary
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get health status of the surveillance metrics collector"""
-        
+        """Get health status of the surveillance metrics collector"""        
         return {
             "status": "healthy",
             "active_sessions": len(self._active_sessions),

@@ -1,5 +1,4 @@
-"""
-Content Extractors - Industrial IA Content Processing System
+"""Content Extractors - Industrial IA Content Processing System
 ==========================================================
 
 Ultra-advanced professional content extraction for audio, video, image, and text processing.
@@ -16,7 +15,6 @@ legal action. Contact mlaiel@live.de for licensing.
 This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de).
 UNAUTHORIZED USE STRICTLY PROHIBITED - Legal action will be taken.
 """
-
 import asyncio
 import logging
 import io
@@ -99,8 +97,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentMetadata:
-    """Advanced content metadata container with AI features"""
-    
+    """Advanced content metadata container with AI features"""    
     # Basic metadata
     file_size: int = 0
     mime_type: Optional[str] = None
@@ -141,8 +138,7 @@ class ContentMetadata:
 
 @dataclass
 class AudioFeatures:
-    """Advanced audio feature container"""
-    
+    """Advanced audio feature container"""    
     # Basic audio features
     mfcc: Optional[np.ndarray] = None
     spectral_centroid: Optional[np.ndarray] = None
@@ -169,8 +165,7 @@ class AudioFeatures:
 
 @dataclass  
 class VideoFeatures:
-    """Advanced video feature container"""
-    
+    """Advanced video feature container"""    
     # Basic video features
     frame_count: int = 0
     fps: float = 0.0
@@ -194,8 +189,7 @@ class VideoFeatures:
 
 @dataclass
 class ImageFeatures:
-    """Advanced image feature container"""
-    
+    """Advanced image feature container"""    
     # Basic image features
     color_histogram: Optional[np.ndarray] = None
     dominant_colors: List[Tuple[int, int, int]] = field(default_factory=list)
@@ -220,8 +214,7 @@ class ImageFeatures:
 
 @dataclass
 class TextFeatures:
-    """Advanced text feature container"""
-    
+    """Advanced text feature container"""    
     # Basic text features
     word_count: int = 0
     character_count: int = 0
@@ -249,8 +242,7 @@ class TextFeatures:
 
 
 class AudioContentExtractor(BaseExtractor):
-    """Industrial-grade audio content extractor with AI fingerprinting"""
-    
+    """Industrial-grade audio content extractor with AI fingerprinting"""    
     def __init__(self):
         super().__init__("AudioContentExtractor")
         self.supported_formats = {
@@ -267,8 +259,7 @@ class AudioContentExtractor(BaseExtractor):
         self._initialize_audio_models()
     
     def _initialize_audio_models(self):
-        """Initialize audio processing models"""
-        try:
+        """Initialize audio processing models"""        try:
             if HAS_AUDIO:
                 # Initialize Essentia extractors
                 self.feature_extractors = {
@@ -292,8 +283,7 @@ class AudioContentExtractor(BaseExtractor):
             self.logger.error(f"Failed to initialize audio models: {e}")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains audio content"""
-        if request.content_type == ContentType.AUDIO:
+        """Check if request contains audio content"""        if request.content_type == ContentType.AUDIO:
             return True
             
         # Check file extension
@@ -308,8 +298,7 @@ class AudioContentExtractor(BaseExtractor):
         return False
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract comprehensive audio features and metadata"""
-        start_time = datetime.now()
+        """Extract comprehensive audio features and metadata"""        start_time = datetime.now()
         
         try:
             # Load audio data
@@ -378,8 +367,7 @@ class AudioContentExtractor(BaseExtractor):
             )
     
     async def _load_audio(self, request: ExtractionRequest) -> Tuple[Optional[np.ndarray], Optional[int]]:
-        """Load audio data from various sources"""
-        try:
+        """Load audio data from various sources"""        try:
             if request.file_path:
                 # Load from file
                 audio_data, sample_rate = librosa.load(request.file_path, sr=None)
@@ -410,8 +398,7 @@ class AudioContentExtractor(BaseExtractor):
     async def _extract_basic_metadata(
         self, audio_data: np.ndarray, sample_rate: int, request: ExtractionRequest
     ) -> ContentMetadata:
-        """Extract basic audio metadata"""
-        
+        """Extract basic audio metadata"""        
         duration = len(audio_data) / sample_rate
         file_size = len(audio_data) * 4  # Assuming 32-bit float
         
@@ -433,8 +420,7 @@ class AudioContentExtractor(BaseExtractor):
     async def _extract_audio_features(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> AudioFeatures:
-        """Extract comprehensive audio features"""
-        
+        """Extract comprehensive audio features"""        
         features = AudioFeatures()
         
         try:
@@ -484,8 +470,7 @@ class AudioContentExtractor(BaseExtractor):
     async def _extract_essentia_features(
         self, audio_data: np.ndarray, sample_rate: int, features: AudioFeatures
     ):
-        """Extract advanced features using Essentia"""
-        try:
+        """Extract advanced features using Essentia"""        try:
             # Convert to Essentia format
             audio_essentia = es.MonoLoader(filename="", sampleRate=sample_rate)()
             
@@ -503,8 +488,7 @@ class AudioContentExtractor(BaseExtractor):
     async def _generate_fingerprints(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> Dict[str, Any]:
-        """Generate multiple types of audio fingerprints"""
-        
+        """Generate multiple types of audio fingerprints"""        
         fingerprints = {}
         
         try:
@@ -533,8 +517,7 @@ class AudioContentExtractor(BaseExtractor):
     async def _generate_spectral_hash(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> str:
-        """Generate spectral-based hash fingerprint"""
-        try:
+        """Generate spectral-based hash fingerprint"""        try:
             # Compute spectrogram
             stft = librosa.stft(audio_data)
             magnitude = np.abs(stft)
@@ -556,8 +539,7 @@ class AudioContentExtractor(BaseExtractor):
     async def _generate_mfcc_fingerprint(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> str:
-        """Generate MFCC-based fingerprint"""
-        try:
+        """Generate MFCC-based fingerprint"""        try:
             mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             mfcc_mean = np.mean(mfcc, axis=1)
             
@@ -574,8 +556,7 @@ class AudioContentExtractor(BaseExtractor):
     async def _ai_content_analysis(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> Dict[str, Any]:
-        """AI-based content analysis"""
-        
+        """AI-based content analysis"""        
         analysis = {
             'mood_classification': {},
             'genre_prediction': {},
@@ -619,8 +600,7 @@ class AudioContentExtractor(BaseExtractor):
     async def _calculate_quality_metrics(
         self, audio_data: np.ndarray, sample_rate: int
     ) -> Dict[str, float]:
-        """Calculate audio quality metrics"""
-        
+        """Calculate audio quality metrics"""        
         metrics = {
             'signal_to_noise_ratio': 0.0,
             'dynamic_range': 0.0,
@@ -665,8 +645,7 @@ class AudioContentExtractor(BaseExtractor):
     async def _analyze_monetization_potential(
         self, audio_features: AudioFeatures, ai_analysis: Dict[str, Any]
     ) -> float:
-        """Analyze monetization potential based on audio characteristics"""
-        
+        """Analyze monetization potential based on audio characteristics"""        
         try:
             score = 0.0
             
@@ -717,8 +696,7 @@ class AudioContentExtractor(BaseExtractor):
         return True
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract audio content and metadata"""
-        
+        """Extract audio content and metadata"""        
         start_time = datetime.utcnow()
         result = ExtractionResult(
             request_id=request.request_id,
@@ -769,8 +747,7 @@ class AudioContentExtractor(BaseExtractor):
         return result
     
     async def _load_audio_data(self, request: ExtractionRequest) -> Optional[np.ndarray]:
-        """Load audio data from various sources"""
-        
+        """Load audio data from various sources"""        
         try:
             if request.source_data:
                 # Load from binary data
@@ -800,8 +777,7 @@ class AudioContentExtractor(BaseExtractor):
             return None
     
     async def _extract_audio_features(self, audio_data: np.ndarray, request: ExtractionRequest) -> Dict[str, Any]:
-        """Extract comprehensive audio features"""
-        
+        """Extract comprehensive audio features"""        
         features = {}
         
         try:
@@ -852,8 +828,7 @@ class AudioContentExtractor(BaseExtractor):
         return features
     
     async def _extract_audio_metadata(self, audio_data: np.ndarray, request: ExtractionRequest) -> Dict[str, Any]:
-        """Extract audio metadata"""
-        
+        """Extract audio metadata"""        
         metadata = {}
         
         try:
@@ -885,8 +860,7 @@ class AudioContentExtractor(BaseExtractor):
         return metadata
     
     async def _calculate_audio_quality(self, audio_data: np.ndarray) -> float:
-        """Calculate audio quality score"""
-        
+        """Calculate audio quality score"""        
         try:
             quality_factors = []
             
@@ -912,8 +886,7 @@ class AudioContentExtractor(BaseExtractor):
 
 
 class VideoContentExtractor(BaseExtractor):
-    """Industrial-grade video content extractor with AI recognition and fingerprinting"""
-    
+    """Industrial-grade video content extractor with AI recognition and fingerprinting"""    
     def __init__(self):
         super().__init__("VideoContentExtractor")
         self.supported_formats = {
@@ -931,8 +904,7 @@ class VideoContentExtractor(BaseExtractor):
         self._initialize_video_models()
     
     def _initialize_video_models(self):
-        """Initialize video AI models"""
-        try:
+        """Initialize video AI models"""        try:
             if HAS_VIDEO:
                 # Initialize object detection model
                 if torch.cuda.is_available():
@@ -958,8 +930,7 @@ class VideoContentExtractor(BaseExtractor):
             self.logger.error(f"Failed to initialize video models: {e}")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains video content"""
-        if request.content_type == ContentType.VIDEO:
+        """Check if request contains video content"""        if request.content_type == ContentType.VIDEO:
             return True
             
         # Check file extension
@@ -974,8 +945,7 @@ class VideoContentExtractor(BaseExtractor):
         return False
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract comprehensive video features and metadata"""
-        start_time = datetime.now()
+        """Extract comprehensive video features and metadata"""        start_time = datetime.now()
         
         try:
             # Load video data
@@ -1055,8 +1025,7 @@ class VideoContentExtractor(BaseExtractor):
             )
     
     async def _prepare_video_file(self, request: ExtractionRequest) -> Optional[str]:
-        """Prepare video file for processing"""
-        try:
+        """Prepare video file for processing"""        try:
             if request.file_path and Path(request.file_path).exists():
                 return request.file_path
                 
@@ -1086,8 +1055,7 @@ class VideoContentExtractor(BaseExtractor):
             return None
     
     async def _extract_video_metadata(self, video_path: str) -> ContentMetadata:
-        """Extract basic video metadata"""
-        try:
+        """Extract basic video metadata"""        try:
             # Use ffprobe to get metadata
             probe = ffmpeg.probe(video_path)
             video_stream = next((stream for stream in probe['streams'] 
@@ -1132,8 +1100,7 @@ class VideoContentExtractor(BaseExtractor):
             return ContentMetadata()
     
     async def _extract_video_features(self, video_path: str) -> VideoFeatures:
-        """Extract comprehensive video features"""
-        features = VideoFeatures()
+        """Extract comprehensive video features"""        features = VideoFeatures()
         
         try:
             # Open video with OpenCV
@@ -1169,8 +1136,7 @@ class VideoContentExtractor(BaseExtractor):
         return features
     
     async def _extract_keyframes(self, cap, features: VideoFeatures):
-        """Extract and analyze keyframes"""
-        try:
+        """Extract and analyze keyframes"""        try:
             frame_interval = max(1, int(features.fps * 5))  # Every 5 seconds
             keyframes = []
             
@@ -1196,8 +1162,7 @@ class VideoContentExtractor(BaseExtractor):
             self.logger.error(f"Keyframe extraction failed: {e}")
     
     async def _analyze_dominant_colors(self, cap, features: VideoFeatures):
-        """Analyze dominant colors in video"""
-        try:
+        """Analyze dominant colors in video"""        try:
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Reset to beginning
             
             color_samples = []
@@ -1235,8 +1200,7 @@ class VideoContentExtractor(BaseExtractor):
             self.logger.error(f"Color analysis failed: {e}")
     
     async def _detect_scene_changes(self, cap, features: VideoFeatures):
-        """Detect scene changes in video"""
-        try:
+        """Detect scene changes in video"""        try:
             cap.set(cv2.CAP_PROP_POS_FRAMES, 0)  # Reset to beginning
             
             prev_frame = None
@@ -1271,8 +1235,7 @@ class VideoContentExtractor(BaseExtractor):
             self.logger.error(f"Scene change detection failed: {e}")
     
     async def _ai_video_analysis(self, video_path: str) -> Dict[str, Any]:
-        """AI-based video content analysis"""
-        analysis = {
+        """AI-based video content analysis"""        analysis = {
             'object_detection': [],
             'face_detection': [],
             'text_recognition': [],
@@ -1326,8 +1289,7 @@ class VideoContentExtractor(BaseExtractor):
         return analysis
     
     async def _analyze_frame(self, frame) -> Dict[str, Any]:
-        """Analyze individual frame for objects, faces, text"""
-        frame_analysis = {
+        """Analyze individual frame for objects, faces, text"""        frame_analysis = {
             'objects': [],
             'faces': [],
             'text': []
@@ -1369,8 +1331,7 @@ class VideoContentExtractor(BaseExtractor):
         return frame_analysis
     
     def _categorize_video_content(self, analysis: Dict[str, Any]) -> str:
-        """Categorize video content based on analysis"""
-        try:
+        """Categorize video content based on analysis"""        try:
             # Simple categorization logic
             if analysis['face_detection']:
                 if len(analysis['face_detection']) > 5:
@@ -1389,8 +1350,7 @@ class VideoContentExtractor(BaseExtractor):
             return 'unknown'
     
     async def _generate_visual_hash(self, frames: List[np.ndarray]) -> str:
-        """Generate visual similarity hash from frames"""
-        try:
+        """Generate visual similarity hash from frames"""        try:
             if not frames:
                 return ""
             
@@ -1419,8 +1379,7 @@ class VideoContentExtractor(BaseExtractor):
             return ""
     
     async def _generate_video_fingerprints(self, video_path: str) -> Dict[str, Any]:
-        """Generate multiple types of video fingerprints"""
-        fingerprints = {}
+        """Generate multiple types of video fingerprints"""        fingerprints = {}
         
         try:
             # Frame-based fingerprint
@@ -1441,8 +1400,7 @@ class VideoContentExtractor(BaseExtractor):
         return fingerprints
     
     async def _generate_frame_fingerprint(self, video_path: str) -> str:
-        """Generate fingerprint based on frame characteristics"""
-        try:
+        """Generate fingerprint based on frame characteristics"""        try:
             cap = cv2.VideoCapture(video_path)
             frame_hashes = []
             
@@ -1472,8 +1430,7 @@ class VideoContentExtractor(BaseExtractor):
             return ""
     
     async def _generate_motion_fingerprint(self, video_path: str) -> str:
-        """Generate fingerprint based on motion patterns"""
-        try:
+        """Generate fingerprint based on motion patterns"""        try:
             cap = cv2.VideoCapture(video_path)
             motion_vectors = []
             
@@ -1517,8 +1474,7 @@ class VideoContentExtractor(BaseExtractor):
             return ""
     
     async def _generate_color_fingerprint(self, video_path: str) -> str:
-        """Generate fingerprint based on color characteristics"""
-        try:
+        """Generate fingerprint based on color characteristics"""        try:
             cap = cv2.VideoCapture(video_path)
             color_histograms = []
             
@@ -1556,8 +1512,7 @@ class VideoContentExtractor(BaseExtractor):
             return ""
     
     async def _extract_audio_from_video(self, video_path: str) -> Dict[str, Any]:
-        """Extract and analyze audio track from video"""
-        audio_analysis = {}
+        """Extract and analyze audio track from video"""        audio_analysis = {}
         
         try:
             # Extract audio using ffmpeg
@@ -1596,8 +1551,7 @@ class VideoContentExtractor(BaseExtractor):
         return audio_analysis
     
     async def _assess_video_quality(self, video_path: str) -> Dict[str, float]:
-        """Assess video quality metrics"""
-        quality_metrics = {
+        """Assess video quality metrics"""        quality_metrics = {
             'resolution_score': 0.0,
             'bitrate_score': 0.0,
             'frame_rate_score': 0.0,
@@ -1651,8 +1605,7 @@ class VideoContentExtractor(BaseExtractor):
         self, video_features: VideoFeatures, ai_analysis: Dict[str, Any], 
         quality_metrics: Dict[str, float]
     ) -> float:
-        """Analyze monetization potential for video content"""
-        
+        """Analyze monetization potential for video content"""        
         try:
             score = 0.0
             
@@ -1724,8 +1677,7 @@ class VideoContentExtractor(BaseExtractor):
         return result
     
     async def _prepare_video_source(self, request: ExtractionRequest) -> Optional[str]:
-        """Prepare video source for processing"""
-        
+        """Prepare video source for processing"""        
         if request.source_path:
             return request.source_path
         
@@ -1756,8 +1708,7 @@ class VideoContentExtractor(BaseExtractor):
         return None
     
     async def _extract_video_features(self, video_path: str) -> Dict[str, Any]:
-        """Extract comprehensive video features"""
-        
+        """Extract comprehensive video features"""        
         features = {}
         
         try:
@@ -1815,8 +1766,7 @@ class VideoContentExtractor(BaseExtractor):
         return features
     
     def _analyze_frame(self, frame: np.ndarray) -> Dict[str, float]:
-        """Analyze individual video frame"""
-        
+        """Analyze individual video frame"""        
         analysis = {}
         
         try:
@@ -1839,8 +1789,7 @@ class VideoContentExtractor(BaseExtractor):
         return analysis
     
     async def _extract_video_metadata(self, video_path: str) -> Dict[str, Any]:
-        """Extract video metadata using ffmpeg"""
-        
+        """Extract video metadata using ffmpeg"""        
         metadata = {}
         
         try:
@@ -1883,8 +1832,7 @@ class VideoContentExtractor(BaseExtractor):
         return metadata
     
     async def _calculate_video_quality(self, video_path: str) -> float:
-        """Calculate video quality score"""
-        
+        """Calculate video quality score"""        
         try:
             quality_factors = []
             
@@ -1918,8 +1866,7 @@ class VideoContentExtractor(BaseExtractor):
             return 0.5
     
     async def _generate_video_hash(self, video_path: str) -> str:
-        """Generate perceptual hash for video"""
-        
+        """Generate perceptual hash for video"""        
         try:
             # Sample frames and create composite hash
             cap = cv2.VideoCapture(video_path)
@@ -1951,8 +1898,7 @@ class VideoContentExtractor(BaseExtractor):
 
 
 class ImageContentExtractor(BaseExtractor):
-    """Advanced image content extractor"""
-    
+    """Advanced image content extractor"""    
     def __init__(self):
         super().__init__("ImageContentExtractor")
         self.supported_formats = {'.jpg', '.jpeg', '.png', '.gif', '.bmp', '.tiff', '.webp'}
@@ -1961,8 +1907,7 @@ class ImageContentExtractor(BaseExtractor):
             self.logger.warning("Image processing libraries not available")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains image content"""
-        
+        """Check if request contains image content"""        
         if request.content_type != ContentType.IMAGE:
             return False
         
@@ -1982,8 +1927,7 @@ class ImageContentExtractor(BaseExtractor):
         return True
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract image content and metadata"""
-        
+        """Extract image content and metadata"""        
         start_time = datetime.utcnow()
         result = ExtractionResult(
             request_id=request.request_id,
@@ -2037,8 +1981,7 @@ class ImageContentExtractor(BaseExtractor):
         return result
     
     async def _load_image(self, request: ExtractionRequest) -> Optional[Image.Image]:
-        """Load image from various sources"""
-        
+        """Load image from various sources"""        
         try:
             if request.source_data:
                 # Load from binary data
@@ -2065,8 +2008,7 @@ class ImageContentExtractor(BaseExtractor):
             return None
     
     async def _extract_image_features(self, image: Image.Image) -> Dict[str, Any]:
-        """Extract comprehensive image features"""
-        
+        """Extract comprehensive image features"""        
         features = {}
         
         try:
@@ -2123,8 +2065,7 @@ class ImageContentExtractor(BaseExtractor):
         return features
     
     async def _extract_image_metadata(self, image: Image.Image, request: ExtractionRequest) -> Dict[str, Any]:
-        """Extract image metadata including EXIF"""
-        
+        """Extract image metadata including EXIF"""        
         metadata = {}
         
         try:
@@ -2173,8 +2114,7 @@ class ImageContentExtractor(BaseExtractor):
         return metadata
     
     async def _calculate_image_quality(self, image: Image.Image) -> float:
-        """Calculate image quality score"""
-        
+        """Calculate image quality score"""        
         try:
             quality_factors = []
             
@@ -2205,8 +2145,7 @@ class ImageContentExtractor(BaseExtractor):
             return 0.5
     
     async def _generate_image_hash(self, image: Image.Image) -> str:
-        """Generate perceptual hash for image"""
-        
+        """Generate perceptual hash for image"""        
         try:
             # Use multiple hash algorithms for better accuracy
             phash = str(imagehash.phash(image))
@@ -2225,8 +2164,7 @@ class ImageContentExtractor(BaseExtractor):
 
 
 class TextContentExtractor(BaseExtractor):
-    """Advanced text content extractor"""
-    
+    """Advanced text content extractor"""    
     def __init__(self):
         super().__init__("TextContentExtractor")
         
@@ -2234,12 +2172,10 @@ class TextContentExtractor(BaseExtractor):
             self.logger.warning("Text processing libraries not available")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Check if request contains text content"""
-        return request.content_type == ContentType.TEXT
+        """Check if request contains text content"""        return request.content_type == ContentType.TEXT
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract text content and metadata"""
-        
+        """Extract text content and metadata"""        
         start_time = datetime.utcnow()
         result = ExtractionResult(
             request_id=request.request_id,
@@ -2285,8 +2221,7 @@ class TextContentExtractor(BaseExtractor):
         return result
     
     async def _load_text_content(self, request: ExtractionRequest) -> Optional[str]:
-        """Load text content from various sources"""
-        
+        """Load text content from various sources"""        
         try:
             if request.source_data:
                 # Load from binary data
@@ -2311,8 +2246,7 @@ class TextContentExtractor(BaseExtractor):
             return None
     
     async def _extract_text_features(self, text_content: str) -> Dict[str, Any]:
-        """Extract comprehensive text features"""
-        
+        """Extract comprehensive text features"""        
         features = {}
         
         try:
@@ -2370,8 +2304,7 @@ class TextContentExtractor(BaseExtractor):
         return features
     
     async def _extract_text_metadata(self, text_content: str, request: ExtractionRequest) -> Dict[str, Any]:
-        """Extract text metadata"""
-        
+        """Extract text metadata"""        
         metadata = {}
         
         try:
@@ -2416,8 +2349,7 @@ class TextContentExtractor(BaseExtractor):
         return metadata
     
     async def _calculate_text_quality(self, text_content: str) -> float:
-        """Calculate text quality score"""
-        
+        """Calculate text quality score"""        
         try:
             quality_factors = []
             
@@ -2455,18 +2387,15 @@ class TextContentExtractor(BaseExtractor):
 
 
 class MetadataExtractor(BaseExtractor):
-    """Universal metadata extractor"""
-    
+    """Universal metadata extractor"""    
     def __init__(self):
         super().__init__("MetadataExtractor")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Can handle any request for metadata extraction"""
-        return "metadata" in request.extraction_types
+        """Can handle any request for metadata extraction"""        return "metadata" in request.extraction_types
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract universal metadata"""
-        
+        """Extract universal metadata"""        
         start_time = datetime.utcnow()
         result = ExtractionResult(
             request_id=request.request_id,
@@ -2516,19 +2445,16 @@ class MetadataExtractor(BaseExtractor):
 
 
 class ThumbnailExtractor(BaseExtractor):
-    """Thumbnail and preview generation extractor"""
-    
+    """Thumbnail and preview generation extractor"""    
     def __init__(self):
         super().__init__("ThumbnailExtractor")
     
     async def can_handle(self, request: ExtractionRequest) -> bool:
-        """Can handle image and video content for thumbnails"""
-        return (request.content_type in [ContentType.IMAGE, ContentType.VIDEO] and
+        """Can handle image and video content for thumbnails"""        return (request.content_type in [ContentType.IMAGE, ContentType.VIDEO] and
                 "thumbnail" in request.extraction_types)
     
     async def extract(self, request: ExtractionRequest) -> ExtractionResult:
-        """Extract thumbnails and previews"""
-        
+        """Extract thumbnails and previews"""        
         start_time = datetime.utcnow()
         result = ExtractionResult(
             request_id=request.request_id,
@@ -2559,8 +2485,7 @@ class ThumbnailExtractor(BaseExtractor):
         return result
     
     async def _generate_image_thumbnails(self, request: ExtractionRequest) -> Dict[str, str]:
-        """Generate image thumbnails in multiple sizes"""
-        
+        """Generate image thumbnails in multiple sizes"""        
         thumbnails = {}
         sizes = [(64, 64), (128, 128), (256, 256), (512, 512)]
         
@@ -2599,8 +2524,7 @@ class ThumbnailExtractor(BaseExtractor):
         return thumbnails
     
     async def _generate_video_thumbnails(self, request: ExtractionRequest) -> Dict[str, str]:
-        """Generate video thumbnails from key frames"""
-        
+        """Generate video thumbnails from key frames"""        
         thumbnails = {}
         
         try:

@@ -1,5 +1,4 @@
-"""
-Federated Learning Deployment Manager
+"""Federated Learning Deployment Manager
 Enterprise federated learning infrastructure
 
 This module provides comprehensive federated learning deployment capabilities
@@ -9,7 +8,6 @@ while preserving privacy and data sovereignty.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class FederatedStrategy(Enum):
-    """Federated learning strategies"""
-    FEDERATED_AVERAGING = "federated_averaging"
+    """Federated learning strategies"""    FEDERATED_AVERAGING = "federated_averaging"
     FEDERATED_SGD = "federated_sgd"
     FEDERATED_PROX = "federated_prox"
     SCAFFOLD = "scaffold"
@@ -43,8 +40,7 @@ class FederatedStrategy(Enum):
 
 
 class AggregationMethod(Enum):
-    """Model aggregation methods"""
-    WEIGHTED_AVERAGE = "weighted_average"
+    """Model aggregation methods"""    WEIGHTED_AVERAGE = "weighted_average"
     SIMPLE_AVERAGE = "simple_average"
     MEDIAN_AGGREGATION = "median_aggregation"
     KRUM = "krum"
@@ -54,8 +50,7 @@ class AggregationMethod(Enum):
 
 
 class PrivacyTechnique(Enum):
-    """Privacy-preserving techniques"""
-    DIFFERENTIAL_PRIVACY = "differential_privacy"
+    """Privacy-preserving techniques"""    DIFFERENTIAL_PRIVACY = "differential_privacy"
     HOMOMORPHIC_ENCRYPTION = "homomorphic_encryption"
     SECURE_MULTIPARTY = "secure_multiparty"
     GRADIENT_COMPRESSION = "gradient_compression"
@@ -64,8 +59,7 @@ class PrivacyTechnique(Enum):
 
 
 class ClientSelectionStrategy(Enum):
-    """Client selection strategies"""
-    RANDOM_SELECTION = "random_selection"
+    """Client selection strategies"""    RANDOM_SELECTION = "random_selection"
     STRATIFIED_SAMPLING = "stratified_sampling"
     RESOURCE_AWARE = "resource_aware"
     DATA_QUALITY_BASED = "data_quality_based"
@@ -75,8 +69,7 @@ class ClientSelectionStrategy(Enum):
 
 @dataclass
 class FederatedLearningConfig:
-    """Federated learning configuration"""
-    federation_name: str
+    """Federated learning configuration"""    federation_name: str
     strategy: FederatedStrategy = FederatedStrategy.FEDERATED_AVERAGING
     aggregation_method: AggregationMethod = AggregationMethod.WEIGHTED_AVERAGE
     privacy_techniques: List[PrivacyTechnique] = field(default_factory=lambda: [PrivacyTechnique.DIFFERENTIAL_PRIVACY])
@@ -109,8 +102,7 @@ class FederatedLearningConfig:
 
 
 class FederatedLearningDeployment:
-    """
-    Enterprise federated learning deployment system
+    """    Enterprise federated learning deployment system
     
     Provides comprehensive federated learning infrastructure with:
     - Multi-strategy federated training algorithms
@@ -120,16 +112,13 @@ class FederatedLearningDeployment:
     - Secure communication and model updates
     - Cross-device and cross-silo federation support
     - Real-time monitoring and analytics
-    """
-    
+    """    
     def __init__(self, namespace: str = "ia-influencer-federated"):
-        """
-        Initialize federated learning deployment
+        """        Initialize federated learning deployment
         
         Args:
             namespace: Kubernetes namespace for federated infrastructure
-        """
-        self.namespace = namespace
+        """        self.namespace = namespace
         self.federations = {}
         self.clients = {}
         self.aggregation_servers = {}
@@ -140,8 +129,7 @@ class FederatedLearningDeployment:
         self._initialize_crypto()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""
-        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -167,8 +155,7 @@ class FederatedLearningDeployment:
             raise
     
     def _initialize_crypto(self) -> None:
-        """Initialize cryptographic components"""
-        try:
+        """Initialize cryptographic components"""        try:
             # Generate federation-wide encryption key
             self.federation_key = Fernet.generate_key()
             self.cipher_suite = Fernet(self.federation_key)
@@ -183,13 +170,11 @@ class FederatedLearningDeployment:
             raise
     
     async def deploy_federated_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete federated learning infrastructure
+        """        Deploy complete federated learning infrastructure
         
         Returns:
             Federated infrastructure deployment summary
-        """
-        try:
+        """        try:
             self.status = "deploying_federated_infrastructure"
             logger.info("Deploying federated learning infrastructure")
             
@@ -258,16 +243,14 @@ class FederatedLearningDeployment:
             raise
     
     async def deploy_federation(self, config: FederatedLearningConfig) -> Dict[str, Any]:
-        """
-        Deploy a federated learning federation
+        """        Deploy a federated learning federation
         
         Args:
             config: Federated learning configuration
             
         Returns:
             Federation deployment result
-        """
-        try:
+        """        try:
             federation_id = f"{config.federation_name}-{int(time.time())}"
             logger.info(f"Deploying federation: {federation_id}")
             
@@ -331,8 +314,7 @@ class FederatedLearningDeployment:
             raise
     
     async def _ensure_federated_namespace(self) -> None:
-        """Create federated namespace"""
-        try:
+        """Create federated namespace"""        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -351,8 +333,7 @@ class FederatedLearningDeployment:
                 logger.info(f"Created federated namespace: {self.namespace}")
     
     async def _deploy_federated_coordinator(self) -> Dict[str, Any]:
-        """Deploy federated learning coordinator"""
-        coordinator = {
+        """Deploy federated learning coordinator"""        coordinator = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -402,8 +383,7 @@ class FederatedLearningDeployment:
         }
     
     async def _deploy_aggregation_servers(self) -> Dict[str, Any]:
-        """Deploy federated aggregation servers"""
-        aggregation_server = {
+        """Deploy federated aggregation servers"""        aggregation_server = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -452,8 +432,7 @@ class FederatedLearningDeployment:
         }
     
     async def _deploy_client_manager(self) -> Dict[str, Any]:
-        """Deploy federated client management system"""
-        client_manager = {
+        """Deploy federated client management system"""        client_manager = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -502,8 +481,7 @@ class FederatedLearningDeployment:
         }
     
     async def _deploy_privacy_infrastructure(self) -> Dict[str, Any]:
-        """Deploy privacy-preserving infrastructure"""
-        privacy_infrastructure = {
+        """Deploy privacy-preserving infrastructure"""        privacy_infrastructure = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -552,8 +530,7 @@ class FederatedLearningDeployment:
         }
     
     async def _deploy_federated_monitoring(self) -> Dict[str, Any]:
-        """Deploy federated learning monitoring"""
-        federated_monitor = {
+        """Deploy federated learning monitoring"""        federated_monitor = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -602,8 +579,7 @@ class FederatedLearningDeployment:
         }
     
     async def _deploy_federated_model_repository(self) -> Dict[str, Any]:
-        """Deploy federated model repository"""
-        model_repository = {
+        """Deploy federated model repository"""        model_repository = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -665,8 +641,7 @@ class FederatedLearningDeployment:
         }
     
     async def _deploy_communication_infrastructure(self) -> Dict[str, Any]:
-        """Deploy federated communication infrastructure"""
-        communication = {
+        """Deploy federated communication infrastructure"""        communication = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -715,8 +690,7 @@ class FederatedLearningDeployment:
         }
     
     async def _configure_federated_networking(self) -> None:
-        """Configure networking for federated infrastructure"""
-        # Federated network policy
+        """Configure networking for federated infrastructure"""        # Federated network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -752,8 +726,7 @@ class FederatedLearningDeployment:
         logger.info("Configured federated networking policies")
     
     async def _validate_federated_infrastructure(self) -> bool:
-        """Validate federated infrastructure deployment"""
-        try:
+        """Validate federated infrastructure deployment"""        try:
             # Check essential federated services
             essential_services = [
                 "federated-coordinator", "aggregation-servers", "client-manager",
@@ -790,8 +763,7 @@ class FederatedLearningDeployment:
             return False
     
     async def _validate_federated_config(self, config: FederatedLearningConfig) -> None:
-        """Validate federated learning configuration"""
-        if not config.federation_name:
+        """Validate federated learning configuration"""        if not config.federation_name:
             raise ValueError("Federation name is required")
         
         if config.num_clients <= 0:
@@ -809,8 +781,7 @@ class FederatedLearningDeployment:
         logger.info(f"Federated config validation passed for {config.federation_name}")
     
     async def _create_federation_coordinator(self, config: FederatedLearningConfig, federation_id: str) -> Dict[str, Any]:
-        """Create federation coordinator"""
-        coordinator_config = {
+        """Create federation coordinator"""        coordinator_config = {
             "federation_id": federation_id,
             "strategy": config.strategy.value,
             "aggregation_method": config.aggregation_method.value,
@@ -833,8 +804,7 @@ class FederatedLearningDeployment:
         }
     
     async def _deploy_federation_aggregation_servers(self, config: FederatedLearningConfig, federation_id: str) -> List[Dict[str, Any]]:
-        """Deploy aggregation servers for specific federation"""
-        aggregation_servers = []
+        """Deploy aggregation servers for specific federation"""        aggregation_servers = []
         
         # Deploy multiple aggregation servers based on federation size
         num_servers = min(5, max(1, config.num_clients // 20))
@@ -859,8 +829,7 @@ class FederatedLearningDeployment:
         return aggregation_servers
     
     async def _initialize_federation_clients(self, config: FederatedLearningConfig, federation_id: str) -> List[Dict[str, Any]]:
-        """Initialize client pool for federation"""
-        client_pool = []
+        """Initialize client pool for federation"""        client_pool = []
         
         for i in range(config.num_clients):
             client_config = {
@@ -887,8 +856,7 @@ class FederatedLearningDeployment:
         return client_pool
     
     async def _setup_federation_privacy(self, config: FederatedLearningConfig, federation_id: str) -> Dict[str, Any]:
-        """Set up privacy-preserving mechanisms for federation"""
-        privacy_config = {
+        """Set up privacy-preserving mechanisms for federation"""        privacy_config = {
             "federation_id": federation_id,
             "privacy_techniques": [p.value for p in config.privacy_techniques],
             "privacy_budget": config.privacy_budget,
@@ -906,8 +874,7 @@ class FederatedLearningDeployment:
         return privacy_config
     
     async def _setup_federation_communication(self, config: FederatedLearningConfig, federation_id: str) -> Dict[str, Any]:
-        """Set up secure communication for federation"""
-        communication_config = {
+        """Set up secure communication for federation"""        communication_config = {
             "federation_id": federation_id,
             "encryption_enabled": True,
             "compression_enabled": config.model_compression,
@@ -924,8 +891,7 @@ class FederatedLearningDeployment:
         return communication_config
     
     async def _setup_federation_monitoring(self, config: FederatedLearningConfig, federation_id: str) -> Dict[str, Any]:
-        """Set up monitoring for federation"""
-        monitoring_config = {
+        """Set up monitoring for federation"""        monitoring_config = {
             "federation_id": federation_id,
             "convergence_tracking": True,
             "client_participation_monitoring": True,
@@ -943,8 +909,7 @@ class FederatedLearningDeployment:
         return monitoring_config
     
     async def get_federated_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive federated learning metrics"""
-        try:
+        """Get comprehensive federated learning metrics"""        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "active_federations": len(self.federations),
@@ -978,8 +943,7 @@ class FederatedLearningDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_federated_infrastructure(self) -> None:
-        """Clean up failed federated infrastructure deployment"""
-        try:
+        """Clean up failed federated infrastructure deployment"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed federated infrastructure")
@@ -987,8 +951,7 @@ class FederatedLearningDeployment:
             logger.error(f"Federated infrastructure cleanup failed: {e}")
     
     async def _cleanup_failed_federation_deployment(self, federation_name: str) -> None:
-        """Clean up failed federation deployment"""
-        try:
+        """Clean up failed federation deployment"""        try:
             # Clean up federation-specific resources
             federation_keys = self._redis_client.keys(f"federation:*{federation_name}*")
             if federation_keys:
@@ -1000,8 +963,7 @@ class FederatedLearningDeployment:
             logger.error(f"Federation deployment cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire federated learning infrastructure"""
-        try:
+        """Clean up entire federated learning infrastructure"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             
@@ -1018,15 +980,13 @@ class FederatedLearningDeployment:
 
 
 class SecureAggregator:
-    """Secure aggregation implementation for federated learning"""
-    
+    """Secure aggregation implementation for federated learning"""    
     def __init__(self):
         self.aggregation_key = Fernet.generate_key()
         self.cipher = Fernet(self.aggregation_key)
     
     def secure_aggregate(self, client_updates: List[Dict[str, Any]], weights: List[float]) -> Dict[str, Any]:
-        """
-        Perform secure aggregation of client updates
+        """        Perform secure aggregation of client updates
         
         Args:
             client_updates: List of encrypted client model updates
@@ -1034,8 +994,7 @@ class SecureAggregator:
             
         Returns:
             Securely aggregated global model update
-        """
-        try:
+        """        try:
             # Decrypt client updates
             decrypted_updates = []
             for update in client_updates:
@@ -1059,8 +1018,7 @@ class SecureAggregator:
             raise
     
     def _weighted_average(self, models: List[Dict], weights: List[float]) -> Dict:
-        """Compute weighted average of model parameters"""
-        if not models or not weights:
+        """Compute weighted average of model parameters"""        if not models or not weights:
             raise ValueError("Models and weights cannot be empty")
         
         # Normalize weights

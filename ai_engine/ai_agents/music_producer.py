@@ -1,5 +1,4 @@
-"""
-Music Producer Agent
+"""Music Producer Agent
 
 Advanced AI agent for music production, composition, audio creation, and sound
 design for content creators and influencers across all platforms.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
-
 import asyncio
 import json
 import logging
@@ -27,43 +25,37 @@ from .base_agent import BaseAIAgent, AgentCapability, AgentConfiguration, AgentT
 # Mock engines for testing - would be replaced with actual implementations
 class MusicGenerationEngine:
     async def initialize(self): 
-        """Initialize music generation engine"""
-        logger.info("MusicGenerationEngine initialized")
+        """Initialize music generation engine"""        logger.info("MusicGenerationEngine initialized")
         self.models_loaded = True
         self.generation_ready = True
 
 class AudioProcessingEngine:
     async def initialize(self): 
-        """Initialize audio processing engine"""
-        logger.info("AudioProcessingEngine initialized")
+        """Initialize audio processing engine"""        logger.info("AudioProcessingEngine initialized")
         self.processors_loaded = True
         self.effects_ready = True
 
 class MasteringEngine:
     async def initialize(self): 
-        """Initialize mastering engine"""
-        logger.info("MasteringEngine initialized")
+        """Initialize mastering engine"""        logger.info("MasteringEngine initialized")
         self.mastering_algorithms = True
         self.eq_processors_ready = True
 
 class SoundDesignEngine:
     async def initialize(self): 
-        """Initialize sound design engine"""
-        logger.info("SoundDesignEngine initialized")
+        """Initialize sound design engine"""        logger.info("SoundDesignEngine initialized")
         self.synthesis_ready = True
         self.effects_library_loaded = True
 
 class MusicAnalysisEngine:
     async def initialize(self): 
-        """Initialize music analysis engine"""
-        logger.info("MusicAnalysisEngine initialized")
+        """Initialize music analysis engine"""        logger.info("MusicAnalysisEngine initialized")
         self.analysis_models_ready = True
         self.feature_extraction_ready = True
 
 class CompositionEngine:
     async def initialize(self): 
-        """Initialize composition engine"""
-        logger.info("CompositionEngine initialized")
+        """Initialize composition engine"""        logger.info("CompositionEngine initialized")
         self.composition_algorithms_loaded = True
         self.harmony_engine_ready = True
 
@@ -71,8 +63,7 @@ logger = logging.getLogger(__name__)
 
 
 class MusicGenre(Enum):
-    """Comprehensive music genres"""
-    POP = "pop"
+    """Comprehensive music genres"""    POP = "pop"
     ELECTRONIC = "electronic"
     HIP_HOP = "hip_hop"
     ROCK = "rock"
@@ -100,8 +91,7 @@ class MusicGenre(Enum):
 
 
 class MusicMood(Enum):
-    """Music mood categories"""
-    ENERGETIC = "energetic"
+    """Music mood categories"""    ENERGETIC = "energetic"
     RELAXING = "relaxing"
     DRAMATIC = "dramatic"
     HAPPY = "happy"
@@ -119,8 +109,7 @@ class MusicMood(Enum):
 
 
 class InstrumentCategory(Enum):
-    """Instrument categories"""
-    STRINGS = "strings"
+    """Instrument categories"""    STRINGS = "strings"
     BRASS = "brass"
     WOODWINDS = "woodwinds"
     PERCUSSION = "percussion"
@@ -134,8 +123,7 @@ class InstrumentCategory(Enum):
 
 
 class ProductionQuality(Enum):
-    """Production quality levels"""
-    DEMO = "demo"           # Basic quality for concepts
+    """Production quality levels"""    DEMO = "demo"           # Basic quality for concepts
     STANDARD = "standard"   # Good quality for social media
     PROFESSIONAL = "professional"  # High quality for releases
     MASTERED = "mastered"   # Full professional mastering
@@ -144,8 +132,7 @@ class ProductionQuality(Enum):
 
 @dataclass
 class MusicProject:
-    """Comprehensive music project structure"""
-    project_id: str
+    """Comprehensive music project structure"""    project_id: str
     title: str
     genre: MusicGenre
     mood: MusicMood
@@ -172,8 +159,7 @@ class MusicProject:
 
 @dataclass
 class SoundDesignAsset:
-    """Sound design asset structure"""
-    asset_id: str
+    """Sound design asset structure"""    asset_id: str
     name: str
     category: str  # sfx, ambient, transition, etc.
     duration_seconds: float
@@ -187,8 +173,7 @@ class SoundDesignAsset:
 
 @dataclass
 class MusicAnalysis:
-    """Music analysis results"""
-    analysis_id: str
+    """Music analysis results"""    analysis_id: str
     project_id: str
     tempo_analysis: Dict[str, Any]
     key_analysis: Dict[str, Any]
@@ -203,8 +188,7 @@ class MusicAnalysis:
 
 
 class MusicProducerAgent(BaseAIAgent):
-    """
-    Advanced AI agent for comprehensive music production and audio creation.
+    """    Advanced AI agent for comprehensive music production and audio creation.
     
     Capabilities:
     - AI-powered music composition and generation
@@ -215,8 +199,7 @@ class MusicProducerAgent(BaseAIAgent):
     - Platform-specific audio optimization
     - Collaborative music creation
     - Copyright and licensing management
-    """
-    
+    """    
     def __init__(self, config: AgentConfiguration):
         # Ensure required capabilities
         required_capabilities = {
@@ -276,8 +259,7 @@ class MusicProducerAgent(BaseAIAgent):
         logger.info("MusicProducerAgent initialized successfully")
 
     async def initialize(self) -> bool:
-        """Initialize music producer agent"""
-        try:
+        """Initialize music producer agent"""        try:
             await super().initialize()
             
             # Initialize music production engines
@@ -306,8 +288,7 @@ class MusicProducerAgent(BaseAIAgent):
         project_brief: Dict[str, Any],
         generation_params: Optional[Dict[str, Any]] = None
     ) -> MusicProject:
-        """
-        Create comprehensive music project from brief
+        """        Create comprehensive music project from brief
         
         Args:
             project_brief: Project requirements and specifications
@@ -315,8 +296,7 @@ class MusicProducerAgent(BaseAIAgent):
             
         Returns:
             Complete music project
-        """
-        try:
+        """        try:
             logger.info(f"Creating music project: {project_brief.get('title')}")
             
             generation_params = generation_params or {}
@@ -383,8 +363,7 @@ class MusicProducerAgent(BaseAIAgent):
         project_id: str,
         production_level: ProductionQuality = ProductionQuality.STANDARD
     ) -> Dict[str, Any]:
-        """
-        Produce complete music track from project
+        """        Produce complete music track from project
         
         Args:
             project_id: Project to produce
@@ -392,8 +371,7 @@ class MusicProducerAgent(BaseAIAgent):
             
         Returns:
             Production results with audio files
-        """
-        try:
+        """        try:
             logger.info(f"Producing music track for project: {project_id}")
             
             if project_id not in self.active_projects:
@@ -464,16 +442,14 @@ class MusicProducerAgent(BaseAIAgent):
         self, 
         sfx_brief: Dict[str, Any]
     ) -> List[SoundDesignAsset]:
-        """
-        Create custom sound effects and audio elements
+        """        Create custom sound effects and audio elements
         
         Args:
             sfx_brief: Sound design requirements
             
         Returns:
             List of created sound design assets
-        """
-        try:
+        """        try:
             logger.info(f"Designing sound effects: {sfx_brief.get('description')}")
             
             # Parse sound design requirements
@@ -521,8 +497,7 @@ class MusicProducerAgent(BaseAIAgent):
         audio_content: Any,
         analysis_type: str = "comprehensive"
     ) -> MusicAnalysis:
-        """
-        Analyze music content for various metrics and insights
+        """        Analyze music content for various metrics and insights
         
         Args:
             audio_content: Audio to analyze
@@ -530,8 +505,7 @@ class MusicProducerAgent(BaseAIAgent):
             
         Returns:
             Comprehensive music analysis
-        """
-        try:
+        """        try:
             logger.info(f"Analyzing music content: {analysis_type} analysis")
             
             analysis_results = {}
@@ -591,8 +565,7 @@ class MusicProducerAgent(BaseAIAgent):
         project_id: str,
         target_platforms: List[str]
     ) -> Dict[str, Dict[str, Any]]:
-        """
-        Optimize music project for specific platforms
+        """        Optimize music project for specific platforms
         
         Args:
             project_id: Project to optimize
@@ -600,8 +573,7 @@ class MusicProducerAgent(BaseAIAgent):
             
         Returns:
             Platform-optimized versions
-        """
-        try:
+        """        try:
             logger.info(f"Optimizing project {project_id} for platforms: {target_platforms}")
             
             if project_id not in self.active_projects:
@@ -648,8 +620,7 @@ class MusicProducerAgent(BaseAIAgent):
     # Private helper methods for music production
 
     async def _parse_project_requirements(self, project_brief: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse and validate project requirements"""
-        requirements = {
+        """Parse and validate project requirements"""        requirements = {
             'title': project_brief.get('title', 'Untitled'),
             'genre': project_brief.get('genre', 'electronic'),
             'mood': project_brief.get('mood', 'energetic'),
@@ -666,8 +637,7 @@ class MusicProducerAgent(BaseAIAgent):
         return requirements
 
     async def _generate_music_structure(self, requirements: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate song structure based on genre and requirements"""
-        
+        """Generate song structure based on genre and requirements"""        
         genre = requirements['genre']
         duration = requirements['duration']
         
@@ -681,8 +651,7 @@ class MusicProducerAgent(BaseAIAgent):
         return structure
 
     async def can_handle_task(self, task_type: str, context: Dict[str, Any]) -> bool:
-        """Check if agent can handle music production task"""
-        supported_tasks = [
+        """Check if agent can handle music production task"""        supported_tasks = [
             "create_music_project",
             "produce_music_track",
             "design_sound_effects",

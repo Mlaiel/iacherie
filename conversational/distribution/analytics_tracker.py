@@ -1,5 +1,4 @@
-"""
-Analytics Tracker
+"""Analytics Tracker
 
 Enterprise-grade analytics tracking and intelligence system for multi-platform content distribution.
 Provides comprehensive performance monitoring, predictive analytics, and business intelligence.
@@ -11,7 +10,6 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -66,8 +64,7 @@ metrics = MetricsCollector("distribution.analytics_tracker")
 
 
 class MetricType(str, Enum):
-    """Analytics metric types"""
-    ENGAGEMENT = "engagement"
+    """Analytics metric types"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     IMPRESSIONS = "impressions"
     CLICKS = "clicks"
@@ -88,8 +85,7 @@ class MetricType(str, Enum):
 
 
 class TimeGranularity(str, Enum):
-    """Time granularity for analytics"""
-    MINUTE = "minute"
+    """Time granularity for analytics"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -100,8 +96,7 @@ class TimeGranularity(str, Enum):
 
 
 class AnalysisType(str, Enum):
-    """Types of analytics analysis"""
-    DESCRIPTIVE = "descriptive"
+    """Types of analytics analysis"""    DESCRIPTIVE = "descriptive"
     DIAGNOSTIC = "diagnostic"
     PREDICTIVE = "predictive"
     PRESCRIPTIVE = "prescriptive"
@@ -114,8 +109,7 @@ class AnalysisType(str, Enum):
 
 
 class AudienceSegment(str, Enum):
-    """Audience segmentation types"""
-    DEMOGRAPHIC = "demographic"
+    """Audience segmentation types"""    DEMOGRAPHIC = "demographic"
     BEHAVIORAL = "behavioral"
     PSYCHOGRAPHIC = "psychographic"
     GEOGRAPHIC = "geographic"
@@ -129,8 +123,7 @@ class AudienceSegment(str, Enum):
 
 @dataclass
 class PerformanceMetrics:
-    """Comprehensive performance metrics"""
-    views: int = 0
+    """Comprehensive performance metrics"""    views: int = 0
     impressions: int = 0
     reach: int = 0
     unique_views: int = 0
@@ -156,8 +149,7 @@ class PerformanceMetrics:
     influence_score: float = 0.0
     
     def calculate_derived_metrics(self):
-        """Calculate derived performance metrics"""
-        if self.impressions > 0:
+        """Calculate derived performance metrics"""        if self.impressions > 0:
             self.engagement_rate = (self.likes + self.comments + self.shares) / self.impressions
             self.click_through_rate = self.clicks / self.impressions
         
@@ -174,8 +166,7 @@ class PerformanceMetrics:
 
 @dataclass
 class AudienceInsights:
-    """Comprehensive audience insights"""
-    total_followers: int = 0
+    """Comprehensive audience insights"""    total_followers: int = 0
     active_followers: int = 0
     new_followers: int = 0
     unfollows: int = 0
@@ -195,8 +186,7 @@ class AudienceInsights:
 
 @dataclass
 class ContentAnalytics:
-    """Comprehensive content analytics"""
-    content_id: int
+    """Comprehensive content analytics"""    content_id: int
     platform: PlatformType
     published_at: datetime
     performance_metrics: PerformanceMetrics
@@ -211,8 +201,7 @@ class ContentAnalytics:
 
 
 class AnalyticsReport(BaseModel):
-    """Comprehensive analytics report"""
-    user_id: int
+    """Comprehensive analytics report"""    user_id: int
     report_type: AnalysisType
     time_period: Tuple[datetime, datetime]
     platforms: List[PlatformType]
@@ -234,8 +223,7 @@ class AnalyticsReport(BaseModel):
 
 
 class AdvancedAnalyticsTracker:
-    """
-    Enterprise-grade analytics tracking system with AI-powered insights and intelligence.
+    """    Enterprise-grade analytics tracking system with AI-powered insights and intelligence.
     
     Features:
     - Real-time performance monitoring across all platforms
@@ -248,8 +236,7 @@ class AdvancedAnalyticsTracker:
     - Custom dashboard generation and visualization
     - ROI analysis and business intelligence
     - Data privacy and compliance management
-    """
-    
+    """    
     def __init__(self, db: Session):
         self.db = db
         self.redis_client = None
@@ -280,19 +267,16 @@ class AdvancedAnalyticsTracker:
         self.executor = ThreadPoolExecutor(max_workers=20)
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.redis_client = await aioredis.from_url(settings.REDIS_URL)
+        """Async context manager entry"""        self.redis_client = await aioredis.from_url(settings.REDIS_URL)
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.redis_client:
+        """Async context manager exit"""        if self.redis_client:
             await self.redis_client.close()
         self.executor.shutdown(wait=True)
     
     def _load_analytics_models(self) -> Dict[str, Any]:
-        """Load ML models for analytics processing"""
-        models = {}
+        """Load ML models for analytics processing"""        models = {}
         
         try:
             # Performance prediction models
@@ -326,8 +310,7 @@ class AdvancedAnalyticsTracker:
         return models
     
     def _create_fallback_analytics_models(self) -> Dict[str, Any]:
-        """Create fallback analytics models"""
-        return {
+        """Create fallback analytics models"""        return {
             "engagement_predictor": RandomForestRegressor(n_estimators=100, random_state=42),
             "reach_predictor": GradientBoostingRegressor(n_estimators=100, random_state=42),
             "viral_predictor": RandomForestRegressor(n_estimators=50, random_state=42),
@@ -345,8 +328,7 @@ class AdvancedAnalyticsTracker:
         }
     
     def _load_prediction_models(self) -> Dict[str, Any]:
-        """Load prediction models for forecasting"""
-        models = {}
+        """Load prediction models for forecasting"""        models = {}
         
         try:
             models["performance_forecaster"] = joblib.load("models/performance_forecaster.pkl")
@@ -362,8 +344,7 @@ class AdvancedAnalyticsTracker:
         return models
     
     def _create_fallback_prediction_models(self) -> Dict[str, Any]:
-        """Create fallback prediction models"""
-        return {
+        """Create fallback prediction models"""        return {
             "performance_forecaster": RandomForestRegressor(n_estimators=100, random_state=42),
             "audience_growth_predictor": LinearRegression(),
             "revenue_forecaster": GradientBoostingRegressor(n_estimators=100, random_state=42),
@@ -372,8 +353,7 @@ class AdvancedAnalyticsTracker:
         }
     
     def _load_segmentation_models(self) -> Dict[str, Any]:
-        """Load audience segmentation models"""
-        models = {}
+        """Load audience segmentation models"""        models = {}
         
         try:
             models["demographic_segmenter"] = joblib.load("models/demographic_segmenter.pkl")
@@ -389,8 +369,7 @@ class AdvancedAnalyticsTracker:
         return models
     
     def _create_fallback_segmentation_models(self) -> Dict[str, Any]:
-        """Create fallback segmentation models"""
-        return {
+        """Create fallback segmentation models"""        return {
             "demographic_segmenter": KMeans(n_clusters=5, random_state=42),
             "behavioral_segmenter": KMeans(n_clusters=8, random_state=42),
             "engagement_segmenter": KMeans(n_clusters=6, random_state=42),
@@ -399,8 +378,7 @@ class AdvancedAnalyticsTracker:
         }
     
     def _initialize_platform_apis(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize platform API configurations for analytics"""
-        return {
+        """Initialize platform API configurations for analytics"""        return {
             PlatformType.YOUTUBE: {
                 "analytics_api": "https://youtubeanalytics.googleapis.com/v2/reports",
                 "metrics": [
@@ -455,8 +433,7 @@ class AdvancedAnalyticsTracker:
         }
     
     def _initialize_streaming_processors(self) -> Dict[str, Any]:
-        """Initialize real-time streaming processors"""
-        return {
+        """Initialize real-time streaming processors"""        return {
             "kafka_config": {
                 "bootstrap_servers": settings.KAFKA_BOOTSTRAP_SERVERS,
                 "group_id": "analytics_tracker",
@@ -473,8 +450,7 @@ class AdvancedAnalyticsTracker:
         }
     
     def _initialize_cache_configs(self) -> Dict[str, Any]:
-        """Initialize caching configurations"""
-        return {
+        """Initialize caching configurations"""        return {
             "analytics_cache_ttl": 300,  # 5 minutes
             "real_time_cache_ttl": 60,   # 1 minute
             "dashboard_cache_ttl": 900,  # 15 minutes
@@ -484,8 +460,7 @@ class AdvancedAnalyticsTracker:
         }
     
     def _initialize_data_validators(self) -> Dict[str, Any]:
-        """Initialize data quality validators"""
-        return {
+        """Initialize data quality validators"""        return {
             "metric_ranges": {
                 "engagement_rate": (0.0, 1.0),
                 "click_through_rate": (0.0, 1.0),
@@ -505,8 +480,7 @@ class AdvancedAnalyticsTracker:
         }
     
     def _initialize_visualization_engine(self) -> Dict[str, Any]:
-        """Initialize visualization and dashboard engine"""
-        return {
+        """Initialize visualization and dashboard engine"""        return {
             "chart_types": [
                 "line", "bar", "pie", "scatter", "heatmap", "treemap",
                 "funnel", "gauge", "candlestick", "violin", "box"
@@ -547,8 +521,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of distribution metrics"""
-    REACH = "reach"
+    """Types of distribution metrics"""    REACH = "reach"
     IMPRESSIONS = "impressions"
     ENGAGEMENT = "engagement"
     CLICKS = "clicks"
@@ -564,8 +537,7 @@ class MetricType(str, Enum):
 
 
 class TimeRange(str, Enum):
-    """Time range options for analytics"""
-    LAST_24H = "last_24h"
+    """Time range options for analytics"""    LAST_24H = "last_24h"
     LAST_7D = "last_7d"
     LAST_30D = "last_30d"
     LAST_90D = "last_90d"
@@ -575,8 +547,7 @@ class TimeRange(str, Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific performance metrics"""
-    platform: PlatformType
+    """Platform-specific performance metrics"""    platform: PlatformType
     reach: int
     impressions: int
     engagement: int
@@ -595,8 +566,7 @@ class PlatformMetrics:
 
 @dataclass
 class CrossPlatformInsights:
-    """Cross-platform distribution insights"""
-    total_reach: int
+    """Cross-platform distribution insights"""    total_reach: int
     total_engagement: int
     total_revenue: float
     platform_performance: Dict[PlatformType, PlatformMetrics]
@@ -607,8 +577,7 @@ class CrossPlatformInsights:
 
 
 class AnalyticsRequest(BaseModel):
-    """Analytics request model"""
-    user_id: int
+    """Analytics request model"""    user_id: int
     content_id: Optional[int] = None
     platforms: Optional[List[PlatformType]] = None
     time_range: TimeRange = TimeRange.LAST_7D
@@ -622,8 +591,7 @@ class AnalyticsRequest(BaseModel):
 
 
 class AnalyticsResponse(BaseModel):
-    """Analytics response model"""
-    user_id: int
+    """Analytics response model"""    user_id: int
     time_range: str
     total_metrics: Dict[str, Any]
     platform_breakdown: Dict[str, Dict[str, Any]]
@@ -635,18 +603,15 @@ class AnalyticsResponse(BaseModel):
 
 
 class DistributionAnalyticsTracker:
-    """
-    Advanced analytics tracker for distribution performance monitoring
-    """
-    
+    """    Advanced analytics tracker for distribution performance monitoring
+    """    
     def __init__(self, db: Session):
         self.db = db
         self.metric_calculators = self._initialize_metric_calculators()
         self.insight_generators = self._initialize_insight_generators()
         
     def _initialize_metric_calculators(self) -> Dict[MetricType, callable]:
-        """Initialize metric calculation functions"""
-        return {
+        """Initialize metric calculation functions"""        return {
             MetricType.REACH: self._calculate_reach,
             MetricType.IMPRESSIONS: self._calculate_impressions,
             MetricType.ENGAGEMENT: self._calculate_engagement,
@@ -663,8 +628,7 @@ class DistributionAnalyticsTracker:
         }
     
     def _initialize_insight_generators(self) -> Dict[str, callable]:
-        """Initialize insight generation functions"""
-        return {
+        """Initialize insight generation functions"""        return {
             "performance_trends": self._generate_performance_trends,
             "platform_comparison": self._generate_platform_comparison,
             "audience_insights": self._generate_audience_insights,
@@ -676,16 +640,14 @@ class DistributionAnalyticsTracker:
     async def get_distribution_analytics(
         self, request: AnalyticsRequest
     ) -> AnalyticsResponse:
-        """
-        Get comprehensive distribution analytics
+        """        Get comprehensive distribution analytics
         
         Args:
             request: Analytics request parameters
             
         Returns:
             Detailed analytics response with insights
-        """
-        try:
+        """        try:
             # Validate request
             await self._validate_analytics_request(request)
             
@@ -753,8 +715,7 @@ class DistributionAnalyticsTracker:
             raise
     
     async def _validate_analytics_request(self, request: AnalyticsRequest) -> None:
-        """Validate analytics request parameters"""
-        # Check user exists
+        """Validate analytics request parameters"""        # Check user exists
         user = self.db.query(UserModel).filter(UserModel.id == request.user_id).first()
         if not user:
             raise ValueError("User not found")
@@ -777,8 +738,7 @@ class DistributionAnalyticsTracker:
                 raise ValueError("Start date must be before end date")
     
     def _calculate_time_range(self, request: AnalyticsRequest) -> Tuple[datetime, datetime]:
-        """Calculate start and end dates for analytics"""
-        end_date = datetime.utcnow()
+        """Calculate start and end dates for analytics"""        end_date = datetime.utcnow()
         
         if request.time_range == TimeRange.CUSTOM:
             return request.start_date, request.end_date
@@ -802,8 +762,7 @@ class DistributionAnalyticsTracker:
         start_date: datetime,
         end_date: datetime
     ) -> List[DistributionAnalyticsModel]:
-        """Fetch analytics data from database"""
-        query = self.db.query(DistributionAnalyticsModel).filter(
+        """Fetch analytics data from database"""        query = self.db.query(DistributionAnalyticsModel).filter(
             DistributionAnalyticsModel.user_id == request.user_id,
             DistributionAnalyticsModel.created_at >= start_date,
             DistributionAnalyticsModel.created_at <= end_date
@@ -827,8 +786,7 @@ class DistributionAnalyticsTracker:
         analytics_data: List[DistributionAnalyticsModel],
         requested_metrics: List[MetricType]
     ) -> Dict[str, Any]:
-        """Calculate total metrics across all data"""
-        total_metrics = {}
+        """Calculate total metrics across all data"""        total_metrics = {}
         
         for metric in requested_metrics:
             calculator = self.metric_calculators.get(metric)
@@ -842,8 +800,7 @@ class DistributionAnalyticsTracker:
         analytics_data: List[DistributionAnalyticsModel],
         requested_metrics: List[MetricType]
     ) -> Dict[str, Dict[str, Any]]:
-        """Calculate metrics broken down by platform"""
-        platform_breakdown = {}
+        """Calculate metrics broken down by platform"""        platform_breakdown = {}
         
         # Group data by platform
         platform_data = {}
@@ -873,8 +830,7 @@ class DistributionAnalyticsTracker:
         start_date: datetime,
         end_date: datetime
     ) -> List[Dict[str, Any]]:
-        """Calculate trend data over time"""
-        trend_data = []
+        """Calculate trend data over time"""        trend_data = []
         
         # Determine time intervals based on granularity
         if granularity == "hourly":
@@ -917,8 +873,7 @@ class DistributionAnalyticsTracker:
         total_metrics: Dict[str, Any],
         platform_breakdown: Dict[str, Dict[str, Any]]
     ) -> List[str]:
-        """Generate actionable insights from analytics data"""
-        insights = []
+        """Generate actionable insights from analytics data"""        insights = []
         
         # Best performing platform
         if platform_breakdown:
@@ -975,8 +930,7 @@ class DistributionAnalyticsTracker:
         total_metrics: Dict[str, Any],
         platform_breakdown: Dict[str, Dict[str, Any]]
     ) -> List[str]:
-        """Generate actionable recommendations"""
-        recommendations = []
+        """Generate actionable recommendations"""        recommendations = []
         
         # Platform optimization
         if platform_breakdown:
@@ -1028,8 +982,7 @@ class DistributionAnalyticsTracker:
     async def _generate_cross_platform_insights(
         self, analytics_data: List[DistributionAnalyticsModel]
     ) -> Dict[str, Any]:
-        """Generate cross-platform distribution insights"""
-        
+        """Generate cross-platform distribution insights"""        
         # Platform performance comparison
         platform_reach = {}
         platform_engagement = {}
@@ -1086,8 +1039,7 @@ class DistributionAnalyticsTracker:
         analytics_data: List[DistributionAnalyticsModel],
         request: AnalyticsRequest
     ) -> Dict[str, Any]:
-        """Generate performance predictions"""
-        if len(analytics_data) < 7:  # Need at least 7 data points
+        """Generate performance predictions"""        if len(analytics_data) < 7:  # Need at least 7 data points
             return {"error": "Insufficient data for predictions"}
         
         # Simple trend-based predictions
@@ -1121,92 +1073,79 @@ class DistributionAnalyticsTracker:
     
     # Metric calculation methods
     async def _calculate_reach(self, data: List[DistributionAnalyticsModel]) -> int:
-        """Calculate total reach"""
-        return sum(
+        """Calculate total reach"""        return sum(
             record.metrics.get("reach", 0) if record.metrics else 0
             for record in data
         )
     
     async def _calculate_impressions(self, data: List[DistributionAnalyticsModel]) -> int:
-        """Calculate total impressions"""
-        return sum(
+        """Calculate total impressions"""        return sum(
             record.metrics.get("impressions", 0) if record.metrics else 0
             for record in data
         )
     
     async def _calculate_engagement(self, data: List[DistributionAnalyticsModel]) -> int:
-        """Calculate total engagement"""
-        return sum(
+        """Calculate total engagement"""        return sum(
             record.metrics.get("engagement", 0) if record.metrics else 0
             for record in data
         )
     
     async def _calculate_clicks(self, data: List[DistributionAnalyticsModel]) -> int:
-        """Calculate total clicks"""
-        return sum(
+        """Calculate total clicks"""        return sum(
             record.metrics.get("clicks", 0) if record.metrics else 0
             for record in data
         )
     
     async def _calculate_shares(self, data: List[DistributionAnalyticsModel]) -> int:
-        """Calculate total shares"""
-        return sum(
+        """Calculate total shares"""        return sum(
             record.metrics.get("shares", 0) if record.metrics else 0
             for record in data
         )
     
     async def _calculate_comments(self, data: List[DistributionAnalyticsModel]) -> int:
-        """Calculate total comments"""
-        return sum(
+        """Calculate total comments"""        return sum(
             record.metrics.get("comments", 0) if record.metrics else 0
             for record in data
         )
     
     async def _calculate_likes(self, data: List[DistributionAnalyticsModel]) -> int:
-        """Calculate total likes"""
-        return sum(
+        """Calculate total likes"""        return sum(
             record.metrics.get("likes", 0) if record.metrics else 0
             for record in data
         )
     
     async def _calculate_saves(self, data: List[DistributionAnalyticsModel]) -> int:
-        """Calculate total saves"""
-        return sum(
+        """Calculate total saves"""        return sum(
             record.metrics.get("saves", 0) if record.metrics else 0
             for record in data
         )
     
     async def _calculate_conversion(self, data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate conversion rate"""
-        total_clicks = await self._calculate_clicks(data)
+        """Calculate conversion rate"""        total_clicks = await self._calculate_clicks(data)
         total_reach = await self._calculate_reach(data)
         
         return total_clicks / total_reach if total_reach > 0 else 0
     
     async def _calculate_revenue(self, data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate total revenue"""
-        return sum(
+        """Calculate total revenue"""        return sum(
             record.metrics.get("revenue", 0.0) if record.metrics else 0.0
             for record in data
         )
     
     async def _calculate_cpm(self, data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate cost per mille (CPM)"""
-        total_revenue = await self._calculate_revenue(data)
+        """Calculate cost per mille (CPM)"""        total_revenue = await self._calculate_revenue(data)
         total_impressions = await self._calculate_impressions(data)
         
         return (total_revenue / total_impressions * 1000) if total_impressions > 0 else 0
     
     async def _calculate_ctr(self, data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate click-through rate"""
-        total_clicks = await self._calculate_clicks(data)
+        """Calculate click-through rate"""        total_clicks = await self._calculate_clicks(data)
         total_impressions = await self._calculate_impressions(data)
         
         return total_clicks / total_impressions if total_impressions > 0 else 0
     
     async def _calculate_engagement_rate(self, data: List[DistributionAnalyticsModel]) -> float:
-        """Calculate engagement rate"""
-        total_engagement = await self._calculate_engagement(data)
+        """Calculate engagement rate"""        total_engagement = await self._calculate_engagement(data)
         total_reach = await self._calculate_reach(data)
         
         return total_engagement / total_reach if total_reach > 0 else 0
@@ -1218,8 +1157,7 @@ class DistributionAnalyticsTracker:
         platform: PlatformType,
         metrics: Dict[str, Any]
     ) -> None:
-        """Track real-time metrics for a piece of content"""
-        try:
+        """Track real-time metrics for a piece of content"""        try:
             # Create or update analytics record
             existing = self.db.query(DistributionAnalyticsModel).filter(
                 DistributionAnalyticsModel.user_id == user_id,
@@ -1255,8 +1193,7 @@ class DistributionAnalyticsTracker:
     async def get_platform_comparison(
         self, user_id: int, days: int = 30
     ) -> Dict[str, Any]:
-        """Get platform performance comparison"""
-        end_date = datetime.utcnow()
+        """Get platform performance comparison"""        end_date = datetime.utcnow()
         start_date = end_date - timedelta(days=days)
         
         analytics_data = self.db.query(DistributionAnalyticsModel).filter(
@@ -1300,8 +1237,7 @@ class DistributionAnalyticsTracker:
         end_date: datetime,
         format: str = "csv"
     ) -> bytes:
-        """Export analytics data in specified format"""
-        analytics_data = self.db.query(DistributionAnalyticsModel).filter(
+        """Export analytics data in specified format"""        analytics_data = self.db.query(DistributionAnalyticsModel).filter(
             DistributionAnalyticsModel.user_id == user_id,
             DistributionAnalyticsModel.created_at >= start_date,
             DistributionAnalyticsModel.created_at <= end_date
@@ -1335,8 +1271,7 @@ class DistributionAnalyticsTracker:
             raise ValueError(f"Unsupported export format: {format}")
     
     async def cleanup_old_analytics(self, days_old: int = 365) -> int:
-        """Cleanup old analytics data"""
-        cutoff_date = datetime.utcnow() - timedelta(days=days_old)
+        """Cleanup old analytics data"""        cutoff_date = datetime.utcnow() - timedelta(days=days_old)
         
         old_records = self.db.query(DistributionAnalyticsModel).filter(
             DistributionAnalyticsModel.created_at < cutoff_date

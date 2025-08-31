@@ -1,5 +1,4 @@
-"""
-Violation Detector - Advanced Content Violation Detection Engine
+"""Violation Detector - Advanced Content Violation Detection Engine
 ==============================================================
 
 AI-powered content violation detection system for multi-format content.
@@ -14,7 +13,6 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -38,8 +36,7 @@ from bs4 import BeautifulSoup
 
 
 class ViolationType(Enum):
-    """Content violation types"""
-    DIRECT_COPY = "direct_copy"
+    """Content violation types"""    DIRECT_COPY = "direct_copy"
     PARTIAL_COPY = "partial_copy"
     DERIVATIVE_WORK = "derivative_work"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -49,8 +46,7 @@ class ViolationType(Enum):
 
 
 class DetectionMethod(Enum):
-    """Detection method types"""
-    AUDIO_FINGERPRINT = "audio_fingerprint"
+    """Detection method types"""    AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
     TEXT_SIMILARITY = "text_similarity"
@@ -60,8 +56,7 @@ class DetectionMethod(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Violation severity levels"""
-    CRITICAL = "critical"
+    """Violation severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -70,8 +65,7 @@ class ViolationSeverity(Enum):
 
 @dataclass
 class DetectionConfig:
-    """Violation detection configuration"""
-    content_id: str
+    """Violation detection configuration"""    content_id: str
     detection_methods: List[DetectionMethod]
     similarity_threshold: float
     scan_frequency: int  # hours
@@ -83,8 +77,7 @@ class DetectionConfig:
 
 @dataclass
 class ViolationEvidence:
-    """Violation evidence data"""
-    evidence_id: str
+    """Violation evidence data"""    evidence_id: str
     violation_id: str
     evidence_type: str
     url: str
@@ -97,8 +90,7 @@ class ViolationEvidence:
 
 @dataclass
 class ViolationAlert:
-    """Content violation alert"""
-    alert_id: str
+    """Content violation alert"""    alert_id: str
     content_id: str
     detected_url: str
     platform: str
@@ -114,8 +106,7 @@ class ViolationAlert:
 
 @dataclass
 class DetectionReport:
-    """Violation detection report"""
-    report_id: str
+    """Violation detection report"""    report_id: str
     content_id: str
     scan_period: int
     total_scans: int
@@ -128,22 +119,18 @@ class DetectionReport:
 
 
 class ViolationDetector:
-    """
-    Advanced content violation detection engine.
+    """    Advanced content violation detection engine.
     
     Uses AI-powered analysis to detect unauthorized content usage across
     multiple platforms with high accuracy and automated evidence collection.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """
-        Initialize ViolationDetector.
+        """        Initialize ViolationDetector.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -186,16 +173,14 @@ class ViolationDetector:
         }
     
     async def configure_detection(self, config: DetectionConfig) -> bool:
-        """
-        Configure violation detection for content.
+        """        Configure violation detection for content.
         
         Args:
             config: Detection configuration
             
         Returns:
             Configuration success status
-        """
-        try:
+        """        try:
             # Validate configuration
             if not await self._validate_detection_config(config):
                 return False
@@ -221,8 +206,7 @@ class ViolationDetector:
     
     async def scan_for_violations(self, content_id: str, 
                                 platforms: Optional[List[str]] = None) -> List[ViolationAlert]:
-        """
-        Scan for content violations across platforms.
+        """        Scan for content violations across platforms.
         
         Args:
             content_id: Content identifier to scan for
@@ -230,8 +214,7 @@ class ViolationDetector:
             
         Returns:
             List of detected violations
-        """
-        try:
+        """        try:
             # Get detection configuration
             config = await self._get_detection_config(content_id)
             if not config:
@@ -291,8 +274,7 @@ class ViolationDetector:
     
     async def analyze_audio_fingerprint(self, audio_data: bytes, 
                                       reference_fingerprint: str) -> Dict[str, Any]:
-        """
-        Analyze audio fingerprint for similarity detection.
+        """        Analyze audio fingerprint for similarity detection.
         
         Args:
             audio_data: Audio data to analyze
@@ -300,8 +282,7 @@ class ViolationDetector:
             
         Returns:
             Analysis results with similarity score
-        """
-        try:
+        """        try:
             # Extract audio features using librosa
             y, sr = librosa.load(audio_data, sr=22050)
             
@@ -343,8 +324,7 @@ class ViolationDetector:
     
     async def analyze_video_fingerprint(self, video_path: str,
                                       reference_fingerprint: str) -> Dict[str, Any]:
-        """
-        Analyze video fingerprint for similarity detection.
+        """        Analyze video fingerprint for similarity detection.
         
         Args:
             video_path: Path to video file
@@ -352,8 +332,7 @@ class ViolationDetector:
             
         Returns:
             Analysis results with similarity score
-        """
-        try:
+        """        try:
             # Open video capture
             cap = cv2.VideoCapture(video_path)
             
@@ -405,8 +384,7 @@ class ViolationDetector:
     
     async def analyze_image_fingerprint(self, image_data: bytes,
                                       reference_fingerprint: str) -> Dict[str, Any]:
-        """
-        Analyze image fingerprint for similarity detection.
+        """        Analyze image fingerprint for similarity detection.
         
         Args:
             image_data: Image data to analyze
@@ -414,8 +392,7 @@ class ViolationDetector:
             
         Returns:
             Analysis results with similarity score
-        """
-        try:
+        """        try:
             # Load image
             image = Image.open(image_data)
             
@@ -459,16 +436,14 @@ class ViolationDetector:
             return {'fingerprint': None, 'similarity_score': 0.0}
     
     async def collect_violation_evidence(self, violation: ViolationAlert) -> List[ViolationEvidence]:
-        """
-        Collect comprehensive evidence for violation.
+        """        Collect comprehensive evidence for violation.
         
         Args:
             violation: Violation alert to collect evidence for
             
         Returns:
             List of collected evidence
-        """
-        try:
+        """        try:
             evidence_list = []
             
             # Collect webpage screenshot
@@ -504,8 +479,7 @@ class ViolationDetector:
     
     async def generate_detection_report(self, content_id: str, 
                                       period_days: int = 30) -> DetectionReport:
-        """
-        Generate comprehensive detection report.
+        """        Generate comprehensive detection report.
         
         Args:
             content_id: Content identifier
@@ -513,8 +487,7 @@ class ViolationDetector:
             
         Returns:
             Detection report
-        """
-        try:
+        """        try:
             # Calculate date range
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -553,13 +526,11 @@ class ViolationDetector:
     # Private helper methods
     
     async def _execute_with_semaphore(self, semaphore: asyncio.Semaphore, coro):
-        """Execute coroutine with semaphore"""
-        async with semaphore:
+        """Execute coroutine with semaphore"""        async with semaphore:
             return await coro
     
     async def _validate_detection_config(self, config: DetectionConfig) -> bool:
-        """Validate detection configuration"""
-        if config.similarity_threshold < 0.0 or config.similarity_threshold > 1.0:
+        """Validate detection configuration"""        if config.similarity_threshold < 0.0 or config.similarity_threshold > 1.0:
             return False
         
         if config.scan_frequency < 1:
@@ -571,18 +542,15 @@ class ViolationDetector:
         return True
     
     async def _store_detection_config(self, config: DetectionConfig):
-        """Store detection configuration in database"""
-        # Implementation would store config in database
+        """Store detection configuration in database"""        # Implementation would store config in database
         pass
     
     async def _initialize_detection_fingerprints(self, config: DetectionConfig):
-        """Initialize detection fingerprints for content"""
-        # Implementation would create/update fingerprints
+        """Initialize detection fingerprints for content"""        # Implementation would create/update fingerprints
         pass
     
     async def _schedule_detection_scans(self, config: DetectionConfig):
-        """Schedule periodic detection scans"""
-        scan_data = {
+        """Schedule periodic detection scans"""        scan_data = {
             'content_id': config.content_id,
             'platforms': config.platforms_to_scan,
             'frequency': config.scan_frequency,
@@ -597,8 +565,7 @@ class ViolationDetector:
         )
     
     async def _cache_detection_config(self, config: DetectionConfig):
-        """Cache detection configuration"""
-        cache_key = f"detection_config:{config.content_id}"
+        """Cache detection configuration"""        cache_key = f"detection_config:{config.content_id}"
         config_data = {
             'detection_methods': [method.value for method in config.detection_methods],
             'similarity_threshold': config.similarity_threshold,
@@ -614,8 +581,7 @@ class ViolationDetector:
         )
     
     async def _get_detection_config(self, content_id: str) -> Optional[DetectionConfig]:
-        """Get detection configuration from cache or database"""
-        # Check cache first
+        """Get detection configuration from cache or database"""        # Check cache first
         cache_key = f"detection_config:{content_id}"
         cached_config = await self.redis.get(cache_key)
         
@@ -636,8 +602,7 @@ class ViolationDetector:
         return None
     
     async def _get_content_fingerprints(self, content_id: str) -> Dict[str, Any]:
-        """Get content fingerprints for detection"""
-        # Implementation would get fingerprints from database
+        """Get content fingerprints for detection"""        # Implementation would get fingerprints from database
         return {
             'audio_fingerprint': 'audio_hash_placeholder',
             'video_fingerprint': 'video_hash_placeholder',
@@ -647,8 +612,7 @@ class ViolationDetector:
     
     async def _scan_platform_violations(self, content_id: str, platform: str,
                                       fingerprints: Dict, config: DetectionConfig) -> List[ViolationAlert]:
-        """Scan specific platform for violations"""
-        violations = []
+        """Scan specific platform for violations"""        violations = []
         
         try:
             platform_config = self.platform_configs.get(platform, {})
@@ -670,8 +634,7 @@ class ViolationDetector:
     
     async def _scan_youtube_violations(self, content_id: str, fingerprints: Dict,
                                      config: DetectionConfig) -> List[ViolationAlert]:
-        """Scan YouTube for violations"""
-        violations = []
+        """Scan YouTube for violations"""        violations = []
         
         # Implementation would use YouTube API to search for similar content
         # Placeholder implementation
@@ -680,8 +643,7 @@ class ViolationDetector:
     
     async def _scan_instagram_violations(self, content_id: str, fingerprints: Dict,
                                        config: DetectionConfig) -> List[ViolationAlert]:
-        """Scan Instagram for violations"""
-        violations = []
+        """Scan Instagram for violations"""        violations = []
         
         # Implementation would use Instagram API to search for similar content
         # Placeholder implementation
@@ -690,8 +652,7 @@ class ViolationDetector:
     
     async def _scan_tiktok_violations(self, content_id: str, fingerprints: Dict,
                                     config: DetectionConfig) -> List[ViolationAlert]:
-        """Scan TikTok for violations"""
-        violations = []
+        """Scan TikTok for violations"""        violations = []
         
         # Implementation would use TikTok API to search for similar content
         # Placeholder implementation
@@ -700,8 +661,7 @@ class ViolationDetector:
     
     async def _scan_twitter_violations(self, content_id: str, fingerprints: Dict,
                                      config: DetectionConfig) -> List[ViolationAlert]:
-        """Scan Twitter for violations"""
-        violations = []
+        """Scan Twitter for violations"""        violations = []
         
         # Implementation would use Twitter API to search for similar content
         # Placeholder implementation
@@ -709,8 +669,7 @@ class ViolationDetector:
         return violations
     
     async def _validate_violation(self, violation: ViolationAlert, config: DetectionConfig) -> bool:
-        """Validate detected violation"""
-        # Check if similarity score meets threshold
+        """Validate detected violation"""        # Check if similarity score meets threshold
         if violation.similarity_score < config.alert_threshold:
             return False
         
@@ -718,13 +677,11 @@ class ViolationDetector:
         return True
     
     async def _store_violation_alert(self, violation: ViolationAlert):
-        """Store violation alert in database"""
-        # Implementation would store violation in database
+        """Store violation alert in database"""        # Implementation would store violation in database
         pass
     
     async def _update_scan_statistics(self, content_id: str, violations_found: int):
-        """Update scan statistics"""
-        stats_key = f"scan_stats:{content_id}"
+        """Update scan statistics"""        stats_key = f"scan_stats:{content_id}"
         current_stats = await self.redis.get(stats_key)
         
         if current_stats:
@@ -739,28 +696,23 @@ class ViolationDetector:
         await self.redis.setex(stats_key, 86400, json.dumps(stats))
     
     async def _calculate_audio_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate audio fingerprint similarity"""
-        # Implementation would calculate similarity using vector comparison
+        """Calculate audio fingerprint similarity"""        # Implementation would calculate similarity using vector comparison
         return 0.0  # Placeholder
     
     async def _calculate_video_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate video fingerprint similarity"""
-        # Implementation would calculate similarity using frame comparison
+        """Calculate video fingerprint similarity"""        # Implementation would calculate similarity using frame comparison
         return 0.0  # Placeholder
     
     async def _calculate_image_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate image fingerprint similarity"""
-        # Implementation would calculate similarity using hash comparison
+        """Calculate image fingerprint similarity"""        # Implementation would calculate similarity using hash comparison
         return 0.0  # Placeholder
     
     async def _capture_webpage_screenshot(self, url: str) -> Optional[ViolationEvidence]:
-        """Capture screenshot of webpage as evidence"""
-        # Implementation would capture screenshot using headless browser
+        """Capture screenshot of webpage as evidence"""        # Implementation would capture screenshot using headless browser
         return None
     
     async def _collect_webpage_metadata(self, url: str) -> Optional[ViolationEvidence]:
-        """Collect webpage metadata as evidence"""
-        try:
+        """Collect webpage metadata as evidence"""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(url) as response:
                     if response.status == 200:
@@ -808,45 +760,38 @@ class ViolationDetector:
         return None
     
     async def _collect_platform_evidence(self, platform: str, url: str) -> List[ViolationEvidence]:
-        """Collect platform-specific evidence"""
-        evidence_list = []
+        """Collect platform-specific evidence"""        evidence_list = []
         
         # Platform-specific evidence collection would be implemented here
         
         return evidence_list
     
     async def _collect_whois_evidence(self, url: str) -> Optional[ViolationEvidence]:
-        """Collect WHOIS information as evidence"""
-        # Implementation would collect WHOIS data
+        """Collect WHOIS information as evidence"""        # Implementation would collect WHOIS data
         return None
     
     async def _store_violation_evidence(self, evidence: ViolationEvidence):
-        """Store violation evidence in database"""
-        # Implementation would store evidence in database
+        """Store violation evidence in database"""        # Implementation would store evidence in database
         pass
     
     async def _get_scan_statistics(self, content_id: str, start_date: datetime, 
                                  end_date: datetime) -> Dict[str, Any]:
-        """Get scan statistics for period"""
-        # Implementation would query scan statistics
+        """Get scan statistics for period"""        # Implementation would query scan statistics
         return {'total_scans': 10, 'platforms_scanned': ['youtube', 'instagram']}
     
     async def _get_violation_statistics(self, content_id: str, start_date: datetime,
                                       end_date: datetime) -> Dict[str, Any]:
-        """Get violation statistics for period"""
-        # Implementation would query violation statistics
+        """Get violation statistics for period"""        # Implementation would query violation statistics
         return {'total_violations': 5, 'false_positives': 1}
     
     async def _calculate_detection_accuracy(self, content_id: str, start_date: datetime,
                                           end_date: datetime) -> float:
-        """Calculate detection accuracy for period"""
-        # Implementation would calculate accuracy based on confirmed violations
+        """Calculate detection accuracy for period"""        # Implementation would calculate accuracy based on confirmed violations
         return 0.95  # 95% accuracy placeholder
     
     async def _get_top_violation_types(self, content_id: str, start_date: datetime,
                                      end_date: datetime) -> List[Dict[str, Any]]:
-        """Get top violation types for period"""
-        # Implementation would query and aggregate violation types
+        """Get top violation types for period"""        # Implementation would query and aggregate violation types
         return [
             {'type': 'direct_copy', 'count': 3, 'percentage': 60.0},
             {'type': 'partial_copy', 'count': 2, 'percentage': 40.0}

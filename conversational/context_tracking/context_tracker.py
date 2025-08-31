@@ -1,5 +1,4 @@
-"""
-Context Tracker - IA Influencer Agent
+"""Context Tracker - IA Influencer Agent
 
 Advanced context tracking engine providing intelligent conversation context
 management with behavioral pattern analysis and personalization capabilities.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,8 +30,7 @@ from ...utils.cache import CacheManager
 
 
 class ContextType(Enum):
-    """Types of context being tracked"""
-    USER_INTENT = "user_intent"
+    """Types of context being tracked"""    USER_INTENT = "user_intent"
     CONTENT_FOCUS = "content_focus"
     BUSINESS_GOAL = "business_goal"
     EMOTIONAL_STATE = "emotional_state"
@@ -46,8 +43,7 @@ class ContextType(Enum):
 
 
 class TrackingMode(Enum):
-    """Context tracking modes"""
-    PASSIVE = "passive"      # Background tracking
+    """Context tracking modes"""    PASSIVE = "passive"      # Background tracking
     ACTIVE = "active"        # Explicit user interaction
     PREDICTIVE = "predictive"  # AI-powered predictions
     ADAPTIVE = "adaptive"    # Learning and adapting
@@ -55,8 +51,7 @@ class TrackingMode(Enum):
 
 @dataclass
 class ContextSignal:
-    """Individual context signal with confidence scoring"""
-    signal_type: ContextType
+    """Individual context signal with confidence scoring"""    signal_type: ContextType
     value: Any
     confidence: float
     timestamp: datetime
@@ -66,14 +61,12 @@ class ContextSignal:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def get_current_weight(self) -> float:
-        """Calculate current weight considering decay"""
-        age_hours = (datetime.utcnow() - self.timestamp).total_seconds() / 3600
+        """Calculate current weight considering decay"""        age_hours = (datetime.utcnow() - self.timestamp).total_seconds() / 3600
         decay_factor = np.exp(-self.decay_rate * age_hours)
         return self.weight * self.confidence * decay_factor
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
-        return {
+        """Convert to dictionary representation"""        return {
             "signal_type": self.signal_type.value,
             "value": self.value,
             "confidence": self.confidence,
@@ -88,8 +81,7 @@ class ContextSignal:
 
 @dataclass
 class ContextPattern:
-    """Identified context pattern with analysis"""
-    pattern_id: str
+    """Identified context pattern with analysis"""    pattern_id: str
     pattern_type: ContextType
     signals: List[ContextSignal]
     strength: float
@@ -100,8 +92,7 @@ class ContextPattern:
     predictions: Dict[str, Any] = field(default_factory=dict)
     
     def calculate_strength(self) -> float:
-        """Calculate pattern strength based on signals"""
-        if not self.signals:
+        """Calculate pattern strength based on signals"""        if not self.signals:
             return 0.0
         
         total_weight = sum(signal.get_current_weight() for signal in self.signals)
@@ -110,8 +101,7 @@ class ContextPattern:
 
 @dataclass
 class UserContextProfile:
-    """Comprehensive user context profile"""
-    user_id: str
+    """Comprehensive user context profile"""    user_id: str
     created_at: datetime
     last_updated: datetime
     
@@ -137,8 +127,7 @@ class UserContextProfile:
 
 
 class ContextTracker:
-    """
-    Advanced context tracking engine providing intelligent conversation 
+    """    Advanced context tracking engine providing intelligent conversation 
     context management with behavioral pattern analysis.
     
     Features:
@@ -147,8 +136,7 @@ class ContextTracker:
     - Predictive context modeling
     - User behavior profiling
     - Adaptive learning capabilities
-    """
-    
+    """    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -186,8 +174,7 @@ class ContextTracker:
         self.logger.info("ContextTracker initialized")
     
     async def start(self):
-        """Start the context tracker and background analysis"""
-        try:
+        """Start the context tracker and background analysis"""        try:
             # Load existing user profiles
             await self._load_user_profiles()
             
@@ -204,8 +191,7 @@ class ContextTracker:
             raise ContextTrackerError(f"Startup failed: {e}")
     
     async def stop(self):
-        """Stop the context tracker and save state"""
-        try:
+        """Stop the context tracker and save state"""        try:
             # Cancel background tasks
             if self.analysis_task:
                 self.analysis_task.cancel()
@@ -232,8 +218,7 @@ class ContextTracker:
         weight: float = 1.0,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Track a new context signal
+        """        Track a new context signal
         
         Args:
             user_id: User identifier
@@ -246,8 +231,7 @@ class ContextTracker:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             # Create context signal
             signal = ContextSignal(
                 signal_type=signal_type,
@@ -296,8 +280,7 @@ class ContextTracker:
         context_types: Optional[List[ContextType]] = None,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """
-        Get current context analysis for user
+        """        Get current context analysis for user
         
         Args:
             user_id: User identifier
@@ -306,8 +289,7 @@ class ContextTracker:
             
         Returns:
             Dict containing current context analysis
-        """
-        try:
+        """        try:
             if user_id not in self.context_signals:
                 return {"user_id": user_id, "context": {}, "patterns": {}}
             
@@ -383,8 +365,7 @@ class ContextTracker:
         context_type: ContextType,
         time_horizon_hours: Optional[int] = None
     ) -> Dict[str, Any]:
-        """
-        Predict likely next context values
+        """        Predict likely next context values
         
         Args:
             user_id: User identifier
@@ -393,8 +374,7 @@ class ContextTracker:
             
         Returns:
             Dict containing predictions
-        """
-        try:
+        """        try:
             horizon = time_horizon_hours or self.prediction_horizon_hours
             
             # Get historical signals
@@ -474,8 +454,7 @@ class ContextTracker:
             return {"error": str(e)}
     
     async def get_user_profile(self, user_id: str) -> Optional[UserContextProfile]:
-        """Get user context profile"""
-        if user_id not in self.user_profiles:
+        """Get user context profile"""        if user_id not in self.user_profiles:
             # Try to load from cache
             await self._load_user_profile(user_id)
         
@@ -486,8 +465,7 @@ class ContextTracker:
         user_id: str,
         **updates
     ) -> bool:
-        """
-        Update user profile attributes
+        """        Update user profile attributes
         
         Args:
             user_id: User identifier
@@ -495,8 +473,7 @@ class ContextTracker:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             profile = await self.get_user_profile(user_id)
             if not profile:
                 # Create new profile
@@ -529,8 +506,7 @@ class ContextTracker:
         user_id2: str,
         context_types: Optional[List[ContextType]] = None
     ) -> Dict[str, float]:
-        """
-        Analyze context similarity between two users
+        """        Analyze context similarity between two users
         
         Args:
             user_id1: First user identifier
@@ -539,8 +515,7 @@ class ContextTracker:
             
         Returns:
             Dict containing similarity scores
-        """
-        try:
+        """        try:
             types_to_compare = context_types or list(ContextType)
             similarities = {}
             
@@ -580,8 +555,7 @@ class ContextTracker:
     # Private helper methods
     
     async def _update_user_profile(self, user_id: str, signal: ContextSignal):
-        """Update user profile based on new signal"""
-        if user_id not in self.user_profiles:
+        """Update user profile based on new signal"""        if user_id not in self.user_profiles:
             self.user_profiles[user_id] = UserContextProfile(
                 user_id=user_id,
                 created_at=datetime.utcnow(),
@@ -615,8 +589,7 @@ class ContextTracker:
         )
     
     async def _analyze_patterns(self, user_id: str, context_type: ContextType):
-        """Analyze patterns for specific context type"""
-        signals = self.context_signals[user_id][context_type]
+        """Analyze patterns for specific context type"""        signals = self.context_signals[user_id][context_type]
         
         # Group signals by value
         value_groups = defaultdict(list)
@@ -655,8 +628,7 @@ class ContextTracker:
         user_id: str,
         context_type: ContextType
     ) -> List[ContextPattern]:
-        """Get patterns for user and context type"""
-        profile = self.user_profiles.get(user_id)
+        """Get patterns for user and context type"""        profile = self.user_profiles.get(user_id)
         if not profile:
             return []
         
@@ -667,8 +639,7 @@ class ContextTracker:
         user_id: str,
         context_types: List[ContextType]
     ) -> Dict[str, Any]:
-        """Generate predictions for multiple context types"""
-        predictions = {}
+        """Generate predictions for multiple context types"""        predictions = {}
         
         for context_type in context_types:
             prediction = await self.predict_next_context(user_id, context_type)
@@ -682,8 +653,7 @@ class ContextTracker:
         signals: List[ContextSignal],
         context_type: ContextType
     ) -> Dict[str, Any]:
-        """Analyze temporal patterns in signals"""
-        if len(signals) < 10:
+        """Analyze temporal patterns in signals"""        if len(signals) < 10:
             return {}
         
         # Group by hour of day
@@ -736,8 +706,7 @@ class ContextTracker:
         texts1: List[str],
         texts2: List[str]
     ) -> float:
-        """Calculate text similarity between two sets of texts"""
-        try:
+        """Calculate text similarity between two sets of texts"""        try:
             if not texts1 or not texts2:
                 return 0.0
             
@@ -762,8 +731,7 @@ class ContextTracker:
         values1: List[str],
         values2: List[str]
     ) -> float:
-        """Calculate frequency-based similarity between two value sets"""
-        try:
+        """Calculate frequency-based similarity between two value sets"""        try:
             if not values1 or not values2:
                 return 0.0
             
@@ -793,8 +761,7 @@ class ContextTracker:
             return 0.0
     
     async def _background_analysis(self):
-        """Background task for pattern analysis and optimization"""
-        while True:
+        """Background task for pattern analysis and optimization"""        while True:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
                 
@@ -819,8 +786,7 @@ class ContextTracker:
                 await asyncio.sleep(60)
     
     async def _cleanup_old_signals(self):
-        """Remove old signals to manage memory"""
-        cutoff_date = datetime.utcnow() - timedelta(days=30)
+        """Remove old signals to manage memory"""        cutoff_date = datetime.utcnow() - timedelta(days=30)
         
         for user_id in self.context_signals:
             for context_type in self.context_signals[user_id]:
@@ -830,20 +796,17 @@ class ContextTracker:
                 ]
     
     async def _initialize_pattern_models(self):
-        """Initialize machine learning models for pattern recognition"""
-        # Placeholder for ML model initialization
+        """Initialize machine learning models for pattern recognition"""        # Placeholder for ML model initialization
         # In a full implementation, this would load pre-trained models
         for context_type in ContextType:
             self.pattern_models[context_type] = None
     
     async def _update_pattern_models(self):
-        """Update pattern recognition models with new data"""
-        # Placeholder for model training/updating
+        """Update pattern recognition models with new data"""        # Placeholder for model training/updating
         pass
     
     async def _load_user_profiles(self):
-        """Load user profiles from persistent storage"""
-        try:
+        """Load user profiles from persistent storage"""        try:
             # Load from cache or database
             profiles_data = await self.cache_manager.get("user_context_profiles")
             if profiles_data:
@@ -855,8 +818,7 @@ class ContextTracker:
             self.logger.error(f"Error loading user profiles: {e}")
     
     async def _save_user_profiles(self):
-        """Save user profiles to persistent storage"""
-        try:
+        """Save user profiles to persistent storage"""        try:
             profiles_data = {}
             for user_id, profile in self.user_profiles.items():
                 profiles_data[user_id] = self._profile_to_dict(profile)
@@ -871,8 +833,7 @@ class ContextTracker:
             self.logger.error(f"Error saving user profiles: {e}")
     
     async def _load_user_profile(self, user_id: str):
-        """Load specific user profile"""
-        try:
+        """Load specific user profile"""        try:
             profile_data = await self.cache_manager.get(f"user_profile:{user_id}")
             if profile_data:
                 self.user_profiles[user_id] = self._profile_from_dict(profile_data)
@@ -881,8 +842,7 @@ class ContextTracker:
             self.logger.error(f"Error loading user profile {user_id}: {e}")
     
     async def _save_user_profile(self, user_id: str):
-        """Save specific user profile"""
-        try:
+        """Save specific user profile"""        try:
             if user_id in self.user_profiles:
                 profile_data = self._profile_to_dict(self.user_profiles[user_id])
                 await self.cache_manager.set(
@@ -895,8 +855,7 @@ class ContextTracker:
             self.logger.error(f"Error saving user profile {user_id}: {e}")
     
     def _profile_to_dict(self, profile: UserContextProfile) -> Dict[str, Any]:
-        """Convert profile to dictionary for serialization"""
-        return {
+        """Convert profile to dictionary for serialization"""        return {
             "user_id": profile.user_id,
             "created_at": profile.created_at.isoformat(),
             "last_updated": profile.last_updated.isoformat(),
@@ -914,8 +873,7 @@ class ContextTracker:
         }
     
     def _profile_from_dict(self, data: Dict[str, Any]) -> UserContextProfile:
-        """Reconstruct profile from dictionary"""
-        return UserContextProfile(
+        """Reconstruct profile from dictionary"""        return UserContextProfile(
             user_id=data["user_id"],
             created_at=datetime.fromisoformat(data["created_at"]),
             last_updated=datetime.fromisoformat(data["last_updated"]),

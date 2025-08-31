@@ -6,8 +6,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 This module handles the deployment configuration and orchestration of AI-powered
 content fingerprinting systems for multi-format content protection.
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."

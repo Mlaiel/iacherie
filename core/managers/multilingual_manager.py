@@ -1,5 +1,4 @@
-"""
-Multilingual Manager - IA-Influencer-Agent
+"""Multilingual Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/multilingual_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Contenu multilingue → Détection langue → Traduction temps réel → 
 Reconnaissance vocale → Synthèse vocale → Optimisation culturelle → Distribution ciblée
 """
-
 from typing import Any, Dict, List, Optional, Union, Tuple, Set
 import logging
 import asyncio
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class LanguageFamily(Enum):
-    """Familles de langues"""
-    INDO_EUROPEAN = "indo_european"
+    """Familles de langues"""    INDO_EUROPEAN = "indo_european"
     SINO_TIBETAN = "sino_tibetan"
     NIGER_CONGO = "niger_congo"
     AFRO_ASIATIC = "afro_asiatic"
@@ -52,8 +49,7 @@ class LanguageFamily(Enum):
 
 
 class ContentType(Enum):
-    """Types de contenu multilingue"""
-    TEXT = "text"
+    """Types de contenu multilingue"""    TEXT = "text"
     AUDIO = "audio"
     VIDEO = "video"
     SUBTITLE = "subtitle"
@@ -66,8 +62,7 @@ class ContentType(Enum):
 
 
 class TranslationQuality(Enum):
-    """Niveaux de qualité de traduction"""
-    AUTOMATIC = "automatic"
+    """Niveaux de qualité de traduction"""    AUTOMATIC = "automatic"
     REVIEWED = "reviewed"
     PROFESSIONAL = "professional"
     NATIVE = "native"
@@ -75,15 +70,13 @@ class TranslationQuality(Enum):
 
 
 class VoiceGender(Enum):
-    """Genres de voix pour synthèse"""
-    MALE = "male"
+    """Genres de voix pour synthèse"""    MALE = "male"
     FEMALE = "female"
     NEUTRAL = "neutral"
 
 
 class SpeechSpeed(Enum):
-    """Vitesses de parole"""
-    VERY_SLOW = "very_slow"
+    """Vitesses de parole"""    VERY_SLOW = "very_slow"
     SLOW = "slow"
     NORMAL = "normal"
     FAST = "fast"
@@ -92,8 +85,7 @@ class SpeechSpeed(Enum):
 
 @dataclass
 class MultilingualConfig:
-    """Configuration du gestionnaire multilingue"""
-    # Language detection
+    """Configuration du gestionnaire multilingue"""    # Language detection
     enable_auto_detection: bool = True
     detection_confidence_threshold: float = 0.8
     fallback_language: str = "en"
@@ -140,8 +132,7 @@ class MultilingualConfig:
 
 @dataclass
 class LanguageInfo:
-    """Informations sur une langue"""
-    code: str  # ISO 639-1 ou 639-3
+    """Informations sur une langue"""    code: str  # ISO 639-1 ou 639-3
     name: str
     native_name: str
     family: LanguageFamily
@@ -178,8 +169,7 @@ class LanguageInfo:
 
 @dataclass
 class TranslationRequest:
-    """Requête de traduction"""
-    id: str
+    """Requête de traduction"""    id: str
     user_id: str
     source_language: str
     target_language: str
@@ -220,8 +210,7 @@ class TranslationRequest:
 
 @dataclass
 class SpeechRecognitionRequest:
-    """Requête de reconnaissance vocale"""
-    id: str
+    """Requête de reconnaissance vocale"""    id: str
     user_id: str
     audio_url: str
     language: str
@@ -257,8 +246,7 @@ class SpeechRecognitionRequest:
 
 @dataclass
 class SpeechSynthesisRequest:
-    """Requête de synthèse vocale"""
-    id: str
+    """Requête de synthèse vocale"""    id: str
     user_id: str
     text: str
     language: str
@@ -295,8 +283,7 @@ class SpeechSynthesisRequest:
 
 @dataclass
 class CulturalAdaptation:
-    """Adaptation culturelle"""
-    source_culture: str
+    """Adaptation culturelle"""    source_culture: str
     target_culture: str
     
     # Adaptations
@@ -322,8 +309,7 @@ class CulturalAdaptation:
 
 
 class MultilingualManager(ABC):
-    """
-    🌍 Advanced Multilingual Manager - IA-Influencer-Agent
+    """    🌍 Advanced Multilingual Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel pour support multilingue universel avec IA avancée
@@ -349,8 +335,7 @@ class MultilingualManager(ABC):
     - Gestion dialectes et variantes
     - API multilingue unifiée
     - Analytics utilisation langues
-    """
-    
+    """    
     def __init__(self, config: MultilingualConfig = None):
         self.config = config or MultilingualConfig()
         
@@ -399,13 +384,11 @@ class MultilingualManager(ABC):
     
     @abstractmethod
     async def initialize_language_support(self) -> bool:
-        """
-        Initialize multilingual support system
+        """        Initialize multilingual support system
         
         Returns:
             bool: True if initialization successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def detect_language(
@@ -413,8 +396,7 @@ class MultilingualManager(ABC):
         content: str,
         content_type: ContentType = ContentType.TEXT
     ) -> Tuple[str, float]:
-        """
-        Detect language of content
+        """        Detect language of content
         
         Args:
             content: Content to analyze
@@ -422,8 +404,7 @@ class MultilingualManager(ABC):
             
         Returns:
             Tuple[str, float]: Language code and confidence score
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def translate_content(
@@ -434,8 +415,7 @@ class MultilingualManager(ABC):
         content_type: ContentType = ContentType.TEXT,
         context: Dict[str, Any] = None
     ) -> TranslationRequest:
-        """
-        Translate content between languages
+        """        Translate content between languages
         
         Args:
             content: Content to translate
@@ -446,8 +426,7 @@ class MultilingualManager(ABC):
             
         Returns:
             TranslationRequest: Translation request with results
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def recognize_speech(
@@ -455,8 +434,7 @@ class MultilingualManager(ABC):
         audio_url: str,
         language: str = "auto"
     ) -> SpeechRecognitionRequest:
-        """
-        Recognize speech from audio
+        """        Recognize speech from audio
         
         Args:
             audio_url: URL to audio file
@@ -464,8 +442,7 @@ class MultilingualManager(ABC):
             
         Returns:
             SpeechRecognitionRequest: Recognition request with results
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def synthesize_speech(
@@ -474,8 +451,7 @@ class MultilingualManager(ABC):
         language: str,
         voice_settings: Dict[str, Any] = None
     ) -> SpeechSynthesisRequest:
-        """
-        Synthesize speech from text
+        """        Synthesize speech from text
         
         Args:
             text: Text to synthesize
@@ -484,23 +460,20 @@ class MultilingualManager(ABC):
             
         Returns:
             SpeechSynthesisRequest: Synthesis request with results
-        """
-        pass
+        """        pass
     
     async def get_supported_languages(
         self,
         capability: str = "all"
     ) -> List[LanguageInfo]:
-        """
-        Get list of supported languages
+        """        Get list of supported languages
         
         Args:
             capability: Filter by capability (translation, speech_recognition, etc.)
             
         Returns:
             List[LanguageInfo]: Supported languages
-        """
-        with self._lock:
+        """        with self._lock:
             languages = list(self._languages.values())
             
             if capability == "translation":
@@ -526,8 +499,7 @@ class MultilingualManager(ABC):
         content_type: ContentType = ContentType.TEXT,
         context: Dict[str, Any] = None
     ) -> Dict[str, TranslationRequest]:
-        """
-        Translate content to multiple target languages
+        """        Translate content to multiple target languages
         
         Args:
             user_id: User requesting translation
@@ -539,8 +511,7 @@ class MultilingualManager(ABC):
             
         Returns:
             Dict[str, TranslationRequest]: Translation results by target language
-        """
-        try:
+        """        try:
             # Create translation tasks
             translation_tasks = []
             for target_lang in target_languages:
@@ -589,8 +560,7 @@ class MultilingualManager(ABC):
         source_culture: str,
         target_culture: str
     ) -> Dict[str, Any]:
-        """
-        Adapt content for target culture
+        """        Adapt content for target culture
         
         Args:
             content: Content to adapt
@@ -599,8 +569,7 @@ class MultilingualManager(ABC):
             
         Returns:
             Dict: Culturally adapted content
-        """
-        try:
+        """        try:
             # Get cultural adaptation rules
             adaptation_key = f"{source_culture}_{target_culture}"
             adaptation = self._cultural_adaptations.get(adaptation_key)
@@ -651,16 +620,14 @@ class MultilingualManager(ABC):
         self,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive language usage analytics
+        """        Get comprehensive language usage analytics
         
         Args:
             time_range: Optional time range filter
             
         Returns:
             Dict: Complete language analytics
-        """
-        with self._lock:
+        """        with self._lock:
             # Most used languages
             most_used = sorted(
                 self._language_usage_stats.items(),
@@ -757,13 +724,11 @@ class MultilingualManager(ABC):
             }
     
     async def optimize_language_resources(self) -> Dict[str, Any]:
-        """
-        Optimize language resources based on usage patterns
+        """        Optimize language resources based on usage patterns
         
         Returns:
             Dict: Optimization results
-        """
-        try:
+        """        try:
             optimization_results = {
                 "cache_optimized": 0,
                 "models_preloaded": 0,
@@ -825,8 +790,7 @@ class MultilingualManager(ABC):
         source_culture: str,
         target_culture: str
     ) -> CulturalAdaptation:
-        """Create cultural adaptation rules"""
-        # This would be implemented with cultural knowledge base
+        """Create cultural adaptation rules"""        # This would be implemented with cultural knowledge base
         adaptation = CulturalAdaptation(
             source_culture=source_culture,
             target_culture=target_culture
@@ -844,13 +808,11 @@ class MultilingualManager(ABC):
         return adaptation
     
     async def _adapt_dates(self, content: Dict[str, Any], date_format: str) -> Dict[str, Any]:
-        """Adapt date formats in content"""
-        # Simplified date adaptation
+        """Adapt date formats in content"""        # Simplified date adaptation
         return content
     
     async def _adapt_numbers(self, content: Dict[str, Any], number_format: str) -> Dict[str, Any]:
-        """Adapt number formats in content"""
-        # Simplified number adaptation
+        """Adapt number formats in content"""        # Simplified number adaptation
         return content
     
     async def _adapt_cultural_references(
@@ -858,8 +820,7 @@ class MultilingualManager(ABC):
         content: Dict[str, Any],
         references: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Adapt cultural references in content"""
-        # Simplified cultural reference adaptation
+        """Adapt cultural references in content"""        # Simplified cultural reference adaptation
         return content
     
     async def _replace_sensitive_content(
@@ -867,8 +828,7 @@ class MultilingualManager(ABC):
         content: Dict[str, Any],
         replacements: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Replace culturally sensitive content"""
-        # Simplified sensitive content replacement
+        """Replace culturally sensitive content"""        # Simplified sensitive content replacement
         return content
     
     async def _adapt_colors(
@@ -876,13 +836,11 @@ class MultilingualManager(ABC):
         content: Dict[str, Any],
         color_preferences: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Adapt colors based on cultural preferences"""
-        # Simplified color adaptation
+        """Adapt colors based on cultural preferences"""        # Simplified color adaptation
         return content
     
     def _is_cache_entry_relevant(self, key: str, value: Dict[str, Any]) -> bool:
-        """Check if cache entry is still relevant"""
-        # Check cache TTL
+        """Check if cache entry is still relevant"""        # Check cache TTL
         created_at = value.get("created_at")
         if created_at:
             try:
@@ -895,8 +853,7 @@ class MultilingualManager(ABC):
         return False
     
     async def _preload_language_models(self, language_code: str) -> bool:
-        """Preload language models for faster processing"""
-        try:
+        """Preload language models for faster processing"""        try:
             # This would preload actual language models
             logger.info(f"🌍 Preloaded models for language: {language_code}")
             return True
@@ -905,8 +862,7 @@ class MultilingualManager(ABC):
             return False
     
     async def _unload_language_resources(self, language_code: str) -> bool:
-        """Unload unused language resources"""
-        try:
+        """Unload unused language resources"""        try:
             # This would unload actual language resources
             logger.info(f"🌍 Unloaded resources for language: {language_code}")
             return True
@@ -916,8 +872,7 @@ class MultilingualManager(ABC):
     
     @asynccontextmanager
     async def get_translation_session(self, user_id: str):
-        """Context manager for translation operations"""
-        session_id = str(uuid.uuid4())
+        """Context manager for translation operations"""        session_id = str(uuid.uuid4())
         try:
             logger.info(f"🌍 Translation session started: {session_id} for user {user_id}")
             yield session_id
@@ -925,8 +880,7 @@ class MultilingualManager(ABC):
             logger.info(f"🌍 Translation session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup multilingual resources"""
-        try:
+        """Cleanup multilingual resources"""        try:
             # Stop monitoring
             self._monitoring_active = False
             
@@ -976,8 +930,7 @@ class MultilingualManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get multilingual system statistics"""
-        with self._lock:
+        """Get multilingual system statistics"""        with self._lock:
             return {
                 "languages_supported": len(self._languages),
                 "active_translations": len(self._active_translations),
@@ -1014,13 +967,11 @@ multilingual_manager = None
 
 
 def get_multilingual_manager() -> MultilingualManager:
-    """
-    Get the global multilingual manager instance
+    """    Get the global multilingual manager instance
     
     Returns:
         MultilingualManager: Global multilingual manager
-    """
-    global multilingual_manager
+    """    global multilingual_manager
     if multilingual_manager is None:
         from ..implementations.multilingual_manager_impl import MultilingualManagerImpl
         multilingual_manager = MultilingualManagerImpl()

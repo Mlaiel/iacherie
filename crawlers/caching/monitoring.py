@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Monitoring - Real-time Cache Performance Monitoring
+"""Cache Monitoring - Real-time Cache Performance Monitoring
 =========================================================
 
 Advanced monitoring system for cache performance tracking,
@@ -10,7 +9,6 @@ alerting, and real-time analytics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import time
@@ -30,16 +28,14 @@ from ...core.utils import generate_uuid, get_timestamp
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    CRITICAL = "critical"
+    """Alert severity levels."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class MetricType(Enum):
-    """Monitoring metric types."""
-    HIT_RATE = "hit_rate"
+    """Monitoring metric types."""    HIT_RATE = "hit_rate"
     MISS_RATE = "miss_rate"
     RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
@@ -51,16 +47,14 @@ class MetricType(Enum):
     NETWORK_IO = "network_io"
 
 class MonitoringStatus(Enum):
-    """Monitoring system status."""
-    ACTIVE = "active"
+    """Monitoring system status."""    ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
     ERROR = "error"
 
 @dataclass
 class MetricData:
-    """Metric data point."""
-    metric_type: MetricType
+    """Metric data point."""    metric_type: MetricType
     value: float
     timestamp: datetime
     labels: Dict[str, str] = field(default_factory=dict)
@@ -68,8 +62,7 @@ class MetricData:
 
 @dataclass
 class Alert:
-    """Monitoring alert."""
-    alert_id: str
+    """Monitoring alert."""    alert_id: str
     severity: AlertSeverity
     metric_type: MetricType
     message: str
@@ -83,8 +76,7 @@ class Alert:
 
 @dataclass
 class Threshold:
-    """Monitoring threshold."""
-    metric_type: MetricType
+    """Monitoring threshold."""    metric_type: MetricType
     operator: str  # >, <, >=, <=, ==, !=
     value: float
     severity: AlertSeverity
@@ -92,8 +84,7 @@ class Threshold:
     enabled: bool = True
 
 class CacheMonitor:
-    """
-    Advanced cache monitoring system.
+    """    Advanced cache monitoring system.
     
     Features:
     - Real-time metrics collection
@@ -101,20 +92,17 @@ class CacheMonitor:
     - Performance analytics
     - Health monitoring
     - Custom dashboards
-    """
-    
+    """    
     def __init__(self, collection_interval: int = 10,
                  retention_hours: int = 24,
                  alert_handlers: Optional[List[Callable]] = None):
-        """
-        Initialize cache monitor.
+        """        Initialize cache monitor.
         
         Args:
             collection_interval: Metrics collection interval in seconds
             retention_hours: Metrics retention period
             alert_handlers: Custom alert handlers
-        """
-        self.collection_interval = collection_interval
+        """        self.collection_interval = collection_interval
         self.retention_hours = retention_hours
         self.alert_handlers = alert_handlers or []
         self.logger = logging.getLogger(f"{__name__}.CacheMonitor")
@@ -156,20 +144,17 @@ class CacheMonitor:
     
     async def register_metric_collector(self, metric_type: MetricType, 
                                       collector: Callable) -> None:
-        """Register custom metric collector."""
-        self.metric_collectors[metric_type] = collector
+        """Register custom metric collector."""        self.metric_collectors[metric_type] = collector
         self.logger.debug(f"Registered collector for {metric_type.value}")
     
     async def add_custom_collector(self, collector: Callable) -> None:
-        """Add custom metric collector."""
-        self.custom_collectors.append(collector)
+        """Add custom metric collector."""        self.custom_collectors.append(collector)
         self.logger.debug("Added custom metric collector")
     
     async def add_threshold(self, metric_type: MetricType, operator: str,
                           value: float, severity: AlertSeverity,
                           duration_seconds: int = 0) -> None:
-        """Add monitoring threshold."""
-        threshold = Threshold(
+        """Add monitoring threshold."""        threshold = Threshold(
             metric_type=metric_type,
             operator=operator,
             value=value,
@@ -181,8 +166,7 @@ class CacheMonitor:
         self.logger.info(f"Added threshold: {metric_type.value} {operator} {value}")
     
     async def remove_threshold(self, metric_type: MetricType) -> bool:
-        """Remove monitoring threshold."""
-        original_count = len(self.thresholds)
+        """Remove monitoring threshold."""        original_count = len(self.thresholds)
         self.thresholds = [t for t in self.thresholds if t.metric_type != metric_type]
         removed = len(self.thresholds) < original_count
         
@@ -194,8 +178,7 @@ class CacheMonitor:
     async def record_metric(self, metric_type: MetricType, value: float,
                           labels: Optional[Dict[str, str]] = None,
                           metadata: Optional[Dict[str, Any]] = None) -> None:
-        """Record metric data point."""
-        try:
+        """Record metric data point."""        try:
             metric = MetricData(
                 metric_type=metric_type,
                 value=value,
@@ -222,8 +205,7 @@ class CacheMonitor:
             self.logger.error(f"Error recording metric: {e}")
     
     async def _check_thresholds(self, metric: MetricData) -> None:
-        """Check metric against thresholds."""
-        try:
+        """Check metric against thresholds."""        try:
             for threshold in self.thresholds:
                 if not threshold.enabled or threshold.metric_type != metric.metric_type:
                     continue
@@ -255,8 +237,7 @@ class CacheMonitor:
             self.logger.error(f"Error checking thresholds: {e}")
     
     async def _check_duration_violation(self, threshold: Threshold) -> bool:
-        """Check if threshold violation persists for required duration."""
-        try:
+        """Check if threshold violation persists for required duration."""        try:
             cutoff_time = datetime.now() - timedelta(seconds=threshold.duration_seconds)
             
             with self.metrics_lock:
@@ -292,8 +273,7 @@ class CacheMonitor:
             return False
     
     async def _create_alert(self, threshold: Threshold, metric: MetricData) -> None:
-        """Create alert for threshold violation."""
-        try:
+        """Create alert for threshold violation."""        try:
             alert_key = f"{threshold.metric_type.value}_{threshold.operator}_{threshold.value}"
             
             # Avoid duplicate alerts
@@ -333,8 +313,7 @@ class CacheMonitor:
             self.logger.error(f"Error creating alert: {e}")
     
     async def acknowledge_alert(self, alert_id: str) -> bool:
-        """Acknowledge alert."""
-        try:
+        """Acknowledge alert."""        try:
             with self.alert_lock:
                 for alert in self.alerts:
                     if alert.alert_id == alert_id and not alert.acknowledged_at:
@@ -349,8 +328,7 @@ class CacheMonitor:
             return False
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve alert."""
-        try:
+        """Resolve alert."""        try:
             with self.alert_lock:
                 for alert in self.alerts:
                     if alert.alert_id == alert_id and not alert.resolved_at:
@@ -371,8 +349,7 @@ class CacheMonitor:
             return False
     
     async def start_monitoring(self) -> None:
-        """Start monitoring process."""
-        if self.status == MonitoringStatus.ACTIVE:
+        """Start monitoring process."""        if self.status == MonitoringStatus.ACTIVE:
             return
         
         self.status = MonitoringStatus.ACTIVE
@@ -386,8 +363,7 @@ class CacheMonitor:
         self.logger.info("Cache monitoring started")
     
     async def stop_monitoring(self) -> None:
-        """Stop monitoring process."""
-        self.status = MonitoringStatus.STOPPED
+        """Stop monitoring process."""        self.status = MonitoringStatus.STOPPED
         
         # Cancel tasks
         if self.collection_task:
@@ -409,19 +385,16 @@ class CacheMonitor:
         self.logger.info("Cache monitoring stopped")
     
     async def pause_monitoring(self) -> None:
-        """Pause monitoring process."""
-        self.status = MonitoringStatus.PAUSED
+        """Pause monitoring process."""        self.status = MonitoringStatus.PAUSED
         self.logger.info("Cache monitoring paused")
     
     async def resume_monitoring(self) -> None:
-        """Resume monitoring process."""
-        if self.status == MonitoringStatus.PAUSED:
+        """Resume monitoring process."""        if self.status == MonitoringStatus.PAUSED:
             self.status = MonitoringStatus.ACTIVE
             self.logger.info("Cache monitoring resumed")
     
     async def _collection_loop(self) -> None:
-        """Main metrics collection loop."""
-        start_time = time.time()
+        """Main metrics collection loop."""        start_time = time.time()
         
         while True:
             try:
@@ -445,8 +418,7 @@ class CacheMonitor:
                 await asyncio.sleep(self.collection_interval)
     
     async def _collect_metrics(self) -> None:
-        """Collect all metrics."""
-        try:
+        """Collect all metrics."""        try:
             # Collect standard metrics
             for metric_type, collector in self.metric_collectors.items():
                 try:
@@ -477,8 +449,7 @@ class CacheMonitor:
             self.logger.error(f"Error in metrics collection: {e}")
     
     async def _update_health_status(self) -> None:
-        """Update overall health status."""
-        try:
+        """Update overall health status."""        try:
             # Simple health check based on active alerts
             critical_alerts = [
                 alert for alert in self.active_alerts.values()
@@ -511,8 +482,7 @@ class CacheMonitor:
             self.health_status = "unknown"
     
     async def _alert_management_loop(self) -> None:
-        """Alert management background task."""
-        while True:
+        """Alert management background task."""        while True:
             try:
                 if self.status != MonitoringStatus.ACTIVE:
                     await asyncio.sleep(10)
@@ -532,8 +502,7 @@ class CacheMonitor:
                 self.logger.error(f"Alert management error: {e}")
     
     async def _auto_resolve_alerts(self) -> None:
-        """Auto-resolve alerts that are no longer active."""
-        try:
+        """Auto-resolve alerts that are no longer active."""        try:
             current_time = datetime.now()
             
             with self.alert_lock:
@@ -583,8 +552,7 @@ class CacheMonitor:
             self.logger.error(f"Error in auto-resolve alerts: {e}")
     
     async def _cleanup_old_alerts(self) -> None:
-        """Clean up old resolved alerts."""
-        try:
+        """Clean up old resolved alerts."""        try:
             cutoff_time = datetime.now() - timedelta(hours=self.retention_hours)
             
             with self.alert_lock:
@@ -603,8 +571,7 @@ class CacheMonitor:
     
     async def get_metrics_summary(self, metric_type: Optional[MetricType] = None,
                                 time_range_hours: int = 1) -> Dict[str, Any]:
-        """Get metrics summary."""
-        try:
+        """Get metrics summary."""        try:
             cutoff_time = datetime.now() - timedelta(hours=time_range_hours)
             summary = {}
             
@@ -640,8 +607,7 @@ class CacheMonitor:
             return {}
     
     async def get_active_alerts(self) -> List[Dict[str, Any]]:
-        """Get active alerts."""
-        try:
+        """Get active alerts."""        try:
             with self.alert_lock:
                 return [
                     {
@@ -663,8 +629,7 @@ class CacheMonitor:
             return []
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get monitoring system status."""
-        try:
+        """Get monitoring system status."""        try:
             with self.metrics_lock:
                 total_metrics = sum(len(metrics) for metrics in self.metrics.values())
             
@@ -691,21 +656,17 @@ class CacheMonitor:
             return {}
 
 class AlertManager:
-    """Manage alert notifications and escalations."""
-    
+    """Manage alert notifications and escalations."""    
     def __init__(self):
-        """Initialize alert manager."""
-        self.notification_channels: List[Callable] = []
+        """Initialize alert manager."""        self.notification_channels: List[Callable] = []
         self.escalation_rules: List[Dict[str, Any]] = []
         self.logger = logging.getLogger(f"{__name__}.AlertManager")
     
     async def add_notification_channel(self, handler: Callable) -> None:
-        """Add notification channel."""
-        self.notification_channels.append(handler)
+        """Add notification channel."""        self.notification_channels.append(handler)
     
     async def handle_alert(self, alert: Alert) -> None:
-        """Handle alert notification."""
-        try:
+        """Handle alert notification."""        try:
             for channel in self.notification_channels:
                 try:
                     if asyncio.iscoroutinefunction(channel):
@@ -719,21 +680,17 @@ class AlertManager:
             self.logger.error(f"Error handling alert: {e}")
 
 class MetricsExporter:
-    """Export metrics to external systems."""
-    
+    """Export metrics to external systems."""    
     def __init__(self, monitor: CacheMonitor):
-        """Initialize metrics exporter."""
-        self.monitor = monitor
+        """Initialize metrics exporter."""        self.monitor = monitor
         self.exporters: List[Callable] = []
         self.logger = logging.getLogger(f"{__name__}.MetricsExporter")
     
     async def add_exporter(self, exporter: Callable) -> None:
-        """Add metrics exporter."""
-        self.exporters.append(exporter)
+        """Add metrics exporter."""        self.exporters.append(exporter)
     
     async def export_metrics(self, time_range_hours: int = 1) -> None:
-        """Export metrics to external systems."""
-        try:
+        """Export metrics to external systems."""        try:
             summary = await self.monitor.get_metrics_summary(time_range_hours=time_range_hours)
             
             for exporter in self.exporters:

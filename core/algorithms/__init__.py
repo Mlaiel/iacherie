@@ -32,8 +32,7 @@ Legal Notice:
 This code and concept are proprietary to Fahed Mlaiel.
 Any unauthorized copying, modification, or distribution is strictly prohibited.
 For licensing inquiries: mlaiel@live.de
-"""
-from typing import Dict, List, Any, Optional, Union, Tuple
+"""from typing import Dict, List, Any, Optional, Union, Tuple
 import logging
 
 # Core algorithm modules (with conditional imports for modules with heavy dependencies)

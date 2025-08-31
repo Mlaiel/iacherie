@@ -1,15 +1,12 @@
 #!/usr/bin/env python3
+"""Simple syntax validation for implemented TODO/NotImplemented items
 """
-Simple syntax validation for implemented TODO/NotImplemented items
-"""
-
 import ast
 import sys
 from pathlib import Path
 
 def check_file_syntax(file_path):
-    """Check if a Python file has valid syntax"""
-    try:
+    """Check if a Python file has valid syntax"""    try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
@@ -22,8 +19,7 @@ def check_file_syntax(file_path):
         return False, f"Error: {e}"
 
 def count_notimplemented_errors(file_path):
-    """Count NotImplementedError occurrences in a file"""
-    try:
+    """Count NotImplementedError occurrences in a file"""    try:
         with open(file_path, 'r', encoding='utf-8') as f:
             content = f.read()
         
@@ -40,8 +36,7 @@ def count_notimplemented_errors(file_path):
         return -1
 
 def main():
-    """Main validation function"""
-    print("🔍 Syntax Validation for TODO/NotImplemented Implementation Fixes")
+    """Main validation function"""    print("🔍 Syntax Validation for TODO/NotImplemented Implementation Fixes")
     print("=" * 70)
     
     files_to_check = [

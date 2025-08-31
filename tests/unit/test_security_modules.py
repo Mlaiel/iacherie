@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit Tests for Security Modules
+"""Unit Tests for Security Modules
 ==============================
 
 Comprehensive unit tests for all security modules including:
@@ -29,7 +26,6 @@ Comprehensive unit tests for all security modules including:
 Author: Copilot Assistant for Fahed Mlaiel
 Purpose: Ensure platform security and data protection
 """
-
 import pytest
 import sys
 import os
@@ -49,12 +45,10 @@ sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 
 class TestAuthenticationSecurity:
-    """Unit tests for authentication security features"""
-    
+    """Unit tests for authentication security features"""    
     @pytest.fixture
     def mock_auth_security(self):
-        """Mock authentication security system"""
-        return Mock(
+        """Mock authentication security system"""        return Mock(
             hash_password=Mock(return_value={
                 'password_hash': 'hashed_password_abc123',
                 'salt': 'salt_def456',
@@ -86,8 +80,7 @@ class TestAuthenticationSecurity:
         )
     
     def test_password_hashing(self, mock_auth_security):
-        """Test secure password hashing"""
-        password = 'user_secure_password123'
+        """Test secure password hashing"""        password = 'user_secure_password123'
         
         result = mock_auth_security.hash_password(password)
         
@@ -96,8 +89,7 @@ class TestAuthenticationSecurity:
         assert result['algorithm'] == 'bcrypt'
         
     def test_password_verification(self, mock_auth_security):
-        """Test password verification against hash"""
-        password = 'user_secure_password123'
+        """Test password verification against hash"""        password = 'user_secure_password123'
         password_hash = 'hashed_password_abc123'
         
         is_valid = mock_auth_security.verify_password(password, password_hash)
@@ -105,8 +97,7 @@ class TestAuthenticationSecurity:
         assert is_valid is True
         
     def test_jwt_token_generation(self, mock_auth_security):
-        """Test JWT token generation"""
-        user_data = {
+        """Test JWT token generation"""        user_data = {
             'user_id': 'user_123',
             'email': 'user@test.com',
             'roles': ['creator']
@@ -120,8 +111,7 @@ class TestAuthenticationSecurity:
         assert result['token_type'] == 'Bearer'
         
     def test_jwt_token_validation(self, mock_auth_security):
-        """Test JWT token validation"""
-        token = 'jwt_token_abc123'
+        """Test JWT token validation"""        token = 'jwt_token_abc123'
         
         result = mock_auth_security.validate_jwt_token(token)
         
@@ -131,8 +121,7 @@ class TestAuthenticationSecurity:
         assert 'write' in result['scopes']
         
     def test_multi_factor_authentication(self, mock_auth_security):
-        """Test multi-factor authentication setup"""
-        user_id = 'user_123'
+        """Test multi-factor authentication setup"""        user_id = 'user_123'
         mfa_type = 'totp'
         
         result = mock_auth_security.implement_mfa(user_id, mfa_type)
@@ -142,8 +131,7 @@ class TestAuthenticationSecurity:
         assert 'qr_code_url' in result
         
     def test_suspicious_login_detection(self, mock_auth_security):
-        """Test detection of suspicious login attempts"""
-        login_data = {
+        """Test detection of suspicious login attempts"""        login_data = {
             'user_id': 'user_123',
             'ip_address': '192.168.1.100',
             'user_agent': 'Mozilla/5.0 Chrome/90.0',
@@ -158,12 +146,10 @@ class TestAuthenticationSecurity:
 
 
 class TestEncryptionSecurity:
-    """Unit tests for encryption and data protection"""
-    
+    """Unit tests for encryption and data protection"""    
     @pytest.fixture
     def mock_encryption_manager(self):
-        """Mock encryption management system"""
-        return Mock(
+        """Mock encryption management system"""        return Mock(
             encrypt_data=Mock(return_value={
                 'encrypted_data': 'encrypted_content_abc123',
                 'encryption_key_id': 'key_456',
@@ -196,8 +182,7 @@ class TestEncryptionSecurity:
         )
     
     def test_data_encryption(self, mock_encryption_manager):
-        """Test sensitive data encryption"""
-        sensitive_data = {
+        """Test sensitive data encryption"""        sensitive_data = {
             'credit_card': '4111-1111-1111-1111',
             'ssn': '123-45-6789',
             'personal_notes': 'Confidential information'
@@ -211,8 +196,7 @@ class TestEncryptionSecurity:
         assert 'iv' in result
         
     def test_data_decryption(self, mock_encryption_manager):
-        """Test encrypted data decryption"""
-        encrypted_data = {
+        """Test encrypted data decryption"""        encrypted_data = {
             'encrypted_content': 'encrypted_content_abc123',
             'key_id': 'key_456',
             'iv': 'initialization_vector_789'
@@ -225,8 +209,7 @@ class TestEncryptionSecurity:
         assert result['decryption_successful'] is True
         
     def test_encryption_key_generation(self, mock_encryption_manager):
-        """Test encryption key generation"""
-        key_params = {
+        """Test encryption key generation"""        key_params = {
             'key_type': 'AES-256',
             'purpose': 'data_encryption',
             'expires_in_days': 365
@@ -240,8 +223,7 @@ class TestEncryptionSecurity:
         assert 'expires_at' in result
         
     def test_key_rotation(self, mock_encryption_manager):
-        """Test encryption key rotation"""
-        rotation_params = {
+        """Test encryption key rotation"""        rotation_params = {
             'old_key_id': 'key_456',
             'rotation_reason': 'scheduled_rotation',
             'update_all_records': True
@@ -255,8 +237,7 @@ class TestEncryptionSecurity:
         assert result['affected_records'] == 1250
         
     def test_secure_file_storage(self, mock_encryption_manager):
-        """Test secure file storage with encryption"""
-        file_data = {
+        """Test secure file storage with encryption"""        file_data = {
             'file_content': b'sensitive_file_content',
             'file_name': 'sensitive_document.pdf',
             'access_level': 'restricted'
@@ -271,12 +252,10 @@ class TestEncryptionSecurity:
 
 
 class TestContentSecurity:
-    """Unit tests for content security and validation"""
-    
+    """Unit tests for content security and validation"""    
     @pytest.fixture
     def mock_content_security(self):
-        """Mock content security system"""
-        return Mock(
+        """Mock content security system"""        return Mock(
             validate_content_upload=Mock(return_value={
                 'valid': True,
                 'security_score': 95,
@@ -312,8 +291,7 @@ class TestContentSecurity:
         )
     
     def test_content_upload_validation(self, mock_content_security):
-        """Test content upload security validation"""
-        upload_data = {
+        """Test content upload security validation"""        upload_data = {
             'file_hash': 'sha256_hash_abc123',
             'file_type': 'audio/mp3',
             'file_size': 5000000,
@@ -329,8 +307,7 @@ class TestContentSecurity:
         
     @pytest.mark.asyncio
     async def test_malware_scanning(self, mock_content_security):
-        """Test malware scanning for uploaded content"""
-        content_data = {
+        """Test malware scanning for uploaded content"""        content_data = {
             'content_id': 'ct_123',
             'file_path': '/uploads/content_file.mp3',
             'scan_priority': 'high'
@@ -344,8 +321,7 @@ class TestContentSecurity:
         assert result['signature_matches'] == 0
         
     def test_content_policy_checking(self, mock_content_security):
-        """Test content policy compliance checking"""
-        content_metadata = {
+        """Test content policy compliance checking"""        content_metadata = {
             'title': 'Test Content',
             'description': 'Safe content for testing',
             'tags': ['music', 'instrumental'],
@@ -360,8 +336,7 @@ class TestContentSecurity:
         assert result['manual_review_required'] is False
         
     def test_content_watermarking(self, mock_content_security):
-        """Test digital watermarking for content protection"""
-        watermark_params = {
+        """Test digital watermarking for content protection"""        watermark_params = {
             'content_id': 'ct_123',
             'creator_id': 'cr_123',
             'watermark_type': 'digital_signature',
@@ -376,8 +351,7 @@ class TestContentSecurity:
         assert result['detection_strength'] == 'high'
         
     def test_content_integrity_verification(self, mock_content_security):
-        """Test content integrity verification"""
-        content_id = 'ct_123'
+        """Test content integrity verification"""        content_id = 'ct_123'
         
         result = mock_content_security.verify_content_integrity(content_id)
         
@@ -388,12 +362,10 @@ class TestContentSecurity:
 
 
 class TestThreatDetection:
-    """Unit tests for threat detection and prevention"""
-    
+    """Unit tests for threat detection and prevention"""    
     @pytest.fixture
     def mock_threat_detector(self):
-        """Mock threat detection system"""
-        return Mock(
+        """Mock threat detection system"""        return Mock(
             detect_ddos_attack=Mock(return_value={
                 'attack_detected': False,
                 'request_rate': 45,
@@ -431,8 +403,7 @@ class TestThreatDetection:
         )
     
     def test_ddos_attack_detection(self, mock_threat_detector):
-        """Test DDoS attack detection"""
-        traffic_data = {
+        """Test DDoS attack detection"""        traffic_data = {
             'requests_per_second': 45,
             'source_ips': ['192.168.1.100', '192.168.1.101'],
             'time_window': '60_seconds'
@@ -446,8 +417,7 @@ class TestThreatDetection:
         assert result['mitigation_active'] is False
         
     def test_brute_force_detection(self, mock_threat_detector):
-        """Test brute force attack detection"""
-        login_attempts = {
+        """Test brute force attack detection"""        login_attempts = {
             'user_id': 'user_123',
             'failed_attempts': 2,
             'time_window': '15_minutes',
@@ -462,8 +432,7 @@ class TestThreatDetection:
         assert result['lockout_active'] is False
         
     def test_suspicious_behavior_analysis(self, mock_threat_detector):
-        """Test suspicious behavior pattern analysis"""
-        user_behavior = {
+        """Test suspicious behavior pattern analysis"""        user_behavior = {
             'user_id': 'user_123',
             'session_duration': 1800,
             'actions_performed': ['login', 'view_content', 'upload'],
@@ -478,8 +447,7 @@ class TestThreatDetection:
         assert result['action_required'] is False
         
     def test_ip_reputation_checking(self, mock_threat_detector):
-        """Test IP address reputation checking"""
-        ip_address = '192.168.1.100'
+        """Test IP address reputation checking"""        ip_address = '192.168.1.100'
         
         result = mock_threat_detector.check_ip_reputation(ip_address)
         
@@ -490,8 +458,7 @@ class TestThreatDetection:
         assert result['whitelist_status'] is True
         
     def test_api_abuse_monitoring(self, mock_threat_detector):
-        """Test API abuse and rate limiting monitoring"""
-        api_usage = {
+        """Test API abuse and rate limiting monitoring"""        api_usage = {
             'user_id': 'user_123',
             'endpoint': '/api/v1/content',
             'calls_in_hour': 150,
@@ -507,12 +474,10 @@ class TestThreatDetection:
 
 
 class TestAccessControl:
-    """Unit tests for access control and permissions"""
-    
+    """Unit tests for access control and permissions"""    
     @pytest.fixture
     def mock_access_controller(self):
-        """Mock access control system"""
-        return Mock(
+        """Mock access control system"""        return Mock(
             validate_user_permissions=Mock(return_value={
                 'access_granted': True,
                 'permission_level': 'read_write',
@@ -549,8 +514,7 @@ class TestAccessControl:
         )
     
     def test_user_permission_validation(self, mock_access_controller):
-        """Test user permission validation"""
-        permission_request = {
+        """Test user permission validation"""        permission_request = {
             'user_id': 'user_123',
             'resource': 'content/ct_123',
             'action': 'read',
@@ -565,8 +529,7 @@ class TestAccessControl:
         assert len(result['restrictions']) == 0
         
     def test_role_based_access_control(self, mock_access_controller):
-        """Test role-based access control (RBAC)"""
-        rbac_request = {
+        """Test role-based access control (RBAC)"""        rbac_request = {
             'user_id': 'user_123',
             'user_role': 'creator',
             'requested_action': 'create_content',
@@ -581,8 +544,7 @@ class TestAccessControl:
         assert 'admin_delete' in result['denied_actions']
         
     def test_api_key_access_management(self, mock_access_controller):
-        """Test API key access management"""
-        api_key_data = {
+        """Test API key access management"""        api_key_data = {
             'api_key': 'key_abc123def456',
             'requested_scopes': ['content:read', 'analytics:read'],
             'client_id': 'client_123'
@@ -597,8 +559,7 @@ class TestAccessControl:
         assert 'expires_at' in result
         
     def test_access_attempt_auditing(self, mock_access_controller):
-        """Test access attempt auditing and logging"""
-        access_data = {
+        """Test access attempt auditing and logging"""        access_data = {
             'user_id': 'user_123',
             'resource': 'content/ct_123',
             'action': 'read',
@@ -615,8 +576,7 @@ class TestAccessControl:
         assert result['action'] == 'read'
         
     def test_content_access_control(self, mock_access_controller):
-        """Test content-specific access control"""
-        content_access = {
+        """Test content-specific access control"""        content_access = {
             'content_id': 'ct_123',
             'access_level': 'private',
             'authorized_users': ['user_123', 'user_456'],
@@ -632,12 +592,10 @@ class TestAccessControl:
 
 
 class TestSecurityAuditing:
-    """Unit tests for security auditing and logging"""
-    
+    """Unit tests for security auditing and logging"""    
     @pytest.fixture
     def mock_security_auditor(self):
-        """Mock security auditing system"""
-        return Mock(
+        """Mock security auditing system"""        return Mock(
             log_security_event=Mock(return_value={
                 'event_logged': True,
                 'log_id': 'sec_log_123',
@@ -675,8 +633,7 @@ class TestSecurityAuditing:
         )
     
     def test_security_event_logging(self, mock_security_auditor):
-        """Test security event logging"""
-        security_event = {
+        """Test security event logging"""        security_event = {
             'event_type': 'authentication_success',
             'user_id': 'user_123',
             'ip_address': '192.168.1.100',
@@ -691,8 +648,7 @@ class TestSecurityAuditing:
         assert result['severity'] == 'info'
         
     def test_security_report_generation(self, mock_security_auditor):
-        """Test security report generation"""
-        report_params = {
+        """Test security report generation"""        report_params = {
             'time_period': '30_days',
             'include_threats': True,
             'include_incidents': True,
@@ -708,8 +664,7 @@ class TestSecurityAuditing:
         assert 'enable_2fa_for_all_users' in result['recommendations']
         
     def test_compliance_monitoring(self, mock_security_auditor):
-        """Test compliance monitoring"""
-        compliance_check = {
+        """Test compliance monitoring"""        compliance_check = {
             'standards': ['SOC2', 'GDPR', 'CCPA'],
             'include_score': True,
             'detailed_report': False
@@ -723,8 +678,7 @@ class TestSecurityAuditing:
         assert len(result['issues']) == 0
         
     def test_data_access_tracking(self, mock_security_auditor):
-        """Test data access tracking for privacy compliance"""
-        data_access = {
+        """Test data access tracking for privacy compliance"""        data_access = {
             'data_subject': 'user_123',
             'accessed_by': 'system_analytics',
             'access_purpose': 'analytics_generation',
@@ -740,8 +694,7 @@ class TestSecurityAuditing:
         assert result['retention_period'] == '2_years'
         
     def test_security_policy_validation(self, mock_security_auditor):
-        """Test security policy validation"""
-        policy_check = {
+        """Test security policy validation"""        policy_check = {
             'check_all_policies': True,
             'include_compliance_gaps': True,
             'update_status': True
@@ -756,12 +709,10 @@ class TestSecurityAuditing:
 
 
 class TestSecurityIntegration:
-    """Integration tests for security modules working together"""
-    
+    """Integration tests for security modules working together"""    
     @pytest.fixture
     def mock_integrated_security(self):
-        """Mock integrated security system"""
-        return Mock(
+        """Mock integrated security system"""        return Mock(
             handle_security_incident=AsyncMock(return_value={
                 'incident_id': 'inc_123',
                 'response_time': 45.5,
@@ -786,8 +737,7 @@ class TestSecurityIntegration:
     
     @pytest.mark.asyncio
     async def test_security_incident_handling(self, mock_integrated_security):
-        """Test comprehensive security incident handling"""
-        incident_data = {
+        """Test comprehensive security incident handling"""        incident_data = {
             'incident_type': 'unauthorized_access_attempt',
             'severity': 'high',
             'affected_resources': ['user_accounts', 'content_database'],
@@ -803,8 +753,7 @@ class TestSecurityIntegration:
         
     @pytest.mark.asyncio
     async def test_comprehensive_security_assessment(self, mock_integrated_security):
-        """Test comprehensive security assessment"""
-        assessment_params = {
+        """Test comprehensive security assessment"""        assessment_params = {
             'scope': 'full_platform',
             'include_penetration_testing': True,
             'include_vulnerability_scanning': True,
@@ -821,8 +770,7 @@ class TestSecurityIntegration:
         
     @pytest.mark.asyncio
     async def test_coordinated_threat_response(self, mock_integrated_security):
-        """Test coordinated threat response across security modules"""
-        threat_data = {
+        """Test coordinated threat response across security modules"""        threat_data = {
             'threat_type': 'malicious_content_upload',
             'source_ip': '192.168.1.100',
             'user_id': 'user_123',

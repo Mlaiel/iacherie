@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Fraud Detector Engine - Advanced Fraud Detection and Prevention System
+"""Fraud Detector Engine - Advanced Fraud Detection and Prevention System
 =====================================================================
 
 Professional fraud detection engine with machine learning algorithms, pattern recognition,
@@ -16,7 +15,6 @@ Expert Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert 
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -56,8 +54,7 @@ from ...security.encryption import encrypt_sensitive_data, decrypt_sensitive_dat
 logger = get_structured_logger(__name__)
 
 class FraudRiskLevel(str, Enum):
-    """Fraud risk level enumeration"""
-    VERY_LOW = "very_low"
+    """Fraud risk level enumeration"""    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -65,8 +62,7 @@ class FraudRiskLevel(str, Enum):
     CRITICAL = "critical"
 
 class FraudCategory(str, Enum):
-    """Fraud category enumeration"""
-    IDENTITY_FRAUD = "identity_fraud"
+    """Fraud category enumeration"""    IDENTITY_FRAUD = "identity_fraud"
     PAYMENT_FRAUD = "payment_fraud"
     TRANSACTION_FRAUD = "transaction_fraud"
     ACCOUNT_TAKEOVER = "account_takeover"
@@ -78,8 +74,7 @@ class FraudCategory(str, Enum):
     CONTENT_MANIPULATION = "content_manipulation"
 
 class DetectionMethod(str, Enum):
-    """Detection method enumeration"""
-    RULE_BASED = "rule_based"
+    """Detection method enumeration"""    RULE_BASED = "rule_based"
     MACHINE_LEARNING = "machine_learning"
     STATISTICAL_ANALYSIS = "statistical_analysis"
     BEHAVIORAL_ANALYSIS = "behavioral_analysis"
@@ -89,8 +84,7 @@ class DetectionMethod(str, Enum):
     HYBRID = "hybrid"
 
 class ActionType(str, Enum):
-    """Fraud action type enumeration"""
-    ALLOW = "allow"
+    """Fraud action type enumeration"""    ALLOW = "allow"
     FLAG = "flag"
     REVIEW = "review"
     BLOCK = "block"
@@ -100,8 +94,7 @@ class ActionType(str, Enum):
 
 @dataclass
 class FraudRule:
-    """Fraud detection rule"""
-    rule_id: str
+    """Fraud detection rule"""    rule_id: str
     name: str
     description: str
     category: FraudCategory
@@ -111,8 +104,7 @@ class FraudRule:
     active: bool = True
 
 class FraudAnalysisRequest(BaseModel):
-    """Fraud analysis request model"""
-    
+    """Fraud analysis request model"""    
     analysis_id: str = Field(default_factory=lambda: f"fraud_{uuid.uuid4().hex}")
     creator_id: str = Field(..., min_length=1)
     transaction_id: Optional[str] = None
@@ -150,8 +142,7 @@ class FraudAnalysisRequest(BaseModel):
         }
 
 class FraudAnalysisResult(BaseModel):
-    """Fraud analysis result model"""
-    
+    """Fraud analysis result model"""    
     analysis_id: str
     creator_id: str
     analyzed_at: datetime = Field(default_factory=datetime.utcnow)
@@ -198,16 +189,13 @@ class FraudAnalysisResult(BaseModel):
         }
 
 class FraudDetectorEngine:
-    """
-    Professional Fraud Detector Engine
+    """    Professional Fraud Detector Engine
     
     Provides comprehensive fraud detection using multiple techniques including
     machine learning, behavioral analysis, and rule-based detection.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize Fraud Detector Engine"""
-        self.config = config or {}
+        """Initialize Fraud Detector Engine"""        self.config = config or {}
         
         # Detection components
         self._rule_engine: Optional[FraudRuleEngine] = None
@@ -239,8 +227,7 @@ class FraudDetectorEngine:
         logger.info("FraudDetectorEngine initialized")
     
     async def initialize(self) -> None:
-        """Initialize all fraud detection components"""
-        try:
+        """Initialize all fraud detection components"""        try:
             logger.info("Initializing Fraud Detector Engine...")
             
             # Initialize components
@@ -270,16 +257,14 @@ class FraudDetectorEngine:
     
     @performance_monitor
     async def analyze_fraud_risk(self, request: FraudAnalysisRequest) -> FraudAnalysisResult:
-        """
-        Analyze fraud risk for a transaction or user action
+        """        Analyze fraud risk for a transaction or user action
         
         Args:
             request: Fraud analysis request
             
         Returns:
             Fraud analysis result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             logger.info(f"Analyzing fraud risk: {request.analysis_id}")
@@ -346,8 +331,7 @@ class FraudDetectorEngine:
         request: FraudAnalysisRequest, 
         result: FraudAnalysisResult
     ) -> None:
-        """Run comprehensive fraud analysis"""
-        try:
+        """Run comprehensive fraud analysis"""        try:
             # Run all analysis components in parallel
             analysis_tasks = []
             
@@ -397,8 +381,7 @@ class FraudDetectorEngine:
         result: FraudAnalysisResult, 
         analysis_results: List[Any]
     ) -> None:
-        """Process and aggregate analysis results"""
-        try:
+        """Process and aggregate analysis results"""        try:
             scores = []
             detected_methods = []
             triggered_rules = []
@@ -475,16 +458,14 @@ class FraudDetectorEngine:
             result.recommended_action = ActionType.REVIEW
     
     def _calculate_risk_level(self, score: int) -> FraudRiskLevel:
-        """Calculate risk level from score"""
-        for risk_level, threshold in sorted(self._risk_thresholds.items(), 
+        """Calculate risk level from score"""        for risk_level, threshold in sorted(self._risk_thresholds.items(), 
                                           key=lambda x: x[1], reverse=True):
             if score >= threshold:
                 return risk_level
         return FraudRiskLevel.VERY_LOW
     
     def _determine_recommended_action(self, result: FraudAnalysisResult) -> ActionType:
-        """Determine recommended action based on analysis"""
-        if result.risk_level == FraudRiskLevel.CRITICAL:
+        """Determine recommended action based on analysis"""        if result.risk_level == FraudRiskLevel.CRITICAL:
             return ActionType.BLOCK
         elif result.risk_level == FraudRiskLevel.VERY_HIGH:
             return ActionType.SUSPEND
@@ -496,8 +477,7 @@ class FraudDetectorEngine:
             return ActionType.ALLOW
     
     def _calculate_confidence_score(self, result: FraudAnalysisResult) -> Decimal:
-        """Calculate confidence score for the analysis"""
-        base_confidence = Decimal("0.7")
+        """Calculate confidence score for the analysis"""        base_confidence = Decimal("0.7")
         
         # Increase confidence with more detection methods
         method_bonus = Decimal(str(len(result.detection_methods) * 0.05))
@@ -513,8 +493,7 @@ class FraudDetectorEngine:
         return min(Decimal("1.0"), max(Decimal("0.1"), confidence))
     
     async def _load_fraud_rules(self) -> None:
-        """Load fraud detection rules"""
-        try:
+        """Load fraud detection rules"""        try:
             # Default fraud rules
             default_rules = [
                 FraudRule(
@@ -620,8 +599,7 @@ class FraudDetectorEngine:
         evidence: Dict[str, Any], 
         reporter_id: str
     ) -> bool:
-        """Report fraud incident"""
-        try:
+        """Report fraud incident"""        try:
             logger.info(f"Fraud reported: {creator_id} - {fraud_type}")
             
             # Create fraud report
@@ -659,8 +637,7 @@ class FraudDetectorEngine:
             return False
     
     async def whitelist_creator(self, creator_id: str, reason: str, admin_id: str) -> bool:
-        """Add creator to fraud detection whitelist"""
-        try:
+        """Add creator to fraud detection whitelist"""        try:
             whitelist_entry = {
                 "creator_id": creator_id,
                 "reason": reason,
@@ -683,8 +660,7 @@ class FraudDetectorEngine:
         self, 
         time_period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get fraud detection analytics"""
-        try:
+        """Get fraud detection analytics"""        try:
             # This would typically query database for fraud statistics
             analytics = {
                 "total_analyses": 1000,
@@ -715,8 +691,7 @@ class FraudDetectorEngine:
     
     # Helper methods
     async def _get_cached_analysis(self, request: FraudAnalysisRequest) -> Optional[FraudAnalysisResult]:
-        """Get cached fraud analysis result"""
-        try:
+        """Get cached fraud analysis result"""        try:
             if not self._redis_client:
                 return None
             
@@ -736,8 +711,7 @@ class FraudDetectorEngine:
         request: FraudAnalysisRequest, 
         result: FraudAnalysisResult
     ) -> None:
-        """Cache fraud analysis result"""
-        try:
+        """Cache fraud analysis result"""        try:
             if not self._redis_client:
                 return
             
@@ -752,8 +726,7 @@ class FraudDetectorEngine:
             logger.warning(f"Cache storage failed: {e}")
     
     async def _store_fraud_report(self, report: Dict[str, Any]) -> None:
-        """Store fraud report in database"""
-        try:
+        """Store fraud report in database"""        try:
             async with self._session_factory() as session:
                 # Store fraud report
                 # Implementation depends on your models
@@ -763,8 +736,7 @@ class FraudDetectorEngine:
             logger.error(f"Failed to store fraud report: {e}")
     
     async def _store_whitelist_entry(self, entry: Dict[str, Any]) -> None:
-        """Store whitelist entry in database"""
-        try:
+        """Store whitelist entry in database"""        try:
             async with self._session_factory() as session:
                 # Store whitelist entry
                 # Implementation depends on your models
@@ -778,8 +750,7 @@ class FraudDetectorEngine:
         creator_id: str, 
         analysis_result: FraudAnalysisResult
     ) -> None:
-        """Take automatic action based on fraud analysis"""
-        try:
+        """Take automatic action based on fraud analysis"""        try:
             action = analysis_result.recommended_action
             
             if action == ActionType.BLOCK:
@@ -801,8 +772,7 @@ class FraudDetectorEngine:
             logger.error(f"Automatic action failed: {e}")
     
     async def shutdown(self) -> None:
-        """Shutdown Fraud Detector Engine"""
-        try:
+        """Shutdown Fraud Detector Engine"""        try:
             logger.info("Shutting down Fraud Detector Engine...")
             
             # Shutdown components
@@ -824,18 +794,15 @@ class FraudDetectorEngine:
 
 # Component classes
 class FraudRuleEngine:
-    """Rule-based fraud detection component"""
-    
+    """Rule-based fraud detection component"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize rule engine"""
-        pass
+        """Initialize rule engine"""        pass
     
     async def analyze(self, request: FraudAnalysisRequest) -> Dict[str, Any]:
-        """Analyze using fraud rules"""
-        # Mock rule-based analysis
+        """Analyze using fraud rules"""        # Mock rule-based analysis
         return {
             "score": 30,
             "method": DetectionMethod.RULE_BASED,
@@ -847,20 +814,17 @@ class FraudRuleEngine:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown rule engine"""
-        pass
+        """Shutdown rule engine"""        pass
 
 class MLFraudDetector:
-    """Machine learning fraud detection component"""
-    
+    """Machine learning fraud detection component"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self._model: Optional[RandomForestClassifier] = None
         self._scaler: Optional[StandardScaler] = None
     
     async def initialize(self) -> None:
-        """Initialize ML detector"""
-        try:
+        """Initialize ML detector"""        try:
             # Initialize ML models
             self._model = RandomForestClassifier(n_estimators=100, random_state=42)
             self._scaler = StandardScaler()
@@ -876,8 +840,7 @@ class MLFraudDetector:
             logger.error(f"ML detector initialization failed: {e}")
     
     async def analyze(self, request: FraudAnalysisRequest) -> Dict[str, Any]:
-        """Analyze using machine learning"""
-        try:
+        """Analyze using machine learning"""        try:
             if not self._model or not self._scaler:
                 return {"score": 25, "method": DetectionMethod.MACHINE_LEARNING}
             
@@ -911,22 +874,18 @@ class MLFraudDetector:
             return {"score": 25, "method": DetectionMethod.MACHINE_LEARNING}
     
     async def shutdown(self) -> None:
-        """Shutdown ML detector"""
-        pass
+        """Shutdown ML detector"""        pass
 
 class BehavioralAnalyzer:
-    """Behavioral pattern analysis component"""
-    
+    """Behavioral pattern analysis component"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize behavioral analyzer"""
-        pass
+        """Initialize behavioral analyzer"""        pass
     
     async def analyze(self, request: FraudAnalysisRequest) -> Dict[str, Any]:
-        """Analyze behavioral patterns"""
-        # Mock behavioral analysis
+        """Analyze behavioral patterns"""        # Mock behavioral analysis
         return {
             "score": 35,
             "method": DetectionMethod.BEHAVIORAL_ANALYSIS,
@@ -939,22 +898,18 @@ class BehavioralAnalyzer:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown behavioral analyzer"""
-        pass
+        """Shutdown behavioral analyzer"""        pass
 
 class NetworkAnalyzer:
-    """Network pattern analysis component"""
-    
+    """Network pattern analysis component"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
     
     async def initialize(self) -> None:
-        """Initialize network analyzer"""
-        pass
+        """Initialize network analyzer"""        pass
     
     async def analyze(self, request: FraudAnalysisRequest) -> Dict[str, Any]:
-        """Analyze network patterns"""
-        # Mock network analysis
+        """Analyze network patterns"""        # Mock network analysis
         return {
             "score": 20,
             "method": DetectionMethod.NETWORK_ANALYSIS,
@@ -963,19 +918,16 @@ class NetworkAnalyzer:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown network analyzer"""
-        pass
+        """Shutdown network analyzer"""        pass
 
 class AnomalyDetector:
-    """Anomaly detection component"""
-    
+    """Anomaly detection component"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self._isolation_forest: Optional[IsolationForest] = None
     
     async def initialize(self) -> None:
-        """Initialize anomaly detector"""
-        try:
+        """Initialize anomaly detector"""        try:
             self._isolation_forest = IsolationForest(contamination=0.1, random_state=42)
             
             # Train with dummy data
@@ -986,8 +938,7 @@ class AnomalyDetector:
             logger.error(f"Anomaly detector initialization failed: {e}")
     
     async def analyze(self, request: FraudAnalysisRequest) -> Dict[str, Any]:
-        """Detect anomalies"""
-        try:
+        """Detect anomalies"""        try:
             if not self._isolation_forest:
                 return {"score": 15, "method": DetectionMethod.ANOMALY_DETECTION}
             
@@ -1032,11 +983,9 @@ class AnomalyDetector:
             return {"score": 15, "method": DetectionMethod.ANOMALY_DETECTION}
     
     async def shutdown(self) -> None:
-        """Shutdown anomaly detector"""
-        pass
+        """Shutdown anomaly detector"""        pass
 
-"""
-Professional Fraud Detector Engine
+"""Professional Fraud Detector Engine
 © 2025 Fahed Mlaiel - Enterprise-Grade Solution
 
 This engine provides comprehensive fraud detection capabilities using multiple

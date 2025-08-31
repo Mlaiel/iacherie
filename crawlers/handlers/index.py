@@ -1,5 +1,4 @@
-"""
-Handlers Index Module
+"""Handlers Index Module
 ====================
 
 Main entry point for all crawler handlers with factory functions and configuration.
@@ -23,7 +22,6 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
-
 import asyncio
 import logging
 from typing import Dict, Optional, Any
@@ -50,11 +48,9 @@ logger = get_logger(__name__)
 
 
 class HandlersManager:
-    """
-    Centralized manager for all crawler handlers.
+    """    Centralized manager for all crawler handlers.
     Provides unified access and lifecycle management.
-    """
-    
+    """    
     def __init__(self):
         self.content_handler: Optional[ContentHandler] = None
         self.event_dispatcher: Optional[EventDispatcher] = None
@@ -75,8 +71,7 @@ class HandlersManager:
         encryption_manager: Optional[EncryptionManager] = None,
         compression_manager: Optional[CompressionManager] = None
     ) -> bool:
-        """
-        Initialize all handlers with dependencies.
+        """        Initialize all handlers with dependencies.
         
         Args:
             redis_client: Redis client for caching and queuing
@@ -88,8 +83,7 @@ class HandlersManager:
             
         Returns:
             True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing Handlers Manager...")
             
             # Get or create Redis client
@@ -142,8 +136,7 @@ class HandlersManager:
             return False
     
     async def shutdown(self):
-        """Gracefully shutdown all handlers."""
-        try:
+        """Gracefully shutdown all handlers."""        try:
             logger.info("Shutting down Handlers Manager...")
             
             if self.event_dispatcher and self._initialized:
@@ -159,8 +152,7 @@ class HandlersManager:
             logger.error(f"Handlers Manager shutdown failed: {e}")
     
     def is_ready(self) -> bool:
-        """Check if all handlers are ready."""
-        return (
+        """Check if all handlers are ready."""        return (
             self._initialized and
             self.content_handler is not None and
             self.event_dispatcher is not None and
@@ -171,8 +163,7 @@ class HandlersManager:
         )
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on all handlers."""
-        try:
+        """Perform health check on all handlers."""        try:
             health_status = {
                 'overall_status': 'healthy',
                 'initialized': self._initialized,
@@ -218,8 +209,7 @@ class HandlersManager:
             }
     
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive statistics from all handlers."""
-        try:
+        """Get comprehensive statistics from all handlers."""        try:
             stats = {
                 'manager_status': {
                     'initialized': self._initialized,
@@ -252,8 +242,7 @@ _handlers_manager: Optional[HandlersManager] = None
 
 
 async def get_handlers_manager() -> HandlersManager:
-    """Get or create the global handlers manager instance."""
-    global _handlers_manager
+    """Get or create the global handlers manager instance."""    global _handlers_manager
     
     if _handlers_manager is None:
         _handlers_manager = HandlersManager()
@@ -266,8 +255,7 @@ async def initialize_handlers(
     redis_client: Optional[aioredis.Redis] = None,
     **kwargs
 ) -> HandlersManager:
-    """
-    Initialize handlers with custom configuration.
+    """    Initialize handlers with custom configuration.
     
     Args:
         redis_client: Custom Redis client
@@ -275,15 +263,13 @@ async def initialize_handlers(
         
     Returns:
         Initialized HandlersManager
-    """
-    manager = HandlersManager()
+    """    manager = HandlersManager()
     await manager.initialize(redis_client=redis_client, **kwargs)
     return manager
 
 
 async def shutdown_handlers():
-    """Shutdown the global handlers manager."""
-    global _handlers_manager
+    """Shutdown the global handlers manager."""    global _handlers_manager
     
     if _handlers_manager:
         await _handlers_manager.shutdown()
@@ -292,38 +278,32 @@ async def shutdown_handlers():
 
 # Convenience functions for direct handler access
 async def get_content_handler() -> ContentHandler:
-    """Get the content handler instance."""
-    manager = await get_handlers_manager()
+    """Get the content handler instance."""    manager = await get_handlers_manager()
     return manager.content_handler
 
 
 async def get_event_dispatcher() -> EventDispatcher:
-    """Get the event dispatcher instance."""
-    manager = await get_handlers_manager()
+    """Get the event dispatcher instance."""    manager = await get_handlers_manager()
     return manager.event_dispatcher
 
 
 async def get_response_handler() -> ResponseHandler:
-    """Get the response handler instance."""
-    manager = await get_handlers_manager()
+    """Get the response handler instance."""    manager = await get_handlers_manager()
     return manager.response_handler
 
 
 async def get_error_handler() -> ErrorHandler:
-    """Get the error handler instance."""
-    manager = await get_handlers_manager()
+    """Get the error handler instance."""    manager = await get_handlers_manager()
     return manager.error_handler
 
 
 async def get_retry_handler() -> RetryHandler:
-    """Get the retry handler instance."""
-    manager = await get_handlers_manager()
+    """Get the retry handler instance."""    manager = await get_handlers_manager()
     return manager.retry_handler
 
 
 async def get_data_handler() -> DataHandler:
-    """Get the data handler instance."""
-    manager = await get_handlers_manager()
+    """Get the data handler instance."""    manager = await get_handlers_manager()
     return manager.data_handler
 
 

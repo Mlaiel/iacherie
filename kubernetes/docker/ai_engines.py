@@ -1,5 +1,4 @@
-"""
-🧠 AI Engines Docker Configuration - IA-Influencer-Agent Platform
+"""🧠 AI Engines Docker Configuration - IA-Influencer-Agent Platform
 ==================================================================
 Expert: ML Engineer + AI Specialist + Model Deployment Expert
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional AI engines Docker configuration for advanced content
 analysis, processing, and intelligent decision-making systems.
 """
-
 from typing import Dict, List, Optional, Any, Union
 import logging
 from dataclasses import dataclass, field
@@ -25,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AIEnginesDockerConfig:
-    """Enterprise AI Engines Docker configuration"""
-    
+    """Enterprise AI Engines Docker configuration"""    
     # Container Configuration
     image_name: str = "ia-influencer/ai-engines"
     image_tag: str = "2.0.0"
@@ -96,11 +93,9 @@ class AIEnginesDockerConfig:
     health_check_retries: int = 3
     
     def generate_dockerfile(self) -> str:
-        """Generate production Dockerfile for AI Engines"""
-        gpu_base = "nvidia/cuda:12.1-devel-ubuntu22.04" if self.gpu_enabled else "python:3.11-slim"
+        """Generate production Dockerfile for AI Engines"""        gpu_base = "nvidia/cuda:12.1-devel-ubuntu22.04" if self.gpu_enabled else "python:3.11-slim"
         
-        return f"""
-# IA-Influencer AI Engines - Production Docker Image
+        return f"""# IA-Influencer AI Engines - Production Docker Image
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Professional AI/ML inference engines with GPU support
 
@@ -213,12 +208,9 @@ CMD ["gunicorn", \\
      "--preload", \\
      "main:app"]
 """
-
     def _generate_system_dependencies(self) -> str:
-        """Generate system dependencies based on configuration"""
-        if self.gpu_enabled:
-            return """
-RUN apt-get update && apt-get install -y \\
+        """Generate system dependencies based on configuration"""        if self.gpu_enabled:
+            return """RUN apt-get update && apt-get install -y \\
     build-essential \\
     curl \\
     ca-certificates \\
@@ -245,10 +237,8 @@ RUN apt-get update && apt-get install -y \\
     python3-dev \\
     && rm -rf /var/lib/apt/lists/* \\
     && apt-get clean
-"""
-        else:
-            return """
-RUN apt-get update && apt-get install -y \\
+"""        else:
+            return """RUN apt-get update && apt-get install -y \\
     build-essential \\
     curl \\
     ca-certificates \\
@@ -267,11 +257,8 @@ RUN apt-get update && apt-get install -y \\
     && rm -rf /var/lib/apt/lists/* \\
     && apt-get clean
 """
-
     def _generate_cuda_env(self) -> str:
-        """Generate CUDA environment variables"""
-        return f"""
-# CUDA environment
+        """Generate CUDA environment variables"""        return f"""# CUDA environment
 ENV NVIDIA_VISIBLE_DEVICES=all
 ENV NVIDIA_DRIVER_CAPABILITIES=compute,utility
 ENV CUDA_CACHE_DISABLE=1
@@ -279,10 +266,8 @@ ENV CUDA_LAUNCH_BLOCKING=0
 ENV TF_FORCE_GPU_ALLOW_GROWTH=true
 ENV PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
 """
-
     def _generate_model_env_vars(self) -> str:
-        """Generate model-specific environment variables"""
-        env_vars = []
+        """Generate model-specific environment variables"""        env_vars = []
         for model, enabled in self.enabled_models.items():
             env_vars.append(f"ENV MODEL_{model.upper()}_ENABLED={str(enabled).lower()}")
         
@@ -292,8 +277,7 @@ ENV PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
         return "\n".join(env_vars)
 
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate docker-compose service configuration"""
-        service_config = {
+        """Generate docker-compose service configuration"""        service_config = {
             "image": f"{self.image_name}:{self.image_tag}",
             "container_name": self.container_name,
             "restart": "unless-stopped",
@@ -379,9 +363,7 @@ ENV PYTORCH_CUDA_ALLOC_CONF=max_split_size_mb:512
         return service_config
 
     def generate_requirements_txt(self) -> str:
-        """Generate AI engines requirements.txt"""
-        base_requirements = """
-# IA-Influencer AI Engines - Production Dependencies
+        """Generate AI engines requirements.txt"""        base_requirements = """# IA-Influencer AI Engines - Production Dependencies
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
 # Core Framework
@@ -468,26 +450,21 @@ redis==5.0.1
 onnx==1.15.0
 onnxruntime==1.16.3
 openvino==2023.2.0
-"""
-        
+"""        
         # Add GPU-specific requirements if enabled
         if self.gpu_enabled:
-            gpu_requirements = """
-# GPU-specific dependencies
+            gpu_requirements = """# GPU-specific dependencies
 torch==2.1.1+cu121
 torchvision==0.16.1+cu121
 torchaudio==2.1.1+cu121
 faiss-gpu==1.7.4
 onnxruntime-gpu==1.16.3
-"""
-            base_requirements += gpu_requirements
+"""            base_requirements += gpu_requirements
         
         return base_requirements
 
     def generate_model_download_script(self) -> str:
-        """Generate script to download AI models"""
-        return """
-#!/usr/bin/env python3
+        """Generate script to download AI models"""        return """#!/usr/bin/env python3
 \"\"\"
 AI Models Download Script - IA-Influencer-Agent
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -596,10 +573,8 @@ if __name__ == "__main__":
     download_models(args.cache_dir)
     logger.info("✅ Model download completed")
 """
-
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all configuration files to output directory"""
-        import os
+        """Save all configuration files to output directory"""        import os
         from pathlib import Path
         
         config_dir = Path(output_dir)

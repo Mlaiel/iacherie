@@ -1,5 +1,4 @@
-"""
-Conversion Tracking Events Module
+"""Conversion Tracking Events Module
 
 Advanced conversion tracking and funnel analysis for multi-format content creators.
 Provides comprehensive conversion attribution, optimization, and prediction capabilities.
@@ -13,7 +12,6 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import json
 import numpy as np
@@ -42,8 +40,7 @@ logger = get_logger(__name__)
 
 
 class ConversionType(Enum):
-    """Types of conversions to track"""
-    PURCHASE = "purchase"
+    """Types of conversions to track"""    PURCHASE = "purchase"
     SUBSCRIPTION = "subscription"
     DOWNLOAD = "download"
     SIGNUP = "signup"
@@ -60,8 +57,7 @@ class ConversionType(Enum):
 
 
 class ConversionStage(Enum):
-    """Stages in the conversion funnel"""
-    AWARENESS = "awareness"
+    """Stages in the conversion funnel"""    AWARENESS = "awareness"
     INTEREST = "interest"
     CONSIDERATION = "consideration"
     INTENT = "intent"
@@ -72,8 +68,7 @@ class ConversionStage(Enum):
 
 
 class AttributionModel(Enum):
-    """Attribution models for conversion tracking"""
-    FIRST_TOUCH = "first_touch"
+    """Attribution models for conversion tracking"""    FIRST_TOUCH = "first_touch"
     LAST_TOUCH = "last_touch"
     LINEAR = "linear"
     TIME_DECAY = "time_decay"
@@ -85,8 +80,7 @@ class AttributionModel(Enum):
 
 @dataclass
 class ConversionEvent(BaseEvent):
-    """Represents a conversion event"""
-    user_id: str
+    """Represents a conversion event"""    user_id: str
     creator_id: str
     conversion_type: ConversionType
     conversion_value: float
@@ -106,8 +100,7 @@ class ConversionEvent(BaseEvent):
     location_data: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert conversion event to dictionary"""
-        return {
+        """Convert conversion event to dictionary"""        return {
             **asdict(self),
             'conversion_type': self.conversion_type.value,
             'funnel_stage': self.funnel_stage.value if self.funnel_stage else None,
@@ -117,8 +110,7 @@ class ConversionEvent(BaseEvent):
 
 @dataclass
 class ConversionFunnel:
-    """Represents a conversion funnel"""
-    funnel_id: str
+    """Represents a conversion funnel"""    funnel_id: str
     name: str
     stages: List[ConversionStage]
     conversion_rates: Dict[str, float]
@@ -132,8 +124,7 @@ class ConversionFunnel:
 
 @dataclass
 class AttributionResult:
-    """Results from attribution analysis"""
-    touchpoint_id: str
+    """Results from attribution analysis"""    touchpoint_id: str
     touchpoint_type: str
     attribution_weight: float
     conversion_value_attributed: float
@@ -143,8 +134,7 @@ class AttributionResult:
 
 
 class ConversionTrackingEventHandler(BaseEventHandler):
-    """Handles conversion tracking events with advanced analytics"""
-    
+    """Handles conversion tracking events with advanced analytics"""    
     def __init__(self):
         super().__init__()
         self.cache_manager = CacheManager()
@@ -155,8 +145,7 @@ class ConversionTrackingEventHandler(BaseEventHandler):
         self.prediction_engine = ConversionPredictionEngine()
         
     async def handle(self, event: ConversionEvent) -> Dict[str, Any]:
-        """Process conversion event with comprehensive analysis"""
-        try:
+        """Process conversion event with comprehensive analysis"""        try:
             # Validate event data
             await self._validate_event(event)
             
@@ -205,8 +194,7 @@ class ConversionTrackingEventHandler(BaseEventHandler):
             raise
     
     async def _validate_event(self, event: ConversionEvent) -> None:
-        """Validate conversion event data"""
-        required_fields = ['user_id', 'creator_id', 'conversion_type', 'conversion_value']
+        """Validate conversion event data"""        required_fields = ['user_id', 'creator_id', 'conversion_type', 'conversion_value']
         for field in required_fields:
             if not getattr(event, field):
                 raise ValueError(f"Missing required field: {field}")
@@ -218,11 +206,9 @@ class ConversionTrackingEventHandler(BaseEventHandler):
             raise ValueError("Conversion value cannot be negative")
     
     async def _store_conversion_data(self, event: ConversionEvent) -> None:
-        """Store conversion data in database"""
-        async with self.db_manager.get_session() as session:
+        """Store conversion data in database"""        async with self.db_manager.get_session() as session:
             await session.execute(
-                """
-                INSERT INTO conversion_events 
+                """                INSERT INTO conversion_events 
                 (event_id, user_id, creator_id, conversion_type, conversion_value, 
                  currency, timestamp, platform, content_id, campaign_id, funnel_stage,
                  attribution_data, user_journey, conversion_metadata, payment_method,
@@ -242,8 +228,7 @@ class ConversionTrackingEventHandler(BaseEventHandler):
             )
     
     async def _calculate_conversion_quality(self, event: ConversionEvent) -> float:
-        """Calculate conversion quality score"""
-        base_score = self._get_base_conversion_score(event.conversion_type)
+        """Calculate conversion quality score"""        base_score = self._get_base_conversion_score(event.conversion_type)
         
         # Value multiplier
         value_multiplier = min(np.log(event.conversion_value + 1) / 10, 2.0)
@@ -265,8 +250,7 @@ class ConversionTrackingEventHandler(BaseEventHandler):
         return min(quality_score, 100.0)
     
     def _get_base_conversion_score(self, conversion_type: ConversionType) -> float:
-        """Get base score for conversion type"""
-        scores = {
+        """Get base score for conversion type"""        scores = {
             ConversionType.SIGNUP: 10.0,
             ConversionType.TRIAL_START: 15.0,
             ConversionType.SUBSCRIPTION: 25.0,
@@ -286,16 +270,14 @@ class ConversionTrackingEventHandler(BaseEventHandler):
 
 
 class ConversionFunnelAnalyzer:
-    """Analyzes conversion funnels and user journey optimization"""
-    
+    """Analyzes conversion funnels and user journey optimization"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager()
         self.metrics_calculator = MetricsCalculator()
     
     async def analyze_conversion(self, event: ConversionEvent) -> Dict[str, Any]:
-        """Analyze conversion within funnel context"""
-        # Get user's funnel progression
+        """Analyze conversion within funnel context"""        # Get user's funnel progression
         funnel_progression = await self._get_user_funnel_progression(event.user_id)
         
         # Calculate funnel metrics
@@ -324,11 +306,9 @@ class ConversionFunnelAnalyzer:
         }
     
     async def _get_user_funnel_progression(self, user_id: str) -> Dict[str, Any]:
-        """Get user's progression through conversion funnel"""
-        async with self.db_manager.get_session() as session:
+        """Get user's progression through conversion funnel"""        async with self.db_manager.get_session() as session:
             result = await session.execute(
-                """
-                SELECT funnel_stage, timestamp, conversion_type, conversion_value
+                """                SELECT funnel_stage, timestamp, conversion_type, conversion_value
                 FROM conversion_events 
                 WHERE user_id = %s 
                 ORDER BY timestamp ASC
@@ -353,15 +333,13 @@ class ConversionFunnelAnalyzer:
             }
     
     async def _calculate_funnel_metrics(self, creator_id: str) -> Dict[str, Any]:
-        """Calculate comprehensive funnel metrics"""
-        # Get conversion data for last 30 days
+        """Calculate comprehensive funnel metrics"""        # Get conversion data for last 30 days
         end_date = datetime.utcnow()
         start_date = end_date - timedelta(days=30)
         
         async with self.db_manager.get_session() as session:
             result = await session.execute(
-                """
-                SELECT funnel_stage, COUNT(*) as count, SUM(conversion_value) as total_value
+                """                SELECT funnel_stage, COUNT(*) as count, SUM(conversion_value) as total_value
                 FROM conversion_events 
                 WHERE creator_id = %s AND timestamp BETWEEN %s AND %s
                 GROUP BY funnel_stage
@@ -413,8 +391,7 @@ class ConversionFunnelAnalyzer:
 
 
 class ConversionOptimizationEngine:
-    """Optimizes conversion rates using ML and A/B testing insights"""
-    
+    """Optimizes conversion rates using ML and A/B testing insights"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.classifier = RandomForestClassifier(n_estimators=100, random_state=42)
@@ -422,8 +399,7 @@ class ConversionOptimizationEngine:
         self.scaler = StandardScaler()
         
     async def optimize_conversion(self, event: ConversionEvent) -> Dict[str, Any]:
-        """Generate conversion optimization insights"""
-        # Analyze conversion factors
+        """Generate conversion optimization insights"""        # Analyze conversion factors
         conversion_factors = await self._analyze_conversion_factors(event)
         
         # Identify optimization opportunities
@@ -448,8 +424,7 @@ class ConversionOptimizationEngine:
         }
     
     async def _analyze_conversion_factors(self, event: ConversionEvent) -> Dict[str, Any]:
-        """Analyze factors that influence conversion"""
-        # Get historical conversion data
+        """Analyze factors that influence conversion"""        # Get historical conversion data
         conversion_data = await self._get_conversion_training_data(event.creator_id)
         
         if len(conversion_data) < 100:  # Need minimum data for analysis
@@ -476,8 +451,7 @@ class ConversionOptimizationEngine:
         }
     
     async def _identify_optimization_opportunities(self, event: ConversionEvent) -> List[Dict[str, Any]]:
-        """Identify specific optimization opportunities"""
-        opportunities = []
+        """Identify specific optimization opportunities"""        opportunities = []
         
         # Analyze conversion rate by platform
         platform_analysis = await self._analyze_platform_performance(event.creator_id)
@@ -513,15 +487,13 @@ class ConversionOptimizationEngine:
 
 
 class ConversionAttributionEngine:
-    """Advanced attribution analysis for conversions"""
-    
+    """Advanced attribution analysis for conversions"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.multi_touch_attribution = MultiTouchAttributionEngine()
         
     async def attribute_conversion(self, event: ConversionEvent) -> Dict[str, Any]:
-        """Perform multi-touch attribution analysis"""
-        # Get user's touchpoint journey
+        """Perform multi-touch attribution analysis"""        # Get user's touchpoint journey
         touchpoint_journey = await self._get_user_touchpoint_journey(event.user_id)
         
         # Apply different attribution models
@@ -557,12 +529,10 @@ class ConversionAttributionEngine:
         }
     
     async def _get_user_touchpoint_journey(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get user's complete touchpoint journey"""
-        async with self.db_manager.get_session() as session:
+        """Get user's complete touchpoint journey"""        async with self.db_manager.get_session() as session:
             # Get engagement events
             engagement_result = await session.execute(
-                """
-                SELECT platform, engagement_type, timestamp, content_id, campaign_id
+                """                SELECT platform, engagement_type, timestamp, content_id, campaign_id
                 FROM engagement_events 
                 WHERE user_id = %s 
                 ORDER BY timestamp ASC
@@ -583,8 +553,7 @@ class ConversionAttributionEngine:
             
             # Get content views
             views_result = await session.execute(
-                """
-                SELECT platform, content_type, timestamp, content_id, referrer_source
+                """                SELECT platform, content_type, timestamp, content_id, referrer_source
                 FROM content_views 
                 WHERE user_id = %s 
                 ORDER BY timestamp ASC
@@ -610,8 +579,7 @@ class ConversionAttributionEngine:
     async def _apply_attribution_model(self, touchpoints: List[Dict[str, Any]], 
                                      event: ConversionEvent, 
                                      model: AttributionModel) -> Dict[str, float]:
-        """Apply specific attribution model"""
-        if not touchpoints:
+        """Apply specific attribution model"""        if not touchpoints:
             return {}
         
         attribution_weights = {}
@@ -680,8 +648,7 @@ class ConversionAttributionEngine:
     
     async def _calculate_shapley_attribution(self, touchpoints: List[Dict[str, Any]], 
                                            event: ConversionEvent) -> Dict[str, float]:
-        """Calculate Shapley value attribution"""
-        if len(touchpoints) <= 1:
+        """Calculate Shapley value attribution"""        if len(touchpoints) <= 1:
             return {}
         
         # This is a simplified Shapley value calculation
@@ -710,15 +677,13 @@ class ConversionAttributionEngine:
 
 
 class ConversionPredictionEngine:
-    """Predicts future conversions using advanced ML models"""
-    
+    """Predicts future conversions using advanced ML models"""    
     def __init__(self):
         self.conversion_predictor = ConversionPredictor()
         self.db_manager = DatabaseManager()
         
     async def predict_conversions(self, event: ConversionEvent) -> Dict[str, Any]:
-        """Predict future conversion patterns"""
-        # Get user conversion history
+        """Predict future conversion patterns"""        # Get user conversion history
         user_history = await self._get_user_conversion_history(event.user_id)
         
         # Predict next conversion probability
@@ -758,8 +723,7 @@ class ConversionPredictionEngine:
     
     async def _predict_next_conversion_probability(self, user_id: str, 
                                                  history: List[Dict]) -> float:
-        """Predict probability of next conversion"""
-        if not history:
+        """Predict probability of next conversion"""        if not history:
             return 0.1  # Default probability for new users
         
         # Calculate features from history
@@ -774,8 +738,7 @@ class ConversionPredictionEngine:
             return 0.5  # Default probability
     
     def _extract_conversion_features(self, history: List[Dict]) -> np.ndarray:
-        """Extract features from conversion history"""
-        if not history:
+        """Extract features from conversion history"""        if not history:
             return np.zeros(15)  # Default feature vector
         
         features = []

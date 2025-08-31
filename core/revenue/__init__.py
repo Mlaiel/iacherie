@@ -24,8 +24,7 @@ Developed by Expert Team:
 🎵 Audio Expert: Audio Revenue Stream Optimization
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
-"""
-# Import all revenue management modules
+"""# Import all revenue management modules
 from .manager import RevenueManager
 from .allocator import RevenueAllocator, create_revenue_allocator
 from .analyzer import RevenueAnalyzer, create_revenue_analyzer

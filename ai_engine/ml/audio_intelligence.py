@@ -1,5 +1,4 @@
-"""
-Audio Intelligence Module - Advanced Music & Audio Processing
+"""Audio Intelligence Module - Advanced Music & Audio Processing
 
 Specialized audio processing and music intelligence for the IA Influencer platform.
 Provides comprehensive audio analysis, fingerprinting, similarity detection, and music understanding.
@@ -12,7 +11,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import numpy as np
 import logging
@@ -56,8 +54,7 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats"""
-    WAV = "wav"
+    """Supported audio formats"""    WAV = "wav"
     MP3 = "mp3"
     FLAC = "flac"
     OGG = "ogg"
@@ -66,8 +63,7 @@ class AudioFormat(Enum):
 
 
 class MusicGenre(Enum):
-    """Music genre classifications"""
-    ROCK = "rock"
+    """Music genre classifications"""    ROCK = "rock"
     POP = "pop"
     JAZZ = "jazz"
     CLASSICAL = "classical"
@@ -88,8 +84,7 @@ class MusicGenre(Enum):
 
 
 class AudioQuality(Enum):
-    """Audio quality levels"""
-    LOW = "low"           # < 128 kbps
+    """Audio quality levels"""    LOW = "low"           # < 128 kbps
     STANDARD = "standard" # 128-192 kbps
     HIGH = "high"         # 192-320 kbps
     LOSSLESS = "lossless" # FLAC, WAV
@@ -97,8 +92,7 @@ class AudioQuality(Enum):
 
 @dataclass
 class AudioFeatures:
-    """Comprehensive audio feature representation"""
-    # Basic properties
+    """Comprehensive audio feature representation"""    # Basic properties
     duration: float = 0.0
     sample_rate: int = 0
     channels: int = 0
@@ -140,8 +134,7 @@ class AudioFeatures:
 
 @dataclass
 class AudioFingerprint:
-    """Audio fingerprint for content identification"""
-    fingerprint_id: str
+    """Audio fingerprint for content identification"""    fingerprint_id: str
     fingerprint_data: np.ndarray
     confidence: float
     algorithm: str
@@ -161,8 +154,7 @@ class AudioFingerprint:
 
 @dataclass
 class MusicAnalysisResult:
-    """Comprehensive music analysis result"""
-    # Basic identification
+    """Comprehensive music analysis result"""    # Basic identification
     title: str = "Unknown"
     artist: str = "Unknown"
     genre: MusicGenre = MusicGenre.UNKNOWN
@@ -205,10 +197,8 @@ class MusicAnalysisResult:
 
 
 class MusicAnalyzer:
-    """
-    Advanced music analysis system for the IA Influencer platform
-    """
-    
+    """    Advanced music analysis system for the IA Influencer platform
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.sample_rate = self.config.get('sample_rate', 22050)
@@ -227,8 +217,7 @@ class MusicAnalyzer:
         }
         
     def _initialize_genre_model(self) -> Optional[nn.Module]:
-        """Initialize genre classification model"""
-        # In production, this would load a trained model
+        """Initialize genre classification model"""        # In production, this would load a trained model
         # For now, return a simple model structure
         class GenreClassifier(nn.Module):
             def __init__(self, input_dim=128, num_genres=len(MusicGenre)):
@@ -249,10 +238,8 @@ class MusicAnalyzer:
         return GenreClassifier()
     
     async def analyze_music(self, audio_path: str, metadata: Optional[Dict[str, Any]] = None) -> MusicAnalysisResult:
-        """
-        Comprehensive music analysis
-        """
-        if not LIBROSA_AVAILABLE:
+        """        Comprehensive music analysis
+        """        if not LIBROSA_AVAILABLE:
             logger.error("Librosa not available for audio analysis")
             return MusicAnalysisResult()
         
@@ -317,8 +304,7 @@ class MusicAnalyzer:
             return MusicAnalysisResult()
     
     async def _extract_all_features(self, y: np.ndarray, sr: int) -> AudioFeatures:
-        """Extract comprehensive audio features"""
-        features = AudioFeatures()
+        """Extract comprehensive audio features"""        features = AudioFeatures()
         features.duration = len(y) / sr
         features.sample_rate = sr
         features.channels = 1 if y.ndim == 1 else y.shape[1]
@@ -338,8 +324,7 @@ class MusicAnalyzer:
         return features
     
     async def _extract_spectral_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract spectral features"""
-        if not LIBROSA_AVAILABLE:
+        """Extract spectral features"""        if not LIBROSA_AVAILABLE:
             return {}
         
         features = {}
@@ -372,8 +357,7 @@ class MusicAnalyzer:
         return features
     
     async def _extract_rhythmic_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract rhythmic features"""
-        if not LIBROSA_AVAILABLE:
+        """Extract rhythmic features"""        if not LIBROSA_AVAILABLE:
             return {}
         
         features = {}
@@ -402,8 +386,7 @@ class MusicAnalyzer:
         return features
     
     async def _extract_harmonic_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract harmonic features"""
-        if not LIBROSA_AVAILABLE:
+        """Extract harmonic features"""        if not LIBROSA_AVAILABLE:
             return {}
         
         features = {}
@@ -425,8 +408,7 @@ class MusicAnalyzer:
         return features
     
     async def _extract_timbral_features(self, y: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extract timbral features"""
-        if not LIBROSA_AVAILABLE:
+        """Extract timbral features"""        if not LIBROSA_AVAILABLE:
             return {}
         
         features = {}
@@ -446,8 +428,7 @@ class MusicAnalyzer:
         return features
     
     async def _classify_genre(self, features: AudioFeatures) -> Tuple[MusicGenre, float]:
-        """Classify music genre using ML model"""
-        try:
+        """Classify music genre using ML model"""        try:
             # Extract features for classification
             if hasattr(features, 'mfcc') and features.mfcc.size > 0:
                 # Use MFCC means as features
@@ -486,8 +467,7 @@ class MusicAnalyzer:
             return MusicGenre.UNKNOWN, 0.0
     
     async def _rule_based_genre_classification(self, features: AudioFeatures) -> Tuple[MusicGenre, float]:
-        """Rule-based genre classification fallback"""
-        genre = MusicGenre.UNKNOWN
+        """Rule-based genre classification fallback"""        genre = MusicGenre.UNKNOWN
         confidence = 0.3
         
         try:
@@ -514,8 +494,7 @@ class MusicAnalyzer:
         return genre, confidence
     
     async def _analyze_key_mode(self, y: np.ndarray, sr: int) -> Tuple[str, str]:
-        """Analyze musical key and mode"""
-        try:
+        """Analyze musical key and mode"""        try:
             if not LIBROSA_AVAILABLE:
                 return "C", "Major"
             
@@ -545,8 +524,7 @@ class MusicAnalyzer:
             return "C", "Major"
     
     async def _detect_time_signature(self, y: np.ndarray, sr: int) -> str:
-        """Detect time signature"""
-        try:
+        """Detect time signature"""        try:
             if not LIBROSA_AVAILABLE:
                 return "4/4"
             
@@ -574,8 +552,7 @@ class MusicAnalyzer:
             return "4/4"
     
     async def _assess_audio_quality(self, y: np.ndarray, sr: int, file_path: str) -> Tuple[AudioQuality, float]:
-        """Assess audio quality"""
-        try:
+        """Assess audio quality"""        try:
             # File-based quality assessment
             file_path_obj = Path(file_path)
             file_size = file_path_obj.stat().st_size
@@ -620,8 +597,7 @@ class MusicAnalyzer:
             return AudioQuality.STANDARD, 0.5
     
     async def _calculate_loudness(self, y: np.ndarray, sr: int) -> float:
-        """Calculate loudness in LUFS (simplified)"""
-        try:
+        """Calculate loudness in LUFS (simplified)"""        try:
             # Simplified loudness calculation (not true LUFS)
             rms = np.sqrt(np.mean(y**2))
             lufs = 20 * np.log10(max(rms, 1e-10)) - 23  # Rough approximation
@@ -631,8 +607,7 @@ class MusicAnalyzer:
             return -23.0  # Default reference
     
     async def _calculate_energy(self, features: AudioFeatures) -> float:
-        """Calculate energy level (0-1)"""
-        try:
+        """Calculate energy level (0-1)"""        try:
             energy = getattr(features, 'rms_energy', 0.1)
             # Normalize and clamp
             return min(max(energy * 5, 0.0), 1.0)
@@ -640,8 +615,7 @@ class MusicAnalyzer:
             return 0.5
     
     async def _calculate_valence(self, features: AudioFeatures) -> float:
-        """Calculate valence (musical positivity) 0-1"""
-        try:
+        """Calculate valence (musical positivity) 0-1"""        try:
             # Simple heuristic based on spectral features
             tempo = getattr(features, 'tempo', 120)
             energy = getattr(features, 'rms_energy', 0.1)
@@ -656,8 +630,7 @@ class MusicAnalyzer:
             return 0.5
     
     async def _calculate_danceability(self, features: AudioFeatures) -> float:
-        """Calculate danceability (0-1)"""
-        try:
+        """Calculate danceability (0-1)"""        try:
             tempo = getattr(features, 'tempo', 120)
             
             # Danceability peaks around 120-130 BPM
@@ -671,8 +644,7 @@ class MusicAnalyzer:
             return 0.5
     
     async def _calculate_acousticness(self, features: AudioFeatures) -> float:
-        """Calculate acousticness (0-1)"""
-        try:
+        """Calculate acousticness (0-1)"""        try:
             # Simple heuristic - lower spectral centroid suggests more acoustic
             if hasattr(features, 'spectral_centroid') and len(features.spectral_centroid) > 0:
                 avg_centroid = np.mean(features.spectral_centroid)
@@ -684,8 +656,7 @@ class MusicAnalyzer:
         return 0.5
     
     async def _calculate_instrumentalness(self, features: AudioFeatures) -> float:
-        """Calculate instrumentalness (0-1)"""
-        try:
+        """Calculate instrumentalness (0-1)"""        try:
             # Simple heuristic based on spectral characteristics
             if hasattr(features, 'spectral_contrast') and features.spectral_contrast.size > 0:
                 contrast = np.mean(features.spectral_contrast)
@@ -697,8 +668,7 @@ class MusicAnalyzer:
         return 0.7  # Default to mostly instrumental
     
     async def _calculate_speechiness(self, features: AudioFeatures) -> float:
-        """Calculate speechiness (0-1)"""
-        try:
+        """Calculate speechiness (0-1)"""        try:
             # Higher zero-crossing rate often indicates speech-like content
             if hasattr(features, 'zero_crossing_rate') and len(features.zero_crossing_rate) > 0:
                 zcr = np.mean(features.zero_crossing_rate)
@@ -709,8 +679,7 @@ class MusicAnalyzer:
         return 0.1  # Default low speechiness for music
     
     async def _generate_fingerprint(self, y: np.ndarray, sr: int, file_path: str) -> AudioFingerprint:
-        """Generate audio fingerprint for content protection"""
-        try:
+        """Generate audio fingerprint for content protection"""        try:
             # Simple fingerprint based on spectral features
             if LIBROSA_AVAILABLE:
                 # Extract mel spectrogram
@@ -751,8 +720,7 @@ class MusicAnalyzer:
         )
     
     async def _assess_commercial_viability(self, result: MusicAnalysisResult) -> float:
-        """Assess commercial viability (0-1)"""
-        try:
+        """Assess commercial viability (0-1)"""        try:
             score = 0.5  # Base score
             
             # Genre popularity weights (simplified)
@@ -787,8 +755,7 @@ class MusicAnalyzer:
             return 0.5
     
     async def _predict_viral_potential(self, result: MusicAnalysisResult) -> float:
-        """Predict viral potential (0-1)"""
-        try:
+        """Predict viral potential (0-1)"""        try:
             viral_score = 0.3  # Base score
             
             # Factors that contribute to virality
@@ -816,8 +783,7 @@ class MusicAnalyzer:
             return 0.3
     
     async def _identify_target_demographics(self, result: MusicAnalysisResult) -> List[str]:
-        """Identify target demographics"""
-        demographics = []
+        """Identify target demographics"""        demographics = []
         
         try:
             # Age groups based on genre and characteristics
@@ -846,8 +812,7 @@ class MusicAnalyzer:
         return list(set(demographics))  # Remove duplicates
     
     async def _recommend_platforms(self, result: MusicAnalysisResult) -> List[str]:
-        """Recommend distribution platforms"""
-        platforms = []
+        """Recommend distribution platforms"""        platforms = []
         
         try:
             # Always recommend major platforms
@@ -876,8 +841,7 @@ class MusicAnalyzer:
         return list(set(platforms))  # Remove duplicates
     
     async def _generate_seo_tags(self, result: MusicAnalysisResult) -> List[str]:
-        """Generate SEO-optimized tags"""
-        tags = []
+        """Generate SEO-optimized tags"""        tags = []
         
         try:
             # Genre-based tags
@@ -916,8 +880,7 @@ class MusicAnalyzer:
         return list(set(tags))  # Remove duplicates
     
     async def _extract_mood_tags(self, features: AudioFeatures) -> List[str]:
-        """Extract mood tags from audio features"""
-        mood_tags = []
+        """Extract mood tags from audio features"""        mood_tags = []
         
         try:
             tempo = getattr(features, 'tempo', 120)
@@ -939,8 +902,7 @@ class MusicAnalyzer:
         return mood_tags
     
     async def _detect_instruments(self, features: AudioFeatures) -> List[str]:
-        """Detect prominent instruments (simplified)"""
-        instruments = []
+        """Detect prominent instruments (simplified)"""        instruments = []
         
         try:
             # Simple heuristics based on spectral features
@@ -966,8 +928,7 @@ class MusicAnalyzer:
         return list(set(instruments))  # Remove duplicates
     
     async def _find_similar_tracks(self, features: AudioFeatures) -> List[Dict[str, Any]]:
-        """Find similar tracks (placeholder for database lookup)"""
-        # In production, this would search a database of analyzed tracks
+        """Find similar tracks (placeholder for database lookup)"""        # In production, this would search a database of analyzed tracks
         similar_tracks = []
         
         try:
@@ -996,17 +957,14 @@ class MusicAnalyzer:
 
 
 class AudioFingerprintEngine:
-    """
-    Advanced audio fingerprinting for content protection
-    """
-    
+    """    Advanced audio fingerprinting for content protection
+    """    
     def __init__(self):
         self.fingerprint_database = {}  # In production, this would be a database
         self.similarity_threshold = 0.85
     
     async def generate_fingerprint(self, audio_path: str) -> Optional[AudioFingerprint]:
-        """Generate comprehensive audio fingerprint"""
-        try:
+        """Generate comprehensive audio fingerprint"""        try:
             if not LIBROSA_AVAILABLE:
                 logger.error("Librosa required for fingerprinting")
                 return None
@@ -1052,8 +1010,7 @@ class AudioFingerprintEngine:
             return None
     
     async def _generate_spectral_fingerprint(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Generate spectral fingerprint"""
-        # Mel spectrogram peaks
+        """Generate spectral fingerprint"""        # Mel spectrogram peaks
         mel_spec = librosa.feature.melspectrogram(y=y, sr=sr, n_mels=32)
         mel_spec_db = librosa.power_to_db(mel_spec, ref=np.max)
         
@@ -1062,15 +1019,13 @@ class AudioFingerprintEngine:
         return fingerprint
     
     async def _generate_chromatic_fingerprint(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Generate chromatic fingerprint"""
-        # Chroma features
+        """Generate chromatic fingerprint"""        # Chroma features
         chroma = librosa.feature.chroma_stft(y=y, sr=sr)
         fingerprint = np.mean(chroma, axis=1)
         return fingerprint
     
     async def _generate_rhythmic_fingerprint(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Generate rhythmic fingerprint"""
-        # Tempo and beat-related features
+        """Generate rhythmic fingerprint"""        # Tempo and beat-related features
         tempo, beats = librosa.beat.beat_track(y=y, sr=sr)
         
         # Create rhythmic pattern fingerprint
@@ -1087,8 +1042,7 @@ class AudioFingerprintEngine:
     
     async def find_matches(self, fingerprint: AudioFingerprint, 
                           threshold: Optional[float] = None) -> List[Dict[str, Any]]:
-        """Find matching fingerprints in database"""
-        if threshold is None:
+        """Find matching fingerprints in database"""        if threshold is None:
             threshold = self.similarity_threshold
         
         matches = []
@@ -1122,8 +1076,7 @@ class AudioFingerprintEngine:
         return matches
     
     async def _calculate_similarity(self, fp1: np.ndarray, fp2: np.ndarray) -> float:
-        """Calculate similarity between two fingerprints"""
-        try:
+        """Calculate similarity between two fingerprints"""        try:
             # Ensure same length
             min_len = min(len(fp1), len(fp2))
             fp1_trim = fp1[:min_len]
@@ -1139,10 +1092,8 @@ class AudioFingerprintEngine:
 
 
 class MusicSimilarityEngine:
-    """
-    Music similarity detection for recommendation and matching
-    """
-    
+    """    Music similarity detection for recommendation and matching
+    """    
     def __init__(self):
         self.feature_weights = {
             'tempo': 0.15,
@@ -1158,8 +1109,7 @@ class MusicSimilarityEngine:
     
     async def calculate_similarity(self, track1: MusicAnalysisResult, 
                                  track2: MusicAnalysisResult) -> float:
-        """Calculate overall similarity between two tracks"""
-        try:
+        """Calculate overall similarity between two tracks"""        try:
             similarity_score = 0.0
             
             # Tempo similarity
@@ -1197,14 +1147,12 @@ class MusicSimilarityEngine:
             return 0.0
     
     def _tempo_similarity(self, tempo1: float, tempo2: float) -> float:
-        """Calculate tempo similarity"""
-        tempo_diff = abs(tempo1 - tempo2)
+        """Calculate tempo similarity"""        tempo_diff = abs(tempo1 - tempo2)
         # Maximum similarity at 0 BPM difference, decreases with difference
         return max(0, 1 - tempo_diff / 50)
     
     def _key_similarity(self, key1: str, key2: str) -> float:
-        """Calculate key similarity"""
-        if key1 == key2:
+        """Calculate key similarity"""        if key1 == key2:
             return 1.0
         
         # Circle of fifths similarity
@@ -1219,8 +1167,7 @@ class MusicSimilarityEngine:
             return 0.5  # Unknown keys get neutral similarity
     
     def _genre_similarity(self, genre1: MusicGenre, genre2: MusicGenre) -> float:
-        """Calculate genre similarity"""
-        if genre1 == genre2:
+        """Calculate genre similarity"""        if genre1 == genre2:
             return 1.0
         
         # Genre similarity matrix (simplified)

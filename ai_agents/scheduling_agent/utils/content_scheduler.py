@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Content Scheduler - Advanced Automated Content Scheduling System
+"""Content Scheduler - Advanced Automated Content Scheduling System
 ================================================================
 
 Industrial-grade content scheduling system with intelligent automation, bulk operations,
@@ -22,7 +21,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -58,8 +56,7 @@ from .schedule_optimizer import ScheduleOptimizer, OptimizationConfig, Optimizat
 logger = logging.getLogger(__name__)
 
 class ScheduleTemplate(Enum):
-    """Predefined schedule templates"""
-    DAILY_CONSISTENT = "daily_consistent"
+    """Predefined schedule templates"""    DAILY_CONSISTENT = "daily_consistent"
     WEEKLY_BALANCED = "weekly_balanced"
     PEAK_TIMES_ONLY = "peak_times_only"
     CONTENT_TYPE_OPTIMIZED = "content_type_optimized"
@@ -68,16 +65,14 @@ class ScheduleTemplate(Enum):
     SEASONAL_ADAPTIVE = "seasonal_adaptive"
 
 class BulkOperationType(Enum):
-    """Types of bulk operations"""
-    BATCH_SCHEDULE = "batch_schedule"
+    """Types of bulk operations"""    BATCH_SCHEDULE = "batch_schedule"
     RESCHEDULE_ALL = "reschedule_all"
     CANCEL_BATCH = "cancel_batch"
     UPDATE_PRIORITIES = "update_priorities"
     PLATFORM_MIGRATION = "platform_migration"
 
 class AutomationRule(Enum):
-    """Automation rules for content scheduling"""
-    OPTIMAL_TIME_ALWAYS = "optimal_time_always"
+    """Automation rules for content scheduling"""    OPTIMAL_TIME_ALWAYS = "optimal_time_always"
     AVOID_CONFLICTS = "avoid_conflicts"
     PLATFORM_SPECIFIC_TIMING = "platform_specific_timing"
     CONTENT_TYPE_RULES = "content_type_rules"
@@ -86,8 +81,7 @@ class AutomationRule(Enum):
 
 @dataclass
 class SchedulingTemplate:
-    """Template for content scheduling"""
-    name: str
+    """Template for content scheduling"""    name: str
     description: str
     schedule_pattern: str  # Cron-like pattern
     platforms: List[str]
@@ -98,8 +92,7 @@ class SchedulingTemplate:
 
 @dataclass
 class BulkScheduleRequest:
-    """Bulk scheduling request"""
-    content_ids: List[str]
+    """Bulk scheduling request"""    content_ids: List[str]
     operation_type: BulkOperationType
     template: Optional[SchedulingTemplate] = None
     schedule_times: Optional[List[datetime]] = None
@@ -109,16 +102,14 @@ class BulkScheduleRequest:
 
 @dataclass
 class AutomationConfig:
-    """Configuration for automated scheduling"""
-    rules: List[AutomationRule]
+    """Configuration for automated scheduling"""    rules: List[AutomationRule]
     triggers: Dict[str, Any] = field(default_factory=dict)
     constraints: Dict[str, Any] = field(default_factory=dict)
     notification_settings: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
 class SchedulingWorkflow:
-    """Workflow definition for complex scheduling"""
-    workflow_id: str
+    """Workflow definition for complex scheduling"""    workflow_id: str
     name: str
     steps: List[Dict[str, Any]]
     conditions: Dict[str, Any] = field(default_factory=dict)
@@ -128,8 +119,7 @@ class SchedulingWorkflow:
 Base = declarative_base()
 
 class SchedulingTemplate_DB(Base):
-    """Database model for scheduling templates"""
-    __tablename__ = 'scheduling_templates'
+    """Database model for scheduling templates"""    __tablename__ = 'scheduling_templates'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     creator_id = Column(String, nullable=False, index=True)
@@ -146,8 +136,7 @@ class SchedulingTemplate_DB(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class BulkOperation(Base):
-    """Database model for bulk operations"""
-    __tablename__ = 'bulk_operations'
+    """Database model for bulk operations"""    __tablename__ = 'bulk_operations'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     creator_id = Column(String, nullable=False, index=True)
@@ -164,8 +153,7 @@ class BulkOperation(Base):
     completed_at = Column(DateTime(timezone=True), nullable=True)
 
 class AutomationRule_DB(Base):
-    """Database model for automation rules"""
-    __tablename__ = 'automation_rules'
+    """Database model for automation rules"""    __tablename__ = 'automation_rules'
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     creator_id = Column(String, nullable=False, index=True)
@@ -180,8 +168,7 @@ class AutomationRule_DB(Base):
     updated_at = Column(DateTime(timezone=True), default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class ContentScheduler:
-    """
-    Advanced content scheduler with template management and bulk operations.
+    """    Advanced content scheduler with template management and bulk operations.
     
     Features:
     - Template-based scheduling
@@ -189,8 +176,7 @@ class ContentScheduler:
     - Workflow automation
     - Smart conflict resolution
     - Performance tracking
-    """
-    
+    """    
     def __init__(self):
         self.scheduling_agent = SchedulingAgent()
         self.optimizer = ScheduleOptimizer()
@@ -206,8 +192,7 @@ class ContentScheduler:
         logger.info("Content scheduler initialized")
     
     def _initialize_builtin_templates(self) -> Dict[str, SchedulingTemplate]:
-        """Initialize built-in scheduling templates"""
-        templates = {}
+        """Initialize built-in scheduling templates"""        templates = {}
         
         # Daily consistent posting template
         templates[ScheduleTemplate.DAILY_CONSISTENT.value] = SchedulingTemplate(
@@ -280,8 +265,7 @@ class ContentScheduler:
         creator_id: str,
         template: SchedulingTemplate
     ) -> str:
-        """
-        Create a custom scheduling template.
+        """        Create a custom scheduling template.
         
         Args:
             creator_id: Creator identifier
@@ -289,8 +273,7 @@ class ContentScheduler:
             
         Returns:
             Template ID
-        """
-        try:
+        """        try:
             logger.info(f"Creating scheduling template for creator {creator_id}")
             
             # Validate template
@@ -334,8 +317,7 @@ class ContentScheduler:
         start_date: Optional[datetime] = None,
         duration_days: int = 7
     ) -> Dict[str, Any]:
-        """
-        Apply a scheduling template to content.
+        """        Apply a scheduling template to content.
         
         Args:
             creator_id: Creator identifier
@@ -346,8 +328,7 @@ class ContentScheduler:
             
         Returns:
             Application result with created schedules
-        """
-        try:
+        """        try:
             logger.info(f"Applying template {template_id} to {len(content_ids)} content items")
             
             # Get template
@@ -450,8 +431,7 @@ class ContentScheduler:
         creator_id: str,
         request: BulkScheduleRequest
     ) -> str:
-        """
-        Perform bulk scheduling operation.
+        """        Perform bulk scheduling operation.
         
         Args:
             creator_id: Creator identifier
@@ -459,8 +439,7 @@ class ContentScheduler:
             
         Returns:
             Operation ID for tracking
-        """
-        try:
+        """        try:
             logger.info(f"Starting bulk operation {request.operation_type.value} for {len(request.content_ids)} items")
             
             # Create operation record
@@ -497,8 +476,7 @@ class ContentScheduler:
         creator_id: str,
         request: BulkScheduleRequest
     ):
-        """Execute bulk operation in background"""
-        try:
+        """Execute bulk operation in background"""        try:
             results = []
             failed_items = []
             
@@ -571,8 +549,7 @@ class ContentScheduler:
                     db.commit()
     
     async def get_bulk_operation_status(self, operation_id: str) -> Dict[str, Any]:
-        """Get status of bulk operation"""
-        try:
+        """Get status of bulk operation"""        try:
             with get_db_session() as db:
                 operation = db.query(BulkOperation).filter(
                     BulkOperation.id == operation_id
@@ -604,8 +581,7 @@ class ContentScheduler:
         creator_id: str,
         workflow: SchedulingWorkflow
     ) -> str:
-        """Create a complex scheduling workflow"""
-        try:
+        """Create a complex scheduling workflow"""        try:
             logger.info(f"Creating scheduling workflow for creator {creator_id}")
             
             # Validate workflow
@@ -671,8 +647,7 @@ class ContentScheduler:
             raise AgentError(f"Workflow creation failed: {str(e)}")
     
     async def _validate_template(self, template: SchedulingTemplate):
-        """Validate template configuration"""
-        if not template.name:
+        """Validate template configuration"""        if not template.name:
             raise AgentError("Template name is required")
         
         if not template.schedule_pattern:
@@ -688,8 +663,7 @@ class ContentScheduler:
             raise AgentError(f"Invalid schedule pattern: {template.schedule_pattern}")
     
     async def _get_template(self, template_id: str, creator_id: str) -> Optional[SchedulingTemplate]:
-        """Get template by ID"""
-        # Check builtin templates first
+        """Get template by ID"""        # Check builtin templates first
         if template_id in self.builtin_templates:
             return self.builtin_templates[template_id]
         
@@ -741,8 +715,7 @@ class ContentScheduler:
         start_date: datetime,
         duration_days: int
     ) -> List[datetime]:
-        """Generate schedule times based on cron pattern"""
-        schedule_times = []
+        """Generate schedule times based on cron pattern"""        schedule_times = []
         
         # Create cron iterator
         cron = croniter.croniter(pattern, start_date)
@@ -764,8 +737,7 @@ class ContentScheduler:
         content_id: str,
         request: BulkScheduleRequest
     ) -> Dict[str, Any]:
-        """Schedule a single item in bulk operation"""
-        try:
+        """Schedule a single item in bulk operation"""        try:
             # Determine schedule time
             if request.schedule_times and len(request.schedule_times) > 0:
                 # Use provided schedule times
@@ -810,8 +782,7 @@ class ContentScheduler:
         content_id: str,
         request: BulkScheduleRequest
     ) -> Dict[str, Any]:
-        """Reschedule a single item in bulk operation"""
-        try:
+        """Reschedule a single item in bulk operation"""        try:
             # Find existing schedules for this content
             existing_schedules = await self.scheduling_agent.get_creator_schedules(
                 creator_id=creator_id,
@@ -864,8 +835,7 @@ class ContentScheduler:
         content_id: str,
         request: BulkScheduleRequest
     ) -> Dict[str, Any]:
-        """Cancel schedules for a single item in bulk operation"""
-        try:
+        """Cancel schedules for a single item in bulk operation"""        try:
             # Find existing schedules for this content
             existing_schedules = await self.scheduling_agent.get_creator_schedules(
                 creator_id=creator_id,
@@ -912,8 +882,7 @@ class ContentScheduler:
         processed: int,
         failed: int
     ):
-        """Update bulk operation progress"""
-        try:
+        """Update bulk operation progress"""        try:
             with get_db_session() as db:
                 operation = db.query(BulkOperation).filter(
                     BulkOperation.id == operation_id
@@ -929,8 +898,7 @@ class ContentScheduler:
             logger.error(f"Failed to update operation progress: {str(e)}")
     
     async def _validate_workflow(self, workflow: SchedulingWorkflow):
-        """Validate workflow configuration"""
-        if not workflow.workflow_id:
+        """Validate workflow configuration"""        if not workflow.workflow_id:
             raise AgentError("Workflow ID is required")
         
         if not workflow.name:
@@ -950,8 +918,7 @@ class ContentScheduler:
         step: Dict[str, Any],
         previous_results: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Execute a single workflow step"""
-        action = step.get('action')
+        """Execute a single workflow step"""        action = step.get('action')
         
         if action == 'create_template':
             # Create a template
@@ -1039,8 +1006,7 @@ class ContentScheduler:
         condition: Dict[str, Any],
         previous_results: List[Dict[str, Any]]
     ) -> bool:
-        """Evaluate a workflow condition"""
-        condition_type = condition.get('type', 'always_true')
+        """Evaluate a workflow condition"""        condition_type = condition.get('type', 'always_true')
         
         if condition_type == 'always_true':
             return True
@@ -1060,16 +1026,14 @@ class ContentScheduler:
             return True
 
 class AutoScheduler:
-    """
-    Automated scheduling system with intelligent rules and triggers.
+    """    Automated scheduling system with intelligent rules and triggers.
     
     Features:
     - Rule-based automation
     - Event-driven scheduling
     - Smart conflict resolution
     - Performance optimization
-    """
-    
+    """    
     def __init__(self):
         self.content_scheduler = ContentScheduler()
         self.performance_monitor = PerformanceMonitor()
@@ -1087,8 +1051,7 @@ class AutoScheduler:
         conditions: Dict[str, Any],
         actions: Dict[str, Any]
     ) -> str:
-        """
-        Create an automation rule.
+        """        Create an automation rule.
         
         Args:
             creator_id: Creator identifier
@@ -1099,8 +1062,7 @@ class AutoScheduler:
             
         Returns:
             Rule ID
-        """
-        try:
+        """        try:
             logger.info(f"Creating automation rule {rule_name} for creator {creator_id}")
             
             # Validate rule
@@ -1139,15 +1101,13 @@ class AutoScheduler:
         trigger_event: str,
         event_data: Dict[str, Any]
     ):
-        """
-        Check and trigger automation rules based on event.
+        """        Check and trigger automation rules based on event.
         
         Args:
             creator_id: Creator identifier
             trigger_event: Event that occurred
             event_data: Data associated with the event
-        """
-        try:
+        """        try:
             logger.info(f"Checking automation triggers for event {trigger_event}")
             
             # Get active rules for creator
@@ -1182,8 +1142,7 @@ class AutoScheduler:
             logger.error(f"Failed to check automation triggers: {str(e)}")
     
     async def get_creator_automation_rules(self, creator_id: str) -> List[Dict[str, Any]]:
-        """Get automation rules for a creator"""
-        try:
+        """Get automation rules for a creator"""        try:
             with get_db_session() as db:
                 rules = db.query(AutomationRule_DB).filter(
                     AutomationRule_DB.creator_id == creator_id,
@@ -1214,8 +1173,7 @@ class AutoScheduler:
         conditions: Dict[str, Any],
         actions: Dict[str, Any]
     ):
-        """Validate automation rule configuration"""
-        if not conditions:
+        """Validate automation rule configuration"""        if not conditions:
             raise AgentError("Rule conditions are required")
         
         if not actions:
@@ -1239,8 +1197,7 @@ class AutoScheduler:
             raise AgentError(f"Invalid action type: {action_type}")
     
     async def _load_automation_rule(self, rule_id: str):
-        """Load automation rule into active rules"""
-        try:
+        """Load automation rule into active rules"""        try:
             with get_db_session() as db:
                 rule = db.query(AutomationRule_DB).filter(
                     AutomationRule_DB.id == rule_id,
@@ -1268,8 +1225,7 @@ class AutoScheduler:
         trigger_event: str,
         event_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate whether rule conditions are met"""
-        conditions = rule['conditions']
+        """Evaluate whether rule conditions are met"""        conditions = rule['conditions']
         rule_type = rule['rule_type']
         
         # Check trigger event match
@@ -1307,8 +1263,7 @@ class AutoScheduler:
         rule: Dict[str, Any],
         event_data: Dict[str, Any]
     ):
-        """Execute automation rule actions"""
-        actions = rule['actions']
+        """Execute automation rule actions"""        actions = rule['actions']
         action_type = actions.get('type')
         
         if action_type == 'schedule':
@@ -1333,8 +1288,7 @@ class AutoScheduler:
         actions: Dict[str, Any],
         event_data: Dict[str, Any]
     ):
-        """Auto-schedule content based on rule"""
-        content_id = event_data.get('content_id')
+        """Auto-schedule content based on rule"""        content_id = event_data.get('content_id')
         if not content_id:
             return
         
@@ -1368,8 +1322,7 @@ class AutoScheduler:
         actions: Dict[str, Any],
         event_data: Dict[str, Any]
     ):
-        """Auto-reschedule content based on rule"""
-        schedule_id = event_data.get('schedule_id')
+        """Auto-reschedule content based on rule"""        schedule_id = event_data.get('schedule_id')
         if not schedule_id:
             return
         
@@ -1393,8 +1346,7 @@ class AutoScheduler:
         actions: Dict[str, Any],
         event_data: Dict[str, Any]
     ):
-        """Auto-cancel schedules based on rule"""
-        schedule_ids = event_data.get('schedule_ids', [])
+        """Auto-cancel schedules based on rule"""        schedule_ids = event_data.get('schedule_ids', [])
         
         cancelled_count = 0
         for schedule_id in schedule_ids:
@@ -1410,16 +1362,14 @@ class AutoScheduler:
         actions: Dict[str, Any],
         event_data: Dict[str, Any]
     ):
-        """Send automation notification"""
-        # This would integrate with notification service
+        """Send automation notification"""        # This would integrate with notification service
         message = actions.get('message', f"Automation rule {rule['rule_name']} triggered")
         
         # Mock notification
         logger.info(f"Automation notification: {message}")
     
     async def _update_rule_execution_stats(self, rule_id: str):
-        """Update rule execution statistics"""
-        try:
+        """Update rule execution statistics"""        try:
             with get_db_session() as db:
                 rule = db.query(AutomationRule_DB).filter(
                     AutomationRule_DB.id == rule_id

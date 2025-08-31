@@ -1,5 +1,4 @@
 """NFT management: minting, metadata, marketplace integration."""
-
 from typing import Dict, Optional
 import json
 import hashlib
@@ -13,8 +12,7 @@ class NFTManager:
         self.contract_address = None  # Would be set to actual NFT contract
         
     def prepare_metadata(self, content_info: Dict) -> Dict:
-        """Prepare NFT metadata following OpenSea standard."""
-        metadata = {
+        """Prepare NFT metadata following OpenSea standard."""        metadata = {
             "name": content_info.get("title", "Untitled Content"),
             "description": content_info.get("description", "Original content protected by IA Influencer Agent"),
             "image": content_info.get("image_url", ""),
@@ -64,15 +62,13 @@ class NFTManager:
         return metadata
 
     def generate_token_id(self, content_info: Dict) -> str:
-        """Generate unique token ID for content."""
-        content_hash = hashlib.sha256(
+        """Generate unique token ID for content."""        content_hash = hashlib.sha256(
             f"{content_info.get('creator_id', '')}-{content_info.get('title', '')}-{content_info.get('created_at', '')}".encode()
         ).hexdigest()
         return content_hash[:16]  # Use first 16 chars as token ID
 
     def estimate_minting_cost(self, network: str = "ethereum") -> Dict:
-        """Estimate NFT minting costs."""
-        # Mock gas prices - in reality would query current network prices
+        """Estimate NFT minting costs."""        # Mock gas prices - in reality would query current network prices
         gas_prices = {
             "ethereum": {"gas_price_gwei": 20, "usd_per_eth": 2000},
             "polygon": {"gas_price_gwei": 30, "usd_per_matic": 0.8},
@@ -98,8 +94,7 @@ class NFTManager:
         }
 
     def prepare_minting_transaction(self, metadata: Dict, recipient_address: str) -> Dict:
-        """Prepare NFT minting transaction (simulation)."""
-        token_id = self.generate_token_id(metadata)
+        """Prepare NFT minting transaction (simulation)."""        token_id = self.generate_token_id(metadata)
         
         # In reality, this would interact with actual smart contract
         transaction_data = {
@@ -117,8 +112,7 @@ class NFTManager:
         return transaction_data
 
     def verify_ownership(self, token_id: str, owner_address: str) -> Dict:
-        """Verify NFT ownership (simulation)."""
-        # Mock verification - in reality would query blockchain
+        """Verify NFT ownership (simulation)."""        # Mock verification - in reality would query blockchain
         return {
             "token_id": token_id,
             "owner": owner_address,
@@ -129,8 +123,7 @@ class NFTManager:
         }
 
     def get_marketplace_links(self, token_id: str) -> Dict:
-        """Generate marketplace links for NFT."""
-        contract_addr = self.contract_address or "0x742d35Cc6635C0532925A3b8D42519B8"
+        """Generate marketplace links for NFT."""        contract_addr = self.contract_address or "0x742d35Cc6635C0532925A3b8D42519B8"
         
         return {
             "opensea": f"https://opensea.io/assets/ethereum/{contract_addr}/{token_id}",

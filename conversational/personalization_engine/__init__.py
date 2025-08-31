@@ -18,8 +18,7 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use strictly prohibited
 
-"""
-# Module metadata
+"""# Module metadata
 __author__ = "Fahed Mlaiel"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 __license__ = "Proprietary"
@@ -46,8 +45,7 @@ def initialize_personalization_engine():
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use of this code is strictly prohibited and will result in
 legal action. Contact mlaiel@live.de for authorization.
-"""
-from .personalization_manager import (
+"""from .personalization_manager import (
     PersonalizationManager,
     PersonalizationContext,
     PersonalizationStrategy,
@@ -255,8 +253,7 @@ Project Team Specialists:
 WARNING: This code is proprietary and confidential. Any unauthorized copying,
 distribution, or use of this code is strictly prohibited and will result in
 legal action. Contact mlaiel@live.de for authorization.
-"""
-from .personalization_manager import (
+"""from .personalization_manager import (
     PersonalizationManager,
     PersonalizationContext,
     PersonalizationStrategy,

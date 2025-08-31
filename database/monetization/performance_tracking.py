@@ -1,5 +1,4 @@
-"""
-Performance Tracking Models - Enterprise Performance Tracking System
+"""Performance Tracking Models - Enterprise Performance Tracking System
 
 Ultra-advanced performance tracking models for comprehensive content performance analysis
 across all platforms with real-time analytics and AI-powered insights.
@@ -26,7 +25,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
-
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -44,8 +42,7 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class MetricType(Enum):
-    """Content performance metric types"""
-    VIEWS = "views"
+    """Content performance metric types"""    VIEWS = "views"
     STREAMS = "streams"
     DOWNLOADS = "downloads"
     LIKES = "likes"
@@ -62,15 +59,13 @@ class MetricType(Enum):
     SKIP_RATE = "skip_rate"
 
 class PerformanceStatus(Enum):
-    """Performance tracking status"""
-    ACTIVE = "active"
+    """Performance tracking status"""    ACTIVE = "active"
     PAUSED = "paused"
     COMPLETED = "completed"
     ARCHIVED = "archived"
 
 class ContentType(Enum):
-    """Content type classification"""
-    MUSIC = "music"
+    """Content type classification"""    MUSIC = "music"
     VIDEO = "video"
     PODCAST = "podcast"
     BLOG_POST = "blog_post"
@@ -80,8 +75,7 @@ class ContentType(Enum):
     ADVERTISEMENT = "advertisement"
 
 class PerformanceRecord(Base):
-    """Individual performance tracking record"""
-    __tablename__ = 'performance_records'
+    """Individual performance tracking record"""    __tablename__ = 'performance_records'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -136,8 +130,7 @@ class PerformanceRecord(Base):
     )
 
 class PerformanceAggregation(Base):
-    """Aggregated performance metrics for efficient querying"""
-    __tablename__ = 'performance_aggregations'
+    """Aggregated performance metrics for efficient querying"""    __tablename__ = 'performance_aggregations'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -204,8 +197,7 @@ class PerformanceAggregation(Base):
     )
 
 class PerformanceBenchmark(Base):
-    """Industry and category performance benchmarks"""
-    __tablename__ = 'performance_benchmarks'
+    """Industry and category performance benchmarks"""    __tablename__ = 'performance_benchmarks'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -272,8 +264,7 @@ class PerformanceBenchmark(Base):
     )
 
 class ContentPerformanceAlert(Base):
-    """Performance alerts and notifications"""
-    __tablename__ = 'content_performance_alerts'
+    """Performance alerts and notifications"""    __tablename__ = 'content_performance_alerts'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -316,8 +307,7 @@ class ContentPerformanceAlert(Base):
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight data structure"""
-    insight_type: str
+    """Performance insight data structure"""    insight_type: str
     title: str
     description: str
     impact_score: float
@@ -327,8 +317,7 @@ class PerformanceInsight:
     priority: str  # low, medium, high
     
 class PerformanceOptimizationSuggestion(Base):
-    """AI-generated performance optimization suggestions"""
-    __tablename__ = 'performance_optimization_suggestions'
+    """AI-generated performance optimization suggestions"""    __tablename__ = 'performance_optimization_suggestions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

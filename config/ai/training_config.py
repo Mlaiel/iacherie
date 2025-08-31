@@ -1,5 +1,4 @@
-"""
-Model Training Configuration for IA-Influencer Agent Platform
+"""Model Training Configuration for IA-Influencer Agent Platform
 =============================================================
 
 Professional AI/ML Model Training and Fine-tuning configuration.
@@ -16,7 +15,6 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -25,8 +23,7 @@ import os
 
 
 class TrainingMode(str, Enum):
-    """Training modes for model development."""
-    
+    """Training modes for model development."""    
     SCRATCH = "scratch"
     FINE_TUNING = "fine_tuning"
     TRANSFER_LEARNING = "transfer_learning"
@@ -38,8 +35,7 @@ class TrainingMode(str, Enum):
 
 
 class OptimizationStrategy(str, Enum):
-    """Optimization strategies for training."""
-    
+    """Optimization strategies for training."""    
     ADAM = "adam"
     ADAMW = "adamw"
     SGD = "sgd"
@@ -50,8 +46,7 @@ class OptimizationStrategy(str, Enum):
 
 
 class SchedulerType(str, Enum):
-    """Learning rate scheduler types."""
-    
+    """Learning rate scheduler types."""    
     COSINE = "cosine"
     LINEAR = "linear"
     EXPONENTIAL = "exponential"
@@ -63,8 +58,7 @@ class SchedulerType(str, Enum):
 
 @dataclass
 class TrainingHyperparameters:
-    """Hyperparameters for model training."""
-    
+    """Hyperparameters for model training."""    
     learning_rate: float = 1e-4
     batch_size: int = 32
     epochs: int = 100
@@ -85,8 +79,7 @@ class TrainingHyperparameters:
 
 @dataclass
 class TrainingSpec:
-    """Complete training specification for a model."""
-    
+    """Complete training specification for a model."""    
     model_name: str
     task_type: str
     training_mode: TrainingMode
@@ -101,13 +94,11 @@ class TrainingSpec:
 
 
 class ModelTrainingConfig(BaseSettings):
-    """
-    Professional Model Training Configuration for IA-Influencer Agent Platform.
+    """    Professional Model Training Configuration for IA-Influencer Agent Platform.
     
     Manages all aspects of AI/ML model training including hyperparameters,
     data preprocessing, evaluation, and deployment pipelines.
-    """
-    
+    """    
     # Core Training Configuration
     TRAINING_DATA_DIR: str = "/data/training"
     MODEL_OUTPUT_DIR: str = "/models/trained"
@@ -201,13 +192,11 @@ class ModelTrainingConfig(BaseSettings):
     
     @validator("TRAINING_DATA_DIR", "MODEL_OUTPUT_DIR", "CHECKPOINT_DIR", "LOGS_DIR")
     def create_directories(cls, v):
-        """Ensure training directories exist."""
-        os.makedirs(v, exist_ok=True)
+        """Ensure training directories exist."""        os.makedirs(v, exist_ok=True)
         return v
     
     def get_training_spec(self, model_name: str, task_type: str) -> TrainingSpec:
-        """Get training specification for a specific model and task."""
-        
+        """Get training specification for a specific model and task."""        
         # Base specifications for different task types
         base_specs = {
             "text_classification": TrainingSpec(
@@ -297,8 +286,7 @@ class ModelTrainingConfig(BaseSettings):
         return base_specs.get(task_type, self._get_default_training_spec(model_name, task_type))
     
     def _get_default_training_spec(self, model_name: str, task_type: str) -> TrainingSpec:
-        """Get default training specification."""
-        return TrainingSpec(
+        """Get default training specification."""        return TrainingSpec(
             model_name=model_name,
             task_type=task_type,
             training_mode=TrainingMode.FINE_TUNING,
@@ -316,8 +304,7 @@ class ModelTrainingConfig(BaseSettings):
         )
     
     def get_hyperparameters_for_task(self, task_type: str) -> TrainingHyperparameters:
-        """Get optimized hyperparameters for specific task type."""
-        task_configs = {
+        """Get optimized hyperparameters for specific task type."""        task_configs = {
             "nlp": self.NLP_TRAINING_CONFIG,
             "vision": self.VISION_TRAINING_CONFIG,
             "audio": self.AUDIO_TRAINING_CONFIG,
@@ -334,8 +321,7 @@ class ModelTrainingConfig(BaseSettings):
         )
     
     def get_data_config(self) -> Dict[str, Any]:
-        """Get data processing configuration."""
-        return {
+        """Get data processing configuration."""        return {
             "data_dir": self.TRAINING_DATA_DIR,
             "splits": {
                 "train_val_split": self.TRAIN_VALIDATION_SPLIT,
@@ -369,8 +355,7 @@ class ModelTrainingConfig(BaseSettings):
         }
     
     def get_training_config(self) -> Dict[str, Any]:
-        """Get complete training configuration."""
-        return {
+        """Get complete training configuration."""        return {
             "hardware": {
                 "gpu_enabled": self.GPU_TRAINING_ENABLED,
                 "multi_gpu": self.MULTI_GPU_TRAINING,
@@ -411,8 +396,7 @@ class ModelTrainingConfig(BaseSettings):
         }
     
     def get_fine_tuning_config(self) -> Dict[str, Any]:
-        """Get fine-tuning specific configuration."""
-        return {
+        """Get fine-tuning specific configuration."""        return {
             "layers_to_unfreeze": self.FINE_TUNING_LAYERS,
             "fine_tuning_lr": self.FINE_TUNING_LEARNING_RATE,
             "gradual_unfreezing": self.GRADUAL_UNFREEZING,
@@ -425,8 +409,7 @@ class ModelTrainingConfig(BaseSettings):
         }
     
     def estimate_training_resources(self, spec: TrainingSpec) -> Dict[str, Any]:
-        """Estimate required resources for training."""
-        base_memory = spec.hyperparameters.batch_size * 0.1  # GB per batch item
+        """Estimate required resources for training."""        base_memory = spec.hyperparameters.batch_size * 0.1  # GB per batch item
         
         # Task-specific memory multipliers
         memory_multipliers = {
@@ -449,8 +432,7 @@ class ModelTrainingConfig(BaseSettings):
         }
     
     def get_evaluation_config(self) -> Dict[str, Any]:
-        """Get model evaluation configuration."""
-        return {
+        """Get model evaluation configuration."""        return {
             "metrics_by_task": {
                 "classification": ["accuracy", "precision", "recall", "f1_score", "auc"],
                 "regression": ["mse", "mae", "r2_score", "rmse"],

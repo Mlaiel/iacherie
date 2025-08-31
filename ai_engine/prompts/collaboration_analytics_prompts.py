@@ -1,5 +1,4 @@
-"""
-Advanced Collaboration & Analytics Prompts System
+"""Advanced Collaboration & Analytics Prompts System
 Professional prompts for creator collaboration and performance analytics
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
-
 from typing import Dict, List, Optional, Tuple, Any, Union
 from enum import Enum
 from dataclasses import dataclass
@@ -23,8 +21,7 @@ import uuid
 logger = logging.getLogger(__name__)
 
 class CollaborationType(Enum):
-    """Types of creator collaborations"""
-    MUSIC_COLLABORATION = "music_collaboration"
+    """Types of creator collaborations"""    MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     CONTENT_SERIES = "content_series"
     CROSS_PROMOTION = "cross_promotion"
@@ -33,8 +30,7 @@ class CollaborationType(Enum):
     BRAND_PARTNERSHIP = "brand_partnership"
 
 class AnalyticsType(Enum):
-    """Types of analytics and insights"""
-    PERFORMANCE_ANALYTICS = "performance_analytics"
+    """Types of analytics and insights"""    PERFORMANCE_ANALYTICS = "performance_analytics"
     AUDIENCE_INSIGHTS = "audience_insights"
     ENGAGEMENT_ANALYTICS = "engagement_analytics"
     REVENUE_ANALYTICS = "revenue_analytics"
@@ -42,8 +38,7 @@ class AnalyticsType(Enum):
     COMPETITIVE_ANALYTICS = "competitive_analytics"
 
 class CollaborationStage(Enum):
-    """Stages of collaboration process"""
-    DISCOVERY = "discovery"
+    """Stages of collaboration process"""    DISCOVERY = "discovery"
     OUTREACH = "outreach"
     NEGOTIATION = "negotiation"
     PLANNING = "planning"
@@ -52,8 +47,7 @@ class CollaborationStage(Enum):
     ANALYSIS = "analysis"
 
 class MetricCategory(Enum):
-    """Categories of performance metrics"""
-    ENGAGEMENT = "engagement"
+    """Categories of performance metrics"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     CONVERSION = "conversion"
     REVENUE = "revenue"
@@ -62,8 +56,7 @@ class MetricCategory(Enum):
 
 @dataclass
 class CollaborationContext:
-    """Context for collaboration prompt generation"""
-    collaboration_type: CollaborationType
+    """Context for collaboration prompt generation"""    collaboration_type: CollaborationType
     stage: CollaborationStage
     creator_profiles: List[Dict[str, Any]]
     target_outcomes: Dict[str, Any]
@@ -72,33 +65,28 @@ class CollaborationContext:
 
 @dataclass
 class AnalyticsContext:
-    """Context for analytics prompt generation"""
-    analytics_type: AnalyticsType
+    """Context for analytics prompt generation"""    analytics_type: AnalyticsType
     metric_categories: List[MetricCategory]
     time_period: Dict[str, str]
     platforms: List[str]
     goals: Dict[str, Any]
 
 class CollaborationAnalyticsPrompts:
-    """Advanced Collaboration & Analytics Prompts System"""
-    
+    """Advanced Collaboration & Analytics Prompts System"""    
     def __init__(self):
-        """Initialize the collaboration analytics prompts system"""
-        self.collaboration_templates = {}
+        """Initialize the collaboration analytics prompts system"""        self.collaboration_templates = {}
         self.analytics_templates = {}
         self.matching_algorithms = {}
         self._load_collaboration_analytics_templates()
     
     def _load_collaboration_analytics_templates(self) -> None:
-        """Load collaboration and analytics templates"""
-        
+        """Load collaboration and analytics templates"""        
         # Collaboration Templates
         self.collaboration_templates = {
             CollaborationType.MUSIC_COLLABORATION: {
                 CollaborationStage.DISCOVERY: {
                     "id": "music_collaboration_discovery",
-                    "template": """
-                    Create comprehensive music collaboration discovery strategy:
+                    "template": """                    Create comprehensive music collaboration discovery strategy:
                     
                     Artist Profile Analysis:
                     - Primary artist: {primary_artist}
@@ -174,8 +162,7 @@ class CollaborationAnalyticsPrompts:
                 
                 CollaborationStage.EXECUTION: {
                     "id": "music_collaboration_execution",
-                    "template": """
-                    Create comprehensive music collaboration execution plan:
+                    "template": """                    Create comprehensive music collaboration execution plan:
                     
                     Collaboration Details:
                     - Artists involved: {collaborating_artists}
@@ -248,8 +235,7 @@ class CollaborationAnalyticsPrompts:
             CollaborationType.BRAND_PARTNERSHIP: {
                 CollaborationStage.NEGOTIATION: {
                     "id": "brand_partnership_negotiation",
-                    "template": """
-                    Create strategic brand partnership negotiation framework:
+                    "template": """                    Create strategic brand partnership negotiation framework:
                     
                     Partnership Overview:
                     - Creator: {creator_name}
@@ -325,8 +311,7 @@ class CollaborationAnalyticsPrompts:
         self.analytics_templates = {
             AnalyticsType.PERFORMANCE_ANALYTICS: {
                 "id": "comprehensive_performance_analytics",
-                "template": """
-                Create comprehensive performance analytics dashboard:
+                "template": """                Create comprehensive performance analytics dashboard:
                 
                 Analytics Overview:
                 - Content creator: {creator_name}
@@ -451,8 +436,7 @@ class CollaborationAnalyticsPrompts:
             
             AnalyticsType.COMPETITIVE_ANALYTICS: {
                 "id": "competitive_intelligence_analytics",
-                "template": """
-                Create comprehensive competitive intelligence system:
+                "template": """                Create comprehensive competitive intelligence system:
                 
                 Competitive Landscape:
                 - Primary creator: {primary_creator}
@@ -580,8 +564,7 @@ class CollaborationAnalyticsPrompts:
         }
     
     def generate_collaboration_prompt(self, context: CollaborationContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate collaboration prompt based on context"""
-        try:
+        """Generate collaboration prompt based on context"""        try:
             # Get collaboration template
             collaboration_templates = self.collaboration_templates.get(context.collaboration_type, {})
             stage_template = collaboration_templates.get(context.stage)
@@ -620,8 +603,7 @@ class CollaborationAnalyticsPrompts:
             return self._generate_fallback_collaboration_prompt(context)
     
     def generate_analytics_prompt(self, context: AnalyticsContext, custom_params: Optional[Dict] = None) -> Dict[str, Any]:
-        """Generate analytics prompt based on context"""
-        try:
+        """Generate analytics prompt based on context"""        try:
             # Get analytics template
             analytics_template = self.analytics_templates.get(context.analytics_type)
             
@@ -661,8 +643,7 @@ class CollaborationAnalyticsPrompts:
     
     # Helper methods for customization
     def _customize_for_creators(self, template: Dict, creator_profiles: List[Dict]) -> Dict:
-        """Customize template for specific creator profiles"""
-        customized = template.copy()
+        """Customize template for specific creator profiles"""        customized = template.copy()
         
         if creator_profiles:
             creator_section = "\n\nCreator Profiles:\n"
@@ -678,8 +659,7 @@ class CollaborationAnalyticsPrompts:
         return customized
     
     def _apply_timeline_constraints(self, prompt: Dict, timeline: Dict) -> Dict:
-        """Apply timeline constraints to prompt"""
-        modified_prompt = prompt.copy()
+        """Apply timeline constraints to prompt"""        modified_prompt = prompt.copy()
         
         timeline_section = "\n\nTimeline Constraints:\n"
         for timeline_key, timeline_value in timeline.items():
@@ -691,8 +671,7 @@ class CollaborationAnalyticsPrompts:
         return modified_prompt
     
     def _apply_budget_constraints(self, prompt: Dict, budget: Dict) -> Dict:
-        """Apply budget constraints to prompt"""
-        modified_prompt = prompt.copy()
+        """Apply budget constraints to prompt"""        modified_prompt = prompt.copy()
         
         budget_section = "\n\nBudget Constraints:\n"
         for budget_key, budget_value in budget.items():
@@ -704,8 +683,7 @@ class CollaborationAnalyticsPrompts:
         return modified_prompt
     
     def _apply_target_outcomes(self, prompt: Dict, outcomes: Dict) -> Dict:
-        """Apply target outcomes to prompt"""
-        modified_prompt = prompt.copy()
+        """Apply target outcomes to prompt"""        modified_prompt = prompt.copy()
         
         outcomes_section = "\n\nTarget Outcomes:\n"
         for outcome_key, outcome_value in outcomes.items():
@@ -717,8 +695,7 @@ class CollaborationAnalyticsPrompts:
         return modified_prompt
     
     def _customize_for_metrics(self, template: Dict, metric_categories: List[MetricCategory]) -> Dict:
-        """Customize template for specific metric categories"""
-        customized = template.copy()
+        """Customize template for specific metric categories"""        customized = template.copy()
         
         metrics_section = "\n\nFocus Metric Categories:\n"
         for category in metric_categories:
@@ -730,8 +707,7 @@ class CollaborationAnalyticsPrompts:
         return customized
     
     def _apply_time_period(self, prompt: Dict, time_period: Dict) -> Dict:
-        """Apply time period to analytics prompt"""
-        modified_prompt = prompt.copy()
+        """Apply time period to analytics prompt"""        modified_prompt = prompt.copy()
         
         time_section = "\n\nAnalysis Time Period:\n"
         for time_key, time_value in time_period.items():
@@ -743,8 +719,7 @@ class CollaborationAnalyticsPrompts:
         return modified_prompt
     
     def _apply_platform_requirements(self, prompt: Dict, platforms: List[str]) -> Dict:
-        """Apply platform-specific requirements"""
-        modified_prompt = prompt.copy()
+        """Apply platform-specific requirements"""        modified_prompt = prompt.copy()
         
         platform_section = f"\n\nPlatform Analysis Focus:\n- Platforms: {', '.join(platforms)}\n"
         
@@ -754,8 +729,7 @@ class CollaborationAnalyticsPrompts:
         return modified_prompt
     
     def _apply_analytics_goals(self, prompt: Dict, goals: Dict) -> Dict:
-        """Apply analytics goals to prompt"""
-        modified_prompt = prompt.copy()
+        """Apply analytics goals to prompt"""        modified_prompt = prompt.copy()
         
         goals_section = "\n\nAnalytics Goals:\n"
         for goal_key, goal_value in goals.items():
@@ -767,8 +741,7 @@ class CollaborationAnalyticsPrompts:
         return modified_prompt
     
     def _apply_custom_collaboration_params(self, prompt: Dict, custom_params: Dict) -> Dict:
-        """Apply custom collaboration parameters"""
-        modified_prompt = prompt.copy()
+        """Apply custom collaboration parameters"""        modified_prompt = prompt.copy()
         
         template = modified_prompt.get("template", "")
         for param_key, param_value in custom_params.items():
@@ -780,8 +753,7 @@ class CollaborationAnalyticsPrompts:
         return modified_prompt
     
     def _apply_custom_analytics_params(self, prompt: Dict, custom_params: Dict) -> Dict:
-        """Apply custom analytics parameters"""
-        modified_prompt = prompt.copy()
+        """Apply custom analytics parameters"""        modified_prompt = prompt.copy()
         
         template = modified_prompt.get("template", "")
         for param_key, param_value in custom_params.items():
@@ -793,11 +765,9 @@ class CollaborationAnalyticsPrompts:
         return modified_prompt
     
     def _generate_fallback_collaboration_prompt(self, context: CollaborationContext) -> Dict[str, Any]:
-        """Generate fallback collaboration prompt"""
-        return {
+        """Generate fallback collaboration prompt"""        return {
             "id": "fallback_collaboration",
-            "template": f"""
-            Create {context.collaboration_type.value} strategy for {context.stage.value} stage:
+            "template": f"""            Create {context.collaboration_type.value} strategy for {context.stage.value} stage:
             
             Collaboration Requirements:
             - Type: {context.collaboration_type.value}
@@ -817,11 +787,9 @@ class CollaborationAnalyticsPrompts:
         }
     
     def _generate_fallback_analytics_prompt(self, context: AnalyticsContext) -> Dict[str, Any]:
-        """Generate fallback analytics prompt"""
-        return {
+        """Generate fallback analytics prompt"""        return {
             "id": "fallback_analytics",
-            "template": f"""
-            Create {context.analytics_type.value} system:
+            "template": f"""            Create {context.analytics_type.value} system:
             
             Analytics Requirements:
             - Type: {context.analytics_type.value}
@@ -849,8 +817,7 @@ COLLABORATION_ANALYTICS_REGISTRY = {
 }
 
 def get_collaboration_analytics_prompts() -> CollaborationAnalyticsPrompts:
-    """Get the main collaboration analytics prompts instance"""
-    return CollaborationAnalyticsPrompts()
+    """Get the main collaboration analytics prompts instance"""    return CollaborationAnalyticsPrompts()
 
 def create_collaboration_context(
     collaboration_type: str,
@@ -860,8 +827,7 @@ def create_collaboration_context(
     timeline: Optional[Dict] = None,
     budget: Optional[Dict] = None
 ) -> CollaborationContext:
-    """Create collaboration context"""
-    return CollaborationContext(
+    """Create collaboration context"""    return CollaborationContext(
         collaboration_type=CollaborationType(collaboration_type),
         stage=CollaborationStage(stage),
         creator_profiles=creator_profiles,
@@ -877,8 +843,7 @@ def create_analytics_context(
     platforms: Optional[List[str]] = None,
     goals: Optional[Dict] = None
 ) -> AnalyticsContext:
-    """Create analytics context"""
-    return AnalyticsContext(
+    """Create analytics context"""    return AnalyticsContext(
         analytics_type=AnalyticsType(analytics_type),
         metric_categories=[MetricCategory(m) for m in metric_categories],
         time_period=time_period or {},

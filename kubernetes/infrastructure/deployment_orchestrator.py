@@ -1,5 +1,4 @@
-"""
-Deployment Orchestrator for IA Influencer Agent Platform
+"""Deployment Orchestrator for IA Influencer Agent Platform
 Enterprise-grade deployment coordination and automation system
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -8,7 +7,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, reprod
 or distribution without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,8 +26,7 @@ from backend.deployment.infrastructure.container_orchestration import ContainerO
 
 
 class DeploymentStrategy(Enum):
-    """Deployment strategy types"""
-    BLUE_GREEN = "blue_green"
+    """Deployment strategy types"""    BLUE_GREEN = "blue_green"
     CANARY = "canary"
     ROLLING = "rolling"
     RECREATE = "recreate"
@@ -37,8 +34,7 @@ class DeploymentStrategy(Enum):
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environment types"""
-    DEVELOPMENT = "development"
+    """Deployment environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -46,8 +42,7 @@ class DeploymentEnvironment(Enum):
 
 
 class DeploymentStatus(Enum):
-    """Deployment status indicators"""
-    PENDING = "pending"
+    """Deployment status indicators"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESSFUL = "successful"
     FAILED = "failed"
@@ -58,8 +53,7 @@ class DeploymentStatus(Enum):
 
 @dataclass
 class DeploymentConfig:
-    """Deployment configuration specification"""
-    deployment_id: str
+    """Deployment configuration specification"""    deployment_id: str
     name: str
     version: str
     environment: DeploymentEnvironment
@@ -80,8 +74,7 @@ class DeploymentConfig:
 
 @dataclass
 class DeploymentResult:
-    """Deployment execution result"""
-    deployment_id: str
+    """Deployment execution result"""    deployment_id: str
     status: DeploymentStatus
     started_at: datetime
     completed_at: Optional[datetime] = None
@@ -93,11 +86,9 @@ class DeploymentResult:
 
 
 class DeploymentOrchestrator:
-    """
-    Enterprise deployment orchestration system
+    """    Enterprise deployment orchestration system
     Coordinates complex multi-service deployments with advanced strategies
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -125,8 +116,7 @@ class DeploymentOrchestrator:
         self.health_checkers: Dict[str, Callable] = {}
     
     async def initialize(self) -> None:
-        """Initialize deployment orchestrator"""
-        try:
+        """Initialize deployment orchestrator"""        try:
             self.logger.info("Initializing deployment orchestrator")
             
             # Initialize infrastructure managers
@@ -149,8 +139,7 @@ class DeploymentOrchestrator:
             raise DeploymentError(f"Initialization failed: {e}")
     
     async def deploy_application(self, config: DeploymentConfig) -> DeploymentResult:
-        """Deploy application using specified configuration"""
-        try:
+        """Deploy application using specified configuration"""        try:
             # Validate deployment configuration
             await self._validate_deployment_config(config)
             
@@ -242,8 +231,7 @@ class DeploymentOrchestrator:
             raise DeploymentError(f"Deployment failed: {e}")
     
     async def rollback_deployment(self, deployment_id: str, target_version: Optional[str] = None) -> DeploymentResult:
-        """Rollback a deployment to previous version"""
-        try:
+        """Rollback a deployment to previous version"""        try:
             self.logger.info(f"Initiating rollback for deployment {deployment_id}")
             
             # Find deployment in history
@@ -269,8 +257,7 @@ class DeploymentOrchestrator:
             raise DeploymentError(f"Rollback failed: {e}")
     
     async def pause_deployment(self, deployment_id: str) -> bool:
-        """Pause an active deployment"""
-        try:
+        """Pause an active deployment"""        try:
             if deployment_id not in self.active_deployments:
                 raise ValidationError(f"Active deployment {deployment_id} not found")
             
@@ -292,8 +279,7 @@ class DeploymentOrchestrator:
             raise DeploymentError(f"Pause failed: {e}")
     
     async def resume_deployment(self, deployment_id: str) -> bool:
-        """Resume a paused deployment"""
-        try:
+        """Resume a paused deployment"""        try:
             if deployment_id not in self.active_deployments:
                 raise ValidationError(f"Active deployment {deployment_id} not found")
             
@@ -318,8 +304,7 @@ class DeploymentOrchestrator:
             raise DeploymentError(f"Resume failed: {e}")
     
     async def get_deployment_status(self, deployment_id: str) -> DeploymentResult:
-        """Get current status of a deployment"""
-        # Check active deployments first
+        """Get current status of a deployment"""        # Check active deployments first
         if deployment_id in self.active_deployments:
             return self.active_deployments[deployment_id]
         
@@ -332,8 +317,7 @@ class DeploymentOrchestrator:
     
     async def list_deployments(self, environment: Optional[DeploymentEnvironment] = None,
                              status: Optional[DeploymentStatus] = None) -> List[DeploymentResult]:
-        """List deployments with optional filtering"""
-        all_deployments = list(self.active_deployments.values()) + self.deployment_history
+        """List deployments with optional filtering"""        all_deployments = list(self.active_deployments.values()) + self.deployment_history
         
         filtered_deployments = all_deployments
         
@@ -347,16 +331,14 @@ class DeploymentOrchestrator:
         return sorted(filtered_deployments, key=lambda x: x.started_at, reverse=True)
     
     async def _execute_deployment_strategy(self, config: DeploymentConfig, result: DeploymentResult) -> None:
-        """Execute deployment using specified strategy"""
-        handler = self.strategy_handlers.get(config.strategy)
+        """Execute deployment using specified strategy"""        handler = self.strategy_handlers.get(config.strategy)
         if not handler:
             raise DeploymentError(f"Unsupported deployment strategy: {config.strategy}")
         
         await handler(config, result)
     
     async def _execute_blue_green_deployment(self, config: DeploymentConfig, result: DeploymentResult) -> None:
-        """Execute blue-green deployment strategy"""
-        self.logger.info(f"Executing blue-green deployment for {config.deployment_id}")
+        """Execute blue-green deployment strategy"""        self.logger.info(f"Executing blue-green deployment for {config.deployment_id}")
         
         # Deploy to green environment
         green_deployment = await self.container_orchestrator.create_deployment(
@@ -385,8 +367,7 @@ class DeploymentOrchestrator:
         result.logs.append(f"Blue-green deployment completed successfully")
     
     async def _execute_canary_deployment(self, config: DeploymentConfig, result: DeploymentResult) -> None:
-        """Execute canary deployment strategy"""
-        self.logger.info(f"Executing canary deployment for {config.deployment_id}")
+        """Execute canary deployment strategy"""        self.logger.info(f"Executing canary deployment for {config.deployment_id}")
         
         # Deploy canary version with limited traffic
         canary_replicas = max(1, config.replicas // 10)  # 10% traffic
@@ -415,8 +396,7 @@ class DeploymentOrchestrator:
         result.logs.append(f"Canary deployment completed successfully")
     
     async def _execute_rolling_deployment(self, config: DeploymentConfig, result: DeploymentResult) -> None:
-        """Execute rolling deployment strategy"""
-        self.logger.info(f"Executing rolling deployment for {config.deployment_id}")
+        """Execute rolling deployment strategy"""        self.logger.info(f"Executing rolling deployment for {config.deployment_id}")
         
         # Update deployment with rolling strategy
         await self.container_orchestrator.update_deployment_rolling(
@@ -433,8 +413,7 @@ class DeploymentOrchestrator:
         result.logs.append(f"Rolling deployment completed successfully")
     
     async def _execute_recreate_deployment(self, config: DeploymentConfig, result: DeploymentResult) -> None:
-        """Execute recreate deployment strategy"""
-        self.logger.info(f"Executing recreate deployment for {config.deployment_id}")
+        """Execute recreate deployment strategy"""        self.logger.info(f"Executing recreate deployment for {config.deployment_id}")
         
         # Scale down existing deployment
         await self.container_orchestrator.scale_deployment(config.name, 0)
@@ -457,8 +436,7 @@ class DeploymentOrchestrator:
         result.logs.append(f"Recreate deployment completed successfully")
     
     async def _execute_ab_testing_deployment(self, config: DeploymentConfig, result: DeploymentResult) -> None:
-        """Execute A/B testing deployment strategy"""
-        self.logger.info(f"Executing A/B testing deployment for {config.deployment_id}")
+        """Execute A/B testing deployment strategy"""        self.logger.info(f"Executing A/B testing deployment for {config.deployment_id}")
         
         # Deploy B version alongside A version
         b_replicas = config.replicas // 2
@@ -485,8 +463,7 @@ class DeploymentOrchestrator:
         result.logs.append(f"A/B testing deployment completed successfully")
     
     async def _validate_deployment_config(self, config: DeploymentConfig) -> None:
-        """Validate deployment configuration"""
-        if not config.deployment_id or not config.name or not config.version:
+        """Validate deployment configuration"""        if not config.deployment_id or not config.name or not config.version:
             raise ValidationError("Deployment ID, name, and version are required")
         
         if config.replicas < 1:
@@ -496,8 +473,7 @@ class DeploymentOrchestrator:
             raise ValidationError("Timeout must be at least 1 minute")
     
     async def _perform_health_checks(self, config: DeploymentConfig, result: DeploymentResult) -> None:
-        """Perform health checks after deployment"""
-        self.logger.info(f"Performing health checks for {config.deployment_id}")
+        """Perform health checks after deployment"""        self.logger.info(f"Performing health checks for {config.deployment_id}")
         
         # Standard health checks
         await self.container_orchestrator.check_deployment_health(config.name)
@@ -512,8 +488,7 @@ class DeploymentOrchestrator:
                 raise DeploymentError(f"Health check failed: {checker_name}")
     
     async def _execute_scripts(self, scripts: List[str], phase: str) -> None:
-        """Execute deployment scripts"""
-        self.logger.info(f"Executing {phase} scripts")
+        """Execute deployment scripts"""        self.logger.info(f"Executing {phase} scripts")
         
         for script in scripts:
             try:
@@ -523,8 +498,7 @@ class DeploymentOrchestrator:
                 raise DeploymentError(f"Script execution failed in {phase}: {e}")
     
     async def _rollback_deployment(self, config: DeploymentConfig, result: DeploymentResult) -> None:
-        """Rollback failed deployment"""
-        self.logger.info(f"Rolling back deployment {config.deployment_id}")
+        """Rollback failed deployment"""        self.logger.info(f"Rolling back deployment {config.deployment_id}")
         
         try:
             # Find previous successful version
@@ -557,44 +531,36 @@ class DeploymentOrchestrator:
             raise
     
     async def _load_deployment_templates(self) -> None:
-        """Load deployment templates from configuration"""
-        # Implementation for loading deployment templates
+        """Load deployment templates from configuration"""        # Implementation for loading deployment templates
         pass
     
     async def _register_health_checkers(self) -> None:
-        """Register custom health check functions"""
-        # Implementation for registering health checkers
+        """Register custom health check functions"""        # Implementation for registering health checkers
         pass
     
     def _find_deployment_in_history(self, deployment_id: str) -> Optional[DeploymentResult]:
-        """Find deployment in history by ID"""
-        for deployment in self.deployment_history:
+        """Find deployment in history by ID"""        for deployment in self.deployment_history:
             if deployment.deployment_id == deployment_id:
                 return deployment
         return None
     
     async def _create_rollback_config(self, deployment: DeploymentResult, 
                                     target_version: Optional[str]) -> DeploymentConfig:
-        """Create rollback configuration"""
-        # Implementation for creating rollback configuration
+        """Create rollback configuration"""        # Implementation for creating rollback configuration
         pass
     
     async def _verify_green_environment_health(self, deployment_id: str) -> None:
-        """Verify green environment health in blue-green deployment"""
-        # Implementation for green environment health verification
+        """Verify green environment health in blue-green deployment"""        # Implementation for green environment health verification
         pass
     
     async def _monitor_canary_deployment(self, deployment_id: str, duration: timedelta) -> None:
-        """Monitor canary deployment for specified duration"""
-        # Implementation for canary monitoring
+        """Monitor canary deployment for specified duration"""        # Implementation for canary monitoring
         pass
     
     async def _gradually_increase_canary_traffic(self, service_name: str, canary_deployment_id: str) -> None:
-        """Gradually increase canary traffic if healthy"""
-        # Implementation for gradual traffic increase
+        """Gradually increase canary traffic if healthy"""        # Implementation for gradual traffic increase
         pass
     
     async def _get_previous_successful_version(self, service_name: str) -> Optional[str]:
-        """Get previous successful deployment version"""
-        # Implementation for finding previous successful version
+        """Get previous successful deployment version"""        # Implementation for finding previous successful version
         return None

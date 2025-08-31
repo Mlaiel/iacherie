@@ -1,5 +1,4 @@
-"""
-Production Deployment Manager for Neural Networks Module
+"""Production Deployment Manager for Neural Networks Module
 
 Enterprise-grade deployment orchestration with automated scaling,
 monitoring, and maintenance for the IA-Influencer-Agent platform.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable
@@ -30,8 +28,7 @@ from .utils import DeviceManager, PerformanceProfiler
 
 
 class DeploymentStatus(Enum):
-    """Deployment status states"""
-    INITIALIZING = "initializing"
+    """Deployment status states"""    INITIALIZING = "initializing"
     HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
@@ -40,8 +37,7 @@ class DeploymentStatus(Enum):
 
 
 class ServiceTier(Enum):
-    """Service tier levels"""
-    BASIC = "basic"
+    """Service tier levels"""    BASIC = "basic"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     ULTRA = "ultra"
@@ -49,8 +45,7 @@ class ServiceTier(Enum):
 
 @dataclass
 class DeploymentMetrics:
-    """Comprehensive deployment metrics"""
-    status: DeploymentStatus
+    """Comprehensive deployment metrics"""    status: DeploymentStatus
     uptime_seconds: float
     requests_per_second: float
     average_response_time_ms: float
@@ -64,13 +59,11 @@ class DeploymentMetrics:
 
 
 class ProductionDeploymentManager:
-    """
-    Enterprise-grade deployment manager for neural networks
+    """    Enterprise-grade deployment manager for neural networks
     
     Provides automated scaling, health monitoring, graceful degradation,
     and production-ready deployment capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         service_tier: ServiceTier = ServiceTier.ENTERPRISE,
@@ -106,8 +99,7 @@ class ProductionDeploymentManager:
         self._setup_logging()
         
     def _setup_logging(self):
-        """Configure production-grade logging"""
-        
+        """Configure production-grade logging"""        
         logging.basicConfig(
             level=logging.INFO if self.environment == DeploymentEnvironment.PRODUCTION else logging.DEBUG,
             format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
@@ -118,8 +110,7 @@ class ProductionDeploymentManager:
         )
         
     async def initialize_deployment(self) -> bool:
-        """Initialize production deployment"""
-        
+        """Initialize production deployment"""        
         try:
             self.logger.info("Initializing neural networks deployment...")
             
@@ -149,8 +140,7 @@ class ProductionDeploymentManager:
             return False
     
     async def _validate_environment(self):
-        """Validate deployment environment requirements"""
-        
+        """Validate deployment environment requirements"""        
         # Check system resources
         memory_gb = psutil.virtual_memory().total / (1024**3)
         cpu_count = psutil.cpu_count()
@@ -173,8 +163,7 @@ class ProductionDeploymentManager:
         self.logger.info(f"Environment validation passed - Memory: {memory_gb:.1f}GB, CPUs: {cpu_count}")
     
     async def _load_core_models(self):
-        """Load and optimize core neural network models"""
-        
+        """Load and optimize core neural network models"""        
         core_models = {
             "content_understanding": "content_understanding.ContentUnderstandingNetwork",
             "content_protection": "protection_networks.ContentFingerprintingNetwork",
@@ -209,8 +198,7 @@ class ProductionDeploymentManager:
                 raise
     
     def _get_instance_count(self, model_name: str) -> int:
-        """Determine number of model instances based on service tier"""
-        
+        """Determine number of model instances based on service tier"""        
         instance_counts = {
             ServiceTier.BASIC: 1,
             ServiceTier.PROFESSIONAL: 2,
@@ -221,8 +209,7 @@ class ProductionDeploymentManager:
         return instance_counts[self.service_tier]
     
     def _create_model_instance(self, model_class: str) -> BaseNeuralNetwork:
-        """Create model instance from class name"""
-        
+        """Create model instance from class name"""        
         # This is a placeholder - in production, would load actual trained models
         # For now, return a mock model that simulates the interface
         class MockModel(BaseNeuralNetwork):
@@ -242,8 +229,7 @@ class ProductionDeploymentManager:
         model: BaseNeuralNetwork,
         model_name: str
     ) -> BaseNeuralNetwork:
-        """Apply production optimizations to model"""
-        
+        """Apply production optimizations to model"""        
         try:
             # Set to evaluation mode
             model.eval()
@@ -281,8 +267,7 @@ class ProductionDeploymentManager:
             return model
     
     async def _setup_monitoring(self):
-        """Setup comprehensive monitoring and alerting"""
-        
+        """Setup comprehensive monitoring and alerting"""        
         self.logger.info("Setting up monitoring and alerting...")
         
         # Initialize metrics collection
@@ -299,8 +284,7 @@ class ProductionDeploymentManager:
         }
         
     async def _health_check_loop(self):
-        """Continuous health monitoring loop"""
-        
+        """Continuous health monitoring loop"""        
         while True:
             try:
                 await asyncio.sleep(self.health_check_interval)
@@ -310,8 +294,7 @@ class ProductionDeploymentManager:
                 self.logger.error(f"Health check error: {e}")
     
     async def _perform_health_check(self):
-        """Perform comprehensive health check"""
-        
+        """Perform comprehensive health check"""        
         try:
             # Collect system metrics
             memory = psutil.virtual_memory()
@@ -363,8 +346,7 @@ class ProductionDeploymentManager:
             self.status = DeploymentStatus.UNHEALTHY
     
     async def _evaluate_health_status(self, metrics: DeploymentMetrics):
-        """Evaluate overall health status based on metrics"""
-        
+        """Evaluate overall health status based on metrics"""        
         # Check for critical issues
         if (metrics.memory_usage_percent > 90 or 
             metrics.cpu_usage_percent > 95 or
@@ -386,8 +368,7 @@ class ProductionDeploymentManager:
             self.status = DeploymentStatus.HEALTHY
     
     async def _trigger_alert(self, level: str, message: str):
-        """Trigger monitoring alert"""
-        
+        """Trigger monitoring alert"""        
         self.logger.warning(f"ALERT [{level}]: {message}")
         
         # In production, would integrate with alerting systems like:
@@ -397,8 +378,7 @@ class ProductionDeploymentManager:
         # - SMS notifications
     
     async def _auto_scaling_loop(self):
-        """Automatic scaling based on load and performance"""
-        
+        """Automatic scaling based on load and performance"""        
         while True:
             try:
                 await asyncio.sleep(60)  # Check every minute
@@ -408,8 +388,7 @@ class ProductionDeploymentManager:
                 self.logger.error(f"Auto-scaling error: {e}")
     
     async def _evaluate_scaling_needs(self):
-        """Evaluate if scaling is needed"""
-        
+        """Evaluate if scaling is needed"""        
         if len(self.metrics_history) < 5:
             return
         
@@ -429,8 +408,7 @@ class ProductionDeploymentManager:
             await self._scale_down()
     
     async def _scale_up(self):
-        """Scale up model instances"""
-        
+        """Scale up model instances"""        
         self.logger.info("Scaling up model instances...")
         self.status = DeploymentStatus.SCALING
         
@@ -450,8 +428,7 @@ class ProductionDeploymentManager:
         self.status = DeploymentStatus.HEALTHY
     
     async def _scale_down(self):
-        """Scale down model instances"""
-        
+        """Scale down model instances"""        
         self.logger.info("Scaling down model instances...")
         
         # Remove instances from low-load models
@@ -466,8 +443,7 @@ class ProductionDeploymentManager:
         input_data: Any,
         request_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Process inference request with load balancing"""
-        
+        """Process inference request with load balancing"""        
         start_time = time.time()
         
         try:
@@ -511,8 +487,7 @@ class ProductionDeploymentManager:
             }
     
     async def _run_inference(self, model: BaseNeuralNetwork, input_data: Any) -> Any:
-        """Run model inference with error handling"""
-        
+        """Run model inference with error handling"""        
         try:
             # Convert input to tensor if needed
             if not isinstance(input_data, torch.Tensor):
@@ -529,8 +504,7 @@ class ProductionDeploymentManager:
             raise
     
     def get_deployment_status(self) -> Dict[str, Any]:
-        """Get comprehensive deployment status"""
-        
+        """Get comprehensive deployment status"""        
         latest_metrics = self.metrics_history[-1] if self.metrics_history else None
         
         return {
@@ -548,8 +522,7 @@ class ProductionDeploymentManager:
         }
     
     async def graceful_shutdown(self):
-        """Perform graceful shutdown of deployment"""
-        
+        """Perform graceful shutdown of deployment"""        
         self.logger.info("Initiating graceful shutdown...")
         self.status = DeploymentStatus.MAINTENANCE
         
@@ -569,8 +542,7 @@ class ProductionDeploymentManager:
             self.logger.error(f"Shutdown error: {e}")
     
     async def _save_deployment_state(self):
-        """Save deployment state and metrics"""
-        
+        """Save deployment state and metrics"""        
         state = {
             "shutdown_time": time.time(),
             "service_tier": self.service_tier.value,
@@ -593,8 +565,7 @@ deployment_manager = None
 async def initialize_production_deployment(
     service_tier: ServiceTier = ServiceTier.ENTERPRISE
 ) -> ProductionDeploymentManager:
-    """Initialize production deployment"""
-    
+    """Initialize production deployment"""    
     global deployment_manager
     deployment_manager = ProductionDeploymentManager(service_tier)
     

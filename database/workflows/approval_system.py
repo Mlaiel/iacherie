@@ -1,5 +1,4 @@
-"""
-Approval System Database Module
+"""Approval System Database Module
 
 Enterprise approval workflow system with hierarchical approvals, 
 automated routing, compliance tracking, and audit trail for 
@@ -25,7 +24,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class ApprovalType(Enum):
-    """Types of approval requests"""
-    CONTENT_PUBLICATION = "content_publication"
+    """Types of approval requests"""    CONTENT_PUBLICATION = "content_publication"
     COLLABORATION_REQUEST = "collaboration_request"
     MONETIZATION_SETUP = "monetization_setup"
     BRAND_PARTNERSHIP = "brand_partnership"
@@ -60,8 +57,7 @@ class ApprovalType(Enum):
 
 
 class ApprovalStatus(Enum):
-    """Approval request status"""
-    PENDING = "pending"
+    """Approval request status"""    PENDING = "pending"
     IN_REVIEW = "in_review"
     APPROVED = "approved"
     REJECTED = "rejected"
@@ -73,8 +69,7 @@ class ApprovalStatus(Enum):
 
 
 class ApprovalPriority(Enum):
-    """Approval priority levels"""
-    LOW = "low"
+    """Approval priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -82,8 +77,7 @@ class ApprovalPriority(Enum):
 
 
 class ApproverRole(Enum):
-    """Approver role types"""
-    CONTENT_MANAGER = "content_manager"
+    """Approver role types"""    CONTENT_MANAGER = "content_manager"
     LEGAL_COUNSEL = "legal_counsel"
     COMPLIANCE_OFFICER = "compliance_officer"
     FINANCIAL_CONTROLLER = "financial_controller"
@@ -96,8 +90,7 @@ class ApproverRole(Enum):
 
 @dataclass
 class ApprovalCriteria:
-    """Approval decision criteria"""
-    criterion_name: str
+    """Approval decision criteria"""    criterion_name: str
     required_value: Any
     actual_value: Any
     weight: float = 1.0
@@ -106,17 +99,14 @@ class ApprovalCriteria:
 
 @dataclass
 class ApprovalAction:
-    """Approval workflow action"""
-    action_type: str
+    """Approval workflow action"""    action_type: str
     parameters: Dict[str, Any]
     condition: Optional[str] = None
 
 
 class ApprovalWorkflow(Base):
-    """
-    Database model for approval workflow definitions
-    """
-    __tablename__ = "approval_workflows"
+    """    Database model for approval workflow definitions
+    """    __tablename__ = "approval_workflows"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     workflow_name = Column(String(200), nullable=False)
@@ -171,10 +161,8 @@ class ApprovalWorkflow(Base):
 
 
 class ApprovalRequest(Base):
-    """
-    Database model for individual approval requests
-    """
-    __tablename__ = "approval_requests"
+    """    Database model for individual approval requests
+    """    __tablename__ = "approval_requests"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     workflow_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -240,10 +228,8 @@ class ApprovalRequest(Base):
 
 
 class ApprovalStep(Base):
-    """
-    Database model for individual approval workflow steps
-    """
-    __tablename__ = "approval_steps"
+    """    Database model for individual approval workflow steps
+    """    __tablename__ = "approval_steps"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     approval_request_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -294,10 +280,8 @@ class ApprovalStep(Base):
 
 
 class ApprovalDecision(Base):
-    """
-    Database model for individual approval decisions
-    """
-    __tablename__ = "approval_decisions"
+    """    Database model for individual approval decisions
+    """    __tablename__ = "approval_decisions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     approval_request_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -350,10 +334,8 @@ class ApprovalDecision(Base):
 
 
 class ApprovalDelegate(Base):
-    """
-    Database model for approval delegation relationships
-    """
-    __tablename__ = "approval_delegates"
+    """    Database model for approval delegation relationships
+    """    __tablename__ = "approval_delegates"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     delegator_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -393,10 +375,8 @@ class ApprovalDelegate(Base):
 
 
 class ApprovalSystemManager:
-    """
-    Enterprise approval system manager with automated routing and AI assistance
-    """
-    
+    """    Enterprise approval system manager with automated routing and AI assistance
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.notification_service = NotificationService()
@@ -412,8 +392,7 @@ class ApprovalSystemManager:
         routing_rules: Dict[str, Any],
         metadata: Dict[str, Any] = None
     ) -> str:
-        """
-        Create new approval workflow
+        """        Create new approval workflow
         
         Args:
             workflow_name: Name of the workflow
@@ -425,8 +404,7 @@ class ApprovalSystemManager:
             
         Returns:
             Workflow ID
-        """
-        workflow = ApprovalWorkflow(
+        """        workflow = ApprovalWorkflow(
             workflow_name=workflow_name,
             workflow_description=metadata.get('description', '') if metadata else '',
             organization_id=organization_id,
@@ -460,8 +438,7 @@ class ApprovalSystemManager:
         priority: ApprovalPriority = ApprovalPriority.NORMAL,
         metadata: Dict[str, Any] = None
     ) -> str:
-        """
-        Submit new approval request
+        """        Submit new approval request
         
         Args:
             workflow_id: Workflow to use
@@ -473,8 +450,7 @@ class ApprovalSystemManager:
             
         Returns:
             Request ID
-        """
-        # Get workflow configuration
+        """        # Get workflow configuration
         workflow = self.db_session.query(ApprovalWorkflow).filter(
             ApprovalWorkflow.id == workflow_id,
             ApprovalWorkflow.is_active == True
@@ -551,8 +527,7 @@ class ApprovalSystemManager:
         rationale: str,
         conditions: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Process approval decision from approver
+        """        Process approval decision from approver
         
         Args:
             request_id: Request being decided on
@@ -563,8 +538,7 @@ class ApprovalSystemManager:
             
         Returns:
             Decision processing result
-        """
-        # Get approval request and current step
+        """        # Get approval request and current step
         request = self.db_session.query(ApprovalRequest).filter(
             ApprovalRequest.id == request_id
         ).first()
@@ -650,8 +624,7 @@ class ApprovalSystemManager:
         }
     
     async def _initiate_approval_workflow(self, request_id: str):
-        """Initialize approval workflow steps"""
-        request = self.db_session.query(ApprovalRequest).filter(
+        """Initialize approval workflow steps"""        request = self.db_session.query(ApprovalRequest).filter(
             ApprovalRequest.id == request_id
         ).first()
         
@@ -707,8 +680,7 @@ class ApprovalSystemManager:
         self.db_session.commit()
     
     async def _advance_approval_workflow(self, request: ApprovalRequest):
-        """Advance to next step in approval workflow"""
-        if request.current_step >= request.total_steps:
+        """Advance to next step in approval workflow"""        if request.current_step >= request.total_steps:
             # Workflow complete - approve request
             await self._complete_approval_request(
                 str(request.id), "approved", "All approval steps completed"
@@ -750,8 +722,7 @@ class ApprovalSystemManager:
         final_decision: str,
         rationale: str
     ):
-        """Complete approval request with final decision"""
-        request = self.db_session.query(ApprovalRequest).filter(
+        """Complete approval request with final decision"""        request = self.db_session.query(ApprovalRequest).filter(
             ApprovalRequest.id == request_id
         ).first()
         
@@ -791,8 +762,7 @@ class ApprovalSystemManager:
         workflow: ApprovalWorkflow,
         request_data: Dict[str, Any]
     ) -> bool:
-        """Check if request meets bypass conditions"""
-        bypass_conditions = workflow.bypass_conditions or {}
+        """Check if request meets bypass conditions"""        bypass_conditions = workflow.bypass_conditions or {}
         
         # Simplified bypass logic - would be more sophisticated in production
         for condition_name, condition_def in bypass_conditions.items():
@@ -817,8 +787,7 @@ class ApprovalSystemManager:
         request: ApprovalRequest,
         workflow: ApprovalWorkflow
     ) -> List[str]:
-        """Determine who should approve this step"""
-        approvers = []
+        """Determine who should approve this step"""        approvers = []
         
         # Add specific approvers
         if 'specific_approvers' in step_def:
@@ -839,8 +808,7 @@ class ApprovalSystemManager:
         step: ApprovalStep,
         approver_id: str
     ) -> bool:
-        """Verify user is authorized to approve this step"""
-        if not step.assigned_approvers:
+        """Verify user is authorized to approve this step"""        if not step.assigned_approvers:
             return False
         
         return approver_id in step.assigned_approvers
@@ -850,13 +818,11 @@ class ApprovalSystemManager:
         approver_id: str,
         step: ApprovalStep
     ) -> str:
-        """Get approver's role for this step"""
-        # Would query user's actual role
+        """Get approver's role for this step"""        # Would query user's actual role
         return "content_manager"  # Simplified
     
     def _calculate_decision_time(self, step: ApprovalStep) -> int:
-        """Calculate time taken to make decision"""
-        if not step.started_at:
+        """Calculate time taken to make decision"""        if not step.started_at:
             return 0
         
         return int(
@@ -868,8 +834,7 @@ class ApprovalSystemManager:
         roles: List[str],
         organization_id: str
     ) -> List[str]:
-        """Get users with specific roles in organization"""
-        # Would query user management system
+        """Get users with specific roles in organization"""        # Would query user management system
         return []  # Simplified
     
     async def _auto_complete_step(
@@ -877,8 +842,7 @@ class ApprovalSystemManager:
         step: ApprovalStep,
         auto_result: Dict[str, Any]
     ):
-        """Auto-complete step based on AI evaluation"""
-        step.status = "completed"
+        """Auto-complete step based on AI evaluation"""        step.status = "completed"
         step.step_decision = auto_result['decision']
         step.completed_at = datetime.now(timezone.utc)
         step.automated_score = auto_result.get('score', 0.0)
@@ -900,16 +864,14 @@ class ApprovalSystemManager:
 
 
 class NotificationService:
-    """Notification service for approval system"""
-    
+    """Notification service for approval system"""    
     async def notify_approvers(
         self,
         approver_ids: List[str],
         request: ApprovalRequest,
         step: ApprovalStep
     ):
-        """Notify approvers of pending approval"""
-        # Implementation would send notifications
+        """Notify approvers of pending approval"""        # Implementation would send notifications
         pass
     
     async def notify_completion(
@@ -917,14 +879,12 @@ class NotificationService:
         request: ApprovalRequest,
         decision: str
     ):
-        """Notify requester of completion"""
-        # Implementation would send completion notification
+        """Notify requester of completion"""        # Implementation would send completion notification
         pass
 
 
 class AIApprovalEvaluator:
-    """AI-powered approval evaluation system"""
-    
+    """AI-powered approval evaluation system"""    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -933,8 +893,7 @@ class AIApprovalEvaluator:
         request: ApprovalRequest,
         step: ApprovalStep
     ) -> Dict[str, Any]:
-        """Evaluate step using AI"""
-        # Simplified AI evaluation
+        """Evaluate step using AI"""        # Simplified AI evaluation
         return {
             'decision': 'approved',
             'confidence': 0.85,
@@ -944,14 +903,12 @@ class AIApprovalEvaluator:
 
 
 class ComplianceChecker:
-    """Compliance checking system"""
-    
+    """Compliance checking system"""    
     async def check_decision_compliance(
         self,
         request: ApprovalRequest,
         decision: ApprovalStatus,
         approver_id: str
     ) -> bool:
-        """Check if decision meets compliance requirements"""
-        # Implementation would check compliance rules
+        """Check if decision meets compliance requirements"""        # Implementation would check compliance rules
         return True

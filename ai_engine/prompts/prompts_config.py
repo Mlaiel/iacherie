@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Advanced AI Prompts Configuration Module
+"""Advanced AI Prompts Configuration Module
 Configuration settings for the prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -11,29 +10,25 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
-
 from dataclasses import dataclass
 from typing import Dict, List, Any, Optional
 from enum import Enum
 
 class PromptQualityLevel(Enum):
-    """Quality levels for prompt generation"""
-    BASIC = "basic"
+    """Quality levels for prompt generation"""    BASIC = "basic"
     ADVANCED = "advanced" 
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    AUDIO = "audio"
+    """Supported content formats"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MIXED = "mixed"
 
 class Platform(Enum):
-    """Supported platforms"""
-    SPOTIFY = "spotify"
+    """Supported platforms"""    SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
@@ -46,8 +41,7 @@ class Platform(Enum):
 
 @dataclass
 class PromptsConfig:
-    """Main configuration for prompts system"""
-    
+    """Main configuration for prompts system"""    
     # Quality settings
     default_quality_level: PromptQualityLevel = PromptQualityLevel.ADVANCED
     min_quality_score: float = 85.0
@@ -80,8 +74,7 @@ class PromptsConfig:
     log_level: str = "INFO"
 
     def __post_init__(self):
-        """Initialize default values after object creation"""
-        if self.supported_languages is None:
+        """Initialize default values after object creation"""        if self.supported_languages is None:
             self.supported_languages = ["en", "de", "fr", "es", "it", "pt"]
             
         if self.supported_platforms is None:
@@ -103,8 +96,7 @@ PROMPTS_CONFIG = PromptsConfig()
 
 # Configuration validation
 def validate_config() -> Dict[str, Any]:
-    """Validate configuration settings"""
-    issues = []
+    """Validate configuration settings"""    issues = []
     warnings = []
     
     # Validate quality settings

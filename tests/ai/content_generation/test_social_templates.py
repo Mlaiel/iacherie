@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Social Media Templates Tests
+"""Social Media Templates Tests
 
 Comprehensive tests for social media template system that handles
 platform-specific content templates and generation.
@@ -26,7 +23,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -50,17 +46,14 @@ from ai.content_generation.content_models import ContentType, Platform
 
 
 class TestSocialMediaTemplates:
-    """Test suite for SocialMediaTemplates"""
-    
+    """Test suite for SocialMediaTemplates"""    
     @pytest.fixture
     def templates(self):
-        """Create a social media templates instance"""
-        return SocialMediaTemplates()
+        """Create a social media templates instance"""        return SocialMediaTemplates()
     
     @pytest.fixture
     def sample_variables(self):
-        """Create sample template variables"""
-        return {
+        """Create sample template variables"""        return {
             "title": "The Future of AI Technology",
             "description": "Exploring how artificial intelligence will transform our world",
             "author": "Fahed Mlaiel",
@@ -73,8 +66,7 @@ class TestSocialMediaTemplates:
     
     @pytest.fixture
     def instagram_data(self):
-        """Create Instagram-specific data"""
-        return {
+        """Create Instagram-specific data"""        return {
             "image_url": "https://example.com/ai-image.jpg",
             "story_highlights": ["Tech", "AI", "Innovation"],
             "location": "San Francisco, CA",
@@ -87,8 +79,7 @@ class TestSocialMediaTemplates:
         }
     
     def test_templates_initialization(self, templates):
-        """Test social media templates initialization"""
-        assert templates is not None
+        """Test social media templates initialization"""        assert templates is not None
         assert hasattr(templates, 'instagram_templates')
         assert hasattr(templates, 'twitter_templates')
         assert hasattr(templates, 'linkedin_templates')
@@ -102,8 +93,7 @@ class TestSocialMediaTemplates:
     
     @pytest.mark.asyncio
     async def test_instagram_post_template(self, templates, sample_variables, instagram_data):
-        """Test Instagram post template generation"""
-        with patch.object(templates, '_generate_from_template') as mock_generate:
+        """Test Instagram post template generation"""        with patch.object(templates, '_generate_from_template') as mock_generate:
             mock_generate.return_value = {
                 "success": True,
                 "content": """🚀 The Future of AI Technology
@@ -141,8 +131,7 @@ Learn more in our latest blog post 👆
     
     @pytest.mark.asyncio
     async def test_instagram_story_template(self, templates, sample_variables):
-        """Test Instagram story template generation"""
-        with patch.object(templates, '_generate_from_template') as mock_generate:
+        """Test Instagram story template generation"""        with patch.object(templates, '_generate_from_template') as mock_generate:
             mock_generate.return_value = {
                 "success": True,
                 "stories": [
@@ -182,8 +171,7 @@ Learn more in our latest blog post 👆
     
     @pytest.mark.asyncio
     async def test_twitter_thread_template(self, templates, sample_variables):
-        """Test Twitter thread template generation"""
-        with patch.object(templates, '_generate_from_template') as mock_generate:
+        """Test Twitter thread template generation"""        with patch.object(templates, '_generate_from_template') as mock_generate:
             mock_generate.return_value = {
                 "success": True,
                 "thread": [
@@ -210,8 +198,7 @@ Learn more in our latest blog post 👆
     
     @pytest.mark.asyncio
     async def test_linkedin_post_template(self, templates, sample_variables):
-        """Test LinkedIn post template generation"""
-        with patch.object(templates, '_generate_from_template') as mock_generate:
+        """Test LinkedIn post template generation"""        with patch.object(templates, '_generate_from_template') as mock_generate:
             mock_generate.return_value = {
                 "success": True,
                 "content": """🎯 The Future of AI Technology: What Every Professional Should Know
@@ -255,8 +242,7 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
     
     @pytest.mark.asyncio
     async def test_tiktok_script_template(self, templates, sample_variables):
-        """Test TikTok script template generation"""
-        with patch.object(templates, '_generate_from_template') as mock_generate:
+        """Test TikTok script template generation"""        with patch.object(templates, '_generate_from_template') as mock_generate:
             mock_generate.return_value = {
                 "success": True,
                 "script": {
@@ -289,8 +275,7 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
     
     @pytest.mark.asyncio
     async def test_template_customization(self, templates, sample_variables):
-        """Test template customization functionality"""
-        custom_template = {
+        """Test template customization functionality"""        custom_template = {
             "name": "custom_tech_post",
             "platform": Platform.INSTAGRAM,
             "structure": [
@@ -336,8 +321,7 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
     
     @pytest.mark.asyncio
     async def test_template_analytics(self, templates):
-        """Test template performance analytics"""
-        with patch.object(templates, '_analyze_template_performance') as mock_analytics:
+        """Test template performance analytics"""        with patch.object(templates, '_analyze_template_performance') as mock_analytics:
             mock_analytics.return_value = {
                 "success": True,
                 "template_stats": {
@@ -373,8 +357,7 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
     
     @pytest.mark.asyncio
     async def test_multi_platform_template_generation(self, templates, sample_variables):
-        """Test generating content for multiple platforms from one template"""
-        platforms = [Platform.INSTAGRAM, Platform.LINKEDIN, Platform.TWITTER]
+        """Test generating content for multiple platforms from one template"""        platforms = [Platform.INSTAGRAM, Platform.LINKEDIN, Platform.TWITTER]
         
         with patch.object(templates, '_generate_multi_platform') as mock_multi:
             mock_multi.return_value = {
@@ -413,8 +396,7 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
     
     @pytest.mark.asyncio
     async def test_template_a_b_testing(self, templates, sample_variables):
-        """Test A/B testing for templates"""
-        with patch.object(templates, '_run_ab_test') as mock_ab_test:
+        """Test A/B testing for templates"""        with patch.object(templates, '_run_ab_test') as mock_ab_test:
             mock_ab_test.return_value = {
                 "success": True,
                 "test_results": {
@@ -450,8 +432,7 @@ What's your organization's AI strategy? Share your thoughts in the comments—I'
     
     @pytest.mark.asyncio
     async def test_seasonal_template_adaptation(self, templates, sample_variables):
-        """Test seasonal template adaptation"""
-        with patch.object(templates, '_adapt_for_season') as mock_seasonal:
+        """Test seasonal template adaptation"""        with patch.object(templates, '_adapt_for_season') as mock_seasonal:
             mock_seasonal.return_value = {
                 "success": True,
                 "adapted_content": """🎊 New Year, New AI Possibilities!
@@ -485,8 +466,7 @@ Ready to embrace the AI revolution? Learn more in our latest blog post!
     
     @pytest.mark.asyncio
     async def test_template_validation(self, templates):
-        """Test template validation functionality"""
-        invalid_template = {
+        """Test template validation functionality"""        invalid_template = {
             "name": "test_template",
             "platform": Platform.INSTAGRAM,
             "structure": ["Too many characters " * 100],  # Exceeds Instagram limit
@@ -521,24 +501,20 @@ Ready to embrace the AI revolution? Learn more in our latest blog post!
 
 
 class TestTemplateEngine:
-    """Test suite for TemplateEngine"""
-    
+    """Test suite for TemplateEngine"""    
     @pytest.fixture
     def engine(self):
-        """Create a template engine instance"""
-        return TemplateEngine()
+        """Create a template engine instance"""        return TemplateEngine()
     
     def test_engine_initialization(self, engine):
-        """Test template engine initialization"""
-        assert engine is not None
+        """Test template engine initialization"""        assert engine is not None
         assert hasattr(engine, 'template_parser')
         assert hasattr(engine, 'variable_resolver')
         assert hasattr(engine, 'formatting_engine')
     
     @pytest.mark.asyncio
     async def test_variable_substitution(self, engine):
-        """Test variable substitution in templates"""
-        template = "Hello {name}, welcome to {platform}! Check out our {content_type}."
+        """Test variable substitution in templates"""        template = "Hello {name}, welcome to {platform}! Check out our {content_type}."
         variables = {
             "name": "Fahed",
             "platform": "Instagram", 
@@ -552,9 +528,7 @@ class TestTemplateEngine:
     
     @pytest.mark.asyncio
     async def test_conditional_logic(self, engine):
-        """Test conditional logic in templates"""
-        template = """
-        {%if has_image%}
+        """Test conditional logic in templates"""        template = """        {%if has_image%}
         📸 Check out this amazing visual!
         {%endif%}
         
@@ -563,8 +537,7 @@ class TestTemplateEngine:
         {%if author%}
         By: {author}
         {%endif%}
-        """
-        
+        """        
         variables = {
             "has_image": True,
             "title": "AI Technology Guide",
@@ -576,8 +549,7 @@ class TestTemplateEngine:
 
 AI Technology Guide
 
-By: Fahed Mlaiel"""
-            
+By: Fahed Mlaiel"""            
             result = await engine.process_template(template, variables)
             
             assert "📸 Check out this amazing visual!" in result
@@ -585,11 +557,9 @@ By: Fahed Mlaiel"""
 
 
 class TestInstagramTemplate:
-    """Test suite for InstagramTemplate"""
-    
+    """Test suite for InstagramTemplate"""    
     def test_instagram_template_creation(self):
-        """Test Instagram template creation"""
-        template = InstagramTemplate(
+        """Test Instagram template creation"""        template = InstagramTemplate(
             template_id="ig_001",
             name="Standard Post",
             category=TemplateCategory.EDUCATIONAL,

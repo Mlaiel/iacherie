@@ -1,11 +1,9 @@
-"""
-Generic Web Crawler
+"""Generic Web Crawler
 General purpose web crawler for content discovery across websites.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import aiohttp
 import logging
@@ -18,8 +16,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebContentData:
-    """Web content data structure"""
-    url: str
+    """Web content data structure"""    url: str
     title: str
     content_type: str
     domain: str
@@ -30,8 +27,7 @@ class WebContentData:
 
 
 class GenericWebCrawler:
-    """Generic web crawler for content discovery"""
-    
+    """Generic web crawler for content discovery"""    
     def __init__(self):
         self.session = None
         
@@ -48,8 +44,7 @@ class GenericWebCrawler:
         fingerprint: str,
         target_domains: Optional[List[str]] = None
     ) -> List[WebContentData]:
-        """Crawl websites for content violations"""
-        try:
+        """Crawl websites for content violations"""        try:
             logger.info("Starting generic web crawl")
             
             # Simulate web crawling

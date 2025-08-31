@@ -1,5 +1,4 @@
-"""
-Entity Extractor - Core Module
+"""Entity Extractor - Core Module
 
 Advanced entity extraction engine for multi-format content with intelligent
 recognition of creative industry entities, business relationships, and 
@@ -15,7 +14,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import re
 from typing import Dict, List, Set, Tuple, Optional, Any, Union
@@ -41,8 +39,7 @@ from ...utils.validation import validate_input
 
 
 class EntityCategory(Enum):
-    """Entity categories specific to creative industry"""
-    PERSON = "person"
+    """Entity categories specific to creative industry"""    PERSON = "person"
     ORGANIZATION = "organization"
     CREATIVE_WORK = "creative_work"
     PLATFORM = "platform"
@@ -57,16 +54,14 @@ class EntityCategory(Enum):
 
 
 class EntityConfidence(Enum):
-    """Confidence levels for entity extraction"""
-    HIGH = 0.9
+    """Confidence levels for entity extraction"""    HIGH = 0.9
     MEDIUM = 0.7
     LOW = 0.5
 
 
 @dataclass
 class ExtractedEntity:
-    """Data class for extracted entity with metadata"""
-    text: str
+    """Data class for extracted entity with metadata"""    text: str
     entity_type: EntityCategory
     confidence: float
     start_pos: int
@@ -78,8 +73,7 @@ class ExtractedEntity:
     aliases: List[str] = field(default_factory=list)
     
     def __post_init__(self):
-        """Post-initialization validation and normalization"""
-        if self.confidence > 1.0:
+        """Post-initialization validation and normalization"""        if self.confidence > 1.0:
             self.confidence = 1.0
         elif self.confidence < 0.0:
             self.confidence = 0.0
@@ -90,8 +84,7 @@ class ExtractedEntity:
 
 @dataclass
 class ExtractionResult:
-    """Comprehensive extraction result with analytics"""
-    entities: List[ExtractedEntity]
+    """Comprehensive extraction result with analytics"""    entities: List[ExtractedEntity]
     processing_time: float
     confidence_score: float
     entity_count_by_type: Dict[EntityCategory, int]
@@ -99,17 +92,14 @@ class ExtractionResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def get_high_confidence_entities(self) -> List[ExtractedEntity]:
-        """Get entities with high confidence scores"""
-        return [e for e in self.entities if e.confidence >= EntityConfidence.HIGH.value]
+        """Get entities with high confidence scores"""        return [e for e in self.entities if e.confidence >= EntityConfidence.HIGH.value]
     
     def get_entities_by_type(self, entity_type: EntityCategory) -> List[ExtractedEntity]:
-        """Get entities filtered by type"""
-        return [e for e in self.entities if e.entity_type == entity_type]
+        """Get entities filtered by type"""        return [e for e in self.entities if e.entity_type == entity_type]
 
 
 class EntityExtractor(BaseService):
-    """
-    Advanced entity extraction engine with specialized models for creative content.
+    """    Advanced entity extraction engine with specialized models for creative content.
     
     Features:
     - Multi-model ensemble for improved accuracy
@@ -118,8 +108,7 @@ class EntityExtractor(BaseService):
     - Relationship extraction between entities
     - Context-aware entity disambiguation
     - Multi-language support
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.logger = logging.getLogger(__name__)
@@ -146,8 +135,7 @@ class EntityExtractor(BaseService):
         }
         
     async def initialize(self):
-        """Initialize models and resources"""
-        try:
+        """Initialize models and resources"""        try:
             self.logger.info("Initializing EntityExtractor models...")
             
             # Load pre-trained NER models
@@ -169,8 +157,7 @@ class EntityExtractor(BaseService):
             raise
     
     async def _load_ner_models(self):
-        """Load named entity recognition models"""
-        models_config = {
+        """Load named entity recognition models"""        models_config = {
             'general_ner': 'dbmdz/bert-large-cased-finetuned-conll03-english',
             'creative_ner': 'microsoft/DialoGPT-medium',  # Adapted for creative content
             'business_ner': 'ProsusAI/finbert'  # For business/financial entities
@@ -192,8 +179,7 @@ class EntityExtractor(BaseService):
                 self.logger.warning(f"Failed to load model {model_name}: {str(e)}")
     
     async def _load_spacy_models(self):
-        """Load spaCy models for additional entity recognition"""
-        try:
+        """Load spaCy models for additional entity recognition"""        try:
             # Try to load English model
             self.nlp_en = spacy.load("en_core_web_sm")
             self.logger.info("Loaded spaCy English model")
@@ -214,8 +200,7 @@ class EntityExtractor(BaseService):
             self.nlp_en = None
     
     async def _load_transformer_models(self):
-        """Load transformer models for advanced entity recognition"""
-        try:
+        """Load transformer models for advanced entity recognition"""        try:
             # Load BERT for creative content understanding
             self.creative_classifier = pipeline(
                 "text-classification",
@@ -235,8 +220,7 @@ class EntityExtractor(BaseService):
             self.logger.warning(f"Failed to load some transformer models: {str(e)}")
     
     async def _load_creative_vocabularies(self):
-        """Load specialized vocabularies for creative industries"""
-        self.creative_vocabularies = {
+        """Load specialized vocabularies for creative industries"""        self.creative_vocabularies = {
             'music_genres': {
                 'pop', 'rock', 'jazz', 'classical', 'electronic', 'hip-hop', 'r&b',
                 'country', 'blues', 'reggae', 'folk', 'punk', 'metal', 'indie',
@@ -265,8 +249,7 @@ class EntityExtractor(BaseService):
         }
     
     def _load_creative_patterns(self) -> Dict[str, List[str]]:
-        """Load regex patterns for creative industry entities"""
-        return {
+        """Load regex patterns for creative industry entities"""        return {
             'social_handles': [
                 r'@[\w\d_]+',
                 r'#[\w\d_]+',
@@ -305,8 +288,7 @@ class EntityExtractor(BaseService):
         content_type: Optional[ContentType] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> ExtractionResult:
-        """
-        Extract entities from text with creative industry specialization.
+        """        Extract entities from text with creative industry specialization.
         
         Args:
             text: Input text for entity extraction
@@ -315,8 +297,7 @@ class EntityExtractor(BaseService):
             
         Returns:
             ExtractionResult with extracted entities and metadata
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             self.logger.debug(f"Starting entity extraction for text length: {len(text)}")
@@ -377,8 +358,7 @@ class EntityExtractor(BaseService):
             raise
     
     async def _extract_spacy_entities(self, text: str) -> List[ExtractedEntity]:
-        """Extract entities using spaCy models"""
-        entities = []
+        """Extract entities using spaCy models"""        entities = []
         
         if not self.nlp_en:
             return entities
@@ -406,8 +386,7 @@ class EntityExtractor(BaseService):
         return entities
     
     async def _extract_transformer_entities(self, text: str) -> List[ExtractedEntity]:
-        """Extract entities using transformer models"""
-        entities = []
+        """Extract entities using transformer models"""        entities = []
         
         for model_name, pipeline_obj in self.pipelines.items():
             try:
@@ -447,8 +426,7 @@ class EntityExtractor(BaseService):
         return entities
     
     async def _extract_pattern_entities(self, text: str) -> List[ExtractedEntity]:
-        """Extract entities using regex patterns"""
-        entities = []
+        """Extract entities using regex patterns"""        entities = []
         
         for pattern_type, patterns in self.creative_patterns.items():
             entity_type = self._map_pattern_type_to_category(pattern_type)
@@ -481,8 +459,7 @@ class EntityExtractor(BaseService):
         return entities
     
     async def _extract_creative_entities(self, text: str, content_type: Optional[ContentType]) -> List[ExtractedEntity]:
-        """Extract creative industry specific entities"""
-        entities = []
+        """Extract creative industry specific entities"""        entities = []
         text_lower = text.lower()
         
         # Extract entities from creative vocabularies
@@ -522,8 +499,7 @@ class EntityExtractor(BaseService):
         return entities
     
     async def _extract_content_specific_entities(self, text: str, content_type: ContentType) -> List[ExtractedEntity]:
-        """Extract entities specific to content type"""
-        entities = []
+        """Extract entities specific to content type"""        entities = []
         
         if content_type == ContentType.AUDIO:
             # Audio-specific entities
@@ -584,8 +560,7 @@ class EntityExtractor(BaseService):
         return entities
     
     async def _deduplicate_entities(self, entities: List[ExtractedEntity]) -> List[ExtractedEntity]:
-        """Remove duplicate entities and merge similar ones"""
-        if not entities:
+        """Remove duplicate entities and merge similar ones"""        if not entities:
             return []
             
         # Sort by position
@@ -613,8 +588,7 @@ class EntityExtractor(BaseService):
         return deduplicated
     
     def _select_best_entity(self, entities: List[ExtractedEntity]) -> ExtractedEntity:
-        """Select the best entity from overlapping entities"""
-        if len(entities) == 1:
+        """Select the best entity from overlapping entities"""        if len(entities) == 1:
             return entities[0]
             
         # Priority: highest confidence, then longest text, then most specific type
@@ -633,8 +607,7 @@ class EntityExtractor(BaseService):
         return best
     
     def _get_entity_type_specificity(self, entity_type: EntityCategory) -> int:
-        """Get specificity score for entity type (higher = more specific)"""
-        specificity_map = {
+        """Get specificity score for entity type (higher = more specific)"""        specificity_map = {
             EntityCategory.CREATIVE_WORK: 10,
             EntityCategory.INSTRUMENT: 9,
             EntityCategory.GENRE: 8,
@@ -649,8 +622,7 @@ class EntityExtractor(BaseService):
         return specificity_map.get(entity_type, 0)
     
     async def _extract_relationships(self, entities: List[ExtractedEntity], text: str) -> List[EntityRelation]:
-        """Extract relationships between entities"""
-        relationships = []
+        """Extract relationships between entities"""        relationships = []
         
         # Simple relationship extraction based on proximity and patterns
         for i, entity1 in enumerate(entities):
@@ -666,8 +638,7 @@ class EntityExtractor(BaseService):
         return relationships
     
     def _identify_relationship(self, entity1: ExtractedEntity, entity2: ExtractedEntity, text: str) -> Optional[EntityRelation]:
-        """Identify relationship between two entities"""
-        # Extract text between entities
+        """Identify relationship between two entities"""        # Extract text between entities
         between_text = text[entity1.end_pos:entity2.start_pos].lower().strip()
         
         # Define relationship patterns
@@ -691,14 +662,12 @@ class EntityExtractor(BaseService):
         return None
     
     def _extract_context(self, text: str, start_pos: int, end_pos: int, context_size: int = 50) -> str:
-        """Extract context around entity"""
-        context_start = max(0, start_pos - context_size)
+        """Extract context around entity"""        context_start = max(0, start_pos - context_size)
         context_end = min(len(text), end_pos + context_size)
         return text[context_start:context_end].strip()
     
     def _map_spacy_label_to_category(self, label: str) -> Optional[EntityCategory]:
-        """Map spaCy entity labels to our categories"""
-        mapping = {
+        """Map spaCy entity labels to our categories"""        mapping = {
             'PERSON': EntityCategory.PERSON,
             'ORG': EntityCategory.ORGANIZATION,
             'GPE': EntityCategory.LOCATION,
@@ -711,8 +680,7 @@ class EntityExtractor(BaseService):
         return mapping.get(label)
     
     def _map_transformer_label_to_category(self, label: str) -> Optional[EntityCategory]:
-        """Map transformer entity labels to our categories"""
-        mapping = {
+        """Map transformer entity labels to our categories"""        mapping = {
             'PER': EntityCategory.PERSON,
             'ORG': EntityCategory.ORGANIZATION,
             'LOC': EntityCategory.LOCATION,
@@ -721,8 +689,7 @@ class EntityExtractor(BaseService):
         return mapping.get(label)
     
     def _map_pattern_type_to_category(self, pattern_type: str) -> Optional[EntityCategory]:
-        """Map pattern types to entity categories"""
-        mapping = {
+        """Map pattern types to entity categories"""        mapping = {
             'social_handles': EntityCategory.PLATFORM,
             'urls': EntityCategory.PLATFORM,
             'email': EntityCategory.PERSON,
@@ -733,8 +700,7 @@ class EntityExtractor(BaseService):
         return mapping.get(pattern_type)
     
     def _map_vocabulary_type_to_category(self, vocab_type: str) -> Optional[EntityCategory]:
-        """Map vocabulary types to entity categories"""
-        mapping = {
+        """Map vocabulary types to entity categories"""        mapping = {
             'music_genres': EntityCategory.GENRE,
             'instruments': EntityCategory.INSTRUMENT,
             'platforms': EntityCategory.PLATFORM,
@@ -744,23 +710,20 @@ class EntityExtractor(BaseService):
         return mapping.get(vocab_type)
     
     def _calculate_overall_confidence(self, entities: List[ExtractedEntity]) -> float:
-        """Calculate overall confidence score for extraction"""
-        if not entities:
+        """Calculate overall confidence score for extraction"""        if not entities:
             return 0.0
             
         total_confidence = sum(entity.confidence for entity in entities)
         return total_confidence / len(entities)
     
     def _count_entities_by_type(self, entities: List[ExtractedEntity]) -> Dict[EntityCategory, int]:
-        """Count entities by type"""
-        counts = {}
+        """Count entities by type"""        counts = {}
         for entity in entities:
             counts[entity.entity_type] = counts.get(entity.entity_type, 0) + 1
         return counts
     
     def _update_extraction_stats(self, result: ExtractionResult):
-        """Update extraction statistics"""
-        self.extraction_stats['total_extractions'] += 1
+        """Update extraction statistics"""        self.extraction_stats['total_extractions'] += 1
         self.extraction_stats['successful_extractions'] += 1
         
         # Update average processing time
@@ -775,8 +738,7 @@ class EntityExtractor(BaseService):
             self.extraction_stats['entity_type_distribution'][entity_type.value] = current_count + count
     
     async def get_extraction_statistics(self) -> Dict[str, Any]:
-        """Get extraction statistics"""
-        return {
+        """Get extraction statistics"""        return {
             **self.extraction_stats,
             'cache_stats': cache_manager.get_stats(),
             'model_info': {
@@ -787,8 +749,7 @@ class EntityExtractor(BaseService):
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for entity extraction service"""
-        return {
+        """Health check for entity extraction service"""        return {
             'status': 'healthy',
             'models_loaded': len(self.models),
             'spacy_available': self.nlp_en is not None,

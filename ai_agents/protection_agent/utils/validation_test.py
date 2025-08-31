@@ -1,19 +1,16 @@
 #!/usr/bin/env python3
-"""
-Validation Test for Protection Agent Module
+"""Validation Test for Protection Agent Module
 Tests imports and basic functionality to ensure everything works
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: Proprietary - All rights reserved
 WARNING: Unauthorized use, copying, or distribution prohibited
 """
-
 import sys
 import traceback
 
 def test_imports():
-    """Test all imports from the protection agent module"""
-    print("🔍 Testing Protection Agent imports...")
+    """Test all imports from the protection agent module"""    print("🔍 Testing Protection Agent imports...")
     
     try:
         # Test main module import
@@ -75,8 +72,7 @@ def test_imports():
         return False
 
 def test_basic_functionality():
-    """Test basic functionality without external dependencies"""
-    print("\n🔧 Testing basic functionality...")
+    """Test basic functionality without external dependencies"""    print("\n🔧 Testing basic functionality...")
     
     try:
         from . import ProtectionAgentIndex, get_protection_index
@@ -122,8 +118,7 @@ def test_basic_functionality():
         return False
 
 def test_class_instantiation():
-    """Test that main classes can be instantiated"""
-    print("\n🏗️ Testing class instantiation...")
+    """Test that main classes can be instantiated"""    print("\n🏗️ Testing class instantiation...")
     
     try:
         from . import (
@@ -164,8 +159,7 @@ def test_class_instantiation():
         return False
 
 def validate_module():
-    """Run complete module validation"""
-    print("🚀 Starting Protection Agent Module Validation")
+    """Run complete module validation"""    print("🚀 Starting Protection Agent Module Validation")
     print("=" * 60)
     
     tests = [

@@ -1,11 +1,9 @@
-"""
-Advanced Collaboration Processing Engine for IA Influencer Agent
+"""Advanced Collaboration Processing Engine for IA Influencer Agent
 Professional business logic processors for collaboration workflows
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Set
 from datetime import datetime, timedelta
 import asyncio
@@ -27,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class MatchingStrategy(Enum):
-    """Different strategies for collaboration matching"""
-    SKILL_BASED = "skill_based"
+    """Different strategies for collaboration matching"""    SKILL_BASED = "skill_based"
     LOCATION_BASED = "location_based"
     BUDGET_BASED = "budget_based"
     TIMELINE_BASED = "timeline_based"
@@ -38,8 +35,7 @@ class MatchingStrategy(Enum):
 
 @dataclass
 class ProcessingResult:
-    """Result of collaboration processing operation"""
-    success: bool
+    """Result of collaboration processing operation"""    success: bool
     data: Optional[Any] = None
     error_message: Optional[str] = None
     metadata: Dict[str, Any] = None
@@ -51,8 +47,7 @@ class ProcessingResult:
 
 
 class CollaborationMatchingProcessor:
-    """Advanced collaboration matching processor with ML capabilities"""
-    
+    """Advanced collaboration matching processor with ML capabilities"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.matching_weights = self.config.get('matching_weights', {
@@ -71,8 +66,7 @@ class CollaborationMatchingProcessor:
         candidate_profiles: List[Dict[str, Any]],
         strategy: MatchingStrategy = MatchingStrategy.HYBRID_INTELLIGENT
     ) -> ProcessingResult:
-        """Find and rank collaboration matches"""
-        start_time = datetime.utcnow()
+        """Find and rank collaboration matches"""        start_time = datetime.utcnow()
         
         try:
             if strategy == MatchingStrategy.HYBRID_INTELLIGENT:
@@ -121,8 +115,7 @@ class CollaborationMatchingProcessor:
         request: CollaborationRequest,
         candidates: List[Dict[str, Any]]
     ) -> List[CollaborationMatch]:
-        """Advanced hybrid matching combining multiple strategies"""
-        matches = []
+        """Advanced hybrid matching combining multiple strategies"""        matches = []
         
         for candidate in candidates:
             if candidate.get('id') == request.creator_id:
@@ -171,8 +164,7 @@ class CollaborationMatchingProcessor:
         request: CollaborationRequest,
         candidates: List[Dict[str, Any]]
     ) -> List[CollaborationMatch]:
-        """ML-powered matching using advanced algorithms"""
-        # Feature extraction for ML model
+        """ML-powered matching using advanced algorithms"""        # Feature extraction for ML model
         request_features = self._extract_request_features(request)
         
         matches = []
@@ -208,8 +200,7 @@ class CollaborationMatchingProcessor:
         request: CollaborationRequest,
         candidate: Dict[str, Any]
     ) -> float:
-        """Calculate skill compatibility score"""
-        if not request.required_skills or not candidate.get('skills'):
+        """Calculate skill compatibility score"""        if not request.required_skills or not candidate.get('skills'):
             return 0.0
             
         candidate_skills = [CollaborationSkill(**skill) for skill in candidate['skills']]
@@ -233,8 +224,7 @@ class CollaborationMatchingProcessor:
         request: CollaborationRequest,
         candidate: Dict[str, Any]
     ) -> float:
-        """Calculate location compatibility score"""
-        if request.remote_work_allowed:
+        """Calculate location compatibility score"""        if request.remote_work_allowed:
             return 1.0  # Perfect score for remote work
             
         candidate_locations = candidate.get('locations', [])
@@ -258,8 +248,7 @@ class CollaborationMatchingProcessor:
         request: CollaborationRequest,
         candidate: Dict[str, Any]
     ) -> float:
-        """Calculate budget compatibility score"""
-        request_budget = request.budget_range
+        """Calculate budget compatibility score"""        request_budget = request.budget_range
         candidate_rates = candidate.get('rates', {})
         
         if not request_budget or not candidate_rates:
@@ -291,8 +280,7 @@ class CollaborationMatchingProcessor:
         request: CollaborationRequest,
         candidate: Dict[str, Any]
     ) -> float:
-        """Calculate timeline compatibility score"""
-        request_timeline = request.timeline
+        """Calculate timeline compatibility score"""        request_timeline = request.timeline
         candidate_availability = candidate.get('availability', {})
         
         if not request_timeline or not candidate_availability:
@@ -327,8 +315,7 @@ class CollaborationMatchingProcessor:
         request: CollaborationRequest,
         candidate: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Get detailed skill matching information"""
-        matches = []
+        """Get detailed skill matching information"""        matches = []
         candidate_skills = [CollaborationSkill(**skill) for skill in candidate.get('skills', [])]
         
         for required_skill in request.required_skills:
@@ -354,8 +341,7 @@ class CollaborationMatchingProcessor:
         return matches
     
     def _extract_request_features(self, request: CollaborationRequest) -> Dict[str, Any]:
-        """Extract features from collaboration request for ML"""
-        return {
+        """Extract features from collaboration request for ML"""        return {
             'collaboration_type': request.collaboration_type.value,
             'num_required_skills': len(request.required_skills),
             'num_offered_skills': len(request.offered_skills),
@@ -367,8 +353,7 @@ class CollaborationMatchingProcessor:
         }
     
     def _extract_candidate_features(self, candidate: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract features from candidate profile for ML"""
-        return {
+        """Extract features from candidate profile for ML"""        return {
             'num_skills': len(candidate.get('skills', [])),
             'reputation_score': candidate.get('reputation_score', 0.5),
             'completion_rate': candidate.get('completion_rate', 0.5),
@@ -384,8 +369,7 @@ class CollaborationMatchingProcessor:
         request_features: Dict[str, Any],
         candidate_features: Dict[str, Any]
     ) -> float:
-        """ML-powered compatibility prediction (simplified simulation)"""
-        # This is a simplified simulation - replace with actual ML model
+        """ML-powered compatibility prediction (simplified simulation)"""        # This is a simplified simulation - replace with actual ML model
         await asyncio.sleep(0.01)  # Simulate ML processing time
         
         # Feature-based scoring simulation
@@ -404,8 +388,7 @@ class CollaborationMatchingProcessor:
 
 
 class CollaborationWorkflowProcessor:
-    """Process collaboration workflows and state transitions"""
-    
+    """Process collaboration workflows and state transitions"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.notification_enabled = self.config.get('notifications_enabled', True)
@@ -416,8 +399,7 @@ class CollaborationWorkflowProcessor:
         action: str,
         metadata: Dict[str, Any] = None
     ) -> ProcessingResult:
-        """Process collaboration request actions"""
-        start_time = datetime.utcnow()
+        """Process collaboration request actions"""        start_time = datetime.utcnow()
         
         try:
             if action == "submit":
@@ -451,8 +433,7 @@ class CollaborationWorkflowProcessor:
         request: CollaborationRequest, 
         metadata: Dict[str, Any]
     ) -> ProcessingResult:
-        """Process collaboration request submission"""
-        # Validation
+        """Process collaboration request submission"""        # Validation
         if not request.title or len(request.title) < 5:
             return ProcessingResult(
                 success=False,
@@ -488,8 +469,7 @@ class CollaborationWorkflowProcessor:
         request: CollaborationRequest, 
         metadata: Dict[str, Any]
     ) -> ProcessingResult:
-        """Process collaboration request update"""
-        # Track what was updated
+        """Process collaboration request update"""        # Track what was updated
         updated_fields = metadata.get('updated_fields', [])
         
         request.updated_at = datetime.utcnow()
@@ -513,8 +493,7 @@ class CollaborationWorkflowProcessor:
         request: CollaborationRequest, 
         metadata: Dict[str, Any]
     ) -> ProcessingResult:
-        """Process collaboration request cancellation"""
-        cancellation_reason = metadata.get('reason', 'No reason provided')
+        """Process collaboration request cancellation"""        cancellation_reason = metadata.get('reason', 'No reason provided')
         
         request.status = CollaborationStatus.CANCELLED
         request.updated_at = datetime.utcnow()
@@ -534,8 +513,7 @@ class CollaborationWorkflowProcessor:
         request: CollaborationRequest, 
         metadata: Dict[str, Any]
     ) -> ProcessingResult:
-        """Process deadline extension request"""
-        extension_days = metadata.get('extension_days', 7)
+        """Process deadline extension request"""        extension_days = metadata.get('extension_days', 7)
         reason = metadata.get('reason', 'Extension requested')
         
         if request.expires_at:
@@ -556,8 +534,7 @@ class CollaborationWorkflowProcessor:
 
 
 class CollaborationContractProcessor:
-    """Process collaboration contracts and agreements"""
-    
+    """Process collaboration contracts and agreements"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -567,8 +544,7 @@ class CollaborationContractProcessor:
         selected_participants: List[str],
         contract_terms: Dict[str, Any]
     ) -> ProcessingResult:
-        """Create a collaboration contract"""
-        start_time = datetime.utcnow()
+        """Create a collaboration contract"""        start_time = datetime.utcnow()
         
         try:
             # Validate participants
@@ -637,8 +613,7 @@ class CollaborationContractProcessor:
         participant_id: str,
         signature_data: Dict[str, Any]
     ) -> ProcessingResult:
-        """Process contract signature from participant"""
-        start_time = datetime.utcnow()
+        """Process contract signature from participant"""        start_time = datetime.utcnow()
         
         try:
             # Validate participant

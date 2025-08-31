@@ -1,13 +1,11 @@
 #!/usr/bin/env python3
-"""
-🔍 TODO Business Impact Analyzer - AINFLUE Project
+"""🔍 TODO Business Impact Analyzer - AINFLUE Project
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Analyser intelligent pour scanner et prioriser les implémentations par impact métier.
 Catégorise le code critique vs optionnel, business vs utilitaires, APIs externes vs logique interne.
 """
-
 import os
 import re
 import ast
@@ -27,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessImpact(Enum):
-    """Niveaux d'impact business pour la priorisation"""
-    CRITICAL = "critical"          # Bloquant production - fonctionnalités core métier
+    """Niveaux d'impact business pour la priorisation"""    CRITICAL = "critical"          # Bloquant production - fonctionnalités core métier
     HIGH = "high"                 # Impact fort sur fonctionnalités business
     MEDIUM = "medium"             # Fonctionnalités importantes mais non bloquantes
     LOW = "low"                   # Utilitaires et améliorations
@@ -36,8 +33,7 @@ class BusinessImpact(Enum):
 
 
 class CodeType(Enum):
-    """Types de code identifiés"""
-    BUSINESS_CORE = "business_core"        # Logique métier centrale
+    """Types de code identifiés"""    BUSINESS_CORE = "business_core"        # Logique métier centrale
     AI_AGENTS = "ai_agents"               # Agents IA spécialisés
     API_EXTERNAL = "api_external"         # APIs et interfaces externes
     CRAWLERS = "crawlers"                 # Collecteurs de données
@@ -50,8 +46,7 @@ class CodeType(Enum):
 
 @dataclass
 class TodoAnalysis:
-    """Analyse détaillée d'un fichier avec TODOs"""
-    file_path: str
+    """Analyse détaillée d'un fichier avec TODOs"""    file_path: str
     code_type: CodeType
     business_impact: BusinessImpact
     todo_count: int
@@ -67,8 +62,7 @@ class TodoAnalysis:
 
 
 class TodoBusinessImpactAnalyzer:
-    """Analyseur intelligent des TODOs par impact métier"""
-    
+    """Analyseur intelligent des TODOs par impact métier"""    
     def __init__(self, project_root: str = "."):
         self.project_root = Path(project_root)
         self.analysis_results: List[TodoAnalysis] = []
@@ -122,8 +116,7 @@ class TodoBusinessImpactAnalyzer:
         ]
 
     def analyze_file(self, file_path: Path) -> Optional[TodoAnalysis]:
-        """Analyser un fichier Python pour les TODOs et impact business"""
-        try:
+        """Analyser un fichier Python pour les TODOs et impact business"""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
@@ -181,8 +174,7 @@ class TodoBusinessImpactAnalyzer:
             return None
 
     def _determine_code_type(self, file_path: Path) -> CodeType:
-        """Déterminer le type de code basé sur le chemin et contenu"""
-        path_str = str(file_path).lower()
+        """Déterminer le type de code basé sur le chemin et contenu"""        path_str = str(file_path).lower()
         
         for code_type, patterns in self.business_patterns.items():
             if any(pattern in path_str for pattern in patterns):
@@ -192,8 +184,7 @@ class TodoBusinessImpactAnalyzer:
 
     def _determine_business_impact(self, file_path: Path, code_type: CodeType, 
                                   critical_methods: List[str], external_apis: List[str]) -> BusinessImpact:
-        """Déterminer l'impact business du fichier"""
-        path_str = str(file_path).lower()
+        """Déterminer l'impact business du fichier"""        path_str = str(file_path).lower()
         
         # Impact critique pour les modules core business
         if code_type == CodeType.BUSINESS_CORE or "main.py" in path_str or "core" in path_str:
@@ -223,8 +214,7 @@ class TodoBusinessImpactAnalyzer:
         return BusinessImpact.MEDIUM
 
     def _find_critical_methods(self, tree: ast.AST) -> List[str]:
-        """Identifier les méthodes critiques business"""
-        critical_methods = []
+        """Identifier les méthodes critiques business"""        critical_methods = []
         
         for node in ast.walk(tree):
             if isinstance(node, ast.FunctionDef):
@@ -235,8 +225,7 @@ class TodoBusinessImpactAnalyzer:
         return critical_methods
 
     def _find_external_apis(self, content: str) -> List[str]:
-        """Identifier les APIs externes utilisées"""
-        external_apis = []
+        """Identifier les APIs externes utilisées"""        external_apis = []
         content_lower = content.lower()
         
         for pattern in self.external_api_patterns:
@@ -246,8 +235,7 @@ class TodoBusinessImpactAnalyzer:
         return list(set(external_apis))
 
     def _find_dependencies(self, tree: ast.AST) -> List[str]:
-        """Identifier les dépendances importantes"""
-        dependencies = []
+        """Identifier les dépendances importantes"""        dependencies = []
         
         for node in ast.walk(tree):
             if isinstance(node, ast.Import):
@@ -261,8 +249,7 @@ class TodoBusinessImpactAnalyzer:
 
     def _calculate_complexity_score(self, total_lines: int, critical_methods: int, 
                                    external_apis: int, dependencies: int) -> float:
-        """Calculer le score de complexité (0-100)"""
-        line_score = min(50, total_lines / 20)  # Max 50 points pour les lignes
+        """Calculer le score de complexité (0-100)"""        line_score = min(50, total_lines / 20)  # Max 50 points pour les lignes
         method_score = critical_methods * 10   # 10 points par méthode critique
         api_score = external_apis * 15         # 15 points par API externe
         dep_score = min(25, dependencies * 2)  # Max 25 points pour les dépendances
@@ -272,8 +259,7 @@ class TodoBusinessImpactAnalyzer:
     def _calculate_priority_score(self, business_impact: BusinessImpact, 
                                  implementation_percentage: float, complexity_score: float, 
                                  todo_count: int) -> float:
-        """Calculer le score de priorité (0-100)"""
-        # Poids par impact business
+        """Calculer le score de priorité (0-100)"""        # Poids par impact business
         impact_weights = {
             BusinessImpact.CRITICAL: 40,
             BusinessImpact.HIGH: 30,
@@ -296,8 +282,7 @@ class TodoBusinessImpactAnalyzer:
         return min(100, impact_score + incompleteness_score + complexity_normalized + todo_boost)
 
     def scan_repository(self) -> None:
-        """Scanner tout le repository pour les TODOs"""
-        logger.info(f"🔍 Scanning repository: {self.project_root}")
+        """Scanner tout le repository pour les TODOs"""        logger.info(f"🔍 Scanning repository: {self.project_root}")
         
         python_files = list(self.project_root.rglob("*.py"))
         logger.info(f"📁 Found {len(python_files)} Python files")
@@ -314,8 +299,7 @@ class TodoBusinessImpactAnalyzer:
         logger.info(f"✅ Analyzed {len(self.analysis_results)} files with implementation gaps")
 
     def generate_summary_report(self) -> Dict:
-        """Générer un rapport de synthèse"""
-        if not self.analysis_results:
+        """Générer un rapport de synthèse"""        if not self.analysis_results:
             return {}
         
         # Statistiques générales
@@ -388,8 +372,7 @@ class TodoBusinessImpactAnalyzer:
         }
 
     def save_detailed_report(self, output_file: str = "todo_business_impact_analysis.json") -> None:
-        """Sauvegarder le rapport détaillé"""
-        # Convertir les enums en strings pour la sérialisation JSON
+        """Sauvegarder le rapport détaillé"""        # Convertir les enums en strings pour la sérialisation JSON
         detailed_analysis = []
         for analysis in self.analysis_results:
             analysis_dict = asdict(analysis)
@@ -409,8 +392,7 @@ class TodoBusinessImpactAnalyzer:
         logger.info(f"📄 Rapport détaillé sauvegardé: {output_path}")
 
     def generate_markdown_report(self) -> str:
-        """Générer un rapport Markdown lisible"""
-        summary = self.generate_summary_report()
+        """Générer un rapport Markdown lisible"""        summary = self.generate_summary_report()
         
         if not summary:
             return "# 🔍 Aucune analyse disponible\n\nAucun fichier avec des gaps d'implémentation trouvé."
@@ -437,8 +419,7 @@ class TodoBusinessImpactAnalyzer:
 
 ## 🎯 RÉPARTITION PAR IMPACT BUSINESS
 
-"""
-        
+"""        
         # Répartition par impact business
         impact_order = [BusinessImpact.CRITICAL, BusinessImpact.HIGH, BusinessImpact.MEDIUM, BusinessImpact.LOW, BusinessImpact.MINIMAL]
         impact_icons = {
@@ -457,15 +438,13 @@ class TodoBusinessImpactAnalyzer:
 - **Priorité moyenne**: {data['avg_priority']:.1f}/100
 - **Gaps totaux**: {data['total_gaps']}
 
-"""
-        
+"""        
         # Répartition par type de code
         report += """---
 
 ## 🏗️ RÉPARTITION PAR TYPE DE CODE
 
-"""
-        
+"""        
         type_icons = {
             CodeType.BUSINESS_CORE: "💼",
             CodeType.AI_AGENTS: "🤖",
@@ -486,15 +465,13 @@ class TodoBusinessImpactAnalyzer:
 - **Priorité moyenne**: {data['avg_priority']:.1f}/100
 - **Implémentation moyenne**: {data['avg_implementation']:.1f}%
 
-"""
-        
+"""        
         # Top priorités critiques
         report += """---
 
 ## 🚨 TOP PRIORITÉS CRITIQUES
 
-"""
-        
+"""        
         critical_files = [a for a in summary['top_priorities'] if a['business_impact'] == 'critical'][:10]
         
         if critical_files:
@@ -508,34 +485,28 @@ class TodoBusinessImpactAnalyzer:
         
         # Recommandations d'actions
         report += """
-
 ---
 
 ## 💡 RECOMMANDATIONS D'ACTIONS
 
 ### 🔴 **ACTIONS CRITIQUES** (Impact Business CRITICAL)
-"""
-        
+"""        
         critical_files_all = [a for a in summary['critical_low_implementation']]
         if critical_files_all:
             for i, file_analysis in enumerate(critical_files_all[:5], 1):
-                report += f"""
-{i}. **`{file_analysis['file_path']}`**
+                report += f"""{i}. **`{file_analysis['file_path']}`**
    - **Impact**: {file_analysis['business_impact'].upper()}
    - **Implémentation**: {file_analysis['implementation_percentage']:.1f}%
    - **TODOs**: {file_analysis['todo_count']} 
    - **Méthodes critiques**: {', '.join(file_analysis['critical_methods'][:3])}
    - **APIs externes**: {', '.join(file_analysis['external_apis'][:3])}
-"""
-        else:
+"""        else:
             report += "\n✅ *Tous les fichiers critiques ont une implémentation acceptable.*\n"
         
         # Actions par type
-        report += """
-### 🟠 **ACTIONS PAR DOMAINE**
+        report += """### 🟠 **ACTIONS PAR DOMAINE**
 
-"""
-        
+"""        
         domain_priorities = {
             'ai_agents': "🤖 **Agents IA**: Finaliser les agents de fingerprinting, monétisation et collaboration",
             'business_core': "💼 **Business Logic**: Compléter les modules de licensing et revenue management", 
@@ -562,14 +533,12 @@ class TodoBusinessImpactAnalyzer:
 
 *📊 Rapport généré automatiquement par TODO Business Impact Analyzer*  
 *🚀 Pour une analyse détaillée, consultez le fichier JSON complet*
-"""
-        
+"""        
         return report
 
 
 def main():
-    """Point d'entrée principal"""
-    parser = argparse.ArgumentParser(description="🔍 TODO Business Impact Analyzer for Ainflue")
+    """Point d'entrée principal"""    parser = argparse.ArgumentParser(description="🔍 TODO Business Impact Analyzer for Ainflue")
     parser.add_argument("--project-root", default=".", help="Chemin vers la racine du projet")
     parser.add_argument("--output-json", default="todo_business_impact_analysis.json", 
                        help="Fichier de sortie JSON")

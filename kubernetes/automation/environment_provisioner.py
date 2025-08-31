@@ -1,5 +1,4 @@
-"""
-Environment Provisioner - Deployment Automation
+"""Environment Provisioner - Deployment Automation
 
 Automated environment provisioning and infrastructure management for the 
 IA Influencer Agent platform across multiple cloud environments and 
@@ -8,7 +7,6 @@ deployment targets.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -29,8 +27,7 @@ from ..storage.volume_manager import VolumeManager
 
 
 class EnvironmentType(Enum):
-    """Environment types supported"""
-    DEVELOPMENT = "development"
+    """Environment types supported"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
@@ -38,8 +35,7 @@ class EnvironmentType(Enum):
 
 
 class ProvisioningStatus(Enum):
-    """Provisioning status types"""
-    PENDING = "pending"
+    """Provisioning status types"""    PENDING = "pending"
     PROVISIONING = "provisioning"
     CONFIGURING = "configuring"
     VALIDATING = "validating"
@@ -51,8 +47,7 @@ class ProvisioningStatus(Enum):
 
 @dataclass
 class ResourceRequirements:
-    """Resource requirements specification"""
-    cpu: str = "1000m"
+    """Resource requirements specification"""    cpu: str = "1000m"
     memory: str = "2Gi"
     storage: str = "10Gi"
     gpu: Optional[str] = None
@@ -64,8 +59,7 @@ class ResourceRequirements:
 
 @dataclass
 class DatabaseRequirements:
-    """Database requirements specification"""
-    engine: str = "postgresql"
+    """Database requirements specification"""    engine: str = "postgresql"
     version: str = "14"
     size: str = "db.t3.medium"
     storage: str = "100Gi"
@@ -76,8 +70,7 @@ class DatabaseRequirements:
 
 @dataclass
 class NetworkRequirements:
-    """Network requirements specification"""
-    vpc_cidr: str = "10.0.0.0/16"
+    """Network requirements specification"""    vpc_cidr: str = "10.0.0.0/16"
     public_subnets: List[str] = field(default_factory=lambda: ["10.0.1.0/24", "10.0.2.0/24"])
     private_subnets: List[str] = field(default_factory=lambda: ["10.0.10.0/24", "10.0.20.0/24"])
     load_balancer: bool = True
@@ -87,8 +80,7 @@ class NetworkRequirements:
 
 @dataclass
 class EnvironmentSpec:
-    """Complete environment specification"""
-    name: str
+    """Complete environment specification"""    name: str
     environment_type: EnvironmentType
     cloud_provider: str
     region: str
@@ -103,13 +95,11 @@ class EnvironmentSpec:
 
 
 class EnvironmentProvisioner(BaseComponent):
-    """
-    Enterprise-grade environment provisioner for multi-cloud deployment.
+    """    Enterprise-grade environment provisioner for multi-cloud deployment.
     
     Handles automated provisioning of infrastructure, networking, databases,
     and Kubernetes clusters across multiple cloud providers.
     """
-
     def __init__(self, config: Dict[str, Any]):
         super().__init__()
         self.config = config
@@ -134,8 +124,7 @@ class EnvironmentProvisioner(BaseComponent):
         self.validation_rules = config.get('validation_rules', {})
 
     def _load_environment_templates(self) -> Dict[str, EnvironmentSpec]:
-        """Load environment templates from configuration"""
-        templates = {}
+        """Load environment templates from configuration"""        templates = {}
         
         # Default templates for each environment type
         templates['development'] = EnvironmentSpec(
@@ -238,8 +227,7 @@ class EnvironmentProvisioner(BaseComponent):
         services: List[str],
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Provision a complete environment with all required infrastructure.
+        """        Provision a complete environment with all required infrastructure.
         
         Args:
             environment_name: Name of the environment to provision
@@ -248,8 +236,7 @@ class EnvironmentProvisioner(BaseComponent):
             
         Returns:
             Provisioning results and environment details
-        """
-        self.logger.info(f"Starting environment provisioning: {environment_name}")
+        """        self.logger.info(f"Starting environment provisioning: {environment_name}")
         
         # Get or create environment specification
         env_spec = await self._get_environment_spec(environment_name, context)
@@ -343,8 +330,7 @@ class EnvironmentProvisioner(BaseComponent):
         environment_name: str, 
         context: Dict[str, Any]
     ) -> EnvironmentSpec:
-        """Get environment specification from template or context"""
-        
+        """Get environment specification from template or context"""        
         # Check if custom spec provided in context
         if 'environment_spec' in context:
             return EnvironmentSpec(**context['environment_spec'])
@@ -379,8 +365,7 @@ class EnvironmentProvisioner(BaseComponent):
         env_spec: EnvironmentSpec, 
         context: Dict[str, Any]
     ) -> None:
-        """Validate provisioning requirements and quotas"""
-        
+        """Validate provisioning requirements and quotas"""        
         # Validate cloud provider credentials
         cloud_provider = self.cloud_provider_factory.get_provider(env_spec.cloud_provider)
         await cloud_provider.validate_credentials()
@@ -408,8 +393,7 @@ class EnvironmentProvisioner(BaseComponent):
         env_spec: EnvironmentSpec, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Provision network infrastructure"""
-        
+        """Provision network infrastructure"""        
         if not env_spec.network_requirements:
             return {'message': 'No network requirements specified'}
         
@@ -496,8 +480,7 @@ class EnvironmentProvisioner(BaseComponent):
         services: List[str], 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Provision compute resources for services"""
-        
+        """Provision compute resources for services"""        
         cloud_provider = self.cloud_provider_factory.get_provider(env_spec.cloud_provider)
         
         # Calculate total resource requirements
@@ -541,8 +524,7 @@ class EnvironmentProvisioner(BaseComponent):
         env_spec: EnvironmentSpec, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Provision database resources"""
-        
+        """Provision database resources"""        
         if not env_spec.database_requirements:
             return {'message': 'No database requirements specified'}
         
@@ -608,8 +590,7 @@ class EnvironmentProvisioner(BaseComponent):
         services: List[str], 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Provision storage resources"""
-        
+        """Provision storage resources"""        
         cloud_provider = self.cloud_provider_factory.get_provider(env_spec.cloud_provider)
         
         # Create persistent volumes for each service
@@ -657,8 +638,7 @@ class EnvironmentProvisioner(BaseComponent):
         env_spec: EnvironmentSpec, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Provision Kubernetes cluster"""
-        
+        """Provision Kubernetes cluster"""        
         if not env_spec.kubernetes_config:
             # Use default Kubernetes configuration
             k8s_config = {
@@ -710,8 +690,7 @@ class EnvironmentProvisioner(BaseComponent):
         env_spec: EnvironmentSpec, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Configure monitoring and observability"""
-        
+        """Configure monitoring and observability"""        
         cloud_provider = self.cloud_provider_factory.get_provider(env_spec.cloud_provider)
         
         # Create CloudWatch/Stackdriver log groups
@@ -776,8 +755,7 @@ class EnvironmentProvisioner(BaseComponent):
         env_spec: EnvironmentSpec, 
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Configure security settings"""
-        
+        """Configure security settings"""        
         cloud_provider = self.cloud_provider_factory.get_provider(env_spec.cloud_provider)
         
         # Create IAM roles and policies
@@ -836,8 +814,7 @@ class EnvironmentProvisioner(BaseComponent):
         vpc_id: str, 
         env_spec: EnvironmentSpec
     ) -> List[Dict[str, Any]]:
-        """Create security groups for the environment"""
-        
+        """Create security groups for the environment"""        
         security_groups = []
         
         # Web tier security group
@@ -893,8 +870,7 @@ class EnvironmentProvisioner(BaseComponent):
         env_spec: EnvironmentSpec, 
         provisioning_state: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate provisioned environment"""
-        
+        """Validate provisioned environment"""        
         validation_results = {
             'valid': True,
             'errors': [],
@@ -946,8 +922,7 @@ class EnvironmentProvisioner(BaseComponent):
         environment_name: str, 
         provisioning_state: Dict[str, Any]
     ) -> None:
-        """Cleanup resources from failed provisioning"""
-        
+        """Cleanup resources from failed provisioning"""        
         self.logger.info(f"Cleaning up failed provisioning for environment: {environment_name}")
         
         try:
@@ -984,8 +959,7 @@ class EnvironmentProvisioner(BaseComponent):
             self.logger.error(f"Failed to cleanup resources for {environment_name}: {str(e)}")
 
     def _determine_instance_type(self, resource_req: ResourceRequirements) -> str:
-        """Determine appropriate instance type based on resource requirements"""
-        
+        """Determine appropriate instance type based on resource requirements"""        
         # Parse CPU and memory requirements
         cpu_millicores = int(resource_req.cpu.replace('m', ''))
         memory_gb = int(resource_req.memory.replace('Gi', ''))
@@ -1003,21 +977,18 @@ class EnvironmentProvisioner(BaseComponent):
             return "m5.2xlarge"
 
     def _generate_password(self, length: int = 20) -> str:
-        """Generate secure random password"""
-        import secrets
+        """Generate secure random password"""        import secrets
         import string
         
         alphabet = string.ascii_letters + string.digits + "!@#$%^&*"
         return ''.join(secrets.choice(alphabet) for _ in range(length))
 
     def _generate_jwt_secret(self, length: int = 64) -> str:
-        """Generate JWT secret"""
-        import secrets
+        """Generate JWT secret"""        import secrets
         return secrets.token_urlsafe(length)
 
     async def destroy_environment(self, environment_name: str) -> Dict[str, Any]:
-        """Destroy a provisioned environment"""
-        
+        """Destroy a provisioned environment"""        
         if environment_name not in self.provisioned_environments:
             raise ValueError(f"Environment not found: {environment_name}")
         
@@ -1041,12 +1012,10 @@ class EnvironmentProvisioner(BaseComponent):
             raise
 
     async def get_environment_status(self, environment_name: str) -> Optional[Dict[str, Any]]:
-        """Get environment provisioning status"""
-        return self.provisioned_environments.get(environment_name)
+        """Get environment provisioning status"""        return self.provisioned_environments.get(environment_name)
 
     async def list_environments(self) -> List[Dict[str, Any]]:
-        """List all provisioned environments"""
-        return [
+        """List all provisioned environments"""        return [
             {
                 'name': name,
                 'status': state['status'].value,

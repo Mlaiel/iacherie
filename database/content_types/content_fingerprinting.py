@@ -1,5 +1,4 @@
-"""
-Content Fingerprinting Module - AI-Powered Content Protection System
+"""Content Fingerprinting Module - AI-Powered Content Protection System
 
 Module avancé pour la génération d'empreintes numériques et la protection
 intelligente du contenu multimédia dans la plateforme IA Influencer Agent.
@@ -14,7 +13,6 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple, NamedTuple
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
@@ -38,8 +36,7 @@ from .content_models import Base, ContentType, ContentStatus
 logger = logging.getLogger(__name__)
 
 class FingerprintType(Enum):
-    """Types of fingerprinting algorithms"""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Types of fingerprinting algorithms"""    PERCEPTUAL_HASH = "perceptual_hash"
     CHROMAPRINT = "chromaprint"
     SPECTROGRAM_HASH = "spectrogram_hash"
     CLIP_EMBEDDING = "clip_embedding"
@@ -49,8 +46,7 @@ class FingerprintType(Enum):
     COMBINED_HASH = "combined_hash"
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithms by content type"""
-    # Audio algorithms
+    """Fingerprinting algorithms by content type"""    # Audio algorithms
     AUDIO_CHROMAPRINT = "chromaprint"
     AUDIO_ESSENTIA = "essentia"
     AUDIO_SPECTRAL = "spectral_hash"
@@ -75,8 +71,7 @@ class FingerprintAlgorithm(Enum):
     TEXT_SEMANTIC = "semantic_hash"
 
 class SimilarityMetric(Enum):
-    """Similarity measurement methods"""
-    COSINE_SIMILARITY = "cosine"
+    """Similarity measurement methods"""    COSINE_SIMILARITY = "cosine"
     EUCLIDEAN_DISTANCE = "euclidean"
     HAMMING_DISTANCE = "hamming"
     JACCARD_SIMILARITY = "jaccard"
@@ -85,28 +80,24 @@ class SimilarityMetric(Enum):
 
 @dataclass
 class FingerprintVector:
-    """Container for fingerprint vector data"""
-    vector: np.ndarray
+    """Container for fingerprint vector data"""    vector: np.ndarray
     algorithm: FingerprintAlgorithm
     dimension: int
     confidence: float
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_bytes(self) -> bytes:
-        """Convert vector to bytes for storage"""
-        return self.vector.tobytes()
+        """Convert vector to bytes for storage"""        return self.vector.tobytes()
     
     @classmethod
     def from_bytes(cls, data: bytes, algorithm: FingerprintAlgorithm, 
                    dimension: int, confidence: float = 1.0) -> 'FingerprintVector':
-        """Restore vector from bytes"""
-        vector = np.frombuffer(data, dtype=np.float32).reshape(-1)
+        """Restore vector from bytes"""        vector = np.frombuffer(data, dtype=np.float32).reshape(-1)
         return cls(vector, algorithm, dimension, confidence)
 
 @dataclass
 class SimilarityResult:
-    """Container for similarity comparison results"""
-    fingerprint_id: str
+    """Container for similarity comparison results"""    fingerprint_id: str
     similarity_score: float
     metric_used: SimilarityMetric
     algorithm_used: FingerprintAlgorithm
@@ -114,8 +105,7 @@ class SimilarityResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class ContentFingerprint(Base):
-    """Database model for content fingerprints"""
-    __tablename__ = "content_fingerprints"
+    """Database model for content fingerprints"""    __tablename__ = "content_fingerprints"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -156,8 +146,7 @@ class ContentFingerprint(Base):
         return f"<ContentFingerprint(id={self.id}, type={self.content_type}, algorithm={self.algorithm_used})>"
 
 class FingerprintMatch(Base):
-    """Database model for fingerprint matches and similarities"""
-    __tablename__ = "fingerprint_matches"
+    """Database model for fingerprint matches and similarities"""    __tablename__ = "fingerprint_matches"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     source_fingerprint_id = Column(UUID(as_uuid=True), ForeignKey('content_fingerprints.id'), nullable=False)
@@ -195,8 +184,7 @@ class FingerprintMatch(Base):
         return f"<FingerprintMatch(id={self.id}, score={self.similarity_score}, status={self.match_status})>"
 
 class FingerprintProcessor:
-    """Advanced fingerprint processing and analysis engine"""
-    
+    """Advanced fingerprint processing and analysis engine"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.similarity_threshold = self.config.get('similarity_threshold', 0.85)
@@ -206,8 +194,7 @@ class FingerprintProcessor:
     async def generate_fingerprint(self, content_path: Path, 
                                  content_type: ContentType,
                                  algorithms: List[FingerprintAlgorithm] = None) -> List[FingerprintVector]:
-        """
-        Generate multiple fingerprints for content using specified algorithms
+        """        Generate multiple fingerprints for content using specified algorithms
         
         Args:
             content_path: Path to content file
@@ -216,8 +203,7 @@ class FingerprintProcessor:
             
         Returns:
             List of fingerprint vectors
-        """
-        try:
+        """        try:
             if algorithms is None:
                 algorithms = self._get_default_algorithms(content_type)
             
@@ -238,8 +224,7 @@ class FingerprintProcessor:
     async def _generate_single_fingerprint(self, content_path: Path,
                                          content_type: ContentType,
                                          algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
-        """Generate fingerprint using specific algorithm"""
-        try:
+        """Generate fingerprint using specific algorithm"""        try:
             if content_type == ContentType.AUDIO:
                 return await self._generate_audio_fingerprint(content_path, algorithm)
             elif content_type == ContentType.VIDEO:
@@ -258,8 +243,7 @@ class FingerprintProcessor:
     
     async def _generate_audio_fingerprint(self, content_path: Path,
                                         algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
-        """Generate audio fingerprint using specified algorithm"""
-        try:
+        """Generate audio fingerprint using specified algorithm"""        try:
             import librosa
             
             # Load audio
@@ -298,8 +282,7 @@ class FingerprintProcessor:
     
     async def _generate_video_fingerprint(self, content_path: Path,
                                         algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
-        """Generate video fingerprint using specified algorithm"""
-        try:
+        """Generate video fingerprint using specified algorithm"""        try:
             import cv2
             
             cap = cv2.VideoCapture(str(content_path))
@@ -344,8 +327,7 @@ class FingerprintProcessor:
     
     async def _generate_image_fingerprint(self, content_path: Path,
                                         algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
-        """Generate image fingerprint using specified algorithm"""
-        try:
+        """Generate image fingerprint using specified algorithm"""        try:
             from PIL import Image
             import imagehash
             
@@ -376,8 +358,7 @@ class FingerprintProcessor:
     
     async def _generate_text_fingerprint(self, content_path: Path,
                                        algorithm: FingerprintAlgorithm) -> Optional[FingerprintVector]:
-        """Generate text fingerprint using specified algorithm"""
-        try:
+        """Generate text fingerprint using specified algorithm"""        try:
             with open(content_path, 'r', encoding='utf-8') as f:
                 text = f.read()
             
@@ -402,8 +383,7 @@ class FingerprintProcessor:
             return None
     
     def _get_default_algorithms(self, content_type: ContentType) -> List[FingerprintAlgorithm]:
-        """Get default algorithms for content type"""
-        defaults = {
+        """Get default algorithms for content type"""        defaults = {
             ContentType.AUDIO: [
                 FingerprintAlgorithm.AUDIO_CHROMAPRINT,
                 FingerprintAlgorithm.AUDIO_MFCC,
@@ -427,8 +407,7 @@ class FingerprintProcessor:
     
     async def compare_fingerprints(self, fp1: FingerprintVector, fp2: FingerprintVector,
                                  metric: SimilarityMetric = SimilarityMetric.COSINE_SIMILARITY) -> SimilarityResult:
-        """Compare two fingerprint vectors using specified metric"""
-        try:
+        """Compare two fingerprint vectors using specified metric"""        try:
             if fp1.algorithm != fp2.algorithm:
                 raise ValueError("Cannot compare fingerprints from different algorithms")
             
@@ -465,8 +444,7 @@ class FingerprintProcessor:
     async def batch_similarity_search(self, query_fingerprint: FingerprintVector,
                                     candidate_fingerprints: List[FingerprintVector],
                                     threshold: float = None) -> List[SimilarityResult]:
-        """Perform batch similarity search against multiple candidates"""
-        threshold = threshold or self.similarity_threshold
+        """Perform batch similarity search against multiple candidates"""        threshold = threshold or self.similarity_threshold
         results = []
         
         for candidate in candidate_fingerprints:
@@ -480,16 +458,14 @@ class FingerprintProcessor:
         return results
 
 class FingerprintManager:
-    """High-level fingerprint management interface"""
-    
+    """High-level fingerprint management interface"""    
     def __init__(self, processor: FingerprintProcessor = None):
         self.processor = processor or FingerprintProcessor()
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def create_content_fingerprint(self, content_path: Path, content_id: str,
                                        user_id: str, content_type: ContentType) -> ContentFingerprint:
-        """Create complete fingerprint record for content"""
-        try:
+        """Create complete fingerprint record for content"""        try:
             # Generate fingerprints
             fingerprints = await self.processor.generate_fingerprint(
                 content_path, content_type
@@ -539,16 +515,14 @@ class FingerprintManager:
             raise
     
     def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file"""
-        hash_sha256 = hashlib.sha256()
+        """Calculate SHA-256 hash of file"""        hash_sha256 = hashlib.sha256()
         with open(file_path, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_sha256.update(chunk)
         return hash_sha256.hexdigest()
     
     def _calculate_quality_score(self, fingerprint: FingerprintVector) -> float:
-        """Calculate quality score based on fingerprint characteristics"""
-        base_score = fingerprint.confidence
+        """Calculate quality score based on fingerprint characteristics"""        base_score = fingerprint.confidence
         
         # Adjust based on vector dimension (more features = higher quality)
         dimension_factor = min(1.0, fingerprint.dimension / 512)

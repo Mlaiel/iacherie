@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Enhanced Crawler Import and Mock Test
+"""Enhanced Crawler Import and Mock Test
 =====================================
 
 Tests crawler imports and basic functionality using mocks to avoid dependency issues.
@@ -8,7 +7,6 @@ This provides functional verification that the crawlers can be imported and init
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import sys
 import os
 import importlib.util
@@ -22,14 +20,12 @@ project_root = Path(__file__).parent
 sys.path.insert(0, str(project_root))
 
 class CrawlerImportTester:
-    """Test crawler imports and basic functionality with mocks."""
-    
+    """Test crawler imports and basic functionality with mocks."""    
     def __init__(self):
         self.results = []
         
     def mock_dependencies(self):
-        """Mock common dependencies that might not be available."""
-        # Mock external libraries
+        """Mock common dependencies that might not be available."""        # Mock external libraries
         mocks = {
             'aiohttp': MagicMock(),
             'spotipy': MagicMock(), 
@@ -51,8 +47,7 @@ class CrawlerImportTester:
             sys.modules[module_name] = mock_obj
     
     def test_spotify_crawler(self) -> Dict[str, Any]:
-        """Test Spotify crawler import and initialization."""
-        try:
+        """Test Spotify crawler import and initialization."""        try:
             self.mock_dependencies()
             
             # Mock internal dependencies that might not exist
@@ -119,8 +114,7 @@ class CrawlerImportTester:
             }
     
     def test_youtube_crawler(self) -> Dict[str, Any]:
-        """Test YouTube crawler import and initialization."""
-        try:
+        """Test YouTube crawler import and initialization."""        try:
             self.mock_dependencies()
             
             with patch.dict('sys.modules', {
@@ -167,8 +161,7 @@ class CrawlerImportTester:
             }
     
     def test_instagram_crawler(self) -> Dict[str, Any]:
-        """Test Instagram crawler import and initialization."""
-        try:
+        """Test Instagram crawler import and initialization."""        try:
             self.mock_dependencies()
             
             with patch.dict('sys.modules', {
@@ -215,8 +208,7 @@ class CrawlerImportTester:
             }
     
     def run_all_tests(self) -> Dict[str, Any]:
-        """Run all crawler import tests."""
-        results = {
+        """Run all crawler import tests."""        results = {
             "spotify": self.test_spotify_crawler(),
             "youtube": self.test_youtube_crawler(), 
             "instagram": self.test_instagram_crawler()
@@ -241,8 +233,7 @@ class CrawlerImportTester:
         }
 
 def main():
-    """Main execution function."""
-    
+    """Main execution function."""    
     print("🧪 CRAWLER IMPORT AND FUNCTIONALITY TEST")
     print("=" * 50)
     

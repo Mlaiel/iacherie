@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Collaboration Management System
+"""IA Influencer Agent - Advanced Collaboration Management System
 ==============================================================
 
 Professional Collaboration & Partnership Coordination Platform
@@ -35,7 +34,6 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
@@ -51,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationStatus(Enum):
-    """Collaboration status enumeration"""
-    PROPOSED = "proposed"
+    """Collaboration status enumeration"""    PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     APPROVED = "approved"
     ACTIVE = "active"
@@ -63,8 +60,7 @@ class CollaborationStatus(Enum):
 
 
 class ProjectPhase(Enum):
-    """Project phase enumeration"""
-    PLANNING = "planning"
+    """Project phase enumeration"""    PLANNING = "planning"
     PRE_PRODUCTION = "pre_production"
     PRODUCTION = "production"
     POST_PRODUCTION = "post_production"
@@ -75,8 +71,7 @@ class ProjectPhase(Enum):
 
 @dataclass
 class CollaborationAgreement:
-    """Comprehensive collaboration agreement model"""
-    agreement_id: str
+    """Comprehensive collaboration agreement model"""    agreement_id: str
     project_title: str
     participants: List[str]
     project_description: str
@@ -94,8 +89,7 @@ class CollaborationAgreement:
 
 @dataclass
 class ProjectMilestone:
-    """Project milestone tracking"""
-    milestone_id: str
+    """Project milestone tracking"""    milestone_id: str
     title: str
     description: str
     assignee_id: str
@@ -109,8 +103,7 @@ class ProjectMilestone:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation tracking"""
-    resource_id: str
+    """Resource allocation tracking"""    resource_id: str
     resource_type: str  # time, budget, equipment, talent
     allocated_to: str
     allocation_amount: Decimal
@@ -121,8 +114,7 @@ class ResourceAllocation:
 
 
 class CollaborationManager:
-    """Advanced collaboration management and coordination system"""
-    
+    """Advanced collaboration management and coordination system"""    
     def __init__(self, db_session, notification_service, contract_service):
         self.db = db_session
         self.notification_service = notification_service
@@ -134,8 +126,7 @@ class CollaborationManager:
         initiator_id: str,
         collaboration_proposal: Dict[str, Any]
     ) -> str:
-        """Initiate a new collaboration project"""
-        try:
+        """Initiate a new collaboration project"""        try:
             # Validate proposal
             validation_result = await self._validate_collaboration_proposal(collaboration_proposal)
             if not validation_result['is_valid']:
@@ -175,8 +166,7 @@ class CollaborationManager:
         self,
         collaboration_id: str
     ) -> Dict[str, Any]:
-        """Manage the complete lifecycle of a collaboration"""
-        try:
+        """Manage the complete lifecycle of a collaboration"""        try:
             # Get collaboration details
             collaboration = await self._get_collaboration_details(collaboration_id)
             if not collaboration:
@@ -224,8 +214,7 @@ class CollaborationManager:
         collaboration_id: str,
         execution_phase: str
     ) -> Dict[str, Any]:
-        """Coordinate project execution across different phases"""
-        try:
+        """Coordinate project execution across different phases"""        try:
             collaboration = await self._get_collaboration_details(collaboration_id)
             if not collaboration:
                 return {}
@@ -268,8 +257,7 @@ class CollaborationManager:
         initiator_id: str,
         proposal: Dict[str, Any]
     ) -> CollaborationAgreement:
-        """Create a comprehensive collaboration agreement"""
-        try:
+        """Create a comprehensive collaboration agreement"""        try:
             agreement_id = str(uuid.uuid4())
             
             # Parse participants
@@ -317,8 +305,7 @@ class CollaborationManager:
 
 
 class PartnershipCoordinator:
-    """Strategic partnership coordination and management system"""
-    
+    """Strategic partnership coordination and management system"""    
     def __init__(self, db_session, legal_service, analytics_service):
         self.db = db_session
         self.legal_service = legal_service
@@ -331,8 +318,7 @@ class PartnershipCoordinator:
         partners: List[str],
         partnership_goals: List[str]
     ) -> Dict[str, Any]:
-        """Coordinate strategic partnerships between creators/brands"""
-        try:
+        """Coordinate strategic partnerships between creators/brands"""        try:
             # Analyze partnership compatibility
             compatibility_analysis = await self._analyze_partnership_compatibility(
                 partners, partnership_goals
@@ -378,8 +364,7 @@ class PartnershipCoordinator:
 
 
 class ProjectManager:
-    """Advanced project management system for collaborations"""
-    
+    """Advanced project management system for collaborations"""    
     def __init__(self, db_session, resource_manager, quality_manager):
         self.db = db_session
         self.resource_manager = resource_manager
@@ -391,8 +376,7 @@ class ProjectManager:
         project_id: str,
         management_scope: str = "full"
     ) -> Dict[str, Any]:
-        """Comprehensive project lifecycle management"""
-        try:
+        """Comprehensive project lifecycle management"""        try:
             # Get project details
             project = await self._get_project_details(project_id)
             if not project:
@@ -441,8 +425,7 @@ class ProjectManager:
 
 
 class WorkflowOrchestrator:
-    """Advanced workflow orchestration for complex collaborations"""
-    
+    """Advanced workflow orchestration for complex collaborations"""    
     def __init__(self, db_session, task_scheduler, automation_engine):
         self.db = db_session
         self.task_scheduler = task_scheduler
@@ -454,8 +437,7 @@ class WorkflowOrchestrator:
         collaboration_id: str,
         workflow_template: str = "default"
     ) -> Dict[str, Any]:
-        """Orchestrate complex collaboration workflows"""
-        try:
+        """Orchestrate complex collaboration workflows"""        try:
             # Load workflow template
             workflow_config = await self._load_workflow_template(workflow_template)
             
@@ -498,8 +480,7 @@ class WorkflowOrchestrator:
 
 
 class ResourceAllocator:
-    """Intelligent resource allocation and optimization system"""
-    
+    """Intelligent resource allocation and optimization system"""    
     def __init__(self, db_session, ml_optimizer, cost_analyzer):
         self.db = db_session
         self.ml_optimizer = ml_optimizer
@@ -512,8 +493,7 @@ class ResourceAllocator:
         resource_requirements: Dict[str, Any],
         optimization_criteria: List[str] = ["cost", "time", "quality"]
     ) -> Dict[str, Any]:
-        """Intelligently allocate resources for collaboration projects"""
-        try:
+        """Intelligently allocate resources for collaboration projects"""        try:
             # Analyze resource requirements
             requirements_analysis = await self._analyze_resource_requirements(
                 collaboration_id, resource_requirements
@@ -566,8 +546,7 @@ class ResourceAllocator:
         collaboration_id: str,
         requirements: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze and categorize resource requirements"""
-        try:
+        """Analyze and categorize resource requirements"""        try:
             collaboration = await self._get_collaboration_details(collaboration_id)
             
             # Categorize requirements
@@ -614,8 +593,7 @@ class ResourceAllocator:
         available_resources: Dict[str, Any],
         criteria: List[str]
     ) -> Dict[str, Any]:
-        """Optimize resource allocation using ML and constraint optimization"""
-        try:
+        """Optimize resource allocation using ML and constraint optimization"""        try:
             # Prepare optimization data
             optimization_data = {
                 'requirements_matrix': await self._create_requirements_matrix(requirements),

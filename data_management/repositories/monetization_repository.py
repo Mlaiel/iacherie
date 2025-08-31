@@ -1,5 +1,4 @@
-"""
-💰 Monetization Repository - IA Influencer Agent Platform Enterprise
+"""💰 Monetization Repository - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/data_management/repositories/monetization_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -22,7 +21,6 @@ MONETIZATION REPOSITORY ARCHITECTURE:
 Revenue Tracking → Payment Integration → Subscription Lifecycle → 
 Commission Management → Payout Processing → Analytics → Optimization
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -35,8 +33,7 @@ from decimal import Decimal
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class RevenueType(Enum):
-    """Types of revenue streams"""
-    SUBSCRIPTION = "subscription"
+    """Types of revenue streams"""    SUBSCRIPTION = "subscription"
     COLLABORATION = "collaboration"
     CONTENT_SALES = "content_sales"
     LICENSING = "licensing"
@@ -46,8 +43,7 @@ class RevenueType(Enum):
     COMMISSION = "commission"
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,16 +52,14 @@ class PaymentStatus(Enum):
     CANCELLED = "cancelled"
 
 class SubscriptionTier(Enum):
-    """Subscription tier levels"""
-    FREE = "free"
+    """Subscription tier levels"""    FREE = "free"
     BASIC = "basic"
     PREMIUM = "premium"
     PRO = "pro"
     ENTERPRISE = "enterprise"
 
 class PayoutStatus(Enum):
-    """Payout status"""
-    SCHEDULED = "scheduled"
+    """Payout status"""    SCHEDULED = "scheduled"
     PROCESSING = "processing"
     SENT = "sent"
     FAILED = "failed"
@@ -73,8 +67,7 @@ class PayoutStatus(Enum):
 
 @dataclass
 class RevenueRecord:
-    """Revenue record data structure"""
-    revenue_id: str
+    """Revenue record data structure"""    revenue_id: str
     creator_id: str
     revenue_type: RevenueType
     amount: Decimal
@@ -89,8 +82,7 @@ class RevenueRecord:
 
 @dataclass
 class SubscriptionInfo:
-    """Subscription information"""
-    subscription_id: str
+    """Subscription information"""    subscription_id: str
     creator_id: str
     subscriber_id: str
     tier: SubscriptionTier
@@ -105,8 +97,7 @@ class SubscriptionInfo:
 
 @dataclass
 class PayoutRecord:
-    """Payout record data structure"""
-    payout_id: str
+    """Payout record data structure"""    payout_id: str
     creator_id: str
     amount: Decimal
     currency: str
@@ -120,8 +111,7 @@ class PayoutRecord:
 
 @dataclass
 class CommissionInfo:
-    """Commission calculation info"""
-    transaction_id: str
+    """Commission calculation info"""    transaction_id: str
     gross_amount: Decimal
     platform_fee: Decimal
     creator_share: Decimal
@@ -131,8 +121,7 @@ class CommissionInfo:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics data"""
-    total_revenue: Decimal
+    """Revenue analytics data"""    total_revenue: Decimal
     revenue_by_type: Dict[str, Decimal]
     revenue_growth: float
     average_revenue_per_user: Decimal
@@ -142,8 +131,7 @@ class RevenueAnalytics:
     conversion_rate: float
 
 class MonetizationRepository(BaseRepository):
-    """
-    Advanced monetization repository for revenue management
+    """    Advanced monetization repository for revenue management
     
     Features:
     - Multi-currency revenue tracking and analytics
@@ -153,8 +141,7 @@ class MonetizationRepository(BaseRepository):
     - Revenue optimization with AI-powered insights
     - Payment gateway integration and fraud detection
     - Comprehensive financial reporting and analytics
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None,
                  payment_processor=None, tax_service=None,
                  analytics_service=None, fraud_detector=None):
@@ -189,8 +176,7 @@ class MonetizationRepository(BaseRepository):
                       source_id: Optional[str] = None,
                       platform: str = "platform",
                       metadata: Dict[str, Any] = None) -> RevenueRecord:
-        """Record a new revenue transaction"""
-        try:
+        """Record a new revenue transaction"""        try:
             # Generate unique revenue ID
             revenue_id = self._generate_unique_id("rev", creator_id)
             
@@ -264,8 +250,7 @@ class MonetizationRepository(BaseRepository):
     
     def calculate_commission(self, creator_id: str, gross_amount: Decimal,
                            creator_tier: SubscriptionTier) -> CommissionInfo:
-        """Calculate commission and creator payout"""
-        try:
+        """Calculate commission and creator payout"""        try:
             transaction_id = self._generate_unique_id("txn", creator_id)
             
             # Get commission rate for tier
@@ -303,8 +288,7 @@ class MonetizationRepository(BaseRepository):
     def calculate_revenue_analytics(self, creator_id: str,
                                   start_date: datetime,
                                   end_date: datetime) -> RevenueAnalytics:
-        """Calculate comprehensive revenue analytics"""
-        try:
+        """Calculate comprehensive revenue analytics"""        try:
             # Get revenue data for period
             revenue_data = self._get_revenue_data(creator_id, start_date, end_date)
             
@@ -356,17 +340,14 @@ class MonetizationRepository(BaseRepository):
     
     # Data fetching methods (placeholders - would connect to actual data sources)
     def _get_revenue_data(self, creator_id: str, start_date: datetime, end_date: datetime) -> List[RevenueRecord]:
-        """Get revenue data for period"""
-        return []
+        """Get revenue data for period"""        return []
     
     def _get_previous_period_revenue(self, creator_id: str, start_date: datetime, end_date: datetime) -> List[RevenueRecord]:
-        """Get revenue data for previous period"""
-        return []
+        """Get revenue data for previous period"""        return []
 
 
 class AsyncMonetizationRepository(AsyncBaseRepository):
-    """Asynchronous monetization repository for high-performance operations"""
-    
+    """Asynchronous monetization repository for high-performance operations"""    
     def __init__(self, db_connection=None, cache_manager=None,
                  payment_processor=None, analytics_service=None):
         super().__init__(db_connection, cache_manager)
@@ -377,11 +358,9 @@ class AsyncMonetizationRepository(AsyncBaseRepository):
     
     async def record_revenue_async(self, creator_id: str, revenue_type: RevenueType,
                                  amount: Decimal, currency: str = "USD") -> RevenueRecord:
-        """Record revenue asynchronously"""
-        # Async implementation would go here
+        """Record revenue asynchronously"""        # Async implementation would go here
         pass
     
     async def process_bulk_payouts_async(self, payout_batch: List[PayoutRecord]) -> List[PayoutRecord]:
-        """Process multiple payouts asynchronously"""
-        # Async implementation would go here
+        """Process multiple payouts asynchronously"""        # Async implementation would go here
         pass

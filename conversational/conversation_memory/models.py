@@ -1,5 +1,4 @@
-"""
-Conversation Memory Data Models - Enterprise Data Structures
+"""Conversation Memory Data Models - Enterprise Data Structures
 
 Comprehensive data models for conversation memory management including
 conversation records, memory entries, and specialized context models
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  LEGAL WARNING: Unauthorized use strictly prohibited ⚠️
 Contact: mlaiel@live.de
 """
-
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -31,8 +29,7 @@ ConversationBase = declarative_base()
 
 
 class ContentType(Enum):
-    """Content creator specialization types"""
-    MUSIC_CREATION = "music_creation"
+    """Content creator specialization types"""    MUSIC_CREATION = "music_creation"
     BLOG_CONTENT = "blog_content"
     PHOTOGRAPHY = "photography"
     VIDEO_CONTENT = "video_content"
@@ -45,8 +42,7 @@ class ContentType(Enum):
 
 
 class ConversationStatus(Enum):
-    """Conversation processing status"""
-    ACTIVE = "active"
+    """Conversation processing status"""    ACTIVE = "active"
     ARCHIVED = "archived"
     PROCESSING = "processing"
     ERROR = "error"
@@ -54,8 +50,7 @@ class ConversationStatus(Enum):
 
 
 class MemoryType(Enum):
-    """Memory classification types"""
-    SHORT_TERM = "short_term"
+    """Memory classification types"""    SHORT_TERM = "short_term"
     LONG_TERM = "long_term"
     WORKING_MEMORY = "working_memory"
     EPISODIC = "episodic"
@@ -63,8 +58,7 @@ class MemoryType(Enum):
 
 
 class ContextType(Enum):
-    """Context classification types"""
-    CONTENT_CONTEXT = "content_context"
+    """Context classification types"""    CONTENT_CONTEXT = "content_context"
     COLLABORATION_CONTEXT = "collaboration_context"
     PROTECTION_CONTEXT = "protection_context"
     BUSINESS_CONTEXT = "business_context"
@@ -73,8 +67,7 @@ class ContextType(Enum):
 
 @dataclass
 class ConversationMetadata:
-    """Metadata for conversation records"""
-    platform: Optional[str] = None
+    """Metadata for conversation records"""    platform: Optional[str] = None
     language: Optional[str] = None
     sentiment_score: Optional[float] = None
     priority_level: Optional[int] = None
@@ -86,8 +79,7 @@ class ConversationMetadata:
     processing_notes: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "platform": self.platform,
             "language": self.language,
             "sentiment_score": self.sentiment_score,
@@ -102,8 +94,7 @@ class ConversationMetadata:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ConversationMetadata':
-        """Create from dictionary"""
-        return cls(
+        """Create from dictionary"""        return cls(
             platform=data.get("platform"),
             language=data.get("language"),
             sentiment_score=data.get("sentiment_score"),
@@ -118,13 +109,11 @@ class ConversationMetadata:
 
 
 class ConversationRecord(Base):
-    """
-    Main conversation record for database storage
+    """    Main conversation record for database storage
     
     Stores conversation data with encryption and metadata for
     multi-format content creators with specialized context tracking.
-    """
-    __tablename__ = "conversation_records"
+    """    __tablename__ = "conversation_records"
     
     # Primary identifiers
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -172,8 +161,7 @@ class ConversationRecord(Base):
     
     @property
     def context(self) -> Optional['ConversationContext']:
-        """Get conversation context"""
-        if not self.metadata:
+        """Get conversation context"""        if not self.metadata:
             return None
         
         context_data = self.metadata.get('context')
@@ -192,8 +180,7 @@ class ConversationRecord(Base):
     
     @context.setter
     def context(self, value: Optional['ConversationContext']):
-        """Set conversation context"""
-        if not self.metadata:
+        """Set conversation context"""        if not self.metadata:
             self.metadata = {}
         
         if value:
@@ -202,8 +189,7 @@ class ConversationRecord(Base):
             self.metadata.pop('context', None)
     
     def encrypt_content(self, encryption_manager: EncryptionManager) -> bool:
-        """Encrypt conversation content"""
-        try:
+        """Encrypt conversation content"""        try:
             if self.conversation_data and not self.is_encrypted:
                 encrypted_data, key_id = encryption_manager.encrypt_data(
                     json.dumps(self.conversation_data)
@@ -217,8 +203,7 @@ class ConversationRecord(Base):
         return False
     
     def decrypt_content(self, encryption_manager: EncryptionManager) -> bool:
-        """Decrypt conversation content"""
-        try:
+        """Decrypt conversation content"""        try:
             if self.is_encrypted and self.conversation_data:
                 encrypted_data = self.conversation_data.get("encrypted")
                 if encrypted_data and self.encryption_key_id:
@@ -233,8 +218,7 @@ class ConversationRecord(Base):
         return False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for API responses"""
-        return {
+        """Convert to dictionary for API responses"""        return {
             "id": str(self.id),
             "conversation_id": self.conversation_id,
             "user_id": self.user_id,
@@ -253,13 +237,11 @@ class ConversationRecord(Base):
 
 @dataclass
 class MemoryEntry:
-    """
-    Individual memory entry for conversation components
+    """    Individual memory entry for conversation components
     
     Represents a single memory item that can be stored in different
     memory systems (short-term, long-term, working memory).
-    """
-    entry_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """    entry_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     conversation_id: str = ""
     user_id: str = ""
     
@@ -286,19 +268,16 @@ class MemoryEntry:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def is_expired(self) -> bool:
-        """Check if memory entry has expired"""
-        if self.expires_at:
+        """Check if memory entry has expired"""        if self.expires_at:
             return datetime.now(timezone.utc) > self.expires_at
         return False
     
     def update_access(self):
-        """Update access tracking"""
-        self.access_count += 1
+        """Update access tracking"""        self.access_count += 1
         self.last_accessed = datetime.now(timezone.utc)
     
     def calculate_retention_score(self) -> float:
-        """Calculate how long this memory should be retained"""
-        # Combine relevance, importance, and access patterns
+        """Calculate how long this memory should be retained"""        # Combine relevance, importance, and access patterns
         base_score = (self.relevance_score + self.importance_score) / 2
         
         # Boost for frequently accessed memories
@@ -311,8 +290,7 @@ class MemoryEntry:
         return min(base_score + access_boost + (recency_factor * 0.2), 1.0)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "entry_id": self.entry_id,
             "conversation_id": self.conversation_id,
             "user_id": self.user_id,
@@ -332,8 +310,7 @@ class MemoryEntry:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'MemoryEntry':
-        """Create from dictionary"""
-        entry = cls(
+        """Create from dictionary"""        entry = cls(
             entry_id=data.get("entry_id", str(uuid.uuid4())),
             conversation_id=data.get("conversation_id", ""),
             user_id=data.get("user_id", ""),
@@ -363,15 +340,13 @@ class MemoryEntry:
 
 @dataclass
 class ConversationContext:
-    """Base class for conversation context"""
-    context_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Base class for conversation context"""    context_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     context_type: ContextType = ContextType.CONTENT_CONTEXT
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "context_id": self.context_id,
             "type": self.context_type.value,
             "created_at": self.created_at.isoformat(),
@@ -380,8 +355,7 @@ class ConversationContext:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ConversationContext':
-        """Create from dictionary"""
-        context = cls(
+        """Create from dictionary"""        context = cls(
             context_id=data.get("context_id", str(uuid.uuid4())),
             context_type=ContextType(data.get("type", ContextType.CONTENT_CONTEXT.value)),
             metadata=data.get("metadata", {})
@@ -395,8 +369,7 @@ class ConversationContext:
 
 @dataclass
 class ContentContext(ConversationContext):
-    """Context for content creation conversations"""
-    content_type: str = ""
+    """Context for content creation conversations"""    content_type: str = ""
     content_format: str = ""  # audio, video, image, text
     creation_stage: str = ""  # ideation, production, post_production, distribution
     quality_requirements: Dict[str, Any] = field(default_factory=dict)
@@ -409,8 +382,7 @@ class ContentContext(ConversationContext):
         self.context_type = ContextType.CONTENT_CONTEXT
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        base_dict = super().to_dict()
+        """Convert to dictionary"""        base_dict = super().to_dict()
         base_dict.update({
             "content_type": self.content_type,
             "content_format": self.content_format,
@@ -425,8 +397,7 @@ class ContentContext(ConversationContext):
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ContentContext':
-        """Create from dictionary"""
-        context = cls(
+        """Create from dictionary"""        context = cls(
             context_id=data.get("context_id", str(uuid.uuid4())),
             content_type=data.get("content_type", ""),
             content_format=data.get("content_format", ""),
@@ -447,8 +418,7 @@ class ContentContext(ConversationContext):
 
 @dataclass
 class CollaborationContext(ConversationContext):
-    """Context for collaboration conversations"""
-    collaboration_type: str = ""  # cross_promotion, joint_content, skill_sharing, resource_sharing
+    """Context for collaboration conversations"""    collaboration_type: str = ""  # cross_promotion, joint_content, skill_sharing, resource_sharing
     partner_types: List[str] = field(default_factory=list)  # musician, blogger, photographer, etc.
     collaboration_scope: str = ""  # local, national, international
     duration_type: str = ""  # one_time, short_term, long_term, ongoing
@@ -462,8 +432,7 @@ class CollaborationContext(ConversationContext):
         self.context_type = ContextType.COLLABORATION_CONTEXT
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        base_dict = super().to_dict()
+        """Convert to dictionary"""        base_dict = super().to_dict()
         base_dict.update({
             "collaboration_type": self.collaboration_type,
             "partner_types": self.partner_types,
@@ -479,8 +448,7 @@ class CollaborationContext(ConversationContext):
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'CollaborationContext':
-        """Create from dictionary"""
-        context = cls(
+        """Create from dictionary"""        context = cls(
             context_id=data.get("context_id", str(uuid.uuid4())),
             collaboration_type=data.get("collaboration_type", ""),
             partner_types=data.get("partner_types", []),
@@ -502,8 +470,7 @@ class CollaborationContext(ConversationContext):
 
 @dataclass
 class ProtectionContext(ConversationContext):
-    """Context for content protection conversations"""
-    protection_type: str = ""  # copyright, trademark, privacy, unauthorized_use
+    """Context for content protection conversations"""    protection_type: str = ""  # copyright, trademark, privacy, unauthorized_use
     content_at_risk: List[str] = field(default_factory=list)
     threat_level: str = ""  # low, medium, high, critical
     violation_platforms: List[str] = field(default_factory=list)
@@ -518,8 +485,7 @@ class ProtectionContext(ConversationContext):
         self.context_type = ContextType.PROTECTION_CONTEXT
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        base_dict = super().to_dict()
+        """Convert to dictionary"""        base_dict = super().to_dict()
         base_dict.update({
             "protection_type": self.protection_type,
             "content_at_risk": self.content_at_risk,
@@ -536,8 +502,7 @@ class ProtectionContext(ConversationContext):
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ProtectionContext':
-        """Create from dictionary"""
-        context = cls(
+        """Create from dictionary"""        context = cls(
             context_id=data.get("context_id", str(uuid.uuid4())),
             protection_type=data.get("protection_type", ""),
             content_at_risk=data.get("content_at_risk", []),

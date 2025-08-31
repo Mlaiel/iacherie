@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Test Suite for Protection Networks
+"""Comprehensive Test Suite for Protection Networks
 
 Ultra-advanced industrial-grade tests for content protection neural networks,
 covering fingerprinting, plagiarism detection, deepfake detection, 
@@ -42,7 +39,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -68,8 +64,7 @@ from ai.neural_networks.base_networks import NetworkType
 
 @pytest.fixture
 def protection_config():
-    """Configuration for protection networks"""
-    return TransformerConfig(
+    """Configuration for protection networks"""    return TransformerConfig(
         input_dim=768,
         hidden_dims=[768, 512, 256, 128],
         output_dim=256,
@@ -84,8 +79,7 @@ def protection_config():
 
 @pytest.fixture
 def content_samples():
-    """Sample content for protection testing"""
-    torch.manual_seed(42)
+    """Sample content for protection testing"""    torch.manual_seed(42)
     np.random.seed(42)
     
     return {
@@ -118,8 +112,7 @@ def content_samples():
 
 @pytest.fixture
 def copyright_database():
-    """Sample copyright database for testing"""
-    torch.manual_seed(42)
+    """Sample copyright database for testing"""    torch.manual_seed(42)
     
     return {
         "registered_works": {
@@ -146,8 +139,7 @@ def copyright_database():
 
 @pytest.fixture
 def plagiarism_corpus():
-    """Sample corpus for plagiarism detection testing"""
-    torch.manual_seed(42)
+    """Sample corpus for plagiarism detection testing"""    torch.manual_seed(42)
     
     return {
         "reference_documents": torch.randn(50, 1024, 768),  # 50 reference documents
@@ -166,11 +158,9 @@ def plagiarism_corpus():
 
 
 class TestContentFingerprintingNetwork:
-    """Test ContentFingerprintingNetwork functionality"""
-    
+    """Test ContentFingerprintingNetwork functionality"""    
     def test_fingerprinting_network_initialization(self, protection_config):
-        """Test ContentFingerprintingNetwork initialization"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test ContentFingerprintingNetwork initialization"""        network = ContentFingerprintingNetwork(protection_config)
         
         assert hasattr(network, 'content_encoder')
         assert hasattr(network, 'fingerprint_generator')
@@ -179,8 +169,7 @@ class TestContentFingerprintingNetwork:
         assert hasattr(network, 'similarity_comparator')
     
     def test_content_fingerprint_generation(self, protection_config, content_samples):
-        """Test content fingerprint generation"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test content fingerprint generation"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         # Test different content types
@@ -202,8 +191,7 @@ class TestContentFingerprintingNetwork:
             assert (non_diagonal < 0.99).any()  # At least some should be dissimilar
     
     def test_fingerprint_robustness(self, protection_config, content_samples):
-        """Test fingerprint robustness to modifications"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test fingerprint robustness to modifications"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         original_content = content_samples["original_audio"][:3]
@@ -221,8 +209,7 @@ class TestContentFingerprintingNetwork:
         assert torch.all(similarities < 0.99)  # But not too similar (some sensitivity needed)
     
     def test_identical_content_detection(self, protection_config, content_samples):
-        """Test detection of identical content"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test detection of identical content"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         original_content = content_samples["original_audio"][:1]
@@ -238,8 +225,7 @@ class TestContentFingerprintingNetwork:
         assert similarity.item() > 0.95
     
     def test_batch_fingerprint_generation(self, protection_config, content_samples):
-        """Test batch fingerprint generation efficiency"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test batch fingerprint generation efficiency"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         content = content_samples["original_video"]
@@ -256,8 +242,7 @@ class TestContentFingerprintingNetwork:
         assert non_diagonal_max < 0.95  # No two should be too similar
     
     def test_cross_modal_fingerprinting(self, protection_config, content_samples):
-        """Test fingerprinting across different modalities"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test fingerprinting across different modalities"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         audio_content = content_samples["original_audio"][:2]
@@ -274,8 +259,7 @@ class TestContentFingerprintingNetwork:
         assert torch.all(cross_similarities < 0.8)  # Different modalities should be dissimilar
     
     def test_fingerprint_database_matching(self, protection_config, content_samples, copyright_database):
-        """Test fingerprint matching against database"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test fingerprint matching against database"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         query_content = content_samples["original_audio"][:1]
@@ -306,11 +290,9 @@ class TestContentFingerprintingNetwork:
 
 
 class TestPlagiarismDetectionNetwork:
-    """Test PlagiarismDetectionNetwork functionality"""
-    
+    """Test PlagiarismDetectionNetwork functionality"""    
     def test_plagiarism_network_initialization(self, protection_config):
-        """Test PlagiarismDetectionNetwork initialization"""
-        network = PlagiarismDetectionNetwork(protection_config)
+        """Test PlagiarismDetectionNetwork initialization"""        network = PlagiarismDetectionNetwork(protection_config)
         
         assert hasattr(network, 'text_encoder')
         assert hasattr(network, 'semantic_analyzer')
@@ -319,8 +301,7 @@ class TestPlagiarismDetectionNetwork:
         assert hasattr(network, 'citation_detector')
     
     def test_semantic_similarity_detection(self, protection_config, plagiarism_corpus):
-        """Test semantic similarity detection"""
-        network = PlagiarismDetectionNetwork(protection_config)
+        """Test semantic similarity detection"""        network = PlagiarismDetectionNetwork(protection_config)
         network.eval()
         
         reference_docs = plagiarism_corpus["reference_documents"][:5]
@@ -337,8 +318,7 @@ class TestPlagiarismDetectionNetwork:
         assert torch.isfinite(similarity_scores).all()
     
     def test_structural_plagiarism_detection(self, protection_config, plagiarism_corpus):
-        """Test structural plagiarism detection"""
-        network = PlagiarismDetectionNetwork(protection_config)
+        """Test structural plagiarism detection"""        network = PlagiarismDetectionNetwork(protection_config)
         network.eval()
         
         reference_doc = plagiarism_corpus["reference_documents"][:1]
@@ -359,8 +339,7 @@ class TestPlagiarismDetectionNetwork:
         assert 0 <= structure_similarity <= 1
     
     def test_plagiarism_detection_pipeline(self, protection_config, plagiarism_corpus):
-        """Test complete plagiarism detection pipeline"""
-        network = PlagiarismDetectionNetwork(protection_config)
+        """Test complete plagiarism detection pipeline"""        network = PlagiarismDetectionNetwork(protection_config)
         network.eval()
         
         reference_corpus = plagiarism_corpus["reference_documents"]
@@ -387,8 +366,7 @@ class TestPlagiarismDetectionNetwork:
         assert 0 <= confidence_level <= 1
     
     def test_citation_analysis(self, protection_config, plagiarism_corpus):
-        """Test citation and attribution analysis"""
-        network = PlagiarismDetectionNetwork(protection_config)
+        """Test citation and attribution analysis"""        network = PlagiarismDetectionNetwork(protection_config)
         network.eval()
         
         document = plagiarism_corpus["query_documents"][:1]
@@ -408,8 +386,7 @@ class TestPlagiarismDetectionNetwork:
         assert 0 <= attribution_ratio <= 1
     
     def test_multilingual_plagiarism_detection(self, protection_config):
-        """Test multilingual plagiarism detection"""
-        network = PlagiarismDetectionNetwork(protection_config)
+        """Test multilingual plagiarism detection"""        network = PlagiarismDetectionNetwork(protection_config)
         network.eval()
         
         # Simulate multilingual documents
@@ -430,8 +407,7 @@ class TestPlagiarismDetectionNetwork:
         assert 0 <= cross_lingual_similarity <= 1
     
     def test_paraphrasing_detection(self, protection_config, plagiarism_corpus):
-        """Test paraphrasing detection"""
-        network = PlagiarismDetectionNetwork(protection_config)
+        """Test paraphrasing detection"""        network = PlagiarismDetectionNetwork(protection_config)
         network.eval()
         
         original_text = plagiarism_corpus["reference_documents"][:1]
@@ -454,11 +430,9 @@ class TestPlagiarismDetectionNetwork:
 
 
 class TestDeepfakeDetectionNetwork:
-    """Test DeepfakeDetectionNetwork functionality"""
-    
+    """Test DeepfakeDetectionNetwork functionality"""    
     def test_deepfake_network_initialization(self, protection_config):
-        """Test DeepfakeDetectionNetwork initialization"""
-        network = DeepfakeDetectionNetwork(protection_config)
+        """Test DeepfakeDetectionNetwork initialization"""        network = DeepfakeDetectionNetwork(protection_config)
         
         assert hasattr(network, 'authenticity_detector')
         assert hasattr(network, 'manipulation_analyzer')
@@ -467,8 +441,7 @@ class TestDeepfakeDetectionNetwork:
         assert hasattr(network, 'confidence_estimator')
     
     def test_audio_deepfake_detection(self, protection_config, content_samples):
-        """Test audio deepfake detection"""
-        network = DeepfakeDetectionNetwork(protection_config)
+        """Test audio deepfake detection"""        network = DeepfakeDetectionNetwork(protection_config)
         network.eval()
         
         authentic_audio = content_samples["authentic_audio"]
@@ -489,8 +462,7 @@ class TestDeepfakeDetectionNetwork:
         assert torch.all(all_scores >= 0) and torch.all(all_scores <= 1)
     
     def test_video_deepfake_detection(self, protection_config, content_samples):
-        """Test video deepfake detection"""
-        network = DeepfakeDetectionNetwork(protection_config)
+        """Test video deepfake detection"""        network = DeepfakeDetectionNetwork(protection_config)
         network.eval()
         
         authentic_video = content_samples["authentic_video"]
@@ -519,8 +491,7 @@ class TestDeepfakeDetectionNetwork:
         assert deepfake_analysis["deepfake_probability"] > 0.5
     
     def test_temporal_consistency_analysis(self, protection_config, content_samples):
-        """Test temporal consistency analysis for videos"""
-        network = DeepfakeDetectionNetwork(protection_config)
+        """Test temporal consistency analysis for videos"""        network = DeepfakeDetectionNetwork(protection_config)
         network.eval()
         
         # Create video with temporal inconsistencies
@@ -540,8 +511,7 @@ class TestDeepfakeDetectionNetwork:
         assert 0 <= consistency_score_consistent <= 1
     
     def test_manipulation_artifact_detection(self, protection_config, content_samples):
-        """Test detection of manipulation artifacts"""
-        network = DeepfakeDetectionNetwork(protection_config)
+        """Test detection of manipulation artifacts"""        network = DeepfakeDetectionNetwork(protection_config)
         network.eval()
         
         clean_content = content_samples["authentic_images"][:1]
@@ -563,8 +533,7 @@ class TestDeepfakeDetectionNetwork:
         assert noisy_artifacts["artifact_score"] > clean_artifacts["artifact_score"]
     
     def test_face_swap_detection(self, protection_config, content_samples):
-        """Test face swap detection in images/videos"""
-        network = DeepfakeDetectionNetwork(protection_config)
+        """Test face swap detection in images/videos"""        network = DeepfakeDetectionNetwork(protection_config)
         network.eval()
         
         original_faces = content_samples["authentic_images"][:2]
@@ -581,8 +550,7 @@ class TestDeepfakeDetectionNetwork:
         assert torch.all(swapped_analysis["swap_probability"] > 0.5)
     
     def test_voice_cloning_detection(self, protection_config, content_samples):
-        """Test voice cloning detection"""
-        network = DeepfakeDetectionNetwork(protection_config)
+        """Test voice cloning detection"""        network = DeepfakeDetectionNetwork(protection_config)
         network.eval()
         
         authentic_voice = content_samples["authentic_audio"][:1]
@@ -609,11 +577,9 @@ class TestDeepfakeDetectionNetwork:
 
 
 class TestCopyrightProtectionNetwork:
-    """Test CopyrightProtectionNetwork functionality"""
-    
+    """Test CopyrightProtectionNetwork functionality"""    
     def test_copyright_network_initialization(self, protection_config):
-        """Test CopyrightProtectionNetwork initialization"""
-        network = CopyrightProtectionNetwork(protection_config)
+        """Test CopyrightProtectionNetwork initialization"""        network = CopyrightProtectionNetwork(protection_config)
         
         assert hasattr(network, 'content_analyzer')
         assert hasattr(network, 'rights_manager')
@@ -622,8 +588,7 @@ class TestCopyrightProtectionNetwork:
         assert hasattr(network, 'violation_classifier')
     
     def test_copyright_infringement_detection(self, protection_config, content_samples, copyright_database):
-        """Test copyright infringement detection"""
-        network = CopyrightProtectionNetwork(protection_config)
+        """Test copyright infringement detection"""        network = CopyrightProtectionNetwork(protection_config)
         network.eval()
         
         suspected_content = content_samples["original_audio"][:1]
@@ -650,8 +615,7 @@ class TestCopyrightProtectionNetwork:
         assert 0 <= infringement_report["confidence_level"] <= 1
     
     def test_license_compliance_checking(self, protection_config, copyright_database):
-        """Test license compliance checking"""
-        network = CopyrightProtectionNetwork(protection_config)
+        """Test license compliance checking"""        network = CopyrightProtectionNetwork(protection_config)
         network.eval()
         
         # Simulate usage scenario
@@ -682,8 +646,7 @@ class TestCopyrightProtectionNetwork:
         assert isinstance(compliance_result["recommendations"], list)
     
     def test_fair_use_analysis(self, protection_config, content_samples):
-        """Test fair use analysis"""
-        network = CopyrightProtectionNetwork(protection_config)
+        """Test fair use analysis"""        network = CopyrightProtectionNetwork(protection_config)
         network.eval()
         
         original_work = content_samples["original_video"][:1]
@@ -712,8 +675,7 @@ class TestCopyrightProtectionNetwork:
         assert 0 <= fair_use_likelihood <= 1
     
     def test_dmca_compliance_workflow(self, protection_config, content_samples, copyright_database):
-        """Test DMCA compliance workflow"""
-        network = CopyrightProtectionNetwork(protection_config)
+        """Test DMCA compliance workflow"""        network = CopyrightProtectionNetwork(protection_config)
         network.eval()
         
         infringing_content = content_samples["original_audio"][:1]
@@ -740,8 +702,7 @@ class TestCopyrightProtectionNetwork:
         assert len(takedown_notice) > 100  # Should be substantial
     
     def test_content_id_system(self, protection_config, content_samples, copyright_database):
-        """Test Content ID system functionality"""
-        network = CopyrightProtectionNetwork(protection_config)
+        """Test Content ID system functionality"""        network = CopyrightProtectionNetwork(protection_config)
         network.eval()
         
         # Register content in Content ID system
@@ -772,8 +733,7 @@ class TestCopyrightProtectionNetwork:
         assert "policy_action" in match_result
     
     def test_blockchain_copyright_verification(self, protection_config, content_samples):
-        """Test blockchain-based copyright verification"""
-        network = CopyrightProtectionNetwork(protection_config)
+        """Test blockchain-based copyright verification"""        network = CopyrightProtectionNetwork(protection_config)
         network.eval()
         
         content = content_samples["original_images"][:1]
@@ -802,11 +762,9 @@ class TestCopyrightProtectionNetwork:
 
 
 class TestProtectionNetworksPerformance:
-    """Performance tests for protection networks"""
-    
+    """Performance tests for protection networks"""    
     def test_fingerprinting_speed(self, protection_config, content_samples):
-        """Test fingerprinting speed"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test fingerprinting speed"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         content = content_samples["original_audio"][:10]
@@ -832,8 +790,7 @@ class TestProtectionNetworksPerformance:
         assert avg_time < 1000  # Less than 1 second for 10 samples
     
     def test_plagiarism_detection_speed(self, protection_config, plagiarism_corpus):
-        """Test plagiarism detection speed"""
-        network = PlagiarismDetectionNetwork(protection_config)
+        """Test plagiarism detection speed"""        network = PlagiarismDetectionNetwork(protection_config)
         network.eval()
         
         query_doc = plagiarism_corpus["query_documents"][:1]
@@ -854,8 +811,7 @@ class TestProtectionNetworksPerformance:
         assert detection_time < 2000  # Less than 2 seconds
     
     def test_deepfake_detection_speed(self, protection_config, content_samples):
-        """Test deepfake detection speed"""
-        network = DeepfakeDetectionNetwork(protection_config)
+        """Test deepfake detection speed"""        network = DeepfakeDetectionNetwork(protection_config)
         network.eval()
         
         video_content = content_samples["authentic_video"][:1]
@@ -872,8 +828,7 @@ class TestProtectionNetworksPerformance:
     
     @pytest.mark.skipif(not torch.cuda.is_available(), reason="CUDA not available")
     def test_gpu_acceleration(self, protection_config, content_samples):
-        """Test GPU acceleration for protection networks"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test GPU acceleration for protection networks"""        network = ContentFingerprintingNetwork(protection_config)
         content = content_samples["original_audio"][:5]
         
         # CPU timing
@@ -903,11 +858,9 @@ class TestProtectionNetworksPerformance:
 
 
 class TestProtectionNetworksRobustness:
-    """Robustness tests for protection networks"""
-    
+    """Robustness tests for protection networks"""    
     def test_adversarial_attack_resistance(self, protection_config, content_samples):
-        """Test resistance to adversarial attacks"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test resistance to adversarial attacks"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         original_content = content_samples["original_audio"][:1]
@@ -926,8 +879,7 @@ class TestProtectionNetworksRobustness:
         assert similarity.item() > 0.7  # Still high similarity despite attack
     
     def test_compression_robustness(self, protection_config, content_samples):
-        """Test robustness to compression artifacts"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test robustness to compression artifacts"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         original_content = content_samples["original_video"][:1]
@@ -945,8 +897,7 @@ class TestProtectionNetworksRobustness:
         assert similarity.item() > 0.6
     
     def test_format_conversion_robustness(self, protection_config, content_samples):
-        """Test robustness to format conversions"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test robustness to format conversions"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         original_audio = content_samples["original_audio"][:1]
@@ -968,8 +919,7 @@ class TestProtectionNetworksRobustness:
         assert similarity.item() > 0.4
     
     def test_partial_content_detection(self, protection_config, content_samples):
-        """Test detection of partial content usage"""
-        network = ContentFingerprintingNetwork(protection_config)
+        """Test detection of partial content usage"""        network = ContentFingerprintingNetwork(protection_config)
         network.eval()
         
         full_content = content_samples["original_video"][:1]
@@ -986,11 +936,9 @@ class TestProtectionNetworksRobustness:
 
 
 class TestProtectionNetworksIntegration:
-    """Integration tests for protection networks"""
-    
+    """Integration tests for protection networks"""    
     def test_comprehensive_content_protection_pipeline(self, protection_config, content_samples, copyright_database, plagiarism_corpus):
-        """Test complete content protection pipeline"""
-        # Initialize all protection networks
+        """Test complete content protection pipeline"""        # Initialize all protection networks
         fingerprinting_net = ContentFingerprintingNetwork(protection_config)
         plagiarism_net = PlagiarismDetectionNetwork(protection_config)
         deepfake_net = DeepfakeDetectionNetwork(protection_config)
@@ -1036,8 +984,7 @@ class TestProtectionNetworksIntegration:
         assert "infringement_detected" in copyright_check
     
     def test_creator_protection_workflow(self, protection_config, content_samples, copyright_database):
-        """Test typical creator protection workflow"""
-        fingerprinting_net = ContentFingerprintingNetwork(protection_config)
+        """Test typical creator protection workflow"""        fingerprinting_net = ContentFingerprintingNetwork(protection_config)
         copyright_net = CopyrightProtectionNetwork(protection_config)
         
         fingerprinting_net.eval()

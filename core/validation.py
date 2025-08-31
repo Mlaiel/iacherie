@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Core System Validation
+"""IA-Influencer-Agent Core System Validation
 ================================================================================
 Module: backend/core/validation.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ Contact: mlaiel@live.de
 
 MISSION: Validation complète du système core pour déploiement production
 """
-
 import os
 import sys
 import importlib
@@ -29,13 +27,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 class CoreSystemValidator:
-    """
-    Validateur complet du système core IA-Influencer-Agent
+    """    Validateur complet du système core IA-Influencer-Agent
     
     Effectue des vérifications exhaustives de tous les modules core
     pour garantir un déploiement production sans erreur.
-    """
-    
+    """    
     def __init__(self):
         self.validation_results = {
             "timestamp": datetime.now().isoformat(),
@@ -64,8 +60,7 @@ class CoreSystemValidator:
         ]
     
     def _get_system_info(self) -> Dict[str, Any]:
-        """Obtient les informations système"""
-        return {
+        """Obtient les informations système"""        return {
             "python_version": sys.version,
             "platform": sys.platform,
             "path": sys.path[:3],  # Premier 3 chemins seulement
@@ -73,16 +68,14 @@ class CoreSystemValidator:
         }
     
     def validate_module_import(self, module_name: str) -> Dict[str, Any]:
-        """
-        Valide l'importation d'un module core
+        """        Valide l'importation d'un module core
         
         Args:
             module_name: Nom du module à valider
             
         Returns:
             Dict avec résultats de validation
-        """
-        result = {
+        """        result = {
             "name": module_name,
             "status": "unknown",
             "import_success": False,
@@ -138,8 +131,7 @@ class CoreSystemValidator:
         return result
     
     def validate_all_modules(self) -> Dict[str, Any]:
-        """Valide tous les modules core"""
-        logger.info("🔍 Début validation complète des modules core...")
+        """Valide tous les modules core"""        logger.info("🔍 Début validation complète des modules core...")
         
         for module_name in self.core_modules:
             logger.info(f"   Validation module: {module_name}")
@@ -177,8 +169,7 @@ class CoreSystemValidator:
         return self.validation_results
     
     def validate_core_dependencies(self) -> Dict[str, Any]:
-        """Valide les dépendances core essentielles"""
-        dependencies_to_check = [
+        """Valide les dépendances core essentielles"""        dependencies_to_check = [
             ("fastapi", "Framework web"),
             ("pydantic", "Validation données"),
             ("sqlalchemy", "ORM base de données"),
@@ -217,8 +208,7 @@ class CoreSystemValidator:
         return dependency_results
     
     async def validate_core_performance(self) -> Dict[str, Any]:
-        """Valide les performances de base"""
-        performance_results = {
+        """Valide les performances de base"""        performance_results = {
             "import_time": 0,
             "memory_usage": 0,
             "initialization_time": 0
@@ -258,8 +248,7 @@ class CoreSystemValidator:
         return performance_results
     
     def validate_security_modules(self) -> Dict[str, Any]:
-        """Valide les modules de sécurité critiques"""
-        security_modules = ["security", "protection", "fingerprinting", "rights"]
+        """Valide les modules de sécurité critiques"""        security_modules = ["security", "protection", "fingerprinting", "rights"]
         security_results = {}
         
         for module_name in security_modules:
@@ -284,13 +273,11 @@ class CoreSystemValidator:
         return security_results
     
     async def run_complete_validation(self) -> Dict[str, Any]:
-        """
-        Exécute une validation complète du système core
+        """        Exécute une validation complète du système core
         
         Returns:
             Dict avec résultats complets de validation
-        """
-        logger.info("🚀 Début validation complète IA-Influencer-Agent Core System")
+        """        logger.info("🚀 Début validation complète IA-Influencer-Agent Core System")
         
         # 1. Validation modules
         logger.info("📋 Validation des modules...")
@@ -323,8 +310,7 @@ class CoreSystemValidator:
         return self.validation_results
     
     def generate_validation_report(self) -> str:
-        """Génère un rapport de validation lisible"""
-        report_lines = [
+        """Génère un rapport de validation lisible"""        report_lines = [
             "=" * 80,
             "🏭 RAPPORT VALIDATION IA-INFLUENCER-AGENT CORE SYSTEM",
             "=" * 80,
@@ -381,23 +367,19 @@ class CoreSystemValidator:
 
 # Fonctions utilitaires globales
 async def validate_core_system() -> Dict[str, Any]:
-    """
-    Valide complètement le système core
+    """    Valide complètement le système core
     
     Returns:
         Dict avec résultats de validation
-    """
-    validator = CoreSystemValidator()
+    """    validator = CoreSystemValidator()
     return await validator.run_complete_validation()
 
 def quick_validate_core() -> bool:
-    """
-    Validation rapide du système core
+    """    Validation rapide du système core
     
     Returns:
         bool: True si système valide
-    """
-    try:
+    """    try:
         # Test importation modules critiques
         from . import index, algorithms, managers, security
         
@@ -410,8 +392,7 @@ def quick_validate_core() -> bool:
         return False
 
 def print_validation_report():
-    """Affiche un rapport de validation formaté"""
-    async def _run_and_print():
+    """Affiche un rapport de validation formaté"""    async def _run_and_print():
         validator = CoreSystemValidator()
         await validator.run_complete_validation()
         print(validator.generate_validation_report())

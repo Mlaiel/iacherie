@@ -1,5 +1,4 @@
-"""
-Ml Manager - Ultra-Advanced Enterprise Management System
+"""Ml Manager - Ultra-Advanced Enterprise Management System
 
 Unified interface for the entire ml system providing comprehensive
 control, monitoring, and optimization capabilities.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -39,15 +37,13 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class MlSystemStatus:
-    """Overall ml system status"""
-    is_healthy: bool = True
+    """Overall ml system status"""    is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
     last_updated: datetime = None
 
 class MlManager(BaseAgent):
-    """
-    Master Ml Manager
+    """    Master Ml Manager
     
     Unified interface for the entire ml system providing:
     - Single point of control for all ml operations
@@ -56,8 +52,7 @@ class MlManager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -70,8 +65,7 @@ class MlManager(BaseAgent):
         logger.info("MlManager initialized")
 
     async def start(self) -> None:
-        """Start the complete ml system"""
-        if self.is_running:
+        """Start the complete ml system"""        if self.is_running:
             logger.warning("Ml system is already running")
             return
         
@@ -86,8 +80,7 @@ class MlManager(BaseAgent):
             raise
 
     async def get_system_status(self) -> MlSystemStatus:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             return MlSystemStatus(
                 is_healthy=self.is_running,
                 active_operations=0,  # Implementation specific
@@ -99,15 +92,13 @@ class MlManager(BaseAgent):
             return MlSystemStatus(is_healthy=False)
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire ml system"""
-        logger.info("Shutting down Ml System...")
+        """Graceful shutdown of the entire ml system"""        logger.info("Shutting down Ml System...")
         self.is_running = False
         await self.engine.shutdown()
         logger.info("Ml System shutdown complete")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""
-        try:
+        """Base agent interface implementation"""        try:
             # Implementation specific to ml operations
             result = await self.engine.process(data)
             return AgentResponse(success=True, data=result)

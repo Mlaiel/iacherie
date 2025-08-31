@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Remix Generation Module
+"""IA-Influencer-Agent Remix Generation Module
 ================================================================================
 Module: ai_engine/remix_generation/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,7 +20,6 @@ Remix generation → Quality enhancement → Collaborative editing → Export pr
 
 Technologies IA: WaveNet, MuseNet, AIVA, Magenta, Jukebox, Neural Style Transfer
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"

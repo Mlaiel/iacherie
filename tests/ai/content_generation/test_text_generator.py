@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Text Generator Tests
+"""Text Generator Tests
 
 Comprehensive tests for the TextGenerator class that handles
 advanced text content generation with AI models.
@@ -26,7 +23,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -47,12 +43,10 @@ from ai.content_generation.text_generator import (
 
 
 class TestTextGenerator:
-    """Test suite for TextGenerator"""
-    
+    """Test suite for TextGenerator"""    
     @pytest.fixture
     def generator(self):
-        """Create a text generator instance"""
-        config = {
+        """Create a text generator instance"""        config = {
             "model_name": "test_model",
             "max_tokens": 1000,
             "temperature": 0.7,
@@ -63,15 +57,13 @@ class TestTextGenerator:
     
     @pytest.fixture
     def mock_ai_client(self):
-        """Create a mock AI client"""
-        client = AsyncMock()
+        """Create a mock AI client"""        client = AsyncMock()
         client.generate_text.return_value = "Generated text content"
         return client
     
     @pytest.fixture
     def blog_request(self):
-        """Create a blog post generation request"""
-        return {
+        """Create a blog post generation request"""        return {
             "content_type": "blog_post",
             "topic": "Future of Artificial Intelligence",
             "target_audience": "tech professionals",
@@ -83,8 +75,7 @@ class TestTextGenerator:
     
     @pytest.fixture
     def social_request(self):
-        """Create a social media post request"""
-        return {
+        """Create a social media post request"""        return {
             "content_type": "social_post",
             "topic": "Daily motivation",
             "target_audience": "young professionals",
@@ -96,8 +87,7 @@ class TestTextGenerator:
     
     @pytest.fixture
     def email_request(self):
-        """Create an email marketing request"""
-        return {
+        """Create an email marketing request"""        return {
             "content_type": "email_marketing",
             "topic": "New product launch",
             "target_audience": "existing customers",
@@ -108,8 +98,7 @@ class TestTextGenerator:
         }
     
     def test_generator_initialization(self, generator):
-        """Test text generator initialization"""
-        assert generator is not None
+        """Test text generator initialization"""        assert generator is not None
         assert hasattr(generator, 'openai_client')
         assert hasattr(generator, 'tokenizer')
         assert hasattr(generator, 'social_templates')
@@ -122,8 +111,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_generate_blog_post(self, generator, blog_request, mock_ai_client):
-        """Test blog post generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test blog post generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             result = await generator.generate_content(blog_request)
             
             assert result is not None
@@ -133,8 +121,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_generate_social_media_post(self, generator, social_request, mock_ai_client):
-        """Test social media post generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test social media post generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             mock_ai_client.generate_text.return_value = "Motivational post content #motivation #success"
             
             result = await generator.generate_content(social_request)
@@ -145,8 +132,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_generate_email_marketing(self, generator, email_request, mock_ai_client):
-        """Test email marketing content generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test email marketing content generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             mock_ai_client.generate_text.return_value = "Email content from TechCorp. Shop Now!"
             
             result = await generator.generate_content(email_request)
@@ -157,11 +143,9 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_content_structure_generation(self, generator, blog_request, mock_ai_client):
-        """Test structured content generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test structured content generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             # Mock structured response
-            mock_ai_client.generate_text.return_value = """
-            # Introduction
+            mock_ai_client.generate_text.return_value = """            # Introduction
             This is the introduction section.
             
             ## Main Points
@@ -169,8 +153,7 @@ class TestTextGenerator:
             
             ## Conclusion
             This is the conclusion section.
-            """
-            
+            """            
             result = await generator.generate_content(blog_request)
             
             assert result is not None
@@ -179,8 +162,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_tone_adaptation(self, generator, mock_ai_client):
-        """Test tone adaptation in content generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test tone adaptation in content generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             tones = ["professional", "casual", "friendly", "authoritative", "playful"]
             
             for tone in tones:
@@ -201,8 +183,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_keyword_integration(self, generator, blog_request, mock_ai_client):
-        """Test keyword integration in generated content"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test keyword integration in generated content"""        with patch.object(generator, 'ai_client', mock_ai_client):
             mock_ai_client.generate_text.return_value = "Content about AI and machine learning in future technology"
             
             result = await generator.generate_content(blog_request)
@@ -214,8 +195,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_word_count_control(self, generator, mock_ai_client):
-        """Test word count control in generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test word count control in generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             word_counts = [100, 300, 500, 1000]
             
             for target_count in word_counts:
@@ -239,8 +219,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_multi_language_generation(self, generator, mock_ai_client):
-        """Test multi-language content generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test multi-language content generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             languages = ["en", "fr", "de", "es"]
             
             for language in languages:
@@ -261,8 +240,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_content_post_processing(self, generator, blog_request, mock_ai_client):
-        """Test content post-processing"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test content post-processing"""        with patch.object(generator, 'ai_client', mock_ai_client):
             # Mock raw content that needs post-processing
             mock_ai_client.generate_text.return_value = "raw content with formatting issues  and  extra spaces"
             
@@ -274,8 +252,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_error_handling_ai_failure(self, generator, blog_request, mock_ai_client):
-        """Test error handling when AI model fails"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test error handling when AI model fails"""        with patch.object(generator, 'ai_client', mock_ai_client):
             mock_ai_client.generate_text.side_effect = Exception("AI model unavailable")
             
             with pytest.raises(TextGenerationError):
@@ -283,8 +260,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_fallback_model_usage(self, generator, blog_request):
-        """Test fallback to alternative models"""
-        # Mock primary model failure, secondary model success
+        """Test fallback to alternative models"""        # Mock primary model failure, secondary model success
         with patch.object(generator, '_get_primary_model') as mock_primary:
             with patch.object(generator, '_get_fallback_model') as mock_fallback:
                 mock_primary.return_value = None
@@ -298,8 +274,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_content_quality_validation(self, generator, blog_request, mock_ai_client):
-        """Test content quality validation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test content quality validation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             # Mock low quality content
             mock_ai_client.generate_text.return_value = "bad quality"
             
@@ -310,8 +285,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_template_based_generation(self, generator, mock_ai_client):
-        """Test template-based content generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test template-based content generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             template_request = {
                 "content_type": "blog_post",
                 "template": "how_to_guide",
@@ -329,8 +303,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_batch_content_generation(self, generator, mock_ai_client):
-        """Test batch content generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test batch content generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             requests = []
             for i in range(3):
                 request = {
@@ -351,8 +324,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_content_refinement(self, generator, mock_ai_client):
-        """Test content refinement process"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test content refinement process"""        with patch.object(generator, 'ai_client', mock_ai_client):
             original_content = "Original content that needs refinement"
             refinement_instructions = "Make it more engaging and professional"
             
@@ -365,8 +337,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_style_consistency(self, generator, mock_ai_client):
-        """Test style consistency across content pieces"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test style consistency across content pieces"""        with patch.object(generator, 'ai_client', mock_ai_client):
             style_guide = {
                 "tone": "professional",
                 "voice": "authoritative",
@@ -392,8 +363,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_content_personalization(self, generator, mock_ai_client):
-        """Test content personalization"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test content personalization"""        with patch.object(generator, 'ai_client', mock_ai_client):
             personalization_data = {
                 "user_name": "John",
                 "user_interests": ["technology", "startups"],
@@ -418,8 +388,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_content_optimization_for_seo(self, generator, mock_ai_client):
-        """Test SEO optimization in content generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test SEO optimization in content generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             seo_requirements = {
                 "primary_keyword": "machine learning",
                 "secondary_keywords": ["AI", "data science", "algorithms"],
@@ -444,8 +413,7 @@ class TestTextGenerator:
             assert "machine learning" in result.lower() or "Generated" in result
     
     def test_content_validation_rules(self, generator):
-        """Test content validation rules"""
-        # Test various content validation scenarios
+        """Test content validation rules"""        # Test various content validation scenarios
         test_cases = [
             ("", False),  # Empty content
             ("Short", False),  # Too short
@@ -461,8 +429,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_concurrent_generation(self, generator, mock_ai_client):
-        """Test concurrent content generation"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test concurrent content generation"""        with patch.object(generator, 'ai_client', mock_ai_client):
             mock_ai_client.generate_text.return_value = "Concurrent content"
             
             requests = []
@@ -485,8 +452,7 @@ class TestTextGenerator:
     
     @pytest.mark.asyncio
     async def test_content_caching(self, generator, blog_request, mock_ai_client):
-        """Test content caching functionality"""
-        with patch.object(generator, 'ai_client', mock_ai_client):
+        """Test content caching functionality"""        with patch.object(generator, 'ai_client', mock_ai_client):
             mock_ai_client.generate_text.return_value = "Cached content"
             
             # First generation
@@ -501,12 +467,10 @@ class TestTextGenerator:
 
 
 class TestTextGeneratorConfiguration:
-    """Test suite for text generator configuration"""
-    
+    """Test suite for text generator configuration"""    
     @pytest.fixture
     def generator(self):
-        """Create a generator for configuration testing"""
-        config = {
+        """Create a generator for configuration testing"""        config = {
             "model_name": "test_model",
             "max_tokens": 1000,
             "temperature": 0.7,
@@ -516,8 +480,7 @@ class TestTextGeneratorConfiguration:
             return TextContentGenerator(config)
     
     def test_model_configuration(self, generator):
-        """Test AI model configuration"""
-        # Test default configuration
+        """Test AI model configuration"""        # Test default configuration
         config = generator.get_model_config()
         assert config is not None
         assert "primary_model" in config
@@ -525,8 +488,7 @@ class TestTextGeneratorConfiguration:
         assert "generation_parameters" in config
     
     def test_update_model_config(self, generator):
-        """Test updating model configuration"""
-        new_config = {
+        """Test updating model configuration"""        new_config = {
             "primary_model": "gpt-4",
             "temperature": 0.7,
             "max_tokens": 2000,
@@ -540,8 +502,7 @@ class TestTextGeneratorConfiguration:
         assert updated_config["temperature"] == 0.7
     
     def test_template_management(self, generator):
-        """Test template management"""
-        # Add custom template
+        """Test template management"""        # Add custom template
         custom_template = {
             "name": "custom_blog",
             "structure": ["intro", "body", "conclusion"],
@@ -555,8 +516,7 @@ class TestTextGeneratorConfiguration:
         assert "custom_blog" in templates
     
     def test_post_processor_configuration(self, generator):
-        """Test post-processor configuration"""
-        processors = generator.get_post_processors()
+        """Test post-processor configuration"""        processors = generator.get_post_processors()
         assert isinstance(processors, list)
         
         # Add custom post-processor

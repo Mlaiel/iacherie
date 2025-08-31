@@ -1,5 +1,4 @@
-"""
-Enterprise Cache Configuration Management
+"""Enterprise Cache Configuration Management
 
 Comprehensive configuration management system for cache deployment with
 environment-specific settings, dynamic reconfiguration, validation, and
@@ -29,7 +28,6 @@ Business Logic Integration:
 - Monetization data caching for real-time revenue analytics
 - Collaboration platform cache for creator discovery
 """
-
 import asyncio
 import logging
 import os
@@ -48,8 +46,7 @@ import psutil
 
 
 class ConfigurationScope(Enum):
-    """Configuration scope levels for multi-tenant cache management"""
-    GLOBAL = "global"
+    """Configuration scope levels for multi-tenant cache management"""    GLOBAL = "global"
     DATACENTER = "datacenter"
     NODE = "node"
     TENANT = "tenant"
@@ -59,8 +56,7 @@ class ConfigurationScope(Enum):
 
 
 class ConfigurationSource(Enum):
-    """Configuration sources with priority ordering"""
-    FILE = "file"
+    """Configuration sources with priority ordering"""    FILE = "file"
     ENVIRONMENT = "environment"
     DATABASE = "database"
     CONSUL = "consul"
@@ -71,8 +67,7 @@ class ConfigurationSource(Enum):
 
 
 class ContentTypeCache(Enum):
-    """Cache strategies per content type"""
-    AUDIO_FINGERPRINT = "audio_fingerprint"
+    """Cache strategies per content type"""    AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
     TEXT_FINGERPRINT = "text_fingerprint"
@@ -84,8 +79,7 @@ class ContentTypeCache(Enum):
 
 
 class CacheOptimizationLevel(Enum):
-    """AI-powered cache optimization levels"""
-    CONSERVATIVE = "conservative"
+    """AI-powered cache optimization levels"""    CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
     ADAPTIVE = "adaptive"
@@ -93,8 +87,7 @@ class CacheOptimizationLevel(Enum):
 
 @dataclass
 class SecurityConfiguration:
-    """Enterprise security configuration settings"""
-    encryption_enabled: bool = True
+    """Enterprise security configuration settings"""    encryption_enabled: bool = True
     encryption_algorithm: str = "AES-256-GCM"
     key_rotation_hours: int = 24
     access_control_enabled: bool = True
@@ -117,8 +110,7 @@ class SecurityConfiguration:
 
 @dataclass
 class PerformanceConfiguration:
-    """High-performance cache configuration optimized for content processing"""
-    max_memory_cache_size_mb: int = 2048
+    """High-performance cache configuration optimized for content processing"""    max_memory_cache_size_mb: int = 2048
     max_concurrent_operations: int = 2000
     operation_timeout_seconds: int = 45
     background_task_workers: int = 8
@@ -142,8 +134,7 @@ class PerformanceConfiguration:
 
 @dataclass
 class ContentCacheConfiguration:
-    """Content-specific cache configuration for multi-format support"""
-    audio_cache_ttl_hours: int = 168  # 7 days for audio fingerprints
+    """Content-specific cache configuration for multi-format support"""    audio_cache_ttl_hours: int = 168  # 7 days for audio fingerprints
     video_cache_ttl_hours: int = 72   # 3 days for video processing
     image_cache_ttl_hours: int = 48   # 2 days for image analysis
     text_cache_ttl_hours: int = 24    # 1 day for text analysis
@@ -179,8 +170,7 @@ class ContentCacheConfiguration:
 
 @dataclass
 class AIOptimizationConfiguration:
-    """AI-powered cache optimization settings"""
-    ml_prediction_enabled: bool = True
+    """AI-powered cache optimization settings"""    ml_prediction_enabled: bool = True
     content_prediction_model: str = "content_popularity_v2"
     user_behavior_analysis: bool = True
     predictive_warming_enabled: bool = True
@@ -206,8 +196,7 @@ class AIOptimizationConfiguration:
 
 @dataclass
 class DistributedConfiguration:
-    """Distributed cache configuration for enterprise scalability"""
-    enabled: bool = True
+    """Distributed cache configuration for enterprise scalability"""    enabled: bool = True
     cluster_name: str = "ia_influencer_cache_cluster"
     coordination_port: int = 7000
     heartbeat_interval_seconds: int = 30
@@ -233,8 +222,7 @@ class DistributedConfiguration:
 
 @dataclass
 class MonitoringConfiguration:
-    """Monitoring and metrics configuration"""
-    metrics_enabled: bool = True
+    """Monitoring and metrics configuration"""    metrics_enabled: bool = True
     metrics_collection_interval_seconds: int = 30
     metrics_retention_hours: int = 720  # 30 days
     alerting_enabled: bool = True
@@ -248,8 +236,7 @@ class MonitoringConfiguration:
 
 @dataclass
 class ContentConfiguration:
-    """Content-specific configuration"""
-    supported_formats: Set[str] = field(default_factory=lambda: {"audio", "video", "image", "text"})
+    """Content-specific configuration"""    supported_formats: Set[str] = field(default_factory=lambda: {"audio", "video", "image", "text"})
     max_content_size_mb: int = 100
     auto_thumbnail_generation: bool = True
     content_versioning_enabled: bool = True
@@ -260,26 +247,22 @@ class ContentConfiguration:
 
 
 class CacheConfiguration:
-    """
-    Enterprise cache configuration manager with support for multiple
+    """    Enterprise cache configuration manager with support for multiple
     environments, dynamic updates, and secure configuration management.
     """
-
     def __init__(
         self,
         config_file: Optional[str] = None,
         environment: str = "production",
         encryption_key: Optional[bytes] = None
     ):
-        """
-        Initialize cache configuration manager.
+        """        Initialize cache configuration manager.
         
         Args:
             config_file: Path to configuration file
             environment: Environment name (development, staging, production)
             encryption_key: Encryption key for secure configuration
-        """
-        self.config_file = config_file
+        """        self.config_file = config_file
         self.environment = environment
         self.encryption_key = encryption_key or Fernet.generate_key()
         self.cipher_suite = Fernet(self.encryption_key)
@@ -308,8 +291,7 @@ class CacheConfiguration:
         self._initialize_validation_schema()
 
     async def initialize(self) -> None:
-        """Initialize configuration manager"""
-        try:
+        """Initialize configuration manager"""        try:
             # Load configuration from sources
             await self.load_configuration()
             
@@ -324,8 +306,7 @@ class CacheConfiguration:
             raise
 
     async def shutdown(self) -> None:
-        """Shutdown configuration manager"""
-        try:
+        """Shutdown configuration manager"""        try:
             self._shutdown_event.set()
             
             if self._watch_task:
@@ -341,8 +322,7 @@ class CacheConfiguration:
         source: ConfigurationSource = ConfigurationSource.FILE,
         merge_with_existing: bool = True
     ) -> bool:
-        """
-        Load configuration from specified source.
+        """        Load configuration from specified source.
         
         Args:
             source: Configuration source to load from
@@ -350,8 +330,7 @@ class CacheConfiguration:
             
         Returns:
             bool: True if configuration loaded successfully
-        """
-        try:
+        """        try:
             config_data = {}
             
             if source == ConfigurationSource.FILE and self.config_file:
@@ -394,8 +373,7 @@ class CacheConfiguration:
         target: ConfigurationSource = ConfigurationSource.FILE,
         encrypt_sensitive: bool = True
     ) -> bool:
-        """
-        Save current configuration to specified target.
+        """        Save current configuration to specified target.
         
         Args:
             target: Target to save configuration to
@@ -403,8 +381,7 @@ class CacheConfiguration:
             
         Returns:
             bool: True if configuration saved successfully
-        """
-        try:
+        """        try:
             # Serialize configuration
             config_data = await self._serialize_configuration(encrypt_sensitive)
             
@@ -432,8 +409,7 @@ class CacheConfiguration:
         validate: bool = True,
         save_to_file: bool = True
     ) -> bool:
-        """
-        Update specific configuration section.
+        """        Update specific configuration section.
         
         Args:
             section: Configuration section to update
@@ -443,8 +419,7 @@ class CacheConfiguration:
             
         Returns:
             bool: True if update successful
-        """
-        try:
+        """        try:
             # Get current section configuration
             current_config = getattr(self, section, None)
             if current_config is None:
@@ -498,16 +473,14 @@ class CacheConfiguration:
         self,
         other_config: 'CacheConfiguration'
     ) -> Dict[str, Any]:
-        """
-        Get differences between this configuration and another.
+        """        Get differences between this configuration and another.
         
         Args:
             other_config: Other configuration to compare with
             
         Returns:
             Dict containing configuration differences
-        """
-        try:
+        """        try:
             current_data = await self._serialize_configuration(encrypt_sensitive=False)
             other_data = await other_config._serialize_configuration(encrypt_sensitive=False)
             
@@ -532,8 +505,7 @@ class CacheConfiguration:
         version: Optional[str] = None,
         steps_back: int = 1
     ) -> bool:
-        """
-        Rollback configuration to previous version.
+        """        Rollback configuration to previous version.
         
         Args:
             version: Specific version to rollback to
@@ -541,8 +513,7 @@ class CacheConfiguration:
             
         Returns:
             bool: True if rollback successful
-        """
-        try:
+        """        try:
             if not self._config_history:
                 self.logger.error("No configuration history available for rollback")
                 return False
@@ -583,22 +554,18 @@ class CacheConfiguration:
             return False
 
     def add_change_listener(self, listener: Callable[[str], None]) -> None:
-        """
-        Add configuration change listener.
+        """        Add configuration change listener.
         
         Args:
             listener: Callback function to call on configuration changes
-        """
-        self._change_listeners.append(listener)
+        """        self._change_listeners.append(listener)
 
     def remove_change_listener(self, listener: Callable[[str], None]) -> None:
-        """
-        Remove configuration change listener.
+        """        Remove configuration change listener.
         
         Args:
             listener: Callback function to remove
-        """
-        if listener in self._change_listeners:
+        """        if listener in self._change_listeners:
             self._change_listeners.remove(listener)
 
     # Properties for easy access
@@ -622,8 +589,7 @@ class CacheConfiguration:
     # Private helper methods
     
     def _initialize_validation_schema(self) -> None:
-        """Initialize configuration validation schema"""
-        self._validation_schema = {
+        """Initialize configuration validation schema"""        self._validation_schema = {
             "security": {
                 "encryption_enabled": {"type": "boolean"},
                 "encryption_algorithm": {"type": "string", "enum": ["AES-256-GCM", "AES-256-CBC"]},
@@ -646,8 +612,7 @@ class CacheConfiguration:
         }
 
     async def _load_from_file(self, file_path: str) -> Dict[str, Any]:
-        """Load configuration from YAML file"""
-        try:
+        """Load configuration from YAML file"""        try:
             with open(file_path, 'r', encoding='utf-8') as file:
                 if file_path.endswith('.yaml') or file_path.endswith('.yml'):
                     return yaml.safe_load(file)
@@ -661,8 +626,7 @@ class CacheConfiguration:
             return {}
 
     async def _load_from_environment(self) -> Dict[str, Any]:
-        """Load configuration from environment variables"""
-        config = {}
+        """Load configuration from environment variables"""        config = {}
         prefix = "CACHE_"
         
         for key, value in os.environ.items():
@@ -683,14 +647,12 @@ class CacheConfiguration:
         return config
 
     async def _load_from_database(self) -> Dict[str, Any]:
-        """Load configuration from database"""
-        # This would integrate with actual database
+        """Load configuration from database"""        # This would integrate with actual database
         # For now, return empty dict
         return {}
 
     async def _save_to_file(self, file_path: str, config_data: Dict[str, Any]) -> bool:
-        """Save configuration to file"""
-        try:
+        """Save configuration to file"""        try:
             # Ensure directory exists
             Path(file_path).parent.mkdir(parents=True, exist_ok=True)
             
@@ -707,14 +669,12 @@ class CacheConfiguration:
             return False
 
     async def _save_to_database(self, config_data: Dict[str, Any]) -> bool:
-        """Save configuration to database"""
-        # This would integrate with actual database
+        """Save configuration to database"""        # This would integrate with actual database
         # For now, return True
         return True
 
     async def _validate_configuration(self, config_data: Dict[str, Any]) -> bool:
-        """Validate configuration data against schema"""
-        try:
+        """Validate configuration data against schema"""        try:
             # Basic validation using schema
             for section, section_data in config_data.items():
                 if section not in self._validation_schema:
@@ -760,8 +720,7 @@ class CacheConfiguration:
             return False
 
     async def _merge_configuration(self, config_data: Dict[str, Any]) -> None:
-        """Merge configuration data with existing configuration"""
-        try:
+        """Merge configuration data with existing configuration"""        try:
             for section, section_data in config_data.items():
                 if hasattr(self, section) and isinstance(section_data, dict):
                     current_section = getattr(self, section)
@@ -774,8 +733,7 @@ class CacheConfiguration:
             raise
 
     async def _replace_configuration(self, config_data: Dict[str, Any]) -> None:
-        """Replace entire configuration with new data"""
-        try:
+        """Replace entire configuration with new data"""        try:
             # Replace each section
             if "security" in config_data:
                 self.security = SecurityConfiguration(**config_data["security"])
@@ -792,8 +750,7 @@ class CacheConfiguration:
             raise
 
     async def _serialize_configuration(self, encrypt_sensitive: bool = False) -> Dict[str, Any]:
-        """Serialize configuration to dictionary"""
-        try:
+        """Serialize configuration to dictionary"""        try:
             config_data = {
                 "security": asdict(self.security),
                 "performance": asdict(self.performance),
@@ -818,8 +775,7 @@ class CacheConfiguration:
             return {}
 
     async def _encrypt_sensitive_values(self, config_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Encrypt sensitive configuration values"""
-        sensitive_keys = {
+        """Encrypt sensitive configuration values"""        sensitive_keys = {
             "encryption_key", "password", "secret", "token", "api_key"
         }
         
@@ -841,8 +797,7 @@ class CacheConfiguration:
         return encrypt_recursive(config_data)
 
     async def _update_version_info(self) -> None:
-        """Update configuration version and checksum"""
-        try:
+        """Update configuration version and checksum"""        try:
             # Calculate checksum
             config_data = await self._serialize_configuration(encrypt_sensitive=False)
             config_json = json.dumps(config_data, sort_keys=True)
@@ -868,8 +823,7 @@ class CacheConfiguration:
             self.logger.error(f"Error updating version info: {str(e)}")
 
     async def _notify_change_listeners(self, change_type: str) -> None:
-        """Notify configuration change listeners"""
-        try:
+        """Notify configuration change listeners"""        try:
             for listener in self._change_listeners:
                 try:
                     if asyncio.iscoroutinefunction(listener):
@@ -882,8 +836,7 @@ class CacheConfiguration:
             self.logger.error(f"Error notifying change listeners: {str(e)}")
 
     async def _watch_configuration(self) -> None:
-        """Watch configuration file for changes"""
-        last_modified = None
+        """Watch configuration file for changes"""        last_modified = None
         
         while not self._shutdown_event.is_set():
             try:
@@ -904,8 +857,7 @@ class CacheConfiguration:
                 await asyncio.sleep(60)
 
     def _compute_section_diff(self, current: Dict[str, Any], other: Dict[str, Any]) -> Dict[str, Any]:
-        """Compute differences between configuration sections"""
-        diff = {}
+        """Compute differences between configuration sections"""        diff = {}
         
         # Find added/changed keys
         for key, value in current.items():

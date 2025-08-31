@@ -1,5 +1,4 @@
-"""
-Quality Validator - Quality assessment and scoring for IA Influencer Agent Platform
+"""Quality Validator - Quality assessment and scoring for IA Influencer Agent Platform
 ====================================================================================
 
 Comprehensive quality validation system with multi-dimensional quality assessment,
@@ -9,7 +8,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Tuple
@@ -25,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions."""
-    TECHNICAL = "technical"
+    """Quality assessment dimensions."""    TECHNICAL = "technical"
     AESTHETIC = "aesthetic"
     CONTENT = "content"
     USABILITY = "usability"
@@ -37,8 +34,7 @@ class QualityDimension(Enum):
 
 
 class QualityMetric(Enum):
-    """Individual quality metrics."""
-    # Technical metrics
+    """Individual quality metrics."""    # Technical metrics
     RESOLUTION = "resolution"
     BITRATE = "bitrate"
     COMPRESSION = "compression"
@@ -83,8 +79,7 @@ class QualityMetric(Enum):
 
 
 class QualityLevel(Enum):
-    """Quality assessment levels."""
-    EXCELLENT = "excellent"
+    """Quality assessment levels."""    EXCELLENT = "excellent"
     GOOD = "good"
     SATISFACTORY = "satisfactory"
     NEEDS_IMPROVEMENT = "needs_improvement"
@@ -93,8 +88,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Quality metrics data structure."""
-    dimension: QualityDimension
+    """Quality metrics data structure."""    dimension: QualityDimension
     metric: QualityMetric
     score: float
     weight: float = 1.0
@@ -115,8 +109,7 @@ class QualityMetrics:
 
 @dataclass
 class QualityAssessmentResult:
-    """Quality assessment result."""
-    overall_score: float
+    """Quality assessment result."""    overall_score: float
     quality_level: QualityLevel
     is_acceptable: bool
     
@@ -142,21 +135,17 @@ class QualityAssessmentResult:
 
 
 class AudioQualityAnalyzer:
-    """
-    Advanced audio quality analysis engine.
+    """    Advanced audio quality analysis engine.
     
     Provides comprehensive audio quality assessment including
     technical metrics, perceptual quality, and content analysis.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize audio quality analyzer.
+        """        Initialize audio quality analyzer.
         
         Args:
             config: Analyzer configuration
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         
         # Quality thresholds
         self.thresholds = self._init_audio_thresholds()
@@ -171,8 +160,7 @@ class AudioQualityAnalyzer:
         audio_data: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[QualityMetrics]:
-        """
-        Analyze audio quality comprehensively.
+        """        Analyze audio quality comprehensively.
         
         Args:
             audio_data: Audio data or file path
@@ -180,8 +168,7 @@ class AudioQualityAnalyzer:
             
         Returns:
             List of quality metrics
-        """
-        metrics = []
+        """        metrics = []
         
         try:
             # Technical quality analysis
@@ -204,8 +191,7 @@ class AudioQualityAnalyzer:
         audio_data: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]]
     ) -> List[QualityMetrics]:
-        """Analyze technical audio quality metrics."""
-        metrics = []
+        """Analyze technical audio quality metrics."""        metrics = []
         
         try:
             # Bitrate analysis
@@ -258,8 +244,7 @@ class AudioQualityAnalyzer:
             return []
     
     async def _analyze_perceptual_audio_quality(self, audio_data: Union[bytes, str, Dict[str, Any]]) -> List[QualityMetrics]:
-        """Analyze perceptual audio quality."""
-        metrics = []
+        """Analyze perceptual audio quality."""        metrics = []
         
         try:
             # Simulate perceptual quality analysis
@@ -291,8 +276,7 @@ class AudioQualityAnalyzer:
             return []
     
     async def _analyze_audio_content_quality(self, audio_data: Union[bytes, str, Dict[str, Any]]) -> List[QualityMetrics]:
-        """Analyze audio content quality."""
-        metrics = []
+        """Analyze audio content quality."""        metrics = []
         
         try:
             # Content completeness (simulated)
@@ -312,8 +296,7 @@ class AudioQualityAnalyzer:
             return []
     
     def _calculate_bitrate_score(self, bitrate: int) -> float:
-        """Calculate bitrate quality score."""
-        try:
+        """Calculate bitrate quality score."""        try:
             if bitrate >= 320000:
                 return 100.0
             elif bitrate >= 256000:
@@ -330,8 +313,7 @@ class AudioQualityAnalyzer:
             return 0.0
     
     def _calculate_sample_rate_score(self, sample_rate: int) -> float:
-        """Calculate sample rate quality score."""
-        try:
+        """Calculate sample rate quality score."""        try:
             if sample_rate >= 48000:
                 return 100.0
             elif sample_rate >= 44100:
@@ -344,8 +326,7 @@ class AudioQualityAnalyzer:
             return 0.0
     
     def _calculate_dynamic_range_score(self, dynamic_range: float) -> float:
-        """Calculate dynamic range quality score."""
-        try:
+        """Calculate dynamic range quality score."""        try:
             if dynamic_range >= 14.0:
                 return 100.0
             elif dynamic_range >= 10.0:
@@ -358,8 +339,7 @@ class AudioQualityAnalyzer:
             return 0.0
     
     async def _calculate_dynamic_range(self, audio_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Calculate audio dynamic range (simulated)."""
-        try:
+        """Calculate audio dynamic range (simulated)."""        try:
             # Simulate dynamic range calculation
             # In real implementation, this would analyze the audio signal
             return 12.5  # Simulated DR value
@@ -367,24 +347,21 @@ class AudioQualityAnalyzer:
             return 0.0
     
     async def _analyze_audio_clarity(self, audio_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze audio clarity (simulated)."""
-        try:
+        """Analyze audio clarity (simulated)."""        try:
             # Simulate clarity analysis
             return 78.0  # Simulated clarity score
         except Exception:
             return 0.0
     
     async def _analyze_audio_noise(self, audio_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze audio noise level (simulated)."""
-        try:
+        """Analyze audio noise level (simulated)."""        try:
             # Simulate noise analysis (higher score = less noise)
             return 82.0  # Simulated noise score
         except Exception:
             return 0.0
     
     def _get_bitrate_suggestions(self, bitrate: int) -> List[str]:
-        """Get bitrate improvement suggestions."""
-        suggestions = []
+        """Get bitrate improvement suggestions."""        suggestions = []
         
         if bitrate < 128000:
             suggestions.append("Consider increasing bitrate to at least 128kbps for acceptable quality")
@@ -394,8 +371,7 @@ class AudioQualityAnalyzer:
         return suggestions
     
     def _get_noise_suggestions(self, noise_score: float) -> List[str]:
-        """Get noise reduction suggestions."""
-        suggestions = []
+        """Get noise reduction suggestions."""        suggestions = []
         
         if noise_score < 70:
             suggestions.append("Consider noise reduction to improve audio quality")
@@ -404,8 +380,7 @@ class AudioQualityAnalyzer:
         return suggestions
     
     def _init_audio_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize audio quality thresholds."""
-        return {
+        """Initialize audio quality thresholds."""        return {
             "bitrate": {
                 "excellent": 320000,
                 "good": 256000,
@@ -428,21 +403,17 @@ class AudioQualityAnalyzer:
 
 
 class VideoQualityAnalyzer:
-    """
-    Advanced video quality analysis engine.
+    """    Advanced video quality analysis engine.
     
     Provides comprehensive video quality assessment including
     technical metrics, visual quality, and content analysis.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize video quality analyzer.
+        """        Initialize video quality analyzer.
         
         Args:
             config: Analyzer configuration
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         
         # Quality thresholds
         self.thresholds = self._init_video_thresholds()
@@ -454,8 +425,7 @@ class VideoQualityAnalyzer:
         video_data: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[QualityMetrics]:
-        """
-        Analyze video quality comprehensively.
+        """        Analyze video quality comprehensively.
         
         Args:
             video_data: Video data or file path
@@ -463,8 +433,7 @@ class VideoQualityAnalyzer:
             
         Returns:
             List of quality metrics
-        """
-        metrics = []
+        """        metrics = []
         
         try:
             # Technical quality analysis
@@ -487,8 +456,7 @@ class VideoQualityAnalyzer:
         video_data: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]]
     ) -> List[QualityMetrics]:
-        """Analyze technical video quality metrics."""
-        metrics = []
+        """Analyze technical video quality metrics."""        metrics = []
         
         try:
             # Resolution analysis
@@ -538,8 +506,7 @@ class VideoQualityAnalyzer:
             return []
     
     async def _analyze_visual_video_quality(self, video_data: Union[bytes, str, Dict[str, Any]]) -> List[QualityMetrics]:
-        """Analyze visual video quality."""
-        metrics = []
+        """Analyze visual video quality."""        metrics = []
         
         try:
             # Sharpness analysis (simulated)
@@ -580,8 +547,7 @@ class VideoQualityAnalyzer:
             return []
     
     async def _analyze_video_content_quality(self, video_data: Union[bytes, str, Dict[str, Any]]) -> List[QualityMetrics]:
-        """Analyze video content quality."""
-        metrics = []
+        """Analyze video content quality."""        metrics = []
         
         try:
             # Composition analysis (simulated)
@@ -602,8 +568,7 @@ class VideoQualityAnalyzer:
             return []
     
     def _calculate_resolution_score(self, resolution: Tuple[int, int]) -> float:
-        """Calculate resolution quality score."""
-        try:
+        """Calculate resolution quality score."""        try:
             width, height = resolution
             pixels = width * height
             
@@ -621,8 +586,7 @@ class VideoQualityAnalyzer:
             return 0.0
     
     def _calculate_fps_score(self, fps: float) -> float:
-        """Calculate frame rate quality score."""
-        try:
+        """Calculate frame rate quality score."""        try:
             if fps >= 60:
                 return 100.0
             elif fps >= 30:
@@ -637,8 +601,7 @@ class VideoQualityAnalyzer:
             return 0.0
     
     def _calculate_video_bitrate_score(self, bitrate: int, resolution: Tuple[int, int]) -> float:
-        """Calculate video bitrate quality score based on resolution."""
-        try:
+        """Calculate video bitrate quality score based on resolution."""        try:
             width, height = resolution
             pixels = width * height
             
@@ -666,40 +629,35 @@ class VideoQualityAnalyzer:
             return 0.0
     
     async def _analyze_video_sharpness(self, video_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze video sharpness (simulated)."""
-        try:
+        """Analyze video sharpness (simulated)."""        try:
             # Simulate sharpness analysis
             return 76.0  # Simulated sharpness score
         except Exception:
             return 0.0
     
     async def _analyze_video_contrast(self, video_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze video contrast (simulated)."""
-        try:
+        """Analyze video contrast (simulated)."""        try:
             # Simulate contrast analysis
             return 82.0  # Simulated contrast score
         except Exception:
             return 0.0
     
     async def _analyze_color_balance(self, video_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze color balance (simulated)."""
-        try:
+        """Analyze color balance (simulated)."""        try:
             # Simulate color balance analysis
             return 79.0  # Simulated color balance score
         except Exception:
             return 0.0
     
     async def _analyze_video_composition(self, video_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze video composition (simulated)."""
-        try:
+        """Analyze video composition (simulated)."""        try:
             # Simulate composition analysis
             return 73.0  # Simulated composition score
         except Exception:
             return 0.0
     
     def _init_video_thresholds(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize video quality thresholds."""
-        return {
+        """Initialize video quality thresholds."""        return {
             "resolution": {
                 "4k": (3840, 2160),
                 "fullhd": (1920, 1080),
@@ -721,21 +679,17 @@ class VideoQualityAnalyzer:
 
 
 class ImageQualityAnalyzer:
-    """
-    Advanced image quality analysis engine.
+    """    Advanced image quality analysis engine.
     
     Provides comprehensive image quality assessment including
     technical metrics, aesthetic quality, and content analysis.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize image quality analyzer.
+        """        Initialize image quality analyzer.
         
         Args:
             config: Analyzer configuration
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         
         # Quality thresholds
         self.thresholds = self._init_image_thresholds()
@@ -747,8 +701,7 @@ class ImageQualityAnalyzer:
         image_data: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[QualityMetrics]:
-        """
-        Analyze image quality comprehensively.
+        """        Analyze image quality comprehensively.
         
         Args:
             image_data: Image data or file path
@@ -756,8 +709,7 @@ class ImageQualityAnalyzer:
             
         Returns:
             List of quality metrics
-        """
-        metrics = []
+        """        metrics = []
         
         try:
             # Technical quality analysis
@@ -780,8 +732,7 @@ class ImageQualityAnalyzer:
         image_data: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]]
     ) -> List[QualityMetrics]:
-        """Analyze technical image quality metrics."""
-        metrics = []
+        """Analyze technical image quality metrics."""        metrics = []
         
         try:
             # Resolution analysis
@@ -819,8 +770,7 @@ class ImageQualityAnalyzer:
             return []
     
     async def _analyze_aesthetic_image_quality(self, image_data: Union[bytes, str, Dict[str, Any]]) -> List[QualityMetrics]:
-        """Analyze aesthetic image quality."""
-        metrics = []
+        """Analyze aesthetic image quality."""        metrics = []
         
         try:
             # Sharpness analysis (simulated)
@@ -861,8 +811,7 @@ class ImageQualityAnalyzer:
             return []
     
     async def _analyze_image_content_quality(self, image_data: Union[bytes, str, Dict[str, Any]]) -> List[QualityMetrics]:
-        """Analyze image content quality."""
-        metrics = []
+        """Analyze image content quality."""        metrics = []
         
         try:
             # Composition analysis (simulated)
@@ -883,8 +832,7 @@ class ImageQualityAnalyzer:
             return []
     
     def _calculate_image_resolution_score(self, resolution: Tuple[int, int]) -> float:
-        """Calculate image resolution quality score."""
-        try:
+        """Calculate image resolution quality score."""        try:
             width, height = resolution
             pixels = width * height
             
@@ -902,8 +850,7 @@ class ImageQualityAnalyzer:
             return 0.0
     
     def _calculate_color_depth_score(self, color_depth: int) -> float:
-        """Calculate color depth quality score."""
-        try:
+        """Calculate color depth quality score."""        try:
             if color_depth >= 16:
                 return 100.0
             elif color_depth >= 10:
@@ -916,40 +863,35 @@ class ImageQualityAnalyzer:
             return 0.0
     
     async def _analyze_image_sharpness(self, image_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze image sharpness (simulated)."""
-        try:
+        """Analyze image sharpness (simulated)."""        try:
             # Simulate sharpness analysis
             return 84.0  # Simulated sharpness score
         except Exception:
             return 0.0
     
     async def _analyze_image_noise(self, image_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze image noise (simulated)."""
-        try:
+        """Analyze image noise (simulated)."""        try:
             # Simulate noise analysis (higher score = less noise)
             return 77.0  # Simulated noise score
         except Exception:
             return 0.0
     
     async def _analyze_image_lighting(self, image_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze image lighting (simulated)."""
-        try:
+        """Analyze image lighting (simulated)."""        try:
             # Simulate lighting analysis
             return 81.0  # Simulated lighting score
         except Exception:
             return 0.0
     
     async def _analyze_image_composition(self, image_data: Union[bytes, str, Dict[str, Any]]) -> float:
-        """Analyze image composition (simulated)."""
-        try:
+        """Analyze image composition (simulated)."""        try:
             # Simulate composition analysis
             return 75.0  # Simulated composition score
         except Exception:
             return 0.0
     
     def _init_image_thresholds(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize image quality thresholds."""
-        return {
+        """Initialize image quality thresholds."""        return {
             "resolution": {
                 "4k": (3840, 2160),
                 "fullhd": (1920, 1080),
@@ -990,8 +932,7 @@ class ImageQualityAnalyzer:
 
 
 class QualityLevel(Enum):
-    """Quality assessment levels."""
-    EXCELLENT = "excellent"
+    """Quality assessment levels."""    EXCELLENT = "excellent"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
     POOR = "poor"
@@ -1000,8 +941,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityScore:
-    """Individual quality metric score."""
-    metric: QualityMetric
+    """Individual quality metric score."""    metric: QualityMetric
     score: float  # 0-100
     weight: float = 1.0
     confidence: float = 1.0
@@ -1025,8 +965,7 @@ class QualityScore:
 
 @dataclass
 class DimensionScore:
-    """Quality dimension assessment result."""
-    dimension: QualityDimension
+    """Quality dimension assessment result."""    dimension: QualityDimension
     overall_score: float  # 0-100
     weight: float = 1.0
     confidence: float = 1.0
@@ -1044,14 +983,12 @@ class DimensionScore:
     
     @property
     def weighted_score(self) -> float:
-        """Calculate weighted score."""
-        return self.overall_score * self.weight
+        """Calculate weighted score."""        return self.overall_score * self.weight
 
 
 @dataclass
 class QualityValidationResult:
-    """Comprehensive quality validation result."""
-    overall_score: float  # 0-100
+    """Comprehensive quality validation result."""    overall_score: float  # 0-100
     overall_level: QualityLevel
     is_acceptable: bool
     
@@ -1087,8 +1024,7 @@ class QualityValidationResult:
     
     @property
     def weighted_total_score(self) -> float:
-        """Calculate total weighted score."""
-        if not self.dimension_scores:
+        """Calculate total weighted score."""        if not self.dimension_scores:
             return self.overall_score
         
         total_weight = sum(dim.weight for dim in self.dimension_scores)
@@ -1100,28 +1036,24 @@ class QualityValidationResult:
 
 
 class QualityValidator:
-    """
-    Comprehensive quality validator for the IA Influencer Agent Platform.
+    """    Comprehensive quality validator for the IA Influencer Agent Platform.
     
     Provides multi-dimensional quality assessment with scoring algorithms,
     benchmarking, and improvement recommendations for creator content.
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
         enable_ai_analysis: bool = True,
         benchmark_dataset: Optional[str] = None
     ):
-        """
-        Initialize quality validator.
+        """        Initialize quality validator.
         
         Args:
             config: Validator configuration
             enable_ai_analysis: Enable AI-powered quality analysis
             benchmark_dataset: Benchmark dataset for comparison
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.enable_ai_analysis = enable_ai_analysis
         self.benchmark_dataset = benchmark_dataset
         
@@ -1151,8 +1083,7 @@ class QualityValidator:
         metadata: Optional[Dict[str, Any]] = None,
         custom_weights: Optional[Dict[str, float]] = None
     ) -> QualityValidationResult:
-        """
-        Perform comprehensive quality validation.
+        """        Perform comprehensive quality validation.
         
         Args:
             content_path: Path to content file
@@ -1163,8 +1094,7 @@ class QualityValidator:
             
         Returns:
             Quality validation result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Prepare content data
@@ -1240,8 +1170,7 @@ class QualityValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> DimensionScore:
-        """
-        Assess specific quality dimension.
+        """        Assess specific quality dimension.
         
         Args:
             dimension: Quality dimension to assess
@@ -1251,8 +1180,7 @@ class QualityValidator:
             
         Returns:
             Dimension score
-        """
-        try:
+        """        try:
             return await self._assess_quality_dimension(
                 dimension, content_data, content_type, metadata
             )
@@ -1271,8 +1199,7 @@ class QualityValidator:
         content_b: Union[str, bytes],
         content_type: str
     ) -> Dict[str, Any]:
-        """
-        Compare quality between two content items.
+        """        Compare quality between two content items.
         
         Args:
             content_a: First content item
@@ -1281,8 +1208,7 @@ class QualityValidator:
             
         Returns:
             Quality comparison result
-        """
-        try:
+        """        try:
             # Validate both items
             result_a = await self.validate_quality(
                 content_path=content_a if isinstance(content_a, str) else None,
@@ -1338,8 +1264,7 @@ class QualityValidator:
         validation_result: QualityValidationResult,
         target_score: float = 80.0
     ) -> Dict[str, Any]:
-        """
-        Generate quality improvement plan.
+        """        Generate quality improvement plan.
         
         Args:
             validation_result: Current quality validation result
@@ -1347,8 +1272,7 @@ class QualityValidator:
             
         Returns:
             Quality improvement plan
-        """
-        try:
+        """        try:
             plan = {
                 "current_score": validation_result.overall_score,
                 "target_score": target_score,
@@ -1419,8 +1343,7 @@ class QualityValidator:
         metadata: Optional[Dict[str, Any]] = None,
         content_path: Optional[Path] = None
     ) -> DimensionScore:
-        """Assess specific quality dimension."""
-        start_time = time.time()
+        """Assess specific quality dimension."""        start_time = time.time()
         
         try:
             dimension_score = DimensionScore(
@@ -1484,8 +1407,7 @@ class QualityValidator:
         metadata: Optional[Dict[str, Any]] = None,
         content_path: Optional[Path] = None
     ) -> QualityScore:
-        """Assess individual quality metric."""
-        try:
+        """Assess individual quality metric."""        try:
             assessment_start = time.time()
             
             # Get metric weight
@@ -1537,8 +1459,7 @@ class QualityValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ):
-        """Assess technical quality metrics."""
-        try:
+        """Assess technical quality metrics."""        try:
             metric = quality_score.metric
             
             if metric == QualityMetric.RESOLUTION:
@@ -1562,8 +1483,7 @@ class QualityValidator:
         content_data: bytes,
         content_type: str
     ):
-        """Assess aesthetic quality metrics."""
-        try:
+        """Assess aesthetic quality metrics."""        try:
             metric = quality_score.metric
             
             # Would use AI models for aesthetic assessment
@@ -1597,8 +1517,7 @@ class QualityValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ):
-        """Assess content quality metrics."""
-        try:
+        """Assess content quality metrics."""        try:
             metric = quality_score.metric
             
             if metric == QualityMetric.RELEVANCE:
@@ -1624,8 +1543,7 @@ class QualityValidator:
         content_data: bytes,
         content_type: str
     ):
-        """Assess usability quality metrics."""
-        try:
+        """Assess usability quality metrics."""        try:
             metric = quality_score.metric
             
             if metric == QualityMetric.READABILITY:
@@ -1647,8 +1565,7 @@ class QualityValidator:
         content_data: bytes,
         content_type: str
     ):
-        """Assess performance quality metrics."""
-        try:
+        """Assess performance quality metrics."""        try:
             metric = quality_score.metric
             
             if metric == QualityMetric.FILE_SIZE:
@@ -1672,8 +1589,7 @@ class QualityValidator:
         content_data: bytes,
         content_type: str
     ):
-        """Assess engagement quality metrics."""
-        try:
+        """Assess engagement quality metrics."""        try:
             metric = quality_score.metric
             
             if metric == QualityMetric.APPEAL:
@@ -1696,8 +1612,7 @@ class QualityValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ):
-        """Assess resolution quality."""
-        try:
+        """Assess resolution quality."""        try:
             # Extract resolution from metadata or analyze content
             resolution = None
             
@@ -1753,8 +1668,7 @@ class QualityValidator:
             quality_score.feedback = f"Resolution assessment failed: {str(e)}"
     
     async def _assess_file_size(self, content_data: bytes, content_type: str) -> float:
-        """Assess file size appropriateness."""
-        try:
+        """Assess file size appropriateness."""        try:
             file_size = len(content_data)
             
             # Size thresholds by content type (in bytes)
@@ -1780,8 +1694,7 @@ class QualityValidator:
             return 50.0
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score."""
-        if score >= 90:
+        """Determine quality level from score."""        if score >= 90:
             return QualityLevel.EXCELLENT
         elif score >= 75:
             return QualityLevel.GOOD
@@ -1793,8 +1706,7 @@ class QualityValidator:
             return QualityLevel.UNACCEPTABLE
     
     def _get_dimension_metrics(self, dimension: QualityDimension, content_type: str) -> List[QualityMetric]:
-        """Get applicable metrics for dimension and content type."""
-        dimension_metrics = {
+        """Get applicable metrics for dimension and content type."""        dimension_metrics = {
             QualityDimension.TECHNICAL: [
                 QualityMetric.RESOLUTION, QualityMetric.BITRATE, QualityMetric.COMPRESSION,
                 QualityMetric.COLOR_DEPTH, QualityMetric.FRAME_RATE, QualityMetric.AUDIO_QUALITY
@@ -1830,8 +1742,7 @@ class QualityValidator:
         return metrics
     
     def _create_error_result(self, error_message: str) -> QualityValidationResult:
-        """Create error validation result."""
-        return QualityValidationResult(
+        """Create error validation result."""        return QualityValidationResult(
             overall_score=0.0,
             overall_level=QualityLevel.UNACCEPTABLE,
             is_acceptable=False,
@@ -1840,8 +1751,7 @@ class QualityValidator:
         )
     
     def _init_dimension_weights(self) -> Dict[str, Dict[str, float]]:
-        """Initialize dimension weights by content type."""
-        return {
+        """Initialize dimension weights by content type."""        return {
             "image": {
                 "technical": 0.3,
                 "aesthetic": 0.4,
@@ -1870,8 +1780,7 @@ class QualityValidator:
         }
     
     def _init_metric_weights(self) -> Dict[str, Dict[str, float]]:
-        """Initialize metric weights by content type."""
-        return {
+        """Initialize metric weights by content type."""        return {
             "image": {
                 "resolution": 1.5,
                 "composition": 1.3,
@@ -1895,8 +1804,7 @@ class QualityValidator:
         }
     
     def _init_quality_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize quality thresholds."""
-        return {
+        """Initialize quality thresholds."""        return {
             "excellent": 90.0,
             "good": 75.0,
             "acceptable": 60.0,
@@ -1904,8 +1812,7 @@ class QualityValidator:
         }
     
     def _init_assessment_methods(self) -> Dict[str, Callable]:
-        """Initialize assessment methods."""
-        return {
+        """Initialize assessment methods."""        return {
             "technical": self._assess_technical_metric,
             "aesthetic": self._assess_aesthetic_metric,
             "content": self._assess_content_metric,
@@ -1915,8 +1822,7 @@ class QualityValidator:
         }
     
     def _load_benchmark_data(self) -> Dict[str, Any]:
-        """Load benchmark data for comparison."""
-        return {
+        """Load benchmark data for comparison."""        return {
             "industry_averages": {
                 "image": {"overall": 72.5, "technical": 78.0, "aesthetic": 69.0},
                 "video": {"overall": 68.0, "technical": 75.0, "aesthetic": 65.0},
@@ -1939,21 +1845,17 @@ class QualityValidator:
 
 
 class QualityValidator:
-    """
-    Comprehensive quality validation engine for creator content.
+    """    Comprehensive quality validation engine for creator content.
     
     Provides multi-dimensional quality assessment with specialized
     analyzers for different content types and advanced scoring algorithms.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize quality validator.
+        """        Initialize quality validator.
         
         Args:
             config: Validator configuration
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         
         # Quality analyzers
         self.audio_analyzer = AudioQualityAnalyzer(config.get("audio", {}))
@@ -1975,8 +1877,7 @@ class QualityValidator:
         metadata: Optional[Dict[str, Any]] = None,
         requirements: Optional[Dict[str, Any]] = None
     ) -> QualityAssessmentResult:
-        """
-        Validate content quality comprehensively.
+        """        Validate content quality comprehensively.
         
         Args:
             content: Content data to validate
@@ -1986,8 +1887,7 @@ class QualityValidator:
             
         Returns:
             Comprehensive quality assessment result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             logger.info(f"Starting quality validation for {content_type} content")
@@ -2054,8 +1954,7 @@ class QualityValidator:
         content_items: List[Dict[str, Any]],
         requirements: Optional[Dict[str, Any]] = None
     ) -> List[QualityAssessmentResult]:
-        """
-        Validate quality for multiple content items.
+        """        Validate quality for multiple content items.
         
         Args:
             content_items: List of content items to validate
@@ -2063,8 +1962,7 @@ class QualityValidator:
             
         Returns:
             List of quality assessment results
-        """
-        try:
+        """        try:
             logger.info(f"Starting batch quality validation for {len(content_items)} items")
             
             # Process items in parallel
@@ -2107,8 +2005,7 @@ class QualityValidator:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> List[QualityMetrics]:
-        """Collect quality metrics based on content type."""
-        metrics = []
+        """Collect quality metrics based on content type."""        metrics = []
         
         try:
             if content_type.lower() in ["audio", "mp3", "wav", "flac", "aac"]:
@@ -2139,8 +2036,7 @@ class QualityValidator:
         content: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]]
     ) -> List[QualityMetrics]:
-        """Analyze text content quality."""
-        metrics = []
+        """Analyze text content quality."""        metrics = []
         
         try:
             text_content = content if isinstance(content, str) else str(content)
@@ -2186,8 +2082,7 @@ class QualityValidator:
         content: Union[bytes, str, Dict[str, Any]],
         metadata: Optional[Dict[str, Any]]
     ) -> List[QualityMetrics]:
-        """Analyze generic content quality."""
-        metrics = []
+        """Analyze generic content quality."""        metrics = []
         
         try:
             # File size analysis
@@ -2219,8 +2114,7 @@ class QualityValidator:
             return []
     
     def _calculate_dimension_scores(self, metrics: List[QualityMetrics]) -> Dict[QualityDimension, float]:
-        """Calculate quality scores for each dimension."""
-        dimension_scores = {}
+        """Calculate quality scores for each dimension."""        dimension_scores = {}
         
         try:
             # Group metrics by dimension
@@ -2250,8 +2144,7 @@ class QualityValidator:
             return {}
     
     def _calculate_overall_score(self, dimension_scores: Dict[QualityDimension, float]) -> float:
-        """Calculate overall quality score."""
-        try:
+        """Calculate overall quality score."""        try:
             if not dimension_scores:
                 return 0.0
             
@@ -2274,8 +2167,7 @@ class QualityValidator:
             return 0.0
     
     def _determine_quality_level(self, score: float) -> QualityLevel:
-        """Determine quality level from score."""
-        try:
+        """Determine quality level from score."""        try:
             if score >= 90:
                 return QualityLevel.EXCELLENT
             elif score >= 75:
@@ -2295,8 +2187,7 @@ class QualityValidator:
         dimension_scores: Dict[QualityDimension, float],
         requirements: Optional[Dict[str, Any]]
     ) -> bool:
-        """Check if quality meets acceptability criteria."""
-        try:
+        """Check if quality meets acceptability criteria."""        try:
             # Default minimum score
             min_score = requirements.get("min_overall_score", 60.0) if requirements else 60.0
             
@@ -2323,8 +2214,7 @@ class QualityValidator:
         self,
         metrics: List[QualityMetrics]
     ) -> Tuple[List[str], List[str]]:
-        """Analyze quality strengths and weaknesses."""
-        strengths = []
+        """Analyze quality strengths and weaknesses."""        strengths = []
         weaknesses = []
         
         try:
@@ -2352,8 +2242,7 @@ class QualityValidator:
         metrics: List[QualityMetrics],
         requirements: Optional[Dict[str, Any]]
     ) -> List[str]:
-        """Generate quality improvement recommendations."""
-        recommendations = []
+        """Generate quality improvement recommendations."""        recommendations = []
         
         try:
             # Collect suggestions from metrics
@@ -2379,8 +2268,7 @@ class QualityValidator:
             return ["Review content quality before publication"]
     
     def _calculate_readability_score(self, text: str) -> float:
-        """Calculate text readability score (simulated)."""
-        try:
+        """Calculate text readability score (simulated)."""        try:
             # Simulate readability calculation
             # In real implementation, this would use readability formulas
             word_count = len(text.split())
@@ -2405,8 +2293,7 @@ class QualityValidator:
             return 50.0
     
     def _calculate_text_completeness_score(self, text: str) -> float:
-        """Calculate text completeness score."""
-        try:
+        """Calculate text completeness score."""        try:
             # Basic completeness indicators
             word_count = len(text.split())
             has_intro = any(word in text.lower() for word in ["introduction", "overview", "summary"])
@@ -2440,8 +2327,7 @@ class QualityValidator:
             return 50.0
     
     def _calculate_text_clarity_score(self, text: str) -> float:
-        """Calculate text clarity score."""
-        try:
+        """Calculate text clarity score."""        try:
             # Simple clarity indicators
             word_count = len(text.split())
             unique_words = len(set(text.lower().split()))
@@ -2465,8 +2351,7 @@ class QualityValidator:
             return 50.0
     
     def _calculate_file_size_score(self, file_size: int) -> float:
-        """Calculate file size quality score."""
-        try:
+        """Calculate file size quality score."""        try:
             # Size scoring (favors reasonable file sizes)
             mb_size = file_size / (1024 * 1024)
             
@@ -2483,8 +2368,7 @@ class QualityValidator:
             return 50.0
     
     def _init_quality_thresholds(self) -> Dict[str, float]:
-        """Initialize quality thresholds."""
-        return {
+        """Initialize quality thresholds."""        return {
             "excellent": 90.0,
             "good": 75.0,
             "satisfactory": 60.0,
@@ -2493,8 +2377,7 @@ class QualityValidator:
         }
     
     def _init_dimension_weights(self) -> Dict[QualityDimension, float]:
-        """Initialize dimension weights for overall scoring."""
-        return {
+        """Initialize dimension weights for overall scoring."""        return {
             QualityDimension.TECHNICAL: 1.2,
             QualityDimension.AESTHETIC: 1.0,
             QualityDimension.CONTENT: 1.3,

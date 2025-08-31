@@ -1,5 +1,4 @@
-"""
-Failover Manager - IA Influencer Agent Platform
+"""Failover Manager - IA Influencer Agent Platform
 
 Manages database failover and high availability:
 - Automatic failover detection and switching
@@ -12,7 +11,6 @@ Manages database failover and high availability:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Callable, Set
@@ -23,16 +21,14 @@ import random
 
 
 class EndpointStatus(Enum):
-    """Database endpoint status"""
-    HEALTHY = "healthy"
+    """Database endpoint status"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     UNKNOWN = "unknown"
 
 
 class FailoverStrategy(Enum):
-    """Failover strategies"""
-    ROUND_ROBIN = "round_robin"
+    """Failover strategies"""    ROUND_ROBIN = "round_robin"
     WEIGHTED = "weighted"
     NEAREST = "nearest"
     RANDOM = "random"
@@ -41,8 +37,7 @@ class FailoverStrategy(Enum):
 
 @dataclass
 class DatabaseEndpoint:
-    """Database endpoint configuration"""
-    endpoint_id: str
+    """Database endpoint configuration"""    endpoint_id: str
     host: str
     port: int
     priority: int = 1  # Lower numbers = higher priority
@@ -55,14 +50,12 @@ class DatabaseEndpoint:
     response_time: float = 0.0
     
     def success_rate(self) -> float:
-        """Calculate success rate"""
-        total = self.success_count + self.failure_count
+        """Calculate success rate"""        total = self.success_count + self.failure_count
         return self.success_count / total if total > 0 else 0.0
 
 
 class FailoverManager:
-    """
-    Database failover manager for high availability.
+    """    Database failover manager for high availability.
     
     Provides:
     - Automatic failover to healthy endpoints
@@ -70,8 +63,7 @@ class FailoverManager:
     - Health monitoring and status tracking
     - Connection retry and circuit breaker logic
     - Graceful degradation handling
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -109,8 +101,7 @@ class FailoverManager:
     async def initialize(self, 
                         endpoint_configs: Dict[str, List[Dict[str, Any]]],
                         strategies: Optional[Dict[str, FailoverStrategy]] = None) -> None:
-        """Initialize failover manager with endpoint configurations"""
-        
+        """Initialize failover manager with endpoint configurations"""        
         # Configure endpoints
         for db_type, configs in endpoint_configs.items():
             self.endpoints[db_type] = []
@@ -135,16 +126,14 @@ class FailoverManager:
         self.logger.info("Failover manager initialized")
     
     async def start_health_monitoring(self) -> None:
-        """Start health monitoring for all endpoints"""
-        for db_type in self.endpoints.keys():
+        """Start health monitoring for all endpoints"""        for db_type in self.endpoints.keys():
             task = asyncio.create_task(self._health_monitoring_loop(db_type))
             self.health_tasks[db_type] = task
         
         self.logger.info("Started health monitoring for all endpoints")
     
     async def stop_health_monitoring(self) -> None:
-        """Stop health monitoring"""
-        for task in self.health_tasks.values():
+        """Stop health monitoring"""        for task in self.health_tasks.values():
             task.cancel()
             try:
                 await task
@@ -155,8 +144,7 @@ class FailoverManager:
         self.logger.info("Stopped health monitoring")
     
     async def _health_monitoring_loop(self, db_type: str) -> None:
-        """Health monitoring loop for specific database type"""
-        while True:
+        """Health monitoring loop for specific database type"""        while True:
             try:
                 await self._check_endpoints_health(db_type)
                 await asyncio.sleep(self.health_check_interval)
@@ -167,8 +155,7 @@ class FailoverManager:
                 await asyncio.sleep(self.health_check_interval)
     
     async def _check_endpoints_health(self, db_type: str) -> None:
-        """Check health of all endpoints for a database type"""
-        if db_type not in self.endpoints:
+        """Check health of all endpoints for a database type"""        if db_type not in self.endpoints:
             return
         
         health_tasks = []
@@ -185,8 +172,7 @@ class FailoverManager:
         await self._evaluate_failover_need(db_type)
     
     async def _check_endpoint_health(self, db_type: str, endpoint: DatabaseEndpoint) -> None:
-        """Check health of a single endpoint"""
-        start_time = datetime.utcnow()
+        """Check health of a single endpoint"""        start_time = datetime.utcnow()
         
         try:
             # Perform health check (simplified - actual implementation would check database)
@@ -220,8 +206,7 @@ class FailoverManager:
             self.logger.warning(f"Health check failed for {endpoint.endpoint_id}: {e}")
     
     async def _perform_health_check(self, db_type: str, endpoint: DatabaseEndpoint) -> None:
-        """Perform actual health check on endpoint"""
-        # This is a simplified implementation
+        """Perform actual health check on endpoint"""        # This is a simplified implementation
         # In real scenario, this would connect to the database and perform a simple query
         
         try:
@@ -239,8 +224,7 @@ class FailoverManager:
             raise Exception("Health check timeout")
     
     async def _evaluate_failover_need(self, db_type: str) -> None:
-        """Evaluate if failover is needed for database type"""
-        current_endpoint_id = self.active_endpoints.get(db_type)
+        """Evaluate if failover is needed for database type"""        current_endpoint_id = self.active_endpoints.get(db_type)
         
         if not current_endpoint_id:
             return
@@ -259,8 +243,7 @@ class FailoverManager:
                 await self._perform_failover(db_type, "endpoint_unhealthy")
     
     def _count_recent_failures(self, endpoint: DatabaseEndpoint) -> int:
-        """Count recent failures within the failure window"""
-        # Simplified implementation - in real scenario, track failure timestamps
+        """Count recent failures within the failure window"""        # Simplified implementation - in real scenario, track failure timestamps
         cutoff_time = datetime.utcnow() - self.failure_window
         
         if endpoint.last_check and endpoint.last_check > cutoff_time:
@@ -269,8 +252,7 @@ class FailoverManager:
         return 0
     
     async def _perform_failover(self, db_type: str, reason: str) -> bool:
-        """Perform failover to next available endpoint"""
-        try:
+        """Perform failover to next available endpoint"""        try:
             current_endpoint_id = self.active_endpoints.get(db_type)
             
             # Find best alternative endpoint
@@ -307,8 +289,7 @@ class FailoverManager:
     async def _select_best_endpoint(self, 
                                   db_type: str, 
                                   exclude: Optional[str] = None) -> Optional[DatabaseEndpoint]:
-        """Select best available endpoint using configured strategy"""
-        
+        """Select best available endpoint using configured strategy"""        
         if db_type not in self.endpoints:
             return None
         
@@ -349,8 +330,7 @@ class FailoverManager:
         return min(available_endpoints, key=lambda ep: ep.priority)
     
     def _weighted_choice(self, endpoints: List[DatabaseEndpoint], weights: List[float]) -> DatabaseEndpoint:
-        """Weighted random selection"""
-        if not weights or sum(weights) == 0:
+        """Weighted random selection"""        if not weights or sum(weights) == 0:
             return random.choice(endpoints)
         
         total_weight = sum(weights)
@@ -365,8 +345,7 @@ class FailoverManager:
         return endpoints[-1]  # Fallback
     
     def _get_endpoint(self, db_type: str, endpoint_id: str) -> Optional[DatabaseEndpoint]:
-        """Get endpoint by ID"""
-        if db_type not in self.endpoints:
+        """Get endpoint by ID"""        if db_type not in self.endpoints:
             return None
         
         for endpoint in self.endpoints[db_type]:
@@ -379,8 +358,7 @@ class FailoverManager:
                                        db_type: str, 
                                        old_endpoint: str, 
                                        new_endpoint: str) -> None:
-        """Notify registered failover callbacks"""
-        for callback in self.failover_callbacks:
+        """Notify registered failover callbacks"""        for callback in self.failover_callbacks:
             try:
                 await callback(db_type, old_endpoint, new_endpoint)
             except Exception as e:
@@ -388,23 +366,19 @@ class FailoverManager:
     
     def register_failover_callback(self, 
                                  callback: Callable[[str, str, str], None]) -> None:
-        """Register callback for failover events"""
-        self.failover_callbacks.append(callback)
+        """Register callback for failover events"""        self.failover_callbacks.append(callback)
     
     def get_active_endpoint(self, db_type: str) -> Optional[DatabaseEndpoint]:
-        """Get currently active endpoint for database type"""
-        endpoint_id = self.active_endpoints.get(db_type)
+        """Get currently active endpoint for database type"""        endpoint_id = self.active_endpoints.get(db_type)
         if endpoint_id:
             return self._get_endpoint(db_type, endpoint_id)
         return None
     
     def get_all_endpoints(self, db_type: str) -> List[DatabaseEndpoint]:
-        """Get all endpoints for database type"""
-        return self.endpoints.get(db_type, [])
+        """Get all endpoints for database type"""        return self.endpoints.get(db_type, [])
     
     async def force_failover(self, db_type: str, target_endpoint_id: Optional[str] = None) -> bool:
-        """Force failover to specific endpoint or best available"""
-        try:
+        """Force failover to specific endpoint or best available"""        try:
             if target_endpoint_id:
                 target_endpoint = self._get_endpoint(db_type, target_endpoint_id)
                 if not target_endpoint:
@@ -433,8 +407,7 @@ class FailoverManager:
                           db_type: str, 
                           endpoint_id: str, 
                           status: EndpointStatus) -> bool:
-        """Manually set endpoint status"""
-        endpoint = self._get_endpoint(db_type, endpoint_id)
+        """Manually set endpoint status"""        endpoint = self._get_endpoint(db_type, endpoint_id)
         if endpoint:
             endpoint.status = status
             endpoint.last_check = datetime.utcnow()
@@ -443,8 +416,7 @@ class FailoverManager:
         return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive failover manager metrics"""
-        endpoint_stats = {}
+        """Get comprehensive failover manager metrics"""        endpoint_stats = {}
         
         for db_type, endpoints in self.endpoints.items():
             endpoint_stats[db_type] = {
@@ -484,8 +456,7 @@ class FailoverManager:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown failover manager"""
-        self.logger.info("Shutting down failover manager...")
+        """Shutdown failover manager"""        self.logger.info("Shutting down failover manager...")
         
         await self.stop_health_monitoring()
         

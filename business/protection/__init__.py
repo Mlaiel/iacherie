@@ -35,8 +35,7 @@ Core Features:
 - Real-time Monitoring & Alerts
 - Revenue Protection & Recovery
 - Advanced Web Crawling & Platform Monitoring
-"""
-from typing import Dict, List, Optional, Any, Union
+"""from typing import Dict, List, Optional, Any, Union
 import logging
 
 # Configure module logger

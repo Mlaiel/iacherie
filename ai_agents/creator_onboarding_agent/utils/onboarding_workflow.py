@@ -1,12 +1,10 @@
-"""
-Onboarding Workflow - Advanced Creator Onboarding Workflow Management System
+"""Onboarding Workflow - Advanced Creator Onboarding Workflow Management System
 
 Comprehensive workflow orchestration for creator onboarding with state management,
 progress tracking, conditional logic, and multi-stage validation.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 import json
@@ -46,8 +44,7 @@ from .verification_engine import VerificationEngine
 logger = logging.getLogger(__name__)
 
 class WorkflowStage(Enum):
-    """Onboarding workflow stages"""
-    INITIALIZATION = "initialization"
+    """Onboarding workflow stages"""    INITIALIZATION = "initialization"
     PROFILE_CREATION = "profile_creation"
     CONTENT_UPLOAD = "content_upload"
     CONTENT_ANALYSIS = "content_analysis"
@@ -61,8 +58,7 @@ class WorkflowStage(Enum):
     COMPLETION = "completion"
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
-    NOT_STARTED = "not_started"
+    """Workflow execution status"""    NOT_STARTED = "not_started"
     IN_PROGRESS = "in_progress"
     WAITING_USER_INPUT = "waiting_user_input"
     WAITING_VERIFICATION = "waiting_verification"
@@ -72,8 +68,7 @@ class WorkflowStatus(Enum):
     CANCELLED = "cancelled"
 
 class StageStatus(Enum):
-    """Individual stage status"""
-    PENDING = "pending"
+    """Individual stage status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     SKIPPED = "skipped"
@@ -81,16 +76,14 @@ class StageStatus(Enum):
     REQUIRES_RETRY = "requires_retry"
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""
-    INFO = "info"
+    """Validation issue severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 @dataclass
 class ValidationIssue:
-    """Workflow validation issue"""
-    stage: WorkflowStage
+    """Workflow validation issue"""    stage: WorkflowStage
     severity: ValidationSeverity
     message: str
     field: str = ""
@@ -100,8 +93,7 @@ class ValidationIssue:
 
 @dataclass
 class StageConfiguration:
-    """Configuration for a workflow stage"""
-    stage: WorkflowStage
+    """Configuration for a workflow stage"""    stage: WorkflowStage
     required: bool = True
     depends_on: List[WorkflowStage] = field(default_factory=list)
     timeout_minutes: int = 30
@@ -113,8 +105,7 @@ class StageConfiguration:
 
 @dataclass
 class StageResult:
-    """Result of a workflow stage execution"""
-    stage: WorkflowStage
+    """Result of a workflow stage execution"""    stage: WorkflowStage
     status: StageStatus
     
     # Execution details
@@ -137,8 +128,7 @@ class StageResult:
 
 @dataclass
 class WorkflowSession:
-    """Complete onboarding workflow session"""
-    session_id: str
+    """Complete onboarding workflow session"""    session_id: str
     user_id: str
     creator_type: str
     
@@ -175,8 +165,7 @@ class WorkflowSession:
     total_duration_seconds: float = 0.0
 
 class OnboardingWorkflow:
-    """
-    Advanced creator onboarding workflow orchestration system.
+    """    Advanced creator onboarding workflow orchestration system.
     
     Core Capabilities:
     - Multi-stage workflow orchestration
@@ -191,8 +180,7 @@ class OnboardingWorkflow:
     - Workflow pause/resume functionality
     - Performance metrics and analytics
     - Notification and communication management
-    """
-    
+    """    
     def __init__(self):
         # Initialize workflow components
         self.onboarding_agent = CreatorOnboardingAgent()
@@ -222,8 +210,7 @@ class OnboardingWorkflow:
         logger.info("OnboardingWorkflow initialized successfully")
     
     def _initialize_default_configurations(self) -> Dict[WorkflowStage, StageConfiguration]:
-        """Initialize default workflow stage configurations."""
-        return {
+        """Initialize default workflow stage configurations."""        return {
             WorkflowStage.INITIALIZATION: StageConfiguration(
                 stage=WorkflowStage.INITIALIZATION,
                 required=True,
@@ -328,8 +315,7 @@ class OnboardingWorkflow:
         }
     
     def _initialize_creator_type_configurations(self) -> Dict[str, Dict[WorkflowStage, StageConfiguration]]:
-        """Initialize creator type specific configurations."""
-        return {
+        """Initialize creator type specific configurations."""        return {
             'musician': {
                 WorkflowStage.RIGHTS_VALIDATION: StageConfiguration(
                     stage=WorkflowStage.RIGHTS_VALIDATION,
@@ -377,10 +363,8 @@ class OnboardingWorkflow:
     
     async def start_onboarding_workflow(self, user_id: str, creator_type: str,
                                       initial_data: Dict[str, Any] = None) -> WorkflowSession:
-        """
-        Start a new onboarding workflow session.
-        """
-        try:
+        """        Start a new onboarding workflow session.
+        """        try:
             # Generate session ID
             session_id = self._generate_session_id(user_id)
             
@@ -420,10 +404,8 @@ class OnboardingWorkflow:
     
     async def continue_workflow(self, session_id: str,
                               user_input: Dict[str, Any] = None) -> WorkflowSession:
-        """
-        Continue an existing workflow session.
-        """
-        try:
+        """        Continue an existing workflow session.
+        """        try:
             session = self.active_sessions.get(session_id)
             if not session:
                 raise WorkflowError(f"Workflow session {session_id} not found")
@@ -452,8 +434,7 @@ class OnboardingWorkflow:
             raise WorkflowError(f"Failed to continue workflow: {str(e)}")
     
     async def _execute_stage(self, session: WorkflowSession, stage: WorkflowStage) -> None:
-        """Execute a specific workflow stage."""
-        try:
+        """Execute a specific workflow stage."""        try:
             logger.info(f"Executing stage {stage.value} for session {session.session_id}")
             
             # Update current stage
@@ -529,8 +510,7 @@ class OnboardingWorkflow:
     
     async def _execute_stage_logic(self, session: WorkflowSession, stage: WorkflowStage,
                                  stage_result: StageResult) -> None:
-        """Execute the specific logic for each workflow stage."""
-        
+        """Execute the specific logic for each workflow stage."""        
         if stage == WorkflowStage.INITIALIZATION:
             # Initialize session data and validate inputs
             stage_result.output_data = {
@@ -720,8 +700,7 @@ class OnboardingWorkflow:
             }
     
     async def _determine_next_stage(self, session: WorkflowSession) -> Optional[WorkflowStage]:
-        """Determine the next stage to execute based on workflow configuration and results."""
-        current_stage = session.current_stage
+        """Determine the next stage to execute based on workflow configuration and results."""        current_stage = session.current_stage
         
         # Define stage order
         stage_order = [
@@ -770,8 +749,7 @@ class OnboardingWorkflow:
         return None
     
     async def _check_stage_dependencies(self, session: WorkflowSession, stage: WorkflowStage) -> bool:
-        """Check if stage dependencies are satisfied."""
-        stage_config = session.workflow_configuration.get(stage)
+        """Check if stage dependencies are satisfied."""        stage_config = session.workflow_configuration.get(stage)
         if not stage_config or not stage_config.depends_on:
             return True
         
@@ -783,8 +761,7 @@ class OnboardingWorkflow:
         return True
     
     async def _should_execute_optional_stage(self, session: WorkflowSession, stage: WorkflowStage) -> bool:
-        """Determine if an optional stage should be executed."""
-        # Optional stage execution logic based on workflow data and user preferences
+        """Determine if an optional stage should be executed."""        # Optional stage execution logic based on workflow data and user preferences
         
         if stage == WorkflowStage.MONETIZATION_SETUP:
             # Execute if user expressed interest in monetization
@@ -799,8 +776,7 @@ class OnboardingWorkflow:
         return True  # Default: execute optional stages
     
     async def _complete_workflow(self, session: WorkflowSession) -> None:
-        """Complete the workflow session."""
-        try:
+        """Complete the workflow session."""        try:
             session.workflow_status = WorkflowStatus.COMPLETED
             session.end_time = datetime.utcnow()
             session.total_duration_seconds = (session.end_time - session.start_time).total_seconds()
@@ -824,12 +800,10 @@ class OnboardingWorkflow:
     
     # Helper methods and utilities
     def _generate_session_id(self, user_id: str) -> str:
-        """Generate unique session ID."""
-        return f"onboarding_{user_id}_{uuid.uuid4().hex[:8]}"
+        """Generate unique session ID."""        return f"onboarding_{user_id}_{uuid.uuid4().hex[:8]}"
     
     def _configure_workflow_for_creator_type(self, creator_type: str) -> Dict[WorkflowStage, StageConfiguration]:
-        """Configure workflow based on creator type."""
-        # Start with default configuration
+        """Configure workflow based on creator type."""        # Start with default configuration
         configuration = self.default_configurations.copy()
         
         # Apply creator type specific overrides
@@ -840,8 +814,7 @@ class OnboardingWorkflow:
         return configuration
     
     def _estimate_completion_time(self, session: WorkflowSession) -> datetime:
-        """Estimate workflow completion time."""
-        total_minutes = 0
+        """Estimate workflow completion time."""        total_minutes = 0
         
         for stage_config in session.workflow_configuration.values():
             if stage_config.required or stage_config.stage in [WorkflowStage.INITIALIZATION, WorkflowStage.COMPLETION]:
@@ -853,8 +826,7 @@ class OnboardingWorkflow:
         return session.start_time + timedelta(minutes=total_minutes)
     
     async def _has_required_user_input(self, session: WorkflowSession, stage: WorkflowStage) -> bool:
-        """Check if required user input is available for stage."""
-        required_inputs = {
+        """Check if required user input is available for stage."""        required_inputs = {
             WorkflowStage.PROFILE_CREATION: ['profile_data'],
             WorkflowStage.CONTENT_UPLOAD: ['content_uploads'],
             WorkflowStage.PLATFORM_CONNECTION: ['platform_accounts'],
@@ -871,8 +843,7 @@ class OnboardingWorkflow:
         return True
     
     async def _request_user_input(self, session: WorkflowSession, stage: WorkflowStage) -> None:
-        """Request required user input for stage."""
-        input_requests = {
+        """Request required user input for stage."""        input_requests = {
             WorkflowStage.PROFILE_CREATION: {
                 'type': 'profile_form',
                 'message': 'Please complete your creator profile',
@@ -908,8 +879,7 @@ class OnboardingWorkflow:
     
     async def _validate_stage_output(self, session: WorkflowSession, stage: WorkflowStage,
                                    stage_result: StageResult) -> None:
-        """Validate stage output and add any validation issues."""
-        validation_issues = []
+        """Validate stage output and add any validation issues."""        validation_issues = []
         
         # Stage-specific validation logic
         if stage == WorkflowStage.PROFILE_CREATION:
@@ -951,8 +921,7 @@ class OnboardingWorkflow:
         session.validation_issues.extend(validation_issues)
     
     async def _perform_final_validation(self, session: WorkflowSession) -> Dict[str, Any]:
-        """Perform final workflow validation."""
-        overall_issues = []
+        """Perform final workflow validation."""        overall_issues = []
         overall_score = 0.0
         
         # Collect all validation issues
@@ -991,8 +960,7 @@ class OnboardingWorkflow:
         }
     
     async def _finalize_onboarding(self, session: WorkflowSession) -> Dict[str, Any]:
-        """Finalize the onboarding process."""
-        # Create final onboarding summary
+        """Finalize the onboarding process."""        # Create final onboarding summary
         summary = {
             'success': session.workflow_status == WorkflowStatus.COMPLETED,
             'user_id': session.user_id,
@@ -1020,14 +988,12 @@ class OnboardingWorkflow:
         return summary
     
     async def _store_onboarding_results(self, session: WorkflowSession, summary: Dict[str, Any]) -> None:
-        """Store onboarding results in persistent storage."""
-        # Placeholder - would implement database storage
+        """Store onboarding results in persistent storage."""        # Placeholder - would implement database storage
         logger.info(f"Storing onboarding results for session {session.session_id}")
     
     # Public utility methods
     async def get_workflow_status(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Get current workflow status."""
-        session = self.active_sessions.get(session_id)
+        """Get current workflow status."""        session = self.active_sessions.get(session_id)
         if not session:
             return None
         
@@ -1043,24 +1009,21 @@ class OnboardingWorkflow:
         }
     
     async def pause_workflow(self, session_id: str) -> bool:
-        """Pause an active workflow."""
-        session = self.active_sessions.get(session_id)
+        """Pause an active workflow."""        session = self.active_sessions.get(session_id)
         if session and session.workflow_status == WorkflowStatus.IN_PROGRESS:
             session.workflow_status = WorkflowStatus.PAUSED
             return True
         return False
     
     async def resume_workflow(self, session_id: str) -> bool:
-        """Resume a paused workflow."""
-        session = self.active_sessions.get(session_id)
+        """Resume a paused workflow."""        session = self.active_sessions.get(session_id)
         if session and session.workflow_status == WorkflowStatus.PAUSED:
             session.workflow_status = WorkflowStatus.IN_PROGRESS
             return True
         return False
     
     async def cancel_workflow(self, session_id: str) -> bool:
-        """Cancel an active workflow."""
-        session = self.active_sessions.get(session_id)
+        """Cancel an active workflow."""        session = self.active_sessions.get(session_id)
         if session:
             session.workflow_status = WorkflowStatus.CANCELLED
             session.end_time = datetime.utcnow()

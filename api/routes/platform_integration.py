@@ -1,11 +1,9 @@
-"""
-Platform Integration API Routes
+"""Platform Integration API Routes
 Integration with social media and content platforms.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from typing import Dict, Any, List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -40,8 +38,7 @@ router = APIRouter()
 async def get_platform_connections(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Get user's platform connections"""
-    try:
+    """Get user's platform connections"""    try:
         user_id = current_user["user_id"]
         
         # Supported platforms
@@ -52,8 +49,7 @@ async def get_platform_connections(
         async with database_manager.get_postgres_session() as session:
             for platform in supported_platforms:
                 result = await session.execute(
-                    """
-                    SELECT platform_username, connected_at 
+                    """                    SELECT platform_username, connected_at 
                     FROM platform_connections 
                     WHERE user_id = %s AND platform = %s AND active = true
                     """,
@@ -84,8 +80,7 @@ async def get_platform_recommendations(
     content_id: Optional[str] = None,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Get platform recommendations for content"""
-    try:
+    """Get platform recommendations for content"""    try:
         user_id = current_user["user_id"]
         
         if content_id:

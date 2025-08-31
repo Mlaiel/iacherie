@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Core Quality Assessment Engine - Ultra Advanced Industrial Test Suite
+"""Core Quality Assessment Engine - Ultra Advanced Industrial Test Suite
 
 Comprehensive industrial-grade test coverage with real data scenarios, performance benchmarks,
 ML model validation, database integration testing, and production-ready validation methods.
@@ -47,7 +44,6 @@ AND WRITTEN AUTHORIZATION WILL FACE SEVERE LEGAL CONSEQUENCES.
 
 Contact: Fahed Mlaiel - mlaiel@live.de
 """
-
 import pytest
 import sys
 import os
@@ -87,11 +83,9 @@ from ai.quality_assessment.core import (
 
 
 class TestQualityAssessmentEngine(TestCase):
-    """Comprehensive test suite for QualityAssessmentEngine with industrial-grade validation."""
-    
+    """Comprehensive test suite for QualityAssessmentEngine with industrial-grade validation."""    
     def setUp(self):
-        """Set up test environment with realistic data and configurations."""
-        self.engine = QualityAssessmentEngine()
+        """Set up test environment with realistic data and configurations."""        self.engine = QualityAssessmentEngine()
         self.test_content_data = {
             'text': 'This is a comprehensive test for quality assessment with advanced content analysis capabilities.',
             'metadata': {
@@ -107,8 +101,7 @@ class TestQualityAssessmentEngine(TestCase):
         }
 
     def test_engine_initialization(self):
-        """Test proper initialization of QualityAssessmentEngine."""
-        engine = QualityAssessmentEngine()
+        """Test proper initialization of QualityAssessmentEngine."""        engine = QualityAssessmentEngine()
         
         # Test default configuration
         self.assertIsNotNone(engine.config)
@@ -122,8 +115,7 @@ class TestQualityAssessmentEngine(TestCase):
 
     @pytest.mark.asyncio
     async def test_content_quality_assessment(self):
-        """Test comprehensive content quality assessment functionality."""
-        
+        """Test comprehensive content quality assessment functionality."""        
         # Test text content assessment
         text_result = await self.engine.assess_content_quality(
             content_path=self.test_content_data['text'],
@@ -145,8 +137,7 @@ class TestQualityAssessmentEngine(TestCase):
         self.assertLessEqual(text_result.metrics.overall_score, 100.0)
 
     def test_quality_metrics_calculation(self):
-        """Test quality metrics calculation and validation."""
-        
+        """Test quality metrics calculation and validation."""        
         # Create test metrics
         metrics = QualityMetrics(
             technical_score=85.5,
@@ -181,8 +172,7 @@ class TestQualityAssessmentEngine(TestCase):
         self.assertIn('timestamp', metrics_dict)
 
     def test_quality_threshold_validation(self):
-        """Test quality threshold management and validation."""
-        
+        """Test quality threshold management and validation."""        
         threshold = QualityThreshold()
         
         # Test default thresholds
@@ -198,8 +188,7 @@ class TestQualityAssessmentEngine(TestCase):
         self.assertEqual(commercial_threshold, 85.0)
 
     def test_content_format_support(self):
-        """Test support for all content formats."""
-        
+        """Test support for all content formats."""        
         # Test all supported formats
         supported_formats = [
             ContentFormat.AUDIO,
@@ -214,8 +203,7 @@ class TestQualityAssessmentEngine(TestCase):
             self.assertIsInstance(content_format.value, str)
 
     def test_quality_level_hierarchy(self):
-        """Test quality level hierarchy and validation."""
-        
+        """Test quality level hierarchy and validation."""        
         quality_levels = [
             QualityLevel.BASIC,
             QualityLevel.SOCIAL_MEDIA,
@@ -236,16 +224,13 @@ class TestQualityAssessmentEngine(TestCase):
 
 
 class TestQualityEngineIntegration(TestCase):
-    """Integration tests for quality assessment engine with external services."""
-    
+    """Integration tests for quality assessment engine with external services."""    
     def setUp(self):
-        """Set up integration test environment."""
-        self.engine = quality_engine
+        """Set up integration test environment."""        self.engine = quality_engine
     
     @pytest.mark.asyncio
     async def test_engine_connectivity(self):
-        """Test quality engine connectivity and service integration."""
-        
+        """Test quality engine connectivity and service integration."""        
         # Test connection
         connected = await self.engine.connect()
         self.assertTrue(connected)
@@ -271,8 +256,7 @@ class TestQualityEngineIntegration(TestCase):
 
     @pytest.mark.asyncio
     async def test_convenience_function(self):
-        """Test convenience function for quality assessment."""
-        
+        """Test convenience function for quality assessment."""        
         result = await assess_content_quality(
             content_path="Test content for convenience function",
             content_format="text",

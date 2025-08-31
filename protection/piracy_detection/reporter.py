@@ -1,5 +1,4 @@
-"""
-📊 Piracy Detection Reporting System
+"""📊 Piracy Detection Reporting System
 ====================================
 
 Comprehensive reporting and analytics for piracy detection activities.
@@ -14,7 +13,6 @@ This module provides:
 - Trend analysis and forecasting
 - Executive dashboards and summaries
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -26,8 +24,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class ReportType(Enum):
-    """Types of reports available."""
-    VIOLATION_SUMMARY = "violation_summary"
+    """Types of reports available."""    VIOLATION_SUMMARY = "violation_summary"
     PERFORMANCE_ANALYTICS = "performance_analytics"
     REVENUE_IMPACT = "revenue_impact"
     PLATFORM_ANALYSIS = "platform_analysis"
@@ -36,16 +33,14 @@ class ReportType(Enum):
     COMPLIANCE_REPORT = "compliance_report"
 
 class ReportFormat(Enum):
-    """Report output formats."""
-    JSON = "json"
+    """Report output formats."""    JSON = "json"
     PDF = "pdf"
     CSV = "csv"
     HTML = "html"
     EXCEL = "excel"
 
 class TimeRange(Enum):
-    """Time range options for reports."""
-    LAST_24_HOURS = "last_24_hours"
+    """Time range options for reports."""    LAST_24_HOURS = "last_24_hours"
     LAST_7_DAYS = "last_7_days"
     LAST_30_DAYS = "last_30_days"
     LAST_90_DAYS = "last_90_days"
@@ -54,8 +49,7 @@ class TimeRange(Enum):
 
 @dataclass
 class ReportConfig:
-    """Report configuration and parameters."""
-    report_type: ReportType
+    """Report configuration and parameters."""    report_type: ReportType
     time_range: TimeRange
     format: ReportFormat
     content_ids: Optional[List[str]]
@@ -67,21 +61,17 @@ class ReportConfig:
     include_recommendations: bool
 
 class PiracyReporter:
-    """
-    Advanced piracy detection reporting system.
+    """    Advanced piracy detection reporting system.
     
     Provides comprehensive reporting capabilities with analytics,
     visualizations, and actionable insights for piracy protection.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Piracy Reporter.
+        """        Initialize the Piracy Reporter.
         
         Args:
             config: Reporter configuration parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         
         # Reporting parameters
@@ -111,13 +101,11 @@ class PiracyReporter:
         logger.info("Piracy Reporter initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize reporter components and services.
+        """        Initialize reporter components and services.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing Piracy Reporter...")
             
             # Initialize data service
@@ -147,8 +135,7 @@ class PiracyReporter:
             return False
     
     async def _initialize_data_service(self) -> None:
-        """Initialize data access service."""
-        self.data_service = {
+        """Initialize data access service."""        self.data_service = {
             'database_connector': True,
             'violation_queries': True,
             'performance_queries': True,
@@ -157,8 +144,7 @@ class PiracyReporter:
         logger.info("Data service initialized")
     
     async def _initialize_analytics_service(self) -> None:
-        """Initialize analytics calculation service."""
-        self.analytics_service = {
+        """Initialize analytics calculation service."""        self.analytics_service = {
             'statistical_analysis': True,
             'trend_calculation': True,
             'forecasting_models': True,
@@ -167,8 +153,7 @@ class PiracyReporter:
         logger.info("Analytics service initialized")
     
     async def _initialize_visualization_service(self) -> None:
-        """Initialize data visualization service."""
-        self.visualization_service = {
+        """Initialize data visualization service."""        self.visualization_service = {
             'chart_generator': True,
             'dashboard_renderer': True,
             'graph_library': 'plotly',
@@ -177,8 +162,7 @@ class PiracyReporter:
         logger.info("Visualization service initialized")
     
     async def _initialize_export_service(self) -> None:
-        """Initialize report export service."""
-        self.export_service = {
+        """Initialize report export service."""        self.export_service = {
             'pdf_generator': True,
             'excel_generator': True,
             'csv_generator': True,
@@ -187,8 +171,7 @@ class PiracyReporter:
         logger.info("Export service initialized")
     
     async def _initialize_report_templates(self) -> None:
-        """Initialize report templates."""
-        self.report_templates = {
+        """Initialize report templates."""        self.report_templates = {
             ReportType.VIOLATION_SUMMARY: {
                 'sections': [
                     'executive_summary',
@@ -252,8 +235,7 @@ class PiracyReporter:
     
     async def generate_report(self, content_id: str, time_range: Optional[str] = None,
                             report_config: Optional[ReportConfig] = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive detection report for content.
+        """        Generate comprehensive detection report for content.
         
         Args:
             content_id: Unique identifier for the content
@@ -262,8 +244,7 @@ class PiracyReporter:
             
         Returns:
             Comprehensive detection report
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Reporter not initialized")
         
         start_time = datetime.utcnow()
@@ -318,16 +299,14 @@ class PiracyReporter:
             raise
     
     async def _generate_report_data(self, config: ReportConfig) -> Dict[str, Any]:
-        """
-        Generate report data based on configuration.
+        """        Generate report data based on configuration.
         
         Args:
             config: Report configuration
             
         Returns:
             Generated report data
-        """
-        # Determine time range
+        """        # Determine time range
         start_date, end_date = self._calculate_time_range(config)
         
         # Collect base data
@@ -350,8 +329,7 @@ class PiracyReporter:
             raise ValueError(f"Unsupported report type: {config.report_type}")
     
     def _calculate_time_range(self, config: ReportConfig) -> Tuple[datetime, datetime]:
-        """Calculate start and end dates for report."""
-        end_date = datetime.utcnow()
+        """Calculate start and end dates for report."""        end_date = datetime.utcnow()
         
         if config.time_range == TimeRange.CUSTOM:
             start_date = config.custom_start_date or (end_date - timedelta(days=30))
@@ -373,8 +351,7 @@ class PiracyReporter:
     
     async def _collect_base_data(self, config: ReportConfig, start_date: datetime, 
                                end_date: datetime) -> Dict[str, Any]:
-        """
-        Collect base data for report generation.
+        """        Collect base data for report generation.
         
         Args:
             config: Report configuration
@@ -383,8 +360,7 @@ class PiracyReporter:
             
         Returns:
             Base data dictionary
-        """
-        # Simulate data collection
+        """        # Simulate data collection
         # In production, this would query actual databases
         
         base_data = {
@@ -404,8 +380,7 @@ class PiracyReporter:
     
     async def _collect_violation_data(self, config: ReportConfig, start_date: datetime, 
                                     end_date: datetime) -> Dict[str, Any]:
-        """Collect violation data."""
-        # Simulate violation data collection
+        """Collect violation data."""        # Simulate violation data collection
         return {
             'total_violations': 1250,
             'high_confidence_violations': 980,
@@ -432,8 +407,7 @@ class PiracyReporter:
     
     async def _collect_detection_data(self, config: ReportConfig, start_date: datetime, 
                                     end_date: datetime) -> Dict[str, Any]:
-        """Collect detection performance data."""
-        return {
+        """Collect detection performance data."""        return {
             'total_scans': 50000,
             'detection_rate': 0.025,
             'false_positive_rate': 0.08,
@@ -447,8 +421,7 @@ class PiracyReporter:
     
     async def _collect_enforcement_data(self, config: ReportConfig, start_date: datetime, 
                                       end_date: datetime) -> Dict[str, Any]:
-        """Collect enforcement data."""
-        return {
+        """Collect enforcement data."""        return {
             'total_enforcements': 980,
             'successful_enforcements': 784,
             'pending_enforcements': 156,
@@ -464,8 +437,7 @@ class PiracyReporter:
     
     async def _collect_performance_data(self, config: ReportConfig, start_date: datetime, 
                                       end_date: datetime) -> Dict[str, Any]:
-        """Collect system performance data."""
-        return {
+        """Collect system performance data."""        return {
             'system_uptime': 0.998,
             'api_response_times': {
                 'average_ms': 145,
@@ -481,8 +453,7 @@ class PiracyReporter:
     
     async def _collect_revenue_data(self, config: ReportConfig, start_date: datetime, 
                                   end_date: datetime) -> Dict[str, Any]:
-        """Collect revenue impact data."""
-        return {
+        """Collect revenue impact data."""        return {
             'protected_revenue': 125000.0,
             'prevented_losses': 87500.0,
             'enforcement_costs': 15000.0,
@@ -497,8 +468,7 @@ class PiracyReporter:
     
     async def _generate_violation_summary_report(self, base_data: Dict[str, Any], 
                                                config: ReportConfig) -> Dict[str, Any]:
-        """Generate violation summary report."""
-        violations = base_data['violations']
+        """Generate violation summary report."""        violations = base_data['violations']
         enforcement = base_data['enforcement']
         
         report = {
@@ -529,8 +499,7 @@ class PiracyReporter:
     
     async def _generate_performance_analytics_report(self, base_data: Dict[str, Any], 
                                                    config: ReportConfig) -> Dict[str, Any]:
-        """Generate performance analytics report."""
-        performance = base_data['performance']
+        """Generate performance analytics report."""        performance = base_data['performance']
         detections = base_data['detections']
         
         report = {
@@ -555,8 +524,7 @@ class PiracyReporter:
     
     async def _generate_revenue_impact_report(self, base_data: Dict[str, Any], 
                                             config: ReportConfig) -> Dict[str, Any]:
-        """Generate revenue impact report."""
-        revenue = base_data['revenue']
+        """Generate revenue impact report."""        revenue = base_data['revenue']
         
         report = {
             'report_type': 'revenue_impact',
@@ -582,8 +550,7 @@ class PiracyReporter:
     
     async def _generate_platform_analysis_report(self, base_data: Dict[str, Any], 
                                                config: ReportConfig) -> Dict[str, Any]:
-        """Generate platform analysis report."""
-        return {
+        """Generate platform analysis report."""        return {
             'report_type': 'platform_analysis',
             'generated_at': datetime.utcnow().isoformat(),
             'time_range': base_data['time_range'],
@@ -595,8 +562,7 @@ class PiracyReporter:
     
     async def _generate_trend_analysis_report(self, base_data: Dict[str, Any], 
                                             config: ReportConfig) -> Dict[str, Any]:
-        """Generate trend analysis report."""
-        return {
+        """Generate trend analysis report."""        return {
             'report_type': 'trend_analysis',
             'generated_at': datetime.utcnow().isoformat(),
             'time_range': base_data['time_range'],
@@ -606,8 +572,7 @@ class PiracyReporter:
     
     async def _generate_executive_summary_report(self, base_data: Dict[str, Any], 
                                                config: ReportConfig) -> Dict[str, Any]:
-        """Generate executive summary report."""
-        violations = base_data['violations']
+        """Generate executive summary report."""        violations = base_data['violations']
         enforcement = base_data['enforcement']
         revenue = base_data['revenue']
         
@@ -634,8 +599,7 @@ class PiracyReporter:
     
     async def _analyze_platform_performance(self, violations: Dict[str, Any], 
                                           enforcement: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze performance by platform."""
-        platform_analysis = {}
+        """Analyze performance by platform."""        platform_analysis = {}
         
         for platform, violation_count in violations['platform_breakdown'].items():
             success_rate = enforcement['platform_success_rates'].get(platform, 0.8)
@@ -652,8 +616,7 @@ class PiracyReporter:
     
     def _get_platform_recommendations(self, platform: str, violation_count: int, 
                                     success_rate: float) -> List[str]:
-        """Get recommendations for specific platform."""
-        recommendations = []
+        """Get recommendations for specific platform."""        recommendations = []
         
         if violation_count > 300:
             recommendations.append(f"Increase monitoring frequency for {platform}")
@@ -667,8 +630,7 @@ class PiracyReporter:
         return recommendations
     
     async def _generate_recommendations(self, base_data: Dict[str, Any]) -> List[str]:
-        """Generate actionable recommendations."""
-        recommendations = []
+        """Generate actionable recommendations."""        recommendations = []
         
         violations = base_data['violations']
         enforcement = base_data['enforcement']
@@ -689,8 +651,7 @@ class PiracyReporter:
         return recommendations
     
     async def _generate_charts(self, base_data: Dict[str, Any], config: ReportConfig) -> Dict[str, Any]:
-        """Generate visualizations for the report."""
-        # Simulate chart generation
+        """Generate visualizations for the report."""        # Simulate chart generation
         # In production, this would create actual charts using plotting libraries
         
         charts = {
@@ -714,8 +675,7 @@ class PiracyReporter:
         return charts
     
     async def _calculate_confidence_distribution(self, detections: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate confidence score distribution."""
-        return {
+        """Calculate confidence score distribution."""        return {
             '0.9-1.0': 0.35,
             '0.8-0.9': 0.28,
             '0.7-0.8': 0.22,
@@ -724,24 +684,21 @@ class PiracyReporter:
         }
     
     async def _calculate_performance_trends(self, detections: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate performance trends."""
-        return {
+        """Calculate performance trends."""        return {
             'detection_rate_trend': 'increasing',
             'accuracy_trend': 'stable',
             'processing_time_trend': 'decreasing'
         }
     
     async def _calculate_revenue_projections(self, revenue: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate revenue projections."""
-        return {
+        """Calculate revenue projections."""        return {
             'next_month_projected_protection': revenue['protected_revenue'] * 1.1,
             'annual_projection': revenue['protected_revenue'] * 12 * 1.15,
             'growth_rate': 0.15
         }
     
     async def _calculate_trends(self, base_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate various trends from base data."""
-        return {
+        """Calculate various trends from base data."""        return {
             'violation_trends': {
                 'monthly_growth': 0.08,
                 'seasonal_patterns': 'higher_in_q4',
@@ -755,8 +712,7 @@ class PiracyReporter:
         }
     
     async def _generate_forecasts(self, base_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate forecasts based on historical data."""
-        return {
+        """Generate forecasts based on historical data."""        return {
             'next_30_days': {
                 'expected_violations': 1350,
                 'confidence_interval': [1200, 1500]
@@ -768,8 +724,7 @@ class PiracyReporter:
         }
     
     async def _generate_strategic_insights(self, base_data: Dict[str, Any]) -> List[str]:
-        """Generate strategic insights for executive summary."""
-        return [
+        """Generate strategic insights for executive summary."""        return [
             "Protection system is effectively preventing 94% of potential revenue loss",
             "YouTube remains the primary threat vector requiring focused attention",
             "Enforcement automation has reduced response times by 40%",
@@ -777,8 +732,7 @@ class PiracyReporter:
         ]
     
     async def _generate_action_items(self, base_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate action items for executive summary."""
-        return [
+        """Generate action items for executive summary."""        return [
             {
                 'priority': 'high',
                 'action': 'Expand YouTube Content ID integration',
@@ -800,8 +754,7 @@ class PiracyReporter:
         ]
     
     def _generate_cache_key(self, config: ReportConfig) -> str:
-        """Generate cache key for report configuration."""
-        config_str = json.dumps({
+        """Generate cache key for report configuration."""        config_str = json.dumps({
             'report_type': config.report_type.value,
             'time_range': config.time_range.value,
             'content_ids': config.content_ids,
@@ -815,8 +768,7 @@ class PiracyReporter:
         return f"report_{hash(config_str)}"
     
     def _is_cache_valid(self, cached_report: Dict[str, Any]) -> bool:
-        """Check if cached report is still valid."""
-        generated_at = cached_report.get('generated_at')
+        """Check if cached report is still valid."""        generated_at = cached_report.get('generated_at')
         if not generated_at:
             return False
         
@@ -824,8 +776,7 @@ class PiracyReporter:
         return age_minutes < self.cache_duration_minutes
     
     def _update_reporting_stats(self, cache_hit: bool, generation_time: float) -> None:
-        """Update reporting statistics."""
-        self.reporting_stats['total_reports_generated'] += 1
+        """Update reporting statistics."""        self.reporting_stats['total_reports_generated'] += 1
         
         # Update cache hit rate
         total_requests = self.reporting_stats['total_reports_generated']
@@ -849,8 +800,7 @@ class PiracyReporter:
                 self.reporting_stats['average_generation_time_seconds'] = generation_time
     
     async def _cache_cleanup_task(self) -> None:
-        """Background task to clean up expired cache entries."""
-        while True:
+        """Background task to clean up expired cache entries."""        while True:
             try:
                 current_time = datetime.utcnow()
                 expired_keys = []
@@ -873,12 +823,10 @@ class PiracyReporter:
                 await asyncio.sleep(300)  # Retry after 5 minutes
     
     async def get_reporting_stats(self) -> Dict[str, Any]:
-        """Get reporting performance statistics."""
-        return self.reporting_stats.copy()
+        """Get reporting performance statistics."""        return self.reporting_stats.copy()
     
     async def export_report(self, report_data: Dict[str, Any], format: ReportFormat) -> bytes:
-        """
-        Export report in specified format.
+        """        Export report in specified format.
         
         Args:
             report_data: Report data to export
@@ -886,8 +834,7 @@ class PiracyReporter:
             
         Returns:
             Exported report as bytes
-        """
-        if format == ReportFormat.JSON:
+        """        if format == ReportFormat.JSON:
             return json.dumps(report_data, indent=2).encode('utf-8')
         elif format == ReportFormat.CSV:
             return await self._export_csv(report_data)
@@ -901,22 +848,18 @@ class PiracyReporter:
             raise ValueError(f"Unsupported export format: {format}")
     
     async def _export_csv(self, report_data: Dict[str, Any]) -> bytes:
-        """Export report as CSV."""
-        # Simplified CSV export
+        """Export report as CSV."""        # Simplified CSV export
         csv_content = "Report Type,Generated At,Key Metric,Value\n"
         csv_content += f"{report_data.get('report_type', '')},{report_data.get('generated_at', '')},Sample Metric,Sample Value\n"
         return csv_content.encode('utf-8')
     
     async def _export_pdf(self, report_data: Dict[str, Any]) -> bytes:
-        """Export report as PDF."""
-        # Placeholder for PDF generation
+        """Export report as PDF."""        # Placeholder for PDF generation
         # In production, this would use libraries like reportlab or weasyprint
         return b"PDF content placeholder"
     
     async def _export_html(self, report_data: Dict[str, Any]) -> bytes:
-        """Export report as HTML."""
-        html_content = f"""
-        <html>
+        """Export report as HTML."""        html_content = f"""        <html>
         <head><title>Piracy Detection Report</title></head>
         <body>
         <h1>Piracy Detection Report</h1>
@@ -924,18 +867,15 @@ class PiracyReporter:
         <pre>{json.dumps(report_data, indent=2)}</pre>
         </body>
         </html>
-        """
-        return html_content.encode('utf-8')
+        """        return html_content.encode('utf-8')
     
     async def _export_excel(self, report_data: Dict[str, Any]) -> bytes:
-        """Export report as Excel."""
-        # Placeholder for Excel generation
+        """Export report as Excel."""        # Placeholder for Excel generation
         # In production, this would use libraries like openpyxl or xlswriter
         return b"Excel content placeholder"
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the reporter."""
-        logger.info("Shutting down Piracy Reporter...")
+        """Gracefully shutdown the reporter."""        logger.info("Shutting down Piracy Reporter...")
         
         # Clear cache
         self.report_cache.clear()

@@ -1,5 +1,4 @@
-"""
-Conversation State Manager - IA Influencer Agent
+"""Conversation State Manager - IA Influencer Agent
 
 Enterprise conversation state management for multi-format content creators with
 intelligent state transitions, persistence, and workflow optimization.
@@ -11,7 +10,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 This code is the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use is strictly prohibited. Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,8 +26,7 @@ from ...utils.cache import CacheManager
 
 
 class ConversationPhase(Enum):
-    """Conversation phases in creator workflow"""
-    ONBOARDING = "onboarding"
+    """Conversation phases in creator workflow"""    ONBOARDING = "onboarding"
     CONTENT_DISCOVERY = "content_discovery"
     PROTECTION_SETUP = "protection_setup"
     COLLABORATION_EXPLORATION = "collaboration_exploration"
@@ -42,8 +39,7 @@ class ConversationPhase(Enum):
 
 
 class StateTransitionReason(Enum):
-    """Reasons for state transitions"""
-    USER_REQUEST = "user_request"
+    """Reasons for state transitions"""    USER_REQUEST = "user_request"
     WORKFLOW_COMPLETION = "workflow_completion"
     TIMEOUT = "timeout"
     ERROR_RECOVERY = "error_recovery"
@@ -54,8 +50,7 @@ class StateTransitionReason(Enum):
 
 @dataclass
 class StateTransition:
-    """State transition record"""
-    transition_id: str
+    """State transition record"""    transition_id: str
     from_state: str
     to_state: str
     reason: StateTransitionReason
@@ -79,8 +74,7 @@ class StateTransition:
 
 @dataclass
 class WorkflowStep:
-    """Individual workflow step"""
-    step_id: str
+    """Individual workflow step"""    step_id: str
     step_name: str
     phase: ConversationPhase
     required_inputs: List[str]
@@ -106,8 +100,7 @@ class WorkflowStep:
 
 @dataclass
 class ConversationWorkflow:
-    """Complete conversation workflow"""
-    workflow_id: str
+    """Complete conversation workflow"""    workflow_id: str
     workflow_name: str
     creator_type: str
     steps: List[WorkflowStep]
@@ -117,20 +110,17 @@ class ConversationWorkflow:
     actual_completion: Optional[datetime] = None
     
     def get_current_step(self) -> Optional[WorkflowStep]:
-        """Get current workflow step"""
-        if 0 <= self.current_step_index < len(self.steps):
+        """Get current workflow step"""        if 0 <= self.current_step_index < len(self.steps):
             return self.steps[self.current_step_index]
         return None
     
     def get_next_step(self) -> Optional[WorkflowStep]:
-        """Get next workflow step"""
-        if self.current_step_index + 1 < len(self.steps):
+        """Get next workflow step"""        if self.current_step_index + 1 < len(self.steps):
             return self.steps[self.current_step_index + 1]
         return None
     
     def calculate_progress(self) -> float:
-        """Calculate workflow completion progress"""
-        if not self.steps:
+        """Calculate workflow completion progress"""        if not self.steps:
             return 0.0
         completed_steps = sum(1 for step in self.steps if step.is_completed)
         return completed_steps / len(self.steps)
@@ -151,8 +141,7 @@ class ConversationWorkflow:
 
 @dataclass
 class ConversationState:
-    """Comprehensive conversation state"""
-    conversation_id: str
+    """Comprehensive conversation state"""    conversation_id: str
     user_id: str
     session_id: str
     
@@ -181,8 +170,7 @@ class ConversationState:
     completion_likelihood: float = 0.5
     
     def add_transition(self, transition: StateTransition):
-        """Add state transition to history"""
-        self.state_history.append(transition)
+        """Add state transition to history"""        self.state_history.append(transition)
         self.last_state_change = datetime.utcnow()
         
         # Update phase duration if phase changed
@@ -221,8 +209,7 @@ class ConversationState:
 
 
 class ConversationStateManager:
-    """
-    Enterprise conversation state manager providing intelligent state tracking,
+    """    Enterprise conversation state manager providing intelligent state tracking,
     workflow orchestration, and completion optimization for content creators.
     
     Features:
@@ -231,8 +218,7 @@ class ConversationStateManager:
     - Intelligent completion prediction
     - State persistence and recovery
     - Analytics and optimization
-    """
-    
+    """    
     def __init__(
         self,
         cache_manager: CacheManager,
@@ -261,8 +247,7 @@ class ConversationStateManager:
         self.logger.info("ConversationStateManager initialized")
     
     async def start(self):
-        """Start the conversation state manager"""
-        try:
+        """Start the conversation state manager"""        try:
             # Load existing states
             await self._load_states()
             
@@ -282,8 +267,7 @@ class ConversationStateManager:
             raise StateManagerError(f"Startup failed: {e}")
     
     async def stop(self):
-        """Stop the conversation state manager"""
-        try:
+        """Stop the conversation state manager"""        try:
             # Cancel background tasks
             if self.cleanup_task:
                 self.cleanup_task.cancel()
@@ -308,8 +292,7 @@ class ConversationStateManager:
         creator_type: str = "multi_format",
         initial_phase: ConversationPhase = ConversationPhase.ONBOARDING
     ) -> ConversationState:
-        """
-        Initialize new conversation state
+        """        Initialize new conversation state
         
         Args:
             conversation_id: Conversation identifier
@@ -320,8 +303,7 @@ class ConversationStateManager:
             
         Returns:
             ConversationState: Initialized state
-        """
-        try:
+        """        try:
             # Create conversation state
             state = ConversationState(
                 conversation_id=conversation_id,
@@ -358,16 +340,14 @@ class ConversationStateManager:
         self,
         conversation_id: str
     ) -> Optional[ConversationState]:
-        """
-        Get conversation state
+        """        Get conversation state
         
         Args:
             conversation_id: Conversation identifier
             
         Returns:
             ConversationState or None if not found
-        """
-        try:
+        """        try:
             # Check in-memory storage
             if conversation_id in self.conversation_states:
                 return self.conversation_states[conversation_id]
@@ -391,8 +371,7 @@ class ConversationStateManager:
         reason: StateTransitionReason = StateTransitionReason.USER_REQUEST,
         context_data: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Transition conversation to new phase
+        """        Transition conversation to new phase
         
         Args:
             conversation_id: Conversation identifier
@@ -402,8 +381,7 @@ class ConversationStateManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             state = await self.get_conversation_state(conversation_id)
             if not state:
                 return False
@@ -461,8 +439,7 @@ class ConversationStateManager:
         step_id: str,
         completion_data: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Update workflow step progress
+        """        Update workflow step progress
         
         Args:
             conversation_id: Conversation identifier
@@ -471,8 +448,7 @@ class ConversationStateManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             state = await self.get_conversation_state(conversation_id)
             if not state or not state.current_workflow:
                 return False
@@ -537,8 +513,7 @@ class ConversationStateManager:
         action: str,
         context: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Add pending action to conversation state
+        """        Add pending action to conversation state
         
         Args:
             conversation_id: Conversation identifier
@@ -547,8 +522,7 @@ class ConversationStateManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             state = await self.get_conversation_state(conversation_id)
             if not state:
                 return False
@@ -574,8 +548,7 @@ class ConversationStateManager:
         conversation_id: str,
         action: str
     ) -> bool:
-        """
-        Mark pending action as completed
+        """        Mark pending action as completed
         
         Args:
             conversation_id: Conversation identifier
@@ -583,8 +556,7 @@ class ConversationStateManager:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             state = await self.get_conversation_state(conversation_id)
             if not state:
                 return False
@@ -615,8 +587,7 @@ class ConversationStateManager:
         user_id: Optional[str] = None,
         phase: Optional[ConversationPhase] = None
     ) -> Dict[str, Any]:
-        """
-        Get state analytics
+        """        Get state analytics
         
         Args:
             conversation_id: Specific conversation to analyze
@@ -625,8 +596,7 @@ class ConversationStateManager:
             
         Returns:
             Dict containing analytics data
-        """
-        try:
+        """        try:
             states_to_analyze = []
             
             if conversation_id:
@@ -710,8 +680,7 @@ class ConversationStateManager:
         from_phase: ConversationPhase,
         to_phase: ConversationPhase
     ) -> bool:
-        """Validate if state transition is allowed"""
-        valid_targets = self.valid_transitions.get(from_phase, set())
+        """Validate if state transition is allowed"""        valid_targets = self.valid_transitions.get(from_phase, set())
         return to_phase in valid_targets or from_phase == to_phase
     
     async def _handle_phase_change(
@@ -720,8 +689,7 @@ class ConversationStateManager:
         from_phase: ConversationPhase,
         to_phase: ConversationPhase
     ):
-        """Handle workflow changes when phase changes"""
-        if from_phase != to_phase:
+        """Handle workflow changes when phase changes"""        if from_phase != to_phase:
             # Create new workflow for the target phase if needed
             if to_phase in [
                 ConversationPhase.PROTECTION_SETUP,
@@ -738,8 +706,7 @@ class ConversationStateManager:
         state: ConversationState,
         transition: StateTransition
     ):
-        """Update engagement metrics based on transition"""
-        # Update engagement based on transition reason
+        """Update engagement metrics based on transition"""        # Update engagement based on transition reason
         if transition.reason == StateTransitionReason.USER_REQUEST:
             state.user_engagement_level = min(state.user_engagement_level + 0.1, 1.0)
         elif transition.reason == StateTransitionReason.TIMEOUT:
@@ -756,8 +723,7 @@ class ConversationStateManager:
         self,
         state: ConversationState
     ) -> Optional[ConversationPhase]:
-        """Suggest next conversation phase based on current state"""
-        current_phase = state.current_phase
+        """Suggest next conversation phase based on current state"""        current_phase = state.current_phase
         creator_type = state.state_context.get("creator_type", "multi_format")
         
         # Phase progression logic
@@ -778,8 +744,7 @@ class ConversationStateManager:
         phase: ConversationPhase,
         creator_type: str
     ) -> Optional[ConversationWorkflow]:
-        """Create workflow for specific phase and creator type"""
-        workflow_key = f"{phase.value}_{creator_type}"
+        """Create workflow for specific phase and creator type"""        workflow_key = f"{phase.value}_{creator_type}"
         
         if workflow_key in self.workflow_templates:
             template = self.workflow_templates[workflow_key]
@@ -806,8 +771,7 @@ class ConversationStateManager:
         return None
     
     async def _initialize_workflow_templates(self):
-        """Initialize workflow templates for different phases and creator types"""
-        # Onboarding workflow for musicians
+        """Initialize workflow templates for different phases and creator types"""        # Onboarding workflow for musicians
         musician_onboarding = ConversationWorkflow(
             workflow_id="template_onboarding_musician",
             workflow_name="Musician Onboarding",
@@ -877,8 +841,7 @@ class ConversationStateManager:
         # Add more workflow templates as needed
     
     async def _setup_state_machine(self):
-        """Setup valid state transitions"""
-        self.valid_transitions = {
+        """Setup valid state transitions"""        self.valid_transitions = {
             ConversationPhase.ONBOARDING: {
                 ConversationPhase.CONTENT_DISCOVERY,
                 ConversationPhase.SUPPORT_REQUEST,
@@ -936,8 +899,7 @@ class ConversationStateManager:
         }
     
     async def _cache_state(self, state: ConversationState):
-        """Cache conversation state"""
-        try:
+        """Cache conversation state"""        try:
             await self.cache_manager.set(
                 f"conversation_state:{state.conversation_id}",
                 state.to_dict(),
@@ -947,8 +909,7 @@ class ConversationStateManager:
             self.logger.error(f"Error caching state: {e}")
     
     async def _load_state(self, conversation_id: str) -> Optional[ConversationState]:
-        """Load conversation state from cache"""
-        try:
+        """Load conversation state from cache"""        try:
             state_data = await self.cache_manager.get(f"conversation_state:{conversation_id}")
             if state_data:
                 return self._state_from_dict(state_data)
@@ -958,16 +919,14 @@ class ConversationStateManager:
             return None
     
     async def _load_states(self):
-        """Load all conversation states"""
-        try:
+        """Load all conversation states"""        try:
             # Implementation would load from persistent storage
             pass
         except Exception as e:
             self.logger.error(f"Error loading states: {e}")
     
     async def _save_states(self):
-        """Save all conversation states"""
-        try:
+        """Save all conversation states"""        try:
             # Implementation would save to persistent storage
             states_data = {}
             for conversation_id, state in self.conversation_states.items():
@@ -982,8 +941,7 @@ class ConversationStateManager:
             self.logger.error(f"Error saving states: {e}")
     
     async def _background_cleanup(self):
-        """Background task for state cleanup"""
-        while True:
+        """Background task for state cleanup"""        while True:
             try:
                 await asyncio.sleep(300)  # Run every 5 minutes
                 
@@ -1015,8 +973,7 @@ class ConversationStateManager:
                 await asyncio.sleep(60)
     
     def _state_from_dict(self, data: Dict[str, Any]) -> ConversationState:
-        """Reconstruct state from dictionary"""
-        # Reconstruct workflow if present
+        """Reconstruct state from dictionary"""        # Reconstruct workflow if present
         current_workflow = None
         workflow_data = data.get("current_workflow")
         if workflow_data:

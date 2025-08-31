@@ -1,5 +1,4 @@
-"""
-Audio Fingerprint Deployment Module
+"""Audio Fingerprint Deployment Module
 Enterprise-grade audio fingerprinting service deployment manager
 
 This module handles the deployment and orchestration of audio fingerprinting
@@ -9,7 +8,6 @@ content identification and protection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -25,15 +23,13 @@ logger = logging.getLogger(__name__)
 
 
 class AudioProcessingQuality(Enum):
-    """Audio processing quality levels"""
-    BASIC = "basic"
+    """Audio processing quality levels"""    BASIC = "basic"
     HIGH = "high"
     ULTRA = "ultra"
 
 
 class DeploymentStatus(Enum):
-    """Deployment status enumeration"""
-    PENDING = "pending"
+    """Deployment status enumeration"""    PENDING = "pending"
     DEPLOYING = "deploying"
     RUNNING = "running"
     SCALING = "scaling"
@@ -43,8 +39,7 @@ class DeploymentStatus(Enum):
 
 @dataclass
 class AudioFingerprintConfig:
-    """Audio fingerprinting deployment configuration"""
-    replicas: int = 3
+    """Audio fingerprinting deployment configuration"""    replicas: int = 3
     cpu_limit: str = "2000m"
     memory_limit: str = "4Gi"
     gpu_count: int = 1
@@ -60,21 +55,17 @@ class AudioFingerprintConfig:
 
 
 class AudioFingerprintDeployment:
-    """
-    Enterprise audio fingerprinting deployment manager
+    """    Enterprise audio fingerprinting deployment manager
     
     Handles deployment, scaling, and monitoring of audio fingerprinting
     services with support for Chromaprint and Essentia engines.
-    """
-    
+    """    
     def __init__(self, namespace: str = "ia-influencer"):
-        """
-        Initialize audio fingerprint deployment manager
+        """        Initialize audio fingerprint deployment manager
         
         Args:
             namespace: Kubernetes namespace for deployment
-        """
-        self.namespace = namespace
+        """        self.namespace = namespace
         self.config = AudioFingerprintConfig()
         self.status = DeploymentStatus.PENDING
         self._k8s_client = None
@@ -85,8 +76,7 @@ class AudioFingerprintDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""
-        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -111,16 +101,14 @@ class AudioFingerprintDeployment:
             raise
     
     async def deploy(self, config: Optional[AudioFingerprintConfig] = None) -> Dict[str, Any]:
-        """
-        Deploy audio fingerprinting services
+        """        Deploy audio fingerprinting services
         
         Args:
             config: Optional custom configuration
             
         Returns:
             Deployment result with status and details
-        """
-        if config:
+        """        if config:
             self.config = config
         
         try:
@@ -169,8 +157,7 @@ class AudioFingerprintDeployment:
             raise
     
     async def _ensure_namespace(self) -> None:
-        """Ensure Kubernetes namespace exists"""
-        try:
+        """Ensure Kubernetes namespace exists"""        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -182,8 +169,7 @@ class AudioFingerprintDeployment:
                 logger.info(f"Created namespace: {self.namespace}")
     
     async def _deploy_redis_cache(self) -> None:
-        """Deploy Redis cache for audio processing optimization"""
-        redis_deployment = {
+        """Deploy Redis cache for audio processing optimization"""        redis_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -250,8 +236,7 @@ class AudioFingerprintDeployment:
         logger.info("Deployed Redis cache for audio processing")
     
     async def _deploy_audio_services(self) -> Dict[str, Any]:
-        """Deploy main audio fingerprinting services"""
-        # Audio fingerprinting deployment manifest
+        """Deploy main audio fingerprinting services"""        # Audio fingerprinting deployment manifest
         audio_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -400,8 +385,7 @@ class AudioFingerprintDeployment:
         }
     
     async def _deploy_autoscaler(self) -> None:
-        """Deploy horizontal pod autoscaler for audio services"""
-        hpa_manifest = {
+        """Deploy horizontal pod autoscaler for audio services"""        hpa_manifest = {
             "apiVersion": "autoscaling/v2",
             "kind": "HorizontalPodAutoscaler",
             "metadata": {
@@ -461,8 +445,7 @@ class AudioFingerprintDeployment:
         logger.info("Deployed horizontal pod autoscaler for audio services")
     
     async def _deploy_monitoring(self) -> None:
-        """Deploy monitoring and observability for audio services"""
-        # ServiceMonitor for Prometheus
+        """Deploy monitoring and observability for audio services"""        # ServiceMonitor for Prometheus
         service_monitor = {
             "apiVersion": "monitoring.coreos.com/v1",
             "kind": "ServiceMonitor",
@@ -485,8 +468,7 @@ class AudioFingerprintDeployment:
         logger.info("Deployed monitoring configuration for audio services")
     
     async def _validate_deployment(self) -> bool:
-        """Validate that deployment is healthy and functional"""
-        try:
+        """Validate that deployment is healthy and functional"""        try:
             # Check deployment status
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
                 name="audio-fingerprint-service",
@@ -519,8 +501,7 @@ class AudioFingerprintDeployment:
             return False
     
     async def _cleanup_failed_deployment(self) -> None:
-        """Clean up resources from failed deployment"""
-        try:
+        """Clean up resources from failed deployment"""        try:
             # Delete deployment
             self.k8s_apps_v1.delete_namespaced_deployment(
                 name="audio-fingerprint-service",
@@ -539,16 +520,14 @@ class AudioFingerprintDeployment:
             logger.error(f"Cleanup failed: {e}")
     
     async def scale(self, replicas: int) -> Dict[str, Any]:
-        """
-        Scale audio fingerprinting deployment
+        """        Scale audio fingerprinting deployment
         
         Args:
             replicas: Target number of replicas
             
         Returns:
             Scaling operation result
-        """
-        try:
+        """        try:
             self.status = DeploymentStatus.SCALING
             
             # Update deployment replica count
@@ -577,13 +556,11 @@ class AudioFingerprintDeployment:
             raise
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """
-        Get deployment metrics and performance data
+        """        Get deployment metrics and performance data
         
         Returns:
             Current metrics and performance indicators
-        """
-        try:
+        """        try:
             # Get deployment status
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
                 name="audio-fingerprint-service",
@@ -623,16 +600,14 @@ class AudioFingerprintDeployment:
             return {"error": str(e)}
     
     async def update_models(self, model_versions: Dict[str, str]) -> Dict[str, Any]:
-        """
-        Update AI models with rolling deployment
+        """        Update AI models with rolling deployment
         
         Args:
             model_versions: Dictionary of model names and versions
             
         Returns:
             Update operation result
-        """
-        try:
+        """        try:
             logger.info(f"Updating models: {model_versions}")
             
             # Implement rolling update strategy
@@ -678,8 +653,7 @@ class AudioFingerprintDeployment:
             raise
     
     async def cleanup(self) -> None:
-        """Clean up all deployment resources"""
-        try:
+        """Clean up all deployment resources"""        try:
             # Delete HPA
             self.k8s_autoscaling_v1.delete_namespaced_horizontal_pod_autoscaler(
                 name="audio-fingerprint-hpa",

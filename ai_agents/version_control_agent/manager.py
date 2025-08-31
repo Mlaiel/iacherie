@@ -1,5 +1,4 @@
-"""
-Version Control Manager - Ultra-Advanced Enterprise Management System
+"""Version Control Manager - Ultra-Advanced Enterprise Management System
 
 Unified interface for the entire version control system providing comprehensive
 control, monitoring, and optimization capabilities.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -36,15 +34,13 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class VersionControlSystemStatus:
-    """Overall version control system status"""
-    is_healthy: bool = True
+    """Overall version control system status"""    is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
     last_updated: datetime = None
 
 class VersionControlManager(BaseAgent):
-    """
-    Master Version Control Manager
+    """    Master Version Control Manager
     
     Unified interface for the entire version control system providing:
     - Single point of control for all version control operations
@@ -53,8 +49,7 @@ class VersionControlManager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -67,8 +62,7 @@ class VersionControlManager(BaseAgent):
         logger.info("VersionControlManager initialized")
 
     async def start(self) -> None:
-        """Start the complete version control system"""
-        if self.is_running:
+        """Start the complete version control system"""        if self.is_running:
             logger.warning("Version Control system is already running")
             return
         
@@ -83,8 +77,7 @@ class VersionControlManager(BaseAgent):
             raise
 
     async def get_system_status(self) -> VersionControlSystemStatus:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             return VersionControlSystemStatus(
                 is_healthy=self.is_running,
                 active_operations=0,  # Implementation specific
@@ -96,8 +89,7 @@ class VersionControlManager(BaseAgent):
             return VersionControlSystemStatus(is_healthy=False)
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire version control system"""
-        if not self.is_running:
+        """Graceful shutdown of the entire version control system"""        if not self.is_running:
             logger.warning("Version Control system is not running")
             return
         
@@ -111,8 +103,7 @@ class VersionControlManager(BaseAgent):
             logger.error(f"Failed to shutdown version control system: {e}")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""
-        try:
+        """Base agent interface implementation"""        try:
             # Implementation specific to version control operations
             result = await self.engine.process(data)
             return AgentResponse(success=True, data=result)

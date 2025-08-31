@@ -1,5 +1,4 @@
-"""
-Surveillance Orchestrator - Central Command & Control System
+"""Surveillance Orchestrator - Central Command & Control System
 
 Revolutionary enterprise-grade surveillance command center providing centralized coordination,
 intelligent task distribution, and comprehensive monitoring across all surveillance operations
@@ -23,7 +22,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 This orchestration system is the EXCLUSIVE intellectual property of Fahed Mlaiel.
 ANY UNAUTHORIZED USE, COPYING, OR THEFT will result in immediate legal prosecution.
 """
-
 import asyncio
 import logging
 import json
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class TaskPriority(Enum):
-    """Task priority levels"""
-    CRITICAL = 1    # Immediate action required
+    """Task priority levels"""    CRITICAL = 1    # Immediate action required
     HIGH = 2        # Process within 1 hour
     NORMAL = 3      # Process within 24 hours
     LOW = 4         # Process when resources available
@@ -54,8 +51,7 @@ class TaskPriority(Enum):
 
 
 class OperationStatus(Enum):
-    """Operation status tracking"""
-    PENDING = "pending"
+    """Operation status tracking"""    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -65,8 +61,7 @@ class OperationStatus(Enum):
 
 @dataclass
 class SurveillanceTask:
-    """Surveillance task definition"""
-    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Surveillance task definition"""    task_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: int = None
     crawl_request: CrawlRequest = None
     priority: TaskPriority = TaskPriority.NORMAL
@@ -83,8 +78,7 @@ class SurveillanceTask:
 
 @dataclass
 class WorkerNode:
-    """Surveillance worker node"""
-    worker_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Surveillance worker node"""    worker_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     hostname: str = None
     is_active: bool = True
     current_load: int = 0
@@ -96,8 +90,7 @@ class WorkerNode:
 
 @dataclass
 class OperationMetrics:
-    """Real-time operation metrics"""
-    total_tasks: int = 0
+    """Real-time operation metrics"""    total_tasks: int = 0
     pending_tasks: int = 0
     running_tasks: int = 0
     completed_tasks: int = 0
@@ -111,13 +104,11 @@ class OperationMetrics:
 
 
 class SurveillanceOrchestrator:
-    """
-    Ultra-Advanced Surveillance Orchestrator
+    """    Ultra-Advanced Surveillance Orchestrator
     
     Central command and control system for coordinating all surveillance operations
     across platforms and managing resources for optimal performance and coverage.
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.event_emitter = EventEmitter()
@@ -142,8 +133,7 @@ class SurveillanceOrchestrator:
         logger.info("SurveillanceOrchestrator initialized successfully")
     
     async def _start_background_processes(self):
-        """Start background monitoring and maintenance processes"""
-        await asyncio.gather(
+        """Start background monitoring and maintenance processes"""        await asyncio.gather(
             self._task_scheduler_loop(),
             self._worker_health_monitor(),
             self._metrics_collector(),
@@ -151,8 +141,7 @@ class SurveillanceOrchestrator:
         )
     
     async def schedule_surveillance(self, crawl_request: CrawlRequest, priority: TaskPriority = TaskPriority.NORMAL) -> str:
-        """
-        Schedule surveillance operation
+        """        Schedule surveillance operation
         
         Args:
             crawl_request: Crawl configuration
@@ -160,8 +149,7 @@ class SurveillanceOrchestrator:
             
         Returns:
             str: Task ID
-        """
-        try:
+        """        try:
             # Create surveillance task
             task = SurveillanceTask(
                 user_id=crawl_request.user_id,
@@ -200,8 +188,7 @@ class SurveillanceOrchestrator:
             raise BusinessLogicError(f"Task scheduling failed: {str(e)}")
     
     def _estimate_task_duration(self, crawl_request: CrawlRequest) -> timedelta:
-        """Estimate task completion time based on request parameters"""
-        base_duration = timedelta(minutes=15)
+        """Estimate task completion time based on request parameters"""        base_duration = timedelta(minutes=15)
         
         # Adjust based on scope
         duration_multiplier = 1.0
@@ -223,8 +210,7 @@ class SurveillanceOrchestrator:
         return min(total_duration, timedelta(hours=4))  # Cap at 4 hours
     
     async def _task_scheduler_loop(self):
-        """Main task scheduling loop"""
-        while True:
+        """Main task scheduling loop"""        while True:
             try:
                 await self._process_task_queue()
                 await asyncio.sleep(5)  # Check every 5 seconds
@@ -233,8 +219,7 @@ class SurveillanceOrchestrator:
                 await asyncio.sleep(10)
     
     async def _process_task_queue(self):
-        """Process pending tasks in priority queue"""
-        try:
+        """Process pending tasks in priority queue"""        try:
             # Check if we can process more tasks
             if len(self.active_tasks) >= self.max_concurrent_tasks:
                 return
@@ -274,8 +259,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Task queue processing failed: {e}")
     
     async def _assign_and_start_task(self, task: SurveillanceTask, worker: WorkerNode):
-        """Assign task to worker and start execution"""
-        try:
+        """Assign task to worker and start execution"""        try:
             # Assign task
             task.assigned_worker = worker.worker_id
             task.status = OperationStatus.RUNNING
@@ -312,8 +296,7 @@ class SurveillanceOrchestrator:
             await self._handle_task_failure(task, str(e))
     
     async def _monitor_task_execution(self, task: SurveillanceTask):
-        """Monitor task execution and handle completion"""
-        try:
+        """Monitor task execution and handle completion"""        try:
             session_id = task.metadata.get('surveillance_session_id')
             if not session_id:
                 raise BusinessLogicError("No surveillance session ID found")
@@ -343,8 +326,7 @@ class SurveillanceOrchestrator:
             await self._handle_task_failure(task, str(e))
     
     async def _handle_task_completion(self, task: SurveillanceTask, surveillance_status: Dict):
-        """Handle successful task completion"""
-        try:
+        """Handle successful task completion"""        try:
             # Update task status
             task.status = OperationStatus.COMPLETED
             task.completed_at = datetime.utcnow()
@@ -380,8 +362,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Task completion handling failed: {e}")
     
     async def _handle_task_failure(self, task: SurveillanceTask, error_message: str):
-        """Handle task failure with retry logic"""
-        try:
+        """Handle task failure with retry logic"""        try:
             task.retry_count += 1
             
             if task.retry_count <= task.max_retries:
@@ -429,8 +410,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Task failure handling failed: {e}")
     
     async def _handle_task_timeout(self, task: SurveillanceTask):
-        """Handle task timeout"""
-        try:
+        """Handle task timeout"""        try:
             # Stop surveillance if running
             session_id = task.metadata.get('surveillance_session_id')
             if session_id:
@@ -442,8 +422,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Task timeout handling failed: {e}")
     
     def _update_average_completion_time(self, completion_time: float):
-        """Update average completion time metric"""
-        if self.metrics.completed_tasks == 1:
+        """Update average completion time metric"""        if self.metrics.completed_tasks == 1:
             self.metrics.average_completion_time = completion_time
         else:
             # Exponential moving average
@@ -454,8 +433,7 @@ class SurveillanceOrchestrator:
             )
     
     async def _process_surveillance_results(self, task: SurveillanceTask, surveillance_status: Dict):
-        """Process surveillance results and update metrics"""
-        try:
+        """Process surveillance results and update metrics"""        try:
             report = surveillance_status.get('report')
             if not report:
                 return
@@ -485,8 +463,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Results processing failed: {e}")
     
     async def _worker_health_monitor(self):
-        """Monitor worker node health"""
-        while True:
+        """Monitor worker node health"""        while True:
             try:
                 current_time = datetime.utcnow()
                 inactive_workers = []
@@ -513,8 +490,7 @@ class SurveillanceOrchestrator:
                 await asyncio.sleep(60)
     
     async def _handle_worker_failure(self, worker_id: str):
-        """Handle worker node failure"""
-        try:
+        """Handle worker node failure"""        try:
             # Find tasks assigned to failed worker
             failed_tasks = [
                 task for task in self.active_tasks.values()
@@ -531,8 +507,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Worker failure handling failed: {e}")
     
     async def _metrics_collector(self):
-        """Collect and update system metrics"""
-        while True:
+        """Collect and update system metrics"""        while True:
             try:
                 # Update success rate
                 total_finished = self.metrics.completed_tasks + self.metrics.failed_tasks
@@ -556,8 +531,7 @@ class SurveillanceOrchestrator:
                 await asyncio.sleep(120)
     
     async def _performance_optimizer(self):
-        """Optimize system performance based on metrics"""
-        while True:
+        """Optimize system performance based on metrics"""        while True:
             try:
                 # Analyze performance patterns
                 await self._analyze_performance_patterns()
@@ -575,8 +549,7 @@ class SurveillanceOrchestrator:
                 await asyncio.sleep(600)
     
     async def _analyze_performance_patterns(self):
-        """Analyze system performance patterns"""
-        try:
+        """Analyze system performance patterns"""        try:
             # Analyze completion times by priority
             # Analyze worker utilization patterns
             # Identify bottlenecks and optimization opportunities
@@ -585,8 +558,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Performance analysis failed: {e}")
     
     async def _optimize_resource_allocation(self):
-        """Optimize resource allocation based on demand"""
-        try:
+        """Optimize resource allocation based on demand"""        try:
             # Adjust worker capacities based on performance
             # Rebalance tasks across workers
             # Scale resources up/down based on queue size
@@ -595,8 +567,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Resource optimization failed: {e}")
     
     async def _tune_system_parameters(self):
-        """Tune system parameters for optimal performance"""
-        try:
+        """Tune system parameters for optimal performance"""        try:
             # Adjust queue processing intervals
             # Tune timeout values
             # Optimize batch sizes
@@ -605,8 +576,7 @@ class SurveillanceOrchestrator:
             logger.error(f"Parameter tuning failed: {e}")
     
     async def register_worker(self, worker: WorkerNode) -> bool:
-        """Register new worker node"""
-        try:
+        """Register new worker node"""        try:
             self.worker_nodes[worker.worker_id] = worker
             worker.last_heartbeat = datetime.utcnow()
             
@@ -624,8 +594,7 @@ class SurveillanceOrchestrator:
             return False
     
     async def worker_heartbeat(self, worker_id: str, metrics: Dict[str, Any] = None) -> bool:
-        """Update worker heartbeat and metrics"""
-        try:
+        """Update worker heartbeat and metrics"""        try:
             if worker_id not in self.worker_nodes:
                 return False
             
@@ -643,8 +612,7 @@ class SurveillanceOrchestrator:
             return False
     
     async def get_orchestration_status(self) -> Dict[str, Any]:
-        """Get comprehensive orchestration status"""
-        try:
+        """Get comprehensive orchestration status"""        try:
             return {
                 'metrics': self.metrics.__dict__,
                 'queue_size': len(self.task_queue),
@@ -657,8 +625,7 @@ class SurveillanceOrchestrator:
             return {}
     
     async def cancel_task(self, task_id: str, user_id: int) -> bool:
-        """Cancel surveillance task"""
-        try:
+        """Cancel surveillance task"""        try:
             # Find task
             task = self.active_tasks.get(task_id)
             if not task or task.user_id != user_id:

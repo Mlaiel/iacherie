@@ -1,5 +1,4 @@
-"""
-Geographic Load Balancer for IA Influencer Agent Platform
+"""Geographic Load Balancer for IA Influencer Agent Platform
 
 Provides intelligent geographic traffic distribution for optimal performance
 of content protection, fingerprinting, and monetization services across
@@ -13,7 +12,6 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
-
 import asyncio
 import logging
 import json
@@ -47,8 +45,7 @@ GEO_COMPLIANCE_STATUS = Gauge('geo_compliance_status', 'GDPR/Regional compliance
 
 @dataclass
 class GeographicRegion:
-    """Geographic region configuration for load balancing"""
-    name: str
+    """Geographic region configuration for load balancing"""    name: str
     countries: List[str]
     primary_servers: List[str]
     fallback_servers: List[str]
@@ -65,8 +62,7 @@ class GeographicRegion:
 
 @dataclass
 class ServerEndpoint:
-    """Geographic server endpoint configuration"""
-    host: str
+    """Geographic server endpoint configuration"""    host: str
     port: int
     region: str
     datacenter: str
@@ -85,8 +81,7 @@ class ServerEndpoint:
 
 @dataclass
 class ClientLocation:
-    """Client geographic location information"""
-    ip_address: str
+    """Client geographic location information"""    ip_address: str
     country_code: str
     region: str
     city: str
@@ -98,16 +93,14 @@ class ClientLocation:
 
 
 class GeographicLoadBalancer:
-    """
-    Geographic Load Balancer for IA Influencer Agent Platform
+    """    Geographic Load Balancer for IA Influencer Agent Platform
     
     Provides intelligent geographic routing for:
     - Content protection services with regional compliance
     - AI fingerprinting with data residency requirements
     - Monetization APIs with local payment regulations
     - Real-time collaboration with latency optimization
-    """
-    
+    """    
     def __init__(
         self,
         geoip_database_path: str = "/opt/geoip/GeoLite2-City.mmdb",
@@ -147,8 +140,7 @@ class GeographicLoadBalancer:
         logger.info("Geographic Load Balancer initialized for global IA Influencer Agent platform")
     
     async def initialize(self) -> bool:
-        """Initialize geographic load balancer with platform configuration"""
-        try:
+        """Initialize geographic load balancer with platform configuration"""        try:
             # Load configuration
             await self._load_configuration()
             
@@ -178,8 +170,7 @@ class GeographicLoadBalancer:
             return False
     
     async def _load_configuration(self) -> None:
-        """Load geographic configuration from file or defaults"""
-        try:
+        """Load geographic configuration from file or defaults"""        try:
             if self.config_file and Path(self.config_file).exists():
                 with open(self.config_file, 'r') as f:
                     file_config = yaml.safe_load(f)
@@ -192,8 +183,7 @@ class GeographicLoadBalancer:
             logger.warning(f"Failed to load configuration: {e}, using defaults")
     
     async def _initialize_geoip_database(self) -> None:
-        """Initialize GeoIP database for client location detection"""
-        try:
+        """Initialize GeoIP database for client location detection"""        try:
             if Path(self.geoip_database_path).exists():
                 self._geoip_reader = geoip2.database.Reader(self.geoip_database_path)
                 logger.info("GeoIP database initialized")
@@ -207,8 +197,7 @@ class GeographicLoadBalancer:
             await self._setup_fallback_geolocation()
     
     async def _setup_fallback_geolocation(self) -> None:
-        """Setup fallback geolocation service"""
-        try:
+        """Setup fallback geolocation service"""        try:
             # Simple fallback using online IP geolocation
             logger.info("Setting up fallback geolocation service")
             
@@ -216,8 +205,7 @@ class GeographicLoadBalancer:
             logger.error(f"Failed to setup fallback geolocation: {e}")
     
     async def _configure_platform_regions(self) -> None:
-        """Configure geographic regions for IA Influencer Agent platform"""
-        try:
+        """Configure geographic regions for IA Influencer Agent platform"""        try:
             # Europe region - GDPR compliance focus
             europe_region = GeographicRegion(
                 name="europe",
@@ -284,8 +272,7 @@ class GeographicLoadBalancer:
             raise
     
     async def _initialize_server_endpoints(self) -> None:
-        """Initialize server endpoints for each geographic region"""
-        try:
+        """Initialize server endpoints for each geographic region"""        try:
             # Europe servers
             europe_servers = [
                 ServerEndpoint(
@@ -393,8 +380,7 @@ class GeographicLoadBalancer:
             raise
     
     async def get_client_location(self, ip_address: str) -> Optional[ClientLocation]:
-        """Get geographic location for client IP address"""
-        try:
+        """Get geographic location for client IP address"""        try:
             # Check cache first
             if ip_address in self.client_cache:
                 return self.client_cache[ip_address]
@@ -448,8 +434,7 @@ class GeographicLoadBalancer:
             return await self._get_fallback_location(ip_address)
     
     async def _get_fallback_location(self, ip_address: str) -> ClientLocation:
-        """Get fallback location for unknown IP addresses"""
-        return ClientLocation(
+        """Get fallback location for unknown IP addresses"""        return ClientLocation(
             ip_address=ip_address,
             country_code="UNKNOWN",
             region="UNKNOWN",
@@ -462,8 +447,7 @@ class GeographicLoadBalancer:
         )
     
     def _determine_compliance_region(self, country_code: str) -> str:
-        """Determine compliance region based on country code"""
-        eu_countries = ["DE", "FR", "GB", "IT", "ES", "NL", "BE", "AT", "CH", "SE", "NO", "DK", "FI"]
+        """Determine compliance region based on country code"""        eu_countries = ["DE", "FR", "GB", "IT", "ES", "NL", "BE", "AT", "CH", "SE", "NO", "DK", "FI"]
         na_countries = ["US", "CA", "MX"]
         ap_countries = ["JP", "KR", "SG", "AU", "HK", "TW", "IN", "TH", "VN", "MY", "PH"]
         
@@ -482,15 +466,13 @@ class GeographicLoadBalancer:
         service_type: str = "general",
         requirements: Optional[Dict[str, Any]] = None
     ) -> Optional[ServerEndpoint]:
-        """
-        Select optimal server for client based on:
+        """        Select optimal server for client based on:
         - Geographic proximity
         - Latency measurements
         - Server load
         - Compliance requirements
         - Service-specific needs
-        """
-        try:
+        """        try:
             # Determine target region
             target_region = self._determine_target_region(client_location, requirements)
             
@@ -539,8 +521,7 @@ class GeographicLoadBalancer:
         client_location: ClientLocation,
         requirements: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Determine target region based on client location and requirements"""
-        try:
+        """Determine target region based on client location and requirements"""        try:
             # First check if client is in a specific compliance region
             compliance_region = client_location.compliance_region
             
@@ -566,8 +547,7 @@ class GeographicLoadBalancer:
             return "global"
     
     def _get_candidate_servers(self, region: str, service_type: str) -> List[ServerEndpoint]:
-        """Get candidate servers for a region and service type"""
-        try:
+        """Get candidate servers for a region and service type"""        try:
             candidate_servers = []
             
             # Primary region servers
@@ -600,8 +580,7 @@ class GeographicLoadBalancer:
         service_type: str,
         requirements: Optional[Dict[str, Any]] = None
     ) -> float:
-        """Calculate server score based on multiple criteria"""
-        try:
+        """Calculate server score based on multiple criteria"""        try:
             score = 0.0
             
             # Geographic distance score (40% weight)
@@ -631,8 +610,7 @@ class GeographicLoadBalancer:
         server: ServerEndpoint,
         client_location: ClientLocation
     ) -> float:
-        """Calculate score based on geographic distance"""
-        try:
+        """Calculate score based on geographic distance"""        try:
             # Calculate great circle distance
             distance_km = self._calculate_great_circle_distance(
                 client_location.coordinates,
@@ -655,8 +633,7 @@ class GeographicLoadBalancer:
         coord1: Tuple[float, float],
         coord2: Tuple[float, float]
     ) -> float:
-        """Calculate great circle distance between two coordinates"""
-        import math
+        """Calculate great circle distance between two coordinates"""        import math
         
         lat1, lon1 = math.radians(coord1[0]), math.radians(coord1[1])
         lat2, lon2 = math.radians(coord2[0]), math.radians(coord2[1])
@@ -673,8 +650,7 @@ class GeographicLoadBalancer:
         return earth_radius * c
     
     async def _calculate_latency_score(self, server: ServerEndpoint) -> float:
-        """Calculate score based on server latency"""
-        try:
+        """Calculate score based on server latency"""        try:
             # Get average latency from monitoring
             avg_latency = server.avg_latency_ms
             
@@ -693,8 +669,7 @@ class GeographicLoadBalancer:
             return 0.5
     
     async def _calculate_load_score(self, server: ServerEndpoint) -> float:
-        """Calculate score based on server load"""
-        try:
+        """Calculate score based on server load"""        try:
             current_load = server.current_load
             capacity_weight = server.capacity_weight
             
@@ -715,8 +690,7 @@ class GeographicLoadBalancer:
         server: ServerEndpoint,
         requirements: Optional[Dict[str, Any]] = None
     ) -> float:
-        """Calculate score based on compliance requirements"""
-        try:
+        """Calculate score based on compliance requirements"""        try:
             if not requirements or "compliance_requirements" not in requirements:
                 return 1.0  # No specific requirements
             
@@ -739,8 +713,7 @@ class GeographicLoadBalancer:
             return 0.5
     
     async def _get_fallback_server(self) -> Optional[ServerEndpoint]:
-        """Get fallback server when optimal selection fails"""
-        try:
+        """Get fallback server when optimal selection fails"""        try:
             # Use global region as fallback
             if "global" in self.servers:
                 global_servers = self.servers["global"]
@@ -758,8 +731,7 @@ class GeographicLoadBalancer:
             return None
     
     async def _start_latency_monitoring(self) -> None:
-        """Start latency monitoring for all servers"""
-        try:
+        """Start latency monitoring for all servers"""        try:
             if self._monitoring_active:
                 return
             
@@ -781,8 +753,7 @@ class GeographicLoadBalancer:
             logger.error(f"Failed to start latency monitoring: {e}")
     
     async def _measure_all_server_latencies(self) -> None:
-        """Measure latency to all servers"""
-        try:
+        """Measure latency to all servers"""        try:
             tasks = []
             
             for region, servers in self.servers.items():
@@ -797,8 +768,7 @@ class GeographicLoadBalancer:
             logger.error(f"Failed to measure server latencies: {e}")
     
     async def _measure_server_latency(self, server: ServerEndpoint) -> None:
-        """Measure latency to a specific server"""
-        try:
+        """Measure latency to a specific server"""        try:
             start_time = time.time()
             
             # Simple TCP connection test
@@ -827,8 +797,7 @@ class GeographicLoadBalancer:
             # Don't update latency on failure
     
     async def _start_health_monitoring(self) -> None:
-        """Start health monitoring for all servers"""
-        try:
+        """Start health monitoring for all servers"""        try:
             async def monitor_health():
                 while self._monitoring_active:
                     try:
@@ -845,8 +814,7 @@ class GeographicLoadBalancer:
             logger.error(f"Failed to start health monitoring: {e}")
     
     async def _check_all_server_health(self) -> None:
-        """Check health of all servers"""
-        try:
+        """Check health of all servers"""        try:
             tasks = []
             
             for region, servers in self.servers.items():
@@ -861,8 +829,7 @@ class GeographicLoadBalancer:
             logger.error(f"Failed to check server health: {e}")
     
     async def _check_server_health(self, server: ServerEndpoint) -> None:
-        """Check health of a specific server"""
-        try:
+        """Check health of a specific server"""        try:
             url = f"https://{server.host}:{server.port}/health"
             
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=10)) as session:
@@ -892,8 +859,7 @@ class GeographicLoadBalancer:
             ).set(0)
     
     async def _initialize_compliance_checking(self) -> None:
-        """Initialize compliance checking for all regions"""
-        try:
+        """Initialize compliance checking for all regions"""        try:
             for region_name, region in self.regions.items():
                 compliance_status = {}
                 
@@ -919,8 +885,7 @@ class GeographicLoadBalancer:
             logger.error(f"Failed to initialize compliance checking: {e}")
     
     async def _get_from_redis_cache(self, key: str) -> Optional[str]:
-        """Get value from Redis cache"""
-        try:
+        """Get value from Redis cache"""        try:
             if self.redis_client:
                 value = self.redis_client.get(key)
                 return value.decode() if value else None
@@ -930,16 +895,14 @@ class GeographicLoadBalancer:
             return None
     
     async def _set_redis_cache(self, key: str, value: str, ttl: int) -> None:
-        """Set value in Redis cache"""
-        try:
+        """Set value in Redis cache"""        try:
             if self.redis_client:
                 self.redis_client.setex(key, ttl, value)
         except Exception as e:
             logger.error(f"Redis cache set error: {e}")
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of geographic load balancer"""
-        try:
+        """Get comprehensive status of geographic load balancer"""        try:
             # Calculate statistics
             total_servers = sum(len(servers) for servers in self.servers.values())
             healthy_servers = sum(
@@ -971,8 +934,7 @@ class GeographicLoadBalancer:
             return {"error": str(e), "timestamp": datetime.now().isoformat()}
     
     async def shutdown(self) -> None:
-        """Shutdown geographic load balancer"""
-        try:
+        """Shutdown geographic load balancer"""        try:
             logger.info("Shutting down Geographic Load Balancer...")
             
             self._monitoring_active = False
@@ -995,8 +957,7 @@ async def route_fingerprinting_request(
     geo_balancer: GeographicLoadBalancer,
     content_type: str = "audio"
 ) -> Optional[ServerEndpoint]:
-    """Route fingerprinting requests with data residency compliance"""
-    try:
+    """Route fingerprinting requests with data residency compliance"""    try:
         client_location = await geo_balancer.get_client_location(client_ip)
         if not client_location:
             return None
@@ -1023,8 +984,7 @@ async def route_monetization_request(
     geo_balancer: GeographicLoadBalancer,
     payment_method: str = "stripe"
 ) -> Optional[ServerEndpoint]:
-    """Route monetization requests with regional payment compliance"""
-    try:
+    """Route monetization requests with regional payment compliance"""    try:
         client_location = await geo_balancer.get_client_location(client_ip)
         if not client_location:
             return None
@@ -1052,8 +1012,7 @@ async def route_ai_agent_request(
     geo_balancer: GeographicLoadBalancer,
     spotify_region: str = "global"
 ) -> Optional[ServerEndpoint]:
-    """Route AI agent requests with optimal latency for real-time features"""
-    try:
+    """Route AI agent requests with optimal latency for real-time features"""    try:
         client_location = await geo_balancer.get_client_location(client_ip)
         if not client_location:
             return None

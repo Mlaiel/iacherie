@@ -1,5 +1,4 @@
-"""
-💰 Advanced Royalty Management System - Comprehensive Rights & Revenue Management
+"""💰 Advanced Royalty Management System - Comprehensive Rights & Revenue Management
 ================================================================================
 
 Ultra-sophisticated royalty calculation and distribution system for licensing:
@@ -22,7 +21,6 @@ applicable intellectual property laws and license agreements.
 
 Contact: mlaiel@live.de for licensing and authorization requests.
 """
-
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union, Tuple, Set
@@ -41,8 +39,7 @@ from abc import ABC, abstractmethod
 logger = logging.getLogger(__name__)
 
 class RoyaltyType(Enum):
-    """Types of royalties in the music industry"""
-    MECHANICAL = "mechanical"  # Reproduction royalties
+    """Types of royalties in the music industry"""    MECHANICAL = "mechanical"  # Reproduction royalties
     PERFORMANCE = "performance"  # Public performance royalties
     SYNCHRONIZATION = "sync"  # Sync licensing for media
     DIGITAL_STREAMING = "digital_streaming"  # Streaming platforms
@@ -56,8 +53,7 @@ class RoyaltyType(Enum):
     NEIGHBORING_RIGHTS = "neighboring_rights"  # Performer rights
 
 class PaymentFrequency(Enum):
-    """Payment frequency options"""
-    REAL_TIME = "real_time"
+    """Payment frequency options"""    REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -66,8 +62,7 @@ class PaymentFrequency(Enum):
     ANNUALLY = "annually"
 
 class RightsHolderType(Enum):
-    """Types of rights holders"""
-    SONGWRITER = "songwriter"
+    """Types of rights holders"""    SONGWRITER = "songwriter"
     COMPOSER = "composer"
     LYRICIST = "lyricist"
     PUBLISHER = "publisher"
@@ -79,8 +74,7 @@ class RightsHolderType(Enum):
     SESSION_MUSICIAN = "session_musician"
 
 class Territory(Enum):
-    """Geographic territories for royalty collection"""
-    WORLDWIDE = "worldwide"
+    """Geographic territories for royalty collection"""    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -90,8 +84,7 @@ class Territory(Enum):
 
 @dataclass
 class RightsHolder:
-    """Individual rights holder information"""
-    holder_id: str
+    """Individual rights holder information"""    holder_id: str
     name: str
     holder_type: RightsHolderType
     email: str
@@ -112,8 +105,7 @@ class RightsHolder:
 
 @dataclass
 class RoyaltyCalculationRule:
-    """Royalty calculation rule definition"""
-    rule_id: str
+    """Royalty calculation rule definition"""    rule_id: str
     name: str
     royalty_type: RoyaltyType
     territory: Territory
@@ -141,8 +133,7 @@ class RoyaltyCalculationRule:
 
 @dataclass
 class UsageData:
-    """Content usage data for royalty calculation"""
-    usage_id: str
+    """Content usage data for royalty calculation"""    usage_id: str
     content_id: str
     platform: str
     territory: Territory
@@ -171,8 +162,7 @@ class UsageData:
 
 @dataclass
 class RoyaltyCalculation:
-    """Result of royalty calculation"""
-    calculation_id: str
+    """Result of royalty calculation"""    calculation_id: str
     content_id: str
     usage_data_id: str
     calculation_date: datetime
@@ -199,8 +189,7 @@ class RoyaltyCalculation:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment record"""
-    payment_id: str
+    """Royalty payment record"""    payment_id: str
     holder_id: str
     payment_date: datetime
     
@@ -227,8 +216,7 @@ class RoyaltyPayment:
     detailed_breakdown: Dict[str, Any] = field(default_factory=dict)
 
 class RoyaltyCalculationEngine(ABC):
-    """Abstract base class for royalty calculation engines"""
-    
+    """Abstract base class for royalty calculation engines"""    
     @abstractmethod
     async def calculate_royalty(
         self,
@@ -236,12 +224,10 @@ class RoyaltyCalculationEngine(ABC):
         rules: List[RoyaltyCalculationRule],
         rights_holders: List[RightsHolder]
     ) -> RoyaltyCalculation:
-        """Calculate royalty for given usage data"""
-        pass
+        """Calculate royalty for given usage data"""        pass
 
 class StandardRoyaltyEngine(RoyaltyCalculationEngine):
-    """Standard royalty calculation engine"""
-    
+    """Standard royalty calculation engine"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
@@ -251,8 +237,7 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         rules: List[RoyaltyCalculationRule],
         rights_holders: List[RightsHolder]
     ) -> RoyaltyCalculation:
-        """Calculate royalty using standard industry methods"""
-        
+        """Calculate royalty using standard industry methods"""        
         # Find applicable rule
         applicable_rule = self._find_applicable_rule(usage_data, rules)
         if not applicable_rule:
@@ -297,8 +282,7 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         usage_data: UsageData,
         rules: List[RoyaltyCalculationRule]
     ) -> Optional[RoyaltyCalculationRule]:
-        """Find the most applicable rule for the usage data"""
-        
+        """Find the most applicable rule for the usage data"""        
         applicable_rules = []
         
         for rule in rules:
@@ -342,8 +326,7 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         usage_data: UsageData,
         rule: RoyaltyCalculationRule
     ) -> Decimal:
-        """Calculate base royalty amount"""
-        
+        """Calculate base royalty amount"""        
         if rule.calculation_method == "percentage":
             # Percentage of net revenue
             base_amount = usage_data.net_revenue * (rule.base_rate / Decimal('100'))
@@ -379,8 +362,7 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         usage_count: int,
         tier_structure: Dict[str, Decimal]
     ) -> Decimal:
-        """Calculate amount using tiered structure"""
-        
+        """Calculate amount using tiered structure"""        
         total_amount = Decimal('0.00')
         remaining_usage = usage_count
         
@@ -415,8 +397,7 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         rule: RoyaltyCalculationRule,
         base_amount: Decimal
     ) -> Dict[str, Decimal]:
-        """Calculate royalty adjustments"""
-        
+        """Calculate royalty adjustments"""        
         adjustments = {}
         
         # Volume discounts
@@ -455,8 +436,7 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         rights_holders: List[RightsHolder],
         royalty_type: RoyaltyType
     ) -> Dict[str, Decimal]:
-        """Distribute royalties among rights holders"""
-        
+        """Distribute royalties among rights holders"""        
         distributions = {}
         
         # Get total shares for the specific royalty type
@@ -493,8 +473,7 @@ class StandardRoyaltyEngine(RoyaltyCalculationEngine):
         return distributions
 
 class AIRoyaltyOptimizer:
-    """AI-powered royalty optimization and forecasting"""
-    
+    """AI-powered royalty optimization and forecasting"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.historical_data = []
@@ -505,8 +484,7 @@ class AIRoyaltyOptimizer:
         current_rules: List[RoyaltyCalculationRule],
         optimization_goals: Dict[str, Any]
     ) -> List[RoyaltyCalculationRule]:
-        """Optimize royalty rates using AI analysis"""
-        
+        """Optimize royalty rates using AI analysis"""        
         # Analyze historical performance
         performance_metrics = await self._analyze_historical_performance(usage_history)
         
@@ -528,8 +506,7 @@ class AIRoyaltyOptimizer:
         forecast_period: int,  # days
         historical_data: List[UsageData]
     ) -> Dict[str, Any]:
-        """Forecast royalty revenue using AI models"""
-        
+        """Forecast royalty revenue using AI models"""        
         # Prepare data for forecasting
         time_series_data = self._prepare_time_series_data(historical_data)
         
@@ -555,8 +532,7 @@ class AIRoyaltyOptimizer:
         self,
         usage_history: List[UsageData]
     ) -> Dict[str, Any]:
-        """Analyze historical royalty performance"""
-        
+        """Analyze historical royalty performance"""        
         # Convert to DataFrame for analysis
         df_data = []
         for usage in usage_history:
@@ -588,8 +564,7 @@ class AIRoyaltyOptimizer:
         return metrics
     
     def _calculate_growth_rate(self, df: pd.DataFrame) -> float:
-        """Calculate revenue growth rate"""
-        if len(df) < 2:
+        """Calculate revenue growth rate"""        if len(df) < 2:
             return 0.0
         
         df_sorted = df.sort_values('date')
@@ -612,8 +587,7 @@ class AIRoyaltyOptimizer:
         current_rules: List[RoyaltyCalculationRule],
         goals: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Identify royalty optimization opportunities"""
-        
+        """Identify royalty optimization opportunities"""        
         opportunities = []
         
         # Analyze platform performance
@@ -658,8 +632,7 @@ class AIRoyaltyOptimizer:
         opportunities: List[Dict[str, Any]],
         goals: Dict[str, Any]
     ) -> List[RoyaltyCalculationRule]:
-        """Generate optimized royalty rules"""
-        
+        """Generate optimized royalty rules"""        
         optimized_rules = current_rules.copy()
         
         for opportunity in opportunities:
@@ -708,8 +681,7 @@ class AIRoyaltyOptimizer:
         return optimized_rules
     
     def _prepare_time_series_data(self, historical_data: List[UsageData]) -> pd.DataFrame:
-        """Prepare time series data for forecasting"""
-        
+        """Prepare time series data for forecasting"""        
         df_data = []
         for usage in historical_data:
             df_data.append({
@@ -736,8 +708,7 @@ class AIRoyaltyOptimizer:
         time_series_data: pd.DataFrame,
         forecast_days: int
     ) -> Dict[str, Any]:
-        """Generate revenue forecast using time series analysis"""
-        
+        """Generate revenue forecast using time series analysis"""        
         if time_series_data.empty or len(time_series_data) < 7:
             return {
                 'revenue': [0.0] * forecast_days,
@@ -792,8 +763,7 @@ class AIRoyaltyOptimizer:
         }
     
     def _calculate_confidence_intervals(self, forecast: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate confidence intervals for forecast"""
-        
+        """Calculate confidence intervals for forecast"""        
         revenue_forecast = forecast['revenue']
         
         # Simple confidence interval calculation (in production, use statistical methods)
@@ -813,8 +783,7 @@ class AIRoyaltyOptimizer:
         }
     
     def _generate_revenue_recommendations(self, forecast: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on forecast"""
-        
+        """Generate recommendations based on forecast"""        
         recommendations = []
         trend_factor = forecast.get('trend_factor', 1.0)
         
@@ -832,16 +801,13 @@ class AIRoyaltyOptimizer:
         return recommendations
 
 class AdvancedRoyaltyManager:
-    """
-    🚀 Advanced royalty management system with AI optimization
+    """    🚀 Advanced royalty management system with AI optimization
     
     Comprehensive system for calculating, tracking, and optimizing
     royalty payments across multiple platforms, territories, and rights holders.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize royalty manager with configuration."""
-        self.config = config
+        """Initialize royalty manager with configuration."""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Initialize calculation engines
@@ -868,8 +834,7 @@ class AdvancedRoyaltyManager:
         self.logger.info("Advanced Royalty Manager initialized successfully")
 
     async def register_rights_holder(self, rights_holder: RightsHolder) -> str:
-        """Register a new rights holder in the system."""
-        try:
+        """Register a new rights holder in the system."""        try:
             # Validate rights holder data
             if not rights_holder.name or not rights_holder.email:
                 raise ValueError("Rights holder must have name and email")
@@ -900,8 +865,7 @@ class AdvancedRoyaltyManager:
             raise
 
     async def create_calculation_rule(self, rule: RoyaltyCalculationRule) -> str:
-        """Create a new royalty calculation rule."""
-        try:
+        """Create a new royalty calculation rule."""        try:
             # Validate rule
             if rule.base_rate < Decimal('0.00'):
                 raise ValueError("Base rate cannot be negative")
@@ -934,8 +898,7 @@ class AdvancedRoyaltyManager:
             raise
 
     def _date_ranges_overlap(self, rule1: RoyaltyCalculationRule, rule2: RoyaltyCalculationRule) -> bool:
-        """Check if two rules have overlapping date ranges."""
-        start1, end1 = rule1.effective_date, rule1.expiry_date or datetime.max
+        """Check if two rules have overlapping date ranges."""        start1, end1 = rule1.effective_date, rule1.expiry_date or datetime.max
         start2, end2 = rule2.effective_date, rule2.expiry_date or datetime.max
         
         return start1 <= end2 and start2 <= end1
@@ -946,8 +909,7 @@ class AdvancedRoyaltyManager:
         content_rights_holders: List[str],
         engine_type: str = "standard"
     ) -> RoyaltyCalculation:
-        """Calculate royalties for given usage data."""
-        start_time = datetime.now()
+        """Calculate royalties for given usage data."""        start_time = datetime.now()
         
         try:
             # Get calculation engine
@@ -1030,8 +992,7 @@ class AdvancedRoyaltyManager:
         period_end: date,
         payment_method: str = "bank_transfer"
     ) -> RoyaltyPayment:
-        """Process royalty payment for a rights holder."""
-        try:
+        """Process royalty payment for a rights holder."""        try:
             # Validate rights holder
             if holder_id not in self.rights_holders:
                 raise ValueError(f"Rights holder {holder_id} not found")
@@ -1098,8 +1059,7 @@ class AdvancedRoyaltyManager:
         rights_holder: RightsHolder,
         payment_method: str
     ) -> Dict[str, Decimal]:
-        """Calculate payment deductions (fees, taxes, etc.)."""
-        deductions = {}
+        """Calculate payment deductions (fees, taxes, etc.)."""        deductions = {}
         
         # Payment processing fees
         if payment_method == "paypal":
@@ -1126,8 +1086,7 @@ class AdvancedRoyaltyManager:
         calculations: List[RoyaltyCalculation],
         holder_id: str
     ) -> Dict[str, Any]:
-        """Create detailed payment breakdown."""
-        breakdown = {
+        """Create detailed payment breakdown."""        breakdown = {
             'calculation_count': len(calculations),
             'by_royalty_type': defaultdict(Decimal),
             'by_territory': defaultdict(Decimal),
@@ -1154,8 +1113,7 @@ class AdvancedRoyaltyManager:
         content_id: str,
         optimization_goals: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize royalty rates for specific content using AI."""
-        try:
+        """Optimize royalty rates for specific content using AI."""        try:
             # Get historical usage data for content
             content_usage = [
                 usage for usage in self._get_usage_data()
@@ -1203,8 +1161,7 @@ class AdvancedRoyaltyManager:
         current_rules: List[RoyaltyCalculationRule],
         optimized_rules: List[RoyaltyCalculationRule]
     ) -> Dict[str, Any]:
-        """Create summary of optimization changes."""
-        
+        """Create summary of optimization changes."""        
         # Calculate average rate changes
         current_avg_rate = sum(rule.base_rate for rule in current_rules) / len(current_rules) if current_rules else Decimal('0')
         optimized_avg_rate = sum(rule.base_rate for rule in optimized_rules) / len(optimized_rules) if optimized_rules else Decimal('0')
@@ -1219,13 +1176,11 @@ class AdvancedRoyaltyManager:
         }
 
     def _get_usage_data(self) -> List[UsageData]:
-        """Get usage data (placeholder - would come from actual data source)."""
-        # In production, this would fetch from database or API
+        """Get usage data (placeholder - would come from actual data source)."""        # In production, this would fetch from database or API
         return []
 
     def _update_calculation_metrics(self, success: bool, processing_time: float):
-        """Update calculation performance metrics."""
-        self.royalty_metrics['total_calculations'] += 1
+        """Update calculation performance metrics."""        self.royalty_metrics['total_calculations'] += 1
         
         # Update average processing time
         current_avg = self.royalty_metrics['average_processing_time']
@@ -1239,8 +1194,7 @@ class AdvancedRoyaltyManager:
         start_date: Optional[date] = None,
         end_date: Optional[date] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive royalty analytics."""
-        
+        """Get comprehensive royalty analytics."""        
         # Filter calculations by date range
         filtered_calculations = self.calculations
         if start_date or end_date:

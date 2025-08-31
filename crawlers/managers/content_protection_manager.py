@@ -1,5 +1,4 @@
-"""
-Content Protection Manager
+"""Content Protection Manager
 =========================
 
 Enterprise-grade content protection and copyright management system for multi-format
@@ -21,7 +20,6 @@ This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 import time
@@ -73,8 +71,7 @@ from ...models.content_protection import (
 
 
 class ContentFormat(Enum):
-    """Supported content formats for protection."""
-    AUDIO = "audio"
+    """Supported content formats for protection."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -83,8 +80,7 @@ class ContentFormat(Enum):
 
 
 class FingerprintType(Enum):
-    """Types of fingerprints for content identification."""
-    CHROMAPRINT = "chromaprint"
+    """Types of fingerprints for content identification."""    CHROMAPRINT = "chromaprint"
     SPECTRAL_HASH = "spectral_hash"
     PERCEPTUAL_HASH = "perceptual_hash"
     VISUAL_HASH = "visual_hash"
@@ -94,8 +90,7 @@ class FingerprintType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels."""
-    BASIC = "basic"
+    """Content protection levels."""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -103,8 +98,7 @@ class ProtectionLevel(Enum):
 
 
 class InfringementSeverity(Enum):
-    """Severity levels for infringement detection."""
-    LOW = "low"
+    """Severity levels for infringement detection."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -112,8 +106,7 @@ class InfringementSeverity(Enum):
 
 @dataclass
 class FingerprintMetadata:
-    """Metadata for content fingerprints."""
-    fingerprint_type: FingerprintType
+    """Metadata for content fingerprints."""    fingerprint_type: FingerprintType
     algorithm: str
     version: str
     confidence_score: float
@@ -128,8 +121,7 @@ class FingerprintMetadata:
 
 @dataclass
 class ContentProtectionRecord:
-    """Complete content protection record."""
-    content_id: str
+    """Complete content protection record."""    content_id: str
     owner_id: str
     content_format: ContentFormat
     protection_level: ProtectionLevel
@@ -147,8 +139,7 @@ class ContentProtectionRecord:
 
 @dataclass
 class InfringementMatch:
-    """Infringement detection match result."""
-    protected_content_id: str
+    """Infringement detection match result."""    protected_content_id: str
     infringing_content_url: str
     platform: str
     similarity_score: float
@@ -163,8 +154,7 @@ class InfringementMatch:
 
 @dataclass
 class TakedownRequestData:
-    """Takedown request information."""
-    request_id: str
+    """Takedown request information."""    request_id: str
     infringement_match: InfringementMatch
     copyright_owner: str
     contact_email: str
@@ -179,8 +169,7 @@ class TakedownRequestData:
 
 
 class ContentProtectionManager:
-    """
-    Enterprise-grade content protection manager for comprehensive copyright protection.
+    """    Enterprise-grade content protection manager for comprehensive copyright protection.
     
     Features:
     - Multi-format fingerprinting (audio, video, image, text)
@@ -189,11 +178,9 @@ class ContentProtectionManager:
     - Vector similarity matching with FAISS
     - Machine learning-based content analysis
     - Blockchain-ready copyright verification
-    """
-    
+    """    
     def __init__(self, config: Optional[ProtectionConfig] = None):
-        """Initialize content protection manager."""
-        self.config = config or ProtectionConfig()
+        """Initialize content protection manager."""        self.config = config or ProtectionConfig()
         self.logger = get_logger(__name__)
         self.storage_manager = StorageManager()
         self.file_handler = FileHandler()
@@ -228,8 +215,7 @@ class ContentProtectionManager:
         self._initialize_vector_databases()
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for content analysis."""
-        try:
+        """Initialize machine learning models for content analysis."""        try:
             # Initialize text similarity model
             self.text_model = SentenceTransformer('all-MiniLM-L6-v2')
             
@@ -245,8 +231,7 @@ class ContentProtectionManager:
             self.logger.error(f"Failed to initialize ML models: {str(e)}")
     
     def _initialize_vector_databases(self):
-        """Initialize FAISS vector databases for similarity matching."""
-        try:
+        """Initialize FAISS vector databases for similarity matching."""        try:
             # Audio fingerprint vectors (512 dimensions)
             self.audio_index = faiss.IndexFlatIP(512)
             
@@ -272,8 +257,7 @@ class ContentProtectionManager:
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Register content for protection and generate fingerprints.
+        """        Register content for protection and generate fingerprints.
         
         Args:
             file_path: Path to content file
@@ -284,8 +268,7 @@ class ContentProtectionManager:
             
         Returns:
             str: Content protection ID
-        """
-        try:
+        """        try:
             content_id = str(uuid.uuid4())
             start_time = time.time()
             
@@ -349,8 +332,7 @@ class ContentProtectionManager:
             raise
     
     async def _generate_audio_fingerprints(self, file_path: str) -> Tuple[Dict[FingerprintType, str], FingerprintMetadata]:
-        """Generate fingerprints for audio content."""
-        fingerprints = {}
+        """Generate fingerprints for audio content."""        fingerprints = {}
         
         try:
             # Load audio file
@@ -400,8 +382,7 @@ class ContentProtectionManager:
             raise
     
     async def _generate_video_fingerprints(self, file_path: str) -> Tuple[Dict[FingerprintType, str], FingerprintMetadata]:
-        """Generate fingerprints for video content."""
-        fingerprints = {}
+        """Generate fingerprints for video content."""        fingerprints = {}
         
         try:
             # Open video file
@@ -467,8 +448,7 @@ class ContentProtectionManager:
             raise
     
     async def _generate_image_fingerprints(self, file_path: str) -> Tuple[Dict[FingerprintType, str], FingerprintMetadata]:
-        """Generate fingerprints for image content."""
-        fingerprints = {}
+        """Generate fingerprints for image content."""        fingerprints = {}
         
         try:
             # Load image
@@ -511,8 +491,7 @@ class ContentProtectionManager:
             raise
     
     async def _generate_text_fingerprints(self, file_path: str) -> Tuple[Dict[FingerprintType, str], FingerprintMetadata]:
-        """Generate fingerprints for text content."""
-        fingerprints = {}
+        """Generate fingerprints for text content."""        fingerprints = {}
         
         try:
             # Read text content
@@ -563,8 +542,7 @@ class ContentProtectionManager:
         source_url: Optional[str] = None,
         platform: Optional[str] = None
     ) -> List[InfringementMatch]:
-        """
-        Detect potential copyright infringement by comparing against protected content.
+        """        Detect potential copyright infringement by comparing against protected content.
         
         Args:
             content_file: Path to suspected infringing content
@@ -574,8 +552,7 @@ class ContentProtectionManager:
             
         Returns:
             List[InfringementMatch]: List of potential infringement matches
-        """
-        try:
+        """        try:
             matches = []
             
             # Generate fingerprints for the suspicious content
@@ -657,8 +634,7 @@ class ContentProtectionManager:
         fingerprint2: str,
         fingerprint_type: FingerprintType
     ) -> float:
-        """Calculate similarity between two fingerprints."""
-        try:
+        """Calculate similarity between two fingerprints."""        try:
             if fingerprint_type in [FingerprintType.CONTENT_ID, FingerprintType.SPECTRAL_HASH, FingerprintType.VISUAL_HASH]:
                 # Exact hash comparison
                 return 1.0 if fingerprint1 == fingerprint2 else 0.0
@@ -709,8 +685,7 @@ class ContentProtectionManager:
         contact_email: str,
         additional_info: Optional[str] = None
     ) -> TakedownRequestData:
-        """
-        Generate automated takedown request for detected infringement.
+        """        Generate automated takedown request for detected infringement.
         
         Args:
             infringement_match: Detected infringement match
@@ -720,8 +695,7 @@ class ContentProtectionManager:
             
         Returns:
             TakedownRequestData: Generated takedown request
-        """
-        try:
+        """        try:
             request_id = str(uuid.uuid4())
             
             # Get protected content details
@@ -764,12 +738,10 @@ class ContentProtectionManager:
             raise
     
     async def _store_protection_record(self, record: ContentProtectionRecord):
-        """Store content protection record in database."""
-        try:
+        """Store content protection record in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO content_protection (
+                    """                    INSERT INTO content_protection (
                         content_id, owner_id, content_format, protection_level,
                         fingerprints, metadata, file_hash, original_filename,
                         content_title, content_description, creation_date,
@@ -805,12 +777,10 @@ class ContentProtectionManager:
             raise
     
     async def _store_takedown_request(self, request: TakedownRequestData):
-        """Store takedown request in database."""
-        try:
+        """Store takedown request in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO takedown_requests (
+                    """                    INSERT INTO takedown_requests (
                         request_id, protected_content_id, infringing_url, platform,
                         similarity_score, fingerprint_type, severity, copyright_owner,
                         contact_email, request_type, legal_basis, requested_action,
@@ -848,8 +818,7 @@ class ContentProtectionManager:
             raise
     
     async def _add_to_vector_database(self, record: ContentProtectionRecord):
-        """Add content fingerprints to vector database for fast similarity search."""
-        try:
+        """Add content fingerprints to vector database for fast similarity search."""        try:
             # This would add vector representations to FAISS indexes
             # Implementation depends on the specific vector format used
             pass
@@ -858,12 +827,10 @@ class ContentProtectionManager:
             self.logger.error(f"Failed to add to vector database: {str(e)}")
     
     async def get_protection_status(self, content_id: str) -> Optional[ContentProtectionRecord]:
-        """Get protection status for specific content."""
-        return self.protected_content.get(content_id)
+        """Get protection status for specific content."""        return self.protected_content.get(content_id)
     
     async def update_protection_level(self, content_id: str, new_level: ProtectionLevel) -> bool:
-        """Update protection level for content."""
-        try:
+        """Update protection level for content."""        try:
             if content_id in self.protected_content:
                 self.protected_content[content_id].protection_level = new_level
                 
@@ -883,8 +850,7 @@ class ContentProtectionManager:
             return False
     
     async def close(self):
-        """Close and cleanup resources."""
-        try:
+        """Close and cleanup resources."""        try:
             # Clear memory caches
             self.protected_content.clear()
             self.active_monitors.clear()
@@ -897,16 +863,14 @@ class ContentProtectionManager:
 
 # Factory functions
 async def create_content_protection_manager(config: Optional[ProtectionConfig] = None) -> ContentProtectionManager:
-    """Create and initialize content protection manager."""
-    return ContentProtectionManager(config)
+    """Create and initialize content protection manager."""    return ContentProtectionManager(config)
 
 
 async def register_content_batch(
     manager: ContentProtectionManager,
     content_files: List[Tuple[str, str, ContentFormat, ProtectionLevel]]
 ) -> List[str]:
-    """Register multiple content files for protection."""
-    content_ids = []
+    """Register multiple content files for protection."""    content_ids = []
     
     for file_path, owner_id, content_format, protection_level in content_files:
         try:

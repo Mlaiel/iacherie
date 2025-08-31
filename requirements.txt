@@ -105,6 +105,13 @@ black==23.11.0
 flake8==6.1.0
 mypy==1.7.0
 
+# Additional dependencies for core functionality
+aioredis==2.0.1
+redis==6.4.0  
+lz4==4.4.4
+pyzstd==0.17.0
+zstd==1.5.7.2
+
 # Utilities
 python-dotenv==1.0.0
 click==8.1.7

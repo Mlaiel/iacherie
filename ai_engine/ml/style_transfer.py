@@ -1,12 +1,10 @@
-"""
-Style Transfer Engine - Advanced Neural Style Transfer and Content Adaptation
+"""Style Transfer Engine - Advanced Neural Style Transfer and Content Adaptation
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive style transfer capabilities using deep learning
 for image, text, and multimedia content transformation and adaptation.
 """
-
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -22,8 +20,7 @@ import base64
 logger = logging.getLogger(__name__)
 
 class StyleType(Enum):
-    """Types of style transfer"""
-    IMAGE_ARTISTIC = "image_artistic"
+    """Types of style transfer"""    IMAGE_ARTISTIC = "image_artistic"
     IMAGE_PHOTOGRAPHIC = "image_photographic"
     TEXT_WRITING = "text_writing"
     VIDEO_CINEMATIC = "video_cinematic"
@@ -31,15 +28,13 @@ class StyleType(Enum):
     MULTI_MODAL = "multi_modal"
 
 class TransferMode(Enum):
-    """Style transfer modes"""
-    FAST = "fast"
+    """Style transfer modes"""    FAST = "fast"
     BALANCED = "balanced"
     HIGH_QUALITY = "high_quality"
     ULTRA_HIGH = "ultra_high"
 
 class ArtisticStyle(Enum):
-    """Predefined artistic styles"""
-    IMPRESSIONIST = "impressionist"
+    """Predefined artistic styles"""    IMPRESSIONIST = "impressionist"
     CUBIST = "cubist"
     ABSTRACT = "abstract"
     REALISTIC = "realistic"
@@ -51,8 +46,7 @@ class ArtisticStyle(Enum):
 
 @dataclass
 class StyleTransferConfig:
-    """Configuration for style transfer operations"""
-    style_type: StyleType
+    """Configuration for style transfer operations"""    style_type: StyleType
     transfer_mode: TransferMode
     source_style: Optional[str] = None  # Custom style reference
     predefined_style: Optional[ArtisticStyle] = None
@@ -64,8 +58,7 @@ class StyleTransferConfig:
 
 @dataclass
 class StyleTransferResult:
-    """Result of style transfer operation"""
-    operation_id: str
+    """Result of style transfer operation"""    operation_id: str
     original_content: Any
     stylized_content: Any
     style_applied: str
@@ -75,8 +68,7 @@ class StyleTransferResult:
     timestamp: datetime
 
 class StyleTransferEngine:
-    """Main style transfer engine"""
-    
+    """Main style transfer engine"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.style_models = self._initialize_style_models()
@@ -86,8 +78,7 @@ class StyleTransferEngine:
         self.logger.info("StyleTransferEngine initialized successfully")
     
     def _initialize_style_models(self) -> Dict[str, Any]:
-        """Initialize style transfer models"""
-        return {
+        """Initialize style transfer models"""        return {
             StyleType.IMAGE_ARTISTIC.value: {
                 "model_type": "neural_style_transfer",
                 "architecture": "VGG19",
@@ -126,8 +117,7 @@ class StyleTransferEngine:
         }
     
     def _initialize_quality_assessor(self) -> Dict[str, Any]:
-        """Initialize quality assessment components"""
-        return {
+        """Initialize quality assessment components"""        return {
             "content_preservation": self._assess_content_preservation,
             "style_fidelity": self._assess_style_fidelity,
             "visual_quality": self._assess_visual_quality,
@@ -137,8 +127,7 @@ class StyleTransferEngine:
     
     def transfer_style(self, content: Any, config: StyleTransferConfig, 
                       reference_style: Optional[Any] = None) -> StyleTransferResult:
-        """Perform style transfer on content"""
-        try:
+        """Perform style transfer on content"""        try:
             start_time = datetime.utcnow()
             
             self.logger.info(f"Starting style transfer: {config.style_type.value} with {config.transfer_mode.value} mode")
@@ -210,8 +199,7 @@ class StyleTransferEngine:
             raise
     
     def _validate_input(self, content: Any, config: StyleTransferConfig) -> None:
-        """Validate input content and configuration"""
-        if content is None:
+        """Validate input content and configuration"""        if content is None:
             raise ValueError("Content cannot be None")
         
         model_info = self.style_models.get(config.style_type.value)
@@ -226,8 +214,7 @@ class StyleTransferEngine:
             raise ValueError("preserve_content must be between 0.0 and 1.0")
     
     def _preprocess_content(self, content: Any, config: StyleTransferConfig) -> Any:
-        """Preprocess content before style transfer"""
-        if config.style_type == StyleType.IMAGE_ARTISTIC or config.style_type == StyleType.IMAGE_PHOTOGRAPHIC:
+        """Preprocess content before style transfer"""        if config.style_type == StyleType.IMAGE_ARTISTIC or config.style_type == StyleType.IMAGE_PHOTOGRAPHIC:
             return self._preprocess_image(content, config)
         elif config.style_type == StyleType.TEXT_WRITING:
             return self._preprocess_text(content, config)
@@ -239,8 +226,7 @@ class StyleTransferEngine:
             return content
     
     def _preprocess_image(self, image: Any, config: StyleTransferConfig) -> Any:
-        """Preprocess image for style transfer"""
-        # Simulate image preprocessing
+        """Preprocess image for style transfer"""        # Simulate image preprocessing
         self.logger.debug("Preprocessing image for style transfer")
         
         # Simulate normalization, resizing, etc.
@@ -255,8 +241,7 @@ class StyleTransferEngine:
         return processed_image
     
     def _preprocess_text(self, text: str, config: StyleTransferConfig) -> Dict[str, Any]:
-        """Preprocess text for style transfer"""
-        self.logger.debug("Preprocessing text for style transfer")
+        """Preprocess text for style transfer"""        self.logger.debug("Preprocessing text for style transfer")
         
         return {
             "original_text": text,
@@ -267,8 +252,7 @@ class StyleTransferEngine:
         }
     
     def _preprocess_video(self, video: Any, config: StyleTransferConfig) -> Dict[str, Any]:
-        """Preprocess video for style transfer"""
-        self.logger.debug("Preprocessing video for style transfer")
+        """Preprocess video for style transfer"""        self.logger.debug("Preprocessing video for style transfer")
         
         return {
             "data": video,
@@ -279,8 +263,7 @@ class StyleTransferEngine:
         }
     
     def _preprocess_audio(self, audio: Any, config: StyleTransferConfig) -> Dict[str, Any]:
-        """Preprocess audio for style transfer"""
-        self.logger.debug("Preprocessing audio for style transfer")
+        """Preprocess audio for style transfer"""        self.logger.debug("Preprocessing audio for style transfer")
         
         return {
             "data": audio,
@@ -292,8 +275,7 @@ class StyleTransferEngine:
     
     def _transfer_image_artistic_style(self, content: Any, config: StyleTransferConfig, 
                                      reference_style: Optional[Any] = None) -> Any:
-        """Transfer artistic style to image"""
-        self.logger.debug(f"Applying artistic style: {config.predefined_style}")
+        """Transfer artistic style to image"""        self.logger.debug(f"Applying artistic style: {config.predefined_style}")
         
         # Simulate neural style transfer
         style_name = config.predefined_style.value if config.predefined_style else "custom"
@@ -324,8 +306,7 @@ class StyleTransferEngine:
     
     def _transfer_image_photographic_style(self, content: Any, config: StyleTransferConfig,
                                          reference_style: Optional[Any] = None) -> Any:
-        """Transfer photographic style to image"""
-        self.logger.debug("Applying photographic style transfer")
+        """Transfer photographic style to image"""        self.logger.debug("Applying photographic style transfer")
         
         # Simulate photographic enhancement
         enhanced_image = {
@@ -341,8 +322,7 @@ class StyleTransferEngine:
     
     def _transfer_text_writing_style(self, content: Dict[str, Any], config: StyleTransferConfig,
                                    reference_style: Optional[Any] = None) -> Dict[str, Any]:
-        """Transfer writing style to text"""
-        self.logger.debug("Applying text style transfer")
+        """Transfer writing style to text"""        self.logger.debug("Applying text style transfer")
         
         original_text = content["original_text"]
         
@@ -373,8 +353,7 @@ class StyleTransferEngine:
     
     def _transfer_video_cinematic_style(self, content: Dict[str, Any], config: StyleTransferConfig,
                                       reference_style: Optional[Any] = None) -> Dict[str, Any]:
-        """Transfer cinematic style to video"""
-        self.logger.debug("Applying cinematic style transfer")
+        """Transfer cinematic style to video"""        self.logger.debug("Applying cinematic style transfer")
         
         # Simulate video style transfer
         stylized_video = {
@@ -390,8 +369,7 @@ class StyleTransferEngine:
     
     def _transfer_audio_musical_style(self, content: Dict[str, Any], config: StyleTransferConfig,
                                     reference_style: Optional[Any] = None) -> Dict[str, Any]:
-        """Transfer musical style to audio"""
-        self.logger.debug("Applying musical style transfer")
+        """Transfer musical style to audio"""        self.logger.debug("Applying musical style transfer")
         
         # Simulate audio style transfer
         stylized_audio = {
@@ -407,8 +385,7 @@ class StyleTransferEngine:
     
     def _transfer_multi_modal_style(self, content: Any, config: StyleTransferConfig,
                                   reference_style: Optional[Any] = None) -> Any:
-        """Transfer style across multiple modalities"""
-        self.logger.debug("Applying multi-modal style transfer")
+        """Transfer style across multiple modalities"""        self.logger.debug("Applying multi-modal style transfer")
         
         # Simulate multi-modal processing
         stylized_content = {
@@ -422,8 +399,7 @@ class StyleTransferEngine:
         return stylized_content
     
     def _postprocess_content(self, content: Any, config: StyleTransferConfig) -> Any:
-        """Post-process stylized content"""
-        self.logger.debug("Post-processing stylized content")
+        """Post-process stylized content"""        self.logger.debug("Post-processing stylized content")
         
         # Simulate post-processing steps
         if isinstance(content, dict):
@@ -434,8 +410,7 @@ class StyleTransferEngine:
         return content
     
     def _calculate_quality_metrics(self, original: Any, stylized: Any, config: StyleTransferConfig) -> Dict[str, float]:
-        """Calculate quality metrics for style transfer"""
-        metrics = {}
+        """Calculate quality metrics for style transfer"""        metrics = {}
         
         # Content preservation score
         metrics["content_preservation"] = self.quality_assessor["content_preservation"](original, stylized, config)
@@ -455,8 +430,7 @@ class StyleTransferEngine:
         return metrics
     
     def _assess_content_preservation(self, original: Any, stylized: Any, config: StyleTransferConfig) -> float:
-        """Assess how well the original content is preserved"""
-        # Simulate content preservation assessment
+        """Assess how well the original content is preserved"""        # Simulate content preservation assessment
         base_score = 0.8
         
         # Lower preservation if intensity is high
@@ -465,8 +439,7 @@ class StyleTransferEngine:
         return max(0.0, base_score - preservation_penalty)
     
     def _assess_style_fidelity(self, stylized: Any, config: StyleTransferConfig) -> float:
-        """Assess how well the target style is applied"""
-        # Simulate style fidelity assessment
+        """Assess how well the target style is applied"""        # Simulate style fidelity assessment
         base_score = 0.75
         
         # Higher fidelity with higher intensity
@@ -483,8 +456,7 @@ class StyleTransferEngine:
         return min(1.0, base_score + intensity_bonus + mode_bonus)
     
     def _assess_visual_quality(self, stylized: Any, config: StyleTransferConfig) -> float:
-        """Assess visual quality of stylized content"""
-        # Simulate visual quality assessment
+        """Assess visual quality of stylized content"""        # Simulate visual quality assessment
         base_score = 0.7
         
         # Quality mode significantly affects visual quality
@@ -501,8 +473,7 @@ class StyleTransferEngine:
         return min(1.0, base_score * mode_multiplier + edge_bonus)
     
     def _assess_temporal_consistency(self, content: Any, config: StyleTransferConfig) -> float:
-        """Assess temporal consistency for video content"""
-        if config.style_type != StyleType.VIDEO_CINEMATIC:
+        """Assess temporal consistency for video content"""        if config.style_type != StyleType.VIDEO_CINEMATIC:
             return 1.0  # Not applicable
         
         # Simulate temporal consistency assessment
@@ -519,14 +490,12 @@ class StyleTransferEngine:
         return min(1.0, base_score + mode_bonus)
     
     def _assess_perceptual_similarity(self, original: Any, stylized: Any) -> float:
-        """Assess perceptual similarity between original and stylized content"""
-        # Simulate perceptual similarity assessment
+        """Assess perceptual similarity between original and stylized content"""        # Simulate perceptual similarity assessment
         return random.uniform(0.6, 0.9)
     
     def batch_style_transfer(self, contents: List[Any], configs: List[StyleTransferConfig],
                            reference_styles: Optional[List[Any]] = None) -> List[StyleTransferResult]:
-        """Perform batch style transfer on multiple contents"""
-        results = []
+        """Perform batch style transfer on multiple contents"""        results = []
         
         if reference_styles is None:
             reference_styles = [None] * len(contents)
@@ -540,8 +509,7 @@ class StyleTransferEngine:
         return results
     
     def create_style_from_reference(self, reference_content: Any, style_name: str) -> Dict[str, Any]:
-        """Create a custom style from reference content"""
-        try:
+        """Create a custom style from reference content"""        try:
             self.logger.info(f"Creating custom style '{style_name}' from reference")
             
             # Simulate style extraction
@@ -570,15 +538,13 @@ class StyleTransferEngine:
             raise
     
     def get_supported_styles(self, style_type: StyleType) -> List[str]:
-        """Get list of supported styles for a given style type"""
-        model_info = self.style_models.get(style_type.value)
+        """Get list of supported styles for a given style type"""        model_info = self.style_models.get(style_type.value)
         if model_info:
             return model_info.get("supported_styles", [])
         return []
     
     def get_transfer_statistics(self) -> Dict[str, Any]:
-        """Get statistics about style transfer operations"""
-        if not self.transfer_history:
+        """Get statistics about style transfer operations"""        if not self.transfer_history:
             return {"message": "No style transfers performed yet"}
         
         # Calculate statistics
@@ -608,8 +574,7 @@ class StyleTransferEngine:
         }
     
     def optimize_for_device(self, config: StyleTransferConfig, device_specs: Dict[str, Any]) -> StyleTransferConfig:
-        """Optimize configuration based on device specifications"""
-        optimized_config = config
+        """Optimize configuration based on device specifications"""        optimized_config = config
         
         # Adjust based on GPU memory
         gpu_memory = device_specs.get("gpu_memory_gb", 4)

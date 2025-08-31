@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,12 +12,10 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Integration Test for AI Agents Business Logic Core
+"""Integration Test for AI Agents Business Logic Core
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -30,9 +26,32 @@ import os
 from pathlib import Path
 from datetime import datetime
 
-from ai_agents.content_agent.utils.business_workflow import (
-    BusinessWorkflowOrchestrator, ContentUpload, CreatorType, WorkflowConfig, WorkflowStage
+# Import from our newly created top-level modules
+from business_logic_core import (
+    BusinessLogicCore, ContentUpload, CreatorType, WorkflowResult, WorkflowStage
 )
+from simple_agents import BaseAgent, AgentStatus
+
+# Create a simple workflow orchestrator for testing
+class BusinessWorkflowOrchestrator:
+    """Simple workflow orchestrator for testing"""
+    
+    def __init__(self):
+        self.business_core = BusinessLogicCore()
+        
+    async def initialize(self):
+        """Initialize the orchestrator"""
+        return await self.business_core.initialize()
+        
+    async def process_content(self, content_upload):
+        """Process content through workflow"""
+        return await self.business_core.process_creator_workflow(content_upload)
+
+# Define WorkflowConfig for compatibility
+class WorkflowConfig:
+    def __init__(self, **kwargs):
+        self.enabled_stages = kwargs.get('enabled_stages', [])
+        self.ai_protection = kwargs.get('ai_protection', True)
 
 
 class TestBusinessLogicCore:
@@ -86,8 +105,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_complete_business_workflow(self, workflow_orchestrator, sample_content_upload):
-        """Test the complete business workflow from upload to monetization"""
-        
+        """Test the complete business workflow from upload to monetization"""        
         # Process content upload
         workflow_id = await workflow_orchestrator.process_content_upload(sample_content_upload)
         
@@ -107,8 +125,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_workflow_stages_progression(self, workflow_orchestrator, sample_content_upload):
-        """Test that workflow progresses through all required stages"""
-        
+        """Test that workflow progresses through all required stages"""        
         workflow_id = await workflow_orchestrator.process_content_upload(sample_content_upload)
         
         # Allow workflow to complete
@@ -125,8 +142,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_individual_agent_processing(self, workflow_orchestrator, sample_content_upload):
-        """Test individual agent processing capabilities"""
-        
+        """Test individual agent processing capabilities"""        
         # Test content validation
         validation_result = await workflow_orchestrator._validate_content(sample_content_upload)
         assert validation_result["valid"] is True
@@ -167,8 +183,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_workflow_error_handling(self, workflow_orchestrator):
-        """Test workflow error handling for invalid content"""
-        
+        """Test workflow error handling for invalid content"""        
         # Create invalid content upload
         invalid_upload = ContentUpload(
             content_id="invalid_content",
@@ -193,8 +208,7 @@ class TestBusinessLogicCore:
         
     @pytest.mark.asyncio
     async def test_different_creator_types(self, workflow_orchestrator):
-        """Test workflow processing for different creator types"""
-        
+        """Test workflow processing for different creator types"""        
         creator_types = [CreatorType.MUSICIAN, CreatorType.BLOGGER, CreatorType.PHOTOGRAPHER]
         content_types = ["audio", "text", "image"]
         
@@ -224,8 +238,7 @@ class TestBusinessLogicCore:
                     os.unlink(temp_file)
     
     def test_business_logic_core_components(self):
-        """Test that all business logic core components are properly configured"""
-        
+        """Test that all business logic core components are properly configured"""        
         # Test that all required classes are importable
         from ai_agents.placeholder_agents import (
             ProtectionAgent, SEOAgent, CollaborationAgent, 

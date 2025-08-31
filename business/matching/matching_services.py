@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Creator Matching Services
+"""IA Influencer Agent - Advanced Creator Matching Services
 =======================================================
 
 Professional Multi-Format Creator Matching Business Services
@@ -35,7 +34,6 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -76,8 +74,7 @@ from .matching_engine import CreatorMatchingEngine
 
 
 class MatchingService(BaseBusinessService):
-    """
-    Core matching service orchestrating creator collaboration discovery
+    """    Core matching service orchestrating creator collaboration discovery
     
     Features:
     - Intelligent creator matching with AI-powered compatibility analysis
@@ -85,8 +82,7 @@ class MatchingService(BaseBusinessService):
     - Advanced filtering and preference management
     - Performance optimized with caching and indexing
     - Event-driven architecture for real-time notifications
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "MatchingService"
@@ -111,8 +107,7 @@ class MatchingService(BaseBusinessService):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize the matching service"""
-        try:
+        """Initialize the matching service"""        try:
             self.logger.info("Initializing Matching Service...")
             
             # Initialize core engine
@@ -144,8 +139,7 @@ class MatchingService(BaseBusinessService):
         offset: int = 0,
         background_tasks: Optional[BackgroundTasks] = None
     ) -> Dict[str, Any]:
-        """
-        Find optimal collaboration matches for a creator
+        """        Find optimal collaboration matches for a creator
         
         Args:
             creator_id: ID of the creator seeking matches
@@ -156,8 +150,7 @@ class MatchingService(BaseBusinessService):
             
         Returns:
             Dictionary containing match results and metadata
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             # Validate input
@@ -243,8 +236,7 @@ class MatchingService(BaseBusinessService):
             raise HTTPException(status_code=500, detail=f"Match finding failed: {str(e)}")
     
     async def get_match_details(self, match_id: str, requester_id: str) -> Dict[str, Any]:
-        """Get detailed information about a specific match"""
-        try:
+        """Get detailed information about a specific match"""        try:
             # Validate access
             await self.security_manager.validate_match_access(match_id, requester_id)
             
@@ -277,8 +269,7 @@ class MatchingService(BaseBusinessService):
         creator_id: str,
         message: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Accept a collaboration match"""
-        try:
+        """Accept a collaboration match"""        try:
             # Validate match exists and creator has permission
             match = await self.matching_engine.get_match_by_id(match_id)
             if not match:
@@ -338,8 +329,7 @@ class MatchingService(BaseBusinessService):
         creator_id: str,
         reason: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Decline a collaboration match"""
-        try:
+        """Decline a collaboration match"""        try:
             # Validate match
             match = await self.matching_engine.get_match_by_id(match_id)
             if not match:
@@ -389,8 +379,7 @@ class MatchingService(BaseBusinessService):
         creator_id: str,
         time_period: str = "30d"
     ) -> Dict[str, Any]:
-        """Get matching analytics for a creator"""
-        try:
+        """Get matching analytics for a creator"""        try:
             # Validate access
             await self.security_manager.validate_creator_access(creator_id)
             
@@ -416,8 +405,7 @@ class MatchingService(BaseBusinessService):
         creator_id: str,
         preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Update creator's matching preferences"""
-        try:
+        """Update creator's matching preferences"""        try:
             # Validate creator access
             await self.security_manager.validate_creator_access(creator_id)
             
@@ -463,8 +451,7 @@ class MatchingService(BaseBusinessService):
             raise HTTPException(status_code=500, detail=f"Preferences update failed: {str(e)}")
     
     async def _get_default_matching_criteria(self, creator_id: str) -> MatchingCriteria:
-        """Get default matching criteria for a creator"""
-        try:
+        """Get default matching criteria for a creator"""        try:
             # Get creator profile to determine defaults
             async with get_async_session() as session:
                 query = select(CreatorProfileDB).where(CreatorProfileDB.creator_id == creator_id)
@@ -505,8 +492,7 @@ class MatchingService(BaseBusinessService):
             return MatchingCriteria()
     
     async def _enrich_match_results(self, matches: List[MatchResult]) -> List[MatchResult]:
-        """Enrich match results with additional business intelligence"""
-        try:
+        """Enrich match results with additional business intelligence"""        try:
             enriched_matches = []
             
             for match in matches:
@@ -531,8 +517,7 @@ class MatchingService(BaseBusinessService):
             return matches
     
     async def _save_match_results(self, matches: List[MatchResult]) -> None:
-        """Save match results to database"""
-        try:
+        """Save match results to database"""        try:
             async with get_async_session() as session:
                 for match in matches:
                     # Check if match already exists
@@ -587,8 +572,7 @@ class MatchingService(BaseBusinessService):
         match: MatchResult,
         message: Optional[str] = None
     ) -> CollaborationOpportunity:
-        """Create collaboration opportunity from accepted match"""
-        try:
+        """Create collaboration opportunity from accepted match"""        try:
             opportunity = CollaborationOpportunity(
                 title=f"Collaboration between {match.requester_id} and {match.matched_creator_id}",
                 description=f"Auto-generated collaboration opportunity based on match {match.match_id}",
@@ -640,8 +624,7 @@ class MatchingService(BaseBusinessService):
             raise
     
     def _serialize_match_result(self, match: MatchResult) -> Dict[str, Any]:
-        """Serialize match result for API response"""
-        try:
+        """Serialize match result for API response"""        try:
             return {
                 "match_id": match.match_id,
                 "matched_creator_id": match.matched_creator_id,
@@ -683,8 +666,7 @@ class MatchingService(BaseBusinessService):
             return {"error": "Serialization failed"}
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of matching service"""
-        try:
+        """Graceful shutdown of matching service"""        try:
             self.logger.info("Shutting down Matching Service...")
             
             # Shutdown components
@@ -702,8 +684,7 @@ class MatchingService(BaseBusinessService):
 
 
 class CollaborationService(BaseBusinessService):
-    """Service for managing collaboration opportunities and proposals"""
-    
+    """Service for managing collaboration opportunities and proposals"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "CollaborationService"
@@ -720,8 +701,7 @@ class CollaborationService(BaseBusinessService):
         creator_id: str,
         opportunity_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create new collaboration opportunity"""
-        try:
+        """Create new collaboration opportunity"""        try:
             # Validate data
             validated_data = await self._validate_opportunity_data(opportunity_data)
             
@@ -760,8 +740,7 @@ class CollaborationService(BaseBusinessService):
         limit: int = 50,
         offset: int = 0
     ) -> List[Dict[str, Any]]:
-        """Get collaboration opportunities with optional filtering"""
-        try:
+        """Get collaboration opportunities with optional filtering"""        try:
             async with get_async_session() as session:
                 query = select(CollaborationOpportunityDB)
                 
@@ -815,8 +794,7 @@ class CollaborationService(BaseBusinessService):
         creator_id: str,
         application_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply to collaboration opportunity"""
-        try:
+        """Apply to collaboration opportunity"""        try:
             # Get opportunity
             async with get_async_session() as session:
                 query = select(CollaborationOpportunityDB).where(
@@ -873,8 +851,7 @@ class CollaborationService(BaseBusinessService):
     
 
 class NetworkAnalysisService(BaseBusinessService):
-    """Service for creator network analysis and insights"""
-    
+    """Service for creator network analysis and insights"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "NetworkAnalysisService" 
@@ -883,8 +860,7 @@ class NetworkAnalysisService(BaseBusinessService):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def analyze_creator_network(self, creator_id: str) -> Dict[str, Any]:
-        """Analyze creator's network and relationships"""
-        try:
+        """Analyze creator's network and relationships"""        try:
             # Implementation for network analysis
             # This would involve graph analysis, community detection, influence metrics
             pass
@@ -895,8 +871,7 @@ class NetworkAnalysisService(BaseBusinessService):
 
 
 class RecommendationService(BaseBusinessService):
-    """Service for generating personalized collaboration recommendations"""
-    
+    """Service for generating personalized collaboration recommendations"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "RecommendationService"
@@ -909,8 +884,7 @@ class RecommendationService(BaseBusinessService):
         creator_id: str,
         recommendation_type: str = "collaboration"
     ) -> List[Dict[str, Any]]:
-        """Get personalized recommendations for creator"""
-        try:
+        """Get personalized recommendations for creator"""        try:
             # Implementation for AI-powered recommendations
             pass
             
@@ -920,8 +894,7 @@ class RecommendationService(BaseBusinessService):
 
 
 class PartnershipService(BaseBusinessService):
-    """Service for managing long-term creator partnerships"""
-    
+    """Service for managing long-term creator partnerships"""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "PartnershipService"
@@ -934,8 +907,7 @@ class PartnershipService(BaseBusinessService):
         creator_ids: List[str],
         partnership_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create formal partnership between creators"""
-        try:
+        """Create formal partnership between creators"""        try:
             # Implementation for partnership management
             pass
             

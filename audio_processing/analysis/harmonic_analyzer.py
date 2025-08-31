@@ -1,5 +1,4 @@
-"""
-🎼 Harmonic Analyzer - Advanced Harmonic Content Analysis
+"""🎼 Harmonic Analyzer - Advanced Harmonic Content Analysis
 
 Professional harmonic analysis engine for comprehensive harmonic structure,
 chord detection, and tonal analysis of audio signals.
@@ -7,7 +6,6 @@ chord detection, and tonal analysis of audio signals.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import numpy as np
 import logging
 from typing import Dict, List, Tuple
@@ -15,16 +13,14 @@ import librosa
 
 
 class HarmonicAnalyzer:
-    """Professional harmonic analysis engine"""
-    
+    """Professional harmonic analysis engine"""    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
         self.logger.info("HarmonicAnalyzer initialized")
     
     async def analyze_harmonics(self, audio_data: np.ndarray) -> Dict[str, Any]:
-        """Analyze harmonic content"""
-        try:
+        """Analyze harmonic content"""        try:
             # Harmonic-percussive separation
             harmonic, percussive = librosa.effects.hpss(audio_data)
             

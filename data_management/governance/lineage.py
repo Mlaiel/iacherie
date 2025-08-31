@@ -1,5 +1,4 @@
-"""
-Data Lineage Tracking System
+"""Data Lineage Tracking System
 
 Advanced data lineage tracking and auditing system for complete
 data flow visibility and governance compliance.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
 from datetime import datetime, timedelta
@@ -30,8 +28,7 @@ from ...core.cache import CacheManager
 
 
 class LineageEventType(Enum):
-    """Types of lineage events"""
-    CREATE = "create"
+    """Types of lineage events"""    CREATE = "create"
     READ = "read"
     UPDATE = "update"
     DELETE = "delete"
@@ -46,8 +43,7 @@ class LineageEventType(Enum):
 
 
 class LineageNodeType(Enum):
-    """Types of lineage nodes"""
-    SOURCE = "source"
+    """Types of lineage nodes"""    SOURCE = "source"
     PROCESS = "process"
     DATASET = "dataset"
     SYSTEM = "system"
@@ -58,8 +54,7 @@ class LineageNodeType(Enum):
 
 @dataclass
 class LineageNode:
-    """Node in the data lineage graph"""
-    node_id: str
+    """Node in the data lineage graph"""    node_id: str
     node_type: LineageNodeType
     name: str
     description: str
@@ -71,8 +66,7 @@ class LineageNode:
 
 @dataclass
 class LineageEdge:
-    """Edge in the data lineage graph"""
-    edge_id: str
+    """Edge in the data lineage graph"""    edge_id: str
     source_node_id: str
     target_node_id: str
     event_type: LineageEventType
@@ -83,8 +77,7 @@ class LineageEdge:
 
 @dataclass
 class LineageEvent:
-    """Data lineage event record"""
-    event_id: str
+    """Data lineage event record"""    event_id: str
     content_id: str
     event_type: LineageEventType
     source_system: str
@@ -97,8 +90,7 @@ class LineageEvent:
 
 @dataclass
 class DataLineage:
-    """Complete data lineage for a content item"""
-    content_id: str
+    """Complete data lineage for a content item"""    content_id: str
     origin_node: LineageNode
     current_node: LineageNode
     lineage_events: List[LineageEvent]
@@ -109,13 +101,11 @@ class DataLineage:
 
 
 class LineageGraph:
-    """
-    Graph structure for managing data lineage relationships
+    """    Graph structure for managing data lineage relationships
     
     Provides efficient storage and traversal of lineage information
     with support for complex dependency analysis.
-    """
-    
+    """    
     def __init__(self):
         self.nodes: Dict[str, LineageNode] = {}
         self.edges: Dict[str, LineageEdge] = {}
@@ -123,16 +113,14 @@ class LineageGraph:
         self.reverse_adjacency_list: Dict[str, Set[str]] = {}  # for upstream traversal
     
     def add_node(self, node: LineageNode) -> None:
-        """Add a node to the lineage graph"""
-        self.nodes[node.node_id] = node
+        """Add a node to the lineage graph"""        self.nodes[node.node_id] = node
         if node.node_id not in self.adjacency_list:
             self.adjacency_list[node.node_id] = set()
         if node.node_id not in self.reverse_adjacency_list:
             self.reverse_adjacency_list[node.node_id] = set()
     
     def add_edge(self, edge: LineageEdge) -> None:
-        """Add an edge to the lineage graph"""
-        self.edges[edge.edge_id] = edge
+        """Add an edge to the lineage graph"""        self.edges[edge.edge_id] = edge
         
         # Update adjacency lists
         if edge.source_node_id not in self.adjacency_list:
@@ -144,8 +132,7 @@ class LineageGraph:
         self.reverse_adjacency_list[edge.target_node_id].add(edge.source_node_id)
     
     def get_downstream_nodes(self, node_id: str, max_depth: Optional[int] = None) -> List[str]:
-        """Get all downstream nodes from a given node"""
-        visited = set()
+        """Get all downstream nodes from a given node"""        visited = set()
         result = []
         
         def dfs(current_id: str, depth: int = 0):
@@ -163,8 +150,7 @@ class LineageGraph:
         return result
     
     def get_upstream_nodes(self, node_id: str, max_depth: Optional[int] = None) -> List[str]:
-        """Get all upstream nodes for a given node"""
-        visited = set()
+        """Get all upstream nodes for a given node"""        visited = set()
         result = []
         
         def dfs(current_id: str, depth: int = 0):
@@ -182,8 +168,7 @@ class LineageGraph:
         return result
     
     def find_path(self, source_id: str, target_id: str) -> List[str]:
-        """Find path between two nodes"""
-        if source_id not in self.nodes or target_id not in self.nodes:
+        """Find path between two nodes"""        if source_id not in self.nodes or target_id not in self.nodes:
             return []
         
         visited = set()
@@ -211,8 +196,7 @@ class LineageGraph:
         return []
     
     def get_connected_components(self) -> List[List[str]]:
-        """Get all connected components in the graph"""
-        visited = set()
+        """Get all connected components in the graph"""        visited = set()
         components = []
         
         def dfs(node_id: str, component: List[str]):
@@ -240,16 +224,13 @@ class LineageGraph:
 
 
 class LineageTracker(BaseManager):
-    """
-    Central data lineage tracking system
+    """    Central data lineage tracking system
     
     Tracks and manages complete data lineage across all content types
     and processing operations in the platform.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the lineage tracker"""
-        super().__init__(config)
+        """Initialize the lineage tracker"""        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -270,8 +251,7 @@ class LineageTracker(BaseManager):
         }
     
     async def initialize(self) -> None:
-        """Initialize the lineage tracker"""
-        try:
+        """Initialize the lineage tracker"""        try:
             await self._load_lineage_data()
             self.logger.info("Lineage tracker initialized successfully")
             
@@ -289,8 +269,7 @@ class LineageTracker(BaseManager):
         properties: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Track a lineage event
+        """        Track a lineage event
         
         Args:
             content_id: ID of content involved in the event
@@ -303,8 +282,7 @@ class LineageTracker(BaseManager):
             
         Returns:
             str: Event ID
-        """
-        try:
+        """        try:
             # Create lineage event
             event = LineageEvent(
                 event_id=f"lineage_{content_id}_{event_type.value}_{datetime.utcnow().timestamp()}",
@@ -338,24 +316,21 @@ class LineageTracker(BaseManager):
             raise LineageError(f"Lineage event tracking failed: {e}")
     
     async def get_content_lineage(self, content_id: str) -> Optional[DataLineage]:
-        """
-        Get complete lineage for a content item
+        """        Get complete lineage for a content item
         
         Args:
             content_id: ID of content
             
         Returns:
             DataLineage: Complete lineage information
-        """
-        return self.content_lineages.get(content_id)
+        """        return self.content_lineages.get(content_id)
     
     async def get_upstream_dependencies(
         self,
         content_id: str,
         max_depth: Optional[int] = None
     ) -> List[str]:
-        """
-        Get upstream dependencies for content
+        """        Get upstream dependencies for content
         
         Args:
             content_id: ID of content
@@ -363,8 +338,7 @@ class LineageTracker(BaseManager):
             
         Returns:
             List[str]: List of upstream content IDs
-        """
-        try:
+        """        try:
             # Find content node in graph
             content_node_id = await self._get_content_node_id(content_id)
             if not content_node_id:
@@ -391,8 +365,7 @@ class LineageTracker(BaseManager):
         content_id: str,
         max_depth: Optional[int] = None
     ) -> List[str]:
-        """
-        Get downstream impact analysis for content
+        """        Get downstream impact analysis for content
         
         Args:
             content_id: ID of content
@@ -400,8 +373,7 @@ class LineageTracker(BaseManager):
             
         Returns:
             List[str]: List of impacted content IDs
-        """
-        try:
+        """        try:
             # Find content node in graph
             content_node_id = await self._get_content_node_id(content_id)
             if not content_node_id:
@@ -428,8 +400,7 @@ class LineageTracker(BaseManager):
         source_content_id: str,
         target_content_id: str
     ) -> List[Dict[str, Any]]:
-        """
-        Trace lineage path between two content items
+        """        Trace lineage path between two content items
         
         Args:
             source_content_id: Source content ID
@@ -437,8 +408,7 @@ class LineageTracker(BaseManager):
             
         Returns:
             List[Dict]: Path with nodes and events
-        """
-        try:
+        """        try:
             source_node_id = await self._get_content_node_id(source_content_id)
             target_node_id = await self._get_content_node_id(target_content_id)
             
@@ -492,8 +462,7 @@ class LineageTracker(BaseManager):
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[LineageEvent]:
-        """
-        Get lineage events with optional filtering
+        """        Get lineage events with optional filtering
         
         Args:
             content_id: Filter by content ID
@@ -505,8 +474,7 @@ class LineageTracker(BaseManager):
             
         Returns:
             List[LineageEvent]: Filtered lineage events
-        """
-        filtered_events = self.lineage_events.copy()
+        """        filtered_events = self.lineage_events.copy()
         
         if content_id:
             filtered_events = [e for e in filtered_events if e.content_id == content_id]
@@ -532,16 +500,14 @@ class LineageTracker(BaseManager):
         return sorted(filtered_events, key=lambda e: e.timestamp, reverse=True)
     
     async def analyze_lineage_complexity(self, content_id: str) -> Dict[str, Any]:
-        """
-        Analyze lineage complexity for content
+        """        Analyze lineage complexity for content
         
         Args:
             content_id: ID of content to analyze
             
         Returns:
             Dict with complexity analysis
-        """
-        try:
+        """        try:
             lineage = await self.get_content_lineage(content_id)
             if not lineage:
                 return {"complexity": "unknown", "details": {}}
@@ -586,8 +552,7 @@ class LineageTracker(BaseManager):
         content_id: str,
         include_visual: bool = False
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive lineage report
+        """        Generate comprehensive lineage report
         
         Args:
             content_id: ID of content
@@ -595,8 +560,7 @@ class LineageTracker(BaseManager):
             
         Returns:
             Dict with complete lineage report
-        """
-        try:
+        """        try:
             lineage = await self.get_content_lineage(content_id)
             if not lineage:
                 return {"error": "No lineage data found"}
@@ -655,8 +619,7 @@ class LineageTracker(BaseManager):
             return {"error": f"Report generation failed: {e}"}
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get lineage tracking metrics"""
-        return {
+        """Get lineage tracking metrics"""        return {
             **self.metrics,
             "total_content_tracked": len(self.content_lineages),
             "graph_nodes": len(self.lineage_graph.nodes),
@@ -665,8 +628,7 @@ class LineageTracker(BaseManager):
         }
     
     async def _update_lineage_graph(self, event: LineageEvent) -> None:
-        """Update the lineage graph with new event"""
-        # Create or update source node
+        """Update the lineage graph with new event"""        # Create or update source node
         source_node_id = f"{event.source_system}_{event.content_id}"
         if source_node_id not in self.lineage_graph.nodes:
             source_node = LineageNode(
@@ -704,8 +666,7 @@ class LineageTracker(BaseManager):
             self.lineage_graph.add_edge(edge)
     
     async def _update_content_lineage(self, event: LineageEvent) -> None:
-        """Update content lineage with new event"""
-        if event.content_id not in self.content_lineages:
+        """Update content lineage with new event"""        if event.content_id not in self.content_lineages:
             # Create new lineage
             origin_node = LineageNode(
                 node_id=f"{event.source_system}_{event.content_id}",
@@ -743,43 +704,37 @@ class LineageTracker(BaseManager):
             )
     
     async def _get_content_node_id(self, content_id: str) -> Optional[str]:
-        """Get current node ID for content"""
-        lineage = self.content_lineages.get(content_id)
+        """Get current node ID for content"""        lineage = self.content_lineages.get(content_id)
         if lineage:
             return lineage.current_node.node_id
         return None
     
     async def _find_edge(self, source_node_id: str, target_node_id: str) -> Optional[LineageEdge]:
-        """Find edge between two nodes"""
-        for edge in self.lineage_graph.edges.values():
+        """Find edge between two nodes"""        for edge in self.lineage_graph.edges.values():
             if edge.source_node_id == source_node_id and edge.target_node_id == target_node_id:
                 return edge
         return None
     
     async def _calculate_lineage_depth(self, content_id: str) -> int:
-        """Calculate lineage depth for content"""
-        upstream = await self.get_upstream_dependencies(content_id)
+        """Calculate lineage depth for content"""        upstream = await self.get_upstream_dependencies(content_id)
         return len(upstream)
     
     def _summarize_events(self, events: List[LineageEvent]) -> Dict[str, int]:
-        """Summarize events by type"""
-        summary = {}
+        """Summarize events by type"""        summary = {}
         for event in events:
             event_type = event.event_type.value
             summary[event_type] = summary.get(event_type, 0) + 1
         return summary
     
     def _get_event_type_breakdown(self) -> Dict[str, int]:
-        """Get breakdown of events by type"""
-        breakdown = {}
+        """Get breakdown of events by type"""        breakdown = {}
         for event in self.lineage_events:
             event_type = event.event_type.value
             breakdown[event_type] = breakdown.get(event_type, 0) + 1
         return breakdown
     
     async def _generate_visual_lineage(self, content_id: str) -> Dict[str, Any]:
-        """Generate visual representation of lineage"""
-        # This would generate graph visualization data
+        """Generate visual representation of lineage"""        # This would generate graph visualization data
         # For now, return basic structure
         upstream = await self.get_upstream_dependencies(content_id)
         downstream = await self.get_downstream_impact(content_id)
@@ -797,8 +752,7 @@ class LineageTracker(BaseManager):
         }
     
     async def _load_lineage_data(self) -> None:
-        """Load lineage data from database"""
-        try:
+        """Load lineage data from database"""        try:
             logger.info("Loading lineage data from database")
             
             # Load lineage entries from database
@@ -830,14 +784,12 @@ class LineageTracker(BaseManager):
             self.lineage_graph = nx.DiGraph()
 
     async def _fetch_lineage_records_from_database(self) -> List[Dict[str, Any]]:
-        """Fetch lineage records from database"""
-        # Mock implementation - would query actual database
+        """Fetch lineage records from database"""        # Mock implementation - would query actual database
         logger.debug("Fetching lineage records from database")
         return []
     
     async def _build_lineage_graph(self) -> None:
-        """Build networkx graph from lineage entries"""
-        try:
+        """Build networkx graph from lineage entries"""        try:
             # Clear existing graph
             self.lineage_graph.clear()
             

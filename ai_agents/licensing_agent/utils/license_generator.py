@@ -1,5 +1,4 @@
-"""
-License Generator - Automated Contract Generation & Legal Documentation System
+"""License Generator - Automated Contract Generation & Legal Documentation System
 
 Advanced license contract generation, template management, and legal document automation
 for comprehensive digital rights licensing across all content formats and jurisdictions.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -49,8 +47,7 @@ from ...integrations.ai.contract_ai import ContractAnalysisAI
 logger = logging.getLogger(__name__)
 
 class ContractType(Enum):
-    """Types of license contracts"""
-    MUSIC_LICENSE = "music_license"
+    """Types of license contracts"""    MUSIC_LICENSE = "music_license"
     VIDEO_LICENSE = "video_license"
     IMAGE_LICENSE = "image_license"
     TEXT_LICENSE = "text_license"
@@ -67,8 +64,7 @@ class ContractType(Enum):
     REVENUE_SHARE = "revenue_share"
 
 class ContractTemplate(Enum):
-    """Available contract templates"""
-    STANDARD = "standard"
+    """Available contract templates"""    STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
     CUSTOM = "custom"
@@ -78,8 +74,7 @@ class ContractTemplate(Enum):
     BROADCAST_LICENSE = "broadcast_license"
 
 class DocumentFormat(Enum):
-    """Output document formats"""
-    PDF = "pdf"
+    """Output document formats"""    PDF = "pdf"
     DOCX = "docx"
     HTML = "html"
     PLAIN_TEXT = "txt"
@@ -87,8 +82,7 @@ class DocumentFormat(Enum):
 
 @dataclass
 class ContractClause:
-    """Individual contract clause"""
-    clause_id: str
+    """Individual contract clause"""    clause_id: str
     title: str
     content: str
     clause_type: str  # "mandatory", "optional", "conditional"
@@ -100,8 +94,7 @@ class ContractClause:
 
 @dataclass
 class ContractTemplate:
-    """Complete contract template structure"""
-    template_id: str
+    """Complete contract template structure"""    template_id: str
     name: str
     description: str
     contract_type: ContractType
@@ -116,8 +109,7 @@ class ContractTemplate:
 
 @dataclass
 class ContractGenerationRequest:
-    """Request for contract generation"""
-    contract_type: ContractType
+    """Request for contract generation"""    contract_type: ContractType
     template: ContractTemplate
     parties: Dict[str, Any]  # licensor, licensee info
     content_details: Dict[str, Any]
@@ -131,8 +123,7 @@ class ContractGenerationRequest:
 
 @dataclass
 class GeneratedContract:
-    """Generated contract with metadata"""
-    contract_id: str
+    """Generated contract with metadata"""    contract_id: str
     contract_type: ContractType
     template_used: str
     parties: Dict[str, Any]
@@ -148,13 +139,11 @@ class GeneratedContract:
     compliance_score: float = 0.0
 
 class LicenseGenerator:
-    """
-    Ultra-Advanced AI-Powered License Contract Generation System
+    """    Ultra-Advanced AI-Powered License Contract Generation System
     
     Provides comprehensive contract automation, legal template management,
     and intelligent clause generation for all content licensing scenarios.
-    """
-    
+    """    
     def __init__(self):
         self.pdf_generator = PDFGenerator()
         self.docx_generator = DocxGenerator()
@@ -181,16 +170,14 @@ class LicenseGenerator:
         self,
         request: ContractGenerationRequest
     ) -> GeneratedContract:
-        """
-        Generate comprehensive license contract with AI optimization
+        """        Generate comprehensive license contract with AI optimization
         
         Args:
             request: Contract generation request with all parameters
             
         Returns:
             Complete generated contract with multiple formats
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             # Validate request
@@ -262,16 +249,14 @@ class LicenseGenerator:
         self,
         template_data: Dict[str, Any]
     ) -> ContractTemplate:
-        """
-        Create new contract template with AI-powered clause suggestions
+        """        Create new contract template with AI-powered clause suggestions
         
         Args:
             template_data: Template creation data
             
         Returns:
             Created contract template
-        """
-        try:
+        """        try:
             # Validate template data
             validation_result = await self._validate_template_data(template_data)
             if not validation_result["valid"]:
@@ -319,8 +304,7 @@ class LicenseGenerator:
         contract: GeneratedContract,
         analysis_parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Perform AI-powered contract risk analysis
+        """        Perform AI-powered contract risk analysis
         
         Args:
             contract: Generated contract to analyze
@@ -328,8 +312,7 @@ class LicenseGenerator:
             
         Returns:
             Comprehensive risk analysis report
-        """
-        try:
+        """        try:
             # Extract contract text for analysis
             contract_text = await self._extract_contract_text(contract)
             
@@ -390,8 +373,7 @@ class LicenseGenerator:
         modifications: Dict[str, Any],
         approval_required: bool = True
     ) -> Dict[str, Any]:
-        """
-        Modify existing contract terms with validation
+        """        Modify existing contract terms with validation
         
         Args:
             contract_id: Contract identifier
@@ -400,8 +382,7 @@ class LicenseGenerator:
             
         Returns:
             Modification result with updated contract
-        """
-        try:
+        """        try:
             # Get existing contract
             existing_contract = await self._get_contract_by_id(contract_id)
             if not existing_contract:
@@ -472,8 +453,7 @@ class LicenseGenerator:
             raise ContractError(f"Contract modification failed: {str(e)}")
 
     async def _validate_generation_request(self, request: ContractGenerationRequest) -> Dict[str, Any]:
-        """Validate contract generation request"""
-        errors = []
+        """Validate contract generation request"""        errors = []
         
         # Validate required fields
         if not request.parties.get("licensor"):
@@ -494,8 +474,7 @@ class LicenseGenerator:
         return {"valid": len(errors) == 0, "errors": errors}
 
     async def _optimize_contract_clauses(self, request: ContractGenerationRequest) -> List[ContractClause]:
-        """AI-powered contract clause optimization"""
-        # Get base clauses from template
+        """AI-powered contract clause optimization"""        # Get base clauses from template
         base_clauses = request.template.clauses.copy()
         
         # AI analysis for optimization
@@ -530,8 +509,7 @@ class LicenseGenerator:
         request: ContractGenerationRequest,
         clauses: List[ContractClause]
     ) -> Dict[str, Any]:
-        """Generate complete contract content"""
-        # Prepare template variables
+        """Generate complete contract content"""        # Prepare template variables
         template_vars = {
             "contract_id": str(uuid.uuid4()),
             "generation_date": datetime.utcnow(),
@@ -563,8 +541,7 @@ class LicenseGenerator:
         contract_content: Dict[str, Any],
         territories: List[str]
     ) -> Dict[str, Any]:
-        """Check contract for legal compliance across territories"""
-        compliance_results = []
+        """Check contract for legal compliance across territories"""        compliance_results = []
         overall_score = 0.0
         
         for territory in territories:
@@ -587,23 +564,19 @@ class LicenseGenerator:
         }
 
     async def _generate_pdf_contract(self, contract_content: Dict[str, Any]) -> bytes:
-        """Generate PDF version of contract"""
-        return await self.pdf_generator.generate_legal_document(
+        """Generate PDF version of contract"""        return await self.pdf_generator.generate_legal_document(
             contract_content["content"],
             contract_content["variables"]
         )
 
     async def _generate_docx_contract(self, contract_content: Dict[str, Any]) -> bytes:
-        """Generate DOCX version of contract"""
-        return await self.docx_generator.generate_legal_document(
+        """Generate DOCX version of contract"""        return await self.docx_generator.generate_legal_document(
             contract_content["content"],
             contract_content["variables"]
         )
 
     async def _generate_html_contract(self, contract_content: Dict[str, Any]) -> bytes:
-        """Generate HTML version of contract"""
-        html_content = f"""
-        <!DOCTYPE html>
+        """Generate HTML version of contract"""        html_content = f"""        <!DOCTYPE html>
         <html>
         <head>
             <title>License Agreement</title>
@@ -618,14 +591,11 @@ class LicenseGenerator:
             {contract_content['content']}
         </body>
         </html>
-        """
-        return html_content.encode('utf-8')
+        """        return html_content.encode('utf-8')
 
     async def _generate_smart_contract(self, contract_content: Dict[str, Any]) -> bytes:
-        """Generate Solidity smart contract"""
-        # This would generate actual smart contract code
-        smart_contract_code = f"""
-        // SPDX-License-Identifier: MIT
+        """Generate Solidity smart contract"""        # This would generate actual smart contract code
+        smart_contract_code = f"""        // SPDX-License-Identifier: MIT
         pragma solidity ^0.8.0;
         
         contract LicenseAgreement {{
@@ -635,12 +605,10 @@ class LicenseGenerator:
             
             // Implementation would include actual contract logic
         }}
-        """
-        return smart_contract_code.encode('utf-8')
+        """        return smart_contract_code.encode('utf-8')
 
     def _calculate_contract_expiry(self, duration: Dict[str, Any]) -> Optional[datetime]:
-        """Calculate contract expiry date"""
-        if not duration:
+        """Calculate contract expiry date"""        if not duration:
             return None
         
         start_date = datetime.utcnow()
@@ -654,8 +622,7 @@ class LicenseGenerator:
         return None
 
     def _calculate_overall_risk_score(self, individual_scores: List[float]) -> float:
-        """Calculate overall risk score from individual assessments"""
-        if not individual_scores:
+        """Calculate overall risk score from individual assessments"""        if not individual_scores:
             return 0.0
         
         # Weighted average with higher weight on compliance and legal risks
@@ -665,8 +632,7 @@ class LicenseGenerator:
         return min(weighted_sum, 1.0)
 
     def _categorize_risk_level(self, risk_score: float) -> str:
-        """Categorize risk level based on score"""
-        if risk_score < 0.3:
+        """Categorize risk level based on score"""        if risk_score < 0.3:
             return "LOW"
         elif risk_score < 0.6:
             return "MEDIUM"
@@ -676,8 +642,7 @@ class LicenseGenerator:
             return "CRITICAL"
 
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get contract generation metrics"""
-        return {
+        """Get contract generation metrics"""        return {
             **self.metrics,
             "timestamp": datetime.utcnow(),
             "ai_system_status": await self.contract_ai.get_system_status(),
@@ -686,10 +651,8 @@ class LicenseGenerator:
 
 
 class ContractAutomator:
-    """
-    Advanced contract lifecycle automation system
-    """
-    
+    """    Advanced contract lifecycle automation system
+    """    
     def __init__(self):
         self.license_generator = LicenseGenerator()
         
@@ -697,16 +660,14 @@ class ContractAutomator:
         self,
         workflow_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Automate complete contract workflow from generation to execution
+        """        Automate complete contract workflow from generation to execution
         
         Args:
             workflow_config: Workflow configuration and parameters
             
         Returns:
             Workflow execution result
-        """
-        try:
+        """        try:
             workflow_id = str(uuid.uuid4())
             workflow_steps = []
             
@@ -762,8 +723,7 @@ class ContractAutomator:
         contract: GeneratedContract,
         approval_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Initiate contract approval workflow"""
-        return {
+        """Initiate contract approval workflow"""        return {
             "approval_id": str(uuid.uuid4()),
             "approvers": approval_config.get("approvers", []),
             "approval_deadline": datetime.utcnow() + timedelta(days=approval_config.get("deadline_days", 5)),
@@ -775,8 +735,7 @@ class ContractAutomator:
     ENTERPRISE = "enterprise"
 
 class ClauseType(Enum):
-    """Types of contract clauses"""
-    GRANT_OF_RIGHTS = "grant_of_rights"
+    """Types of contract clauses"""    GRANT_OF_RIGHTS = "grant_of_rights"
     TERRITORY = "territory"
     DURATION = "duration"
     PAYMENT_TERMS = "payment_terms"
@@ -791,8 +750,7 @@ class ClauseType(Enum):
 
 @dataclass
 class ContractTemplate:
-    """Contract template structure"""
-    template_id: str
+    """Contract template structure"""    template_id: str
     name: str
     contract_type: ContractType
     complexity: ContractComplexity
@@ -807,8 +765,7 @@ class ContractTemplate:
 
 @dataclass
 class ContractParameters:
-    """Parameters for contract generation"""
-    licensor_info: Dict[str, Any]
+    """Parameters for contract generation"""    licensor_info: Dict[str, Any]
     licensee_info: Dict[str, Any]
     content_details: Dict[str, Any]
     license_terms: Dict[str, Any]
@@ -820,8 +777,7 @@ class ContractParameters:
 
 @dataclass
 class GeneratedContract:
-    """Generated contract result"""
-    contract_id: str
+    """Generated contract result"""    contract_id: str
     template_id: str
     contract_type: ContractType
     parties: Dict[str, Dict[str, Any]]
@@ -835,13 +791,11 @@ class GeneratedContract:
     status: str = "draft"
 
 class LicenseGenerator:
-    """
-    Advanced License Contract Generation System
+    """    Advanced License Contract Generation System
     
     Automated generation of comprehensive license contracts with legal compliance,
     multi-jurisdiction support, and intelligent clause selection.
-    """
-    
+    """    
     def __init__(self):
         self.template_engine = jinja2.Environment(
             loader=jinja2.FileSystemLoader('templates/contracts/'),
@@ -867,8 +821,7 @@ class LicenseGenerator:
         }
 
     async def initialize(self):
-        """Initialize license generator with templates and clause library"""
-        await self._load_contract_templates()
+        """Initialize license generator with templates and clause library"""        await self._load_contract_templates()
         await self._load_clause_library()
         await self._load_jurisdiction_rules()
 
@@ -880,8 +833,7 @@ class LicenseGenerator:
         language: str = "en",
         auto_optimize: bool = True
     ) -> GeneratedContract:
-        """
-        Generate comprehensive license contract
+        """        Generate comprehensive license contract
         
         Args:
             contract_type: Type of contract to generate
@@ -892,8 +844,7 @@ class LicenseGenerator:
             
         Returns:
             Generated contract with all formats
-        """
-        try:
+        """        try:
             # Select appropriate template
             template = await self._select_optimal_template(
                 contract_type, jurisdiction, language, parameters
@@ -988,8 +939,7 @@ class LicenseGenerator:
         template_data: Dict[str, Any],
         base_template: Optional[str] = None
     ) -> ContractTemplate:
-        """
-        Create custom contract template
+        """        Create custom contract template
         
         Args:
             template_data: Template configuration
@@ -997,8 +947,7 @@ class LicenseGenerator:
             
         Returns:
             Created contract template
-        """
-        try:
+        """        try:
             # Validate template data
             validation_result = await self._validate_template_data(template_data)
             if not validation_result["valid"]:
@@ -1054,8 +1003,7 @@ class LicenseGenerator:
         contract_type: ContractType,
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """
-        Analyze contract for legal and business risks
+        """        Analyze contract for legal and business risks
         
         Args:
             contract_content: Contract text to analyze
@@ -1064,8 +1012,7 @@ class LicenseGenerator:
             
         Returns:
             Comprehensive risk analysis
-        """
-        try:
+        """        try:
             # AI-powered contract analysis
             ai_analysis = await self.contract_ai.analyze_contract_risks(
                 contract_content, contract_type.value, jurisdiction
@@ -1120,16 +1067,14 @@ class LicenseGenerator:
         self,
         contract_requests: List[Dict[str, Any]]
     ) -> List[GeneratedContract]:
-        """
-        Generate multiple contracts in batch
+        """        Generate multiple contracts in batch
         
         Args:
             contract_requests: List of contract generation requests
             
         Returns:
             List of generated contracts
-        """
-        try:
+        """        try:
             tasks = []
             for request in contract_requests:
                 task = self.generate_license_contract(
@@ -1173,8 +1118,7 @@ class LicenseGenerator:
             raise ContractError(f"Failed to generate contracts in batch: {str(e)}")
 
     async def _load_contract_templates(self):
-        """Load contract templates from storage"""
-        # Load built-in templates
+        """Load contract templates from storage"""        # Load built-in templates
         template_configs = {
             "music_standard": {
                 "name": "Standard Music License",
@@ -1223,13 +1167,11 @@ class LicenseGenerator:
             self.templates[template_id] = template
 
     async def _load_clause_library(self):
-        """Load standard contract clauses"""
-        # Load clause library from external source
+        """Load standard contract clauses"""        # Load clause library from external source
         self.clause_sets = await self.clause_library.load_clauses()
 
     async def _load_jurisdiction_rules(self):
-        """Load jurisdiction-specific legal rules"""
-        self.jurisdiction_rules = {
+        """Load jurisdiction-specific legal rules"""        self.jurisdiction_rules = {
             "EU": {
                 "required_clauses": ["governing_law", "dispute_resolution"],
                 "prohibited_clauses": [],
@@ -1245,8 +1187,7 @@ class LicenseGenerator:
         }
 
     def _categorize_risk_level(self, risk_score: float) -> str:
-        """Categorize risk level based on score"""
-        if risk_score <= 0.3:
+        """Categorize risk level based on score"""        if risk_score <= 0.3:
             return "low"
         elif risk_score <= 0.6:
             return "medium"
@@ -1257,10 +1198,8 @@ class LicenseGenerator:
 
 
 class ContractAutomator:
-    """
-    Contract Automation and Workflow Management System
-    """
-    
+    """    Contract Automation and Workflow Management System
+    """    
     def __init__(self, license_generator: LicenseGenerator):
         self.license_generator = license_generator
         self.workflow_engine = None
@@ -1270,8 +1209,7 @@ class ContractAutomator:
         self,
         workflow_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Automate entire contract generation and approval workflow with multi-stage processing"""
-        try:
+        """Automate entire contract generation and approval workflow with multi-stage processing"""        try:
             workflow_id = str(uuid.uuid4())
             logger.info(f"Starting automated contract workflow {workflow_id}")
             
@@ -1380,8 +1318,7 @@ class ContractAutomator:
         contracts: List[str],
         review_schedule: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Schedule periodic contract reviews with automated reminders and analysis"""
-        try:
+        """Schedule periodic contract reviews with automated reminders and analysis"""        try:
             review_id = str(uuid.uuid4())
             logger.info(f"Scheduling contract reviews {review_id} for {len(contracts)} contracts")
             

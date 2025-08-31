@@ -1,5 +1,4 @@
-"""
-🚀 Docker Deployment Manager - IA-Influencer-Agent Platform
+"""🚀 Docker Deployment Manager - IA-Influencer-Agent Platform
 ===========================================================
 Expert: Lead Dev IA + DevOps Engineer + Orchestration Specialist
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Professional Docker deployment manager for orchestrating the complete
 IA-Influencer platform with all microservices and infrastructure.
 """
-
 from typing import Dict, List, Optional, Any, Union
 import logging
 import asyncio
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class DockerDeploymentManager:
-    """Enterprise Docker Deployment Manager for IA-Influencer Platform"""
-    
+    """Enterprise Docker Deployment Manager for IA-Influencer Platform"""    
     # Deployment Configuration
     environment: str = "production"
     platform_version: str = "2.0.0"
@@ -69,8 +66,7 @@ class DockerDeploymentManager:
     total_memory_limit: str = "64Gi"
     
     def __post_init__(self):
-        """Initialize deployment manager"""
-        self.deployment_order = [
+        """Initialize deployment manager"""        self.deployment_order = [
             "network",
             "volumes", 
             "database-cluster",
@@ -86,8 +82,7 @@ class DockerDeploymentManager:
         ]
     
     def generate_master_docker_compose(self) -> Dict[str, Any]:
-        """Generate master docker-compose.yml for entire platform"""
-        
+        """Generate master docker-compose.yml for entire platform"""        
         # Combine all services
         all_services = {}
         
@@ -160,8 +155,7 @@ class DockerDeploymentManager:
         }
     
     def _generate_infrastructure_services(self) -> Dict[str, Any]:
-        """Generate infrastructure services (Redis, Elasticsearch, etc.)"""
-        return {
+        """Generate infrastructure services (Redis, Elasticsearch, etc.)"""        return {
             # Redis Cluster
             "redis": {
                 "image": "redis:7-alpine",
@@ -298,8 +292,7 @@ class DockerDeploymentManager:
         }
     
     def _generate_volumes(self) -> Dict[str, Any]:
-        """Generate Docker volumes for all services"""
-        volumes = {
+        """Generate Docker volumes for all services"""        volumes = {
             # Database volumes
             "postgres_master_data": {},
             "postgres_replica_1_data": {},
@@ -330,8 +323,7 @@ class DockerDeploymentManager:
         return volumes
     
     def generate_deployment_scripts(self) -> Dict[str, str]:
-        """Generate deployment scripts"""
-        
+        """Generate deployment scripts"""        
         scripts = {}
         
         # Build script
@@ -370,7 +362,6 @@ docker build -f ./database-cluster/Dockerfile.replica -t {self.registry_url}/pos
 
 echo "✅ All images built successfully!"
 """
-
         # Deploy script
         scripts["deploy.sh"] = f"""#!/bin/bash
 # IA-Influencer Platform Deployment Script
@@ -423,7 +414,6 @@ echo "✅ Deployment completed successfully!"
 echo "🌐 Platform available at: https://app.ia-influencer.com"
 echo "📊 Monitoring available at: https://monitoring.ia-influencer.com"
 """
-
         # Health check script
         scripts["health-check.sh"] = """#!/bin/bash
 # IA-Influencer Platform Health Check Script
@@ -457,7 +447,6 @@ done
 
 echo "🏥 Health check completed!"
 """
-
         # Backup script
         scripts["backup.sh"] = """#!/bin/bash
 # IA-Influencer Platform Backup Script
@@ -487,12 +476,10 @@ tar czf "$BACKUP_DIR/ssl.tar.gz" ssl/
 
 echo "✅ Backup completed: $BACKUP_DIR"
 """
-
         return scripts
     
     def save_deployment_configuration(self, output_dir: str) -> List[str]:
-        """Save complete deployment configuration"""
-        output_path = Path(output_dir)
+        """Save complete deployment configuration"""        output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
         files_created = []
@@ -551,9 +538,7 @@ echo "✅ Backup completed: $BACKUP_DIR"
         return files_created
     
     def _generate_env_file(self) -> str:
-        """Generate environment variables file"""
-        return f"""
-# IA-Influencer Platform Environment Configuration
+        """Generate environment variables file"""        return f"""# IA-Influencer Platform Environment Configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 # Environment: {self.environment}
 
@@ -625,11 +610,8 @@ SMTP_PORT=587
 SMTP_USERNAME=your_email@ia-influencer.com
 SMTP_PASSWORD=your_email_password_here
 """
-
     def _generate_deployment_readme(self) -> str:
-        """Generate deployment README"""
-        return f"""
-# 🚀 IA-Influencer Platform - Docker Deployment Guide
+        """Generate deployment README"""        return f"""# 🚀 IA-Influencer Platform - Docker Deployment Guide
 
 ## Expert Team Specialties
 - **Lead Dev IA + Backend Senior**: Architecture & Development
@@ -785,10 +767,8 @@ Unauthorized use, copying, or distribution is strictly prohibited.
 
 © 2024 Fahed Mlaiel. All rights reserved.
 """
-
     async def deploy_platform(self, output_dir: str) -> bool:
-        """Deploy the entire IA-Influencer platform"""
-        try:
+        """Deploy the entire IA-Influencer platform"""        try:
             logger.info("🚀 Starting IA-Influencer platform deployment...")
             
             # Save all configuration files

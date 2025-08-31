@@ -1,5 +1,4 @@
-"""
-Alert Systems Module
+"""Alert Systems Module
 ===================
 
 Advanced alert and notification systems for content surveillance.
@@ -12,7 +11,6 @@ WARNING: This code and concept are protected intellectual property.
 Any unauthorized use, copying, or distribution without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
-
 import asyncio
 import logging
 import smtplib
@@ -34,16 +32,14 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    LOW = "low"
+    """Alert severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class AlertStatus(Enum):
-    """Alert status enumeration."""
-    PENDING = "pending"
+    """Alert status enumeration."""    PENDING = "pending"
     ACKNOWLEDGED = "acknowledged"
     IN_PROGRESS = "in_progress"
     RESOLVED = "resolved"
@@ -51,8 +47,7 @@ class AlertStatus(Enum):
 
 
 class AlertChannel(Enum):
-    """Alert notification channels."""
-    EMAIL = "email"
+    """Alert notification channels."""    EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
     PUSH = "push"
@@ -62,8 +57,7 @@ class AlertChannel(Enum):
 
 
 class AlertCategory(Enum):
-    """Alert category types."""
-    COPYRIGHT_VIOLATION = "copyright_violation"
+    """Alert category types."""    COPYRIGHT_VIOLATION = "copyright_violation"
     UNAUTHORIZED_USE = "unauthorized_use"
     PLAGIARISM = "plagiarism"
     DMCA_REQUIRED = "dmca_required"
@@ -74,8 +68,7 @@ class AlertCategory(Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration."""
-    rule_id: str
+    """Alert rule configuration."""    rule_id: str
     name: str
     description: str
     severity: AlertSeverity
@@ -92,8 +85,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert data structure."""
-    alert_id: str
+    """Alert data structure."""    alert_id: str
     rule_id: str
     user_id: str
     fingerprint_id: str
@@ -119,8 +111,7 @@ class Alert:
 
 @dataclass
 class NotificationTemplate:
-    """Notification template structure."""
-    template_id: str
+    """Notification template structure."""    template_id: str
     name: str
     channel: AlertChannel
     subject_template: str
@@ -131,8 +122,7 @@ class NotificationTemplate:
 
 
 class BaseNotificationChannel(ABC):
-    """Base class for notification channels."""
-    
+    """Base class for notification channels."""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.enabled = config.get("enabled", False)
@@ -140,17 +130,14 @@ class BaseNotificationChannel(ABC):
         
     @abstractmethod
     async def send_notification(self, alert: Alert, template: NotificationTemplate) -> bool:
-        """Send notification through this channel."""
-        pass
+        """Send notification through this channel."""        pass
     
     @abstractmethod
     async def test_connection(self) -> bool:
-        """Test channel connectivity."""
-        pass
+        """Test channel connectivity."""        pass
     
     def format_message(self, template: NotificationTemplate, alert: Alert) -> Dict[str, str]:
-        """Format message using template and alert data."""
-        try:
+        """Format message using template and alert data."""        try:
             alert_dict = asdict(alert)
             
             # Format subject
@@ -175,8 +162,7 @@ class BaseNotificationChannel(ABC):
 
 
 class EmailNotificationChannel(BaseNotificationChannel):
-    """Email notification channel implementation."""
-    
+    """Email notification channel implementation."""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.channel_type = AlertChannel.EMAIL
@@ -188,8 +174,7 @@ class EmailNotificationChannel(BaseNotificationChannel):
         self.use_tls = config.get("use_tls", True)
         
     async def send_notification(self, alert: Alert, template: NotificationTemplate) -> bool:
-        """Send email notification."""
-        try:
+        """Send email notification."""        try:
             # Get recipient email from user metadata
             to_email = alert.metadata.get("user_email", "")
             if not to_email:
@@ -229,8 +214,7 @@ class EmailNotificationChannel(BaseNotificationChannel):
             return False
     
     async def test_connection(self) -> bool:
-        """Test email server connection."""
-        try:
+        """Test email server connection."""        try:
             async with aiosmtplib.SMTP(hostname=self.smtp_server, port=self.smtp_port) as server:
                 if self.use_tls:
                     await server.starttls()
@@ -242,8 +226,7 @@ class EmailNotificationChannel(BaseNotificationChannel):
 
 
 class WebhookNotificationChannel(BaseNotificationChannel):
-    """Webhook notification channel implementation."""
-    
+    """Webhook notification channel implementation."""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.channel_type = AlertChannel.WEBHOOK
@@ -253,8 +236,7 @@ class WebhookNotificationChannel(BaseNotificationChannel):
         self.retry_attempts = config.get("retry_attempts", 3)
         
     async def send_notification(self, alert: Alert, template: NotificationTemplate) -> bool:
-        """Send webhook notification."""
-        try:
+        """Send webhook notification."""        try:
             # Prepare webhook payload
             payload = {
                 "alert_id": alert.alert_id,
@@ -303,8 +285,7 @@ class WebhookNotificationChannel(BaseNotificationChannel):
             return False
     
     async def test_connection(self) -> bool:
-        """Test webhook endpoint."""
-        try:
+        """Test webhook endpoint."""        try:
             test_payload = {"test": True, "timestamp": datetime.utcnow().isoformat()}
             
             async with aiohttp.ClientSession(timeout=aiohttp.ClientTimeout(total=self.timeout)) as session:
@@ -321,8 +302,7 @@ class WebhookNotificationChannel(BaseNotificationChannel):
 
 
 class SlackNotificationChannel(BaseNotificationChannel):
-    """Slack notification channel implementation."""
-    
+    """Slack notification channel implementation."""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.channel_type = AlertChannel.SLACK
@@ -332,8 +312,7 @@ class SlackNotificationChannel(BaseNotificationChannel):
         self.icon_emoji = config.get("icon_emoji", ":warning:")
         
     async def send_notification(self, alert: Alert, template: NotificationTemplate) -> bool:
-        """Send Slack notification."""
-        try:
+        """Send Slack notification."""        try:
             # Format message
             message_data = self.format_message(template, alert)
             
@@ -389,8 +368,7 @@ class SlackNotificationChannel(BaseNotificationChannel):
             return False
     
     def _get_color_for_severity(self, severity: AlertSeverity) -> str:
-        """Get color code for alert severity."""
-        color_map = {
+        """Get color code for alert severity."""        color_map = {
             AlertSeverity.LOW: "good",
             AlertSeverity.MEDIUM: "warning",
             AlertSeverity.HIGH: "danger",
@@ -399,8 +377,7 @@ class SlackNotificationChannel(BaseNotificationChannel):
         return color_map.get(severity, "warning")
     
     async def test_connection(self) -> bool:
-        """Test Slack webhook."""
-        try:
+        """Test Slack webhook."""        try:
             test_payload = {
                 "channel": self.channel,
                 "username": self.username,
@@ -418,8 +395,7 @@ class SlackNotificationChannel(BaseNotificationChannel):
 
 
 class TelegramNotificationChannel(BaseNotificationChannel):
-    """Telegram notification channel implementation."""
-    
+    """Telegram notification channel implementation."""    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.channel_type = AlertChannel.TELEGRAM
@@ -427,8 +403,7 @@ class TelegramNotificationChannel(BaseNotificationChannel):
         self.default_chat_id = config.get("default_chat_id", "")
         
     async def send_notification(self, alert: Alert, template: NotificationTemplate) -> bool:
-        """Send Telegram notification."""
-        try:
+        """Send Telegram notification."""        try:
             # Get chat ID from user metadata or use default
             chat_id = alert.metadata.get("telegram_chat_id", self.default_chat_id)
             if not chat_id:
@@ -469,8 +444,7 @@ class TelegramNotificationChannel(BaseNotificationChannel):
             return False
     
     async def test_connection(self) -> bool:
-        """Test Telegram bot connection."""
-        try:
+        """Test Telegram bot connection."""        try:
             url = f"https://api.telegram.org/bot{self.bot_token}/getMe"
             
             async with aiohttp.ClientSession() as session:
@@ -483,13 +457,11 @@ class TelegramNotificationChannel(BaseNotificationChannel):
 
 
 class NotificationDispatcher:
-    """
-    Notification dispatcher for managing multiple channels.
+    """    Notification dispatcher for managing multiple channels.
     
     Handles routing alerts to appropriate channels based on
     rules and user preferences.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.channels: Dict[AlertChannel, BaseNotificationChannel] = {}
@@ -497,8 +469,7 @@ class NotificationDispatcher:
         self.dispatch_rules: List[Dict[str, Any]] = []
         
     async def initialize(self) -> bool:
-        """Initialize notification dispatcher."""
-        try:
+        """Initialize notification dispatcher."""        try:
             # Initialize notification channels
             await self._initialize_channels()
             
@@ -516,8 +487,7 @@ class NotificationDispatcher:
             return False
     
     async def _initialize_channels(self) -> None:
-        """Initialize notification channels."""
-        channels_config = self.config.get("channels", {})
+        """Initialize notification channels."""        channels_config = self.config.get("channels", {})
         
         # Email channel
         if channels_config.get("email", {}).get("enabled", False):
@@ -542,8 +512,7 @@ class NotificationDispatcher:
         logger.info(f"Initialized {len(self.channels)} notification channels")
     
     async def _load_templates(self) -> None:
-        """Load notification templates."""
-        templates_config = self.config.get("templates", {})
+        """Load notification templates."""        templates_config = self.config.get("templates", {})
         
         # Default templates
         default_templates = [
@@ -552,8 +521,7 @@ class NotificationDispatcher:
                 name="Copyright Violation Email",
                 channel=AlertChannel.EMAIL,
                 subject_template="🚨 Copyright Violation Detected - {title}",
-                body_template="""
-                <h2>Copyright Violation Alert</h2>
+                body_template="""                <h2>Copyright Violation Alert</h2>
                 <p><strong>Content:</strong> {title}</p>
                 <p><strong>Platform:</strong> {platform}</p>
                 <p><strong>Detected URL:</strong> <a href="{detected_url}">{detected_url}</a></p>
@@ -598,8 +566,7 @@ class NotificationDispatcher:
         logger.info(f"Loaded {len(self.templates)} notification templates")
     
     async def _load_dispatch_rules(self) -> None:
-        """Load notification dispatch rules."""
-        rules_config = self.config.get("dispatch_rules", [])
+        """Load notification dispatch rules."""        rules_config = self.config.get("dispatch_rules", [])
         
         # Default dispatch rules
         default_rules = [
@@ -633,8 +600,7 @@ class NotificationDispatcher:
         logger.info(f"Loaded {len(self.dispatch_rules)} dispatch rules")
     
     async def dispatch_alert(self, alert: Alert) -> Dict[AlertChannel, bool]:
-        """Dispatch alert to appropriate channels."""
-        results = {}
+        """Dispatch alert to appropriate channels."""        results = {}
         
         try:
             # Find matching dispatch rules
@@ -676,8 +642,7 @@ class NotificationDispatcher:
             return {}
     
     def _find_matching_rules(self, alert: Alert) -> List[Dict[str, Any]]:
-        """Find dispatch rules matching the alert."""
-        matching_rules = []
+        """Find dispatch rules matching the alert."""        matching_rules = []
         
         for rule in self.dispatch_rules:
             conditions = rule.get("conditions", {})
@@ -689,8 +654,7 @@ class NotificationDispatcher:
         return matching_rules
     
     def _rule_matches_alert(self, conditions: Dict[str, Any], alert: Alert) -> bool:
-        """Check if rule conditions match alert."""
-        for key, value in conditions.items():
+        """Check if rule conditions match alert."""        for key, value in conditions.items():
             if key == "severity":
                 if alert.severity.value != value:
                     return False
@@ -710,8 +674,7 @@ class NotificationDispatcher:
         return True
     
     def _get_template_for_channel(self, channel: AlertChannel, alert: Alert) -> Optional[NotificationTemplate]:
-        """Get appropriate template for channel and alert."""
-        # Template selection logic based on channel and alert category
+        """Get appropriate template for channel and alert."""        # Template selection logic based on channel and alert category
         template_key = f"{alert.category.value}_{channel.value}"
         
         if template_key in self.templates:
@@ -730,8 +693,7 @@ class NotificationDispatcher:
         return None
     
     async def test_all_channels(self) -> Dict[AlertChannel, bool]:
-        """Test connectivity for all configured channels."""
-        results = {}
+        """Test connectivity for all configured channels."""        results = {}
         
         for channel_type, channel in self.channels.items():
             try:
@@ -746,21 +708,18 @@ class NotificationDispatcher:
 
 
 class EscalationHandler:
-    """
-    Alert escalation handler.
+    """    Alert escalation handler.
     
     Manages automatic escalation of unacknowledged alerts
     and implements escalation policies.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.escalation_policies: List[Dict[str, Any]] = []
         self.active_escalations: Dict[str, Dict[str, Any]] = {}
         
     async def initialize(self) -> bool:
-        """Initialize escalation handler."""
-        try:
+        """Initialize escalation handler."""        try:
             # Load escalation policies
             await self._load_escalation_policies()
             
@@ -775,8 +734,7 @@ class EscalationHandler:
             return False
     
     async def _load_escalation_policies(self) -> None:
-        """Load escalation policies."""
-        policies_config = self.config.get("escalation_policies", [])
+        """Load escalation policies."""        policies_config = self.config.get("escalation_policies", [])
         
         # Default escalation policies
         default_policies = [
@@ -803,8 +761,7 @@ class EscalationHandler:
         logger.info(f"Loaded {len(self.escalation_policies)} escalation policies")
     
     async def _escalation_monitor(self) -> None:
-        """Monitor alerts for escalation."""
-        while True:
+        """Monitor alerts for escalation."""        while True:
             try:
                 current_time = datetime.utcnow()
                 
@@ -820,8 +777,7 @@ class EscalationHandler:
                 await asyncio.sleep(60)
     
     async def _check_escalation(self, alert_id: str, escalation_data: Dict[str, Any], current_time: datetime) -> None:
-        """Check if alert needs escalation."""
-        try:
+        """Check if alert needs escalation."""        try:
             alert_created = escalation_data["created_at"]
             current_step = escalation_data["current_step"]
             policy = escalation_data["policy"]
@@ -844,8 +800,7 @@ class EscalationHandler:
             logger.error(f"Error checking escalation for alert {alert_id}: {e}")
     
     async def _execute_escalation_step(self, alert_id: str, step: Dict[str, Any], escalation_data: Dict[str, Any]) -> None:
-        """Execute escalation step."""
-        try:
+        """Execute escalation step."""        try:
             logger.info(f"Executing escalation step for alert {alert_id}")
             
             # Get original alert data
@@ -879,24 +834,21 @@ class EscalationHandler:
             logger.error(f"Error executing escalation step for alert {alert_id}: {e}")
     
     async def _notify_management(self, alert: Alert, escalation_data: Dict[str, Any]) -> None:
-        """Notify management about escalated alert."""
-        try:
+        """Notify management about escalated alert."""        try:
             # Implementation for management notification
             logger.info(f"Management notified about escalated alert {alert.alert_id}")
         except Exception as e:
             logger.error(f"Management notification failed: {e}")
     
     async def _notify_executive(self, alert: Alert, escalation_data: Dict[str, Any]) -> None:
-        """Notify executive about escalated alert."""
-        try:
+        """Notify executive about escalated alert."""        try:
             # Implementation for executive notification
             logger.info(f"Executive notified about escalated alert {alert.alert_id}")
         except Exception as e:
             logger.error(f"Executive notification failed: {e}")
     
     async def register_alert_for_escalation(self, alert: Alert) -> None:
-        """Register alert for escalation monitoring."""
-        try:
+        """Register alert for escalation monitoring."""        try:
             # Find matching escalation policy
             policy = self._find_escalation_policy(alert)
             
@@ -916,8 +868,7 @@ class EscalationHandler:
             logger.error(f"Failed to register alert {alert.alert_id} for escalation: {e}")
     
     def _find_escalation_policy(self, alert: Alert) -> Optional[Dict[str, Any]]:
-        """Find escalation policy matching alert."""
-        for policy in self.escalation_policies:
+        """Find escalation policy matching alert."""        for policy in self.escalation_policies:
             conditions = policy.get("conditions", {})
             
             # Check if policy conditions match alert
@@ -936,8 +887,7 @@ class EscalationHandler:
         return None
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge alert and stop escalation."""
-        try:
+        """Acknowledge alert and stop escalation."""        try:
             if alert_id in self.active_escalations:
                 del self.active_escalations[alert_id]
                 logger.info(f"Alert {alert_id} acknowledged by {acknowledged_by}, escalation stopped")
@@ -951,20 +901,17 @@ class EscalationHandler:
 
 
 class AlertRepository:
-    """
-    Alert repository for storing and retrieving alerts.
+    """    Alert repository for storing and retrieving alerts.
     
     Manages alert persistence, querying, and lifecycle operations.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.alerts: Dict[str, Alert] = {}  # In-memory storage for demo
         self.alert_rules: Dict[str, AlertRule] = {}
         
     async def initialize(self) -> bool:
-        """Initialize alert repository."""
-        try:
+        """Initialize alert repository."""        try:
             # Load default alert rules
             await self._load_default_rules()
             
@@ -976,8 +923,7 @@ class AlertRepository:
             return False
     
     async def _load_default_rules(self) -> None:
-        """Load default alert rules."""
-        default_rules = [
+        """Load default alert rules."""        default_rules = [
             AlertRule(
                 rule_id="copyright_violation_high",
                 name="High Similarity Copyright Violation",
@@ -1016,8 +962,7 @@ class AlertRepository:
         logger.info(f"Loaded {len(default_rules)} default alert rules")
     
     async def create_alert(self, alert: Alert) -> bool:
-        """Create new alert."""
-        try:
+        """Create new alert."""        try:
             self.alerts[alert.alert_id] = alert
             logger.info(f"Alert created: {alert.alert_id}")
             return True
@@ -1027,12 +972,10 @@ class AlertRepository:
             return False
     
     async def get_alert(self, alert_id: str) -> Optional[Alert]:
-        """Get alert by ID."""
-        return self.alerts.get(alert_id)
+        """Get alert by ID."""        return self.alerts.get(alert_id)
     
     async def update_alert(self, alert: Alert) -> bool:
-        """Update existing alert."""
-        try:
+        """Update existing alert."""        try:
             if alert.alert_id in self.alerts:
                 alert.updated_at = datetime.utcnow()
                 self.alerts[alert.alert_id] = alert
@@ -1047,8 +990,7 @@ class AlertRepository:
             return False
     
     async def get_alerts_by_user(self, user_id: str, status: Optional[AlertStatus] = None) -> List[Alert]:
-        """Get alerts for specific user."""
-        alerts = [
+        """Get alerts for specific user."""        alerts = [
             alert for alert in self.alerts.values()
             if alert.user_id == user_id
         ]
@@ -1059,15 +1001,13 @@ class AlertRepository:
         return alerts
     
     async def get_alerts_by_status(self, status: AlertStatus) -> List[Alert]:
-        """Get alerts by status."""
-        return [
+        """Get alerts by status."""        return [
             alert for alert in self.alerts.values()
             if alert.status == status
         ]
     
     async def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get alert statistics."""
-        total_alerts = len(self.alerts)
+        """Get alert statistics."""        total_alerts = len(self.alerts)
         
         if total_alerts == 0:
             return {"total": 0}
@@ -1096,13 +1036,11 @@ class AlertRepository:
 
 
 class AlertManager:
-    """
-    Main alert management system.
+    """    Main alert management system.
     
     Coordinates alert creation, notification dispatch, escalation,
     and lifecycle management.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.repository = AlertRepository(config.get("repository", {}))
@@ -1111,8 +1049,7 @@ class AlertManager:
         self.throttle_cache: Dict[str, datetime] = {}
         
     async def initialize(self) -> bool:
-        """Initialize alert manager."""
-        try:
+        """Initialize alert manager."""        try:
             # Initialize components
             await self.repository.initialize()
             await self.dispatcher.initialize()
@@ -1131,8 +1068,7 @@ class AlertManager:
         fingerprint_id: str,
         violation_data: Dict[str, Any]
     ) -> Optional[str]:
-        """Create alert for content violation."""
-        try:
+        """Create alert for content violation."""        try:
             # Find matching alert rule
             rule = await self._find_matching_rule(violation_data)
             if not rule:
@@ -1193,8 +1129,7 @@ class AlertManager:
             return None
     
     async def _find_matching_rule(self, violation_data: Dict[str, Any]) -> Optional[AlertRule]:
-        """Find alert rule matching violation data."""
-        similarity_score = violation_data.get("similarity_score", 0.0)
+        """Find alert rule matching violation data."""        similarity_score = violation_data.get("similarity_score", 0.0)
         confidence_level = violation_data.get("confidence_level", 0.0)
         
         # Check all rules for matches
@@ -1220,8 +1155,7 @@ class AlertManager:
         return None
     
     async def _is_throttled(self, rule: AlertRule, user_id: str, fingerprint_id: str) -> bool:
-        """Check if alert is throttled."""
-        if rule.throttle_duration <= 0:
+        """Check if alert is throttled."""        if rule.throttle_duration <= 0:
             return False
         
         throttle_key = f"{rule.rule_id}:{user_id}:{fingerprint_id}"
@@ -1236,13 +1170,11 @@ class AlertManager:
         return False
     
     def _update_throttle_cache(self, rule: AlertRule, user_id: str, fingerprint_id: str) -> None:
-        """Update throttle cache."""
-        throttle_key = f"{rule.rule_id}:{user_id}:{fingerprint_id}"
+        """Update throttle cache."""        throttle_key = f"{rule.rule_id}:{user_id}:{fingerprint_id}"
         self.throttle_cache[throttle_key] = datetime.utcnow()
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge alert."""
-        try:
+        """Acknowledge alert."""        try:
             alert = await self.repository.get_alert(alert_id)
             if not alert:
                 logger.warning(f"Alert not found: {alert_id}")
@@ -1267,8 +1199,7 @@ class AlertManager:
             return False
     
     async def resolve_alert(self, alert_id: str, resolved_by: str, resolution_notes: str = "") -> bool:
-        """Resolve alert."""
-        try:
+        """Resolve alert."""        try:
             alert = await self.repository.get_alert(alert_id)
             if not alert:
                 logger.warning(f"Alert not found: {alert_id}")
@@ -1296,28 +1227,23 @@ class AlertManager:
             return False
     
     async def get_user_alerts(self, user_id: str, status: Optional[AlertStatus] = None) -> List[Alert]:
-        """Get alerts for user."""
-        return await self.repository.get_alerts_by_user(user_id, status)
+        """Get alerts for user."""        return await self.repository.get_alerts_by_user(user_id, status)
     
     async def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get system-wide alert statistics."""
-        return await self.repository.get_alert_statistics()
+        """Get system-wide alert statistics."""        return await self.repository.get_alert_statistics()
     
     async def test_notification_channels(self) -> Dict[AlertChannel, bool]:
-        """Test all notification channels."""
-        return await self.dispatcher.test_all_channels()
+        """Test all notification channels."""        return await self.dispatcher.test_all_channels()
 
 
 # Factory functions for easy access
 def get_alert_manager() -> Optional[AlertManager]:
-    """Get alert manager instance."""
-    # Implementation would return configured alert manager
+    """Get alert manager instance."""    # Implementation would return configured alert manager
     return None
 
 
 def get_notification_dispatcher() -> Optional[NotificationDispatcher]:
-    """Get notification dispatcher instance."""
-    # Implementation would return configured dispatcher
+    """Get notification dispatcher instance."""    # Implementation would return configured dispatcher
     return None
     severity: AlertSeverity
     status: AlertStatus
@@ -1332,8 +1258,7 @@ def get_notification_dispatcher() -> Optional[NotificationDispatcher]:
 
 
 class BaseNotificationChannel(ABC):
-    """Base class for notification channels."""
-    
+    """Base class for notification channels."""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.enabled = config.get("enabled", True)
@@ -1343,12 +1268,10 @@ class BaseNotificationChannel(ABC):
     
     @abstractmethod
     async def send_notification(self, alert: Alert, recipients: List[str]) -> bool:
-        """Send notification through channel."""
-        pass
+        """Send notification through channel."""        pass
     
     def can_send(self) -> bool:
-        """Check if notification can be sent (rate limiting)."""
-        if not self.enabled:
+        """Check if notification can be sent (rate limiting)."""        if not self.enabled:
             return False
         
         if not self.rate_limit:
@@ -1363,17 +1286,14 @@ class BaseNotificationChannel(ABC):
         return True
     
     def record_sent(self) -> None:
-        """Record that notification was sent."""
-        self.sent_count += 1
+        """Record that notification was sent."""        self.sent_count += 1
         self.last_sent = datetime.utcnow()
 
 
 class EmailNotificationChannel(BaseNotificationChannel):
-    """Email notification channel."""
-    
+    """Email notification channel."""    
     async def send_notification(self, alert: Alert, recipients: List[str]) -> bool:
-        """Send email notification."""
-        if not self.can_send():
+        """Send email notification."""        if not self.can_send():
             logger.warning("Email rate limit exceeded")
             return False
         
@@ -1414,16 +1334,14 @@ class EmailNotificationChannel(BaseNotificationChannel):
             return False
     
     def _create_email_body(self, alert: Alert) -> str:
-        """Create HTML email body."""
-        severity_color = {
+        """Create HTML email body."""        severity_color = {
             AlertSeverity.LOW: "#28a745",
             AlertSeverity.MEDIUM: "#ffc107", 
             AlertSeverity.HIGH: "#fd7e14",
             AlertSeverity.CRITICAL: "#dc3545"
         }
         
-        return f"""
-        <html>
+        return f"""        <html>
         <body>
             <div style="font-family: Arial, sans-serif; max-width: 600px;">
                 <h2 style="color: {severity_color.get(alert.severity, '#333')};">
@@ -1465,13 +1383,10 @@ class EmailNotificationChannel(BaseNotificationChannel):
         </html>
         """
 
-
 class SlackNotificationChannel(BaseNotificationChannel):
-    """Slack notification channel."""
-    
+    """Slack notification channel."""    
     async def send_notification(self, alert: Alert, recipients: List[str]) -> bool:
-        """Send Slack notification."""
-        if not self.can_send():
+        """Send Slack notification."""        if not self.can_send():
             logger.warning("Slack rate limit exceeded")
             return False
         
@@ -1501,8 +1416,7 @@ class SlackNotificationChannel(BaseNotificationChannel):
             return False
     
     def _create_slack_message(self, alert: Alert) -> Dict[str, Any]:
-        """Create Slack message payload."""
-        severity_color = {
+        """Create Slack message payload."""        severity_color = {
             AlertSeverity.LOW: "good",
             AlertSeverity.MEDIUM: "warning",
             AlertSeverity.HIGH: "danger",
@@ -1553,11 +1467,9 @@ class SlackNotificationChannel(BaseNotificationChannel):
 
 
 class WebhookNotificationChannel(BaseNotificationChannel):
-    """Generic webhook notification channel."""
-    
+    """Generic webhook notification channel."""    
     async def send_notification(self, alert: Alert, recipients: List[str]) -> bool:
-        """Send webhook notification."""
-        if not self.can_send():
+        """Send webhook notification."""        if not self.can_send():
             logger.warning("Webhook rate limit exceeded")
             return False
         
@@ -1603,12 +1515,10 @@ class WebhookNotificationChannel(BaseNotificationChannel):
 
 
 class AlertManager:
-    """
-    Main alert management system.
+    """    Main alert management system.
     
     Coordinates alert creation, processing, notification, and escalation.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.alert_rules: Dict[str, AlertRule] = {}
@@ -1618,8 +1528,7 @@ class AlertManager:
         self.escalation_tasks: Set[asyncio.Task] = set()
         
     async def initialize(self) -> bool:
-        """Initialize alert manager."""
-        try:
+        """Initialize alert manager."""        try:
             # Load alert rules
             await self._load_alert_rules()
             
@@ -1637,8 +1546,7 @@ class AlertManager:
             return False
     
     async def _load_alert_rules(self) -> None:
-        """Load alert rules from configuration."""
-        rules_config = self.config.get("alert_rules", [])
+        """Load alert rules from configuration."""        rules_config = self.config.get("alert_rules", [])
         
         default_rules = [
             {
@@ -1703,8 +1611,7 @@ class AlertManager:
         logger.info(f"Loaded {len(self.alert_rules)} alert rules")
     
     async def _initialize_notification_channels(self) -> None:
-        """Initialize notification channels."""
-        channels_config = self.config.get("notification_channels", {})
+        """Initialize notification channels."""        channels_config = self.config.get("notification_channels", {})
         
         # Email channel
         if channels_config.get("email", {}).get("enabled", False):
@@ -1727,15 +1634,13 @@ class AlertManager:
         logger.info(f"Initialized {len(self.notification_channels)} notification channels")
     
     async def _start_escalation_processor(self) -> None:
-        """Start escalation processor task."""
-        escalation_task = asyncio.create_task(self._escalation_processor())
+        """Start escalation processor task."""        escalation_task = asyncio.create_task(self._escalation_processor())
         self.escalation_tasks.add(escalation_task)
         escalation_task.add_done_callback(self.escalation_tasks.discard)
         logger.info("Escalation processor started")
     
     async def _escalation_processor(self) -> None:
-        """Process alert escalations."""
-        while True:
+        """Process alert escalations."""        while True:
             try:
                 now = datetime.utcnow()
                 
@@ -1757,8 +1662,7 @@ class AlertManager:
                 await asyncio.sleep(60)
     
     async def _escalate_alert(self, alert: Alert) -> None:
-        """Escalate unresolved alert."""
-        try:
+        """Escalate unresolved alert."""        try:
             # Mark as escalated
             alert.escalated = True
             alert.updated_at = datetime.utcnow()
@@ -1796,8 +1700,7 @@ class AlertManager:
             logger.error(f"Error escalating alert {alert.alert_id}: {e}")
     
     async def create_violation_alert(self, target, detection_result) -> Optional[Alert]:
-        """Create alert for content violation detection."""
-        try:
+        """Create alert for content violation detection."""        try:
             # Determine appropriate alert rule
             rule = self._select_alert_rule(detection_result)
             if not rule or not rule.enabled:
@@ -1842,8 +1745,7 @@ class AlertManager:
             return None
     
     def _select_alert_rule(self, detection_result) -> Optional[AlertRule]:
-        """Select appropriate alert rule based on detection result."""
-        similarity = detection_result.similarity_score
+        """Select appropriate alert rule based on detection result."""        similarity = detection_result.similarity_score
         confidence = detection_result.confidence_level
         
         # High similarity rule
@@ -1857,8 +1759,7 @@ class AlertManager:
         return None
     
     async def _send_alert_notifications(self, alert: Alert, rule: AlertRule) -> None:
-        """Send alert notifications through configured channels."""
-        try:
+        """Send alert notifications through configured channels."""        try:
             # Get recipients for user
             user_recipients = await self._get_user_notification_recipients(alert.user_id)
             
@@ -1877,8 +1778,7 @@ class AlertManager:
             logger.error(f"Error sending alert notifications: {e}")
     
     async def _get_user_notification_recipients(self, user_id: str) -> Dict[str, List[str]]:
-        """Get notification recipients for user."""
-        # This would typically query user preferences from database
+        """Get notification recipients for user."""        # This would typically query user preferences from database
         # For now, return default configuration
         return {
             "email": [f"user_{user_id}@example.com"],
@@ -1888,8 +1788,7 @@ class AlertManager:
         }
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert."""
-        try:
+        """Acknowledge an alert."""        try:
             if alert_id in self.active_alerts:
                 alert = self.active_alerts[alert_id]
                 alert.status = AlertStatus.ACKNOWLEDGED
@@ -1906,8 +1805,7 @@ class AlertManager:
             return False
     
     async def resolve_alert(self, alert_id: str, resolved_by: str) -> bool:
-        """Resolve an alert."""
-        try:
+        """Resolve an alert."""        try:
             if alert_id in self.active_alerts:
                 alert = self.active_alerts[alert_id]
                 alert.status = AlertStatus.RESOLVED
@@ -1928,15 +1826,13 @@ class AlertManager:
             return False
     
     async def get_active_alerts(self, user_id: Optional[str] = None) -> List[Alert]:
-        """Get active alerts, optionally filtered by user."""
-        if user_id:
+        """Get active alerts, optionally filtered by user."""        if user_id:
             return [alert for alert in self.active_alerts.values() if alert.user_id == user_id]
         
         return list(self.active_alerts.values())
     
     async def get_alert_statistics(self) -> Dict[str, Any]:
-        """Get alert statistics."""
-        now = datetime.utcnow()
+        """Get alert statistics."""        now = datetime.utcnow()
         last_24h = now - timedelta(hours=24)
         
         recent_alerts = [
@@ -1959,8 +1855,7 @@ class AlertManager:
         }
     
     def _calculate_average_resolution_time(self) -> float:
-        """Calculate average alert resolution time in minutes."""
-        resolved_alerts = [
+        """Calculate average alert resolution time in minutes."""        resolved_alerts = [
             alert for alert in self.alert_history
             if alert.resolved_at is not None
         ]
@@ -1976,8 +1871,7 @@ class AlertManager:
         return total_time / len(resolved_alerts) / 60  # Convert to minutes
     
     async def shutdown(self) -> None:
-        """Shutdown alert manager."""
-        logger.info("Shutting down AlertManager...")
+        """Shutdown alert manager."""        logger.info("Shutting down AlertManager...")
         
         # Cancel escalation tasks
         for task in self.escalation_tasks:
@@ -1990,12 +1884,10 @@ class AlertManager:
 
 
 class NotificationDispatcher:
-    """
-    Notification dispatcher for managing notification delivery.
+    """    Notification dispatcher for managing notification delivery.
     
     Handles notification queuing, batching, and delivery optimization.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.notification_queue: asyncio.Queue = asyncio.Queue()
@@ -2004,8 +1896,7 @@ class NotificationDispatcher:
         self.dispatcher_tasks: Set[asyncio.Task] = set()
         
     async def initialize(self) -> bool:
-        """Initialize notification dispatcher."""
-        try:
+        """Initialize notification dispatcher."""        try:
             # Start dispatcher worker
             dispatcher_task = asyncio.create_task(self._notification_worker())
             self.dispatcher_tasks.add(dispatcher_task)
@@ -2019,8 +1910,7 @@ class NotificationDispatcher:
             return False
     
     async def _notification_worker(self) -> None:
-        """Notification worker for processing queued notifications."""
-        batch = []
+        """Notification worker for processing queued notifications."""        batch = []
         last_batch_time = datetime.utcnow()
         
         while True:
@@ -2051,8 +1941,7 @@ class NotificationDispatcher:
                 await asyncio.sleep(5)
     
     async def _process_notification_batch(self, batch: List[Dict[str, Any]]) -> None:
-        """Process batch of notifications."""
-        try:
+        """Process batch of notifications."""        try:
             # Group notifications by channel
             channel_groups = {}
             for notification in batch:
@@ -2071,8 +1960,7 @@ class NotificationDispatcher:
             logger.error(f"Error processing notification batch: {e}")
     
     async def _process_channel_notifications(self, channel: str, notifications: List[Dict[str, Any]]) -> None:
-        """Process notifications for specific channel."""
-        try:
+        """Process notifications for specific channel."""        try:
             # Channel-specific processing logic
             for notification in notifications:
                 # Process individual notification
@@ -2082,12 +1970,10 @@ class NotificationDispatcher:
             logger.error(f"Error processing {channel} notifications: {e}")
     
     async def queue_notification(self, notification: Dict[str, Any]) -> None:
-        """Queue notification for delivery."""
-        await self.notification_queue.put(notification)
+        """Queue notification for delivery."""        await self.notification_queue.put(notification)
     
     async def shutdown(self) -> None:
-        """Shutdown notification dispatcher."""
-        logger.info("Shutting down NotificationDispatcher...")
+        """Shutdown notification dispatcher."""        logger.info("Shutting down NotificationDispatcher...")
         
         # Cancel dispatcher tasks
         for task in self.dispatcher_tasks:
@@ -2100,19 +1986,16 @@ class NotificationDispatcher:
 
 
 class EscalationHandler:
-    """
-    Escalation handler for managing alert escalations.
+    """    Escalation handler for managing alert escalations.
     
     Handles escalation rules, timing, and stakeholder notifications.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.escalation_rules: Dict[str, Any] = {}
         
     async def initialize(self) -> bool:
-        """Initialize escalation handler."""
-        try:
+        """Initialize escalation handler."""        try:
             await self._load_escalation_rules()
             logger.info("EscalationHandler initialized successfully")
             return True
@@ -2122,8 +2005,7 @@ class EscalationHandler:
             return False
     
     async def _load_escalation_rules(self) -> None:
-        """Load escalation rules from configuration."""
-        rules_config = self.config.get("escalation_rules", {})
+        """Load escalation rules from configuration."""        rules_config = self.config.get("escalation_rules", {})
         
         default_rules = {
             "low_severity": {
@@ -2160,19 +2042,16 @@ class EscalationHandler:
 
 
 class AlertRepository:
-    """
-    Alert repository for persistent alert storage and retrieval.
+    """    Alert repository for persistent alert storage and retrieval.
     
     Handles alert data persistence, querying, and archival.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.connection_pool = None
         
     async def initialize(self) -> bool:
-        """Initialize alert repository."""
-        try:
+        """Initialize alert repository."""        try:
             # Initialize database connection
             await self._initialize_database()
             logger.info("AlertRepository initialized successfully")
@@ -2183,13 +2062,11 @@ class AlertRepository:
             return False
     
     async def _initialize_database(self) -> None:
-        """Initialize database connection."""
-        # Database initialization logic
+        """Initialize database connection."""        # Database initialization logic
         pass
     
     async def store_alert(self, alert: Alert) -> bool:
-        """Store alert in repository."""
-        try:
+        """Store alert in repository."""        try:
             # Store alert in database
             return True
             
@@ -2198,8 +2075,7 @@ class AlertRepository:
             return False
     
     async def get_alert(self, alert_id: str) -> Optional[Alert]:
-        """Get alert by ID."""
-        try:
+        """Get alert by ID."""        try:
             # Retrieve alert from database
             return None
             
@@ -2208,8 +2084,7 @@ class AlertRepository:
             return None
     
     async def search_alerts(self, criteria: Dict[str, Any]) -> List[Alert]:
-        """Search alerts by criteria."""
-        try:
+        """Search alerts by criteria."""        try:
             # Search alerts in database
             return []
             
@@ -2223,12 +2098,10 @@ _alert_manager: Optional[AlertManager] = None
 
 
 def get_alert_manager() -> Optional[AlertManager]:
-    """Get global alert manager instance."""
-    return _alert_manager
+    """Get global alert manager instance."""    return _alert_manager
 
 
 def initialize_alert_manager(config: Dict[str, Any]) -> AlertManager:
-    """Initialize global alert manager."""
-    global _alert_manager
+    """Initialize global alert manager."""    global _alert_manager
     _alert_manager = AlertManager(config)
     return _alert_manager

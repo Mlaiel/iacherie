@@ -1,5 +1,4 @@
-"""
-Predictive Analytics Engine for IA Influencer Agent Platform
+"""Predictive Analytics Engine for IA Influencer Agent Platform
 Advanced machine learning models for trend prediction and business forecasting.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,7 +10,6 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
-
 import asyncio
 import logging
 import pickle
@@ -35,8 +33,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 class PredictionType(Enum):
-    """Types of predictions available in the system."""
-    REVENUE_FORECAST = "revenue_forecast"
+    """Types of predictions available in the system."""    REVENUE_FORECAST = "revenue_forecast"
     ENGAGEMENT_PREDICTION = "engagement_prediction"
     CONTENT_PERFORMANCE = "content_performance"
     USER_BEHAVIOR = "user_behavior"
@@ -50,8 +47,7 @@ class PredictionType(Enum):
 
 @dataclass
 class PredictionResult:
-    """Prediction result data structure."""
-    prediction_id: str
+    """Prediction result data structure."""    prediction_id: str
     prediction_type: PredictionType
     predicted_value: float
     confidence_score: float
@@ -65,8 +61,7 @@ class PredictionResult:
 
 @dataclass
 class ModelPerformance:
-    """Model performance metrics."""
-    model_name: str
+    """Model performance metrics."""    model_name: str
     accuracy: float
     mae: float
     mse: float
@@ -77,11 +72,9 @@ class ModelPerformance:
 
 
 class PredictiveAnalytics:
-    """
-    Enterprise-grade predictive analytics engine using advanced machine learning
+    """    Enterprise-grade predictive analytics engine using advanced machine learning
     for business forecasting, trend prediction, and intelligent insights.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, model_storage_path: str = "./models"):
         self.db_session = db_session
         self.model_storage_path = model_storage_path
@@ -121,8 +114,7 @@ class PredictiveAnalytics:
         }
     
     async def initialize_models(self):
-        """Initialize and load all predictive models."""
-        try:
+        """Initialize and load all predictive models."""        try:
             self.logger.info("Initializing predictive analytics models")
             
             for prediction_type in PredictionType:
@@ -138,8 +130,7 @@ class PredictiveAnalytics:
                                 prediction_type: PredictionType,
                                 input_data: Dict[str, Any],
                                 time_horizon: int = 7) -> PredictionResult:
-        """Generate a prediction using the specified model."""
-        try:
+        """Generate a prediction using the specified model."""        try:
             if prediction_type not in self.models:
                 await self._load_or_create_model(prediction_type)
             
@@ -177,8 +168,7 @@ class PredictiveAnalytics:
     async def generate_revenue_forecast(self, 
                                       user_id: str,
                                       time_horizon: int = 30) -> Dict[str, Any]:
-        """Generate comprehensive revenue forecast for a user."""
-        try:
+        """Generate comprehensive revenue forecast for a user."""        try:
             # Gather historical data
             historical_data = await self._get_user_historical_data(user_id)
             
@@ -226,8 +216,7 @@ class PredictiveAnalytics:
             return {}
     
     async def predict_content_performance(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict how well content will perform across multiple metrics."""
-        try:
+        """Predict how well content will perform across multiple metrics."""        try:
             predictions = {}
             
             # Predict engagement
@@ -283,8 +272,7 @@ class PredictiveAnalytics:
             return {}
     
     async def predict_user_churn(self, user_id: str) -> Dict[str, Any]:
-        """Predict probability of user churn and provide retention insights."""
-        try:
+        """Predict probability of user churn and provide retention insights."""        try:
             # Get user behavioral data
             user_data = await self._get_user_behavior_data(user_id)
             
@@ -319,8 +307,7 @@ class PredictiveAnalytics:
             return {}
     
     async def analyze_market_trends(self, industry: str, region: str = "global") -> Dict[str, Any]:
-        """Analyze and predict market trends for content creators."""
-        try:
+        """Analyze and predict market trends for content creators."""        try:
             # Gather market data
             market_data = await self._get_market_data(industry, region)
             
@@ -354,8 +341,7 @@ class PredictiveAnalytics:
             return {}
     
     async def retrain_models(self, model_type: Optional[PredictionType] = None):
-        """Retrain models with latest data."""
-        try:
+        """Retrain models with latest data."""        try:
             models_to_retrain = [model_type] if model_type else list(PredictionType)
             
             for pred_type in models_to_retrain:
@@ -386,8 +372,7 @@ class PredictiveAnalytics:
             raise
     
     async def get_model_performance_report(self) -> Dict[str, Any]:
-        """Generate comprehensive model performance report."""
-        try:
+        """Generate comprehensive model performance report."""        try:
             report = {
                 'generated_at': datetime.utcnow().isoformat(),
                 'models': {},
@@ -431,8 +416,7 @@ class PredictiveAnalytics:
     # Private helper methods
     
     async def _load_or_create_model(self, prediction_type: PredictionType):
-        """Load existing model or create new one."""
-        try:
+        """Load existing model or create new one."""        try:
             model_path = f"{self.model_storage_path}/{prediction_type.value}_model.pkl"
             
             try:
@@ -450,8 +434,7 @@ class PredictiveAnalytics:
             raise
     
     async def _create_new_model(self, prediction_type: PredictionType):
-        """Create and train a new model."""
-        try:
+        """Create and train a new model."""        try:
             # Get training data
             training_data = await self._get_training_data(prediction_type)
             
@@ -475,21 +458,18 @@ class PredictiveAnalytics:
             raise
     
     def _calculate_prediction_range(self, prediction: float, confidence: float) -> Tuple[float, float]:
-        """Calculate prediction range based on confidence level."""
-        margin = prediction * (1 - confidence) * 0.5
+        """Calculate prediction range based on confidence level."""        margin = prediction * (1 - confidence) * 0.5
         return (max(0, prediction - margin), prediction + margin)
     
     def _calculate_overall_performance_score(self, engagement: float, viral: float, monetization: float) -> float:
-        """Calculate overall content performance score."""
-        # Weighted combination of different prediction scores
+        """Calculate overall content performance score."""        # Weighted combination of different prediction scores
         weights = {'engagement': 0.4, 'viral': 0.3, 'monetization': 0.3}
         return (engagement * weights['engagement'] + 
                 viral * weights['viral'] + 
                 monetization * weights['monetization'])
     
     def _categorize_churn_risk(self, churn_probability: float) -> str:
-        """Categorize churn risk level."""
-        if churn_probability > 0.8:
+        """Categorize churn risk level."""        if churn_probability > 0.8:
             return "high"
         elif churn_probability > 0.5:
             return "medium"
@@ -499,8 +479,7 @@ class PredictiveAnalytics:
             return "very_low"
     
     def _assess_model_health(self, performance: ModelPerformance) -> str:
-        """Assess model health based on performance metrics."""
-        if performance.accuracy > 0.85:
+        """Assess model health based on performance metrics."""        if performance.accuracy > 0.85:
             return "excellent"
         elif performance.accuracy > 0.75:
             return "good"

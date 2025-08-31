@@ -1,5 +1,4 @@
-"""
-🚀 Configuration Module Index - IA-Influencer-Agent
+"""🚀 Configuration Module Index - IA-Influencer-Agent
 ================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de
 Main entry point for deployment configuration module.
 ================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List
@@ -52,8 +50,7 @@ from .deployment_templates import DeploymentTemplateManager
 logger = logging.getLogger(__name__)
 
 class ConfigurationIndex:
-    """
-    Central index and coordination point for all configuration managers.
+    """    Central index and coordination point for all configuration managers.
     
     Provides unified access to all configuration components with:
     - Centralized initialization
@@ -62,11 +59,9 @@ class ConfigurationIndex:
     - Performance tracking
     - Error handling
     - Status reporting
-    """
-    
+    """    
     def __init__(self):
-        """Initialize configuration index"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize configuration index"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Core managers
         self.base_config = BaseConfigurationManager()
@@ -110,16 +105,14 @@ class ConfigurationIndex:
         self.logger.info("Configuration index initialized")
     
     async def initialize_all(self, environment: str = "production") -> bool:
-        """
-        Initialize all configuration managers.
+        """        Initialize all configuration managers.
         
         Args:
             environment: Target environment
             
         Returns:
             bool: True if all managers initialized successfully
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             self.logger.info(f"Starting initialization for environment: {environment}")
             
@@ -213,13 +206,11 @@ class ConfigurationIndex:
             return False
     
     async def perform_health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check of all managers.
+        """        Perform comprehensive health check of all managers.
         
         Returns:
             Dict containing health status of all components
-        """
-        try:
+        """        try:
             self.logger.info("Performing health check on all configuration managers")
             
             health_results = {
@@ -320,8 +311,7 @@ class ConfigurationIndex:
             }
     
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics from all managers"""
-        try:
+        """Get performance metrics from all managers"""        try:
             metrics = {
                 "timestamp": datetime.now(),
                 "system": {
@@ -365,16 +355,14 @@ class ConfigurationIndex:
             return {"error": str(e), "timestamp": datetime.now()}
     
     def get_manager(self, manager_name: str) -> Optional[Any]:
-        """
-        Get specific manager by name.
+        """        Get specific manager by name.
         
         Args:
             manager_name: Name of the manager to retrieve
             
         Returns:
             Manager instance or None if not found
-        """
-        manager_map = {
+        """        manager_map = {
             "base_config": self.base_config,
             "environment": self.environment_manager,
             "deployment_orchestrator": self.deployment_orchestrator,
@@ -403,8 +391,7 @@ class ConfigurationIndex:
         return manager_map.get(manager_name)
     
     def list_available_managers(self) -> List[str]:
-        """Get list of all available manager names"""
-        return [
+        """Get list of all available manager names"""        return [
             "base_config", "environment", "deployment_orchestrator", "security",
             "performance", "monitoring", "database", "network", "secrets",
             "scaling", "backup", "compliance", "validation", "templates",
@@ -413,8 +400,7 @@ class ConfigurationIndex:
         ]
     
     def get_index_status(self) -> Dict[str, Any]:
-        """Get overall index status"""
-        return {
+        """Get overall index status"""        return {
             "initialized": self.initialized,
             "initialization_time": self.initialization_time,
             "last_health_check": self.last_health_check,
@@ -430,31 +416,26 @@ configuration_index = ConfigurationIndex()
 
 # Main initialization function
 async def initialize_configuration_system(environment: str = "production") -> bool:
-    """
-    Initialize the complete configuration system.
+    """    Initialize the complete configuration system.
     
     Args:
         environment: Target environment for initialization
         
     Returns:
         bool: True if initialization successful
-    """
-    return await configuration_index.initialize_all(environment)
+    """    return await configuration_index.initialize_all(environment)
 
 # Health check function
 async def perform_system_health_check() -> Dict[str, Any]:
-    """Perform system-wide health check"""
-    return await configuration_index.perform_health_check()
+    """Perform system-wide health check"""    return await configuration_index.perform_health_check()
 
 # Performance metrics function
 async def get_system_performance_metrics() -> Dict[str, Any]:
-    """Get system-wide performance metrics"""
-    return await configuration_index.get_performance_metrics()
+    """Get system-wide performance metrics"""    return await configuration_index.get_performance_metrics()
 
 # Convenience functions for common operations
 async def get_complete_configuration() -> Dict[str, Any]:
-    """Get complete system configuration"""
-    try:
+    """Get complete system configuration"""    try:
         complete_config = {
             "timestamp": datetime.now(),
             "environment": configuration_index.environment_manager.get_current_environment(),

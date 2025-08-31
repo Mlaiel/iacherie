@@ -33,8 +33,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  MAXIMUM SECURITY IP WARNING: This code contains proprietary algorithms,
     trade secrets, and intellectual property protected by international law.
     Unauthorized use will be prosecuted to the full extent of the law.
-"""
-from .compliance_manager import (
+"""from .compliance_manager import (
     UltraIndustrialComplianceManager,
     ComplianceLevel,
     ViolationType, 

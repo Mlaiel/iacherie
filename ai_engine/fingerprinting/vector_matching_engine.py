@@ -1,11 +1,9 @@
-"""
-Advanced Vector Matching Engine
+"""Advanced Vector Matching Engine
 FAISS-powered similarity search and vector database management.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import numpy as np
 import faiss
@@ -24,8 +22,7 @@ from ...config import settings
 
 @dataclass
 class VectorMatch:
-    """Vector match result"""
-    content_id: str
+    """Vector match result"""    content_id: str
     similarity_score: float
     distance: float
     metadata: Optional[Dict[str, Any]] = None
@@ -33,8 +30,7 @@ class VectorMatch:
 
 @dataclass
 class IndexConfig:
-    """FAISS index configuration"""
-    index_type: str = "HNSW32"  # HNSW, IVF, Flat, LSH
+    """FAISS index configuration"""    index_type: str = "HNSW32"  # HNSW, IVF, Flat, LSH
     dimension: int = 512
     metric: str = "cosine"  # cosine, l2, inner_product
     nlist: int = 100  # For IVF indices
@@ -44,8 +40,7 @@ class IndexConfig:
 
 
 class VectorMatchingEngine:
-    """
-    Advanced vector matching engine with FAISS backend supporting:
+    """    Advanced vector matching engine with FAISS backend supporting:
     - Multiple index types (HNSW, IVF, Flat, LSH)
     - Multi-modal embeddings (audio, video, image, text)
     - Batch processing for high-throughput
@@ -53,8 +48,7 @@ class VectorMatchingEngine:
     - Threshold-based matching
     - Incremental index updates
     - Index persistence and loading
-    """
-    
+    """    
     def __init__(self, index_config: Optional[IndexConfig] = None):
         self.config = index_config or IndexConfig()
         
@@ -96,8 +90,7 @@ class VectorMatchingEngine:
         logger.info(f"VectorMatchingEngine initialized with {self.config.index_type} index")
     
     async def create_index(self, content_type: str, dimension: Optional[int] = None) -> bool:
-        """
-        Create a new FAISS index for a content type
+        """        Create a new FAISS index for a content type
         
         Args:
             content_type: Type of content ('audio', 'video', 'image', 'text', 'combined')
@@ -105,8 +98,7 @@ class VectorMatchingEngine:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             with self.lock:
                 dim = dimension or self.config.dimension
                 
@@ -128,8 +120,7 @@ class VectorMatchingEngine:
             return False
     
     async def _create_faiss_index(self, dimension: int):
-        """Create FAISS index based on configuration"""
-        try:
+        """Create FAISS index based on configuration"""        try:
             index_type = self.config.index_type.upper()
             
             if index_type == "FLAT":
@@ -188,8 +179,7 @@ class VectorMatchingEngine:
     
     async def add_vectors(self, content_type: str, vectors: np.ndarray, content_ids: List[str], 
                          metadata: Optional[List[Dict[str, Any]]] = None) -> bool:
-        """
-        Add vectors to the index
+        """        Add vectors to the index
         
         Args:
             content_type: Type of content
@@ -199,8 +189,7 @@ class VectorMatchingEngine:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if content_type not in self.indices:
                 await self.create_index(content_type, vectors.shape[1])
             
@@ -251,15 +240,13 @@ class VectorMatchingEngine:
             return False
     
     def _normalize_vectors(self, vectors: np.ndarray) -> np.ndarray:
-        """Normalize vectors for cosine similarity"""
-        norms = np.linalg.norm(vectors, axis=1, keepdims=True)
+        """Normalize vectors for cosine similarity"""        norms = np.linalg.norm(vectors, axis=1, keepdims=True)
         norms[norms == 0] = 1  # Avoid division by zero
         return vectors / norms
     
     async def search_similar(self, content_type: str, query_vector: np.ndarray, 
                            k: int = 10, threshold: float = 0.7) -> List[VectorMatch]:
-        """
-        Search for similar vectors
+        """        Search for similar vectors
         
         Args:
             content_type: Type of content to search
@@ -269,8 +256,7 @@ class VectorMatchingEngine:
             
         Returns:
             List[VectorMatch]: Similar vectors with scores
-        """
-        try:
+        """        try:
             index = self.indices.get(content_type)
             if index is None or index.ntotal == 0:
                 logger.warning(f"No index or empty index for {content_type}")
@@ -324,8 +310,7 @@ class VectorMatchingEngine:
             return []
     
     async def _distance_to_similarity(self, distance: float) -> float:
-        """Convert distance to similarity score (0-1)"""
-        if self.config.metric == "cosine":
+        """Convert distance to similarity score (0-1)"""        if self.config.metric == "cosine":
             # For inner product (cosine), higher is better
             return max(0.0, min(1.0, distance))
         elif self.config.metric == "l2":
@@ -337,8 +322,7 @@ class VectorMatchingEngine:
     
     async def batch_search(self, content_type: str, query_vectors: np.ndarray, 
                           k: int = 10, threshold: float = 0.7) -> List[List[VectorMatch]]:
-        """
-        Batch search for multiple query vectors
+        """        Batch search for multiple query vectors
         
         Args:
             content_type: Type of content to search
@@ -348,8 +332,7 @@ class VectorMatchingEngine:
             
         Returns:
             List[List[VectorMatch]]: Results for each query
-        """
-        try:
+        """        try:
             index = self.indices.get(content_type)
             if index is None or index.ntotal == 0:
                 return [[] for _ in range(query_vectors.shape[0])]
@@ -401,8 +384,7 @@ class VectorMatchingEngine:
             return [[] for _ in range(query_vectors.shape[0])]
     
     async def remove_vectors(self, content_type: str, content_ids: List[str]) -> bool:
-        """
-        Remove vectors from index (creates new index without removed vectors)
+        """        Remove vectors from index (creates new index without removed vectors)
         
         Args:
             content_type: Type of content
@@ -410,8 +392,7 @@ class VectorMatchingEngine:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             index = self.indices.get(content_type)
             if index is None:
                 return True
@@ -454,8 +435,7 @@ class VectorMatchingEngine:
             return False
     
     async def save_index(self, content_type: str, filepath: Optional[str] = None) -> bool:
-        """
-        Save index to disk
+        """        Save index to disk
         
         Args:
             content_type: Type of content
@@ -463,8 +443,7 @@ class VectorMatchingEngine:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             index = self.indices.get(content_type)
             if index is None:
                 logger.warning(f"No index to save for {content_type}")
@@ -495,8 +474,7 @@ class VectorMatchingEngine:
             return False
     
     async def load_index(self, content_type: str, filepath: Optional[str] = None) -> bool:
-        """
-        Load index from disk
+        """        Load index from disk
         
         Args:
             content_type: Type of content
@@ -504,8 +482,7 @@ class VectorMatchingEngine:
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if filepath is None:
                 filepath = os.path.join(self.index_dir, f"{content_type}_index.faiss")
             
@@ -535,16 +512,14 @@ class VectorMatchingEngine:
             return False
     
     async def get_index_stats(self, content_type: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get index statistics
+        """        Get index statistics
         
         Args:
             content_type: Specific content type (returns all if None)
             
         Returns:
             Dict[str, Any]: Index statistics
-        """
-        try:
+        """        try:
             if content_type:
                 return {
                     content_type: {
@@ -568,16 +543,14 @@ class VectorMatchingEngine:
             return {}
     
     async def optimize_index(self, content_type: str) -> bool:
-        """
-        Optimize index for better search performance
+        """        Optimize index for better search performance
         
         Args:
             content_type: Type of content
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             index = self.indices.get(content_type)
             if index is None:
                 return False
@@ -606,8 +579,7 @@ class VectorMatchingEngine:
     
     async def cross_modal_search(self, query_vector: np.ndarray, content_types: List[str], 
                                k: int = 10, threshold: float = 0.7) -> Dict[str, List[VectorMatch]]:
-        """
-        Search across multiple content types
+        """        Search across multiple content types
         
         Args:
             query_vector: Query vector
@@ -617,8 +589,7 @@ class VectorMatchingEngine:
             
         Returns:
             Dict[str, List[VectorMatch]]: Results per content type
-        """
-        try:
+        """        try:
             results = {}
             
             # Search in parallel across content types
@@ -643,8 +614,7 @@ class VectorMatchingEngine:
             return {}
     
     def __del__(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if hasattr(self, 'executor'):
                 self.executor.shutdown(wait=False)
         except:

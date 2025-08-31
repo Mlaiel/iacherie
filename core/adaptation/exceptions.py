@@ -1,5 +1,4 @@
-"""
-Enterprise Adaptation Engine Exceptions - Comprehensive Error Handling System
+"""Enterprise Adaptation Engine Exceptions - Comprehensive Error Handling System
 
 Ultra-advanced exception management for the content adaptation engine providing
 detailed error information, debugging capabilities, and recovery suggestions
@@ -9,15 +8,13 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
-
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 import uuid
 
 
 class AdaptationError(Exception):
-    """Base exception for content adaptation errors with enterprise-grade error tracking"""
-    
+    """Base exception for content adaptation errors with enterprise-grade error tracking"""    
     def __init__(
         self, 
         message: str, 
@@ -38,8 +35,7 @@ class AdaptationError(Exception):
         self.error_id = str(uuid.uuid4())
     
     def to_dict(self) -> dict:
-        """Convert exception to comprehensive dictionary format"""
-        return {
+        """Convert exception to comprehensive dictionary format"""        return {
             "error_id": self.error_id,
             "error_type": self.__class__.__name__,
             "message": self.message,
@@ -54,161 +50,131 @@ class AdaptationError(Exception):
 
 # Core Engine Exceptions
 class ContentAdapterError(AdaptationError):
-    """Exception raised during content adaptation operations"""
-    pass
+    """Exception raised during content adaptation operations"""    pass
 
 
 class AdaptationEngineError(AdaptationError):
-    """Exception raised by the main adaptation engine"""
-    pass
+    """Exception raised by the main adaptation engine"""    pass
 
 
 class WorkflowError(AdaptationError):
-    """Exception raised during workflow execution"""
-    pass
+    """Exception raised during workflow execution"""    pass
 
 
 class ProcessingTimeoutError(AdaptationError):
-    """Exception raised when processing exceeds timeout limits"""
-    pass
+    """Exception raised when processing exceeds timeout limits"""    pass
 
 
 # Format and Conversion Exceptions
 class FormatConversionError(AdaptationError):
-    """Exception raised during format conversion operations"""
-    pass
+    """Exception raised during format conversion operations"""    pass
 
 
 class ConversionError(FormatConversionError):
-    """Alias for FormatConversionError for backward compatibility"""
-    pass
+    """Alias for FormatConversionError for backward compatibility"""    pass
 
 
 class UnsupportedFormatError(AdaptationError):
-    """Exception raised for unsupported file formats"""
-    pass
+    """Exception raised for unsupported file formats"""    pass
 
 
 class QualityValidationError(AdaptationError):
-    """Exception raised during quality validation processes"""
-    pass
+    """Exception raised during quality validation processes"""    pass
 
 
 # Platform and Optimization Exceptions
 class PlatformOptimizationError(AdaptationError):
-    """Exception raised during platform optimization"""
-    pass
+    """Exception raised during platform optimization"""    pass
 
 
 class OptimizationError(PlatformOptimizationError):
-    """Alias for PlatformOptimizationError"""
-    pass
+    """Alias for PlatformOptimizationError"""    pass
 
 
 class UnsupportedPlatformError(AdaptationError):
-    """Exception raised for unsupported platforms"""
-    pass
+    """Exception raised for unsupported platforms"""    pass
 
 
 class AlgorithmError(AdaptationError):
-    """Exception raised during algorithm processing"""
-    pass
+    """Exception raised during algorithm processing"""    pass
 
 
 # Audience and Targeting Exceptions
 class AudienceTargetingError(AdaptationError):
-    """Exception raised during audience targeting operations"""
-    pass
+    """Exception raised during audience targeting operations"""    pass
 
 
 class TargetingError(AudienceTargetingError):
-    """Alias for AudienceTargetingError"""
-    pass
+    """Alias for AudienceTargetingError"""    pass
 
 
 class InsufficientDataError(AdaptationError):
-    """Exception raised when insufficient data is available for processing"""
-    pass
+    """Exception raised when insufficient data is available for processing"""    pass
 
 
 class ModelTrainingError(AdaptationError):
-    """Exception raised during AI model training"""
-    pass
+    """Exception raised during AI model training"""    pass
 
 
 # Performance and Quality Exceptions
 class PerformanceOptimizationError(AdaptationError):
-    """Exception raised during performance optimization"""
-    pass
+    """Exception raised during performance optimization"""    pass
 
 
 class QualityControlError(AdaptationError):
-    """Exception raised during quality control operations"""
-    pass
+    """Exception raised during quality control operations"""    pass
 
 
 class QualityError(QualityControlError):
-    """Alias for QualityControlError"""
-    pass
+    """Alias for QualityControlError"""    pass
 
 
 class ModelValidationError(AdaptationError):
-    """Exception raised during model validation"""
-    pass
+    """Exception raised during model validation"""    pass
 
 
 # Metadata and Enhancement Exceptions
 class MetadataEnhancementError(AdaptationError):
-    """Exception raised during metadata enhancement"""
-    pass
+    """Exception raised during metadata enhancement"""    pass
 
 
 class MetadataError(MetadataEnhancementError):
-    """Alias for MetadataEnhancementError"""
-    pass
+    """Alias for MetadataEnhancementError"""    pass
 
 
 class ProcessingError(AdaptationError):
-    """Exception raised during general processing operations"""
-    pass
+    """Exception raised during general processing operations"""    pass
 
 
 # Validation and Compliance Exceptions
 class ValidationError(AdaptationError):
-    """Exception raised during content validation"""
-    pass
+    """Exception raised during content validation"""    pass
 
 
 class ContentValidationError(ValidationError):
-    """Exception raised during specific content validation operations"""
-    pass
+    """Exception raised during specific content validation operations"""    pass
 
 
 class ComplianceError(AdaptationError):
-    """Exception raised during compliance checking"""
-    pass
+    """Exception raised during compliance checking"""    pass
 
 
 # Strategy and Configuration Exceptions
 class StrategyError(AdaptationError):
-    """Exception raised during strategy operations"""
-    pass
+    """Exception raised during strategy operations"""    pass
 
 
 class InvalidStrategyError(StrategyError):
-    """Exception raised for invalid strategy definitions"""
-    pass
+    """Exception raised for invalid strategy definitions"""    pass
 
 
 class ConfigurationError(AdaptationError):
-    """Exception raised for configuration issues"""
-    pass
+    """Exception raised for configuration issues"""    pass
 
 
 # Content Type and Support Exceptions
 class UnsupportedContentTypeError(AdaptationError):
-    """Exception raised for unsupported content types"""
-    
+    """Exception raised for unsupported content types"""    
     def __init__(self, content_type: str, supported_types: list = None, creator_type: str = None):
         message = f"Unsupported content type: {content_type}"
         if supported_types:
@@ -235,8 +201,7 @@ class UnsupportedContentTypeError(AdaptationError):
 
 
 class UnsupportedPlatformError(AdaptationError):
-    """Exception raised for unsupported platforms"""
-    
+    """Exception raised for unsupported platforms"""    
     def __init__(self, platform: str, supported_platforms: list = None):
         message = f"Unsupported platform: {platform}"
         if supported_platforms:
@@ -249,13 +214,11 @@ class UnsupportedPlatformError(AdaptationError):
 
 
 class ConfigurationError(AdaptationError):
-    """Exception raised for configuration-related errors"""
-    pass
+    """Exception raised for configuration-related errors"""    pass
 
 
 class ResourceLimitError(AdaptationError):
-    """Exception raised when resource limits are exceeded"""
-    
+    """Exception raised when resource limits are exceeded"""    
     def __init__(self, resource_type: str, limit: str, current: str):
         message = f"Resource limit exceeded for {resource_type}: {current} > {limit}"
         super().__init__(message, "RESOURCE_LIMIT_EXCEEDED", {
@@ -266,8 +229,7 @@ class ResourceLimitError(AdaptationError):
 
 
 class ProcessingTimeoutError(AdaptationError):
-    """Exception raised when processing operations timeout"""
-    
+    """Exception raised when processing operations timeout"""    
     def __init__(self, operation: str, timeout: int):
         message = f"Operation '{operation}' timed out after {timeout} seconds"
         super().__init__(message, "PROCESSING_TIMEOUT", {
@@ -277,8 +239,7 @@ class ProcessingTimeoutError(AdaptationError):
 
 
 class FileNotFoundError(AdaptationError):
-    """Exception raised when required files are not found"""
-    
+    """Exception raised when required files are not found"""    
     def __init__(self, file_path: str):
         message = f"File not found: {file_path}"
         super().__init__(message, "FILE_NOT_FOUND", {
@@ -287,8 +248,7 @@ class FileNotFoundError(AdaptationError):
 
 
 class FilePermissionError(AdaptationError):
-    """Exception raised for file permission issues"""
-    
+    """Exception raised for file permission issues"""    
     def __init__(self, file_path: str, operation: str):
         message = f"Permission denied for {operation} operation on: {file_path}"
         super().__init__(message, "FILE_PERMISSION_DENIED", {
@@ -298,8 +258,7 @@ class FilePermissionError(AdaptationError):
 
 
 class DependencyError(AdaptationError):
-    """Exception raised when external dependencies are missing or incompatible"""
-    
+    """Exception raised when external dependencies are missing or incompatible"""    
     def __init__(self, dependency: str, required_version: str = None):
         message = f"Missing or incompatible dependency: {dependency}"
         if required_version:
@@ -312,13 +271,11 @@ class DependencyError(AdaptationError):
 
 
 class DatabaseError(AdaptationError):
-    """Exception raised for database-related errors"""
-    pass
+    """Exception raised for database-related errors"""    pass
 
 
 class APIError(AdaptationError):
-    """Exception raised for external API errors"""
-    
+    """Exception raised for external API errors"""    
     def __init__(self, api_name: str, status_code: int = None, response: str = None):
         message = f"API error from {api_name}"
         if status_code:
@@ -332,8 +289,7 @@ class APIError(AdaptationError):
 
 
 class AuthenticationError(AdaptationError):
-    """Exception raised for authentication failures"""
-    
+    """Exception raised for authentication failures"""    
     def __init__(self, service: str):
         message = f"Authentication failed for service: {service}"
         super().__init__(message, "AUTHENTICATION_FAILED", {
@@ -342,8 +298,7 @@ class AuthenticationError(AdaptationError):
 
 
 class QuotaExceededError(AdaptationError):
-    """Exception raised when service quotas are exceeded"""
-    
+    """Exception raised when service quotas are exceeded"""    
     def __init__(self, service: str, quota_type: str, limit: str):
         message = f"Quota exceeded for {service} ({quota_type}): {limit}"
         super().__init__(message, "QUOTA_EXCEEDED", {
@@ -354,8 +309,7 @@ class QuotaExceededError(AdaptationError):
 
 
 class ContentCorruptionError(AdaptationError):
-    """Exception raised when content corruption is detected"""
-    
+    """Exception raised when content corruption is detected"""    
     def __init__(self, content_path: str, corruption_type: str):
         message = f"Content corruption detected in {content_path}: {corruption_type}"
         super().__init__(message, "CONTENT_CORRUPTION", {
@@ -365,8 +319,7 @@ class ContentCorruptionError(AdaptationError):
 
 
 class IncompatibleFormatError(AdaptationError):
-    """Exception raised for format incompatibility issues"""
-    
+    """Exception raised for format incompatibility issues"""    
     def __init__(self, source_format: str, target_format: str, reason: str = None):
         message = f"Incompatible format conversion: {source_format} -> {target_format}"
         if reason:
@@ -380,8 +333,7 @@ class IncompatibleFormatError(AdaptationError):
 
 
 class QualityDegradationError(AdaptationError):
-    """Exception raised when quality degradation exceeds acceptable limits"""
-    
+    """Exception raised when quality degradation exceeds acceptable limits"""    
     def __init__(self, metric: str, degradation: float, threshold: float):
         message = f"Quality degradation in {metric}: {degradation:.2%} > {threshold:.2%} threshold"
         super().__init__(message, "QUALITY_DEGRADATION", {
@@ -392,8 +344,7 @@ class QualityDegradationError(AdaptationError):
 
 
 class ComplianceViolationError(AdaptationError):
-    """Exception raised for compliance violations"""
-    
+    """Exception raised for compliance violations"""    
     def __init__(self, compliance_standard: str, violation_details: str):
         message = f"Compliance violation ({compliance_standard}): {violation_details}"
         super().__init__(message, "COMPLIANCE_VIOLATION", {
@@ -403,8 +354,7 @@ class ComplianceViolationError(AdaptationError):
 
 
 class WorkflowError(AdaptationError):
-    """Exception raised during workflow execution"""
-    
+    """Exception raised during workflow execution"""    
     def __init__(self, workflow_id: str, step: str, reason: str):
         message = f"Workflow {workflow_id} failed at step '{step}': {reason}"
         super().__init__(message, "WORKFLOW_ERROR", {
@@ -415,8 +365,7 @@ class WorkflowError(AdaptationError):
 
 
 class CancellationError(AdaptationError):
-    """Exception raised when operations are cancelled"""
-    
+    """Exception raised when operations are cancelled"""    
     def __init__(self, operation: str, reason: str = "User cancellation"):
         message = f"Operation cancelled: {operation} ({reason})"
         super().__init__(message, "OPERATION_CANCELLED", {
@@ -427,50 +376,41 @@ class CancellationError(AdaptationError):
 
 # Convenience functions for common error scenarios
 def raise_unsupported_content_type(content_type: str, supported_types: list = None):
-    """Raise UnsupportedContentTypeError with standardized message"""
-    raise UnsupportedContentTypeError(content_type, supported_types)
+    """Raise UnsupportedContentTypeError with standardized message"""    raise UnsupportedContentTypeError(content_type, supported_types)
 
 
 def raise_unsupported_platform(platform: str, supported_platforms: list = None):
-    """Raise UnsupportedPlatformError with standardized message"""
-    raise UnsupportedPlatformError(platform, supported_platforms)
+    """Raise UnsupportedPlatformError with standardized message"""    raise UnsupportedPlatformError(platform, supported_platforms)
 
 
 def raise_resource_limit_exceeded(resource_type: str, limit: str, current: str):
-    """Raise ResourceLimitError with standardized message"""
-    raise ResourceLimitError(resource_type, limit, current)
+    """Raise ResourceLimitError with standardized message"""    raise ResourceLimitError(resource_type, limit, current)
 
 
 def raise_processing_timeout(operation: str, timeout: int):
-    """Raise ProcessingTimeoutError with standardized message"""
-    raise ProcessingTimeoutError(operation, timeout)
+    """Raise ProcessingTimeoutError with standardized message"""    raise ProcessingTimeoutError(operation, timeout)
 
 
 def raise_file_not_found(file_path: str):
-    """Raise FileNotFoundError with standardized message"""
-    raise FileNotFoundError(file_path)
+    """Raise FileNotFoundError with standardized message"""    raise FileNotFoundError(file_path)
 
 
 def raise_quality_degradation(metric: str, degradation: float, threshold: float):
-    """Raise QualityDegradationError with standardized message"""
-    raise QualityDegradationError(metric, degradation, threshold)
+    """Raise QualityDegradationError with standardized message"""    raise QualityDegradationError(metric, degradation, threshold)
 
 
 def raise_compliance_violation(compliance_standard: str, violation_details: str):
-    """Raise ComplianceViolationError with standardized message"""
-    raise ComplianceViolationError(compliance_standard, violation_details)
+    """Raise ComplianceViolationError with standardized message"""    raise ComplianceViolationError(compliance_standard, violation_details)
 
 
 def handle_adaptation_error(func):
-    """
-    Decorator to handle and standardize adaptation errors
+    """    Decorator to handle and standardize adaptation errors
     
     Usage:
         @handle_adaptation_error
         async def my_adaptation_function():
             # function implementation
-    """
-    async def wrapper(*args, **kwargs):
+    """    async def wrapper(*args, **kwargs):
         try:
             return await func(*args, **kwargs)
         except AdaptationError:

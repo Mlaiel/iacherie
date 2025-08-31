@@ -21,8 +21,7 @@ Module Overview:
 - Relationship extraction and knowledge graph construction
 - Real-time entity tracking and monitoring
 - Advanced metadata parsing and rights detection
-"""
-# Version information
+"""# Version information
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -358,8 +357,7 @@ BANNER = f"""╔═════════════════════�
 ║                                                                              ║
 ║  ⚠️  WARNING: This is proprietary software. Unauthorized use prohibited.    ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
-"""
-# Print banner on import (only in development)
+"""# Print banner on import (only in development)
 import os
 if os.getenv('ENVIRONMENT') == 'development' and os.getenv('SHOW_BANNER', '').lower() == 'true':
     print(BANNER)

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Unified Pipeline & Deployment Orchestration System
+"""IA Influencer Agent - Unified Pipeline & Deployment Orchestration System
 Enterprise-Grade Complete System Management and Coordination Hub
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -22,7 +21,6 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
-
 import asyncio
 import logging
 import signal
@@ -57,8 +55,7 @@ except ImportError:
     API_AVAILABLE = False
 
 class UnifiedPipelineOrchestrator:
-    """
-    Unified Pipeline & Deployment System Orchestrator
+    """    Unified Pipeline & Deployment System Orchestrator
     
     Combines pipeline management and deployment orchestration into a single
     comprehensive system management interface:
@@ -70,8 +67,7 @@ class UnifiedPipelineOrchestrator:
     - Monitoring and alerting coordination
     - Kubernetes cluster management
     - Database operations coordination
-    """
-    
+    """    
     def __init__(self, config_dir: Optional[Path] = None, 
                  enable_api: bool = True,
                  api_host: str = "0.0.0.0",
@@ -102,8 +98,7 @@ class UnifiedPipelineOrchestrator:
         self.shutdown_event = asyncio.Event()
         
     def _setup_logging(self):
-        """Setup comprehensive logging configuration"""
-        log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        """Setup comprehensive logging configuration"""        log_format = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
         logging.basicConfig(
             level=logging.INFO,
             format=log_format,
@@ -119,8 +114,7 @@ class UnifiedPipelineOrchestrator:
         logging.getLogger('security_manager').setLevel(logging.INFO)
         
     async def initialize_components(self):
-        """Initialize all pipeline system components"""
-        self.logger.info("Initializing IA Influencer Agent Pipeline System...")
+        """Initialize all pipeline system components"""        self.logger.info("Initializing IA Influencer Agent Pipeline System...")
         
         try:
             # Initialize configuration manager first
@@ -187,11 +181,9 @@ class UnifiedPipelineOrchestrator:
             raise
             
     async def _setup_component_integrations(self):
-        """Setup integrations between components"""
-        # Connect notification handlers to pipeline manager
+        """Setup integrations between components"""        # Connect notification handlers to pipeline manager
         async def pipeline_notification_handler(execution, success):
-            """Handle pipeline completion notifications"""
-            from .notification_manager import NotificationEvent
+            """Handle pipeline completion notifications"""            from .notification_manager import NotificationEvent
             
             event = NotificationEvent.PIPELINE_COMPLETED if success else NotificationEvent.PIPELINE_FAILED
             await self.notification_manager.send_pipeline_notification(execution, event)
@@ -200,8 +192,7 @@ class UnifiedPipelineOrchestrator:
         
         # Connect monitoring to pipeline events
         def pipeline_metrics_handler(event_type, execution):
-            """Handle pipeline metrics collection"""
-            self.monitoring_manager.record_pipeline_event(event_type, execution)
+            """Handle pipeline metrics collection"""            self.monitoring_manager.record_pipeline_event(event_type, execution)
             
         # Note: This would need proper event system implementation
         # For now, manually call from pipeline manager
@@ -209,8 +200,7 @@ class UnifiedPipelineOrchestrator:
         self.logger.info("Component integrations configured")
         
     async def start_system(self):
-        """Start the complete pipeline system"""
-        if self.is_running:
+        """Start the complete pipeline system"""        if self.is_running:
             self.logger.warning("System is already running")
             return
             
@@ -239,8 +229,7 @@ class UnifiedPipelineOrchestrator:
             raise
             
     def _setup_signal_handlers(self):
-        """Setup signal handlers for graceful shutdown"""
-        def signal_handler(signum, frame):
+        """Setup signal handlers for graceful shutdown"""        def signal_handler(signum, frame):
             self.logger.info(f"Received signal {signum}, initiating graceful shutdown...")
             asyncio.create_task(self.shutdown_system())
             
@@ -248,8 +237,7 @@ class UnifiedPipelineOrchestrator:
         signal.signal(signal.SIGTERM, signal_handler)
         
     async def shutdown_system(self):
-        """Gracefully shutdown the pipeline system"""
-        if not self.is_running:
+        """Gracefully shutdown the pipeline system"""        if not self.is_running:
             return
             
         self.logger.info("Shutting down pipeline system...")
@@ -280,8 +268,7 @@ class UnifiedPipelineOrchestrator:
             
     async def execute_pipeline_by_name(self, pipeline_name: str, environment: str,
                                      context: Optional[Dict[str, Any]] = None) -> str:
-        """Execute pipeline by name and environment"""
-        if not self.pipeline_manager:
+        """Execute pipeline by name and environment"""        if not self.pipeline_manager:
             raise RuntimeError("Pipeline manager not initialized")
             
         # Find pipeline by name and environment
@@ -298,8 +285,7 @@ class UnifiedPipelineOrchestrator:
         
     async def run_security_scan(self, project_path: str, image_name: Optional[str] = None,
                               policy_name: str = "development") -> Dict[str, Any]:
-        """Run comprehensive security scan"""
-        if not self.security_manager:
+        """Run comprehensive security scan"""        if not self.security_manager:
             raise RuntimeError("Security manager not initialized")
             
         return await self.security_manager.run_comprehensive_security_scan(
@@ -309,8 +295,7 @@ class UnifiedPipelineOrchestrator:
     async def create_deployment_plan(self, environment: str, 
                                    strategy: str = "rolling_update",
                                    components: Optional[List[str]] = None) -> str:
-        """Create deployment plan"""
-        if not self.deployment_engine:
+        """Create deployment plan"""        if not self.deployment_engine:
             raise RuntimeError("Deployment engine not initialized")
             
         env = Environment(environment.upper())
@@ -321,22 +306,19 @@ class UnifiedPipelineOrchestrator:
         )
         
     async def execute_deployment(self, plan_id: str) -> str:
-        """Execute deployment plan"""
-        if not self.deployment_engine:
+        """Execute deployment plan"""        if not self.deployment_engine:
             raise RuntimeError("Deployment engine not initialized")
             
         return await self.deployment_engine.execute_deployment(plan_id)
         
     def get_deployment_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get deployment status"""
-        if not self.deployment_engine:
+        """Get deployment status"""        if not self.deployment_engine:
             raise RuntimeError("Deployment engine not initialized")
             
         return self.deployment_engine.get_deployment_status(execution_id)
         
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        status = {
+        """Get comprehensive system status"""        status = {
             "system_running": self.is_running,
             "timestamp": datetime.utcnow().isoformat(),
             "components": {}
@@ -380,23 +362,19 @@ class UnifiedPipelineOrchestrator:
         return status
 
 class UnifiedPipelineCLI:
-    """
-    Unified Command Line Interface for Pipeline & Deployment Operations
+    """    Unified Command Line Interface for Pipeline & Deployment Operations
     
     Provides comprehensive CLI for all system management operations including
     pipeline management and deployment orchestration
-    """
-    
+    """    
     def __init__(self):
         self.orchestrator: Optional[UnifiedPipelineOrchestrator] = None
         
     def create_parser(self) -> argparse.ArgumentParser:
-        """Create command line argument parser"""
-        parser = argparse.ArgumentParser(
+        """Create command line argument parser"""        parser = argparse.ArgumentParser(
             description="IA Influencer Agent Unified Pipeline & Deployment Management System",
             formatter_class=argparse.RawDescriptionHelpFormatter,
-            epilog="""
-Examples:
+            epilog="""Examples:
   %(prog)s start                                    # Start complete system
   %(prog)s execute build staging                    # Execute build pipeline in staging
   %(prog)s deploy create staging rolling_update     # Create deployment plan
@@ -405,8 +383,7 @@ Examples:
   %(prog)s scan /path/to/project                    # Run security scan
   %(prog)s status                                   # Show system status
   %(prog)s list pipelines                           # List all pipelines
-            """
-        )
+            """        )
         
         # Global options
         parser.add_argument('--config-dir', type=str, help='Configuration directory path')
@@ -469,8 +446,7 @@ Examples:
         return parser
         
     async def run_command(self, args):
-        """Execute CLI command"""
-        try:
+        """Execute CLI command"""        try:
             if args.command == 'start':
                 await self._cmd_start(args)
             elif args.command == 'execute':
@@ -493,8 +469,7 @@ Examples:
             sys.exit(1)
             
     async def _cmd_start(self, args):
-        """Start pipeline system"""
-        config_dir = Path(args.config_dir) if args.config_dir else None
+        """Start pipeline system"""        config_dir = Path(args.config_dir) if args.config_dir else None
         
         self.orchestrator = UnifiedPipelineOrchestrator(
             config_dir=config_dir,
@@ -507,8 +482,7 @@ Examples:
         await self.orchestrator.start_system()
         
     async def _cmd_execute(self, args):
-        """Execute pipeline"""
-        if not self.orchestrator:
+        """Execute pipeline"""        if not self.orchestrator:
             self.orchestrator = UnifiedPipelineOrchestrator()
             await self.orchestrator.initialize_components()
             
@@ -528,8 +502,7 @@ Examples:
             # Implementation would wait for completion
             
     async def _cmd_deploy(self, args):
-        """Handle deployment operations"""
-        if not self.orchestrator:
+        """Handle deployment operations"""        if not self.orchestrator:
             self.orchestrator = UnifiedPipelineOrchestrator()
             await self.orchestrator.initialize_components()
             
@@ -553,8 +526,7 @@ Examples:
                 print(f"Deployment execution not found: {args.execution_id}")
     
     async def _cmd_scan(self, args):
-        """Run security scan"""
-        if not self.orchestrator:
+        """Run security scan"""        if not self.orchestrator:
             self.orchestrator = UnifiedPipelineOrchestrator()
             await self.orchestrator.initialize_components()
             
@@ -567,8 +539,7 @@ Examples:
         print(f"Total vulnerabilities: {result.get('policy_evaluation', {}).get('summary', {}).get('total_vulnerabilities', 0)}")
         
     async def _cmd_status(self, args):
-        """Show system status"""
-        if not self.orchestrator:
+        """Show system status"""        if not self.orchestrator:
             print("System not running")
             return
             
@@ -576,8 +547,7 @@ Examples:
         print(json.dumps(status, indent=2))
         
     async def _cmd_list(self, args):
-        """List resources"""
-        if not self.orchestrator:
+        """List resources"""        if not self.orchestrator:
             self.orchestrator = UnifiedPipelineOrchestrator()
             await self.orchestrator.initialize_components()
             
@@ -593,15 +563,12 @@ Examples:
                 print(f"Success rate: {stats['success_rate']:.1f}%")
                 
     async def _cmd_stop(self, args):
-        """Stop pipeline system"""
-        if self.orchestrator:
+        """Stop pipeline system"""        if self.orchestrator:
             await self.orchestrator.shutdown_system()
             print("Pipeline system stopped")
 
 def main():
-    """Main entry point"""
-    print("""
-    ████████╗   ████████╗   ██████╗   ██████╗   ██████╗   ██████╗   ██████╗   ██████╗
+    """Main entry point"""    print("""    ████████╗   ████████╗   ██████╗   ██████╗   ██████╗   ██████╗   ██████╗   ██████╗
     ╚══██╔══╝   ██╔═════╝  ██╔═══██╗ ██╔═══██╗ ██╔═══██╗ ██╔═══██╗ ██╔═══██╗ ██╔═══██╗
        ██║      ███████╗   ██║   ██║ ██║   ██║ ██║   ██║ ██║   ██║ ██║   ██║ ██║   ██║
        ██║      ██╔════╝   ██║   ██║ ██║   ██║ ██║   ██║ ██║   ██║ ██║   ██║ ██║   ██║

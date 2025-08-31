@@ -1,5 +1,4 @@
-"""
-Intelligent Multi-Platform Distribution Module
+"""Intelligent Multi-Platform Distribution Module
 
 Enterprise-grade content distribution system with AI-powered platform optimization,
 automated scheduling, and performance tracking across multiple social media and content platforms.
@@ -17,7 +16,6 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -70,8 +68,7 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Supported content distribution platforms"""
-    YOUTUBE = "youtube"
+    """Supported content distribution platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -88,8 +85,7 @@ class Platform(Enum):
 
 
 class ContentFormat(Enum):
-    """Content formats for different platforms"""
-    VIDEO_SHORT = "video_short"  # TikTok, Instagram Reels, YouTube Shorts
+    """Content formats for different platforms"""    VIDEO_SHORT = "video_short"  # TikTok, Instagram Reels, YouTube Shorts
     VIDEO_LONG = "video_long"    # YouTube, Facebook, LinkedIn
     IMAGE_SINGLE = "image_single" # Instagram, Twitter, Pinterest
     IMAGE_CAROUSEL = "image_carousel" # Instagram, LinkedIn
@@ -101,8 +97,7 @@ class ContentFormat(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Content optimization strategies"""
-    ENGAGEMENT_MAXIMIZATION = "engagement_maximization"
+    """Content optimization strategies"""    ENGAGEMENT_MAXIMIZATION = "engagement_maximization"
     REACH_OPTIMIZATION = "reach_optimization"
     CONVERSION_FOCUS = "conversion_focus"
     BRAND_AWARENESS = "brand_awareness"
@@ -112,8 +107,7 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class PlatformConfiguration:
-    """Platform-specific configuration"""
-    platform: Platform
+    """Platform-specific configuration"""    platform: Platform
     enabled: bool = True
     
     # Content specifications
@@ -138,8 +132,7 @@ class PlatformConfiguration:
 
 @dataclass
 class DistributionRequest:
-    """Content distribution request"""
-    content_id: str
+    """Content distribution request"""    content_id: str
     creator_id: str
     content_path: str
     content_type: str
@@ -165,8 +158,7 @@ class DistributionRequest:
 
 
 class IntelligentDistributionEngine:
-    """
-    Advanced multi-platform content distribution engine.
+    """    Advanced multi-platform content distribution engine.
     
     Provides intelligent content distribution with:
     - AI-powered platform optimization
@@ -175,8 +167,7 @@ class IntelligentDistributionEngine:
     - Real-time performance monitoring
     - Cross-platform analytics
     - Engagement optimization
-    """
-    
+    """    
     def __init__(self):
         # Platform management
         self.platform_apis = PlatformAPIManager()
@@ -202,8 +193,7 @@ class IntelligentDistributionEngine:
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     async def initialize(self):
-        """Initialize distribution engine and platform connections"""
-        try:
+        """Initialize distribution engine and platform connections"""        try:
             logger.info("Initializing Intelligent Distribution Engine...")
             
             # Initialize platform configurations
@@ -234,16 +224,14 @@ class IntelligentDistributionEngine:
             raise DistributionError(f"Initialization failed: {e}")
     
     async def distribute_content(self, distribution_request: DistributionRequest) -> str:
-        """
-        Distribute content across multiple platforms with AI optimization.
+        """        Distribute content across multiple platforms with AI optimization.
         
         Args:
             distribution_request: Distribution configuration and content
             
         Returns:
             campaign_id: Distribution campaign identifier
-        """
-        try:
+        """        try:
             campaign_id = str(uuid.uuid4())
             
             # Create distribution campaign
@@ -302,8 +290,7 @@ class IntelligentDistributionEngine:
             raise DistributionError(f"Distribution failed: {e}")
     
     async def _optimize_content_for_platforms(self, request: DistributionRequest) -> Dict[str, Any]:
-        """Optimize content using AI for maximum engagement"""
-        try:
+        """Optimize content using AI for maximum engagement"""        try:
             # Analyze content for optimization opportunities
             content_analysis = await self._analyze_content_for_optimization(request)
             
@@ -351,8 +338,7 @@ class IntelligentDistributionEngine:
     
     async def _generate_platform_versions(self, request: DistributionRequest, 
                                         optimized_content: Dict[str, Any]) -> Dict[Platform, Dict[str, Any]]:
-        """Generate platform-specific content versions"""
-        try:
+        """Generate platform-specific content versions"""        try:
             platform_contents = {}
             
             for platform in request.target_platforms:
@@ -398,8 +384,7 @@ class IntelligentDistributionEngine:
     
     async def _optimize_distribution_schedule(self, request: DistributionRequest,
                                             platform_contents: Dict[Platform, Dict[str, Any]]) -> Dict[Platform, datetime]:
-        """Optimize posting schedule using AI and platform analytics"""
-        try:
+        """Optimize posting schedule using AI and platform analytics"""        try:
             optimal_schedule = {}
             
             # Base scheduling preferences from request
@@ -445,8 +430,7 @@ class IntelligentDistributionEngine:
                    for platform in platform_contents.keys()}
     
     async def _distribution_worker(self):
-        """Background worker for processing distribution queue"""
-        while True:
+        """Background worker for processing distribution queue"""        while True:
             try:
                 if self.distribution_queue:
                     task = self.distribution_queue.pop(0)
@@ -459,8 +443,7 @@ class IntelligentDistributionEngine:
                 await asyncio.sleep(60)  # Wait 1 minute on error
     
     async def _execute_distribution_task(self, task: DistributionRequest):
-        """Execute a single distribution task"""
-        try:
+        """Execute a single distribution task"""        try:
             platform = task.target_platforms[0]  # Task should be per platform
             platform_api = await self.platform_apis.get_platform_api(platform)
             
@@ -507,8 +490,7 @@ class IntelligentDistributionEngine:
             await self._handle_distribution_failure(task, {"error": str(e)})
     
     async def _performance_monitor(self):
-        """Monitor performance of distributed content"""
-        while True:
+        """Monitor performance of distributed content"""        while True:
             try:
                 # Check performance for active campaigns
                 for campaign_id, campaign in self.active_campaigns.items():
@@ -522,8 +504,7 @@ class IntelligentDistributionEngine:
                 await asyncio.sleep(3600)
     
     async def get_campaign_analytics(self, campaign_id: str) -> Dict[str, Any]:
-        """Get comprehensive analytics for a distribution campaign"""
-        try:
+        """Get comprehensive analytics for a distribution campaign"""        try:
             campaign = self.active_campaigns.get(campaign_id)
             if not campaign:
                 return {"error": "Campaign not found"}
@@ -581,8 +562,7 @@ class IntelligentDistributionEngine:
             return {"error": str(e)}
     
     async def _initialize_platform_configs(self):
-        """Initialize platform-specific configurations"""
-        # This would load platform configurations from settings
+        """Initialize platform-specific configurations"""        # This would load platform configurations from settings
         # Here's an example configuration
         
         self.platform_configs[Platform.YOUTUBE] = PlatformConfiguration(
@@ -611,8 +591,7 @@ class IntelligentDistributionEngine:
         # Add configurations for other platforms...
         
     async def _initialize_ai_models(self):
-        """Initialize AI models for content optimization"""
-        try:
+        """Initialize AI models for content optimization"""        try:
             # Initialize text model for content optimization
             self.text_model = AutoModel.from_pretrained("sentence-transformers/all-MiniLM-L6-v2")
             self.text_model.to(self.device)

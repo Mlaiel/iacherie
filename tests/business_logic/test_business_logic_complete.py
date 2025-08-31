@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,14 +12,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Test Suite for Business Logic Core
+"""Comprehensive Test Suite for Business Logic Core
 Tests the complete integration of 53 AI agents
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -46,19 +42,16 @@ logger = logging.getLogger(__name__)
 
 
 class TestBusinessLogicCore:
-    """Comprehensive test suite for business logic core with 53 agents"""
-    
+    """Comprehensive test suite for business logic core with 53 agents"""    
     @pytest_asyncio.fixture
     async def initialized_core(self):
-        """Initialize business logic core for testing"""
-        core = BusinessLogicCore()
+        """Initialize business logic core for testing"""        core = BusinessLogicCore()
         await core.initialize()
         return core
     
     @pytest.fixture
     def sample_content_musician(self):
-        """Sample musician content for testing"""
-        return ContentUpload(
+        """Sample musician content for testing"""        return ContentUpload(
             content_id="music_001",
             creator_id="musician_test",
             creator_type=CreatorType.MUSICIAN,
@@ -76,8 +69,7 @@ class TestBusinessLogicCore:
     
     @pytest.fixture
     def sample_content_blogger(self):
-        """Sample blogger content for testing"""
-        return ContentUpload(
+        """Sample blogger content for testing"""        return ContentUpload(
             content_id="blog_001",
             creator_id="blogger_test",
             creator_type=CreatorType.BLOGGER,
@@ -95,8 +87,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_business_logic_core_initialization(self, initialized_core):
-        """Test that business logic core initializes properly"""
-        assert initialized_core.initialized == True
+        """Test that business logic core initializes properly"""        assert initialized_core.initialized == True
         
         # Test agent count
         agent_status = initialized_core.get_agent_status()
@@ -112,8 +103,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_all_53_agents_present(self, initialized_core):
-        """Test that all 53 agents are properly registered"""
-        expected_agents = [
+        """Test that all 53 agents are properly registered"""        expected_agents = [
             # Core business agents
             'content_agent', 'fingerprinting_agent', 'protection_agent',
             'seo_agent', 'collaboration_agent', 'distribution_agent', 'monetization_agent',
@@ -172,8 +162,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_complete_workflow_musician(self, initialized_core, sample_content_musician):
-        """Test complete workflow for musician content"""
-        results = await initialized_core.process_content_workflow(sample_content_musician)
+        """Test complete workflow for musician content"""        results = await initialized_core.process_content_workflow(sample_content_musician)
         
         # Verify all stages completed
         assert len(results) == 7, "Should have 7 workflow stages"
@@ -217,8 +206,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_complete_workflow_blogger(self, initialized_core, sample_content_blogger):
-        """Test complete workflow for blogger content"""
-        results = await initialized_core.process_content_workflow(sample_content_blogger)
+        """Test complete workflow for blogger content"""        results = await initialized_core.process_content_workflow(sample_content_blogger)
         
         # Verify all stages completed successfully
         assert len(results) == 7
@@ -241,8 +229,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_agent_integration_capabilities(self, initialized_core):
-        """Test that agents have proper integration capabilities"""
-        for agent_name, agent in initialized_core.agents.items():
+        """Test that agents have proper integration capabilities"""        for agent_name, agent in initialized_core.agents.items():
             # Each agent should have proper structure
             assert 'type' in agent
             assert 'description' in agent
@@ -262,8 +249,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_workflow_error_handling(self, initialized_core):
-        """Test workflow error handling with invalid content"""
-        # Create invalid content
+        """Test workflow error handling with invalid content"""        # Create invalid content
         invalid_content = ContentUpload(
             content_id="invalid_001",
             creator_id="",  # Empty creator ID
@@ -283,8 +269,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_agent_status_monitoring(self, initialized_core):
-        """Test agent status monitoring capabilities"""
-        status = initialized_core.get_agent_status()
+        """Test agent status monitoring capabilities"""        status = initialized_core.get_agent_status()
         
         assert status['total_agents'] == 53
         assert status['active_agents'] == 53
@@ -298,8 +283,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_global_business_logic_core(self):
-        """Test the global business logic core instance"""
-        success = await initialize_business_logic_core()
+        """Test the global business logic core instance"""        success = await initialize_business_logic_core()
         assert success == True
         
         # Test global instance
@@ -324,8 +308,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_multiple_creator_types(self, initialized_core):
-        """Test workflow with different creator types"""
-        creator_types = [
+        """Test workflow with different creator types"""        creator_types = [
             CreatorType.MUSICIAN,
             CreatorType.BLOGGER,
             CreatorType.PHOTOGRAPHER,
@@ -353,8 +336,7 @@ class TestBusinessLogicCore:
         logger.info("✅ Multiple creator types test passed")
     
     def test_business_logic_core_import(self):
-        """Test that business logic core can be imported correctly"""
-        # Import test
+        """Test that business logic core can be imported correctly"""        # Import test
         from business_logic_core import BusinessLogicCore, business_logic_core
         
         assert BusinessLogicCore is not None
@@ -364,8 +346,7 @@ class TestBusinessLogicCore:
     
     @pytest.mark.asyncio
     async def test_workflow_performance(self, initialized_core, sample_content_musician):
-        """Test workflow performance with timing"""
-        start_time = datetime.now()
+        """Test workflow performance with timing"""        start_time = datetime.now()
         
         results = await initialized_core.process_content_workflow(sample_content_musician)
         
@@ -382,8 +363,7 @@ class TestBusinessLogicCore:
 
 if __name__ == "__main__":
     async def run_tests():
-        """Run all tests manually"""
-        print("🧪 Running Business Logic Core Tests")
+        """Run all tests manually"""        print("🧪 Running Business Logic Core Tests")
         
         # Initialize test instance
         test_instance = TestBusinessLogicCore()

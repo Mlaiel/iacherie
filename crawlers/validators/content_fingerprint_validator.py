@@ -1,5 +1,4 @@
-"""
-Content Fingerprint Validator for IA Influencer Agent Platform
+"""Content Fingerprint Validator for IA Influencer Agent Platform
 ===========================================================
 
 Advanced AI-powered content fingerprinting system providing comprehensive
@@ -19,7 +18,6 @@ Features:
 - Real-time duplicate detection and copyright protection
 - Content monetization validation and tracking
 """
-
 import hashlib
 import numpy as np
 from enum import Enum
@@ -53,8 +51,7 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(Enum):
-    """Content fingerprint types"""
-    AUDIO_CHROMAPRINT = "audio_chromaprint"
+    """Content fingerprint types"""    AUDIO_CHROMAPRINT = "audio_chromaprint"
     AUDIO_MFCC = "audio_mfcc"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_FRAME_HASH = "video_frame_hash"
@@ -69,8 +66,7 @@ class FingerprintType(Enum):
 
 
 class SimilarityMethod(Enum):
-    """Similarity calculation methods"""
-    COSINE = "cosine"
+    """Similarity calculation methods"""    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     HAMMING = "hamming"
     JACCARD = "jaccard"
@@ -78,8 +74,7 @@ class SimilarityMethod(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    # Audio formats
+    """Supported content formats"""    # Audio formats
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -113,8 +108,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class FingerprintMetadata:
-    """Metadata for content fingerprint"""
-    content_id: str
+    """Metadata for content fingerprint"""    content_id: str
     creator_id: Optional[str] = None
     original_filename: Optional[str] = None
     content_type: Optional[str] = None
@@ -134,8 +128,7 @@ class FingerprintMetadata:
 
 @dataclass
 class Fingerprint:
-    """Content fingerprint representation"""
-    fingerprint_id: str
+    """Content fingerprint representation"""    fingerprint_id: str
     fingerprint_type: FingerprintType
     content_format: ContentFormat
     fingerprint_data: Union[np.ndarray, bytes, str]
@@ -145,20 +138,17 @@ class Fingerprint:
     hash_value: Optional[str] = None
     
     def __post_init__(self):
-        """Generate hash value after initialization"""
-        if self.hash_value is None:
+        """Generate hash value after initialization"""        if self.hash_value is None:
             self.hash_value = self._generate_hash()
     
     def _generate_hash(self) -> str:
-        """Generate unique hash for fingerprint"""
-        data_str = f"{self.fingerprint_type.value}_{self.content_format.value}_{str(self.fingerprint_data)}"
+        """Generate unique hash for fingerprint"""        data_str = f"{self.fingerprint_type.value}_{self.content_format.value}_{str(self.fingerprint_data)}"
         return hashlib.sha256(data_str.encode()).hexdigest()
 
 
 @dataclass
 class SimilarityResult:
-    """Similarity comparison result"""
-    is_similar: bool
+    """Similarity comparison result"""    is_similar: bool
     similarity_score: float
     threshold_used: float
     method_used: SimilarityMethod
@@ -173,8 +163,7 @@ class SimilarityResult:
 
 @dataclass
 class DuplicateDetectionResult:
-    """Duplicate detection result"""
-    has_duplicates: bool
+    """Duplicate detection result"""    has_duplicates: bool
     duplicate_count: int
     similar_content: List[SimilarityResult] = field(default_factory=list)
     exact_matches: List[str] = field(default_factory=list)
@@ -187,8 +176,7 @@ class DuplicateDetectionResult:
 
 @dataclass
 class FingerprintValidationResult:
-    """Fingerprint validation result"""
-    is_valid: bool
+    """Fingerprint validation result"""    is_valid: bool
     fingerprint: Optional[Fingerprint] = None
     duplicate_result: Optional[DuplicateDetectionResult] = None
     quality_score: float = 0.0
@@ -201,8 +189,7 @@ class FingerprintValidationResult:
 
 
 class ContentFingerprintValidator:
-    """
-    Advanced AI-powered content fingerprinting validator for the IA Influencer Agent Platform.
+    """    Advanced AI-powered content fingerprinting validator for the IA Influencer Agent Platform.
     
     Provides comprehensive content protection through:
     - Multi-format fingerprinting (audio, video, image, text)
@@ -210,8 +197,7 @@ class ContentFingerprintValidator:
     - Copyright protection validation
     - Real-time duplicate detection
     - Monetization eligibility assessment
-    """
-    
+    """    
     def __init__(
         self,
         vector_db_path: Optional[str] = None,
@@ -238,8 +224,7 @@ class ContentFingerprintValidator:
         logger.info(f"ContentFingerprintValidator initialized (AI enabled: {self.enable_ai_models})")
     
     def _initialize_ai_models(self):
-        """Initialize AI models for advanced fingerprinting"""
-        self.ai_models = {}
+        """Initialize AI models for advanced fingerprinting"""        self.ai_models = {}
         
         if not self.enable_ai_models:
             logger.warning("AI models disabled or dependencies not available")
@@ -265,8 +250,7 @@ class ContentFingerprintValidator:
             self.enable_ai_models = False
     
     def _initialize_vector_db(self):
-        """Initialize FAISS vector database for similarity search"""
-        try:
+        """Initialize FAISS vector database for similarity search"""        try:
             if self.enable_ai_models:
                 # Create FAISS index for high-dimensional vectors
                 self.vector_index = faiss.IndexFlatIP(512)  # 512-dimensional vectors
@@ -291,8 +275,7 @@ class ContentFingerprintValidator:
         fingerprint_types: Optional[List[FingerprintType]] = None,
         metadata: Optional[FingerprintMetadata] = None
     ) -> List[Fingerprint]:
-        """
-        Generate comprehensive fingerprints for content.
+        """        Generate comprehensive fingerprints for content.
         
         Args:
             content: Content data (bytes, string, or numpy array)
@@ -302,8 +285,7 @@ class ContentFingerprintValidator:
             
         Returns:
             List[Fingerprint]: Generated fingerprints
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         fingerprints = []
         
         try:
@@ -354,8 +336,7 @@ class ContentFingerprintValidator:
         fingerprint_types: List[FingerprintType],
         metadata: Optional[FingerprintMetadata]
     ) -> List[Fingerprint]:
-        """Generate audio fingerprints using multiple methods"""
-        fingerprints = []
+        """Generate audio fingerprints using multiple methods"""        fingerprints = []
         
         try:
             # Load audio data
@@ -450,8 +431,7 @@ class ContentFingerprintValidator:
         fingerprint_types: List[FingerprintType],
         metadata: Optional[FingerprintMetadata]
     ) -> List[Fingerprint]:
-        """Generate video fingerprints using multiple methods"""
-        fingerprints = []
+        """Generate video fingerprints using multiple methods"""        fingerprints = []
         
         try:
             # Save video data to temporary file
@@ -515,8 +495,7 @@ class ContentFingerprintValidator:
         fingerprint_types: List[FingerprintType],
         metadata: Optional[FingerprintMetadata]
     ) -> List[Fingerprint]:
-        """Generate image fingerprints using multiple methods"""
-        fingerprints = []
+        """Generate image fingerprints using multiple methods"""        fingerprints = []
         
         try:
             # Load image
@@ -610,8 +589,7 @@ class ContentFingerprintValidator:
         fingerprint_types: List[FingerprintType],
         metadata: Optional[FingerprintMetadata]
     ) -> List[Fingerprint]:
-        """Generate text fingerprints using multiple methods"""
-        fingerprints = []
+        """Generate text fingerprints using multiple methods"""        fingerprints = []
         
         try:
             # Convert to string if bytes
@@ -705,8 +683,7 @@ class ContentFingerprintValidator:
         threshold: Optional[float] = None,
         method: SimilarityMethod = SimilarityMethod.COSINE
     ) -> SimilarityResult:
-        """
-        Check similarity between two fingerprints.
+        """        Check similarity between two fingerprints.
         
         Args:
             fingerprint1: First fingerprint
@@ -716,8 +693,7 @@ class ContentFingerprintValidator:
             
         Returns:
             SimilarityResult: Similarity comparison result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         if threshold is None:
             threshold = self.similarity_threshold
@@ -785,8 +761,7 @@ class ContentFingerprintValidator:
         search_limit: int = 100,
         similarity_threshold: Optional[float] = None
     ) -> DuplicateDetectionResult:
-        """
-        Detect duplicate content using fingerprint matching.
+        """        Detect duplicate content using fingerprint matching.
         
         Args:
             fingerprint: Fingerprint to search for duplicates
@@ -795,8 +770,7 @@ class ContentFingerprintValidator:
             
         Returns:
             DuplicateDetectionResult: Duplicate detection results
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         if similarity_threshold is None:
             similarity_threshold = self.similarity_threshold
@@ -869,8 +843,7 @@ class ContentFingerprintValidator:
         check_duplicates: bool = True,
         platform_targets: Optional[List[str]] = None
     ) -> FingerprintValidationResult:
-        """
-        Comprehensive content fingerprint validation.
+        """        Comprehensive content fingerprint validation.
         
         Args:
             content: Content to validate
@@ -881,8 +854,7 @@ class ContentFingerprintValidator:
             
         Returns:
             FingerprintValidationResult: Validation result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             # Create metadata
@@ -968,8 +940,7 @@ class ContentFingerprintValidator:
     # Helper methods
     
     def _get_default_fingerprint_types(self, content_format: ContentFormat) -> List[FingerprintType]:
-        """Get default fingerprint types for content format"""
-        if content_format in [ContentFormat.MP3, ContentFormat.WAV, ContentFormat.FLAC]:
+        """Get default fingerprint types for content format"""        if content_format in [ContentFormat.MP3, ContentFormat.WAV, ContentFormat.FLAC]:
             return [FingerprintType.AUDIO_CHROMAPRINT, FingerprintType.AUDIO_MFCC, FingerprintType.AUDIO_SPECTRAL]
         elif content_format in [ContentFormat.MP4, ContentFormat.AVI, ContentFormat.MKV]:
             return [FingerprintType.VIDEO_FRAME_HASH]
@@ -987,8 +958,7 @@ class ContentFingerprintValidator:
         fingerprint_type: FingerprintType,
         method: SimilarityMethod
     ) -> float:
-        """Calculate similarity between two fingerprint data"""
-        
+        """Calculate similarity between two fingerprint data"""        
         if isinstance(data1, np.ndarray) and isinstance(data2, np.ndarray):
             if method == SimilarityMethod.COSINE:
                 # Cosine similarity
@@ -1039,8 +1009,7 @@ class ContentFingerprintValidator:
         return 1.0 if data1 == data2 else 0.0
     
     def _store_vector_embedding(self, fingerprint: Fingerprint):
-        """Store vector embedding in FAISS index"""
-        if fingerprint.vector_embedding is not None and self.enable_ai_models:
+        """Store vector embedding in FAISS index"""        if fingerprint.vector_embedding is not None and self.enable_ai_models:
             try:
                 # Ensure vector is the right dimension
                 vector = fingerprint.vector_embedding
@@ -1068,8 +1037,7 @@ class ContentFingerprintValidator:
         k: int = 10,
         threshold: float = 0.8
     ) -> List[Tuple[int, float]]:
-        """Search for similar vectors in FAISS index"""
-        if not self.enable_ai_models or query_vector is None:
+        """Search for similar vectors in FAISS index"""        if not self.enable_ai_models or query_vector is None:
             return []
         
         try:
@@ -1099,8 +1067,7 @@ class ContentFingerprintValidator:
             return []
     
     def _assess_fingerprint_quality(self, fingerprint: Fingerprint) -> float:
-        """Assess quality of generated fingerprint"""
-        quality_score = 0.5  # Base score
+        """Assess quality of generated fingerprint"""        quality_score = 0.5  # Base score
         
         # Check fingerprint data quality
         if fingerprint.fingerprint_data is not None:
@@ -1125,8 +1092,7 @@ class ContentFingerprintValidator:
         return min(1.0, quality_score)
     
     def _check_platform_compliance(self, fingerprint: Fingerprint, platform: str) -> bool:
-        """Check if fingerprint meets platform compliance requirements"""
-        # Platform-specific compliance rules
+        """Check if fingerprint meets platform compliance requirements"""        # Platform-specific compliance rules
         platform_rules = {
             'spotify': {
                 'required_types': [FingerprintType.AUDIO_CHROMAPRINT],
@@ -1164,8 +1130,7 @@ class ContentFingerprintValidator:
         quality_score: float,
         copyright_status: str
     ) -> List[str]:
-        """Generate recommendations based on fingerprint analysis"""
-        recommendations = []
+        """Generate recommendations based on fingerprint analysis"""        recommendations = []
         
         if quality_score < 0.7:
             recommendations.append("Consider improving content quality for better fingerprint accuracy")
@@ -1187,24 +1152,21 @@ class ContentFingerprintValidator:
         return recommendations
     
     def _load_vector_db(self):
-        """Load existing vector database"""
-        try:
+        """Load existing vector database"""        try:
             # Implementation would load from persistent storage
             logger.info("Vector database loaded from storage")
         except Exception as e:
             logger.warning(f"Failed to load vector database: {e}")
     
     def _save_vector_db(self):
-        """Save vector database to persistent storage"""
-        try:
+        """Save vector database to persistent storage"""        try:
             # Implementation would save to persistent storage
             logger.info("Vector database saved to storage")
         except Exception as e:
             logger.warning(f"Failed to save vector database: {e}")
     
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check of fingerprint validator"""
-        health_status = {
+        """Perform health check of fingerprint validator"""        health_status = {
             "status": "healthy",
             "ai_models_available": self.enable_ai_models,
             "vector_db_size": self.vector_index.ntotal if self.enable_ai_models else 0,
@@ -1235,8 +1197,7 @@ def create_content_fingerprint_validator(
     similarity_threshold: float = 0.85,
     cache_size: int = 10000
 ) -> ContentFingerprintValidator:
-    """Create a content fingerprint validator with specified configuration"""
-    return ContentFingerprintValidator(
+    """Create a content fingerprint validator with specified configuration"""    return ContentFingerprintValidator(
         enable_ai_models=enable_ai_models,
         similarity_threshold=similarity_threshold,
         cache_size=cache_size
@@ -1248,8 +1209,7 @@ def generate_audio_fingerprint_comprehensive(
     check_duplicates: bool = True,
     store_fingerprint: bool = True
 ) -> FingerprintValidationResult:
-    """Generate comprehensive audio fingerprint with duplicate checking"""
-    validator = create_content_fingerprint_validator()
+    """Generate comprehensive audio fingerprint with duplicate checking"""    validator = create_content_fingerprint_validator()
     
     return validator.validate_content_fingerprint(
         content=audio_data,
@@ -1264,8 +1224,7 @@ def validate_creator_content_fingerprint(
     creator_id: str,
     platform_targets: Optional[List[str]] = None
 ) -> FingerprintValidationResult:
-    """Validate creator content fingerprint with platform compliance"""
-    validator = create_content_fingerprint_validator()
+    """Validate creator content fingerprint with platform compliance"""    validator = create_content_fingerprint_validator()
     
     return validator.validate_content_fingerprint(
         content=content,

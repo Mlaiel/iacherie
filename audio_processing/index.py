@@ -1,5 +1,4 @@
-"""
-🎵 Audio Engine Hub - Central Audio Intelligence Orchestrator
+"""🎵 Audio Engine Hub - Central Audio Intelligence Orchestrator
 
 Professional audio processing hub that coordinates all audio capabilities
 across analysis, synthesis, enhancement, protection, and quality control.
@@ -27,7 +26,6 @@ and will result in legal action under German and International copyright law.
 
 For licensing inquiries: mlaiel@live.de
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -62,8 +60,7 @@ logger = logging.getLogger(__name__)
 
 
 class AudioCapability(Enum):
-    """Available audio processing capabilities."""
-    # Analysis capabilities
+    """Available audio processing capabilities."""    # Analysis capabilities
     SPECTRAL_ANALYSIS = "spectral_analysis"
     GENRE_CLASSIFICATION = "genre_classification"
     QUALITY_ASSESSMENT = "quality_assessment"
@@ -110,8 +107,7 @@ class AudioCapability(Enum):
 
 
 class AudioProcessingMode(Enum):
-    """Audio processing execution modes."""
-    REAL_TIME = "real_time"
+    """Audio processing execution modes."""    REAL_TIME = "real_time"
     BATCH = "batch"
     STREAMING = "streaming"
     OFFLINE = "offline"
@@ -119,8 +115,7 @@ class AudioProcessingMode(Enum):
 
 @dataclass
 class AudioRequest:
-    """Unified audio processing request structure."""
-    capability: AudioCapability
+    """Unified audio processing request structure."""    capability: AudioCapability
     input_data: Union[torch.Tensor, np.ndarray, str, Path]
     parameters: Dict[str, Any] = field(default_factory=dict)
     processing_mode: AudioProcessingMode = AudioProcessingMode.OFFLINE
@@ -132,8 +127,7 @@ class AudioRequest:
 
 @dataclass
 class AudioResponse:
-    """Unified audio processing response structure."""
-    success: bool
+    """Unified audio processing response structure."""    success: bool
     output_data: Optional[Any]
     metadata: Dict[str, Any] = field(default_factory=dict)
     processing_time: float = 0.0
@@ -143,16 +137,13 @@ class AudioResponse:
 
 
 class AudioEngineHub:
-    """
-    Central hub orchestrating all audio processing capabilities.
+    """    Central hub orchestrating all audio processing capabilities.
     
     This hub provides unified access to all audio engines including synthesis,
     analysis, enhancement, effects, quality control, and protection systems.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[Path] = None):
-        """Initialize the Audio Engine Hub."""
-        self.config_path = config_path or Path("config/audio_hub.yaml")
+        """Initialize the Audio Engine Hub."""        self.config_path = config_path or Path("config/audio_hub.yaml")
         
         # Component managers
         self.synthesis_hub = None
@@ -181,8 +172,7 @@ class AudioEngineHub:
         self._initialize_hub()
         
     def _initialize_hub(self) -> None:
-        """Initialize all audio processing engines."""
-        try:
+        """Initialize all audio processing engines."""        try:
             logger.info("Initializing Audio Engine Hub...")
             
             # Initialize synthesis hub
@@ -220,8 +210,7 @@ class AudioEngineHub:
             raise
             
     def _initialize_analysis_engine(self) -> None:
-        """Initialize audio analysis components."""
-        try:
+        """Initialize audio analysis components."""        try:
             self.analysis_engine = {
                 'spectral_analyzer': SpectralAnalyzer(),
                 'quality_assessor': AudioQualityAssessment(),
@@ -232,8 +221,7 @@ class AudioEngineHub:
             logger.error(f"Failed to initialize analysis engine: {e}")
             
     def _initialize_enhancement_engine(self) -> None:
-        """Initialize audio enhancement components."""
-        try:
+        """Initialize audio enhancement components."""        try:
             self.enhancement_engine = {
                 'spatial_enhancer': SpatialEnhancer(),
                 'noise_remover': NoiseRemover(),
@@ -244,8 +232,7 @@ class AudioEngineHub:
             logger.error(f"Failed to initialize enhancement engine: {e}")
             
     def _initialize_effects_engine(self) -> None:
-        """Initialize audio effects components."""
-        try:
+        """Initialize audio effects components."""        try:
             self.effects_engine = {
                 'equalizer': EqualizerProcessor(),
                 'compressor': CompressorProcessor(),
@@ -256,8 +243,7 @@ class AudioEngineHub:
             logger.error(f"Failed to initialize effects engine: {e}")
             
     def _initialize_quality_engine(self) -> None:
-        """Initialize quality control components."""
-        try:
+        """Initialize quality control components."""        try:
             self.quality_engine = {
                 'quality_analyzer': QualityAnalyzer(),
                 'loudness_analyzer': LoudnessAnalyzer(),
@@ -268,8 +254,7 @@ class AudioEngineHub:
             logger.error(f"Failed to initialize quality engine: {e}")
             
     def _initialize_fingerprint_engine(self) -> None:
-        """Initialize fingerprinting and protection components."""
-        try:
+        """Initialize fingerprinting and protection components."""        try:
             self.fingerprint_engine = {
                 'fingerprinter': AudioFingerprinter(),
                 'content_matcher': ContentMatcher(),
@@ -280,8 +265,7 @@ class AudioEngineHub:
             logger.error(f"Failed to initialize fingerprint engine: {e}")
             
     def _initialize_separation_engine(self) -> None:
-        """Initialize audio separation components."""
-        try:
+        """Initialize audio separation components."""        try:
             self.separation_engine = {
                 'vocal_separator': VocalSeparator(),
                 'instrument_separator': InstrumentSeparator(),
@@ -292,8 +276,7 @@ class AudioEngineHub:
             logger.error(f"Failed to initialize separation engine: {e}")
             
     def _initialize_conversion_engine(self) -> None:
-        """Initialize format conversion components."""
-        try:
+        """Initialize format conversion components."""        try:
             self.conversion_engine = {
                 'audio_converter': AudioConverter(),
                 'codec_manager': CodecManager(),
@@ -304,8 +287,7 @@ class AudioEngineHub:
             logger.error(f"Failed to initialize conversion engine: {e}")
             
     def _register_capabilities(self) -> None:
-        """Register available audio processing capabilities."""
-        self.capabilities = {
+        """Register available audio processing capabilities."""        self.capabilities = {
             # Analysis capabilities
             AudioCapability.SPECTRAL_ANALYSIS: self.analysis_engine is not None,
             AudioCapability.GENRE_CLASSIFICATION: self.analysis_engine is not None,
@@ -354,16 +336,14 @@ class AudioEngineHub:
             self.capability_usage[capability] = 0
             
     async def process_audio(self, request: AudioRequest) -> AudioResponse:
-        """
-        Main audio processing method - routes requests to appropriate engines.
+        """        Main audio processing method - routes requests to appropriate engines.
         
         Args:
             request: Audio processing request with capability and parameters
             
         Returns:
             AudioResponse with processed audio and metadata
-        """
-        if self.active_processes >= self.max_concurrent_processes:
+        """        if self.active_processes >= self.max_concurrent_processes:
             return AudioResponse(
                 success=False,
                 output_data=None,
@@ -441,8 +421,7 @@ class AudioEngineHub:
             self.active_processes -= 1
             
     async def _handle_synthesis_request(self, request: AudioRequest) -> AudioResponse:
-        """Handle synthesis requests by delegating to synthesis hub."""
-        # Map AudioCapability to SynthesisCapability
+        """Handle synthesis requests by delegating to synthesis hub."""        # Map AudioCapability to SynthesisCapability
         capability_mapping = {
             AudioCapability.NEURAL_SYNTHESIS: SynthesisCapability.NEURAL_VOCODER,
             AudioCapability.MUSIC_GENERATION: SynthesisCapability.MUSIC_GENERATION,
@@ -470,8 +449,7 @@ class AudioEngineHub:
         )
         
     async def _handle_analysis_request(self, request: AudioRequest) -> AudioResponse:
-        """Handle audio analysis requests."""
-        try:
+        """Handle audio analysis requests."""        try:
             if request.capability == AudioCapability.SPECTRAL_ANALYSIS:
                 analyzer = self.analysis_engine['spectral_analyzer']
                 result = analyzer.analyze_spectrum(request.input_data, **request.parameters)
@@ -501,8 +479,7 @@ class AudioEngineHub:
             )
             
     async def _handle_enhancement_request(self, request: AudioRequest) -> AudioResponse:
-        """Handle audio enhancement requests."""
-        try:
+        """Handle audio enhancement requests."""        try:
             if request.capability == AudioCapability.SPATIAL_ENHANCEMENT:
                 enhancer = self.enhancement_engine['spatial_enhancer']
                 result = enhancer.enhance_spatial(request.input_data, **request.parameters)
@@ -532,8 +509,7 @@ class AudioEngineHub:
             )
             
     async def _handle_effects_request(self, request: AudioRequest) -> AudioResponse:
-        """Handle audio effects requests."""
-        try:
+        """Handle audio effects requests."""        try:
             if request.capability == AudioCapability.EQUALIZATION:
                 eq = self.effects_engine['equalizer']
                 result = eq.process_audio(request.input_data, **request.parameters)
@@ -563,8 +539,7 @@ class AudioEngineHub:
             )
             
     async def _handle_quality_request(self, request: AudioRequest) -> AudioResponse:
-        """Handle quality control requests."""
-        try:
+        """Handle quality control requests."""        try:
             if request.capability == AudioCapability.LOUDNESS_ANALYSIS:
                 analyzer = self.quality_engine['loudness_analyzer']
                 result = analyzer.analyze_loudness(request.input_data)
@@ -594,8 +569,7 @@ class AudioEngineHub:
             )
             
     async def _handle_fingerprint_request(self, request: AudioRequest) -> AudioResponse:
-        """Handle fingerprinting and protection requests."""
-        try:
+        """Handle fingerprinting and protection requests."""        try:
             if request.capability == AudioCapability.FINGERPRINTING:
                 fingerprinter = self.fingerprint_engine['fingerprinter']
                 result = fingerprinter.generate_fingerprint(request.input_data)
@@ -625,8 +599,7 @@ class AudioEngineHub:
             )
             
     async def _handle_separation_request(self, request: AudioRequest) -> AudioResponse:
-        """Handle audio separation requests."""
-        try:
+        """Handle audio separation requests."""        try:
             if request.capability == AudioCapability.VOCAL_SEPARATION:
                 separator = self.separation_engine['vocal_separator']
                 result = separator.separate_vocals(request.input_data, **request.parameters)
@@ -656,8 +629,7 @@ class AudioEngineHub:
             )
             
     async def _handle_conversion_request(self, request: AudioRequest) -> AudioResponse:
-        """Handle format conversion requests."""
-        try:
+        """Handle format conversion requests."""        try:
             if request.capability == AudioCapability.CODEC_CONVERSION:
                 converter = self.conversion_engine['audio_converter']
                 result = converter.convert_format(request.input_data, **request.parameters)
@@ -683,18 +655,15 @@ class AudioEngineHub:
             )
             
     async def _apply_mastering_chain(self, audio_data: Any, parameters: Dict[str, Any]) -> Any:
-        """Apply complete mastering processing chain."""
-        # This would implement a complete mastering pipeline
+        """Apply complete mastering processing chain."""        # This would implement a complete mastering pipeline
         # For now, return the input data
         return audio_data
         
     def get_capabilities(self) -> List[str]:
-        """Get list of available audio capabilities."""
-        return [cap.value for cap, available in self.capabilities.items() if available]
+        """Get list of available audio capabilities."""        return [cap.value for cap, available in self.capabilities.items() if available]
         
     def get_hub_statistics(self) -> Dict[str, Any]:
-        """Get hub performance and usage statistics."""
-        success_rate = (self.successful_requests / self.total_requests 
+        """Get hub performance and usage statistics."""        success_rate = (self.successful_requests / self.total_requests 
                        if self.total_requests > 0 else 0)
         
         avg_processing_time = (self.total_processing_time / self.total_requests 
@@ -715,8 +684,7 @@ class AudioEngineHub:
         }
         
     def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check of all audio engines."""
-        health_status = {
+        """Perform comprehensive health check of all audio engines."""        health_status = {
             'status': 'healthy',
             'timestamp': time.time(),
             'engines': {},
@@ -753,8 +721,7 @@ class AudioEngineHub:
         return health_status
         
     async def shutdown(self) -> None:
-        """Gracefully shutdown all audio engines."""
-        logger.info("Shutting down Audio Engine Hub...")
+        """Gracefully shutdown all audio engines."""        logger.info("Shutting down Audio Engine Hub...")
         
         try:
             # Shutdown synthesis hub
@@ -781,16 +748,14 @@ _audio_hub_instance: Optional[AudioEngineHub] = None
 
 
 def get_audio_hub(config_path: Optional[Path] = None) -> AudioEngineHub:
-    """
-    Get the global Audio Engine Hub instance.
+    """    Get the global Audio Engine Hub instance.
     
     Args:
         config_path: Optional path to configuration file
         
     Returns:
         AudioEngineHub instance
-    """
-    global _audio_hub_instance
+    """    global _audio_hub_instance
     
     if _audio_hub_instance is None:
         _audio_hub_instance = AudioEngineHub(config_path)
@@ -803,8 +768,7 @@ async def process_audio(capability: AudioCapability,
                        input_data: Any,
                        parameters: Dict[str, Any] = None,
                        processing_mode: AudioProcessingMode = AudioProcessingMode.OFFLINE) -> AudioResponse:
-    """
-    Convenience function for direct audio processing.
+    """    Convenience function for direct audio processing.
     
     Args:
         capability: Audio capability to use
@@ -814,8 +778,7 @@ async def process_audio(capability: AudioCapability,
         
     Returns:
         AudioResponse with processed audio
-    """
-    hub = get_audio_hub()
+    """    hub = get_audio_hub()
     
     request = AudioRequest(
         capability=capability,
@@ -828,20 +791,17 @@ async def process_audio(capability: AudioCapability,
 
 
 def list_audio_capabilities() -> List[str]:
-    """Get list of available audio capabilities."""
-    hub = get_audio_hub()
+    """Get list of available audio capabilities."""    hub = get_audio_hub()
     return hub.get_capabilities()
 
 
 def get_audio_hub_health() -> Dict[str, Any]:
-    """Get audio hub health status."""
-    hub = get_audio_hub()
+    """Get audio hub health status."""    hub = get_audio_hub()
     return hub.health_check()
 
 
 def get_audio_hub_stats() -> Dict[str, Any]:
-    """Get audio hub performance statistics."""
-    hub = get_audio_hub()
+    """Get audio hub performance statistics."""    hub = get_audio_hub()
     return hub.get_hub_statistics()
 
 

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for Collaboration Matching System
+"""Comprehensive Tests for Collaboration Matching System
 
 Tests cover collaboration matching, compatibility scoring, and partnership algorithms
 
@@ -27,7 +24,6 @@ Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
 Lead Developer: Fahed Mlaiel
 Email: mlaiel@live.de
 """
-
 import pytest
 import sys
 import os
@@ -51,12 +47,10 @@ from ai.core.base_models import ModelStatus
 
 
 class TestCollaborationMatcher:
-    """Comprehensive tests for the main collaboration matcher"""
-    
+    """Comprehensive tests for the main collaboration matcher"""    
     @pytest.mark.asyncio
     async def test_matcher_initialization(self, collaboration_matcher):
-        """Test collaboration matcher initialization"""
-        matcher = collaboration_matcher
+        """Test collaboration matcher initialization"""        matcher = collaboration_matcher
         
         assert matcher is not None
         assert matcher.status == ModelStatus.READY
@@ -71,8 +65,7 @@ class TestCollaborationMatcher:
     
     @pytest.mark.asyncio
     async def test_matcher_initialization_failure(self):
-        """Test matcher initialization failure handling"""
-        matcher = CollaborationMatcher()
+        """Test matcher initialization failure handling"""        matcher = CollaborationMatcher()
         
         # Mock a failure condition
         original_method = matcher._load_compatibility_models
@@ -95,8 +88,7 @@ class TestCollaborationMatcher:
     
     @pytest.mark.asyncio
     async def test_find_collaboration_matches_basic(self, collaboration_matcher, sample_creator_musician):
-        """Test basic collaboration match finding"""
-        creator = sample_creator_musician
+        """Test basic collaboration match finding"""        creator = sample_creator_musician
         portfolio = [
             {
                 "content_id": "track_001",
@@ -128,8 +120,7 @@ class TestCollaborationMatcher:
     
     @pytest.mark.asyncio
     async def test_find_matches_by_collaboration_type(self, collaboration_matcher, sample_creator_musician, sample_creator_portfolio):
-        """Test finding matches by different collaboration types"""
-        creator = sample_creator_musician
+        """Test finding matches by different collaboration types"""        creator = sample_creator_musician
         portfolio = sample_creator_portfolio
         
         # Test content creation collaboration
@@ -182,8 +173,7 @@ class TestCollaborationMatcher:
     
     @pytest.mark.asyncio
     async def test_find_matches_with_filters(self, collaboration_matcher, sample_creator_musician, sample_creator_portfolio):
-        """Test finding matches with platform and genre filters"""
-        creator = sample_creator_musician
+        """Test finding matches with platform and genre filters"""        creator = sample_creator_musician
         portfolio = sample_creator_portfolio
         
         # Test platform filter
@@ -210,8 +200,7 @@ class TestCollaborationMatcher:
     
     @pytest.mark.asyncio
     async def test_find_matches_follower_range(self, collaboration_matcher, sample_creator_musician, sample_creator_portfolio):
-        """Test finding matches within follower count ranges"""
-        creator = sample_creator_musician
+        """Test finding matches within follower count ranges"""        creator = sample_creator_musician
         portfolio = sample_creator_portfolio
         
         # Test similar sized creators
@@ -238,8 +227,7 @@ class TestCollaborationMatcher:
     
     @pytest.mark.asyncio
     async def test_match_personalization(self, collaboration_matcher, sample_creator_musician, sample_creator_portfolio):
-        """Test match personalization for different creators"""
-        musician = sample_creator_musician
+        """Test match personalization for different creators"""        musician = sample_creator_musician
         portfolio = sample_creator_portfolio
         
         musician_matches = await collaboration_matcher.find_matches(
@@ -263,8 +251,7 @@ class TestCollaborationMatcher:
     
     @pytest.mark.asyncio
     async def test_collaboration_success_prediction(self, collaboration_matcher, sample_creator_musician, sample_creator_portfolio):
-        """Test collaboration success probability prediction"""
-        creator = sample_creator_musician
+        """Test collaboration success probability prediction"""        creator = sample_creator_musician
         portfolio = sample_creator_portfolio
         
         matches = await collaboration_matcher.find_matches(
@@ -284,8 +271,7 @@ class TestCollaborationMatcher:
     
     @pytest.mark.asyncio
     async def test_mutual_benefit_analysis(self, collaboration_matcher, sample_creator_musician, sample_creator_portfolio):
-        """Test mutual benefit analysis for collaborations"""
-        creator = sample_creator_musician
+        """Test mutual benefit analysis for collaborations"""        creator = sample_creator_musician
         portfolio = sample_creator_portfolio
         
         matches = await collaboration_matcher.find_matches(
@@ -301,12 +287,10 @@ class TestCollaborationMatcher:
 
 
 class TestCompatibilityScorer:
-    """Tests for compatibility scoring algorithms"""
-    
+    """Tests for compatibility scoring algorithms"""    
     @pytest.mark.asyncio
     async def test_calculate_compatibility_score(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test compatibility score calculation"""
-        musician = sample_creator_musician
+        """Test compatibility score calculation"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test musician-blogger compatibility
@@ -331,8 +315,7 @@ class TestCompatibilityScorer:
     
     @pytest.mark.asyncio
     async def test_content_compatibility_scoring(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test content compatibility scoring"""
-        musician = sample_creator_musician
+        """Test content compatibility scoring"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test compatibility between musician and blogger
@@ -346,8 +329,7 @@ class TestCompatibilityScorer:
         
     @pytest.mark.asyncio
     async def test_audience_compatibility_scoring(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test audience compatibility scoring"""
-        musician = sample_creator_musician
+        """Test audience compatibility scoring"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
 
         # Test audience overlap calculation
@@ -361,8 +343,7 @@ class TestCompatibilityScorer:
 
     @pytest.mark.asyncio
     async def test_style_compatibility_scoring(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test style compatibility scoring"""
-        musician = sample_creator_musician
+        """Test style compatibility scoring"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
 
         # Test brand alignment calculation
@@ -376,8 +357,7 @@ class TestCompatibilityScorer:
 
     @pytest.mark.asyncio
     async def test_schedule_compatibility_scoring(self, compatibility_scorer, sample_creator_musician, sample_creator_blogger):
-        """Test schedule compatibility scoring"""
-        musician = sample_creator_musician
+        """Test schedule compatibility scoring"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
 
         # Test schedule compatibility calculation
@@ -389,12 +369,10 @@ class TestCompatibilityScorer:
         assert isinstance(score['individual_scores']['schedule_compatibility'], (int, float))
         assert 0 <= score['individual_scores']['schedule_compatibility'] <= 1
 class TestPartnershipAnalyzer:
-    """Tests for partnership analysis and optimization"""
-    
+    """Tests for partnership analysis and optimization"""    
     @pytest.mark.asyncio
     async def test_analyze_partnership_potential(self, partnership_analyzer, sample_creator_musician, sample_creator_blogger):
-        """Test partnership potential analysis"""
-        musician = sample_creator_musician
+        """Test partnership potential analysis"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test partnership analysis with list of creators
@@ -418,8 +396,7 @@ class TestPartnershipAnalyzer:
     
     @pytest.mark.asyncio
     async def test_cross_promotion_analysis(self, partnership_analyzer, sample_creator_musician, sample_creator_blogger):
-        """Test cross-promotion partnership analysis"""
-        musician = sample_creator_musician
+        """Test cross-promotion partnership analysis"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test cross-promotion potential using partnership analysis
@@ -439,8 +416,7 @@ class TestPartnershipAnalyzer:
     
     @pytest.mark.asyncio
     async def test_skill_exchange_analysis(self, partnership_analyzer, sample_creator_musician, sample_creator_blogger):
-        """Test skill exchange partnership analysis"""
-        musician = sample_creator_musician
+        """Test skill exchange partnership analysis"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test skill exchange potential using partnership analysis  
@@ -459,8 +435,7 @@ class TestPartnershipAnalyzer:
     
     @pytest.mark.asyncio
     async def test_content_collaboration_analysis(self, partnership_analyzer, sample_creator_musician, sample_creator_blogger):
-        """Test content collaboration analysis"""
-        musician = sample_creator_musician
+        """Test content collaboration analysis"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test content collaboration potential
@@ -479,8 +454,7 @@ class TestPartnershipAnalyzer:
 
     @pytest.mark.asyncio
     async def test_partnership_risk_assessment(self, partnership_analyzer, sample_creator_musician, sample_creator_blogger):
-        """Test partnership risk assessment"""
-        musician = sample_creator_musician
+        """Test partnership risk assessment"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test risk assessment through partnership analysis
@@ -498,8 +472,7 @@ class TestPartnershipAnalyzer:
     
     @pytest.mark.asyncio
     async def test_skill_exchange_analysis(self, partnership_analyzer, sample_creator_musician, sample_creator_blogger):
-        """Test skill exchange partnership analysis"""
-        musician = sample_creator_musician
+        """Test skill exchange partnership analysis"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test skill exchange potential using partnership analysis  
@@ -518,8 +491,7 @@ class TestPartnershipAnalyzer:
     
     @pytest.mark.asyncio
     async def test_content_collaboration_analysis(self, partnership_analyzer, sample_creator_musician, sample_creator_blogger):
-        """Test content collaboration analysis"""
-        musician = sample_creator_musician
+        """Test content collaboration analysis"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test content collaboration potential
@@ -538,8 +510,7 @@ class TestPartnershipAnalyzer:
     
     @pytest.mark.asyncio
     async def test_partnership_risk_assessment(self, partnership_analyzer, sample_creator_musician, sample_creator_blogger):
-        """Test partnership risk assessment"""
-        musician = sample_creator_musician
+        """Test partnership risk assessment"""        musician = sample_creator_musician
         blogger = sample_creator_blogger
         
         # Test risk assessment through partnership analysis
@@ -557,12 +528,10 @@ class TestPartnershipAnalyzer:
 
 
 class TestCollaborationRecommender:
-    """Tests for collaboration recommendation system"""
-    
+    """Tests for collaboration recommendation system"""    
     @pytest.mark.asyncio
     async def test_recommend_collaborations(self, collaboration_recommender, sample_creator_musician):
-        """Test collaboration recommendation generation"""
-        creator = sample_creator_musician
+        """Test collaboration recommendation generation"""        creator = sample_creator_musician
         
         recommendations = await collaboration_recommender.get_collaboration_recommendations(
             creator=creator,
@@ -579,8 +548,7 @@ class TestCollaborationRecommender:
     
     @pytest.mark.asyncio
     async def test_recommend_by_goal(self, collaboration_recommender, sample_creator_musician):
-        """Test collaboration recommendations by goal"""
-        creator = sample_creator_musician
+        """Test collaboration recommendations by goal"""        creator = sample_creator_musician
         
         # Test growth goal
         growth_recommendations = await collaboration_recommender.recommend_for_goal(
@@ -618,8 +586,7 @@ class TestCollaborationRecommender:
     
     @pytest.mark.asyncio
     async def test_recommend_seasonal_collaborations(self, collaboration_recommender, sample_creator_musician):
-        """Test seasonal collaboration recommendations"""
-        creator = sample_creator_musician
+        """Test seasonal collaboration recommendations"""        creator = sample_creator_musician
         
         # Test holiday season recommendations
         holiday_recommendations = await collaboration_recommender.recommend_seasonal(
@@ -653,8 +620,7 @@ class TestCollaborationRecommender:
     
     @pytest.mark.asyncio
     async def test_recommend_trending_collaborations(self, collaboration_recommender, sample_creator_musician):
-        """Test trending collaboration recommendations"""
-        creator = sample_creator_musician
+        """Test trending collaboration recommendations"""        creator = sample_creator_musician
         
         trending_recommendations = await collaboration_recommender.recommend_trending(
             creator_profile=creator,
@@ -670,8 +636,7 @@ class TestCollaborationRecommender:
     
     @pytest.mark.asyncio
     async def test_recommend_niche_collaborations(self, collaboration_recommender, sample_creator_musician):
-        """Test niche collaboration recommendations"""
-        creator = sample_creator_musician
+        """Test niche collaboration recommendations"""        creator = sample_creator_musician
         
         niche_recommendations = await collaboration_recommender.recommend_niche(
             creator_profile=creator,
@@ -690,13 +655,11 @@ class TestCollaborationRecommender:
 
 
 class TestCollaborationMatchingPerformance:
-    """Performance tests for collaboration matching"""
-    
+    """Performance tests for collaboration matching"""    
     @pytest.mark.asyncio
     @pytest.mark.benchmark
     async def test_matching_performance(self, benchmark, collaboration_matcher, sample_creator_musician):
-        """Benchmark collaboration matching performance"""
-        creator = sample_creator_musician
+        """Benchmark collaboration matching performance"""        creator = sample_creator_musician
         
         async def find_matches():
             return await collaboration_matcher.find_matches(
@@ -711,8 +674,7 @@ class TestCollaborationMatchingPerformance:
     
     @pytest.mark.asyncio
     async def test_batch_matching_performance(self, collaboration_matcher, sample_creator_musician, sample_creator_blogger):
-        """Test batch collaboration matching performance"""
-        creators = [sample_creator_musician, sample_creator_blogger]
+        """Test batch collaboration matching performance"""        creators = [sample_creator_musician, sample_creator_blogger]
         
         start_time = datetime.now()
         
@@ -734,8 +696,7 @@ class TestCollaborationMatchingPerformance:
     
     @pytest.mark.asyncio
     async def test_concurrent_matching_requests(self, collaboration_matcher, sample_creator_musician):
-        """Test handling concurrent matching requests"""
-        creator = sample_creator_musician
+        """Test handling concurrent matching requests"""        creator = sample_creator_musician
         
         # Create multiple concurrent requests
         tasks = []
@@ -762,12 +723,10 @@ class TestCollaborationMatchingPerformance:
 
 
 class TestCollaborationMatchingEdgeCases:
-    """Tests for edge cases and error scenarios"""
-    
+    """Tests for edge cases and error scenarios"""    
     @pytest.mark.asyncio
     async def test_matching_for_new_creator(self, collaboration_matcher):
-        """Test matching for creators with minimal data"""
-        new_creator = CreatorProfile(
+        """Test matching for creators with minimal data"""        new_creator = CreatorProfile(
             creator_id="new_creator_001",
             username="newcreator",
             display_name="New Creator",
@@ -796,8 +755,7 @@ class TestCollaborationMatchingEdgeCases:
     
     @pytest.mark.asyncio
     async def test_matching_with_no_compatible_creators(self, collaboration_matcher):
-        """Test matching when no compatible creators exist"""
-        unique_creator = CreatorProfile(
+        """Test matching when no compatible creators exist"""        unique_creator = CreatorProfile(
             creator_id="unique_creator",
             username="uniquecreator",
             display_name="Unique Creator",
@@ -823,8 +781,7 @@ class TestCollaborationMatchingEdgeCases:
     
     @pytest.mark.asyncio
     async def test_invalid_collaboration_type(self, collaboration_matcher, sample_creator_musician):
-        """Test handling of invalid collaboration types"""
-        creator = sample_creator_musician
+        """Test handling of invalid collaboration types"""        creator = sample_creator_musician
         
         # Test behavior with invalid match type (should handle gracefully)
         try:
@@ -842,8 +799,7 @@ class TestCollaborationMatchingEdgeCases:
     
     @pytest.mark.asyncio
     async def test_zero_limit_matching(self, collaboration_matcher, sample_creator_musician):
-        """Test matching with zero limit"""
-        creator = sample_creator_musician
+        """Test matching with zero limit"""        creator = sample_creator_musician
         
         # Test behavior with zero limit (should handle gracefully)
         try:
@@ -861,8 +817,7 @@ class TestCollaborationMatchingEdgeCases:
     
     @pytest.mark.asyncio
     async def test_very_high_limit_matching(self, collaboration_matcher, sample_creator_musician):
-        """Test matching with very high limit"""
-        creator = sample_creator_musician
+        """Test matching with very high limit"""        creator = sample_creator_musician
         
         matches = await collaboration_matcher.find_matches(
             creator_profile=creator,
@@ -878,8 +833,7 @@ class TestCollaborationMatchingEdgeCases:
     
     @pytest.mark.asyncio
     async def test_matching_timeout_handling(self, collaboration_matcher, sample_creator_musician):
-        """Test matching timeout handling"""
-        creator = sample_creator_musician
+        """Test matching timeout handling"""        creator = sample_creator_musician
         
         try:
             # Set timeout to test timeout handling

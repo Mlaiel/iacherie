@@ -1,5 +1,4 @@
-"""
-Protection Monitoring Module
+"""Protection Monitoring Module
 
 Enterprise-grade monitoring and observability system for copyright protection
 infrastructure. Provides real-time monitoring, alerting, analytics, and
@@ -20,7 +19,6 @@ Project: IA Influencer Agent + Content Protection Platform
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
-
 import asyncio
 import logging
 import time
@@ -55,8 +53,7 @@ warnings.filterwarnings('ignore')
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -64,8 +61,7 @@ class AlertSeverity(Enum):
 
 
 class SystemStatus(Enum):
-    """System component status"""
-    HEALTHY = "healthy"
+    """System component status"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     OFFLINE = "offline"
@@ -73,8 +69,7 @@ class SystemStatus(Enum):
 
 
 class MetricType(Enum):
-    """Types of metrics"""
-    COUNTER = "counter"
+    """Types of metrics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -83,8 +78,7 @@ class MetricType(Enum):
 
 @dataclass
 class Alert:
-    """System alert definition"""
-    alert_id: str
+    """System alert definition"""    alert_id: str
     title: str
     description: str
     severity: AlertSeverity
@@ -101,8 +95,7 @@ class Alert:
 
 @dataclass
 class SystemHealth:
-    """System health status"""
-    component: str
+    """System health status"""    component: str
     status: SystemStatus
     last_check: datetime = field(default_factory=datetime.now)
     uptime: float = 0.0
@@ -117,8 +110,7 @@ class SystemHealth:
 
 @dataclass
 class ProtectionMetrics:
-    """Content protection specific metrics"""
-    detection_rate: float = 0.0
+    """Content protection specific metrics"""    detection_rate: float = 0.0
     false_positive_rate: float = 0.0
     enforcement_success_rate: float = 0.0
     average_detection_time: float = 0.0
@@ -131,8 +123,7 @@ class ProtectionMetrics:
 
 
 class ProtectionMonitoringSystem:
-    """
-    Enterprise-grade monitoring system for content protection infrastructure
+    """    Enterprise-grade monitoring system for content protection infrastructure
     
     Features:
     - Real-time system health monitoring and alerting
@@ -143,8 +134,7 @@ class ProtectionMonitoringSystem:
     - Predictive analytics for system optimization
     - Integration with external monitoring platforms
     - Compliance and audit logging
-    """
-    
+    """    
     def __init__(self,
                  redis_host: str = "localhost",
                  redis_port: int = 6379,
@@ -188,8 +178,7 @@ class ProtectionMonitoringSystem:
         self.logger.info("ProtectionMonitoringSystem initialized successfully")
     
     def _load_monitoring_config(self) -> Dict[str, Any]:
-        """Load monitoring configuration"""
-        return {
+        """Load monitoring configuration"""        return {
             'collection_interval': 30,  # seconds
             'alert_check_interval': 60,  # seconds
             'health_check_interval': 120,  # seconds
@@ -207,8 +196,7 @@ class ProtectionMonitoringSystem:
         }
     
     def _load_alert_rules(self) -> Dict[str, Dict[str, Any]]:
-        """Load alert rules configuration"""
-        return {
+        """Load alert rules configuration"""        return {
             'cpu_usage': {
                 'warning': 70.0,
                 'critical': 85.0,
@@ -247,8 +235,7 @@ class ProtectionMonitoringSystem:
         }
     
     def _init_prometheus_metrics(self):
-        """Initialize Prometheus metrics"""
-        # System metrics
+        """Initialize Prometheus metrics"""        # System metrics
         self.system_cpu_usage = Gauge('system_cpu_usage_percent', 
                                     'CPU usage percentage', ['component'], registry=self.registry)
         self.system_memory_usage = Gauge('system_memory_usage_percent', 
@@ -277,16 +264,14 @@ class ProtectionMonitoringSystem:
                                      'Total alerts generated', ['component', 'severity'], registry=self.registry)
     
     def _init_elasticsearch(self):
-        """Initialize Elasticsearch client"""
-        try:
+        """Initialize Elasticsearch client"""        try:
             return elasticsearch.Elasticsearch([self.elasticsearch_url])
         except Exception as e:
             self.logger.warning(f"Failed to initialize Elasticsearch: {str(e)}")
             return None
     
     def _init_grafana(self):
-        """Initialize Grafana API client"""
-        try:
+        """Initialize Grafana API client"""        try:
             # Initialize Grafana API client
             return None  # Would initialize actual Grafana client
         except Exception as e:
@@ -294,8 +279,7 @@ class ProtectionMonitoringSystem:
             return None
     
     async def collect_system_metrics(self) -> Dict[str, SystemHealth]:
-        """Collect system health metrics for all components"""
-        health_data = {}
+        """Collect system health metrics for all components"""        health_data = {}
         
         for component in self.monitoring_config['components']:
             try:
@@ -312,8 +296,7 @@ class ProtectionMonitoringSystem:
         return health_data
     
     async def _collect_component_health(self, component: str) -> SystemHealth:
-        """Collect health metrics for specific component"""
-        try:
+        """Collect health metrics for specific component"""        try:
             # Get component-specific metrics
             if component == 'fingerprinting_servers':
                 return await self._collect_fingerprinting_health()
@@ -341,8 +324,7 @@ class ProtectionMonitoringSystem:
             )
     
     async def _collect_fingerprinting_health(self) -> SystemHealth:
-        """Collect fingerprinting servers health"""
-        try:
+        """Collect fingerprinting servers health"""        try:
             # Check fingerprinting server status
             fingerprint_metrics = await self._get_redis_metrics('fingerprint:*')
             
@@ -382,8 +364,7 @@ class ProtectionMonitoringSystem:
             )
     
     async def _collect_crawler_health(self) -> SystemHealth:
-        """Collect crawler deployment health"""
-        try:
+        """Collect crawler deployment health"""        try:
             # Check crawler status
             crawler_metrics = await self._get_redis_metrics('crawler:*')
             
@@ -418,8 +399,7 @@ class ProtectionMonitoringSystem:
             )
     
     async def _collect_detection_health(self) -> SystemHealth:
-        """Collect detection systems health"""
-        try:
+        """Collect detection systems health"""        try:
             # Check detection system metrics
             detection_metrics = await self._get_redis_metrics('detection:*')
             
@@ -456,8 +436,7 @@ class ProtectionMonitoringSystem:
             )
     
     async def _collect_enforcement_health(self) -> SystemHealth:
-        """Collect enforcement system health"""
-        try:
+        """Collect enforcement system health"""        try:
             # Check enforcement metrics
             enforcement_metrics = await self._get_redis_metrics('enforcement:*')
             
@@ -493,8 +472,7 @@ class ProtectionMonitoringSystem:
             )
     
     async def _collect_database_health(self) -> SystemHealth:
-        """Collect database cluster health"""
-        try:
+        """Collect database cluster health"""        try:
             # Check PostgreSQL health
             db_metrics = await self._check_database_performance()
             
@@ -530,8 +508,7 @@ class ProtectionMonitoringSystem:
             )
     
     async def _collect_redis_health(self) -> SystemHealth:
-        """Collect Redis cluster health"""
-        try:
+        """Collect Redis cluster health"""        try:
             # Check Redis health
             redis_info = self.redis_client.info()
             
@@ -570,8 +547,7 @@ class ProtectionMonitoringSystem:
             )
     
     async def _collect_queue_health(self) -> SystemHealth:
-        """Collect message queue health"""
-        try:
+        """Collect message queue health"""        try:
             # Check queue metrics
             queue_metrics = await self._get_queue_metrics()
             
@@ -612,8 +588,7 @@ class ProtectionMonitoringSystem:
             )
     
     async def _collect_generic_health(self, component: str) -> SystemHealth:
-        """Collect generic component health"""
-        return SystemHealth(
+        """Collect generic component health"""        return SystemHealth(
             component=component,
             status=SystemStatus.HEALTHY,
             cpu_usage=psutil.cpu_percent(),
@@ -622,8 +597,7 @@ class ProtectionMonitoringSystem:
         )
     
     def _determine_status(self, error_rate: float, response_time: float) -> SystemStatus:
-        """Determine system status based on metrics"""
-        if error_rate >= 25 or response_time >= 10000:
+        """Determine system status based on metrics"""        if error_rate >= 25 or response_time >= 10000:
             return SystemStatus.OFFLINE
         elif error_rate >= 10 or response_time >= 3000:
             return SystemStatus.UNHEALTHY
@@ -633,8 +607,7 @@ class ProtectionMonitoringSystem:
             return SystemStatus.HEALTHY
     
     def _determine_detection_status(self, accuracy: float, false_positive_rate: float) -> SystemStatus:
-        """Determine detection system status"""
-        if accuracy < 60 or false_positive_rate > 20:
+        """Determine detection system status"""        if accuracy < 60 or false_positive_rate > 20:
             return SystemStatus.OFFLINE
         elif accuracy < 75 or false_positive_rate > 10:
             return SystemStatus.UNHEALTHY
@@ -644,8 +617,7 @@ class ProtectionMonitoringSystem:
             return SystemStatus.HEALTHY
     
     def _update_prometheus_metrics(self, component: str, health: SystemHealth):
-        """Update Prometheus metrics"""
-        try:
+        """Update Prometheus metrics"""        try:
             # Update system metrics
             self.system_cpu_usage.labels(component=component).set(health.cpu_usage)
             self.system_memory_usage.labels(component=component).set(health.memory_usage)
@@ -676,8 +648,7 @@ class ProtectionMonitoringSystem:
             self.logger.error(f"Error updating Prometheus metrics: {str(e)}")
     
     async def check_alert_conditions(self):
-        """Check all alert conditions and trigger alerts if necessary"""
-        try:
+        """Check all alert conditions and trigger alerts if necessary"""        try:
             for component, health in self.system_health.items():
                 await self._check_component_alerts(component, health)
                 
@@ -685,8 +656,7 @@ class ProtectionMonitoringSystem:
             self.logger.error(f"Error checking alert conditions: {str(e)}")
     
     async def _check_component_alerts(self, component: str, health: SystemHealth):
-        """Check alert conditions for specific component"""
-        alerts_to_trigger = []
+        """Check alert conditions for specific component"""        alerts_to_trigger = []
         
         # Check CPU usage alerts
         cpu_alerts = self._check_threshold_alerts('cpu_usage', health.cpu_usage, component)
@@ -718,8 +688,7 @@ class ProtectionMonitoringSystem:
             await self._trigger_alert(alert)
     
     def _check_threshold_alerts(self, metric_name: str, current_value: float, component: str) -> List[Alert]:
-        """Check threshold-based alerts"""
-        alerts = []
+        """Check threshold-based alerts"""        alerts = []
         
         if metric_name not in self.alert_rules:
             return alerts
@@ -750,8 +719,7 @@ class ProtectionMonitoringSystem:
         return alerts
     
     async def _check_detection_alerts(self, health: SystemHealth) -> List[Alert]:
-        """Check detection system specific alerts"""
-        alerts = []
+        """Check detection system specific alerts"""        alerts = []
         
         detection_accuracy = health.custom_metrics.get('detection_accuracy', 100)
         false_positive_rate = health.error_rate
@@ -776,8 +744,7 @@ class ProtectionMonitoringSystem:
     
     def _create_alert(self, component: str, metric_name: str, severity: AlertSeverity, 
                      threshold: float, current_value: float) -> Alert:
-        """Create new alert"""
-        alert_id = str(uuid.uuid4())
+        """Create new alert"""        alert_id = str(uuid.uuid4())
         
         return Alert(
             alert_id=alert_id,
@@ -792,8 +759,7 @@ class ProtectionMonitoringSystem:
         )
     
     async def _trigger_alert(self, alert: Alert):
-        """Trigger alert and send notifications"""
-        try:
+        """Trigger alert and send notifications"""        try:
             # Check if alert already exists (avoid spam)
             existing_alert_key = f"{alert.component}:{alert.metric_name}:{alert.severity.value}"
             
@@ -829,8 +795,7 @@ class ProtectionMonitoringSystem:
             self.logger.error(f"Error triggering alert: {str(e)}")
     
     async def _send_alert_notifications(self, alert: Alert):
-        """Send alert notifications via multiple channels"""
-        try:
+        """Send alert notifications via multiple channels"""        try:
             # Email notification
             await self._send_alert_email(alert)
             
@@ -848,8 +813,7 @@ class ProtectionMonitoringSystem:
             self.logger.error(f"Error sending alert notifications: {str(e)}")
     
     async def _send_alert_email(self, alert: Alert):
-        """Send alert via email"""
-        try:
+        """Send alert via email"""        try:
             # Email configuration would be loaded from config
             email_config = {
                 'smtp_server': 'smtp.gmail.com',
@@ -860,8 +824,7 @@ class ProtectionMonitoringSystem:
             
             subject = f"[{alert.severity.value.upper()}] IA Influencer Alert: {alert.title}"
             
-            body = f"""
-IA Influencer Agent Protection System Alert
+            body = f"""IA Influencer Agent Protection System Alert
 
 Alert Details:
 - Severity: {alert.severity.value.upper()}
@@ -880,8 +843,7 @@ System Dashboard: http://monitoring.ia-influencer.com/dashboard
 Alert Management: http://monitoring.ia-influencer.com/alerts
 
 IA Influencer Agent Monitoring System
-"""
-            
+"""            
             # Send email
             msg = MimeMultipart()
             msg['From'] = email_config['email']
@@ -900,8 +862,7 @@ IA Influencer Agent Monitoring System
             self.logger.error(f"Error sending alert email: {str(e)}")
     
     async def _send_slack_notification(self, alert: Alert):
-        """Send alert to Slack"""
-        try:
+        """Send alert to Slack"""        try:
             # Slack webhook URL would be configured
             webhook_url = "https://hooks.slack.com/services/YOUR/SLACK/WEBHOOK"
             
@@ -940,8 +901,7 @@ IA Influencer Agent Monitoring System
             self.logger.error(f"Error sending Slack notification: {str(e)}")
     
     async def _send_pagerduty_alert(self, alert: Alert):
-        """Send alert to PagerDuty"""
-        try:
+        """Send alert to PagerDuty"""        try:
             # PagerDuty integration key would be configured
             integration_key = "YOUR_PAGERDUTY_INTEGRATION_KEY"
             
@@ -975,8 +935,7 @@ IA Influencer Agent Monitoring System
             self.logger.error(f"Error sending PagerDuty alert: {str(e)}")
     
     async def _send_discord_notification(self, alert: Alert):
-        """Send alert to Discord"""
-        try:
+        """Send alert to Discord"""        try:
             # Discord webhook URL would be configured
             webhook_url = "https://discord.com/api/webhooks/YOUR/DISCORD/WEBHOOK"
             
@@ -1015,8 +974,7 @@ IA Influencer Agent Monitoring System
             self.logger.error(f"Error sending Discord notification: {str(e)}")
     
     def _update_alert_count_metrics(self):
-        """Update alert count metrics"""
-        try:
+        """Update alert count metrics"""        try:
             # Count active alerts by severity
             severity_counts = defaultdict(int)
             for alert in self.active_alerts.values():
@@ -1031,8 +989,7 @@ IA Influencer Agent Monitoring System
             self.logger.error(f"Error updating alert count metrics: {str(e)}")
     
     async def _store_alert_in_elasticsearch(self, alert: Alert):
-        """Store alert in Elasticsearch for analytics"""
-        try:
+        """Store alert in Elasticsearch for analytics"""        try:
             if not self.elasticsearch_client:
                 return
             
@@ -1063,8 +1020,7 @@ IA Influencer Agent Monitoring System
             self.logger.error(f"Error storing alert in Elasticsearch: {str(e)}")
     
     async def generate_protection_analytics_report(self) -> Dict[str, Any]:
-        """Generate comprehensive protection analytics report"""
-        try:
+        """Generate comprehensive protection analytics report"""        try:
             # Collect protection metrics
             protection_metrics = await self._collect_protection_metrics()
             
@@ -1114,8 +1070,7 @@ IA Influencer Agent Monitoring System
             return {}
     
     async def _collect_protection_metrics(self) -> ProtectionMetrics:
-        """Collect protection-specific metrics"""
-        try:
+        """Collect protection-specific metrics"""        try:
             # Get metrics from Redis
             detection_metrics = await self._get_redis_metrics('detection:*')
             enforcement_metrics = await self._get_redis_metrics('enforcement:*')
@@ -1139,8 +1094,7 @@ IA Influencer Agent Monitoring System
             return ProtectionMetrics()
     
     def _calculate_overall_health(self) -> str:
-        """Calculate overall system health score"""
-        if not self.system_health:
+        """Calculate overall system health score"""        if not self.system_health:
             return "unknown"
         
         health_scores = {
@@ -1173,8 +1127,7 @@ IA Influencer Agent Monitoring System
             return "critical"
     
     async def _generate_optimization_recommendations(self) -> List[str]:
-        """Generate system optimization recommendations"""
-        recommendations = []
+        """Generate system optimization recommendations"""        recommendations = []
         
         # Analyze system health for recommendations
         for component, health in self.system_health.items():
@@ -1209,8 +1162,7 @@ IA Influencer Agent Monitoring System
     
     # Helper methods for metrics collection
     async def _get_redis_metrics(self, pattern: str) -> Dict[str, Any]:
-        """Get metrics from Redis matching pattern"""
-        try:
+        """Get metrics from Redis matching pattern"""        try:
             keys = self.redis_client.keys(pattern)
             metrics = {}
             
@@ -1233,8 +1185,7 @@ IA Influencer Agent Monitoring System
             return {}
     
     async def _check_database_performance(self) -> Dict[str, Any]:
-        """Check database performance metrics"""
-        try:
+        """Check database performance metrics"""        try:
             # This would connect to PostgreSQL and collect metrics
             # For now, return mock data
             return {
@@ -1252,8 +1203,7 @@ IA Influencer Agent Monitoring System
             return {}
     
     async def _get_queue_metrics(self) -> Dict[str, Any]:
-        """Get message queue metrics"""
-        try:
+        """Get message queue metrics"""        try:
             # This would integrate with actual message queue system
             return {
                 'total_messages': 10000,
@@ -1270,8 +1220,7 @@ IA Influencer Agent Monitoring System
             return {}
     
     def _get_protected_content_types(self) -> Dict[str, int]:
-        """Get count of protected content by type"""
-        return {
+        """Get count of protected content by type"""        return {
             'audio': 1500,
             'video': 800,
             'image': 2000,
@@ -1279,8 +1228,7 @@ IA Influencer Agent Monitoring System
         }
     
     async def _get_violations_by_platform(self) -> Dict[str, int]:
-        """Get violations count by platform"""
-        return {
+        """Get violations count by platform"""        return {
             'youtube': 45,
             'tiktok': 32,
             'instagram': 28,
@@ -1289,16 +1237,13 @@ IA Influencer Agent Monitoring System
         }
     
     async def _get_dmca_notices_count(self) -> int:
-        """Get count of DMCA notices sent"""
-        return 25
+        """Get count of DMCA notices sent"""        return 25
     
     async def _get_pending_enforcements_count(self) -> int:
-        """Get count of pending enforcement actions"""
-        return 8
+        """Get count of pending enforcement actions"""        return 8
     
     async def _get_resource_utilization_summary(self) -> Dict[str, float]:
-        """Get resource utilization summary"""
-        return {
+        """Get resource utilization summary"""        return {
             'avg_cpu_usage': 65.5,
             'avg_memory_usage': 70.2,
             'avg_disk_usage': 45.8,
@@ -1306,8 +1251,7 @@ IA Influencer Agent Monitoring System
         }
     
     async def _get_throughput_metrics(self) -> Dict[str, float]:
-        """Get system throughput metrics"""
-        return {
+        """Get system throughput metrics"""        return {
             'fingerprints_per_second': 125.0,
             'detections_per_hour': 450.0,
             'enforcements_per_day': 15.0,
@@ -1315,8 +1259,7 @@ IA Influencer Agent Monitoring System
         }
     
     async def _get_error_rate_summary(self) -> Dict[str, float]:
-        """Get error rate summary across components"""
-        return {
+        """Get error rate summary across components"""        return {
             'fingerprinting_servers': 1.2,
             'crawler_deployment': 2.1,
             'detection_systems': 0.8,
@@ -1325,19 +1268,16 @@ IA Influencer Agent Monitoring System
         }
     
     def _get_alerts_by_severity(self) -> Dict[str, int]:
-        """Get active alerts count by severity"""
-        severity_counts = defaultdict(int)
+        """Get active alerts count by severity"""        severity_counts = defaultdict(int)
         for alert in self.active_alerts.values():
             severity_counts[alert.severity.value] += 1
         return dict(severity_counts)
     
     async def _get_resolved_alerts_count(self) -> int:
-        """Get count of alerts resolved in last 24h"""
-        return 12
+        """Get count of alerts resolved in last 24h"""        return 12
     
     async def _get_top_alert_sources(self) -> Dict[str, int]:
-        """Get top sources generating alerts"""
-        return {
+        """Get top sources generating alerts"""        return {
             'detection_systems': 8,
             'crawler_deployment': 5,
             'database_cluster': 3,
@@ -1345,8 +1285,7 @@ IA Influencer Agent Monitoring System
         }
     
     async def _store_analytics_report(self, analytics: Dict[str, Any]):
-        """Store analytics report"""
-        try:
+        """Store analytics report"""        try:
             # Store in Redis with timestamp
             report_key = f"analytics_report:{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             await asyncio.get_event_loop().run_in_executor(
@@ -1371,10 +1310,8 @@ IA Influencer Agent Monitoring System
             self.logger.error(f"Error storing analytics report: {str(e)}")
     
     def _start_monitoring_workers(self):
-        """Start background monitoring workers"""
-        def metrics_collector():
-            """Collect metrics periodically"""
-            loop = asyncio.new_event_loop()
+        """Start background monitoring workers"""        def metrics_collector():
+            """Collect metrics periodically"""            loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             
             async def collect_loop():
@@ -1389,8 +1326,7 @@ IA Influencer Agent Monitoring System
             loop.run_until_complete(collect_loop())
         
         def alert_checker():
-            """Check alerts periodically"""
-            loop = asyncio.new_event_loop()
+            """Check alerts periodically"""            loop = asyncio.new_event_loop()
             asyncio.set_event_loop(loop)
             
             async def alert_loop():
@@ -1416,16 +1352,14 @@ IA Influencer Agent Monitoring System
 
 # Factory function for creating monitoring system
 def create_monitoring_system(config: Dict[str, Any]) -> ProtectionMonitoringSystem:
-    """
-    Create and configure protection monitoring system
+    """    Create and configure protection monitoring system
     
     Args:
         config: System configuration parameters
         
     Returns:
         ProtectionMonitoringSystem: Configured monitoring system
-    """
-    return ProtectionMonitoringSystem(
+    """    return ProtectionMonitoringSystem(
         redis_host=config.get('redis_host', 'localhost'),
         redis_port=config.get('redis_port', 6379),
         postgres_url=config.get('postgres_url', 'postgresql://localhost/ia_influencer'),

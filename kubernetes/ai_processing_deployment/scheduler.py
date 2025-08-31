@@ -1,5 +1,4 @@
-"""
-AI Processing Scheduler
+"""AI Processing Scheduler
 ======================
 
 Enterprise-grade scheduling system for AI processing tasks with
@@ -14,7 +13,6 @@ Features:
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 import time
@@ -44,8 +42,7 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulingStrategy(Enum):
-    """Task scheduling strategies."""
-    FIFO = "first_in_first_out"
+    """Task scheduling strategies."""    FIFO = "first_in_first_out"
     PRIORITY = "priority_based"
     SJF = "shortest_job_first"
     ROUND_ROBIN = "round_robin"
@@ -54,8 +51,7 @@ class SchedulingStrategy(Enum):
 
 
 class TaskPriority(Enum):
-    """Task priority levels."""
-    CRITICAL = 1
+    """Task priority levels."""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -63,8 +59,7 @@ class TaskPriority(Enum):
 
 
 class ResourceRequirement(Enum):
-    """Resource requirement types."""
-    CPU_INTENSIVE = "cpu_intensive"
+    """Resource requirement types."""    CPU_INTENSIVE = "cpu_intensive"
     GPU_INTENSIVE = "gpu_intensive"
     MEMORY_INTENSIVE = "memory_intensive"
     IO_INTENSIVE = "io_intensive"
@@ -73,8 +68,7 @@ class ResourceRequirement(Enum):
 
 @dataclass
 class SchedulingConfig:
-    """Scheduler configuration parameters."""
-    strategy: SchedulingStrategy = SchedulingStrategy.PRIORITY
+    """Scheduler configuration parameters."""    strategy: SchedulingStrategy = SchedulingStrategy.PRIORITY
     max_concurrent_tasks: int = 50
     max_queue_size: int = 1000
     default_timeout: int = 300
@@ -87,8 +81,7 @@ class SchedulingConfig:
 
 @dataclass
 class ScheduledTask:
-    """Scheduled task with metadata."""
-    task: ProcessingTask
+    """Scheduled task with metadata."""    task: ProcessingTask
     priority: TaskPriority
     resource_requirement: ResourceRequirement
     deadline: Optional[datetime] = None
@@ -106,8 +99,7 @@ class ScheduledTask:
 
 @dataclass
 class ResourcePool:
-    """Resource pool for task execution."""
-    pool_id: str
+    """Resource pool for task execution."""    pool_id: str
     resource_type: ResourceRequirement
     capacity: int
     available: int
@@ -120,16 +112,13 @@ class ResourcePool:
 
 
 class AIProcessingScheduler:
-    """
-    Enterprise AI Processing Scheduler
+    """    Enterprise AI Processing Scheduler
     
     Manages scheduling and execution of AI processing tasks with
     intelligent prioritization, resource optimization, and SLA compliance.
-    """
-    
+    """    
     def __init__(self, config: SchedulingConfig):
-        """Initialize AI processing scheduler."""
-        self.config = config
+        """Initialize AI processing scheduler."""        self.config = config
         self.task_queue = []  # Priority queue (heapq)
         self.active_tasks: Dict[str, ScheduledTask] = {}
         self.completed_tasks = deque(maxlen=10000)
@@ -154,8 +143,7 @@ class AIProcessingScheduler:
         self._initialize_scheduler()
     
     async def _initialize_scheduler(self):
-        """Initialize scheduler components."""
-        try:
+        """Initialize scheduler components."""        try:
             # Initialize Redis for persistence
             self.redis_client = aioredis.from_url(
                 "redis://localhost:6379",
@@ -178,8 +166,7 @@ class AIProcessingScheduler:
             raise
     
     async def _initialize_resource_pools(self):
-        """Initialize resource pools for different task types."""
-        try:
+        """Initialize resource pools for different task types."""        try:
             # CPU-intensive tasks pool
             self.resource_pools['cpu_pool'] = ResourcePool(
                 pool_id='cpu_pool',
@@ -243,8 +230,7 @@ class AIProcessingScheduler:
         deadline: Optional[datetime] = None,
         estimated_duration: float = 60.0
     ) -> str:
-        """
-        Schedule a processing task for execution.
+        """        Schedule a processing task for execution.
         
         Args:
             task: Processing task to schedule
@@ -254,8 +240,7 @@ class AIProcessingScheduler:
             
         Returns:
             str: Scheduled task ID
-        """
-        try:
+        """        try:
             scheduler_tasks_queued.inc()
             
             # Validate queue capacity
@@ -307,8 +292,7 @@ class AIProcessingScheduler:
             raise
     
     def _determine_resource_requirement(self, task: ProcessingTask) -> ResourceRequirement:
-        """Determine resource requirement based on task characteristics."""
-        model_type = task.model_type
+        """Determine resource requirement based on task characteristics."""        model_type = task.model_type
         content_type = task.content_type
         
         # GPU-intensive tasks
@@ -331,8 +315,7 @@ class AIProcessingScheduler:
         return ResourceRequirement.BALANCED
     
     def _calculate_priority_score(self, scheduled_task: ScheduledTask) -> float:
-        """Calculate priority score for heap ordering (lower = higher priority)."""
-        base_score = scheduled_task.priority.value
+        """Calculate priority score for heap ordering (lower = higher priority)."""        base_score = scheduled_task.priority.value
         
         # Age factor (older tasks get higher priority)
         age_hours = (datetime.utcnow() - scheduled_task.scheduled_at).total_seconds() / 3600
@@ -354,8 +337,7 @@ class AIProcessingScheduler:
         return max(0.1, final_score)  # Ensure positive score
     
     def _get_resource_availability_factor(self, resource_requirement: ResourceRequirement) -> float:
-        """Get resource availability factor for priority calculation."""
-        pool_id = self._get_pool_for_resource(resource_requirement)
+        """Get resource availability factor for priority calculation."""        pool_id = self._get_pool_for_resource(resource_requirement)
         pool = self.resource_pools.get(pool_id)
         
         if not pool or pool.capacity == 0:
@@ -365,8 +347,7 @@ class AIProcessingScheduler:
         return (1.0 - availability_ratio) * 0.5  # Lower penalty for more available resources
     
     def _get_pool_for_resource(self, resource_requirement: ResourceRequirement) -> str:
-        """Get resource pool ID for requirement type."""
-        pool_mapping = {
+        """Get resource pool ID for requirement type."""        pool_mapping = {
             ResourceRequirement.CPU_INTENSIVE: 'cpu_pool',
             ResourceRequirement.GPU_INTENSIVE: 'gpu_pool',
             ResourceRequirement.MEMORY_INTENSIVE: 'memory_pool',
@@ -376,8 +357,7 @@ class AIProcessingScheduler:
         return pool_mapping.get(resource_requirement, 'balanced_pool')
     
     async def _scheduler_loop(self):
-        """Main scheduler loop for task execution."""
-        while True:
+        """Main scheduler loop for task execution."""        while True:
             try:
                 # Process pending tasks
                 await self._process_pending_tasks()
@@ -396,8 +376,7 @@ class AIProcessingScheduler:
                 await asyncio.sleep(5.0)
     
     async def _process_pending_tasks(self):
-        """Process pending tasks from the queue."""
-        try:
+        """Process pending tasks from the queue."""        try:
             while (self.task_queue and 
                    len(self.active_tasks) < self.config.max_concurrent_tasks):
                 
@@ -425,8 +404,7 @@ class AIProcessingScheduler:
             logger.error(f"Error processing pending tasks: {e}")
     
     async def _allocate_resources(self, scheduled_task: ScheduledTask) -> bool:
-        """Allocate resources for task execution."""
-        try:
+        """Allocate resources for task execution."""        try:
             pool_id = self._get_pool_for_resource(scheduled_task.resource_requirement)
             pool = self.resource_pools.get(pool_id)
             
@@ -449,8 +427,7 @@ class AIProcessingScheduler:
             return False
     
     async def _start_task_execution(self, scheduled_task: ScheduledTask):
-        """Start execution of a scheduled task."""
-        try:
+        """Start execution of a scheduled task."""        try:
             task_id = scheduled_task.task.task_id
             
             # Update task status
@@ -480,8 +457,7 @@ class AIProcessingScheduler:
             logger.error(f"Failed to start task execution for {scheduled_task.task.task_id}: {e}")
     
     async def _check_active_tasks(self):
-        """Check active tasks for completion or timeout."""
-        try:
+        """Check active tasks for completion or timeout."""        try:
             completed_tasks = []
             current_time = datetime.utcnow()
             
@@ -519,8 +495,7 @@ class AIProcessingScheduler:
             logger.error(f"Error checking active tasks: {e}")
     
     async def _complete_task(self, task_id: str):
-        """Complete and cleanup a task."""
-        try:
+        """Complete and cleanup a task."""        try:
             scheduled_task = self.active_tasks.get(task_id)
             if not scheduled_task:
                 return
@@ -567,8 +542,7 @@ class AIProcessingScheduler:
             logger.error(f"Failed to complete task {task_id}: {e}")
     
     async def _release_resources(self, scheduled_task: ScheduledTask):
-        """Release allocated resources for a task."""
-        try:
+        """Release allocated resources for a task."""        try:
             task_id = scheduled_task.task.task_id
             pool_id = self.resource_allocation.get(task_id)
             
@@ -586,8 +560,7 @@ class AIProcessingScheduler:
             logger.error(f"Failed to release resources for task {scheduled_task.task.task_id}: {e}")
     
     async def _retry_task(self, scheduled_task: ScheduledTask):
-        """Retry a failed task."""
-        try:
+        """Retry a failed task."""        try:
             scheduled_task.retry_count += 1
             scheduled_task.task.status = ProcessingStatus.PENDING
             scheduled_task.task.error = None
@@ -610,8 +583,7 @@ class AIProcessingScheduler:
             logger.error(f"Failed to retry task {scheduled_task.task.task_id}: {e}")
     
     async def _update_resource_pools(self):
-        """Update resource pool statistics and optimization."""
-        try:
+        """Update resource pool statistics and optimization."""        try:
             for pool_id, pool in self.resource_pools.items():
                 # Calculate utilization
                 utilization = (pool.capacity - pool.available) / pool.capacity if pool.capacity > 0 else 0
@@ -627,8 +599,7 @@ class AIProcessingScheduler:
             logger.error(f"Error updating resource pools: {e}")
     
     async def _optimize_pool_capacity(self, pool: ResourcePool):
-        """Optimize resource pool capacity based on usage patterns."""
-        try:
+        """Optimize resource pool capacity based on usage patterns."""        try:
             utilization_key = f"{pool.pool_id}_utilization"
             recent_utilization = self.performance_metrics[utilization_key][-10:]  # Last 10 measurements
             
@@ -654,8 +625,7 @@ class AIProcessingScheduler:
             logger.error(f"Failed to optimize pool capacity for {pool.pool_id}: {e}")
     
     async def _cleanup_loop(self):
-        """Background cleanup task."""
-        while True:
+        """Background cleanup task."""        while True:
             try:
                 await asyncio.sleep(self.config.queue_cleanup_interval)
                 
@@ -687,8 +657,7 @@ class AIProcessingScheduler:
                 logger.error(f"Error in cleanup loop: {e}")
     
     async def _metrics_loop(self):
-        """Background metrics collection task."""
-        while True:
+        """Background metrics collection task."""        while True:
             try:
                 await asyncio.sleep(60)  # Update every minute
                 
@@ -708,8 +677,7 @@ class AIProcessingScheduler:
                 logger.error(f"Error in metrics loop: {e}")
     
     async def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of a scheduled task."""
-        try:
+        """Get status of a scheduled task."""        try:
             # Check active tasks
             if task_id in self.active_tasks:
                 scheduled_task = self.active_tasks[task_id]
@@ -737,8 +705,7 @@ class AIProcessingScheduler:
             return None
     
     def _format_task_status(self, scheduled_task: ScheduledTask) -> Dict[str, Any]:
-        """Format task status for response."""
-        return {
+        """Format task status for response."""        return {
             'task_id': scheduled_task.task.task_id,
             'status': scheduled_task.task.status.value,
             'priority': scheduled_task.priority.name,
@@ -753,8 +720,7 @@ class AIProcessingScheduler:
         }
     
     async def get_scheduler_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive scheduler statistics."""
-        try:
+        """Get comprehensive scheduler statistics."""        try:
             # Resource pool stats
             pool_stats = {}
             for pool_id, pool in self.resource_pools.items():
@@ -789,8 +755,7 @@ class AIProcessingScheduler:
             return {}
     
     async def shutdown(self):
-        """Gracefully shutdown scheduler."""
-        try:
+        """Gracefully shutdown scheduler."""        try:
             logger.info("Shutting down AI processing scheduler")
             
             # Cancel background tasks
@@ -825,8 +790,7 @@ class AIProcessingScheduler:
 
 # Factory functions
 def create_scheduler(strategy: str = "priority") -> AIProcessingScheduler:
-    """Create scheduler with specified strategy."""
-    config = SchedulingConfig(
+    """Create scheduler with specified strategy."""    config = SchedulingConfig(
         strategy=SchedulingStrategy(strategy.lower()),
         max_concurrent_tasks=50,
         max_queue_size=1000
@@ -835,8 +799,7 @@ def create_scheduler(strategy: str = "priority") -> AIProcessingScheduler:
 
 
 def create_high_performance_scheduler() -> AIProcessingScheduler:
-    """Create high-performance scheduler configuration."""
-    config = SchedulingConfig(
+    """Create high-performance scheduler configuration."""    config = SchedulingConfig(
         strategy=SchedulingStrategy.RESOURCE_OPTIMIZED,
         max_concurrent_tasks=100,
         max_queue_size=2000,

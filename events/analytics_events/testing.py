@@ -1,5 +1,4 @@
-"""
-Analytics Events Testing Module
+"""Analytics Events Testing Module
 
 Ultra-advanced testing utilities for analytics events with performance benchmarks,
 load testing, data quality validation, and ML model testing.
@@ -13,7 +12,6 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import time
 import random
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class TestResult:
-    """Test result data structure"""
-    test_name: str
+    """Test result data structure"""    test_name: str
     passed: bool
     duration: float
     details: Dict[str, Any]
@@ -48,8 +45,7 @@ class TestResult:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark data structure"""
-    operation_name: str
+    """Performance benchmark data structure"""    operation_name: str
     avg_response_time: float
     min_response_time: float
     max_response_time: float
@@ -61,11 +57,9 @@ class PerformanceBenchmark:
 
 
 class DataGenerator:
-    """Advanced test data generator for analytics events"""
-    
+    """Advanced test data generator for analytics events"""    
     def __init__(self, seed: int = 42):
-        """Initialize data generator with random seed"""
-        random.seed(seed)
+        """Initialize data generator with random seed"""        random.seed(seed)
         np.random.seed(seed)
         self.user_ids = [str(uuid.uuid4()) for _ in range(1000)]
         self.content_ids = [str(uuid.uuid4()) for _ in range(500)]
@@ -74,8 +68,7 @@ class DataGenerator:
         self.event_types = ['view', 'like', 'share', 'comment', 'download', 'subscribe']
     
     def generate_engagement_event(self, timestamp: Optional[datetime] = None) -> Dict[str, Any]:
-        """Generate realistic engagement event data"""
-        if timestamp is None:
+        """Generate realistic engagement event data"""        if timestamp is None:
             timestamp = datetime.now(timezone.utc) - timedelta(
                 seconds=random.randint(0, 86400)  # Last 24 hours
             )
@@ -106,8 +99,7 @@ class DataGenerator:
         }
     
     def generate_revenue_event(self, timestamp: Optional[datetime] = None) -> Dict[str, Any]:
-        """Generate realistic revenue event data"""
-        if timestamp is None:
+        """Generate realistic revenue event data"""        if timestamp is None:
             timestamp = datetime.now(timezone.utc) - timedelta(
                 seconds=random.randint(0, 86400)
             )
@@ -145,8 +137,7 @@ class DataGenerator:
         }
     
     def generate_protection_event(self, timestamp: Optional[datetime] = None) -> Dict[str, Any]:
-        """Generate realistic content protection event data"""
-        if timestamp is None:
+        """Generate realistic content protection event data"""        if timestamp is None:
             timestamp = datetime.now(timezone.utc) - timedelta(
                 seconds=random.randint(0, 86400)
             )
@@ -177,8 +168,7 @@ class DataGenerator:
         }
     
     def generate_collaboration_event(self, timestamp: Optional[datetime] = None) -> Dict[str, Any]:
-        """Generate realistic collaboration event data"""
-        if timestamp is None:
+        """Generate realistic collaboration event data"""        if timestamp is None:
             timestamp = datetime.now(timezone.utc) - timedelta(
                 seconds=random.randint(0, 86400)
             )
@@ -213,8 +203,7 @@ class DataGenerator:
     
     def generate_batch_events(self, event_type: str, count: int, 
                             time_range_hours: int = 24) -> List[Dict[str, Any]]:
-        """Generate a batch of events of specified type"""
-        events = []
+        """Generate a batch of events of specified type"""        events = []
         start_time = datetime.now(timezone.utc) - timedelta(hours=time_range_hours)
         
         for i in range(count):
@@ -240,19 +229,16 @@ class DataGenerator:
 
 
 class LoadTester:
-    """Advanced load testing for analytics systems"""
-    
+    """Advanced load testing for analytics systems"""    
     def __init__(self, target_function: Callable, max_concurrent: int = 100):
-        """Initialize load tester"""
-        self.target_function = target_function
+        """Initialize load tester"""        self.target_function = target_function
         self.max_concurrent = max_concurrent
         self.results = []
     
     async def run_load_test(self, requests_per_second: int, 
                           duration_seconds: int, 
                           test_data_generator: Callable) -> PerformanceBenchmark:
-        """Run comprehensive load test"""
-        total_requests = requests_per_second * duration_seconds
+        """Run comprehensive load test"""        total_requests = requests_per_second * duration_seconds
         interval = 1.0 / requests_per_second
         
         start_time = time.time()
@@ -326,8 +312,7 @@ class LoadTester:
     
     def run_stress_test(self, increasing_load_steps: List[int], 
                        step_duration: int = 60) -> List[PerformanceBenchmark]:
-        """Run stress test with increasing load"""
-        benchmarks = []
+        """Run stress test with increasing load"""        benchmarks = []
         
         for rps in increasing_load_steps:
             logger.info(f"Running stress test step: {rps} RPS")
@@ -350,8 +335,7 @@ class LoadTester:
 
 
 class DataQualityValidator:
-    """Advanced data quality validation for analytics events"""
-    
+    """Advanced data quality validation for analytics events"""    
     def __init__(self):
         self.validation_rules = {}
         self.quality_metrics = {}
@@ -359,15 +343,13 @@ class DataQualityValidator:
     def add_validation_rule(self, rule_name: str, 
                           validation_func: Callable[[Dict[str, Any]], bool],
                           description: str = ""):
-        """Add custom validation rule"""
-        self.validation_rules[rule_name] = {
+        """Add custom validation rule"""        self.validation_rules[rule_name] = {
             'function': validation_func,
             'description': description
         }
     
     def validate_data_quality(self, events: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Comprehensive data quality validation"""
-        if not events:
+        """Comprehensive data quality validation"""        if not events:
             return {'error': 'No events to validate'}
         
         df = pd.DataFrame(events)
@@ -466,16 +448,14 @@ class DataQualityValidator:
 
 
 class MLModelTester:
-    """Advanced testing utilities for ML models in analytics"""
-    
+    """Advanced testing utilities for ML models in analytics"""    
     def __init__(self):
         self.test_results = {}
     
     async def test_model_performance(self, model, test_data: List[Dict[str, Any]], 
                                    target_column: str, 
                                    feature_columns: List[str]) -> Dict[str, Any]:
-        """Comprehensive ML model performance testing"""
-        try:
+        """Comprehensive ML model performance testing"""        try:
             df = pd.DataFrame(test_data)
             X = df[feature_columns]
             y = df[target_column]
@@ -551,8 +531,7 @@ class MLModelTester:
     
     async def test_model_robustness(self, model, test_data: List[Dict[str, Any]], 
                                   feature_columns: List[str]) -> Dict[str, Any]:
-        """Test model robustness against various perturbations"""
-        try:
+        """Test model robustness against various perturbations"""        try:
             df = pd.DataFrame(test_data)
             X = df[feature_columns]
             
@@ -610,14 +589,12 @@ class MLModelTester:
 
 
 class IntegrationTester:
-    """Integration testing for analytics systems"""
-    
+    """Integration testing for analytics systems"""    
     def __init__(self):
         self.test_results = []
     
     async def test_database_integration(self, db_connection) -> TestResult:
-        """Test database integration"""
-        start_time = time.time()
+        """Test database integration"""        start_time = time.time()
         errors = []
         warnings = []
         
@@ -661,8 +638,7 @@ class IntegrationTester:
             )
     
     async def test_cache_integration(self, cache_client) -> TestResult:
-        """Test cache integration"""
-        start_time = time.time()
+        """Test cache integration"""        start_time = time.time()
         errors = []
         warnings = []
         
@@ -711,8 +687,7 @@ class IntegrationTester:
             )
     
     async def test_api_endpoints(self, api_client, endpoints: List[str]) -> List[TestResult]:
-        """Test API endpoint integration"""
-        results = []
+        """Test API endpoint integration"""        results = []
         
         for endpoint in endpoints:
             start_time = time.time()
@@ -756,8 +731,7 @@ class IntegrationTester:
 
 # Utility functions for testing
 def create_mock_analytics_handler():
-    """Create mock analytics event handler for testing"""
-    mock_handler = Mock()
+    """Create mock analytics event handler for testing"""    mock_handler = Mock()
     mock_handler.process_event = AsyncMock(return_value={'status': 'processed'})
     mock_handler.get_metrics = AsyncMock(return_value={
         'total_events': 100,
@@ -768,8 +742,7 @@ def create_mock_analytics_handler():
 
 
 def create_test_dataset(size: int = 1000) -> List[Dict[str, Any]]:
-    """Create comprehensive test dataset"""
-    generator = DataGenerator()
+    """Create comprehensive test dataset"""    generator = DataGenerator()
     dataset = []
     
     # Generate mixed event types
@@ -791,8 +764,7 @@ def create_test_dataset(size: int = 1000) -> List[Dict[str, Any]]:
 
 
 async def run_comprehensive_test_suite() -> Dict[str, Any]:
-    """Run comprehensive test suite for analytics system"""
-    test_results = {
+    """Run comprehensive test suite for analytics system"""    test_results = {
         'data_quality': {},
         'load_testing': {},
         'ml_testing': {},

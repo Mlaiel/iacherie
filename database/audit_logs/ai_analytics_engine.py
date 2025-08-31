@@ -1,5 +1,4 @@
-"""
-AI Analytics Engine for Audit Logs
+"""AI Analytics Engine for Audit Logs
 
 Ultra-advanced AI-powered analytics engine for audit log analysis, anomaly detection,
 predictive modeling, and behavioral profiling in the IA Influencer Agent platform.
@@ -13,7 +12,6 @@ Unauthorized use, copying, distribution, or reverse engineering is STRICTLY PROH
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
 """
-
 from typing import List, Dict, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timezone, timedelta
 from enum import Enum
@@ -48,8 +46,7 @@ Base = declarative_base()
 
 
 class AnalyticsEventType(Enum):
-    """AI analytics event types."""
-    
+    """AI analytics event types."""    
     # Anomaly Detection
     ANOMALY_DETECTED = "anomaly_detected"
     BEHAVIOR_DEVIATION = "behavior_deviation"
@@ -76,8 +73,7 @@ class AnalyticsEventType(Enum):
 
 
 class AnalyticsSeverity(Enum):
-    """Analytics event severity levels."""
-    
+    """Analytics event severity levels."""    
     CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
@@ -86,8 +82,7 @@ class AnalyticsSeverity(Enum):
 
 
 class ModelType(Enum):
-    """Machine learning model types."""
-    
+    """Machine learning model types."""    
     ANOMALY_DETECTION = "anomaly_detection"
     BEHAVIORAL_CLUSTERING = "behavioral_clustering"
     THREAT_PREDICTION = "threat_prediction"
@@ -98,8 +93,7 @@ class ModelType(Enum):
 
 @dataclass
 class AIAnalyticsContext:
-    """Context information for AI analytics events."""
-    
+    """Context information for AI analytics events."""    
     model_name: str
     model_version: str
     algorithm_type: str
@@ -114,8 +108,7 @@ class AIAnalyticsContext:
 
 
 class AIAnalyticsLog(Base):
-    """AI analytics log model for audit trail."""
-    
+    """AI analytics log model for audit trail."""    
     __tablename__ = "ai_analytics_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -149,11 +142,9 @@ class AIAnalyticsLog(Base):
 
 
 class AnomalyDetector:
-    """Advanced anomaly detection using multiple ML algorithms."""
-    
+    """Advanced anomaly detection using multiple ML algorithms."""    
     def __init__(self, model_config: Dict[str, Any] = None):
-        """Initialize anomaly detector with configuration."""
-        self.config = model_config or {}
+        """Initialize anomaly detector with configuration."""        self.config = model_config or {}
         self.models = {}
         self.scalers = {}
         self.is_trained = False
@@ -162,16 +153,14 @@ class AnomalyDetector:
             logger.warning("ML libraries not available. Anomaly detection will use statistical methods.")
     
     async def train_models(self, training_data: pd.DataFrame) -> Dict[str, float]:
-        """
-        Train multiple anomaly detection models.
+        """        Train multiple anomaly detection models.
         
         Args:
             training_data: Historical audit log data
             
         Returns:
             Dict[str, float]: Model performance metrics
-        """
-        performance_metrics = {}
+        """        performance_metrics = {}
         
         if not HAS_ML_LIBS:
             logger.warning("ML libraries not available for training")
@@ -230,8 +219,7 @@ class AnomalyDetector:
         audit_data: pd.DataFrame,
         threshold: float = 0.5
     ) -> List[Dict[str, Any]]:
-        """
-        Detect anomalies in audit log data.
+        """        Detect anomalies in audit log data.
         
         Args:
             audit_data: Recent audit log data
@@ -239,8 +227,7 @@ class AnomalyDetector:
             
         Returns:
             List[Dict[str, Any]]: Detected anomalies with details
-        """
-        if not self.is_trained:
+        """        if not self.is_trained:
             raise ValueError("Models must be trained before anomaly detection")
         
         anomalies = []
@@ -308,8 +295,7 @@ class AnomalyDetector:
         return sorted(unique_anomalies, key=lambda x: x['confidence'], reverse=True)
     
     def _extract_features(self, data: pd.DataFrame) -> pd.DataFrame:
-        """Extract features from audit log data for ML analysis."""
-        features = []
+        """Extract features from audit log data for ML analysis."""        features = []
         
         # Time-based features
         if 'timestamp' in data.columns:
@@ -343,8 +329,7 @@ class AnomalyDetector:
         return data[features].fillna(0)
     
     def _build_autoencoder(self, input_dim: int):
-        """Build autoencoder neural network for anomaly detection."""
-        if not HAS_ML_LIBS:
+        """Build autoencoder neural network for anomaly detection."""        if not HAS_ML_LIBS:
             return None
         
         # Encoder
@@ -365,8 +350,7 @@ class AnomalyDetector:
         return autoencoder
     
     async def _evaluate_models(self, features: pd.DataFrame) -> Dict[str, float]:
-        """Evaluate model performance."""
-        # Implementation for model evaluation
+        """Evaluate model performance."""        # Implementation for model evaluation
         return {
             'isolation_forest_score': 0.95,
             'dbscan_silhouette_score': 0.85,
@@ -374,8 +358,7 @@ class AnomalyDetector:
         }
     
     def _deduplicate_anomalies(self, anomalies: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate anomalies from different detection methods."""
-        unique_anomalies = []
+        """Remove duplicate anomalies from different detection methods."""        unique_anomalies = []
         seen_indices = set()
         
         for anomaly in anomalies:
@@ -387,11 +370,9 @@ class AnomalyDetector:
 
 
 class PredictiveAnalyzer:
-    """Advanced predictive analytics for audit logs and system behavior."""
-    
+    """Advanced predictive analytics for audit logs and system behavior."""    
     def __init__(self, model_config: Dict[str, Any] = None):
-        """Initialize predictive analyzer."""
-        self.config = model_config or {}
+        """Initialize predictive analyzer."""        self.config = model_config or {}
         self.models = {}
         self.is_trained = False
     
@@ -400,8 +381,7 @@ class PredictiveAnalyzer:
         historical_data: pd.DataFrame,
         prediction_horizon: int = 24
     ) -> Dict[str, Any]:
-        """
-        Predict potential security threats based on historical patterns.
+        """        Predict potential security threats based on historical patterns.
         
         Args:
             historical_data: Historical security event data
@@ -409,8 +389,7 @@ class PredictiveAnalyzer:
             
         Returns:
             Dict[str, Any]: Threat predictions with confidence scores
-        """
-        try:
+        """        try:
             # Time series analysis for threat prediction
             threat_timeline = self._create_threat_timeline(historical_data)
             
@@ -436,8 +415,7 @@ class PredictiveAnalyzer:
         performance_data: pd.DataFrame,
         forecast_days: int = 7
     ) -> Dict[str, Any]:
-        """
-        Forecast system performance metrics.
+        """        Forecast system performance metrics.
         
         Args:
             performance_data: Historical performance data
@@ -445,8 +423,7 @@ class PredictiveAnalyzer:
             
         Returns:
             Dict[str, Any]: Performance forecasts
-        """
-        try:
+        """        try:
             forecasts = {}
             
             # CPU utilization forecast
@@ -484,8 +461,7 @@ class PredictiveAnalyzer:
             raise
     
     def _create_threat_timeline(self, data: pd.DataFrame) -> pd.Series:
-        """Create timeline of threat events."""
-        if 'timestamp' in data.columns and 'severity' in data.columns:
+        """Create timeline of threat events."""        if 'timestamp' in data.columns and 'severity' in data.columns:
             # Convert severity to numeric score
             severity_weights = {'info': 1, 'low': 2, 'medium': 3, 'high': 4, 'critical': 5}
             data['threat_score'] = data['severity'].map(severity_weights).fillna(0)
@@ -498,8 +474,7 @@ class PredictiveAnalyzer:
         return pd.Series()
     
     def _analyze_threat_patterns(self, timeline: pd.Series) -> Dict[str, Any]:
-        """Analyze patterns in threat timeline."""
-        patterns = {}
+        """Analyze patterns in threat timeline."""        patterns = {}
         
         if len(timeline) > 24:  # Need at least 24 hours of data
             # Daily patterns
@@ -518,8 +493,7 @@ class PredictiveAnalyzer:
         patterns: Dict[str, Any], 
         horizon: int
     ) -> List[Dict[str, Any]]:
-        """Generate threat predictions."""
-        predictions = []
+        """Generate threat predictions."""        predictions = []
         
         if 'daily_average' in patterns:
             base_threat_level = patterns['daily_average']
@@ -539,8 +513,7 @@ class PredictiveAnalyzer:
         return predictions
     
     def _forecast_metric(self, metric_data: pd.Series, forecast_days: int) -> Dict[str, Any]:
-        """Forecast a single performance metric."""
-        # Simple exponential smoothing for demonstration
+        """Forecast a single performance metric."""        # Simple exponential smoothing for demonstration
         # In production, would use more sophisticated methods like ARIMA, LSTM, etc.
         
         if len(metric_data) < 24:
@@ -569,8 +542,7 @@ class PredictiveAnalyzer:
         }
     
     def _calculate_prediction_confidence(self, patterns: Dict[str, Any]) -> float:
-        """Calculate confidence score for predictions."""
-        # Base confidence on data quality and pattern stability
+        """Calculate confidence score for predictions."""        # Base confidence on data quality and pattern stability
         base_confidence = 0.7
         
         if 'weekly_trend' in patterns and 'daily_average' in patterns:
@@ -588,8 +560,7 @@ class PredictiveAnalyzer:
         return min(0.95, max(0.5, base_confidence))
     
     def _identify_risk_factors(self, data: pd.DataFrame) -> List[str]:
-        """Identify risk factors from historical data."""
-        risk_factors = []
+        """Identify risk factors from historical data."""        risk_factors = []
         
         # High frequency of critical events
         if 'severity' in data.columns:
@@ -607,8 +578,7 @@ class PredictiveAnalyzer:
         return risk_factors
     
     def _generate_recommendations(self, predictions: List[Dict[str, Any]]) -> List[str]:
-        """Generate actionable recommendations based on predictions."""
-        recommendations = []
+        """Generate actionable recommendations based on predictions."""        recommendations = []
         
         high_risk_hours = [p for p in predictions if p.get('risk_category') == 'high']
         if high_risk_hours:
@@ -621,8 +591,7 @@ class PredictiveAnalyzer:
         return recommendations
     
     def _categorize_threat_level(self, threat_level: float) -> str:
-        """Categorize threat level."""
-        if threat_level < 2:
+        """Categorize threat level."""        if threat_level < 2:
             return 'low'
         elif threat_level < 5:
             return 'medium'
@@ -632,8 +601,7 @@ class PredictiveAnalyzer:
             return 'critical'
     
     def _generate_capacity_alerts(self, forecasts: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate capacity planning alerts."""
-        alerts = []
+        """Generate capacity planning alerts."""        alerts = []
         
         for metric, forecast in forecasts.items():
             if 'forecast_points' in forecast:
@@ -650,8 +618,7 @@ class PredictiveAnalyzer:
         return alerts
     
     def _generate_capacity_recommendations(self, forecasts: Dict[str, Any]) -> List[str]:
-        """Generate capacity planning recommendations."""
-        recommendations = []
+        """Generate capacity planning recommendations."""        recommendations = []
         
         for metric, forecast in forecasts.items():
             if 'trend' in forecast and forecast['trend'] == 'increasing':
@@ -664,11 +631,9 @@ class PredictiveAnalyzer:
 
 
 class BehaviorProfiler:
-    """Advanced user behavior profiling and analysis."""
-    
+    """Advanced user behavior profiling and analysis."""    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize behavior profiler."""
-        self.config = config or {}
+        """Initialize behavior profiler."""        self.config = config or {}
         self.user_profiles = {}
         self.behavior_models = {}
     
@@ -677,8 +642,7 @@ class BehaviorProfiler:
         user_id: str, 
         activity_data: pd.DataFrame
     ) -> Dict[str, Any]:
-        """
-        Create comprehensive user behavior profile.
+        """        Create comprehensive user behavior profile.
         
         Args:
             user_id: User identifier
@@ -686,8 +650,7 @@ class BehaviorProfiler:
             
         Returns:
             Dict[str, Any]: User behavior profile
-        """
-        try:
+        """        try:
             profile = {
                 'user_id': user_id,
                 'created_at': datetime.now(timezone.utc).isoformat(),
@@ -712,8 +675,7 @@ class BehaviorProfiler:
         user_id: str, 
         recent_activity: pd.DataFrame
     ) -> List[Dict[str, Any]]:
-        """
-        Detect behavioral anomalies for a specific user.
+        """        Detect behavioral anomalies for a specific user.
         
         Args:
             user_id: User identifier
@@ -721,8 +683,7 @@ class BehaviorProfiler:
             
         Returns:
             List[Dict[str, Any]]: Detected behavioral anomalies
-        """
-        if user_id not in self.user_profiles:
+        """        if user_id not in self.user_profiles:
             raise ValueError(f"No profile found for user {user_id}")
         
         profile = self.user_profiles[user_id]
@@ -757,8 +718,7 @@ class BehaviorProfiler:
         return anomalies
     
     def _analyze_activity_patterns(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user activity patterns."""
-        patterns = {}
+        """Analyze user activity patterns."""        patterns = {}
         
         if 'timestamp' in data.columns:
             data['hour'] = pd.to_datetime(data['timestamp']).dt.hour
@@ -774,8 +734,7 @@ class BehaviorProfiler:
         return patterns
     
     def _analyze_content_preferences(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user content preferences."""
-        preferences = {}
+        """Analyze user content preferences."""        preferences = {}
         
         # Content type analysis
         if 'content_type' in data.columns:
@@ -797,8 +756,7 @@ class BehaviorProfiler:
         return preferences
     
     def _analyze_collaboration_behavior(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user collaboration behavior."""
-        collaboration = {}
+        """Analyze user collaboration behavior."""        collaboration = {}
         
         # Collaboration frequency
         collab_events = data[data['event_type'].str.contains('collaboration', na=False)]
@@ -816,8 +774,7 @@ class BehaviorProfiler:
         return collaboration
     
     def _analyze_security_behavior(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user security behavior."""
-        security = {}
+        """Analyze user security behavior."""        security = {}
         
         # Login patterns
         login_events = data[data['event_type'].str.contains('login', na=False)]
@@ -837,8 +794,7 @@ class BehaviorProfiler:
         return security
     
     def _analyze_revenue_patterns(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user revenue patterns."""
-        revenue = {}
+        """Analyze user revenue patterns."""        revenue = {}
         
         # Revenue events
         revenue_events = data[data['event_type'].str.contains('revenue', na=False)]
@@ -857,8 +813,7 @@ class BehaviorProfiler:
         return revenue
     
     def _assess_user_risk(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Assess user risk level."""
-        risk_factors = []
+        """Assess user risk level."""        risk_factors = []
         risk_score = 0
         
         # High frequency of failed authentications
@@ -895,8 +850,7 @@ class BehaviorProfiler:
         }
     
     def _create_anomaly_baseline(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Create baseline for anomaly detection."""
-        baseline = {}
+        """Create baseline for anomaly detection."""        baseline = {}
         
         # Activity frequency baseline
         if 'timestamp' in data.columns:
@@ -912,8 +866,7 @@ class BehaviorProfiler:
         return baseline
     
     def _compare_patterns(self, current: Dict[str, Any], baseline: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Compare current patterns with baseline."""
-        anomalies = []
+        """Compare current patterns with baseline."""        anomalies = []
         
         # Compare activity frequency
         if 'activity_frequency' in current and 'activity_frequency' in baseline:
@@ -931,8 +884,7 @@ class BehaviorProfiler:
         return anomalies
     
     def _compare_security_behavior(self, current: Dict[str, Any], baseline: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Compare current security behavior with baseline."""
-        anomalies = []
+        """Compare current security behavior with baseline."""        anomalies = []
         
         # Compare unique IP count
         if 'unique_ips' in current and 'unique_ips' in baseline:
@@ -950,8 +902,7 @@ class BehaviorProfiler:
         return anomalies
     
     def _compare_collaboration_behavior(self, current: Dict[str, Any], baseline: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Compare current collaboration behavior with baseline."""
-        anomalies = []
+        """Compare current collaboration behavior with baseline."""        anomalies = []
         
         # Compare collaboration frequency
         if 'frequency' in current and 'frequency' in baseline:
@@ -969,8 +920,7 @@ class BehaviorProfiler:
         return anomalies
     
     def _calculate_trend(self, series: pd.Series) -> str:
-        """Calculate trend direction for a time series."""
-        if len(series) < 2:
+        """Calculate trend direction for a time series."""        if len(series) < 2:
             return "insufficient_data"
         
         # Simple linear trend calculation
@@ -987,11 +937,9 @@ class BehaviorProfiler:
 
 
 class AIAnalyticsEngine:
-    """Main AI analytics engine orchestrating all analytics components."""
-    
+    """Main AI analytics engine orchestrating all analytics components."""    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize AI analytics engine."""
-        self.config = config or {}
+        """Initialize AI analytics engine."""        self.config = config or {}
         self.anomaly_detector = AnomalyDetector(self.config.get('anomaly_detection', {}))
         self.predictive_analyzer = PredictiveAnalyzer(self.config.get('predictive_analysis', {}))
         self.behavior_profiler = BehaviorProfiler(self.config.get('behavior_profiling', {}))
@@ -1005,16 +953,14 @@ class AIAnalyticsEngine:
         self, 
         audit_data: pd.DataFrame
     ) -> Dict[str, Any]:
-        """
-        Run comprehensive AI analytics on audit data.
+        """        Run comprehensive AI analytics on audit data.
         
         Args:
             audit_data: Complete audit log dataset
             
         Returns:
             Dict[str, Any]: Comprehensive analytics results
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             results = {
@@ -1089,8 +1035,7 @@ class AIAnalyticsEngine:
             raise
     
     def _create_data_summary(self, data: pd.DataFrame) -> Dict[str, Any]:
-        """Create summary of the audit data."""
-        summary = {
+        """Create summary of the audit data."""        summary = {
             'total_records': len(data),
             'date_range': {},
             'event_types': {},
@@ -1125,8 +1070,7 @@ class AIAnalyticsEngine:
         return summary
     
     def _summarize_anomalies(self, anomalies: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Summarize detected anomalies."""
-        if not anomalies:
+        """Summarize detected anomalies."""        if not anomalies:
             return {'total': 0, 'by_method': {}, 'severity_distribution': {}}
         
         summary = {
@@ -1156,8 +1100,7 @@ class AIAnalyticsEngine:
         return summary
     
     def _calculate_overall_risk(self, analysis_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate overall system risk score."""
-        risk_score = 0
+        """Calculate overall system risk score."""        risk_score = 0
         risk_factors = []
         
         # Anomaly contribution
@@ -1212,8 +1155,7 @@ class AIAnalyticsEngine:
         }
     
     def _generate_comprehensive_recommendations(self, analysis_results: Dict[str, Any]) -> List[Dict[str, str]]:
-        """Generate comprehensive recommendations based on analysis."""
-        recommendations = []
+        """Generate comprehensive recommendations based on analysis."""        recommendations = []
         
         # Anomaly-based recommendations
         anomaly_count = analysis_results.get('anomaly_detection', {}).get('anomalies_found', 0)
@@ -1276,8 +1218,7 @@ class AIAnalyticsEngine:
         return recommendations
     
     def _get_risk_mitigation_actions(self, risk_level: str) -> List[str]:
-        """Get risk mitigation actions based on risk level."""
-        actions = {
+        """Get risk mitigation actions based on risk level."""        actions = {
             'critical': [
                 "Implement immediate incident response protocols",
                 "Escalate to security operations center",
@@ -1308,16 +1249,14 @@ class AIAnalyticsEngine:
 
 # Factory functions for creating analytics components
 async def create_ai_analytics_engine(config: Dict[str, Any] = None) -> AIAnalyticsEngine:
-    """
-    Create and configure AI analytics engine.
+    """    Create and configure AI analytics engine.
     
     Args:
         config: Analytics configuration
         
     Returns:
         AIAnalyticsEngine: Configured analytics engine
-    """
-    engine = AIAnalyticsEngine(config)
+    """    engine = AIAnalyticsEngine(config)
     
     # Initialize ML models if available
     if HAS_ML_LIBS and config and config.get('train_on_startup', False):
@@ -1328,18 +1267,15 @@ async def create_ai_analytics_engine(config: Dict[str, Any] = None) -> AIAnalyti
 
 
 def create_anomaly_detector(config: Dict[str, Any] = None) -> AnomalyDetector:
-    """Create and configure anomaly detector."""
-    return AnomalyDetector(config)
+    """Create and configure anomaly detector."""    return AnomalyDetector(config)
 
 
 def create_predictive_analyzer(config: Dict[str, Any] = None) -> PredictiveAnalyzer:
-    """Create and configure predictive analyzer."""
-    return PredictiveAnalyzer(config)
+    """Create and configure predictive analyzer."""    return PredictiveAnalyzer(config)
 
 
 def create_behavior_profiler(config: Dict[str, Any] = None) -> BehaviorProfiler:
-    """Create and configure behavior profiler."""
-    return BehaviorProfiler(config)
+    """Create and configure behavior profiler."""    return BehaviorProfiler(config)
 
 
 # Export all components

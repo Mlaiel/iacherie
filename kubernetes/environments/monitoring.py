@@ -1,5 +1,4 @@
-"""
-Monitoring Environment Manager - IA Influencer Agent
+"""Monitoring Environment Manager - IA Influencer Agent
 =====================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -16,7 +15,6 @@ Monitoring environment configuration for observability and alerting.
 Handles metrics collection, logging, tracing, and real-time monitoring.
 =====================================================
 """
-
 import os
 import logging
 from typing import Dict, Any, List, Optional, Set, Union
@@ -28,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class MonitoringLevel(Enum):
-    """Monitoring configuration levels"""
-    DEVELOPMENT = "development"
+    """Monitoring configuration levels"""    DEVELOPMENT = "development"
     TESTING = "testing"
     STAGING = "staging"
     PRODUCTION = "production"
@@ -38,8 +35,7 @@ class MonitoringLevel(Enum):
 
 
 class MetricType(Enum):
-    """Types of metrics to collect"""
-    COUNTER = "counter"
+    """Types of metrics to collect"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -48,8 +44,7 @@ class MetricType(Enum):
 
 @dataclass
 class MetricsConfig:
-    """Metrics collection configuration"""
-    enabled: bool = True
+    """Metrics collection configuration"""    enabled: bool = True
     collection_interval_seconds: int = int(os.getenv('METRICS_INTERVAL_SECONDS', '15'))
     retention_days: int = int(os.getenv('METRICS_RETENTION_DAYS', '30'))
     prometheus_enabled: bool = bool(os.getenv('PROMETHEUS_ENABLED', 'true').lower() == 'true')
@@ -69,8 +64,7 @@ class MetricsConfig:
 
 @dataclass
 class LoggingConfig:
-    """Logging configuration"""
-    enabled: bool = True
+    """Logging configuration"""    enabled: bool = True
     log_level: str = os.getenv('LOG_LEVEL', 'INFO')
     structured_logging: bool = True
     log_format: str = "json"
@@ -92,8 +86,7 @@ class LoggingConfig:
 
 @dataclass
 class TracingConfig:
-    """Distributed tracing configuration"""
-    enabled: bool = True
+    """Distributed tracing configuration"""    enabled: bool = True
     sampling_rate: float = float(os.getenv('TRACING_SAMPLING_RATE', '0.1'))
     jaeger_enabled: bool = bool(os.getenv('JAEGER_ENABLED', 'true').lower() == 'true')
     zipkin_enabled: bool = bool(os.getenv('ZIPKIN_ENABLED', 'false').lower() == 'true')
@@ -112,8 +105,7 @@ class TracingConfig:
 
 @dataclass
 class AlertingConfig:
-    """Alerting and notification configuration"""
-    enabled: bool = True
+    """Alerting and notification configuration"""    enabled: bool = True
     alert_manager_enabled: bool = bool(os.getenv('ALERT_MANAGER_ENABLED', 'true').lower() == 'true')
     notification_channels: List[str] = field(default_factory=lambda: ["email", "slack", "webhook"])
     email_notifications: bool = True
@@ -134,8 +126,7 @@ class AlertingConfig:
 
 @dataclass
 class DashboardConfig:
-    """Dashboard and visualization configuration"""
-    enabled: bool = True
+    """Dashboard and visualization configuration"""    enabled: bool = True
     grafana_enabled: bool = bool(os.getenv('GRAFANA_ENABLED', 'true').lower() == 'true')
     grafana_port: int = int(os.getenv('GRAFANA_PORT', '3000'))
     custom_dashboards_enabled: bool = True
@@ -155,8 +146,7 @@ class DashboardConfig:
 
 @dataclass
 class HealthCheckConfig:
-    """Health check and uptime monitoring configuration"""
-    enabled: bool = True
+    """Health check and uptime monitoring configuration"""    enabled: bool = True
     health_check_interval: int = int(os.getenv('HEALTH_CHECK_INTERVAL', '30'))
     endpoint_monitoring: bool = True
     database_health_checks: bool = True
@@ -178,8 +168,7 @@ class HealthCheckConfig:
 
 @dataclass
 class PerformanceMonitoringConfig:
-    """Performance monitoring configuration"""
-    enabled: bool = True
+    """Performance monitoring configuration"""    enabled: bool = True
     apm_enabled: bool = bool(os.getenv('APM_ENABLED', 'true').lower() == 'true')
     profiling_enabled: bool = bool(os.getenv('PROFILING_ENABLED', 'false').lower() == 'true')
     memory_profiling: bool = True
@@ -199,8 +188,7 @@ class PerformanceMonitoringConfig:
 
 
 class MonitoringEnvironmentManager:
-    """
-    Monitoring environment manager for observability and alerting.
+    """    Monitoring environment manager for observability and alerting.
     
     Features:
     - Comprehensive metrics collection and visualization
@@ -211,8 +199,7 @@ class MonitoringEnvironmentManager:
     - Health checks and uptime monitoring
     - Custom dashboards and reporting
     - SLA monitoring and capacity planning
-    """
-    
+    """    
     def __init__(self, monitoring_level: MonitoringLevel = MonitoringLevel.PRODUCTION, config_path: Optional[str] = None):
         self.monitoring_level = monitoring_level
         self.config_path = config_path or f"./monitoring/{monitoring_level.value}_config.yml"
@@ -239,8 +226,7 @@ class MonitoringEnvironmentManager:
         logger.info(f"Monitoring environment manager initialized for level: {monitoring_level.value}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load monitoring environment configuration"""
-        try:
+        """Load monitoring environment configuration"""        try:
             config = {
                 'environment': self.environment,
                 'monitoring_level': self.monitoring_level.value,
@@ -457,8 +443,7 @@ class MonitoringEnvironmentManager:
             raise
     
     def setup_observability_stack(self) -> Dict[str, Any]:
-        """Setup complete observability stack"""
-        try:
+        """Setup complete observability stack"""        try:
             setup_results = {
                 'prometheus_setup': False,
                 'grafana_setup': False,
@@ -510,8 +495,7 @@ class MonitoringEnvironmentManager:
             return {'error': str(e)}
     
     def configure_monitoring_rules(self) -> Dict[str, Any]:
-        """Configure monitoring and alerting rules"""
-        try:
+        """Configure monitoring and alerting rules"""        try:
             rule_config = {
                 'prometheus_rules': [],
                 'grafana_alerts': [],
@@ -548,8 +532,7 @@ class MonitoringEnvironmentManager:
             return {'error': str(e)}
     
     def generate_monitoring_report(self) -> Dict[str, Any]:
-        """Generate comprehensive monitoring report"""
-        try:
+        """Generate comprehensive monitoring report"""        try:
             report = {
                 'report_date': datetime.utcnow().isoformat(),
                 'monitoring_level': self.monitoring_level.value,
@@ -599,8 +582,7 @@ class MonitoringEnvironmentManager:
             return {'error': str(e)}
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get monitoring environment health status"""
-        return {
+        """Get monitoring environment health status"""        return {
             'environment': self.environment,
             'monitoring_level': self.monitoring_level.value,
             'status': 'monitoring',
@@ -620,8 +602,7 @@ class MonitoringEnvironmentManager:
     
     # Private helper methods
     def _apply_monitoring_level_config(self):
-        """Apply monitoring level-specific configurations"""
-        if self.monitoring_level == MonitoringLevel.ENTERPRISE:
+        """Apply monitoring level-specific configurations"""        if self.monitoring_level == MonitoringLevel.ENTERPRISE:
             self.metrics.high_cardinality_metrics = True
             self.logging.debug_logging = True
             self.tracing.sampling_rate = 0.5
@@ -635,8 +616,7 @@ class MonitoringEnvironmentManager:
             self.performance.anomaly_detection = True
     
     def _get_observability_stack(self) -> List[str]:
-        """Get enabled observability stack components"""
-        stack = []
+        """Get enabled observability stack components"""        stack = []
         if self.metrics.prometheus_enabled:
             stack.append("prometheus")
         if self.dashboards.grafana_enabled:

@@ -5,8 +5,7 @@ Central module for all social media and content platforms.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
-"""
-from typing import Dict, List, Any
+"""from typing import Dict, List, Any
 
 from .base import (
     PlatformBase, PlatformConfig, PlatformType, ContentType,

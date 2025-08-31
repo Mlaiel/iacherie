@@ -1,5 +1,4 @@
-"""
-Data Lifecycle Management System
+"""Data Lifecycle Management System
 
 Advanced lifecycle management for content data including retention policies,
 archival strategies, and automated lifecycle transitions.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
 from datetime import datetime, timedelta
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class LifecycleStage(Enum):
-    """Data lifecycle stages"""
-    CREATED = "created"
+    """Data lifecycle stages"""    CREATED = "created"
     ACTIVE = "active"
     INACTIVE = "inactive"
     ARCHIVED = "archived"
@@ -44,8 +41,7 @@ class LifecycleStage(Enum):
 
 
 class RetentionAction(Enum):
-    """Actions to take when retention period expires"""
-    DELETE = "delete"
+    """Actions to take when retention period expires"""    DELETE = "delete"
     ARCHIVE = "archive"
     ANONYMIZE = "anonymize"
     MIGRATE = "migrate"
@@ -54,8 +50,7 @@ class RetentionAction(Enum):
 
 
 class DataClassification(Enum):
-    """Data classification levels"""
-    PUBLIC = "public"
+    """Data classification levels"""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -64,8 +59,7 @@ class DataClassification(Enum):
 
 @dataclass
 class RetentionRule:
-    """Data retention rule definition"""
-    rule_id: str
+    """Data retention rule definition"""    rule_id: str
     name: str
     description: str
     content_types: List[str]
@@ -80,8 +74,7 @@ class RetentionRule:
 
 @dataclass
 class LifecycleEvent:
-    """Lifecycle event record"""
-    event_id: str
+    """Lifecycle event record"""    event_id: str
     content_id: str
     stage_from: LifecycleStage
     stage_to: LifecycleStage
@@ -92,8 +85,7 @@ class LifecycleEvent:
 
 @dataclass
 class RetentionPolicy:
-    """Complete retention policy definition"""
-    policy_id: str
+    """Complete retention policy definition"""    policy_id: str
     name: str
     description: str
     rules: List[RetentionRule]
@@ -105,13 +97,11 @@ class RetentionPolicy:
 
 
 class LifecycleTransition:
-    """
-    Defines lifecycle stage transitions and conditions
+    """    Defines lifecycle stage transitions and conditions
     
     Manages the rules and logic for transitioning content
     between different lifecycle stages.
-    """
-    
+    """    
     def __init__(
         self,
         from_stage: LifecycleStage,
@@ -125,15 +115,13 @@ class LifecycleTransition:
         self.action = action
     
     def can_transition(self, metadata: Dict[str, Any]) -> bool:
-        """Check if transition condition is met"""
-        try:
+        """Check if transition condition is met"""        try:
             return self.condition(metadata)
         except Exception:
             return False
     
     async def execute_transition(self, content_id: str, metadata: Dict[str, Any]) -> None:
-        """Execute transition action"""
-        if self.action:
+        """Execute transition action"""        if self.action:
             try:
                 await self.action(content_id, metadata)
             except Exception as e:
@@ -141,16 +129,14 @@ class LifecycleTransition:
 
 
 class ArchivalStrategy(ABC):
-    """Base class for archival strategies"""
-    
+    """Base class for archival strategies"""    
     async def archive_content(
         self,
         content_id: str,
         content_data: bytes,
         metadata: Dict[str, Any]
     ) -> str:
-        """Archive content and return archive location - base implementation"""
-        try:
+        """Archive content and return archive location - base implementation"""        try:
             logger.info(f"Archiving content: {content_id}")
             
             # Base implementation that simulates archiving
@@ -172,8 +158,7 @@ class ArchivalStrategy(ABC):
         content_id: str,
         archive_location: str
     ) -> bytes:
-        """Retrieve archived content - base implementation"""
-        try:
+        """Retrieve archived content - base implementation"""        try:
             logger.info(f"Retrieving content: {content_id} from {archive_location}")
             
             # Base implementation that simulates content retrieval
@@ -192,8 +177,7 @@ class ArchivalStrategy(ABC):
         content_id: str,
         archive_location: str
     ) -> bool:
-        """Delete archived content - base implementation"""
-        try:
+        """Delete archived content - base implementation"""        try:
             logger.info(f"Deleting archived content: {content_id} from {archive_location}")
             
             # Base implementation that simulates content deletion
@@ -208,8 +192,7 @@ class ArchivalStrategy(ABC):
 
 
 class CloudArchivalStrategy(ArchivalStrategy):
-    """Cloud-based archival strategy using S3-compatible storage"""
-    
+    """Cloud-based archival strategy using S3-compatible storage"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.storage_manager = StorageManager(config)
@@ -221,8 +204,7 @@ class CloudArchivalStrategy(ArchivalStrategy):
         content_data: bytes,
         metadata: Dict[str, Any]
     ) -> str:
-        """Archive content to cloud storage"""
-        archive_key = f"archived/{datetime.utcnow().year}/{content_id}"
+        """Archive content to cloud storage"""        archive_key = f"archived/{datetime.utcnow().year}/{content_id}"
         
         # Add archival metadata
         archive_metadata = {
@@ -247,8 +229,7 @@ class CloudArchivalStrategy(ArchivalStrategy):
         content_id: str,
         archive_location: str
     ) -> bytes:
-        """Retrieve content from cloud archive"""
-        bucket, key = archive_location.split("/", 1)
+        """Retrieve content from cloud archive"""        bucket, key = archive_location.split("/", 1)
         return await self.storage_manager.download(bucket=bucket, key=key)
     
     async def delete_archived_content(
@@ -256,14 +237,12 @@ class CloudArchivalStrategy(ArchivalStrategy):
         content_id: str,
         archive_location: str
     ) -> bool:
-        """Delete content from cloud archive"""
-        bucket, key = archive_location.split("/", 1)
+        """Delete content from cloud archive"""        bucket, key = archive_location.split("/", 1)
         return await self.storage_manager.delete(bucket=bucket, key=key)
 
 
 class TapeArchivalStrategy(ArchivalStrategy):
-    """Tape-based archival strategy for long-term cold storage"""
-    
+    """Tape-based archival strategy for long-term cold storage"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.tape_library_endpoint = config.get("tape_library_endpoint")
@@ -274,8 +253,7 @@ class TapeArchivalStrategy(ArchivalStrategy):
         content_data: bytes,
         metadata: Dict[str, Any]
     ) -> str:
-        """Archive content to tape storage"""
-        # Implementation for tape library integration
+        """Archive content to tape storage"""        # Implementation for tape library integration
         # This would typically involve vendor-specific APIs
         tape_id = f"TAPE_{datetime.utcnow().strftime('%Y%m%d')}_{content_id}"
         return tape_id
@@ -285,8 +263,7 @@ class TapeArchivalStrategy(ArchivalStrategy):
         content_id: str,
         archive_location: str
     ) -> bytes:
-        """Retrieve content from tape archive"""
-        # Tape retrieval typically has longer latency
+        """Retrieve content from tape archive"""        # Tape retrieval typically has longer latency
         # Would integrate with tape library management system
         return b""  # Placeholder
     
@@ -295,22 +272,18 @@ class TapeArchivalStrategy(ArchivalStrategy):
         content_id: str,
         archive_location: str
     ) -> bool:
-        """Delete content from tape archive"""
-        return True  # Placeholder
+        """Delete content from tape archive"""        return True  # Placeholder
 
 
 class LifecycleManager(BaseManager):
-    """
-    Central data lifecycle management system
+    """    Central data lifecycle management system
     
     Manages complete data lifecycle from creation to deletion,
     including retention policies, archival strategies, and
     automated lifecycle transitions.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the lifecycle manager"""
-        super().__init__(config)
+        """Initialize the lifecycle manager"""        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -345,8 +318,7 @@ class LifecycleManager(BaseManager):
         self._setup_default_transitions()
     
     async def initialize(self) -> None:
-        """Initialize the lifecycle manager"""
-        try:
+        """Initialize the lifecycle manager"""        try:
             await self._load_retention_policies()
             await self._create_default_policies()
             
@@ -366,8 +338,7 @@ class LifecycleManager(BaseManager):
         classification: DataClassification,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Register new content for lifecycle management
+        """        Register new content for lifecycle management
         
         Args:
             content_id: Unique content identifier
@@ -377,8 +348,7 @@ class LifecycleManager(BaseManager):
             
         Returns:
             bool: True if registration successful
-        """
-        try:
+        """        try:
             # Set initial lifecycle stage
             self.content_stages[content_id] = LifecycleStage.CREATED
             
@@ -422,16 +392,14 @@ class LifecycleManager(BaseManager):
         self,
         policy: RetentionPolicy
     ) -> bool:
-        """
-        Apply a retention policy to managed content
+        """        Apply a retention policy to managed content
         
         Args:
             policy: Retention policy to apply
             
         Returns:
             bool: True if policy applied successfully
-        """
-        try:
+        """        try:
             # Validate policy
             await self._validate_retention_policy(policy)
             
@@ -449,16 +417,14 @@ class LifecycleManager(BaseManager):
             raise LifecycleError(f"Policy application failed: {e}")
     
     async def evaluate_retention(self, content_id: str) -> List[str]:
-        """
-        Evaluate retention requirements for content
+        """        Evaluate retention requirements for content
         
         Args:
             content_id: ID of content to evaluate
             
         Returns:
             List[str]: List of actions to take
-        """
-        actions = []
+        """        actions = []
         
         try:
             # Get content metadata
@@ -488,8 +454,7 @@ class LifecycleManager(BaseManager):
         content_id: str,
         strategy: str = "cloud"
     ) -> Optional[str]:
-        """
-        Archive content using specified strategy
+        """        Archive content using specified strategy
         
         Args:
             content_id: ID of content to archive
@@ -497,8 +462,7 @@ class LifecycleManager(BaseManager):
             
         Returns:
             Optional[str]: Archive location if successful
-        """
-        try:
+        """        try:
             if strategy not in self.archival_strategies:
                 raise LifecycleError(f"Unknown archival strategy: {strategy}")
             
@@ -537,16 +501,14 @@ class LifecycleManager(BaseManager):
         self,
         content_id: str
     ) -> Optional[bytes]:
-        """
-        Retrieve archived content
+        """        Retrieve archived content
         
         Args:
             content_id: ID of content to retrieve
             
         Returns:
             Optional[bytes]: Content data if found
-        """
-        try:
+        """        try:
             # Get archive metadata
             metadata = await self._get_content_metadata(content_id)
             if not metadata:
@@ -577,8 +539,7 @@ class LifecycleManager(BaseManager):
         content_id: str,
         force: bool = False
     ) -> bool:
-        """
-        Delete content according to lifecycle rules
+        """        Delete content according to lifecycle rules
         
         Args:
             content_id: ID of content to delete
@@ -586,8 +547,7 @@ class LifecycleManager(BaseManager):
             
         Returns:
             bool: True if deletion successful
-        """
-        try:
+        """        try:
             if not force:
                 # Check if deletion is allowed by retention policies
                 if not await self._can_delete_content(content_id):
@@ -626,16 +586,14 @@ class LifecycleManager(BaseManager):
             raise LifecycleError(f"Content deletion failed: {e}")
     
     async def get_content_lifecycle(self, content_id: str) -> List[LifecycleEvent]:
-        """
-        Get complete lifecycle history for content
+        """        Get complete lifecycle history for content
         
         Args:
             content_id: ID of content
             
         Returns:
             List[LifecycleEvent]: Ordered list of lifecycle events
-        """
-        events = [
+        """        events = [
             event for event in self.lifecycle_events
             if event.content_id == content_id
         ]
@@ -646,16 +604,14 @@ class LifecycleManager(BaseManager):
         self,
         content_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get retention status for content or all content
+        """        Get retention status for content or all content
         
         Args:
             content_id: Specific content ID or None for all
             
         Returns:
             Dict with retention status information
-        """
-        if content_id:
+        """        if content_id:
             # Single content status
             metadata = await self._get_content_metadata(content_id)
             if not metadata:
@@ -686,8 +642,7 @@ class LifecycleManager(BaseManager):
             }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get lifecycle management metrics"""
-        return {
+        """Get lifecycle management metrics"""        return {
             **self.metrics,
             "retention_policy_count": len(self.retention_policies),
             "lifecycle_events_count": len(self.lifecycle_events),
@@ -698,8 +653,7 @@ class LifecycleManager(BaseManager):
         }
     
     def _setup_default_transitions(self) -> None:
-        """Setup default lifecycle transitions"""
-        # Created -> Active (automatic)
+        """Setup default lifecycle transitions"""        # Created -> Active (automatic)
         self.transitions.append(LifecycleTransition(
             from_stage=LifecycleStage.CREATED,
             to_stage=LifecycleStage.ACTIVE,
@@ -730,8 +684,7 @@ class LifecycleManager(BaseManager):
             ))
     
     def _check_inactivity_threshold(self, metadata: Dict[str, Any]) -> bool:
-        """Check if content meets inactivity threshold"""
-        last_access = metadata.get("last_access_at")
+        """Check if content meets inactivity threshold"""        last_access = metadata.get("last_access_at")
         if not last_access:
             return False
         
@@ -742,8 +695,7 @@ class LifecycleManager(BaseManager):
         return datetime.utcnow() - last_access > inactive_threshold
     
     def _check_archive_threshold(self, metadata: Dict[str, Any]) -> bool:
-        """Check if content meets archival threshold"""
-        inactive_since = metadata.get("inactive_since")
+        """Check if content meets archival threshold"""        inactive_since = metadata.get("inactive_since")
         if not inactive_since:
             return False
         
@@ -754,8 +706,7 @@ class LifecycleManager(BaseManager):
         return datetime.utcnow() - inactive_since > archive_threshold
     
     def _check_retention_expired(self, metadata: Dict[str, Any]) -> bool:
-        """Check if retention period has expired"""
-        created_at = metadata.get("created_at")
+        """Check if retention period has expired"""        created_at = metadata.get("created_at")
         retention_days = metadata.get("retention_days", 2555)  # 7 years default
         
         if not created_at:
@@ -773,8 +724,7 @@ class LifecycleManager(BaseManager):
         new_stage: LifecycleStage,
         metadata: Dict[str, Any]
     ) -> None:
-        """Transition content to new lifecycle stage"""
-        old_stage = self.content_stages.get(content_id, LifecycleStage.CREATED)
+        """Transition content to new lifecycle stage"""        old_stage = self.content_stages.get(content_id, LifecycleStage.CREATED)
         self.content_stages[content_id] = new_stage
         
         # Record lifecycle event
@@ -791,8 +741,7 @@ class LifecycleManager(BaseManager):
         self.lifecycle_events.append(event)
     
     async def _lifecycle_monitor(self) -> None:
-        """Background task to monitor and manage lifecycle transitions"""
-        while True:
+        """Background task to monitor and manage lifecycle transitions"""        while True:
             try:
                 # Check all managed content for lifecycle transitions
                 for content_id, current_stage in self.content_stages.items():
@@ -831,8 +780,7 @@ class LifecycleManager(BaseManager):
         content_type: str,
         classification: DataClassification
     ) -> List[RetentionPolicy]:
-        """Get applicable retention policies for content"""
-        applicable = []
+        """Get applicable retention policies for content"""        applicable = []
         
         for policy in self.retention_policies.values():
             if not policy.enabled:
@@ -851,8 +799,7 @@ class LifecycleManager(BaseManager):
         self,
         metadata: Dict[str, Any]
     ) -> List[RetentionRule]:
-        """Get applicable retention rules for content metadata"""
-        applicable_rules = []
+        """Get applicable retention rules for content metadata"""        applicable_rules = []
         
         content_type = metadata.get("content_type", "")
         classification = DataClassification(metadata.get("classification", "internal"))
@@ -882,8 +829,7 @@ class LifecycleManager(BaseManager):
         rule: RetentionRule,
         metadata: Dict[str, Any]
     ) -> bool:
-        """Evaluate additional rule conditions"""
-        if not rule.conditions:
+        """Evaluate additional rule conditions"""        if not rule.conditions:
             return True
         
         # Simple condition evaluation (can be extended)
@@ -900,8 +846,7 @@ class LifecycleManager(BaseManager):
         rule: RetentionRule,
         metadata: Dict[str, Any]
     ) -> bool:
-        """Check if retention action should be applied"""
-        created_at = metadata.get("created_at")
+        """Check if retention action should be applied"""        created_at = metadata.get("created_at")
         if not created_at:
             return False
         
@@ -916,8 +861,7 @@ class LifecycleManager(BaseManager):
         content_id: str,
         rule: RetentionRule
     ) -> None:
-        """Schedule retention action for content"""
-        # Implementation would integrate with task queue
+        """Schedule retention action for content"""        # Implementation would integrate with task queue
         # For now, execute immediately
         
         if rule.action == RetentionAction.DELETE:
@@ -929,8 +873,7 @@ class LifecycleManager(BaseManager):
         # Additional actions can be implemented
     
     async def _can_delete_content(self, content_id: str) -> bool:
-        """Check if content can be deleted based on retention policies"""
-        metadata = await self._get_content_metadata(content_id)
+        """Check if content can be deleted based on retention policies"""        metadata = await self._get_content_metadata(content_id)
         if not metadata:
             return True
         
@@ -944,8 +887,7 @@ class LifecycleManager(BaseManager):
         return True
     
     async def _check_retention_compliance(self) -> None:
-        """Check overall retention compliance"""
-        violations = 0
+        """Check overall retention compliance"""        violations = 0
         
         for content_id in self.content_stages.keys():
             metadata = await self._get_content_metadata(content_id)
@@ -963,8 +905,7 @@ class LifecycleManager(BaseManager):
         self.metrics["retention_violations"] = violations
     
     async def _count_pending_retention_actions(self) -> int:
-        """Count pending retention actions"""
-        pending = 0
+        """Count pending retention actions"""        pending = 0
         
         for content_id in self.content_stages.keys():
             actions = await self.evaluate_retention(content_id)
@@ -973,8 +914,7 @@ class LifecycleManager(BaseManager):
         return pending
     
     async def _validate_retention_policy(self, policy: RetentionPolicy) -> None:
-        """Validate retention policy configuration"""
-        if not policy.policy_id or not policy.name:
+        """Validate retention policy configuration"""        if not policy.policy_id or not policy.name:
             raise ValidationError("Policy ID and name are required")
         
         if not policy.rules:
@@ -985,8 +925,7 @@ class LifecycleManager(BaseManager):
                 raise ValidationError(f"Invalid retention period in rule {rule.rule_id}")
     
     async def _apply_policy_to_existing_content(self, policy: RetentionPolicy) -> None:
-        """Apply new policy to existing content"""
-        try:
+        """Apply new policy to existing content"""        try:
             # Get all existing content records
             content_records = await self._get_all_content_records()
             
@@ -1017,8 +956,7 @@ class LifecycleManager(BaseManager):
             raise
     
     async def _load_retention_policies(self) -> None:
-        """Load retention policies from database"""
-        try:
+        """Load retention policies from database"""        try:
             # Load policies from database or configuration
             # This would interface with the policy storage system
             policy_data = await self._fetch_policies_from_database()
@@ -1052,8 +990,7 @@ class LifecycleManager(BaseManager):
             await self._create_default_policies()
     
     async def _create_default_policies(self) -> None:
-        """Create default retention policies"""
-        # Create default content retention policy
+        """Create default retention policies"""        # Create default content retention policy
         default_policy = RetentionPolicy(
             policy_id="default_content",
             name="Default Content Retention",
@@ -1084,18 +1021,15 @@ class LifecycleManager(BaseManager):
         await self.apply_retention_policy(default_policy)
     
     async def _get_content_metadata(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content metadata from database"""
-        # Database query logic here
+        """Get content metadata from database"""        # Database query logic here
         return {}
     
     async def _get_content_data(self, content_id: str) -> Optional[bytes]:
-        """Get content data from storage"""
-        # Storage retrieval logic here
+        """Get content data from storage"""        # Storage retrieval logic here
         return b""
     
     async def _delete_active_content(self, content_id: str) -> None:
-        """Delete active content from storage"""
-        try:
+        """Delete active content from storage"""        try:
             logger.info(f"Deleting active content: {content_id}")
             
             # Get content metadata first
@@ -1135,8 +1069,7 @@ class LifecycleManager(BaseManager):
             raise
     
     async def _anonymize_content(self, content_id: str) -> None:
-        """Anonymize content data"""
-        try:
+        """Anonymize content data"""        try:
             logger.info(f"Anonymizing content: {content_id}")
             
             # Get content data and metadata
@@ -1187,64 +1120,53 @@ class LifecycleManager(BaseManager):
     # Helper methods for the implementations above
     
     async def _get_all_content_records(self) -> List[Dict[str, Any]]:
-        """Get all content records from database"""
-        # Mock implementation - in practice this would query the database
+        """Get all content records from database"""        # Mock implementation - in practice this would query the database
         logger.debug("Fetching all content records from database")
         return []
     
     def _find_applicable_rule(self, policy: RetentionPolicy, content_type: str) -> Optional['RetentionRule']:
-        """Find the applicable retention rule for content type"""
-        for rule in policy.rules:
+        """Find the applicable retention rule for content type"""        for rule in policy.rules:
             if rule.content_type == content_type or rule.content_type == "*":
                 return rule
         return None
     
     async def _update_content_retention_settings(self, content_id: str, rule: 'RetentionRule') -> None:
-        """Update content retention settings in database"""
-        logger.debug(f"Updating retention settings for content {content_id} with rule {rule.rule_id}")
+        """Update content retention settings in database"""        logger.debug(f"Updating retention settings for content {content_id} with rule {rule.rule_id}")
         # Mock implementation - would update database record
     
     async def _schedule_retention_check(self, content_id: str, retention_days: int) -> None:
-        """Schedule retention check for content"""
-        check_date = datetime.utcnow() + timedelta(days=retention_days)
+        """Schedule retention check for content"""        check_date = datetime.utcnow() + timedelta(days=retention_days)
         logger.debug(f"Scheduling retention check for content {content_id} on {check_date}")
         # Mock implementation - would schedule task or add to queue
     
     async def _fetch_policies_from_database(self) -> List[Dict[str, Any]]:
-        """Fetch policies from database"""
-        # Mock implementation - would query database
+        """Fetch policies from database"""        # Mock implementation - would query database
         logger.debug("Fetching policies from database")
         return []
     
     async def _get_content_metadata(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content metadata from database"""
-        logger.debug(f"Fetching metadata for content {content_id}")
+        """Get content metadata from database"""        logger.debug(f"Fetching metadata for content {content_id}")
         # Mock implementation - would query database
         return {"content_type": "text", "storage_locations": [], "cache_keys": []}
     
     async def _delete_from_storage(self, location: str) -> None:
-        """Delete content from storage location"""
-        logger.debug(f"Deleting from storage location: {location}")
+        """Delete content from storage location"""        logger.debug(f"Deleting from storage location: {location}")
         # Mock implementation - would delete from actual storage
     
     async def _delete_from_cache(self, cache_key: str) -> None:
-        """Delete content from cache"""
-        logger.debug(f"Deleting from cache: {cache_key}")
+        """Delete content from cache"""        logger.debug(f"Deleting from cache: {cache_key}")
         # Mock implementation - would delete from cache
     
     async def _update_content_status(self, content_id: str, status: str) -> None:
-        """Update content status in database"""
-        logger.debug(f"Updating content {content_id} status to {status}")
+        """Update content status in database"""        logger.debug(f"Updating content {content_id} status to {status}")
         # Mock implementation - would update database
     
     async def _log_content_deletion(self, content_id: str, reason: str) -> None:
-        """Log content deletion for audit trail"""
-        logger.info(f"AUDIT: Content {content_id} deleted - reason: {reason}")
+        """Log content deletion for audit trail"""        logger.info(f"AUDIT: Content {content_id} deleted - reason: {reason}")
         # Mock implementation - would write to audit log
     
     async def _anonymize_text_content(self, content_data: bytes) -> bytes:
-        """Anonymize text content by removing PII"""
-        # Basic implementation - would use proper PII detection/removal
+        """Anonymize text content by removing PII"""        # Basic implementation - would use proper PII detection/removal
         text = content_data.decode('utf-8', errors='ignore')
         # Remove common PII patterns (emails, phone numbers, etc.)
         import re
@@ -1253,32 +1175,26 @@ class LifecycleManager(BaseManager):
         return text.encode('utf-8')
     
     async def _anonymize_media_content(self, content_data: bytes, content_type: str) -> bytes:
-        """Anonymize media content by removing metadata"""
-        # Basic implementation - would remove EXIF/metadata
+        """Anonymize media content by removing metadata"""        # Basic implementation - would remove EXIF/metadata
         logger.debug(f"Anonymizing {content_type} content (removing metadata)")
         return content_data  # Simplified - real implementation would strip metadata
     
     async def _anonymize_audio_content(self, content_data: bytes) -> bytes:
-        """Anonymize audio content by removing metadata"""
-        logger.debug("Anonymizing audio content (removing metadata)")
+        """Anonymize audio content by removing metadata"""        logger.debug("Anonymizing audio content (removing metadata)")
         return content_data  # Simplified - real implementation would strip metadata
     
     async def _anonymize_generic_content(self, content_data: bytes) -> bytes:
-        """Generic anonymization for unknown content types"""
-        logger.debug("Applying generic anonymization")
+        """Generic anonymization for unknown content types"""        logger.debug("Applying generic anonymization")
         return content_data  # Simplified - real implementation would apply generic rules
     
     async def _replace_content_data(self, content_id: str, new_data: bytes) -> None:
-        """Replace content data in storage"""
-        logger.debug(f"Replacing content data for {content_id}")
+        """Replace content data in storage"""        logger.debug(f"Replacing content data for {content_id}")
         # Mock implementation - would update storage
     
     async def _update_content_metadata(self, content_id: str, metadata: Dict[str, Any]) -> None:
-        """Update content metadata in database"""
-        logger.debug(f"Updating metadata for content {content_id}")
+        """Update content metadata in database"""        logger.debug(f"Updating metadata for content {content_id}")
         # Mock implementation - would update database
     
     async def _log_content_anonymization(self, content_id: str) -> None:
-        """Log content anonymization for audit trail"""
-        logger.info(f"AUDIT: Content {content_id} anonymized")
+        """Log content anonymization for audit trail"""        logger.info(f"AUDIT: Content {content_id} anonymized")
         # Mock implementation - would write to audit log

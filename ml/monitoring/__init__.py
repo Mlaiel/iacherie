@@ -1,5 +1,4 @@
-"""
-🚀 ML Monitoring Module - IA Influencer Agent Platform Enterprise
+"""🚀 ML Monitoring Module - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/ml/monitoring/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Surveillance complète des modèles ML en production
 - Système d'alertes intelligent
 - Reporting et analytics avancés
 """
-
 from .performance_monitor import (
     ModelPerformanceMonitor,
     MetricPoint,

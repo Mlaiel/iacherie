@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-🔧 Production Environment Configuration Manager - Ainflue Platform
+"""🔧 Production Environment Configuration Manager - Ainflue Platform
 ===================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + DBA + Security Engineer
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de
 Complete production environment configuration with optimized settings.
 ===================================================================
 """
-
 import os
 import yaml
 import logging
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProductionEnvironmentConfig:
-    """Production environment configuration"""
-    # Application Configuration
+    """Production environment configuration"""    # Application Configuration
     app_name: str = "Ainflue"
     app_version: str = "1.0.0"
     environment: str = "production"
@@ -176,8 +173,7 @@ class ProductionEnvironmentConfig:
 
 
 class ProductionEnvironmentManager:
-    """
-    Production environment configuration manager.
+    """    Production environment configuration manager.
     
     Features:
     - Comprehensive production settings
@@ -186,8 +182,7 @@ class ProductionEnvironmentManager:
     - Monitoring integration
     - Auto-scaling support
     - Compliance settings
-    """
-    
+    """    
     def __init__(self, namespace: str = "ainflue"):
         self.namespace = namespace
         self.config = ProductionEnvironmentConfig()
@@ -207,8 +202,7 @@ class ProductionEnvironmentManager:
                 logger.warning(f"Could not load Kubernetes configuration: {e}")
     
     def generate_configmap_data(self) -> Dict[str, str]:
-        """Generate ConfigMap data from production configuration"""
-        return {
+        """Generate ConfigMap data from production configuration"""        return {
             # Application Configuration
             "APP_NAME": self.config.app_name,
             "APP_VERSION": self.config.app_version,
@@ -350,8 +344,7 @@ class ProductionEnvironmentManager:
         }
     
     def create_production_configmap(self) -> bool:
-        """Create production ConfigMap"""
-        if not self.kubernetes_client:
+        """Create production ConfigMap"""        if not self.kubernetes_client:
             logger.error("Kubernetes client not available")
             return False
         
@@ -397,8 +390,7 @@ class ProductionEnvironmentManager:
             return False
     
     def validate_production_settings(self) -> Dict[str, bool]:
-        """Validate production environment settings"""
-        validation_results = {}
+        """Validate production environment settings"""        validation_results = {}
         
         # Check performance settings
         validation_results['workers_sufficient'] = self.config.workers >= 8
@@ -427,8 +419,7 @@ class ProductionEnvironmentManager:
         return validation_results
     
     def get_environment_status(self) -> Dict[str, Any]:
-        """Get production environment status"""
-        validation_results = self.validate_production_settings()
+        """Get production environment status"""        validation_results = self.validate_production_settings()
         
         return {
             'environment': self.config.environment,
@@ -447,8 +438,7 @@ class ProductionEnvironmentManager:
         }
     
     def setup_production_environment(self) -> bool:
-        """Setup complete production environment"""
-        try:
+        """Setup complete production environment"""        try:
             # Create production ConfigMap
             if self.create_production_configmap():
                 logger.info("Production environment setup completed successfully")

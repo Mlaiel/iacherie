@@ -1,5 +1,4 @@
-"""
-Notification Settings Database Model
+"""Notification Settings Database Model
 
 Enterprise-grade SQLAlchemy model for managing comprehensive notification preferences,
 delivery settings, and communication channels for users and creators.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, ARRAY, Time
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -38,8 +36,7 @@ Base = declarative_base()
 
 
 class NotificationType(Enum):
-    """Notification type enumeration"""
-    CONTENT_PROTECTION = "content_protection"
+    """Notification type enumeration"""    CONTENT_PROTECTION = "content_protection"
     COPYRIGHT_VIOLATION = "copyright_violation"
     COLLABORATION_REQUEST = "collaboration_request"
     COLLABORATION_ACCEPTED = "collaboration_accepted"
@@ -71,8 +68,7 @@ class NotificationType(Enum):
 
 
 class Channel(Enum):
-    """Notification delivery channel"""
-    EMAIL = "email"
+    """Notification delivery channel"""    EMAIL = "email"
     SMS = "sms"
     PUSH_NOTIFICATION = "push_notification"
     IN_APP = "in_app"
@@ -87,8 +83,7 @@ class Channel(Enum):
 
 
 class Priority(Enum):
-    """Notification priority levels"""
-    LOW = "low"
+    """Notification priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -96,8 +91,7 @@ class Priority(Enum):
 
 
 class Frequency(Enum):
-    """Notification frequency settings"""
-    IMMEDIATE = "immediate"
+    """Notification frequency settings"""    IMMEDIATE = "immediate"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -108,8 +102,7 @@ class Frequency(Enum):
 
 
 class Status(Enum):
-    """Notification setting status"""
-    ACTIVE = "active"
+    """Notification setting status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
     PENDING_VERIFICATION = "pending_verification"
@@ -118,8 +111,7 @@ class Status(Enum):
 
 
 class DeliveryTime(Enum):
-    """Preferred delivery time"""
-    ANYTIME = "anytime"
+    """Preferred delivery time"""    ANYTIME = "anytime"
     BUSINESS_HOURS = "business_hours"
     EVENING = "evening"
     MORNING = "morning"
@@ -129,13 +121,11 @@ class DeliveryTime(Enum):
 
 
 class NotificationSettings(Base):
-    """
-    Enterprise Notification Settings Model
+    """    Enterprise Notification Settings Model
     
     Comprehensive notification preference management with multi-channel support,
     smart scheduling, priority handling, and granular control options.
-    """
-    __tablename__ = 'notification_settings'
+    """    __tablename__ = 'notification_settings'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -314,8 +304,7 @@ class NotificationSettings(Base):
     
     @classmethod
     def create_default_settings(cls, user_id: str, creator_profile_id: str = None) -> List['NotificationSettings']:
-        """Create default notification settings for a new user"""
-        default_settings = []
+        """Create default notification settings for a new user"""        default_settings = []
         
         # Essential notification types with default configurations
         essential_types = [
@@ -344,8 +333,7 @@ class NotificationSettings(Base):
         return default_settings
     
     def is_delivery_time_valid(self, check_time: datetime = None) -> bool:
-        """Check if current time is valid for delivery based on settings"""
-        if check_time is None:
+        """Check if current time is valid for delivery based on settings"""        if check_time is None:
             check_time = datetime.now(timezone.utc)
         
         # Convert to user's timezone
@@ -374,8 +362,7 @@ class NotificationSettings(Base):
         return True
     
     def should_send_notification(self, context: Dict[str, Any] = None) -> bool:
-        """Determine if notification should be sent based on filters and conditions"""
-        if not self.is_active or self.status != Status.ACTIVE:
+        """Determine if notification should be sent based on filters and conditions"""        if not self.is_active or self.status != Status.ACTIVE:
             return False
         
         # Check rate limits
@@ -405,8 +392,7 @@ class NotificationSettings(Base):
         return True
     
     def get_optimal_channel(self, context: Dict[str, Any] = None) -> Channel:
-        """Get optimal delivery channel based on AI optimization and context"""
-        if not self.ai_optimization:
+        """Get optimal delivery channel based on AI optimization and context"""        if not self.ai_optimization:
             return self.primary_channel
         
         # AI-based channel selection logic
@@ -426,8 +412,7 @@ class NotificationSettings(Base):
         return self.primary_channel
     
     def update_performance_metrics(self, delivered: bool, opened: bool = False, clicked: bool = False) -> None:
-        """Update performance metrics based on notification interaction"""
-        # This would be implemented with proper statistical tracking
+        """Update performance metrics based on notification interaction"""        # This would be implemented with proper statistical tracking
         # Simplified version here
         
         if delivered:
@@ -445,8 +430,7 @@ class NotificationSettings(Base):
         self.updated_at = datetime.now(timezone.utc)
     
     def schedule_next_notification(self) -> Optional[datetime]:
-        """Calculate next notification time based on frequency settings"""
-        if self.frequency == Frequency.NEVER:
+        """Calculate next notification time based on frequency settings"""        if self.frequency == Frequency.NEVER:
             return None
         
         now = datetime.now(timezone.utc)
@@ -478,8 +462,7 @@ class NotificationSettings(Base):
         return next_time
     
     def get_notification_template_data(self, context: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Get template data for notification rendering"""
-        return {
+        """Get template data for notification rendering"""        return {
             'user_preferences': {
                 'language': self.language,
                 'format': self.content_format,
@@ -497,8 +480,7 @@ class NotificationSettings(Base):
         }
     
     def clone_settings(self, new_notification_type: NotificationType) -> 'NotificationSettings':
-        """Clone settings for a different notification type"""
-        new_settings = NotificationSettings(
+        """Clone settings for a different notification type"""        new_settings = NotificationSettings(
             user_id=self.user_id,
             creator_profile_id=self.creator_profile_id,
             notification_type=new_notification_type,

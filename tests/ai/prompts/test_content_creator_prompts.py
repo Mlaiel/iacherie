@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced Content Creator Prompts Tests
+"""Advanced Content Creator Prompts Tests
 Ultra-professional test suite for Content Creator Prompts system
 
 Created by: Fahed Mlaiel <mlaiel@live.de>
@@ -26,7 +23,6 @@ This code is the intellectual property of Fahed Mlaiel (mlaiel@live.de)
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Violators will be prosecuted under German and International copyright law.
 """
-
 import pytest
 import sys
 import os
@@ -47,20 +43,17 @@ from ai.prompts.content_creator_prompts import (
 
 
 class TestContentCreatorPrompts:
-    """Ultra-comprehensive test suite for Content Creator Prompts"""
-    
+    """Ultra-comprehensive test suite for Content Creator Prompts"""    
     @pytest.fixture
     async def content_creator_prompts(self):
-        """Create a fresh ContentCreatorPrompts instance for each test"""
-        prompts = ContentCreatorPrompts()
+        """Create a fresh ContentCreatorPrompts instance for each test"""        prompts = ContentCreatorPrompts()
         await prompts.initialize()
         yield prompts
         await prompts.cleanup()
     
     @pytest.fixture
     def sample_musician_context(self):
-        """Create sample musician context for testing"""
-        return PromptContext(
+        """Create sample musician context for testing"""        return PromptContext(
             creator_type=ContentCreatorType.MUSICIAN,
             content_format=ContentFormat.AUDIO,
             category=PromptCategory.CREATION,
@@ -89,8 +82,7 @@ class TestContentCreatorPrompts:
     
     @pytest.fixture
     def sample_blogger_context(self):
-        """Create sample blogger context for testing"""
-        return PromptContext(
+        """Create sample blogger context for testing"""        return PromptContext(
             creator_type=ContentCreatorType.BLOGGER,
             content_format=ContentFormat.TEXT,
             category=PromptCategory.CREATION,
@@ -118,8 +110,7 @@ class TestContentCreatorPrompts:
     
     @pytest.fixture
     def sample_photographer_context(self):
-        """Create sample photographer context for testing"""
-        return PromptContext(
+        """Create sample photographer context for testing"""        return PromptContext(
             creator_type=ContentCreatorType.PHOTOGRAPHER,
             content_format=ContentFormat.IMAGE,
             category=PromptCategory.CREATION,
@@ -149,8 +140,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_content_creator_prompts_initialization(self, content_creator_prompts):
-        """Test ContentCreatorPrompts initialization"""
-        assert content_creator_prompts is not None
+        """Test ContentCreatorPrompts initialization"""        assert content_creator_prompts is not None
         assert hasattr(content_creator_prompts, 'prompts_cache')
         assert hasattr(content_creator_prompts, 'personalization_engine')
         assert hasattr(content_creator_prompts, 'base_prompts')
@@ -161,8 +151,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_prompt_registry_loading(self, content_creator_prompts):
-        """Test that prompt registry is properly loaded"""
-        registry = CONTENT_CREATOR_PROMPTS_REGISTRY
+        """Test that prompt registry is properly loaded"""        registry = CONTENT_CREATOR_PROMPTS_REGISTRY
         assert registry is not None
         assert isinstance(registry, dict)
         
@@ -180,8 +169,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_musician_creation_prompts(self, content_creator_prompts, sample_musician_context):
-        """Test musician creation prompts generation"""
-        result = await content_creator_prompts.generate_prompt(sample_musician_context)
+        """Test musician creation prompts generation"""        result = await content_creator_prompts.generate_prompt(sample_musician_context)
         
         assert result["success"] is True
         assert "prompt" in result
@@ -208,8 +196,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_musician_protection_prompts(self, content_creator_prompts):
-        """Test musician protection prompts"""
-        protection_context = PromptContext(
+        """Test musician protection prompts"""        protection_context = PromptContext(
             creator_type=ContentCreatorType.MUSICIAN,
             content_format=ContentFormat.AUDIO,
             category=PromptCategory.PROTECTION,
@@ -241,8 +228,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_musician_monetization_prompts(self, content_creator_prompts):
-        """Test musician monetization prompts"""
-        monetization_context = PromptContext(
+        """Test musician monetization prompts"""        monetization_context = PromptContext(
             creator_type=ContentCreatorType.MUSICIAN,
             content_format=ContentFormat.AUDIO,
             category=PromptCategory.MONETIZATION,
@@ -279,8 +265,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_blogger_creation_prompts(self, content_creator_prompts, sample_blogger_context):
-        """Test blogger creation prompts generation"""
-        result = await content_creator_prompts.generate_prompt(sample_blogger_context)
+        """Test blogger creation prompts generation"""        result = await content_creator_prompts.generate_prompt(sample_blogger_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -302,8 +287,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_blogger_seo_optimization_prompts(self, content_creator_prompts):
-        """Test blogger SEO optimization prompts"""
-        seo_context = PromptContext(
+        """Test blogger SEO optimization prompts"""        seo_context = PromptContext(
             creator_type=ContentCreatorType.BLOGGER,
             content_format=ContentFormat.TEXT,
             category=PromptCategory.OPTIMIZATION,
@@ -343,8 +327,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_photographer_creation_prompts(self, content_creator_prompts, sample_photographer_context):
-        """Test photographer creation prompts generation"""
-        result = await content_creator_prompts.generate_prompt(sample_photographer_context)
+        """Test photographer creation prompts generation"""        result = await content_creator_prompts.generate_prompt(sample_photographer_context)
         
         assert result["success"] is True
         prompt = result["prompt"]
@@ -368,8 +351,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_photographer_portfolio_optimization_prompts(self, content_creator_prompts):
-        """Test photographer portfolio optimization prompts"""
-        portfolio_context = PromptContext(
+        """Test photographer portfolio optimization prompts"""        portfolio_context = PromptContext(
             creator_type=ContentCreatorType.PHOTOGRAPHER,
             content_format=ContentFormat.IMAGE,
             category=PromptCategory.OPTIMIZATION,
@@ -409,8 +391,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_influencer_content_strategy_prompts(self, content_creator_prompts):
-        """Test influencer content strategy prompts"""
-        influencer_context = PromptContext(
+        """Test influencer content strategy prompts"""        influencer_context = PromptContext(
             creator_type=ContentCreatorType.INFLUENCER,
             content_format=ContentFormat.MIXED_MEDIA,
             category=PromptCategory.CREATION,
@@ -451,8 +432,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_comedian_performance_prompts(self, content_creator_prompts):
-        """Test comedian performance prompts"""
-        comedian_context = PromptContext(
+        """Test comedian performance prompts"""        comedian_context = PromptContext(
             creator_type=ContentCreatorType.COMEDIAN,
             content_format=ContentFormat.VIDEO,
             category=PromptCategory.CREATION,
@@ -493,8 +473,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_personalization_engine_user_preferences(self, content_creator_prompts):
-        """Test personalization engine with user preferences"""
-        base_context = PromptContext(
+        """Test personalization engine with user preferences"""        base_context = PromptContext(
             creator_type=ContentCreatorType.MUSICIAN,
             content_format=ContentFormat.AUDIO,
             category=PromptCategory.CREATION,
@@ -525,8 +504,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_personalization_engine_learning_adaptation(self, content_creator_prompts):
-        """Test personalization engine learning and adaptation"""
-        context = PromptContext(
+        """Test personalization engine learning and adaptation"""        context = PromptContext(
             creator_type=ContentCreatorType.BLOGGER,
             content_format=ContentFormat.TEXT,
             category=PromptCategory.CREATION,
@@ -567,8 +545,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_mixed_media_content_prompts(self, content_creator_prompts):
-        """Test mixed media content prompts"""
-        mixed_media_context = PromptContext(
+        """Test mixed media content prompts"""        mixed_media_context = PromptContext(
             creator_type=ContentCreatorType.YOUTUBER,
             content_format=ContentFormat.MIXED_MEDIA,
             category=PromptCategory.CREATION,
@@ -611,8 +588,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_collaboration_workflow_prompts(self, content_creator_prompts):
-        """Test collaboration workflow prompts"""
-        collaboration_context = PromptContext(
+        """Test collaboration workflow prompts"""        collaboration_context = PromptContext(
             creator_type=ContentCreatorType.MUSICIAN,
             content_format=ContentFormat.AUDIO,
             category=PromptCategory.COLLABORATION,
@@ -653,8 +629,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_content_analytics_prompts(self, content_creator_prompts):
-        """Test content analytics prompts"""
-        analytics_context = PromptContext(
+        """Test content analytics prompts"""        analytics_context = PromptContext(
             creator_type=ContentCreatorType.INFLUENCER,
             content_format=ContentFormat.MIXED_MEDIA,
             category=PromptCategory.ANALYTICS,
@@ -694,8 +669,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_invalid_creator_type_error(self, content_creator_prompts):
-        """Test error handling for invalid creator type"""
-        invalid_context = PromptContext(
+        """Test error handling for invalid creator type"""        invalid_context = PromptContext(
             creator_type="invalid_creator",  # Invalid enum value
             content_format=ContentFormat.TEXT,
             category=PromptCategory.CREATION,
@@ -709,8 +683,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_missing_required_preferences_error(self, content_creator_prompts):
-        """Test error handling for missing required preferences"""
-        incomplete_context = PromptContext(
+        """Test error handling for missing required preferences"""        incomplete_context = PromptContext(
             creator_type=ContentCreatorType.MUSICIAN,
             content_format=ContentFormat.AUDIO,
             category=PromptCategory.CREATION,
@@ -730,8 +703,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_prompt_generation_performance(self, content_creator_prompts, sample_musician_context):
-        """Test prompt generation performance"""
-        # Test single generation performance
+        """Test prompt generation performance"""        # Test single generation performance
         start_time = datetime.now()
         result = await content_creator_prompts.generate_prompt(sample_musician_context)
         single_duration = (datetime.now() - start_time).total_seconds()
@@ -752,8 +724,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_cache_efficiency(self, content_creator_prompts, sample_musician_context):
-        """Test caching efficiency for repeated requests"""
-        # First generation (no cache)
+        """Test caching efficiency for repeated requests"""        # First generation (no cache)
         start_time = datetime.now()
         result1 = await content_creator_prompts.generate_prompt(
             sample_musician_context, 
@@ -780,8 +751,7 @@ class TestContentCreatorPrompts:
     
     @pytest.mark.asyncio
     async def test_full_content_creation_workflow(self, content_creator_prompts):
-        """Test complete content creation workflow integration"""
-        # Step 1: Initial prompt generation
+        """Test complete content creation workflow integration"""        # Step 1: Initial prompt generation
         initial_context = PromptContext(
             creator_type=ContentCreatorType.BLOGGER,
             content_format=ContentFormat.TEXT,

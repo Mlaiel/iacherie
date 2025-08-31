@@ -1,5 +1,4 @@
-"""
-Multimedia Processor - Enterprise Real-time Processing Engine
+"""Multimedia Processor - Enterprise Real-time Processing Engine
 
 High-performance real-time multimedia processing system for live streams and interactive content.
 Provides low-latency processing, streaming optimization, and real-time analytics.
@@ -12,7 +11,6 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import time
@@ -65,8 +63,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingMode(Enum):
-    """Processing modes"""
-    REAL_TIME = "real_time"
+    """Processing modes"""    REAL_TIME = "real_time"
     LOW_LATENCY = "low_latency"
     HIGH_QUALITY = "high_quality"
     BATCH = "batch"
@@ -74,8 +71,7 @@ class ProcessingMode(Enum):
 
 
 class StreamType(Enum):
-    """Stream types"""
-    VIDEO = "video"
+    """Stream types"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     DATA = "data"
@@ -83,8 +79,7 @@ class StreamType(Enum):
 
 
 class ProcessingStatus(Enum):
-    """Processing status"""
-    IDLE = "idle"
+    """Processing status"""    IDLE = "idle"
     RUNNING = "running"
     PAUSED = "paused"
     STOPPED = "stopped"
@@ -93,8 +88,7 @@ class ProcessingStatus(Enum):
 
 @dataclass
 class ProcessingFrame:
-    """Processing frame data"""
-    frame_id: str
+    """Processing frame data"""    frame_id: str
     timestamp: float
     stream_type: StreamType
     data: Any
@@ -104,8 +98,7 @@ class ProcessingFrame:
     
 @dataclass
 class ProcessingResult:
-    """Processing result"""
-    frame_id: str
+    """Processing result"""    frame_id: str
     timestamp: float
     processed_data: Any
     processing_time: float
@@ -115,8 +108,7 @@ class ProcessingResult:
 
 @dataclass
 class StreamConfiguration:
-    """Stream configuration"""
-    stream_id: str
+    """Stream configuration"""    stream_id: str
     stream_type: StreamType
     processing_mode: ProcessingMode
     target_fps: Optional[float] = None
@@ -130,8 +122,7 @@ class StreamConfiguration:
 
 @dataclass
 class PerformanceMetrics:
-    """Performance metrics"""
-    frames_processed: int = 0
+    """Performance metrics"""    frames_processed: int = 0
     average_fps: float = 0.0
     current_fps: float = 0.0
     average_latency: float = 0.0
@@ -142,8 +133,7 @@ class PerformanceMetrics:
     processing_errors: int = 0
     
     def reset(self):
-        """Reset metrics"""
-        self.frames_processed = 0
+        """Reset metrics"""        self.frames_processed = 0
         self.average_fps = 0.0
         self.current_fps = 0.0
         self.average_latency = 0.0
@@ -153,8 +143,7 @@ class PerformanceMetrics:
 
 
 class MultimediaProcessor:
-    """Enterprise real-time multimedia processor"""
-    
+    """Enterprise real-time multimedia processor"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         
@@ -187,8 +176,7 @@ class MultimediaProcessor:
         self.executor = concurrent.futures.ThreadPoolExecutor(max_workers=self.max_workers)
         
     async def initialize(self):
-        """Initialize the processor"""
-        try:
+        """Initialize the processor"""        try:
             # Initialize performance monitoring
             if PSUTIL_AVAILABLE:
                 self.performance_monitor = PerformanceMonitor()
@@ -210,8 +198,7 @@ class MultimediaProcessor:
         stream_config: StreamConfiguration,
         processing_pipeline: Optional[Callable] = None
     ) -> str:
-        """Create a new processing stream"""
-        try:
+        """Create a new processing stream"""        try:
             stream_id = stream_config.stream_id
             
             # Store stream configuration
@@ -242,8 +229,7 @@ class MultimediaProcessor:
             raise
             
     async def start_stream(self, stream_id: str) -> bool:
-        """Start processing for a stream"""
-        try:
+        """Start processing for a stream"""        try:
             if stream_id not in self.active_streams:
                 raise ValueError(f"Stream not found: {stream_id}")
                 
@@ -272,8 +258,7 @@ class MultimediaProcessor:
             return False
             
     async def stop_stream(self, stream_id: str) -> bool:
-        """Stop processing for a stream"""
-        try:
+        """Stop processing for a stream"""        try:
             if stream_id not in self.active_streams:
                 return True
                 
@@ -309,8 +294,7 @@ class MultimediaProcessor:
         frame_data: Any,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Optional[str]:
-        """Submit a frame for processing"""
-        try:
+        """Submit a frame for processing"""        try:
             if stream_id not in self.active_streams:
                 raise ValueError(f"Stream not found: {stream_id}")
                 
@@ -350,8 +334,7 @@ class MultimediaProcessor:
             return None
             
     async def get_result(self, stream_id: str, timeout: float = 1.0) -> Optional[ProcessingResult]:
-        """Get processing result"""
-        try:
+        """Get processing result"""        try:
             if stream_id not in self.result_queues:
                 return None
                 
@@ -373,8 +356,7 @@ class MultimediaProcessor:
         stream_id: str, 
         callback: Callable[[ProcessingFrame], None]
     ):
-        """Add frame processing callback"""
-        if stream_id in self.frame_callbacks:
+        """Add frame processing callback"""        if stream_id in self.frame_callbacks:
             self.frame_callbacks[stream_id].append(callback)
             
     async def add_result_callback(
@@ -382,21 +364,17 @@ class MultimediaProcessor:
         stream_id: str, 
         callback: Callable[[ProcessingResult], None]
     ):
-        """Add result callback"""
-        if stream_id in self.result_callbacks:
+        """Add result callback"""        if stream_id in self.result_callbacks:
             self.result_callbacks[stream_id].append(callback)
             
     async def get_stream_metrics(self, stream_id: str) -> Optional[PerformanceMetrics]:
-        """Get performance metrics for a stream"""
-        return self.metrics.get(stream_id)
+        """Get performance metrics for a stream"""        return self.metrics.get(stream_id)
         
     async def get_all_metrics(self) -> Dict[str, PerformanceMetrics]:
-        """Get metrics for all streams"""
-        return self.metrics.copy()
+        """Get metrics for all streams"""        return self.metrics.copy()
         
     async def optimize_performance(self, stream_id: str) -> bool:
-        """Optimize performance for a stream"""
-        try:
+        """Optimize performance for a stream"""        try:
             if stream_id not in self.active_streams:
                 return False
                 
@@ -423,18 +401,15 @@ class MultimediaProcessor:
             return False
             
     async def pause_stream(self, stream_id: str) -> bool:
-        """Pause stream processing"""
-        # Implementation for pausing stream
+        """Pause stream processing"""        # Implementation for pausing stream
         return True
         
     async def resume_stream(self, stream_id: str) -> bool:
-        """Resume stream processing"""
-        # Implementation for resuming stream
+        """Resume stream processing"""        # Implementation for resuming stream
         return True
         
     async def health_check(self) -> Dict[str, Any]:
-        """Processor health check"""
-        try:
+        """Processor health check"""        try:
             # System metrics
             system_metrics = {}
             if PSUTIL_AVAILABLE:
@@ -479,8 +454,7 @@ class MultimediaProcessor:
     # Private methods
     
     def _process_stream(self, stream_id: str):
-        """Main processing loop for a stream"""
-        try:
+        """Main processing loop for a stream"""        try:
             config = self.active_streams[stream_id]
             metrics = self.metrics[stream_id]
             frame_queue = self.frame_queues[stream_id]
@@ -573,8 +547,7 @@ class MultimediaProcessor:
             logger.error(f"Fatal error in stream processing for {stream_id}: {e}")
             
     def _default_processing_pipeline(self, data: Any, config: StreamConfiguration) -> Any:
-        """Default processing pipeline"""
-        # This is a placeholder - in practice, this would implement
+        """Default processing pipeline"""        # This is a placeholder - in practice, this would implement
         # specific processing based on stream type and configuration
         
         if config.stream_type == StreamType.VIDEO and CV2_AVAILABLE:
@@ -592,8 +565,7 @@ class MultimediaProcessor:
         return data
         
     async def _initialize_gpu_acceleration(self):
-        """Initialize GPU acceleration"""
-        try:
+        """Initialize GPU acceleration"""        try:
             # Check if CUDA is available
             if hasattr(cv2, 'cuda') and cv2.cuda.getCudaEnabledDeviceCount() > 0:
                 logger.info("GPU acceleration enabled")
@@ -606,8 +578,7 @@ class MultimediaProcessor:
             return False
             
     def _cleanup_stream(self, stream_id: str):
-        """Cleanup stream resources"""
-        # Remove from active streams
+        """Cleanup stream resources"""        # Remove from active streams
         self.active_streams.pop(stream_id, None)
         
         # Remove queues
@@ -626,8 +597,7 @@ class MultimediaProcessor:
         self.processing_threads.pop(stream_id, None)
         
     async def _call_callback(self, callback: Callable, data: Any):
-        """Call callback function safely"""
-        try:
+        """Call callback function safely"""        try:
             if asyncio.iscoroutinefunction(callback):
                 await callback(data)
             else:
@@ -636,8 +606,7 @@ class MultimediaProcessor:
             logger.error(f"Callback execution failed: {e}")
             
     async def _reduce_quality(self, stream_id: str):
-        """Reduce quality to improve performance"""
-        config = self.active_streams[stream_id]
+        """Reduce quality to improve performance"""        config = self.active_streams[stream_id]
         
         # Reduce resolution
         if config.target_resolution:
@@ -653,40 +622,34 @@ class MultimediaProcessor:
         logger.info(f"Quality reduced for stream {stream_id}")
         
     async def _increase_buffer_size(self, stream_id: str):
-        """Increase buffer size to handle drops"""
-        config = self.active_streams[stream_id]
+        """Increase buffer size to handle drops"""        config = self.active_streams[stream_id]
         config.buffer_size = min(config.buffer_size + 10, 100)
         logger.info(f"Buffer size increased for stream {stream_id}")
         
     async def _optimize_pipeline(self, stream_id: str):
-        """Optimize processing pipeline"""
-        # This would implement pipeline optimizations
+        """Optimize processing pipeline"""        # This would implement pipeline optimizations
         # such as reducing processing complexity, skipping frames, etc.
         logger.info(f"Pipeline optimized for stream {stream_id}")
 
 
 class PerformanceMonitor:
-    """Performance monitoring system"""
-    
+    """Performance monitoring system"""    
     def __init__(self):
         self.monitoring = False
         self.monitor_thread = None
         
     async def start(self):
-        """Start performance monitoring"""
-        self.monitoring = True
+        """Start performance monitoring"""        self.monitoring = True
         self.monitor_thread = threading.Thread(target=self._monitor_loop, daemon=True)
         self.monitor_thread.start()
         
     async def stop(self):
-        """Stop performance monitoring"""
-        self.monitoring = False
+        """Stop performance monitoring"""        self.monitoring = False
         if self.monitor_thread:
             self.monitor_thread.join()
             
     def _monitor_loop(self):
-        """Performance monitoring loop"""
-        while self.monitoring:
+        """Performance monitoring loop"""        while self.monitoring:
             try:
                 if PSUTIL_AVAILABLE:
                     # Monitor system resources
@@ -708,15 +671,13 @@ class PerformanceMonitor:
 
 # WebRTC integration for real-time streaming
 class WebRTCProcessor:
-    """WebRTC real-time streaming processor"""
-    
+    """WebRTC real-time streaming processor"""    
     def __init__(self, processor: MultimediaProcessor):
         self.processor = processor
         self.peer_connections = {}
         
     async def create_peer_connection(self, stream_id: str) -> bool:
-        """Create WebRTC peer connection"""
-        if not WEBRTC_AVAILABLE:
+        """Create WebRTC peer connection"""        if not WEBRTC_AVAILABLE:
             logger.warning("WebRTC not available")
             return False
             
@@ -731,11 +692,9 @@ class WebRTCProcessor:
             return False
             
     async def handle_offer(self, stream_id: str, offer: Any) -> Any:
-        """Handle WebRTC offer"""
-        # Implementation for handling WebRTC offers
+        """Handle WebRTC offer"""        # Implementation for handling WebRTC offers
         pass
         
     async def handle_answer(self, stream_id: str, answer: Any) -> bool:
-        """Handle WebRTC answer"""
-        # Implementation for handling WebRTC answers
+        """Handle WebRTC answer"""        # Implementation for handling WebRTC answers
         return True

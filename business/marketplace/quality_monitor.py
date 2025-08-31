@@ -1,5 +1,4 @@
-"""
-Quality Monitor - Advanced Content Quality Assessment System
+"""Quality Monitor - Advanced Content Quality Assessment System
 ============================================================
 
 AI-powered quality monitoring and assessment for all content types
@@ -15,7 +14,6 @@ This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
 """
-
 from typing import Dict, Any, List, Optional, Union, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
@@ -28,8 +26,7 @@ import asyncio
 logger = logging.getLogger(__name__)
 
 class QualityDimension(Enum):
-    """Quality assessment dimensions"""
-    TECHNICAL_QUALITY = "technical_quality"
+    """Quality assessment dimensions"""    TECHNICAL_QUALITY = "technical_quality"
     CONTENT_ORIGINALITY = "content_originality"
     ENGAGEMENT_POTENTIAL = "engagement_potential"
     PRODUCTION_VALUE = "production_value"
@@ -41,8 +38,7 @@ class QualityDimension(Enum):
     BRAND_CONSISTENCY = "brand_consistency"
 
 class QualityLevel(Enum):
-    """Quality levels"""
-    EXCEPTIONAL = "exceptional"  # 0.9-1.0
+    """Quality levels"""    EXCEPTIONAL = "exceptional"  # 0.9-1.0
     HIGH = "high"              # 0.8-0.89
     GOOD = "good"              # 0.7-0.79
     ACCEPTABLE = "acceptable"   # 0.6-0.69
@@ -51,8 +47,7 @@ class QualityLevel(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics structure"""
-    content_id: str
+    """Comprehensive quality metrics structure"""    content_id: str
     overall_score: float
     quality_level: QualityLevel
     dimension_scores: Dict[QualityDimension, float]
@@ -70,11 +65,9 @@ class QualityMetrics:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class QualityMonitor:
-    """
-    Advanced AI-powered quality monitoring system for multi-format content
+    """    Advanced AI-powered quality monitoring system for multi-format content
     with real-time assessment and continuous improvement recommendations.
-    """
-    
+    """    
     def __init__(self):
         self.quality_thresholds = {
             QualityLevel.EXCEPTIONAL: 0.9,
@@ -108,8 +101,7 @@ class QualityMonitor:
         }
     
     async def assess_quality(self, content_metadata) -> QualityMetrics:
-        """Comprehensive quality assessment of content"""
-        try:
+        """Comprehensive quality assessment of content"""        try:
             # Multi-dimensional quality analysis
             dimension_scores = await self._analyze_all_dimensions(content_metadata)
             
@@ -179,8 +171,7 @@ class QualityMonitor:
             raise
     
     async def _analyze_all_dimensions(self, content_metadata) -> Dict[QualityDimension, float]:
-        """Analyze all quality dimensions"""
-        dimension_scores = {}
+        """Analyze all quality dimensions"""        dimension_scores = {}
         
         # Technical Quality Analysis
         dimension_scores[QualityDimension.TECHNICAL_QUALITY] = await self._assess_technical_quality(content_metadata)
@@ -216,8 +207,7 @@ class QualityMonitor:
         return dimension_scores
     
     async def _assess_technical_quality(self, content_metadata) -> float:
-        """Assess technical quality of content"""
-        technical_score = 0.0
+        """Assess technical quality of content"""        technical_score = 0.0
         
         # File quality metrics
         if hasattr(content_metadata, 'file_size') and content_metadata.file_size:
@@ -255,8 +245,7 @@ class QualityMonitor:
         return min(technical_score, 1.0)
     
     async def _assess_originality(self, content_metadata) -> float:
-        """Assess content originality using AI analysis"""
-        # This would use ML models to detect originality
+        """Assess content originality using AI analysis"""        # This would use ML models to detect originality
         originality_score = content_metadata.ai_analysis.get('originality_score', 0.75)
         
         # Additional checks
@@ -270,8 +259,7 @@ class QualityMonitor:
         return max(min(originality_score, 1.0), 0.0)
     
     async def _assess_engagement_potential(self, content_metadata) -> float:
-        """Assess potential for audience engagement"""
-        base_engagement = content_metadata.ai_analysis.get('engagement_potential', 0.6)
+        """Assess potential for audience engagement"""        base_engagement = content_metadata.ai_analysis.get('engagement_potential', 0.6)
         
         # Boost based on trending topics
         trending_boost = 0.0
@@ -288,8 +276,7 @@ class QualityMonitor:
         return min(engagement_score, 1.0)
     
     async def _assess_production_value(self, content_metadata) -> float:
-        """Assess overall production value"""
-        production_factors = {
+        """Assess overall production value"""        production_factors = {
             'editing_quality': content_metadata.ai_analysis.get('editing_quality', 0.7),
             'composition': content_metadata.ai_analysis.get('composition_score', 0.7),
             'lighting_audio': content_metadata.ai_analysis.get('technical_execution', 0.7),
@@ -300,8 +287,7 @@ class QualityMonitor:
         return min(production_score, 1.0)
     
     async def _assess_audio_quality(self, content_metadata) -> float:
-        """Assess audio-specific quality metrics"""
-        audio_metrics = content_metadata.ai_analysis.get('audio_analysis', {})
+        """Assess audio-specific quality metrics"""        audio_metrics = content_metadata.ai_analysis.get('audio_analysis', {})
         
         quality_factors = {
             'clarity': audio_metrics.get('clarity_score', 0.7),
@@ -315,8 +301,7 @@ class QualityMonitor:
         return min(audio_score, 1.0)
     
     async def _assess_visual_quality(self, content_metadata) -> float:
-        """Assess visual-specific quality metrics"""
-        visual_metrics = content_metadata.ai_analysis.get('visual_analysis', {})
+        """Assess visual-specific quality metrics"""        visual_metrics = content_metadata.ai_analysis.get('visual_analysis', {})
         
         quality_factors = {
             'sharpness': visual_metrics.get('sharpness_score', 0.7),
@@ -330,8 +315,7 @@ class QualityMonitor:
         return min(visual_score, 1.0)
     
     async def _assess_narrative_structure(self, content_metadata) -> float:
-        """Assess narrative and structural quality for text content"""
-        narrative_metrics = content_metadata.ai_analysis.get('narrative_analysis', {})
+        """Assess narrative and structural quality for text content"""        narrative_metrics = content_metadata.ai_analysis.get('narrative_analysis', {})
         
         structure_factors = {
             'coherence': narrative_metrics.get('coherence_score', 0.7),
@@ -345,8 +329,7 @@ class QualityMonitor:
         return min(narrative_score, 1.0)
     
     async def _assess_seo_optimization(self, content_metadata) -> float:
-        """Assess SEO optimization level"""
-        seo_factors = {
+        """Assess SEO optimization level"""        seo_factors = {
             'title_optimization': 0.8 if len(content_metadata.title) > 10 else 0.5,
             'description_length': 0.8 if len(content_metadata.description) > 100 else 0.6,
             'tags_count': min(len(content_metadata.tags) / 10.0, 1.0),
@@ -358,8 +341,7 @@ class QualityMonitor:
         return min(seo_score, 1.0)
     
     async def _assess_accessibility(self, content_metadata) -> float:
-        """Assess content accessibility"""
-        accessibility_factors = {
+        """Assess content accessibility"""        accessibility_factors = {
             'alt_text_present': 0.8,  # Assume good alt text
             'captions_available': 0.7,  # Assume captions for video/audio
             'color_contrast': 0.8,  # Assume good contrast
@@ -371,14 +353,12 @@ class QualityMonitor:
         return min(accessibility_score, 1.0)
     
     async def _assess_brand_consistency(self, content_metadata) -> float:
-        """Assess brand consistency"""
-        # This would analyze brand elements, colors, fonts, tone
+        """Assess brand consistency"""        # This would analyze brand elements, colors, fonts, tone
         brand_score = content_metadata.ai_analysis.get('brand_consistency_score', 0.75)
         return min(brand_score, 1.0)
     
     def _calculate_metadata_completeness(self, content_metadata) -> float:
-        """Calculate how complete the content metadata is"""
-        required_fields = ['title', 'description', 'tags', 'categories']
+        """Calculate how complete the content metadata is"""        required_fields = ['title', 'description', 'tags', 'categories']
         optional_fields = ['seo_keywords', 'copyright_info']
         
         completed_required = 0
@@ -400,13 +380,11 @@ class QualityMonitor:
         return (required_score * 0.8) + (optional_score * 0.2)
     
     def _is_trending_topic(self, tag: str) -> bool:
-        """Check if a tag represents a trending topic"""
-        trending_keywords = ['ai', 'viral', '2025', 'trending', 'new', 'latest', 'breaking']
+        """Check if a tag represents a trending topic"""        trending_keywords = ['ai', 'viral', '2025', 'trending', 'new', 'latest', 'breaking']
         return any(keyword in tag.lower() for keyword in trending_keywords)
     
     def _assess_title_quality(self, title: str) -> float:
-        """Assess title quality"""
-        if not title:
+        """Assess title quality"""        if not title:
             return 0.0
         
         quality_score = 0.0
@@ -436,8 +414,7 @@ class QualityMonitor:
         return min(quality_score, 1.0)
     
     def _assess_description_quality(self, description: str) -> float:
-        """Assess description quality"""
-        if not description:
+        """Assess description quality"""        if not description:
             return 0.0
         
         quality_score = 0.0
@@ -467,8 +444,7 @@ class QualityMonitor:
         return min(quality_score, 1.0)
     
     def _calculate_weighted_score(self, dimension_scores: Dict[QualityDimension, float]) -> float:
-        """Calculate weighted overall quality score"""
-        total_score = 0.0
+        """Calculate weighted overall quality score"""        total_score = 0.0
         total_weight = 0.0
         
         for dimension, score in dimension_scores.items():
@@ -479,15 +455,13 @@ class QualityMonitor:
         return total_score / total_weight if total_weight > 0 else 0.0
     
     def _determine_quality_level(self, overall_score: float) -> QualityLevel:
-        """Determine quality level from overall score"""
-        for level, threshold in sorted(self.quality_thresholds.items(), key=lambda x: x[1], reverse=True):
+        """Determine quality level from overall score"""        for level, threshold in sorted(self.quality_thresholds.items(), key=lambda x: x[1], reverse=True):
             if overall_score >= threshold:
                 return level
         return QualityLevel.UNACCEPTABLE
     
     async def _perform_technical_analysis(self, content_metadata) -> Dict[str, Any]:
-        """Perform detailed technical analysis"""
-        return {
+        """Perform detailed technical analysis"""        return {
             'file_analysis': {
                 'size_mb': content_metadata.file_size / (1024 * 1024) if content_metadata.file_size else 0,
                 'format_optimal': True,
@@ -507,8 +481,7 @@ class QualityMonitor:
         }
     
     async def _generate_improvement_suggestions(self, dimension_scores: Dict[QualityDimension, float], content_metadata) -> List[str]:
-        """Generate specific improvement suggestions"""
-        suggestions = []
+        """Generate specific improvement suggestions"""        suggestions = []
         
         # Check each dimension and suggest improvements
         for dimension, score in dimension_scores.items():
@@ -536,8 +509,7 @@ class QualityMonitor:
         return suggestions[:10]  # Top 10 most important suggestions
     
     async def _identify_strengths_weaknesses(self, dimension_scores: Dict[QualityDimension, float]) -> Tuple[List[str], List[str]]:
-        """Identify content strengths and weaknesses"""
-        strengths = []
+        """Identify content strengths and weaknesses"""        strengths = []
         weaknesses = []
         
         for dimension, score in dimension_scores.items():
@@ -553,8 +525,7 @@ class QualityMonitor:
         return strengths, weaknesses
     
     async def _benchmark_against_industry(self, content_metadata, overall_score: float) -> Dict[str, float]:
-        """Benchmark content against industry standards"""
-        content_type = content_metadata.content_type.value
+        """Benchmark content against industry standards"""        content_type = content_metadata.content_type.value
         industry_avg = self.benchmark_data['industry_averages'].get(content_type, 0.70)
         
         return {
@@ -566,8 +537,7 @@ class QualityMonitor:
         }
     
     async def _calculate_industry_percentile(self, content_metadata, overall_score: float) -> float:
-        """Calculate percentile rank within industry"""
-        # This would use actual industry data
+        """Calculate percentile rank within industry"""        # This would use actual industry data
         # For now, using a simplified calculation
         content_type = content_metadata.content_type.value
         industry_avg = self.benchmark_data['industry_averages'].get(content_type, 0.70)
@@ -582,8 +552,7 @@ class QualityMonitor:
             return max(20.0, (overall_score / industry_avg) * 50)
     
     def _calculate_assessment_confidence(self, dimension_scores: Dict[QualityDimension, float], technical_analysis: Dict[str, Any]) -> float:
-        """Calculate confidence level of the assessment"""
-        confidence_factors = {
+        """Calculate confidence level of the assessment"""        confidence_factors = {
             'dimension_coverage': len(dimension_scores) / len(QualityDimension),
             'technical_completeness': 0.8,  # Based on available technical data
             'ai_analysis_confidence': 0.85,  # AI model confidence
@@ -594,8 +563,7 @@ class QualityMonitor:
         return min(overall_confidence, 1.0)
     
     async def _generate_automated_flags(self, content_metadata, dimension_scores: Dict[QualityDimension, float], technical_analysis: Dict[str, Any]) -> List[str]:
-        """Generate automated quality flags"""
-        flags = []
+        """Generate automated quality flags"""        flags = []
         
         # Low quality flags
         if dimension_scores.get(QualityDimension.TECHNICAL_QUALITY, 1.0) < 0.5:
@@ -618,8 +586,7 @@ class QualityMonitor:
         return flags
     
     def _requires_human_review(self, overall_score: float, flags: List[str], confidence: float) -> bool:
-        """Determine if human review is required"""
-        # Require human review if:
+        """Determine if human review is required"""        # Require human review if:
         # 1. Very low quality score
         # 2. Low confidence in assessment
         # 3. Serious quality flags
@@ -638,8 +605,7 @@ class QualityMonitor:
         return False
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for quality monitor"""
-        return {
+        """Health check for quality monitor"""        return {
             "status": "healthy",
             "quality_dimensions": len(QualityDimension),
             "quality_levels": len(QualityLevel),
@@ -648,5 +614,4 @@ class QualityMonitor:
         }
     
     async def shutdown(self):
-        """Graceful shutdown"""
-        logger.info("QualityMonitor shutting down...")
+        """Graceful shutdown"""        logger.info("QualityMonitor shutting down...")

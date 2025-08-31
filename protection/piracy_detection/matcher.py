@@ -1,5 +1,4 @@
-"""
-🎯 Content Matching Engine
+"""🎯 Content Matching Engine
 ==========================
 
 Advanced AI-powered content matching and similarity detection.
@@ -14,7 +13,6 @@ This module provides:
 - Batch processing optimization
 - Advanced matching algorithms
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -26,8 +24,7 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class MatchingAlgorithm(Enum):
-    """Content matching algorithms."""
-    COSINE_SIMILARITY = "cosine"
+    """Content matching algorithms."""    COSINE_SIMILARITY = "cosine"
     EUCLIDEAN_DISTANCE = "euclidean" 
     HAMMING_DISTANCE = "hamming"
     JACCARD_SIMILARITY = "jaccard"
@@ -35,8 +32,7 @@ class MatchingAlgorithm(Enum):
     DEEP_LEARNING = "deep_learning"
 
 class ContentType(Enum):
-    """Content types for matching."""
-    AUDIO = "audio"
+    """Content types for matching."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -44,8 +40,7 @@ class ContentType(Enum):
 
 @dataclass
 class MatchResult:
-    """Content matching result."""
-    original_id: str
+    """Content matching result."""    original_id: str
     candidate_id: str
     content_type: ContentType
     similarity_score: float
@@ -56,21 +51,17 @@ class MatchResult:
     processing_time_ms: int
 
 class ContentMatcher:
-    """
-    Advanced content matching engine with multi-modal capabilities.
+    """    Advanced content matching engine with multi-modal capabilities.
     
     Provides high-performance content similarity detection using
     multiple algorithms and AI-powered feature extraction.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Content Matcher.
+        """        Initialize the Content Matcher.
         
         Args:
             config: Matcher configuration parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         
         # Matching parameters
@@ -103,13 +94,11 @@ class ContentMatcher:
         logger.info("Content Matcher initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize matcher components and models.
+        """        Initialize matcher components and models.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing Content Matcher components...")
             
             # Initialize vector database
@@ -133,8 +122,7 @@ class ContentMatcher:
             return False
     
     async def _initialize_vector_database(self) -> None:
-        """Initialize vector database for similarity search."""
-        try:
+        """Initialize vector database for similarity search."""        try:
             from ..vector_database import VectorDatabaseService
             self.vector_db = VectorDatabaseService(self.config.get('vector_db', {}))
             await self.vector_db.initialize()
@@ -144,8 +132,7 @@ class ContentMatcher:
             raise
     
     async def _initialize_feature_extractors(self) -> None:
-        """Initialize feature extractors for different content types."""
-        # Audio feature extractor
+        """Initialize feature extractors for different content types."""        # Audio feature extractor
         self.feature_extractors[ContentType.AUDIO] = {
             'model': 'audio_feature_extractor_v2',
             'features': ['mfcc', 'chroma', 'spectral_centroid', 'zero_crossing_rate'],
@@ -176,8 +163,7 @@ class ContentMatcher:
         logger.info("Feature extractors initialized")
     
     async def _initialize_similarity_models(self) -> None:
-        """Initialize similarity calculation models."""
-        for algorithm in MatchingAlgorithm:
+        """Initialize similarity calculation models."""        for algorithm in MatchingAlgorithm:
             self.similarity_models[algorithm] = {
                 'model_version': '2.0.0',
                 'optimization': 'gpu_accelerated',
@@ -188,8 +174,7 @@ class ContentMatcher:
         logger.info("Similarity models initialized")
     
     async def _warmup_models(self) -> None:
-        """Warm up models with dummy data."""
-        # Simulate model warmup
+        """Warm up models with dummy data."""        # Simulate model warmup
         logger.info("Warming up matching models...")
         await asyncio.sleep(0.1)  # Simulate warmup time
         logger.info("Model warmup complete")
@@ -197,8 +182,7 @@ class ContentMatcher:
     async def find_matches(self, content_id: str, content_type: ContentType,
                           candidate_pool: Optional[List[str]] = None,
                           algorithm: Optional[MatchingAlgorithm] = None) -> List[MatchResult]:
-        """
-        Find similar content matches for given content.
+        """        Find similar content matches for given content.
         
         Args:
             content_id: ID of content to find matches for
@@ -208,8 +192,7 @@ class ContentMatcher:
             
         Returns:
             List of match results sorted by similarity score
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             raise RuntimeError("Matcher not initialized")
         
         start_time = datetime.utcnow()
@@ -274,8 +257,7 @@ class ContentMatcher:
             raise
     
     async def _extract_features(self, content_id: str, content_type: ContentType) -> Optional[Dict[str, Any]]:
-        """
-        Extract features from content for matching.
+        """        Extract features from content for matching.
         
         Args:
             content_id: Content identifier
@@ -283,8 +265,7 @@ class ContentMatcher:
             
         Returns:
             Extracted features dictionary
-        """
-        try:
+        """        try:
             extractor = self.feature_extractors.get(content_type)
             if not extractor:
                 logger.error(f"No feature extractor available for content type: {content_type}")
@@ -308,16 +289,14 @@ class ContentMatcher:
             return None
     
     async def _get_candidate_pool(self, content_type: ContentType) -> List[str]:
-        """
-        Get candidate pool for content type.
+        """        Get candidate pool for content type.
         
         Args:
             content_type: Type of content
             
         Returns:
             List of candidate content IDs
-        """
-        try:
+        """        try:
             # Query vector database for candidates
             if self.vector_db:
                 candidates = await self.vector_db.get_candidates_by_type(
@@ -336,8 +315,7 @@ class ContentMatcher:
     async def _single_algorithm_matching(self, content_id: str, content_features: Dict[str, Any],
                                        candidates: List[str], algorithm: MatchingAlgorithm,
                                        content_type: ContentType) -> List[MatchResult]:
-        """
-        Perform matching using a single algorithm.
+        """        Perform matching using a single algorithm.
         
         Args:
             content_id: Original content ID
@@ -348,8 +326,7 @@ class ContentMatcher:
             
         Returns:
             List of match results
-        """
-        matches = []
+        """        matches = []
         start_time = datetime.utcnow()
         
         try:
@@ -372,8 +349,7 @@ class ContentMatcher:
     
     async def _ensemble_matching(self, content_id: str, content_features: Dict[str, Any],
                                candidates: List[str], content_type: ContentType) -> List[MatchResult]:
-        """
-        Perform ensemble matching using multiple algorithms.
+        """        Perform ensemble matching using multiple algorithms.
         
         Args:
             content_id: Original content ID
@@ -383,8 +359,7 @@ class ContentMatcher:
             
         Returns:
             List of match results
-        """
-        algorithm_results = {}
+        """        algorithm_results = {}
         
         try:
             # Run multiple algorithms in parallel
@@ -418,8 +393,7 @@ class ContentMatcher:
     async def _process_batch(self, content_id: str, content_features: Dict[str, Any],
                            batch: List[str], algorithm: MatchingAlgorithm,
                            content_type: ContentType) -> List[MatchResult]:
-        """
-        Process a batch of candidates with specific algorithm.
+        """        Process a batch of candidates with specific algorithm.
         
         Args:
             content_id: Original content ID
@@ -430,8 +404,7 @@ class ContentMatcher:
             
         Returns:
             List of match results for the batch
-        """
-        batch_matches = []
+        """        batch_matches = []
         
         try:
             for candidate_id in batch:
@@ -468,8 +441,7 @@ class ContentMatcher:
             return []
     
     async def _get_candidate_features(self, candidate_id: str, content_type: ContentType) -> Optional[Dict[str, Any]]:
-        """Get features for a candidate content."""
-        # Simulate getting candidate features
+        """Get features for a candidate content."""        # Simulate getting candidate features
         # In production, this would query the vector database
         extractor = self.feature_extractors.get(content_type)
         if not extractor:
@@ -483,8 +455,7 @@ class ContentMatcher:
     
     async def _calculate_similarity(self, features1: Dict[str, Any], features2: Dict[str, Any],
                                   algorithm: MatchingAlgorithm) -> float:
-        """
-        Calculate similarity between two feature sets.
+        """        Calculate similarity between two feature sets.
         
         Args:
             features1: First feature set
@@ -493,8 +464,7 @@ class ContentMatcher:
             
         Returns:
             Similarity score (0.0 to 1.0)
-        """
-        try:
+        """        try:
             vector1 = np.array(features1.get('vector', []))
             vector2 = np.array(features2.get('vector', []))
             
@@ -521,8 +491,7 @@ class ContentMatcher:
             return 0.0
     
     def _cosine_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate cosine similarity between vectors."""
-        try:
+        """Calculate cosine similarity between vectors."""        try:
             dot_product = np.dot(vector1, vector2)
             norm_product = np.linalg.norm(vector1) * np.linalg.norm(vector2)
             if norm_product == 0:
@@ -532,8 +501,7 @@ class ContentMatcher:
             return 0.0
     
     def _euclidean_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate similarity based on Euclidean distance."""
-        try:
+        """Calculate similarity based on Euclidean distance."""        try:
             distance = np.linalg.norm(vector1 - vector2)
             max_distance = np.sqrt(len(vector1))  # Maximum possible distance
             return 1.0 - min(distance / max_distance, 1.0)
@@ -541,8 +509,7 @@ class ContentMatcher:
             return 0.0
     
     def _hamming_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate Hamming similarity."""
-        try:
+        """Calculate Hamming similarity."""        try:
             # Convert to binary for Hamming distance
             binary1 = (vector1 > np.mean(vector1)).astype(int)
             binary2 = (vector2 > np.mean(vector2)).astype(int)
@@ -552,8 +519,7 @@ class ContentMatcher:
             return 0.0
     
     def _jaccard_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate Jaccard similarity."""
-        try:
+        """Calculate Jaccard similarity."""        try:
             # Convert to sets for Jaccard
             set1 = set(np.where(vector1 > np.mean(vector1))[0])
             set2 = set(np.where(vector2 > np.mean(vector2))[0])
@@ -564,21 +530,18 @@ class ContentMatcher:
             return 0.0
     
     def _perceptual_hash_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate perceptual hash similarity."""
-        # Simplified perceptual hash similarity
+        """Calculate perceptual hash similarity."""        # Simplified perceptual hash similarity
         return self._cosine_similarity(vector1, vector2)
     
     def _deep_learning_similarity(self, vector1: np.ndarray, vector2: np.ndarray) -> float:
-        """Calculate deep learning-based similarity."""
-        # Simulate deep learning similarity
+        """Calculate deep learning-based similarity."""        # Simulate deep learning similarity
         # In production, this would use trained neural networks
         base_similarity = self._cosine_similarity(vector1, vector2)
         # Add some learned adjustments
         return min(1.0, base_similarity * 1.1)
     
     def _calculate_confidence(self, similarity_score: float, algorithm: MatchingAlgorithm) -> float:
-        """Calculate confidence score for a match."""
-        # Algorithm-specific confidence adjustments
+        """Calculate confidence score for a match."""        # Algorithm-specific confidence adjustments
         algorithm_confidence_factors = {
             MatchingAlgorithm.DEEP_LEARNING: 1.0,
             MatchingAlgorithm.COSINE_SIMILARITY: 0.9,
@@ -592,8 +555,7 @@ class ContentMatcher:
         return min(1.0, similarity_score * factor)
     
     def _get_feature_breakdown(self, features1: Dict[str, Any], features2: Dict[str, Any]) -> Dict[str, float]:
-        """Get detailed feature-by-feature similarity breakdown."""
-        # Simplified feature breakdown
+        """Get detailed feature-by-feature similarity breakdown."""        # Simplified feature breakdown
         return {
             'vector_similarity': self._cosine_similarity(
                 np.array(features1.get('vector', [])),
@@ -605,8 +567,7 @@ class ContentMatcher:
     
     def _combine_algorithm_results(self, algorithm_results: Dict[MatchingAlgorithm, List[MatchResult]],
                                  content_id: str, content_type: ContentType) -> List[MatchResult]:
-        """
-        Combine results from multiple algorithms using weighted ensemble.
+        """        Combine results from multiple algorithms using weighted ensemble.
         
         Args:
             algorithm_results: Results from each algorithm
@@ -615,8 +576,7 @@ class ContentMatcher:
             
         Returns:
             Combined match results
-        """
-        candidate_scores = {}
+        """        candidate_scores = {}
         
         # Aggregate scores from all algorithms
         for algorithm, matches in algorithm_results.items():
@@ -659,8 +619,7 @@ class ContentMatcher:
         return combined_matches
     
     def _is_cache_valid(self, cached_data: Dict[str, Any]) -> bool:
-        """Check if cached data is still valid."""
-        cache_time = cached_data.get('timestamp')
+        """Check if cached data is still valid."""        cache_time = cached_data.get('timestamp')
         ttl_hours = cached_data.get('ttl_hours', 1)
         
         if cache_time:
@@ -670,8 +629,7 @@ class ContentMatcher:
         return False
     
     def _update_cache_stats(self, cache_hit: bool) -> None:
-        """Update cache statistics."""
-        total_requests = self.matching_stats.get('total_requests', 0) + 1
+        """Update cache statistics."""        total_requests = self.matching_stats.get('total_requests', 0) + 1
         cache_hits = self.matching_stats.get('cache_hits', 0)
         
         if cache_hit:
@@ -682,8 +640,7 @@ class ContentMatcher:
         self.matching_stats['cache_hit_rate'] = cache_hits / total_requests if total_requests > 0 else 0.0
     
     def _update_matching_stats(self, matches: List[MatchResult], processing_time: float) -> None:
-        """Update matching performance statistics."""
-        self.matching_stats['total_matches_performed'] += 1
+        """Update matching performance statistics."""        self.matching_stats['total_matches_performed'] += 1
         
         if matches:
             avg_similarity = sum(match.similarity_score for match in matches) / len(matches)
@@ -705,8 +662,7 @@ class ContentMatcher:
                 self.matching_stats['performance_metrics']['processing_times'][-1000:]
     
     async def get_matching_stats(self) -> Dict[str, Any]:
-        """Get matching performance statistics."""
-        stats = self.matching_stats.copy()
+        """Get matching performance statistics."""        stats = self.matching_stats.copy()
         
         # Calculate additional metrics
         processing_times = stats.get('performance_metrics', {}).get('processing_times', [])
@@ -720,8 +676,7 @@ class ContentMatcher:
         return stats
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the matcher."""
-        logger.info("Shutting down Content Matcher...")
+        """Gracefully shutdown the matcher."""        logger.info("Shutting down Content Matcher...")
         
         # Clear cache
         self.matching_cache.clear()

@@ -1,12 +1,10 @@
-"""
-Onboarding Manager - Central Orchestration for Creator Onboarding
+"""Onboarding Manager - Central Orchestration for Creator Onboarding
 
 Enterprise-grade onboarding management system with workflow orchestration,
 session persistence, and intelligent progress tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 import json
@@ -46,8 +44,7 @@ from ...utils.notifications import NotificationService
 logger = logging.getLogger(__name__)
 
 class OnboardingStatus(Enum):
-    """Onboarding process status levels"""
-    NOT_STARTED = "not_started"
+    """Onboarding process status levels"""    NOT_STARTED = "not_started"
     IN_PROGRESS = "in_progress" 
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -56,8 +53,7 @@ class OnboardingStatus(Enum):
 
 @dataclass
 class OnboardingMetrics:
-    """Comprehensive onboarding performance metrics"""
-    total_sessions: int = 0
+    """Comprehensive onboarding performance metrics"""    total_sessions: int = 0
     active_sessions: int = 0
     completed_sessions: int = 0
     failed_sessions: int = 0
@@ -73,8 +69,7 @@ class OnboardingMetrics:
             self.creator_type_distribution = {}
 
 class OnboardingManager:
-    """
-    Advanced onboarding management system with enterprise features.
+    """    Advanced onboarding management system with enterprise features.
     
     Core Capabilities:
     - Session lifecycle management
@@ -84,8 +79,7 @@ class OnboardingManager:
     - Performance monitoring and optimization
     - Multi-tenant isolation and security
     - Automated notifications and alerts
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager(prefix="onboarding")
         self.notification_service = NotificationService()
@@ -98,10 +92,8 @@ class OnboardingManager:
     
     async def create_session(self, user_id: str, creator_type: str, 
                            initial_data: Dict[str, Any] = None) -> str:
-        """
-        Create new onboarding session with enterprise tracking.
-        """
-        try:
+        """        Create new onboarding session with enterprise tracking.
+        """        try:
             session_id = str(uuid.uuid4())
             session_data = {
                 'session_id': session_id,
@@ -153,10 +145,8 @@ class OnboardingManager:
             raise OnboardingError(f"Failed to create session: {str(e)}")
     
     async def get_session(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve onboarding session with cache optimization.
-        """
-        try:
+        """        Retrieve onboarding session with cache optimization.
+        """        try:
             # Try cache first
             cached_data = await self.cache_manager.get(f"session:{session_id}")
             if cached_data:
@@ -180,10 +170,8 @@ class OnboardingManager:
     
     async def update_session(self, session_id: str, 
                            update_data: Dict[str, Any]) -> bool:
-        """
-        Update onboarding session with optimistic locking.
-        """
-        try:
+        """        Update onboarding session with optimistic locking.
+        """        try:
             session_data = await self.get_session(session_id)
             if not session_data:
                 raise ValidationError(f"Session not found: {session_id}")
@@ -229,10 +217,8 @@ class OnboardingManager:
     
     async def complete_onboarding(self, session_id: str, 
                                 completion_data: Dict[str, Any] = None) -> bool:
-        """
-        Complete onboarding session with final validation and cleanup.
-        """
-        try:
+        """        Complete onboarding session with final validation and cleanup.
+        """        try:
             session_data = await self.get_session(session_id)
             if not session_data:
                 raise ValidationError(f"Session not found: {session_id}")
@@ -281,10 +267,8 @@ class OnboardingManager:
             return False
     
     async def cancel_session(self, session_id: str, reason: str = None) -> bool:
-        """
-        Cancel onboarding session with proper cleanup.
-        """
-        try:
+        """        Cancel onboarding session with proper cleanup.
+        """        try:
             session_data = await self.get_session(session_id)
             if not session_data:
                 return False
@@ -323,18 +307,14 @@ class OnboardingManager:
     
     async def get_user_sessions(self, user_id: str, 
                               status_filter: List[str] = None) -> List[Dict[str, Any]]:
-        """
-        Retrieve all onboarding sessions for a user.
-        """
-        try:
+        """        Retrieve all onboarding sessions for a user.
+        """        try:
             async with get_db_session() as db:
-                query = """
-                    SELECT session_id, creator_type, status, current_stage, 
+                query = """                    SELECT session_id, creator_type, status, current_stage, 
                            completion_percentage, created_at, updated_at
                     FROM onboarding_sessions 
                     WHERE user_id = $1
-                """
-                params = [user_id]
+                """                params = [user_id]
                 
                 if status_filter:
                     query += f" AND status = ANY($2)"
@@ -350,10 +330,8 @@ class OnboardingManager:
             return []
     
     async def get_metrics(self) -> OnboardingMetrics:
-        """
-        Get comprehensive onboarding metrics and analytics.
-        """
-        try:
+        """        Get comprehensive onboarding metrics and analytics.
+        """        try:
             # Update live metrics from database
             await self._refresh_metrics()
             return self.metrics
@@ -363,16 +341,13 @@ class OnboardingManager:
             return self.metrics
     
     async def cleanup_expired_sessions(self) -> int:
-        """
-        Clean up expired onboarding sessions.
-        """
-        try:
+        """        Clean up expired onboarding sessions.
+        """        try:
             cutoff_time = datetime.utcnow() - self.session_timeout
             
             async with get_db_session() as db:
                 # Find expired active sessions
-                expired_sessions = await db.fetch("""
-                    SELECT session_id, user_id FROM onboarding_sessions
+                expired_sessions = await db.fetch("""                    SELECT session_id, user_id FROM onboarding_sessions
                     WHERE status = $1 AND updated_at < $2
                 """, OnboardingStatus.IN_PROGRESS.value, cutoff_time)
                 
@@ -394,11 +369,9 @@ class OnboardingManager:
             return 0
     
     async def _persist_session(self, session_data: Dict[str, Any]) -> None:
-        """Persist session data to database."""
-        try:
+        """Persist session data to database."""        try:
             async with get_db_session() as db:
-                await db.execute("""
-                    INSERT INTO onboarding_sessions (
+                await db.execute("""                    INSERT INTO onboarding_sessions (
                         session_id, user_id, creator_type, status,
                         current_stage, completed_stages, progress_data,
                         session_metadata, created_at, updated_at,
@@ -423,11 +396,9 @@ class OnboardingManager:
             raise
     
     async def _load_session_from_db(self, session_id: str) -> Optional[Dict[str, Any]]:
-        """Load session data from database."""
-        try:
+        """Load session data from database."""        try:
             async with get_db_session() as db:
-                result = await db.fetchrow("""
-                    SELECT * FROM onboarding_sessions WHERE session_id = $1
+                result = await db.fetchrow("""                    SELECT * FROM onboarding_sessions WHERE session_id = $1
                 """, session_id)
                 
                 if result:
@@ -444,11 +415,9 @@ class OnboardingManager:
             return None
     
     async def _update_session_in_db(self, session_id: str, session_data: Dict[str, Any]) -> None:
-        """Update session data in database."""
-        try:
+        """Update session data in database."""        try:
             async with get_db_session() as db:
-                await db.execute("""
-                    UPDATE onboarding_sessions SET
+                await db.execute("""                    UPDATE onboarding_sessions SET
                         status = $2, current_stage = $3, completed_stages = $4,
                         progress_data = $5, updated_at = $6, completion_percentage = $7
                     WHERE session_id = $1
@@ -467,11 +436,9 @@ class OnboardingManager:
             raise
     
     async def _archive_session(self, session_id: str, session_data: Dict[str, Any]) -> None:
-        """Archive completed session data."""
-        try:
+        """Archive completed session data."""        try:
             async with get_db_session() as db:
-                await db.execute("""
-                    INSERT INTO onboarding_archives (
+                await db.execute("""                    INSERT INTO onboarding_archives (
                         session_id, user_id, creator_type, completion_data,
                         archived_at, session_duration_minutes
                     ) VALUES ($1, $2, $3, $4, $5, $6)
@@ -488,14 +455,12 @@ class OnboardingManager:
             logger.error(f"Error archiving session: {str(e)}")
     
     def _calculate_progress(self, completed_stages: List[str]) -> float:
-        """Calculate completion percentage based on completed stages."""
-        total_stages = 8  # Total expected stages
+        """Calculate completion percentage based on completed stages."""        total_stages = 8  # Total expected stages
         completed_count = len(completed_stages)
         return min((completed_count / total_stages) * 100, 100.0)
     
     def _validate_completion_requirements(self, session_data: Dict[str, Any]) -> bool:
-        """Validate that onboarding requirements are met."""
-        required_stages = [
+        """Validate that onboarding requirements are met."""        required_stages = [
             'profile_creation',
             'content_analysis', 
             'rights_verification',
@@ -506,8 +471,7 @@ class OnboardingManager:
         return all(stage in completed_stages for stage in required_stages)
     
     def _calculate_session_duration(self, session_data: Dict[str, Any]) -> int:
-        """Calculate session duration in minutes."""
-        try:
+        """Calculate session duration in minutes."""        try:
             created_at = datetime.fromisoformat(session_data['created_at'])
             updated_at = datetime.fromisoformat(session_data['updated_at'])
             duration = updated_at - created_at
@@ -516,19 +480,16 @@ class OnboardingManager:
             return 0
     
     def _update_completion_metrics(self) -> None:
-        """Update completion rate and related metrics."""
-        if self.metrics.total_sessions > 0:
+        """Update completion rate and related metrics."""        if self.metrics.total_sessions > 0:
             self.metrics.completion_rate = (
                 self.metrics.completed_sessions / self.metrics.total_sessions
             ) * 100
     
     async def _refresh_metrics(self) -> None:
-        """Refresh metrics from database."""
-        try:
+        """Refresh metrics from database."""        try:
             async with get_db_session() as db:
                 # Get basic counts
-                counts = await db.fetchrow("""
-                    SELECT 
+                counts = await db.fetchrow("""                    SELECT 
                         COUNT(*) as total,
                         COUNT(CASE WHEN status = 'in_progress' THEN 1 END) as active,
                         COUNT(CASE WHEN status = 'completed' THEN 1 END) as completed,

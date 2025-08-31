@@ -1,5 +1,4 @@
-"""
-Quality Management Module Index - IA Influencer Agent
+"""Quality Management Module Index - IA Influencer Agent
 ====================================================
 
 Central index and factory for the enterprise-grade quality management system.
@@ -17,7 +16,6 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: Quality request → Component factory → Workflow orchestration → 
 Quality assessment → Results aggregation → Reporting & recommendations
 """
-
 import logging
 import asyncio
 from datetime import datetime
@@ -55,8 +53,7 @@ from .enhancer import (
 
 
 class QualityWorkflowType(Enum):
-    """Types of quality workflows"""
-    CONTENT_VALIDATION = "content_validation"
+    """Types of quality workflows"""    CONTENT_VALIDATION = "content_validation"
     COMPREHENSIVE_ANALYSIS = "comprehensive_analysis"
     PLATFORM_OPTIMIZATION = "platform_optimization"
     COMPLIANCE_CHECK = "compliance_check"
@@ -68,8 +65,7 @@ class QualityWorkflowType(Enum):
 
 @dataclass
 class QualityWorkflowConfig:
-    """Configuration for quality workflows"""
-    workflow_type: QualityWorkflowType
+    """Configuration for quality workflows"""    workflow_type: QualityWorkflowType
     content_types: List[str]
     target_platforms: List[str]
     validation_level: str = "standard"
@@ -82,13 +78,11 @@ class QualityWorkflowConfig:
 
 
 class QualityManagerFactory:
-    """
-    Factory class for creating quality management components and workflows.
+    """    Factory class for creating quality management components and workflows.
     
     Provides centralized component creation, configuration management,
     and workflow orchestration for the IA Influencer quality system.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -151,8 +145,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> QualityOrchestrator:
-        """Create and configure a QualityOrchestrator instance."""
-        effective_config = {**self.default_configs['orchestrator']}
+        """Create and configure a QualityOrchestrator instance."""        effective_config = {**self.default_configs['orchestrator']}
         if config:
             effective_config.update(config)
         
@@ -168,8 +161,7 @@ class QualityManagerFactory:
         config: Optional[Dict[str, Any]] = None
     ) -> Union[ContentValidator, AudioQualityValidator, VideoQualityValidator, 
                ImageQualityValidator, TextQualityValidator]:
-        """Create appropriate content validator based on content type."""
-        effective_config = {**self.default_configs['validator']}
+        """Create appropriate content validator based on content type."""        effective_config = {**self.default_configs['validator']}
         if config:
             effective_config.update(config)
         
@@ -188,8 +180,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> QualityMetricsEngine:
-        """Create and configure a QualityMetricsEngine instance."""
-        effective_config = {**self.default_configs['metrics']}
+        """Create and configure a QualityMetricsEngine instance."""        effective_config = {**self.default_configs['metrics']}
         if config:
             effective_config.update(config)
         
@@ -203,8 +194,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> ContentQualityScorer:
-        """Create and configure a ContentQualityScorer instance."""
-        effective_config = {**self.default_configs['metrics']}
+        """Create and configure a ContentQualityScorer instance."""        effective_config = {**self.default_configs['metrics']}
         if config:
             effective_config.update(config)
         
@@ -214,8 +204,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> PerformanceMetricsCalculator:
-        """Create and configure a PerformanceMetricsCalculator instance."""
-        effective_config = {**self.default_configs['metrics']}
+        """Create and configure a PerformanceMetricsCalculator instance."""        effective_config = {**self.default_configs['metrics']}
         if config:
             effective_config.update(config)
         
@@ -225,8 +214,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> IntegrityController:
-        """Create and configure an IntegrityController instance."""
-        effective_config = {**self.default_configs['integrity']}
+        """Create and configure an IntegrityController instance."""        effective_config = {**self.default_configs['integrity']}
         if config:
             effective_config.update(config)
         
@@ -240,8 +228,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> ContentIntegrityVerifier:
-        """Create and configure a ContentIntegrityVerifier instance."""
-        effective_config = {**self.default_configs['integrity']}
+        """Create and configure a ContentIntegrityVerifier instance."""        effective_config = {**self.default_configs['integrity']}
         if config:
             effective_config.update(config)
         
@@ -251,8 +238,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> MetadataIntegrityChecker:
-        """Create and configure a MetadataIntegrityChecker instance."""
-        effective_config = {**self.default_configs['integrity']}
+        """Create and configure a MetadataIntegrityChecker instance."""        effective_config = {**self.default_configs['integrity']}
         if config:
             effective_config.update(config)
         
@@ -262,8 +248,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> ComplianceChecker:
-        """Create and configure a ComplianceChecker instance."""
-        effective_config = {**self.default_configs['compliance']}
+        """Create and configure a ComplianceChecker instance."""        effective_config = {**self.default_configs['compliance']}
         if config:
             effective_config.update(config)
         
@@ -277,8 +262,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> ContentComplianceValidator:
-        """Create and configure a ContentComplianceValidator instance."""
-        effective_config = {**self.default_configs['compliance']}
+        """Create and configure a ContentComplianceValidator instance."""        effective_config = {**self.default_configs['compliance']}
         if config:
             effective_config.update(config)
         
@@ -288,8 +272,7 @@ class QualityManagerFactory:
         self, 
         config: Optional[Dict[str, Any]] = None
     ) -> CopyrightComplianceChecker:
-        """Create and configure a CopyrightComplianceChecker instance."""
-        effective_config = {**self.default_configs['compliance']}
+        """Create and configure a CopyrightComplianceChecker instance."""        effective_config = {**self.default_configs['compliance']}
         if config:
             effective_config.update(config)
         
@@ -300,8 +283,7 @@ class QualityManagerFactory:
         processing_type: str = "standard",
         config: Optional[Dict[str, Any]] = None
     ) -> Union[QualityProcessor, BatchQualityProcessor, RealTimeQualityProcessor]:
-        """Create appropriate quality processor based on processing type."""
-        effective_config = {**self.default_configs['processor']}
+        """Create appropriate quality processor based on processing type."""        effective_config = {**self.default_configs['processor']}
         if config:
             effective_config.update(config)
         
@@ -317,8 +299,7 @@ class QualityManagerFactory:
         monitor_type: str = "standard",
         config: Optional[Dict[str, Any]] = None
     ) -> Union[QualityMonitor, ContentQualityMonitor, SystemQualityMonitor]:
-        """Create appropriate quality monitor based on monitor type."""
-        effective_config = {**self.default_configs['monitor']}
+        """Create appropriate quality monitor based on monitor type."""        effective_config = {**self.default_configs['monitor']}
         if config:
             effective_config.update(config)
         
@@ -334,8 +315,7 @@ class QualityManagerFactory:
         enhancer_type: str = "standard",
         config: Optional[Dict[str, Any]] = None
     ) -> Union[QualityEnhancer, ContentQualityEnhancer, AIQualityOptimizer]:
-        """Create appropriate quality enhancer based on enhancer type."""
-        effective_config = {**self.default_configs['enhancer']}
+        """Create appropriate quality enhancer based on enhancer type."""        effective_config = {**self.default_configs['enhancer']}
         if config:
             effective_config.update(config)
         
@@ -351,8 +331,7 @@ class QualityManagerFactory:
         reporter_type: str = "standard",
         config: Optional[Dict[str, Any]] = None
     ) -> Union[QualityReporter, QualityDashboardReporter, QualityAnalyticsReporter]:
-        """Create appropriate quality reporter based on reporter type."""
-        effective_config = {**self.default_configs['reporter']}
+        """Create appropriate quality reporter based on reporter type."""        effective_config = {**self.default_configs['reporter']}
         if config:
             effective_config.update(config)
         
@@ -367,8 +346,7 @@ class QualityManagerFactory:
         self, 
         workflow_config: QualityWorkflowConfig
     ) -> 'QualityWorkflow':
-        """Create a complete quality workflow with all necessary components."""
-        workflow_id = f"{workflow_config.workflow_type.value}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """Create a complete quality workflow with all necessary components."""        workflow_id = f"{workflow_config.workflow_type.value}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
         # Create workflow components based on configuration
         components = {}
@@ -420,16 +398,13 @@ class QualityManagerFactory:
         return workflow
     
     def get_workflow(self, workflow_id: str) -> Optional['QualityWorkflow']:
-        """Retrieve an existing workflow by ID."""
-        return self._workflow_registry.get(workflow_id)
+        """Retrieve an existing workflow by ID."""        return self._workflow_registry.get(workflow_id)
     
     def list_workflows(self) -> List[str]:
-        """List all active workflow IDs."""
-        return list(self._workflow_registry.keys())
+        """List all active workflow IDs."""        return list(self._workflow_registry.keys())
     
     def cleanup_workflow(self, workflow_id: str) -> bool:
-        """Clean up and remove a workflow."""
-        if workflow_id in self._workflow_registry:
+        """Clean up and remove a workflow."""        if workflow_id in self._workflow_registry:
             workflow = self._workflow_registry[workflow_id]
             workflow.cleanup()
             del self._workflow_registry[workflow_id]
@@ -439,13 +414,11 @@ class QualityManagerFactory:
 
 
 class QualityWorkflow:
-    """
-    Complete quality workflow orchestrator for end-to-end quality management.
+    """    Complete quality workflow orchestrator for end-to-end quality management.
     
     Coordinates all quality management components to provide comprehensive
     content quality assessment, enhancement, and reporting.
-    """
-    
+    """    
     def __init__(
         self,
         workflow_id: str,
@@ -476,8 +449,7 @@ class QualityWorkflow:
         target_platforms: Optional[List[str]] = None,
         additional_metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Process content through the complete quality workflow."""
-        start_time = datetime.now()
+        """Process content through the complete quality workflow."""        start_time = datetime.now()
         
         try:
             # Use workflow target platforms or provided ones
@@ -631,8 +603,7 @@ class QualityWorkflow:
             return error_results
     
     def _calculate_overall_quality_score(self, workflow_results: Dict[str, Any]) -> float:
-        """Calculate overall quality score from all workflow components."""
-        scores = []
+        """Calculate overall quality score from all workflow components."""        scores = []
         weights = []
         
         # Validation score (25% weight)
@@ -680,8 +651,7 @@ class QualityWorkflow:
         return 0.5  # Neutral score if no components available
     
     def _generate_workflow_recommendations(self, workflow_results: Dict[str, Any]) -> List[str]:
-        """Generate comprehensive recommendations from all workflow components."""
-        all_recommendations = []
+        """Generate comprehensive recommendations from all workflow components."""        all_recommendations = []
         
         # Collect recommendations from all components
         for component_results in workflow_results.values():
@@ -710,8 +680,7 @@ class QualityWorkflow:
         return unique_recommendations[:10]  # Limit to top 10 recommendations
     
     def _update_processing_stats(self, workflow_results: Dict[str, Any]):
-        """Update workflow processing statistics."""
-        self.processing_stats['total_processed'] += 1
+        """Update workflow processing statistics."""        self.processing_stats['total_processed'] += 1
         
         if workflow_results.get('workflow_status') == 'completed':
             self.processing_stats['successful'] += 1
@@ -727,8 +696,7 @@ class QualityWorkflow:
         self.processing_stats['average_processing_time'] = round(new_avg, 3)
     
     def get_processing_stats(self) -> Dict[str, Any]:
-        """Get workflow processing statistics."""
-        return {
+        """Get workflow processing statistics."""        return {
             'workflow_id': self.workflow_id,
             'workflow_type': self.config.workflow_type.value,
             'active': self.active,
@@ -738,8 +706,7 @@ class QualityWorkflow:
         }
     
     def cleanup(self):
-        """Clean up workflow resources."""
-        self.active = False
+        """Clean up workflow resources."""        self.active = False
         self.results_cache.clear()
         self.components.clear()
         self.logger.info(f"Workflow {self.workflow_id} cleaned up")
@@ -752,13 +719,11 @@ async def quick_quality_assessment(
     target_platforms: Optional[List[str]] = None,
     validation_level: str = "standard"
 ) -> Dict[str, Any]:
-    """
-    Perform a quick quality assessment using default workflow configuration.
+    """    Perform a quick quality assessment using default workflow configuration.
     
     This is a convenience function for simple quality checks without
     creating a full workflow configuration.
-    """
-    factory = QualityManagerFactory()
+    """    factory = QualityManagerFactory()
     
     workflow_config = QualityWorkflowConfig(
         workflow_type=QualityWorkflowType.CONTENT_VALIDATION,
@@ -792,13 +757,11 @@ async def comprehensive_quality_analysis(
     target_platforms: List[str],
     enable_enhancement: bool = True
 ) -> Dict[str, Any]:
-    """
-    Perform a comprehensive quality analysis with all features enabled.
+    """    Perform a comprehensive quality analysis with all features enabled.
     
     This function provides a complete quality assessment including
     validation, metrics, integrity, compliance, and enhancement recommendations.
-    """
-    factory = QualityManagerFactory()
+    """    factory = QualityManagerFactory()
     
     workflow_config = QualityWorkflowConfig(
         workflow_type=QualityWorkflowType.COMPREHENSIVE_ANALYSIS,

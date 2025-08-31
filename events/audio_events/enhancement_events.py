@@ -1,5 +1,4 @@
-"""
-Audio Enhancement Events - Industrial Grade Audio Enhancement & Mastering
+"""Audio Enhancement Events - Industrial Grade Audio Enhancement & Mastering
 ========================================================================
 
 This module handles all events related to audio enhancement, mastering,
@@ -8,7 +7,6 @@ noise reduction, and quality improvement processes.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Dict, List, Optional, Any, Tuple
@@ -19,8 +17,7 @@ from ...core.events.base_event import BaseEvent, EventPriority, EventCategory
 
 
 class EnhancementType(Enum):
-    """Types of audio enhancement"""
-    NOISE_REDUCTION = "noise_reduction"
+    """Types of audio enhancement"""    NOISE_REDUCTION = "noise_reduction"
     MASTERING = "mastering"
     RESTORATION = "restoration"
     SPATIAL_ENHANCEMENT = "spatial_enhancement"
@@ -33,8 +30,7 @@ class EnhancementType(Enum):
 
 
 class NoiseType(Enum):
-    """Types of noise to be reduced"""
-    BACKGROUND_NOISE = "background_noise"
+    """Types of noise to be reduced"""    BACKGROUND_NOISE = "background_noise"
     HISS = "hiss"
     HUM = "hum"
     CLICKS_POPS = "clicks_pops"
@@ -47,8 +43,7 @@ class NoiseType(Enum):
 
 
 class MasteringPreset(Enum):
-    """Mastering presets for different purposes"""
-    STREAMING = "streaming"
+    """Mastering presets for different purposes"""    STREAMING = "streaming"
     CD_RELEASE = "cd_release"
     VINYL = "vinyl"
     RADIO = "radio"
@@ -62,13 +57,11 @@ class MasteringPreset(Enum):
 
 @dataclass
 class AudioEnhancementStartedEvent(BaseEvent):
-    """
-    Event triggered when audio enhancement process begins.
+    """    Event triggered when audio enhancement process begins.
     
     Initializes comprehensive audio enhancement pipeline with AI-powered
     analysis and processing algorithms.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     enhancement_id: UUID
     filename: str
@@ -103,12 +96,10 @@ class AudioEnhancementStartedEvent(BaseEvent):
 
 @dataclass
 class AudioEnhancementProgressEvent(BaseEvent):
-    """
-    Event triggered during audio enhancement progress updates.
+    """    Event triggered during audio enhancement progress updates.
     
     Provides real-time feedback about enhancement pipeline progress.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     enhancement_id: UUID
     current_enhancement_type: EnhancementType
@@ -139,12 +130,10 @@ class AudioEnhancementProgressEvent(BaseEvent):
 
 @dataclass
 class AudioEnhancementCompletedEvent(BaseEvent):
-    """
-    Event triggered when audio enhancement is successfully completed.
+    """    Event triggered when audio enhancement is successfully completed.
     
     Contains comprehensive enhancement results and quality metrics.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     enhancement_id: UUID
     enhanced_file_id: UUID
@@ -181,12 +170,10 @@ class AudioEnhancementCompletedEvent(BaseEvent):
 
 @dataclass
 class AudioEnhancementFailedEvent(BaseEvent):
-    """
-    Event triggered when audio enhancement fails.
+    """    Event triggered when audio enhancement fails.
     
     Contains detailed error information and recovery options.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     enhancement_id: UUID
     failed_enhancement_type: EnhancementType
@@ -221,12 +208,10 @@ class AudioEnhancementFailedEvent(BaseEvent):
 
 @dataclass
 class AudioNoiseReductionEvent(BaseEvent):
-    """
-    Event triggered when noise reduction process is completed.
+    """    Event triggered when noise reduction process is completed.
     
     Contains detailed noise analysis and reduction results.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     reduction_id: UUID
     noise_types_detected: List[NoiseType]
@@ -261,12 +246,10 @@ class AudioNoiseReductionEvent(BaseEvent):
 
 @dataclass
 class AudioMasteringEvent(BaseEvent):
-    """
-    Event triggered when mastering process is completed.
+    """    Event triggered when mastering process is completed.
     
     Contains comprehensive mastering analysis and processing results.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     mastering_id: UUID
     mastering_preset: MasteringPreset
@@ -306,12 +289,10 @@ class AudioMasteringEvent(BaseEvent):
 
 @dataclass
 class AudioRestorationEvent(BaseEvent):
-    """
-    Event triggered when audio restoration process is completed.
+    """    Event triggered when audio restoration process is completed.
     
     Handles restoration of degraded or damaged audio recordings.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     restoration_id: UUID
     degradation_types: List[str]
@@ -349,12 +330,10 @@ class AudioRestorationEvent(BaseEvent):
 
 @dataclass
 class AudioSpatialEnhancementEvent(BaseEvent):
-    """
-    Event triggered when spatial enhancement is completed.
+    """    Event triggered when spatial enhancement is completed.
     
     Handles stereo widening, surround sound, and 3D audio processing.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     spatial_id: UUID
     spatial_format: str  # stereo, 5.1, 7.1, binaural, ambisonic
@@ -391,12 +370,10 @@ class AudioSpatialEnhancementEvent(BaseEvent):
 
 @dataclass
 class AudioVocalEnhancementEvent(BaseEvent):
-    """
-    Event triggered when vocal enhancement is completed.
+    """    Event triggered when vocal enhancement is completed.
     
     Specialized enhancement for vocal recordings and performances.
-    """
-    user_id: UUID
+    """    user_id: UUID
     file_id: UUID
     vocal_enhancement_id: UUID
     vocal_clarity_improvement: float

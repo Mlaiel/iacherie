@@ -1,5 +1,4 @@
-"""
-Content Analyzers Module - Industrial AI-Powered Content Analysis
+"""Content Analyzers Module - Industrial AI-Powered Content Analysis
 
 Advanced content analysis engine with multi-format AI capabilities for creators.
 Provides comprehensive content understanding, quality assessment, and trend analysis.
@@ -17,7 +16,6 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -70,8 +68,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalysisType(Enum):
-    """Content analysis types"""
-    BASIC = "basic"
+    """Content analysis types"""    BASIC = "basic"
     DETAILED = "detailed" 
     COMPREHENSIVE = "comprehensive"
     TREND = "trend"
@@ -83,8 +80,7 @@ class AnalysisType(Enum):
 
 @dataclass
 class ContentAnalysisConfig:
-    """Configuration for content analysis operations"""
-    analysis_types: List[AnalysisType] = field(default_factory=lambda: [AnalysisType.BASIC])
+    """Configuration for content analysis operations"""    analysis_types: List[AnalysisType] = field(default_factory=lambda: [AnalysisType.BASIC])
     include_embeddings: bool = True
     generate_fingerprint: bool = True
     extract_features: bool = True
@@ -99,8 +95,7 @@ class ContentAnalysisConfig:
 
 @dataclass
 class AnalysisResult:
-    """Comprehensive analysis result structure"""
-    content_id: str
+    """Comprehensive analysis result structure"""    content_id: str
     content_type: str
     analysis_timestamp: datetime
     
@@ -136,16 +131,14 @@ class AnalysisResult:
 
 
 class ContentAnalyzer:
-    """
-    Main content analyzer with AI-powered multi-format analysis capabilities.
+    """    Main content analyzer with AI-powered multi-format analysis capabilities.
     
     Provides comprehensive content understanding for:
     - Content classification and categorization
     - Quality assessment and scoring
     - Feature extraction and embedding generation
     - Protection and originality analysis
-    """
-    
+    """    
     def __init__(self, config: Optional[ContentAnalysisConfig] = None):
         self.config = config or ContentAnalysisConfig()
         self.model_manager = ModelManager()
@@ -167,8 +160,7 @@ class ContentAnalyzer:
         self.is_initialized = False
         
     async def initialize(self) -> None:
-        """Initialize AI models and dependencies"""
-        try:
+        """Initialize AI models and dependencies"""        try:
             logger.info("Initializing Content Analyzer...")
             
             # Load core classification model
@@ -211,8 +203,7 @@ class ContentAnalyzer:
         metadata: Optional[Dict[str, Any]] = None,
         config_override: Optional[ContentAnalysisConfig] = None
     ) -> AnalysisResult:
-        """
-        Perform comprehensive content analysis.
+        """        Perform comprehensive content analysis.
         
         Args:
             content: Content to analyze (file path, bytes, or text)
@@ -223,8 +214,7 @@ class ContentAnalyzer:
             
         Returns:
             AnalysisResult: Comprehensive analysis results
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         config = config_override or self.config
         content_id = content_id or self._generate_content_id(content)
         
@@ -333,8 +323,7 @@ class ContentAnalyzer:
         content_items: List[Dict[str, Any]],
         config: Optional[ContentAnalysisConfig] = None
     ) -> List[AnalysisResult]:
-        """
-        Analyze multiple content items in batch for efficiency.
+        """        Analyze multiple content items in batch for efficiency.
         
         Args:
             content_items: List of content items to analyze
@@ -342,8 +331,7 @@ class ContentAnalyzer:
             
         Returns:
             List of analysis results
-        """
-        config = config or self.config
+        """        config = config or self.config
         batch_size = config.batch_size
         results = []
         
@@ -380,8 +368,7 @@ class ContentAnalyzer:
         content: Union[bytes, str, Path],
         content_type: str
     ) -> Any:
-        """Preprocess content based on type"""
-        if isinstance(content, (str, Path)):
+        """Preprocess content based on type"""        if isinstance(content, (str, Path)):
             content_path = Path(content)
             if content_path.exists():
                 if content_type == 'text':
@@ -401,8 +388,7 @@ class ContentAnalyzer:
         content_type: str,
         result: AnalysisResult
     ) -> None:
-        """Perform basic content classification and metadata extraction"""
-        try:
+        """Perform basic content classification and metadata extraction"""        try:
             # Content classification
             if self.classification_model:
                 classification = await self.classification_model.classify(content, content_type)
@@ -431,8 +417,7 @@ class ContentAnalyzer:
         content_type: str,
         result: AnalysisResult
     ) -> None:
-        """Perform comprehensive quality assessment"""
-        try:
+        """Perform comprehensive quality assessment"""        try:
             if self.quality_model:
                 quality_assessment = await self.quality_model.assess_quality(content, content_type)
                 result.quality_score = quality_assessment.get('overall_score', 0.0)
@@ -450,8 +435,7 @@ class ContentAnalyzer:
         content_type: str,
         result: AnalysisResult
     ) -> None:
-        """Perform sentiment analysis for applicable content"""
-        try:
+        """Perform sentiment analysis for applicable content"""        try:
             text_content = None
             
             if content_type == 'text':
@@ -482,8 +466,7 @@ class ContentAnalyzer:
         content_type: str,
         result: AnalysisResult
     ) -> None:
-        """Perform trend prediction analysis"""
-        try:
+        """Perform trend prediction analysis"""        try:
             if self.trend_model:
                 trend_prediction = await self.trend_model.predict_trends(content, content_type)
                 result.trend_prediction = trend_prediction
@@ -499,8 +482,7 @@ class ContentAnalyzer:
         content_type: str,
         result: AnalysisResult
     ) -> None:
-        """Perform copyright and originality analysis"""
-        try:
+        """Perform copyright and originality analysis"""        try:
             # Assess copyright risk
             copyright_assessment = await self._assess_copyright_risk(content, content_type)
             result.copyright_risk = copyright_assessment
@@ -523,8 +505,7 @@ class ContentAnalyzer:
         content_type: str,
         result: AnalysisResult
     ) -> None:
-        """Generate content embeddings for similarity matching"""
-        try:
+        """Generate content embeddings for similarity matching"""        try:
             embeddings = await self.embedding_generator.generate_embeddings(content, content_type)
             result.embeddings = embeddings
             result.models_used.append("content_embeddings")
@@ -538,8 +519,7 @@ class ContentAnalyzer:
         content_type: str,
         result: AnalysisResult
     ) -> None:
-        """Generate content fingerprint for protection"""
-        try:
+        """Generate content fingerprint for protection"""        try:
             fingerprint = await self.fingerprinter.generate_fingerprint(content, content_type)
             result.content_fingerprint = fingerprint
             
@@ -547,8 +527,7 @@ class ContentAnalyzer:
             logger.warning(f"Fingerprint generation failed: {e}")
     
     def _generate_content_id(self, content: Any) -> str:
-        """Generate unique content ID based on content hash"""
-        if isinstance(content, bytes):
+        """Generate unique content ID based on content hash"""        if isinstance(content, bytes):
             content_hash = hashlib.sha256(content).hexdigest()
         elif isinstance(content, str):
             content_hash = hashlib.sha256(content.encode('utf-8')).hexdigest()
@@ -562,8 +541,7 @@ class ContentAnalyzer:
         content: Any,
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract technical metadata based on content type"""
-        metadata = {}
+        """Extract technical metadata based on content type"""        metadata = {}
         
         try:
             if content_type == 'audio' and isinstance(content, bytes):
@@ -598,14 +576,12 @@ class ContentAnalyzer:
         return metadata
     
     async def _extract_audio_transcription(self, audio_content: bytes) -> Optional[str]:
-        """Extract transcription from audio content"""
-        # Implementation would use speech-to-text model
+        """Extract transcription from audio content"""        # Implementation would use speech-to-text model
         # Placeholder for now
         return None
     
     async def _extract_video_transcription(self, video_content: bytes) -> Optional[str]:
-        """Extract transcription from video content"""
-        # Implementation would extract audio and transcribe
+        """Extract transcription from video content"""        # Implementation would extract audio and transcribe
         # Placeholder for now
         return None
     
@@ -614,8 +590,7 @@ class ContentAnalyzer:
         content: Any,
         content_type: str
     ) -> Dict[str, float]:
-        """Assess copyright infringement risk"""
-        # Placeholder implementation
+        """Assess copyright infringement risk"""        # Placeholder implementation
         return {
             'risk_score': 0.1,  # Low risk by default
             'confidence': 0.8,
@@ -627,13 +602,11 @@ class ContentAnalyzer:
         content: Any,
         content_type: str
     ) -> float:
-        """Calculate content originality score"""
-        # Placeholder implementation
+        """Calculate content originality score"""        # Placeholder implementation
         return 0.9  # High originality by default
     
     def get_analysis_stats(self) -> Dict[str, Any]:
-        """Get analyzer performance statistics"""
-        return {
+        """Get analyzer performance statistics"""        return {
             'total_analyzed': self.total_analyzed,
             'successful_analyses': self.successful_analyses,
             'failed_analyses': self.failed_analyses,
@@ -644,12 +617,10 @@ class ContentAnalyzer:
 
 
 class QualityAnalyzer:
-    """
-    Specialized quality assessment analyzer for multi-format content.
+    """    Specialized quality assessment analyzer for multi-format content.
     
     Provides detailed quality metrics and recommendations for content improvement.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.quality_thresholds = {
@@ -665,12 +636,10 @@ class QualityAnalyzer:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive quality analysis.
+        """        Perform comprehensive quality analysis.
         
         Returns detailed quality metrics and improvement recommendations.
-        """
-        try:
+        """        try:
             quality_result = {
                 'overall_score': 0.0,
                 'category': 'unknown',
@@ -715,8 +684,7 @@ class QualityAnalyzer:
             }
     
     async def _analyze_audio_quality(self, audio_content: bytes) -> Dict[str, Any]:
-        """Analyze audio quality metrics"""
-        return {
+        """Analyze audio quality metrics"""        return {
             'overall_score': 0.8,  # Placeholder
             'metrics': {
                 'clarity': 0.85,
@@ -729,8 +697,7 @@ class QualityAnalyzer:
         }
     
     async def _analyze_video_quality(self, video_content: bytes) -> Dict[str, Any]:
-        """Analyze video quality metrics"""
-        return {
+        """Analyze video quality metrics"""        return {
             'overall_score': 0.75,  # Placeholder
             'metrics': {
                 'resolution': 0.8,
@@ -744,8 +711,7 @@ class QualityAnalyzer:
         }
     
     async def _analyze_image_quality(self, image_content: bytes) -> Dict[str, Any]:
-        """Analyze image quality metrics"""
-        return {
+        """Analyze image quality metrics"""        return {
             'overall_score': 0.85,  # Placeholder
             'metrics': {
                 'sharpness': 0.9,
@@ -759,8 +725,7 @@ class QualityAnalyzer:
         }
     
     async def _analyze_text_quality(self, text_content: str) -> Dict[str, Any]:
-        """Analyze text quality metrics"""
-        try:
+        """Analyze text quality metrics"""        try:
             word_count = len(text_content.split())
             
             # Basic text quality metrics
@@ -798,8 +763,7 @@ class QualityAnalyzer:
             }
     
     def _get_text_recommendations(self, readability: float, word_count: int) -> List[str]:
-        """Generate text improvement recommendations"""
-        recommendations = []
+        """Generate text improvement recommendations"""        recommendations = []
         
         if readability < 30:
             recommendations.append("Simplify sentence structure for better readability")
@@ -818,12 +782,10 @@ class QualityAnalyzer:
 
 
 class TrendAnalyzer:
-    """
-    Advanced trend analysis system for content performance prediction.
+    """    Advanced trend analysis system for content performance prediction.
     
     Analyzes content trends, viral potential, and audience engagement predictions.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.trend_models = {}
@@ -836,8 +798,7 @@ class TrendAnalyzer:
         metadata: Optional[Dict[str, Any]] = None,
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Analyze content trends and predict performance.
+        """        Analyze content trends and predict performance.
         
         Args:
             content: Content to analyze
@@ -847,8 +808,7 @@ class TrendAnalyzer:
             
         Returns:
             Comprehensive trend analysis results
-        """
-        try:
+        """        try:
             trend_result = {
                 'viral_potential': 0.0,
                 'engagement_prediction': {},
@@ -911,8 +871,7 @@ class TrendAnalyzer:
         content_type: str,
         metadata: Optional[Dict[str, Any]]
     ) -> float:
-        """Calculate viral potential score (0-1)"""
-        # Factors contributing to viral potential
+        """Calculate viral potential score (0-1)"""        # Factors contributing to viral potential
         factors = []
         
         # Content quality factor
@@ -947,8 +906,7 @@ class TrendAnalyzer:
         content_type: str,
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Predict engagement metrics"""
-        base_engagement = {
+        """Predict engagement metrics"""        base_engagement = {
             'likes': 100,
             'comments': 20,
             'shares': 15,
@@ -976,8 +934,7 @@ class TrendAnalyzer:
         content: Any,
         content_type: str
     ) -> List[str]:
-        """Identify relevant trend categories"""
-        # Placeholder trend categories
+        """Identify relevant trend categories"""        # Placeholder trend categories
         all_categories = [
             'entertainment', 'educational', 'lifestyle', 'technology',
             'music', 'art', 'comedy', 'news', 'sports', 'fashion'
@@ -993,8 +950,7 @@ class TrendAnalyzer:
         content_type: str,
         context: Optional[Dict[str, Any]]
     ) -> Optional[str]:
-        """Predict optimal posting time"""
-        # Placeholder optimal times based on content type
+        """Predict optimal posting time"""        # Placeholder optimal times based on content type
         optimal_times = {
             'video': '19:00',  # Evening prime time
             'image': '12:00',  # Lunch break
@@ -1010,8 +966,7 @@ class TrendAnalyzer:
         content_type: str,
         context: Optional[Dict[str, Any]]
     ) -> float:
-        """Calculate how well content matches target audience"""
-        # Placeholder calculation
+        """Calculate how well content matches target audience"""        # Placeholder calculation
         # In reality, this would analyze audience demographics,
         # interests, and behavior patterns
         
@@ -1030,8 +985,7 @@ class TrendAnalyzer:
         content_type: str,
         context: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze platform-specific optimization recommendations"""
-        platforms = ['instagram', 'tiktok', 'youtube', 'twitter', 'linkedin']
+        """Analyze platform-specific optimization recommendations"""        platforms = ['instagram', 'tiktok', 'youtube', 'twitter', 'linkedin']
         
         optimization = {}
         
@@ -1047,8 +1001,7 @@ class TrendAnalyzer:
         return optimization
     
     def _get_platform_duration(self, platform: str, content_type: str) -> Optional[str]:
-        """Get recommended content duration for platform"""
-        durations = {
+        """Get recommended content duration for platform"""        durations = {
             ('instagram', 'video'): '15-30 seconds',
             ('tiktok', 'video'): '15-60 seconds',
             ('youtube', 'video'): '2-10 minutes',
@@ -1058,8 +1011,7 @@ class TrendAnalyzer:
         return durations.get((platform, content_type))
     
     def _get_platform_hashtags(self, platform: str) -> List[str]:
-        """Get platform-specific hashtag recommendations"""
-        hashtags = {
+        """Get platform-specific hashtag recommendations"""        hashtags = {
             'instagram': ['#content', '#creator', '#viral', '#trending'],
             'tiktok': ['#fyp', '#trending', '#viral', '#content'],
             'youtube': ['#youtube', '#content', '#creator'],
@@ -1070,8 +1022,7 @@ class TrendAnalyzer:
         return hashtags.get(platform, ['#content'])
     
     def _get_posting_frequency(self, platform: str) -> str:
-        """Get recommended posting frequency for platform"""
-        frequencies = {
+        """Get recommended posting frequency for platform"""        frequencies = {
             'instagram': '1-2 times daily',
             'tiktok': '1-3 times daily',
             'youtube': '3-5 times weekly',
@@ -1083,12 +1034,10 @@ class TrendAnalyzer:
 
 
 class SentimentAnalyzer:
-    """
-    Advanced sentiment analysis for multi-format content.
+    """    Advanced sentiment analysis for multi-format content.
     
     Provides detailed emotional analysis and audience reaction prediction.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.vader_analyzer = SentimentIntensityAnalyzer()
@@ -1100,12 +1049,10 @@ class SentimentAnalyzer:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive sentiment analysis.
+        """        Perform comprehensive sentiment analysis.
         
         Returns detailed emotional analysis and predictions.
-        """
-        try:
+        """        try:
             sentiment_result = {
                 'overall_sentiment': 'neutral',
                 'sentiment_scores': {},
@@ -1169,8 +1116,7 @@ class SentimentAnalyzer:
         content: Any,
         content_type: str
     ) -> Optional[str]:
-        """Extract text content for sentiment analysis"""
-        if content_type == 'text':
+        """Extract text content for sentiment analysis"""        if content_type == 'text':
             return content if isinstance(content, str) else None
         elif content_type == 'audio':
             # Would implement audio transcription
@@ -1185,8 +1131,7 @@ class SentimentAnalyzer:
         return None
     
     def _analyze_basic_sentiment(self, text: str) -> Dict[str, float]:
-        """Perform basic sentiment analysis using VADER"""
-        scores = self.vader_analyzer.polarity_scores(text)
+        """Perform basic sentiment analysis using VADER"""        scores = self.vader_analyzer.polarity_scores(text)
         return {
             'positive': scores['pos'],
             'negative': scores['neg'],
@@ -1195,8 +1140,7 @@ class SentimentAnalyzer:
         }
     
     async def _analyze_emotional_dimensions(self, text: str) -> Dict[str, float]:
-        """Analyze emotional dimensions beyond basic sentiment"""
-        # Placeholder for advanced emotional analysis
+        """Analyze emotional dimensions beyond basic sentiment"""        # Placeholder for advanced emotional analysis
         # In reality, this would use specialized emotion models
         
         emotions = {
@@ -1231,8 +1175,7 @@ class SentimentAnalyzer:
         text: str,
         sentiment_scores: Dict[str, float]
     ) -> Dict[str, float]:
-        """Predict likely audience reactions"""
-        compound = sentiment_scores.get('compound', 0)
+        """Predict likely audience reactions"""        compound = sentiment_scores.get('compound', 0)
         
         # Base reaction predictions
         reactions = {
@@ -1258,8 +1201,7 @@ class SentimentAnalyzer:
         return reactions
     
     async def _analyze_emotional_trajectory(self, text: str) -> List[Dict[str, Any]]:
-        """Analyze emotional changes throughout the content"""
-        # Split text into chunks for trajectory analysis
+        """Analyze emotional changes throughout the content"""        # Split text into chunks for trajectory analysis
         words = text.split()
         chunk_size = max(50, len(words) // 10)  # Analyze in chunks
         

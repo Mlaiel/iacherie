@@ -1,5 +1,4 @@
-"""
-Enterprise Content Protection Dialogue Manager - AI-Powered Content Security
+"""Enterprise Content Protection Dialogue Manager - AI-Powered Content Security
 
 Advanced content protection dialogue management system with comprehensive AI-powered security,
 rights management, infringement detection, and legal compliance automation for content creators.
@@ -64,7 +63,6 @@ For licensing inquiries or authorized usage: mlaiel@live.de
 Legal compliance verification and security clearance required before any access.
 All system access and usage is monitored and tracked for security and compliance.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -87,16 +85,14 @@ from .content_creator_flows import CreatorProfile, Platform, ContentFormat
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     ENTERPRISE = "enterprise"
     CUSTOM = "custom"
 
 class ContentType(Enum):
-    """Types of content for protection"""
-    ORIGINAL_MUSIC = "original_music"
+    """Types of content for protection"""    ORIGINAL_MUSIC = "original_music"
     COVER_SONGS = "cover_songs"
     INSTRUMENTAL = "instrumental"
     PODCAST_EPISODES = "podcast_episodes"
@@ -108,8 +104,7 @@ class ContentType(Enum):
     LIVE_RECORDINGS = "live_recordings"
 
 class InfringementType(Enum):
-    """Types of content infringement"""
-    UNAUTHORIZED_USE = "unauthorized_use"
+    """Types of content infringement"""    UNAUTHORIZED_USE = "unauthorized_use"
     PARTIAL_COPYING = "partial_copying"
     REMIXING_WITHOUT_PERMISSION = "remixing_without_permission"
     SAMPLING_WITHOUT_CLEARANCE = "sampling_without_clearance"
@@ -119,8 +114,7 @@ class InfringementType(Enum):
     DEEPFAKE_IMPERSONATION = "deepfake_impersonation"
 
 class ProtectionGoal(Enum):
-    """Content protection goals"""
-    PREVENT_UNAUTHORIZED_USE = "prevent_unauthorized_use"
+    """Content protection goals"""    PREVENT_UNAUTHORIZED_USE = "prevent_unauthorized_use"
     MONETIZE_USAGE = "monetize_usage"
     MAINTAIN_ATTRIBUTION = "maintain_attribution"
     CONTROL_DISTRIBUTION = "control_distribution"
@@ -130,8 +124,7 @@ class ProtectionGoal(Enum):
     LEGAL_COMPLIANCE = "legal_compliance"
 
 class ResponseAction(Enum):
-    """Actions for infringement response"""
-    AUTOMATED_TAKEDOWN = "automated_takedown"
+    """Actions for infringement response"""    AUTOMATED_TAKEDOWN = "automated_takedown"
     MONETIZATION_CLAIM = "monetization_claim"
     LICENSING_OFFER = "licensing_offer"
     LEGAL_NOTICE = "legal_notice"
@@ -141,8 +134,7 @@ class ResponseAction(Enum):
 
 @dataclass
 class ProtectionPreferences:
-    """Creator content protection preferences"""
-    protection_level: ProtectionLevel = ProtectionLevel.STANDARD
+    """Creator content protection preferences"""    protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     monitoring_frequency: str = "daily"  # real_time, hourly, daily, weekly
     alert_sensitivity: str = "medium"  # low, medium, high, custom
     
@@ -169,8 +161,7 @@ class ProtectionPreferences:
 
 @dataclass
 class ContentProtectionStrategy:
-    """Comprehensive content protection strategy"""
-    strategy_id: str
+    """Comprehensive content protection strategy"""    strategy_id: str
     creator_id: str
     created_at: datetime
     
@@ -190,8 +181,7 @@ class ContentProtectionStrategy:
     response_time: str = ""
 
 class ProtectionDialogueHandler:
-    """Specialized dialogue handler for content protection conversations"""
-    
+    """Specialized dialogue handler for content protection conversations"""    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -212,8 +202,7 @@ class ProtectionDialogueHandler:
         self.protection_flows = self._initialize_protection_flows()
         
     def _initialize_protection_flows(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize protection conversation flows"""
-        return {
+        """Initialize protection conversation flows"""        return {
             "protection_assessment_flow": {
                 "name": "Content Protection Assessment",
                 "description": "Assess current protection needs and vulnerabilities",
@@ -460,8 +449,7 @@ class ProtectionDialogueHandler:
         user_message: str,
         flow_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Handle protection-focused conversation"""
-        try:
+        """Handle protection-focused conversation"""        try:
             # Determine conversation flow if not specified
             if not flow_id:
                 flow_id = await self._determine_protection_flow(
@@ -516,8 +504,7 @@ class ProtectionDialogueHandler:
         creator_profile: CreatorProfile,
         context: Dict[str, Any]
     ) -> str:
-        """Determine appropriate protection flow based on message and context"""
-        # AI analysis of user intent
+        """Determine appropriate protection flow based on message and context"""        # AI analysis of user intent
         intent_analysis = await self.ai_service.analyze_protection_intent(
             user_message, creator_profile, context
         )
@@ -543,8 +530,7 @@ class ProtectionDialogueHandler:
         conversation_state: Dict[str, Any],
         flow_id: str
     ) -> Dict[str, Any]:
-        """Process user message within protection flow context"""
-        flow_definition = self.protection_flows[flow_id]
+        """Process user message within protection flow context"""        flow_definition = self.protection_flows[flow_id]
         current_step_index = conversation_state.get("current_step", 0)
         
         if current_step_index >= len(flow_definition["conversation_steps"]):
@@ -585,8 +571,7 @@ class ProtectionDialogueHandler:
         step_definition: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Extract protection-relevant data from user message"""
-        # Use AI to extract structured data
+        """Extract protection-relevant data from user message"""        # Use AI to extract structured data
         extraction_result = await self.ai_service.extract_protection_data(
             user_message,
             step_definition.get("data_collection", []),
@@ -601,8 +586,7 @@ class ProtectionDialogueHandler:
         conversation_state: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Generate response for current conversation step"""
-        step_type = step_definition.get("step")
+        """Generate response for current conversation step"""        step_type = step_definition.get("step")
         collected_data = conversation_state.get("collected_data", {})
         
         # Generate AI-powered personalized response
@@ -634,8 +618,7 @@ class ProtectionDialogueHandler:
         collected_data: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Perform AI action for protection analysis"""
-        if action_type == "generate_protection_strategy":
+        """Perform AI action for protection analysis"""        if action_type == "generate_protection_strategy":
             return await self.ai_service.generate_protection_strategy(
                 creator_profile, collected_data
             )
@@ -656,8 +639,7 @@ class ProtectionDialogueHandler:
         collected_data: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
-        """Generate protection recommendations for current step"""
-        recommendations = []
+        """Generate protection recommendations for current step"""        recommendations = []
         
         # Use AI to generate personalized recommendations
         ai_recommendations = await self.ai_service.generate_protection_recommendations(
@@ -683,8 +665,7 @@ class ProtectionDialogueHandler:
         creator_profile: CreatorProfile,
         conversation_state: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate final comprehensive protection recommendations"""
-        collected_data = conversation_state.get("collected_data", {})
+        """Generate final comprehensive protection recommendations"""        collected_data = conversation_state.get("collected_data", {})
         
         # Generate comprehensive protection strategy
         strategy = await self.ai_service.generate_comprehensive_protection_strategy(
@@ -707,8 +688,7 @@ class ProtectionDialogueHandler:
         response: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Update conversation state after processing"""
-        # Advance to next step if not final response
+        """Update conversation state after processing"""        # Advance to next step if not final response
         if response.get("type") != "final_recommendations":
             current_state["current_step"] = current_state.get("current_step", 0) + 1
         
@@ -726,8 +706,7 @@ class ProtectionDialogueHandler:
         creator_profile: CreatorProfile,
         infringement_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Handle real-time infringement alert"""
-        # Analyze infringement severity and recommend action
+        """Handle real-time infringement alert"""        # Analyze infringement severity and recommend action
         analysis = await self.ai_service.analyze_infringement_severity(
             infringement_data, creator_profile
         )
@@ -762,8 +741,7 @@ class ProtectionDialogueHandler:
         infringement_analysis: Dict[str, Any],
         creator_profile: CreatorProfile
     ) -> Optional[Dict[str, Any]]:
-        """Determine if automated response should be executed"""
-        confidence_score = infringement_analysis.get("confidence_score", 0.0)
+        """Determine if automated response should be executed"""        confidence_score = infringement_analysis.get("confidence_score", 0.0)
         creator_preferences = await self._get_creator_protection_preferences(creator_profile.creator_id)
         
         if not creator_preferences.get("auto_enforcement", False):
@@ -789,16 +767,14 @@ class ProtectionDialogueHandler:
         self,
         creator_id: str
     ) -> Dict[str, Any]:
-        """Get creator's protection preferences"""
-        # Retrieve from database or return defaults
+        """Get creator's protection preferences"""        # Retrieve from database or return defaults
         return await self.protection_service.get_creator_preferences(creator_id)
 
     async def get_protection_dashboard_data(
         self,
         creator_profile: CreatorProfile
     ) -> Dict[str, Any]:
-        """Get comprehensive protection dashboard data"""
-        # Get protection status
+        """Get comprehensive protection dashboard data"""        # Get protection status
         protection_status = await self.protection_service.get_protection_status(
             creator_profile.creator_id
         )
@@ -824,5 +800,4 @@ class ProtectionDialogueHandler:
         self,
         creator_profile: CreatorProfile
     ) -> List[Dict[str, Any]]:
-        """Get protection improvement recommendations"""
-        return await self.ai_service.generate_protection_improvements(creator_profile)
+        """Get protection improvement recommendations"""        return await self.ai_service.generate_protection_improvements(creator_profile)

@@ -1,5 +1,4 @@
-"""
-Collaboration Projects Database Module
+"""Collaboration Projects Database Module
 
 Enterprise-grade project lifecycle management for multi-format content creators.
 Handles project creation, management, versioning, and collaboration workflows.
@@ -7,7 +6,6 @@ Handles project creation, management, versioning, and collaboration workflows.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Microservices
 """
-
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class ProjectStatus(Enum):
-    """Project status enumeration"""
-    DRAFT = "draft"
+    """Project status enumeration"""    DRAFT = "draft"
     PLANNING = "planning"
     ACTIVE = "active"
     ON_HOLD = "on_hold"
@@ -41,8 +38,7 @@ class ProjectStatus(Enum):
     ARCHIVED = "archived"
 
 class ProjectType(Enum):
-    """Project type enumeration for multi-format content"""
-    MUSIC_COLLABORATION = "music_collaboration"
+    """Project type enumeration for multi-format content"""    MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_PRODUCTION = "video_production"
     PHOTOGRAPHY_SERIES = "photography_series"
     BLOG_SERIES = "blog_series"
@@ -51,19 +47,16 @@ class ProjectType(Enum):
     CROSS_PLATFORM_CONTENT = "cross_platform_content"
 
 class ProjectPriority(Enum):
-    """Project priority levels"""
-    LOW = "low"
+    """Project priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     URGENT = "urgent"
 
 class CollaborationProject(Base):
-    """
-    Core collaboration project model for enterprise project management.
+    """    Core collaboration project model for enterprise project management.
     Supports multi-format content creation with advanced features.
-    """
-    __tablename__ = 'collaboration_projects'
+    """    __tablename__ = 'collaboration_projects'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -146,8 +139,7 @@ class CollaborationProject(Base):
 
 @dataclass
 class ProjectCreationRequest:
-    """Data class for project creation requests"""
-    title: str
+    """Data class for project creation requests"""    title: str
     description: str
     project_type: ProjectType
     creator_id: str
@@ -164,8 +156,7 @@ class ProjectCreationRequest:
 
 @dataclass
 class ProjectUpdateRequest:
-    """Data class for project update requests"""
-    project_id: str
+    """Data class for project update requests"""    project_id: str
     title: Optional[str] = None
     description: Optional[str] = None
     status: Optional[ProjectStatus] = None
@@ -176,19 +167,16 @@ class ProjectUpdateRequest:
     metadata: Optional[Dict[str, Any]] = None
 
 class ProjectDatabaseManager:
-    """
-    Enterprise project database manager with advanced features.
+    """    Enterprise project database manager with advanced features.
     Handles CRUD operations, caching, and business logic.
-    """
-    
+    """    
     def __init__(self, db_session, redis_client: aioredis.Redis = None):
         self.db_session = db_session
         self.redis_client = redis_client
         self.cache_ttl = 3600  # 1 hour cache
         
     async def create_project(self, request: ProjectCreationRequest) -> CollaborationProject:
-        """
-        Create a new collaboration project with enterprise features.
+        """        Create a new collaboration project with enterprise features.
         
         Args:
             request: Project creation request data
@@ -199,8 +187,7 @@ class ProjectDatabaseManager:
         Raises:
             ValueError: Invalid project data
             DatabaseError: Database operation failed
-        """
-        try:
+        """        try:
             # Generate unique project code
             project_code = await self._generate_project_code(request.project_type)
             
@@ -248,16 +235,14 @@ class ProjectDatabaseManager:
             raise
     
     async def get_project(self, project_id: str) -> Optional[CollaborationProject]:
-        """
-        Retrieve project by ID with caching support.
+        """        Retrieve project by ID with caching support.
         
         Args:
             project_id: Project UUID
             
         Returns:
             Project instance or None
-        """
-        try:
+        """        try:
             # Check cache first
             if self.redis_client:
                 cached_data = await self.redis_client.get(f"project:{project_id}")
@@ -280,16 +265,14 @@ class ProjectDatabaseManager:
             return None
     
     async def update_project(self, request: ProjectUpdateRequest) -> Optional[CollaborationProject]:
-        """
-        Update project with enterprise audit trail.
+        """        Update project with enterprise audit trail.
         
         Args:
             request: Project update request
             
         Returns:
             Updated project instance
-        """
-        try:
+        """        try:
             project = await self.get_project(request.project_id)
             if not project:
                 return None
@@ -372,8 +355,7 @@ class ProjectDatabaseManager:
         limit: int = 50,
         offset: int = 0
     ) -> Tuple[List[CollaborationProject], int]:
-        """
-        List projects with advanced filtering and pagination.
+        """        List projects with advanced filtering and pagination.
         
         Args:
             creator_id: Filter by creator
@@ -385,8 +367,7 @@ class ProjectDatabaseManager:
             
         Returns:
             Tuple of (projects list, total count)
-        """
-        try:
+        """        try:
             query = self.db_session.query(CollaborationProject)
             
             # Apply filters
@@ -419,8 +400,7 @@ class ProjectDatabaseManager:
             return [], 0
     
     async def delete_project(self, project_id: str, soft_delete: bool = True) -> bool:
-        """
-        Delete project with optional soft delete.
+        """        Delete project with optional soft delete.
         
         Args:
             project_id: Project UUID
@@ -428,8 +408,7 @@ class ProjectDatabaseManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             project = await self.get_project(project_id)
             if not project:
                 return False
@@ -458,16 +437,14 @@ class ProjectDatabaseManager:
             return False
     
     async def get_project_analytics(self, project_id: str) -> Dict[str, Any]:
-        """
-        Get comprehensive project analytics and insights.
+        """        Get comprehensive project analytics and insights.
         
         Args:
             project_id: Project UUID
             
         Returns:
             Analytics data dictionary
-        """
-        try:
+        """        try:
             project = await self.get_project(project_id)
             if not project:
                 return {}
@@ -522,8 +499,7 @@ class ProjectDatabaseManager:
     # Private helper methods
     
     async def _generate_project_code(self, project_type: ProjectType) -> str:
-        """Generate unique project code based on type and timestamp"""
-        type_prefix = {
+        """Generate unique project code based on type and timestamp"""        type_prefix = {
             ProjectType.MUSIC_COLLABORATION: 'MUS',
             ProjectType.VIDEO_PRODUCTION: 'VID',
             ProjectType.PHOTOGRAPHY_SERIES: 'PHO',
@@ -540,8 +516,7 @@ class ProjectDatabaseManager:
         return f"{prefix}-{timestamp}-{random_suffix}"
     
     def _default_collaboration_settings(self) -> Dict[str, Any]:
-        """Default collaboration settings for new projects"""
-        return {
+        """Default collaboration settings for new projects"""        return {
             'real_time_editing': True,
             'version_control': True,
             'comment_system': True,
@@ -557,8 +532,7 @@ class ProjectDatabaseManager:
         }
     
     def _initialize_version_control(self) -> Dict[str, Any]:
-        """Initialize version control structure"""
-        return {
+        """Initialize version control structure"""        return {
             'current_version': '1.0.0',
             'branches': ['main'],
             'commits': [],
@@ -567,8 +541,7 @@ class ProjectDatabaseManager:
         }
     
     def _default_access_permissions(self) -> Dict[str, Any]:
-        """Default access permissions structure"""
-        return {
+        """Default access permissions structure"""        return {
             'read': ['team_member', 'viewer'],
             'write': ['team_member', 'editor'],
             'admin': ['creator', 'team_lead'],
@@ -577,8 +550,7 @@ class ProjectDatabaseManager:
         }
     
     def _initialize_project_metadata(self, request: ProjectCreationRequest) -> Dict[str, Any]:
-        """Initialize comprehensive project metadata"""
-        return {
+        """Initialize comprehensive project metadata"""        return {
             'creation_context': {
                 'source': 'api',
                 'timestamp': datetime.utcnow().isoformat(),
@@ -600,8 +572,7 @@ class ProjectDatabaseManager:
         }
     
     async def _cache_project(self, project: CollaborationProject):
-        """Cache project data in Redis"""
-        try:
+        """Cache project data in Redis"""        try:
             project_data = {
                 'id': str(project.id),
                 'project_code': project.project_code,
@@ -622,16 +593,14 @@ class ProjectDatabaseManager:
             logger.warning(f"Failed to cache project {project.id}: {str(e)}")
     
     def _calculate_project_duration(self, project: CollaborationProject) -> Optional[int]:
-        """Calculate project duration in days"""
-        if not project.start_date:
+        """Calculate project duration in days"""        if not project.start_date:
             return None
         
         end_date = project.actual_end_date or project.target_end_date or datetime.utcnow()
         return (end_date - project.start_date).days
     
     def _calculate_completion_percentage(self, project: CollaborationProject) -> float:
-        """Calculate project completion percentage"""
-        if project.status == ProjectStatus.COMPLETED:
+        """Calculate project completion percentage"""        if project.status == ProjectStatus.COMPLETED:
             return 100.0
         elif project.status in [ProjectStatus.DRAFT, ProjectStatus.PLANNING]:
             return 0.0
@@ -647,16 +616,14 @@ class ProjectDatabaseManager:
         return (completed_items / total_items) * 100 if total_items > 0 else 0.0
     
     def _calculate_budget_utilization(self, project: CollaborationProject) -> float:
-        """Calculate budget utilization percentage"""
-        if not project.budget_allocated or project.budget_allocated == 0:
+        """Calculate budget utilization percentage"""        if not project.budget_allocated or project.budget_allocated == 0:
             return 0.0
         
         spent = project.budget_spent or 0
         return (spent / project.budget_allocated) * 100
     
     def _deserialize_project(self, data: Dict[str, Any]) -> CollaborationProject:
-        """Deserialize project data from cache"""
-        # Simplified deserialization for cache data
+        """Deserialize project data from cache"""        # Simplified deserialization for cache data
         project = CollaborationProject()
         project.id = uuid.UUID(data['id'])
         project.project_code = data['project_code']

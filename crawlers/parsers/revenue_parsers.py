@@ -1,5 +1,4 @@
-"""
-Revenue Parsers Module
+"""Revenue Parsers Module
 =====================
 
 Specialized parsers for extracting monetization and revenue data from various platforms.
@@ -13,7 +12,6 @@ This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import json
 import re
@@ -31,36 +29,30 @@ from .parser_config import ParserConfig
 
 
 class BaseRevenueParser(ABC):
-    """Abstract base class for revenue parsers"""
-    
+    """Abstract base class for revenue parsers"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.revenue_config = config.revenue
         self.session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     @abstractmethod
     async def parse_revenue(self, **kwargs) -> Dict[str, Any]:
-        """Parse revenue data from platform"""
-        pass
+        """Parse revenue data from platform"""        pass
     
     @abstractmethod
     def get_platform_name(self) -> str:
-        """Get the platform name for this revenue parser"""
-        pass
+        """Get the platform name for this revenue parser"""        pass
     
     def _calculate_date_range(self, days: Optional[int] = None) -> tuple:
-        """Calculate date range for revenue queries"""
-        if days is None:
+        """Calculate date range for revenue queries"""        if days is None:
             days = self.revenue_config.date_range_days
         
         end_date = datetime.now(timezone.utc)
@@ -69,8 +61,7 @@ class BaseRevenueParser(ABC):
         return start_date, end_date
     
     def _format_currency(self, amount: float, currency: str = "USD") -> str:
-        """Format currency amount"""
-        if currency == "USD":
+        """Format currency amount"""        if currency == "USD":
             return f"${amount:.2f}"
         elif currency == "EUR":
             return f"€{amount:.2f}"
@@ -80,14 +71,12 @@ class BaseRevenueParser(ABC):
             return f"{amount:.2f} {currency}"
     
     def _calculate_growth_rate(self, current: float, previous: float) -> float:
-        """Calculate growth rate percentage"""
-        if previous == 0:
+        """Calculate growth rate percentage"""        if previous == 0:
             return 0.0
         return ((current - previous) / previous) * 100
     
     def _convert_currency(self, amount: float, from_currency: str, to_currency: str = "USD") -> float:
-        """Convert currency (placeholder implementation)"""
-        # In a real implementation, this would use a currency conversion API
+        """Convert currency (placeholder implementation)"""        # In a real implementation, this would use a currency conversion API
         conversion_rates = {
             "EUR": 1.1,
             "GBP": 1.3,
@@ -110,14 +99,12 @@ class BaseRevenueParser(ABC):
 
 
 class YouTubeRevenueParser(BaseRevenueParser):
-    """Parser for YouTube Partner Program revenue"""
-    
+    """Parser for YouTube Partner Program revenue"""    
     def get_platform_name(self) -> str:
         return "youtube_partner"
     
     async def parse_revenue(self, channel_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse YouTube revenue data"""
-        try:
+        """Parse YouTube revenue data"""        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             revenue_data = await self._get_youtube_revenue_data(channel_id, start_date, end_date)
@@ -146,8 +133,7 @@ class YouTubeRevenueParser(BaseRevenueParser):
             )
     
     async def _get_youtube_revenue_data(self, channel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get YouTube revenue data from YouTube Analytics API"""
-        url = "https://youtubeanalytics.googleapis.com/v2/reports"
+        """Get YouTube revenue data from YouTube Analytics API"""        url = "https://youtubeanalytics.googleapis.com/v2/reports"
         
         params = {
             'ids': f'channel=={channel_id}',
@@ -174,8 +160,7 @@ class YouTubeRevenueParser(BaseRevenueParser):
             return await response.json()
     
     async def _get_youtube_analytics_data(self, channel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get additional analytics data for revenue context"""
-        url = "https://youtubeanalytics.googleapis.com/v2/reports"
+        """Get additional analytics data for revenue context"""        url = "https://youtubeanalytics.googleapis.com/v2/reports"
         
         params = {
             'ids': f'channel=={channel_id}',
@@ -194,8 +179,7 @@ class YouTubeRevenueParser(BaseRevenueParser):
             return await response.json()
     
     async def _parse_youtube_revenue(self, revenue_data: Dict[str, Any], analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse YouTube revenue and analytics data"""
-        revenue_rows = revenue_data.get('rows', [])
+        """Parse YouTube revenue and analytics data"""        revenue_rows = revenue_data.get('rows', [])
         analytics_rows = analytics_data.get('rows', [])
         
         # Process revenue data
@@ -273,14 +257,12 @@ class YouTubeRevenueParser(BaseRevenueParser):
 
 
 class SpotifyRoyaltiesParser(BaseRevenueParser):
-    """Parser for Spotify artist royalties"""
-    
+    """Parser for Spotify artist royalties"""    
     def get_platform_name(self) -> str:
         return "spotify_royalties"
     
     async def parse_revenue(self, artist_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Spotify royalties data"""
-        try:
+        """Parse Spotify royalties data"""        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             # Spotify for Artists API doesn't provide detailed royalty data
@@ -311,8 +293,7 @@ class SpotifyRoyaltiesParser(BaseRevenueParser):
             )
     
     async def _get_spotify_royalties_data(self, artist_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Spotify royalties data (placeholder implementation)"""
-        # This would parse from Spotify for Artists reports or dashboard
+        """Get Spotify royalties data (placeholder implementation)"""        # This would parse from Spotify for Artists reports or dashboard
         return {
             'total_streams': 0,
             'total_royalties': 0.0,
@@ -320,16 +301,14 @@ class SpotifyRoyaltiesParser(BaseRevenueParser):
         }
     
     async def _get_spotify_streams_data(self, artist_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Spotify streams data"""
-        # This would use Spotify Web API for public metrics
+        """Get Spotify streams data"""        # This would use Spotify Web API for public metrics
         return {
             'tracks': [],
             'total_streams': 0
         }
     
     async def _parse_spotify_royalties(self, royalties_data: Dict[str, Any], streams_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Spotify royalties data"""
-        total_streams = royalties_data.get('total_streams', 0)
+        """Parse Spotify royalties data"""        total_streams = royalties_data.get('total_streams', 0)
         total_royalties = royalties_data.get('total_royalties', 0.0)
         
         # Spotify pays approximately $0.003 to $0.005 per stream
@@ -352,14 +331,12 @@ class SpotifyRoyaltiesParser(BaseRevenueParser):
 
 
 class PatreonRevenueParser(BaseRevenueParser):
-    """Parser for Patreon subscription revenue"""
-    
+    """Parser for Patreon subscription revenue"""    
     def get_platform_name(self) -> str:
         return "patreon"
     
     async def parse_revenue(self, campaign_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Patreon revenue data"""
-        try:
+        """Parse Patreon revenue data"""        try:
             campaign_data = await self._get_patreon_campaign_data(campaign_id)
             pledges_data = await self._get_patreon_pledges_data(campaign_id)
             
@@ -381,8 +358,7 @@ class PatreonRevenueParser(BaseRevenueParser):
             )
     
     async def _get_patreon_campaign_data(self, campaign_id: str) -> Dict[str, Any]:
-        """Get Patreon campaign data"""
-        url = f"https://www.patreon.com/api/oauth2/v2/campaigns/{campaign_id}"
+        """Get Patreon campaign data"""        url = f"https://www.patreon.com/api/oauth2/v2/campaigns/{campaign_id}"
         
         headers = {
             'Authorization': f'Bearer {self.config.platform["patreon"].access_token}'
@@ -393,8 +369,7 @@ class PatreonRevenueParser(BaseRevenueParser):
             return await response.json()
     
     async def _get_patreon_pledges_data(self, campaign_id: str) -> Dict[str, Any]:
-        """Get Patreon pledges data"""
-        url = f"https://www.patreon.com/api/oauth2/v2/campaigns/{campaign_id}/pledges"
+        """Get Patreon pledges data"""        url = f"https://www.patreon.com/api/oauth2/v2/campaigns/{campaign_id}/pledges"
         
         headers = {
             'Authorization': f'Bearer {self.config.platform["patreon"].access_token}'
@@ -405,8 +380,7 @@ class PatreonRevenueParser(BaseRevenueParser):
             return await response.json()
     
     async def _parse_patreon_revenue(self, campaign_data: Dict[str, Any], pledges_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Patreon revenue data"""
-        campaign = campaign_data.get('data', {}).get('attributes', {})
+        """Parse Patreon revenue data"""        campaign = campaign_data.get('data', {}).get('attributes', {})
         pledges = pledges_data.get('data', [])
         
         monthly_revenue = 0
@@ -447,14 +421,12 @@ class PatreonRevenueParser(BaseRevenueParser):
 
 
 class TwitchRevenueParser(BaseRevenueParser):
-    """Parser for Twitch revenue (subscriptions, bits, ads)"""
-    
+    """Parser for Twitch revenue (subscriptions, bits, ads)"""    
     def get_platform_name(self) -> str:
         return "twitch"
     
     async def parse_revenue(self, channel_id: str, **kwargs) -> Dict[str, Any]:
-        """Parse Twitch revenue data"""
-        try:
+        """Parse Twitch revenue data"""        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             revenue_data = await self._get_twitch_revenue_data(channel_id, start_date, end_date)
@@ -483,8 +455,7 @@ class TwitchRevenueParser(BaseRevenueParser):
             )
     
     async def _get_twitch_revenue_data(self, channel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Twitch revenue data (placeholder implementation)"""
-        # Twitch doesn't provide public revenue APIs
+        """Get Twitch revenue data (placeholder implementation)"""        # Twitch doesn't provide public revenue APIs
         # This would parse from Creator Dashboard or use undocumented APIs
         return {
             'subscriptions': [],
@@ -493,8 +464,7 @@ class TwitchRevenueParser(BaseRevenueParser):
         }
     
     async def _get_twitch_analytics_data(self, channel_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Twitch analytics data"""
-        url = "https://api.twitch.tv/helix/analytics/games"
+        """Get Twitch analytics data"""        url = "https://api.twitch.tv/helix/analytics/games"
         
         headers = {
             'Client-ID': self.config.platform['twitch'].client_id,
@@ -511,8 +481,7 @@ class TwitchRevenueParser(BaseRevenueParser):
             return await response.json()
     
     async def _parse_twitch_revenue(self, revenue_data: Dict[str, Any], analytics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Twitch revenue data"""
-        # Placeholder implementation
+        """Parse Twitch revenue data"""        # Placeholder implementation
         return {
             'overview': {
                 'total_revenue': 0.0,
@@ -536,14 +505,12 @@ class TwitchRevenueParser(BaseRevenueParser):
 
 
 class PayPalRevenueParser(BaseRevenueParser):
-    """Parser for PayPal transaction revenue"""
-    
+    """Parser for PayPal transaction revenue"""    
     def get_platform_name(self) -> str:
         return "paypal"
     
     async def parse_revenue(self, **kwargs) -> Dict[str, Any]:
-        """Parse PayPal revenue data"""
-        try:
+        """Parse PayPal revenue data"""        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             transactions_data = await self._get_paypal_transactions(start_date, end_date)
@@ -569,8 +536,7 @@ class PayPalRevenueParser(BaseRevenueParser):
             )
     
     async def _get_paypal_transactions(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get PayPal transactions"""
-        url = "https://api.paypal.com/v1/reporting/transactions"
+        """Get PayPal transactions"""        url = "https://api.paypal.com/v1/reporting/transactions"
         
         headers = {
             'Authorization': f'Bearer {self.config.platform["paypal"].access_token}',
@@ -588,8 +554,7 @@ class PayPalRevenueParser(BaseRevenueParser):
             return await response.json()
     
     async def _parse_paypal_revenue(self, transactions_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse PayPal revenue data"""
-        transactions = transactions_data.get('transaction_details', [])
+        """Parse PayPal revenue data"""        transactions = transactions_data.get('transaction_details', [])
         
         total_revenue = 0
         total_fees = 0
@@ -631,14 +596,12 @@ class PayPalRevenueParser(BaseRevenueParser):
 
 
 class StripeRevenueParser(BaseRevenueParser):
-    """Parser for Stripe payment revenue"""
-    
+    """Parser for Stripe payment revenue"""    
     def get_platform_name(self) -> str:
         return "stripe"
     
     async def parse_revenue(self, **kwargs) -> Dict[str, Any]:
-        """Parse Stripe revenue data"""
-        try:
+        """Parse Stripe revenue data"""        try:
             start_date, end_date = self._calculate_date_range(kwargs.get('days'))
             
             charges_data = await self._get_stripe_charges(start_date, end_date)
@@ -664,8 +627,7 @@ class StripeRevenueParser(BaseRevenueParser):
             )
     
     async def _get_stripe_charges(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Stripe charges"""
-        url = "https://api.stripe.com/v1/charges"
+        """Get Stripe charges"""        url = "https://api.stripe.com/v1/charges"
         
         headers = {
             'Authorization': f'Bearer {self.config.platform["stripe"].secret_key}'
@@ -682,8 +644,7 @@ class StripeRevenueParser(BaseRevenueParser):
             return await response.json()
     
     async def _parse_stripe_revenue(self, charges_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Stripe revenue data"""
-        charges = charges_data.get('data', [])
+        """Parse Stripe revenue data"""        charges = charges_data.get('data', [])
         
         total_revenue = 0
         total_fees = 0

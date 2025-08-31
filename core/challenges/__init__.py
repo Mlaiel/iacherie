@@ -1,5 +1,4 @@
-"""
-🎯 Challenge System Core Module - IA Influencer Agent Platform Enterprise
+"""🎯 Challenge System Core Module - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/core/challenges/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -22,7 +21,6 @@ CHALLENGE SYSTEM ARCHITECTURE:
 Challenge Creation → User Participation → Progress Tracking → 
 Competition Management → Scoring & Ranking → Reward Distribution
 """
-
 from .challenge_engine import (
     ChallengeEngine,
     ChallengeType,

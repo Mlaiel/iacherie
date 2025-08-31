@@ -2,7 +2,6 @@
 
 Core engine and processing components for version control operations.
 """
-
 from .version_control_engine import (
     VersionControlEngine,
     VersionControlJob,

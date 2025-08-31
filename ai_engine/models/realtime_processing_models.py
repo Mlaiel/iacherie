@@ -1,5 +1,4 @@
-"""
-Advanced Real-Time Processing Models for IA Influencer Agent Platform
+"""Advanced Real-Time Processing Models for IA Influencer Agent Platform
 Enterprise-grade real-time content processing and streaming models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
-
 import asyncio
 import torch
 import numpy as np
@@ -36,8 +34,7 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class StreamingMode(Enum):
-    """Real-time streaming modes"""
-    LIVE = "live"
+    """Real-time streaming modes"""    LIVE = "live"
     BUFFERED = "buffered"
     BATCH = "batch"
     PIPELINE = "pipeline"
@@ -45,8 +42,7 @@ class StreamingMode(Enum):
 
 
 class ProcessingLatency(Enum):
-    """Processing latency requirements"""
-    ULTRA_LOW = "ultra_low"  # < 10ms
+    """Processing latency requirements"""    ULTRA_LOW = "ultra_low"  # < 10ms
     LOW = "low"              # < 50ms  
     MEDIUM = "medium"        # < 200ms
     HIGH = "high"            # < 1000ms
@@ -55,8 +51,7 @@ class ProcessingLatency(Enum):
 
 @dataclass
 class StreamingConfig:
-    """Configuration for real-time streaming models"""
-    mode: StreamingMode
+    """Configuration for real-time streaming models"""    mode: StreamingMode
     latency_requirement: ProcessingLatency
     buffer_size: int = 1024
     batch_size: int = 32
@@ -73,8 +68,7 @@ class StreamingConfig:
 
 @dataclass
 class StreamMetrics:
-    """Real-time streaming performance metrics"""
-    current_fps: float
+    """Real-time streaming performance metrics"""    current_fps: float
     avg_fps: float
     latency_ms: float
     buffer_utilization: float
@@ -88,11 +82,9 @@ class StreamMetrics:
 
 
 class RealTimeAudioProcessor(BaseAIModel):
-    """
-    Real-time audio processing engine with ultra-low latency
+    """    Real-time audio processing engine with ultra-low latency
     Supports live audio streaming, analysis, and enhancement
-    """
-    
+    """    
     def __init__(self, config: ModelConfig, streaming_config: StreamingConfig):
         super().__init__(config)
         self.streaming_config = streaming_config
@@ -117,8 +109,7 @@ class RealTimeAudioProcessor(BaseAIModel):
         )
         
     def _initialize_feature_extractor(self) -> torch.nn.Module:
-        """Initialize optimized feature extractor for real-time processing"""
-        class FastAudioFeatureExtractor(torch.nn.Module):
+        """Initialize optimized feature extractor for real-time processing"""        class FastAudioFeatureExtractor(torch.nn.Module):
             def __init__(self):
                 super().__init__()
                 self.conv_layers = torch.nn.Sequential(
@@ -150,8 +141,7 @@ class RealTimeAudioProcessor(BaseAIModel):
         return model
     
     def _initialize_enhancer(self) -> torch.nn.Module:
-        """Initialize real-time audio enhancer"""
-        class RealTimeAudioEnhancer(torch.nn.Module):
+        """Initialize real-time audio enhancer"""        class RealTimeAudioEnhancer(torch.nn.Module):
             def __init__(self):
                 super().__init__()
                 self.noise_gate = torch.nn.Sequential(
@@ -183,8 +173,7 @@ class RealTimeAudioProcessor(BaseAIModel):
         return model
     
     def _initialize_analyzer(self) -> torch.nn.Module:
-        """Initialize real-time audio analyzer"""
-        class FastAudioAnalyzer(torch.nn.Module):
+        """Initialize real-time audio analyzer"""        class FastAudioAnalyzer(torch.nn.Module):
             def __init__(self):
                 super().__init__()
                 self.classifier = torch.nn.Sequential(
@@ -209,8 +198,7 @@ class RealTimeAudioProcessor(BaseAIModel):
         audio_source: Union[str, int, Callable],
         callback: Optional[Callable] = None
     ) -> None:
-        """Start real-time audio streaming and processing"""
-        try:
+        """Start real-time audio streaming and processing"""        try:
             self.is_streaming = True
             self.logger.info("Starting real-time audio streaming")
             
@@ -242,8 +230,7 @@ class RealTimeAudioProcessor(BaseAIModel):
         device_id: Union[str, int],
         callback: Optional[Callable]
     ) -> None:
-        """Capture audio from device (microphone, audio interface)"""
-        try:
+        """Capture audio from device (microphone, audio interface)"""        try:
             import sounddevice as sd
             
             def audio_callback(indata, frames, time, status):
@@ -283,8 +270,7 @@ class RealTimeAudioProcessor(BaseAIModel):
         audio_callback: Callable,
         result_callback: Optional[Callable]
     ) -> None:
-        """Capture audio from custom callback function"""
-        try:
+        """Capture audio from custom callback function"""        try:
             while self.is_streaming:
                 try:
                     audio_data = await asyncio.get_event_loop().run_in_executor(
@@ -309,8 +295,7 @@ class RealTimeAudioProcessor(BaseAIModel):
             raise
     
     async def _processing_loop(self) -> None:
-        """Main audio processing loop"""
-        try:
+        """Main audio processing loop"""        try:
             while self.is_streaming:
                 try:
                     # Get audio data from queue (non-blocking)
@@ -351,8 +336,7 @@ class RealTimeAudioProcessor(BaseAIModel):
             self.logger.error(f"Processing loop failed: {e}")
     
     async def _process_audio_chunk(self, audio_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process single audio chunk in real-time"""
-        try:
+        """Process single audio chunk in real-time"""        try:
             audio_tensor = audio_data["audio"]
             
             # Ensure correct tensor format
@@ -397,8 +381,7 @@ class RealTimeAudioProcessor(BaseAIModel):
             raise
     
     def _get_latency_threshold(self) -> float:
-        """Get latency threshold based on configuration"""
-        thresholds = {
+        """Get latency threshold based on configuration"""        thresholds = {
             ProcessingLatency.ULTRA_LOW: 10.0,
             ProcessingLatency.LOW: 50.0,
             ProcessingLatency.MEDIUM: 200.0,
@@ -408,8 +391,7 @@ class RealTimeAudioProcessor(BaseAIModel):
         return thresholds.get(self.streaming_config.latency_requirement, 200.0)
     
     async def _adjust_quality_based_on_performance(self) -> None:
-        """Dynamically adjust processing quality based on performance"""
-        if self.metrics.latency_ms > self._get_latency_threshold():
+        """Dynamically adjust processing quality based on performance"""        if self.metrics.latency_ms > self._get_latency_threshold():
             # Reduce quality to meet latency requirements
             self.streaming_config.quality_vs_speed = max(0.0, self.streaming_config.quality_vs_speed - 0.1)
             self.logger.info(f"Reduced quality to {self.streaming_config.quality_vs_speed}")
@@ -418,8 +400,7 @@ class RealTimeAudioProcessor(BaseAIModel):
             self.streaming_config.quality_vs_speed = min(1.0, self.streaming_config.quality_vs_speed + 0.05)
     
     def _calculate_quality_score(self, original: torch.Tensor, enhanced: torch.Tensor) -> float:
-        """Calculate audio quality score"""
-        try:
+        """Calculate audio quality score"""        try:
             # Simple SNR-based quality metric
             noise = original - enhanced
             signal_power = torch.mean(enhanced ** 2)
@@ -437,8 +418,7 @@ class RealTimeAudioProcessor(BaseAIModel):
             return 0.5  # Default quality score
     
     async def _metrics_update_loop(self) -> None:
-        """Update performance metrics periodically"""
-        frame_times = deque(maxlen=100)
+        """Update performance metrics periodically"""        frame_times = deque(maxlen=100)
         last_frame_count = 0
         
         try:
@@ -471,8 +451,7 @@ class RealTimeAudioProcessor(BaseAIModel):
             self.logger.warning(f"Metrics update error: {e}")
     
     async def stop_streaming(self) -> Dict[str, Any]:
-        """Stop streaming and return final metrics"""
-        self.is_streaming = False
+        """Stop streaming and return final metrics"""        self.is_streaming = False
         self.logger.info("Stopping real-time audio streaming")
         
         # Return final performance report
@@ -486,8 +465,7 @@ class RealTimeAudioProcessor(BaseAIModel):
         }
     
     async def get_processed_results(self) -> AsyncGenerator[Dict[str, Any], None]:
-        """Get processed results as they become available"""
-        while self.is_streaming or not self.result_queue.empty():
+        """Get processed results as they become available"""        while self.is_streaming or not self.result_queue.empty():
             try:
                 result = self.result_queue.get_nowait()
                 yield result
@@ -497,11 +475,9 @@ class RealTimeAudioProcessor(BaseAIModel):
 
 
 class RealTimeVideoProcessor(BaseAIModel):
-    """
-    Real-time video processing engine with low-latency streaming
+    """    Real-time video processing engine with low-latency streaming
     Supports live video analysis, enhancement, and content protection
-    """
-    
+    """    
     def __init__(self, config: ModelConfig, streaming_config: StreamingConfig):
         super().__init__(config)
         self.streaming_config = streaming_config
@@ -525,8 +501,7 @@ class RealTimeVideoProcessor(BaseAIModel):
         )
     
     def _initialize_frame_analyzer(self) -> torch.nn.Module:
-        """Initialize optimized frame analyzer for real-time processing"""
-        class FastFrameAnalyzer(torch.nn.Module):
+        """Initialize optimized frame analyzer for real-time processing"""        class FastFrameAnalyzer(torch.nn.Module):
             def __init__(self):
                 super().__init__()
                 self.backbone = torch.nn.Sequential(
@@ -556,8 +531,7 @@ class RealTimeVideoProcessor(BaseAIModel):
         return model
     
     def _initialize_video_enhancer(self) -> torch.nn.Module:
-        """Initialize real-time video enhancer"""
-        class RealTimeVideoEnhancer(torch.nn.Module):
+        """Initialize real-time video enhancer"""        class RealTimeVideoEnhancer(torch.nn.Module):
             def __init__(self):
                 super().__init__()
                 self.denoise_net = torch.nn.Sequential(
@@ -577,8 +551,7 @@ class RealTimeVideoProcessor(BaseAIModel):
         return model
     
     def _initialize_object_detector(self) -> torch.nn.Module:
-        """Initialize fast object detector"""
-        class FastObjectDetector(torch.nn.Module):
+        """Initialize fast object detector"""        class FastObjectDetector(torch.nn.Module):
             def __init__(self):
                 super().__init__()
                 self.feature_extractor = torch.nn.Sequential(
@@ -608,8 +581,7 @@ class RealTimeVideoProcessor(BaseAIModel):
         video_source: Union[str, int, cv2.VideoCapture],
         callback: Optional[Callable] = None
     ) -> None:
-        """Start real-time video streaming and processing"""
-        try:
+        """Start real-time video streaming and processing"""        try:
             self.is_streaming = True
             self.logger.info("Starting real-time video streaming")
             
@@ -635,8 +607,7 @@ class RealTimeVideoProcessor(BaseAIModel):
         video_source: Union[str, int, cv2.VideoCapture],
         callback: Optional[Callable]
     ) -> None:
-        """Capture video frames from source"""
-        try:
+        """Capture video frames from source"""        try:
             if isinstance(video_source, (str, int)):
                 cap = cv2.VideoCapture(video_source)
             else:
@@ -677,8 +648,7 @@ class RealTimeVideoProcessor(BaseAIModel):
             raise
     
     async def _video_processing_loop(self) -> None:
-        """Main video processing loop"""
-        try:
+        """Main video processing loop"""        try:
             while self.is_streaming:
                 try:
                     # Get frame from queue
@@ -716,8 +686,7 @@ class RealTimeVideoProcessor(BaseAIModel):
             self.logger.error(f"Video processing loop failed: {e}")
     
     async def _process_video_frame(self, frame_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process single video frame in real-time"""
-        try:
+        """Process single video frame in real-time"""        try:
             frame_tensor = frame_data["frame"].unsqueeze(0)  # Add batch dimension
             
             # Move to GPU if available
@@ -757,8 +726,7 @@ class RealTimeVideoProcessor(BaseAIModel):
             raise
     
     def _calculate_frame_quality(self, original: torch.Tensor, enhanced: torch.Tensor) -> float:
-        """Calculate frame quality score"""
-        try:
+        """Calculate frame quality score"""        try:
             # Calculate PSNR-based quality
             mse = torch.mean((original - enhanced) ** 2)
             if mse == 0:
@@ -773,8 +741,7 @@ class RealTimeVideoProcessor(BaseAIModel):
             return 0.5
     
     async def _video_metrics_loop(self) -> None:
-        """Update video processing metrics"""
-        frame_times = deque(maxlen=100)
+        """Update video processing metrics"""        frame_times = deque(maxlen=100)
         last_frame_count = 0
         
         try:
@@ -801,8 +768,7 @@ class RealTimeVideoProcessor(BaseAIModel):
             self.logger.warning(f"Video metrics update error: {e}")
     
     async def stop_video_streaming(self) -> Dict[str, Any]:
-        """Stop video streaming and return metrics"""
-        self.is_streaming = False
+        """Stop video streaming and return metrics"""        self.is_streaming = False
         self.logger.info("Stopping real-time video streaming")
         
         return {

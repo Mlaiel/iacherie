@@ -1,5 +1,4 @@
-"""
-Recommendation Engine Module - IA Influencer Agent + Content Protection Platform
+"""Recommendation Engine Module - IA Influencer Agent + Content Protection Platform
 
 Intelligent recommendation system for multi-format content creators
 (musicians, bloggers, photographers, influencers, comedians) with AI-powered suggestions.
@@ -24,7 +23,6 @@ Specialties of Project Team:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -38,8 +36,7 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class RecommendationType(str, Enum):
-    """Types of recommendations available"""
-    CONTENT_OPTIMIZATION = "content_optimization"
+    """Types of recommendations available"""    CONTENT_OPTIMIZATION = "content_optimization"
     POSTING_SCHEDULE = "posting_schedule"
     COLLABORATION = "collaboration"
     MONETIZATION = "monetization"
@@ -51,15 +48,13 @@ class RecommendationType(str, Enum):
     REVENUE_OPTIMIZATION = "revenue_optimization"
 
 class RecommendationPriority(str, Enum):
-    """Recommendation priority levels"""
-    CRITICAL = "critical"
+    """Recommendation priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
 
 class RecommendationCategory(str, Enum):
-    """Recommendation categories"""
-    PERFORMANCE = "performance"
+    """Recommendation categories"""    PERFORMANCE = "performance"
     GROWTH = "growth"
     MONETIZATION = "monetization"
     CONTENT = "content"
@@ -68,8 +63,7 @@ class RecommendationCategory(str, Enum):
 
 @dataclass
 class Recommendation:
-    """Individual recommendation data structure"""
-    recommendation_id: str
+    """Individual recommendation data structure"""    recommendation_id: str
     user_id: int
     type: RecommendationType
     category: RecommendationCategory
@@ -90,8 +84,7 @@ class Recommendation:
 
 @dataclass
 class RecommendationResult:
-    """Result of recommendation analysis"""
-    user_id: int
+    """Result of recommendation analysis"""    user_id: int
     analysis_date: datetime
     total_recommendations: int
     recommendations: List[Recommendation]
@@ -102,21 +95,17 @@ class RecommendationResult:
 
 
 class RecommendationEngine:
-    """
-    Enterprise-grade recommendation engine
+    """    Enterprise-grade recommendation engine
     
     Provides intelligent, data-driven recommendations for content creators
     across all aspects of their digital presence and monetization strategy.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize recommendation engine
+        """        Initialize recommendation engine
         
         Args:
             db_session: Database session for data access
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.logger = logging.getLogger(__name__)
         
         # Initialize recommendation weights
@@ -140,8 +129,7 @@ class RecommendationEngine:
         max_recommendations: int = 20,
         include_low_priority: bool = False
     ) -> RecommendationResult:
-        """
-        Generate comprehensive recommendations for user
+        """        Generate comprehensive recommendations for user
         
         Args:
             user_id: User identifier
@@ -151,8 +139,7 @@ class RecommendationEngine:
             
         Returns:
             RecommendationResult with all recommendations
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating comprehensive recommendations for user {user_id}")
             
             # Get user data for analysis
@@ -221,8 +208,7 @@ class RecommendationEngine:
         user_id: int,
         user_analytics: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Generate content-related recommendations"""
-        
+        """Generate content-related recommendations"""        
         recommendations = []
         
         # Analyze content performance
@@ -363,8 +349,7 @@ class RecommendationEngine:
         user_id: int,
         user_analytics: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Generate monetization-related recommendations"""
-        
+        """Generate monetization-related recommendations"""        
         recommendations = []
         
         # Analyze monetization potential
@@ -467,8 +452,7 @@ class RecommendationEngine:
         user_id: int,
         user_analytics: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Generate audience growth recommendations"""
-        
+        """Generate audience growth recommendations"""        
         recommendations = []
         
         audience_data = user_analytics.get('audience_data', {})
@@ -566,8 +550,7 @@ class RecommendationEngine:
         user_id: int,
         user_analytics: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Generate performance optimization recommendations"""
-        
+        """Generate performance optimization recommendations"""        
         recommendations = []
         
         performance_data = user_analytics.get('performance_metrics', {})
@@ -665,8 +648,7 @@ class RecommendationEngine:
         user_id: int,
         user_analytics: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Generate collaboration recommendations"""
-        
+        """Generate collaboration recommendations"""        
         recommendations = []
         
         audience_data = user_analytics.get('audience_data', {})
@@ -724,8 +706,7 @@ class RecommendationEngine:
         user_id: int,
         user_analytics: Dict[str, Any]
     ) -> List[Recommendation]:
-        """Generate technical optimization recommendations"""
-        
+        """Generate technical optimization recommendations"""        
         recommendations = []
         
         technical_data = user_analytics.get('technical_metrics', {})
@@ -781,8 +762,7 @@ class RecommendationEngine:
         max_recommendations: int,
         include_low_priority: bool
     ) -> List[Recommendation]:
-        """Filter and prioritize recommendations based on criteria"""
-        
+        """Filter and prioritize recommendations based on criteria"""        
         # Filter by priority if needed
         if not include_low_priority:
             recommendations = [
@@ -810,8 +790,7 @@ class RecommendationEngine:
         self,
         recommendations: List[Recommendation]
     ) -> Dict[RecommendationPriority, int]:
-        """Calculate distribution of recommendations by priority"""
-        
+        """Calculate distribution of recommendations by priority"""        
         distribution = {priority: 0 for priority in RecommendationPriority}
         
         for rec in recommendations:
@@ -823,8 +802,7 @@ class RecommendationEngine:
         self,
         recommendations: List[Recommendation]
     ) -> Dict[RecommendationCategory, int]:
-        """Calculate distribution of recommendations by category"""
-        
+        """Calculate distribution of recommendations by category"""        
         distribution = {category: 0 for category in RecommendationCategory}
         
         for rec in recommendations:
@@ -836,8 +814,7 @@ class RecommendationEngine:
         self,
         recommendations: List[Recommendation]
     ) -> float:
-        """Calculate overall score based on recommendations"""
-        
+        """Calculate overall score based on recommendations"""        
         if not recommendations:
             return 0.0
         
@@ -864,8 +841,7 @@ class RecommendationEngine:
         user_id: int,
         analysis_period_days: int
     ) -> Dict[str, Any]:
-        """Get comprehensive user analytics data for recommendations"""
-        
+        """Get comprehensive user analytics data for recommendations"""        
         # This would fetch real data from various analytics tables
         # For now, returning mock data structure
         
@@ -908,21 +884,17 @@ class RecommendationEngine:
 
 
 class ContentOptimizer:
-    """
-    Advanced content optimization engine
+    """    Advanced content optimization engine
     
     Provides specific, actionable recommendations for improving
     individual pieces of content and overall content strategy.
-    """
-    
+    """    
     def __init__(self, recommendation_engine: RecommendationEngine):
-        """
-        Initialize content optimizer
+        """        Initialize content optimizer
         
         Args:
             recommendation_engine: Instance of RecommendationEngine
-        """
-        self.recommendation_engine = recommendation_engine
+        """        self.recommendation_engine = recommendation_engine
         self.logger = logging.getLogger(__name__)
     
     async def optimize_content_piece(
@@ -931,8 +903,7 @@ class ContentOptimizer:
         content_id: str,
         content_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Optimize a specific piece of content
+        """        Optimize a specific piece of content
         
         Args:
             user_id: User identifier
@@ -941,8 +912,7 @@ class ContentOptimizer:
             
         Returns:
             Dict with optimization recommendations
-        """
-        try:
+        """        try:
             self.logger.info(f"Optimizing content piece {content_id} for user {user_id}")
             
             # Analyze content performance
@@ -1031,8 +1001,7 @@ class ContentOptimizer:
         user_id: int,
         lookback_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Analyze overall content strategy and provide recommendations
+        """        Analyze overall content strategy and provide recommendations
         
         Args:
             user_id: User identifier
@@ -1040,8 +1009,7 @@ class ContentOptimizer:
             
         Returns:
             Dict with strategy analysis and recommendations
-        """
-        try:
+        """        try:
             self.logger.info(f"Analyzing content strategy for user {user_id}")
             
             # Get content performance data
@@ -1078,8 +1046,7 @@ class ContentOptimizer:
             raise
     
     def _calculate_content_performance_score(self, content_data: Dict[str, Any]) -> float:
-        """Calculate overall performance score for content piece"""
-        
+        """Calculate overall performance score for content piece"""        
         # Weighted scoring of different metrics
         engagement_rate = content_data.get('engagement_rate', 0)
         reach_rate = content_data.get('reach_rate', 0)
@@ -1103,8 +1070,7 @@ class ContentOptimizer:
         return performance_score
     
     def _is_optimal_posting_time(self, posting_time: datetime, user_id: int) -> bool:
-        """Check if posting time is optimal for user's audience"""
-        
+        """Check if posting time is optimal for user's audience"""        
         # This would analyze user's audience activity patterns
         # For now, using general optimal times
         optimal_hours = [7, 8, 12, 13, 17, 18, 19, 20, 21]
@@ -1112,8 +1078,7 @@ class ContentOptimizer:
         return posting_time.hour in optimal_hours
     
     def _prioritize_optimizations(self, optimizations: List[Dict[str, Any]]) -> List[str]:
-        """Prioritize optimization actions by impact"""
-        
+        """Prioritize optimization actions by impact"""        
         # Priority order based on typical impact
         priority_order = {
             "caption": 1,     # Highest impact
@@ -1130,8 +1095,7 @@ class ContentOptimizer:
         return [opt["title"] for opt in sorted_optimizations]
     
     def _estimate_improvement_potential(self, optimizations: List[Dict[str, Any]]) -> float:
-        """Estimate potential improvement from optimizations"""
-        
+        """Estimate potential improvement from optimizations"""        
         # Each optimization type has different improvement potential
         improvement_potential = {
             "caption": 0.3,     # 30% potential improvement
@@ -1148,8 +1112,7 @@ class ContentOptimizer:
         return min(1.0, total_potential)
     
     async def _get_user_content_data(self, user_id: int, lookback_days: int) -> List[Dict[str, Any]]:
-        """Get user's content data for analysis"""
-        
+        """Get user's content data for analysis"""        
         # This would query the content_performance_analytics table
         # For now, return mock data
         return [
@@ -1164,8 +1127,7 @@ class ContentOptimizer:
         ]
     
     def _analyze_posting_frequency(self, content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze posting frequency patterns"""
-        
+        """Analyze posting frequency patterns"""        
         if not content_data:
             return {"posts_per_week": 0, "consistency_score": 0}
         
@@ -1183,8 +1145,7 @@ class ContentOptimizer:
         }
     
     def _analyze_content_types(self, content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze content type distribution"""
-        
+        """Analyze content type distribution"""        
         if not content_data:
             return {"distribution": {}, "diversity_score": 0}
         
@@ -1208,8 +1169,7 @@ class ContentOptimizer:
         }
     
     def _analyze_engagement_patterns(self, content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze engagement patterns"""
-        
+        """Analyze engagement patterns"""        
         if not content_data:
             return {"average_engagement": 0, "engagement_trend": "stable"}
         
@@ -1239,8 +1199,7 @@ class ContentOptimizer:
         }
     
     def _analyze_performance_trends(self, content_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze overall performance trends"""
-        
+        """Analyze overall performance trends"""        
         if not content_data:
             return {"overall_trend": "no_data", "performance_score": 0}
         
@@ -1274,8 +1233,7 @@ class ContentOptimizer:
         }
     
     def _identify_optimization_opportunities(self, content_data: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Identify specific optimization opportunities"""
-        
+        """Identify specific optimization opportunities"""        
         opportunities = []
         
         if not content_data:
@@ -1322,8 +1280,7 @@ class ContentOptimizer:
         user_id: int,
         strategy_analysis: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate strategic recommendations based on analysis"""
-        
+        """Generate strategic recommendations based on analysis"""        
         recommendations = []
         
         # Posting frequency recommendations
@@ -1370,8 +1327,7 @@ class ContentOptimizer:
         return recommendations
     
     def _calculate_strategy_score(self, strategy_analysis: Dict[str, Any]) -> float:
-        """Calculate overall strategy score"""
-        
+        """Calculate overall strategy score"""        
         # Weight different aspects of strategy
         frequency_score = strategy_analysis["posting_frequency"]["consistency_score"]
         diversity_score = strategy_analysis["content_types"]["diversity_score"]

@@ -1,5 +1,4 @@
-"""
-SEO and Marketing AI Configuration for IA-Influencer Agent Platform
+"""SEO and Marketing AI Configuration for IA-Influencer Agent Platform
 ===================================================================
 
 Professional SEO optimization and marketing automation AI configuration.
@@ -16,7 +15,6 @@ prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, List, Optional, Union, Any, Tuple
 from pydantic import BaseSettings, validator
 from enum import Enum
@@ -25,8 +23,7 @@ import os
 
 
 class SEOStrategy(str, Enum):
-    """SEO optimization strategies."""
-    
+    """SEO optimization strategies."""    
     AGGRESSIVE_GROWTH = "aggressive_growth"
     STEADY_ORGANIC = "steady_organic"
     BRAND_FOCUSED = "brand_focused"
@@ -36,8 +33,7 @@ class SEOStrategy(str, Enum):
 
 
 class ContentCategory(str, Enum):
-    """Content categories for SEO optimization."""
-    
+    """Content categories for SEO optimization."""    
     MUSIC = "music"
     VIDEO = "video"
     PODCAST = "podcast"
@@ -50,8 +46,7 @@ class ContentCategory(str, Enum):
 
 
 class PlatformOptimization(str, Enum):
-    """Platforms for SEO optimization."""
-    
+    """Platforms for SEO optimization."""    
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -65,8 +60,7 @@ class PlatformOptimization(str, Enum):
 
 
 class MarketingCampaignType(str, Enum):
-    """Marketing campaign types."""
-    
+    """Marketing campaign types."""    
     AWARENESS_CAMPAIGN = "awareness_campaign"
     ENGAGEMENT_CAMPAIGN = "engagement_campaign"
     CONVERSION_CAMPAIGN = "conversion_campaign"
@@ -79,8 +73,7 @@ class MarketingCampaignType(str, Enum):
 
 @dataclass
 class SEOOptimization:
-    """SEO optimization configuration."""
-    
+    """SEO optimization configuration."""    
     optimization_id: str
     strategy: SEOStrategy
     target_keywords: List[str]
@@ -96,13 +89,11 @@ class SEOOptimization:
 
 
 class SEOMarketingConfig(BaseSettings):
-    """
-    Professional SEO and Marketing AI Configuration.
+    """    Professional SEO and Marketing AI Configuration.
     
     Manages comprehensive SEO optimization, content marketing,
     and automated promotion strategies for maximum visibility.
-    """
-    
+    """    
     # Core SEO Configuration
     SEO_STORAGE_PATH: str = "/data/seo"
     KEYWORD_RESEARCH_ENABLED: bool = True
@@ -274,8 +265,7 @@ class SEOMarketingConfig(BaseSettings):
         target_platforms: List[PlatformOptimization],
         strategy: SEOStrategy = SEOStrategy.STEADY_ORGANIC
     ) -> SEOOptimization:
-        """Get SEO optimization configuration for content."""
-        
+        """Get SEO optimization configuration for content."""        
         # Generate target keywords based on category and strategy
         target_keywords = self._generate_target_keywords(content_category, strategy)
         
@@ -307,8 +297,7 @@ class SEOMarketingConfig(BaseSettings):
         content_category: ContentCategory, 
         strategy: SEOStrategy
     ) -> List[str]:
-        """Generate target keywords for content category and strategy."""
-        
+        """Generate target keywords for content category and strategy."""        
         base_keywords = {
             ContentCategory.MUSIC: [
                 "music", "song", "artist", "album", "playlist", "streaming",
@@ -340,8 +329,7 @@ class SEOMarketingConfig(BaseSettings):
         target_platforms: List[PlatformOptimization],
         strategy: SEOStrategy
     ) -> float:
-        """Calculate SEO optimization score."""
-        
+        """Calculate SEO optimization score."""        
         # Base score by category
         category_scores = {
             ContentCategory.MUSIC: 0.8,
@@ -373,8 +361,7 @@ class SEOMarketingConfig(BaseSettings):
         content_category: ContentCategory, 
         target_keywords: List[str]
     ) -> str:
-        """Analyze competition level for keywords."""
-        
+        """Analyze competition level for keywords."""        
         # Simplified competition analysis
         category_competition = {
             ContentCategory.MUSIC: "high",
@@ -386,8 +373,7 @@ class SEOMarketingConfig(BaseSettings):
         return category_competition.get(content_category, "medium")
     
     def _calculate_difficulty_score(self, competition_level: str) -> float:
-        """Calculate SEO difficulty score."""
-        
+        """Calculate SEO difficulty score."""        
         difficulty_scores = {
             "low": 0.3,
             "medium": 0.5,
@@ -398,8 +384,7 @@ class SEOMarketingConfig(BaseSettings):
         return difficulty_scores.get(competition_level, 0.5)
     
     def _estimate_reach_increase(self, strategy: SEOStrategy, competition_level: str) -> float:
-        """Estimate potential reach increase."""
-        
+        """Estimate potential reach increase."""        
         base_increases = {
             SEOStrategy.AGGRESSIVE_GROWTH: 0.5,
             SEOStrategy.STEADY_ORGANIC: 0.3,
@@ -422,8 +407,7 @@ class SEOMarketingConfig(BaseSettings):
         return base_increase * adjustment
     
     def _estimate_optimization_timeline(self, strategy: SEOStrategy) -> int:
-        """Estimate optimization timeline in days."""
-        
+        """Estimate optimization timeline in days."""        
         timelines = {
             SEOStrategy.AGGRESSIVE_GROWTH: 30,
             SEOStrategy.STEADY_ORGANIC: 90,
@@ -435,8 +419,7 @@ class SEOMarketingConfig(BaseSettings):
         return timelines.get(strategy, 60)
     
     def _get_strategy_parameters(self, strategy: SEOStrategy) -> Dict[str, Any]:
-        """Get strategy-specific parameters."""
-        
+        """Get strategy-specific parameters."""        
         parameters = {
             SEOStrategy.AGGRESSIVE_GROWTH: {
                 "posting_frequency": "daily",
@@ -465,8 +448,7 @@ class SEOMarketingConfig(BaseSettings):
         return parameters.get(strategy, {})
     
     def get_platform_specific_config(self, platform: PlatformOptimization) -> Dict[str, Any]:
-        """Get platform-specific SEO configuration."""
-        
+        """Get platform-specific SEO configuration."""        
         configs = {
             PlatformOptimization.YOUTUBE: {
                 "title_max_length": 100,

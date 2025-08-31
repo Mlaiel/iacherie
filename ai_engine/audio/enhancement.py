@@ -1,11 +1,9 @@
-"""
-Audio Enhancement - Advanced Audio Enhancement and Processing
+"""Audio Enhancement - Advanced Audio Enhancement and Processing
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive audio enhancement capabilities.
 """
-
 import logging
 import numpy as np
 import time
@@ -18,8 +16,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class EnhancementType(Enum):
-    """Types of audio enhancement"""
-    NOISE_REDUCTION = "noise_reduction"
+    """Types of audio enhancement"""    NOISE_REDUCTION = "noise_reduction"
     DYNAMIC_RANGE = "dynamic_range"
     SPECTRAL_ENHANCE = "spectral_enhance"
     VOCAL_ENHANCE = "vocal_enhance"
@@ -31,16 +28,14 @@ class EnhancementType(Enum):
     WARMTH_ENHANCE = "warmth_enhance"
 
 class QualityLevel(Enum):
-    """Enhancement quality levels"""
-    LOW = "low"
+    """Enhancement quality levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
 
 @dataclass
 class EnhancementSettings:
-    """Enhancement configuration"""
-    enhancement_type: EnhancementType
+    """Enhancement configuration"""    enhancement_type: EnhancementType
     strength: float = 0.5  # 0.0 to 1.0
     quality_level: QualityLevel = QualityLevel.MEDIUM
     preserve_dynamics: bool = True
@@ -49,8 +44,7 @@ class EnhancementSettings:
 
 @dataclass
 class EnhancementResult:
-    """Audio enhancement result"""
-    enhanced_audio: np.ndarray
+    """Audio enhancement result"""    enhanced_audio: np.ndarray
     original_audio: np.ndarray
     settings_used: EnhancementSettings
     processing_time: float
@@ -62,8 +56,7 @@ class EnhancementResult:
     error_message: Optional[str] = None
 
 class AudioEnhancer:
-    """Advanced audio enhancement engine"""
-    
+    """Advanced audio enhancement engine"""    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -84,8 +77,7 @@ class AudioEnhancer:
         self.logger.info("AudioEnhancer initialized successfully")
     
     def enhance(self, audio_data: np.ndarray, settings: EnhancementSettings) -> EnhancementResult:
-        """Enhance audio with specified settings"""
-        start_time = time.time()
+        """Enhance audio with specified settings"""        start_time = time.time()
         
         try:
             original_audio = audio_data.copy()
@@ -162,8 +154,7 @@ class AudioEnhancer:
             )
     
     def _reduce_noise(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Reduce noise using spectral subtraction technique"""
-        try:
+        """Reduce noise using spectral subtraction technique"""        try:
             strength = settings.strength
             
             # Simple noise reduction: spectral subtraction approach
@@ -187,8 +178,7 @@ class AudioEnhancer:
             return audio_data
     
     def _enhance_dynamics(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Enhance dynamic range"""
-        try:
+        """Enhance dynamic range"""        try:
             strength = settings.strength
             
             # Multi-band dynamic range enhancement
@@ -225,8 +215,7 @@ class AudioEnhancer:
             return audio_data
     
     def _enhance_spectrum(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Enhance spectral content"""
-        try:
+        """Enhance spectral content"""        try:
             strength = settings.strength
             
             # FFT-based spectral enhancement
@@ -257,8 +246,7 @@ class AudioEnhancer:
             return audio_data
     
     def _enhance_vocals(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Enhance vocal frequencies"""
-        try:
+        """Enhance vocal frequencies"""        try:
             strength = settings.strength
             
             # Vocal frequency range enhancement (roughly 300Hz - 3kHz)
@@ -287,8 +275,7 @@ class AudioEnhancer:
             return audio_data
     
     def _boost_bass(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Boost bass frequencies"""
-        try:
+        """Boost bass frequencies"""        try:
             strength = settings.strength
             bass_boost = 1.0 + strength * 0.6
             
@@ -312,8 +299,7 @@ class AudioEnhancer:
             return audio_data
     
     def _boost_treble(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Boost treble frequencies"""
-        try:
+        """Boost treble frequencies"""        try:
             strength = settings.strength
             treble_boost = 1.0 + strength * 0.5
             
@@ -337,8 +323,7 @@ class AudioEnhancer:
             return audio_data
     
     def _widen_stereo(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Widen stereo image (for stereo audio)"""
-        try:
+        """Widen stereo image (for stereo audio)"""        try:
             # For mono audio, just return original
             if len(audio_data.shape) == 1:
                 return audio_data
@@ -371,8 +356,7 @@ class AudioEnhancer:
             return audio_data
     
     def _enhance_harmonics(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Enhance harmonic content"""
-        try:
+        """Enhance harmonic content"""        try:
             strength = settings.strength
             
             # Harmonic enhancement using gentle saturation
@@ -393,8 +377,7 @@ class AudioEnhancer:
             return audio_data
     
     def _boost_clarity(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Boost audio clarity"""
-        try:
+        """Boost audio clarity"""        try:
             strength = settings.strength
             
             # Clarity boost through mid-frequency enhancement
@@ -419,8 +402,7 @@ class AudioEnhancer:
             return audio_data
     
     def _enhance_warmth(self, audio_data: np.ndarray, settings: EnhancementSettings) -> np.ndarray:
-        """Enhance warmth (analog-like character)"""
-        try:
+        """Enhance warmth (analog-like character)"""        try:
             strength = settings.strength
             
             # Warmth enhancement through:
@@ -457,8 +439,7 @@ class AudioEnhancer:
             return audio_data
     
     def _apply_auto_gain(self, enhanced_audio: np.ndarray, original_audio: np.ndarray) -> np.ndarray:
-        """Apply automatic gain compensation"""
-        try:
+        """Apply automatic gain compensation"""        try:
             original_rms = np.sqrt(np.mean(original_audio ** 2))
             enhanced_rms = np.sqrt(np.mean(enhanced_audio ** 2))
             
@@ -475,8 +456,7 @@ class AudioEnhancer:
             return enhanced_audio
     
     def _prevent_clipping(self, audio_data: np.ndarray) -> np.ndarray:
-        """Prevent digital clipping"""
-        try:
+        """Prevent digital clipping"""        try:
             max_val = np.max(np.abs(audio_data))
             if max_val > 0.95:  # Leave some headroom
                 return audio_data * (0.95 / max_val)
@@ -486,8 +466,7 @@ class AudioEnhancer:
             return audio_data
     
     def _calculate_quality_metrics(self, original: np.ndarray, enhanced: np.ndarray) -> Dict[str, float]:
-        """Calculate enhancement quality metrics"""
-        try:
+        """Calculate enhancement quality metrics"""        try:
             metrics = {}
             
             # RMS levels
@@ -527,8 +506,7 @@ class AudioEnhancer:
             return {}
     
     def _calculate_spectral_centroid(self, audio_data: np.ndarray) -> float:
-        """Calculate spectral centroid"""
-        try:
+        """Calculate spectral centroid"""        try:
             fft = np.fft.fft(audio_data[:8192])  # Use first 8192 samples
             magnitude = np.abs(fft[:4096])  # First half (positive frequencies)
             
@@ -547,8 +525,7 @@ class AudioEnhancer:
             return 0.0
     
     def _calculate_enhancement_gain(self, original: np.ndarray, enhanced: np.ndarray) -> float:
-        """Calculate overall enhancement gain in dB"""
-        try:
+        """Calculate overall enhancement gain in dB"""        try:
             original_rms = np.sqrt(np.mean(original ** 2))
             enhanced_rms = np.sqrt(np.mean(enhanced ** 2))
             
@@ -562,8 +539,7 @@ class AudioEnhancer:
             return 0.0
     
     def _analyze_frequency_response(self, original: np.ndarray, enhanced: np.ndarray) -> Dict[str, float]:
-        """Analyze frequency response changes"""
-        try:
+        """Analyze frequency response changes"""        try:
             # Calculate frequency response in different bands
             bands = {
                 'sub_bass': (20, 60),
@@ -606,8 +582,7 @@ class AudioEnhancer:
             return {}
     
     def _check_enhancement_quality(self, result: EnhancementResult):
-        """Check for potential enhancement quality issues"""
-        try:
+        """Check for potential enhancement quality issues"""        try:
             warnings = []
             
             # Check for clipping
@@ -639,8 +614,7 @@ class AudioEnhancer:
     
     def batch_enhance(self, audio_files: List[np.ndarray], 
                      settings: EnhancementSettings) -> List[EnhancementResult]:
-        """Enhance multiple audio files with same settings"""
-        results = []
+        """Enhance multiple audio files with same settings"""        results = []
         
         for i, audio_data in enumerate(audio_files):
             self.logger.info(f"Processing file {i+1}/{len(audio_files)}")
@@ -652,8 +626,7 @@ class AudioEnhancer:
     def create_enhancement_preset(self, name: str, enhancement_type: EnhancementType,
                                 strength: float, quality_level: QualityLevel = QualityLevel.MEDIUM,
                                 **kwargs) -> EnhancementSettings:
-        """Create an enhancement preset"""
-        return EnhancementSettings(
+        """Create an enhancement preset"""        return EnhancementSettings(
             enhancement_type=enhancement_type,
             strength=strength,
             quality_level=quality_level,

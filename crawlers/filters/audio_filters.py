@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Audio Content Filters
+"""IA Influencer Agent - Audio Content Filters
 ===========================================
 
 Ultra-advanced professional audio content filtering for multimedia processing.
@@ -29,7 +28,6 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
-
 import asyncio
 import logging
 import time
@@ -54,15 +52,12 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class AudioQualityMetrics:
-    """Audio quality analysis metrics."""
-    
+    """Audio quality analysis metrics."""    
     def __init__(self):
-        """Initialize audio quality metrics calculator."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize audio quality metrics calculator."""        self.logger = logging.getLogger(__name__)
     
     def calculate_snr(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate Signal-to-Noise Ratio."""
-        try:
+        """Calculate Signal-to-Noise Ratio."""        try:
             # Use spectral analysis for SNR estimation
             stft = librosa.stft(audio_data)
             magnitude = np.abs(stft)
@@ -84,8 +79,7 @@ class AudioQualityMetrics:
             return 30.0  # Default conservative SNR
     
     def calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Calculate dynamic range of audio."""
-        try:
+        """Calculate dynamic range of audio."""        try:
             # Calculate RMS values in windows
             window_size = 2048
             rms_values = []
@@ -114,8 +108,7 @@ class AudioQualityMetrics:
             return 15.0  # Default conservative dynamic range
     
     def calculate_spectral_centroid(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate spectral centroid for brightness analysis."""
-        try:
+        """Calculate spectral centroid for brightness analysis."""        try:
             centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sample_rate)[0]
             return float(np.mean(centroid))
         except Exception as e:
@@ -123,8 +116,7 @@ class AudioQualityMetrics:
             return 2000.0  # Default centroid frequency
     
     def calculate_zero_crossing_rate(self, audio_data: np.ndarray) -> float:
-        """Calculate zero crossing rate for percussiveness analysis."""
-        try:
+        """Calculate zero crossing rate for percussiveness analysis."""        try:
             zcr = librosa.feature.zero_crossing_rate(audio_data)[0]
             return float(np.mean(zcr))
         except Exception as e:
@@ -132,8 +124,7 @@ class AudioQualityMetrics:
             return 0.1  # Default ZCR
     
     def calculate_mfcc_variance(self, audio_data: np.ndarray, sample_rate: int) -> float:
-        """Calculate MFCC variance for timbral complexity."""
-        try:
+        """Calculate MFCC variance for timbral complexity."""        try:
             mfccs = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             variance = np.var(mfccs, axis=1)
             return float(np.mean(variance))
@@ -143,11 +134,9 @@ class AudioQualityMetrics:
 
 
 class AdvancedAudioAnalyzer:
-    """Advanced audio content analysis using machine learning and signal processing."""
-    
+    """Advanced audio content analysis using machine learning and signal processing."""    
     def __init__(self):
-        """Initialize advanced audio analyzer."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize advanced audio analyzer."""        self.logger = logging.getLogger(__name__)
         self.quality_metrics = AudioQualityMetrics()
         
         # Initialize Essentia algorithms
@@ -160,8 +149,7 @@ class AdvancedAudioAnalyzer:
             self.loudness_analyzer = es.Loudness()
     
     async def analyze_audio_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Generate comprehensive audio fingerprint for protection."""
-        try:
+        """Generate comprehensive audio fingerprint for protection."""        try:
             if not HAS_AUDIO_LIBS:
                 return {"error": "Audio libraries not available"}
             
@@ -195,8 +183,7 @@ class AdvancedAudioAnalyzer:
             return {"error": str(e)}
     
     async def _extract_spectral_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract spectral features from audio."""
-        features = {}
+        """Extract spectral features from audio."""        features = {}
         
         try:
             # Spectral centroid
@@ -223,8 +210,7 @@ class AdvancedAudioAnalyzer:
         return features
     
     async def _extract_temporal_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract temporal features from audio."""
-        features = {}
+        """Extract temporal features from audio."""        features = {}
         
         try:
             # Onset detection
@@ -251,8 +237,7 @@ class AdvancedAudioAnalyzer:
         return features
     
     async def _extract_harmonic_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract harmonic and tonal features from audio."""
-        features = {}
+        """Extract harmonic and tonal features from audio."""        features = {}
         
         try:
             # Harmonic-percussive separation
@@ -278,8 +263,7 @@ class AdvancedAudioAnalyzer:
         return features
     
     async def _extract_perceptual_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract perceptual features from audio."""
-        features = {}
+        """Extract perceptual features from audio."""        features = {}
         
         try:
             # Signal-to-noise ratio
@@ -304,11 +288,9 @@ class AdvancedAudioAnalyzer:
 
 
 class AudioContentClassifier:
-    """AI-powered audio content classification for advanced filtering."""
-    
+    """AI-powered audio content classification for advanced filtering."""    
     def __init__(self):
-        """Initialize audio content classifier."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize audio content classifier."""        self.logger = logging.getLogger(__name__)
         
         # Content type classification thresholds
         self.music_thresholds = {
@@ -335,8 +317,7 @@ class AudioContentClassifier:
         }
     
     async def classify_content_type(self, features: Dict[str, Any]) -> Dict[str, float]:
-        """Classify audio content type with confidence scores."""
-        try:
+        """Classify audio content type with confidence scores."""        try:
             spectral = features.get("spectral", {})
             temporal = features.get("temporal", {})
             harmonic = features.get("harmonic", {})
@@ -415,8 +396,7 @@ class AudioContentClassifier:
             return {"unknown": 1.0}
     
     async def detect_audio_quality_issues(self, features: Dict[str, Any]) -> List[str]:
-        """Detect audio quality issues based on extracted features."""
-        issues = []
+        """Detect audio quality issues based on extracted features."""        issues = []
         
         try:
             spectral = features.get("spectral", {})
@@ -467,8 +447,7 @@ class AudioContentClassifier:
             return 20.0
     
     def detect_clipping(self, audio_data: np.ndarray, threshold: float = 0.99) -> float:
-        """Detect audio clipping percentage."""
-        try:
+        """Detect audio clipping percentage."""        try:
             clipped_samples = np.sum(np.abs(audio_data) >= threshold)
             clipping_percentage = (clipped_samples / len(audio_data)) * 100
             return min(100.0, clipping_percentage)
@@ -479,16 +458,13 @@ class AudioContentClassifier:
 
 
 class AudioCopyrightDetector:
-    """Audio copyright and fingerprinting system."""
-    
+    """Audio copyright and fingerprinting system."""    
     def __init__(self):
-        """Initialize copyright detector."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize copyright detector."""        self.logger = logging.getLogger(__name__)
         self.fingerprint_cache = {}
     
     def generate_chromaprint_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Generate Chromaprint fingerprint for audio."""
-        try:
+        """Generate Chromaprint fingerprint for audio."""        try:
             # Simulate Chromaprint fingerprinting
             # In real implementation, use pyacoustid or similar
             
@@ -505,8 +481,7 @@ class AudioCopyrightDetector:
             return hashlib.md5(audio_data.tobytes()).hexdigest()[:32]
     
     def generate_essentia_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Generate Essentia-based audio fingerprint."""
-        try:
+        """Generate Essentia-based audio fingerprint."""        try:
             if not HAS_AUDIO_LIBS:
                 return {'error': 'Essentia not available'}
             
@@ -540,8 +515,7 @@ class AudioCopyrightDetector:
             }
     
     def check_copyright_database(self, fingerprint: str) -> Dict[str, Any]:
-        """Check fingerprint against copyright database."""
-        # Simulate copyright database check
+        """Check fingerprint against copyright database."""        # Simulate copyright database check
         # In real implementation, query actual copyright databases
         
         known_copyrighted = [
@@ -567,19 +541,16 @@ class AudioCopyrightDetector:
 
 
 class AudioGenreClassifier:
-    """Audio genre classification using ML."""
-    
+    """Audio genre classification using ML."""    
     def __init__(self):
-        """Initialize genre classifier."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize genre classifier."""        self.logger = logging.getLogger(__name__)
         self.genres = [
             'rock', 'pop', 'jazz', 'classical', 'electronic',
             'hip-hop', 'country', 'blues', 'reggae', 'folk'
         ]
     
     def extract_audio_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract features for genre classification."""
-        try:
+        """Extract features for genre classification."""        try:
             features = {}
             
             # Spectral features
@@ -609,8 +580,7 @@ class AudioGenreClassifier:
             return {}
     
     def classify_genre(self, features: Dict[str, float]) -> Dict[str, Any]:
-        """Classify audio genre based on features."""
-        # Simplified genre classification
+        """Classify audio genre based on features."""        # Simplified genre classification
         # In real implementation, use trained ML models
         
         if not features:
@@ -659,11 +629,9 @@ class AudioGenreClassifier:
 
 
 class AudioContentFilter:
-    """Enterprise-grade audio content filter."""
-    
+    """Enterprise-grade audio content filter."""    
     def __init__(self, config: AudioFilterConfig):
-        """Initialize audio content filter."""
-        self.config = config
+        """Initialize audio content filter."""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -679,8 +647,7 @@ class AudioContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Asynchronously filter audio content."""
-        return await asyncio.get_event_loop().run_in_executor(
+        """Asynchronously filter audio content."""        return await asyncio.get_event_loop().run_in_executor(
             None, self.filter, content, ai_validation, strict_mode
         )
     
@@ -690,8 +657,7 @@ class AudioContentFilter:
         ai_validation: bool = True,
         strict_mode: bool = False
     ) -> FilterResponse:
-        """Filter audio content with comprehensive analysis."""
-        start_time = time.time()
+        """Filter audio content with comprehensive analysis."""        start_time = time.time()
         
         try:
             if not HAS_AUDIO_LIBS:
@@ -762,8 +728,7 @@ class AudioContentFilter:
             )
     
     def _load_audio_content(self, content: ContentItem) -> Tuple[Optional[np.ndarray], int, Dict[str, Any]]:
-        """Load and validate audio content."""
-        try:
+        """Load and validate audio content."""        try:
             metadata = {}
             
             if content.file_path:
@@ -820,8 +785,7 @@ class AudioContentFilter:
         ai_validation: bool,
         strict_mode: bool
     ) -> Dict[str, Any]:
-        """Perform comprehensive audio content analysis."""
-        analysis_results = {
+        """Perform comprehensive audio content analysis."""        analysis_results = {
             'warnings': [],
             'errors': [],
             'confidence': 0.85
@@ -853,8 +817,7 @@ class AudioContentFilter:
             return analysis_results
     
     def _analyze_audio_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze audio quality metrics."""
-        quality_results = {}
+        """Analyze audio quality metrics."""        quality_results = {}
         
         try:
             # Signal-to-Noise Ratio
@@ -881,8 +844,7 @@ class AudioContentFilter:
             return {'error': str(e), 'overall_score': 0.5}
     
     def _analyze_copyright(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze audio for copyright violations."""
-        copyright_results = {}
+        """Analyze audio for copyright violations."""        copyright_results = {}
         
         try:
             # Generate fingerprints
@@ -909,8 +871,7 @@ class AudioContentFilter:
             return {'error': str(e), 'is_copyrighted': False, 'confidence': 0.0}
     
     def _analyze_genre(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze audio genre using ML classification."""
-        try:
+        """Analyze audio genre using ML classification."""        try:
             features = self.genre_classifier.extract_audio_features(audio_data, sample_rate)
             genre_result = self.genre_classifier.classify_genre(features)
             genre_result['features'] = features
@@ -921,8 +882,7 @@ class AudioContentFilter:
             return {'error': str(e), 'genre': 'unknown', 'confidence': 0.0}
     
     def _analyze_mood(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Analyze audio mood and emotional content."""
-        try:
+        """Analyze audio mood and emotional content."""        try:
             # Simplified mood analysis based on audio features
             # In real implementation, use specialized mood detection models
             
@@ -962,8 +922,7 @@ class AudioContentFilter:
             return {'error': str(e), 'mood': 'unknown', 'confidence': 0.0}
     
     def _calculate_overall_score(self, analysis_results: Dict[str, Any], strict_mode: bool) -> float:
-        """Calculate overall audio filter score."""
-        scores = []
+        """Calculate overall audio filter score."""        scores = []
         weights = []
         
         # Quality score
@@ -1005,8 +964,7 @@ class AudioContentFilter:
         analysis_results: Dict[str, Any],
         strict_mode: bool
     ) -> FilterResult:
-        """Determine filter result based on analysis."""
-        # Check for blocking conditions
+        """Determine filter result based on analysis."""        # Check for blocking conditions
         copyright_data = analysis_results.get('copyright', {})
         if copyright_data.get('is_copyrighted') and copyright_data.get('confidence', 0) > 0.8:
             return FilterResult.BLOCKED
@@ -1033,8 +991,7 @@ class AudioContentFilter:
                 return FilterResult.FAILED
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on audio filter."""
-        health_status = {
+        """Perform health check on audio filter."""        health_status = {
             'status': 'healthy',
             'libraries': {
                 'librosa': HAS_AUDIO_LIBS,

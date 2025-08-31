@@ -1,5 +1,4 @@
-"""
-Content Surveillance Module - Comprehensive web surveillance and monitoring system.
+"""Content Surveillance Module - Comprehensive web surveillance and monitoring system.
 
 Provides intelligent surveillance capabilities for content protection across
 multiple platforms, deep web monitoring, and automated violation detection.
@@ -18,7 +17,6 @@ Team Specialization:
 - DevOps Engineer: Production deployment & monitoring systems
 - AI Prompt Engineer: Intelligent content analysis & classification
 """
-
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -40,8 +38,7 @@ logger = get_logger(__name__)
 
 
 class SurveillanceScope(str, Enum):
-    """Surveillance scope levels."""
-    SURFACE_WEB = "surface_web"
+    """Surveillance scope levels."""    SURFACE_WEB = "surface_web"
     DEEP_WEB = "deep_web"
     SOCIAL_PLATFORMS = "social_platforms"
     STREAMING_SERVICES = "streaming_services"
@@ -50,8 +47,7 @@ class SurveillanceScope(str, Enum):
 
 
 class PlatformType(str, Enum):
-    """Supported platform types for surveillance."""
-    YOUTUBE = "youtube"
+    """Supported platform types for surveillance."""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -66,8 +62,7 @@ class PlatformType(str, Enum):
 
 
 class ViolationType(str, Enum):
-    """Types of content violations."""
-    EXACT_COPY = "exact_copy"
+    """Types of content violations."""    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIXED_CONTENT = "remixed_content"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -77,8 +72,7 @@ class ViolationType(str, Enum):
 
 
 class ViolationSeverity(str, Enum):
-    """Violation severity levels."""
-    CRITICAL = "critical"
+    """Violation severity levels."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -87,8 +81,7 @@ class ViolationSeverity(str, Enum):
 
 @dataclass
 class SurveillanceTarget:
-    """Surveillance target configuration."""
-    target_id: str
+    """Surveillance target configuration."""    target_id: str
     content_fingerprints: Dict[str, Any]
     owner_id: str
     platforms_to_monitor: List[PlatformType]
@@ -102,8 +95,7 @@ class SurveillanceTarget:
 
 @dataclass
 class ViolationDetection:
-    """Detected content violation."""
-    detection_id: str
+    """Detected content violation."""    detection_id: str
     target_id: str
     violation_type: ViolationType
     severity: ViolationSeverity
@@ -121,8 +113,7 @@ class ViolationDetection:
 
 @dataclass
 class SurveillanceReport:
-    """Comprehensive surveillance report."""
-    report_id: str
+    """Comprehensive surveillance report."""    report_id: str
     scan_period: Tuple[datetime, datetime]
     targets_monitored: List[str]
     total_violations_detected: int
@@ -136,8 +127,7 @@ class SurveillanceReport:
 
 
 class ContentSurveillance:
-    """
-    Comprehensive content surveillance and monitoring system.
+    """    Comprehensive content surveillance and monitoring system.
     
     Provides intelligent surveillance across multiple platforms including:
     - Real-time web crawling and monitoring
@@ -147,7 +137,6 @@ class ContentSurveillance:
     - Evidence collection and verification
     - Performance analytics and reporting
     """
-
     def __init__(self):
         self.active_targets = {}
         self.platform_crawlers = {}
@@ -168,8 +157,7 @@ class ContentSurveillance:
         owner_id: str,
         configuration: Dict[str, Any]
     ) -> str:
-        """
-        Register new content for surveillance monitoring.
+        """        Register new content for surveillance monitoring.
         
         Args:
             content_fingerprints: Fingerprint data for the content
@@ -178,8 +166,7 @@ class ContentSurveillance:
             
         Returns:
             Target ID for the registered surveillance
-        """
-        try:
+        """        try:
             target_id = f"target_{int(datetime.utcnow().timestamp() * 1000)}"
             
             surveillance_target = SurveillanceTarget(
@@ -221,8 +208,7 @@ class ContentSurveillance:
         target_id: str,
         scan_scope: Optional[SurveillanceScope] = None
     ) -> List[ViolationDetection]:
-        """
-        Execute surveillance scan for specific target.
+        """        Execute surveillance scan for specific target.
         
         Args:
             target_id: Target identifier
@@ -230,8 +216,7 @@ class ContentSurveillance:
             
         Returns:
             List of detected violations
-        """
-        try:
+        """        try:
             target = self.active_targets.get(target_id)
             if not target:
                 logger.warning(f"Surveillance target {target_id} not found")
@@ -318,8 +303,7 @@ class ContentSurveillance:
         target_ids: List[str],
         monitoring_duration: timedelta
     ) -> Dict[str, List[ViolationDetection]]:
-        """
-        Monitor continuous surveillance for multiple targets.
+        """        Monitor continuous surveillance for multiple targets.
         
         Args:
             target_ids: List of target identifiers
@@ -327,8 +311,7 @@ class ContentSurveillance:
             
         Returns:
             Dictionary mapping target IDs to detected violations
-        """
-        try:
+        """        try:
             logger.info(f"Starting continuous surveillance for {len(target_ids)} targets")
             
             monitoring_results = {}
@@ -367,8 +350,7 @@ class ContentSurveillance:
         target_id: str,
         analysis_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """
-        Analyze violation patterns for specific target.
+        """        Analyze violation patterns for specific target.
         
         Args:
             target_id: Target identifier
@@ -376,8 +358,7 @@ class ContentSurveillance:
             
         Returns:
             Violation pattern analysis
-        """
-        try:
+        """        try:
             logger.info(f"Analyzing violation patterns for target {target_id}")
             
             # Get historical violations
@@ -469,8 +450,7 @@ class ContentSurveillance:
         target_id: str,
         optimization_goals: List[str]
     ) -> Dict[str, Any]:
-        """
-        Optimize surveillance strategy based on analysis.
+        """        Optimize surveillance strategy based on analysis.
         
         Args:
             target_id: Target identifier
@@ -478,8 +458,7 @@ class ContentSurveillance:
             
         Returns:
             Optimized surveillance strategy
-        """
-        try:
+        """        try:
             logger.info(f"Optimizing surveillance strategy for target {target_id}")
             
             target = self.active_targets.get(target_id)
@@ -551,8 +530,7 @@ class ContentSurveillance:
     # Private helper methods
     
     async def _initialize_surveillance_system(self):
-        """Initialize surveillance system components."""
-        try:
+        """Initialize surveillance system components."""        try:
             # Initialize platform crawlers
             await self._initialize_platform_crawlers()
             
@@ -567,8 +545,7 @@ class ContentSurveillance:
             logger.error(f"Error initializing surveillance system: {str(e)}")
     
     async def _initialize_platform_crawlers(self):
-        """Initialize crawlers for different platforms."""
-        try:
+        """Initialize crawlers for different platforms."""        try:
             self.platform_crawlers = {
                 PlatformType.YOUTUBE: YouTubeCrawler(),
                 PlatformType.TIKTOK: TikTokCrawler(),
@@ -591,8 +568,7 @@ class ContentSurveillance:
         platform: PlatformType,
         scan_session_id: str
     ) -> List[ViolationDetection]:
-        """Scan specific platform for violations."""
-        try:
+        """Scan specific platform for violations."""        try:
             logger.info(f"Scanning {platform.value} for target {target.target_id}")
             
             crawler = self.platform_crawlers.get(platform)
@@ -627,8 +603,7 @@ class ContentSurveillance:
         target: SurveillanceTarget,
         scan_session_id: str
     ) -> List[ViolationDetection]:
-        """Scan streaming services for violations."""
-        try:
+        """Scan streaming services for violations."""        try:
             logger.info(f"Scanning streaming services for target {target.target_id}")
             
             # Mock streaming service scan
@@ -665,8 +640,7 @@ class ContentSurveillance:
         target: SurveillanceTarget,
         scan_session_id: str
     ) -> List[ViolationDetection]:
-        """Scan commerce platforms for violations."""
-        try:
+        """Scan commerce platforms for violations."""        try:
             logger.info(f"Scanning commerce platforms for target {target.target_id}")
             
             violations = []
@@ -702,8 +676,7 @@ class ContentSurveillance:
         target: SurveillanceTarget,
         scan_session_id: str
     ) -> List[ViolationDetection]:
-        """Scan deep web for violations."""
-        try:
+        """Scan deep web for violations."""        try:
             logger.info(f"Scanning deep web for target {target.target_id}")
             
             # Mock deep web scan (requires specialized tools)
@@ -739,8 +712,7 @@ class ContentSurveillance:
         target: SurveillanceTarget,
         scan_session_id: str
     ) -> List[ViolationDetection]:
-        """Scan underground networks for violations."""
-        try:
+        """Scan underground networks for violations."""        try:
             logger.info(f"Scanning underground networks for target {target.target_id}")
             
             # Mock underground network scan
@@ -762,8 +734,7 @@ class ContentSurveillance:
         platform: PlatformType,
         scan_session_id: str
     ) -> Optional[ViolationDetection]:
-        """Process scan result into violation detection."""
-        try:
+        """Process scan result into violation detection."""        try:
             # Calculate similarity score
             similarity_score = scan_result.get("similarity_score", 0.0)
             
@@ -810,8 +781,7 @@ class ContentSurveillance:
         self,
         violations: List[ViolationDetection]
     ) -> List[ViolationDetection]:
-        """Verify detected violations to reduce false positives."""
-        try:
+        """Verify detected violations to reduce false positives."""        try:
             verified_violations = []
             
             for violation in violations:
@@ -830,8 +800,7 @@ class ContentSurveillance:
             return violations  # Return unverified if verification fails
     
     async def _verify_single_violation(self, violation: ViolationDetection) -> bool:
-        """Verify a single violation detection."""
-        try:
+        """Verify a single violation detection."""        try:
             # Mock verification logic
             verification_score = 0.0
             
@@ -861,20 +830,17 @@ class ContentSurveillance:
     # Additional helper methods (simplified implementations)
     
     async def _cache_surveillance_target(self, target: SurveillanceTarget):
-        """Cache surveillance target."""
-        try:
+        """Cache surveillance target."""        try:
             cache_key = f"surveillance_target:{target.target_id}"
             await cache_manager.set(cache_key, target.__dict__, ttl=self.cache_ttl)
         except Exception as e:
             logger.warning(f"Failed to cache surveillance target: {str(e)}")
     
     async def _schedule_target_scan(self, target: SurveillanceTarget):
-        """Schedule surveillance scan for target."""
-        logger.info(f"Scheduled surveillance scan for target {target.target_id}")
+        """Schedule surveillance scan for target."""        logger.info(f"Scheduled surveillance scan for target {target.target_id}")
     
     async def _cache_violation(self, violation: ViolationDetection):
-        """Cache violation detection."""
-        try:
+        """Cache violation detection."""        try:
             cache_key = f"violation:{violation.detection_id}"
             await cache_manager.set(cache_key, violation.__dict__, ttl=self.cache_ttl * 2)
         except Exception as e:
@@ -886,8 +852,7 @@ class ContentSurveillance:
         start_time: datetime,
         end_time: datetime
     ) -> List[ViolationDetection]:
-        """Continuous monitoring for single target."""
-        all_violations = []
+        """Continuous monitoring for single target."""        all_violations = []
         
         while datetime.utcnow() < end_time:
             violations = await self.execute_surveillance_scan(target_id)
@@ -904,8 +869,7 @@ class ContentSurveillance:
         start_time: datetime,
         end_time: datetime
     ):
-        """Generate comprehensive surveillance report."""
-        logger.info(f"Generated surveillance report for period {start_time} to {end_time}")
+        """Generate comprehensive surveillance report."""        logger.info(f"Generated surveillance report for period {start_time} to {end_time}")
     
     # Pattern analysis methods (simplified)
     
@@ -914,33 +878,26 @@ class ContentSurveillance:
         target_id: str,
         period: timedelta
     ) -> List[ViolationDetection]:
-        """Get historical violations for target."""
-        # Mock historical data
+        """Get historical violations for target."""        # Mock historical data
         return []
     
     async def _analyze_violation_trends(self, violations: List[ViolationDetection]) -> Dict[str, Any]:
-        """Analyze violation trends."""
-        return {"trend": "increasing", "rate": 0.15}
+        """Analyze violation trends."""        return {"trend": "increasing", "rate": 0.15}
     
     async def _analyze_temporal_patterns(self, violations: List[ViolationDetection]) -> Dict[str, Any]:
-        """Analyze temporal patterns in violations."""
-        return {"peak_hours": [14, 15, 16], "peak_days": ["Monday", "Tuesday"]}
+        """Analyze temporal patterns in violations."""        return {"peak_hours": [14, 15, 16], "peak_days": ["Monday", "Tuesday"]}
     
     async def _analyze_geographic_patterns(self, violations: List[ViolationDetection]) -> Dict[str, Any]:
-        """Analyze geographic patterns."""
-        return {"top_countries": ["US", "UK", "DE"], "regions": ["North America", "Europe"]}
+        """Analyze geographic patterns."""        return {"top_countries": ["US", "UK", "DE"], "regions": ["North America", "Europe"]}
     
     async def _identify_recurring_violators(self, violations: List[ViolationDetection]) -> List[Dict[str, Any]]:
-        """Identify recurring violators."""
-        return [{"violator_id": "repeat_001", "violation_count": 5, "platforms": ["youtube", "tiktok"]}]
+        """Identify recurring violators."""        return [{"violator_id": "repeat_001", "violation_count": 5, "platforms": ["youtube", "tiktok"]}]
     
     async def _analyze_detection_efficiency(self, violations: List[ViolationDetection]) -> Dict[str, Any]:
-        """Analyze detection efficiency."""
-        return {"detection_rate": 0.85, "false_positive_rate": 0.12, "response_time": "2.3 hours"}
+        """Analyze detection efficiency."""        return {"detection_rate": 0.85, "false_positive_rate": 0.12, "response_time": "2.3 hours"}
     
     async def _generate_pattern_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on pattern analysis."""
-        return [
+        """Generate recommendations based on pattern analysis."""        return [
             "Increase monitoring frequency during peak hours",
             "Focus surveillance on top violation platforms",
             "Implement automated takedown for repeat violators"
@@ -949,8 +906,7 @@ class ContentSurveillance:
     # Optimization methods (simplified)
     
     async def _analyze_current_surveillance_performance(self, target_id: str) -> Dict[str, Any]:
-        """Analyze current surveillance performance."""
-        return {
+        """Analyze current surveillance performance."""        return {
             "detection_rate": 0.78,
             "false_positive_rate": 0.15,
             "coverage_percentage": 0.65,
@@ -958,48 +914,42 @@ class ContentSurveillance:
         }
     
     async def _optimize_platform_coverage(self, target: SurveillanceTarget) -> Dict[str, Any]:
-        """Optimize platform coverage."""
-        return {
+        """Optimize platform coverage."""        return {
             "add_platforms": ["linkedin", "bandcamp"],
             "reduce_platforms": [],
             "priority_platforms": ["youtube", "instagram"]
         }
     
     async def _optimize_scan_frequency(self, target: SurveillanceTarget) -> Dict[str, Any]:
-        """Optimize scan frequency."""
-        return {
+        """Optimize scan frequency."""        return {
             "recommended_frequency": 12,  # hours
             "peak_frequency": 6,  # hours during peak times
             "low_frequency": 24  # hours during low activity
         }
     
     async def _optimize_surveillance_scope(self, target: SurveillanceTarget) -> Dict[str, Any]:
-        """Optimize surveillance scope."""
-        return {
+        """Optimize surveillance scope."""        return {
             "recommended_scope": "multi_platform",
             "additional_scopes": ["streaming_services"],
             "cost_benefit": {"cost_increase": 0.3, "detection_improvement": 0.25}
         }
     
     async def _optimize_detection_accuracy(self, target: SurveillanceTarget) -> Dict[str, Any]:
-        """Optimize detection accuracy."""
-        return {
+        """Optimize detection accuracy."""        return {
             "threshold_adjustments": {"similarity_threshold": 0.82},
             "additional_methods": ["semantic_analysis"],
             "verification_improvements": ["human_review_for_high_value"]
         }
     
     async def _optimize_cost_efficiency(self, target: SurveillanceTarget) -> Dict[str, Any]:
-        """Optimize cost efficiency."""
-        return {
+        """Optimize cost efficiency."""        return {
             "cost_reduction_opportunities": ["reduce_low_value_scans"],
             "efficiency_improvements": ["batch_processing"],
             "roi_improvements": ["focus_on_high_violation_platforms"]
         }
     
     async def _generate_implementation_plan(self, changes: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate implementation plan for optimization changes."""
-        return [
+        """Generate implementation plan for optimization changes."""        return [
             {"phase": 1, "changes": ["platform_optimization"], "duration": "1 week"},
             {"phase": 2, "changes": ["frequency_optimization"], "duration": "2 weeks"},
             {"phase": 3, "changes": ["scope_expansion"], "duration": "3 weeks"}
@@ -1010,8 +960,7 @@ class ContentSurveillance:
         current_performance: Dict[str, Any],
         changes: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate expected performance improvements."""
-        return {
+        """Calculate expected performance improvements."""        return {
             "detection_rate_improvement": 0.15,
             "false_positive_reduction": 0.08,
             "cost_efficiency_gain": 0.20,
@@ -1019,8 +968,7 @@ class ContentSurveillance:
         }
     
     async def _perform_cost_benefit_analysis(self, changes: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform cost-benefit analysis."""
-        return {
+        """Perform cost-benefit analysis."""        return {
             "implementation_cost": 5000,
             "monthly_cost_change": 200,
             "expected_monthly_savings": 800,
@@ -1031,8 +979,7 @@ class ContentSurveillance:
     # Background tasks
     
     async def _surveillance_scheduler_task(self):
-        """Background task for scheduling surveillance scans."""
-        while True:
+        """Background task for scheduling surveillance scans."""        while True:
             try:
                 # Schedule scans for targets
                 await asyncio.sleep(300)  # Check every 5 minutes
@@ -1042,8 +989,7 @@ class ContentSurveillance:
                 await asyncio.sleep(300)
     
     async def _violation_verification_task(self):
-        """Background task for violation verification."""
-        while True:
+        """Background task for violation verification."""        while True:
             try:
                 # Verify pending violations
                 await asyncio.sleep(600)  # Check every 10 minutes
@@ -1053,8 +999,7 @@ class ContentSurveillance:
                 await asyncio.sleep(600)
     
     async def _cache_maintenance_task(self):
-        """Background task for cache maintenance."""
-        while True:
+        """Background task for cache maintenance."""        while True:
             try:
                 # Maintain cache
                 await asyncio.sleep(3600)  # Check every hour
@@ -1067,29 +1012,25 @@ class ContentSurveillance:
 # Platform crawler implementations (simplified)
 
 class BasePlatformCrawler:
-    """Base class for platform crawlers."""
-    
+    """Base class for platform crawlers."""    
     async def scan_for_content(
         self,
         fingerprints: Dict[str, Any],
         keywords: List[str],
         metadata: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan platform for content matches."""
-        return []
+        """Scan platform for content matches."""        return []
 
 
 class YouTubeCrawler(BasePlatformCrawler):
-    """YouTube platform crawler."""
-    
+    """YouTube platform crawler."""    
     async def scan_for_content(
         self,
         fingerprints: Dict[str, Any],
         keywords: List[str],
         metadata: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan YouTube for content matches."""
-        # Mock YouTube scan
+        """Scan YouTube for content matches."""        # Mock YouTube scan
         return [
             {
                 "url": "https://youtube.com/watch?v=example123",
@@ -1103,44 +1044,36 @@ class YouTubeCrawler(BasePlatformCrawler):
 
 
 class TikTokCrawler(BasePlatformCrawler):
-    """TikTok platform crawler."""
-    
+    """TikTok platform crawler."""    
     async def scan_for_content(
         self,
         fingerprints: Dict[str, Any],
         keywords: List[str],
         metadata: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Scan TikTok for content matches."""
-        # Mock TikTok scan
+        """Scan TikTok for content matches."""        # Mock TikTok scan
         return []
 
 
 class InstagramCrawler(BasePlatformCrawler):
-    """Instagram platform crawler."""
-    pass
+    """Instagram platform crawler."""    pass
 
 
 class FacebookCrawler(BasePlatformCrawler):
-    """Facebook platform crawler."""
-    pass
+    """Facebook platform crawler."""    pass
 
 
 class TwitterCrawler(BasePlatformCrawler):
-    """Twitter platform crawler."""
-    pass
+    """Twitter platform crawler."""    pass
 
 
 class SpotifyCrawler(BasePlatformCrawler):
-    """Spotify platform crawler."""
-    pass
+    """Spotify platform crawler."""    pass
 
 
 class SoundCloudCrawler(BasePlatformCrawler):
-    """SoundCloud platform crawler."""
-    pass
+    """SoundCloud platform crawler."""    pass
 
 
 class GenericWebCrawler(BasePlatformCrawler):
-    """Generic web crawler."""
-    pass
+    """Generic web crawler."""    pass

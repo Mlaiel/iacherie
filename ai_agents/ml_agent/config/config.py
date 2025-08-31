@@ -1,5 +1,4 @@
-"""
-ML Agent Configuration - Advanced Configuration Management System
+"""ML Agent Configuration - Advanced Configuration Management System
 
 Industrial-grade configuration management for ML operations, providing centralized
 configuration, environment-specific settings, and dynamic configuration updates
@@ -22,7 +21,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
 from pathlib import Path
@@ -32,15 +30,13 @@ import json
 from enum import Enum
 
 class Environment(Enum):
-    """Deployment environments"""
-    DEVELOPMENT = "development"
+    """Deployment environments"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 class ModelFramework(Enum):
-    """Supported ML frameworks"""
-    SCIKIT_LEARN = "scikit_learn"
+    """Supported ML frameworks"""    SCIKIT_LEARN = "scikit_learn"
     TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     XGBOOST = "xgboost"
@@ -49,8 +45,7 @@ class ModelFramework(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""
-    host: str = "localhost"
+    """Database configuration"""    host: str = "localhost"
     port: int = 5432
     database: str = "ml_agent_db"
     username: str = "ml_agent"
@@ -61,8 +56,7 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration"""
-    host: str = "localhost"
+    """Redis configuration"""    host: str = "localhost"
     port: int = 6379
     database: int = 0
     password: Optional[str] = None
@@ -72,8 +66,7 @@ class RedisConfig:
 
 @dataclass
 class S3Config:
-    """S3 storage configuration"""
-    bucket_name: str = "ml-models"
+    """S3 storage configuration"""    bucket_name: str = "ml-models"
     access_key: str = ""
     secret_key: str = ""
     region: str = "us-east-1"
@@ -82,16 +75,14 @@ class S3Config:
 
 @dataclass
 class MLFlowConfig:
-    """MLflow configuration"""
-    tracking_uri: str = "http://localhost:5000"
+    """MLflow configuration"""    tracking_uri: str = "http://localhost:5000"
     artifact_root: str = "s3://ml-experiments"
     experiment_name: str = "default"
     registry_uri: Optional[str] = None
 
 @dataclass
 class TrainingConfig:
-    """Model training configuration"""
-    default_validation_split: float = 0.2
+    """Model training configuration"""    default_validation_split: float = 0.2
     default_test_split: float = 0.1
     default_cross_validation_folds: int = 5
     default_random_seed: int = 42
@@ -108,8 +99,7 @@ class TrainingConfig:
 
 @dataclass
 class InferenceConfig:
-    """Model inference configuration"""
-    max_batch_size: int = 32
+    """Model inference configuration"""    max_batch_size: int = 32
     default_timeout: int = 30
     max_concurrent_requests: int = 100
     caching_enabled: bool = True
@@ -120,8 +110,7 @@ class InferenceConfig:
 
 @dataclass
 class DeploymentConfig:
-    """Model deployment configuration"""
-    default_replicas: int = 2
+    """Model deployment configuration"""    default_replicas: int = 2
     max_replicas: int = 10
     cpu_request: str = "500m"
     cpu_limit: str = "2000m"
@@ -134,8 +123,7 @@ class DeploymentConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Performance monitoring configuration"""
-    enabled: bool = True
+    """Performance monitoring configuration"""    enabled: bool = True
     metrics_collection_interval: int = 60  # seconds
     drift_detection_enabled: bool = True
     drift_check_interval: int = 3600  # 1 hour
@@ -147,8 +135,7 @@ class MonitoringConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    encryption_enabled: bool = True
+    """Security configuration"""    encryption_enabled: bool = True
     jwt_secret_key: str = "your-secret-key-here"
     token_expiration_hours: int = 24
     api_rate_limit: int = 1000  # requests per hour
@@ -158,8 +145,7 @@ class SecurityConfig:
 
 @dataclass
 class LoggingConfig:
-    """Logging configuration"""
-    level: str = "INFO"
+    """Logging configuration"""    level: str = "INFO"
     format: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     log_file: Optional[str] = None
     max_file_size_mb: int = 100
@@ -169,8 +155,7 @@ class LoggingConfig:
 
 @dataclass
 class MLAgentConfig:
-    """Complete ML Agent configuration"""
-    environment: Environment = Environment.DEVELOPMENT
+    """Complete ML Agent configuration"""    environment: Environment = Environment.DEVELOPMENT
     debug: bool = False
     
     # Component configurations
@@ -194,8 +179,7 @@ class MLAgentConfig:
     
     @classmethod
     def from_file(cls, config_path: Union[str, Path]) -> 'MLAgentConfig':
-        """Load configuration from file"""
-        config_path = Path(config_path)
+        """Load configuration from file"""        config_path = Path(config_path)
         
         if not config_path.exists():
             raise FileNotFoundError(f"Configuration file not found: {config_path}")
@@ -213,8 +197,7 @@ class MLAgentConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'MLAgentConfig':
-        """Create configuration from dictionary"""
-        config = cls()
+        """Create configuration from dictionary"""        config = cls()
         
         # Update configuration fields
         for key, value in config_dict.items():
@@ -233,8 +216,7 @@ class MLAgentConfig:
     
     @classmethod
     def from_environment(cls) -> 'MLAgentConfig':
-        """Create configuration from environment variables"""
-        config = cls()
+        """Create configuration from environment variables"""        config = cls()
         
         # Environment
         if os.getenv('ML_ENVIRONMENT'):
@@ -285,8 +267,7 @@ class MLAgentConfig:
         return config
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        return {
+        """Convert configuration to dictionary"""        return {
             'environment': self.environment.value,
             'debug': self.debug,
             'database': {
@@ -386,8 +367,7 @@ class MLAgentConfig:
         }
     
     def save_to_file(self, config_path: Union[str, Path], format: str = 'yaml'):
-        """Save configuration to file"""
-        config_path = Path(config_path)
+        """Save configuration to file"""        config_path = Path(config_path)
         config_dict = self.to_dict()
         
         config_path.parent.mkdir(parents=True, exist_ok=True)
@@ -402,8 +382,7 @@ class MLAgentConfig:
             raise ValueError(f"Unsupported format: {format}")
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of errors"""
-        errors = []
+        """Validate configuration and return list of errors"""        errors = []
         
         # Validate database configuration
         if not self.database.host:
@@ -446,12 +425,10 @@ class MLAgentConfig:
         return errors
     
     def is_production(self) -> bool:
-        """Check if running in production environment"""
-        return self.environment == Environment.PRODUCTION
+        """Check if running in production environment"""        return self.environment == Environment.PRODUCTION
     
     def is_development(self) -> bool:
-        """Check if running in development environment"""
-        return self.environment == Environment.DEVELOPMENT
+        """Check if running in development environment"""        return self.environment == Environment.DEVELOPMENT
 
 # Default configuration instance
 default_config = MLAgentConfig()
@@ -495,8 +472,7 @@ production_config = MLAgentConfig(
 
 # Configuration factory
 def get_config(environment: str = None, config_file: str = None) -> MLAgentConfig:
-    """Get configuration based on environment or file"""
-    
+    """Get configuration based on environment or file"""    
     if config_file:
         return MLAgentConfig.from_file(config_file)
     

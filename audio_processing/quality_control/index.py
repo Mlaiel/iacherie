@@ -1,5 +1,4 @@
-"""
-🎯 Quality Control Index - Entry Point & System Orchestration
+"""🎯 Quality Control Index - Entry Point & System Orchestration
 
 Main entry point for the Quality Control System providing unified access
 to all quality management components with intelligent routing and coordination.
@@ -14,7 +13,6 @@ Toute utilisation, copie, modification, distribution ou reproduction sans
 autorisation écrite explicite de Fahed Mlaiel (mlaiel@live.de) est strictement 
 interdite et passible de poursuites judiciaires selon la loi allemande et internationale.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class QualityControlConfig:
-    """Quality Control System Configuration"""
-    enable_real_time_monitoring: bool = True
+    """Quality Control System Configuration"""    enable_real_time_monitoring: bool = True
     enable_optimization: bool = True
     enable_compliance_checking: bool = True
     enable_dashboard: bool = True
@@ -59,8 +56,7 @@ class QualityControlConfig:
 
 @dataclass
 class ProcessingRequest:
-    """Audio processing request"""
-    request_id: str
+    """Audio processing request"""    request_id: str
     audio_file: str
     quality_profile: Optional[str] = None
     platforms: List[str] = field(default_factory=list)
@@ -73,8 +69,7 @@ class ProcessingRequest:
 
 @dataclass
 class ProcessingResult:
-    """Complete processing result"""
-    request_id: str
+    """Complete processing result"""    request_id: str
     success: bool
     audio_file: str
     quality_report: Optional[QualityReport] = None
@@ -89,8 +84,7 @@ class ProcessingResult:
 
 
 class QualityControlSystem:
-    """
-    🎯 Quality Control System - Master Orchestrator
+    """    🎯 Quality Control System - Master Orchestrator
     
     Complete audio quality management system providing:
     - Unified quality assessment and optimization
@@ -99,7 +93,6 @@ class QualityControlSystem:
     - Interactive dashboard and reporting
     - Intelligent routing and decision making
     """
-
     def __init__(self, config: Optional[QualityControlConfig] = None):
         self.config = config or QualityControlConfig()
         self.system_id = str(uuid.uuid4())
@@ -130,8 +123,7 @@ class QualityControlSystem:
         logger.info(f"QualityControlSystem created with ID: {self.system_id}")
 
     async def initialize(self) -> bool:
-        """Initialize all system components"""
-        
+        """Initialize all system components"""        
         if self.is_initialized:
             logger.warning("System already initialized")
             return True
@@ -170,28 +162,23 @@ class QualityControlSystem:
             return False
 
     async def _initialize_standards_manager(self):
-        """Initialize quality standards manager"""
-        self.standards_manager = QualityStandardsManager()
+        """Initialize quality standards manager"""        self.standards_manager = QualityStandardsManager()
         logger.debug("Quality Standards Manager initialized")
 
     async def _initialize_validator(self):
-        """Initialize audio quality validator"""
-        self.validator = AudioQualityValidator(self.standards_manager)
+        """Initialize audio quality validator"""        self.validator = AudioQualityValidator(self.standards_manager)
         logger.debug("Audio Quality Validator initialized")
 
     async def _initialize_metrics(self):
-        """Initialize quality metrics system"""
-        self.metrics = QualityMetrics()
+        """Initialize quality metrics system"""        self.metrics = QualityMetrics()
         logger.debug("Quality Metrics system initialized")
 
     async def _initialize_gate_manager(self):
-        """Initialize quality gate manager"""
-        self.gate_manager = QualityGateManager()
+        """Initialize quality gate manager"""        self.gate_manager = QualityGateManager()
         logger.debug("Quality Gate Manager initialized")
 
     async def _initialize_monitor(self):
-        """Initialize quality monitor"""
-        if self.config.enable_real_time_monitoring:
+        """Initialize quality monitor"""        if self.config.enable_real_time_monitoring:
             self.monitor = QualityMonitor()
             # Configure alert thresholds
             for metric, threshold in self.config.alert_thresholds.items():
@@ -199,8 +186,7 @@ class QualityControlSystem:
             logger.debug("Quality Monitor initialized")
 
     async def _initialize_controller(self):
-        """Initialize quality controller"""
-        self.controller = QualityController(
+        """Initialize quality controller"""        self.controller = QualityController(
             validator=self.validator,
             standards_manager=self.standards_manager,
             metrics=self.metrics,
@@ -210,18 +196,15 @@ class QualityControlSystem:
         logger.debug("Quality Controller initialized")
 
     async def _initialize_optimizer(self):
-        """Initialize quality optimizer"""
-        self.optimizer = QualityOptimizer()
+        """Initialize quality optimizer"""        self.optimizer = QualityOptimizer()
         logger.debug("Quality Optimizer initialized")
 
     async def _initialize_compliance_manager(self):
-        """Initialize compliance manager"""
-        self.compliance_manager = PlatformComplianceManager()
+        """Initialize compliance manager"""        self.compliance_manager = PlatformComplianceManager()
         logger.debug("Platform Compliance Manager initialized")
 
     async def _initialize_dashboard(self):
-        """Initialize real-time dashboard"""
-        if all([self.controller, self.monitor, self.compliance_manager, self.optimizer]):
+        """Initialize real-time dashboard"""        if all([self.controller, self.monitor, self.compliance_manager, self.optimizer]):
             self.dashboard = RealTimeDashboard(
                 quality_controller=self.controller,
                 quality_monitor=self.monitor,
@@ -233,8 +216,7 @@ class QualityControlSystem:
             logger.warning("Cannot initialize dashboard - missing required components")
 
     async def start(self) -> bool:
-        """Start the quality control system"""
-        
+        """Start the quality control system"""        
         if not self.is_initialized:
             success = await self.initialize()
             if not success:
@@ -264,8 +246,7 @@ class QualityControlSystem:
             return False
 
     async def stop(self) -> bool:
-        """Stop the quality control system"""
-        
+        """Stop the quality control system"""        
         if not self.is_running:
             logger.warning("System not running")
             return True
@@ -300,8 +281,7 @@ class QualityControlSystem:
         enable_compliance: bool = None,
         priority: int = 1
     ) -> ProcessingResult:
-        """Process audio file through complete quality control pipeline"""
-        
+        """Process audio file through complete quality control pipeline"""        
         if not self.is_running:
             return ProcessingResult(
                 request_id="",
@@ -326,8 +306,7 @@ class QualityControlSystem:
         return await self._process_request(request)
 
     async def _process_request(self, request: ProcessingRequest) -> ProcessingResult:
-        """Process individual request"""
-        
+        """Process individual request"""        
         start_time = datetime.now()
         self.active_processes[request.request_id] = request
         
@@ -401,8 +380,7 @@ class QualityControlSystem:
         return result
 
     async def _assess_quality(self, request: ProcessingRequest) -> Optional[QualityReport]:
-        """Assess audio quality"""
-        
+        """Assess audio quality"""        
         if not self.controller:
             return None
         
@@ -425,8 +403,7 @@ class QualityControlSystem:
         quality_report: QualityReport,
         request: ProcessingRequest
     ) -> List[QualityGateResult]:
-        """Check quality gates"""
-        
+        """Check quality gates"""        
         if not self.gate_manager:
             return []
         
@@ -437,8 +414,7 @@ class QualityControlSystem:
         request: ProcessingRequest,
         quality_report: QualityReport
     ) -> List[OptimizationResult]:
-        """Optimize audio quality"""
-        
+        """Optimize audio quality"""        
         if not self.optimizer:
             return []
         
@@ -456,8 +432,7 @@ class QualityControlSystem:
         request: ProcessingRequest,
         quality_report: QualityReport
     ) -> Dict[str, ComplianceReport]:
-        """Check platform compliance"""
-        
+        """Check platform compliance"""        
         if not self.compliance_manager:
             return {}
         
@@ -483,8 +458,7 @@ class QualityControlSystem:
         quality_report: QualityReport,
         gate_results: List[QualityGateResult]
     ) -> List[QualityAlert]:
-        """Generate quality alerts"""
-        
+        """Generate quality alerts"""        
         if not self.monitor:
             return []
         
@@ -510,8 +484,7 @@ class QualityControlSystem:
         return alerts
 
     async def _process_queue_handler(self):
-        """Background task to process queued requests"""
-        
+        """Background task to process queued requests"""        
         while self.is_running:
             try:
                 if self.processing_queue and len(self.active_processes) < self.config.max_concurrent_processes:
@@ -529,13 +502,11 @@ class QualityControlSystem:
                 await asyncio.sleep(1)
 
     def queue_request(self, request: ProcessingRequest):
-        """Add request to processing queue"""
-        self.processing_queue.append(request)
+        """Add request to processing queue"""        self.processing_queue.append(request)
         logger.info(f"Queued request {request.request_id} for {request.audio_file}")
 
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        
+        """Get comprehensive system status"""        
         uptime = (datetime.now() - self.start_time).total_seconds()
         
         return {
@@ -569,8 +540,7 @@ class QualityControlSystem:
         }
 
     def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get processing performance statistics"""
-        
+        """Get processing performance statistics"""        
         if not self.processing_history:
             return {"no_data": True}
         
@@ -593,24 +563,21 @@ class QualityControlSystem:
         return stats
 
     async def get_dashboard_data(self) -> Optional[DashboardData]:
-        """Get dashboard data if dashboard is enabled"""
-        
+        """Get dashboard data if dashboard is enabled"""        
         if not self.dashboard:
             return None
         
         return await self.dashboard.get_dashboard_data()
 
     def get_active_alerts(self) -> List[QualityAlert]:
-        """Get all active quality alerts"""
-        
+        """Get all active quality alerts"""        
         if not self.monitor:
             return []
         
         return self.monitor.get_active_alerts()
 
     async def shutdown(self):
-        """Graceful system shutdown"""
-        
+        """Graceful system shutdown"""        
         logger.info("Initiating Quality Control System shutdown...")
         
         # Stop the system
@@ -626,8 +593,7 @@ class QualityControlSystem:
 # Convenience functions for quick system access
 
 async def create_quality_control_system(config: Optional[QualityControlConfig] = None) -> QualityControlSystem:
-    """Create and initialize a Quality Control System"""
-    
+    """Create and initialize a Quality Control System"""    
     system = QualityControlSystem(config)
     success = await system.initialize()
     
@@ -642,8 +608,7 @@ async def quick_quality_check(
     quality_level: QualityLevel = QualityLevel.HIGH,
     platforms: List[str] = None
 ) -> ProcessingResult:
-    """Quick quality check for single audio file"""
-    
+    """Quick quality check for single audio file"""    
     config = QualityControlConfig(
         enable_real_time_monitoring=False,
         enable_dashboard=False,
@@ -667,12 +632,10 @@ async def quick_quality_check(
 # System factory for different use cases
 
 class QualityControlFactory:
-    """Factory for creating pre-configured Quality Control Systems"""
-    
+    """Factory for creating pre-configured Quality Control Systems"""    
     @staticmethod
     async def create_streaming_system() -> QualityControlSystem:
-        """Create system optimized for streaming platforms"""
-        
+        """Create system optimized for streaming platforms"""        
         config = QualityControlConfig(
             enable_real_time_monitoring=True,
             enable_optimization=True,
@@ -691,8 +654,7 @@ class QualityControlFactory:
     
     @staticmethod
     async def create_broadcast_system() -> QualityControlSystem:
-        """Create system optimized for broadcast quality"""
-        
+        """Create system optimized for broadcast quality"""        
         config = QualityControlConfig(
             enable_real_time_monitoring=True,
             enable_optimization=True,
@@ -711,8 +673,7 @@ class QualityControlFactory:
     
     @staticmethod
     async def create_mastering_system() -> QualityControlSystem:
-        """Create system optimized for mastering quality"""
-        
+        """Create system optimized for mastering quality"""        
         config = QualityControlConfig(
             enable_real_time_monitoring=True,
             enable_optimization=True,

@@ -1,5 +1,4 @@
-"""
-Content management endpoints for IA Influencer Agent platform.
+"""Content management endpoints for IA Influencer Agent platform.
 
 This module handles multi-format content upload, processing, protection,
 and distribution for musicians, bloggers, photographers, influencers, and actors.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import os
 import uuid
 from datetime import datetime
@@ -58,16 +56,14 @@ async def upload_content(
     ai_service: AIProcessingService = Depends(),
     protection_service: ProtectionService = Depends()
 ):
-    """
-    Upload multi-format content with AI processing and protection.
+    """    Upload multi-format content with AI processing and protection.
     
     Supports:
     - Audio files (MP3, WAV, FLAC) for musicians
     - Images (JPG, PNG, WEBP) for photographers/influencers
     - Videos (MP4, MOV, AVI) for actors/influencers
     - Text content for bloggers
-    """
-    try:
+    """    try:
         # Validate user role and content types
         allowed_types = ROLE_CONTENT_MAPPING.get(current_user.role.lower(), [])
         
@@ -162,10 +158,8 @@ async def get_my_content(
     current_user: User = Depends(AuthManager.get_current_user),
     content_service: ContentService = Depends()
 ):
-    """
-    Get current user's content with filtering and pagination.
-    """
-    try:
+    """    Get current user's content with filtering and pagination.
+    """    try:
         contents = await content_service.get_user_content(
             user_id=current_user.id,
             skip=skip,
@@ -219,10 +213,8 @@ async def get_content_details(
     current_user: Optional[User] = Depends(AuthManager.get_current_user_optional),
     content_service: ContentService = Depends()
 ):
-    """
-    Get detailed content information with access control.
-    """
-    try:
+    """    Get detailed content information with access control.
+    """    try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
             raise HTTPException(
@@ -286,10 +278,8 @@ async def update_content(
     current_user: User = Depends(AuthManager.get_current_user),
     content_service: ContentService = Depends()
 ):
-    """
-    Update content metadata and settings.
-    """
-    try:
+    """    Update content metadata and settings.
+    """    try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
             raise HTTPException(
@@ -330,10 +320,8 @@ async def delete_content(
     current_user: User = Depends(AuthManager.get_current_user),
     content_service: ContentService = Depends()
 ):
-    """
-    Delete content and associated files.
-    """
-    try:
+    """    Delete content and associated files.
+    """    try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
             raise HTTPException(
@@ -373,10 +361,8 @@ async def download_content(
     current_user: Optional[User] = Depends(AuthManager.get_current_user_optional),
     content_service: ContentService = Depends()
 ):
-    """
-    Download content file with access control.
-    """
-    try:
+    """    Download content file with access control.
+    """    try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
             raise HTTPException(
@@ -429,10 +415,8 @@ async def get_content_thumbnail(
     current_user: Optional[User] = Depends(AuthManager.get_current_user_optional),
     content_service: ContentService = Depends()
 ):
-    """
-    Get content thumbnail/preview.
-    """
-    try:
+    """    Get content thumbnail/preview.
+    """    try:
         content = await content_service.get_content_by_id(content_id)
         if not content:
             raise HTTPException(
@@ -482,10 +466,8 @@ async def like_content(
     current_user: User = Depends(AuthManager.get_current_user),
     content_service: ContentService = Depends()
 ):
-    """
-    Like/unlike content.
-    """
-    try:
+    """    Like/unlike content.
+    """    try:
         result = await content_service.toggle_like(content_id, current_user.id)
         
         return {
@@ -512,10 +494,8 @@ async def search_content(
     current_user: Optional[User] = Depends(AuthManager.get_current_user_optional),
     content_service: ContentService = Depends()
 ):
-    """
-    Search public content with filters.
-    """
-    try:
+    """    Search public content with filters.
+    """    try:
         search_results = await content_service.search_content(
             query=q,
             category=category,
@@ -553,10 +533,8 @@ async def get_trending_content(
     limit: int = Query(20, ge=1, le=50),
     content_service: ContentService = Depends()
 ):
-    """
-    Get trending content based on views, likes, and engagement.
-    """
-    try:
+    """    Get trending content based on views, likes, and engagement.
+    """    try:
         trending = await content_service.get_trending_content(
             timeframe=timeframe,
             category=category,

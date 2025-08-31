@@ -1,5 +1,4 @@
-"""
-Gamification Agent - Advanced AI-Powered Creator Engagement Intelligence
+"""Gamification Agent - Advanced AI-Powered Creator Engagement Intelligence
 
 Industrial-grade gamification agent providing intelligent challenge generation,
 reward optimization, engagement prediction, and comprehensive creator motivation
@@ -26,7 +25,6 @@ Team Specialties:
 - DevOps Engineer & Security Specialist
 - Audio Processing & Multimedia Expert
 """
-
 import asyncio
 import logging
 import json
@@ -70,8 +68,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class GamificationEventType(Enum):
-    """Gamification event types"""
-    CONTENT_UPLOAD = "content_upload"
+    """Gamification event types"""    CONTENT_UPLOAD = "content_upload"
     COLLABORATION_START = "collaboration_start"
     COLLABORATION_COMPLETE = "collaboration_complete"
     MONETIZATION_MILESTONE = "monetization_milestone"
@@ -81,8 +78,7 @@ class GamificationEventType(Enum):
     COMMUNITY_CONTRIBUTION = "community_contribution"
 
 class EngagementLevel(Enum):
-    """User engagement levels"""
-    DORMANT = "dormant"
+    """User engagement levels"""    DORMANT = "dormant"
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -90,8 +86,7 @@ class EngagementLevel(Enum):
 
 @dataclass
 class GamificationConfig:
-    """Configuration for gamification agent"""
-    challenge_generation_enabled: bool = True
+    """Configuration for gamification agent"""    challenge_generation_enabled: bool = True
     reward_optimization_enabled: bool = True
     engagement_tracking_enabled: bool = True
     social_features_enabled: bool = True
@@ -105,8 +100,7 @@ class GamificationConfig:
 
 @dataclass
 class UserGamificationProfile:
-    """Comprehensive user gamification profile"""
-    user_id: str
+    """Comprehensive user gamification profile"""    user_id: str
     level: int = 1
     experience_points: int = 0
     engagement_level: EngagementLevel = EngagementLevel.LOW
@@ -126,8 +120,7 @@ class UserGamificationProfile:
 
 @dataclass
 class GamificationResponse:
-    """Response from gamification processing"""
-    user_id: str
+    """Response from gamification processing"""    user_id: str
     success: bool
     message: str
     updated_profile: Optional[UserGamificationProfile] = None
@@ -140,8 +133,7 @@ class GamificationResponse:
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class GamificationAgent(BaseAgent):
-    """
-    Advanced AI-powered gamification agent providing intelligent creator engagement,
+    """    Advanced AI-powered gamification agent providing intelligent creator engagement,
     personalized challenges, dynamic rewards, and comprehensive motivation systems.
     
     Core Capabilities:
@@ -152,8 +144,7 @@ class GamificationAgent(BaseAgent):
     - Social competition orchestration
     - Achievement and badge management
     - Advanced analytics and insights generation
-    """
-    
+    """    
     def __init__(
         self,
         agent_id: str = None,
@@ -188,8 +179,7 @@ class GamificationAgent(BaseAgent):
         logger.info(f"GamificationAgent {self.agent_id} initialized successfully")
     
     def _initialize_gamification_systems(self):
-        """Initialize gamification subsystems"""
-        try:
+        """Initialize gamification subsystems"""        try:
             # Initialize reward calculations
             self._setup_reward_system()
             
@@ -208,8 +198,7 @@ class GamificationAgent(BaseAgent):
             raise
     
     def _setup_reward_system(self):
-        """Setup intelligent reward calculation system"""
-        self.reward_multipliers = {
+        """Setup intelligent reward calculation system"""        self.reward_multipliers = {
             'content_upload': 1.0,
             'high_quality_content': 1.5,
             'viral_content': 2.0,
@@ -229,8 +218,7 @@ class GamificationAgent(BaseAgent):
         }
     
     def _setup_engagement_tracking(self):
-        """Setup engagement level tracking system"""
-        self.engagement_thresholds = {
+        """Setup engagement level tracking system"""        self.engagement_thresholds = {
             EngagementLevel.DORMANT: (0, 10),
             EngagementLevel.LOW: (10, 35),
             EngagementLevel.MODERATE: (35, 65),
@@ -239,8 +227,7 @@ class GamificationAgent(BaseAgent):
         }
     
     def _setup_analytics_system(self):
-        """Setup comprehensive analytics tracking"""
-        self.analytics_metrics = {
+        """Setup comprehensive analytics tracking"""        self.analytics_metrics = {
             'daily_active_users': 0,
             'challenge_completion_rate': 0.0,
             'average_session_time': 0.0,
@@ -255,8 +242,7 @@ class GamificationAgent(BaseAgent):
         event_type: GamificationEventType,
         event_data: Dict[str, Any]
     ) -> GamificationResponse:
-        """
-        Process user gamification event and update systems accordingly.
+        """        Process user gamification event and update systems accordingly.
         
         Args:
             user_id: Unique user identifier
@@ -265,8 +251,7 @@ class GamificationAgent(BaseAgent):
             
         Returns:
             Comprehensive gamification response
-        """
-        start_time = datetime.now(timezone.utc)
+        """        start_time = datetime.now(timezone.utc)
         
         try:
             # Get or create user profile
@@ -328,8 +313,7 @@ class GamificationAgent(BaseAgent):
             )
     
     async def _get_or_create_user_profile(self, user_id: str) -> UserGamificationProfile:
-        """Get existing user profile or create new one"""
-        if user_id in self.user_profiles:
+        """Get existing user profile or create new one"""        if user_id in self.user_profiles:
             return self.user_profiles[user_id]
         
         # Create new profile
@@ -344,8 +328,7 @@ class GamificationAgent(BaseAgent):
         event_data: Dict[str, Any],
         response: GamificationResponse
     ):
-        """Process content upload event"""
-        # Update counters
+        """Process content upload event"""        # Update counters
         user_profile.total_content_uploads += 1
         
         # Calculate base experience points
@@ -380,8 +363,7 @@ class GamificationAgent(BaseAgent):
         event_data: Dict[str, Any],
         response: GamificationResponse
     ):
-        """Process collaboration completion event"""
-        user_profile.successful_collaborations += 1
+        """Process collaboration completion event"""        user_profile.successful_collaborations += 1
         
         # Calculate collaboration rewards
         base_points = 100
@@ -407,8 +389,7 @@ class GamificationAgent(BaseAgent):
         event_data: Dict[str, Any],
         response: GamificationResponse
     ):
-        """Process monetization milestone event"""
-        user_profile.monetization_milestones += 1
+        """Process monetization milestone event"""        user_profile.monetization_milestones += 1
         
         # High rewards for monetization
         milestone_value = event_data.get('milestone_value', 0)
@@ -430,8 +411,7 @@ class GamificationAgent(BaseAgent):
         event_data: Dict[str, Any],
         response: GamificationResponse
     ):
-        """Process social engagement event"""
-        engagement_score = event_data.get('engagement_score', 0.0)
+        """Process social engagement event"""        engagement_score = event_data.get('engagement_score', 0.0)
         user_profile.social_engagement_score = (
             user_profile.social_engagement_score * 0.8 + engagement_score * 0.2
         )
@@ -453,8 +433,7 @@ class GamificationAgent(BaseAgent):
         user_profile: UserGamificationProfile,
         response: GamificationResponse
     ):
-        """Update user engagement level based on activity"""
-        # Calculate engagement score based on multiple factors
+        """Update user engagement level based on activity"""        # Calculate engagement score based on multiple factors
         activity_score = min(100, (
             user_profile.total_content_uploads * 2 +
             user_profile.successful_collaborations * 5 +
@@ -483,8 +462,7 @@ class GamificationAgent(BaseAgent):
         user_profile: UserGamificationProfile,
         response: GamificationResponse
     ):
-        """Generate personalized challenges for user"""
-        if len(user_profile.active_challenges) >= self.gamification_config.max_active_challenges_per_user:
+        """Generate personalized challenges for user"""        if len(user_profile.active_challenges) >= self.gamification_config.max_active_challenges_per_user:
             return
         
         # Generate challenges based on user profile and engagement level
@@ -532,8 +510,7 @@ class GamificationAgent(BaseAgent):
         user_profile: UserGamificationProfile,
         response: GamificationResponse
     ):
-        """Check for newly unlocked achievements"""
-        potential_achievements = []
+        """Check for newly unlocked achievements"""        potential_achievements = []
         
         # Content creation achievements
         if user_profile.total_content_uploads >= 1 and 'first_upload' not in user_profile.earned_achievements:
@@ -572,8 +549,7 @@ class GamificationAgent(BaseAgent):
         user_profile: UserGamificationProfile,
         response: GamificationResponse
     ):
-        """Update user level based on experience points"""
-        current_level = user_profile.level
+        """Update user level based on experience points"""        current_level = user_profile.level
         
         # Find new level based on experience points
         for level, threshold in sorted(self.level_thresholds.items(), reverse=True):
@@ -605,8 +581,7 @@ class GamificationAgent(BaseAgent):
         leaderboard_type: str = "experience",
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get user leaderboard rankings"""
-        try:
+        """Get user leaderboard rankings"""        try:
             users = list(self.user_profiles.values())
             
             if leaderboard_type == "experience":
@@ -639,8 +614,7 @@ class GamificationAgent(BaseAgent):
             return []
     
     async def get_user_insights(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive insights for a user"""
-        try:
+        """Get comprehensive insights for a user"""        try:
             if user_id not in self.user_profiles:
                 return {'error': 'User not found'}
             
@@ -671,8 +645,7 @@ class GamificationAgent(BaseAgent):
             return {'error': str(e)}
     
     def _calculate_progress_to_next_level(self, user_profile: UserGamificationProfile) -> Dict[str, Any]:
-        """Calculate progress to next level"""
-        current_level = user_profile.level
+        """Calculate progress to next level"""        current_level = user_profile.level
         current_points = user_profile.experience_points
         
         # Find next level threshold
@@ -697,8 +670,7 @@ class GamificationAgent(BaseAgent):
         }
     
     def _analyze_user_strengths(self, user_profile: UserGamificationProfile) -> List[str]:
-        """Analyze user strengths based on profile"""
-        strengths = []
+        """Analyze user strengths based on profile"""        strengths = []
         
         if user_profile.total_content_uploads > 20:
             strengths.append("Prolific Content Creator")
@@ -718,8 +690,7 @@ class GamificationAgent(BaseAgent):
         return strengths or ["Developing Skills"]
     
     def _analyze_improvement_areas(self, user_profile: UserGamificationProfile) -> List[str]:
-        """Analyze areas for improvement"""
-        improvements = []
+        """Analyze areas for improvement"""        improvements = []
         
         if user_profile.total_content_uploads < 5:
             improvements.append("Content Creation Frequency")
@@ -736,8 +707,7 @@ class GamificationAgent(BaseAgent):
         return improvements
     
     def _generate_recommendations(self, user_profile: UserGamificationProfile) -> List[str]:
-        """Generate personalized recommendations"""
-        recommendations = []
+        """Generate personalized recommendations"""        recommendations = []
         
         if user_profile.engagement_level == EngagementLevel.LOW:
             recommendations.append("Try uploading content more frequently to increase engagement")
@@ -754,8 +724,7 @@ class GamificationAgent(BaseAgent):
         return recommendations or ["Keep up the great work!"]
     
     def get_agent_status(self) -> Dict[str, Any]:
-        """Get comprehensive agent status"""
-        return {
+        """Get comprehensive agent status"""        return {
             'agent_id': self.agent_id,
             'status': self.status.value,
             'total_users_processed': self.total_users_processed,

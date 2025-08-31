@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - TLS Configuration Manager
+"""IA Influencer Agent - TLS Configuration Manager
 Advanced TLS/SSL configuration and security settings
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
-
 import os
 import ssl
 import json
@@ -33,24 +31,21 @@ from cryptography.hazmat.backends import default_backend
 
 
 class TLSVersion(Enum):
-    """TLS version enumeration"""
-    TLSv1_0 = "TLSv1.0"
+    """TLS version enumeration"""    TLSv1_0 = "TLSv1.0"
     TLSv1_1 = "TLSv1.1"
     TLSv1_2 = "TLSv1.2"
     TLSv1_3 = "TLSv1.3"
 
 
 class SecurityLevel(Enum):
-    """TLS security level enumeration"""
-    LOW = "low"
+    """TLS security level enumeration"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     MAXIMUM = "maximum"
 
 
 class CipherSuite(Enum):
-    """TLS cipher suite categories"""
-    MODERN = "modern"
+    """TLS cipher suite categories"""    MODERN = "modern"
     INTERMEDIATE = "intermediate"
     OLD = "old"
     CUSTOM = "custom"
@@ -58,8 +53,7 @@ class CipherSuite(Enum):
 
 @dataclass
 class TLSConfig:
-    """TLS configuration structure"""
-    # Basic TLS settings
+    """TLS configuration structure"""    # Basic TLS settings
     min_tls_version: TLSVersion = TLSVersion.TLSv1_2
     max_tls_version: TLSVersion = TLSVersion.TLSv1_3
     cipher_suite: CipherSuite = CipherSuite.MODERN
@@ -107,8 +101,7 @@ class TLSConfig:
 
 @dataclass
 class NginxTLSConfig:
-    """Nginx-specific TLS configuration"""
-    server_name: str
+    """Nginx-specific TLS configuration"""    server_name: str
     listen_port: int = 443
     http_redirect: bool = True
     http_port: int = 80
@@ -141,8 +134,7 @@ class NginxTLSConfig:
 
 @dataclass
 class ApacheTLSConfig:
-    """Apache-specific TLS configuration"""
-    server_name: str
+    """Apache-specific TLS configuration"""    server_name: str
     document_root: str
     virtual_host_port: int = 443
     
@@ -170,16 +162,13 @@ class ApacheTLSConfig:
 
 
 class TLSConfigError(Exception):
-    """TLS configuration exception"""
-    pass
+    """TLS configuration exception"""    pass
 
 
 class TLSConfigManager:
-    """
-    Advanced TLS/SSL configuration management
+    """    Advanced TLS/SSL configuration management
     Supports multiple web servers and security standards
-    """
-    
+    """    
     # Mozilla TLS configurations
     MOZILLA_MODERN_CIPHERS = [
         "ECDHE-ECDSA-AES128-GCM-SHA256",
@@ -221,13 +210,11 @@ class TLSConfigManager:
     ]
     
     def __init__(self, config_path: Optional[Path] = None):
-        """
-        Initialize TLS configuration manager
+        """        Initialize TLS configuration manager
         
         Args:
             config_path: Path to configuration file
-        """
-        self.logger = logging.getLogger(__name__)
+        """        self.logger = logging.getLogger(__name__)
         self.config_path = config_path
         self.base_config = TLSConfig()
         
@@ -238,16 +225,14 @@ class TLSConfigManager:
         self.logger.info("TLS configuration manager initialized")
     
     def load_config(self, config_path: Path) -> TLSConfig:
-        """
-        Load TLS configuration from file
+        """        Load TLS configuration from file
         
         Args:
             config_path: Path to configuration file
             
         Returns:
             Loaded TLS configuration
-        """
-        try:
+        """        try:
             with open(config_path, 'r') as f:
                 if config_path.suffix.lower() in ['.yml', '.yaml']:
                     config_data = yaml.safe_load(f)
@@ -265,15 +250,13 @@ class TLSConfigManager:
             raise TLSConfigError(f"Configuration load failed: {e}")
     
     def save_config(self, config: TLSConfig, output_path: Path, format_type: str = "yaml") -> None:
-        """
-        Save TLS configuration to file
+        """        Save TLS configuration to file
         
         Args:
             config: TLS configuration to save
             output_path: Output file path
             format_type: Output format (yaml/json)
-        """
-        try:
+        """        try:
             config_dict = asdict(config)
             
             # Convert enum values to strings
@@ -294,8 +277,7 @@ class TLSConfigManager:
             raise TLSConfigError(f"Configuration save failed: {e}")
     
     def get_cipher_list(self, cipher_suite: CipherSuite, custom_ciphers: List[str] = None) -> str:
-        """
-        Get cipher list based on security level
+        """        Get cipher list based on security level
         
         Args:
             cipher_suite: Cipher suite category
@@ -303,8 +285,7 @@ class TLSConfigManager:
             
         Returns:
             Formatted cipher string
-        """
-        if cipher_suite == CipherSuite.CUSTOM and custom_ciphers:
+        """        if cipher_suite == CipherSuite.CUSTOM and custom_ciphers:
             return ":".join(custom_ciphers)
         elif cipher_suite == CipherSuite.MODERN:
             return ":".join(self.MOZILLA_MODERN_CIPHERS)
@@ -316,16 +297,14 @@ class TLSConfigManager:
             return ":".join(self.MOZILLA_INTERMEDIATE_CIPHERS)
     
     def get_tls_protocols(self, config: TLSConfig) -> List[str]:
-        """
-        Get enabled TLS protocols based on configuration
+        """        Get enabled TLS protocols based on configuration
         
         Args:
             config: TLS configuration
             
         Returns:
             List of enabled protocols
-        """
-        all_protocols = {
+        """        all_protocols = {
             TLSVersion.TLSv1_0: "TLSv1",
             TLSVersion.TLSv1_1: "TLSv1.1",
             TLSVersion.TLSv1_2: "TLSv1.2",
@@ -345,8 +324,7 @@ class TLSConfigManager:
         return enabled_protocols
     
     def generate_nginx_config(self, tls_config: TLSConfig, server_config: NginxTLSConfig) -> str:
-        """
-        Generate Nginx SSL/TLS configuration
+        """        Generate Nginx SSL/TLS configuration
         
         Args:
             tls_config: Base TLS configuration
@@ -354,8 +332,7 @@ class TLSConfigManager:
             
         Returns:
             Nginx configuration string
-        """
-        try:
+        """        try:
             # Get protocols and ciphers
             protocols = server_config.ssl_protocols or self.get_tls_protocols(tls_config)
             cipher_list = server_config.ssl_ciphers or self.get_cipher_list(
@@ -457,8 +434,7 @@ class TLSConfigManager:
             raise TLSConfigError(f"Nginx config generation failed: {e}")
     
     def generate_apache_config(self, tls_config: TLSConfig, server_config: ApacheTLSConfig) -> str:
-        """
-        Generate Apache SSL/TLS configuration
+        """        Generate Apache SSL/TLS configuration
         
         Args:
             tls_config: Base TLS configuration
@@ -466,8 +442,7 @@ class TLSConfigManager:
             
         Returns:
             Apache configuration string
-        """
-        try:
+        """        try:
             # Get protocols and ciphers
             protocols = server_config.ssl_protocol or self.get_tls_protocols(tls_config)
             cipher_list = server_config.ssl_cipher_suite or self.get_cipher_list(
@@ -550,16 +525,14 @@ class TLSConfigManager:
             raise TLSConfigError(f"Apache config generation failed: {e}")
     
     def validate_certificate_files(self, config: TLSConfig) -> Dict[str, bool]:
-        """
-        Validate certificate files exist and are readable
+        """        Validate certificate files exist and are readable
         
         Args:
             config: TLS configuration
             
         Returns:
             Dictionary of validation results
-        """
-        validation_results = {}
+        """        validation_results = {}
         
         files_to_check = {
             'certificate': config.certificate_path,
@@ -595,8 +568,7 @@ class TLSConfigManager:
         return validation_results
     
     def test_ssl_connection(self, hostname: str, port: int = 443, timeout: int = 10) -> Dict[str, Any]:
-        """
-        Test SSL/TLS connection to server
+        """        Test SSL/TLS connection to server
         
         Args:
             hostname: Server hostname
@@ -605,8 +577,7 @@ class TLSConfigManager:
             
         Returns:
             Connection test results
-        """
-        try:
+        """        try:
             # Create SSL context
             context = ssl.create_default_context()
             
@@ -641,16 +612,14 @@ class TLSConfigManager:
             }
     
     def get_security_recommendations(self, config: TLSConfig) -> List[str]:
-        """
-        Get security recommendations for TLS configuration
+        """        Get security recommendations for TLS configuration
         
         Args:
             config: TLS configuration to analyze
             
         Returns:
             List of security recommendations
-        """
-        recommendations = []
+        """        recommendations = []
         
         # Check TLS version
         if config.min_tls_version in [TLSVersion.TLSv1_0, TLSVersion.TLSv1_1]:
@@ -685,16 +654,14 @@ class TLSConfigManager:
         return recommendations
     
     def generate_security_report(self, config: TLSConfig) -> Dict[str, Any]:
-        """
-        Generate comprehensive security report
+        """        Generate comprehensive security report
         
         Args:
             config: TLS configuration to analyze
             
         Returns:
             Security analysis report
-        """
-        # Calculate security score
+        """        # Calculate security score
         score = 100
         issues = []
         
@@ -766,13 +733,11 @@ class TLSConfigManager:
 
 
 def create_tls_config_manager(config_path: Optional[Path] = None) -> TLSConfigManager:
-    """
-    Factory function to create TLS configuration manager
+    """    Factory function to create TLS configuration manager
     
     Args:
         config_path: Path to configuration file
         
     Returns:
         Configured TLS manager
-    """
-    return TLSConfigManager(config_path)
+    """    return TLSConfigManager(config_path)

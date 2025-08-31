@@ -1,5 +1,4 @@
-"""
-🚀 Compliance Checker - IA Influencer Agent Platform Enterprise
+"""🚀 Compliance Checker - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/validation/compliance_checker.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ Vérification automatisée des conformités multi-juridictionnelles
 - Standards plateformes (YouTube, TikTok, Instagram)
 - Conformité business multi-créateurs
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -49,15 +47,13 @@ from geopy.geocoders import Nominatim
 logger = logging.getLogger(__name__)
 
 class ComplianceLevel(Enum):
-    """Niveaux de conformité"""
-    COMPLIANT = "compliant"
+    """Niveaux de conformité"""    COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
     CRITICAL = "critical"
 
 class ComplianceCategory(Enum):
-    """Catégories de conformité"""
-    PRIVACY = "privacy"
+    """Catégories de conformité"""    PRIVACY = "privacy"
     COPYRIGHT = "copyright"
     CONTENT_SAFETY = "content_safety"
     PLATFORM_POLICY = "platform_policy"
@@ -66,8 +62,7 @@ class ComplianceCategory(Enum):
     LEGAL_REQUIREMENTS = "legal_requirements"
 
 class JurisdictionType(Enum):
-    """Types de juridiction"""
-    EU = "european_union"
+    """Types de juridiction"""    EU = "european_union"
     US = "united_states"
     CA = "canada"
     UK = "united_kingdom"
@@ -75,8 +70,7 @@ class JurisdictionType(Enum):
 
 @dataclass
 class ComplianceIssue:
-    """Issue de conformité détectée"""
-    category: ComplianceCategory
+    """Issue de conformité détectée"""    category: ComplianceCategory
     level: ComplianceLevel
     jurisdiction: JurisdictionType
     description: str
@@ -88,8 +82,7 @@ class ComplianceIssue:
 
 @dataclass
 class ComplianceResult:
-    """Résultat de vérification de conformité"""
-    overall_compliance: ComplianceLevel
+    """Résultat de vérification de conformité"""    overall_compliance: ComplianceLevel
     issues: List[ComplianceIssue]
     compliant_categories: List[ComplianceCategory]
     jurisdiction_status: Dict[JurisdictionType, ComplianceLevel]
@@ -100,8 +93,7 @@ class ComplianceResult:
     metadata: Dict[str, Any]
 
 class PrivacyComplianceChecker:
-    """Vérificateur de conformité vie privée (RGPD/CCPA)"""
-    
+    """Vérificateur de conformité vie privée (RGPD/CCPA)"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.PrivacyComplianceChecker")
         
@@ -124,8 +116,7 @@ class PrivacyComplianceChecker:
     
     def check_privacy_compliance(self, content: Dict[str, Any], 
                                metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie la conformité vie privée"""
-        issues = []
+        """Vérifie la conformité vie privée"""        issues = []
         
         # Vérification données personnelles dans contenu
         pii_issues = self._check_pii_exposure(content)
@@ -146,8 +137,7 @@ class PrivacyComplianceChecker:
         return issues
     
     def _check_pii_exposure(self, content: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie l'exposition de données personnelles"""
-        issues = []
+        """Vérifie l'exposition de données personnelles"""        issues = []
         
         # Analyse du contenu textuel
         text_content = ""
@@ -205,8 +195,7 @@ class PrivacyComplianceChecker:
         return issues
     
     def _check_metadata_privacy(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie la vie privée dans les métadonnées"""
-        issues = []
+        """Vérifie la vie privée dans les métadonnées"""        issues = []
         
         # Vérification EXIF sensible
         if 'geolocation' in metadata and metadata['geolocation']:
@@ -252,8 +241,7 @@ class PrivacyComplianceChecker:
         return issues
     
     def _check_geolocation_compliance(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie la conformité géolocalisation"""
-        issues = []
+        """Vérifie la conformité géolocalisation"""        issues = []
         
         geolocation = metadata.get('geolocation')
         if geolocation and geolocation.get('latitude'):
@@ -285,8 +273,7 @@ class PrivacyComplianceChecker:
         return issues
     
     def _check_consent_compliance(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie la conformité du consentement"""
-        issues = []
+        """Vérifie la conformité du consentement"""        issues = []
         
         # Vérification présence de consentement
         consent_info = metadata.get('consent', {})
@@ -331,8 +318,7 @@ class PrivacyComplianceChecker:
         return issues
     
     def _is_sensitive_location(self, lat: float, lon: float) -> bool:
-        """Vérifie si une localisation est sensible"""
-        # Zones sensibles basiques (à étendre)
+        """Vérifie si une localisation est sensible"""        # Zones sensibles basiques (à étendre)
         sensitive_zones = [
             # Écoles, hôpitaux, zones militaires approximatives
             {'lat_range': (48.8, 48.9), 'lon_range': (2.3, 2.4), 'type': 'restricted'},  # Paris centre
@@ -349,8 +335,7 @@ class PrivacyComplianceChecker:
         return False
 
 class CopyrightComplianceChecker:
-    """Vérificateur de conformité copyright"""
-    
+    """Vérificateur de conformité copyright"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.CopyrightComplianceChecker")
         
@@ -369,8 +354,7 @@ class CopyrightComplianceChecker:
     
     def check_copyright_compliance(self, content: Dict[str, Any], 
                                  metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie la conformité copyright"""
-        issues = []
+        """Vérifie la conformité copyright"""        issues = []
         
         # Vérification licence
         license_issues = self._check_license_compliance(metadata)
@@ -391,8 +375,7 @@ class CopyrightComplianceChecker:
         return issues
     
     def _check_license_compliance(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie la conformité de licence"""
-        issues = []
+        """Vérifie la conformité de licence"""        issues = []
         
         business = metadata.get('business', {})
         license_info = business.get('license')
@@ -434,8 +417,7 @@ class CopyrightComplianceChecker:
         return issues
     
     def _check_attribution_requirements(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie les exigences d'attribution"""
-        issues = []
+        """Vérifie les exigences d'attribution"""        issues = []
         
         business = metadata.get('business', {})
         creative = metadata.get('creative', {})
@@ -472,8 +454,7 @@ class CopyrightComplianceChecker:
         return issues
     
     def _check_commercial_usage(self, metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie l'usage commercial"""
-        issues = []
+        """Vérifie l'usage commercial"""        issues = []
         
         business = metadata.get('business', {})
         commercial_use = business.get('commercial_use')
@@ -504,8 +485,7 @@ class CopyrightComplianceChecker:
     
     def _check_watermark_requirements(self, content: Dict[str, Any], 
                                     metadata: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie les exigences de watermark"""
-        issues = []
+        """Vérifie les exigences de watermark"""        issues = []
         
         business = metadata.get('business', {})
         
@@ -536,8 +516,7 @@ class CopyrightComplianceChecker:
         return issues
     
     async def _detect_watermark(self, content: Dict[str, Any]) -> bool:
-        """Détecte la présence d'un watermark"""
-        # Analyse basique pour détecter watermarks
+        """Détecte la présence d'un watermark"""        # Analyse basique pour détecter watermarks
         
         # Dans le texte
         text_content = str(content.get('text', ''))
@@ -574,16 +553,14 @@ class CopyrightComplianceChecker:
         return False
     
     async def _analyze_visual_content(self, creative: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Analyze visual content for copyright elements
+        """        Analyze visual content for copyright elements
         
         Args:
             creative: Creative content metadata
             
         Returns:
             Dict containing analysis results
-        """
-        analysis_result = {
+        """        analysis_result = {
             'has_copyrighted_elements': False,
             'has_brand_elements': False,
             'has_celebrity_faces': False,
@@ -633,16 +610,14 @@ class CopyrightComplianceChecker:
         return analysis_result
     
     async def _check_copyright_database(self, visual_fingerprint: str) -> Optional[Dict[str, Any]]:
-        """
-        Check visual fingerprint against copyright database
+        """        Check visual fingerprint against copyright database
         
         Args:
             visual_fingerprint: Visual content fingerprint/hash
             
         Returns:
             Match result if found, None otherwise
-        """
-        try:
+        """        try:
             # In production, this would query a real copyright database
             # For now, simulate with known bad hashes
             known_copyrighted_hashes = {
@@ -670,8 +645,7 @@ class CopyrightComplianceChecker:
             return None
 
 class PlatformPolicyChecker:
-    """Vérificateur de conformité aux politiques des plateformes"""
-    
+    """Vérificateur de conformité aux politiques des plateformes"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.PlatformPolicyChecker")
         
@@ -708,8 +682,7 @@ class PlatformPolicyChecker:
     def check_platform_compliance(self, content: Dict[str, Any], 
                                  metadata: Dict[str, Any],
                                  platforms: List[str]) -> List[ComplianceIssue]:
-        """Vérifie la conformité aux plateformes"""
-        issues = []
+        """Vérifie la conformité aux plateformes"""        issues = []
         
         for platform in platforms:
             platform_issues = self._check_single_platform(content, metadata, platform)
@@ -720,8 +693,7 @@ class PlatformPolicyChecker:
     def _check_single_platform(self, content: Dict[str, Any], 
                               metadata: Dict[str, Any], 
                               platform: str) -> List[ComplianceIssue]:
-        """Vérifie la conformité pour une plateforme"""
-        issues = []
+        """Vérifie la conformité pour une plateforme"""        issues = []
         
         if platform not in self.platform_rules:
             return issues
@@ -748,8 +720,7 @@ class PlatformPolicyChecker:
     
     def _check_duration_limits(self, metadata: Dict[str, Any], 
                               platform: str, rules: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie les limites de durée"""
-        issues = []
+        """Vérifie les limites de durée"""        issues = []
         
         dimensions = metadata.get('dimensions', {})
         duration = dimensions.get('duration')
@@ -783,8 +754,7 @@ class PlatformPolicyChecker:
     
     def _check_inappropriate_content(self, content: Dict[str, Any], 
                                    platform: str, rules: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie le contenu inapproprié"""
-        issues = []
+        """Vérifie le contenu inapproprié"""        issues = []
         
         # Analyse du contenu textuel
         text_content = str(content.get('text', ''))
@@ -853,8 +823,7 @@ class PlatformPolicyChecker:
     def _check_age_restrictions(self, content: Dict[str, Any], 
                                metadata: Dict[str, Any], 
                                platform: str, rules: Dict[str, Any]) -> List[ComplianceIssue]:
-        """Vérifie les restrictions d'âge"""
-        issues = []
+        """Vérifie les restrictions d'âge"""        issues = []
         
         if not rules.get('age_restrictions'):
             return issues
@@ -890,8 +859,7 @@ class PlatformPolicyChecker:
     
     def _check_format_requirements(self, metadata: Dict[str, Any], 
                                   platform: str) -> List[ComplianceIssue]:
-        """Vérifie les exigences de format"""
-        issues = []
+        """Vérifie les exigences de format"""        issues = []
         
         technical = metadata.get('technical', {})
         dimensions = metadata.get('dimensions', {})
@@ -932,8 +900,7 @@ class PlatformPolicyChecker:
         return issues
 
 class ComplianceChecker:
-    """Vérificateur de conformité principal"""
-    
+    """Vérificateur de conformité principal"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ComplianceChecker")
         
@@ -949,8 +916,7 @@ class ComplianceChecker:
                         metadata: Dict[str, Any],
                         target_platforms: List[str] = None,
                         jurisdictions: List[JurisdictionType] = None) -> ComplianceResult:
-        """Vérifie la conformité complète"""
-        
+        """Vérifie la conformité complète"""        
         # Paramètres par défaut
         if target_platforms is None:
             target_platforms = ['youtube', 'instagram', 'tiktok']
@@ -986,8 +952,7 @@ class ComplianceChecker:
     
     def _analyze_compliance_results(self, issues: List[ComplianceIssue], 
                                    jurisdictions: List[JurisdictionType]) -> ComplianceResult:
-        """Analyse les résultats de conformité"""
-        
+        """Analyse les résultats de conformité"""        
         # Classification des issues par niveau
         critical_issues = [i for i in issues if i.level == ComplianceLevel.CRITICAL]
         violation_issues = [i for i in issues if i.level == ComplianceLevel.VIOLATION]
@@ -1061,8 +1026,7 @@ class ComplianceChecker:
         )
     
     def _generate_recommendations(self, issues: List[ComplianceIssue]) -> List[str]:
-        """Génère des recommandations globales"""
-        recommendations = []
+        """Génère des recommandations globales"""        recommendations = []
         
         # Recommandations par catégorie
         category_counts = {}
@@ -1086,8 +1050,7 @@ class ComplianceChecker:
         return recommendations
     
     def _generate_required_actions(self, critical_issues: List[ComplianceIssue]) -> List[str]:
-        """Génère les actions requises pour les problèmes critiques"""
-        required_actions = []
+        """Génère les actions requises pour les problèmes critiques"""        required_actions = []
         
         # Actions par priorité
         priority_actions = {}
@@ -1105,8 +1068,7 @@ class ComplianceChecker:
         return required_actions
     
     def _create_error_result(self, error: str) -> ComplianceResult:
-        """Crée un résultat d'erreur"""
-        return ComplianceResult(
+        """Crée un résultat d'erreur"""        return ComplianceResult(
             overall_compliance=ComplianceLevel.CRITICAL,
             issues=[ComplianceIssue(
                 category=ComplianceCategory.LEGAL_REQUIREMENTS,
@@ -1128,8 +1090,7 @@ class ComplianceChecker:
         )
 
 class AsyncComplianceChecker:
-    """Version asynchrone du vérificateur de conformité"""
-    
+    """Version asynchrone du vérificateur de conformité"""    
     def __init__(self):
         self.sync_checker = ComplianceChecker()
         self.logger = logging.getLogger(f"{__name__}.AsyncComplianceChecker")
@@ -1138,8 +1099,7 @@ class AsyncComplianceChecker:
                               metadata: Dict[str, Any],
                               target_platforms: List[str] = None,
                               jurisdictions: List[JurisdictionType] = None) -> ComplianceResult:
-        """Vérifie la conformité de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Vérifie la conformité de manière asynchrone"""        loop = asyncio.get_event_loop()
         
         result = await loop.run_in_executor(
             None,
@@ -1156,8 +1116,7 @@ class AsyncComplianceChecker:
                                    content_batch: List[Tuple[Dict[str, Any], Dict[str, Any]]],
                                    target_platforms: List[str] = None,
                                    jurisdictions: List[JurisdictionType] = None) -> List[ComplianceResult]:
-        """Vérifie la conformité d'un lot de contenus"""
-        tasks = []
+        """Vérifie la conformité d'un lot de contenus"""        tasks = []
         
         for content, metadata in content_batch:
             task = self.check_compliance(content, metadata, target_platforms, jurisdictions)

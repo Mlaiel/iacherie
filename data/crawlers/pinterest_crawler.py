@@ -1,5 +1,4 @@
-"""
-Pinterest Crawler Implementation
+"""Pinterest Crawler Implementation
 ===============================
 
 Advanced Pinterest content monitoring and discovery crawler.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import json
 import logging
@@ -49,8 +47,7 @@ from .platform_crawler import PlatformCrawler, CrawlerConfig, CrawlerResult
 
 @dataclass
 class PinterestPin:
-    """Pinterest pin information"""
-    pin_id: str
+    """Pinterest pin information"""    pin_id: str
     title: str
     description: str
     url: str
@@ -94,8 +91,7 @@ class PinterestPin:
 
 @dataclass
 class PinterestBoard:
-    """Pinterest board information"""
-    board_id: str
+    """Pinterest board information"""    board_id: str
     name: str
     description: str
     url: str
@@ -129,8 +125,7 @@ class PinterestBoard:
 
 @dataclass
 class PinterestUser:
-    """Pinterest user information"""
-    user_id: str
+    """Pinterest user information"""    user_id: str
     username: str
     first_name: str
     last_name: str
@@ -179,8 +174,7 @@ class PinterestUser:
 
 
 class PinterestCrawler(PlatformCrawler):
-    """
-    Advanced Pinterest crawler for visual content monitoring and discovery.
+    """    Advanced Pinterest crawler for visual content monitoring and discovery.
     
     Features:
     - Pin discovery and image analysis
@@ -191,8 +185,7 @@ class PinterestCrawler(PlatformCrawler):
     - Image fingerprinting
     - Copyright violation detection
     - Engagement metrics tracking
-    """
-    
+    """    
     def __init__(self, config: CrawlerConfig, vector_matcher=None, access_token: str = None):
         super().__init__(config, vector_matcher)
         self.platform_name = "pinterest"
@@ -227,8 +220,7 @@ class PinterestCrawler(PlatformCrawler):
         self._setup_session_headers()
     
     def _setup_session_headers(self):
-        """Setup Pinterest-specific headers"""
-        self.session_headers.update({
+        """Setup Pinterest-specific headers"""        self.session_headers.update({
             'Accept': 'application/json',
             'Accept-Encoding': 'gzip, deflate, br',
             'Accept-Language': 'en-US,en;q=0.9',
@@ -248,8 +240,7 @@ class PinterestCrawler(PlatformCrawler):
     
     async def search_content(self, query: str, content_type: str = "pins", 
                            max_results: int = 50) -> List[CrawlerResult]:
-        """
-        Search for content on Pinterest.
+        """        Search for content on Pinterest.
         
         Args:
             query: Search query
@@ -258,8 +249,7 @@ class PinterestCrawler(PlatformCrawler):
             
         Returns:
             List of crawler results
-        """
-        try:
+        """        try:
             await self._check_rate_limit()
             
             if content_type not in self.content_types:
@@ -277,8 +267,7 @@ class PinterestCrawler(PlatformCrawler):
             return []
     
     async def _crawl_pins(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Pinterest pins"""
-        try:
+        """Crawl Pinterest pins"""        try:
             results = []
             
             # Search for pins using Pinterest API
@@ -340,8 +329,7 @@ class PinterestCrawler(PlatformCrawler):
             return []
     
     async def _crawl_boards(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Pinterest boards"""
-        try:
+        """Crawl Pinterest boards"""        try:
             results = []
             
             # Search for boards using Pinterest API
@@ -399,8 +387,7 @@ class PinterestCrawler(PlatformCrawler):
             return []
     
     async def _crawl_users(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Pinterest users"""
-        try:
+        """Crawl Pinterest users"""        try:
             results = []
             
             # Search for users using Pinterest API
@@ -459,8 +446,7 @@ class PinterestCrawler(PlatformCrawler):
             return []
     
     async def _crawl_search(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """General Pinterest search across all content types"""
-        try:
+        """General Pinterest search across all content types"""        try:
             results = []
             
             # Search across different content types
@@ -479,8 +465,7 @@ class PinterestCrawler(PlatformCrawler):
             return []
     
     async def _crawl_trending(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl trending content on Pinterest"""
-        try:
+        """Crawl trending content on Pinterest"""        try:
             results = []
             
             # Get trending pins (Popular section)
@@ -530,8 +515,7 @@ class PinterestCrawler(PlatformCrawler):
             return []
     
     async def _crawl_visual_search(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl using visual search capabilities"""
-        try:
+        """Crawl using visual search capabilities"""        try:
             results = []
             
             # Pinterest visual search requires an image
@@ -577,8 +561,7 @@ class PinterestCrawler(PlatformCrawler):
             return []
     
     async def _crawl_shopping(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl shopping and product pins"""
-        try:
+        """Crawl shopping and product pins"""        try:
             results = []
             
             # Search for shopping pins
@@ -629,8 +612,7 @@ class PinterestCrawler(PlatformCrawler):
             return []
     
     async def _crawl_ideas(self, query: str, max_results: int) -> List[CrawlerResult]:
-        """Crawl Pinterest Ideas (story pins)"""
-        try:
+        """Crawl Pinterest Ideas (story pins)"""        try:
             results = []
             
             # Search for idea pins (story pins)
@@ -682,8 +664,7 @@ class PinterestCrawler(PlatformCrawler):
     # Helper methods
     
     async def _parse_pin_data(self, pin_data: Dict[str, Any]) -> Optional[PinterestPin]:
-        """Parse pin data from API response"""
-        try:
+        """Parse pin data from API response"""        try:
             created_time = pin_data.get('created_at')
             created_at = datetime.fromisoformat(created_time.replace('Z', '+00:00')) if created_time else datetime.utcnow()
             
@@ -761,8 +742,7 @@ class PinterestCrawler(PlatformCrawler):
             return None
     
     async def _parse_board_data(self, board_data: Dict[str, Any]) -> Optional[PinterestBoard]:
-        """Parse board data from API response"""
-        try:
+        """Parse board data from API response"""        try:
             created_time = board_data.get('created_at')
             created_at = datetime.fromisoformat(created_time.replace('Z', '+00:00')) if created_time else datetime.utcnow()
             
@@ -818,8 +798,7 @@ class PinterestCrawler(PlatformCrawler):
             return None
     
     async def _parse_user_data(self, user_data: Dict[str, Any]) -> Optional[PinterestUser]:
-        """Parse user data from API response"""
-        try:
+        """Parse user data from API response"""        try:
             created_time = user_data.get('created_at')
             created_at = datetime.fromisoformat(created_time.replace('Z', '+00:00')) if created_time else datetime.utcnow()
             
@@ -879,8 +858,7 @@ class PinterestCrawler(PlatformCrawler):
             return None
     
     async def _analyze_pin_image(self, image_url: str) -> Optional[Dict[str, Any]]:
-        """Analyze pin image for visual features"""
-        try:
+        """Analyze pin image for visual features"""        try:
             if not image_url:
                 return None
             
@@ -910,8 +888,7 @@ class PinterestCrawler(PlatformCrawler):
             return None
     
     def _extract_dominant_colors(self, image: Image.Image, num_colors: int = 5) -> List[str]:
-        """Extract dominant colors from image"""
-        try:
+        """Extract dominant colors from image"""        try:
             # Convert to RGB if needed
             if image.mode != 'RGB':
                 image = image.convert('RGB')
@@ -939,8 +916,7 @@ class PinterestCrawler(PlatformCrawler):
         return []
     
     async def _check_rate_limit(self):
-        """Check and enforce rate limiting"""
-        try:
+        """Check and enforce rate limiting"""        try:
             current_time = time.time()
             time_since_last = current_time - self.last_request_time
             
@@ -956,8 +932,7 @@ class PinterestCrawler(PlatformCrawler):
             self.logger.error(f"Error in rate limiting: {str(e)}")
     
     async def extract_content_metadata(self, url: str) -> Dict[str, Any]:
-        """Extract metadata from Pinterest content"""
-        try:
+        """Extract metadata from Pinterest content"""        try:
             # Parse Pinterest URL
             parsed_url = urlparse(url)
             path_parts = parsed_url.path.strip('/').split('/')
@@ -1001,8 +976,7 @@ class PinterestCrawler(PlatformCrawler):
             return {'error': str(e)}
     
     def get_platform_info(self) -> Dict[str, Any]:
-        """Get Pinterest platform information"""
-        return {
+        """Get Pinterest platform information"""        return {
             'platform_name': 'Pinterest',
             'base_url': self.base_url,
             'api_base_url': self.api_base_url,

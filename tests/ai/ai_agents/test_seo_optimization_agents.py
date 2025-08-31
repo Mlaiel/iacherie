@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test suite for SEO Optimization AI Agents
+"""Test suite for SEO Optimization AI Agents
 
 Tests all functionalities of search engine optimization, keyword research,
 content optimization, and visibility enhancement agents.
@@ -29,7 +26,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -53,24 +49,20 @@ from ai.ai_agents.seo_optimization_agents import (
 
 
 class TestSEOOptimizationAgent:
-    """Test SEOOptimizationAgent functionality"""
-    
+    """Test SEOOptimizationAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create SEOOptimizationAgent instance"""
-        return SEOOptimizationAgent()
+        """Create SEOOptimizationAgent instance"""        return SEOOptimizationAgent()
     
     @pytest.fixture
     def sample_content_data(self):
-        """Sample content data for SEO optimization"""
-        return {
+        """Sample content data for SEO optimization"""        return {
             "content_id": "content_001",
             "title": "Complete Guide to Machine Learning for Beginners",
             "description": "Learn machine learning fundamentals, algorithms, and practical applications in this comprehensive tutorial.",
             "content_type": "video",
             "duration": 2400,  # 40 minutes
-            "transcript": """
-            Welcome to this comprehensive machine learning tutorial. Today we'll cover the fundamentals 
+            "transcript": """            Welcome to this comprehensive machine learning tutorial. Today we'll cover the fundamentals 
             of machine learning, including supervised learning, unsupervised learning, and reinforcement learning.
             We'll explore popular algorithms like linear regression, decision trees, and neural networks.
             By the end of this tutorial, you'll understand how to apply machine learning to real-world problems.
@@ -95,8 +87,7 @@ class TestSEOOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_content_seo(self, agent, sample_content_data):
-        """Test content SEO analysis"""
-        seo_analysis = await agent.analyze_content_seo(sample_content_data)
+        """Test content SEO analysis"""        seo_analysis = await agent.analyze_content_seo(sample_content_data)
         
         assert isinstance(seo_analysis, SEOAnalysis)
         assert seo_analysis.content_id == sample_content_data["content_id"]
@@ -108,8 +99,7 @@ class TestSEOOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_title_and_description(self, agent, sample_content_data):
-        """Test title and description optimization"""
-        optimization = await agent.optimize_title_and_description(sample_content_data)
+        """Test title and description optimization"""        optimization = await agent.optimize_title_and_description(sample_content_data)
         
         assert "optimized_title" in optimization
         assert "optimized_description" in optimization
@@ -128,8 +118,7 @@ class TestSEOOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_generate_seo_keywords(self, agent, sample_content_data):
-        """Test SEO keyword generation"""
-        keyword_generation = await agent.generate_seo_keywords(sample_content_data)
+        """Test SEO keyword generation"""        keyword_generation = await agent.generate_seo_keywords(sample_content_data)
         
         assert "primary_keywords" in keyword_generation
         assert "secondary_keywords" in keyword_generation
@@ -149,8 +138,7 @@ class TestSEOOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_hashtags(self, agent, sample_content_data):
-        """Test hashtag optimization"""
-        hashtag_optimization = await agent.optimize_hashtags(sample_content_data)
+        """Test hashtag optimization"""        hashtag_optimization = await agent.optimize_hashtags(sample_content_data)
         
         assert "recommended_hashtags" in hashtag_optimization
         assert "hashtag_performance" in hashtag_optimization
@@ -168,8 +156,7 @@ class TestSEOOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_competitor_seo(self, agent, sample_content_data):
-        """Test competitor SEO analysis"""
-        competitor_data = [
+        """Test competitor SEO analysis"""        competitor_data = [
             {
                 "competitor_id": "competitor_1",
                 "title": "Machine Learning Tutorial - Complete Beginner Course",
@@ -206,8 +193,7 @@ class TestSEOOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_track_seo_performance(self, agent, sample_content_data):
-        """Test SEO performance tracking"""
-        performance_data = {
+        """Test SEO performance tracking"""        performance_data = {
             "time_period": "30_days",
             "search_rankings": {
                 "machine learning tutorial": [15, 12, 10, 8, 8, 7, 6],  # Weekly rankings
@@ -244,17 +230,14 @@ class TestSEOOptimizationAgent:
 
 
 class TestKeywordResearchAgent:
-    """Test KeywordResearchAgent functionality"""
-    
+    """Test KeywordResearchAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create KeywordResearchAgent instance"""
-        return KeywordResearchAgent()
+        """Create KeywordResearchAgent instance"""        return KeywordResearchAgent()
     
     @pytest.fixture
     def sample_research_context(self):
-        """Sample context for keyword research"""
-        return {
+        """Sample context for keyword research"""        return {
             "niche": "fitness_nutrition",
             "target_audience": "fitness_enthusiasts_25_40",
             "content_goals": ["education", "product_promotion", "community_building"],
@@ -271,8 +254,7 @@ class TestKeywordResearchAgent:
     
     @pytest.mark.asyncio
     async def test_research_target_keywords(self, agent, sample_research_context):
-        """Test target keyword research"""
-        keyword_research = await agent.research_target_keywords(sample_research_context)
+        """Test target keyword research"""        keyword_research = await agent.research_target_keywords(sample_research_context)
         
         assert "high_value_keywords" in keyword_research
         assert "emerging_keywords" in keyword_research
@@ -294,8 +276,7 @@ class TestKeywordResearchAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_keyword_difficulty(self, agent, sample_research_context):
-        """Test keyword difficulty analysis"""
-        target_keywords = [
+        """Test keyword difficulty analysis"""        target_keywords = [
             "best home workout routine",
             "healthy meal prep ideas", 
             "fitness motivation tips",
@@ -324,8 +305,7 @@ class TestKeywordResearchAgent:
     
     @pytest.mark.asyncio
     async def test_identify_keyword_gaps(self, agent, sample_research_context):
-        """Test keyword gap identification"""
-        current_rankings = {
+        """Test keyword gap identification"""        current_rankings = {
             "workout routine": 15,
             "fitness tips": 8,
             "healthy eating": 12,
@@ -353,8 +333,7 @@ class TestKeywordResearchAgent:
     
     @pytest.mark.asyncio
     async def test_create_keyword_strategy(self, agent, sample_research_context):
-        """Test keyword strategy creation"""
-        strategy_goals = {
+        """Test keyword strategy creation"""        strategy_goals = {
             "primary_objective": "increase_organic_traffic",
             "target_traffic_increase": 0.5,  # 50% increase
             "timeline_months": 6,
@@ -375,8 +354,7 @@ class TestKeywordResearchAgent:
     
     @pytest.mark.asyncio
     async def test_monitor_keyword_trends(self, agent, sample_research_context):
-        """Test keyword trend monitoring"""
-        monitoring_setup = {
+        """Test keyword trend monitoring"""        monitoring_setup = {
             "keywords_to_track": [
                 "home fitness", "workout from home", "online fitness classes",
                 "nutrition coaching", "meal planning", "fitness app"
@@ -401,22 +379,18 @@ class TestKeywordResearchAgent:
 
 
 class TestContentOptimizationAgent:
-    """Test ContentOptimizationAgent functionality"""
-    
+    """Test ContentOptimizationAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create ContentOptimizationAgent instance"""
-        return ContentOptimizationAgent()
+        """Create ContentOptimizationAgent instance"""        return ContentOptimizationAgent()
     
     @pytest.fixture
     def sample_content_for_optimization(self):
-        """Sample content for optimization"""
-        return {
+        """Sample content for optimization"""        return {
             "content_id": "content_seo_001",
             "title": "Workout Tips",
             "description": "Some workout tips for you.",
-            "content": """
-            Here are some basic workout tips. Exercise is good for health.
+            "content": """            Here are some basic workout tips. Exercise is good for health.
             You should workout regularly. Cardio is important. Strength training helps too.
             Don't forget to stretch. Eat healthy food. Drink water.
             """,
@@ -435,8 +409,7 @@ class TestContentOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_content_structure(self, agent, sample_content_for_optimization):
-        """Test content structure optimization"""
-        structure_optimization = await agent.optimize_content_structure(
+        """Test content structure optimization"""        structure_optimization = await agent.optimize_content_structure(
             sample_content_for_optimization
         )
         
@@ -460,8 +433,7 @@ class TestContentOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_enhance_keyword_density(self, agent, sample_content_for_optimization):
-        """Test keyword density enhancement"""
-        keyword_enhancement = await agent.enhance_keyword_density(
+        """Test keyword density enhancement"""        keyword_enhancement = await agent.enhance_keyword_density(
             sample_content_for_optimization
         )
         
@@ -485,8 +457,7 @@ class TestContentOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_improve_content_readability(self, agent, sample_content_for_optimization):
-        """Test content readability improvement"""
-        readability_improvement = await agent.improve_content_readability(
+        """Test content readability improvement"""        readability_improvement = await agent.improve_content_readability(
             sample_content_for_optimization
         )
         
@@ -509,8 +480,7 @@ class TestContentOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_optimize_meta_tags(self, agent, sample_content_for_optimization):
-        """Test meta tag optimization"""
-        meta_optimization = await agent.optimize_meta_tags(sample_content_for_optimization)
+        """Test meta tag optimization"""        meta_optimization = await agent.optimize_meta_tags(sample_content_for_optimization)
         
         assert "optimized_title_tag" in meta_optimization
         assert "optimized_description_tag" in meta_optimization
@@ -533,8 +503,7 @@ class TestContentOptimizationAgent:
     
     @pytest.mark.asyncio
     async def test_generate_content_optimization_report(self, agent, sample_content_for_optimization):
-        """Test content optimization report generation"""
-        optimization_report = await agent.generate_content_optimization_report(
+        """Test content optimization report generation"""        optimization_report = await agent.generate_content_optimization_report(
             sample_content_for_optimization
         )
         
@@ -548,17 +517,14 @@ class TestContentOptimizationAgent:
 
 
 class TestVisibilityAnalysisAgent:
-    """Test VisibilityAnalysisAgent functionality"""
-    
+    """Test VisibilityAnalysisAgent functionality"""    
     @pytest.fixture
     def agent(self):
-        """Create VisibilityAnalysisAgent instance"""
-        return VisibilityAnalysisAgent()
+        """Create VisibilityAnalysisAgent instance"""        return VisibilityAnalysisAgent()
     
     @pytest.fixture
     def sample_visibility_data(self):
-        """Sample visibility data for analysis"""
-        return {
+        """Sample visibility data for analysis"""        return {
             "creator_id": "creator_visibility_001",
             "platform": "youtube",
             "content_library": [
@@ -593,8 +559,7 @@ class TestVisibilityAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_analyze_search_visibility(self, agent, sample_visibility_data):
-        """Test search visibility analysis"""
-        visibility_analysis = await agent.analyze_search_visibility(sample_visibility_data)
+        """Test search visibility analysis"""        visibility_analysis = await agent.analyze_search_visibility(sample_visibility_data)
         
         assert "overall_visibility_score" in visibility_analysis
         assert "search_performance" in visibility_analysis
@@ -611,8 +576,7 @@ class TestVisibilityAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_identify_visibility_bottlenecks(self, agent, sample_visibility_data):
-        """Test visibility bottleneck identification"""
-        bottleneck_analysis = await agent.identify_visibility_bottlenecks(sample_visibility_data)
+        """Test visibility bottleneck identification"""        bottleneck_analysis = await agent.identify_visibility_bottlenecks(sample_visibility_data)
         
         assert "critical_bottlenecks" in bottleneck_analysis
         assert "moderate_issues" in bottleneck_analysis
@@ -631,8 +595,7 @@ class TestVisibilityAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_recommend_visibility_improvements(self, agent, sample_visibility_data):
-        """Test visibility improvement recommendations"""
-        improvement_recommendations = await agent.recommend_visibility_improvements(
+        """Test visibility improvement recommendations"""        improvement_recommendations = await agent.recommend_visibility_improvements(
             sample_visibility_data
         )
         
@@ -653,8 +616,7 @@ class TestVisibilityAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_track_visibility_trends(self, agent, sample_visibility_data):
-        """Test visibility trend tracking"""
-        trend_data = {
+        """Test visibility trend tracking"""        trend_data = {
             "time_period": "90_days",
             "historical_metrics": {
                 "weekly_impressions": [45000, 48000, 52000, 55000, 58000, 62000, 65000, 68000, 70000, 72000, 75000, 78000],
@@ -681,8 +643,7 @@ class TestVisibilityAnalysisAgent:
     
     @pytest.mark.asyncio
     async def test_generate_visibility_report(self, agent, sample_visibility_data):
-        """Test visibility report generation"""
-        report_config = {
+        """Test visibility report generation"""        report_config = {
             "report_type": "comprehensive",
             "time_period": "quarterly",
             "include_competitive_analysis": True,
@@ -704,12 +665,10 @@ class TestVisibilityAnalysisAgent:
 
 
 class TestIntegrationScenarios:
-    """Test integration between different SEO optimization agents"""
-    
+    """Test integration between different SEO optimization agents"""    
     @pytest.fixture
     def agents(self):
-        """Create all SEO optimization agents for integration testing"""
-        return {
+        """Create all SEO optimization agents for integration testing"""        return {
             "seo": SEOOptimizationAgent(),
             "keyword": KeywordResearchAgent(),
             "content": ContentOptimizationAgent(),
@@ -718,8 +677,7 @@ class TestIntegrationScenarios:
     
     @pytest.mark.asyncio
     async def test_comprehensive_seo_strategy(self, agents):
-        """Test comprehensive SEO strategy development"""
-        # Creator profile for complete SEO optimization
+        """Test comprehensive SEO strategy development"""        # Creator profile for complete SEO optimization
         creator_data = {
             "creator_id": "seo_integration_creator",
             "niche": "personal_finance",
@@ -773,25 +731,21 @@ class TestIntegrationScenarios:
 
 
 class TestErrorHandling:
-    """Test error handling scenarios"""
-    
+    """Test error handling scenarios"""    
     @pytest.fixture
     def agent(self):
-        """Create SEOOptimizationAgent for error testing"""
-        return SEOOptimizationAgent()
+        """Create SEOOptimizationAgent for error testing"""        return SEOOptimizationAgent()
     
     @pytest.mark.asyncio
     async def test_insufficient_content_data(self, agent):
-        """Test handling of insufficient content data"""
-        minimal_data = {"content_id": "test"}
+        """Test handling of insufficient content data"""        minimal_data = {"content_id": "test"}
         
         with pytest.raises((ValueError, KeyError)):
             await agent.analyze_content_seo(minimal_data)
     
     @pytest.mark.asyncio
     async def test_invalid_seo_parameters(self, agent):
-        """Test handling of invalid SEO parameters"""
-        invalid_data = {
+        """Test handling of invalid SEO parameters"""        invalid_data = {
             "content_id": "test",
             "title": "",  # Empty title
             "description": "x" * 10000,  # Too long description
@@ -808,8 +762,7 @@ class TestErrorHandling:
     
     @pytest.mark.asyncio
     async def test_external_seo_api_failures(self, agent):
-        """Test handling of external SEO API failures"""
-        with patch('aiohttp.ClientSession.get') as mock_get:
+        """Test handling of external SEO API failures"""        with patch('aiohttp.ClientSession.get') as mock_get:
             mock_get.side_effect = Exception("SEO API service unavailable")
             
             content_data = {
@@ -828,17 +781,14 @@ class TestErrorHandling:
 
 
 class TestPerformanceAndScaling:
-    """Test performance and scaling scenarios"""
-    
+    """Test performance and scaling scenarios"""    
     @pytest.fixture
     def agent(self):
-        """Create SEOOptimizationAgent for performance testing"""
-        return SEOOptimizationAgent()
+        """Create SEOOptimizationAgent for performance testing"""        return SEOOptimizationAgent()
     
     @pytest.mark.asyncio
     async def test_bulk_content_seo_analysis(self, agent):
-        """Test bulk SEO analysis performance"""
-        content_batch = [
+        """Test bulk SEO analysis performance"""        content_batch = [
             {
                 "content_id": f"bulk_content_{i}",
                 "title": f"SEO Tutorial {i}: Advanced Techniques",
@@ -869,8 +819,7 @@ class TestPerformanceAndScaling:
     
     @pytest.mark.asyncio
     async def test_concurrent_keyword_research(self, agent):
-        """Test concurrent keyword research for multiple niches"""
-        keyword_agent = KeywordResearchAgent()
+        """Test concurrent keyword research for multiple niches"""        keyword_agent = KeywordResearchAgent()
         
         research_contexts = [
             {"niche": f"niche_{i}", "target_audience": f"audience_{i}"}

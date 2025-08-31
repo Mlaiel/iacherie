@@ -1,5 +1,4 @@
-"""
-Platform Revenue Management - Platform-specific revenue optimization and management
+"""Platform Revenue Management - Platform-specific revenue optimization and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -11,7 +10,6 @@ written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    SPOTIFY = "spotify"
+    """Supported platform types"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -47,8 +44,7 @@ class PlatformType(Enum):
 
 
 class RevenueModel(Enum):
-    """Platform revenue models"""
-    CPM = "cpm"  # Cost per mille (impressions)
+    """Platform revenue models"""    CPM = "cpm"  # Cost per mille (impressions)
     CPC = "cpc"  # Cost per click
     SUBSCRIPTION = "subscription"
     COMMISSION = "commission"
@@ -60,8 +56,7 @@ class RevenueModel(Enum):
 
 @dataclass
 class PlatformRevenueStrategy:
-    """Platform-specific revenue optimization strategy"""
-    platform: PlatformType
+    """Platform-specific revenue optimization strategy"""    platform: PlatformType
     revenue_model: RevenueModel
     optimization_focus: List[str]
     target_metrics: Dict[str, float]
@@ -73,8 +68,7 @@ class PlatformRevenueStrategy:
 
 @dataclass
 class PlatformMetrics:
-    """Platform performance metrics"""
-    followers: int
+    """Platform performance metrics"""    followers: int
     engagement_rate: float
     reach: int
     impressions: int
@@ -87,35 +81,29 @@ class PlatformMetrics:
 
 
 class BasePlatformManager(ABC):
-    """Abstract base class for platform managers"""
-    
+    """Abstract base class for platform managers"""    
     @abstractmethod
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize platform manager"""
-        pass
+        """Initialize platform manager"""        pass
     
     @abstractmethod
     async def get_revenue_data(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get revenue data from platform"""
-        pass
+        """Get revenue data from platform"""        pass
     
     @abstractmethod
     async def optimize_strategy(self, current_metrics: PlatformMetrics) -> PlatformRevenueStrategy:
-        """Optimize revenue strategy for platform"""
-        pass
+        """Optimize revenue strategy for platform"""        pass
 
 
 class SpotifyRevenueManager(BasePlatformManager):
-    """Spotify-specific revenue management"""
-    
+    """Spotify-specific revenue management"""    
     def __init__(self):
         self.platform = PlatformType.SPOTIFY
         self.api_client = None
         self.config = {}
         
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize Spotify manager"""
-        try:
+        """Initialize Spotify manager"""        try:
             self.config = config
             # Initialize Spotify API client
             await self._setup_spotify_api()
@@ -125,13 +113,11 @@ class SpotifyRevenueManager(BasePlatformManager):
             raise
     
     async def _setup_spotify_api(self) -> None:
-        """Setup Spotify API client"""
-        # In production, setup actual Spotify API client
+        """Setup Spotify API client"""        # In production, setup actual Spotify API client
         self.api_client = {"client_id": self.config.get("client_id"), "client_secret": self.config.get("client_secret")}
     
     async def get_revenue_data(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Spotify revenue data"""
-        try:
+        """Get Spotify revenue data"""        try:
             # Mock data for demonstration - in production, use real Spotify API
             days = (end_date - start_date).days
             daily_streams = np.random.randint(1000, 10000, days)
@@ -163,8 +149,7 @@ class SpotifyRevenueManager(BasePlatformManager):
             raise PlatformRevenueError(f"Spotify data retrieval failed: {e}")
     
     async def optimize_strategy(self, current_metrics: PlatformMetrics) -> PlatformRevenueStrategy:
-        """Optimize Spotify revenue strategy"""
-        try:
+        """Optimize Spotify revenue strategy"""        try:
             # Analyze current performance
             streams_per_follower = current_metrics.reach / max(current_metrics.followers, 1)
             
@@ -208,16 +193,14 @@ class SpotifyRevenueManager(BasePlatformManager):
 
 
 class YouTubeRevenueManager(BasePlatformManager):
-    """YouTube-specific revenue management"""
-    
+    """YouTube-specific revenue management"""    
     def __init__(self):
         self.platform = PlatformType.YOUTUBE
         self.api_client = None
         self.config = {}
         
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize YouTube manager"""
-        try:
+        """Initialize YouTube manager"""        try:
             self.config = config
             await self._setup_youtube_api()
             logger.info("YouTube revenue manager initialized")
@@ -226,12 +209,10 @@ class YouTubeRevenueManager(BasePlatformManager):
             raise
     
     async def _setup_youtube_api(self) -> None:
-        """Setup YouTube API client"""
-        self.api_client = {"api_key": self.config.get("api_key")}
+        """Setup YouTube API client"""        self.api_client = {"api_key": self.config.get("api_key")}
     
     async def get_revenue_data(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get YouTube revenue data"""
-        try:
+        """Get YouTube revenue data"""        try:
             days = (end_date - start_date).days
             daily_views = np.random.randint(5000, 50000, days)
             daily_revenue = daily_views * Decimal('0.002')  # Approximate ad revenue
@@ -264,8 +245,7 @@ class YouTubeRevenueManager(BasePlatformManager):
             raise PlatformRevenueError(f"YouTube data retrieval failed: {e}")
     
     async def optimize_strategy(self, current_metrics: PlatformMetrics) -> PlatformRevenueStrategy:
-        """Optimize YouTube revenue strategy"""
-        try:
+        """Optimize YouTube revenue strategy"""        try:
             optimization_focus = []
             
             if current_metrics.engagement_rate < 5:
@@ -307,16 +287,14 @@ class YouTubeRevenueManager(BasePlatformManager):
 
 
 class InstagramRevenueManager(BasePlatformManager):
-    """Instagram-specific revenue management"""
-    
+    """Instagram-specific revenue management"""    
     def __init__(self):
         self.platform = PlatformType.INSTAGRAM
         self.api_client = None
         self.config = {}
         
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize Instagram manager"""
-        try:
+        """Initialize Instagram manager"""        try:
             self.config = config
             await self._setup_instagram_api()
             logger.info("Instagram revenue manager initialized")
@@ -325,12 +303,10 @@ class InstagramRevenueManager(BasePlatformManager):
             raise
     
     async def _setup_instagram_api(self) -> None:
-        """Setup Instagram API client"""
-        self.api_client = {"access_token": self.config.get("access_token")}
+        """Setup Instagram API client"""        self.api_client = {"access_token": self.config.get("access_token")}
     
     async def get_revenue_data(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get Instagram revenue data"""
-        try:
+        """Get Instagram revenue data"""        try:
             days = (end_date - start_date).days
             daily_reach = np.random.randint(10000, 100000, days)
             daily_revenue = daily_reach * Decimal('0.001')  # Approximate creator fund
@@ -363,8 +339,7 @@ class InstagramRevenueManager(BasePlatformManager):
             raise PlatformRevenueError(f"Instagram data retrieval failed: {e}")
     
     async def optimize_strategy(self, current_metrics: PlatformMetrics) -> PlatformRevenueStrategy:
-        """Optimize Instagram revenue strategy"""
-        try:
+        """Optimize Instagram revenue strategy"""        try:
             optimization_focus = []
             
             if current_metrics.engagement_rate < 3:
@@ -406,16 +381,14 @@ class InstagramRevenueManager(BasePlatformManager):
 
 
 class TikTokRevenueManager(BasePlatformManager):
-    """TikTok-specific revenue management"""
-    
+    """TikTok-specific revenue management"""    
     def __init__(self):
         self.platform = PlatformType.TIKTOK
         self.api_client = None
         self.config = {}
         
     async def initialize(self, config: Dict[str, Any]) -> None:
-        """Initialize TikTok manager"""
-        try:
+        """Initialize TikTok manager"""        try:
             self.config = config
             await self._setup_tiktok_api()
             logger.info("TikTok revenue manager initialized")
@@ -424,12 +397,10 @@ class TikTokRevenueManager(BasePlatformManager):
             raise
     
     async def _setup_tiktok_api(self) -> None:
-        """Setup TikTok API client"""
-        self.api_client = {"app_id": self.config.get("app_id"), "secret": self.config.get("secret")}
+        """Setup TikTok API client"""        self.api_client = {"app_id": self.config.get("app_id"), "secret": self.config.get("secret")}
     
     async def get_revenue_data(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get TikTok revenue data"""
-        try:
+        """Get TikTok revenue data"""        try:
             days = (end_date - start_date).days
             daily_views = np.random.randint(50000, 500000, days)
             daily_revenue = daily_views * Decimal('0.0005')  # Creator fund rate
@@ -461,8 +432,7 @@ class TikTokRevenueManager(BasePlatformManager):
             raise PlatformRevenueError(f"TikTok data retrieval failed: {e}")
     
     async def optimize_strategy(self, current_metrics: PlatformMetrics) -> PlatformRevenueStrategy:
-        """Optimize TikTok revenue strategy"""
-        try:
+        """Optimize TikTok revenue strategy"""        try:
             optimization_focus = []
             
             if current_metrics.engagement_rate < 8:
@@ -504,15 +474,13 @@ class TikTokRevenueManager(BasePlatformManager):
 
 
 class CrossPlatformOptimizer:
-    """Cross-platform revenue optimization"""
-    
+    """Cross-platform revenue optimization"""    
     def __init__(self):
         self.platform_managers = {}
         self.optimization_history = []
         
     async def initialize(self, platform_configs: Dict[str, Dict[str, Any]]) -> None:
-        """Initialize cross-platform optimizer"""
-        try:
+        """Initialize cross-platform optimizer"""        try:
             # Initialize platform managers
             manager_classes = {
                 PlatformType.SPOTIFY: SpotifyRevenueManager,
@@ -547,8 +515,7 @@ class CrossPlatformOptimizer:
         total_budget: Decimal,
         platform_metrics: Dict[PlatformType, PlatformMetrics]
     ) -> Dict[PlatformType, Dict[str, Any]]:
-        """Optimize revenue allocation across platforms"""
-        try:
+        """Optimize revenue allocation across platforms"""        try:
             optimization_results = {}
             
             # Calculate platform ROI scores
@@ -605,8 +572,7 @@ class CrossPlatformOptimizer:
         metrics: PlatformMetrics,
         budget: Decimal
     ) -> List[str]:
-        """Get platform-specific recommendations"""
-        recommendations = []
+        """Get platform-specific recommendations"""        recommendations = []
         
         # General recommendations based on metrics
         if metrics.engagement_rate < 2:
@@ -635,8 +601,7 @@ class CrossPlatformOptimizer:
         return recommendations
     
     async def generate_cross_platform_report(self, period_days: int = 30) -> Dict[str, Any]:
-        """Generate comprehensive cross-platform revenue report"""
-        try:
+        """Generate comprehensive cross-platform revenue report"""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -683,8 +648,7 @@ class CrossPlatformOptimizer:
             raise PlatformRevenueError(f"Cross-platform report generation failed: {e}")
     
     async def _generate_cross_platform_insights(self, platform_data: Dict[str, Any]) -> List[str]:
-        """Generate insights from cross-platform data"""
-        insights = []
+        """Generate insights from cross-platform data"""        insights = []
         
         # Revenue distribution insights
         revenues = {
@@ -718,8 +682,7 @@ class CrossPlatformOptimizer:
         return insights
     
     async def _generate_cross_platform_recommendations(self, platform_data: Dict[str, Any]) -> List[str]:
-        """Generate cross-platform optimization recommendations"""
-        recommendations = []
+        """Generate cross-platform optimization recommendations"""        recommendations = []
         
         # Identify underperforming platforms
         revenues = {
@@ -752,16 +715,14 @@ class CrossPlatformOptimizer:
 
 
 class PlatformRevenueManager:
-    """Main platform revenue management controller"""
-    
+    """Main platform revenue management controller"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.cross_platform_optimizer = CrossPlatformOptimizer()
         self.platform_managers = {}
         
     async def initialize(self) -> None:
-        """Initialize platform revenue manager"""
-        try:
+        """Initialize platform revenue manager"""        try:
             platform_configs = self.config.get('platforms', {})
             await self.cross_platform_optimizer.initialize(platform_configs)
             
@@ -772,8 +733,7 @@ class PlatformRevenueManager:
             raise
     
     async def get_platform_revenue_summary(self, platforms: List[PlatformType]) -> Dict[str, Any]:
-        """Get revenue summary for specified platforms"""
-        try:
+        """Get revenue summary for specified platforms"""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=30)
             
@@ -799,8 +759,7 @@ class PlatformRevenueManager:
         target_revenue: Decimal,
         budget: Decimal
     ) -> Dict[str, Any]:
-        """Optimize platform mix for target revenue"""
-        try:
+        """Optimize platform mix for target revenue"""        try:
             # Get current metrics for platforms
             platform_metrics = {}
             
@@ -861,8 +820,7 @@ class PlatformRevenueManager:
         projected_revenue: Decimal,
         allocation_results: Dict[PlatformType, Dict[str, Any]]
     ) -> List[str]:
-        """Generate overall optimization recommendations"""
-        recommendations = []
+        """Generate overall optimization recommendations"""        recommendations = []
         
         revenue_gap = target_revenue - projected_revenue
         

@@ -1,5 +1,4 @@
-"""
-Revenue Security Configuration Module
+"""Revenue Security Configuration Module
 ====================================
 
 Advanced revenue security and monetization configuration for IA Influencer Agent platform.
@@ -21,7 +20,6 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, List, Optional, Any, Set
 from dataclasses import dataclass, field
@@ -31,8 +29,7 @@ from enum import Enum
 
 
 class PaymentProvider(Enum):
-    """Supported payment providers."""
-    STRIPE = "stripe"
+    """Supported payment providers."""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -42,8 +39,7 @@ class PaymentProvider(Enum):
 
 
 class RevenueSource(Enum):
-    """Revenue sources for content creators."""
-    SPOTIFY_ROYALTIES = "spotify_royalties"
+    """Revenue sources for content creators."""    SPOTIFY_ROYALTIES = "spotify_royalties"
     YOUTUBE_ADSENSE = "youtube_adsense"
     INSTAGRAM_CREATOR = "instagram_creator"
     TIKTOK_CREATOR = "tiktok_creator"
@@ -56,8 +52,7 @@ class RevenueSource(Enum):
 
 
 class FraudRiskLevel(Enum):
-    """Fraud risk assessment levels."""
-    VERY_LOW = "very_low"
+    """Fraud risk assessment levels."""    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -66,8 +61,7 @@ class FraudRiskLevel(Enum):
 
 
 class ComplianceRegion(Enum):
-    """Financial compliance regions."""
-    EU = "eu"
+    """Financial compliance regions."""    EU = "eu"
     US = "us"
     UK = "uk"
     CANADA = "canada"
@@ -77,8 +71,7 @@ class ComplianceRegion(Enum):
 
 @dataclass
 class PaymentSecurityConfig:
-    """Payment processing security configuration."""
-    # PCI DSS compliance
+    """Payment processing security configuration."""    # PCI DSS compliance
     pci_compliance_level: str = "Level 1"
     tokenization_enabled: bool = True
     vault_storage: bool = True
@@ -127,8 +120,7 @@ class PaymentSecurityConfig:
 
 @dataclass
 class FraudDetectionConfig:
-    """Financial fraud detection configuration."""
-    # AI-powered fraud detection
+    """Financial fraud detection configuration."""    # AI-powered fraud detection
     ml_fraud_detection: bool = True
     real_time_analysis: bool = True
     behavioral_analytics: bool = True
@@ -171,8 +163,7 @@ class FraudDetectionConfig:
 
 @dataclass
 class RevenueTrackingConfig:
-    """Revenue tracking and analytics configuration."""
-    # Real-time tracking
+    """Revenue tracking and analytics configuration."""    # Real-time tracking
     real_time_tracking: bool = True
     tracking_interval_minutes: int = 15
     
@@ -231,8 +222,7 @@ class RevenueTrackingConfig:
 
 @dataclass
 class PayoutConfig:
-    """Automated payout configuration."""
-    # Payout frequency
+    """Automated payout configuration."""    # Payout frequency
     default_frequency: str = "weekly"
     minimum_payout_amount: Decimal = Decimal("25.00")
     maximum_payout_amount: Decimal = Decimal("25000.00")
@@ -267,8 +257,7 @@ class PayoutConfig:
 
 @dataclass
 class AuditConfig:
-    """Financial audit and compliance configuration."""
-    # Audit trail
+    """Financial audit and compliance configuration."""    # Audit trail
     comprehensive_logging: bool = True
     immutable_records: bool = True
     blockchain_verification: bool = False
@@ -301,8 +290,7 @@ class AuditConfig:
 
 @dataclass
 class DisputeResolutionConfig:
-    """Payment dispute and chargeback configuration."""
-    # Dispute handling
+    """Payment dispute and chargeback configuration."""    # Dispute handling
     automated_dispute_response: bool = True
     evidence_collection: bool = True
     representment_automation: bool = True
@@ -346,8 +334,7 @@ class DisputeResolutionConfig:
 
 @dataclass
 class TaxComplianceConfig:
-    """Tax compliance and reporting configuration."""
-    # Tax calculation
+    """Tax compliance and reporting configuration."""    # Tax calculation
     automated_tax_calculation: bool = True
     real_time_tax_rates: bool = True
     multi_jurisdiction_support: bool = True
@@ -397,8 +384,7 @@ class TaxComplianceConfig:
 
 @dataclass
 class RevenueSecurityConfig:
-    """Main revenue security configuration container."""
-    payment_security: PaymentSecurityConfig = field(default_factory=PaymentSecurityConfig)
+    """Main revenue security configuration container."""    payment_security: PaymentSecurityConfig = field(default_factory=PaymentSecurityConfig)
     fraud_detection: FraudDetectionConfig = field(default_factory=FraudDetectionConfig)
     revenue_tracking: RevenueTrackingConfig = field(default_factory=RevenueTrackingConfig)
     payout: PayoutConfig = field(default_factory=PayoutConfig)
@@ -432,13 +418,11 @@ revenue_security_config = RevenueSecurityConfig()
 
 
 def get_revenue_security_config() -> RevenueSecurityConfig:
-    """Get the revenue security configuration instance."""
-    return revenue_security_config
+    """Get the revenue security configuration instance."""    return revenue_security_config
 
 
 def validate_revenue_security_config(config: RevenueSecurityConfig) -> bool:
-    """Validate revenue security configuration settings."""
-    # Validate payment limits
+    """Validate revenue security configuration settings."""    # Validate payment limits
     if config.payment_security.transaction_limit_eur <= 0:
         raise ValueError("Transaction limit must be positive")
     
@@ -466,8 +450,7 @@ def validate_revenue_security_config(config: RevenueSecurityConfig) -> bool:
 
 
 def get_creator_tier_config(tier: str) -> Dict[str, Any]:
-    """Get revenue configuration overrides for creator tiers."""
-    tier_configs = {
+    """Get revenue configuration overrides for creator tiers."""    tier_configs = {
         "free": {
             "payment_security.daily_limit_eur": Decimal("1000.00"),
             "payment_security.monthly_limit_eur": Decimal("5000.00"),

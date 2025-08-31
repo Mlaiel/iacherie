@@ -1,11 +1,9 @@
-"""
-Advanced Content Detection Engine
+"""Advanced Content Detection Engine
 Professional content identification and analysis system for IA Influencer Protection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import hashlib
 import imagehash
 import librosa
@@ -24,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint for identification"""
-    content_id: str
+    """Content fingerprint for identification"""    content_id: str
     content_type: str  # 'image', 'audio', 'video', 'text'
     hash_signatures: Dict[str, str]
     feature_vectors: Dict[str, List[float]]
@@ -35,8 +32,7 @@ class ContentFingerprint:
 
 
 class ContentHashGenerator:
-    """Advanced hashing system for content identification"""
-    
+    """Advanced hashing system for content identification"""    
     def __init__(self):
         self.supported_formats = {
             'image': ['.jpg', '.jpeg', '.png', '.bmp', '.tiff', '.webp'],
@@ -46,8 +42,7 @@ class ContentHashGenerator:
         }
     
     def generate_image_hash(self, image_path: str) -> Dict[str, str]:
-        """Generate multiple hash signatures for images"""
-        try:
+        """Generate multiple hash signatures for images"""        try:
             image = Image.open(image_path)
             
             hashes = {
@@ -67,8 +62,7 @@ class ContentHashGenerator:
             raise
     
     def generate_audio_hash(self, audio_path: str) -> Dict[str, str]:
-        """Generate audio fingerprint using spectral analysis"""
-        try:
+        """Generate audio fingerprint using spectral analysis"""        try:
             # Load audio file
             y, sr = librosa.load(audio_path, duration=30)  # First 30 seconds
             
@@ -101,8 +95,7 @@ class ContentHashGenerator:
             raise
     
     def generate_video_hash(self, video_path: str) -> Dict[str, str]:
-        """Generate video fingerprint using frame analysis"""
-        try:
+        """Generate video fingerprint using frame analysis"""        try:
             cap = cv2.VideoCapture(video_path)
             frame_hashes = []
             
@@ -146,8 +139,7 @@ class ContentHashGenerator:
             raise
     
     def generate_text_hash(self, text_content: str) -> Dict[str, str]:
-        """Generate text content fingerprint"""
-        try:
+        """Generate text content fingerprint"""        try:
             # Normalize text
             normalized = text_content.lower().strip()
             words = normalized.split()
@@ -167,8 +159,7 @@ class ContentHashGenerator:
             raise
     
     def _calculate_file_hash(self, file_path: str, algorithm: str) -> str:
-        """Calculate file hash using specified algorithm"""
-        hash_func = getattr(hashlib, algorithm)()
+        """Calculate file hash using specified algorithm"""        hash_func = getattr(hashlib, algorithm)()
         
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
@@ -177,8 +168,7 @@ class ContentHashGenerator:
         return hash_func.hexdigest()
     
     def _generate_semantic_hash(self, words: List[str]) -> str:
-        """Generate semantic hash for text similarity"""
-        # Simple word frequency-based hash
+        """Generate semantic hash for text similarity"""        # Simple word frequency-based hash
         word_freq = {}
         for word in words:
             word_freq[word] = word_freq.get(word, 0) + 1
@@ -191,16 +181,14 @@ class ContentHashGenerator:
 
 
 class ContentDetectionEngine:
-    """Main content detection and analysis engine"""
-    
+    """Main content detection and analysis engine"""    
     def __init__(self):
         self.hash_generator = ContentHashGenerator()
         self.similarity_threshold = 0.95
         self.fingerprint_cache = {}
     
     def analyze_content(self, content_path: str, content_type: str = None) -> ContentFingerprint:
-        """Comprehensive content analysis and fingerprinting"""
-        try:
+        """Comprehensive content analysis and fingerprinting"""        try:
             if not content_type:
                 content_type = self._detect_content_type(content_path)
             
@@ -246,8 +234,7 @@ class ContentDetectionEngine:
             raise
     
     def detect_similarity(self, fingerprint1: ContentFingerprint, fingerprint2: ContentFingerprint) -> float:
-        """Calculate similarity between two content fingerprints"""
-        try:
+        """Calculate similarity between two content fingerprints"""        try:
             if fingerprint1.content_type != fingerprint2.content_type:
                 return 0.0
             
@@ -275,8 +262,7 @@ class ContentDetectionEngine:
             return 0.0
     
     def search_duplicates(self, target_fingerprint: ContentFingerprint, fingerprint_database: List[ContentFingerprint]) -> List[Tuple[ContentFingerprint, float]]:
-        """Search for potential duplicates in fingerprint database"""
-        matches = []
+        """Search for potential duplicates in fingerprint database"""        matches = []
         
         for fp in fingerprint_database:
             if fp.content_type == target_fingerprint.content_type:
@@ -291,8 +277,7 @@ class ContentDetectionEngine:
         return matches
     
     def _detect_content_type(self, file_path: str) -> str:
-        """Auto-detect content type from file extension"""
-        ext = file_path.lower().split('.')[-1]
+        """Auto-detect content type from file extension"""        ext = file_path.lower().split('.')[-1]
         
         for content_type, extensions in self.hash_generator.supported_formats.items():
             if f'.{ext}' in extensions:
@@ -301,8 +286,7 @@ class ContentDetectionEngine:
         raise ValueError(f"Unsupported file extension: .{ext}")
     
     def _extract_image_features(self, image_path: str) -> Dict[str, List[float]]:
-        """Extract advanced image features"""
-        try:
+        """Extract advanced image features"""        try:
             image = cv2.imread(image_path)
             
             # Color histograms
@@ -326,8 +310,7 @@ class ContentDetectionEngine:
             return {}
     
     def _extract_audio_features(self, audio_path: str) -> Dict[str, List[float]]:
-        """Extract advanced audio features"""
-        try:
+        """Extract advanced audio features"""        try:
             y, sr = librosa.load(audio_path, duration=30)
             
             # Spectral features
@@ -352,8 +335,7 @@ class ContentDetectionEngine:
             return {}
     
     def _extract_video_features(self, video_path: str) -> Dict[str, List[float]]:
-        """Extract video-specific features"""
-        try:
+        """Extract video-specific features"""        try:
             cap = cv2.VideoCapture(video_path)
             
             # Video metadata
@@ -386,8 +368,7 @@ class ContentDetectionEngine:
             return {}
     
     def _extract_metadata(self, file_path: str, content_type: str) -> Dict[str, Any]:
-        """Extract file metadata"""
-        import os
+        """Extract file metadata"""        import os
         from pathlib import Path
         
         path_obj = Path(file_path)
@@ -405,8 +386,7 @@ class ContentDetectionEngine:
         return metadata
     
     def _calculate_confidence_score(self, hash_signatures: Dict[str, str], feature_vectors: Dict[str, List[float]]) -> float:
-        """Calculate confidence score for fingerprint quality"""
-        score = 0.0
+        """Calculate confidence score for fingerprint quality"""        score = 0.0
         
         # Hash quality (more hashes = higher confidence)
         hash_score = min(len(hash_signatures) / 4, 1.0) * 0.4
@@ -420,8 +400,7 @@ class ContentDetectionEngine:
         return min(score, 1.0)
     
     def _compare_hashes(self, hashes1: Dict[str, str], hashes2: Dict[str, str]) -> float:
-        """Compare hash signatures for similarity"""
-        common_keys = set(hashes1.keys()) & set(hashes2.keys())
+        """Compare hash signatures for similarity"""        common_keys = set(hashes1.keys()) & set(hashes2.keys())
         if not common_keys:
             return 0.0
         
@@ -429,8 +408,7 @@ class ContentDetectionEngine:
         return matches / len(common_keys)
     
     def _compare_features(self, features1: Dict[str, List[float]], features2: Dict[str, List[float]]) -> float:
-        """Compare feature vectors for similarity"""
-        common_keys = set(features1.keys()) & set(features2.keys())
+        """Compare feature vectors for similarity"""        common_keys = set(features1.keys()) & set(features2.keys())
         if not common_keys:
             return 0.0
         
@@ -452,8 +430,7 @@ class ContentDetectionEngine:
         return np.mean(similarities) if similarities else 0.0
     
     def _calculate_texture_features(self, gray_image: np.ndarray) -> np.ndarray:
-        """Calculate basic texture features"""
-        # Simple gradient-based texture features
+        """Calculate basic texture features"""        # Simple gradient-based texture features
         grad_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
         grad_y = cv2.Sobel(gray_image, cv2.CV_64F, 0, 1, ksize=3)
         
@@ -471,15 +448,13 @@ class ContentDetectionEngine:
 
 
 class ContentDetectionManager:
-    """High-level manager for content detection operations"""
-    
+    """High-level manager for content detection operations"""    
     def __init__(self):
         self.detection_engine = ContentDetectionEngine()
         self.fingerprint_database = []
     
     def register_content(self, content_path: str, owner_id: str, content_metadata: Dict[str, Any] = None) -> str:
-        """Register new content for protection"""
-        try:
+        """Register new content for protection"""        try:
             fingerprint = self.detection_engine.analyze_content(content_path)
             
             # Add owner information
@@ -500,8 +475,7 @@ class ContentDetectionManager:
             raise
     
     def detect_infringement(self, suspicious_content_path: str) -> List[Dict[str, Any]]:
-        """Detect potential copyright infringement"""
-        try:
+        """Detect potential copyright infringement"""        try:
             # Analyze suspicious content
             suspicious_fingerprint = self.detection_engine.analyze_content(suspicious_content_path)
             
@@ -532,8 +506,7 @@ class ContentDetectionManager:
             raise
     
     def export_fingerprint_database(self) -> str:
-        """Export fingerprint database to JSON"""
-        try:
+        """Export fingerprint database to JSON"""        try:
             export_data = []
             for fp in self.fingerprint_database:
                 export_data.append(asdict(fp))
@@ -545,8 +518,7 @@ class ContentDetectionManager:
             raise
     
     def import_fingerprint_database(self, json_data: str) -> int:
-        """Import fingerprint database from JSON"""
-        try:
+        """Import fingerprint database from JSON"""        try:
             import_data = json.loads(json_data)
             imported_count = 0
             

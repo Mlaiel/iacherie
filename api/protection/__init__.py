@@ -36,8 +36,7 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""
-# Import all protection modules
+"""# Import all protection modules
 from .content_protection import (
     ContentProtectionEngine,
     ProtectionLevel,

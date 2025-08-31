@@ -1,5 +1,4 @@
-"""
-🔧 Artifact Manager - IA-Influencer-Agent CI/CD
+"""🔧 Artifact Manager - IA-Influencer-Agent CI/CD
 ================================================================
 Expert: DEVOPS_ENGINEER + STORAGE_SPECIALIST
 Created: 2025-08-24
@@ -9,7 +8,6 @@ Enterprise artifact management system for multi-format content platform.
 Handles storage, versioning, distribution, and lifecycle management of build artifacts.
 ================================================================
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -30,8 +28,7 @@ import requests
 logger = logging.getLogger(__name__)
 
 class ArtifactType(Enum):
-    """Artifact type enumeration"""
-    DOCKER_IMAGE = "docker_image"
+    """Artifact type enumeration"""    DOCKER_IMAGE = "docker_image"
     AI_MODEL = "ai_model"
     CONTENT_FINGERPRINT = "content_fingerprint"
     CONFIGURATION = "configuration"
@@ -43,8 +40,7 @@ class ArtifactType(Enum):
     DEPLOYMENT_PACKAGE = "deployment_package"
 
 class StorageBackend(Enum):
-    """Storage backend enumeration"""
-    LOCAL = "local"
+    """Storage backend enumeration"""    LOCAL = "local"
     AWS_S3 = "aws_s3"
     MINIO = "minio"
     AZURE_BLOB = "azure_blob"
@@ -52,8 +48,7 @@ class StorageBackend(Enum):
 
 @dataclass
 class ArtifactMetadata:
-    """Artifact metadata structure"""
-    artifact_id: str
+    """Artifact metadata structure"""    artifact_id: str
     name: str
     version: str
     artifact_type: ArtifactType
@@ -76,8 +71,7 @@ class ArtifactMetadata:
 
 @dataclass
 class ArtifactStorageConfig:
-    """Artifact storage configuration"""
-    backend: StorageBackend
+    """Artifact storage configuration"""    backend: StorageBackend
     bucket_name: str
     region: str = "eu-central-1"
     endpoint_url: Optional[str] = None
@@ -96,11 +90,9 @@ class ArtifactStorageConfig:
             }
 
 class ArtifactManager:
-    """Enterprise artifact management system"""
-    
+    """Enterprise artifact management system"""    
     def __init__(self, storage_config: ArtifactStorageConfig):
-        """Initialize artifact manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize artifact manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.storage_config = storage_config
         self.storage_client = None
         self.local_cache_dir = Path("/tmp/ia_influencer_artifacts")
@@ -108,8 +100,7 @@ class ArtifactManager:
         self.initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize artifact manager"""
-        try:
+        """Initialize artifact manager"""        try:
             # Initialize storage backend
             await self._initialize_storage_backend()
             
@@ -128,8 +119,7 @@ class ArtifactManager:
             return False
     
     async def _initialize_storage_backend(self) -> None:
-        """Initialize storage backend client"""
-        if self.storage_config.backend == StorageBackend.AWS_S3:
+        """Initialize storage backend client"""        if self.storage_config.backend == StorageBackend.AWS_S3:
             self.storage_client = boto3.client(
                 's3',
                 region_name=self.storage_config.region,
@@ -159,8 +149,7 @@ class ArtifactManager:
         version: Optional[str] = None,
         tags: Optional[List[str]] = None
     ) -> str:
-        """Store artifact with metadata"""
-        try:
+        """Store artifact with metadata"""        try:
             if not os.path.exists(file_path):
                 raise FileNotFoundError(f"Artifact file not found: {file_path}")
             
@@ -225,8 +214,7 @@ class ArtifactManager:
         artifact_id: str,
         local_path: Optional[str] = None
     ) -> str:
-        """Retrieve artifact from storage"""
-        try:
+        """Retrieve artifact from storage"""        try:
             if artifact_id not in self.metadata_store:
                 raise ValueError(f"Artifact not found: {artifact_id}")
             
@@ -266,8 +254,7 @@ class ArtifactManager:
         build_id: Optional[str] = None,
         tags: Optional[List[str]] = None
     ) -> List[ArtifactMetadata]:
-        """List artifacts with optional filtering"""
-        artifacts = list(self.metadata_store.values())
+        """List artifacts with optional filtering"""        artifacts = list(self.metadata_store.values())
         
         # Apply filters
         if artifact_type:
@@ -288,8 +275,7 @@ class ArtifactManager:
         return artifacts
     
     async def delete_artifact(self, artifact_id: str) -> bool:
-        """Delete artifact and its metadata"""
-        try:
+        """Delete artifact and its metadata"""        try:
             if artifact_id not in self.metadata_store:
                 return False
             
@@ -310,8 +296,7 @@ class ArtifactManager:
             return False
     
     async def cleanup_expired_artifacts(self) -> int:
-        """Clean up expired artifacts based on retention policy"""
-        cleaned_count = 0
+        """Clean up expired artifacts based on retention policy"""        cleaned_count = 0
         current_time = datetime.now()
         
         expired_artifacts = []
@@ -328,12 +313,10 @@ class ArtifactManager:
         return cleaned_count
     
     async def get_artifact_metadata(self, artifact_id: str) -> Optional[ArtifactMetadata]:
-        """Get artifact metadata"""
-        return self.metadata_store.get(artifact_id)
+        """Get artifact metadata"""        return self.metadata_store.get(artifact_id)
     
     async def update_artifact_tags(self, artifact_id: str, tags: List[str]) -> bool:
-        """Update artifact tags"""
-        try:
+        """Update artifact tags"""        try:
             if artifact_id not in self.metadata_store:
                 return False
             
@@ -346,8 +329,7 @@ class ArtifactManager:
             return False
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """Get storage usage statistics"""
-        total_size = sum(metadata.file_size for metadata in self.metadata_store.values())
+        """Get storage usage statistics"""        total_size = sum(metadata.file_size for metadata in self.metadata_store.values())
         
         stats_by_type = {}
         stats_by_env = {}
@@ -377,28 +359,24 @@ class ArtifactManager:
         }
     
     def _generate_artifact_id(self, file_path: str, build_id: str) -> str:
-        """Generate unique artifact ID"""
-        content = f"{file_path}_{build_id}_{datetime.now().isoformat()}"
+        """Generate unique artifact ID"""        content = f"{file_path}_{build_id}_{datetime.now().isoformat()}"
         return hashlib.sha256(content.encode()).hexdigest()[:16]
     
     async def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate file checksum"""
-        hash_sha256 = hashlib.sha256()
+        """Calculate file checksum"""        hash_sha256 = hashlib.sha256()
         with open(file_path, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_sha256.update(chunk)
         return hash_sha256.hexdigest()
     
     async def _compress_artifact(self, file_path: str) -> str:
-        """Compress artifact file"""
-        compressed_path = f"{file_path}.tar.gz"
+        """Compress artifact file"""        compressed_path = f"{file_path}.tar.gz"
         with tarfile.open(compressed_path, "w:gz") as tar:
             tar.add(file_path, arcname=os.path.basename(file_path))
         return compressed_path
     
     async def _decompress_artifact(self, compressed_path: str) -> str:
-        """Decompress artifact file"""
-        extract_dir = os.path.dirname(compressed_path)
+        """Decompress artifact file"""        extract_dir = os.path.dirname(compressed_path)
         with tarfile.open(compressed_path, "r:gz") as tar:
             tar.extractall(extract_dir)
         
@@ -409,22 +387,19 @@ class ArtifactManager:
         return compressed_path
     
     async def _encrypt_artifact(self, file_path: str) -> str:
-        """Encrypt artifact file (placeholder implementation)"""
-        # In production, implement proper encryption
+        """Encrypt artifact file (placeholder implementation)"""        # In production, implement proper encryption
         encrypted_path = f"{file_path}.enc"
         shutil.copy2(file_path, encrypted_path)
         return encrypted_path
     
     async def _decrypt_artifact(self, encrypted_path: str) -> str:
-        """Decrypt artifact file (placeholder implementation)"""
-        # In production, implement proper decryption
+        """Decrypt artifact file (placeholder implementation)"""        # In production, implement proper decryption
         decrypted_path = encrypted_path.replace('.enc', '')
         shutil.copy2(encrypted_path, decrypted_path)
         return decrypted_path
     
     async def _upload_to_storage(self, file_path: str, artifact_id: str) -> str:
-        """Upload file to storage backend"""
-        if self.storage_config.backend == StorageBackend.LOCAL:
+        """Upload file to storage backend"""        if self.storage_config.backend == StorageBackend.LOCAL:
             storage_path = Path(self.storage_config.bucket_name) / artifact_id
             shutil.copy2(file_path, storage_path)
             return str(storage_path)
@@ -450,8 +425,7 @@ class ArtifactManager:
         return file_path
     
     async def _download_from_storage(self, storage_path: str, local_path: str) -> None:
-        """Download file from storage backend"""
-        if self.storage_config.backend == StorageBackend.LOCAL:
+        """Download file from storage backend"""        if self.storage_config.backend == StorageBackend.LOCAL:
             shutil.copy2(storage_path, local_path)
         
         elif self.storage_config.backend == StorageBackend.AWS_S3:
@@ -469,8 +443,7 @@ class ArtifactManager:
             )
     
     async def _delete_from_storage(self, storage_path: str) -> None:
-        """Delete file from storage backend"""
-        if self.storage_config.backend == StorageBackend.LOCAL:
+        """Delete file from storage backend"""        if self.storage_config.backend == StorageBackend.LOCAL:
             if os.path.exists(storage_path):
                 os.unlink(storage_path)
         
@@ -487,8 +460,7 @@ class ArtifactManager:
             )
     
     async def _load_metadata(self) -> None:
-        """Load artifact metadata from storage"""
-        metadata_file = self.local_cache_dir / "artifacts_metadata.json"
+        """Load artifact metadata from storage"""        metadata_file = self.local_cache_dir / "artifacts_metadata.json"
         if metadata_file.exists():
             try:
                 with open(metadata_file, 'r') as f:
@@ -505,8 +477,7 @@ class ArtifactManager:
                 self.logger.error(f"Failed to load metadata: {e}")
     
     async def _save_metadata(self) -> None:
-        """Save artifact metadata to storage"""
-        metadata_file = self.local_cache_dir / "artifacts_metadata.json"
+        """Save artifact metadata to storage"""        metadata_file = self.local_cache_dir / "artifacts_metadata.json"
         try:
             metadata_dict = {}
             for artifact_id, metadata in self.metadata_store.items():
@@ -522,8 +493,7 @@ class ArtifactManager:
             self.logger.error(f"Failed to save metadata: {e}")
 
 class ArtifactVersionManager:
-    """Manage artifact versioning and releases"""
-    
+    """Manage artifact versioning and releases"""    
     def __init__(self, artifact_manager: ArtifactManager):
         self.artifact_manager = artifact_manager
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -539,8 +509,7 @@ class ArtifactVersionManager:
         environment: str,
         changelog: Optional[str] = None
     ) -> str:
-        """Create new version of artifact"""
-        try:
+        """Create new version of artifact"""        try:
             # Store artifact with version
             artifact_id = await self.artifact_manager.store_artifact(
                 file_path=file_path,
@@ -570,8 +539,7 @@ class ArtifactVersionManager:
             raise
     
     async def get_versions(self, artifact_name: str) -> List[Dict[str, Any]]:
-        """Get all versions of an artifact"""
-        if artifact_name not in self.version_registry:
+        """Get all versions of an artifact"""        if artifact_name not in self.version_registry:
             return []
         
         versions = []
@@ -591,8 +559,7 @@ class ArtifactVersionManager:
         return versions
     
     async def get_latest_version(self, artifact_name: str, environment: str) -> Optional[str]:
-        """Get latest version artifact ID for environment"""
-        versions = await self.get_versions(artifact_name)
+        """Get latest version artifact ID for environment"""        versions = await self.get_versions(artifact_name)
         
         # Filter by environment and get latest
         env_versions = [v for v in versions if v["environment"] == environment]
@@ -606,8 +573,7 @@ class ArtifactVersionManager:
         artifact_id: str,
         target_environment: str
     ) -> str:
-        """Promote artifact version to target environment"""
-        try:
+        """Promote artifact version to target environment"""        try:
             # Get current artifact metadata
             metadata = await self.artifact_manager.get_artifact_metadata(artifact_id)
             if not metadata:
@@ -635,8 +601,7 @@ class ArtifactVersionManager:
             raise
     
     async def _store_changelog(self, artifact_name: str, version: str, changelog: str) -> None:
-        """Store changelog for version"""
-        changelog_data = {
+        """Store changelog for version"""        changelog_data = {
             "artifact_name": artifact_name,
             "version": version,
             "changelog": changelog,

@@ -1,5 +1,4 @@
-"""
-Cryptographic Timestamping System
+"""Cryptographic Timestamping System
 Professional timestamping service for content protection proof of existence
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,7 +19,6 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -51,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class TimestampingService(Enum):
-    """Available timestamping services"""
-    OPENTIMESTAMPS = "opentimestamps"
+    """Available timestamping services"""    OPENTIMESTAMPS = "opentimestamps"
     BLOCKCHAIN_PROOF = "blockchain_proof"
     RFC3161_TSA = "rfc3161_tsa"
     ETHEREUM_TIMESTAMP = "ethereum_timestamp"
@@ -60,8 +57,7 @@ class TimestampingService(Enum):
 
 
 class ProofStatus(Enum):
-    """Proof verification status"""
-    PENDING = "pending"
+    """Proof verification status"""    PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
     EXPIRED = "expired"
@@ -70,8 +66,7 @@ class ProofStatus(Enum):
 
 @dataclass
 class TimestampProof:
-    """Cryptographic timestamp proof structure"""
-    content_hash: str
+    """Cryptographic timestamp proof structure"""    content_hash: str
     timestamp: datetime
     service: TimestampingService
     proof_data: Dict[str, Any]
@@ -82,8 +77,7 @@ class TimestampProof:
     status: ProofStatus = ProofStatus.PENDING
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage/transmission"""
-        return {
+        """Convert to dictionary for storage/transmission"""        return {
             "content_hash": self.content_hash,
             "timestamp": self.timestamp.isoformat(),
             "service": self.service.value,
@@ -98,8 +92,7 @@ class TimestampProof:
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint for timestamping"""
-    content_id: str
+    """Content fingerprint for timestamping"""    content_id: str
     content_type: str  # audio, video, image, text
     file_hash: str
     metadata_hash: str
@@ -109,18 +102,15 @@ class ContentFingerprint:
     mime_type: str
     
     def __post_init__(self):
-        """Generate combined hash from content and metadata"""
-        if not self.combined_hash:
+        """Generate combined hash from content and metadata"""        if not self.combined_hash:
             data = f"{self.file_hash}:{self.metadata_hash}:{self.content_type}"
             self.combined_hash = hashlib.sha256(data.encode()).hexdigest()
 
 
 class CryptographicTimestamping:
-    """
-    Professional cryptographic timestamping system for content protection
+    """    Professional cryptographic timestamping system for content protection
     Provides immutable proof of existence and integrity for digital content
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.private_key = self._load_private_key()
@@ -128,18 +118,15 @@ class CryptographicTimestamping:
         self.session = None
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     def _load_private_key(self) -> rsa.RSAPrivateKey:
-        """Load or generate RSA private key for signing"""
-        key_path = self.config.get("private_key_path")
+        """Load or generate RSA private key for signing"""        key_path = self.config.get("private_key_path")
         
         if key_path and Path(key_path).exists():
             with open(key_path, "rb") as key_file:
@@ -174,8 +161,7 @@ class CryptographicTimestamping:
         content_id: str,
         metadata: Dict[str, Any]
     ) -> ContentFingerprint:
-        """
-        Create cryptographic fingerprint of content
+        """        Create cryptographic fingerprint of content
         
         Args:
             content_path: Path to content file
@@ -184,8 +170,7 @@ class CryptographicTimestamping:
             
         Returns:
             ContentFingerprint object
-        """
-        try:
+        """        try:
             file_path = Path(content_path)
             
             if not file_path.exists():
@@ -218,8 +203,7 @@ class CryptographicTimestamping:
             raise BlockchainError(f"Content fingerprinting failed: {e}")
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file content"""
-        hash_sha256 = hashlib.sha256()
+        """Calculate SHA-256 hash of file content"""        hash_sha256 = hashlib.sha256()
         
         with open(file_path, "rb") as f:
             # Read file in chunks to handle large files
@@ -229,8 +213,7 @@ class CryptographicTimestamping:
         return hash_sha256.hexdigest()
     
     def _determine_content_type(self, file_path: Path) -> str:
-        """Determine content type from file extension"""
-        extension = file_path.suffix.lower()
+        """Determine content type from file extension"""        extension = file_path.suffix.lower()
         
         audio_extensions = {'.mp3', '.wav', '.flac', '.aac', '.ogg', '.m4a'}
         video_extensions = {'.mp4', '.avi', '.mkv', '.mov', '.wmv', '.flv'}
@@ -249,8 +232,7 @@ class CryptographicTimestamping:
             return "unknown"
     
     def _get_mime_type(self, file_path: Path) -> str:
-        """Get MIME type from file extension"""
-        import mimetypes
+        """Get MIME type from file extension"""        import mimetypes
         mime_type, _ = mimetypes.guess_type(str(file_path))
         return mime_type or "application/octet-stream"
     
@@ -259,8 +241,7 @@ class CryptographicTimestamping:
         fingerprint: ContentFingerprint,
         service: TimestampingService = TimestampingService.BLOCKCHAIN_PROOF
     ) -> TimestampProof:
-        """
-        Create cryptographic timestamp proof for content
+        """        Create cryptographic timestamp proof for content
         
         Args:
             fingerprint: Content fingerprint
@@ -268,8 +249,7 @@ class CryptographicTimestamping:
             
         Returns:
             TimestampProof object
-        """
-        try:
+        """        try:
             proof_data = {}
             transaction_hash = None
             block_number = None
@@ -313,8 +293,7 @@ class CryptographicTimestamping:
         self,
         fingerprint: ContentFingerprint
     ) -> Dict[str, Any]:
-        """Create blockchain-based timestamp proof"""
-        # Implementation would integrate with smart contract
+        """Create blockchain-based timestamp proof"""        # Implementation would integrate with smart contract
         # For now, return mock data structure
         return {
             "proof_data": {
@@ -331,8 +310,7 @@ class CryptographicTimestamping:
         self,
         fingerprint: ContentFingerprint
     ) -> Dict[str, Any]:
-        """Create OpenTimestamps proof"""
-        # Implementation would integrate with OpenTimestamps
+        """Create OpenTimestamps proof"""        # Implementation would integrate with OpenTimestamps
         return {
             "ots_file": f"{fingerprint.combined_hash}.ots",
             "calendar_urls": [
@@ -346,8 +324,7 @@ class CryptographicTimestamping:
         self,
         fingerprint: ContentFingerprint
     ) -> Dict[str, Any]:
-        """Create RFC3161 TSA proof"""
-        # Implementation would integrate with TSA service
+        """Create RFC3161 TSA proof"""        # Implementation would integrate with TSA service
         return {
             "tsa_url": "http://timestamp.digicert.com",
             "tsr_token": base64.b64encode(secrets.token_bytes(64)).decode(),
@@ -360,8 +337,7 @@ class CryptographicTimestamping:
         fingerprint: ContentFingerprint,
         proof_data: Dict[str, Any]
     ) -> str:
-        """Create digital signature for proof integrity"""
-        # Combine fingerprint and proof data for signing
+        """Create digital signature for proof integrity"""        # Combine fingerprint and proof data for signing
         data_to_sign = {
             "content_hash": fingerprint.combined_hash,
             "timestamp": datetime.utcnow().isoformat(),
@@ -386,8 +362,7 @@ class CryptographicTimestamping:
         proof: TimestampProof,
         original_content: Optional[str] = None
     ) -> bool:
-        """
-        Verify the integrity and authenticity of a timestamp proof
+        """        Verify the integrity and authenticity of a timestamp proof
         
         Args:
             proof: TimestampProof to verify
@@ -395,8 +370,7 @@ class CryptographicTimestamping:
             
         Returns:
             True if proof is valid, False otherwise
-        """
-        try:
+        """        try:
             # Verify signature
             if not self._verify_signature(proof):
                 logger.warning(f"Signature verification failed for proof {proof.content_hash}")
@@ -429,8 +403,7 @@ class CryptographicTimestamping:
             return False
     
     def _verify_signature(self, proof: TimestampProof) -> bool:
-        """Verify digital signature of proof"""
-        try:
+        """Verify digital signature of proof"""        try:
             if not proof.signature:
                 return False
             
@@ -461,23 +434,19 @@ class CryptographicTimestamping:
             return False
     
     async def _verify_blockchain_proof(self, proof: TimestampProof) -> bool:
-        """Verify blockchain-based proof"""
-        # Implementation would check transaction on blockchain
+        """Verify blockchain-based proof"""        # Implementation would check transaction on blockchain
         return proof.transaction_hash is not None
     
     async def _verify_opentimestamps_proof(self, proof: TimestampProof) -> bool:
-        """Verify OpenTimestamps proof"""
-        # Implementation would verify with OpenTimestamps
+        """Verify OpenTimestamps proof"""        # Implementation would verify with OpenTimestamps
         return "ots_file" in proof.proof_data
     
     async def _verify_rfc3161_proof(self, proof: TimestampProof) -> bool:
-        """Verify RFC3161 TSA proof"""
-        # Implementation would verify with TSA
+        """Verify RFC3161 TSA proof"""        # Implementation would verify with TSA
         return "tsr_token" in proof.proof_data
     
     async def get_proof_status(self, proof: TimestampProof) -> ProofStatus:
-        """Get current status of timestamp proof"""
-        try:
+        """Get current status of timestamp proof"""        try:
             if proof.service == TimestampingService.BLOCKCHAIN_PROOF:
                 # Check blockchain confirmation
                 if proof.transaction_hash:
@@ -504,16 +473,14 @@ class CryptographicTimestamping:
         self,
         fingerprints: List[ContentFingerprint]
     ) -> Dict[str, Any]:
-        """
-        Create Merkle tree proof for batch content verification
+        """        Create Merkle tree proof for batch content verification
         
         Args:
             fingerprints: List of content fingerprints
             
         Returns:
             Merkle tree structure with root hash
-        """
-        try:
+        """        try:
             if not fingerprints:
                 raise ValueError("At least one fingerprint required")
             
@@ -534,8 +501,7 @@ class CryptographicTimestamping:
             raise BlockchainError(f"Merkle proof creation failed: {e}")
     
     def _build_merkle_tree(self, leaves: List[str]) -> List[List[str]]:
-        """Build Merkle tree from leaf hashes"""
-        if not leaves:
+        """Build Merkle tree from leaf hashes"""        if not leaves:
             return []
         
         tree = [leaves]
@@ -563,8 +529,7 @@ class CryptographicTimestamping:
         content_paths: List[str],
         service: TimestampingService = TimestampingService.BLOCKCHAIN_PROOF
     ) -> List[TimestampProof]:
-        """
-        Batch timestamp multiple content files efficiently
+        """        Batch timestamp multiple content files efficiently
         
         Args:
             content_paths: List of content file paths
@@ -572,8 +537,7 @@ class CryptographicTimestamping:
             
         Returns:
             List of TimestampProof objects
-        """
-        try:
+        """        try:
             # Create fingerprints for all content
             fingerprints = []
             for i, path in enumerate(content_paths):

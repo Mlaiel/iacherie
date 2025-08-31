@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-🔴 CRITIQUE - AGENTS IA
+"""🔴 CRITIQUE - AGENTS IA
 Vérification implémentation réelle des agents trouvés
 
 Script pour inventorier TOUS les agents réellement implémentés
@@ -9,7 +8,6 @@ et vérifier l'état des 5 agents critiques demandés.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import os
 import sys
 import ast
@@ -26,8 +24,7 @@ sys.path.insert(0, '.')
 
 @dataclass
 class AgentInfo:
-    """Information about an agent implementation"""
-    name: str
+    """Information about an agent implementation"""    name: str
     file_path: str
     class_name: str
     line_count: int
@@ -39,8 +36,7 @@ class AgentInfo:
     description: str = ""
 
 class AgentsInventory:
-    """Complete inventory and verification of AI agents"""
-    
+    """Complete inventory and verification of AI agents"""    
     def __init__(self):
         self.target_agents = [
             "ContentStrategistAgent",
@@ -53,8 +49,7 @@ class AgentsInventory:
         self.agent_files = []
         
     def find_agent_files(self) -> List[str]:
-        """Find all Python files containing agents"""
-        agent_files = []
+        """Find all Python files containing agents"""        agent_files = []
         
         # Search in ai_engine/ai_agents
         ai_agents_dir = Path("ai_engine/ai_agents")
@@ -75,8 +70,7 @@ class AgentsInventory:
         return agent_files
     
     def analyze_file(self, file_path: str) -> List[AgentInfo]:
-        """Analyze a Python file for agent classes"""
-        agents = []
+        """Analyze a Python file for agent classes"""        agents = []
         
         try:
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -141,8 +135,7 @@ class AgentsInventory:
         return agents
     
     def test_import(self, file_path: str, class_name: str) -> str:
-        """Test if agent class can be imported"""
-        try:
+        """Test if agent class can be imported"""        try:
             # Convert file path to module path
             module_path = file_path.replace('/', '.').replace('.py', '')
             module = importlib.import_module(module_path)
@@ -158,8 +151,7 @@ class AgentsInventory:
             return f"❌ ERROR: {str(e)[:50]}..."
     
     def run_inventory(self) -> Dict[str, Any]:
-        """Run complete inventory of all agents"""
-        print("🔍 Scanning for AI agents...")
+        """Run complete inventory of all agents"""        print("🔍 Scanning for AI agents...")
         
         # Find all agent files
         self.agent_files = self.find_agent_files()
@@ -195,8 +187,7 @@ class AgentsInventory:
         return summary
     
     def generate_report(self, summary: Dict[str, Any]) -> str:
-        """Generate detailed verification report"""
-        report = []
+        """Generate detailed verification report"""        report = []
         report.append("# 🔴 CRITIQUE - AGENTS IA")
         report.append("## Vérification implémentation réelle des agents trouvés")
         report.append("")
@@ -270,8 +261,7 @@ class AgentsInventory:
 
 
 def main():
-    """Main execution function"""
-    print("🤖 AGENTS IA - VÉRIFICATION D'IMPLÉMENTATION")
+    """Main execution function"""    print("🤖 AGENTS IA - VÉRIFICATION D'IMPLÉMENTATION")
     print("=" * 50)
     
     inventory = AgentsInventory()

@@ -7,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited.
 """
-
 from typing import Dict, List, Optional, Union, Callable, Any
 import asyncio
 from dataclasses import dataclass
@@ -23,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class TransactionStatus(Enum):
-    """Transaction execution status."""
-    PENDING = "pending"
+    """Transaction execution status."""    PENDING = "pending"
     CONFIRMED = "confirmed"
     FAILED = "failed"
     CANCELLED = "cancelled"
@@ -33,8 +31,7 @@ class TransactionStatus(Enum):
 
 @dataclass
 class TransactionRequest:
-    """Transaction request data structure."""
-    
+    """Transaction request data structure."""    
     to: str
     value: int = 0
     data: str = "0x"
@@ -49,8 +46,7 @@ class TransactionRequest:
 
 @dataclass 
 class TransactionResult:
-    """Transaction execution result."""
-    
+    """Transaction execution result."""    
     transaction_hash: str
     status: TransactionStatus
     block_number: Optional[int] = None
@@ -62,8 +58,7 @@ class TransactionResult:
     
 
 class TransactionManager:
-    """Professional transaction management and execution system."""
-    
+    """Professional transaction management and execution system."""    
     def __init__(self, web3: Web3, account: Account, gas_optimizer=None):
         """Initialize transaction manager.
         
@@ -71,8 +66,7 @@ class TransactionManager:
             web3: Web3 instance for blockchain interaction
             account: Account for transaction signing
             gas_optimizer: Gas optimization service
-        """
-        self.web3 = web3
+        """        self.web3 = web3
         self.account = account
         self.gas_optimizer = gas_optimizer
         self.pending_transactions: Dict[str, Dict] = {}
@@ -94,8 +88,7 @@ class TransactionManager:
             
         Returns:
             Transaction execution result
-        """
-        try:
+        """        try:
             # Build transaction parameters
             tx_params = await self._build_transaction_params(tx_request)
             
@@ -133,8 +126,7 @@ class TransactionManager:
             )
     
     async def _build_transaction_params(self, tx_request: TransactionRequest) -> Dict:
-        """Build complete transaction parameters."""
-        try:
+        """Build complete transaction parameters."""        try:
             # Base parameters
             tx_params = {
                 "to": tx_request.to,
@@ -186,8 +178,7 @@ class TransactionManager:
             raise
     
     async def _monitor_transaction(self, tx_hash: str) -> None:
-        """Monitor transaction until confirmation or timeout."""
-        try:
+        """Monitor transaction until confirmation or timeout."""        try:
             tx_info = self.pending_transactions.get(tx_hash)
             if not tx_info:
                 return
@@ -271,8 +262,7 @@ class TransactionManager:
             self._finalize_transaction(tx_hash, result)
     
     async def _handle_transaction_timeout(self, tx_hash: str) -> Optional[TransactionResult]:
-        """Handle transaction timeout by attempting replacement."""
-        try:
+        """Handle transaction timeout by attempting replacement."""        try:
             tx_info = self.pending_transactions.get(tx_hash)
             if not tx_info:
                 return None
@@ -327,8 +317,7 @@ class TransactionManager:
             return None
     
     def _finalize_transaction(self, tx_hash: str, result: TransactionResult) -> None:
-        """Finalize transaction tracking."""
-        try:
+        """Finalize transaction tracking."""        try:
             # Remove from pending
             if tx_hash in self.pending_transactions:
                 del self.pending_transactions[tx_hash]
@@ -346,8 +335,7 @@ class TransactionManager:
             logger.error(f"Failed to finalize transaction: {e}")
     
     async def cancel_transaction(self, tx_hash: str) -> Optional[TransactionResult]:
-        """Attempt to cancel a pending transaction."""
-        try:
+        """Attempt to cancel a pending transaction."""        try:
             tx_info = self.pending_transactions.get(tx_hash)
             if not tx_info:
                 return None
@@ -392,8 +380,7 @@ class TransactionManager:
         self, 
         transactions: List[TransactionRequest]
     ) -> List[TransactionResult]:
-        """Send multiple transactions in batch."""
-        try:
+        """Send multiple transactions in batch."""        try:
             results = []
             
             # Use batch-optimized nonces
@@ -416,8 +403,7 @@ class TransactionManager:
             return []
     
     def get_transaction_status(self, tx_hash: str) -> Optional[Dict]:
-        """Get current status of a transaction."""
-        # Check pending transactions
+        """Get current status of a transaction."""        # Check pending transactions
         if tx_hash in self.pending_transactions:
             return {
                 "status": "pending",
@@ -441,8 +427,7 @@ class TransactionManager:
         return None
     
     def get_pending_transactions(self) -> List[Dict]:
-        """Get all pending transactions."""
-        return [
+        """Get all pending transactions."""        return [
             {
                 "hash": tx_hash,
                 "submitted_at": info["submitted_at"].isoformat(),
@@ -453,8 +438,7 @@ class TransactionManager:
         ]
     
     def get_transaction_history(self, limit: int = 100) -> List[Dict]:
-        """Get transaction history."""
-        recent_history = self.transaction_history[-limit:]
+        """Get transaction history."""        recent_history = self.transaction_history[-limit:]
         
         return [
             {
@@ -473,23 +457,20 @@ class TransactionManager:
 
 
 class NonceManager:
-    """Professional nonce management for transaction ordering."""
-    
+    """Professional nonce management for transaction ordering."""    
     def __init__(self, web3: Web3, address: str):
         """Initialize nonce manager.
         
         Args:
             web3: Web3 instance
             address: Wallet address
-        """
-        self.web3 = web3
+        """        self.web3 = web3
         self.address = address
         self.local_nonce: Optional[int] = None
         self.nonce_lock = asyncio.Lock()
     
     async def get_next_nonce(self) -> int:
-        """Get next available nonce."""
-        async with self.nonce_lock:
+        """Get next available nonce."""        async with self.nonce_lock:
             try:
                 # Get current network nonce
                 network_nonce = self.web3.eth.get_transaction_count(self.address, "pending")
@@ -512,12 +493,10 @@ class NonceManager:
                 return self.web3.eth.get_transaction_count(self.address, "pending")
     
     def reset_nonce(self) -> None:
-        """Reset local nonce tracking."""
-        self.local_nonce = None
+        """Reset local nonce tracking."""        self.local_nonce = None
     
     async def sync_nonce(self) -> int:
-        """Synchronize with network nonce."""
-        async with self.nonce_lock:
+        """Synchronize with network nonce."""        async with self.nonce_lock:
             network_nonce = self.web3.eth.get_transaction_count(self.address, "pending")
             self.local_nonce = network_nonce
             return network_nonce

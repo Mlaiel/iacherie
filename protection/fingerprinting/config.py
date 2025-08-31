@@ -1,5 +1,4 @@
-"""
-⚙️ Configuration Management for Content Fingerprinting System
+"""⚙️ Configuration Management for Content Fingerprinting System
 =============================================================
 
 Centralized configuration system for multi-modal content fingerprinting.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
-
 import os
 import json
 import yaml
@@ -23,22 +21,19 @@ from dataclasses import dataclass, field
 from enum import Enum
 
 class ProcessingMode(str, Enum):
-    """Processing mode configurations."""
-    CPU = "cpu"
+    """Processing mode configurations."""    CPU = "cpu"
     GPU = "gpu"
     AUTO = "auto"
 
 class QualityLevel(str, Enum):
-    """Quality levels for processing."""
-    LOW = "low"
+    """Quality levels for processing."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
 
 @dataclass
 class AudioConfig:
-    """Audio processing configuration."""
-    # Basic audio parameters
+    """Audio processing configuration."""    # Basic audio parameters
     sample_rate: int = 22050
     channels: int = 1
     duration_limit: int = 300  # seconds
@@ -71,8 +66,7 @@ class AudioConfig:
 
 @dataclass
 class VideoConfig:
-    """Video processing configuration."""
-    # Basic video parameters
+    """Video processing configuration."""    # Basic video parameters
     max_duration: int = 600  # seconds
     min_duration: float = 1.0  # seconds
     frame_rate: int = 1  # frames per second for sampling
@@ -114,8 +108,7 @@ class VideoConfig:
 
 @dataclass
 class ImageConfig:
-    """Image processing configuration."""
-    # Basic image parameters
+    """Image processing configuration."""    # Basic image parameters
     max_size_mb: int = 50
     min_width: int = 32
     min_height: int = 32
@@ -156,8 +149,7 @@ class ImageConfig:
 
 @dataclass
 class TextConfig:
-    """Text processing configuration."""
-    # Basic text parameters
+    """Text processing configuration."""    # Basic text parameters
     max_length: int = 1000000  # characters
     min_length: int = 10  # characters
     chunk_size: int = 512  # tokens
@@ -202,8 +194,7 @@ class TextConfig:
 
 @dataclass
 class SimilarityConfig:
-    """Similarity matching configuration."""
-    # Default thresholds
+    """Similarity matching configuration."""    # Default thresholds
     default_threshold: float = 0.8
     audio_threshold: float = 0.85
     video_threshold: float = 0.75
@@ -251,8 +242,7 @@ class SimilarityConfig:
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration."""
-    # Database connection
+    """Database configuration."""    # Database connection
     host: str = "localhost"
     port: int = 5432
     database: str = "fingerprinting"
@@ -274,8 +264,7 @@ class DatabaseConfig:
 
 @dataclass
 class CacheConfig:
-    """Caching configuration."""
-    # Cache settings
+    """Caching configuration."""    # Cache settings
     enable_cache: bool = True
     cache_type: str = "memory"  # memory, redis, memcached
     max_size: int = 1000
@@ -294,8 +283,7 @@ class CacheConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Performance optimization configuration."""
-    # Processing mode
+    """Performance optimization configuration."""    # Processing mode
     processing_mode: ProcessingMode = ProcessingMode.AUTO
     
     # CPU settings
@@ -322,8 +310,7 @@ class PerformanceConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration."""
-    # API security
+    """Security configuration."""    # API security
     enable_api_key: bool = True
     api_key_header: str = "X-API-Key"
     
@@ -347,8 +334,7 @@ class SecurityConfig:
 
 @dataclass
 class LoggingConfig:
-    """Logging configuration."""
-    # Log levels
+    """Logging configuration."""    # Log levels
     log_level: str = "INFO"
     log_format: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
     
@@ -367,8 +353,7 @@ class LoggingConfig:
 
 @dataclass
 class FingerprintingConfig:
-    """Main configuration container."""
-    # Component configurations
+    """Main configuration container."""    # Component configurations
     audio: AudioConfig = field(default_factory=AudioConfig)
     video: VideoConfig = field(default_factory=VideoConfig)
     image: ImageConfig = field(default_factory=ImageConfig)
@@ -386,8 +371,7 @@ class FingerprintingConfig:
     
     @classmethod
     def from_file(cls, config_path: Union[str, Path]) -> 'FingerprintingConfig':
-        """Load configuration from file."""
-        config_path = Path(config_path)
+        """Load configuration from file."""        config_path = Path(config_path)
         
         if not config_path.exists():
             raise FileNotFoundError(f"Configuration file not found: {config_path}")
@@ -404,8 +388,7 @@ class FingerprintingConfig:
     
     @classmethod
     def from_dict(cls, config_dict: Dict[str, Any]) -> 'FingerprintingConfig':
-        """Create configuration from dictionary."""
-        config = cls()
+        """Create configuration from dictionary."""        config = cls()
         
         # Update each component
         for component_name, component_config in config_dict.items():
@@ -421,8 +404,7 @@ class FingerprintingConfig:
     
     @classmethod
     def from_environment(cls) -> 'FingerprintingConfig':
-        """Load configuration from environment variables."""
-        config = cls()
+        """Load configuration from environment variables."""        config = cls()
         
         # Environment-specific overrides
         env_prefix = "FINGERPRINT_"
@@ -453,16 +435,14 @@ class FingerprintingConfig:
     
     @staticmethod
     def _set_nested_attr(obj: Any, path: str, value: Any):
-        """Set nested attribute using dot notation."""
-        parts = path.split('.')
+        """Set nested attribute using dot notation."""        parts = path.split('.')
         for part in parts[:-1]:
             obj = getattr(obj, part)
         setattr(obj, parts[-1], value)
     
     @staticmethod
     def _convert_env_value(value: str) -> Any:
-        """Convert environment variable value to appropriate type."""
-        # Boolean conversion
+        """Convert environment variable value to appropriate type."""        # Boolean conversion
         if value.lower() in ('true', 'false'):
             return value.lower() == 'true'
         
@@ -479,13 +459,11 @@ class FingerprintingConfig:
         return value
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        import dataclasses
+        """Convert configuration to dictionary."""        import dataclasses
         return dataclasses.asdict(self)
     
     def save_to_file(self, config_path: Union[str, Path]):
-        """Save configuration to file."""
-        config_path = Path(config_path)
+        """Save configuration to file."""        config_path = Path(config_path)
         config_dict = self.to_dict()
         
         with open(config_path, 'w', encoding='utf-8') as f:
@@ -497,8 +475,7 @@ class FingerprintingConfig:
                 raise ValueError(f"Unsupported configuration file format: {config_path.suffix}")
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of issues."""
-        issues = []
+        """Validate configuration and return list of issues."""        issues = []
         
         # Validate audio config
         if self.audio.sample_rate <= 0:
@@ -541,8 +518,7 @@ default_config = FingerprintingConfig()
 
 # Configuration factory functions
 def get_development_config() -> FingerprintingConfig:
-    """Get development configuration."""
-    config = FingerprintingConfig()
+    """Get development configuration."""    config = FingerprintingConfig()
     config.environment = "development"
     config.debug = True
     config.logging.log_level = "DEBUG"
@@ -551,8 +527,7 @@ def get_development_config() -> FingerprintingConfig:
     return config
 
 def get_production_config() -> FingerprintingConfig:
-    """Get production configuration."""
-    config = FingerprintingConfig()
+    """Get production configuration."""    config = FingerprintingConfig()
     config.environment = "production"
     config.debug = False
     config.logging.log_level = "INFO"
@@ -563,8 +538,7 @@ def get_production_config() -> FingerprintingConfig:
     return config
 
 def get_testing_config() -> FingerprintingConfig:
-    """Get testing configuration."""
-    config = FingerprintingConfig()
+    """Get testing configuration."""    config = FingerprintingConfig()
     config.environment = "testing"
     config.debug = True
     config.logging.log_level = "WARNING"
@@ -576,8 +550,7 @@ def get_testing_config() -> FingerprintingConfig:
 # Configuration loader
 def load_config(config_path: Optional[str] = None, 
                 environment: Optional[str] = None) -> FingerprintingConfig:
-    """Load configuration with fallback hierarchy."""
-    
+    """Load configuration with fallback hierarchy."""    
     # 1. Start with default config
     if environment == "development":
         config = get_development_config()
@@ -615,8 +588,7 @@ def load_config(config_path: Optional[str] = None,
 
 def merge_configs(base_config: FingerprintingConfig, 
                  override_config: FingerprintingConfig) -> FingerprintingConfig:
-    """Merge two configurations, with override taking precedence."""
-    import copy
+    """Merge two configurations, with override taking precedence."""    import copy
     
     merged = copy.deepcopy(base_config)
     override_dict = override_config.to_dict()

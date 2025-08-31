@@ -1,5 +1,4 @@
-"""
-Multi-Language Voice Processing Module - IA Influencer Agent Conversational System
+"""Multi-Language Voice Processing Module - IA Influencer Agent Conversational System
 
 Ultra-advanced enterprise-grade multi-language voice processing system with automatic 
 language detection, dialect recognition, real-time translation, cultural adaptation, 
@@ -40,7 +39,6 @@ ABSOLUTELY PROHIBITED WITHOUT EXPLICIT WRITTEN AUTHORIZATION FROM FAHED MLAIEL:
 
 For official licensing inquiries ONLY: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import time
@@ -87,8 +85,7 @@ from .models import (
 logger = logging.getLogger(__name__)
 
 class LanguageFamily(Enum):
-    """Language family classifications."""
-    INDO_EUROPEAN = "indo_european"
+    """Language family classifications."""    INDO_EUROPEAN = "indo_european"
     SINO_TIBETAN = "sino_tibetan"
     NIGER_CONGO = "niger_congo"
     AFRO_ASIATIC = "afro_asiatic"
@@ -100,8 +97,7 @@ class LanguageFamily(Enum):
     KOREANIC = "koreanic"
 
 class AccentType(Enum):
-    """Accent classification types."""
-    NATIVE = "native"
+    """Accent classification types."""    NATIVE = "native"
     REGIONAL = "regional"
     FOREIGN = "foreign"
     CREOLE = "creole"
@@ -109,8 +105,7 @@ class AccentType(Enum):
     MIXED = "mixed"
 
 class CulturalDimension(Enum):
-    """Cultural dimension analysis categories."""
-    POWER_DISTANCE = "power_distance"
+    """Cultural dimension analysis categories."""    POWER_DISTANCE = "power_distance"
     INDIVIDUALISM = "individualism"
     MASCULINITY = "masculinity"
     UNCERTAINTY_AVOIDANCE = "uncertainty_avoidance"
@@ -119,8 +114,7 @@ class CulturalDimension(Enum):
 
 @dataclass
 class LanguageProcessingMetrics:
-    """Language processing performance metrics."""
-    detection_confidence: float = 0.0
+    """Language processing performance metrics."""    detection_confidence: float = 0.0
     translation_quality: float = 0.0
     cultural_adaptation_score: float = 0.0
     accent_identification_accuracy: float = 0.0
@@ -128,21 +122,17 @@ class LanguageProcessingMetrics:
     memory_usage_mb: float = 0.0
     
 class MultilingualVoiceProcessor:
-    """
-    Ultra-advanced multi-language voice processing system with cultural intelligence.
+    """    Ultra-advanced multi-language voice processing system with cultural intelligence.
     
     Provides comprehensive language detection, translation, cultural adaptation,
     and localization services for global content creators and influencers.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the multi-language voice processor."""
-        self.config = config or get_language_processing_config()
+        """Initialize the multi-language voice processor."""        self.config = config or get_language_processing_config()
         self.is_initialized = False
         
     async def initialize(self) -> bool:
-        """Initialize all language processing components."""
-        try:
+        """Initialize all language processing components."""        try:
             start_time = time.time()
             logger.info("Initializing Multi-language Voice Processor...")
             
@@ -184,8 +174,7 @@ class MultilingualVoiceProcessor:
                             audio_data: Optional[np.ndarray] = None,
                             text_data: Optional[str] = None,
                             use_ensemble: bool = True) -> LanguageDetectionResult:
-        """
-        Detect language from audio or text with high accuracy ensemble approach.
+        """        Detect language from audio or text with high accuracy ensemble approach.
         
         Args:
             audio_data: Audio signal as numpy array
@@ -194,8 +183,7 @@ class MultilingualVoiceProcessor:
             
         Returns:
             LanguageDetectionResult with detected language and confidence
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             if not self.is_initialized:
@@ -244,8 +232,7 @@ class MultilingualVoiceProcessor:
                             target_language: str,
                             preserve_emotion: bool = True,
                             preserve_speaker_identity: bool = False) -> TranslationResult:
-        """
-        Translate voice content while preserving emotional characteristics.
+        """        Translate voice content while preserving emotional characteristics.
         
         Args:
             audio_data: Source audio signal
@@ -256,8 +243,7 @@ class MultilingualVoiceProcessor:
             
         Returns:
             TranslationResult with translated audio and metadata
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Extract text from audio using speech recognition
@@ -333,8 +319,7 @@ class MultilingualVoiceProcessor:
     async def analyze_accent(self, 
                            audio_data: np.ndarray,
                            detected_language: str) -> AccentAnalysisResult:
-        """
-        Analyze accent and regional dialect characteristics.
+        """        Analyze accent and regional dialect characteristics.
         
         Args:
             audio_data: Audio signal for accent analysis
@@ -342,8 +327,7 @@ class MultilingualVoiceProcessor:
             
         Returns:
             AccentAnalysisResult with accent classification and features
-        """
-        try:
+        """        try:
             # Extract acoustic features for accent analysis
             features = self._extract_accent_features(audio_data)
             
@@ -383,8 +367,7 @@ class MultilingualVoiceProcessor:
                                 source_culture: str,
                                 target_culture: str,
                                 adaptation_level: str = 'moderate') -> LocalizationResult:
-        """
-        Adapt content for cultural context and sensitivities.
+        """        Adapt content for cultural context and sensitivities.
         
         Args:
             content: Original content to adapt
@@ -394,8 +377,7 @@ class MultilingualVoiceProcessor:
             
         Returns:
             LocalizationResult with culturally adapted content
-        """
-        try:
+        """        try:
             # Load cultural profiles
             source_profile = self.cultural_profiles.get(source_culture)
             target_profile = self.cultural_profiles.get(target_culture)
@@ -468,8 +450,7 @@ class MultilingualVoiceProcessor:
             )
     
     async def get_processing_stats(self) -> Dict[str, Any]:
-        """Get comprehensive processing statistics."""
-        return {
+        """Get comprehensive processing statistics."""        return {
             "performance_metrics": {
                 "detection_confidence": self.performance_metrics.detection_confidence,
                 "translation_quality": self.performance_metrics.translation_quality,
@@ -486,8 +467,7 @@ class MultilingualVoiceProcessor:
     
     # Private helper methods
     async def _load_cultural_profiles(self):
-        """Load cultural dimension profiles for different countries/regions."""
-        # Hofstede cultural dimensions data
+        """Load cultural dimension profiles for different countries/regions."""        # Hofstede cultural dimensions data
         self.cultural_profiles = {
             'US': {
                 'power_distance': 0.40,
@@ -532,8 +512,7 @@ class MultilingualVoiceProcessor:
         }
     
     async def _initialize_accent_analyzers(self):
-        """Initialize accent analysis models for different languages."""
-        self.accent_analyzers = {
+        """Initialize accent analysis models for different languages."""        self.accent_analyzers = {
             'en': {'regions': ['US', 'UK', 'AU', 'CA', 'IN', 'ZA']},
             'es': {'regions': ['ES', 'MX', 'AR', 'CO', 'PE', 'CL']},
             'fr': {'regions': ['FR', 'CA', 'BE', 'CH', 'SN', 'MA']},
@@ -543,8 +522,7 @@ class MultilingualVoiceProcessor:
         }
     
     async def _detect_language_from_text(self, text: str) -> List[LanguageDetectionResult]:
-        """Detect language from text using multiple methods."""
-        detections = []
+        """Detect language from text using multiple methods."""        detections = []
         
         try:
             # FastText detection
@@ -587,8 +565,7 @@ class MultilingualVoiceProcessor:
         return detections
     
     async def _detect_language_from_audio(self, audio_data: np.ndarray) -> List[LanguageDetectionResult]:
-        """Detect language from audio using speech recognition."""
-        detections = []
+        """Detect language from audio using speech recognition."""        detections = []
         
         try:
             # Use speech recognition with multiple language attempts
@@ -621,8 +598,7 @@ class MultilingualVoiceProcessor:
         return detections
     
     def _ensemble_language_detection(self, detections: List[LanguageDetectionResult]) -> LanguageDetectionResult:
-        """Combine multiple language detection results using ensemble voting."""
-        if not detections:
+        """Combine multiple language detection results using ensemble voting."""        if not detections:
             return LanguageDetectionResult(language_code='unknown', confidence=0.0, method='ensemble')
         
         # Weight different methods
@@ -660,8 +636,7 @@ class MultilingualVoiceProcessor:
         )
     
     async def _translate_text(self, text: str, source_lang: str, target_lang: str) -> str:
-        """Translate text using best available translation engine."""
-        try:
+        """Translate text using best available translation engine."""        try:
             # Use Google Translator as primary
             translated = self.google_translator.translate(
                 text=text,
@@ -677,8 +652,7 @@ class MultilingualVoiceProcessor:
                              detect_language: bool = True,
                              translate_text: bool = False,
                              target_language: str = "en") -> LanguageInfo:
-        """Process language detection, translation, and analysis"""
-        try:
+        """Process language detection, translation, and analysis"""        try:
             # Detect language from audio or text
             detected_language = "en-US"
             confidence = 0.95
@@ -710,18 +684,15 @@ class MultilingualVoiceProcessor:
             raise
     
     async def _detect_language_from_audio(self, audio_data: np.ndarray) -> Tuple[str, float]:
-        """Detect language from audio samples"""
-        # Mock implementation - in real system would use acoustic language detection
+        """Detect language from audio samples"""        # Mock implementation - in real system would use acoustic language detection
         return "en-US", 0.95
     
     async def _detect_language_from_text(self, text: str) -> Tuple[str, float]:
-        """Detect language from text"""
-        # Mock implementation - in real system would use text-based language detection
+        """Detect language from text"""        # Mock implementation - in real system would use text-based language detection
         return "en-US", 0.98
     
     async def _translate_text(self, text: str, source_lang: str, target_lang: str) -> Tuple[str, float]:
-        """Translate text between languages"""
-        # Mock translation
+        """Translate text between languages"""        # Mock translation
         translations = {
             "Hello": {"es": "Hola", "fr": "Bonjour", "de": "Hallo"},
             "Thank you": {"es": "Gracias", "fr": "Merci", "de": "Danke"}

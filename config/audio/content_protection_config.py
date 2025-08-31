@@ -1,5 +1,4 @@
-"""
-Content Protection Configuration Module for IA-Influencer Agent Platform
+"""Content Protection Configuration Module for IA-Influencer Agent Platform
 ========================================================================
 
 Advanced content protection and rights management configuration for audio content creators.
@@ -19,7 +18,6 @@ to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from enum import Enum
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionLevel(Enum):
-    """Content protection security levels"""
-    PUBLIC = "public"                    # Basic protection
+    """Content protection security levels"""    PUBLIC = "public"                    # Basic protection
     STANDARD = "standard"                # Standard copyright protection
     PREMIUM = "premium"                  # Enhanced protection with monitoring
     ENTERPRISE = "enterprise"            # Maximum protection with legal enforcement
@@ -40,8 +37,7 @@ class ProtectionLevel(Enum):
 
 
 class FingerprintType(Enum):
-    """Types of content fingerprinting"""
-    AUDIO_SPECTRAL = "audio_spectral"              # Spectral analysis fingerprinting
+    """Types of content fingerprinting"""    AUDIO_SPECTRAL = "audio_spectral"              # Spectral analysis fingerprinting
     AUDIO_PERCEPTUAL = "audio_perceptual"          # Perceptual hash fingerprinting
     AUDIO_CHROMAPRINT = "audio_chromaprint"        # Chromaprint algorithm
     AUDIO_NEURAL = "audio_neural"                  # AI neural network fingerprinting
@@ -50,8 +46,7 @@ class FingerprintType(Enum):
 
 
 class DetectionMethod(Enum):
-    """Content detection methods"""
-    REAL_TIME_MONITORING = "real_time_monitoring"
+    """Content detection methods"""    REAL_TIME_MONITORING = "real_time_monitoring"
     BATCH_SCANNING = "batch_scanning"
     CROWD_SOURCED_REPORTING = "crowd_sourced_reporting"
     API_BASED_MONITORING = "api_based_monitoring"
@@ -61,8 +56,7 @@ class DetectionMethod(Enum):
 
 
 class EnforcementAction(Enum):
-    """Copyright enforcement actions"""
-    DMCA_TAKEDOWN = "dmca_takedown"
+    """Copyright enforcement actions"""    DMCA_TAKEDOWN = "dmca_takedown"
     CEASE_AND_DESIST = "cease_and_desist"
     CONTENT_CLAIMING = "content_claiming"
     REVENUE_REDIRECTION = "revenue_redirection"
@@ -73,8 +67,7 @@ class EnforcementAction(Enum):
 
 
 class WatermarkType(Enum):
-    """Digital watermarking types"""
-    INAUDIBLE_WATERMARK = "inaudible_watermark"
+    """Digital watermarking types"""    INAUDIBLE_WATERMARK = "inaudible_watermark"
     SPECTRAL_WATERMARK = "spectral_watermark"
     STEGANOGRAPHIC = "steganographic"
     BLOCKCHAIN_HASH = "blockchain_hash"
@@ -84,8 +77,7 @@ class WatermarkType(Enum):
 
 @dataclass
 class FingerprintingConfig:
-    """Configuration for audio fingerprinting"""
-    enabled_algorithms: List[FingerprintType] = field(
+    """Configuration for audio fingerprinting"""    enabled_algorithms: List[FingerprintType] = field(
         default_factory=lambda: [
             FingerprintType.AUDIO_SPECTRAL,
             FingerprintType.AUDIO_PERCEPTUAL,
@@ -137,8 +129,7 @@ class FingerprintingConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for content monitoring and detection"""
-    monitoring_enabled: bool = True
+    """Configuration for content monitoring and detection"""    monitoring_enabled: bool = True
     monitoring_methods: List[DetectionMethod] = field(
         default_factory=lambda: [
             DetectionMethod.REAL_TIME_MONITORING,
@@ -185,8 +176,7 @@ class MonitoringConfig:
 
 @dataclass
 class WatermarkingConfig:
-    """Configuration for digital watermarking"""
-    watermarking_enabled: bool = True
+    """Configuration for digital watermarking"""    watermarking_enabled: bool = True
     watermark_types: List[WatermarkType] = field(
         default_factory=lambda: [
             WatermarkType.INAUDIBLE_WATERMARK,
@@ -232,8 +222,7 @@ class WatermarkingConfig:
 
 @dataclass
 class EnforcementConfig:
-    """Configuration for copyright enforcement"""
-    automated_enforcement: bool = True
+    """Configuration for copyright enforcement"""    automated_enforcement: bool = True
     enforcement_actions: List[EnforcementAction] = field(
         default_factory=lambda: [
             EnforcementAction.DMCA_TAKEDOWN,
@@ -289,8 +278,7 @@ class EnforcementConfig:
 
 @dataclass
 class ProtectionProfile:
-    """Complete protection profile for content"""
-    profile_name: str
+    """Complete protection profile for content"""    profile_name: str
     protection_level: ProtectionLevel
     
     # Configuration components
@@ -318,8 +306,7 @@ class ProtectionProfile:
 
 
 class ContentProtectionConfig:
-    """Main content protection configuration manager"""
-    
+    """Main content protection configuration manager"""    
     def __init__(self):
         self.protection_profiles = self._initialize_protection_profiles()
         self.platform_specific_configs = self._initialize_platform_configs()
@@ -332,8 +319,7 @@ class ContentProtectionConfig:
         self.audit_logging_enabled = True
     
     def _initialize_protection_profiles(self) -> Dict[str, ProtectionProfile]:
-        """Initialize predefined protection profiles"""
-        profiles = {}
+        """Initialize predefined protection profiles"""        profiles = {}
         
         # Public/Basic Protection Profile
         profiles["public"] = ProtectionProfile(
@@ -526,8 +512,7 @@ class ContentProtectionConfig:
         return profiles
     
     def _initialize_platform_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific protection configurations"""
-        configs = {
+        """Initialize platform-specific protection configurations"""        configs = {
             "youtube": {
                 "content_id_integration": True,
                 "api_monitoring": True,
@@ -562,8 +547,7 @@ class ContentProtectionConfig:
         return configs
     
     def get_protection_profile(self, profile_name: str) -> ProtectionProfile:
-        """Get protection profile by name"""
-        profile_key = profile_name.lower()
+        """Get protection profile by name"""        profile_key = profile_name.lower()
         
         if profile_key in self.custom_profiles:
             return self.custom_profiles[profile_key]
@@ -575,8 +559,7 @@ class ContentProtectionConfig:
     
     def create_custom_profile(self, profile_name: str, base_profile: str, 
                             modifications: Dict[str, Any]) -> ProtectionProfile:
-        """Create custom protection profile"""
-        base = self.get_protection_profile(base_profile)
+        """Create custom protection profile"""        base = self.get_protection_profile(base_profile)
         
         # Deep copy base profile
         custom_profile = ProtectionProfile(
@@ -599,13 +582,11 @@ class ContentProtectionConfig:
         return custom_profile
     
     def get_platform_config(self, platform: str) -> Dict[str, Any]:
-        """Get platform-specific protection configuration"""
-        platform_key = platform.lower()
+        """Get platform-specific protection configuration"""        platform_key = platform.lower()
         return self.platform_specific_configs.get(platform_key, {})
     
     def validate_protection_setup(self, profile_name: str, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate protection setup for content"""
-        profile = self.get_protection_profile(profile_name)
+        """Validate protection setup for content"""        profile = self.get_protection_profile(profile_name)
         
         validation_results = {
             "valid": True,
@@ -667,8 +648,7 @@ class ContentProtectionConfig:
     
     def get_protection_recommendations(self, content_type: str, creator_tier: str, 
                                      budget_level: str) -> Dict[str, Any]:
-        """Get personalized protection recommendations"""
-        recommendations = {
+        """Get personalized protection recommendations"""        recommendations = {
             "recommended_profile": "standard",
             "reasoning": [],
             "upgrade_path": [],
@@ -708,8 +688,7 @@ class ContentProtectionConfig:
         return recommendations
     
     def _get_upgrade_features(self, current_level: str, target_level: str) -> List[str]:
-        """Get additional features when upgrading protection levels"""
-        current_profile = self.protection_profiles[current_level]
+        """Get additional features when upgrading protection levels"""        current_profile = self.protection_profiles[current_level]
         target_profile = self.protection_profiles[target_level]
         
         features = []
@@ -746,13 +725,10 @@ content_protection_config = ContentProtectionConfig()
 
 # Export commonly used functions
 def get_protection_profile(profile_name: str) -> ProtectionProfile:
-    """Get content protection profile"""
-    return content_protection_config.get_protection_profile(profile_name)
+    """Get content protection profile"""    return content_protection_config.get_protection_profile(profile_name)
 
 def validate_protection_setup(profile_name: str, content_metadata: Dict[str, Any]) -> Dict[str, Any]:
-    """Validate protection setup for content"""
-    return content_protection_config.validate_protection_setup(profile_name, content_metadata)
+    """Validate protection setup for content"""    return content_protection_config.validate_protection_setup(profile_name, content_metadata)
 
 def get_protection_recommendations(content_type: str, creator_tier: str, budget_level: str) -> Dict[str, Any]:
-    """Get personalized protection recommendations"""
-    return content_protection_config.get_protection_recommendations(content_type, creator_tier, budget_level)
+    """Get personalized protection recommendations"""    return content_protection_config.get_protection_recommendations(content_type, creator_tier, budget_level)

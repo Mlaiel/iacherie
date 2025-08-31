@@ -1,5 +1,4 @@
-"""
-Smart Content Recommendations Engine - IA Influencer Agent Platform
+"""Smart Content Recommendations Engine - IA Influencer Agent Platform
 ===================================================================
 
 Industrial-grade AI recommendation system for content optimization, audience targeting,
@@ -16,7 +15,6 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
-
 import asyncio
 import json
 import logging
@@ -51,8 +49,7 @@ settings = get_settings()
 
 
 class SmartRecommendationEngine:
-    """AI-powered content and strategy recommendation system."""
-    
+    """AI-powered content and strategy recommendation system."""    
     def __init__(self):
         self.db = get_database()
         self.analytics_service = AnalyticsService()
@@ -137,8 +134,7 @@ class SmartRecommendationEngine:
         content_type: str,
         recommendation_params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Generate AI-powered content recommendations for creators.
+        """        Generate AI-powered content recommendations for creators.
         
         Args:
             creator_id: Creator requesting recommendations
@@ -147,8 +143,7 @@ class SmartRecommendationEngine:
             
         Returns:
             Comprehensive content recommendations with confidence scores
-        """
-        try:
+        """        try:
             # Get creator profile and history
             creator_profile = await self.db.creator_profiles.get_by_id(creator_id)
             if not creator_profile:
@@ -276,8 +271,7 @@ class SmartRecommendationEngine:
         analysis_period: str = 'month',
         deep_analysis: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive audience insights and segmentation.
+        """        Generate comprehensive audience insights and segmentation.
         
         Args:
             creator_id: Creator to analyze
@@ -286,8 +280,7 @@ class SmartRecommendationEngine:
             
         Returns:
             Detailed audience insights and recommendations
-        """
-        try:
+        """        try:
             # Get audience data
             audience_data = await self.analytics_service.get_audience_data(
                 creator_id, analysis_period
@@ -430,8 +423,7 @@ class SmartRecommendationEngine:
         revenue_goals: Dict[str, Any],
         optimization_params: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Generate AI-optimized monetization strategy.
+        """        Generate AI-optimized monetization strategy.
         
         Args:
             creator_id: Creator requesting strategy
@@ -440,8 +432,7 @@ class SmartRecommendationEngine:
             
         Returns:
             Comprehensive monetization strategy with projections
-        """
-        try:
+        """        try:
             # Get creator data and audience insights
             creator_profile = await self.db.creator_profiles.get_by_id(creator_id)
             audience_insights = await self.db.audience_insights.get_latest_by_creator(creator_id)
@@ -590,8 +581,7 @@ class SmartRecommendationEngine:
         content_history: List[Dict[str, Any]],
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze creator's historical performance patterns."""
-        try:
+        """Analyze creator's historical performance patterns."""        try:
             if not content_history:
                 return self._get_default_performance_analysis()
             
@@ -654,8 +644,7 @@ class SmartRecommendationEngine:
         trend_data: Dict[str, Any],
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered content ideas."""
-        try:
+        """Generate AI-powered content ideas."""        try:
             content_ideas = []
             
             # Combine creator strengths with trending topics
@@ -703,8 +692,7 @@ class SmartRecommendationEngine:
         creator_profile: Any,
         audience_insights: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Predict performance for content suggestions using AI."""
-        try:
+        """Predict performance for content suggestions using AI."""        try:
             predictions = []
             
             for suggestion in content_suggestions:
@@ -747,8 +735,7 @@ class SmartRecommendationEngine:
     # Additional helper methods...
     
     async def _initialize_recommendation_models(self):
-        """Initialize AI models for recommendations."""
-        try:
+        """Initialize AI models for recommendations."""        try:
             # Initialize sentiment analyzer
             self.models['sentiment_analyzer'] = pipeline(
                 "sentiment-analysis",
@@ -766,8 +753,7 @@ class SmartRecommendationEngine:
             logger.error(f"Failed to initialize recommendation models: {str(e)}")
     
     def _get_default_performance_analysis(self) -> Dict[str, Any]:
-        """Return default performance analysis for new creators."""
-        return {
+        """Return default performance analysis for new creators."""        return {
             'averages': {
                 'avg_views': 500,
                 'avg_engagement_rate': 0.03,
@@ -795,8 +781,7 @@ class SmartRecommendationEngine:
         }
     
     def _calculate_trend(self, df: pd.DataFrame, column: str) -> str:
-        """Calculate trend direction for a metric."""
-        if len(df) < 3:
+        """Calculate trend direction for a metric."""        if len(df) < 3:
             return 'insufficient_data'
         
         # Simple linear trend calculation
@@ -812,8 +797,7 @@ class SmartRecommendationEngine:
             return 'stable'
     
     def _calculate_consistency_score(self, df: pd.DataFrame) -> float:
-        """Calculate consistency score based on performance variance."""
-        if len(df) < 2:
+        """Calculate consistency score based on performance variance."""        if len(df) < 2:
             return 0.5
         
         # Calculate coefficient of variation for views and engagement
@@ -825,8 +809,7 @@ class SmartRecommendationEngine:
         return float(np.clip(consistency, 0, 1))
     
     def _identify_creator_strengths(self, df: pd.DataFrame) -> List[str]:
-        """Identify creator's content strengths."""
-        strengths = []
+        """Identify creator's content strengths."""        strengths = []
         
         # High engagement rate
         if df['engagement_rate'].mean() > 0.05:
@@ -847,8 +830,7 @@ class SmartRecommendationEngine:
         return strengths
     
     def _identify_improvement_areas(self, df: pd.DataFrame) -> List[str]:
-        """Identify areas for improvement."""
-        improvements = []
+        """Identify areas for improvement."""        improvements = []
         
         # Low engagement
         if df['engagement_rate'].mean() < 0.02:
@@ -873,8 +855,7 @@ class SmartRecommendationEngine:
         creator_id: UUID,
         content_type: str
     ) -> Dict[str, Any]:
-        """Get performance benchmarks for creator's niche."""
-        try:
+        """Get performance benchmarks for creator's niche."""        try:
             creator_profile = await self.db.creator_profiles.get_by_id(creator_id)
             niche_categories = creator_profile.niche_categories if creator_profile else ['general']
             

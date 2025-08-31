@@ -1,11 +1,9 @@
-"""
-ML Training - Simplified training without heavy dependencies
+"""ML Training - Simplified training without heavy dependencies
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 Simplified model training without MLflow, wandb, optuna dependencies.
 """
-
 import logging
 import time
 import json
@@ -19,8 +17,7 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class TrainingStatus(Enum):
-    """Training status enumeration"""
-    NOT_STARTED = "not_started"
+    """Training status enumeration"""    NOT_STARTED = "not_started"
     INITIALIZING = "initializing"
     TRAINING = "training"
     VALIDATING = "validating"
@@ -29,16 +26,14 @@ class TrainingStatus(Enum):
     STOPPED = "stopped"
 
 class OptimizationAlgorithm(Enum):
-    """Optimization algorithms"""
-    SGD = "sgd"
+    """Optimization algorithms"""    SGD = "sgd"
     ADAM = "adam"
     ADAMW = "adamw"
     RMSPROP = "rmsprop"
 
 @dataclass
 class TrainingConfig:
-    """Configuration for model training"""
-    model_name: str
+    """Configuration for model training"""    model_name: str
     output_dir: str
     num_epochs: int = 10
     batch_size: int = 32
@@ -60,8 +55,7 @@ class TrainingConfig:
 
 @dataclass 
 class TrainingResult:
-    """Results from model training"""
-    model_path: str
+    """Results from model training"""    model_path: str
     training_history: Dict[str, List[float]]
     best_metrics: Dict[str, float]
     final_metrics: Dict[str, float]
@@ -76,8 +70,7 @@ class TrainingResult:
     artifacts: List[str] = field(default_factory=list)
 
 class SimpleModelTrainer:
-    """Simplified model trainer without heavy dependencies"""
-    
+    """Simplified model trainer without heavy dependencies"""    
     def __init__(self, config: TrainingConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -107,8 +100,7 @@ class SimpleModelTrainer:
              train_dataset: Any,
              eval_dataset: Optional[Any] = None,
              data_collator: Optional[Any] = None) -> TrainingResult:
-        """Train the model"""
-        try:
+        """Train the model"""        try:
             self.status = TrainingStatus.INITIALIZING
             start_time = time.time()
             
@@ -215,15 +207,13 @@ class SimpleModelTrainer:
             raise
     
     def _is_improvement(self, current_value: float) -> bool:
-        """Check if current metric is an improvement"""
-        if self.config.greater_is_better:
+        """Check if current metric is an improvement"""        if self.config.greater_is_better:
             return current_value > self.best_metric_value + self.config.early_stopping_threshold
         else:
             return current_value < self.best_metric_value - self.config.early_stopping_threshold
     
     def _save_checkpoint(self, model: Any, epoch: int, checkpoint_type: str):
-        """Save model checkpoint"""
-        try:
+        """Save model checkpoint"""        try:
             checkpoint_dir = Path(self.config.output_dir) / f"checkpoint-{checkpoint_type}-{epoch}"
             checkpoint_dir.mkdir(parents=True, exist_ok=True)
             
@@ -241,8 +231,7 @@ class SimpleModelTrainer:
             self.logger.warning(f"Failed to save checkpoint: {e}")
     
     def _save_artifacts(self, result: TrainingResult):
-        """Save training artifacts"""
-        try:
+        """Save training artifacts"""        try:
             output_dir = Path(self.config.output_dir)
             
             # Save training history
@@ -273,8 +262,7 @@ class SimpleModelTrainer:
             self.logger.warning(f"Failed to save artifacts: {e}")
     
     def _get_hyperparameters(self) -> Dict[str, Any]:
-        """Get hyperparameters dictionary"""
-        return {
+        """Get hyperparameters dictionary"""        return {
             'learning_rate': self.config.learning_rate,
             'batch_size': self.config.batch_size,
             'num_epochs': self.config.num_epochs,
@@ -285,8 +273,7 @@ class SimpleModelTrainer:
         }
     
     def get_training_progress(self) -> Dict[str, Any]:
-        """Get current training progress"""
-        return {
+        """Get current training progress"""        return {
             'status': self.status.value,
             'current_epoch': self.current_epoch,
             'total_epochs': self.config.num_epochs,

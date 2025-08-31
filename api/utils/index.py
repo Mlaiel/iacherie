@@ -1,12 +1,10 @@
-"""
-Utilities Index - IA Influencer Agent Platform
+"""Utilities Index - IA Influencer Agent Platform
 Main entry point for utility functions and helpers
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 # File and media utilities
 from .files import (
     FileManager,
@@ -74,13 +72,11 @@ from .content_helpers import (
 
 
 def get_file_manager():
-    """Get file management utilities"""
-    return FileManager()
+    """Get file management utilities"""    return FileManager()
 
 
 def get_security_utils():
-    """Get security utility collection"""
-    return {
+    """Get security utility collection"""    return {
         'password_manager': PasswordManager(),
         'token_generator': TokenGenerator(),
         'encryption_helper': EncryptionHelper(),
@@ -90,8 +86,7 @@ def get_security_utils():
 
 
 def get_performance_utils():
-    """Get performance utility collection"""
-    return {
+    """Get performance utility collection"""    return {
         'cache_manager': CacheManager(),
         'rate_limiter': RateLimiter(),
         'performance_monitor': PerformanceMonitor(),
@@ -101,8 +96,7 @@ def get_performance_utils():
 
 
 def get_api_utils():
-    """Get API utility collection"""
-    return {
+    """Get API utility collection"""    return {
         'response_formatter': ResponseFormatter(),
         'request_validator': RequestValidator(),
         'pagination_helper': PaginationHelper(),
@@ -112,8 +106,7 @@ def get_api_utils():
 
 
 def get_content_utils():
-    """Get content utility collection"""
-    return {
+    """Get content utility collection"""    return {
         'content_analyzer': ContentAnalyzer(),
         'metadata_extractor': MetadataExtractor(),
         'thumbnail_generator': ThumbnailGenerator(),
@@ -123,8 +116,7 @@ def get_content_utils():
 
 
 def get_data_utils():
-    """Get data processing utility collection"""
-    return {
+    """Get data processing utility collection"""    return {
         'transformer': DataTransformer(),
         'validator': DataValidator(),
         'normalizer': DataNormalizer(),
@@ -134,8 +126,7 @@ def get_data_utils():
 
 
 def get_all_utilities():
-    """Get all utility collections organized by category"""
-    return {
+    """Get all utility collections organized by category"""    return {
         'file_manager': get_file_manager(),
         'security': get_security_utils(),
         'performance': get_performance_utils(),

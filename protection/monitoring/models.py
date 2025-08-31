@@ -1,5 +1,4 @@
-"""
-📊 Monitoring Models and Database Schemas
+"""📊 Monitoring Models and Database Schemas
 ========================================
 
 Comprehensive database models and schemas for content protection monitoring system.
@@ -21,7 +20,6 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import json
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -82,8 +80,7 @@ class MonitoringPriorityEnum(PyEnum):
 # Core Monitoring Models
 
 class MonitoringSession(Base):
-    """Real-time monitoring session tracking."""
-    __tablename__ = "monitoring_sessions"
+    """Real-time monitoring session tracking."""    __tablename__ = "monitoring_sessions"
     
     id = Column(String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
@@ -125,8 +122,7 @@ class MonitoringSession(Base):
     )
 
 class ViolationDetection(Base):
-    """Content violation detection records."""
-    __tablename__ = "violation_detections"
+    """Content violation detection records."""    __tablename__ = "violation_detections"
     
     id = Column(String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
     monitoring_session_id = Column(String(50), ForeignKey("monitoring_sessions.id"), nullable=False, index=True)
@@ -182,8 +178,7 @@ class ViolationDetection(Base):
     )
 
 class MonitoringAlert(Base):
-    """Monitoring system alerts and notifications."""
-    __tablename__ = "monitoring_alerts"
+    """Monitoring system alerts and notifications."""    __tablename__ = "monitoring_alerts"
     
     id = Column(String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
     monitoring_session_id = Column(String(50), ForeignKey("monitoring_sessions.id"), index=True)
@@ -222,8 +217,7 @@ class MonitoringAlert(Base):
     )
 
 class PlatformMonitoringConfig(Base):
-    """Platform-specific monitoring configuration."""
-    __tablename__ = "platform_monitoring_configs"
+    """Platform-specific monitoring configuration."""    __tablename__ = "platform_monitoring_configs"
     
     id = Column(Integer, primary_key=True, autoincrement=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
@@ -263,8 +257,7 @@ class PlatformMonitoringConfig(Base):
     )
 
 class MonitoringMetrics(Base):
-    """Time-series monitoring metrics data."""
-    __tablename__ = "monitoring_metrics"
+    """Time-series monitoring metrics data."""    __tablename__ = "monitoring_metrics"
     
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     session_id = Column(String(50), ForeignKey("monitoring_sessions.id"), index=True)
@@ -292,8 +285,7 @@ class MonitoringMetrics(Base):
     )
 
 class SystemPerformanceMetrics(Base):
-    """System performance and health metrics."""
-    __tablename__ = "system_performance_metrics"
+    """System performance and health metrics."""    __tablename__ = "system_performance_metrics"
     
     id = Column(BigInteger, primary_key=True, autoincrement=True)
     
@@ -327,8 +319,7 @@ class SystemPerformanceMetrics(Base):
     )
 
 class EnforcementAction(Base):
-    """Enforcement actions taken against violations."""
-    __tablename__ = "enforcement_actions"
+    """Enforcement actions taken against violations."""    __tablename__ = "enforcement_actions"
     
     id = Column(String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
     violation_id = Column(String(50), ForeignKey("violation_detections.id"), nullable=False, index=True)
@@ -369,8 +360,7 @@ class EnforcementAction(Base):
 # Analytics and Reporting Models
 
 class AnalyticsReport(Base):
-    """Generated analytics reports."""
-    __tablename__ = "analytics_reports"
+    """Generated analytics reports."""    __tablename__ = "analytics_reports"
     
     id = Column(String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
@@ -407,8 +397,7 @@ class AnalyticsReport(Base):
     )
 
 class DashboardLayout(Base):
-    """User dashboard layout configurations."""
-    __tablename__ = "dashboard_layouts"
+    """User dashboard layout configurations."""    __tablename__ = "dashboard_layouts"
     
     id = Column(String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
@@ -438,8 +427,7 @@ class DashboardLayout(Base):
     )
 
 class PerformanceOptimizationLog(Base):
-    """Performance optimization actions log."""
-    __tablename__ = "performance_optimization_log"
+    """Performance optimization actions log."""    __tablename__ = "performance_optimization_log"
     
     id = Column(String(50), primary_key=True, default=lambda: str(uuid.uuid4()))
     
@@ -475,8 +463,7 @@ class PerformanceOptimizationLog(Base):
 # Pydantic models for API
 
 class MonitoringSessionCreate(BaseModel):
-    """Create monitoring session request."""
-    fingerprint_id: str
+    """Create monitoring session request."""    fingerprint_id: str
     session_name: Optional[str] = None
     priority: MonitoringPriorityEnum = MonitoringPriorityEnum.MEDIUM
     platforms: List[str]
@@ -485,8 +472,7 @@ class MonitoringSessionCreate(BaseModel):
     custom_config: Dict[str, Any] = Field(default_factory=dict)
 
 class MonitoringSessionUpdate(BaseModel):
-    """Update monitoring session request."""
-    session_name: Optional[str] = None
+    """Update monitoring session request."""    session_name: Optional[str] = None
     priority: Optional[MonitoringPriorityEnum] = None
     platforms: Optional[List[str]] = None
     search_keywords: Optional[List[str]] = None
@@ -494,8 +480,7 @@ class MonitoringSessionUpdate(BaseModel):
     custom_config: Optional[Dict[str, Any]] = None
 
 class ViolationDetectionResponse(BaseModel):
-    """Violation detection response."""
-    id: str
+    """Violation detection response."""    id: str
     platform: str
     detected_url: str
     content_title: Optional[str] = None
@@ -510,8 +495,7 @@ class ViolationDetectionResponse(BaseModel):
         from_attributes = True
 
 class MonitoringMetricsResponse(BaseModel):
-    """Monitoring metrics response."""
-    session_id: Optional[str] = None
+    """Monitoring metrics response."""    session_id: Optional[str] = None
     metric_type: str
     platform: Optional[str] = None
     value: float
@@ -523,8 +507,7 @@ class MonitoringMetricsResponse(BaseModel):
         from_attributes = True
 
 class SystemHealthResponse(BaseModel):
-    """System health metrics response."""
-    cpu_usage_percent: Optional[float] = None
+    """System health metrics response."""    cpu_usage_percent: Optional[float] = None
     memory_usage_percent: Optional[float] = None
     disk_usage_percent: Optional[float] = None
     active_monitoring_sessions: int = 0
@@ -537,8 +520,7 @@ class SystemHealthResponse(BaseModel):
         from_attributes = True
 
 class PlatformConfigUpdate(BaseModel):
-    """Platform configuration update request."""
-    enabled: Optional[bool] = None
+    """Platform configuration update request."""    enabled: Optional[bool] = None
     scan_interval_seconds: Optional[int] = Field(None, ge=30, le=3600)
     similarity_threshold: Optional[float] = Field(None, ge=0.0, le=1.0)
     confidence_threshold: Optional[float] = Field(None, ge=0.0, le=1.0)
@@ -548,8 +530,7 @@ class PlatformConfigUpdate(BaseModel):
 # Database utility functions
 
 def create_monitoring_indexes(engine):
-    """Create additional database indexes for performance optimization."""
-    from sqlalchemy import text
+    """Create additional database indexes for performance optimization."""    from sqlalchemy import text
     
     # Time-series partitioning indexes
     indexes = [
@@ -568,8 +549,7 @@ def create_monitoring_indexes(engine):
                 print(f"Index creation failed: {e}")
 
 def setup_monitoring_database(engine):
-    """Set up monitoring database with all tables and indexes."""
-    # Create all tables
+    """Set up monitoring database with all tables and indexes."""    # Create all tables
     Base.metadata.create_all(engine)
     
     # Create performance indexes
@@ -579,13 +559,11 @@ def setup_monitoring_database(engine):
     setup_time_series_partitioning(engine)
 
 def setup_time_series_partitioning(engine):
-    """Set up time-series partitioning for high-volume tables."""
-    from sqlalchemy import text
+    """Set up time-series partitioning for high-volume tables."""    from sqlalchemy import text
     
     # This would set up monthly partitioning for metrics tables
     partitioning_sql = [
-        """
-        -- Create monthly partitions for monitoring_metrics
+        """        -- Create monthly partitions for monitoring_metrics
         CREATE OR REPLACE FUNCTION create_monthly_partitions()
         RETURNS void AS $$
         DECLARE

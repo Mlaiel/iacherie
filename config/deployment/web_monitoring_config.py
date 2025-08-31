@@ -1,5 +1,4 @@
-"""
-Web Monitoring and Surveillance Configuration Module for IA-Influencer Agent Platform
+"""Web Monitoring and Surveillance Configuration Module for IA-Influencer Agent Platform
 ====================================================================================
 
 Professional web monitoring and content surveillance configuration
@@ -22,7 +21,6 @@ WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual pro
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
 """
-
 import os
 import json
 import yaml
@@ -35,8 +33,7 @@ from datetime import datetime, timedelta
 
 
 class PlatformType(Enum):
-    """Supported platform types for monitoring"""
-    YOUTUBE = "youtube"
+    """Supported platform types for monitoring"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -51,8 +48,7 @@ class PlatformType(Enum):
 
 
 class CrawlerMethod(Enum):
-    """Crawling methods"""
-    API = "api"
+    """Crawling methods"""    API = "api"
     SELENIUM = "selenium"
     SCRAPY = "scrapy"
     REQUESTS = "requests"
@@ -60,8 +56,7 @@ class CrawlerMethod(Enum):
 
 
 class DetectionMode(Enum):
-    """Content detection modes"""
-    FINGERPRINT = "fingerprint"
+    """Content detection modes"""    FINGERPRINT = "fingerprint"
     VISUAL = "visual"
     AUDIO = "audio"
     TEXT = "text"
@@ -71,8 +66,7 @@ class DetectionMode(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""
-    platform_type: PlatformType
+    """Platform-specific configuration"""    platform_type: PlatformType
     enabled: bool = True
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
@@ -88,8 +82,7 @@ class PlatformConfig:
 
 @dataclass
 class AlertConfig:
-    """Alert configuration for detected content"""
-    similarity_threshold: float = 0.85
+    """Alert configuration for detected content"""    similarity_threshold: float = 0.85
     immediate_alert_threshold: float = 0.95
     notification_channels: List[str] = field(default_factory=lambda: ["email", "slack", "webhook"])
     evidence_collection: bool = True
@@ -100,8 +93,7 @@ class AlertConfig:
 
 @dataclass
 class CrawlerConfig:
-    """Crawler configuration"""
-    user_agents: List[str] = field(default_factory=list)
+    """Crawler configuration"""    user_agents: List[str] = field(default_factory=list)
     proxy_rotation: bool = True
     proxy_pool: List[str] = field(default_factory=list)
     delay_range: tuple = (1, 5)
@@ -114,8 +106,7 @@ class CrawlerConfig:
 
 
 class WebMonitoringConfig:
-    """
-    Professional web monitoring and surveillance configuration for IA-Influencer Agent Platform.
+    """    Professional web monitoring and surveillance configuration for IA-Influencer Agent Platform.
     
     Provides comprehensive web monitoring infrastructure:
     - Multi-platform content surveillance (YouTube, Instagram, TikTok, Twitter, etc.)
@@ -128,8 +119,7 @@ class WebMonitoringConfig:
     - Revenue tracking and monetization alerts
     - GDPR/CCPA compliant data collection
     - Machine learning-based content matching
-    """
-    
+    """    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent-web-monitoring"
@@ -140,8 +130,7 @@ class WebMonitoringConfig:
         self.logger = self._setup_logging()
         
     def _initialize_platforms(self) -> Dict[PlatformType, PlatformConfig]:
-        """Initialize platform configurations"""
-        platforms = {}
+        """Initialize platform configurations"""        platforms = {}
         
         # YouTube configuration
         platforms[PlatformType.YOUTUBE] = PlatformConfig(
@@ -251,8 +240,7 @@ class WebMonitoringConfig:
         return platforms
     
     def _initialize_alert_config(self) -> AlertConfig:
-        """Initialize alert configuration"""
-        escalation_levels = {
+        """Initialize alert configuration"""        escalation_levels = {
             0.95: "immediate",
             0.90: "high_priority",
             0.85: "standard",
@@ -269,8 +257,7 @@ class WebMonitoringConfig:
         )
     
     def _initialize_crawler_config(self) -> CrawlerConfig:
-        """Initialize crawler configuration"""
-        user_agents = [
+        """Initialize crawler configuration"""        user_agents = [
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
             "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36",
             "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
@@ -296,8 +283,7 @@ class WebMonitoringConfig:
         )
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup logging configuration"""
-        logger = logging.getLogger("web_monitoring")
+        """Setup logging configuration"""        logger = logging.getLogger("web_monitoring")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -311,18 +297,15 @@ class WebMonitoringConfig:
         return logger
     
     def get_platform_config(self, platform: PlatformType) -> Optional[PlatformConfig]:
-        """Get configuration for specific platform"""
-        return self.platforms.get(platform)
+        """Get configuration for specific platform"""        return self.platforms.get(platform)
     
     def enable_platform(self, platform: PlatformType, enabled: bool = True) -> None:
-        """Enable or disable platform monitoring"""
-        if platform in self.platforms:
+        """Enable or disable platform monitoring"""        if platform in self.platforms:
             self.platforms[platform].enabled = enabled
             self.logger.info(f"Platform {platform.value} {'enabled' if enabled else 'disabled'}")
     
     def update_platform_credentials(self, platform: PlatformType, credentials: Dict[str, str]) -> None:
-        """Update platform API credentials"""
-        if platform in self.platforms:
+        """Update platform API credentials"""        if platform in self.platforms:
             config = self.platforms[platform]
             config.api_key = credentials.get("api_key")
             config.api_secret = credentials.get("api_secret")
@@ -331,12 +314,10 @@ class WebMonitoringConfig:
             self.logger.info(f"Updated credentials for platform {platform.value}")
     
     def get_enabled_platforms(self) -> List[PlatformType]:
-        """Get list of enabled platforms"""
-        return [platform for platform, config in self.platforms.items() if config.enabled]
+        """Get list of enabled platforms"""        return [platform for platform, config in self.platforms.items() if config.enabled]
     
     def generate_youtube_crawler_config(self) -> Dict[str, Any]:
-        """Generate YouTube-specific crawler configuration"""
-        config = self.get_platform_config(PlatformType.YOUTUBE)
+        """Generate YouTube-specific crawler configuration"""        config = self.get_platform_config(PlatformType.YOUTUBE)
         if not config:
             return {}
         
@@ -369,8 +350,7 @@ class WebMonitoringConfig:
         }
     
     def generate_instagram_crawler_config(self) -> Dict[str, Any]:
-        """Generate Instagram-specific crawler configuration"""
-        config = self.get_platform_config(PlatformType.INSTAGRAM)
+        """Generate Instagram-specific crawler configuration"""        config = self.get_platform_config(PlatformType.INSTAGRAM)
         if not config:
             return {}
         
@@ -401,8 +381,7 @@ class WebMonitoringConfig:
         }
     
     def generate_monitoring_schedule(self) -> Dict[str, Any]:
-        """Generate monitoring schedule configuration"""
-        return {
+        """Generate monitoring schedule configuration"""        return {
             "scheduler_type": "cron",
             "timezone": "Europe/Berlin",
             "schedules": {
@@ -435,8 +414,7 @@ class WebMonitoringConfig:
         }
     
     def generate_alert_configuration(self) -> Dict[str, Any]:
-        """Generate alert system configuration"""
-        return {
+        """Generate alert system configuration"""        return {
             "notification_channels": {
                 "email": {
                     "enabled": True,
@@ -504,10 +482,8 @@ class WebMonitoringConfig:
         }
     
     def generate_legal_notice_templates(self) -> Dict[str, str]:
-        """Generate legal notice templates for takedown requests"""
-        return {
-            "dmca_takedown": """
-Dear Content Platform Administrator,
+        """Generate legal notice templates for takedown requests"""        return {
+            "dmca_takedown": """Dear Content Platform Administrator,
 
 I am writing to notify you of copyright infringement occurring on your platform.
 
@@ -533,8 +509,7 @@ Fahed Mlaiel
 Email: mlaiel@live.de
 Date: {current_date}
 """,
-            "eu_copyright_notice": """
-Sehr geehrte Damen und Herren,
+            "eu_copyright_notice": """Sehr geehrte Damen und Herren,
 
 hiermit teile ich Ihnen eine Urheberrechtsverletzung auf Ihrer Plattform mit.
 
@@ -553,8 +528,7 @@ Bitte entfernen Sie umgehend die rechtsverletzenden Inhalte.
 Mit freundlichen Grüßen,
 Fahed Mlaiel
 """,
-            "gdpr_data_request": """
-Subject: GDPR Data Access Request - Content Protection
+            "gdpr_data_request": """Subject: GDPR Data Access Request - Content Protection
 
 Dear Data Protection Officer,
 
@@ -569,12 +543,10 @@ Please provide this information within 30 days as required by law.
 Regards,
 Fahed Mlaiel
 mlaiel@live.de
-"""
-        }
+"""        }
     
     def export_configurations(self, output_dir: str = "./web-monitoring-configs") -> Dict[str, str]:
-        """Export all web monitoring configurations to files"""
-        output_path = Path(output_dir)
+        """Export all web monitoring configurations to files"""        output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
         exported_files = {}
@@ -640,8 +612,7 @@ mlaiel@live.de
 
 # Factory function for different environments
 def create_web_monitoring_config(environment: str = "development") -> WebMonitoringConfig:
-    """Create web monitoring configuration for specific environment"""
-    return WebMonitoringConfig(environment=environment)
+    """Create web monitoring configuration for specific environment"""    return WebMonitoringConfig(environment=environment)
 
 
 # Export configuration instances

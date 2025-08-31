@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Invalidation - Smart Cache Invalidation System
+"""Cache Invalidation - Smart Cache Invalidation System
 ===================================================
 
 Advanced cache invalidation with intelligent patterns,
@@ -10,7 +9,6 @@ dependencies, and event-driven invalidation strategies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import re
@@ -28,8 +26,7 @@ from .cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class InvalidationType(Enum):
-    """Cache invalidation types."""
-    IMMEDIATE = "immediate"
+    """Cache invalidation types."""    IMMEDIATE = "immediate"
     DELAYED = "delayed"
     CONDITIONAL = "conditional"
     PATTERN_BASED = "pattern_based"
@@ -38,8 +35,7 @@ class InvalidationType(Enum):
     TIME_BASED = "time_based"
 
 class InvalidationTrigger(Enum):
-    """Invalidation trigger types."""
-    MANUAL = "manual"
+    """Invalidation trigger types."""    MANUAL = "manual"
     DATA_CHANGE = "data_change"
     USER_ACTION = "user_action"
     SYSTEM_EVENT = "system_event"
@@ -49,8 +45,7 @@ class InvalidationTrigger(Enum):
 
 @dataclass
 class InvalidationRule:
-    """Cache invalidation rule configuration."""
-    rule_id: str
+    """Cache invalidation rule configuration."""    rule_id: str
     name: str
     invalidation_type: InvalidationType
     trigger: InvalidationTrigger
@@ -66,8 +61,7 @@ class InvalidationRule:
     trigger_count: int = 0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "rule_id": self.rule_id,
             "name": self.name,
             "invalidation_type": self.invalidation_type.value,
@@ -86,8 +80,7 @@ class InvalidationRule:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'InvalidationRule':
-        """Create from dictionary."""
-        last_triggered = None
+        """Create from dictionary."""        last_triggered = None
         if data.get('last_triggered'):
             last_triggered = datetime.fromisoformat(data['last_triggered'])
         
@@ -110,8 +103,7 @@ class InvalidationRule:
 
 @dataclass
 class InvalidationEvent:
-    """Cache invalidation event."""
-    event_id: str
+    """Cache invalidation event."""    event_id: str
     rule_id: str
     trigger: InvalidationTrigger
     keys_affected: List[str]
@@ -121,19 +113,16 @@ class InvalidationEvent:
     error_message: Optional[str] = None
 
 class CacheInvalidator:
-    """
-    Basic cache invalidation implementation.
+    """    Basic cache invalidation implementation.
     
     Features:
     - Pattern-based invalidation
     - Tag-based invalidation
     - Dependency tracking
     - Event logging
-    """
-    
+    """    
     def __init__(self, cache_manager: Optional[CacheManager] = None):
-        """Initialize cache invalidator."""
-        self.cache_manager = cache_manager
+        """Initialize cache invalidator."""        self.cache_manager = cache_manager
         self.logger = logging.getLogger(f"{__name__}.CacheInvalidator")
         
         # Invalidation tracking
@@ -147,8 +136,7 @@ class CacheInvalidator:
         self.logger.info("Cache invalidator initialized")
     
     async def _get_cache_manager(self) -> CacheManager:
-        """Get cache manager instance."""
-        if self.cache_manager is None:
+        """Get cache manager instance."""        if self.cache_manager is None:
             from .cache_manager import get_cache_manager
             self.cache_manager = await get_cache_manager()
         return self.cache_manager
@@ -156,8 +144,7 @@ class CacheInvalidator:
     async def invalidate_key(self, key: str, 
                            trigger: InvalidationTrigger = InvalidationTrigger.MANUAL,
                            metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """
-        Invalidate single cache key.
+        """        Invalidate single cache key.
         
         Args:
             key: Cache key to invalidate
@@ -166,8 +153,7 @@ class CacheInvalidator:
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             success = await cache_manager.delete(key)
             
@@ -192,8 +178,7 @@ class CacheInvalidator:
     async def invalidate_keys(self, keys: List[str],
                             trigger: InvalidationTrigger = InvalidationTrigger.MANUAL,
                             metadata: Optional[Dict[str, Any]] = None) -> int:
-        """
-        Invalidate multiple cache keys.
+        """        Invalidate multiple cache keys.
         
         Args:
             keys: List of cache keys
@@ -202,8 +187,7 @@ class CacheInvalidator:
             
         Returns:
             Number of keys successfully invalidated
-        """
-        try:
+        """        try:
             invalidated_count = 0
             successful_keys = []
             
@@ -237,8 +221,7 @@ class CacheInvalidator:
     async def invalidate_pattern(self, pattern: str,
                                trigger: InvalidationTrigger = InvalidationTrigger.MANUAL,
                                metadata: Optional[Dict[str, Any]] = None) -> int:
-        """
-        Invalidate keys matching pattern.
+        """        Invalidate keys matching pattern.
         
         Args:
             pattern: Key pattern (supports wildcards)
@@ -247,8 +230,7 @@ class CacheInvalidator:
             
         Returns:
             Number of keys invalidated
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             invalidated_count = await cache_manager.invalidate_pattern(pattern)
             
@@ -272,8 +254,7 @@ class CacheInvalidator:
     async def invalidate_by_tags(self, tags: List[str],
                                trigger: InvalidationTrigger = InvalidationTrigger.MANUAL,
                                metadata: Optional[Dict[str, Any]] = None) -> int:
-        """
-        Invalidate keys by tags.
+        """        Invalidate keys by tags.
         
         Args:
             tags: List of tags
@@ -282,8 +263,7 @@ class CacheInvalidator:
             
         Returns:
             Number of keys invalidated
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             invalidated_count = 0
             
@@ -318,8 +298,7 @@ class CacheInvalidator:
     async def invalidate_dependencies(self, key: str,
                                     trigger: InvalidationTrigger = InvalidationTrigger.DEPENDENCY,
                                     metadata: Optional[Dict[str, Any]] = None) -> int:
-        """
-        Invalidate keys that depend on given key.
+        """        Invalidate keys that depend on given key.
         
         Args:
             key: Key that changed
@@ -328,8 +307,7 @@ class CacheInvalidator:
             
         Returns:
             Number of dependent keys invalidated
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             dependency_key = f"{self.dependency_prefix}{key}"
             
@@ -366,8 +344,7 @@ class CacheInvalidator:
             return 0
     
     async def add_dependency(self, source_key: str, dependent_key: str) -> bool:
-        """
-        Add dependency relationship.
+        """        Add dependency relationship.
         
         Args:
             source_key: Key that is depended upon
@@ -375,8 +352,7 @@ class CacheInvalidator:
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             dependency_key = f"{self.dependency_prefix}{source_key}"
             
@@ -392,8 +368,7 @@ class CacheInvalidator:
             return False
     
     async def add_tags(self, key: str, tags: List[str]) -> bool:
-        """
-        Add tags to cache key.
+        """        Add tags to cache key.
         
         Args:
             key: Cache key
@@ -401,8 +376,7 @@ class CacheInvalidator:
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             
             for tag in tags:
@@ -420,20 +394,17 @@ class CacheInvalidator:
             return False
     
     def _add_event(self, event: InvalidationEvent) -> None:
-        """Add event to history."""
-        self.invalidation_events.append(event)
+        """Add event to history."""        self.invalidation_events.append(event)
         
         # Keep only recent events
         if len(self.invalidation_events) > self.max_events:
             self.invalidation_events = self.invalidation_events[-self.max_events:]
     
     async def get_events(self, limit: int = 100) -> List[InvalidationEvent]:
-        """Get recent invalidation events."""
-        return self.invalidation_events[-limit:]
+        """Get recent invalidation events."""        return self.invalidation_events[-limit:]
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get invalidation statistics."""
-        total_events = len(self.invalidation_events)
+        """Get invalidation statistics."""        total_events = len(self.invalidation_events)
         successful_events = sum(1 for event in self.invalidation_events if event.success)
         
         # Count by trigger type
@@ -450,8 +421,7 @@ class CacheInvalidator:
         }
 
 class SmartInvalidator(CacheInvalidator):
-    """
-    Smart cache invalidator with rule-based invalidation.
+    """    Smart cache invalidator with rule-based invalidation.
     
     Enhanced features:
     - Rule-based invalidation
@@ -459,11 +429,9 @@ class SmartInvalidator(CacheInvalidator):
     - Delayed invalidation
     - Priority-based processing
     - Machine learning optimization
-    """
-    
+    """    
     def __init__(self, cache_manager: Optional[CacheManager] = None):
-        """Initialize smart invalidator."""
-        super().__init__(cache_manager)
+        """Initialize smart invalidator."""        super().__init__(cache_manager)
         self.logger = logging.getLogger(f"{__name__}.SmartInvalidator")
         
         # Rule management
@@ -481,16 +449,14 @@ class SmartInvalidator(CacheInvalidator):
         self.logger.info("Smart invalidator initialized")
     
     async def add_rule(self, rule: InvalidationRule) -> bool:
-        """
-        Add invalidation rule.
+        """        Add invalidation rule.
         
         Args:
             rule: Invalidation rule
             
         Returns:
             True if successful
-        """
-        try:
+        """        try:
             cache_manager = await self._get_cache_manager()
             
             self.rules[rule.rule_id] = rule
@@ -507,8 +473,7 @@ class SmartInvalidator(CacheInvalidator):
             return False
     
     async def remove_rule(self, rule_id: str) -> bool:
-        """Remove invalidation rule."""
-        try:
+        """Remove invalidation rule."""        try:
             cache_manager = await self._get_cache_manager()
             
             if rule_id in self.rules:
@@ -526,8 +491,7 @@ class SmartInvalidator(CacheInvalidator):
     
     async def trigger_rules(self, trigger: InvalidationTrigger,
                           context: Optional[Dict[str, Any]] = None) -> int:
-        """
-        Trigger invalidation rules.
+        """        Trigger invalidation rules.
         
         Args:
             trigger: Trigger type
@@ -535,8 +499,7 @@ class SmartInvalidator(CacheInvalidator):
             
         Returns:
             Number of rules executed
-        """
-        try:
+        """        try:
             executed_count = 0
             context = context or {}
             
@@ -585,8 +548,7 @@ class SmartInvalidator(CacheInvalidator):
     
     async def _execute_rule(self, rule: InvalidationRule, 
                           context: Dict[str, Any]) -> bool:
-        """Execute invalidation rule."""
-        try:
+        """Execute invalidation rule."""        try:
             if rule.invalidation_type == InvalidationType.PATTERN_BASED and rule.pattern:
                 await self.invalidate_pattern(rule.pattern, rule.trigger, context)
                 
@@ -605,8 +567,7 @@ class SmartInvalidator(CacheInvalidator):
     
     async def _evaluate_condition(self, condition: str, 
                                 context: Dict[str, Any]) -> bool:
-        """Evaluate rule condition."""
-        try:
+        """Evaluate rule condition."""        try:
             self.conditions_evaluated += 1
             
             # Simple expression evaluation
@@ -629,8 +590,7 @@ class SmartInvalidator(CacheInvalidator):
             return False
     
     async def _process_delayed_queue(self) -> None:
-        """Process delayed invalidation queue."""
-        try:
+        """Process delayed invalidation queue."""        try:
             while True:
                 await asyncio.sleep(10)  # Check every 10 seconds
                 
@@ -663,8 +623,7 @@ class SmartInvalidator(CacheInvalidator):
             self._delayed_task = None
     
     async def load_rules(self) -> int:
-        """Load rules from cache."""
-        try:
+        """Load rules from cache."""        try:
             cache_manager = await self._get_cache_manager()
             loaded_count = 0
             
@@ -678,8 +637,7 @@ class SmartInvalidator(CacheInvalidator):
             return 0
     
     async def get_rule_stats(self) -> Dict[str, Any]:
-        """Get rule statistics."""
-        return {
+        """Get rule statistics."""        return {
             "total_rules": len(self.rules),
             "enabled_rules": sum(1 for rule in self.rules.values() if rule.enabled),
             "rule_executions": self.rule_executions,

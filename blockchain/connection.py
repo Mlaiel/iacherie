@@ -7,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 Warning: Unauthorized use, copying, or distribution of this code is strictly prohibited.
 """
-
 from typing import Dict, Optional, Any, Union
 import asyncio
 from web3 import Web3
@@ -22,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class NetworkConfig:
-    """Network configuration for blockchain connections."""
-    
+    """Network configuration for blockchain connections."""    
     name: str
     rpc_url: str
     chain_id: int
@@ -34,8 +32,7 @@ class NetworkConfig:
 
 
 class BlockchainConnection:
-    """Professional blockchain connection manager for multi-network support."""
-    
+    """Professional blockchain connection manager for multi-network support."""    
     # Network configurations
     NETWORKS = {
         "ethereum": NetworkConfig(
@@ -86,8 +83,7 @@ class BlockchainConnection:
         Args:
             network: Target blockchain network
             api_key: API key for RPC provider
-        """
-        self.network = network
+        """        self.network = network
         self.api_key = api_key
         self.web3: Optional[Web3] = None
         self.account: Optional[Account] = None
@@ -96,8 +92,7 @@ class BlockchainConnection:
         self.connection_retries = 3
         
     async def initialize_connection(self) -> bool:
-        """Initialize blockchain connection with retry logic."""
-        try:
+        """Initialize blockchain connection with retry logic."""        try:
             network_config = self.NETWORKS.get(self.network)
             if not network_config:
                 raise ValueError(f"Unsupported network: {self.network}")
@@ -129,14 +124,12 @@ class BlockchainConnection:
             return False
     
     def _build_rpc_url(self, base_url: str) -> str:
-        """Build complete RPC URL with API key if needed."""
-        if self.api_key and "infura.io" in base_url:
+        """Build complete RPC URL with API key if needed."""        if self.api_key and "infura.io" in base_url:
             return f"{base_url}{self.api_key}"
         return base_url
     
     async def _test_connection(self) -> bool:
-        """Test blockchain connection health."""
-        try:
+        """Test blockchain connection health."""        try:
             if not self.web3:
                 return False
                 
@@ -155,8 +148,7 @@ class BlockchainConnection:
         return False
     
     async def switch_network(self, network: str) -> bool:
-        """Switch to different blockchain network."""
-        if network == self.network:
+        """Switch to different blockchain network."""        if network == self.network:
             return True
             
         old_network = self.network
@@ -171,8 +163,7 @@ class BlockchainConnection:
             return False
     
     def get_network_info(self) -> Dict[str, Any]:
-        """Get current network information."""
-        network_config = self.NETWORKS.get(self.network)
+        """Get current network information."""        network_config = self.NETWORKS.get(self.network)
         if not network_config:
             return {}
             
@@ -188,8 +179,7 @@ class BlockchainConnection:
         }
     
     async def get_balance(self, address: str) -> Dict[str, Union[int, str]]:
-        """Get wallet balance for address."""
-        try:
+        """Get wallet balance for address."""        try:
             if not self.web3:
                 raise ValueError("Blockchain connection not initialized")
                 
@@ -213,8 +203,7 @@ class BlockchainConnection:
             raise
     
     async def estimate_gas_price(self) -> Dict[str, int]:
-        """Estimate current gas prices."""
-        try:
+        """Estimate current gas prices."""        try:
             if not self.web3:
                 raise ValueError("Blockchain connection not initialized")
             
@@ -266,8 +255,7 @@ class BlockchainConnection:
             raise
     
     def create_account(self, private_key: Optional[str] = None) -> Dict[str, str]:
-        """Create or load blockchain account."""
-        try:
+        """Create or load blockchain account."""        try:
             if private_key:
                 account = Account.from_key(private_key)
             else:
@@ -286,8 +274,7 @@ class BlockchainConnection:
             raise
     
     async def close_connection(self) -> None:
-        """Close blockchain connection and cleanup resources."""
-        try:
+        """Close blockchain connection and cleanup resources."""        try:
             if self.web3:
                 # Cleanup any pending transactions or connections
                 self.web3 = None
@@ -298,15 +285,13 @@ class BlockchainConnection:
 
 
 class MultiNetworkManager:
-    """Manager for multiple blockchain network connections."""
-    
+    """Manager for multiple blockchain network connections."""    
     def __init__(self):
         self.connections: Dict[str, BlockchainConnection] = {}
         self.active_network = "polygon"
     
     async def add_network(self, network: str, api_key: Optional[str] = None) -> bool:
-        """Add and initialize a new network connection."""
-        try:
+        """Add and initialize a new network connection."""        try:
             if network in self.connections:
                 return True
                 
@@ -324,13 +309,11 @@ class MultiNetworkManager:
             return False
     
     def get_connection(self, network: Optional[str] = None) -> Optional[BlockchainConnection]:
-        """Get connection for specific network."""
-        target_network = network or self.active_network
+        """Get connection for specific network."""        target_network = network or self.active_network
         return self.connections.get(target_network)
     
     async def switch_active_network(self, network: str) -> bool:
-        """Switch active network."""
-        if network in self.connections:
+        """Switch active network."""        if network in self.connections:
             self.active_network = network
             return True
         else:
@@ -341,8 +324,7 @@ class MultiNetworkManager:
         return False
     
     def get_all_network_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all network connections."""
-        status = {}
+        """Get status of all network connections."""        status = {}
         for network, connection in self.connections.items():
             status[network] = {
                 **connection.get_network_info(),
@@ -351,8 +333,7 @@ class MultiNetworkManager:
         return status
     
     async def close_all_connections(self) -> None:
-        """Close all network connections."""
-        for connection in self.connections.values():
+        """Close all network connections."""        for connection in self.connections.values():
             await connection.close_connection()
         self.connections.clear()
         logger.info("All blockchain connections closed")

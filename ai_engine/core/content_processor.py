@@ -1,5 +1,4 @@
-"""
-Content Processing Pipeline Module
+"""Content Processing Pipeline Module
 
 Advanced content processing pipeline for multi-format content creators platform.
 Handles the complete content workflow from upload to distribution.
@@ -9,7 +8,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
-
 import asyncio
 import time
 from typing import Dict, Any, List, Optional, Union, Callable, TypeVar, Generic, Tuple
@@ -36,8 +34,7 @@ T = TypeVar('T')
 
 
 class ProcessingStage(Enum):
-    """Stages in the content processing pipeline"""
-    UPLOAD = "upload"
+    """Stages in the content processing pipeline"""    UPLOAD = "upload"
     VALIDATION = "validation"
     PREPROCESSING = "preprocessing"
     AI_ANALYSIS = "ai_analysis"
@@ -52,8 +49,7 @@ class ProcessingStage(Enum):
 
 
 class ProcessingStatus(Enum):
-    """Status of content processing"""
-    PENDING = "pending"
+    """Status of content processing"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -62,8 +58,7 @@ class ProcessingStatus(Enum):
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    AUDIO = "audio"
+    """Supported content formats"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -73,8 +68,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class ProcessingContext:
-    """Context for content processing pipeline"""
-    user_id: str
+    """Context for content processing pipeline"""    user_id: str
     session_id: str
     content_id: str
     content_type: ContentType
@@ -85,8 +79,7 @@ class ProcessingContext:
     processing_options: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "user_id": self.user_id,
             "session_id": self.session_id,
             "content_id": self.content_id,
@@ -101,8 +94,7 @@ class ProcessingContext:
 
 @dataclass
 class ProcessingResult:
-    """Result of content processing stage"""
-    stage: ProcessingStage
+    """Result of content processing stage"""    stage: ProcessingStage
     status: ProcessingStatus
     timestamp: datetime = field(default_factory=datetime.utcnow)
     processing_time_ms: float = 0.0
@@ -113,8 +105,7 @@ class ProcessingResult:
     confidence_score: float = 1.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "stage": self.stage.value,
             "status": self.status.value,
             "timestamp": self.timestamp.isoformat(),
@@ -128,8 +119,7 @@ class ProcessingResult:
 
 @dataclass
 class PipelineState:
-    """State of the content processing pipeline"""
-    context: ProcessingContext
+    """State of the content processing pipeline"""    context: ProcessingContext
     current_stage: ProcessingStage = ProcessingStage.UPLOAD
     status: ProcessingStatus = ProcessingStatus.PENDING
     created_at: datetime = field(default_factory=datetime.utcnow)
@@ -154,8 +144,7 @@ class PipelineState:
     distribution_assets: Dict[str, Any] = field(default_factory=dict)
     
     def update_stage(self, stage: ProcessingStage, result: ProcessingResult):
-        """Update pipeline stage with result"""
-        self.current_stage = stage
+        """Update pipeline stage with result"""        self.current_stage = stage
         self.stage_results[stage] = result
         self.updated_at = datetime.utcnow()
         
@@ -166,8 +155,7 @@ class PipelineState:
             self.status = ProcessingStatus.FAILED
             
     def get_processing_summary(self) -> Dict[str, Any]:
-        """Get comprehensive processing summary"""
-        total_time = 0.0
+        """Get comprehensive processing summary"""        total_time = 0.0
         stage_times = {}
         
         for stage, result in self.stage_results.items():
@@ -190,8 +178,7 @@ class PipelineState:
 
 
 class BaseProcessor:
-    """Base class for content processors"""
-    
+    """Base class for content processors"""    
     def __init__(self, name: str):
         self.name = name
         self.logger = logging.getLogger(f"{__name__}.{name}")
@@ -202,8 +189,7 @@ class BaseProcessor:
         context: ProcessingContext, 
         state: PipelineState
     ) -> ProcessingResult:
-        """Process content and return result - base implementation"""
-        try:
+        """Process content and return result - base implementation"""        try:
             # Basic processing that validates input and returns content unchanged
             if not self.validate_input(content, context):
                 return ProcessingResult(
@@ -246,13 +232,11 @@ class BaseProcessor:
             )
         
     def validate_input(self, content: Any, context: ProcessingContext) -> bool:
-        """Validate processor input"""
-        return content is not None
+        """Validate processor input"""        return content is not None
 
 
 class ValidationProcessor(BaseProcessor):
-    """Content validation processor"""
-    
+    """Content validation processor"""    
     def __init__(self):
         super().__init__("validation")
         self.validator = ContentValidator()
@@ -263,8 +247,7 @@ class ValidationProcessor(BaseProcessor):
         context: ProcessingContext, 
         state: PipelineState
     ) -> ProcessingResult:
-        """Validate content quality and compliance"""
-        start_time = time.perf_counter()
+        """Validate content quality and compliance"""        start_time = time.perf_counter()
         
         try:
             # Perform comprehensive validation
@@ -325,8 +308,7 @@ class ValidationProcessor(BaseProcessor):
 
 
 class AIAnalysisProcessor(BaseProcessor):
-    """AI-powered content analysis processor"""
-    
+    """AI-powered content analysis processor"""    
     def __init__(self):
         super().__init__("ai_analysis")
         
@@ -336,8 +318,7 @@ class AIAnalysisProcessor(BaseProcessor):
         context: ProcessingContext, 
         state: PipelineState
     ) -> ProcessingResult:
-        """Perform AI analysis of content"""
-        start_time = time.perf_counter()
+        """Perform AI analysis of content"""        start_time = time.perf_counter()
         
         try:
             analysis_results = {}
@@ -395,8 +376,7 @@ class AIAnalysisProcessor(BaseProcessor):
             )
             
     async def _analyze_text_content(self, content: str, context: ProcessingContext) -> Dict[str, Any]:
-        """Analyze text content using AI models"""
-        # Text classification, entity extraction, etc.
+        """Analyze text content using AI models"""        # Text classification, entity extraction, etc.
         return {
             "word_count": len(content.split()),
             "language": "en",  # Simplified
@@ -405,8 +385,7 @@ class AIAnalysisProcessor(BaseProcessor):
         }
         
     async def _analyze_audio_content(self, content: Any, context: ProcessingContext) -> Dict[str, Any]:
-        """Analyze audio content"""
-        # Audio classification, speech recognition, etc.
+        """Analyze audio content"""        # Audio classification, speech recognition, etc.
         return {
             "duration": 120.0,
             "sample_rate": 44100,
@@ -416,8 +395,7 @@ class AIAnalysisProcessor(BaseProcessor):
         }
         
     async def _analyze_image_content(self, content: Any, context: ProcessingContext) -> Dict[str, Any]:
-        """Analyze image content"""
-        # Image classification, object detection, etc.
+        """Analyze image content"""        # Image classification, object detection, etc.
         return {
             "width": 1920,
             "height": 1080,
@@ -427,8 +405,7 @@ class AIAnalysisProcessor(BaseProcessor):
         }
         
     async def _analyze_video_content(self, content: Any, context: ProcessingContext) -> Dict[str, Any]:
-        """Analyze video content"""
-        # Video analysis, scene detection, etc.
+        """Analyze video content"""        # Video analysis, scene detection, etc.
         return {
             "duration": 300.0,
             "resolution": "1920x1080",
@@ -438,8 +415,7 @@ class AIAnalysisProcessor(BaseProcessor):
         }
         
     async def _analyze_sentiment(self, content: str) -> Dict[str, Any]:
-        """Analyze content sentiment"""
-        # Simplified sentiment analysis
+        """Analyze content sentiment"""        # Simplified sentiment analysis
         return {
             "score": 0.6,
             "label": "positive",
@@ -447,16 +423,14 @@ class AIAnalysisProcessor(BaseProcessor):
         }
         
     async def _extract_topics(self, content: Any, context: ProcessingContext) -> List[Dict[str, Any]]:
-        """Extract topics from content"""
-        # Topic modeling
+        """Extract topics from content"""        # Topic modeling
         return [
             {"topic": "music", "confidence": 0.9},
             {"topic": "entertainment", "confidence": 0.7}
         ]
         
     async def _assess_quality(self, content: Any, context: ProcessingContext) -> Dict[str, Any]:
-        """Assess content quality"""
-        return {
+        """Assess content quality"""        return {
             "overall_score": 0.85,
             "technical_quality": 0.9,
             "content_quality": 0.8,
@@ -464,26 +438,22 @@ class AIAnalysisProcessor(BaseProcessor):
         }
         
     def _get_models_used(self, context: ProcessingContext) -> List[str]:
-        """Get list of AI models used in analysis"""
-        return ["text_classifier", "sentiment_analyzer", "quality_assessor"]
+        """Get list of AI models used in analysis"""        return ["text_classifier", "sentiment_analyzer", "quality_assessor"]
         
     def _extract_confidence_scores(self, results: Dict[str, Any]) -> Dict[str, float]:
-        """Extract confidence scores from analysis results"""
-        scores = {}
+        """Extract confidence scores from analysis results"""        scores = {}
         for key, value in results.items():
             if isinstance(value, dict) and "confidence" in value:
                 scores[key] = value["confidence"]
         return scores
         
     def _calculate_overall_confidence(self, results: Dict[str, Any]) -> float:
-        """Calculate overall confidence score"""
-        confidence_scores = self._extract_confidence_scores(results)
+        """Calculate overall confidence score"""        confidence_scores = self._extract_confidence_scores(results)
         return sum(confidence_scores.values()) / len(confidence_scores) if confidence_scores else 0.8
 
 
 class ProtectionProcessor(BaseProcessor):
-    """Content protection and rights management processor"""
-    
+    """Content protection and rights management processor"""    
     def __init__(self):
         super().__init__("protection")
         
@@ -493,8 +463,7 @@ class ProtectionProcessor(BaseProcessor):
         context: ProcessingContext, 
         state: PipelineState
     ) -> ProcessingResult:
-        """Apply content protection measures"""
-        start_time = time.perf_counter()
+        """Apply content protection measures"""        start_time = time.perf_counter()
         
         try:
             protection_results = {}
@@ -564,8 +533,7 @@ class ProtectionProcessor(BaseProcessor):
             )
             
     async def _generate_fingerprint(self, content: Any, context: ProcessingContext) -> str:
-        """Generate unique content fingerprint"""
-        if isinstance(content, str):
+        """Generate unique content fingerprint"""        if isinstance(content, str):
             content_bytes = content.encode('utf-8')
         elif isinstance(content, Path):
             content_bytes = content.read_bytes()
@@ -583,8 +551,7 @@ class ProtectionProcessor(BaseProcessor):
         return combined_hash
         
     async def _check_content_similarity(self, fingerprint: str, context: ProcessingContext) -> Dict[str, Any]:
-        """Check content similarity against existing content"""
-        # In production, this would query a fingerprint database
+        """Check content similarity against existing content"""        # In production, this would query a fingerprint database
         return {
             "similarity_score": 0.1,  # Low similarity
             "similar_content_ids": [],
@@ -592,8 +559,7 @@ class ProtectionProcessor(BaseProcessor):
         }
         
     async def _apply_watermark(self, content: Any, context: ProcessingContext) -> Dict[str, Any]:
-        """Apply digital watermark to content"""
-        # Watermarking implementation would go here
+        """Apply digital watermark to content"""        # Watermarking implementation would go here
         return {
             "watermark_applied": True,
             "watermark_type": "invisible",
@@ -601,8 +567,7 @@ class ProtectionProcessor(BaseProcessor):
         }
         
     async def _validate_copyright(self, content: Any, context: ProcessingContext) -> Dict[str, Any]:
-        """Validate copyright compliance"""
-        # Copyright detection logic
+        """Validate copyright compliance"""        # Copyright detection logic
         return {
             "violations_detected": 0,
             "copyright_score": 0.95,
@@ -610,8 +575,7 @@ class ProtectionProcessor(BaseProcessor):
         }
         
     async def _generate_rights_metadata(self, content: Any, context: ProcessingContext) -> Dict[str, Any]:
-        """Generate rights management metadata"""
-        return {
+        """Generate rights management metadata"""        return {
             "creator_id": context.user_id,
             "creation_timestamp": datetime.utcnow().isoformat(),
             "rights_type": "full",
@@ -622,8 +586,7 @@ class ProtectionProcessor(BaseProcessor):
 
 
 class ContentProcessingPipeline:
-    """
-    Enterprise-grade content processing pipeline
+    """    Enterprise-grade content processing pipeline
     
     Features:
     - Multi-stage processing workflow
@@ -632,8 +595,7 @@ class ContentProcessingPipeline:
     - Progress tracking
     - Scalable processor architecture
     - Comprehensive logging and monitoring
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.processors: Dict[ProcessingStage, BaseProcessor] = {}
@@ -646,15 +608,13 @@ class ContentProcessingPipeline:
         logger.info("Content Processing Pipeline initialized")
         
     def _initialize_processors(self):
-        """Initialize pipeline processors"""
-        self.processors[ProcessingStage.VALIDATION] = ValidationProcessor()
+        """Initialize pipeline processors"""        self.processors[ProcessingStage.VALIDATION] = ValidationProcessor()
         self.processors[ProcessingStage.AI_ANALYSIS] = AIAnalysisProcessor()
         self.processors[ProcessingStage.PROTECTION] = ProtectionProcessor()
         # Additional processors would be initialized here
         
     def register_processor(self, stage: ProcessingStage, processor: BaseProcessor):
-        """Register a custom processor for a stage"""
-        self.processors[stage] = processor
+        """Register a custom processor for a stage"""        self.processors[stage] = processor
         logger.info(f"Registered processor '{processor.name}' for stage '{stage.value}'")
         
     async def process_content(
@@ -663,8 +623,7 @@ class ContentProcessingPipeline:
         context: ProcessingContext,
         stages: Optional[List[ProcessingStage]] = None
     ) -> PipelineState:
-        """
-        Process content through the pipeline
+        """        Process content through the pipeline
         
         Args:
             content: Content to process
@@ -673,8 +632,7 @@ class ContentProcessingPipeline:
             
         Returns:
             Pipeline state with results
-        """
-        # Create pipeline state
+        """        # Create pipeline state
         state = PipelineState(context=context)
         state.original_content = content
         
@@ -767,14 +725,12 @@ class ContentProcessingPipeline:
         return state
         
     def get_pipeline_status(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get status of active pipeline"""
-        if content_id in self.active_pipelines:
+        """Get status of active pipeline"""        if content_id in self.active_pipelines:
             return self.active_pipelines[content_id].get_processing_summary()
         return None
         
     def cancel_pipeline(self, content_id: str) -> bool:
-        """Cancel active pipeline"""
-        if content_id in self.active_pipelines:
+        """Cancel active pipeline"""        if content_id in self.active_pipelines:
             state = self.active_pipelines[content_id]
             state.status = ProcessingStatus.CANCELLED
             del self.active_pipelines[content_id]
@@ -783,8 +739,7 @@ class ContentProcessingPipeline:
         return False
         
     def get_pipeline_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive pipeline metrics"""
-        return {
+        """Get comprehensive pipeline metrics"""        return {
             "active_pipelines": len(self.active_pipelines),
             "registered_processors": len(self.processors),
             "processing_stages": [stage.value for stage in self.processors.keys()],
@@ -796,8 +751,7 @@ class ContentProcessingPipeline:
         content_batch: List[Tuple[Any, ProcessingContext]],
         max_concurrent: int = 5
     ) -> List[PipelineState]:
-        """Process multiple content items in batch"""
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """Process multiple content items in batch"""        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def process_single(content, context):
             async with semaphore:
@@ -821,8 +775,7 @@ class ContentProcessingPipeline:
         return valid_results
         
     def shutdown(self):
-        """Shutdown the processing pipeline"""
-        logger.info("Shutting down content processing pipeline...")
+        """Shutdown the processing pipeline"""        logger.info("Shutting down content processing pipeline...")
         
         # Cancel all active pipelines
         for content_id in list(self.active_pipelines.keys()):
@@ -845,8 +798,7 @@ async def process_content_async(
     content_format: ContentFormat,
     **kwargs
 ) -> PipelineState:
-    """
-    Convenience function for processing content
+    """    Convenience function for processing content
     
     Args:
         content: Content to process
@@ -857,8 +809,7 @@ async def process_content_async(
         
     Returns:
         Pipeline processing state
-    """
-    context = ProcessingContext(
+    """    context = ProcessingContext(
         user_id=user_id,
         session_id=kwargs.get('session_id', str(uuid.uuid4())),
         content_id=kwargs.get('content_id', str(uuid.uuid4())),

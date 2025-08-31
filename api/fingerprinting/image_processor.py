@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Image Fingerprinting Processor
+"""IA Influencer Agent - Image Fingerprinting Processor
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 AVERTISSEMENT LÉGAL STRICT:
@@ -10,7 +9,6 @@ constituera une violation des droits d'auteur.
 
 Advanced image fingerprinting processor for multi-format content protection
 """
-
 import cv2
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any
@@ -29,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint data structure"""
-    content_hash: str
+    """Image fingerprint data structure"""    content_hash: str
     perceptual_hash: str
     color_histogram: np.ndarray
     texture_features: np.ndarray
@@ -42,20 +39,16 @@ class ImageFingerprint:
     metadata: Dict[str, Any]
 
 class ImageFingerprintProcessor:
-    """
-    Professional image fingerprinting processor with advanced computer vision algorithms
+    """    Professional image fingerprinting processor with advanced computer vision algorithms
     Handles multi-format image content protection and similarity detection
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize image fingerprinting processor"""
-        self.config = config or self._get_default_config()
+        """Initialize image fingerprinting processor"""        self.config = config or self._get_default_config()
         self.executor = ThreadPoolExecutor(max_workers=4)
         self.sift_detector = cv2.SIFT_create(nfeatures=500)
         
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default configuration for image processing"""
-        return {
+        """Get default configuration for image processing"""        return {
             'resize_width': 512,
             'resize_height': 512,
             'similarity_threshold': 0.85,
@@ -66,16 +59,14 @@ class ImageFingerprintProcessor:
         }
     
     async def process_image_file(self, file_path: Path) -> ImageFingerprint:
-        """
-        Process image file and generate comprehensive fingerprint
+        """        Process image file and generate comprehensive fingerprint
         
         Args:
             file_path: Path to image file
             
         Returns:
             ImageFingerprint object with extracted features
-        """
-        try:
+        """        try:
             # Load image asynchronously
             loop = asyncio.get_event_loop()
             
@@ -125,8 +116,7 @@ class ImageFingerprintProcessor:
             raise
     
     def _load_image(self, file_path: str) -> np.ndarray:
-        """Load and preprocess image"""
-        # Try OpenCV first
+        """Load and preprocess image"""        # Try OpenCV first
         image = cv2.imread(file_path)
         if image is None:
             # Fallback to PIL for other formats
@@ -145,13 +135,11 @@ class ImageFingerprintProcessor:
         return image
     
     def _generate_content_hash(self, image: np.ndarray) -> str:
-        """Generate unique hash for image content"""
-        image_bytes = image.tobytes()
+        """Generate unique hash for image content"""        image_bytes = image.tobytes()
         return hashlib.sha256(image_bytes).hexdigest()
     
     async def _extract_perceptual_hash(self, image: np.ndarray) -> str:
-        """Extract perceptual hash from image"""
-        loop = asyncio.get_event_loop()
+        """Extract perceptual hash from image"""        loop = asyncio.get_event_loop()
         
         def compute_hash():
             # Convert to RGB for PIL
@@ -166,8 +154,7 @@ class ImageFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_hash)
     
     async def _extract_color_histogram(self, image: np.ndarray) -> np.ndarray:
-        """Extract color histogram features"""
-        loop = asyncio.get_event_loop()
+        """Extract color histogram features"""        loop = asyncio.get_event_loop()
         
         def compute_histogram():
             if len(image.shape) == 3:
@@ -192,8 +179,7 @@ class ImageFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_histogram)
     
     async def _extract_texture_features(self, image: np.ndarray) -> np.ndarray:
-        """Extract texture features using Local Binary Patterns"""
-        loop = asyncio.get_event_loop()
+        """Extract texture features using Local Binary Patterns"""        loop = asyncio.get_event_loop()
         
         def compute_texture():
             # Convert to grayscale if needed
@@ -233,8 +219,7 @@ class ImageFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_texture)
     
     async def _extract_shape_features(self, image: np.ndarray) -> np.ndarray:
-        """Extract shape features using edge detection and contours"""
-        loop = asyncio.get_event_loop()
+        """Extract shape features using edge detection and contours"""        loop = asyncio.get_event_loop()
         
         def compute_shape():
             # Convert to grayscale if needed
@@ -289,8 +274,7 @@ class ImageFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_shape)
     
     async def _extract_sift_features(self, image: np.ndarray) -> Optional[np.ndarray]:
-        """Extract SIFT keypoint features"""
-        loop = asyncio.get_event_loop()
+        """Extract SIFT keypoint features"""        loop = asyncio.get_event_loop()
         
         def compute_sift():
             try:
@@ -321,8 +305,7 @@ class ImageFingerprintProcessor:
         return await loop.run_in_executor(self.executor, compute_sift)
     
     def _extract_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract file metadata"""
-        return {
+        """Extract file metadata"""        return {
             'filename': file_path.name,
             'file_size': file_path.stat().st_size,
             'created_at': file_path.stat().st_ctime,
@@ -330,8 +313,7 @@ class ImageFingerprintProcessor:
         }
     
     def calculate_similarity(self, fp1: ImageFingerprint, fp2: ImageFingerprint) -> float:
-        """
-        Calculate similarity score between two image fingerprints
+        """        Calculate similarity score between two image fingerprints
         
         Args:
             fp1: First image fingerprint
@@ -339,8 +321,7 @@ class ImageFingerprintProcessor:
             
         Returns:
             Similarity score between 0 and 1
-        """
-        try:
+        """        try:
             # Content hash exact match
             if fp1.content_hash == fp2.content_hash:
                 return 1.0
@@ -391,8 +372,7 @@ class ImageFingerprintProcessor:
             return 0.0
     
     def _calculate_hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between perceptual hashes"""
-        if len(hash1) != len(hash2):
+        """Calculate similarity between perceptual hashes"""        if len(hash1) != len(hash2):
             return 0.0
         
         # Calculate Hamming distance
@@ -402,8 +382,7 @@ class ImageFingerprintProcessor:
         return similarity
     
     def _histogram_intersection(self, hist1: np.ndarray, hist2: np.ndarray) -> float:
-        """Calculate histogram intersection similarity"""
-        try:
+        """Calculate histogram intersection similarity"""        try:
             if len(hist1) != len(hist2):
                 return 0.0
             
@@ -414,8 +393,7 @@ class ImageFingerprintProcessor:
             return 0.0
     
     def _cosine_similarity(self, vec1: np.ndarray, vec2: np.ndarray) -> float:
-        """Calculate cosine similarity between two vectors"""
-        try:
+        """Calculate cosine similarity between two vectors"""        try:
             if len(vec1) != len(vec2):
                 return 0.0
             
@@ -434,8 +412,7 @@ class ImageFingerprintProcessor:
             return 0.0
     
     def _resolution_similarity(self, res1: Tuple[int, int], res2: Tuple[int, int]) -> float:
-        """Calculate resolution similarity"""
-        aspect_ratio_1 = res1[0] / res1[1] if res1[1] > 0 else 0
+        """Calculate resolution similarity"""        aspect_ratio_1 = res1[0] / res1[1] if res1[1] > 0 else 0
         aspect_ratio_2 = res2[0] / res2[1] if res2[1] > 0 else 0
         
         if aspect_ratio_1 == 0 or aspect_ratio_2 == 0:
@@ -445,16 +422,13 @@ class ImageFingerprintProcessor:
         return 1.0 - min(ratio_diff, 1.0)
     
     def is_duplicate(self, fp1: ImageFingerprint, fp2: ImageFingerprint) -> bool:
-        """Check if two fingerprints represent duplicate content"""
-        similarity = self.calculate_similarity(fp1, fp2)
+        """Check if two fingerprints represent duplicate content"""        similarity = self.calculate_similarity(fp1, fp2)
         return similarity >= self.config['similarity_threshold']
     
     async def batch_process(self, file_paths: List[Path]) -> List[ImageFingerprint]:
-        """Process multiple image files in parallel"""
-        tasks = [self.process_image_file(path) for path in file_paths]
+        """Process multiple image files in parallel"""        tasks = [self.process_image_file(path) for path in file_paths]
         return await asyncio.gather(*tasks, return_exceptions=True)
     
     def __del__(self):
-        """Cleanup resources"""
-        if hasattr(self, 'executor'):
+        """Cleanup resources"""        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=True)

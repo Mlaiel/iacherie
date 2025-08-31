@@ -18,7 +18,6 @@ Features:
 - File sharing platform monitoring
 - AI-powered content matching
 """
-
 from .manager import PiracyDetectionManager
 from .core.deep_web_scanner import DeepWebScanner
 from .core.torrent_monitor import TorrentMonitor

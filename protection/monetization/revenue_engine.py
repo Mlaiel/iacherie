@@ -1,11 +1,9 @@
-"""
-Revenue Engine - Professional monetization core system.
+"""Revenue Engine - Professional monetization core system.
 Handles all revenue generation, tracking, and optimization for content creators.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from decimal import Decimal
@@ -19,8 +17,7 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStreamType(Enum):
-    """Revenue stream types for content monetization."""
-    SUBSCRIPTION = "subscription"
+    """Revenue stream types for content monetization."""    SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     SPONSORSHIP = "sponsorship"
     MERCHANDISE = "merchandise"
@@ -33,8 +30,7 @@ class RevenueStreamType(Enum):
 
 
 class RevenueStatus(Enum):
-    """Revenue tracking status."""
-    PENDING = "pending"
+    """Revenue tracking status."""    PENDING = "pending"
     ACTIVE = "active"
     COMPLETED = "completed"
     CANCELLED = "cancelled"
@@ -44,8 +40,7 @@ class RevenueStatus(Enum):
 
 @dataclass
 class RevenueTransaction:
-    """Individual revenue transaction data."""
-    transaction_id: str
+    """Individual revenue transaction data."""    transaction_id: str
     user_id: str
     content_id: str
     stream_type: RevenueStreamType
@@ -58,8 +53,7 @@ class RevenueTransaction:
     updated_at: datetime = field(default_factory=datetime.utcnow)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert transaction to dictionary."""
-        return {
+        """Convert transaction to dictionary."""        return {
             "transaction_id": self.transaction_id,
             "user_id": self.user_id,
             "content_id": self.content_id,
@@ -76,8 +70,7 @@ class RevenueTransaction:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics."""
-    total_revenue: Decimal
+    """Revenue performance metrics."""    total_revenue: Decimal
     revenue_by_stream: Dict[RevenueStreamType, Decimal]
     transaction_count: int
     average_transaction: Decimal
@@ -88,35 +81,29 @@ class RevenueMetrics:
     period_end: datetime
     
     def get_performance_score(self) -> float:
-        """Calculate overall performance score."""
-        base_score = min(float(self.total_revenue) / 1000, 100)
+        """Calculate overall performance score."""        base_score = min(float(self.total_revenue) / 1000, 100)
         growth_bonus = min(self.growth_rate * 10, 20)
         conversion_bonus = min(self.conversion_rate * 100, 30)
         return min(base_score + growth_bonus + conversion_bonus, 100)
 
 
 class RevenueProcessor(ABC):
-    """Abstract base class for revenue processors."""
-    
+    """Abstract base class for revenue processors."""    
     @abstractmethod
     async def process_transaction(self, transaction: RevenueTransaction) -> bool:
-        """Process a revenue transaction."""
-        pass
+        """Process a revenue transaction."""        pass
     
     @abstractmethod
     async def verify_payment(self, transaction_id: str) -> bool:
-        """Verify payment status."""
-        pass
+        """Verify payment status."""        pass
     
     @abstractmethod
     async def handle_refund(self, transaction_id: str, reason: str) -> bool:
-        """Handle transaction refund."""
-        pass
+        """Handle transaction refund."""        pass
 
 
 class SubscriptionProcessor(RevenueProcessor):
-    """Handles subscription-based revenue processing."""
-    
+    """Handles subscription-based revenue processing."""    
     def __init__(self):
         self.active_subscriptions: Dict[str, Dict] = {}
         self.subscription_tiers = {
@@ -126,8 +113,7 @@ class SubscriptionProcessor(RevenueProcessor):
         }
     
     async def process_transaction(self, transaction: RevenueTransaction) -> bool:
-        """Process subscription transaction."""
-        try:
+        """Process subscription transaction."""        try:
             if transaction.stream_type != RevenueStreamType.SUBSCRIPTION:
                 return False
             
@@ -152,19 +138,16 @@ class SubscriptionProcessor(RevenueProcessor):
             return False
     
     async def verify_payment(self, transaction_id: str) -> bool:
-        """Verify subscription payment."""
-        # Implement payment verification logic
+        """Verify subscription payment."""        # Implement payment verification logic
         return True
     
     async def handle_refund(self, transaction_id: str, reason: str) -> bool:
-        """Handle subscription refund."""
-        # Implement refund logic
+        """Handle subscription refund."""        # Implement refund logic
         return True
 
 
 class PayPerViewProcessor(RevenueProcessor):
-    """Handles pay-per-view revenue processing."""
-    
+    """Handles pay-per-view revenue processing."""    
     def __init__(self):
         self.view_prices = {
             "audio": Decimal("0.99"),
@@ -174,8 +157,7 @@ class PayPerViewProcessor(RevenueProcessor):
         }
     
     async def process_transaction(self, transaction: RevenueTransaction) -> bool:
-        """Process pay-per-view transaction."""
-        try:
+        """Process pay-per-view transaction."""        try:
             if transaction.stream_type != RevenueStreamType.PAY_PER_VIEW:
                 return False
             
@@ -195,20 +177,16 @@ class PayPerViewProcessor(RevenueProcessor):
             return False
     
     async def verify_payment(self, transaction_id: str) -> bool:
-        """Verify pay-per-view payment."""
-        return True
+        """Verify pay-per-view payment."""        return True
     
     async def handle_refund(self, transaction_id: str, reason: str) -> bool:
-        """Handle pay-per-view refund."""
-        return True
+        """Handle pay-per-view refund."""        return True
 
 
 class RevenueEngine:
-    """
-    Professional revenue engine for content monetization.
+    """    Professional revenue engine for content monetization.
     Handles all aspects of revenue generation, tracking, and optimization.
-    """
-    
+    """    
     def __init__(self):
         self.processors: Dict[RevenueStreamType, RevenueProcessor] = {
             RevenueStreamType.SUBSCRIPTION: SubscriptionProcessor(),
@@ -219,8 +197,7 @@ class RevenueEngine:
         self.is_initialized = False
     
     async def initialize(self) -> bool:
-        """Initialize the revenue engine."""
-        try:
+        """Initialize the revenue engine."""        try:
             # Initialize processors
             for processor in self.processors.values():
                 if hasattr(processor, 'initialize'):
@@ -235,8 +212,7 @@ class RevenueEngine:
             return False
     
     async def process_revenue(self, transaction: RevenueTransaction) -> bool:
-        """Process a revenue transaction."""
-        if not self.is_initialized:
+        """Process a revenue transaction."""        if not self.is_initialized:
             await self.initialize()
         
         try:
@@ -262,8 +238,7 @@ class RevenueEngine:
         period_start: datetime, 
         period_end: datetime
     ) -> RevenueMetrics:
-        """Calculate revenue metrics for a specific period."""
-        user_transactions = [
+        """Calculate revenue metrics for a specific period."""        user_transactions = [
             t for t in self.transactions 
             if t.user_id == user_id and period_start <= t.created_at <= period_end
         ]
@@ -308,8 +283,7 @@ class RevenueEngine:
         )
     
     async def optimize_pricing(self, content_id: str, performance_data: Dict) -> Dict[str, Decimal]:
-        """Optimize pricing based on performance data."""
-        base_prices = {
+        """Optimize pricing based on performance data."""        base_prices = {
             "basic": Decimal("0.99"),
             "premium": Decimal("4.99"),
             "exclusive": Decimal("9.99")
@@ -327,8 +301,7 @@ class RevenueEngine:
         return optimized_prices
     
     async def generate_revenue_report(self, user_id: str, period_days: int = 30) -> Dict[str, Any]:
-        """Generate comprehensive revenue report."""
-        period_end = datetime.utcnow()
+        """Generate comprehensive revenue report."""        period_end = datetime.utcnow()
         period_start = period_end - timedelta(days=period_days)
         
         metrics = await self.calculate_metrics(user_id, period_start, period_end)
@@ -359,15 +332,13 @@ class RevenueEngine:
         }
     
     async def _update_metrics(self, transaction: RevenueTransaction) -> None:
-        """Update cached metrics after transaction."""
-        # Invalidate relevant cache entries
+        """Update cached metrics after transaction."""        # Invalidate relevant cache entries
         cache_key = f"{transaction.user_id}_{transaction.created_at.date()}"
         if cache_key in self.revenue_cache:
             del self.revenue_cache[cache_key]
     
     async def _generate_recommendations(self, metrics: RevenueMetrics) -> List[str]:
-        """Generate revenue optimization recommendations."""
-        recommendations = []
+        """Generate revenue optimization recommendations."""        recommendations = []
         
         if metrics.growth_rate < 0:
             recommendations.append("Consider diversifying revenue streams to improve growth")
@@ -383,8 +354,7 @@ class RevenueEngine:
         return recommendations
     
     def get_revenue_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get quick revenue summary for a user."""
-        user_transactions = [t for t in self.transactions if t.user_id == user_id]
+        """Get quick revenue summary for a user."""        user_transactions = [t for t in self.transactions if t.user_id == user_id]
         
         if not user_transactions:
             return {"total_revenue": 0, "transaction_count": 0, "status": "no_revenue"}

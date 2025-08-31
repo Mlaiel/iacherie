@@ -1,5 +1,4 @@
-"""
-Performance Monitor - System Performance Intelligence
+"""Performance Monitor - System Performance Intelligence
 ====================================================
 
 Professional performance monitoring and resource tracking for IA-Influencer-Agent platform.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 import psutil
@@ -41,8 +39,7 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class ResourceType(Enum):
-    """System resource types."""
-    CPU = "cpu"
+    """System resource types."""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -52,8 +49,7 @@ class ResourceType(Enum):
     QUEUE = "queue"
 
 class PerformanceMetricType(Enum):
-    """Performance metric categories."""
-    RESPONSE_TIME = "response_time"
+    """Performance metric categories."""    RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     AVAILABILITY = "availability"
@@ -62,16 +58,14 @@ class PerformanceMetricType(Enum):
     EFFICIENCY = "efficiency"
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    INFO = "info"
+    """Alert severity levels."""    INFO = "info"
     WARNING = "warning"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 @dataclass
 class ResourceMetrics:
-    """System resource metrics."""
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    """System resource metrics."""    timestamp: datetime = field(default_factory=datetime.utcnow)
     cpu_percent: float = 0.0
     cpu_cores: int = 0
     memory_total: int = 0
@@ -88,8 +82,7 @@ class ResourceMetrics:
 
 @dataclass
 class PerformanceMetrics:
-    """Application performance metrics."""
-    timestamp: datetime = field(default_factory=datetime.utcnow)
+    """Application performance metrics."""    timestamp: datetime = field(default_factory=datetime.utcnow)
     average_response_time: float = 0.0
     requests_per_second: float = 0.0
     error_rate: float = 0.0
@@ -102,8 +95,7 @@ class PerformanceMetrics:
 
 @dataclass
 class PerformanceAlert:
-    """Performance alert data structure."""
-    alert_id: str
+    """Performance alert data structure."""    alert_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     metric_name: str = ""
     current_value: float = 0.0
@@ -114,15 +106,13 @@ class PerformanceAlert:
     recommendations: List[str] = field(default_factory=list)
 
 class ResourceMonitor:
-    """System resource monitoring component."""
-    
+    """System resource monitoring component."""    
     def __init__(self):
         self.resource_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
         self.last_network_stats = None
         
     async def collect_system_metrics(self) -> ResourceMetrics:
-        """Collect comprehensive system metrics."""
-        try:
+        """Collect comprehensive system metrics."""        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1)
             cpu_cores = psutil.cpu_count()
@@ -180,8 +170,7 @@ class ResourceMonitor:
             return ResourceMetrics()
     
     def get_resource_trends(self, resource_type: str, window_minutes: int = 10) -> Dict[str, float]:
-        """Get resource usage trends."""
-        history = self.resource_history.get(resource_type, deque())
+        """Get resource usage trends."""        history = self.resource_history.get(resource_type, deque())
         
         if len(history) < 2:
             return {"trend": 0.0, "average": 0.0, "max": 0.0, "min": 0.0}
@@ -217,11 +206,9 @@ class ResourceMonitor:
         }
 
 class PerformanceMonitor(MonitorEngine):
-    """
-    Advanced performance monitoring engine.
+    """    Advanced performance monitoring engine.
     Tracks system resources, application performance, and optimization opportunities.
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfiguration):
         super().__init__(config)
         self.resource_monitor = ResourceMonitor()
@@ -234,8 +221,7 @@ class PerformanceMonitor(MonitorEngine):
         self._initialize_performance_thresholds()
     
     def _initialize_performance_thresholds(self) -> None:
-        """Initialize performance monitoring thresholds."""
-        self.performance_thresholds = {
+        """Initialize performance monitoring thresholds."""        self.performance_thresholds = {
             "cpu_percent": {"warning": 70.0, "critical": 85.0, "emergency": 95.0},
             "memory_percent": {"warning": 75.0, "critical": 90.0, "emergency": 98.0},
             "disk_percent": {"warning": 80.0, "critical": 90.0, "emergency": 98.0},
@@ -246,8 +232,7 @@ class PerformanceMonitor(MonitorEngine):
         }
     
     async def initialize(self) -> bool:
-        """Initialize performance monitoring engine."""
-        try:
+        """Initialize performance monitoring engine."""        try:
             logger.info("Initializing performance monitor...")
             
             # Start resource monitoring
@@ -261,8 +246,7 @@ class PerformanceMonitor(MonitorEngine):
             return False
     
     async def start_monitoring(self, targets: List[Any]) -> bool:
-        """Start performance monitoring operations."""
-        try:
+        """Start performance monitoring operations."""        try:
             logger.info("Starting performance monitoring...")
             
             # Start monitoring tasks
@@ -283,8 +267,7 @@ class PerformanceMonitor(MonitorEngine):
             return False
     
     async def stop_monitoring(self) -> bool:
-        """Stop performance monitoring operations."""
-        try:
+        """Stop performance monitoring operations."""        try:
             await self.cleanup()
             return True
         except Exception as e:
@@ -292,8 +275,7 @@ class PerformanceMonitor(MonitorEngine):
             return False
     
     async def collect_metrics(self) -> Any:
-        """Collect performance monitoring metrics."""
-        from .monitor_engine import MonitoringMetrics
+        """Collect performance monitoring metrics."""        from .monitor_engine import MonitoringMetrics
         
         # Collect system metrics
         resource_metrics = await self.resource_monitor.collect_system_metrics()
@@ -331,13 +313,11 @@ class PerformanceMonitor(MonitorEngine):
         return metrics
     
     async def process_events(self, events: List[Any]) -> None:
-        """Process performance events."""
-        for event in events:
+        """Process performance events."""        for event in events:
             await self._process_performance_event(event)
     
     async def _process_performance_event(self, event: Dict[str, Any]) -> None:
-        """Process individual performance event."""
-        try:
+        """Process individual performance event."""        try:
             event_type = event.get("type", "")
             
             if event_type == "request":
@@ -353,8 +333,7 @@ class PerformanceMonitor(MonitorEngine):
             logger.error(f"Failed to process performance event: {e}")
     
     async def _process_request_event(self, event: Dict[str, Any]) -> None:
-        """Process HTTP request performance event."""
-        response_time = event.get("response_time", 0.0)
+        """Process HTTP request performance event."""        response_time = event.get("response_time", 0.0)
         status_code = event.get("status_code", 200)
         
         # Record response time
@@ -371,8 +350,7 @@ class PerformanceMonitor(MonitorEngine):
             )
     
     async def _process_error_event(self, event: Dict[str, Any]) -> None:
-        """Process error event for error rate calculation."""
-        error_type = event.get("error_type", "unknown")
+        """Process error event for error rate calculation."""        error_type = event.get("error_type", "unknown")
         
         # Record error
         self.performance_history["errors"].append(1)
@@ -391,8 +369,7 @@ class PerformanceMonitor(MonitorEngine):
             )
     
     async def _process_database_event(self, event: Dict[str, Any]) -> None:
-        """Process database performance event."""
-        query_time = event.get("execution_time", 0.0)
+        """Process database performance event."""        query_time = event.get("execution_time", 0.0)
         query_type = event.get("query_type", "unknown")
         
         # Record database query time
@@ -409,8 +386,7 @@ class PerformanceMonitor(MonitorEngine):
             )
     
     async def _process_cache_event(self, event: Dict[str, Any]) -> None:
-        """Process cache operation event."""
-        cache_hit = event.get("cache_hit", False)
+        """Process cache operation event."""        cache_hit = event.get("cache_hit", False)
         
         # Record cache operation
         self.performance_history["cache_hits"].append(1 if cache_hit else 0)
@@ -429,8 +405,7 @@ class PerformanceMonitor(MonitorEngine):
             )
     
     async def _collect_application_metrics(self) -> PerformanceMetrics:
-        """Collect application-specific performance metrics."""
-        try:
+        """Collect application-specific performance metrics."""        try:
             # Calculate metrics from stored history
             response_times = list(self.performance_history["response_time"])[-100:]
             avg_response_time = statistics.mean(response_times) if response_times else 0.0
@@ -477,8 +452,7 @@ class PerformanceMonitor(MonitorEngine):
         severity: AlertSeverity,
         description: str
     ) -> None:
-        """Create a performance alert."""
-        alert_id = f"{metric_name}_{datetime.utcnow().timestamp()}"
+        """Create a performance alert."""        alert_id = f"{metric_name}_{datetime.utcnow().timestamp()}"
         
         alert = PerformanceAlert(
             alert_id=alert_id,
@@ -502,8 +476,7 @@ class PerformanceMonitor(MonitorEngine):
         })
     
     def _get_optimization_recommendations(self, metric_name: str) -> List[str]:
-        """Get optimization recommendations for specific metric."""
-        recommendations = {
+        """Get optimization recommendations for specific metric."""        recommendations = {
             "slow_request": [
                 "Optimize database queries",
                 "Implement response caching",
@@ -533,8 +506,7 @@ class PerformanceMonitor(MonitorEngine):
         return recommendations.get(metric_name, ["Monitor and analyze further"])
     
     async def _monitor_system_resources(self) -> None:
-        """Monitor system resource utilization."""
-        while True:
+        """Monitor system resource utilization."""        while True:
             try:
                 metrics = await self.resource_monitor.collect_system_metrics()
                 
@@ -548,8 +520,7 @@ class PerformanceMonitor(MonitorEngine):
                 await asyncio.sleep(60)
     
     async def _check_resource_thresholds(self, metrics: ResourceMetrics) -> None:
-        """Check if resource metrics exceed thresholds."""
-        resources_to_check = [
+        """Check if resource metrics exceed thresholds."""        resources_to_check = [
             ("cpu_percent", metrics.cpu_percent),
             ("memory_percent", metrics.memory_percent),
             ("disk_percent", metrics.disk_percent)
@@ -576,8 +547,7 @@ class PerformanceMonitor(MonitorEngine):
             )
     
     async def _monitor_application_performance(self) -> None:
-        """Monitor application-specific performance metrics."""
-        while True:
+        """Monitor application-specific performance metrics."""        while True:
             try:
                 # Collect and analyze application metrics
                 await asyncio.sleep(60)  # Check every minute
@@ -587,8 +557,7 @@ class PerformanceMonitor(MonitorEngine):
                 await asyncio.sleep(120)
     
     async def _monitor_database_performance(self) -> None:
-        """Monitor database performance metrics."""
-        while True:
+        """Monitor database performance metrics."""        while True:
             try:
                 # Monitor database performance
                 await asyncio.sleep(120)  # Check every 2 minutes
@@ -598,8 +567,7 @@ class PerformanceMonitor(MonitorEngine):
                 await asyncio.sleep(180)
     
     async def _monitor_network_performance(self) -> None:
-        """Monitor network performance metrics."""
-        while True:
+        """Monitor network performance metrics."""        while True:
             try:
                 # Monitor network performance
                 await asyncio.sleep(90)  # Check every 90 seconds
@@ -609,8 +577,7 @@ class PerformanceMonitor(MonitorEngine):
                 await asyncio.sleep(120)
     
     async def _analyze_performance_trends(self) -> None:
-        """Analyze performance trends and patterns."""
-        while True:
+        """Analyze performance trends and patterns."""        while True:
             try:
                 # Analyze trends in performance data
                 await asyncio.sleep(300)  # Analyze every 5 minutes
@@ -620,8 +587,7 @@ class PerformanceMonitor(MonitorEngine):
                 await asyncio.sleep(600)
     
     async def _generate_optimization_recommendations(self) -> None:
-        """Generate performance optimization recommendations."""
-        while True:
+        """Generate performance optimization recommendations."""        while True:
             try:
                 # Generate optimization recommendations
                 self.optimization_recommendations = await self._analyze_optimization_opportunities()
@@ -632,8 +598,7 @@ class PerformanceMonitor(MonitorEngine):
                 await asyncio.sleep(1200)
     
     async def _analyze_optimization_opportunities(self) -> List[str]:
-        """Analyze current performance data for optimization opportunities."""
-        recommendations = []
+        """Analyze current performance data for optimization opportunities."""        recommendations = []
         
         try:
             # Analyze resource usage patterns

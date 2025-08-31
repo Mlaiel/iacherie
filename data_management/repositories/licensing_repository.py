@@ -1,5 +1,4 @@
-"""
-🏛️ Licensing Repository - IA Influencer Agent Platform Enterprise
+"""🏛️ Licensing Repository - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/repositories/licensing_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,7 +20,6 @@ LICENSING REPOSITORY ARCHITECTURE:
 License Creation → Rights Verification → Revenue Tracking → Distribution Management → 
 Territory Restrictions → Usage Analytics → Compliance Monitoring → Payment Processing
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -38,8 +36,7 @@ from ..models.licensing_model import (
 )
 
 class LicenseCategory(Enum):
-    """License category types"""
-    SYNC_RIGHTS = "sync_rights"
+    """License category types"""    SYNC_RIGHTS = "sync_rights"
     MECHANICAL_RIGHTS = "mechanical_rights"
     PERFORMANCE_RIGHTS = "performance_rights"
     REPRODUCTION_RIGHTS = "reproduction_rights"
@@ -50,8 +47,7 @@ class LicenseCategory(Enum):
 
 @dataclass
 class LicenseMetrics:
-    """License performance metrics"""
-    license_id: str
+    """License performance metrics"""    license_id: str
     usage_count: int
     revenue_generated: Decimal
     territory_reach: int
@@ -60,8 +56,7 @@ class LicenseMetrics:
     created_at: datetime
 
 class LicensingRepository(BaseRepository[LicensingModel]):
-    """Professional licensing repository with advanced rights management"""
-    
+    """Professional licensing repository with advanced rights management"""    
     def __init__(self, db_session, cache_manager=None, vector_store=None):
         super().__init__(db_session, cache_manager, vector_store)
         self.model_class = LicensingModel
@@ -88,8 +83,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         terms: Dict[str, Any],
         revenue_share: Optional[Dict[str, Any]] = None
     ) -> LicensingModel:
-        """Create comprehensive license agreement with AI-powered terms generation"""
-        try:
+        """Create comprehensive license agreement with AI-powered terms generation"""        try:
             # Generate unique license ID
             license_id = self._generate_license_id(content_id, license_type)
             
@@ -147,8 +141,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         license_id: str,
         usage_details: Dict[str, Any]
     ) -> LicenseTerms:
-        """Track license usage with AI-powered analytics"""
-        try:
+        """Track license usage with AI-powered analytics"""        try:
             # Validate license exists and is active
             license_agreement = await self.get_by_id(license_id)
             if not license_agreement or license_agreement.status != LicenseStatus.ACTIVE:
@@ -201,8 +194,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calculate comprehensive license revenue with AI analytics"""
-        try:
+        """Calculate comprehensive license revenue with AI analytics"""        try:
             license_agreement = await self.get_by_id(license_id)
             if not license_agreement:
                 raise ValueError(f"License not found: {license_id}")
@@ -261,8 +253,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         license_id: str,
         renewal_terms: Optional[Dict[str, Any]] = None
     ) -> LicensingModel:
-        """Manage license renewal with AI-optimized terms"""
-        try:
+        """Manage license renewal with AI-optimized terms"""        try:
             current_license = await self.get_by_id(license_id)
             if not current_license:
                 raise ValueError(f"License not found: {license_id}")
@@ -333,8 +324,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         license_id: Optional[str] = None,
         creator_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Comprehensive license compliance audit"""
-        try:
+        """Comprehensive license compliance audit"""        try:
             # Determine audit scope
             if license_id:
                 licenses = [await self.get_by_id(license_id)]
@@ -409,19 +399,16 @@ class LicensingRepository(BaseRepository[LicensingModel]):
     # Private helper methods
 
     def _generate_license_id(self, content_id: str, license_type: LicenseType, suffix: str = "") -> str:
-        """Generate unique license identifier"""
-        timestamp = int(datetime.now(timezone.utc).timestamp())
+        """Generate unique license identifier"""        timestamp = int(datetime.now(timezone.utc).timestamp())
         base_id = f"LIC_{content_id[:8]}_{license_type.value}_{timestamp}"
         return f"{base_id}_{suffix}" if suffix else base_id
 
     def _generate_usage_id(self) -> str:
-        """Generate unique usage identifier"""
-        timestamp = int(datetime.now(timezone.utc).timestamp())
+        """Generate unique usage identifier"""        timestamp = int(datetime.now(timezone.utc).timestamp())
         return f"USG_{timestamp}_{hash(str(timestamp)) % 10000:04d}"
 
     def _generate_audit_id(self) -> str:
-        """Generate unique audit identifier"""
-        timestamp = int(datetime.now(timezone.utc).timestamp())
+        """Generate unique audit identifier"""        timestamp = int(datetime.now(timezone.utc).timestamp())
         return f"AUD_{timestamp}_{hash(str(timestamp)) % 10000:04d}"
 
     async def _optimize_license_terms(
@@ -430,8 +417,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         terms: Dict[str, Any],
         content_id: str
     ) -> Dict[str, Any]:
-        """AI-powered license terms optimization"""
-        # This would integrate with ML models for terms optimization
+        """AI-powered license terms optimization"""        # This would integrate with ML models for terms optimization
         base_terms = terms.copy()
         
         # Add AI-optimized clauses based on content type and market data
@@ -456,8 +442,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         license_type: LicenseType,
         territories: List[str]
     ) -> Dict[str, Any]:
-        """Validate content rights availability"""
-        # Check for existing conflicting licenses
+        """Validate content rights availability"""        # Check for existing conflicting licenses
         existing_licenses = await self.find_by_criteria({
             'content_id': content_id,
             'license_type': license_type,
@@ -480,8 +465,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         }
 
     def _calculate_default_revenue_share(self, license_type: LicenseType) -> Dict[str, Any]:
-        """Calculate default revenue share based on license type"""
-        default_shares = {
+        """Calculate default revenue share based on license type"""        default_shares = {
             LicenseType.SYNC_RIGHTS: {'licensor': 70, 'licensee': 30},
             LicenseType.STREAMING: {'licensor': 60, 'licensee': 40},
             LicenseType.COMMERCIAL: {'licensor': 80, 'licensee': 20},
@@ -491,8 +475,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         return default_shares.get(license_type, {'licensor': 65, 'licensee': 35})
 
     async def _cache_license_data(self, license_agreement: LicensingModel):
-        """Cache license data for quick access"""
-        if self.cache_manager:
+        """Cache license data for quick access"""        if self.cache_manager:
             cache_key = f"license:{license_agreement.license_id}"
             await self.cache_manager.set(
                 cache_key,
@@ -501,8 +484,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
             )
 
     async def _deploy_license_smart_contract(self, license_agreement: LicensingModel):
-        """Deploy smart contract for blockchain-based licensing"""
-        # This would integrate with blockchain networks
+        """Deploy smart contract for blockchain-based licensing"""        # This would integrate with blockchain networks
         # Placeholder for smart contract deployment
         self.logger.info(f"Smart contract deployment initiated for license: {license_agreement.license_id}")
 
@@ -511,8 +493,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         license_agreement: LicensingModel,
         usage_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Verify usage compliance with license terms"""
-        violations = []
+        """Verify usage compliance with license terms"""        violations = []
         
         # Check territory restrictions
         if usage_details.get('territory') in license_agreement.territory_restrictions:
@@ -536,22 +517,19 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         }
 
     async def _handle_compliance_violation(self, license_id: str, violations: List[Dict[str, Any]]):
-        """Handle license compliance violations"""
-        # Log violations
+        """Handle license compliance violations"""        # Log violations
         for violation in violations:
             self.logger.warning(f"License violation {license_id}: {violation}")
         
         # This could trigger notifications, automatic actions, etc.
 
     async def _store_usage_record(self, usage_record: LicenseTerms):
-        """Store license usage record"""
-        # This would store in a separate usage tracking table
+        """Store license usage record"""        # This would store in a separate usage tracking table
         # For now, just log the usage
         self.logger.info(f"Usage recorded: {usage_record.usage_id}")
 
     async def _update_license_analytics(self, license_id: str, usage_record: LicenseTerms):
-        """Update license analytics with new usage data"""
-        # This would update analytics tables/metrics
+        """Update license analytics with new usage data"""        # This would update analytics tables/metrics
         self.logger.info(f"Analytics updated for license: {license_id}")
 
     async def _process_revenue_distribution(
@@ -559,8 +537,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         license_agreement: LicensingModel,
         usage_record: LicenseTerms
     ):
-        """Process revenue distribution based on usage"""
-        # Calculate revenue splits
+        """Process revenue distribution based on usage"""        # Calculate revenue splits
         licensor_share = (
             usage_record.revenue_generated * 
             license_agreement.revenue_share.get('licensor', 65) / 100
@@ -578,8 +555,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         period_start: datetime,
         period_end: datetime
     ) -> List[LicenseTerms]:
-        """Fetch usage records for a period"""
-        # This would query the usage tracking table
+        """Fetch usage records for a period"""        # This would query the usage tracking table
         # For now, return empty list
         return []
 
@@ -588,8 +564,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         license_agreement: LicensingModel,
         total_revenue: Decimal
     ) -> Dict[str, Decimal]:
-        """Calculate revenue distribution"""
-        licensor_percentage = license_agreement.revenue_share.get('licensor', 65)
+        """Calculate revenue distribution"""        licensor_percentage = license_agreement.revenue_share.get('licensor', 65)
         licensee_percentage = 100 - licensor_percentage
         
         return {
@@ -604,8 +579,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         license_id: str,
         usage_records: List[LicenseTerms]
     ) -> Dict[str, Any]:
-        """AI-powered future revenue predictions"""
-        # This would use ML models for revenue prediction
+        """AI-powered future revenue predictions"""        # This would use ML models for revenue prediction
         return {
             'next_month': 1000.0,
             'next_quarter': 3000.0,
@@ -617,8 +591,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         self,
         usage_records: List[LicenseTerms]
     ) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by territory"""
-        territory_revenue = {}
+        """Calculate revenue breakdown by territory"""        territory_revenue = {}
         for usage in usage_records:
             territory = usage.territory or 'unknown'
             territory_revenue[territory] = territory_revenue.get(territory, Decimal('0')) + usage.revenue_generated
@@ -629,8 +602,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         self,
         usage_records: List[LicenseTerms]
     ) -> Dict[str, Any]:
-        """Analyze performance across platforms"""
-        platform_metrics = {}
+        """Analyze performance across platforms"""        platform_metrics = {}
         for usage in usage_records:
             platform = usage.platform or 'unknown'
             if platform not in platform_metrics:
@@ -656,8 +628,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         self,
         current_license: LicensingModel
     ) -> Dict[str, Any]:
-        """Generate AI-powered renewal recommendations"""
-        # This would use ML models to analyze performance and recommend optimizations
+        """Generate AI-powered renewal recommendations"""        # This would use ML models to analyze performance and recommend optimizations
         return {
             'recommended_renewal': True,
             'optimizations': {
@@ -669,8 +640,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         }
 
     async def _calculate_license_performance(self, license_id: str) -> Dict[str, Any]:
-        """Calculate comprehensive license performance metrics"""
-        # This would analyze historical data
+        """Calculate comprehensive license performance metrics"""        # This would analyze historical data
         return {
             'revenue_growth': 15.5,
             'usage_frequency': 'high',
@@ -683,8 +653,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         current_share: Dict[str, Any],
         performance_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize revenue share based on performance"""
-        optimized_share = current_share.copy()
+        """Optimize revenue share based on performance"""        optimized_share = current_share.copy()
         
         # Adjust based on performance
         if performance_metrics.get('revenue_growth', 0) > 10:
@@ -694,13 +663,11 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         return optimized_share
 
     async def _transfer_license_analytics(self, old_license_id: str, new_license_id: str):
-        """Transfer analytics data from old to new license"""
-        # This would migrate analytics and performance data
+        """Transfer analytics data from old to new license"""        # This would migrate analytics and performance data
         self.logger.info(f"Analytics transferred: {old_license_id} -> {new_license_id}")
 
     async def _check_license_validity(self, license_agreement: LicensingModel) -> Dict[str, Any]:
-        """Check license validity"""
-        current_time = datetime.now(timezone.utc)
+        """Check license validity"""        current_time = datetime.now(timezone.utc)
         
         return {
             'valid': license_agreement.status == LicenseStatus.ACTIVE,
@@ -710,8 +677,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         }
 
     async def _audit_usage_compliance(self, license_id: str) -> Dict[str, Any]:
-        """Audit usage compliance for a license"""
-        # This would check all usage records against license terms
+        """Audit usage compliance for a license"""        # This would check all usage records against license terms
         return {
             'compliant_usage_percentage': 98.5,
             'violations_count': 2,
@@ -720,8 +686,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         }
 
     async def _audit_revenue_distribution(self, license_id: str) -> Dict[str, Any]:
-        """Audit revenue distribution accuracy"""
-        return {
+        """Audit revenue distribution accuracy"""        return {
             'distribution_accuracy': 99.8,
             'payment_delays': 0,
             'disputed_payments': 0,
@@ -729,8 +694,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         }
 
     async def _audit_territory_compliance(self, license_id: str) -> Dict[str, Any]:
-        """Audit territory compliance"""
-        return {
+        """Audit territory compliance"""        return {
             'territory_violations': 0,
             'authorized_territories': ['US', 'CA', 'EU'],
             'unauthorized_usage': [],
@@ -744,8 +708,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         revenue_audit: Dict[str, Any],
         territory_compliance: Dict[str, Any]
     ) -> float:
-        """Calculate overall compliance score"""
-        scores = [
+        """Calculate overall compliance score"""        scores = [
             1.0 if validity_check['valid'] else 0.0,
             usage_compliance['compliant_usage_percentage'] / 100,
             revenue_audit['distribution_accuracy'] / 100,
@@ -759,8 +722,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         license_agreement: LicensingModel,
         compliance_score: float
     ) -> List[str]:
-        """Generate compliance improvement recommendations"""
-        recommendations = []
+        """Generate compliance improvement recommendations"""        recommendations = []
         
         if compliance_score < 0.9:
             recommendations.append("Implement stricter usage monitoring")
@@ -777,8 +739,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
         self,
         compliance_results: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Generate compliance audit summary"""
-        if not compliance_results:
+        """Generate compliance audit summary"""        if not compliance_results:
             return {}
         
         total_licenses = len(compliance_results)
@@ -805,8 +766,7 @@ class LicensingRepository(BaseRepository[LicensingModel]):
 
 
 class AsyncLicensingRepository(AsyncBaseRepository[LicensingModel]):
-    """Async version of licensing repository for high-performance operations"""
-    
+    """Async version of licensing repository for high-performance operations"""    
     def __init__(self, db_session, cache_manager=None, vector_store=None):
         super().__init__(db_session, cache_manager, vector_store)
         self.sync_repo = LicensingRepository(db_session, cache_manager, vector_store)
@@ -815,8 +775,7 @@ class AsyncLicensingRepository(AsyncBaseRepository[LicensingModel]):
         self,
         license_requests: List[Dict[str, Any]]
     ) -> List[LicensingModel]:
-        """Create multiple license agreements in batch"""
-        try:
+        """Create multiple license agreements in batch"""        try:
             tasks = []
             for request in license_requests:
                 task = self.sync_repo.create_license_agreement(**request)
@@ -843,8 +802,7 @@ class AsyncLicensingRepository(AsyncBaseRepository[LicensingModel]):
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Dict[str, Any]]:
-        """Calculate revenue for multiple licenses in parallel"""
-        try:
+        """Calculate revenue for multiple licenses in parallel"""        try:
             tasks = []
             for license_id in license_ids:
                 task = self.sync_repo.calculate_license_revenue(
@@ -874,8 +832,7 @@ class AsyncLicensingRepository(AsyncBaseRepository[LicensingModel]):
         license_id: str,
         callback: callable
     ):
-        """Stream real-time license analytics"""
-        try:
+        """Stream real-time license analytics"""        try:
             while True:
                 # Fetch latest analytics
                 analytics = await self._fetch_real_time_analytics(license_id)
@@ -891,8 +848,7 @@ class AsyncLicensingRepository(AsyncBaseRepository[LicensingModel]):
             raise
 
     async def _fetch_real_time_analytics(self, license_id: str) -> Dict[str, Any]:
-        """Fetch real-time analytics data"""
-        # This would fetch from real-time analytics systems
+        """Fetch real-time analytics data"""        # This would fetch from real-time analytics systems
         return {
             'license_id': license_id,
             'current_usage': 156,

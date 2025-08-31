@@ -1,5 +1,4 @@
-"""
-Rollback Manager for IA Influencer Agent Platform
+"""Rollback Manager for IA Influencer Agent Platform
 Automated rollback and recovery system for deployment failures
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
@@ -8,7 +7,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, reprod
 or distribution without explicit written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,8 +24,7 @@ from backend.deployment.infrastructure.cloud_provider import CloudProviderManage
 
 
 class RollbackTrigger(Enum):
-    """Rollback trigger types"""
-    MANUAL = "manual"
+    """Rollback trigger types"""    MANUAL = "manual"
     AUTOMATIC = "automatic"
     HEALTH_CHECK_FAILURE = "health_check_failure"
     PERFORMANCE_DEGRADATION = "performance_degradation"
@@ -37,8 +34,7 @@ class RollbackTrigger(Enum):
 
 
 class RollbackStrategy(Enum):
-    """Rollback strategy types"""
-    IMMEDIATE = "immediate"
+    """Rollback strategy types"""    IMMEDIATE = "immediate"
     GRADUAL = "gradual"
     BLUE_GREEN_SWAP = "blue_green_swap"
     CANARY_ROLLBACK = "canary_rollback"
@@ -46,8 +42,7 @@ class RollbackStrategy(Enum):
 
 
 class RollbackStatus(Enum):
-    """Rollback execution status"""
-    PENDING = "pending"
+    """Rollback execution status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     SUCCESSFUL = "successful"
     FAILED = "failed"
@@ -57,8 +52,7 @@ class RollbackStatus(Enum):
 
 @dataclass
 class RollbackTarget:
-    """Rollback target specification"""
-    service_name: str
+    """Rollback target specification"""    service_name: str
     current_version: str
     target_version: str
     rollback_scope: str  # 'service', 'application', 'infrastructure'
@@ -70,8 +64,7 @@ class RollbackTarget:
 
 @dataclass
 class RollbackPlan:
-    """Rollback execution plan"""
-    rollback_id: str
+    """Rollback execution plan"""    rollback_id: str
     trigger: RollbackTrigger
     strategy: RollbackStrategy
     targets: List[RollbackTarget]
@@ -86,8 +79,7 @@ class RollbackPlan:
 
 @dataclass
 class RollbackExecution:
-    """Rollback execution tracking"""
-    rollback_id: str
+    """Rollback execution tracking"""    rollback_id: str
     plan: RollbackPlan
     status: RollbackStatus
     started_at: datetime
@@ -101,11 +93,9 @@ class RollbackExecution:
 
 
 class RollbackManager:
-    """
-    Automated rollback and recovery management system
+    """    Automated rollback and recovery management system
     Handles intelligent rollback decisions and execution coordination
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -138,8 +128,7 @@ class RollbackManager:
         self.auto_rollback_timeout_minutes = config.get('auto_rollback_timeout', 15)
     
     async def initialize(self) -> None:
-        """Initialize rollback manager"""
-        try:
+        """Initialize rollback manager"""        try:
             self.logger.info("Initializing rollback manager")
             
             # Initialize infrastructure managers
@@ -167,8 +156,7 @@ class RollbackManager:
     
     async def create_rollback_plan(self, trigger: RollbackTrigger, targets: List[RollbackTarget],
                                  strategy: RollbackStrategy = RollbackStrategy.IMMEDIATE) -> RollbackPlan:
-        """Create a rollback execution plan"""
-        try:
+        """Create a rollback execution plan"""        try:
             # Generate rollback ID
             rollback_id = self._generate_rollback_id(targets)
             
@@ -217,8 +205,7 @@ class RollbackManager:
             raise RollbackError(f"Rollback plan creation failed: {e}")
     
     async def execute_rollback(self, plan: RollbackPlan) -> RollbackExecution:
-        """Execute rollback according to plan"""
-        try:
+        """Execute rollback according to plan"""        try:
             # Create execution tracking
             execution = RollbackExecution(
                 rollback_id=plan.rollback_id,
@@ -302,8 +289,7 @@ class RollbackManager:
     
     async def trigger_automatic_rollback(self, service_name: str, reason: str,
                                        target_version: Optional[str] = None) -> RollbackExecution:
-        """Trigger automatic rollback for a service"""
-        try:
+        """Trigger automatic rollback for a service"""        try:
             self.logger.warning(f"Triggering automatic rollback for {service_name}: {reason}")
             
             # Get current service information
@@ -343,8 +329,7 @@ class RollbackManager:
             raise RollbackError(f"Automatic rollback failed: {e}")
     
     async def cancel_rollback(self, rollback_id: str) -> bool:
-        """Cancel an active rollback"""
-        try:
+        """Cancel an active rollback"""        try:
             if rollback_id not in self.active_rollbacks:
                 raise ValidationError(f"Active rollback {rollback_id} not found")
             
@@ -376,8 +361,7 @@ class RollbackManager:
             raise RollbackError(f"Rollback cancellation failed: {e}")
     
     async def get_rollback_status(self, rollback_id: str) -> RollbackExecution:
-        """Get rollback execution status"""
-        # Check active rollbacks first
+        """Get rollback execution status"""        # Check active rollbacks first
         if rollback_id in self.active_rollbacks:
             return self.active_rollbacks[rollback_id]
         
@@ -390,8 +374,7 @@ class RollbackManager:
     
     async def list_rollbacks(self, status_filter: Optional[RollbackStatus] = None,
                            days_back: int = 30) -> List[RollbackExecution]:
-        """List rollbacks with optional filtering"""
-        cutoff_date = datetime.utcnow() - timedelta(days=days_back)
+        """List rollbacks with optional filtering"""        cutoff_date = datetime.utcnow() - timedelta(days=days_back)
         
         all_rollbacks = list(self.active_rollbacks.values()) + self.rollback_history
         
@@ -405,8 +388,7 @@ class RollbackManager:
         return sorted(filtered_rollbacks, key=lambda x: x.started_at, reverse=True)
     
     async def validate_rollback_feasibility(self, targets: List[RollbackTarget]) -> Dict[str, Any]:
-        """Validate if rollback is feasible for given targets"""
-        results = {
+        """Validate if rollback is feasible for given targets"""        results = {
             'feasible': True,
             'warnings': [],
             'blockers': [],
@@ -439,8 +421,7 @@ class RollbackManager:
         return results
     
     async def _monitor_for_rollback_triggers(self) -> None:
-        """Monitor system for automatic rollback triggers"""
-        while True:
+        """Monitor system for automatic rollback triggers"""        while True:
             try:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 
@@ -474,8 +455,7 @@ class RollbackManager:
                 await asyncio.sleep(60)  # Wait longer on error
     
     async def _execute_rollback_strategy(self, execution: RollbackExecution) -> None:
-        """Execute rollback using specified strategy"""
-        strategy = execution.plan.strategy
+        """Execute rollback using specified strategy"""        strategy = execution.plan.strategy
         
         if strategy == RollbackStrategy.IMMEDIATE:
             await self._execute_immediate_rollback(execution)
@@ -491,8 +471,7 @@ class RollbackManager:
             raise RollbackError(f"Unsupported rollback strategy: {strategy}")
     
     async def _execute_immediate_rollback(self, execution: RollbackExecution) -> None:
-        """Execute immediate rollback strategy"""
-        total_targets = len(execution.plan.targets)
+        """Execute immediate rollback strategy"""        total_targets = len(execution.plan.targets)
         
         for i, target in enumerate(execution.plan.targets):
             self.logger.info(f"Rolling back {target.service_name} from {target.current_version} to {target.target_version}")
@@ -511,113 +490,91 @@ class RollbackManager:
             execution.logs.append(f"Rolled back {target.service_name} to {target.target_version}")
     
     async def _execute_gradual_rollback(self, execution: RollbackExecution) -> None:
-        """Execute gradual rollback strategy"""
-        # Implementation for gradual rollback
+        """Execute gradual rollback strategy"""        # Implementation for gradual rollback
         pass
     
     async def _execute_blue_green_rollback(self, execution: RollbackExecution) -> None:
-        """Execute blue-green rollback strategy"""
-        # Implementation for blue-green rollback
+        """Execute blue-green rollback strategy"""        # Implementation for blue-green rollback
         pass
     
     async def _execute_canary_rollback(self, execution: RollbackExecution) -> None:
-        """Execute canary rollback strategy"""
-        # Implementation for canary rollback
+        """Execute canary rollback strategy"""        # Implementation for canary rollback
         pass
     
     async def _execute_database_rollback(self, execution: RollbackExecution) -> None:
-        """Execute database point-in-time rollback"""
-        # Implementation for database rollback
+        """Execute database point-in-time rollback"""        # Implementation for database rollback
         pass
     
     def _generate_rollback_id(self, targets: List[RollbackTarget]) -> str:
-        """Generate unique rollback ID"""
-        target_names = [t.service_name for t in targets]
+        """Generate unique rollback ID"""        target_names = [t.service_name for t in targets]
         timestamp = datetime.utcnow().isoformat()
         combined = f"{'-'.join(target_names)}-{timestamp}"
         return hashlib.sha256(combined.encode()).hexdigest()[:16]
     
     async def _analyze_rollback_dependencies(self, targets: List[RollbackTarget]) -> Dict[str, List[str]]:
-        """Analyze dependencies between rollback targets"""
-        # Implementation for dependency analysis
+        """Analyze dependencies between rollback targets"""        # Implementation for dependency analysis
         return {}
     
     async def _calculate_rollback_order(self, targets: List[RollbackTarget], 
                                       dependencies: Dict[str, List[str]]) -> List[str]:
-        """Calculate optimal rollback order"""
-        # Implementation for rollback order calculation
+        """Calculate optimal rollback order"""        # Implementation for rollback order calculation
         return [t.service_name for t in targets]
     
     async def _estimate_rollback_duration(self, targets: List[RollbackTarget], 
                                         strategy: RollbackStrategy) -> int:
-        """Estimate rollback duration in minutes"""
-        # Implementation for duration estimation
+        """Estimate rollback duration in minutes"""        # Implementation for duration estimation
         return len(targets) * 5  # 5 minutes per service as default
     
     async def _get_pre_rollback_checks(self, targets: List[RollbackTarget]) -> List[str]:
-        """Get pre-rollback checks for targets"""
-        return ['health_check', 'dependency_check', 'backup_verification']
+        """Get pre-rollback checks for targets"""        return ['health_check', 'dependency_check', 'backup_verification']
     
     async def _get_post_rollback_checks(self, targets: List[RollbackTarget]) -> List[str]:
-        """Get post-rollback checks for targets"""
-        return ['health_check', 'functionality_test', 'performance_check']
+        """Get post-rollback checks for targets"""        return ['health_check', 'functionality_test', 'performance_check']
     
     async def _validate_rollback_plan(self, plan: RollbackPlan) -> None:
-        """Validate rollback plan"""
-        # Implementation for plan validation
+        """Validate rollback plan"""        # Implementation for plan validation
         pass
     
     async def _execute_pre_rollback_checks(self, execution: RollbackExecution) -> None:
-        """Execute pre-rollback checks"""
-        # Implementation for pre-rollback checks
+        """Execute pre-rollback checks"""        # Implementation for pre-rollback checks
         pass
     
     async def _execute_post_rollback_checks(self, execution: RollbackExecution) -> None:
-        """Execute post-rollback checks"""
-        # Implementation for post-rollback checks
+        """Execute post-rollback checks"""        # Implementation for post-rollback checks
         pass
     
     async def _load_rollback_templates(self) -> None:
-        """Load rollback templates from configuration"""
-        # Implementation for loading rollback templates
+        """Load rollback templates from configuration"""        # Implementation for loading rollback templates
         pass
     
     async def _register_health_checkers(self) -> None:
-        """Register custom health check functions"""
-        # Implementation for registering health checkers
+        """Register custom health check functions"""        # Implementation for registering health checkers
         pass
     
     async def _get_last_stable_version(self, service_name: str) -> Optional[str]:
-        """Get last stable version for a service"""
-        # Implementation for finding last stable version
+        """Get last stable version for a service"""        # Implementation for finding last stable version
         return None
     
     async def _get_service_environment(self, service_name: str) -> str:
-        """Get environment for a service"""
-        # Implementation for getting service environment
+        """Get environment for a service"""        # Implementation for getting service environment
         return "production"
     
     async def _check_data_compatibility(self, target: RollbackTarget) -> bool:
-        """Check data compatibility for rollback target"""
-        # Implementation for data compatibility check
+        """Check data compatibility for rollback target"""        # Implementation for data compatibility check
         return True
     
     async def _estimate_service_downtime(self, target: RollbackTarget) -> int:
-        """Estimate downtime for service rollback"""
-        # Implementation for downtime estimation
+        """Estimate downtime for service rollback"""        # Implementation for downtime estimation
         return 5  # 5 minutes default
     
     async def _should_trigger_health_rollback(self, service: Dict[str, Any]) -> bool:
-        """Check if health-based rollback should be triggered"""
-        # Implementation for health-based rollback decision
+        """Check if health-based rollback should be triggered"""        # Implementation for health-based rollback decision
         return False
     
     async def _should_trigger_performance_rollback(self, service: Dict[str, Any]) -> bool:
-        """Check if performance-based rollback should be triggered"""
-        # Implementation for performance-based rollback decision
+        """Check if performance-based rollback should be triggered"""        # Implementation for performance-based rollback decision
         return False
     
     async def _should_trigger_error_rate_rollback(self, service: Dict[str, Any]) -> bool:
-        """Check if error rate-based rollback should be triggered"""
-        # Implementation for error rate-based rollback decision
+        """Check if error rate-based rollback should be triggered"""        # Implementation for error rate-based rollback decision
         return False

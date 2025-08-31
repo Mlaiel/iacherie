@@ -1,5 +1,4 @@
-"""
-Payout Configuration Module
+"""Payout Configuration Module
 ==========================
 
 Professional payout management configuration for creator monetization platform.
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Set, Union
@@ -26,8 +24,7 @@ from datetime import datetime, time, timedelta
 
 
 class PayoutMethod(str, Enum):
-    """Enhanced payout methods for global creator monetization."""
-    # Traditional Banking
+    """Enhanced payout methods for global creator monetization."""    # Traditional Banking
     BANK_TRANSFER = "bank_transfer"
     WIRE_TRANSFER = "wire_transfer"
     ACH_TRANSFER = "ach_transfer"
@@ -69,8 +66,7 @@ class PayoutMethod(str, Enum):
 
 
 class PayoutStatus(str, Enum):
-    """Comprehensive payout status tracking."""
-    QUEUED = "queued"
+    """Comprehensive payout status tracking."""    QUEUED = "queued"
     SCHEDULED = "scheduled"
     PENDING_APPROVAL = "pending_approval"
     APPROVED = "approved"
@@ -91,8 +87,7 @@ class PayoutStatus(str, Enum):
 
 
 class PayoutFrequency(str, Enum):
-    """Flexible payout frequency options."""
-    INSTANT = "instant"  # <1 hour
+    """Flexible payout frequency options."""    INSTANT = "instant"  # <1 hour
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -106,8 +101,7 @@ class PayoutFrequency(str, Enum):
 
 
 class PayoutPriority(str, Enum):
-    """Payout processing priority levels."""
-    LOW = "low"
+    """Payout processing priority levels."""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -115,8 +109,7 @@ class PayoutPriority(str, Enum):
 
 
 class PayoutReason(str, Enum):
-    """Comprehensive failure and hold reasons."""
-    INSUFFICIENT_BALANCE = "insufficient_balance"
+    """Comprehensive failure and hold reasons."""    INSUFFICIENT_BALANCE = "insufficient_balance"
     INVALID_ACCOUNT = "invalid_account"
     ACCOUNT_CLOSED = "account_closed"
     BANK_REJECTED = "bank_rejected"
@@ -146,8 +139,7 @@ class PayoutReason(str, Enum):
 
 @dataclass
 class PayoutLimits:
-    """Comprehensive payout limits configuration."""
-    min_amount: Decimal
+    """Comprehensive payout limits configuration."""    min_amount: Decimal
     max_amount_per_transaction: Decimal
     max_amount_per_day: Decimal
     max_amount_per_week: Decimal
@@ -160,8 +152,7 @@ class PayoutLimits:
 
 @dataclass
 class PayoutFeeStructure:
-    """Detailed fee structure for payout methods."""
-    percentage_fee: Decimal
+    """Detailed fee structure for payout methods."""    percentage_fee: Decimal
     fixed_fee: Decimal
     minimum_fee: Decimal
     maximum_fee: Decimal
@@ -174,8 +165,7 @@ class PayoutFeeStructure:
 
 @dataclass
 class PayoutMethodConfig:
-    """Enhanced configuration for payout methods."""
-    method: PayoutMethod
+    """Enhanced configuration for payout methods."""    method: PayoutMethod
     display_name: str
     enabled: bool
     priority: int  # Lower = higher priority
@@ -219,8 +209,7 @@ class PayoutMethodConfig:
 
 @dataclass
 class PayoutScheduleConfig:
-    """Advanced payout scheduling configuration."""
-    frequency: PayoutFrequency
+    """Advanced payout scheduling configuration."""    frequency: PayoutFrequency
     enabled: bool = True
     
     # Schedule Timing
@@ -243,8 +232,7 @@ class PayoutScheduleConfig:
 
 @dataclass
 class PayoutRetryConfig:
-    """Configuration for payout retry logic."""
-    enabled: bool = True
+    """Configuration for payout retry logic."""    enabled: bool = True
     max_retry_attempts: int = 3
     initial_retry_delay_minutes: int = 15
     exponential_backoff: bool = True
@@ -265,8 +253,7 @@ class PayoutRetryConfig:
 
 @dataclass
 class PayoutConfig:
-    """Professional payout management configuration."""
-    
+    """Professional payout management configuration."""    
     # Global Settings
     ENABLE_PAYOUTS: bool = True
     DEFAULT_CURRENCY: str = "EUR"
@@ -522,33 +509,28 @@ class PayoutConfig:
     })
     
     def get_method_config(self, method: PayoutMethod) -> Optional[PayoutMethodConfig]:
-        """Get configuration for a specific payout method."""
-        return self.PAYOUT_METHODS.get(method)
+        """Get configuration for a specific payout method."""        return self.PAYOUT_METHODS.get(method)
     
     def get_enabled_methods(self) -> List[PayoutMethodConfig]:
-        """Get all enabled payout methods sorted by priority."""
-        enabled = [config for config in self.PAYOUT_METHODS.values() if config.enabled]
+        """Get all enabled payout methods sorted by priority."""        enabled = [config for config in self.PAYOUT_METHODS.values() if config.enabled]
         return sorted(enabled, key=lambda x: x.priority)
     
     def get_methods_for_country(self, country_code: str) -> List[PayoutMethodConfig]:
-        """Get available payout methods for a specific country."""
-        return [
+        """Get available payout methods for a specific country."""        return [
             config for config in self.get_enabled_methods()
             if country_code.upper() in config.supported_countries
             and country_code.upper() not in config.restricted_countries
         ]
     
     def get_methods_for_currency(self, currency: str) -> List[PayoutMethodConfig]:
-        """Get available payout methods for a specific currency."""
-        return [
+        """Get available payout methods for a specific currency."""        return [
             config for config in self.get_enabled_methods()
             if currency.upper() in config.supported_currencies
         ]
     
     def calculate_payout_fee(self, method: PayoutMethod, amount: Decimal, 
                            currency: str) -> Decimal:
-        """Calculate payout fee for a specific method and amount."""
-        config = self.get_method_config(method)
+        """Calculate payout fee for a specific method and amount."""        config = self.get_method_config(method)
         if not config or currency not in config.fee_structures:
             return Decimal("0.00")
         
@@ -566,8 +548,7 @@ class PayoutConfig:
     def is_within_limits(self, method: PayoutMethod, amount: Decimal, 
                         currency: str, user_daily_total: Decimal = Decimal("0"),
                         user_monthly_total: Decimal = Decimal("0")) -> bool:
-        """Check if payout amount is within configured limits."""
-        config = self.get_method_config(method)
+        """Check if payout amount is within configured limits."""        config = self.get_method_config(method)
         if not config or currency not in config.limits:
             return False
         
@@ -599,8 +580,7 @@ payout_config = PayoutConfig()
 
 @dataclass
 class PayoutThreshold:
-    """Payout threshold configuration."""
-    currency: str
+    """Payout threshold configuration."""    currency: str
     minimum_amount: Decimal
     maximum_amount: Decimal
     auto_payout_threshold: Decimal
@@ -609,8 +589,7 @@ class PayoutThreshold:
 
 @dataclass
 class PayoutConfig:
-    """Main payout configuration class."""
-    
+    """Main payout configuration class."""    
     # Database Configuration
     DATABASE_URL: str = os.getenv(
         "PAYOUT_DB_URL", 
@@ -915,33 +894,28 @@ class PayoutConfig:
     })
     
     def get_method_config(self, method: PayoutMethod) -> Optional[PayoutMethodConfig]:
-        """Get configuration for a specific payout method."""
-        return self.PAYOUT_METHODS.get(method)
+        """Get configuration for a specific payout method."""        return self.PAYOUT_METHODS.get(method)
     
     def get_enabled_methods(self) -> List[PayoutMethod]:
-        """Get list of enabled payout methods."""
-        return [
+        """Get list of enabled payout methods."""        return [
             method for method, config in self.PAYOUT_METHODS.items() 
             if config.enabled
         ]
     
     def get_methods_for_currency(self, currency: str) -> List[PayoutMethod]:
-        """Get available payout methods for a specific currency."""
-        return [
+        """Get available payout methods for a specific currency."""        return [
             method for method, config in self.PAYOUT_METHODS.items()
             if config.enabled and currency in config.supported_currencies
         ]
     
     def get_methods_for_country(self, country: str) -> List[PayoutMethod]:
-        """Get available payout methods for a specific country."""
-        return [
+        """Get available payout methods for a specific country."""        return [
             method for method, config in self.PAYOUT_METHODS.items()
             if config.enabled and country in config.supported_countries
         ]
     
     def get_threshold_config(self, currency: str) -> Optional[PayoutThreshold]:
-        """Get threshold configuration for a currency."""
-        return self.PAYOUT_THRESHOLDS.get(
+        """Get threshold configuration for a currency."""        return self.PAYOUT_THRESHOLDS.get(
             currency, 
             self.PAYOUT_THRESHOLDS.get(self.DEFAULT_CURRENCY)
         )
@@ -951,8 +925,7 @@ class PayoutConfig:
         method: PayoutMethod, 
         amount: Decimal
     ) -> Decimal:
-        """Calculate payout fee for a specific method and amount."""
-        config = self.get_method_config(method)
+        """Calculate payout fee for a specific method and amount."""        config = self.get_method_config(method)
         if not config:
             return Decimal("0.00")
         
@@ -961,13 +934,11 @@ class PayoutConfig:
         return total_fee.quantize(Decimal("0.01"))
     
     def is_instant_available(self, method: PayoutMethod) -> bool:
-        """Check if instant payout is available for a method."""
-        config = self.get_method_config(method)
+        """Check if instant payout is available for a method."""        config = self.get_method_config(method)
         return config.instant_available if config else False
     
     def get_processing_time(self, method: PayoutMethod) -> int:
-        """Get processing time in hours for a payout method."""
-        config = self.get_method_config(method)
+        """Get processing time in hours for a payout method."""        config = self.get_method_config(method)
         return config.processing_time_hours if config else 72
 
 

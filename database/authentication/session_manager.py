@@ -1,5 +1,4 @@
-"""
-Session Management Database Components
+"""Session Management Database Components
 
 Enterprise session management with distributed storage, security validation,
 and real-time monitoring for multi-format creator authentication.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 import uuid
 import json
 import hashlib
@@ -42,8 +40,7 @@ Base = declarative_base()
 
 
 class SessionStatus(Enum):
-    """Session status enumeration"""
-    ACTIVE = "active"
+    """Session status enumeration"""    ACTIVE = "active"
     EXPIRED = "expired"
     REVOKED = "revoked"
     SUSPENDED = "suspended"
@@ -51,8 +48,7 @@ class SessionStatus(Enum):
 
 
 class DeviceType(Enum):
-    """Device type enumeration"""
-    DESKTOP = "desktop"
+    """Device type enumeration"""    DESKTOP = "desktop"
     MOBILE = "mobile"
     TABLET = "tablet"
     API = "api"
@@ -61,8 +57,7 @@ class DeviceType(Enum):
 
 @dataclass
 class SessionInfo:
-    """Session information data structure"""
-    session_id: str
+    """Session information data structure"""    session_id: str
     user_id: str
     creator_type: str
     device_type: DeviceType
@@ -84,10 +79,8 @@ class SessionInfo:
 
 
 class SessionStore(Base):
-    """
-    Database model for session storage with comprehensive tracking
-    """
-    __tablename__ = "session_store"
+    """    Database model for session storage with comprehensive tracking
+    """    __tablename__ = "session_store"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     session_id = Column(String(128), unique=True, nullable=False, index=True)
@@ -138,10 +131,8 @@ class SessionStore(Base):
 
 
 class SessionManager:
-    """
-    Enterprise session manager with Redis caching and PostgreSQL persistence
-    """
-    
+    """    Enterprise session manager with Redis caching and PostgreSQL persistence
+    """    
     def __init__(self, db_session: Session, redis_client: redis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -160,8 +151,7 @@ class SessionManager:
         device_info: Dict[str, Any],
         security_context: Dict[str, Any]
     ) -> SessionInfo:
-        """
-        Create new authenticated session with comprehensive tracking
+        """        Create new authenticated session with comprehensive tracking
         
         Args:
             user_id: Unique user identifier
@@ -171,8 +161,7 @@ class SessionManager:
             
         Returns:
             SessionInfo: Created session information
-        """
-        # Generate secure session ID
+        """        # Generate secure session ID
         session_id = self._generate_secure_session_id(user_id)
         
         # Create session token
@@ -221,8 +210,7 @@ class SessionManager:
         return session_info
     
     def validate_session(self, session_id: str, token: str) -> Optional[SessionInfo]:
-        """
-        Validate session with comprehensive security checks
+        """        Validate session with comprehensive security checks
         
         Args:
             session_id: Session identifier
@@ -230,8 +218,7 @@ class SessionManager:
             
         Returns:
             SessionInfo if valid, None otherwise
-        """
-        # First check Redis cache
+        """        # First check Redis cache
         cached_session = self._get_cached_session(session_id)
         if cached_session and self._verify_session_token(cached_session, token):
             self._update_activity(session_id)
@@ -278,16 +265,14 @@ class SessionManager:
         return session_info
     
     def renew_session(self, session_id: str) -> Optional[SessionInfo]:
-        """
-        Renew session expiration with security validation
+        """        Renew session expiration with security validation
         
         Args:
             session_id: Session to renew
             
         Returns:
             Updated SessionInfo or None if renewal failed
-        """
-        session_record = self.db_session.query(SessionStore).filter(
+        """        session_record = self.db_session.query(SessionStore).filter(
             SessionStore.session_id == session_id,
             SessionStore.status == "active"
         ).first()
@@ -317,8 +302,7 @@ class SessionManager:
         return session_info
     
     def terminate_session(self, session_id: str, reason: str = "user_logout") -> bool:
-        """
-        Terminate session with cleanup
+        """        Terminate session with cleanup
         
         Args:
             session_id: Session to terminate
@@ -326,8 +310,7 @@ class SessionManager:
             
         Returns:
             Success status
-        """
-        session_record = self.db_session.query(SessionStore).filter(
+        """        session_record = self.db_session.query(SessionStore).filter(
             SessionStore.session_id == session_id
         ).first()
         
@@ -347,8 +330,7 @@ class SessionManager:
         return True
     
     def get_user_sessions(self, user_id: str, active_only: bool = True) -> List[SessionInfo]:
-        """
-        Get all sessions for a user
+        """        Get all sessions for a user
         
         Args:
             user_id: User identifier
@@ -356,8 +338,7 @@ class SessionManager:
             
         Returns:
             List of user sessions
-        """
-        query = self.db_session.query(SessionStore).filter(
+        """        query = self.db_session.query(SessionStore).filter(
             SessionStore.user_id == user_id
         )
         
@@ -372,13 +353,11 @@ class SessionManager:
         return [self._build_session_info_from_record(session) for session in sessions]
     
     def cleanup_expired_sessions(self) -> int:
-        """
-        Clean up expired sessions
+        """        Clean up expired sessions
         
         Returns:
             Number of sessions cleaned up
-        """
-        current_time = datetime.now(timezone.utc)
+        """        current_time = datetime.now(timezone.utc)
         
         # Update expired sessions in database
         expired_count = self.db_session.query(SessionStore).filter(
@@ -400,16 +379,14 @@ class SessionManager:
         self,
         time_period: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """
-        Get session analytics for monitoring
+        """        Get session analytics for monitoring
         
         Args:
             time_period: Analysis time period
             
         Returns:
             Analytics data
-        """
-        start_time = datetime.now(timezone.utc) - time_period
+        """        start_time = datetime.now(timezone.utc) - time_period
         
         # Active sessions
         active_sessions = self.db_session.query(SessionStore).filter(
@@ -443,24 +420,20 @@ class SessionManager:
         }
     
     def _generate_secure_session_id(self, user_id: str) -> str:
-        """Generate cryptographically secure session ID"""
-        timestamp = str(datetime.now(timezone.utc).timestamp())
+        """Generate cryptographically secure session ID"""        timestamp = str(datetime.now(timezone.utc).timestamp())
         random_data = uuid.uuid4().hex
         combined = f"{user_id}:{timestamp}:{random_data}"
         return hashlib.sha256(combined.encode()).hexdigest()
     
     def _generate_session_token(self, session_id: str, user_id: str) -> str:
-        """Generate secure session token"""
-        secret_data = f"{session_id}:{user_id}:{uuid.uuid4().hex}"
+        """Generate secure session token"""        secret_data = f"{session_id}:{user_id}:{uuid.uuid4().hex}"
         return hashlib.sha256(secret_data.encode()).hexdigest()
     
     def _generate_csrf_token(self) -> str:
-        """Generate CSRF protection token"""
-        return hashlib.sha256(uuid.uuid4().hex.encode()).hexdigest()[:32]
+        """Generate CSRF protection token"""        return hashlib.sha256(uuid.uuid4().hex.encode()).hexdigest()[:32]
     
     def _enforce_concurrent_session_limits(self, user_id: str):
-        """Enforce maximum concurrent sessions per user"""
-        active_sessions = self.db_session.query(SessionStore).filter(
+        """Enforce maximum concurrent sessions per user"""        active_sessions = self.db_session.query(SessionStore).filter(
             SessionStore.user_id == user_id,
             SessionStore.status == "active",
             SessionStore.expires_at > datetime.now(timezone.utc)
@@ -473,8 +446,7 @@ class SessionManager:
                 self.terminate_session(session.session_id, "concurrent_limit_exceeded")
     
     def _cache_session_in_redis(self, session_info: SessionInfo, token: str):
-        """Cache session data in Redis"""
-        cache_data = asdict(session_info)
+        """Cache session data in Redis"""        cache_data = asdict(session_info)
         cache_data['token'] = token
         cache_data['created_at'] = session_info.created_at.isoformat()
         cache_data['last_activity'] = session_info.last_activity.isoformat()
@@ -491,8 +463,7 @@ class SessionManager:
         )
     
     def _get_cached_session(self, session_id: str) -> Optional[SessionInfo]:
-        """Retrieve session from Redis cache"""
-        cached_data = self.redis_client.get(f"session:{session_id}")
+        """Retrieve session from Redis cache"""        cached_data = self.redis_client.get(f"session:{session_id}")
         if not cached_data:
             return None
         
@@ -515,8 +486,7 @@ class SessionManager:
             return None
     
     def _verify_session_token(self, session_info: SessionInfo, token: str) -> bool:
-        """Verify session token against cached data"""
-        cached_data = self.redis_client.get(f"session:{session_info.session_id}")
+        """Verify session token against cached data"""        cached_data = self.redis_client.get(f"session:{session_info.session_id}")
         if not cached_data:
             return False
         
@@ -527,8 +497,7 @@ class SessionManager:
             return False
     
     def _update_activity(self, session_id: str):
-        """Update last activity timestamp"""
-        current_time = datetime.now(timezone.utc)
+        """Update last activity timestamp"""        current_time = datetime.now(timezone.utc)
         
         # Update database
         self.db_session.query(SessionStore).filter(
@@ -557,8 +526,7 @@ class SessionManager:
                 pass
     
     def _build_session_info_from_record(self, record: SessionStore) -> SessionInfo:
-        """Build SessionInfo from database record"""
-        return SessionInfo(
+        """Build SessionInfo from database record"""        return SessionInfo(
             session_id=record.session_id,
             user_id=str(record.user_id),
             creator_type=record.creator_type,
@@ -573,6 +541,5 @@ class SessionManager:
         )
     
     def _log_security_violation(self, session_id: str, violation_type: str):
-        """Log security violations for monitoring"""
-        # Implementation would integrate with security monitoring system
+        """Log security violations for monitoring"""        # Implementation would integrate with security monitoring system
         pass

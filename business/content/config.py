@@ -1,5 +1,4 @@
-"""
-Content Module Configuration - IA Influencer Agent Platform
+"""Content Module Configuration - IA Influencer Agent Platform
 ===========================================================
 
 Configuration management for the content management system with environment-specific
@@ -8,7 +7,6 @@ settings, feature flags, and deployment configurations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import os
 from typing import Any, Dict, List, Optional
 from dataclasses import dataclass
@@ -20,8 +18,7 @@ from ...core.config import BaseConfig
 
 @dataclass
 class ContentProcessingConfig:
-    """Configuration for content processing engine."""
-    
+    """Configuration for content processing engine."""    
     # Processing limits
     max_file_size_mb: int = 1024  # 1GB default
     max_processing_time_minutes: int = 30
@@ -51,8 +48,7 @@ class ContentProcessingConfig:
 
 @dataclass
 class DistributionConfig:
-    """Configuration for content distribution."""
-    
+    """Configuration for content distribution."""    
     # Platform configurations
     platforms: Dict[str, Dict[str, Any]] = None
     
@@ -146,8 +142,7 @@ class DistributionConfig:
 
 @dataclass
 class MonetizationConfig:
-    """Configuration for monetization engine."""
-    
+    """Configuration for monetization engine."""    
     # Commission rates by strategy type
     commission_rates: Dict[str, Decimal] = None
     
@@ -210,8 +205,7 @@ class MonetizationConfig:
 
 @dataclass
 class QualityAssuranceConfig:
-    """Configuration for quality assurance system."""
-    
+    """Configuration for quality assurance system."""    
     # Processing timeouts
     automated_analysis_timeout: int = 600     # 10 minutes
     human_review_timeout: int = 86400        # 24 hours
@@ -255,8 +249,7 @@ class QualityAssuranceConfig:
 
 @dataclass
 class CollaborationConfig:
-    """Configuration for collaboration hub."""
-    
+    """Configuration for collaboration hub."""    
     # Session settings
     max_session_duration_hours: int = 24
     max_participants_per_session: int = 20
@@ -278,8 +271,7 @@ class CollaborationConfig:
 
 
 class ContentModuleConfig(BaseConfig):
-    """Main configuration class for content module."""
-    
+    """Main configuration class for content module."""    
     def __init__(self, env: str = "development"):
         super().__init__(env)
         
@@ -318,8 +310,7 @@ class ContentModuleConfig(BaseConfig):
         self._load_feature_flags()
     
     def _load_feature_flags(self):
-        """Load feature flags from environment variables."""
-        self.features = {
+        """Load feature flags from environment variables."""        self.features = {
             "ai_enhancement": os.getenv("FEATURE_AI_ENHANCEMENT", "true").lower() == "true",
             "real_time_collaboration": os.getenv("FEATURE_REAL_TIME_COLLAB", "true").lower() == "true",
             "advanced_analytics": os.getenv("FEATURE_ADVANCED_ANALYTICS", "true").lower() == "true",
@@ -332,24 +323,19 @@ class ContentModuleConfig(BaseConfig):
         }
     
     def get_platform_config(self, platform: str) -> Optional[Dict[str, Any]]:
-        """Get configuration for specific platform."""
-        return self.distribution.platforms.get(platform)
+        """Get configuration for specific platform."""        return self.distribution.platforms.get(platform)
     
     def is_feature_enabled(self, feature: str) -> bool:
-        """Check if a feature is enabled."""
-        return self.features.get(feature, False)
+        """Check if a feature is enabled."""        return self.features.get(feature, False)
     
     def get_quality_threshold(self, level: str, metric: str) -> float:
-        """Get quality threshold for specific level and metric."""
-        return self.quality_assurance.quality_thresholds.get(level, {}).get(metric, 0.5)
+        """Get quality threshold for specific level and metric."""        return self.quality_assurance.quality_thresholds.get(level, {}).get(metric, 0.5)
     
     def get_commission_rate(self, strategy: str) -> Decimal:
-        """Get commission rate for monetization strategy."""
-        return self.monetization.commission_rates.get(strategy, Decimal('0.10'))
+        """Get commission rate for monetization strategy."""        return self.monetization.commission_rates.get(strategy, Decimal('0.10'))
     
     def validate_config(self) -> List[str]:
-        """Validate configuration and return list of issues."""
-        issues = []
+        """Validate configuration and return list of issues."""        issues = []
         
         # Check required directories
         required_dirs = [
@@ -386,14 +372,12 @@ class ContentModuleConfig(BaseConfig):
         return issues
     
     def update_from_database(self) -> None:
-        """Update configuration from database settings."""
-        # This would load dynamic configuration from database
+        """Update configuration from database settings."""        # This would load dynamic configuration from database
         # Implementation would depend on your database schema
         pass
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return {
+        """Convert configuration to dictionary."""        return {
             "processing": self.processing.__dict__,
             "distribution": self.distribution.__dict__,
             "monetization": {
@@ -421,8 +405,7 @@ _content_config = None
 
 
 def get_content_config(env: Optional[str] = None) -> ContentModuleConfig:
-    """Get content module configuration singleton."""
-    global _content_config
+    """Get content module configuration singleton."""    global _content_config
     
     if _content_config is None:
         env = env or os.getenv("ENVIRONMENT", "development")
@@ -432,8 +415,7 @@ def get_content_config(env: Optional[str] = None) -> ContentModuleConfig:
 
 
 def reload_content_config(env: Optional[str] = None) -> ContentModuleConfig:
-    """Reload content configuration."""
-    global _content_config
+    """Reload content configuration."""    global _content_config
     env = env or os.getenv("ENVIRONMENT", "development")
     _content_config = ContentModuleConfig(env)
     return _content_config

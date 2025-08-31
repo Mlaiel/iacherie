@@ -1,5 +1,4 @@
-"""
-Collaboration Finder - Advanced AI-Powered Creator Partnership Engine
+"""Collaboration Finder - Advanced AI-Powered Creator Partnership Engine
 ===================================================================
 
 This module provides intelligent creator matching, collaboration opportunity
@@ -10,7 +9,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use prohibited and legally prosecuted.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple
@@ -41,8 +39,7 @@ settings = get_settings()
 
 
 class CollaborationType(Enum):
-    """Types of creator collaborations."""
-    DUET = "duet"                    # TikTok duets, Instagram collaborations
+    """Types of creator collaborations."""    DUET = "duet"                    # TikTok duets, Instagram collaborations
     GUEST_APPEARANCE = "guest_appearance"  # Podcast/video guests
     JOINT_CONTENT = "joint_content"   # Shared content creation
     CROSS_PROMOTION = "cross_promotion"  # Mutual promotion
@@ -55,8 +52,7 @@ class CollaborationType(Enum):
 
 
 class MatchingCriteria(Enum):
-    """Criteria for creator matching."""
-    AUDIENCE_OVERLAP = "audience_overlap"
+    """Criteria for creator matching."""    AUDIENCE_OVERLAP = "audience_overlap"
     CONTENT_SIMILARITY = "content_similarity"
     ENGAGEMENT_COMPATIBILITY = "engagement_compatibility"
     BRAND_ALIGNMENT = "brand_alignment"
@@ -67,8 +63,7 @@ class MatchingCriteria(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Status of collaboration opportunities."""
-    POTENTIAL = "potential"
+    """Status of collaboration opportunities."""    POTENTIAL = "potential"
     RECOMMENDED = "recommended"
     CONTACTED = "contacted"
     IN_PROGRESS = "in_progress"
@@ -78,8 +73,7 @@ class CollaborationStatus(Enum):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile for matching."""
-    creator_id: str
+    """Comprehensive creator profile for matching."""    creator_id: str
     display_name: str
     platforms: List[str]
     primary_platform: str
@@ -99,8 +93,7 @@ class CreatorProfile:
 
 @dataclass
 class MatchingScore:
-    """Detailed matching score between creators."""
-    overall_score: float
+    """Detailed matching score between creators."""    overall_score: float
     criteria_scores: Dict[MatchingCriteria, float]
     confidence_level: str
     explanation: List[str]
@@ -111,8 +104,7 @@ class MatchingScore:
 
 @dataclass
 class CollaborationOpportunity:
-    """Detailed collaboration opportunity."""
-    opportunity_id: str
+    """Detailed collaboration opportunity."""    opportunity_id: str
     creator_a: CreatorProfile
     creator_b: CreatorProfile
     collaboration_type: CollaborationType
@@ -131,8 +123,7 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationCampaign:
-    """Multi-creator collaboration campaign."""
-    campaign_id: str
+    """Multi-creator collaboration campaign."""    campaign_id: str
     campaign_name: str
     campaign_type: str
     participating_creators: List[CreatorProfile]
@@ -146,14 +137,11 @@ class CollaborationCampaign:
 
 
 class InfluencerMatchingEngine:
-    """
-    Advanced AI-powered influencer matching engine that finds optimal
+    """    Advanced AI-powered influencer matching engine that finds optimal
     collaboration opportunities between creators.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the influencer matching engine."""
-        self.analytics_service = CreatorAnalyticsService()
+        """Initialize the influencer matching engine."""        self.analytics_service = CreatorAnalyticsService()
         self.prediction_engine = CollaborationPredictionEngine()
         self.social_graph = SocialGraphAnalyzer()
         
@@ -186,8 +174,7 @@ class InfluencerMatchingEngine:
         logger.info("Influencer matching engine initialized successfully")
     
     def _initialize_compatibility_matrix(self) -> Dict[str, Dict[CollaborationType, float]]:
-        """Initialize content type compatibility matrix for collaborations."""
-        
+        """Initialize content type compatibility matrix for collaborations."""        
         return {
             'music': {
                 CollaborationType.DUET: 0.9,
@@ -251,8 +238,7 @@ class InfluencerMatchingEngine:
         }
     
     def _initialize_platform_preferences(self) -> Dict[str, Dict[CollaborationType, float]]:
-        """Initialize platform-specific collaboration preferences."""
-        
+        """Initialize platform-specific collaboration preferences."""        
         return {
             'tiktok': {
                 CollaborationType.DUET: 0.95,
@@ -292,8 +278,7 @@ class InfluencerMatchingEngine:
         }
     
     def _load_and_train_models(self):
-        """Load historical data and train ML models for creator matching."""
-        try:
+        """Load historical data and train ML models for creator matching."""        try:
             # Generate synthetic training data for creator matching
             n_samples = 15000
             
@@ -346,8 +331,7 @@ class InfluencerMatchingEngine:
         collaboration_types: List[CollaborationType] = None,
         max_matches: int = 10
     ) -> List[CollaborationOpportunity]:
-        """
-        Find optimal collaboration matches for a target creator.
+        """        Find optimal collaboration matches for a target creator.
         
         Args:
             target_creator: The creator seeking collaborations
@@ -357,8 +341,7 @@ class InfluencerMatchingEngine:
             
         Returns:
             List of ranked collaboration opportunities
-        """
-        
+        """        
         try:
             opportunities = []
             
@@ -403,8 +386,7 @@ class InfluencerMatchingEngine:
     async def _calculate_matching_score(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> MatchingScore:
-        """Calculate comprehensive matching score between two creators."""
-        
+        """Calculate comprehensive matching score between two creators."""        
         criteria_scores = {}
         explanations = []
         synergies = []
@@ -497,8 +479,7 @@ class InfluencerMatchingEngine:
     def _calculate_audience_overlap(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate audience overlap between two creators."""
-        
+        """Calculate audience overlap between two creators."""        
         # Analyze demographic overlap
         demo_a = creator_a.demographics
         demo_b = creator_b.demographics
@@ -542,8 +523,7 @@ class InfluencerMatchingEngine:
     def _calculate_distribution_overlap(
         self, dist_a: Dict[str, float], dist_b: Dict[str, float]
     ) -> float:
-        """Calculate overlap between two probability distributions."""
-        
+        """Calculate overlap between two probability distributions."""        
         if not dist_a or not dist_b:
             return 0
         
@@ -562,8 +542,7 @@ class InfluencerMatchingEngine:
     def _calculate_content_similarity(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate content similarity between two creators."""
-        
+        """Calculate content similarity between two creators."""        
         # Content category similarity
         categories_a = set(creator_a.content_categories)
         categories_b = set(creator_b.content_categories)
@@ -623,8 +602,7 @@ class InfluencerMatchingEngine:
     def _calculate_engagement_compatibility(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate engagement rate compatibility between creators."""
-        
+        """Calculate engagement rate compatibility between creators."""        
         # Get engagement rates for common platforms
         common_platforms = set(creator_a.platforms) & set(creator_b.platforms)
         
@@ -650,8 +628,7 @@ class InfluencerMatchingEngine:
     def _calculate_brand_alignment(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate brand alignment between creators."""
-        
+        """Calculate brand alignment between creators."""        
         # Check for common brand partnerships
         brands_a = set(creator_a.brand_partnerships)
         brands_b = set(creator_b.brand_partnerships)
@@ -685,8 +662,7 @@ class InfluencerMatchingEngine:
     def _calculate_geographic_proximity(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate geographic proximity score."""
-        
+        """Calculate geographic proximity score."""        
         location_a = creator_a.location
         location_b = creator_b.location
         
@@ -714,8 +690,7 @@ class InfluencerMatchingEngine:
     def _calculate_complementary_skills(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate complementary skills score."""
-        
+        """Calculate complementary skills score."""        
         # Analyze content categories for complementarity
         categories_a = set(creator_a.content_categories)
         categories_b = set(creator_b.content_categories)
@@ -754,8 +729,7 @@ class InfluencerMatchingEngine:
     def _calculate_mutual_benefit(
         self, creator_a: CreatorProfile, creator_b: CreatorProfile
     ) -> float:
-        """Calculate mutual benefit potential."""
-        
+        """Calculate mutual benefit potential."""        
         # Analyze potential benefits for each creator
         benefit_a = self._calculate_individual_benefit(creator_a, creator_b)
         benefit_b = self._calculate_individual_benefit(creator_b, creator_a)
@@ -767,8 +741,7 @@ class InfluencerMatchingEngine:
     def _calculate_individual_benefit(
         self, beneficiary: CreatorProfile, partner: CreatorProfile
     ) -> float:
-        """Calculate benefit for individual creator from collaboration."""
-        
+        """Calculate benefit for individual creator from collaboration."""        
         benefits = []
         
         # Audience growth potential
@@ -803,8 +776,7 @@ class InfluencerMatchingEngine:
     def _generate_matching_explanations(
         self, criteria_scores: Dict[MatchingCriteria, float], overall_score: float
     ) -> List[str]:
-        """Generate human-readable explanations for matching scores."""
-        
+        """Generate human-readable explanations for matching scores."""        
         explanations = []
         
         # Overall score explanation
@@ -832,8 +804,7 @@ class InfluencerMatchingEngine:
         creator_b: CreatorProfile,
         criteria_scores: Dict[MatchingCriteria, float]
     ) -> List[CollaborationType]:
-        """Recommend specific collaboration types based on compatibility."""
-        
+        """Recommend specific collaboration types based on compatibility."""        
         recommendations = []
         
         # Analyze creator characteristics
@@ -892,8 +863,7 @@ class InfluencerMatchingEngine:
         candidate: CreatorProfile,
         preferred_types: List[CollaborationType] = None
     ) -> List[CollaborationType]:
-        """Determine best collaboration types for a creator pair."""
-        
+        """Determine best collaboration types for a creator pair."""        
         # Get recommended types
         recommended = self._recommend_collaboration_types(target_creator, candidate, {})
         
@@ -910,8 +880,7 @@ class InfluencerMatchingEngine:
         collaboration_type: CollaborationType,
         matching_score: MatchingScore
     ) -> CollaborationOpportunity:
-        """Generate detailed collaboration opportunity."""
-        
+        """Generate detailed collaboration opportunity."""        
         # Calculate estimated reach
         reach_a = sum(creator_a.audience_size.values())
         reach_b = sum(creator_b.audience_size.values())
@@ -985,8 +954,7 @@ class InfluencerMatchingEngine:
         )
     
     def _generate_collaboration_timeline(self, collaboration_type: CollaborationType) -> Dict[str, str]:
-        """Generate timeline for collaboration type."""
-        
+        """Generate timeline for collaboration type."""        
         timeline_templates = {
             CollaborationType.CROSS_PROMOTION: {
                 "planning": "1 week",
@@ -1029,8 +997,7 @@ class InfluencerMatchingEngine:
         collaboration_type: CollaborationType,
         estimated_reach: int
     ) -> Dict[str, float]:
-        """Calculate revenue potential for collaboration."""
-        
+        """Calculate revenue potential for collaboration."""        
         # Base rates (would come from creator profiles in production)
         base_rate_a = creator_a.rates.get('collaboration', 1000)
         base_rate_b = creator_b.rates.get('collaboration', 1000)
@@ -1072,8 +1039,7 @@ class InfluencerMatchingEngine:
         creator_b: CreatorProfile,
         collaboration_type: CollaborationType
     ) -> List[str]:
-        """Generate specific content ideas for collaboration."""
-        
+        """Generate specific content ideas for collaboration."""        
         category_a = creator_a.content_categories[0] if creator_a.content_categories else 'general'
         category_b = creator_b.content_categories[0] if creator_b.content_categories else 'general'
         
@@ -1140,8 +1106,7 @@ class InfluencerMatchingEngine:
         ])
     
     def _generate_next_steps(self, collaboration_type: CollaborationType) -> List[str]:
-        """Generate actionable next steps for collaboration."""
-        
+        """Generate actionable next steps for collaboration."""        
         common_steps = [
             "Reach out with collaboration proposal",
             "Schedule initial discussion call",
@@ -1173,14 +1138,11 @@ class InfluencerMatchingEngine:
 
 
 class CollaborationFinder:
-    """
-    Master collaboration finder that coordinates all collaboration discovery
+    """    Master collaboration finder that coordinates all collaboration discovery
     and management operations.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the collaboration finder."""
-        self.matching_engine = InfluencerMatchingEngine()
+        """Initialize the collaboration finder."""        self.matching_engine = InfluencerMatchingEngine()
         self.analytics_service = CreatorAnalyticsService()
         
         logger.info("Collaboration finder initialized successfully")
@@ -1191,8 +1153,7 @@ class CollaborationFinder:
         preferences: Dict[str, Any] = None,
         max_opportunities: int = 20
     ) -> List[CollaborationOpportunity]:
-        """
-        Discover collaboration opportunities for a creator.
+        """        Discover collaboration opportunities for a creator.
         
         Args:
             creator_id: Target creator identifier
@@ -1201,8 +1162,7 @@ class CollaborationFinder:
             
         Returns:
             List of collaboration opportunities
-        """
-        
+        """        
         try:
             # Get creator profile
             creator_profile = await self._get_creator_profile(creator_id)
@@ -1223,8 +1183,7 @@ class CollaborationFinder:
             return []
     
     async def _get_creator_profile(self, creator_id: str) -> CreatorProfile:
-        """Get comprehensive creator profile for matching."""
-        
+        """Get comprehensive creator profile for matching."""        
         # This would fetch real creator data from various sources
         # For now, return a sample profile
         
@@ -1259,8 +1218,7 @@ class CollaborationFinder:
     async def _find_potential_partners(
         self, creator_profile: CreatorProfile, preferences: Dict[str, Any] = None
     ) -> List[CreatorProfile]:
-        """Find potential collaboration partners."""
-        
+        """Find potential collaboration partners."""        
         # This would query a database of creators
         # For now, return sample candidates
         

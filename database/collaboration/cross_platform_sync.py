@@ -1,5 +1,4 @@
-"""
-Cross-Platform Synchronization Database Module
+"""Cross-Platform Synchronization Database Module
 
 Enterprise cross-platform content synchronization system for automated distribution,
 platform-specific optimization, and unified content management across multiple social media
@@ -11,7 +10,6 @@ Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security + Micros
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 Unauthorized copying, distribution, or use is strictly prohibited.
 """
-
 from typing import List, Dict, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class PlatformType(Enum):
-    """Supported social media and content platforms"""
-    YOUTUBE = "youtube"
+    """Supported social media and content platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -59,8 +56,7 @@ class PlatformType(Enum):
     GITHUB = "github"
 
 class SyncStatus(Enum):
-    """Synchronization status enumeration"""
-    PENDING = "pending"
+    """Synchronization status enumeration"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -70,8 +66,7 @@ class SyncStatus(Enum):
     RETRY_PENDING = "retry_pending"
 
 class ContentOptimizationType(Enum):
-    """Content optimization types for different platforms"""
-    RESIZE_IMAGE = "resize_image"
+    """Content optimization types for different platforms"""    RESIZE_IMAGE = "resize_image"
     CONVERT_VIDEO = "convert_video"
     ADJUST_AUDIO_QUALITY = "adjust_audio_quality"
     CROP_CONTENT = "crop_content"
@@ -83,10 +78,8 @@ class ContentOptimizationType(Enum):
     SCHEDULE_POSTING = "schedule_posting"
 
 class PlatformConfiguration(Base):
-    """
-    Platform-specific configuration and authentication settings.
-    """
-    __tablename__ = 'platform_configurations'
+    """    Platform-specific configuration and authentication settings.
+    """    __tablename__ = 'platform_configurations'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -132,10 +125,8 @@ class PlatformConfiguration(Base):
     )
 
 class CrossPlatformSync(Base):
-    """
-    Main synchronization job tracking across multiple platforms.
-    """
-    __tablename__ = 'cross_platform_syncs'
+    """    Main synchronization job tracking across multiple platforms.
+    """    __tablename__ = 'cross_platform_syncs'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     sync_name = Column(String(255), nullable=False)
@@ -183,10 +174,8 @@ class CrossPlatformSync(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class PlatformSyncDetail(Base):
-    """
-    Individual platform synchronization details and results.
-    """
-    __tablename__ = 'platform_sync_details'
+    """    Individual platform synchronization details and results.
+    """    __tablename__ = 'platform_sync_details'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     sync_id = Column(UUID(as_uuid=True), ForeignKey('cross_platform_syncs.id'), nullable=False)
@@ -232,10 +221,8 @@ class PlatformSyncDetail(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class ContentOptimizationRule(Base):
-    """
-    Platform-specific content optimization rules and settings.
-    """
-    __tablename__ = 'content_optimization_rules'
+    """    Platform-specific content optimization rules and settings.
+    """    __tablename__ = 'content_optimization_rules'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False)
@@ -276,10 +263,8 @@ class ContentOptimizationRule(Base):
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
 class SyncAnalytics(Base):
-    """
-    Analytics and performance metrics for cross-platform synchronization.
-    """
-    __tablename__ = 'sync_analytics'
+    """    Analytics and performance metrics for cross-platform synchronization.
+    """    __tablename__ = 'sync_analytics'
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     sync_id = Column(UUID(as_uuid=True), ForeignKey('cross_platform_syncs.id'), nullable=False)
@@ -323,8 +308,7 @@ class SyncAnalytics(Base):
 
 @dataclass
 class SyncConfiguration:
-    """Configuration for cross-platform synchronization"""
-    target_platforms: List[PlatformType]
+    """Configuration for cross-platform synchronization"""    target_platforms: List[PlatformType]
     optimization_enabled: bool = True
     auto_schedule: bool = False
     retry_on_failure: bool = True
@@ -333,11 +317,9 @@ class SyncConfiguration:
     custom_optimizations: Dict[str, Any] = None
 
 class CrossPlatformSyncEngine:
-    """
-    Advanced cross-platform synchronization engine for automated content distribution.
+    """    Advanced cross-platform synchronization engine for automated content distribution.
     Handles platform-specific optimizations, scheduling, and performance tracking.
-    """
-    
+    """    
     def __init__(self, db_session, redis_client=None, storage_client=None):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -348,8 +330,7 @@ class CrossPlatformSyncEngine:
         self.platform_clients = {}
     
     async def initiate_cross_platform_sync(self, content_id: str, config: SyncConfiguration, initiated_by: str) -> CrossPlatformSync:
-        """
-        Initiate cross-platform synchronization for content.
+        """        Initiate cross-platform synchronization for content.
         
         Args:
             content_id: Content to synchronize
@@ -358,8 +339,7 @@ class CrossPlatformSyncEngine:
             
         Returns:
             Created sync job
-        """
-        try:
+        """        try:
             # Validate platform connections
             await self._validate_platform_connections(initiated_by, config.target_platforms)
             
@@ -402,16 +382,14 @@ class CrossPlatformSyncEngine:
             raise
     
     async def execute_platform_sync(self, sync_detail_id: str) -> bool:
-        """
-        Execute synchronization for a specific platform.
+        """        Execute synchronization for a specific platform.
         
         Args:
             sync_detail_id: Platform sync detail ID
             
         Returns:
             True if sync completed successfully
-        """
-        try:
+        """        try:
             # Get sync detail
             detail = self.db_session.query(PlatformSyncDetail).filter(
                 PlatformSyncDetail.id == sync_detail_id
@@ -490,8 +468,7 @@ class CrossPlatformSyncEngine:
             raise
     
     async def optimize_content_for_platform(self, content_id: str, platform: PlatformType, user_id: str) -> Dict[str, Any]:
-        """
-        Optimize content specifically for a target platform.
+        """        Optimize content specifically for a target platform.
         
         Args:
             content_id: Content to optimize
@@ -500,8 +477,7 @@ class CrossPlatformSyncEngine:
             
         Returns:
             Optimization results
-        """
-        try:
+        """        try:
             # Get user's optimization rules for the platform
             rules = self.db_session.query(ContentOptimizationRule).filter(
                 ContentOptimizationRule.user_id == user_id,
@@ -565,8 +541,7 @@ class CrossPlatformSyncEngine:
             raise
     
     async def get_sync_analytics(self, sync_id: str, timeframe_days: int = 7) -> Dict[str, Any]:
-        """
-        Get comprehensive analytics for a sync job.
+        """        Get comprehensive analytics for a sync job.
         
         Args:
             sync_id: Sync job ID
@@ -574,8 +549,7 @@ class CrossPlatformSyncEngine:
             
         Returns:
             Analytics data
-        """
-        try:
+        """        try:
             # Get sync job
             sync_job = self.db_session.query(CrossPlatformSync).filter(
                 CrossPlatformSync.id == sync_id
@@ -693,8 +667,7 @@ class CrossPlatformSyncEngine:
             raise
     
     async def _execute_sync(self, sync_id: str):
-        """Execute the complete sync process"""
-        try:
+        """Execute the complete sync process"""        try:
             # Get platform details
             platform_details = self.db_session.query(PlatformSyncDetail).filter(
                 PlatformSyncDetail.sync_id == sync_id
@@ -717,8 +690,7 @@ class CrossPlatformSyncEngine:
             raise
     
     async def _validate_platform_connections(self, user_id: str, platforms: List[PlatformType]):
-        """Validate that user has valid connections to all target platforms"""
-        try:
+        """Validate that user has valid connections to all target platforms"""        try:
             for platform in platforms:
                 config = self.db_session.query(PlatformConfiguration).filter(
                     PlatformConfiguration.user_id == user_id,

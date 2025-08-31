@@ -1,5 +1,4 @@
-"""
-Revenue Aggregation - High-Performance Revenue Data Processing
+"""Revenue Aggregation - High-Performance Revenue Data Processing
 
 Enterprise-grade aggregation system for real-time revenue analytics,
 pre-calculated metrics, and optimized query performance.
@@ -26,7 +25,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
-
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, func, select,
@@ -48,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class AggregationLevel(Enum):
-    """Aggregation granularity levels"""
-    MINUTE = "minute"
+    """Aggregation granularity levels"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -60,8 +57,7 @@ class AggregationLevel(Enum):
 
 
 class AggregationScope(Enum):
-    """Aggregation scope definitions"""
-    USER_GLOBAL = "user_global"
+    """Aggregation scope definitions"""    USER_GLOBAL = "user_global"
     USER_PLATFORM = "user_platform"
     USER_CONTENT = "user_content"
     USER_CONTENT_PLATFORM = "user_content_platform"
@@ -73,8 +69,7 @@ class AggregationScope(Enum):
 
 
 class AggregationStatus(Enum):
-    """Aggregation processing status"""
-    PENDING = "pending"
+    """Aggregation processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -83,13 +78,11 @@ class AggregationStatus(Enum):
 
 
 class RevenueAggregationDaily(Base):
-    """
-    Daily Revenue Aggregation Model
+    """    Daily Revenue Aggregation Model
     
     High-performance daily aggregations optimized for dashboard queries
     and real-time analytics with comprehensive revenue metrics.
-    """
-    __tablename__ = "revenue_aggregation_daily"
+    """    __tablename__ = "revenue_aggregation_daily"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -173,12 +166,10 @@ class RevenueAggregationDaily(Base):
 
 
 class RevenueAggregationWeekly(Base):
-    """
-    Weekly Revenue Aggregation Model
+    """    Weekly Revenue Aggregation Model
     
     Weekly aggregations for trend analysis and medium-term performance tracking.
-    """
-    __tablename__ = "revenue_aggregation_weekly"
+    """    __tablename__ = "revenue_aggregation_weekly"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -243,13 +234,11 @@ class RevenueAggregationWeekly(Base):
 
 
 class RevenueAggregationMonthly(Base):
-    """
-    Monthly Revenue Aggregation Model
+    """    Monthly Revenue Aggregation Model
     
     Monthly aggregations for business reporting, financial planning,
     and long-term trend analysis.
-    """
-    __tablename__ = "revenue_aggregation_monthly"
+    """    __tablename__ = "revenue_aggregation_monthly"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -336,13 +325,11 @@ class RevenueAggregationMonthly(Base):
 
 
 class RevenueAggregationQuarterly(Base):
-    """
-    Quarterly Revenue Aggregation Model
+    """    Quarterly Revenue Aggregation Model
     
     Quarterly aggregations for business reviews, strategic planning,
     and seasonal analysis.
-    """
-    __tablename__ = "revenue_aggregation_quarterly"
+    """    __tablename__ = "revenue_aggregation_quarterly"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -410,13 +397,11 @@ class RevenueAggregationQuarterly(Base):
 
 
 class AggregationTask(Base):
-    """
-    Aggregation Task Model
+    """    Aggregation Task Model
     
     Manages aggregation job scheduling, processing status,
     and performance monitoring for automated data processing.
-    """
-    __tablename__ = "aggregation_tasks"
+    """    __tablename__ = "aggregation_tasks"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -480,13 +465,11 @@ class AggregationTask(Base):
 
 
 class AggregationMetrics(Base):
-    """
-    Aggregation Metrics Model
+    """    Aggregation Metrics Model
     
     Tracks aggregation system performance, data quality,
     and processing efficiency metrics.
-    """
-    __tablename__ = "aggregation_metrics"
+    """    __tablename__ = "aggregation_metrics"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -537,8 +520,7 @@ async def calculate_daily_aggregations(
     target_date: date,
     platforms: List[str] = None
 ) -> Dict[str, Any]:
-    """
-    Calculate daily revenue aggregations for a specific user and date.
+    """    Calculate daily revenue aggregations for a specific user and date.
     
     Args:
         session: Database session
@@ -548,8 +530,7 @@ async def calculate_daily_aggregations(
         
     Returns:
         Dictionary containing aggregation results and metadata
-    """
-    try:
+    """    try:
         start_time = datetime.utcnow()
         
         # Build base query
@@ -590,8 +571,7 @@ async def rebuild_aggregations(
     end_date: date,
     aggregation_levels: List[AggregationLevel] = None
 ) -> Dict[str, Any]:
-    """
-    Rebuild aggregations for a specific date range and user.
+    """    Rebuild aggregations for a specific date range and user.
     
     Args:
         session: Database session
@@ -602,8 +582,7 @@ async def rebuild_aggregations(
         
     Returns:
         Dictionary containing rebuild results and statistics
-    """
-    try:
+    """    try:
         if not aggregation_levels:
             aggregation_levels = [AggregationLevel.DAY, AggregationLevel.WEEK, AggregationLevel.MONTH]
         

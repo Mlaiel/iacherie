@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Prometheus Metrics Manager
+"""IA Influencer Agent - Prometheus Metrics Manager
 Enterprise-grade metrics collection and monitoring for multi-tenant AI platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -30,7 +29,6 @@ Features:
 - Revenue tracking metrics
 - Resource utilization monitoring
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -58,8 +56,7 @@ settings = get_settings()
 
 @dataclass
 class MetricDefinition:
-    """Metric definition structure"""
-    name: str
+    """Metric definition structure"""    name: str
     metric_type: str  # counter, histogram, gauge, summary, info
     description: str
     labels: List[str]
@@ -68,8 +65,7 @@ class MetricDefinition:
 
 
 class PrometheusManager:
-    """
-    Enterprise Prometheus metrics manager with multi-tenant support
+    """    Enterprise Prometheus metrics manager with multi-tenant support
     
     Handles:
     - Application metrics collection
@@ -78,8 +74,7 @@ class PrometheusManager:
     - Content protection metrics
     - Revenue and business metrics
     - Alert threshold management
-    """
-    
+    """    
     def __init__(self):
         self.registry = CollectorRegistry()
         self.metrics: Dict[str, MetricWrapperBase] = {}
@@ -89,8 +84,7 @@ class PrometheusManager:
         self._setup_custom_collectors()
         
     def _initialize_core_metrics(self) -> None:
-        """Initialize core application metrics"""
-        
+        """Initialize core application metrics"""        
         # Application Performance Metrics
         self.http_requests_total = Counter(
             'ia_influencer_http_requests_total',
@@ -251,8 +245,7 @@ class PrometheusManager:
         })
     
     def _setup_custom_collectors(self) -> None:
-        """Setup custom metric collectors"""
-        self.registry.register(SystemResourceCollector())
+        """Setup custom metric collectors"""        self.registry.register(SystemResourceCollector())
         self.registry.register(DatabaseMetricsCollector())
     
     async def record_http_request(
@@ -263,8 +256,7 @@ class PrometheusManager:
         duration: float,
         tenant_id: str
     ) -> None:
-        """Record HTTP request metrics"""
-        try:
+        """Record HTTP request metrics"""        try:
             self.http_requests_total.labels(
                 method=method,
                 endpoint=endpoint,
@@ -290,8 +282,7 @@ class PrometheusManager:
         accuracy: Optional[float],
         tenant_id: str
     ) -> None:
-        """Record AI model prediction metrics"""
-        try:
+        """Record AI model prediction metrics"""        try:
             self.ai_model_predictions_total.labels(
                 model_name=model_name,
                 model_version=model_version,
@@ -326,8 +317,7 @@ class PrometheusManager:
         platform: Optional[str] = None,
         similarity_threshold: Optional[float] = None
     ) -> None:
-        """Record content protection metrics"""
-        try:
+        """Record content protection metrics"""        try:
             self.content_fingerprints_created.labels(
                 content_type=content_type,
                 fingerprint_algorithm=fingerprint_algorithm,
@@ -359,8 +349,7 @@ class PrometheusManager:
         currency: str,
         tenant_id: str
     ) -> None:
-        """Record revenue tracking metrics"""
-        try:
+        """Record revenue tracking metrics"""        try:
             self.revenue_tracked.labels(
                 platform=platform,
                 content_type=content_type,
@@ -378,8 +367,7 @@ class PrometheusManager:
         status: str,
         tenant_id: str
     ) -> None:
-        """Record licensing transaction metrics"""
-        try:
+        """Record licensing transaction metrics"""        try:
             self.licensing_transactions.labels(
                 license_type=license_type,
                 platform=platform,
@@ -396,8 +384,7 @@ class PrometheusManager:
         cache_type: str,
         result: str
     ) -> None:
-        """Record cache operation metrics"""
-        try:
+        """Record cache operation metrics"""        try:
             self.cache_operations.labels(
                 operation=operation,
                 cache_type=cache_type,
@@ -417,8 +404,7 @@ class PrometheusManager:
         status: str,
         duration: float
     ) -> None:
-        """Record background task metrics"""
-        try:
+        """Record background task metrics"""        try:
             self.background_tasks_total.labels(
                 task_type=task_type,
                 status=status,
@@ -440,8 +426,7 @@ class PrometheusManager:
         count: int,
         tenant_id: str
     ) -> None:
-        """Update active users gauge"""
-        try:
+        """Update active users gauge"""        try:
             self.active_users.labels(
                 time_window=time_window,
                 user_type=user_type,
@@ -452,8 +437,7 @@ class PrometheusManager:
             self.logger.error(f"Error updating active users metrics: {e}")
     
     async def _update_cache_hit_rate(self, cache_type: str) -> None:
-        """Update cache hit rate based on recent operations"""
-        try:
+        """Update cache hit rate based on recent operations"""        try:
             # Get cache statistics from Redis
             cache_stats = await self.redis_manager.get_cache_stats(cache_type)
             
@@ -467,16 +451,14 @@ class PrometheusManager:
             self.logger.error(f"Error updating cache hit rate: {e}")
     
     def get_metrics(self) -> str:
-        """Get all metrics in Prometheus format"""
-        try:
+        """Get all metrics in Prometheus format"""        try:
             return generate_latest(self.registry)
         except Exception as e:
             self.logger.error(f"Error generating metrics: {e}")
             return ""
     
     def start_metrics_server(self, port: int = 8000) -> None:
-        """Start Prometheus metrics HTTP server"""
-        try:
+        """Start Prometheus metrics HTTP server"""        try:
             start_http_server(port, registry=self.registry)
             self.logger.info(f"Prometheus metrics server started on port {port}")
         except Exception as e:
@@ -484,8 +466,7 @@ class PrometheusManager:
             raise
     
     async def push_to_gateway(self, gateway_url: str, job_name: str) -> None:
-        """Push metrics to Prometheus pushgateway"""
-        try:
+        """Push metrics to Prometheus pushgateway"""        try:
             push_to_gateway(gateway_url, job=job_name, registry=self.registry)
             self.logger.info(f"Metrics pushed to gateway: {gateway_url}")
         except Exception as e:
@@ -496,8 +477,7 @@ class PrometheusManager:
         definition: MetricDefinition,
         tenant_id: Optional[str] = None
     ) -> MetricWrapperBase:
-        """Create custom metric dynamically"""
-        try:
+        """Create custom metric dynamically"""        try:
             labels = definition.labels.copy()
             if tenant_id and 'tenant_id' not in labels:
                 labels.append('tenant_id')
@@ -550,8 +530,7 @@ class PrometheusManager:
             raise
     
     async def get_tenant_metrics(self, tenant_id: str) -> Dict[str, Any]:
-        """Get metrics for specific tenant"""
-        try:
+        """Get metrics for specific tenant"""        try:
             # This would require filtering metrics by tenant_id
             # Implementation depends on specific requirements
             pass
@@ -560,8 +539,7 @@ class PrometheusManager:
             return {}
     
     async def export_metrics_to_file(self, file_path: str) -> None:
-        """Export metrics to file"""
-        try:
+        """Export metrics to file"""        try:
             metrics_data = self.get_metrics()
             with open(file_path, 'w') as f:
                 f.write(metrics_data)
@@ -571,11 +549,9 @@ class PrometheusManager:
 
 
 class SystemResourceCollector:
-    """Custom collector for system resource metrics"""
-    
+    """Custom collector for system resource metrics"""    
     def collect(self):
-        """Collect system resource metrics"""
-        try:
+        """Collect system resource metrics"""        try:
             # CPU metrics
             cpu_percent = psutil.cpu_percent(interval=1, percpu=True)
             for i, cpu in enumerate(cpu_percent):
@@ -618,11 +594,9 @@ class SystemResourceCollector:
 
 
 class DatabaseMetricsCollector:
-    """Custom collector for database metrics"""
-    
+    """Custom collector for database metrics"""    
     def collect(self):
-        """Collect database metrics"""
-        try:
+        """Collect database metrics"""        try:
             # Database connection metrics would be implemented here
             # This is a placeholder for the actual implementation
             pass

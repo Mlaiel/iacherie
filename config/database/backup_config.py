@@ -1,5 +1,4 @@
-"""
-Database Backup Configuration for IA-Influencer Agent Platform
+"""Database Backup Configuration for IA-Influencer Agent Platform
 =============================================================
 
 Professional database backup and disaster recovery management for PostgreSQL,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import json
 import shutil
@@ -40,24 +38,21 @@ logger = logging.getLogger(__name__)
 
 
 class BackupEnvironment(Enum):
-    """Backup environment types"""
-    DEVELOPMENT = "development"
+    """Backup environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class BackupType(Enum):
-    """Backup operation types"""
-    FULL = "full"
+    """Backup operation types"""    FULL = "full"
     INCREMENTAL = "incremental"
     DIFFERENTIAL = "differential"
     POINT_IN_TIME = "point_in_time"
 
 
 class BackupStatus(Enum):
-    """Backup operation status"""
-    SCHEDULED = "scheduled"
+    """Backup operation status"""    SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -65,8 +60,7 @@ class BackupStatus(Enum):
 
 
 class StorageProvider(Enum):
-    """Cloud storage providers"""
-    LOCAL = "local"
+    """Cloud storage providers"""    LOCAL = "local"
     AWS_S3 = "aws_s3"
     AZURE_BLOB = "azure_blob"
     GOOGLE_CLOUD = "google_cloud"
@@ -74,8 +68,7 @@ class StorageProvider(Enum):
 
 
 class DatabaseSystem(Enum):
-    """Supported database systems for backup"""
-    POSTGRESQL = "postgresql"
+    """Supported database systems for backup"""    POSTGRESQL = "postgresql"
     MONGODB = "mongodb"
     REDIS = "redis"
     FAISS = "faiss"
@@ -84,8 +77,7 @@ class DatabaseSystem(Enum):
 
 @dataclass
 class BackupSchedule:
-    """Backup schedule configuration"""
-    backup_type: BackupType
+    """Backup schedule configuration"""    backup_type: BackupType
     frequency: str  # cron-like: "daily", "weekly", "monthly", "0 2 * * *"
     retention_days: int = 30
     enabled: bool = True
@@ -95,8 +87,7 @@ class BackupSchedule:
 
 @dataclass
 class StorageConfig:
-    """Storage configuration for different providers"""
-    provider: StorageProvider
+    """Storage configuration for different providers"""    provider: StorageProvider
     local_path: Optional[str] = None
     aws_bucket: Optional[str] = None
     aws_region: Optional[str] = None
@@ -111,8 +102,7 @@ class StorageConfig:
 
 @dataclass
 class BackupRecord:
-    """Backup operation record"""
-    backup_id: str
+    """Backup operation record"""    backup_id: str
     database_system: DatabaseSystem
     backup_type: BackupType
     backup_name: str
@@ -128,16 +118,14 @@ class BackupRecord:
 
 
 class PostgreSQLBackupManager:
-    """PostgreSQL backup management using pg_dump/pg_restore"""
-    
+    """PostgreSQL backup management using pg_dump/pg_restore"""    
     def __init__(self, connection_string: str, config: StorageConfig):
         self.connection_string = connection_string
         self.config = config
         self.logger = logging.getLogger("postgresql_backup")
 
     def create_backup(self, backup_name: str, backup_type: BackupType = BackupType.FULL) -> BackupRecord:
-        """Create PostgreSQL backup"""
-        record = BackupRecord(
+        """Create PostgreSQL backup"""        record = BackupRecord(
             backup_id=f"pg_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{backup_name}",
             database_system=DatabaseSystem.POSTGRESQL,
             backup_type=backup_type,
@@ -236,8 +224,7 @@ class PostgreSQLBackupManager:
             raise
 
     def restore_backup(self, backup_path: str, target_database: Optional[str] = None) -> bool:
-        """Restore PostgreSQL backup"""
-        try:
+        """Restore PostgreSQL backup"""        try:
             # Prepare psql command
             cmd = ["psql", "--no-password", "--quiet"]
             
@@ -266,16 +253,14 @@ class PostgreSQLBackupManager:
             raise
 
     def _get_pg_dump_version(self) -> str:
-        """Get pg_dump version"""
-        try:
+        """Get pg_dump version"""        try:
             result = subprocess.run(["pg_dump", "--version"], capture_output=True, text=True)
             return result.stdout.strip()
         except Exception:
             return "unknown"
 
     def _upload_to_storage(self, local_path: Path, record: BackupRecord) -> None:
-        """Upload backup to cloud storage"""
-        try:
+        """Upload backup to cloud storage"""        try:
             if self.config.provider == StorageProvider.AWS_S3:
                 self._upload_to_s3(local_path, record)
             elif self.config.provider == StorageProvider.AZURE_BLOB:
@@ -286,8 +271,7 @@ class PostgreSQLBackupManager:
             self.logger.error(f"Cloud upload failed: {str(e)}")
 
     def _upload_to_s3(self, local_path: Path, record: BackupRecord) -> None:
-        """Upload to AWS S3"""
-        s3_client = boto3.client(
+        """Upload to AWS S3"""        s3_client = boto3.client(
             's3',
             region_name=self.config.aws_region,
             aws_access_key_id=self.config.credentials.get('aws_access_key_id'),
@@ -300,8 +284,7 @@ class PostgreSQLBackupManager:
         record.metadata['cloud_path'] = f"s3://{self.config.aws_bucket}/{s3_key}"
 
     def _upload_to_azure(self, local_path: Path, record: BackupRecord) -> None:
-        """Upload to Azure Blob Storage"""
-        blob_service = BlobServiceClient(
+        """Upload to Azure Blob Storage"""        blob_service = BlobServiceClient(
             account_url=f"https://{self.config.azure_account}.blob.core.windows.net",
             credential=self.config.credentials.get('azure_key')
         )
@@ -318,8 +301,7 @@ class PostgreSQLBackupManager:
         record.metadata['cloud_path'] = f"azure://{self.config.azure_account}/{self.config.azure_container}/{blob_name}"
 
     def _upload_to_gcp(self, local_path: Path, record: BackupRecord) -> None:
-        """Upload to Google Cloud Storage"""
-        client = gcs.Client(project=self.config.gcp_project)
+        """Upload to Google Cloud Storage"""        client = gcs.Client(project=self.config.gcp_project)
         bucket = client.bucket(self.config.gcp_bucket)
         
         blob_name = f"backups/postgresql/{record.backup_id}/{local_path.name}"
@@ -330,8 +312,7 @@ class PostgreSQLBackupManager:
 
 
 class MongoDBBackupManager:
-    """MongoDB backup management using mongodump/mongorestore"""
-    
+    """MongoDB backup management using mongodump/mongorestore"""    
     def __init__(self, connection_string: str, config: StorageConfig):
         self.connection_string = connection_string
         self.config = config
@@ -340,8 +321,7 @@ class MongoDBBackupManager:
     def create_backup(self, backup_name: str, 
                      database_name: Optional[str] = None,
                      collection_names: Optional[List[str]] = None) -> BackupRecord:
-        """Create MongoDB backup"""
-        record = BackupRecord(
+        """Create MongoDB backup"""        record = BackupRecord(
             backup_id=f"mongo_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{backup_name}",
             database_system=DatabaseSystem.MONGODB,
             backup_type=BackupType.FULL,
@@ -417,8 +397,7 @@ class MongoDBBackupManager:
             raise
 
     def _get_mongodump_version(self) -> str:
-        """Get mongodump version"""
-        try:
+        """Get mongodump version"""        try:
             result = subprocess.run(["mongodump", "--version"], capture_output=True, text=True)
             return result.stdout.strip()
         except Exception:
@@ -426,16 +405,14 @@ class MongoDBBackupManager:
 
 
 class RedisBackupManager:
-    """Redis backup management using RDB/AOF files"""
-    
+    """Redis backup management using RDB/AOF files"""    
     def __init__(self, redis_client: Any, config: StorageConfig):
         self.redis_client = redis_client
         self.config = config
         self.logger = logging.getLogger("redis_backup")
 
     def create_backup(self, backup_name: str) -> BackupRecord:
-        """Create Redis backup"""
-        record = BackupRecord(
+        """Create Redis backup"""        record = BackupRecord(
             backup_id=f"redis_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{backup_name}",
             database_system=DatabaseSystem.REDIS,
             backup_type=BackupType.FULL,
@@ -502,13 +479,11 @@ class RedisBackupManager:
 
 
 class BackupConfig:
-    """
-    Main backup configuration manager for IA-Influencer Agent Platform
+    """    Main backup configuration manager for IA-Influencer Agent Platform
     
     Orchestrates backup operations across all database systems with
     scheduling, retention management, and cloud storage integration.
-    """
-    
+    """    
     def __init__(self, 
                  environment: BackupEnvironment = BackupEnvironment.DEVELOPMENT,
                  storage_config: Optional[StorageConfig] = None):
@@ -522,8 +497,7 @@ class BackupConfig:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup backup logging"""
-        self.logger = logging.getLogger(f"backup_config.{self.environment.value}")
+        """Setup backup logging"""        self.logger = logging.getLogger(f"backup_config.{self.environment.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -534,8 +508,7 @@ class BackupConfig:
             self.logger.setLevel(logging.INFO)
 
     def _get_default_storage_config(self) -> StorageConfig:
-        """Get default storage configuration"""
-        if self.environment == BackupEnvironment.PRODUCTION:
+        """Get default storage configuration"""        if self.environment == BackupEnvironment.PRODUCTION:
             # Use cloud storage for production
             provider = StorageProvider.AWS_S3  # or based on environment variables
         else:
@@ -549,20 +522,17 @@ class BackupConfig:
         )
 
     def register_postgresql_manager(self, connection_string: str) -> None:
-        """Register PostgreSQL backup manager"""
-        manager = PostgreSQLBackupManager(connection_string, self.storage_config)
+        """Register PostgreSQL backup manager"""        manager = PostgreSQLBackupManager(connection_string, self.storage_config)
         self.backup_managers[DatabaseSystem.POSTGRESQL] = manager
         self.logger.info("PostgreSQL backup manager registered")
 
     def register_mongodb_manager(self, connection_string: str) -> None:
-        """Register MongoDB backup manager"""
-        manager = MongoDBBackupManager(connection_string, self.storage_config)
+        """Register MongoDB backup manager"""        manager = MongoDBBackupManager(connection_string, self.storage_config)
         self.backup_managers[DatabaseSystem.MONGODB] = manager
         self.logger.info("MongoDB backup manager registered")
 
     def register_redis_manager(self, redis_client: Any) -> None:
-        """Register Redis backup manager"""
-        manager = RedisBackupManager(redis_client, self.storage_config)
+        """Register Redis backup manager"""        manager = RedisBackupManager(redis_client, self.storage_config)
         self.backup_managers[DatabaseSystem.REDIS] = manager
         self.logger.info("Redis backup manager registered")
 
@@ -570,8 +540,7 @@ class BackupConfig:
                            name: str, 
                            database_system: DatabaseSystem,
                            schedule: BackupSchedule) -> None:
-        """Add backup schedule"""
-        schedule_key = f"{database_system.value}_{name}"
+        """Add backup schedule"""        schedule_key = f"{database_system.value}_{name}"
         self.schedules[schedule_key] = schedule
         
         # Register with scheduler
@@ -594,8 +563,7 @@ class BackupConfig:
                        database_system: DatabaseSystem, 
                        backup_name: str,
                        backup_type: BackupType) -> None:
-        """Execute backup operation"""
-        try:
+        """Execute backup operation"""        try:
             if database_system not in self.backup_managers:
                 raise ValueError(f"No backup manager registered for {database_system.value}")
             
@@ -619,8 +587,7 @@ class BackupConfig:
             self.logger.error(f"Backup execution failed: {str(e)}")
 
     def _cleanup_old_backups(self, database_system: DatabaseSystem, backup_name: str) -> None:
-        """Cleanup old backups based on retention policy"""
-        try:
+        """Cleanup old backups based on retention policy"""        try:
             schedule_key = f"{database_system.value}_{backup_name}"
             if schedule_key not in self.schedules:
                 return
@@ -656,8 +623,7 @@ class BackupConfig:
             self.logger.error(f"Backup cleanup failed: {str(e)}")
 
     def start_scheduler(self) -> None:
-        """Start backup scheduler"""
-        if self._scheduler_running:
+        """Start backup scheduler"""        if self._scheduler_running:
             return
         
         self._scheduler_running = True
@@ -674,13 +640,11 @@ class BackupConfig:
         self.logger.info("Backup scheduler started")
 
     def stop_scheduler(self) -> None:
-        """Stop backup scheduler"""
-        self._scheduler_running = False
+        """Stop backup scheduler"""        self._scheduler_running = False
         self.logger.info("Backup scheduler stopped")
 
     def get_backup_status(self) -> Dict[str, Any]:
-        """Get comprehensive backup status"""
-        status = {
+        """Get comprehensive backup status"""        status = {
             "environment": self.environment.value,
             "scheduler_running": self._scheduler_running,
             "total_backups": len(self._backup_records),
@@ -719,8 +683,7 @@ class BackupConfig:
         return status
 
     def health_check(self) -> Dict[str, Any]:
-        """Perform backup system health check"""
-        health_status = {
+        """Perform backup system health check"""        health_status = {
             "status": "healthy",
             "environment": self.environment.value,
             "managers": {},
@@ -765,7 +728,6 @@ class BackupConfig:
             return health_status
 
     def close(self) -> None:
-        """Close backup configuration and cleanup resources"""
-        self.stop_scheduler()
+        """Close backup configuration and cleanup resources"""        self.stop_scheduler()
         self._executor.shutdown(wait=True)
         self.logger.info("Backup configuration closed")

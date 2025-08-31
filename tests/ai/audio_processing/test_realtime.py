@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-⚡ Real-time Tests - Industrial-Grade Real-time Audio Processing Testing Suite
+"""⚡ Real-time Tests - Industrial-Grade Real-time Audio Processing Testing Suite
 
 Comprehensive testing for real-time audio processing including:
 - RealtimeProcessor validation
@@ -27,7 +24,6 @@ Comprehensive testing for real-time audio processing including:
 Created by Expert Team: Real-time Systems Engineer + Performance Specialist + Audio Engineer
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -66,8 +62,7 @@ from . import TEST_CONFIG, setup_test_environment
 
 
 class TestRealtimeProcessor:
-    """
-    Industrial-grade testing for RealtimeProcessor class
+    """    Industrial-grade testing for RealtimeProcessor class
     
     Test Coverage:
     - Real-time processing initialization
@@ -75,12 +70,10 @@ class TestRealtimeProcessor:
     - Buffer size optimization
     - Processing time constraints
     - Thread safety
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment before each test"""
-        setup_test_environment()
+        """Setup test environment before each test"""        setup_test_environment()
         
         # Create real-time configuration
         self.config = RealtimeConfig(
@@ -92,8 +85,7 @@ class TestRealtimeProcessor:
         self.processor = RealtimeProcessor(config=self.config)
     
     def test_initialization(self):
-        """Test RealtimeProcessor initialization"""
-        processor = RealtimeProcessor()
+        """Test RealtimeProcessor initialization"""        processor = RealtimeProcessor()
         
         assert processor is not None
         assert hasattr(processor, 'config')
@@ -102,8 +94,7 @@ class TestRealtimeProcessor:
         assert hasattr(processor, 'processing_chain')
     
     def test_buffer_size_optimization(self):
-        """Test buffer size optimization for low latency"""
-        # Test different buffer sizes
+        """Test buffer size optimization for low latency"""        # Test different buffer sizes
         buffer_sizes = [64, 128, 256, 512, 1024]
         latencies = []
         
@@ -133,8 +124,7 @@ class TestRealtimeProcessor:
         assert latencies[0] <= latencies[-1] * 2  # Allow some tolerance
     
     def test_low_latency_processing(self):
-        """Test low-latency processing requirements"""
-        # Configure for very low latency
+        """Test low-latency processing requirements"""        # Configure for very low latency
         low_latency_config = RealtimeConfig(
             sample_rate=44100,
             buffer_size=64,  # Very small buffer
@@ -163,8 +153,7 @@ class TestRealtimeProcessor:
         assert average_latency < low_latency_config.max_latency_ms * 0.5
     
     def test_thread_safety(self):
-        """Test thread safety of real-time processing"""
-        processed_buffers = []
+        """Test thread safety of real-time processing"""        processed_buffers = []
         errors = []
         
         def process_worker(worker_id):
@@ -198,8 +187,7 @@ class TestRealtimeProcessor:
             assert not np.any(np.isinf(processed))
     
     def test_processing_chain_performance(self):
-        """Test processing chain performance under real-time constraints"""
-        # Create processing chain with multiple stages
+        """Test processing chain performance under real-time constraints"""        # Create processing chain with multiple stages
         def gain_stage(buffer):
             return buffer * 0.8
         
@@ -232,8 +220,7 @@ class TestRealtimeProcessor:
         assert not np.array_equal(processed, test_buffer)  # Should be different
     
     def test_dynamic_buffer_adjustment(self):
-        """Test dynamic buffer size adjustment based on performance"""
-        # Start with large buffer
+        """Test dynamic buffer size adjustment based on performance"""        # Start with large buffer
         adaptive_config = RealtimeConfig(
             sample_rate=44100,
             buffer_size=1024,
@@ -267,8 +254,7 @@ class TestRealtimeProcessor:
 
 
 class TestBufferManager:
-    """
-    Industrial-grade testing for BufferManager class
+    """    Industrial-grade testing for BufferManager class
     
     Test Coverage:
     - Buffer allocation and management
@@ -276,12 +262,10 @@ class TestBufferManager:
     - Buffer overflow/underflow handling
     - Memory efficiency
     - Lock-free operations
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         self.buffer_size = 1024
         self.num_buffers = 8
         self.manager = BufferManager(
@@ -290,8 +274,7 @@ class TestBufferManager:
         )
     
     def test_initialization(self):
-        """Test BufferManager initialization"""
-        manager = BufferManager(buffer_size=512, num_buffers=4)
+        """Test BufferManager initialization"""        manager = BufferManager(buffer_size=512, num_buffers=4)
         
         assert manager is not None
         assert manager.buffer_size == 512
@@ -301,8 +284,7 @@ class TestBufferManager:
         assert hasattr(manager, 'used_buffers')
     
     def test_buffer_allocation(self):
-        """Test buffer allocation and deallocation"""
-        # Allocate buffer
+        """Test buffer allocation and deallocation"""        # Allocate buffer
         buffer = self.manager.allocate_buffer()
         
         assert buffer is not None
@@ -320,8 +302,7 @@ class TestBufferManager:
         assert len(self.manager.used_buffers) == 0
     
     def test_buffer_pool_exhaustion(self):
-        """Test behavior when buffer pool is exhausted"""
-        allocated_buffers = []
+        """Test behavior when buffer pool is exhausted"""        allocated_buffers = []
         
         # Allocate all buffers
         for i in range(self.num_buffers):
@@ -342,8 +323,7 @@ class TestBufferManager:
             self.manager.deallocate_buffer(buffer)
     
     def test_circular_buffer_operations(self):
-        """Test circular buffer operations"""
-        circular_buffer = self.manager.create_circular_buffer(size=2048)
+        """Test circular buffer operations"""        circular_buffer = self.manager.create_circular_buffer(size=2048)
         
         # Test writing
         test_data = np.random.randn(512)
@@ -361,8 +341,7 @@ class TestBufferManager:
         assert bytes_written <= 2048  # Should not exceed buffer size
     
     def test_lock_free_operations(self):
-        """Test lock-free buffer operations"""
-        lock_free_queue = LockFreeQueue(capacity=16)
+        """Test lock-free buffer operations"""        lock_free_queue = LockFreeQueue(capacity=16)
         
         # Test concurrent access
         def producer():
@@ -396,8 +375,7 @@ class TestBufferManager:
         assert True  # If we reach here, no deadlock occurred
     
     def test_memory_efficiency(self):
-        """Test memory efficiency of buffer management"""
-        import psutil
+        """Test memory efficiency of buffer management"""        import psutil
         import gc
         
         # Measure initial memory
@@ -428,8 +406,7 @@ class TestBufferManager:
 
 
 class TestStreamProcessor:
-    """
-    Industrial-grade testing for StreamProcessor class
+    """    Industrial-grade testing for StreamProcessor class
     
     Test Coverage:
     - Continuous stream processing
@@ -437,12 +414,10 @@ class TestStreamProcessor:
     - Real-time callback handling
     - Stream synchronization
     - Error recovery
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         
         self.config = RealtimeConfig(
             sample_rate=44100,
@@ -452,8 +427,7 @@ class TestStreamProcessor:
         self.stream_processor = StreamProcessor(config=self.config)
     
     def test_initialization(self):
-        """Test StreamProcessor initialization"""
-        processor = StreamProcessor()
+        """Test StreamProcessor initialization"""        processor = StreamProcessor()
         
         assert processor is not None
         assert hasattr(processor, 'input_stream')
@@ -462,8 +436,7 @@ class TestStreamProcessor:
         assert hasattr(processor, 'is_running')
     
     def test_stream_callback_processing(self):
-        """Test stream callback processing"""
-        processed_buffers = []
+        """Test stream callback processing"""        processed_buffers = []
         
         def test_callback(input_buffer):
             # Simple processing: apply gain
@@ -486,8 +459,7 @@ class TestStreamProcessor:
         assert len(processed_buffers) == 10
     
     def test_stream_synchronization(self):
-        """Test stream synchronization between input and output"""
-        input_timestamps = []
+        """Test stream synchronization between input and output"""        input_timestamps = []
         output_timestamps = []
         
         def timestamping_callback(input_buffer):
@@ -517,8 +489,7 @@ class TestStreamProcessor:
         assert delay_std < 0.005  # Low jitter
     
     def test_stream_error_recovery(self):
-        """Test error recovery in stream processing"""
-        error_count = 0
+        """Test error recovery in stream processing"""        error_count = 0
         recovery_count = 0
         
         def error_prone_callback(input_buffer):
@@ -559,8 +530,7 @@ class TestStreamProcessor:
         assert recovery_count == error_count  # All errors should be recovered
     
     def test_continuous_stream_processing(self):
-        """Test continuous stream processing over time"""
-        duration_seconds = 2.0
+        """Test continuous stream processing over time"""        duration_seconds = 2.0
         sample_rate = self.config.sample_rate
         buffer_size = self.config.buffer_size
         
@@ -598,25 +568,21 @@ class TestStreamProcessor:
 
 
 class TestLatencyMonitor:
-    """
-    Industrial-grade testing for LatencyMonitor class
+    """    Industrial-grade testing for LatencyMonitor class
     
     Test Coverage:
     - Latency measurement accuracy
     - Performance statistics
     - Latency threshold monitoring
     - Performance trend analysis
-    """
-    
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
         self.monitor = LatencyMonitor(max_samples=1000)
     
     def test_initialization(self):
-        """Test LatencyMonitor initialization"""
-        monitor = LatencyMonitor()
+        """Test LatencyMonitor initialization"""        monitor = LatencyMonitor()
         
         assert monitor is not None
         assert hasattr(monitor, 'latency_samples')
@@ -624,8 +590,7 @@ class TestLatencyMonitor:
         assert hasattr(monitor, 'thresholds')
     
     def test_latency_measurement(self):
-        """Test latency measurement accuracy"""
-        # Simulate known processing delays
+        """Test latency measurement accuracy"""        # Simulate known processing delays
         known_delays = [0.001, 0.002, 0.005, 0.010, 0.003]  # Known delays in seconds
         
         for delay in known_delays:
@@ -639,8 +604,7 @@ class TestLatencyMonitor:
             assert abs(measured_latency - delay * 1000) < 1.0  # Convert to ms
     
     def test_statistics_calculation(self):
-        """Test latency statistics calculation"""
-        # Record known latency values
+        """Test latency statistics calculation"""        # Record known latency values
         test_latencies = [1.0, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0, 10.0]  # ms
         
         for latency_ms in test_latencies:
@@ -658,8 +622,7 @@ class TestLatencyMonitor:
         assert stats['p99'] >= 9.5  # 99th percentile
     
     def test_threshold_monitoring(self):
-        """Test latency threshold monitoring"""
-        # Set thresholds
+        """Test latency threshold monitoring"""        # Set thresholds
         warning_threshold = 5.0  # ms
         critical_threshold = 10.0  # ms
         
@@ -696,8 +659,7 @@ class TestLatencyMonitor:
         assert len(critical_alerts) >= 2  # Should detect critical cases
     
     def test_performance_trend_analysis(self):
-        """Test performance trend analysis"""
-        # Simulate degrading performance
+        """Test performance trend analysis"""        # Simulate degrading performance
         base_latency = 2.0
         
         for i in range(100):
@@ -719,8 +681,7 @@ class TestLatencyMonitor:
         assert trend_analysis['trend_magnitude'] > 0
     
     def test_real_time_monitoring(self):
-        """Test real-time latency monitoring"""
-        monitoring_results = []
+        """Test real-time latency monitoring"""        monitoring_results = []
         
         def monitor_callback(stats):
             monitoring_results.append(stats.copy())
@@ -751,11 +712,9 @@ class TestLatencyMonitor:
 
 
 class TestRealtimeConfig:
-    """Test RealtimeConfig data structure"""
-    
+    """Test RealtimeConfig data structure"""    
     def test_config_creation(self):
-        """Test RealtimeConfig creation"""
-        config = RealtimeConfig(
+        """Test RealtimeConfig creation"""        config = RealtimeConfig(
             sample_rate=48000,
             buffer_size=128,
             max_latency_ms=8.0,
@@ -770,8 +729,7 @@ class TestRealtimeConfig:
         assert config.enable_adaptive_buffering is True
     
     def test_config_validation(self):
-        """Test config validation"""
-        # Valid config
+        """Test config validation"""        # Valid config
         valid_config = RealtimeConfig(
             sample_rate=44100,
             buffer_size=256,
@@ -791,16 +749,13 @@ class TestRealtimeConfig:
 
 
 class TestAudioStream:
-    """Test AudioStream implementation"""
-    
+    """Test AudioStream implementation"""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_stream_creation(self):
-        """Test audio stream creation"""
-        stream = AudioStream(
+        """Test audio stream creation"""        stream = AudioStream(
             sample_rate=44100,
             channels=2,
             buffer_size=512
@@ -814,8 +769,7 @@ class TestAudioStream:
         assert hasattr(stream, 'output_callback')
     
     def test_stream_data_flow(self):
-        """Test stream data flow"""
-        received_data = []
+        """Test stream data flow"""        received_data = []
         
         def data_callback(input_data, frame_count, time_info, status):
             received_data.append(input_data.copy())
@@ -840,18 +794,14 @@ class TestAudioStream:
 
 
 class TestRealtimeIntegration:
-    """
-    Integration tests for complete real-time processing workflows
-    """
-    
+    """    Integration tests for complete real-time processing workflows
+    """    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Setup test environment"""
-        setup_test_environment()
+        """Setup test environment"""        setup_test_environment()
     
     def test_complete_realtime_workflow(self):
-        """Test complete real-time processing workflow"""
-        # Configure real-time system
+        """Test complete real-time processing workflow"""        # Configure real-time system
         config = RealtimeConfig(
             sample_rate=44100,
             buffer_size=256,
@@ -907,8 +857,7 @@ class TestRealtimeIntegration:
         assert stats['mean'] < config.max_latency_ms * 0.5  # Average should be well below limit
     
     def test_stress_test_realtime_processing(self):
-        """Stress test real-time processing under load"""
-        config = RealtimeConfig(
+        """Stress test real-time processing under load"""        config = RealtimeConfig(
             sample_rate=44100,
             buffer_size=128,  # Small buffer for stress
             max_latency_ms=5.0  # Tight constraint

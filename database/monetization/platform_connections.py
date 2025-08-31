@@ -1,5 +1,4 @@
-"""
-Platform Connections - Multi-Platform API Integration System
+"""Platform Connections - Multi-Platform API Integration System
 
 Ultra-advanced platform integration system connecting to all major content platforms
 (YouTube, Spotify, Instagram, TikTok, etc.) for revenue tracking and content management.
@@ -26,7 +25,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
-
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
@@ -45,8 +43,7 @@ Base = declarative_base()
 
 
 class Platform(Enum):
-    """Supported content platforms"""
-    # Music platforms
+    """Supported content platforms"""    # Music platforms
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     YOUTUBE_MUSIC = "youtube_music"
@@ -98,8 +95,7 @@ class Platform(Enum):
 
 
 class ConnectionStatus(Enum):
-    """Platform connection status"""
-    DISCONNECTED = "disconnected"
+    """Platform connection status"""    DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     AUTHENTICATED = "authenticated"
@@ -110,8 +106,7 @@ class ConnectionStatus(Enum):
 
 
 class DataSyncFrequency(Enum):
-    """Data synchronization frequency options"""
-    REAL_TIME = "real_time"
+    """Data synchronization frequency options"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -120,8 +115,7 @@ class DataSyncFrequency(Enum):
 
 
 class PlatformConnection(Base):
-    """User connections to content platforms"""
-    __tablename__ = "platform_connections"
+    """User connections to content platforms"""    __tablename__ = "platform_connections"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False)
@@ -215,8 +209,7 @@ class PlatformConnection(Base):
 
 
 class PlatformSyncLog(Base):
-    """Logging for platform data synchronization operations"""
-    __tablename__ = "platform_sync_logs"
+    """Logging for platform data synchronization operations"""    __tablename__ = "platform_sync_logs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     connection_id = Column(UUID(as_uuid=True), ForeignKey("platform_connections.id"), nullable=False)
@@ -269,8 +262,7 @@ class PlatformSyncLog(Base):
 
 
 class PlatformAnalytics(Base):
-    """Analytics data from various platforms"""
-    __tablename__ = "platform_analytics"
+    """Analytics data from various platforms"""    __tablename__ = "platform_analytics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     connection_id = Column(UUID(as_uuid=True), ForeignKey("platform_connections.id"), nullable=False)
@@ -351,8 +343,7 @@ class PlatformAnalytics(Base):
 
 
 class PlatformRevenue(Base):
-    """Revenue data from various platforms"""
-    __tablename__ = "platform_revenue"
+    """Revenue data from various platforms"""    __tablename__ = "platform_revenue"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     connection_id = Column(UUID(as_uuid=True), ForeignKey("platform_connections.id"), nullable=False)
@@ -440,8 +431,7 @@ class PlatformRevenue(Base):
 
 
 class PlatformContentMetadata(Base):
-    """Content metadata from various platforms"""
-    __tablename__ = "platform_content_metadata"
+    """Content metadata from various platforms"""    __tablename__ = "platform_content_metadata"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     connection_id = Column(UUID(as_uuid=True), ForeignKey("platform_connections.id"), nullable=False)
@@ -521,8 +511,7 @@ class PlatformContentMetadata(Base):
 
 
 class PlatformWebhook(Base):
-    """Webhook configurations for real-time platform updates"""
-    __tablename__ = "platform_webhooks"
+    """Webhook configurations for real-time platform updates"""    __tablename__ = "platform_webhooks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     connection_id = Column(UUID(as_uuid=True), ForeignKey("platform_connections.id"), nullable=False)
@@ -573,8 +562,7 @@ class PlatformWebhook(Base):
 
 
 class WebhookEvent(Base):
-    """Individual webhook events received from platforms"""
-    __tablename__ = "webhook_events"
+    """Individual webhook events received from platforms"""    __tablename__ = "webhook_events"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     webhook_id = Column(UUID(as_uuid=True), ForeignKey("platform_webhooks.id"), nullable=False)
@@ -616,8 +604,7 @@ class WebhookEvent(Base):
 # SQLAlchemy event listeners
 @event.listens_for(PlatformConnection, 'before_update')
 def platform_connection_before_update(mapper, connection, target):
-    """Update connection status and sync schedule"""
-    if target.status == ConnectionStatus.CONNECTED and not target.connected_at:
+    """Update connection status and sync schedule"""    if target.status == ConnectionStatus.CONNECTED and not target.connected_at:
         target.connected_at = datetime.now(timezone.utc)
     elif target.status == ConnectionStatus.DISCONNECTED:
         target.disconnected_at = datetime.now(timezone.utc)
@@ -638,8 +625,7 @@ def platform_connection_before_update(mapper, connection, target):
 
 @event.listens_for(PlatformSyncLog, 'before_update')
 def sync_log_before_update(mapper, connection, target):
-    """Calculate duration and update statistics"""
-    if target.completed_at and target.started_at:
+    """Calculate duration and update statistics"""    if target.completed_at and target.started_at:
         target.duration_seconds = int((target.completed_at - target.started_at).total_seconds())
 
 

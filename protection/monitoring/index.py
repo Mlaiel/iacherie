@@ -1,5 +1,4 @@
-"""
-🔍 Content Protection Monitoring Index
+"""🔍 Content Protection Monitoring Index
 =====================================
 
 Main entry point and service orchestrator for the comprehensive content protection monitoring system.
@@ -22,7 +21,6 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import json
@@ -56,24 +54,21 @@ logger = logging.getLogger(__name__)
 security = HTTPBearer()
 
 class MonitoringIndexStatus(str, Enum):
-    """Status of the monitoring index service."""
-    INITIALIZING = "initializing"
+    """Status of the monitoring index service."""    INITIALIZING = "initializing"
     RUNNING = "running"
     STOPPING = "stopping"
     STOPPED = "stopped"
     ERROR = "error"
 
 class ServiceHealth(str, Enum):
-    """Health status for individual services."""
-    HEALTHY = "healthy"
+    """Health status for individual services."""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     UNKNOWN = "unknown"
 
 @dataclass
 class ServiceStatus:
-    """Status information for a monitoring service."""
-    name: str
+    """Status information for a monitoring service."""    name: str
     health: ServiceHealth
     uptime_seconds: float
     last_check: datetime
@@ -81,16 +76,14 @@ class ServiceStatus:
     metrics: Dict[str, Any] = None
 
 class MonitoringRequest(BaseModel):
-    """Request model for starting monitoring."""
-    fingerprint_id: str
+    """Request model for starting monitoring."""    fingerprint_id: str
     user_id: int
     platforms: List[str]
     priority: str = "medium"
     custom_config: Optional[Dict[str, Any]] = None
 
 class ReportRequest(BaseModel):
-    """Request model for generating reports."""
-    template_id: Optional[str] = None
+    """Request model for generating reports."""    template_id: Optional[str] = None
     report_type: str = "detailed_analytics"
     time_range: str = "last_7_days"
     output_formats: List[str] = Field(default_factory=lambda: ["pdf", "json"])
@@ -98,20 +91,17 @@ class ReportRequest(BaseModel):
     custom_parameters: Optional[Dict[str, Any]] = None
 
 class DashboardRequest(BaseModel):
-    """Request model for dashboard operations."""
-    user_id: int
+    """Request model for dashboard operations."""    user_id: int
     layout_type: Optional[str] = None
     widgets: Optional[List[Dict[str, Any]]] = None
 
 class PerformanceOptimizationRequest(BaseModel):
-    """Request model for performance optimization."""
-    optimization_type: str = "auto"
+    """Request model for performance optimization."""    optimization_type: str = "auto"
     target_resources: Optional[List[str]] = None
     aggressive_mode: bool = False
 
 class MonitoringIndex:
-    """
-    Central index and orchestrator for the complete monitoring system.
+    """    Central index and orchestrator for the complete monitoring system.
     
     This class provides a unified interface to all monitoring capabilities:
     - Real-time content monitoring and violation detection
@@ -125,16 +115,13 @@ class MonitoringIndex:
     - Comprehensive API for external integration
     - Advanced configuration and health monitoring
     - Production-ready error handling and logging
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the monitoring index.
+        """        Initialize the monitoring index.
         
         Args:
             config: Optional configuration dictionary
-        """
-        self.config = config or self._load_default_config()
+        """        self.config = config or self._load_default_config()
         self.status = MonitoringIndexStatus.INITIALIZING
         self.start_time = datetime.utcnow()
         
@@ -158,13 +145,11 @@ class MonitoringIndex:
         logger.info("Monitoring Index initialized")
 
     async def initialize(self) -> bool:
-        """
-        Initialize all monitoring services and the API.
+        """        Initialize all monitoring services and the API.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing Content Protection Monitoring Index...")
             
             # Initialize core services
@@ -186,8 +171,7 @@ class MonitoringIndex:
             return False
 
     async def _initialize_services(self) -> None:
-        """Initialize all monitoring services."""
-        try:
+        """Initialize all monitoring services."""        try:
             # Initialize Analytics first (required by other services)
             logger.info("Initializing Analytics service...")
             self.analytics = MonitoringAnalytics(
@@ -245,12 +229,10 @@ class MonitoringIndex:
             raise
 
     async def _initialize_api(self) -> None:
-        """Initialize FastAPI application with all routes."""
-        
+        """Initialize FastAPI application with all routes."""        
         @asynccontextmanager
         async def lifespan(app: FastAPI):
-            """FastAPI lifespan manager."""
-            # Startup
+            """FastAPI lifespan manager."""            # Startup
             logger.info("Starting Monitoring API...")
             yield
             # Shutdown
@@ -280,19 +262,16 @@ class MonitoringIndex:
         logger.info("FastAPI application initialized")
 
     def _setup_api_routes(self) -> None:
-        """Setup all API routes."""
-        
+        """Setup all API routes."""        
         # Health check endpoint
         @self.app.get("/health")
         async def health_check():
-            """Get system health status."""
-            return await self.get_system_health()
+            """Get system health status."""            return await self.get_system_health()
         
         # Service status endpoint
         @self.app.get("/status")
         async def system_status():
-            """Get detailed system status."""
-            return await self.get_system_status()
+            """Get detailed system status."""            return await self.get_system_status()
         
         # Start monitoring endpoint
         @self.app.post("/monitoring/start")
@@ -300,8 +279,7 @@ class MonitoringIndex:
             request: MonitoringRequest,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Start content monitoring for a fingerprint."""
-            try:
+            """Start content monitoring for a fingerprint."""            try:
                 session_id = await self.start_content_monitoring(
                     fingerprint_id=request.fingerprint_id,
                     user_id=request.user_id,
@@ -319,8 +297,7 @@ class MonitoringIndex:
             session_id: str,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Stop monitoring for a session."""
-            try:
+            """Stop monitoring for a session."""            try:
                 success = await self.stop_content_monitoring(session_id)
                 return {"session_id": session_id, "status": "stopped" if success else "failed"}
             except Exception as e:
@@ -332,8 +309,7 @@ class MonitoringIndex:
             user_id: int,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get active monitoring sessions for a user."""
-            try:
+            """Get active monitoring sessions for a user."""            try:
                 sessions = await self.get_active_monitoring_sessions(user_id)
                 return {"user_id": user_id, "sessions": sessions}
             except Exception as e:
@@ -345,8 +321,7 @@ class MonitoringIndex:
             user_id: int,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get dashboard data for a user."""
-            try:
+            """Get dashboard data for a user."""            try:
                 data = await self.get_dashboard_data(user_id)
                 return data
             except Exception as e:
@@ -358,8 +333,7 @@ class MonitoringIndex:
             request: ReportRequest,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Generate a monitoring report."""
-            try:
+            """Generate a monitoring report."""            try:
                 report = await self.generate_report(
                     template_id=request.template_id,
                     report_type=request.report_type,
@@ -379,8 +353,7 @@ class MonitoringIndex:
             format: str,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Download a generated report."""
-            try:
+            """Download a generated report."""            try:
                 file_path = await self.download_report(report_id, format)
                 if file_path and file_path.exists():
                     return FileResponse(
@@ -399,8 +372,7 @@ class MonitoringIndex:
             request: PerformanceOptimizationRequest,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Run system performance optimization."""
-            try:
+            """Run system performance optimization."""            try:
                 result = await self.optimize_system_performance(
                     optimization_type=request.optimization_type,
                     target_resources=request.target_resources,
@@ -417,8 +389,7 @@ class MonitoringIndex:
             time_range: str = "last_7_days",
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get analytics data for a user."""
-            try:
+            """Get analytics data for a user."""            try:
                 analytics_data = await self.get_analytics_data(user_id, time_range)
                 return analytics_data
             except Exception as e:
@@ -427,8 +398,7 @@ class MonitoringIndex:
         # WebSocket endpoint for real-time updates
         @self.app.websocket("/ws/{user_id}")
         async def websocket_endpoint(websocket: WebSocket, user_id: int):
-            """WebSocket endpoint for real-time monitoring updates."""
-            try:
+            """WebSocket endpoint for real-time monitoring updates."""            try:
                 await self.handle_websocket_connection(websocket, user_id)
             except Exception as e:
                 logger.error(f"WebSocket error for user {user_id}: {e}")
@@ -441,8 +411,7 @@ class MonitoringIndex:
         priority: str = "medium",
         custom_config: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Start monitoring for a content fingerprint.
+        """        Start monitoring for a content fingerprint.
         
         Args:
             fingerprint_id: Content fingerprint to monitor
@@ -453,8 +422,7 @@ class MonitoringIndex:
             
         Returns:
             str: Monitoring session ID
-        """
-        if not self.realtime_monitor:
+        """        if not self.realtime_monitor:
             raise RuntimeError("Real-time monitor not initialized")
         
         # Convert priority string to enum
@@ -478,16 +446,14 @@ class MonitoringIndex:
         return session_id
 
     async def stop_content_monitoring(self, session_id: str) -> bool:
-        """
-        Stop monitoring for a session.
+        """        Stop monitoring for a session.
         
         Args:
             session_id: Monitoring session ID to stop
             
         Returns:
             bool: True if successful
-        """
-        if not self.realtime_monitor:
+        """        if not self.realtime_monitor:
             return False
         
         success = await self.realtime_monitor.stop_realtime_monitoring(session_id)
@@ -498,16 +464,14 @@ class MonitoringIndex:
         return success
 
     async def get_active_monitoring_sessions(self, user_id: int) -> List[Dict[str, Any]]:
-        """
-        Get active monitoring sessions for a user.
+        """        Get active monitoring sessions for a user.
         
         Args:
             user_id: User ID to get sessions for
             
         Returns:
             List of active monitoring sessions
-        """
-        if not self.realtime_monitor:
+        """        if not self.realtime_monitor:
             return []
         
         # Get active sessions from real-time monitor
@@ -515,16 +479,14 @@ class MonitoringIndex:
         return [session.dict() for session in sessions]
 
     async def get_dashboard_data(self, user_id: int) -> Dict[str, Any]:
-        """
-        Get comprehensive dashboard data for a user.
+        """        Get comprehensive dashboard data for a user.
         
         Args:
             user_id: User ID to get dashboard data for
             
         Returns:
             Dict containing dashboard metrics and data
-        """
-        if not self.dashboard:
+        """        if not self.dashboard:
             return {}
         
         return await self.dashboard.get_dashboard_metrics(user_id)
@@ -538,8 +500,7 @@ class MonitoringIndex:
         user_id: int = 0,
         custom_parameters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate a monitoring report.
+        """        Generate a monitoring report.
         
         Args:
             template_id: Optional template ID
@@ -551,8 +512,7 @@ class MonitoringIndex:
             
         Returns:
             Dict containing report information
-        """
-        if not self.report_generator:
+        """        if not self.report_generator:
             return {}
         
         # Default output formats
@@ -574,8 +534,7 @@ class MonitoringIndex:
         return generated_report.dict()
 
     async def download_report(self, report_id: str, format_type: str) -> Optional[Path]:
-        """
-        Get download path for a generated report.
+        """        Get download path for a generated report.
         
         Args:
             report_id: Report ID to download
@@ -583,8 +542,7 @@ class MonitoringIndex:
             
         Returns:
             Path to report file or None if not found
-        """
-        if not self.report_generator:
+        """        if not self.report_generator:
             return None
         
         return await self.report_generator.download_report(report_id, format_type)
@@ -595,8 +553,7 @@ class MonitoringIndex:
         target_resources: Optional[List[str]] = None,
         aggressive_mode: bool = False
     ) -> Dict[str, Any]:
-        """
-        Run system performance optimization.
+        """        Run system performance optimization.
         
         Args:
             optimization_type: Type of optimization to run
@@ -605,8 +562,7 @@ class MonitoringIndex:
             
         Returns:
             Dict containing optimization results
-        """
-        if not self.performance_optimizer:
+        """        if not self.performance_optimizer:
             return {}
         
         if optimization_type == "auto":
@@ -623,8 +579,7 @@ class MonitoringIndex:
         user_id: int, 
         time_range: str = "last_7_days"
     ) -> Dict[str, Any]:
-        """
-        Get analytics data for a user.
+        """        Get analytics data for a user.
         
         Args:
             user_id: User ID to get analytics for
@@ -632,8 +587,7 @@ class MonitoringIndex:
             
         Returns:
             Dict containing analytics data
-        """
-        if not self.analytics:
+        """        if not self.analytics:
             return {}
         
         # Convert time range to enum
@@ -660,14 +614,12 @@ class MonitoringIndex:
         }
 
     async def handle_websocket_connection(self, websocket: WebSocket, user_id: int):
-        """
-        Handle WebSocket connection for real-time updates.
+        """        Handle WebSocket connection for real-time updates.
         
         Args:
             websocket: WebSocket connection
             user_id: User ID for the connection
-        """
-        if not self.dashboard:
+        """        if not self.dashboard:
             await websocket.close(code=1000, reason="Dashboard not available")
             return
         
@@ -676,13 +628,11 @@ class MonitoringIndex:
         await self.dashboard.stream_realtime_data(websocket, user_id, subscriptions)
 
     async def get_system_health(self) -> Dict[str, Any]:
-        """
-        Get system health status.
+        """        Get system health status.
         
         Returns:
             Dict containing health information
-        """
-        overall_health = ServiceHealth.HEALTHY
+        """        overall_health = ServiceHealth.HEALTHY
         
         # Check individual service health
         for service_name, service_status in self.service_health.items():
@@ -708,13 +658,11 @@ class MonitoringIndex:
         }
 
     async def get_system_status(self) -> Dict[str, Any]:
-        """
-        Get detailed system status.
+        """        Get detailed system status.
         
         Returns:
             Dict containing comprehensive status information
-        """
-        status = {
+        """        status = {
             "version": "3.0.0",
             "author": "Fahed Mlaiel",
             "copyright": "© 2025 Fahed Mlaiel. All rights reserved.",
@@ -765,15 +713,13 @@ class MonitoringIndex:
         return status
 
     async def _start_background_tasks(self) -> None:
-        """Start background maintenance tasks."""
-        self._health_check_task = asyncio.create_task(self._health_check_loop())
+        """Start background maintenance tasks."""        self._health_check_task = asyncio.create_task(self._health_check_loop())
         self._cleanup_task = asyncio.create_task(self._cleanup_loop())
         
         logger.info("Background tasks started")
 
     async def _health_check_loop(self) -> None:
-        """Background task for health monitoring."""
-        try:
+        """Background task for health monitoring."""        try:
             while self.status == MonitoringIndexStatus.RUNNING:
                 await self._check_service_health()
                 await asyncio.sleep(60)  # Check every minute
@@ -781,8 +727,7 @@ class MonitoringIndex:
             logger.debug("Health check loop cancelled")
 
     async def _cleanup_loop(self) -> None:
-        """Background task for cleanup operations."""
-        try:
+        """Background task for cleanup operations."""        try:
             while self.status == MonitoringIndexStatus.RUNNING:
                 await self._perform_cleanup()
                 await asyncio.sleep(3600)  # Cleanup every hour
@@ -790,8 +735,7 @@ class MonitoringIndex:
             logger.debug("Cleanup loop cancelled")
 
     async def _check_service_health(self) -> None:
-        """Check health of all services."""
-        try:
+        """Check health of all services."""        try:
             services = {
                 'realtime_monitor': self.realtime_monitor,
                 'analytics': self.analytics,
@@ -818,8 +762,7 @@ class MonitoringIndex:
             logger.error(f"Health check failed: {e}")
 
     async def _perform_cleanup(self) -> None:
-        """Perform cleanup operations."""
-        try:
+        """Perform cleanup operations."""        try:
             # Cleanup old reports
             if self.report_generator:
                 await self.report_generator.cleanup_old_reports(days_to_keep=30)
@@ -835,8 +778,7 @@ class MonitoringIndex:
         health: ServiceHealth, 
         error_message: Optional[str] = None
     ) -> None:
-        """Update service health status."""
-        current_time = datetime.utcnow()
+        """Update service health status."""        current_time = datetime.utcnow()
         
         if service_name in self.service_health:
             uptime = (current_time - (current_time - timedelta(seconds=self.service_health[service_name].uptime_seconds))).total_seconds()
@@ -852,8 +794,7 @@ class MonitoringIndex:
         )
 
     def _load_default_config(self) -> Dict[str, Any]:
-        """Load default configuration."""
-        return {
+        """Load default configuration."""        return {
             "cors_origins": ["*"],
             "analytics": {
                 "trend_analysis_window_days": 30,
@@ -876,8 +817,7 @@ class MonitoringIndex:
         }
 
     async def shutdown(self) -> None:
-        """Gracefully shutdown all services."""
-        logger.info("Shutting down Monitoring Index...")
+        """Gracefully shutdown all services."""        logger.info("Shutting down Monitoring Index...")
         self.status = MonitoringIndexStatus.STOPPING
         
         # Cancel background tasks
@@ -910,23 +850,20 @@ class MonitoringIndex:
 monitoring_index: Optional[MonitoringIndex] = None
 
 def get_monitoring_index() -> MonitoringIndex:
-    """Get the global monitoring index instance."""
-    global monitoring_index
+    """Get the global monitoring index instance."""    global monitoring_index
     if monitoring_index is None:
         monitoring_index = MonitoringIndex()
     return monitoring_index
 
 async def initialize_monitoring_system(config: Optional[Dict[str, Any]] = None) -> MonitoringIndex:
-    """
-    Initialize the complete monitoring system.
+    """    Initialize the complete monitoring system.
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         MonitoringIndex: Initialized monitoring index
-    """
-    global monitoring_index
+    """    global monitoring_index
     monitoring_index = MonitoringIndex(config)
     
     success = await monitoring_index.initialize()
@@ -936,24 +873,21 @@ async def initialize_monitoring_system(config: Optional[Dict[str, Any]] = None) 
     return monitoring_index
 
 async def shutdown_monitoring_system():
-    """Shutdown the monitoring system."""
-    global monitoring_index
+    """Shutdown the monitoring system."""    global monitoring_index
     if monitoring_index:
         await monitoring_index.shutdown()
         monitoring_index = None
 
 # FastAPI app factory
 def create_monitoring_app(config: Optional[Dict[str, Any]] = None) -> FastAPI:
-    """
-    Create and configure the monitoring FastAPI application.
+    """    Create and configure the monitoring FastAPI application.
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         FastAPI: Configured FastAPI application
-    """
-    index = MonitoringIndex(config)
+    """    index = MonitoringIndex(config)
     
     # Initialize on startup
     async def startup():
@@ -974,8 +908,7 @@ def create_monitoring_app(config: Optional[Dict[str, Any]] = None) -> FastAPI:
     return app
 
 # Legal notice and copyright
-LEGAL_NOTICE = """
-⚖️ LEGAL WARNING ⚖️
+LEGAL_NOTICE = """⚖️ LEGAL WARNING ⚖️
 
 This software is the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 
@@ -989,7 +922,6 @@ For licensing inquiries, contact: mlaiel@live.de
 
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 # Export main classes and functions
 __all__ = [
     "MonitoringIndex",

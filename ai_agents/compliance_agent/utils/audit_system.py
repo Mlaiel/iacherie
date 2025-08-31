@@ -1,5 +1,4 @@
-"""
-Audit System - Enterprise-Grade Compliance Auditing & Reporting System
+"""Audit System - Enterprise-Grade Compliance Auditing & Reporting System
 
 Comprehensive audit trail management, compliance reporting, and automated
 compliance verification for regulatory frameworks and internal policies.
@@ -12,7 +11,6 @@ This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import time
@@ -59,8 +57,7 @@ from ...security.audit_logger import AuditLogger
 logger = logging.getLogger(__name__)
 
 class AuditType(Enum):
-    """Types of audit events"""
-    COMPLIANCE_CHECK = "compliance_check"
+    """Types of audit events"""    COMPLIANCE_CHECK = "compliance_check"
     POLICY_VIOLATION = "policy_violation"
     DATA_ACCESS = "data_access"
     USER_ACTION = "user_action"
@@ -71,8 +68,7 @@ class AuditType(Enum):
     BREACH_EVENT = "breach_event"
 
 class AuditSeverity(Enum):
-    """Audit event severity levels"""
-    INFO = "info"
+    """Audit event severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -80,8 +76,7 @@ class AuditSeverity(Enum):
     EMERGENCY = "emergency"
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks for auditing"""
-    GDPR = "gdpr"
+    """Compliance frameworks for auditing"""    GDPR = "gdpr"
     DMCA = "dmca"
     SOX = "sox"
     HIPAA = "hipaa"
@@ -91,16 +86,14 @@ class ComplianceFramework(Enum):
     INTERNAL = "internal"
 
 class AuditStatus(Enum):
-    """Audit event status"""
-    ACTIVE = "active"
+    """Audit event status"""    ACTIVE = "active"
     RESOLVED = "resolved"
     INVESTIGATING = "investigating"
     ARCHIVED = "archived"
 
 @dataclass
 class AuditEvent:
-    """Comprehensive audit event record"""
-    id: str
+    """Comprehensive audit event record"""    id: str
     event_type: AuditType
     framework: ComplianceFramework
     severity: AuditSeverity
@@ -121,8 +114,7 @@ class AuditEvent:
 
 @dataclass
 class AuditQuery:
-    """Audit query parameters"""
-    start_date: Optional[datetime] = None
+    """Audit query parameters"""    start_date: Optional[datetime] = None
     end_date: Optional[datetime] = None
     event_types: Optional[List[AuditType]] = None
     frameworks: Optional[List[ComplianceFramework]] = None
@@ -136,8 +128,7 @@ class AuditQuery:
 
 @dataclass
 class ComplianceMetrics:
-    """Compliance metrics for reporting"""
-    framework: ComplianceFramework
+    """Compliance metrics for reporting"""    framework: ComplianceFramework
     period_start: datetime
     period_end: datetime
     total_events: int
@@ -152,8 +143,7 @@ class ComplianceMetrics:
 
 @dataclass
 class AuditReport:
-    """Comprehensive audit report"""
-    id: str
+    """Comprehensive audit report"""    id: str
     report_type: str
     framework: ComplianceFramework
     generated_at: datetime
@@ -167,16 +157,13 @@ class AuditReport:
     report_format: str = "json"
 
 class AuditSystem:
-    """
-    Enterprise-grade audit system for comprehensive compliance monitoring
+    """    Enterprise-grade audit system for comprehensive compliance monitoring
     
     Provides centralized audit logging, compliance tracking, automated reporting,
     and regulatory compliance verification with tamper-proof audit trails.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
-        """Initialize audit system with enterprise security features"""
-        self.config = config or {}
+        """Initialize audit system with enterprise security features"""        self.config = config or {}
         self.encryption = ContentEncryption()
         self.performance_monitor = PerformanceMonitor()
         
@@ -216,8 +203,7 @@ class AuditSystem:
         logger.info("AuditSystem initialized successfully")
     
     async def initialize_audit_system(self):
-        """Initialize comprehensive audit system"""
-        try:
+        """Initialize comprehensive audit system"""        try:
             # Initialize metrics collection
             await self._initialize_compliance_metrics()
             
@@ -239,8 +225,7 @@ class AuditSystem:
                             user_id: Optional[str] = None, ip_address: Optional[str] = None,
                             user_agent: Optional[str] = None, session_id: Optional[str] = None,
                             correlation_id: Optional[str] = None) -> AuditEvent:
-        """
-        Log comprehensive audit event with tamper-proof integrity
+        """        Log comprehensive audit event with tamper-proof integrity
         
         Args:
             event_type: Type of audit event
@@ -258,8 +243,7 @@ class AuditSystem:
             
         Returns:
             Created AuditEvent object
-        """
-        try:
+        """        try:
             event_id = str(uuid.uuid4())
             timestamp = datetime.now(timezone.utc)
             
@@ -315,16 +299,14 @@ class AuditSystem:
             raise ComplianceError(f"Audit logging failed: {e}")
     
     async def query_audit_events(self, query: AuditQuery) -> List[AuditEvent]:
-        """
-        Query audit events with comprehensive filtering
+        """        Query audit events with comprehensive filtering
         
         Args:
             query: AuditQuery object with filter parameters
             
         Returns:
             List of matching audit events
-        """
-        try:
+        """        try:
             start_time = time.time()
             matching_events = []
             
@@ -352,8 +334,7 @@ class AuditSystem:
             raise ComplianceError(f"Audit query failed: {e}")
     
     def _matches_query(self, event: AuditEvent, query: AuditQuery) -> bool:
-        """Check if audit event matches query parameters"""
-        try:
+        """Check if audit event matches query parameters"""        try:
             # Date range filter
             if query.start_date and event.timestamp < query.start_date:
                 return False
@@ -397,8 +378,7 @@ class AuditSystem:
     async def generate_compliance_report(self, framework: ComplianceFramework,
                                        start_date: datetime, end_date: datetime,
                                        report_type: str = "comprehensive") -> AuditReport:
-        """
-        Generate comprehensive compliance report for specified framework and period
+        """        Generate comprehensive compliance report for specified framework and period
         
         Args:
             framework: Compliance framework to report on
@@ -408,8 +388,7 @@ class AuditSystem:
             
         Returns:
             Generated AuditReport object
-        """
-        try:
+        """        try:
             report_id = str(uuid.uuid4())
             generation_start = time.time()
             
@@ -464,8 +443,7 @@ class AuditSystem:
     async def _calculate_compliance_metrics(self, framework: ComplianceFramework,
                                           start_date: datetime, end_date: datetime,
                                           events: List[AuditEvent]) -> ComplianceMetrics:
-        """Calculate comprehensive compliance metrics"""
-        try:
+        """Calculate comprehensive compliance metrics"""        try:
             total_events = len(events)
             
             # Count violations
@@ -519,8 +497,7 @@ class AuditSystem:
     
     async def _analyze_compliance_findings(self, events: List[AuditEvent],
                                          framework: ComplianceFramework) -> List[Dict[str, Any]]:
-        """Analyze audit events to identify compliance findings"""
-        try:
+        """Analyze audit events to identify compliance findings"""        try:
             findings = []
             
             # Analyze violation patterns
@@ -572,8 +549,7 @@ class AuditSystem:
     
     async def _generate_compliance_recommendations(self, metrics: ComplianceMetrics,
                                                  findings: List[Dict[str, Any]]) -> List[str]:
-        """Generate actionable compliance recommendations"""
-        recommendations = []
+        """Generate actionable compliance recommendations"""        recommendations = []
         
         # Score-based recommendations
         if metrics.compliance_score < 85:
@@ -628,8 +604,7 @@ class AuditSystem:
     async def _create_executive_summary(self, metrics: ComplianceMetrics,
                                       findings: List[Dict[str, Any]],
                                       framework: ComplianceFramework) -> str:
-        """Create executive summary for compliance report"""
-        try:
+        """Create executive summary for compliance report"""        try:
             summary_parts = []
             
             # Overview
@@ -686,8 +661,7 @@ class AuditSystem:
     
     async def export_audit_data(self, query: AuditQuery, format: str = "json",
                               file_path: Optional[str] = None) -> str:
-        """
-        Export audit data in various formats
+        """        Export audit data in various formats
         
         Args:
             query: Query parameters for data selection
@@ -696,8 +670,7 @@ class AuditSystem:
             
         Returns:
             Export file path or data string
-        """
-        try:
+        """        try:
             events = await self.query_audit_events(query)
             
             if format.lower() == "json":
@@ -714,8 +687,7 @@ class AuditSystem:
             raise ComplianceError(f"Data export failed: {e}")
     
     async def _export_json(self, events: List[AuditEvent], file_path: Optional[str] = None) -> str:
-        """Export events to JSON format"""
-        try:
+        """Export events to JSON format"""        try:
             export_data = {
                 'export_timestamp': datetime.now(timezone.utc).isoformat(),
                 'event_count': len(events),
@@ -754,8 +726,7 @@ class AuditSystem:
             raise
     
     async def _export_csv(self, events: List[AuditEvent], file_path: Optional[str] = None) -> str:
-        """Export events to CSV format"""
-        try:
+        """Export events to CSV format"""        try:
             if not file_path:
                 file_path = f"audit_export_{int(time.time())}.csv"
             
@@ -790,8 +761,7 @@ class AuditSystem:
             raise
     
     async def _export_xlsx(self, events: List[AuditEvent], file_path: Optional[str] = None) -> str:
-        """Export events to Excel format"""
-        try:
+        """Export events to Excel format"""        try:
             if not file_path:
                 file_path = f"audit_export_{int(time.time())}.xlsx"
             
@@ -848,8 +818,7 @@ class AuditSystem:
     
     async def verify_audit_integrity(self, start_date: Optional[datetime] = None,
                                    end_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """
-        Verify integrity of audit trail
+        """        Verify integrity of audit trail
         
         Args:
             start_date: Start date for verification (optional)
@@ -857,8 +826,7 @@ class AuditSystem:
             
         Returns:
             Integrity verification results
-        """
-        try:
+        """        try:
             verification_start = time.time()
             
             # Get events to verify
@@ -922,8 +890,7 @@ class AuditSystem:
     
     # Helper methods
     async def _generate_event_checksum(self, event: AuditEvent) -> str:
-        """Generate tamper-proof checksum for audit event"""
-        try:
+        """Generate tamper-proof checksum for audit event"""        try:
             # Create canonical representation of event data
             canonical_data = f"{event.id}:{event.timestamp.isoformat()}:{event.event_type.value}:" \
                            f"{event.entity_type}:{event.entity_id}:{event.event_description}:" \
@@ -938,8 +905,7 @@ class AuditSystem:
             return ""
     
     async def _update_audit_indices(self, event: AuditEvent):
-        """Update audit indices for fast retrieval"""
-        try:
+        """Update audit indices for fast retrieval"""        try:
             # Index by event type
             if event.event_type.value not in self.audit_indices['by_type']:
                 self.audit_indices['by_type'][event.event_type.value] = set()
@@ -971,8 +937,7 @@ class AuditSystem:
             logger.error(f"Index update failed: {e}")
     
     async def _cache_audit_event(self, event: AuditEvent):
-        """Cache audit event in Redis"""
-        if not self.redis_client:
+        """Cache audit event in Redis"""        if not self.redis_client:
             return
         
         try:
@@ -1006,8 +971,7 @@ class AuditSystem:
             logger.warning(f"Audit event caching failed: {e}")
     
     async def _update_compliance_metrics(self, event: AuditEvent):
-        """Update real-time compliance metrics"""
-        try:
+        """Update real-time compliance metrics"""        try:
             framework = event.framework
             
             if framework not in self.compliance_metrics:
@@ -1043,8 +1007,7 @@ class AuditSystem:
             logger.error(f"Metrics update failed: {e}")
     
     async def _process_high_priority_event(self, event: AuditEvent):
-        """Process high-priority audit events"""
-        try:
+        """Process high-priority audit events"""        try:
             # Send immediate notifications for critical events
             if event.severity == AuditSeverity.EMERGENCY:
                 await self._send_emergency_notification(event)
@@ -1059,24 +1022,20 @@ class AuditSystem:
             logger.error(f"High-priority event processing failed: {e}")
     
     async def _send_emergency_notification(self, event: AuditEvent):
-        """Send emergency notification for critical audit event"""
-        logger.critical(f"EMERGENCY AUDIT EVENT: {event.event_description} (ID: {event.id})")
+        """Send emergency notification for critical audit event"""        logger.critical(f"EMERGENCY AUDIT EVENT: {event.event_description} (ID: {event.id})")
         # Implementation would integrate with alerting systems
     
     async def _send_critical_notification(self, event: AuditEvent):
-        """Send critical notification for high-severity audit event"""
-        logger.error(f"CRITICAL AUDIT EVENT: {event.event_description} (ID: {event.id})")
+        """Send critical notification for high-severity audit event"""        logger.error(f"CRITICAL AUDIT EVENT: {event.event_description} (ID: {event.id})")
         # Implementation would integrate with notification systems
     
     async def _auto_escalate_event(self, event: AuditEvent):
-        """Auto-escalate security and breach events"""
-        logger.warning(f"Auto-escalating audit event: {event.id}")
+        """Auto-escalate security and breach events"""        logger.warning(f"Auto-escalating audit event: {event.id}")
         event.status = AuditStatus.INVESTIGATING
         # Implementation would integrate with incident management systems
     
     async def _initialize_compliance_metrics(self):
-        """Initialize compliance metrics for all frameworks"""
-        try:
+        """Initialize compliance metrics for all frameworks"""        try:
             for framework in ComplianceFramework:
                 if framework not in self.compliance_metrics:
                     self.compliance_metrics[framework] = ComplianceMetrics(
@@ -1096,8 +1055,7 @@ class AuditSystem:
             logger.error(f"Metrics initialization failed: {e}")
     
     async def _schedule_audit_cleanup(self):
-        """Schedule periodic audit data cleanup based on retention policies"""
-        while True:
+        """Schedule periodic audit data cleanup based on retention policies"""        while True:
             try:
                 await asyncio.sleep(86400)  # Run daily
                 
@@ -1121,8 +1079,7 @@ class AuditSystem:
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
     async def _schedule_integrity_checks(self):
-        """Schedule periodic integrity checks"""
-        while True:
+        """Schedule periodic integrity checks"""        while True:
             try:
                 await asyncio.sleep(86400 * 7)  # Run weekly
                 
@@ -1138,8 +1095,7 @@ class AuditSystem:
                 await asyncio.sleep(86400)  # Retry in 24 hours
     
     async def _archive_audit_event(self, event: AuditEvent):
-        """Archive expired audit event"""
-        try:
+        """Archive expired audit event"""        try:
             # Implementation would archive to long-term storage
             logger.debug(f"Archiving audit event: {event.id}")
         except Exception as e:
@@ -1147,8 +1103,7 @@ class AuditSystem:
     
     # Analysis helper methods
     async def _analyze_violation_patterns(self, events: List[AuditEvent]) -> Optional[Dict[str, Any]]:
-        """Analyze patterns in policy violations"""
-        violation_events = [e for e in events if e.event_type == AuditType.POLICY_VIOLATION]
+        """Analyze patterns in policy violations"""        violation_events = [e for e in events if e.event_type == AuditType.POLICY_VIOLATION]
         
         if len(violation_events) < 5:  # Need minimum events for pattern analysis
             return None
@@ -1176,8 +1131,7 @@ class AuditSystem:
         return pattern_data if pattern_data['recurring_entities'] else None
     
     async def _analyze_response_times(self, events: List[AuditEvent]) -> Optional[Dict[str, Any]]:
-        """Analyze response times to compliance incidents"""
-        # Simplified analysis - would be more sophisticated in production
+        """Analyze response times to compliance incidents"""        # Simplified analysis - would be more sophisticated in production
         slow_responses = []
         
         for event in events:
@@ -1194,8 +1148,7 @@ class AuditSystem:
     
     async def _analyze_coverage_gaps(self, events: List[AuditEvent], 
                                    framework: ComplianceFramework) -> Optional[Dict[str, Any]]:
-        """Analyze potential coverage gaps in monitoring"""
-        # Simplified gap analysis
+        """Analyze potential coverage gaps in monitoring"""        # Simplified gap analysis
         expected_event_types = {
             ComplianceFramework.GDPR: [AuditType.DATA_ACCESS, AuditType.USER_ACTION, AuditType.GDPR_EVENT],
             ComplianceFramework.DMCA: [AuditType.DMCA_EVENT, AuditType.POLICY_VIOLATION],
@@ -1218,8 +1171,7 @@ class AuditSystem:
     
     async def _calculate_compliance_trends(self, events: List[AuditEvent],
                                          start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Calculate compliance trends over time"""
-        try:
+        """Calculate compliance trends over time"""        try:
             # Calculate weekly trends
             period_days = (end_date - start_date).days
             weeks = max(1, period_days // 7)
@@ -1265,8 +1217,7 @@ class AuditSystem:
             return {'error': str(e)}
     
     def _get_gdpr_recommendations(self, metrics: ComplianceMetrics) -> List[str]:
-        """Get GDPR-specific recommendations"""
-        recommendations = []
+        """Get GDPR-specific recommendations"""        recommendations = []
         
         if metrics.violations_count > 10:
             recommendations.append(
@@ -1281,8 +1232,7 @@ class AuditSystem:
         return recommendations
     
     def _get_dmca_recommendations(self, metrics: ComplianceMetrics) -> List[str]:
-        """Get DMCA-specific recommendations"""
-        recommendations = []
+        """Get DMCA-specific recommendations"""        recommendations = []
         
         if metrics.violations_count > 5:
             recommendations.append(
@@ -1292,8 +1242,7 @@ class AuditSystem:
         return recommendations
     
     async def _analyze_gdpr_specific_findings(self, events: List[AuditEvent]) -> List[Dict[str, Any]]:
-        """Analyze GDPR-specific compliance findings"""
-        findings = []
+        """Analyze GDPR-specific compliance findings"""        findings = []
         
         # Look for consent-related issues
         consent_events = [e for e in events if 'consent' in e.event_description.lower()]
@@ -1309,8 +1258,7 @@ class AuditSystem:
         return findings
     
     async def _analyze_dmca_specific_findings(self, events: List[AuditEvent]) -> List[Dict[str, Any]]:
-        """Analyze DMCA-specific compliance findings"""
-        findings = []
+        """Analyze DMCA-specific compliance findings"""        findings = []
         
         # Look for takedown-related issues
         takedown_events = [e for e in events if 'takedown' in e.event_description.lower()]
@@ -1328,8 +1276,7 @@ class AuditSystem:
     async def _create_report_appendices(self, events: List[AuditEvent],
                                       metrics: ComplianceMetrics,
                                       framework: ComplianceFramework) -> Dict[str, Any]:
-        """Create detailed appendices for compliance reports"""
-        try:
+        """Create detailed appendices for compliance reports"""        try:
             appendices = {
                 'event_summary': {
                     'total_events': len(events),
@@ -1369,18 +1316,15 @@ class AuditSystem:
 
 
 class ComplianceReporter:
-    """
-    Advanced compliance reporting system with automated report generation
-    """
-    
+    """    Advanced compliance reporting system with automated report generation
+    """    
     def __init__(self, audit_system: AuditSystem):
         self.audit_system = audit_system
         self.report_templates = {}
         self.scheduled_reports = {}
     
     async def generate_executive_dashboard(self) -> Dict[str, Any]:
-        """Generate executive compliance dashboard"""
-        try:
+        """Generate executive compliance dashboard"""        try:
             dashboard = {
                 'overview': {},
                 'framework_summaries': {},
@@ -1430,8 +1374,7 @@ class ComplianceReporter:
             return {'error': str(e)}
     
     async def schedule_periodic_reports(self):
-        """Schedule automatic periodic compliance reports"""
-        try:
+        """Schedule automatic periodic compliance reports"""        try:
             # Daily summary reports
             daily_task = asyncio.create_task(self._generate_daily_reports())
             
@@ -1453,8 +1396,7 @@ class ComplianceReporter:
             logger.error(f"Report scheduling failed: {e}")
     
     async def _generate_daily_reports(self):
-        """Generate daily compliance summary reports"""
-        while True:
+        """Generate daily compliance summary reports"""        while True:
             try:
                 # Wait until start of next day
                 now = datetime.now(timezone.utc)
@@ -1487,8 +1429,7 @@ class ComplianceReporter:
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
     async def _generate_weekly_reports(self):
-        """Generate weekly compliance reports"""
-        while True:
+        """Generate weekly compliance reports"""        while True:
             try:
                 # Wait until Sunday
                 now = datetime.now(timezone.utc)
@@ -1524,8 +1465,7 @@ class ComplianceReporter:
                 await asyncio.sleep(86400)  # Retry in 24 hours
     
     async def _generate_monthly_reports(self):
-        """Generate monthly executive reports"""
-        while True:
+        """Generate monthly executive reports"""        while True:
             try:
                 # Wait until first day of next month
                 now = datetime.now(timezone.utc)
@@ -1557,16 +1497,13 @@ class ComplianceReporter:
                 await asyncio.sleep(86400)  # Retry in 24 hours
     
     async def _process_daily_report(self, report: AuditReport):
-        """Process and distribute daily compliance report"""
-        logger.info(f"Processing daily report: {report.id}")
+        """Process and distribute daily compliance report"""        logger.info(f"Processing daily report: {report.id}")
         # Implementation would send to stakeholders, store in database, etc.
     
     async def _process_weekly_report(self, report: AuditReport):
-        """Process and distribute weekly compliance report"""
-        logger.info(f"Processing weekly report: {report.id}")
+        """Process and distribute weekly compliance report"""        logger.info(f"Processing weekly report: {report.id}")
         # Implementation would generate detailed analysis, send to management, etc.
     
     async def _process_monthly_report(self, report: AuditReport):
-        """Process and distribute monthly executive report"""
-        logger.info(f"Processing monthly executive report: {report.id}")
+        """Process and distribute monthly executive report"""        logger.info(f"Processing monthly executive report: {report.id}")
         # Implementation would create executive briefing, board reporting, etc.

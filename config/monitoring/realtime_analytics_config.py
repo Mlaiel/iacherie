@@ -1,5 +1,4 @@
-"""
-Real-time Analytics Monitoring Configuration for IA-Influencer Agent Platform
+"""Real-time Analytics Monitoring Configuration for IA-Influencer Agent Platform
 =============================================================================
 
 Professional real-time analytics and business intelligence monitoring configuration
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import asyncio
 from typing import Dict, List, Any, Optional, Callable, Union
@@ -31,8 +29,7 @@ import pandas as pd
 
 
 class AnalyticsMetricType(Enum):
-    """Analytics metric types"""
-    COUNTER = "counter"
+    """Analytics metric types"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     RATE = "rate"
@@ -41,8 +38,7 @@ class AnalyticsMetricType(Enum):
 
 
 class TimeAggregation(Enum):
-    """Time aggregation methods"""
-    SUM = "sum"
+    """Time aggregation methods"""    SUM = "sum"
     AVG = "avg"
     MIN = "min"
     MAX = "max"
@@ -53,8 +49,7 @@ class TimeAggregation(Enum):
 
 
 class AlertCondition(Enum):
-    """Analytics alert conditions"""
-    ABOVE = "above"
+    """Analytics alert conditions"""    ABOVE = "above"
     BELOW = "below"
     EQUALS = "equals"
     ANOMALY = "anomaly"
@@ -64,8 +59,7 @@ class AlertCondition(Enum):
 
 @dataclass
 class AnalyticsMetric:
-    """Real-time analytics metric definition"""
-    name: str
+    """Real-time analytics metric definition"""    name: str
     metric_type: AnalyticsMetricType
     source_query: str
     aggregation: TimeAggregation
@@ -79,8 +73,7 @@ class AnalyticsMetric:
 
 @dataclass
 class AnalyticsDashboard:
-    """Analytics dashboard configuration"""
-    name: str
+    """Analytics dashboard configuration"""    name: str
     category: str
     description: str
     metrics: List[str] = field(default_factory=list)
@@ -93,8 +86,7 @@ class AnalyticsDashboard:
 
 @dataclass
 class AlertRule:
-    """Real-time analytics alert rule"""
-    name: str
+    """Real-time analytics alert rule"""    name: str
     metric: str
     condition: AlertCondition
     threshold: float
@@ -106,16 +98,13 @@ class AlertRule:
 
 
 class RealTimeAnalyticsConfig:
-    """
-    Professional real-time analytics monitoring configuration
+    """    Professional real-time analytics monitoring configuration
     
     Manages business intelligence, content analytics, and performance monitoring
     with advanced real-time insights and automated alerting.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize real-time analytics configuration"""
-        self._metrics = {}
+        """Initialize real-time analytics configuration"""        self._metrics = {}
         self._dashboards = {}
         self._alert_rules = {}
         self._data_sources = {}
@@ -152,13 +141,11 @@ class RealTimeAnalyticsConfig:
         self._setup_alert_rules()
     
     def _setup_content_creator_metrics(self):
-        """Setup content creator analytics metrics"""
-        # User engagement metrics
+        """Setup content creator analytics metrics"""        # User engagement metrics
         self.register_metric(AnalyticsMetric(
             name="active_creators_realtime",
             metric_type=AnalyticsMetricType.GAUGE,
-            source_query="""
-                SELECT COUNT(DISTINCT user_id) as active_creators
+            source_query="""                SELECT COUNT(DISTINCT user_id) as active_creators
                 FROM user_sessions 
                 WHERE created_at >= NOW() - INTERVAL '5 minutes'
                 AND session_type IN ('creation', 'upload', 'edit')
@@ -173,8 +160,7 @@ class RealTimeAnalyticsConfig:
         self.register_metric(AnalyticsMetric(
             name="content_uploads_per_minute",
             metric_type=AnalyticsMetricType.RATE,
-            source_query="""
-                SELECT COUNT(*) as uploads_count,
+            source_query="""                SELECT COUNT(*) as uploads_count,
                        content_type,
                        file_size_category
                 FROM content_uploads 
@@ -191,8 +177,7 @@ class RealTimeAnalyticsConfig:
         self.register_metric(AnalyticsMetric(
             name="processing_success_rate",
             metric_type=AnalyticsMetricType.PERCENTAGE,
-            source_query="""
-                SELECT 
+            source_query="""                SELECT 
                     (COUNT(*) FILTER (WHERE status = 'completed') * 100.0 / COUNT(*)) as success_rate,
                     processing_type
                 FROM content_processing_jobs
@@ -209,8 +194,7 @@ class RealTimeAnalyticsConfig:
         self.register_metric(AnalyticsMetric(
             name="user_interaction_events",
             metric_type=AnalyticsMetricType.COUNTER,
-            source_query="""
-                SELECT COUNT(*) as interaction_count,
+            source_query="""                SELECT COUNT(*) as interaction_count,
                        event_type,
                        user_tier
                 FROM user_interactions
@@ -224,13 +208,11 @@ class RealTimeAnalyticsConfig:
         ))
     
     def _setup_ai_processing_metrics(self):
-        """Setup AI processing analytics metrics"""
-        # AI model performance
+        """Setup AI processing analytics metrics"""        # AI model performance
         self.register_metric(AnalyticsMetric(
             name="ai_model_inference_latency",
             metric_type=AnalyticsMetricType.HISTOGRAM,
-            source_query="""
-                SELECT 
+            source_query="""                SELECT 
                     model_name,
                     AVG(inference_time_ms) as avg_latency,
                     PERCENTILE_CONT(0.95) WITHIN GROUP (ORDER BY inference_time_ms) as p95_latency
@@ -248,8 +230,7 @@ class RealTimeAnalyticsConfig:
         self.register_metric(AnalyticsMetric(
             name="ai_accuracy_score",
             metric_type=AnalyticsMetricType.GAUGE,
-            source_query="""
-                SELECT 
+            source_query="""                SELECT 
                     model_name,
                     AVG(accuracy_score) as avg_accuracy,
                     COUNT(*) as prediction_count
@@ -268,8 +249,7 @@ class RealTimeAnalyticsConfig:
         self.register_metric(AnalyticsMetric(
             name="ai_resource_utilization",
             metric_type=AnalyticsMetricType.GAUGE,
-            source_query="""
-                SELECT 
+            source_query="""                SELECT 
                     resource_type,
                     AVG(utilization_percent) as avg_utilization,
                     MAX(utilization_percent) as max_utilization
@@ -285,13 +265,11 @@ class RealTimeAnalyticsConfig:
         ))
     
     def _setup_protection_metrics(self):
-        """Setup content protection analytics metrics"""
-        # Fingerprint generation rate
+        """Setup content protection analytics metrics"""        # Fingerprint generation rate
         self.register_metric(AnalyticsMetric(
             name="fingerprint_generation_rate",
             metric_type=AnalyticsMetricType.RATE,
-            source_query="""
-                SELECT COUNT(*) as fingerprint_count,
+            source_query="""                SELECT COUNT(*) as fingerprint_count,
                        content_type,
                        fingerprint_algorithm
                 FROM content_fingerprints
@@ -308,8 +286,7 @@ class RealTimeAnalyticsConfig:
         self.register_metric(AnalyticsMetric(
             name="violation_detection_rate",
             metric_type=AnalyticsMetricType.COUNTER,
-            source_query="""
-                SELECT COUNT(*) as violation_count,
+            source_query="""                SELECT COUNT(*) as violation_count,
                        platform,
                        violation_type,
                        confidence_level
@@ -327,8 +304,7 @@ class RealTimeAnalyticsConfig:
         self.register_metric(AnalyticsMetric(
             name="false_positive_rate",
             metric_type=AnalyticsMetricType.PERCENTAGE,
-            source_query="""
-                SELECT 
+            source_query="""                SELECT 
                     (COUNT(*) FILTER (WHERE status = 'false_positive') * 100.0 / COUNT(*)) as fp_rate,
                     detection_algorithm
                 FROM violation_reviews
@@ -342,13 +318,11 @@ class RealTimeAnalyticsConfig:
         ))
     
     def _setup_monetization_metrics(self):
-        """Setup monetization analytics metrics"""
-        # Revenue tracking
+        """Setup monetization analytics metrics"""        # Revenue tracking
         self.register_metric(AnalyticsMetric(
             name="realtime_revenue",
             metric_type=AnalyticsMetricType.GAUGE,
-            source_query="""
-                SELECT 
+            source_query="""                SELECT 
                     SUM(amount) as total_revenue,
                     currency,
                     revenue_source
@@ -366,8 +340,7 @@ class RealTimeAnalyticsConfig:
         self.register_metric(AnalyticsMetric(
             name="subscription_conversions",
             metric_type=AnalyticsMetricType.RATE,
-            source_query="""
-                SELECT COUNT(*) as conversion_count,
+            source_query="""                SELECT COUNT(*) as conversion_count,
                        subscription_tier,
                        conversion_source
                 FROM subscription_events
@@ -385,8 +358,7 @@ class RealTimeAnalyticsConfig:
         self.register_metric(AnalyticsMetric(
             name="payment_success_rate",
             metric_type=AnalyticsMetricType.PERCENTAGE,
-            source_query="""
-                SELECT 
+            source_query="""                SELECT 
                     (COUNT(*) FILTER (WHERE status = 'completed') * 100.0 / COUNT(*)) as success_rate,
                     payment_method
                 FROM payment_transactions
@@ -400,8 +372,7 @@ class RealTimeAnalyticsConfig:
         ))
     
     def _setup_platform_dashboards(self):
-        """Setup platform monitoring dashboards"""
-        # Executive dashboard
+        """Setup platform monitoring dashboards"""        # Executive dashboard
         self.register_dashboard(AnalyticsDashboard(
             name="executive_overview",
             category="executive",
@@ -488,8 +459,7 @@ class RealTimeAnalyticsConfig:
         ))
     
     def _setup_alert_rules(self):
-        """Setup real-time analytics alert rules"""
-        # Critical system alerts
+        """Setup real-time analytics alert rules"""        # Critical system alerts
         self.register_alert_rule(AlertRule(
             name="high_processing_failure_rate",
             metric="processing_success_rate",
@@ -537,45 +507,36 @@ class RealTimeAnalyticsConfig:
         ))
     
     def register_metric(self, metric: AnalyticsMetric):
-        """Register analytics metric"""
-        self._metrics[metric.name] = metric
+        """Register analytics metric"""        self._metrics[metric.name] = metric
         logging.info(f"Registered analytics metric: {metric.name}")
     
     def register_dashboard(self, dashboard: AnalyticsDashboard):
-        """Register analytics dashboard"""
-        self._dashboards[dashboard.name] = dashboard
+        """Register analytics dashboard"""        self._dashboards[dashboard.name] = dashboard
         logging.info(f"Registered analytics dashboard: {dashboard.name}")
     
     def register_alert_rule(self, alert_rule: AlertRule):
-        """Register alert rule"""
-        self._alert_rules[alert_rule.name] = alert_rule
+        """Register alert rule"""        self._alert_rules[alert_rule.name] = alert_rule
         logging.info(f"Registered alert rule: {alert_rule.name}")
     
     def get_metric(self, name: str) -> Optional[AnalyticsMetric]:
-        """Get metric by name"""
-        return self._metrics.get(name)
+        """Get metric by name"""        return self._metrics.get(name)
     
     def get_dashboard(self, name: str) -> Optional[AnalyticsDashboard]:
-        """Get dashboard by name"""
-        return self._dashboards.get(name)
+        """Get dashboard by name"""        return self._dashboards.get(name)
     
     def get_alert_rule(self, name: str) -> Optional[AlertRule]:
-        """Get alert rule by name"""
-        return self._alert_rules.get(name)
+        """Get alert rule by name"""        return self._alert_rules.get(name)
     
     def get_metrics_by_type(self, metric_type: AnalyticsMetricType) -> List[AnalyticsMetric]:
-        """Get metrics by type"""
-        return [metric for metric in self._metrics.values() 
+        """Get metrics by type"""        return [metric for metric in self._metrics.values() 
                 if metric.metric_type == metric_type]
     
     def get_dashboards_by_role(self, role: str) -> List[AnalyticsDashboard]:
-        """Get dashboards accessible by role"""
-        return [dashboard for dashboard in self._dashboards.values()
+        """Get dashboards accessible by role"""        return [dashboard for dashboard in self._dashboards.values()
                 if role in dashboard.role_access or dashboard.public]
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export complete analytics configuration"""
-        return {
+        """Export complete analytics configuration"""        return {
             "metadata": {
                 "generated_at": datetime.utcnow().isoformat(),
                 "version": "1.0.0",

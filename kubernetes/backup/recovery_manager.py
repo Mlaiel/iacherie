@@ -1,5 +1,4 @@
-"""
-Recovery Manager for IA Influencer Agent Platform.
+"""Recovery Manager for IA Influencer Agent Platform.
 
 Provides comprehensive disaster recovery and backup restoration
 capabilities with automated rollback and verification.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import shutil
@@ -27,8 +25,7 @@ from ...core.exceptions import RecoveryError
 
 
 class RecoveryType(Enum):
-    """Recovery type enumeration."""
-    FULL_RESTORE = "full_restore"
+    """Recovery type enumeration."""    FULL_RESTORE = "full_restore"
     PARTIAL_RESTORE = "partial_restore"
     POINT_IN_TIME = "point_in_time"
     SELECTIVE_RESTORE = "selective_restore"
@@ -36,8 +33,7 @@ class RecoveryType(Enum):
 
 
 class RecoveryStatus(Enum):
-    """Recovery status enumeration."""
-    PENDING = "pending"
+    """Recovery status enumeration."""    PENDING = "pending"
     PREPARING = "preparing"
     RESTORING = "restoring"
     VERIFYING = "verifying"
@@ -49,8 +45,7 @@ class RecoveryStatus(Enum):
 
 @dataclass
 class RecoveryPlan:
-    """Recovery execution plan."""
-    recovery_id: str
+    """Recovery execution plan."""    recovery_id: str
     recovery_type: RecoveryType
     target_backups: List[str]
     restore_components: List[str]
@@ -66,8 +61,7 @@ class RecoveryPlan:
 
 @dataclass
 class RecoveryOperation:
-    """Recovery operation tracking."""
-    recovery_id: str
+    """Recovery operation tracking."""    recovery_id: str
     plan: RecoveryPlan
     status: RecoveryStatus
     started_at: datetime
@@ -84,21 +78,17 @@ class RecoveryOperation:
 
 
 class RecoveryManager:
-    """
-    Enterprise recovery manager for comprehensive disaster recovery.
+    """    Enterprise recovery manager for comprehensive disaster recovery.
     
     Handles backup restoration, point-in-time recovery, selective restoration,
     and automated rollback with verification capabilities.
     """
-
     def __init__(self, storage_config: Dict[str, Any]):
-        """
-        Initialize recovery manager.
+        """        Initialize recovery manager.
         
         Args:
             storage_config: Storage configuration
-        """
-        self.logger = logging.getLogger(__name__)
+        """        self.logger = logging.getLogger(__name__)
         self.storage_config = storage_config
         
         # Initialize components
@@ -122,8 +112,7 @@ class RecoveryManager:
         target_time: Optional[datetime] = None,
         custom_path: Optional[str] = None
     ) -> str:
-        """
-        Create comprehensive recovery plan.
+        """        Create comprehensive recovery plan.
         
         Args:
             recovery_type: Type of recovery operation
@@ -134,8 +123,7 @@ class RecoveryManager:
             
         Returns:
             Recovery plan ID
-        """
-        recovery_id = f"recovery_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """        recovery_id = f"recovery_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
         self.logger.info(f"Creating recovery plan: {recovery_id}")
         
@@ -175,8 +163,7 @@ class RecoveryManager:
         dry_run: bool = False,
         force: bool = False
     ) -> bool:
-        """
-        Execute recovery plan.
+        """        Execute recovery plan.
         
         Args:
             recovery_id: Recovery plan identifier
@@ -185,8 +172,7 @@ class RecoveryManager:
             
         Returns:
             Success status
-        """
-        # Get recovery plan
+        """        # Get recovery plan
         plan = await self.recovery_repo.get_recovery_plan(recovery_id)
         if not plan:
             raise RecoveryError(f"Recovery plan not found: {recovery_id}")
@@ -243,16 +229,14 @@ class RecoveryManager:
             return False
 
     async def cancel_recovery(self, recovery_id: str) -> bool:
-        """
-        Cancel active recovery operation.
+        """        Cancel active recovery operation.
         
         Args:
             recovery_id: Recovery operation identifier
             
         Returns:
             Success status
-        """
-        if recovery_id not in self.active_recoveries:
+        """        if recovery_id not in self.active_recoveries:
             self.logger.warning(f"Recovery not active: {recovery_id}")
             return False
         
@@ -276,16 +260,14 @@ class RecoveryManager:
         return True
 
     async def rollback_recovery(self, recovery_id: str) -> bool:
-        """
-        Rollback completed recovery operation.
+        """        Rollback completed recovery operation.
         
         Args:
             recovery_id: Recovery operation identifier
             
         Returns:
             Success status
-        """
-        # Find recovery in history
+        """        # Find recovery in history
         operation = None
         for recovery in self.recovery_history:
             if recovery.recovery_id == recovery_id:
@@ -342,16 +324,14 @@ class RecoveryManager:
             return False
 
     async def get_recovery_status(self, recovery_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Get recovery operation status.
+        """        Get recovery operation status.
         
         Args:
             recovery_id: Recovery operation identifier
             
         Returns:
             Recovery status information
-        """
-        # Check active recoveries
+        """        # Check active recoveries
         if recovery_id in self.active_recoveries:
             operation = self.active_recoveries[recovery_id]
             return {
@@ -396,8 +376,7 @@ class RecoveryManager:
         component_type: Optional[str] = None,
         date_range: Optional[Tuple[datetime, datetime]] = None
     ) -> List[Dict[str, Any]]:
-        """
-        List available recovery points.
+        """        List available recovery points.
         
         Args:
             component_type: Filter by component type
@@ -405,8 +384,7 @@ class RecoveryManager:
             
         Returns:
             List of recovery points
-        """
-        # Get all available backups
+        """        # Get all available backups
         backups = await self.storage.list_backups()
         
         recovery_points = []
@@ -441,16 +419,14 @@ class RecoveryManager:
         return recovery_points
 
     async def verify_recovery_readiness(self, recovery_id: str) -> Dict[str, Any]:
-        """
-        Verify system readiness for recovery operation.
+        """        Verify system readiness for recovery operation.
         
         Args:
             recovery_id: Recovery plan identifier
             
         Returns:
             Readiness verification results
-        """
-        plan = await self.recovery_repo.get_recovery_plan(recovery_id)
+        """        plan = await self.recovery_repo.get_recovery_plan(recovery_id)
         if not plan:
             raise RecoveryError(f"Recovery plan not found: {recovery_id}")
         
@@ -528,13 +504,11 @@ class RecoveryManager:
         return verification_results
 
     async def get_recovery_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive recovery statistics.
+        """        Get comprehensive recovery statistics.
         
         Returns:
             Recovery statistics
-        """
-        total_recoveries = len(self.recovery_history)
+        """        total_recoveries = len(self.recovery_history)
         active_recoveries = len(self.active_recoveries)
         
         # Calculate success rate
@@ -583,8 +557,7 @@ class RecoveryManager:
         operation: RecoveryOperation, 
         dry_run: bool
     ) -> bool:
-        """Execute all recovery steps."""
-        try:
+        """Execute all recovery steps."""        try:
             plan = operation.plan
             
             # Step 1: Pre-recovery preparation
@@ -627,8 +600,7 @@ class RecoveryManager:
         operation: RecoveryOperation, 
         dry_run: bool
     ) -> bool:
-        """Execute pre-recovery steps."""
-        try:
+        """Execute pre-recovery steps."""        try:
             for step in operation.plan.pre_recovery_steps:
                 self.logger.info(f"Executing pre-recovery step: {step}")
                 
@@ -649,8 +621,7 @@ class RecoveryManager:
             return False
 
     async def _create_rollback_point(self, operation: RecoveryOperation) -> str:
-        """Create rollback point before recovery."""
-        rollback_id = f"rollback_{operation.recovery_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
+        """Create rollback point before recovery."""        rollback_id = f"rollback_{operation.recovery_id}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         
         # Create system snapshot
         snapshot_path = self.temp_dir / rollback_id
@@ -666,8 +637,7 @@ class RecoveryManager:
         return rollback_id
 
     async def _restore_data(self, operation: RecoveryOperation, dry_run: bool) -> bool:
-        """Restore data from backups."""
-        try:
+        """Restore data from backups."""        try:
             plan = operation.plan
             
             for backup_id in plan.target_backups:
@@ -706,8 +676,7 @@ class RecoveryManager:
             return False
 
     async def _verify_restoration(self, operation: RecoveryOperation, dry_run: bool) -> bool:
-        """Verify restoration integrity."""
-        try:
+        """Verify restoration integrity."""        try:
             plan = operation.plan
             
             for component in plan.restore_components:
@@ -734,8 +703,7 @@ class RecoveryManager:
         operation: RecoveryOperation, 
         dry_run: bool
     ) -> bool:
-        """Execute post-recovery steps."""
-        try:
+        """Execute post-recovery steps."""        try:
             for step in operation.plan.post_recovery_steps:
                 self.logger.info(f"Executing post-recovery step: {step}")
                 
@@ -755,8 +723,7 @@ class RecoveryManager:
             return False
 
     async def _perform_rollback(self, operation: RecoveryOperation) -> bool:
-        """Perform rollback operation."""
-        try:
+        """Perform rollback operation."""        try:
             if not operation.rollback_point:
                 raise RecoveryError("No rollback point available")
             
@@ -786,17 +753,14 @@ class RecoveryManager:
 
     # Helper methods
     async def _get_default_components(self) -> List[str]:
-        """Get default components for restoration."""
-        return ["content", "users", "system"]
+        """Get default components for restoration."""        return ["content", "users", "system"]
 
     async def _estimate_recovery_duration(self, backup_ids: List[str]) -> int:
-        """Estimate recovery duration in seconds."""
-        # This would be based on backup sizes and historical performance
+        """Estimate recovery duration in seconds."""        # This would be based on backup sizes and historical performance
         return 3600  # 1 hour default
 
     async def _analyze_dependencies(self, components: List[str]) -> List[str]:
-        """Analyze component dependencies."""
-        dependencies = []
+        """Analyze component dependencies."""        dependencies = []
         
         if "content" in components:
             dependencies.append("users")
@@ -806,8 +770,7 @@ class RecoveryManager:
         return dependencies
 
     async def _generate_pre_recovery_steps(self, recovery_type: RecoveryType) -> List[str]:
-        """Generate pre-recovery steps."""
-        steps = [
+        """Generate pre-recovery steps."""        steps = [
             "validate_system_state",
             "check_storage_space",
             "backup_current_state"
@@ -819,8 +782,7 @@ class RecoveryManager:
         return steps
 
     async def _generate_post_recovery_steps(self, recovery_type: RecoveryType) -> List[str]:
-        """Generate post-recovery steps."""
-        steps = [
+        """Generate post-recovery steps."""        steps = [
             "restart_services",
             "validate_system_health",
             "cleanup_temporary_files"
@@ -829,8 +791,7 @@ class RecoveryManager:
         return steps
 
     async def _calculate_total_steps(self, plan: RecoveryPlan) -> int:
-        """Calculate total number of recovery steps."""
-        total = 0
+        """Calculate total number of recovery steps."""        total = 0
         total += len(plan.pre_recovery_steps)
         total += len(plan.target_backups)  # Restore steps
         total += len(plan.restore_components)  # Verification steps
@@ -840,8 +801,7 @@ class RecoveryManager:
         return total
 
     async def _estimate_completion_time(self, operation: RecoveryOperation) -> Optional[str]:
-        """Estimate completion time for active recovery."""
-        if operation.progress_percent <= 0:
+        """Estimate completion time for active recovery."""        if operation.progress_percent <= 0:
             return None
         
         elapsed = (datetime.now() - operation.started_at).total_seconds()
@@ -852,8 +812,7 @@ class RecoveryManager:
         return completion_time.isoformat()
 
     async def _calculate_required_space(self, plan: RecoveryPlan) -> int:
-        """Calculate required storage space for recovery."""
-        total_size = 0
+        """Calculate required storage space for recovery."""        total_size = 0
         
         for backup_id in plan.target_backups:
             backup_metadata = await self.storage.get_backup_metadata(backup_id)
@@ -863,13 +822,11 @@ class RecoveryManager:
         return int(total_size * 1.5)
 
     async def _get_available_space(self) -> int:
-        """Get available storage space."""
-        import shutil
+        """Get available storage space."""        import shutil
         return shutil.disk_usage("/").free
 
     async def _check_system_resources(self) -> bool:
-        """Check if system has sufficient resources."""
-        import psutil
+        """Check if system has sufficient resources."""        import psutil
         
         # Check CPU usage
         cpu_percent = psutil.cpu_percent(interval=1)
@@ -884,13 +841,11 @@ class RecoveryManager:
         return True
 
     async def _check_dependencies(self, plan: RecoveryPlan) -> bool:
-        """Check if all dependencies are met."""
-        # Implementation would check specific dependencies
+        """Check if all dependencies are met."""        # Implementation would check specific dependencies
         return True
 
     async def _check_conflicts(self, plan: RecoveryPlan) -> List[str]:
-        """Check for conflicts with current system state."""
-        conflicts = []
+        """Check for conflicts with current system state."""        conflicts = []
         
         # Check for active processes that might conflict
         # Check for locked files
@@ -899,13 +854,11 @@ class RecoveryManager:
         return conflicts
 
     async def _execute_step(self, step: str, operation: RecoveryOperation) -> bool:
-        """Execute a specific recovery step."""
-        # Implementation would execute specific recovery steps
+        """Execute a specific recovery step."""        # Implementation would execute specific recovery steps
         return True
 
     async def _capture_current_state(self, components: List[str]) -> Dict[str, Any]:
-        """Capture current system state for rollback."""
-        state = {}
+        """Capture current system state for rollback."""        state = {}
         
         for component in components:
             # Capture component state
@@ -914,8 +867,7 @@ class RecoveryManager:
         return state
 
     async def _get_component_state(self, component: str) -> Dict[str, Any]:
-        """Get current state of a component."""
-        # Implementation would capture component state
+        """Get current state of a component."""        # Implementation would capture component state
         return {}
 
     async def _restore_component(
@@ -924,21 +876,17 @@ class RecoveryManager:
         component_data: Dict[str, Any], 
         restore_path: Optional[str]
     ) -> bool:
-        """Restore a specific component."""
-        # Implementation would restore component data
+        """Restore a specific component."""        # Implementation would restore component data
         return True
 
     async def _count_files_in_component(self, component_data: Dict[str, Any]) -> int:
-        """Count files in component data."""
-        # Implementation would count files
+        """Count files in component data."""        # Implementation would count files
         return 1
 
     async def _verify_component(self, component: str, restore_path: Optional[str]) -> bool:
-        """Verify component integrity after restoration."""
-        # Implementation would verify component
+        """Verify component integrity after restoration."""        # Implementation would verify component
         return True
 
     async def _restore_component_state(self, component: str, state_data: Dict[str, Any]) -> None:
-        """Restore component to previous state."""
-        # Implementation would restore component state
+        """Restore component to previous state."""        # Implementation would restore component state
         pass

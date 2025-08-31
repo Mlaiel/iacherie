@@ -1,5 +1,4 @@
-"""
-Database Connection Manager - IA Influencer Agent Platform
+"""Database Connection Manager - IA Influencer Agent Platform
 
 Central orchestrator for all database connections supporting the content creator ecosystem.
 Manages PostgreSQL, Redis, MongoDB, Elasticsearch, Vector stores, and Object storage.
@@ -7,7 +6,6 @@ Manages PostgreSQL, Redis, MongoDB, Elasticsearch, Vector stores, and Object sto
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Type
@@ -28,8 +26,7 @@ from .tenant_manager import TenantConnectionManager
 
 
 class DatabaseType(Enum):
-    """Supported database types in the platform"""
-    POSTGRESQL = "postgresql"
+    """Supported database types in the platform"""    POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
     ELASTICSEARCH = "elasticsearch"
@@ -39,8 +36,7 @@ class DatabaseType(Enum):
 
 @dataclass
 class ConnectionConfig:
-    """Database connection configuration"""
-    host: str
+    """Database connection configuration"""    host: str
     port: int
     database: str
     username: str
@@ -55,8 +51,7 @@ class ConnectionConfig:
 
 
 class DatabaseConnectionManager:
-    """
-    Central database connection manager for IA Influencer platform.
+    """    Central database connection manager for IA Influencer platform.
     
     Orchestrates connections to all database systems required for:
     - Content creator management
@@ -64,8 +59,7 @@ class DatabaseConnectionManager:
     - Content protection and monitoring
     - Revenue tracking and monetization
     - Collaboration and distribution
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -84,8 +78,7 @@ class DatabaseConnectionManager:
         self._connections_healthy = False
         
     async def initialize(self) -> None:
-        """Initialize all database connections and components"""
-        if self._initialized:
+        """Initialize all database connections and components"""        if self._initialized:
             return
             
         try:
@@ -119,8 +112,7 @@ class DatabaseConnectionManager:
             raise
     
     async def _initialize_handlers(self) -> None:
-        """Initialize individual database handlers"""
-        
+        """Initialize individual database handlers"""        
         # PostgreSQL - Primary relational database
         if "postgresql" in self.config:
             self.handlers[DatabaseType.POSTGRESQL] = PostgreSQLConnectionHandler(
@@ -164,8 +156,7 @@ class DatabaseConnectionManager:
             await self.handlers[DatabaseType.OBJECT_STORAGE].initialize()
     
     async def _verify_connections(self) -> None:
-        """Verify all database connections are working"""
-        verification_tasks = []
+        """Verify all database connections are working"""        verification_tasks = []
         
         for db_type, handler in self.handlers.items():
             task = asyncio.create_task(
@@ -186,8 +177,7 @@ class DatabaseConnectionManager:
             raise ConnectionError(f"Failed to verify connections: {failed_connections}")
     
     async def _verify_single_connection(self, db_type: DatabaseType, handler: Any) -> None:
-        """Verify a single database connection"""
-        try:
+        """Verify a single database connection"""        try:
             await handler.health_check()
             self.logger.info(f"Connection verified for {db_type.value}")
         except Exception as e:
@@ -195,8 +185,7 @@ class DatabaseConnectionManager:
             raise
     
     async def get_connection(self, db_type: DatabaseType, tenant_id: Optional[str] = None):
-        """Get a database connection for the specified type and tenant"""
-        if not self._initialized:
+        """Get a database connection for the specified type and tenant"""        if not self._initialized:
             await self.initialize()
         
         if db_type not in self.handlers:
@@ -211,8 +200,7 @@ class DatabaseConnectionManager:
     
     @asynccontextmanager
     async def transaction(self, tenant_id: Optional[str] = None):
-        """Context manager for cross-database transactions"""
-        async with self.transaction_manager.transaction(tenant_id) as tx:
+        """Context manager for cross-database transactions"""        async with self.transaction_manager.transaction(tenant_id) as tx:
             yield tx
     
     async def execute_query(self, 
@@ -220,13 +208,11 @@ class DatabaseConnectionManager:
                           query: str, 
                           params: Optional[Dict] = None,
                           tenant_id: Optional[str] = None) -> Any:
-        """Execute a query on the specified database"""
-        connection = await self.get_connection(db_type, tenant_id)
+        """Execute a query on the specified database"""        connection = await self.get_connection(db_type, tenant_id)
         return await connection.execute(query, params)
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get connection metrics for all databases"""
-        metrics = {}
+        """Get connection metrics for all databases"""        metrics = {}
         
         for db_type, handler in self.handlers.items():
             if hasattr(handler, 'get_metrics'):
@@ -241,12 +227,10 @@ class DatabaseConnectionManager:
         return metrics
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for all database connections"""
-        return await self.health_monitor.comprehensive_health_check()
+        """Comprehensive health check for all database connections"""        return await self.health_monitor.comprehensive_health_check()
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown all database connections"""
-        if not self._initialized:
+        """Gracefully shutdown all database connections"""        if not self._initialized:
             return
         
         self.logger.info("Shutting down database connections...")
@@ -276,8 +260,7 @@ _connection_manager: Optional[DatabaseConnectionManager] = None
 
 
 def get_connection_manager() -> DatabaseConnectionManager:
-    """Get the global database connection manager instance"""
-    global _connection_manager
+    """Get the global database connection manager instance"""    global _connection_manager
     
     if _connection_manager is None:
         raise RuntimeError("Database connection manager not initialized")
@@ -286,8 +269,7 @@ def get_connection_manager() -> DatabaseConnectionManager:
 
 
 def initialize_connection_manager(config: Dict[str, Any]) -> DatabaseConnectionManager:
-    """Initialize the global database connection manager"""
-    global _connection_manager
+    """Initialize the global database connection manager"""    global _connection_manager
     
     _connection_manager = DatabaseConnectionManager(config)
     return _connection_manager

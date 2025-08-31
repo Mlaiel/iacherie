@@ -1,5 +1,4 @@
-"""
-Revenue Benchmarker - Competitive analysis and industry benchmarking system
+"""Revenue Benchmarker - Competitive analysis and industry benchmarking system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -26,7 +25,6 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Decision Making
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -48,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class BenchmarkCategory(Enum):
-    """Benchmark categories"""
-    PLATFORM_REVENUE = "platform_revenue"
+    """Benchmark categories"""    PLATFORM_REVENUE = "platform_revenue"
     CONTENT_TYPE = "content_type"
     GEOGRAPHIC = "geographic"
     DEMOGRAPHIC = "demographic"
@@ -60,8 +57,7 @@ class BenchmarkCategory(Enum):
 
 
 class BenchmarkMetric(Enum):
-    """Benchmark metrics"""
-    REVENUE_PER_STREAM = "revenue_per_stream"
+    """Benchmark metrics"""    REVENUE_PER_STREAM = "revenue_per_stream"
     REVENUE_PER_VIEW = "revenue_per_view"
     REVENUE_PER_FOLLOWER = "revenue_per_follower"
     MONTHLY_RECURRING_REVENUE = "monthly_recurring_revenue"
@@ -74,8 +70,7 @@ class BenchmarkMetric(Enum):
 
 
 class CompetitorTier(Enum):
-    """Competitor tiers"""
-    DIRECT_COMPETITOR = "direct_competitor"
+    """Competitor tiers"""    DIRECT_COMPETITOR = "direct_competitor"
     INDIRECT_COMPETITOR = "indirect_competitor"
     ASPIRATIONAL_TARGET = "aspirational_target"
     MARKET_LEADER = "market_leader"
@@ -85,8 +80,7 @@ class CompetitorTier(Enum):
 
 @dataclass
 class BenchmarkData:
-    """Benchmark data point"""
-    data_id: str
+    """Benchmark data point"""    data_id: str
     category: BenchmarkCategory
     metric: BenchmarkMetric
     value: Decimal
@@ -98,14 +92,12 @@ class BenchmarkData:
     
     @property
     def age_days(self) -> int:
-        """Get age of benchmark data in days"""
-        return (datetime.utcnow() - self.timestamp).days
+        """Get age of benchmark data in days"""        return (datetime.utcnow() - self.timestamp).days
 
 
 @dataclass
 class CompetitorProfile:
-    """Competitor profile"""
-    competitor_id: str
+    """Competitor profile"""    competitor_id: str
     name: str
     tier: CompetitorTier
     platforms: List[str]
@@ -120,8 +112,7 @@ class CompetitorProfile:
 
 @dataclass
 class BenchmarkMetrics:
-    """Benchmark analysis metrics"""
-    metric: BenchmarkMetric
+    """Benchmark analysis metrics"""    metric: BenchmarkMetric
     category: BenchmarkCategory
     percentile_25: Decimal
     percentile_50: Decimal
@@ -136,14 +127,12 @@ class BenchmarkMetrics:
     
     @property
     def performance_range(self) -> Decimal:
-        """Get performance range (75th - 25th percentile)"""
-        return self.percentile_75 - self.percentile_25
+        """Get performance range (75th - 25th percentile)"""        return self.percentile_75 - self.percentile_25
 
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor analysis results"""
-    user_position: Dict[str, Any]
+    """Competitor analysis results"""    user_position: Dict[str, Any]
     competitor_rankings: List[Dict[str, Any]]
     market_gaps: List[Dict[str, Any]]
     opportunities: List[Dict[str, Any]]
@@ -153,8 +142,7 @@ class CompetitorAnalysis:
 
 
 class RevenueBenchmarker:
-    """Advanced revenue benchmarking and competitive analysis system"""
-    
+    """Advanced revenue benchmarking and competitive analysis system"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.benchmark_data = []
@@ -163,8 +151,7 @@ class RevenueBenchmarker:
         self.scaler = StandardScaler()
         
     async def initialize(self) -> None:
-        """Initialize benchmarker"""
-        try:
+        """Initialize benchmarker"""        try:
             # Load benchmark data sources
             await self._load_benchmark_data()
             
@@ -181,8 +168,7 @@ class RevenueBenchmarker:
             raise
     
     async def _load_benchmark_data(self) -> None:
-        """Load benchmark data from various sources"""
-        # In production, load from multiple data sources:
+        """Load benchmark data from various sources"""        # In production, load from multiple data sources:
         # - Industry reports
         # - Public APIs
         # - Partner data exchanges
@@ -215,8 +201,7 @@ class RevenueBenchmarker:
         self.benchmark_data.extend(sample_data)
     
     async def _load_competitor_profiles(self) -> None:
-        """Load competitor profiles"""
-        # Sample competitor data
+        """Load competitor profiles"""        # Sample competitor data
         sample_competitor = CompetitorProfile(
             competitor_id=str(uuid.uuid4()),
             name="Sample Creator",
@@ -241,8 +226,7 @@ class RevenueBenchmarker:
         self.competitors[sample_competitor.competitor_id] = sample_competitor
     
     async def _initialize_market_clustering(self) -> None:
-        """Initialize market clustering for segmentation"""
-        if not self.benchmark_data:
+        """Initialize market clustering for segmentation"""        if not self.benchmark_data:
             return
         
         # Prepare data for clustering
@@ -276,8 +260,7 @@ class RevenueBenchmarker:
             }
     
     def _find_optimal_clusters(self, data: np.ndarray, max_k: int = 10) -> int:
-        """Find optimal number of clusters using elbow method and silhouette score"""
-        if len(data) < 2:
+        """Find optimal number of clusters using elbow method and silhouette score"""        if len(data) < 2:
             return 1
         
         max_k = min(max_k, len(data) - 1)
@@ -299,8 +282,7 @@ class RevenueBenchmarker:
         metric: BenchmarkMetric,
         filters: Optional[Dict[str, Any]] = None
     ) -> BenchmarkMetrics:
-        """Generate benchmark metrics for specific category and metric"""
-        try:
+        """Generate benchmark metrics for specific category and metric"""        try:
             # Filter benchmark data
             filtered_data = self._filter_benchmark_data(category, metric, filters)
             
@@ -355,8 +337,7 @@ class RevenueBenchmarker:
         metric: BenchmarkMetric,
         filters: Optional[Dict[str, Any]] = None
     ) -> List[BenchmarkData]:
-        """Filter benchmark data based on criteria"""
-        filtered = [
+        """Filter benchmark data based on criteria"""        filtered = [
             data for data in self.benchmark_data
             if data.category == category and data.metric == metric
         ]
@@ -393,8 +374,7 @@ class RevenueBenchmarker:
         categories: List[BenchmarkCategory],
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Benchmark user performance against market data"""
-        try:
+        """Benchmark user performance against market data"""        try:
             results = {}
             
             for category in categories:
@@ -446,8 +426,7 @@ class RevenueBenchmarker:
             raise
     
     def _get_relevant_metrics_for_category(self, category: BenchmarkCategory) -> List[BenchmarkMetric]:
-        """Get relevant metrics for a benchmark category"""
-        category_metrics = {
+        """Get relevant metrics for a benchmark category"""        category_metrics = {
             BenchmarkCategory.PLATFORM_REVENUE: [
                 BenchmarkMetric.REVENUE_PER_STREAM,
                 BenchmarkMetric.REVENUE_PER_VIEW,
@@ -468,8 +447,7 @@ class RevenueBenchmarker:
         return category_metrics.get(category, list(BenchmarkMetric))
     
     def _calculate_percentile_position(self, user_value: Decimal, benchmark: BenchmarkMetrics) -> float:
-        """Calculate user's percentile position in benchmark distribution"""
-        # Simple percentile calculation based on quartiles
+        """Calculate user's percentile position in benchmark distribution"""        # Simple percentile calculation based on quartiles
         if user_value <= benchmark.percentile_25:
             return 25.0 * float(user_value / benchmark.percentile_25)
         elif user_value <= benchmark.percentile_50:
@@ -482,8 +460,7 @@ class RevenueBenchmarker:
             return min(100.0, 90.0 + 10.0 * float((user_value - benchmark.percentile_90) / benchmark.percentile_90))
     
     def _determine_performance_tier(self, percentile_position: float) -> str:
-        """Determine performance tier based on percentile position"""
-        if percentile_position >= 90:
+        """Determine performance tier based on percentile position"""        if percentile_position >= 90:
             return "Exceptional"
         elif percentile_position >= 75:
             return "Above Average"
@@ -495,8 +472,7 @@ class RevenueBenchmarker:
             return "Needs Improvement"
     
     async def _generate_overall_assessment(self, results: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate overall performance assessment"""
-        try:
+        """Generate overall performance assessment"""        try:
             all_percentiles = []
             category_assessments = {}
             
@@ -548,8 +524,7 @@ class RevenueBenchmarker:
         user_profile: Dict[str, Any],
         competitor_tiers: Optional[List[CompetitorTier]] = None
     ) -> CompetitorAnalysis:
-        """Analyze competitive landscape and positioning"""
-        try:
+        """Analyze competitive landscape and positioning"""        try:
             competitor_tiers = competitor_tiers or [
                 CompetitorTier.DIRECT_COMPETITOR,
                 CompetitorTier.MARKET_LEADER
@@ -598,8 +573,7 @@ class RevenueBenchmarker:
         user_profile: Dict[str, Any],
         competitors: List[CompetitorProfile]
     ) -> Dict[str, Any]:
-        """Analyze user's competitive position"""
-        user_followers = user_profile.get('follower_count', 0)
+        """Analyze user's competitive position"""        user_followers = user_profile.get('follower_count', 0)
         user_revenue = Decimal(str(user_profile.get('monthly_revenue', 0)))
         user_engagement = user_profile.get('engagement_rate', 0)
         
@@ -630,8 +604,7 @@ class RevenueBenchmarker:
         }
     
     async def _rank_competitors(self, competitors: List[CompetitorProfile]) -> List[Dict[str, Any]]:
-        """Rank competitors by multiple criteria"""
-        ranked_competitors = []
+        """Rank competitors by multiple criteria"""        ranked_competitors = []
         
         for comp in competitors:
             # Calculate composite score
@@ -668,8 +641,7 @@ class RevenueBenchmarker:
         user_profile: Dict[str, Any],
         competitors: List[CompetitorProfile]
     ) -> List[Dict[str, Any]]:
-        """Identify market gaps and underserved segments"""
-        gaps = []
+        """Identify market gaps and underserved segments"""        gaps = []
         
         # Platform gap analysis
         user_platforms = set(user_profile.get('platforms', []))
@@ -723,8 +695,7 @@ class RevenueBenchmarker:
         user_profile: Dict[str, Any],
         competitors: List[CompetitorProfile]
     ) -> List[Dict[str, Any]]:
-        """Identify growth opportunities"""
-        opportunities = []
+        """Identify growth opportunities"""        opportunities = []
         
         # High-performing competitor strategies
         top_performers = [comp for comp in competitors if comp.tier == CompetitorTier.MARKET_LEADER]
@@ -764,8 +735,7 @@ class RevenueBenchmarker:
         user_profile: Dict[str, Any],
         competitors: List[CompetitorProfile]
     ) -> List[Dict[str, Any]]:
-        """Identify competitive threats"""
-        threats = []
+        """Identify competitive threats"""        threats = []
         
         # Fast-growing competitors
         fast_growers = [
@@ -810,8 +780,7 @@ class RevenueBenchmarker:
         opportunities: List[Dict[str, Any]],
         threats: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate competitive recommendations"""
-        recommendations = []
+        """Generate competitive recommendations"""        recommendations = []
         
         # Position-based recommendations
         if user_position['revenue_percentile'] < 50:
@@ -847,8 +816,7 @@ class RevenueBenchmarker:
         user_profile: Dict[str, Any],
         categories: List[BenchmarkCategory]
     ) -> Dict[str, Any]:
-        """Export comprehensive benchmark report"""
-        try:
+        """Export comprehensive benchmark report"""        try:
             # Generate benchmark analysis
             benchmark_results = await self.benchmark_user_performance(
                 user_profile, categories
@@ -892,8 +860,7 @@ class RevenueBenchmarker:
         benchmark_results: Dict[str, Any],
         competitive_analysis: CompetitorAnalysis
     ) -> List[str]:
-        """Generate key insights from analysis"""
-        insights = []
+        """Generate key insights from analysis"""        insights = []
         
         # Benchmark insights
         overall_assessment = benchmark_results.get('overall_assessment', {})
@@ -933,8 +900,7 @@ class RevenueBenchmarker:
         benchmark_results: Dict[str, Any],
         competitive_analysis: CompetitorAnalysis
     ) -> List[Dict[str, Any]]:
-        """Generate actionable plan based on analysis"""
-        action_plan = []
+        """Generate actionable plan based on analysis"""        action_plan = []
         
         # Priority actions from competitive recommendations
         recommendations = competitive_analysis.recommendations[:5]  # Top 5
@@ -980,7 +946,6 @@ class RevenueBenchmarker:
 
 
 async def create_benchmarker(config: Optional[Dict[str, Any]] = None) -> RevenueBenchmarker:
-    """Factory function to create and initialize revenue benchmarker"""
-    benchmarker = RevenueBenchmarker(config)
+    """Factory function to create and initialize revenue benchmarker"""    benchmarker = RevenueBenchmarker(config)
     await benchmarker.initialize()
     return benchmarker

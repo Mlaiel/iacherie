@@ -1,5 +1,4 @@
-"""
-🏅 Leaderboard Repository - IA Influencer Agent Platform Enterprise
+"""🏅 Leaderboard Repository - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/database/gamification/leaderboard_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,7 +20,6 @@ LEADERBOARD REPOSITORY ARCHITECTURE:
 Score Aggregation → Ranking Calculation → Real-time Updates → 
 Performance Analytics → Competition Management → Social Features
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -35,8 +33,7 @@ import statistics
 from ...data_management.repositories.base_repository import BaseRepository, OperationType
 
 class LeaderboardType(Enum):
-    """Leaderboard competition types"""
-    GLOBAL = "global"
+    """Leaderboard competition types"""    GLOBAL = "global"
     REGIONAL = "regional"
     CATEGORY = "category"
     CHALLENGE = "challenge"
@@ -44,8 +41,7 @@ class LeaderboardType(Enum):
     CUSTOM = "custom"
 
 class TimeFrame(Enum):
-    """Leaderboard time frames"""
-    DAILY = "daily"
+    """Leaderboard time frames"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -53,8 +49,7 @@ class TimeFrame(Enum):
     ALL_TIME = "all_time"
 
 class ScoreMetric(Enum):
-    """Score calculation metrics"""
-    EXPERIENCE_POINTS = "experience_points"
+    """Score calculation metrics"""    EXPERIENCE_POINTS = "experience_points"
     ACHIEVEMENTS_COUNT = "achievements_count"
     CHALLENGES_COMPLETED = "challenges_completed"
     CONTENT_QUALITY = "content_quality"
@@ -64,8 +59,7 @@ class ScoreMetric(Enum):
     COMPOSITE_SCORE = "composite_score"
 
 class RankingStatus(Enum):
-    """Ranking status"""
-    ACTIVE = "active"
+    """Ranking status"""    ACTIVE = "active"
     CLIMBING = "climbing"
     FALLING = "falling"
     STABLE = "stable"
@@ -74,8 +68,7 @@ class RankingStatus(Enum):
 
 @dataclass
 class LeaderboardEntry:
-    """Individual leaderboard entry"""
-    entry_id: str
+    """Individual leaderboard entry"""    entry_id: str
     user_id: str
     leaderboard_id: str
     current_rank: int
@@ -93,8 +86,7 @@ class LeaderboardEntry:
 
 @dataclass
 class Leaderboard:
-    """Leaderboard configuration"""
-    leaderboard_id: str
+    """Leaderboard configuration"""    leaderboard_id: str
     name: str
     description: str
     leaderboard_type: LeaderboardType
@@ -113,8 +105,7 @@ class Leaderboard:
     metadata: Dict[str, Any]
 
 class LeaderboardRepository(BaseRepository[Leaderboard]):
-    """Enterprise leaderboard management repository"""
-    
+    """Enterprise leaderboard management repository"""    
     def __init__(self, db_connection=None, cache_manager=None,
                  analytics_service=None, notification_service=None,
                  user_service=None, gamification_service=None):
@@ -172,8 +163,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         reset_schedule: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Leaderboard:
-        """Create new leaderboard with configuration"""
-        try:
+        """Create new leaderboard with configuration"""        try:
             # Validate inputs
             if not name or len(name) < 3:
                 raise ValueError("Leaderboard name must be at least 3 characters")
@@ -252,8 +242,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         score_updates: Dict[ScoreMetric, float],
         activity_timestamp: Optional[datetime] = None
     ) -> Optional[LeaderboardEntry]:
-        """Update user score on leaderboard"""
-        try:
+        """Update user score on leaderboard"""        try:
             # Get leaderboard configuration
             leaderboard = self.get_by_id(leaderboard_id)
             if not leaderboard or not leaderboard.is_active:
@@ -344,8 +333,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         offset: int = 0,
         user_context: Optional[str] = None
     ) -> List[LeaderboardEntry]:
-        """Get leaderboard rankings with user context"""
-        try:
+        """Get leaderboard rankings with user context"""        try:
             cache_key = f"leaderboard_rankings:{leaderboard_id}:{limit}:{offset}"
             
             # Try cache first
@@ -378,8 +366,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         leaderboard_id: str,
         user_id: str
     ) -> Optional[Dict[str, Any]]:
-        """Get detailed user ranking information"""
-        try:
+        """Get detailed user ranking information"""        try:
             # Get user entry
             entry = self.get_user_entry(leaderboard_id, user_id)
             if not entry:
@@ -420,8 +407,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         leaderboard_id: str,
         days: int = 30
     ) -> Dict[str, Any]:
-        """Get comprehensive leaderboard analytics"""
-        try:
+        """Get comprehensive leaderboard analytics"""        try:
             cache_key = f"leaderboard_analytics:{leaderboard_id}:{days}"
             
             # Try cache first
@@ -448,8 +434,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         leaderboard_id: str,
         preserve_history: bool = True
     ) -> bool:
-        """Reset leaderboard for new period"""
-        try:
+        """Reset leaderboard for new period"""        try:
             leaderboard = self.get_by_id(leaderboard_id)
             if not leaderboard:
                 return False
@@ -492,8 +477,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         name: str,
         leaderboard_type: LeaderboardType
     ) -> str:
-        """Generate unique leaderboard ID"""
-        base_string = f"{leaderboard_type.value}_{name.lower().replace(' ', '_')}"
+        """Generate unique leaderboard ID"""        base_string = f"{leaderboard_type.value}_{name.lower().replace(' ', '_')}"
         timestamp = str(int(datetime.now().timestamp()))
         return f"lb_{hashlib.md5((base_string + timestamp).encode()).hexdigest()[:12]}"
     
@@ -502,8 +486,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         time_frame: TimeFrame,
         reset_schedule: Optional[str]
     ) -> Optional[datetime]:
-        """Calculate next reset time based on time frame"""
-        current_time = datetime.now(timezone.utc)
+        """Calculate next reset time based on time frame"""        current_time = datetime.now(timezone.utc)
         
         if time_frame == TimeFrame.DAILY:
             return current_time.replace(hour=0, minute=0, second=0, microsecond=0) + timedelta(days=1)
@@ -524,8 +507,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         score_breakdown: Dict[str, float],
         metric_weights: Dict[ScoreMetric, float]
     ) -> float:
-        """Calculate weighted composite score"""
-        total_score = 0.0
+        """Calculate weighted composite score"""        total_score = 0.0
         
         for metric, weight in metric_weights.items():
             metric_value = score_breakdown.get(metric.value, 0.0)
@@ -534,8 +516,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         return total_score
     
     def _recalculate_leaderboard_rankings(self, leaderboard_id: str):
-        """Recalculate all rankings for leaderboard"""
-        try:
+        """Recalculate all rankings for leaderboard"""        try:
             # Get all entries sorted by score
             entries = self._query_leaderboard_entries(
                 leaderboard_id, limit=None, offset=0, order_by="score DESC"
@@ -582,8 +563,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         rank_change: int,
         previous_rank: Optional[int]
     ) -> RankingStatus:
-        """Determine ranking status based on rank change"""
-        if previous_rank is None:
+        """Determine ranking status based on rank change"""        if previous_rank is None:
             return RankingStatus.NEW_ENTRY
         
         if rank_change >= self._rank_change_thresholds["major_climb"]:
@@ -598,15 +578,13 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
             return RankingStatus.FALLING
     
     def _determine_tier(self, percentile: float) -> str:
-        """Determine tier based on percentile"""
-        for tier, threshold in self._tier_thresholds.items():
+        """Determine tier based on percentile"""        for tier, threshold in self._tier_thresholds.items():
             if percentile >= threshold:
                 return tier
         return "bronze"
     
     def _initialize_leaderboard_entries(self, leaderboard_id: str):
-        """Initialize leaderboard with existing user data"""
-        # Implementation would populate initial entries
+        """Initialize leaderboard with existing user data"""        # Implementation would populate initial entries
         pass
     
     def get_user_entry(
@@ -614,13 +592,11 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         leaderboard_id: str,
         user_id: str
     ) -> Optional[LeaderboardEntry]:
-        """Get user's leaderboard entry"""
-        # Implementation would query user entry
+        """Get user's leaderboard entry"""        # Implementation would query user entry
         return None
     
     def _save_leaderboard_entry(self, entry: LeaderboardEntry) -> LeaderboardEntry:
-        """Save leaderboard entry"""
-        # Implementation would save to database
+        """Save leaderboard entry"""        # Implementation would save to database
         return entry
     
     def _query_leaderboard_entries(
@@ -630,8 +606,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         offset: int,
         order_by: str = "current_rank"
     ) -> List[LeaderboardEntry]:
-        """Query leaderboard entries"""
-        # Implementation would query entries
+        """Query leaderboard entries"""        # Implementation would query entries
         return []
     
     def _add_user_context(
@@ -639,13 +614,11 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         rankings: List[LeaderboardEntry],
         user_id: str
     ) -> List[LeaderboardEntry]:
-        """Add user context to rankings"""
-        # Implementation would add context
+        """Add user context to rankings"""        # Implementation would add context
         return rankings
     
     def get_participant_count(self, leaderboard_id: str) -> int:
-        """Get total participant count"""
-        # Implementation would count participants
+        """Get total participant count"""        # Implementation would count participants
         return 0
     
     def get_nearby_entries(
@@ -654,8 +627,7 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         user_id: str,
         radius: int
     ) -> List[LeaderboardEntry]:
-        """Get nearby leaderboard entries"""
-        # Implementation would get nearby entries
+        """Get nearby leaderboard entries"""        # Implementation would get nearby entries
         return []
     
     def get_user_rank_history(
@@ -664,68 +636,56 @@ class LeaderboardRepository(BaseRepository[Leaderboard]):
         user_id: str,
         days: int
     ) -> List[Dict[str, Any]]:
-        """Get user rank history"""
-        # Implementation would get rank history
+        """Get user rank history"""        # Implementation would get rank history
         return []
     
     def _get_tier_info(self, tier: str, percentile: float) -> Dict[str, Any]:
-        """Get tier information"""
-        return {"tier": tier, "percentile": percentile}
+        """Get tier information"""        return {"tier": tier, "percentile": percentile}
     
     def _calculate_next_milestone(
         self,
         entry: LeaderboardEntry,
         leaderboard: Leaderboard
     ) -> Dict[str, Any]:
-        """Calculate next milestone for user"""
-        return {}
+        """Calculate next milestone for user"""        return {}
     
     def _calculate_achievement_potential(self, entry: LeaderboardEntry) -> Dict[str, Any]:
-        """Calculate achievement potential"""
-        return {}
+        """Calculate achievement potential"""        return {}
     
     def _calculate_leaderboard_analytics(
         self,
         leaderboard_id: str,
         days: int
     ) -> Dict[str, Any]:
-        """Calculate comprehensive analytics"""
-        return {}
+        """Calculate comprehensive analytics"""        return {}
     
     def _archive_leaderboard_entries(self, leaderboard_id: str, timestamp: datetime):
-        """Archive current leaderboard entries"""
-        # Implementation would archive entries
+        """Archive current leaderboard entries"""        # Implementation would archive entries
         pass
     
     def _clear_leaderboard_entries(self, leaderboard_id: str):
-        """Clear current leaderboard entries"""
-        # Implementation would clear entries
+        """Clear current leaderboard entries"""        # Implementation would clear entries
         pass
     
     # BaseRepository abstract method implementations
     def create(self, entity: Leaderboard, **kwargs) -> Leaderboard:
-        """Create leaderboard entity"""
-        self._validate_entity(entity)
+        """Create leaderboard entity"""        self._validate_entity(entity)
         # Implementation would save to database
         return entity
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[Leaderboard]:
-        """Get leaderboard by ID"""
-        # Implementation would query database
+        """Get leaderboard by ID"""        # Implementation would query database
         return None
     
     def update(self, entity: Leaderboard, **kwargs) -> Leaderboard:
-        """Update leaderboard entity"""
-        self._validate_entity(entity)
+        """Update leaderboard entity"""        self._validate_entity(entity)
         # Implementation would update database
         return entity
     
     def delete(self, entity_id: str, **kwargs) -> bool:
-        """Delete leaderboard"""
-        # Implementation would delete from database
+        """Delete leaderboard"""        # Implementation would delete from database
         return True
     
     def list_all(self, limit: int = 100, offset: int = 0, **filters) -> List[Leaderboard]:
-        """List all leaderboards with filtering"""
-        # Implementation would query with filters
+        """List all leaderboards with filtering"""        # Implementation would query with filters
         return []

@@ -1,5 +1,4 @@
-"""
-Terraform Configuration Module for IA-Influencer Agent Platform
+"""Terraform Configuration Module for IA-Influencer Agent Platform
 ===============================================================
 
 Professional Terraform infrastructure-as-code configuration
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -27,8 +25,7 @@ import yaml
 
 @dataclass
 class TerraformProvider:
-    """Terraform provider configuration"""
-    name: str
+    """Terraform provider configuration"""    name: str
     source: str
     version: str
     configuration: Dict[str, Any] = field(default_factory=dict)
@@ -36,8 +33,7 @@ class TerraformProvider:
 
 @dataclass
 class TerraformModule:
-    """Terraform module configuration"""
-    name: str
+    """Terraform module configuration"""    name: str
     source: str
     version: Optional[str] = None
     variables: Dict[str, Any] = field(default_factory=dict)
@@ -45,16 +41,14 @@ class TerraformModule:
 
 @dataclass
 class TerraformResource:
-    """Terraform resource configuration"""
-    type: str
+    """Terraform resource configuration"""    type: str
     name: str
     configuration: Dict[str, Any] = field(default_factory=dict)
     depends_on: List[str] = field(default_factory=list)
 
 
 class TerraformConfig:
-    """
-    Professional Terraform configuration manager for IA-Influencer Agent Platform.
+    """    Professional Terraform configuration manager for IA-Influencer Agent Platform.
     
     Provides enterprise-grade infrastructure automation:
     - Multi-cloud provider support (AWS, Azure, GCP)
@@ -65,8 +59,7 @@ class TerraformConfig:
     - Monitoring and logging infrastructure
     - CI/CD pipeline integration
     - State management and workspace separation
-    """
-    
+    """    
     def __init__(self, environment: str = "development", cloud_provider: str = "aws"):
         self.environment = environment
         self.cloud_provider = cloud_provider.lower()
@@ -111,8 +104,7 @@ class TerraformConfig:
         }
     
     def _get_default_region(self) -> str:
-        """Get default region based on cloud provider"""
-        region_map = {
+        """Get default region based on cloud provider"""        region_map = {
             "aws": "us-east-1",
             "azure": "East US",
             "gcp": "us-central1"
@@ -120,8 +112,7 @@ class TerraformConfig:
         return region_map.get(self.cloud_provider, "us-east-1")
     
     def _get_default_azs(self) -> List[str]:
-        """Get default availability zones"""
-        az_map = {
+        """Get default availability zones"""        az_map = {
             "aws": ["us-east-1a", "us-east-1b", "us-east-1c"],
             "azure": ["1", "2", "3"],
             "gcp": ["us-central1-a", "us-central1-b", "us-central1-c"]
@@ -129,8 +120,7 @@ class TerraformConfig:
         return az_map.get(self.cloud_provider, ["us-east-1a", "us-east-1b"])
     
     def get_terraform_configuration(self) -> Dict[str, Any]:
-        """Generate main Terraform configuration"""
-        return {
+        """Generate main Terraform configuration"""        return {
             "terraform": {
                 "required_version": self.terraform_version,
                 "required_providers": self._get_required_providers(),
@@ -139,8 +129,7 @@ class TerraformConfig:
         }
     
     def _get_required_providers(self) -> Dict[str, Dict[str, str]]:
-        """Get required providers based on cloud provider"""
-        base_providers = {
+        """Get required providers based on cloud provider"""        base_providers = {
             "random": {
                 "source": "hashicorp/random",
                 "version": "~> 3.4"
@@ -208,8 +197,7 @@ class TerraformConfig:
         return providers
     
     def _get_backend_configuration(self) -> Dict[str, Any]:
-        """Get backend configuration based on cloud provider"""
-        backend_configs = {
+        """Get backend configuration based on cloud provider"""        backend_configs = {
             "aws": {
                 "s3": {
                     "bucket": f"{self.project_name}-terraform-state-{self.environment}",
@@ -238,8 +226,7 @@ class TerraformConfig:
         return backend_configs.get(self.cloud_provider, {})
     
     def get_provider_configurations(self) -> Dict[str, Any]:
-        """Generate provider configurations"""
-        provider_configs = {
+        """Generate provider configurations"""        provider_configs = {
             "aws": {
                 "provider": {
                     "aws": {
@@ -286,8 +273,7 @@ class TerraformConfig:
         return provider_configs.get(self.cloud_provider, {})
     
     def get_data_sources(self) -> Dict[str, Any]:
-        """Generate data sources"""
-        data_sources = {
+        """Generate data sources"""        data_sources = {
             "aws": {
                 "data": {
                     "aws_caller_identity": {
@@ -330,8 +316,7 @@ class TerraformConfig:
         return data_sources.get(self.cloud_provider, {})
     
     def get_modules_configuration(self) -> Dict[str, Any]:
-        """Generate modules configuration"""
-        modules = {
+        """Generate modules configuration"""        modules = {
             "aws": self._get_aws_modules(),
             "azure": self._get_azure_modules(),
             "gcp": self._get_gcp_modules()
@@ -340,8 +325,7 @@ class TerraformConfig:
         return {"module": modules.get(self.cloud_provider, {})}
     
     def _get_aws_modules(self) -> Dict[str, Any]:
-        """Get AWS-specific modules"""
-        return {
+        """Get AWS-specific modules"""        return {
             "vpc": {
                 "source": "terraform-aws-modules/vpc/aws",
                 "version": "~> 5.0",
@@ -488,8 +472,7 @@ class TerraformConfig:
         }
     
     def _get_azure_modules(self) -> Dict[str, Any]:
-        """Get Azure-specific modules"""
-        return {
+        """Get Azure-specific modules"""        return {
             "resource_group": {
                 "source": "Azure/resourcegroup/azurerm",
                 "version": "~> 1.0",
@@ -560,8 +543,7 @@ class TerraformConfig:
         }
     
     def _get_gcp_modules(self) -> Dict[str, Any]:
-        """Get GCP-specific modules"""
-        return {
+        """Get GCP-specific modules"""        return {
             "vpc": {
                 "source": "terraform-google-modules/network/google",
                 "version": "~> 7.0",
@@ -676,8 +658,7 @@ class TerraformConfig:
         }
     
     def get_random_resources(self) -> Dict[str, Any]:
-        """Generate random resources for unique naming"""
-        return {
+        """Generate random resources for unique naming"""        return {
             "resource": {
                 "random_id": {
                     "bucket_suffix": {
@@ -698,8 +679,7 @@ class TerraformConfig:
         }
     
     def get_outputs_configuration(self) -> Dict[str, Any]:
-        """Generate outputs configuration"""
-        outputs = {
+        """Generate outputs configuration"""        outputs = {
             "aws": {
                 "vpc_id": {
                     "description": "VPC ID",
@@ -770,8 +750,7 @@ class TerraformConfig:
         return {"output": outputs.get(self.cloud_provider, {})}
     
     def generate_main_tf(self, output_file: str = "main.tf") -> None:
-        """Generate main.tf file"""
-        config = {}
+        """Generate main.tf file"""        config = {}
         
         # Add terraform configuration
         config.update(self.get_terraform_configuration())
@@ -801,8 +780,7 @@ class TerraformConfig:
             self._write_hcl_block(f, config)
     
     def generate_variables_tf(self, output_file: str = "variables.tf") -> None:
-        """Generate variables.tf file"""
-        with open(output_file, 'w') as f:
+        """Generate variables.tf file"""        with open(output_file, 'w') as f:
             f.write("# Variables for IA-Influencer Agent Platform\n")
             f.write(f"# Author: Fahed Mlaiel <mlaiel@live.de>\n\n")
             
@@ -829,8 +807,7 @@ class TerraformConfig:
                 f.write("}\n\n")
     
     def generate_terraform_tfvars(self, output_file: str = f"terraform.tfvars") -> None:
-        """Generate terraform.tfvars file"""
-        with open(output_file, 'w') as f:
+        """Generate terraform.tfvars file"""        with open(output_file, 'w') as f:
             f.write("# Terraform variables for IA-Influencer Agent Platform\n")
             f.write(f"# Author: Fahed Mlaiel <mlaiel@live.de>\n")
             f.write(f"# Environment: {self.environment}\n\n")
@@ -849,8 +826,7 @@ class TerraformConfig:
                 f.write(f'project_id = "ia-influencer-agent-{self.environment}"\n')
     
     def _write_hcl_block(self, file, config: Dict[str, Any], indent: int = 0) -> None:
-        """Write HCL block to file"""
-        for key, value in config.items():
+        """Write HCL block to file"""        for key, value in config.items():
             if isinstance(value, dict) and any(isinstance(v, dict) for v in value.values()):
                 # This is a configuration block
                 file.write("  " * indent + f"{key} {{\n")
@@ -872,8 +848,7 @@ class TerraformConfig:
                     file.write("  " * indent + f'{key} = {json.dumps(value)}\n')
     
     def get_deployment_scripts(self) -> Dict[str, str]:
-        """Generate deployment scripts"""
-        return {
+        """Generate deployment scripts"""        return {
             "deploy.sh": self._get_deployment_script(),
             "destroy.sh": self._get_destroy_script(),
             "plan.sh": self._get_plan_script(),
@@ -881,8 +856,7 @@ class TerraformConfig:
         }
     
     def _get_deployment_script(self) -> str:
-        """Generate deployment script"""
-        return f'''#!/bin/bash
+        """Generate deployment script"""        return f'''#!/bin/bash
 # Terraform deployment script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -930,8 +904,7 @@ echo "4. Configure CI/CD pipelines"
 '''
     
     def _get_destroy_script(self) -> str:
-        """Generate destroy script"""
-        return f'''#!/bin/bash
+        """Generate destroy script"""        return f'''#!/bin/bash
 # Terraform destroy script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -961,8 +934,7 @@ echo "✅ Infrastructure destroyed successfully"
 '''
     
     def _get_plan_script(self) -> str:
-        """Generate plan script"""
-        return f'''#!/bin/bash
+        """Generate plan script"""        return f'''#!/bin/bash
 # Terraform plan script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -989,8 +961,7 @@ echo "✅ Plan completed successfully"
 '''
     
     def _get_init_script(self) -> str:
-        """Generate init script"""
-        return f'''#!/bin/bash
+        """Generate init script"""        return f'''#!/bin/bash
 # Terraform initialization script for IA-Influencer Agent Platform
 # Author: Fahed Mlaiel <mlaiel@live.de>
 
@@ -1040,8 +1011,7 @@ echo "✅ Terraform initialized successfully"
 '''
     
     def generate_all_files(self, output_dir: str = "./terraform") -> None:
-        """Generate all Terraform files"""
-        Path(output_dir).mkdir(parents=True, exist_ok=True)
+        """Generate all Terraform files"""        Path(output_dir).mkdir(parents=True, exist_ok=True)
         
         # Generate main configuration files
         self.generate_main_tf(f"{output_dir}/main.tf")
@@ -1111,7 +1081,6 @@ This infrastructure includes:
 
 ## Support
 For issues or questions, contact: mlaiel@live.de
-"""
-        
+"""        
         with open(f"{output_dir}/README.md", 'w') as f:
             f.write(readme_content)

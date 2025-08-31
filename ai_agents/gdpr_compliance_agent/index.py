@@ -1,5 +1,4 @@
-"""
-GDPR Compliance Agent - Main Entry Point & High-Level Interface
+"""GDPR Compliance Agent - Main Entry Point & High-Level Interface
 Centralized orchestration and management interface for all GDPR compliance operations
 
 Project: IA-Influencer Agent
@@ -9,7 +8,6 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
-
 import asyncio
 import logging
 import json
@@ -45,8 +43,7 @@ logger = get_logger(__name__)
 settings = get_settings()
 
 class GDPROperationType(Enum):
-    """Types of GDPR operations"""
-    DATA_PROCESSING = "data_processing"
+    """Types of GDPR operations"""    DATA_PROCESSING = "data_processing"
     CONSENT_COLLECTION = "consent_collection"
     RIGHTS_REQUEST = "rights_request"
     BREACH_RESPONSE = "breach_response"
@@ -56,8 +53,7 @@ class GDPROperationType(Enum):
     ANONYMIZATION = "anonymization"
 
 class SystemStatus(Enum):
-    """System operational status"""
-    INITIALIZING = "initializing"
+    """System operational status"""    INITIALIZING = "initializing"
     READY = "ready"
     PROCESSING = "processing"
     MAINTENANCE = "maintenance"
@@ -65,8 +61,7 @@ class SystemStatus(Enum):
 
 @dataclass
 class GDPRComplianceConfig:
-    """Configuration for GDPR compliance system"""
-    organization_name: str = "Ultra-Industrial AI Solutions"
+    """Configuration for GDPR compliance system"""    organization_name: str = "Ultra-Industrial AI Solutions"
     dpo_email: str = "dpo@ultra-industrial.ai"
     privacy_officer_email: str = "privacy@ultra-industrial.ai"
     regulatory_contact: str = "legal@ultra-industrial.ai"
@@ -93,8 +88,7 @@ class GDPRComplianceConfig:
 
 @dataclass
 class SystemMetrics:
-    """System-wide GDPR compliance metrics"""
-    total_operations_processed: int = 0
+    """System-wide GDPR compliance metrics"""    total_operations_processed: int = 0
     successful_operations: int = 0
     failed_operations: int = 0
     average_processing_time_ms: float = 0.0
@@ -113,16 +107,13 @@ class SystemMetrics:
     error_rates: Dict[str, float] = field(default_factory=dict)
 
 class GDPRComplianceIndex:
-    """
-    Main Entry Point and High-Level Interface for GDPR Compliance Agent
+    """    Main Entry Point and High-Level Interface for GDPR Compliance Agent
     
     This class provides a unified interface for all GDPR compliance operations,
     orchestrating all components and providing high-level business logic.
-    """
-    
+    """    
     def __init__(self, config: GDPRComplianceConfig = None):
-        """Initialize GDPR Compliance Index with configuration"""
-        self.config = config or GDPRComplianceConfig()
+        """Initialize GDPR Compliance Index with configuration"""        self.config = config or GDPRComplianceConfig()
         self.system_status = SystemStatus.INITIALIZING
         self.metrics = SystemMetrics()
         
@@ -136,8 +127,7 @@ class GDPRComplianceIndex:
         logger.info("GDPR Compliance Index initialized successfully")
     
     def _initialize_components(self):
-        """Initialize all GDPR compliance components"""
-        try:
+        """Initialize all GDPR compliance components"""        try:
             # Core compliance manager
             self.compliance_manager = GDPRComplianceManager()
             
@@ -168,8 +158,7 @@ class GDPRComplianceIndex:
     
     @asynccontextmanager
     async def operation_context(self, operation_type: GDPROperationType, operation_id: str = None):
-        """Context manager for tracking GDPR operations"""
-        if operation_id is None:
+        """Context manager for tracking GDPR operations"""        if operation_id is None:
             operation_id = str(uuid.uuid4())
         
         start_time = datetime.utcnow()
@@ -228,8 +217,7 @@ class GDPRComplianceIndex:
                     del self._active_operations[op_id]
     
     async def initialize_system(self, organization_config: Dict[str, Any] = None) -> Dict[str, Any]:
-        """Initialize the complete GDPR compliance system"""
-        try:
+        """Initialize the complete GDPR compliance system"""        try:
             async with self.operation_context(GDPROperationType.COMPLIANCE_AUDIT) as op_id:
                 # Initialize compliance framework
                 framework_result = await self.compliance_manager.initialize_compliance_framework(
@@ -275,8 +263,7 @@ class GDPRComplianceIndex:
         user_id: str = None,
         priority: str = "normal"
     ) -> Dict[str, Any]:
-        """Unified entry point for all GDPR-related requests"""
-        try:
+        """Unified entry point for all GDPR-related requests"""        try:
             # Determine operation type
             operation_type = self._map_request_to_operation(request_type)
             
@@ -313,8 +300,7 @@ class GDPRComplianceIndex:
             raise HTTPException(status_code=500, detail=f"Request processing failed: {str(e)}")
     
     async def get_compliance_status(self, detailed: bool = False) -> Dict[str, Any]:
-        """Get current system compliance status"""
-        try:
+        """Get current system compliance status"""        try:
             # Get basic system status
             basic_status = {
                 "system_status": self.system_status.value,
@@ -375,8 +361,7 @@ class GDPRComplianceIndex:
         time_period_days: int = 30,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive compliance dashboard"""
-        try:
+        """Generate comprehensive compliance dashboard"""        try:
             async with self.operation_context(GDPROperationType.REPORTING) as op_id:
                 # Get dashboard data from reporting engine
                 dashboard_data = await self.reporting_engine.get_compliance_dashboard(time_period_days)
@@ -429,8 +414,7 @@ class GDPRComplianceIndex:
         maintenance_type: str = "routine",
         background_tasks: BackgroundTasks = None
     ) -> Dict[str, Any]:
-        """Perform system maintenance operations"""
-        try:
+        """Perform system maintenance operations"""        try:
             self.system_status = SystemStatus.MAINTENANCE
             
             maintenance_results = {
@@ -489,8 +473,7 @@ class GDPRComplianceIndex:
     # Request handlers for different GDPR operations
     
     async def _handle_consent_request(self, request_data: Dict[str, Any], user_id: str) -> Dict[str, Any]:
-        """Handle consent-related requests"""
-        action = request_data.get("action", "collect")
+        """Handle consent-related requests"""        action = request_data.get("action", "collect")
         
         if action == "collect":
             result = await self.consent_manager.collect_consent(
@@ -518,8 +501,7 @@ class GDPRComplianceIndex:
         return result
     
     async def _handle_rights_request(self, request_data: Dict[str, Any], user_id: str) -> Dict[str, Any]:
-        """Handle data subject rights requests"""
-        right_type = request_data.get("right_type")
+        """Handle data subject rights requests"""        right_type = request_data.get("right_type")
         
         if not right_type:
             raise HTTPException(status_code=400, detail="right_type is required")
@@ -536,8 +518,7 @@ class GDPRComplianceIndex:
         return result
     
     async def _handle_data_processing_request(self, request_data: Dict[str, Any], user_id: str) -> Dict[str, Any]:
-        """Handle data processing requests"""
-        processing_purpose = request_data.get("purpose")
+        """Handle data processing requests"""        processing_purpose = request_data.get("purpose")
         legal_basis = request_data.get("legal_basis")
         data = request_data.get("data")
         
@@ -551,8 +532,7 @@ class GDPRComplianceIndex:
         return result
     
     async def _handle_breach_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle breach detection and response requests"""
-        action = request_data.get("action", "detect")
+        """Handle breach detection and response requests"""        action = request_data.get("action", "detect")
         
         if action == "detect":
             security_event = request_data.get("security_event", {})
@@ -581,8 +561,7 @@ class GDPRComplianceIndex:
             raise HTTPException(status_code=400, detail=f"Unknown breach action: {action}")
     
     async def _handle_policy_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle policy generation and management requests"""
-        action = request_data.get("action", "generate")
+        """Handle policy generation and management requests"""        action = request_data.get("action", "generate")
         
         if action == "generate":
             result = await self.policy_engine.generate_privacy_policy(
@@ -606,8 +585,7 @@ class GDPRComplianceIndex:
         return result
     
     async def _handle_reporting_request(self, request_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle reporting requests"""
-        report_type = ReportType(request_data.get("report_type", "monthly_compliance"))
+        """Handle reporting requests"""        report_type = ReportType(request_data.get("report_type", "monthly_compliance"))
         report_period = request_data.get("report_period", {
             "start_date": (datetime.utcnow() - timedelta(days=30)).isoformat(),
             "end_date": datetime.utcnow().isoformat()
@@ -626,8 +604,7 @@ class GDPRComplianceIndex:
     # Helper methods
     
     def _map_request_to_operation(self, request_type: str) -> GDPROperationType:
-        """Map request type to operation type"""
-        mapping = {
+        """Map request type to operation type"""        mapping = {
             "consent": GDPROperationType.CONSENT_COLLECTION,
             "rights": GDPROperationType.RIGHTS_REQUEST,
             "data_processing": GDPROperationType.DATA_PROCESSING,
@@ -643,8 +620,7 @@ class GDPRComplianceIndex:
         return GDPROperationType.DATA_PROCESSING  # default
     
     async def _perform_comprehensive_health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check"""
-        health_status = {
+        """Perform comprehensive system health check"""        health_status = {
             "timestamp": datetime.utcnow().isoformat(),
             "overall_health": "healthy",
             "component_status": {},
@@ -688,8 +664,7 @@ class GDPRComplianceIndex:
         return health_status
     
     async def _initialize_monitoring_systems(self) -> Dict[str, Any]:
-        """Initialize monitoring and alerting systems"""
-        return {
+        """Initialize monitoring and alerting systems"""        return {
             "real_time_monitoring": self.config.enable_real_time_monitoring,
             "automated_responses": self.config.enable_automated_responses,
             "predictive_analytics": self.config.enable_predictive_analytics,
@@ -702,12 +677,10 @@ class GDPRComplianceIndex:
         }
     
     async def _setup_background_tasks(self) -> None:
-        """Set up automated background tasks"""
-        logger.info("Background tasks setup completed")
+        """Set up automated background tasks"""        logger.info("Background tasks setup completed")
     
     async def _get_component_health_status(self) -> Dict[str, str]:
-        """Get health status of all components"""
-        return {
+        """Get health status of all components"""        return {
             "compliance_manager": "healthy",
             "data_handler": "healthy", 
             "consent_manager": "healthy",
@@ -718,8 +691,7 @@ class GDPRComplianceIndex:
         }
     
     async def _get_recent_activities(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get recent system activities"""
-        # Return recent operations (simplified)
+        """Get recent system activities"""        # Return recent operations (simplified)
         recent_ops = list(self._active_operations.items())[-limit:]
         return [
             {
@@ -733,8 +705,7 @@ class GDPRComplianceIndex:
         ]
     
     async def _generate_compliance_predictions(self) -> Dict[str, Any]:
-        """Generate compliance predictions using AI"""
-        return {
+        """Generate compliance predictions using AI"""        return {
             "next_30_days": {
                 "expected_rights_requests": 45,
                 "compliance_score_trend": "improving",
@@ -746,8 +717,7 @@ class GDPRComplianceIndex:
         }
     
     async def _optimize_system_performance(self) -> Dict[str, Any]:
-        """Optimize system performance"""
-        return {
+        """Optimize system performance"""        return {
             "cache_optimization": "completed",
             "database_optimization": "completed", 
             "memory_cleanup": "completed",
@@ -755,15 +725,13 @@ class GDPRComplianceIndex:
         }
     
     async def _update_system_metrics(self) -> Dict[str, Any]:
-        """Update system-wide metrics"""
-        return {
+        """Update system-wide metrics"""        return {
             "metrics_updated": True,
             "timestamp": datetime.utcnow().isoformat()
         }
     
     async def _perform_system_backup(self) -> Dict[str, Any]:
-        """Perform system backup"""
-        return {
+        """Perform system backup"""        return {
             "backup_completed": True,
             "backup_timestamp": datetime.utcnow().isoformat()
         }
@@ -771,8 +739,7 @@ class GDPRComplianceIndex:
 # Convenience functions for easy access
 
 async def initialize_gdpr_system(config: GDPRComplianceConfig = None) -> GDPRComplianceIndex:
-    """Initialize and return GDPR Compliance System"""
-    gdpr_system = GDPRComplianceIndex(config)
+    """Initialize and return GDPR Compliance System"""    gdpr_system = GDPRComplianceIndex(config)
     await gdpr_system.initialize_system()
     return gdpr_system
 
@@ -782,8 +749,7 @@ async def process_gdpr_request(
     user_id: str = None,
     gdpr_system: GDPRComplianceIndex = None
 ) -> Dict[str, Any]:
-    """Process GDPR request with default system"""
-    if gdpr_system is None:
+    """Process GDPR request with default system"""    if gdpr_system is None:
         gdpr_system = await initialize_gdpr_system()
     
     return await gdpr_system.process_gdpr_request(
@@ -807,8 +773,7 @@ __all__ = [
 _global_gdpr_system: Optional[GDPRComplianceIndex] = None
 
 async def get_global_gdpr_system() -> GDPRComplianceIndex:
-    """Get or create global GDPR system instance"""
-    global _global_gdpr_system
+    """Get or create global GDPR system instance"""    global _global_gdpr_system
     if _global_gdpr_system is None:
         _global_gdpr_system = await initialize_gdpr_system()
     return _global_gdpr_system

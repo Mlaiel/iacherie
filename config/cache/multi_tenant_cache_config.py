@@ -1,5 +1,4 @@
-"""
-Multi-Tenant Cache Configuration for IA-Influencer Agent Platform
+"""Multi-Tenant Cache Configuration for IA-Influencer Agent Platform
 ================================================================
 
 Professional multi-tenant caching system ensuring strict data isolation
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, Optional, List, Any, Union, Set
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,8 +25,7 @@ from pydantic import BaseModel, validator
 
 
 class TenantType(str, Enum):
-    """Types of tenants in the platform"""
-    INDIVIDUAL_CREATOR = "individual_creator"    # Solo musicians, artists
+    """Types of tenants in the platform"""    INDIVIDUAL_CREATOR = "individual_creator"    # Solo musicians, artists
     MUSIC_LABEL = "music_label"                 # Record labels
     CONTENT_AGENCY = "content_agency"           # Marketing agencies
     ENTERPRISE = "enterprise"                   # Large organizations
@@ -37,15 +34,13 @@ class TenantType(str, Enum):
 
 
 class IsolationLevel(str, Enum):
-    """Data isolation levels for tenants"""
-    STRICT = "strict"           # Complete isolation
+    """Data isolation levels for tenants"""    STRICT = "strict"           # Complete isolation
     SHARED_CACHE = "shared_cache"  # Shared cache with tenant prefixes
     HYBRID = "hybrid"           # Mixed approach based on data sensitivity
 
 
 class ResourceTier(str, Enum):
-    """Resource allocation tiers"""
-    BASIC = "basic"            # Limited resources
+    """Resource allocation tiers"""    BASIC = "basic"            # Limited resources
     STANDARD = "standard"      # Standard resources
     PREMIUM = "premium"        # Enhanced resources
     ENTERPRISE = "enterprise"  # Maximum resources
@@ -53,8 +48,7 @@ class ResourceTier(str, Enum):
 
 @dataclass
 class TenantResourceLimits:
-    """Resource limits for tenant cache usage"""
-    max_cache_size_mb: int = 100
+    """Resource limits for tenant cache usage"""    max_cache_size_mb: int = 100
     max_keys_per_tenant: int = 10000
     max_requests_per_minute: int = 1000
     max_concurrent_connections: int = 50
@@ -64,8 +58,7 @@ class TenantResourceLimits:
 
 @dataclass
 class TenantCacheSettings:
-    """Cache settings for individual tenant"""
-    tenant_id: str
+    """Cache settings for individual tenant"""    tenant_id: str
     tenant_name: str
     tenant_type: TenantType
     isolation_level: IsolationLevel = IsolationLevel.STRICT
@@ -97,8 +90,7 @@ class TenantCacheSettings:
 
 @dataclass
 class MultiTenantCacheConfig:
-    """Complete configuration for multi-tenant caching"""
-    
+    """Complete configuration for multi-tenant caching"""    
     # Global cache settings
     cache_name: str = "multi_tenant_cache"
     namespace: str = "ia_influencer_mt"
@@ -179,8 +171,7 @@ class MultiTenantCacheConfig:
     })
 
     def add_tenant(self, tenant_settings: TenantCacheSettings) -> bool:
-        """Add new tenant configuration"""
-        if len(self.configured_tenants) >= self.max_tenants:
+        """Add new tenant configuration"""        if len(self.configured_tenants) >= self.max_tenants:
             return False
             
         # Apply resource tier limits
@@ -191,13 +182,11 @@ class MultiTenantCacheConfig:
         return True
     
     def get_tenant_cache_key(self, tenant_id: str, cache_key: str) -> str:
-        """Generate tenant-specific cache key"""
-        components = [self.global_prefix, self.namespace, tenant_id, cache_key]
+        """Generate tenant-specific cache key"""        components = [self.global_prefix, self.namespace, tenant_id, cache_key]
         return self.tenant_key_separator.join(components)
     
     def get_available_cache_size(self) -> int:
-        """Get available cache size for new tenants"""
-        used_cache = sum(
+        """Get available cache size for new tenants"""        used_cache = sum(
             settings.resource_limits.max_cache_size_mb 
             for settings in self.configured_tenants.values()
         )
@@ -205,8 +194,7 @@ class MultiTenantCacheConfig:
         return max(0, available)
     
     def validate_tenant_access(self, tenant_id: str, api_key: Optional[str] = None) -> bool:
-        """Validate tenant access permissions"""
-        if tenant_id not in self.configured_tenants:
+        """Validate tenant access permissions"""        if tenant_id not in self.configured_tenants:
             return False
             
         tenant_settings = self.configured_tenants[tenant_id]
@@ -223,8 +211,7 @@ class MultiTenantCacheConfig:
 
 
 class MultiTenantCacheManager:
-    """Manager for multi-tenant cache operations"""
-    
+    """Manager for multi-tenant cache operations"""    
     def __init__(self, config: MultiTenantCacheConfig):
         self.config = config
         self._tenant_stats = {}
@@ -233,8 +220,7 @@ class MultiTenantCacheManager:
     
     def create_tenant(self, tenant_name: str, tenant_type: TenantType, 
                      resource_tier: ResourceTier = ResourceTier.STANDARD) -> Optional[TenantCacheSettings]:
-        """Create new tenant with generated ID"""
-        tenant_id = str(uuid.uuid4())
+        """Create new tenant with generated ID"""        tenant_id = str(uuid.uuid4())
         
         tenant_settings = TenantCacheSettings(
             tenant_id=tenant_id,
@@ -250,8 +236,7 @@ class MultiTenantCacheManager:
         return None
     
     def get_tenant_resource_usage(self, tenant_id: str) -> Dict[str, Any]:
-        """Get current resource usage for tenant"""
-        if tenant_id not in self._resource_usage:
+        """Get current resource usage for tenant"""        if tenant_id not in self._resource_usage:
             return {}
             
         usage = self._resource_usage[tenant_id]
@@ -273,8 +258,7 @@ class MultiTenantCacheManager:
         }
     
     def check_tenant_limits(self, tenant_id: str, operation_type: str) -> bool:
-        """Check if tenant operation is within limits"""
-        tenant_settings = self.config.configured_tenants.get(tenant_id)
+        """Check if tenant operation is within limits"""        tenant_settings = self.config.configured_tenants.get(tenant_id)
         if not tenant_settings:
             return False
         
@@ -292,8 +276,7 @@ class MultiTenantCacheManager:
         return True
     
     def get_platform_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive platform statistics"""
-        total_tenants = len(self.config.configured_tenants)
+        """Get comprehensive platform statistics"""        total_tenants = len(self.config.configured_tenants)
         tenants_by_type = {}
         tenants_by_tier = {}
         
@@ -324,8 +307,7 @@ class MultiTenantCacheManager:
         }
     
     def _initialize_tenant_stats(self, tenant_id: str):
-        """Initialize statistics tracking for new tenant"""
-        self._tenant_stats[tenant_id] = {
+        """Initialize statistics tracking for new tenant"""        self._tenant_stats[tenant_id] = {
             "created_at": datetime.now(),
             "last_access": datetime.now(),
             "total_requests": 0,

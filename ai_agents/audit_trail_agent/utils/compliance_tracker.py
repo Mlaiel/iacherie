@@ -1,5 +1,4 @@
-"""
-Compliance Tracker - Enterprise Regulatory Compliance Management
+"""Compliance Tracker - Enterprise Regulatory Compliance Management
 
 Industrial-grade compliance monitoring system for GDPR, SOX, HIPAA, PCI-DSS,
 ISO27001, and other regulatory frameworks with automated reporting capabilities.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
-
 import asyncio
 import logging
 import uuid
@@ -58,8 +56,7 @@ from ...utils.retention_manager import RetentionManager
 logger = logging.getLogger(__name__)
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"
+    """Supported compliance frameworks"""    GDPR = "gdpr"
     SOX = "sox"
     HIPAA = "hipaa"
     PCI_DSS = "pci_dss"
@@ -69,16 +66,14 @@ class ComplianceFramework(Enum):
     COPYRIGHT_LAW = "copyright_law"
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     PENDING_REVIEW = "pending_review"
     VIOLATION = "violation"
 
 class DataCategory(Enum):
-    """Personal data categories for GDPR classification"""
-    PERSONAL_IDENTIFIERS = "personal_identifiers"
+    """Personal data categories for GDPR classification"""    PERSONAL_IDENTIFIERS = "personal_identifiers"
     FINANCIAL_DATA = "financial_data"
     HEALTH_DATA = "health_data"
     BIOMETRIC_DATA = "biometric_data"
@@ -88,8 +83,7 @@ class DataCategory(Enum):
     TECHNICAL_DATA = "technical_data"
 
 class ProcessingLawfulBasis(Enum):
-    """GDPR lawful basis for processing"""
-    CONSENT = "consent"
+    """GDPR lawful basis for processing"""    CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
     VITAL_INTERESTS = "vital_interests"
@@ -98,8 +92,7 @@ class ProcessingLawfulBasis(Enum):
 
 @dataclass
 class ComplianceConfiguration:
-    """Advanced compliance tracking configuration"""
-    enabled_frameworks: Set[ComplianceFramework] = field(default_factory=set)
+    """Advanced compliance tracking configuration"""    enabled_frameworks: Set[ComplianceFramework] = field(default_factory=set)
     auto_anonymization: bool = True
     consent_tracking: bool = True
     data_retention_enforcement: bool = True
@@ -111,8 +104,7 @@ class ComplianceConfiguration:
 
 @dataclass
 class ComplianceMetrics:
-    """Comprehensive compliance metrics"""
-    compliance_score_by_framework: Dict[str, float] = field(default_factory=dict)
+    """Comprehensive compliance metrics"""    compliance_score_by_framework: Dict[str, float] = field(default_factory=dict)
     active_violations: int = 0
     data_subject_requests_pending: int = 0
     retention_policies_enforced: int = 0
@@ -121,8 +113,7 @@ class ComplianceMetrics:
     average_response_time_hours: float = 0.0
 
 class ComplianceTracker:
-    """
-    Enterprise Compliance Tracking System
+    """    Enterprise Compliance Tracking System
     
     Comprehensive regulatory compliance management providing:
     - Multi-framework compliance monitoring (GDPR, SOX, HIPAA, etc.)
@@ -133,7 +124,6 @@ class ComplianceTracker:
     - Real-time compliance scoring
     - Automated compliance reporting
     """
-
     def __init__(self, config: Optional[ComplianceConfiguration] = None):
         self.config = config or ComplianceConfiguration()
         self.metrics = ComplianceMetrics()
@@ -174,8 +164,7 @@ class ComplianceTracker:
         logger.info("ComplianceTracker initialized with enterprise regulatory frameworks")
 
     async def initialize(self) -> bool:
-        """Initialize compliance tracking system"""
-        try:
+        """Initialize compliance tracking system"""        try:
             # Load compliance policies and rules
             await self._load_compliance_policies()
             
@@ -208,8 +197,7 @@ class ComplianceTracker:
         third_party_sharing: bool = False,
         cross_border_transfer: bool = False
     ) -> str:
-        """
-        Track data processing activity for compliance monitoring
+        """        Track data processing activity for compliance monitoring
         
         Args:
             activity_type: Type of processing activity
@@ -224,8 +212,7 @@ class ComplianceTracker:
             
         Returns:
             Unique activity tracking ID
-        """
-        try:
+        """        try:
             activity_id = str(uuid.uuid4())
             timestamp = datetime.now(timezone.utc)
             
@@ -275,8 +262,7 @@ class ComplianceTracker:
         request_details: Dict[str, Any],
         contact_email: str
     ) -> Dict[str, Any]:
-        """
-        Handle data subject rights requests (GDPR Article 15-22)
+        """        Handle data subject rights requests (GDPR Article 15-22)
         
         Args:
             request_type: Type of request (access, rectification, erasure, etc.)
@@ -286,8 +272,7 @@ class ComplianceTracker:
             
         Returns:
             Request processing results
-        """
-        try:
+        """        try:
             request_id = str(uuid.uuid4())
             received_at = datetime.now(timezone.utc)
             sla_deadline = received_at + timedelta(hours=self.config.data_subject_request_sla_hours)
@@ -348,8 +333,7 @@ class ComplianceTracker:
         consent_timestamp: Optional[datetime] = None,
         withdrawal_timestamp: Optional[datetime] = None
     ) -> str:
-        """
-        Manage user consent for data processing activities
+        """        Manage user consent for data processing activities
         
         Args:
             data_subject_id: Data subject identifier
@@ -361,8 +345,7 @@ class ComplianceTracker:
             
         Returns:
             Consent record ID
-        """
-        try:
+        """        try:
             consent_id = str(uuid.uuid4())
             timestamp = consent_timestamp or datetime.now(timezone.utc)
             
@@ -407,8 +390,7 @@ class ComplianceTracker:
         data_identifier: str,
         retention_policy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Enforce data retention policies with automated deletion/anonymization
+        """        Enforce data retention policies with automated deletion/anonymization
         
         Args:
             data_type: Type of data subject to retention
@@ -417,8 +399,7 @@ class ComplianceTracker:
             
         Returns:
             Retention enforcement results
-        """
-        try:
+        """        try:
             # Calculate retention deadline
             creation_date = retention_policy.get('creation_date')
             if isinstance(creation_date, str):
@@ -472,8 +453,7 @@ class ComplianceTracker:
         containment_measures: List[str],
         notification_required: bool = True
     ) -> Dict[str, Any]:
-        """
-        Report and manage data breach incidents with regulatory notification
+        """        Report and manage data breach incidents with regulatory notification
         
         Args:
             breach_type: Type of breach (confidentiality, integrity, availability)
@@ -485,8 +465,7 @@ class ComplianceTracker:
             
         Returns:
             Breach incident report
-        """
-        try:
+        """        try:
             breach_id = str(uuid.uuid4())
             incident_timestamp = datetime.now(timezone.utc)
             
@@ -540,8 +519,7 @@ class ComplianceTracker:
         period_end: datetime,
         include_recommendations: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report for regulatory submission
+        """        Generate comprehensive compliance report for regulatory submission
         
         Args:
             framework: Compliance framework to report on
@@ -551,8 +529,7 @@ class ComplianceTracker:
             
         Returns:
             Detailed compliance report
-        """
-        try:
+        """        try:
             report_id = str(uuid.uuid4())
             
             # Gather compliance data for the period
@@ -619,13 +596,11 @@ class ComplianceTracker:
             raise ComplianceError(f"Report generation failed: {str(e)}")
 
     async def get_compliance_dashboard(self) -> Dict[str, Any]:
-        """
-        Generate real-time compliance monitoring dashboard
+        """        Generate real-time compliance monitoring dashboard
         
         Returns:
             Comprehensive compliance dashboard data
-        """
-        try:
+        """        try:
             current_time = datetime.now(timezone.utc)
             
             # Get overall compliance scores
@@ -675,8 +650,7 @@ class ComplianceTracker:
 
     # Framework-specific compliance handlers
     async def _handle_gdpr_compliance(self, activity_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle GDPR-specific compliance checks"""
-        gdpr_result = {
+        """Handle GDPR-specific compliance checks"""        gdpr_result = {
             "compliant": True,
             "issues": [],
             "score": 1.0
@@ -706,8 +680,7 @@ class ComplianceTracker:
         return gdpr_result
 
     async def _handle_sox_compliance(self, activity_record: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle SOX-specific compliance checks"""
-        sox_result = {
+        """Handle SOX-specific compliance checks"""        sox_result = {
             "compliant": True,
             "issues": [],
             "score": 1.0
@@ -726,8 +699,7 @@ class ComplianceTracker:
 
     # Private helper methods
     async def _load_compliance_policies(self) -> None:
-        """Load compliance policies from configuration"""
-        try:
+        """Load compliance policies from configuration"""        try:
             logger.info("Loading compliance policies and frameworks")
             
             # Load default compliance policies
@@ -819,8 +791,7 @@ class ComplianceTracker:
             }
 
     async def _verify_active_consent(self, data_subject_id: str, purpose: str) -> bool:
-        """Verify active consent exists for processing"""
-        try:
+        """Verify active consent exists for processing"""        try:
             async with get_db_session() as session:
                 active_consent = session.query(ConsentRecord).filter(
                     and_(
@@ -842,8 +813,7 @@ class ComplianceTracker:
         affected_categories: List[DataCategory], 
         affected_subjects: int
     ) -> str:
-        """Assess data breach severity level"""
-        severity_score = 0
+        """Assess data breach severity level"""        severity_score = 0
         
         # Score based on data sensitivity
         sensitive_categories = [
@@ -879,8 +849,7 @@ class ComplianceTracker:
             return "LOW"
 
     def _determine_compliance_status(self, compliance_score: float) -> str:
-        """Determine compliance status from score"""
-        if compliance_score >= 0.95:
+        """Determine compliance status from score"""        if compliance_score >= 0.95:
             return ComplianceStatus.COMPLIANT.value
         elif compliance_score >= 0.75:
             return ComplianceStatus.PARTIALLY_COMPLIANT.value
@@ -888,18 +857,15 @@ class ComplianceTracker:
             return ComplianceStatus.NON_COMPLIANT.value
 
     def _get_client_ip(self) -> str:
-        """Extract client IP from request context"""
-        # Implementation depends on web framework
+        """Extract client IP from request context"""        # Implementation depends on web framework
         return "127.0.0.1"  # Placeholder
 
     def _get_user_agent(self) -> str:
-        """Extract user agent from request context"""
-        # Implementation depends on web framework  
+        """Extract user agent from request context"""        # Implementation depends on web framework  
         return "Unknown"  # Placeholder
 
     async def _start_compliance_monitoring(self) -> None:
-        """Start background compliance monitoring tasks"""
-        while True:
+        """Start background compliance monitoring tasks"""        while True:
             try:
                 await self._monitor_compliance_violations()
                 await asyncio.sleep(300)  # Check every 5 minutes
@@ -908,8 +874,7 @@ class ComplianceTracker:
                 await asyncio.sleep(60)
 
     async def _start_retention_enforcement(self) -> None:
-        """Start background data retention enforcement"""
-        while True:
+        """Start background data retention enforcement"""        while True:
             try:
                 await self._enforce_retention_policies()
                 await asyncio.sleep(3600)  # Check every hour

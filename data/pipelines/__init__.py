@@ -23,8 +23,7 @@ This code, concept, and intellectual property belong exclusively to Fahed Mlaiel
 Any unauthorized use, theft, copying, or reproduction without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will
 result in immediate legal action under German and international copyright laws.
-"""
-from .content_ingestion import ContentIngestionPipeline, MultiFormatProcessor
+"""from .content_ingestion import ContentIngestionPipeline, MultiFormatProcessor
 from .protection_pipeline import ProtectionPipeline, FingerprintingEngine
 from .monetization_pipeline import MonetizationPipeline, RevenueCalculatorEngine
 from .analytics_pipeline import AnalyticsPipeline, MetricsAggregator

@@ -1,5 +1,4 @@
-"""
-Conversation Orchestrator - Enterprise Conversation Management
+"""Conversation Orchestrator - Enterprise Conversation Management
 
 Advanced conversation orchestration system that coordinates multiple dialogue flows,
 manages complex multi-party conversations, and handles business workflow automation
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -41,8 +39,7 @@ from backend.services.content.processing_service import ContentProcessingService
 logger = logging.getLogger(__name__)
 
 class ConversationType(Enum):
-    """Types of conversations in the platform"""
-    SINGLE_USER = "single_user"
+    """Types of conversations in the platform"""    SINGLE_USER = "single_user"
     COLLABORATION = "collaboration"
     GROUP_PROJECT = "group_project"
     SUPPORT_ESCALATION = "support_escalation"
@@ -51,16 +48,14 @@ class ConversationType(Enum):
     PLATFORM_INTEGRATION = "platform_integration"
 
 class ConversationPriority(Enum):
-    """Conversation priority levels"""
-    LOW = "low"
+    """Conversation priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
     CRITICAL = "critical"
 
 class OrchestrationEvent(Enum):
-    """Events in conversation orchestration"""
-    CONVERSATION_STARTED = "conversation_started"
+    """Events in conversation orchestration"""    CONVERSATION_STARTED = "conversation_started"
     PARTICIPANT_JOINED = "participant_joined"
     PARTICIPANT_LEFT = "participant_left"
     WORKFLOW_TRIGGERED = "workflow_triggered"
@@ -73,8 +68,7 @@ class OrchestrationEvent(Enum):
 
 @dataclass
 class ConversationParticipant:
-    """Participant in orchestrated conversation"""
-    user_id: str
+    """Participant in orchestrated conversation"""    user_id: str
     participant_type: str  # creator, agent, moderator, system
     creator_type: Optional[CreatorType] = None
     roles: List[str] = field(default_factory=list)
@@ -90,8 +84,7 @@ class ConversationParticipant:
 
 @dataclass
 class OrchestrationContext:
-    """Context for conversation orchestration"""
-    orchestration_id: str
+    """Context for conversation orchestration"""    orchestration_id: str
     conversation_type: ConversationType
     priority: ConversationPriority
     participants: Dict[str, ConversationParticipant] = field(default_factory=dict)
@@ -120,8 +113,7 @@ class OrchestrationContext:
 
 @dataclass
 class OrchestrationRule:
-    """Rules for conversation orchestration"""
-    rule_id: str
+    """Rules for conversation orchestration"""    rule_id: str
     rule_type: str
     conditions: Dict[str, Any]
     actions: List[str]
@@ -134,8 +126,7 @@ class OrchestrationRule:
     workflow_triggers: List[str] = field(default_factory=list)
 
 class ConversationOrchestrator:
-    """
-    Enterprise conversation orchestration system for IA Influencer platform.
+    """    Enterprise conversation orchestration system for IA Influencer platform.
     
     Manages complex multi-party conversations, coordinates business workflows,
     and automates collaboration processes between content creators.
@@ -147,8 +138,7 @@ class ConversationOrchestrator:
     - Content creation project management
     - Revenue sharing negotiations
     - Real-time event processing
-    """
-    
+    """    
     def __init__(
         self,
         dialogue_manager: DialogueFlowManager,
@@ -190,8 +180,7 @@ class ConversationOrchestrator:
         logger.info("ConversationOrchestrator initialized for enterprise workflows")
 
     def _initialize_orchestration_rules(self):
-        """Initialize business orchestration rules"""
-        
+        """Initialize business orchestration rules"""        
         # Collaboration workflow rules
         collaboration_rules = [
             OrchestrationRule(
@@ -291,8 +280,7 @@ class ConversationOrchestrator:
         logger.info(f"Initialized {len(self.orchestration_rules)} orchestration rules")
 
     def _setup_event_processors(self):
-        """Setup event processors for orchestration events"""
-        
+        """Setup event processors for orchestration events"""        
         # Conversation lifecycle events
         self.event_processors[OrchestrationEvent.CONVERSATION_STARTED].append(
             self._handle_conversation_started
@@ -322,8 +310,7 @@ class ConversationOrchestrator:
         business_objectives: List[str],
         priority: ConversationPriority = ConversationPriority.NORMAL
     ) -> str:
-        """
-        Create new conversation orchestration
+        """        Create new conversation orchestration
         
         Args:
             conversation_type: Type of conversation to orchestrate
@@ -333,8 +320,7 @@ class ConversationOrchestrator:
             
         Returns:
             Orchestration ID
-        """
-        orchestration_id = str(uuid.uuid4())
+        """        orchestration_id = str(uuid.uuid4())
         
         # Create orchestration context
         context = OrchestrationContext(
@@ -378,8 +364,7 @@ class ConversationOrchestrator:
         roles: List[str] = None,
         invitation_context: Dict[str, Any] = None
     ) -> bool:
-        """
-        Add participant to orchestrated conversation
+        """        Add participant to orchestrated conversation
         
         Args:
             orchestration_id: Orchestration to add participant to
@@ -390,8 +375,7 @@ class ConversationOrchestrator:
             
         Returns:
             Success status
-        """
-        context = self.active_orchestrations.get(orchestration_id)
+        """        context = self.active_orchestrations.get(orchestration_id)
         if not context:
             logger.warning(f"Orchestration {orchestration_id} not found")
             return False
@@ -467,8 +451,7 @@ class ConversationOrchestrator:
         message: str,
         message_type: str = "text"
     ) -> Dict[str, Any]:
-        """
-        Process message in orchestrated conversation
+        """        Process message in orchestrated conversation
         
         Args:
             orchestration_id: Orchestration handling the message
@@ -478,8 +461,7 @@ class ConversationOrchestrator:
             
         Returns:
             Processing results and responses
-        """
-        context = self.active_orchestrations.get(orchestration_id)
+        """        context = self.active_orchestrations.get(orchestration_id)
         if not context:
             return {"error": "Orchestration not found"}
         
@@ -547,8 +529,7 @@ class ConversationOrchestrator:
         context: OrchestrationContext, 
         message_data: Dict[str, Any]
     ):
-        """Evaluate orchestration rules against current context and message"""
-        
+        """Evaluate orchestration rules against current context and message"""        
         triggered_rules = []
         
         for rule in self.orchestration_rules:
@@ -583,8 +564,7 @@ class ConversationOrchestrator:
         context: OrchestrationContext, 
         message_data: Dict[str, Any]
     ) -> bool:
-        """Evaluate if rule conditions are met"""
-        
+        """Evaluate if rule conditions are met"""        
         conditions = rule.conditions
         
         # Check conversation type condition
@@ -633,8 +613,7 @@ class ConversationOrchestrator:
         context: OrchestrationContext, 
         message_data: Dict[str, Any]
     ):
-        """Execute actions defined in orchestration rule"""
-        
+        """Execute actions defined in orchestration rule"""        
         for action in rule.actions:
             try:
                 if action == "trigger_matching_workflow":
@@ -670,8 +649,7 @@ class ConversationOrchestrator:
                 logger.error(f"Error executing orchestration action {action}: {str(e)}")
 
     async def _trigger_collaboration_matching(self, context: OrchestrationContext):
-        """Trigger collaboration matching workflow"""
-        
+        """Trigger collaboration matching workflow"""        
         # Extract creator profiles from participants
         creator_profiles = []
         for participant in context.participants.values():
@@ -701,8 +679,7 @@ class ConversationOrchestrator:
         )
 
     async def _create_collaboration_room(self, context: OrchestrationContext):
-        """Create dedicated collaboration room for matched creators"""
-        
+        """Create dedicated collaboration room for matched creators"""        
         room_config = {
             "orchestration_id": context.orchestration_id,
             "participants": list(context.participants.keys()),
@@ -729,8 +706,7 @@ class ConversationOrchestrator:
             )
 
     async def _initiate_revenue_negotiation(self, context: OrchestrationContext):
-        """Initiate revenue sharing negotiation between participants"""
-        
+        """Initiate revenue sharing negotiation between participants"""        
         # Calculate potential revenue based on participant profiles
         revenue_analysis = await self._calculate_collaboration_revenue(context)
         
@@ -754,8 +730,7 @@ class ConversationOrchestrator:
             )
 
     async def _trigger_content_analysis(self, context: OrchestrationContext, message_data: Dict[str, Any]):
-        """Trigger content analysis workflow"""
-        
+        """Trigger content analysis workflow"""        
         # Extract content information from message
         content_info = await self._extract_content_info(message_data)
         
@@ -778,8 +753,7 @@ class ConversationOrchestrator:
             )
 
     async def _setup_content_protection(self, context: OrchestrationContext):
-        """Setup content protection for uploaded content"""
-        
+        """Setup content protection for uploaded content"""        
         content_info = context.workflow_state.get("content_info")
         if not content_info:
             return
@@ -806,8 +780,7 @@ class ConversationOrchestrator:
         context.workflow_state["protection_id"] = protection_result.get("protection_id")
 
     async def _escalate_to_human_support(self, context: OrchestrationContext, message_data: Dict[str, Any]):
-        """Escalate conversation to human support"""
-        
+        """Escalate conversation to human support"""        
         escalation_data = {
             "orchestration_id": context.orchestration_id,
             "user_id": message_data["user_id"],
@@ -837,8 +810,7 @@ class ConversationOrchestrator:
         context: OrchestrationContext, 
         message_data: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Prepare message for broadcasting to other participants"""
-        
+        """Prepare message for broadcasting to other participants"""        
         # Only broadcast certain types of messages in collaboration contexts
         if context.conversation_type not in [ConversationType.COLLABORATION, ConversationType.GROUP_PROJECT]:
             return None
@@ -871,8 +843,7 @@ class ConversationOrchestrator:
         broadcast_data: Dict[str, Any], 
         exclude_user: str = None
     ):
-        """Broadcast message to all participants except sender"""
-        
+        """Broadcast message to all participants except sender"""        
         for user_id in context.participants.keys():
             if user_id == exclude_user:
                 continue
@@ -889,8 +860,7 @@ class ConversationOrchestrator:
         orchestration_id: str, 
         event_data: Dict[str, Any]
     ):
-        """Emit orchestration event for processing"""
-        
+        """Emit orchestration event for processing"""        
         event_record = {
             "event": event.value,
             "orchestration_id": orchestration_id,
@@ -913,48 +883,39 @@ class ConversationOrchestrator:
 
     # Event processors
     async def _handle_conversation_started(self, orchestration_id: str, event_data: Dict[str, Any]):
-        """Handle conversation started event"""
-        self.metrics['active_conversations'] += 1
+        """Handle conversation started event"""        self.metrics['active_conversations'] += 1
         logger.info(f"Conversation orchestration {orchestration_id} started")
 
     async def _handle_participant_joined(self, orchestration_id: str, event_data: Dict[str, Any]):
-        """Handle participant joined event"""
-        logger.info(f"Participant {event_data['user_id']} joined orchestration {orchestration_id}")
+        """Handle participant joined event"""        logger.info(f"Participant {event_data['user_id']} joined orchestration {orchestration_id}")
 
     async def _handle_workflow_triggered(self, orchestration_id: str, event_data: Dict[str, Any]):
-        """Handle workflow triggered event"""
-        workflow = event_data.get("workflow")
+        """Handle workflow triggered event"""        workflow = event_data.get("workflow")
         logger.info(f"Workflow {workflow} triggered in orchestration {orchestration_id}")
 
     async def _handle_collaboration_matched(self, orchestration_id: str, event_data: Dict[str, Any]):
-        """Handle collaboration matched event"""
-        self.metrics['successful_collaborations'] += 1
+        """Handle collaboration matched event"""        self.metrics['successful_collaborations'] += 1
         logger.info(f"Collaboration match found in orchestration {orchestration_id}")
 
     async def _handle_content_processed(self, orchestration_id: str, event_data: Dict[str, Any]):
-        """Handle content processed event"""
-        logger.info(f"Content processed in orchestration {orchestration_id}")
+        """Handle content processed event"""        logger.info(f"Content processed in orchestration {orchestration_id}")
 
     async def _handle_agreement_reached(self, orchestration_id: str, event_data: Dict[str, Any]):
-        """Handle agreement reached event"""
-        revenue_amount = event_data.get("revenue_amount", 0.0)
+        """Handle agreement reached event"""        revenue_amount = event_data.get("revenue_amount", 0.0)
         self.metrics['revenue_facilitated'] += revenue_amount
         logger.info(f"Agreement reached in orchestration {orchestration_id}, revenue: ${revenue_amount}")
 
     # Helper methods
     async def _get_user(self, user_id: str) -> Optional[User]:
-        """Get user from database"""
-        # Implement user retrieval logic
+        """Get user from database"""        # Implement user retrieval logic
         pass
 
     async def _get_creator_type(self, user: User) -> Optional[CreatorType]:
-        """Determine creator type from user profile"""
-        # Implement creator type detection logic
+        """Determine creator type from user profile"""        # Implement creator type detection logic
         pass
 
     def _get_default_permissions(self, participant_type: str) -> Set[str]:
-        """Get default permissions for participant type"""
-        permission_map = {
+        """Get default permissions for participant type"""        permission_map = {
             "creator": {"send_messages", "view_analytics", "invite_participants", "upload_content"},
             "agent": {"send_messages", "view_analytics", "moderate_conversation"},
             "moderator": {"send_messages", "view_analytics", "moderate_conversation", "escalate_issues"},
@@ -963,8 +924,7 @@ class ConversationOrchestrator:
         return permission_map.get(participant_type, {"send_messages"})
 
     async def _persist_orchestration(self, context: OrchestrationContext):
-        """Persist orchestration context to Redis"""
-        try:
+        """Persist orchestration context to Redis"""        try:
             # Serialize context for storage
             context_data = {
                 "orchestration_id": context.orchestration_id,
@@ -1007,8 +967,7 @@ class ConversationOrchestrator:
             logger.error(f"Error persisting orchestration context: {str(e)}")
 
     async def get_orchestration_status(self, orchestration_id: str) -> Dict[str, Any]:
-        """Get comprehensive status of orchestration"""
-        context = self.active_orchestrations.get(orchestration_id)
+        """Get comprehensive status of orchestration"""        context = self.active_orchestrations.get(orchestration_id)
         if not context:
             return {"error": "Orchestration not found"}
         
@@ -1052,8 +1011,7 @@ class ConversationOrchestrator:
         orchestration_id: str, 
         completion_reason: str = "objectives_achieved"
     ) -> Dict[str, Any]:
-        """Complete orchestration and generate summary"""
-        context = self.active_orchestrations.get(orchestration_id)
+        """Complete orchestration and generate summary"""        context = self.active_orchestrations.get(orchestration_id)
         if not context:
             return {"error": "Orchestration not found"}
         
@@ -1101,13 +1059,11 @@ class ConversationOrchestrator:
         return completion_summary
 
     async def _archive_orchestration(self, context: OrchestrationContext):
-        """Archive completed orchestration for analytics"""
-        # Implement archival logic for completed orchestrations
+        """Archive completed orchestration for analytics"""        # Implement archival logic for completed orchestrations
         pass
 
     def get_orchestration_metrics(self) -> Dict[str, Any]:
-        """Get overall orchestration metrics"""
-        return {
+        """Get overall orchestration metrics"""        return {
             "current_metrics": self.metrics,
             "active_orchestrations": len(self.active_orchestrations),
             "orchestration_types": {

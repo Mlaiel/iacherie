@@ -1,5 +1,4 @@
-"""
-Analytics Reporting - Advanced Report Generation System
+"""Analytics Reporting - Advanced Report Generation System
 
 Comprehensive reporting engine for business intelligence, performance analytics,
 and executive reporting for multi-format content creator platform.
@@ -24,7 +23,6 @@ Team Specialists:
 - DevOps Engineer: Production-ready infrastructure
 - IA Prompt Engineer: Optimized AI model interactions
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, List, Optional, Union
@@ -46,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Types of reports"""
-    EXECUTIVE_SUMMARY = "executive_summary"
+    """Types of reports"""    EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_ANALYTICS = "detailed_analytics"
     PERFORMANCE_DASHBOARD = "performance_dashboard"
     FINANCIAL_REPORT = "financial_report"
@@ -58,8 +55,7 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report output formats"""
-    JSON = "json"
+    """Report output formats"""    JSON = "json"
     PDF = "pdf"
     HTML = "html"
     CSV = "csv"
@@ -67,8 +63,7 @@ class ReportFormat(Enum):
 
 
 class ReportFrequency(Enum):
-    """Report generation frequency"""
-    REALTIME = "realtime"
+    """Report generation frequency"""    REALTIME = "realtime"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -80,8 +75,7 @@ class ReportFrequency(Enum):
 
 @dataclass
 class ReportConfig:
-    """Report configuration"""
-    report_id: str
+    """Report configuration"""    report_id: str
     report_type: ReportType
     title: str
     description: str
@@ -94,8 +88,7 @@ class ReportConfig:
     custom_sections: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert config to dictionary"""
-        return {
+        """Convert config to dictionary"""        return {
             'report_id': self.report_id,
             'report_type': self.report_type.value,
             'title': self.title,
@@ -112,8 +105,7 @@ class ReportConfig:
 
 @dataclass
 class ReportSection:
-    """Report section"""
-    id: str
+    """Report section"""    id: str
     title: str
     content: Dict[str, Any]
     charts: List[Dict[str, Any]] = field(default_factory=list)
@@ -121,8 +113,7 @@ class ReportSection:
     insights: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert section to dictionary"""
-        return {
+        """Convert section to dictionary"""        return {
             'id': self.id,
             'title': self.title,
             'content': self.content,
@@ -134,8 +125,7 @@ class ReportSection:
 
 @dataclass
 class GeneratedReport:
-    """Generated report"""
-    report_id: str
+    """Generated report"""    report_id: str
     config: ReportConfig
     generated_at: datetime
     sections: List[ReportSection]
@@ -143,8 +133,7 @@ class GeneratedReport:
     raw_data: Optional[bytes] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert report to dictionary"""
-        return {
+        """Convert report to dictionary"""        return {
             'report_id': self.report_id,
             'config': self.config.to_dict(),
             'generated_at': self.generated_at.isoformat(),
@@ -155,13 +144,11 @@ class GeneratedReport:
 
 
 class ReportGenerator:
-    """
-    Advanced report generation system for analytics platform.
+    """    Advanced report generation system for analytics platform.
     
     Generates comprehensive reports in multiple formats with automated
     scheduling, distribution, and customizable templates.
-    """
-    
+    """    
     def __init__(
         self,
         metrics_collector: Optional[MetricsCollector] = None,
@@ -192,8 +179,7 @@ class ReportGenerator:
         }
     
     async def initialize(self) -> None:
-        """Initialize report generator"""
-        try:
+        """Initialize report generator"""        try:
             self.logger.info("Initializing ReportGenerator...")
             
             # Load report templates
@@ -209,8 +195,7 @@ class ReportGenerator:
             raise ReportingError(f"Initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown report generator"""
-        try:
+        """Shutdown report generator"""        try:
             self.logger.info("Shutting down ReportGenerator...")
             
             # Complete any pending reports
@@ -223,8 +208,7 @@ class ReportGenerator:
             raise ReportingError(f"Shutdown failed: {str(e)}")
     
     async def create_report_config(self, config: ReportConfig) -> str:
-        """Create a new report configuration"""
-        try:
+        """Create a new report configuration"""        try:
             # Validate configuration
             self._validate_report_config(config)
             
@@ -247,8 +231,7 @@ class ReportGenerator:
         report_id: str,
         custom_filters: Optional[Dict[str, Any]] = None
     ) -> GeneratedReport:
-        """Generate a report"""
-        try:
+        """Generate a report"""        try:
             config = self.report_configs.get(report_id)
             if not config:
                 raise ValueError(f"Report configuration not found: {report_id}")
@@ -300,8 +283,7 @@ class ReportGenerator:
         report_id: str,
         limit: int = 10
     ) -> List[Dict[str, Any]]:
-        """Get report generation history"""
-        try:
+        """Get report generation history"""        try:
             history = self.report_history.get(report_id, [])
             
             # Sort by generation time (newest first)
@@ -318,8 +300,7 @@ class ReportGenerator:
             raise ReportingError(f"Report history retrieval failed: {str(e)}")
     
     async def delete_report_config(self, report_id: str) -> None:
-        """Delete a report configuration"""
-        try:
+        """Delete a report configuration"""        try:
             if report_id in self.report_configs:
                 # Remove from scheduled reports
                 if report_id in self.scheduled_reports:
@@ -339,8 +320,7 @@ class ReportGenerator:
             raise ReportingError(f"Report config deletion failed: {str(e)}")
     
     async def get_available_templates(self) -> List[Dict[str, Any]]:
-        """Get available report templates"""
-        try:
+        """Get available report templates"""        try:
             templates = []
             for template_id, template in self.report_templates.items():
                 templates.append({
@@ -358,8 +338,7 @@ class ReportGenerator:
             raise ReportingError(f"Template retrieval failed: {str(e)}")
     
     async def get_generation_stats(self) -> Dict[str, Any]:
-        """Get report generation statistics"""
-        try:
+        """Get report generation statistics"""        try:
             stats = self.generation_stats.copy()
             stats['active_configs'] = len(self.report_configs)
             stats['scheduled_reports'] = len(self.scheduled_reports)
@@ -377,8 +356,7 @@ class ReportGenerator:
     # Private Methods
     
     async def _load_report_templates(self) -> None:
-        """Load report templates"""
-        self.report_templates = {
+        """Load report templates"""        self.report_templates = {
             'executive_summary': {
                 'name': 'Executive Summary',
                 'description': 'High-level business overview',
@@ -415,8 +393,7 @@ class ReportGenerator:
         }
     
     def _validate_report_config(self, config: ReportConfig) -> None:
-        """Validate report configuration"""
-        if not config.report_id:
+        """Validate report configuration"""        if not config.report_id:
             raise ValueError("Report ID is required")
         
         if not config.title:
@@ -436,8 +413,7 @@ class ReportGenerator:
         config: ReportConfig,
         filters: Dict[str, Any]
     ) -> List[ReportSection]:
-        """Generate report sections based on configuration"""
-        sections = []
+        """Generate report sections based on configuration"""        sections = []
         
         template = self.report_templates.get(config.report_type.value, {})
         template_sections = template.get('sections', {})
@@ -465,8 +441,7 @@ class ReportGenerator:
         filters: Dict[str, Any],
         template_sections: Dict[str, Any]
     ) -> List[ReportSection]:
-        """Generate executive summary sections"""
-        sections = []
+        """Generate executive summary sections"""        sections = []
         
         # Business Overview
         overview_section = ReportSection(
@@ -531,8 +506,7 @@ class ReportGenerator:
         filters: Dict[str, Any],
         template_sections: Dict[str, Any]
     ) -> List[ReportSection]:
-        """Generate performance dashboard sections"""
-        sections = []
+        """Generate performance dashboard sections"""        sections = []
         
         # Performance Metrics
         metrics_section = ReportSection(
@@ -567,8 +541,7 @@ class ReportGenerator:
         filters: Dict[str, Any],
         template_sections: Dict[str, Any]
     ) -> List[ReportSection]:
-        """Generate financial report sections"""
-        sections = []
+        """Generate financial report sections"""        sections = []
         
         # Revenue Analysis
         revenue_section = ReportSection(
@@ -602,8 +575,7 @@ class ReportGenerator:
         return sections
     
     async def _generate_user_sections(self, filters: Dict[str, Any]) -> List[ReportSection]:
-        """Generate user analytics sections"""
-        sections = []
+        """Generate user analytics sections"""        sections = []
         
         user_section = ReportSection(
             id="user_analytics",
@@ -626,8 +598,7 @@ class ReportGenerator:
         return sections
     
     async def _generate_content_sections(self, filters: Dict[str, Any]) -> List[ReportSection]:
-        """Generate content performance sections"""
-        sections = []
+        """Generate content performance sections"""        sections = []
         
         content_section = ReportSection(
             id="content_performance",
@@ -650,8 +621,7 @@ class ReportGenerator:
         return sections
     
     async def _generate_system_sections(self, filters: Dict[str, Any]) -> List[ReportSection]:
-        """Generate system health sections"""
-        sections = []
+        """Generate system health sections"""        sections = []
         
         system_section = ReportSection(
             id="system_health",
@@ -678,8 +648,7 @@ class ReportGenerator:
         config: ReportConfig,
         filters: Dict[str, Any]
     ) -> List[ReportSection]:
-        """Generate custom report sections"""
-        sections = []
+        """Generate custom report sections"""        sections = []
         
         for section_name in config.custom_sections:
             custom_section = ReportSection(
@@ -696,8 +665,7 @@ class ReportGenerator:
         report: GeneratedReport,
         format: ReportFormat
     ) -> bytes:
-        """Generate report data in specified format"""
-        try:
+        """Generate report data in specified format"""        try:
             if format == ReportFormat.HTML:
                 return await self._generate_html_report(report)
             elif format == ReportFormat.PDF:
@@ -714,9 +682,7 @@ class ReportGenerator:
             raise ReportingError(f"Report data generation failed: {str(e)}")
     
     async def _generate_html_report(self, report: GeneratedReport) -> bytes:
-        """Generate HTML report"""
-        html_content = f"""
-        <!DOCTYPE html>
+        """Generate HTML report"""        html_content = f"""        <!DOCTYPE html>
         <html>
         <head>
             <title>{report.config.title}</title>
@@ -733,31 +699,24 @@ class ReportGenerator:
             <h1>{report.config.title}</h1>
             <p>Generated: {report.generated_at.isoformat()}</p>
             <p>{report.config.description}</p>
-        """
-        
+        """        
         for section in report.sections:
-            html_content += f"""
-            <div class="section">
+            html_content += f"""            <div class="section">
                 <h2>{section.title}</h2>
                 <pre>{json.dumps(section.content, indent=2)}</pre>
             </div>
-            """
-        
-        html_content += """
-        </body>
+            """        
+        html_content += """        </body>
         </html>
-        """
-        
+        """        
         return html_content.encode('utf-8')
     
     async def _generate_pdf_report(self, report: GeneratedReport) -> bytes:
-        """Generate PDF report"""
-        # Placeholder - would use a PDF library like reportlab
+        """Generate PDF report"""        # Placeholder - would use a PDF library like reportlab
         return b"PDF report content placeholder"
     
     async def _generate_csv_report(self, report: GeneratedReport) -> bytes:
-        """Generate CSV report"""
-        csv_data = []
+        """Generate CSV report"""        csv_data = []
         csv_data.append(['Section', 'Key', 'Value'])
         
         for section in report.sections:
@@ -769,8 +728,7 @@ class ReportGenerator:
         return csv_content.encode('utf-8')
     
     async def _generate_excel_report(self, report: GeneratedReport) -> bytes:
-        """Generate Excel report"""
-        # Create DataFrame
+        """Generate Excel report"""        # Create DataFrame
         data = []
         for section in report.sections:
             for key, value in section.content.items():
@@ -790,8 +748,7 @@ class ReportGenerator:
         return buffer.getvalue()
     
     async def _schedule_report(self, config: ReportConfig) -> None:
-        """Schedule report for automatic generation"""
-        next_run = self._calculate_next_run_time(config.frequency)
+        """Schedule report for automatic generation"""        next_run = self._calculate_next_run_time(config.frequency)
         self.scheduled_reports[config.report_id] = {
             'config': config,
             'next_run': next_run,
@@ -799,8 +756,7 @@ class ReportGenerator:
         }
     
     def _calculate_next_run_time(self, frequency: ReportFrequency) -> datetime:
-        """Calculate next run time based on frequency"""
-        now = datetime.now()
+        """Calculate next run time based on frequency"""        now = datetime.now()
         
         if frequency == ReportFrequency.HOURLY:
             return now + timedelta(hours=1)
@@ -818,8 +774,7 @@ class ReportGenerator:
             return now + timedelta(days=1)  # Default to daily
     
     async def _scheduled_report_processor(self) -> None:
-        """Process scheduled reports"""
-        while True:
+        """Process scheduled reports"""        while True:
             try:
                 now = datetime.now()
                 
@@ -847,19 +802,16 @@ class ReportGenerator:
                 await asyncio.sleep(60)
     
     async def _complete_pending_reports(self) -> None:
-        """Complete any pending report generations"""
-        # Placeholder for cleanup logic
+        """Complete any pending report generations"""        # Placeholder for cleanup logic
         pass
 
 
 class PerformanceReporter:
-    """
-    Specialized performance reporting system.
+    """    Specialized performance reporting system.
     
     Focuses on system performance, business KPIs, and operational metrics
     with advanced analytics and trend analysis.
-    """
-    
+    """    
     def __init__(self, metrics_collector: Optional[MetricsCollector] = None):
         self.logger = logging.getLogger(__name__)
         self.metrics_collector = metrics_collector or MetricsCollector()
@@ -874,8 +826,7 @@ class PerformanceReporter:
         }
     
     async def initialize(self) -> None:
-        """Initialize performance reporter"""
-        try:
+        """Initialize performance reporter"""        try:
             self.logger.info("Initializing PerformanceReporter...")
             self.logger.info("PerformanceReporter initialized successfully")
             
@@ -884,8 +835,7 @@ class PerformanceReporter:
             raise ReportingError(f"Initialization failed: {str(e)}")
     
     async def shutdown(self) -> None:
-        """Shutdown performance reporter"""
-        try:
+        """Shutdown performance reporter"""        try:
             self.logger.info("Shutting down PerformanceReporter...")
             self.logger.info("PerformanceReporter shutdown completed")
             
@@ -894,8 +844,7 @@ class PerformanceReporter:
             raise ReportingError(f"Shutdown failed: {str(e)}")
     
     async def generate_report(self, period: str = "daily") -> Dict[str, Any]:
-        """Generate performance report"""
-        try:
+        """Generate performance report"""        try:
             report = {
                 'report_type': 'performance',
                 'period': period,
@@ -913,8 +862,7 @@ class PerformanceReporter:
             raise ReportingError(f"Performance report generation failed: {str(e)}")
     
     async def _get_system_performance(self) -> Dict[str, Any]:
-        """Get system performance metrics"""
-        # Get current system metrics
+        """Get system performance metrics"""        # Get current system metrics
         import psutil
         
         return {
@@ -926,8 +874,7 @@ class PerformanceReporter:
         }
     
     async def _get_business_performance(self) -> Dict[str, Any]:
-        """Get business performance metrics"""
-        return {
+        """Get business performance metrics"""        return {
             'revenue_metrics': {
                 'daily_revenue': 1234.56,
                 'revenue_growth': 5.2
@@ -943,8 +890,7 @@ class PerformanceReporter:
         }
     
     async def _get_performance_alerts(self) -> List[Dict[str, Any]]:
-        """Get performance alerts"""
-        alerts = []
+        """Get performance alerts"""        alerts = []
         
         # Check thresholds
         system_perf = await self._get_system_performance()
@@ -961,8 +907,7 @@ class PerformanceReporter:
         return alerts
     
     async def _get_performance_recommendations(self) -> List[str]:
-        """Get performance recommendations"""
-        recommendations = []
+        """Get performance recommendations"""        recommendations = []
         
         alerts = await self._get_performance_alerts()
         

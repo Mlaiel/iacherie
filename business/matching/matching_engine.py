@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Creator Matching Engine
+"""IA Influencer Agent - Advanced Creator Matching Engine
 =====================================================
 
 Professional Multi-Format Creator Matching & Collaboration Engine
@@ -35,7 +34,6 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -83,8 +81,7 @@ from .matching_models import (
 
 
 class CreatorMatchingEngine(BaseBusinessEngine):
-    """
-    Ultra-Advanced Creator Matching Engine
+    """    Ultra-Advanced Creator Matching Engine
     
     Features:
     - AI-powered semantic matching using transformer models
@@ -93,8 +90,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
     - Real-time matching with sub-second response times
     - Scalable vector similarity search using FAISS
     - Advanced business intelligence and revenue optimization
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.name = "CreatorMatchingEngine"
@@ -129,8 +125,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
     
     async def initialize(self) -> bool:
-        """Initialize the matching engine with all components"""
-        try:
+        """Initialize the matching engine with all components"""        try:
             self.logger.info("Initializing Creator Matching Engine...")
             
             # Initialize core components
@@ -156,8 +151,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             return False
     
     async def _initialize_ai_models(self) -> None:
-        """Initialize AI/ML models for semantic matching"""
-        try:
+        """Initialize AI/ML models for semantic matching"""        try:
             # Semantic embedding model
             model_name = "sentence-transformers/all-MiniLM-L6-v2"
             self.embedding_model = AutoModel.from_pretrained(model_name)
@@ -188,8 +182,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             raise
     
     async def _initialize_vector_databases(self) -> None:
-        """Initialize FAISS vector databases for fast similarity search"""
-        try:
+        """Initialize FAISS vector databases for fast similarity search"""        try:
             # Creator profile vectors (768-dim)
             self.creator_index = faiss.IndexFlatIP(768)
             self.creator_id_map = {}
@@ -209,8 +202,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             raise
     
     async def _initialize_analyzers(self) -> None:
-        """Initialize specialized analyzers"""
-        try:
+        """Initialize specialized analyzers"""        try:
             self.compatibility_analyzer = CompatibilityAnalyzer(self.config)
             self.network_analyzer = NetworkAnalyzer(self.config)
             self.business_intelligence = BusinessIntelligenceAnalyzer(self.config)
@@ -223,8 +215,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             raise
     
     async def _initialize_cache_system(self) -> None:
-        """Initialize caching system for performance optimization"""
-        try:
+        """Initialize caching system for performance optimization"""        try:
             # Redis cache for hot data
             self.redis_client = await aioredis.create_redis_pool(
                 self.config.get("redis_url", "redis://localhost:6379"),
@@ -248,8 +239,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         limit: int = 50,
         offset: int = 0
     ) -> List[MatchResult]:
-        """
-        Find optimal collaboration matches for a creator
+        """        Find optimal collaboration matches for a creator
         
         Args:
             creator_id: ID of the creator seeking matches
@@ -259,8 +249,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             
         Returns:
             List of ranked match results
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             # Get creator profile
@@ -320,8 +309,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             raise HTTPException(status_code=500, detail=f"Match finding failed: {str(e)}")
     
     async def _get_creator_profile(self, creator_id: str) -> Optional[CreatorProfile]:
-        """Get creator profile from database or cache"""
-        try:
+        """Get creator profile from database or cache"""        try:
             # Check cache first
             cache_key = f"creator_profile:{creator_id}"
             cached_profile = await self.redis_client.get(cache_key)
@@ -371,8 +359,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         creator: CreatorProfile, 
         criteria: MatchingCriteria
     ) -> List[CreatorProfile]:
-        """Get candidate creators for matching"""
-        try:
+        """Get candidate creators for matching"""        try:
             # Use vector similarity search for initial candidate retrieval
             if self.creator_index.ntotal > 0:
                 candidates = await self._vector_search_candidates(creator, criteria)
@@ -390,8 +377,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         creator: CreatorProfile, 
         criteria: MatchingCriteria
     ) -> List[CreatorProfile]:
-        """Use vector similarity search for candidate retrieval"""
-        try:
+        """Use vector similarity search for candidate retrieval"""        try:
             # Generate embedding for creator
             creator_embedding = await self._generate_creator_embedding(creator)
             
@@ -424,8 +410,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         creator: CreatorProfile, 
         criteria: MatchingCriteria
     ) -> List[CreatorProfile]:
-        """Use database queries for candidate retrieval"""
-        try:
+        """Use database queries for candidate retrieval"""        try:
             async with get_async_session() as session:
                 query = select(CreatorProfileDB).where(
                     CreatorProfileDB.creator_id != creator.creator_id
@@ -484,8 +469,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         candidates: List[CreatorProfile],
         criteria: MatchingCriteria
     ) -> List[CreatorProfile]:
-        """Apply advanced filtering to candidate list"""
-        try:
+        """Apply advanced filtering to candidate list"""        try:
             filtered = []
             
             for candidate in candidates:
@@ -504,8 +488,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         candidate: CreatorProfile, 
         criteria: MatchingCriteria
     ) -> bool:
-        """Check if candidate passes all criteria filters"""
-        try:
+        """Check if candidate passes all criteria filters"""        try:
             # Platform requirements
             if criteria.required_platforms:
                 candidate_platforms = set(candidate.platforms.keys())
@@ -556,8 +539,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         creator: CreatorProfile,
         candidates: List[CreatorProfile]
     ) -> List[Tuple[CreatorProfile, CreatorCompatibility]]:
-        """Calculate compatibility scores for batch of candidates"""
-        try:
+        """Calculate compatibility scores for batch of candidates"""        try:
             compatibility_results = []
             
             # Process in batches for performance
@@ -595,8 +577,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         creator: CreatorProfile, 
         candidate: CreatorProfile
     ) -> Optional[CreatorCompatibility]:
-        """Synchronous compatibility calculation for threading"""
-        try:
+        """Synchronous compatibility calculation for threading"""        try:
             # This would be called from thread pool
             return asyncio.run(self.compatibility_analyzer.analyze_compatibility(creator, candidate))
             
@@ -610,8 +591,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         compatibility_scores: List[Tuple[CreatorProfile, CreatorCompatibility]],
         criteria: MatchingCriteria
     ) -> List[MatchResult]:
-        """Generate comprehensive match results"""
-        try:
+        """Generate comprehensive match results"""        try:
             matches = []
             
             for candidate, compatibility in compatibility_scores:
@@ -652,8 +632,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         matches: List[MatchResult],
         criteria: MatchingCriteria
     ) -> List[MatchResult]:
-        """Rank matches by composite scoring algorithm"""
-        try:
+        """Rank matches by composite scoring algorithm"""        try:
             # Calculate composite scores considering multiple factors
             for i, match in enumerate(matches):
                 composite_score = await self._calculate_composite_score(match, criteria)
@@ -678,8 +657,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         match: MatchResult,
         criteria: MatchingCriteria
     ) -> float:
-        """Calculate composite match score using weighted factors"""
-        try:
+        """Calculate composite match score using weighted factors"""        try:
             compatibility = match.compatibility_analysis
             weights = criteria.compatibility_weights or {}
             
@@ -708,8 +686,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             return match.match_score
     
     async def _generate_creator_embedding(self, creator: CreatorProfile) -> np.ndarray:
-        """Generate semantic embedding for creator profile"""
-        try:
+        """Generate semantic embedding for creator profile"""        try:
             # Combine textual features
             text_features = f"{creator.bio} {' '.join(creator.content_categories)} {' '.join(creator.content_themes)}"
             
@@ -738,8 +715,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         criteria: MatchingCriteria,
         matches: List[MatchResult]
     ) -> None:
-        """Cache match results for performance optimization"""
-        try:
+        """Cache match results for performance optimization"""        try:
             # Create cache key from criteria hash
             criteria_hash = hash(str(criteria.__dict__))
             cache_key = f"matches:{creator_id}:{criteria_hash}"
@@ -758,8 +734,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             self.logger.warning(f"Failed to cache match results: {e}")
     
     async def _validate_system_readiness(self) -> bool:
-        """Validate that all systems are ready for operation"""
-        try:
+        """Validate that all systems are ready for operation"""        try:
             # Test AI models
             if not self.embedding_model:
                 return False
@@ -782,8 +757,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             return False
     
     async def get_match_by_id(self, match_id: str) -> Optional[MatchResult]:
-        """Get specific match result by ID"""
-        try:
+        """Get specific match result by ID"""        try:
             cache_key = f"match:{match_id}"
             cached_match = await self.redis_client.get(cache_key)
             
@@ -830,8 +804,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         status: MatchingStatus,
         metadata: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """Update match status"""
-        try:
+        """Update match status"""        try:
             async with get_async_session() as session:
                 query = select(MatchResultDB).where(MatchResultDB.match_id == match_id)
                 result = await session.execute(query)
@@ -866,8 +839,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
         limit: int = 100,
         offset: int = 0
     ) -> List[MatchResult]:
-        """Get creator's match history"""
-        try:
+        """Get creator's match history"""        try:
             async with get_async_session() as session:
                 query = select(MatchResultDB).where(
                     or_(
@@ -901,8 +873,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
             return []
     
     async def shutdown(self) -> None:
-        """Graceful shutdown of matching engine"""
-        try:
+        """Graceful shutdown of matching engine"""        try:
             self.logger.info("Shutting down Creator Matching Engine...")
             
             # Close Redis connection
@@ -921,8 +892,7 @@ class CreatorMatchingEngine(BaseBusinessEngine):
 
 
 class CompatibilityAnalyzer:
-    """Advanced compatibility analysis between creators"""
-    
+    """Advanced compatibility analysis between creators"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -932,8 +902,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> CreatorCompatibility:
-        """Comprehensive compatibility analysis"""
-        try:
+        """Comprehensive compatibility analysis"""        try:
             # Calculate individual factor scores
             factor_scores = await self._calculate_factor_scores(creator_a, creator_b)
             
@@ -990,8 +959,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> Dict[CompatibilityFactor, float]:
-        """Calculate individual compatibility factor scores"""
-        try:
+        """Calculate individual compatibility factor scores"""        try:
             scores = {}
             
             # Audience overlap
@@ -1045,8 +1013,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate audience demographic overlap"""
-        try:
+        """Calculate audience demographic overlap"""        try:
             # Age distribution overlap
             age_overlap = self._calculate_distribution_overlap(
                 creator_a.audience_age_distribution,
@@ -1082,8 +1049,7 @@ class CompatibilityAnalyzer:
         dist_a: Dict[str, float],
         dist_b: Dict[str, float]
     ) -> float:
-        """Calculate overlap between two probability distributions"""
-        try:
+        """Calculate overlap between two probability distributions"""        try:
             if not dist_a or not dist_b:
                 return 0.0
             
@@ -1108,8 +1074,7 @@ class CompatibilityAnalyzer:
         creator_a: CreatorProfile,
         creator_b: CreatorProfile
     ) -> float:
-        """Calculate content style similarity using semantic analysis"""
-        try:
+        """Calculate content style similarity using semantic analysis"""        try:
             # Content categories overlap
             categories_a = set(creator_a.content_categories)
             categories_b = set(creator_b.content_categories)
@@ -1144,8 +1109,7 @@ class CompatibilityAnalyzer:
             return 0.0
     
     async def _calculate_overall_score(self, factor_scores: Dict[CompatibilityFactor, float]) -> float:
-        """Calculate weighted overall compatibility score"""
-        try:
+        """Calculate weighted overall compatibility score"""        try:
             # Default weights for factors
             default_weights = {
                 CompatibilityFactor.AUDIENCE_OVERLAP: 0.20,
@@ -1182,8 +1146,7 @@ class CompatibilityAnalyzer:
 
 
 class MatchingPreferences:
-    """User preferences for matching algorithm configuration"""
-    
+    """User preferences for matching algorithm configuration"""    
     def __init__(self):
         self.quality_weight = 0.3
         self.audience_similarity_weight = 0.25

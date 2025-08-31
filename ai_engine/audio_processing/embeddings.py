@@ -1,5 +1,4 @@
-"""
-🧠 Audio Embeddings Module - Advanced Audio Similarity Engine
+"""🧠 Audio Embeddings Module - Advanced Audio Similarity Engine
 
 Professional audio embeddings generation and similarity matching for the IA Influencer Agent platform.
 Implements state-of-the-art deep learning models for audio representation learning.
@@ -7,7 +6,6 @@ Implements state-of-the-art deep learning models for audio representation learni
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioEmbedding:
-    """Audio embedding representation with metadata"""
-    embedding: np.ndarray
+    """Audio embedding representation with metadata"""    embedding: np.ndarray
     audio_id: str
     features: Optional[AudioFeatures] = None
     metadata: Optional[Dict[str, Any]] = None
@@ -46,8 +43,7 @@ class AudioEmbedding:
 
 @dataclass
 class SimilarityResult:
-    """Audio similarity matching result"""
-    target_id: str
+    """Audio similarity matching result"""    target_id: str
     similarity_score: float
     distance: float
     features_similarity: Optional[Dict[str, float]] = None
@@ -55,16 +51,14 @@ class SimilarityResult:
 
 
 class AudioEmbeddingModel(nn.Module):
-    """
-    🧠 Deep Audio Embedding Neural Network
+    """    🧠 Deep Audio Embedding Neural Network
     
     Advanced CNN-based architecture for learning audio representations:
     - Multi-scale temporal convolutions
     - Attention mechanisms
     - Residual connections
     - Contrastive learning optimization
-    """
-    
+    """    
     def __init__(self, 
                  input_features: int = 128,
                  embedding_dim: int = 512,
@@ -119,24 +113,21 @@ class AudioEmbeddingModel(nn.Module):
         self._initialize_weights()
     
     def _initialize_weights(self):
-        """Initialize model weights using Xavier initialization"""
-        for module in self.modules():
+        """Initialize model weights using Xavier initialization"""        for module in self.modules():
             if isinstance(module, (nn.Conv1d, nn.Linear)):
                 nn.init.xavier_uniform_(module.weight)
                 if module.bias is not None:
                     nn.init.zeros_(module.bias)
     
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """
-        Forward pass through the embedding model
+        """        Forward pass through the embedding model
         
         Args:
             x: Input audio features [batch_size, features, time]
             
         Returns:
             Audio embeddings [batch_size, embedding_dim]
-        """
-        batch_size = x.size(0)
+        """        batch_size = x.size(0)
         
         # Normalize input features
         x = self.input_norm(x)
@@ -174,8 +165,7 @@ class AudioEmbeddingModel(nn.Module):
 
 
 class AudioEmbeddingGenerator:
-    """
-    🎵 Professional Audio Embedding Generator
+    """    🎵 Professional Audio Embedding Generator
     
     High-performance audio embedding generation system:
     - Deep learning-based feature extraction
@@ -183,8 +173,7 @@ class AudioEmbeddingGenerator:
     - Model versioning and management
     - GPU acceleration support
     - Cached embedding storage
-    """
-    
+    """    
     def __init__(self, 
                  config: Optional[AudioProcessingConfig] = None,
                  model_path: Optional[Path] = None):
@@ -211,8 +200,7 @@ class AudioEmbeddingGenerator:
         logger.info(f"AudioEmbeddingGenerator initialized on {self.device}")
     
     def _load_model(self, model_path: Path):
-        """Load pre-trained model weights"""
-        try:
+        """Load pre-trained model weights"""        try:
             checkpoint = torch.load(model_path, map_location=self.device)
             self.model.load_state_dict(checkpoint['model_state_dict'])
             self.model.eval()
@@ -221,8 +209,7 @@ class AudioEmbeddingGenerator:
             logger.error(f"Failed to load model: {e}")
     
     def _save_model(self, model_path: Path, metadata: Dict[str, Any] = None):
-        """Save model checkpoint"""
-        try:
+        """Save model checkpoint"""        try:
             model_path.parent.mkdir(parents=True, exist_ok=True)
             
             checkpoint = {
@@ -244,8 +231,7 @@ class AudioEmbeddingGenerator:
                                sample_rate: int,
                                audio_id: Optional[str] = None,
                                use_cache: bool = True) -> AudioEmbedding:
-        """
-        Generate audio embedding for input audio
+        """        Generate audio embedding for input audio
         
         Args:
             audio_data: Audio samples
@@ -255,8 +241,7 @@ class AudioEmbeddingGenerator:
             
         Returns:
             AudioEmbedding object
-        """
-        try:
+        """        try:
             # Generate audio ID if not provided
             if audio_id is None:
                 audio_hash = hashlib.md5(audio_data.tobytes()).hexdigest()
@@ -300,8 +285,7 @@ class AudioEmbeddingGenerator:
     async def _extract_embedding_features(self,
                                         audio_data: np.ndarray,
                                         sample_rate: int) -> np.ndarray:
-        """Extract features optimized for embedding generation"""
-        try:
+        """Extract features optimized for embedding generation"""        try:
             import librosa
             
             # Ensure consistent length for embedding
@@ -376,8 +360,7 @@ class AudioEmbeddingGenerator:
     async def generate_batch_embeddings(self,
                                       audio_files: List[Tuple[str, np.ndarray, int]],
                                       batch_size: int = 8) -> List[AudioEmbedding]:
-        """Generate embeddings for multiple audio files efficiently"""
-        try:
+        """Generate embeddings for multiple audio files efficiently"""        try:
             embeddings = []
             
             for i in range(0, len(audio_files), batch_size):
@@ -403,8 +386,7 @@ class AudioEmbeddingGenerator:
             raise
     
     def save_embeddings(self, embeddings: List[AudioEmbedding], output_path: Path):
-        """Save embeddings to disk"""
-        try:
+        """Save embeddings to disk"""        try:
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
             with open(output_path, 'wb') as f:
@@ -416,8 +398,7 @@ class AudioEmbeddingGenerator:
             logger.error(f"Failed to save embeddings: {e}")
     
     def load_embeddings(self, input_path: Path) -> List[AudioEmbedding]:
-        """Load embeddings from disk"""
-        try:
+        """Load embeddings from disk"""        try:
             with open(input_path, 'rb') as f:
                 embeddings = pickle.load(f)
             
@@ -430,8 +411,7 @@ class AudioEmbeddingGenerator:
 
 
 class SimilarityMatcher:
-    """
-    🔍 Advanced Audio Similarity Matcher
+    """    🔍 Advanced Audio Similarity Matcher
     
     Professional similarity matching system:
     - Multi-metric similarity calculation
@@ -439,8 +419,7 @@ class SimilarityMatcher:
     - Similarity threshold filtering
     - Batch similarity computation
     - Advanced ranking algorithms
-    """
-    
+    """    
     def __init__(self, 
                  config: Optional[AudioProcessingConfig] = None):
         self.config = config or AudioProcessingConfig()
@@ -455,8 +434,7 @@ class SimilarityMatcher:
         logger.info("SimilarityMatcher initialized")
     
     def add_embeddings(self, embeddings: List[AudioEmbedding]):
-        """Add embeddings to the similarity database"""
-        try:
+        """Add embeddings to the similarity database"""        try:
             self.embeddings_db.extend(embeddings)
             self._rebuild_embedding_matrix()
             
@@ -466,8 +444,7 @@ class SimilarityMatcher:
             logger.error(f"Failed to add embeddings: {e}")
     
     def _rebuild_embedding_matrix(self):
-        """Rebuild the embedding matrix for efficient similarity computation"""
-        try:
+        """Rebuild the embedding matrix for efficient similarity computation"""        try:
             if not self.embeddings_db:
                 return
             
@@ -503,8 +480,7 @@ class SimilarityMatcher:
                          top_k: int = 10,
                          similarity_threshold: float = 0.5,
                          exclude_self: bool = True) -> List[SimilarityResult]:
-        """
-        Find similar audio tracks based on embedding similarity
+        """        Find similar audio tracks based on embedding similarity
         
         Args:
             query_embedding: Query audio embedding
@@ -514,8 +490,7 @@ class SimilarityMatcher:
             
         Returns:
             List of similarity results sorted by similarity score
-        """
-        try:
+        """        try:
             if self.embedding_matrix is None or len(self.embeddings_db) == 0:
                 logger.warning("No embeddings in database")
                 return []
@@ -572,8 +547,7 @@ class SimilarityMatcher:
                                query_embeddings: List[AudioEmbedding],
                                top_k: int = 10,
                                similarity_threshold: float = 0.5) -> Dict[str, List[SimilarityResult]]:
-        """Find similar tracks for multiple queries efficiently"""
-        try:
+        """Find similar tracks for multiple queries efficiently"""        try:
             results = {}
             
             for query_embedding in query_embeddings:
@@ -590,8 +564,7 @@ class SimilarityMatcher:
             return {}
     
     def get_similarity_statistics(self) -> Dict[str, Any]:
-        """Get statistics about the similarity database"""
-        try:
+        """Get statistics about the similarity database"""        try:
             if not self.embeddings_db:
                 return {"total_embeddings": 0}
             
@@ -614,8 +587,7 @@ class SimilarityMatcher:
             return {"error": str(e)}
     
     def clear_database(self):
-        """Clear the similarity database"""
-        self.embeddings_db = []
+        """Clear the similarity database"""        self.embeddings_db = []
         self.embedding_matrix = None
         self.audio_ids = []
         self.pca = None
@@ -625,8 +597,7 @@ class SimilarityMatcher:
     
     async def compute_similarity_matrix(self, 
                                       embeddings: List[AudioEmbedding]) -> np.ndarray:
-        """Compute full similarity matrix for a set of embeddings"""
-        try:
+        """Compute full similarity matrix for a set of embeddings"""        try:
             if not embeddings:
                 return np.array([])
             

@@ -1,5 +1,4 @@
-"""
-Revenue Stream Management - Multi-stream revenue optimization and management
+"""Revenue Stream Management - Multi-stream revenue optimization and management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -11,7 +10,6 @@ written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class StreamType(Enum):
-    """Revenue stream types"""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Revenue stream types"""    STREAMING_ROYALTIES = "streaming_royalties"
     DIGITAL_SALES = "digital_sales"
     PHYSICAL_SALES = "physical_sales"
     LICENSING = "licensing"
@@ -50,8 +47,7 @@ class StreamType(Enum):
 
 
 class StreamStatus(Enum):
-    """Revenue stream status"""
-    ACTIVE = "active"
+    """Revenue stream status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     PAUSED = "paused"
     TESTING = "testing"
@@ -62,8 +58,7 @@ class StreamStatus(Enum):
 
 
 class StreamRisk(Enum):
-    """Revenue stream risk levels"""
-    LOW = "low"
+    """Revenue stream risk levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -71,8 +66,7 @@ class StreamRisk(Enum):
 
 @dataclass
 class StreamPerformance:
-    """Revenue stream performance metrics"""
-    stream_id: str
+    """Revenue stream performance metrics"""    stream_id: str
     revenue: Decimal
     growth_rate: float
     stability_score: float
@@ -86,8 +80,7 @@ class StreamPerformance:
     
     @property
     def performance_score(self) -> float:
-        """Calculate overall performance score"""
-        return (
+        """Calculate overall performance score"""        return (
             min(100, float(self.revenue) / 1000) * 0.3 +
             min(100, max(0, self.growth_rate)) * 0.2 +
             self.stability_score * 0.2 +
@@ -98,8 +91,7 @@ class StreamPerformance:
 
 @dataclass
 class RevenueStream:
-    """Revenue stream configuration and data"""
-    stream_id: str
+    """Revenue stream configuration and data"""    stream_id: str
     name: str
     type: StreamType
     status: StreamStatus
@@ -117,27 +109,23 @@ class RevenueStream:
     
     @property
     def revenue_gap(self) -> Decimal:
-        """Calculate revenue gap to target"""
-        return self.target_revenue - self.current_revenue
+        """Calculate revenue gap to target"""        return self.target_revenue - self.current_revenue
     
     @property
     def target_achievement(self) -> float:
-        """Calculate target achievement percentage"""
-        if self.target_revenue == 0:
+        """Calculate target achievement percentage"""        if self.target_revenue == 0:
             return 0.0
         return float((self.current_revenue / self.target_revenue) * 100)
 
 
 class StreamOptimizer:
-    """Individual stream optimization engine"""
-    
+    """Individual stream optimization engine"""    
     def __init__(self, stream: RevenueStream):
         self.stream = stream
         self.optimization_strategies = {}
         
     async def analyze_performance(self) -> Dict[str, Any]:
-        """Analyze stream performance"""
-        try:
+        """Analyze stream performance"""        try:
             analysis = {
                 'performance_score': self.stream.performance.performance_score,
                 'target_achievement': self.stream.target_achievement,
@@ -155,8 +143,7 @@ class StreamOptimizer:
             raise StreamManagementError(f"Performance analysis failed: {e}")
     
     async def _analyze_revenue_trend(self) -> Dict[str, Any]:
-        """Analyze revenue trend for stream"""
-        # Mock trend analysis - in production, use actual historical data
+        """Analyze revenue trend for stream"""        # Mock trend analysis - in production, use actual historical data
         trend_data = {
             'direction': 'upward' if self.stream.performance.growth_rate > 0 else 'downward',
             'strength': abs(self.stream.performance.growth_rate),
@@ -168,8 +155,7 @@ class StreamOptimizer:
         return trend_data
     
     async def _analyze_cost_efficiency(self) -> Dict[str, Any]:
-        """Analyze cost efficiency"""
-        total_costs = sum(self.stream.cost_structure.values())
+        """Analyze cost efficiency"""        total_costs = sum(self.stream.cost_structure.values())
         
         return {
             'total_costs': float(total_costs),
@@ -180,8 +166,7 @@ class StreamOptimizer:
         }
     
     async def _analyze_market_position(self) -> Dict[str, Any]:
-        """Analyze market position"""
-        return {
+        """Analyze market position"""        return {
             'market_share': self.stream.performance.market_share,
             'competitive_position': self.stream.performance.competitive_position,
             'differentiation_score': np.random.uniform(0.3, 0.9),  # Mock score
@@ -190,8 +175,7 @@ class StreamOptimizer:
         }
     
     async def _assess_risks(self) -> Dict[str, Any]:
-        """Assess stream risks"""
-        risks = []
+        """Assess stream risks"""        risks = []
         
         if self.stream.performance.growth_rate < 0:
             risks.append({'type': 'declining_revenue', 'severity': 'high'})
@@ -209,8 +193,7 @@ class StreamOptimizer:
         }
     
     async def _get_risk_mitigation_strategies(self, risks: List[Dict[str, Any]]) -> List[str]:
-        """Get risk mitigation strategies"""
-        strategies = []
+        """Get risk mitigation strategies"""        strategies = []
         
         for risk in risks:
             if risk['type'] == 'declining_revenue':
@@ -223,8 +206,7 @@ class StreamOptimizer:
         return strategies
     
     async def _assess_growth_potential(self) -> Dict[str, Any]:
-        """Assess growth potential"""
-        market_factors = np.random.uniform(0.4, 0.9)  # Mock market conditions
+        """Assess growth potential"""        market_factors = np.random.uniform(0.4, 0.9)  # Mock market conditions
         competition_level = np.random.uniform(0.3, 0.8)  # Mock competition
         
         growth_score = (
@@ -243,8 +225,7 @@ class StreamOptimizer:
         }
     
     async def generate_optimization_recommendations(self) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations for stream"""
-        try:
+        """Generate optimization recommendations for stream"""        try:
             recommendations = []
             
             # Revenue-based recommendations
@@ -296,15 +277,13 @@ class StreamOptimizer:
 
 
 class MultiStreamAnalyzer:
-    """Multi-stream analysis and optimization"""
-    
+    """Multi-stream analysis and optimization"""    
     def __init__(self, streams: List[RevenueStream]):
         self.streams = streams
         self.analysis_cache = {}
         
     async def analyze_portfolio_performance(self) -> Dict[str, Any]:
-        """Analyze overall stream portfolio performance"""
-        try:
+        """Analyze overall stream portfolio performance"""        try:
             total_revenue = sum(stream.current_revenue for stream in self.streams)
             total_target = sum(stream.target_revenue for stream in self.streams)
             
@@ -375,8 +354,7 @@ class MultiStreamAnalyzer:
             raise StreamManagementError(f"Portfolio analysis failed: {e}")
     
     async def _calculate_portfolio_risk(self) -> float:
-        """Calculate overall portfolio risk score"""
-        risk_weights = {
+        """Calculate overall portfolio risk score"""        risk_weights = {
             StreamRisk.LOW: 0.1,
             StreamRisk.MEDIUM: 0.3,
             StreamRisk.HIGH: 0.7,
@@ -395,8 +373,7 @@ class MultiStreamAnalyzer:
         return weighted_risk
     
     def _calculate_high_risk_percentage(self) -> float:
-        """Calculate percentage of revenue from high-risk streams"""
-        total_revenue = sum(stream.current_revenue for stream in self.streams)
+        """Calculate percentage of revenue from high-risk streams"""        total_revenue = sum(stream.current_revenue for stream in self.streams)
         high_risk_revenue = sum(
             stream.current_revenue for stream in self.streams
             if stream.risk_level in [StreamRisk.HIGH, StreamRisk.CRITICAL]
@@ -405,8 +382,7 @@ class MultiStreamAnalyzer:
         return float((high_risk_revenue / total_revenue) * 100) if total_revenue > 0 else 0
     
     async def _assess_concentration_risk(self) -> Dict[str, Any]:
-        """Assess concentration risk in portfolio"""
-        total_revenue = sum(stream.current_revenue for stream in self.streams)
+        """Assess concentration risk in portfolio"""        total_revenue = sum(stream.current_revenue for stream in self.streams)
         
         # Calculate revenue concentration
         sorted_streams = sorted(self.streams, key=lambda s: s.current_revenue, reverse=True)
@@ -423,8 +399,7 @@ class MultiStreamAnalyzer:
         }
     
     async def _analyze_platform_distribution(self) -> Dict[str, float]:
-        """Analyze distribution across platforms"""
-        platform_revenue = {}
+        """Analyze distribution across platforms"""        platform_revenue = {}
         total_revenue = sum(stream.current_revenue for stream in self.streams)
         
         for stream in self.streams:
@@ -439,8 +414,7 @@ class MultiStreamAnalyzer:
         }
     
     async def _analyze_audience_distribution(self) -> Dict[str, int]:
-        """Analyze audience segment distribution"""
-        audience_distribution = {}
+        """Analyze audience segment distribution"""        audience_distribution = {}
         
         for stream in self.streams:
             segment = stream.audience_segment
@@ -451,8 +425,7 @@ class MultiStreamAnalyzer:
         return audience_distribution
     
     async def _identify_top_performers(self) -> List[Dict[str, Any]]:
-        """Identify top performing streams"""
-        sorted_streams = sorted(
+        """Identify top performing streams"""        sorted_streams = sorted(
             self.streams,
             key=lambda s: s.performance.performance_score,
             reverse=True
@@ -471,8 +444,7 @@ class MultiStreamAnalyzer:
         ]
     
     async def _identify_underperformers(self) -> List[Dict[str, Any]]:
-        """Identify underperforming streams"""
-        underperformers = [
+        """Identify underperforming streams"""        underperformers = [
             stream for stream in self.streams
             if (stream.target_achievement < 70 or 
                 stream.performance.growth_rate < 0 or
@@ -492,8 +464,7 @@ class MultiStreamAnalyzer:
         ]
     
     async def _identify_stream_issues(self, stream: RevenueStream) -> List[str]:
-        """Identify specific issues with underperforming stream"""
-        issues = []
+        """Identify specific issues with underperforming stream"""        issues = []
         
         if stream.target_achievement < 50:
             issues.append('Significantly below revenue target')
@@ -514,8 +485,7 @@ class MultiStreamAnalyzer:
 
 
 class StreamDiversificationEngine:
-    """Stream diversification optimization engine"""
-    
+    """Stream diversification optimization engine"""    
     def __init__(self):
         self.diversification_strategies = {}
         
@@ -525,8 +495,7 @@ class StreamDiversificationEngine:
         target_revenue: Decimal,
         risk_tolerance: float
     ) -> Dict[str, Any]:
-        """Analyze diversification opportunities"""
-        try:
+        """Analyze diversification opportunities"""        try:
             current_analysis = MultiStreamAnalyzer(current_streams)
             portfolio_analysis = await current_analysis.analyze_portfolio_performance()
             
@@ -573,8 +542,7 @@ class StreamDiversificationEngine:
         target_revenue: Decimal,
         risk_tolerance: float
     ) -> Dict[str, Any]:
-        """Evaluate potential new revenue stream"""
-        
+        """Evaluate potential new revenue stream"""        
         # Stream characteristics (simplified evaluation)
         stream_characteristics = {
             StreamType.STREAMING_ROYALTIES: {
@@ -664,8 +632,7 @@ class StreamDiversificationEngine:
         stream_type: StreamType,
         current_streams: List[RevenueStream]
     ) -> Dict[str, Any]:
-        """Assess strategic fit of new stream with current portfolio"""
-        
+        """Assess strategic fit of new stream with current portfolio"""        
         # Synergy analysis
         synergistic_types = {
             StreamType.STREAMING_ROYALTIES: [StreamType.MERCHANDISE, StreamType.LIVE_PERFORMANCES],
@@ -698,8 +665,7 @@ class StreamDiversificationEngine:
         potential_streams: List[Dict[str, Any]],
         risk_tolerance: float
     ) -> List[str]:
-        """Generate diversification recommendations"""
-        recommendations = []
+        """Generate diversification recommendations"""        recommendations = []
         
         # Diversification score recommendations
         diversification_score = portfolio_analysis['performance_metrics']['diversification_score']
@@ -732,8 +698,7 @@ class StreamDiversificationEngine:
         priority_streams: List[Dict[str, Any]],
         target_revenue: Decimal
     ) -> Dict[str, Any]:
-        """Create implementation roadmap for new streams"""
-        
+        """Create implementation roadmap for new streams"""        
         roadmap_phases = []
         cumulative_cost = Decimal('0')
         cumulative_revenue = Decimal('0')
@@ -765,8 +730,7 @@ class StreamDiversificationEngine:
         }
     
     async def _get_implementation_milestones(self, stream_type: str) -> List[str]:
-        """Get implementation milestones for stream type"""
-        milestone_templates = {
+        """Get implementation milestones for stream type"""        milestone_templates = {
             'streaming_royalties': [
                 'Complete music production',
                 'Submit to streaming platforms',
@@ -795,8 +759,7 @@ class StreamDiversificationEngine:
         ])
     
     async def _get_success_metrics(self, stream_type: str) -> List[str]:
-        """Get success metrics for stream type"""
-        return [
+        """Get success metrics for stream type"""        return [
             'Revenue target achievement',
             'Customer acquisition cost',
             'Conversion rate',
@@ -805,8 +768,7 @@ class StreamDiversificationEngine:
         ]
     
     async def _get_risk_mitigation_plan(self, priority_streams: List[Dict[str, Any]]) -> List[str]:
-        """Get risk mitigation plan for implementation"""
-        return [
+        """Get risk mitigation plan for implementation"""        return [
             'Start with lowest-risk, highest-ROI stream',
             'Implement staged rollout with milestone gates',
             'Maintain reserve budget for unexpected costs',
@@ -816,8 +778,7 @@ class StreamDiversificationEngine:
 
 
 class RevenueStreamManager:
-    """Main revenue stream management controller"""
-    
+    """Main revenue stream management controller"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.streams = {}
@@ -825,8 +786,7 @@ class RevenueStreamManager:
         self.diversification_engine = StreamDiversificationEngine()
         
     async def initialize(self) -> None:
-        """Initialize revenue stream manager"""
-        try:
+        """Initialize revenue stream manager"""        try:
             # Load existing streams
             await self._load_streams()
             
@@ -841,8 +801,7 @@ class RevenueStreamManager:
             raise
     
     async def _load_streams(self) -> None:
-        """Load existing revenue streams"""
-        # In production, load from database
+        """Load existing revenue streams"""        # In production, load from database
         # For now, create sample streams
         
         sample_streams = [
@@ -908,8 +867,7 @@ class RevenueStreamManager:
             self.streams[stream.stream_id] = stream
     
     async def get_portfolio_overview(self) -> Dict[str, Any]:
-        """Get complete portfolio overview"""
-        try:
+        """Get complete portfolio overview"""        try:
             streams_list = list(self.streams.values())
             analyzer = MultiStreamAnalyzer(streams_list)
             
@@ -944,8 +902,7 @@ class RevenueStreamManager:
             raise StreamManagementError(f"Portfolio overview failed: {e}")
     
     async def _identify_optimization_opportunities(self, streams: List[RevenueStream]) -> List[Dict[str, Any]]:
-        """Identify portfolio-wide optimization opportunities"""
-        opportunities = []
+        """Identify portfolio-wide optimization opportunities"""        opportunities = []
         
         # Low-performing streams
         underperformers = [s for s in streams if s.target_achievement < 70]

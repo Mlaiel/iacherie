@@ -1,5 +1,4 @@
-"""
-🚀 Payout Processor - Ultra-Advanced Automated Payout System
+"""🚀 Payout Processor - Ultra-Advanced Automated Payout System
 ===========================================================
 
 Industrial-grade payout processing system handling automated payments,
@@ -18,7 +17,6 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Automated Payouts
 ===========================================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class PayoutStatus(Enum):
-    """Payout processing status"""
-    PENDING = "pending"
+    """Payout processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -49,8 +46,7 @@ class PayoutStatus(Enum):
 
 
 class PayoutFrequency(Enum):
-    """Payout frequency options"""
-    IMMEDIATE = "immediate"
+    """Payout frequency options"""    IMMEDIATE = "immediate"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -59,8 +55,7 @@ class PayoutFrequency(Enum):
 
 @dataclass
 class PayoutRequest:
-    """Payout request data structure"""
-    payout_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Payout request data structure"""    payout_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     amount: Decimal = Decimal('0')
     currency: str = "USD"
@@ -79,8 +74,7 @@ class PayoutRequest:
 
 
 class PayoutProcessor:
-    """
-    Ultra-advanced automated payout processing system
+    """    Ultra-advanced automated payout processing system
     
     Features:
     - Automated payout scheduling and processing
@@ -91,8 +85,7 @@ class PayoutProcessor:
     - Failed payment retry mechanisms
     - Batch processing for efficiency
     - Detailed audit trails and reporting
-    """
-    
+    """    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -108,8 +101,7 @@ class PayoutProcessor:
         self._compliance_rules = {}
         
     async def initialize(self):
-        """Initialize payout processor"""
-        try:
+        """Initialize payout processor"""        try:
             # Initialize payment orchestrator
             await self.payment_orchestrator.initialize()
             
@@ -134,8 +126,7 @@ class PayoutProcessor:
                             currency: str = "USD",
                             payment_method: Optional[str] = None,
                             frequency: PayoutFrequency = PayoutFrequency.WEEKLY) -> str:
-        """
-        Schedule a payout for a creator
+        """        Schedule a payout for a creator
         
         Args:
             creator_id: Creator ID
@@ -146,8 +137,7 @@ class PayoutProcessor:
             
         Returns:
             Payout ID
-        """
-        try:
+        """        try:
             # Validate payout request
             await self._validate_payout_request(creator_id, amount, currency)
             
@@ -208,8 +198,7 @@ class PayoutProcessor:
                                      amount: Decimal,
                                      currency: str = "USD",
                                      payment_method: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Process immediate payout (bypassing normal schedule)
+        """        Process immediate payout (bypassing normal schedule)
         
         Args:
             creator_id: Creator ID
@@ -219,8 +208,7 @@ class PayoutProcessor:
             
         Returns:
             Payout processing result
-        """
-        try:
+        """        try:
             # Create immediate payout request
             payout_id = await self.schedule_payout(
                 creator_id=creator_id,
@@ -248,8 +236,7 @@ class PayoutProcessor:
             raise
 
     async def _process_single_payout(self, payout_id: str) -> Dict[str, Any]:
-        """Process a single payout"""
-        try:
+        """Process a single payout"""        try:
             # Get payout request
             payout_request = await self._get_payout_request(payout_id)
             
@@ -329,8 +316,7 @@ class PayoutProcessor:
             }
 
     async def process_scheduled_payouts(self) -> Dict[str, Any]:
-        """Process all scheduled payouts that are due"""
-        try:
+        """Process all scheduled payouts that are due"""        try:
             # Get payouts due for processing
             due_payouts = await self._get_due_payouts()
             
@@ -396,8 +382,7 @@ class PayoutProcessor:
                                date_range: Optional[Tuple[datetime, datetime]] = None,
                                status_filter: Optional[PayoutStatus] = None,
                                limit: int = 50) -> List[Dict[str, Any]]:
-        """Get payout history for a creator"""
-        try:
+        """Get payout history for a creator"""        try:
             conditions = ["creator_id = %s"]
             params = [creator_id]
             
@@ -409,8 +394,7 @@ class PayoutProcessor:
                 conditions.append("status = %s")
                 params.append(status_filter.value)
             
-            query = f"""
-                SELECT 
+            query = f"""                SELECT 
                     payout_id, amount, currency, payment_method, status,
                     scheduled_date, processed_date, transaction_id, fees,
                     error_messages, created_at
@@ -418,8 +402,7 @@ class PayoutProcessor:
                 WHERE {' AND '.join(conditions)}
                 ORDER BY created_at DESC
                 LIMIT %s
-            """
-            params.append(limit)
+            """            params.append(limit)
             
             payout_records = await self.db.fetch_all(query, params)
             
@@ -447,8 +430,7 @@ class PayoutProcessor:
     async def get_payout_statistics(self,
                                   creator_id: Optional[str] = None,
                                   date_range: Optional[Tuple[datetime, datetime]] = None) -> Dict[str, Any]:
-        """Get payout processing statistics"""
-        try:
+        """Get payout processing statistics"""        try:
             conditions = []
             params = []
             
@@ -463,8 +445,7 @@ class PayoutProcessor:
             where_clause = " AND ".join(conditions) if conditions else "1=1"
             
             # Overall statistics
-            stats_query = f"""
-                SELECT 
+            stats_query = f"""                SELECT 
                     COUNT(*) as total_payouts,
                     SUM(CASE WHEN status = 'completed' THEN 1 ELSE 0 END) as successful_payouts,
                     SUM(CASE WHEN status = 'failed' THEN 1 ELSE 0 END) as failed_payouts,
@@ -476,8 +457,7 @@ class PayoutProcessor:
                     MAX(amount) as maximum_amount
                 FROM payouts
                 WHERE {where_clause}
-            """
-            
+            """            
             stats = await self.db.fetch_one(stats_query, params)
             
             # Success rate calculation
@@ -506,8 +486,7 @@ class PayoutProcessor:
             return {}
 
     async def cleanup(self):
-        """Cleanup payout processor resources"""
-        try:
+        """Cleanup payout processor resources"""        try:
             # Stop background processing
             await self._stop_background_processing()
             

@@ -1,5 +1,4 @@
-"""
-🎯 Content Classifier Engine
+"""🎯 Content Classifier Engine
 ===========================
 
 Advanced multi-modal content classification using state-of-the-art AI models:
@@ -13,7 +12,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + ML Engineer + Audio Engineer
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import torch
 import numpy as np
@@ -33,10 +31,8 @@ import cv2
 logger = logging.getLogger(__name__)
 
 class ContentClassifierEngine:
-    """
-    Enterprise-grade multi-modal content classifier
-    """
-    
+    """    Enterprise-grade multi-modal content classifier
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -55,8 +51,7 @@ class ContentClassifierEngine:
         logger.info(f"Content Classifier Engine initialized on {self.device}")
     
     def _load_models(self):
-        """Load all AI models for content classification"""
-        try:
+        """Load all AI models for content classification"""        try:
             # CLIP for visual content
             self.models['clip'] = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(self.device)
             self.processors['clip'] = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -84,10 +79,8 @@ class ContentClassifierEngine:
             raise
     
     async def classify(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Main classification entry point for all content types
-        """
-        try:
+        """        Main classification entry point for all content types
+        """        try:
             content_type = content_data.get('type', 'unknown')
             file_path = content_data.get('file_path')
             metadata = content_data.get('metadata', {})
@@ -126,8 +119,7 @@ class ContentClassifierEngine:
             raise
     
     async def _classify_image(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Classify image content using CLIP and specialized models"""
-        try:
+        """Classify image content using CLIP and specialized models"""        try:
             # Load and preprocess image
             image = Image.open(file_path).convert('RGB')
             
@@ -184,8 +176,7 @@ class ContentClassifierEngine:
             raise
     
     async def _classify_video(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Classify video content using frame analysis and audio extraction"""
-        try:
+        """Classify video content using frame analysis and audio extraction"""        try:
             # Extract key frames
             cap = cv2.VideoCapture(file_path)
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -247,8 +238,7 @@ class ContentClassifierEngine:
             raise
     
     async def _classify_audio(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Classify audio content using Whisper and audio analysis"""
-        try:
+        """Classify audio content using Whisper and audio analysis"""        try:
             # Load audio
             audio, sr = librosa.load(file_path, sr=16000)
             duration = len(audio) / sr
@@ -307,8 +297,7 @@ class ContentClassifierEngine:
             raise
     
     async def _classify_text(self, text_content: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Classify text content using advanced NLP models"""
-        try:
+        """Classify text content using advanced NLP models"""        try:
             if not text_content.strip():
                 return {
                     'classifications': {'empty_content': True},
@@ -374,8 +363,7 @@ class ContentClassifierEngine:
             raise
     
     async def update_model(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Update models based on feedback data"""
-        try:
+        """Update models based on feedback data"""        try:
             update_results = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'samples_processed': len(feedback_data),
@@ -412,69 +400,56 @@ class ContentClassifierEngine:
     
     # Helper methods
     async def _classify_image_direct(self, image: Image.Image) -> Dict[str, Any]:
-        """Direct image classification without file I/O"""
-        # Implementation similar to _classify_image but with direct Image input
+        """Direct image classification without file I/O"""        # Implementation similar to _classify_image but with direct Image input
         pass
     
     async def _analyze_image_safety(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze image for safety concerns"""
-        # Implementation for image safety analysis
+        """Analyze image for safety concerns"""        # Implementation for image safety analysis
         return {'risk_level': 'low', 'confidence': 0.8}
     
     async def _assess_image_quality(self, image: Image.Image) -> Dict[str, Any]:
-        """Assess image quality metrics"""
-        # Implementation for image quality assessment
+        """Assess image quality metrics"""        # Implementation for image quality assessment
         return {'quality_level': 'high', 'confidence': 0.9}
     
     def _aggregate_frame_classifications(self, frame_classifications: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Aggregate classifications from multiple video frames"""
-        # Implementation for aggregating frame classifications
+        """Aggregate classifications from multiple video frames"""        # Implementation for aggregating frame classifications
         return {}
     
     async def _extract_and_classify_audio(self, video_path: str) -> Dict[str, Any]:
-        """Extract audio from video and classify"""
-        # Implementation for video audio extraction and classification
+        """Extract audio from video and classify"""        # Implementation for video audio extraction and classification
         return {'content_type': 'unknown', 'confidence': 0.0}
     
     def _calculate_visual_risk(self, classifications: Dict[str, Any]) -> str:
-        """Calculate visual risk level from classifications"""
-        # Implementation for visual risk calculation
+        """Calculate visual risk level from classifications"""        # Implementation for visual risk calculation
         return 'low'
     
     async def _analyze_audio_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyze audio features"""
-        # Implementation for audio feature analysis
+        """Analyze audio features"""        # Implementation for audio feature analysis
         return {'classification_confidence': 0.8, 'quality_risk': 'low', 'copyright_risk': 'low', 'channels': 1}
     
     async def _classify_audio_type(self, audio: np.ndarray, sr: int) -> str:
-        """Classify audio as music, speech, etc."""
-        # Implementation for audio type classification
+        """Classify audio as music, speech, etc."""        # Implementation for audio type classification
         return 'music'
     
     async def _analyze_sentiment(self, text: str) -> str:
-        """Analyze text sentiment"""
-        # Implementation for sentiment analysis
+        """Analyze text sentiment"""        # Implementation for sentiment analysis
         return 'neutral'
     
     def _map_category_scores(self, scores: np.ndarray) -> str:
-        """Map category scores to category names"""
-        # Implementation for category mapping
+        """Map category scores to category names"""        # Implementation for category mapping
         return 'general'
     
     def _assess_content_risk(self, scores: np.ndarray) -> str:
-        """Assess content risk from category scores"""
-        # Implementation for content risk assessment
+        """Assess content risk from category scores"""        # Implementation for content risk assessment
         return 'low'
     
     def _calculate_text_risk(self, toxicity: float, category_scores: np.ndarray) -> str:
-        """Calculate overall text risk"""
-        if toxicity > 0.7:
+        """Calculate overall text risk"""        if toxicity > 0.7:
             return 'high'
         return 'low'
     
     def _calculate_overall_risk(self, classification_result: Dict[str, Any]) -> str:
-        """Calculate overall risk assessment"""
-        risk_factors = classification_result.get('risk_factors', {})
+        """Calculate overall risk assessment"""        risk_factors = classification_result.get('risk_factors', {})
         high_risks = sum(1 for risk in risk_factors.values() if risk == 'high')
         
         if high_risks >= 2:
@@ -485,8 +460,7 @@ class ContentClassifierEngine:
             return 'low'
     
     async def _classify_unknown(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle unknown content types"""
-        return {
+        """Handle unknown content types"""        return {
             'classifications': {'unknown_type': True},
             'confidence_scores': {'overall': 0.0},
             'risk_factors': {'overall_risk': 'medium'}

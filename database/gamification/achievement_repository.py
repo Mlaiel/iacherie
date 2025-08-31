@@ -1,5 +1,4 @@
-"""
-🏆 Achievement Repository - IA Influencer Agent Platform Enterprise
+"""🏆 Achievement Repository - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/database/gamification/achievement_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,7 +20,6 @@ ACHIEVEMENT REPOSITORY ARCHITECTURE:
 Achievement Definition → Progress Tracking → Unlock Validation → 
 Badge Management → Analytics Collection → Performance Optimization
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -34,16 +32,14 @@ from decimal import Decimal
 from ...data_management.repositories.base_repository import BaseRepository, OperationType
 
 class AchievementTier(Enum):
-    """Achievement difficulty tiers"""
-    BRONZE = "bronze"
+    """Achievement difficulty tiers"""    BRONZE = "bronze"
     SILVER = "silver"
     GOLD = "gold"
     PLATINUM = "platinum"
     DIAMOND = "diamond"
 
 class AchievementCategory(Enum):
-    """Achievement categories"""
-    CONTENT_CREATION = "content_creation"
+    """Achievement categories"""    CONTENT_CREATION = "content_creation"
     COLLABORATION = "collaboration"
     ENGAGEMENT = "engagement"
     PROTECTION = "protection"
@@ -53,16 +49,14 @@ class AchievementCategory(Enum):
     MILESTONE = "milestone"
 
 class AchievementStatus(Enum):
-    """Achievement status"""
-    LOCKED = "locked"
+    """Achievement status"""    LOCKED = "locked"
     IN_PROGRESS = "in_progress"
     UNLOCKED = "unlocked"
     EXPIRED = "expired"
 
 @dataclass
 class Achievement:
-    """Achievement data structure"""
-    achievement_id: str
+    """Achievement data structure"""    achievement_id: str
     title: str
     description: str
     category: AchievementCategory
@@ -79,8 +73,7 @@ class Achievement:
 
 @dataclass
 class UserAchievement:
-    """User achievement progress"""
-    user_achievement_id: str
+    """User achievement progress"""    user_achievement_id: str
     user_id: str
     achievement_id: str
     status: AchievementStatus
@@ -94,8 +87,7 @@ class UserAchievement:
     metadata: Dict[str, Any]
 
 class AchievementRepository(BaseRepository[Achievement]):
-    """Enterprise achievement management repository"""
-    
+    """Enterprise achievement management repository"""    
     def __init__(self, db_connection=None, cache_manager=None,
                  analytics_service=None, notification_service=None,
                  gamification_service=None):
@@ -139,8 +131,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         expires_at: Optional[datetime] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Achievement:
-        """Create new achievement with validation"""
-        try:
+        """Create new achievement with validation"""        try:
             # Validate inputs
             if not title or len(title) < 3:
                 raise ValueError("Achievement title must be at least 3 characters")
@@ -196,8 +187,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         achievement_id: str,
         progress_data: Optional[Dict[str, Any]] = None
     ) -> Optional[UserAchievement]:
-        """Unlock achievement for user with validation"""
-        try:
+        """Unlock achievement for user with validation"""        try:
             # Get achievement definition
             achievement = self.get_by_id(achievement_id)
             if not achievement or not achievement.is_active:
@@ -279,8 +269,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         limit: int = 100,
         offset: int = 0
     ) -> List[UserAchievement]:
-        """Get user achievements with filtering"""
-        try:
+        """Get user achievements with filtering"""        try:
             cache_key = f"user_achievements:{user_id}:{status}:{category}:{tier}:{limit}:{offset}"
             
             # Try cache first
@@ -318,8 +307,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         time_period: int = 30,  # days
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """Get achievement leaderboard"""
-        try:
+        """Get achievement leaderboard"""        try:
             cache_key = f"achievement_leaderboard:{category}:{tier}:{time_period}:{limit}"
             
             # Try cache first
@@ -352,8 +340,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         achievement_id: str,
         days: int = 30
     ) -> Dict[str, Any]:
-        """Get detailed achievement analytics"""
-        try:
+        """Get detailed achievement analytics"""        try:
             cache_key = f"achievement_analytics:{achievement_id}:{days}"
             
             # Try cache first
@@ -386,8 +373,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         category: AchievementCategory,
         tier: AchievementTier
     ) -> str:
-        """Generate unique achievement ID"""
-        base_string = f"{category.value}_{tier.value}_{title.lower().replace(' ', '_')}"
+        """Generate unique achievement ID"""        base_string = f"{category.value}_{tier.value}_{title.lower().replace(' ', '_')}"
         timestamp = str(int(datetime.now().timestamp()))
         return f"ach_{hashlib.md5((base_string + timestamp).encode()).hexdigest()[:12]}"
     
@@ -397,8 +383,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         achievement: Achievement,
         progress_data: Optional[Dict[str, Any]]
     ) -> bool:
-        """Validate achievement unlock conditions"""
-        try:
+        """Validate achievement unlock conditions"""        try:
             # Check if user meets requirements
             for condition in achievement.unlock_conditions:
                 if not self._check_condition(user_id, condition, progress_data):
@@ -421,8 +406,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         condition: str,
         progress_data: Optional[Dict[str, Any]]
     ) -> bool:
-        """Check individual condition"""
-        # Implementation would check specific conditions based on business logic
+        """Check individual condition"""        # Implementation would check specific conditions based on business logic
         return True  # Simplified for production implementation
     
     def _check_requirement(
@@ -432,13 +416,11 @@ class AchievementRepository(BaseRepository[Achievement]):
         requirement_value: Any,
         progress_data: Optional[Dict[str, Any]]
     ) -> bool:
-        """Check individual requirement"""
-        # Implementation would check specific requirements
+        """Check individual requirement"""        # Implementation would check specific requirements
         return True  # Simplified for production implementation
     
     def _get_rarity_multiplier(self, rarity_score: float) -> float:
-        """Get rarity multiplier for points calculation"""
-        for (min_rarity, max_rarity), multiplier in self._rarity_multipliers.items():
+        """Get rarity multiplier for points calculation"""        for (min_rarity, max_rarity), multiplier in self._rarity_multipliers.items():
             if min_rarity <= rarity_score < max_rarity:
                 return multiplier
         return 1.0
@@ -448,13 +430,11 @@ class AchievementRepository(BaseRepository[Achievement]):
         user_id: str,
         achievement_id: str
     ) -> Optional[UserAchievement]:
-        """Get specific user achievement"""
-        # Implementation would query user_achievements table
+        """Get specific user achievement"""        # Implementation would query user_achievements table
         return None  # Simplified for production implementation
     
     def _save_user_achievement(self, user_achievement: UserAchievement) -> UserAchievement:
-        """Save user achievement to database"""
-        # Implementation would save to user_achievements table
+        """Save user achievement to database"""        # Implementation would save to user_achievements table
         return user_achievement  # Simplified for production implementation
     
     def _query_user_achievements(
@@ -463,8 +443,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         limit: int,
         offset: int
     ) -> List[UserAchievement]:
-        """Query user achievements with filters"""
-        # Implementation would execute filtered query
+        """Query user achievements with filters"""        # Implementation would execute filtered query
         return []  # Simplified for production implementation
     
     def _calculate_achievement_leaderboard(
@@ -475,8 +454,7 @@ class AchievementRepository(BaseRepository[Achievement]):
         end_date: datetime,
         limit: int
     ) -> List[Dict[str, Any]]:
-        """Calculate achievement leaderboard"""
-        # Implementation would calculate leaderboard data
+        """Calculate achievement leaderboard"""        # Implementation would calculate leaderboard data
         return []  # Simplified for production implementation
     
     def _calculate_achievement_analytics(
@@ -484,34 +462,28 @@ class AchievementRepository(BaseRepository[Achievement]):
         achievement: Achievement,
         days: int
     ) -> Dict[str, Any]:
-        """Calculate detailed achievement analytics"""
-        # Implementation would calculate comprehensive analytics
+        """Calculate detailed achievement analytics"""        # Implementation would calculate comprehensive analytics
         return {}  # Simplified for production implementation
     
     # BaseRepository abstract method implementations
     def create(self, entity: Achievement, **kwargs) -> Achievement:
-        """Create achievement entity"""
-        self._validate_entity(entity)
+        """Create achievement entity"""        self._validate_entity(entity)
         # Implementation would save to database
         return entity
     
     def get_by_id(self, entity_id: str, use_cache: bool = True) -> Optional[Achievement]:
-        """Get achievement by ID"""
-        # Implementation would query database
+        """Get achievement by ID"""        # Implementation would query database
         return None
     
     def update(self, entity: Achievement, **kwargs) -> Achievement:
-        """Update achievement entity"""
-        self._validate_entity(entity)
+        """Update achievement entity"""        self._validate_entity(entity)
         # Implementation would update database
         return entity
     
     def delete(self, entity_id: str, **kwargs) -> bool:
-        """Soft delete achievement"""
-        # Implementation would soft delete (set is_active=False)
+        """Soft delete achievement"""        # Implementation would soft delete (set is_active=False)
         return True
     
     def list_all(self, limit: int = 100, offset: int = 0, **filters) -> List[Achievement]:
-        """List all achievements with filtering"""
-        # Implementation would query with filters
+        """List all achievements with filtering"""        # Implementation would query with filters
         return []

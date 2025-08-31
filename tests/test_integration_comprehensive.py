@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,11 +12,9 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Integration Tests for Core Platform Features
+"""Integration Tests for Core Platform Features
 Ensures comprehensive test coverage for critical business workflows
-"""
-import pytest
+"""import pytest
 import sys
 import os
 from pathlib import Path
@@ -29,12 +25,10 @@ from pathlib import Path
 
 
 class TestContentWorkflow:
-    """Integration tests for content management workflow"""
-    
+    """Integration tests for content management workflow"""    
     @pytest.mark.asyncio
     async def test_content_upload_to_protection_flow(self):
-        """Test complete flow from upload to protection activation"""
-        # Mock the complete workflow
+        """Test complete flow from upload to protection activation"""        # Mock the complete workflow
         content_id = "test-content-123"
         
         # Step 1: Content Upload
@@ -51,8 +45,7 @@ class TestContentWorkflow:
     
     @pytest.mark.asyncio
     async def test_collaboration_workflow(self):
-        """Test collaboration matching and proposal workflow"""
-        # Mock collaboration workflow
+        """Test collaboration matching and proposal workflow"""        # Mock collaboration workflow
         user_id = "creator-123"
         
         # Step 1: Get Matches
@@ -69,8 +62,7 @@ class TestContentWorkflow:
     
     @pytest.mark.asyncio
     async def test_monetization_workflow(self):
-        """Test monetization and revenue workflow"""
-        # Mock monetization workflow
+        """Test monetization and revenue workflow"""        # Mock monetization workflow
         content_id = "content-456"
         
         # Step 1: Revenue Calculation
@@ -87,12 +79,10 @@ class TestContentWorkflow:
 
 
 class TestPlatformIntegrations:
-    """Integration tests for platform-specific features"""
-    
+    """Integration tests for platform-specific features"""    
     @pytest.mark.asyncio
     async def test_youtube_integration_flow(self):
-        """Test YouTube platform integration"""
-        platform = "youtube"
+        """Test YouTube platform integration"""        platform = "youtube"
         
         # Mock YouTube API responses
         video_data = {"video_id": "yt123", "views": 1000}
@@ -103,8 +93,7 @@ class TestPlatformIntegrations:
     
     @pytest.mark.asyncio
     async def test_instagram_integration_flow(self):
-        """Test Instagram platform integration"""
-        platform = "instagram"
+        """Test Instagram platform integration"""        platform = "instagram"
         
         # Mock Instagram API responses
         post_data = {"post_id": "ig456", "likes": 500}
@@ -115,8 +104,7 @@ class TestPlatformIntegrations:
     
     @pytest.mark.asyncio
     async def test_tiktok_integration_flow(self):
-        """Test TikTok platform integration"""
-        platform = "tiktok"
+        """Test TikTok platform integration"""        platform = "tiktok"
         
         # Mock TikTok API responses
         video_data = {"video_id": "tk789", "views": 5000}
@@ -127,11 +115,9 @@ class TestPlatformIntegrations:
 
 
 class TestSecurityWorkflow:
-    """Integration tests for security features"""
-    
+    """Integration tests for security features"""    
     def test_authentication_flow(self):
-        """Test complete authentication workflow"""
-        # Mock authentication
+        """Test complete authentication workflow"""        # Mock authentication
         credentials = {"email": "test@example.com", "password": "secure123"}
         
         # Step 1: Login
@@ -147,8 +133,7 @@ class TestSecurityWorkflow:
         assert access["authorized"] is True
     
     def test_content_protection_workflow(self):
-        """Test content protection security workflow"""
-        content_id = "content789"
+        """Test content protection security workflow"""        content_id = "content789"
         
         # Step 1: Fingerprint Security
         security_check = {"fingerprint_secure": True, "hash_valid": True}
@@ -164,12 +149,10 @@ class TestSecurityWorkflow:
 
 
 class TestAnalyticsWorkflow:
-    """Integration tests for analytics and reporting"""
-    
+    """Integration tests for analytics and reporting"""    
     @pytest.mark.asyncio
     async def test_analytics_generation_flow(self):
-        """Test analytics generation workflow"""
-        # Mock analytics generation
+        """Test analytics generation workflow"""        # Mock analytics generation
         content_id = "content-analytics-123"
         
         # Step 1: Data Collection
@@ -185,8 +168,7 @@ class TestAnalyticsWorkflow:
         assert report["status"] == "generated"
     
     def test_revenue_analytics_workflow(self):
-        """Test revenue analytics workflow"""
-        # Mock revenue analytics
+        """Test revenue analytics workflow"""        # Mock revenue analytics
         period = "monthly"
         
         # Step 1: Revenue Aggregation
@@ -203,12 +185,10 @@ class TestAnalyticsWorkflow:
 
 
 class TestAIWorkflow:
-    """Integration tests for AI and ML features"""
-    
+    """Integration tests for AI and ML features"""    
     @pytest.mark.asyncio
     async def test_ai_content_analysis_workflow(self):
-        """Test AI content analysis workflow"""
-        content_path = "/tmp/test_content.mp4"
+        """Test AI content analysis workflow"""        content_path = "/tmp/test_content.mp4"
         
         # Step 1: Content Preprocessing
         preprocessed = {"status": "preprocessed", "format": "mp4"}
@@ -223,8 +203,7 @@ class TestAIWorkflow:
         assert features["audio_features"] > 0
     
     def test_recommendation_engine_workflow(self):
-        """Test AI recommendation engine workflow"""
-        user_id = "user-rec-123"
+        """Test AI recommendation engine workflow"""        user_id = "user-rec-123"
         
         # Step 1: User Profile Analysis
         profile = {"preferences": ["music", "comedy"], "engagement_history": 50}
@@ -240,12 +219,10 @@ class TestAIWorkflow:
 
 
 class TestPaymentWorkflow:
-    """Integration tests for payment processing"""
-    
+    """Integration tests for payment processing"""    
     @pytest.mark.asyncio
     async def test_payment_processing_workflow(self):
-        """Test complete payment processing workflow"""
-        amount = 150.00
+        """Test complete payment processing workflow"""        amount = 150.00
         
         # Step 1: Payment Initiation
         payment_init = {"payment_id": "pay123", "status": "initiated"}
@@ -260,8 +237,7 @@ class TestPaymentWorkflow:
         assert completion["status"] == "completed"
     
     def test_royalty_distribution_workflow(self):
-        """Test royalty distribution workflow"""
-        content_id = "content-royalty-789"
+        """Test royalty distribution workflow"""        content_id = "content-royalty-789"
         
         # Step 1: Revenue Calculation
         revenue = {"total": 500.00, "creator_share": 350.00, "platform_fee": 150.00}
@@ -277,12 +253,10 @@ class TestPaymentWorkflow:
 
 
 class TestErrorHandlingWorkflow:
-    """Integration tests for error handling and resilience"""
-    
+    """Integration tests for error handling and resilience"""    
     @pytest.mark.asyncio
     async def test_network_failure_recovery(self):
-        """Test network failure recovery workflow"""
-        # Mock network failure scenario
+        """Test network failure recovery workflow"""        # Mock network failure scenario
         with patch('aiohttp.ClientSession.post') as mock_post:
             mock_post.side_effect = Exception("Network error")
             
@@ -301,8 +275,7 @@ class TestErrorHandlingWorkflow:
             assert retry_count <= max_retries
     
     def test_data_validation_workflow(self):
-        """Test data validation and sanitization workflow"""
-        # Test input validation
+        """Test data validation and sanitization workflow"""        # Test input validation
         invalid_data = {"email": "invalid-email", "age": -5}
         
         # Step 1: Validation
@@ -319,12 +292,10 @@ class TestErrorHandlingWorkflow:
 
 
 class TestScalabilityWorkflow:
-    """Integration tests for scalability and performance"""
-    
+    """Integration tests for scalability and performance"""    
     @pytest.mark.asyncio
     async def test_high_load_processing(self):
-        """Test high load processing workflow"""
-        # Mock high load scenario
+        """Test high load processing workflow"""        # Mock high load scenario
         requests_count = 1000
         
         # Step 1: Load Distribution
@@ -340,8 +311,7 @@ class TestScalabilityWorkflow:
         assert performance["avg_response_time"] < 200
     
     def test_database_optimization_workflow(self):
-        """Test database optimization workflow"""
-        # Mock database optimization
+        """Test database optimization workflow"""        # Mock database optimization
         query_count = 500
         
         # Step 1: Query Optimization

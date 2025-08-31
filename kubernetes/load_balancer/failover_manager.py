@@ -1,5 +1,4 @@
-"""
-Failover Manager for Load Balancer - IA Influencer Agent Platform
+"""Failover Manager for Load Balancer - IA Influencer Agent Platform
 
 Advanced failover management system providing automatic failover detection,
 orchestration, and recovery for high availability across all services.
@@ -12,7 +11,6 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
-
 import asyncio
 import logging
 import time
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class FailoverTrigger(Enum):
-    """Failover trigger types"""
-    HEALTH_CHECK_FAILURE = "health_check_failure"
+    """Failover trigger types"""    HEALTH_CHECK_FAILURE = "health_check_failure"
     HIGH_ERROR_RATE = "high_error_rate"
     HIGH_RESPONSE_TIME = "high_response_time"
     RESOURCE_EXHAUSTION = "resource_exhaustion"
@@ -41,8 +38,7 @@ class FailoverTrigger(Enum):
 
 
 class FailoverStrategy(Enum):
-    """Failover strategies"""
-    IMMEDIATE = "immediate"
+    """Failover strategies"""    IMMEDIATE = "immediate"
     GRADUAL = "gradual"
     CIRCUIT_BREAKER = "circuit_breaker"
     ROLLING = "rolling"
@@ -50,8 +46,7 @@ class FailoverStrategy(Enum):
 
 
 class NodeStatus(Enum):
-    """Node status enumeration"""
-    HEALTHY = "healthy"
+    """Node status enumeration"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     FAILED = "failed"
@@ -61,8 +56,7 @@ class NodeStatus(Enum):
 
 @dataclass
 class ServiceNode:
-    """Service node configuration"""
-    id: str
+    """Service node configuration"""    id: str
     service_name: str
     host: str
     port: int
@@ -83,8 +77,7 @@ class ServiceNode:
 
 @dataclass
 class FailoverEvent:
-    """Failover event record"""
-    id: str
+    """Failover event record"""    id: str
     trigger: FailoverTrigger
     strategy: FailoverStrategy
     source_node: str
@@ -100,14 +93,12 @@ class FailoverEvent:
 
 
 class FailoverManager:
-    """
-    Enterprise Failover Manager for Load Balancer
+    """    Enterprise Failover Manager for Load Balancer
     
     Provides comprehensive failover management with automatic detection,
     intelligent failover strategies, and recovery orchestration for the
     IA Influencer Agent platform's microservices.
-    """
-    
+    """    
     def __init__(self, check_interval: int = 30):
         self.check_interval = check_interval
         
@@ -142,8 +133,7 @@ class FailoverManager:
         logger.info("Failover Manager initialized")
     
     async def initialize(self) -> None:
-        """Initialize failover manager"""
-        try:
+        """Initialize failover manager"""        try:
             logger.info("Initializing Failover Manager...")
             
             # Initialize service nodes
@@ -162,8 +152,7 @@ class FailoverManager:
             raise
     
     async def _initialize_service_nodes(self) -> None:
-        """Initialize service nodes for IA Influencer platform"""
-        services_config = {
+        """Initialize service nodes for IA Influencer platform"""        services_config = {
             "fingerprinting": {"instances": 3, "port_base": 8001},
             "protection": {"instances": 2, "port_base": 8002},
             "monetization": {"instances": 2, "port_base": 8003},
@@ -196,8 +185,7 @@ class FailoverManager:
         logger.info(f"Initialized {len(self.service_nodes)} service nodes across {len(services_config)} services")
     
     async def _configure_failover_strategies(self) -> None:
-        """Configure failover strategies per service"""
-        # Service-specific failover strategies
+        """Configure failover strategies per service"""        # Service-specific failover strategies
         self.service_strategies = {
             "fingerprinting": FailoverStrategy.GRADUAL,  # CPU intensive, gradual failover
             "protection": FailoverStrategy.IMMEDIATE,   # Critical for security
@@ -209,8 +197,7 @@ class FailoverManager:
         logger.info("Failover strategies configured")
     
     async def _load_historical_data(self) -> None:
-        """Load historical failover data"""
-        try:
+        """Load historical failover data"""        try:
             # Try to load from file
             data_file = "/var/lib/ia-influencer/failover_history.json"
             try:
@@ -234,8 +221,7 @@ class FailoverManager:
             logger.error(f"Error loading historical data: {e}")
     
     async def start_monitoring(self) -> None:
-        """Start failover monitoring"""
-        if self.is_monitoring:
+        """Start failover monitoring"""        if self.is_monitoring:
             logger.warning("Failover monitoring already running")
             return
         
@@ -246,8 +232,7 @@ class FailoverManager:
         logger.info("Failover monitoring started")
     
     async def stop_monitoring(self) -> None:
-        """Stop failover monitoring"""
-        self.is_monitoring = False
+        """Stop failover monitoring"""        self.is_monitoring = False
         
         if self.monitor_task:
             self.monitor_task.cancel()
@@ -266,8 +251,7 @@ class FailoverManager:
         logger.info("Failover monitoring stopped")
     
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop"""
-        while self.is_monitoring:
+        """Main monitoring loop"""        while self.is_monitoring:
             try:
                 # Check health of all nodes
                 await self._check_all_nodes_health()
@@ -289,8 +273,7 @@ class FailoverManager:
                 await asyncio.sleep(self.check_interval)
     
     async def _cascade_detection_loop(self) -> None:
-        """Cascade failure detection loop"""
-        while self.is_monitoring:
+        """Cascade failure detection loop"""        while self.is_monitoring:
             try:
                 await self._detect_cascade_failures()
                 await asyncio.sleep(30)  # Check every 30 seconds
@@ -300,8 +283,7 @@ class FailoverManager:
                 await asyncio.sleep(30)
     
     async def _check_all_nodes_health(self) -> None:
-        """Check health of all service nodes"""
-        for node_id, node in self.service_nodes.items():
+        """Check health of all service nodes"""        for node_id, node in self.service_nodes.items():
             if node_id in self.maintenance_nodes:
                 continue
             
@@ -314,8 +296,7 @@ class FailoverManager:
                 await self._update_node_status(node, False)
     
     async def _check_node_health(self, node: ServiceNode) -> bool:
-        """Check health of a single node"""
-        try:
+        """Check health of a single node"""        try:
             # TCP connection test
             sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             sock.settimeout(5)
@@ -346,8 +327,7 @@ class FailoverManager:
             return False
     
     async def _update_node_status(self, node: ServiceNode, is_healthy: bool) -> None:
-        """Update node status based on health check"""
-        node.last_health_check = datetime.now()
+        """Update node status based on health check"""        node.last_health_check = datetime.now()
         
         if is_healthy:
             node.consecutive_successes += 1
@@ -389,8 +369,7 @@ class FailoverManager:
                     logger.info(f"Node {node.id} marked as degraded")
     
     async def _detect_and_trigger_failovers(self) -> None:
-        """Detect conditions requiring failover and trigger them"""
-        for service_name, node_ids in self.service_groups.items():
+        """Detect conditions requiring failover and trigger them"""        for service_name, node_ids in self.service_groups.items():
             # Count healthy nodes
             healthy_nodes = [
                 node_id for node_id in node_ids
@@ -432,8 +411,7 @@ class FailoverManager:
     
     async def _trigger_failover(self, service_name: str, failed_node: str,
                               trigger: FailoverTrigger, available_nodes: List[str]) -> bool:
-        """Trigger failover for a failed node"""
-        try:
+        """Trigger failover for a failed node"""        try:
             # Check if we can handle more failovers
             if len(self.active_failovers) >= self.max_concurrent_failovers:
                 logger.warning("Maximum concurrent failovers reached, queuing...")
@@ -502,8 +480,7 @@ class FailoverManager:
             return False
     
     async def _select_target_nodes(self, service_name: str, available_nodes: List[str]) -> List[str]:
-        """Select target nodes for failover"""
-        if not available_nodes:
+        """Select target nodes for failover"""        if not available_nodes:
             return []
         
         # Sort nodes by health score and load
@@ -525,8 +502,7 @@ class FailoverManager:
         return [node_id for node_id, _ in node_scores[:min(2, len(node_scores))]]
     
     async def _execute_failover(self, failover_event: FailoverEvent) -> bool:
-        """Execute the actual failover"""
-        try:
+        """Execute the actual failover"""        try:
             strategy = failover_event.strategy
             
             if strategy == FailoverStrategy.IMMEDIATE:
@@ -547,8 +523,7 @@ class FailoverManager:
             return False
     
     async def _execute_immediate_failover(self, failover_event: FailoverEvent) -> bool:
-        """Execute immediate failover"""
-        try:
+        """Execute immediate failover"""        try:
             # Immediately redirect traffic to target nodes
             # This would integrate with load balancer configuration
             
@@ -574,8 +549,7 @@ class FailoverManager:
             return False
     
     async def _execute_gradual_failover(self, failover_event: FailoverEvent) -> bool:
-        """Execute gradual failover (drain connections)"""
-        try:
+        """Execute gradual failover (drain connections)"""        try:
             logger.info(f"Executing gradual failover: {failover_event.source_node} -> {failover_event.target_nodes}")
             
             # Gradually reduce weight of failed node
@@ -600,8 +574,7 @@ class FailoverManager:
             return False
     
     async def _execute_circuit_breaker_failover(self, failover_event: FailoverEvent) -> bool:
-        """Execute circuit breaker style failover"""
-        try:
+        """Execute circuit breaker style failover"""        try:
             logger.info(f"Executing circuit breaker failover: {failover_event.source_node}")
             
             # Open circuit for failed node
@@ -624,8 +597,7 @@ class FailoverManager:
             return False
     
     async def _execute_rolling_failover(self, failover_event: FailoverEvent) -> bool:
-        """Execute rolling failover (for maintaining state)"""
-        try:
+        """Execute rolling failover (for maintaining state)"""        try:
             logger.info(f"Executing rolling failover: {failover_event.source_node}")
             
             # Mark node for rolling replacement
@@ -648,8 +620,7 @@ class FailoverManager:
             return False
     
     async def _check_node_recovery(self) -> None:
-        """Check for node recovery and restore them"""
-        for node_id in list(self.blacklisted_nodes):
+        """Check for node recovery and restore them"""        for node_id in list(self.blacklisted_nodes):
             node = self.service_nodes.get(node_id)
             if not node:
                 continue
@@ -659,8 +630,7 @@ class FailoverManager:
                 await self._restore_node(node)
     
     async def _restore_node(self, node: ServiceNode) -> None:
-        """Restore a recovered node to service"""
-        try:
+        """Restore a recovered node to service"""        try:
             logger.info(f"Restoring node {node.id} to service")
             
             # Remove from blacklist
@@ -682,8 +652,7 @@ class FailoverManager:
             logger.error(f"Failed to restore node {node.id}: {e}")
     
     async def _update_active_failovers(self) -> None:
-        """Update and cleanup active failover events"""
-        completed_failovers = []
+        """Update and cleanup active failover events"""        completed_failovers = []
         
         for failover_id, failover_event in self.active_failovers.items():
             # Check if failover has timed out
@@ -704,8 +673,7 @@ class FailoverManager:
             self.active_failovers.pop(failover_id, None)
     
     async def _detect_cascade_failures(self) -> None:
-        """Detect potential cascade failures"""
-        try:
+        """Detect potential cascade failures"""        try:
             # Look for multiple failures in short time window
             recent_failures = [
                 event for event in self.failover_history
@@ -722,8 +690,7 @@ class FailoverManager:
             logger.error(f"Error in cascade detection: {e}")
     
     async def _prevent_cascade_failure(self) -> None:
-        """Implement cascade failure prevention measures"""
-        try:
+        """Implement cascade failure prevention measures"""        try:
             logger.info("Implementing cascade failure prevention measures")
             
             # Temporarily increase failure thresholds
@@ -749,8 +716,7 @@ class FailoverManager:
             logger.error(f"Failed to prevent cascade failure: {e}")
     
     async def manual_failover(self, source_node: str, target_nodes: List[str] = None) -> bool:
-        """Manually trigger failover"""
-        try:
+        """Manually trigger failover"""        try:
             node = self.service_nodes.get(source_node)
             if not node:
                 logger.error(f"Node {source_node} not found")
@@ -778,8 +744,7 @@ class FailoverManager:
             return False
     
     async def set_maintenance_mode(self, node_id: str, maintenance: bool = True) -> bool:
-        """Set node maintenance mode"""
-        try:
+        """Set node maintenance mode"""        try:
             node = self.service_nodes.get(node_id)
             if not node:
                 return False
@@ -802,8 +767,7 @@ class FailoverManager:
             return False
     
     async def get_failover_status(self) -> Dict[str, Any]:
-        """Get comprehensive failover status"""
-        try:
+        """Get comprehensive failover status"""        try:
             # Service health summary
             service_health = {}
             for service_name, node_ids in self.service_groups.items():
@@ -864,8 +828,7 @@ class FailoverManager:
             return {"error": str(e), "timestamp": datetime.now().isoformat()}
     
     async def shutdown(self) -> None:
-        """Shutdown failover manager"""
-        try:
+        """Shutdown failover manager"""        try:
             logger.info("Shutting down Failover Manager...")
             
             await self.stop_monitoring()
@@ -879,8 +842,7 @@ class FailoverManager:
             logger.error(f"Error during Failover Manager shutdown: {e}")
     
     async def _save_historical_data(self) -> None:
-        """Save historical failover data"""
-        try:
+        """Save historical failover data"""        try:
             data = {
                 "total_failovers": self.total_failovers,
                 "successful_failovers": self.successful_failovers,

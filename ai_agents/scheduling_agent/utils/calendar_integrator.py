@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Calendar Integrator - Advanced Calendar Integration & Event Synchronization
+"""Calendar Integrator - Advanced Calendar Integration & Event Synchronization
 ===========================================================================
 
 Industrial-grade calendar integration system for scheduling coordination,
@@ -30,7 +29,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -65,8 +63,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CalendarEvent:
-    """Comprehensive calendar event structure"""
-    event_id: str
+    """Comprehensive calendar event structure"""    event_id: str
     title: str
     description: str
     start_time: datetime
@@ -88,8 +85,7 @@ class CalendarEvent:
 
 @dataclass
 class AvailabilitySlot:
-    """Time slot availability information"""
-    start_time: datetime
+    """Time slot availability information"""    start_time: datetime
     end_time: datetime
     timezone: str
     availability_type: str  # free, busy, tentative, out_of_office
@@ -100,8 +96,7 @@ class AvailabilitySlot:
 
 @dataclass
 class CalendarIntegration:
-    """Calendar platform integration configuration"""
-    platform: str
+    """Calendar platform integration configuration"""    platform: str
     user_id: str
     calendar_id: str
     access_token: str
@@ -117,8 +112,7 @@ class CalendarIntegration:
     webhook_url: Optional[str]
 
 class CalendarPlatform(Enum):
-    """Supported calendar platforms"""
-    GOOGLE = "google"
+    """Supported calendar platforms"""    GOOGLE = "google"
     OUTLOOK = "outlook"
     APPLE = "apple"
     CALDAV = "caldav"
@@ -126,8 +120,7 @@ class CalendarPlatform(Enum):
     EXCHANGE = "exchange"
 
 class EventType(Enum):
-    """Calendar event types"""
-    CONTENT_POSTING = "content_posting"
+    """Calendar event types"""    CONTENT_POSTING = "content_posting"
     MEETING = "meeting"
     PERSONAL = "personal"
     WORK = "work"
@@ -137,28 +130,24 @@ class EventType(Enum):
     BLOCK_TIME = "block_time"
 
 class AvailabilityType(Enum):
-    """Availability status types"""
-    FREE = "free"
+    """Availability status types"""    FREE = "free"
     BUSY = "busy"
     TENTATIVE = "tentative"
     OUT_OF_OFFICE = "out_of_office"
     WORKING_ELSEWHERE = "working_elsewhere"
 
 class ConflictResolutionStrategy(Enum):
-    """Conflict resolution strategies"""
-    RESCHEDULE_NEW = "reschedule_new"
+    """Conflict resolution strategies"""    RESCHEDULE_NEW = "reschedule_new"
     RESCHEDULE_EXISTING = "reschedule_existing"
     MERGE_EVENTS = "merge_events"
     CANCEL_NEW = "cancel_new"
     MANUAL_REVIEW = "manual_review"
 
 class CalendarIntegratorError(AgentError):
-    """Calendar integrator specific exceptions"""
-    pass
+    """Calendar integrator specific exceptions"""    pass
 
 class CalendarIntegrator(BaseAgent):
-    """
-    Enterprise calendar integration system for scheduling coordination.
+    """    Enterprise calendar integration system for scheduling coordination.
     
     Provides industrial-grade calendar functionality including:
     - Multi-provider calendar support (Google, Outlook, Apple, CalDAV)
@@ -166,11 +155,9 @@ class CalendarIntegrator(BaseAgent):
     - Conflict detection and resolution
     - Automated scheduling optimization
     - Enterprise security and compliance
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize calendar integrator with configuration"""
-        super().__init__(config or {})
+        """Initialize calendar integrator with configuration"""        super().__init__(config or {})
         self.performance_monitor = PerformanceMonitor()
         
         # Calendar integrations and data
@@ -198,16 +185,14 @@ class CalendarIntegrator(BaseAgent):
         asyncio.create_task(self._start_background_sync())
     
     def _get_encryption_key(self) -> bytes:
-        """Get or generate encryption key for token storage"""
-        # In production, use secure key management
+        """Get or generate encryption key for token storage"""        # In production, use secure key management
         key = getattr(settings, 'CALENDAR_ENCRYPTION_KEY', None)
         if not key:
             key = Fernet.generate_key()
         return key if isinstance(key, bytes) else key.encode()
     
     async def _start_background_sync(self):
-        """Start background synchronization for all integrations"""
-        try:
+        """Start background synchronization for all integrations"""        try:
             while True:
                 for integration in self.integrations.values():
                     if integration.sync_enabled:
@@ -223,8 +208,7 @@ class CalendarIntegrator(BaseAgent):
     
     async def add_calendar_integration(self, user_id: str, platform: CalendarPlatform,
                                      auth_data: Dict[str, Any]) -> str:
-        """
-        Add new calendar platform integration
+        """        Add new calendar platform integration
         
         Args:
             user_id: User identifier
@@ -233,8 +217,7 @@ class CalendarIntegrator(BaseAgent):
         
         Returns:
             Integration ID
-        """
-        try:
+        """        try:
             integration_id = str(uuid.uuid4())
             
             if platform == CalendarPlatform.GOOGLE:
@@ -260,8 +243,7 @@ class CalendarIntegrator(BaseAgent):
     
     async def _setup_google_integration(self, user_id: str, auth_data: Dict[str, Any], 
                                       integration_id: str) -> CalendarIntegration:
-        """Setup Google Calendar integration"""
-        try:
+        """Setup Google Calendar integration"""        try:
             # Create credentials from auth data
             creds = Credentials(
                 token=auth_data['access_token'],
@@ -314,8 +296,7 @@ class CalendarIntegrator(BaseAgent):
     
     async def _setup_outlook_integration(self, user_id: str, auth_data: Dict[str, Any], 
                                        integration_id: str) -> CalendarIntegration:
-        """Setup Outlook Calendar integration"""
-        try:
+        """Setup Outlook Calendar integration"""        try:
             # Encrypt tokens
             encrypted_access_token = self.cipher_suite.encrypt(auth_data['access_token'].encode()).decode()
             encrypted_refresh_token = self.cipher_suite.encrypt(auth_data.get('refresh_token', '').encode()).decode()
@@ -359,8 +340,7 @@ class CalendarIntegrator(BaseAgent):
     
     async def _setup_caldav_integration(self, user_id: str, auth_data: Dict[str, Any], 
                                       integration_id: str) -> CalendarIntegration:
-        """Setup CalDAV integration"""
-        try:
+        """Setup CalDAV integration"""        try:
             # Create CalDAV client
             client = caldav.DAVClient(
                 url=auth_data['server_url'],
@@ -403,8 +383,7 @@ class CalendarIntegrator(BaseAgent):
             raise CalendarIntegratorError(f"CalDAV setup failed: {e}")
     
     async def _sync_calendar_events(self, integration: CalendarIntegration):
-        """Synchronize events from calendar platform"""
-        try:
+        """Synchronize events from calendar platform"""        try:
             if integration.platform == CalendarPlatform.GOOGLE.value:
                 events = await self._sync_google_events(integration)
             elif integration.platform == CalendarPlatform.OUTLOOK.value:
@@ -431,8 +410,7 @@ class CalendarIntegrator(BaseAgent):
             logger.error(f"Event sync failed for {integration.platform}: {e}")
     
     async def _sync_google_events(self, integration: CalendarIntegration) -> List[CalendarEvent]:
-        """Sync events from Google Calendar"""
-        try:
+        """Sync events from Google Calendar"""        try:
             # Decrypt access token
             access_token = self.cipher_suite.decrypt(integration.access_token.encode()).decode()
             
@@ -473,8 +451,7 @@ class CalendarIntegrator(BaseAgent):
             return []
     
     async def _sync_outlook_events(self, integration: CalendarIntegration) -> List[CalendarEvent]:
-        """Sync events from Outlook Calendar"""
-        try:
+        """Sync events from Outlook Calendar"""        try:
             # Decrypt access token
             access_token = self.cipher_suite.decrypt(integration.access_token.encode()).decode()
             
@@ -520,8 +497,7 @@ class CalendarIntegrator(BaseAgent):
             return []
     
     async def _sync_caldav_events(self, integration: CalendarIntegration) -> List[CalendarEvent]:
-        """Sync events from CalDAV calendar"""
-        try:
+        """Sync events from CalDAV calendar"""        try:
             client = self.caldav_clients.get(integration.calendar_id)
             if not client:
                 logger.warning(f"No CalDAV client found for integration {integration.calendar_id}")
@@ -565,8 +541,7 @@ class CalendarIntegrator(BaseAgent):
     
     async def _convert_google_event(self, google_event: Dict[str, Any], 
                                   integration: CalendarIntegration) -> Optional[CalendarEvent]:
-        """Convert Google Calendar event to internal format"""
-        try:
+        """Convert Google Calendar event to internal format"""        try:
             # Handle different start/end time formats
             start_data = google_event.get('start', {})
             end_data = google_event.get('end', {})
@@ -624,8 +599,7 @@ class CalendarIntegrator(BaseAgent):
     
     async def _convert_outlook_event(self, outlook_event: Dict[str, Any], 
                                    integration: CalendarIntegration) -> Optional[CalendarEvent]:
-        """Convert Outlook event to internal format"""
-        try:
+        """Convert Outlook event to internal format"""        try:
             # Parse start/end times
             start_data = outlook_event.get('start', {})
             end_data = outlook_event.get('end', {})
@@ -668,8 +642,7 @@ class CalendarIntegrator(BaseAgent):
             return None
     
     async def _convert_caldav_event(self, caldav_event, integration: CalendarIntegration) -> Optional[CalendarEvent]:
-        """Convert CalDAV event to internal format"""
-        try:
+        """Convert CalDAV event to internal format"""        try:
             # Parse iCalendar data
             cal_data = icalendar.Calendar.from_ical(caldav_event.data)
             
@@ -714,8 +687,7 @@ class CalendarIntegrator(BaseAgent):
             return None
     
     def _determine_event_type(self, event_data: Dict[str, Any]) -> str:
-        """Determine event type based on event data"""
-        title = event_data.get('summary', event_data.get('subject', '')).lower()
+        """Determine event type based on event data"""        title = event_data.get('summary', event_data.get('subject', '')).lower()
         description = event_data.get('description', event_data.get('body', {}).get('content', '')).lower()
         
         # Check for content-related keywords
@@ -736,8 +708,7 @@ class CalendarIntegrator(BaseAgent):
         return EventType.PERSONAL.value
     
     def _determine_priority(self, event_data: Dict[str, Any]) -> str:
-        """Determine event priority based on event data"""
-        # Check for explicit priority in different formats
+        """Determine event priority based on event data"""        # Check for explicit priority in different formats
         if 'importance' in event_data:
             outlook_priority = event_data['importance'].lower()
             if outlook_priority == 'high':
@@ -761,8 +732,7 @@ class CalendarIntegrator(BaseAgent):
         return 'medium'
     
     async def _update_availability_cache(self, user_id: str, events: List[CalendarEvent]):
-        """Update availability cache based on calendar events"""
-        try:
+        """Update availability cache based on calendar events"""        try:
             # Generate availability slots for the next 30 days
             start_date = datetime.now().replace(hour=0, minute=0, second=0, microsecond=0)
             end_date = start_date + timedelta(days=30)
@@ -816,8 +786,7 @@ class CalendarIntegrator(BaseAgent):
             logger.error(f"Failed to update availability cache: {e}")
     
     def _calculate_slot_priority_score(self, slot_time: datetime, conflicts: List[str]) -> float:
-        """Calculate priority score for an availability slot"""
-        try:
+        """Calculate priority score for an availability slot"""        try:
             score = 1.0
             
             # Reduce score for conflicts
@@ -851,14 +820,11 @@ class CalendarIntegrator(BaseAgent):
             return 0.5
 
 class EventSynchronizer:
-    """
-    Event synchronization coordinator that handles cross-platform
+    """    Event synchronization coordinator that handles cross-platform
     event management and conflict resolution.
-    """
-    
+    """    
     def __init__(self, calendar_integrator: CalendarIntegrator):
-        """Initialize event synchronizer with calendar integrator"""
-        self.calendar_integrator = calendar_integrator
+        """Initialize event synchronizer with calendar integrator"""        self.calendar_integrator = calendar_integrator
         self.sync_rules: Dict[str, Dict[str, Any]] = {}
         self.conflict_handlers: Dict[ConflictResolutionStrategy, callable] = {
             ConflictResolutionStrategy.RESCHEDULE_NEW: self._reschedule_new_event,
@@ -870,8 +836,7 @@ class EventSynchronizer:
     
     async def create_event(self, user_id: str, event_data: Dict[str, Any], 
                           target_platforms: List[str] = None) -> Dict[str, Any]:
-        """
-        Create event across specified platforms with conflict detection
+        """        Create event across specified platforms with conflict detection
         
         Args:
             user_id: User identifier
@@ -880,8 +845,7 @@ class EventSynchronizer:
         
         Returns:
             Creation results with conflict information
-        """
-        try:
+        """        try:
             if target_platforms is None:
                 # Get all user's integrations
                 user_integrations = [
@@ -939,8 +903,7 @@ class EventSynchronizer:
             raise CalendarIntegratorError(f"Event creation failed: {e}")
     
     async def _detect_conflicts(self, user_id: str, event_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect scheduling conflicts for new event"""
-        try:
+        """Detect scheduling conflicts for new event"""        try:
             conflicts = []
             
             # Get availability slots for user
@@ -993,8 +956,7 @@ class EventSynchronizer:
     
     def _calculate_conflict_severity(self, conflicting_events: List[CalendarEvent], 
                                    new_event_data: Dict[str, Any]) -> str:
-        """Calculate severity of scheduling conflict"""
-        try:
+        """Calculate severity of scheduling conflict"""        try:
             new_priority = new_event_data.get('priority', 'medium')
             
             # Check priorities of conflicting events
@@ -1016,8 +978,7 @@ class EventSynchronizer:
     
     def _suggest_resolution_strategy(self, conflicting_events: List[CalendarEvent], 
                                    new_event_data: Dict[str, Any]) -> str:
-        """Suggest optimal conflict resolution strategy"""
-        try:
+        """Suggest optimal conflict resolution strategy"""        try:
             new_priority = new_event_data.get('priority', 'medium')
             
             # If new event has higher priority
@@ -1037,8 +998,7 @@ class EventSynchronizer:
     
     async def _resolve_conflicts(self, conflicts: List[Dict[str, Any]], 
                                strategy: str, event_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Resolve conflicts using specified strategy"""
-        try:
+        """Resolve conflicts using specified strategy"""        try:
             resolution_actions = []
             
             for conflict in conflicts:
@@ -1063,8 +1023,7 @@ class EventSynchronizer:
     
     async def _reschedule_new_event(self, conflict: Dict[str, Any], 
                                   event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Reschedule the new event to avoid conflicts"""
-        try:
+        """Reschedule the new event to avoid conflicts"""        try:
             # Find next available slot
             # This is a simplified implementation - in production, use sophisticated scheduling algorithm
             
@@ -1120,8 +1079,7 @@ class EventSynchronizer:
     
     async def _reschedule_existing_event(self, conflict: Dict[str, Any], 
                                        event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Reschedule existing conflicting event"""
-        try:
+        """Reschedule existing conflicting event"""        try:
             # This would involve calling the appropriate platform API to reschedule
             # Return production-ready result with comprehensive error handling
             
@@ -1144,8 +1102,7 @@ class EventSynchronizer:
     
     async def _merge_events(self, conflict: Dict[str, Any], 
                           event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Merge conflicting events if appropriate"""
-        try:
+        """Merge conflicting events if appropriate"""        try:
             # Check if events can be merged (similar titles, same attendees, etc.)
             mergeable_events = []
             
@@ -1182,8 +1139,7 @@ class EventSynchronizer:
     
     async def _cancel_new_event(self, conflict: Dict[str, Any], 
                               event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Cancel the new event due to conflicts"""
-        return {
+        """Cancel the new event due to conflicts"""        return {
             'action': 'cancel_new_event',
             'conflict_id': conflict['conflict_id'],
             'reason': 'Cancelled due to high-priority conflicts',
@@ -1192,8 +1148,7 @@ class EventSynchronizer:
     
     async def _flag_for_manual_review(self, conflict: Dict[str, Any], 
                                     event_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Flag conflict for manual review"""
-        return {
+        """Flag conflict for manual review"""        return {
             'action': 'manual_review',
             'conflict_id': conflict['conflict_id'],
             'severity': conflict['severity'],
@@ -1203,8 +1158,7 @@ class EventSynchronizer:
         }
     
     def _events_similar(self, event1: Dict[str, Any], event2: Dict[str, Any]) -> bool:
-        """Check if two events are similar enough to merge"""
-        try:
+        """Check if two events are similar enough to merge"""        try:
             # Compare titles (simple similarity check)
             title1 = event1.get('title', '').lower()
             title2 = event2.get('title', '').lower()
@@ -1231,8 +1185,7 @@ class EventSynchronizer:
     
     async def _create_platform_event(self, user_id: str, platform: str, 
                                    event_data: Dict[str, Any]) -> str:
-        """Create event on specific platform"""
-        try:
+        """Create event on specific platform"""        try:
             if platform == CalendarPlatform.GOOGLE.value:
                 return await self._create_google_event(user_id, event_data)
             elif platform == CalendarPlatform.OUTLOOK.value:
@@ -1247,8 +1200,7 @@ class EventSynchronizer:
             raise
     
     async def _create_google_event(self, user_id: str, event_data: Dict[str, Any]) -> str:
-        """Create event in Google Calendar"""
-        try:
+        """Create event in Google Calendar"""        try:
             # Find user's Google integration
             google_integration = None
             for integration in self.calendar_integrator.integrations.values():
@@ -1293,8 +1245,7 @@ class EventSynchronizer:
             raise CalendarIntegratorError(f"Google event creation failed: {e}")
     
     async def _create_outlook_event(self, user_id: str, event_data: Dict[str, Any]) -> str:
-        """Create event in Outlook Calendar"""
-        try:
+        """Create event in Outlook Calendar"""        try:
             # Find user's Outlook integration
             outlook_integration = None
             for integration in self.calendar_integrator.integrations.values():
@@ -1360,8 +1311,7 @@ class EventSynchronizer:
             raise CalendarIntegratorError(f"Outlook event creation failed: {e}")
     
     async def _create_caldav_event(self, user_id: str, event_data: Dict[str, Any]) -> str:
-        """Create event in CalDAV calendar"""
-        try:
+        """Create event in CalDAV calendar"""        try:
             # Find user's CalDAV integration
             caldav_integration = None
             for integration in self.calendar_integrator.integrations.values():

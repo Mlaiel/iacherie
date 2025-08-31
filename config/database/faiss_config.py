@@ -1,5 +1,4 @@
-"""
-FAISS Vector Database Configuration Module for IA-Influencer Agent Platform
+"""FAISS Vector Database Configuration Module for IA-Influencer Agent Platform
 ===========================================================================
 
 Professional FAISS (Facebook AI Similarity Search) configuration for content
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import pickle
 import numpy as np
@@ -35,16 +33,14 @@ logger = logging.getLogger(__name__)
 
 
 class FAISSEnvironment(Enum):
-    """FAISS environment configurations"""
-    DEVELOPMENT = "development"
+    """FAISS environment configurations"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class FAISSIndexType(Enum):
-    """FAISS index types for different use cases"""
-    FLAT_L2 = "flat_l2"  # Exact search, small datasets
+    """FAISS index types for different use cases"""    FLAT_L2 = "flat_l2"  # Exact search, small datasets
     IVF_FLAT = "ivf_flat"  # Fast search with clustering
     HNSW_FLAT = "hnsw_flat"  # Hierarchical graph-based
     LSH = "lsh"  # Locality Sensitive Hashing
@@ -53,8 +49,7 @@ class FAISSIndexType(Enum):
 
 
 class FAISSContentType(Enum):
-    """Content types for vector indexing"""
-    AUDIO_FINGERPRINT = "audio_fingerprint"
+    """Content types for vector indexing"""    AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
     TEXT_EMBEDDING = "text_embedding"
@@ -63,8 +58,7 @@ class FAISSContentType(Enum):
 
 @dataclass
 class FAISSIndexConfig:
-    """FAISS index configuration"""
-    index_type: FAISSIndexType
+    """FAISS index configuration"""    index_type: FAISSIndexType
     dimension: int
     nlist: Optional[int] = None  # For IVF indexes
     nprobe: Optional[int] = None  # Search parameter for IVF
@@ -78,8 +72,7 @@ class FAISSIndexConfig:
 
 @dataclass
 class FAISSPerformanceConfig:
-    """FAISS performance optimization settings"""
-    batch_size: int = 1000
+    """FAISS performance optimization settings"""    batch_size: int = 1000
     max_memory_mb: int = 1024
     parallel_search_threads: int = 4
     index_cache_size: int = 100
@@ -91,8 +84,7 @@ class FAISSPerformanceConfig:
 
 @dataclass
 class FAISSStorageConfig:
-    """FAISS storage and persistence configuration"""
-    base_path: str = "/data/faiss_indexes"
+    """FAISS storage and persistence configuration"""    base_path: str = "/data/faiss_indexes"
     backup_enabled: bool = True
     backup_interval_hours: int = 24
     compression_enabled: bool = True
@@ -102,13 +94,11 @@ class FAISSStorageConfig:
 
 
 class FAISSConfig:
-    """
-    Professional FAISS configuration manager for IA-Influencer Agent Platform
+    """    Professional FAISS configuration manager for IA-Influencer Agent Platform
     
     Manages vector indexing for content fingerprinting, similarity search,
     and content protection across audio, video, image, and text content.
     """
-
     def __init__(self, 
                  environment: FAISSEnvironment = FAISSEnvironment.DEVELOPMENT,
                  content_type: FAISSContentType = FAISSContentType.AUDIO_FINGERPRINT):
@@ -125,8 +115,7 @@ class FAISSConfig:
         self._configure_faiss()
 
     def _setup_logging(self) -> None:
-        """Setup FAISS-specific logging"""
-        self.logger = logging.getLogger(f"faiss.{self.environment.value}.{self.content_type.value}")
+        """Setup FAISS-specific logging"""        self.logger = logging.getLogger(f"faiss.{self.environment.value}.{self.content_type.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -137,8 +126,7 @@ class FAISSConfig:
             self.logger.setLevel(logging.INFO)
 
     def _setup_directories(self) -> None:
-        """Setup FAISS storage directories"""
-        try:
+        """Setup FAISS storage directories"""        try:
             base_path = Path(self.storage_config.base_path)
             base_path.mkdir(parents=True, exist_ok=True)
             
@@ -162,8 +150,7 @@ class FAISSConfig:
             raise
 
     def _configure_faiss(self) -> None:
-        """Configure FAISS global settings"""
-        try:
+        """Configure FAISS global settings"""        try:
             # Set OpenMP threads if enabled
             if self.performance_config.use_omp_threads:
                 faiss.omp_set_num_threads(self.performance_config.omp_num_threads)
@@ -175,8 +162,7 @@ class FAISSConfig:
             raise
 
     def _get_index_configs(self) -> Dict[FAISSContentType, FAISSIndexConfig]:
-        """Get index configurations for different content types"""
-        configs = {
+        """Get index configurations for different content types"""        configs = {
             FAISSContentType.AUDIO_FINGERPRINT: FAISSIndexConfig(
                 index_type=FAISSIndexType.IVF_FLAT,
                 dimension=1024,  # Chromaprint/audio feature dimension
@@ -220,8 +206,7 @@ class FAISSConfig:
         return configs
 
     def _get_performance_config(self) -> FAISSPerformanceConfig:
-        """Get performance configuration based on environment"""
-        configs = {
+        """Get performance configuration based on environment"""        configs = {
             FAISSEnvironment.DEVELOPMENT: FAISSPerformanceConfig(
                 batch_size=100,
                 max_memory_mb=512,
@@ -252,8 +237,7 @@ class FAISSConfig:
         return configs.get(self.environment, FAISSPerformanceConfig())
 
     def _get_storage_config(self) -> FAISSStorageConfig:
-        """Get storage configuration based on environment"""
-        base_path = os.getenv(f"FAISS_STORAGE_PATH_{self.environment.value.upper()}", 
+        """Get storage configuration based on environment"""        base_path = os.getenv(f"FAISS_STORAGE_PATH_{self.environment.value.upper()}", 
                              f"/data/faiss_{self.environment.value}")
         
         if self.environment == FAISSEnvironment.PRODUCTION:
@@ -283,8 +267,7 @@ class FAISSConfig:
     def create_index(self, 
                     content_type: Optional[FAISSContentType] = None,
                     custom_config: Optional[FAISSIndexConfig] = None) -> faiss.Index:
-        """
-        Create FAISS index based on content type and configuration
+        """        Create FAISS index based on content type and configuration
         
         Args:
             content_type: Type of content for the index
@@ -292,8 +275,7 @@ class FAISSConfig:
             
         Returns:
             Configured FAISS index
-        """
-        content_type = content_type or self.content_type
+        """        content_type = content_type or self.content_type
         config = custom_config or self.index_configs[content_type]
         
         index_key = f"{content_type.value}_{config.index_type.value}"
@@ -326,8 +308,7 @@ class FAISSConfig:
                 raise
 
     def _create_index_by_type(self, config: FAISSIndexConfig) -> faiss.Index:
-        """Create index based on specified type"""
-        if config.index_type == FAISSIndexType.FLAT_L2:
+        """Create index based on specified type"""        if config.index_type == FAISSIndexType.FLAT_L2:
             return IndexFlatL2(config.dimension)
         
         elif config.index_type == FAISSIndexType.IVF_FLAT:
@@ -355,8 +336,7 @@ class FAISSConfig:
             raise ValueError(f"Unsupported index type: {config.index_type}")
 
     def _move_to_gpu(self, index: faiss.Index, gpu_ids: List[int]) -> faiss.Index:
-        """Move index to GPU(s)"""
-        try:
+        """Move index to GPU(s)"""        try:
             if len(gpu_ids) == 1:
                 # Single GPU
                 res = faiss.StandardGpuResources()
@@ -372,15 +352,13 @@ class FAISSConfig:
                    index_key: str, 
                    vectors: np.ndarray, 
                    ids: Optional[np.ndarray] = None) -> None:
-        """
-        Add vectors to FAISS index
+        """        Add vectors to FAISS index
         
         Args:
             index_key: Index identifier
             vectors: Vector array to add
             ids: Optional vector IDs
-        """
-        with self._lock:
+        """        with self._lock:
             if index_key not in self._indexes:
                 raise ValueError(f"Index {index_key} not found")
             
@@ -429,8 +407,7 @@ class FAISSConfig:
                       index_key: str, 
                       query_vector: np.ndarray, 
                       k: int = 10) -> Tuple[np.ndarray, np.ndarray]:
-        """
-        Search for similar vectors in FAISS index
+        """        Search for similar vectors in FAISS index
         
         Args:
             index_key: Index identifier
@@ -439,8 +416,7 @@ class FAISSConfig:
             
         Returns:
             Tuple of (distances, indices)
-        """
-        with self._lock:
+        """        with self._lock:
             if index_key not in self._indexes:
                 raise ValueError(f"Index {index_key} not found")
             
@@ -472,8 +448,7 @@ class FAISSConfig:
                     index_key: str, 
                     query_vectors: np.ndarray, 
                     k: int = 10) -> Tuple[np.ndarray, np.ndarray]:
-        """
-        Batch search for similar vectors
+        """        Batch search for similar vectors
         
         Args:
             index_key: Index identifier
@@ -482,8 +457,7 @@ class FAISSConfig:
             
         Returns:
             Tuple of (distances, indices) arrays
-        """
-        with self._lock:
+        """        with self._lock:
             if index_key not in self._indexes:
                 raise ValueError(f"Index {index_key} not found")
             
@@ -512,8 +486,7 @@ class FAISSConfig:
                 raise
 
     def save_index(self, index_key: str, version: Optional[str] = None) -> str:
-        """
-        Save FAISS index to disk
+        """        Save FAISS index to disk
         
         Args:
             index_key: Index identifier
@@ -521,8 +494,7 @@ class FAISSConfig:
             
         Returns:
             Path to saved index file
-        """
-        with self._lock:
+        """        with self._lock:
             if index_key not in self._indexes:
                 raise ValueError(f"Index {index_key} not found")
             
@@ -553,8 +525,7 @@ class FAISSConfig:
                 raise
 
     def load_index(self, index_key: str, file_path: Optional[str] = None) -> faiss.Index:
-        """
-        Load FAISS index from disk
+        """        Load FAISS index from disk
         
         Args:
             index_key: Index identifier
@@ -562,8 +533,7 @@ class FAISSConfig:
             
         Returns:
             Loaded FAISS index
-        """
-        with self._lock:
+        """        with self._lock:
             try:
                 if file_path:
                     load_path = Path(file_path)
@@ -595,16 +565,14 @@ class FAISSConfig:
                 raise
 
     def get_index_stats(self, index_key: str) -> Dict[str, Any]:
-        """
-        Get statistics about FAISS index
+        """        Get statistics about FAISS index
         
         Args:
             index_key: Index identifier
             
         Returns:
             Index statistics dictionary
-        """
-        with self._lock:
+        """        with self._lock:
             if index_key not in self._indexes:
                 raise ValueError(f"Index {index_key} not found")
             
@@ -632,13 +600,11 @@ class FAISSConfig:
             return stats
 
     def health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check on FAISS indexes
+        """        Perform comprehensive health check on FAISS indexes
         
         Returns:
             Health check results dictionary
-        """
-        health_status = {
+        """        health_status = {
             "status": "healthy",
             "environment": self.environment.value,
             "content_type": self.content_type.value,
@@ -694,13 +660,11 @@ class FAISSConfig:
         return health_status
 
     def cleanup_old_versions(self, max_versions: Optional[int] = None) -> None:
-        """
-        Cleanup old index versions
+        """        Cleanup old index versions
         
         Args:
             max_versions: Maximum versions to keep (uses config default if None)
-        """
-        if not self.storage_config.versioning_enabled:
+        """        if not self.storage_config.versioning_enabled:
             return
         
         max_versions = max_versions or self.storage_config.max_versions
@@ -742,8 +706,7 @@ class FAISSConfig:
             self.logger.error(f"Failed to cleanup old versions: {str(e)}")
 
     def close_all_indexes(self) -> None:
-        """Close all indexes and cleanup resources"""
-        with self._lock:
+        """Close all indexes and cleanup resources"""        with self._lock:
             for index_key in list(self._indexes.keys()):
                 try:
                     # Save index before closing if configured
@@ -758,8 +721,7 @@ class FAISSConfig:
                     self.logger.error(f"Error closing index {index_key}: {str(e)}")
 
     def __del__(self):
-        """Cleanup on object destruction"""
-        try:
+        """Cleanup on object destruction"""        try:
             self.close_all_indexes()
         except:
             pass

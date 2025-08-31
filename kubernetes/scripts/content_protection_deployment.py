@@ -1,9 +1,7 @@
 #!/usr/bin/env python3
-"""
-Content Protection Deployment Manager
+"""Content Protection Deployment Manager
 Specialized deployment automation for AI fingerprinting and content protection systems
 """
-
 import os
 import sys
 import time
@@ -36,24 +34,21 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionStrategy(Enum):
-    """Content protection deployment strategy"""
-    PHASED_ROLLOUT = "phased_rollout"
+    """Content protection deployment strategy"""    PHASED_ROLLOUT = "phased_rollout"
     INSTANT_ACTIVATION = "instant_activation"
     GRADUAL_MIGRATION = "gradual_migration"
     BLUE_GREEN_PROTECTION = "blue_green_protection"
 
 
 class ProtectionMode(Enum):
-    """Protection mode enumeration"""
-    PASSIVE_MONITORING = "passive_monitoring"
+    """Protection mode enumeration"""    PASSIVE_MONITORING = "passive_monitoring"
     ACTIVE_DETECTION = "active_detection"
     AGGRESSIVE_ENFORCEMENT = "aggressive_enforcement"
     LEARNING_MODE = "learning_mode"
 
 
 class FingerprintEngine(Enum):
-    """Fingerprinting engine types"""
-    AUDIO_CHROMAPRINT = "audio_chromaprint"
+    """Fingerprinting engine types"""    AUDIO_CHROMAPRINT = "audio_chromaprint"
     VIDEO_OPENCV = "video_opencv"
     IMAGE_CLIP = "image_clip"
     TEXT_BERT = "text_bert"
@@ -62,8 +57,7 @@ class FingerprintEngine(Enum):
 
 @dataclass
 class ProtectionDeploymentConfig:
-    """Content protection deployment configuration"""
-    fingerprint_engines: List[FingerprintEngine]
+    """Content protection deployment configuration"""    fingerprint_engines: List[FingerprintEngine]
     vector_db_config: Dict[str, Any]
     crawler_config: Dict[str, Any]
     monitoring_config: Dict[str, Any]
@@ -75,8 +69,7 @@ class ProtectionDeploymentConfig:
 
 @dataclass
 class FingerprintEngineStatus:
-    """Status of fingerprinting engines"""
-    engine_type: FingerprintEngine
+    """Status of fingerprinting engines"""    engine_type: FingerprintEngine
     status: str
     accuracy_score: float
     processing_speed: float
@@ -85,14 +78,11 @@ class FingerprintEngineStatus:
 
 
 class ContentProtectionDeploymentManager:
-    """
-    Manages deployment of content protection and AI fingerprinting systems
+    """    Manages deployment of content protection and AI fingerprinting systems
     for the IA Influencer Agent platform
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize content protection deployment manager"""
-        self.config_path = config_path or "/etc/ia-influencer/protection-deployment.yaml"
+        """Initialize content protection deployment manager"""        self.config_path = config_path or "/etc/ia-influencer/protection-deployment.yaml"
         self.config = self._load_configuration()
         self.docker_client = docker.from_env()
         self.redis_client = redis.Redis(
@@ -113,8 +103,7 @@ class ContentProtectionDeploymentManager:
         }
         
     def _load_configuration(self) -> Dict[str, Any]:
-        """Load deployment configuration"""
-        try:
+        """Load deployment configuration"""        try:
             with open(self.config_path, 'r') as f:
                 config = yaml.safe_load(f)
             logger.info(f"Configuration loaded from {self.config_path}")
@@ -124,8 +113,7 @@ class ContentProtectionDeploymentManager:
             return self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default protection deployment configuration"""
-        return {
+        """Get default protection deployment configuration"""        return {
             'fingerprint_engines': {
                 'audio': {
                     'enabled': True,
@@ -200,8 +188,7 @@ class ContentProtectionDeploymentManager:
         }
     
     def deploy_protection_system(self, deployment_config: ProtectionDeploymentConfig) -> str:
-        """Deploy complete content protection system"""
-        deployment_id = f"protection-{int(time.time())}"
+        """Deploy complete content protection system"""        deployment_id = f"protection-{int(time.time())}"
         
         try:
             logger.info(f"Starting protection system deployment: {deployment_id}")
@@ -235,8 +222,7 @@ class ContentProtectionDeploymentManager:
             raise
     
     def _deploy_vector_database(self, vector_config: Dict[str, Any]) -> None:
-        """Deploy FAISS vector database for similarity search"""
-        logger.info("Deploying vector database...")
+        """Deploy FAISS vector database for similarity search"""        logger.info("Deploying vector database...")
         
         # Create FAISS deployment manifest
         deployment_manifest = self._create_vector_db_manifest(vector_config)
@@ -265,8 +251,7 @@ class ContentProtectionDeploymentManager:
             raise
     
     def _deploy_fingerprint_engine(self, engine: FingerprintEngine, config: ProtectionDeploymentConfig) -> None:
-        """Deploy specific fingerprint engine"""
-        logger.info(f"Deploying fingerprint engine: {engine.value}")
+        """Deploy specific fingerprint engine"""        logger.info(f"Deploying fingerprint engine: {engine.value}")
         
         # Get engine-specific configuration
         engine_config = self.config['fingerprint_engines'].get(engine.value.split('_')[0], {})
@@ -302,8 +287,7 @@ class ContentProtectionDeploymentManager:
             raise
     
     def _deploy_content_crawlers(self, crawler_config: Dict[str, Any]) -> None:
-        """Deploy content crawlers for platform monitoring"""
-        logger.info("Deploying content crawlers...")
+        """Deploy content crawlers for platform monitoring"""        logger.info("Deploying content crawlers...")
         
         platforms = crawler_config.get('platforms', [])
         
@@ -323,8 +307,7 @@ class ContentProtectionDeploymentManager:
                 raise
     
     def _deploy_protection_monitoring(self, monitoring_config: Dict[str, Any]) -> None:
-        """Deploy monitoring stack for protection system"""
-        logger.info("Deploying protection monitoring...")
+        """Deploy monitoring stack for protection system"""        logger.info("Deploying protection monitoring...")
         
         if monitoring_config.get('prometheus', False):
             self._deploy_prometheus()
@@ -336,8 +319,7 @@ class ContentProtectionDeploymentManager:
             self._deploy_alertmanager()
     
     def _initialize_protection_workflows(self, config: ProtectionDeploymentConfig) -> None:
-        """Initialize protection workflows and policies"""
-        logger.info("Initializing protection workflows...")
+        """Initialize protection workflows and policies"""        logger.info("Initializing protection workflows...")
         
         # Create protection policies
         policies = self._create_protection_policies(config.protection_mode)
@@ -352,8 +334,7 @@ class ContentProtectionDeploymentManager:
         self._initialize_ml_models()
     
     def _init_audio_engine(self) -> None:
-        """Initialize audio fingerprinting engine"""
-        logger.info("Initializing audio fingerprinting engine...")
+        """Initialize audio fingerprinting engine"""        logger.info("Initializing audio fingerprinting engine...")
         
         # Configure Chromaprint
         chromaprint_config = {
@@ -371,8 +352,7 @@ class ContentProtectionDeploymentManager:
         logger.info("Audio fingerprinting engine initialized")
     
     def _init_video_engine(self) -> None:
-        """Initialize video fingerprinting engine"""
-        logger.info("Initializing video fingerprinting engine...")
+        """Initialize video fingerprinting engine"""        logger.info("Initializing video fingerprinting engine...")
         
         # Configure OpenCV
         opencv_config = {
@@ -390,8 +370,7 @@ class ContentProtectionDeploymentManager:
         logger.info("Video fingerprinting engine initialized")
     
     def _init_image_engine(self) -> None:
-        """Initialize image fingerprinting engine"""
-        logger.info("Initializing image fingerprinting engine...")
+        """Initialize image fingerprinting engine"""        logger.info("Initializing image fingerprinting engine...")
         
         # Configure CLIP
         clip_config = {
@@ -408,8 +387,7 @@ class ContentProtectionDeploymentManager:
         logger.info("Image fingerprinting engine initialized")
     
     def _init_text_engine(self) -> None:
-        """Initialize text fingerprinting engine"""
-        logger.info("Initializing text fingerprinting engine...")
+        """Initialize text fingerprinting engine"""        logger.info("Initializing text fingerprinting engine...")
         
         # Configure BERT
         bert_config = {
@@ -426,8 +404,7 @@ class ContentProtectionDeploymentManager:
         logger.info("Text fingerprinting engine initialized")
     
     def _init_hybrid_engine(self) -> None:
-        """Initialize hybrid multimodal fingerprinting engine"""
-        logger.info("Initializing hybrid multimodal engine...")
+        """Initialize hybrid multimodal fingerprinting engine"""        logger.info("Initializing hybrid multimodal engine...")
         
         # Configure multimodal fusion
         hybrid_config = {
@@ -447,8 +424,7 @@ class ContentProtectionDeploymentManager:
         logger.info("Hybrid multimodal engine initialized")
     
     def _create_vector_db_manifest(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create FAISS vector database deployment manifest"""
-        return {
+        """Create FAISS vector database deployment manifest"""        return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
             'metadata': {
@@ -501,8 +477,7 @@ class ContentProtectionDeploymentManager:
         }
     
     def _create_engine_manifest(self, engine: FingerprintEngine, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create fingerprint engine deployment manifest"""
-        engine_name = engine.value.replace('_', '-')
+        """Create fingerprint engine deployment manifest"""        engine_name = engine.value.replace('_', '-')
         
         return {
             'apiVersion': 'apps/v1',
@@ -552,8 +527,7 @@ class ContentProtectionDeploymentManager:
         }
     
     def _create_crawler_manifest(self, platform: str, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create content crawler deployment manifest"""
-        return {
+        """Create content crawler deployment manifest"""        return {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
             'metadata': {
@@ -603,8 +577,7 @@ class ContentProtectionDeploymentManager:
         }
     
     def _verify_protection_deployment(self, deployment_id: str) -> bool:
-        """Verify protection system deployment"""
-        logger.info(f"Verifying protection deployment: {deployment_id}")
+        """Verify protection system deployment"""        logger.info(f"Verifying protection deployment: {deployment_id}")
         
         try:
             # Check all fingerprint engines
@@ -638,8 +611,7 @@ class ContentProtectionDeploymentManager:
             return False
     
     def _check_fingerprint_engines_health(self) -> bool:
-        """Check health of all fingerprint engines"""
-        engine_statuses = []
+        """Check health of all fingerprint engines"""        engine_statuses = []
         
         for engine in FingerprintEngine:
             status = self._get_engine_status(engine)
@@ -648,8 +620,7 @@ class ContentProtectionDeploymentManager:
         return all(engine_statuses)
     
     def _get_engine_status(self, engine: FingerprintEngine) -> FingerprintEngineStatus:
-        """Get status of specific fingerprint engine"""
-        engine_name = engine.value.replace('_', '-')
+        """Get status of specific fingerprint engine"""        engine_name = engine.value.replace('_', '-')
         
         try:
             # Check deployment status
@@ -683,8 +654,7 @@ class ContentProtectionDeploymentManager:
             )
     
     def get_protection_status(self) -> Dict[str, Any]:
-        """Get comprehensive protection system status"""
-        status = {
+        """Get comprehensive protection system status"""        status = {
             'timestamp': datetime.now().isoformat(),
             'fingerprint_engines': {},
             'vector_database': self._get_vector_db_status(),
@@ -717,8 +687,7 @@ class ContentProtectionDeploymentManager:
         return status
     
     def _get_vector_db_status(self) -> Dict[str, Any]:
-        """Get vector database status"""
-        try:
+        """Get vector database status"""        try:
             deployment = self.k8s_apps_v1.read_namespaced_deployment(
                 name='faiss-vector-db',
                 namespace='ia-influencer'
@@ -743,8 +712,7 @@ class ContentProtectionDeploymentManager:
             }
     
     def _get_crawlers_status(self) -> Dict[str, Any]:
-        """Get content crawlers status"""
-        crawler_status = {}
+        """Get content crawlers status"""        crawler_status = {}
         platforms = ['youtube', 'instagram', 'tiktok', 'twitter']
         
         for platform in platforms:
@@ -775,8 +743,7 @@ class ContentProtectionDeploymentManager:
         return crawler_status
     
     def _rollback_protection_deployment(self, deployment_id: str) -> None:
-        """Rollback failed protection deployment"""
-        logger.info(f"Rolling back protection deployment: {deployment_id}")
+        """Rollback failed protection deployment"""        logger.info(f"Rolling back protection deployment: {deployment_id}")
         
         try:
             # Delete failed deployments
@@ -810,8 +777,7 @@ class ContentProtectionDeploymentManager:
 
 
 def main():
-    """Main function for CLI usage"""
-    import argparse
+    """Main function for CLI usage"""    import argparse
     
     parser = argparse.ArgumentParser(description='Content Protection Deployment Manager')
     parser.add_argument('--config', help='Configuration file path')

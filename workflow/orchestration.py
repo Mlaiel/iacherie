@@ -1,11 +1,9 @@
-"""
-Workflow orchestration engine for content processing and protection.
+"""Workflow orchestration engine for content processing and protection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 Licensed under proprietary license - reproduction forbidden without written authorization.
 """
-
 import asyncio
 from typing import Dict, List, Optional, Any, Callable
 from datetime import datetime
@@ -24,8 +22,7 @@ from ..services.distribution.publisher import MultiPlatformPublisher
 
 
 class WorkflowStage(Enum):
-    """Content processing workflow stages."""
-    INGESTION = "ingestion"
+    """Content processing workflow stages."""    INGESTION = "ingestion"
     ANALYSIS = "analysis"
     PROTECTION = "protection"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -35,8 +32,7 @@ class WorkflowStage(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status."""
-    QUEUED = "queued"
+    """Workflow execution status."""    QUEUED = "queued"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -45,8 +41,7 @@ class WorkflowStatus(Enum):
 
 
 class WorkflowContext:
-    """Context object passed through workflow stages."""
-    
+    """Context object passed through workflow stages."""    
     def __init__(self, workflow_id: str, user_id: str, content_item: ContentItem):
         self.workflow_id = workflow_id
         self.user_id = user_id
@@ -58,17 +53,14 @@ class WorkflowContext:
         self.updated_at = datetime.utcnow()
     
     def set_stage_result(self, stage: WorkflowStage, result: Dict[str, Any]) -> None:
-        """Set result for a workflow stage."""
-        self.stage_results[stage.value] = result
+        """Set result for a workflow stage."""        self.stage_results[stage.value] = result
         self.updated_at = datetime.utcnow()
     
     def get_stage_result(self, stage: WorkflowStage) -> Optional[Dict[str, Any]]:
-        """Get result from a workflow stage."""
-        return self.stage_results.get(stage.value)
+        """Get result from a workflow stage."""        return self.stage_results.get(stage.value)
     
     def add_error(self, stage: WorkflowStage, error: str) -> None:
-        """Add error to workflow context."""
-        self.errors.append({
+        """Add error to workflow context."""        self.errors.append({
             "stage": stage.value,
             "error": error,
             "timestamp": datetime.utcnow().isoformat()
@@ -76,29 +68,25 @@ class WorkflowContext:
 
 
 class WorkflowStageHandler:
-    """Base class for workflow stage handlers."""
-    
+    """Base class for workflow stage handlers."""    
     def __init__(self, stage: WorkflowStage):
         self.stage = stage
         self.logger = logging.getLogger(f"workflow.{stage.value}")
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process the workflow stage. Return True if successful."""
-        # Default implementation for workflow stage handlers without specific implementation
+        """Process the workflow stage. Return True if successful."""        # Default implementation for workflow stage handlers without specific implementation
         logging.warning(f"Workflow stage processing not implemented for {self.stage.value}")
         return False
 
 
 class IngestionStageHandler(WorkflowStageHandler):
-    """Handle content ingestion and initial processing."""
-    
+    """Handle content ingestion and initial processing."""    
     def __init__(self):
         super().__init__(WorkflowStage.INGESTION)
         self.content_analyzer = ContentAnalyzer()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process content ingestion stage."""
-        try:
+        """Process content ingestion stage."""        try:
             # Validate content format and quality
             validation_result = await self.content_analyzer.validate_content(
                 context.content_item
@@ -135,8 +123,7 @@ class IngestionStageHandler(WorkflowStageHandler):
             return False
     
     async def _generate_processing_hints(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate processing hints based on content metadata."""
-        hints = {
+        """Generate processing hints based on content metadata."""        hints = {
             "priority": "normal",
             "processing_complexity": "medium",
             "recommended_quality": "high"
@@ -158,15 +145,13 @@ class IngestionStageHandler(WorkflowStageHandler):
 
 
 class AnalysisStageHandler(WorkflowStageHandler):
-    """Handle AI-powered content analysis."""
-    
+    """Handle AI-powered content analysis."""    
     def __init__(self):
         super().__init__(WorkflowStage.ANALYSIS)
         self.content_analyzer = ContentAnalyzer()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process content analysis stage."""
-        try:
+        """Process content analysis stage."""        try:
             # Perform comprehensive AI analysis
             analysis_result = await self.content_analyzer.analyze_comprehensive(
                 context.content_item,
@@ -202,8 +187,7 @@ class AnalysisStageHandler(WorkflowStageHandler):
             return False
     
     async def _generate_content_insights(self, analysis_result: Dict) -> Dict[str, Any]:
-        """Generate actionable insights from content analysis."""
-        insights = {
+        """Generate actionable insights from content analysis."""        insights = {
             "content_category": analysis_result.get("category", "unknown"),
             "target_audience": analysis_result.get("target_audience", []),
             "trending_topics": analysis_result.get("trending_topics", []),
@@ -220,8 +204,7 @@ class AnalysisStageHandler(WorkflowStageHandler):
         return insights
     
     async def _detect_monetization_opportunities(self, analysis_result: Dict) -> List[Dict]:
-        """Detect potential monetization opportunities."""
-        opportunities = []
+        """Detect potential monetization opportunities."""        opportunities = []
         
         if analysis_result.get("has_brand_potential", False):
             opportunities.append({
@@ -241,15 +224,13 @@ class AnalysisStageHandler(WorkflowStageHandler):
 
 
 class ProtectionStageHandler(WorkflowStageHandler):
-    """Handle content protection and fingerprinting."""
-    
+    """Handle content protection and fingerprinting."""    
     def __init__(self):
         super().__init__(WorkflowStage.PROTECTION)
         self.fingerprint_service = FingerprintService()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process content protection stage."""
-        try:
+        """Process content protection stage."""        try:
             # Generate content fingerprints
             fingerprints = await self.fingerprint_service.generate_fingerprints(
                 context.content_item
@@ -284,8 +265,7 @@ class ProtectionStageHandler(WorkflowStageHandler):
             return False
     
     def _determine_protection_level(self, context: WorkflowContext) -> str:
-        """Determine appropriate protection level."""
-        analysis_result = context.get_stage_result(WorkflowStage.ANALYSIS)
+        """Determine appropriate protection level."""        analysis_result = context.get_stage_result(WorkflowStage.ANALYSIS)
         if not analysis_result:
             return "standard"
         
@@ -297,8 +277,7 @@ class ProtectionStageHandler(WorkflowStageHandler):
         return "standard"
     
     def _get_monitoring_platforms(self, context: WorkflowContext) -> List[str]:
-        """Get list of platforms to monitor for content theft."""
-        base_platforms = ["youtube", "instagram", "tiktok"]
+        """Get list of platforms to monitor for content theft."""        base_platforms = ["youtube", "instagram", "tiktok"]
         
         # Add more platforms based on content type and user preferences
         content_type = context.content_item.content_type
@@ -310,8 +289,7 @@ class ProtectionStageHandler(WorkflowStageHandler):
         return base_platforms
     
     async def _setup_content_monitoring(self, context: WorkflowContext, fingerprints: Dict) -> Dict:
-        """Set up monitoring configuration."""
-        return {
+        """Set up monitoring configuration."""        return {
             "enabled": True,
             "frequency": "daily",
             "sensitivity": 0.85,
@@ -320,8 +298,7 @@ class ProtectionStageHandler(WorkflowStageHandler):
         }
     
     async def _configure_protection_alerts(self, context: WorkflowContext) -> Dict:
-        """Configure protection alert settings."""
-        return {
+        """Configure protection alert settings."""        return {
             "email_notifications": True,
             "slack_notifications": False,
             "sms_notifications": False,
@@ -331,15 +308,13 @@ class ProtectionStageHandler(WorkflowStageHandler):
 
 
 class SEOOptimizationStageHandler(WorkflowStageHandler):
-    """Handle SEO optimization for content."""
-    
+    """Handle SEO optimization for content."""    
     def __init__(self):
         super().__init__(WorkflowStage.SEO_OPTIMIZATION)
         self.seo_optimizer = SEOOptimizer()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process SEO optimization stage."""
-        try:
+        """Process SEO optimization stage."""        try:
             analysis_result = context.get_stage_result(WorkflowStage.ANALYSIS)
             if not analysis_result:
                 context.add_error(self.stage, "Missing analysis results")
@@ -384,8 +359,7 @@ class SEOOptimizationStageHandler(WorkflowStageHandler):
             return False
     
     async def _calculate_seo_score(self, metadata: Dict, keywords: Dict) -> float:
-        """Calculate SEO optimization score."""
-        score = 0.0
+        """Calculate SEO optimization score."""        score = 0.0
         
         # Check title optimization
         if metadata.get("title") and len(metadata["title"]) > 10:
@@ -406,8 +380,7 @@ class SEOOptimizationStageHandler(WorkflowStageHandler):
         return score
     
     async def _generate_seo_suggestions(self, context: WorkflowContext) -> List[str]:
-        """Generate SEO improvement suggestions."""
-        suggestions = []
+        """Generate SEO improvement suggestions."""        suggestions = []
         
         # Add generic suggestions that could be customized based on analysis
         suggestions.extend([
@@ -420,15 +393,13 @@ class SEOOptimizationStageHandler(WorkflowStageHandler):
 
 
 class CollaborationMatchingStageHandler(WorkflowStageHandler):
-    """Handle collaboration matching and opportunities."""
-    
+    """Handle collaboration matching and opportunities."""    
     def __init__(self):
         super().__init__(WorkflowStage.COLLABORATION_MATCHING)
         self.collaboration_matcher = CollaborationMatcher()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process collaboration matching stage."""
-        try:
+        """Process collaboration matching stage."""        try:
             analysis_result = context.get_stage_result(WorkflowStage.ANALYSIS)
             if not analysis_result:
                 context.add_error(self.stage, "Missing analysis results")
@@ -477,8 +448,7 @@ class CollaborationMatchingStageHandler(WorkflowStageHandler):
         matches: List[Dict], 
         context: WorkflowContext
     ) -> List[Dict]:
-        """Score and rank collaboration matches."""
-        scored_matches = []
+        """Score and rank collaboration matches."""        scored_matches = []
         
         for match in matches:
             score = 0.0
@@ -506,8 +476,7 @@ class CollaborationMatchingStageHandler(WorkflowStageHandler):
         matches: List[Dict],
         analysis_result: Dict
     ) -> List[Dict]:
-        """Generate collaboration suggestions."""
-        suggestions = []
+        """Generate collaboration suggestions."""        suggestions = []
         
         for match in matches[:5]:  # Top 5 matches
             suggestion = {
@@ -522,8 +491,7 @@ class CollaborationMatchingStageHandler(WorkflowStageHandler):
         return suggestions
     
     def _determine_collaboration_type(self, match: Dict, analysis_result: Dict) -> str:
-        """Determine the type of collaboration."""
-        content_types = [
+        """Determine the type of collaboration."""        content_types = [
             analysis_result.get("content_category", ""),
             match.get("primary_content_type", "")
         ]
@@ -538,8 +506,7 @@ class CollaborationMatchingStageHandler(WorkflowStageHandler):
             return "cross_promotion"
     
     def _suggest_collaboration_action(self, match: Dict) -> str:
-        """Suggest specific collaboration action."""
-        score = match.get("score", 0)
+        """Suggest specific collaboration action."""        score = match.get("score", 0)
         
         if score > 0.8:
             return "Send collaboration proposal immediately"
@@ -550,15 +517,13 @@ class CollaborationMatchingStageHandler(WorkflowStageHandler):
 
 
 class DistributionStageHandler(WorkflowStageHandler):
-    """Handle multi-platform content distribution."""
-    
+    """Handle multi-platform content distribution."""    
     def __init__(self):
         super().__init__(WorkflowStage.DISTRIBUTION)
         self.multi_platform_publisher = MultiPlatformPublisher()
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process content distribution stage."""
-        try:
+        """Process content distribution stage."""        try:
             # Get optimized content from previous stages
             seo_result = context.get_stage_result(WorkflowStage.SEO_OPTIMIZATION)
             if not seo_result:
@@ -602,8 +567,7 @@ class DistributionStageHandler(WorkflowStageHandler):
             return False
     
     async def _create_distribution_plan(self, context: WorkflowContext) -> Dict:
-        """Create optimized distribution plan."""
-        analysis_result = context.get_stage_result(WorkflowStage.ANALYSIS)
+        """Create optimized distribution plan."""        analysis_result = context.get_stage_result(WorkflowStage.ANALYSIS)
         content_type = context.content_item.content_type
         
         plan = {
@@ -633,8 +597,7 @@ class DistributionStageHandler(WorkflowStageHandler):
         return plan
     
     async def _optimize_posting_schedule(self, target_audience: List[Dict]) -> Dict:
-        """Optimize posting schedule based on audience activity."""
-        # Default schedule - would be enhanced with real audience data
+        """Optimize posting schedule based on audience activity."""        # Default schedule - would be enhanced with real audience data
         return {
             "instagram": {"time": "18:00", "timezone": "UTC"},
             "youtube": {"time": "20:00", "timezone": "UTC"},
@@ -647,8 +610,7 @@ class DistributionStageHandler(WorkflowStageHandler):
         context: WorkflowContext,
         distribution_results: List[Dict]
     ) -> Dict:
-        """Set up tracking for distributed content."""
-        return {
+        """Set up tracking for distributed content."""        return {
             "analytics_enabled": True,
             "tracking_metrics": ["views", "engagement", "shares", "revenue"],
             "reporting_frequency": "daily",
@@ -657,14 +619,12 @@ class DistributionStageHandler(WorkflowStageHandler):
 
 
 class MonitoringStageHandler(WorkflowStageHandler):
-    """Handle ongoing content monitoring and analytics."""
-    
+    """Handle ongoing content monitoring and analytics."""    
     def __init__(self):
         super().__init__(WorkflowStage.MONITORING)
     
     async def process(self, context: WorkflowContext) -> bool:
-        """Process monitoring setup stage."""
-        try:
+        """Process monitoring setup stage."""        try:
             # Set up comprehensive monitoring
             monitoring_config = await self._setup_comprehensive_monitoring(context)
             
@@ -695,8 +655,7 @@ class MonitoringStageHandler(WorkflowStageHandler):
             return False
     
     async def _setup_comprehensive_monitoring(self, context: WorkflowContext) -> Dict:
-        """Set up comprehensive content monitoring."""
-        return {
+        """Set up comprehensive content monitoring."""        return {
             "content_protection": True,
             "performance_analytics": True,
             "revenue_tracking": True,
@@ -705,8 +664,7 @@ class MonitoringStageHandler(WorkflowStageHandler):
         }
     
     async def _configure_analytics_dashboards(self, context: WorkflowContext) -> Dict:
-        """Configure analytics dashboards."""
-        return {
+        """Configure analytics dashboards."""        return {
             "main_dashboard": True,
             "protection_dashboard": True,
             "revenue_dashboard": True,
@@ -715,8 +673,7 @@ class MonitoringStageHandler(WorkflowStageHandler):
         }
     
     async def _setup_automated_reporting(self, context: WorkflowContext) -> Dict:
-        """Set up automated reporting."""
-        return {
+        """Set up automated reporting."""        return {
             "daily_summary": True,
             "weekly_report": True,
             "monthly_analysis": True,
@@ -729,8 +686,7 @@ class MonitoringStageHandler(WorkflowStageHandler):
 
 
 class ContentWorkflowOrchestrator:
-    """Main orchestrator for content processing workflows."""
-    
+    """Main orchestrator for content processing workflows."""    
     def __init__(self):
         self.logger = logging.getLogger("workflow.orchestrator")
         self.active_workflows = {}
@@ -752,8 +708,7 @@ class ContentWorkflowOrchestrator:
         content_item: ContentItem,
         workflow_config: Optional[Dict] = None
     ) -> str:
-        """Start a new content processing workflow."""
-        workflow_id = f"workflow_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
+        """Start a new content processing workflow."""        workflow_id = f"workflow_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         
         context = WorkflowContext(workflow_id, user_id, content_item)
         
@@ -775,8 +730,7 @@ class ContentWorkflowOrchestrator:
         return workflow_id
     
     async def _execute_workflow(self, workflow_id: str) -> None:
-        """Execute the complete workflow."""
-        workflow_info = self.active_workflows.get(workflow_id)
+        """Execute the complete workflow."""        workflow_info = self.active_workflows.get(workflow_id)
         if not workflow_info:
             self.logger.error(f"Workflow {workflow_id} not found")
             return
@@ -824,8 +778,7 @@ class ContentWorkflowOrchestrator:
             context.add_error(WorkflowStage.INGESTION, str(e))
     
     def get_workflow_status(self, workflow_id: str) -> Optional[Dict]:
-        """Get current workflow status."""
-        workflow_info = self.active_workflows.get(workflow_id)
+        """Get current workflow status."""        workflow_info = self.active_workflows.get(workflow_id)
         if not workflow_info:
             return None
         
@@ -840,8 +793,7 @@ class ContentWorkflowOrchestrator:
         }
     
     def cancel_workflow(self, workflow_id: str) -> bool:
-        """Cancel an active workflow."""
-        workflow_info = self.active_workflows.get(workflow_id)
+        """Cancel an active workflow."""        workflow_info = self.active_workflows.get(workflow_id)
         if not workflow_info:
             return False
         
@@ -850,8 +802,7 @@ class ContentWorkflowOrchestrator:
         return True
     
     def get_active_workflows(self, user_id: Optional[str] = None) -> List[Dict]:
-        """Get list of active workflows, optionally filtered by user."""
-        workflows = []
+        """Get list of active workflows, optionally filtered by user."""        workflows = []
         
         for workflow_id, workflow_info in self.active_workflows.items():
             if user_id and workflow_info["context"].user_id != user_id:

@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Comprehensive Tests for Security Configuration
+"""Comprehensive Tests for Security Configuration
 
 Expert Team Specifications:
 - Lead Dev + AI Architect: Fahed Mlaiel
@@ -37,7 +36,6 @@ FOR AUTHORIZATION: Contact Fahed Mlaiel at mlaiel@live.de with detailed usage re
 Comprehensive test suite for SecurityConfig module ensuring 100% security,
 authentication, encryption, and threat protection for the IA platform.
 """
-
 import pytest
 import sys
 import os
@@ -73,20 +71,17 @@ except ImportError as e:
     pytest.skip("SecurityConfig module not available", allow_module_level=True)
 
 class TestSecurityConfig:
-    """Tests complets pour la configuration de sécurité."""
-    
+    """Tests complets pour la configuration de sécurité."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.config = SecurityConfig()
+        """Configuration avant chaque test."""        self.config = SecurityConfig()
         self.test_env = test_environment
         self.test_credentials = self._generate_test_credentials()
         self.test_security_scenarios = self._create_security_scenarios()
         logger.info("TestSecurityConfig setup completed")
     
     def _generate_test_credentials(self) -> Dict[str, Any]:
-        """Génère des identifiants de test sécurisés."""
-        return {
+        """Génère des identifiants de test sécurisés."""        return {
             "valid_user": {
                 "user_id": "test_user_001",
                 "username": "test_musician",
@@ -120,8 +115,7 @@ class TestSecurityConfig:
         }
     
     def _create_security_scenarios(self) -> Dict[str, Any]:
-        """Crée des scénarios de test de sécurité."""
-        return {
+        """Crée des scénarios de test de sécurité."""        return {
             "brute_force_attack": {
                 "attack_type": "brute_force",
                 "target": "login_endpoint",
@@ -155,8 +149,7 @@ class TestSecurityConfig:
     
     @pytest_marks["unit"]
     def test_config_initialization(self):
-        """Test l'initialisation de base de la configuration de sécurité."""
-        assert self.config is not None
+        """Test l'initialisation de base de la configuration de sécurité."""        assert self.config is not None
         assert hasattr(self.config, 'authentication_manager')
         assert hasattr(self.config, 'encryption_engine')
         assert hasattr(self.config, 'threat_detector')
@@ -167,8 +160,7 @@ class TestSecurityConfig:
     
     @pytest_marks["security"]
     def test_authentication_mechanisms(self):
-        """Test les mécanismes d'authentification."""
-        user_credentials = self.test_credentials["valid_user"]
+        """Test les mécanismes d'authentification."""        user_credentials = self.test_credentials["valid_user"]
         
         # Test authentification par mot de passe
         password_auth = self.config.authenticate_password(
@@ -223,8 +215,7 @@ class TestSecurityConfig:
     
     @pytest_marks["security"]
     def test_encryption_engine_security(self):
-        """Test la sécurité du moteur de chiffrement."""
-        sensitive_data = {
+        """Test la sécurité du moteur de chiffrement."""        sensitive_data = {
             "user_id": "test_user_001",
             "payment_info": {
                 "card_number": "4111111111111111",
@@ -301,8 +292,7 @@ class TestSecurityConfig:
     
     @pytest_marks["security"]
     def test_threat_detection_system(self):
-        """Test le système de détection de menaces."""
-        # Test détection d'attaque par force brute
+        """Test le système de détection de menaces."""        # Test détection d'attaque par force brute
         brute_force_scenario = self.test_security_scenarios["brute_force_attack"]
         
         brute_force_detection = self.config.detect_brute_force_attack(
@@ -372,8 +362,7 @@ class TestSecurityConfig:
     
     @pytest_marks["security"]
     def test_access_control_system(self):
-        """Test le système de contrôle d'accès."""
-        # Test contrôle d'accès basé sur les rôles (RBAC)
+        """Test le système de contrôle d'accès."""        # Test contrôle d'accès basé sur les rôles (RBAC)
         admin_user = self.test_credentials["admin_user"]
         regular_user = self.test_credentials["valid_user"]
         
@@ -461,8 +450,7 @@ class TestSecurityConfig:
     
     @pytest_marks["security"]
     def test_security_audit_system(self):
-        """Test le système d'audit de sécurité."""
-        # Test logging d'événements de sécurité
+        """Test le système d'audit de sécurité."""        # Test logging d'événements de sécurité
         security_event = {
             "event_type": "authentication_failure",
             "user_id": "test_user_001",
@@ -512,8 +500,7 @@ class TestSecurityConfig:
     
     @pytest_marks["security"]
     def test_compliance_validation(self):
-        """Test la validation de conformité."""
-        # Test conformité GDPR
+        """Test la validation de conformité."""        # Test conformité GDPR
         gdpr_compliance = self.config.validate_gdpr_compliance(
             data_processing_activities=[
                 {
@@ -586,8 +573,7 @@ class TestSecurityConfig:
     
     @pytest_marks["performance"]
     def test_security_performance_under_load(self):
-        """Test les performances de sécurité sous charge."""
-        # Test authentification sous charge
+        """Test les performances de sécurité sous charge."""        # Test authentification sous charge
         start_time = time.time()
         successful_auths = 0
         
@@ -628,8 +614,7 @@ class TestSecurityConfig:
     
     @pytest_marks["security"]
     def test_vulnerability_scanning(self):
-        """Test le scanning de vulnérabilités."""
-        # Test scan de vulnérabilités système
+        """Test le scanning de vulnérabilités."""        # Test scan de vulnérabilités système
         system_scan = self.config.scan_system_vulnerabilities(
             scan_scope="comprehensive",
             include_components=[
@@ -678,8 +663,7 @@ class TestSecurityConfig:
     
     @pytest_marks["security"]
     def test_incident_response_system(self):
-        """Test le système de réponse aux incidents."""
-        # Simulation d'incident de sécurité
+        """Test le système de réponse aux incidents."""        # Simulation d'incident de sécurité
         security_incident = {
             "incident_type": "data_breach_attempt",
             "severity": "high",
@@ -732,8 +716,7 @@ class TestSecurityConfig:
     
     @pytest_marks["integration"]
     async def test_security_integration_with_ai_systems(self):
-        """Test l'intégration sécurisée avec les systèmes IA."""
-        # Test sécurisation des requêtes IA
+        """Test l'intégration sécurisée avec les systèmes IA."""        # Test sécurisation des requêtes IA
         ai_request_security = self.config.secure_ai_request(
             user_id="test_user_001",
             ai_model="gpt-4",
@@ -777,17 +760,14 @@ class TestSecurityConfig:
         logger.info("Security integration with AI systems test passed")
 
 class TestAuthenticationManager:
-    """Tests spécifiques pour le gestionnaire d'authentification."""
-    
+    """Tests spécifiques pour le gestionnaire d'authentification."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.auth_manager = AuthenticationManager()
+        """Configuration avant chaque test."""        self.auth_manager = AuthenticationManager()
     
     @pytest_marks["security"]
     def test_token_management(self):
-        """Test la gestion des tokens."""
-        # Test génération de tokens JWT
+        """Test la gestion des tokens."""        # Test génération de tokens JWT
         token_generation = self.auth_manager.generate_jwt_token(
             user_id="test_user_001",
             claims={
@@ -820,17 +800,14 @@ class TestAuthenticationManager:
         assert token_revocation["revoked"] is True
 
 class TestEncryptionEngine:
-    """Tests spécifiques pour le moteur de chiffrement."""
-    
+    """Tests spécifiques pour le moteur de chiffrement."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.encryption_engine = EncryptionEngine()
+        """Configuration avant chaque test."""        self.encryption_engine = EncryptionEngine()
     
     @pytest_marks["security"]
     def test_encryption_algorithms(self):
-        """Test les algorithmes de chiffrement."""
-        test_data = "sensitive_financial_data_12345"
+        """Test les algorithmes de chiffrement."""        test_data = "sensitive_financial_data_12345"
         
         # Test AES-256-GCM
         aes_result = self.encryption_engine.encrypt_aes_gcm(
@@ -854,17 +831,14 @@ class TestEncryptionEngine:
         assert decrypted == test_data
 
 class TestThreatDetector:
-    """Tests spécifiques pour le détecteur de menaces."""
-    
+    """Tests spécifiques pour le détecteur de menaces."""    
     @pytest.fixture(autouse=True)
     def setup_method(self):
-        """Configuration avant chaque test."""
-        self.threat_detector = ThreatDetector()
+        """Configuration avant chaque test."""        self.threat_detector = ThreatDetector()
     
     @pytest_marks["security"]
     def test_threat_intelligence(self):
-        """Test l'intelligence des menaces."""
-        # Test détection de IOCs (Indicators of Compromise)
+        """Test l'intelligence des menaces."""        # Test détection de IOCs (Indicators of Compromise)
         ioc_detection = self.threat_detector.detect_iocs(
             network_traffic=[
                 {"src_ip": "known.malicious.ip", "dst_port": 443, "protocol": "https"},
@@ -877,13 +851,11 @@ class TestThreatDetector:
         assert "threat_level" in ioc_detection
 
 class TestSecurityPerformance:
-    """Tests de performance pour les fonctionnalités de sécurité."""
-    
+    """Tests de performance pour les fonctionnalités de sécurité."""    
     @pytest_marks["performance"]
     @pytest.mark.slow
     def test_large_scale_security_operations(self):
-        """Test d'opérations de sécurité à grande échelle."""
-        config = SecurityConfig()
+        """Test d'opérations de sécurité à grande échelle."""        config = SecurityConfig()
         
         # Simuler 10000 validations de tokens
         start_time = time.time()
@@ -907,8 +879,7 @@ class TestSecurityPerformance:
 
 # Configuration pytest pour les tests de sécurité
 def pytest_configure(config):
-    """Configuration pytest pour les tests de sécurité."""
-    config.addinivalue_line(
+    """Configuration pytest pour les tests de sécurité."""    config.addinivalue_line(
         "markers", "authentication: Authentication system tests"
     )
     config.addinivalue_line(

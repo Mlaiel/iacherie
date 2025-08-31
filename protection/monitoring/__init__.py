@@ -46,8 +46,7 @@ UNAUTHORIZED ACCESS, USE, OR APPROPRIATION IS CRIMINAL OFFENSE:
 
 Contact mlaiel@live.de for MANDATORY authorization before any interaction.
 All access attempts are logged, monitored, and legally documented.
-"""
-import logging
+"""import logging
 from typing import Optional, Dict, Any
 from datetime import datetime
 
@@ -97,8 +96,7 @@ __legal_notice__ = """⚖️ LEGAL WARNING: This software is the exclusive intel
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-class MonitoringService:
+"""class MonitoringService:
     """    Main monitoring service orchestrator that coordinates all monitoring components.
     
     This service integrates:
@@ -405,8 +403,7 @@ is strictly prohibited and will result in immediate legal action.
 For licensing inquiries, contact: mlaiel@live.de
 
 © 2025 Fahed Mlaiel. All rights reserved.
-"""
-def print_legal_notice():
+"""def print_legal_notice():
     """Print the legal notice and copyright information."""    print(LEGAL_NOTICE)
 
 # Automatic legal notice display (can be disabled in production)
@@ -451,8 +448,7 @@ __legal_notice__ = """⚖️ LEGAL WARNING: This software is the exclusive intel
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-class MonitoringService:
+"""class MonitoringService:
     """    Main monitoring service orchestrator that coordinates all monitoring components.
     
     This service integrates:

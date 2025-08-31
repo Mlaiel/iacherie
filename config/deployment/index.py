@@ -1,5 +1,4 @@
-"""
-Deployment Configuration Index for IA-Influencer Agent Platform
+"""Deployment Configuration Index for IA-Influencer Agent Platform
 ===============================================================
 
 Central index and factory for all deployment configuration modules
@@ -22,7 +21,6 @@ WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual pro
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
 """
-
 import os
 import yaml
 from typing import Dict, List, Optional, Any, Type, Union
@@ -52,8 +50,7 @@ from .security_compliance_config import SecurityComplianceConfig
 
 
 class DeploymentEnvironment(Enum):
-    """Deployment environments"""
-    DEVELOPMENT = "development"
+    """Deployment environments"""    DEVELOPMENT = "development"
     STAGING = "staging" 
     PRODUCTION = "production"
     TESTING = "testing"
@@ -61,8 +58,7 @@ class DeploymentEnvironment(Enum):
 
 
 class ConfigurationType(Enum):
-    """Configuration types"""
-    INFRASTRUCTURE = "infrastructure"
+    """Configuration types"""    INFRASTRUCTURE = "infrastructure"
     CLOUD = "cloud"
     SECURITY = "security"
     MONITORING = "monitoring"
@@ -74,8 +70,7 @@ class ConfigurationType(Enum):
 
 
 class DeploymentConfigurationIndex:
-    """
-    Central index and factory for all deployment configurations.
+    """    Central index and factory for all deployment configurations.
     
     Provides:
     - Centralized configuration management
@@ -86,8 +81,7 @@ class DeploymentConfigurationIndex:
     - Cross-module dependency resolution
     - Configuration versioning and rollback
     - Automated deployment orchestration
-    """
-    
+    """    
     def __init__(self, environment: DeploymentEnvironment = DeploymentEnvironment.DEVELOPMENT):
         self.environment = environment
         self.project_name = "ia-influencer-agent"
@@ -95,8 +89,7 @@ class DeploymentConfigurationIndex:
         self.logger = self._setup_logging()
         
     def _setup_logging(self) -> logging.Logger:
-        """Setup logging configuration"""
-        logger = logging.getLogger("deployment_config_index")
+        """Setup logging configuration"""        logger = logging.getLogger("deployment_config_index")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -110,8 +103,7 @@ class DeploymentConfigurationIndex:
         return logger
     
     def _initialize_config_registry(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize configuration registry"""
-        return {
+        """Initialize configuration registry"""        return {
             "docker": {
                 "class": DockerConfig,
                 "type": ConfigurationType.INFRASTRUCTURE,
@@ -223,8 +215,7 @@ class DeploymentConfigurationIndex:
         }
     
     def get_config_instance(self, config_name: str, environment: Optional[str] = None) -> Any:
-        """Get configuration instance by name"""
-        if config_name not in self.config_registry:
+        """Get configuration instance by name"""        if config_name not in self.config_registry:
             raise ValueError(f"Unknown configuration: {config_name}")
         
         config_info = self.config_registry[config_name]
@@ -240,8 +231,7 @@ class DeploymentConfigurationIndex:
             return config_class()
     
     def get_all_configs(self, environment: Optional[str] = None) -> Dict[str, Any]:
-        """Get all configuration instances"""
-        configs = {}
+        """Get all configuration instances"""        configs = {}
         env = environment or self.environment.value
         
         for config_name in self.config_registry.keys():
@@ -254,8 +244,7 @@ class DeploymentConfigurationIndex:
         return configs
     
     def get_configs_by_type(self, config_type: ConfigurationType, environment: Optional[str] = None) -> Dict[str, Any]:
-        """Get configurations by type"""
-        configs = {}
+        """Get configurations by type"""        configs = {}
         env = environment or self.environment.value
         
         for config_name, config_info in self.config_registry.items():
@@ -268,8 +257,7 @@ class DeploymentConfigurationIndex:
         return configs
     
     def validate_dependencies(self, config_name: str) -> List[str]:
-        """Validate configuration dependencies"""
-        if config_name not in self.config_registry:
+        """Validate configuration dependencies"""        if config_name not in self.config_registry:
             return [f"Configuration '{config_name}' not found"]
         
         errors = []
@@ -282,8 +270,7 @@ class DeploymentConfigurationIndex:
         return errors
     
     def get_deployment_order(self) -> List[str]:
-        """Get deployment order based on dependencies"""
-        ordered_configs = []
+        """Get deployment order based on dependencies"""        ordered_configs = []
         visited = set()
         temp_visited = set()
         
@@ -310,8 +297,7 @@ class DeploymentConfigurationIndex:
         return ordered_configs
     
     def export_all_configurations(self, output_dir: str = "./complete-deployment-configs") -> Dict[str, Dict[str, str]]:
-        """Export all configurations to files"""
-        output_path = Path(output_dir)
+        """Export all configurations to files"""        output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
         all_exported_files = {}
@@ -351,8 +337,7 @@ class DeploymentConfigurationIndex:
         return all_exported_files
     
     def generate_deployment_manifest(self) -> Dict[str, Any]:
-        """Generate complete deployment manifest"""
-        deployment_order = self.get_deployment_order()
+        """Generate complete deployment manifest"""        deployment_order = self.get_deployment_order()
         
         manifest = {
             "version": "1.0",
@@ -403,8 +388,7 @@ class DeploymentConfigurationIndex:
         return manifest
     
     def get_environment_specific_overrides(self, environment: DeploymentEnvironment) -> Dict[str, Any]:
-        """Get environment-specific configuration overrides"""
-        overrides = {
+        """Get environment-specific configuration overrides"""        overrides = {
             DeploymentEnvironment.DEVELOPMENT: {
                 "docker": {"enable_debug": True, "resource_limits": "low"},
                 "kubernetes": {"replica_count": 1, "resource_requests": "minimal"},
@@ -430,8 +414,7 @@ class DeploymentConfigurationIndex:
 
 # Factory function
 def create_deployment_configuration_index(environment: DeploymentEnvironment = DeploymentEnvironment.DEVELOPMENT) -> DeploymentConfigurationIndex:
-    """Create deployment configuration index for specific environment"""
-    return DeploymentConfigurationIndex(environment=environment)
+    """Create deployment configuration index for specific environment"""    return DeploymentConfigurationIndex(environment=environment)
 
 
 # Default instance

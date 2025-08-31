@@ -1,5 +1,4 @@
-"""
-🔧 Security Configuration Manager - IA-Influencer-Agent
+"""🔧 Security Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Security Engineer + DevOps + Backend Senior + Compliance Officer
@@ -15,7 +14,6 @@ Contact: mlaiel@live.de
 Enterprise-grade security configuration and compliance management.
 ==================================================================
 """
-
 import logging
 import os
 import hashlib
@@ -28,31 +26,27 @@ from datetime import datetime, timedelta
 import json
 
 class SecurityLevel(Enum):
-    """Security configuration levels"""
-    BASIC = "basic"
+    """Security configuration levels"""    BASIC = "basic"
     STANDARD = "standard"
     HIGH = "high"
     MAXIMUM = "maximum"
     PARANOID = "paranoid"
 
 class EncryptionType(Enum):
-    """Encryption algorithms"""
-    AES_256_GCM = "aes_256_gcm"
+    """Encryption algorithms"""    AES_256_GCM = "aes_256_gcm"
     CHACHA20_POLY1305 = "chacha20_poly1305"
     AES_256_CBC = "aes_256_cbc"
     RSA_4096 = "rsa_4096"
 
 class AuthenticationMethod(Enum):
-    """Authentication methods"""
-    JWT = "jwt"
+    """Authentication methods"""    JWT = "jwt"
     OAUTH2 = "oauth2"
     SAML = "saml"
     LDAP = "ldap"
     MULTI_FACTOR = "multi_factor"
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks"""
-    GDPR = "gdpr"
+    """Compliance frameworks"""    GDPR = "gdpr"
     SOC2 = "soc2"
     HIPAA = "hipaa"
     PCI_DSS = "pci_dss"
@@ -61,8 +55,7 @@ class ComplianceFramework(Enum):
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration"""
-    algorithm: EncryptionType
+    """Encryption configuration"""    algorithm: EncryptionType
     key_size: int
     key_rotation_interval: int = 86400  # 24 hours
     iv_size: int = 16
@@ -72,8 +65,7 @@ class EncryptionConfig:
 
 @dataclass
 class AuthenticationConfig:
-    """Authentication configuration"""
-    method: AuthenticationMethod
+    """Authentication configuration"""    method: AuthenticationMethod
     jwt_secret: str
     jwt_expiration: int = 3600
     refresh_token_expiration: int = 604800  # 7 days
@@ -84,8 +76,7 @@ class AuthenticationConfig:
 
 @dataclass
 class NetworkSecurityConfig:
-    """Network security configuration"""
-    ssl_required: bool = True
+    """Network security configuration"""    ssl_required: bool = True
     tls_version: str = "1.3"
     cipher_suites: List[str] = field(default_factory=list)
     cors_origins: List[str] = field(default_factory=list)
@@ -95,8 +86,7 @@ class NetworkSecurityConfig:
 
 @dataclass
 class DataProtectionConfig:
-    """Data protection configuration"""
-    encryption_at_rest: bool = True
+    """Data protection configuration"""    encryption_at_rest: bool = True
     encryption_in_transit: bool = True
     data_masking: bool = True
     anonymization: bool = True
@@ -106,8 +96,7 @@ class DataProtectionConfig:
 
 @dataclass
 class AuditConfig:
-    """Audit and logging configuration"""
-    audit_enabled: bool = True
+    """Audit and logging configuration"""    audit_enabled: bool = True
     log_level: str = "INFO"
     log_retention: int = 2592000  # 30 days
     real_time_monitoring: bool = True
@@ -117,8 +106,7 @@ class AuditConfig:
 
 @dataclass
 class SecurityConfiguration:
-    """Complete security configuration"""
-    level: SecurityLevel
+    """Complete security configuration"""    level: SecurityLevel
     encryption: EncryptionConfig
     authentication: AuthenticationConfig
     network: NetworkSecurityConfig
@@ -131,8 +119,7 @@ class SecurityConfiguration:
     content_security_policy: str = ""
 
 class SecurityConfigManager:
-    """
-    Enterprise security configuration manager.
+    """    Enterprise security configuration manager.
     
     Provides comprehensive security management:
     - Multi-level security configurations
@@ -144,11 +131,9 @@ class SecurityConfigManager:
     - Vulnerability management
     - Security monitoring and alerting
     - Compliance framework implementation
-    """
-    
+    """    
     def __init__(self):
-        """Initialize security configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize security configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Security configurations by level
         self.security_configs = {}
@@ -168,13 +153,11 @@ class SecurityConfigManager:
         self.logger.info("Security configuration manager initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize security configuration manager.
+        """        Initialize security configuration manager.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Load security configurations for all levels
             await self._load_security_configurations()
             
@@ -198,8 +181,7 @@ class SecurityConfigManager:
             return False
     
     async def _load_security_configurations(self) -> None:
-        """Load security configurations for all levels"""
-        
+        """Load security configurations for all levels"""        
         # Basic security configuration
         basic_config = SecurityConfiguration(
             level=SecurityLevel.BASIC,
@@ -446,12 +428,10 @@ class SecurityConfigManager:
         self.logger.info(f"Loaded {len(self.security_configs)} security configurations")
     
     async def _generate_jwt_secret(self) -> str:
-        """Generate secure JWT secret"""
-        return base64.b64encode(secrets.token_bytes(64)).decode('utf-8')
+        """Generate secure JWT secret"""        return base64.b64encode(secrets.token_bytes(64)).decode('utf-8')
     
     async def _initialize_encryption_keys(self) -> None:
-        """Initialize encryption keys"""
-        for level, config in self.security_configs.items():
+        """Initialize encryption keys"""        for level, config in self.security_configs.items():
             key = secrets.token_bytes(config.encryption.key_size // 8)
             self.encryption_keys[level] = {
                 "key": key,
@@ -463,13 +443,11 @@ class SecurityConfigManager:
         self.logger.info("Encryption keys initialized")
     
     async def _setup_security_monitoring(self) -> None:
-        """Setup security monitoring and alerting"""
-        # Implementation would setup real security monitoring
+        """Setup security monitoring and alerting"""        # Implementation would setup real security monitoring
         self.logger.info("Security monitoring configured")
     
     async def _initialize_compliance_frameworks(self) -> None:
-        """Initialize compliance framework configurations"""
-        for framework in ComplianceFramework:
+        """Initialize compliance framework configurations"""        for framework in ComplianceFramework:
             self.compliance_status[framework] = {
                 "enabled": False,
                 "compliance_level": 0,
@@ -480,8 +458,7 @@ class SecurityConfigManager:
         self.logger.info("Compliance frameworks initialized")
     
     async def _get_compliance_requirements(self, framework: ComplianceFramework) -> List[str]:
-        """Get compliance requirements for framework"""
-        requirements = {
+        """Get compliance requirements for framework"""        requirements = {
             ComplianceFramework.GDPR: [
                 "Data encryption at rest and in transit",
                 "User consent management",
@@ -522,16 +499,14 @@ class SecurityConfigManager:
         return requirements.get(framework, [])
     
     async def set_security_level(self, level: SecurityLevel) -> bool:
-        """
-        Set active security level.
+        """        Set active security level.
         
         Args:
             level: Security level to activate
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if level not in self.security_configs:
                 raise ValueError(f"Security level not configured: {level.value}")
             
@@ -557,8 +532,7 @@ class SecurityConfigManager:
             return False
     
     async def _apply_security_configuration(self, config: SecurityConfiguration) -> None:
-        """Apply security configuration"""
-        # Set environment variables for security settings
+        """Apply security configuration"""        # Set environment variables for security settings
         os.environ["SECURITY_LEVEL"] = config.level.value
         os.environ["JWT_SECRET"] = config.authentication.jwt_secret
         os.environ["JWT_EXPIRATION"] = str(config.authentication.jwt_expiration)
@@ -582,8 +556,7 @@ class SecurityConfigManager:
         self.logger.info(f"Applied security configuration for level: {config.level.value}")
     
     async def configure_ssl_certificates(self) -> bool:
-        """Configure SSL/TLS certificates"""
-        try:
+        """Configure SSL/TLS certificates"""        try:
             if not self.active_config:
                 raise ValueError("No active security configuration")
             
@@ -610,8 +583,7 @@ class SecurityConfigManager:
             return False
     
     async def setup_secret_rotation(self) -> bool:
-        """Setup automatic secret rotation"""
-        try:
+        """Setup automatic secret rotation"""        try:
             if not self.active_config:
                 raise ValueError("No active security configuration")
             
@@ -628,8 +600,7 @@ class SecurityConfigManager:
             return False
     
     async def rotate_encryption_keys(self) -> bool:
-        """Rotate encryption keys"""
-        try:
+        """Rotate encryption keys"""        try:
             if not self.active_config:
                 raise ValueError("No active security configuration")
             
@@ -660,16 +631,14 @@ class SecurityConfigManager:
             return False
     
     async def enable_compliance_framework(self, framework: ComplianceFramework) -> bool:
-        """
-        Enable compliance framework.
+        """        Enable compliance framework.
         
         Args:
             framework: Compliance framework to enable
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if framework not in self.compliance_status:
                 raise ValueError(f"Unknown compliance framework: {framework.value}")
             
@@ -687,8 +656,7 @@ class SecurityConfigManager:
             return False
     
     async def _apply_compliance_configuration(self, framework: ComplianceFramework) -> None:
-        """Apply compliance-specific configuration"""
-        if framework == ComplianceFramework.GDPR:
+        """Apply compliance-specific configuration"""        if framework == ComplianceFramework.GDPR:
             # Enable GDPR-specific features
             os.environ["GDPR_ENABLED"] = "true"
             os.environ["DATA_RETENTION_ENABLED"] = "true"
@@ -707,8 +675,7 @@ class SecurityConfigManager:
             os.environ["NETWORK_SEGMENTATION"] = "true"
     
     async def get_security_status(self) -> Dict[str, Any]:
-        """Get comprehensive security status"""
-        return {
+        """Get comprehensive security status"""        return {
             "current_level": self.current_level.value,
             "encryption_algorithm": self.active_config.encryption.algorithm.value if self.active_config else None,
             "authentication_method": self.active_config.authentication.method.value if self.active_config else None,
@@ -722,8 +689,7 @@ class SecurityConfigManager:
         }
     
     async def get_compliance_report(self) -> Dict[str, Any]:
-        """Get compliance status report"""
-        return {
+        """Get compliance status report"""        return {
             "frameworks": {
                 framework.value: {
                     "enabled": status["enabled"],
@@ -739,8 +705,7 @@ class SecurityConfigManager:
         }
     
     async def audit_security_configuration(self) -> Dict[str, Any]:
-        """Perform security configuration audit"""
-        audit_result = {
+        """Perform security configuration audit"""        audit_result = {
             "timestamp": datetime.now(),
             "security_level": self.current_level.value,
             "findings": [],
@@ -786,5 +751,4 @@ class SecurityConfigManager:
         return audit_result
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get security manager status"""
-        return await self.get_security_status()
+        """Get security manager status"""        return await self.get_security_status()

@@ -1,5 +1,4 @@
-"""
-Creator Registration Handler - Advanced Registration & Onboarding System
+"""Creator Registration Handler - Advanced Registration & Onboarding System
 
 Ultra-sophisticated creator registration and onboarding system with multi-step verification,
 KYC compliance, and intelligent onboarding workflows for multi-format content creators.
@@ -18,7 +17,6 @@ Any unauthorized use, copying, distribution, reverse engineering, or commerciali
 without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is STRICTLY PROHIBITED
 and will result in immediate legal action under German and International copyright laws.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta, timezone
@@ -61,8 +59,7 @@ logger = get_logger(__name__)
 
 
 class RegistrationStage(Enum):
-    """Registration workflow stages"""
-    INITIATED = "initiated"
+    """Registration workflow stages"""    INITIATED = "initiated"
     EMAIL_SENT = "email_sent"
     EMAIL_VERIFIED = "email_verified"
     PROFILE_SETUP = "profile_setup"
@@ -75,8 +72,7 @@ class RegistrationStage(Enum):
 
 
 class KYCStatus(Enum):
-    """KYC verification status"""
-    NOT_STARTED = "not_started"
+    """KYC verification status"""    NOT_STARTED = "not_started"
     PENDING = "pending"
     UNDER_REVIEW = "under_review"
     APPROVED = "approved"
@@ -85,8 +81,7 @@ class KYCStatus(Enum):
 
 
 class OnboardingType(Enum):
-    """Onboarding workflow types"""
-    STANDARD = "standard"
+    """Onboarding workflow types"""    STANDARD = "standard"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     EXPEDITED = "expedited"
@@ -95,8 +90,7 @@ class OnboardingType(Enum):
 
 @dataclass
 class RegistrationData:
-    """Registration form data"""
-    email: str
+    """Registration form data"""    email: str
     username: str
     display_name: str
     password: str
@@ -121,8 +115,7 @@ class RegistrationData:
 
 @dataclass
 class OnboardingProgress:
-    """Onboarding progress tracking"""
-    user_id: str
+    """Onboarding progress tracking"""    user_id: str
     creator_id: str
     current_stage: RegistrationStage
     completed_stages: List[str] = field(default_factory=list)
@@ -137,8 +130,7 @@ class OnboardingProgress:
 
 
 class RegistrationRequest(BaseModel):
-    """Registration request validation model"""
-    email: EmailStr
+    """Registration request validation model"""    email: EmailStr
     username: str
     display_name: str
     password: str
@@ -189,8 +181,7 @@ class RegistrationRequest(BaseModel):
 
 
 class PhoneVerificationRequest(BaseModel):
-    """Phone verification request model"""
-    phone_number: str
+    """Phone verification request model"""    phone_number: str
     country_code: Optional[str] = None
     
     @validator('phone_number')
@@ -206,13 +197,11 @@ class PhoneVerificationRequest(BaseModel):
 
 
 class KYCProcessor:
-    """
-    KYC (Know Your Customer) compliance processor
+    """    KYC (Know Your Customer) compliance processor
     
     Handles identity verification, document processing, and compliance checks
     for creator monetization and professional features.
-    """
-    
+    """    
     def __init__(self, security_manager: SecurityManager, cache_manager: CacheManager):
         self.security = security_manager
         self.cache = cache_manager
@@ -232,8 +221,7 @@ class KYCProcessor:
         verification_level: VerificationLevel,
         documents: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Initiate KYC verification process
+        """        Initiate KYC verification process
         
         Args:
             creator_id: Creator identifier
@@ -242,8 +230,7 @@ class KYCProcessor:
             
         Returns:
             KYC verification result
-        """
-        try:
+        """        try:
             self.logger.info(f"Initiating KYC verification for creator {creator_id}")
             
             # Validate documents
@@ -298,8 +285,7 @@ class KYCProcessor:
             }
     
     async def check_kyc_status(self, verification_id: str) -> Dict[str, Any]:
-        """Check KYC verification status"""
-        try:
+        """Check KYC verification status"""        try:
             verification_data = await self.cache.get(f"kyc_verification:{verification_id}")
             if not verification_data:
                 return {'status': 'not_found'}
@@ -319,8 +305,7 @@ class KYCProcessor:
             return {'status': 'error', 'error': str(e)}
     
     async def _validate_kyc_documents(self, documents: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate KYC documents"""
-        try:
+        """Validate KYC documents"""        try:
             errors = []
             warnings = []
             
@@ -362,8 +347,7 @@ class KYCProcessor:
             }
     
     async def _process_kyc_verification(self, verification_data: Dict[str, Any]) -> None:
-        """Process KYC verification (simulated)"""
-        try:
+        """Process KYC verification (simulated)"""        try:
             # In production, this would integrate with external KYC providers
             # like Jumio, Onfido, or similar services
             
@@ -388,13 +372,11 @@ class KYCProcessor:
 
 
 class OnboardingPipeline:
-    """
-    Intelligent onboarding pipeline for creators
+    """    Intelligent onboarding pipeline for creators
     
     Provides personalized onboarding experiences based on creator type,
     experience level, and business requirements.
-    """
-    
+    """    
     def __init__(self, profile_manager: CreatorProfileManager, cache_manager: CacheManager):
         self.profile_manager = profile_manager
         self.cache = cache_manager
@@ -415,8 +397,7 @@ class OnboardingPipeline:
         creator_id: str,
         onboarding_type: OnboardingType = OnboardingType.STANDARD
     ) -> OnboardingProgress:
-        """
-        Create personalized onboarding workflow
+        """        Create personalized onboarding workflow
         
         Args:
             creator_id: Creator identifier
@@ -424,8 +405,7 @@ class OnboardingPipeline:
             
         Returns:
             OnboardingProgress tracking object
-        """
-        try:
+        """        try:
             profile = await self.profile_manager.get_creator_profile(creator_id)
             if not profile:
                 raise HTTPException(
@@ -463,8 +443,7 @@ class OnboardingPipeline:
         stage: RegistrationStage,
         stage_data: Optional[Dict[str, Any]] = None
     ) -> OnboardingProgress:
-        """
-        Update onboarding progress
+        """        Update onboarding progress
         
         Args:
             creator_id: Creator identifier
@@ -473,8 +452,7 @@ class OnboardingPipeline:
             
         Returns:
             Updated OnboardingProgress
-        """
-        try:
+        """        try:
             # Get current progress
             progress = await self._get_onboarding_progress(creator_id)
             if not progress:
@@ -517,8 +495,7 @@ class OnboardingPipeline:
             raise
     
     async def get_onboarding_status(self, creator_id: str) -> Dict[str, Any]:
-        """Get comprehensive onboarding status"""
-        try:
+        """Get comprehensive onboarding status"""        try:
             progress = await self._get_onboarding_progress(creator_id)
             if not progress:
                 return {'status': 'not_found'}
@@ -548,8 +525,7 @@ class OnboardingPipeline:
         profile: CreatorProfile,
         onboarding_type: OnboardingType
     ) -> List[Dict[str, Any]]:
-        """Generate personalized workflow steps"""
-        steps = [
+        """Generate personalized workflow steps"""        steps = [
             {
                 'stage': RegistrationStage.PROFILE_SETUP.value,
                 'title': 'Complete Your Profile',
@@ -600,8 +576,7 @@ class OnboardingPipeline:
         return steps
     
     async def _calculate_progress_percentage(self, progress: OnboardingProgress) -> float:
-        """Calculate onboarding progress percentage"""
-        try:
+        """Calculate onboarding progress percentage"""        try:
             total_weight = sum(self.stage_weights.values())
             completed_weight = sum(
                 self.stage_weights.get(RegistrationStage(stage), 0)
@@ -616,8 +591,7 @@ class OnboardingPipeline:
             return 0.0
     
     async def _get_next_stage(self, progress: OnboardingProgress) -> RegistrationStage:
-        """Determine next onboarding stage"""
-        stage_order = [
+        """Determine next onboarding stage"""        stage_order = [
             RegistrationStage.EMAIL_VERIFIED,
             RegistrationStage.PROFILE_SETUP,
             RegistrationStage.PHONE_VERIFICATION,
@@ -634,13 +608,11 @@ class OnboardingPipeline:
         return RegistrationStage.COMPLETED
     
     async def _get_remaining_stages(self, progress: OnboardingProgress) -> List[RegistrationStage]:
-        """Get remaining onboarding stages"""
-        all_stages = list(RegistrationStage)
+        """Get remaining onboarding stages"""        all_stages = list(RegistrationStage)
         return [stage for stage in all_stages if stage.value not in progress.completed_stages]
     
     async def _get_next_steps(self, progress: OnboardingProgress) -> List[str]:
-        """Get next steps for onboarding"""
-        next_steps = []
+        """Get next steps for onboarding"""        next_steps = []
         
         if progress.current_stage == RegistrationStage.PROFILE_SETUP:
             next_steps = [
@@ -680,8 +652,7 @@ class OnboardingPipeline:
         progress: OnboardingProgress,
         profile: Optional[CreatorProfile]
     ) -> bool:
-        """Check if creator is eligible for monetization"""
-        if not profile:
+        """Check if creator is eligible for monetization"""        if not profile:
             return False
         
         # Check minimum requirements
@@ -697,8 +668,7 @@ class OnboardingPipeline:
         return all(stage in progress.completed_stages for stage in required_stages)
     
     async def _cache_onboarding_progress(self, progress: OnboardingProgress) -> None:
-        """Cache onboarding progress"""
-        try:
+        """Cache onboarding progress"""        try:
             await self.cache.set(
                 f"onboarding_progress:{progress.creator_id}",
                 json.dumps(asdict(progress), default=str),
@@ -708,8 +678,7 @@ class OnboardingPipeline:
             self.logger.warning(f"Failed to cache onboarding progress: {e}")
     
     async def _get_onboarding_progress(self, creator_id: str) -> Optional[OnboardingProgress]:
-        """Get cached onboarding progress"""
-        try:
+        """Get cached onboarding progress"""        try:
             cached_data = await self.cache.get(f"onboarding_progress:{creator_id}")
             if cached_data:
                 data = json.loads(cached_data)
@@ -722,13 +691,11 @@ class OnboardingPipeline:
 
 
 class RegistrationWorkflow:
-    """
-    Complete registration workflow orchestrator
+    """    Complete registration workflow orchestrator
     
     Manages the entire creator registration process from initial signup
     to completed onboarding with all verification steps.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -755,16 +722,14 @@ class RegistrationWorkflow:
         self,
         registration_data: RegistrationRequest
     ) -> Dict[str, Any]:
-        """
-        Initiate creator registration process
+        """        Initiate creator registration process
         
         Args:
             registration_data: Registration form data
             
         Returns:
             Registration initiation result
-        """
-        try:
+        """        try:
             self.logger.info(f"Initiating registration for {registration_data.email}")
             
             # Validate registration data
@@ -853,16 +818,14 @@ class RegistrationWorkflow:
         self,
         verification_token: str
     ) -> Dict[str, Any]:
-        """
-        Verify creator email address
+        """        Verify creator email address
         
         Args:
             verification_token: Email verification token
             
         Returns:
             Verification result
-        """
-        try:
+        """        try:
             # Validate and decode token
             token_data = await self._validate_verification_token(verification_token)
             user_id = token_data['user_id']
@@ -916,8 +879,7 @@ class RegistrationWorkflow:
         creator_id: str,
         phone_request: PhoneVerificationRequest
     ) -> Dict[str, Any]:
-        """
-        Initiate phone number verification
+        """        Initiate phone number verification
         
         Args:
             creator_id: Creator identifier
@@ -925,8 +887,7 @@ class RegistrationWorkflow:
             
         Returns:
             Phone verification initiation result
-        """
-        try:
+        """        try:
             # Get profile
             profile = await self.profile_manager.get_creator_profile(creator_id)
             if not profile:
@@ -982,8 +943,7 @@ class RegistrationWorkflow:
         creator_id: str,
         verification_code: str
     ) -> Dict[str, Any]:
-        """
-        Verify phone number with code
+        """        Verify phone number with code
         
         Args:
             creator_id: Creator identifier
@@ -991,8 +951,7 @@ class RegistrationWorkflow:
             
         Returns:
             Phone verification result
-        """
-        try:
+        """        try:
             # Get verification data
             cached_data = await self.cache.get(f"phone_verification:{creator_id}")
             if not cached_data:
@@ -1057,8 +1016,7 @@ class RegistrationWorkflow:
     # Private helper methods
     
     async def _validate_registration_data(self, data: RegistrationRequest) -> None:
-        """Validate registration data"""
-        # Email validation
+        """Validate registration data"""        # Email validation
         try:
             validate_email(data.email)
         except EmailNotValidError:
@@ -1079,8 +1037,7 @@ class RegistrationWorkflow:
             )
     
     def _determine_onboarding_type(self, data: RegistrationRequest) -> OnboardingType:
-        """Determine appropriate onboarding type"""
-        # Business users get professional onboarding
+        """Determine appropriate onboarding type"""        # Business users get professional onboarding
         if data.business_name or data.creator_type in ['influencer', 'enterprise']:
             return OnboardingType.PROFESSIONAL
         
@@ -1091,8 +1048,7 @@ class RegistrationWorkflow:
         return OnboardingType.STANDARD
     
     async def _generate_email_verification_token(self, user_id: str) -> str:
-        """Generate email verification token"""
-        payload = {
+        """Generate email verification token"""        payload = {
             'user_id': user_id,
             'type': 'email_verification',
             'exp': datetime.utcnow() + timedelta(hours=24)
@@ -1100,8 +1056,7 @@ class RegistrationWorkflow:
         return jwt.encode(payload, self.settings.SECRET_KEY, algorithm='HS256')
     
     async def _validate_verification_token(self, token: str) -> Dict[str, Any]:
-        """Validate and decode verification token"""
-        try:
+        """Validate and decode verification token"""        try:
             payload = jwt.decode(token, self.settings.SECRET_KEY, algorithms=['HS256'])
             return payload
         except jwt.ExpiredSignatureError:
@@ -1116,8 +1071,7 @@ class RegistrationWorkflow:
             )
     
     async def _generate_access_token(self, user_id: str, creator_id: str) -> str:
-        """Generate access token for authenticated sessions"""
-        payload = {
+        """Generate access token for authenticated sessions"""        payload = {
             'user_id': user_id,
             'creator_id': creator_id,
             'type': 'access_token',
@@ -1126,8 +1080,7 @@ class RegistrationWorkflow:
         return jwt.encode(payload, self.settings.SECRET_KEY, algorithm='HS256')
     
     async def _store_password_hash(self, user_id: str, password_hash: bytes) -> None:
-        """Store password hash securely"""
-        # In production, this would be stored in a separate auth service/table
+        """Store password hash securely"""        # In production, this would be stored in a separate auth service/table
         await self.cache.set(
             f"password_hash:{user_id}",
             password_hash.decode('utf-8'),
@@ -1135,8 +1088,7 @@ class RegistrationWorkflow:
         )
     
     async def _process_referral(self, creator_id: str, referral_code: str) -> None:
-        """Process referral code"""
-        try:
+        """Process referral code"""        try:
             # In production, this would track referrals and provide rewards
             self.logger.info(f"Processing referral {referral_code} for creator {creator_id}")
         except Exception as e:
@@ -1144,13 +1096,11 @@ class RegistrationWorkflow:
 
 
 class CreatorRegistrationHandler:
-    """
-    Main creator registration handler
+    """    Main creator registration handler
     
     Orchestrates all registration-related operations and provides
     a unified interface for creator registration and onboarding.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession):
         self.db = db_session
         self.logger = get_logger(self.__class__.__name__)
@@ -1176,20 +1126,17 @@ class CreatorRegistrationHandler:
         self,
         registration_data: RegistrationRequest
     ) -> Dict[str, Any]:
-        """Main creator registration entry point"""
-        return await self.registration_workflow.initiate_registration(registration_data)
+        """Main creator registration entry point"""        return await self.registration_workflow.initiate_registration(registration_data)
     
     async def verify_email(self, verification_token: str) -> Dict[str, Any]:
-        """Verify creator email"""
-        return await self.registration_workflow.verify_email(verification_token)
+        """Verify creator email"""        return await self.registration_workflow.verify_email(verification_token)
     
     async def initiate_phone_verification(
         self,
         creator_id: str,
         phone_request: PhoneVerificationRequest
     ) -> Dict[str, Any]:
-        """Initiate phone verification"""
-        return await self.registration_workflow.initiate_phone_verification(
+        """Initiate phone verification"""        return await self.registration_workflow.initiate_phone_verification(
             creator_id, phone_request
         )
     
@@ -1198,8 +1145,7 @@ class CreatorRegistrationHandler:
         creator_id: str,
         verification_code: str
     ) -> Dict[str, Any]:
-        """Verify phone number"""
-        return await self.registration_workflow.verify_phone(creator_id, verification_code)
+        """Verify phone number"""        return await self.registration_workflow.verify_phone(creator_id, verification_code)
     
     async def initiate_kyc(
         self,
@@ -1207,14 +1153,12 @@ class CreatorRegistrationHandler:
         verification_level: VerificationLevel,
         documents: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Initiate KYC verification"""
-        return await self.kyc_processor.initiate_kyc_verification(
+        """Initiate KYC verification"""        return await self.kyc_processor.initiate_kyc_verification(
             creator_id, verification_level, documents
         )
     
     async def get_onboarding_status(self, creator_id: str) -> Dict[str, Any]:
-        """Get onboarding status"""
-        return await self.onboarding_pipeline.get_onboarding_status(creator_id)
+        """Get onboarding status"""        return await self.onboarding_pipeline.get_onboarding_status(creator_id)
     
     async def update_onboarding_progress(
         self,
@@ -1222,8 +1166,7 @@ class CreatorRegistrationHandler:
         stage: RegistrationStage,
         stage_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Update onboarding progress"""
-        progress = await self.onboarding_pipeline.update_onboarding_progress(
+        """Update onboarding progress"""        progress = await self.onboarding_pipeline.update_onboarding_progress(
             creator_id, stage, stage_data
         )
         return {

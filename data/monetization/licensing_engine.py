@@ -1,5 +1,4 @@
-"""
-Automated Content Licensing Engine
+"""Automated Content Licensing Engine
 ==================================
 
 Professional licensing system for content creators and rights management.
@@ -12,7 +11,6 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: Unauthorized use, copying, or distribution of this code is strictly 
 prohibited and subject to legal action under German and international copyright law.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -32,8 +30,7 @@ from .revenue_calculator import Currency
 
 
 class LicenseType(Enum):
-    """Types of content licenses"""
-    EXCLUSIVE = "exclusive"
+    """Types of content licenses"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     ROYALTY_FREE = "royalty_free"
     CREATIVE_COMMONS = "creative_commons"
@@ -44,8 +41,7 @@ class LicenseType(Enum):
 
 
 class LicenseStatus(Enum):
-    """License status"""
-    ACTIVE = "active"
+    """License status"""    ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
     REVOKED = "revoked"
@@ -54,8 +50,7 @@ class LicenseStatus(Enum):
 
 
 class ContentType(Enum):
-    """Types of licensable content"""
-    MUSIC = "music"
+    """Types of licensable content"""    MUSIC = "music"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -66,8 +61,7 @@ class ContentType(Enum):
 
 
 class UsageType(Enum):
-    """Content usage types"""
-    STREAMING = "streaming"
+    """Content usage types"""    STREAMING = "streaming"
     DOWNLOAD = "download"
     BROADCAST = "broadcast"
     SYNC_VIDEO = "sync_video"
@@ -79,8 +73,7 @@ class UsageType(Enum):
 
 @dataclass
 class LicenseTerms:
-    """License terms and conditions"""
-    license_type: LicenseType
+    """License terms and conditions"""    license_type: LicenseType
     usage_types: List[UsageType]
     territory: List[str]  # Country codes
     duration_months: Optional[int]  # None for perpetual
@@ -98,8 +91,7 @@ class LicenseTerms:
 
 @dataclass
 class LicenseAgreement:
-    """Complete license agreement"""
-    license_id: str
+    """Complete license agreement"""    license_id: str
     content_id: str
     licensor_id: str  # Content owner
     licensee_id: str  # License buyer
@@ -114,8 +106,7 @@ class LicenseAgreement:
 
 @dataclass
 class RoyaltyPayment:
-    """Royalty payment record"""
-    payment_id: str
+    """Royalty payment record"""    payment_id: str
     license_id: str
     period_start: datetime
     period_end: datetime
@@ -128,8 +119,7 @@ class RoyaltyPayment:
 
 @dataclass
 class LicenseReport:
-    """License performance report"""
-    content_id: str
+    """License performance report"""    content_id: str
     total_licenses: int
     active_licenses: int
     total_revenue: Decimal
@@ -140,23 +130,19 @@ class LicenseReport:
 
 
 class LicensingEngine:
-    """
-    Professional content licensing engine for IA Influencer Agent platform.
+    """    Professional content licensing engine for IA Influencer Agent platform.
     
     Provides automated licensing, royalty management, compliance tracking,
     and comprehensive rights management for content creators across
     multiple formats and platforms.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """
-        Initialize LicensingEngine.
+        """        Initialize LicensingEngine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -233,8 +219,7 @@ class LicensingEngine:
     async def create_license_offer(self, content_id: str, licensor_id: str,
                                  content_type: ContentType,
                                  custom_terms: Optional[LicenseTerms] = None) -> str:
-        """
-        Create a license offer for content.
+        """        Create a license offer for content.
         
         Args:
             content_id: Content identifier
@@ -244,8 +229,7 @@ class LicensingEngine:
             
         Returns:
             License offer identifier
-        """
-        try:
+        """        try:
             # Use custom terms or defaults
             terms = custom_terms or self.default_terms.get(content_type)
             if not terms:
@@ -290,8 +274,7 @@ class LicensingEngine:
     
     async def accept_license(self, license_id: str, licensee_id: str,
                            custom_terms: Optional[Dict[str, Any]] = None) -> bool:
-        """
-        Accept a license offer.
+        """        Accept a license offer.
         
         Args:
             license_id: License identifier
@@ -300,8 +283,7 @@ class LicensingEngine:
             
         Returns:
             Acceptance success status
-        """
-        try:
+        """        try:
             # Get license offer
             license_offer = await self._get_license_agreement(license_id)
             if not license_offer:
@@ -350,8 +332,7 @@ class LicensingEngine:
             return False
     
     async def calculate_royalties(self, license_id: str, usage_data: Dict[str, Any]) -> RoyaltyPayment:
-        """
-        Calculate royalty payment for license usage.
+        """        Calculate royalty payment for license usage.
         
         Args:
             license_id: License identifier
@@ -359,8 +340,7 @@ class LicensingEngine:
             
         Returns:
             Calculated royalty payment
-        """
-        try:
+        """        try:
             # Get license agreement
             license_agreement = await self._get_license_agreement(license_id)
             if not license_agreement:
@@ -412,8 +392,7 @@ class LicensingEngine:
     
     async def search_licenses(self, search_criteria: Dict[str, Any],
                             limit: int = 50) -> List[LicenseAgreement]:
-        """
-        Search available licenses.
+        """        Search available licenses.
         
         Args:
             search_criteria: Search filters
@@ -421,8 +400,7 @@ class LicensingEngine:
             
         Returns:
             List of matching licenses
-        """
-        try:
+        """        try:
             # Build search query
             filters = []
             
@@ -458,8 +436,7 @@ class LicensingEngine:
             return []
     
     async def get_license_report(self, content_id: str, period_days: int = 30) -> LicenseReport:
-        """
-        Generate license performance report for content.
+        """        Generate license performance report for content.
         
         Args:
             content_id: Content identifier
@@ -467,8 +444,7 @@ class LicensingEngine:
             
         Returns:
             License performance report
-        """
-        try:
+        """        try:
             # Calculate date range
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -535,13 +511,11 @@ class LicensingEngine:
             )
     
     async def process_license_renewals(self) -> List[Dict[str, Any]]:
-        """
-        Process automatic license renewals.
+        """        Process automatic license renewals.
         
         Returns:
             List of renewal processing results
-        """
-        try:
+        """        try:
             results = []
             
             # Get licenses expiring soon
@@ -588,8 +562,7 @@ class LicensingEngine:
             return []
     
     async def revoke_license(self, license_id: str, reason: str) -> bool:
-        """
-        Revoke a license agreement.
+        """        Revoke a license agreement.
         
         Args:
             license_id: License identifier
@@ -597,8 +570,7 @@ class LicensingEngine:
             
         Returns:
             Revocation success status
-        """
-        try:
+        """        try:
             # Get license agreement
             license_agreement = await self._get_license_agreement(license_id)
             if not license_agreement:
@@ -631,8 +603,7 @@ class LicensingEngine:
     # Private helper methods
     
     async def _calculate_license_fee(self, content_id: str, terms: LicenseTerms) -> Decimal:
-        """Calculate license fee based on terms"""
-        base_fee = terms.minimum_fee
+        """Calculate license fee based on terms"""        base_fee = terms.minimum_fee
         
         # Apply territory multiplier
         territory_multiplier = Decimal('1.0')
@@ -656,8 +627,7 @@ class LicensingEngine:
         return final_fee.quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
     
     async def _store_license_agreement(self, agreement: LicenseAgreement):
-        """Store license agreement in database"""
-        # Implementation would store in database
+        """Store license agreement in database"""        # Implementation would store in database
         license_record = LicenseModel(
             id=agreement.license_id,
             content_id=agreement.content_id,
@@ -677,14 +647,12 @@ class LicensingEngine:
         await self.db_session.commit()
     
     async def _get_license_agreement(self, license_id: str) -> Optional[LicenseAgreement]:
-        """Get license agreement from database"""
-        # Implementation would query database
+        """Get license agreement from database"""        # Implementation would query database
         # Placeholder implementation
         return None
     
     async def _index_license_offer(self, offer: LicenseAgreement):
-        """Index license offer for search"""
-        # Implementation would index in search engine
+        """Index license offer for search"""        # Implementation would index in search engine
         search_doc = {
             'license_id': offer.license_id,
             'content_id': offer.content_id,
@@ -700,22 +668,19 @@ class LicensingEngine:
         await self._save_to_cache(cache_key, search_doc)
     
     async def _search_license_index(self, filters: List[str], limit: int) -> List[Dict]:
-        """Search license index"""
-        # Implementation would search in Elasticsearch or similar
+        """Search license index"""        # Implementation would search in Elasticsearch or similar
         # Placeholder implementation
         return []
     
     async def _get_from_cache(self, key: str) -> Optional[Dict]:
-        """Get data from cache"""
-        try:
+        """Get data from cache"""        try:
             cached_data = await self.redis.get(key)
             return json.loads(cached_data) if cached_data else None
         except:
             return None
     
     async def _save_to_cache(self, key: str, data: Dict, ttl: int = None):
-        """Save data to cache"""
-        try:
+        """Save data to cache"""        try:
             ttl = ttl or self.cache_ttl
             await self.redis.setex(key, ttl, json.dumps(data, default=str))
         except Exception as e:
@@ -725,26 +690,21 @@ class LicensingEngine:
     
     async def _apply_custom_terms(self, license_offer: LicenseAgreement, 
                                 custom_terms: Dict[str, Any]) -> LicenseAgreement:
-        """Apply custom terms to license offer"""
-        # Implementation would modify terms based on custom_terms
+        """Apply custom terms to license offer"""        # Implementation would modify terms based on custom_terms
         return license_offer
     
     async def _process_license_payment(self, license_agreement: LicenseAgreement) -> bool:
-        """Process license payment"""
-        # Implementation would process payment through payment processor
+        """Process license payment"""        # Implementation would process payment through payment processor
         return True
     
     async def _setup_royalty_tracking(self, license_agreement: LicenseAgreement):
-        """Setup royalty tracking for license"""
-        # Implementation would setup tracking
+        """Setup royalty tracking for license"""        # Implementation would setup tracking
         pass
     
     async def _send_license_notifications(self, license_agreement: LicenseAgreement, event: str):
-        """Send license notifications"""
-        # Implementation would send notifications
+        """Send license notifications"""        # Implementation would send notifications
         pass
     
     async def _create_initial_royalty_record(self, license_agreement: LicenseAgreement):
-        """Create initial royalty record"""
-        # Implementation would create royalty tracking record
+        """Create initial royalty record"""        # Implementation would create royalty tracking record
         pass

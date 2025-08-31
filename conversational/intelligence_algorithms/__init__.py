@@ -44,8 +44,7 @@ is STRICTLY PROHIBITED and will result in immediate legal prosecution
 under German and International copyright laws.
 
 Contact: mlaiel@live.de for legal authorization inquiries only.
-"""
-# Core system modules
+"""# Core system modules
 from . import config
 from . import index
 

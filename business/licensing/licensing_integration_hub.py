@@ -1,5 +1,4 @@
-"""
-Licensing Integration Hub - Unified integration with external licensing systems
+"""Licensing Integration Hub - Unified integration with external licensing systems
 
 Manages integrations with major licensing platforms, collection societies,
 digital service providers, and third-party licensing systems.
@@ -12,7 +11,6 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, or distribution without explicit written 
 authorization from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 from datetime import datetime, timedelta
 from enum import Enum
@@ -33,8 +31,7 @@ from ..ai.integration_intelligence import IntegrationIntelligenceEngine
 
 
 class IntegrationType(Enum):
-    """Types of licensing integrations"""
-    COLLECTION_SOCIETY = "collection_society"
+    """Types of licensing integrations"""    COLLECTION_SOCIETY = "collection_society"
     DIGITAL_SERVICE_PROVIDER = "digital_service_provider"
     MECHANICAL_LICENSING = "mechanical_licensing"
     SYNC_LICENSING_PLATFORM = "sync_licensing_platform"
@@ -45,8 +42,7 @@ class IntegrationType(Enum):
 
 
 class IntegrationStatus(Enum):
-    """Integration connection status"""
-    ACTIVE = "active"
+    """Integration connection status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     PENDING_SETUP = "pending_setup"
     ERROR = "error"
@@ -55,8 +51,7 @@ class IntegrationStatus(Enum):
 
 
 class SynchronizationMode(Enum):
-    """Data synchronization modes"""
-    REAL_TIME = "real_time"
+    """Data synchronization modes"""    REAL_TIME = "real_time"
     BATCH_HOURLY = "batch_hourly"
     BATCH_DAILY = "batch_daily"
     BATCH_WEEKLY = "batch_weekly"
@@ -65,8 +60,7 @@ class SynchronizationMode(Enum):
 
 @dataclass
 class IntegrationCredentials:
-    """Integration authentication credentials"""
-    integration_id: str
+    """Integration authentication credentials"""    integration_id: str
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
     oauth_token: Optional[str] = None
@@ -79,8 +73,7 @@ class IntegrationCredentials:
 
 @dataclass
 class DataMappingRule:
-    """Data field mapping rules"""
-    source_field: str
+    """Data field mapping rules"""    source_field: str
     target_field: str
     transformation_rule: Optional[str] = None
     validation_rule: Optional[str] = None
@@ -89,8 +82,7 @@ class DataMappingRule:
 
 @dataclass
 class IntegrationMetrics:
-    """Integration performance metrics"""
-    total_api_calls: int
+    """Integration performance metrics"""    total_api_calls: int
     successful_calls: int
     failed_calls: int
     average_response_time_ms: float
@@ -100,8 +92,7 @@ class IntegrationMetrics:
 
 
 class IntegrationRequest(BaseModel):
-    """Integration setup request"""
-    integration_name: str = Field(..., description="Name of the integration")
+    """Integration setup request"""    integration_name: str = Field(..., description="Name of the integration")
     integration_type: IntegrationType = Field(..., description="Type of integration")
     credentials: IntegrationCredentials = Field(..., description="Authentication credentials")
     sync_mode: SynchronizationMode = Field(default=SynchronizationMode.BATCH_DAILY)
@@ -112,12 +103,10 @@ class IntegrationRequest(BaseModel):
 
 
 class LicensingIntegrationHub:
-    """
-    Comprehensive integration hub for external licensing systems with
+    """    Comprehensive integration hub for external licensing systems with
     AI-driven data mapping, real-time synchronization, and intelligent
     error handling and recovery.
-    """
-    
+    """    
     def __init__(self, db: Session = None):
         self.db = db or next(get_db())
         self.logger = get_logger(__name__)
@@ -133,16 +122,14 @@ class LicensingIntegrationHub:
         self,
         integration_request: IntegrationRequest
     ) -> Dict[str, Any]:
-        """
-        Setup new external licensing system integration with intelligent configuration
+        """        Setup new external licensing system integration with intelligent configuration
         
         Args:
             integration_request: Integration configuration parameters
             
         Returns:
             Integration setup results
-        """
-        try:
+        """        try:
             self.logger.info(f"Setting up integration: {integration_request.integration_name}")
             
             # Validate integration request and credentials
@@ -231,8 +218,7 @@ class LicensingIntegrationHub:
         sync_type: str = "incremental",
         force_full_sync: bool = False
     ) -> Dict[str, Any]:
-        """
-        Synchronize licensing data across all or specific integrations
+        """        Synchronize licensing data across all or specific integrations
         
         Args:
             integration_id: Specific integration to sync (None for all)
@@ -241,8 +227,7 @@ class LicensingIntegrationHub:
             
         Returns:
             Comprehensive synchronization results
-        """
-        try:
+        """        try:
             sync_start_time = datetime.utcnow()
             self.logger.info(f"Starting licensing data synchronization (type: {sync_type})")
             
@@ -366,16 +351,14 @@ class LicensingIntegrationHub:
         self,
         health_check_scope: str = "all"
     ) -> Dict[str, Any]:
-        """
-        Monitor and manage integration health across all connected systems
+        """        Monitor and manage integration health across all connected systems
         
         Args:
             health_check_scope: Scope of health monitoring
             
         Returns:
             Comprehensive integration health management results
-        """
-        try:
+        """        try:
             self.logger.info(f"Managing integration health (scope: {health_check_scope})")
             
             # Get all active integrations
@@ -471,8 +454,7 @@ class LicensingIntegrationHub:
         analytics_period: timedelta = timedelta(days=30),
         analytics_depth: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive analytics for licensing integrations
+        """        Generate comprehensive analytics for licensing integrations
         
         Args:
             analytics_period: Period for analytics analysis
@@ -480,8 +462,7 @@ class LicensingIntegrationHub:
             
         Returns:
             Detailed integration analytics and insights
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating integration analytics (depth: {analytics_depth})")
             
             # Collect integration performance data
@@ -552,8 +533,7 @@ class LicensingIntegrationHub:
             raise LicensingIntegrationError(f"Integration analytics generation failed: {str(e)}")
     
     def _initialize_integration_registry(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize supported integrations registry"""
-        return {
+        """Initialize supported integrations registry"""        return {
             "spotify_for_artists": {
                 "name": "Spotify for Artists",
                 "type": IntegrationType.DIGITAL_SERVICE_PROVIDER,
@@ -620,16 +600,14 @@ class LicensingIntegrationHub:
         self, 
         request: IntegrationRequest
     ) -> Dict[str, Any]:
-        """Validate integration setup request"""
-        # Implementation for request validation
+        """Validate integration setup request"""        # Implementation for request validation
         pass
     
     async def _test_integration_connection(
         self, 
         request: IntegrationRequest
     ) -> Dict[str, Any]:
-        """Test connection to external integration"""
-        # Implementation for connection testing
+        """Test connection to external integration"""        # Implementation for connection testing
         pass
     
     async def _analyze_integration_schema(
@@ -637,6 +615,5 @@ class LicensingIntegrationHub:
         integration_type: IntegrationType,
         api_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze external system data schema"""
-        # Implementation for schema analysis
+        """Analyze external system data schema"""        # Implementation for schema analysis
         pass

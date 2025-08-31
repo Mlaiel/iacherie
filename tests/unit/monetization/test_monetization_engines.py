@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit tests for monetization engines.
+"""Unit tests for monetization engines.
 
 Comprehensive tests for payment processing, revenue calculation,
 licensing management, and royalty distribution.
@@ -23,7 +20,6 @@ licensing management, and royalty distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -47,12 +43,10 @@ except ImportError as e:
 
 
 class TestPaymentProcessor:
-    """Test suite for payment processing functionality."""
-    
+    """Test suite for payment processing functionality."""    
     @pytest.fixture
     def payment_processor(self):
-        """Create payment processor instance."""
-        config = {
+        """Create payment processor instance."""        config = {
             'stripe_api_key': 'sk_test_fake_key',
             'paypal_client_id': 'fake_paypal_id',
             'default_currency': 'USD',
@@ -62,8 +56,7 @@ class TestPaymentProcessor:
     
     @pytest.fixture
     def sample_payment_data(self):
-        """Sample payment data for testing."""
-        return {
+        """Sample payment data for testing."""        return {
             'amount': Decimal('99.99'),
             'currency': 'USD',
             'customer_id': 'cust_123456',
@@ -73,8 +66,7 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_create_payment_intent(self, payment_processor, sample_payment_data):
-        """Test creating a payment intent."""
-        with patch('stripe.PaymentIntent.create') as mock_create:
+        """Test creating a payment intent."""        with patch('stripe.PaymentIntent.create') as mock_create:
             mock_create.return_value = Mock(
                 id='pi_test_123',
                 status='requires_payment_method',
@@ -94,8 +86,7 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_process_card_payment(self, payment_processor):
-        """Test processing a card payment."""
-        payment_data = {
+        """Test processing a card payment."""        payment_data = {
             'payment_method_id': 'pm_test_card',
             'amount': Decimal('49.99'),
             'currency': 'USD'
@@ -120,8 +111,7 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_refund_payment(self, payment_processor):
-        """Test processing a refund."""
-        refund_data = {
+        """Test processing a refund."""        refund_data = {
             'transaction_id': 'txn_abc123',
             'amount': Decimal('49.99'),
             'reason': 'customer_request'
@@ -142,8 +132,7 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_payment_failure_handling(self, payment_processor):
-        """Test handling of payment failures."""
-        with patch.object(payment_processor, '_charge_card') as mock_charge:
+        """Test handling of payment failures."""        with patch.object(payment_processor, '_charge_card') as mock_charge:
             mock_charge.side_effect = Exception("Card declined")
             
             result = await payment_processor.process_payment(
@@ -157,8 +146,7 @@ class TestPaymentProcessor:
             assert 'error_message' in result
     
     def test_fee_calculation(self, payment_processor):
-        """Test payment fee calculation."""
-        # Stripe standard rate: 2.9% + 30¢
+        """Test payment fee calculation."""        # Stripe standard rate: 2.9% + 30¢
         amount = Decimal('100.00')
         fees = payment_processor.calculate_fees(amount, PaymentMethod.CARD)
         
@@ -167,8 +155,7 @@ class TestPaymentProcessor:
     
     @pytest.mark.asyncio
     async def test_webhook_validation(self, payment_processor):
-        """Test webhook signature validation."""
-        payload = b'{"event": "payment_intent.succeeded"}'
+        """Test webhook signature validation."""        payload = b'{"event": "payment_intent.succeeded"}'
         signature = 'test_signature_header'
         
         with patch.object(payment_processor, '_validate_webhook_signature') as mock_validate:
@@ -181,12 +168,10 @@ class TestPaymentProcessor:
 
 
 class TestRevenueCalculator:
-    """Test suite for revenue calculation functionality."""
-    
+    """Test suite for revenue calculation functionality."""    
     @pytest.fixture
     def revenue_calculator(self):
-        """Create revenue calculator instance."""
-        config = {
+        """Create revenue calculator instance."""        config = {
             'platform_fee_rate': Decimal('0.15'),  # 15% platform fee
             'payment_processor_rate': Decimal('0.029'),  # 2.9% payment processing
             'currency': 'USD'
@@ -195,8 +180,7 @@ class TestRevenueCalculator:
     
     @pytest.fixture
     def sample_revenue_streams(self):
-        """Sample revenue streams for testing."""
-        return [
+        """Sample revenue streams for testing."""        return [
             RevenueStream(
                 stream_type='subscription',
                 gross_amount=Decimal('99.99'),
@@ -222,8 +206,7 @@ class TestRevenueCalculator:
     
     @pytest.mark.asyncio
     async def test_calculate_net_revenue(self, revenue_calculator, sample_revenue_streams):
-        """Test net revenue calculation after fees."""
-        total_gross = sum(stream.gross_amount for stream in sample_revenue_streams)
+        """Test net revenue calculation after fees."""        total_gross = sum(stream.gross_amount for stream in sample_revenue_streams)
         
         result = await revenue_calculator.calculate_net_revenue(sample_revenue_streams)
         
@@ -239,8 +222,7 @@ class TestRevenueCalculator:
     
     @pytest.mark.asyncio
     async def test_revenue_forecasting(self, revenue_calculator, sample_revenue_streams):
-        """Test revenue forecasting based on historical data."""
-        historical_data = [
+        """Test revenue forecasting based on historical data."""        historical_data = [
             {'date': datetime.now() - timedelta(days=30), 'revenue': Decimal('1000.00')},
             {'date': datetime.now() - timedelta(days=60), 'revenue': Decimal('850.00')},
             {'date': datetime.now() - timedelta(days=90), 'revenue': Decimal('920.00')}
@@ -260,8 +242,7 @@ class TestRevenueCalculator:
     
     @pytest.mark.asyncio
     async def test_revenue_optimization_suggestions(self, revenue_calculator):
-        """Test revenue optimization suggestions."""
-        current_metrics = {
+        """Test revenue optimization suggestions."""        current_metrics = {
             'conversion_rate': 0.03,
             'average_order_value': Decimal('45.50'),
             'churn_rate': 0.08,
@@ -275,8 +256,7 @@ class TestRevenueCalculator:
         assert all('action' in suggestion for suggestion in suggestions)
     
     def test_currency_conversion(self, revenue_calculator):
-        """Test currency conversion functionality."""
-        amount_usd = Decimal('100.00')
+        """Test currency conversion functionality."""        amount_usd = Decimal('100.00')
         
         with patch.object(revenue_calculator, '_get_exchange_rate') as mock_rate:
             mock_rate.return_value = Decimal('0.85')  # USD to EUR
@@ -287,8 +267,7 @@ class TestRevenueCalculator:
     
     @pytest.mark.asyncio
     async def test_performance_metrics_calculation(self, revenue_calculator):
-        """Test calculation of key performance metrics."""
-        revenue_data = {
+        """Test calculation of key performance metrics."""        revenue_data = {
             'total_revenue': Decimal('10000.00'),
             'total_customers': 500,
             'new_customers': 75,
@@ -305,12 +284,10 @@ class TestRevenueCalculator:
 
 
 class TestLicensingManager:
-    """Test suite for licensing management functionality."""
-    
+    """Test suite for licensing management functionality."""    
     @pytest.fixture
     def licensing_manager(self):
-        """Create licensing manager instance."""
-        config = {
+        """Create licensing manager instance."""        config = {
             'default_license_duration': 365,  # days
             'auto_renewal': True,
             'grace_period': 30  # days
@@ -319,8 +296,7 @@ class TestLicensingManager:
     
     @pytest.fixture
     def sample_license_data(self):
-        """Sample license data for testing."""
-        return {
+        """Sample license data for testing."""        return {
             'content_id': 'content_abc123',
             'licensee_id': 'user_xyz789',
             'license_type': LicenseType.COMMERCIAL,
@@ -334,8 +310,7 @@ class TestLicensingManager:
     
     @pytest.mark.asyncio
     async def test_create_license(self, licensing_manager, sample_license_data):
-        """Test creating a new license."""
-        with patch.object(licensing_manager, '_generate_license_contract') as mock_contract:
+        """Test creating a new license."""        with patch.object(licensing_manager, '_generate_license_contract') as mock_contract:
             mock_contract.return_value = "LICENSE_CONTRACT_123"
             
             license_id = await licensing_manager.create_license(**sample_license_data)
@@ -346,8 +321,7 @@ class TestLicensingManager:
     
     @pytest.mark.asyncio
     async def test_license_validation(self, licensing_manager):
-        """Test license validation and status checking."""
-        license_id = 'lic_test_123'
+        """Test license validation and status checking."""        license_id = 'lic_test_123'
         
         with patch.object(licensing_manager, '_get_license_data') as mock_data:
             mock_data.return_value = {
@@ -364,8 +338,7 @@ class TestLicensingManager:
     
     @pytest.mark.asyncio
     async def test_license_expiry_handling(self, licensing_manager):
-        """Test handling of expired licenses."""
-        license_id = 'lic_expired_123'
+        """Test handling of expired licenses."""        license_id = 'lic_expired_123'
         
         with patch.object(licensing_manager, '_get_license_data') as mock_data:
             mock_data.return_value = {
@@ -380,8 +353,7 @@ class TestLicensingManager:
     
     @pytest.mark.asyncio
     async def test_license_renewal(self, licensing_manager):
-        """Test license renewal process."""
-        license_id = 'lic_renew_123'
+        """Test license renewal process."""        license_id = 'lic_renew_123'
         renewal_data = {
             'extend_days': 365,
             'new_fee': Decimal('600.00')
@@ -401,8 +373,7 @@ class TestLicensingManager:
     
     @pytest.mark.asyncio
     async def test_bulk_license_operations(self, licensing_manager):
-        """Test bulk license operations."""
-        license_ids = ['lic_1', 'lic_2', 'lic_3', 'lic_4', 'lic_5']
+        """Test bulk license operations."""        license_ids = ['lic_1', 'lic_2', 'lic_3', 'lic_4', 'lic_5']
         
         with patch.object(licensing_manager, '_process_bulk_operation') as mock_bulk:
             mock_bulk.return_value = {
@@ -422,12 +393,10 @@ class TestLicensingManager:
 
 
 class TestRoyaltyEngine:
-    """Test suite for royalty distribution functionality."""
-    
+    """Test suite for royalty distribution functionality."""    
     @pytest.fixture
     def royalty_engine(self):
-        """Create royalty engine instance."""
-        config = {
+        """Create royalty engine instance."""        config = {
             'minimum_payout': Decimal('10.00'),
             'processing_fee_rate': Decimal('0.02'),  # 2%
             'payout_frequency': 'monthly'
@@ -436,8 +405,7 @@ class TestRoyaltyEngine:
     
     @pytest.fixture
     def sample_royalty_data(self):
-        """Sample royalty data for testing."""
-        return {
+        """Sample royalty data for testing."""        return {
             'content_id': 'track_123',
             'total_revenue': Decimal('1000.00'),
             'stakeholders': [
@@ -449,8 +417,7 @@ class TestRoyaltyEngine:
     
     @pytest.mark.asyncio
     async def test_calculate_royalty_distribution(self, royalty_engine, sample_royalty_data):
-        """Test calculating royalty distribution among stakeholders."""
-        distribution = await royalty_engine.calculate_distribution(**sample_royalty_data)
+        """Test calculating royalty distribution among stakeholders."""        distribution = await royalty_engine.calculate_distribution(**sample_royalty_data)
         
         assert len(distribution.distributions) == 3
         
@@ -465,8 +432,7 @@ class TestRoyaltyEngine:
     
     @pytest.mark.asyncio
     async def test_minimum_payout_threshold(self, royalty_engine):
-        """Test minimum payout threshold enforcement."""
-        small_royalty_data = {
+        """Test minimum payout threshold enforcement."""        small_royalty_data = {
             'content_id': 'track_small',
             'total_revenue': Decimal('5.00'),  # Below minimum payout
             'stakeholders': [
@@ -482,8 +448,7 @@ class TestRoyaltyEngine:
     
     @pytest.mark.asyncio
     async def test_process_batch_payouts(self, royalty_engine):
-        """Test processing batch payouts."""
-        payout_batch = [
+        """Test processing batch payouts."""        payout_batch = [
             {'user_id': 'user_1', 'amount': Decimal('50.00')},
             {'user_id': 'user_2', 'amount': Decimal('75.25')},
             {'user_id': 'user_3', 'amount': Decimal('120.50')}
@@ -504,8 +469,7 @@ class TestRoyaltyEngine:
     
     @pytest.mark.asyncio
     async def test_royalty_tracking_and_analytics(self, royalty_engine):
-        """Test royalty tracking and analytics generation."""
-        tracking_data = {
+        """Test royalty tracking and analytics generation."""        tracking_data = {
             'content_id': 'track_analytics',
             'period_start': datetime.now() - timedelta(days=30),
             'period_end': datetime.now()
@@ -527,12 +491,10 @@ class TestRoyaltyEngine:
 
 
 class TestUsageTracker:
-    """Test suite for usage tracking functionality."""
-    
+    """Test suite for usage tracking functionality."""    
     @pytest.fixture
     def usage_tracker(self):
-        """Create usage tracker instance."""
-        config = {
+        """Create usage tracker instance."""        config = {
             'tracking_enabled': True,
             'batch_size': 1000,
             'flush_interval': 60  # seconds
@@ -541,8 +503,7 @@ class TestUsageTracker:
     
     @pytest.mark.asyncio
     async def test_track_content_usage(self, usage_tracker):
-        """Test tracking content usage events."""
-        usage_event = UsageEvent(
+        """Test tracking content usage events."""        usage_event = UsageEvent(
             content_id='content_123',
             user_id='user_456',
             event_type='view',
@@ -557,8 +518,7 @@ class TestUsageTracker:
     
     @pytest.mark.asyncio
     async def test_usage_analytics(self, usage_tracker):
-        """Test usage analytics generation."""
-        content_id = 'content_analytics'
+        """Test usage analytics generation."""        content_id = 'content_analytics'
         
         with patch.object(usage_tracker, '_get_usage_data') as mock_data:
             mock_data.return_value = [
@@ -574,8 +534,7 @@ class TestUsageTracker:
     
     @pytest.mark.asyncio
     async def test_usage_limits_enforcement(self, usage_tracker):
-        """Test usage limits enforcement."""
-        license_limits = {
+        """Test usage limits enforcement."""        license_limits = {
             'max_views': 10000,
             'max_downloads': 100,
             'expiry_date': datetime.now() + timedelta(days=30)
@@ -599,25 +558,21 @@ class TestUsageTracker:
 
 # Integration tests
 class TestMonetizationIntegration:
-    """Integration tests for monetization system."""
-    
+    """Integration tests for monetization system."""    
     @pytest.mark.asyncio
     async def test_end_to_end_payment_to_royalty_flow(self):
-        """Test complete flow from payment to royalty distribution."""
-        # This would test the integration between payment processing,
+        """Test complete flow from payment to royalty distribution."""        # This would test the integration between payment processing,
         # revenue calculation, and royalty distribution
         pass
     
     @pytest.mark.asyncio
     async def test_licensing_with_payment_integration(self):
-        """Test licensing workflow with payment processing."""
-        # Test creating license, processing payment, and activating license
+        """Test licensing workflow with payment processing."""        # Test creating license, processing payment, and activating license
         pass
     
     @pytest.mark.asyncio
     async def test_usage_tracking_with_billing(self):
-        """Test usage tracking integration with billing."""
-        # Test usage tracking triggering billing events
+        """Test usage tracking integration with billing."""        # Test usage tracking triggering billing events
         pass
 
 

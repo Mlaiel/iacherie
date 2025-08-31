@@ -1,5 +1,4 @@
-"""
-Session Revenue Tracker - IA Influencer Agent
+"""Session Revenue Tracker - IA Influencer Agent
 
 Enterprise-grade session-based revenue tracking and monetization analytics
 for multi-format content creators with advanced financial analysis,
@@ -25,7 +24,6 @@ Team Specialists:
 - DevOps: Financial Data Scalability & Performance
 - IA Prompt Engineer: Revenue Intelligence & Insights
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -64,8 +62,7 @@ logger = get_logger(__name__)
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams"""
-    SUBSCRIPTION = "subscription"
+    """Types of revenue streams"""    SUBSCRIPTION = "subscription"
     PAY_PER_USE = "pay_per_use"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
@@ -78,8 +75,7 @@ class RevenueStreamType(Enum):
 
 
 class TransactionType(Enum):
-    """Transaction types"""
-    INCOME = "income"
+    """Transaction types"""    INCOME = "income"
     EXPENSE = "expense"
     REFUND = "refund"
     CHARGEBACK = "chargeback"
@@ -89,8 +85,7 @@ class TransactionType(Enum):
 
 
 class TransactionStatus(Enum):
-    """Transaction status"""
-    PENDING = "pending"
+    """Transaction status"""    PENDING = "pending"
     COMPLETED = "completed"
     FAILED = "failed"
     CANCELLED = "cancelled"
@@ -99,8 +94,7 @@ class TransactionStatus(Enum):
 
 
 class MonetizationStrategy(Enum):
-    """Monetization strategies"""
-    FREEMIUM = "freemium"
+    """Monetization strategies"""    FREEMIUM = "freemium"
     PREMIUM = "premium"
     AD_SUPPORTED = "ad_supported"
     SUBSCRIPTION_BASED = "subscription_based"
@@ -110,8 +104,7 @@ class MonetizationStrategy(Enum):
 
 
 class SessionRevenueData(BaseModel):
-    """Session revenue tracking data"""
-    session_id: str
+    """Session revenue tracking data"""    session_id: str
     user_id: str
     revenue_streams: Dict[str, Decimal] = Field(default_factory=dict)
     session_revenue: Decimal = Field(default=Decimal('0.00'))
@@ -135,8 +128,7 @@ class SessionRevenueData(BaseModel):
 
 
 class RevenueTransaction(BaseModel):
-    """Revenue transaction model"""
-    transaction_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Revenue transaction model"""    transaction_id: str = Field(default_factory=lambda: str(uuid4()))
     session_id: str
     user_id: str
     transaction_type: TransactionType
@@ -164,8 +156,7 @@ class RevenueTransaction(BaseModel):
 
 
 class MonetizationMetrics(BaseModel):
-    """Monetization performance metrics"""
-    session_id: str
+    """Monetization performance metrics"""    session_id: str
     user_id: str
     total_revenue: Decimal = Field(default=Decimal('0.00'))
     revenue_per_minute: Decimal = Field(default=Decimal('0.00'))
@@ -187,8 +178,7 @@ class MonetizationMetrics(BaseModel):
 
 
 class RevenueAnalytics(BaseModel):
-    """Revenue analytics and insights"""
-    period_start: datetime
+    """Revenue analytics and insights"""    period_start: datetime
     period_end: datetime
     total_revenue: Decimal
     total_transactions: int
@@ -211,8 +201,7 @@ class RevenueAnalytics(BaseModel):
 
 @dataclass
 class RevenueTrackerConfig:
-    """Revenue tracker configuration"""
-    enable_real_time_tracking: bool = True
+    """Revenue tracker configuration"""    enable_real_time_tracking: bool = True
     enable_fraud_detection: bool = True
     enable_predictive_analytics: bool = True
     currency: str = "USD"
@@ -228,8 +217,7 @@ class RevenueTrackerConfig:
 
 
 class SessionRevenueCalculator:
-    """Calculates session-based revenue and metrics"""
-    
+    """Calculates session-based revenue and metrics"""    
     def __init__(self, config: RevenueTrackerConfig):
         self.config = config
         self.financial_calculator = FinancialCalculator()
@@ -240,8 +228,7 @@ class SessionRevenueCalculator:
         session_data: SessionRevenueData,
         transactions: List[RevenueTransaction]
     ) -> Decimal:
-        """Calculate total session revenue"""
-        
+        """Calculate total session revenue"""        
         try:
             total_revenue = Decimal('0.00')
             
@@ -279,8 +266,7 @@ class SessionRevenueCalculator:
         self,
         session_data: SessionRevenueData
     ) -> Decimal:
-        """Calculate revenue per minute of session"""
-        
+        """Calculate revenue per minute of session"""        
         try:
             if session_data.total_session_duration > 0:
                 return session_data.session_revenue / Decimal(str(session_data.total_session_duration))
@@ -295,8 +281,7 @@ class SessionRevenueCalculator:
         session_data: SessionRevenueData,
         total_interactions: int
     ) -> float:
-        """Calculate session conversion rate"""
-        
+        """Calculate session conversion rate"""        
         try:
             conversion_events = len(session_data.conversion_events)
             
@@ -313,8 +298,7 @@ class SessionRevenueCalculator:
         user_id: str,
         current_session_revenue: Decimal
     ) -> Decimal:
-        """Calculate customer lifetime value"""
-        
+        """Calculate customer lifetime value"""        
         try:
             # This would typically involve historical data analysis
             # For now, we'll use a simplified calculation
@@ -337,8 +321,7 @@ class SessionRevenueCalculator:
             return Decimal('0.00')
     
     async def _get_user_historical_revenue(self, user_id: str) -> List[Decimal]:
-        """Get historical revenue data for user"""
-        
+        """Get historical revenue data for user"""        
         try:
             # This would query the database for historical revenue
             # For now, return empty list
@@ -353,8 +336,7 @@ class SessionRevenueCalculator:
         gross_amount: Decimal,
         payment_method: str = "credit_card"
     ) -> Tuple[Decimal, Decimal]:
-        """Calculate net amount after fees"""
-        
+        """Calculate net amount after fees"""        
         try:
             # Calculate transaction fees
             percentage_fee = gross_amount * Decimal(str(self.config.transaction_fee_percentage))
@@ -375,8 +357,7 @@ class SessionRevenueCalculator:
 
 
 class FraudDetectionEngine:
-    """Detects fraudulent revenue patterns"""
-    
+    """Detects fraudulent revenue patterns"""    
     def __init__(self, config: RevenueTrackerConfig):
         self.config = config
         self.fraud_detector = FraudDetector()
@@ -388,8 +369,7 @@ class FraudDetectionEngine:
         session_data: SessionRevenueData,
         user_history: Dict[str, Any]
     ) -> float:
-        """Analyze fraud risk for transaction"""
-        
+        """Analyze fraud risk for transaction"""        
         try:
             risk_factors = []
             
@@ -433,8 +413,7 @@ class FraudDetectionEngine:
         transaction: RevenueTransaction,
         user_history: Dict[str, Any]
     ) -> float:
-        """Analyze risk based on transaction amount"""
-        
+        """Analyze risk based on transaction amount"""        
         try:
             # Get historical transaction amounts
             historical_amounts = user_history.get("historical_amounts", [])
@@ -473,8 +452,7 @@ class FraudDetectionEngine:
         transaction: RevenueTransaction,
         session_data: SessionRevenueData
     ) -> float:
-        """Analyze risk based on transaction frequency"""
-        
+        """Analyze risk based on transaction frequency"""        
         try:
             # Count recent transactions in session
             recent_transactions = len([
@@ -503,8 +481,7 @@ class FraudDetectionEngine:
         transaction: RevenueTransaction,
         user_history: Dict[str, Any]
     ) -> float:
-        """Analyze risk based on geographic patterns"""
-        
+        """Analyze risk based on geographic patterns"""        
         try:
             # Get geographic information from metadata
             current_location = transaction.metadata.get("location", {})
@@ -526,8 +503,7 @@ class FraudDetectionEngine:
             return 0.5
     
     async def _analyze_payment_method_risk(self, transaction: RevenueTransaction) -> float:
-        """Analyze risk based on payment method"""
-        
+        """Analyze risk based on payment method"""        
         try:
             # Payment method risk scores
             payment_risks = {
@@ -549,8 +525,7 @@ class FraudDetectionEngine:
 
 
 class RevenuePredictionEngine:
-    """Predicts future revenue based on session patterns"""
-    
+    """Predicts future revenue based on session patterns"""    
     def __init__(self, config: RevenueTrackerConfig):
         self.config = config
         self.linear_model = LinearRegression()
@@ -562,8 +537,7 @@ class RevenuePredictionEngine:
         session_data: SessionRevenueData,
         session_duration_prediction: float
     ) -> Dict[str, Any]:
-        """Predict final session revenue"""
-        
+        """Predict final session revenue"""        
         try:
             # Feature engineering
             features = await self._extract_prediction_features(session_data)
@@ -598,8 +572,7 @@ class RevenuePredictionEngine:
         self,
         session_data: SessionRevenueData
     ) -> Dict[str, float]:
-        """Extract features for revenue prediction"""
-        
+        """Extract features for revenue prediction"""        
         try:
             features = {}
             
@@ -637,8 +610,7 @@ class RevenuePredictionEngine:
         features: Dict[str, float],
         duration_prediction: float
     ) -> float:
-        """Linear model revenue prediction"""
-        
+        """Linear model revenue prediction"""        
         try:
             # Simple linear prediction based on current revenue per minute
             current_rpm = features.get("revenue_per_minute", 0.0)
@@ -661,8 +633,7 @@ class RevenuePredictionEngine:
         features: Dict[str, float],
         duration_prediction: float
     ) -> float:
-        """Machine learning model revenue prediction"""
-        
+        """Machine learning model revenue prediction"""        
         try:
             # This would use a trained model in production
             # For now, we'll use a simplified heuristic-based approach
@@ -691,8 +662,7 @@ class RevenuePredictionEngine:
             return 0.0
     
     async def _calculate_prediction_confidence(self, features: Dict[str, float]) -> float:
-        """Calculate prediction confidence based on data quality"""
-        
+        """Calculate prediction confidence based on data quality"""        
         try:
             confidence_factors = []
             
@@ -722,8 +692,7 @@ class RevenuePredictionEngine:
 
 
 class SessionRevenueTracker:
-    """Main session revenue tracking and management system"""
-    
+    """Main session revenue tracking and management system"""    
     def __init__(self, config: Optional[RevenueTrackerConfig] = None):
         self.config = config or RevenueTrackerConfig()
         self.revenue_calculator = SessionRevenueCalculator(self.config)
@@ -748,8 +717,7 @@ class SessionRevenueTracker:
         session_id: str,
         user_id: str
     ) -> SessionRevenueData:
-        """Initialize revenue tracking for session"""
-        
+        """Initialize revenue tracking for session"""        
         try:
             session_data = SessionRevenueData(
                 session_id=session_id,
@@ -790,8 +758,7 @@ class SessionRevenueTracker:
         payment_method: str = "credit_card",
         metadata: Dict[str, Any] = None
     ) -> Optional[RevenueTransaction]:
-        """Process a revenue transaction"""
-        
+        """Process a revenue transaction"""        
         try:
             session_data = await self._get_session_data(session_id)
             
@@ -889,8 +856,7 @@ class SessionRevenueTracker:
             return None
     
     async def _process_payment(self, transaction: RevenueTransaction) -> bool:
-        """Process payment through payment provider"""
-        
+        """Process payment through payment provider"""        
         try:
             if transaction.payment_method in ["credit_card", "debit_card"]:
                 # Stripe payment processing
@@ -928,8 +894,7 @@ class SessionRevenueTracker:
         session_id: str,
         transaction: RevenueTransaction
     ):
-        """Update session revenue data with new transaction"""
-        
+        """Update session revenue data with new transaction"""        
         try:
             session_data = self.active_sessions.get(session_id)
             
@@ -980,8 +945,7 @@ class SessionRevenueTracker:
             self.logger.error(f"Session revenue update failed: {str(e)}")
     
     async def get_session_metrics(self, session_id: str) -> Optional[MonetizationMetrics]:
-        """Get comprehensive session monetization metrics"""
-        
+        """Get comprehensive session monetization metrics"""        
         try:
             session_data = await self._get_session_data(session_id)
             
@@ -1056,8 +1020,7 @@ class SessionRevenueTracker:
         session_id: str,
         predicted_duration: float
     ) -> Dict[str, Any]:
-        """Predict future revenue for session"""
-        
+        """Predict future revenue for session"""        
         try:
             session_data = await self._get_session_data(session_id)
             
@@ -1080,8 +1043,7 @@ class SessionRevenueTracker:
         end_date: datetime,
         user_id: Optional[str] = None
     ) -> RevenueAnalytics:
-        """Generate comprehensive revenue analytics"""
-        
+        """Generate comprehensive revenue analytics"""        
         try:
             # This would typically query the database for historical data
             # For now, we'll generate analytics from active sessions
@@ -1169,8 +1131,7 @@ class SessionRevenueTracker:
             )
     
     async def _get_session_data(self, session_id: str) -> Optional[SessionRevenueData]:
-        """Get session revenue data"""
-        
+        """Get session revenue data"""        
         # Check memory first
         if session_id in self.active_sessions:
             return self.active_sessions[session_id]
@@ -1187,8 +1148,7 @@ class SessionRevenueTracker:
         return None
     
     async def _cache_session_data(self, session_data: SessionRevenueData):
-        """Cache session revenue data"""
-        
+        """Cache session revenue data"""        
         try:
             cache_key = f"revenue_session:{session_data.session_id}"
             await self.cache_manager.set(
@@ -1201,8 +1161,7 @@ class SessionRevenueTracker:
             self.logger.error(f"Session data caching failed: {str(e)}")
     
     async def _persist_transaction(self, transaction: RevenueTransaction):
-        """Persist transaction to database"""
-        
+        """Persist transaction to database"""        
         try:
             async with get_async_session() as session:
                 # Encrypt sensitive data
@@ -1236,8 +1195,7 @@ class SessionRevenueTracker:
             self.logger.error(f"Transaction persistence failed: {str(e)}")
     
     async def _get_user_history(self, user_id: str) -> Dict[str, Any]:
-        """Get user transaction history for fraud analysis"""
-        
+        """Get user transaction history for fraud analysis"""        
         try:
             # This would query the database for user history
             # For now, return minimal history
@@ -1253,8 +1211,7 @@ class SessionRevenueTracker:
             return {}
     
     async def finalize_session_revenue(self, session_id: str) -> Dict[str, Any]:
-        """Finalize revenue tracking for completed session"""
-        
+        """Finalize revenue tracking for completed session"""        
         try:
             session_data = await self._get_session_data(session_id)
             
@@ -1303,8 +1260,7 @@ class SessionRevenueTracker:
             return {"error": str(e)}
     
     async def get_revenue_tracker_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive revenue tracker statistics"""
-        
+        """Get comprehensive revenue tracker statistics"""        
         try:
             active_sessions_count = len(self.active_sessions)
             total_active_revenue = sum(

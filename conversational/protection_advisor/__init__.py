@@ -18,8 +18,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️ INTELLECTUAL PROPERTY WARNING ⚠️
 This code is proprietary and confidential. Unauthorized copying, distribution,
 or use is strictly prohibited and may result in severe legal consequences.
-"""
-from .advisor_core import (
+"""from .advisor_core import (
     ProtectionAdvisorCore,
     ContentAnalysis,
     ProtectionAdvice,

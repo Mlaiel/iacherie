@@ -1,5 +1,4 @@
-"""
-Log Rotation Configuration for IA-Influencer Agent Platform
+"""Log Rotation Configuration for IA-Influencer Agent Platform
 ==========================================================
 
 Advanced log rotation management with compression, archiving,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import gzip
 import bz2
@@ -39,24 +37,21 @@ import psutil
 
 
 class CompressionType(str, Enum):
-    """Supported compression types"""
-    NONE = "none"
+    """Supported compression types"""    NONE = "none"
     GZIP = "gzip"
     BZIP2 = "bzip2"
     LZMA = "lzma"
 
 
 class RotationTrigger(str, Enum):
-    """Log rotation triggers"""
-    SIZE = "size"
+    """Log rotation triggers"""    SIZE = "size"
     TIME = "time"
     HYBRID = "hybrid"  # Both size and time
     DISK_SPACE = "disk_space"
 
 
 class ArchiveStrategy(str, Enum):
-    """Archive storage strategies"""
-    LOCAL = "local"
+    """Archive storage strategies"""    LOCAL = "local"
     S3 = "s3"
     AZURE_BLOB = "azure_blob"
     GCS = "gcs"
@@ -65,8 +60,7 @@ class ArchiveStrategy(str, Enum):
 
 @dataclass
 class RotationPolicy:
-    """Log rotation policy configuration"""
-    name: str
+    """Log rotation policy configuration"""    name: str
     log_pattern: str  # Glob pattern to match log files
     
     # Size-based rotation
@@ -105,8 +99,7 @@ class RotationPolicy:
 
 @dataclass
 class DiskSpaceMonitor:
-    """Disk space monitoring configuration"""
-    enabled: bool = True
+    """Disk space monitoring configuration"""    enabled: bool = True
     check_interval: int = 300  # Seconds between checks
     warning_threshold: float = 0.85  # Warn when disk is 85% full
     critical_threshold: float = 0.95  # Critical when disk is 95% full
@@ -115,13 +108,11 @@ class DiskSpaceMonitor:
 
 
 class LogRotationConfig:
-    """
-    Enterprise log rotation configuration for IA-Influencer platform.
+    """    Enterprise log rotation configuration for IA-Influencer platform.
     
     Provides intelligent log rotation with compression, archiving, cleanup,
     and disk space monitoring for high-volume content processing operations.
-    """
-    
+    """    
     def __init__(
         self,
         base_log_path: str = "/var/log/ia_influencer",
@@ -134,8 +125,7 @@ class LogRotationConfig:
         enable_notifications: bool = False,
         webhook_url: Optional[str] = None
     ):
-        """
-        Initialize log rotation configuration.
+        """        Initialize log rotation configuration.
         
         Args:
             base_log_path: Base directory for log files
@@ -147,8 +137,7 @@ class LogRotationConfig:
             operation_timeout: Timeout for rotation operations
             enable_notifications: Enable rotation notifications
             webhook_url: Webhook URL for notifications
-        """
-        self.base_log_path = Path(base_log_path)
+        """        self.base_log_path = Path(base_log_path)
         self.policies = policies or self._create_default_policies()
         self.disk_monitor = disk_monitor or DiskSpaceMonitor()
         self.global_compression = global_compression
@@ -174,8 +163,7 @@ class LogRotationConfig:
             self.start_scheduler()
     
     def _create_default_policies(self) -> List[RotationPolicy]:
-        """Create default rotation policies for platform components"""
-        return [
+        """Create default rotation policies for platform components"""        return [
             # Main application logs
             RotationPolicy(
                 name="platform_logs",
@@ -296,8 +284,7 @@ class LogRotationConfig:
         ]
     
     def _initialize_directories(self) -> None:
-        """Initialize log and archive directories"""
-        self.base_log_path.mkdir(parents=True, exist_ok=True)
+        """Initialize log and archive directories"""        self.base_log_path.mkdir(parents=True, exist_ok=True)
         
         # Create subdirectories for different log types
         subdirs = ['archive', 'temp', 'compressed']
@@ -305,16 +292,14 @@ class LogRotationConfig:
             (self.base_log_path / subdir).mkdir(exist_ok=True)
     
     def _initialize_handlers(self) -> None:
-        """Initialize rotating file handlers"""
-        for policy in self.policies:
+        """Initialize rotating file handlers"""        for policy in self.policies:
             try:
                 self._create_handler_for_policy(policy)
             except Exception as e:
                 logging.error(f"Failed to initialize handler for policy {policy.name}: {e}")
     
     def _create_handler_for_policy(self, policy: RotationPolicy) -> None:
-        """Create rotating file handler for a policy"""
-        # Find matching log files
+        """Create rotating file handler for a policy"""        # Find matching log files
         log_files = list(self.base_log_path.glob(policy.log_pattern))
         
         for log_file in log_files:
@@ -343,8 +328,7 @@ class LogRotationConfig:
             self._handlers[handler_key] = handler
     
     def _parse_size(self, size_str: str) -> int:
-        """Parse size string to bytes"""
-        size_str = size_str.upper().strip()
+        """Parse size string to bytes"""        size_str = size_str.upper().strip()
         multipliers = {
             'B': 1,
             'KB': 1024,
@@ -368,8 +352,7 @@ class LogRotationConfig:
             return 100 * 1024**2  # 100MB default
     
     def _parse_rotation_interval(self, interval: str) -> str:
-        """Parse rotation interval to logging format"""
-        interval_map = {
+        """Parse rotation interval to logging format"""        interval_map = {
             'daily': 'D',
             'weekly': 'W0',  # Monday
             'monthly': 'midnight',
@@ -379,16 +362,14 @@ class LogRotationConfig:
         return interval_map.get(interval.lower(), 'D')
     
     def rotate_logs(self, policy_name: Optional[str] = None) -> Dict[str, bool]:
-        """
-        Manually trigger log rotation.
+        """        Manually trigger log rotation.
         
         Args:
             policy_name: Specific policy to rotate (None for all)
             
         Returns:
             Dictionary of rotation results by policy name
-        """
-        results = {}
+        """        results = {}
         
         policies_to_rotate = [p for p in self.policies if p.name == policy_name] if policy_name else self.policies
         
@@ -407,8 +388,7 @@ class LogRotationConfig:
         return results
     
     def _rotate_policy_logs(self, policy: RotationPolicy) -> bool:
-        """Rotate logs for a specific policy"""
-        try:
+        """Rotate logs for a specific policy"""        try:
             # Find matching log files
             log_files = list(self.base_log_path.glob(policy.log_pattern))
             
@@ -439,8 +419,7 @@ class LogRotationConfig:
             return False
     
     def _should_rotate_file(self, log_file: Path, policy: RotationPolicy) -> bool:
-        """Check if a log file should be rotated"""
-        if not log_file.exists():
+        """Check if a log file should be rotated"""        if not log_file.exists():
             return False
         
         file_stat = log_file.stat()
@@ -465,8 +444,7 @@ class LogRotationConfig:
         return False
     
     def _rotate_single_file(self, log_file: Path, policy: RotationPolicy) -> None:
-        """Rotate a single log file"""
-        if not log_file.exists():
+        """Rotate a single log file"""        if not log_file.exists():
             return
         
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -488,8 +466,7 @@ class LogRotationConfig:
             raise
     
     def _cleanup_old_files(self, policy: RotationPolicy) -> None:
-        """Clean up old log files based on retention policy"""
-        pattern = policy.log_pattern.replace('*', '*_[0-9]*')
+        """Clean up old log files based on retention policy"""        pattern = policy.log_pattern.replace('*', '*_[0-9]*')
         old_files = list(self.base_log_path.glob(pattern))
         
         # Sort by modification time (oldest first)
@@ -519,8 +496,7 @@ class LogRotationConfig:
                         logging.error(f"Failed to remove aged log file {old_file}: {e}")
     
     def _compress_old_files(self, policy: RotationPolicy) -> None:
-        """Compress old log files based on policy"""
-        if policy.compression == CompressionType.NONE:
+        """Compress old log files based on policy"""        if policy.compression == CompressionType.NONE:
             return
         
         # Find uncompressed rotated files
@@ -546,8 +522,7 @@ class LogRotationConfig:
                 self._compress_file(file_path, policy.compression, policy.compression_level)
     
     def _compress_file(self, file_path: Path, compression: CompressionType, level: int) -> None:
-        """Compress a single file"""
-        try:
+        """Compress a single file"""        try:
             if compression == CompressionType.GZIP:
                 compressed_path = file_path.with_suffix(file_path.suffix + '.gz')
                 with open(file_path, 'rb') as f_in:
@@ -582,8 +557,7 @@ class LogRotationConfig:
             logging.error(f"Failed to compress file {file_path}: {e}")
     
     def _archive_old_files(self, policy: RotationPolicy) -> None:
-        """Archive old log files to external storage"""
-        if not policy.archive_enabled:
+        """Archive old log files to external storage"""        if not policy.archive_enabled:
             return
         
         # Find files to archive
@@ -606,8 +580,7 @@ class LogRotationConfig:
         # Add other archive strategies as needed
     
     def _archive_to_local(self, files: List[Path], policy: RotationPolicy) -> None:
-        """Archive files to local directory"""
-        archive_dir = self.base_log_path / 'archive' / policy.name
+        """Archive files to local directory"""        archive_dir = self.base_log_path / 'archive' / policy.name
         archive_dir.mkdir(parents=True, exist_ok=True)
         
         for file_path in files:
@@ -620,14 +593,12 @@ class LogRotationConfig:
                 logging.error(f"Failed to archive file {file_path}: {e}")
     
     def _archive_to_s3(self, files: List[Path], policy: RotationPolicy) -> None:
-        """Archive files to AWS S3"""
-        # Implementation would use boto3 to upload files to S3
+        """Archive files to AWS S3"""        # Implementation would use boto3 to upload files to S3
         # This is a placeholder for the actual implementation
         logging.info(f"Would archive {len(files)} files to S3 for policy {policy.name}")
     
     def check_disk_space(self) -> Dict[str, Any]:
-        """Check disk space and return status"""
-        if not self.disk_monitor.enabled:
+        """Check disk space and return status"""        if not self.disk_monitor.enabled:
             return {"enabled": False}
         
         try:
@@ -667,8 +638,7 @@ class LogRotationConfig:
             return {"enabled": True, "error": str(e)}
     
     def _emergency_cleanup(self) -> None:
-        """Perform emergency cleanup when disk space is critical"""
-        logging.warning("Performing emergency log cleanup due to low disk space")
+        """Perform emergency cleanup when disk space is critical"""        logging.warning("Performing emergency log cleanup due to low disk space")
         
         try:
             # Force rotation of all large files
@@ -688,8 +658,7 @@ class LogRotationConfig:
             logging.error(f"Emergency cleanup failed: {e}")
     
     def _emergency_rotate_policy(self, policy: RotationPolicy) -> None:
-        """Emergency rotation for a policy - more aggressive cleanup"""
-        try:
+        """Emergency rotation for a policy - more aggressive cleanup"""        try:
             # Reduce backup count temporarily for emergency cleanup
             original_backup_count = policy.backup_count
             policy.backup_count = max(1, policy.backup_count // 2)
@@ -703,8 +672,7 @@ class LogRotationConfig:
             logging.error(f"Emergency rotation failed for policy {policy.name}: {e}")
     
     def _emergency_compress_all(self) -> None:
-        """Emergency compression of all uncompressed log files"""
-        try:
+        """Emergency compression of all uncompressed log files"""        try:
             for policy in self.policies:
                 if policy.compression != CompressionType.NONE:
                     # Compress files immediately regardless of age
@@ -720,8 +688,7 @@ class LogRotationConfig:
             logging.error(f"Emergency compression failed: {e}")
     
     def _send_rotation_notification(self, policy_name: str, success: bool) -> None:
-        """Send rotation notification"""
-        if not self.enable_notifications or not self.webhook_url:
+        """Send rotation notification"""        if not self.enable_notifications or not self.webhook_url:
             return
         
         try:
@@ -742,8 +709,7 @@ class LogRotationConfig:
             logging.error(f"Failed to send rotation notification: {e}")
     
     def start_scheduler(self) -> None:
-        """Start the automatic rotation scheduler"""
-        if self._scheduler_thread and self._scheduler_thread.is_alive():
+        """Start the automatic rotation scheduler"""        if self._scheduler_thread and self._scheduler_thread.is_alive():
             return
         
         self._stop_event.clear()
@@ -753,16 +719,14 @@ class LogRotationConfig:
         logging.info("Log rotation scheduler started")
     
     def stop_scheduler(self) -> None:
-        """Stop the automatic rotation scheduler"""
-        if self._scheduler_thread:
+        """Stop the automatic rotation scheduler"""        if self._scheduler_thread:
             self._stop_event.set()
             self._scheduler_thread.join(timeout=10)
         
         logging.info("Log rotation scheduler stopped")
     
     def _run_scheduler(self) -> None:
-        """Run the rotation scheduler"""
-        # Schedule rotation jobs
+        """Run the rotation scheduler"""        # Schedule rotation jobs
         schedule.every().day.at("00:00").do(self._scheduled_rotation)
         schedule.every().hour.do(self._scheduled_disk_check)
         
@@ -775,16 +739,14 @@ class LogRotationConfig:
                 time.sleep(60)
     
     def _scheduled_rotation(self) -> None:
-        """Scheduled rotation job"""
-        try:
+        """Scheduled rotation job"""        try:
             results = self.rotate_logs()
             logging.info(f"Scheduled rotation completed: {results}")
         except Exception as e:
             logging.error(f"Scheduled rotation failed: {e}")
     
     def _scheduled_disk_check(self) -> None:
-        """Scheduled disk space check"""
-        try:
+        """Scheduled disk space check"""        try:
             status = self.check_disk_space()
             if status.get("status") in ["warning", "critical"]:
                 logging.warning(f"Disk space check: {status}")
@@ -792,8 +754,7 @@ class LogRotationConfig:
             logging.error(f"Scheduled disk check failed: {e}")
     
     def get_rotation_status(self) -> Dict[str, Any]:
-        """Get current rotation status and statistics"""
-        status = {
+        """Get current rotation status and statistics"""        status = {
             "enabled": True,
             "base_path": str(self.base_log_path),
             "policies_count": len(self.policies),
@@ -828,14 +789,12 @@ class LogRotationConfig:
         return status
     
     def add_policy(self, policy: RotationPolicy) -> None:
-        """Add a new rotation policy"""
-        self.policies.append(policy)
+        """Add a new rotation policy"""        self.policies.append(policy)
         self._create_handler_for_policy(policy)
         logging.info(f"Added rotation policy: {policy.name}")
     
     def remove_policy(self, policy_name: str) -> bool:
-        """Remove a rotation policy"""
-        policy = next((p for p in self.policies if p.name == policy_name), None)
+        """Remove a rotation policy"""        policy = next((p for p in self.policies if p.name == policy_name), None)
         if policy:
             self.policies.remove(policy)
             
@@ -850,8 +809,7 @@ class LogRotationConfig:
         return False
     
     def update_policy(self, policy_name: str, **kwargs) -> bool:
-        """Update an existing rotation policy"""
-        policy = next((p for p in self.policies if p.name == policy_name), None)
+        """Update an existing rotation policy"""        policy = next((p for p in self.policies if p.name == policy_name), None)
         if policy:
             for key, value in kwargs.items():
                 if hasattr(policy, key):
@@ -877,16 +835,14 @@ _rotation_config: Optional[LogRotationConfig] = None
 def initialize_log_rotation(
     config: Optional[LogRotationConfig] = None
 ) -> LogRotationConfig:
-    """
-    Initialize global log rotation configuration.
+    """    Initialize global log rotation configuration.
     
     Args:
         config: Custom LogRotationConfig instance
         
     Returns:
         Initialized log rotation configuration
-    """
-    global _rotation_config
+    """    global _rotation_config
     
     if config:
         _rotation_config = config
@@ -897,22 +853,19 @@ def initialize_log_rotation(
 
 
 def get_rotation_config() -> LogRotationConfig:
-    """Get the global log rotation configuration"""
-    if not _rotation_config:
+    """Get the global log rotation configuration"""    if not _rotation_config:
         initialize_log_rotation()
     
     return _rotation_config
 
 
 def rotate_logs(policy_name: Optional[str] = None) -> Dict[str, bool]:
-    """
-    Trigger log rotation using global configuration.
+    """    Trigger log rotation using global configuration.
     
     Args:
         policy_name: Specific policy to rotate (None for all)
         
     Returns:
         Dictionary of rotation results by policy name
-    """
-    config = get_rotation_config()
+    """    config = get_rotation_config()
     return config.rotate_logs(policy_name)

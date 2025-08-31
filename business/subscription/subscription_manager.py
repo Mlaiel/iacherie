@@ -1,5 +1,4 @@
-"""
-Subscription Manager
+"""Subscription Manager
 
 High-level subscription management orchestrator providing unified interface
 for subscription operations, feature access control, and business logic coordination.
@@ -9,7 +8,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
-
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List, Tuple
@@ -40,8 +38,7 @@ logger = get_logger(__name__)
 
 
 class SubscriptionManager:
-    """
-    Comprehensive subscription management orchestrator.
+    """    Comprehensive subscription management orchestrator.
     
     Coordinates all subscription-related operations including:
     - Subscription lifecycle management
@@ -50,11 +47,9 @@ class SubscriptionManager:
     - Billing and payment coordination
     - Analytics and reporting
     - Event publishing for integrations
-    """
-    
+    """    
     def __init__(self):
-        """Initialize subscription manager with required services."""
-        self.service = SubscriptionService()
+        """Initialize subscription manager with required services."""        self.service = SubscriptionService()
         self.billing = BillingEngine()
         self.payment = PaymentProcessor()
         self.tier_controller = TierController()
@@ -71,8 +66,7 @@ class SubscriptionManager:
         include_billing: bool = True,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive subscription overview for user.
+        """        Get comprehensive subscription overview for user.
         
         Args:
             user_id: User ID
@@ -82,8 +76,7 @@ class SubscriptionManager:
             
         Returns:
             Complete subscription overview
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -153,8 +146,7 @@ class SubscriptionManager:
         requested_usage: int = 1,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Check feature limits and enforce usage quotas.
+        """        Check feature limits and enforce usage quotas.
         
         Args:
             user_id: User ID
@@ -164,8 +156,7 @@ class SubscriptionManager:
             
         Returns:
             Usage check result with enforcement actions
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -244,8 +235,7 @@ class SubscriptionManager:
         action: str,
         **kwargs
     ) -> Dict[str, Any]:
-        """
-        Handle subscription changes with comprehensive validation and processing.
+        """        Handle subscription changes with comprehensive validation and processing.
         
         Args:
             user_id: User ID
@@ -254,8 +244,7 @@ class SubscriptionManager:
             
         Returns:
             Change result with updated subscription info
-        """
-        try:
+        """        try:
             # Validate action parameters
             await self._validate_change_parameters(user_id, action, kwargs)
             
@@ -290,8 +279,7 @@ class SubscriptionManager:
         subscription_id: int,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Process subscription billing cycle.
+        """        Process subscription billing cycle.
         
         Args:
             subscription_id: Subscription ID
@@ -299,8 +287,7 @@ class SubscriptionManager:
             
         Returns:
             Billing processing result
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -374,8 +361,7 @@ class SubscriptionManager:
         end_date: Optional[datetime] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get subscription analytics and insights.
+        """        Get subscription analytics and insights.
         
         Args:
             user_id: User ID (None for all users)
@@ -385,8 +371,7 @@ class SubscriptionManager:
             
         Returns:
             Subscription analytics data
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -418,8 +403,7 @@ class SubscriptionManager:
     # Private helper methods
     
     async def _get_non_subscriber_overview(self, user_id: int) -> Dict[str, Any]:
-        """Get overview for non-subscribed user."""
-        free_plan_features = await self.tier_controller.get_free_tier_features()
+        """Get overview for non-subscribed user."""        free_plan_features = await self.tier_controller.get_free_tier_features()
         return {
             "subscription": None,
             "status": "no_subscription",
@@ -429,8 +413,7 @@ class SubscriptionManager:
         }
     
     async def _get_usage_warnings(self, usage_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate usage warnings based on current usage."""
-        warnings = []
+        """Generate usage warnings based on current usage."""        warnings = []
         
         for feature, usage_info in usage_data.items():
             if isinstance(usage_info, dict) and "usage_percentage" in usage_info:
@@ -457,8 +440,7 @@ class SubscriptionManager:
         self, 
         subscription: UserSubscription
     ) -> List[str]:
-        """Get available actions for subscription."""
-        actions = []
+        """Get available actions for subscription."""        actions = []
         
         if subscription.status == SubscriptionStatus.ACTIVE.value:
             actions.extend(["upgrade", "downgrade", "cancel", "update_payment"])
@@ -476,8 +458,7 @@ class SubscriptionManager:
         feature_name: str, 
         db: Session
     ) -> List[Dict[str, Any]]:
-        """Get subscription plans that include specific feature."""
-        plans = db.query(SubscriptionPlan).filter(
+        """Get subscription plans that include specific feature."""        plans = db.query(SubscriptionPlan).filter(
             SubscriptionPlan.is_active == True
         ).all()
         
@@ -500,8 +481,7 @@ class SubscriptionManager:
         user_id: int, 
         db: Session
     ) -> List[Dict[str, Any]]:
-        """Get higher tier plans for user."""
-        current_subscription = await self.service.get_active_subscription(user_id, db)
+        """Get higher tier plans for user."""        current_subscription = await self.service.get_active_subscription(user_id, db)
         if not current_subscription:
             return await self._get_plans_with_feature("", db)  # All plans
         
@@ -527,8 +507,7 @@ class SubscriptionManager:
         action: str, 
         kwargs: Dict[str, Any]
     ) -> None:
-        """Validate subscription change parameters."""
-        valid_actions = ["subscribe", "upgrade", "downgrade", "cancel", "reactivate"]
+        """Validate subscription change parameters."""        valid_actions = ["subscribe", "upgrade", "downgrade", "cancel", "reactivate"]
         
         if action not in valid_actions:
             raise ValidationError(f"Invalid action: {action}")
@@ -540,8 +519,7 @@ class SubscriptionManager:
             raise ValidationError("payment_method_id required for reactivation")
     
     async def _clear_subscription_caches(self, user_id: int) -> None:
-        """Clear subscription-related caches."""
-        cache_keys = [
+        """Clear subscription-related caches."""        cache_keys = [
             f"subscription_overview:{user_id}",
             f"user_subscription:{user_id}",
             f"usage_metrics:{user_id}",
@@ -557,8 +535,7 @@ class SubscriptionManager:
         action: str, 
         result: Dict[str, Any]
     ) -> None:
-        """Send subscription change notifications."""
-        # Implementation would send emails/notifications based on action
+        """Send subscription change notifications."""        # Implementation would send emails/notifications based on action
         # This is a placeholder for notification service integration
         pass
     
@@ -567,8 +544,7 @@ class SubscriptionManager:
         subscription: UserSubscription, 
         db: Session
     ) -> None:
-        """Update subscription for next billing cycle."""
-        # Calculate next billing date
+        """Update subscription for next billing cycle."""        # Calculate next billing date
         if subscription.billing_cycle == BillingCycleType.MONTHLY.value:
             subscription.next_billing_date += timedelta(days=30)
             subscription.end_date += timedelta(days=30)
@@ -588,8 +564,7 @@ class SubscriptionManager:
         billing_result: Dict[str, Any],
         db: Session
     ) -> None:
-        """Handle billing failure scenarios."""
-        # Update subscription status
+        """Handle billing failure scenarios."""        # Update subscription status
         subscription.status = SubscriptionStatus.SUSPENDED.value
         subscription.updated_at = datetime.utcnow()
         
@@ -614,8 +589,7 @@ class SubscriptionManager:
         end_date: datetime, 
         db: Session
     ) -> Dict[str, Any]:
-        """Get analytics for specific user."""
-        # Implementation for user-specific analytics
+        """Get analytics for specific user."""        # Implementation for user-specific analytics
         return {
             "user_id": user_id,
             "period": {
@@ -633,8 +607,7 @@ class SubscriptionManager:
         end_date: datetime, 
         db: Session
     ) -> Dict[str, Any]:
-        """Get platform-wide subscription analytics."""
-        # Implementation for platform analytics
+        """Get platform-wide subscription analytics."""        # Implementation for platform analytics
         return {
             "period": {
                 "start": start_date.isoformat(),

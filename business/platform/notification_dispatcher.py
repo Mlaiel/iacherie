@@ -1,5 +1,4 @@
-"""
-Notification Dispatcher - Advanced Multi-Channel Notification System
+"""Notification Dispatcher - Advanced Multi-Channel Notification System
 
 Intelligent notification routing and delivery system supporting multiple channels
 including email, SMS, push notifications, webhooks, and in-app notifications.
@@ -7,7 +6,6 @@ including email, SMS, push notifications, webhooks, and in-app notifications.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -31,8 +29,7 @@ from ...services.notification.webhook_service import WebhookService
 logger = get_logger(__name__)
 
 class NotificationType(Enum):
-    """Notification types"""
-    CONTENT_UPLOAD = "content_upload"
+    """Notification types"""    CONTENT_UPLOAD = "content_upload"
     CONTENT_PROTECTION = "content_protection"
     COLLABORATION_REQUEST = "collaboration_request"
     COLLABORATION_RESPONSE = "collaboration_response"
@@ -44,8 +41,7 @@ class NotificationType(Enum):
     SYSTEM_MAINTENANCE = "system_maintenance"
 
 class NotificationChannel(Enum):
-    """Notification channels"""
-    EMAIL = "email"
+    """Notification channels"""    EMAIL = "email"
     SMS = "sms"
     PUSH = "push"
     IN_APP = "in_app"
@@ -54,8 +50,7 @@ class NotificationChannel(Enum):
     DISCORD = "discord"
 
 class NotificationPriority(Enum):
-    """Notification priority levels"""
-    LOW = 1
+    """Notification priority levels"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     URGENT = 4
@@ -63,8 +58,7 @@ class NotificationPriority(Enum):
 
 @dataclass
 class NotificationContent:
-    """Notification content structure"""
-    title: str
+    """Notification content structure"""    title: str
     message: str
     action_url: Optional[str] = None
     image_url: Optional[str] = None
@@ -72,8 +66,7 @@ class NotificationContent:
 
 @dataclass
 class NotificationRequest:
-    """Notification request structure"""
-    user_id: int
+    """Notification request structure"""    user_id: int
     notification_type: NotificationType
     priority: NotificationPriority
     content: NotificationContent
@@ -83,8 +76,7 @@ class NotificationRequest:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class NotificationDispatcher:
-    """
-    Advanced multi-channel notification system
+    """    Advanced multi-channel notification system
     
     Features:
     - Multi-channel notification delivery
@@ -94,8 +86,7 @@ class NotificationDispatcher:
     - Retry logic and fallback channels
     - Template management
     - Rate limiting and throttling
-    """
-    
+    """    
     def __init__(self):
         # Channel services
         self.email_service = EmailService()
@@ -140,13 +131,11 @@ class NotificationDispatcher:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize notification dispatcher
+        """        Initialize notification dispatcher
         
         Returns:
             bool: Initialization success status
-        """
-        try:
+        """        try:
             logger.info("Initializing Notification Dispatcher...")
             
             # Initialize channel services
@@ -172,8 +161,7 @@ class NotificationDispatcher:
         notification_request: NotificationRequest,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Send notification through appropriate channels
+        """        Send notification through appropriate channels
         
         Args:
             notification_request: Notification details
@@ -181,8 +169,7 @@ class NotificationDispatcher:
             
         Returns:
             Dict containing dispatch results
-        """
-        try:
+        """        try:
             # Generate notification ID
             notification_id = f"notif_{notification_request.user_id}_{int(datetime.utcnow().timestamp())}"
             
@@ -248,8 +235,7 @@ class NotificationDispatcher:
         priority: NotificationPriority = NotificationPriority.MEDIUM,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Send bulk notification to multiple users
+        """        Send bulk notification to multiple users
         
         Args:
             user_ids: List of user IDs
@@ -260,8 +246,7 @@ class NotificationDispatcher:
             
         Returns:
             Dict containing bulk dispatch results
-        """
-        try:
+        """        try:
             bulk_id = f"bulk_{int(datetime.utcnow().timestamp())}"
             dispatch_results = []
             failed_dispatches = []
@@ -305,8 +290,7 @@ class NotificationDispatcher:
         notification_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Get notification delivery status
+        """        Get notification delivery status
         
         Args:
             notification_id: Notification ID
@@ -314,8 +298,7 @@ class NotificationDispatcher:
             
         Returns:
             Dict containing notification status
-        """
-        try:
+        """        try:
             result = await session.execute(
                 select(NotificationQueue).where(
                     NotificationQueue.notification_id == notification_id
@@ -353,8 +336,7 @@ class NotificationDispatcher:
         preferences: Dict[str, Any],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Update user notification preferences
+        """        Update user notification preferences
         
         Args:
             user_id: User ID
@@ -363,8 +345,7 @@ class NotificationDispatcher:
             
         Returns:
             Dict containing updated preferences
-        """
-        try:
+        """        try:
             # Get existing preferences
             result = await session.execute(
                 select(UserPreference).where(UserPreference.user_id == user_id)
@@ -404,8 +385,7 @@ class NotificationDispatcher:
         time_range: Optional[Dict[str, datetime]] = None,
         session: AsyncSession = None
     ) -> Dict[str, Any]:
-        """
-        Get notification analytics
+        """        Get notification analytics
         
         Args:
             user_id: Specific user ID (optional)
@@ -414,8 +394,7 @@ class NotificationDispatcher:
             
         Returns:
             Dict containing notification analytics
-        """
-        try:
+        """        try:
             # Build query
             query = select(NotificationQueue)
             
@@ -477,8 +456,7 @@ class NotificationDispatcher:
             raise HTTPException(status_code=500, detail=f"Analytics failed: {str(e)}")
     
     async def _process_notification_queue(self):
-        """Process notification queue in background"""
-        while True:
+        """Process notification queue in background"""        while True:
             try:
                 # Get notification from queue
                 notification = await self.notification_queue.get()
@@ -494,8 +472,7 @@ class NotificationDispatcher:
                 await asyncio.sleep(5)
     
     async def _process_single_notification(self, notification: NotificationQueue):
-        """Process single notification"""
-        try:
+        """Process single notification"""        try:
             channels = json.loads(notification.channels) if notification.channels else []
             delivery_results = {}
             
@@ -525,8 +502,7 @@ class NotificationDispatcher:
         notification: NotificationQueue, 
         channel: NotificationChannel
     ) -> Dict[str, Any]:
-        """Send notification via specific channel"""
-        try:
+        """Send notification via specific channel"""        try:
             content = NotificationContent(
                 title=notification.title,
                 message=notification.message,
@@ -573,8 +549,7 @@ class NotificationDispatcher:
         user_id: int, 
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Get user notification preferences"""
-        result = await session.execute(
+        """Get user notification preferences"""        result = await session.execute(
             select(UserPreference).where(UserPreference.user_id == user_id)
         )
         
@@ -597,8 +572,7 @@ class NotificationDispatcher:
         request: NotificationRequest,
         user_preferences: Dict[str, Any]
     ) -> List[NotificationChannel]:
-        """Determine target channels based on type and preferences"""
-        if request.channels:
+        """Determine target channels based on type and preferences"""        if request.channels:
             # Use explicitly specified channels
             return request.channels
         
@@ -618,8 +592,7 @@ class NotificationDispatcher:
         return allowed_channels
     
     async def _check_rate_limit(self, user_id: int, channel: NotificationChannel) -> bool:
-        """Check rate limits for channel"""
-        # Implementation for rate limiting
+        """Check rate limits for channel"""        # Implementation for rate limiting
         return True  # Placeholder
     
     async def _update_notification_status(
@@ -627,18 +600,15 @@ class NotificationDispatcher:
         notification: NotificationQueue,
         delivery_results: Dict[str, Any]
     ):
-        """Update notification status based on delivery results"""
-        # Implementation for status update
+        """Update notification status based on delivery results"""        # Implementation for status update
         pass
     
     async def _mark_notification_failed(self, notification: NotificationQueue, error: str):
-        """Mark notification as failed"""
-        # Implementation for failure marking
+        """Mark notification as failed"""        # Implementation for failure marking
         pass
     
     async def _process_scheduled_notifications(self):
-        """Process scheduled notifications"""
-        while True:
+        """Process scheduled notifications"""        while True:
             try:
                 # Implementation for scheduled notification processing
                 await asyncio.sleep(60)  # Check every minute
@@ -648,8 +618,7 @@ class NotificationDispatcher:
                 await asyncio.sleep(60)
     
     async def _cleanup_expired_notifications(self):
-        """Clean up expired notifications"""
-        while True:
+        """Clean up expired notifications"""        while True:
             try:
                 # Implementation for cleanup
                 await asyncio.sleep(3600)  # Clean every hour

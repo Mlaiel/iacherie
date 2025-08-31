@@ -1,5 +1,4 @@
-"""
-Platform Registry Manager for IA Influencer Agent - Professional Content Distribution Platform
+"""Platform Registry Manager for IA Influencer Agent - Professional Content Distribution Platform
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -19,7 +18,6 @@ Violators will be prosecuted to the full extent of the law.
 - DevOps Engineer: Cloud Infrastructure & CI/CD
 - IA Prompt Engineer: Advanced Prompt Engineering & LLM Integration
 """
-
 import logging
 from typing import Dict, List, Optional, Type, Any, Set
 from dataclasses import dataclass, field
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformAdapter:
-    """Base platform adapter interface"""
-    platform_type: PlatformType
+    """Base platform adapter interface"""    platform_type: PlatformType
     capabilities: PlatformCapabilities
     adapter_class: Type
     is_active: bool = True
@@ -50,8 +47,7 @@ class PlatformAdapter:
 
 
 class PlatformRegistryManager:
-    """Professional platform registry manager for all distribution platforms"""
-    
+    """Professional platform registry manager for all distribution platforms"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._adapters: Dict[PlatformType, PlatformAdapter] = {}
@@ -61,8 +57,7 @@ class PlatformRegistryManager:
         self._initialize_platform_registry()
     
     def _initialize_platform_registry(self):
-        """Initialize all platform adapters with their capabilities"""
-        
+        """Initialize all platform adapters with their capabilities"""        
         # YouTube Platform
         self._register_platform(
             PlatformType.YOUTUBE,
@@ -115,8 +110,7 @@ class PlatformRegistryManager:
         self._register_additional_platforms()
     
     def _register_additional_platforms(self):
-        """Register all additional platforms with their capabilities"""
-        
+        """Register all additional platforms with their capabilities"""        
         platforms_config = {
             PlatformType.SPOTIFY: PlatformCapabilities(
                 max_file_size=650 * 1024 * 1024,  # 650MB
@@ -173,8 +167,7 @@ class PlatformRegistryManager:
             self._register_platform(platform_type, capabilities)
     
     def _register_platform(self, platform_type: PlatformType, capabilities: PlatformCapabilities):
-        """Register a platform with its capabilities"""
-        try:
+        """Register a platform with its capabilities"""        try:
             adapter_class = self._import_adapter_class(platform_type)
             
             adapter = PlatformAdapter(
@@ -194,8 +187,7 @@ class PlatformRegistryManager:
             self.logger.error(f"Failed to register platform {platform_type.value}: {e}")
     
     def _import_adapter_class(self, platform_type: PlatformType) -> Optional[Type]:
-        """Dynamically import adapter class for platform"""
-        try:
+        """Dynamically import adapter class for platform"""        try:
             module_name = f".{platform_type.value}_adapter"
             class_name = f"{platform_type.value.title()}Adapter"
             
@@ -208,23 +200,19 @@ class PlatformRegistryManager:
             return None
     
     def get_supported_platforms(self) -> List[PlatformType]:
-        """Get list of all supported platforms"""
-        return list(self._adapters.keys())
+        """Get list of all supported platforms"""        return list(self._adapters.keys())
     
     def get_active_platforms(self) -> List[PlatformType]:
-        """Get list of active platforms"""
-        return [
+        """Get list of active platforms"""        return [
             platform for platform, adapter in self._adapters.items()
             if adapter.is_active and adapter.adapter_class is not None
         ]
     
     def get_platform_capabilities(self, platform: PlatformType) -> Optional[PlatformCapabilities]:
-        """Get capabilities for a specific platform"""
-        return self._capabilities_cache.get(platform)
+        """Get capabilities for a specific platform"""        return self._capabilities_cache.get(platform)
     
     def is_content_supported(self, platform: PlatformType, content_metadata: ContentMetadata) -> bool:
-        """Check if content is supported by platform"""
-        capabilities = self.get_platform_capabilities(platform)
+        """Check if content is supported by platform"""        capabilities = self.get_platform_capabilities(platform)
         if not capabilities:
             return False
         
@@ -244,8 +232,7 @@ class PlatformRegistryManager:
         return True
     
     def get_compatible_platforms(self, content_metadata: ContentMetadata) -> List[PlatformType]:
-        """Get list of platforms compatible with content"""
-        return [
+        """Get list of platforms compatible with content"""        return [
             platform for platform in self.get_active_platforms()
             if self.is_content_supported(platform, content_metadata)
         ]
@@ -274,8 +261,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformConfig:
-    """Configuration for a platform adapter."""
-    name: str
+    """Configuration for a platform adapter."""    name: str
     adapter_class: Type[BasePlatformAdapter]
     category: str
     is_active: bool = True
@@ -290,19 +276,16 @@ class PlatformConfig:
     business_priority: int = 1  # 1=highest, 5=lowest
 
 class PlatformRegistry:
-    """
-    Central registry for ALL platform adapters.
+    """    Central registry for ALL platform adapters.
     Manages platform discovery, loading, and configuration.
-    """
-    
+    """    
     def __init__(self):
         self._platforms: Dict[str, PlatformConfig] = {}
         self._initialized_adapters: Dict[str, BasePlatformAdapter] = {}
         self._register_all_platforms()
     
     def _register_all_platforms(self):
-        """Register all available platform adapters."""
-        
+        """Register all available platform adapters."""        
         # Social Media Platforms
         self.register_platform(PlatformConfig(
             name="youtube",
@@ -444,28 +427,23 @@ class PlatformRegistry:
         logger.info(f"Registered {len(self._platforms)} platform adapters")
     
     def register_platform(self, config: PlatformConfig):
-        """Register a new platform adapter."""
-        self._platforms[config.name] = config
+        """Register a new platform adapter."""        self._platforms[config.name] = config
         logger.debug(f"Registered platform: {config.name}")
     
     def get_platform_config(self, platform_name: str) -> Optional[PlatformConfig]:
-        """Get platform configuration by name."""
-        return self._platforms.get(platform_name)
+        """Get platform configuration by name."""        return self._platforms.get(platform_name)
     
     def get_all_platforms(self) -> Dict[str, PlatformConfig]:
-        """Get all registered platforms."""
-        return self._platforms.copy()
+        """Get all registered platforms."""        return self._platforms.copy()
     
     def get_platforms_by_category(self, category: str) -> Dict[str, PlatformConfig]:
-        """Get all platforms in a specific category."""
-        return {
+        """Get all platforms in a specific category."""        return {
             name: config for name, config in self._platforms.items()
             if config.category == category
         }
     
     def get_platforms_by_content_type(self, content_type: str) -> Dict[str, PlatformConfig]:
-        """Get platforms that support specific content type."""
-        content_type_mapping = {
+        """Get platforms that support specific content type."""        content_type_mapping = {
             "video": "supports_video",
             "audio": "supports_audio", 
             "image": "supports_images",
@@ -482,29 +460,25 @@ class PlatformRegistry:
         }
     
     def get_monetization_platforms(self) -> Dict[str, PlatformConfig]:
-        """Get platforms that support monetization."""
-        return {
+        """Get platforms that support monetization."""        return {
             name: config for name, config in self._platforms.items()
             if config.monetization_available and config.is_active
         }
     
     def get_high_priority_platforms(self) -> Dict[str, PlatformConfig]:
-        """Get high business priority platforms."""
-        return {
+        """Get high business priority platforms."""        return {
             name: config for name, config in self._platforms.items()
             if config.business_priority <= 2 and config.is_active
         }
     
     def get_free_tier_platforms(self) -> Dict[str, PlatformConfig]:
-        """Get platforms with free API tier."""
-        return {
+        """Get platforms with free API tier."""        return {
             name: config for name, config in self._platforms.items()
             if config.api_cost_tier == "free" and config.is_active
         }
     
     def initialize_adapter(self, platform_name: str, credentials: Any) -> Optional[BasePlatformAdapter]:
-        """Initialize a platform adapter with credentials."""
-        try:
+        """Initialize a platform adapter with credentials."""        try:
             config = self.get_platform_config(platform_name)
             if not config:
                 logger.error(f"Platform {platform_name} not found in registry")
@@ -530,12 +504,10 @@ class PlatformRegistry:
             return None
     
     def get_adapter(self, platform_name: str) -> Optional[BasePlatformAdapter]:
-        """Get initialized adapter instance."""
-        return self._initialized_adapters.get(platform_name)
+        """Get initialized adapter instance."""        return self._initialized_adapters.get(platform_name)
     
     def get_platform_recommendations(self, content_metadata: Any) -> List[str]:
-        """Get recommended platforms based on content metadata."""
-        recommendations = []
+        """Get recommended platforms based on content metadata."""        recommendations = []
         
         # Analyze content type
         content_type = getattr(content_metadata, 'content_type', 'text').lower()
@@ -554,8 +526,7 @@ class PlatformRegistry:
         return recommendations
     
     def get_distribution_strategy(self, content_metadata: Any, budget_tier: str = "medium") -> Dict[str, Any]:
-        """Get optimized distribution strategy based on content and budget."""
-        strategy = {
+        """Get optimized distribution strategy based on content and budget."""        strategy = {
             "primary_platforms": [],
             "secondary_platforms": [],
             "budget_allocation": {},
@@ -601,8 +572,7 @@ class PlatformRegistry:
         return strategy
     
     def validate_platform_compatibility(self, platform_name: str, content_metadata: Any) -> Dict[str, Any]:
-        """Validate if content is compatible with platform."""
-        config = self.get_platform_config(platform_name)
+        """Validate if content is compatible with platform."""        config = self.get_platform_config(platform_name)
         if not config:
             return {"compatible": False, "reason": "Platform not found"}
         
@@ -628,8 +598,7 @@ class PlatformRegistry:
         }
     
     def get_platform_statistics(self) -> Dict[str, Any]:
-        """Get registry statistics."""
-        stats = {
+        """Get registry statistics."""        stats = {
             "total_platforms": len(self._platforms),
             "active_platforms": len([p for p in self._platforms.values() if p.is_active]),
             "initialized_adapters": len(self._initialized_adapters),
@@ -658,5 +627,4 @@ class PlatformRegistry:
 platform_registry = PlatformRegistry()
 
 def get_platform_registry() -> PlatformRegistry:
-    """Get the global platform registry instance."""
-    return platform_registry
+    """Get the global platform registry instance."""    return platform_registry

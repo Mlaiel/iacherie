@@ -1,5 +1,4 @@
-"""
-Collaboration Licensing System - IA Influencer Agent + Content Protection Platform
+"""Collaboration Licensing System - IA Influencer Agent + Content Protection Platform
 
 Advanced collaboration licensing for multi-format creators enabling seamless
 creator-to-creator licensing, collaboration rights management, and revenue sharing.
@@ -9,7 +8,6 @@ Business Logic: Creator → Collaboration Matching → License Agreement → Rev
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from datetime import datetime, timedelta
 from enum import Enum
@@ -23,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of creative collaborations."""
-    MUSIC_FEATURING = "music_featuring"
+    """Types of creative collaborations."""    MUSIC_FEATURING = "music_featuring"
     REMIX_COLLABORATION = "remix_collaboration"
     PODCAST_GUEST = "podcast_guest"
     PHOTO_SHOOT = "photo_shoot"
@@ -35,8 +32,7 @@ class CollaborationType(Enum):
 
 
 class LicenseScope(Enum):
-    """Scope of collaboration license."""
-    SINGLE_PROJECT = "single_project"
+    """Scope of collaboration license."""    SINGLE_PROJECT = "single_project"
     SERIES_PROJECT = "series_project"
     ONGOING_PARTNERSHIP = "ongoing_partnership"
     EXCLUSIVE_COLLABORATION = "exclusive_collaboration"
@@ -44,8 +40,7 @@ class LicenseScope(Enum):
 
 
 class RevenueModel(Enum):
-    """Revenue sharing models."""
-    EQUAL_SPLIT = "equal_split"
+    """Revenue sharing models."""    EQUAL_SPLIT = "equal_split"
     WEIGHTED_SPLIT = "weighted_split"
     LEAD_CREATOR_MAJORITY = "lead_creator_majority"
     PERFORMANCE_BASED = "performance_based"
@@ -54,8 +49,7 @@ class RevenueModel(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Status of collaboration."""
-    PROPOSED = "proposed"
+    """Status of collaboration."""    PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     AGREED = "agreed"
     ACTIVE = "active"
@@ -66,8 +60,7 @@ class CollaborationStatus(Enum):
 
 @dataclass
 class CollaborationProposal:
-    """Collaboration proposal structure."""
-    proposal_id: str
+    """Collaboration proposal structure."""    proposal_id: str
     proposer_id: str
     proposer_type: str  # CreatorType
     target_creator_id: str
@@ -87,8 +80,7 @@ class CollaborationProposal:
 
 @dataclass
 class CollaborationAgreement:
-    """Executed collaboration agreement."""
-    agreement_id: str
+    """Executed collaboration agreement."""    agreement_id: str
     proposal_id: str
     collaborators: List[Dict[str, Any]]  # [{creator_id, creator_type, role, contribution_weight}]
     collaboration_type: CollaborationType
@@ -106,8 +98,7 @@ class CollaborationAgreement:
 
 @dataclass
 class CollaborationRevenue:
-    """Revenue tracking for collaborations."""
-    revenue_id: str
+    """Revenue tracking for collaborations."""    revenue_id: str
     agreement_id: str
     content_id: str
     platform: str
@@ -121,8 +112,7 @@ class CollaborationRevenue:
 
 @dataclass
 class CreatorProfile:
-    """Creator profile for collaboration matching."""
-    creator_id: str
+    """Creator profile for collaboration matching."""    creator_id: str
     creator_type: str
     specialties: List[str]
     portfolio_stats: Dict[str, Any]
@@ -135,16 +125,13 @@ class CreatorProfile:
 
 
 class CollaborationLicensingManager:
-    """
-    Advanced collaboration licensing system.
+    """    Advanced collaboration licensing system.
     
     Manages creator-to-creator collaborations, licensing agreements,
     and automated revenue sharing in the IA Influencer ecosystem.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the Collaboration Licensing Manager."""
-        self.config = config
+        """Initialize the Collaboration Licensing Manager."""        self.config = config
         self.db_config = config.get("database", {})
         self.collaboration_config = config.get("collaboration", {})
         
@@ -176,8 +163,7 @@ class CollaborationLicensingManager:
         revenue_model: RevenueModel = RevenueModel.EQUAL_SPLIT,
         duration_days: Optional[int] = None
     ) -> CollaborationProposal:
-        """
-        Create a new collaboration proposal.
+        """        Create a new collaboration proposal.
         
         Args:
             proposer_id: ID of creator making the proposal
@@ -188,8 +174,7 @@ class CollaborationLicensingManager:
             proposed_terms: Detailed terms and conditions
             revenue_model: Revenue sharing model
             duration_days: Duration in days (optional)
-        """
-        try:
+        """        try:
             # Validate creators exist and are compatible
             await self._validate_collaboration_compatibility(
                 proposer_id, target_creator_id, collaboration_type
@@ -239,8 +224,7 @@ class CollaborationLicensingManager:
         target_creator_id: str,
         collaboration_type: CollaborationType
     ) -> bool:
-        """Validate that creators are compatible for collaboration."""
-        # Check if creators exist
+        """Validate that creators are compatible for collaboration."""        # Check if creators exist
         proposer_profile = self.creator_profiles.get(proposer_id)
         target_profile = self.creator_profiles.get(target_creator_id)
         
@@ -270,8 +254,7 @@ class CollaborationLicensingManager:
         response: str,  # "accept", "reject", "counter"
         counter_terms: Optional[Dict[str, Any]] = None
     ) -> CollaborationProposal:
-        """Respond to a collaboration proposal."""
-        try:
+        """Respond to a collaboration proposal."""        try:
             proposal = self.proposals.get(proposal_id)
             if not proposal:
                 raise ValueError(f"Proposal {proposal_id} not found")
@@ -307,8 +290,7 @@ class CollaborationLicensingManager:
         self,
         proposal: CollaborationProposal
     ) -> CollaborationAgreement:
-        """Create a binding collaboration agreement from an accepted proposal."""
-        try:
+        """Create a binding collaboration agreement from an accepted proposal."""        try:
             # Build collaborators list
             collaborators = [
                 {
@@ -374,8 +356,7 @@ class CollaborationLicensingManager:
         revenue_model: RevenueModel,
         collaborators: List[Dict[str, Any]]
     ) -> Dict[str, float]:
-        """Calculate revenue sharing percentages based on model."""
-        sharing = {}
+        """Calculate revenue sharing percentages based on model."""        sharing = {}
         
         if revenue_model == RevenueModel.EQUAL_SPLIT:
             percentage = 1.0 / len(collaborators)
@@ -403,8 +384,7 @@ class CollaborationLicensingManager:
         collaboration_type: CollaborationType,
         proposed_terms: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate specific license terms based on collaboration type."""
-        base_terms = {
+        """Generate specific license terms based on collaboration type."""        base_terms = {
             "usage_rights": "shared",
             "attribution_required": True,
             "modification_rights": "with_approval",
@@ -445,8 +425,7 @@ class CollaborationLicensingManager:
         self,
         proposal: CollaborationProposal
     ) -> Dict[str, Any]:
-        """Generate intellectual property terms for the collaboration."""
-        return {
+        """Generate intellectual property terms for the collaboration."""        return {
             "joint_ownership": True,
             "individual_contributions_recognized": True,
             "derivative_works_approval": "mutual_consent",
@@ -471,8 +450,7 @@ class CollaborationLicensingManager:
         revenue_amount: float,
         currency: str = "EUR"
     ) -> CollaborationRevenue:
-        """Track revenue for collaborative content."""
-        try:
+        """Track revenue for collaborative content."""        try:
             agreement = self.agreements.get(agreement_id)
             if not agreement:
                 raise ValueError(f"Agreement {agreement_id} not found")
@@ -511,8 +489,7 @@ class CollaborationLicensingManager:
         revenue_record: CollaborationRevenue,
         agreement: CollaborationAgreement
     ) -> Dict[str, float]:
-        """Calculate revenue distribution based on agreement terms."""
-        try:
+        """Calculate revenue distribution based on agreement terms."""        try:
             distribution = {}
             
             for creator_id, percentage in agreement.revenue_sharing.items():
@@ -537,8 +514,7 @@ class CollaborationLicensingManager:
         collaboration_type: CollaborationType,
         project_requirements: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Find potential collaboration matches using AI matching."""
-        try:
+        """Find potential collaboration matches using AI matching."""        try:
             if not self.enable_ai_matching:
                 return []
             
@@ -593,8 +569,7 @@ class CollaborationLicensingManager:
         collaboration_type: CollaborationType,
         project_requirements: Dict[str, Any]
     ) -> float:
-        """Calculate AI-based match score between creators."""
-        score = 0.0
+        """Calculate AI-based match score between creators."""        score = 0.0
         
         # Reputation compatibility (20%)
         rep_diff = abs(requester_profile.reputation_score - candidate_profile.reputation_score)
@@ -629,8 +604,7 @@ class CollaborationLicensingManager:
         requester_stats: Dict[str, Any],
         candidate_stats: Dict[str, Any]
     ) -> float:
-        """Calculate portfolio compatibility score."""
-        # Simplified compatibility based on similar metrics
+        """Calculate portfolio compatibility score."""        # Simplified compatibility based on similar metrics
         compatible_metrics = 0
         total_metrics = 0
         
@@ -654,8 +628,7 @@ class CollaborationLicensingManager:
         creator_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Generate comprehensive collaboration report for a creator."""
-        try:
+        """Generate comprehensive collaboration report for a creator."""        try:
             period_start = datetime.utcnow() - timedelta(days=period_days)
             
             # Get creator's active collaborations
@@ -715,8 +688,7 @@ class CollaborationLicensingManager:
         self,
         agreements: List[CollaborationAgreement]
     ) -> Dict[str, int]:
-        """Get breakdown of collaborations by type."""
-        breakdown = {}
+        """Get breakdown of collaborations by type."""        breakdown = {}
         for agreement in agreements:
             collab_type = agreement.collaboration_type.value
             breakdown[collab_type] = breakdown.get(collab_type, 0) + 1
@@ -727,8 +699,7 @@ class CollaborationLicensingManager:
         creator_id: str,
         limit: int = 5
     ) -> List[Dict[str, Any]]:
-        """Get top collaborators by revenue and frequency."""
-        collaborator_stats = {}
+        """Get top collaborators by revenue and frequency."""        collaborator_stats = {}
         
         # Aggregate collaboration data
         for agreement_id in self.active_collaborations.get(creator_id, []):
@@ -769,8 +740,7 @@ class CollaborationLicensingManager:
         agreements: List[CollaborationAgreement],
         creator_id: str
     ) -> Dict[str, float]:
-        """Get collaboration revenue breakdown by platform."""
-        platform_revenue = {}
+        """Get collaboration revenue breakdown by platform."""        platform_revenue = {}
         
         for agreement in agreements:
             creator_share = agreement.revenue_sharing.get(creator_id, 0.0)
@@ -787,8 +757,7 @@ class CollaborationLicensingManager:
         self,
         creator_id: str
     ) -> List[str]:
-        """Generate personalized collaboration recommendations."""
-        recommendations = []
+        """Generate personalized collaboration recommendations."""        recommendations = []
         
         creator_profile = self.creator_profiles.get(creator_id)
         if not creator_profile:

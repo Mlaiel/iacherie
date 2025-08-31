@@ -27,8 +27,7 @@ Les violations seront poursuivies dans toute la mesure du droit applicable.
 Violations will be prosecuted to the fullest extent of applicable law.
 
 For licensing and usage permissions, contact: mlaiel@live.de
-"""
-import pytest
+"""import pytest
 import torch
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any

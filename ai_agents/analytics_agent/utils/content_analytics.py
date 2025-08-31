@@ -1,5 +1,4 @@
-"""
-Analytics Agent - Enterprise Content Analytics Module
+"""Analytics Agent - Enterprise Content Analytics Module
 Industrial-grade content performance analysis and optimization for IA Influencer Agent with
 comprehensive multi-format support, AI-powered insights, and predictive capabilities.
 
@@ -22,7 +21,6 @@ Enterprise Features:
 - Automated content optimization recommendations
 - Enterprise analytics with machine learning insights
 """
-
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
 from enum import Enum, IntEnum
@@ -46,8 +44,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Enhanced content type enumeration with modern formats"""
-    AUDIO = "audio"
+    """Enhanced content type enumeration with modern formats"""    AUDIO = "audio"
     VIDEO = "video"  
     IMAGE = "image"
     TEXT = "text"
@@ -64,8 +61,7 @@ class ContentType(Enum):
     AI_GENERATED = "ai_generated"
 
 class EngagementMetric(Enum):
-    """Comprehensive engagement metrics enumeration"""
-    VIEWS = "views"
+    """Comprehensive engagement metrics enumeration"""    VIEWS = "views"
     LIKES = "likes"
     SHARES = "shares"
     COMMENTS = "comments"
@@ -82,8 +78,7 @@ class EngagementMetric(Enum):
     INTERACTION_DEPTH = "interaction_depth"
 
 class ContentStatus(Enum):
-    """Content lifecycle status"""
-    DRAFT = "draft"
+    """Content lifecycle status"""    DRAFT = "draft"
     PUBLISHED = "published"
     ARCHIVED = "archived"
     DELETED = "deleted"
@@ -93,8 +88,7 @@ class ContentStatus(Enum):
     VIRAL = "viral"
 
 class AnalysisLevel(Enum):
-    """Analysis depth levels"""
-    STANDARD = "standard"
+    """Analysis depth levels"""    STANDARD = "standard"
     PROFESSIONAL = "professional"
     ENTERPRISE = "enterprise"
     PRODUCTION = "production"
@@ -102,8 +96,7 @@ class AnalysisLevel(Enum):
 
 @dataclass
 class ContentMetrics:
-    """Comprehensive content performance metrics data model"""
-    content_id: str
+    """Comprehensive content performance metrics data model"""    content_id: str
     content_type: ContentType
     title: str = ""
     description: str = ""
@@ -185,8 +178,7 @@ class ContentMetrics:
 
 @dataclass
 class AudienceSegment:
-    """Enterprise audience segment analysis with detailed demographics"""
-    segment_id: str
+    """Enterprise audience segment analysis with detailed demographics"""    segment_id: str
     segment_name: str
     
     # Demographic information
@@ -242,8 +234,7 @@ class AudienceSegment:
 
 @dataclass 
 class TrendAnalysis:
-    """Comprehensive trend analysis with predictive capabilities"""
-    trend_id: str
+    """Comprehensive trend analysis with predictive capabilities"""    trend_id: str
     trend_name: str
     keyword: str
     category: str = ""
@@ -301,8 +292,7 @@ class TrendAnalysis:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization recommendations and strategies"""
-    content_id: str
+    """Content optimization recommendations and strategies"""    content_id: str
     optimization_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     
     # Optimization scores
@@ -338,8 +328,7 @@ class ContentOptimization:
     results_tracking: Dict[str, float] = field(default_factory=dict)
 
 class ContentAnalyticsEngine:
-    """
-    Enterprise Content Analytics Processing Engine - Production Edition
+    """    Enterprise Content Analytics Processing Engine - Production Edition
     
     Industrial-grade content analytics system providing comprehensive analysis capabilities:
     
@@ -372,11 +361,9 @@ class ContentAnalyticsEngine:
     - Creator performance benchmarking
     - Market trend analysis and competitive positioning
     - Collaboration opportunity discovery and matching
-    """
-    
+    """    
     def __init__(self, analysis_level: AnalysisLevel = AnalysisLevel.ENTERPRISE):
-        """Initialize enterprise content analytics engine"""
-        self.analysis_level = analysis_level
+        """Initialize enterprise content analytics engine"""        self.analysis_level = analysis_level
         self.engine_id = f"content_analytics_{datetime.now().strftime('%Y%m%d_%H%M%S')}_{uuid.uuid4().hex[:8]}"
         
         # Core data structures
@@ -414,8 +401,7 @@ class ContentAnalyticsEngine:
         logger.info(f"Analysis Level: {analysis_level.value}")
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for enterprise analytics"""
-        try:
+        """Initialize machine learning models for enterprise analytics"""        try:
             # Engagement prediction model
             self.ml_processors['engagement_predictor'] = self._create_engagement_model()
             
@@ -437,8 +423,7 @@ class ContentAnalyticsEngine:
             logger.error(f"Error initializing ML models: {e}")
     
     def _initialize_sample_data(self):
-        """Initialize comprehensive sample data for testing and demonstration"""
-        try:
+        """Initialize comprehensive sample data for testing and demonstration"""        try:
             # Sample content metrics for different formats
             content_types = [ContentType.AUDIO, ContentType.VIDEO, ContentType.IMAGE, ContentType.TEXT, ContentType.BLOG, ContentType.PODCAST]
             
@@ -552,8 +537,7 @@ class ContentAnalyticsEngine:
             logger.error(f"Error initializing sample data: {e}")
     
     def calculate_engagement_rate(self, metrics: ContentMetrics) -> float:
-        """Calculate advanced engagement rate with weighted interactions"""
-        try:
+        """Calculate advanced engagement rate with weighted interactions"""        try:
             if metrics.views == 0:
                 return 0.0
             
@@ -597,10 +581,8 @@ class ContentAnalyticsEngine:
             return 0.0
     
     def analyze_content_performance(self, content_id: str, timeframe_days: int = 30) -> Dict[str, Any]:
-        """
-        Comprehensive content performance analysis with multi-dimensional insights
-        """
-        try:
+        """        Comprehensive content performance analysis with multi-dimensional insights
+        """        try:
             # Find content metrics
             content_metrics = next((m for m in self.metrics_history if m.content_id == content_id), None)
             if not content_metrics:
@@ -696,8 +678,7 @@ class ContentAnalyticsEngine:
             return {"error": str(e), "content_id": content_id}
     
     def analyze_trending_topics(self) -> Dict[str, Any]:
-        """Analyze current trending topics with predictive insights"""
-        try:
+        """Analyze current trending topics with predictive insights"""        try:
             current_time = datetime.now()
             
             # Sort trends by score and recency
@@ -757,8 +738,7 @@ class ContentAnalyticsEngine:
             return {"error": str(e)}
     
     def segment_audience(self, content_id: Optional[str] = None) -> Dict[str, Any]:
-        """Advanced audience segmentation with behavioral analysis"""
-        try:
+        """Advanced audience segmentation with behavioral analysis"""        try:
             if content_id:
                 # Segment audience for specific content
                 content_metrics = next((m for m in self.metrics_history if m.content_id == content_id), None)
@@ -819,8 +799,7 @@ class ContentAnalyticsEngine:
             return {"error": str(e)}
     
     def optimize_content_strategy(self, creator_id: str, content_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Generate comprehensive content strategy optimization"""
-        try:
+        """Generate comprehensive content strategy optimization"""        try:
             # Analyze creator's content history
             creator_metrics = [m for m in self.metrics_history if m.creator_id == creator_id]
             
@@ -875,8 +854,7 @@ class ContentAnalyticsEngine:
     # ML Model Creation Methods
     
     def _create_engagement_model(self):
-        """Create engagement prediction model"""
-        # Placeholder for actual ML model
+        """Create engagement prediction model"""        # Placeholder for actual ML model
         return {
             'model_type': 'engagement_predictor',
             'version': '2.0.0',
@@ -885,8 +863,7 @@ class ContentAnalyticsEngine:
         }
     
     def _create_trend_detection_model(self):
-        """Create trend detection model"""
-        return {
+        """Create trend detection model"""        return {
             'model_type': 'trend_detector',
             'version': '2.0.0',
             'accuracy': 0.78,
@@ -894,8 +871,7 @@ class ContentAnalyticsEngine:
         }
     
     def _create_segmentation_model(self):
-        """Create audience segmentation model"""
-        return {
+        """Create audience segmentation model"""        return {
             'model_type': 'audience_segmenter',
             'version': '2.0.0',
             'accuracy': 0.82,
@@ -903,8 +879,7 @@ class ContentAnalyticsEngine:
         }
     
     def _create_optimization_model(self):
-        """Create content optimization model"""
-        return {
+        """Create content optimization model"""        return {
             'model_type': 'content_optimizer',
             'version': '2.0.0',
             'accuracy': 0.79,
@@ -912,8 +887,7 @@ class ContentAnalyticsEngine:
         }
     
     def _create_protection_model(self):
-        """Create content protection analysis model"""
-        return {
+        """Create content protection analysis model"""        return {
             'model_type': 'protection_analyzer',
             'version': '2.0.0',
             'accuracy': 0.92,
@@ -923,16 +897,14 @@ class ContentAnalyticsEngine:
     # Performance Calculation Methods
     
     def _calculate_viral_coefficient(self, metrics: ContentMetrics) -> float:
-        """Calculate viral coefficient for content"""
-        if metrics.views == 0:
+        """Calculate viral coefficient for content"""        if metrics.views == 0:
             return 0.0
         
         viral_actions = metrics.shares + (metrics.comments * 0.5) + (metrics.saves * 0.3)
         return min(viral_actions / metrics.views * 10, 10.0)
     
     def _calculate_performance_score(self, metrics: ContentMetrics) -> float:
-        """Calculate overall performance score"""
-        engagement_score = self.calculate_engagement_rate(metrics) * 0.3
+        """Calculate overall performance score"""        engagement_score = self.calculate_engagement_rate(metrics) * 0.3
         completion_score = metrics.completion_rate * 0.2
         quality_score = metrics.quality_score * 0.2
         revenue_score = min(metrics.roi, 5.0) / 5.0 * 0.15
@@ -941,8 +913,7 @@ class ContentAnalyticsEngine:
         return min(engagement_score + completion_score + quality_score + revenue_score + reach_score, 1.0)
     
     def _calculate_interaction_depth(self, metrics: ContentMetrics) -> float:
-        """Calculate depth of user interactions"""
-        if metrics.views == 0:
+        """Calculate depth of user interactions"""        if metrics.views == 0:
             return 0.0
         
         depth_score = (
@@ -954,8 +925,7 @@ class ContentAnalyticsEngine:
         return min(depth_score * 10, 1.0)
     
     def _assess_engagement_quality(self, metrics: ContentMetrics) -> str:
-        """Assess quality of engagement"""
-        engagement_rate = self.calculate_engagement_rate(metrics)
+        """Assess quality of engagement"""        engagement_rate = self.calculate_engagement_rate(metrics)
         
         if engagement_rate > 0.15:
             return "excellent"
@@ -969,8 +939,7 @@ class ContentAnalyticsEngine:
             return "very_poor"
     
     def _calculate_monetization_efficiency(self, metrics: ContentMetrics) -> float:
-        """Calculate monetization efficiency"""
-        if metrics.views == 0:
+        """Calculate monetization efficiency"""        if metrics.views == 0:
             return 0.0
         
         revenue_per_view = metrics.revenue / metrics.views
@@ -981,8 +950,7 @@ class ContentAnalyticsEngine:
     # Analysis Helper Methods
     
     def _analyze_content_audience(self, metrics: ContentMetrics) -> Dict[str, Any]:
-        """Analyze audience for specific content"""
-        return {
+        """Analyze audience for specific content"""        return {
             'audience_size': metrics.reach,
             'engagement_quality': self._assess_engagement_quality(metrics),
             'audience_retention': metrics.audience_retention,
@@ -992,8 +960,7 @@ class ContentAnalyticsEngine:
         }
     
     def _assess_technical_quality(self, metrics: ContentMetrics) -> Dict[str, Any]:
-        """Assess technical quality of content"""
-        return {
+        """Assess technical quality of content"""        return {
             'resolution_score': np.random.uniform(0.7, 1.0),
             'audio_quality': np.random.uniform(0.8, 1.0),
             'compression_efficiency': np.random.uniform(0.6, 0.9),
@@ -1003,8 +970,7 @@ class ContentAnalyticsEngine:
         }
     
     def _identify_improvement_areas(self, metrics: ContentMetrics) -> List[str]:
-        """Identify areas for content improvement"""
-        improvements = []
+        """Identify areas for content improvement"""        improvements = []
         
         if metrics.engagement_rate < 0.05:
             improvements.append("Improve content engagement through better hooks and calls-to-action")
@@ -1024,8 +990,7 @@ class ContentAnalyticsEngine:
         return improvements
     
     def _analyze_platform_performance(self, metrics: ContentMetrics) -> Dict[str, Any]:
-        """Analyze performance specific to platform"""
-        platform_insights = {
+        """Analyze performance specific to platform"""        platform_insights = {
             'youtube': {
                 'algorithm_compatibility': np.random.uniform(0.6, 0.9),
                 'seo_optimization': np.random.uniform(0.5, 0.8),
@@ -1052,8 +1017,7 @@ class ContentAnalyticsEngine:
         })
     
     def _analyze_trend_correlation(self, metrics: ContentMetrics) -> Dict[str, Any]:
-        """Analyze correlation with current trends"""
-        relevant_trends = [trend for trend in self.trend_analyses if any(
+        """Analyze correlation with current trends"""        relevant_trends = [trend for trend in self.trend_analyses if any(
             keyword in metrics.tags or keyword in metrics.title.lower()
             for keyword in [trend.keyword] + trend.related_keywords
         )]
@@ -1067,8 +1031,7 @@ class ContentAnalyticsEngine:
         }
     
     def _analyze_competitive_position(self, metrics: ContentMetrics) -> Dict[str, Any]:
-        """Analyze competitive position"""
-        similar_content = [m for m in self.metrics_history 
+        """Analyze competitive position"""        similar_content = [m for m in self.metrics_history 
                           if m.content_type == metrics.content_type and m.content_id != metrics.content_id]
         
         if not similar_content:
@@ -1089,8 +1052,7 @@ class ContentAnalyticsEngine:
         }
     
     def _assess_protection_threats(self, metrics: ContentMetrics) -> Dict[str, Any]:
-        """Assess content protection threats"""
-        return {
+        """Assess content protection threats"""        return {
             'piracy_risk_level': np.random.choice(['low', 'medium', 'high'], p=[0.6, 0.3, 0.1]),
             'copyright_violations': np.random.randint(0, 5),
             'unauthorized_usage_detected': np.random.choice([True, False], p=[0.2, 0.8]),
@@ -1104,8 +1066,7 @@ class ContentAnalyticsEngine:
         }
     
     def _generate_performance_predictions(self, metrics: ContentMetrics) -> Dict[str, Any]:
-        """Generate predictive insights for content performance"""
-        return {
+        """Generate predictive insights for content performance"""        return {
             'predicted_7_day_performance': {
                 'views_increase': np.random.uniform(0.05, 0.25),
                 'engagement_trend': np.random.choice(['increasing', 'stable', 'decreasing'], p=[0.4, 0.4, 0.2]),
@@ -1124,8 +1085,7 @@ class ContentAnalyticsEngine:
         }
     
     def _generate_optimization_recommendations(self, metrics: ContentMetrics) -> List[Dict[str, Any]]:
-        """Generate actionable optimization recommendations"""
-        recommendations = []
+        """Generate actionable optimization recommendations"""        recommendations = []
         
         # SEO optimization
         if metrics.relevance_score < 0.7:
@@ -1170,8 +1130,7 @@ class ContentAnalyticsEngine:
         return recommendations
     
     def _compare_with_historical_performance(self, metrics: ContentMetrics) -> Dict[str, Any]:
-        """Compare with historical performance"""
-        creator_content = [m for m in self.metrics_history if m.creator_id == metrics.creator_id]
+        """Compare with historical performance"""        creator_content = [m for m in self.metrics_history if m.creator_id == metrics.creator_id]
         
         if len(creator_content) < 2:
             return {'comparison': 'insufficient_data'}
@@ -1188,8 +1147,7 @@ class ContentAnalyticsEngine:
         }
     
     def _generate_advanced_insights(self, metrics: ContentMetrics) -> List[str]:
-        """Generate advanced AI-powered insights"""
-        insights = []
+        """Generate advanced AI-powered insights"""        insights = []
         
         if metrics.viral_coefficient > 2.0:
             insights.append("Content shows strong viral potential with high share-to-view ratio")
@@ -1211,8 +1169,7 @@ class ContentAnalyticsEngine:
     # Mock Data Generation Methods
     
     def _generate_mock_performance_analysis(self, content_id: str, timeframe_days: int) -> Dict[str, Any]:
-        """Generate mock performance analysis for testing"""
-        return {
+        """Generate mock performance analysis for testing"""        return {
             "content_id": content_id,
             "timeframe_days": timeframe_days,
             "performance_overview": {
@@ -1233,8 +1190,7 @@ class ContentAnalyticsEngine:
         }
     
     def _generate_mock_optimization_strategy(self, creator_id: str, content_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Generate mock optimization strategy"""
-        return {
+        """Generate mock optimization strategy"""        return {
             "creator_id": creator_id,
             "performance_overview": {
                 "average_engagement": np.random.uniform(0.05, 0.12),
@@ -1256,8 +1212,7 @@ class ContentAnalyticsEngine:
     # Trend Analysis Helper Methods
     
     def _analyze_trend_categories(self, trends: List[TrendAnalysis]) -> Dict[str, Any]:
-        """Analyze trends by category"""
-        categories = {}
+        """Analyze trends by category"""        categories = {}
         for trend in trends:
             category = trend.category or 'uncategorized'
             if category not in categories:
@@ -1279,8 +1234,7 @@ class ContentAnalyticsEngine:
         return categories
     
     def _analyze_platform_trends(self, trends: List[TrendAnalysis]) -> Dict[str, Any]:
-        """Analyze trends by platform"""
-        platform_data = {}
+        """Analyze trends by platform"""        platform_data = {}
         
         for trend in trends:
             for platform, score in trend.platform_breakdown.items():
@@ -1303,8 +1257,7 @@ class ContentAnalyticsEngine:
         return platform_data
     
     def _predict_trend_peaks(self, trends: List[TrendAnalysis]) -> List[Dict[str, Any]]:
-        """Predict when trends will peak"""
-        predictions = []
+        """Predict when trends will peak"""        predictions = []
         
         for trend in trends:
             peak_prediction = {
@@ -1320,8 +1273,7 @@ class ContentAnalyticsEngine:
         return predictions
     
     def _identify_trend_opportunities(self, trends: List[TrendAnalysis]) -> List[Dict[str, Any]]:
-        """Identify content opportunities from trends"""
-        opportunities = []
+        """Identify content opportunities from trends"""        opportunities = []
         
         for trend in trends:
             if trend.opportunity_score > 0.6 and trend.commercial_viability > 0.5:
@@ -1339,8 +1291,7 @@ class ContentAnalyticsEngine:
         return sorted(opportunities, key=lambda x: x['opportunity_score'], reverse=True)
     
     def _generate_trend_market_insights(self, trends: List[TrendAnalysis]) -> List[str]:
-        """Generate market insights from trend analysis"""
-        insights = []
+        """Generate market insights from trend analysis"""        insights = []
         
         # Trend velocity insights
         high_velocity_trends = [t for t in trends if t.velocity > 1.5]
@@ -1362,8 +1313,7 @@ class ContentAnalyticsEngine:
     # Audience Analysis Helper Methods
     
     def _analyze_demographics(self) -> Dict[str, Any]:
-        """Analyze demographic distribution across segments"""
-        age_distribution = {}
+        """Analyze demographic distribution across segments"""        age_distribution = {}
         gender_distribution = {'male': 0.0, 'female': 0.0, 'other': 0.0}
         location_distribution = {}
         
@@ -1389,8 +1339,7 @@ class ContentAnalyticsEngine:
         }
     
     def _analyze_audience_behavior(self) -> Dict[str, Any]:
-        """Analyze behavioral patterns across audience segments"""
-        behavior_patterns = {
+        """Analyze behavioral patterns across audience segments"""        behavior_patterns = {
             'engagement_levels': {'high': 0, 'medium': 0, 'low': 0},
             'content_consumption_patterns': {},
             'platform_usage_patterns': {},
@@ -1413,8 +1362,7 @@ class ContentAnalyticsEngine:
         return behavior_patterns
     
     def _analyze_content_preferences(self) -> Dict[str, Any]:
-        """Analyze content preferences across segments"""
-        content_preferences = {}
+        """Analyze content preferences across segments"""        content_preferences = {}
         
         for segment in self.audience_segments:
             for content_type in segment.content_preferences:
@@ -1432,8 +1380,7 @@ class ContentAnalyticsEngine:
         }
     
     def _analyze_engagement_patterns(self) -> Dict[str, Any]:
-        """Analyze engagement patterns across segments"""
-        engagement_data = {
+        """Analyze engagement patterns across segments"""        engagement_data = {
             'average_session_duration': 0.0,
             'interaction_frequency': 0.0,
             'retention_rates': [],
@@ -1455,8 +1402,7 @@ class ContentAnalyticsEngine:
         return engagement_data
     
     def _segment_by_value(self) -> Dict[str, Any]:
-        """Segment audience by value metrics"""
-        value_segments = {
+        """Segment audience by value metrics"""        value_segments = {
             'high_value': [],
             'medium_value': [],
             'low_value': []
@@ -1492,8 +1438,7 @@ class ContentAnalyticsEngine:
     # Content Strategy Optimization Helper Methods
     
     def _analyze_creator_performance(self, creator_metrics: List[ContentMetrics]) -> Dict[str, Any]:
-        """Analyze overall creator performance"""
-        if not creator_metrics:
+        """Analyze overall creator performance"""        if not creator_metrics:
             return {'error': 'No content data available'}
         
         total_views = sum(m.views for m in creator_metrics)
@@ -1511,8 +1456,7 @@ class ContentAnalyticsEngine:
         }
     
     def _optimize_content_formats(self, creator_metrics: List[ContentMetrics]) -> Dict[str, Any]:
-        """Optimize content format strategy"""
-        format_performance = {}
+        """Optimize content format strategy"""        format_performance = {}
         
         for metrics in creator_metrics:
             format_key = metrics.content_type.value
@@ -1561,8 +1505,7 @@ class ContentAnalyticsEngine:
         }
     
     def _optimize_content_timing(self, creator_metrics: List[ContentMetrics]) -> Dict[str, Any]:
-        """Optimize content posting timing"""
-        # Analyze posting patterns (simulated)
+        """Optimize content posting timing"""        # Analyze posting patterns (simulated)
         optimal_times = {
             'weekdays': [9, 12, 17, 20],
             'weekends': [10, 14, 19, 21],
@@ -1583,12 +1526,10 @@ class ContentAnalyticsEngine:
         }
     
     def _calculate_demographic_match(self, metrics: ContentMetrics) -> float:
-        """Calculate how well content matches target demographics"""
-        return np.random.uniform(0.6, 0.9)
+        """Calculate how well content matches target demographics"""        return np.random.uniform(0.6, 0.9)
     
     def _identify_competitive_advantages(self, metrics: ContentMetrics, similar_content: List[ContentMetrics]) -> List[str]:
-        """Identify competitive advantages"""
-        advantages = []
+        """Identify competitive advantages"""        advantages = []
         
         if metrics.engagement_rate > np.mean([m.engagement_rate for m in similar_content]):
             advantages.append("Above-average engagement rate")
@@ -1602,8 +1543,7 @@ class ContentAnalyticsEngine:
         return advantages
     
     def _identify_competitive_gaps(self, metrics: ContentMetrics, similar_content: List[ContentMetrics]) -> List[str]:
-        """Identify areas for competitive improvement"""
-        gaps = []
+        """Identify areas for competitive improvement"""        gaps = []
         
         avg_engagement = np.mean([m.engagement_rate for m in similar_content])
         if metrics.engagement_rate < avg_engagement * 0.8:
@@ -1612,8 +1552,7 @@ class ContentAnalyticsEngine:
         return gaps
     
     def _calculate_performance_trend(self, content_history: List[ContentMetrics]) -> str:
-        """Calculate performance trend over time"""
-        if len(content_history) < 3:
+        """Calculate performance trend over time"""        if len(content_history) < 3:
             return "insufficient_data"
         
         # Sort by publish date
@@ -1631,8 +1570,7 @@ class ContentAnalyticsEngine:
             return "stable"
     
     def _suggest_content_types_for_trend(self, trend: TrendAnalysis) -> List[str]:
-        """Suggest content types for a given trend"""
-        suggestions = []
+        """Suggest content types for a given trend"""        suggestions = []
         
         if trend.category == "technology":
             suggestions.extend(["tutorial", "review", "explainer_video"])
@@ -1646,16 +1584,14 @@ class ContentAnalyticsEngine:
         return suggestions
     
     def _suggest_platforms_for_trend(self, trend: TrendAnalysis) -> List[str]:
-        """Suggest optimal platforms for a trend"""
-        # Return platforms where trend has highest scores
+        """Suggest optimal platforms for a trend"""        # Return platforms where trend has highest scores
         platform_scores = trend.platform_breakdown
         return sorted(platform_scores.keys(), key=lambda x: platform_scores[x], reverse=True)[:3]
     
     # Additional helper methods for completeness
     
     def _calculate_consistency_score(self, creator_metrics: List[ContentMetrics]) -> float:
-        """Calculate content consistency score"""
-        if len(creator_metrics) < 2:
+        """Calculate content consistency score"""        if len(creator_metrics) < 2:
             return 0.5
         
         engagement_rates = [m.engagement_rate for m in creator_metrics]
@@ -1667,8 +1603,7 @@ class ContentAnalyticsEngine:
         return (engagement_consistency + quality_consistency) / 2
     
     def _analyze_growth_trajectory(self, creator_metrics: List[ContentMetrics]) -> str:
-        """Analyze creator's growth trajectory"""
-        if len(creator_metrics) < 3:
+        """Analyze creator's growth trajectory"""        if len(creator_metrics) < 3:
             return "insufficient_data"
         
         sorted_metrics = sorted(creator_metrics, key=lambda x: x.publish_date or datetime.now())
@@ -1687,8 +1622,7 @@ class ContentAnalyticsEngine:
 
 
 class ContentOptimizationEngine:
-    """
-    Advanced Content Optimization Engine with AI-Powered Recommendations
+    """    Advanced Content Optimization Engine with AI-Powered Recommendations
     
     Provides intelligent content optimization strategies based on:
     - Performance analytics and historical data
@@ -1696,8 +1630,7 @@ class ContentOptimizationEngine:
     - Audience behavior and preferences
     - Platform-specific optimization techniques
     - AI-powered content enhancement suggestions
-    """
-    
+    """    
     def __init__(self, content_analytics: ContentAnalyticsEngine):
         self.content_analytics = content_analytics
         self.optimization_history: List[ContentOptimization] = []
@@ -1713,8 +1646,7 @@ class ContentOptimizationEngine:
         logger.info("Content Optimization Engine initialized")
     
     def optimize_content_strategy(self, creator_id: str, content_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Generate comprehensive content optimization strategy"""
-        try:
+        """Generate comprehensive content optimization strategy"""        try:
             optimization = {
                 'creator_id': creator_id,
                 'optimization_timestamp': datetime.now().isoformat(),
@@ -1735,40 +1667,35 @@ class ContentOptimizationEngine:
             return {"error": str(e), "creator_id": creator_id}
     
     def _create_seo_model(self):
-        """Create SEO optimization model"""
-        return {
+        """Create SEO optimization model"""        return {
             'model_type': 'seo_optimizer',
             'features': ['keyword_density', 'title_optimization', 'description_quality'],
             'accuracy': 0.83
         }
     
     def _create_engagement_model(self):
-        """Create engagement optimization model"""
-        return {
+        """Create engagement optimization model"""        return {
             'model_type': 'engagement_optimizer', 
             'features': ['content_hooks', 'call_to_actions', 'interactive_elements'],
             'accuracy': 0.79
         }
     
     def _create_monetization_model(self):
-        """Create monetization optimization model"""
-        return {
+        """Create monetization optimization model"""        return {
             'model_type': 'monetization_optimizer',
             'features': ['conversion_funnels', 'pricing_strategy', 'value_proposition'],
             'accuracy': 0.81
         }
     
     def _create_viral_model(self):
-        """Create viral content optimization model"""
-        return {
+        """Create viral content optimization model"""        return {
             'model_type': 'viral_optimizer',
             'features': ['shareability_factor', 'trend_alignment', 'emotional_impact'],
             'accuracy': 0.74
         }
     
     def _analyze_content_portfolio(self, content_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze overall content portfolio"""
-        if not content_history:
+        """Analyze overall content portfolio"""        if not content_history:
             return {'total_content': 0, 'analysis': 'No content history available'}
         
         return {
@@ -1781,8 +1708,7 @@ class ContentOptimizationEngine:
         }
     
     def _identify_optimization_opportunities(self, content_history: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Identify specific optimization opportunities"""
-        opportunities = []
+        """Identify specific optimization opportunities"""        opportunities = []
         
         # SEO opportunities
         opportunities.append({
@@ -1814,8 +1740,7 @@ class ContentOptimizationEngine:
         return opportunities
     
     def _generate_platform_strategies(self, content_history: List[Dict[str, Any]]) -> Dict[str, Dict[str, Any]]:
-        """Generate platform-specific optimization strategies"""
-        return {
+        """Generate platform-specific optimization strategies"""        return {
             'youtube': {
                 'optimization_focus': ['thumbnail_optimization', 'seo_titles', 'end_screens'],
                 'content_recommendations': ['long_form_tutorials', 'series_content', 'live_streams'],
@@ -1837,8 +1762,7 @@ class ContentOptimizationEngine:
         }
     
     def _optimize_content_calendar(self, content_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Optimize content calendar and posting schedule"""
-        return {
+        """Optimize content calendar and posting schedule"""        return {
             'optimal_posting_frequency': 'Daily for short-form, 3x/week for long-form',
             'best_posting_times': {
                 'monday': ['12 PM', '7 PM'],
@@ -1859,8 +1783,7 @@ class ContentOptimizationEngine:
         }
     
     def _calculate_content_distribution(self, content_history: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate content type distribution"""
-        distribution = {}
+        """Calculate content type distribution"""        distribution = {}
         total = len(content_history)
         
         for content in content_history:
@@ -1871,8 +1794,7 @@ class ContentOptimizationEngine:
         return {k: v/total for k, v in distribution.items()}
     
     def _analyze_portfolio_trends(self, content_history: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze portfolio performance trends"""
-        return {
+        """Analyze portfolio performance trends"""        return {
             'overall_trend': 'improving',
             'engagement_trend': '+15% over last 30 days',
             'reach_trend': '+22% over last 30 days',
@@ -1881,8 +1803,7 @@ class ContentOptimizationEngine:
         }
     
     def _identify_top_performers(self, content_history: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Identify top performing content"""
-        # Sort by performance score (simulated)
+        """Identify top performing content"""        # Sort by performance score (simulated)
         top_performers = []
         
         for i, content in enumerate(content_history[:3]):  # Top 3
@@ -1896,8 +1817,7 @@ class ContentOptimizationEngine:
         return top_performers
     
     def _identify_underperformers(self, content_history: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Identify underperforming content"""
-        underperformers = []
+        """Identify underperforming content"""        underperformers = []
         
         for i, content in enumerate(content_history[-2:]):  # Bottom 2
             underperformers.append({
@@ -1910,8 +1830,7 @@ class ContentOptimizationEngine:
         return underperformers
     
     def _identify_content_gaps(self, content_history: List[Dict[str, Any]]) -> List[str]:
-        """Identify gaps in content strategy"""
-        return [
+        """Identify gaps in content strategy"""        return [
             'Tutorial content for beginners',
             'Behind-the-scenes personal content',
             'Live Q&A sessions',
@@ -1945,8 +1864,7 @@ __all__ = [
         return (base_rate + weighted_rate) * (1 + duration_factor * 0.2)
     
     def analyze_content_performance(self, content_id: str, timeframe_days: int = 30) -> Dict[str, Any]:
-        """Analyze comprehensive content performance"""
-        content_metrics = [m for m in self.metrics_history 
+        """Analyze comprehensive content performance"""        content_metrics = [m for m in self.metrics_history 
                           if m.content_id == content_id and 
                           (datetime.now() - m.timestamp).days <= timeframe_days]
         
@@ -1979,8 +1897,7 @@ __all__ = [
         }
     
     def segment_audience(self, content_metrics: List[ContentMetrics]) -> List[AudienceSegment]:
-        """Advanced audience segmentation analysis"""
-        # Simulated audience segmentation based on content performance
+        """Advanced audience segmentation analysis"""        # Simulated audience segmentation based on content performance
         segments = []
         
         # High-value segment
@@ -2014,8 +1931,7 @@ __all__ = [
         return segments
     
     def analyze_trending_topics(self, time_window_hours: int = 24) -> List[TrendAnalysis]:
-        """Analyze trending topics and opportunities"""
-        # Simulated trend analysis
+        """Analyze trending topics and opportunities"""        # Simulated trend analysis
         trends = [
             TrendAnalysis(
                 trend_id="ai_music_generation",
@@ -2044,8 +1960,7 @@ __all__ = [
         return trends
     
     def _calculate_growth_rate(self, metrics: List[ContentMetrics]) -> float:
-        """Calculate content growth rate"""
-        if len(metrics) < 2:
+        """Calculate content growth rate"""        if len(metrics) < 2:
             return 0.0
         
         sorted_metrics = sorted(metrics, key=lambda x: x.timestamp)
@@ -2058,8 +1973,7 @@ __all__ = [
         return (last_views - first_views) / first_views
     
     def _predict_future_performance(self, metrics: List[ContentMetrics]) -> Dict[str, float]:
-        """Predict future content performance using advanced analytics"""
-        if len(metrics) < 3:
+        """Predict future content performance using advanced analytics"""        if len(metrics) < 3:
             return {"predicted_views_30d": 0, "confidence": 0.0}
         
         # Simple linear regression for prediction
@@ -2082,8 +1996,7 @@ __all__ = [
         }
     
     def _generate_optimization_recommendations(self, metrics: List[ContentMetrics]) -> List[str]:
-        """Generate content optimization recommendations"""
-        recommendations = []
+        """Generate content optimization recommendations"""        recommendations = []
         latest_metric = metrics[-1]
         
         # Engagement-based recommendations
@@ -2107,8 +2020,7 @@ __all__ = [
         return recommendations
     
     def _calculate_performance_score(self, metrics: List[ContentMetrics]) -> float:
-        """Calculate overall performance score"""
-        if not metrics:
+        """Calculate overall performance score"""        if not metrics:
             return 0.0
         
         latest_metric = metrics[-1]
@@ -2122,8 +2034,7 @@ __all__ = [
         return engagement_score + views_score + growth_score + revenue_score
     
     def _analyze_competitive_position(self, content_id: str) -> Dict[str, Any]:
-        """Analyze competitive position"""
-        return {
+        """Analyze competitive position"""        return {
             "market_position": "strong",
             "competitive_advantage": 0.75,
             "differentiation_score": 0.68,
@@ -2132,14 +2043,12 @@ __all__ = [
         }
 
 class ContentOptimizationEngine:
-    """Advanced content optimization engine"""
-    
+    """Advanced content optimization engine"""    
     def __init__(self):
         self.analytics_engine = ContentAnalyticsEngine()
     
     def optimize_content_strategy(self, user_id: str, content_history: List[ContentMetrics]) -> Dict[str, Any]:
-        """Generate comprehensive content optimization strategy"""
-        
+        """Generate comprehensive content optimization strategy"""        
         # Analyze current performance
         performance_analysis = self._analyze_overall_performance(content_history)
         
@@ -2167,8 +2076,7 @@ class ContentOptimizationEngine:
         }
     
     def _analyze_overall_performance(self, content_history: List[ContentMetrics]) -> Dict[str, float]:
-        """Analyze overall content performance metrics"""
-        if not content_history:
+        """Analyze overall content performance metrics"""        if not content_history:
             return {}
         
         total_views = sum(m.views for m in content_history)
@@ -2184,8 +2092,7 @@ class ContentOptimizationEngine:
         }
     
     def _identify_top_content_types(self, content_history: List[ContentMetrics]) -> List[Dict[str, Any]]:
-        """Identify best performing content types"""
-        type_performance = {}
+        """Identify best performing content types"""        type_performance = {}
         
         for metric in content_history:
             content_type = metric.content_type.value
@@ -2220,8 +2127,7 @@ class ContentOptimizationEngine:
         return sorted(ranked_types, key=lambda x: x["performance_score"], reverse=True)
     
     def _generate_optimal_schedule(self, content_history: List[ContentMetrics]) -> Dict[str, Any]:
-        """Generate optimal content posting schedule"""
-        # Analyze posting patterns and performance correlation
+        """Generate optimal content posting schedule"""        # Analyze posting patterns and performance correlation
         hourly_performance = {}
         daily_performance = {}
         
@@ -2254,8 +2160,7 @@ class ContentOptimizationEngine:
         }
     
     def _recommend_content_formats(self, content_history: List[ContentMetrics]) -> List[Dict[str, Any]]:
-        """Recommend optimal content formats"""
-        return [
+        """Recommend optimal content formats"""        return [
             {
                 "format": "Short-form video with audio",
                 "reason": "High engagement rate for multi-format content",
@@ -2274,8 +2179,7 @@ class ContentOptimizationEngine:
         ]
     
     def _generate_seo_recommendations(self, content_history: List[ContentMetrics]) -> List[str]:
-        """Generate SEO optimization recommendations"""
-        return [
+        """Generate SEO optimization recommendations"""        return [
             "Implement AI-powered keyword optimization for better discoverability",
             "Use trending hashtags related to content protection and creator economy",
             "Optimize content titles for search algorithms across multiple platforms",
@@ -2285,8 +2189,7 @@ class ContentOptimizationEngine:
         ]
     
     def _identify_collaboration_opportunities(self, user_id: str) -> List[Dict[str, Any]]:
-        """Identify potential collaboration opportunities"""
-        return [
+        """Identify potential collaboration opportunities"""        return [
             {
                 "collaboration_type": "Cross-genre music collaboration",
                 "potential_reach": 15000,
@@ -2308,8 +2211,7 @@ class ContentOptimizationEngine:
         ]
     
     def _suggest_monetization_strategies(self, content_history: List[ContentMetrics]) -> List[Dict[str, Any]]:
-        """Suggest monetization strategies based on content performance"""
-        return [
+        """Suggest monetization strategies based on content performance"""        return [
             {
                 "strategy": "Premium content subscription model",
                 "revenue_potential": "High",
@@ -2337,8 +2239,7 @@ class ContentOptimizationEngine:
         ]
     
     def _calculate_performance_trend(self, content_history: List[ContentMetrics]) -> str:
-        """Calculate overall performance trend"""
-        if len(content_history) < 2:
+        """Calculate overall performance trend"""        if len(content_history) < 2:
             return "insufficient_data"
         
         sorted_metrics = sorted(content_history, key=lambda x: x.timestamp)

@@ -1,5 +1,4 @@
-"""
-Security Logging Configuration for IA-Influencer Agent Platform
+"""Security Logging Configuration for IA-Influencer Agent Platform
 ===============================================================
 
 Enterprise-grade security logging with threat detection, incident tracking,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import json
 import time
 import hashlib
@@ -36,8 +34,7 @@ import structlog
 
 
 class ThreatLevel(str, Enum):
-    """Security threat levels"""
-    CRITICAL = "CRITICAL"
+    """Security threat levels"""    CRITICAL = "CRITICAL"
     HIGH = "HIGH"
     MEDIUM = "MEDIUM"
     LOW = "LOW"
@@ -45,8 +42,7 @@ class ThreatLevel(str, Enum):
 
 
 class SecurityEventType(str, Enum):
-    """Types of security events"""
-    # Authentication & Authorization
+    """Types of security events"""    # Authentication & Authorization
     AUTH_SUCCESS = "auth_success"
     AUTH_FAILURE = "auth_failure"
     AUTH_BRUTE_FORCE = "auth_brute_force"
@@ -108,8 +104,7 @@ class SecurityEventType(str, Enum):
 
 
 class IncidentStatus(str, Enum):
-    """Security incident status"""
-    OPEN = "open"
+    """Security incident status"""    OPEN = "open"
     INVESTIGATING = "investigating"
     CONTAINED = "contained"
     MITIGATED = "mitigated"
@@ -120,8 +115,7 @@ class IncidentStatus(str, Enum):
 
 @dataclass
 class ThreatIndicator:
-    """Threat indicator information"""
-    type: str  # ip, domain, hash, pattern
+    """Threat indicator information"""    type: str  # ip, domain, hash, pattern
     value: str
     confidence: float  # 0.0 to 1.0
     source: str
@@ -132,8 +126,7 @@ class ThreatIndicator:
 
 @dataclass
 class GeoLocation:
-    """Geographic location information"""
-    country: Optional[str] = None
+    """Geographic location information"""    country: Optional[str] = None
     country_code: Optional[str] = None
     region: Optional[str] = None
     city: Optional[str] = None
@@ -145,8 +138,7 @@ class GeoLocation:
 
 @dataclass
 class SecurityEvent:
-    """Security event data structure"""
-    event_id: str
+    """Security event data structure"""    event_id: str
     timestamp: datetime
     event_type: SecurityEventType
     threat_level: ThreatLevel
@@ -192,8 +184,7 @@ class SecurityEvent:
 
 @dataclass
 class AttackPattern:
-    """Attack pattern definition"""
-    name: str
+    """Attack pattern definition"""    name: str
     pattern: Union[str, re.Pattern]
     event_type: SecurityEventType
     threat_level: ThreatLevel
@@ -204,8 +195,7 @@ class AttackPattern:
 
 @dataclass
 class IPReputation:
-    """IP address reputation information"""
-    ip: str
+    """IP address reputation information"""    ip: str
     reputation_score: float  # -1.0 to 1.0
     threat_types: List[str] = field(default_factory=list)
     last_seen_malicious: Optional[datetime] = None
@@ -215,14 +205,12 @@ class IPReputation:
 
 
 class SecurityLoggingConfig:
-    """
-    Enterprise security logging configuration for IA-Influencer platform.
+    """    Enterprise security logging configuration for IA-Influencer platform.
     
     Provides comprehensive security event detection, threat intelligence,
     incident tracking, and compliance monitoring for multi-format content
     protection and business operations.
-    """
-    
+    """    
     def __init__(
         self,
         enabled: bool = True,
@@ -243,8 +231,7 @@ class SecurityLoggingConfig:
         enable_ml_detection: bool = False,
         webhook_urls: Optional[List[str]] = None
     ):
-        """
-        Initialize security logging configuration.
+        """        Initialize security logging configuration.
         
         Args:
             enabled: Enable security logging
@@ -264,8 +251,7 @@ class SecurityLoggingConfig:
             auto_incident_threshold: Threshold for automatic incident creation
             enable_ml_detection: Enable ML-based threat detection
             webhook_urls: Webhook URLs for alerts
-        """
-        self.enabled = enabled
+        """        self.enabled = enabled
         self.threat_detection_enabled = threat_detection_enabled
         self.geo_ip_enabled = geo_ip_enabled
         self.reputation_checking_enabled = reputation_checking_enabled
@@ -315,8 +301,7 @@ class SecurityLoggingConfig:
         self._security_logger = self._initialize_security_logger()
     
     def _initialize_geoip(self, database_path: str) -> None:
-        """Initialize GeoIP database reader"""
-        try:
+        """Initialize GeoIP database reader"""        try:
             self._geo_reader = geoip2.database.Reader(database_path)
             logging.info(f"Initialized GeoIP database: {database_path}")
         except Exception as e:
@@ -324,12 +309,10 @@ class SecurityLoggingConfig:
             self._geo_reader = None
     
     def _initialize_security_logger(self) -> structlog.BoundLogger:
-        """Initialize structured security logger"""
-        return structlog.get_logger("ia_influencer_security")
+        """Initialize structured security logger"""        return structlog.get_logger("ia_influencer_security")
     
     def _create_default_attack_patterns(self) -> List[AttackPattern]:
-        """Create default attack detection patterns"""
-        patterns = [
+        """Create default attack detection patterns"""        patterns = [
             # SQL Injection patterns
             AttackPattern(
                 name="sql_injection_union",
@@ -411,8 +394,7 @@ class SecurityLoggingConfig:
         return patterns
     
     def _compile_attack_patterns(self) -> None:
-        """Compile regex patterns for attack detection"""
-        for pattern in self.attack_patterns:
+        """Compile regex patterns for attack detection"""        for pattern in self.attack_patterns:
             if isinstance(pattern.pattern, str):
                 try:
                     pattern.pattern = re.compile(pattern.pattern, re.IGNORECASE)
@@ -431,8 +413,7 @@ class SecurityLoggingConfig:
         details: Optional[Dict[str, Any]] = None,
         **kwargs
     ) -> str:
-        """
-        Log a security event.
+        """        Log a security event.
         
         Args:
             event_type: Type of security event
@@ -446,8 +427,7 @@ class SecurityLoggingConfig:
             
         Returns:
             Event ID
-        """
-        if not self.enabled:
+        """        if not self.enabled:
             return ""
         
         # Create security event
@@ -493,14 +473,12 @@ class SecurityLoggingConfig:
         return event.event_id
     
     def _generate_event_id(self) -> str:
-        """Generate unique event ID"""
-        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
+        """Generate unique event ID"""        timestamp = datetime.now().strftime("%Y%m%d%H%M%S")
         random_part = hashlib.md5(str(time.time()).encode()).hexdigest()[:8]
         return f"SEC_{timestamp}_{random_part}"
     
     def _enrich_security_event(self, event: SecurityEvent) -> None:
-        """Enrich security event with additional context"""
-        # GeoIP lookup
+        """Enrich security event with additional context"""        # GeoIP lookup
         if self.geo_ip_enabled and event.source_ip and self._geo_reader:
             try:
                 response = self._geo_reader.city(event.source_ip)
@@ -544,8 +522,7 @@ class SecurityLoggingConfig:
                 event.blocked = True
     
     def _perform_threat_detection(self, event: SecurityEvent) -> None:
-        """Perform automated threat detection"""
-        for pattern in self.attack_patterns:
+        """Perform automated threat detection"""        for pattern in self.attack_patterns:
             if not pattern.enabled:
                 continue
             
@@ -585,8 +562,7 @@ class SecurityLoggingConfig:
                 break  # Use first matching pattern
     
     def _threat_level_value(self, level: ThreatLevel) -> int:
-        """Get numeric value for threat level comparison"""
-        values = {
+        """Get numeric value for threat level comparison"""        values = {
             ThreatLevel.INFO: 1,
             ThreatLevel.LOW: 2,
             ThreatLevel.MEDIUM: 3,
@@ -596,8 +572,7 @@ class SecurityLoggingConfig:
         return values.get(level, 0)
     
     def _get_ip_reputation(self, ip: str) -> Optional[IPReputation]:
-        """Get IP reputation information"""
-        if ip in self._ip_reputation_cache:
+        """Get IP reputation information"""        if ip in self._ip_reputation_cache:
             return self._ip_reputation_cache[ip]
         
         # In a real implementation, this would query external threat intelligence
@@ -610,8 +585,7 @@ class SecurityLoggingConfig:
         return reputation
     
     def _calculate_basic_ip_reputation(self, ip: str) -> Optional[IPReputation]:
-        """Calculate basic IP reputation"""
-        try:
+        """Calculate basic IP reputation"""        try:
             ip_obj = ipaddress.ip_address(ip)
             
             reputation_score = 0.0
@@ -638,16 +612,13 @@ class SecurityLoggingConfig:
             return None
     
     def _is_ip_whitelisted(self, ip: str) -> bool:
-        """Check if IP is in whitelist"""
-        return ip in self.ip_whitelist
+        """Check if IP is in whitelist"""        return ip in self.ip_whitelist
     
     def _is_ip_blacklisted(self, ip: str) -> bool:
-        """Check if IP is in blacklist"""
-        return ip in self.ip_blacklist
+        """Check if IP is in blacklist"""        return ip in self.ip_blacklist
     
     def _update_statistics(self, event: SecurityEvent) -> None:
-        """Update security statistics"""
-        self._stats['total_events'] += 1
+        """Update security statistics"""        self._stats['total_events'] += 1
         self._stats['events_by_type'][event.event_type.value] += 1
         self._stats['events_by_threat_level'][event.threat_level.value] += 1
         
@@ -655,8 +626,7 @@ class SecurityLoggingConfig:
             self._stats['blocked_ips'].add(event.source_ip)
     
     def _log_security_event(self, event: SecurityEvent) -> None:
-        """Log security event using structured logging"""
-        try:
+        """Log security event using structured logging"""        try:
             event_dict = asdict(event)
             
             # Convert datetime objects to ISO format
@@ -684,8 +654,7 @@ class SecurityLoggingConfig:
             logging.error(f"Failed to log security event: {e}")
     
     def _get_log_level_for_threat(self, threat_level: ThreatLevel) -> int:
-        """Get logging level for threat level"""
-        mapping = {
+        """Get logging level for threat level"""        mapping = {
             ThreatLevel.INFO: logging.INFO,
             ThreatLevel.LOW: logging.INFO,
             ThreatLevel.MEDIUM: logging.WARNING,
@@ -695,14 +664,12 @@ class SecurityLoggingConfig:
         return mapping.get(threat_level, logging.WARNING)
     
     def _check_incident_creation(self, event: SecurityEvent) -> None:
-        """Check if event should trigger incident creation"""
-        if event.threat_score >= self.auto_incident_threshold:
+        """Check if event should trigger incident creation"""        if event.threat_score >= self.auto_incident_threshold:
             incident_id = self._create_incident(event)
             event.incident_id = incident_id
     
     def _create_incident(self, triggering_event: SecurityEvent) -> str:
-        """Create a new security incident"""
-        incident_id = f"INC_{datetime.now().strftime('%Y%m%d%H%M%S')}"
+        """Create a new security incident"""        incident_id = f"INC_{datetime.now().strftime('%Y%m%d%H%M%S')}"
         
         incident = {
             'id': incident_id,
@@ -734,8 +701,7 @@ class SecurityLoggingConfig:
         return incident_id
     
     def _correlate_events(self, event: SecurityEvent) -> None:
-        """Correlate events for pattern detection"""
-        correlation_key = self._get_correlation_key(event)
+        """Correlate events for pattern detection"""        correlation_key = self._get_correlation_key(event)
         
         with self._lock:
             self._event_correlations[correlation_key].append(event)
@@ -751,13 +717,11 @@ class SecurityLoggingConfig:
             self._analyze_correlated_events(correlation_key)
     
     def _get_correlation_key(self, event: SecurityEvent) -> str:
-        """Get correlation key for event grouping"""
-        # Group by source IP and event type
+        """Get correlation key for event grouping"""        # Group by source IP and event type
         return f"{event.source_ip or 'unknown'}_{event.event_type.value}"
     
     def _analyze_correlated_events(self, correlation_key: str) -> None:
-        """Analyze correlated events for attack patterns"""
-        events = self._event_correlations[correlation_key]
+        """Analyze correlated events for attack patterns"""        events = self._event_correlations[correlation_key]
         
         if len(events) < 2:
             return
@@ -787,13 +751,11 @@ class SecurityLoggingConfig:
             )
     
     def _send_security_alert(self, event: SecurityEvent) -> None:
-        """Send real-time security alert"""
-        if event.threat_level in [ThreatLevel.HIGH, ThreatLevel.CRITICAL]:
+        """Send real-time security alert"""        if event.threat_level in [ThreatLevel.HIGH, ThreatLevel.CRITICAL]:
             self._send_webhook_alert(event)
     
     def _send_webhook_alert(self, event: SecurityEvent) -> None:
-        """Send webhook alert for security event"""
-        if not self.webhook_urls:
+        """Send webhook alert for security event"""        if not self.webhook_urls:
             return
         
         try:
@@ -837,8 +799,7 @@ class SecurityLoggingConfig:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[SecurityEvent]:
-        """
-        Get security events with filtering.
+        """        Get security events with filtering.
         
         Args:
             limit: Maximum number of events to return
@@ -849,8 +810,7 @@ class SecurityLoggingConfig:
             
         Returns:
             List of security events
-        """
-        with self._lock:
+        """        with self._lock:
             events = list(self._events_buffer)
         
         # Apply filters
@@ -871,8 +831,7 @@ class SecurityLoggingConfig:
         return events[:limit]
     
     def get_security_statistics(self) -> Dict[str, Any]:
-        """Get security statistics"""
-        with self._lock:
+        """Get security statistics"""        with self._lock:
             stats = self._stats.copy()
             stats['blocked_ips'] = list(stats['blocked_ips'])
             stats['events_by_type'] = dict(stats['events_by_type'])
@@ -884,28 +843,23 @@ class SecurityLoggingConfig:
         return stats
     
     def add_ip_to_whitelist(self, ip: str) -> None:
-        """Add IP to whitelist"""
-        self.ip_whitelist.add(ip)
+        """Add IP to whitelist"""        self.ip_whitelist.add(ip)
         logging.info(f"Added IP to whitelist: {ip}")
     
     def remove_ip_from_whitelist(self, ip: str) -> None:
-        """Remove IP from whitelist"""
-        self.ip_whitelist.discard(ip)
+        """Remove IP from whitelist"""        self.ip_whitelist.discard(ip)
         logging.info(f"Removed IP from whitelist: {ip}")
     
     def add_ip_to_blacklist(self, ip: str) -> None:
-        """Add IP to blacklist"""
-        self.ip_blacklist.add(ip)
+        """Add IP to blacklist"""        self.ip_blacklist.add(ip)
         logging.info(f"Added IP to blacklist: {ip}")
     
     def remove_ip_from_blacklist(self, ip: str) -> None:
-        """Remove IP from blacklist"""
-        self.ip_blacklist.discard(ip)
+        """Remove IP from blacklist"""        self.ip_blacklist.discard(ip)
         logging.info(f"Removed IP from blacklist: {ip}")
     
     def update_incident_status(self, incident_id: str, status: IncidentStatus, notes: str = "") -> bool:
-        """Update incident status"""
-        with self._lock:
+        """Update incident status"""        with self._lock:
             if incident_id in self._active_incidents:
                 incident = self._active_incidents[incident_id]
                 old_status = incident['status']
@@ -937,14 +891,12 @@ class SecurityLoggingConfig:
         return False
     
     def add_attack_pattern(self, pattern: AttackPattern) -> None:
-        """Add custom attack pattern"""
-        self.attack_patterns.append(pattern)
+        """Add custom attack pattern"""        self.attack_patterns.append(pattern)
         self._compile_attack_patterns()
         logging.info(f"Added attack pattern: {pattern.name}")
     
     def remove_attack_pattern(self, pattern_name: str) -> bool:
-        """Remove attack pattern"""
-        pattern = next((p for p in self.attack_patterns if p.name == pattern_name), None)
+        """Remove attack pattern"""        pattern = next((p for p in self.attack_patterns if p.name == pattern_name), None)
         if pattern:
             self.attack_patterns.remove(pattern)
             logging.info(f"Removed attack pattern: {pattern_name}")
@@ -952,8 +904,7 @@ class SecurityLoggingConfig:
         return False
     
     def get_config_status(self) -> Dict[str, Any]:
-        """Get current configuration status"""
-        return {
+        """Get current configuration status"""        return {
             "enabled": self.enabled,
             "threat_detection_enabled": self.threat_detection_enabled,
             "geo_ip_enabled": self.geo_ip_enabled,
@@ -980,16 +931,14 @@ _security_config: Optional[SecurityLoggingConfig] = None
 def initialize_security_logging(
     config: Optional[SecurityLoggingConfig] = None
 ) -> SecurityLoggingConfig:
-    """
-    Initialize global security logging configuration.
+    """    Initialize global security logging configuration.
     
     Args:
         config: Custom SecurityLoggingConfig instance
         
     Returns:
         Initialized security logging configuration
-    """
-    global _security_config
+    """    global _security_config
     
     if config:
         _security_config = config
@@ -1000,8 +949,7 @@ def initialize_security_logging(
 
 
 def get_security_config() -> SecurityLoggingConfig:
-    """Get the global security logging configuration"""
-    if not _security_config:
+    """Get the global security logging configuration"""    if not _security_config:
         initialize_security_logging()
     
     return _security_config
@@ -1013,8 +961,7 @@ def log_security_event(
     description: str,
     **kwargs
 ) -> str:
-    """
-    Log a security event using global configuration.
+    """    Log a security event using global configuration.
     
     Args:
         event_type: Type of security event
@@ -1024,6 +971,5 @@ def log_security_event(
         
     Returns:
         Event ID
-    """
-    config = get_security_config()
+    """    config = get_security_config()
     return config.log_security_event(event_type, threat_level, description, **kwargs)

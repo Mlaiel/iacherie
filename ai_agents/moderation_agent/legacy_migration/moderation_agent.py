@@ -1,5 +1,4 @@
-"""
-Moderation Agent - Ultra-Advanced AI Content Moderation & Safety System
+"""Moderation Agent - Ultra-Advanced AI Content Moderation & Safety System
 
 Enterprise-grade content moderation agent providing comprehensive safety filtering, 
 harmful content detection, and automated compliance enforcement across multiple formats.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 import asyncio
 import logging
 import time
@@ -61,8 +59,7 @@ from ...utils.content_analyzer import ContentAnalyzer
 logger = logging.getLogger(__name__)
 
 class ModerationAction(Enum):
-    """Content moderation actions"""
-    APPROVE = "approve"
+    """Content moderation actions"""    APPROVE = "approve"
     FLAG = "flag"
     BLOCK = "block"
     REMOVE = "remove"
@@ -71,8 +68,7 @@ class ModerationAction(Enum):
     SHADOWBAN = "shadowban"
 
 class ViolationType(Enum):
-    """Types of content violations"""
-    HATE_SPEECH = "hate_speech"
+    """Types of content violations"""    HATE_SPEECH = "hate_speech"
     HARASSMENT = "harassment"
     VIOLENCE = "violence"
     SEXUAL_CONTENT = "sexual_content"
@@ -87,16 +83,14 @@ class ViolationType(Enum):
     CHILD_SAFETY = "child_safety"
 
 class SeverityLevel(Enum):
-    """Violation severity levels"""
-    LOW = 1
+    """Violation severity levels"""    LOW = 1
     MEDIUM = 2
     HIGH = 3
     CRITICAL = 4
     EXTREME = 5
 
 class ContentType(Enum):
-    """Types of content to moderate"""
-    TEXT = "text"
+    """Types of content to moderate"""    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -104,8 +98,7 @@ class ContentType(Enum):
 
 @dataclass
 class ModerationResult:
-    """Result of content moderation analysis"""
-    content_id: str
+    """Result of content moderation analysis"""    content_id: str
     content_type: ContentType
     action: ModerationAction
     violations: List[Dict[str, Any]]
@@ -118,8 +111,7 @@ class ModerationResult:
 
 @dataclass
 class ViolationDetection:
-    """Detection of a specific violation"""
-    violation_type: ViolationType
+    """Detection of a specific violation"""    violation_type: ViolationType
     confidence: float
     severity: SeverityLevel
     evidence: Dict[str, Any]
@@ -127,8 +119,7 @@ class ViolationDetection:
     context: Optional[str] = None
 
 class ModerationAgent(BaseAgent):
-    """
-    Ultra-advanced AI content moderation system with comprehensive safety capabilities:
+    """    Ultra-advanced AI content moderation system with comprehensive safety capabilities:
     
     Core Features:
     - Multi-format content analysis (text, image, video, audio)
@@ -142,8 +133,7 @@ class ModerationAgent(BaseAgent):
     - Deepfake and synthetic media detection
     - Live stream monitoring
     - Appeal and review workflow management
-    """
-    
+    """    
     def __init__(self, agent_id: str, config: Dict[str, Any] = None):
         super().__init__(
             agent_id=agent_id,
@@ -196,8 +186,7 @@ class ModerationAgent(BaseAgent):
         ]
     
     async def _load_models_and_resources(self):
-        """Load AI models for content moderation"""
-        try:
+        """Load AI models for content moderation"""        try:
             # Load text moderation models
             await self._load_text_moderation_models()
             
@@ -217,8 +206,7 @@ class ModerationAgent(BaseAgent):
             raise
     
     async def _load_text_moderation_models(self):
-        """Load models for text content moderation"""
-        try:
+        """Load models for text content moderation"""        try:
             # Load Detoxify for toxicity detection
             self.detoxify_model = Detoxify('multilingual')
             
@@ -242,8 +230,7 @@ class ModerationAgent(BaseAgent):
             raise
     
     async def _load_image_moderation_models(self):
-        """Load models for image content moderation"""
-        try:
+        """Load models for image content moderation"""        try:
             # Load NSFW detector
             self.nsfw_detector = NSFWDetector()
             
@@ -267,8 +254,7 @@ class ModerationAgent(BaseAgent):
             raise
     
     async def _load_audio_moderation_models(self):
-        """Load models for audio content moderation"""
-        try:
+        """Load models for audio content moderation"""        try:
             # Load Whisper for speech-to-text
             self.whisper_model = whisper.load_model("base")
             
@@ -282,8 +268,7 @@ class ModerationAgent(BaseAgent):
             raise
     
     async def _load_video_moderation_models(self):
-        """Load models for video content moderation"""
-        try:
+        """Load models for video content moderation"""        try:
             # Video moderation uses combination of image and audio models
             # Plus frame-by-frame analysis capabilities
             
@@ -294,8 +279,7 @@ class ModerationAgent(BaseAgent):
             raise
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main moderation processing pipeline"""
-        action = request.action
+        """Main moderation processing pipeline"""        action = request.action
         data = request.data
         
         try:
@@ -335,8 +319,7 @@ class ModerationAgent(BaseAgent):
             )
     
     async def _moderate_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Comprehensive content moderation analysis"""
-        content_id = data.get('content_id')
+        """Comprehensive content moderation analysis"""        content_id = data.get('content_id')
         content_type = ContentType(data.get('content_type', 'text'))
         content_data = data.get('content_data', {})
         user_id = data.get('user_id')
@@ -396,8 +379,7 @@ class ModerationAgent(BaseAgent):
         }
     
     async def _analyze_text_content(self, text: str) -> List[ViolationDetection]:
-        """Analyze text content for violations"""
-        violations = []
+        """Analyze text content for violations"""        violations = []
         
         if not text or len(text.strip()) == 0:
             return violations
@@ -459,8 +441,7 @@ class ModerationAgent(BaseAgent):
         return violations
     
     async def _analyze_image_content(self, image_path: str) -> List[ViolationDetection]:
-        """Analyze image content for violations"""
-        violations = []
+        """Analyze image content for violations"""        violations = []
         
         if not image_path:
             return violations
@@ -520,8 +501,7 @@ class ModerationAgent(BaseAgent):
         return violations
     
     async def _analyze_video_content(self, video_path: str) -> List[ViolationDetection]:
-        """Analyze video content for violations"""
-        violations = []
+        """Analyze video content for violations"""        violations = []
         
         if not video_path:
             return violations
@@ -556,8 +536,7 @@ class ModerationAgent(BaseAgent):
         return violations
     
     async def _analyze_audio_content(self, audio_path: str) -> List[ViolationDetection]:
-        """Analyze audio content for violations"""
-        violations = []
+        """Analyze audio content for violations"""        violations = []
         
         if not audio_path:
             return violations
@@ -593,8 +572,7 @@ class ModerationAgent(BaseAgent):
         return violations
     
     async def _detect_hate_speech(self, text: str) -> Dict[str, Any]:
-        """Detect hate speech in text"""
-        try:
+        """Detect hate speech in text"""        try:
             # Tokenize input
             inputs = self.hate_speech_tokenizer(
                 text, 
@@ -622,8 +600,7 @@ class ModerationAgent(BaseAgent):
             return {'is_hate_speech': False, 'confidence': 0.0, 'error': str(e)}
     
     def _determine_moderation_action(self, violations: List[ViolationDetection]) -> Tuple[ModerationAction, SeverityLevel]:
-        """Determine moderation action based on violations"""
-        if not violations:
+        """Determine moderation action based on violations"""        if not violations:
             return ModerationAction.APPROVE, SeverityLevel.LOW
         
         # Find highest severity violation
@@ -646,8 +623,7 @@ class ModerationAgent(BaseAgent):
             return ModerationAction.APPROVE, SeverityLevel.LOW
     
     def _calculate_severity_from_score(self, confidence_score: float) -> SeverityLevel:
-        """Calculate severity level from confidence score"""
-        if confidence_score >= 0.95:
+        """Calculate severity level from confidence score"""        if confidence_score >= 0.95:
             return SeverityLevel.EXTREME
         elif confidence_score >= 0.85:
             return SeverityLevel.CRITICAL
@@ -659,8 +635,7 @@ class ModerationAgent(BaseAgent):
             return SeverityLevel.LOW
     
     def _load_moderation_rules(self) -> Dict[str, Any]:
-        """Load moderation rules configuration"""
-        return {
+        """Load moderation rules configuration"""        return {
             'auto_approve_threshold': 0.1,
             'auto_flag_threshold': 0.6,
             'auto_block_threshold': 0.85,
@@ -677,8 +652,7 @@ class ModerationAgent(BaseAgent):
         }
     
     def _load_confidence_thresholds(self) -> Dict[str, float]:
-        """Load confidence thresholds for different violation types"""
-        return {
+        """Load confidence thresholds for different violation types"""        return {
             'toxicity_toxicity': 0.7,
             'toxicity_severe_toxicity': 0.6,
             'toxicity_obscene': 0.7,
@@ -692,8 +666,7 @@ class ModerationAgent(BaseAgent):
         }
     
     async def _detect_spam_text(self, text: str) -> Dict[str, Any]:
-        """Detect spam content in text"""
-        try:
+        """Detect spam content in text"""        try:
             # Spam detection features
             spam_indicators = {
                 'excessive_caps': len([c for c in text if c.isupper()]) / len(text) if text else 0,
@@ -724,8 +697,7 @@ class ModerationAgent(BaseAgent):
             return {'is_spam': False, 'confidence': 0.0, 'error': str(e)}
     
     async def _detect_self_harm_content(self, text: str) -> Dict[str, Any]:
-        """Detect self-harm related content"""
-        try:
+        """Detect self-harm related content"""        try:
             # Self-harm keywords and patterns
             self_harm_keywords = [
                 'suicide', 'kill myself', 'end it all', 'self harm', 'cut myself',
@@ -752,8 +724,7 @@ class ModerationAgent(BaseAgent):
             return {'detected': False, 'confidence': 0.0, 'error': str(e)}
     
     async def _detect_nsfw_image(self, image_path: str) -> Dict[str, Any]:
-        """Detect NSFW content in images"""
-        try:
+        """Detect NSFW content in images"""        try:
             if not self.nsfw_detector:
                 return {'is_nsfw': False, 'confidence': 0.0, 'error': 'NSFW detector not loaded'}
             
@@ -771,8 +742,7 @@ class ModerationAgent(BaseAgent):
             return {'is_nsfw': False, 'confidence': 0.0, 'error': str(e)}
     
     async def _detect_image_violence(self, image_array: np.ndarray) -> Dict[str, Any]:
-        """Detect violent content in images"""
-        try:
+        """Detect violent content in images"""        try:
             if not self.violence_detector:
                 return {'detected': False, 'confidence': 0.0, 'error': 'Violence detector not loaded'}
             
@@ -790,8 +760,7 @@ class ModerationAgent(BaseAgent):
             return {'detected': False, 'confidence': 0.0, 'error': str(e)}
     
     async def _extract_video_frames(self, video_path: str, max_frames: int = 30) -> List[np.ndarray]:
-        """Extract frames from video for analysis"""
-        try:
+        """Extract frames from video for analysis"""        try:
             cap = cv2.VideoCapture(video_path)
             frames = []
             frame_count = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -818,8 +787,7 @@ class ModerationAgent(BaseAgent):
             return []
     
     async def _analyze_frame_content(self, frame: np.ndarray, frame_index: int) -> List[ViolationDetection]:
-        """Analyze individual video frame for violations"""
-        violations = []
+        """Analyze individual video frame for violations"""        violations = []
         
         try:
             # Convert frame to image for analysis
@@ -848,8 +816,7 @@ class ModerationAgent(BaseAgent):
         return violations
     
     async def _extract_video_audio(self, video_path: str) -> str:
-        """Extract audio from video"""
-        try:
+        """Extract audio from video"""        try:
             import subprocess
             import tempfile
             
@@ -869,8 +836,7 @@ class ModerationAgent(BaseAgent):
             return ""
     
     async def _analyze_video_metrics(self, video_path: str) -> Dict[str, Any]:
-        """Analyze overall video metrics for suspicious content"""
-        try:
+        """Analyze overall video metrics for suspicious content"""        try:
             cap = cv2.VideoCapture(video_path)
             
             metrics = {
@@ -909,8 +875,7 @@ class ModerationAgent(BaseAgent):
             return {'suspicious_activity': False, 'confidence': 0.0, 'error': str(e)}
     
     async def _analyze_audio_features(self, audio_path: str) -> Dict[str, Any]:
-        """Analyze audio features for suspicious patterns"""
-        try:
+        """Analyze audio features for suspicious patterns"""        try:
             # Load audio
             y, sr = librosa.load(audio_path)
             
@@ -948,8 +913,7 @@ class ModerationAgent(BaseAgent):
             return {'suspicious_patterns': False, 'confidence': 0.0, 'error': str(e)}
     
     async def _moderate_live_stream(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Monitor and moderate live stream content"""
-        stream_id = data.get('stream_id')
+        """Monitor and moderate live stream content"""        stream_id = data.get('stream_id')
         stream_url = data.get('stream_url')
         monitoring_interval = data.get('monitoring_interval', 5)  # seconds
         
@@ -971,8 +935,7 @@ class ModerationAgent(BaseAgent):
             return {'error': str(e), 'monitoring_started': False}
     
     async def _monitor_stream_content(self, stream_id: str, stream_url: str, interval: int):
-        """Continuously monitor live stream content"""
-        try:
+        """Continuously monitor live stream content"""        try:
             while True:
                 # Capture frame from stream
                 frame = await self._capture_stream_frame(stream_url)
@@ -992,8 +955,7 @@ class ModerationAgent(BaseAgent):
             logger.error(f"Stream monitoring failed: {e}")
     
     async def _capture_stream_frame(self, stream_url: str) -> Optional[np.ndarray]:
-        """Capture a frame from live stream"""
-        try:
+        """Capture a frame from live stream"""        try:
             cap = cv2.VideoCapture(stream_url)
             ret, frame = cap.read()
             cap.release()
@@ -1005,8 +967,7 @@ class ModerationAgent(BaseAgent):
             return None
     
     async def _handle_live_stream_violations(self, stream_id: str, violations: List[ViolationDetection]):
-        """Handle violations detected in live stream"""
-        try:
+        """Handle violations detected in live stream"""        try:
             # Determine severity of violations
             max_severity = max(v.severity for v in violations)
             
@@ -1028,8 +989,7 @@ class ModerationAgent(BaseAgent):
             logger.error(f"Stream violation handling failed: {e}")
     
     async def _bulk_content_moderation(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform bulk moderation on multiple content items"""
-        content_items = data.get('content_items', [])
+        """Perform bulk moderation on multiple content items"""        content_items = data.get('content_items', [])
         batch_size = data.get('batch_size', 50)
         
         results = []
@@ -1069,8 +1029,7 @@ class ModerationAgent(BaseAgent):
             return {'error': str(e), 'processed': processed, 'failed': failed}
     
     async def _review_flagged_content(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Review and update flagged content decisions"""
-        content_id = data.get('content_id')
+        """Review and update flagged content decisions"""        content_id = data.get('content_id')
         reviewer_id = data.get('reviewer_id')
         decision = data.get('decision')  # approve, reject, escalate
         notes = data.get('notes', '')
@@ -1096,8 +1055,7 @@ class ModerationAgent(BaseAgent):
             return {'error': str(e)}
     
     async def _update_moderation_rules(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Update moderation rules and thresholds"""
-        new_rules = data.get('rules', {})
+        """Update moderation rules and thresholds"""        new_rules = data.get('rules', {})
         
         try:
             # Update rules
@@ -1118,8 +1076,7 @@ class ModerationAgent(BaseAgent):
             return {'error': str(e)}
     
     async def _get_moderation_stats(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get comprehensive moderation statistics"""
-        time_range = data.get('time_range', '24h')
+        """Get comprehensive moderation statistics"""        time_range = data.get('time_range', '24h')
         
         try:
             # Current statistics
@@ -1153,8 +1110,7 @@ class ModerationAgent(BaseAgent):
     
     # Helper methods
     def _map_toxicity_to_violation_type(self, category: str) -> ViolationType:
-        """Map toxicity category to violation type"""
-        mapping = {
+        """Map toxicity category to violation type"""        mapping = {
             'toxicity': ViolationType.HARASSMENT,
             'severe_toxicity': ViolationType.HARASSMENT,
             'obscene': ViolationType.SEXUAL_CONTENT,
@@ -1165,8 +1121,7 @@ class ModerationAgent(BaseAgent):
         return mapping.get(category, ViolationType.HARASSMENT)
     
     def _calculate_overall_confidence(self, violations: List[ViolationDetection]) -> float:
-        """Calculate overall confidence score from violations"""
-        if not violations:
+        """Calculate overall confidence score from violations"""        if not violations:
             return 0.0
         
         # Weighted average based on severity
@@ -1181,8 +1136,7 @@ class ModerationAgent(BaseAgent):
         return weighted_confidence / total_weight if total_weight > 0 else 0.0
     
     def _generate_moderation_explanation(self, violations: List[ViolationDetection]) -> str:
-        """Generate human-readable explanation for moderation decision"""
-        if not violations:
+        """Generate human-readable explanation for moderation decision"""        if not violations:
             return "Content approved - no violations detected"
         
         violation_types = [v.violation_type.value for v in violations]
@@ -1194,8 +1148,7 @@ class ModerationAgent(BaseAgent):
             return f"Content flagged for multiple violations: {', '.join(unique_types)}"
     
     def _requires_human_review(self, violations: List[ViolationDetection], severity: SeverityLevel) -> bool:
-        """Determine if human review is required"""
-        # Always require review for critical/extreme severity
+        """Determine if human review is required"""        # Always require review for critical/extreme severity
         if severity in [SeverityLevel.CRITICAL, SeverityLevel.EXTREME]:
             return True
         
@@ -1212,8 +1165,7 @@ class ModerationAgent(BaseAgent):
         return False
     
     def _count_repeated_patterns(self, text: str) -> float:
-        """Count repeated character patterns in text"""
-        if not text:
+        """Count repeated character patterns in text"""        if not text:
             return 0.0
         
         repeated_count = 0
@@ -1235,14 +1187,12 @@ class ModerationAgent(BaseAgent):
         return repeated_count / len(text) if text else 0.0
     
     def _extract_urls(self, text: str) -> List[str]:
-        """Extract URLs from text"""
-        import re
+        """Extract URLs from text"""        import re
         url_pattern = r'http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\\(\\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+'
         return re.findall(url_pattern, text)
     
     def _count_promotional_keywords(self, text: str) -> float:
-        """Count promotional keywords in text"""
-        promotional_keywords = [
+        """Count promotional keywords in text"""        promotional_keywords = [
             'buy', 'sale', 'discount', 'offer', 'deal', 'free', 'win', 'prize',
             'click here', 'limited time', 'act now', 'exclusive', 'bonus'
         ]
@@ -1253,8 +1203,7 @@ class ModerationAgent(BaseAgent):
         return count / len(promotional_keywords)
     
     def _violation_to_dict(self, violation: ViolationDetection) -> Dict[str, Any]:
-        """Convert ViolationDetection to dictionary"""
-        return {
+        """Convert ViolationDetection to dictionary"""        return {
             'violation_type': violation.violation_type.value,
             'confidence': violation.confidence,
             'severity': violation.severity.value,
@@ -1264,8 +1213,7 @@ class ModerationAgent(BaseAgent):
         }
     
     def _get_model_versions(self) -> Dict[str, str]:
-        """Get versions of loaded models"""
-        return {
+        """Get versions of loaded models"""        return {
             'detoxify': 'multilingual-v1',
             'whisper': 'base',
             'nsfw_detector': 'v2.1',
@@ -1273,8 +1221,7 @@ class ModerationAgent(BaseAgent):
         }
     
     async def _log_moderation_decision(self, result: ModerationResult, user_id: str):
-        """Log moderation decision for audit purposes"""
-        try:
+        """Log moderation decision for audit purposes"""        try:
             log_entry = {
                 'timestamp': result.timestamp.isoformat(),
                 'content_id': result.content_id,
@@ -1293,16 +1240,14 @@ class ModerationAgent(BaseAgent):
             logger.error(f"Failed to log moderation decision: {e}")
     
     async def _log_review_decision(self, review_result: Dict[str, Any]):
-        """Log human review decision"""
-        try:
+        """Log human review decision"""        try:
             # In production, this would write to audit log
             logger.info(f"Review decision logged: {review_result}")
         except Exception as e:
             logger.error(f"Failed to log review decision: {e}")
     
     async def _log_stream_violations(self, stream_id: str, violations: List[ViolationDetection]):
-        """Log live stream violations"""
-        try:
+        """Log live stream violations"""        try:
             log_entry = {
                 'timestamp': datetime.now(timezone.utc).isoformat(),
                 'stream_id': stream_id,
@@ -1316,18 +1261,15 @@ class ModerationAgent(BaseAgent):
             logger.error(f"Failed to log stream violations: {e}")
     
     async def _stop_live_stream(self, stream_id: str):
-        """Stop a live stream due to violations"""
-        # Implementation would integrate with streaming service API
+        """Stop a live stream due to violations"""        # Implementation would integrate with streaming service API
         logger.critical(f"STREAM STOPPED: {stream_id} due to critical violations")
     
     async def _issue_stream_warning(self, stream_id: str, violations: List[ViolationDetection]):
-        """Issue warning for live stream violations"""
-        # Implementation would send warning to streamer
+        """Issue warning for live stream violations"""        # Implementation would send warning to streamer
         logger.warning(f"Stream warning issued: {stream_id}, violations: {len(violations)}")
     
     def _update_moderation_stats(self, result: ModerationResult):
-        """Update moderation statistics"""
-        self.auto_moderation_stats['total_content'] += 1
+        """Update moderation statistics"""        self.auto_moderation_stats['total_content'] += 1
         
         if result.action == ModerationAction.APPROVE:
             self.auto_moderation_stats['approved'] += 1
@@ -1340,14 +1282,12 @@ class ModerationAgent(BaseAgent):
             self.auto_moderation_stats['human_review_required'] += 1
 
 class ModerationAgentManager:
-    """Manager for moderation agent instances"""
-    
+    """Manager for moderation agent instances"""    
     def __init__(self):
         self.agents: Dict[str, ModerationAgent] = {}
     
     async def create_agent(self, agent_id: str, config: Dict[str, Any] = None) -> ModerationAgent:
-        """Create new moderation agent"""
-        agent = ModerationAgent(agent_id, config)
+        """Create new moderation agent"""        agent = ModerationAgent(agent_id, config)
         await agent.initialize()
         self.agents[agent_id] = agent
         return agent

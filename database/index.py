@@ -1,5 +1,4 @@
-"""
-Database Module Index - IA Influencer Agent + Content Protection Platform
+"""Database Module Index - IA Influencer Agent + Content Protection Platform
 
 Point d'entrée centralisé pour tous les modules de base de données
 de la plateforme IA Influencer Agent.
@@ -12,7 +11,6 @@ AVERTISSEMENT: Ce code est propriétaire et confidentiel. Toute utilisation,
 modification ou distribution non autorisée est strictement interdite.
 Contact: mlaiel@live.de pour les demandes de licence.
 """
-
 from typing import Dict, List, Any, Optional
 import logging
 from datetime import datetime
@@ -82,10 +80,8 @@ from . import (
 )
 
 class DatabaseModuleRegistry:
-    """
-    Registre centralisé de tous les modules de base de données.
-    """
-    
+    """    Registre centralisé de tous les modules de base de données.
+    """    
     def __init__(self):
         self.modules = {
             # Core modules
@@ -150,8 +146,7 @@ class DatabaseModuleRegistry:
         logger.info(f"Database registry initialized with {len(self.modules)} modules")
     
     def get_module(self, module_name: str) -> Any:
-        """
-        Récupère un module spécifique par son nom.
+        """        Récupère un module spécifique par son nom.
         
         Args:
             module_name (str): Nom du module
@@ -161,32 +156,27 @@ class DatabaseModuleRegistry:
             
         Raises:
             KeyError: Si le module n'existe pas
-        """
-        if module_name not in self.modules:
+        """        if module_name not in self.modules:
             raise KeyError(f"Module '{module_name}' not found in registry")
         
         return self.modules[module_name]
     
     def list_modules(self) -> List[str]:
-        """
-        Liste tous les modules disponibles.
+        """        Liste tous les modules disponibles.
         
         Returns:
             List[str]: Liste des noms de modules
-        """
-        return list(self.modules.keys())
+        """        return list(self.modules.keys())
     
     def get_module_info(self, module_name: str) -> Dict[str, Any]:
-        """
-        Récupère les informations d'un module.
+        """        Récupère les informations d'un module.
         
         Args:
             module_name (str): Nom du module
             
         Returns:
             Dict[str, Any]: Informations du module
-        """
-        module = self.get_module(module_name)
+        """        module = self.get_module(module_name)
         
         if hasattr(module, 'get_module_info'):
             return module.get_module_info()
@@ -199,13 +189,11 @@ class DatabaseModuleRegistry:
         }
     
     def get_all_modules_info(self) -> Dict[str, Any]:
-        """
-        Récupère les informations de tous les modules.
+        """        Récupère les informations de tous les modules.
         
         Returns:
             Dict[str, Any]: Informations de tous les modules
-        """
-        return {
+        """        return {
             module_name: self.get_module_info(module_name)
             for module_name in self.modules.keys()
         }
@@ -214,13 +202,11 @@ class DatabaseModuleRegistry:
 registry = DatabaseModuleRegistry()
 
 def get_database_status() -> Dict[str, Any]:
-    """
-    Retourne le statut global du module database.
+    """    Retourne le statut global du module database.
     
     Returns:
         Dict[str, Any]: Statut du module database
-    """
-    return {
+    """    return {
         "name": "Database Module - IA Influencer Agent",
         "version": "2.0.0",
         "author": "Fahed Mlaiel",
@@ -234,13 +220,11 @@ def get_database_status() -> Dict[str, Any]:
     }
 
 def initialize_database_modules() -> bool:
-    """
-    Initialise tous les modules de base de données.
+    """    Initialise tous les modules de base de données.
     
     Returns:
         bool: True si l'initialisation réussie, False sinon
-    """
-    try:
+    """    try:
         logger.info("Initializing database modules...")
         
         # Vérification de tous les modules

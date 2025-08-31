@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for NLP Analyzers Module
+"""Comprehensive Tests for NLP Analyzers Module
 
 Industrial-grade t        # Verify sentiment analysis result
         sentiment_result = analysis['sentiment']
@@ -47,7 +44,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
-
 import pytest
 import sys
 import os
@@ -86,12 +82,10 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class TestAdvancedContentAnalyzer:
-    """Comprehensive tests for AdvancedContentAnalyzer"""
-    
+    """Comprehensive tests for AdvancedContentAnalyzer"""    
     @pytest.mark.asyncio
     async def test_analyzer_initialization(self, content_analyzer):
-        """Test analyzer initialization and configuration"""
-        assert content_analyzer is not None
+        """Test analyzer initialization and configuration"""        assert content_analyzer is not None
         assert hasattr(content_analyzer, 'config')
         assert hasattr(content_analyzer, 'analyzers')
         
@@ -106,8 +100,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_comprehensive_analysis(self, content_analyzer, sample_texts):
-        """Test comprehensive content analysis"""
-        # Test with first text from English samples
+        """Test comprehensive content analysis"""        # Test with first text from English samples
         text = sample_texts["english"][0]
         
         # Run comprehensive analysis
@@ -132,8 +125,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_sentiment_analysis_accuracy(self, content_analyzer):
-        """Test sentiment analysis accuracy with known examples"""
-        # Positive sentiment examples
+        """Test sentiment analysis accuracy with known examples"""        # Positive sentiment examples
         positive_texts = [
             "I absolutely love this product! It's amazing and perfect! 😍✨",
             "Best day ever! So happy and grateful! 🎉❤️",
@@ -201,8 +193,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_emotion_detection(self, content_analyzer):
-        """Test emotion detection capabilities"""
-        emotion_texts = {
+        """Test emotion detection capabilities"""        emotion_texts = {
             'joy': "I'm so happy and excited! This is wonderful! 🎉😊",
             'anger': "This is infuriating! I'm so angry about this! 😡🔥",
             'sadness': "I'm feeling really sad and disappointed today 😢💔",
@@ -231,8 +222,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_topic_modeling(self, content_analyzer, sample_social_content):
-        """Test topic modeling capabilities"""
-        # Use social content for topic detection
+        """Test topic modeling capabilities"""        # Use social content for topic detection
         social_posts = sample_social_content['posts']
         instagram_post = next((post for post in social_posts if post['platform'] == 'instagram'), None)
         
@@ -258,8 +248,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_content_themes(self, content_analyzer, sample_social_content):
-        """Test content theme detection"""
-        # Use available social content from posts
+        """Test content theme detection"""        # Use available social content from posts
         posts = sample_social_content['posts']
         
         for post in posts[:2]:  # Test with first 2 posts
@@ -283,8 +272,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_collaboration_detection(self, content_analyzer, sample_texts):
-        """Test collaboration opportunity detection"""
-        # Use text that might indicate collaborations
+        """Test collaboration opportunity detection"""        # Use text that might indicate collaborations
         collaboration_text = sample_texts['english'][2]  # Use available sample text
         
         # Use comprehensive analysis to detect collaboration opportunities
@@ -309,8 +297,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_engagement_prediction(self, content_analyzer, sample_social_content):
-        """Test engagement prediction capabilities through comprehensive analysis"""
-        platforms_to_test = [
+        """Test engagement prediction capabilities through comprehensive analysis"""        platforms_to_test = [
             ('instagram', sample_social_content['posts'][0]['content']),  # Instagram fitness post
             ('tiktok', sample_social_content['tiktok']['trending_video']['content']),  # TikTok trending
             ('youtube', sample_social_content['youtube']['long_description']['content'])  # YouTube description
@@ -347,8 +334,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_readability_analysis(self, content_analyzer, sample_social_content):
-        """Test content readability analysis through comprehensive analysis"""
-        # Test with different content complexities
+        """Test content readability analysis through comprehensive analysis"""        # Test with different content complexities
         contents = [
             "Simple text. Easy to read. Short sentences.",
             sample_social_content['posts'][0]['content'],
@@ -380,8 +366,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_multilingual_analysis(self, content_analyzer, sample_texts):
-        """Test multilingual analysis capabilities"""
-        for language, texts in sample_texts.items():
+        """Test multilingual analysis capabilities"""        for language, texts in sample_texts.items():
             text = texts[0]
             lang_code = language[:2]
             
@@ -417,8 +402,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_batch_analysis(self, content_analyzer, performance_test_data):
-        """Test batch analysis capabilities using comprehensive analysis"""
-        texts = performance_test_data['small_batch']
+        """Test batch analysis capabilities using comprehensive analysis"""        texts = performance_test_data['small_batch']
         
         start_time = time.time()
         
@@ -453,8 +437,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_trend_analysis(self, content_analyzer, sample_social_content):
-        """Test trend analysis capabilities through comprehensive analysis"""
-        trending_content = sample_social_content['tiktok']['trending_video']['content']
+        """Test trend analysis capabilities through comprehensive analysis"""        trending_content = sample_social_content['tiktok']['trending_video']['content']
         
         analysis = await content_analyzer.analyze_comprehensive(
             content=trending_content,
@@ -483,8 +466,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_content_quality_assessment(self, content_analyzer, sample_social_content):
-        """Test content quality assessment through comprehensive analysis"""
-        # Test with high-quality content
+        """Test content quality assessment through comprehensive analysis"""        # Test with high-quality content
         high_quality_content = sample_social_content['youtube']['long_description']['content']
         
         analysis = await content_analyzer.analyze_comprehensive(
@@ -520,8 +502,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_performance_benchmarks(self, content_analyzer, performance_test_data, benchmark_config):
-        """Test analyzer performance benchmarks"""
-        # Test single analysis performance
+        """Test analyzer performance benchmarks"""        # Test single analysis performance
         text = performance_test_data['small_batch'][0]
         
         start_time = time.time()
@@ -572,8 +553,7 @@ class TestAdvancedContentAnalyzer:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, content_analyzer):
-        """Test error handling and edge cases"""
-        # Test empty text
+        """Test error handling and edge cases"""        # Test empty text
         analysis = await content_analyzer.analyze_comprehensive(
             content="",
             metadata={
@@ -610,19 +590,16 @@ class TestAdvancedContentAnalyzer:
         assert analysis is not None
 
 class TestSentimentAnalyzer:
-    """Test specialized sentiment analyzer"""
-    
+    """Test specialized sentiment analyzer"""    
     @pytest.mark.asyncio
     async def test_sentiment_analyzer_initialization(self):
-        """Test sentiment analyzer initialization"""
-        analyzer = SentimentAnalyzer()
+        """Test sentiment analyzer initialization"""        analyzer = SentimentAnalyzer()
         assert analyzer is not None
         assert hasattr(analyzer, 'analyze')
 
     @pytest.mark.asyncio
     async def test_sentiment_analysis_detailed(self):
-        """Test detailed sentiment analysis"""
-        analyzer = SentimentAnalyzer()
+        """Test detailed sentiment analysis"""        analyzer = SentimentAnalyzer()
         
         text = "I absolutely love this amazing product! It's fantastic! 😍"
         
@@ -646,19 +623,16 @@ class TestSentimentAnalyzer:
         assert result.confidence_score >= 0.0  # Should have confidence
 
 class TestTopicAnalyzer:
-    """Test specialized topic analyzer"""
-    
+    """Test specialized topic analyzer"""    
     @pytest.mark.asyncio
     async def test_topic_analyzer_initialization(self):
-        """Test topic analyzer initialization"""
-        analyzer = TopicAnalyzer()
+        """Test topic analyzer initialization"""        analyzer = TopicAnalyzer()
         assert analyzer is not None
         assert hasattr(analyzer, 'analyze')  # Use the real method name
 
     @pytest.mark.asyncio
     async def test_topic_extraction(self, sample_social_content):
-        """Test topic extraction"""
-        analyzer = TopicAnalyzer()
+        """Test topic extraction"""        analyzer = TopicAnalyzer()
         
         text = sample_social_content['youtube']['description']
         
@@ -673,19 +647,16 @@ class TestTopicAnalyzer:
         assert len(topics) <= 3
 
 class TestCollaborationAnalyzer:
-    """Test specialized collaboration analyzer"""
-    
+    """Test specialized collaboration analyzer"""    
     @pytest.mark.asyncio
     async def test_collaboration_analyzer_initialization(self):
-        """Test collaboration analyzer initialization"""
-        analyzer = CollaborationAnalyzer()
+        """Test collaboration analyzer initialization"""        analyzer = CollaborationAnalyzer()
         assert analyzer is not None
         assert hasattr(analyzer, 'detect_opportunities')
 
     @pytest.mark.asyncio
     async def test_collaboration_detection(self, sample_texts):
-        """Test collaboration opportunity detection"""
-        analyzer = CollaborationAnalyzer()
+        """Test collaboration opportunity detection"""        analyzer = CollaborationAnalyzer()
         
         text = sample_texts['english'][2]  # Has mention
         
@@ -699,11 +670,9 @@ class TestCollaborationAnalyzer:
         assert isinstance(collaborations, list)
 
 class TestAnalysisConfig:
-    """Test analysis configuration"""
-    
+    """Test analysis configuration"""    
     def test_config_creation(self):
-        """Test analysis configuration creation"""
-        config = AnalysisConfig(
+        """Test analysis configuration creation"""        config = AnalysisConfig(
             sentiment_models=['model1', 'model2'],
             topic_models=['lda', 'nmf'],
             analysis_depth='comprehensive'
@@ -714,11 +683,9 @@ class TestAnalysisConfig:
         assert config.analysis_depth == 'comprehensive'
 
 class TestAnalysisResult:
-    """Test analysis result structure"""
-    
+    """Test analysis result structure"""    
     def test_result_creation(self):
-        """Test analysis result creation"""
-        result = AnalysisResult(
+        """Test analysis result creation"""        result = AnalysisResult(
             content_id="test_001",
             analysis_type="sentiment_analysis",
             results={

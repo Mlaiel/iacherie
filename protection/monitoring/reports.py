@@ -1,5 +1,4 @@
-"""
-📋 Monitoring Reports Generator
+"""📋 Monitoring Reports Generator
 =============================
 
 Advanced automated reporting system for content protection monitoring.
@@ -21,7 +20,6 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import json
@@ -51,16 +49,14 @@ from .performance_optimizer import PerformanceOptimizer
 logger = logging.getLogger(__name__)
 
 class ReportFormat(str, Enum):
-    """Report output formats."""
-    PDF = "pdf"
+    """Report output formats."""    PDF = "pdf"
     EXCEL = "excel"
     JSON = "json"
     HTML = "html"
     CSV = "csv"
 
 class ReportType(str, Enum):
-    """Types of reports."""
-    EXECUTIVE_SUMMARY = "executive_summary"
+    """Types of reports."""    EXECUTIVE_SUMMARY = "executive_summary"
     DETAILED_ANALYTICS = "detailed_analytics"
     PERFORMANCE_REPORT = "performance_report"
     SECURITY_ASSESSMENT = "security_assessment"
@@ -69,24 +65,21 @@ class ReportType(str, Enum):
     CUSTOM = "custom"
 
 class ReportFrequency(str, Enum):
-    """Report generation frequency."""
-    DAILY = "daily"
+    """Report generation frequency."""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     ON_DEMAND = "on_demand"
 
 class ChartStyle(str, Enum):
-    """Chart styling options."""
-    PROFESSIONAL = "professional"
+    """Chart styling options."""    PROFESSIONAL = "professional"
     MODERN = "modern"
     MINIMAL = "minimal"
     COLORFUL = "colorful"
 
 @dataclass
 class ReportSection:
-    """Report section configuration."""
-    section_id: str
+    """Report section configuration."""    section_id: str
     title: str
     content_type: str  # text, chart, table, metrics
     data_source: str
@@ -95,8 +88,7 @@ class ReportSection:
     order: int = 0
 
 class ReportTemplate(BaseModel):
-    """Report template configuration."""
-    template_id: str
+    """Report template configuration."""    template_id: str
     name: str
     description: str = ""
     report_type: ReportType
@@ -107,8 +99,7 @@ class ReportTemplate(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class ReportConfiguration(BaseModel):
-    """Report generation configuration."""
-    config_id: str
+    """Report generation configuration."""    config_id: str
     template_id: str
     name: str
     description: str = ""
@@ -123,8 +114,7 @@ class ReportConfiguration(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class GeneratedReport(BaseModel):
-    """Generated report metadata."""
-    report_id: str
+    """Generated report metadata."""    report_id: str
     config_id: str
     template_id: str
     generated_at: datetime = Field(default_factory=datetime.utcnow)
@@ -138,8 +128,7 @@ class GeneratedReport(BaseModel):
     error_message: Optional[str] = None
 
 class ReportGenerator:
-    """
-    Advanced automated reporting system for monitoring analytics.
+    """    Advanced automated reporting system for monitoring analytics.
     
     Features:
     - Multi-format report generation with professional styling
@@ -147,16 +136,14 @@ class ReportGenerator:
     - Interactive charts and visualizations
     - Custom templates and branding
     - Executive summaries with key insights
-    """
-    
+    """    
     def __init__(
         self,
         config: Dict[str, Any],
         analytics: MonitoringAnalytics,
         performance_optimizer: PerformanceOptimizer
     ):
-        """Initialize report generator."""
-        self.config = config
+        """Initialize report generator."""        self.config = config
         self.analytics = analytics
         self.performance_optimizer = performance_optimizer
         
@@ -182,8 +169,7 @@ class ReportGenerator:
         logger.info("Report Generator initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the report generator."""
-        try:
+        """Initialize the report generator."""        try:
             logger.info("Initializing Report Generator...")
             
             # Load default templates
@@ -207,8 +193,7 @@ class ReportGenerator:
         template_data: Dict[str, Any],
         user_id: int
     ) -> ReportTemplate:
-        """Create a new report template."""
-        try:
+        """Create a new report template."""        try:
             template = ReportTemplate(
                 template_id=f"template_{user_id}_{int(datetime.utcnow().timestamp())}",
                 name=template_data.get('name', 'New Template'),
@@ -244,8 +229,7 @@ class ReportGenerator:
         time_range: Optional[Tuple[datetime, datetime]] = None,
         custom_parameters: Optional[Dict[str, Any]] = None
     ) -> GeneratedReport:
-        """Generate a report based on configuration or template."""
-        start_time = datetime.utcnow()
+        """Generate a report based on configuration or template."""        start_time = datetime.utcnow()
         
         try:
             # Determine configuration
@@ -335,8 +319,7 @@ class ReportGenerator:
         config_data: Dict[str, Any],
         user_id: int
     ) -> ReportConfiguration:
-        """Schedule automated report generation."""
-        try:
+        """Schedule automated report generation."""        try:
             config = ReportConfiguration(
                 config_id=f"config_{user_id}_{int(datetime.utcnow().timestamp())}",
                 template_id=config_data['template_id'],
@@ -374,8 +357,7 @@ class ReportGenerator:
         time_range: Tuple[datetime, datetime],
         custom_parameters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Gather all data needed for report generation."""
-        report_data = {
+        """Gather all data needed for report generation."""        report_data = {
             'metadata': {
                 'generated_at': datetime.utcnow(),
                 'time_range_start': time_range[0],
@@ -408,8 +390,7 @@ class ReportGenerator:
         time_range: Tuple[datetime, datetime],
         custom_parameters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Gather data for a specific report section."""
-        if section.data_source == 'analytics':
+        """Gather data for a specific report section."""        if section.data_source == 'analytics':
             return await self._gather_analytics_data(section, time_range)
         elif section.data_source == 'performance':
             return await self._gather_performance_data(section, time_range)
@@ -425,8 +406,7 @@ class ReportGenerator:
         section: ReportSection,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Gather analytics data for a section."""
-        # Determine time range for analytics
+        """Gather analytics data for a section."""        # Determine time range for analytics
         duration = time_range[1] - time_range[0]
         if duration <= timedelta(hours=1):
             analytics_range = AnalyticsTimeRange.LAST_HOUR
@@ -464,8 +444,7 @@ class ReportGenerator:
         section: ReportSection,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Gather performance data for a section."""
-        # Get current performance metrics
+        """Gather performance data for a section."""        # Get current performance metrics
         current_metrics = await self.performance_optimizer.monitor_system_performance()
         
         # Get optimization recommendations
@@ -497,8 +476,7 @@ class ReportGenerator:
         section: ReportSection,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Gather violations data for a section."""
-        # Mock violations data (would integrate with actual violation tracking)
+        """Gather violations data for a section."""        # Mock violations data (would integrate with actual violation tracking)
         return {
             'title': section.title,
             'total_violations': np.random.randint(100, 500),
@@ -526,8 +504,7 @@ class ReportGenerator:
         section: ReportSection,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Gather platform-specific data for a section."""
-        platforms = ['youtube', 'spotify', 'instagram', 'tiktok']
+        """Gather platform-specific data for a section."""        platforms = ['youtube', 'spotify', 'instagram', 'tiktok']
         
         platform_data = {}
         for platform in platforms:
@@ -558,8 +535,7 @@ class ReportGenerator:
         report_data: Dict[str, Any],
         format_type: ReportFormat
     ) -> Tuple[Path, int]:
-        """Generate report in specific format."""
-        if format_type == ReportFormat.PDF:
+        """Generate report in specific format."""        if format_type == ReportFormat.PDF:
             return await self._generate_pdf_report(report_id, template, report_data)
         elif format_type == ReportFormat.EXCEL:
             return await self._generate_excel_report(report_id, template, report_data)
@@ -578,8 +554,7 @@ class ReportGenerator:
         template: ReportTemplate,
         report_data: Dict[str, Any]
     ) -> Tuple[Path, int]:
-        """Generate PDF report with charts and professional formatting."""
-        file_path = self.output_directory / f"{report_id}.pdf"
+        """Generate PDF report with charts and professional formatting."""        file_path = self.output_directory / f"{report_id}.pdf"
         
         # Configure matplotlib for PDF generation
         plt.style.use('seaborn-v0_8' if 'seaborn-v0_8' in plt.style.available else 'default')
@@ -615,8 +590,7 @@ class ReportGenerator:
         template: ReportTemplate,
         report_data: Dict[str, Any]
     ) -> None:
-        """Create PDF title page."""
-        fig, ax = plt.subplots(figsize=(8.5, 11))
+        """Create PDF title page."""        fig, ax = plt.subplots(figsize=(8.5, 11))
         ax.axis('off')
         
         # Title
@@ -659,8 +633,7 @@ class ReportGenerator:
         pdf: PdfPages,
         report_data: Dict[str, Any]
     ) -> None:
-        """Create PDF executive summary page."""
-        fig, ax = plt.subplots(figsize=(8.5, 11))
+        """Create PDF executive summary page."""        fig, ax = plt.subplots(figsize=(8.5, 11))
         ax.axis('off')
         
         # Title
@@ -714,8 +687,7 @@ class ReportGenerator:
         section: ReportSection,
         section_data: Dict[str, Any]
     ) -> None:
-        """Create PDF chart section."""
-        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(11, 8.5))
+        """Create PDF chart section."""        fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(11, 8.5))
         fig.suptitle(section.title, fontsize=16, fontweight='bold')
         
         # Chart 1: Detection Trends
@@ -759,8 +731,7 @@ class ReportGenerator:
         template: ReportTemplate,
         report_data: Dict[str, Any]
     ) -> Tuple[Path, int]:
-        """Generate Excel report with multiple sheets."""
-        file_path = self.output_directory / f"{report_id}.xlsx"
+        """Generate Excel report with multiple sheets."""        file_path = self.output_directory / f"{report_id}.xlsx"
         
         with pd.ExcelWriter(str(file_path), engine='openpyxl') as writer:
             # Summary sheet
@@ -802,8 +773,7 @@ class ReportGenerator:
         template: ReportTemplate,
         report_data: Dict[str, Any]
     ) -> Tuple[Path, int]:
-        """Generate JSON report."""
-        file_path = self.output_directory / f"{report_id}.json"
+        """Generate JSON report."""        file_path = self.output_directory / f"{report_id}.json"
         
         # Convert datetime objects to ISO format strings
         def convert_datetime(obj):
@@ -830,12 +800,10 @@ class ReportGenerator:
         template: ReportTemplate,
         report_data: Dict[str, Any]
     ) -> Tuple[Path, int]:
-        """Generate HTML report with interactive charts."""
-        file_path = self.output_directory / f"{report_id}.html"
+        """Generate HTML report with interactive charts."""        file_path = self.output_directory / f"{report_id}.html"
         
         # Create HTML template
-        html_template = """
-        <!DOCTYPE html>
+        html_template = """        <!DOCTYPE html>
         <html>
         <head>
             <title>{{ template_name }}</title>
@@ -881,8 +849,7 @@ class ReportGenerator:
             </script>
         </body>
         </html>
-        """
-        
+        """        
         template_obj = Template(html_template)
         metadata = report_data['metadata']
         
@@ -904,8 +871,7 @@ class ReportGenerator:
         template: ReportTemplate,
         report_data: Dict[str, Any]
     ) -> Tuple[Path, int]:
-        """Generate CSV report."""
-        file_path = self.output_directory / f"{report_id}.csv"
+        """Generate CSV report."""        file_path = self.output_directory / f"{report_id}.csv"
         
         # Create summary data
         data = {
@@ -924,8 +890,7 @@ class ReportGenerator:
         return file_path, file_size
 
     def _calculate_next_run_time(self, frequency: ReportFrequency) -> datetime:
-        """Calculate next run time based on frequency."""
-        now = datetime.utcnow()
+        """Calculate next run time based on frequency."""        now = datetime.utcnow()
         
         if frequency == ReportFrequency.DAILY:
             return now + timedelta(days=1)
@@ -939,14 +904,12 @@ class ReportGenerator:
             return now
 
     async def _start_report_scheduler(self) -> None:
-        """Start the automated report scheduler."""
-        self._scheduler_running = True
+        """Start the automated report scheduler."""        self._scheduler_running = True
         self._scheduler_task = asyncio.create_task(self._scheduler_loop())
         logger.info("Report scheduler started")
 
     async def _scheduler_loop(self) -> None:
-        """Main scheduler loop for automated reports."""
-        try:
+        """Main scheduler loop for automated reports."""        try:
             while self._scheduler_running:
                 current_time = datetime.utcnow()
                 
@@ -976,8 +939,7 @@ class ReportGenerator:
             logger.debug("Report scheduler loop cancelled")
 
     async def _load_default_templates(self) -> None:
-        """Load default report templates."""
-        try:
+        """Load default report templates."""        try:
             # Executive Summary template
             executive_template = ReportTemplate(
                 template_id="default_executive_summary",
@@ -1057,24 +1019,21 @@ class ReportGenerator:
             logger.error(f"Failed to load default templates: {e}")
 
     async def _load_report_configurations(self) -> None:
-        """Load existing report configurations."""
-        try:
+        """Load existing report configurations."""        try:
             # This would load from database in real implementation
             logger.debug("Loaded report configurations")
         except Exception as e:
             logger.error(f"Failed to load report configurations: {e}")
 
     async def _save_report_template(self, template: ReportTemplate) -> None:
-        """Save report template to storage."""
-        try:
+        """Save report template to storage."""        try:
             # This would save to database in real implementation
             logger.debug(f"Saved report template: {template.template_id}")
         except Exception as e:
             logger.error(f"Failed to save report template: {e}")
 
     async def _save_report_configuration(self, config: ReportConfiguration) -> None:
-        """Save report configuration to storage."""
-        try:
+        """Save report configuration to storage."""        try:
             # This would save to database in real implementation
             logger.debug(f"Saved report configuration: {config.config_id}")
         except Exception as e:
@@ -1086,8 +1045,7 @@ class ReportGenerator:
         section: ReportSection,
         section_data: Dict[str, Any]
     ) -> None:
-        """Create PDF table section."""
-        fig, ax = plt.subplots(figsize=(11, 8.5))
+        """Create PDF table section."""        fig, ax = plt.subplots(figsize=(11, 8.5))
         ax.axis('off')
         
         # Title
@@ -1153,8 +1111,7 @@ class ReportGenerator:
         section: ReportSection,
         section_data: Dict[str, Any]
     ) -> None:
-        """Create PDF metrics section."""
-        fig, ax = plt.subplots(figsize=(11, 8.5))
+        """Create PDF metrics section."""        fig, ax = plt.subplots(figsize=(11, 8.5))
         ax.axis('off')
         
         # Title
@@ -1211,8 +1168,7 @@ class ReportGenerator:
         section: ReportSection,
         section_data: Dict[str, Any]
     ) -> None:
-        """Create PDF text section."""
-        fig, ax = plt.subplots(figsize=(11, 8.5))
+        """Create PDF text section."""        fig, ax = plt.subplots(figsize=(11, 8.5))
         ax.axis('off')
         
         # Title
@@ -1288,8 +1244,7 @@ class ReportGenerator:
     # Public API methods for external access
     
     async def get_available_templates(self, user_id: Optional[int] = None) -> List[Dict[str, Any]]:
-        """Get list of available report templates."""
-        try:
+        """Get list of available report templates."""        try:
             templates = []
             for template in self._report_templates.values():
                 if template.is_public or (user_id and template.created_by == user_id):
@@ -1314,8 +1269,7 @@ class ReportGenerator:
         user_id: Optional[int] = None,
         limit: int = 50
     ) -> List[Dict[str, Any]]:
-        """Get history of generated reports."""
-        try:
+        """Get history of generated reports."""        try:
             reports = []
             for report in self._generated_reports.values():
                 # Filter by user if provided (would check permissions in real implementation)
@@ -1345,8 +1299,7 @@ class ReportGenerator:
             return []
 
     async def delete_report_template(self, template_id: str, user_id: int) -> bool:
-        """Delete a report template."""
-        try:
+        """Delete a report template."""        try:
             if template_id not in self._report_templates:
                 return False
             
@@ -1381,8 +1334,7 @@ class ReportGenerator:
         updates: Dict[str, Any],
         user_id: int
     ) -> bool:
-        """Update a report configuration."""
-        try:
+        """Update a report configuration."""        try:
             if config_id not in self._report_configurations:
                 return False
             
@@ -1420,8 +1372,7 @@ class ReportGenerator:
             return False
 
     async def download_report(self, report_id: str, format_type: str) -> Optional[Path]:
-        """Get download path for a generated report."""
-        try:
+        """Get download path for a generated report."""        try:
             if report_id not in self._generated_reports:
                 return None
             
@@ -1443,8 +1394,7 @@ class ReportGenerator:
             return None
 
     async def get_report_statistics(self) -> Dict[str, Any]:
-        """Get statistics about report generation."""
-        try:
+        """Get statistics about report generation."""        try:
             total_reports = len(self._generated_reports)
             successful_reports = len([r for r in self._generated_reports.values() if r.status == "completed"])
             failed_reports = total_reports - successful_reports
@@ -1485,8 +1435,7 @@ class ReportGenerator:
             return {}
 
     async def cleanup_old_reports(self, days_to_keep: int = 30) -> int:
-        """Clean up old report files."""
-        try:
+        """Clean up old report files."""        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_to_keep)
             files_deleted = 0
             

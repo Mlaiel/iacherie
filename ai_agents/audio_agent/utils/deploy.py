@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Audio Agent Deployment Script - Enterprise Production Deployment
+"""Audio Agent Deployment Script - Enterprise Production Deployment
 
 Professional deployment automation for the Audio Agent module with comprehensive
 health checks, dependency validation, and performance monitoring setup.
@@ -12,7 +11,6 @@ Project Team Specialties: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sec
 This deployment script contains proprietary deployment procedures and configurations.
 Unauthorized use or modification is strictly prohibited. Contact: mlaiel@live.de
 """
-
 import asyncio
 import sys
 import os
@@ -35,8 +33,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 class AudioAgentDeployer:
-    """Enterprise-grade deployment automation for Audio Agent"""
-    
+    """Enterprise-grade deployment automation for Audio Agent"""    
     def __init__(self, environment: str = "production"):
         self.environment = environment
         self.deployment_start_time = time.time()
@@ -91,8 +88,7 @@ class AudioAgentDeployer:
         logger.info(f"👨‍💻 Author: Fahed Mlaiel <mlaiel@live.de>")
     
     async def deploy(self):
-        """Execute complete deployment workflow"""
-        
+        """Execute complete deployment workflow"""        
         print("🎵 AUDIO AGENT ENTERPRISE DEPLOYMENT")
         print("=" * 60)
         print(f"Author: Fahed Mlaiel <mlaiel@live.de>")
@@ -156,8 +152,7 @@ class AudioAgentDeployer:
             return False
     
     async def _execute_step(self, step: str):
-        """Execute individual deployment step"""
-        
+        """Execute individual deployment step"""        
         if step == "validate_environment":
             await self._validate_environment()
         elif step == "check_dependencies":
@@ -184,8 +179,7 @@ class AudioAgentDeployer:
             raise ValueError(f"Unknown deployment step: {step}")
     
     async def _validate_environment(self):
-        """Validate deployment environment"""
-        
+        """Validate deployment environment"""        
         # Check Python version
         python_version = sys.version_info
         if python_version < (3, 11):
@@ -221,8 +215,7 @@ class AudioAgentDeployer:
                 print(f"   ✓ Environment variable: {env_var}")
     
     async def _check_dependencies(self):
-        """Check and install required dependencies"""
-        
+        """Check and install required dependencies"""        
         # Core dependencies to check
         dependencies = [
             ("torch", "2.0.0"),
@@ -259,8 +252,7 @@ class AudioAgentDeployer:
             print(f"   ⚠ GPU check: Failed")
     
     async def _validate_configuration(self):
-        """Validate Audio Agent configuration"""
-        
+        """Validate Audio Agent configuration"""        
         try:
             # Import and validate configuration
             sys.path.append(str(self.project_root))
@@ -280,8 +272,7 @@ class AudioAgentDeployer:
             raise RuntimeError(f"Configuration validation failed: {e}")
     
     async def _setup_directories(self):
-        """Setup required directories with proper permissions"""
-        
+        """Setup required directories with proper permissions"""        
         directories = [
             "/data/audio_agent/audio_files",
             "/data/audio_agent/models", 
@@ -308,8 +299,7 @@ class AudioAgentDeployer:
                 print(f"   ⚠ Using fallback directory: {alt_dir}")
     
     async def _download_ai_models(self):
-        """Download and verify AI models"""
-        
+        """Download and verify AI models"""        
         models_to_download = [
             {
                 "name": "MusicGen Small",
@@ -335,8 +325,7 @@ class AudioAgentDeployer:
                 logger.warning(f"Model check failed for {model['name']}: {e}")
     
     async def _setup_database(self):
-        """Setup database connections and tables"""
-        
+        """Setup database connections and tables"""        
         try:
             database_url = os.getenv("DATABASE_URL", "sqlite:///audio_agent.db")
             
@@ -362,8 +351,7 @@ class AudioAgentDeployer:
             raise RuntimeError(f"Database setup failed: {e}")
     
     async def _setup_redis(self):
-        """Setup Redis connection and configuration"""
-        
+        """Setup Redis connection and configuration"""        
         try:
             import redis
             redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
@@ -382,8 +370,7 @@ class AudioAgentDeployer:
             print(f"   ⚠ Redis connection failed - caching disabled")
     
     async def _run_health_checks(self):
-        """Run comprehensive health checks"""
-        
+        """Run comprehensive health checks"""        
         health_checks = [
             ("Memory Usage", self._check_memory_usage),
             ("Disk Space", self._check_disk_space),
@@ -399,31 +386,27 @@ class AudioAgentDeployer:
                 print(f"   ⚠ {check_name}: WARNING - {e}")
     
     async def _check_memory_usage(self):
-        """Check current memory usage"""
-        import psutil
+        """Check current memory usage"""        import psutil
         memory = psutil.virtual_memory()
         if memory.percent > 80:
             raise RuntimeError(f"High memory usage: {memory.percent}%")
     
     async def _check_disk_space(self):
-        """Check available disk space"""
-        import psutil
+        """Check available disk space"""        import psutil
         disk = psutil.disk_usage('/')
         usage_percent = (disk.used / disk.total) * 100
         if usage_percent > 90:
             raise RuntimeError(f"Low disk space: {usage_percent:.1f}% used")
     
     async def _check_network(self):
-        """Check network connectivity"""
-        import socket
+        """Check network connectivity"""        import socket
         try:
             socket.create_connection(("8.8.8.8", 53), timeout=5)
         except Exception:
             raise RuntimeError("No internet connectivity")
     
     async def _check_audio_processing(self):
-        """Basic audio processing functionality check"""
-        try:
+        """Basic audio processing functionality check"""        try:
             import numpy as np
             import librosa
             
@@ -442,8 +425,7 @@ class AudioAgentDeployer:
             raise RuntimeError(f"Audio processing check failed: {e}")
     
     async def _start_services(self):
-        """Start Audio Agent services"""
-        
+        """Start Audio Agent services"""        
         env_config = self.config[self.environment]
         
         print(f"   🚀 Starting Audio Agent server...")
@@ -460,8 +442,7 @@ class AudioAgentDeployer:
             print(f"      Use: uvicorn backend.ai_agents.audio_agent.index:app --host {env_config['host']} --port {env_config['port']} --workers {env_config['workers']}")
     
     async def _validate_deployment(self):
-        """Validate successful deployment"""
-        
+        """Validate successful deployment"""        
         env_config = self.config[self.environment]
         
         # Test basic API endpoints
@@ -485,8 +466,7 @@ class AudioAgentDeployer:
             print(f"   ⚠ API validation: Manual testing required")
     
     async def _setup_monitoring(self):
-        """Setup monitoring and alerting"""
-        
+        """Setup monitoring and alerting"""        
         monitoring_configs = [
             "Prometheus metrics endpoint: /metrics",
             "Health check endpoint: /health", 
@@ -500,8 +480,7 @@ class AudioAgentDeployer:
         print(f"   ✓ Monitoring dashboard: http://{self.config[self.environment]['domain']}/docs")
 
 async def main():
-    """Main deployment execution"""
-    
+    """Main deployment execution"""    
     if len(sys.argv) > 1:
         environment = sys.argv[1]
     else:

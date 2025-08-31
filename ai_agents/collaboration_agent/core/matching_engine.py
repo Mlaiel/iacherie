@@ -1,5 +1,4 @@
-"""
-Matching Engine - Ultra-Advanced AI-Powered Creator Discovery & Compatibility System
+"""Matching Engine - Ultra-Advanced AI-Powered Creator Discovery & Compatibility System
 
 Sophisticated creator matching system using deep learning, behavioral analysis,
 content similarity, and predictive modeling for optimal collaboration recommendations.
@@ -23,7 +22,6 @@ Team Specialties:
 - DevOps Engineer: CI/CD, deployment, and infrastructure automation
 - IA Prompt Engineer: AI prompt optimization and conversational systems
 """
-
 import asyncio
 import logging
 import time
@@ -64,8 +62,7 @@ from ...utils.cache_utils import CacheManager
 logger = logging.getLogger(__name__)
 
 class MatchingCriteria(Enum):
-    """Criteria for creator matching"""
-    CONTENT_SIMILARITY = "content_similarity"
+    """Criteria for creator matching"""    CONTENT_SIMILARITY = "content_similarity"
     STYLE_COMPATIBILITY = "style_compatibility"
     AUDIENCE_OVERLAP = "audience_overlap"
     ENGAGEMENT_COMPATIBILITY = "engagement_compatibility"
@@ -76,8 +73,7 @@ class MatchingCriteria(Enum):
 
 @dataclass
 class CreatorVector:
-    """Multi-dimensional creator representation for matching"""
-    creator_id: str
+    """Multi-dimensional creator representation for matching"""    creator_id: str
     content_embeddings: np.ndarray
     style_features: np.ndarray
     audience_features: np.ndarray
@@ -89,8 +85,7 @@ class CreatorVector:
 
 @dataclass
 class MatchScore:
-    """Comprehensive match scoring result"""
-    creator_a_id: str
+    """Comprehensive match scoring result"""    creator_a_id: str
     creator_b_id: str
     overall_score: float
     component_scores: Dict[str, float]
@@ -102,8 +97,7 @@ class MatchScore:
     recommended_next_steps: List[str]
 
 class CreatorMatcher:
-    """
-    Advanced AI-powered creator matching system.
+    """    Advanced AI-powered creator matching system.
     
     Uses multiple ML models and algorithms to find optimal creator partnerships:
     - Deep content similarity analysis
@@ -111,8 +105,7 @@ class CreatorMatcher:
     - Audience demographic analysis
     - Success prediction modeling
     - Risk assessment algorithms
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -149,8 +142,7 @@ class CreatorMatcher:
         }
     
     async def initialize(self):
-        """Initialize all matching components"""
-        try:
+        """Initialize all matching components"""        try:
             # Load AI models
             self.content_similarity_model = ContentSimilarityModel()
             await self.content_similarity_model.load_model()
@@ -177,8 +169,7 @@ class CreatorMatcher:
         filters: Dict[str, Any] = None,
         max_results: int = 20
     ) -> List[MatchScore]:
-        """
-        Find best matching creators for collaboration.
+        """        Find best matching creators for collaboration.
         
         Args:
             creator_id: ID of creator seeking matches
@@ -188,8 +179,7 @@ class CreatorMatcher:
         
         Returns:
             List of MatchScore objects ranked by compatibility
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Get creator vector
@@ -253,8 +243,7 @@ class CreatorMatcher:
         candidate_id: str,
         criteria: List[MatchingCriteria]
     ) -> MatchScore:
-        """Compute comprehensive match score between creators"""
-        
+        """Compute comprehensive match score between creators"""        
         candidate_vector = await self._get_creator_vector(candidate_id)
         if not candidate_vector:
             raise ValidationError(f"Candidate vector not found: {candidate_id}")
@@ -342,8 +331,7 @@ class CreatorMatcher:
         creator_a: CreatorVector,
         creator_b: CreatorVector
     ) -> float:
-        """Calculate content similarity using AI models"""
-        try:
+        """Calculate content similarity using AI models"""        try:
             # Use cosine similarity on content embeddings
             similarity = 1 - cosine(creator_a.content_embeddings, creator_b.content_embeddings)
             
@@ -366,8 +354,7 @@ class CreatorMatcher:
         creator_a: CreatorVector,
         creator_b: CreatorVector
     ) -> float:
-        """Calculate creative style compatibility"""
-        try:
+        """Calculate creative style compatibility"""        try:
             # Compare style features using custom similarity metric
             style_sim = cosine_similarity(
                 creator_a.style_features.reshape(1, -1),
@@ -390,8 +377,7 @@ class CreatorMatcher:
         creator_a: CreatorVector,
         creator_b: CreatorVector
     ) -> float:
-        """Calculate audience demographic overlap"""
-        try:
+        """Calculate audience demographic overlap"""        try:
             # Use audience features for overlap calculation
             overlap = cosine_similarity(
                 creator_a.audience_features.reshape(1, -1),
@@ -405,8 +391,7 @@ class CreatorMatcher:
             return 0.0
     
     async def _get_creator_vector(self, creator_id: str) -> Optional[CreatorVector]:
-        """Get or compute creator vector"""
-        
+        """Get or compute creator vector"""        
         # Check cache first
         if creator_id in self.creator_vectors:
             vector = self.creator_vectors[creator_id]
@@ -422,8 +407,7 @@ class CreatorMatcher:
         return vector
     
     async def _compute_creator_vector(self, creator_id: str) -> Optional[CreatorVector]:
-        """Compute multi-dimensional creator vector"""
-        
+        """Compute multi-dimensional creator vector"""        
         try:
             async with get_async_session() as session:
                 # Get creator data
@@ -478,21 +462,18 @@ class CreatorMatcher:
             return None
 
 class StyleAnalyzer:
-    """
-    Advanced style analysis system for content and creator compatibility.
+    """    Advanced style analysis system for content and creator compatibility.
     
     Analyzes visual, auditory, and narrative styles to determine compatibility
     between creators for different types of collaborative projects.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.style_models = {}
         self.feature_extractors = {}
     
     async def initialize(self):
-        """Initialize style analysis models"""
-        try:
+        """Initialize style analysis models"""        try:
             # Initialize different style analysis models
             self.style_models = {
                 'visual': await self._load_visual_style_model(),
@@ -513,8 +494,7 @@ class StyleAnalyzer:
         creator_b_id: str,
         content_types: List[str] = None
     ) -> Dict[str, Any]:
-        """Analyze style compatibility between creators"""
-        
+        """Analyze style compatibility between creators"""        
         try:
             compatibility_scores = {}
             
@@ -548,21 +528,18 @@ class StyleAnalyzer:
             raise MatchingError(f"Style compatibility analysis failed: {e}")
 
 class AudienceAnalyzer:
-    """
-    Sophisticated audience analysis system for creator collaboration matching.
+    """    Sophisticated audience analysis system for creator collaboration matching.
     
     Analyzes audience demographics, behavior patterns, and engagement metrics
     to identify optimal collaboration opportunities with maximum reach potential.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.audience_models = {}
         self.demographic_processor = None
     
     async def initialize(self):
-        """Initialize audience analysis components"""
-        try:
+        """Initialize audience analysis components"""        try:
             # Load audience analysis models
             self.audience_models = {
                 'demographic': await self._load_demographic_model(),
@@ -583,8 +560,7 @@ class AudienceAnalyzer:
         creator_b_id: str,
         analysis_depth: str = "comprehensive"
     ) -> Dict[str, Any]:
-        """Analyze audience compatibility between creators"""
-        
+        """Analyze audience compatibility between creators"""        
         try:
             # Get audience data for both creators
             audience_a = await self._get_audience_profile(creator_a_id)
@@ -622,11 +598,9 @@ class AudienceAnalyzer:
             raise MatchingError(f"Audience compatibility analysis failed: {e}")
 
 class CompatibilityScorer:
-    """
-    Advanced compatibility scoring system that combines multiple analysis dimensions
+    """    Advanced compatibility scoring system that combines multiple analysis dimensions
     to provide comprehensive creator matching scores with detailed explanations.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         
@@ -647,8 +621,7 @@ class CompatibilityScorer:
         }
     
     async def initialize(self):
-        """Initialize all scoring components"""
-        try:
+        """Initialize all scoring components"""        try:
             await self.style_analyzer.initialize()
             await self.audience_analyzer.initialize()
             
@@ -664,8 +637,7 @@ class CompatibilityScorer:
         creator_b_id: str,
         collaboration_context: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Compute comprehensive compatibility score with detailed breakdown.
+        """        Compute comprehensive compatibility score with detailed breakdown.
         
         Args:
             creator_a_id: First creator ID
@@ -674,8 +646,7 @@ class CompatibilityScorer:
         
         Returns:
             Comprehensive scoring results with explanations
-        """
-        
+        """        
         try:
             start_time = time.time()
             
@@ -758,8 +729,7 @@ class CompatibilityScorer:
         component_scores: Dict[str, float],
         overall_score: float
     ) -> List[str]:
-        """Generate human-readable explanation of compatibility score"""
-        
+        """Generate human-readable explanation of compatibility score"""        
         explanations = []
         
         # Overall assessment
@@ -791,8 +761,7 @@ class CompatibilityScorer:
         creator_b_id: str,
         component_scores: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Predict collaboration success using advanced ML models"""
-        
+        """Predict collaboration success using advanced ML models"""        
         try:
             # Features for prediction model
             features = np.array(list(component_scores.values())).reshape(1, -1)

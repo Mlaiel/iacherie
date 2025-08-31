@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-Cache Serializers - Advanced Data Serialization System
+"""Cache Serializers - Advanced Data Serialization System
 ======================================================
 
 Comprehensive serialization system for cache data with multiple
@@ -10,7 +9,6 @@ formats, compression, and performance optimization.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import pickle
@@ -36,8 +34,7 @@ from ...core.utils import generate_uuid
 logger = logging.getLogger(__name__)
 
 class SerializationFormat(Enum):
-    """Serialization formats."""
-    PICKLE = "pickle"
+    """Serialization formats."""    PICKLE = "pickle"
     JSON = "json"
     MSGPACK = "msgpack"
     BINARY = "binary"
@@ -47,8 +44,7 @@ class SerializationFormat(Enum):
     COMPRESSED_MSGPACK = "compressed_msgpack"
 
 class CompressionType(Enum):
-    """Compression types."""
-    NONE = "none"
+    """Compression types."""    NONE = "none"
     GZIP = "gzip"
     BROTLI = "brotli"
     LZ4 = "lz4"
@@ -56,8 +52,7 @@ class CompressionType(Enum):
 
 @dataclass
 class SerializationMetadata:
-    """Serialization metadata."""
-    format: SerializationFormat
+    """Serialization metadata."""    format: SerializationFormat
     compression: CompressionType
     original_size: int
     compressed_size: int
@@ -67,70 +62,57 @@ class SerializationMetadata:
 
 @dataclass
 class SerializedData:
-    """Serialized data container."""
-    data: bytes
+    """Serialized data container."""    data: bytes
     metadata: SerializationMetadata
     timestamp: datetime = field(default_factory=datetime.now)
 
 class SerializerInterface(ABC):
-    """Abstract serializer interface."""
-    
+    """Abstract serializer interface."""    
     @abstractmethod
     async def serialize(self, obj: Any) -> bytes:
-        """Serialize object to bytes."""
-        pass
+        """Serialize object to bytes."""        pass
     
     @abstractmethod
     async def deserialize(self, data: bytes) -> Any:
-        """Deserialize bytes to object."""
-        pass
+        """Deserialize bytes to object."""        pass
     
     @abstractmethod
     def get_format(self) -> SerializationFormat:
-        """Get serialization format."""
-        pass
+        """Get serialization format."""        pass
 
 class PickleSerializer(SerializerInterface):
-    """Pickle-based serializer."""
-    
+    """Pickle-based serializer."""    
     def __init__(self, protocol: int = pickle.HIGHEST_PROTOCOL):
-        """Initialize pickle serializer."""
-        self.protocol = protocol
+        """Initialize pickle serializer."""        self.protocol = protocol
     
     async def serialize(self, obj: Any) -> bytes:
-        """Serialize object using pickle."""
-        try:
+        """Serialize object using pickle."""        try:
             return pickle.dumps(obj, protocol=self.protocol)
         except Exception as e:
             logger.error(f"Pickle serialization error: {e}")
             raise
     
     async def deserialize(self, data: bytes) -> Any:
-        """Deserialize object using pickle."""
-        try:
+        """Deserialize object using pickle."""        try:
             return pickle.loads(data)
         except Exception as e:
             logger.error(f"Pickle deserialization error: {e}")
             raise
     
     def get_format(self) -> SerializationFormat:
-        """Get serialization format."""
-        return SerializationFormat.PICKLE
+        """Get serialization format."""        return SerializationFormat.PICKLE
 
 class JSONSerializer(SerializerInterface):
-    """JSON-based serializer with custom encoder."""
-    
+    """JSON-based serializer with custom encoder."""    
     def __init__(self, ensure_ascii: bool = False, 
                  sort_keys: bool = True,
                  separators: tuple = (',', ':')):
-        """Initialize JSON serializer."""
-        self.ensure_ascii = ensure_ascii
+        """Initialize JSON serializer."""        self.ensure_ascii = ensure_ascii
         self.sort_keys = sort_keys
         self.separators = separators
     
     async def serialize(self, obj: Any) -> bytes:
-        """Serialize object using JSON."""
-        try:
+        """Serialize object using JSON."""        try:
             # Convert to JSON-serializable format
             json_obj = self._make_json_serializable(obj)
             json_str = json.dumps(
@@ -146,8 +128,7 @@ class JSONSerializer(SerializerInterface):
             raise
     
     async def deserialize(self, data: bytes) -> Any:
-        """Deserialize object using JSON."""
-        try:
+        """Deserialize object using JSON."""        try:
             json_str = data.decode('utf-8')
             return json.loads(json_str, cls=CustomJSONDecoder)
         except Exception as e:
@@ -155,12 +136,10 @@ class JSONSerializer(SerializerInterface):
             raise
     
     def get_format(self) -> SerializationFormat:
-        """Get serialization format."""
-        return SerializationFormat.JSON
+        """Get serialization format."""        return SerializationFormat.JSON
     
     def _make_json_serializable(self, obj: Any) -> Any:
-        """Convert object to JSON-serializable format."""
-        if isinstance(obj, (str, int, float, bool)) or obj is None:
+        """Convert object to JSON-serializable format."""        if isinstance(obj, (str, int, float, bool)) or obj is None:
             return obj
         elif isinstance(obj, (datetime, date, time)):
             return {'__type__': 'datetime', 'value': obj.isoformat()}
@@ -185,38 +164,31 @@ class JSONSerializer(SerializerInterface):
             return {'__type__': 'object', 'value': str(obj)}
 
 class MsgPackSerializer(SerializerInterface):
-    """MessagePack-based serializer."""
-    
+    """MessagePack-based serializer."""    
     def __init__(self, use_bin_type: bool = True):
-        """Initialize MessagePack serializer."""
-        self.use_bin_type = use_bin_type
+        """Initialize MessagePack serializer."""        self.use_bin_type = use_bin_type
     
     async def serialize(self, obj: Any) -> bytes:
-        """Serialize object using MessagePack."""
-        try:
+        """Serialize object using MessagePack."""        try:
             return msgpack.packb(obj, use_bin_type=self.use_bin_type)
         except Exception as e:
             logger.error(f"MessagePack serialization error: {e}")
             raise
     
     async def deserialize(self, data: bytes) -> Any:
-        """Deserialize object using MessagePack."""
-        try:
+        """Deserialize object using MessagePack."""        try:
             return msgpack.unpackb(data, raw=False)
         except Exception as e:
             logger.error(f"MessagePack deserialization error: {e}")
             raise
     
     def get_format(self) -> SerializationFormat:
-        """Get serialization format."""
-        return SerializationFormat.MSGPACK
+        """Get serialization format."""        return SerializationFormat.MSGPACK
 
 class BinarySerializer(SerializerInterface):
-    """Binary data serializer (pass-through for bytes)."""
-    
+    """Binary data serializer (pass-through for bytes)."""    
     async def serialize(self, obj: Any) -> bytes:
-        """Serialize binary data."""
-        if isinstance(obj, bytes):
+        """Serialize binary data."""        if isinstance(obj, bytes):
             return obj
         elif isinstance(obj, str):
             return obj.encode('utf-8')
@@ -224,130 +196,99 @@ class BinarySerializer(SerializerInterface):
             raise ValueError("BinarySerializer only supports bytes and strings")
     
     async def deserialize(self, data: bytes) -> bytes:
-        """Deserialize binary data."""
-        return data
+        """Deserialize binary data."""        return data
     
     def get_format(self) -> SerializationFormat:
-        """Get serialization format."""
-        return SerializationFormat.BINARY
+        """Get serialization format."""        return SerializationFormat.BINARY
 
 class StringSerializer(SerializerInterface):
-    """String serializer."""
-    
+    """String serializer."""    
     def __init__(self, encoding: str = 'utf-8'):
-        """Initialize string serializer."""
-        self.encoding = encoding
+        """Initialize string serializer."""        self.encoding = encoding
     
     async def serialize(self, obj: Any) -> bytes:
-        """Serialize string data."""
-        if isinstance(obj, str):
+        """Serialize string data."""        if isinstance(obj, str):
             return obj.encode(self.encoding)
         else:
             return str(obj).encode(self.encoding)
     
     async def deserialize(self, data: bytes) -> str:
-        """Deserialize string data."""
-        return data.decode(self.encoding)
+        """Deserialize string data."""        return data.decode(self.encoding)
     
     def get_format(self) -> SerializationFormat:
-        """Get serialization format."""
-        return SerializationFormat.STRING
+        """Get serialization format."""        return SerializationFormat.STRING
 
 class CompressorInterface(ABC):
-    """Abstract compressor interface."""
-    
+    """Abstract compressor interface."""    
     @abstractmethod
     async def compress(self, data: bytes) -> bytes:
-        """Compress data."""
-        pass
+        """Compress data."""        pass
     
     @abstractmethod
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress data."""
-        pass
+        """Decompress data."""        pass
     
     @abstractmethod
     def get_type(self) -> CompressionType:
-        """Get compression type."""
-        pass
+        """Get compression type."""        pass
 
 class GzipCompressor(CompressorInterface):
-    """Gzip compressor."""
-    
+    """Gzip compressor."""    
     def __init__(self, level: int = 6):
-        """Initialize gzip compressor."""
-        self.level = level
+        """Initialize gzip compressor."""        self.level = level
     
     async def compress(self, data: bytes) -> bytes:
-        """Compress using gzip."""
-        return gzip.compress(data, compresslevel=self.level)
+        """Compress using gzip."""        return gzip.compress(data, compresslevel=self.level)
     
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress using gzip."""
-        return gzip.decompress(data)
+        """Decompress using gzip."""        return gzip.decompress(data)
     
     def get_type(self) -> CompressionType:
-        """Get compression type."""
-        return CompressionType.GZIP
+        """Get compression type."""        return CompressionType.GZIP
 
 class BrotliCompressor(CompressorInterface):
-    """Brotli compressor."""
-    
+    """Brotli compressor."""    
     def __init__(self, quality: int = 6):
-        """Initialize brotli compressor."""
-        self.quality = quality
+        """Initialize brotli compressor."""        self.quality = quality
     
     async def compress(self, data: bytes) -> bytes:
-        """Compress using brotli."""
-        return brotli.compress(data, quality=self.quality)
+        """Compress using brotli."""        return brotli.compress(data, quality=self.quality)
     
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress using brotli."""
-        return brotli.decompress(data)
+        """Decompress using brotli."""        return brotli.decompress(data)
     
     def get_type(self) -> CompressionType:
-        """Get compression type."""
-        return CompressionType.BROTLI
+        """Get compression type."""        return CompressionType.BROTLI
 
 class LZ4Compressor(CompressorInterface):
-    """LZ4 compressor."""
-    
+    """LZ4 compressor."""    
     async def compress(self, data: bytes) -> bytes:
-        """Compress using LZ4."""
-        return lz4.frame.compress(data)
+        """Compress using LZ4."""        return lz4.frame.compress(data)
     
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress using LZ4."""
-        return lz4.frame.decompress(data)
+        """Decompress using LZ4."""        return lz4.frame.decompress(data)
     
     def get_type(self) -> CompressionType:
-        """Get compression type."""
-        return CompressionType.LZ4
+        """Get compression type."""        return CompressionType.LZ4
 
 class ZstdCompressor(CompressorInterface):
-    """Zstandard compressor."""
-    
+    """Zstandard compressor."""    
     def __init__(self, level: int = 3):
-        """Initialize zstd compressor."""
-        self.level = level
+        """Initialize zstd compressor."""        self.level = level
         self.compressor = zstd.ZstdCompressor(level=level)
         self.decompressor = zstd.ZstdDecompressor()
     
     async def compress(self, data: bytes) -> bytes:
-        """Compress using zstd."""
-        return self.compressor.compress(data)
+        """Compress using zstd."""        return self.compressor.compress(data)
     
     async def decompress(self, data: bytes) -> bytes:
-        """Decompress using zstd."""
-        return self.decompressor.decompress(data)
+        """Decompress using zstd."""        return self.decompressor.decompress(data)
     
     def get_type(self) -> CompressionType:
-        """Get compression type."""
-        return CompressionType.ZSTD
+        """Get compression type."""        return CompressionType.ZSTD
 
 class CacheSerializer:
-    """
-    Advanced cache serialization system.
+    """    Advanced cache serialization system.
     
     Features:
     - Multiple serialization formats
@@ -355,11 +296,9 @@ class CacheSerializer:
     - Performance optimization
     - Type-aware serialization
     - Metadata tracking
-    """
-    
+    """    
     def __init__(self):
-        """Initialize cache serializer."""
-        self.logger = logging.getLogger(f"{__name__}.CacheSerializer")
+        """Initialize cache serializer."""        self.logger = logging.getLogger(f"{__name__}.CacheSerializer")
         
         # Register serializers
         self.serializers: Dict[SerializationFormat, SerializerInterface] = {
@@ -399,22 +338,19 @@ class CacheSerializer:
     
     async def register_serializer(self, format: SerializationFormat,
                                 serializer: SerializerInterface) -> None:
-        """Register custom serializer."""
-        self.serializers[format] = serializer
+        """Register custom serializer."""        self.serializers[format] = serializer
         self.logger.debug(f"Registered serializer for {format.value}")
     
     async def register_compressor(self, compression: CompressionType,
                                 compressor: CompressorInterface) -> None:
-        """Register custom compressor."""
-        self.compressors[compression] = compressor
+        """Register custom compressor."""        self.compressors[compression] = compressor
         self.logger.debug(f"Registered compressor for {compression.value}")
     
     async def serialize(self, obj: Any,
                        format: Optional[SerializationFormat] = None,
                        compression: Optional[CompressionType] = None,
                        auto_select_format: bool = True) -> SerializedData:
-        """
-        Serialize object with optimal format and compression.
+        """        Serialize object with optimal format and compression.
         
         Args:
             obj: Object to serialize
@@ -424,8 +360,7 @@ class CacheSerializer:
             
         Returns:
             Serialized data with metadata
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             
             # Auto-select format if not specified
@@ -484,16 +419,14 @@ class CacheSerializer:
             raise
     
     async def deserialize(self, serialized_data: SerializedData) -> Any:
-        """
-        Deserialize data using metadata information.
+        """        Deserialize data using metadata information.
         
         Args:
             serialized_data: Serialized data with metadata
             
         Returns:
             Deserialized object
-        """
-        try:
+        """        try:
             start_time = datetime.now()
             data = serialized_data.data
             metadata = serialized_data.metadata
@@ -527,8 +460,7 @@ class CacheSerializer:
             raise
     
     async def _select_optimal_format(self, obj: Any) -> SerializationFormat:
-        """Select optimal serialization format based on object type."""
-        try:
+        """Select optimal serialization format based on object type."""        try:
             # Type-based format selection
             if isinstance(obj, bytes):
                 return SerializationFormat.BINARY
@@ -543,8 +475,7 @@ class CacheSerializer:
             return self.default_format
     
     def _is_json_compatible(self, obj: Any) -> bool:
-        """Check if object is JSON-compatible."""
-        try:
+        """Check if object is JSON-compatible."""        try:
             json.dumps(obj, cls=CustomJSONEncoder)
             return True
         except (TypeError, ValueError):
@@ -552,8 +483,7 @@ class CacheSerializer:
     
     async def _select_optimal_compression(self, data: bytes,
                                         format: SerializationFormat) -> CompressionType:
-        """Select optimal compression based on data characteristics."""
-        try:
+        """Select optimal compression based on data characteristics."""        try:
             data_size = len(data)
             
             # Skip compression for small data
@@ -576,8 +506,7 @@ class CacheSerializer:
     
     async def benchmark_formats(self, test_objects: List[Any],
                               iterations: int = 10) -> Dict[str, Any]:
-        """Benchmark different serialization formats."""
-        try:
+        """Benchmark different serialization formats."""        try:
             results = {}
             
             for format in SerializationFormat:
@@ -627,8 +556,7 @@ class CacheSerializer:
             return {}
     
     async def get_serialization_stats(self) -> Dict[str, Any]:
-        """Get serialization statistics."""
-        try:
+        """Get serialization statistics."""        try:
             with self.lock:
                 stats = self.serialization_stats.copy()
                 
@@ -647,11 +575,9 @@ class CacheSerializer:
             return {}
 
 class CustomJSONEncoder(json.JSONEncoder):
-    """Custom JSON encoder for complex types."""
-    
+    """Custom JSON encoder for complex types."""    
     def default(self, obj):
-        """Handle custom object encoding."""
-        if isinstance(obj, datetime):
+        """Handle custom object encoding."""        if isinstance(obj, datetime):
             return {'__type__': 'datetime', 'value': obj.isoformat()}
         elif isinstance(obj, date):
             return {'__type__': 'date', 'value': obj.isoformat()}
@@ -673,15 +599,12 @@ class CustomJSONEncoder(json.JSONEncoder):
             return super().default(obj)
 
 class CustomJSONDecoder(json.JSONDecoder):
-    """Custom JSON decoder for complex types."""
-    
+    """Custom JSON decoder for complex types."""    
     def __init__(self, *args, **kwargs):
-        """Initialize custom decoder."""
-        super().__init__(object_hook=self.object_hook, *args, **kwargs)
+        """Initialize custom decoder."""        super().__init__(object_hook=self.object_hook, *args, **kwargs)
     
     def object_hook(self, obj):
-        """Handle custom object decoding."""
-        if isinstance(obj, dict) and '__type__' in obj:
+        """Handle custom object decoding."""        if isinstance(obj, dict) and '__type__' in obj:
             type_name = obj['__type__']
             value = obj['value']
             

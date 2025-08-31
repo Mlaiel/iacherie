@@ -1,10 +1,8 @@
-"""
-Pinterest Content Crawler
+"""Pinterest Content Crawler
 Advanced industrial-grade Pinterest crawler for content protection and analytics
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 - All rights reserved
 """
-
 import asyncio
 import json
 import re
@@ -29,8 +27,7 @@ settings = get_settings()
 
 
 class PinterestPin(BaseModel):
-    """Pinterest Pin data model"""
-    pin_id: str
+    """Pinterest Pin data model"""    pin_id: str
     title: str
     description: str
     image_url: str
@@ -46,8 +43,7 @@ class PinterestPin(BaseModel):
 
 
 class PinterestBoard(BaseModel):
-    """Pinterest Board data model"""
-    board_id: str
+    """Pinterest Board data model"""    board_id: str
     name: str
     description: str
     creator_username: str
@@ -60,8 +56,7 @@ class PinterestBoard(BaseModel):
 
 
 class PinterestProfile(BaseModel):
-    """Pinterest Profile data model"""
-    username: str
+    """Pinterest Profile data model"""    username: str
     display_name: str
     bio: str
     follower_count: int
@@ -75,8 +70,7 @@ class PinterestProfile(BaseModel):
 
 
 class PinterestCrawler(BaseCrawler):
-    """
-    Advanced Pinterest crawler for comprehensive content monitoring
+    """    Advanced Pinterest crawler for comprehensive content monitoring
     
     Features:
     - Pin content analysis with image fingerprinting
@@ -86,8 +80,7 @@ class PinterestCrawler(BaseCrawler):
     - Copyright infringement detection
     - Engagement metrics collection
     - Real-time monitoring with webhooks
-    """
-    
+    """    
     def __init__(self):
         super().__init__()
         self.platform = "pinterest"
@@ -107,8 +100,7 @@ class PinterestCrawler(BaseCrawler):
         }
         
     async def authenticate(self, access_token: str) -> bool:
-        """Authenticate with Pinterest API"""
-        try:
+        """Authenticate with Pinterest API"""        try:
             self.session_headers['Authorization'] = f'Bearer {access_token}'
             
             async with aiohttp.ClientSession(headers=self.session_headers) as session:
@@ -132,8 +124,7 @@ class PinterestCrawler(BaseCrawler):
         limit: int = 100,
         filters: Optional[Dict] = None
     ) -> List[Dict]:
-        """
-        Search Pinterest content with advanced filtering
+        """        Search Pinterest content with advanced filtering
         
         Args:
             query: Search query
@@ -143,8 +134,7 @@ class PinterestCrawler(BaseCrawler):
             
         Returns:
             List of matching content items
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             search_params = {
@@ -174,8 +164,7 @@ class PinterestCrawler(BaseCrawler):
             return []
     
     async def get_pin_details(self, pin_id: str) -> Optional[PinterestPin]:
-        """Get detailed information about a specific pin"""
-        await self.rate_limiter.wait()
+        """Get detailed information about a specific pin"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/pins/{pin_id}"
@@ -222,8 +211,7 @@ class PinterestCrawler(BaseCrawler):
             return None
     
     async def get_board_pins(self, board_id: str, limit: int = 100) -> List[PinterestPin]:
-        """Get all pins from a specific board"""
-        await self.rate_limiter.wait()
+        """Get all pins from a specific board"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/boards/{board_id}/pins"
@@ -255,8 +243,7 @@ class PinterestCrawler(BaseCrawler):
             return []
     
     async def get_user_profile(self, username: str) -> Optional[PinterestProfile]:
-        """Get detailed user profile information"""
-        await self.rate_limiter.wait()
+        """Get detailed user profile information"""        await self.rate_limiter.wait()
         
         try:
             endpoint = f"{self.api_base}/user_account"
@@ -297,8 +284,7 @@ class PinterestCrawler(BaseCrawler):
         protected_content: Dict,
         similarity_threshold: float = 0.8
     ) -> List[ContentMatch]:
-        """
-        Monitor Pinterest for potential copyright infringement
+        """        Monitor Pinterest for potential copyright infringement
         
         Args:
             protected_content: Content to protect (images, descriptions, etc.)
@@ -306,8 +292,7 @@ class PinterestCrawler(BaseCrawler):
             
         Returns:
             List of potential copyright matches
-        """
-        matches = []
+        """        matches = []
         
         try:
             # Search for similar content using image similarity and text matching
@@ -351,8 +336,7 @@ class PinterestCrawler(BaseCrawler):
             return []
     
     async def analyze_trends(self, category: str = None, days: int = 7) -> Dict[str, Any]:
-        """
-        Analyze Pinterest trends for content strategy
+        """        Analyze Pinterest trends for content strategy
         
         Args:
             category: Specific category to analyze
@@ -360,8 +344,7 @@ class PinterestCrawler(BaseCrawler):
             
         Returns:
             Trend analysis data
-        """
-        try:
+        """        try:
             # Get trending topics and popular pins
             trending_data = {
                 'trending_topics': await self._get_trending_topics(category),
@@ -377,8 +360,7 @@ class PinterestCrawler(BaseCrawler):
             return {}
     
     async def bulk_pin_analysis(self, pin_ids: List[str]) -> List[Dict[str, Any]]:
-        """Analyze multiple pins in bulk for efficiency"""
-        results = []
+        """Analyze multiple pins in bulk for efficiency"""        results = []
         
         # Process pins in batches to respect rate limits
         batch_size = 25
@@ -401,8 +383,7 @@ class PinterestCrawler(BaseCrawler):
         return results
     
     async def _parse_pin_data(self, pin_data: Dict) -> Optional[PinterestPin]:
-        """Parse Pinterest API pin data into PinterestPin model"""
-        try:
+        """Parse Pinterest API pin data into PinterestPin model"""        try:
             metrics = pin_data.get('pin_metrics', {})
             
             pin = PinterestPin(
@@ -427,14 +408,12 @@ class PinterestCrawler(BaseCrawler):
             return None
     
     def _extract_hashtags(self, text: str) -> List[str]:
-        """Extract hashtags from pin description"""
-        hashtag_pattern = r'#\w+'
+        """Extract hashtags from pin description"""        hashtag_pattern = r'#\w+'
         hashtags = re.findall(hashtag_pattern, text.lower())
         return [tag[1:] for tag in hashtags]  # Remove # symbol
     
     def _generate_search_queries(self, protected_content: Dict) -> List[str]:
-        """Generate search queries for content protection"""
-        queries = []
+        """Generate search queries for content protection"""        queries = []
         
         if 'title' in protected_content:
             queries.append(protected_content['title'])
@@ -455,8 +434,7 @@ class PinterestCrawler(BaseCrawler):
         protected_content: Dict,
         pin: PinterestPin
     ) -> float:
-        """Calculate similarity between protected content and Pinterest pin"""
-        from difflib import SequenceMatcher
+        """Calculate similarity between protected content and Pinterest pin"""        from difflib import SequenceMatcher
         
         similarity_scores = []
         
@@ -489,8 +467,7 @@ class PinterestCrawler(BaseCrawler):
         return sum(similarity_scores) if similarity_scores else 0.0
     
     async def _get_trending_topics(self, category: str = None) -> List[str]:
-        """Get trending topics on Pinterest"""
-        # This would require Pinterest's trending API or web scraping
+        """Get trending topics on Pinterest"""        # This would require Pinterest's trending API or web scraping
         # For now, return common trending topics
         return [
             "home decor", "fashion", "recipes", "diy", "wedding", 
@@ -498,23 +475,19 @@ class PinterestCrawler(BaseCrawler):
         ]
     
     async def _get_popular_pins(self, category: str = None, days: int = 7) -> List[Dict]:
-        """Get popular pins from recent days"""
-        # Implementation would depend on Pinterest's popular content API
+        """Get popular pins from recent days"""        # Implementation would depend on Pinterest's popular content API
         return []
     
     async def _analyze_hashtag_trends(self, days: int = 7) -> Dict[str, int]:
-        """Analyze hashtag trends"""
-        # Implementation for hashtag trend analysis
+        """Analyze hashtag trends"""        # Implementation for hashtag trend analysis
         return {}
     
     async def _analyze_engagement_patterns(self, days: int = 7) -> Dict[str, Any]:
-        """Analyze engagement patterns"""
-        # Implementation for engagement pattern analysis
+        """Analyze engagement patterns"""        # Implementation for engagement pattern analysis
         return {}
     
     async def _analyze_pin_performance(self, pin: PinterestPin) -> Dict[str, Any]:
-        """Analyze individual pin performance metrics"""
-        return {
+        """Analyze individual pin performance metrics"""        return {
             'pin_id': pin.pin_id,
             'engagement_rate': (pin.repin_count + pin.like_count) / max(pin.like_count, 1),
             'virality_score': pin.repin_count * 2 + pin.like_count,
@@ -524,8 +497,7 @@ class PinterestCrawler(BaseCrawler):
         }
     
     def _categorize_performance(self, pin: PinterestPin) -> str:
-        """Categorize pin performance level"""
-        total_engagement = pin.repin_count + pin.like_count
+        """Categorize pin performance level"""        total_engagement = pin.repin_count + pin.like_count
         
         if total_engagement > 1000:
             return "viral"

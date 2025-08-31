@@ -14,8 +14,7 @@ Isolation complète des données et routage intelligent pour architecture SaaS
 - Routage dynamique et load balancing intelligent
 - Gestion des quotas et limites en temps réel
 - Facturation et analytics par tenant
-"""
-from .tenant_manager import (
+"""from .tenant_manager import (
     TenantManager,
     TenantDataIsolator,
     TenantConfig,

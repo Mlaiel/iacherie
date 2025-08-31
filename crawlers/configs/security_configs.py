@@ -1,5 +1,4 @@
-"""
-Advanced Security Configurations for Crawlers
+"""Advanced Security Configurations for Crawlers
 ============================================
 
 Enterprise-grade security configuration system for content crawling operations.
@@ -16,7 +15,6 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
-
 import os
 from typing import Dict, List, Optional, Union, Any, Set, Tuple
 from dataclasses import dataclass, field
@@ -28,16 +26,14 @@ import hashlib
 import secrets
 
 class SecurityLevel(Enum):
-    """Security levels for different operations."""
-    LOW = "low"
+    """Security levels for different operations."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     MAXIMUM = "maximum"
 
 class ThreatLevel(Enum):
-    """Threat level classifications."""
-    MINIMAL = "minimal"
+    """Threat level classifications."""    MINIMAL = "minimal"
     LOW = "low"
     MODERATE = "moderate"
     HIGH = "high"
@@ -45,8 +41,7 @@ class ThreatLevel(Enum):
     CRITICAL = "critical"
 
 class AuthenticationMethod(Enum):
-    """Authentication methods for secure access."""
-    API_KEY = "api_key"
+    """Authentication methods for secure access."""    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     JWT = "jwt"
     MUTUAL_TLS = "mutual_tls"
@@ -55,8 +50,7 @@ class AuthenticationMethod(Enum):
     BIOMETRIC = "biometric"
 
 class EncryptionStandard(Enum):
-    """Encryption standards."""
-    AES_128 = "aes_128"
+    """Encryption standards."""    AES_128 = "aes_128"
     AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
@@ -64,8 +58,7 @@ class EncryptionStandard(Enum):
     CHACHA20 = "chacha20"
 
 class ComplianceFramework(Enum):
-    """Compliance frameworks."""
-    GDPR = "gdpr"
+    """Compliance frameworks."""    GDPR = "gdpr"
     CCPA = "ccpa"
     HIPAA = "hipaa"
     SOX = "sox"
@@ -75,8 +68,7 @@ class ComplianceFramework(Enum):
 
 @dataclass
 class EncryptionConfig:
-    """Configuration for data encryption."""
-    enabled: bool = True
+    """Configuration for data encryption."""    enabled: bool = True
     standard: EncryptionStandard = EncryptionStandard.AES_256
     key_rotation_days: int = 30
     key_storage_method: str = "secure_vault"  # secure_vault, hsm, kms
@@ -98,8 +90,7 @@ class EncryptionConfig:
 
 @dataclass
 class AccessControlConfig:
-    """Configuration for access control and permissions."""
-    enabled: bool = True
+    """Configuration for access control and permissions."""    enabled: bool = True
     
     # Role-based access control
     rbac_enabled: bool = True
@@ -130,8 +121,7 @@ class AccessControlConfig:
 
 @dataclass
 class ThreatProtectionConfig:
-    """Configuration for threat detection and protection."""
-    enabled: bool = True
+    """Configuration for threat detection and protection."""    enabled: bool = True
     
     # Intrusion detection
     ids_enabled: bool = True
@@ -165,8 +155,7 @@ class ThreatProtectionConfig:
 
 @dataclass
 class ComplianceConfig:
-    """Configuration for regulatory compliance."""
-    enabled: bool = True
+    """Configuration for regulatory compliance."""    enabled: bool = True
     
     # Applicable frameworks
     frameworks: List[ComplianceFramework] = field(default_factory=lambda: [
@@ -200,8 +189,7 @@ class ComplianceConfig:
 
 @dataclass
 class SecurityMonitoringConfig:
-    """Configuration for security monitoring and alerting."""
-    enabled: bool = True
+    """Configuration for security monitoring and alerting."""    enabled: bool = True
     
     # Monitoring scope
     real_time_monitoring: bool = True
@@ -236,8 +224,7 @@ class SecurityMonitoringConfig:
 
 @dataclass
 class VulnerabilityManagementConfig:
-    """Configuration for vulnerability management."""
-    enabled: bool = True
+    """Configuration for vulnerability management."""    enabled: bool = True
     
     # Scanning configuration
     vulnerability_scanning: bool = True
@@ -264,11 +251,9 @@ class VulnerabilityManagementConfig:
     executive_summaries: bool = True
 
 class SecurityConfigManager:
-    """Manager for security configurations."""
-    
+    """Manager for security configurations."""    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize security configuration manager."""
-        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
+        """Initialize security configuration manager."""        self.config_dir = Path(config_dir) if config_dir else Path(__file__).parent
         self.encryption = EncryptionConfig()
         self.access_control = AccessControlConfig()
         self.threat_protection = ThreatProtectionConfig()
@@ -278,8 +263,7 @@ class SecurityConfigManager:
         self._load_configurations()
     
     def _load_configurations(self) -> None:
-        """Load security configurations from files."""
-        try:
+        """Load security configurations from files."""        try:
             config_file = self.config_dir / "security_config.json"
             if config_file.exists():
                 with open(config_file, 'r', encoding='utf-8') as f:
@@ -293,12 +277,10 @@ class SecurityConfigManager:
             print(f"Error loading security configurations: {e}")
     
     def generate_api_key(self, length: int = 32) -> str:
-        """Generate a secure API key."""
-        return secrets.token_urlsafe(length)
+        """Generate a secure API key."""        return secrets.token_urlsafe(length)
     
     def hash_password(self, password: str, salt: Optional[str] = None) -> Tuple[str, str]:
-        """Hash a password with salt."""
-        if salt is None:
+        """Hash a password with salt."""        if salt is None:
             salt = secrets.token_hex(16)
         
         password_hash = hashlib.pbkdf2_hmac(
@@ -310,13 +292,11 @@ class SecurityConfigManager:
         return password_hash.hex(), salt
     
     def verify_password(self, password: str, hashed: str, salt: str) -> bool:
-        """Verify a password against its hash."""
-        password_hash, _ = self.hash_password(password, salt)
+        """Verify a password against its hash."""        password_hash, _ = self.hash_password(password, salt)
         return password_hash == hashed
     
     def check_security_compliance(self) -> Dict[str, Any]:
-        """Check current security compliance status."""
-        compliance_status = {
+        """Check current security compliance status."""        compliance_status = {
             "overall_score": 0.0,
             "checks": {},
             "recommendations": []
@@ -342,8 +322,7 @@ class SecurityConfigManager:
         return compliance_status
     
     def get_security_policies(self) -> Dict[str, Any]:
-        """Get comprehensive security policies."""
-        return {
+        """Get comprehensive security policies."""        return {
             "password_policy": {
                 "min_length": 12,
                 "require_uppercase": True,
@@ -367,8 +346,7 @@ class SecurityConfigManager:
         }
     
     def validate_security_configuration(self) -> Dict[str, List[str]]:
-        """Validate security configuration."""
-        issues = {"errors": [], "warnings": []}
+        """Validate security configuration."""        issues = {"errors": [], "warnings": []}
         
         if not self.encryption.enabled:
             issues["errors"].append("Encryption is disabled")

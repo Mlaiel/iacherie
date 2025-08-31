@@ -1,5 +1,4 @@
-"""
-Cloud Services Integration - Multi-Cloud Infrastructure Management
+"""Cloud Services Integration - Multi-Cloud Infrastructure Management
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -15,7 +14,6 @@ This module provides comprehensive cloud services integration supporting AWS, Az
 GCP, and other cloud providers with advanced resource management, cost optimization,
 and security features.
 """
-
 import logging
 import asyncio
 import time
@@ -36,8 +34,7 @@ from google.oauth2 import service_account
 logger = logging.getLogger(__name__)
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
-    AWS = "aws"
+    """Supported cloud providers"""    AWS = "aws"
     AZURE = "azure"
     GCP = "gcp"
     DIGITAL_OCEAN = "digital_ocean"
@@ -45,8 +42,7 @@ class CloudProvider(Enum):
     LINODE = "linode"
 
 class ResourceType(Enum):
-    """Cloud resource types"""
-    STORAGE = "storage"
+    """Cloud resource types"""    STORAGE = "storage"
     COMPUTE = "compute"
     DATABASE = "database"
     CDN = "cdn"
@@ -58,8 +54,7 @@ class ResourceType(Enum):
     SECURITY_GROUP = "security_group"
 
 class ResourceStatus(Enum):
-    """Resource status"""
-    CREATING = auto()
+    """Resource status"""    CREATING = auto()
     RUNNING = auto()
     STOPPED = auto()
     TERMINATED = auto()
@@ -68,8 +63,7 @@ class ResourceStatus(Enum):
 
 @dataclass
 class CloudCredentials:
-    """Cloud provider credentials"""
-    provider: CloudProvider
+    """Cloud provider credentials"""    provider: CloudProvider
     access_key_id: Optional[str] = None
     secret_access_key: Optional[str] = None
     region: str = "us-east-1"
@@ -85,8 +79,7 @@ class CloudCredentials:
 
 @dataclass
 class CloudResource:
-    """Cloud resource representation"""
-    resource_id: str
+    """Cloud resource representation"""    resource_id: str
     name: str
     resource_type: ResourceType
     provider: CloudProvider
@@ -100,8 +93,7 @@ class CloudResource:
 
 @dataclass
 class StorageObject:
-    """Storage object representation"""
-    key: str
+    """Storage object representation"""    key: str
     size: int
     last_modified: datetime
     etag: str
@@ -110,8 +102,7 @@ class StorageObject:
     content_type: str = "binary/octet-stream"
 
 class BaseCloudConnector(ABC):
-    """Base cloud provider connector"""
-    
+    """Base cloud provider connector"""    
     def __init__(self, credentials: CloudCredentials):
         self.credentials = credentials
         self.provider = credentials.provider
@@ -121,43 +112,36 @@ class BaseCloudConnector(ABC):
         
     @abstractmethod
     async def authenticate(self) -> bool:
-        """Authenticate with cloud provider"""
-        pass
+        """Authenticate with cloud provider"""        pass
     
     @abstractmethod
     async def list_resources(self, resource_type: ResourceType) -> List[CloudResource]:
-        """List resources of specific type"""
-        pass
+        """List resources of specific type"""        pass
     
     @abstractmethod
     async def create_resource(self, resource_type: ResourceType, 
                             config: Dict[str, Any]) -> CloudResource:
-        """Create new resource"""
-        pass
+        """Create new resource"""        pass
     
     @abstractmethod
     async def delete_resource(self, resource_id: str, 
                             resource_type: ResourceType) -> bool:
-        """Delete resource"""
-        pass
+        """Delete resource"""        pass
     
     @abstractmethod
     async def get_resource_metrics(self, resource_id: str, 
                                  start_time: datetime, 
                                  end_time: datetime) -> Dict[str, Any]:
-        """Get resource performance metrics"""
-        pass
+        """Get resource performance metrics"""        pass
     
     async def cleanup(self):
-        """Cleanup connector resources"""
-        if self.client:
+        """Cleanup connector resources"""        if self.client:
             if hasattr(self.client, 'close'):
                 await self.client.close()
         self.logger.info(f"Cleaned up {self.provider.value} connector")
 
 class AWSConnector(BaseCloudConnector):
-    """Amazon Web Services connector"""
-    
+    """Amazon Web Services connector"""    
     def __init__(self, credentials: CloudCredentials):
         super().__init__(credentials)
         self.s3_client = None
@@ -166,8 +150,7 @@ class AWSConnector(BaseCloudConnector):
         self.lambda_client = None
         
     async def authenticate(self) -> bool:
-        """Authenticate with AWS"""
-        try:
+        """Authenticate with AWS"""        try:
             # Initialize AWS session
             session_kwargs = {
                 'region_name': self.credentials.region
@@ -206,8 +189,7 @@ class AWSConnector(BaseCloudConnector):
             return False
     
     async def list_resources(self, resource_type: ResourceType) -> List[CloudResource]:
-        """List AWS resources"""
-        resources = []
+        """List AWS resources"""        resources = []
         
         try:
             if resource_type == ResourceType.STORAGE:
@@ -223,8 +205,7 @@ class AWSConnector(BaseCloudConnector):
         return resources
     
     async def _list_s3_buckets(self) -> List[CloudResource]:
-        """List S3 buckets"""
-        resources = []
+        """List S3 buckets"""        resources = []
         
         try:
             response = await asyncio.get_event_loop().run_in_executor(
@@ -250,8 +231,7 @@ class AWSConnector(BaseCloudConnector):
         return resources
     
     async def _list_ec2_instances(self) -> List[CloudResource]:
-        """List EC2 instances"""
-        resources = []
+        """List EC2 instances"""        resources = []
         
         try:
             response = await asyncio.get_event_loop().run_in_executor(
@@ -292,8 +272,7 @@ class AWSConnector(BaseCloudConnector):
         return resources
     
     async def _list_lambda_functions(self) -> List[CloudResource]:
-        """List Lambda functions"""
-        resources = []
+        """List Lambda functions"""        resources = []
         
         try:
             response = await asyncio.get_event_loop().run_in_executor(
@@ -325,8 +304,7 @@ class AWSConnector(BaseCloudConnector):
     
     async def create_resource(self, resource_type: ResourceType, 
                             config: Dict[str, Any]) -> CloudResource:
-        """Create AWS resource"""
-        if resource_type == ResourceType.STORAGE:
+        """Create AWS resource"""        if resource_type == ResourceType.STORAGE:
             return await self._create_s3_bucket(config)
         elif resource_type == ResourceType.COMPUTE:
             return await self._create_ec2_instance(config)
@@ -353,8 +331,7 @@ class AWSConnector(BaseCloudConnector):
             )
     
     async def _create_s3_bucket(self, config: Dict[str, Any]) -> CloudResource:
-        """Create S3 bucket"""
-        bucket_name = config['bucket_name']
+        """Create S3 bucket"""        bucket_name = config['bucket_name']
         
         try:
             if self.credentials.region != 'us-east-1':
@@ -387,8 +364,7 @@ class AWSConnector(BaseCloudConnector):
             raise
     
     async def _create_ec2_instance(self, config: Dict[str, Any]) -> CloudResource:
-        """Create EC2 instance"""
-        try:
+        """Create EC2 instance"""        try:
             response = await asyncio.get_event_loop().run_in_executor(
                 None,
                 lambda: self.ec2_client.run_instances(
@@ -432,8 +408,7 @@ class AWSConnector(BaseCloudConnector):
     
     async def delete_resource(self, resource_id: str, 
                             resource_type: ResourceType) -> bool:
-        """Delete AWS resource"""
-        try:
+        """Delete AWS resource"""        try:
             if resource_type == ResourceType.STORAGE:
                 # Empty bucket first, then delete
                 await asyncio.get_event_loop().run_in_executor(
@@ -459,8 +434,7 @@ class AWSConnector(BaseCloudConnector):
             return False
     
     def _empty_s3_bucket(self, bucket_name: str):
-        """Empty S3 bucket before deletion"""
-        try:
+        """Empty S3 bucket before deletion"""        try:
             paginator = self.s3_client.get_paginator('list_objects_v2')
             
             for page in paginator.paginate(Bucket=bucket_name):
@@ -477,8 +451,7 @@ class AWSConnector(BaseCloudConnector):
     async def get_resource_metrics(self, resource_id: str, 
                                  start_time: datetime, 
                                  end_time: datetime) -> Dict[str, Any]:
-        """Get CloudWatch metrics for resource"""
-        try:
+        """Get CloudWatch metrics for resource"""        try:
             # This would implement CloudWatch metrics retrieval
             # For now, return mock data
             return {
@@ -495,8 +468,7 @@ class AWSConnector(BaseCloudConnector):
     
     async def upload_to_s3(self, bucket_name: str, key: str, 
                           file_path: str, metadata: Optional[Dict[str, str]] = None) -> bool:
-        """Upload file to S3"""
-        try:
+        """Upload file to S3"""        try:
             extra_args = {}
             if metadata:
                 extra_args['Metadata'] = metadata
@@ -517,8 +489,7 @@ class AWSConnector(BaseCloudConnector):
     
     async def download_from_s3(self, bucket_name: str, key: str, 
                               file_path: str) -> bool:
-        """Download file from S3"""
-        try:
+        """Download file from S3"""        try:
             await asyncio.get_event_loop().run_in_executor(
                 None,
                 lambda: self.s3_client.download_file(bucket_name, key, file_path)
@@ -533,8 +504,7 @@ class AWSConnector(BaseCloudConnector):
     
     async def list_s3_objects(self, bucket_name: str, 
                              prefix: str = "") -> List[StorageObject]:
-        """List S3 objects"""
-        objects = []
+        """List S3 objects"""        objects = []
         
         try:
             paginator = self.s3_client.get_paginator('list_objects_v2')
@@ -560,8 +530,7 @@ class AWSConnector(BaseCloudConnector):
         return objects
     
     async def _create_rds_database(self, config: Dict[str, Any]) -> CloudResource:
-        """Create RDS database instance"""
-        try:
+        """Create RDS database instance"""        try:
             db_identifier = config['db_instance_identifier']
             
             # Simulate RDS database creation
@@ -588,8 +557,7 @@ class AWSConnector(BaseCloudConnector):
             raise
     
     async def _create_sqs_queue(self, config: Dict[str, Any]) -> CloudResource:
-        """Create SQS queue"""
-        try:
+        """Create SQS queue"""        try:
             queue_name = config['queue_name']
             
             # Simulate SQS queue creation
@@ -615,8 +583,7 @@ class AWSConnector(BaseCloudConnector):
             raise
     
     async def _create_vpc(self, config: Dict[str, Any]) -> CloudResource:
-        """Create VPC (Virtual Private Cloud)"""
-        try:
+        """Create VPC (Virtual Private Cloud)"""        try:
             vpc_name = config.get('name', 'default-vpc')
             
             # Simulate VPC creation
@@ -642,16 +609,14 @@ class AWSConnector(BaseCloudConnector):
             raise
 
 class AzureConnector(BaseCloudConnector):
-    """Microsoft Azure connector"""
-    
+    """Microsoft Azure connector"""    
     def __init__(self, credentials: CloudCredentials):
         super().__init__(credentials)
         self.credential = None
         self.storage_client = None
         
     async def authenticate(self) -> bool:
-        """Authenticate with Azure"""
-        try:
+        """Authenticate with Azure"""        try:
             if self.credentials.client_id and self.credentials.client_secret:
                 self.credential = azure.identity.ClientSecretCredential(
                     tenant_id=self.credentials.tenant_id,
@@ -669,14 +634,12 @@ class AzureConnector(BaseCloudConnector):
             return False
     
     async def list_resources(self, resource_type: ResourceType) -> List[CloudResource]:
-        """List Azure resources"""
-        # Implementation would use Azure Resource Management APIs
+        """List Azure resources"""        # Implementation would use Azure Resource Management APIs
         return []
     
     async def create_resource(self, resource_type: ResourceType, 
                             config: Dict[str, Any]) -> CloudResource:
-        """Create Azure resource"""
-        try:
+        """Create Azure resource"""        try:
             if resource_type == ResourceType.STORAGE:
                 return await self._create_azure_storage(config)
             elif resource_type == ResourceType.DATABASE:
@@ -691,8 +654,7 @@ class AzureConnector(BaseCloudConnector):
             raise
     
     async def _create_azure_storage(self, config: Dict[str, Any]) -> CloudResource:
-        """Create Azure Storage Account"""
-        try:
+        """Create Azure Storage Account"""        try:
             account_name = config.get('account_name', f"storage{int(time.time())}")
             
             # Simulate Azure storage creation
@@ -718,8 +680,7 @@ class AzureConnector(BaseCloudConnector):
             raise
     
     async def _create_azure_database(self, config: Dict[str, Any]) -> CloudResource:
-        """Create Azure Database"""
-        try:
+        """Create Azure Database"""        try:
             db_name = config.get('database_name', f"db{int(time.time())}")
             
             return CloudResource(
@@ -742,8 +703,7 @@ class AzureConnector(BaseCloudConnector):
             raise
     
     async def _create_azure_vm(self, config: Dict[str, Any]) -> CloudResource:
-        """Create Azure Virtual Machine"""
-        try:
+        """Create Azure Virtual Machine"""        try:
             vm_name = config.get('vm_name', f"vm{int(time.time())}")
             
             return CloudResource(
@@ -767,8 +727,7 @@ class AzureConnector(BaseCloudConnector):
     
     async def delete_resource(self, resource_id: str, 
                             resource_type: ResourceType) -> bool:
-        """Delete Azure resource"""
-        try:
+        """Delete Azure resource"""        try:
             logger.info(f"Deleting Azure {resource_type.value} resource: {resource_id}")
             
             # Simulate deletion process
@@ -795,19 +754,16 @@ class AzureConnector(BaseCloudConnector):
     async def get_resource_metrics(self, resource_id: str, 
                                  start_time: datetime, 
                                  end_time: datetime) -> Dict[str, Any]:
-        """Get Azure resource metrics"""
-        return {}
+        """Get Azure resource metrics"""        return {}
 
 class GCPConnector(BaseCloudConnector):
-    """Google Cloud Platform connector"""
-    
+    """Google Cloud Platform connector"""    
     def __init__(self, credentials: CloudCredentials):
         super().__init__(credentials)
         self.storage_client = None
         
     async def authenticate(self) -> bool:
-        """Authenticate with GCP"""
-        try:
+        """Authenticate with GCP"""        try:
             if self.credentials.service_account_key:
                 credentials_obj = service_account.Credentials.from_service_account_info(
                     self.credentials.service_account_key
@@ -832,8 +788,7 @@ class GCPConnector(BaseCloudConnector):
             return False
     
     async def list_resources(self, resource_type: ResourceType) -> List[CloudResource]:
-        """List GCP resources"""
-        resources = []
+        """List GCP resources"""        resources = []
         
         if resource_type == ResourceType.STORAGE and self.storage_client:
             try:
@@ -862,8 +817,7 @@ class GCPConnector(BaseCloudConnector):
     
     async def create_resource(self, resource_type: ResourceType, 
                             config: Dict[str, Any]) -> CloudResource:
-        """Create GCP resource"""
-        try:
+        """Create GCP resource"""        try:
             if resource_type == ResourceType.STORAGE:
                 return await self._create_gcp_storage(config)
             elif resource_type == ResourceType.DATABASE:
@@ -878,8 +832,7 @@ class GCPConnector(BaseCloudConnector):
             raise
     
     async def _create_gcp_storage(self, config: Dict[str, Any]) -> CloudResource:
-        """Create GCP Cloud Storage bucket"""
-        try:
+        """Create GCP Cloud Storage bucket"""        try:
             bucket_name = config.get('bucket_name', f"bucket-{int(time.time())}")
             
             # Simulate GCP storage creation
@@ -905,8 +858,7 @@ class GCPConnector(BaseCloudConnector):
             raise
     
     async def _create_gcp_database(self, config: Dict[str, Any]) -> CloudResource:
-        """Create GCP Cloud SQL instance"""
-        try:
+        """Create GCP Cloud SQL instance"""        try:
             instance_name = config.get('instance_name', f"db-{int(time.time())}")
             
             return CloudResource(
@@ -929,8 +881,7 @@ class GCPConnector(BaseCloudConnector):
             raise
     
     async def _create_gcp_vm(self, config: Dict[str, Any]) -> CloudResource:
-        """Create GCP Compute Engine instance"""
-        try:
+        """Create GCP Compute Engine instance"""        try:
             instance_name = config.get('instance_name', f"vm-{int(time.time())}")
             
             return CloudResource(
@@ -954,8 +905,7 @@ class GCPConnector(BaseCloudConnector):
     
     async def delete_resource(self, resource_id: str, 
                             resource_type: ResourceType) -> bool:
-        """Delete GCP resource"""
-        try:
+        """Delete GCP resource"""        try:
             logger.info(f"Deleting GCP {resource_type.value} resource: {resource_id}")
             
             # Simulate deletion process
@@ -982,12 +932,10 @@ class GCPConnector(BaseCloudConnector):
     async def get_resource_metrics(self, resource_id: str, 
                                  start_time: datetime, 
                                  end_time: datetime) -> Dict[str, Any]:
-        """Get GCP resource metrics"""
-        return {}
+        """Get GCP resource metrics"""        return {}
 
 class CloudOrchestrator:
-    """Multi-cloud orchestration and management"""
-    
+    """Multi-cloud orchestration and management"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.connectors: Dict[CloudProvider, BaseCloudConnector] = {}
@@ -996,8 +944,7 @@ class CloudOrchestrator:
         
     async def add_provider(self, provider: CloudProvider, 
                           credentials: CloudCredentials) -> bool:
-        """Add cloud provider"""
-        try:
+        """Add cloud provider"""        try:
             connector_classes = {
                 CloudProvider.AWS: AWSConnector,
                 CloudProvider.AZURE: AzureConnector,
@@ -1023,8 +970,7 @@ class CloudOrchestrator:
             return False
     
     async def discover_all_resources(self) -> Dict[CloudProvider, List[CloudResource]]:
-        """Discover resources across all providers"""
-        all_resources = {}
+        """Discover resources across all providers"""        all_resources = {}
         
         for provider, connector in self.connectors.items():
             provider_resources = []
@@ -1048,8 +994,7 @@ class CloudOrchestrator:
         return all_resources
     
     async def optimize_costs(self) -> Dict[str, Any]:
-        """Analyze and optimize costs across providers"""
-        recommendations = []
+        """Analyze and optimize costs across providers"""        recommendations = []
         potential_savings = 0.0
         
         for resource in self.resource_registry.values():
@@ -1081,8 +1026,7 @@ class CloudOrchestrator:
         }
     
     async def deploy_multi_cloud_application(self, deployment_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy application across multiple cloud providers"""
-        deployment_results = {}
+        """Deploy application across multiple cloud providers"""        deployment_results = {}
         
         for provider_config in deployment_config.get('providers', []):
             provider = CloudProvider(provider_config['provider'])
@@ -1119,8 +1063,7 @@ class CloudOrchestrator:
     async def backup_across_providers(self, source_provider: CloudProvider,
                                     target_provider: CloudProvider,
                                     resource_filter: Optional[Dict[str, Any]] = None) -> bool:
-        """Backup resources from one provider to another"""
-        try:
+        """Backup resources from one provider to another"""        try:
             source_connector = self.connectors.get(source_provider)
             target_connector = self.connectors.get(target_provider)
             
@@ -1142,8 +1085,7 @@ class CloudOrchestrator:
             return False
     
     async def monitor_resource_health(self) -> Dict[str, Any]:
-        """Monitor health of all resources"""
-        health_report = {
+        """Monitor health of all resources"""        health_report = {
             'healthy': 0,
             'unhealthy': 0,
             'unknown': 0,
@@ -1186,8 +1128,7 @@ class CloudOrchestrator:
         return health_report
     
     async def cleanup_all(self):
-        """Cleanup all cloud connectors"""
-        for connector in self.connectors.values():
+        """Cleanup all cloud connectors"""        for connector in self.connectors.values():
             await connector.cleanup()
         
         self.connectors.clear()
@@ -1195,16 +1136,14 @@ class CloudOrchestrator:
         self.logger.info("All cloud providers cleaned up")
 
 class CloudCostTracker:
-    """Cloud cost tracking and optimization"""
-    
+    """Cloud cost tracking and optimization"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.cost_history = defaultdict(list)
         
     def track_cost(self, provider: CloudProvider, resource_id: str, 
                   cost: float, timestamp: datetime):
-        """Track cost for resource"""
-        cost_entry = {
+        """Track cost for resource"""        cost_entry = {
             'provider': provider.value,
             'resource_id': resource_id,
             'cost': cost,
@@ -1214,8 +1153,7 @@ class CloudCostTracker:
     
     def get_cost_report(self, start_date: datetime, 
                        end_date: datetime) -> Dict[str, Any]:
-        """Generate cost report for date range"""
-        total_cost = 0.0
+        """Generate cost report for date range"""        total_cost = 0.0
         provider_costs = defaultdict(float)
         resource_costs = {}
         

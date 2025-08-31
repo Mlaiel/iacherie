@@ -1,5 +1,4 @@
-"""
-Tax Management Models - Enterprise Tax Optimization & Compliance System
+"""Tax Management Models - Enterprise Tax Optimization & Compliance System
 
 Ultra-advanced tax management system for international tax compliance,
 optimization strategies, and automated tax calculation for content creators.
@@ -26,7 +25,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
-
 from sqlalchemy import (
     Column, Integer, String, DateTime, Float, Boolean, ForeignKey,
     Text, DECIMAL, JSON, BigInteger, Index, UniqueConstraint
@@ -44,8 +42,7 @@ from dataclasses import dataclass
 Base = declarative_base()
 
 class TaxJurisdiction(Enum):
-    """Tax jurisdiction types"""
-    FEDERAL = "federal"
+    """Tax jurisdiction types"""    FEDERAL = "federal"
     STATE = "state"
     LOCAL = "local"
     INTERNATIONAL = "international"
@@ -53,8 +50,7 @@ class TaxJurisdiction(Enum):
     WITHHOLDING = "withholding"
 
 class TaxType(Enum):
-    """Tax type classifications"""
-    INCOME_TAX = "income_tax"
+    """Tax type classifications"""    INCOME_TAX = "income_tax"
     CORPORATE_TAX = "corporate_tax"
     VAT_GST = "vat_gst"
     SALES_TAX = "sales_tax"
@@ -65,8 +61,7 @@ class TaxType(Enum):
     EXCISE_TAX = "excise_tax"
 
 class TaxStatus(Enum):
-    """Tax calculation and filing status"""
-    CALCULATED = "calculated"
+    """Tax calculation and filing status"""    CALCULATED = "calculated"
     PENDING_REVIEW = "pending_review"
     APPROVED = "approved"
     FILED = "filed"
@@ -76,8 +71,7 @@ class TaxStatus(Enum):
     AMENDED = "amended"
 
 class DeductionCategory(Enum):
-    """Tax deduction categories"""
-    BUSINESS_EXPENSES = "business_expenses"
+    """Tax deduction categories"""    BUSINESS_EXPENSES = "business_expenses"
     EQUIPMENT_DEPRECIATION = "equipment_depreciation"
     HOME_OFFICE = "home_office"
     TRAVEL_EXPENSES = "travel_expenses"
@@ -88,8 +82,7 @@ class DeductionCategory(Enum):
     CHARITABLE_DONATIONS = "charitable_donations"
 
 class TaxJurisdictionProfile(Base):
-    """Tax jurisdiction profiles and regulations"""
-    __tablename__ = 'tax_jurisdiction_profiles'
+    """Tax jurisdiction profiles and regulations"""    __tablename__ = 'tax_jurisdiction_profiles'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -159,8 +152,7 @@ class TaxJurisdictionProfile(Base):
     )
 
 class CreatorTaxProfile(Base):
-    """Creator tax profile and configuration"""
-    __tablename__ = 'creator_tax_profiles'
+    """Creator tax profile and configuration"""    __tablename__ = 'creator_tax_profiles'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -232,8 +224,7 @@ class CreatorTaxProfile(Base):
     )
 
 class TaxCalculation(Base):
-    """Tax calculations for specific periods and jurisdictions"""
-    __tablename__ = 'tax_calculations'
+    """Tax calculations for specific periods and jurisdictions"""    __tablename__ = 'tax_calculations'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -329,8 +320,7 @@ class TaxCalculation(Base):
     )
 
 class TaxDeduction(Base):
-    """Individual tax deduction records"""
-    __tablename__ = 'tax_deductions'
+    """Individual tax deduction records"""    __tablename__ = 'tax_deductions'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -397,8 +387,7 @@ class TaxDeduction(Base):
     )
 
 class TaxOptimizationStrategy(Base):
-    """Tax optimization strategies and recommendations"""
-    __tablename__ = 'tax_optimization_strategies'
+    """Tax optimization strategies and recommendations"""    __tablename__ = 'tax_optimization_strategies'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -472,8 +461,7 @@ class TaxOptimizationStrategy(Base):
     )
 
 class TaxDocument(Base):
-    """Tax-related documents and forms"""
-    __tablename__ = 'tax_documents'
+    """Tax-related documents and forms"""    __tablename__ = 'tax_documents'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -545,8 +533,7 @@ class TaxDocument(Base):
 
 @dataclass
 class TaxSummary:
-    """Tax summary for reporting"""
-    total_income: float
+    """Tax summary for reporting"""    total_income: float
     total_deductions: float
     taxable_income: float
     total_tax_liability: float
@@ -557,8 +544,7 @@ class TaxSummary:
     jurisdictions: List[str]
 
 class TaxAlert(Base):
-    """Tax-related alerts and reminders"""
-    __tablename__ = 'tax_alerts'
+    """Tax-related alerts and reminders"""    __tablename__ = 'tax_alerts'
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

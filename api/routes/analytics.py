@@ -1,11 +1,9 @@
-"""
-Analytics API Routes
+"""Analytics API Routes
 Content analytics, performance metrics, and insights.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from typing import Dict, Any, List, Optional
 from datetime import datetime, timedelta
 
@@ -52,8 +50,7 @@ router = APIRouter()
 async def get_analytics_overview(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Get analytics overview for user"""
-    try:
+    """Get analytics overview for user"""    try:
         user_id = current_user["user_id"]
         
         async with database_manager.get_postgres_session() as session:
@@ -66,8 +63,7 @@ async def get_analytics_overview(
             
             # Get protected content count
             protected_result = await session.execute(
-                """
-                SELECT COUNT(DISTINCT content_id) 
+                """                SELECT COUNT(DISTINCT content_id) 
                 FROM content_monitoring 
                 WHERE user_id = %s AND active = true
                 """,
@@ -107,8 +103,7 @@ async def get_content_analytics(
     offset: int = 0,
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Get detailed content analytics"""
-    try:
+    """Get detailed content analytics"""    try:
         user_id = current_user["user_id"]
         
         content_analytics = []
@@ -116,8 +111,7 @@ async def get_content_analytics(
         # Get content with basic info
         async with database_manager.get_postgres_session() as session:
             result = await session.execute(
-                """
-                SELECT c.id, c.title, c.content_type, 
+                """                SELECT c.id, c.title, c.content_type, 
                        COUNT(pv.id) as violations_count
                 FROM content c
                 LEFT JOIN protection_violations pv ON c.id = pv.original_content_id
@@ -173,14 +167,12 @@ async def get_content_analytics(
 async def get_platform_analytics(
     current_user: Dict[str, Any] = Depends(security_manager.get_current_user)
 ):
-    """Get platform-specific analytics"""
-    try:
+    """Get platform-specific analytics"""    try:
         user_id = current_user["user_id"]
         
         async with database_manager.get_postgres_session() as session:
             result = await session.execute(
-                """
-                SELECT 
+                """                SELECT 
                     pv.platform,
                     COUNT(DISTINCT pv.original_content_id) as content_count,
                     COUNT(pv.id) as violations_count,

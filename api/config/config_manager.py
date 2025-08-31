@@ -1,12 +1,10 @@
-"""
-Configuration Managers - IA Influencer Agent Platform
+"""Configuration Managers - IA Influencer Agent Platform
 Advanced configuration management utilities and managers
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import os
 import json
 import yaml
@@ -26,8 +24,7 @@ from .environments import get_config
 
 
 class SingletonMeta(type):
-    """Metaclass for singleton pattern"""
-    _instances = {}
+    """Metaclass for singleton pattern"""    _instances = {}
     _lock = threading.Lock()
     
     def __call__(cls, *args, **kwargs):
@@ -40,8 +37,7 @@ class SingletonMeta(type):
 
 @dataclass
 class ConfigurationSource:
-    """Configuration source definition"""
-    name: str
+    """Configuration source definition"""    name: str
     source_type: str  # file, env, s3, redis, database
     location: str
     priority: int = 0  # Higher number = higher priority
@@ -52,8 +48,7 @@ class ConfigurationSource:
 
 
 class ConfigManager(metaclass=SingletonMeta):
-    """Centralized configuration manager"""
-    
+    """Centralized configuration manager"""    
     def __init__(self):
         self._config_cache: Dict[str, Any] = {}
         self._sources: List[ConfigurationSource] = []
@@ -67,8 +62,7 @@ class ConfigManager(metaclass=SingletonMeta):
         self._start_auto_refresh()
     
     def _initialize_default_sources(self):
-        """Initialize default configuration sources"""
-        # Environment variables (highest priority)
+        """Initialize default configuration sources"""        # Environment variables (highest priority)
         self.add_source(ConfigurationSource(
             name="environment",
             source_type="env",
@@ -114,8 +108,7 @@ class ConfigManager(metaclass=SingletonMeta):
             ))
     
     def add_source(self, source: ConfigurationSource):
-        """Add a configuration source"""
-        with self._lock:
+        """Add a configuration source"""        with self._lock:
             # Remove existing source with same name
             self._sources = [s for s in self._sources if s.name != source.name]
             self._sources.append(source)
@@ -123,26 +116,22 @@ class ConfigManager(metaclass=SingletonMeta):
             self._sources.sort(key=lambda x: x.priority, reverse=True)
     
     def remove_source(self, name: str):
-        """Remove a configuration source"""
-        with self._lock:
+        """Remove a configuration source"""        with self._lock:
             self._sources = [s for s in self._sources if s.name != name]
     
     def get(self, key: str, default: Any = None, refresh: bool = False) -> Any:
-        """Get configuration value with cascading priority"""
-        if refresh or key not in self._config_cache:
+        """Get configuration value with cascading priority"""        if refresh or key not in self._config_cache:
             self._refresh_key(key)
         
         return self._config_cache.get(key, default)
     
     def set(self, key: str, value: Any, source_name: str = "runtime"):
-        """Set configuration value in cache"""
-        with self._lock:
+        """Set configuration value in cache"""        with self._lock:
             self._config_cache[key] = value
             self._notify_watchers(key, value)
     
     def _refresh_key(self, key: str):
-        """Refresh a specific configuration key from sources"""
-        with self._lock:
+        """Refresh a specific configuration key from sources"""        with self._lock:
             for source in self._sources:
                 if not source.enabled:
                     continue
@@ -157,8 +146,7 @@ class ConfigManager(metaclass=SingletonMeta):
                     continue
     
     def _load_from_source(self, source: ConfigurationSource, key: str) -> Any:
-        """Load configuration value from a specific source"""
-        if source.source_type == "env":
+        """Load configuration value from a specific source"""        if source.source_type == "env":
             return os.getenv(key.upper())
         
         elif source.source_type == "file":
@@ -176,8 +164,7 @@ class ConfigManager(metaclass=SingletonMeta):
         return None
     
     def _load_from_file(self, file_path: str, key: str) -> Any:
-        """Load configuration from file"""
-        try:
+        """Load configuration from file"""        try:
             with open(file_path, 'r') as f:
                 if file_path.endswith('.json'):
                     data = json.load(f)
@@ -199,8 +186,7 @@ class ConfigManager(metaclass=SingletonMeta):
             return None
     
     def _load_from_aws_ssm(self, parameter_name: str) -> Any:
-        """Load configuration from AWS Systems Manager Parameter Store"""
-        try:
+        """Load configuration from AWS Systems Manager Parameter Store"""        try:
             import boto3
             ssm = boto3.client('ssm')
             response = ssm.get_parameter(Name=parameter_name, WithDecryption=True)
@@ -215,8 +201,7 @@ class ConfigManager(metaclass=SingletonMeta):
             return None
     
     def _load_from_redis(self, redis_url: str, key: str) -> Any:
-        """Load configuration from Redis"""
-        try:
+        """Load configuration from Redis"""        try:
             r = redis.from_url(redis_url)
             value = r.get(key)
             if value:
@@ -229,8 +214,7 @@ class ConfigManager(metaclass=SingletonMeta):
             return None
     
     def _load_from_s3(self, s3_path: str, key: str) -> Any:
-        """Load configuration from S3"""
-        try:
+        """Load configuration from S3"""        try:
             import boto3
             # Parse S3 path: s3://bucket/path/file.json
             parts = s3_path.replace('s3://', '').split('/', 1)
@@ -261,16 +245,14 @@ class ConfigManager(metaclass=SingletonMeta):
             return None
     
     def _start_auto_refresh(self):
-        """Start automatic configuration refresh thread"""
-        if self._refresh_thread and self._refresh_thread.is_alive():
+        """Start automatic configuration refresh thread"""        if self._refresh_thread and self._refresh_thread.is_alive():
             return
         
         self._refresh_thread = threading.Thread(target=self._auto_refresh_worker, daemon=True)
         self._refresh_thread.start()
     
     def _auto_refresh_worker(self):
-        """Auto-refresh worker thread"""
-        while not self._stop_refresh:
+        """Auto-refresh worker thread"""        while not self._stop_refresh:
             try:
                 current_time = datetime.now()
                 for source in self._sources:
@@ -287,21 +269,18 @@ class ConfigManager(metaclass=SingletonMeta):
                 time.sleep(60)
     
     def _refresh_source(self, source: ConfigurationSource):
-        """Refresh all configurations from a specific source"""
-        # This would reload all keys from the source
+        """Refresh all configurations from a specific source"""        # This would reload all keys from the source
         # Implementation depends on source type
         pass
     
     def watch(self, key: str, callback: callable):
-        """Watch for configuration changes"""
-        with self._lock:
+        """Watch for configuration changes"""        with self._lock:
             if key not in self._watchers:
                 self._watchers[key] = []
             self._watchers[key].append(callback)
     
     def _notify_watchers(self, key: str, value: Any):
-        """Notify watchers of configuration changes"""
-        if key in self._watchers:
+        """Notify watchers of configuration changes"""        if key in self._watchers:
             for callback in self._watchers[key]:
                 try:
                     callback(key, value)
@@ -310,49 +289,41 @@ class ConfigManager(metaclass=SingletonMeta):
     
     @staticmethod
     def get_current_environment() -> str:
-        """Get current environment"""
-        return os.getenv("ENVIRONMENT", "development").lower()
+        """Get current environment"""        return os.getenv("ENVIRONMENT", "development").lower()
     
     def get_all_config(self) -> Dict[str, Any]:
-        """Get all configuration as dictionary"""
-        return dict(self._config_cache)
+        """Get all configuration as dictionary"""        return dict(self._config_cache)
     
     def reload(self):
-        """Reload all configuration from sources"""
-        with self._lock:
+        """Reload all configuration from sources"""        with self._lock:
             self._config_cache.clear()
             for source in self._sources:
                 source.last_refresh = None
     
     def stop(self):
-        """Stop the configuration manager"""
-        self._stop_refresh = True
+        """Stop the configuration manager"""        self._stop_refresh = True
         if self._refresh_thread:
             self._refresh_thread.join(timeout=5)
 
 
 class EnvironmentManager:
-    """Environment-specific configuration management"""
-    
+    """Environment-specific configuration management"""    
     def __init__(self):
         self._current_env = None
         self._config_cache: Dict[str, AppConfig] = {}
     
     def get_current_environment(self) -> str:
-        """Get current environment name"""
-        if self._current_env is None:
+        """Get current environment name"""        if self._current_env is None:
             self._current_env = os.getenv("ENVIRONMENT", "development").lower()
         return self._current_env
     
     def set_environment(self, environment: str):
-        """Set current environment"""
-        self._current_env = environment.lower()
+        """Set current environment"""        self._current_env = environment.lower()
         # Clear config cache to force reload
         self._config_cache.clear()
     
     def get_config(self, environment: str = None) -> AppConfig:
-        """Get configuration for specific environment"""
-        env = environment or self.get_current_environment()
+        """Get configuration for specific environment"""        env = environment or self.get_current_environment()
         
         if env not in self._config_cache:
             self._config_cache[env] = get_config(env)
@@ -360,32 +331,26 @@ class EnvironmentManager:
         return self._config_cache[env]
     
     def validate_environment(self, environment: str = None) -> Dict[str, Any]:
-        """Validate environment configuration"""
-        from .environments import validate_environment_config
+        """Validate environment configuration"""        from .environments import validate_environment_config
         env = environment or self.get_current_environment()
         config = self.get_config(env)
         return validate_environment_config(config)
     
     def list_environments(self) -> List[str]:
-        """List available environments"""
-        return ["development", "testing", "staging", "production"]
+        """List available environments"""        return ["development", "testing", "staging", "production"]
     
     def is_production(self) -> bool:
-        """Check if running in production"""
-        return self.get_current_environment() == "production"
+        """Check if running in production"""        return self.get_current_environment() == "production"
     
     def is_development(self) -> bool:
-        """Check if running in development"""
-        return self.get_current_environment() == "development"
+        """Check if running in development"""        return self.get_current_environment() == "development"
     
     def is_testing(self) -> bool:
-        """Check if running in testing"""
-        return self.get_current_environment() == "testing"
+        """Check if running in testing"""        return self.get_current_environment() == "testing"
 
 
 class SecretManager:
-    """Secure secrets management"""
-    
+    """Secure secrets management"""    
     def __init__(self):
         self._encryption_key = self._get_or_create_encryption_key()
         self._cipher_suite = Fernet(self._encryption_key)
@@ -399,8 +364,7 @@ class SecretManager:
             )
     
     def _get_or_create_encryption_key(self) -> bytes:
-        """Get or create encryption key"""
-        key = os.getenv("SECRETS_ENCRYPTION_KEY")
+        """Get or create encryption key"""        key = os.getenv("SECRETS_ENCRYPTION_KEY")
         if key:
             return key.encode()
         
@@ -422,8 +386,7 @@ class SecretManager:
         return new_key
     
     def store_secret(self, name: str, value: str, encrypted: bool = True) -> bool:
-        """Store a secret securely"""
-        try:
+        """Store a secret securely"""        try:
             if encrypted:
                 value = self.encrypt(value)
             
@@ -445,8 +408,7 @@ class SecretManager:
             return False
     
     def get_secret(self, name: str, default: str = None, encrypted: bool = True) -> Optional[str]:
-        """Get a secret securely"""
-        # Check cache first
+        """Get a secret securely"""        # Check cache first
         if name in self._secrets_cache:
             return self._secrets_cache[name]
         
@@ -484,8 +446,7 @@ class SecretManager:
         return value
     
     def _store_in_aws_secrets_manager(self, name: str, value: str) -> bool:
-        """Store secret in AWS Secrets Manager"""
-        try:
+        """Store secret in AWS Secrets Manager"""        try:
             import boto3
             secrets_client = boto3.client('secretsmanager')
             
@@ -496,8 +457,7 @@ class SecretManager:
             return False
     
     def _get_from_aws_secrets_manager(self, name: str) -> Optional[str]:
-        """Get secret from AWS Secrets Manager"""
-        try:
+        """Get secret from AWS Secrets Manager"""        try:
             import boto3
             secrets_client = boto3.client('secretsmanager')
             
@@ -508,8 +468,7 @@ class SecretManager:
             return None
     
     def _store_in_redis(self, name: str, value: str) -> bool:
-        """Store secret in Redis"""
-        try:
+        """Store secret in Redis"""        try:
             key = f"secrets:{name}"
             self._redis_client.set(key, value, ex=86400)  # 24 hour expiry
             return True
@@ -517,8 +476,7 @@ class SecretManager:
             return False
     
     def _get_from_redis(self, name: str) -> Optional[str]:
-        """Get secret from Redis"""
-        try:
+        """Get secret from Redis"""        try:
             key = f"secrets:{name}"
             value = self._redis_client.get(key)
             return value.decode('utf-8') if value else None
@@ -526,8 +484,7 @@ class SecretManager:
             return None
     
     def _store_locally(self, name: str, value: str) -> bool:
-        """Store secret locally"""
-        try:
+        """Store secret locally"""        try:
             secrets_dir = os.path.expanduser("~/.ia-influencer-agent/secrets")
             os.makedirs(secrets_dir, exist_ok=True)
             
@@ -540,8 +497,7 @@ class SecretManager:
             return False
     
     def _get_locally(self, name: str) -> Optional[str]:
-        """Get secret from local storage"""
-        try:
+        """Get secret from local storage"""        try:
             secrets_dir = os.path.expanduser("~/.ia-influencer-agent/secrets")
             secret_file = os.path.join(secrets_dir, f"{name}.secret")
             
@@ -553,16 +509,13 @@ class SecretManager:
         return None
     
     def encrypt(self, plaintext: str) -> str:
-        """Encrypt a string"""
-        return self._cipher_suite.encrypt(plaintext.encode()).decode()
+        """Encrypt a string"""        return self._cipher_suite.encrypt(plaintext.encode()).decode()
     
     def decrypt(self, ciphertext: str) -> str:
-        """Decrypt a string"""
-        return self._cipher_suite.decrypt(ciphertext.encode()).decode()
+        """Decrypt a string"""        return self._cipher_suite.decrypt(ciphertext.encode()).decode()
     
     def rotate_encryption_key(self) -> bool:
-        """Rotate the encryption key (re-encrypt all secrets)"""
-        try:
+        """Rotate the encryption key (re-encrypt all secrets)"""        try:
             # Generate new key
             new_key = Fernet.generate_key()
             new_cipher = Fernet(new_key)
@@ -592,8 +545,7 @@ class SecretManager:
 
 
 class FeatureToggleManager:
-    """Feature toggle management system"""
-    
+    """Feature toggle management system"""    
     def __init__(self):
         self._config_manager = ConfigManager()
         self._feature_cache: Dict[str, bool] = {}
@@ -615,8 +567,7 @@ class FeatureToggleManager:
     
     def is_enabled(self, feature_name: str, user_id: str = None, 
                    context: Dict[str, Any] = None) -> bool:
-        """Check if a feature is enabled for a user/context"""
-        # Check cache first
+        """Check if a feature is enabled for a user/context"""        # Check cache first
         cache_key = f"{feature_name}:{user_id or 'global'}"
         if cache_key in self._feature_cache:
             return self._feature_cache[cache_key]
@@ -636,14 +587,12 @@ class FeatureToggleManager:
         return result
     
     def _get_feature_config(self, feature_name: str) -> Optional[Dict[str, Any]]:
-        """Get feature configuration from config manager"""
-        return self._config_manager.get(f"features.{feature_name}")
+        """Get feature configuration from config manager"""        return self._config_manager.get(f"features.{feature_name}")
     
     def _evaluate_feature_rules(self, feature_config: Dict[str, Any], 
                                user_id: str = None, 
                                context: Dict[str, Any] = None) -> bool:
-        """Evaluate feature toggle rules"""
-        # Global enable/disable
+        """Evaluate feature toggle rules"""        # Global enable/disable
         if not feature_config.get("enabled", True):
             return False
         
@@ -679,8 +628,7 @@ class FeatureToggleManager:
         return True
     
     def _evaluate_rule(self, rule: Dict[str, Any], context: Dict[str, Any] = None) -> bool:
-        """Evaluate a single feature rule"""
-        if not context:
+        """Evaluate a single feature rule"""        if not context:
             context = {}
         
         rule_type = rule.get("type")
@@ -716,18 +664,15 @@ class FeatureToggleManager:
         return True
     
     def enable_feature(self, feature_name: str, user_id: str = None):
-        """Enable a feature for a user or globally"""
-        cache_key = f"{feature_name}:{user_id or 'global'}"
+        """Enable a feature for a user or globally"""        cache_key = f"{feature_name}:{user_id or 'global'}"
         self._feature_cache[cache_key] = True
     
     def disable_feature(self, feature_name: str, user_id: str = None):
-        """Disable a feature for a user or globally"""
-        cache_key = f"{feature_name}:{user_id or 'global'}"
+        """Disable a feature for a user or globally"""        cache_key = f"{feature_name}:{user_id or 'global'}"
         self._feature_cache[cache_key] = False
     
     def set_rollout_percentage(self, feature_name: str, percentage: int):
-        """Set rollout percentage for a feature"""
-        if feature_name not in self._rollout_cache:
+        """Set rollout percentage for a feature"""        if feature_name not in self._rollout_cache:
             self._rollout_cache[feature_name] = {}
         self._rollout_cache[feature_name]["rollout_percentage"] = percentage
         
@@ -737,13 +682,11 @@ class FeatureToggleManager:
             del self._feature_cache[key]
     
     def get_feature_status(self, user_id: str = None) -> Dict[str, bool]:
-        """Get status of all features for a user"""
-        status = {}
+        """Get status of all features for a user"""        status = {}
         for feature_name in self._default_features:
             status[feature_name] = self.is_enabled(feature_name, user_id)
         return status
     
     def clear_cache(self):
-        """Clear feature toggle cache"""
-        self._feature_cache.clear()
+        """Clear feature toggle cache"""        self._feature_cache.clear()
         self._rollout_cache.clear()

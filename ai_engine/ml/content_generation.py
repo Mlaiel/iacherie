@@ -1,12 +1,10 @@
-"""
-Content Generation Module - Advanced AI content creation and generation
+"""Content Generation Module - Advanced AI content creation and generation
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive content generation capabilities using advanced AI models
 for text, image, video, and multi-modal content creation.
 """
-
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -20,8 +18,7 @@ import random
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Types of content that can be generated"""
-    TEXT = "text"
+    """Types of content that can be generated"""    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
@@ -31,8 +28,7 @@ class ContentType(Enum):
     ADVERTISEMENT = "advertisement"
 
 class GenerationStrategy(Enum):
-    """Content generation strategies"""
-    CREATIVE = "creative"
+    """Content generation strategies"""    CREATIVE = "creative"
     INFORMATIVE = "informative"
     PERSUASIVE = "persuasive"
     ENTERTAINING = "entertaining"
@@ -40,8 +36,7 @@ class GenerationStrategy(Enum):
 
 @dataclass
 class GenerationConfig:
-    """Configuration for content generation"""
-    content_type: ContentType
+    """Configuration for content generation"""    content_type: ContentType
     strategy: GenerationStrategy
     target_audience: str = "general"
     tone: str = "professional"
@@ -52,8 +47,7 @@ class GenerationConfig:
 
 @dataclass
 class GeneratedContent:
-    """Container for generated content"""
-    content_id: str
+    """Container for generated content"""    content_id: str
     content_type: ContentType
     content: str
     metadata: Dict[str, Any]
@@ -62,8 +56,7 @@ class GeneratedContent:
     config_used: GenerationConfig
 
 class ContentGenerator:
-    """Main content generation engine"""
-    
+    """Main content generation engine"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.generation_history = []
@@ -72,8 +65,7 @@ class ContentGenerator:
         self.logger.info("ContentGenerator initialized successfully")
     
     def _load_templates(self) -> Dict[str, List[str]]:
-        """Load content templates"""
-        return {
+        """Load content templates"""        return {
             "social_post": [
                 "🚀 {main_message} {call_to_action}",
                 "✨ {intro} {main_content} {hashtags}",
@@ -90,8 +82,7 @@ class ContentGenerator:
         }
     
     def _load_vocabulary(self) -> Dict[str, List[str]]:
-        """Load vocabulary for content generation"""
-        return {
+        """Load vocabulary for content generation"""        return {
             "creative_adjectives": ["innovative", "groundbreaking", "revolutionary", "cutting-edge", "transformative"],
             "action_words": ["discover", "explore", "unlock", "unleash", "master", "achieve", "create"],
             "engagement_hooks": ["Don't miss out!", "Join thousands of others", "Transform your business today"],
@@ -100,8 +91,7 @@ class ContentGenerator:
         }
     
     def generate(self, config: GenerationConfig, prompt: str = "") -> GeneratedContent:
-        """Generate content based on configuration"""
-        try:
+        """Generate content based on configuration"""        try:
             self.logger.info(f"Generating {config.content_type.value} content with {config.strategy.value} strategy")
             
             # Generate content based on type
@@ -146,8 +136,7 @@ class ContentGenerator:
             raise
     
     def _generate_text(self, config: GenerationConfig, prompt: str) -> str:
-        """Generate general text content"""
-        # Simulate text generation using templates and vocabulary
+        """Generate general text content"""        # Simulate text generation using templates and vocabulary
         base_content = prompt if prompt else "Here is your generated content."
         
         # Add vocabulary based on strategy
@@ -171,8 +160,7 @@ class ContentGenerator:
         return base_content
     
     def _generate_social_post(self, config: GenerationConfig, prompt: str) -> str:
-        """Generate social media post"""
-        template = random.choice(self.templates["social_post"])
+        """Generate social media post"""        template = random.choice(self.templates["social_post"])
         
         # Fill template variables
         content_vars = {
@@ -189,8 +177,7 @@ class ContentGenerator:
         return template.format(**content_vars)
     
     def _generate_blog_article(self, config: GenerationConfig, prompt: str) -> str:
-        """Generate blog article"""
-        template = random.choice(self.templates["blog_article"])
+        """Generate blog article"""        template = random.choice(self.templates["blog_article"])
         
         title = prompt or "The Future of AI-Powered Content Creation"
         
@@ -207,8 +194,7 @@ class ContentGenerator:
         return template.format(**content_vars)
     
     def _generate_email(self, config: GenerationConfig, prompt: str) -> str:
-        """Generate email content"""
-        template = random.choice(self.templates["email"])
+        """Generate email content"""        template = random.choice(self.templates["email"])
         
         content_vars = {
             "subject": prompt or "Important Update",
@@ -224,12 +210,10 @@ class ContentGenerator:
         return template.format(**content_vars)
     
     def _generate_generic_content(self, config: GenerationConfig, prompt: str) -> str:
-        """Generate generic content for other types"""
-        return prompt or f"Generated {config.content_type.value} content using {config.strategy.value} strategy."
+        """Generate generic content for other types"""        return prompt or f"Generated {config.content_type.value} content using {config.strategy.value} strategy."
     
     def _generate_additional_content(self, config: GenerationConfig) -> str:
-        """Generate additional content for longer pieces"""
-        additions = [
+        """Generate additional content for longer pieces"""        additions = [
             "Furthermore, this approach provides numerous benefits for businesses.",
             "Research shows that implementing these strategies leads to significant improvements.",
             "Many companies have already seen remarkable results using these methods.",
@@ -239,8 +223,7 @@ class ContentGenerator:
         return " ".join(random.choices(additions, k=random.randint(1, 3)))
     
     def _calculate_quality_score(self, content: str, config: GenerationConfig) -> float:
-        """Calculate quality score for generated content"""
-        score = 0.5  # Base score
+        """Calculate quality score for generated content"""        score = 0.5  # Base score
         
         # Length appropriateness
         word_count = len(content.split())
@@ -269,8 +252,7 @@ class ContentGenerator:
         return min(score, 1.0)  # Cap at 1.0
     
     def batch_generate(self, configs: List[GenerationConfig], prompts: List[str] = None) -> List[GeneratedContent]:
-        """Generate multiple pieces of content"""
-        if prompts is None:
+        """Generate multiple pieces of content"""        if prompts is None:
             prompts = [""] * len(configs)
         
         results = []
@@ -282,8 +264,7 @@ class ContentGenerator:
         return results
     
     def optimize_content(self, content: str, target_metrics: Dict[str, float]) -> str:
-        """Optimize existing content for specific metrics"""
-        try:
+        """Optimize existing content for specific metrics"""        try:
             # Simple optimization simulation
             optimized = content
             
@@ -310,8 +291,7 @@ class ContentGenerator:
             return content
     
     def analyze_content_performance(self, content_id: str) -> Dict[str, Any]:
-        """Analyze performance of generated content"""
-        # Find content in history
+        """Analyze performance of generated content"""        # Find content in history
         content = next((c for c in self.generation_history if c.content_id == content_id), None)
         
         if not content:
@@ -341,8 +321,7 @@ class ContentGenerator:
         return performance
     
     def get_generation_statistics(self) -> Dict[str, Any]:
-        """Get statistics about content generation"""
-        if not self.generation_history:
+        """Get statistics about content generation"""        if not self.generation_history:
             return {"message": "No content generated yet"}
         
         stats = {
@@ -368,15 +347,13 @@ class ContentGenerator:
 
 # Content Analysis Classes (for backward compatibility)
 class ContentAnalyzer:
-    """Content analysis engine"""
-    
+    """Content analysis engine"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.logger.info("ContentAnalyzer initialized successfully")
     
     def analyze(self, content: str) -> Dict[str, Any]:
-        """Analyze content quality and characteristics"""
-        return {
+        """Analyze content quality and characteristics"""        return {
             "word_count": len(content.split()),
             "character_count": len(content),
             "sentiment": "positive",

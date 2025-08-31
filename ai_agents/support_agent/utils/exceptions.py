@@ -1,5 +1,4 @@
-"""
-Support Agent Exceptions
+"""Support Agent Exceptions
 
 Specialized exception classes for Support Agent with detailed error handling,
 logging integration, and recovery suggestions.
@@ -11,14 +10,12 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 from typing import Dict, Any, Optional, List
 from datetime import datetime, timezone
 from enum import Enum
 
 class SupportErrorCategory(Enum):
-    """Categories of support errors"""
-    CONFIGURATION = "configuration"
+    """Categories of support errors"""    CONFIGURATION = "configuration"
     AI_MODEL = "ai_model"
     DATABASE = "database"
     KNOWLEDGE_BASE = "knowledge_base"
@@ -31,15 +28,13 @@ class SupportErrorCategory(Enum):
     EXTERNAL_SERVICE = "external_service"
 
 class SupportErrorSeverity(Enum):
-    """Error severity levels"""
-    LOW = "low"
+    """Error severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class SupportAgentException(Exception):
-    """Base exception class for Support Agent"""
-    
+    """Base exception class for Support Agent"""    
     def __init__(
         self,
         message: str,
@@ -59,13 +54,11 @@ class SupportAgentException(Exception):
         self.timestamp = datetime.now(timezone.utc)
         
     def _generate_error_code(self) -> str:
-        """Generate error code based on category and timestamp"""
-        timestamp_str = self.timestamp.strftime("%Y%m%d%H%M")
+        """Generate error code based on category and timestamp"""        timestamp_str = self.timestamp.strftime("%Y%m%d%H%M")
         return f"SUP_{self.category.value.upper()}_{timestamp_str}"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/API responses"""
-        return {
+        """Convert exception to dictionary for logging/API responses"""        return {
             "error_code": self.error_code,
             "message": self.message,
             "category": self.category.value,
@@ -79,8 +72,7 @@ class SupportAgentException(Exception):
         return f"[{self.error_code}] {self.message}"
 
 class ConfigurationError(SupportAgentException):
-    """Configuration-related errors"""
-    
+    """Configuration-related errors"""    
     def __init__(
         self,
         message: str,
@@ -109,8 +101,7 @@ class ConfigurationError(SupportAgentException):
         )
 
 class AIModelError(SupportAgentException):
-    """AI model loading and processing errors"""
-    
+    """AI model loading and processing errors"""    
     def __init__(
         self,
         message: str,
@@ -140,8 +131,7 @@ class AIModelError(SupportAgentException):
         )
 
 class DatabaseError(SupportAgentException):
-    """Database connection and query errors"""
-    
+    """Database connection and query errors"""    
     def __init__(
         self,
         message: str,
@@ -174,8 +164,7 @@ class DatabaseError(SupportAgentException):
         )
 
 class KnowledgeBaseError(SupportAgentException):
-    """Knowledge base and search errors"""
-    
+    """Knowledge base and search errors"""    
     def __init__(
         self,
         message: str,
@@ -205,8 +194,7 @@ class KnowledgeBaseError(SupportAgentException):
         )
 
 class ConversationError(SupportAgentException):
-    """Conversation handling and processing errors"""
-    
+    """Conversation handling and processing errors"""    
     def __init__(
         self,
         message: str,
@@ -239,8 +227,7 @@ class ConversationError(SupportAgentException):
         )
 
 class TicketManagementError(SupportAgentException):
-    """Ticket creation, update, and management errors"""
-    
+    """Ticket creation, update, and management errors"""    
     def __init__(
         self,
         message: str,
@@ -270,8 +257,7 @@ class TicketManagementError(SupportAgentException):
         )
 
 class EscalationError(SupportAgentException):
-    """Escalation process and routing errors"""
-    
+    """Escalation process and routing errors"""    
     def __init__(
         self,
         message: str,
@@ -301,8 +287,7 @@ class EscalationError(SupportAgentException):
         )
 
 class PerformanceError(SupportAgentException):
-    """Performance and resource-related errors"""
-    
+    """Performance and resource-related errors"""    
     def __init__(
         self,
         message: str,
@@ -336,8 +321,7 @@ class PerformanceError(SupportAgentException):
         )
 
 class SecurityError(SupportAgentException):
-    """Security and authentication errors"""
-    
+    """Security and authentication errors"""    
     def __init__(
         self,
         message: str,
@@ -368,8 +352,7 @@ class SecurityError(SupportAgentException):
         )
 
 class ValidationError(SupportAgentException):
-    """Input validation and data format errors"""
-    
+    """Input validation and data format errors"""    
     def __init__(
         self,
         message: str,
@@ -403,8 +386,7 @@ class ValidationError(SupportAgentException):
         )
 
 class ExternalServiceError(SupportAgentException):
-    """External service integration errors"""
-    
+    """External service integration errors"""    
     def __init__(
         self,
         message: str,
@@ -443,8 +425,7 @@ def handle_exception(
     context: Dict[str, Any] = None,
     logger = None
 ) -> SupportAgentException:
-    """Convert generic exception to SupportAgentException"""
-    
+    """Convert generic exception to SupportAgentException"""    
     if isinstance(exception, SupportAgentException):
         return exception
     
@@ -486,8 +467,7 @@ def log_exception(
     include_context: bool = True,
     include_recovery: bool = True
 ):
-    """Log exception with appropriate level and formatting"""
-    
+    """Log exception with appropriate level and formatting"""    
     log_data = {
         "error_code": exception.error_code,
         "message": exception.message,
@@ -512,8 +492,7 @@ def log_exception(
         logger.info("Support Agent Info", extra=log_data)
 
 class ErrorRecoveryManager:
-    """Manages error recovery and retry logic"""
-    
+    """Manages error recovery and retry logic"""    
     def __init__(self, max_retries: int = 3, backoff_factor: float = 1.5):
         self.max_retries = max_retries
         self.backoff_factor = backoff_factor
@@ -524,8 +503,7 @@ class ErrorRecoveryManager:
         exception_types: List[type] = None,
         context: Dict[str, Any] = None
     ):
-        """Execute operation with retry logic"""
-        import asyncio
+        """Execute operation with retry logic"""        import asyncio
         
         exception_types = exception_types or [Exception]
         retry_count = 0

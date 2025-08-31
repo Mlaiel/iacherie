@@ -1,5 +1,4 @@
-"""
-🚀 Workflow Validator - IA Influencer Agent Platform Enterprise
+"""🚀 Workflow Validator - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/data_management/validation/workflow_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Validation complète des workflows de création de contenu
 - Orchestration validation bout-en-bout
 - Conformité business et qualité intégrée
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -40,8 +38,7 @@ from ..business.business_validator import BusinessValidator, BusinessValidationR
 logger = logging.getLogger(__name__)
 
 class WorkflowStep(Enum):
-    """Étapes du workflow de validation"""
-    CONTENT_INGESTION = "content_ingestion"
+    """Étapes du workflow de validation"""    CONTENT_INGESTION = "content_ingestion"
     METADATA_EXTRACTION = "metadata_extraction"
     TECHNICAL_VALIDATION = "technical_validation"
     QUALITY_ASSESSMENT = "quality_assessment"
@@ -51,8 +48,7 @@ class WorkflowStep(Enum):
     FINAL_APPROVAL = "final_approval"
 
 class WorkflowStatus(Enum):
-    """Status du workflow"""
-    PENDING = "pending"
+    """Status du workflow"""    PENDING = "pending"
     RUNNING = "running"
     SUCCESS = "success"
     WARNING = "warning"
@@ -60,8 +56,7 @@ class WorkflowStatus(Enum):
     CANCELLED = "cancelled"
 
 class CreatorType(Enum):
-    """Types de créateurs supportés"""
-    MUSICIAN = "musician"
+    """Types de créateurs supportés"""    MUSICIAN = "musician"
     INFLUENCER = "influencer"
     PHOTOGRAPHER = "photographer"
     BLOGGER = "blogger"
@@ -71,8 +66,7 @@ class CreatorType(Enum):
 
 @dataclass
 class WorkflowStepResult:
-    """Résultat d'une étape de workflow"""
-    step: WorkflowStep
+    """Résultat d'une étape de workflow"""    step: WorkflowStep
     status: WorkflowStatus
     start_time: datetime
     end_time: Optional[datetime] = None
@@ -84,8 +78,7 @@ class WorkflowStepResult:
 
 @dataclass
 class WorkflowConfiguration:
-    """Configuration du workflow"""
-    creator_type: CreatorType
+    """Configuration du workflow"""    creator_type: CreatorType
     content_type: str  # audio, video, image, text
     target_platforms: List[str]
     quality_requirements: Dict[str, Any]
@@ -97,8 +90,7 @@ class WorkflowConfiguration:
 
 @dataclass
 class WorkflowResult:
-    """Résultat complet du workflow"""
-    workflow_id: str
+    """Résultat complet du workflow"""    workflow_id: str
     configuration: WorkflowConfiguration
     overall_status: WorkflowStatus
     start_time: datetime
@@ -120,8 +112,7 @@ class WorkflowResult:
     next_steps: List[str] = field(default_factory=list)
 
 class WorkflowOrchestrator:
-    """Orchestrateur principal des workflows"""
-    
+    """Orchestrateur principal des workflows"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.WorkflowOrchestrator")
         
@@ -139,8 +130,7 @@ class WorkflowOrchestrator:
         self.creator_workflows = self._initialize_creator_workflows()
     
     def _initialize_creator_workflows(self) -> Dict[CreatorType, Dict[str, Any]]:
-        """Initialise les configurations de workflow par créateur"""
-        return {
+        """Initialise les configurations de workflow par créateur"""        return {
             CreatorType.MUSICIAN: {
                 'priority_steps': [
                     WorkflowStep.QUALITY_ASSESSMENT,
@@ -215,8 +205,7 @@ class WorkflowOrchestrator:
     
     async def validate_content_workflow(self, file_path: str, 
                                       config: WorkflowConfiguration) -> WorkflowResult:
-        """Lance un workflow de validation complet"""
-        
+        """Lance un workflow de validation complet"""        
         workflow_id = str(uuid.uuid4())
         start_time = datetime.now()
         
@@ -285,8 +274,7 @@ class WorkflowOrchestrator:
                                    file_path: str,
                                    config: WorkflowConfiguration,
                                    workflow_result: WorkflowResult) -> WorkflowStepResult:
-        """Exécute une étape spécifique du workflow"""
-        
+        """Exécute une étape spécifique du workflow"""        
         step_start = datetime.now()
         step_result = WorkflowStepResult(
             step=step,
@@ -327,8 +315,7 @@ class WorkflowOrchestrator:
         return step_result
     
     async def _step_content_ingestion(self, file_path: str) -> Dict[str, Any]:
-        """Étape d'ingestion du contenu"""
-        self.logger.debug(f"Ingestion contenu: {file_path}")
+        """Étape d'ingestion du contenu"""        self.logger.debug(f"Ingestion contenu: {file_path}")
         
         # Vérifications basiques
         if not Path(file_path).exists():
@@ -348,8 +335,7 @@ class WorkflowOrchestrator:
         }
     
     async def _step_metadata_extraction(self, file_path: str) -> Dict[str, Any]:
-        """Étape d'extraction des métadonnées"""
-        self.logger.debug(f"Extraction métadonnées: {file_path}")
+        """Étape d'extraction des métadonnées"""        self.logger.debug(f"Extraction métadonnées: {file_path}")
         
         loop = asyncio.get_event_loop()
         metadata = await loop.run_in_executor(
@@ -363,8 +349,7 @@ class WorkflowOrchestrator:
     
     async def _step_technical_validation(self, file_path: str, 
                                        config: WorkflowConfiguration) -> Dict[str, Any]:
-        """Étape de validation technique"""
-        self.logger.debug(f"Validation technique: {file_path}")
+        """Étape de validation technique"""        self.logger.debug(f"Validation technique: {file_path}")
         
         # Validation basique du format
         supported_formats = {
@@ -388,8 +373,7 @@ class WorkflowOrchestrator:
     
     async def _step_quality_assessment(self, file_path: str, 
                                      config: WorkflowConfiguration) -> Dict[str, Any]:
-        """Étape d'évaluation qualité"""
-        self.logger.debug(f"Évaluation qualité: {file_path}")
+        """Étape d'évaluation qualité"""        self.logger.debug(f"Évaluation qualité: {file_path}")
         
         loop = asyncio.get_event_loop()
         quality_result = await loop.run_in_executor(
@@ -424,8 +408,7 @@ class WorkflowOrchestrator:
     
     async def _step_fingerprint_generation(self, file_path: str, 
                                          config: WorkflowConfiguration) -> Dict[str, Any]:
-        """Étape de génération d'empreinte"""
-        self.logger.debug(f"Génération empreinte: {file_path}")
+        """Étape de génération d'empreinte"""        self.logger.debug(f"Génération empreinte: {file_path}")
         
         loop = asyncio.get_event_loop()
         fingerprint_result = await loop.run_in_executor(
@@ -443,8 +426,7 @@ class WorkflowOrchestrator:
     async def _step_business_validation(self, file_path: str, 
                                       config: WorkflowConfiguration,
                                       workflow_result: WorkflowResult) -> Dict[str, Any]:
-        """Étape de validation business"""
-        self.logger.debug(f"Validation business: {file_path}")
+        """Étape de validation business"""        self.logger.debug(f"Validation business: {file_path}")
         
         # Récupération des métadonnées extraites
         metadata_step = workflow_result.step_results.get(WorkflowStep.METADATA_EXTRACTION)
@@ -470,8 +452,7 @@ class WorkflowOrchestrator:
     async def _step_compliance_check(self, file_path: str, 
                                    config: WorkflowConfiguration,
                                    workflow_result: WorkflowResult) -> Dict[str, Any]:
-        """Étape de vérification conformité"""
-        self.logger.debug(f"Vérification conformité: {file_path}")
+        """Étape de vérification conformité"""        self.logger.debug(f"Vérification conformité: {file_path}")
         
         # Récupération des métadonnées
         metadata_step = workflow_result.step_results.get(WorkflowStep.METADATA_EXTRACTION)
@@ -501,8 +482,7 @@ class WorkflowOrchestrator:
     async def _execute_parallel_steps(self, file_path: str, 
                                     config: WorkflowConfiguration,
                                     workflow_result: WorkflowResult) -> Dict[WorkflowStep, WorkflowStepResult]:
-        """Exécute les étapes d'analyse en parallèle"""
-        
+        """Exécute les étapes d'analyse en parallèle"""        
         parallel_steps = [
             WorkflowStep.QUALITY_ASSESSMENT,
             WorkflowStep.FINGERPRINT_GENERATION,
@@ -541,8 +521,7 @@ class WorkflowOrchestrator:
     async def _execute_sequential_steps(self, file_path: str, 
                                       config: WorkflowConfiguration,
                                       workflow_result: WorkflowResult) -> Dict[WorkflowStep, WorkflowStepResult]:
-        """Exécute les étapes d'analyse en séquentiel"""
-        
+        """Exécute les étapes d'analyse en séquentiel"""        
         sequential_steps = [
             WorkflowStep.QUALITY_ASSESSMENT,
             WorkflowStep.FINGERPRINT_GENERATION,
@@ -571,8 +550,7 @@ class WorkflowOrchestrator:
         return results
     
     async def _execute_final_approval(self, workflow_result: WorkflowResult) -> WorkflowStepResult:
-        """Étape finale d'approbation"""
-        
+        """Étape finale d'approbation"""        
         step_start = datetime.now()
         approval_result = WorkflowStepResult(
             step=WorkflowStep.FINAL_APPROVAL,
@@ -646,8 +624,7 @@ class WorkflowOrchestrator:
         return approval_result
     
     async def _finalize_workflow(self, workflow_result: WorkflowResult) -> WorkflowResult:
-        """Finalise le workflow et agrège les résultats"""
-        
+        """Finalise le workflow et agrège les résultats"""        
         workflow_result.end_time = datetime.now()
         workflow_result.total_duration_seconds = (
             workflow_result.end_time - workflow_result.start_time
@@ -710,8 +687,7 @@ class WorkflowOrchestrator:
         return workflow_result
     
     def _generate_next_steps(self, workflow_result: WorkflowResult) -> List[str]:
-        """Génère les prochaines étapes recommandées"""
-        next_steps = []
+        """Génère les prochaines étapes recommandées"""        next_steps = []
         
         if workflow_result.approval_status:
             next_steps.append("Procéder à la publication")
@@ -730,8 +706,7 @@ class WorkflowOrchestrator:
         return next_steps
 
 class WorkflowValidator:
-    """Validateur de workflow principal avec API simplifiée"""
-    
+    """Validateur de workflow principal avec API simplifiée"""    
     def __init__(self):
         self.orchestrator = WorkflowOrchestrator()
         self.logger = logging.getLogger(f"{__name__}.WorkflowValidator")
@@ -741,8 +716,7 @@ class WorkflowValidator:
                              content_type: str = "audio",
                              target_platforms: List[str] = None,
                              custom_config: Dict[str, Any] = None) -> WorkflowResult:
-        """Interface simplifiée pour validation de contenu"""
-        
+        """Interface simplifiée pour validation de contenu"""        
         if target_platforms is None:
             target_platforms = ["youtube", "spotify", "instagram"]
         
@@ -771,8 +745,7 @@ class WorkflowValidator:
                                    creator_type: str = "musician",
                                    content_type: str = "audio",
                                    target_platforms: List[str] = None) -> List[WorkflowResult]:
-        """Validation en lot de contenus"""
-        
+        """Validation en lot de contenus"""        
         tasks = []
         for file_path in file_paths:
             task = self.validate_content(file_path, creator_type, content_type, target_platforms)
@@ -807,12 +780,10 @@ class WorkflowValidator:
         return workflow_results
     
     def get_active_workflows(self) -> Dict[str, WorkflowResult]:
-        """Retourne les workflows actifs"""
-        return self.orchestrator._active_workflows.copy()
+        """Retourne les workflows actifs"""        return self.orchestrator._active_workflows.copy()
     
     def get_workflow_status(self, workflow_id: str) -> Optional[WorkflowResult]:
-        """Retourne le status d'un workflow spécifique"""
-        return self.orchestrator._active_workflows.get(workflow_id)
+        """Retourne le status d'un workflow spécifique"""        return self.orchestrator._active_workflows.get(workflow_id)
 
 # Export des classes principales
 __all__ = [

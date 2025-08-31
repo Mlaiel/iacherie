@@ -1,5 +1,4 @@
-"""
-Revenue Storage Module
+"""Revenue Storage Module
 =====================
 
 Professional revenue tracking and monetization storage for IA-Influencer-Agent platform.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Tuple, AsyncIterator
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics data structure."""
-    user_id: str
+    """Revenue analytics data structure."""    user_id: str
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -57,8 +54,7 @@ class RevenueAnalytics:
 
 @dataclass
 class PaymentRecord:
-    """Payment processing record."""
-    id: str
+    """Payment processing record."""    id: str
     user_id: str
     revenue_records: List[str]  # Revenue record IDs
     amount: Decimal
@@ -73,28 +69,22 @@ class PaymentRecord:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProvider):
-    """
-    Database-based revenue storage provider.
+    """    Database-based revenue storage provider.
     
     Implements revenue tracking, analytics, and payment processing
     with high-performance database operations.
-    """
-    
+    """    
     def __init__(self, provider_id: str, config: Dict[str, Any]):
-        """Initialize database revenue storage provider."""
-        super().__init__(provider_id, config)
+        """Initialize database revenue storage provider."""        super().__init__(provider_id, config)
         self.ml_models = {}  # Cache for ML models
         
     async def connect(self) -> None:
-        """Connect to database and initialize revenue tables."""
-        await super().connect()
+        """Connect to database and initialize revenue tables."""        await super().connect()
         await self._create_revenue_tables()
         await self._initialize_ml_models()
         
     async def _create_revenue_tables(self) -> None:
-        """Create revenue-specific database tables."""
-        revenue_table_sql = """
-        CREATE TABLE IF NOT EXISTS revenue_records (
+        """Create revenue-specific database tables."""        revenue_table_sql = """        CREATE TABLE IF NOT EXISTS revenue_records (
             id VARCHAR(36) PRIMARY KEY,
             user_id VARCHAR(36) NOT NULL,
             content_id VARCHAR(36) NOT NULL,
@@ -121,10 +111,8 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             INDEX idx_revenue_status (payment_status),
             INDEX idx_revenue_content (content_id)
         );
-        """
-        
-        payment_table_sql = """
-        CREATE TABLE IF NOT EXISTS payment_records (
+        """        
+        payment_table_sql = """        CREATE TABLE IF NOT EXISTS payment_records (
             id VARCHAR(36) PRIMARY KEY,
             user_id VARCHAR(36) NOT NULL,
             revenue_record_ids JSON NOT NULL,
@@ -146,10 +134,8 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             INDEX idx_payment_method (payment_method),
             INDEX idx_payment_date (scheduled_date)
         );
-        """
-        
-        analytics_table_sql = """
-        CREATE TABLE IF NOT EXISTS revenue_analytics (
+        """        
+        analytics_table_sql = """        CREATE TABLE IF NOT EXISTS revenue_analytics (
             id VARCHAR(36) PRIMARY KEY,
             user_id VARCHAR(36) NOT NULL,
             period_start TIMESTAMP NOT NULL,
@@ -167,8 +153,7 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             INDEX idx_analytics_user (user_id),
             INDEX idx_analytics_period (period_start, period_end)
         );
-        """
-        
+        """        
         try:
             async with self.get_connection() as conn:
                 await conn.execute(revenue_table_sql)
@@ -183,8 +168,7 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             raise StorageException(f"Revenue table creation failed: {e}")
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize ML models for revenue prediction."""
-        try:
+        """Initialize ML models for revenue prediction."""        try:
             # In a real implementation, load trained ML models here
             # For now, we'll use simple statistical models
             self.ml_models = {
@@ -199,16 +183,13 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             logger.error(f"Failed to initialize ML models: {e}")
     
     async def store_revenue_record(self, revenue_record: RevenueRecord) -> bool:
-        """Store a revenue record."""
-        try:
-            sql = """
-            INSERT INTO revenue_records (
+        """Store a revenue record."""        try:
+            sql = """            INSERT INTO revenue_records (
                 id, user_id, content_id, platform, revenue_type, amount, currency,
                 period_start, period_end, views, engagement_rate, cpm, 
                 commission_rate, net_amount, payment_status, payment_date, metadata
             ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-            """
-            
+            """            
             # Calculate net amount if not provided
             net_amount = revenue_record.net_amount
             if net_amount is None:
@@ -253,11 +234,9 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         end_date: datetime,
         platform: Optional[Platform] = None
     ) -> Dict[str, float]:
-        """Calculate revenue for user in date range."""
-        try:
+        """Calculate revenue for user in date range."""        try:
             # Base query
-            sql = """
-            SELECT 
+            sql = """            SELECT 
                 platform,
                 revenue_type,
                 SUM(amount) as total_amount,
@@ -269,8 +248,7 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             WHERE user_id = ? 
                 AND period_start >= ? 
                 AND period_end <= ?
-            """
-            
+            """            
             values = [user_id, start_date, end_date]
             
             if platform:
@@ -319,11 +297,9 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             # Calculate average CPM
             if result['record_count'] > 0:
                 # Get weighted average CPM
-                cpm_sql = """
-                SELECT AVG(cpm) FROM revenue_records 
+                cpm_sql = """                SELECT AVG(cpm) FROM revenue_records 
                 WHERE user_id = ? AND period_start >= ? AND period_end <= ? AND cpm IS NOT NULL
-                """
-                async with self.get_connection() as conn:
+                """                async with self.get_connection() as conn:
                     cursor = await conn.execute(cpm_sql, [user_id, start_date, end_date])
                     avg_cpm_row = await cursor.fetchone()
                     if avg_cpm_row and avg_cpm_row[0]:
@@ -340,8 +316,7 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         user_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get revenue analytics and trends."""
-        try:
+        """Get revenue analytics and trends."""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -401,17 +376,14 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         content_id: str,
         projection_days: int = 30
     ) -> float:
-        """Estimate projected revenue using ML."""
-        try:
+        """Estimate projected revenue using ML."""        try:
             # Get historical performance for this content
-            sql = """
-            SELECT amount, views, engagement_rate, cpm, period_start
+            sql = """            SELECT amount, views, engagement_rate, cpm, period_start
             FROM revenue_records 
             WHERE user_id = ? AND content_id = ?
             ORDER BY period_start DESC
             LIMIT 10
-            """
-            
+            """            
             async with self.get_connection() as conn:
                 cursor = await conn.execute(sql, [user_id, content_id])
                 rows = await cursor.fetchall()
@@ -450,8 +422,7 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             return 0.0
     
     async def get_platform_commission_rates(self, platform: Platform) -> Dict[str, float]:
-        """Get commission rates for platform."""
-        # Standard commission rates by platform and revenue type
+        """Get commission rates for platform."""        # Standard commission rates by platform and revenue type
         commission_rates = {
             Platform.YOUTUBE: {
                 'streaming': 0.45,      # YouTube takes 45% of ad revenue
@@ -489,14 +460,11 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         start_date: datetime,
         end_date: datetime
     ) -> Optional[Dict[str, Any]]:
-        """Get cached analytics if available."""
-        try:
-            sql = """
-            SELECT * FROM revenue_analytics 
+        """Get cached analytics if available."""        try:
+            sql = """            SELECT * FROM revenue_analytics 
             WHERE user_id = ? AND period_start = ? AND period_end = ?
             AND calculated_at > ?
-            """
-            
+            """            
             # Consider cache valid for 1 hour
             cache_cutoff = datetime.utcnow() - timedelta(hours=1)
             
@@ -526,10 +494,8 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             return None
     
     async def _cache_analytics(self, analytics: Dict[str, Any]) -> None:
-        """Cache analytics results."""
-        try:
-            sql = """
-            INSERT INTO revenue_analytics (
+        """Cache analytics results."""        try:
+            sql = """            INSERT INTO revenue_analytics (
                 id, user_id, period_start, period_end, total_revenue,
                 revenue_by_platform, revenue_by_type, growth_rate,
                 projected_revenue, top_content, engagement_correlation
@@ -543,8 +509,7 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
                 top_content = VALUES(top_content),
                 engagement_correlation = VALUES(engagement_correlation),
                 calculated_at = CURRENT_TIMESTAMP
-            """
-            
+            """            
             values = (
                 str(uuid.uuid4()),
                 analytics['user_id'],
@@ -567,8 +532,7 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             logger.warning(f"Failed to cache analytics: {e}")
     
     def _simple_revenue_predictor(self, historical_data: List[Dict[str, Any]]) -> float:
-        """Simple revenue prediction based on historical data."""
-        if not historical_data:
+        """Simple revenue prediction based on historical data."""        if not historical_data:
             return 0.0
         
         # Calculate trend
@@ -585,8 +549,7 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         return sum(amounts) / len(amounts)
     
     def _calculate_growth_rate(self, current: float, previous: float) -> Optional[float]:
-        """Calculate growth rate between periods."""
-        if previous == 0:
+        """Calculate growth rate between periods."""        if previous == 0:
             return None if current == 0 else 100.0
         
         return ((current - previous) / previous) * 100.0
@@ -597,15 +560,12 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         start_date: datetime,
         end_date: datetime
     ) -> Optional[float]:
-        """Calculate correlation between engagement and revenue."""
-        try:
-            sql = """
-            SELECT engagement_rate, amount 
+        """Calculate correlation between engagement and revenue."""        try:
+            sql = """            SELECT engagement_rate, amount 
             FROM revenue_records 
             WHERE user_id = ? AND period_start >= ? AND period_end <= ?
             AND engagement_rate IS NOT NULL AND engagement_rate > 0
-            """
-            
+            """            
             async with self.get_connection() as conn:
                 cursor = await conn.execute(sql, [user_id, start_date, end_date])
                 rows = await cursor.fetchall()
@@ -646,17 +606,14 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         end_date: datetime,
         limit: int = 5
     ) -> List[str]:
-        """Get top performing content by revenue."""
-        try:
-            sql = """
-            SELECT content_id, SUM(amount) as total_revenue
+        """Get top performing content by revenue."""        try:
+            sql = """            SELECT content_id, SUM(amount) as total_revenue
             FROM revenue_records 
             WHERE user_id = ? AND period_start >= ? AND period_end <= ?
             GROUP BY content_id
             ORDER BY total_revenue DESC
             LIMIT ?
-            """
-            
+            """            
             async with self.get_connection() as conn:
                 cursor = await conn.execute(sql, [user_id, start_date, end_date, limit])
                 rows = await cursor.fetchall()
@@ -668,19 +625,16 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
             return []
     
     async def _predict_revenue(self, user_id: str, days: int) -> float:
-        """Predict future revenue for user."""
-        try:
+        """Predict future revenue for user."""        try:
             # Get recent revenue data
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days * 2)  # Use 2x period for prediction
             
-            sql = """
-            SELECT amount, period_start 
+            sql = """            SELECT amount, period_start 
             FROM revenue_records 
             WHERE user_id = ? AND period_start >= ?
             ORDER BY period_start DESC
-            """
-            
+            """            
             async with self.get_connection() as conn:
                 cursor = await conn.execute(sql, [user_id, start_date])
                 rows = await cursor.fetchall()
@@ -728,8 +682,7 @@ class DatabaseRevenueStorageProvider(DatabaseStorageProvider, RevenueStorageProv
         previous: Dict[str, Any],
         growth_rate: Optional[float]
     ) -> List[str]:
-        """Generate revenue insights."""
-        insights = []
+        """Generate revenue insights."""        insights = []
         
         if growth_rate is not None:
             if growth_rate > 20:

@@ -1,5 +1,4 @@
-"""
-Telegram Crawling Engine
+"""Telegram Crawling Engine
 =======================
 
 Advanced Telegram crawler for content monitoring and channel analysis.
@@ -22,7 +21,6 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
@@ -66,8 +64,7 @@ settings = get_settings()
 
 @dataclass
 class TelegramMessageData:
-    """Telegram message data structure"""
-    message_id: int
+    """Telegram message data structure"""    message_id: int
     channel_id: int
     channel_username: str
     sender_id: int
@@ -107,8 +104,7 @@ class TelegramMessageData:
 
 @dataclass
 class TelegramChannelData:
-    """Telegram channel data structure"""
-    channel_id: int
+    """Telegram channel data structure"""    channel_id: int
     username: str
     title: str
     about: str
@@ -150,8 +146,7 @@ class TelegramChannelData:
 
 @dataclass
 class TelegramChatData:
-    """Telegram chat/group data structure"""
-    chat_id: int
+    """Telegram chat/group data structure"""    chat_id: int
     title: str
     participants_count: int
     date: datetime
@@ -172,8 +167,7 @@ class TelegramChatData:
 
 
 class TelegramCrawlerEngine(BaseCrawlerEngine):
-    """
-    Advanced Telegram crawler engine with comprehensive API integration.
+    """    Advanced Telegram crawler engine with comprehensive API integration.
     
     Features:
     - Telethon library integration
@@ -185,7 +179,6 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
     - Forward tracking
     - Reaction monitoring
     """
-
     def __init__(self, 
                  api_id: Optional[int] = None,
                  api_hash: Optional[str] = None,
@@ -194,8 +187,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
                  password: Optional[str] = None,
                  proxy_config: Optional[Dict] = None,
                  rate_limit_config: Optional[Dict] = None):
-        """
-        Initialize Telegram crawler engine.
+        """        Initialize Telegram crawler engine.
         
         Args:
             api_id: Telegram API ID
@@ -205,8 +197,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
             password: 2FA password if enabled
             proxy_config: Proxy configuration
             rate_limit_config: Rate limiting configuration
-        """
-        super().__init__()
+        """        super().__init__()
         
         # API Configuration
         self.api_id = api_id or settings.TELEGRAM_API_ID
@@ -239,8 +230,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
         self.proxy_config = proxy_config
 
     async def authenticate(self) -> bool:
-        """Authenticate with Telegram API"""
-        try:
+        """Authenticate with Telegram API"""        try:
             # Initialize client
             if self.proxy_config:
                 import socks
@@ -287,8 +277,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
             return False
 
     async def complete_authentication(self, code: str) -> bool:
-        """Complete authentication with received code"""
-        try:
+        """Complete authentication with received code"""        try:
             await self.client.sign_in(self.phone_number, code)
             self.is_authenticated = True
             me = await self.client.get_me()
@@ -309,16 +298,14 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
             return False
 
     async def get_channel_info(self, channel_username: str) -> TelegramChannelData:
-        """
-        Get Telegram channel information.
+        """        Get Telegram channel information.
         
         Args:
             channel_username: Channel username (with or without @)
         
         Returns:
             TelegramChannelData object
-        """
-        if not self.is_authenticated:
+        """        if not self.is_authenticated:
             raise AuthenticationError("Telegram client not authenticated")
 
         cache_key = f"channel_info_{channel_username}"
@@ -395,8 +382,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
                                  offset_id: int = 0,
                                  min_id: int = 0,
                                  max_id: int = 0) -> List[TelegramMessageData]:
-        """
-        Get messages from a Telegram channel.
+        """        Get messages from a Telegram channel.
         
         Args:
             channel_username: Channel username
@@ -408,8 +394,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of TelegramMessageData objects
-        """
-        if not self.is_authenticated:
+        """        if not self.is_authenticated:
             raise AuthenticationError("Telegram client not authenticated")
 
         cache_key = f"channel_messages_{channel_username}_{limit}_{offset_date}_{offset_id}"
@@ -459,8 +444,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
                             channel_username: str,
                             query: str,
                             limit: int = 100) -> List[TelegramMessageData]:
-        """
-        Search for messages in a Telegram channel.
+        """        Search for messages in a Telegram channel.
         
         Args:
             channel_username: Channel username
@@ -469,8 +453,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of TelegramMessageData objects
-        """
-        if not self.is_authenticated:
+        """        if not self.is_authenticated:
             raise AuthenticationError("Telegram client not authenticated")
 
         messages = []
@@ -506,8 +489,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
                              channel_usernames: List[str],
                              keywords: List[str],
                              check_interval: int = 300) -> AsyncGenerator[Dict[str, Any], None]:
-        """
-        Monitor Telegram channels for content matches.
+        """        Monitor Telegram channels for content matches.
         
         Args:
             channel_usernames: List of channel usernames to monitor
@@ -516,8 +498,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
         
         Yields:
             Dictionary containing monitoring results
-        """
-        if not self.is_authenticated:
+        """        if not self.is_authenticated:
             raise AuthenticationError("Telegram client not authenticated")
 
         logger.info(f"Starting Telegram content monitoring for {len(channel_usernames)} channels")
@@ -576,8 +557,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
     async def download_media(self, 
                            message: TelegramMessageData,
                            download_path: str = './downloads/') -> Optional[str]:
-        """
-        Download media from a Telegram message.
+        """        Download media from a Telegram message.
         
         Args:
             message: TelegramMessageData object
@@ -585,8 +565,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             Path to downloaded file or None if no media
-        """
-        if not self.is_authenticated:
+        """        if not self.is_authenticated:
             raise AuthenticationError("Telegram client not authenticated")
 
         try:
@@ -612,8 +591,7 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
             return None
 
     async def _process_message_data(self, message, channel) -> Optional[TelegramMessageData]:
-        """Process Telegram message into TelegramMessageData object"""
-        try:
+        """Process Telegram message into TelegramMessageData object"""        try:
             # Extract sender information
             sender_id = getattr(message.sender, 'id', 0) if message.sender else 0
             sender_username = getattr(message.sender, 'username', '') if message.sender else ''
@@ -728,13 +706,11 @@ class TelegramCrawlerEngine(BaseCrawlerEngine):
             return None
 
     async def close(self):
-        """Close Telegram client connection"""
-        if self.client:
+        """Close Telegram client connection"""        if self.client:
             await self.client.disconnect()
 
     def __del__(self):
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if self.client:
                 asyncio.create_task(self.close())
         except:

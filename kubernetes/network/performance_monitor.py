@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Network Performance Monitor
+"""IA Influencer Agent - Network Performance Monitor
 Enterprise network performance monitoring and optimization for content protection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class NetworkInterface(Enum):
-    """Network interface types"""
-    ETHERNET = "ethernet"
+    """Network interface types"""    ETHERNET = "ethernet"
     WIFI = "wifi"
     VPN = "vpn"
     CELLULAR = "cellular"
@@ -52,8 +49,7 @@ class NetworkInterface(Enum):
 
 
 class PerformanceMetric(Enum):
-    """Network performance metrics"""
-    LATENCY = "latency"
+    """Network performance metrics"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     PACKET_LOSS = "packet_loss"
     JITTER = "jitter"
@@ -63,8 +59,7 @@ class PerformanceMetric(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Network optimization strategies"""
-    BANDWIDTH_OPTIMIZATION = "bandwidth_optimization"
+    """Network optimization strategies"""    BANDWIDTH_OPTIMIZATION = "bandwidth_optimization"
     LATENCY_REDUCTION = "latency_reduction"
     RELIABILITY_IMPROVEMENT = "reliability_improvement"
     COST_OPTIMIZATION = "cost_optimization"
@@ -73,8 +68,7 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class NetworkPerformanceData:
-    """Network performance measurement data"""
-    timestamp: datetime
+    """Network performance measurement data"""    timestamp: datetime
     interface: NetworkInterface
     latency_ms: float
     throughput_mbps: float
@@ -88,8 +82,7 @@ class NetworkPerformanceData:
 
 @dataclass
 class PerformanceThreshold:
-    """Performance threshold configuration"""
-    metric: PerformanceMetric
+    """Performance threshold configuration"""    metric: PerformanceMetric
     warning_threshold: float
     critical_threshold: float
     unit: str
@@ -98,8 +91,7 @@ class PerformanceThreshold:
 
 @dataclass
 class OptimizationRecommendation:
-    """Network optimization recommendation"""
-    strategy: OptimizationStrategy
+    """Network optimization recommendation"""    strategy: OptimizationStrategy
     priority: int  # 1 (highest) to 5 (lowest)
     impact_score: float  # 0.0 to 1.0
     implementation_effort: str  # low, medium, high
@@ -110,11 +102,9 @@ class OptimizationRecommendation:
 
 
 class NetworkPerformanceMonitor:
-    """
-    Network Performance Monitor for IA Influencer Agent Platform
+    """    Network Performance Monitor for IA Influencer Agent Platform
     Provides comprehensive network performance monitoring and optimization recommendations
-    """
-    
+    """    
     def __init__(
         self,
         database_url: str,
@@ -148,8 +138,7 @@ class NetworkPerformanceMonitor:
         self.optimization_history: List[OptimizationRecommendation] = []
     
     async def initialize(self) -> bool:
-        """Initialize network performance monitor"""
-        try:
+        """Initialize network performance monitor"""        try:
             logger.info("Initializing Network Performance Monitor...")
             
             # Initialize database connection
@@ -191,8 +180,7 @@ class NetworkPerformanceMonitor:
         self,
         target_endpoints: Optional[List[str]] = None
     ) -> NetworkPerformanceData:
-        """Measure comprehensive network performance"""
-        try:
+        """Measure comprehensive network performance"""        try:
             start_time = datetime.now()
             endpoints = target_endpoints or self.monitored_endpoints
             
@@ -288,8 +276,7 @@ class NetworkPerformanceMonitor:
         self,
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """Analyze network performance trends"""
-        try:
+        """Analyze network performance trends"""        try:
             end_time = datetime.now()
             start_time = end_time - time_range
             
@@ -321,8 +308,7 @@ class NetworkPerformanceMonitor:
         self,
         current_performance: Optional[NetworkPerformanceData] = None
     ) -> List[OptimizationRecommendation]:
-        """Generate network optimization recommendations"""
-        try:
+        """Generate network optimization recommendations"""        try:
             if not current_performance:
                 current_performance = await self.measure_network_performance()
             
@@ -403,8 +389,7 @@ class NetworkPerformanceMonitor:
             return []
     
     async def get_performance_dashboard_data(self) -> Dict[str, Any]:
-        """Get real-time performance dashboard data"""
-        try:
+        """Get real-time performance dashboard data"""        try:
             # Get current performance
             current_performance = await self.measure_network_performance()
             
@@ -444,8 +429,7 @@ class NetworkPerformanceMonitor:
         self,
         optimization_strategies: List[OptimizationStrategy]
     ) -> Dict[str, bool]:
-        """Apply network optimization configurations"""
-        try:
+        """Apply network optimization configurations"""        try:
             optimization_results = {}
             
             for strategy in optimization_strategies:
@@ -481,8 +465,7 @@ class NetworkPerformanceMonitor:
     # Private methods
     
     async def _measure_throughput(self) -> Tuple[float, float]:
-        """Measure network throughput using speedtest"""
-        try:
+        """Measure network throughput using speedtest"""        try:
             if not self.speedtest_client:
                 return 0.0, 0.0
             
@@ -497,8 +480,7 @@ class NetworkPerformanceMonitor:
             return 0.0, 0.0
     
     async def _estimate_packet_loss(self, endpoints: List[str]) -> float:
-        """Estimate packet loss percentage"""
-        try:
+        """Estimate packet loss percentage"""        try:
             successful_pings = 0
             total_pings = 0
             
@@ -529,8 +511,7 @@ class NetworkPerformanceMonitor:
         packet_loss: float,
         jitter: float
     ) -> float:
-        """Calculate overall network quality score (0-100)"""
-        try:
+        """Calculate overall network quality score (0-100)"""        try:
             # Normalize metrics to 0-1 scale
             latency_score = max(0, min(1, (200 - latency) / 200))  # Good latency < 200ms
             throughput_score = min(1, throughput / 100)  # Good throughput > 100 Mbps
@@ -559,8 +540,7 @@ class NetworkPerformanceMonitor:
             return 0.0
     
     async def _performance_monitoring_loop(self) -> None:
-        """Background performance monitoring loop"""
-        while True:
+        """Background performance monitoring loop"""        while True:
             try:
                 # Measure performance
                 await self.measure_network_performance()
@@ -573,8 +553,7 @@ class NetworkPerformanceMonitor:
                 await asyncio.sleep(self.monitoring_interval)
     
     async def _optimization_analysis_loop(self) -> None:
-        """Background optimization analysis loop"""
-        while True:
+        """Background optimization analysis loop"""        while True:
             try:
                 # Run optimization analysis every hour
                 await asyncio.sleep(3600)
@@ -590,8 +569,7 @@ class NetworkPerformanceMonitor:
                 await asyncio.sleep(3600)
     
     async def _alert_monitoring_loop(self) -> None:
-        """Background alert monitoring loop"""
-        while True:
+        """Background alert monitoring loop"""        while True:
             try:
                 # Check performance thresholds every 5 minutes
                 await asyncio.sleep(300)

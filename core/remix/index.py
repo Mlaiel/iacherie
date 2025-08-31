@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Core Remix Index
+"""IA-Influencer-Agent Core Remix Index
 ================================================================================
 Module: backend/core/remix/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -19,7 +18,6 @@ MISSION: Index central du système core remix IA-Influencer-Agent
 LOGIQUE MÉTIER: User (créateur) → Upload multi-format → IA protection → SEO pro → 
 Matching collaboration + gamifications → Distribution multi-plateformes → Remix IA professionnel
 """
-
 __version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
@@ -34,28 +32,23 @@ from datetime import datetime
 logger = logging.getLogger(__name__)
 
 class CoreRemixIndex:
-    """
-    Central index orchestrator for core remix services.
+    """    Central index orchestrator for core remix services.
     
     Provides unified access to all remix core functionalities including
     AI processing, quality control, security, and performance optimization.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize core remix index."""
-        self.services = {}
+        """Initialize core remix index."""        self.services = {}
         self.performance_metrics = {}
         self.security_status = "initialized"
         self.last_health_check = None
         
     async def initialize_all_services(self) -> Dict[str, Any]:
-        """
-        Initialize all core remix services.
+        """        Initialize all core remix services.
         
         Returns:
             Dict[str, Any]: Initialization status for each service
-        """
-        try:
+        """        try:
             logger.info("Starting core remix services initialization")
             start_time = time.time()
             
@@ -95,8 +88,7 @@ class CoreRemixIndex:
             }
     
     async def _initialize_remix_processor(self) -> bool:
-        """Initialize remix processing engine."""
-        try:
+        """Initialize remix processing engine."""        try:
             # Remix processor initialization logic
             logger.info("Initializing remix processor...")
             self.services["remix_processor"] = {
@@ -115,8 +107,7 @@ class CoreRemixIndex:
             return False
     
     async def _initialize_quality_controller(self) -> bool:
-        """Initialize quality control system."""
-        try:
+        """Initialize quality control system."""        try:
             logger.info("Initializing quality controller...")
             self.services["quality_controller"] = {
                 "status": "active",
@@ -134,8 +125,7 @@ class CoreRemixIndex:
             return False
     
     async def _initialize_security_manager(self) -> bool:
-        """Initialize security management system."""
-        try:
+        """Initialize security management system."""        try:
             logger.info("Initializing security manager...")
             self.services["security_manager"] = {
                 "status": "active",
@@ -156,8 +146,7 @@ class CoreRemixIndex:
             return False
     
     async def _initialize_performance_optimizer(self) -> bool:
-        """Initialize performance optimization system."""
-        try:
+        """Initialize performance optimization system."""        try:
             logger.info("Initializing performance optimizer...")
             self.services["performance_optimizer"] = {
                 "status": "active",
@@ -182,8 +171,7 @@ class CoreRemixIndex:
             return False
     
     async def _initialize_configuration_manager(self) -> bool:
-        """Initialize configuration management system."""
-        try:
+        """Initialize configuration management system."""        try:
             logger.info("Initializing configuration manager...")
             self.services["configuration_manager"] = {
                 "status": "active",
@@ -203,13 +191,11 @@ class CoreRemixIndex:
             return False
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive health check of all core remix services.
+        """        Perform comprehensive health check of all core remix services.
         
         Returns:
             Dict[str, Any]: Health status of all services
-        """
-        try:
+        """        try:
             health_results = {}
             
             for service_name, service_info in self.services.items():
@@ -239,34 +225,28 @@ class CoreRemixIndex:
             }
     
     def get_service_info(self, service_name: str) -> Optional[Dict[str, Any]]:
-        """
-        Get detailed information about a specific service.
+        """        Get detailed information about a specific service.
         
         Args:
             service_name (str): Name of the service
             
         Returns:
             Optional[Dict[str, Any]]: Service information or None if not found
-        """
-        return self.services.get(service_name)
+        """        return self.services.get(service_name)
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """
-        Get current performance metrics.
+        """        Get current performance metrics.
         
         Returns:
             Dict[str, Any]: Performance metrics
-        """
-        return self.performance_metrics
+        """        return self.performance_metrics
     
     async def shutdown_services(self) -> Dict[str, Any]:
-        """
-        Gracefully shutdown all core remix services.
+        """        Gracefully shutdown all core remix services.
         
         Returns:
             Dict[str, Any]: Shutdown status for each service
-        """
-        try:
+        """        try:
             logger.info("Starting graceful shutdown of core remix services")
             
             shutdown_results = {}

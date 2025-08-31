@@ -1,12 +1,10 @@
-"""
-Strategic Analysis Engine - Advanced Strategic Intelligence System
+"""Strategic Analysis Engine - Advanced Strategic Intelligence System
 Provides comprehensive strategic analysis and competitive intelligence.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -34,8 +32,7 @@ from ...utils.statistical_analyzer import StatisticalAnalyzer
 
 @dataclass
 class SWOTAnalysis:
-    """SWOT analysis structure."""
-    competitor_id: str
+    """SWOT analysis structure."""    competitor_id: str
     strengths: List[Dict[str, Any]]
     weaknesses: List[Dict[str, Any]]
     opportunities: List[Dict[str, Any]]
@@ -48,8 +45,7 @@ class SWOTAnalysis:
 
 @dataclass
 class MarketPosition:
-    """Market position analysis."""
-    competitor_id: str
+    """Market position analysis."""    competitor_id: str
     market_segment: str
     current_position: int
     market_share: float
@@ -65,8 +61,7 @@ class MarketPosition:
 
 @dataclass
 class CompetitiveThreat:
-    """Competitive threat assessment."""
-    competitor_id: str
+    """Competitive threat assessment."""    competitor_id: str
     threat_level: str  # low, medium, high, critical
     threat_score: float
     threat_factors: List[Dict[str, Any]]
@@ -79,8 +74,7 @@ class CompetitiveThreat:
 
 @dataclass
 class StrategicRecommendation:
-    """Strategic recommendation structure."""
-    recommendation_id: str
+    """Strategic recommendation structure."""    recommendation_id: str
     category: str
     title: str
     description: str
@@ -95,16 +89,13 @@ class StrategicRecommendation:
 
 
 class StrategicAnalysisEngine:
-    """
-    Advanced strategic analysis engine for competitive intelligence.
+    """    Advanced strategic analysis engine for competitive intelligence.
     
     Provides comprehensive strategic analysis including SWOT analysis,
     market positioning, threat assessment, and strategic recommendations.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the strategic analysis engine."""
-        self.config = config
+        """Initialize the strategic analysis engine."""        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -134,8 +125,7 @@ class StrategicAnalysisEngine:
         self.logger.info("StrategicAnalysisEngine initialized")
     
     async def perform_swot_analysis(self, competitor_id: str, competitor_data: Dict[str, Any]) -> SWOTAnalysis:
-        """Perform comprehensive SWOT analysis for a competitor."""
-        try:
+        """Perform comprehensive SWOT analysis for a competitor."""        try:
             self.logger.info(f"Performing SWOT analysis for competitor: {competitor_id}")
             
             # Analyze strengths
@@ -183,8 +173,7 @@ class StrategicAnalysisEngine:
             raise AnalysisError(f"Failed to perform SWOT analysis: {str(e)}")
     
     async def analyze_market_position(self, competitor_id: str, market_data: Dict[str, Any]) -> MarketPosition:
-        """Analyze competitor's market position."""
-        try:
+        """Analyze competitor's market position."""        try:
             self.logger.info(f"Analyzing market position for competitor: {competitor_id}")
             
             competitor_data = market_data.get("competitor_data", {})
@@ -247,8 +236,7 @@ class StrategicAnalysisEngine:
             raise AnalysisError(f"Failed to analyze market position: {str(e)}")
     
     async def assess_competitive_threat(self, competitor_id: str, threat_data: Dict[str, Any]) -> CompetitiveThreat:
-        """Assess competitive threat level from a competitor."""
-        try:
+        """Assess competitive threat level from a competitor."""        try:
             self.logger.info(f"Assessing competitive threat for competitor: {competitor_id}")
             
             # Extract threat factors
@@ -299,8 +287,7 @@ class StrategicAnalysisEngine:
             raise AnalysisError(f"Failed to assess competitive threat: {str(e)}")
     
     async def generate_strategic_recommendations(self, analysis_data: Dict[str, Any]) -> List[StrategicRecommendation]:
-        """Generate strategic recommendations based on analysis data."""
-        try:
+        """Generate strategic recommendations based on analysis data."""        try:
             self.logger.info("Generating strategic recommendations")
             
             recommendations = []
@@ -331,8 +318,7 @@ class StrategicAnalysisEngine:
             raise AnalysisError(f"Failed to generate strategic recommendations: {str(e)}")
     
     async def analyze_competitive_dynamics(self, market_segment: str, competitors_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze competitive dynamics within a market segment."""
-        try:
+        """Analyze competitive dynamics within a market segment."""        try:
             self.logger.info(f"Analyzing competitive dynamics for segment: {market_segment}")
             
             # Analyze market structure
@@ -379,8 +365,7 @@ class StrategicAnalysisEngine:
             raise AnalysisError(f"Failed to analyze competitive dynamics: {str(e)}")
     
     async def _analyze_strengths(self, competitor_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze competitor strengths."""
-        strengths = []
+        """Analyze competitor strengths."""        strengths = []
         
         # Market position strengths
         if competitor_data.get("market_share", 0) > 0.1:
@@ -439,8 +424,7 @@ class StrategicAnalysisEngine:
         return strengths
     
     async def _analyze_weaknesses(self, competitor_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze competitor weaknesses."""
-        weaknesses = []
+        """Analyze competitor weaknesses."""        weaknesses = []
         
         # Market position weaknesses
         if competitor_data.get("market_share", 0) < 0.05:
@@ -488,8 +472,7 @@ class StrategicAnalysisEngine:
         return weaknesses
     
     async def _calculate_threat_score(self, threat_factors: List[Dict[str, Any]]) -> float:
-        """Calculate overall threat score from threat factors."""
-        if not threat_factors:
+        """Calculate overall threat score from threat factors."""        if not threat_factors:
             return 0.0
         
         total_score = 0.0
@@ -514,8 +497,7 @@ class StrategicAnalysisEngine:
         return total_score / total_weight if total_weight > 0 else 0.0
     
     async def _determine_threat_level(self, threat_score: float) -> str:
-        """Determine threat level based on score."""
-        if threat_score >= 0.8:
+        """Determine threat level based on score."""        if threat_score >= 0.8:
             return "critical"
         elif threat_score >= 0.6:
             return "high"
@@ -525,8 +507,7 @@ class StrategicAnalysisEngine:
             return "low"
     
     async def _generate_swot_recommendations(self, swot_data: Dict[str, Any]) -> List[StrategicRecommendation]:
-        """Generate recommendations based on SWOT analysis."""
-        recommendations = []
+        """Generate recommendations based on SWOT analysis."""        recommendations = []
         
         strengths = swot_data.get("strengths", [])
         weaknesses = swot_data.get("weaknesses", [])
@@ -581,8 +562,7 @@ class StrategicAnalysisEngine:
         return recommendations
     
     async def get_analysis_status(self) -> Dict[str, Any]:
-        """Get current analysis engine status."""
-        return {
+        """Get current analysis engine status."""        return {
             "cached_swot_analyses": len(self.swot_cache),
             "cached_position_analyses": len(self.position_cache),
             "cached_threat_assessments": len(self.threat_cache),

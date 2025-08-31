@@ -1,5 +1,4 @@
-"""
-⚖️ Enterprise Legal Violation Surveillance Crawler
+"""⚖️ Enterprise Legal Violation Surveillance Crawler
 ==================================================
 
 Advanced legal compliance monitoring and intellectual property violation detection
@@ -35,7 +34,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 is strictly prohibited without explicit written permission from Fahed Mlaiel.
 Contact: mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 import json
@@ -55,8 +53,7 @@ from .platform_apis import PlatformAPIManager, APIResponse, PlatformType
 logger = logging.getLogger(__name__)
 
 class ViolationType(str, Enum):
-    """Legal violation type classification."""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Legal violation type classification."""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     DMCA_VIOLATION = "dmca_violation"
     ATTRIBUTION_MISSING = "attribution_missing"
@@ -70,8 +67,7 @@ class ViolationType(str, Enum):
     UNKNOWN = "unknown"
 
 class LegalJurisdiction(str, Enum):
-    """Legal jurisdiction enumeration."""
-    US_FEDERAL = "us_federal"
+    """Legal jurisdiction enumeration."""    US_FEDERAL = "us_federal"
     EU_DIRECTIVE = "eu_directive"
     UK_COPYRIGHT = "uk_copyright"
     CANADA_COPYRIGHT = "canada_copyright"
@@ -80,16 +76,14 @@ class LegalJurisdiction(str, Enum):
     PLATFORM_SPECIFIC = "platform_specific"
 
 class ViolationSeverity(str, Enum):
-    """Violation severity classification."""
-    CRITICAL = "critical"      # Immediate legal action required
+    """Violation severity classification."""    CRITICAL = "critical"      # Immediate legal action required
     HIGH = "high"             # Legal action recommended
     MEDIUM = "medium"         # Monitor and document
     LOW = "low"               # Minor violation
     NEGLIGIBLE = "negligible" # No action required
 
 class LegalStatus(str, Enum):
-    """Legal case status enumeration."""
-    DETECTED = "detected"
+    """Legal case status enumeration."""    DETECTED = "detected"
     UNDER_REVIEW = "under_review"
     DMCA_SENT = "dmca_sent"
     DMCA_COMPLIED = "dmca_complied"
@@ -102,8 +96,7 @@ class LegalStatus(str, Enum):
 
 @dataclass
 class LegalViolationAlert:
-    """Comprehensive legal violation alert structure."""
-    violation_id: str
+    """Comprehensive legal violation alert structure."""    violation_id: str
     violation_type: ViolationType
     severity: ViolationSeverity
     detected_at: datetime
@@ -127,8 +120,7 @@ class LegalViolationAlert:
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice structure."""
-    notice_id: str
+    """DMCA takedown notice structure."""    notice_id: str
     issued_date: datetime
     copyright_owner: Dict[str, Any]
     infringing_content: Dict[str, Any]
@@ -144,8 +136,7 @@ class DMCANotice:
 
 @dataclass
 class LegalPrecedent:
-    """Legal precedent and case law reference."""
-    case_name: str
+    """Legal precedent and case law reference."""    case_name: str
     jurisdiction: LegalJurisdiction
     year: int
     citation: str
@@ -155,16 +146,13 @@ class LegalPrecedent:
     key_factors: List[str]
 
 class LegalViolationCrawler(BasePlatformCrawler):
-    """
-    Enterprise-grade legal violation surveillance crawler.
+    """    Enterprise-grade legal violation surveillance crawler.
     
     Provides comprehensive legal monitoring, compliance checking, and automated
     violation detection with sophisticated legal analysis capabilities.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any], platform_apis: PlatformAPIManager):
-        """Initialize legal violation crawler with advanced legal analysis."""
-        super().__init__(config)
+        """Initialize legal violation crawler with advanced legal analysis."""        super().__init__(config)
         self.platform_apis = platform_apis
         self.supported_platforms = [
             PlatformType.YOUTUBE, PlatformType.TIKTOK, PlatformType.INSTAGRAM,
@@ -195,8 +183,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
     async def scan_legal_violations(self, 
                                    content_fingerprints: List[str],
                                    platforms: Optional[List[PlatformType]] = None) -> List[LegalViolationAlert]:
-        """
-        Comprehensive legal violation scanning across specified platforms.
+        """        Comprehensive legal violation scanning across specified platforms.
         
         Args:
             content_fingerprints: List of content fingerprints to monitor
@@ -204,8 +191,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
             
         Returns:
             List of legal violation alerts with comprehensive analysis
-        """
-        if platforms is None:
+        """        if platforms is None:
             platforms = self.supported_platforms
             
         all_violations = []
@@ -236,8 +222,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
     async def _scan_platform_violations(self, 
                                        fingerprint: str, 
                                        platform: PlatformType) -> List[LegalViolationAlert]:
-        """Scan specific platform for legal violations."""
-        violations = []
+        """Scan specific platform for legal violations."""        violations = []
         
         # Platform-specific violation detection
         if platform == PlatformType.YOUTUBE:
@@ -258,8 +243,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _scan_youtube_violations(self, fingerprint: str) -> List[LegalViolationAlert]:
-        """Scan YouTube for copyright and policy violations."""
-        violations = []
+        """Scan YouTube for copyright and policy violations."""        violations = []
         
         try:
             # Search for potential matches using YouTube API
@@ -287,8 +271,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _scan_tiktok_violations(self, fingerprint: str) -> List[LegalViolationAlert]:
-        """Scan TikTok for content violations and unauthorized usage."""
-        violations = []
+        """Scan TikTok for content violations and unauthorized usage."""        violations = []
         
         try:
             # TikTok content discovery and analysis
@@ -314,8 +297,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _scan_instagram_violations(self, fingerprint: str) -> List[LegalViolationAlert]:
-        """Scan Instagram for copyright and trademark violations."""
-        violations = []
+        """Scan Instagram for copyright and trademark violations."""        violations = []
         
         try:
             # Instagram content analysis
@@ -340,8 +322,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _scan_facebook_violations(self, fingerprint: str) -> List[LegalViolationAlert]:
-        """Scan Facebook for intellectual property violations."""
-        violations = []
+        """Scan Facebook for intellectual property violations."""        violations = []
         
         try:
             # Facebook content monitoring
@@ -355,8 +336,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _scan_twitter_violations(self, fingerprint: str) -> List[LegalViolationAlert]:
-        """Scan Twitter for content theft and unauthorized sharing."""
-        violations = []
+        """Scan Twitter for content theft and unauthorized sharing."""        violations = []
         
         try:
             # Twitter API v2 search for content violations
@@ -382,8 +362,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _scan_spotify_violations(self, fingerprint: str) -> List[LegalViolationAlert]:
-        """Scan Spotify for unauthorized music usage and licensing violations."""
-        violations = []
+        """Scan Spotify for unauthorized music usage and licensing violations."""        violations = []
         
         try:
             # Spotify content analysis for licensing compliance
@@ -411,8 +390,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
     async def _scan_generic_platform_violations(self, 
                                                fingerprint: str, 
                                                platform: PlatformType) -> List[LegalViolationAlert]:
-        """Generic platform violation scanning for unsupported platforms."""
-        violations = []
+        """Generic platform violation scanning for unsupported platforms."""        violations = []
         
         try:
             # Generic content analysis approach
@@ -425,8 +403,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _analyze_youtube_content(self, video: Dict, fingerprint: str) -> Optional[LegalViolationAlert]:
-        """Analyze YouTube video for potential violations."""
-        # Content similarity analysis
+        """Analyze YouTube video for potential violations."""        # Content similarity analysis
         similarity_score = await self._calculate_content_similarity(video, fingerprint)
         
         if similarity_score >= self.legal_thresholds['similarity_threshold']:
@@ -459,8 +436,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return None
     
     async def _analyze_tiktok_content(self, video: Dict, fingerprint: str) -> Optional[LegalViolationAlert]:
-        """Analyze TikTok video for potential violations."""
-        similarity_score = await self._calculate_content_similarity(video, fingerprint)
+        """Analyze TikTok video for potential violations."""        similarity_score = await self._calculate_content_similarity(video, fingerprint)
         
         if similarity_score >= self.legal_thresholds['similarity_threshold']:
             violation = LegalViolationAlert(
@@ -492,8 +468,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return None
     
     async def _analyze_instagram_content(self, media: Dict, fingerprint: str) -> Optional[LegalViolationAlert]:
-        """Analyze Instagram content for potential violations."""
-        similarity_score = await self._calculate_content_similarity(media, fingerprint)
+        """Analyze Instagram content for potential violations."""        similarity_score = await self._calculate_content_similarity(media, fingerprint)
         
         if similarity_score >= self.legal_thresholds['similarity_threshold']:
             violation = LegalViolationAlert(
@@ -525,8 +500,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return None
     
     async def _analyze_twitter_content(self, tweet: Dict, fingerprint: str) -> Optional[LegalViolationAlert]:
-        """Analyze Twitter content for potential violations."""
-        similarity_score = await self._calculate_content_similarity(tweet, fingerprint)
+        """Analyze Twitter content for potential violations."""        similarity_score = await self._calculate_content_similarity(tweet, fingerprint)
         
         if similarity_score >= self.legal_thresholds['similarity_threshold']:
             violation = LegalViolationAlert(
@@ -558,8 +532,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return None
     
     async def _analyze_spotify_content(self, track: Dict, fingerprint: str) -> Optional[LegalViolationAlert]:
-        """Analyze Spotify track for potential licensing violations."""
-        similarity_score = await self._calculate_content_similarity(track, fingerprint)
+        """Analyze Spotify track for potential licensing violations."""        similarity_score = await self._calculate_content_similarity(track, fingerprint)
         
         if similarity_score >= self.legal_thresholds['similarity_threshold']:
             violation = LegalViolationAlert(
@@ -591,8 +564,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return None
     
     async def _perform_legal_analysis(self, violation: LegalViolationAlert) -> LegalViolationAlert:
-        """Perform comprehensive legal analysis on detected violation."""
-        # Enhanced legal analysis
+        """Perform comprehensive legal analysis on detected violation."""        # Enhanced legal analysis
         violation.case_strength_score = await self._calculate_case_strength(violation)
         violation.legal_precedents = await self._find_relevant_precedents(violation)
         violation.recommended_actions = await self._generate_recommended_actions(violation)
@@ -601,8 +573,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violation
     
     async def _calculate_content_similarity(self, content: Dict, fingerprint: str) -> float:
-        """Calculate content similarity score using advanced algorithms."""
-        # Placeholder for advanced similarity calculation
+        """Calculate content similarity score using advanced algorithms."""        # Placeholder for advanced similarity calculation
         # Would integrate with ML models and content analysis systems
         
         # Simulate similarity analysis based on content attributes
@@ -618,8 +589,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return min(base_similarity, 1.0)
     
     def _determine_violation_severity(self, similarity_score: float) -> ViolationSeverity:
-        """Determine violation severity based on similarity and other factors."""
-        if similarity_score >= 0.95:
+        """Determine violation severity based on similarity and other factors."""        if similarity_score >= 0.95:
             return ViolationSeverity.CRITICAL
         elif similarity_score >= 0.90:
             return ViolationSeverity.HIGH
@@ -631,8 +601,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
             return ViolationSeverity.NEGLIGIBLE
     
     async def _analyze_fair_use(self, content: Dict) -> Dict[str, Any]:
-        """Analyze content for fair use considerations."""
-        fair_use_factors = {
+        """Analyze content for fair use considerations."""        fair_use_factors = {
             "purpose_character": 0.5,    # Purpose and character of use
             "nature_work": 0.7,          # Nature of copyrighted work
             "amount_substantiality": 0.8, # Amount and substantiality used
@@ -650,8 +619,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         }
     
     async def _collect_youtube_evidence(self, video: Dict) -> Dict[str, Any]:
-        """Collect evidence package for YouTube violations."""
-        return {
+        """Collect evidence package for YouTube violations."""        return {
             "screenshots": [f"screenshot_{video['id']['videoId']}.png"],
             "metadata": {
                 "video_id": video['id']['videoId'],
@@ -664,8 +632,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         }
     
     async def _collect_tiktok_evidence(self, video: Dict) -> Dict[str, Any]:
-        """Collect evidence package for TikTok violations."""
-        return {
+        """Collect evidence package for TikTok violations."""        return {
             "screenshots": [f"screenshot_{video.get('video_id', 'unknown')}.png"],
             "metadata": {
                 "video_id": video.get('video_id'),
@@ -678,8 +645,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         }
     
     async def _collect_instagram_evidence(self, media: Dict) -> Dict[str, Any]:
-        """Collect evidence package for Instagram violations."""
-        return {
+        """Collect evidence package for Instagram violations."""        return {
             "screenshots": [f"screenshot_{media.get('id', 'unknown')}.png"],
             "metadata": {
                 "media_id": media.get('id'),
@@ -692,8 +658,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         }
     
     async def _collect_twitter_evidence(self, tweet: Dict) -> Dict[str, Any]:
-        """Collect evidence package for Twitter violations."""
-        return {
+        """Collect evidence package for Twitter violations."""        return {
             "screenshots": [f"screenshot_{tweet.get('id', 'unknown')}.png"],
             "metadata": {
                 "tweet_id": tweet.get('id'),
@@ -707,8 +672,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         }
     
     async def _collect_spotify_evidence(self, track: Dict) -> Dict[str, Any]:
-        """Collect evidence package for Spotify violations."""
-        return {
+        """Collect evidence package for Spotify violations."""        return {
             "metadata": {
                 "track_id": track.get('id'),
                 "name": track.get('name'),
@@ -721,8 +685,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         }
     
     async def _check_youtube_policies(self, video: Dict) -> List[str]:
-        """Check YouTube platform policy violations."""
-        violations = []
+        """Check YouTube platform policy violations."""        violations = []
         
         # Check for common YouTube policy violations
         title = video.get('snippet', {}).get('title', '').lower()
@@ -737,8 +700,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _check_tiktok_policies(self, video: Dict) -> List[str]:
-        """Check TikTok platform policy violations."""
-        violations = []
+        """Check TikTok platform policy violations."""        violations = []
         
         # Check for TikTok policy violations
         description = video.get('desc', '').lower()
@@ -749,8 +711,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _check_instagram_policies(self, media: Dict) -> List[str]:
-        """Check Instagram platform policy violations."""
-        violations = []
+        """Check Instagram platform policy violations."""        violations = []
         
         # Check for Instagram policy violations
         caption = media.get('caption', {})
@@ -763,8 +724,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _check_twitter_policies(self, tweet: Dict) -> List[str]:
-        """Check Twitter platform policy violations."""
-        violations = []
+        """Check Twitter platform policy violations."""        violations = []
         
         # Check for Twitter policy violations
         text = tweet.get('text', '').lower()
@@ -775,8 +735,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _check_spotify_policies(self, track: Dict) -> List[str]:
-        """Check Spotify platform policy violations."""
-        violations = []
+        """Check Spotify platform policy violations."""        violations = []
         
         # Check for Spotify licensing violations
         # Note: Spotify violations are typically licensing-related
@@ -786,8 +745,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return violations
     
     async def _calculate_case_strength(self, violation: LegalViolationAlert) -> float:
-        """Calculate legal case strength score."""
-        strength_factors = {
+        """Calculate legal case strength score."""        strength_factors = {
             "copyright_strength": violation.copyright_strength * 0.3,
             "similarity_score": violation.similarity_score * 0.25,
             "evidence_quality": len(violation.evidence_package) / 10 * 0.2,
@@ -799,8 +757,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return min(total_strength, 1.0)
     
     async def _find_relevant_precedents(self, violation: LegalViolationAlert) -> List[str]:
-        """Find relevant legal precedents for the violation."""
-        precedents = []
+        """Find relevant legal precedents for the violation."""        precedents = []
         
         # Sample precedents based on violation type
         if violation.violation_type == ViolationType.COPYRIGHT_INFRINGEMENT:
@@ -819,8 +776,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return precedents[:3]  # Return top 3 most relevant
     
     async def _generate_recommended_actions(self, violation: LegalViolationAlert) -> List[str]:
-        """Generate recommended legal actions based on violation analysis."""
-        actions = []
+        """Generate recommended legal actions based on violation analysis."""        actions = []
         
         if violation.severity == ViolationSeverity.CRITICAL:
             actions.extend([
@@ -846,8 +802,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return actions
     
     async def _estimate_damages(self, violation: LegalViolationAlert) -> float:
-        """Estimate potential damages from the violation."""
-        base_damages = 1000.0  # Base statutory damages
+        """Estimate potential damages from the violation."""        base_damages = 1000.0  # Base statutory damages
         
         # Factor in violation severity
         severity_multiplier = {
@@ -866,8 +821,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return estimated_damages
     
     async def generate_dmca_notice(self, violation: LegalViolationAlert, copyright_owner: Dict[str, Any]) -> DMCANotice:
-        """Generate DMCA takedown notice for the violation."""
-        notice_id = f"dmca_{violation.violation_id}_{int(datetime.now().timestamp())}"
+        """Generate DMCA takedown notice for the violation."""        notice_id = f"dmca_{violation.violation_id}_{int(datetime.now().timestamp())}"
         
         notice_text = await self._generate_dmca_text(violation, copyright_owner)
         
@@ -889,9 +843,7 @@ class LegalViolationCrawler(BasePlatformCrawler):
         return dmca_notice
     
     async def _generate_dmca_text(self, violation: LegalViolationAlert, copyright_owner: Dict[str, Any]) -> str:
-        """Generate DMCA notice text."""
-        template = """
-DMCA TAKEDOWN NOTICE
+        """Generate DMCA notice text."""        template = """DMCA TAKEDOWN NOTICE
 
 To: {platform} Copyright Agent
 
@@ -921,8 +873,7 @@ Phone: {owner_phone}
 
 Signature: {owner_signature}
 Date: {notice_date}
-        """
-        
+        """        
         return template.format(
             platform=violation.platform.title(),
             owner_name=copyright_owner.get('name', 'Copyright Owner'),
@@ -939,15 +890,13 @@ Date: {notice_date}
         )
 
 class LegalAnalyzer:
-    """Advanced legal analysis engine for violation assessment."""
-    
+    """Advanced legal analysis engine for violation assessment."""    
     def __init__(self):
         self.legal_databases = {}
         self.analysis_models = {}
         
     async def analyze_violation_strength(self, violation: LegalViolationAlert) -> Dict[str, Any]:
-        """Analyze legal strength of violation case."""
-        return {
+        """Analyze legal strength of violation case."""        return {
             "copyright_validity": 0.9,
             "infringement_evidence": 0.85,
             "fair_use_defense": 0.3,
@@ -955,72 +904,58 @@ class LegalAnalyzer:
         }
 
 class DMCANoticeGenerator:
-    """Automated DMCA notice generation system."""
-    
+    """Automated DMCA notice generation system."""    
     def __init__(self):
         self.templates = {}
         self.delivery_systems = {}
         
     async def generate_notice(self, violation: LegalViolationAlert) -> str:
-        """Generate formatted DMCA takedown notice."""
-        return "DMCA Notice Template"
+        """Generate formatted DMCA takedown notice."""        return "DMCA Notice Template"
 
 class LegalPrecedentMatcher:
-    """Legal precedent matching and case law analysis system."""
-    
+    """Legal precedent matching and case law analysis system."""    
     def __init__(self):
         self.precedent_database = {}
         
     async def find_precedents(self, violation: LegalViolationAlert) -> List[LegalPrecedent]:
-        """Find relevant legal precedents."""
-        return []
+        """Find relevant legal precedents."""        return []
 
 class EvidenceCollector:
-    """Legal-grade evidence collection and preservation system."""
-    
+    """Legal-grade evidence collection and preservation system."""    
     def __init__(self):
         self.collection_tools = {}
         
     async def collect_evidence(self, violation: LegalViolationAlert) -> Dict[str, Any]:
-        """Collect comprehensive evidence package."""
-        return {"evidence": "collected"}
+        """Collect comprehensive evidence package."""        return {"evidence": "collected"}
 
 class ComplianceChecker:
-    """Platform compliance and policy violation checker."""
-    
+    """Platform compliance and policy violation checker."""    
     def __init__(self):
         self.policy_databases = {}
         
     async def check_compliance(self, content: Dict, platform: str) -> List[str]:
-        """Check platform-specific compliance violations."""
-        return []
+        """Check platform-specific compliance violations."""        return []
 
 class CopyrightDatabase:
-    """Copyright registration and ownership database."""
-    
+    """Copyright registration and ownership database."""    
     def __init__(self):
         self.registrations = {}
         
     async def verify_ownership(self, content_id: str) -> Dict[str, Any]:
-        """Verify copyright ownership."""
-        return {"verified": True}
+        """Verify copyright ownership."""        return {"verified": True}
 
 class PlatformPolicyDatabase:
-    """Platform-specific policy and terms of service database."""
-    
+    """Platform-specific policy and terms of service database."""    
     def __init__(self):
         self.policies = {}
         
     async def get_policy_violations(self, platform: str, content: Dict) -> List[str]:
-        """Get platform policy violations."""
-        return []
+        """Get platform policy violations."""        return []
 
 class LegalTemplateManager:
-    """Legal document template management system."""
-    
+    """Legal document template management system."""    
     def __init__(self):
         self.templates = {}
         
     async def get_template(self, document_type: str) -> str:
-        """Get legal document template."""
-        return "Template content"
+        """Get legal document template."""        return "Template content"

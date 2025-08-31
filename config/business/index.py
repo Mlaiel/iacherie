@@ -1,5 +1,4 @@
-"""
-Business Configuration Index
+"""Business Configuration Index
 ============================
 
 Central index and registry for all business configuration modules and components.
@@ -15,7 +14,6 @@ from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will result in leg
 
 Contact: mlaiel@live.de for licensing and collaboration inquiries.
 """
-
 from typing import Dict, List, Type, Any, Optional
 from dataclasses import dataclass
 from datetime import datetime
@@ -33,8 +31,7 @@ from .compliance_config import ComplianceConfig
 
 @dataclass
 class ConfigurationModule:
-    """Configuration module metadata."""
-    name: str
+    """Configuration module metadata."""    name: str
     class_ref: Type
     description: str
     version: str
@@ -46,11 +43,9 @@ class ConfigurationModule:
 
 
 class BusinessConfigIndex:
-    """
-    Central registry and index for all business configuration modules.
+    """    Central registry and index for all business configuration modules.
     Provides unified access, discovery, and management of configuration components.
     """
-
     # Registry of all configuration modules
     CONFIGURATION_MODULES: Dict[str, ConfigurationModule] = {
         "workflow": ConfigurationModule(
@@ -173,40 +168,34 @@ class BusinessConfigIndex:
 
     @classmethod
     def get_module(cls, module_name: str) -> Optional[ConfigurationModule]:
-        """Get configuration module by name."""
-        return cls.CONFIGURATION_MODULES.get(module_name)
+        """Get configuration module by name."""        return cls.CONFIGURATION_MODULES.get(module_name)
 
     @classmethod
     def get_module_class(cls, module_name: str) -> Optional[Type]:
-        """Get configuration class by module name."""
-        module = cls.get_module(module_name)
+        """Get configuration class by module name."""        module = cls.get_module(module_name)
         return module.class_ref if module else None
 
     @classmethod
     def list_modules(cls, category: Optional[str] = None) -> List[str]:
-        """List all configuration modules, optionally filtered by category."""
-        if category:
+        """List all configuration modules, optionally filtered by category."""        if category:
             return cls.CATEGORIES.get(category, [])
         return list(cls.CONFIGURATION_MODULES.keys())
 
     @classmethod
     def get_modules_by_category(cls, category: str) -> Dict[str, ConfigurationModule]:
-        """Get all modules in a specific category."""
-        module_names = cls.CATEGORIES.get(category, [])
+        """Get all modules in a specific category."""        module_names = cls.CATEGORIES.get(category, [])
         return {name: cls.CONFIGURATION_MODULES[name] for name in module_names}
 
     @classmethod
     def get_dependency_graph(cls) -> Dict[str, List[str]]:
-        """Get dependency graph of all modules."""
-        return {
+        """Get dependency graph of all modules."""        return {
             name: module.dependencies 
             for name, module in cls.CONFIGURATION_MODULES.items()
         }
 
     @classmethod
     def get_initialization_order(cls) -> List[str]:
-        """Get recommended module initialization order based on dependencies."""
-        # Topological sort of dependency graph
+        """Get recommended module initialization order based on dependencies."""        # Topological sort of dependency graph
         visited = set()
         temp_visited = set()
         order = []
@@ -236,8 +225,7 @@ class BusinessConfigIndex:
 
     @classmethod
     def validate_system_integrity(cls) -> Dict[str, Any]:
-        """Validate the integrity of the configuration system."""
-        validation_results = {
+        """Validate the integrity of the configuration system."""        validation_results = {
             "valid": True,
             "errors": [],
             "warnings": [],
@@ -281,8 +269,7 @@ class BusinessConfigIndex:
 
     @classmethod
     def get_system_statistics(cls) -> Dict[str, Any]:
-        """Get comprehensive system statistics."""
-        stats = {
+        """Get comprehensive system statistics."""        stats = {
             "modules": {
                 "total": len(cls.CONFIGURATION_MODULES),
                 "by_category": {
@@ -336,8 +323,7 @@ class BusinessConfigIndex:
 
     @classmethod
     def generate_documentation_index(cls) -> Dict[str, Any]:
-        """Generate documentation index for all modules."""
-        doc_index = {
+        """Generate documentation index for all modules."""        doc_index = {
             "system": cls.SYSTEM_INFO,
             "modules": {},
             "categories": {},
@@ -374,8 +360,7 @@ class BusinessConfigIndex:
 
     @classmethod
     def _get_category_description(cls, category: str) -> str:
-        """Get description for a category."""
-        descriptions = {
+        """Get description for a category."""        descriptions = {
             "core": "Essential system configuration modules required for basic platform operation",
             "security": "Security-related configuration including access control and compliance",
             "business": "Business logic and workflow configuration modules",
@@ -391,20 +376,16 @@ configuration_index = BusinessConfigIndex()
 
 # Quick access functions
 def get_config_class(module_name: str) -> Optional[Type]:
-    """Quick access function to get configuration class."""
-    return BusinessConfigIndex.get_module_class(module_name)
+    """Quick access function to get configuration class."""    return BusinessConfigIndex.get_module_class(module_name)
 
 def list_config_modules(category: Optional[str] = None) -> List[str]:
-    """Quick access function to list configuration modules."""
-    return BusinessConfigIndex.list_modules(category)
+    """Quick access function to list configuration modules."""    return BusinessConfigIndex.list_modules(category)
 
 def validate_config_system() -> Dict[str, Any]:
-    """Quick access function to validate configuration system."""
-    return BusinessConfigIndex.validate_system_integrity()
+    """Quick access function to validate configuration system."""    return BusinessConfigIndex.validate_system_integrity()
 
 def get_system_info() -> Dict[str, Any]:
-    """Quick access function to get system information."""
-    return BusinessConfigIndex.SYSTEM_INFO.copy()
+    """Quick access function to get system information."""    return BusinessConfigIndex.SYSTEM_INFO.copy()
 
 # Module exports
 __all__ = [

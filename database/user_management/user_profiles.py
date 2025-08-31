@@ -1,5 +1,4 @@
-"""
-User Profiles Database Models and Operations
+"""User Profiles Database Models and Operations
 
 Gestion complète des profils utilisateurs avec support multi-tenant
 et intégration IA pour personnalisation et recommandations.
@@ -14,7 +13,6 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
-
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -31,8 +29,7 @@ Base = declarative_base()
 
 
 class UserType(PyEnum):
-    """Types d'utilisateurs dans la plateforme."""
-    INDIVIDUAL = "individual"
+    """Types d'utilisateurs dans la plateforme."""    INDIVIDUAL = "individual"
     BUSINESS = "business"
     ENTERPRISE = "enterprise"
     CREATOR = "creator"
@@ -41,8 +38,7 @@ class UserType(PyEnum):
 
 
 class UserStatus(PyEnum):
-    """Statuts possibles des utilisateurs."""
-    PENDING = "pending"
+    """Statuts possibles des utilisateurs."""    PENDING = "pending"
     ACTIVE = "active"
     INACTIVE = "inactive"
     SUSPENDED = "suspended"
@@ -51,8 +47,7 @@ class UserStatus(PyEnum):
 
 
 class OnboardingStep(PyEnum):
-    """Étapes du processus d'onboarding."""
-    REGISTRATION = "registration"
+    """Étapes du processus d'onboarding."""    REGISTRATION = "registration"
     EMAIL_VERIFICATION = "email_verification"
     PROFILE_SETUP = "profile_setup"
     CREATOR_SETUP = "creator_setup"
@@ -62,19 +57,16 @@ class OnboardingStep(PyEnum):
 
 
 class NotificationPreference(PyEnum):
-    """Préférences de notification."""
-    ALL = "all"
+    """Préférences de notification."""    ALL = "all"
     IMPORTANT_ONLY = "important_only"
     MINIMAL = "minimal"
     DISABLED = "disabled"
 
 
 class User(Base):
-    """
-    Modèle principal des utilisateurs avec support multi-tenant.
+    """    Modèle principal des utilisateurs avec support multi-tenant.
     Intègre l'IA pour personnalisation et recommandations.
-    """
-    __tablename__ = "users"
+    """    __tablename__ = "users"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -150,27 +142,22 @@ class User(Base):
     
     @property
     def full_name(self) -> str:
-        """Retourne le nom complet de l'utilisateur."""
-        if self.first_name and self.last_name:
+        """Retourne le nom complet de l'utilisateur."""        if self.first_name and self.last_name:
             return f"{self.first_name} {self.last_name}"
         return self.display_name or self.username
     
     @property
     def is_creator(self) -> bool:
-        """Vérifie si l'utilisateur est un créateur."""
-        return self.creator_account is not None
+        """Vérifie si l'utilisateur est un créateur."""        return self.creator_account is not None
     
     @property
     def avatar_hash(self) -> str:
-        """Génère un hash pour l'avatar par défaut."""
-        return hashlib.md5(self.email.encode()).hexdigest()
+        """Génère un hash pour l'avatar par défaut."""        return hashlib.md5(self.email.encode()).hexdigest()
 
 
 class UserProfile(Base):
-    """
-    Profil détaillé de l'utilisateur avec informations personnelles et professionnelles.
-    """
-    __tablename__ = "user_profiles"
+    """    Profil détaillé de l'utilisateur avec informations personnelles et professionnelles.
+    """    __tablename__ = "user_profiles"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.id"), nullable=False, unique=True)
@@ -227,10 +214,8 @@ class UserProfile(Base):
 
 
 class UserActivity(Base):
-    """
-    Suivi des activités utilisateur pour analytics et personnalisation IA.
-    """
-    __tablename__ = "user_activities"
+    """    Suivi des activités utilisateur pour analytics et personnalisation IA.
+    """    __tablename__ = "user_activities"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.id"), nullable=False)
@@ -274,10 +259,8 @@ class UserActivity(Base):
 
 
 class UserSession(Base):
-    """
-    Gestion des sessions utilisateur avec analytics détaillés.
-    """
-    __tablename__ = "user_sessions"
+    """    Gestion des sessions utilisateur avec analytics détaillés.
+    """    __tablename__ = "user_sessions"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.id"), nullable=False)
@@ -322,8 +305,7 @@ class UserSession(Base):
     user = relationship("User", back_populates="sessions")
 
     def end_session(self):
-        """Terminer la session."""
-        self.ended_at = datetime.utcnow()
+        """Terminer la session."""        self.ended_at = datetime.utcnow()
         self.is_active = False
         if self.started_at:
             self.duration_seconds = int((self.ended_at - self.started_at).total_seconds())
@@ -333,10 +315,8 @@ class UserSession(Base):
 
 
 class UserSecurityLog(Base):
-    """
-    Logs de sécurité pour traçabilité et détection d'anomalies.
-    """
-    __tablename__ = "user_security_logs"
+    """    Logs de sécurité pour traçabilité et détection d'anomalies.
+    """    __tablename__ = "user_security_logs"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.id"), nullable=False)
@@ -374,10 +354,8 @@ class UserSecurityLog(Base):
 
 
 class UserAIProfile(Base):
-    """
-    Profil IA pour personnalisation avancée et recommandations.
-    """
-    __tablename__ = "user_ai_profiles"
+    """    Profil IA pour personnalisation avancée et recommandations.
+    """    __tablename__ = "user_ai_profiles"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     user_id = Column(String, ForeignKey("users.id"), nullable=False, unique=True)
@@ -418,8 +396,7 @@ class UserAIProfile(Base):
     user = relationship("User", back_populates="ai_profile")
 
     def update_embeddings(self, content_data: Dict[str, Any]):
-        """Mettre à jour les embeddings basés sur les nouvelles données."""
-        # Implémentation simplifiée - à enrichir avec ML réel
+        """Mettre à jour les embeddings basés sur les nouvelles données."""        # Implémentation simplifiée - à enrichir avec ML réel
         self.updated_at = datetime.utcnow()
 
     def __repr__(self):
@@ -427,16 +404,13 @@ class UserAIProfile(Base):
 
 
 class UserRepository:
-    """
-    Repository pour la gestion des utilisateurs avec fonctionnalités avancées.
-    """
-    
+    """    Repository pour la gestion des utilisateurs avec fonctionnalités avancées.
+    """    
     def __init__(self, db_session: Session):
         self.db = db_session
     
     def create_user(self, user_data: Dict[str, Any]) -> User:
-        """Créer un nouvel utilisateur avec profil complet."""
-        try:
+        """Créer un nouvel utilisateur avec profil complet."""        try:
             # Vérifier l'unicité de l'email et du username
             existing_user = self.db.query(User).filter(
                 (User.email == user_data['email']) | 
@@ -471,16 +445,13 @@ class UserRepository:
             raise
     
     def get_user_by_email(self, email: str) -> Optional[User]:
-        """Récupérer un utilisateur par email."""
-        return self.db.query(User).filter(User.email == email).first()
+        """Récupérer un utilisateur par email."""        return self.db.query(User).filter(User.email == email).first()
     
     def get_user_by_username(self, username: str) -> Optional[User]:
-        """Récupérer un utilisateur par nom d'utilisateur."""
-        return self.db.query(User).filter(User.username == username).first()
+        """Récupérer un utilisateur par nom d'utilisateur."""        return self.db.query(User).filter(User.username == username).first()
     
     def authenticate_user(self, identifier: str, password: str) -> Optional[User]:
-        """Authentifier un utilisateur par email/username et mot de passe."""
-        try:
+        """Authentifier un utilisateur par email/username et mot de passe."""        try:
             user = self.db.query(User).filter(
                 (User.email == identifier) | (User.username == identifier)
             ).first()
@@ -503,8 +474,7 @@ class UserRepository:
             return None
     
     def update_user_profile(self, user_id: str, profile_data: Dict[str, Any]) -> bool:
-        """Mettre à jour le profil utilisateur."""
-        try:
+        """Mettre à jour le profil utilisateur."""        try:
             user = self.db.query(User).filter(User.id == user_id).first()
             if not user:
                 return False
@@ -527,8 +497,7 @@ class UserRepository:
             return False
     
     def create_user_session(self, user_id: str, session_data: Dict[str, Any]) -> UserSession:
-        """Créer une nouvelle session utilisateur."""
-        try:
+        """Créer une nouvelle session utilisateur."""        try:
             session = UserSession(
                 user_id=user_id,
                 session_token=str(uuid.uuid4()),
@@ -546,8 +515,7 @@ class UserRepository:
             raise
     
     def log_user_activity(self, user_id: str, activity_type: str, activity_data: Dict[str, Any] = None) -> UserActivity:
-        """Enregistrer une activité utilisateur."""
-        try:
+        """Enregistrer une activité utilisateur."""        try:
             activity = UserActivity(
                 user_id=user_id,
                 activity_type=activity_type,
@@ -564,8 +532,7 @@ class UserRepository:
             raise
     
     def log_security_event(self, user_id: str, event_type: str, event_data: Dict[str, Any] = None) -> UserSecurityLog:
-        """Enregistrer un événement de sécurité."""
-        try:
+        """Enregistrer un événement de sécurité."""        try:
             security_log = UserSecurityLog(
                 user_id=user_id,
                 event_type=event_type,
@@ -582,8 +549,7 @@ class UserRepository:
             raise
     
     def get_user_analytics(self, user_id: str, days: int = 30) -> Dict[str, Any]:
-        """Obtenir les analytics d'un utilisateur."""
-        try:
+        """Obtenir les analytics d'un utilisateur."""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days)
             
@@ -628,8 +594,7 @@ class UserRepository:
             return {}
     
     def update_ai_profile(self, user_id: str, ai_data: Dict[str, Any]) -> bool:
-        """Mettre à jour le profil IA d'un utilisateur."""
-        try:
+        """Mettre à jour le profil IA d'un utilisateur."""        try:
             ai_profile = self.db.query(UserAIProfile).filter(
                 UserAIProfile.user_id == user_id
             ).first()
@@ -654,8 +619,7 @@ class UserRepository:
             return False
     
     def get_users_by_criteria(self, criteria: Dict[str, Any], limit: int = 100) -> List[User]:
-        """Rechercher des utilisateurs selon des critères."""
-        try:
+        """Rechercher des utilisateurs selon des critères."""        try:
             query = self.db.query(User)
             
             if 'user_type' in criteria:
@@ -681,8 +645,7 @@ class UserRepository:
             return []
     
     def _get_most_active_day(self, activities: List[UserActivity]) -> str:
-        """Déterminer le jour le plus actif."""
-        if not activities:
+        """Déterminer le jour le plus actif."""        if not activities:
             return "N/A"
         
         day_counts = {}
@@ -693,8 +656,7 @@ class UserRepository:
         return max(day_counts, key=day_counts.get) if day_counts else "N/A"
     
     def _calculate_engagement_score(self, activities: List[UserActivity], sessions: List[UserSession]) -> float:
-        """Calculer un score d'engagement utilisateur."""
-        if not activities and not sessions:
+        """Calculer un score d'engagement utilisateur."""        if not activities and not sessions:
             return 0.0
         
         # Score basé sur la fréquence et diversité d'activités
@@ -732,18 +694,15 @@ class UserRepository:
 
 
 class UserRepository:
-    """
-    Repository pattern pour les opérations sur les utilisateurs.
+    """    Repository pattern pour les opérations sur les utilisateurs.
     Implémentation professionnelle avec gestion d'erreurs et analytics.
-    """
-    
+    """    
     def __init__(self, session: Session):
         self.session = session
         self.logger = logging.getLogger(__name__)
     
     def create_user(self, user_data: Dict[str, Any]) -> User:
-        """
-        Crée un nouvel utilisateur avec validation complète.
+        """        Crée un nouvel utilisateur avec validation complète.
         
         Args:
             user_data: Données de l'utilisateur
@@ -754,8 +713,7 @@ class UserRepository:
         Raises:
             ValueError: Si les données sont invalides
             Exception: En cas d'erreur de création
-        """
-        try:
+        """        try:
             # Validation des données obligatoires
             required_fields = ['email', 'username']
             for field in required_fields:
@@ -799,20 +757,16 @@ class UserRepository:
             raise
     
     def get_user_by_id(self, user_id: str) -> Optional[User]:
-        """Récupère un utilisateur par son ID."""
-        return self.session.query(User).filter(User.id == user_id).first()
+        """Récupère un utilisateur par son ID."""        return self.session.query(User).filter(User.id == user_id).first()
     
     def get_user_by_email(self, email: str) -> Optional[User]:
-        """Récupère un utilisateur par son email."""
-        return self.session.query(User).filter(User.email == email.lower()).first()
+        """Récupère un utilisateur par son email."""        return self.session.query(User).filter(User.email == email.lower()).first()
     
     def get_user_by_username(self, username: str) -> Optional[User]:
-        """Récupère un utilisateur par son nom d'utilisateur."""
-        return self.session.query(User).filter(User.username == username).first()
+        """Récupère un utilisateur par son nom d'utilisateur."""        return self.session.query(User).filter(User.username == username).first()
     
     def update_user_status(self, user_id: str, status: UserStatus) -> bool:
-        """
-        Met à jour le statut d'un utilisateur.
+        """        Met à jour le statut d'un utilisateur.
         
         Args:
             user_id: ID de l'utilisateur
@@ -820,8 +774,7 @@ class UserRepository:
             
         Returns:
             bool: True si mis à jour avec succès
-        """
-        try:
+        """        try:
             user = self.get_user_by_id(user_id)
             if not user:
                 return False
@@ -839,8 +792,7 @@ class UserRepository:
             return False
     
     def complete_onboarding_step(self, user_id: str, step: OnboardingStep) -> bool:
-        """
-        Marque une étape d'onboarding comme complétée.
+        """        Marque une étape d'onboarding comme complétée.
         
         Args:
             user_id: ID de l'utilisateur
@@ -848,8 +800,7 @@ class UserRepository:
             
         Returns:
             bool: True si mis à jour avec succès
-        """
-        try:
+        """        try:
             user = self.get_user_by_id(user_id)
             if not user:
                 return False
@@ -869,8 +820,7 @@ class UserRepository:
             return False
     
     def track_user_activity(self, user_id: str, activity_data: Dict[str, Any]) -> bool:
-        """
-        Enregistre une activité utilisateur pour analytics.
+        """        Enregistre une activité utilisateur pour analytics.
         
         Args:
             user_id: ID de l'utilisateur
@@ -878,8 +828,7 @@ class UserRepository:
             
         Returns:
             bool: True si enregistré avec succès
-        """
-        try:
+        """        try:
             activity = UserActivity(
                 user_id=user_id,
                 activity_type=activity_data['activity_type'],
@@ -909,8 +858,7 @@ class UserRepository:
             return False
     
     def get_user_analytics(self, user_id: str, days: int = 30) -> Dict[str, Any]:
-        """
-        Retourne les analytics d'un utilisateur sur une période donnée.
+        """        Retourne les analytics d'un utilisateur sur une période donnée.
         
         Args:
             user_id: ID de l'utilisateur
@@ -918,8 +866,7 @@ class UserRepository:
             
         Returns:
             Dict[str, Any]: Analytics utilisateur
-        """
-        from datetime import timedelta
+        """        from datetime import timedelta
         
         start_date = datetime.utcnow() - timedelta(days=days)
         
@@ -959,8 +906,7 @@ class UserRepository:
         }
     
     def _get_most_used_platform(self, activities: List[UserActivity]) -> str:
-        """Helper pour déterminer la plateforme la plus utilisée."""
-        platform_counts = {}
+        """Helper pour déterminer la plateforme la plus utilisée."""        platform_counts = {}
         for activity in activities:
             platform = activity.platform or 'unknown'
             platform_counts[platform] = platform_counts.get(platform, 0) + 1

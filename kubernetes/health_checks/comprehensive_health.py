@@ -1,5 +1,4 @@
-"""
-Comprehensive Health Monitoring System
+"""Comprehensive Health Monitoring System
 Master health checker coordinating all subsystem health monitoring
 
 This module provides unified health monitoring by orchestrating:
@@ -19,7 +18,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
-
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -38,8 +36,7 @@ from .infrastructure_health import InfrastructureHealthChecker
 
 @dataclass
 class PlatformHealthSummary:
-    """Complete platform health summary"""
-    overall_status: str
+    """Complete platform health summary"""    overall_status: str
     overall_health_percentage: float
     total_services: int
     healthy_services: int
@@ -54,22 +51,18 @@ class PlatformHealthSummary:
 
 
 class ComprehensiveHealthChecker:
-    """
-    Master health monitoring system for IA Influencer Agent Platform
+    """    Master health monitoring system for IA Influencer Agent Platform
     
     Coordinates health checking across all platform subsystems and provides
     unified health reporting, alerting, and diagnostic capabilities.
     """
-
     def __init__(self, config: Dict[str, Any], app=None):
-        """
-        Initialize comprehensive health checker
+        """        Initialize comprehensive health checker
         
         Args:
             config: Complete platform configuration
             app: FastAPI application instance (optional)
-        """
-        self.config = config
+        """        self.config = config
         self.app = app
         self.logger = logging.getLogger(__name__)
         
@@ -93,13 +86,11 @@ class ComprehensiveHealthChecker:
         self._consecutive_failures = {}
 
     async def perform_comprehensive_health_check(self) -> PlatformHealthSummary:
-        """
-        Perform comprehensive health check across all platform subsystems
+        """        Perform comprehensive health check across all platform subsystems
         
         Returns:
             PlatformHealthSummary: Complete platform health status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         self.logger.info("Starting comprehensive platform health check")
         
         try:
@@ -183,8 +174,7 @@ class ComprehensiveHealthChecker:
             )
 
     def _calculate_subsystem_summary(self, results: List[HealthCheckResult]) -> Dict[str, Any]:
-        """Calculate health summary for a specific subsystem"""
-        if not results:
+        """Calculate health summary for a specific subsystem"""        if not results:
             return {
                 "status": HealthStatus.CRITICAL.value,
                 "health_percentage": 0.0,
@@ -244,8 +234,7 @@ class ComprehensiveHealthChecker:
 
     def _calculate_platform_summary(self, all_results: List[HealthCheckResult], 
                                    subsystem_summaries: Dict[str, Any]) -> PlatformHealthSummary:
-        """Calculate overall platform health summary"""
-        
+        """Calculate overall platform health summary"""        
         # Aggregate all service counts
         total_services = len(all_results)
         
@@ -304,8 +293,7 @@ class ComprehensiveHealthChecker:
     def _generate_recommendations(self, overall_status: HealthStatus, 
                                 subsystem_summaries: Dict[str, Any],
                                 status_counts: Dict[HealthStatus, int]) -> List[str]:
-        """Generate actionable recommendations based on health status"""
-        recommendations = []
+        """Generate actionable recommendations based on health status"""        recommendations = []
         
         # Critical status recommendations
         if overall_status == HealthStatus.CRITICAL:
@@ -354,8 +342,7 @@ class ComprehensiveHealthChecker:
         return recommendations[:8]  # Limit to top 8 recommendations
 
     def _update_health_history(self, summary: PlatformHealthSummary):
-        """Update health check history for trend analysis"""
-        history_entry = {
+        """Update health check history for trend analysis"""        history_entry = {
             "timestamp": summary.last_check_timestamp,
             "overall_status": summary.overall_status,
             "health_percentage": summary.overall_health_percentage,
@@ -372,13 +359,11 @@ class ComprehensiveHealthChecker:
             self._health_history = self._health_history[-max_entries:]
 
     async def get_health_status(self) -> Dict[str, Any]:
-        """
-        Get current health status without performing new checks
+        """        Get current health status without performing new checks
         
         Returns:
             Dict[str, Any]: Current health status and summary
-        """
-        if self._last_comprehensive_check is None:
+        """        if self._last_comprehensive_check is None:
             return {
                 "status": "no_data",
                 "message": "No health check data available. Run comprehensive check first.",
@@ -388,16 +373,14 @@ class ComprehensiveHealthChecker:
         return asdict(self._last_comprehensive_check)
 
     async def get_health_trends(self, hours: int = 24) -> Dict[str, Any]:
-        """
-        Get health trends and historical data
+        """        Get health trends and historical data
         
         Args:
             hours: Number of hours of history to return
         
         Returns:
             Dict[str, Any]: Health trends and metrics
-        """
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         # Filter history for requested time period
         filtered_history = [
@@ -430,16 +413,14 @@ class ComprehensiveHealthChecker:
         }
 
     async def get_subsystem_health(self, subsystem: str) -> Dict[str, Any]:
-        """
-        Get detailed health information for a specific subsystem
+        """        Get detailed health information for a specific subsystem
         
         Args:
             subsystem: Name of subsystem (core, database, ml_services, etc.)
         
         Returns:
             Dict[str, Any]: Detailed subsystem health information
-        """
-        checker_map = {
+        """        checker_map = {
             "core": self.core_checker,
             "database": self.database_checker,
             "ml_services": self.ml_checker,
@@ -479,13 +460,11 @@ class ComprehensiveHealthChecker:
             }
 
     async def check_service_readiness(self) -> Dict[str, Any]:
-        """
-        Perform quick readiness check for essential services
+        """        Perform quick readiness check for essential services
         
         Returns:
             Dict[str, Any]: Service readiness status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         essential_checks = []
         
@@ -522,8 +501,7 @@ class ComprehensiveHealthChecker:
         }
 
     async def cleanup_resources(self):
-        """Clean up health checker resources"""
-        try:
+        """Clean up health checker resources"""        try:
             await self.database_checker.cleanup_connections()
             self.logger.info("Health checker resources cleaned up successfully")
         except Exception as e:

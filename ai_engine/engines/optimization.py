@@ -1,5 +1,4 @@
-"""
-Performance Optimization Module for AI Engines
+"""Performance Optimization Module for AI Engines
 
 Enterprise-grade performance optimization, caching, and resource management
 for the IA-Influencer platform AI content processing engines.
@@ -32,7 +31,6 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 Business Logic: User Upload → AI Processing → Protection → SEO → Collaboration → Distribution
 """
-
 import asyncio
 import time
 import hashlib
@@ -55,8 +53,7 @@ from pathlib import Path
 
 
 class CacheStrategy(Enum):
-    """Cache eviction strategies"""
-    LRU = "lru"  # Least Recently Used
+    """Cache eviction strategies"""    LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     FIFO = "fifo"  # First In First Out
     TTL = "ttl"  # Time To Live
@@ -64,16 +61,14 @@ class CacheStrategy(Enum):
 
 
 class OptimizationLevel(Enum):
-    """Performance optimization levels"""
-    BASIC = "basic"
+    """Performance optimization levels"""    BASIC = "basic"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
     ULTRA = "ultra"
 
 
 class ResourceType(Enum):
-    """Types of system resources"""
-    CPU = "cpu"
+    """Types of system resources"""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -82,8 +77,7 @@ class ResourceType(Enum):
 
 @dataclass
 class CacheEntry:
-    """Cache entry with metadata"""
-    key: str
+    """Cache entry with metadata"""    key: str
     value: Any
     created_at: datetime
     last_accessed: datetime
@@ -96,8 +90,7 @@ class CacheEntry:
 
 @dataclass
 class PerformanceProfile:
-    """Performance optimization profile"""
-    name: str
+    """Performance optimization profile"""    name: str
     cache_size_mb: int
     max_concurrent_workers: int
     enable_compression: bool
@@ -108,11 +101,9 @@ class PerformanceProfile:
 
 
 class AdvancedCache:
-    """
-    Advanced caching system with multiple eviction strategies
+    """    Advanced caching system with multiple eviction strategies
     and intelligent cache management.
-    """
-    
+    """    
     def __init__(
         self,
         max_size_mb: int = 1024,
@@ -151,8 +142,7 @@ class AdvancedCache:
         self.logger = logging.getLogger(__name__)
         
     def get(self, key: str) -> Optional[Any]:
-        """Get value from cache"""
-        with self.lock:
+        """Get value from cache"""        with self.lock:
             entry = self.cache.get(key)
             
             if entry is None:
@@ -185,8 +175,7 @@ class AdvancedCache:
         priority: int = 1,
         metadata: Optional[Dict[str, Any]] = None
     ):
-        """Put value in cache"""
-        with self.lock:
+        """Put value in cache"""        with self.lock:
             # Calculate value size
             size_bytes = self._calculate_size(value)
             
@@ -224,24 +213,21 @@ class AdvancedCache:
             self.access_frequency[key] = 1
             
     def delete(self, key: str) -> bool:
-        """Delete entry from cache"""
-        with self.lock:
+        """Delete entry from cache"""        with self.lock:
             if key in self.cache:
                 self._remove_entry(key)
                 return True
             return False
             
     def clear(self):
-        """Clear all cache entries"""
-        with self.lock:
+        """Clear all cache entries"""        with self.lock:
             self.cache.clear()
             self.access_order.clear()
             self.access_frequency.clear()
             self.current_size_bytes = 0
             
     def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        with self.lock:
+        """Get cache statistics"""        with self.lock:
             total_requests = self.hits + self.misses
             hit_rate = (self.hits / total_requests * 100) if total_requests > 0 else 0
             
@@ -258,14 +244,12 @@ class AdvancedCache:
             }
             
     def _is_expired(self, entry: CacheEntry) -> bool:
-        """Check if cache entry is expired"""
-        if entry.ttl is None:
+        """Check if cache entry is expired"""        if entry.ttl is None:
             return False
         return (datetime.now() - entry.created_at).total_seconds() > entry.ttl
         
     def _calculate_size(self, value: Any) -> int:
-        """Calculate approximate size of value in bytes"""
-        try:
+        """Calculate approximate size of value in bytes"""        try:
             return len(pickle.dumps(value))
         except:
             # Fallback estimation
@@ -281,13 +265,11 @@ class AdvancedCache:
                 return 1024  # Default estimate
                 
     def _ensure_space(self, required_bytes: int):
-        """Ensure enough space in cache for new entry"""
-        while (self.current_size_bytes + required_bytes) > self.max_size_bytes and self.cache:
+        """Ensure enough space in cache for new entry"""        while (self.current_size_bytes + required_bytes) > self.max_size_bytes and self.cache:
             self._evict_entry()
             
     def _evict_entry(self):
-        """Evict entry based on strategy"""
-        if not self.cache:
+        """Evict entry based on strategy"""        if not self.cache:
             return
             
         if self.strategy == CacheStrategy.LRU:
@@ -321,8 +303,7 @@ class AdvancedCache:
         self.evictions += 1
         
     def _adaptive_eviction(self):
-        """Adaptive eviction based on access patterns"""
-        # Score entries based on multiple factors
+        """Adaptive eviction based on access patterns"""        # Score entries based on multiple factors
         scores = {}
         now = datetime.now()
         
@@ -345,8 +326,7 @@ class AdvancedCache:
         self._remove_entry(victim_key)
         
     def _remove_entry(self, key: str):
-        """Remove entry from cache and update tracking"""
-        if key in self.cache:
+        """Remove entry from cache and update tracking"""        if key in self.cache:
             entry = self.cache[key]
             self.current_size_bytes -= entry.size_bytes
             del self.cache[key]
@@ -358,8 +338,7 @@ class AdvancedCache:
             del self.access_frequency[key]
             
     def _start_maintenance_thread(self):
-        """Start background maintenance thread"""
-        def maintenance_worker():
+        """Start background maintenance thread"""        def maintenance_worker():
             while True:
                 try:
                     time.sleep(300)  # 5 minutes
@@ -373,15 +352,13 @@ class AdvancedCache:
         maintenance_thread.start()
         
     def _cleanup_expired(self):
-        """Remove expired entries"""
-        with self.lock:
+        """Remove expired entries"""        with self.lock:
             expired_keys = [k for k, v in self.cache.items() if self._is_expired(v)]
             for key in expired_keys:
                 self._remove_entry(key)
                 
     def _persist_cache(self):
-        """Persist cache to disk"""
-        try:
+        """Persist cache to disk"""        try:
             with open(self.persistence_file, 'wb') as f:
                 pickle.dump({
                     'cache': self.cache,
@@ -393,8 +370,7 @@ class AdvancedCache:
             self.logger.error(f"Cache persistence error: {str(e)}")
             
     def _load_cache(self):
-        """Load cache from disk"""
-        try:
+        """Load cache from disk"""        try:
             if os.path.exists(self.persistence_file):
                 with open(self.persistence_file, 'rb') as f:
                     data = pickle.load(f)
@@ -411,10 +387,8 @@ class AdvancedCache:
 
 
 class ResourceMonitor:
-    """
-    System resource monitoring and management.
-    """
-    
+    """    System resource monitoring and management.
+    """    
     def __init__(self, monitoring_interval: int = 30):
         self.monitoring_interval = monitoring_interval
         self.resource_history: Dict[ResourceType, List[Tuple[datetime, float]]] = defaultdict(list)
@@ -432,8 +406,7 @@ class ResourceMonitor:
         self._start_monitoring()
         
     def get_current_usage(self) -> Dict[ResourceType, float]:
-        """Get current resource usage"""
-        try:
+        """Get current resource usage"""        try:
             # CPU usage
             cpu_percent = psutil.cpu_percent(interval=1)
             
@@ -473,8 +446,7 @@ class ResourceMonitor:
             return {}
             
     def check_resource_limits(self) -> List[Dict[str, Any]]:
-        """Check if any resource limits are exceeded"""
-        alerts = []
+        """Check if any resource limits are exceeded"""        alerts = []
         current_usage = self.get_current_usage()
         
         for resource_type, usage in current_usage.items():
@@ -494,8 +466,7 @@ class ResourceMonitor:
         return alerts
         
     def get_resource_trends(self, hours: int = 24) -> Dict[ResourceType, Dict[str, float]]:
-        """Get resource usage trends"""
-        trends = {}
+        """Get resource usage trends"""        trends = {}
         cutoff_time = datetime.now() - timedelta(hours=hours)
         
         for resource_type, history in self.resource_history.items():
@@ -517,8 +488,7 @@ class ResourceMonitor:
         return trends
         
     def _start_monitoring(self):
-        """Start background resource monitoring"""
-        def monitoring_worker():
+        """Start background resource monitoring"""        def monitoring_worker():
             while True:
                 try:
                     current_usage = self.get_current_usage()
@@ -555,10 +525,8 @@ class ResourceMonitor:
 
 
 class PerformanceOptimizer:
-    """
-    Advanced performance optimization system for AI engines.
-    """
-    
+    """    Advanced performance optimization system for AI engines.
+    """    
     def __init__(
         self,
         profile: Optional[PerformanceProfile] = None,
@@ -593,8 +561,7 @@ class PerformanceOptimizer:
             self._start_auto_tuning()
             
     def _get_default_profile(self) -> PerformanceProfile:
-        """Get default performance profile"""
-        return PerformanceProfile(
+        """Get default performance profile"""        return PerformanceProfile(
             name="default",
             cache_size_mb=512,
             max_concurrent_workers=10,
@@ -615,10 +582,8 @@ class PerformanceOptimizer:
         content: Any,
         options: Dict[str, Any]
     ) -> Any:
-        """
-        Optimize content processing with caching, compression, and parallel execution.
-        """
-        start_time = time.time()
+        """        Optimize content processing with caching, compression, and parallel execution.
+        """        start_time = time.time()
         
         try:
             # Generate cache key
@@ -669,8 +634,7 @@ class PerformanceOptimizer:
         content: Any,
         options: Dict[str, Any]
     ) -> str:
-        """Generate cache key for processing request"""
-        try:
+        """Generate cache key for processing request"""        try:
             # Create content hash
             if isinstance(content, str):
                 content_hash = hashlib.md5(content.encode('utf-8')).hexdigest()
@@ -693,8 +657,7 @@ class PerformanceOptimizer:
             return f"{processing_function.__name__}:{hash(str(content))}:{hash(str(options))}"
             
     def _should_compress(self, content: Any) -> bool:
-        """Determine if content should be compressed"""
-        if isinstance(content, str):
+        """Determine if content should be compressed"""        if isinstance(content, str):
             return len(content) > 1024  # Compress text > 1KB
         elif isinstance(content, bytes):
             return len(content) > 10240  # Compress binary > 10KB
@@ -703,8 +666,7 @@ class PerformanceOptimizer:
         return False
         
     def _compress_content(self, content: Any) -> bytes:
-        """Compress content for processing"""
-        try:
+        """Compress content for processing"""        try:
             if isinstance(content, str):
                 content_bytes = content.encode('utf-8')
             elif isinstance(content, bytes):
@@ -724,8 +686,7 @@ class PerformanceOptimizer:
         content: Any,
         options: Dict[str, Any]
     ) -> str:
-        """Determine optimal execution strategy"""
-        
+        """Determine optimal execution strategy"""        
         # Check GPU availability and suitability
         if (self.profile.enable_gpu_acceleration and 
             self._is_gpu_suitable(processing_function, content)):
@@ -738,8 +699,7 @@ class PerformanceOptimizer:
         return "standard"
         
     def _is_gpu_suitable(self, processing_function: Callable, content: Any) -> bool:
-        """Check if GPU acceleration is suitable"""
-        # Check function name for GPU-suitable operations
+        """Check if GPU acceleration is suitable"""        # Check function name for GPU-suitable operations
         gpu_suitable_functions = [
             "generate", "process", "enhance", "transform", "analyze",
             "neural", "ml", "ai", "tensor", "matrix"
@@ -749,8 +709,7 @@ class PerformanceOptimizer:
         return any(keyword in function_name_lower for keyword in gpu_suitable_functions)
         
     def _is_parallel_suitable(self, processing_function: Callable, content: Any) -> bool:
-        """Check if parallel execution is suitable"""
-        # Check if content can be split for parallel processing
+        """Check if parallel execution is suitable"""        # Check if content can be split for parallel processing
         if isinstance(content, (list, tuple)) and len(content) > 1:
             return True
             
@@ -765,8 +724,7 @@ class PerformanceOptimizer:
         content: Any,
         options: Dict[str, Any]
     ) -> Any:
-        """Execute processing in standard mode"""
-        loop = asyncio.get_event_loop()
+        """Execute processing in standard mode"""        loop = asyncio.get_event_loop()
         
         if asyncio.iscoroutinefunction(processing_function):
             return await processing_function(content, options)
@@ -784,8 +742,7 @@ class PerformanceOptimizer:
         content: Any,
         options: Dict[str, Any]
     ) -> Any:
-        """Execute processing in parallel mode"""
-        
+        """Execute processing in parallel mode"""        
         # Split content for parallel processing
         content_chunks = self._split_content(content)
         
@@ -810,15 +767,13 @@ class PerformanceOptimizer:
         content: Any,
         options: Dict[str, Any]
     ) -> Any:
-        """Execute processing with GPU acceleration"""
-        # For now, fall back to standard execution
+        """Execute processing with GPU acceleration"""        # For now, fall back to standard execution
         # In a real implementation, this would use GPU libraries
         options["use_gpu"] = True
         return await self._execute_standard(processing_function, content, options)
         
     def _split_content(self, content: Any) -> List[Any]:
-        """Split content for parallel processing"""
-        if isinstance(content, (list, tuple)):
+        """Split content for parallel processing"""        if isinstance(content, (list, tuple)):
             # Split list/tuple into chunks
             chunk_size = max(1, len(content) // self.profile.max_concurrent_workers)
             return [content[i:i+chunk_size] for i in range(0, len(content), chunk_size)]
@@ -839,8 +794,7 @@ class PerformanceOptimizer:
         return [content]
         
     def _combine_results(self, results: List[Any], original_content: Any) -> Any:
-        """Combine parallel processing results"""
-        # Filter out exceptions
+        """Combine parallel processing results"""        # Filter out exceptions
         valid_results = [r for r in results if not isinstance(r, Exception)]
         
         if not valid_results:
@@ -861,8 +815,7 @@ class PerformanceOptimizer:
             return valid_results[0]  # Return first valid result
             
     def _calculate_cache_ttl(self, processing_function: Callable, result: Any) -> Optional[int]:
-        """Calculate appropriate cache TTL for result"""
-        
+        """Calculate appropriate cache TTL for result"""        
         # Base TTL on function type and result size
         base_ttl = 3600  # 1 hour
         
@@ -887,8 +840,7 @@ class PerformanceOptimizer:
         return base_ttl
         
     def _record_performance(self, function_name: str, execution_time: float, success: bool):
-        """Record performance metrics"""
-        metric = {
+        """Record performance metrics"""        metric = {
             "function": function_name,
             "execution_time": execution_time,
             "success": success,
@@ -905,8 +857,7 @@ class PerformanceOptimizer:
         ]
         
     def get_performance_report(self) -> Dict[str, Any]:
-        """Get comprehensive performance report"""
-        if not self.performance_history:
+        """Get comprehensive performance report"""        if not self.performance_history:
             return {"message": "No performance data available"}
             
         # Calculate statistics
@@ -953,8 +904,7 @@ class PerformanceOptimizer:
         }
         
     def _start_auto_tuning(self):
-        """Start automatic performance tuning"""
-        def tuning_worker():
+        """Start automatic performance tuning"""        def tuning_worker():
             while True:
                 try:
                     time.sleep(3600)  # Tune every hour
@@ -970,8 +920,7 @@ class PerformanceOptimizer:
         tuning_thread.start()
         
     def _perform_auto_tuning(self):
-        """Perform automatic performance tuning"""
-        try:
+        """Perform automatic performance tuning"""        try:
             # Analyze recent performance
             recent_metrics = [
                 m for m in self.performance_history 
@@ -1050,25 +999,21 @@ async def optimize_processing(
     content: Any,
     options: Optional[Dict[str, Any]] = None
 ) -> Any:
-    """Optimize content processing with global optimizer"""
-    return await performance_optimizer.optimize_processing(
+    """Optimize content processing with global optimizer"""    return await performance_optimizer.optimize_processing(
         processing_function, content, options or {}
     )
 
 
 def get_performance_report() -> Dict[str, Any]:
-    """Get performance report from global optimizer"""
-    return performance_optimizer.get_performance_report()
+    """Get performance report from global optimizer"""    return performance_optimizer.get_performance_report()
 
 
 def get_cache_stats() -> Dict[str, Any]:
-    """Get cache statistics"""
-    return performance_optimizer.cache.get_stats()
+    """Get cache statistics"""    return performance_optimizer.cache.get_stats()
 
 
 def get_resource_usage() -> Dict[ResourceType, float]:
-    """Get current resource usage"""
-    return performance_optimizer.resource_monitor.get_current_usage()
+    """Get current resource usage"""    return performance_optimizer.resource_monitor.get_current_usage()
 
 
 # Export all classes and functions

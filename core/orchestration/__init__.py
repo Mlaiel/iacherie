@@ -6,8 +6,7 @@ intelligent coordination across all business domains.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
-"""
-from .workflow_engine import WorkflowEngine
+"""from .workflow_engine import WorkflowEngine
 from .pipeline_coordinator import PipelineCoordinator
 from .task_scheduler import TaskScheduler
 from .resource_manager import ResourceManager

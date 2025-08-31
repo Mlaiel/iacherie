@@ -1,5 +1,4 @@
-"""
-Enterprise Single Sign-On (SSO) System
+"""Enterprise Single Sign-On (SSO) System
 ======================================
 
 Advanced enterprise SSO integration supporting SAML 2.0, OpenID Connect (OIDC),
@@ -14,7 +13,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 import asyncio
 import logging
 import json
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class AuthenticationProtocol(Enum):
-    """Authentication protocol types"""
-    SAML2 = "saml2"
+    """Authentication protocol types"""    SAML2 = "saml2"
     OIDC = "oidc"
     OAUTH2 = "oauth2"
     LDAP = "ldap"
@@ -53,16 +50,14 @@ class AuthenticationProtocol(Enum):
 
 
 class SessionStatus(Enum):
-    """User session status"""
-    ACTIVE = "active"
+    """User session status"""    ACTIVE = "active"
     EXPIRED = "expired"
     INVALIDATED = "invalidated"
     SUSPENDED = "suspended"
 
 
 class MFAMethod(Enum):
-    """Multi-factor authentication methods"""
-    TOTP = "totp"
+    """Multi-factor authentication methods"""    TOTP = "totp"
     SMS = "sms"
     EMAIL = "email"
     HARDWARE_TOKEN = "hardware_token"
@@ -72,8 +67,7 @@ class MFAMethod(Enum):
 
 @dataclass
 class SAMLConfiguration:
-    """SAML 2.0 configuration"""
-    entity_id: str
+    """SAML 2.0 configuration"""    entity_id: str
     sso_url: str
     slo_url: Optional[str]
     certificate: str
@@ -88,8 +82,7 @@ class SAMLConfiguration:
 
 @dataclass
 class OIDCConfiguration:
-    """OpenID Connect configuration"""
-    client_id: str
+    """OpenID Connect configuration"""    client_id: str
     client_secret: str
     discovery_url: str
     redirect_uri: str
@@ -104,8 +97,7 @@ class OIDCConfiguration:
 
 @dataclass
 class ActiveDirectoryConfiguration:
-    """Active Directory configuration"""
-    server_uri: str
+    """Active Directory configuration"""    server_uri: str
     bind_dn: str
     bind_password: str
     user_search_base: str
@@ -120,8 +112,7 @@ class ActiveDirectoryConfiguration:
 
 @dataclass
 class UserProfile:
-    """User profile from identity provider"""
-    user_id: str
+    """User profile from identity provider"""    user_id: str
     email: str
     first_name: str
     last_name: str
@@ -137,8 +128,7 @@ class UserProfile:
 
 @dataclass
 class AuthenticationSession:
-    """User authentication session"""
-    session_id: str
+    """User authentication session"""    session_id: str
     user_id: str
     user_profile: UserProfile
     provider: str
@@ -158,8 +148,7 @@ class AuthenticationSession:
 
 @dataclass
 class IdentityProvider:
-    """Identity provider configuration"""
-    provider_id: str
+    """Identity provider configuration"""    provider_id: str
     name: str
     protocol: AuthenticationProtocol
     enabled: bool
@@ -174,8 +163,7 @@ class IdentityProvider:
 
 
 class SAMLProvider:
-    """SAML 2.0 authentication provider"""
-    
+    """SAML 2.0 authentication provider"""    
     def __init__(self, config: SAMLConfiguration):
         self.config = config
         self._certificate = None
@@ -183,8 +171,7 @@ class SAMLProvider:
         self._load_certificates()
     
     def _load_certificates(self):
-        """Load SAML certificates"""
-        try:
+        """Load SAML certificates"""        try:
             # Load X.509 certificate
             cert_pem = self.config.certificate.encode('utf-8')
             self._certificate = load_pem_x509_certificate(cert_pem, default_backend())
@@ -200,11 +187,9 @@ class SAMLProvider:
             raise
     
     async def generate_auth_request(self, request_id: str, relay_state: Optional[str] = None) -> str:
-        """Generate SAML authentication request"""
-        try:
+        """Generate SAML authentication request"""        try:
             # Create SAML AuthnRequest
-            auth_request = f"""
-            <samlp:AuthnRequest
+            auth_request = f"""            <samlp:AuthnRequest
                 xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
                 xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
                 ID="{request_id}"
@@ -218,8 +203,7 @@ class SAMLProvider:
                     Format="{self.config.name_id_format}"
                     AllowCreate="true"/>
             </samlp:AuthnRequest>
-            """
-            
+            """            
             # Encode and sign if required
             encoded_request = base64.b64encode(auth_request.encode('utf-8')).decode('utf-8')
             
@@ -239,8 +223,7 @@ class SAMLProvider:
             raise
     
     async def process_saml_response(self, saml_response: str) -> UserProfile:
-        """Process SAML authentication response"""
-        try:
+        """Process SAML authentication response"""        try:
             # Decode SAML response
             decoded_response = base64.b64decode(saml_response)
             
@@ -266,8 +249,7 @@ class SAMLProvider:
             raise
     
     async def _verify_saml_signature(self, assertion: ET.Element) -> bool:
-        """Verify SAML assertion signature"""
-        try:
+        """Verify SAML assertion signature"""        try:
             # In real implementation, this would perform cryptographic verification
             # using the certificate and signature algorithms
             signature = assertion.find('.//{http://www.w3.org/2000/09/xmldsig#}Signature')
@@ -277,8 +259,7 @@ class SAMLProvider:
             return False
     
     async def _extract_user_profile(self, assertion: ET.Element) -> UserProfile:
-        """Extract user profile from SAML assertion"""
-        try:
+        """Extract user profile from SAML assertion"""        try:
             # Extract NameID
             name_id = assertion.find('.//{urn:oasis:names:tc:SAML:2.0:assertion}NameID')
             user_id = name_id.text if name_id is not None else str(uuid.uuid4())
@@ -324,16 +305,14 @@ class SAMLProvider:
 
 
 class OIDCProvider:
-    """OpenID Connect authentication provider"""
-    
+    """OpenID Connect authentication provider"""    
     def __init__(self, config: OIDCConfiguration):
         self.config = config
         self._discovery_doc: Optional[Dict[str, Any]] = None
         self._jwks: Optional[Dict[str, Any]] = None
     
     async def initialize(self):
-        """Initialize OIDC provider with discovery"""
-        try:
+        """Initialize OIDC provider with discovery"""        try:
             # Fetch discovery document
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.config.discovery_url) as response:
@@ -362,8 +341,7 @@ class OIDCProvider:
             raise
     
     async def generate_auth_url(self, state: str, nonce: str) -> str:
-        """Generate OIDC authorization URL"""
-        try:
+        """Generate OIDC authorization URL"""        try:
             if not self._discovery_doc:
                 await self.initialize()
             
@@ -387,8 +365,7 @@ class OIDCProvider:
             raise
     
     async def exchange_code_for_tokens(self, code: str, state: str) -> Dict[str, Any]:
-        """Exchange authorization code for tokens"""
-        try:
+        """Exchange authorization code for tokens"""        try:
             if not self._discovery_doc:
                 await self.initialize()
             
@@ -421,8 +398,7 @@ class OIDCProvider:
             raise
     
     async def verify_id_token(self, id_token: str) -> Dict[str, Any]:
-        """Verify and decode ID token"""
-        try:
+        """Verify and decode ID token"""        try:
             # Decode token header to get key ID
             header = jwt.get_unverified_header(id_token)
             kid = header.get('kid')
@@ -456,8 +432,7 @@ class OIDCProvider:
             raise
     
     async def get_user_info(self, access_token: str) -> UserProfile:
-        """Get user information using access token"""
-        try:
+        """Get user information using access token"""        try:
             if not self.config.userinfo_endpoint:
                 raise ValueError("UserInfo endpoint not configured")
             
@@ -476,8 +451,7 @@ class OIDCProvider:
             raise
     
     def _map_oidc_user_profile(self, user_info: Dict[str, Any]) -> UserProfile:
-        """Map OIDC user info to UserProfile"""
-        return UserProfile(
+        """Map OIDC user info to UserProfile"""        return UserProfile(
             user_id=user_info.get('sub', str(uuid.uuid4())),
             email=user_info.get('email', ''),
             first_name=user_info.get('given_name', ''),
@@ -489,15 +463,13 @@ class OIDCProvider:
 
 
 class ActiveDirectoryConnector:
-    """Active Directory LDAP connector"""
-    
+    """Active Directory LDAP connector"""    
     def __init__(self, config: ActiveDirectoryConfiguration):
         self.config = config
         self._connection: Optional[ldap3.Connection] = None
     
     async def connect(self) -> bool:
-        """Connect to Active Directory"""
-        try:
+        """Connect to Active Directory"""        try:
             server = ldap3.Server(
                 self.config.server_uri,
                 port=self.config.port,
@@ -521,8 +493,7 @@ class ActiveDirectoryConnector:
             return False
     
     async def authenticate_user(self, username: str, password: str) -> Optional[UserProfile]:
-        """Authenticate user against Active Directory"""
-        try:
+        """Authenticate user against Active Directory"""        try:
             if not self._connection:
                 await self.connect()
             
@@ -577,8 +548,7 @@ class ActiveDirectoryConnector:
             return None
     
     async def _get_user_groups(self, user_dn: str) -> List[str]:
-        """Get user group memberships"""
-        try:
+        """Get user group memberships"""        try:
             if not self.config.group_search_base:
                 return []
             
@@ -602,15 +572,13 @@ class ActiveDirectoryConnector:
             return []
     
     async def disconnect(self):
-        """Disconnect from Active Directory"""
-        if self._connection:
+        """Disconnect from Active Directory"""        if self._connection:
             self._connection.unbind()
             self._connection = None
 
 
 class SessionManager:
-    """Advanced session management with Redis backend"""
-    
+    """Advanced session management with Redis backend"""    
     def __init__(self, redis_url: str = "redis://localhost:6379"):
         self.redis_url = redis_url
         self._redis: Optional[aioredis.Redis] = None
@@ -618,8 +586,7 @@ class SessionManager:
         self._max_sessions_per_user = 5
     
     async def initialize(self):
-        """Initialize Redis connection"""
-        try:
+        """Initialize Redis connection"""        try:
             self._redis = aioredis.from_url(self.redis_url, decode_responses=True)
             await self._redis.ping()
             logger.info("Session manager initialized with Redis")
@@ -635,8 +602,7 @@ class SessionManager:
         ip_address: str,
         user_agent: str
     ) -> AuthenticationSession:
-        """Create new authentication session"""
-        try:
+        """Create new authentication session"""        try:
             session_id = secrets.token_urlsafe(32)
             session_token = secrets.token_urlsafe(64)
             refresh_token = secrets.token_urlsafe(64)
@@ -673,8 +639,7 @@ class SessionManager:
             raise
     
     async def _store_session(self, session: AuthenticationSession):
-        """Store session in Redis"""
-        if not self._redis:
+        """Store session in Redis"""        if not self._redis:
             await self.initialize()
         
         session_key = f"session:{session.session_id}"
@@ -697,8 +662,7 @@ class SessionManager:
         await self._redis.expire(user_sessions_key, int(self._session_timeout.total_seconds()))
     
     async def _enforce_session_limits(self, user_id: str):
-        """Enforce maximum sessions per user"""
-        try:
+        """Enforce maximum sessions per user"""        try:
             user_sessions_key = f"user_sessions:{user_id}"
             session_ids = await self._redis.smembers(user_sessions_key)
             
@@ -725,8 +689,7 @@ class SessionManager:
             logger.error(f"Failed to enforce session limits: {e}")
     
     async def get_session(self, session_id: str) -> Optional[AuthenticationSession]:
-        """Get session by ID"""
-        try:
+        """Get session by ID"""        try:
             if not self._redis:
                 await self.initialize()
             
@@ -772,8 +735,7 @@ class SessionManager:
             return None
     
     async def update_session_activity(self, session_id: str) -> bool:
-        """Update session last activity"""
-        try:
+        """Update session last activity"""        try:
             if not self._redis:
                 await self.initialize()
             
@@ -788,8 +750,7 @@ class SessionManager:
             return False
     
     async def invalidate_session(self, session_id: str) -> bool:
-        """Invalidate session"""
-        try:
+        """Invalidate session"""        try:
             if not self._redis:
                 await self.initialize()
             
@@ -815,8 +776,7 @@ class SessionManager:
 
 
 class EnterpriseSSO:
-    """Main Enterprise SSO orchestrator"""
-    
+    """Main Enterprise SSO orchestrator"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self._providers: Dict[str, IdentityProvider] = {}
@@ -828,8 +788,7 @@ class EnterpriseSSO:
         )
         
     async def initialize(self):
-        """Initialize SSO system"""
-        try:
+        """Initialize SSO system"""        try:
             await self.session_manager.initialize()
             logger.info("Enterprise SSO system initialized")
         except Exception as e:
@@ -843,8 +802,7 @@ class EnterpriseSSO:
         saml_config: SAMLConfiguration,
         enabled: bool = True
     ) -> bool:
-        """Configure SAML identity provider"""
-        try:
+        """Configure SAML identity provider"""        try:
             provider = IdentityProvider(
                 provider_id=provider_id,
                 name=name,
@@ -873,8 +831,7 @@ class EnterpriseSSO:
         oidc_config: OIDCConfiguration,
         enabled: bool = True
     ) -> bool:
-        """Configure OIDC identity provider"""
-        try:
+        """Configure OIDC identity provider"""        try:
             provider = IdentityProvider(
                 provider_id=provider_id,
                 name=name,
@@ -904,8 +861,7 @@ class EnterpriseSSO:
         ad_config: ActiveDirectoryConfiguration,
         enabled: bool = True
     ) -> bool:
-        """Configure Active Directory connector"""
-        try:
+        """Configure Active Directory connector"""        try:
             provider = IdentityProvider(
                 provider_id=provider_id,
                 name=name,
@@ -933,8 +889,7 @@ class EnterpriseSSO:
         provider_id: str,
         redirect_uri: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Initiate authentication with specified provider"""
-        try:
+        """Initiate authentication with specified provider"""        try:
             if provider_id not in self._providers:
                 raise ValueError(f"Provider not found: {provider_id}")
             
@@ -981,8 +936,7 @@ class EnterpriseSSO:
         ip_address: str,
         user_agent: str
     ) -> AuthenticationSession:
-        """Process authentication response and create session"""
-        try:
+        """Process authentication response and create session"""        try:
             if provider_id not in self._providers:
                 raise ValueError(f"Provider not found: {provider_id}")
             
@@ -1039,8 +993,7 @@ class EnterpriseSSO:
             raise
     
     async def validate_session(self, session_token: str) -> Optional[AuthenticationSession]:
-        """Validate session token"""
-        try:
+        """Validate session token"""        try:
             # In real implementation, you'd decode the session token to get session_id
             # For now, we'll treat the token as session_id
             session = await self.session_manager.get_session(session_token)
@@ -1056,16 +1009,14 @@ class EnterpriseSSO:
             return None
     
     async def logout(self, session_id: str) -> bool:
-        """Logout user and invalidate session"""
-        try:
+        """Logout user and invalidate session"""        try:
             return await self.session_manager.invalidate_session(session_id)
         except Exception as e:
             logger.error(f"Failed to logout: {e}")
             return False
     
     async def get_configured_providers(self) -> List[Dict[str, Any]]:
-        """Get list of configured identity providers"""
-        providers = []
+        """Get list of configured identity providers"""        providers = []
         
         for provider_id, provider in self._providers.items():
             providers.append({
@@ -1081,8 +1032,7 @@ class EnterpriseSSO:
         return providers
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for SSO system"""
-        try:
+        """Health check for SSO system"""        try:
             health_status = {
                 'status': 'healthy',
                 'providers': {},

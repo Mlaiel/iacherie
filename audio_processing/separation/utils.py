@@ -1,5 +1,4 @@
-"""
-Utility functions and classes for audio separation operations.
+"""Utility functions and classes for audio separation operations.
 
 This module provides essential utilities for validation, format conversion,
 metadata handling, and audio file operations within the separation pipeline.
@@ -13,7 +12,6 @@ Any unauthorized use, copying, distribution, or modification is strictly
 prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import hashlib
 import logging
@@ -41,8 +39,7 @@ logger = get_logger(__name__)
 
 @dataclass
 class AudioMetadata:
-    """Container for audio file metadata."""
-    title: Optional[str] = None
+    """Container for audio file metadata."""    title: Optional[str] = None
     artist: Optional[str] = None
     album: Optional[str] = None
     year: Optional[int] = None
@@ -61,8 +58,7 @@ class AudioMetadata:
 
 @dataclass
 class ValidationResult:
-    """Result of audio validation operations."""
-    is_valid: bool
+    """Result of audio validation operations."""    is_valid: bool
     file_format: str
     sample_rate: int
     channels: int
@@ -73,8 +69,7 @@ class ValidationResult:
 
 
 class AudioValidator:
-    """Professional audio file validation and format detection."""
-    
+    """Professional audio file validation and format detection."""    
     SUPPORTED_FORMATS = {
         'wav': ['audio/wav', 'audio/x-wav', 'audio/wave'],
         'flac': ['audio/flac', 'audio/x-flac'],
@@ -97,8 +92,7 @@ class AudioValidator:
         self.magic = magic.Magic(mime=True)
         
     async def validate_file(self, file_path: Union[str, Path]) -> ValidationResult:
-        """Validate audio file comprehensively."""
-        file_path = Path(file_path)
+        """Validate audio file comprehensively."""        file_path = Path(file_path)
         issues = []
         
         try:
@@ -193,8 +187,7 @@ class AudioValidator:
             )
     
     async def validate_audio_data(self, audio: np.ndarray, sample_rate: int) -> List[str]:
-        """Validate audio numpy array."""
-        issues = []
+        """Validate audio numpy array."""        issues = []
         
         try:
             # Basic array validation
@@ -243,15 +236,13 @@ class AudioValidator:
             return [f"Validation error: {str(e)}"]
     
     def _detect_format_from_mime(self, mime_type: str) -> str:
-        """Detect audio format from MIME type."""
-        for format_name, mime_types in self.SUPPORTED_FORMATS.items():
+        """Detect audio format from MIME type."""        for format_name, mime_types in self.SUPPORTED_FORMATS.items():
             if mime_type.lower() in [mt.lower() for mt in mime_types]:
                 return format_name
         return "unknown"
     
     def _detect_format_from_extension(self, extension: str) -> str:
-        """Detect format from file extension."""
-        ext = extension.lower().lstrip('.')
+        """Detect format from file extension."""        ext = extension.lower().lstrip('.')
         if ext in self.SUPPORTED_FORMATS:
             return ext
         
@@ -266,8 +257,7 @@ class AudioValidator:
         return extension_mapping.get(ext, "unknown")
     
     async def _extract_metadata(self, file_path: Path) -> AudioMetadata:
-        """Extract comprehensive metadata from audio file."""
-        try:
+        """Extract comprehensive metadata from audio file."""        try:
             metadata = AudioMetadata()
             
             # Basic file info
@@ -332,8 +322,7 @@ class AudioValidator:
             return AudioMetadata()
     
     def _get_tag_value(self, mutagen_file, tag_names: List[str]) -> Optional[str]:
-        """Get tag value from mutagen file with fallbacks."""
-        for tag_name in tag_names:
+        """Get tag value from mutagen file with fallbacks."""        for tag_name in tag_names:
             if tag_name in mutagen_file:
                 value = mutagen_file[tag_name]
                 if isinstance(value, list) and len(value) > 0:
@@ -343,8 +332,7 @@ class AudioValidator:
         return None
     
     async def _generate_fingerprint(self, file_path: Path) -> str:
-        """Generate audio fingerprint for duplicate detection."""
-        try:
+        """Generate audio fingerprint for duplicate detection."""        try:
             # Load audio for fingerprinting
             audio, sr = librosa.load(str(file_path), sr=22050, duration=30)  # First 30 seconds
             
@@ -368,8 +356,7 @@ class AudioValidator:
             return hashlib.md5(str(file_path).encode()).hexdigest()
     
     async def _validate_audio_content(self, file_path: Path) -> List[str]:
-        """Validate actual audio content."""
-        issues = []
+        """Validate actual audio content."""        issues = []
         
         try:
             # Load audio data for analysis
@@ -401,14 +388,12 @@ class AudioValidator:
 
 
 class FormatConverter:
-    """Professional audio format converter with quality preservation."""
-    
+    """Professional audio format converter with quality preservation."""    
     def __init__(self):
         self.conversion_profiles = self._setup_conversion_profiles()
         
     def _setup_conversion_profiles(self) -> Dict[str, Dict[str, Any]]:
-        """Setup conversion profiles for different output formats."""
-        return {
+        """Setup conversion profiles for different output formats."""        return {
             OutputFormat.WAV.value: {
                 'format': 'WAV',
                 'subtype': 'PCM_24',  # High quality default
@@ -435,8 +420,7 @@ class FormatConverter:
                           output_format: OutputFormat, 
                           output_path: Optional[Path] = None,
                           quality: SeparationQuality = SeparationQuality.HIGH) -> Union[bytes, Path]:
-        """Convert audio to specified format."""
-        try:
+        """Convert audio to specified format."""        try:
             # Validate input
             validator = AudioValidator()
             validation_issues = await validator.validate_audio_data(audio, sample_rate)
@@ -475,8 +459,7 @@ class FormatConverter:
                           sample_rate: int, output_format: OutputFormat,
                           output_directory: Path,
                           quality: SeparationQuality = SeparationQuality.HIGH) -> Dict[str, Path]:
-        """Convert multiple audio files in batch."""
-        output_directory.mkdir(parents=True, exist_ok=True)
+        """Convert multiple audio files in batch."""        output_directory.mkdir(parents=True, exist_ok=True)
         results = {}
         
         for name, audio in audio_dict.items():
@@ -505,8 +488,7 @@ class FormatConverter:
     
     def _adjust_profile_for_quality(self, profile: Dict[str, Any], 
                                    quality: SeparationQuality) -> Dict[str, Any]:
-        """Adjust conversion profile based on quality setting."""
-        adjusted_profile = profile.copy()
+        """Adjust conversion profile based on quality setting."""        adjusted_profile = profile.copy()
         
         quality_settings = {
             SeparationQuality.DRAFT: {'bit_depth': 16, 'compression': 8},
@@ -532,8 +514,7 @@ class FormatConverter:
     
     async def _write_audio_file(self, audio: np.ndarray, sample_rate: int,
                                output_path: Path, profile: Dict[str, Any]) -> None:
-        """Write audio to file with specified profile."""
-        try:
+        """Write audio to file with specified profile."""        try:
             # Ensure directory exists
             output_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -553,8 +534,7 @@ class FormatConverter:
     
     async def _convert_to_bytes(self, audio: np.ndarray, sample_rate: int,
                                profile: Dict[str, Any]) -> bytes:
-        """Convert audio to bytes in specified format."""
-        try:
+        """Convert audio to bytes in specified format."""        try:
             import io
             
             # Create in-memory buffer
@@ -581,8 +561,7 @@ class FormatConverter:
             raise AudioProcessingError(f"Bytes conversion error: {str(e)}")
     
     def _sanitize_filename(self, filename: str) -> str:
-        """Sanitize filename for cross-platform compatibility."""
-        # Remove or replace invalid characters
+        """Sanitize filename for cross-platform compatibility."""        # Remove or replace invalid characters
         invalid_chars = '<>:"/\\|?*'
         for char in invalid_chars:
             filename = filename.replace(char, '_')
@@ -599,8 +578,7 @@ class FormatConverter:
 
 
 class MetadataExtractor:
-    """Advanced metadata extraction and management."""
-    
+    """Advanced metadata extraction and management."""    
     def __init__(self):
         self.extractors = {
             'basic': self._extract_basic_metadata,
@@ -611,8 +589,7 @@ class MetadataExtractor:
     
     async def extract_comprehensive_metadata(self, file_path: Path,
                                            extract_types: Optional[List[str]] = None) -> Dict[str, Any]:
-        """Extract comprehensive metadata from audio file."""
-        extract_types = extract_types or ['basic', 'technical', 'musical', 'fingerprint']
+        """Extract comprehensive metadata from audio file."""        extract_types = extract_types or ['basic', 'technical', 'musical', 'fingerprint']
         metadata = {}
         
         for extract_type in extract_types:
@@ -630,8 +607,7 @@ class MetadataExtractor:
         return metadata
     
     async def _extract_basic_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract basic file and tag metadata."""
-        metadata = {}
+        """Extract basic file and tag metadata."""        metadata = {}
         
         # File info
         stat = file_path.stat()
@@ -679,8 +655,7 @@ class MetadataExtractor:
         return metadata
     
     async def _extract_technical_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract technical audio analysis metadata."""
-        try:
+        """Extract technical audio analysis metadata."""        try:
             # Load audio for analysis
             audio, sr = librosa.load(str(file_path), sr=None, duration=60)  # First minute
             
@@ -761,8 +736,7 @@ class MetadataExtractor:
             return {'error': str(e)}
     
     async def _extract_musical_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract musical analysis metadata."""
-        try:
+        """Extract musical analysis metadata."""        try:
             # Load audio
             audio, sr = librosa.load(str(file_path), sr=22050, duration=120)  # First 2 minutes
             
@@ -833,8 +807,7 @@ class MetadataExtractor:
             return {'error': str(e)}
     
     async def _extract_fingerprint_data(self, file_path: Path) -> Dict[str, Any]:
-        """Extract audio fingerprint and identification data."""
-        try:
+        """Extract audio fingerprint and identification data."""        try:
             # Load audio for fingerprinting
             audio, sr = librosa.load(str(file_path), sr=22050, duration=30)
             
@@ -883,8 +856,7 @@ class MetadataExtractor:
             return {'error': str(e)}
     
     def _get_tag(self, mutagen_file, tag_names: List[str]) -> Optional[str]:
-        """Get tag value with multiple fallbacks."""
-        for tag_name in tag_names:
+        """Get tag value with multiple fallbacks."""        for tag_name in tag_names:
             if tag_name in mutagen_file:
                 value = mutagen_file[tag_name]
                 if isinstance(value, list) and len(value) > 0:
@@ -894,8 +866,7 @@ class MetadataExtractor:
         return None
     
     def _format_duration(self, seconds: float) -> str:
-        """Format duration in human-readable format."""
-        hours = int(seconds // 3600)
+        """Format duration in human-readable format."""        hours = int(seconds // 3600)
         minutes = int((seconds % 3600) // 60)
         secs = int(seconds % 60)
         
@@ -906,8 +877,7 @@ class MetadataExtractor:
     
     async def export_metadata(self, metadata: Dict[str, Any], 
                             output_path: Path, format: str = 'json') -> None:
-        """Export metadata to file."""
-        output_path.parent.mkdir(parents=True, exist_ok=True)
+        """Export metadata to file."""        output_path.parent.mkdir(parents=True, exist_ok=True)
         
         if format.lower() == 'json':
             with open(output_path, 'w', encoding='utf-8') as f:
@@ -926,8 +896,7 @@ class MetadataExtractor:
 async def validate_and_convert_audio(input_path: Union[str, Path],
                                    output_format: OutputFormat = OutputFormat.WAV,
                                    quality: SeparationQuality = SeparationQuality.HIGH) -> Tuple[ValidationResult, Optional[Path]]:
-    """Convenience function to validate and convert audio."""
-    input_path = Path(input_path)
+    """Convenience function to validate and convert audio."""    input_path = Path(input_path)
     
     # Validate
     validator = AudioValidator()
@@ -965,8 +934,7 @@ async def validate_and_convert_audio(input_path: Union[str, Path],
 
 def calculate_audio_similarity(audio1: np.ndarray, audio2: np.ndarray, 
                              method: str = 'spectral') -> float:
-    """Calculate similarity between two audio signals."""
-    try:
+    """Calculate similarity between two audio signals."""    try:
         # Ensure same length
         min_len = min(len(audio1), len(audio2))
         a1 = audio1[:min_len]

@@ -19,8 +19,7 @@ Enterprise Docker orchestration supporting:
 - Real-time monitoring and scaling
 - Production-grade security and compliance
 - Microservices architecture deployment
-"""
-from .api_gateway import APIGatewayDockerConfig
+"""from .api_gateway import APIGatewayDockerConfig
 from .backend_services import BackendServicesDockerConfig  
 from .ai_engines import AIEnginesDockerConfig
 from .fingerprinting_engine import FingerprintingEngineDockerConfig

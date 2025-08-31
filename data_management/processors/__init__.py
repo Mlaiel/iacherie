@@ -17,8 +17,7 @@ LOGIQUE MÉTIER PROCESSORS COMPLETE:
 User Upload → Format Detection → Quality Analysis → Metadata Extraction → Content Analysis → 
 Feature Extraction → AI Fingerprinting → Protection Preparation → Optimization → SEO Enhancement → 
 Collaboration Matching → Distribution Preparation → Monetization Analytics
-"""
-__version__ = "4.0.0"
+"""__version__ = "4.0.0"
 __author__ = "Fahed Mlaiel <mlaiel@live.de>"
 
 # Core Processor Imports

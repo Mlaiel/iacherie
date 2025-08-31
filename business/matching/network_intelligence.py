@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Network Intelligence System
+"""IA Influencer Agent - Advanced Network Intelligence System
 ==========================================================
 
 Professional Network Analysis & Intelligent Relationship Mapping
@@ -35,7 +34,6 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
@@ -55,8 +53,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class NetworkNode:
-    """Individual network node representation"""
-    node_id: str
+    """Individual network node representation"""    node_id: str
     node_type: str  # creator, brand, platform, event
     influence_score: float
     centrality_metrics: Dict[str, float]
@@ -67,8 +64,7 @@ class NetworkNode:
 
 @dataclass
 class NetworkEdge:
-    """Network relationship edge"""
-    source_id: str
+    """Network relationship edge"""    source_id: str
     target_id: str
     relationship_type: str
     strength: float
@@ -80,8 +76,7 @@ class NetworkEdge:
 
 @dataclass
 class CommunityCluster:
-    """Network community cluster"""
-    cluster_id: str
+    """Network community cluster"""    cluster_id: str
     members: List[str]
     cluster_theme: str
     influence_level: str
@@ -92,8 +87,7 @@ class CommunityCluster:
 
 
 class NetworkIntelligence:
-    """Advanced network intelligence and analysis system"""
-    
+    """Advanced network intelligence and analysis system"""    
     def __init__(self, db_session, graph_db, ml_models):
         self.db = db_session
         self.graph_db = graph_db
@@ -106,8 +100,7 @@ class NetworkIntelligence:
         creator_id: str,
         analysis_depth: int = 3
     ) -> Dict[str, Any]:
-        """Comprehensive network analysis for a creator"""
-        try:
+        """Comprehensive network analysis for a creator"""        try:
             # Build network graph
             network_data = await self._build_network_graph(creator_id, analysis_depth)
             
@@ -148,8 +141,7 @@ class NetworkIntelligence:
         creator_id: str,
         depth: int
     ) -> Dict[str, Any]:
-        """Build comprehensive network graph"""
-        try:
+        """Build comprehensive network graph"""        try:
             # Get direct connections
             direct_connections = await self._get_direct_connections(creator_id)
             
@@ -204,8 +196,7 @@ class NetworkIntelligence:
             return {}
     
     async def _calculate_centrality_metrics(self, creator_id: str) -> Dict[str, float]:
-        """Calculate various centrality metrics"""
-        try:
+        """Calculate various centrality metrics"""        try:
             if creator_id not in self.network_graph:
                 return {}
             
@@ -247,8 +238,7 @@ class NetworkIntelligence:
             return {}
     
     async def _detect_communities(self, creator_id: str) -> List[CommunityCluster]:
-        """Detect communities in the network"""
-        try:
+        """Detect communities in the network"""        try:
             # Use multiple community detection algorithms
             communities_louvain = list(nx.community.louvain_communities(self.network_graph))
             communities_greedy = list(nx.community.greedy_modularity_communities(self.network_graph))
@@ -280,8 +270,7 @@ class NetworkIntelligence:
         cluster_id: str,
         members: List[str]
     ) -> CommunityCluster:
-        """Analyze characteristics of a community cluster"""
-        try:
+        """Analyze characteristics of a community cluster"""        try:
             # Determine cluster theme
             themes = await self._extract_cluster_themes(members)
             primary_theme = max(themes.items(), key=lambda x: x[1])[0] if themes else "general"
@@ -321,8 +310,7 @@ class NetworkIntelligence:
 
 
 class CreatorNetworkBuilder:
-    """Strategic network building system for creators"""
-    
+    """Strategic network building system for creators"""    
     def __init__(self, db_session, recommendation_engine):
         self.db = db_session
         self.recommendation_engine = recommendation_engine
@@ -334,8 +322,7 @@ class CreatorNetworkBuilder:
         network_goals: List[str],
         time_horizon: str = "6_months"
     ) -> Dict[str, Any]:
-        """Build strategic network plan for creator"""
-        try:
+        """Build strategic network plan for creator"""        try:
             # Analyze current network state
             current_state = await self._analyze_current_network_state(creator_id)
             
@@ -374,8 +361,7 @@ class CreatorNetworkBuilder:
 
 
 class InfluenceMapper:
-    """Advanced influence mapping and analysis system"""
-    
+    """Advanced influence mapping and analysis system"""    
     def __init__(self, db_session, analytics_engine):
         self.db = db_session
         self.analytics = analytics_engine
@@ -386,8 +372,7 @@ class InfluenceMapper:
         target_niche: str,
         influence_threshold: float = 0.7
     ) -> Dict[str, Any]:
-        """Map influence networks within a niche"""
-        try:
+        """Map influence networks within a niche"""        try:
             # Get high-influence creators in niche
             influencers = await self._get_niche_influencers(target_niche, influence_threshold)
             
@@ -420,8 +405,7 @@ class InfluenceMapper:
 
 
 class CommunityDetector:
-    """Advanced community detection and analysis system"""
-    
+    """Advanced community detection and analysis system"""    
     def __init__(self, db_session, ml_models):
         self.db = db_session
         self.ml_models = ml_models
@@ -432,8 +416,7 @@ class CommunityDetector:
         analysis_scope: str = "global",
         community_size_threshold: int = 5
     ) -> List[Dict[str, Any]]:
-        """Detect creator communities using advanced algorithms"""
-        try:
+        """Detect creator communities using advanced algorithms"""        try:
             # Get creator interaction data
             interaction_data = await self._get_creator_interactions(analysis_scope)
             
@@ -475,8 +458,7 @@ class CommunityDetector:
 
 
 class RelationshipAnalyzer:
-    """Deep relationship analysis and pattern recognition system"""
-    
+    """Deep relationship analysis and pattern recognition system"""    
     def __init__(self, db_session, ml_models, vector_store):
         self.db = db_session
         self.ml_models = ml_models
@@ -488,8 +470,7 @@ class RelationshipAnalyzer:
         creator_id: str,
         analysis_timeframe: str = "12_months"
     ) -> Dict[str, Any]:
-        """Analyze relationship patterns and dynamics"""
-        try:
+        """Analyze relationship patterns and dynamics"""        try:
             # Get relationship history
             relationship_history = await self._get_relationship_history(
                 creator_id, analysis_timeframe
@@ -534,8 +515,7 @@ class RelationshipAnalyzer:
         creator_id: str,
         timeframe: str
     ) -> List[Dict[str, Any]]:
-        """Get comprehensive relationship history"""
-        try:
+        """Get comprehensive relationship history"""        try:
             # Calculate time boundaries
             timeframe_days = {
                 '3_months': 90,
@@ -547,8 +527,7 @@ class RelationshipAnalyzer:
             start_date = datetime.now() - timedelta(days=timeframe_days)
             
             # Query relationship interactions
-            query = """
-                SELECT 
+            query = """                SELECT 
                     ci.*,
                     c1.username as creator1_name,
                     c2.username as creator2_name,
@@ -560,8 +539,7 @@ class RelationshipAnalyzer:
                 WHERE (ci.creator1_id = %s OR ci.creator2_id = %s)
                 AND ci.interaction_date >= %s
                 ORDER BY ci.interaction_date DESC
-            """
-            
+            """            
             results = await self.db.fetch_all(query, (creator_id, creator_id, start_date))
             return [dict(row) for row in results]
             
@@ -573,8 +551,7 @@ class RelationshipAnalyzer:
         self,
         relationship_history: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze how relationships have evolved over time"""
-        try:
+        """Analyze how relationships have evolved over time"""        try:
             if not relationship_history:
                 return {}
             

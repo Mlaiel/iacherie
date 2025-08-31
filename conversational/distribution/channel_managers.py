@@ -1,5 +1,4 @@
-"""
-Channel Managers
+"""Channel Managers
 
 Platform-specific distribution managers for handling unique requirements and APIs.
 Each manager handles the specific characteristics and optimization for its platform.
@@ -7,7 +6,6 @@ Each manager handles the specific characteristics and optimization for its platf
 Author: Fahed Mlaiel
 Email: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -29,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class BasePlatformManager(ABC):
-    """Base class for all platform managers"""
-    
+    """Base class for all platform managers"""    
     def __init__(self, db: Session):
         self.db = db
         self.rate_limiter = RateLimiter()
@@ -43,8 +40,7 @@ class BasePlatformManager(ABC):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Distribute content to the platform"""
-        pass
+        """Distribute content to the platform"""        pass
     
     @abstractmethod
     async def get_content_metrics(
@@ -52,8 +48,7 @@ class BasePlatformManager(ABC):
         credentials: PlatformCredentials,
         content_id: str
     ) -> Dict[str, Any]:
-        """Get metrics for specific content"""
-        pass
+        """Get metrics for specific content"""        pass
     
     @abstractmethod
     async def delete_content(
@@ -61,26 +56,22 @@ class BasePlatformManager(ABC):
         credentials: PlatformCredentials,
         content_id: str
     ) -> bool:
-        """Delete content from platform"""
-        pass
+        """Delete content from platform"""        pass
     
     async def get_session(self, platform: str) -> aiohttp.ClientSession:
-        """Get or create HTTP session for platform"""
-        if platform not in self.session_pool:
+        """Get or create HTTP session for platform"""        if platform not in self.session_pool:
             timeout = aiohttp.ClientTimeout(total=30)
             self.session_pool[platform] = aiohttp.ClientSession(timeout=timeout)
         return self.session_pool[platform]
     
     async def close_sessions(self):
-        """Close all HTTP sessions"""
-        for session in self.session_pool.values():
+        """Close all HTTP sessions"""        for session in self.session_pool.values():
             await session.close()
         self.session_pool.clear()
 
 
 class YouTubeChannelManager(BasePlatformManager):
-    """YouTube platform manager with advanced features"""
-    
+    """YouTube platform manager with advanced features"""    
     def __init__(self, db: Session):
         super().__init__(db)
         self.api_base_url = "https://www.googleapis.com/youtube/v3"
@@ -92,8 +83,7 @@ class YouTubeChannelManager(BasePlatformManager):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Upload video to YouTube"""
-        try:
+        """Upload video to YouTube"""        try:
             # Rate limiting
             await self.rate_limiter.acquire("youtube", credentials.user_id)
             
@@ -187,8 +177,7 @@ class YouTubeChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> Dict[str, Any]:
-        """Get YouTube video analytics"""
-        try:
+        """Get YouTube video analytics"""        try:
             session = await self.get_session("youtube")
             
             # Get video statistics
@@ -235,8 +224,7 @@ class YouTubeChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> bool:
-        """Delete YouTube video"""
-        try:
+        """Delete YouTube video"""        try:
             session = await self.get_session("youtube")
             
             params = {
@@ -254,8 +242,7 @@ class YouTubeChannelManager(BasePlatformManager):
             return False
     
     def _get_category_id(self, category: Optional[str]) -> str:
-        """Map content category to YouTube category ID"""
-        category_map = {
+        """Map content category to YouTube category ID"""        category_map = {
             "music": "10",
             "entertainment": "24",
             "education": "27",
@@ -270,8 +257,7 @@ class YouTubeChannelManager(BasePlatformManager):
         return category_map.get(category.lower() if category else "", "22")  # Default to People & Blogs
     
     def _calculate_youtube_engagement(self, stats: Dict[str, Any]) -> float:
-        """Calculate YouTube engagement rate"""
-        views = int(stats.get("viewCount", 0))
+        """Calculate YouTube engagement rate"""        views = int(stats.get("viewCount", 0))
         likes = int(stats.get("likeCount", 0))
         comments = int(stats.get("commentCount", 0))
         
@@ -283,8 +269,7 @@ class YouTubeChannelManager(BasePlatformManager):
 
 
 class InstagramChannelManager(BasePlatformManager):
-    """Instagram platform manager"""
-    
+    """Instagram platform manager"""    
     def __init__(self, db: Session):
         super().__init__(db)
         self.api_base_url = "https://graph.facebook.com/v18.0"
@@ -295,8 +280,7 @@ class InstagramChannelManager(BasePlatformManager):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Post content to Instagram"""
-        try:
+        """Post content to Instagram"""        try:
             await self.rate_limiter.acquire("instagram", credentials.user_id)
             
             session = await self.get_session("instagram")
@@ -325,8 +309,7 @@ class InstagramChannelManager(BasePlatformManager):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Upload image to Instagram"""
-        
+        """Upload image to Instagram"""        
         # Step 1: Create media container
         container_params = {
             "image_url": content.get("file_url"),
@@ -381,8 +364,7 @@ class InstagramChannelManager(BasePlatformManager):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Upload video to Instagram (Reels)"""
-        
+        """Upload video to Instagram (Reels)"""        
         container_params = {
             "video_url": content.get("file_url"),
             "caption": self._format_instagram_caption(content),
@@ -435,8 +417,7 @@ class InstagramChannelManager(BasePlatformManager):
             }
     
     def _format_instagram_caption(self, content: Dict[str, Any]) -> str:
-        """Format caption for Instagram"""
-        caption = content.get("description", "")
+        """Format caption for Instagram"""        caption = content.get("description", "")
         hashtags = content.get("hashtags", [])
         
         # Instagram caption limit
@@ -455,8 +436,7 @@ class InstagramChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> Dict[str, Any]:
-        """Get Instagram post metrics"""
-        try:
+        """Get Instagram post metrics"""        try:
             session = await self.get_session("instagram")
             
             params = {
@@ -494,8 +474,7 @@ class InstagramChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> bool:
-        """Delete Instagram post"""
-        try:
+        """Delete Instagram post"""        try:
             session = await self.get_session("instagram")
             
             params = {"access_token": credentials.access_token}
@@ -509,8 +488,7 @@ class InstagramChannelManager(BasePlatformManager):
 
 
 class TikTokChannelManager(BasePlatformManager):
-    """TikTok platform manager"""
-    
+    """TikTok platform manager"""    
     def __init__(self, db: Session):
         super().__init__(db)
         self.api_base_url = "https://open-api.tiktok.com"
@@ -521,8 +499,7 @@ class TikTokChannelManager(BasePlatformManager):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Upload video to TikTok"""
-        try:
+        """Upload video to TikTok"""        try:
             await self.rate_limiter.acquire("tiktok", credentials.user_id)
             
             session = await self.get_session("tiktok")
@@ -626,8 +603,7 @@ class TikTokChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> Dict[str, Any]:
-        """Get TikTok video metrics"""
-        try:
+        """Get TikTok video metrics"""        try:
             session = await self.get_session("tiktok")
             
             params = {
@@ -678,8 +654,7 @@ class TikTokChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> bool:
-        """Delete TikTok video"""
-        try:
+        """Delete TikTok video"""        try:
             session = await self.get_session("tiktok")
             
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
@@ -697,8 +672,7 @@ class TikTokChannelManager(BasePlatformManager):
 
 
 class TwitterChannelManager(BasePlatformManager):
-    """Twitter/X platform manager"""
-    
+    """Twitter/X platform manager"""    
     def __init__(self, db: Session):
         super().__init__(db)
         self.api_base_url = "https://api.twitter.com/2"
@@ -709,8 +683,7 @@ class TwitterChannelManager(BasePlatformManager):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Post content to Twitter"""
-        try:
+        """Post content to Twitter"""        try:
             await self.rate_limiter.acquire("twitter", credentials.user_id)
             
             session = await self.get_session("twitter")
@@ -777,8 +750,7 @@ class TwitterChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content: Dict[str, Any]
     ) -> Optional[str]:
-        """Upload media to Twitter"""
-        try:
+        """Upload media to Twitter"""        try:
             file_url = content.get("file_url")
             
             # Download media
@@ -809,8 +781,7 @@ class TwitterChannelManager(BasePlatformManager):
             return None
     
     def _format_twitter_text(self, content: Dict[str, Any]) -> str:
-        """Format text for Twitter with character limits"""
-        text = content.get("description", "") or content.get("title", "")
+        """Format text for Twitter with character limits"""        text = content.get("description", "") or content.get("title", "")
         hashtags = content.get("hashtags", [])
         
         # Twitter character limit
@@ -836,8 +807,7 @@ class TwitterChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> Dict[str, Any]:
-        """Get Twitter tweet metrics"""
-        try:
+        """Get Twitter tweet metrics"""        try:
             session = await self.get_session("twitter")
             
             params = {
@@ -870,8 +840,7 @@ class TwitterChannelManager(BasePlatformManager):
             return {"error": str(e)}
     
     def _calculate_twitter_engagement(self, metrics: Dict[str, Any]) -> float:
-        """Calculate Twitter engagement rate"""
-        impressions = metrics.get("impression_count", 0)
+        """Calculate Twitter engagement rate"""        impressions = metrics.get("impression_count", 0)
         likes = metrics.get("like_count", 0)
         replies = metrics.get("reply_count", 0)
         retweets = metrics.get("retweet_count", 0)
@@ -887,8 +856,7 @@ class TwitterChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> bool:
-        """Delete Twitter tweet"""
-        try:
+        """Delete Twitter tweet"""        try:
             session = await self.get_session("twitter")
             
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
@@ -902,8 +870,7 @@ class TwitterChannelManager(BasePlatformManager):
 
 
 class SpotifyChannelManager(BasePlatformManager):
-    """Spotify platform manager for podcast content"""
-    
+    """Spotify platform manager for podcast content"""    
     def __init__(self, db: Session):
         super().__init__(db)
         self.api_base_url = "https://api.spotify.com/v1"
@@ -914,8 +881,7 @@ class SpotifyChannelManager(BasePlatformManager):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Upload podcast episode to Spotify"""
-        try:
+        """Upload podcast episode to Spotify"""        try:
             await self.rate_limiter.acquire("spotify", credentials.user_id)
             
             session = await self.get_session("spotify")
@@ -978,8 +944,7 @@ class SpotifyChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> Dict[str, Any]:
-        """Get Spotify episode metrics"""
-        try:
+        """Get Spotify episode metrics"""        try:
             session = await self.get_session("spotify")
             
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
@@ -1011,8 +976,7 @@ class SpotifyChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> bool:
-        """Delete Spotify episode"""
-        try:
+        """Delete Spotify episode"""        try:
             session = await self.get_session("spotify")
             
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
@@ -1026,8 +990,7 @@ class SpotifyChannelManager(BasePlatformManager):
 
 
 class LinkedInChannelManager(BasePlatformManager):
-    """LinkedIn platform manager"""
-    
+    """LinkedIn platform manager"""    
     def __init__(self, db: Session):
         super().__init__(db)
         self.api_base_url = "https://api.linkedin.com/v2"
@@ -1038,8 +1001,7 @@ class LinkedInChannelManager(BasePlatformManager):
         content: Dict[str, Any],
         request: DistributionRequest
     ) -> Dict[str, Any]:
-        """Post content to LinkedIn"""
-        try:
+        """Post content to LinkedIn"""        try:
             await self.rate_limiter.acquire("linkedin", credentials.user_id)
             
             session = await self.get_session("linkedin")
@@ -1125,8 +1087,7 @@ class LinkedInChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content: Dict[str, Any]
     ) -> Optional[str]:
-        """Upload media to LinkedIn"""
-        try:
+        """Upload media to LinkedIn"""        try:
             # Register upload
             register_data = {
                 "registerUploadRequest": {
@@ -1180,8 +1141,7 @@ class LinkedInChannelManager(BasePlatformManager):
             return None
     
     def _format_linkedin_text(self, content: Dict[str, Any]) -> str:
-        """Format text for LinkedIn"""
-        text = content.get("description", "") or content.get("title", "")
+        """Format text for LinkedIn"""        text = content.get("description", "") or content.get("title", "")
         hashtags = content.get("hashtags", [])
         
         # LinkedIn character limit
@@ -1203,8 +1163,7 @@ class LinkedInChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> Dict[str, Any]:
-        """Get LinkedIn post metrics"""
-        try:
+        """Get LinkedIn post metrics"""        try:
             session = await self.get_session("linkedin")
             
             headers = {"Authorization": f"Bearer {credentials.access_token}"}
@@ -1235,8 +1194,7 @@ class LinkedInChannelManager(BasePlatformManager):
         credentials: PlatformCredentials,
         content_id: str
     ) -> bool:
-        """Delete LinkedIn post"""
-        try:
+        """Delete LinkedIn post"""        try:
             session = await self.get_session("linkedin")
             
             headers = {"Authorization": f"Bearer {credentials.access_token}"}

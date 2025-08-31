@@ -1,5 +1,4 @@
-"""
-Flow Controller - Advanced Dialogue Flow Control System
+"""Flow Controller - Advanced Dialogue Flow Control System
 
 Enterprise-grade flow control system that orchestrates complex dialogue patterns,
 manages dynamic routing, handles interruptions, and coordinates multi-workflow
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
@@ -38,8 +36,7 @@ from .turn_manager import TurnManager
 logger = logging.getLogger(__name__)
 
 class FlowType(Enum):
-    """Types of dialogue flows"""
-    LINEAR = "linear"  # Sequential steps
+    """Types of dialogue flows"""    LINEAR = "linear"  # Sequential steps
     BRANCHING = "branching"  # Multiple paths based on conditions
     PARALLEL = "parallel"  # Multiple flows simultaneously
     ITERATIVE = "iterative"  # Repeating cycles
@@ -49,8 +46,7 @@ class FlowType(Enum):
     COLLABORATIVE = "collaborative"  # Multi-party collaboration
 
 class FlowPriority(Enum):
-    """Priority levels for flow execution"""
-    BACKGROUND = 1
+    """Priority levels for flow execution"""    BACKGROUND = 1
     LOW = 2
     NORMAL = 3
     HIGH = 4
@@ -58,8 +54,7 @@ class FlowPriority(Enum):
     CRITICAL = 6
 
 class FlowStatus(Enum):
-    """Status of dialogue flows"""
-    INACTIVE = "inactive"
+    """Status of dialogue flows"""    INACTIVE = "inactive"
     ACTIVE = "active"
     PAUSED = "paused"
     INTERRUPTED = "interrupted"
@@ -68,8 +63,7 @@ class FlowStatus(Enum):
     CANCELLED = "cancelled"
 
 class InterruptionType(Enum):
-    """Types of flow interruptions"""
-    USER_INTERRUPT = "user_interrupt"
+    """Types of flow interruptions"""    USER_INTERRUPT = "user_interrupt"
     SYSTEM_INTERRUPT = "system_interrupt"
     PRIORITY_OVERRIDE = "priority_override"
     ERROR_INTERRUPT = "error_interrupt"
@@ -79,8 +73,7 @@ class InterruptionType(Enum):
 
 @dataclass
 class FlowNode:
-    """Node in dialogue flow"""
-    node_id: str
+    """Node in dialogue flow"""    node_id: str
     node_type: str  # start, end, action, decision, wait, parallel, join
     name: str
     description: str = ""
@@ -111,8 +104,7 @@ class FlowNode:
 
 @dataclass
 class FlowEdge:
-    """Edge connecting flow nodes"""
-    edge_id: str
+    """Edge connecting flow nodes"""    edge_id: str
     from_node: str
     to_node: str
     condition: str = ""
@@ -133,8 +125,7 @@ class FlowEdge:
 
 @dataclass
 class FlowDefinition:
-    """Definition of a dialogue flow"""
-    flow_id: str
+    """Definition of a dialogue flow"""    flow_id: str
     flow_name: str
     flow_type: FlowType
     description: str
@@ -163,8 +154,7 @@ class FlowDefinition:
 
 @dataclass
 class FlowExecution:
-    """Runtime execution of a dialogue flow"""
-    execution_id: str
+    """Runtime execution of a dialogue flow"""    execution_id: str
     flow_id: str
     conversation_id: str
     status: FlowStatus
@@ -202,8 +192,7 @@ class FlowExecution:
 
 @dataclass
 class FlowInterruption:
-    """Interruption in flow execution"""
-    interrupt_id: str
+    """Interruption in flow execution"""    interrupt_id: str
     execution_id: str
     interrupt_type: InterruptionType
     interrupt_reason: str
@@ -224,8 +213,7 @@ class FlowInterruption:
     resolution_action: Optional[str] = None
 
 class FlowController:
-    """
-    Enterprise flow control system for IA Influencer dialogue management.
+    """    Enterprise flow control system for IA Influencer dialogue management.
     
     Orchestrates complex dialogue flows for content creator business workflows,
     handling dynamic routing, interruptions, parallel execution, and business
@@ -239,8 +227,7 @@ class FlowController:
     - Performance optimization
     - Error recovery and rollback
     - Real-time flow monitoring
-    """
-    
+    """    
     def __init__(
         self,
         dialogue_manager: DialogueFlowManager,
@@ -303,8 +290,7 @@ class FlowController:
         logger.info("FlowController initialized for enterprise dialogue management")
 
     def _initialize_business_flows(self):
-        """Initialize business workflow flow definitions"""
-        
+        """Initialize business workflow flow definitions"""        
         # Content Protection Flow
         content_protection_flow = FlowDefinition(
             flow_id="content_protection_flow",
@@ -571,8 +557,7 @@ class FlowController:
         logger.info(f"Initialized {len(self.flow_definitions)} business flow definitions")
 
     def _create_seo_optimization_flow(self):
-        """Create SEO optimization flow"""
-        
+        """Create SEO optimization flow"""        
         seo_flow = FlowDefinition(
             flow_id="seo_optimization_flow",
             flow_name="SEO Enhancement Workflow",
@@ -587,8 +572,7 @@ class FlowController:
         self.flow_definitions["seo_optimization_flow"] = seo_flow
 
     def _create_platform_integration_flow(self):
-        """Create platform integration flow"""
-        
+        """Create platform integration flow"""        
         platform_flow = FlowDefinition(
             flow_id="platform_integration_flow",
             flow_name="Platform Integration Workflow",
@@ -603,8 +587,7 @@ class FlowController:
         self.flow_definitions["platform_integration_flow"] = platform_flow
 
     def _create_technical_support_flow(self):
-        """Create technical support flow"""
-        
+        """Create technical support flow"""        
         support_flow = FlowDefinition(
             flow_id="technical_support_flow",
             flow_name="Technical Support Workflow",
@@ -620,8 +603,7 @@ class FlowController:
         self.flow_definitions["technical_support_flow"] = support_flow
 
     def _initialize_flow_processors(self):
-        """Initialize processors for different node types"""
-        
+        """Initialize processors for different node types"""        
         self.flow_processors = {
             "start": self._process_start_node,
             "end": self._process_end_node,
@@ -639,8 +621,7 @@ class FlowController:
         initial_data: Dict[str, Any] = None,
         priority: FlowPriority = FlowPriority.NORMAL
     ) -> str:
-        """
-        Start execution of a dialogue flow
+        """        Start execution of a dialogue flow
         
         Args:
             conversation_id: Conversation to execute flow for
@@ -650,8 +631,7 @@ class FlowController:
             
         Returns:
             Execution ID
-        """
-        
+        """        
         flow_def = self.flow_definitions.get(flow_id)
         if not flow_def:
             raise ValueError(f"Flow definition not found: {flow_id}")
@@ -702,8 +682,7 @@ class FlowController:
         context_data: Dict[str, Any] = None,
         priority: FlowPriority = FlowPriority.NORMAL
     ) -> Optional[str]:
-        """
-        Start appropriate flow for dialogue intent
+        """        Start appropriate flow for dialogue intent
         
         Args:
             conversation_id: Conversation to execute flow for
@@ -713,8 +692,7 @@ class FlowController:
             
         Returns:
             Execution ID if flow started, None if no matching flow
-        """
-        
+        """        
         flow_id = self.business_flow_map.get(intent)
         if not flow_id:
             logger.warning(f"No flow mapped for intent: {intent}")
@@ -742,8 +720,7 @@ class FlowController:
         interrupt_reason: str,
         interrupt_data: Dict[str, Any] = None
     ) -> bool:
-        """
-        Interrupt flow execution
+        """        Interrupt flow execution
         
         Args:
             execution_id: Execution to interrupt
@@ -753,8 +730,7 @@ class FlowController:
             
         Returns:
             Success status
-        """
-        
+        """        
         execution = self.active_executions.get(execution_id)
         if not execution:
             return False
@@ -819,8 +795,7 @@ class FlowController:
         execution_id: str,
         resume_data: Dict[str, Any] = None
     ) -> bool:
-        """
-        Resume interrupted flow execution
+        """        Resume interrupted flow execution
         
         Args:
             execution_id: Execution to resume
@@ -828,8 +803,7 @@ class FlowController:
             
         Returns:
             Success status
-        """
-        
+        """        
         execution = self.active_executions.get(execution_id)
         if not execution or execution.status != FlowStatus.INTERRUPTED:
             return False
@@ -875,8 +849,7 @@ class FlowController:
         return True
 
     async def _process_execution_queue(self):
-        """Background task to process flow execution queue"""
-        
+        """Background task to process flow execution queue"""        
         while True:
             try:
                 if self.execution_queue:
@@ -895,8 +868,7 @@ class FlowController:
                 await asyncio.sleep(1)
 
     async def _execute_flow_step(self, execution: FlowExecution):
-        """Execute single step of flow"""
-        
+        """Execute single step of flow"""        
         async with self.execution_semaphore:
             try:
                 flow_def = self.flow_definitions[execution.flow_id]
@@ -975,8 +947,7 @@ class FlowController:
                 await self._handle_execution_error(execution, str(e))
 
     async def _check_node_conditions(self, execution: FlowExecution, node: FlowNode) -> bool:
-        """Check if node execution conditions are met"""
-        
+        """Check if node execution conditions are met"""        
         for condition in node.execution_conditions:
             if not await self._evaluate_flow_condition(execution, condition):
                 return False
@@ -989,8 +960,7 @@ class FlowController:
         return True
 
     async def _evaluate_flow_condition(self, execution: FlowExecution, condition: str) -> bool:
-        """Evaluate flow condition"""
-        
+        """Evaluate flow condition"""        
         flow_data = execution.flow_data
         
         # Content-related conditions
@@ -1058,8 +1028,7 @@ class FlowController:
         return False
 
     async def _get_next_node(self, execution: FlowExecution, current_node: FlowNode, result_type: str) -> Optional[str]:
-        """Get next node in flow based on current node and result"""
-        
+        """Get next node in flow based on current node and result"""        
         flow_def = self.flow_definitions[execution.flow_id]
         
         # Find outgoing edges from current node
@@ -1075,8 +1044,7 @@ class FlowController:
 
     # Node processors
     async def _process_start_node(self, execution: FlowExecution, node: FlowNode) -> Dict[str, Any]:
-        """Process start node"""
-        
+        """Process start node"""        
         # Execute entry actions
         for action in node.on_enter_actions:
             await self._execute_node_action(execution, action, node)
@@ -1084,8 +1052,7 @@ class FlowController:
         return {"success": True, "message": f"Started flow {execution.flow_id}"}
 
     async def _process_end_node(self, execution: FlowExecution, node: FlowNode) -> Dict[str, Any]:
-        """Process end node"""
-        
+        """Process end node"""        
         # Execute entry actions
         for action in node.on_enter_actions:
             await self._execute_node_action(execution, action, node)
@@ -1093,8 +1060,7 @@ class FlowController:
         return {"success": True, "message": f"Completed flow {execution.flow_id}"}
 
     async def _process_action_node(self, execution: FlowExecution, node: FlowNode) -> Dict[str, Any]:
-        """Process action node"""
-        
+        """Process action node"""        
         try:
             # Execute entry actions
             for action in node.on_enter_actions:
@@ -1131,14 +1097,12 @@ class FlowController:
             return {"success": False, "error": str(e)}
 
     async def _process_decision_node(self, execution: FlowExecution, node: FlowNode) -> Dict[str, Any]:
-        """Process decision node"""
-        
+        """Process decision node"""        
         # Decision nodes evaluate conditions and route accordingly
         return {"success": True, "message": f"Decision {node.name} evaluated"}
 
     async def _process_wait_node(self, execution: FlowExecution, node: FlowNode) -> Dict[str, Any]:
-        """Process wait node"""
-        
+        """Process wait node"""        
         if node.requires_user_input:
             # Schedule timeout if specified
             if node.timeout_seconds:
@@ -1155,20 +1119,17 @@ class FlowController:
             return {"success": True, "message": f"Wait {node.name} completed"}
 
     async def _process_parallel_node(self, execution: FlowExecution, node: FlowNode) -> Dict[str, Any]:
-        """Process parallel node (splits flow into parallel branches)"""
-        
+        """Process parallel node (splits flow into parallel branches)"""        
         # In real implementation, would create parallel executions
         return {"success": True, "message": f"Parallel {node.name} initiated"}
 
     async def _process_join_node(self, execution: FlowExecution, node: FlowNode) -> Dict[str, Any]:
-        """Process join node (waits for parallel branches to complete)"""
-        
+        """Process join node (waits for parallel branches to complete)"""        
         # In real implementation, would wait for parallel executions
         return {"success": True, "message": f"Join {node.name} completed"}
 
     async def _execute_node_action(self, execution: FlowExecution, action: str, node: FlowNode):
-        """Execute individual node action"""
-        
+        """Execute individual node action"""        
         try:
             if action == "log_workflow_start":
                 logger.info(f"Started workflow {execution.flow_id} for conversation {execution.conversation_id}")
@@ -1204,8 +1165,7 @@ class FlowController:
             logger.error(f"Error executing node action {action}: {str(e)}")
 
     async def _complete_flow_execution(self, execution: FlowExecution):
-        """Complete flow execution"""
-        
+        """Complete flow execution"""        
         execution.status = FlowStatus.COMPLETED
         execution.completed_at = datetime.now(timezone.utc)
         execution.execution_time = (execution.completed_at - execution.started_at).total_seconds()
@@ -1240,8 +1200,7 @@ class FlowController:
         logger.info(f"Completed flow execution {execution.execution_id} in {execution.execution_time:.2f}s")
 
     def _calculate_success_score(self, execution: FlowExecution) -> float:
-        """Calculate success score for flow execution"""
-        
+        """Calculate success score for flow execution"""        
         score = 0.0
         
         # Completion score
@@ -1266,8 +1225,7 @@ class FlowController:
         return min(score, 1.0)
 
     async def _handle_node_failure(self, execution: FlowExecution, node: FlowNode, result: Dict[str, Any]):
-        """Handle node execution failure"""
-        
+        """Handle node execution failure"""        
         execution.retry_count += 1
         execution.error_log.append({
             "node_id": node.node_id,
@@ -1288,8 +1246,7 @@ class FlowController:
             logger.error(f"Flow execution {execution.execution_id} failed at node {node.node_id}")
 
     async def _handle_execution_error(self, execution: FlowExecution, error: str):
-        """Handle general execution error"""
-        
+        """Handle general execution error"""        
         execution.status = FlowStatus.FAILED
         execution.error_log.append({
             "error": error,
@@ -1307,8 +1264,7 @@ class FlowController:
         )
 
     async def _schedule_wait_timeout(self, execution: FlowExecution, node: FlowNode):
-        """Schedule timeout for wait node"""
-        
+        """Schedule timeout for wait node"""        
         await asyncio.sleep(node.timeout_seconds)
         
         # Check if still waiting
@@ -1324,8 +1280,7 @@ class FlowController:
             )
 
     async def _monitor_flow_timeouts(self):
-        """Background task to monitor flow timeouts"""
-        
+        """Background task to monitor flow timeouts"""        
         while True:
             try:
                 current_time = datetime.now(timezone.utc)
@@ -1354,8 +1309,7 @@ class FlowController:
                 await asyncio.sleep(60)
 
     async def _handle_interrupted_flows(self):
-        """Background task to handle interrupted flows"""
-        
+        """Background task to handle interrupted flows"""        
         while True:
             try:
                 for interruption in list(self.interrupted_executions.values()):
@@ -1381,8 +1335,7 @@ class FlowController:
                 await asyncio.sleep(600)
 
     async def _persist_flow_execution(self, execution: FlowExecution):
-        """Persist flow execution to Redis"""
-        
+        """Persist flow execution to Redis"""        
         try:
             execution_data = {
                 "execution_id": execution.execution_id,
@@ -1417,8 +1370,7 @@ class FlowController:
             logger.error(f"Error persisting flow execution: {str(e)}")
 
     async def _persist_flow_interruption(self, interruption: FlowInterruption):
-        """Persist flow interruption to Redis"""
-        
+        """Persist flow interruption to Redis"""        
         try:
             interruption_data = {
                 "interrupt_id": interruption.interrupt_id,
@@ -1447,8 +1399,7 @@ class FlowController:
 
     # Public API methods
     async def get_flow_status(self, execution_id: str) -> Dict[str, Any]:
-        """Get status of flow execution"""
-        
+        """Get status of flow execution"""        
         execution = self.active_executions.get(execution_id)
         if not execution:
             return {"error": "Execution not found"}
@@ -1486,8 +1437,7 @@ class FlowController:
         }
 
     async def get_conversation_flows(self, conversation_id: str) -> List[Dict[str, Any]]:
-        """Get all flows for conversation"""
-        
+        """Get all flows for conversation"""        
         conversation_flows = []
         
         for execution in self.active_executions.values():
@@ -1498,8 +1448,7 @@ class FlowController:
         return conversation_flows
 
     async def cancel_flow(self, execution_id: str, reason: str = "user_cancelled") -> bool:
-        """Cancel flow execution"""
-        
+        """Cancel flow execution"""        
         execution = self.active_executions.get(execution_id)
         if not execution:
             return False
@@ -1518,8 +1467,7 @@ class FlowController:
         return True
 
     def get_flow_metrics(self) -> Dict[str, Any]:
-        """Get flow controller metrics"""
-        
+        """Get flow controller metrics"""        
         return {
             "global_metrics": self.metrics,
             "active_executions": len(self.active_executions),
@@ -1541,8 +1489,7 @@ class FlowController:
 
 @dataclass
 class FlowExecutionStatus:
-    """Detailed flow execution status"""
-    execution_id: str
+    """Detailed flow execution status"""    execution_id: str
     status: FlowStatus
     current_node: Optional[str] = None
     progress_percentage: float = 0.0
@@ -1553,8 +1500,7 @@ class FlowExecutionStatus:
 
 @dataclass
 class FlowInterruption:
-    """Flow interruption details"""
-    interruption_id: str
+    """Flow interruption details"""    interruption_id: str
     execution_id: str
     interruption_type: InterruptionType
     source: str  # user, system, external
@@ -1575,8 +1521,7 @@ class FlowInterruption:
 
 @dataclass
 class FlowResumption:
-    """Flow resumption configuration"""
-    resumption_id: str
+    """Flow resumption configuration"""    resumption_id: str
     interruption_id: str
     execution_id: str
     
@@ -1597,8 +1542,7 @@ class FlowResumption:
 
 @dataclass
 class ConditionalFlow:
-    """Conditional flow execution based on business rules"""
-    condition_id: str
+    """Conditional flow execution based on business rules"""    condition_id: str
     flow_id: str
     condition_expression: str
     condition_type: str  # business_rule, user_attribute, system_state, time_based
@@ -1622,8 +1566,7 @@ class ConditionalFlow:
 
 @dataclass
 class ParallelFlow:
-    """Parallel flow execution management"""
-    parallel_id: str
+    """Parallel flow execution management"""    parallel_id: str
     main_flow_id: str
     parallel_flows: List[str] = field(default_factory=list)
     
@@ -1649,8 +1592,7 @@ class ParallelFlow:
 
 @dataclass
 class FlowValidation:
-    """Flow validation and quality assurance"""
-    validation_id: str
+    """Flow validation and quality assurance"""    validation_id: str
     flow_id: str
     validation_type: str  # structural, business_logic, performance, security
     
@@ -1673,8 +1615,7 @@ class FlowValidation:
 
 @dataclass
 class FlowOptimization:
-    """Flow optimization analysis and recommendations"""
-    optimization_id: str
+    """Flow optimization analysis and recommendations"""    optimization_id: str
     flow_id: str
     optimization_type: str  # performance, cost, user_experience, business_value
     

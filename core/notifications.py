@@ -1,5 +1,4 @@
-"""
-Notification System for Content Protection
+"""Notification System for Content Protection
 
 Advanced notification management system for DMCA automation, compliance alerts,
 and real-time communication with copyright owners and legal teams.
@@ -16,7 +15,6 @@ prohibited and will result in legal action.
 
 All rights reserved © 2025 Fahed Mlaiel
 """
-
 import asyncio
 import logging
 import smtplib
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class NotificationType(Enum):
-    """Types of notifications"""
-    EMAIL = "email"
+    """Types of notifications"""    EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
     PUSH = "push"
@@ -47,8 +44,7 @@ class NotificationType(Enum):
 
 
 class NotificationPriority(Enum):
-    """Notification priority levels"""
-    LOW = "low"
+    """Notification priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -56,8 +52,7 @@ class NotificationPriority(Enum):
 
 
 class NotificationStatus(Enum):
-    """Notification delivery status"""
-    PENDING = "pending"
+    """Notification delivery status"""    PENDING = "pending"
     SENDING = "sending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -68,8 +63,7 @@ class NotificationStatus(Enum):
 
 @dataclass
 class NotificationRecipient:
-    """Notification recipient information"""
-    recipient_id: str
+    """Notification recipient information"""    recipient_id: str
     name: str
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -81,8 +75,7 @@ class NotificationRecipient:
 
 @dataclass
 class NotificationTemplate:
-    """Notification template"""
-    template_id: str
+    """Notification template"""    template_id: str
     name: str
     template_type: NotificationType
     subject_template: Optional[str] = None
@@ -94,8 +87,7 @@ class NotificationTemplate:
 
 @dataclass
 class NotificationMessage:
-    """Notification message"""
-    message_id: str
+    """Notification message"""    message_id: str
     notification_type: NotificationType
     recipient: NotificationRecipient
     subject: Optional[str] = None
@@ -109,8 +101,7 @@ class NotificationMessage:
 
 
 class NotificationManager:
-    """
-    Advanced notification management system
+    """    Advanced notification management system
     
     Features:
     - Multi-channel notifications (Email, SMS, Webhook, Push)
@@ -120,11 +111,9 @@ class NotificationManager:
     - Delivery tracking and analytics
     - Rate limiting and throttling
     - Internationalization support
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize notification manager"""
-        self.config = config or {}
+        """Initialize notification manager"""        self.config = config or {}
         self.logger = logger
         
         # Email configuration
@@ -165,8 +154,7 @@ class NotificationManager:
                               variables: Dict[str, Any],
                               priority: NotificationPriority = NotificationPriority.NORMAL,
                               scheduled_at: Optional[datetime] = None) -> str:
-        """
-        Send notification using template
+        """        Send notification using template
         
         Args:
             recipient: Notification recipient
@@ -177,8 +165,7 @@ class NotificationManager:
             
         Returns:
             Message ID for tracking
-        """
-        try:
+        """        try:
             # Get template
             template = self.templates.get(template_id)
             if not template:
@@ -210,8 +197,7 @@ class NotificationManager:
                                      body: str,
                                      priority: NotificationPriority = NotificationPriority.NORMAL,
                                      attachments: Optional[List[Dict[str, Any]]] = None) -> str:
-        """
-        Send direct notification without template
+        """        Send direct notification without template
         
         Args:
             recipient: Notification recipient
@@ -223,8 +209,7 @@ class NotificationManager:
             
         Returns:
             Message ID for tracking
-        """
-        try:
+        """        try:
             import uuid
             
             # Create message
@@ -256,8 +241,7 @@ class NotificationManager:
                                    platform: str,
                                    status: str,
                                    details: Dict[str, Any]) -> str:
-        """
-        Send DMCA notice status alert
+        """        Send DMCA notice status alert
         
         Args:
             recipient: Alert recipient
@@ -268,8 +252,7 @@ class NotificationManager:
             
         Returns:
             Message ID for tracking
-        """
-        try:
+        """        try:
             # Determine priority based on status
             priority_map = {
                 'sent': NotificationPriority.NORMAL,
@@ -284,8 +267,7 @@ class NotificationManager:
             # Create subject and body
             subject = f"DMCA Notice Update: {status.title()} - {platform}"
             
-            body = f"""
-DMCA Notice Status Update
+            body = f"""DMCA Notice Status Update
 
 Notice ID: {notice_id}
 Platform: {platform}
@@ -319,8 +301,7 @@ Contact: mlaiel@live.de for support.
                                   compliance_status: str,
                                   deadline: datetime,
                                   actions_required: List[str]) -> str:
-        """
-        Send compliance monitoring alert
+        """        Send compliance monitoring alert
         
         Args:
             recipient: Alert recipient
@@ -331,8 +312,7 @@ Contact: mlaiel@live.de for support.
             
         Returns:
             Message ID for tracking
-        """
-        try:
+        """        try:
             # Determine urgency based on deadline
             time_until_deadline = deadline - datetime.now(timezone.utc)
             days_remaining = time_until_deadline.days
@@ -350,8 +330,7 @@ Contact: mlaiel@live.de for support.
             
             actions_list = "\n".join(f"• {action}" for action in actions_required)
             
-            body = f"""
-Compliance Monitoring Alert
+            body = f"""Compliance Monitoring Alert
 
 Tracking ID: {tracking_id}
 Status: {compliance_status.title()}
@@ -387,8 +366,7 @@ Contact: mlaiel@live.de for support.
                                     stage: str,
                                     action_taken: str,
                                     result: Dict[str, Any]) -> str:
-        """
-        Send enforcement action update
+        """        Send enforcement action update
         
         Args:
             recipient: Update recipient
@@ -399,12 +377,10 @@ Contact: mlaiel@live.de for support.
             
         Returns:
             Message ID for tracking
-        """
-        try:
+        """        try:
             subject = f"Enforcement Update: {stage.title()} - {action_taken}"
             
-            body = f"""
-Enforcement Action Update
+            body = f"""Enforcement Action Update
 
 Enforcement ID: {enforcement_id}
 Stage: {stage.title()}
@@ -435,13 +411,11 @@ Contact: mlaiel@live.de for support.
             raise
     
     async def register_template(self, template: NotificationTemplate) -> None:
-        """Register notification template"""
-        self.templates[template.template_id] = template
+        """Register notification template"""        self.templates[template.template_id] = template
         self.logger.info(f"Template registered: {template.template_id}")
     
     async def get_delivery_status(self, message_id: str) -> Optional[Dict[str, Any]]:
-        """Get delivery status for message"""
-        for message in self.delivery_queue:
+        """Get delivery status for message"""        for message in self.delivery_queue:
             if message.message_id == message_id:
                 return {
                     'message_id': message_id,
@@ -454,8 +428,7 @@ Contact: mlaiel@live.de for support.
         return None
     
     async def get_delivery_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive delivery analytics"""
-        total_messages = len(self.delivery_queue)
+        """Get comprehensive delivery analytics"""        total_messages = len(self.delivery_queue)
         
         if total_messages == 0:
             return {
@@ -499,8 +472,7 @@ Contact: mlaiel@live.de for support.
                                           variables: Dict[str, Any],
                                           priority: NotificationPriority,
                                           scheduled_at: Optional[datetime]) -> NotificationMessage:
-        """Render message from template"""
-        import uuid
+        """Render message from template"""        import uuid
         from string import Template
         
         # Add recipient variables
@@ -534,8 +506,7 @@ Contact: mlaiel@live.de for support.
         )
     
     async def _deliver_message(self, message: NotificationMessage) -> bool:
-        """Deliver notification message"""
-        try:
+        """Deliver notification message"""        try:
             message.status = NotificationStatus.SENDING
             
             if message.notification_type == NotificationType.EMAIL:
@@ -568,8 +539,7 @@ Contact: mlaiel@live.de for support.
             return False
     
     async def _send_email(self, message: NotificationMessage) -> bool:
-        """Send email notification"""
-        try:
+        """Send email notification"""        try:
             if not self.email_enabled:
                 self.logger.warning("Email not configured")
                 return False
@@ -611,8 +581,7 @@ Contact: mlaiel@live.de for support.
             return False
     
     async def _send_sms(self, message: NotificationMessage) -> bool:
-        """Send SMS notification"""
-        try:
+        """Send SMS notification"""        try:
             if not self.sms_enabled:
                 self.logger.warning("SMS not configured")
                 return False
@@ -636,8 +605,7 @@ Contact: mlaiel@live.de for support.
             return False
     
     async def _send_webhook(self, message: NotificationMessage) -> bool:
-        """Send webhook notification"""
-        try:
+        """Send webhook notification"""        try:
             if not message.recipient.webhook_url:
                 self.logger.warning("Recipient webhook URL not provided")
                 return False
@@ -678,8 +646,7 @@ Contact: mlaiel@live.de for support.
 
 # Factory function
 def create_notification_manager(config: Optional[Dict[str, Any]] = None) -> NotificationManager:
-    """Factory function to create notification manager"""
-    return NotificationManager(config)
+    """Factory function to create notification manager"""    return NotificationManager(config)
 
 
 # Export all notification components

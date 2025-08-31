@@ -1,11 +1,9 @@
-"""
-Advanced Social Scheduler - Ultra-Advanced Implementation
+"""Advanced Social Scheduler - Ultra-Advanced Implementation
 AI-Powered Social Media Content Scheduling and Optimization System
 
 This module provides comprehensive social media scheduling capabilities including
 optimal timing analysis, multi-platform posting, content optimization, and performance tracking.
 """
-
 import asyncio
 import aiohttp
 import json
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class SocialPlatform(str, Enum):
-    """Supported social media platforms"""
-    TWITTER = "twitter"
+    """Supported social media platforms"""    TWITTER = "twitter"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
     LINKEDIN = "linkedin"
@@ -48,8 +45,7 @@ class SocialPlatform(str, Enum):
 
 
 class PostType(str, Enum):
-    """Types of social media posts"""
-    TEXT = "text"
+    """Types of social media posts"""    TEXT = "text"
     IMAGE = "image"
     VIDEO = "video"
     CAROUSEL = "carousel"
@@ -62,8 +58,7 @@ class PostType(str, Enum):
 
 
 class SchedulingStrategy(str, Enum):
-    """Content scheduling strategies"""
-    OPTIMAL_TIMING = "optimal_timing"
+    """Content scheduling strategies"""    OPTIMAL_TIMING = "optimal_timing"
     CONSISTENT_INTERVALS = "consistent_intervals"
     PEAK_ENGAGEMENT = "peak_engagement"
     COMPETITOR_ANALYSIS = "competitor_analysis"
@@ -73,8 +68,7 @@ class SchedulingStrategy(str, Enum):
 
 
 class PostStatus(str, Enum):
-    """Status of scheduled posts"""
-    DRAFT = "draft"
+    """Status of scheduled posts"""    DRAFT = "draft"
     SCHEDULED = "scheduled"
     PUBLISHED = "published"
     FAILED = "failed"
@@ -85,8 +79,7 @@ class PostStatus(str, Enum):
 
 
 class OptimizationGoal(str, Enum):
-    """Content optimization goals"""
-    ENGAGEMENT = "engagement"
+    """Content optimization goals"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     CLICKS = "clicks"
     SHARES = "shares"
@@ -97,8 +90,7 @@ class OptimizationGoal(str, Enum):
 
 
 class MediaAsset(BaseModel):
-    """Media asset for social media posts"""
-    asset_id: str
+    """Media asset for social media posts"""    asset_id: str
     asset_type: str  # "image", "video", "gif", "document"
     file_url: str
     file_size: int
@@ -111,8 +103,7 @@ class MediaAsset(BaseModel):
 
 
 class PlatformSettings(BaseModel):
-    """Platform-specific settings"""
-    platform: SocialPlatform
+    """Platform-specific settings"""    platform: SocialPlatform
     account_id: str
     account_username: str
     
@@ -139,8 +130,7 @@ class PlatformSettings(BaseModel):
 
 
 class ScheduledPost(BaseModel):
-    """Scheduled social media post"""
-    post_id: str
+    """Scheduled social media post"""    post_id: str
     campaign_id: Optional[str] = None
     platform: SocialPlatform
     post_type: PostType
@@ -181,8 +171,7 @@ class ScheduledPost(BaseModel):
 
 
 class PostingResult(BaseModel):
-    """Result of posting to social media"""
-    post_id: str
+    """Result of posting to social media"""    post_id: str
     platform: SocialPlatform
     success: bool
     published_post_id: Optional[str] = None
@@ -202,8 +191,7 @@ class PostingResult(BaseModel):
 
 
 class OptimalTimingAnalysis(BaseModel):
-    """Analysis of optimal posting times"""
-    analysis_id: str
+    """Analysis of optimal posting times"""    analysis_id: str
     platform: SocialPlatform
     analysis_period: str
     generation_timestamp: datetime
@@ -229,8 +217,7 @@ class OptimalTimingAnalysis(BaseModel):
 
 
 class ContentCalendar(BaseModel):
-    """Content calendar with scheduled posts"""
-    calendar_id: str
+    """Content calendar with scheduled posts"""    calendar_id: str
     calendar_name: str
     creation_timestamp: datetime
     
@@ -259,13 +246,11 @@ class ContentCalendar(BaseModel):
 
 
 class AdvancedSocialScheduler(BaseCrawler):
-    """
-    Ultra-Advanced Social Media Scheduler
+    """    Ultra-Advanced Social Media Scheduler
     
     Provides comprehensive social media scheduling with AI-powered optimization,
     multi-platform support, and advanced analytics.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         
@@ -327,8 +312,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         logger.info("Advanced Social Scheduler initialized with multi-platform support")
 
     async def start_scheduler(self):
-        """Start background scheduler and publisher tasks"""
-        if self.scheduler_active:
+        """Start background scheduler and publisher tasks"""        if self.scheduler_active:
             return
         
         self.scheduler_active = True
@@ -349,8 +333,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         logger.info("Social media scheduler started")
 
     async def stop_scheduler(self):
-        """Stop background scheduler tasks"""
-        self.scheduler_active = False
+        """Stop background scheduler tasks"""        self.scheduler_active = False
         self.publisher_active = False
         logger.info("Social media scheduler stopped")
 
@@ -363,8 +346,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         platforms: List[SocialPlatform],
         posting_frequency: Dict[SocialPlatform, int] = None
     ) -> ContentCalendar:
-        """
-        Create a new content calendar
+        """        Create a new content calendar
         
         Args:
             calendar_name: Name for the calendar
@@ -376,8 +358,7 @@ class AdvancedSocialScheduler(BaseCrawler):
             
         Returns:
             ContentCalendar: Created calendar
-        """
-        try:
+        """        try:
             calendar_id = hashlib.md5(f"{calendar_name}_{datetime.utcnow()}".encode()).hexdigest()
             
             # Default posting frequencies
@@ -430,8 +411,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         optimization_goal: OptimizationGoal = OptimizationGoal.ENGAGEMENT,
         campaign_id: str = None
     ) -> str:
-        """
-        Schedule a social media post
+        """        Schedule a social media post
         
         Args:
             platform: Target platform
@@ -444,8 +424,7 @@ class AdvancedSocialScheduler(BaseCrawler):
             
         Returns:
             str: Post ID for tracking
-        """
-        try:
+        """        try:
             post_id = hashlib.md5(f"{platform.value}_{content}_{datetime.utcnow()}".encode()).hexdigest()
             
             # Extract hashtags and mentions
@@ -507,16 +486,14 @@ class AdvancedSocialScheduler(BaseCrawler):
         self,
         posts_data: List[Dict[str, Any]]
     ) -> List[str]:
-        """
-        Schedule multiple posts in batch
+        """        Schedule multiple posts in batch
         
         Args:
             posts_data: List of post data dictionaries
             
         Returns:
             List[str]: List of scheduled post IDs
-        """
-        scheduled_ids = []
+        """        scheduled_ids = []
         
         for post_data in posts_data:
             try:
@@ -544,8 +521,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         analysis_period: str = "30d",
         content_type: PostType = None
     ) -> OptimalTimingAnalysis:
-        """
-        Analyze optimal posting times for platform
+        """        Analyze optimal posting times for platform
         
         Args:
             platform: Platform to analyze
@@ -554,8 +530,7 @@ class AdvancedSocialScheduler(BaseCrawler):
             
         Returns:
             OptimalTimingAnalysis: Timing analysis results
-        """
-        try:
+        """        try:
             analysis_id = hashlib.md5(f"{platform.value}_{analysis_period}_{datetime.utcnow()}".encode()).hexdigest()
             
             # Get historical engagement data
@@ -600,16 +575,14 @@ class AdvancedSocialScheduler(BaseCrawler):
             raise
 
     async def get_post_status(self, post_id: str) -> Optional[ScheduledPost]:
-        """
-        Get status of scheduled post
+        """        Get status of scheduled post
         
         Args:
             post_id: Post identifier
             
         Returns:
             ScheduledPost: Current post status or None
-        """
-        if post_id in self.scheduled_posts:
+        """        if post_id in self.scheduled_posts:
             return self.scheduled_posts[post_id]
         elif post_id in self.published_posts:
             return self.published_posts[post_id]
@@ -621,8 +594,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         post_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update scheduled post
+        """        Update scheduled post
         
         Args:
             post_id: Post identifier
@@ -630,8 +602,7 @@ class AdvancedSocialScheduler(BaseCrawler):
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if post_id not in self.scheduled_posts:
                 return False
             
@@ -662,16 +633,14 @@ class AdvancedSocialScheduler(BaseCrawler):
             return False
 
     async def cancel_post(self, post_id: str) -> bool:
-        """
-        Cancel scheduled post
+        """        Cancel scheduled post
         
         Args:
             post_id: Post identifier
             
         Returns:
             bool: Success status
-        """
-        try:
+        """        try:
             if post_id in self.scheduled_posts:
                 post = self.scheduled_posts[post_id]
                 if post.status in [PostStatus.SCHEDULED, PostStatus.REVIEWING]:
@@ -688,8 +657,7 @@ class AdvancedSocialScheduler(BaseCrawler):
     # Helper methods
     
     async def _scheduler_loop(self):
-        """Main scheduler loop for processing scheduled posts"""
-        try:
+        """Main scheduler loop for processing scheduled posts"""        try:
             while self.scheduler_active:
                 try:
                     # Check for posts ready to publish
@@ -717,8 +685,7 @@ class AdvancedSocialScheduler(BaseCrawler):
             logger.error(f"Scheduler loop crashed: {str(e)}")
 
     async def _publisher_loop(self):
-        """Main publisher loop for publishing posts"""
-        try:
+        """Main publisher loop for publishing posts"""        try:
             while self.publisher_active:
                 try:
                     # Get post from publishing queue
@@ -756,8 +723,7 @@ class AdvancedSocialScheduler(BaseCrawler):
             logger.error(f"Publisher loop crashed: {str(e)}")
 
     async def _retry_loop(self):
-        """Retry loop for failed posts"""
-        try:
+        """Retry loop for failed posts"""        try:
             while self.publisher_active:
                 try:
                     # Get post from retry queue
@@ -781,8 +747,7 @@ class AdvancedSocialScheduler(BaseCrawler):
             logger.error(f"Retry loop crashed: {str(e)}")
 
     async def _publish_post(self, post: ScheduledPost) -> PostingResult:
-        """Publish post to social media platform"""
-        try:
+        """Publish post to social media platform"""        try:
             await self.rate_limiters[post.platform].acquire()
             
             # Get platform-specific publisher
@@ -809,8 +774,7 @@ class AdvancedSocialScheduler(BaseCrawler):
             )
 
     async def _publish_to_twitter(self, post: ScheduledPost) -> PostingResult:
-        """Publish post to Twitter"""
-        # Simplified Twitter publishing (would use actual Twitter API)
+        """Publish post to Twitter"""        # Simplified Twitter publishing (would use actual Twitter API)
         return PostingResult(
             post_id=post.post_id,
             platform=post.platform,
@@ -822,8 +786,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         )
 
     async def _publish_to_instagram(self, post: ScheduledPost) -> PostingResult:
-        """Publish post to Instagram"""
-        # Simplified Instagram publishing
+        """Publish post to Instagram"""        # Simplified Instagram publishing
         return PostingResult(
             post_id=post.post_id,
             platform=post.platform,
@@ -835,8 +798,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         )
 
     async def _publish_to_facebook(self, post: ScheduledPost) -> PostingResult:
-        """Publish post to Facebook"""
-        # Simplified Facebook publishing
+        """Publish post to Facebook"""        # Simplified Facebook publishing
         return PostingResult(
             post_id=post.post_id,
             platform=post.platform,
@@ -848,8 +810,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         )
 
     async def _publish_to_linkedin(self, post: ScheduledPost) -> PostingResult:
-        """Publish post to LinkedIn"""
-        # Simplified LinkedIn publishing
+        """Publish post to LinkedIn"""        # Simplified LinkedIn publishing
         return PostingResult(
             post_id=post.post_id,
             platform=post.platform,
@@ -861,8 +822,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         )
 
     async def _validate_post_for_platform(self, post: ScheduledPost) -> Dict[str, Any]:
-        """Validate post for platform requirements"""
-        platform_settings = self.platform_settings.get(post.platform)
+        """Validate post for platform requirements"""        platform_settings = self.platform_settings.get(post.platform)
         if not platform_settings:
             return {'valid': False, 'errors': ['Platform not configured']}
         
@@ -887,8 +847,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         return {'valid': len(errors) == 0, 'errors': errors}
 
     async def _optimize_post_content(self, post: ScheduledPost) -> ScheduledPost:
-        """Optimize post content for better performance"""
-        # Add AI-powered content optimization here
+        """Optimize post content for better performance"""        # Add AI-powered content optimization here
         
         # Suggest hashtags
         if self.ai_suggestions_enabled and len(post.hashtags) < 5:
@@ -904,8 +863,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         return post
 
     async def _predict_post_performance(self, post: ScheduledPost) -> Dict[str, Any]:
-        """Predict post performance metrics"""
-        # Simplified performance prediction (would use ML models)
+        """Predict post performance metrics"""        # Simplified performance prediction (would use ML models)
         base_engagement = 100
         base_reach = 1000
         
@@ -927,8 +885,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         }
 
     async def _check_approval_requirements(self, post: ScheduledPost) -> bool:
-        """Check if post requires approval"""
-        # Simple approval rules
+        """Check if post requires approval"""        # Simple approval rules
         if len(post.text_content) > 500:
             return True
         
@@ -938,18 +895,15 @@ class AdvancedSocialScheduler(BaseCrawler):
         return False
 
     async def _optimize_calendar_timing(self, calendar: ContentCalendar, platforms: List[SocialPlatform]) -> ContentCalendar:
-        """Optimize calendar timing based on platform analytics"""
-        # Implementation for calendar timing optimization
+        """Optimize calendar timing based on platform analytics"""        # Implementation for calendar timing optimization
         return calendar
 
     async def _optimize_for_peak_engagement(self, calendar: ContentCalendar, platforms: List[SocialPlatform]) -> ContentCalendar:
-        """Optimize calendar for peak engagement times"""
-        # Implementation for peak engagement optimization
+        """Optimize calendar for peak engagement times"""        # Implementation for peak engagement optimization
         return calendar
 
     async def _get_historical_engagement_data(self, platform: SocialPlatform, period: str) -> List[Dict[str, Any]]:
-        """Get historical engagement data for analysis"""
-        # Simplified historical data (would fetch from analytics APIs)
+        """Get historical engagement data for analysis"""        # Simplified historical data (would fetch from analytics APIs)
         data_points = []
         
         # Generate sample data for the period
@@ -971,8 +925,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         return data_points
 
     async def _analyze_audience_activity(self, platform: SocialPlatform, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze audience activity patterns"""
-        if not historical_data:
+        """Analyze audience activity patterns"""        if not historical_data:
             return {}
         
         # Analyze by hour
@@ -1012,8 +965,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         }
 
     async def _calculate_optimal_times(self, historical_data: List[Dict[str, Any]], patterns: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Calculate optimal posting times"""
-        optimal_times = []
+        """Calculate optimal posting times"""        optimal_times = []
         
         for hour in patterns.get('peak_hours', []):
             for day in patterns.get('best_days', []):
@@ -1027,8 +979,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         return optimal_times
 
     async def _analyze_content_type_timing(self, historical_data: List[Dict[str, Any]], content_type: PostType) -> Dict[PostType, List[str]]:
-        """Analyze optimal timing for different content types"""
-        # Simplified content type timing analysis
+        """Analyze optimal timing for different content types"""        # Simplified content type timing analysis
         return {
             PostType.TEXT: ['09:00', '12:00', '18:00'],
             PostType.IMAGE: ['11:00', '15:00', '19:00'],
@@ -1036,16 +987,14 @@ class AdvancedSocialScheduler(BaseCrawler):
         }
 
     async def _calculate_timing_confidence(self, historical_data: List[Dict[str, Any]]) -> Dict[str, float]:
-        """Calculate confidence metrics for timing analysis"""
-        return {
+        """Calculate confidence metrics for timing analysis"""        return {
             'accuracy': 0.85,
             'confidence': 0.9,
             'data_quality': 0.8
         }
 
     async def _suggest_hashtags(self, content: str, platform: SocialPlatform) -> List[str]:
-        """Suggest relevant hashtags for content"""
-        # Simplified hashtag suggestion (would use AI/ML)
+        """Suggest relevant hashtags for content"""        # Simplified hashtag suggestion (would use AI/ML)
         words = content.lower().split()
         suggestions = []
         
@@ -1064,19 +1013,16 @@ class AdvancedSocialScheduler(BaseCrawler):
         return suggestions[:3]
 
     async def _get_optimal_time_for_content(self, post: ScheduledPost) -> Optional[datetime]:
-        """Get optimal time for specific content"""
-        # Would analyze content and return optimal time
+        """Get optimal time for specific content"""        # Would analyze content and return optimal time
         return None
 
     def _is_optimal_time(self, scheduled_time: datetime) -> bool:
-        """Check if scheduled time is optimal"""
-        # Simplified optimal time check
+        """Check if scheduled time is optimal"""        # Simplified optimal time check
         hour = scheduled_time.hour
         return 9 <= hour <= 17  # Business hours
 
     async def get_calendar_analytics(self, calendar_id: str) -> Dict[str, Any]:
-        """Get analytics for content calendar"""
-        if calendar_id not in self.active_calendars:
+        """Get analytics for content calendar"""        if calendar_id not in self.active_calendars:
             return {}
         
         calendar = self.active_calendars[calendar_id]
@@ -1099,8 +1045,7 @@ class AdvancedSocialScheduler(BaseCrawler):
         }
 
     async def close(self):
-        """Close scheduler and cleanup resources"""
-        try:
+        """Close scheduler and cleanup resources"""        try:
             await self.stop_scheduler()
             await self.cache_manager.close()
             await super().close()

@@ -1,5 +1,4 @@
-"""
-Engagement Optimizer - Advanced Engagement Analytics & Optimization Engine
+"""Engagement Optimizer - Advanced Engagement Analytics & Optimization Engine
 
 Industrial-grade engagement optimization system with ML-powered insights,
 A/B testing capabilities, and real-time performance optimization.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -50,8 +48,7 @@ from ...utils.cache_manager import CacheManager
 logger = logging.getLogger(__name__)
 
 class OptimizationObjective(Enum):
-    """Engagement optimization objectives"""
-    MAXIMIZE_REACH = "maximize_reach"
+    """Engagement optimization objectives"""    MAXIMIZE_REACH = "maximize_reach"
     MAXIMIZE_ENGAGEMENT_RATE = "maximize_engagement_rate" 
     MAXIMIZE_CONVERSIONS = "maximize_conversions"
     MAXIMIZE_RETENTION = "maximize_retention"
@@ -60,8 +57,7 @@ class OptimizationObjective(Enum):
     MAXIMIZE_AUDIENCE_GROWTH = "maximize_audience_growth"
 
 class ExperimentType(Enum):
-    """A/B testing experiment types"""
-    POSTING_TIME = "posting_time"
+    """A/B testing experiment types"""    POSTING_TIME = "posting_time"
     CONTENT_FORMAT = "content_format"
     HASHTAG_STRATEGY = "hashtag_strategy"
     CAPTION_LENGTH = "caption_length"
@@ -71,8 +67,7 @@ class ExperimentType(Enum):
 
 @dataclass
 class OptimizationRecommendation:
-    """Engagement optimization recommendation"""
-    objective: OptimizationObjective
+    """Engagement optimization recommendation"""    objective: OptimizationObjective
     recommendation_type: str
     description: str
     expected_improvement: float
@@ -85,8 +80,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class ABTestExperiment:
-    """A/B testing experiment configuration"""
-    experiment_id: str
+    """A/B testing experiment configuration"""    experiment_id: str
     experiment_type: ExperimentType
     hypothesis: str
     control_group: Dict[str, Any]
@@ -101,8 +95,7 @@ class ABTestExperiment:
 
 @dataclass
 class InteractionPattern:
-    """User interaction pattern analysis"""
-    user_id: str
+    """User interaction pattern analysis"""    user_id: str
     platform: str
     interaction_type: str
     frequency: int
@@ -113,13 +106,11 @@ class InteractionPattern:
     churn_probability: float
 
 class EngagementOptimizer:
-    """
-    Advanced Engagement Optimization Engine
+    """    Advanced Engagement Optimization Engine
     
     Machine learning-powered engagement optimization with A/B testing,
     predictive analytics, and automated recommendation generation.
-    """
-    
+    """    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.cache_manager = CacheManager(namespace="engagement_optimizer")
@@ -140,8 +131,7 @@ class EngagementOptimizer:
         logger.info("Engagement Optimizer initialized")
 
     async def initialize(self) -> bool:
-        """Initialize optimizer with ML models and historical data"""
-        try:
+        """Initialize optimizer with ML models and historical data"""        try:
             # Load and train ML models
             await self._initialize_ml_models()
             
@@ -164,8 +154,7 @@ class EngagementOptimizer:
                                          platform: str,
                                          objective: OptimizationObjective,
                                          historical_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """
-        Generate optimized engagement strategy recommendations
+        """        Generate optimized engagement strategy recommendations
         
         Args:
             creator_id: Creator identifier
@@ -175,8 +164,7 @@ class EngagementOptimizer:
             
         Returns:
             List[OptimizationRecommendation]: Prioritized recommendations
-        """
-        try:
+        """        try:
             # Analyze current performance patterns
             performance_analysis = await self._analyze_performance_patterns(
                 historical_data, objective
@@ -222,16 +210,14 @@ class EngagementOptimizer:
 
     async def run_ab_test_experiment(self,
                                    experiment_config: ABTestExperiment) -> Dict[str, Any]:
-        """
-        Run A/B testing experiment for engagement optimization
+        """        Run A/B testing experiment for engagement optimization
         
         Args:
             experiment_config: Experiment configuration
             
         Returns:
             Dict: Experiment results and analysis
-        """
-        try:
+        """        try:
             # Validate experiment configuration
             validation_result = await self._validate_experiment_config(experiment_config)
             if not validation_result['valid']:
@@ -283,8 +269,7 @@ class EngagementOptimizer:
                                            content_features: Dict[str, Any],
                                            platform: str,
                                            posting_time: datetime) -> Dict[str, Any]:
-        """
-        Predict engagement performance for content before posting
+        """        Predict engagement performance for content before posting
         
         Args:
             content_features: Content characteristics
@@ -293,8 +278,7 @@ class EngagementOptimizer:
             
         Returns:
             Dict: Predicted engagement metrics
-        """
-        try:
+        """        try:
             # Prepare feature vector
             feature_vector = await self._prepare_feature_vector(
                 content_features, platform, posting_time
@@ -350,8 +334,7 @@ class EngagementOptimizer:
     async def analyze_audience_segments(self,
                                       creator_id: str,
                                       platform: str) -> Dict[str, Any]:
-        """
-        Perform advanced audience segmentation analysis
+        """        Perform advanced audience segmentation analysis
         
         Args:
             creator_id: Creator identifier
@@ -359,8 +342,7 @@ class EngagementOptimizer:
             
         Returns:
             Dict: Audience segmentation insights
-        """
-        try:
+        """        try:
             # Fetch audience interaction data
             audience_data = await self._fetch_audience_interaction_data(
                 creator_id, platform
@@ -417,8 +399,7 @@ class EngagementOptimizer:
     # Private helper methods
     
     async def _initialize_ml_models(self) -> None:
-        """Initialize and train ML models for optimization"""
-        try:
+        """Initialize and train ML models for optimization"""        try:
             # Load historical data for training
             training_data = await self._fetch_training_data()
             
@@ -479,8 +460,7 @@ class EngagementOptimizer:
     async def _analyze_performance_patterns(self,
                                           historical_data: Dict[str, Any],
                                           objective: OptimizationObjective) -> Dict[str, Any]:
-        """Analyze historical performance patterns"""
-        try:
+        """Analyze historical performance patterns"""        try:
             df = pd.DataFrame(historical_data['metrics'])
             
             # Time-based analysis
@@ -512,8 +492,7 @@ class EngagementOptimizer:
                                          platform: str,
                                          objective: OptimizationObjective,
                                          historical_data: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Generate ML-powered optimization recommendations"""
-        recommendations = []
+        """Generate ML-powered optimization recommendations"""        recommendations = []
         
         try:
             if self.engagement_predictor is None:
@@ -548,8 +527,7 @@ class EngagementOptimizer:
             return recommendations
 
     def _calculate_engagement_trends(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Calculate engagement trends over time"""
-        try:
+        """Calculate engagement trends over time"""        try:
             df_sorted = df.sort_values('timestamp')
             df_sorted['moving_avg'] = df_sorted['engagement_rate'].rolling(window=7).mean()
             
@@ -571,8 +549,7 @@ class EngagementOptimizer:
             return {}
 
     def _identify_seasonal_patterns(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Identify seasonal engagement patterns"""
-        try:
+        """Identify seasonal engagement patterns"""        try:
             df['month'] = pd.to_datetime(df['timestamp']).dt.month
             monthly_avg = df.groupby('month')['engagement_rate'].mean()
             
@@ -593,13 +570,11 @@ class EngagementOptimizer:
 
 
 class InteractionAnalyzer:
-    """
-    Advanced User Interaction Analysis System
+    """    Advanced User Interaction Analysis System
     
     Analyzes user interaction patterns, behavior sequences, and engagement quality
     to provide deep insights into audience behavior and preferences.
-    """
-    
+    """    
     def __init__(self):
         self.cache_manager = CacheManager(namespace="interaction_analyzer")
         self.statistical_analyzer = StatisticalAnalyzer()
@@ -614,8 +589,7 @@ class InteractionAnalyzer:
                                       creator_id: str,
                                       platform: str,
                                       timeframe_days: int = 30) -> Dict[str, Any]:
-        """
-        Analyze user interaction patterns and behaviors
+        """        Analyze user interaction patterns and behaviors
         
         Args:
             creator_id: Creator identifier
@@ -624,8 +598,7 @@ class InteractionAnalyzer:
             
         Returns:
             Dict: Comprehensive interaction analysis
-        """
-        try:
+        """        try:
             # Fetch interaction data
             interaction_data = await self._fetch_interaction_data(
                 creator_id, platform, timeframe_days
@@ -674,16 +647,14 @@ class InteractionAnalyzer:
 
     async def predict_user_churn(self,
                                user_interactions: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """
-        Predict user churn probability based on interaction patterns
+        """        Predict user churn probability based on interaction patterns
         
         Args:
             user_interactions: Historical user interactions
             
         Returns:
             Dict: Churn prediction and risk factors
-        """
-        try:
+        """        try:
             # Extract churn features
             features = await self._extract_churn_features(user_interactions)
             
@@ -725,8 +696,7 @@ class InteractionAnalyzer:
     
     async def _analyze_interaction_patterns(self, 
                                           interaction_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze user interaction patterns"""
-        try:
+        """Analyze user interaction patterns"""        try:
             df = pd.DataFrame(interaction_data)
             
             if df.empty:
@@ -753,8 +723,7 @@ class InteractionAnalyzer:
             return {}
 
     def _calculate_average_session_length(self, df: pd.DataFrame) -> float:
-        """Calculate average user session length"""
-        try:
+        """Calculate average user session length"""        try:
             df_sorted = df.sort_values(['user_id', 'timestamp'])
             session_lengths = []
             
@@ -792,8 +761,7 @@ class InteractionAnalyzer:
             return 0.0
 
     def _calculate_interaction_intensity(self, df: pd.DataFrame) -> float:
-        """Calculate interaction intensity score"""
-        try:
+        """Calculate interaction intensity score"""        try:
             # Weight different interaction types
             interaction_weights = {
                 'like': 1.0,
@@ -819,8 +787,7 @@ class InteractionAnalyzer:
             return 0.0
 
     def _categorize_risk_level(self, churn_probability: float) -> str:
-        """Categorize churn risk level"""
-        if churn_probability >= 0.8:
+        """Categorize churn risk level"""        if churn_probability >= 0.8:
             return "critical"
         elif churn_probability >= 0.6:
             return "high"

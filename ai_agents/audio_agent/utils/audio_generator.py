@@ -1,5 +1,4 @@
-"""
-AI Audio Generator - Advanced Audio Generation & Synthesis System
+"""AI Audio Generator - Advanced Audio Generation & Synthesis System
 
 Ultra-advanced AI-powered audio generation system with neural synthesis,
 procedural generation, and professional audio creation capabilities.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -51,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AudioGenerationRequest:
-    """Comprehensive audio generation request parameters"""
-    # Text-to-Audio parameters
+    """Comprehensive audio generation request parameters"""    # Text-to-Audio parameters
     text_prompt: Optional[str] = None
     description: Optional[str] = None
     
@@ -88,8 +85,7 @@ class AudioGenerationRequest:
 
 @dataclass
 class AudioGenerationResponse:
-    """Comprehensive audio generation response"""
-    success: bool
+    """Comprehensive audio generation response"""    success: bool
     generated_audio_path: Optional[str] = None
     generated_audio_data: Optional[np.ndarray] = None
     
@@ -121,8 +117,7 @@ class AudioGenerationResponse:
     warnings: List[str] = field(default_factory=list)
 
 class NeuralAudioGenerator(nn.Module):
-    """Advanced neural network for audio generation"""
-    
+    """Advanced neural network for audio generation"""    
     def __init__(self, 
                  latent_dim: int = 512,
                  sample_rate: int = 44100,
@@ -201,8 +196,7 @@ class NeuralAudioGenerator(nn.Module):
         return audio
 
 class ProceduralAudioGenerator:
-    """Procedural audio generation system"""
-    
+    """Procedural audio generation system"""    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         
@@ -216,8 +210,7 @@ class ProceduralAudioGenerator:
         self.chord_progressions = self._build_chord_progression_library()
     
     def _build_note_frequency_map(self) -> Dict[str, float]:
-        """Build mapping of note names to frequencies"""
-        notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
+        """Build mapping of note names to frequencies"""        notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
         frequencies = {}
         
         # A4 = 440 Hz reference
@@ -233,8 +226,7 @@ class ProceduralAudioGenerator:
         return frequencies
     
     def _build_scale_library(self) -> Dict[str, List[int]]:
-        """Build library of musical scales (semitone intervals)"""
-        return {
+        """Build library of musical scales (semitone intervals)"""        return {
             "major": [0, 2, 4, 5, 7, 9, 11],
             "minor": [0, 2, 3, 5, 7, 8, 10],
             "pentatonic_major": [0, 2, 4, 7, 9],
@@ -246,8 +238,7 @@ class ProceduralAudioGenerator:
         }
     
     def _build_chord_progression_library(self) -> Dict[str, List[str]]:
-        """Build library of common chord progressions"""
-        return {
+        """Build library of common chord progressions"""        return {
             "pop_basic": ["I", "V", "vi", "IV"],
             "jazz_ii_v": ["ii", "V", "I"],
             "blues": ["I", "I", "I", "I", "IV", "IV", "I", "I", "V", "IV", "I", "I"],
@@ -260,8 +251,7 @@ class ProceduralAudioGenerator:
                        scale: str = "major",
                        duration_seconds: float = 10.0,
                        tempo_bpm: float = 120.0) -> np.ndarray:
-        """Generate a procedural melody"""
-        # Calculate timing
+        """Generate a procedural melody"""        # Calculate timing
         beats_per_second = tempo_bpm / 60.0
         total_beats = duration_seconds * beats_per_second
         
@@ -309,8 +299,7 @@ class ProceduralAudioGenerator:
                                  progression: str = "pop_basic",
                                  duration_seconds: float = 10.0,
                                  tempo_bpm: float = 120.0) -> np.ndarray:
-        """Generate chord progression"""
-        chord_sequence = self.chord_progressions.get(progression, self.chord_progressions["pop_basic"])
+        """Generate chord progression"""        chord_sequence = self.chord_progressions.get(progression, self.chord_progressions["pop_basic"])
         
         # Map Roman numerals to chord intervals
         chord_intervals = {
@@ -355,8 +344,7 @@ class ProceduralAudioGenerator:
                           duration_seconds: float = 10.0,
                           tempo_bpm: float = 120.0,
                           complexity: str = "medium") -> np.ndarray:
-        """Generate procedural percussion"""
-        beat_duration = 60.0 / tempo_bpm
+        """Generate procedural percussion"""        beat_duration = 60.0 / tempo_bpm
         total_beats = int(duration_seconds / beat_duration)
         
         audio_data = np.zeros(int(duration_seconds * self.sample_rate))
@@ -399,8 +387,7 @@ class ProceduralAudioGenerator:
                             decay: float = 0.2, 
                             sustain: float = 0.6,
                             release: float = 0.1) -> np.ndarray:
-        """Create ADSR envelope"""
-        total_duration = t[-1] if len(t) > 0 else 1.0
+        """Create ADSR envelope"""        total_duration = t[-1] if len(t) > 0 else 1.0
         envelope = np.ones_like(t)
         
         # Attack phase
@@ -428,8 +415,7 @@ class ProceduralAudioGenerator:
         return envelope
     
     def _generate_kick_drum(self, duration: float) -> np.ndarray:
-        """Generate kick drum sound"""
-        t = np.linspace(0, duration, int(duration * self.sample_rate))
+        """Generate kick drum sound"""        t = np.linspace(0, duration, int(duration * self.sample_rate))
         
         # Low-frequency sine wave with pitch envelope
         freq_envelope = 60 * np.exp(-t * 8)  # Start at 60Hz, decay quickly
@@ -442,8 +428,7 @@ class ProceduralAudioGenerator:
         return kick
     
     def _generate_snare_drum(self, duration: float) -> np.ndarray:
-        """Generate snare drum sound"""
-        t = np.linspace(0, duration, int(duration * self.sample_rate))
+        """Generate snare drum sound"""        t = np.linspace(0, duration, int(duration * self.sample_rate))
         
         # Mix of tone and noise
         tone = 0.3 * np.sin(2 * np.pi * 200 * t)  # 200Hz tone
@@ -456,8 +441,7 @@ class ProceduralAudioGenerator:
         return snare * 0.6
     
     def _generate_hihat(self, duration: float) -> np.ndarray:
-        """Generate hi-hat sound"""
-        t = np.linspace(0, min(duration, 0.1), int(min(duration, 0.1) * self.sample_rate))
+        """Generate hi-hat sound"""        t = np.linspace(0, min(duration, 0.1), int(min(duration, 0.1) * self.sample_rate))
         
         # High-frequency noise
         hihat = np.random.normal(0, 1, len(t))
@@ -478,8 +462,7 @@ class ProceduralAudioGenerator:
         return hihat * 0.3
 
 class AIAudioGenerator:
-    """
-    Advanced AI-powered audio generation system
+    """    Advanced AI-powered audio generation system
     
     Features:
     - Neural audio synthesis from text prompts
@@ -487,8 +470,7 @@ class AIAudioGenerator:
     - Hybrid generation combining multiple methods
     - Professional audio mastering
     - Content protection and fingerprinting
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.cache_manager = CacheManager()
@@ -514,8 +496,7 @@ class AIAudioGenerator:
         logger.info(f"AIAudioGenerator initialized on device: {self.device}")
     
     async def generate_audio(self, request: AudioGenerationRequest) -> AudioGenerationResponse:
-        """Generate audio based on comprehensive request parameters"""
-        start_time = datetime.now()
+        """Generate audio based on comprehensive request parameters"""        start_time = datetime.now()
         
         try:
             # Validate request
@@ -617,8 +598,7 @@ class AIAudioGenerator:
             )
     
     def _validate_request(self, request: AudioGenerationRequest) -> Dict[str, Any]:
-        """Validate generation request parameters"""
-        if request.duration_seconds <= 0 or request.duration_seconds > 300:  # Max 5 minutes
+        """Validate generation request parameters"""        if request.duration_seconds <= 0 or request.duration_seconds > 300:  # Max 5 minutes
             return {"valid": False, "error": "Duration must be between 0 and 300 seconds"}
         
         if request.sample_rate not in [22050, 44100, 48000, 96000]:
@@ -635,8 +615,7 @@ class AIAudioGenerator:
         return {"valid": True}
     
     async def _generate_neural_audio(self, request: AudioGenerationRequest) -> np.ndarray:
-        """Generate audio using neural network"""
-        try:
+        """Generate audio using neural network"""        try:
             # Process text prompt to get embeddings
             text_embedding = await self._process_text_prompt(
                 request.text_prompt or request.description or "ambient music"
@@ -691,8 +670,7 @@ class AIAudioGenerator:
             return 0.1 * np.sin(2 * np.pi * 440 * t)  # A4 fallback
     
     async def _generate_procedural_audio(self, request: AudioGenerationRequest) -> np.ndarray:
-        """Generate audio using procedural synthesis"""
-        try:
+        """Generate audio using procedural synthesis"""        try:
             # Determine generation approach based on request
             if request.genre in ["classical", "orchestral", "ambient"]:
                 # Generate harmonic content
@@ -767,8 +745,7 @@ class AIAudioGenerator:
             return 0.1 * np.sin(2 * np.pi * 440 * t)
     
     async def _generate_hybrid_audio(self, request: AudioGenerationRequest) -> np.ndarray:
-        """Generate audio using hybrid neural + procedural approach"""
-        try:
+        """Generate audio using hybrid neural + procedural approach"""        try:
             # Generate base using procedural
             procedural_audio = await self._generate_procedural_audio(request)
             
@@ -794,8 +771,7 @@ class AIAudioGenerator:
             return await self._generate_procedural_audio(request)
     
     async def _process_text_prompt(self, text: str) -> torch.Tensor:
-        """Process text prompt into embeddings"""
-        try:
+        """Process text prompt into embeddings"""        try:
             if self.text_processor:
                 # Use actual text processing
                 # This is simplified - in production you'd use more sophisticated text processing
@@ -813,8 +789,7 @@ class AIAudioGenerator:
             return torch.randn(1, 768)
     
     def _create_style_vector(self, request: AudioGenerationRequest) -> torch.Tensor:
-        """Create style vector from musical parameters"""
-        style_features = np.zeros(128)  # Style vector size
+        """Create style vector from musical parameters"""        style_features = np.zeros(128)  # Style vector size
         
         try:
             # Genre encoding (one-hot style)
@@ -861,8 +836,7 @@ class AIAudioGenerator:
                                 audio_data: np.ndarray,
                                 sample_rate: int,
                                 request: AudioGenerationRequest) -> np.ndarray:
-        """Post-process generated audio"""
-        processed = audio_data.copy()
+        """Post-process generated audio"""        processed = audio_data.copy()
         
         try:
             # Convert to stereo if requested
@@ -890,8 +864,7 @@ class AIAudioGenerator:
             return processed
     
     async def _apply_mastering(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply professional mastering chain"""
-        try:
+        """Apply professional mastering chain"""        try:
             mastered = audio_data.copy()
             
             # 1. EQ - gentle high-frequency boost
@@ -913,8 +886,7 @@ class AIAudioGenerator:
             return audio_data
     
     def _apply_mastering_compression(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply mastering compression"""
-        compressed = audio_data.copy()
+        """Apply mastering compression"""        compressed = audio_data.copy()
         threshold = 0.7
         ratio = 3.0
         
@@ -927,8 +899,7 @@ class AIAudioGenerator:
         return compressed
     
     def _apply_mastering_limiter(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply mastering limiter"""
-        limited = audio_data.copy()
+        """Apply mastering limiter"""        limited = audio_data.copy()
         threshold = 0.95
         
         # Hard limiting
@@ -937,8 +908,7 @@ class AIAudioGenerator:
         return limited
     
     def _normalize_audio(self, audio_data: np.ndarray) -> np.ndarray:
-        """Normalize audio to optimal level"""
-        peak = np.max(np.abs(audio_data))
+        """Normalize audio to optimal level"""        peak = np.max(np.abs(audio_data))
         if peak > 0:
             return audio_data / peak * 0.95  # Leave some headroom
         return audio_data
@@ -948,8 +918,7 @@ class AIAudioGenerator:
                              sample_rate: int,
                              output_format: str,
                              request: AudioGenerationRequest) -> str:
-        """Save audio to file with metadata"""
-        try:
+        """Save audio to file with metadata"""        try:
             # Generate filename
             timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
             method_short = request.generation_method[:4]
@@ -979,8 +948,7 @@ class AIAudioGenerator:
             raise
     
     async def _add_audio_metadata(self, file_path: str, request: AudioGenerationRequest):
-        """Add metadata to audio file"""
-        try:
+        """Add metadata to audio file"""        try:
             # Create metadata dictionary
             metadata = {
                 "title": f"AI Generated - {request.text_prompt or 'Untitled'}",
@@ -1002,8 +970,7 @@ class AIAudioGenerator:
     async def _analyze_generated_audio(self,
                                      audio_data: np.ndarray,
                                      sample_rate: int) -> Dict[str, Any]:
-        """Analyze generated audio for response data"""
-        try:
+        """Analyze generated audio for response data"""        try:
             analysis = {}
             
             # Simple instrument detection (heuristic)
@@ -1076,8 +1043,7 @@ class AIAudioGenerator:
             }
 
 class AudioSynthesizer:
-    """
-    Advanced audio synthesizer with multiple synthesis methods
+    """    Advanced audio synthesizer with multiple synthesis methods
     
     Features:
     - Subtractive synthesis
@@ -1085,8 +1051,7 @@ class AudioSynthesizer:
     - Granular synthesis
     - Physical modeling
     - Wavetable synthesis
-    """
-    
+    """    
     def __init__(self, sample_rate: int = 44100):
         self.sample_rate = sample_rate
         self.nyquist = sample_rate // 2
@@ -1097,8 +1062,7 @@ class AudioSynthesizer:
         self.effects = self._initialize_effects()
     
     def _initialize_oscillators(self) -> Dict[str, callable]:
-        """Initialize oscillator functions"""
-        return {
+        """Initialize oscillator functions"""        return {
             "sine": lambda t, f: np.sin(2 * np.pi * f * t),
             "saw": lambda t, f: 2 * (t * f - np.floor(t * f + 0.5)),
             "square": lambda t, f: np.sign(np.sin(2 * np.pi * f * t)),
@@ -1107,8 +1071,7 @@ class AudioSynthesizer:
         }
     
     def _initialize_filters(self) -> Dict[str, callable]:
-        """Initialize filter functions"""
-        def lowpass(audio, cutoff, order=4):
+        """Initialize filter functions"""        def lowpass(audio, cutoff, order=4):
             b, a = signal.butter(order, cutoff / self.nyquist, btype='low')
             return signal.filtfilt(b, a, audio)
         
@@ -1127,8 +1090,7 @@ class AudioSynthesizer:
         }
     
     def _initialize_effects(self) -> Dict[str, callable]:
-        """Initialize audio effects"""
-        def reverb(audio, room_size=0.5, damping=0.2):
+        """Initialize audio effects"""        def reverb(audio, room_size=0.5, damping=0.2):
             # Simple reverb using multiple delays
             delays = [0.03, 0.05, 0.07, 0.09]  # seconds
             reverb_audio = audio.copy()
@@ -1165,8 +1127,7 @@ class AudioSynthesizer:
                        duration: float,
                        waveform: str = "sine",
                        envelope: Optional[Dict[str, float]] = None) -> np.ndarray:
-        """Synthesize a single note"""
-        t = np.linspace(0, duration, int(duration * self.sample_rate))
+        """Synthesize a single note"""        t = np.linspace(0, duration, int(duration * self.sample_rate))
         
         # Generate waveform
         if waveform in self.oscillators:
@@ -1189,8 +1150,7 @@ class AudioSynthesizer:
                         duration: float,
                         waveform: str = "sine",
                         envelope: Optional[Dict[str, float]] = None) -> np.ndarray:
-        """Synthesize a chord (multiple frequencies)"""
-        chord_audio = np.zeros(int(duration * self.sample_rate))
+        """Synthesize a chord (multiple frequencies)"""        chord_audio = np.zeros(int(duration * self.sample_rate))
         
         for freq in frequencies:
             note_audio = self.synthesize_note(freq, duration, waveform, envelope)
@@ -1204,8 +1164,7 @@ class AudioSynthesizer:
                     modulator_freq: float,
                     modulation_index: float,
                     duration: float) -> np.ndarray:
-        """Frequency modulation synthesis"""
-        t = np.linspace(0, duration, int(duration * self.sample_rate))
+        """Frequency modulation synthesis"""        t = np.linspace(0, duration, int(duration * self.sample_rate))
         
         # FM synthesis formula: sin(2π * fc * t + I * sin(2π * fm * t))
         modulator = np.sin(2 * np.pi * modulator_freq * t)
@@ -1223,8 +1182,7 @@ class AudioSynthesizer:
                           grain_density: int = 50,
                           pitch_shift: float = 1.0,
                           time_stretch: float = 1.0) -> np.ndarray:
-        """Granular synthesis from source audio"""
-        grain_samples = int(grain_size * self.sample_rate)
+        """Granular synthesis from source audio"""        grain_samples = int(grain_size * self.sample_rate)
         output_length = int(len(source_audio) * time_stretch)
         output_audio = np.zeros(output_length)
         
@@ -1255,8 +1213,7 @@ class AudioSynthesizer:
         return output_audio / np.max(np.abs(output_audio))  # Normalize
     
     def _create_envelope(self, t: np.ndarray, params: Dict[str, float]) -> np.ndarray:
-        """Create ADSR envelope"""
-        attack = params.get("attack", 0.1)
+        """Create ADSR envelope"""        attack = params.get("attack", 0.1)
         decay = params.get("decay", 0.2)
         sustain = params.get("sustain", 0.6)
         release = params.get("release", 0.1)

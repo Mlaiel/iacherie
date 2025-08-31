@@ -1,12 +1,10 @@
-"""
-Music Generation Engine - Advanced AI Music Creation and Composition
+"""Music Generation Engine - Advanced AI Music Creation and Composition
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive music generation capabilities using deep learning
 for MIDI composition, audio synthesis, and multi-instrumental arrangements.
 """
-
 import logging
 import numpy as np
 from typing import Dict, List, Any, Optional, Union, Tuple
@@ -20,8 +18,7 @@ import random
 logger = logging.getLogger(__name__)
 
 class MusicGenre(Enum):
-    """Music genres for generation"""
-    CLASSICAL = "classical"
+    """Music genres for generation"""    CLASSICAL = "classical"
     JAZZ = "jazz"
     ROCK = "rock"
     POP = "pop"
@@ -33,8 +30,7 @@ class MusicGenre(Enum):
     BLUES = "blues"
 
 class Instrument(Enum):
-    """Available instruments"""
-    PIANO = "piano"
+    """Available instruments"""    PIANO = "piano"
     GUITAR = "guitar"
     VIOLIN = "violin"
     DRUMS = "drums"
@@ -46,8 +42,7 @@ class Instrument(Enum):
     CELLO = "cello"
 
 class CompositionStyle(Enum):
-    """Composition styles"""
-    MELODIC = "melodic"
+    """Composition styles"""    MELODIC = "melodic"
     RHYTHMIC = "rhythmic"
     HARMONIC = "harmonic"
     AMBIENT = "ambient"
@@ -56,8 +51,7 @@ class CompositionStyle(Enum):
 
 @dataclass
 class MusicGenerationConfig:
-    """Configuration for music generation"""
-    genre: MusicGenre
+    """Configuration for music generation"""    genre: MusicGenre
     duration: float = 60.0  # seconds
     bpm: int = 120
     key: str = "C"
@@ -70,8 +64,7 @@ class MusicGenerationConfig:
 
 @dataclass
 class GeneratedMusic:
-    """Container for generated music"""
-    composition_id: str
+    """Container for generated music"""    composition_id: str
     config: MusicGenerationConfig
     midi_data: Optional[bytes] = None
     audio_data: Optional[bytes] = None
@@ -81,8 +74,7 @@ class GeneratedMusic:
     generated_at: datetime = None
 
 class MusicGenerationEngine:
-    """Main music generation engine"""
-    
+    """Main music generation engine"""    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.generation_models = self._initialize_generation_models()
@@ -93,8 +85,7 @@ class MusicGenerationEngine:
         self.logger.info("MusicGenerationEngine initialized successfully")
     
     def _initialize_generation_models(self) -> Dict[str, Any]:
-        """Initialize music generation models"""
-        return {
+        """Initialize music generation models"""        return {
             MusicGenre.CLASSICAL.value: {
                 "model_type": "transformer",
                 "training_data": "classical_compositions",
@@ -122,8 +113,7 @@ class MusicGenerationEngine:
         }
     
     def _initialize_synthesizers(self) -> Dict[str, Any]:
-        """Initialize instrument synthesizers"""
-        return {
+        """Initialize instrument synthesizers"""        return {
             Instrument.PIANO.value: {
                 "synthesis_method": "physical_modeling",
                 "parameters": {"brightness": 0.7, "resonance": 0.5, "velocity_sensitivity": 0.8}
@@ -143,8 +133,7 @@ class MusicGenerationEngine:
         }
     
     def _load_composition_templates(self) -> Dict[str, List[str]]:
-        """Load composition structure templates"""
-        return {
+        """Load composition structure templates"""        return {
             "simple_song": ["intro", "verse", "chorus", "verse", "chorus", "outro"],
             "complex_song": ["intro", "verse", "chorus", "verse", "chorus", "bridge", "chorus", "outro"],
             "classical_form": ["exposition", "development", "recapitulation"],
@@ -153,8 +142,7 @@ class MusicGenerationEngine:
         }
     
     def _initialize_music_theory(self) -> Dict[str, Any]:
-        """Initialize music theory knowledge base"""
-        return {
+        """Initialize music theory knowledge base"""        return {
             "scales": {
                 "major": [0, 2, 4, 5, 7, 9, 11],
                 "minor": [0, 2, 3, 5, 7, 8, 10],
@@ -174,8 +162,7 @@ class MusicGenerationEngine:
         }
     
     def generate_music(self, config: MusicGenerationConfig, seed_melody: Optional[List[int]] = None) -> GeneratedMusic:
-        """Generate music based on configuration"""
-        try:
+        """Generate music based on configuration"""        try:
             start_time = datetime.utcnow()
             
             self.logger.info(f"Generating {config.genre.value} music for {config.duration}s at {config.bpm} BPM")
@@ -244,8 +231,7 @@ class MusicGenerationEngine:
             raise
     
     def _validate_config(self, config: MusicGenerationConfig) -> None:
-        """Validate generation configuration"""
-        if config.duration <= 0:
+        """Validate generation configuration"""        if config.duration <= 0:
             raise ValueError("Duration must be positive")
         
         if not (60 <= config.bpm <= 200):
@@ -258,8 +244,7 @@ class MusicGenerationEngine:
             raise ValueError("Creativity must be between 0.0 and 1.0")
     
     def _generate_structure(self, config: MusicGenerationConfig) -> List[str]:
-        """Generate composition structure"""
-        if config.structure:
+        """Generate composition structure"""        if config.structure:
             return config.structure
         
         # Choose structure based on genre and duration
@@ -276,8 +261,7 @@ class MusicGenerationEngine:
             return self.composition_templates["simple_song"]
     
     def _generate_chord_progression(self, config: MusicGenerationConfig) -> List[str]:
-        """Generate harmonic chord progression"""
-        # Get base progression for genre
+        """Generate harmonic chord progression"""        # Get base progression for genre
         progressions = self.music_theory_engine["chord_progressions"]
         
         if config.genre == MusicGenre.JAZZ:
@@ -297,8 +281,7 @@ class MusicGenerationEngine:
     def _generate_melody(self, config: MusicGenerationConfig, 
                         chord_progression: List[str], 
                         seed_melody: Optional[List[int]] = None) -> List[Dict[str, Any]]:
-        """Generate melody line"""
-        scale_notes = self.music_theory_engine["scales"][config.scale]
+        """Generate melody line"""        scale_notes = self.music_theory_engine["scales"][config.scale]
         
         melody = []
         current_note = seed_melody[0] if seed_melody else random.choice(scale_notes)
@@ -337,8 +320,7 @@ class MusicGenerationEngine:
         return melody
     
     def _generate_accompaniment(self, config: MusicGenerationConfig, chord_progression: List[str]) -> Dict[str, List[Dict[str, Any]]]:
-        """Generate accompaniment parts"""
-        accompaniment = {}
+        """Generate accompaniment parts"""        accompaniment = {}
         
         if not config.instruments:
             return accompaniment
@@ -358,8 +340,7 @@ class MusicGenerationEngine:
         return accompaniment
     
     def _generate_rhythm(self, config: MusicGenerationConfig) -> Dict[str, List[Dict[str, Any]]]:
-        """Generate rhythmic elements"""
-        rhythm = {}
+        """Generate rhythmic elements"""        rhythm = {}
         
         if Instrument.DRUMS in (config.instruments or []):
             # Generate drum pattern
@@ -379,8 +360,7 @@ class MusicGenerationEngine:
                            melody: List[Dict[str, Any]], 
                            accompaniment: Dict[str, List[Dict[str, Any]]], 
                            rhythm: Dict[str, List[Dict[str, Any]]]) -> Dict[str, Any]:
-        """Arrange all musical elements"""
-        arrangement = {
+        """Arrange all musical elements"""        arrangement = {
             "melody": melody,
             "accompaniment": accompaniment,
             "rhythm": rhythm,
@@ -396,8 +376,7 @@ class MusicGenerationEngine:
         return arrangement
     
     def _generate_piano_chords(self, chord_progression: List[str], config: MusicGenerationConfig) -> List[Dict[str, Any]]:
-        """Generate piano chord accompaniment"""
-        chords = []
+        """Generate piano chord accompaniment"""        chords = []
         
         for i, chord_symbol in enumerate(chord_progression):
             chord_notes = self._resolve_chord(chord_symbol, config.key)
@@ -416,8 +395,7 @@ class MusicGenerationEngine:
         return chords
     
     def _generate_bass_line(self, chord_progression: List[str], config: MusicGenerationConfig) -> List[Dict[str, Any]]:
-        """Generate bass line"""
-        bass_line = []
+        """Generate bass line"""        bass_line = []
         
         for i, chord_symbol in enumerate(chord_progression):
             root_note = self._get_chord_root(chord_symbol, config.key)
@@ -435,8 +413,7 @@ class MusicGenerationEngine:
         return bass_line
     
     def _generate_guitar_chords(self, chord_progression: List[str], config: MusicGenerationConfig) -> List[Dict[str, Any]]:
-        """Generate guitar chord progression"""
-        guitar_chords = []
+        """Generate guitar chord progression"""        guitar_chords = []
         
         for i, chord_symbol in enumerate(chord_progression):
             chord_notes = self._resolve_chord(chord_symbol, config.key)
@@ -456,8 +433,7 @@ class MusicGenerationEngine:
         return guitar_chords
     
     def _resolve_chord(self, chord_symbol: str, key: str) -> List[int]:
-        """Resolve chord symbol to MIDI notes"""
-        # Simplified chord resolution
+        """Resolve chord symbol to MIDI notes"""        # Simplified chord resolution
         chord_tones = {
             "I": [0, 4, 7],
             "ii": [2, 5, 9],
@@ -475,8 +451,7 @@ class MusicGenerationEngine:
         return [(note + key_offset) % 12 + 60 for note in base_notes]  # Middle C octave
     
     def _get_chord_root(self, chord_symbol: str, key: str) -> int:
-        """Get root note of chord"""
-        chord_roots = {
+        """Get root note of chord"""        chord_roots = {
             "I": 0, "ii": 2, "iii": 4, "IV": 5, "V": 7, "vi": 9
         }
         
@@ -486,8 +461,7 @@ class MusicGenerationEngine:
         return (root_offset + key_offset) % 12 + 48  # Bass register
     
     def _get_guitar_fingering(self, chord_notes: List[int]) -> Dict[str, int]:
-        """Get guitar fingering for chord notes"""
-        # Simplified guitar fingering simulation
+        """Get guitar fingering for chord notes"""        # Simplified guitar fingering simulation
         return {
             "string_1": chord_notes[0] % 12,
             "string_2": chord_notes[1] % 12,
@@ -498,8 +472,7 @@ class MusicGenerationEngine:
         }
     
     def _generate_midi(self, arrangement: Dict[str, Any], config: MusicGenerationConfig) -> bytes:
-        """Generate MIDI data from arrangement"""
-        # Simulate MIDI generation
+        """Generate MIDI data from arrangement"""        # Simulate MIDI generation
         self.logger.debug("Generating MIDI data")
         
         # This would normally create actual MIDI file
@@ -517,8 +490,7 @@ class MusicGenerationEngine:
         return midi_bytes
     
     def _synthesize_audio(self, midi_data: bytes, config: MusicGenerationConfig) -> Optional[bytes]:
-        """Synthesize audio from MIDI data"""
-        if not config.instruments:
+        """Synthesize audio from MIDI data"""        if not config.instruments:
             return None
         
         self.logger.debug("Synthesizing audio")
@@ -537,23 +509,19 @@ class MusicGenerationEngine:
         return audio_bytes
     
     def _generate_score_notation(self, arrangement: Dict[str, Any], config: MusicGenerationConfig) -> str:
-        """Generate musical score notation"""
-        # Simulate score notation generation
-        score = f"""
-        Title: Generated {config.genre.value.title()} Composition
+        """Generate musical score notation"""        # Simulate score notation generation
+        score = f"""        Title: Generated {config.genre.value.title()} Composition
         Key: {config.key} {config.scale}
         Time Signature: 4/4
         Tempo: {config.bpm} BPM
         Duration: {config.duration}s
         
         [Musical notation would be generated here]
-        """
-        
+        """        
         return score.strip()
     
     def _calculate_quality_metrics(self, arrangement: Dict[str, Any], config: MusicGenerationConfig) -> Dict[str, float]:
-        """Calculate quality metrics for generated music"""
-        metrics = {
+        """Calculate quality metrics for generated music"""        metrics = {
             "melodic_coherence": random.uniform(0.7, 0.95),
             "harmonic_consistency": random.uniform(0.75, 0.9),
             "rhythmic_stability": random.uniform(0.8, 0.95),
@@ -581,8 +549,7 @@ class MusicGenerationEngine:
         return metrics
     
     def generate_variation(self, original_music: GeneratedMusic, variation_type: str = "melodic") -> GeneratedMusic:
-        """Generate a variation of existing music"""
-        try:
+        """Generate a variation of existing music"""        try:
             self.logger.info(f"Generating {variation_type} variation")
             
             # Create modified config
@@ -607,8 +574,7 @@ class MusicGenerationEngine:
             raise
     
     def get_generation_statistics(self) -> Dict[str, Any]:
-        """Get statistics about music generation"""
-        if not self.generation_history:
+        """Get statistics about music generation"""        if not self.generation_history:
             return {"message": "No music generated yet"}
         
         stats = {

@@ -1,5 +1,4 @@
-"""
-Distribution System Index - Main Interface
+"""Distribution System Index - Main Interface
 ==========================================
 
 Central index file providing the main distribution system interface and factory functions.
@@ -7,7 +6,6 @@ Central index file providing the main distribution system interface and factory 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from datetime import datetime
@@ -25,8 +23,7 @@ from .monitor import DistributionMonitor
 
 
 class DistributionStatus(Enum):
-    """Distribution system status enumeration."""
-    INACTIVE = "inactive"
+    """Distribution system status enumeration."""    INACTIVE = "inactive"
     INITIALIZING = "initializing"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -36,8 +33,7 @@ class DistributionStatus(Enum):
 
 @dataclass
 class DistributionSystemConfig:
-    """Configuration for distribution system."""
-    max_concurrent_distributions: int = 50
+    """Configuration for distribution system."""    max_concurrent_distributions: int = 50
     retry_attempts: int = 3
     timeout_seconds: int = 300
     rate_limit_per_minute: int = 100
@@ -48,16 +44,13 @@ class DistributionSystemConfig:
 
 
 class DistributionSystem:
-    """
-    Main Distribution System Interface
+    """    Main Distribution System Interface
     
     Provides unified access to all distribution functionality including
     multi-platform publishing, scheduling, tracking, and analytics.
-    """
-    
+    """    
     def __init__(self, config: Optional[DistributionSystemConfig] = None):
-        """Initialize distribution system with configuration."""
-        self.config = config or DistributionSystemConfig()
+        """Initialize distribution system with configuration."""        self.config = config or DistributionSystemConfig()
         self.system_id = uuid4()
         self.status = DistributionStatus.INACTIVE
         self.created_at = datetime.utcnow()
@@ -82,13 +75,11 @@ class DistributionSystem:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize all distribution system components.
+        """        Initialize all distribution system components.
         
         Returns:
             bool: True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             self.status = DistributionStatus.INITIALIZING
             self.logger.info(f"Initializing distribution system {self.system_id}")
             
@@ -122,13 +113,11 @@ class DistributionSystem:
             return False
     
     async def shutdown(self) -> bool:
-        """
-        Gracefully shutdown the distribution system.
+        """        Gracefully shutdown the distribution system.
         
         Returns:
             bool: True if shutdown successful, False otherwise
-        """
-        try:
+        """        try:
             self.logger.info("Shutting down distribution system")
             self.status = DistributionStatus.INACTIVE
             
@@ -165,8 +154,7 @@ class DistributionSystem:
         schedule_time: Optional[datetime] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Distribute content to specified platforms.
+        """        Distribute content to specified platforms.
         
         Args:
             content_id: Unique identifier for content
@@ -176,8 +164,7 @@ class DistributionSystem:
             
         Returns:
             Dict containing distribution results
-        """
-        if self.status != DistributionStatus.ACTIVE:
+        """        if self.status != DistributionStatus.ACTIVE:
             raise RuntimeError("Distribution system not active")
         
         try:
@@ -204,8 +191,7 @@ class DistributionSystem:
             raise
     
     async def get_distribution_status(self, distribution_id: UUID) -> Dict[str, Any]:
-        """Get status of specific distribution."""
-        if not self.tracker:
+        """Get status of specific distribution."""        if not self.tracker:
             raise RuntimeError("Tracker not initialized")
         
         return await self.tracker.get_distribution_status(distribution_id)
@@ -216,8 +202,7 @@ class DistributionSystem:
         platform: Optional[str] = None,
         time_range: Optional[tuple] = None
     ) -> Dict[str, Any]:
-        """Get distribution analytics."""
-        if not self.analytics:
+        """Get distribution analytics."""        if not self.analytics:
             raise RuntimeError("Analytics not enabled")
         
         return await self.analytics.get_analytics(
@@ -227,8 +212,7 @@ class DistributionSystem:
         )
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get current system status and metrics."""
-        return {
+        """Get current system status and metrics."""        return {
             'system_id': str(self.system_id),
             'status': self.status.value,
             'created_at': self.created_at.isoformat(),
@@ -255,16 +239,14 @@ class DistributionSystem:
 async def create_distribution_system(
     config: Optional[DistributionSystemConfig] = None
 ) -> DistributionSystem:
-    """
-    Factory function to create and initialize a distribution system.
+    """    Factory function to create and initialize a distribution system.
     
     Args:
         config: Optional system configuration
         
     Returns:
         Initialized DistributionSystem instance
-    """
-    system = DistributionSystem(config)
+    """    system = DistributionSystem(config)
     
     if await system.initialize():
         return system
@@ -274,8 +256,7 @@ async def create_distribution_system(
 
 # Health check function
 async def health_check() -> Dict[str, Any]:
-    """Perform distribution system health check."""
-    return {
+    """Perform distribution system health check."""    return {
         'status': 'healthy',
         'timestamp': datetime.utcnow().isoformat(),
         'module': 'distribution',

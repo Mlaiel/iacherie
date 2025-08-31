@@ -1,12 +1,10 @@
-"""
-Security Audit Trail Implementation
+"""Security Audit Trail Implementation
 Comprehensive audit trail system for security events, access logging, and compliance tracking.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use prohibited
 """
-
 import asyncio
 import hashlib
 import json
@@ -25,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class AuditTrailLevel(Enum):
-    """Security audit trail severity levels"""
-    INFO = "info"
+    """Security audit trail severity levels"""    INFO = "info"
     WARNING = "warning"
     SECURITY = "security"
     CRITICAL = "critical"
@@ -35,8 +32,7 @@ class AuditTrailLevel(Enum):
 
 @dataclass
 class SecurityAuditEvent:
-    """Security audit event record"""
-    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Security audit event record"""    event_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     level: AuditTrailLevel = AuditTrailLevel.INFO
     category: str = ""
@@ -50,8 +46,7 @@ class SecurityAuditEvent:
     compliance_flags: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for storage"""
-        return {
+        """Convert to dictionary for storage"""        return {
             "event_id": self.event_id,
             "timestamp": self.timestamp.isoformat(),
             "level": self.level.value,
@@ -68,8 +63,7 @@ class SecurityAuditEvent:
 
 
 class SecurityAuditTrail:
-    """Comprehensive security audit trail system"""
-    
+    """Comprehensive security audit trail system"""    
     def __init__(self):
         self.security_logger = SecurityEventLogger()
         self.access_controller = AccessController()
@@ -89,8 +83,7 @@ class SecurityAuditTrail:
         details: Optional[Dict[str, Any]] = None,
         compliance_flags: Optional[List[str]] = None
     ) -> str:
-        """Log a security audit event"""
-        
+        """Log a security audit event"""        
         event = SecurityAuditEvent(
             level=level,
             category="security",
@@ -122,8 +115,7 @@ class SecurityAuditTrail:
         return event.event_id
     
     async def _log_to_security_events(self, event: SecurityAuditEvent):
-        """Log to security events system"""
-        try:
+        """Log to security events system"""        try:
             security_event_type = self._map_to_security_event_type(event.action, event.success)
             
             await self.security_logger.log_security_event(
@@ -143,8 +135,7 @@ class SecurityAuditTrail:
             logger.error(f"Failed to log to security events: {e}")
     
     async def _log_to_audit_logger(self, event: SecurityAuditEvent):
-        """Log to audit logger system"""
-        try:
+        """Log to audit logger system"""        try:
             audit_level = self._map_to_audit_level(event.level)
             audit_category = self._map_to_audit_category(event.action)
             
@@ -163,8 +154,7 @@ class SecurityAuditTrail:
             logger.error(f"Failed to log to audit logger: {e}")
     
     async def _log_access_event(self, event: SecurityAuditEvent):
-        """Log access-related events"""
-        try:
+        """Log access-related events"""        try:
             if event.user_id and event.resource:
                 # Note: This would integrate with the AccessController
                 # For now, we'll log it as a security event
@@ -173,8 +163,7 @@ class SecurityAuditTrail:
             logger.error(f"Failed to log access event: {e}")
     
     def _map_to_security_event_type(self, action: str, success: bool) -> SecurityEventType:
-        """Map action to security event type"""
-        action_lower = action.lower()
+        """Map action to security event type"""        action_lower = action.lower()
         
         if "login" in action_lower:
             return SecurityEventType.FAILED_LOGIN_ATTEMPT if not success else SecurityEventType.SUSPICIOUS_LOGIN
@@ -188,8 +177,7 @@ class SecurityAuditTrail:
             return SecurityEventType.SUSPICIOUS_LOGIN  # Default
     
     def _map_to_audit_level(self, level: AuditTrailLevel) -> AuditLevel:
-        """Map audit trail level to audit logger level"""
-        mapping = {
+        """Map audit trail level to audit logger level"""        mapping = {
             AuditTrailLevel.INFO: AuditLevel.INFO,
             AuditTrailLevel.WARNING: AuditLevel.WARNING,
             AuditTrailLevel.SECURITY: AuditLevel.SECURITY,
@@ -199,8 +187,7 @@ class SecurityAuditTrail:
         return mapping.get(level, AuditLevel.INFO)
     
     def _map_to_audit_category(self, action: str) -> AuditCategory:
-        """Map action to audit category"""
-        action_lower = action.lower()
+        """Map action to audit category"""        action_lower = action.lower()
         
         if "auth" in action_lower or "login" in action_lower:
             return AuditCategory.AUTHENTICATION
@@ -220,8 +207,7 @@ class SecurityAuditTrail:
         action: Optional[str] = None,
         limit: int = 100
     ) -> List[SecurityAuditEvent]:
-        """Retrieve audit trail with filtering"""
-        
+        """Retrieve audit trail with filtering"""        
         filtered_events = self.events_cache.copy()
         
         # Apply filters
@@ -250,8 +236,7 @@ class SecurityAuditTrail:
         end_time: datetime,
         compliance_standard: str = "GDPR"
     ) -> Dict[str, Any]:
-        """Generate compliance report for audit trail"""
-        
+        """Generate compliance report for audit trail"""        
         events = await self.get_audit_trail(start_time=start_time, end_time=end_time)
         
         # Filter events relevant to compliance standard
@@ -283,8 +268,7 @@ class SecurityAuditTrail:
         return report
     
     async def verify_audit_integrity(self) -> Dict[str, Any]:
-        """Verify the integrity of the audit trail"""
-        
+        """Verify the integrity of the audit trail"""        
         try:
             # Calculate hash chain for events
             hash_chain = []
@@ -328,8 +312,7 @@ async def log_security_audit(
     level: AuditTrailLevel = AuditTrailLevel.INFO,
     **kwargs
 ) -> str:
-    """Convenience function to log security audit events"""
-    return await security_audit_trail.log_security_event(
+    """Convenience function to log security audit events"""    return await security_audit_trail.log_security_event(
         action=action,
         resource=resource,
         level=level,
@@ -343,8 +326,7 @@ async def log_authentication_event(
     ip_address: Optional[str] = None,
     details: Optional[Dict[str, Any]] = None
 ) -> str:
-    """Log authentication events"""
-    return await log_security_audit(
+    """Log authentication events"""    return await log_security_audit(
         action="authentication",
         resource=f"user:{user_id}",
         level=AuditTrailLevel.SECURITY if not success else AuditTrailLevel.INFO,
@@ -364,8 +346,7 @@ async def log_data_access_event(
     ip_address: Optional[str] = None,
     details: Optional[Dict[str, Any]] = None
 ) -> str:
-    """Log data access events"""
-    return await log_security_audit(
+    """Log data access events"""    return await log_security_audit(
         action=f"data_access_{action}",
         resource=resource,
         level=AuditTrailLevel.COMPLIANCE,

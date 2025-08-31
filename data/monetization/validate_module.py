@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Monetization Module Validation Script
+"""Monetization Module Validation Script
 ====================================
 
 Validates that all monetization components are properly implemented and importable.
@@ -9,7 +8,6 @@ Performs comprehensive checks on module integrity and functionality.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 import sys
 import logging
 from typing import Dict, Any, List
@@ -19,8 +17,7 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 logger = logging.getLogger(__name__)
 
 def validate_imports() -> Dict[str, bool]:
-    """Validate all monetization module imports."""
-    validation_results = {}
+    """Validate all monetization module imports."""    validation_results = {}
     
     try:
         # Test core module import
@@ -67,8 +64,7 @@ def validate_imports() -> Dict[str, bool]:
         return {"critical_failure": False}
 
 def validate_enums() -> Dict[str, bool]:
-    """Validate enum definitions."""
-    validation_results = {}
+    """Validate enum definitions."""    validation_results = {}
     
     try:
         from backend.data.monetization import (
@@ -113,8 +109,7 @@ def validate_enums() -> Dict[str, bool]:
         return {"enum_import_failure": False}
 
 def validate_data_models() -> Dict[str, bool]:
-    """Validate data model definitions."""
-    validation_results = {}
+    """Validate data model definitions."""    validation_results = {}
     
     try:
         from backend.data.monetization import (
@@ -152,8 +147,7 @@ def validate_data_models() -> Dict[str, bool]:
         return {"model_import_failure": False}
 
 def validate_configuration() -> Dict[str, bool]:
-    """Validate module configuration."""
-    validation_results = {}
+    """Validate module configuration."""    validation_results = {}
     
     try:
         from backend.data.monetization import MONETIZATION_CONFIG
@@ -193,8 +187,7 @@ def validate_configuration() -> Dict[str, bool]:
         return {"config_import_failure": False}
 
 def generate_validation_report(results: Dict[str, Dict[str, bool]]) -> None:
-    """Generate comprehensive validation report."""
-    total_tests = 0
+    """Generate comprehensive validation report."""    total_tests = 0
     passed_tests = 0
     
     logger.info("\n" + "="*80)
@@ -241,8 +234,7 @@ def generate_validation_report(results: Dict[str, Dict[str, bool]]) -> None:
     logger.info("="*80)
 
 def main():
-    """Main validation function."""
-    logger.info("🚀 Starting monetization module validation...")
+    """Main validation function."""    logger.info("🚀 Starting monetization module validation...")
     
     validation_results = {
         "imports": validate_imports(),

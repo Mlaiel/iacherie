@@ -1,5 +1,4 @@
-"""
-Quality Processor Module - IA-Influencer-Agent Platform
+"""Quality Processor Module - IA-Influencer-Agent Platform
 
 Industrial-grade quality assessment and enhancement engine for content creators.
 Comprehensive quality analysis, scoring, and automated improvement capabilities.
@@ -14,7 +13,6 @@ strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 ================================================================================
 """
-
 import asyncio
 import logging
 import json
@@ -68,8 +66,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityDimension(str, Enum):
-    """Quality assessment dimensions"""
-    TECHNICAL_QUALITY = "technical_quality"
+    """Quality assessment dimensions"""    TECHNICAL_QUALITY = "technical_quality"
     CONTENT_QUALITY = "content_quality"
     AESTHETIC_QUALITY = "aesthetic_quality"
     ENGAGEMENT_QUALITY = "engagement_quality"
@@ -80,8 +77,7 @@ class QualityDimension(str, Enum):
 
 
 class QualityLevel(str, Enum):
-    """Quality levels"""
-    POOR = "poor"          # 0.0 - 0.3
+    """Quality levels"""    POOR = "poor"          # 0.0 - 0.3
     FAIR = "fair"          # 0.3 - 0.5
     GOOD = "good"          # 0.5 - 0.7
     EXCELLENT = "excellent" # 0.7 - 0.9
@@ -89,8 +85,7 @@ class QualityLevel(str, Enum):
 
 
 class ContentType(str, Enum):
-    """Content types for quality assessment"""
-    IMAGE = "image"
+    """Content types for quality assessment"""    IMAGE = "image"
     VIDEO = "video"
     AUDIO = "audio"
     TEXT = "text"
@@ -101,8 +96,7 @@ class ContentType(str, Enum):
 
 
 class ImprovementCategory(str, Enum):
-    """Categories of quality improvements"""
-    RESOLUTION = "resolution"
+    """Categories of quality improvements"""    RESOLUTION = "resolution"
     LIGHTING = "lighting"
     COMPOSITION = "composition"
     COLOR_CORRECTION = "color_correction"
@@ -116,8 +110,7 @@ class ImprovementCategory(str, Enum):
 
 @dataclass
 class QualityProcessingConfig:
-    """Configuration for quality processing"""
-    # Assessment settings
+    """Configuration for quality processing"""    # Assessment settings
     enable_technical_analysis: bool = True
     enable_content_analysis: bool = True
     enable_aesthetic_analysis: bool = True
@@ -158,8 +151,7 @@ class QualityProcessingConfig:
 
 @dataclass
 class TechnicalQualityMetrics:
-    """Technical quality assessment metrics"""
-    # Image/Video metrics
+    """Technical quality assessment metrics"""    # Image/Video metrics
     resolution: Optional[Tuple[int, int]] = None
     aspect_ratio: Optional[float] = None
     bit_depth: Optional[int] = None
@@ -192,8 +184,7 @@ class TechnicalQualityMetrics:
 
 @dataclass
 class ContentQualityMetrics:
-    """Content quality assessment metrics"""
-    # Content structure
+    """Content quality assessment metrics"""    # Content structure
     information_density: Optional[float] = None
     content_depth: Optional[float] = None
     topic_coherence: Optional[float] = None
@@ -227,8 +218,7 @@ class ContentQualityMetrics:
 
 @dataclass
 class AestheticQualityMetrics:
-    """Aesthetic quality assessment metrics"""
-    # Visual aesthetics
+    """Aesthetic quality assessment metrics"""    # Visual aesthetics
     visual_appeal: Optional[float] = None
     color_scheme_quality: Optional[float] = None
     typography_quality: Optional[float] = None
@@ -257,8 +247,7 @@ class AestheticQualityMetrics:
 
 @dataclass
 class EngagementQualityMetrics:
-    """Engagement quality assessment metrics"""
-    # Attention factors
+    """Engagement quality assessment metrics"""    # Attention factors
     attention_grabbing: Optional[float] = None
     retention_potential: Optional[float] = None
     curiosity_factor: Optional[float] = None
@@ -285,8 +274,7 @@ class EngagementQualityMetrics:
 
 @dataclass
 class AccessibilityQualityMetrics:
-    """Accessibility quality assessment metrics"""
-    # Visual accessibility
+    """Accessibility quality assessment metrics"""    # Visual accessibility
     color_contrast_ratio: Optional[float] = None
     text_readability: Optional[float] = None
     font_size_adequacy: Optional[float] = None
@@ -313,8 +301,7 @@ class AccessibilityQualityMetrics:
 
 @dataclass
 class SEOQualityMetrics:
-    """SEO quality assessment metrics"""
-    # Content SEO
+    """SEO quality assessment metrics"""    # Content SEO
     keyword_optimization: Optional[float] = None
     title_effectiveness: Optional[float] = None
     description_quality: Optional[float] = None
@@ -337,8 +324,7 @@ class SEOQualityMetrics:
 
 @dataclass
 class QualityAssessmentResult:
-    """Comprehensive quality assessment result"""
-    # Basic information
+    """Comprehensive quality assessment result"""    # Basic information
     content_id: str
     content_type: ContentType
     assessment_timestamp: datetime = field(default_factory=datetime.now)
@@ -373,13 +359,11 @@ class QualityAssessmentResult:
 
 
 class QualityProcessor:
-    """
-    🎯 ENTERPRISE QUALITY PROCESSOR
+    """    🎯 ENTERPRISE QUALITY PROCESSOR
     
     Industrial-grade quality assessment and enhancement engine with
     comprehensive multi-dimensional analysis and AI-powered optimization.
-    """
-    
+    """    
     def __init__(
         self,
         db_session,
@@ -422,8 +406,7 @@ class QualityProcessor:
             self.logger.warning("ML quality assessment libraries not available")
     
     async def initialize(self) -> bool:
-        """Initialize the quality processor"""
-        try:
+        """Initialize the quality processor"""        try:
             # Load AI models for quality assessment
             await self._load_quality_models()
             
@@ -445,8 +428,7 @@ class QualityProcessor:
         metadata: Optional[Dict[str, Any]] = None,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive quality assessment of content
+        """        Comprehensive quality assessment of content
         
         Args:
             content: Content to assess
@@ -456,8 +438,7 @@ class QualityProcessor:
             
         Returns:
             Quality assessment result
-        """
-        try:
+        """        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -566,8 +547,7 @@ class QualityProcessor:
         assessment_result: Optional[QualityAssessmentResult] = None,
         enhancement_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Enhance content quality based on assessment
+        """        Enhance content quality based on assessment
         
         Args:
             content: Content to enhance
@@ -577,8 +557,7 @@ class QualityProcessor:
             
         Returns:
             Enhanced content and improvement metrics
-        """
-        try:
+        """        try:
             if not self._initialized:
                 await self.initialize()
             
@@ -659,8 +638,7 @@ class QualityProcessor:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]]
     ) -> TechnicalQualityMetrics:
-        """Assess technical quality metrics"""
-        try:
+        """Assess technical quality metrics"""        try:
             metrics = TechnicalQualityMetrics()
             
             if content_type in [ContentType.IMAGE, ContentType.VIDEO]:
@@ -686,8 +664,7 @@ class QualityProcessor:
         content: Union[bytes, np.ndarray],
         metrics: TechnicalQualityMetrics
     ):
-        """Assess visual technical quality"""
-        try:
+        """Assess visual technical quality"""        try:
             if not VISION_QUALITY_LIBS_AVAILABLE:
                 return
             
@@ -739,8 +716,7 @@ class QualityProcessor:
         content: Union[bytes, np.ndarray],
         metrics: TechnicalQualityMetrics
     ):
-        """Assess audio technical quality"""
-        try:
+        """Assess audio technical quality"""        try:
             if not AUDIO_QUALITY_LIBS_AVAILABLE:
                 return
             
@@ -779,8 +755,7 @@ class QualityProcessor:
         content: str,
         metrics: TechnicalQualityMetrics
     ):
-        """Assess text technical quality"""
-        try:
+        """Assess text technical quality"""        try:
             if not TEXT_QUALITY_LIBS_AVAILABLE:
                 return
             
@@ -810,8 +785,7 @@ class QualityProcessor:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]]
     ) -> ContentQualityMetrics:
-        """Assess content quality metrics"""
-        try:
+        """Assess content quality metrics"""        try:
             metrics = ContentQualityMetrics()
             
             if content_type == ContentType.TEXT:
@@ -835,8 +809,7 @@ class QualityProcessor:
         content: str,
         metrics: ContentQualityMetrics
     ):
-        """Assess text content quality"""
-        try:
+        """Assess text content quality"""        try:
             if not TEXT_QUALITY_LIBS_AVAILABLE:
                 return
             
@@ -878,8 +851,7 @@ class QualityProcessor:
         content: Union[bytes, np.ndarray],
         metrics: ContentQualityMetrics
     ):
-        """Assess visual content quality"""
-        try:
+        """Assess visual content quality"""        try:
             if not VISION_QUALITY_LIBS_AVAILABLE:
                 return
             
@@ -937,8 +909,7 @@ class QualityProcessor:
         content: Union[bytes, np.ndarray],
         metrics: ContentQualityMetrics
     ):
-        """Assess audio content quality"""
-        try:
+        """Assess audio content quality"""        try:
             if not AUDIO_QUALITY_LIBS_AVAILABLE:
                 return
             
@@ -966,8 +937,7 @@ class QualityProcessor:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]]
     ) -> AestheticQualityMetrics:
-        """Assess aesthetic quality metrics"""
-        metrics = AestheticQualityMetrics()
+        """Assess aesthetic quality metrics"""        metrics = AestheticQualityMetrics()
         
         # Aesthetic assessment would be implemented here
         # This would involve more sophisticated visual/audio analysis
@@ -981,8 +951,7 @@ class QualityProcessor:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]]
     ) -> EngagementQualityMetrics:
-        """Assess engagement quality metrics"""
-        metrics = EngagementQualityMetrics()
+        """Assess engagement quality metrics"""        metrics = EngagementQualityMetrics()
         
         # Engagement assessment would be implemented here
         metrics.engagement_score = 0.6  # Placeholder
@@ -995,8 +964,7 @@ class QualityProcessor:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]]
     ) -> AccessibilityQualityMetrics:
-        """Assess accessibility quality metrics"""
-        metrics = AccessibilityQualityMetrics()
+        """Assess accessibility quality metrics"""        metrics = AccessibilityQualityMetrics()
         
         # Accessibility assessment would be implemented here
         metrics.accessibility_score = 0.8  # Placeholder
@@ -1009,8 +977,7 @@ class QualityProcessor:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]]
     ) -> SEOQualityMetrics:
-        """Assess SEO quality metrics"""
-        metrics = SEOQualityMetrics()
+        """Assess SEO quality metrics"""        metrics = SEOQualityMetrics()
         
         # SEO assessment would be implemented here
         metrics.seo_score = 0.5  # Placeholder
@@ -1018,8 +985,7 @@ class QualityProcessor:
         return metrics
     
     async def _calculate_technical_score(self, metrics: TechnicalQualityMetrics) -> float:
-        """Calculate overall technical quality score"""
-        scores = []
+        """Calculate overall technical quality score"""        scores = []
         
         if metrics.sharpness_score is not None:
             scores.append(metrics.sharpness_score)
@@ -1036,8 +1002,7 @@ class QualityProcessor:
         return sum(scores) / len(scores) if scores else 0.5
     
     async def _calculate_content_score(self, metrics: ContentQualityMetrics) -> float:
-        """Calculate overall content quality score"""
-        scores = []
+        """Calculate overall content quality score"""        scores = []
         
         if metrics.readability_score is not None:
             scores.append(metrics.readability_score)
@@ -1058,8 +1023,7 @@ class QualityProcessor:
         assessment: QualityAssessmentResult,
         results: List[Any]
     ):
-        """Process assessment results from different dimensions"""
-        try:
+        """Process assessment results from different dimensions"""        try:
             for i, result in enumerate(results):
                 if isinstance(result, Exception):
                     self.logger.warning(f"Assessment task {i} failed: {result}")
@@ -1088,8 +1052,7 @@ class QualityProcessor:
             self.logger.error(f"Assessment result processing failed: {e}")
     
     async def _calculate_overall_quality(self, assessment: QualityAssessmentResult):
-        """Calculate overall quality score and level"""
-        try:
+        """Calculate overall quality score and level"""        try:
             scores = list(assessment.dimension_scores.values())
             
             if scores:
@@ -1121,8 +1084,7 @@ class QualityProcessor:
             self.logger.error(f"Overall quality calculation failed: {e}")
     
     async def _generate_quality_suggestions(self, assessment: QualityAssessmentResult):
-        """Generate quality improvement suggestions"""
-        try:
+        """Generate quality improvement suggestions"""        try:
             suggestions = []
             
             # Technical suggestions
@@ -1150,8 +1112,7 @@ class QualityProcessor:
             self.logger.error(f"Quality suggestions generation failed: {e}")
     
     async def _benchmark_quality(self, assessment: QualityAssessmentResult):
-        """Benchmark quality against industry standards"""
-        try:
+        """Benchmark quality against industry standards"""        try:
             # Industry benchmarks (would be loaded from data)
             industry_benchmarks = {
                 ContentType.IMAGE: 0.75,
@@ -1172,8 +1133,7 @@ class QualityProcessor:
         assessment: QualityAssessmentResult,
         options: Optional[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Create enhancement plan based on assessment"""
-        try:
+        """Create enhancement plan based on assessment"""        try:
             plan = []
             
             # Technical enhancements
@@ -1209,8 +1169,7 @@ class QualityProcessor:
         content_type: ContentType,
         enhancement: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply a specific enhancement to content"""
-        try:
+        """Apply a specific enhancement to content"""        try:
             enhanced_content = content
             
             if enhancement["type"] == ImprovementCategory.RESOLUTION and VISION_QUALITY_LIBS_AVAILABLE:
@@ -1235,8 +1194,7 @@ class QualityProcessor:
         content: Union[bytes, np.ndarray],
         parameters: Dict[str, Any]
     ) -> np.ndarray:
-        """Apply sharpening enhancement"""
-        try:
+        """Apply sharpening enhancement"""        try:
             if isinstance(content, bytes):
                 image = cv2.imdecode(np.frombuffer(content, np.uint8), cv2.IMREAD_COLOR)
             else:
@@ -1258,8 +1216,7 @@ class QualityProcessor:
         content: Union[bytes, np.ndarray],
         parameters: Dict[str, Any]
     ) -> np.ndarray:
-        """Apply noise reduction"""
-        try:
+        """Apply noise reduction"""        try:
             if isinstance(content, bytes):
                 image = cv2.imdecode(np.frombuffer(content, np.uint8), cv2.IMREAD_COLOR)
             else:
@@ -1279,8 +1236,7 @@ class QualityProcessor:
         before: QualityAssessmentResult,
         after: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate improvement metrics between before and after assessments"""
-        try:
+        """Calculate improvement metrics between before and after assessments"""        try:
             improvement = {
                 "overall_improvement": 0.0,
                 "dimension_improvements": {},
@@ -1310,8 +1266,7 @@ class QualityProcessor:
             return {}
     
     async def _load_quality_models(self):
-        """Load AI models for quality assessment"""
-        try:
+        """Load AI models for quality assessment"""        try:
             if not ML_QUALITY_LIBS_AVAILABLE:
                 return
             
@@ -1326,8 +1281,7 @@ class QualityProcessor:
             self.logger.error(f"Quality models loading failed: {e}")
     
     async def _load_benchmark_data(self):
-        """Load benchmark data for quality comparison"""
-        try:
+        """Load benchmark data for quality comparison"""        try:
             # Placeholder for loading benchmark data
             self._benchmark_data = {
                 "industry_standards": {},
@@ -1344,8 +1298,7 @@ class QualityProcessor:
         content_type: ContentType,
         options: Optional[Dict[str, Any]]
     ) -> str:
-        """Generate cache key for quality assessment"""
-        try:
+        """Generate cache key for quality assessment"""        try:
             # Create hash of content
             if isinstance(content, str):
                 content_hash = hashlib.md5(content.encode()).hexdigest()
@@ -1365,8 +1318,7 @@ class QualityProcessor:
             return f"quality_{content_type.value}_{time.time()}"
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform health check on the quality processor"""
-        health_status = {
+        """Perform health check on the quality processor"""        health_status = {
             "status": "healthy" if self._initialized else "not_initialized",
             "vision_quality_libs_available": VISION_QUALITY_LIBS_AVAILABLE,
             "audio_quality_libs_available": AUDIO_QUALITY_LIBS_AVAILABLE,
@@ -1381,8 +1333,7 @@ class QualityProcessor:
         return health_status
     
     async def shutdown(self):
-        """Gracefully shutdown the quality processor"""
-        try:
+        """Gracefully shutdown the quality processor"""        try:
             # Clear cache
             self._assessment_cache.clear()
             
@@ -1400,8 +1351,7 @@ async def create_quality_processor(
     redis_client,
     config: Optional[Dict[str, Any]] = None
 ) -> QualityProcessor:
-    """
-    Factory function to create and initialize a quality processor
+    """    Factory function to create and initialize a quality processor
     
     Args:
         db_session: Database session
@@ -1410,8 +1360,7 @@ async def create_quality_processor(
         
     Returns:
         Initialized QualityProcessor instance
-    """
-    # Create config from dict if provided
+    """    # Create config from dict if provided
     processor_config = None
     if config:
         processor_config = QualityProcessingConfig(**{

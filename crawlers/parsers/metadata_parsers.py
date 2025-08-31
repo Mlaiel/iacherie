@@ -1,5 +1,4 @@
-"""
-Metadata Parsers Module
+"""Metadata Parsers Module
 =======================
 
 Specialized parsers for extracting metadata from various structured formats.
@@ -13,7 +12,6 @@ This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
-
 import json
 import re
 from abc import ABC, abstractmethod
@@ -28,24 +26,20 @@ from .parser_config import ParserConfig
 
 
 class BaseMetadataParser(ABC):
-    """Abstract base class for metadata parsers"""
-    
+    """Abstract base class for metadata parsers"""    
     def __init__(self, config: ParserConfig):
         self.config = config
     
     @abstractmethod
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse metadata from HTML content"""
-        pass
+        """Parse metadata from HTML content"""        pass
     
     @abstractmethod
     def get_parser_type(self) -> str:
-        """Get the type of metadata this parser handles"""
-        pass
+        """Get the type of metadata this parser handles"""        pass
     
     def _normalize_url(self, url: str, base_url: Optional[str] = None) -> str:
-        """Normalize relative URLs to absolute URLs"""
-        if not url:
+        """Normalize relative URLs to absolute URLs"""        if not url:
             return url
         
         if url.startswith(('http://', 'https://')):
@@ -57,8 +51,7 @@ class BaseMetadataParser(ABC):
         return url
     
     def _clean_text(self, text: str) -> str:
-        """Clean and normalize text content"""
-        if not text:
+        """Clean and normalize text content"""        if not text:
             return ""
         
         # Remove extra whitespace
@@ -72,14 +65,12 @@ class BaseMetadataParser(ABC):
 
 
 class OpenGraphParser(BaseMetadataParser):
-    """Parser for Open Graph metadata"""
-    
+    """Parser for Open Graph metadata"""    
     def get_parser_type(self) -> str:
         return "open_graph"
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse Open Graph metadata from HTML"""
-        try:
+        """Parse Open Graph metadata from HTML"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             og_data = {}
             
@@ -127,8 +118,7 @@ class OpenGraphParser(BaseMetadataParser):
             )
     
     def _parse_structured_og_data(self, og_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Parse Open Graph data into structured format"""
-        structured = {
+        """Parse Open Graph data into structured format"""        structured = {
             'basic': {},
             'optional': {},
             'image': {},
@@ -201,14 +191,12 @@ class OpenGraphParser(BaseMetadataParser):
 
 
 class TwitterCardParser(BaseMetadataParser):
-    """Parser for Twitter Card metadata"""
-    
+    """Parser for Twitter Card metadata"""    
     def get_parser_type(self) -> str:
         return "twitter_card"
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse Twitter Card metadata from HTML"""
-        try:
+        """Parse Twitter Card metadata from HTML"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             twitter_data = {}
             
@@ -249,8 +237,7 @@ class TwitterCardParser(BaseMetadataParser):
             )
     
     def _validate_twitter_card(self, data: Dict[str, Any], card_type: str) -> Dict[str, Any]:
-        """Validate Twitter Card data based on card type"""
-        validation = {
+        """Validate Twitter Card data based on card type"""        validation = {
             'is_valid': True,
             'missing_required': [],
             'missing_recommended': [],
@@ -293,14 +280,12 @@ class TwitterCardParser(BaseMetadataParser):
 
 
 class SchemaOrgParser(BaseMetadataParser):
-    """Parser for Schema.org structured data"""
-    
+    """Parser for Schema.org structured data"""    
     def get_parser_type(self) -> str:
         return "schema_org"
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse Schema.org structured data from HTML"""
-        try:
+        """Parse Schema.org structured data from HTML"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             schema_data = {
                 'json_ld': [],
@@ -332,8 +317,7 @@ class SchemaOrgParser(BaseMetadataParser):
             )
     
     async def _parse_json_ld(self, soup: BeautifulSoup) -> List[Dict[str, Any]]:
-        """Parse JSON-LD structured data"""
-        json_ld_data = []
+        """Parse JSON-LD structured data"""        json_ld_data = []
         
         scripts = soup.find_all('script', type='application/ld+json')
         
@@ -355,8 +339,7 @@ class SchemaOrgParser(BaseMetadataParser):
         return json_ld_data
     
     async def _parse_microdata(self, soup: BeautifulSoup) -> List[Dict[str, Any]]:
-        """Parse Microdata structured data"""
-        microdata_items = []
+        """Parse Microdata structured data"""        microdata_items = []
         
         # Find all elements with itemscope
         items = soup.find_all(attrs={'itemscope': True})
@@ -399,8 +382,7 @@ class SchemaOrgParser(BaseMetadataParser):
         return microdata_items
     
     async def _parse_rdfa(self, soup: BeautifulSoup) -> List[Dict[str, Any]]:
-        """Parse RDFa structured data"""
-        rdfa_items = []
+        """Parse RDFa structured data"""        rdfa_items = []
         
         # Find elements with RDFa attributes
         elements = soup.find_all(attrs={'typeof': True})
@@ -437,14 +419,12 @@ class SchemaOrgParser(BaseMetadataParser):
 
 
 class DublinCoreParser(BaseMetadataParser):
-    """Parser for Dublin Core metadata"""
-    
+    """Parser for Dublin Core metadata"""    
     def get_parser_type(self) -> str:
         return "dublin_core"
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse Dublin Core metadata from HTML"""
-        try:
+        """Parse Dublin Core metadata from HTML"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             dc_data = {}
             
@@ -492,14 +472,12 @@ class DublinCoreParser(BaseMetadataParser):
 
 
 class MetaTagParser(BaseMetadataParser):
-    """Parser for standard HTML meta tags"""
-    
+    """Parser for standard HTML meta tags"""    
     def get_parser_type(self) -> str:
         return "meta_tags"
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse standard meta tags from HTML"""
-        try:
+        """Parse standard meta tags from HTML"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             meta_data = {
                 'basic': {},
@@ -555,8 +533,7 @@ class MetaTagParser(BaseMetadataParser):
             )
     
     def _parse_viewport(self, content: str) -> Dict[str, str]:
-        """Parse viewport meta tag content"""
-        viewport = {}
+        """Parse viewport meta tag content"""        viewport = {}
         
         parts = [part.strip() for part in content.split(',')]
         for part in parts:
@@ -569,8 +546,7 @@ class MetaTagParser(BaseMetadataParser):
         return viewport
     
     def _parse_robots(self, content: str) -> Dict[str, bool]:
-        """Parse robots meta tag content"""
-        robots = {}
+        """Parse robots meta tag content"""        robots = {}
         
         directives = [directive.strip().lower() for directive in content.split(',')]
         
@@ -590,14 +566,12 @@ class MetaTagParser(BaseMetadataParser):
 
 
 class JsonLdParser(BaseMetadataParser):
-    """Specialized parser for JSON-LD structured data"""
-    
+    """Specialized parser for JSON-LD structured data"""    
     def get_parser_type(self) -> str:
         return "json_ld"
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse JSON-LD structured data with detailed analysis"""
-        try:
+        """Parse JSON-LD structured data with detailed analysis"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             json_ld_data = []
             schemas_found = {}
@@ -651,8 +625,7 @@ class JsonLdParser(BaseMetadataParser):
             )
     
     def _extract_schema_type(self, data: Dict[str, Any]) -> Optional[str]:
-        """Extract schema type from JSON-LD data"""
-        if '@type' in data:
+        """Extract schema type from JSON-LD data"""        if '@type' in data:
             schema_type = data['@type']
             if isinstance(schema_type, list):
                 return schema_type[0] if schema_type else None
@@ -670,8 +643,7 @@ class JsonLdParser(BaseMetadataParser):
         return None
     
     def _process_json_ld_urls(self, data: Any, base_url: Optional[str]) -> Any:
-        """Process URLs in JSON-LD data to make them absolute"""
-        if isinstance(data, dict):
+        """Process URLs in JSON-LD data to make them absolute"""        if isinstance(data, dict):
             processed = {}
             for key, value in data.items():
                 if key in ['url', 'image', '@id'] and isinstance(value, str):
@@ -686,14 +658,12 @@ class JsonLdParser(BaseMetadataParser):
 
 
 class MicrodataParser(BaseMetadataParser):
-    """Specialized parser for HTML Microdata"""
-    
+    """Specialized parser for HTML Microdata"""    
     def get_parser_type(self) -> str:
         return "microdata"
     
     async def parse(self, html: str, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse Microdata with detailed analysis"""
-        try:
+        """Parse Microdata with detailed analysis"""        try:
             soup = BeautifulSoup(html, 'html.parser')
             
             # Find all top-level items (itemscope without itemprop)
@@ -742,8 +712,7 @@ class MicrodataParser(BaseMetadataParser):
             )
     
     async def _parse_microdata_item(self, item_element, base_url: Optional[str] = None) -> Dict[str, Any]:
-        """Parse individual microdata item"""
-        item_data = {
+        """Parse individual microdata item"""        item_data = {
             'itemtype': item_element.get('itemtype', ''),
             'itemid': item_element.get('itemid', ''),
             'properties': {},
@@ -784,8 +753,7 @@ class MicrodataParser(BaseMetadataParser):
         return item_data
     
     def _extract_property_value(self, element, base_url: Optional[str] = None) -> str:
-        """Extract property value from element based on type"""
-        # Value extraction based on element type and attributes
+        """Extract property value from element based on type"""        # Value extraction based on element type and attributes
         if element.get('content'):
             return element.get('content')
         elif element.name in ['a', 'area', 'link']:

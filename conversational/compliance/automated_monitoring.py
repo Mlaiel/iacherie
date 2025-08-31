@@ -1,5 +1,4 @@
-"""
-Automated Compliance Monitoring - Real-time Compliance Surveillance System
+"""Automated Compliance Monitoring - Real-time Compliance Surveillance System
 
 This module provides automated compliance monitoring across all platforms and content types,
 with real-time alerts, violation detection, and preventive compliance measures.
@@ -12,7 +11,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -35,32 +33,28 @@ from ..models.monitoring_models import ComplianceAlert, MonitoringTask, Violatio
 
 
 class MonitoringType(Enum):
-    """Types of compliance monitoring"""
-    REAL_TIME = "real_time"
+    """Types of compliance monitoring"""    REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     EVENT_DRIVEN = "event_driven"
     MANUAL = "manual"
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class MonitoringScope(Enum):
-    """Monitoring scope levels"""
-    CONTENT = "content"
+    """Monitoring scope levels"""    CONTENT = "content"
     USER = "user"
     PLATFORM = "platform"
     GLOBAL = "global"
 
 
 class ComplianceMetric(Enum):
-    """Compliance metrics to monitor"""
-    COPYRIGHT_VIOLATIONS = "copyright_violations"
+    """Compliance metrics to monitor"""    COPYRIGHT_VIOLATIONS = "copyright_violations"
     CONTENT_VIOLATIONS = "content_violations"
     PLATFORM_VIOLATIONS = "platform_violations"
     LICENSE_VIOLATIONS = "license_violations"
@@ -70,8 +64,7 @@ class ComplianceMetric(Enum):
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring configuration"""
-    monitoring_type: MonitoringType
+    """Monitoring configuration"""    monitoring_type: MonitoringType
     scope: MonitoringScope
     metrics: List[ComplianceMetric]
     frequency_minutes: int
@@ -83,8 +76,7 @@ class MonitoringConfig:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert structure"""
-    alert_id: str
+    """Compliance alert structure"""    alert_id: str
     monitoring_type: MonitoringType
     severity: AlertSeverity
     metric: ComplianceMetric
@@ -100,8 +92,7 @@ class ComplianceAlert:
 
 @dataclass
 class MonitoringReport:
-    """Monitoring report structure"""
-    report_id: str
+    """Monitoring report structure"""    report_id: str
     monitoring_period: Dict[str, datetime]
     scope: MonitoringScope
     total_checks: int
@@ -115,13 +106,11 @@ class MonitoringReport:
 
 
 class AutomatedComplianceMonitor:
-    """
-    Automated Compliance Monitoring System
+    """    Automated Compliance Monitoring System
     
     Provides real-time compliance monitoring, automated violation detection,
     alert generation, and preventive compliance measures.
-    """
-    
+    """    
     def __init__(self, 
                  db_manager: DatabaseManager,
                  cache_manager: CacheManager,
@@ -162,16 +151,14 @@ class AutomatedComplianceMonitor:
         asyncio.create_task(self._start_monitoring_services())
     
     async def start_monitoring(self, monitoring_configs: List[MonitoringConfig] = None) -> Dict[str, Any]:
-        """
-        Start automated compliance monitoring
+        """        Start automated compliance monitoring
         
         Args:
             monitoring_configs: Custom monitoring configurations
             
         Returns:
             Dict: Monitoring startup result
-        """
-        try:
+        """        try:
             if self.monitoring_active:
                 return {
                     "success": False,
@@ -218,13 +205,11 @@ class AutomatedComplianceMonitor:
             }
     
     async def stop_monitoring(self) -> Dict[str, Any]:
-        """
-        Stop automated compliance monitoring
+        """        Stop automated compliance monitoring
         
         Returns:
             Dict: Monitoring stop result
-        """
-        try:
+        """        try:
             if not self.monitoring_active:
                 return {
                     "success": False,
@@ -265,8 +250,7 @@ class AutomatedComplianceMonitor:
                                        content_id: str,
                                        action: str,
                                        context: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Perform real-time compliance check for content action
+        """        Perform real-time compliance check for content action
         
         Args:
             content_id: Content identifier
@@ -275,8 +259,7 @@ class AutomatedComplianceMonitor:
             
         Returns:
             Dict: Real-time compliance result
-        """
-        try:
+        """        try:
             compliance_checks = []
             violations = []
             alerts = []
@@ -376,8 +359,7 @@ class AutomatedComplianceMonitor:
                                        scope: MonitoringScope,
                                        period_days: int = 7,
                                        target_id: str = None) -> MonitoringReport:
-        """
-        Generate comprehensive compliance monitoring report
+        """        Generate comprehensive compliance monitoring report
         
         Args:
             scope: Monitoring scope
@@ -386,8 +368,7 @@ class AutomatedComplianceMonitor:
             
         Returns:
             MonitoringReport: Comprehensive monitoring report
-        """
-        try:
+        """        try:
             start_date = datetime.now() - timedelta(days=period_days)
             end_date = datetime.now()
             
@@ -454,16 +435,14 @@ class AutomatedComplianceMonitor:
             )
     
     async def configure_custom_monitor(self, config: MonitoringConfig) -> Dict[str, Any]:
-        """
-        Configure custom compliance monitor
+        """        Configure custom compliance monitor
         
         Args:
             config: Monitoring configuration
             
         Returns:
             Dict: Configuration result
-        """
-        try:
+        """        try:
             # Validate configuration
             validation_result = await self._validate_monitoring_config(config)
             
@@ -502,8 +481,7 @@ class AutomatedComplianceMonitor:
             }
     
     async def _initialize_default_monitors(self) -> List[MonitoringConfig]:
-        """Initialize default monitoring configurations"""
-        return [
+        """Initialize default monitoring configurations"""        return [
             # Real-time copyright monitoring
             MonitoringConfig(
                 monitoring_type=MonitoringType.REAL_TIME,
@@ -554,8 +532,7 @@ class AutomatedComplianceMonitor:
         ]
     
     async def _start_monitor(self, config: MonitoringConfig) -> Optional[str]:
-        """Start individual monitoring task"""
-        try:
+        """Start individual monitoring task"""        try:
             monitor_id = str(uuid.uuid4())
             
             if config.monitoring_type == MonitoringType.REAL_TIME:
@@ -584,8 +561,7 @@ class AutomatedComplianceMonitor:
             return None
     
     async def _process_alert_queue(self):
-        """Process compliance alerts from queue"""
-        try:
+        """Process compliance alerts from queue"""        try:
             while self.monitoring_active:
                 try:
                     # Get alerts from queue
@@ -614,8 +590,7 @@ class AutomatedComplianceMonitor:
             self.logger.error(f"Alert queue processor error: {str(e)}")
     
     async def get_monitoring_status(self) -> Dict[str, Any]:
-        """Get current monitoring status and statistics"""
-        try:
+        """Get current monitoring status and statistics"""        try:
             active_monitors = {}
             for monitor_id, task in self.monitoring_tasks.items():
                 active_monitors[monitor_id] = {

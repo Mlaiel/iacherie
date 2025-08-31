@@ -1,5 +1,4 @@
-"""
-Backup Storage for IA Influencer Agent Platform.
+"""Backup Storage for IA Influencer Agent Platform.
 
 Provides enterprise-grade backup storage management with support for
 multiple storage backends, redundancy, and disaster recovery.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import shutil
@@ -26,8 +24,7 @@ from ...core.exceptions import StorageError
 
 
 class StorageBackend(Enum):
-    """Storage backend enumeration."""
-    LOCAL = "local"
+    """Storage backend enumeration."""    LOCAL = "local"
     S3 = "s3"
     AZURE_BLOB = "azure_blob"
     GCS = "gcs"
@@ -37,8 +34,7 @@ class StorageBackend(Enum):
 
 
 class StorageStatus(Enum):
-    """Storage status enumeration."""
-    AVAILABLE = "available"
+    """Storage status enumeration."""    AVAILABLE = "available"
     UNAVAILABLE = "unavailable"
     DEGRADED = "degraded"
     MAINTENANCE = "maintenance"
@@ -47,8 +43,7 @@ class StorageStatus(Enum):
 
 @dataclass
 class StorageConfig:
-    """Storage configuration container."""
-    backend: StorageBackend
+    """Storage configuration container."""    backend: StorageBackend
     connection_params: Dict[str, Any]
     retention_days: int = 30
     compression_enabled: bool = True
@@ -60,8 +55,7 @@ class StorageConfig:
 
 @dataclass
 class BackupMetadata:
-    """Backup metadata container."""
-    backup_id: str
+    """Backup metadata container."""    backup_id: str
     created_at: datetime
     size_bytes: int
     checksum: str
@@ -74,8 +68,7 @@ class BackupMetadata:
 
 @dataclass
 class StorageLocation:
-    """Storage location information."""
-    backend: StorageBackend
+    """Storage location information."""    backend: StorageBackend
     path: str
     size_bytes: int
     created_at: datetime
@@ -84,8 +77,7 @@ class StorageLocation:
 
 
 class StorageBackendInterface(ABC):
-    """Abstract storage backend interface."""
-    
+    """Abstract storage backend interface."""    
     @abstractmethod
     async def store_backup(
         self,
@@ -93,46 +85,37 @@ class StorageBackendInterface(ABC):
         data: Union[bytes, Dict[str, Any]],
         metadata: BackupMetadata
     ) -> bool:
-        """Store backup data."""
-        pass
+        """Store backup data."""        pass
     
     @abstractmethod
     async def retrieve_backup(self, backup_id: str) -> Optional[Union[bytes, Dict[str, Any]]]:
-        """Retrieve backup data."""
-        pass
+        """Retrieve backup data."""        pass
     
     @abstractmethod
     async def delete_backup(self, backup_id: str) -> bool:
-        """Delete backup data."""
-        pass
+        """Delete backup data."""        pass
     
     @abstractmethod
     async def list_backups(self) -> List[str]:
-        """List available backups."""
-        pass
+        """List available backups."""        pass
     
     @abstractmethod
     async def get_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """Get backup metadata."""
-        pass
+        """Get backup metadata."""        pass
     
     @abstractmethod
     async def verify_backup(self, backup_id: str) -> bool:
-        """Verify backup integrity."""
-        pass
+        """Verify backup integrity."""        pass
     
     @abstractmethod
     async def get_storage_usage(self) -> Dict[str, Any]:
-        """Get storage usage information."""
-        pass
+        """Get storage usage information."""        pass
 
 
 class LocalStorageBackend(StorageBackendInterface):
-    """Local filesystem storage backend."""
-    
+    """Local filesystem storage backend."""    
     def __init__(self, config: StorageConfig):
-        """Initialize local storage backend."""
-        self.config = config
+        """Initialize local storage backend."""        self.config = config
         self.base_path = Path(config.connection_params.get("path", "/tmp/backups"))
         self.base_path.mkdir(parents=True, exist_ok=True)
         self.metadata_path = self.base_path / "metadata"
@@ -145,8 +128,7 @@ class LocalStorageBackend(StorageBackendInterface):
         data: Union[bytes, Dict[str, Any]],
         metadata: BackupMetadata
     ) -> bool:
-        """Store backup data locally."""
-        try:
+        """Store backup data locally."""        try:
             backup_file = self.base_path / f"{backup_id}.backup"
             metadata_file = self.metadata_path / f"{backup_id}.json"
             
@@ -182,8 +164,7 @@ class LocalStorageBackend(StorageBackendInterface):
             return False
     
     async def retrieve_backup(self, backup_id: str) -> Optional[Union[bytes, Dict[str, Any]]]:
-        """Retrieve backup data from local storage."""
-        try:
+        """Retrieve backup data from local storage."""        try:
             backup_file = self.base_path / f"{backup_id}.backup"
             
             if not backup_file.exists():
@@ -203,8 +184,7 @@ class LocalStorageBackend(StorageBackendInterface):
             return None
     
     async def delete_backup(self, backup_id: str) -> bool:
-        """Delete backup data from local storage."""
-        try:
+        """Delete backup data from local storage."""        try:
             backup_file = self.base_path / f"{backup_id}.backup"
             metadata_file = self.metadata_path / f"{backup_id}.json"
             
@@ -222,8 +202,7 @@ class LocalStorageBackend(StorageBackendInterface):
             return False
     
     async def list_backups(self) -> List[str]:
-        """List available backups in local storage."""
-        try:
+        """List available backups in local storage."""        try:
             backup_files = list(self.base_path.glob("*.backup"))
             return [f.stem for f in backup_files]
         except Exception as e:
@@ -231,8 +210,7 @@ class LocalStorageBackend(StorageBackendInterface):
             return []
     
     async def get_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """Get backup metadata from local storage."""
-        try:
+        """Get backup metadata from local storage."""        try:
             metadata_file = self.metadata_path / f"{backup_id}.json"
             
             if not metadata_file.exists():
@@ -258,8 +236,7 @@ class LocalStorageBackend(StorageBackendInterface):
             return None
     
     async def verify_backup(self, backup_id: str) -> bool:
-        """Verify backup integrity in local storage."""
-        try:
+        """Verify backup integrity in local storage."""        try:
             backup_file = self.base_path / f"{backup_id}.backup"
             metadata_file = self.metadata_path / f"{backup_id}.json"
             
@@ -270,8 +247,7 @@ class LocalStorageBackend(StorageBackendInterface):
             return False
     
     async def get_storage_usage(self) -> Dict[str, Any]:
-        """Get local storage usage information."""
-        try:
+        """Get local storage usage information."""        try:
             total_size = 0
             file_count = 0
             
@@ -298,21 +274,17 @@ class LocalStorageBackend(StorageBackendInterface):
 
 
 class BackupStorage:
-    """
-    Enterprise backup storage manager with multiple backend support.
+    """    Enterprise backup storage manager with multiple backend support.
     
     Manages backup storage across multiple backends with redundancy,
     retention policies, and disaster recovery capabilities.
     """
-
     def __init__(self, storage_configs: List[StorageConfig]):
-        """
-        Initialize backup storage manager.
+        """        Initialize backup storage manager.
         
         Args:
             storage_configs: List of storage backend configurations
-        """
-        self.logger = logging.getLogger(__name__)
+        """        self.logger = logging.getLogger(__name__)
         self.storage_configs = storage_configs
         self.backends: Dict[str, StorageBackendInterface] = {}
         self.primary_backend: Optional[str] = None
@@ -322,8 +294,7 @@ class BackupStorage:
         self._initialize_backends()
 
     def _initialize_backends(self):
-        """Initialize storage backends from configurations."""
-        for i, config in enumerate(self.storage_configs):
+        """Initialize storage backends from configurations."""        for i, config in enumerate(self.storage_configs):
             backend_id = f"{config.backend.value}_{i}"
             
             if config.backend == StorageBackend.LOCAL:
@@ -345,8 +316,7 @@ class BackupStorage:
         metadata: Optional[BackupMetadata] = None,
         redundancy_count: int = 1
     ) -> bool:
-        """
-        Store backup data with optional redundancy.
+        """        Store backup data with optional redundancy.
         
         Args:
             backup_id: Unique backup identifier
@@ -356,8 +326,7 @@ class BackupStorage:
             
         Returns:
             Success status
-        """
-        self.logger.info(f"Storing backup: {backup_id} (redundancy: {redundancy_count})")
+        """        self.logger.info(f"Storing backup: {backup_id} (redundancy: {redundancy_count})")
         
         # Create metadata if not provided
         if metadata is None:
@@ -410,16 +379,14 @@ class BackupStorage:
         return success
 
     async def retrieve_backup(self, backup_id: str) -> Optional[Union[bytes, Dict[str, Any]]]:
-        """
-        Retrieve backup data from storage.
+        """        Retrieve backup data from storage.
         
         Args:
             backup_id: Backup identifier
             
         Returns:
             Backup data or None if not found
-        """
-        self.logger.debug(f"Retrieving backup: {backup_id}")
+        """        self.logger.debug(f"Retrieving backup: {backup_id}")
         
         # Check if backup is in registry
         if backup_id not in self.backup_registry:
@@ -464,8 +431,7 @@ class BackupStorage:
         return None
 
     async def delete_backup(self, backup_id: str, force: bool = False) -> bool:
-        """
-        Delete backup from all storage locations.
+        """        Delete backup from all storage locations.
         
         Args:
             backup_id: Backup identifier
@@ -473,8 +439,7 @@ class BackupStorage:
             
         Returns:
             Success status
-        """
-        self.logger.info(f"Deleting backup: {backup_id} (force: {force})")
+        """        self.logger.info(f"Deleting backup: {backup_id} (force: {force})")
         
         success_count = 0
         total_attempts = 0
@@ -502,16 +467,14 @@ class BackupStorage:
         return success
 
     async def list_backups(self, backend_filter: Optional[str] = None) -> List[str]:
-        """
-        List all available backups.
+        """        List all available backups.
         
         Args:
             backend_filter: Filter by specific backend
             
         Returns:
             List of backup identifiers
-        """
-        all_backups = set()
+        """        all_backups = set()
         
         backends_to_check = self.backends
         if backend_filter:
@@ -527,16 +490,14 @@ class BackupStorage:
         return sorted(list(all_backups))
 
     async def get_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """
-        Get backup metadata.
+        """        Get backup metadata.
         
         Args:
             backup_id: Backup identifier
             
         Returns:
             Backup metadata or None if not found
-        """
-        # Try primary backend first
+        """        # Try primary backend first
         if self.primary_backend and self.primary_backend in self.backends:
             try:
                 backend = self.backends[self.primary_backend]
@@ -561,29 +522,25 @@ class BackupStorage:
         return None
 
     async def get_backup_size(self, backup_id: str) -> Optional[int]:
-        """
-        Get backup size in bytes.
+        """        Get backup size in bytes.
         
         Args:
             backup_id: Backup identifier
             
         Returns:
             Backup size in bytes or None if not found
-        """
-        metadata = await self.get_backup_metadata(backup_id)
+        """        metadata = await self.get_backup_metadata(backup_id)
         return metadata.size_bytes if metadata else None
 
     async def verify_backup_integrity(self, backup_id: str) -> Dict[str, bool]:
-        """
-        Verify backup integrity across all storage locations.
+        """        Verify backup integrity across all storage locations.
         
         Args:
             backup_id: Backup identifier
             
         Returns:
             Verification results per backend
-        """
-        results = {}
+        """        results = {}
         
         for backend_id, backend in self.backends.items():
             try:
@@ -595,13 +552,11 @@ class BackupStorage:
         return results
 
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive storage statistics.
+        """        Get comprehensive storage statistics.
         
         Returns:
             Storage statistics across all backends
-        """
-        statistics = {
+        """        statistics = {
             "backends": {},
             "total_backups": 0,
             "total_size_bytes": 0,
@@ -646,13 +601,11 @@ class BackupStorage:
         return statistics
 
     async def cleanup_expired_backups(self) -> Dict[str, int]:
-        """
-        Clean up expired backups based on retention policies.
+        """        Clean up expired backups based on retention policies.
         
         Returns:
             Cleanup statistics
-        """
-        self.logger.info("Starting cleanup of expired backups")
+        """        self.logger.info("Starting cleanup of expired backups")
         
         cleanup_stats = {
             "expired_backups_found": 0,
@@ -698,8 +651,7 @@ class BackupStorage:
         source_backend: str,
         target_backend: str
     ) -> bool:
-        """
-        Migrate backup between storage backends.
+        """        Migrate backup between storage backends.
         
         Args:
             backup_id: Backup identifier
@@ -708,8 +660,7 @@ class BackupStorage:
             
         Returns:
             Migration success status
-        """
-        self.logger.info(f"Migrating backup {backup_id} from {source_backend} to {target_backend}")
+        """        self.logger.info(f"Migrating backup {backup_id} from {source_backend} to {target_backend}")
         
         if source_backend not in self.backends or target_backend not in self.backends:
             self.logger.error("Invalid source or target backend")
@@ -744,16 +695,14 @@ class BackupStorage:
             return False
 
     async def create_backup_snapshot(self, backup_ids: List[str]) -> Optional[str]:
-        """
-        Create a snapshot of multiple backups.
+        """        Create a snapshot of multiple backups.
         
         Args:
             backup_ids: List of backup identifiers
             
         Returns:
             Snapshot identifier or None if failed
-        """
-        snapshot_id = f"snapshot_{int(time.time())}"
+        """        snapshot_id = f"snapshot_{int(time.time())}"
         
         self.logger.info(f"Creating backup snapshot: {snapshot_id}")
         
@@ -797,16 +746,14 @@ class BackupStorage:
             return None
 
     async def restore_from_snapshot(self, snapshot_id: str) -> List[str]:
-        """
-        Restore backups from snapshot.
+        """        Restore backups from snapshot.
         
         Args:
             snapshot_id: Snapshot identifier
             
         Returns:
             List of restored backup identifiers
-        """
-        self.logger.info(f"Restoring from backup snapshot: {snapshot_id}")
+        """        self.logger.info(f"Restoring from backup snapshot: {snapshot_id}")
         
         try:
             # Retrieve snapshot data

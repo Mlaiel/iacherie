@@ -1,5 +1,4 @@
-"""
-✅ Deployment Templates - IA-Influencer-Agent
+"""✅ Deployment Templates - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps Architect + Cloud Engineer + Infrastructure Expert
@@ -15,7 +14,6 @@ Contact: mlaiel@live.de
 Infrastructure as Code templates for multi-cloud deployment.
 ==================================================================
 """
-
 import logging
 import asyncio
 import yaml
@@ -30,8 +28,7 @@ import jinja2
 from jinja2 import Environment, FileSystemLoader, Template
 
 class CloudProvider(Enum):
-    """Supported cloud providers"""
-    AWS = "aws"
+    """Supported cloud providers"""    AWS = "aws"
     GCP = "gcp"
     AZURE = "azure"
     KUBERNETES = "kubernetes"
@@ -40,16 +37,14 @@ class CloudProvider(Enum):
     ANSIBLE = "ansible"
 
 class DeploymentType(Enum):
-    """Deployment types"""
-    DEVELOPMENT = "development"
+    """Deployment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TEST = "test"
     DISASTER_RECOVERY = "disaster_recovery"
 
 class TemplateFormat(Enum):
-    """Template formats"""
-    YAML = "yaml"
+    """Template formats"""    YAML = "yaml"
     JSON = "json"
     TERRAFORM = "tf"
     DOCKERFILE = "dockerfile"
@@ -59,8 +54,7 @@ class TemplateFormat(Enum):
 
 @dataclass
 class TemplateContext:
-    """Template rendering context"""
-    environment: str
+    """Template rendering context"""    environment: str
     region: str
     namespace: str
     application_name: str
@@ -73,8 +67,7 @@ class TemplateContext:
 
 @dataclass
 class DeploymentTemplate:
-    """Deployment template definition"""
-    name: str
+    """Deployment template definition"""    name: str
     provider: CloudProvider
     template_type: DeploymentType
     format: TemplateFormat
@@ -85,8 +78,7 @@ class DeploymentTemplate:
     version: str = "1.0.0"
 
 class DeploymentTemplateManager:
-    """
-    Infrastructure as Code deployment templates manager.
+    """    Infrastructure as Code deployment templates manager.
     
     Provides comprehensive deployment automation:
     - Multi-cloud deployment templates (AWS, GCP, Azure)
@@ -102,11 +94,9 @@ class DeploymentTemplateManager:
     - Monitoring and logging integration
     - Backup and disaster recovery
     - Blue-green and canary deployments
-    """
-    
+    """    
     def __init__(self):
-        """Initialize deployment template manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize deployment template manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Templates storage
         self.templates = {}
@@ -124,13 +114,11 @@ class DeploymentTemplateManager:
         self.logger.info("Deployment template manager initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize template manager.
+        """        Initialize template manager.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Create template directories
             await self._create_template_directories()
             
@@ -151,8 +139,7 @@ class DeploymentTemplateManager:
             return False
     
     async def _create_template_directories(self) -> None:
-        """Create template directories"""
-        
+        """Create template directories"""        
         for template_dir in self.template_dirs:
             Path(template_dir).mkdir(parents=True, exist_ok=True)
             
@@ -164,24 +151,19 @@ class DeploymentTemplateManager:
         self.logger.info("Template directories created")
     
     async def _initialize_jinja_environment(self) -> None:
-        """Initialize Jinja2 template environment"""
-        
+        """Initialize Jinja2 template environment"""        
         # Custom filters
         def to_yaml(value, indent=2):
-            """Convert value to YAML"""
-            return yaml.dump(value, default_flow_style=False, indent=indent)
+            """Convert value to YAML"""            return yaml.dump(value, default_flow_style=False, indent=indent)
         
         def to_json(value, indent=2):
-            """Convert value to JSON"""
-            return json.dumps(value, indent=indent)
+            """Convert value to JSON"""            return json.dumps(value, indent=indent)
         
         def resource_name(name, environment):
-            """Generate resource name"""
-            return f"{name}-{environment}"
+            """Generate resource name"""            return f"{name}-{environment}"
         
         def namespace_name(app_name, environment):
-            """Generate namespace name"""
-            return f"{app_name}-{environment}"
+            """Generate namespace name"""            return f"{app_name}-{environment}"
         
         # Create Jinja2 environment
         self.jinja_env = Environment(
@@ -200,8 +182,7 @@ class DeploymentTemplateManager:
         self.logger.info("Jinja2 environment initialized")
     
     async def _load_builtin_templates(self) -> None:
-        """Load built-in deployment templates"""
-        
+        """Load built-in deployment templates"""        
         # Kubernetes deployment template
         k8s_deployment = DeploymentTemplate(
             name="kubernetes-deployment",
@@ -289,8 +270,7 @@ class DeploymentTemplateManager:
         self.logger.info(f"Loaded {len(self.templates)} built-in templates")
     
     def _get_kubernetes_deployment_template(self) -> str:
-        """Get Kubernetes deployment template"""
-        return """---
+        """Get Kubernetes deployment template"""        return """---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -522,10 +502,8 @@ spec:
         value: 2
         periodSeconds: 60
 """
-
     def _get_docker_compose_template(self) -> str:
-        """Get Docker Compose template"""
-        return """version: '3.8'
+        """Get Docker Compose template"""        return """version: '3.8'
 
 services:
   {{ application_name }}:
@@ -643,10 +621,8 @@ networks:
   app-network:
     driver: bridge
 """
-
     def _get_terraform_aws_template(self) -> str:
-        """Get Terraform AWS template"""
-        return """terraform {
+        """Get Terraform AWS template"""        return """terraform {
   required_version = ">= 1.0"
   required_providers {
     aws = {
@@ -947,10 +923,8 @@ output "vpc_id" {
   value       = aws_vpc.main.id
 }
 """
-
     def _get_helm_chart_template(self) -> str:
-        """Get Helm chart template"""
-        return """apiVersion: v2
+        """Get Helm chart template"""        return """apiVersion: v2
 name: {{ application_name }}
 description: A Helm chart for {{ application_name }}
 type: application
@@ -967,10 +941,8 @@ dependencies:
     repository: https://charts.bitnami.com/bitnami
     condition: redis.enabled
 """
-
     def _get_ansible_playbook_template(self) -> str:
-        """Get Ansible playbook template"""
-        return """---
+        """Get Ansible playbook template"""        return """---
 - name: Deploy {{ application_name }}
   hosts: all
   become: yes
@@ -1106,10 +1078,8 @@ dependencies:
         name: nginx
         state: restarted
 """
-
     async def _generate_default_templates(self) -> None:
-        """Generate additional default templates"""
-        
+        """Generate additional default templates"""        
         # CI/CD pipeline templates
         await self._generate_cicd_templates()
         
@@ -1125,8 +1095,7 @@ dependencies:
         self.logger.info("Default templates generated")
     
     async def _generate_cicd_templates(self) -> None:
-        """Generate CI/CD pipeline templates"""
-        
+        """Generate CI/CD pipeline templates"""        
         # GitHub Actions template
         github_actions = DeploymentTemplate(
             name="github-actions",
@@ -1200,8 +1169,7 @@ jobs:
         self.templates["github-actions"] = github_actions
     
     async def _generate_database_templates(self) -> None:
-        """Generate database templates"""
-        
+        """Generate database templates"""        
         # Database migration template
         db_migration = DeploymentTemplate(
             name="database-migration",
@@ -1235,8 +1203,7 @@ spec:
         self.templates["database-migration"] = db_migration
     
     async def _generate_monitoring_templates(self) -> None:
-        """Generate monitoring templates"""
-        
+        """Generate monitoring templates"""        
         # Prometheus monitoring template
         prometheus_config = DeploymentTemplate(
             name="prometheus-monitoring",
@@ -1263,8 +1230,7 @@ spec:
         self.templates["prometheus-monitoring"] = prometheus_config
     
     async def _generate_security_templates(self) -> None:
-        """Generate security templates"""
-        
+        """Generate security templates"""        
         # Network policy template
         network_policy = DeploymentTemplate(
             name="network-policy",
@@ -1312,8 +1278,7 @@ spec:
         context: TemplateContext,
         output_format: Optional[TemplateFormat] = None
     ) -> str:
-        """
-        Render deployment template.
+        """        Render deployment template.
         
         Args:
             template_name: Name of template to render
@@ -1322,8 +1287,7 @@ spec:
             
         Returns:
             Rendered template content
-        """
-        try:
+        """        try:
             if template_name not in self.templates:
                 raise ValueError(f"Template not found: {template_name}")
             
@@ -1371,8 +1335,7 @@ spec:
         from_format: TemplateFormat,
         to_format: TemplateFormat
     ) -> str:
-        """Convert content between formats"""
-        
+        """Convert content between formats"""        
         # Basic format conversion
         if from_format == TemplateFormat.YAML and to_format == TemplateFormat.JSON:
             data = yaml.safe_load(content)
@@ -1390,8 +1353,7 @@ spec:
         context: TemplateContext,
         output_directory: str
     ) -> bool:
-        """
-        Generate complete deployment package.
+        """        Generate complete deployment package.
         
         Args:
             template_names: List of templates to include
@@ -1400,8 +1362,7 @@ spec:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             # Create output directory
             output_path = Path(output_directory)
             output_path.mkdir(parents=True, exist_ok=True)
@@ -1434,8 +1395,7 @@ spec:
             return False
     
     def _get_file_extension(self, template_format: TemplateFormat) -> str:
-        """Get file extension for template format"""
-        
+        """Get file extension for template format"""        
         extension_map = {
             TemplateFormat.YAML: "yaml",
             TemplateFormat.JSON: "json",
@@ -1449,16 +1409,14 @@ spec:
         return extension_map.get(template_format, "txt")
     
     async def add_custom_template(self, template: DeploymentTemplate) -> bool:
-        """
-        Add custom deployment template.
+        """        Add custom deployment template.
         
         Args:
             template: Template definition
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             self.templates[template.name] = template
             self.logger.info(f"Custom template added: {template.name}")
             return True
@@ -1468,8 +1426,7 @@ spec:
             return False
     
     async def validate_template(self, template_name: str, context: TemplateContext) -> Dict[str, Any]:
-        """
-        Validate template rendering.
+        """        Validate template rendering.
         
         Args:
             template_name: Name of template to validate
@@ -1477,8 +1434,7 @@ spec:
             
         Returns:
             Validation result
-        """
-        try:
+        """        try:
             # Attempt to render template
             rendered_content = await self.render_template(template_name, context)
             
@@ -1521,8 +1477,7 @@ spec:
             }
     
     async def get_template_list(self) -> List[Dict[str, Any]]:
-        """Get list of available templates"""
-        
+        """Get list of available templates"""        
         return [
             {
                 "name": template.name,
@@ -1537,8 +1492,7 @@ spec:
         ]
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get template manager status"""
-        
+        """Get template manager status"""        
         return {
             "total_templates": len(self.templates),
             "providers": list(set(t.provider.value for t in self.templates.values())),

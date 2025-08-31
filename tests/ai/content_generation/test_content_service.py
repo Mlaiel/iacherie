@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Content Service Tests
+"""Content Service Tests
 
 Comprehensive tests for the ContentService class that provides
 the high-level business logic API for content operations.
@@ -26,7 +23,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -54,17 +50,14 @@ from ai.content_generation.content_models import (
 
 
 class TestContentService:
-    """Test suite for ContentService"""
-    
+    """Test suite for ContentService"""    
     @pytest.fixture
     def service(self):
-        """Create a content service instance"""
-        return ContentService()
+        """Create a content service instance"""        return ContentService()
     
     @pytest.fixture
     def mock_generation_manager(self):
-        """Create a mock generation manager"""
-        manager = AsyncMock()
+        """Create a mock generation manager"""        manager = AsyncMock()
         manager.submit_generation_request.return_value = "task_123"
         manager.get_task_result.return_value = Mock(
             final_content="Generated content",
@@ -75,8 +68,7 @@ class TestContentService:
     
     @pytest.fixture
     def mock_quality_metrics(self):
-        """Create a mock quality metrics"""
-        metrics = AsyncMock()
+        """Create a mock quality metrics"""        metrics = AsyncMock()
         metrics.calculate_quality_score.return_value = {
             "overall_score": 0.85,
             "readability_score": 0.8,
@@ -87,8 +79,7 @@ class TestContentService:
     
     @pytest.fixture
     def blog_request(self):
-        """Create a blog post request"""
-        return ContentGenerationRequest(
+        """Create a blog post request"""        return ContentGenerationRequest(
             content_type=ContentType.BLOG_POST,
             topic="Future of Artificial Intelligence",
             target_audience="tech professionals",
@@ -99,8 +90,7 @@ class TestContentService:
     
     @pytest.fixture
     def social_request(self):
-        """Create a social media request"""
-        return ContentGenerationRequest(
+        """Create a social media request"""        return ContentGenerationRequest(
             content_type=ContentType.INSTAGRAM_POST,
             topic="Daily motivation",
             target_audience="young professionals",
@@ -112,8 +102,7 @@ class TestContentService:
     
     @pytest.fixture
     def email_request(self):
-        """Create an email marketing request"""
-        return ContentGenerationRequest(
+        """Create an email marketing request"""        return ContentGenerationRequest(
             content_type=ContentType.EMAIL_MARKETING,
             topic="New product launch",
             target_audience="existing customers",
@@ -124,8 +113,7 @@ class TestContentService:
         )
     
     def test_service_initialization(self, service):
-        """Test service initialization"""
-        assert service is not None
+        """Test service initialization"""        assert service is not None
         assert hasattr(service, 'generation_manager')
         assert hasattr(service, 'quality_metrics')
         assert hasattr(service, 'performance_tracker')
@@ -134,8 +122,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_create_content_blog_post(self, service, blog_request, mock_generation_manager, mock_quality_metrics):
-        """Test creating a blog post"""
-        with patch.object(service, 'generation_manager', mock_generation_manager):
+        """Test creating a blog post"""        with patch.object(service, 'generation_manager', mock_generation_manager):
             with patch.object(service, 'quality_metrics', mock_quality_metrics):
                 response = await service.create_content(blog_request)
                 
@@ -148,8 +135,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_create_content_social_post(self, service, social_request, mock_generation_manager, mock_quality_metrics):
-        """Test creating a social media post"""
-        with patch.object(service, 'generation_manager', mock_generation_manager):
+        """Test creating a social media post"""        with patch.object(service, 'generation_manager', mock_generation_manager):
             with patch.object(service, 'quality_metrics', mock_quality_metrics):
                 response = await service.create_content(social_request)
                 
@@ -160,8 +146,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_create_content_email_marketing(self, service, email_request, mock_generation_manager, mock_quality_metrics):
-        """Test creating email marketing content"""
-        with patch.object(service, 'generation_manager', mock_generation_manager):
+        """Test creating email marketing content"""        with patch.object(service, 'generation_manager', mock_generation_manager):
             with patch.object(service, 'quality_metrics', mock_quality_metrics):
                 response = await service.create_content(email_request)
                 
@@ -172,8 +157,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_business_rule_validation(self, service, blog_request):
-        """Test business rule validation"""
-        # Test valid request passes validation
+        """Test business rule validation"""        # Test valid request passes validation
         validation_result = await service._validate_business_rules(blog_request)
         assert validation_result["valid"] is True
         assert len(validation_result["violations"]) == 0
@@ -188,8 +172,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_quality_threshold_enforcement(self, service, blog_request, mock_generation_manager):
-        """Test quality threshold enforcement"""
-        # Mock low quality result
+        """Test quality threshold enforcement"""        # Mock low quality result
         low_quality_result = Mock(
             final_content="Low quality content",
             status="completed",
@@ -205,8 +188,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_template_based_creation(self, service, social_request):
-        """Test template-based content creation"""
-        template_request = social_request.copy()
+        """Test template-based content creation"""        template_request = social_request.copy()
         template_request.template_type = "engagement_post"
         
         response = await service.create_content_from_template(
@@ -225,8 +207,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_bulk_content_creation(self, service, mock_generation_manager, mock_quality_metrics):
-        """Test bulk content creation"""
-        requests = []
+        """Test bulk content creation"""        requests = []
         for i in range(3):
             request = ContentGenerationRequest(
                 content_type=ContentType.SOCIAL_POST,
@@ -246,8 +227,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_content_optimization(self, service, blog_request):
-        """Test content optimization"""
-        original_content = "This is original content that needs optimization."
+        """Test content optimization"""        original_content = "This is original content that needs optimization."
         
         optimized_content = await service.optimize_content(
             content=original_content,
@@ -261,8 +241,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_content_analysis(self, service):
-        """Test content analysis functionality"""
-        content = "This is a sample content for analysis. It contains multiple sentences and should provide good metrics."
+        """Test content analysis functionality"""        content = "This is a sample content for analysis. It contains multiple sentences and should provide good metrics."
         
         analysis_result = await service.analyze_content(content)
         
@@ -273,8 +252,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_workflow_customization(self, service, blog_request):
-        """Test custom workflow execution"""
-        custom_workflow = {
+        """Test custom workflow execution"""        custom_workflow = {
             "name": "premium_blog",
             "stages": ["planning", "generation", "seo_optimization", "quality_enhancement", "validation"],
             "quality_threshold": 0.9,
@@ -302,8 +280,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_error_handling(self, service, blog_request, mock_generation_manager):
-        """Test error handling in content creation"""
-        # Mock generation manager to raise an error
+        """Test error handling in content creation"""        # Mock generation manager to raise an error
         mock_generation_manager.submit_generation_request.side_effect = Exception("Generation failed")
         
         with patch.object(service, 'generation_manager', mock_generation_manager):
@@ -312,8 +289,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_business_rule_violation_handling(self, service):
-        """Test business rule violation handling"""
-        # Create request that violates business rules
+        """Test business rule violation handling"""        # Create request that violates business rules
         invalid_request = ContentGenerationRequest(
             content_type=ContentType.BLOG_POST,
             topic="",  # Empty topic violates rules
@@ -326,8 +302,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_performance_tracking(self, service, blog_request, mock_generation_manager, mock_quality_metrics):
-        """Test performance tracking during content creation"""
-        with patch.object(service, 'generation_manager', mock_generation_manager):
+        """Test performance tracking during content creation"""        with patch.object(service, 'generation_manager', mock_generation_manager):
             with patch.object(service, 'quality_metrics', mock_quality_metrics):
                 # Track performance before
                 initial_metrics = service.get_performance_metrics()
@@ -343,8 +318,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_content_caching(self, service, blog_request, mock_generation_manager, mock_quality_metrics):
-        """Test content caching functionality"""
-        with patch.object(service, 'generation_manager', mock_generation_manager):
+        """Test content caching functionality"""        with patch.object(service, 'generation_manager', mock_generation_manager):
             with patch.object(service, 'quality_metrics', mock_quality_metrics):
                 # First request
                 response1 = await service.create_content(blog_request)
@@ -357,8 +331,7 @@ class TestContentService:
                 # Both should succeed regardless of caching implementation
     
     def test_content_validation(self, service):
-        """Test content validation methods"""
-        # Test valid content
+        """Test content validation methods"""        # Test valid content
         valid_content = "This is a well-formed piece of content with appropriate length and structure."
         validation_result = service._validate_content(valid_content, ContentType.BLOG_POST)
         assert validation_result["valid"] is True
@@ -370,8 +343,7 @@ class TestContentService:
         assert len(validation_result["errors"]) > 0
     
     def test_metrics_collection(self, service):
-        """Test metrics collection"""
-        metrics = service.get_performance_metrics()
+        """Test metrics collection"""        metrics = service.get_performance_metrics()
         
         expected_keys = [
             'total_requests',
@@ -387,8 +359,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_concurrent_content_creation(self, service, mock_generation_manager, mock_quality_metrics):
-        """Test concurrent content creation"""
-        with patch.object(service, 'generation_manager', mock_generation_manager):
+        """Test concurrent content creation"""        with patch.object(service, 'generation_manager', mock_generation_manager):
             with patch.object(service, 'quality_metrics', mock_quality_metrics):
                 # Create multiple requests
                 requests = []
@@ -411,8 +382,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_content_revision(self, service):
-        """Test content revision functionality"""
-        original_content = "This is the original content that needs revision."
+        """Test content revision functionality"""        original_content = "This is the original content that needs revision."
         revision_instructions = "Make it more engaging and add a call to action."
         
         revised_content = await service.revise_content(
@@ -427,8 +397,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_content_localization(self, service, blog_request):
-        """Test content localization"""
-        # Set language for localization
+        """Test content localization"""        # Set language for localization
         blog_request.language = "fr"  # French
         
         with patch.object(service, 'generation_manager', AsyncMock()):
@@ -446,8 +415,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_content_versioning(self, service, blog_request):
-        """Test content versioning"""
-        with patch.object(service, 'generation_manager', AsyncMock()):
+        """Test content versioning"""        with patch.object(service, 'generation_manager', AsyncMock()):
             service.generation_manager.submit_generation_request.return_value = "task_123"
             service.generation_manager.get_task_result.return_value = Mock(
                 final_content="Versioned content",
@@ -467,8 +435,7 @@ class TestContentService:
             # Both versions should be tracked
     
     def test_business_rules_configuration(self, service):
-        """Test business rules configuration"""
-        # Get current rules
+        """Test business rules configuration"""        # Get current rules
         current_rules = service.get_business_rules()
         assert current_rules is not None
         
@@ -488,8 +455,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_content_scheduling(self, service, social_request):
-        """Test content scheduling functionality"""
-        from datetime import datetime, timedelta
+        """Test content scheduling functionality"""        from datetime import datetime, timedelta
         
         scheduled_time = datetime.now() + timedelta(hours=1)
         
@@ -505,8 +471,7 @@ class TestContentService:
     
     @pytest.mark.asyncio
     async def test_a_b_testing_support(self, service, social_request):
-        """Test A/B testing support"""
-        # Create A/B test variants
+        """Test A/B testing support"""        # Create A/B test variants
         variant_a = social_request.copy()
         variant_a.tone = "professional"
         
@@ -527,17 +492,14 @@ class TestContentService:
 
 
 class TestContentServiceIntegration:
-    """Integration tests for ContentService"""
-    
+    """Integration tests for ContentService"""    
     @pytest.fixture
     def integrated_service(self):
-        """Create a service with real dependencies for integration testing"""
-        return ContentService()
+        """Create a service with real dependencies for integration testing"""        return ContentService()
     
     @pytest.mark.asyncio
     async def test_end_to_end_blog_creation(self, integrated_service):
-        """Test end-to-end blog post creation"""
-        request = ContentGenerationRequest(
+        """Test end-to-end blog post creation"""        request = ContentGenerationRequest(
             content_type=ContentType.BLOG_POST,
             topic="Benefits of Remote Work",
             target_audience="business professionals",
@@ -560,8 +522,7 @@ class TestContentServiceIntegration:
     
     @pytest.mark.asyncio
     async def test_end_to_end_social_media_creation(self, integrated_service):
-        """Test end-to-end social media post creation"""
-        request = ContentGenerationRequest(
+        """Test end-to-end social media post creation"""        request = ContentGenerationRequest(
             content_type=ContentType.INSTAGRAM_POST,
             topic="Monday motivation",
             target_audience="young professionals",

@@ -1,5 +1,4 @@
-"""
-Revenue Management System - Central Integration Hub
+"""Revenue Management System - Central Integration Hub
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
@@ -26,7 +25,6 @@ Developed by Expert Team:
 ⚙️  DevOps: Production Infrastructure & Monitoring
 🧠 IA Prompt Engineer: AI-Powered Revenue Optimization
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -69,8 +67,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueSystemConfiguration:
-    """Revenue system configuration"""
-    enable_real_time_tracking: bool = True
+    """Revenue system configuration"""    enable_real_time_tracking: bool = True
     enable_ai_optimization: bool = True
     enable_cross_platform_sync: bool = True
     enable_automated_payments: bool = True
@@ -84,8 +81,7 @@ class RevenueSystemConfiguration:
 
 
 class RevenueManagementSystem:
-    """Comprehensive revenue management system orchestrator"""
-    
+    """Comprehensive revenue management system orchestrator"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = RevenueSystemConfiguration(**(config or {}))
         self.system_id = str(uuid.uuid4())
@@ -122,8 +118,7 @@ class RevenueManagementSystem:
         self.performance_stats = {}
         
     async def initialize(self) -> None:
-        """Initialize the complete revenue management system"""
-        try:
+        """Initialize the complete revenue management system"""        try:
             logger.info(f"Initializing Revenue Management System {self.system_id}")
             
             # Initialize core components
@@ -150,8 +145,7 @@ class RevenueManagementSystem:
             raise RevenueSystemError(f"System initialization failed: {e}")
     
     async def _initialize_core_components(self) -> None:
-        """Initialize core revenue management components"""
-        logger.info("Initializing core revenue components...")
+        """Initialize core revenue management components"""        logger.info("Initializing core revenue components...")
         
         # Revenue Manager (portfolio and target management)
         self.revenue_manager = RevenueManager(self.config.__dict__)
@@ -228,8 +222,7 @@ class RevenueManagementSystem:
         logger.info("Core revenue components initialized successfully")
     
     async def _initialize_enterprise_components(self) -> None:
-        """Initialize enterprise revenue management components"""
-        logger.info("Initializing enterprise revenue components...")
+        """Initialize enterprise revenue management components"""        logger.info("Initializing enterprise revenue components...")
         
         # Distribution Manager (revenue distribution and payouts)
         self.distribution_manager = create_distribution_manager(self.config.__dict__)
@@ -250,8 +243,7 @@ class RevenueManagementSystem:
         logger.info("Enterprise revenue components initialized successfully")
     
     async def _setup_system_integration(self) -> None:
-        """Setup integration between all components"""
-        logger.info("Setting up system integration...")
+        """Setup integration between all components"""        logger.info("Setting up system integration...")
         
         # Configure component interconnections
         component_registry = {
@@ -287,8 +279,7 @@ class RevenueManagementSystem:
         logger.info("System integration setup completed")
     
     async def _start_background_processes(self) -> None:
-        """Start background processes for automated operations"""
-        if self.config.enable_real_time_tracking:
+        """Start background processes for automated operations"""        if self.config.enable_real_time_tracking:
             asyncio.create_task(self._revenue_sync_process())
         
         if self.config.enable_cross_platform_sync:
@@ -303,8 +294,7 @@ class RevenueManagementSystem:
         logger.info("Background processes started")
     
     async def _setup_system_monitoring(self) -> None:
-        """Setup system monitoring and health checks"""
-        # Setup performance monitoring
+        """Setup system monitoring and health checks"""        # Setup performance monitoring
         self.performance_stats = {
             'system_start_time': datetime.utcnow(),
             'total_revenue_processed': Decimal('0'),
@@ -324,8 +314,7 @@ class RevenueManagementSystem:
         revenue_data: List[Dict[str, Any]],
         source: str = "manual"
     ) -> Dict[str, Any]:
-        """Process revenue data through the complete system"""
-        try:
+        """Process revenue data through the complete system"""        try:
             if not self.is_initialized:
                 raise RevenueSystemError("System not initialized")
             
@@ -381,8 +370,7 @@ class RevenueManagementSystem:
         user_id: str,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue dashboard"""
-        try:
+        """Get comprehensive revenue dashboard"""        try:
             # Revenue overview
             revenue_overview = await self.tracker.get_revenue_summary(user_id, period_days)
             
@@ -432,8 +420,7 @@ class RevenueManagementSystem:
             raise RevenueSystemError(f"Dashboard generation failed: {e}")
     
     async def execute_optimization_cycle(self, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """Execute complete optimization cycle"""
-        try:
+        """Execute complete optimization cycle"""        try:
             optimization_id = str(uuid.uuid4())
             
             # Run optimization across all components
@@ -476,8 +463,7 @@ class RevenueManagementSystem:
             raise RevenueSystemError(f"Optimization cycle failed: {e}")
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             component_status = {}
             
             # Check core components
@@ -543,8 +529,7 @@ class RevenueManagementSystem:
     
     # Background process methods
     async def _revenue_sync_process(self) -> None:
-        """Background process for revenue synchronization"""
-        while True:
+        """Background process for revenue synchronization"""        while True:
             try:
                 await asyncio.sleep(self.config.revenue_sync_frequency)
                 
@@ -556,8 +541,7 @@ class RevenueManagementSystem:
                 logger.error(f"Error in revenue sync process: {e}")
     
     async def _platform_sync_process(self) -> None:
-        """Background process for platform synchronization"""
-        while True:
+        """Background process for platform synchronization"""        while True:
             try:
                 await asyncio.sleep(self.config.platform_sync_frequency)
                 
@@ -569,8 +553,7 @@ class RevenueManagementSystem:
                 logger.error(f"Error in platform sync process: {e}")
     
     async def _payment_processing_process(self) -> None:
-        """Background process for payment processing"""
-        while True:
+        """Background process for payment processing"""        while True:
             try:
                 await asyncio.sleep(self.config.payment_processing_delay)
                 
@@ -582,8 +565,7 @@ class RevenueManagementSystem:
                 logger.error(f"Error in payment processing: {e}")
     
     async def _optimization_process(self) -> None:
-        """Background process for AI optimization"""
-        while True:
+        """Background process for AI optimization"""        while True:
             try:
                 await asyncio.sleep(3600)  # Run hourly
                 
@@ -594,8 +576,7 @@ class RevenueManagementSystem:
                 logger.error(f"Error in optimization process: {e}")
     
     async def _health_check_process(self) -> None:
-        """Background process for health monitoring"""
-        while True:
+        """Background process for health monitoring"""        while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
@@ -609,8 +590,7 @@ class RevenueManagementSystem:
                 logger.error(f"Error in health check process: {e}")
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown the revenue management system"""
-        try:
+        """Gracefully shutdown the revenue management system"""        try:
             logger.info(f"Shutting down Revenue Management System {self.system_id}")
             
             # Cleanup all components
@@ -653,12 +633,10 @@ class RevenueManagementSystem:
 
 # Factory functions
 async def create_revenue_management_system(config: Optional[Dict[str, Any]] = None) -> RevenueManagementSystem:
-    """Create and initialize revenue management system"""
-    system = RevenueManagementSystem(config)
+    """Create and initialize revenue management system"""    system = RevenueManagementSystem(config)
     await system.initialize()
     return system
 
 
 def create_revenue_system_config(**kwargs) -> RevenueSystemConfiguration:
-    """Create revenue system configuration"""
-    return RevenueSystemConfiguration(**kwargs)
+    """Create revenue system configuration"""    return RevenueSystemConfiguration(**kwargs)

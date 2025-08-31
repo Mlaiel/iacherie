@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Adaptive Learning Algorithms Tests
+"""Adaptive Learning Algorithms Tests
 
 Comprehensive tests for all adaptive learning algorithms in personalization.
 Tests online learning, bandits, reinforcement learning, and optimization algorithms.
@@ -23,7 +20,6 @@ Tests online learning, bandits, reinforcement learning, and optimization algorit
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -61,10 +57,8 @@ from ai.personalization.exceptions import (
 
 class TestAdaptiveLearningAlgorithm(IsolatedAsyncioTestCase):
     """Base tests for AdaptiveLearningAlgorithm abstract class"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        # Test with concrete implementation (OnlineLearningAlgorithm)
+        """Set up test environment"""        # Test with concrete implementation (OnlineLearningAlgorithm)
         self.algorithm = OnlineLearningAlgorithm(
             learning_rate=0.01,
             decay_factor=0.95,
@@ -72,23 +66,20 @@ class TestAdaptiveLearningAlgorithm(IsolatedAsyncioTestCase):
         )
 
     async def test_algorithm_initialization(self):
-        """Test algorithm proper initialization"""
-        self.assertIsNotNone(self.algorithm)
+        """Test algorithm proper initialization"""        self.assertIsNotNone(self.algorithm)
         self.assertEqual(self.algorithm.algorithm_type, AlgorithmType.ONLINE_LEARNING)
         self.assertFalse(self.algorithm.is_initialized)
         self.assertEqual(self.algorithm.update_count, 0)
 
     async def test_algorithm_configuration(self):
-        """Test algorithm configuration management"""
-        config = self.algorithm.get_config()
+        """Test algorithm configuration management"""        config = self.algorithm.get_config()
         self.assertIsInstance(config, dict)
         self.assertIn('learning_rate', config)
         self.assertIn('decay_factor', config)
         self.assertIn('regularization', config)
 
     async def test_learning_rate_scheduling(self):
-        """Test adaptive learning rate scheduling"""
-        initial_lr = self.algorithm.learning_rate
+        """Test adaptive learning rate scheduling"""        initial_lr = self.algorithm.learning_rate
         
         # Simulate multiple updates
         for i in range(100):
@@ -105,8 +96,7 @@ class TestAdaptiveLearningAlgorithm(IsolatedAsyncioTestCase):
         self.assertLess(current_lr, initial_lr)
 
     async def test_convergence_detection(self):
-        """Test convergence detection mechanism"""
-        convergence_threshold = 1e-6
+        """Test convergence detection mechanism"""        convergence_threshold = 1e-6
         self.algorithm.convergence_threshold = convergence_threshold
         
         # Simulate convergence scenario
@@ -121,10 +111,8 @@ class TestAdaptiveLearningAlgorithm(IsolatedAsyncioTestCase):
 
 class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
     """Comprehensive tests for OnlineLearningAlgorithm"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.algorithm = OnlineLearningAlgorithm(
+        """Set up test environment"""        self.algorithm = OnlineLearningAlgorithm(
             learning_rate=0.05,
             decay_factor=0.9,
             regularization=0.01,
@@ -133,8 +121,7 @@ class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
         self.stream_data = self._generate_streaming_data()
 
     def _generate_streaming_data(self) -> List[Dict[str, Any]]:
-        """Generate streaming data for online learning"""
-        stream = []
+        """Generate streaming data for online learning"""        stream = []
         n_users, n_items = 50, 100
         
         for t in range(1000):  # 1000 time steps
@@ -161,8 +148,7 @@ class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
         return stream
 
     async def test_online_learning_initialization(self):
-        """Test online learning initialization"""
-        await self.algorithm.initialize(
+        """Test online learning initialization"""        await self.algorithm.initialize(
             user_ids=[f'user_{i}' for i in range(50)],
             item_ids=[f'item_{i}' for i in range(100)],
             initial_features=64
@@ -173,8 +159,7 @@ class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
         self.assertIsNotNone(self.algorithm.item_embeddings)
 
     async def test_incremental_updates(self):
-        """Test incremental learning updates"""
-        await self.algorithm.initialize(
+        """Test incremental learning updates"""        await self.algorithm.initialize(
             user_ids=[f'user_{i}' for i in range(50)],
             item_ids=[f'item_{i}' for i in range(100)]
         )
@@ -195,8 +180,7 @@ class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
         self.assertLess(final_loss, initial_loss * 2)  # Allow some flexibility
 
     async def test_mini_batch_processing(self):
-        """Test mini-batch processing in online learning"""
-        await self.algorithm.initialize(
+        """Test mini-batch processing in online learning"""        await self.algorithm.initialize(
             user_ids=[f'user_{i}' for i in range(50)],
             item_ids=[f'item_{i}' for i in range(100)]
         )
@@ -213,8 +197,7 @@ class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
             self.assertGreaterEqual(loss, 0.0)
 
     async def test_concept_drift_detection(self):
-        """Test concept drift detection"""
-        await self.algorithm.initialize(
+        """Test concept drift detection"""        await self.algorithm.initialize(
             user_ids=[f'user_{i}' for i in range(50)],
             item_ids=[f'item_{i}' for i in range(100)]
         )
@@ -239,8 +222,7 @@ class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
         self.assertIsInstance(drift_detected, bool)
 
     async def test_adaptive_regularization(self):
-        """Test adaptive regularization adjustment"""
-        await self.algorithm.initialize(
+        """Test adaptive regularization adjustment"""        await self.algorithm.initialize(
             user_ids=[f'user_{i}' for i in range(50)],
             item_ids=[f'item_{i}' for i in range(100)]
         )
@@ -257,8 +239,7 @@ class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
         self.assertGreater(current_reg, 0.0)
 
     async def test_forgetting_mechanism(self):
-        """Test forgetting mechanism for old data"""
-        self.algorithm.enable_forgetting = True
+        """Test forgetting mechanism for old data"""        self.algorithm.enable_forgetting = True
         self.algorithm.forgetting_factor = 0.99
         
         await self.algorithm.initialize(
@@ -283,10 +264,8 @@ class TestOnlineLearningAlgorithm(IsolatedAsyncioTestCase):
 
 class TestMultiArmedBandit(IsolatedAsyncioTestCase):
     """Comprehensive tests for MultiArmedBandit algorithms"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.n_arms = 10
+        """Set up test environment"""        self.n_arms = 10
         self.bandit = MultiArmedBandit(
             n_arms=self.n_arms,
             exploration_strategy='epsilon_greedy',
@@ -295,19 +274,16 @@ class TestMultiArmedBandit(IsolatedAsyncioTestCase):
         self.true_rewards = np.random.uniform(0.2, 0.8, self.n_arms)
 
     def _simulate_reward(self, arm: int) -> float:
-        """Simulate reward for pulling an arm"""
-        return np.random.normal(self.true_rewards[arm], 0.1)
+        """Simulate reward for pulling an arm"""        return np.random.normal(self.true_rewards[arm], 0.1)
 
     async def test_bandit_initialization(self):
-        """Test bandit initialization"""
-        self.assertEqual(self.bandit.n_arms, self.n_arms)
+        """Test bandit initialization"""        self.assertEqual(self.bandit.n_arms, self.n_arms)
         self.assertEqual(len(self.bandit.arm_counts), self.n_arms)
         self.assertEqual(len(self.bandit.arm_rewards), self.n_arms)
         self.assertTrue(all(count == 0 for count in self.bandit.arm_counts))
 
     async def test_epsilon_greedy_strategy(self):
-        """Test epsilon-greedy exploration strategy"""
-        # Warm up with some pulls
+        """Test epsilon-greedy exploration strategy"""        # Warm up with some pulls
         for arm in range(self.n_arms):
             reward = self._simulate_reward(arm)
             await self.bandit.update(arm, reward)
@@ -330,8 +306,7 @@ class TestMultiArmedBandit(IsolatedAsyncioTestCase):
         self.assertLess(exploration_rate, 0.25)
 
     async def test_bandit_convergence(self):
-        """Test bandit convergence to optimal arm"""
-        n_trials = 1000
+        """Test bandit convergence to optimal arm"""        n_trials = 1000
         arm_selections = []
         
         for trial in range(n_trials):
@@ -349,8 +324,7 @@ class TestMultiArmedBandit(IsolatedAsyncioTestCase):
         self.assertLess(regret, 0.5 * n_trials)  # Should be much better than random
 
     async def test_bandit_statistics(self):
-        """Test bandit statistics tracking"""
-        # Pull each arm a few times
+        """Test bandit statistics tracking"""        # Pull each arm a few times
         for arm in range(self.n_arms):
             for _ in range(5):
                 reward = self._simulate_reward(arm)
@@ -370,10 +344,8 @@ class TestMultiArmedBandit(IsolatedAsyncioTestCase):
 
 class TestContextualBandit(IsolatedAsyncioTestCase):
     """Comprehensive tests for ContextualBandit algorithms"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.n_arms = 5
+        """Set up test environment"""        self.n_arms = 5
         self.context_dim = 10
         self.bandit = ContextualBandit(
             n_arms=self.n_arms,
@@ -386,23 +358,19 @@ class TestContextualBandit(IsolatedAsyncioTestCase):
         self.arm_weights = np.random.randn(self.n_arms, self.context_dim)
 
     def _generate_context(self) -> np.ndarray:
-        """Generate random context vector"""
-        return np.random.randn(self.context_dim)
+        """Generate random context vector"""        return np.random.randn(self.context_dim)
 
     def _simulate_contextual_reward(self, arm: int, context: np.ndarray) -> float:
-        """Simulate context-dependent reward"""
-        expected_reward = np.dot(self.arm_weights[arm], context)
+        """Simulate context-dependent reward"""        expected_reward = np.dot(self.arm_weights[arm], context)
         return expected_reward + np.random.normal(0, 0.1)
 
     async def test_contextual_bandit_initialization(self):
-        """Test contextual bandit initialization"""
-        self.assertEqual(self.bandit.n_arms, self.n_arms)
+        """Test contextual bandit initialization"""        self.assertEqual(self.bandit.n_arms, self.n_arms)
         self.assertEqual(self.bandit.context_dim, self.context_dim)
         self.assertIsNotNone(self.bandit.arm_models)
 
     async def test_linucb_algorithm(self):
-        """Test LinUCB algorithm implementation"""
-        linucb_bandit = LinUCB(
+        """Test LinUCB algorithm implementation"""        linucb_bandit = LinUCB(
             n_arms=self.n_arms,
             context_dim=self.context_dim,
             alpha=0.1
@@ -433,8 +401,7 @@ class TestContextualBandit(IsolatedAsyncioTestCase):
         self.assertGreater(late_rewards + 0.2, early_rewards)
 
     async def test_thompson_sampling(self):
-        """Test Thompson Sampling for contextual bandits"""
-        ts_bandit = ThompsonSampling(
+        """Test Thompson Sampling for contextual bandits"""        ts_bandit = ThompsonSampling(
             n_arms=self.n_arms,
             context_dim=self.context_dim,
             prior_variance=1.0
@@ -455,8 +422,7 @@ class TestContextualBandit(IsolatedAsyncioTestCase):
             self.assertGreater(uncertainty, 0.0)
 
     async def test_contextual_feature_importance(self):
-        """Test feature importance analysis in contextual bandits"""
-        # Use structured context with known important features
+        """Test feature importance analysis in contextual bandits"""        # Use structured context with known important features
         structured_contexts = []
         for trial in range(150):
             context = np.zeros(self.context_dim)
@@ -482,10 +448,8 @@ class TestContextualBandit(IsolatedAsyncioTestCase):
 
 class TestQLearningAgent(IsolatedAsyncioTestCase):
     """Comprehensive tests for Q-Learning reinforcement learning agent"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.n_states = 20
+        """Set up test environment"""        self.n_states = 20
         self.n_actions = 4
         self.agent = QLearningAgent(
             n_states=self.n_states,
@@ -497,8 +461,7 @@ class TestQLearningAgent(IsolatedAsyncioTestCase):
         self._setup_environment()
 
     def _setup_environment(self):
-        """Set up a simple grid world environment"""
-        self.grid_size = int(np.sqrt(self.n_states))
+        """Set up a simple grid world environment"""        self.grid_size = int(np.sqrt(self.n_states))
         self.goal_state = self.n_states - 1
         self.reward_map = np.zeros(self.n_states)
         self.reward_map[self.goal_state] = 10.0
@@ -508,8 +471,7 @@ class TestQLearningAgent(IsolatedAsyncioTestCase):
         self.reward_map[obstacles] = -1.0
 
     def _get_next_state(self, state: int, action: int) -> int:
-        """Get next state given current state and action"""
-        row, col = divmod(state, self.grid_size)
+        """Get next state given current state and action"""        row, col = divmod(state, self.grid_size)
         
         # Actions: 0=up, 1=down, 2=left, 3=right
         if action == 0 and row > 0:
@@ -524,19 +486,16 @@ class TestQLearningAgent(IsolatedAsyncioTestCase):
         return row * self.grid_size + col
 
     def _get_reward(self, state: int) -> float:
-        """Get reward for being in a state"""
-        return self.reward_map[state]
+        """Get reward for being in a state"""        return self.reward_map[state]
 
     async def test_q_learning_initialization(self):
-        """Test Q-learning agent initialization"""
-        self.assertEqual(self.agent.q_table.shape, (self.n_states, self.n_actions))
+        """Test Q-learning agent initialization"""        self.assertEqual(self.agent.q_table.shape, (self.n_states, self.n_actions))
         self.assertTrue(np.allclose(self.agent.q_table, 0.0))
         self.assertEqual(self.agent.n_states, self.n_states)
         self.assertEqual(self.agent.n_actions, self.n_actions)
 
     async def test_action_selection(self):
-        """Test action selection strategies"""
-        state = 0
+        """Test action selection strategies"""        state = 0
         
         # Test epsilon-greedy selection
         actions = []
@@ -553,8 +512,7 @@ class TestQLearningAgent(IsolatedAsyncioTestCase):
             self.assertIn(action, range(self.n_actions))
 
     async def test_q_value_updates(self):
-        """Test Q-value updates"""
-        state = 0
+        """Test Q-value updates"""        state = 0
         action = 1
         next_state = self._get_next_state(state, action)
         reward = self._get_reward(next_state)
@@ -569,8 +527,7 @@ class TestQLearningAgent(IsolatedAsyncioTestCase):
         self.assertNotEqual(old_q_value, new_q_value)
 
     async def test_policy_learning(self):
-        """Test that agent learns a reasonable policy"""
-        n_episodes = 200
+        """Test that agent learns a reasonable policy"""        n_episodes = 200
         episode_rewards = []
         
         for episode in range(n_episodes):
@@ -602,8 +559,7 @@ class TestQLearningAgent(IsolatedAsyncioTestCase):
         self.assertGreater(late_performance, early_performance - 2.0)
 
     async def test_value_function_convergence(self):
-        """Test that value function converges"""
-        # Train for many episodes
+        """Test that value function converges"""        # Train for many episodes
         for _ in range(500):
             state = np.random.randint(self.n_states)
             action = np.random.randint(self.n_actions)
@@ -625,10 +581,8 @@ class TestQLearningAgent(IsolatedAsyncioTestCase):
 
 class TestPolicyGradientAgent(IsolatedAsyncioTestCase):
     """Comprehensive tests for Policy Gradient reinforcement learning agent"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.n_states = 10
+        """Set up test environment"""        self.n_states = 10
         self.n_actions = 3
         self.agent = PolicyGradientAgent(
             n_states=self.n_states,
@@ -638,8 +592,7 @@ class TestPolicyGradientAgent(IsolatedAsyncioTestCase):
         )
 
     async def test_policy_initialization(self):
-        """Test policy network initialization"""
-        # Policy should output valid probability distributions
+        """Test policy network initialization"""        # Policy should output valid probability distributions
         for state in range(self.n_states):
             action_probs = await self.agent.get_action_probabilities(state)
             
@@ -648,8 +601,7 @@ class TestPolicyGradientAgent(IsolatedAsyncioTestCase):
             self.assertTrue(all(prob >= 0.0 for prob in action_probs))
 
     async def test_trajectory_collection(self):
-        """Test trajectory collection and reward computation"""
-        # Generate a simple trajectory
+        """Test trajectory collection and reward computation"""        # Generate a simple trajectory
         trajectory = [
             {'state': 0, 'action': 1, 'reward': 1.0},
             {'state': 1, 'action': 2, 'reward': 0.5},
@@ -671,8 +623,7 @@ class TestPolicyGradientAgent(IsolatedAsyncioTestCase):
             self.assertAlmostEqual(computed, expected, places=5)
 
     async def test_policy_gradient_update(self):
-        """Test policy gradient updates"""
-        # Create a batch of trajectories
+        """Test policy gradient updates"""        # Create a batch of trajectories
         trajectories = []
         for _ in range(10):
             trajectory = []
@@ -696,8 +647,7 @@ class TestPolicyGradientAgent(IsolatedAsyncioTestCase):
         self.assertTrue(params_changed)
 
     async def test_baseline_estimation(self):
-        """Test baseline estimation for variance reduction"""
-        self.agent.use_baseline = True
+        """Test baseline estimation for variance reduction"""        self.agent.use_baseline = True
         
         # Generate trajectories with varying returns
         high_return_trajectory = [
@@ -718,10 +668,8 @@ class TestPolicyGradientAgent(IsolatedAsyncioTestCase):
 
 class TestGradientBoostedPersonalization(IsolatedAsyncioTestCase):
     """Comprehensive tests for Gradient Boosted Personalization"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.algorithm = GradientBoostedPersonalization(
+        """Set up test environment"""        self.algorithm = GradientBoostedPersonalization(
             n_estimators=10,
             learning_rate=0.1,
             max_depth=3,
@@ -730,8 +678,7 @@ class TestGradientBoostedPersonalization(IsolatedAsyncioTestCase):
         self.training_data = self._generate_boosting_data()
 
     def _generate_boosting_data(self) -> Dict[str, Any]:
-        """Generate data for gradient boosting"""
-        n_samples = 500
+        """Generate data for gradient boosting"""        n_samples = 500
         n_features = 20
         
         # Generate features
@@ -751,14 +698,12 @@ class TestGradientBoostedPersonalization(IsolatedAsyncioTestCase):
         }
 
     async def test_boosting_initialization(self):
-        """Test gradient boosting initialization"""
-        self.assertEqual(self.algorithm.n_estimators, 10)
+        """Test gradient boosting initialization"""        self.assertEqual(self.algorithm.n_estimators, 10)
         self.assertEqual(self.algorithm.learning_rate, 0.1)
         self.assertFalse(self.algorithm.is_fitted)
 
     async def test_gradient_boosting_training(self):
-        """Test gradient boosting training process"""
-        result = await self.algorithm.fit(
+        """Test gradient boosting training process"""        result = await self.algorithm.fit(
             X=self.training_data['features'],
             y=self.training_data['targets']
         )
@@ -768,8 +713,7 @@ class TestGradientBoostedPersonalization(IsolatedAsyncioTestCase):
         self.assertEqual(len(self.algorithm.estimators), self.algorithm.n_estimators)
 
     async def test_boosting_predictions(self):
-        """Test gradient boosting predictions"""
-        await self.algorithm.fit(
+        """Test gradient boosting predictions"""        await self.algorithm.fit(
             X=self.training_data['features'],
             y=self.training_data['targets']
         )
@@ -782,8 +726,7 @@ class TestGradientBoostedPersonalization(IsolatedAsyncioTestCase):
         self.assertEqual(len(prediction), 1)
 
     async def test_feature_importance(self):
-        """Test feature importance computation"""
-        await self.algorithm.fit(
+        """Test feature importance computation"""        await self.algorithm.fit(
             X=self.training_data['features'],
             y=self.training_data['targets']
         )
@@ -796,8 +739,7 @@ class TestGradientBoostedPersonalization(IsolatedAsyncioTestCase):
         self.assertAlmostEqual(np.sum(importance), 1.0, places=5)
 
     async def test_partial_dependence(self):
-        """Test partial dependence computation"""
-        await self.algorithm.fit(
+        """Test partial dependence computation"""        await self.algorithm.fit(
             X=self.training_data['features'],
             y=self.training_data['targets']
         )
@@ -815,10 +757,8 @@ class TestGradientBoostedPersonalization(IsolatedAsyncioTestCase):
 
 class TestOnlineMatrixFactorization(IsolatedAsyncioTestCase):
     """Comprehensive tests for Online Matrix Factorization"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.algorithm = OnlineMatrixFactorization(
+        """Set up test environment"""        self.algorithm = OnlineMatrixFactorization(
             n_factors=20,
             learning_rate=0.01,
             regularization=0.001,
@@ -827,8 +767,7 @@ class TestOnlineMatrixFactorization(IsolatedAsyncioTestCase):
         self.streaming_data = self._generate_matrix_factorization_stream()
 
     def _generate_matrix_factorization_stream(self) -> List[Dict[str, Any]]:
-        """Generate streaming data for matrix factorization"""
-        n_users, n_items = 100, 200
+        """Generate streaming data for matrix factorization"""        n_users, n_items = 100, 200
         
         # Create true latent factors
         true_user_factors = np.random.randn(n_users, 20)
@@ -853,8 +792,7 @@ class TestOnlineMatrixFactorization(IsolatedAsyncioTestCase):
         return stream
 
     async def test_online_mf_initialization(self):
-        """Test online matrix factorization initialization"""
-        user_ids = [f'user_{i}' for i in range(100)]
+        """Test online matrix factorization initialization"""        user_ids = [f'user_{i}' for i in range(100)]
         item_ids = [f'item_{i}' for i in range(200)]
         
         await self.algorithm.initialize(user_ids, item_ids)
@@ -864,8 +802,7 @@ class TestOnlineMatrixFactorization(IsolatedAsyncioTestCase):
         self.assertEqual(self.algorithm.item_factors.shape, (200, 20))
 
     async def test_incremental_factorization(self):
-        """Test incremental matrix factorization updates"""
-        user_ids = [f'user_{i}' for i in range(100)]
+        """Test incremental matrix factorization updates"""        user_ids = [f'user_{i}' for i in range(100)]
         item_ids = [f'item_{i}' for i in range(200)]
         
         await self.algorithm.initialize(user_ids, item_ids)
@@ -886,8 +823,7 @@ class TestOnlineMatrixFactorization(IsolatedAsyncioTestCase):
         self.assertLess(final_loss, initial_loss)
 
     async def test_prediction_accuracy(self):
-        """Test prediction accuracy of online matrix factorization"""
-        user_ids = [f'user_{i}' for i in range(100)]
+        """Test prediction accuracy of online matrix factorization"""        user_ids = [f'user_{i}' for i in range(100)]
         item_ids = [f'item_{i}' for i in range(200)]
         
         await self.algorithm.initialize(user_ids, item_ids)
@@ -913,8 +849,7 @@ class TestOnlineMatrixFactorization(IsolatedAsyncioTestCase):
         self.assertLess(rmse, 2.0)  # Should be reasonable
 
     async def test_factor_evolution(self):
-        """Test evolution of latent factors over time"""
-        user_ids = [f'user_{i}' for i in range(100)]
+        """Test evolution of latent factors over time"""        user_ids = [f'user_{i}' for i in range(100)]
         item_ids = [f'item_{i}' for i in range(200)]
         
         await self.algorithm.initialize(user_ids, item_ids)
@@ -935,28 +870,23 @@ class TestOnlineMatrixFactorization(IsolatedAsyncioTestCase):
 
 class TestBayesianOptimization(IsolatedAsyncioTestCase):
     """Comprehensive tests for Bayesian Optimization"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.optimizer = BayesianOptimization(
+        """Set up test environment"""        self.optimizer = BayesianOptimization(
             bounds={'x': (-5.0, 5.0), 'y': (-3.0, 3.0)},
             acquisition_function='expected_improvement',
             n_random_starts=5
         )
 
     def _objective_function(self, x: float, y: float) -> float:
-        """Test objective function to optimize"""
-        return -(x**2 + y**2) + 0.1 * np.sin(10 * x) * np.cos(10 * y)
+        """Test objective function to optimize"""        return -(x**2 + y**2) + 0.1 * np.sin(10 * x) * np.cos(10 * y)
 
     async def test_bayesian_optimization_initialization(self):
-        """Test Bayesian optimization initialization"""
-        self.assertIsNotNone(self.optimizer.bounds)
+        """Test Bayesian optimization initialization"""        self.assertIsNotNone(self.optimizer.bounds)
         self.assertEqual(len(self.optimizer.bounds), 2)
         self.assertFalse(self.optimizer.is_fitted)
 
     async def test_random_exploration_phase(self):
-        """Test random exploration phase"""
-        # Perform random exploration
+        """Test random exploration phase"""        # Perform random exploration
         for _ in range(self.optimizer.n_random_starts):
             params = await self.optimizer.suggest_parameters()
             
@@ -974,8 +904,7 @@ class TestBayesianOptimization(IsolatedAsyncioTestCase):
             await self.optimizer.update(params, objective_value)
 
     async def test_acquisition_function_optimization(self):
-        """Test acquisition function optimization"""
-        # Initialize with random points
+        """Test acquisition function optimization"""        # Initialize with random points
         for _ in range(10):
             params = await self.optimizer.suggest_parameters()
             objective_value = self._objective_function(params['x'], params['y'])
@@ -988,8 +917,7 @@ class TestBayesianOptimization(IsolatedAsyncioTestCase):
         self.assertIn('y', next_params)
 
     async def test_optimization_convergence(self):
-        """Test optimization convergence"""
-        best_values = []
+        """Test optimization convergence"""        best_values = []
         
         for iteration in range(30):
             params = await self.optimizer.suggest_parameters()
@@ -1006,8 +934,7 @@ class TestBayesianOptimization(IsolatedAsyncioTestCase):
         self.assertGreaterEqual(late_best, early_best - 0.1)
 
     async def test_uncertainty_estimation(self):
-        """Test uncertainty estimation in Bayesian optimization"""
-        # Initialize with some data
+        """Test uncertainty estimation in Bayesian optimization"""        # Initialize with some data
         for _ in range(15):
             params = await self.optimizer.suggest_parameters()
             objective_value = self._objective_function(params['x'], params['y'])
@@ -1030,10 +957,8 @@ class TestBayesianOptimization(IsolatedAsyncioTestCase):
 
 class TestAlgorithmPerformanceAndScalability(IsolatedAsyncioTestCase):
     """Performance and scalability tests for all algorithms"""
-
     async def test_algorithm_training_speed(self):
-        """Test training speed across different algorithms"""
-        algorithms_to_test = [
+        """Test training speed across different algorithms"""        algorithms_to_test = [
             OnlineLearningAlgorithm(learning_rate=0.1),
             OnlineMatrixFactorization(n_factors=10),
             GradientBoostedPersonalization(n_estimators=5)
@@ -1068,8 +993,7 @@ class TestAlgorithmPerformanceAndScalability(IsolatedAsyncioTestCase):
             self.assertLess(training_time, 30.0)
 
     async def test_memory_efficiency(self):
-        """Test memory efficiency of algorithms"""
-        import psutil
+        """Test memory efficiency of algorithms"""        import psutil
         import os
         
         process = psutil.Process(os.getpid())
@@ -1103,8 +1027,7 @@ class TestAlgorithmPerformanceAndScalability(IsolatedAsyncioTestCase):
         self.assertLess(memory_increase, 200)  # Less than 200MB increase
 
     def _generate_large_dataset(self, size: int) -> List[Dict[str, Any]]:
-        """Generate large dataset for performance testing"""
-        dataset = []
+        """Generate large dataset for performance testing"""        dataset = []
         for i in range(size):
             dataset.append({
                 'user_id': f'user_{i % 50}',
@@ -1118,10 +1041,8 @@ class TestAlgorithmPerformanceAndScalability(IsolatedAsyncioTestCase):
 
 class TestAlgorithmRobustness(IsolatedAsyncioTestCase):
     """Robustness and edge case tests"""
-
     async def test_empty_data_handling(self):
-        """Test handling of empty or insufficient data"""
-        algorithm = OnlineLearningAlgorithm()
+        """Test handling of empty or insufficient data"""        algorithm = OnlineLearningAlgorithm()
         
         # Test with no initialization
         with self.assertRaises(AlgorithmError):
@@ -1132,8 +1053,7 @@ class TestAlgorithmRobustness(IsolatedAsyncioTestCase):
             })
 
     async def test_invalid_parameters(self):
-        """Test handling of invalid parameters"""
-        # Test negative learning rate
+        """Test handling of invalid parameters"""        # Test negative learning rate
         with self.assertRaises(ValueError):
             OnlineLearningAlgorithm(learning_rate=-0.1)
         
@@ -1142,8 +1062,7 @@ class TestAlgorithmRobustness(IsolatedAsyncioTestCase):
             MultiArmedBandit(n_arms=0)
 
     async def test_numerical_stability(self):
-        """Test numerical stability with extreme values"""
-        algorithm = OnlineLearningAlgorithm(learning_rate=0.01)
+        """Test numerical stability with extreme values"""        algorithm = OnlineLearningAlgorithm(learning_rate=0.01)
         
         await algorithm.initialize(
             user_ids=['user_1'],
@@ -1165,8 +1084,7 @@ class TestAlgorithmRobustness(IsolatedAsyncioTestCase):
                 self.assertIsInstance(e, (AlgorithmError, ValueError))
 
     async def test_concurrent_updates(self):
-        """Test thread safety with concurrent updates"""
-        algorithm = OnlineLearningAlgorithm(learning_rate=0.01)
+        """Test thread safety with concurrent updates"""        algorithm = OnlineLearningAlgorithm(learning_rate=0.01)
         
         await algorithm.initialize(
             user_ids=[f'user_{i}' for i in range(10)],

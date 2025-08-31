@@ -1,5 +1,4 @@
-"""
-Compliance Manager Database Components
+"""Compliance Manager Database Components
 
 Enterprise compliance management with GDPR, SOC2, HIPAA, and industry-specific
 regulations for content creator platforms and data protection requirements.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 import uuid
 import json
 from datetime import datetime, timedelta, timezone
@@ -42,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"  # General Data Protection Regulation (EU)
+    """Supported compliance frameworks"""    GDPR = "gdpr"  # General Data Protection Regulation (EU)
     CCPA = "ccpa"  # California Consumer Privacy Act (US)
     SOC2 = "soc2"  # Service Organization Control 2
     HIPAA = "hipaa"  # Health Insurance Portability and Accountability Act
@@ -56,8 +53,7 @@ class ComplianceFramework(Enum):
 
 
 class DataCategory(Enum):
-    """Personal data categories"""
-    PERSONAL_IDENTITY = "personal_identity"  # Name, email, phone
+    """Personal data categories"""    PERSONAL_IDENTITY = "personal_identity"  # Name, email, phone
     BIOMETRIC_DATA = "biometric_data"  # Fingerprints, face recognition
     LOCATION_DATA = "location_data"  # GPS, IP geolocation
     BEHAVIORAL_DATA = "behavioral_data"  # Usage patterns, preferences
@@ -70,8 +66,7 @@ class DataCategory(Enum):
 
 
 class ProcessingPurpose(Enum):
-    """Data processing purposes"""
-    AUTHENTICATION = "authentication"
+    """Data processing purposes"""    AUTHENTICATION = "authentication"
     CONTENT_PROTECTION = "content_protection"
     PERSONALIZATION = "personalization"
     ANALYTICS = "analytics"
@@ -84,8 +79,7 @@ class ProcessingPurpose(Enum):
 
 
 class LegalBasis(Enum):
-    """GDPR legal basis for processing"""
-    CONSENT = "consent"
+    """GDPR legal basis for processing"""    CONSENT = "consent"
     CONTRACT = "contract"
     LEGAL_OBLIGATION = "legal_obligation"
     VITAL_INTERESTS = "vital_interests"
@@ -94,8 +88,7 @@ class LegalBasis(Enum):
 
 
 class ConsentStatus(Enum):
-    """User consent status"""
-    GIVEN = "given"
+    """User consent status"""    GIVEN = "given"
     WITHDRAWN = "withdrawn"
     PENDING = "pending"
     EXPIRED = "expired"
@@ -104,8 +97,7 @@ class ConsentStatus(Enum):
 
 @dataclass
 class DataRetentionPolicy:
-    """Data retention policy structure"""
-    retention_period_days: int
+    """Data retention policy structure"""    retention_period_days: int
     deletion_method: str  # secure_deletion, anonymization, archival
     retention_reason: str
     auto_deletion_enabled: bool
@@ -114,8 +106,7 @@ class DataRetentionPolicy:
 
 
 class GDPRCompliance(Base):
-    """GDPR compliance tracking"""
-    __tablename__ = "gdpr_compliance"
+    """GDPR compliance tracking"""    __tablename__ = "gdpr_compliance"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -150,8 +141,7 @@ class GDPRCompliance(Base):
 
 
 class SOCCompliance(Base):
-    """SOC 2 compliance tracking"""
-    __tablename__ = "soc2_compliance"
+    """SOC 2 compliance tracking"""    __tablename__ = "soc2_compliance"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     control_id = Column(String(100), nullable=False, index=True)
@@ -180,8 +170,7 @@ class SOCCompliance(Base):
 
 
 class DataSubjectRequest(Base):
-    """Data subject rights requests (GDPR Article 15-22)"""
-    __tablename__ = "data_subject_requests"
+    """Data subject rights requests (GDPR Article 15-22)"""    __tablename__ = "data_subject_requests"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -218,8 +207,7 @@ class DataSubjectRequest(Base):
 
 
 class PrivacyBreach(Base):
-    """Privacy breach incident tracking"""
-    __tablename__ = "privacy_breaches"
+    """Privacy breach incident tracking"""    __tablename__ = "privacy_breaches"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     incident_id = Column(String(100), nullable=False, unique=True, index=True)
@@ -260,15 +248,13 @@ class PrivacyBreach(Base):
 
 
 class ComplianceManager:
-    """Enterprise compliance management system"""
-    
+    """Enterprise compliance management system"""    
     def __init__(self, db_session: Session):
         self.db = db_session
         self.retention_policies = self._initialize_retention_policies()
     
     def _initialize_retention_policies(self) -> Dict[str, DataRetentionPolicy]:
-        """Initialize default data retention policies"""
-        return {
+        """Initialize default data retention policies"""        return {
             "authentication_logs": DataRetentionPolicy(
                 retention_period_days=2555,  # 7 years
                 deletion_method="secure_deletion",
@@ -312,8 +298,7 @@ class ComplianceManager:
         consent_required: bool = False,
         privacy_notice_version: str = "1.0"
     ) -> str:
-        """Initialize GDPR compliance tracking for user"""
-        try:
+        """Initialize GDPR compliance tracking for user"""        try:
             gdpr_record = GDPRCompliance(
                 user_id=uuid.UUID(user_id),
                 data_subject_id=user_id,  # Using same ID unless specified otherwise
@@ -339,8 +324,7 @@ class ComplianceManager:
             raise
     
     def _get_retention_policy_for_categories(self, data_categories: List[DataCategory]) -> Dict[str, Any]:
-        """Get retention policy based on data categories"""
-        max_retention_days = 0
+        """Get retention policy based on data categories"""        max_retention_days = 0
         policy_details = {}
         
         for category in data_categories:
@@ -364,8 +348,7 @@ class ComplianceManager:
         }
     
     def _requires_dpo_notification(self, data_categories: List[DataCategory]) -> bool:
-        """Check if DPO notification is required"""
-        sensitive_categories = [
+        """Check if DPO notification is required"""        sensitive_categories = [
             DataCategory.BIOMETRIC_DATA,
             DataCategory.SENSITIVE_PERSONAL,
             DataCategory.FINANCIAL_DATA
@@ -381,8 +364,7 @@ class ComplianceManager:
         consent_method: str = "web_form",
         consent_expiry_days: Optional[int] = None
     ) -> bool:
-        """Record user consent"""
-        try:
+        """Record user consent"""        try:
             gdpr_record = self.db.query(GDPRCompliance).filter(
                 GDPRCompliance.user_id == uuid.UUID(user_id)
             ).first()
@@ -423,8 +405,7 @@ class ComplianceManager:
         request_details: Dict[str, Any],
         identity_verification_method: str
     ) -> str:
-        """Process data subject rights request"""
-        try:
+        """Process data subject rights request"""        try:
             # Calculate response due date (30 days for GDPR)
             due_date = datetime.now(timezone.utc) + timedelta(days=30)
             
@@ -452,13 +433,11 @@ class ComplianceManager:
             raise
     
     def _requires_legal_review(self, request_type: str, request_details: Dict[str, Any]) -> bool:
-        """Check if request requires legal review"""
-        complex_requests = ["erasure", "restriction", "objection"]
+        """Check if request requires legal review"""        complex_requests = ["erasure", "restriction", "objection"]
         return request_type in complex_requests or request_details.get("complex_circumstances", False)
     
     async def _send_request_acknowledgment(self, dsr: DataSubjectRequest):
-        """Send acknowledgment for data subject request"""
-        try:
+        """Send acknowledgment for data subject request"""        try:
             # Update acknowledgment status
             dsr.acknowledgment_sent = True
             dsr.acknowledgment_timestamp = datetime.now(timezone.utc)
@@ -479,8 +458,7 @@ class ComplianceManager:
         responsible_party: str,
         test_frequency: str = "quarterly"
     ) -> str:
-        """Implement SOC 2 control"""
-        try:
+        """Implement SOC 2 control"""        try:
             soc_control = SOCCompliance(
                 control_id=control_id,
                 control_category=control_category,
@@ -505,8 +483,7 @@ class ComplianceManager:
             raise
     
     def _calculate_next_review_date(self, test_frequency: str) -> datetime:
-        """Calculate next review date based on frequency"""
-        current_time = datetime.now(timezone.utc)
+        """Calculate next review date based on frequency"""        current_time = datetime.now(timezone.utc)
         
         frequency_days = {
             "continuous": 1,
@@ -531,8 +508,7 @@ class ComplianceManager:
         immediate_actions: List[str],
         discovery_method: str = "internal_audit"
     ) -> str:
-        """Report privacy breach incident"""
-        try:
+        """Report privacy breach incident"""        try:
             # Determine if regulatory notification is required
             notification_required = self._requires_regulatory_notification(
                 severity_level, affected_data_categories, estimated_affected_users
@@ -580,8 +556,7 @@ class ComplianceManager:
         affected_categories: List[DataCategory],
         affected_users: int
     ) -> bool:
-        """Determine if regulatory notification is required"""
-        # High risk scenarios require notification
+        """Determine if regulatory notification is required"""        # High risk scenarios require notification
         if severity_level in ["high", "critical"]:
             return True
         
@@ -602,16 +577,14 @@ class ComplianceManager:
         return False
     
     def _requires_user_notification(self, severity_level: str, affected_users: int) -> bool:
-        """Determine if user notification is required"""
-        return severity_level in ["medium", "high", "critical"] or affected_users > 100
+        """Determine if user notification is required"""        return severity_level in ["medium", "high", "critical"] or affected_users > 100
     
     def _assess_breach_risk(
         self,
         severity_level: str,
         affected_categories: List[DataCategory]
     ) -> Dict[str, Any]:
-        """Assess breach risk"""
-        risk_score = 0
+        """Assess breach risk"""        risk_score = 0
         
         # Severity-based risk
         severity_scores = {"low": 25, "medium": 50, "high": 75, "critical": 100}
@@ -636,8 +609,7 @@ class ComplianceManager:
         }
     
     def _assess_potential_harm(self, affected_categories: List[DataCategory]) -> List[str]:
-        """Assess potential harm from breach"""
-        harm_types = []
+        """Assess potential harm from breach"""        harm_types = []
         
         category_harms = {
             DataCategory.FINANCIAL_DATA: ["financial_fraud", "identity_theft"],
@@ -655,8 +627,7 @@ class ComplianceManager:
         return list(set(harm_types))  # Remove duplicates
     
     async def _trigger_breach_notifications(self, breach: PrivacyBreach):
-        """Trigger breach notifications"""
-        try:
+        """Trigger breach notifications"""        try:
             # Implementation would send actual notifications
             # to regulatory authorities and affected users
             
@@ -666,8 +637,7 @@ class ComplianceManager:
             logger.error(f"Failed to trigger breach notifications: {e}")
     
     async def get_compliance_status(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive compliance status for user"""
-        try:
+        """Get comprehensive compliance status for user"""        try:
             gdpr_record = self.db.query(GDPRCompliance).filter(
                 GDPRCompliance.user_id == uuid.UUID(user_id)
             ).first()
@@ -706,8 +676,7 @@ class ComplianceManager:
             return {"compliant": False, "reason": "System error"}
     
     async def execute_data_retention_cleanup(self) -> Dict[str, int]:
-        """Execute automated data retention cleanup"""
-        try:
+        """Execute automated data retention cleanup"""        try:
             cleanup_stats = {"records_deleted": 0, "records_anonymized": 0, "errors": 0}
             
             # Find records that exceed retention period

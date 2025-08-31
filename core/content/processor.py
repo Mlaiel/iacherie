@@ -1,5 +1,4 @@
-"""
-Content Processor - Multi-Format Content Processing Engine
+"""Content Processor - Multi-Format Content Processing Engine
 ==========================================================
 
 The ContentProcessor handles the technical processing of various content formats
@@ -9,7 +8,6 @@ specifications for the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 import mimetypes
@@ -41,8 +39,7 @@ from ..ml.text_analysis import TextAnalyzer
 
 @dataclass
 class ProcessingResult:
-    """Content processing result container"""
-    success: bool
+    """Content processing result container"""    success: bool
     content_id: str
     processed_files: List[str]
     metadata: Dict[str, Any]
@@ -53,8 +50,7 @@ class ProcessingResult:
 
 @dataclass
 class ProcessingConfig:
-    """Content processing configuration"""
-    enable_thumbnails: bool = True
+    """Content processing configuration"""    enable_thumbnails: bool = True
     enable_previews: bool = True
     enable_compression: bool = True
     enable_format_conversion: bool = True
@@ -67,8 +63,7 @@ class ProcessingConfig:
 
 
 class ContentProcessor:
-    """
-    Multi-Format Content Processing Engine
+    """    Multi-Format Content Processing Engine
     
     Handles processing of audio, video, image, and text content with
     advanced features like enhancement, compression, format conversion,
@@ -79,8 +74,7 @@ class ContentProcessor:
     - Video: MP4, AVI, MOV, WMV, FLV, MKV, WEBM
     - Image: JPG, PNG, GIF, BMP, TIFF, WEBP
     - Text: TXT, MD, DOC, DOCX, PDF, RTF
-    """
-    
+    """    
     def __init__(
         self,
         db_session: AsyncSession,
@@ -128,8 +122,7 @@ class ContentProcessor:
         user_id: int,
         custom_config: ProcessingConfig = None
     ) -> ProcessingResult:
-        """
-        Process content file according to type and configuration
+        """        Process content file according to type and configuration
         
         Args:
             content_id: Unique content identifier
@@ -140,8 +133,7 @@ class ContentProcessor:
             
         Returns:
             ProcessingResult with operation status and metadata
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         config = custom_config or self.config
         
         try:
@@ -216,8 +208,7 @@ class ContentProcessor:
         file_path: str,
         config: ProcessingConfig
     ) -> ProcessingResult:
-        """
-        Process audio content with analysis, enhancement, and format conversion
+        """        Process audio content with analysis, enhancement, and format conversion
         
         Args:
             content_id: Content identifier
@@ -226,8 +217,7 @@ class ContentProcessor:
             
         Returns:
             ProcessingResult for audio processing
-        """
-        try:
+        """        try:
             processed_files = []
             metadata = {}
             
@@ -304,8 +294,7 @@ class ContentProcessor:
         file_path: str,
         config: ProcessingConfig
     ) -> ProcessingResult:
-        """
-        Process video content with analysis, thumbnail generation, and compression
+        """        Process video content with analysis, thumbnail generation, and compression
         
         Args:
             content_id: Content identifier
@@ -314,8 +303,7 @@ class ContentProcessor:
             
         Returns:
             ProcessingResult for video processing
-        """
-        try:
+        """        try:
             processed_files = []
             metadata = {}
             
@@ -400,8 +388,7 @@ class ContentProcessor:
         file_path: str,
         config: ProcessingConfig
     ) -> ProcessingResult:
-        """
-        Process image content with analysis, enhancement, and format conversion
+        """        Process image content with analysis, enhancement, and format conversion
         
         Args:
             content_id: Content identifier
@@ -410,8 +397,7 @@ class ContentProcessor:
             
         Returns:
             ProcessingResult for image processing
-        """
-        try:
+        """        try:
             processed_files = []
             metadata = {}
             
@@ -496,8 +482,7 @@ class ContentProcessor:
         file_path: str,
         config: ProcessingConfig
     ) -> ProcessingResult:
-        """
-        Process text content with analysis, extraction, and formatting
+        """        Process text content with analysis, extraction, and formatting
         
         Args:
             content_id: Content identifier
@@ -506,8 +491,7 @@ class ContentProcessor:
             
         Returns:
             ProcessingResult for text processing
-        """
-        try:
+        """        try:
             processed_files = []
             metadata = {}
             
@@ -585,27 +569,23 @@ class ContentProcessor:
     # Helper methods for processing operations
 
     def _validate_mime_type(self, mime_type: str, content_type: str) -> bool:
-        """Validate MIME type against expected content type"""
-        if not mime_type:
+        """Validate MIME type against expected content type"""        if not mime_type:
             return False
         return mime_type in self.supported_types.get(content_type, [])
 
     def _get_processed_file_path(self, content_id: str, filename: str) -> str:
-        """Generate path for processed file"""
-        processed_dir = f"/tmp/processed/{content_id}"
+        """Generate path for processed file"""        processed_dir = f"/tmp/processed/{content_id}"
         Path(processed_dir).mkdir(parents=True, exist_ok=True)
         return f"{processed_dir}/{filename}"
 
     async def _generate_audio_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> str:
-        """Generate audio fingerprint for similarity matching"""
-        # Simplified fingerprint generation - in production, use Chromaprint
+        """Generate audio fingerprint for similarity matching"""        # Simplified fingerprint generation - in production, use Chromaprint
         mfcc = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
         fingerprint_hash = hashlib.sha256(mfcc.tobytes()).hexdigest()
         return fingerprint_hash
 
     async def _generate_video_fingerprint(self, file_path: str) -> str:
-        """Generate video fingerprint for similarity matching"""
-        # Simplified fingerprint generation - in production, use perceptual hashing
+        """Generate video fingerprint for similarity matching"""        # Simplified fingerprint generation - in production, use perceptual hashing
         cap = cv2.VideoCapture(file_path)
         frames_hash = []
         
@@ -630,8 +610,7 @@ class ContentProcessor:
         return hashlib.sha256(b"empty_video").hexdigest()
 
     async def _generate_image_fingerprint(self, img: Image.Image) -> str:
-        """Generate image fingerprint for similarity matching"""
-        # Create perceptual hash
+        """Generate image fingerprint for similarity matching"""        # Create perceptual hash
         resized = img.resize((8, 8), Image.Resampling.LANCZOS).convert('L')
         pixels = list(resized.getdata())
         avg = sum(pixels) / len(pixels)
@@ -646,15 +625,13 @@ class ContentProcessor:
         return fingerprint_hash
 
     async def _generate_text_fingerprint(self, content: str) -> str:
-        """Generate text fingerprint for similarity matching"""
-        # Normalize text for fingerprinting
+        """Generate text fingerprint for similarity matching"""        # Normalize text for fingerprinting
         normalized = ' '.join(content.lower().split())
         fingerprint_hash = hashlib.sha256(normalized.encode('utf-8')).hexdigest()
         return fingerprint_hash
 
     async def _enhance_audio(self, audio_data: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Apply audio enhancement algorithms"""
-        # Noise reduction (simplified)
+        """Apply audio enhancement algorithms"""        # Noise reduction (simplified)
         enhanced = audio_data.copy()
         
         # Normalize audio levels
@@ -665,8 +642,7 @@ class ContentProcessor:
         return enhanced
 
     async def _enhance_image(self, img: Image.Image) -> Image.Image:
-        """Apply image enhancement algorithms"""
-        enhanced = img.copy()
+        """Apply image enhancement algorithms"""        enhanced = img.copy()
         
         # Auto contrast enhancement
         enhanced = ImageEnhance.Contrast(enhanced).enhance(1.2)
@@ -681,8 +657,7 @@ class ContentProcessor:
         return enhanced
 
     async def _cache_processing_result(self, content_id: str, result: ProcessingResult) -> None:
-        """Cache processing result for quick retrieval"""
-        cache_data = {
+        """Cache processing result for quick retrieval"""        cache_data = {
             "success": result.success,
             "processed_files": result.processed_files,
             "metadata": result.metadata,

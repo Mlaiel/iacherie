@@ -1,12 +1,10 @@
-"""
-Platform Integration Manager
+"""Platform Integration Manager
 
 Comprehensive system for managing integrations with multiple social media
 and content platforms including YouTube, SoundCloud, Instagram, TikTok, etc.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 import aiohttp
@@ -22,8 +20,7 @@ logger = logging.getLogger(__name__)
 
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    SOCIAL_MEDIA = "social_media"
+    """Supported platform types"""    SOCIAL_MEDIA = "social_media"
     MUSIC_STREAMING = "music_streaming"
     VIDEO_STREAMING = "video_streaming"
     CONTENT_SHARING = "content_sharing"
@@ -33,8 +30,7 @@ class PlatformType(Enum):
 
 
 class APIMethod(Enum):
-    """API method types"""
-    REST = "rest"
+    """API method types"""    REST = "rest"
     GRAPHQL = "graphql"
     WEBSOCKET = "websocket"
     WEBHOOK = "webhook"
@@ -42,8 +38,7 @@ class APIMethod(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform configuration"""
-    platform_id: str
+    """Platform configuration"""    platform_id: str
     name: str
     platform_type: PlatformType
     api_method: APIMethod
@@ -59,8 +54,7 @@ class PlatformConfig:
 
 @dataclass
 class APICredentials:
-    """API credentials for a platform"""
-    platform_id: str
+    """API credentials for a platform"""    platform_id: str
     api_key: Optional[str] = None
     client_id: Optional[str] = None
     client_secret: Optional[str] = None
@@ -71,8 +65,7 @@ class APICredentials:
 
 @dataclass
 class PlatformResponse:
-    """Standardized platform response"""
-    platform_id: str
+    """Standardized platform response"""    platform_id: str
     success: bool
     data: Dict[str, Any]
     error_message: Optional[str] = None
@@ -83,10 +76,8 @@ class PlatformResponse:
 
 
 class PlatformIntegrationManager:
-    """
-    Central manager for all platform integrations
-    """
-    
+    """    Central manager for all platform integrations
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -106,8 +97,7 @@ class PlatformIntegrationManager:
         self._initialize_platforms()
     
     def _initialize_platforms(self):
-        """Initialize built-in platform configurations"""
-        
+        """Initialize built-in platform configurations"""        
         # YouTube configuration
         self.platforms["youtube"] = PlatformConfig(
             platform_id="youtube",
@@ -240,13 +230,11 @@ class PlatformIntegrationManager:
         )
     
     def add_platform_credentials(self, platform_id: str, credentials: APICredentials):
-        """Add credentials for a platform"""
-        self.credentials[platform_id] = credentials
+        """Add credentials for a platform"""        self.credentials[platform_id] = credentials
         self.logger.info(f"Credentials added for platform: {platform_id}")
     
     async def initialize_session(self, platform_id: str) -> bool:
-        """Initialize HTTP session for a platform"""
-        try:
+        """Initialize HTTP session for a platform"""        try:
             platform_config = self.platforms.get(platform_id)
             if not platform_config:
                 self.logger.error(f"Platform not configured: {platform_id}")
@@ -272,15 +260,13 @@ class PlatformIntegrationManager:
             return False
     
     async def close_session(self, platform_id: str):
-        """Close HTTP session for a platform"""
-        if platform_id in self.sessions:
+        """Close HTTP session for a platform"""        if platform_id in self.sessions:
             await self.sessions[platform_id].close()
             del self.sessions[platform_id]
             self.logger.info(f"Session closed for platform: {platform_id}")
     
     async def close_all_sessions(self):
-        """Close all HTTP sessions"""
-        for platform_id in list(self.sessions.keys()):
+        """Close all HTTP sessions"""        for platform_id in list(self.sessions.keys()):
             await self.close_session(platform_id)
     
     async def make_api_request(
@@ -292,8 +278,7 @@ class PlatformIntegrationManager:
         data: Optional[Dict[str, Any]] = None,
         headers: Optional[Dict[str, str]] = None
     ) -> PlatformResponse:
-        """
-        Make API request to a platform
+        """        Make API request to a platform
         
         Args:
             platform_id: Platform identifier
@@ -305,8 +290,7 @@ class PlatformIntegrationManager:
             
         Returns:
             Standardized platform response
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             # Get platform configuration
@@ -389,8 +373,7 @@ class PlatformIntegrationManager:
         params: Dict[str, Any],
         headers: Dict[str, str]
     ):
-        """Add authentication to request"""
-        platform_config = self.platforms[platform_id]
+        """Add authentication to request"""        platform_config = self.platforms[platform_id]
         credentials = self.credentials.get(platform_id)
         
         if not credentials:
@@ -413,8 +396,7 @@ class PlatformIntegrationManager:
                 await self._refresh_oauth_token(platform_id)
     
     async def _refresh_oauth_token(self, platform_id: str):
-        """Refresh OAuth token for a platform"""
-        credentials = self.credentials.get(platform_id)
+        """Refresh OAuth token for a platform"""        credentials = self.credentials.get(platform_id)
         if not credentials or not credentials.refresh_token:
             return
         
@@ -423,8 +405,7 @@ class PlatformIntegrationManager:
         self.logger.warning(f"OAuth token refresh needed for {platform_id}")
     
     async def _check_rate_limit(self, platform_id: str) -> bool:
-        """Check if request is within rate limits"""
-        rate_limit_info = self.rate_limits.get(platform_id, {})
+        """Check if request is within rate limits"""        rate_limit_info = self.rate_limits.get(platform_id, {})
         
         if not rate_limit_info:
             return True
@@ -442,8 +423,7 @@ class PlatformIntegrationManager:
         return remaining > 0
     
     def _update_rate_limit_tracking(self, platform_id: str, response_headers: Dict[str, str]):
-        """Update rate limit tracking from response headers"""
-        # Common rate limit header patterns
+        """Update rate limit tracking from response headers"""        # Common rate limit header patterns
         remaining_headers = [
             "x-ratelimit-remaining",
             "x-rate-limit-remaining",
@@ -494,8 +474,7 @@ class PlatformIntegrationManager:
         content_type: str = "video",
         max_results: int = 50
     ) -> PlatformResponse:
-        """Search YouTube for content"""
-        params = {
+        """Search YouTube for content"""        params = {
             "q": query,
             "type": content_type,
             "maxResults": min(max_results, 50),
@@ -505,8 +484,7 @@ class PlatformIntegrationManager:
         return await self.make_api_request("youtube", "/search", params=params)
     
     async def get_youtube_video(self, video_id: str) -> PlatformResponse:
-        """Get YouTube video details"""
-        params = {
+        """Get YouTube video details"""        params = {
             "id": video_id,
             "part": "snippet,statistics,contentDetails"
         }
@@ -518,8 +496,7 @@ class PlatformIntegrationManager:
         query: str,
         limit: int = 50
     ) -> PlatformResponse:
-        """Search SoundCloud for tracks"""
-        params = {
+        """Search SoundCloud for tracks"""        params = {
             "q": query,
             "limit": min(limit, 200)
         }
@@ -527,14 +504,12 @@ class PlatformIntegrationManager:
         return await self.make_api_request("soundcloud", "/tracks", params=params)
     
     async def resolve_soundcloud_url(self, url: str) -> PlatformResponse:
-        """Resolve SoundCloud URL to get track info"""
-        params = {"url": url}
+        """Resolve SoundCloud URL to get track info"""        params = {"url": url}
         
         return await self.make_api_request("soundcloud", "/resolve", params=params)
     
     async def search_instagram_hashtags(self, hashtag: str) -> PlatformResponse:
-        """Search Instagram hashtags"""
-        params = {"q": hashtag}
+        """Search Instagram hashtags"""        params = {"q": hashtag}
         
         return await self.make_api_request("instagram", "/ig_hashtag_search", params=params)
     
@@ -543,8 +518,7 @@ class PlatformIntegrationManager:
         query: str,
         max_results: int = 100
     ) -> PlatformResponse:
-        """Search Twitter for tweets"""
-        params = {
+        """Search Twitter for tweets"""        params = {
             "query": query,
             "max_results": min(max_results, 100)
         }
@@ -554,23 +528,19 @@ class PlatformIntegrationManager:
     # Utility methods
     
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms"""
-        return list(self.platforms.keys())
+        """Get list of supported platforms"""        return list(self.platforms.keys())
     
     def get_platform_info(self, platform_id: str) -> Optional[Dict[str, Any]]:
-        """Get platform configuration info"""
-        platform_config = self.platforms.get(platform_id)
+        """Get platform configuration info"""        platform_config = self.platforms.get(platform_id)
         if platform_config:
             return asdict(platform_config)
         return None
     
     def get_rate_limit_status(self, platform_id: str) -> Dict[str, Any]:
-        """Get current rate limit status for a platform"""
-        return self.rate_limits.get(platform_id, {})
+        """Get current rate limit status for a platform"""        return self.rate_limits.get(platform_id, {})
     
     async def test_platform_connection(self, platform_id: str) -> bool:
-        """Test connection to a platform"""
-        try:
+        """Test connection to a platform"""        try:
             # Make a simple test request based on platform
             if platform_id == "youtube":
                 response = await self.make_api_request("youtube", "/search", params={"q": "test", "maxResults": 1})
@@ -592,8 +562,7 @@ class PlatformIntegrationManager:
         platforms: List[str],
         max_results_per_platform: int = 25
     ) -> Dict[str, PlatformResponse]:
-        """Search across multiple platforms simultaneously"""
-        tasks = []
+        """Search across multiple platforms simultaneously"""        tasks = []
         
         for platform_id in platforms:
             if platform_id == "youtube":

@@ -1,5 +1,4 @@
-"""
-Multimedia Content Validators
+"""Multimedia Content Validators
 Comprehensive validation for multimedia content integrity and quality
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +11,6 @@ distribution, or modification without written permission from Fahed Mlaiel
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
 extent of the law. All rights reserved.
 """
-
 import asyncio
 import logging
 import mimetypes
@@ -44,8 +42,7 @@ settings = get_settings()
 
 @dataclass
 class ValidationRule:
-    """Validation rule definition"""
-    name: str
+    """Validation rule definition"""    name: str
     severity: str  # 'error', 'warning', 'info'
     description: str
     check_function: Optional[callable] = None
@@ -54,8 +51,7 @@ class ValidationRule:
 
 @dataclass
 class ValidationResult:
-    """Result of content validation"""
-    is_valid: bool
+    """Result of content validation"""    is_valid: bool
     content_path: Path
     content_type: ContentFormat
     file_size: int = 0
@@ -90,37 +86,31 @@ class ValidationResult:
 
 
 class BaseValidator(ABC):
-    """Abstract base class for content validators"""
-    
+    """Abstract base class for content validators"""    
     def __init__(self):
         self.validation_rules = self._initialize_rules()
         
     @abstractmethod
     async def validate(self, content_path: Path) -> ValidationResult:
-        """Validate content and return result"""
-        pass
+        """Validate content and return result"""        pass
     
     @abstractmethod
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if validator supports format"""
-        pass
+        """Check if validator supports format"""        pass
     
     @abstractmethod
     def _initialize_rules(self) -> List[ValidationRule]:
-        """Initialize validation rules"""
-        pass
+        """Initialize validation rules"""        pass
     
     def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA256 hash of file"""
-        sha256_hash = hashlib.sha256()
+        """Calculate SHA256 hash of file"""        sha256_hash = hashlib.sha256()
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 sha256_hash.update(chunk)
         return sha256_hash.hexdigest()
     
     def _detect_mime_type(self, file_path: Path) -> Optional[str]:
-        """Detect MIME type using multiple methods"""
-        # Try with python-magic first (more accurate)
+        """Detect MIME type using multiple methods"""        # Try with python-magic first (more accurate)
         try:
             mime = magic.Magic(mime=True)
             return mime.from_file(str(file_path))
@@ -132,25 +122,21 @@ class BaseValidator(ABC):
         return mime_type
     
     def _check_file_accessibility(self, file_path: Path) -> bool:
-        """Check if file is accessible and readable"""
-        try:
+        """Check if file is accessible and readable"""        try:
             return file_path.exists() and file_path.is_file() and file_path.stat().st_size > 0
         except:
             return False
 
 
 class AudioValidator(BaseValidator):
-    """Professional audio content validator"""
-    
+    """Professional audio content validator"""    
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if validator supports audio format"""
-        if isinstance(format_type, ContentFormat):
+        """Check if validator supports audio format"""        if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.AUDIO
         return SupportedFormats.is_audio_format(format_type)
     
     def _initialize_rules(self) -> List[ValidationRule]:
-        """Initialize audio validation rules"""
-        return [
+        """Initialize audio validation rules"""        return [
             ValidationRule(
                 name="file_accessibility",
                 severity="error",
@@ -202,8 +188,7 @@ class AudioValidator(BaseValidator):
         ]
     
     async def validate(self, content_path: Path) -> ValidationResult:
-        """Validate audio content"""
-        start_time = datetime.now()
+        """Validate audio content"""        start_time = datetime.now()
         
         result = ValidationResult(
             is_valid=True,
@@ -250,8 +235,7 @@ class AudioValidator(BaseValidator):
     
     async def _check_rule(self, rule: ValidationRule, content_path: Path, 
                          result: ValidationResult) -> bool:
-        """Check individual validation rule"""
-        
+        """Check individual validation rule"""        
         if rule.name == "file_accessibility":
             return self._check_file_accessibility(content_path)
         
@@ -359,8 +343,7 @@ class AudioValidator(BaseValidator):
     
     async def _calculate_quality_score(self, content_path: Path, 
                                      result: ValidationResult) -> float:
-        """Calculate overall audio quality score"""
-        try:
+        """Calculate overall audio quality score"""        try:
             audio, sr = librosa.load(str(content_path), sr=None)
             
             quality_factors = []
@@ -400,8 +383,7 @@ class AudioValidator(BaseValidator):
             return 0.0
     
     async def _calculate_integrity_score(self, result: ValidationResult) -> float:
-        """Calculate content integrity score"""
-        integrity_factors = []
+        """Calculate content integrity score"""        integrity_factors = []
         
         # File accessibility
         if result.content_readable:
@@ -423,8 +405,7 @@ class AudioValidator(BaseValidator):
     
     async def _calculate_security_score(self, content_path: Path, 
                                       result: ValidationResult) -> float:
-        """Calculate security score for audio file"""
-        security_factors = []
+        """Calculate security score for audio file"""        security_factors = []
         
         # Basic file structure validation
         try:
@@ -452,8 +433,7 @@ class AudioValidator(BaseValidator):
         return sum(security_factors)
     
     async def _generate_recommendations(self, result: ValidationResult) -> List[str]:
-        """Generate improvement recommendations"""
-        recommendations = []
+        """Generate improvement recommendations"""        recommendations = []
         
         if not result.content_readable:
             recommendations.append("File appears to be corrupted or in an unsupported format")
@@ -481,17 +461,14 @@ class AudioValidator(BaseValidator):
 
 
 class VideoValidator(BaseValidator):
-    """Professional video content validator"""
-    
+    """Professional video content validator"""    
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if validator supports video format"""
-        if isinstance(format_type, ContentFormat):
+        """Check if validator supports video format"""        if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.VIDEO
         return SupportedFormats.is_video_format(format_type)
     
     def _initialize_rules(self) -> List[ValidationRule]:
-        """Initialize video validation rules"""
-        return [
+        """Initialize video validation rules"""        return [
             ValidationRule(
                 name="file_accessibility",
                 severity="error",
@@ -548,8 +525,7 @@ class VideoValidator(BaseValidator):
         ]
     
     async def validate(self, content_path: Path) -> ValidationResult:
-        """Validate video content"""
-        start_time = datetime.now()
+        """Validate video content"""        start_time = datetime.now()
         
         result = ValidationResult(
             is_valid=True,
@@ -596,8 +572,7 @@ class VideoValidator(BaseValidator):
     
     async def _check_rule(self, rule: ValidationRule, content_path: Path, 
                          result: ValidationResult) -> bool:
-        """Check individual validation rule"""
-        
+        """Check individual validation rule"""        
         if rule.name == "file_accessibility":
             return self._check_file_accessibility(content_path)
         
@@ -773,8 +748,7 @@ class VideoValidator(BaseValidator):
     
     async def _calculate_quality_score(self, content_path: Path, 
                                      result: ValidationResult) -> float:
-        """Calculate overall video quality score"""
-        try:
+        """Calculate overall video quality score"""        try:
             quality_factors = []
             
             # Resolution quality
@@ -819,8 +793,7 @@ class VideoValidator(BaseValidator):
             return 0.0
     
     async def _calculate_integrity_score(self, result: ValidationResult) -> float:
-        """Calculate content integrity score"""
-        integrity_factors = []
+        """Calculate content integrity score"""        integrity_factors = []
         
         # File accessibility
         if result.content_readable:
@@ -843,8 +816,7 @@ class VideoValidator(BaseValidator):
     
     async def _calculate_security_score(self, content_path: Path, 
                                       result: ValidationResult) -> float:
-        """Calculate security score for video file"""
-        security_factors = []
+        """Calculate security score for video file"""        security_factors = []
         
         # Basic file structure validation
         if result.content_readable:
@@ -868,8 +840,7 @@ class VideoValidator(BaseValidator):
         return sum(security_factors)
     
     async def _generate_recommendations(self, result: ValidationResult) -> List[str]:
-        """Generate improvement recommendations"""
-        recommendations = []
+        """Generate improvement recommendations"""        recommendations = []
         
         if not result.content_readable:
             recommendations.append("Video file appears to be corrupted or in an unsupported format")
@@ -900,17 +871,14 @@ class VideoValidator(BaseValidator):
 
 
 class ImageValidator(BaseValidator):
-    """Professional image content validator"""
-    
+    """Professional image content validator"""    
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if validator supports image format"""
-        if isinstance(format_type, ContentFormat):
+        """Check if validator supports image format"""        if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.IMAGE
         return SupportedFormats.is_image_format(format_type)
     
     def _initialize_rules(self) -> List[ValidationRule]:
-        """Initialize image validation rules"""
-        return [
+        """Initialize image validation rules"""        return [
             ValidationRule(
                 name="file_accessibility",
                 severity="error",
@@ -961,8 +929,7 @@ class ImageValidator(BaseValidator):
         ]
     
     async def validate(self, content_path: Path) -> ValidationResult:
-        """Validate image content"""
-        start_time = datetime.now()
+        """Validate image content"""        start_time = datetime.now()
         
         result = ValidationResult(
             is_valid=True,
@@ -1009,8 +976,7 @@ class ImageValidator(BaseValidator):
     
     async def _check_rule(self, rule: ValidationRule, content_path: Path, 
                          result: ValidationResult) -> bool:
-        """Check individual validation rule"""
-        
+        """Check individual validation rule"""        
         if rule.name == "file_accessibility":
             return self._check_file_accessibility(content_path)
         
@@ -1161,8 +1127,7 @@ class ImageValidator(BaseValidator):
     
     async def _calculate_quality_score(self, content_path: Path, 
                                      result: ValidationResult) -> float:
-        """Calculate overall image quality score"""
-        try:
+        """Calculate overall image quality score"""        try:
             quality_factors = []
             
             # Resolution quality
@@ -1205,8 +1170,7 @@ class ImageValidator(BaseValidator):
             return 0.0
     
     async def _calculate_integrity_score(self, result: ValidationResult) -> float:
-        """Calculate content integrity score"""
-        integrity_factors = []
+        """Calculate content integrity score"""        integrity_factors = []
         
         # File accessibility
         if result.content_readable:
@@ -1228,8 +1192,7 @@ class ImageValidator(BaseValidator):
     
     async def _calculate_security_score(self, content_path: Path, 
                                       result: ValidationResult) -> float:
-        """Calculate security score for image file"""
-        security_factors = []
+        """Calculate security score for image file"""        security_factors = []
         
         # Basic file structure validation
         if result.content_readable and result.no_corruption:
@@ -1253,8 +1216,7 @@ class ImageValidator(BaseValidator):
         return sum(security_factors)
     
     async def _generate_recommendations(self, result: ValidationResult) -> List[str]:
-        """Generate improvement recommendations"""
-        recommendations = []
+        """Generate improvement recommendations"""        recommendations = []
         
         if not result.content_readable:
             recommendations.append("Image file appears to be corrupted or in an unsupported format")
@@ -1289,8 +1251,7 @@ class ImageValidator(BaseValidator):
 
 
 class MediaValidator:
-    """Universal multimedia content validator"""
-    
+    """Universal multimedia content validator"""    
     def __init__(self):
         self.validators = {
             ContentFormat.AUDIO: AudioValidator(),
@@ -1300,8 +1261,7 @@ class MediaValidator:
     
     async def validate(self, content_path: Path, 
                       content_type: Optional[Union[str, ContentFormat]] = None) -> ValidationResult:
-        """Validate multimedia content"""
-        
+        """Validate multimedia content"""        
         # Auto-detect content type if not provided
         if content_type is None:
             content_type = self._detect_content_type(content_path)
@@ -1323,8 +1283,7 @@ class MediaValidator:
         return await validator.validate(content_path)
     
     def _detect_content_type(self, content_path: Path) -> ContentFormat:
-        """Auto-detect content type from file extension"""
-        extension = content_path.suffix.lower().lstrip('.')
+        """Auto-detect content type from file extension"""        extension = content_path.suffix.lower().lstrip('.')
         format_enum = SupportedFormats.get_format_by_extension(extension)
         
         if format_enum:
@@ -1339,8 +1298,7 @@ class MediaValidator:
     
     async def batch_validate(self, content_paths: List[Path],
                            content_types: Optional[List[Union[str, ContentFormat]]] = None) -> List[ValidationResult]:
-        """Validate multiple multimedia files"""
-        
+        """Validate multiple multimedia files"""        
         if content_types is None:
             content_types = [None] * len(content_paths)
         elif len(content_types) != len(content_paths):
@@ -1371,8 +1329,7 @@ class MediaValidator:
         return processed_results
     
     def get_validation_statistics(self, results: List[ValidationResult]) -> Dict[str, Any]:
-        """Calculate validation statistics"""
-        stats = {
+        """Calculate validation statistics"""        stats = {
             'total_files': len(results),
             'valid_files': sum(1 for r in results if r.is_valid),
             'invalid_files': sum(1 for r in results if not r.is_valid),
@@ -1424,8 +1381,7 @@ class MediaValidator:
         return stats
     
     def get_supported_formats(self) -> Dict[ContentFormat, List[str]]:
-        """Get all supported formats by content type"""
-        return {
+        """Get all supported formats by content type"""        return {
             ContentFormat.AUDIO: [fmt.value for fmt in AudioFormat],
             ContentFormat.VIDEO: [fmt.value for fmt in VideoFormat],
             ContentFormat.IMAGE: [fmt.value for fmt in ImageFormat]

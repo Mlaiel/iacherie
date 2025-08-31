@@ -1,5 +1,4 @@
-"""
-Cache Optimizer - Intelligent Cache Performance Optimization
+"""Cache Optimizer - Intelligent Cache Performance Optimization
 
 Advanced optimization engine providing AI-driven cache performance tuning,
 predictive optimization, and automated efficiency improvements.
@@ -7,7 +6,6 @@ predictive optimization, and automated efficiency improvements.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 import statistics
@@ -23,8 +21,7 @@ import json
 logger = logging.getLogger(__name__)
 
 class OptimizationType(Enum):
-    """Types of optimization operations"""
-    MEMORY_OPTIMIZATION = "memory_optimization"
+    """Types of optimization operations"""    MEMORY_OPTIMIZATION = "memory_optimization"
     ACCESS_PATTERN_OPTIMIZATION = "access_pattern_optimization"
     TTL_OPTIMIZATION = "ttl_optimization"
     EVICTION_OPTIMIZATION = "eviction_optimization"
@@ -33,8 +30,7 @@ class OptimizationType(Enum):
     PREFETCH_OPTIMIZATION = "prefetch_optimization"
 
 class OptimizationPriority(Enum):
-    """Priority levels for optimization actions"""
-    CRITICAL = 1
+    """Priority levels for optimization actions"""    CRITICAL = 1
     HIGH = 2
     NORMAL = 3
     LOW = 4
@@ -42,8 +38,7 @@ class OptimizationPriority(Enum):
 
 @dataclass
 class OptimizationRecommendation:
-    """Single optimization recommendation"""
-    optimization_id: str
+    """Single optimization recommendation"""    optimization_id: str
     optimization_type: OptimizationType
     priority: OptimizationPriority
     title: str
@@ -58,8 +53,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization execution"""
-    recommendation_id: str
+    """Result of optimization execution"""    recommendation_id: str
     success: bool
     execution_time: float
     before_metrics: Dict[str, Any]
@@ -71,8 +65,7 @@ class OptimizationResult:
 
 @dataclass
 class CachePrediction:
-    """Cache performance prediction model"""
-    metric_name: str
+    """Cache performance prediction model"""    metric_name: str
     current_value: float
     predicted_values: List[Tuple[datetime, float]]  # (time, predicted_value)
     confidence_intervals: List[Tuple[float, float]]  # (lower, upper) bounds
@@ -80,11 +73,9 @@ class CachePrediction:
     prediction_accuracy: float = 0.0  # Historical accuracy
 
 class CacheOptimizer:
-    """
-    Advanced cache optimization engine using ML-driven insights
+    """    Advanced cache optimization engine using ML-driven insights
     to automatically tune cache performance and efficiency.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         
@@ -120,8 +111,7 @@ class CacheOptimizer:
         metrics: Dict[str, Any],
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Main optimization entry point - analyze cache state and apply optimizations.
+        """        Main optimization entry point - analyze cache state and apply optimizations.
         
         Args:
             cache_entries: Current cache entries
@@ -130,8 +120,7 @@ class CacheOptimizer:
             
         Returns:
             Optimization results and recommendations
-        """
-        optimization_start = datetime.utcnow()
+        """        optimization_start = datetime.utcnow()
         
         try:
             # Update historical data
@@ -179,8 +168,7 @@ class CacheOptimizer:
         metrics: Dict[str, Any],
         config: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Generate intelligent optimization recommendations"""
-        recommendations = []
+        """Generate intelligent optimization recommendations"""        recommendations = []
         
         # Memory optimization
         memory_recs = await self._analyze_memory_optimization(cache_entries, metrics, config)
@@ -217,8 +205,7 @@ class CacheOptimizer:
         metrics: Dict[str, Any], 
         config: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Analyze memory usage and generate optimization recommendations"""
-        recommendations = []
+        """Analyze memory usage and generate optimization recommendations"""        recommendations = []
         
         memory_usage_percent = metrics.get('memory_usage_percent', 0)
         total_entries = len(cache_entries)
@@ -263,8 +250,7 @@ class CacheOptimizer:
         cache_entries: Dict[str, Any],
         metrics: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Analyze access patterns for optimization opportunities"""
-        recommendations = []
+        """Analyze access patterns for optimization opportunities"""        recommendations = []
         
         # Calculate access frequency distribution
         access_counts = []
@@ -322,8 +308,7 @@ class CacheOptimizer:
         cache_entries: Dict[str, Any],
         metrics: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Analyze TTL settings for optimization"""
-        recommendations = []
+        """Analyze TTL settings for optimization"""        recommendations = []
         
         # Analyze TTL vs access patterns
         ttl_access_correlation = []
@@ -363,8 +348,7 @@ class CacheOptimizer:
         cache_entries: Dict[str, Any],
         metrics: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Analyze eviction strategy effectiveness"""
-        recommendations = []
+        """Analyze eviction strategy effectiveness"""        recommendations = []
         
         eviction_rate = metrics.get('evictions', 0) / max(metrics.get('total_requests', 1), 1)
         
@@ -395,8 +379,7 @@ class CacheOptimizer:
         cache_entries: Dict[str, Any],
         metrics: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Analyze compression opportunities"""
-        recommendations = []
+        """Analyze compression opportunities"""        recommendations = []
         
         # Analyze entry sizes and compression potential
         large_entries = 0
@@ -438,8 +421,7 @@ class CacheOptimizer:
         cache_entries: Dict[str, Any],
         metrics: Dict[str, Any]
     ) -> List[OptimizationRecommendation]:
-        """Analyze prefetching opportunities"""
-        recommendations = []
+        """Analyze prefetching opportunities"""        recommendations = []
         
         # Analyze sequential access patterns
         # This is a simplified analysis - real implementation would track access sequences
@@ -466,8 +448,7 @@ class CacheOptimizer:
         recommendations: List[OptimizationRecommendation],
         cache_entries: Dict[str, Any]
     ) -> List[OptimizationResult]:
-        """Execute high-priority optimizations automatically"""
-        results = []
+        """Execute high-priority optimizations automatically"""        results = []
         
         for rec in recommendations:
             # Only auto-execute critical/high priority, low complexity optimizations
@@ -490,8 +471,7 @@ class CacheOptimizer:
         recommendation: OptimizationRecommendation,
         cache_entries: Dict[str, Any]
     ) -> OptimizationResult:
-        """Execute specific optimization recommendation"""
-        start_time = datetime.utcnow()
+        """Execute specific optimization recommendation"""        start_time = datetime.utcnow()
         
         try:
             # Store before metrics
@@ -541,8 +521,7 @@ class CacheOptimizer:
         recommendation: OptimizationRecommendation,
         cache_entries: Dict[str, Any]
     ) -> bool:
-        """Execute memory optimization"""
-        try:
+        """Execute memory optimization"""        try:
             target_reduction = recommendation.parameters.get('target_reduction_percent', 20)
             
             # Calculate entries to evict
@@ -588,8 +567,7 @@ class CacheOptimizer:
         recommendation: OptimizationRecommendation,
         cache_entries: Dict[str, Any]
     ) -> bool:
-        """Execute TTL optimization"""
-        try:
+        """Execute TTL optimization"""        try:
             ttl_multiplier = recommendation.parameters.get('ttl_multiplier', 1.5)
             adaptive_ttl = recommendation.parameters.get('adaptive_ttl', False)
             
@@ -620,16 +598,14 @@ class CacheOptimizer:
             return False
     
     async def _update_historical_metrics(self, metrics: Dict[str, Any]):
-        """Update historical metrics for trend analysis"""
-        timestamp = datetime.utcnow()
+        """Update historical metrics for trend analysis"""        timestamp = datetime.utcnow()
         
         for metric_name, value in metrics.items():
             if isinstance(value, (int, float)):
                 self.historical_metrics[metric_name].append((timestamp, value))
     
     async def _update_learning_models(self, metrics: Dict[str, Any]):
-        """Update ML models with new performance data"""
-        # Simplified learning model update
+        """Update ML models with new performance data"""        # Simplified learning model update
         # Real implementation would use proper ML algorithms
         
         for metric_name, values in self.historical_metrics.items():
@@ -651,8 +627,7 @@ class CacheOptimizer:
                         }
     
     async def _generate_predictions(self) -> List[CachePrediction]:
-        """Generate performance predictions"""
-        predictions = []
+        """Generate performance predictions"""        predictions = []
         
         for metric_name, model_data in self.predictive_models.items():
             if metric_name in self.historical_metrics:
@@ -698,8 +673,7 @@ class CacheOptimizer:
         return predictions
     
     async def _capture_metrics_snapshot(self, cache_entries: Dict[str, Any]) -> Dict[str, Any]:
-        """Capture current metrics snapshot"""
-        total_entries = len(cache_entries)
+        """Capture current metrics snapshot"""        total_entries = len(cache_entries)
         total_size = sum(
             getattr(entry, 'size_bytes', 0) 
             for entry in cache_entries.values()
@@ -723,8 +697,7 @@ class CacheOptimizer:
         before_metrics: Dict[str, Any],
         after_metrics: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Calculate actual impact of optimization"""
-        impact = {}
+        """Calculate actual impact of optimization"""        impact = {}
         
         for metric_name in before_metrics:
             if metric_name in after_metrics and metric_name != 'timestamp':
@@ -738,8 +711,7 @@ class CacheOptimizer:
         return impact
     
     async def _calculate_improvement(self, current_metrics: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate performance improvement over baseline"""
-        if not self.performance_baseline:
+        """Calculate performance improvement over baseline"""        if not self.performance_baseline:
             # Set current as baseline
             self.performance_baseline = current_metrics.copy()
             return {}
@@ -758,8 +730,7 @@ class CacheOptimizer:
         return improvements
     
     def _recommendation_to_dict(self, rec: OptimizationRecommendation) -> Dict[str, Any]:
-        """Convert recommendation to dictionary"""
-        return {
+        """Convert recommendation to dictionary"""        return {
             'optimization_id': rec.optimization_id,
             'type': rec.optimization_type.value,
             'priority': rec.priority.value,
@@ -773,8 +744,7 @@ class CacheOptimizer:
         }
     
     def _prediction_to_dict(self, pred: CachePrediction) -> Dict[str, Any]:
-        """Convert prediction to dictionary"""
-        return {
+        """Convert prediction to dictionary"""        return {
             'metric_name': pred.metric_name,
             'current_value': pred.current_value,
             'predicted_values': [

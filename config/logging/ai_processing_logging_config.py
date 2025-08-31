@@ -1,5 +1,4 @@
-"""
-AI Processing Logging Configuration for IA-Influencer Agent Platform
+"""AI Processing Logging Configuration for IA-Influencer Agent Platform
 ====================================================================
 
 Industrial-grade logging configuration for AI engines, machine learning pipelines,
@@ -18,7 +17,6 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
-
 import logging
 import json
 from datetime import datetime
@@ -32,8 +30,7 @@ from pythonjsonlogger import jsonlogger
 
 
 class AIEngineType(str, Enum):
-    """AI engine types for specialized logging"""
-    CONTENT_ANALYSIS = "content_analysis"
+    """AI engine types for specialized logging"""    CONTENT_ANALYSIS = "content_analysis"
     AUDIO_PROCESSING = "audio_processing"
     VIDEO_PROCESSING = "video_processing"
     IMAGE_PROCESSING = "image_processing"
@@ -51,8 +48,7 @@ class AIEngineType(str, Enum):
 
 
 class ProcessingStage(str, Enum):
-    """AI processing pipeline stages"""
-    INPUT_VALIDATION = "input_validation"
+    """AI processing pipeline stages"""    INPUT_VALIDATION = "input_validation"
     PREPROCESSING = "preprocessing"
     FEATURE_EXTRACTION = "feature_extraction"
     MODEL_INFERENCE = "model_inference"
@@ -65,8 +61,7 @@ class ProcessingStage(str, Enum):
 
 
 class ModelType(str, Enum):
-    """AI model types"""
-    DEEP_LEARNING = "deep_learning"
+    """AI model types"""    DEEP_LEARNING = "deep_learning"
     MACHINE_LEARNING = "machine_learning"
     NATURAL_LANGUAGE_PROCESSING = "nlp"
     COMPUTER_VISION = "computer_vision"
@@ -82,8 +77,7 @@ class ModelType(str, Enum):
 
 @dataclass
 class AIProcessingLogConfig:
-    """Configuration for AI processing logging"""
-    enable_model_performance_logging: bool = True
+    """Configuration for AI processing logging"""    enable_model_performance_logging: bool = True
     enable_inference_logging: bool = True
     enable_training_logging: bool = True
     enable_pipeline_logging: bool = True
@@ -122,15 +116,13 @@ class AIProcessingLogConfig:
 
 
 class AIProcessingLogger:
-    """Specialized logger for AI processing operations"""
-    
+    """Specialized logger for AI processing operations"""    
     def __init__(self, config: AIProcessingLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for AI processing"""
-        processors = [
+        """Setup structured logger for AI processing"""        processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
             structlog.processors.add_log_level,
@@ -156,8 +148,7 @@ class AIProcessingLogger:
         return structlog.get_logger("ia_influencer_ai_processing")
     
     def _mask_sensitive_data(self, logger, method_name, event_dict):
-        """Mask sensitive data in AI processing logs"""
-        sensitive_fields = ['user_content', 'personal_data', 'private_info']
+        """Mask sensitive data in AI processing logs"""        sensitive_fields = ['user_content', 'personal_data', 'private_info']
         for field in sensitive_fields:
             if field in event_dict:
                 event_dict[field] = "[AI_MASKED]"
@@ -174,8 +165,7 @@ class AIProcessingLogger:
         prediction_results: Dict[str, Any],
         resource_usage: Dict[str, float]
     ) -> None:
-        """Log AI model inference operations"""
-        if not self.config.enable_inference_logging:
+        """Log AI model inference operations"""        if not self.config.enable_inference_logging:
             return
             
         log_data = {
@@ -218,8 +208,7 @@ class AIProcessingLogger:
         success: bool,
         error_details: Optional[str] = None
     ) -> None:
-        """Log AI processing pipeline execution"""
-        if not self.config.enable_pipeline_logging:
+        """Log AI processing pipeline execution"""        if not self.config.enable_pipeline_logging:
             return
             
         log_data = {
@@ -260,8 +249,7 @@ class AIProcessingLogger:
         training_duration: float,
         epochs_completed: int
     ) -> None:
-        """Log AI model training sessions"""
-        if not self.config.enable_training_logging:
+        """Log AI model training sessions"""        if not self.config.enable_training_logging:
             return
             
         log_data = {
@@ -299,8 +287,7 @@ class AIProcessingLogger:
         quality_score: float,
         confidence_level: float
     ) -> None:
-        """Log content analysis operations"""
-        log_data = {
+        """Log content analysis operations"""        log_data = {
             "event_type": "ai_content_analysis",
             "analysis_id": analysis_id,
             "content_id": content_id,
@@ -336,8 +323,7 @@ class AIProcessingLogger:
         diversity_score: float,
         processing_time: float
     ) -> None:
-        """Log AI recommendation generation"""
-        log_data = {
+        """Log AI recommendation generation"""        log_data = {
             "event_type": "ai_recommendation_generation",
             "recommendation_request_id": recommendation_request_id,
             "user_id": user_id if not self.config.mask_sensitive_inputs else "[MASKED]",
@@ -367,8 +353,7 @@ class AIProcessingLogger:
         resource_utilization: Dict[str, float],
         error_rates: Dict[str, float]
     ) -> None:
-        """Log AI model performance metrics"""
-        if not self.config.enable_model_performance_logging:
+        """Log AI model performance metrics"""        if not self.config.enable_model_performance_logging:
             return
             
         log_data = {
@@ -407,8 +392,7 @@ class AIProcessingLogger:
         affected_features: List[str],
         recommended_actions: List[str]
     ) -> None:
-        """Log AI model drift detection"""
-        if not self.config.track_model_drift:
+        """Log AI model drift detection"""        if not self.config.track_model_drift:
             return
             
         log_data = {
@@ -441,8 +425,7 @@ class AIProcessingLogger:
         bias_severity: str,
         mitigation_suggestions: List[str]
     ) -> None:
-        """Log AI model bias and fairness checks"""
-        if not self.config.enable_bias_detection:
+        """Log AI model bias and fairness checks"""        if not self.config.enable_bias_detection:
             return
             
         log_data = {
@@ -462,8 +445,7 @@ class AIProcessingLogger:
         getattr(self.logger, level)("AI bias and fairness check completed", **log_data)
     
     def get_ai_processing_metrics(self) -> Dict[str, Any]:
-        """Get AI processing system metrics"""
-        return {
+        """Get AI processing system metrics"""        return {
             "model_performance_logging": self.config.enable_model_performance_logging,
             "inference_logging": self.config.enable_inference_logging,
             "training_logging": self.config.enable_training_logging,
@@ -480,17 +462,14 @@ class AIProcessingLogger:
 
 
 class AIProcessingLoggingConfig:
-    """Main configuration class for AI processing logging"""
-    
+    """Main configuration class for AI processing logging"""    
     @staticmethod
     def create_default_config() -> AIProcessingLogConfig:
-        """Create default AI processing logging configuration"""
-        return AIProcessingLogConfig()
+        """Create default AI processing logging configuration"""        return AIProcessingLogConfig()
     
     @staticmethod
     def create_production_config() -> AIProcessingLogConfig:
-        """Create production AI processing logging configuration"""
-        return AIProcessingLogConfig(
+        """Create production AI processing logging configuration"""        return AIProcessingLogConfig(
             enable_model_performance_logging=True,
             enable_inference_logging=True,
             enable_training_logging=True,

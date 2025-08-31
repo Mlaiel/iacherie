@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Analytics and Metrics Tests
+"""Analytics and Metrics Tests
 
 Comprehensive tests for analytics, metrics computation, and performance monitoring.
 Tests recommendation metrics, user engagement analytics, and system performance.
@@ -23,7 +20,6 @@ Tests recommendation metrics, user engagement analytics, and system performance.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -59,10 +55,8 @@ from ai.personalization.analytics import (
 
 class TestAnalyticsEngine(IsolatedAsyncioTestCase):
     """Comprehensive tests for AnalyticsEngine"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.engine = AnalyticsEngine(
+        """Set up test environment"""        self.engine = AnalyticsEngine(
             metrics_window=timedelta(days=30),
             sampling_rate=0.1,
             real_time_processing=True
@@ -70,8 +64,7 @@ class TestAnalyticsEngine(IsolatedAsyncioTestCase):
         self.analytics_data = self._generate_analytics_data()
 
     def _generate_analytics_data(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Generate comprehensive analytics data"""
-        now = datetime.utcnow()
+        """Generate comprehensive analytics data"""        now = datetime.utcnow()
         
         # User interactions
         interactions = []
@@ -126,14 +119,12 @@ class TestAnalyticsEngine(IsolatedAsyncioTestCase):
         }
 
     async def test_engine_initialization(self):
-        """Test analytics engine initialization"""
-        self.assertIsNotNone(self.engine.metrics_window)
+        """Test analytics engine initialization"""        self.assertIsNotNone(self.engine.metrics_window)
         self.assertEqual(self.engine.sampling_rate, 0.1)
         self.assertTrue(self.engine.real_time_processing)
 
     async def test_data_ingestion(self):
-        """Test data ingestion into analytics engine"""
-        # Ingest interaction data
+        """Test data ingestion into analytics engine"""        # Ingest interaction data
         await self.engine.ingest_interactions(self.analytics_data['interactions'])
         
         # Ingest recommendation data
@@ -150,8 +141,7 @@ class TestAnalyticsEngine(IsolatedAsyncioTestCase):
         self.assertGreater(stats['system_metrics_count'], 0)
 
     async def test_real_time_analytics(self):
-        """Test real-time analytics processing"""
-        await self.engine.ingest_interactions(self.analytics_data['interactions'])
+        """Test real-time analytics processing"""        await self.engine.ingest_interactions(self.analytics_data['interactions'])
         
         # Process real-time metrics
         real_time_metrics = await self.engine.compute_real_time_metrics()
@@ -162,8 +152,7 @@ class TestAnalyticsEngine(IsolatedAsyncioTestCase):
         self.assertIn('average_session_length', real_time_metrics)
 
     async def test_batch_analytics(self):
-        """Test batch analytics processing"""
-        await self.engine.ingest_interactions(self.analytics_data['interactions'])
+        """Test batch analytics processing"""        await self.engine.ingest_interactions(self.analytics_data['interactions'])
         await self.engine.ingest_recommendations(self.analytics_data['recommendations'])
         
         # Process batch analytics
@@ -180,15 +169,12 @@ class TestAnalyticsEngine(IsolatedAsyncioTestCase):
 
 class TestMetricsCalculator(IsolatedAsyncioTestCase):
     """Comprehensive tests for MetricsCalculator"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.calculator = MetricsCalculator()
+        """Set up test environment"""        self.calculator = MetricsCalculator()
         self.metrics_data = self._generate_metrics_data()
 
     def _generate_metrics_data(self) -> Dict[str, Any]:
-        """Generate data for metrics calculation"""
-        # Recommendation performance data
+        """Generate data for metrics calculation"""        # Recommendation performance data
         actual_interactions = [1, 0, 1, 1, 0, 1, 0, 0, 1, 1]  # Binary relevance
         predicted_scores = [0.9, 0.3, 0.8, 0.7, 0.2, 0.85, 0.1, 0.4, 0.75, 0.65]
         
@@ -212,8 +198,7 @@ class TestMetricsCalculator(IsolatedAsyncioTestCase):
         }
 
     async def test_recommendation_metrics(self):
-        """Test recommendation quality metrics"""
-        metrics = await self.calculator.calculate_recommendation_metrics(
+        """Test recommendation quality metrics"""        metrics = await self.calculator.calculate_recommendation_metrics(
             actual=self.metrics_data['actual_interactions'],
             predicted=self.metrics_data['predicted_scores'],
             k=5
@@ -232,8 +217,7 @@ class TestMetricsCalculator(IsolatedAsyncioTestCase):
         self.assertLessEqual(metrics.recall_at_k, 1.0)
 
     async def test_engagement_metrics(self):
-        """Test user engagement metrics"""
-        metrics = await self.calculator.calculate_engagement_metrics(
+        """Test user engagement metrics"""        metrics = await self.calculator.calculate_engagement_metrics(
             self.metrics_data['user_sessions']
         )
         
@@ -248,8 +232,7 @@ class TestMetricsCalculator(IsolatedAsyncioTestCase):
         self.assertLessEqual(metrics.user_retention_rate, 1.0)
 
     async def test_diversity_metrics(self):
-        """Test recommendation diversity metrics"""
-        recommendations = [
+        """Test recommendation diversity metrics"""        recommendations = [
             ['track_1', 'track_2', 'track_3'],  # User 1 recommendations
             ['track_2', 'track_4', 'track_5'],  # User 2 recommendations
             ['track_1', 'track_3', 'track_6']   # User 3 recommendations
@@ -275,8 +258,7 @@ class TestMetricsCalculator(IsolatedAsyncioTestCase):
         self.assertIn('catalog_coverage', diversity_metrics)
 
     async def test_novelty_metrics(self):
-        """Test recommendation novelty metrics"""
-        user_history = {
+        """Test recommendation novelty metrics"""        user_history = {
             'user_1': ['track_1', 'track_2'],
             'user_2': ['track_3', 'track_4'],
             'user_3': ['track_5']
@@ -297,8 +279,7 @@ class TestMetricsCalculator(IsolatedAsyncioTestCase):
         self.assertLessEqual(novelty_score, 1.0)
 
     async def test_serendipity_metrics(self):
-        """Test recommendation serendipity metrics"""
-        user_profiles = {
+        """Test recommendation serendipity metrics"""        user_profiles = {
             'user_1': {'preferred_genres': ['pop', 'rock'], 'energy_preference': 0.8},
             'user_2': {'preferred_genres': ['jazz'], 'energy_preference': 0.4}
         }
@@ -324,8 +305,7 @@ class TestMetricsCalculator(IsolatedAsyncioTestCase):
         self.assertLessEqual(serendipity_score, 1.0)
 
     async def test_business_metrics(self):
-        """Test business KPI metrics"""
-        business_data = {
+        """Test business KPI metrics"""        business_data = {
             'user_acquisition': {'new_users': 1500, 'period_days': 30},
             'user_retention': {'returning_users': 8500, 'total_users': 10000},
             'revenue': {'subscription_revenue': 45000, 'ad_revenue': 12000},
@@ -343,10 +323,8 @@ class TestMetricsCalculator(IsolatedAsyncioTestCase):
 
 class TestPerformanceMonitor(IsolatedAsyncioTestCase):
     """Comprehensive tests for PerformanceMonitor"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.monitor = PerformanceMonitor(
+        """Set up test environment"""        self.monitor = PerformanceMonitor(
             monitoring_interval=timedelta(minutes=5),
             alert_thresholds={
                 'response_time': 1000,  # ms
@@ -357,8 +335,7 @@ class TestPerformanceMonitor(IsolatedAsyncioTestCase):
         self.performance_data = self._generate_performance_data()
 
     def _generate_performance_data(self) -> List[Dict[str, Any]]:
-        """Generate performance monitoring data"""
-        data = []
+        """Generate performance monitoring data"""        data = []
         now = datetime.utcnow()
         
         for i in range(288):  # 24 hours * 12 (5-minute intervals)
@@ -385,8 +362,7 @@ class TestPerformanceMonitor(IsolatedAsyncioTestCase):
         return data
 
     async def test_performance_monitoring(self):
-        """Test performance monitoring functionality"""
-        await self.monitor.ingest_performance_data(self.performance_data)
+        """Test performance monitoring functionality"""        await self.monitor.ingest_performance_data(self.performance_data)
         
         # Get current performance status
         status = await self.monitor.get_performance_status()
@@ -398,8 +374,7 @@ class TestPerformanceMonitor(IsolatedAsyncioTestCase):
         self.assertIn('alerts', status)
 
     async def test_alert_generation(self):
-        """Test alert generation for performance issues"""
-        # Create data with performance issues
+        """Test alert generation for performance issues"""        # Create data with performance issues
         problematic_data = []
         for i in range(10):
             problematic_data.append({
@@ -425,8 +400,7 @@ class TestPerformanceMonitor(IsolatedAsyncioTestCase):
             self.assertIn('timestamp', alert)
 
     async def test_performance_trends(self):
-        """Test performance trend analysis"""
-        await self.monitor.ingest_performance_data(self.performance_data)
+        """Test performance trend analysis"""        await self.monitor.ingest_performance_data(self.performance_data)
         
         trends = await self.monitor.analyze_performance_trends(
             metric='response_time',
@@ -439,8 +413,7 @@ class TestPerformanceMonitor(IsolatedAsyncioTestCase):
         self.assertIn('predicted_values', trends)
 
     async def test_capacity_planning(self):
-        """Test capacity planning recommendations"""
-        await self.monitor.ingest_performance_data(self.performance_data)
+        """Test capacity planning recommendations"""        await self.monitor.ingest_performance_data(self.performance_data)
         
         capacity_report = await self.monitor.generate_capacity_report()
         
@@ -450,8 +423,7 @@ class TestPerformanceMonitor(IsolatedAsyncioTestCase):
         self.assertIn('scaling_recommendations', capacity_report)
 
     async def test_anomaly_detection(self):
-        """Test performance anomaly detection"""
-        # Add anomalous data points
+        """Test performance anomaly detection"""        # Add anomalous data points
         anomalous_data = self.performance_data.copy()
         
         # Insert clear anomalies
@@ -480,10 +452,8 @@ class TestPerformanceMonitor(IsolatedAsyncioTestCase):
 
 class TestABTestAnalyzer(IsolatedAsyncioTestCase):
     """Comprehensive tests for ABTestAnalyzer"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.analyzer = ABTestAnalyzer(
+        """Set up test environment"""        self.analyzer = ABTestAnalyzer(
             confidence_level=0.95,
             minimum_sample_size=100,
             statistical_tests=['t_test', 'mann_whitney', 'chi_square']
@@ -491,8 +461,7 @@ class TestABTestAnalyzer(IsolatedAsyncioTestCase):
         self.ab_test_data = self._generate_ab_test_data()
 
     def _generate_ab_test_data(self) -> Dict[str, Any]:
-        """Generate A/B test data"""
-        # Test: New recommendation algorithm vs. baseline
+        """Generate A/B test data"""        # Test: New recommendation algorithm vs. baseline
         control_group = []
         treatment_group = []
         
@@ -536,8 +505,7 @@ class TestABTestAnalyzer(IsolatedAsyncioTestCase):
         }
 
     async def test_ab_test_analysis(self):
-        """Test A/B test statistical analysis"""
-        result = await self.analyzer.analyze_ab_test(
+        """Test A/B test statistical analysis"""        result = await self.analyzer.analyze_ab_test(
             control_data=self.ab_test_data['control_group'],
             treatment_data=self.ab_test_data['treatment_group'],
             metrics=['click_through_rate', 'session_length', 'user_satisfaction']
@@ -550,8 +518,7 @@ class TestABTestAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('p_values', result.__dict__)
 
     async def test_power_analysis(self):
-        """Test statistical power analysis"""
-        power_analysis = await self.analyzer.calculate_statistical_power(
+        """Test statistical power analysis"""        power_analysis = await self.analyzer.calculate_statistical_power(
             effect_size=0.1,
             sample_size=500,
             alpha=0.05
@@ -563,8 +530,7 @@ class TestABTestAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('recommended_sample_size', power_analysis)
 
     async def test_sample_size_calculation(self):
-        """Test sample size calculation for A/B tests"""
-        sample_size = await self.analyzer.calculate_required_sample_size(
+        """Test sample size calculation for A/B tests"""        sample_size = await self.analyzer.calculate_required_sample_size(
             expected_effect_size=0.15,
             statistical_power=0.8,
             significance_level=0.05
@@ -574,8 +540,7 @@ class TestABTestAnalyzer(IsolatedAsyncioTestCase):
         self.assertGreater(sample_size, 0)
 
     async def test_multiple_testing_correction(self):
-        """Test multiple testing correction"""
-        # Test multiple metrics simultaneously
+        """Test multiple testing correction"""        # Test multiple metrics simultaneously
         metrics = ['click_through_rate', 'session_length', 'tracks_played', 'user_satisfaction']
         
         corrected_results = await self.analyzer.apply_multiple_testing_correction(
@@ -590,8 +555,7 @@ class TestABTestAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('significant_metrics', corrected_results)
 
     async def test_bayesian_analysis(self):
-        """Test Bayesian A/B test analysis"""
-        bayesian_result = await self.analyzer.bayesian_analysis(
+        """Test Bayesian A/B test analysis"""        bayesian_result = await self.analyzer.bayesian_analysis(
             control_data=self.ab_test_data['control_group'],
             treatment_data=self.ab_test_data['treatment_group'],
             metric='click_through_rate',
@@ -604,8 +568,7 @@ class TestABTestAnalyzer(IsolatedAsyncioTestCase):
         self.assertIn('expected_loss', bayesian_result)
 
     async def test_segmentation_analysis(self):
-        """Test A/B test results by user segments"""
-        # Add segment information to test data
+        """Test A/B test results by user segments"""        # Add segment information to test data
         for user in self.ab_test_data['control_group']:
             user['segment'] = np.random.choice(['new_users', 'power_users', 'casual_users'])
         
@@ -626,18 +589,15 @@ class TestABTestAnalyzer(IsolatedAsyncioTestCase):
 
 class TestReportGenerator(IsolatedAsyncioTestCase):
     """Comprehensive tests for ReportGenerator"""
-
     async def asyncSetUp(self):
-        """Set up test environment"""
-        self.generator = ReportGenerator(
+        """Set up test environment"""        self.generator = ReportGenerator(
             report_formats=['json', 'html', 'pdf'],
             template_path='templates/',
             auto_export=True
         )
 
     async def test_engagement_report_generation(self):
-        """Test user engagement report generation"""
-        engagement_data = {
+        """Test user engagement report generation"""        engagement_data = {
             'daily_active_users': [5000, 5200, 4800, 5100],
             'average_session_length': [25.5, 26.2, 24.8, 25.9],
             'user_retention_rates': {'day_1': 0.75, 'day_7': 0.45, 'day_30': 0.25},
@@ -657,8 +617,7 @@ class TestReportGenerator(IsolatedAsyncioTestCase):
         self.assertIn('recommendations', report)
 
     async def test_recommendation_performance_report(self):
-        """Test recommendation performance report"""
-        recommendation_data = {
+        """Test recommendation performance report"""        recommendation_data = {
             'algorithms': {
                 'collaborative_filtering': {'precision': 0.25, 'recall': 0.18, 'ndcg': 0.32},
                 'content_based': {'precision': 0.22, 'recall': 0.16, 'ndcg': 0.28},
@@ -680,8 +639,7 @@ class TestReportGenerator(IsolatedAsyncioTestCase):
         self.assertIn('user_satisfaction', report)
 
     async def test_system_performance_report(self):
-        """Test system performance report"""
-        performance_data = {
+        """Test system performance report"""        performance_data = {
             'response_times': [245, 250, 280, 265, 275],
             'memory_usage': [68, 72, 75, 70, 73],
             'error_rates': [0.02, 0.015, 0.018, 0.021, 0.019],
@@ -702,8 +660,7 @@ class TestReportGenerator(IsolatedAsyncioTestCase):
         self.assertIn('capacity_utilization', report)
 
     async def test_business_intelligence_report(self):
-        """Test business intelligence report"""
-        business_data = {
+        """Test business intelligence report"""        business_data = {
             'revenue': {'monthly': 125000, 'growth_rate': 0.12},
             'user_metrics': {'new_users': 2500, 'churn_rate': 0.08},
             'content_metrics': {'new_content': 1500, 'popular_genres': ['Pop', 'Electronic']},
@@ -721,8 +678,7 @@ class TestReportGenerator(IsolatedAsyncioTestCase):
         self.assertIn('roi_analysis', report)
 
     async def test_automated_insights(self):
-        """Test automated insights generation"""
-        analytics_data = {
+        """Test automated insights generation"""        analytics_data = {
             'user_behavior': {
                 'peak_usage_hours': [19, 20, 21],
                 'popular_devices': ['mobile', 'desktop'],
@@ -751,8 +707,7 @@ class TestReportGenerator(IsolatedAsyncioTestCase):
             self.assertIn('recommendation', insight)
 
     async def test_custom_dashboard_generation(self):
-        """Test custom dashboard generation"""
-        dashboard_config = {
+        """Test custom dashboard generation"""        dashboard_config = {
             'widgets': [
                 {'type': 'metric', 'title': 'Active Users', 'value': 15000},
                 {'type': 'chart', 'title': 'Usage Trends', 'data': [100, 120, 115, 130]},
@@ -774,10 +729,8 @@ class TestReportGenerator(IsolatedAsyncioTestCase):
 
 class TestAnalyticsPerformanceAndScalability(IsolatedAsyncioTestCase):
     """Performance and scalability tests for analytics operations"""
-
     async def test_large_dataset_processing(self):
-        """Test analytics processing on large datasets"""
-        calculator = MetricsCalculator()
+        """Test analytics processing on large datasets"""        calculator = MetricsCalculator()
         
         # Generate large dataset
         n_interactions = 100000
@@ -805,8 +758,7 @@ class TestAnalyticsPerformanceAndScalability(IsolatedAsyncioTestCase):
         self.assertIsNotNone(engagement_metrics)
 
     async def test_real_time_analytics_throughput(self):
-        """Test real-time analytics throughput"""
-        engine = AnalyticsEngine(real_time_processing=True)
+        """Test real-time analytics throughput"""        engine = AnalyticsEngine(real_time_processing=True)
         
         # Simulate high-throughput data ingestion
         batch_size = 1000
@@ -833,8 +785,7 @@ class TestAnalyticsPerformanceAndScalability(IsolatedAsyncioTestCase):
         self.assertGreater(throughput, 1000)
 
     async def test_concurrent_analytics_operations(self):
-        """Test concurrent analytics operations"""
-        engine = AnalyticsEngine()
+        """Test concurrent analytics operations"""        engine = AnalyticsEngine()
         
         async def analytics_task(task_id: int):
             # Simulate different analytics operations

@@ -1,5 +1,4 @@
-"""
-🎵 Audio Content Migrations - Advanced Audio Processing & Protection Schema Evolution
+"""🎵 Audio Content Migrations - Advanced Audio Processing & Protection Schema Evolution
 ====================================================================================
 Module: backend/database/migrations/audio_migrations.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -25,7 +24,6 @@ Audio Content Types Supported:
 - Voice Recordings: Speeches, announcements, voice-overs
 - Live Recordings: Concerts, performances, events
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Set, Tuple, Any, Union
@@ -48,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFormat(Enum):
-    """Supported audio formats with quality levels"""
-    MP3 = "mp3"
+    """Supported audio formats with quality levels"""    MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
     AAC = "aac"
@@ -60,8 +57,7 @@ class AudioFormat(Enum):
 
 
 class AudioQuality(Enum):
-    """Audio quality classifications"""
-    LOSSY_LOW = "lossy_low"      # <128 kbps
+    """Audio quality classifications"""    LOSSY_LOW = "lossy_low"      # <128 kbps
     LOSSY_STANDARD = "lossy_standard"  # 128-192 kbps
     LOSSY_HIGH = "lossy_high"    # 192-320 kbps
     LOSSLESS = "lossless"        # FLAC, WAV
@@ -69,8 +65,7 @@ class AudioQuality(Enum):
 
 
 class AudioContentType(Enum):
-    """Audio content categorization"""
-    MUSIC_TRACK = "music_track"
+    """Audio content categorization"""    MUSIC_TRACK = "music_track"
     PODCAST_EPISODE = "podcast_episode"
     AUDIOBOOK_CHAPTER = "audiobook_chapter"
     SOUND_EFFECT = "sound_effect"
@@ -82,8 +77,7 @@ class AudioContentType(Enum):
 
 @dataclass
 class AudioMigrationConfiguration:
-    """Migration configuration for audio processing systems"""
-    enable_fingerprinting: bool = True
+    """Migration configuration for audio processing systems"""    enable_fingerprinting: bool = True
     enable_ai_analysis: bool = True
     enable_quality_enhancement: bool = True
     enable_metadata_extraction: bool = True
@@ -92,8 +86,7 @@ class AudioMigrationConfiguration:
 
 
 class AudioMigrations:
-    """
-    Ultra-advanced audio database migrations for professional audio content management
+    """    Ultra-advanced audio database migrations for professional audio content management
     
     Handles schema evolution for:
     - Audio file metadata and technical specifications
@@ -101,21 +94,17 @@ class AudioMigrations:
     - AI-powered audio analysis and enhancement
     - Professional audio quality assessment
     - Multi-format audio processing pipelines
-    """
-    
+    """    
     def __init__(self, migration_manager: EnterpriseMigrationManager):
         self.migration_manager = migration_manager
         self.logger = logging.getLogger(__name__)
     
     async def create_audio_files_table(self) -> str:
-        """
-        Create comprehensive audio files table with professional metadata support
+        """        Create comprehensive audio files table with professional metadata support
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS audio_files (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS audio_files (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             content_id UUID NOT NULL REFERENCES content_items(id) ON DELETE CASCADE,
             creator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
@@ -224,8 +213,7 @@ class AudioMigrations:
         
         -- Fingerprint search index
         CREATE INDEX IF NOT EXISTS idx_audio_files_fingerprint ON audio_files(fingerprint_algorithm, fingerprint_version);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -234,14 +222,11 @@ class AudioMigrations:
         )
     
     async def create_audio_segments_table(self) -> str:
-        """
-        Create audio segments table for detailed audio analysis and protection
+        """        Create audio segments table for detailed audio analysis and protection
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS audio_segments (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS audio_segments (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             audio_file_id UUID NOT NULL REFERENCES audio_files(id) ON DELETE CASCADE,
             
@@ -307,8 +292,7 @@ class AudioMigrations:
         
         -- Similarity search
         CREATE INDEX IF NOT EXISTS idx_audio_segments_similarity ON audio_segments(similarity_hash);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -317,14 +301,11 @@ class AudioMigrations:
         )
     
     async def create_audio_fingerprints_table(self) -> str:
-        """
-        Create specialized audio fingerprints table for advanced protection
+        """        Create specialized audio fingerprints table for advanced protection
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS audio_fingerprints (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS audio_fingerprints (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             audio_file_id UUID NOT NULL REFERENCES audio_files(id) ON DELETE CASCADE,
             
@@ -393,8 +374,7 @@ class AudioMigrations:
         -- JSONB indexes for segment analysis
         CREATE INDEX IF NOT EXISTS idx_fingerprints_segments ON audio_fingerprints USING GIN(segment_fingerprints);
         CREATE INDEX IF NOT EXISTS idx_fingerprints_params ON audio_fingerprints USING GIN(algorithm_parameters);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -403,14 +383,11 @@ class AudioMigrations:
         )
     
     async def create_audio_processing_jobs_table(self) -> str:
-        """
-        Create audio processing jobs table for background audio operations
+        """        Create audio processing jobs table for background audio operations
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS audio_processing_jobs (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS audio_processing_jobs (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             audio_file_id UUID NOT NULL REFERENCES audio_files(id) ON DELETE CASCADE,
             creator_id UUID NOT NULL REFERENCES creator_profiles(id) ON DELETE CASCADE,
@@ -478,8 +455,7 @@ class AudioMigrations:
         -- JSONB indexes
         CREATE INDEX IF NOT EXISTS idx_processing_jobs_params ON audio_processing_jobs USING GIN(job_parameters);
         CREATE INDEX IF NOT EXISTS idx_processing_jobs_results ON audio_processing_jobs USING GIN(result_data);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -488,14 +464,11 @@ class AudioMigrations:
         )
     
     async def create_audio_analytics_table(self) -> str:
-        """
-        Create audio-specific analytics table for performance tracking
+        """        Create audio-specific analytics table for performance tracking
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        CREATE TABLE IF NOT EXISTS audio_analytics (
+        """        migration_sql = """        CREATE TABLE IF NOT EXISTS audio_analytics (
             id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
             audio_file_id UUID NOT NULL REFERENCES audio_files(id) ON DELETE CASCADE,
             
@@ -565,8 +538,7 @@ class AudioMigrations:
         CREATE INDEX IF NOT EXISTS idx_audio_analytics_geo ON audio_analytics USING GIN(country_breakdown);
         CREATE INDEX IF NOT EXISTS idx_audio_analytics_platforms ON audio_analytics USING GIN(platform_plays);
         CREATE INDEX IF NOT EXISTS idx_audio_analytics_discovery ON audio_analytics USING GIN(discovery_source);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.SCHEMA,
@@ -575,16 +547,14 @@ class AudioMigrations:
         )
     
     async def execute_full_audio_migration(self, config: AudioMigrationConfiguration) -> List[str]:
-        """
-        Execute complete audio database migration according to configuration
+        """        Execute complete audio database migration according to configuration
         
         Args:
             config: AudioMigrationConfiguration with specific settings
             
         Returns:
             List[str]: Migration IDs for tracking
-        """
-        migration_ids = []
+        """        migration_ids = []
         
         try:
             self.logger.info("Starting comprehensive audio database migration")
@@ -610,14 +580,11 @@ class AudioMigrations:
             raise
     
     async def add_audio_performance_optimizations(self) -> str:
-        """
-        Add performance optimizations for audio processing workloads
+        """        Add performance optimizations for audio processing workloads
         
         Returns:
             str: Migration ID for tracking
-        """
-        migration_sql = """
-        -- Partitioning for audio analytics by date
+        """        migration_sql = """        -- Partitioning for audio analytics by date
         CREATE TABLE IF NOT EXISTS audio_analytics_partitioned (
             LIKE audio_analytics INCLUDING DEFAULTS INCLUDING CONSTRAINTS
         ) PARTITION BY RANGE (analytics_date);
@@ -639,8 +606,7 @@ class AudioMigrations:
         CREATE EXTENSION IF NOT EXISTS pg_trgm;
         CREATE INDEX IF NOT EXISTS idx_audio_similarity_search
         ON audio_segments USING GIN(similarity_hash gin_trgm_ops);
-        """
-        
+        """        
         return await self.migration_manager.execute_migration(
             migration_sql,
             migration_type=MigrationType.OPTIMIZATION,

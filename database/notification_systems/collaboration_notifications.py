@@ -1,5 +1,4 @@
-"""
-Collaboration and Partnership Notification Manager
+"""Collaboration and Partnership Notification Manager
 
 Gestionnaire spécialisé pour les notifications de collaboration et partenariats
 dans l'écosystème IA Influencer Agent. Matching artistes, projets collaboratifs et réseautage.
@@ -21,7 +20,6 @@ Toute utilisation, copie, modification, distribution ou tentative de reverse eng
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -46,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types de collaborations possibles"""
-    MUSIC_FEATURE = "music_feature"
+    """Types de collaborations possibles"""    MUSIC_FEATURE = "music_feature"
     REMIX_COLLABORATION = "remix_collaboration"
     JOINT_RELEASE = "joint_release"
     LIVE_PERFORMANCE = "live_performance"
@@ -62,8 +59,7 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
-    """États des collaborations"""
-    SUGGESTED = "suggested"
+    """États des collaborations"""    SUGGESTED = "suggested"
     PENDING = "pending"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -74,8 +70,7 @@ class CollaborationStatus(Enum):
 
 
 class MatchQuality(IntEnum):
-    """Qualité du matching de collaboration"""
-    POOR = 1        # <40% compatibilité
+    """Qualité du matching de collaboration"""    POOR = 1        # <40% compatibilité
     FAIR = 2        # 40-60% compatibilité
     GOOD = 3        # 60-80% compatibilité
     EXCELLENT = 4   # 80-95% compatibilité
@@ -83,8 +78,7 @@ class MatchQuality(IntEnum):
 
 
 class Genre(Enum):
-    """Genres musicaux pour matching"""
-    ELECTRONIC = "electronic"
+    """Genres musicaux pour matching"""    ELECTRONIC = "electronic"
     HIP_HOP = "hip_hop"
     POP = "pop"
     ROCK = "rock"
@@ -106,8 +100,7 @@ class Genre(Enum):
 
 @dataclass
 class ArtistProfile:
-    """Profil artiste pour matching collaborations"""
-    user_id: str
+    """Profil artiste pour matching collaborations"""    user_id: str
     artist_name: str
     genres: List[Genre] = field(default_factory=list)
     skills: List[str] = field(default_factory=list)  # vocals, guitar, production, mixing
@@ -125,8 +118,7 @@ class ArtistProfile:
 
 @dataclass
 class CollaborationOpportunity:
-    """Opportunité de collaboration détectée"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Opportunité de collaboration détectée"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     initiator_id: str = None
     target_id: str = None
     collaboration_type: CollaborationType = CollaborationType.MUSIC_FEATURE
@@ -145,8 +137,7 @@ class CollaborationOpportunity:
 
 @dataclass
 class CollaborationProject:
-    """Projet de collaboration en cours"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Projet de collaboration en cours"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str = ""
     participants: List[str] = field(default_factory=list)
     collaboration_type: CollaborationType = CollaborationType.MUSIC_FEATURE
@@ -162,8 +153,7 @@ class CollaborationProject:
 
 
 class CollaborationNotificationManager:
-    """
-    Gestionnaire avancé des notifications de collaboration
+    """    Gestionnaire avancé des notifications de collaboration
     
     Responsabilités:
     - Matching intelligent artistes compatibles via IA
@@ -172,7 +162,6 @@ class CollaborationNotificationManager:
     - Analytics performance collaborations
     - Système de réputation et recommandations
     """
-
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis):
         self.db_pool = db_pool
         self.redis = redis_client
@@ -181,16 +170,14 @@ class CollaborationNotificationManager:
         self.matching_weights = self._load_matching_weights()
         
     def _init_ml_models(self) -> Dict[str, Any]:
-        """Initialise les modèles ML pour le matching"""
-        return {
+        """Initialise les modèles ML pour le matching"""        return {
             "tfidf_vectorizer": TfidfVectorizer(max_features=1000, stop_words='english'),
             "genre_similarity_matrix": self._build_genre_similarity_matrix(),
             "collaboration_success_predictor": None  # À charger depuis fichier modèle
         }
 
     def _build_genre_similarity_matrix(self) -> np.ndarray:
-        """Construit matrice de similarité entre genres musicaux"""
-        genres = list(Genre)
+        """Construit matrice de similarité entre genres musicaux"""        genres = list(Genre)
         # Matrice de similarité basée sur la proximité musicologique
         similarity_matrix = np.eye(len(genres))
         
@@ -211,10 +198,8 @@ class CollaborationNotificationManager:
         return similarity_matrix
 
     def _load_collaboration_templates(self) -> Dict[str, Template]:
-        """Charge les templates de notification de collaboration"""
-        templates = {
-            "collaboration_suggestion": Template("""
-                🤝 NOUVELLE OPPORTUNITÉ DE COLLABORATION!
+        """Charge les templates de notification de collaboration"""        templates = {
+            "collaboration_suggestion": Template("""                🤝 NOUVELLE OPPORTUNITÉ DE COLLABORATION!
                 
                 🎵 Artiste suggéré: {{ target_artist }}
                 🎯 Type: {{ collaboration_type }}
@@ -238,8 +223,7 @@ class CollaborationNotificationManager:
                 👀 Voir profil complet: {{ profile_url }}
             """),
             
-            "collaboration_request": Template("""
-                🎼 DEMANDE DE COLLABORATION REÇUE
+            "collaboration_request": Template("""                🎼 DEMANDE DE COLLABORATION REÇUE
                 
                 👤 De: {{ initiator_name }}
                 🎵 Projet: {{ project_title }}
@@ -265,8 +249,7 @@ class CollaborationNotificationManager:
                 👀 Voir portfolio: {{ portfolio_url }}
             """),
             
-            "collaboration_accepted": Template("""
-                🎉 COLLABORATION ACCEPTÉE!
+            "collaboration_accepted": Template("""                🎉 COLLABORATION ACCEPTÉE!
                 
                 🎵 Projet: {{ project_title }}
                 👥 Collaborateurs: {{ participants | join(', ') }}
@@ -285,8 +268,7 @@ class CollaborationNotificationManager:
                 💪 Faisons de la magie ensemble!
             """),
             
-            "milestone_achieved": Template("""
-                🏆 ÉTAPE FRANCHIE - {{ project_title }}
+            "milestone_achieved": Template("""                🏆 ÉTAPE FRANCHIE - {{ project_title }}
                 
                 ✅ Étape complétée: {{ milestone_name }}
                 📈 Progression: {{ progress_percentage }}%
@@ -302,8 +284,7 @@ class CollaborationNotificationManager:
                 📊 Tableau de bord: {{ dashboard_url }}
             """),
             
-            "trending_opportunity": Template("""
-                📈 OPPORTUNITÉ TRENDING DÉTECTÉE!
+            "trending_opportunity": Template("""                📈 OPPORTUNITÉ TRENDING DÉTECTÉE!
                 
                 🔥 {{ opportunity_type }} en tendance
                 📊 Popularité: +{{ trend_percentage }}% cette semaine
@@ -323,8 +304,7 @@ class CollaborationNotificationManager:
         return templates
 
     def _load_matching_weights(self) -> Dict[str, float]:
-        """Charge les poids pour l'algorithme de matching"""
-        return {
+        """Charge les poids pour l'algorithme de matching"""        return {
             "genre_compatibility": 0.25,
             "skill_complementarity": 0.20,
             "location_proximity": 0.10,
@@ -340,8 +320,7 @@ class CollaborationNotificationManager:
         collaboration_types: List[CollaborationType] = None,
         max_suggestions: int = 10
     ) -> List[CollaborationOpportunity]:
-        """
-        Découvre et propose des opportunités de collaboration via IA
+        """        Découvre et propose des opportunités de collaboration via IA
         
         Args:
             user_id: ID de l'utilisateur demandeur
@@ -350,8 +329,7 @@ class CollaborationNotificationManager:
             
         Returns:
             Liste d'opportunités de collaboration classées par compatibilité
-        """
-        try:
+        """        try:
             # Récupération profil utilisateur
             user_profile = await self._get_artist_profile(user_id)
             
@@ -404,8 +382,7 @@ class CollaborationNotificationManager:
         target_id: str,
         collaboration_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Traite une demande de collaboration entre artistes"""
-        try:
+        """Traite une demande de collaboration entre artistes"""        try:
             # Validation des participants
             initiator_profile = await self._get_artist_profile(initiator_id)
             target_profile = await self._get_artist_profile(target_id)
@@ -456,10 +433,8 @@ class CollaborationNotificationManager:
         action: str,
         data: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Gère un projet de collaboration (mise à jour, jalons, etc.)"""
-        async with self.db_pool.acquire() as conn:
-            project = await conn.fetchrow("""
-                SELECT * FROM collaboration_projects 
+        """Gère un projet de collaboration (mise à jour, jalons, etc.)"""        async with self.db_pool.acquire() as conn:
+            project = await conn.fetchrow("""                SELECT * FROM collaboration_projects 
                 WHERE id = $1
             """, project_id)
             
@@ -485,11 +460,9 @@ class CollaborationNotificationManager:
             return result
 
     async def get_collaboration_analytics(self, user_id: str) -> Dict[str, Any]:
-        """Récupère les analytics de collaboration pour un utilisateur"""
-        async with self.db_pool.acquire() as conn:
+        """Récupère les analytics de collaboration pour un utilisateur"""        async with self.db_pool.acquire() as conn:
             # Statistiques collaborations
-            collab_stats = await conn.fetchrow("""
-                SELECT 
+            collab_stats = await conn.fetchrow("""                SELECT 
                     COUNT(*) as total_collaborations,
                     COUNT(*) FILTER (WHERE status = 'completed') as completed,
                     COUNT(*) FILTER (WHERE status = 'in_progress') as active,
@@ -504,8 +477,7 @@ class CollaborationNotificationManager:
             """, user_id)
             
             # Types de collaboration préférés
-            collab_types = await conn.fetch("""
-                SELECT 
+            collab_types = await conn.fetch("""                SELECT 
                     collaboration_type,
                     COUNT(*) as count,
                     AVG(compatibility_score) as avg_compatibility
@@ -517,8 +489,7 @@ class CollaborationNotificationManager:
             """, user_id)
             
             # Partenaires fréquents
-            frequent_partners = await conn.fetch("""
-                SELECT 
+            frequent_partners = await conn.fetch("""                SELECT 
                     CASE 
                         WHEN initiator_id = $1 THEN target_id 
                         ELSE initiator_id 
@@ -547,10 +518,8 @@ class CollaborationNotificationManager:
 
     # Méthodes utilitaires privées
     async def _get_artist_profile(self, user_id: str) -> ArtistProfile:
-        """Récupère le profil artiste complet pour matching"""
-        async with self.db_pool.acquire() as conn:
-            profile_data = await conn.fetchrow("""
-                SELECT 
+        """Récupère le profil artiste complet pour matching"""        async with self.db_pool.acquire() as conn:
+            profile_data = await conn.fetchrow("""                SELECT 
                     u.id, u.username, u.location,
                     ap.genres, ap.skills, ap.languages,
                     ap.collaboration_preferences, ap.social_metrics,
@@ -585,8 +554,7 @@ class CollaborationNotificationManager:
         profile2: ArtistProfile,
         collaboration_type: CollaborationType
     ) -> Dict[str, Any]:
-        """Calcule la compatibilité entre deux artistes pour un type de collaboration"""
-        
+        """Calcule la compatibilité entre deux artistes pour un type de collaboration"""        
         # Compatibilité genres
         genre_score = self._calculate_genre_compatibility(profile1.genres, profile2.genres)
         
@@ -655,8 +623,7 @@ class CollaborationNotificationManager:
         }
 
     def _calculate_genre_compatibility(self, genres1: List[Genre], genres2: List[Genre]) -> float:
-        """Calcule la compatibilité entre genres musicaux"""
-        if not genres1 or not genres2:
+        """Calcule la compatibilité entre genres musicaux"""        if not genres1 or not genres2:
             return 0.5  # Score neutre
         
         max_similarity = 0.0
@@ -681,8 +648,7 @@ class CollaborationNotificationManager:
         collaboration_type: CollaborationType,
         scores: Dict[str, float]
     ) -> str:
-        """Génère le raisonnement IA pour expliquer le matching"""
-        
+        """Génère le raisonnement IA pour expliquer le matching"""        
         strengths = []
         
         if scores["genre"] > 0.7:

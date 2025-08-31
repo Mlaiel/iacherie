@@ -1,5 +1,4 @@
-"""
-Content Fingerprinting Module
+"""Content Fingerprinting Module
 
 Advanced AI-powered content fingerprinting for unique identification across all media types.
 
@@ -11,7 +10,6 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import hashlib
 import numpy as np
@@ -67,8 +65,7 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintAlgorithm:
-    """Fingerprint algorithm constants"""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Fingerprint algorithm constants"""    PERCEPTUAL_HASH = "perceptual_hash"
     DCT_HASH = "dct_hash"
     SSIM = "ssim"
     SPECTRAL = "spectral"
@@ -78,8 +75,7 @@ class FingerprintAlgorithm:
 
 
 class FingerprintType(Enum):
-    """Types of content fingerprints"""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Types of content fingerprints"""    PERCEPTUAL_HASH = "perceptual_hash"
     AUDIO_SPECTRAL = "audio_spectral"
     VIDEO_FRAME = "video_frame"
     TEXT_SEMANTIC = "text_semantic"
@@ -89,8 +85,7 @@ class FingerprintType(Enum):
 
 @dataclass
 class ContentFingerprint:
-    """Content fingerprint representation"""
-    fingerprint_id: str
+    """Content fingerprint representation"""    fingerprint_id: str
     content_id: str
     fingerprint_type: FingerprintType
     fingerprint_data: bytes
@@ -102,8 +97,7 @@ class ContentFingerprint:
 
 @dataclass
 class FingerprintMatch:
-    """Fingerprint matching result"""
-    match_id: str
+    """Fingerprint matching result"""    match_id: str
     original_fingerprint_id: str
     matched_fingerprint_id: str
     similarity_score: float
@@ -113,16 +107,13 @@ class FingerprintMatch:
 
 
 class ContentFingerprinter:
-    """
-    Advanced AI-powered content fingerprinting system
+    """    Advanced AI-powered content fingerprinting system
     
     Generates unique perceptual fingerprints for content identification
     and similarity detection across multiple media types.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content fingerprinter"""
-        self.config = config or {}
+        """Initialize content fingerprinter"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # AI models for fingerprinting
@@ -150,8 +141,7 @@ class ContentFingerprinter:
         }
     
     async def initialize(self):
-        """Initialize the content fingerprinter asynchronously"""
-        self.logger.info("Initializing ContentFingerprinter")
+        """Initialize the content fingerprinter asynchronously"""        self.logger.info("Initializing ContentFingerprinter")
         # Initialize ML models and feature extractors
         self._is_initialized = True
         return self
@@ -163,8 +153,7 @@ class ContentFingerprinter:
         content_type: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Create comprehensive fingerprint for content"""
-        try:
+        """Create comprehensive fingerprint for content"""        try:
             self.logger.info(f"Creating fingerprint for content: {content_id}")
             
             # Route to appropriate fingerprinting method
@@ -198,8 +187,7 @@ class ContentFingerprinter:
         composite_data: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None
     ) -> Any:
-        """Generate composite fingerprint for multimedia content"""
-        try:
+        """Generate composite fingerprint for multimedia content"""        try:
             content_id = metadata.get('content_id', 'unknown') if metadata else 'unknown'
             
             # Extract components
@@ -274,8 +262,7 @@ class ContentFingerprinter:
         algorithm=None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Any:
-        """Generate image fingerprint with visual features"""
-        try:
+        """Generate image fingerprint with visual features"""        try:
             from backend.ai.content_protection.core import ContentType
             
             content_id = metadata.get('content_id', 'unknown') if metadata else 'unknown'
@@ -326,8 +313,7 @@ class ContentFingerprinter:
         fingerprint2: str,
         algorithm: Optional[Any] = None
     ) -> float:
-        """Calculate similarity between two fingerprints"""
-        try:
+        """Calculate similarity between two fingerprints"""        try:
             # Simple hash comparison for testing
             if fingerprint1 == fingerprint2:
                 return 1.0
@@ -351,8 +337,7 @@ class ContentFingerprinter:
         audio_data: bytes,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Create advanced audio fingerprint using spectral analysis"""
-        try:
+        """Create advanced audio fingerprint using spectral analysis"""        try:
             # Load audio data
             audio_buffer = io.BytesIO(audio_data)
             y, sr = librosa.load(audio_buffer, sr=22050)
@@ -432,8 +417,7 @@ class ContentFingerprinter:
         image_data: bytes,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Create robust image fingerprint using perceptual hashing"""
-        try:
+        """Create robust image fingerprint using perceptual hashing"""        try:
             # Load image
             image = Image.open(io.BytesIO(image_data))
             
@@ -516,8 +500,7 @@ class ContentFingerprinter:
         text_data: bytes,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Create semantic text fingerprint using NLP techniques"""
-        try:
+        """Create semantic text fingerprint using NLP techniques"""        try:
             # Decode text
             text = text_data.decode('utf-8', errors='ignore')
             
@@ -610,8 +593,7 @@ class ContentFingerprinter:
         video_data: bytes,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Create video fingerprint using frame sampling and analysis"""
-        try:
+        """Create video fingerprint using frame sampling and analysis"""        try:
             # This is a simplified implementation
             # In production, you'd use opencv-python for video processing
             
@@ -658,8 +640,7 @@ class ContentFingerprinter:
         content_data: bytes,
         metadata: Optional[Dict[str, Any]] = None
     ) -> ContentFingerprint:
-        """Create generic fingerprint for unknown content types"""
-        try:
+        """Create generic fingerprint for unknown content types"""        try:
             # Use cryptographic hash as fallback
             content_hash = hashlib.sha256(content_data).hexdigest()
             
@@ -694,8 +675,7 @@ class ContentFingerprinter:
             raise
     
     def _calculate_audio_confidence(self, audio_signal: np.ndarray, sample_rate: int) -> float:
-        """Calculate confidence score for audio fingerprint"""
-        try:
+        """Calculate confidence score for audio fingerprint"""        try:
             # Signal-to-noise ratio estimation
             rms = np.sqrt(np.mean(audio_signal**2))
             
@@ -714,8 +694,7 @@ class ContentFingerprinter:
             return 0.5
     
     def _calculate_image_confidence(self, image_array: np.ndarray) -> float:
-        """Calculate confidence score for image fingerprint"""
-        try:
+        """Calculate confidence score for image fingerprint"""        try:
             # Simplified but robust confidence calculation for industrial use
             
             # Image size factor (larger images generally more reliable)
@@ -746,8 +725,7 @@ class ContentFingerprinter:
     
     # Alias for backward compatibility
     async def generate_fingerprint(self, content_id: str, content_data: bytes, content_type: str, metadata: Optional[Dict[str, Any]] = None) -> ContentFingerprint:
-        """Alias for create_fingerprint for backward compatibility"""
-        return await self.create_fingerprint(content_id, content_data, content_type, metadata)
+        """Alias for create_fingerprint for backward compatibility"""        return await self.create_fingerprint(content_id, content_data, content_type, metadata)
     
     async def generate_image_fingerprint(
         self, 
@@ -756,8 +734,7 @@ class ContentFingerprinter:
         metadata=None,
         content_type="image"
     ):
-        """Generate fingerprint specifically for image content - supports multiple call signatures"""
-        try:
+        """Generate fingerprint specifically for image content - supports multiple call signatures"""        try:
             # Handle different call signatures
             if isinstance(content_data_or_id, bytes):
                 # New signature: generate_image_fingerprint(content_data, algorithm=..., metadata=...)
@@ -844,8 +821,7 @@ class ContentFingerprinter:
             raise
     
     async def generate_text_fingerprint(self, content_id: str, content_data: bytes, content_type: str = "text", metadata: Optional[Dict[str, Any]] = None) -> ContentFingerprint:
-        """Generate fingerprint specifically for text content"""
-        try:
+        """Generate fingerprint specifically for text content"""        try:
             # Convert bytes to text
             text_content = content_data.decode('utf-8', errors='ignore')
             
@@ -871,8 +847,7 @@ class ContentFingerprinter:
             raise
     
     async def generate_video_fingerprint(self, video_data, algorithm=None, metadata=None):
-        """Generate video fingerprint for test compatibility"""
-        try:
+        """Generate video fingerprint for test compatibility"""        try:
             from backend.ai.content_protection.core import ContentType
             
             # Create a test-compatible FingerprintResult
@@ -922,8 +897,7 @@ class ContentFingerprinter:
         metadata=None,
         algorithm=None  # Add algorithm parameter for test compatibility
     ):
-        """Generate audio fingerprint for test compatibility"""
-        try:
+        """Generate audio fingerprint for test compatibility"""        try:
             from backend.ai.content_protection.core import ContentType
             
             # Use algorithm if provided
@@ -971,8 +945,7 @@ class ContentFingerprinter:
         metadata=None,
         algorithm=None
     ):
-        """Generate text fingerprint with multiple signature support"""
-        try:
+        """Generate text fingerprint with multiple signature support"""        try:
             from backend.ai.content_protection.core import ContentType
             
             # Create test-compatible FingerprintResult
@@ -1024,8 +997,7 @@ class ContentFingerprinter:
 
 
     async def store_fingerprint(self, fingerprint):
-        """Store fingerprint for test compatibility"""
-        try:
+        """Store fingerprint for test compatibility"""        try:
             # Simulate storing the fingerprint
             fingerprint_id = getattr(fingerprint, 'fingerprint_id', None) or getattr(fingerprint, 'fingerprint_hash', None) or 'stored_' + str(hash(str(fingerprint)))
             return {
@@ -1039,8 +1011,7 @@ class ContentFingerprinter:
             return {'success': False, 'error': str(e)}
 
     async def get_fingerprint(self, fingerprint_id: str):
-        """Retrieve fingerprint by ID for test compatibility"""
-        try:
+        """Retrieve fingerprint by ID for test compatibility"""        try:
             # Simulate retrieving fingerprint from storage
             return {
                 'success': True,
@@ -1058,8 +1029,7 @@ class ContentFingerprinter:
             return {'success': False, 'error': str(e)}
 
     async def get_content_fingerprints(self, content_id: str):
-        """Retrieve all fingerprints for a content ID"""
-        try:
+        """Retrieve all fingerprints for a content ID"""        try:
             # Simulate retrieving multiple fingerprints for content
             return {
                 'success': True,
@@ -1083,8 +1053,7 @@ class ContentFingerprinter:
             return {'success': False, 'error': str(e)}
 
     async def update_fingerprint(self, fingerprint_id: str, updated_fingerprint):
-        """Update existing fingerprint with versioning"""
-        try:
+        """Update existing fingerprint with versioning"""        try:
             # Simulate updating fingerprint with version tracking
             updated_hash = updated_fingerprint.get('fingerprint_hash', f'updated_{fingerprint_id}') if isinstance(updated_fingerprint, dict) else getattr(updated_fingerprint, 'fingerprint_hash', f'updated_{fingerprint_id}')
             
@@ -1102,8 +1071,7 @@ class ContentFingerprinter:
             return {'success': False, 'error': str(e)}
 
     async def get_fingerprint_versions(self, fingerprint_id: str):
-        """Get all versions of a fingerprint"""
-        try:
+        """Get all versions of a fingerprint"""        try:
             return {
                 'success': True,
                 'fingerprint_id': fingerprint_id,
@@ -1129,13 +1097,10 @@ class ContentFingerprinter:
 
 
 class FingerprintMatcher:
-    """
-    Advanced fingerprint matching and similarity detection system
-    """
-    
+    """    Advanced fingerprint matching and similarity detection system
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize fingerprint matcher"""
-        self.config = config or {}
+        """Initialize fingerprint matcher"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # In-memory storage for testing (replace with real DB in production)
@@ -1151,8 +1116,7 @@ class FingerprintMatcher:
         }
     
     async def store_fingerprint(self, fingerprint) -> Dict[str, Any]:
-        """Store a fingerprint in the database"""
-        try:
+        """Store a fingerprint in the database"""        try:
             fp_id = getattr(fingerprint, 'fingerprint_id', f"stored_{len(self.fingerprint_storage)}")
             self.fingerprint_storage[fp_id] = fingerprint
             return {
@@ -1165,8 +1129,7 @@ class FingerprintMatcher:
             return {'success': False, 'error': str(e)}
     
     async def store_fingerprints_batch(self, fingerprints: List) -> Dict[str, Any]:
-        """Store multiple fingerprints in batch"""
-        try:
+        """Store multiple fingerprints in batch"""        try:
             stored_ids = []
             for fp in fingerprints:
                 result = await self.store_fingerprint(fp)
@@ -1181,17 +1144,14 @@ class FingerprintMatcher:
             return {'success': False, 'error': str(e)}
     
     async def get_fingerprint(self, fingerprint_id: str) -> Optional[Any]:
-        """Retrieve a fingerprint by ID"""
-        return self.fingerprint_storage.get(fingerprint_id)
+        """Retrieve a fingerprint by ID"""        return self.fingerprint_storage.get(fingerprint_id)
     
     async def get_content_fingerprints(self, content_id: str) -> List[Any]:
-        """Get all fingerprints for a specific content ID"""
-        return [fp for fp in self.fingerprint_storage.values() 
+        """Get all fingerprints for a specific content ID"""        return [fp for fp in self.fingerprint_storage.values() 
                 if getattr(fp, 'content_id', None) == content_id]
     
     async def find_matches_batch(self, query_fingerprints: List, **kwargs) -> Dict[str, List]:
-        """Batch find matches for multiple fingerprints"""
-        results = {}
+        """Batch find matches for multiple fingerprints"""        results = {}
         for query_fp in query_fingerprints:
             matches = await self.find_matches(query_fp, **kwargs)
             fp_id = getattr(query_fp, 'fingerprint_id', f'query_{len(results)}')
@@ -1199,8 +1159,7 @@ class FingerprintMatcher:
         return results
     
     async def delete_fingerprint(self, fingerprint_id: str) -> Dict[str, Any]:
-        """Delete a fingerprint from storage"""
-        try:
+        """Delete a fingerprint from storage"""        try:
             if fingerprint_id in self.fingerprint_storage:
                 del self.fingerprint_storage[fingerprint_id]
                 return {'success': True, 'deleted_id': fingerprint_id}
@@ -1210,8 +1169,7 @@ class FingerprintMatcher:
             return {'success': False, 'error': str(e)}
     
     async def get_database_statistics(self) -> Dict[str, Any]:
-        """Get database statistics"""
-        try:
+        """Get database statistics"""        try:
             total_count = len(self.fingerprint_storage)
             content_types = {}
             algorithms = {}
@@ -1237,8 +1195,7 @@ class FingerprintMatcher:
     async def find_fuzzy_matches(self, query_fingerprint, threshold: float = 0.7, 
                                 similarity_threshold: Optional[float] = None, 
                                 fuzzy_tolerance: Optional[float] = None, **kwargs) -> List:
-        """Find fuzzy matches with lower threshold"""
-        # Use the most restrictive threshold available
+        """Find fuzzy matches with lower threshold"""        # Use the most restrictive threshold available
         effective_threshold = min(filter(None, [similarity_threshold, threshold, fuzzy_tolerance, 0.7]))
         return await self.find_matches(query_fingerprint, threshold=effective_threshold, **kwargs)
     
@@ -1251,8 +1208,7 @@ class FingerprintMatcher:
         max_results: Optional[int] = None,
         **kwargs
     ) -> List:
-        """Find matching fingerprints in database"""
-        try:
+        """Find matching fingerprints in database"""        try:
             # Use stored fingerprints if no database provided
             if fingerprint_database is None:
                 fingerprint_database = list(self.fingerprint_storage.values())
@@ -1336,8 +1292,7 @@ class FingerprintMatcher:
         vector2: np.ndarray,
         fingerprint_type: FingerprintType
     ) -> float:
-        """Calculate similarity between two fingerprint vectors"""
-        try:
+        """Calculate similarity between two fingerprint vectors"""        try:
             # Ensure vectors are same length
             min_len = min(len(vector1), len(vector2))
             v1 = vector1[:min_len]
@@ -1362,8 +1317,7 @@ class FingerprintMatcher:
         query_fingerprints: List[ContentFingerprint],
         fingerprint_database: List[ContentFingerprint]
     ) -> Dict[str, List[FingerprintMatch]]:
-        """Perform batch matching for multiple fingerprints"""
-        try:
+        """Perform batch matching for multiple fingerprints"""        try:
             results = {}
             
             for query_fp in query_fingerprints:
@@ -1382,8 +1336,7 @@ class FingerprintMatcher:
         fingerprint2,
         algorithm=None
     ):
-        """Calculate similarity between two fingerprints - public interface"""
-        try:
+        """Calculate similarity between two fingerprints - public interface"""        try:
             # For test compatibility with hash strings
             if isinstance(fingerprint1, str) and isinstance(fingerprint2, str):
                 # String comparison for hash values
@@ -1413,8 +1366,7 @@ class FingerprintMatcher:
 
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithm types"""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Fingerprinting algorithm types"""    PERCEPTUAL_HASH = "perceptual_hash"
     CONTENT_HASH = "content_hash"
     SPECTRAL_HASH = "spectral_hash"
     NEURAL_EMBEDDING = "neural_embedding"
@@ -1424,8 +1376,7 @@ class FingerprintAlgorithm(Enum):
 
 @dataclass 
 class MatchResult:
-    """Match result for fingerprint matching"""
-    match_id: str = ""
+    """Match result for fingerprint matching"""    match_id: str = ""
     original_fingerprint_id: str = ""
     matched_fingerprint_id: str = ""
     similarity_score: float = 1.0
@@ -1458,15 +1409,13 @@ class MatchResult:
 
 
 class AudioFingerprinter:
-    """Ultra-Industrial Audio Fingerprinting Engine"""
-    
+    """Ultra-Industrial Audio Fingerprinting Engine"""    
     def __init__(self):
         self.fingerprinter_id = f"audio_fp_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         self.logger = logging.getLogger(__name__)
         
     async def generate_fingerprint(self, audio_data: bytes) -> Dict[str, Any]:
-        """Generate audio fingerprint"""
-        try:
+        """Generate audio fingerprint"""        try:
             # Simulate audio fingerprint generation
             audio_hash = hashlib.sha256(audio_data).hexdigest()
             
@@ -1502,8 +1451,7 @@ class AudioFingerprinter:
             }
     
     async def compare_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> Dict[str, Any]:
-        """Compare two audio fingerprints"""
-        try:
+        """Compare two audio fingerprints"""        try:
             # Simple hash comparison
             hash_match = fp1.get('hash_value') == fp2.get('hash_value')
             
@@ -1529,15 +1477,13 @@ class AudioFingerprinter:
 
 
 class ImageFingerprinter:
-    """Ultra-Industrial Image Fingerprinting Engine"""
-    
+    """Ultra-Industrial Image Fingerprinting Engine"""    
     def __init__(self):
         self.fingerprinter_id = f"image_fp_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
         self.logger = logging.getLogger(__name__)
         
     async def generate_fingerprint(self, image_data: bytes) -> Dict[str, Any]:
-        """Generate image fingerprint"""
-        try:
+        """Generate image fingerprint"""        try:
             # Simulate image fingerprint generation
             image_hash = hashlib.sha256(image_data).hexdigest()
             
@@ -1573,8 +1519,7 @@ class ImageFingerprinter:
             }
     
     async def compare_fingerprints(self, fp1: Dict[str, Any], fp2: Dict[str, Any]) -> Dict[str, Any]:
-        """Compare two image fingerprints"""
-        try:
+        """Compare two image fingerprints"""        try:
             # Simple hash comparison
             hash_match = fp1.get('hash_value') == fp2.get('hash_value')
             
@@ -1601,8 +1546,7 @@ class ImageFingerprinter:
 
 @dataclass
 class FingerprintResult:
-    """Result of fingerprint generation operation"""
-    fingerprint_id: str
+    """Result of fingerprint generation operation"""    fingerprint_id: str
     content_id: str
     content_type: Any  # ContentType enum
     algorithm: Any  # FingerprintAlgorithm enum
@@ -1612,8 +1556,7 @@ class FingerprintResult:
     metadata: Dict[str, Any]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary representation"""
-        return {
+        """Convert to dictionary representation"""        return {
             'fingerprint_id': self.fingerprint_id,
             'content_id': self.content_id,
             'content_type': self.content_type.value if hasattr(self.content_type, 'value') else str(self.content_type),

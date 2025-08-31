@@ -24,8 +24,7 @@ Core Components:
 - Notification Handler: Multi-channel notification and alerting system
 - Deployment Recorder: Comprehensive deployment tracking and audit trails
 - Pipeline Executor: Advanced pipeline orchestration and execution engine
-"""
-__version__ = "2.0.0"
+"""__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __license__ = "Proprietary"

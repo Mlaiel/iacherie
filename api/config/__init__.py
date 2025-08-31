@@ -8,8 +8,7 @@ Microservices + Audio + DevOps + IA Prompt Engineer
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-# Core configuration management
+"""# Core configuration management
 from .index import *
 
 # Initialize configuration system
@@ -46,8 +45,7 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 For licensing inquiries, contact: mlaiel@live.de
 
 Violators will be prosecuted to the full extent of the law.
-"""
-def print_copyright_notice():
+"""def print_copyright_notice():
     """Print copyright and team information"""    print(COPYRIGHT_NOTICE)
     print(f"\nProject Lead: {__author__}")
     print(f"Contact: {__email__}")

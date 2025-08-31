@@ -42,8 +42,7 @@ LEGAL WARNING: This software and all associated intellectual property
 belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
-"""
-# Import all core application modules
+"""# Import all core application modules
 from . import (
     ai,
     api, 

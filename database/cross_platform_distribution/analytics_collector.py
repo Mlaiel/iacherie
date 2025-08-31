@@ -1,5 +1,4 @@
-"""
-Analytics Collector - Performance Analytics and Metrics Collection System
+"""Analytics Collector - Performance Analytics and Metrics Collection System
 
 Advanced analytics collection system for cross-platform distribution performance tracking.
 Provides comprehensive metrics collection, analysis, and reporting capabilities.
@@ -13,7 +12,6 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class MetricType(str, Enum):
-    """Types of metrics collected"""
-    REACH = "reach"
+    """Types of metrics collected"""    REACH = "reach"
     IMPRESSIONS = "impressions"
     VIEWS = "views"
     LIKES = "likes"
@@ -55,8 +52,7 @@ class MetricType(str, Enum):
     RETURN_ON_INVESTMENT = "return_on_investment"
 
 class AnalyticsTimeframe(str, Enum):
-    """Analytics timeframe options"""
-    HOURLY = "hourly"
+    """Analytics timeframe options"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -65,8 +61,7 @@ class AnalyticsTimeframe(str, Enum):
     CUSTOM = "custom"
 
 class DataSource(str, Enum):
-    """Data source types"""
-    PLATFORM_API = "platform_api"
+    """Data source types"""    PLATFORM_API = "platform_api"
     WEBHOOK = "webhook"
     MANUAL_ENTRY = "manual_entry"
     ESTIMATED = "estimated"
@@ -74,8 +69,7 @@ class DataSource(str, Enum):
 
 @dataclass
 class MetricData:
-    """Individual metric data point"""
-    metric_type: MetricType
+    """Individual metric data point"""    metric_type: MetricType
     value: Union[int, float, Decimal]
     timestamp: datetime
     platform: str
@@ -86,8 +80,7 @@ class MetricData:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    content_id: str
+    """Comprehensive analytics report"""    content_id: str
     report_id: str
     timeframe: AnalyticsTimeframe
     start_date: datetime
@@ -100,8 +93,7 @@ class AnalyticsReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class DistributionMetrics(Base):
-    """Database model for distribution performance metrics"""
-    __tablename__ = "distribution_metrics"
+    """Database model for distribution performance metrics"""    __tablename__ = "distribution_metrics"
     
     id = Column(Integer, primary_key=True, index=True)
     content_id = Column(String(100), nullable=False, index=True)
@@ -135,8 +127,7 @@ class DistributionMetrics(Base):
     )
 
 class AnalyticsSnapshot(Base):
-    """Database model for periodic analytics snapshots"""
-    __tablename__ = "analytics_snapshots"
+    """Database model for periodic analytics snapshots"""    __tablename__ = "analytics_snapshots"
     
     id = Column(Integer, primary_key=True, index=True)
     content_id = Column(String(100), nullable=False, index=True)
@@ -173,13 +164,11 @@ class AnalyticsSnapshot(Base):
     created_at = Column(DateTime, default=datetime.utcnow, nullable=False)
 
 class AnalyticsCollector:
-    """
-    Enterprise-grade analytics collection and processing system
+    """    Enterprise-grade analytics collection and processing system
     
     Provides comprehensive metrics collection, analysis, and reporting
     for cross-platform distribution performance tracking.
-    """
-    
+    """    
     # Platform metric mappings
     PLATFORM_METRICS = {
         "youtube": {
@@ -234,8 +223,7 @@ class AnalyticsCollector:
         platforms: List[str],
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.DAILY
     ) -> Dict[str, List[MetricData]]:
-        """
-        Collect metrics for content across specified platforms
+        """        Collect metrics for content across specified platforms
         
         Args:
             content_id: Content identifier
@@ -244,8 +232,7 @@ class AnalyticsCollector:
             
         Returns:
             Dict mapping platforms to collected metrics
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting metrics collection for content {content_id}")
             
             collected_metrics = {}
@@ -274,8 +261,7 @@ class AnalyticsCollector:
         platform: str,
         timeframe: AnalyticsTimeframe
     ) -> List[MetricData]:
-        """Collect metrics from specific platform"""
-        
+        """Collect metrics from specific platform"""        
         platform_config = self.PLATFORM_METRICS.get(platform.lower())
         if not platform_config:
             self.logger.warning(f"Platform {platform} not supported for metrics collection")
@@ -318,8 +304,7 @@ class AnalyticsCollector:
         metric_type: MetricType,
         timeframe: AnalyticsTimeframe
     ) -> Optional[MetricData]:
-        """Fetch specific metric from platform API"""
-        
+        """Fetch specific metric from platform API"""        
         try:
             # This would integrate with actual platform APIs
             # For now, simulate metric collection
@@ -356,8 +341,7 @@ class AnalyticsCollector:
         metric_type: MetricType,
         content_id: str
     ) -> Union[int, float]:
-        """Generate realistic metric values for simulation"""
-        
+        """Generate realistic metric values for simulation"""        
         # Base values by platform and metric type
         base_values = {
             "youtube": {
@@ -416,8 +400,7 @@ class AnalyticsCollector:
         base_metrics: List[MetricData],
         platform: str
     ) -> List[MetricData]:
-        """Calculate derived metrics from base metrics"""
-        
+        """Calculate derived metrics from base metrics"""        
         derived = []
         
         # Create metric lookup
@@ -463,8 +446,7 @@ class AnalyticsCollector:
         metric_values: Dict[MetricType, Union[int, float]],
         platform: str
     ) -> Optional[float]:
-        """Calculate engagement rate based on platform-specific formula"""
-        
+        """Calculate engagement rate based on platform-specific formula"""        
         if platform.lower() == "youtube":
             # YouTube: (Likes + Comments + Shares) / Views * 100
             engagements = (
@@ -501,8 +483,7 @@ class AnalyticsCollector:
         return None
     
     async def _store_metrics(self, metrics_data: Dict[str, List[MetricData]]):
-        """Store collected metrics in database"""
-        
+        """Store collected metrics in database"""        
         if not self.db_session:
             self.logger.warning("Database session not available, metrics not stored")
             return
@@ -539,8 +520,7 @@ class AnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> AnalyticsReport:
-        """Generate comprehensive analytics report"""
-        
+        """Generate comprehensive analytics report"""        
         try:
             self.logger.info(f"Generating analytics report for {content_id}")
             
@@ -600,8 +580,7 @@ class AnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[MetricData]:
-        """Get historical metrics from database"""
-        
+        """Get historical metrics from database"""        
         if not self.db_session:
             return []
         
@@ -635,8 +614,7 @@ class AnalyticsCollector:
         self,
         metrics_data: Dict[str, List[MetricData]]
     ) -> Dict[str, Any]:
-        """Calculate summary statistics from metrics"""
-        
+        """Calculate summary statistics from metrics"""        
         summary = {
             "total_platforms": len(metrics_data),
             "total_metrics": sum(len(metrics) for metrics in metrics_data.values()),
@@ -678,8 +656,7 @@ class AnalyticsCollector:
         metrics_data: Dict[str, List[MetricData]],
         summary_stats: Dict[str, Any]
     ) -> List[str]:
-        """Generate performance insights from metrics analysis"""
-        
+        """Generate performance insights from metrics analysis"""        
         insights = []
         
         # Analyze cross-platform performance
@@ -736,8 +713,7 @@ class AnalyticsCollector:
         metrics_data: Dict[str, List[MetricData]],
         summary_stats: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable recommendations based on analytics"""
-        
+        """Generate actionable recommendations based on analytics"""        
         recommendations = []
         
         platform_summaries = summary_stats.get("platform_summaries", {})
@@ -798,8 +774,7 @@ class AnalyticsCollector:
         content_id: str,
         platform: str
     ) -> Optional[AnalyticsSnapshot]:
-        """Create periodic analytics snapshot"""
-        
+        """Create periodic analytics snapshot"""        
         if not self.db_session:
             return None
         

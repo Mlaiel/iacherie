@@ -1,5 +1,4 @@
-"""
-🚀 IA-Influencer-Agent - Engagement Gamification Central Index
+"""🚀 IA-Influencer-Agent - Engagement Gamification Central Index
 ============================================================
 
 This module provides centralized access to all engagement and gamification
@@ -28,7 +27,6 @@ Business Logic Flow:
 Creator (Multi-format) → Upload → AI Protection & Rights → SEO Pro → 
 Collaboration Matching + Gamification → Multi-platform Distribution → Revenue Optimization → Analytics
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -69,24 +67,20 @@ logger = logging.getLogger(__name__)
 
 
 class EngagementIndex:
-    """
-    Central index for all engagement and gamification functionality.
+    """    Central index for all engagement and gamification functionality.
     
     Provides a unified interface for accessing all engagement systems
     and common operations across the gamification ecosystem.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the engagement index."""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the engagement index."""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._orchestrator = None
         self._initialized = False
         
         self.logger.info("EngagementIndex initialized")
     
     async def initialize(self) -> bool:
-        """Initialize the engagement systems."""
-        try:
+        """Initialize the engagement systems."""        try:
             self._orchestrator = await get_engagement_orchestrator()
             self._initialized = True
             self.logger.info("✅ EngagementIndex fully initialized")
@@ -102,13 +96,11 @@ class EngagementIndex:
         data: Dict[str, Any],
         user_profile: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Process any creator action through the complete engagement pipeline.
+        """        Process any creator action through the complete engagement pipeline.
         
         This is the main entry point for all creator interactions that should
         trigger gamification, rewards, achievements, etc.
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         if not self._orchestrator:
@@ -122,8 +114,7 @@ class EngagementIndex:
         )
     
     async def get_creator_dashboard(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive creator engagement dashboard."""
-        if not self._initialized:
+        """Get comprehensive creator engagement dashboard."""        if not self._initialized:
             await self.initialize()
         
         if not self._orchestrator:
@@ -140,8 +131,7 @@ class EngagementIndex:
         quality_score: float,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Handle content upload with full gamification processing."""
-        action_data = {
+        """Handle content upload with full gamification processing."""        action_data = {
             "content_id": content_id,
             "content_type": content_type,
             "quality_score": quality_score,
@@ -162,8 +152,7 @@ class EngagementIndex:
         view_count: int,
         platform: str
     ) -> Dict[str, Any]:
-        """Handle viral content achievement."""
-        action_data = {
+        """Handle viral content achievement."""        action_data = {
             "content_id": content_id,
             "view_count": view_count,
             "platform": platform,
@@ -184,8 +173,7 @@ class EngagementIndex:
         partner_ids: List[str],
         collaboration_type: str
     ) -> Dict[str, Any]:
-        """Handle collaboration initiation."""
-        action_data = {
+        """Handle collaboration initiation."""        action_data = {
             "collaboration_id": collaboration_id,
             "partner_ids": partner_ids,
             "collaboration_type": collaboration_type,
@@ -205,8 +193,7 @@ class EngagementIndex:
         success_rating: float,
         output_quality: float
     ) -> Dict[str, Any]:
-        """Handle collaboration completion."""
-        action_data = {
+        """Handle collaboration completion."""        action_data = {
             "collaboration_id": collaboration_id,
             "success_rating": success_rating,
             "output_quality": output_quality,
@@ -226,8 +213,7 @@ class EngagementIndex:
         challenge_id: str,
         challenge_type: str
     ) -> Dict[str, Any]:
-        """Handle challenge participation."""
-        action_data = {
+        """Handle challenge participation."""        action_data = {
             "challenge_id": challenge_id,
             "challenge_type": challenge_type
         }
@@ -245,8 +231,7 @@ class EngagementIndex:
         completion_score: float,
         ranking: Optional[int] = None
     ) -> Dict[str, Any]:
-        """Handle challenge completion."""
-        action_data = {
+        """Handle challenge completion."""        action_data = {
             "challenge_id": challenge_id,
             "completion_score": completion_score,
             "value": 1  # One completed challenge
@@ -268,8 +253,7 @@ class EngagementIndex:
         new_quality_score: float,
         milestone_level: str
     ) -> Dict[str, Any]:
-        """Handle quality score milestone achievement."""
-        action_data = {
+        """Handle quality score milestone achievement."""        action_data = {
             "quality_score": new_quality_score,
             "milestone_level": milestone_level,
             "value": new_quality_score
@@ -287,8 +271,7 @@ class EngagementIndex:
         consecutive_days: int,
         platform: str = "web"
     ) -> Dict[str, Any]:
-        """Handle daily login with streak tracking."""
-        action_data = {
+        """Handle daily login with streak tracking."""        action_data = {
             "consecutive_days": consecutive_days,
             "platform": platform,
             "login_date": datetime.utcnow().isoformat()
@@ -308,8 +291,7 @@ class EngagementIndex:
         milestone_amount: float,
         revenue_source: str
     ) -> Dict[str, Any]:
-        """Handle revenue milestone achievement."""
-        action_data = {
+        """Handle revenue milestone achievement."""        action_data = {
             "revenue_amount": new_revenue,
             "milestone_amount": milestone_amount,
             "revenue_source": revenue_source,
@@ -330,8 +312,7 @@ class EngagementIndex:
         activity_type: str,
         impact_score: float
     ) -> Dict[str, Any]:
-        """Handle mentorship activities."""
-        action_data = {
+        """Handle mentorship activities."""        action_data = {
             "mentee_id": mentee_id,
             "activity_type": activity_type,
             "impact_score": impact_score,
@@ -351,8 +332,7 @@ class EngagementIndex:
         contribution_value: float,
         community_impact: float
     ) -> Dict[str, Any]:
-        """Handle community contributions."""
-        action_data = {
+        """Handle community contributions."""        action_data = {
             "contribution_type": contribution_type,
             "contribution_value": contribution_value,
             "community_impact": community_impact,
@@ -373,8 +353,7 @@ class EngagementIndex:
         amount: float,
         reason: str
     ) -> Dict[str, Any]:
-        """Quick method to reward a user with virtual currency."""
-        try:
+        """Quick method to reward a user with virtual currency."""        try:
             economy = await get_virtual_economy()
             
             transaction = await award_currency(
@@ -401,8 +380,7 @@ class EngagementIndex:
         user_id: str,
         achievement_id: str
     ) -> Dict[str, Any]:
-        """Quick method to manually unlock an achievement."""
-        try:
+        """Quick method to manually unlock an achievement."""        try:
             tracker = await get_achievement_tracker()
             
             # This would typically be done through metric tracking
@@ -417,8 +395,7 @@ class EngagementIndex:
             return {"success": False, "error": str(e)}
     
     async def get_user_engagement_summary(self, user_id: str) -> Dict[str, Any]:
-        """Get a quick engagement summary for a user."""
-        try:
+        """Get a quick engagement summary for a user."""        try:
             dashboard = await self.get_creator_dashboard(user_id)
             
             # Extract key metrics for summary
@@ -444,8 +421,7 @@ class EngagementIndex:
             return {"error": str(e)}
     
     async def get_platform_engagement_stats(self) -> Dict[str, Any]:
-        """Get platform-wide engagement statistics."""
-        try:
+        """Get platform-wide engagement statistics."""        try:
             analytics = await get_engagement_analytics()
             
             return await analytics.get_platform_analytics()
@@ -459,8 +435,7 @@ _engagement_index: Optional[EngagementIndex] = None
 
 
 async def get_engagement_index() -> EngagementIndex:
-    """Get the global engagement index instance."""
-    global _engagement_index
+    """Get the global engagement index instance."""    global _engagement_index
     
     if _engagement_index is None:
         _engagement_index = EngagementIndex()
@@ -476,14 +451,12 @@ async def process_creator_action(
     data: Dict[str, Any],
     user_profile: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Process any creator action (high-level convenience function)."""
-    index = await get_engagement_index()
+    """Process any creator action (high-level convenience function)."""    index = await get_engagement_index()
     return await index.process_creator_action(user_id, action, data, user_profile)
 
 
 async def get_creator_engagement_dashboard(user_id: str) -> Dict[str, Any]:
-    """Get creator engagement dashboard (high-level convenience function)."""
-    index = await get_engagement_index()
+    """Get creator engagement dashboard (high-level convenience function)."""    index = await get_engagement_index()
     return await index.get_creator_dashboard(user_id)
 
 
@@ -494,8 +467,7 @@ async def handle_content_upload_complete(
     quality_score: float,
     engagement_metrics: Optional[Dict[str, Any]] = None
 ) -> Dict[str, Any]:
-    """Handle complete content upload process (convenience function)."""
-    index = await get_engagement_index()
+    """Handle complete content upload process (convenience function)."""    index = await get_engagement_index()
     return await index.handle_content_upload(
         user_id=user_id,
         content_id=content_id,
@@ -512,8 +484,7 @@ async def handle_collaboration_complete(
     output_quality: float,
     partners: List[str]
 ) -> Dict[str, Any]:
-    """Handle complete collaboration process (convenience function)."""
-    index = await get_engagement_index()
+    """Handle complete collaboration process (convenience function)."""    index = await get_engagement_index()
     return await index.handle_collaboration_completion(
         user_id=user_id,
         collaboration_id=collaboration_id,
@@ -523,8 +494,7 @@ async def handle_collaboration_complete(
 
 
 async def quick_user_summary(user_id: str) -> Dict[str, Any]:
-    """Get quick user engagement summary (convenience function)."""
-    index = await get_engagement_index()
+    """Get quick user engagement summary (convenience function)."""    index = await get_engagement_index()
     return await index.get_user_engagement_summary(user_id)
 
 

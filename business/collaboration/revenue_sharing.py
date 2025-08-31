@@ -1,11 +1,9 @@
-"""
-Advanced Revenue Sharing Engine for IA Influencer Agent
+"""Advanced Revenue Sharing Engine for IA Influencer Agent
 Professional revenue management and distribution system for collaborations
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
 from datetime import datetime, timedelta
 from enum import Enum
@@ -21,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueStreamType(Enum):
-    """Types of revenue streams in collaborations"""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Types of revenue streams in collaborations"""    STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
     BRAND_SPONSORSHIP = "brand_sponsorship"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -35,8 +32,7 @@ class RevenueStreamType(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment processing status"""
-    PENDING = "pending"
+    """Payment processing status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -47,8 +43,7 @@ class PaymentStatus(Enum):
 
 
 class RevenueShareModel(Enum):
-    """Revenue sharing models"""
-    EQUAL_SPLIT = "equal_split"
+    """Revenue sharing models"""    EQUAL_SPLIT = "equal_split"
     PERCENTAGE_BASED = "percentage_based"
     CONTRIBUTION_BASED = "contribution_based"
     ROLE_BASED = "role_based"
@@ -59,8 +54,7 @@ class RevenueShareModel(Enum):
 
 @dataclass
 class CollaboratorShare:
-    """Individual collaborator revenue share configuration"""
-    collaborator_id: str
+    """Individual collaborator revenue share configuration"""    collaborator_id: str
     collaborator_name: str
     share_percentage: Decimal
     role: str
@@ -74,8 +68,7 @@ class CollaboratorShare:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""
-    total_revenue: Decimal = Decimal('0.00')
+    """Revenue performance metrics"""    total_revenue: Decimal = Decimal('0.00')
     revenue_per_stream: Dict[RevenueStreamType, Decimal] = field(default_factory=dict)
     growth_rate: Decimal = Decimal('0.00')
     conversion_rate: Decimal = Decimal('0.00')
@@ -86,8 +79,7 @@ class RevenueMetrics:
 
 
 class RevenueTransaction(BaseModel):
-    """Individual revenue transaction record"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual revenue transaction record"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     collaboration_id: str
     revenue_stream: RevenueStreamType
     
@@ -125,8 +117,7 @@ class RevenueTransaction(BaseModel):
 
 
 class RevenueSharingAgreement(BaseModel):
-    """Revenue sharing agreement model"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Revenue sharing agreement model"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     collaboration_id: str
     agreement_name: str = Field(..., min_length=5, max_length=200)
     
@@ -173,8 +164,7 @@ class RevenueSharingAgreement(BaseModel):
 
 
 class PayoutRecord(BaseModel):
-    """Individual payout record"""
-    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
+    """Individual payout record"""    id: str = Field(default_factory=lambda: str(uuid.uuid4()))
     collaboration_id: str
     collaborator_id: str
     
@@ -205,12 +195,10 @@ class PayoutRecord(BaseModel):
 
 
 class RevenueSharingEngine:
-    """
-    Advanced Revenue Sharing Engine
+    """    Advanced Revenue Sharing Engine
     Manages revenue collection, calculation, distribution, and reporting
     for collaborative content creation
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.active_agreements: Dict[str, RevenueSharingAgreement] = {}
@@ -224,8 +212,7 @@ class RevenueSharingEngine:
         asyncio.create_task(self._initialize_engine())
     
     async def _initialize_engine(self):
-        """Initialize revenue sharing engine"""
-        try:
+        """Initialize revenue sharing engine"""        try:
             await self._setup_payment_processors()
             await self._initialize_tax_calculators()
             await self._setup_compliance_validators()
@@ -242,10 +229,8 @@ class RevenueSharingEngine:
         self,
         agreement_data: Dict[str, Any]
     ) -> RevenueSharingAgreement:
-        """
-        Create a new revenue sharing agreement
-        """
-        try:
+        """        Create a new revenue sharing agreement
+        """        try:
             # Validate agreement data
             validated_data = await self._validate_agreement_data(agreement_data)
             
@@ -273,10 +258,8 @@ class RevenueSharingEngine:
         self,
         transaction_data: Dict[str, Any]
     ) -> RevenueTransaction:
-        """
-        Record a new revenue transaction
-        """
-        try:
+        """        Record a new revenue transaction
+        """        try:
             # Validate transaction data
             validated_data = await self._validate_transaction_data(transaction_data)
             
@@ -308,10 +291,8 @@ class RevenueSharingEngine:
         collaboration_id: str,
         period: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Calculate revenue shares for a collaboration
-        """
-        try:
+        """        Calculate revenue shares for a collaboration
+        """        try:
             if collaboration_id not in self.active_agreements:
                 raise ValueError(f"No active agreement found for collaboration {collaboration_id}")
             
@@ -366,10 +347,8 @@ class RevenueSharingEngine:
         collaboration_id: str,
         payout_period: str
     ) -> Dict[str, Any]:
-        """
-        Process payouts for a collaboration period
-        """
-        try:
+        """        Process payouts for a collaboration period
+        """        try:
             # Calculate current shares
             shares_calculation = await self.calculate_revenue_shares(
                 collaboration_id, payout_period
@@ -436,10 +415,8 @@ class RevenueSharingEngine:
         report_period: str,
         report_type: str = "detailed"
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive revenue report
-        """
-        try:
+        """        Generate comprehensive revenue report
+        """        try:
             # Get agreement and transactions
             agreement = self.active_agreements.get(collaboration_id)
             if not agreement:
@@ -492,10 +469,8 @@ class RevenueSharingEngine:
         collaborator_id: str,
         time_period: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Get earnings summary for a specific collaborator
-        """
-        try:
+        """        Get earnings summary for a specific collaborator
+        """        try:
             # Find all collaborations for this collaborator
             collaborator_agreements = [
                 agreement for agreement in self.active_agreements.values()
@@ -557,8 +532,7 @@ class RevenueSharingEngine:
     
     # Private helper methods
     async def _setup_payment_processors(self):
-        """Setup payment processing integrations"""
-        self.payment_processors = {
+        """Setup payment processing integrations"""        self.payment_processors = {
             'stripe': {'initialized': True, 'supported_currencies': ['EUR', 'USD', 'GBP']},
             'paypal': {'initialized': True, 'supported_currencies': ['EUR', 'USD', 'GBP']},
             'wise': {'initialized': True, 'supported_currencies': ['EUR', 'USD', 'GBP', 'CAD']},
@@ -566,70 +540,59 @@ class RevenueSharingEngine:
         }
     
     async def _initialize_tax_calculators(self):
-        """Initialize tax calculation systems"""
-        self.tax_calculators = {
+        """Initialize tax calculation systems"""        self.tax_calculators = {
             'DE': {'vat_rate': Decimal('0.19'), 'income_tax_rates': [0.14, 0.42, 0.45]},
             'US': {'sales_tax': Decimal('0.08'), 'income_tax_rates': [0.10, 0.22, 0.24]},
             'GB': {'vat_rate': Decimal('0.20'), 'income_tax_rates': [0.20, 0.40, 0.45]}
         }
     
     async def _setup_compliance_validators(self):
-        """Setup compliance validation systems"""
-        self.compliance_validators = {
+        """Setup compliance validation systems"""        self.compliance_validators = {
             'gdpr': {'enabled': True, 'data_retention_days': 2555},  # 7 years
             'aml': {'enabled': True, 'transaction_threshold': Decimal('10000.00')},
             'kyc': {'enabled': True, 'verification_required': True}
         }
     
     async def _load_exchange_rate_providers(self):
-        """Load exchange rate providers"""
-        # Mock implementation
+        """Load exchange rate providers"""        # Mock implementation
         pass
     
     async def _initialize_analytics_tracking(self):
-        """Initialize analytics tracking"""
-        # Mock implementation
+        """Initialize analytics tracking"""        # Mock implementation
         pass
     
     async def _validate_agreement_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate revenue sharing agreement data"""
-        # Add comprehensive validation logic
+        """Validate revenue sharing agreement data"""        # Add comprehensive validation logic
         return data
     
     async def _validate_transaction_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate transaction data"""
-        # Add comprehensive validation logic
+        """Validate transaction data"""        # Add comprehensive validation logic
         return data
     
     async def _setup_automated_tracking(self, agreement: RevenueSharingAgreement):
-        """Setup automated revenue tracking for agreement"""
-        # Implementation would setup automated tracking
+        """Setup automated revenue tracking for agreement"""        # Implementation would setup automated tracking
         pass
     
     async def _generate_agreement_documentation(
         self, 
         agreement: RevenueSharingAgreement
     ) -> Dict[str, Any]:
-        """Generate legal agreement documentation"""
-        return {
+        """Generate legal agreement documentation"""        return {
             'agreement_document_url': f'/agreements/{agreement.id}/document.pdf',
             'terms_summary': 'Revenue sharing agreement with automated distribution',
             'legal_status': 'valid'
         }
     
     async def _process_revenue_sharing(self, transaction: RevenueTransaction):
-        """Process revenue sharing for transaction"""
-        # Implementation would handle the sharing logic
+        """Process revenue sharing for transaction"""        # Implementation would handle the sharing logic
         pass
     
     async def _update_revenue_metrics(self, transaction: RevenueTransaction):
-        """Update revenue metrics with new transaction"""
-        # Implementation would update metrics
+        """Update revenue metrics with new transaction"""        # Implementation would update metrics
         pass
     
     async def _check_payout_thresholds(self, collaboration_id: str):
-        """Check if payout thresholds are met"""
-        # Implementation would check thresholds and trigger payouts
+        """Check if payout thresholds are met"""        # Implementation would check thresholds and trigger payouts
         pass
     
     async def _get_transactions_for_period(
@@ -637,8 +600,7 @@ class RevenueSharingEngine:
         collaboration_id: str, 
         period: Optional[str]
     ) -> List[RevenueTransaction]:
-        """Get transactions for specific period"""
-        transactions = [
+        """Get transactions for specific period"""        transactions = [
             t for t in self.revenue_transactions 
             if t.collaboration_id == collaboration_id
         ]
@@ -654,8 +616,7 @@ class RevenueSharingEngine:
         transactions: List[RevenueTransaction], 
         agreement: RevenueSharingAgreement
     ) -> Dict[str, Any]:
-        """Generate detailed revenue breakdown"""
-        return {
+        """Generate detailed revenue breakdown"""        return {
             'by_stream': {},
             'by_platform': {},
             'by_month': {},
@@ -670,8 +631,7 @@ class RevenueSharingEngine:
         period: str,
         config: CollaboratorShare
     ) -> Dict[str, Any]:
-        """Process payout for individual collaborator"""
-        try:
+        """Process payout for individual collaborator"""        try:
             # Create payout record
             payout = PayoutRecord(
                 collaboration_id=collaboration_id,
@@ -715,8 +675,7 @@ class RevenueSharingEngine:
         transactions: List[RevenueTransaction], 
         agreement: RevenueSharingAgreement
     ) -> RevenueMetrics:
-        """Calculate metrics for a specific period"""
-        total_revenue = sum(t.net_amount for t in transactions)
+        """Calculate metrics for a specific period"""        total_revenue = sum(t.net_amount for t in transactions)
         
         return RevenueMetrics(
             total_revenue=total_revenue,
@@ -732,8 +691,7 @@ class RevenueSharingEngine:
         transactions: List[RevenueTransaction], 
         period: str
     ) -> Dict[str, Any]:
-        """Generate data for revenue charts"""
-        return {
+        """Generate data for revenue charts"""        return {
             'revenue_over_time': {'labels': [], 'data': []},
             'revenue_by_stream': {'labels': [], 'data': []},
             'collaborator_contributions': {'labels': [], 'data': []}
@@ -745,8 +703,7 @@ class RevenueSharingEngine:
         agreement: RevenueSharingAgreement,
         report_type: str
     ) -> Dict[str, Any]:
-        """Generate detailed revenue breakdown"""
-        return {
+        """Generate detailed revenue breakdown"""        return {
             'transaction_summary': {
                 'total_transactions': len(transactions),
                 'successful_transactions': len(transactions),
@@ -762,8 +719,7 @@ class RevenueSharingEngine:
         metrics: RevenueMetrics, 
         transactions: List[RevenueTransaction]
     ) -> List[str]:
-        """Generate actionable revenue insights"""
-        insights = []
+        """Generate actionable revenue insights"""        insights = []
         
         if metrics.growth_rate > Decimal('0.10'):
             insights.append("Revenue showing strong growth - consider scaling successful strategies")
@@ -781,8 +737,7 @@ class RevenueSharingEngine:
         collaborator_id: str,
         time_period: Optional[Tuple[datetime, datetime]]
     ) -> Dict[str, Any]:
-        """Calculate earnings for specific collaborator"""
-        # Get relevant transactions
+        """Calculate earnings for specific collaborator"""        # Get relevant transactions
         transactions = await self._get_transactions_for_period(collaboration_id, None)
         
         # Filter by time period if provided
@@ -819,8 +774,7 @@ class RevenueSharingEngine:
         }
     
     async def _get_pending_payouts(self, collaborator_id: str) -> List[Dict[str, Any]]:
-        """Get pending payouts for collaborator"""
-        pending = [
+        """Get pending payouts for collaborator"""        pending = [
             {
                 'collaboration_id': p.collaboration_id,
                 'amount': p.payout_amount,
@@ -838,8 +792,7 @@ class RevenueSharingEngine:
         collaborator_id: str, 
         earnings_data: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate insights for collaborator performance"""
-        insights = []
+        """Generate insights for collaborator performance"""        insights = []
         
         if len(earnings_data) > 1:
             insights.append("Active in multiple collaborations - diversified income")

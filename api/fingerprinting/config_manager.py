@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Fingerprinting Configuration Manager
+"""IA Influencer Agent - Fingerprinting Configuration Manager
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 AVERTISSEMENT LÉGAL STRICT:
@@ -10,7 +9,6 @@ constituera une violation des droits d'auteur.
 
 Configuration management for content fingerprinting system
 """
-
 import os
 import json
 from typing import Dict, Any, Optional
@@ -20,11 +18,9 @@ import logging
 logger = logging.getLogger(__name__)
 
 class FingerprintConfig:
-    """
-    Professional configuration manager for fingerprinting system
+    """    Professional configuration manager for fingerprinting system
     Handles environment variables, config files, and default settings
-    """
-    
+    """    
     DEFAULT_CONFIG = {
         # Global settings
         'similarity_threshold': 0.85,
@@ -112,14 +108,12 @@ class FingerprintConfig:
     }
     
     def __init__(self, config_file: Optional[Path] = None, config_dict: Optional[Dict[str, Any]] = None):
-        """
-        Initialize configuration manager
+        """        Initialize configuration manager
         
         Args:
             config_file: Optional path to configuration file
             config_dict: Optional configuration dictionary
-        """
-        self.config = self.DEFAULT_CONFIG.copy()
+        """        self.config = self.DEFAULT_CONFIG.copy()
         
         # Load from file if provided
         if config_file:
@@ -135,8 +129,7 @@ class FingerprintConfig:
         logger.info("Configuration manager initialized")
     
     def load_from_file(self, config_file: Path):
-        """Load configuration from JSON file"""
-        try:
+        """Load configuration from JSON file"""        try:
             if config_file.exists():
                 with open(config_file, 'r') as f:
                     file_config = json.load(f)
@@ -149,8 +142,7 @@ class FingerprintConfig:
             raise
     
     def save_to_file(self, config_file: Path):
-        """Save current configuration to JSON file"""
-        try:
+        """Save current configuration to JSON file"""        try:
             config_file.parent.mkdir(parents=True, exist_ok=True)
             with open(config_file, 'w') as f:
                 json.dump(self.config, f, indent=2)
@@ -160,8 +152,7 @@ class FingerprintConfig:
             raise
     
     def update_config(self, new_config: Dict[str, Any]):
-        """Update configuration with new values"""
-        def deep_update(base_dict, update_dict):
+        """Update configuration with new values"""        def deep_update(base_dict, update_dict):
             for key, value in update_dict.items():
                 if isinstance(value, dict) and key in base_dict:
                     deep_update(base_dict[key], value)
@@ -171,8 +162,7 @@ class FingerprintConfig:
         deep_update(self.config, new_config)
     
     def _apply_env_overrides(self):
-        """Apply environment variable overrides"""
-        env_mappings = {
+        """Apply environment variable overrides"""        env_mappings = {
             'IA_SIMILARITY_THRESHOLD': ('similarity_threshold', float),
             'IA_MAX_FILE_SIZE': ('max_file_size', int),
             'IA_BATCH_SIZE': ('batch_size', int),
@@ -223,8 +213,7 @@ class FingerprintConfig:
                     logger.warning(f"Invalid value for {env_var}: {env_value}, error: {str(e)}")
     
     def _set_nested_config(self, path: str, value: Any):
-        """Set nested configuration value using dot notation"""
-        keys = path.split('.')
+        """Set nested configuration value using dot notation"""        keys = path.split('.')
         current = self.config
         
         for key in keys[:-1]:
@@ -235,8 +224,7 @@ class FingerprintConfig:
         current[keys[-1]] = value
     
     def get(self, key: str, default: Any = None) -> Any:
-        """Get configuration value using dot notation"""
-        try:
+        """Get configuration value using dot notation"""        try:
             keys = key.split('.')
             current = self.config
             
@@ -248,40 +236,31 @@ class FingerprintConfig:
             return default
     
     def get_database_config(self) -> Dict[str, Any]:
-        """Get database configuration"""
-        return self.config.get('database', {})
+        """Get database configuration"""        return self.config.get('database', {})
     
     def get_audio_config(self) -> Dict[str, Any]:
-        """Get audio processing configuration"""
-        return self.config.get('audio', {})
+        """Get audio processing configuration"""        return self.config.get('audio', {})
     
     def get_video_config(self) -> Dict[str, Any]:
-        """Get video processing configuration"""
-        return self.config.get('video', {})
+        """Get video processing configuration"""        return self.config.get('video', {})
     
     def get_image_config(self) -> Dict[str, Any]:
-        """Get image processing configuration"""
-        return self.config.get('image', {})
+        """Get image processing configuration"""        return self.config.get('image', {})
     
     def get_text_config(self) -> Dict[str, Any]:
-        """Get text processing configuration"""
-        return self.config.get('text', {})
+        """Get text processing configuration"""        return self.config.get('text', {})
     
     def get_security_config(self) -> Dict[str, Any]:
-        """Get security configuration"""
-        return self.config.get('security', {})
+        """Get security configuration"""        return self.config.get('security', {})
     
     def get_monitoring_config(self) -> Dict[str, Any]:
-        """Get monitoring configuration"""
-        return self.config.get('monitoring', {})
+        """Get monitoring configuration"""        return self.config.get('monitoring', {})
     
     def get_logging_config(self) -> Dict[str, Any]:
-        """Get logging configuration"""
-        return self.config.get('logging', {})
+        """Get logging configuration"""        return self.config.get('logging', {})
     
     def validate_config(self) -> List[str]:
-        """Validate configuration and return list of errors"""
-        errors = []
+        """Validate configuration and return list of errors"""        errors = []
         
         # Validate similarity thresholds
         if not 0.0 <= self.get('similarity_threshold', 0) <= 1.0:
@@ -315,16 +294,13 @@ class FingerprintConfig:
         return errors
     
     def is_valid(self) -> bool:
-        """Check if configuration is valid"""
-        return len(self.validate_config()) == 0
+        """Check if configuration is valid"""        return len(self.validate_config()) == 0
     
     def get_full_config(self) -> Dict[str, Any]:
-        """Get full configuration dictionary"""
-        return self.config.copy()
+        """Get full configuration dictionary"""        return self.config.copy()
     
     def __str__(self) -> str:
-        """String representation of configuration"""
-        # Create a safe copy without sensitive information
+        """String representation of configuration"""        # Create a safe copy without sensitive information
         safe_config = self.config.copy()
         if 'database' in safe_config and 'password' in safe_config['database']:
             safe_config['database']['password'] = '***HIDDEN***'
@@ -335,19 +311,16 @@ class FingerprintConfig:
 _global_config = None
 
 def get_global_config() -> FingerprintConfig:
-    """Get global configuration instance"""
-    global _global_config
+    """Get global configuration instance"""    global _global_config
     if _global_config is None:
         _global_config = FingerprintConfig()
     return _global_config
 
 def set_global_config(config: FingerprintConfig):
-    """Set global configuration instance"""
-    global _global_config
+    """Set global configuration instance"""    global _global_config
     _global_config = config
 
 def load_config_from_file(config_file: Path) -> FingerprintConfig:
-    """Load configuration from file and set as global"""
-    config = FingerprintConfig(config_file=config_file)
+    """Load configuration from file and set as global"""    config = FingerprintConfig(config_file=config_file)
     set_global_config(config)
     return config

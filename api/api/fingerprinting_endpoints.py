@@ -1,5 +1,4 @@
-"""
-AI Fingerprinting endpoints for IA Influencer Agent platform.
+"""AI Fingerprinting endpoints for IA Influencer Agent platform.
 
 This module handles multi-format content fingerprinting (audio, video, image, text)
 with advanced AI detection algorithms and vector similarity matching.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 from datetime import datetime, timedelta
 from typing import List, Dict, Any, Optional
 import asyncio
@@ -40,8 +38,7 @@ router = APIRouter(prefix="/fingerprinting", tags=["AI Fingerprinting"])
 
 # Pydantic models for request/response validation
 class FingerprintRequest(BaseModel):
-    """Request model for content fingerprinting"""
-    content_type: ContentType = Field(..., description="Type of content to fingerprint")
+    """Request model for content fingerprinting"""    content_type: ContentType = Field(..., description="Type of content to fingerprint")
     metadata: Dict[str, Any] = Field(default={}, description="Optional metadata for content")
     protection_level: str = Field(default="standard", description="Protection level: basic, standard, premium")
     monitoring_enabled: bool = Field(default=True, description="Enable continuous monitoring")
@@ -54,8 +51,7 @@ class FingerprintRequest(BaseModel):
         return v
 
 class FingerprintResponse(BaseModel):
-    """Response model for fingerprinting operation"""
-    fingerprint_id: str = Field(..., description="Unique fingerprint identifier")
+    """Response model for fingerprinting operation"""    fingerprint_id: str = Field(..., description="Unique fingerprint identifier")
     content_hash: str = Field(..., description="SHA256 hash of content")
     vector_id: str = Field(..., description="Vector database identifier")
     processing_time: float = Field(..., description="Processing time in seconds")
@@ -64,16 +60,14 @@ class FingerprintResponse(BaseModel):
     metadata: Dict[str, Any] = Field(..., description="Processing metadata and statistics")
 
 class SimilaritySearchRequest(BaseModel):
-    """Request model for similarity search"""
-    fingerprint_id: Optional[str] = Field(None, description="Existing fingerprint ID to compare")
+    """Request model for similarity search"""    fingerprint_id: Optional[str] = Field(None, description="Existing fingerprint ID to compare")
     similarity_threshold: float = Field(0.8, ge=0.0, le=1.0, description="Minimum similarity score")
     max_results: int = Field(100, ge=1, le=1000, description="Maximum number of results")
     platforms: List[str] = Field(default=[], description="Specific platforms to search")
     include_metadata: bool = Field(True, description="Include detailed metadata in results")
 
 class SimilarityMatch(BaseModel):
-    """Model for similarity search results"""
-    match_id: str = Field(..., description="Unique match identifier")
+    """Model for similarity search results"""    match_id: str = Field(..., description="Unique match identifier")
     similarity_score: float = Field(..., description="Similarity score (0.0-1.0)")
     original_fingerprint_id: str = Field(..., description="Original content fingerprint ID")
     detected_content_url: Optional[str] = Field(None, description="URL where content was detected")
@@ -82,8 +76,7 @@ class SimilarityMatch(BaseModel):
     content_metadata: Dict[str, Any] = Field(..., description="Additional content information")
 
 class MonitoringSetupRequest(BaseModel):
-    """Request model for monitoring setup"""
-    fingerprint_ids: List[str] = Field(..., description="List of fingerprint IDs to monitor")
+    """Request model for monitoring setup"""    fingerprint_ids: List[str] = Field(..., description="List of fingerprint IDs to monitor")
     platforms: List[str] = Field(..., description="Platforms to monitor")
     monitoring_frequency: str = Field("realtime", description="Monitoring frequency: realtime, hourly, daily")
     notification_settings: Dict[str, Any] = Field(..., description="Notification preferences")
@@ -100,8 +93,7 @@ async def create_fingerprint(
     fingerprinting_service: FingerprintingService = Depends(),
     vector_service: VectorSearchService = Depends()
 ):
-    """
-    Create AI fingerprint for uploaded content with advanced detection.
+    """    Create AI fingerprint for uploaded content with advanced detection.
     
     Supports multi-format fingerprinting:
     - Audio: Chromaprint + spectral analysis + Essentia features
@@ -109,8 +101,7 @@ async def create_fingerprint(
     - Image: CLIP embeddings + perceptual hashing + ImageHash
     - Text: BERT/RoBERTa embeddings + semantic analysis
     - Document: OCR + structure analysis + content extraction
-    """
-    try:
+    """    try:
         # Parse request data
         import json
         request_obj = FingerprintRequest.parse_raw(request_data)
@@ -239,16 +230,14 @@ async def search_similar_content(
     vector_service: VectorSearchService = Depends(),
     fingerprinting_service: FingerprintingService = Depends()
 ):
-    """
-    Search for similar content using advanced AI vector similarity matching.
+    """    Search for similar content using advanced AI vector similarity matching.
     
     Features:
     - Multi-algorithm similarity detection
     - Cross-platform content monitoring
     - Fuzzy matching for modified content
     - Real-time detection alerts
-    """
-    try:
+    """    try:
         # Validate fingerprint ID exists
         if search_request.fingerprint_id:
             fingerprint = db.query(ContentFingerprint).filter(
@@ -329,15 +318,13 @@ async def setup_content_monitoring(
     db: Session = Depends(get_db),
     fingerprinting_service: FingerprintingService = Depends()
 ):
-    """
-    Setup continuous content monitoring across multiple platforms.
+    """    Setup continuous content monitoring across multiple platforms.
     
     Platforms supported:
     - YouTube, Instagram, TikTok, Twitter/X, Facebook
     - Spotify, SoundCloud, Apple Music, Amazon Music
     - Generic web crawling with custom rules
-    """
-    try:
+    """    try:
         # Validate all fingerprint IDs belong to user
         fingerprints = db.query(ContentFingerprint).filter(
             ContentFingerprint.id.in_(monitoring_request.fingerprint_ids),
@@ -412,8 +399,7 @@ async def get_fingerprint_details(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get detailed information about a specific fingerprint."""
-    try:
+    """Get detailed information about a specific fingerprint."""    try:
         fingerprint = db.query(ContentFingerprint).filter(
             ContentFingerprint.id == fingerprint_id,
             ContentFingerprint.user_id == current_user.id
@@ -456,8 +442,7 @@ async def get_user_fingerprints(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """Get all fingerprints for the current user with optional filtering."""
-    try:
+    """Get all fingerprints for the current user with optional filtering."""    try:
         query = db.query(ContentFingerprint).filter(
             ContentFingerprint.user_id == current_user.id
         )
@@ -495,8 +480,7 @@ async def delete_fingerprint(
     fingerprinting_service: FingerprintingService = Depends(),
     vector_service: VectorSearchService = Depends()
 ):
-    """Delete a fingerprint and all associated monitoring."""
-    try:
+    """Delete a fingerprint and all associated monitoring."""    try:
         fingerprint = db.query(ContentFingerprint).filter(
             ContentFingerprint.id == fingerprint_id,
             ContentFingerprint.user_id == current_user.id

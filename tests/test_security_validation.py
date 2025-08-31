@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,13 +12,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Tests for Security Validation System
+"""Tests for Security Validation System
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -63,23 +59,19 @@ except ImportError:
 
 
 class TestSecurityValidator:
-    """Test cases for SecurityValidator"""
-    
+    """Test cases for SecurityValidator"""    
     @pytest.fixture
     def validator(self):
-        """Create a SecurityValidator instance for testing"""
-        return SecurityValidator()
+        """Create a SecurityValidator instance for testing"""        return SecurityValidator()
     
     def test_validator_initialization(self, validator):
-        """Test that security validator initializes correctly"""
-        assert validator is not None
+        """Test that security validator initializes correctly"""        assert validator is not None
         assert hasattr(validator, '_scan_malware')
         assert hasattr(validator, '_analyze_file_integrity')
         assert hasattr(validator, '_extract_security_metadata')
     
     def test_malware_scan_safe_file(self, validator):
-        """Test malware scanning on a safe file"""
-        # Create a temporary safe text file
+        """Test malware scanning on a safe file"""        # Create a temporary safe text file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             f.write("This is a safe text file for testing.")
             temp_path = f.name
@@ -100,8 +92,7 @@ class TestSecurityValidator:
             os.unlink(temp_path)
     
     def test_file_integrity_analysis(self, validator):
-        """Test file integrity analysis"""
-        # Create a temporary file
+        """Test file integrity analysis"""        # Create a temporary file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             f.write("Normal file content for integrity testing.")
             temp_path = f.name
@@ -122,8 +113,7 @@ class TestSecurityValidator:
             os.unlink(temp_path)
     
     def test_security_metadata_extraction(self, validator):
-        """Test security metadata extraction"""
-        # Create a temporary file
+        """Test security metadata extraction"""        # Create a temporary file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             f.write("File for metadata extraction testing.")
             temp_path = f.name
@@ -142,8 +132,7 @@ class TestSecurityValidator:
             os.unlink(temp_path)
     
     def test_integrity_analysis_with_missing_file(self, validator):
-        """Test integrity analysis with non-existent file"""
-        non_existent_path = Path("/non/existent/file.txt")
+        """Test integrity analysis with non-existent file"""        non_existent_path = Path("/non/existent/file.txt")
         
         # Should handle missing file gracefully
         result = validator._analyze_file_integrity(non_existent_path)
@@ -154,8 +143,7 @@ class TestSecurityValidator:
         assert 'warnings' in result
     
     def test_malware_scan_with_missing_file(self, validator):
-        """Test malware scanning with non-existent file"""
-        non_existent_path = Path("/non/existent/file.txt")
+        """Test malware scanning with non-existent file"""        non_existent_path = Path("/non/existent/file.txt")
         
         # Should handle missing file gracefully
         result = validator._scan_malware(non_existent_path)
@@ -166,8 +154,7 @@ class TestSecurityValidator:
         assert 'scanner_used' in result
     
     def test_security_metadata_with_missing_file(self, validator):
-        """Test security metadata extraction with non-existent file"""
-        non_existent_path = Path("/non/existent/file.txt")
+        """Test security metadata extraction with non-existent file"""        non_existent_path = Path("/non/existent/file.txt")
         
         # Should handle missing file gracefully
         result = validator._extract_security_metadata(non_existent_path)
@@ -178,8 +165,7 @@ class TestSecurityValidator:
     
     @patch('logging.getLogger')
     def test_error_logging(self, mock_logger, validator):
-        """Test that errors are properly logged"""
-        mock_logger_instance = Mock()
+        """Test that errors are properly logged"""        mock_logger_instance = Mock()
         mock_logger.return_value = mock_logger_instance
         validator.logger = mock_logger_instance
         
@@ -196,8 +182,7 @@ class TestSecurityValidator:
         assert logger_called
     
     def test_large_file_handling(self, validator):
-        """Test handling of large files"""
-        # Create a moderately large temporary file
+        """Test handling of large files"""        # Create a moderately large temporary file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             # Write about 1MB of data
             large_content = "A" * (1024 * 1024)
@@ -219,8 +204,7 @@ class TestSecurityValidator:
             os.unlink(temp_path)
     
     def test_binary_file_handling(self, validator):
-        """Test handling of binary files"""
-        # Create a temporary binary file
+        """Test handling of binary files"""        # Create a temporary binary file
         with tempfile.NamedTemporaryFile(mode='wb', suffix='.bin', delete=False) as f:
             # Write some binary data
             binary_data = bytes(range(256))
@@ -242,8 +226,7 @@ class TestSecurityValidator:
             os.unlink(temp_path)
     
     def test_empty_file_handling(self, validator):
-        """Test handling of empty files"""
-        # Create an empty temporary file
+        """Test handling of empty files"""        # Create an empty temporary file
         with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False) as f:
             # Don't write anything - file will be empty
             temp_path = f.name
@@ -264,18 +247,15 @@ class TestSecurityValidator:
 
 
 class TestThreatLevel:
-    """Test cases for ThreatLevel enum"""
-    
+    """Test cases for ThreatLevel enum"""    
     def test_threat_levels_exist(self):
-        """Test that all threat levels are defined"""
-        assert hasattr(ThreatLevel, 'LOW')
+        """Test that all threat levels are defined"""        assert hasattr(ThreatLevel, 'LOW')
         assert hasattr(ThreatLevel, 'MEDIUM')
         assert hasattr(ThreatLevel, 'HIGH')
         assert hasattr(ThreatLevel, 'CRITICAL')
     
     def test_threat_level_values(self):
-        """Test threat level values"""
-        assert ThreatLevel.LOW == "low"
+        """Test threat level values"""        assert ThreatLevel.LOW == "low"
         assert ThreatLevel.MEDIUM == "medium"
         assert ThreatLevel.HIGH == "high"
         assert ThreatLevel.CRITICAL == "critical"

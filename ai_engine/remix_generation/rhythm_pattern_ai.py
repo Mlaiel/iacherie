@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Rhythm Pattern AI
+"""IA-Influencer-Agent Rhythm Pattern AI
 ================================================================================
 Module: ai_engine/remix_generation/rhythm_pattern_ai.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -19,7 +18,6 @@ MISSION: Générateur de patterns rythmiques IA ultra-avancé avec deep learning
 TECHNOLOGIES: Neural Networks, Rhythmic Analysis, Pattern Recognition, Temporal Modeling
 LOGIQUE MÉTIER: Musical context → Rhythm analysis → Pattern generation → Groove optimization → Quality validation
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -40,8 +38,7 @@ import mido
 logger = logging.getLogger(__name__)
 
 class RhythmStyle(Enum):
-    """Rhythm generation styles"""
-    ROCK = "rock"
+    """Rhythm generation styles"""    ROCK = "rock"
     JAZZ = "jazz"
     POP = "pop"
     ELECTRONIC = "electronic"
@@ -57,15 +54,13 @@ class RhythmStyle(Enum):
     HOUSE = "house"
 
 class RhythmComplexity(Enum):
-    """Rhythm complexity levels"""
-    SIMPLE = "simple"        # Basic patterns
+    """Rhythm complexity levels"""    SIMPLE = "simple"        # Basic patterns
     MODERATE = "moderate"    # Standard complexity
     COMPLEX = "complex"      # Advanced patterns
     POLYRHYTHMIC = "polyrhythmic"  # Multiple rhythms
 
 class TimeSignature(Enum):
-    """Time signatures"""
-    FOUR_FOUR = "4/4"
+    """Time signatures"""    FOUR_FOUR = "4/4"
     THREE_FOUR = "3/4"
     TWO_FOUR = "2/4"
     SIX_EIGHT = "6/8"
@@ -74,8 +69,7 @@ class TimeSignature(Enum):
     NINE_EIGHT = "9/8"
 
 class DrumVoice(Enum):
-    """Drum voices/instruments"""
-    KICK = "kick"
+    """Drum voices/instruments"""    KICK = "kick"
     SNARE = "snare"
     HIHAT_CLOSED = "hihat_closed"
     HIHAT_OPEN = "hihat_open"
@@ -90,8 +84,7 @@ class DrumVoice(Enum):
 
 @dataclass
 class RhythmParameters:
-    """Parameters for rhythm generation"""
-    tempo_bpm: int = 120
+    """Parameters for rhythm generation"""    tempo_bpm: int = 120
     time_signature: TimeSignature = TimeSignature.FOUR_FOUR
     pattern_length_bars: int = 4
     subdivision: int = 16  # 16th notes
@@ -105,8 +98,7 @@ class RhythmParameters:
 
 @dataclass
 class RhythmPattern:
-    """Generated rhythm pattern"""
-    pattern_id: str
+    """Generated rhythm pattern"""    pattern_id: str
     drum_patterns: Dict[DrumVoice, List[float]]  # Velocity per subdivision
     timing_grid: List[float]  # Timing for each subdivision
     pattern_length: int
@@ -120,8 +112,7 @@ class RhythmPattern:
     midi_data: Optional[bytes] = None
 
 class RhythmConvNet(nn.Module):
-    """Convolutional Neural Network for rhythm pattern generation"""
-    
+    """Convolutional Neural Network for rhythm pattern generation"""    
     def __init__(self, num_voices: int = 12, pattern_length: int = 64, 
                  hidden_dim: int = 128):
         super(RhythmConvNet, self).__init__()
@@ -209,8 +200,7 @@ class RhythmConvNet(nn.Module):
         return output, groove_adjustment
 
 class RhythmLSTM(nn.Module):
-    """LSTM-based rhythm sequence generator"""
-    
+    """LSTM-based rhythm sequence generator"""    
     def __init__(self, num_voices: int = 12, hidden_size: int = 256, 
                  num_layers: int = 3):
         super(RhythmLSTM, self).__init__()
@@ -255,14 +245,12 @@ class RhythmLSTM(nn.Module):
         return torch.sigmoid(output), hidden
 
 class GrooveAnalyzer:
-    """Analyze and quantify groove characteristics"""
-    
+    """Analyze and quantify groove characteristics"""    
     def __init__(self):
         self.groove_templates = self._initialize_groove_templates()
     
     def _initialize_groove_templates(self) -> Dict[RhythmStyle, Dict[str, Any]]:
-        """Initialize style-specific groove templates"""
-        return {
+        """Initialize style-specific groove templates"""        return {
             RhythmStyle.ROCK: {
                 "kick_pattern": [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0],
                 "snare_pattern": [0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0],
@@ -302,8 +290,7 @@ class GrooveAnalyzer:
     
     async def analyze_groove(self, pattern: Dict[DrumVoice, List[float]],
                            timing_grid: List[float]) -> Dict[str, float]:
-        """Analyze groove characteristics of a rhythm pattern"""
-        try:
+        """Analyze groove characteristics of a rhythm pattern"""        try:
             analysis = {}
             
             # Syncopation analysis
@@ -331,8 +318,7 @@ class GrooveAnalyzer:
             return {"groove_score": 0.5}
     
     async def _analyze_syncopation(self, pattern: Dict[DrumVoice, List[float]]) -> float:
-        """Analyze syncopation level in the pattern"""
-        try:
+        """Analyze syncopation level in the pattern"""        try:
             # Focus on kick and snare patterns
             kick_pattern = pattern.get(DrumVoice.KICK, [])
             snare_pattern = pattern.get(DrumVoice.SNARE, [])
@@ -364,8 +350,7 @@ class GrooveAnalyzer:
             return 0.0
     
     async def _analyze_tightness(self, timing_grid: List[float]) -> float:
-        """Analyze timing tightness (deviation from grid)"""
-        try:
+        """Analyze timing tightness (deviation from grid)"""        try:
             if len(timing_grid) < 2:
                 return 1.0
             
@@ -391,8 +376,7 @@ class GrooveAnalyzer:
             return 0.5
     
     async def _analyze_polyrhythm(self, pattern: Dict[DrumVoice, List[float]]) -> float:
-        """Analyze polyrhythmic complexity"""
-        try:
+        """Analyze polyrhythmic complexity"""        try:
             if len(pattern) < 2:
                 return 0.0
             
@@ -424,8 +408,7 @@ class GrooveAnalyzer:
             return 0.0
     
     async def _analyze_dynamics(self, pattern: Dict[DrumVoice, List[float]]) -> float:
-        """Analyze dynamic variation in the pattern"""
-        try:
+        """Analyze dynamic variation in the pattern"""        try:
             all_velocities = []
             for voice_pattern in pattern.values():
                 all_velocities.extend([v for v in voice_pattern if v > 0])
@@ -451,8 +434,7 @@ class GrooveAnalyzer:
     
     async def _analyze_pocket(self, pattern: Dict[DrumVoice, List[float]],
                             timing_grid: List[float]) -> float:
-        """Analyze the 'pocket' (rhythmic feel and groove)"""
-        try:
+        """Analyze the 'pocket' (rhythmic feel and groove)"""        try:
             # Simplified pocket analysis based on kick-snare relationship
             kick_pattern = pattern.get(DrumVoice.KICK, [])
             snare_pattern = pattern.get(DrumVoice.SNARE, [])
@@ -484,8 +466,7 @@ class GrooveAnalyzer:
             return 0.5
     
     async def _calculate_groove_score(self, analysis: Dict[str, float]) -> float:
-        """Calculate overall groove score"""
-        try:
+        """Calculate overall groove score"""        try:
             weights = {
                 "syncopation": 0.2,
                 "tightness": 0.3,
@@ -512,8 +493,7 @@ class GrooveAnalyzer:
             return 0.5
 
 class RhythmPatternAI:
-    """Main rhythm pattern generation AI"""
-    
+    """Main rhythm pattern generation AI"""    
     def __init__(self):
         # Neural networks
         self.conv_model = RhythmConvNet()
@@ -534,8 +514,7 @@ class RhythmPatternAI:
                                     parameters: RhythmParameters,
                                     complexity: RhythmComplexity = RhythmComplexity.MODERATE,
                                     use_neural_network: bool = True) -> RhythmPattern:
-        """Generate rhythm pattern with specified style and parameters"""
-        try:
+        """Generate rhythm pattern with specified style and parameters"""        try:
             start_time = datetime.now()
             pattern_id = f"rhythm_{int(start_time.timestamp())}"
             
@@ -603,8 +582,7 @@ class RhythmPatternAI:
     async def _generate_with_neural_network(self, style: RhythmStyle,
                                           parameters: RhythmParameters,
                                           complexity: RhythmComplexity) -> Dict[DrumVoice, List[float]]:
-        """Generate rhythm using neural network"""
-        try:
+        """Generate rhythm using neural network"""        try:
             # Convert parameters to tensor
             param_tensor = await self._parameters_to_tensor(parameters, complexity)
             
@@ -641,8 +619,7 @@ class RhythmPatternAI:
     async def _generate_with_templates(self, style: RhythmStyle,
                                      parameters: RhythmParameters,
                                      complexity: RhythmComplexity) -> Dict[DrumVoice, List[float]]:
-        """Generate rhythm using style templates"""
-        try:
+        """Generate rhythm using style templates"""        try:
             # Get base template
             template = self.groove_analyzer.groove_templates.get(style)
             if not template:
@@ -706,8 +683,7 @@ class RhythmPatternAI:
             }
     
     async def _extend_pattern(self, base_pattern: List[int], target_length: int) -> List[float]:
-        """Extend a base pattern to target length"""
-        try:
+        """Extend a base pattern to target length"""        try:
             if not base_pattern:
                 return [0.0] * target_length
             
@@ -725,8 +701,7 @@ class RhythmPatternAI:
     async def _apply_complexity(self, pattern: List[float], 
                               complexity: RhythmComplexity,
                               base_velocity: float) -> List[float]:
-        """Apply complexity variations to pattern"""
-        try:
+        """Apply complexity variations to pattern"""        try:
             complexity_multipliers = {
                 RhythmComplexity.SIMPLE: 0.5,
                 RhythmComplexity.MODERATE: 1.0,
@@ -761,8 +736,7 @@ class RhythmPatternAI:
     
     async def _generate_secondary_voice(self, reference_pattern: List[float],
                                       correlation: float) -> List[float]:
-        """Generate secondary voice with specified correlation to reference"""
-        try:
+        """Generate secondary voice with specified correlation to reference"""        try:
             secondary = []
             
             for i, ref_velocity in enumerate(reference_pattern):
@@ -786,8 +760,7 @@ class RhythmPatternAI:
             return [0.0] * len(reference_pattern)
     
     async def _generate_latin_percussion(self, pattern_length: int) -> List[float]:
-        """Generate Latin percussion pattern"""
-        try:
+        """Generate Latin percussion pattern"""        try:
             # Create clave-inspired pattern
             pattern = [0.0] * pattern_length
             
@@ -806,8 +779,7 @@ class RhythmPatternAI:
     
     async def _add_fills(self, drum_patterns: Dict[DrumVoice, List[float]],
                         parameters: RhythmParameters) -> Dict[DrumVoice, List[float]]:
-        """Add fills to drum patterns"""
-        try:
+        """Add fills to drum patterns"""        try:
             pattern_length = len(next(iter(drum_patterns.values())))
             beats_per_bar = int(parameters.time_signature.value.split('/')[0])
             subdivisions_per_bar = beats_per_bar * (parameters.subdivision // 4)
@@ -835,8 +807,7 @@ class RhythmPatternAI:
             return drum_patterns
     
     async def _add_ghost_notes(self, drum_patterns: Dict[DrumVoice, List[float]]) -> Dict[DrumVoice, List[float]]:
-        """Add ghost notes to snare pattern"""
-        try:
+        """Add ghost notes to snare pattern"""        try:
             if DrumVoice.SNARE in drum_patterns:
                 snare_pattern = drum_patterns[DrumVoice.SNARE]
                 
@@ -855,8 +826,7 @@ class RhythmPatternAI:
     
     async def _generate_timing_grid(self, parameters: RhythmParameters,
                                   drum_patterns: Dict[DrumVoice, List[float]]) -> List[float]:
-        """Generate timing grid with swing and groove"""
-        try:
+        """Generate timing grid with swing and groove"""        try:
             pattern_length = len(next(iter(drum_patterns.values())))
             
             # Base timing (straight)
@@ -888,8 +858,7 @@ class RhythmPatternAI:
     async def _apply_humanization(self, drum_patterns: Dict[DrumVoice, List[float]],
                                 timing_grid: List[float], 
                                 humanization_level: float) -> Tuple[Dict[DrumVoice, List[float]], List[float]]:
-        """Apply humanization to patterns and timing"""
-        try:
+        """Apply humanization to patterns and timing"""        try:
             # Humanize velocities
             humanized_patterns = {}
             for voice, pattern in drum_patterns.items():
@@ -918,8 +887,7 @@ class RhythmPatternAI:
             return drum_patterns, timing_grid
     
     async def _calculate_complexity_score(self, drum_patterns: Dict[DrumVoice, List[float]]) -> float:
-        """Calculate complexity score of the pattern"""
-        try:
+        """Calculate complexity score of the pattern"""        try:
             complexity_factors = []
             
             # Number of active voices
@@ -961,8 +929,7 @@ class RhythmPatternAI:
                               timing_grid: List[float],
                               parameters: RhythmParameters,
                               sample_rate: int = 44100) -> np.ndarray:
-        """Synthesize audio from drum patterns"""
-        try:
+        """Synthesize audio from drum patterns"""        try:
             # Calculate total duration
             total_duration = timing_grid[-1] + 0.5 if timing_grid else 4.0
             total_samples = int(total_duration * sample_rate)
@@ -1004,8 +971,7 @@ class RhythmPatternAI:
             return np.array([])
     
     async def _generate_drum_sounds(self, sample_rate: int) -> Dict[DrumVoice, np.ndarray]:
-        """Generate synthetic drum sounds"""
-        try:
+        """Generate synthetic drum sounds"""        try:
             drum_sounds = {}
             
             # Kick drum: Low frequency sine wave with envelope
@@ -1053,8 +1019,7 @@ class RhythmPatternAI:
     async def _generate_midi(self, drum_patterns: Dict[DrumVoice, List[float]],
                            timing_grid: List[float],
                            parameters: RhythmParameters) -> bytes:
-        """Generate MIDI data from drum patterns"""
-        try:
+        """Generate MIDI data from drum patterns"""        try:
             # Create MIDI file
             mid = mido.MidiFile()
             track = mido.MidiTrack()
@@ -1119,8 +1084,7 @@ class RhythmPatternAI:
     
     async def _parameters_to_tensor(self, parameters: RhythmParameters,
                                    complexity: RhythmComplexity) -> torch.Tensor:
-        """Convert parameters to tensor for neural network"""
-        try:
+        """Convert parameters to tensor for neural network"""        try:
             param_values = [
                 (parameters.tempo_bpm - 60) / 140.0,  # Normalize 60-200 BPM
                 list(TimeSignature).index(parameters.time_signature) / len(TimeSignature),
@@ -1140,8 +1104,7 @@ class RhythmPatternAI:
     
     async def analyze_rhythm_similarity(self, pattern1: RhythmPattern,
                                       pattern2: RhythmPattern) -> Dict[str, float]:
-        """Analyze similarity between two rhythm patterns"""
-        try:
+        """Analyze similarity between two rhythm patterns"""        try:
             similarity_metrics = {}
             
             # Voice correlation analysis
@@ -1186,8 +1149,7 @@ class RhythmPatternAI:
     
     async def evolve_rhythm_pattern(self, base_pattern: RhythmPattern,
                                   evolution_strength: float = 0.3) -> RhythmPattern:
-        """Evolve an existing rhythm pattern"""
-        try:
+        """Evolve an existing rhythm pattern"""        try:
             # Create evolved parameters
             evolved_params = base_pattern.generation_parameters
             
@@ -1217,8 +1179,7 @@ class RhythmPatternAI:
             raise
     
     def get_generation_statistics(self) -> Dict[str, Any]:
-        """Get generation performance statistics"""
-        try:
+        """Get generation performance statistics"""        try:
             if not self.generation_history:
                 return {"total_generated": 0}
             

@@ -1,5 +1,4 @@
-"""
-ML Model Cache Configuration for IA-Influencer Agent Platform
+"""ML Model Cache Configuration for IA-Influencer Agent Platform
 ============================================================
 
 Professional caching system for AI/ML models used in content protection,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, Optional, List, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -27,8 +25,7 @@ from pydantic import BaseModel, validator
 
 
 class ModelType(str, Enum):
-    """Types of ML models used in the platform"""
-    # Audio processing models
+    """Types of ML models used in the platform"""    # Audio processing models
     AUDIO_FINGERPRINT = "audio_fingerprint"
     MUSIC_GENRE_CLASSIFICATION = "music_genre_classification"
     AUDIO_QUALITY_ASSESSMENT = "audio_quality_assessment"
@@ -62,8 +59,7 @@ class ModelType(str, Enum):
 
 
 class ModelFormat(str, Enum):
-    """Model serialization formats"""
-    PYTORCH = "pytorch"
+    """Model serialization formats"""    PYTORCH = "pytorch"
     TENSORFLOW = "tensorflow"
     ONNX = "onnx"
     SCIKIT_LEARN = "scikit_learn"
@@ -73,8 +69,7 @@ class ModelFormat(str, Enum):
 
 
 class CacheStrategy(str, Enum):
-    """Model cache strategies"""
-    LAZY_LOADING = "lazy_loading"        # Load on first use
+    """Model cache strategies"""    LAZY_LOADING = "lazy_loading"        # Load on first use
     EAGER_LOADING = "eager_loading"      # Preload all models
     SCHEDULED_LOADING = "scheduled_loading"  # Load based on schedule
     DEMAND_BASED = "demand_based"        # Load based on usage patterns
@@ -82,8 +77,7 @@ class CacheStrategy(str, Enum):
 
 @dataclass
 class ModelCacheSettings:
-    """Cache settings for individual ML models"""
-    model_type: ModelType
+    """Cache settings for individual ML models"""    model_type: ModelType
     model_format: ModelFormat
     model_version: str
     model_size_mb: float
@@ -99,8 +93,7 @@ class ModelCacheSettings:
 
 @dataclass
 class MLModelCacheConfig:
-    """Complete configuration for ML model caching"""
-    
+    """Complete configuration for ML model caching"""    
     # Cache identification
     cache_name: str = "ml_models"
     namespace: str = "ia_influencer_ml"
@@ -231,8 +224,7 @@ class MLModelCacheConfig:
     })
 
     def get_cache_key(self, model_name: str, model_type: ModelType, version: str) -> str:
-        """Generate standardized cache key for ML model"""
-        key_components = [
+        """Generate standardized cache key for ML model"""        key_components = [
             self.redis_key_prefix,
             self.namespace,
             model_type.value,
@@ -244,8 +236,7 @@ class MLModelCacheConfig:
         return ":".join(key_components)
     
     def get_all_models(self) -> Dict[str, ModelCacheSettings]:
-        """Get all configured models"""
-        all_models = {}
+        """Get all configured models"""        all_models = {}
         all_models.update(self.audio_models)
         all_models.update(self.video_models)
         all_models.update(self.text_models)
@@ -254,8 +245,7 @@ class MLModelCacheConfig:
         return all_models
     
     def get_high_priority_models(self) -> List[str]:
-        """Get list of high priority models (priority 1-2)"""
-        high_priority = []
+        """Get list of high priority models (priority 1-2)"""        high_priority = []
         for name, settings in self.get_all_models().items():
             if settings.priority <= 2:
                 high_priority.append(name)
@@ -263,8 +253,7 @@ class MLModelCacheConfig:
 
 
 class MLModelCacheManager:
-    """Manager for ML model cache operations"""
-    
+    """Manager for ML model cache operations"""    
     def __init__(self, config: MLModelCacheConfig):
         self.config = config
         self._loaded_models = {}
@@ -272,8 +261,7 @@ class MLModelCacheManager:
         self._performance_metrics = {}
     
     def calculate_memory_usage(self) -> Dict[str, float]:
-        """Calculate current memory usage of cached models"""
-        total_memory_mb = 0
+        """Calculate current memory usage of cached models"""        total_memory_mb = 0
         memory_by_type = {}
         
         for model_name, settings in self.config.get_all_models().items():
@@ -292,8 +280,7 @@ class MLModelCacheManager:
         }
     
     def get_model_load_priority(self) -> List[tuple]:
-        """Get models ordered by loading priority"""
-        models = []
+        """Get models ordered by loading priority"""        models = []
         for name, settings in self.config.get_all_models().items():
             models.append((name, settings.priority, settings.memory_requirements_mb))
         
@@ -301,16 +288,14 @@ class MLModelCacheManager:
         return sorted(models, key=lambda x: (x[1], -x[2]))
     
     def generate_model_hash(self, model_path: str, model_version: str) -> str:
-        """Generate hash for model integrity verification"""
-        hasher = hashlib.sha256()
+        """Generate hash for model integrity verification"""        hasher = hashlib.sha256()
         hasher.update(model_path.encode())
         hasher.update(model_version.encode())
         hasher.update(str(datetime.now().date()).encode())  # Include date for versioning
         return hasher.hexdigest()
     
     def get_cache_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive cache statistics"""
-        memory_usage = self.calculate_memory_usage()
+        """Get comprehensive cache statistics"""        memory_usage = self.calculate_memory_usage()
         
         return {
             "loaded_models_count": len(self._loaded_models),
@@ -324,15 +309,13 @@ class MLModelCacheManager:
         }
     
     def _get_models_by_priority(self) -> Dict[int, int]:
-        """Count models by priority level"""
-        priority_counts = {}
+        """Count models by priority level"""        priority_counts = {}
         for settings in self.config.get_all_models().values():
             priority_counts[settings.priority] = priority_counts.get(settings.priority, 0) + 1
         return priority_counts
     
     def _count_gpu_models(self) -> int:
-        """Count models that require GPU"""
-        return sum(1 for settings in self.config.get_all_models().values() 
+        """Count models that require GPU"""        return sum(1 for settings in self.config.get_all_models().values() 
                   if settings.gpu_required)
 
 

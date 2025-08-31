@@ -1,5 +1,4 @@
-"""
-🔐 Access Controller - IA Influencer Agent Platform Enterprise
+"""🔐 Access Controller - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/storage/access_controller.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,7 +17,6 @@ Contact: mlaiel@live.de
 - Security: Fahed Mlaiel
 - DevOps: Fahed Mlaiel
 """
-
 from typing import Dict, List, Optional, Any, Union, Set, Tuple, Callable
 import logging
 import asyncio
@@ -39,16 +37,14 @@ from functools import wraps
 logger = logging.getLogger(__name__)
 
 class AccessLevel(Enum):
-    """Access levels for resources"""
-    NONE = "none"
+    """Access levels for resources"""    NONE = "none"
     READ = "read"
     WRITE = "write"
     ADMIN = "admin"
     OWNER = "owner"
 
 class ResourceType(Enum):
-    """Types of storage resources"""
-    FILE = "file"
+    """Types of storage resources"""    FILE = "file"
     DIRECTORY = "directory"
     BACKUP = "backup"
     ARCHIVE = "archive"
@@ -56,8 +52,7 @@ class ResourceType(Enum):
     SYSTEM = "system"
 
 class PermissionType(Enum):
-    """Types of permissions"""
-    READ = "read"
+    """Types of permissions"""    READ = "read"
     WRITE = "write"
     DELETE = "delete"
     EXECUTE = "execute"
@@ -67,8 +62,7 @@ class PermissionType(Enum):
     UPLOAD = "upload"
 
 class UserRole(Enum):
-    """User roles in the system"""
-    GUEST = "guest"
+    """User roles in the system"""    GUEST = "guest"
     USER = "user"
     EDITOR = "editor"
     MODERATOR = "moderator"
@@ -77,8 +71,7 @@ class UserRole(Enum):
     SYSTEM = "system"
 
 class AuditAction(Enum):
-    """Actions that can be audited"""
-    LOGIN = "login"
+    """Actions that can be audited"""    LOGIN = "login"
     LOGOUT = "logout"
     ACCESS_GRANTED = "access_granted"
     ACCESS_DENIED = "access_denied"
@@ -94,8 +87,7 @@ class AuditAction(Enum):
 
 @dataclass
 class User:
-    """Represents a user in the system"""
-    user_id: str
+    """Represents a user in the system"""    user_id: str
     username: str
     email: str
     password_hash: str
@@ -124,8 +116,7 @@ class User:
 
 @dataclass
 class AccessPolicy:
-    """Defines access policies for resources"""
-    policy_id: str
+    """Defines access policies for resources"""    policy_id: str
     name: str
     description: str
     
@@ -156,8 +147,7 @@ class AccessPolicy:
 
 @dataclass
 class AccessRequest:
-    """Represents an access request"""
-    request_id: str
+    """Represents an access request"""    request_id: str
     user_id: str
     resource_path: str
     resource_type: ResourceType
@@ -178,8 +168,7 @@ class AccessRequest:
 
 @dataclass
 class AccessDecision:
-    """Result of access control decision"""
-    request_id: str
+    """Result of access control decision"""    request_id: str
     granted: bool
     granted_permissions: List[PermissionType] = field(default_factory=list)
     denied_permissions: List[PermissionType] = field(default_factory=list)
@@ -199,8 +188,7 @@ class AccessDecision:
 
 @dataclass
 class AuditEntry:
-    """Audit log entry"""
-    entry_id: str
+    """Audit log entry"""    entry_id: str
     user_id: str
     action: AuditAction
     resource_path: str
@@ -224,8 +212,7 @@ class AuditEntry:
 
 @dataclass
 class AccessConfig:
-    """Configuration for access controller"""
-    storage_root_path: str
+    """Configuration for access controller"""    storage_root_path: str
     users_directory: str
     policies_directory: str
     audit_directory: str
@@ -259,8 +246,7 @@ class AccessConfig:
     require_email_verification: bool = True
 
 class AccessController:
-    """
-    Enterprise access control system for storage resources.
+    """    Enterprise access control system for storage resources.
     
     Features:
     - Role-based access control (RBAC)
@@ -269,11 +255,9 @@ class AccessController:
     - Session management
     - Security monitoring
     - Multi-factor authentication support
-    """
-    
+    """    
     def __init__(self, config: AccessConfig):
-        """Initialize access controller"""
-        self.config = config
+        """Initialize access controller"""        self.config = config
         self.users: Dict[str, User] = {}
         self.policies: Dict[str, AccessPolicy] = {}
         self.audit_entries: List[AuditEntry] = []
@@ -312,8 +296,7 @@ class AccessController:
         logger.info("AccessController initialized successfully")
     
     def _initialize_access_directories(self) -> None:
-        """Initialize access control directories"""
-        try:
+        """Initialize access control directories"""        try:
             directories = [
                 self.config.storage_root_path,
                 self.config.users_directory,
@@ -341,8 +324,7 @@ class AccessController:
             raise
     
     async def create_user(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create new user account"""
-        try:
+        """Create new user account"""        try:
             # Validate required fields
             required_fields = ['username', 'email', 'password']
             for field in required_fields:
@@ -444,8 +426,7 @@ class AccessController:
         ip_address: str = "",
         user_agent: str = ""
     ) -> Dict[str, Any]:
-        """Authenticate user credentials"""
-        try:
+        """Authenticate user credentials"""        try:
             start_time = time.time()
             
             # Find user
@@ -596,8 +577,7 @@ class AccessController:
         permissions: List[PermissionType],
         context: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Check if user has access to resource with specified permissions"""
-        try:
+        """Check if user has access to resource with specified permissions"""        try:
             start_time = time.time()
             
             # Get user
@@ -683,8 +663,7 @@ class AccessController:
             }
     
     async def create_access_policy(self, policy_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create new access policy"""
-        try:
+        """Create new access policy"""        try:
             # Validate required fields
             required_fields = ['name', 'resource_patterns']
             for field in required_fields:
@@ -758,8 +737,7 @@ class AccessController:
             }
     
     async def get_user_permissions(self, user_id: str, resource_path: str) -> Dict[str, Any]:
-        """Get effective permissions for user on resource"""
-        try:
+        """Get effective permissions for user on resource"""        try:
             if user_id not in self.users:
                 return {
                     'success': False,
@@ -811,8 +789,7 @@ class AccessController:
         filters: Optional[Dict[str, Any]] = None,
         limit: int = 100
     ) -> Dict[str, Any]:
-        """Get audit log entries with filtering"""
-        try:
+        """Get audit log entries with filtering"""        try:
             return await self.audit_manager.get_audit_entries(filters, limit)
             
         except Exception as e:
@@ -823,8 +800,7 @@ class AccessController:
             }
     
     def get_access_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive access control statistics"""
-        try:
+        """Get comprehensive access control statistics"""        try:
             # User statistics
             total_users = len(self.users)
             active_users = len([u for u in self.users.values() if u.is_active])
@@ -881,8 +857,7 @@ class AccessController:
     # Private implementation methods
     
     def _validate_password(self, password: str) -> Dict[str, Any]:
-        """Validate password strength"""
-        if len(password) < self.config.password_min_length:
+        """Validate password strength"""        if len(password) < self.config.password_min_length:
             return {
                 'valid': False,
                 'error': f'Password must be at least {self.config.password_min_length} characters'
@@ -894,8 +869,7 @@ class AccessController:
         return {'valid': True}
     
     def _determine_resource_type(self, resource_path: str) -> ResourceType:
-        """Determine resource type from path"""
-        path = Path(resource_path)
+        """Determine resource type from path"""        path = Path(resource_path)
         
         if 'backup' in str(path):
             return ResourceType.BACKUP
@@ -909,8 +883,7 @@ class AccessController:
             return ResourceType.FILE
     
     async def _load_initial_data(self) -> None:
-        """Load initial data from disk"""
-        try:
+        """Load initial data from disk"""        try:
             # Load users
             users_dir = Path(self.config.users_directory)
             if users_dir.exists():
@@ -987,8 +960,7 @@ class AccessController:
             logger.error(f"Failed to load initial data: {str(e)}")
     
     async def _start_background_tasks(self) -> None:
-        """Start background maintenance tasks"""
-        try:
+        """Start background maintenance tasks"""        try:
             # Start session cleanup
             asyncio.create_task(self._session_cleanup_task())
             
@@ -1002,8 +974,7 @@ class AccessController:
             logger.error(f"Failed to start background tasks: {str(e)}")
     
     async def _session_cleanup_task(self) -> None:
-        """Clean up expired sessions"""
-        while True:
+        """Clean up expired sessions"""        while True:
             try:
                 await asyncio.sleep(300)  # Check every 5 minutes
                 
@@ -1024,8 +995,7 @@ class AccessController:
                 logger.error(f"Session cleanup error: {str(e)}")
     
     async def _cache_cleanup_task(self) -> None:
-        """Clean up expired cache entries"""
-        while True:
+        """Clean up expired cache entries"""        while True:
             try:
                 await asyncio.sleep(600)  # Check every 10 minutes
                 
@@ -1046,8 +1016,7 @@ class AccessController:
                 logger.error(f"Cache cleanup error: {str(e)}")
     
     async def _audit_cleanup_task(self) -> None:
-        """Clean up old audit entries"""
-        while True:
+        """Clean up old audit entries"""        while True:
             try:
                 await asyncio.sleep(3600)  # Check every hour
                 
@@ -1062,8 +1031,7 @@ class AccessController:
                 logger.error(f"Audit cleanup error: {str(e)}")
     
     async def _save_user(self, user: User) -> None:
-        """Save user to disk"""
-        try:
+        """Save user to disk"""        try:
             user_path = Path(self.config.users_directory) / f"{user.user_id}.json"
             
             user_data = {
@@ -1094,8 +1062,7 @@ class AccessController:
             logger.error(f"Failed to save user: {str(e)}")
     
     async def _save_policy(self, policy: AccessPolicy) -> None:
-        """Save policy to disk"""
-        try:
+        """Save policy to disk"""        try:
             policy_path = Path(self.config.policies_directory) / "active" / f"{policy.policy_id}.json"
             
             policy_data = {
@@ -1127,15 +1094,12 @@ class AccessController:
 
 
 class AuthenticationManager:
-    """Manages user authentication"""
-    
+    """Manages user authentication"""    
     def __init__(self, access_controller: AccessController):
-        """Initialize authentication manager"""
-        self.access_controller = access_controller
+        """Initialize authentication manager"""        self.access_controller = access_controller
     
     async def generate_token(self, user: User) -> str:
-        """Generate JWT token for user"""
-        try:
+        """Generate JWT token for user"""        try:
             payload = {
                 'user_id': user.user_id,
                 'username': user.username,
@@ -1157,8 +1121,7 @@ class AuthenticationManager:
             raise
     
     async def verify_token(self, token: str) -> Dict[str, Any]:
-        """Verify JWT token"""
-        try:
+        """Verify JWT token"""        try:
             payload = jwt.decode(
                 token,
                 self.access_controller.config.jwt_secret_key,
@@ -1189,15 +1152,12 @@ class AuthenticationManager:
 
 
 class AuthorizationManager:
-    """Manages authorization decisions"""
-    
+    """Manages authorization decisions"""    
     def __init__(self, access_controller: AccessController):
-        """Initialize authorization manager"""
-        self.access_controller = access_controller
+        """Initialize authorization manager"""        self.access_controller = access_controller
     
     async def make_decision(self, request: AccessRequest, user: User) -> AccessDecision:
-        """Make authorization decision"""
-        try:
+        """Make authorization decision"""        try:
             start_time = datetime.now()
             
             # Get applicable policies
@@ -1250,8 +1210,7 @@ class AuthorizationManager:
             )
     
     async def calculate_effective_permissions(self, user: User, resource_path: str) -> List[str]:
-        """Calculate effective permissions for user on resource"""
-        try:
+        """Calculate effective permissions for user on resource"""        try:
             # Get applicable policies
             request = AccessRequest(
                 request_id="calc_perms",
@@ -1281,8 +1240,7 @@ class AuthorizationManager:
             return []
     
     async def _get_applicable_policies(self, request: AccessRequest, user: User) -> List[AccessPolicy]:
-        """Get policies applicable to the request"""
-        applicable_policies = []
+        """Get policies applicable to the request"""        applicable_policies = []
         
         for policy in self.access_controller.policies.values():
             if not policy.is_active:
@@ -1305,16 +1263,14 @@ class AuthorizationManager:
         return applicable_policies
     
     def _resource_matches_patterns(self, resource_path: str, patterns: List[str]) -> bool:
-        """Check if resource path matches any of the patterns"""
-        for pattern in patterns:
+        """Check if resource path matches any of the patterns"""        for pattern in patterns:
             # Simple glob-like pattern matching
             if pattern == "*" or pattern in resource_path:
                 return True
         return False
     
     async def _user_matches_policy(self, user: User, policy: AccessPolicy) -> bool:
-        """Check if user matches policy criteria"""
-        # Check denied users first
+        """Check if user matches policy criteria"""        # Check denied users first
         if user.user_id in policy.denied_users:
             return False
         
@@ -1345,8 +1301,7 @@ class AuthorizationManager:
         permission: PermissionType,
         applicable_policies: List[AccessPolicy]
     ) -> bool:
-        """Check if user has specific permission"""
-        # Check if any applicable policy grants the permission
+        """Check if user has specific permission"""        # Check if any applicable policy grants the permission
         for policy in applicable_policies:
             if permission in policy.permissions:
                 return True
@@ -1359,8 +1314,7 @@ class AuthorizationManager:
         return False
     
     def _get_role_permissions(self, role: UserRole) -> List[str]:
-        """Get default permissions for role"""
-        role_permissions = {
+        """Get default permissions for role"""        role_permissions = {
             UserRole.GUEST: ['read'],
             UserRole.USER: ['read', 'write', 'download'],
             UserRole.EDITOR: ['read', 'write', 'delete', 'download', 'upload'],
@@ -1374,11 +1328,9 @@ class AuthorizationManager:
 
 
 class AuditManager:
-    """Manages audit logging"""
-    
+    """Manages audit logging"""    
     def __init__(self, access_controller: AccessController):
-        """Initialize audit manager"""
-        self.access_controller = access_controller
+        """Initialize audit manager"""        self.access_controller = access_controller
     
     async def log_action(
         self,
@@ -1392,8 +1344,7 @@ class AuditManager:
         session_id: str = "",
         duration_ms: Optional[float] = None
     ) -> None:
-        """Log audit action"""
-        try:
+        """Log audit action"""        try:
             if not self.access_controller.config.audit_enabled:
                 return
             
@@ -1431,8 +1382,7 @@ class AuditManager:
         filters: Optional[Dict[str, Any]] = None,
         limit: int = 100
     ) -> Dict[str, Any]:
-        """Get audit entries with filtering"""
-        try:
+        """Get audit entries with filtering"""        try:
             filters = filters or {}
             filtered_entries = []
             
@@ -1496,8 +1446,7 @@ class AuditManager:
             }
     
     async def _save_audit_entry(self, audit_entry: AuditEntry) -> None:
-        """Save audit entry to disk"""
-        try:
+        """Save audit entry to disk"""        try:
             # Create date-based directory structure
             date_str = audit_entry.timestamp.strftime("%Y/%m/%d")
             audit_dir = Path(self.access_controller.config.audit_directory) / "access" / date_str
@@ -1530,15 +1479,12 @@ class AuditManager:
 
 
 class SessionManager:
-    """Manages user sessions"""
-    
+    """Manages user sessions"""    
     def __init__(self, access_controller: AccessController):
-        """Initialize session manager"""
-        self.access_controller = access_controller
+        """Initialize session manager"""        self.access_controller = access_controller
     
     async def create_session(self, user: User, ip_address: str, user_agent: str) -> str:
-        """Create new user session"""
-        try:
+        """Create new user session"""        try:
             session_id = secrets.token_urlsafe(32)
             
             session_data = {
@@ -1576,8 +1522,7 @@ class SessionManager:
             raise
     
     async def validate_session(self, session_id: str) -> Dict[str, Any]:
-        """Validate session"""
-        try:
+        """Validate session"""        try:
             if session_id not in self.access_controller.active_sessions:
                 return {
                     'valid': False,
@@ -1610,8 +1555,7 @@ class SessionManager:
             }
     
     async def terminate_session(self, session_id: str) -> Dict[str, Any]:
-        """Terminate session"""
-        try:
+        """Terminate session"""        try:
             if session_id in self.access_controller.active_sessions:
                 session_data = self.access_controller.active_sessions[session_id]
                 del self.access_controller.active_sessions[session_id]
@@ -1646,8 +1590,7 @@ class SessionManager:
 
 # Decorator for access control
 def require_permission(permission: PermissionType):
-    """Decorator to require specific permission for function access"""
-    def decorator(func: Callable) -> Callable:
+    """Decorator to require specific permission for function access"""    def decorator(func: Callable) -> Callable:
         @wraps(func)
         async def wrapper(*args, **kwargs):
             # This would implement the actual permission check

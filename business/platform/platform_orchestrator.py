@@ -1,5 +1,4 @@
-"""
-Platform Orchestrator - Central Platform Management System
+"""Platform Orchestrator - Central Platform Management System
 
 Coordinates all platform operations including content lifecycle management,
 AI protection workflows, and multi-platform distribution orchestration.
@@ -7,7 +6,6 @@ AI protection workflows, and multi-platform distribution orchestration.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Optional, Any, Union
@@ -31,8 +29,7 @@ from ...services.notification.notification_service import NotificationService
 logger = get_logger(__name__)
 
 class PlatformOperation(Enum):
-    """Platform operation types"""
-    CONTENT_UPLOAD = "content_upload"
+    """Platform operation types"""    CONTENT_UPLOAD = "content_upload"
     CONTENT_PROTECTION = "content_protection"
     CONTENT_DISTRIBUTION = "content_distribution"
     COLLABORATION_MATCH = "collaboration_match"
@@ -41,8 +38,7 @@ class PlatformOperation(Enum):
 
 @dataclass
 class PlatformWorkflow:
-    """Platform workflow configuration"""
-    workflow_id: str
+    """Platform workflow configuration"""    workflow_id: str
     user_id: int
     content_id: int
     operations: List[PlatformOperation]
@@ -51,8 +47,7 @@ class PlatformWorkflow:
     created_at: datetime = None
 
 class PlatformOrchestrator:
-    """
-    Central platform orchestrator managing all platform operations
+    """    Central platform orchestrator managing all platform operations
     
     Handles:
     - Content lifecycle management
@@ -60,8 +55,7 @@ class PlatformOrchestrator:
     - Multi-platform distribution
     - Creator collaboration orchestration
     - Real-time workflow monitoring
-    """
-    
+    """    
     def __init__(self):
         self.content_protection = ContentProtectionService()
         self.content_analysis = ContentAnalysisService()
@@ -70,13 +64,11 @@ class PlatformOrchestrator:
         self.workflow_queue = asyncio.Queue(maxsize=1000)
         
     async def initialize_platform(self) -> bool:
-        """
-        Initialize platform orchestrator
+        """        Initialize platform orchestrator
         
         Returns:
             bool: Initialization success status
-        """
-        try:
+        """        try:
             logger.info("Initializing Platform Orchestrator...")
             
             # Initialize core services
@@ -102,8 +94,7 @@ class PlatformOrchestrator:
         background_tasks: BackgroundTasks,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Orchestrate complete content lifecycle from upload to distribution
+        """        Orchestrate complete content lifecycle from upload to distribution
         
         Args:
             user_id: Creator user ID
@@ -114,8 +105,7 @@ class PlatformOrchestrator:
             
         Returns:
             Dict containing workflow information and status
-        """
-        try:
+        """        try:
             # Validate creator permissions
             creator = await self._validate_creator_permissions(user_id, session)
             if not creator:
@@ -186,8 +176,7 @@ class PlatformOrchestrator:
         protection_level: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Orchestrate AI content protection workflow
+        """        Orchestrate AI content protection workflow
         
         Args:
             content_id: Content item ID
@@ -196,8 +185,7 @@ class PlatformOrchestrator:
             
         Returns:
             Dict containing protection workflow status
-        """
-        try:
+        """        try:
             # Get content item
             result = await session.execute(
                 select(ContentItem).where(ContentItem.id == content_id)
@@ -246,8 +234,7 @@ class PlatformOrchestrator:
         distribution_config: Dict[str, Any],
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """
-        Orchestrate multi-platform content distribution
+        """        Orchestrate multi-platform content distribution
         
         Args:
             content_id: Content item ID
@@ -257,8 +244,7 @@ class PlatformOrchestrator:
             
         Returns:
             Dict containing distribution workflow status
-        """
-        try:
+        """        try:
             # Get content item
             result = await session.execute(
                 select(ContentItem).where(ContentItem.id == content_id)
@@ -314,16 +300,14 @@ class PlatformOrchestrator:
         self,
         workflow_id: str
     ) -> Dict[str, Any]:
-        """
-        Get workflow status and progress information
+        """        Get workflow status and progress information
         
         Args:
             workflow_id: Workflow identifier
             
         Returns:
             Dict containing workflow status information
-        """
-        try:
+        """        try:
             workflow = self.active_workflows.get(workflow_id)
             if not workflow:
                 raise HTTPException(status_code=404, detail="Workflow not found")
@@ -350,8 +334,7 @@ class PlatformOrchestrator:
         user_id: int,
         session: AsyncSession
     ) -> Optional[User]:
-        """Validate creator permissions and subscription level"""
-        result = await session.execute(
+        """Validate creator permissions and subscription level"""        result = await session.execute(
             select(User).where(
                 and_(
                     User.id == user_id,
@@ -368,8 +351,7 @@ class PlatformOrchestrator:
         content_item: ContentItem,
         content_type: str
     ) -> List[PlatformOperation]:
-        """Determine workflow operations based on creator and content"""
-        operations = [PlatformOperation.CONTENT_UPLOAD]
+        """Determine workflow operations based on creator and content"""        operations = [PlatformOperation.CONTENT_UPLOAD]
         
         # AI protection for premium creators or specific content types
         if creator.role == UserRole.PREMIUM_CREATOR or content_type in ['audio', 'video']:
@@ -393,8 +375,7 @@ class PlatformOrchestrator:
         return operations
     
     def _calculate_workflow_priority(self, creator: User) -> int:
-        """Calculate workflow priority based on creator tier"""
-        if creator.role == UserRole.PREMIUM_CREATOR:
+        """Calculate workflow priority based on creator tier"""        if creator.role == UserRole.PREMIUM_CREATOR:
             return 1  # High priority
         elif creator.role == UserRole.CREATOR:
             return 2  # Medium priority
@@ -402,8 +383,7 @@ class PlatformOrchestrator:
             return 3  # Low priority
     
     async def _process_workflow_queue(self):
-        """Background task to process workflow queue"""
-        while True:
+        """Background task to process workflow queue"""        while True:
             try:
                 # Get workflow from queue
                 workflow = await self.workflow_queue.get()
@@ -419,8 +399,7 @@ class PlatformOrchestrator:
                 await asyncio.sleep(5)  # Wait before retry
     
     async def _execute_workflow_operations(self, workflow: PlatformWorkflow):
-        """Execute workflow operations sequentially"""
-        try:
+        """Execute workflow operations sequentially"""        try:
             for operation in workflow.operations:
                 logger.info(f"Executing operation: {operation.value} for workflow: {workflow.workflow_id}")
                 
@@ -436,8 +415,7 @@ class PlatformOrchestrator:
             logger.error(f"Workflow execution failed: {workflow.workflow_id} - {e}")
     
     async def _execute_operation(self, workflow: PlatformWorkflow, operation: PlatformOperation):
-        """Execute specific workflow operation"""
-        operation_handlers = {
+        """Execute specific workflow operation"""        operation_handlers = {
             PlatformOperation.CONTENT_UPLOAD: self._handle_content_upload,
             PlatformOperation.CONTENT_PROTECTION: self._handle_content_protection,
             PlatformOperation.CONTENT_DISTRIBUTION: self._handle_content_distribution,
@@ -453,38 +431,31 @@ class PlatformOrchestrator:
             logger.warning(f"Unknown operation: {operation.value}")
     
     async def _handle_content_upload(self, workflow: PlatformWorkflow):
-        """Handle content upload operation"""
-        # Implementation for content upload processing
+        """Handle content upload operation"""        # Implementation for content upload processing
         logger.info(f"Processing content upload for workflow: {workflow.workflow_id}")
     
     async def _handle_content_protection(self, workflow: PlatformWorkflow):
-        """Handle content protection operation"""
-        # Implementation for AI content protection
+        """Handle content protection operation"""        # Implementation for AI content protection
         logger.info(f"Processing content protection for workflow: {workflow.workflow_id}")
     
     async def _handle_content_distribution(self, workflow: PlatformWorkflow):
-        """Handle content distribution operation"""
-        # Implementation for multi-platform distribution
+        """Handle content distribution operation"""        # Implementation for multi-platform distribution
         logger.info(f"Processing content distribution for workflow: {workflow.workflow_id}")
     
     async def _handle_collaboration_match(self, workflow: PlatformWorkflow):
-        """Handle collaboration matching operation"""
-        # Implementation for creator collaboration matching
+        """Handle collaboration matching operation"""        # Implementation for creator collaboration matching
         logger.info(f"Processing collaboration match for workflow: {workflow.workflow_id}")
     
     async def _handle_monetization_track(self, workflow: PlatformWorkflow):
-        """Handle monetization tracking operation"""
-        # Implementation for revenue tracking
+        """Handle monetization tracking operation"""        # Implementation for revenue tracking
         logger.info(f"Processing monetization tracking for workflow: {workflow.workflow_id}")
     
     async def _handle_analytics_process(self, workflow: PlatformWorkflow):
-        """Handle analytics processing operation"""
-        # Implementation for analytics processing
+        """Handle analytics processing operation"""        # Implementation for analytics processing
         logger.info(f"Processing analytics for workflow: {workflow.workflow_id}")
     
     async def _monitor_workflow_progress(self, workflow_id: str, session: AsyncSession):
-        """Monitor and update workflow progress"""
-        try:
+        """Monitor and update workflow progress"""        try:
             while workflow_id in self.active_workflows:
                 # Check workflow progress
                 progress = await self._calculate_workflow_progress(
@@ -508,8 +479,7 @@ class PlatformOrchestrator:
             logger.error(f"Workflow monitoring failed: {e}")
     
     async def _calculate_workflow_progress(self, workflow: PlatformWorkflow) -> Dict[str, Any]:
-        """Calculate workflow progress"""
-        # Implementation for progress calculation
+        """Calculate workflow progress"""        # Implementation for progress calculation
         return {
             'status': 'processing',
             'percentage': 50,
@@ -526,13 +496,11 @@ class PlatformOrchestrator:
         protection_level: str,
         session: AsyncSession
     ):
-        """Store fingerprint data in database"""
-        # Implementation for storing fingerprint data
+        """Store fingerprint data in database"""        # Implementation for storing fingerprint data
         logger.info(f"Storing fingerprint data for content: {content_item.id}")
     
     async def _initiate_content_monitoring(self, content_item: ContentItem, session: AsyncSession):
-        """Initiate content monitoring for protected content"""
-        # Implementation for content monitoring initiation
+        """Initiate content monitoring for protected content"""        # Implementation for content monitoring initiation
         logger.info(f"Initiating content monitoring for: {content_item.id}")
     
     async def _validate_platform_compatibility(
@@ -540,8 +508,7 @@ class PlatformOrchestrator:
         content_item: ContentItem,
         target_platforms: List[str]
     ) -> List[str]:
-        """Validate platform compatibility for content"""
-        # Implementation for platform compatibility validation
+        """Validate platform compatibility for content"""        # Implementation for platform compatibility validation
         return target_platforms  # Simplified for now
     
     async def _optimize_content_for_platform(
@@ -550,8 +517,7 @@ class PlatformOrchestrator:
         platform: str,
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize content for specific platform"""
-        # Implementation for platform-specific content optimization
+        """Optimize content for specific platform"""        # Implementation for platform-specific content optimization
         return {'optimized': True, 'platform': platform}
     
     async def _schedule_platform_distribution(
@@ -560,6 +526,5 @@ class PlatformOrchestrator:
         optimized_data: Dict[str, Any],
         config: Dict[str, Any]
     ) -> str:
-        """Schedule distribution task for platform"""
-        # Implementation for distribution task scheduling
+        """Schedule distribution task for platform"""        # Implementation for distribution task scheduling
         return f"task_{platform}_{datetime.utcnow().timestamp()}"

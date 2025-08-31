@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Real-time Alert Configuration
+"""IA Influencer Agent - Real-time Alert Configuration
 Enterprise alerting system for content protection network infrastructure
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional
@@ -31,16 +29,14 @@ logger = logging.getLogger(__name__)
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    LOW = "low"
+    """Alert severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class AlertChannel(Enum):
-    """Alert notification channels"""
-    EMAIL = "email"
+    """Alert notification channels"""    EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -49,8 +45,7 @@ class AlertChannel(Enum):
 
 @dataclass
 class AlertRule:
-    """Alert rule configuration"""
-    name: str
+    """Alert rule configuration"""    name: str
     condition: str
     severity: AlertSeverity
     description: str
@@ -63,8 +58,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Alert instance"""
-    id: str
+    """Alert instance"""    id: str
     rule_name: str
     severity: AlertSeverity
     title: str
@@ -76,11 +70,9 @@ class Alert:
 
 
 class NetworkAlertManager:
-    """
-    Real-time alert management for IA Influencer Agent Network Module
+    """    Real-time alert management for IA Influencer Agent Network Module
     Provides intelligent alerting with escalation and noise reduction
-    """
-    
+    """    
     def __init__(
         self,
         redis_url: str = "redis://localhost:6379",
@@ -105,8 +97,7 @@ class NetworkAlertManager:
         self._initialize_default_rules()
     
     def _initialize_default_rules(self):
-        """Initialize default alert rules for IA platform"""
-        
+        """Initialize default alert rules for IA platform"""        
         default_rules = [
             # Content Protection Alerts
             AlertRule(
@@ -263,8 +254,7 @@ class NetworkAlertManager:
             self.alert_rules[rule.name] = rule
     
     async def initialize(self) -> bool:
-        """Initialize alert manager"""
-        try:
+        """Initialize alert manager"""        try:
             logger.info("Initializing Network Alert Manager...")
             
             # Initialize Redis for alert storage
@@ -295,8 +285,7 @@ class NetworkAlertManager:
         description: str,
         metadata: Dict[str, Any] = None
     ) -> Optional[str]:
-        """Trigger an alert based on rule"""
-        try:
+        """Trigger an alert based on rule"""        try:
             # Check if rule exists
             if rule_name not in self.alert_rules:
                 logger.error(f"Alert rule not found: {rule_name}")
@@ -344,8 +333,7 @@ class NetworkAlertManager:
             return None
     
     async def resolve_alert(self, alert_id: str, resolution_note: str = None) -> bool:
-        """Resolve an active alert"""
-        try:
+        """Resolve an active alert"""        try:
             if alert_id not in self.active_alerts:
                 logger.error(f"Alert not found: {alert_id}")
                 return False
@@ -377,8 +365,7 @@ class NetworkAlertManager:
             return False
     
     async def get_active_alerts(self, severity: AlertSeverity = None) -> List[Alert]:
-        """Get list of active alerts"""
-        try:
+        """Get list of active alerts"""        try:
             alerts = list(self.active_alerts.values())
             
             if severity:
@@ -400,8 +387,7 @@ class NetworkAlertManager:
             return []
     
     async def get_alert_statistics(self, time_range: timedelta = timedelta(days=7)) -> Dict[str, Any]:
-        """Get alert statistics for time range"""
-        try:
+        """Get alert statistics for time range"""        try:
             end_time = datetime.now()
             start_time = end_time - time_range
             
@@ -460,8 +446,7 @@ class NetworkAlertManager:
             return {}
     
     async def create_custom_rule(self, rule: AlertRule) -> bool:
-        """Create a custom alert rule"""
-        try:
+        """Create a custom alert rule"""        try:
             # Validate rule
             if not rule.name or not rule.condition:
                 logger.error("Alert rule missing required fields")
@@ -479,8 +464,7 @@ class NetworkAlertManager:
             return False
     
     async def update_rule_status(self, rule_name: str, enabled: bool) -> bool:
-        """Enable or disable an alert rule"""
-        try:
+        """Enable or disable an alert rule"""        try:
             if rule_name not in self.alert_rules:
                 logger.error(f"Alert rule not found: {rule_name}")
                 return False
@@ -498,8 +482,7 @@ class NetworkAlertManager:
     # Private methods for internal functionality
     
     async def _setup_notification_channels(self):
-        """Setup notification channels"""
-        try:
+        """Setup notification channels"""        try:
             # Email channel
             if self.email_config:
                 self.notification_channels[AlertChannel.EMAIL] = self.email_config
@@ -516,8 +499,7 @@ class NetworkAlertManager:
             logger.error(f"Failed to setup notification channels: {e}")
     
     async def _send_notifications(self, alert: Alert, rule: AlertRule):
-        """Send alert notifications through configured channels"""
-        try:
+        """Send alert notifications through configured channels"""        try:
             if not rule.channels:
                 return
             
@@ -529,8 +511,7 @@ class NetworkAlertManager:
             logger.error(f"Failed to send notifications: {e}")
     
     async def _send_channel_notification(self, alert: Alert, channel: AlertChannel):
-        """Send notification through specific channel"""
-        try:
+        """Send notification through specific channel"""        try:
             if channel == AlertChannel.EMAIL:
                 await self._send_email_notification(alert)
             elif channel == AlertChannel.SLACK:
@@ -542,8 +523,7 @@ class NetworkAlertManager:
             logger.error(f"Failed to send {channel.value} notification: {e}")
     
     async def _alert_processing_loop(self):
-        """Background alert processing loop"""
-        while True:
+        """Background alert processing loop"""        while True:
             try:
                 await asyncio.sleep(30)  # Check every 30 seconds
                 await self._process_auto_resolve()
@@ -556,8 +536,7 @@ class NetworkAlertManager:
 
 # Example usage and testing
 async def demo_alert_manager():
-    """Demonstrate alert manager functionality"""
-    
+    """Demonstrate alert manager functionality"""    
     print("🚨 IA Influencer Agent - Network Alert Manager Demo")
     print("=" * 60)
     

@@ -1,5 +1,4 @@
-"""
-Platform API Cache Configuration for IA-Influencer Agent Platform
+"""Platform API Cache Configuration for IA-Influencer Agent Platform
 ================================================================
 
 Professional caching system for external platform APIs including Spotify, YouTube, 
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, Optional, List, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -26,8 +24,7 @@ from pydantic import BaseModel, validator
 
 
 class PlatformType(str, Enum):
-    """Supported external platforms"""
-    SPOTIFY = "spotify"
+    """Supported external platforms"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -42,8 +39,7 @@ class PlatformType(str, Enum):
 
 
 class APIEndpointType(str, Enum):
-    """Types of API endpoints"""
-    # User data endpoints
+    """Types of API endpoints"""    # User data endpoints
     USER_PROFILE = "user_profile"
     USER_ANALYTICS = "user_analytics"
     USER_CONTENT = "user_content"
@@ -71,8 +67,7 @@ class APIEndpointType(str, Enum):
 
 
 class CacheDataType(str, Enum):
-    """Types of data being cached"""
-    JSON = "json"
+    """Types of data being cached"""    JSON = "json"
     XML = "xml"
     BINARY = "binary"
     TEXT = "text"
@@ -82,8 +77,7 @@ class CacheDataType(str, Enum):
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration for platform APIs"""
-    requests_per_minute: int = 60
+    """Rate limiting configuration for platform APIs"""    requests_per_minute: int = 60
     requests_per_hour: int = 1000
     requests_per_day: int = 10000
     burst_limit: int = 10
@@ -94,8 +88,7 @@ class RateLimitConfig:
 
 @dataclass
 class PlatformAPISettings:
-    """Cache settings for individual platform API"""
-    platform: PlatformType
+    """Cache settings for individual platform API"""    platform: PlatformType
     endpoint_type: APIEndpointType
     data_type: CacheDataType
     ttl_seconds: int = 3600  # 1 hour default
@@ -111,8 +104,7 @@ class PlatformAPISettings:
 
 @dataclass
 class PlatformAPICacheConfig:
-    """Complete configuration for platform API caching"""
-    
+    """Complete configuration for platform API caching"""    
     # Cache identification
     cache_name: str = "platform_apis"
     namespace: str = "ia_influencer_api"
@@ -276,8 +268,7 @@ class PlatformAPICacheConfig:
 
     def get_cache_key(self, platform: PlatformType, endpoint: APIEndpointType, 
                       user_id: str, params_hash: str) -> str:
-        """Generate standardized cache key for API response"""
-        key_components = [
+        """Generate standardized cache key for API response"""        key_components = [
             self.redis_key_prefix,
             self.namespace,
             platform.value,
@@ -290,8 +281,7 @@ class PlatformAPICacheConfig:
         return ":".join(key_components)
     
     def get_all_platform_configs(self) -> Dict[str, PlatformAPISettings]:
-        """Get all configured platform API settings"""
-        all_configs = {}
+        """Get all configured platform API settings"""        all_configs = {}
         all_configs.update(self.spotify_config)
         all_configs.update(self.youtube_config)
         all_configs.update(self.instagram_config)
@@ -300,8 +290,7 @@ class PlatformAPICacheConfig:
     
     def get_settings_for_platform_endpoint(self, platform: PlatformType, 
                                          endpoint: APIEndpointType) -> Optional[PlatformAPISettings]:
-        """Get cache settings for specific platform and endpoint"""
-        all_configs = self.get_all_platform_configs()
+        """Get cache settings for specific platform and endpoint"""        all_configs = self.get_all_platform_configs()
         for config in all_configs.values():
             if config.platform == platform and config.endpoint_type == endpoint:
                 return config
@@ -309,8 +298,7 @@ class PlatformAPICacheConfig:
 
 
 class PlatformAPICacheManager:
-    """Manager for platform API cache operations"""
-    
+    """Manager for platform API cache operations"""    
     def __init__(self, config: PlatformAPICacheConfig):
         self.config = config
         self._rate_limit_counters = {}
@@ -318,15 +306,13 @@ class PlatformAPICacheManager:
         self._api_quotas = {}
     
     def generate_params_hash(self, params: Dict[str, Any]) -> str:
-        """Generate consistent hash for API parameters"""
-        # Sort parameters for consistent hashing
+        """Generate consistent hash for API parameters"""        # Sort parameters for consistent hashing
         sorted_params = sorted(params.items())
         params_str = str(sorted_params)
         return hashlib.sha256(params_str.encode()).hexdigest()[:16]
     
     def check_rate_limit(self, platform: PlatformType, endpoint: APIEndpointType) -> bool:
-        """Check if request is within rate limits"""
-        settings = self.config.get_settings_for_platform_endpoint(platform, endpoint)
+        """Check if request is within rate limits"""        settings = self.config.get_settings_for_platform_endpoint(platform, endpoint)
         if not settings:
             return True
             
@@ -364,15 +350,13 @@ class PlatformAPICacheManager:
         return True
     
     def record_api_call(self, platform: PlatformType, endpoint: APIEndpointType):
-        """Record an API call for rate limiting"""
-        key = f"{platform.value}:{endpoint.value}"
+        """Record an API call for rate limiting"""        key = f"{platform.value}:{endpoint.value}"
         if key in self._rate_limit_counters:
             for period in ["minute", "hour", "day"]:
                 self._rate_limit_counters[key][period]["count"] += 1
     
     def get_cache_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive API cache statistics"""
-        return {
+        """Get comprehensive API cache statistics"""        return {
             "total_platforms": len(set(config.platform for config in self.config.get_all_platform_configs().values())),
             "total_endpoints": len(self.config.get_all_platform_configs()),
             "cache_hit_rate": self._performance_metrics.get("cache_hit_rate", 0.0),
@@ -384,8 +368,7 @@ class PlatformAPICacheManager:
         }
     
     def _get_rate_limit_status(self) -> Dict[str, Dict[str, int]]:
-        """Get current rate limit status for all platforms"""
-        status = {}
+        """Get current rate limit status for all platforms"""        status = {}
         for key, counters in self._rate_limit_counters.items():
             status[key] = {
                 "requests_this_minute": counters["minute"]["count"],

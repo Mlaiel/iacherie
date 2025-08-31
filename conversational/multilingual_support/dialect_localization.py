@@ -1,18 +1,15 @@
-"""
-Dialect-Specific Localization Features
+"""Dialect-Specific Localization Features
 Enhanced regional customization for comprehensive multilingual support
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from typing import Dict, Any, Optional
 from dataclasses import dataclass
 from enum import Enum
 
 class LocalizationFeature(Enum):
-    """Enhanced localization features for regional variants"""
-    CURRENCY_FORMAT = "currency_format"
+    """Enhanced localization features for regional variants"""    CURRENCY_FORMAT = "currency_format"
     DATE_FORMAT = "date_format"
     TIME_FORMAT = "time_format"
     NUMBER_FORMAT = "number_format"
@@ -23,8 +20,7 @@ class LocalizationFeature(Enum):
 
 @dataclass
 class DialectLocalization:
-    """Comprehensive dialect-specific localization settings"""
-    dialect_code: str
+    """Comprehensive dialect-specific localization settings"""    dialect_code: str
     region: str
     
     # Currency and numbers
@@ -927,14 +923,12 @@ DIALECT_LOCALIZATIONS: Dict[str, DialectLocalization] = {
 }
 
 class EnhancedDialectProcessor:
-    """Enhanced processor for dialect-specific content formatting"""
-    
+    """Enhanced processor for dialect-specific content formatting"""    
     def __init__(self):
         self.localizations = DIALECT_LOCALIZATIONS
     
     def format_currency(self, amount: float, dialect_code: str) -> str:
-        """Format currency according to dialect preferences"""
-        localization = self.localizations.get(dialect_code)
+        """Format currency according to dialect preferences"""        localization = self.localizations.get(dialect_code)
         if not localization:
             return f"${amount:.2f}"  # Default fallback
             
@@ -953,16 +947,14 @@ class EnhancedDialectProcessor:
             return f"{formatted_amount} {localization.currency_symbol}"
     
     def format_date(self, date_obj, dialect_code: str) -> str:
-        """Format date according to dialect preferences"""
-        localization = self.localizations.get(dialect_code)
+        """Format date according to dialect preferences"""        localization = self.localizations.get(dialect_code)
         if not localization:
             return date_obj.strftime("%Y-%m-%d")
             
         return date_obj.strftime(localization.date_format)
     
     def format_phone(self, number: str, area_code: str, dialect_code: str) -> str:
-        """Format phone number according to dialect preferences"""
-        localization = self.localizations.get(dialect_code)
+        """Format phone number according to dialect preferences"""        localization = self.localizations.get(dialect_code)
         if not localization:
             return f"+1 {area_code} {number}"
             
@@ -973,13 +965,11 @@ class EnhancedDialectProcessor:
         )
     
     def get_greeting_style(self, dialect_code: str) -> str:
-        """Get appropriate greeting style for dialect"""
-        localization = self.localizations.get(dialect_code)
+        """Get appropriate greeting style for dialect"""        localization = self.localizations.get(dialect_code)
         return localization.greeting_style if localization else "neutral"
     
     def get_cultural_preferences(self, dialect_code: str) -> Dict[str, Any]:
-        """Get cultural preferences for dialect"""
-        localization = self.localizations.get(dialect_code)
+        """Get cultural preferences for dialect"""        localization = self.localizations.get(dialect_code)
         if not localization:
             return {}
             
@@ -992,8 +982,7 @@ class EnhancedDialectProcessor:
         }
     
     def _add_thousand_separators(self, number_str: str, separator: str) -> str:
-        """Add thousand separators to number string"""
-        reversed_chars = list(reversed(number_str))
+        """Add thousand separators to number string"""        reversed_chars = list(reversed(number_str))
         grouped = []
         
         for i, char in enumerate(reversed_chars):

@@ -1,5 +1,4 @@
-"""
-🚀 Hyperparameter Tuning - IA Influencer Agent Platform Enterprise
+"""🚀 Hyperparameter Tuning - IA Influencer Agent Platform Enterprise
 ================================================================
 Module: backend/ml/training/hyperparameter_tuning.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Optimisation automatique des hyperparamètres
 - Early stopping et pruning intelligent
 - Parallel trials et distributed tuning
 """
-
 import asyncio
 import logging
 import time
@@ -40,27 +38,23 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_sc
 logger = logging.getLogger(__name__)
 
 class OptimizationDirection(Enum):
-    """Direction d'optimisation"""
-    MAXIMIZE = "maximize"
+    """Direction d'optimisation"""    MAXIMIZE = "maximize"
     MINIMIZE = "minimize"
 
 class SamplerType(Enum):
-    """Types de samplers Optuna"""
-    TPE = "tpe"
+    """Types de samplers Optuna"""    TPE = "tpe"
     CMAES = "cmaes"
     RANDOM = "random"
     GRID = "grid"
 
 class PrunerType(Enum):
-    """Types de pruners Optuna"""
-    MEDIAN = "median"
+    """Types de pruners Optuna"""    MEDIAN = "median"
     HYPERBAND = "hyperband"
     NONE = "none"
 
 @dataclass
 class HyperparameterSpace:
-    """Espace de recherche des hyperparamètres"""
-    name: str
+    """Espace de recherche des hyperparamètres"""    name: str
     param_type: str  # 'categorical', 'int', 'float', 'loguniform'
     choices: Optional[List[Any]] = None
     low: Optional[float] = None
@@ -70,8 +64,7 @@ class HyperparameterSpace:
 
 @dataclass
 class OptimizationConfig:
-    """Configuration d'optimisation"""
-    n_trials: int = 100
+    """Configuration d'optimisation"""    n_trials: int = 100
     timeout: Optional[int] = None
     direction: OptimizationDirection = OptimizationDirection.MAXIMIZE
     sampler_type: SamplerType = SamplerType.TPE
@@ -84,8 +77,7 @@ class OptimizationConfig:
 
 @dataclass
 class OptimizationResult:
-    """Résultat d'optimisation"""
-    study_name: str
+    """Résultat d'optimisation"""    study_name: str
     best_value: float
     best_params: Dict[str, Any]
     n_trials: int
@@ -94,8 +86,7 @@ class OptimizationResult:
     trials_df: pd.DataFrame
 
 class HyperparameterTuner:
-    """Tuner d'hyperparamètres avancé"""
-    
+    """Tuner d'hyperparamètres avancé"""    
     def __init__(self, config: OptimizationConfig):
         self.config = config
         self.studies: Dict[str, optuna.Study] = {}
@@ -107,8 +98,7 @@ class HyperparameterTuner:
     def create_study(self, 
                     study_name: Optional[str] = None,
                     load_if_exists: bool = True) -> optuna.Study:
-        """Crée ou charge une étude Optuna"""
-        
+        """Crée ou charge une étude Optuna"""        
         if study_name is None:
             study_name = f"study_{uuid.uuid4().hex[:8]}"
         
@@ -134,8 +124,7 @@ class HyperparameterTuner:
         return study
     
     def _create_sampler(self) -> optuna.samplers.BaseSampler:
-        """Crée un sampler selon la configuration"""
-        if self.config.sampler_type == SamplerType.TPE:
+        """Crée un sampler selon la configuration"""        if self.config.sampler_type == SamplerType.TPE:
             return TPESampler(
                 n_startup_trials=10,
                 n_ei_candidates=24,
@@ -147,8 +136,7 @@ class HyperparameterTuner:
             return optuna.samplers.RandomSampler(seed=self.config.random_state)
     
     def _create_pruner(self) -> optuna.pruners.BasePruner:
-        """Crée un pruner selon la configuration"""
-        if self.config.pruner_type == PrunerType.MEDIAN:
+        """Crée un pruner selon la configuration"""        if self.config.pruner_type == PrunerType.MEDIAN:
             return MedianPruner(
                 n_startup_trials=5,
                 n_warmup_steps=30,
@@ -170,8 +158,7 @@ class HyperparameterTuner:
                            y: np.ndarray,
                            scoring: str = 'accuracy',
                            study_name: Optional[str] = None) -> OptimizationResult:
-        """Optimise les hyperparamètres d'un modèle"""
-        
+        """Optimise les hyperparamètres d'un modèle"""        
         start_time = time.time()
         
         # Créer l'étude
@@ -225,8 +212,7 @@ class HyperparameterTuner:
                           X: np.ndarray,
                           y: np.ndarray,
                           scoring: str) -> float:
-        """Fonction objective pour l'optimisation"""
-        
+        """Fonction objective pour l'optimisation"""        
         try:
             # Suggérer les hyperparamètres
             params = {}
@@ -302,12 +288,10 @@ class HyperparameterTuner:
             return 0.0
     
     def get_study(self, study_name: str) -> Optional[optuna.Study]:
-        """Récupère une étude par nom"""
-        return self.studies.get(study_name)
+        """Récupère une étude par nom"""        return self.studies.get(study_name)
     
     def plot_optimization_history(self, study_name: str) -> Any:
-        """Trace l'historique d'optimisation"""
-        study = self.studies.get(study_name)
+        """Trace l'historique d'optimisation"""        study = self.studies.get(study_name)
         if study:
             try:
                 return optuna.visualization.plot_optimization_history(study)
@@ -317,8 +301,7 @@ class HyperparameterTuner:
         return None
     
     def plot_param_importances(self, study_name: str) -> Any:
-        """Trace l'importance des paramètres"""
-        study = self.studies.get(study_name)
+        """Trace l'importance des paramètres"""        study = self.studies.get(study_name)
         if study:
             try:
                 return optuna.visualization.plot_param_importances(study)
@@ -330,15 +313,13 @@ class HyperparameterTuner:
     def get_best_params_by_metric(self, 
                                 study_name: str, 
                                 metric: str = 'value') -> Dict[str, Any]:
-        """Récupère les meilleurs paramètres selon une métrique"""
-        study = self.studies.get(study_name)
+        """Récupère les meilleurs paramètres selon une métrique"""        study = self.studies.get(study_name)
         if study:
             return study.best_params
         return {}
     
     def export_study_results(self, study_name: str, filepath: str):
-        """Exporte les résultats d'une étude"""
-        study = self.studies.get(study_name)
+        """Exporte les résultats d'une étude"""        study = self.studies.get(study_name)
         if study:
             try:
                 df = study.trials_dataframe()
@@ -354,8 +335,7 @@ class HyperparameterTuner:
                                          y: np.ndarray,
                                          objectives: List[str],
                                          study_name: Optional[str] = None) -> OptimizationResult:
-        """Optimisation multi-objectifs"""
-        
+        """Optimisation multi-objectifs"""        
         start_time = time.time()
         
         # Créer l'étude multi-objectifs
@@ -424,8 +404,7 @@ class HyperparameterTuner:
                                 X: np.ndarray,
                                 y: np.ndarray,
                                 objectives: List[str]) -> List[float]:
-        """Fonction objective multi-objectifs"""
-        
+        """Fonction objective multi-objectifs"""        
         try:
             # Suggérer les hyperparamètres
             params = {}
@@ -484,12 +463,10 @@ class HyperparameterTuner:
 
 # Classes helper pour définir les espaces de paramètres communs
 class CommonParameterSpaces:
-    """Espaces de paramètres communs pour différents modèles"""
-    
+    """Espaces de paramètres communs pour différents modèles"""    
     @staticmethod
     def random_forest_space() -> List[HyperparameterSpace]:
-        """Espace de paramètres pour Random Forest"""
-        return [
+        """Espace de paramètres pour Random Forest"""        return [
             HyperparameterSpace("n_estimators", "int", low=50, high=500),
             HyperparameterSpace("max_depth", "int", low=3, high=20),
             HyperparameterSpace("min_samples_split", "int", low=2, high=20),
@@ -500,8 +477,7 @@ class CommonParameterSpaces:
     
     @staticmethod
     def gradient_boosting_space() -> List[HyperparameterSpace]:
-        """Espace de paramètres pour Gradient Boosting"""
-        return [
+        """Espace de paramètres pour Gradient Boosting"""        return [
             HyperparameterSpace("n_estimators", "int", low=50, high=300),
             HyperparameterSpace("learning_rate", "float", low=0.01, high=0.3),
             HyperparameterSpace("max_depth", "int", low=3, high=10),
@@ -511,8 +487,7 @@ class CommonParameterSpaces:
     
     @staticmethod
     def svm_space() -> List[HyperparameterSpace]:
-        """Espace de paramètres pour SVM"""
-        return [
+        """Espace de paramètres pour SVM"""        return [
             HyperparameterSpace("C", "loguniform", low=0.1, high=100),
             HyperparameterSpace("kernel", "categorical", 
                               choices=["rbf", "linear", "poly"]),
@@ -524,8 +499,7 @@ class CommonParameterSpaces:
 
 # Exemple d'utilisation
 async def example_usage():
-    """Exemple d'utilisation du tuner"""
-    
+    """Exemple d'utilisation du tuner"""    
     from sklearn.ensemble import RandomForestClassifier
     from sklearn.datasets import make_classification
     

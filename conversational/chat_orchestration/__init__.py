@@ -11,8 +11,7 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 WARNING: This code and concept are proprietary intellectual property of Fahed Mlaiel.
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
-"""
-# Core chat orchestration components
+"""# Core chat orchestration components
 from .chat_manager import ChatManager
 from .conversation_router import ConversationRouter
 from .message_processor import MessageProcessor

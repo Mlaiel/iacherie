@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Adapter System Initialization Script
+"""Adapter System Initialization Script
 
 This script initializes the complete adapter system with automatic discovery,
 configuration loading, and health monitoring setup.
@@ -13,7 +12,6 @@ of this code is strictly prohibited without explicit written permission.
 Usage:
     python init_adapters.py [--environment ENV] [--config-dir DIR] [--auto-register]
 """
-
 import asyncio
 import logging
 import argparse
@@ -41,8 +39,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 async def initialize_adapter_system(environment: Environment, config_dir: Path = None, auto_register: bool = True):
-    """Initialize the complete adapter system."""
-    
+    """Initialize the complete adapter system."""    
     logger.info(f"Initializing Adapter System for environment: {environment.value}")
     start_time = datetime.utcnow()
     
@@ -160,8 +157,7 @@ async def initialize_adapter_system(environment: Environment, config_dir: Path =
         }
 
 async def test_adapter_operations():
-    """Test basic adapter operations after initialization."""
-    logger.info("Testing adapter operations...")
+    """Test basic adapter operations after initialization."""    logger.info("Testing adapter operations...")
     
     try:
         registry = get_adapter_registry()
@@ -190,8 +186,7 @@ async def test_adapter_operations():
         return False
 
 def main():
-    """Main entry point."""
-    parser = argparse.ArgumentParser(
+    """Main entry point."""    parser = argparse.ArgumentParser(
         description="Initialize the IA Influencer Agent Adapter System"
     )
     
@@ -238,8 +233,7 @@ def main():
     environment = Environment(args.environment)
     
     async def run_initialization():
-        """Run the initialization process."""
-        print("=" * 80)
+        """Run the initialization process."""        print("=" * 80)
         print("IA INFLUENCER AGENT - ADAPTER SYSTEM INITIALIZATION")
         print("=" * 80)
         print(f"Environment: {environment.value}")

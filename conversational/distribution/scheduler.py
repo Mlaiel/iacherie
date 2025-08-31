@@ -1,5 +1,4 @@
-"""
-Content Distribution Scheduler
+"""Content Distribution Scheduler
 
 Enterprise-grade intelligent scheduling system for multi-platform content distribution.
 Provides AI-powered optimal timing, queue management, and automated publishing.
@@ -11,7 +10,6 @@ Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 WARNING: This code is proprietary and protected. Unauthorized use, reproduction, 
 or distribution is strictly prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Set
@@ -59,8 +57,7 @@ metrics = MetricsCollector("distribution.scheduler")
 
 
 class SchedulingStrategy(str, Enum):
-    """Content scheduling strategies"""
-    IMMEDIATE = "immediate"
+    """Content scheduling strategies"""    IMMEDIATE = "immediate"
     OPTIMAL_TIMING = "optimal_timing"
     STAGGERED = "staggered"
     BATCH = "batch"
@@ -75,8 +72,7 @@ class SchedulingStrategy(str, Enum):
 
 
 class ScheduleStatus(str, Enum):
-    """Schedule status tracking"""
-    PENDING = "pending"
+    """Schedule status tracking"""    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -89,8 +85,7 @@ class ScheduleStatus(str, Enum):
 
 
 class Priority(str, Enum):
-    """Task priority levels"""
-    CRITICAL = "critical"
+    """Task priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -98,8 +93,7 @@ class Priority(str, Enum):
 
 
 class TimeSlotType(str, Enum):
-    """Time slot optimization types"""
-    PEAK_ENGAGEMENT = "peak_engagement"
+    """Time slot optimization types"""    PEAK_ENGAGEMENT = "peak_engagement"
     LOW_COMPETITION = "low_competition"
     OPTIMAL_REACH = "optimal_reach"
     VIRAL_POTENTIAL = "viral_potential"
@@ -110,8 +104,7 @@ class TimeSlotType(str, Enum):
 
 @dataclass
 class OptimalTimeSlot:
-    """Optimal time slot for content publishing"""
-    platform: PlatformType
+    """Optimal time slot for content publishing"""    platform: PlatformType
     datetime: datetime
     confidence_score: float
     expected_engagement: float
@@ -126,8 +119,7 @@ class OptimalTimeSlot:
 
 @dataclass
 class ScheduleTask:
-    """Individual scheduling task"""
-    id: str
+    """Individual scheduling task"""    id: str
     user_id: int
     content_id: int
     platform: PlatformType
@@ -147,8 +139,7 @@ class ScheduleTask:
 
 @dataclass
 class BatchSchedule:
-    """Batch scheduling configuration"""
-    name: str
+    """Batch scheduling configuration"""    name: str
     user_id: int
     content_ids: List[int]
     platforms: List[PlatformType]
@@ -163,8 +154,7 @@ class BatchSchedule:
 
 
 class SchedulingConfig(BaseModel):
-    """Scheduling configuration model"""
-    user_id: int
+    """Scheduling configuration model"""    user_id: int
     default_strategy: SchedulingStrategy = SchedulingStrategy.OPTIMAL_TIMING
     timezone: str = "UTC"
     working_hours: Dict[str, Tuple[int, int]] = Field(
@@ -190,8 +180,7 @@ class SchedulingConfig(BaseModel):
 
 
 class ContentDistributionScheduler:
-    """
-    Enterprise-grade intelligent content distribution scheduler with AI optimization.
+    """    Enterprise-grade intelligent content distribution scheduler with AI optimization.
     
     Features:
     - AI-powered optimal timing prediction
@@ -206,8 +195,7 @@ class ContentDistributionScheduler:
     - Performance feedback learning
     - Seasonal and trend-based optimization
     - Compliance and rate limiting
-    """
-    
+    """    
     def __init__(self, db: Session):
         self.db = db
         self.redis_client = None
@@ -240,23 +228,20 @@ class ContentDistributionScheduler:
         self.executor = ThreadPoolExecutor(max_workers=10)
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.redis_client = await aioredis.from_url(settings.REDIS_URL)
+        """Async context manager entry"""        self.redis_client = await aioredis.from_url(settings.REDIS_URL)
         self.celery_app = Celery('content_scheduler', broker=settings.CELERY_BROKER_URL)
         self.scheduler.start()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.scheduler.running:
+        """Async context manager exit"""        if self.scheduler.running:
             self.scheduler.shutdown()
         if self.redis_client:
             await self.redis_client.close()
         self.executor.shutdown(wait=True)
     
     def _load_timing_models(self) -> Dict[str, Any]:
-        """Load ML models for optimal timing prediction"""
-        models = {}
+        """Load ML models for optimal timing prediction"""        models = {}
         
         try:
             # Platform-specific timing models
@@ -281,8 +266,7 @@ class ContentDistributionScheduler:
         return models
     
     def _create_fallback_timing_models(self) -> Dict[str, Any]:
-        """Create fallback timing models"""
-        return {
+        """Create fallback timing models"""        return {
             "engagement_predictor": RandomForestRegressor(n_estimators=100, random_state=42),
             "reach_predictor": GradientBoostingRegressor(n_estimators=100, random_state=42),
             "viral_predictor": RandomForestRegressor(n_estimators=50, random_state=42),
@@ -291,8 +275,7 @@ class ContentDistributionScheduler:
         }
     
     def _load_engagement_models(self) -> Dict[str, Any]:
-        """Load engagement prediction models"""
-        models = {}
+        """Load engagement prediction models"""        models = {}
         
         try:
             models["hourly_engagement"] = joblib.load("models/hourly_engagement_predictor.pkl")
@@ -307,8 +290,7 @@ class ContentDistributionScheduler:
         return models
     
     def _create_fallback_engagement_models(self) -> Dict[str, Any]:
-        """Create fallback engagement models"""
-        return {
+        """Create fallback engagement models"""        return {
             "hourly_engagement": RandomForestRegressor(n_estimators=50, random_state=42),
             "daily_engagement": GradientBoostingRegressor(n_estimators=50, random_state=42),
             "audience_activity": RandomForestRegressor(n_estimators=30, random_state=42),
@@ -316,8 +298,7 @@ class ContentDistributionScheduler:
         }
     
     def _initialize_priority_queues(self) -> Dict[Priority, deque]:
-        """Initialize priority-based task queues"""
-        return {
+        """Initialize priority-based task queues"""        return {
             Priority.CRITICAL: deque(),
             Priority.HIGH: deque(),
             Priority.MEDIUM: deque(),
@@ -326,12 +307,10 @@ class ContentDistributionScheduler:
         }
     
     def _initialize_platform_queues(self) -> Dict[PlatformType, deque]:
-        """Initialize platform-specific task queues"""
-        return {platform: deque() for platform in PlatformType}
+        """Initialize platform-specific task queues"""        return {platform: deque() for platform in PlatformType}
     
     def _initialize_rate_limiters(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize rate limiting configurations"""
-        return {
+        """Initialize rate limiting configurations"""        return {
             PlatformType.YOUTUBE: {
                 "requests_per_minute": 100,
                 "requests_per_hour": 1000,
@@ -370,8 +349,7 @@ class ContentDistributionScheduler:
         }
     
     def _initialize_compliance_rules(self) -> Dict[str, Any]:
-        """Initialize compliance and content policy rules"""
-        return {
+        """Initialize compliance and content policy rules"""        return {
             "content_approval_required": ["sensitive", "promotional", "political"],
             "restricted_times": {
                 "political_content": ["election_periods", "voting_days"],
@@ -398,8 +376,7 @@ class ContentDistributionScheduler:
         }
     
     def _initialize_performance_tracker(self) -> Dict[str, Any]:
-        """Initialize performance tracking system"""
-        return {
+        """Initialize performance tracking system"""        return {
             "metrics": {
                 "scheduling_accuracy": 0.0,
                 "optimal_timing_hits": 0.0,
@@ -432,8 +409,7 @@ class ContentDistributionScheduler:
         priority: Priority = Priority.MEDIUM,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[ScheduleTask]:
-        """
-        Schedule content for distribution across multiple platforms with intelligent timing.
+        """        Schedule content for distribution across multiple platforms with intelligent timing.
         
         Args:
             user_id: User scheduling the content
@@ -446,8 +422,7 @@ class ContentDistributionScheduler:
             
         Returns:
             List of created schedule tasks
-        """
-        
+        """        
         with metrics.timer("scheduler.content_scheduling"):
             try:
                 # Validate inputs
@@ -520,8 +495,7 @@ class ContentDistributionScheduler:
         content_id: int,
         platforms: List[PlatformType]
     ) -> None:
-        """Validate scheduling request parameters"""
-        
+        """Validate scheduling request parameters"""        
         # Check user exists and has scheduling permissions
         user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
         if not user:
@@ -547,8 +521,7 @@ class ContentDistributionScheduler:
                 raise ValidationError(f"Invalid platform: {platform}")
     
     async def _get_user_config(self, user_id: int) -> SchedulingConfig:
-        """Get or create user scheduling configuration"""
-        
+        """Get or create user scheduling configuration"""        
         if user_id in self.user_configs:
             return self.user_configs[user_id]
         
@@ -567,8 +540,7 @@ class ContentDistributionScheduler:
         return config
     
     async def _get_content_details(self, content_id: int) -> ContentModel:
-        """Get detailed content information"""
-        content = self.db.query(ContentModel).filter(ContentModel.id == content_id).first()
+        """Get detailed content information"""        content = self.db.query(ContentModel).filter(ContentModel.id == content_id).first()
         if not content:
             raise ValidationError(f"Content {content_id} not found")
         
@@ -583,8 +555,7 @@ class ContentDistributionScheduler:
         target_time: Optional[datetime],
         config: SchedulingConfig
     ) -> Dict[PlatformType, OptimalTimeSlot]:
-        """Generate optimal time slots for each platform using AI prediction"""
-        
+        """Generate optimal time slots for each platform using AI prediction"""        
         optimal_slots = {}
         
         # Process each platform
@@ -645,8 +616,7 @@ logger = logging.getLogger(__name__)
 
 
 class ScheduleType(str, Enum):
-    """Types of scheduling strategies"""
-    IMMEDIATE = "immediate"
+    """Types of scheduling strategies"""    IMMEDIATE = "immediate"
     OPTIMAL_TIME = "optimal_time"
     SPECIFIC_TIME = "specific_time"
     RECURRING = "recurring"
@@ -655,16 +625,14 @@ class ScheduleType(str, Enum):
 
 
 class RecurrencePattern(str, Enum):
-    """Recurrence patterns for scheduled content"""
-    DAILY = "daily"
+    """Recurrence patterns for scheduled content"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     CUSTOM = "custom"
 
 
 class TimeZonePreference(str, Enum):
-    """Common timezone preferences"""
-    UTC = "UTC"
+    """Common timezone preferences"""    UTC = "UTC"
     EST = "America/New_York"
     PST = "America/Los_Angeles"
     GMT = "Europe/London"
@@ -675,8 +643,7 @@ class TimeZonePreference(str, Enum):
 
 @dataclass
 class OptimalTimeSlot:
-    """Optimal posting time slot"""
-    datetime: datetime
+    """Optimal posting time slot"""    datetime: datetime
     platform: PlatformType
     expected_reach: int
     expected_engagement: float
@@ -686,8 +653,7 @@ class OptimalTimeSlot:
 
 @dataclass
 class ScheduleConflict:
-    """Schedule conflict information"""
-    existing_post_id: int
+    """Schedule conflict information"""    existing_post_id: int
     conflicting_time: datetime
     platform: PlatformType
     severity: str  # low, medium, high
@@ -695,8 +661,7 @@ class ScheduleConflict:
 
 
 class ScheduleRequest(BaseModel):
-    """Content scheduling request"""
-    user_id: int
+    """Content scheduling request"""    user_id: int
     content_id: int
     schedule_type: ScheduleType
     platforms: List[PlatformType]
@@ -722,8 +687,7 @@ class ScheduleRequest(BaseModel):
 
 
 class ScheduleResult(BaseModel):
-    """Scheduling operation result"""
-    schedule_id: str
+    """Scheduling operation result"""    schedule_id: str
     success: bool
     scheduled_posts: List[Dict[str, Any]] = Field(default_factory=list)
     conflicts: List[ScheduleConflict] = Field(default_factory=list)
@@ -733,10 +697,8 @@ class ScheduleResult(BaseModel):
 
 
 class ContentScheduler:
-    """
-    Intelligent content scheduling system with AI-powered optimization
-    """
-    
+    """    Intelligent content scheduling system with AI-powered optimization
+    """    
     def __init__(self, db: Session):
         self.db = db
         self.scheduler = AsyncIOScheduler()
@@ -749,8 +711,7 @@ class ContentScheduler:
             self.scheduler.start()
     
     def _initialize_platform_limits(self) -> Dict[PlatformType, Dict[str, Any]]:
-        """Initialize platform-specific posting limits and guidelines"""
-        return {
+        """Initialize platform-specific posting limits and guidelines"""        return {
             PlatformType.YOUTUBE: {
                 "daily_limit": 10,
                 "hourly_limit": 3,
@@ -797,16 +758,14 @@ class ContentScheduler:
         }
     
     async def schedule_content(self, request: ScheduleRequest) -> ScheduleResult:
-        """
-        Schedule content distribution with AI optimization
+        """        Schedule content distribution with AI optimization
         
         Args:
             request: Scheduling request with parameters
             
         Returns:
             Scheduling result with created schedules
-        """
-        try:
+        """        try:
             # Validate request
             await self._validate_schedule_request(request)
             
@@ -848,8 +807,7 @@ class ContentScheduler:
             )
     
     async def _validate_schedule_request(self, request: ScheduleRequest) -> None:
-        """Validate scheduling request parameters"""
-        # Check user exists
+        """Validate scheduling request parameters"""        # Check user exists
         user = self.db.query(UserModel).filter(UserModel.id == request.user_id).first()
         if not user:
             raise ValueError("User not found")
@@ -888,8 +846,7 @@ class ContentScheduler:
                 raise ValueError("Batch interval must be at least 5 minutes")
     
     async def _get_user_timezone(self, user_id: int) -> str:
-        """Get user's preferred timezone"""
-        if user_id in self.timezone_cache:
+        """Get user's preferred timezone"""        if user_id in self.timezone_cache:
             return self.timezone_cache[user_id]
         
         user = self.db.query(UserModel).filter(UserModel.id == user_id).first()
@@ -906,8 +863,7 @@ class ContentScheduler:
         request: ScheduleRequest,
         user_timezone: str
     ) -> List[OptimalTimeSlot]:
-        """Find optimal posting times using AI analysis"""
-        try:
+        """Find optimal posting times using AI analysis"""        try:
             # Get content analysis
             content = self.db.query(ContentModel).filter(
                 ContentModel.id == request.content_id
@@ -958,8 +914,7 @@ class ContentScheduler:
     async def _check_schedule_conflicts(
         self, request: ScheduleRequest
     ) -> List[ScheduleConflict]:
-        """Check for scheduling conflicts with existing posts"""
-        conflicts = []
+        """Check for scheduling conflicts with existing posts"""        conflicts = []
         
         try:
             # Get existing scheduled posts for user
@@ -1020,8 +975,7 @@ class ContentScheduler:
         optimal_times: List[OptimalTimeSlot],
         user_timezone: str
     ) -> List[Dict[str, Any]]:
-        """Create scheduled post entries based on request type"""
-        scheduled_posts = []
+        """Create scheduled post entries based on request type"""        scheduled_posts = []
         
         try:
             if request.schedule_type == ScheduleType.IMMEDIATE:
@@ -1057,8 +1011,7 @@ class ContentScheduler:
     async def _create_immediate_posts(
         self, request: ScheduleRequest
     ) -> List[Dict[str, Any]]:
-        """Create immediate posting schedule"""
-        posts = []
+        """Create immediate posting schedule"""        posts = []
         base_time = datetime.utcnow()
         
         for i, platform in enumerate(request.platforms):
@@ -1081,8 +1034,7 @@ class ContentScheduler:
         request: ScheduleRequest,
         optimal_times: List[OptimalTimeSlot]
     ) -> List[Dict[str, Any]]:
-        """Create posts scheduled for optimal times"""
-        posts = []
+        """Create posts scheduled for optimal times"""        posts = []
         used_times = set()
         
         for platform in request.platforms:
@@ -1125,8 +1077,7 @@ class ContentScheduler:
         request: ScheduleRequest,
         user_timezone: str
     ) -> List[Dict[str, Any]]:
-        """Create posts scheduled for specific time"""
-        posts = []
+        """Create posts scheduled for specific time"""        posts = []
         
         # Convert target time to UTC
         user_tz = pytz.timezone(user_timezone)
@@ -1162,8 +1113,7 @@ class ContentScheduler:
         request: ScheduleRequest,
         user_timezone: str
     ) -> List[Dict[str, Any]]:
-        """Create recurring post schedule"""
-        posts = []
+        """Create recurring post schedule"""        posts = []
         
         if not request.target_datetime:
             # Default to next optimal time
@@ -1218,8 +1168,7 @@ class ContentScheduler:
     async def _create_batch_posts(
         self, request: ScheduleRequest
     ) -> List[Dict[str, Any]]:
-        """Create batch release schedule"""
-        posts = []
+        """Create batch release schedule"""        posts = []
         base_time = datetime.utcnow() + timedelta(minutes=5)  # Start in 5 minutes
         
         interval = timedelta(minutes=request.batch_interval or 30)
@@ -1242,8 +1191,7 @@ class ContentScheduler:
     async def _create_drip_campaign_posts(
         self, request: ScheduleRequest
     ) -> List[Dict[str, Any]]:
-        """Create drip campaign schedule"""
-        posts = []
+        """Create drip campaign schedule"""        posts = []
         
         campaign_duration = request.campaign_duration or 7  # Default 7 days
         interval = timedelta(minutes=request.batch_interval or 60)
@@ -1285,8 +1233,7 @@ class ContentScheduler:
         request: ScheduleRequest,
         scheduled_posts: List[Dict[str, Any]]
     ) -> str:
-        """Save schedule to database and create background tasks"""
-        try:
+        """Save schedule to database and create background tasks"""        try:
             schedule_id = f"schedule_{request.user_id}_{request.content_id}_{int(datetime.utcnow().timestamp())}"
             
             # Save to database
@@ -1323,8 +1270,7 @@ class ContentScheduler:
     async def _create_execution_tasks(
         self, scheduled_posts: List[Dict[str, Any]]
     ) -> None:
-        """Create Celery tasks for scheduled execution"""
-        from ....tasks.distribution import execute_scheduled_post
+        """Create Celery tasks for scheduled execution"""        from ....tasks.distribution import execute_scheduled_post
         
         for post_data in scheduled_posts:
             # Schedule Celery task
@@ -1344,8 +1290,7 @@ class ContentScheduler:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[Dict[str, Any]]:
-        """Get user's scheduled posts"""
-        query = self.db.query(ScheduledPostModel).filter(
+        """Get user's scheduled posts"""        query = self.db.query(ScheduledPostModel).filter(
             ScheduledPostModel.user_id == user_id
         )
         
@@ -1377,8 +1322,7 @@ class ContentScheduler:
     async def cancel_scheduled_post(
         self, user_id: int, schedule_id: str, post_id: Optional[int] = None
     ) -> bool:
-        """Cancel scheduled post(s)"""
-        try:
+        """Cancel scheduled post(s)"""        try:
             query = self.db.query(ScheduledPostModel).filter(
                 ScheduledPostModel.user_id == user_id,
                 ScheduledPostModel.schedule_id == schedule_id,
@@ -1413,8 +1357,7 @@ class ContentScheduler:
         new_time: datetime,
         timezone: Optional[str] = None
     ) -> bool:
-        """Reschedule a specific post"""
-        try:
+        """Reschedule a specific post"""        try:
             post = self.db.query(ScheduledPostModel).filter(
                 ScheduledPostModel.id == post_id,
                 ScheduledPostModel.user_id == user_id,
@@ -1448,8 +1391,7 @@ class ContentScheduler:
     async def get_schedule_analytics(
         self, user_id: int, schedule_id: str
     ) -> Dict[str, Any]:
-        """Get analytics for a specific schedule"""
-        posts = self.db.query(ScheduledPostModel).filter(
+        """Get analytics for a specific schedule"""        posts = self.db.query(ScheduledPostModel).filter(
             ScheduledPostModel.user_id == user_id,
             ScheduledPostModel.schedule_id == schedule_id
         ).all()
@@ -1489,8 +1431,7 @@ class ContentScheduler:
         }
     
     async def cleanup_old_schedules(self, days_old: int = 30) -> int:
-        """Cleanup old completed/cancelled schedules"""
-        cutoff_date = datetime.utcnow() - timedelta(days=days_old)
+        """Cleanup old completed/cancelled schedules"""        cutoff_date = datetime.utcnow() - timedelta(days=days_old)
         
         old_posts = self.db.query(ScheduledPostModel).filter(
             ScheduledPostModel.updated_at < cutoff_date,
@@ -1512,6 +1453,5 @@ class ContentScheduler:
         return count
     
     def __del__(self):
-        """Cleanup scheduler on deletion"""
-        if hasattr(self, 'scheduler') and self.scheduler.running:
+        """Cleanup scheduler on deletion"""        if hasattr(self, 'scheduler') and self.scheduler.running:
             self.scheduler.shutdown()

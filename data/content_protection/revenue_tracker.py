@@ -1,5 +1,4 @@
-"""
-Advanced Revenue Tracking Engine
+"""Advanced Revenue Tracking Engine
 ===============================
 
 Industrial-grade revenue tracking and monetization system for content protection.
@@ -14,7 +13,6 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,8 +40,7 @@ from redis import Redis
 
 
 class RevenueType(Enum):
-    """Revenue type enumeration"""
-    STREAMING = "streaming"
+    """Revenue type enumeration"""    STREAMING = "streaming"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
     MERCHANDISE = "merchandise"
@@ -54,8 +51,7 @@ class RevenueType(Enum):
 
 
 class PlatformRevenue(Enum):
-    """Supported platforms for revenue tracking"""
-    YOUTUBE = "youtube"
+    """Supported platforms for revenue tracking"""    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -66,8 +62,7 @@ class PlatformRevenue(Enum):
 
 
 class CompensationMethod(Enum):
-    """Compensation calculation methods"""
-    LOST_REVENUE = "lost_revenue"
+    """Compensation calculation methods"""    LOST_REVENUE = "lost_revenue"
     MARKET_RATE = "market_rate"
     STATUTORY_DAMAGES = "statutory_damages"
     ACTUAL_DAMAGES = "actual_damages"
@@ -76,8 +71,7 @@ class CompensationMethod(Enum):
 
 @dataclass
 class RevenueRecord:
-    """Revenue tracking record"""
-    record_id: str
+    """Revenue tracking record"""    record_id: str
     user_id: str
     content_id: str
     platform: PlatformRevenue
@@ -93,8 +87,7 @@ class RevenueRecord:
 
 @dataclass
 class ViolationImpact:
-    """Revenue impact from content violation"""
-    impact_id: str
+    """Revenue impact from content violation"""    impact_id: str
     violation_id: str
     content_id: str
     estimated_loss: Decimal
@@ -107,8 +100,7 @@ class ViolationImpact:
 
 @dataclass
 class CompensationClaim:
-    """Compensation claim for unauthorized usage"""
-    claim_id: str
+    """Compensation claim for unauthorized usage"""    claim_id: str
     violation_id: str
     claimant_id: str
     respondent_info: Dict[str, Any]
@@ -124,8 +116,7 @@ class CompensationClaim:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics summary"""
-    user_id: str
+    """Revenue analytics summary"""    user_id: str
     period_start: datetime
     period_end: datetime
     total_revenue: Decimal
@@ -138,24 +129,20 @@ class RevenueAnalytics:
 
 
 class RevenueTracker:
-    """
-    Advanced revenue tracking and monetization system.
+    """    Advanced revenue tracking and monetization system.
     
     Provides comprehensive revenue monitoring, violation impact calculation,
     and automated compensation claim generation.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis, 
                  api_config: Dict[str, Any]):
-        """
-        Initialize RevenueTracker.
+        """        Initialize RevenueTracker.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
             api_config: Platform API configuration
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.api_config = api_config
         self.logger = logging.getLogger(__name__)
@@ -193,8 +180,7 @@ class RevenueTracker:
         }
     
     def _initialize_platform_apis(self):
-        """Initialize platform API clients"""
-        try:
+        """Initialize platform API clients"""        try:
             # YouTube Analytics API
             if 'youtube_api_key' in self.api_config:
                 self.youtube_analytics = build('youtubeAnalytics', 'v2',
@@ -213,8 +199,7 @@ class RevenueTracker:
     
     async def sync_platform_revenue(self, user_id: str, platforms: List[PlatformRevenue],
                                   date_range: Tuple[datetime, datetime]) -> Dict[str, bool]:
-        """
-        Sync revenue data from multiple platforms.
+        """        Sync revenue data from multiple platforms.
         
         Args:
             user_id: User identifier
@@ -223,8 +208,7 @@ class RevenueTracker:
             
         Returns:
             Dictionary of sync results per platform
-        """
-        try:
+        """        try:
             start_date, end_date = date_range
             sync_results = {}
             
@@ -263,8 +247,7 @@ class RevenueTracker:
     
     async def _sync_youtube_revenue(self, user_id: str, start_date: datetime, 
                                   end_date: datetime) -> List[RevenueRecord]:
-        """Sync YouTube revenue data"""
-        revenue_records = []
+        """Sync YouTube revenue data"""        revenue_records = []
         
         try:
             # This would use YouTube Analytics API to get revenue data
@@ -308,8 +291,7 @@ class RevenueTracker:
     
     async def _sync_spotify_revenue(self, user_id: str, start_date: datetime, 
                                   end_date: datetime) -> List[RevenueRecord]:
-        """Sync Spotify revenue data"""
-        revenue_records = []
+        """Sync Spotify revenue data"""        revenue_records = []
         
         try:
             # This would use Spotify for Artists API
@@ -352,8 +334,7 @@ class RevenueTracker:
     
     async def _sync_instagram_revenue(self, user_id: str, start_date: datetime, 
                                     end_date: datetime) -> List[RevenueRecord]:
-        """Sync Instagram revenue data"""
-        revenue_records = []
+        """Sync Instagram revenue data"""        revenue_records = []
         
         try:
             # This would use Instagram Creator API
@@ -409,8 +390,7 @@ class RevenueTracker:
     
     async def _sync_tiktok_revenue(self, user_id: str, start_date: datetime, 
                                  end_date: datetime) -> List[RevenueRecord]:
-        """Sync TikTok revenue data"""
-        revenue_records = []
+        """Sync TikTok revenue data"""        revenue_records = []
         
         try:
             # This would use TikTok Creator Fund API
@@ -452,8 +432,7 @@ class RevenueTracker:
     
     async def calculate_violation_impact(self, violation_id: str, content_id: str,
                                        metrics: Dict[str, Any]) -> ViolationImpact:
-        """
-        Calculate revenue impact from content violation.
+        """        Calculate revenue impact from content violation.
         
         Args:
             violation_id: Violation identifier
@@ -462,8 +441,7 @@ class RevenueTracker:
             
         Returns:
             Calculated violation impact
-        """
-        try:
+        """        try:
             # Get historical revenue data for content
             historical_revenue = await self._get_content_revenue_history(content_id)
             
@@ -519,8 +497,7 @@ class RevenueTracker:
     
     async def _calculate_lost_revenue(self, content_id: str, violation_metrics: Dict[str, Any],
                                     historical_revenue: List[Decimal]) -> Decimal:
-        """Calculate lost revenue based on historical performance"""
-        try:
+        """Calculate lost revenue based on historical performance"""        try:
             if not historical_revenue:
                 return Decimal('0.00')
             
@@ -545,8 +522,7 @@ class RevenueTracker:
     
     async def _calculate_market_rate_impact(self, content_id: str, 
                                           violation_metrics: Dict[str, Any]) -> Decimal:
-        """Calculate impact based on market rates"""
-        try:
+        """Calculate impact based on market rates"""        try:
             # Get content platform and type
             content_platform = await self._get_content_platform(content_id)
             content_type = await self._get_content_type(content_id)
@@ -577,8 +553,7 @@ class RevenueTracker:
     async def generate_compensation_claim(self, violation_impact: ViolationImpact,
                                         respondent_info: Dict[str, Any],
                                         legal_framework: str = "DMCA") -> CompensationClaim:
-        """
-        Generate compensation claim for violation.
+        """        Generate compensation claim for violation.
         
         Args:
             violation_impact: Calculated violation impact
@@ -587,8 +562,7 @@ class RevenueTracker:
             
         Returns:
             Generated compensation claim
-        """
-        try:
+        """        try:
             # Calculate claim amount with damages multiplier
             base_amount = violation_impact.estimated_loss
             
@@ -636,8 +610,7 @@ class RevenueTracker:
     
     async def generate_revenue_analytics(self, user_id: str, 
                                        period_days: int = 30) -> RevenueAnalytics:
-        """
-        Generate comprehensive revenue analytics.
+        """        Generate comprehensive revenue analytics.
         
         Args:
             user_id: User identifier
@@ -645,8 +618,7 @@ class RevenueTracker:
             
         Returns:
             Revenue analytics summary
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -708,16 +680,14 @@ class RevenueTracker:
     # Private helper methods
     
     async def _store_revenue_record(self, record: RevenueRecord):
-        """Store revenue record in database"""
-        try:
+        """Store revenue record in database"""        try:
             # Implementation would store in database
             pass
         except Exception as e:
             self.logger.error(f"Error storing revenue record: {str(e)}")
     
     async def _cache_sync_status(self, user_id: str, platform: PlatformRevenue, record_count: int):
-        """Cache sync status"""
-        cache_key = f"revenue_sync:{user_id}:{platform.value}"
+        """Cache sync status"""        cache_key = f"revenue_sync:{user_id}:{platform.value}"
         sync_data = {
             'last_sync': datetime.utcnow().isoformat(),
             'records_synced': record_count,
@@ -727,14 +697,12 @@ class RevenueTracker:
         await self.redis.setex(cache_key, self.cache_ttl, json.dumps(sync_data))
     
     async def _get_content_revenue_history(self, content_id: str) -> List[Decimal]:
-        """Get historical revenue for content"""
-        # Implementation would query database
+        """Get historical revenue for content"""        # Implementation would query database
         return [Decimal('25.50'), Decimal('32.75'), Decimal('28.90'), Decimal('35.25')]
     
     async def _calculate_impact_confidence(self, historical_revenue: List[Decimal],
                                          metrics: Dict[str, Any], estimated_loss: Decimal) -> float:
-        """Calculate confidence score for impact estimate"""
-        try:
+        """Calculate confidence score for impact estimate"""        try:
             if not historical_revenue:
                 return 0.5
             
@@ -763,26 +731,22 @@ class RevenueTracker:
             return 0.5
     
     async def _store_violation_impact(self, impact: ViolationImpact):
-        """Store violation impact in database"""
-        try:
+        """Store violation impact in database"""        try:
             # Implementation would store in database
             pass
         except Exception as e:
             self.logger.error(f"Error storing violation impact: {str(e)}")
     
     async def _get_content_platform(self, content_id: str) -> PlatformRevenue:
-        """Get platform for content"""
-        # Implementation would query database
+        """Get platform for content"""        # Implementation would query database
         return PlatformRevenue.YOUTUBE
     
     async def _get_content_type(self, content_id: str) -> RevenueType:
-        """Get content type"""
-        # Implementation would query database
+        """Get content type"""        # Implementation would query database
         return RevenueType.ADVERTISING
     
     async def _gather_claim_evidence(self, violation_impact: ViolationImpact) -> List[str]:
-        """Gather supporting evidence for claim"""
-        evidence = [
+        """Gather supporting evidence for claim"""        evidence = [
             "Original content ownership certificate",
             "Revenue tracking records",
             "Violation detection report",
@@ -792,13 +756,11 @@ class RevenueTracker:
         return evidence
     
     async def _get_content_owner(self, content_id: str) -> str:
-        """Get content owner ID"""
-        # Implementation would query database
+        """Get content owner ID"""        # Implementation would query database
         return "user_123"
     
     async def _store_compensation_claim(self, claim: CompensationClaim):
-        """Store compensation claim in database"""
-        try:
+        """Store compensation claim in database"""        try:
             # Implementation would store in database
             pass
         except Exception as e:
@@ -806,20 +768,17 @@ class RevenueTracker:
     
     async def _get_revenue_records(self, user_id: str, start_date: datetime, 
                                  end_date: datetime) -> List[RevenueRecord]:
-        """Get revenue records for period"""
-        # Implementation would query database
+        """Get revenue records for period"""        # Implementation would query database
         return []
     
     async def _get_period_revenue(self, user_id: str, start_date: datetime, 
                                 end_date: datetime) -> Decimal:
-        """Get total revenue for period"""
-        # Implementation would query database
+        """Get total revenue for period"""        # Implementation would query database
         return Decimal('450.75')
     
     async def _calculate_projected_revenue(self, user_id: str, current_revenue: Decimal, 
                                          growth_rate: float) -> Decimal:
-        """Calculate projected revenue"""
-        try:
+        """Calculate projected revenue"""        try:
             # Simple projection based on growth rate
             projection_multiplier = 1 + growth_rate
             projected = current_revenue * Decimal(str(projection_multiplier))
@@ -829,14 +788,12 @@ class RevenueTracker:
     
     async def _get_violation_losses(self, user_id: str, start_date: datetime, 
                                   end_date: datetime) -> Decimal:
-        """Get total losses from violations in period"""
-        # Implementation would query violation impacts
+        """Get total losses from violations in period"""        # Implementation would query violation impacts
         return Decimal('125.50')
     
     async def _calculate_protection_roi(self, user_id: str, total_revenue: Decimal, 
                                       violation_losses: Decimal) -> float:
-        """Calculate protection system ROI"""
-        try:
+        """Calculate protection system ROI"""        try:
             if total_revenue > 0:
                 protection_value = violation_losses
                 protection_cost = total_revenue * Decimal('0.05')  # Assume 5% protection cost

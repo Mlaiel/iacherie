@@ -1,5 +1,4 @@
-"""
-🚀 Production Deployment & Orchestration System
+"""🚀 Production Deployment & Orchestration System
 ===============================================
 
 Enterprise deployment system with container orchestration, load balancing,
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from Fahed Mlaiel is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
-
 import asyncio
 import logging
 import json
@@ -48,30 +46,26 @@ from .models import ContentType
 logger = logging.getLogger(__name__)
 
 class DeploymentMode(str, Enum):
-    """Deployment modes."""
-    DEVELOPMENT = "development"
+    """Deployment modes."""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 class ScalingStrategy(str, Enum):
-    """Auto-scaling strategies."""
-    MANUAL = "manual"
+    """Auto-scaling strategies."""    MANUAL = "manual"
     CPU_BASED = "cpu_based"
     QUEUE_BASED = "queue_based"
     HYBRID = "hybrid"
 
 class LoadBalancingStrategy(str, Enum):
-    """Load balancing strategies."""
-    ROUND_ROBIN = "round_robin"
+    """Load balancing strategies."""    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED = "weighted"
     HASH_BASED = "hash_based"
 
 @dataclass
 class ServiceConfig:
-    """Service configuration for deployment."""
-    name: str
+    """Service configuration for deployment."""    name: str
     image: str
     replicas: int = 1
     cpu_request: str = "100m"
@@ -87,8 +81,7 @@ class ServiceConfig:
 
 @dataclass
 class DeploymentConfig:
-    """Complete deployment configuration."""
-    mode: DeploymentMode
+    """Complete deployment configuration."""    mode: DeploymentMode
     namespace: str = "fingerprinting"
     services: List[ServiceConfig] = field(default_factory=list)
     scaling_strategy: ScalingStrategy = ScalingStrategy.CPU_BASED
@@ -116,8 +109,7 @@ class DeploymentConfig:
     storage_size: str = "100Gi"
 
 class DockerManager:
-    """Docker container management."""
-    
+    """Docker container management."""    
     def __init__(self):
         if ORCHESTRATION_AVAILABLE:
             try:
@@ -130,8 +122,7 @@ class DockerManager:
             self.available = False
     
     def build_image(self, dockerfile_path: str, image_name: str, tag: str = "latest") -> bool:
-        """Build Docker image."""
-        if not self.available:
+        """Build Docker image."""        if not self.available:
             logger.error("Docker not available")
             return False
         
@@ -157,8 +148,7 @@ class DockerManager:
             return False
     
     def push_image(self, image_name: str, tag: str = "latest", registry: str = None) -> bool:
-        """Push Docker image to registry."""
-        if not self.available:
+        """Push Docker image to registry."""        if not self.available:
             return False
         
         try:
@@ -183,8 +173,7 @@ class DockerManager:
             return False
     
     def generate_dockerfile(self, service_config: ServiceConfig, output_path: str):
-        """Generate optimized Dockerfile."""
-        
+        """Generate optimized Dockerfile."""        
         dockerfile_content = f"""# Multi-stage production Dockerfile for {service_config.name}
 FROM python:3.11-slim as builder
 
@@ -247,16 +236,14 @@ EXPOSE {service_config.ports[0]}
 
 # Start application
 CMD ["python", "-m", "backend.content_protection.fingerprinting"]
-"""
-        
+"""        
         with open(output_path, 'w') as f:
             f.write(dockerfile_content)
         
         logger.info(f"Generated Dockerfile: {output_path}")
 
 class KubernetesManager:
-    """Kubernetes orchestration management."""
-    
+    """Kubernetes orchestration management."""    
     def __init__(self):
         if not ORCHESTRATION_AVAILABLE:
             self.available = False
@@ -282,8 +269,7 @@ class KubernetesManager:
             self.available = False
     
     def create_namespace(self, namespace: str) -> bool:
-        """Create Kubernetes namespace."""
-        if not self.available:
+        """Create Kubernetes namespace."""        if not self.available:
             return False
         
         try:
@@ -310,8 +296,7 @@ class KubernetesManager:
             return False
     
     def deploy_service(self, service_config: ServiceConfig, namespace: str) -> bool:
-        """Deploy service to Kubernetes."""
-        if not self.available:
+        """Deploy service to Kubernetes."""        if not self.available:
             return False
         
         try:
@@ -336,8 +321,7 @@ class KubernetesManager:
             return False
     
     def _create_deployment(self, service_config: ServiceConfig, namespace: str) -> bool:
-        """Create Kubernetes deployment."""
-        
+        """Create Kubernetes deployment."""        
         # Container definition
         container = client.V1Container(
             name=service_config.name,
@@ -426,8 +410,7 @@ class KubernetesManager:
             return False
     
     def _create_service(self, service_config: ServiceConfig, namespace: str) -> bool:
-        """Create Kubernetes service."""
-        
+        """Create Kubernetes service."""        
         service = client.V1Service(
             api_version="v1",
             kind="Service",
@@ -470,8 +453,7 @@ class KubernetesManager:
             return False
     
     def _create_hpa(self, service_config: ServiceConfig, namespace: str) -> bool:
-        """Create Horizontal Pod Autoscaler."""
-        
+        """Create Horizontal Pod Autoscaler."""        
         hpa = client.V1HorizontalPodAutoscaler(
             api_version="autoscaling/v1",
             kind="HorizontalPodAutoscaler",
@@ -511,8 +493,7 @@ class KubernetesManager:
             return False
     
     def get_service_status(self, service_name: str, namespace: str) -> Dict[str, Any]:
-        """Get service deployment status."""
-        if not self.available:
+        """Get service deployment status."""        if not self.available:
             return {"status": "unavailable"}
         
         try:
@@ -553,8 +534,7 @@ class KubernetesManager:
             return {"status": "error", "error": str(e)}
 
 class ServiceDiscovery:
-    """Service discovery and registration."""
-    
+    """Service discovery and registration."""    
     def __init__(self, consul_host: str = "localhost", consul_port: int = 8500):
         if CONSUL_AVAILABLE:
             try:
@@ -569,8 +549,7 @@ class ServiceDiscovery:
     
     def register_service(self, service_name: str, service_id: str, 
                         address: str, port: int, health_check_url: str = None) -> bool:
-        """Register service with discovery system."""
-        if not self.available:
+        """Register service with discovery system."""        if not self.available:
             return False
         
         try:
@@ -595,8 +574,7 @@ class ServiceDiscovery:
             return False
     
     def discover_services(self, service_name: str) -> List[Dict[str, Any]]:
-        """Discover available service instances."""
-        if not self.available:
+        """Discover available service instances."""        if not self.available:
             return []
         
         try:
@@ -617,8 +595,7 @@ class ServiceDiscovery:
             return []
 
 class DeploymentOrchestrator:
-    """
-    Master deployment orchestration system.
+    """    Master deployment orchestration system.
     
     Features:
     - Multi-environment deployment (dev, staging, production)
@@ -628,8 +605,7 @@ class DeploymentOrchestrator:
     - Health monitoring and rollback capabilities
     - Blue-green and canary deployments
     - Infrastructure as Code (IaC) generation
-    """
-    
+    """    
     def __init__(self, config: DeploymentConfig):
         self.config = config
         
@@ -645,8 +621,7 @@ class DeploymentOrchestrator:
         logger.info(f"Deployment orchestrator initialized for {config.mode.value} environment")
     
     async def deploy_full_system(self) -> bool:
-        """Deploy complete fingerprinting system."""
-        
+        """Deploy complete fingerprinting system."""        
         logger.info("Starting full system deployment...")
         
         try:
@@ -688,8 +663,7 @@ class DeploymentOrchestrator:
             return False
     
     async def _deploy_infrastructure(self) -> bool:
-        """Deploy infrastructure components (database, cache, storage)."""
-        
+        """Deploy infrastructure components (database, cache, storage)."""        
         logger.info("Deploying infrastructure components...")
         
         # Database deployment
@@ -747,8 +721,7 @@ class DeploymentOrchestrator:
         return True
     
     async def _deploy_services(self) -> bool:
-        """Deploy application services."""
-        
+        """Deploy application services."""        
         logger.info("Deploying application services...")
         
         # Default fingerprinting service configuration
@@ -811,8 +784,7 @@ class DeploymentOrchestrator:
         return True
     
     async def _deploy_monitoring(self) -> bool:
-        """Deploy monitoring and logging infrastructure."""
-        
+        """Deploy monitoring and logging infrastructure."""        
         if not self.config.monitoring_enabled:
             return True
         
@@ -852,8 +824,7 @@ class DeploymentOrchestrator:
         return prometheus_deployed and grafana_deployed
     
     async def _verify_deployment_health(self) -> bool:
-        """Verify deployment health across all services."""
-        
+        """Verify deployment health across all services."""        
         logger.info("Verifying deployment health...")
         
         max_retries = 30
@@ -889,16 +860,14 @@ class DeploymentOrchestrator:
         return False
     
     async def _rollback_deployment(self):
-        """Rollback failed deployment."""
-        logger.warning("Initiating deployment rollback...")
+        """Rollback failed deployment."""        logger.warning("Initiating deployment rollback...")
         
         # This would implement rollback logic
         # For now, just log the action
         logger.info("Rollback completed")
     
     def generate_kubernetes_manifests(self, output_dir: str):
-        """Generate Kubernetes YAML manifests."""
-        
+        """Generate Kubernetes YAML manifests."""        
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
@@ -1019,8 +988,7 @@ class DeploymentOrchestrator:
         logger.info("Kubernetes manifests generated successfully")
     
     def generate_docker_compose(self, output_file: str):
-        """Generate Docker Compose file for local development."""
-        
+        """Generate Docker Compose file for local development."""        
         compose_config = {
             "version": "3.8",
             "services": {},
@@ -1073,8 +1041,7 @@ class DeploymentOrchestrator:
         logger.info(f"Docker Compose file generated: {output_file}")
     
     def get_deployment_status(self) -> Dict[str, Any]:
-        """Get comprehensive deployment status."""
-        
+        """Get comprehensive deployment status."""        
         status = {
             "environment": self.config.mode.value,
             "namespace": self.config.namespace,

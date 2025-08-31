@@ -1,5 +1,4 @@
-"""
-Content Validator - AI-Powered Content Quality and Compliance Validation
+"""Content Validator - AI-Powered Content Quality and Compliance Validation
 
 Validates marketplace content for quality, authenticity, compliance,
 and appropriateness using advanced AI analysis.
@@ -7,7 +6,6 @@ and appropriateness using advanced AI analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -20,16 +18,14 @@ from .marketplace_agent import MarketplaceConfig, MarketplaceListing
 
 
 class ValidationLevel(Enum):
-    """Content validation levels."""
-    BASIC = "basic"
+    """Content validation levels."""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class ContentCategory(Enum):
-    """Content categories for validation."""
-    AUDIO = "audio"
+    """Content categories for validation."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -39,8 +35,7 @@ class ContentCategory(Enum):
 
 
 class ValidationStatus(Enum):
-    """Validation result status."""
-    APPROVED = "approved"
+    """Validation result status."""    APPROVED = "approved"
     REJECTED = "rejected"
     PENDING_REVIEW = "pending_review"
     CONDITIONALLY_APPROVED = "conditionally_approved"
@@ -49,8 +44,7 @@ class ValidationStatus(Enum):
 
 @dataclass
 class ValidationRule:
-    """Individual validation rule configuration."""
-    rule_id: str = ""
+    """Individual validation rule configuration."""    rule_id: str = ""
     rule_name: str = ""
     category: ContentCategory = ContentCategory.AUDIO
     severity: str = "medium"  # low, medium, high, critical
@@ -62,8 +56,7 @@ class ValidationRule:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive validation result."""
-    is_valid: bool = False
+    """Comprehensive validation result."""    is_valid: bool = False
     overall_score: float = 0.0
     validation_level: ValidationLevel = ValidationLevel.STANDARD
     status: ValidationStatus = ValidationStatus.PENDING_REVIEW
@@ -80,8 +73,7 @@ class ValidationResult:
 
 @dataclass
 class QualityMetrics:
-    """Content quality assessment metrics."""
-    technical_quality: float = 0.0
+    """Content quality assessment metrics."""    technical_quality: float = 0.0
     artistic_quality: float = 0.0
     production_quality: float = 0.0
     originality_score: float = 0.0
@@ -91,8 +83,7 @@ class QualityMetrics:
 
 
 class ContentValidator:
-    """
-    AI-powered content validation and quality assessment system.
+    """    AI-powered content validation and quality assessment system.
     
     Provides comprehensive content validation including:
     - Multi-format content quality analysis
@@ -102,15 +93,12 @@ class ContentValidator:
     - Technical quality assessment
     - Market readiness evaluation
     """
-
     def __init__(self, config: MarketplaceConfig):
-        """
-        Initialize content validator.
+        """        Initialize content validator.
         
         Args:
             config: Marketplace configuration
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # Initialize validation components
@@ -125,8 +113,7 @@ class ContentValidator:
         self.logger.info("Content validator initialized")
 
     def _initialize_validation_engines(self) -> None:
-        """Initialize AI validation engines."""
-        try:
+        """Initialize AI validation engines."""        try:
             # Initialize audio analysis engines
             # Initialize video analysis engines
             # Initialize image analysis engines
@@ -138,8 +125,7 @@ class ContentValidator:
             raise
 
     def _initialize_quality_analyzers(self) -> None:
-        """Initialize quality analysis components."""
-        try:
+        """Initialize quality analysis components."""        try:
             # Initialize technical quality analyzers
             # Initialize artistic quality models
             # Initialize market analysis tools
@@ -154,8 +140,7 @@ class ContentValidator:
         listing: MarketplaceListing,
         validation_level: ValidationLevel = ValidationLevel.STANDARD
     ) -> ValidationResult:
-        """
-        Comprehensive marketplace listing validation.
+        """        Comprehensive marketplace listing validation.
         
         Args:
             listing: Marketplace listing to validate
@@ -163,8 +148,7 @@ class ContentValidator:
             
         Returns:
             Detailed validation result
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             # Initialize validation result
@@ -253,8 +237,7 @@ class ContentValidator:
         content_type: ContentCategory,
         validation_rules: Optional[List[str]] = None
     ) -> ValidationResult:
-        """
-        Validate individual content file.
+        """        Validate individual content file.
         
         Args:
             file_path: Path to content file
@@ -263,8 +246,7 @@ class ContentValidator:
             
         Returns:
             File validation result
-        """
-        try:
+        """        try:
             result = ValidationResult()
             
             # File existence and accessibility
@@ -326,8 +308,7 @@ class ContentValidator:
         content_type: ContentCategory,
         file_path: str
     ) -> Dict[str, Any]:
-        """
-        Generate unique fingerprint for content identification.
+        """        Generate unique fingerprint for content identification.
         
         Args:
             content_id: ID of the content
@@ -336,8 +317,7 @@ class ContentValidator:
             
         Returns:
             Content fingerprint data
-        """
-        try:
+        """        try:
             fingerprint_data = {
                 "content_id": content_id,
                 "content_type": content_type.value,
@@ -378,8 +358,7 @@ class ContentValidator:
         content_id_2: int,
         similarity_threshold: float = 0.8
     ) -> Dict[str, Any]:
-        """
-        Check similarity between two pieces of content.
+        """        Check similarity between two pieces of content.
         
         Args:
             content_id_1: ID of first content
@@ -388,8 +367,7 @@ class ContentValidator:
             
         Returns:
             Similarity analysis result
-        """
-        try:
+        """        try:
             # Get fingerprints
             fingerprint_1 = self.content_fingerprints.get(content_id_1)
             fingerprint_2 = self.content_fingerprints.get(content_id_2)
@@ -441,8 +419,7 @@ class ContentValidator:
             return {"error": str(e)}
 
     async def _validate_listing_metadata(self, listing: MarketplaceListing) -> Dict[str, List[str]]:
-        """Validate listing metadata and information."""
-        try:
+        """Validate listing metadata and information."""        try:
             errors = []
             warnings = []
 
@@ -477,8 +454,7 @@ class ContentValidator:
             return {"errors": [f"Metadata validation error: {str(e)}"], "warnings": []}
 
     async def _validate_audio_content(self, listing: MarketplaceListing) -> Dict[str, Any]:
-        """Validate audio content specific requirements."""
-        try:
+        """Validate audio content specific requirements."""        try:
             result = {
                 "quality_metrics": {},
                 "analysis": {},
@@ -519,8 +495,7 @@ class ContentValidator:
             return {"errors": [f"Audio validation error: {str(e)}"], "warnings": []}
 
     async def _assess_content_quality(self, listing: MarketplaceListing) -> Dict[str, Any]:
-        """Assess overall content quality and provide suggestions."""
-        try:
+        """Assess overall content quality and provide suggestions."""        try:
             assessment = {
                 "metrics": {
                     "overall_quality": 0.0,
@@ -558,8 +533,7 @@ class ContentValidator:
             return {"metrics": {}, "suggestions": []}
 
     async def _calculate_overall_score(self, result: ValidationResult) -> float:
-        """Calculate overall validation score."""
-        try:
+        """Calculate overall validation score."""        try:
             base_score = 1.0
             
             # Deduct for errors
@@ -584,8 +558,7 @@ class ContentValidator:
             return 0.0
 
     async def _determine_validation_status(self, result: ValidationResult) -> ValidationStatus:
-        """Determine final validation status based on results."""
-        try:
+        """Determine final validation status based on results."""        try:
             # Critical errors = rejection
             if any("critical" in error.lower() for error in result.errors):
                 return ValidationStatus.REJECTED

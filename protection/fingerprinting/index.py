@@ -1,5 +1,4 @@
-"""
-🔍 Content Fingerprinting System - Ultra-Industrial Entry Point
+"""🔍 Content Fingerprinting System - Ultra-Industrial Entry Point
 ===============================================================
 
 Enterprise-grade multi-modal content fingerprinting orchestration system providing
@@ -28,7 +27,6 @@ reverse engineering, or appropriation is STRICTLY PROHIBITED and will result in 
 legal action including civil lawsuits, criminal prosecution, and maximum financial penalties.
 Contact mlaiel@live.de for any usage authorization. All activities are monitored and logged.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any
@@ -52,8 +50,7 @@ from .config import FingerprintConfig
 
 
 class ContentFormat(Enum):
-    """Supported content formats for fingerprinting."""
-    AUDIO = "audio"
+    """Supported content formats for fingerprinting."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -63,8 +60,7 @@ class ContentFormat(Enum):
 
 @dataclass
 class FingerprintRequest:
-    """Request structure for fingerprinting operations."""
-    content_path: Union[str, Path]
+    """Request structure for fingerprinting operations."""    content_path: Union[str, Path]
     content_type: ContentFormat
     user_id: str
     content_id: Optional[str] = None
@@ -75,21 +71,17 @@ class FingerprintRequest:
 
 
 class FingerprintingSystemIndex:
-    """
-    Main entry point for the Content Fingerprinting System.
+    """    Main entry point for the Content Fingerprinting System.
     
     This class provides a unified interface for all fingerprinting operations,
     coordinating between different processors, monitoring, optimization, and security.
-    """
-    
+    """    
     def __init__(self, config: Optional[FingerprintConfig] = None):
-        """
-        Initialize the fingerprinting system.
+        """        Initialize the fingerprinting system.
         
         Args:
             config: Configuration object for the system
-        """
-        self.config = config or FingerprintConfig()
+        """        self.config = config or FingerprintConfig()
         self.logger = logging.getLogger(__name__)
         
         # Core services
@@ -114,13 +106,11 @@ class FingerprintingSystemIndex:
         self.active_jobs = {}
         
     async def initialize(self) -> bool:
-        """
-        Initialize all system components.
+        """        Initialize all system components.
         
         Returns:
             True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             self.logger.info("Initializing Content Fingerprinting System...")
             
             # Initialize security first
@@ -147,16 +137,14 @@ class FingerprintingSystemIndex:
             return False
     
     async def process_content(self, request: FingerprintRequest) -> FingerprintResult:
-        """
-        Process a single content item for fingerprinting.
+        """        Process a single content item for fingerprinting.
         
         Args:
             request: Fingerprint request object
             
         Returns:
             Fingerprint result
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RuntimeError("System not initialized. Call initialize() first.")
         
         # Security check
@@ -196,16 +184,14 @@ class FingerprintingSystemIndex:
             raise
     
     async def process_batch(self, requests: List[FingerprintRequest]) -> List[FingerprintResult]:
-        """
-        Process multiple content items in batch.
+        """        Process multiple content items in batch.
         
         Args:
             requests: List of fingerprint requests
             
         Returns:
             List of fingerprint results
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RuntimeError("System not initialized. Call initialize() first.")
         
         return await self.batch_processor.process_batch(requests)
@@ -217,8 +203,7 @@ class FingerprintingSystemIndex:
         threshold: float = 0.85,
         limit: int = 100
     ) -> List[Dict[str, Any]]:
-        """
-        Search for similar content based on fingerprint.
+        """        Search for similar content based on fingerprint.
         
         Args:
             fingerprint_data: Fingerprint data to search with
@@ -228,21 +213,18 @@ class FingerprintingSystemIndex:
             
         Returns:
             List of similar content matches
-        """
-        processor = self.processors.get(content_type)
+        """        processor = self.processors.get(content_type)
         if not processor:
             raise ValueError(f"Unsupported content type: {content_type}")
         
         return await processor.search_similar(fingerprint_data, threshold, limit)
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system status.
+        """        Get comprehensive system status.
         
         Returns:
             System status information
-        """
-        return {
+        """        return {
             "system_initialized": self.is_initialized,
             "active_jobs": len(self.active_jobs),
             "monitoring_status": await self.monitoring.get_status(),
@@ -255,38 +237,31 @@ class FingerprintingSystemIndex:
         }
     
     async def optimize_system(self) -> Dict[str, Any]:
-        """
-        Optimize system performance.
+        """        Optimize system performance.
         
         Returns:
             Optimization results
-        """
-        return await self.optimizer.optimize_system()
+        """        return await self.optimizer.optimize_system()
     
     async def validate_system_integrity(self) -> Dict[str, Any]:
-        """
-        Validate system integrity and configuration.
+        """        Validate system integrity and configuration.
         
         Returns:
             Validation results
-        """
-        return await self.validator.validate_system_integrity()
+        """        return await self.validator.validate_system_integrity()
     
     async def deploy_to_production(self, environment: str = "production") -> bool:
-        """
-        Deploy system to production environment.
+        """        Deploy system to production environment.
         
         Args:
             environment: Target environment
             
         Returns:
             True if deployment successful
-        """
-        return await self.deployment_manager.deploy(environment)
+        """        return await self.deployment_manager.deploy(environment)
     
     async def shutdown(self):
-        """Gracefully shutdown the system."""
-        self.logger.info("Shutting down Content Fingerprinting System...")
+        """Gracefully shutdown the system."""        self.logger.info("Shutting down Content Fingerprinting System...")
         
         # Stop monitoring
         await self.monitoring.stop_monitoring()
@@ -309,16 +284,14 @@ _system_instance: Optional[FingerprintingSystemIndex] = None
 
 
 def get_fingerprinting_system(config: Optional[FingerprintConfig] = None) -> FingerprintingSystemIndex:
-    """
-    Get or create the global fingerprinting system instance.
+    """    Get or create the global fingerprinting system instance.
     
     Args:
         config: Configuration object
         
     Returns:
         Fingerprinting system instance
-    """
-    global _system_instance
+    """    global _system_instance
     
     if _system_instance is None:
         _system_instance = FingerprintingSystemIndex(config)
@@ -327,16 +300,14 @@ def get_fingerprinting_system(config: Optional[FingerprintConfig] = None) -> Fin
 
 
 async def initialize_system(config: Optional[FingerprintConfig] = None) -> bool:
-    """
-    Initialize the global fingerprinting system.
+    """    Initialize the global fingerprinting system.
     
     Args:
         config: Configuration object
         
     Returns:
         True if initialization successful
-    """
-    system = get_fingerprinting_system(config)
+    """    system = get_fingerprinting_system(config)
     return await system.initialize()
 
 
@@ -345,8 +316,7 @@ async def process_content_simple(
     content_type: ContentFormat,
     user_id: str
 ) -> FingerprintResult:
-    """
-    Simple interface for processing single content item.
+    """    Simple interface for processing single content item.
     
     Args:
         content_path: Path to content file
@@ -355,8 +325,7 @@ async def process_content_simple(
         
     Returns:
         Fingerprint result
-    """
-    system = get_fingerprinting_system()
+    """    system = get_fingerprinting_system()
     
     if not system.is_initialized:
         await system.initialize()
@@ -371,8 +340,7 @@ async def process_content_simple(
 
 
 async def shutdown_system():
-    """Shutdown the global fingerprinting system."""
-    global _system_instance
+    """Shutdown the global fingerprinting system."""    global _system_instance
     
     if _system_instance:
         await _system_instance.shutdown()
@@ -396,8 +364,7 @@ if __name__ == "__main__":
     import sys
     
     async def main():
-        """Main function for testing and development."""
-        try:
+        """Main function for testing and development."""        try:
             # Initialize system
             success = await initialize_system()
             if not success:

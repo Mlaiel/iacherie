@@ -1,5 +1,4 @@
-"""
-Push Notification Manager
+"""Push Notification Manager
 
 Gestionnaire avancé des notifications push pour mobiles et web.
 Support multi-plateformes avec Firebase, APNs, WebPush et analytics avancés.
@@ -14,7 +13,6 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et constitue une violation des droits d'auteur.
 Les contrevenants s'exposent à des poursuites judiciaires.
 """
-
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class PushPlatform(Enum):
-    """Plateformes de notification push"""
-    ANDROID = "android"
+    """Plateformes de notification push"""    ANDROID = "android"
     IOS = "ios"
     WEB = "web"
     WINDOWS = "windows"
@@ -47,16 +44,14 @@ class PushPlatform(Enum):
 
 
 class PushPriority(Enum):
-    """Priorités des notifications push"""
-    LOW = "low"
+    """Priorités des notifications push"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class PushStatus(Enum):
-    """Statuts des notifications push"""
-    PENDING = "pending"
+    """Statuts des notifications push"""    PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
     FAILED = "failed"
@@ -66,8 +61,7 @@ class PushStatus(Enum):
 
 
 class NotificationType(Enum):
-    """Types de notifications"""
-    CONTENT_UPLOAD = "content_upload"
+    """Types de notifications"""    CONTENT_UPLOAD = "content_upload"
     CONTENT_PROTECTION = "content_protection"
     COLLABORATION_REQUEST = "collaboration_request"
     REVENUE_UPDATE = "revenue_update"
@@ -78,8 +72,7 @@ class NotificationType(Enum):
 
 @dataclass
 class PushDevice:
-    """Appareil pour notifications push"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Appareil pour notifications push"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     platform: PushPlatform = PushPlatform.ANDROID
     token: str = ""
@@ -99,8 +92,7 @@ class PushDevice:
 
 @dataclass
 class PushNotification:
-    """Notification push"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Notification push"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     device_id: Optional[str] = None
     platform: Optional[PushPlatform] = None
@@ -127,8 +119,7 @@ class PushNotification:
 
 @dataclass
 class PushDelivery:
-    """Livraison de notification push"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Livraison de notification push"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     notification_id: str = ""
     device_id: str = ""
     platform: PushPlatform = PushPlatform.ANDROID
@@ -148,16 +139,14 @@ class PushDelivery:
 
 
 class FirebasePushProvider:
-    """Fournisseur Firebase Cloud Messaging"""
-    
+    """Fournisseur Firebase Cloud Messaging"""    
     def __init__(self, credentials_path: str, project_id: str):
         self.project_id = project_id
         self.app = None
         self._init_firebase(credentials_path)
     
     def _init_firebase(self, credentials_path: str):
-        """Initialiser Firebase"""
-        try:
+        """Initialiser Firebase"""        try:
             cred = credentials.Certificate(credentials_path)
             self.app = initialize_app(cred, name=f"push_{self.project_id}")
             logger.info(f"Firebase initialisé pour le projet {self.project_id}")
@@ -166,8 +155,7 @@ class FirebasePushProvider:
             raise
     
     async def send_notification(self, notification: PushNotification, device: PushDevice) -> Dict[str, Any]:
-        """Envoyer une notification via FCM"""
-        try:
+        """Envoyer une notification via FCM"""        try:
             # Construire le message FCM
             fcm_message = self._build_fcm_message(notification, device)
             
@@ -201,8 +189,7 @@ class FirebasePushProvider:
             }
     
     def _build_fcm_message(self, notification: PushNotification, device: PushDevice) -> messaging.Message:
-        """Construire un message FCM"""
-        # Configuration de base
+        """Construire un message FCM"""        # Configuration de base
         fcm_notification = messaging.Notification(
             title=notification.title,
             body=notification.body,
@@ -271,8 +258,7 @@ class FirebasePushProvider:
         )
     
     def _get_android_priority(self, priority: PushPriority) -> str:
-        """Convertir la priorité en priorité Android"""
-        mapping = {
+        """Convertir la priorité en priorité Android"""        mapping = {
             PushPriority.LOW: "normal",
             PushPriority.NORMAL: "normal", 
             PushPriority.HIGH: "high",
@@ -281,8 +267,7 @@ class FirebasePushProvider:
         return mapping.get(priority, "normal")
     
     def _get_apns_priority(self, priority: PushPriority) -> str:
-        """Convertir la priorité en priorité APNs"""
-        mapping = {
+        """Convertir la priorité en priorité APNs"""        mapping = {
             PushPriority.LOW: "5",
             PushPriority.NORMAL: "5",
             PushPriority.HIGH: "10", 
@@ -292,16 +277,14 @@ class FirebasePushProvider:
 
 
 class WebPushProvider:
-    """Fournisseur Web Push direct"""
-    
+    """Fournisseur Web Push direct"""    
     def __init__(self, vapid_private_key: str, vapid_public_key: str, vapid_subject: str):
         self.vapid_private_key = vapid_private_key
         self.vapid_public_key = vapid_public_key
         self.vapid_subject = vapid_subject
     
     async def send_notification(self, notification: PushNotification, device: PushDevice) -> Dict[str, Any]:
-        """Envoyer une notification Web Push"""
-        try:
+        """Envoyer une notification Web Push"""        try:
             if not device.endpoint or not device.p256dh_key or not device.auth_key:
                 raise ValueError("Données Web Push incomplètes")
             
@@ -369,8 +352,7 @@ class WebPushProvider:
             }
     
     def _encrypt_payload(self, payload: str, p256dh_key: str, auth_key: str) -> bytes:
-        """Chiffrer le payload Web Push"""
-        try:
+        """Chiffrer le payload Web Push"""        try:
             # Décoder les clés
             receiver_key = base64.urlsafe_b64decode(p256dh_key + "==")
             auth_secret = base64.urlsafe_b64decode(auth_key + "==")
@@ -410,16 +392,14 @@ class WebPushProvider:
             raise
     
     def _hkdf_extract(self, salt: bytes, ikm: bytes) -> bytes:
-        """HKDF Extract"""
-        import hmac
+        """HKDF Extract"""        import hmac
         import hashlib
         if len(salt) == 0:
             salt = b'\x00' * hashlib.sha256().digest_size
         return hmac.new(salt, ikm, hashlib.sha256).digest()
     
     def _hkdf_expand(self, prk: bytes, info: bytes, length: int) -> bytes:
-        """HKDF Expand"""
-        import hmac
+        """HKDF Expand"""        import hmac
         import hashlib
         t = b""
         okm = b""
@@ -431,8 +411,7 @@ class WebPushProvider:
         return okm[:length]
     
     def _generate_vapid_headers(self, endpoint: str) -> Dict[str, str]:
-        """Générer les en-têtes VAPID"""
-        try:
+        """Générer les en-têtes VAPID"""        try:
             # Préparer les claims
             claims = {
                 "aud": endpoint,
@@ -453,8 +432,7 @@ class WebPushProvider:
 
 
 class PushNotificationManager:
-    """Gestionnaire principal des notifications push"""
-    
+    """Gestionnaire principal des notifications push"""    
     def __init__(self, db_pool: asyncpg.Pool, redis_client: aioredis.Redis, config: Dict[str, Any]):
         self.db_pool = db_pool
         self.redis = redis_client
@@ -463,8 +441,7 @@ class PushNotificationManager:
         self.max_batch_size = config.get("max_batch_size", 500)
         
     def _init_providers(self) -> Dict[str, Any]:
-        """Initialiser les fournisseurs de push"""
-        providers = {}
+        """Initialiser les fournisseurs de push"""        providers = {}
         
         # Firebase
         if firebase_config := self.config.get("firebase"):
@@ -484,8 +461,7 @@ class PushNotificationManager:
         return providers
     
     async def register_device(self, device: PushDevice) -> str:
-        """Enregistrer un appareil"""
-        try:
+        """Enregistrer un appareil"""        try:
             # Vérifier si l'appareil existe déjà
             existing = await self._find_device_by_token(device.token)
             if existing:
@@ -503,8 +479,7 @@ class PushNotificationManager:
             raise
     
     async def send_notification(self, notification: PushNotification) -> str:
-        """Envoyer une notification"""
-        try:
+        """Envoyer une notification"""        try:
             # Sauvegarder la notification
             notification_id = await self._save_notification(notification)
             
@@ -528,8 +503,7 @@ class PushNotificationManager:
             raise
     
     async def send_bulk_notifications(self, notifications: List[PushNotification]) -> List[str]:
-        """Envoyer des notifications en lot"""
-        try:
+        """Envoyer des notifications en lot"""        try:
             notification_ids = []
             
             # Traiter par batch
@@ -554,8 +528,7 @@ class PushNotificationManager:
             raise
     
     async def _send_to_devices(self, notification: PushNotification, devices: List[Dict[str, Any]]):
-        """Envoyer à une liste d'appareils"""
-        try:
+        """Envoyer à une liste d'appareils"""        try:
             # Grouper par plateforme
             platform_groups = {}
             for device in devices:
@@ -572,8 +545,7 @@ class PushNotificationManager:
             logger.error(f"Erreur envoi appareils: {e}")
     
     async def _send_to_platform(self, notification: PushNotification, platform: PushPlatform, devices: List[Dict[str, Any]]):
-        """Envoyer à une plateforme spécifique"""
-        try:
+        """Envoyer à une plateforme spécifique"""        try:
             # Sélectionner le bon fournisseur
             provider = None
             if platform in [PushPlatform.ANDROID, PushPlatform.IOS]:
@@ -623,8 +595,7 @@ class PushNotificationManager:
             logger.error(f"Erreur envoi plateforme {platform}: {e}")
     
     async def _schedule_notification(self, notification: PushNotification, devices: List[Dict[str, Any]]):
-        """Programmer une notification"""
-        try:
+        """Programmer une notification"""        try:
             # Ajouter à la queue Redis
             schedule_data = {
                 "notification_id": notification.id,
@@ -642,8 +613,7 @@ class PushNotificationManager:
             logger.error(f"Erreur programmation notification: {e}")
     
     async def process_scheduled_notifications(self):
-        """Traiter les notifications programmées"""
-        try:
+        """Traiter les notifications programmées"""        try:
             now = datetime.utcnow().timestamp()
             
             # Récupérer les notifications à envoyer
@@ -671,19 +641,16 @@ class PushNotificationManager:
             logger.error(f"Erreur traitement notifications programmées: {e}")
     
     async def _get_target_devices(self, notification: PushNotification) -> List[Dict[str, Any]]:
-        """Récupérer les appareils cibles"""
-        async with self.db_pool.acquire() as conn:
+        """Récupérer les appareils cibles"""        async with self.db_pool.acquire() as conn:
             if notification.device_id:
                 # Appareil spécifique
                 query = "SELECT * FROM push_devices WHERE id = $1 AND is_active = true"
                 rows = await conn.fetch(query, notification.device_id)
             else:
                 # Tous les appareils de l'utilisateur
-                query = """
-                    SELECT * FROM push_devices 
+                query = """                    SELECT * FROM push_devices 
                     WHERE user_id = $1 AND is_active = true
-                """
-                if notification.platform:
+                """                if notification.platform:
                     query += " AND platform = $2"
                     rows = await conn.fetch(query, notification.user_id, notification.platform.value)
                 else:
@@ -692,10 +659,8 @@ class PushNotificationManager:
             return [dict(row) for row in rows]
     
     async def _save_notification(self, notification: PushNotification) -> str:
-        """Sauvegarder une notification"""
-        async with self.db_pool.acquire() as conn:
-            query = """
-                INSERT INTO push_notifications (
+        """Sauvegarder une notification"""        async with self.db_pool.acquire() as conn:
+            query = """                INSERT INTO push_notifications (
                     id, user_id, device_id, platform, notification_type,
                     title, body, icon, image, badge, sound, priority,
                     ttl, collapse_key, data, actions, scheduled_at,
@@ -703,8 +668,7 @@ class PushNotificationManager:
                     created_at, metadata
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19, $20, $21, $22, $23)
                 RETURNING id
-            """
-            
+            """            
             result = await conn.fetchval(
                 query,
                 notification.id, notification.user_id, notification.device_id,
@@ -722,17 +686,14 @@ class PushNotificationManager:
             return result
     
     async def _save_delivery(self, delivery: PushDelivery):
-        """Sauvegarder une livraison"""
-        async with self.db_pool.acquire() as conn:
-            query = """
-                INSERT INTO push_deliveries (
+        """Sauvegarder une livraison"""        async with self.db_pool.acquire() as conn:
+            query = """                INSERT INTO push_deliveries (
                     id, notification_id, device_id, platform, status,
                     provider_message_id, sent_at, delivered_at, clicked_at,
                     dismissed_at, failed_at, failure_reason, retry_count,
                     max_retries, next_retry_at, response_data, created_at
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)
-            """
-            
+            """            
             await conn.execute(
                 query,
                 delivery.id, delivery.notification_id, delivery.device_id,
@@ -745,16 +706,13 @@ class PushNotificationManager:
             )
     
     async def _create_device(self, device: PushDevice):
-        """Créer un nouvel appareil"""
-        async with self.db_pool.acquire() as conn:
-            query = """
-                INSERT INTO push_devices (
+        """Créer un nouvel appareil"""        async with self.db_pool.acquire() as conn:
+            query = """                INSERT INTO push_devices (
                     id, user_id, platform, token, endpoint, p256dh_key,
                     auth_key, app_version, os_version, device_model,
                     timezone, language, is_active, last_seen, created_at, metadata
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16)
-            """
-            
+            """            
             await conn.execute(
                 query,
                 device.id, device.user_id, device.platform.value, device.token,
@@ -765,17 +723,14 @@ class PushNotificationManager:
             )
     
     async def _update_device(self, device: PushDevice):
-        """Mettre à jour un appareil"""
-        async with self.db_pool.acquire() as conn:
-            query = """
-                UPDATE push_devices SET
+        """Mettre à jour un appareil"""        async with self.db_pool.acquire() as conn:
+            query = """                UPDATE push_devices SET
                     token = $2, endpoint = $3, p256dh_key = $4, auth_key = $5,
                     app_version = $6, os_version = $7, device_model = $8,
                     timezone = $9, language = $10, is_active = $11,
                     last_seen = $12, metadata = $13
                 WHERE id = $1
-            """
-            
+            """            
             await conn.execute(
                 query,
                 device.id, device.token, device.endpoint, device.p256dh_key,
@@ -785,21 +740,18 @@ class PushNotificationManager:
             )
     
     async def _find_device_by_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Trouver un appareil par token"""
-        async with self.db_pool.acquire() as conn:
+        """Trouver un appareil par token"""        async with self.db_pool.acquire() as conn:
             query = "SELECT * FROM push_devices WHERE token = $1"
             row = await conn.fetchrow(query, token)
             return dict(row) if row else None
     
     async def _deactivate_device(self, device_id: str):
-        """Désactiver un appareil"""
-        async with self.db_pool.acquire() as conn:
+        """Désactiver un appareil"""        async with self.db_pool.acquire() as conn:
             query = "UPDATE push_devices SET is_active = false WHERE id = $1"
             await conn.execute(query, device_id)
     
     async def _load_notification(self, notification_id: str) -> Optional[PushNotification]:
-        """Charger une notification"""
-        async with self.db_pool.acquire() as conn:
+        """Charger une notification"""        async with self.db_pool.acquire() as conn:
             query = "SELECT * FROM push_notifications WHERE id = $1"
             row = await conn.fetchrow(query, notification_id)
             
@@ -833,18 +785,15 @@ class PushNotificationManager:
             )
     
     async def _load_devices(self, device_ids: List[str]) -> List[Dict[str, Any]]:
-        """Charger plusieurs appareils"""
-        async with self.db_pool.acquire() as conn:
+        """Charger plusieurs appareils"""        async with self.db_pool.acquire() as conn:
             query = "SELECT * FROM push_devices WHERE id = ANY($1) AND is_active = true"
             rows = await conn.fetch(query, device_ids)
             return [dict(row) for row in rows]
     
     async def get_notification_analytics(self, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Récupérer les analytics de notifications"""
-        async with self.db_pool.acquire() as conn:
+        """Récupérer les analytics de notifications"""        async with self.db_pool.acquire() as conn:
             # Statistiques générales
-            stats_query = """
-                SELECT 
+            stats_query = """                SELECT 
                     COUNT(DISTINCT n.id) as total_notifications,
                     COUNT(d.id) as total_deliveries,
                     COUNT(CASE WHEN d.status = 'sent' THEN 1 END) as sent,
@@ -854,13 +803,11 @@ class PushNotificationManager:
                 FROM push_notifications n
                 LEFT JOIN push_deliveries d ON n.id = d.notification_id
                 WHERE n.created_at BETWEEN $1 AND $2
-            """
-            
+            """            
             stats = await conn.fetchrow(stats_query, start_date, end_date)
             
             # Statistiques par plateforme
-            platform_query = """
-                SELECT 
+            platform_query = """                SELECT 
                     d.platform,
                     COUNT(*) as total,
                     COUNT(CASE WHEN d.status = 'sent' THEN 1 END) as sent,
@@ -869,8 +816,7 @@ class PushNotificationManager:
                 JOIN push_notifications n ON d.notification_id = n.id
                 WHERE n.created_at BETWEEN $1 AND $2
                 GROUP BY d.platform
-            """
-            
+            """            
             platform_stats = await conn.fetch(platform_query, start_date, end_date)
             
             # Calculer les taux

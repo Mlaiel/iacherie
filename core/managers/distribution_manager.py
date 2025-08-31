@@ -1,5 +1,4 @@
-"""
-Distribution Manager - IA-Influencer-Agent
+"""Distribution Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/core/managers/distribution_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Contenu optimisé → Analyse plateformes → Distribution intelligente → 
 Optimisation formats → Publication coordonnée → Monitoring performance → Analytics cross-platform
 """
-
 from typing import Any, Dict, List, Optional, Union, Tuple, Set, Callable
 import logging
 import asyncio
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class Platform(Enum):
-    """Plateformes de distribution supportées"""
-    # Video platforms
+    """Plateformes de distribution supportées"""    # Video platforms
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     VIMEO = "vimeo"
@@ -86,8 +83,7 @@ class Platform(Enum):
 
 
 class ContentFormat(Enum):
-    """Formats de contenu"""
-    VIDEO_SHORT = "video_short"  # <60s
+    """Formats de contenu"""    VIDEO_SHORT = "video_short"  # <60s
     VIDEO_LONG = "video_long"    # >60s
     AUDIO_TRACK = "audio_track"
     AUDIO_PODCAST = "audio_podcast"
@@ -100,8 +96,7 @@ class ContentFormat(Enum):
 
 
 class DistributionStatus(Enum):
-    """Statuts de distribution"""
-    PENDING = "pending"
+    """Statuts de distribution"""    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -112,8 +107,7 @@ class DistributionStatus(Enum):
 
 
 class OptimizationType(Enum):
-    """Types d'optimisation"""
-    FORMAT_CONVERSION = "format_conversion"
+    """Types d'optimisation"""    FORMAT_CONVERSION = "format_conversion"
     SIZE_OPTIMIZATION = "size_optimization"
     QUALITY_ENHANCEMENT = "quality_enhancement"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -125,8 +119,7 @@ class OptimizationType(Enum):
 
 @dataclass
 class DistributionConfig:
-    """Configuration du gestionnaire de distribution"""
-    # Platform management
+    """Configuration du gestionnaire de distribution"""    # Platform management
     max_concurrent_distributions: int = 20
     distribution_timeout: int = 300
     retry_attempts: int = 3
@@ -175,8 +168,7 @@ class DistributionConfig:
 
 @dataclass
 class PlatformConfig:
-    """Configuration spécifique à une plateforme"""
-    platform: Platform
+    """Configuration spécifique à une plateforme"""    platform: Platform
     name: str
     api_endpoint: str = ""
     
@@ -229,8 +221,7 @@ class PlatformConfig:
 
 @dataclass
 class DistributionRequest:
-    """Requête de distribution"""
-    id: str
+    """Requête de distribution"""    id: str
     user_id: str
     content_id: str
     platforms: List[Platform]
@@ -286,8 +277,7 @@ class DistributionRequest:
 
 @dataclass
 class DistributionResult:
-    """Résultat de distribution sur une plateforme"""
-    platform: Platform
+    """Résultat de distribution sur une plateforme"""    platform: Platform
     content_id: str
     platform_content_id: str = ""
     
@@ -329,8 +319,7 @@ class DistributionResult:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Analytics cross-platform"""
-    request_id: str
+    """Analytics cross-platform"""    request_id: str
     total_platforms: int
     successful_platforms: int
     
@@ -362,8 +351,7 @@ class CrossPlatformAnalytics:
 
 
 class DistributionManager(ABC):
-    """
-    🌐 Advanced Multi-Platform Distribution Manager - IA-Influencer-Agent
+    """    🌐 Advanced Multi-Platform Distribution Manager - IA-Influencer-Agent
     
     Responsabilité:
     Gestionnaire industriel pour distribution multi-plateformes intelligente
@@ -389,8 +377,7 @@ class DistributionManager(ABC):
     - Watermarking et protection
     - Revenue tracking multi-plateforme
     - Audience targeting avancé
-    """
-    
+    """    
     def __init__(self, config: DistributionConfig = None):
         self.config = config or DistributionConfig()
         
@@ -442,13 +429,11 @@ class DistributionManager(ABC):
     
     @abstractmethod
     async def initialize_platforms(self) -> bool:
-        """
-        Initialize platform connections and configurations
+        """        Initialize platform connections and configurations
         
         Returns:
             bool: True if initialization successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def register_platform(
@@ -456,8 +441,7 @@ class DistributionManager(ABC):
         platform: Platform,
         config: PlatformConfig
     ) -> bool:
-        """
-        Register and configure platform for distribution
+        """        Register and configure platform for distribution
         
         Args:
             platform: Platform to register
@@ -465,8 +449,7 @@ class DistributionManager(ABC):
             
         Returns:
             bool: True if registration successful
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def optimize_content_for_platform(
@@ -475,8 +458,7 @@ class DistributionManager(ABC):
         platform: Platform,
         optimization_types: List[OptimizationType] = None
     ) -> Dict[str, Any]:
-        """
-        Optimize content for specific platform requirements
+        """        Optimize content for specific platform requirements
         
         Args:
             content_url: URL to content to optimize
@@ -485,8 +467,7 @@ class DistributionManager(ABC):
             
         Returns:
             Dict: Optimization results with optimized content URLs
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def publish_to_platform(
@@ -495,8 +476,7 @@ class DistributionManager(ABC):
         content_data: Dict[str, Any],
         settings: Dict[str, Any] = None
     ) -> DistributionResult:
-        """
-        Publish content to specific platform
+        """        Publish content to specific platform
         
         Args:
             platform: Platform to publish to
@@ -505,8 +485,7 @@ class DistributionManager(ABC):
             
         Returns:
             DistributionResult: Publishing result
-        """
-        pass
+        """        pass
     
     async def distribute_content(
         self,
@@ -516,8 +495,7 @@ class DistributionManager(ABC):
         content_data: Dict[str, Any],
         distribution_settings: Dict[str, Any] = None
     ) -> DistributionRequest:
-        """
-        Distribute content to multiple platforms
+        """        Distribute content to multiple platforms
         
         Args:
             user_id: User requesting distribution
@@ -528,8 +506,7 @@ class DistributionManager(ABC):
             
         Returns:
             DistributionRequest: Distribution request tracking
-        """
-        try:
+        """        try:
             settings = distribution_settings or {}
             
             # Create distribution request
@@ -577,8 +554,7 @@ class DistributionManager(ABC):
         distributions: List[Dict[str, Any]],
         schedule_config: Dict[str, Any] = None
     ) -> List[DistributionRequest]:
-        """
-        Schedule batch distribution across multiple contents and platforms
+        """        Schedule batch distribution across multiple contents and platforms
         
         Args:
             user_id: User requesting batch distribution
@@ -587,8 +563,7 @@ class DistributionManager(ABC):
             
         Returns:
             List[DistributionRequest]: List of distribution requests
-        """
-        try:
+        """        try:
             config = schedule_config or {}
             requests = []
             
@@ -628,8 +603,7 @@ class DistributionManager(ABC):
         platform: Optional[Platform] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive distribution analytics
+        """        Get comprehensive distribution analytics
         
         Args:
             request_id: Optional specific request filter
@@ -639,8 +613,7 @@ class DistributionManager(ABC):
             
         Returns:
             Dict: Complete distribution analytics
-        """
-        with self._lock:
+        """        with self._lock:
             # Filter distributions
             distributions = list(self._active_distributions.values())
             
@@ -787,8 +760,7 @@ class DistributionManager(ABC):
         content_analysis: Dict[str, Any],
         target_audience: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Optimize distribution strategy based on content and audience analysis
+        """        Optimize distribution strategy based on content and audience analysis
         
         Args:
             user_id: User requesting optimization
@@ -797,8 +769,7 @@ class DistributionManager(ABC):
             
         Returns:
             Dict: Optimized distribution strategy
-        """
-        try:
+        """        try:
             # Analyze content characteristics
             content_type = content_analysis.get("type", "unknown")
             content_format = content_analysis.get("format", "unknown")
@@ -916,8 +887,7 @@ class DistributionManager(ABC):
             raise
     
     async def _start_distribution_processing(self) -> None:
-        """Start background distribution processing"""
-        if self._monitoring_active:
+        """Start background distribution processing"""        if self._monitoring_active:
             return
         
         self._monitoring_active = True
@@ -934,8 +904,7 @@ class DistributionManager(ABC):
         logger.info("🌐 Distribution processing started")
     
     async def _distribution_processor(self, processor_id: str) -> None:
-        """Background distribution processor"""
-        while self._monitoring_active:
+        """Background distribution processor"""        while self._monitoring_active:
             try:
                 # Get next distribution from queue
                 priority, timestamp, request = await asyncio.wait_for(
@@ -956,8 +925,7 @@ class DistributionManager(ABC):
                 await asyncio.sleep(1)
     
     async def _process_distribution(self, request: DistributionRequest) -> None:
-        """Process individual distribution request"""
-        try:
+        """Process individual distribution request"""        try:
             request.status = DistributionStatus.PROCESSING
             request.started_at = datetime.utcnow()
             
@@ -1064,8 +1032,7 @@ class DistributionManager(ABC):
             logger.error(f"❌ Distribution processing failed: {request.id} - {e}")
     
     async def _analytics_monitor(self) -> None:
-        """Background analytics monitoring"""
-        while self._monitoring_active:
+        """Background analytics monitoring"""        while self._monitoring_active:
             try:
                 await asyncio.sleep(300)  # Update every 5 minutes
                 await self._update_platform_analytics()
@@ -1073,14 +1040,12 @@ class DistributionManager(ABC):
                 logger.error(f"❌ Analytics monitor error: {e}")
     
     async def _update_platform_analytics(self) -> None:
-        """Update platform analytics data"""
-        # This would fetch real-time analytics from platforms
+        """Update platform analytics data"""        # This would fetch real-time analytics from platforms
         # Simplified implementation
         pass
     
     async def _generate_hashtag_strategy(self, content_analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate hashtag strategy based on content analysis"""
-        # Simplified hashtag generation
+        """Generate hashtag strategy based on content analysis"""        # Simplified hashtag generation
         content_type = content_analysis.get("type", "")
         category = content_analysis.get("category", "")
         
@@ -1103,8 +1068,7 @@ class DistributionManager(ABC):
         }
     
     async def _generate_caption_variations(self, content_analysis: Dict[str, Any]) -> Dict[str, str]:
-        """Generate caption variations for different platforms"""
-        title = content_analysis.get("title", "")
+        """Generate caption variations for different platforms"""        title = content_analysis.get("title", "")
         description = content_analysis.get("description", "")
         
         return {
@@ -1120,8 +1084,7 @@ class DistributionManager(ABC):
         platforms: List[Tuple[Platform, float]],
         content_analysis: Dict[str, Any]
     ) -> int:
-        """Calculate estimated reach based on platform scores"""
-        # Simplified reach calculation
+        """Calculate estimated reach based on platform scores"""        # Simplified reach calculation
         base_reach = 1000
         quality_multiplier = content_analysis.get("quality_score", 0.5)
         
@@ -1137,8 +1100,7 @@ class DistributionManager(ABC):
         platforms: List[Tuple[Platform, float]],
         content_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate expected engagement rate"""
-        # Simplified engagement calculation
+        """Calculate expected engagement rate"""        # Simplified engagement calculation
         base_engagement = 2.0  # 2% base engagement rate
         quality_multiplier = content_analysis.get("quality_score", 0.5)
         
@@ -1155,8 +1117,7 @@ class DistributionManager(ABC):
     
     @asynccontextmanager
     async def get_distribution_session(self, user_id: str):
-        """Context manager for distribution operations"""
-        session_id = str(uuid.uuid4())
+        """Context manager for distribution operations"""        session_id = str(uuid.uuid4())
         try:
             logger.info(f"🌐 Distribution session started: {session_id} for user {user_id}")
             yield session_id
@@ -1164,8 +1125,7 @@ class DistributionManager(ABC):
             logger.info(f"🌐 Distribution session ended: {session_id}")
     
     async def cleanup(self) -> bool:
-        """Cleanup distribution resources"""
-        try:
+        """Cleanup distribution resources"""        try:
             # Stop monitoring
             self._monitoring_active = False
             
@@ -1220,8 +1180,7 @@ class DistributionManager(ABC):
             return False
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get distribution system statistics"""
-        with self._lock:
+        """Get distribution system statistics"""        with self._lock:
             return {
                 "platforms_configured": len(self._platforms),
                 "active_distributions": len(self._active_distributions),
@@ -1255,13 +1214,11 @@ distribution_manager = None
 
 
 def get_distribution_manager() -> DistributionManager:
-    """
-    Get the global distribution manager instance
+    """    Get the global distribution manager instance
     
     Returns:
         DistributionManager: Global distribution manager
-    """
-    global distribution_manager
+    """    global distribution_manager
     if distribution_manager is None:
         from ..implementations.distribution_manager_impl import DistributionManagerImpl
         distribution_manager = DistributionManagerImpl()

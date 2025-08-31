@@ -1,5 +1,4 @@
-"""
-Genre Detector
+"""Genre Detector
 
 Specialized AI-powered genre detection system for music and content classification
 with support for hierarchical genre structures and cross-genre analysis.
@@ -17,7 +16,6 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
-
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 import logging
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class GenreDetector:
-    """
-    Enterprise-grade genre detection system.
+    """    Enterprise-grade genre detection system.
     
     Features:
     - Hierarchical genre classification
@@ -43,11 +40,9 @@ class GenreDetector:
     - Confidence scoring and uncertainty handling
     - Temporal genre evolution tracking
     - Regional and cultural genre variations
-    """
-    
+    """    
     def __init__(self):
-        """Initialize genre detector."""
-        self.settings = get_settings()
+        """Initialize genre detector."""        self.settings = get_settings()
         
         # Initialize genre knowledge base
         self._init_genre_database()
@@ -63,8 +58,7 @@ class GenreDetector:
         }
 
     def _init_genre_database(self):
-        """Initialize comprehensive genre database."""
-        
+        """Initialize comprehensive genre database."""        
         # Main music genre hierarchy
         self.music_genres = {
             'electronic': {
@@ -250,8 +244,7 @@ class GenreDetector:
         content_type: str,
         options: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """
-        Detect genre from content analysis data.
+        """        Detect genre from content analysis data.
         
         Args:
             content_data: Analyzed content data (classifications, features, etc.)
@@ -260,8 +253,7 @@ class GenreDetector:
             
         Returns:
             Comprehensive genre detection results
-        """
-        try:
+        """        try:
             if not content_data:
                 raise ClassificationError("No content data provided")
             
@@ -324,8 +316,7 @@ class GenreDetector:
             raise ClassificationError(f"Genre detection failed: {e}")
 
     def _extract_genre_indicators(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Extract genre indicators from content analysis data."""
-        try:
+        """Extract genre indicators from content analysis data."""        try:
             indicators = {
                 'keywords': [],
                 'characteristics': [],
@@ -371,8 +362,7 @@ class GenreDetector:
             return {}
 
     def _extract_audio_indicators(self, classifications: Dict, features: Dict) -> Dict[str, Any]:
-        """Extract audio-specific genre indicators."""
-        indicators = {}
+        """Extract audio-specific genre indicators."""        indicators = {}
         
         try:
             # Tempo from audio analysis
@@ -407,8 +397,7 @@ class GenreDetector:
         return indicators
 
     def _extract_text_indicators(self, classifications: Dict, features: Dict) -> Dict[str, Any]:
-        """Extract text-specific genre indicators."""
-        indicators = {}
+        """Extract text-specific genre indicators."""        indicators = {}
         
         try:
             # Language detection
@@ -448,8 +437,7 @@ class GenreDetector:
         return indicators
 
     def _extract_visual_indicators(self, classifications: Dict, features: Dict) -> Dict[str, Any]:
-        """Extract visual-specific genre indicators."""
-        indicators = {}
+        """Extract visual-specific genre indicators."""        indicators = {}
         
         try:
             # Style analysis
@@ -483,8 +471,7 @@ class GenreDetector:
         return indicators
 
     def _detect_primary_genre(self, indicators: Dict[str, Any], content_type: str) -> Optional[Dict[str, Any]]:
-        """Detect primary genre from indicators."""
-        try:
+        """Detect primary genre from indicators."""        try:
             genre_scores = {}
             
             # If existing genre classification exists, use it with high weight
@@ -538,8 +525,7 @@ class GenreDetector:
             return None
 
     def _score_genres_by_keywords(self, keywords: List[str]) -> Dict[str, float]:
-        """Score genres based on keyword matches."""
-        scores = {}
+        """Score genres based on keyword matches."""        scores = {}
         
         for genre, genre_data in self.music_genres.items():
             score = 0
@@ -569,8 +555,7 @@ class GenreDetector:
         return scores
 
     def _score_genres_by_characteristics(self, indicators: Dict[str, Any]) -> Dict[str, float]:
-        """Score genres based on musical/content characteristics."""
-        scores = {}
+        """Score genres based on musical/content characteristics."""        scores = {}
         
         for genre, genre_data in self.music_genres.items():
             score = 0
@@ -627,8 +612,7 @@ class GenreDetector:
         return scores
 
     def _score_genres_by_tempo(self, tempo: float) -> Dict[str, float]:
-        """Score genres based on tempo (BPM)."""
-        scores = {}
+        """Score genres based on tempo (BPM)."""        scores = {}
         
         for genre, genre_data in self.music_genres.items():
             subgenres = genre_data.get('subgenres', {})
@@ -661,8 +645,7 @@ class GenreDetector:
         return scores
 
     def _score_genres_by_mood(self, mood: str) -> Dict[str, float]:
-        """Score genres based on mood/emotion."""
-        mood_genre_mapping = {
+        """Score genres based on mood/emotion."""        mood_genre_mapping = {
             'aggressive': {'rock': 0.8, 'hip_hop': 0.7, 'electronic': 0.5},
             'energetic': {'rock': 0.7, 'electronic': 0.8, 'pop': 0.6, 'hip_hop': 0.5},
             'calm': {'jazz': 0.8, 'classical': 0.9, 'electronic': 0.4},
@@ -682,8 +665,7 @@ class GenreDetector:
         indicators: Dict[str, Any], 
         content_type: str
     ) -> List[Dict[str, Any]]:
-        """Detect subgenres within the primary genre."""
-        try:
+        """Detect subgenres within the primary genre."""        try:
             subgenres = []
             
             if primary_genre not in self.music_genres:
@@ -753,8 +735,7 @@ class GenreDetector:
             return []
 
     def _analyze_fusion_genres(self, indicators: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Analyze potential fusion/cross-genre characteristics."""
-        try:
+        """Analyze potential fusion/cross-genre characteristics."""        try:
             fusion_analysis = {
                 'detected_fusions': [],
                 'genre_mixing_score': 0.0,
@@ -804,8 +785,7 @@ class GenreDetector:
             return {}
 
     def _analyze_regional_genres(self, indicators: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Analyze regional genre characteristics."""
-        try:
+        """Analyze regional genre characteristics."""        try:
             regional_analysis = {
                 'detected_regions': [],
                 'cultural_confidence': 0.0
@@ -857,8 +837,7 @@ class GenreDetector:
             return {}
 
     def _analyze_temporal_characteristics(self, indicators: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze temporal/era characteristics of the content."""
-        try:
+        """Analyze temporal/era characteristics of the content."""        try:
             temporal_analysis = {
                 'detected_era': None,
                 'era_confidence': 0.0,
@@ -902,8 +881,7 @@ class GenreDetector:
             return {}
 
     def _build_genre_hierarchy(self, detection: Dict[str, Any]) -> List[str]:
-        """Build hierarchical genre path."""
-        hierarchy = []
+        """Build hierarchical genre path."""        hierarchy = []
         
         try:
             # Primary genre
@@ -935,8 +913,7 @@ class GenreDetector:
             return hierarchy
 
     def _calculate_overall_confidence(self, detection: Dict[str, Any]) -> float:
-        """Calculate overall confidence in genre detection."""
-        try:
+        """Calculate overall confidence in genre detection."""        try:
             confidence_scores = detection.get('confidence_scores', {})
             primary_confidence = confidence_scores.get('primary', 0)
             
@@ -983,8 +960,7 @@ class GenreDetector:
 
     # Helper methods
     def _map_to_main_genre(self, genre_name: str) -> Optional[str]:
-        """Map a genre name to main genre categories."""
-        genre_name = genre_name.lower()
+        """Map a genre name to main genre categories."""        genre_name = genre_name.lower()
         
         # Direct mapping
         if genre_name in self.music_genres:
@@ -1004,14 +980,12 @@ class GenreDetector:
         return None
 
     def _get_genre_characteristics(self, genre: str) -> List[str]:
-        """Get characteristics for a genre."""
-        if genre in self.music_genres:
+        """Get characteristics for a genre."""        if genre in self.music_genres:
             return self.music_genres[genre].get('characteristics', [])
         return []
 
     def _analyze_color_scheme_for_genre(self, colors: List[str]) -> Optional[str]:
-        """Analyze color scheme for genre indicators."""
-        try:
+        """Analyze color scheme for genre indicators."""        try:
             # Simple color-genre associations
             color_genre_mapping = {
                 'dark': ['rock', 'metal', 'gothic'],
@@ -1033,13 +1007,11 @@ class GenreDetector:
             return None
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""
-        from datetime import datetime
+        """Get current timestamp."""        from datetime import datetime
         return datetime.now().isoformat()
 
     def get_genre_info(self, genre: str) -> Dict[str, Any]:
-        """Get detailed information about a specific genre."""
-        try:
+        """Get detailed information about a specific genre."""        try:
             genre = genre.lower()
             
             if genre in self.music_genres:
@@ -1072,8 +1044,7 @@ class GenreDetector:
             return {'error': str(e)}
 
     def get_all_genres(self) -> Dict[str, List[str]]:
-        """Get list of all available genres."""
-        try:
+        """Get list of all available genres."""        try:
             all_genres = {
                 'main_genres': list(self.music_genres.keys()),
                 'subgenres': {},
@@ -1099,8 +1070,7 @@ class GenreDetector:
         genre_data: Dict[str, Any], 
         parent_genre: Optional[str] = None
     ) -> bool:
-        """Add a custom genre to the system."""
-        try:
+        """Add a custom genre to the system."""        try:
             genre_name = genre_name.lower()
             
             if parent_genre:
@@ -1127,8 +1097,7 @@ class GenreDetector:
             return False
 
     def get_detection_summary(self, detection: Dict[str, Any]) -> str:
-        """Generate a human-readable summary of genre detection results."""
-        try:
+        """Generate a human-readable summary of genre detection results."""        try:
             summary_parts = []
             
             # Primary genre

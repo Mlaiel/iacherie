@@ -1,5 +1,4 @@
-"""
-User Content Repository Module
+"""User Content Repository Module
 
 Enterprise-grade repository for user content management with multi-format support,
 metadata handling, versioning, and content lifecycle management.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import and_, or_, func, desc, asc, text
@@ -48,14 +46,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 class UserContentRepository(BaseRepository[UserContent]):
-    """
-    Repository for user content operations with advanced content management,
+    """    Repository for user content operations with advanced content management,
     metadata extraction, version control, and content optimization features.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize user content repository"""
-        super().__init__(db_session, UserContent)
+        """Initialize user content repository"""        super().__init__(db_session, UserContent)
         
     def create_content(self,
                       user_id: int,
@@ -72,8 +67,7 @@ class UserContentRepository(BaseRepository[UserContent]):
                       privacy_level: PrivacyLevel = PrivacyLevel.PRIVATE,
                       content_category: ContentCategory = ContentCategory.ORIGINAL,
                       metadata: Optional[Dict[str, Any]] = None) -> UserContent:
-        """
-        Create user content with comprehensive metadata and validation
+        """        Create user content with comprehensive metadata and validation
         
         Args:
             user_id: Owner user ID
@@ -93,8 +87,7 @@ class UserContentRepository(BaseRepository[UserContent]):
             
         Returns:
             Created UserContent instance
-        """
-        try:
+        """        try:
             # Generate content ID and hash
             content_id = str(uuid.uuid4())
             file_hash = self._calculate_file_hash(file_path)
@@ -140,16 +133,14 @@ class UserContentRepository(BaseRepository[UserContent]):
             raise RepositoryException(f"Content creation failed: {str(e)}")
             
     def _calculate_file_hash(self, file_path: str) -> str:
-        """
-        Calculate SHA-256 hash of file for deduplication
+        """        Calculate SHA-256 hash of file for deduplication
         
         Args:
             file_path: Path to file
             
         Returns:
             SHA-256 hash string
-        """
-        try:
+        """        try:
             # In production, this would read the actual file
             # For now, create a hash based on the path
             return hashlib.sha256(file_path.encode()).hexdigest()
@@ -159,16 +150,14 @@ class UserContentRepository(BaseRepository[UserContent]):
             return hashlib.sha256(f"fallback_{datetime.utcnow()}".encode()).hexdigest()
             
     def get_by_file_hash(self, file_hash: str) -> Optional[UserContent]:
-        """
-        Get content by file hash for deduplication
+        """        Get content by file hash for deduplication
         
         Args:
             file_hash: File hash to search for
             
         Returns:
             UserContent instance or None
-        """
-        try:
+        """        try:
             return self.db_session.query(UserContent).filter(
                 UserContent.file_hash == file_hash
             ).first()
@@ -186,8 +175,7 @@ class UserContentRepository(BaseRepository[UserContent]):
                         limit: Optional[int] = None,
                         offset: Optional[int] = None,
                         include_fingerprints: bool = False) -> List[UserContent]:
-        """
-        Get user content with comprehensive filtering and optional fingerprint data
+        """        Get user content with comprehensive filtering and optional fingerprint data
         
         Args:
             user_id: User ID to filter by
@@ -201,8 +189,7 @@ class UserContentRepository(BaseRepository[UserContent]):
             
         Returns:
             List of UserContent instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(UserContent).filter(
                 UserContent.user_id == user_id
             )
@@ -249,8 +236,7 @@ class UserContentRepository(BaseRepository[UserContent]):
                       search_query: str,
                       content_type: Optional[ContentType] = None,
                       limit: int = 20) -> List[UserContent]:
-        """
-        Search user content by title, description, and tags
+        """        Search user content by title, description, and tags
         
         Args:
             user_id: User ID to search within
@@ -260,8 +246,7 @@ class UserContentRepository(BaseRepository[UserContent]):
             
         Returns:
             List of matching UserContent instances
-        """
-        try:
+        """        try:
             # Create search conditions
             search_pattern = f"%{search_query.lower()}%"
             
@@ -302,8 +287,7 @@ class UserContentRepository(BaseRepository[UserContent]):
                             content_id: int,
                             new_status: ContentStatus,
                             status_reason: Optional[str] = None) -> Optional[UserContent]:
-        """
-        Update content status with history tracking
+        """        Update content status with history tracking
         
         Args:
             content_id: Content ID to update
@@ -312,8 +296,7 @@ class UserContentRepository(BaseRepository[UserContent]):
             
         Returns:
             Updated UserContent instance
-        """
-        try:
+        """        try:
             content = self.get_by_id(content_id)
             if not content:
                 return None
@@ -358,8 +341,7 @@ class UserContentRepository(BaseRepository[UserContent]):
                             user_id: int,
                             start_date: Optional[datetime] = None,
                             end_date: Optional[datetime] = None) -> Dict[str, Any]:
-        """
-        Get comprehensive content analytics for user
+        """        Get comprehensive content analytics for user
         
         Args:
             user_id: User ID to analyze
@@ -368,8 +350,7 @@ class UserContentRepository(BaseRepository[UserContent]):
             
         Returns:
             Dictionary containing content analytics
-        """
-        try:
+        """        try:
             query = self.db_session.query(UserContent).filter(
                 UserContent.user_id == user_id
             )
@@ -485,16 +466,14 @@ class UserContentRepository(BaseRepository[UserContent]):
             return {'error': str(e), 'user_id': user_id}
             
     def get_content_with_fingerprints(self, user_id: int) -> List[Dict[str, Any]]:
-        """
-        Get user content with associated fingerprint data
+        """        Get user content with associated fingerprint data
         
         Args:
             user_id: User ID to get content for
             
         Returns:
             List of content dictionaries with fingerprint data
-        """
-        try:
+        """        try:
             # Join with ContentFingerprint to get protection status
             query = self.db_session.query(
                 UserContent, ContentFingerprint
@@ -562,8 +541,7 @@ class UserContentRepository(BaseRepository[UserContent]):
                                 content_ids: List[int],
                                 new_privacy_level: PrivacyLevel,
                                 user_id: int) -> int:
-        """
-        Bulk update privacy level for multiple content items
+        """        Bulk update privacy level for multiple content items
         
         Args:
             content_ids: List of content IDs to update
@@ -572,8 +550,7 @@ class UserContentRepository(BaseRepository[UserContent]):
             
         Returns:
             Number of updated content items
-        """
-        try:
+        """        try:
             updated_count = self.db_session.query(UserContent).filter(
                 and_(
                     UserContent.id.in_(content_ids),
@@ -601,16 +578,14 @@ class UserContentRepository(BaseRepository[UserContent]):
             raise RepositoryException(f"Bulk privacy update failed: {str(e)}")
             
     def cleanup_orphaned_content(self, days_old: int = 30) -> int:
-        """
-        Clean up orphaned or old temporary content
+        """        Clean up orphaned or old temporary content
         
         Args:
             days_old: Number of days after which temporary content is considered orphaned
             
         Returns:
             Number of cleaned up content items
-        """
-        try:
+        """        try:
             cutoff_date = datetime.utcnow() - timedelta(days=days_old)
             
             # Find orphaned temporary content

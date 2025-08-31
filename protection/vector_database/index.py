@@ -1,5 +1,4 @@
-"""
-🔗 Vector Database Main Interface
+"""🔗 Vector Database Main Interface
 =================================
 
 Unified entry point for the advanced vector database system.
@@ -29,7 +28,6 @@ Audio: Signal Processing & Fingerprinting
 DevOps: Infrastructure & Cloud Deployment
 IA Prompt Engineer: AI Model Integration & Optimization
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -88,8 +86,7 @@ logger = logging.getLogger(__name__)
 
 
 class VectorDatabaseManager:
-    """
-    🔍 Ultra-Advanced Vector Database Manager
+    """    🔍 Ultra-Advanced Vector Database Manager
     =========================================
     
     Complete enterprise-grade vector database solution for content protection
@@ -107,11 +104,9 @@ class VectorDatabaseManager:
     
     This system supports millions of vectors with sub-second search latency
     and provides comprehensive analytics for content protection decisions.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the complete vector database system"""
-        self.config = config
+        """Initialize the complete vector database system"""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.VectorDatabaseManager")
         
         # Core components
@@ -139,8 +134,7 @@ class VectorDatabaseManager:
         self.logger.info("VectorDatabaseManager initialized")
     
     async def initialize(self):
-        """Initialize all vector database components"""
-        try:
+        """Initialize all vector database components"""        try:
             start_time = time.time()
             
             # Initialize core components
@@ -162,8 +156,7 @@ class VectorDatabaseManager:
             raise
     
     async def _initialize_core_components(self):
-        """Initialize core vector database components"""
-        # Initialize embedding service
+        """Initialize core vector database components"""        # Initialize embedding service
         embedding_config = self.config.get('embeddings', {})
         self.embedding_service = EmbeddingService(embedding_config)
         
@@ -182,8 +175,7 @@ class VectorDatabaseManager:
         self.logger.debug("Core components initialized")
     
     async def _initialize_advanced_components(self):
-        """Initialize advanced components for enterprise features"""
-        # Initialize query executor with optimization and caching
+        """Initialize advanced components for enterprise features"""        # Initialize query executor with optimization and caching
         query_config = self.config.get('query_engine', {})
         self.query_executor = QueryExecutor(self.vector_store, query_config)
         
@@ -203,8 +195,7 @@ class VectorDatabaseManager:
         self.logger.debug("Advanced components initialized")
     
     async def _start_background_services(self):
-        """Start background services for monitoring and optimization"""
-        if self.analytics_engine:
+        """Start background services for monitoring and optimization"""        if self.analytics_engine:
             await self.analytics_engine.start_analytics()
         
         if self.optimization_engine:
@@ -217,8 +208,7 @@ class VectorDatabaseManager:
         self.logger.debug("Background services started")
     
     async def shutdown(self):
-        """Gracefully shutdown all components"""
-        try:
+        """Gracefully shutdown all components"""        try:
             self.is_running = False
             
             # Stop background services
@@ -245,8 +235,7 @@ class VectorDatabaseManager:
         fingerprint_data: Dict[str, Any],
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Store content fingerprint with automatic embedding generation
+        """        Store content fingerprint with automatic embedding generation
         
         Args:
             content_id: Unique identifier for the content
@@ -256,8 +245,7 @@ class VectorDatabaseManager:
             
         Returns:
             Embedding ID for future reference
-        """
-        try:
+        """        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -314,8 +302,7 @@ class VectorDatabaseManager:
         max_results: int = 10,
         include_metadata: bool = True
     ) -> List[Dict[str, Any]]:
-        """
-        Find similar content using advanced similarity search
+        """        Find similar content using advanced similarity search
         
         Args:
             query_content_id: ID of existing content to find similar to
@@ -328,8 +315,7 @@ class VectorDatabaseManager:
             
         Returns:
             List of similar content with similarity scores and metadata
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             if not self.is_initialized:
@@ -396,8 +382,7 @@ class VectorDatabaseManager:
         similarity_threshold: float = 0.95,
         min_cluster_size: int = 2
     ) -> List[Dict[str, Any]]:
-        """
-        Detect potential duplicate content using advanced clustering
+        """        Detect potential duplicate content using advanced clustering
         
         Args:
             content_type: Filter by specific content type
@@ -406,8 +391,7 @@ class VectorDatabaseManager:
             
         Returns:
             List of duplicate clusters with member content and similarity scores
-        """
-        try:
+        """        try:
             if not self.is_initialized:
                 await self.initialize()
             
@@ -461,16 +445,14 @@ class VectorDatabaseManager:
             return []
     
     async def get_analytics_report(self, level: AnalyticsLevel = AnalyticsLevel.DETAILED) -> Optional[Dict[str, Any]]:
-        """
-        Generate comprehensive analytics report
+        """        Generate comprehensive analytics report
         
         Args:
             level: Detail level for the report
             
         Returns:
             Analytics report with performance metrics, patterns, and recommendations
-        """
-        try:
+        """        try:
             if not self.analytics_engine:
                 return None
             
@@ -491,16 +473,14 @@ class VectorDatabaseManager:
             return None
     
     async def optimize_performance(self, level: OptimizationLevel = OptimizationLevel.MODERATE) -> List[Dict[str, Any]]:
-        """
-        Analyze and optimize database performance
+        """        Analyze and optimize database performance
         
         Args:
             level: Optimization intensity level
             
         Returns:
             List of optimization recommendations and results
-        """
-        try:
+        """        try:
             if not self.optimization_engine:
                 return []
             
@@ -534,8 +514,7 @@ class VectorDatabaseManager:
     # ========== UTILITY METHODS ==========
     
     def _map_content_type_to_embedding(self, content_type: str) -> EmbeddingType:
-        """Map content type to embedding type"""
-        mapping = {
+        """Map content type to embedding type"""        mapping = {
             'audio': EmbeddingType.AUDIO_SPECTRAL,
             'video': EmbeddingType.VIDEO_TEMPORAL,
             'image': EmbeddingType.IMAGE_VISUAL,
@@ -544,8 +523,7 @@ class VectorDatabaseManager:
         return mapping.get(content_type.lower(), EmbeddingType.COMPOSITE_MULTIMODAL)
     
     def _format_search_result(self, result) -> Dict[str, Any]:
-        """Format search result for consistent output"""
-        if hasattr(result, '__dict__'):
+        """Format search result for consistent output"""        if hasattr(result, '__dict__'):
             return {
                 'content_id': getattr(result, 'content_id', ''),
                 'similarity_score': getattr(result, 'similarity_score', 0.0),
@@ -556,14 +534,12 @@ class VectorDatabaseManager:
         return result
     
     async def _get_all_vectors_and_metadata(self) -> Tuple[List[np.ndarray], List[Dict[str, Any]]]:
-        """Get all vectors and metadata for analysis"""
-        # This would typically iterate through the vector store
+        """Get all vectors and metadata for analysis"""        # This would typically iterate through the vector store
         # For now, return empty lists as placeholder
         return [], []
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             status = {
                 'system_info': {
                     'initialized': self.is_initialized,
@@ -626,16 +602,14 @@ class VectorDatabaseManager:
 
 # Factory function for easy instantiation
 def create_vector_database(config: Dict[str, Any]) -> VectorDatabaseManager:
-    """
-    Factory function to create a fully configured vector database manager
+    """    Factory function to create a fully configured vector database manager
     
     Args:
         config: Complete configuration dictionary
         
     Returns:
         Configured VectorDatabaseManager instance
-    """
-    return VectorDatabaseManager(config)
+    """    return VectorDatabaseManager(config)
 
 
 # Default configuration template

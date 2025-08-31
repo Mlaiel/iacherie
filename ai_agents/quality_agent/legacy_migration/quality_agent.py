@@ -1,5 +1,4 @@
-"""
-Quality Agent - Industrial-Grade Content Quality Management System
+"""Quality Agent - Industrial-Grade Content Quality Management System
 
 Advanced AI-driven quality assessment, scoring, and enhancement system for all content types.
 Comprehensive quality control with automated improvement suggestions and real-time monitoring.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import time
@@ -63,16 +61,14 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class QualityLevel(Enum):
-    """Content quality levels"""
-    POOR = "poor"
+    """Content quality levels"""    POOR = "poor"
     FAIR = "fair"
     GOOD = "good"
     EXCELLENT = "excellent"
     PROFESSIONAL = "professional"
 
 class ContentType(Enum):
-    """Supported content types for quality assessment"""
-    AUDIO = "audio"
+    """Supported content types for quality assessment"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -83,8 +79,7 @@ class ContentType(Enum):
 
 @dataclass
 class QualityScore:
-    """Comprehensive quality scoring structure"""
-    overall_score: float = field(default=0.0)
+    """Comprehensive quality scoring structure"""    overall_score: float = field(default=0.0)
     technical_score: float = field(default=0.0)
     content_score: float = field(default=0.0)
     seo_score: float = field(default=0.0)
@@ -100,8 +95,7 @@ class QualityScore:
 
 @dataclass  
 class QualityRecommendation:
-    """Quality improvement recommendation"""
-    category: str
+    """Quality improvement recommendation"""    category: str
     priority: str  # high, medium, low
     description: str
     impact_score: float
@@ -113,8 +107,7 @@ class QualityRecommendation:
 
 @dataclass
 class QualityAnalysis:
-    """Complete quality analysis result"""
-    content_id: str
+    """Complete quality analysis result"""    content_id: str
     content_type: ContentType
     quality_score: QualityScore
     recommendations: List[QualityRecommendation]
@@ -126,8 +119,7 @@ class QualityAnalysis:
     created_at: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
 
 class QualityAgent(BaseAgent):
-    """
-    Advanced Quality Agent for comprehensive content quality assessment and enhancement.
+    """    Advanced Quality Agent for comprehensive content quality assessment and enhancement.
     
     Features:
     - Multi-dimensional quality scoring (technical, content, SEO, engagement)
@@ -138,8 +130,7 @@ class QualityAgent(BaseAgent):
     - Performance optimization analysis
     - Brand safety assessment
     - Monetization potential evaluation
-    """
-    
+    """    
     def __init__(
         self,
         agent_id: Optional[str] = None,
@@ -190,8 +181,7 @@ class QualityAgent(BaseAgent):
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> QualityAnalysis:
-        """
-        Perform comprehensive quality analysis of content.
+        """        Perform comprehensive quality analysis of content.
         
         Args:
             content_id: Unique identifier for the content
@@ -201,8 +191,7 @@ class QualityAgent(BaseAgent):
             
         Returns:
             QualityAnalysis: Complete quality analysis results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             self.logger.info(f"Starting quality analysis for {content_id}")
@@ -270,8 +259,7 @@ class QualityAgent(BaseAgent):
         content_path: str, 
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Analyze technical quality metrics"""
-        
+        """Analyze technical quality metrics"""        
         technical_metrics = {}
         
         try:
@@ -297,8 +285,7 @@ class QualityAgent(BaseAgent):
         return technical_metrics
 
     async def _analyze_audio_quality(self, content_path: str) -> Dict[str, Any]:
-        """Analyze audio/music technical quality"""
-        
+        """Analyze audio/music technical quality"""        
         metrics = {}
         
         try:
@@ -355,8 +342,7 @@ class QualityAgent(BaseAgent):
         return metrics
 
     async def _analyze_video_quality(self, content_path: str) -> Dict[str, Any]:
-        """Analyze video technical quality"""
-        
+        """Analyze video technical quality"""        
         metrics = {}
         
         try:
@@ -421,8 +407,7 @@ class QualityAgent(BaseAgent):
         return metrics
 
     async def _analyze_image_quality(self, content_path: str) -> Dict[str, Any]:
-        """Analyze image technical quality"""
-        
+        """Analyze image technical quality"""        
         metrics = {}
         
         try:
@@ -483,8 +468,7 @@ class QualityAgent(BaseAgent):
         return metrics
 
     async def _analyze_text_quality(self, content_path: str) -> Dict[str, Any]:
-        """Analyze text/blog content technical quality"""
-        
+        """Analyze text/blog content technical quality"""        
         metrics = {}
         
         try:
@@ -549,8 +533,7 @@ class QualityAgent(BaseAgent):
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Analyze content quality dimensions beyond technical metrics"""
-        
+        """Analyze content quality dimensions beyond technical metrics"""        
         dimensions = {}
         
         try:
@@ -601,8 +584,7 @@ class QualityAgent(BaseAgent):
         content_analysis: Dict[str, Any],
         content_type: ContentType
     ) -> QualityScore:
-        """Calculate comprehensive quality score with weighted metrics"""
-        
+        """Calculate comprehensive quality score with weighted metrics"""        
         try:
             # Technical score from technical analysis
             technical_score = technical_analysis.get("technical_score", 0.0)
@@ -665,8 +647,7 @@ class QualityAgent(BaseAgent):
             return QualityScore(overall_score=0.0, quality_level=QualityLevel.POOR)
 
     def _get_quality_weights(self, content_type: ContentType) -> Dict[str, float]:
-        """Get quality scoring weights based on content type"""
-        
+        """Get quality scoring weights based on content type"""        
         base_weights = {
             "technical": 0.25,
             "content": 0.20,
@@ -703,8 +684,7 @@ class QualityAgent(BaseAgent):
         return base_weights
 
     def _determine_quality_level(self, overall_score: float) -> QualityLevel:
-        """Determine quality level from overall score"""
-        
+        """Determine quality level from overall score"""        
         for level, threshold in sorted(
             self.quality_thresholds.items(), 
             key=lambda x: x[1], 
@@ -721,8 +701,7 @@ class QualityAgent(BaseAgent):
         technical_analysis: Dict[str, Any],
         content_analysis: Dict[str, Any]
     ) -> List[QualityRecommendation]:
-        """Generate AI-powered improvement recommendations"""
-        
+        """Generate AI-powered improvement recommendations"""        
         recommendations = []
         
         try:
@@ -780,8 +759,7 @@ class QualityAgent(BaseAgent):
         technical_analysis: Dict[str, Any],
         quality_score: QualityScore
     ) -> List[QualityRecommendation]:
-        """Generate technical quality improvement recommendations"""
-        
+        """Generate technical quality improvement recommendations"""        
         recommendations = []
         
         # Audio quality recommendations
@@ -827,8 +805,7 @@ class QualityAgent(BaseAgent):
         content_id: str,
         enhancement_options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply automated quality enhancements to content"""
-        
+        """Apply automated quality enhancements to content"""        
         try:
             self.logger.info(f"Starting quality enhancement for {content_id}")
             
@@ -884,8 +861,7 @@ class QualityAgent(BaseAgent):
         content_ids: List[str],
         report_type: str = "detailed"
     ) -> Dict[str, Any]:
-        """Generate comprehensive quality report for multiple content pieces"""
-        
+        """Generate comprehensive quality report for multiple content pieces"""        
         try:
             self.logger.info(f"Generating quality report for {len(content_ids)} items")
             
@@ -946,8 +922,7 @@ class QualityAgent(BaseAgent):
 
     # Helper methods for specific quality analysis tasks
     async def _assess_mastering_quality(self, content_path: str) -> float:
-        """Assess audio mastering quality using advanced algorithms"""
-        try:
+        """Assess audio mastering quality using advanced algorithms"""        try:
             # Load audio data
             y, sr = librosa.load(content_path)
             
@@ -989,8 +964,7 @@ class QualityAgent(BaseAgent):
             return 0.5
 
     async def _detect_compression_artifacts(self, content_path: str) -> float:
-        """Detect video compression artifacts using advanced computer vision"""
-        try:
+        """Detect video compression artifacts using advanced computer vision"""        try:
             # Load video frames for analysis
             cap = cv2.VideoCapture(content_path)
             artifact_scores = []
@@ -1039,8 +1013,7 @@ class QualityAgent(BaseAgent):
             return 0.5
 
     async def _analyze_image_composition(self, content_path: str) -> float:
-        """Analyze image composition quality using rule of thirds, leading lines, etc."""
-        try:
+        """Analyze image composition quality using rule of thirds, leading lines, etc."""        try:
             # Load image
             image = cv2.imread(content_path)
             if image is None:
@@ -1095,8 +1068,7 @@ class QualityAgent(BaseAgent):
             return 0.5
 
     async def _analyze_seo_quality(self, text_content: str) -> Dict[str, Any]:
-        """Analyze SEO quality of text content using comprehensive metrics"""
-        try:
+        """Analyze SEO quality of text content using comprehensive metrics"""        try:
             # Initialize SEO analyzer
             seo_metrics = {}
             
@@ -1173,8 +1145,7 @@ class QualityAgent(BaseAgent):
             return {"seo_score": 0.0}
 
     async def _analyze_content_structure(self, text_content: str) -> float:
-        """Analyze content structure quality including paragraphs, transitions, flow"""
-        try:
+        """Analyze content structure quality including paragraphs, transitions, flow"""        try:
             # Split into paragraphs
             paragraphs = [p.strip() for p in text_content.split('\n\n') if p.strip()]
             sentences = [s.strip() for s in text_content.split('.') if s.strip()]
@@ -1232,8 +1203,7 @@ class QualityAgent(BaseAgent):
             return 0.5
 
     async def _check_content_uniqueness(self, text_content: str) -> float:
-        """Check content uniqueness and plagiarism using advanced algorithms"""
-        try:
+        """Check content uniqueness and plagiarism using advanced algorithms"""        try:
             # Content fingerprinting using text hashing
             content_hash = await self._generate_content_fingerprint(text_content)
             
@@ -1280,8 +1250,7 @@ class QualityAgent(BaseAgent):
             return 0.7  # Conservative estimate
 
     def _load_quality_rules(self) -> Dict[str, Any]:
-        """Load quality assessment rules and standards"""
-        return {
+        """Load quality assessment rules and standards"""        return {
             "audio": {
                 "min_bitrate": 128000,
                 "recommended_bitrate": 320000,
@@ -1309,8 +1278,7 @@ class QualityAgent(BaseAgent):
         }
 
     def _load_industry_standards(self) -> Dict[str, Any]:
-        """Load industry quality standards"""
-        return {
+        """Load industry quality standards"""        return {
             "broadcast": {
                 "audio_standard": "EBU R128",
                 "video_standard": "ITU-R BT.709",
@@ -1339,8 +1307,7 @@ class QualityAgent(BaseAgent):
         content_path: str, 
         content_type: ContentType
     ) -> None:
-        """Validate content input parameters"""
-        
+        """Validate content input parameters"""        
         if not content_path:
             raise ValidationError("Content path is required")
             
@@ -1353,10 +1320,8 @@ class QualityAgent(BaseAgent):
             raise ValidationError(f"Content not found: {content_path}")
 
 class QualityAgentManager:
-    """
-    Manager for multiple Quality Agents with load balancing and coordination.
-    """
-    
+    """    Manager for multiple Quality Agents with load balancing and coordination.
+    """    
     def __init__(self, max_agents: int = 5):
         self.max_agents = max_agents
         self.agents: List[QualityAgent] = []
@@ -1365,8 +1330,7 @@ class QualityAgentManager:
         self.logger = logging.getLogger(__name__)
         
     async def initialize(self) -> None:
-        """Initialize the agent pool"""
-        
+        """Initialize the agent pool"""        
         for i in range(self.max_agents):
             agent = QualityAgent(agent_id=f"quality_agent_pool_{i}")
             await agent.initialize()
@@ -1382,8 +1346,7 @@ class QualityAgentManager:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> QualityAnalysis:
-        """Analyze content using available agent from pool"""
-        
+        """Analyze content using available agent from pool"""        
         agent = await self.agent_pool.get()
         
         try:
@@ -1396,8 +1359,7 @@ class QualityAgentManager:
             await self.agent_pool.put(agent)
             
     async def shutdown(self) -> None:
-        """Shutdown all agents"""
-        
+        """Shutdown all agents"""        
         for agent in self.agents:
             await agent.shutdown()
             
@@ -1406,8 +1368,7 @@ class QualityAgentManager:
     # Advanced analysis methods for quality assessment
     
     async def _analyze_stereo_imaging(self, audio_data: np.ndarray) -> float:
-        """Analyze stereo imaging quality"""
-        try:
+        """Analyze stereo imaging quality"""        try:
             if len(audio_data.shape) != 2:
                 return 0.8  # Mono content default
                 
@@ -1439,8 +1400,7 @@ class QualityAgentManager:
             return 0.6
             
     async def _analyze_frequency_balance(self, audio_data: np.ndarray, sr: int) -> float:
-        """Analyze frequency balance in audio"""
-        try:
+        """Analyze frequency balance in audio"""        try:
             # Calculate spectral centroid
             spectral_centroid = librosa.feature.spectral_centroid(y=audio_data, sr=sr)
             
@@ -1478,8 +1438,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _detect_blocking_artifacts(self, frame: np.ndarray) -> float:
-        """Detect blocking artifacts in video frame"""
-        try:
+        """Detect blocking artifacts in video frame"""        try:
             # Apply gradient filters to detect block edges
             grad_x = cv2.Sobel(frame, cv2.CV_64F, 1, 0, ksize=3)
             grad_y = cv2.Sobel(frame, cv2.CV_64F, 0, 1, ksize=3)
@@ -1518,8 +1477,7 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_ringing_artifacts(self, frame: np.ndarray) -> float:
-        """Detect ringing artifacts around edges"""
-        try:
+        """Detect ringing artifacts around edges"""        try:
             # Edge detection
             edges = cv2.Canny(frame, 50, 150)
             
@@ -1542,8 +1500,7 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_mosquito_noise(self, frame: np.ndarray) -> float:
-        """Detect mosquito noise artifacts"""
-        try:
+        """Detect mosquito noise artifacts"""        try:
             # Apply Gaussian blur and compare
             blurred = cv2.GaussianBlur(frame, (5, 5), 1.0)
             diff = np.abs(frame.astype(float) - blurred.astype(float))
@@ -1558,8 +1515,7 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_compression_blur(self, frame: np.ndarray) -> float:
-        """Detect blur from compression"""
-        try:
+        """Detect blur from compression"""        try:
             # Laplacian variance for sharpness measurement
             laplacian_var = cv2.Laplacian(frame, cv2.CV_64F).var()
             
@@ -1572,8 +1528,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_rule_of_thirds(self, image: np.ndarray) -> float:
-        """Analyze adherence to rule of thirds"""
-        try:
+        """Analyze adherence to rule of thirds"""        try:
             height, width = image.shape
             
             # Define third lines
@@ -1604,8 +1559,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _detect_leading_lines(self, image: np.ndarray) -> float:
-        """Detect leading lines in composition"""
-        try:
+        """Detect leading lines in composition"""        try:
             # Edge detection
             edges = cv2.Canny(image, 50, 150)
             
@@ -1624,8 +1578,7 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_visual_balance(self, image: np.ndarray) -> float:
-        """Analyze visual balance and weight distribution"""
-        try:
+        """Analyze visual balance and weight distribution"""        try:
             # Convert to grayscale if needed
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -1659,8 +1612,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_color_harmony(self, hsv_image: np.ndarray) -> float:
-        """Analyze color harmony in the image"""
-        try:
+        """Analyze color harmony in the image"""        try:
             # Extract hue channel
             hue = hsv_image[:, :, 0]
             
@@ -1706,8 +1658,7 @@ class QualityAgentManager:
         content_path: str,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Assess brand safety and content appropriateness"""
-        try:
+        """Assess brand safety and content appropriateness"""        try:
             brand_safety_metrics = {"score": 0.0}
             
             if content_type in [ContentType.TEXT, ContentType.BLOG, ContentType.SOCIAL_POST]:
@@ -1753,8 +1704,7 @@ class QualityAgentManager:
             return {"score": 0.5, "error": str(e)}
 
     async def _check_inappropriate_content(self, text_content: str) -> float:
-        """Check for inappropriate or offensive content"""
-        try:
+        """Check for inappropriate or offensive content"""        try:
             # Define inappropriate keywords/phrases (placeholder implementation)
             inappropriate_terms = [
                 'spam', 'scam', 'fake', 'misleading', 'clickbait',
@@ -1783,8 +1733,7 @@ class QualityAgentManager:
             return 0.8
 
     async def _check_controversial_topics(self, text_content: str) -> float:
-        """Check for controversial or sensitive topics"""
-        try:
+        """Check for controversial or sensitive topics"""        try:
             controversial_topics = [
                 'politics', 'religion', 'conspiracy', 'controversy',
                 'sensitive', 'polarizing', 'divisive', 'scandal'
@@ -1805,8 +1754,7 @@ class QualityAgentManager:
             return 0.7
 
     async def _analyze_professional_tone(self, text_content: str) -> float:
-        """Analyze professional tone of content"""
-        try:
+        """Analyze professional tone of content"""        try:
             professional_indicators = [
                 'professional', 'expert', 'research', 'analysis',
                 'insights', 'strategy', 'business', 'industry'
@@ -1831,8 +1779,7 @@ class QualityAgentManager:
             return 0.6
 
     async def _assess_image_brand_safety(self, content_path: str) -> Dict[str, Any]:
-        """Assess brand safety for image content"""
-        try:
+        """Assess brand safety for image content"""        try:
             # Basic image safety assessment
             return {
                 "score": 0.8,  # Placeholder - would use ML model in production
@@ -1844,8 +1791,7 @@ class QualityAgentManager:
             return {"score": 0.6}
 
     async def _assess_video_brand_safety(self, content_path: str) -> Dict[str, Any]:
-        """Assess brand safety for video content"""
-        try:
+        """Assess brand safety for video content"""        try:
             # Basic video safety assessment
             return {
                 "score": 0.8,  # Placeholder
@@ -1857,8 +1803,7 @@ class QualityAgentManager:
             return {"score": 0.6}
 
     async def _assess_audio_brand_safety(self, content_path: str) -> Dict[str, Any]:
-        """Assess brand safety for audio content"""
-        try:
+        """Assess brand safety for audio content"""        try:
             # Basic audio safety assessment
             return {
                 "score": 0.8,  # Placeholder
@@ -1874,8 +1819,7 @@ class QualityAgentManager:
         content_path: str,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """Evaluate content accessibility compliance"""
-        try:
+        """Evaluate content accessibility compliance"""        try:
             accessibility_metrics = {"score": 0.0}
             
             if content_type in [ContentType.TEXT, ContentType.BLOG]:
@@ -1917,8 +1861,7 @@ class QualityAgentManager:
             return {"score": 0.6, "wcag_compliance": "A"}
 
     async def _check_accessibility_readability(self, text_content: str) -> float:
-        """Check readability for accessibility"""
-        try:
+        """Check readability for accessibility"""        try:
             # Simple readability metrics
             sentences = text_content.count('.') + text_content.count('!') + text_content.count('?')
             words = len(text_content.split())
@@ -1942,8 +1885,7 @@ class QualityAgentManager:
             return 0.6
 
     async def _check_accessibility_structure(self, text_content: str) -> float:
-        """Check structural accessibility elements"""
-        try:
+        """Check structural accessibility elements"""        try:
             structure_score = 0.0
             
             # Check for headers (markdown-style)
@@ -1965,8 +1907,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _evaluate_image_accessibility(self, content_path: str) -> Dict[str, Any]:
-        """Evaluate image accessibility"""
-        try:
+        """Evaluate image accessibility"""        try:
             return {
                 "score": 0.7,  # Placeholder - would analyze contrast, text, etc.
                 "has_alt_text_potential": True,
@@ -1977,8 +1918,7 @@ class QualityAgentManager:
             return {"score": 0.5}
 
     async def _evaluate_video_accessibility(self, content_path: str) -> Dict[str, Any]:
-        """Evaluate video accessibility"""
-        try:
+        """Evaluate video accessibility"""        try:
             return {
                 "score": 0.6,  # Placeholder
                 "has_captions": False,
@@ -1994,8 +1934,7 @@ class QualityAgentManager:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Assess monetization potential of content"""
-        try:
+        """Assess monetization potential of content"""        try:
             monetization_factors = {
                 "quality_score": 0.0,
                 "engagement_potential": 0.0,
@@ -2075,8 +2014,7 @@ class QualityAgentManager:
             return {"score": 0.5, "monetization_readiness": "Low"}
 
     async def _analyze_engagement_potential(self, content_path: str, content_type: ContentType) -> float:
-        """Analyze potential for audience engagement"""
-        try:
+        """Analyze potential for audience engagement"""        try:
             if content_type in [ContentType.TEXT, ContentType.BLOG, ContentType.SOCIAL_POST]:
                 with open(content_path, 'r', encoding='utf-8') as f:
                     text_content = f.read()
@@ -2109,8 +2047,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_commercial_viability(self, content_path: str, content_type: ContentType) -> float:
-        """Analyze commercial viability of content"""
-        try:
+        """Analyze commercial viability of content"""        try:
             if content_type in [ContentType.TEXT, ContentType.BLOG]:
                 with open(content_path, 'r', encoding='utf-8') as f:
                     text_content = f.read()
@@ -2139,8 +2076,7 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_audience_appeal(self, content_path: str, content_type: ContentType) -> float:
-        """Analyze general audience appeal"""
-        try:
+        """Analyze general audience appeal"""        try:
             if content_type in [ContentType.TEXT, ContentType.BLOG, ContentType.SOCIAL_POST]:
                 with open(content_path, 'r', encoding='utf-8') as f:
                     text_content = f.read()
@@ -2177,8 +2113,7 @@ class QualityAgentManager:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Predict viral potential of content using advanced analysis"""
-        try:
+        """Predict viral potential of content using advanced analysis"""        try:
             viral_factors = {
                 "emotional_impact": 0.0,
                 "shareability": 0.0,
@@ -2244,8 +2179,7 @@ class QualityAgentManager:
             return {"score": 0.5, "viral_probability": "Low"}
 
     async def _analyze_emotional_impact(self, text_content: str) -> float:
-        """Analyze emotional impact of content for viral potential"""
-        try:
+        """Analyze emotional impact of content for viral potential"""        try:
             # Strong emotional words that drive sharing
             high_emotion_words = [
                 'amazing', 'incredible', 'shocking', 'unbelievable',
@@ -2275,8 +2209,7 @@ class QualityAgentManager:
             return 0.3
 
     async def _analyze_shareability(self, text_content: str) -> float:
-        """Analyze how shareable content is"""
-        try:
+        """Analyze how shareable content is"""        try:
             shareability_score = 0.0
             
             # Social sharing indicators
@@ -2308,8 +2241,7 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_trending_alignment(self, text_content: str) -> float:
-        """Analyze alignment with trending topics"""
-        try:
+        """Analyze alignment with trending topics"""        try:
             # Current trending topics (simplified - would use real API data)
             trending_topics = [
                 'artificial intelligence', 'ai', 'machine learning',
@@ -2339,8 +2271,7 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_novelty_factor(self, text_content: str) -> float:
-        """Analyze novelty and uniqueness factor"""
-        try:
+        """Analyze novelty and uniqueness factor"""        try:
             novelty_indicators = [
                 'new', 'first time', 'never before', 'breakthrough',
                 'discovery', 'revealed', 'secret', 'hidden',
@@ -2370,8 +2301,7 @@ class QualityAgentManager:
         content_type: ContentType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Analyze content relevance and trends alignment"""
-        try:
+        """Analyze content relevance and trends alignment"""        try:
             relevance_metrics = {
                 "trend_alignment": 0.0,
                 "seasonal_relevance": 0.0,
@@ -2417,8 +2347,7 @@ class QualityAgentManager:
         self,
         content_path: str
     ) -> float:
-        """Check accessibility compliance score"""
-        try:
+        """Check accessibility compliance score"""        try:
             # Basic accessibility score calculation
             # Would implement WCAG 2.1 guidelines in production
             return 0.7  # Placeholder score
@@ -2428,8 +2357,7 @@ class QualityAgentManager:
 
     # Audio analysis helper methods
     async def _detect_blocking_artifacts(self, frame: np.ndarray) -> float:
-        """Detect blocking artifacts in video frame"""
-        try:
+        """Detect blocking artifacts in video frame"""        try:
             # Simplified blocking artifact detection
             # Would use more sophisticated algorithms in production
             gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) if len(frame.shape) == 3 else frame
@@ -2453,8 +2381,7 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_ringing_artifacts(self, frame: np.ndarray) -> float:
-        """Detect ringing artifacts in video frame"""
-        try:
+        """Detect ringing artifacts in video frame"""        try:
             # Ringing artifacts appear as oscillations near edges
             # Use Laplacian to detect high-frequency oscillations
             laplacian = cv2.Laplacian(frame, cv2.CV_64F)
@@ -2471,8 +2398,7 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_mosquito_noise(self, frame: np.ndarray) -> float:
-        """Detect mosquito noise artifacts"""
-        try:
+        """Detect mosquito noise artifacts"""        try:
             # Mosquito noise appears as fluctuating noise around edges
             # Use Canny edge detection + noise analysis
             edges = cv2.Canny(frame, 50, 150)
@@ -2493,8 +2419,7 @@ class QualityAgentManager:
             return 0.7
 
     async def _detect_compression_blur(self, frame: np.ndarray) -> float:
-        """Detect compression-induced blur"""
-        try:
+        """Detect compression-induced blur"""        try:
             # Use Laplacian variance to measure sharpness
             laplacian_var = cv2.Laplacian(frame, cv2.CV_64F).var()
             
@@ -2516,8 +2441,7 @@ class QualityAgentManager:
 
     # Advanced image analysis methods
     async def _analyze_rule_of_thirds(self, gray_image: np.ndarray) -> float:
-        """Analyze composition using rule of thirds"""
-        try:
+        """Analyze composition using rule of thirds"""        try:
             height, width = gray_image.shape
             
             # Define rule of thirds grid lines
@@ -2558,8 +2482,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _detect_leading_lines(self, gray_image: np.ndarray) -> float:
-        """Detect leading lines in composition"""
-        try:
+        """Detect leading lines in composition"""        try:
             # Use Hough line detection
             edges = cv2.Canny(gray_image, 50, 150, apertureSize=3)
             lines = cv2.HoughLines(edges, 1, np.pi/180, threshold=100)
@@ -2584,8 +2507,7 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_visual_balance(self, image: np.ndarray) -> float:
-        """Analyze visual balance in the image"""
-        try:
+        """Analyze visual balance in the image"""        try:
             # Convert to grayscale for analysis
             if len(image.shape) == 3:
                 gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
@@ -2619,8 +2541,7 @@ class QualityAgentManager:
             return 0.6
 
     async def _analyze_focus_quality(self, gray_image: np.ndarray) -> float:
-        """Analyze focus and depth of field quality"""
-        try:
+        """Analyze focus and depth of field quality"""        try:
             # Use Laplacian variance to measure overall sharpness
             laplacian_var = cv2.Laplacian(gray_image, cv2.CV_64F).var()
             
@@ -2638,8 +2559,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_subject_prominence(self, image: np.ndarray) -> float:
-        """Analyze how prominent the main subject is"""
-        try:
+        """Analyze how prominent the main subject is"""        try:
             # Use edge detection and contour analysis
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) if len(image.shape) == 3 else image
             
@@ -2674,8 +2594,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_golden_ratio(self, gray_image: np.ndarray) -> float:
-        """Analyze composition using golden ratio spiral"""
-        try:
+        """Analyze composition using golden ratio spiral"""        try:
             height, width = gray_image.shape
             
             # Golden ratio point (approximately)
@@ -2709,8 +2628,7 @@ class QualityAgentManager:
             return 0.4
 
     async def _analyze_negative_space(self, gray_image: np.ndarray) -> float:
-        """Analyze negative space utilization"""
-        try:
+        """Analyze negative space utilization"""        try:
             # Use thresholding to separate subjects from background
             _, binary = cv2.threshold(gray_image, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
             
@@ -2734,8 +2652,7 @@ class QualityAgentManager:
 
     # SEO Analysis Helper Methods
     async def _analyze_keyword_density(self, text_content: str) -> float:
-        """Analyze keyword density for SEO optimization"""
-        try:
+        """Analyze keyword density for SEO optimization"""        try:
             # Simplified keyword density analysis
             # In production, would use actual target keywords
             words = text_content.lower().split()
@@ -2768,8 +2685,7 @@ class QualityAgentManager:
             return 0.6
 
     async def _analyze_heading_structure(self, text_content: str) -> float:
-        """Analyze heading structure for SEO"""
-        try:
+        """Analyze heading structure for SEO"""        try:
             # Count different heading levels (markdown style)
             h1_count = text_content.count('\n# ')
             h2_count = text_content.count('\n## ')
@@ -2800,8 +2716,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_link_structure(self, text_content: str) -> float:
-        """Analyze internal/external link structure"""
-        try:
+        """Analyze internal/external link structure"""        try:
             # Count markdown links
             link_pattern = r'\[([^\]]+)\]\(([^)]+)\)'
             import re
@@ -2836,8 +2751,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_meta_description_potential(self, text_content: str) -> float:
-        """Analyze potential for good meta description"""
-        try:
+        """Analyze potential for good meta description"""        try:
             # Use first paragraph or first few sentences
             sentences = text_content.split('.')
             if not sentences:
@@ -2861,8 +2775,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _calculate_seo_readability(self, text_content: str) -> float:
-        """Calculate readability score for SEO"""
-        try:
+        """Calculate readability score for SEO"""        try:
             # Simplified Flesch Reading Ease calculation
             sentences = len([s for s in text_content.split('.') if s.strip()])
             words = len(text_content.split())
@@ -2891,8 +2804,7 @@ class QualityAgentManager:
             return 0.6
 
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
-        try:
+        """Count syllables in a word (simplified)"""        try:
             word = word.lower()
             vowels = 'aeiouy'
             syllables = 0
@@ -2916,8 +2828,7 @@ class QualityAgentManager:
             return 1
 
     async def _analyze_semantic_richness(self, text_content: str) -> float:
-        """Analyze semantic richness of content"""
-        try:
+        """Analyze semantic richness of content"""        try:
             words = text_content.lower().split()
             unique_words = set(words)
             
@@ -2939,8 +2850,7 @@ class QualityAgentManager:
             return 0.6
 
     async def _analyze_content_freshness(self, text_content: str) -> float:
-        """Analyze content freshness indicators"""
-        try:
+        """Analyze content freshness indicators"""        try:
             # Look for freshness indicators
             fresh_terms = [
                 'new', 'latest', 'recent', 'updated', 'current',
@@ -2962,8 +2872,7 @@ class QualityAgentManager:
             return 0.5
 
     async def _analyze_schema_potential(self, text_content: str) -> float:
-        """Analyze potential for schema markup"""
-        try:
+        """Analyze potential for schema markup"""        try:
             # Look for structured data indicators
             schema_indicators = [
                 'review', 'rating', 'price', 'product', 'service',

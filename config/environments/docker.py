@@ -1,5 +1,4 @@
-"""
-🔧 Docker Environment Configuration - IA-Influencer-Agent
+"""🔧 Docker Environment Configuration - IA-Influencer-Agent
 ==================================================================
 Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: DevOps + Backend Senior + ML Engineer + Infrastructure
@@ -15,7 +14,6 @@ Contact: mlaiel@live.de
 Configuration environnement Docker avec orchestration microservices.
 ==================================================================
 """
-
 import os
 from typing import Dict, Any, List, Optional
 from .base import (
@@ -32,11 +30,9 @@ from .base import (
 
 
 class DockerConfigManager(BaseEnvironmentConfigManager):
-    """
-    Configuration manager pour l'environnement Docker.
+    """    Configuration manager pour l'environnement Docker.
     Optimisé pour conteneurs et orchestration microservices.
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             environment=EnvironmentType.DEVELOPMENT,  # Base development
@@ -48,8 +44,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         )
         
     def _get_docker_cors_origins(self) -> List[str]:
-        """Définit les origins CORS pour Docker"""
-        origins_env = os.getenv("DOCKER_CORS_ORIGINS", "")
+        """Définit les origins CORS pour Docker"""        origins_env = os.getenv("DOCKER_CORS_ORIGINS", "")
         if origins_env:
             return [origin.strip() for origin in origins_env.split(",")]
         return [
@@ -60,8 +55,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def load_environment_specific_config(self) -> None:
-        """Charge la configuration spécifique Docker"""
-        
+        """Charge la configuration spécifique Docker"""        
         # Configuration Base de Données Docker (service externe)
         self.database_config = DatabaseConfig(
             host=os.getenv("DATABASE_HOST", "postgres"),  # Service Docker
@@ -138,8 +132,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         )
         
     def validate_configuration(self) -> bool:
-        """Valide la configuration Docker"""
-        try:
+        """Valide la configuration Docker"""        try:
             # Vérifications Docker spécifiques
             assert self.database_config is not None, "Configuration base de données requise"
             assert self.redis_config is not None, "Configuration Redis requise"
@@ -159,8 +152,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
             return False
             
     def get_docker_features(self) -> Dict[str, Any]:
-        """Fonctionnalités spécifiques Docker"""
-        return {
+        """Fonctionnalités spécifiques Docker"""        return {
             "containerized": True,
             "microservices_ready": True,
             "service_discovery": True,
@@ -174,8 +166,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_docker_services(self) -> Dict[str, Dict[str, Any]]:
-        """Configuration des services Docker"""
-        return {
+        """Configuration des services Docker"""        return {
             "postgres": {
                 "image": "postgres:15-alpine",
                 "environment": {
@@ -214,8 +205,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_docker_networks(self) -> Dict[str, Dict[str, Any]]:
-        """Configuration des réseaux Docker"""
-        return {
+        """Configuration des réseaux Docker"""        return {
             "ia-influencer-network": {
                 "driver": "bridge",
                 "ipam": {
@@ -225,8 +215,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         }
         
     def get_docker_volumes(self) -> List[str]:
-        """Volumes Docker persistants"""
-        return [
+        """Volumes Docker persistants"""        return [
             "postgres_data",
             "redis_data",
             "model_cache",
@@ -238,8 +227,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         ]
         
     def get_health_check_config(self) -> Dict[str, Any]:
-        """Configuration health check Docker"""
-        return {
+        """Configuration health check Docker"""        return {
             "test": ["CMD", "curl", "-f", f"http://localhost:{self.port}/health"],
             "interval": "30s",
             "timeout": "10s",
@@ -248,8 +236,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         }
         
     def generate_docker_compose(self) -> str:
-        """Génère le fichier docker-compose.yml"""
-        services = self.get_docker_services()
+        """Génère le fichier docker-compose.yml"""        services = self.get_docker_services()
         networks = self.get_docker_networks()
         volumes = self.get_docker_volumes()
         
@@ -284,8 +271,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         return yaml.dump(compose_config, default_flow_style=False)
         
     def _get_environment_variables(self) -> Dict[str, str]:
-        """Variables d'environnement pour conteneur"""
-        return {
+        """Variables d'environnement pour conteneur"""        return {
             "ENVIRONMENT": self.environment.value,
             "DATABASE_URL": self.get_database_url(),
             "REDIS_URL": self.get_redis_url(),
@@ -296,8 +282,7 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
         }
         
     def export_to_dict(self) -> Dict[str, Any]:
-        """Exporte la configuration Docker complète"""
-        base_config = super().export_to_dict()
+        """Exporte la configuration Docker complète"""        base_config = super().export_to_dict()
         base_config.update({
             "docker_features": self.get_docker_features(),
             "docker_services": self.get_docker_services(),
@@ -310,7 +295,6 @@ class DockerConfigManager(BaseEnvironmentConfigManager):
 
 
 def create_docker_config() -> DockerConfigManager:
-    """Crée et initialise la configuration Docker"""
-    config = DockerConfigManager()
+    """Crée et initialise la configuration Docker"""    config = DockerConfigManager()
     config.initialize_configuration()
     return config

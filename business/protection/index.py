@@ -1,5 +1,4 @@
-"""
-🛡️ IA Influencer Agent - Protection Module Main Entry Point
+"""🛡️ IA Influencer Agent - Protection Module Main Entry Point
 ==================================================================
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel - All Rights Reserved
@@ -20,7 +19,6 @@ Business Flow:
 User Upload → AI Analysis → Rights Protection → SEO Optimization → 
 Collaboration Matching → Multi-Platform Distribution
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -81,8 +79,7 @@ logger = logging.getLogger(__name__)
 # =============== SYSTEM STATUS & CONFIGURATION ===============
 
 class ProtectionSystemStatus(Enum):
-    """Overall protection system status"""
-    INITIALIZING = "initializing"
+    """Overall protection system status"""    INITIALIZING = "initializing"
     ACTIVE = "active"
     MONITORING = "monitoring"
     ENFORCING = "enforcing"
@@ -91,8 +88,7 @@ class ProtectionSystemStatus(Enum):
     SHUTTING_DOWN = "shutting_down"
 
 class ContentCreatorType(Enum):
-    """Types of content creators supported"""
-    MUSICIAN = "musician"
+    """Types of content creators supported"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -105,8 +101,7 @@ class ContentCreatorType(Enum):
 
 @dataclass
 class ProtectionSystemConfig:
-    """Main configuration for the protection system"""
-    
+    """Main configuration for the protection system"""    
     # System settings
     enable_real_time_monitoring: bool = True
     enable_automated_enforcement: bool = True
@@ -159,8 +154,7 @@ class ProtectionSystemConfig:
 
 @dataclass
 class ContentProtectionRequest:
-    """Request for content protection services"""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Request for content protection services"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     creator_type: ContentCreatorType = ContentCreatorType.INFLUENCER
     
@@ -194,8 +188,7 @@ class ContentProtectionRequest:
 
 @dataclass
 class ProtectionResult:
-    """Result from protection operations"""
-    request_id: str = ""
+    """Result from protection operations"""    request_id: str = ""
     status: str = "pending"
     
     # Detection results
@@ -222,13 +215,11 @@ class ProtectionResult:
     error_messages: List[str] = field(default_factory=list)
 
 class ContentProtectionSystem:
-    """
-    Main Content Protection System orchestrating all protection components.
+    """    Main Content Protection System orchestrating all protection components.
     
     This is the primary interface for content creators to protect their
     intellectual property across multiple platforms and formats.
-    """
-    
+    """    
     def __init__(self, config: Optional[ProtectionSystemConfig] = None):
         self.config = config or ProtectionSystemConfig()
         self.status = ProtectionSystemStatus.INITIALIZING
@@ -263,8 +254,7 @@ class ContentProtectionSystem:
         logger.info(f"Copyright: {__copyright__}")
     
     async def initialize(self) -> bool:
-        """Initialize all protection system components"""
-        try:
+        """Initialize all protection system components"""        try:
             logger.info("🚀 Initializing IA Influencer Agent Protection System...")
             
             # Initialize core detection and fingerprinting
@@ -317,8 +307,7 @@ class ContentProtectionSystem:
             return False
     
     async def protect_content(self, request: ContentProtectionRequest) -> ProtectionResult:
-        """
-        Main method to protect content across all platforms and formats.
+        """        Main method to protect content across all platforms and formats.
         
         This orchestrates the complete protection workflow:
         1. Content Analysis & Fingerprinting
@@ -326,8 +315,7 @@ class ContentProtectionSystem:
         3. Multi-Platform Monitoring Setup
         4. Rights Enforcement Configuration
         5. Revenue Protection Setup
-        """
-        result = ProtectionResult(request_id=request.request_id)
+        """        result = ProtectionResult(request_id=request.request_id)
         
         try:
             logger.info(f"🛡️ Starting content protection for request: {request.request_id}")
@@ -478,12 +466,10 @@ class ContentProtectionSystem:
             return result
     
     async def get_protection_status(self, request_id: str) -> Optional[ProtectionResult]:
-        """Get current protection status for a request"""
-        return self.protection_results.get(request_id)
+        """Get current protection status for a request"""        return self.protection_results.get(request_id)
     
     async def get_system_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive system statistics"""
-        return {
+        """Get comprehensive system statistics"""        return {
             'system_status': self.status.value,
             'system_version': __version__,
             'total_requests': self.stats['total_requests_processed'],
@@ -507,8 +493,7 @@ class ContentProtectionSystem:
         }
     
     async def shutdown(self):
-        """Gracefully shutdown the protection system"""
-        try:
+        """Gracefully shutdown the protection system"""        try:
             logger.info("🔄 Shutting down Content Protection System...")
             self.status = ProtectionSystemStatus.SHUTTING_DOWN
             
@@ -538,8 +523,7 @@ class ContentProtectionSystem:
 # =============== CONVENIENCE FUNCTIONS ===============
 
 def create_protection_system(config: Optional[ProtectionSystemConfig] = None) -> ContentProtectionSystem:
-    """Factory function to create a new protection system instance"""
-    return ContentProtectionSystem(config)
+    """Factory function to create a new protection system instance"""    return ContentProtectionSystem(config)
 
 async def protect_content_simple(
     content_path: str,
@@ -547,8 +531,7 @@ async def protect_content_simple(
     creator_type: ContentCreatorType = ContentCreatorType.INFLUENCER,
     platforms: Optional[List[PlatformType]] = None
 ) -> ProtectionResult:
-    """
-    Simplified content protection function for quick setup.
+    """    Simplified content protection function for quick setup.
     
     Args:
         content_path: Path to content file
@@ -558,8 +541,7 @@ async def protect_content_simple(
     
     Returns:
         ProtectionResult with protection status
-    """
-    # Create protection system
+    """    # Create protection system
     system = create_protection_system()
     await system.initialize()
     
@@ -584,12 +566,10 @@ async def protect_content_simple(
     return result
 
 def get_supported_creator_types() -> List[ContentCreatorType]:
-    """Get list of supported content creator types"""
-    return list(ContentCreatorType)
+    """Get list of supported content creator types"""    return list(ContentCreatorType)
 
 def get_supported_platforms() -> List[PlatformType]:
-    """Get list of supported platforms for monitoring"""
-    return [
+    """Get list of supported platforms for monitoring"""    return [
         PlatformType.YOUTUBE,
         PlatformType.INSTAGRAM,
         PlatformType.TIKTOK,
@@ -611,11 +591,9 @@ def get_supported_platforms() -> List[PlatformType]:
 # =============== MAIN ENTRY POINT ===============
 
 if __name__ == "__main__":
-    """
-    Main entry point for testing and development.
+    """    Main entry point for testing and development.
     This demonstrates the basic usage of the protection system.
-    """
-    async def main():
+    """    async def main():
         print("🛡️ IA Influencer Agent - Content Protection System")
         print(f"Version: {__version__}")
         print(f"Author: {__author__}")

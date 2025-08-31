@@ -1,5 +1,4 @@
-"""
-Business services index for IA Influencer Agent platform.
+"""Business services index for IA Influencer Agent platform.
 
 This module provides a centralized access point for all business services,
 facilitating service discovery, dependency injection, and service orchestration.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from typing import Dict, Type, Any, List, Optional
 from datetime import datetime
@@ -41,11 +39,9 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class BusinessServiceRegistry:
-    """
-    Advanced registry for all business services with comprehensive dependency injection,
+    """    Advanced registry for all business services with comprehensive dependency injection,
     health monitoring, and service orchestration capabilities.
-    """
-    
+    """    
     def __init__(self):
         self._services: Dict[str, Any] = {}
         self._service_types: Dict[str, Type] = {
@@ -77,8 +73,7 @@ class BusinessServiceRegistry:
         self._is_initialized = False
     
     async def initialize_services(self) -> None:
-        """Initialize all services in dependency order."""
-        try:
+        """Initialize all services in dependency order."""        try:
             logger.info("Starting business services initialization...")
             
             # Calculate initialization order based on dependencies
@@ -100,8 +95,7 @@ class BusinessServiceRegistry:
             raise
     
     async def shutdown_services(self) -> None:
-        """Gracefully shutdown all services."""
-        try:
+        """Gracefully shutdown all services."""        try:
             logger.info("Starting graceful shutdown of business services...")
             
             # Shutdown services in reverse order
@@ -120,8 +114,7 @@ class BusinessServiceRegistry:
             raise
     
     def get_service(self, service_name: str) -> Any:
-        """
-        Get service instance by name with dependency resolution.
+        """        Get service instance by name with dependency resolution.
         
         Args:
             service_name: Name of the service to retrieve
@@ -131,8 +124,7 @@ class BusinessServiceRegistry:
             
         Raises:
             ValueError: If service is unknown or not initialized
-        """
-        if not self._is_initialized:
+        """        if not self._is_initialized:
             raise RuntimeError("Services not initialized. Call initialize_services() first.")
         
         if service_name not in self._services:
@@ -149,64 +141,54 @@ class BusinessServiceRegistry:
         return self._services[service_name]
     
     def register_service(self, service_name: str, service_instance: Any) -> None:
-        """
-        Register a service instance manually.
+        """        Register a service instance manually.
         
         Args:
             service_name: Name of the service
             service_instance: Service instance to register
-        """
-        self._services[service_name] = service_instance
+        """        self._services[service_name] = service_instance
         self._service_monitor.register_service(service_name, service_instance)
         logger.info(f"Service '{service_name}' registered manually")
     
     def get_service_health(self, service_name: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get health status of service(s).
+        """        Get health status of service(s).
         
         Args:
             service_name: Specific service name (optional, returns all if None)
             
         Returns:
             Health status information
-        """
-        if service_name:
+        """        if service_name:
             return self._health_checker.check_service_health(service_name)
         else:
             return self._health_checker.check_all_services_health()
     
     def get_service_metrics(self, service_name: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get performance metrics for service(s).
+        """        Get performance metrics for service(s).
         
         Args:
             service_name: Specific service name (optional, returns all if None)
             
         Returns:
             Service metrics and performance data
-        """
-        if service_name:
+        """        if service_name:
             return self._service_monitor.get_service_metrics(service_name)
         else:
             return self._service_monitor.get_all_service_metrics()
     
     def list_services(self) -> List[str]:
-        """List all available services."""
-        return list(self._service_types.keys())
+        """List all available services."""        return list(self._service_types.keys())
     
     def get_service_dependencies(self, service_name: str) -> List[str]:
-        """Get dependencies for a specific service."""
-        return self._service_dependencies.get(service_name, [])
+        """Get dependencies for a specific service."""        return self._service_dependencies.get(service_name, [])
     
     @asynccontextmanager
     async def service_context(self, service_names: List[str]):
-        """
-        Async context manager for service lifecycle management.
+        """        Async context manager for service lifecycle management.
         
         Args:
             service_names: List of service names to manage
-        """
-        services = {}
+        """        services = {}
         try:
             # Initialize requested services
             for service_name in service_names:
@@ -228,8 +210,7 @@ class BusinessServiceRegistry:
     
     # Private helper methods
     def _calculate_initialization_order(self) -> List[str]:
-        """Calculate the order to initialize services based on dependencies."""
-        order = []
+        """Calculate the order to initialize services based on dependencies."""        order = []
         visited = set()
         visiting = set()
         
@@ -256,8 +237,7 @@ class BusinessServiceRegistry:
         return order
     
     async def _initialize_service(self, service_name: str) -> None:
-        """Initialize a single service."""
-        try:
+        """Initialize a single service."""        try:
             if service_name in self._services:
                 return  # Already initialized
             
@@ -282,8 +262,7 @@ class BusinessServiceRegistry:
             raise
     
     async def _shutdown_service(self, service_name: str) -> None:
-        """Shutdown a single service."""
-        try:
+        """Shutdown a single service."""        try:
             if service_name not in self._services:
                 return  # Not initialized
             
@@ -304,8 +283,7 @@ class BusinessServiceRegistry:
             raise
     
     def _resolve_dependencies(self, service_name: str) -> Dict[str, Any]:
-        """Resolve dependencies for a service."""
-        dependencies = {}
+        """Resolve dependencies for a service."""        dependencies = {}
         
         for dep_name in self._service_dependencies.get(service_name, []):
             if dep_name not in self._services:
@@ -318,26 +296,22 @@ class BusinessServiceRegistry:
         return dependencies
     
     async def _start_health_monitoring(self) -> None:
-        """Start health monitoring for all services."""
-        try:
+        """Start health monitoring for all services."""        try:
             await self._health_checker.start_monitoring()
             logger.info("Health monitoring started for all services")
         except Exception as e:
             logger.warning(f"Failed to start health monitoring: {str(e)}")
     
     async def _stop_health_monitoring(self) -> None:
-        """Stop health monitoring."""
-        try:
+        """Stop health monitoring."""        try:
             await self._health_checker.stop_monitoring()
             logger.info("Health monitoring stopped")
         except Exception as e:
             logger.warning(f"Error stopping health monitoring: {str(e)}")
 
 class BusinessServiceOrchestrator:
-    """
-    High-level orchestrator for complex business operations involving multiple services.
-    """
-    
+    """    High-level orchestrator for complex business operations involving multiple services.
+    """    
     def __init__(self, service_registry: BusinessServiceRegistry):
         self.registry = service_registry
     
@@ -348,8 +322,7 @@ class BusinessServiceOrchestrator:
         workflow_options: Dict[str, Any],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Execute complete content creation and distribution workflow.
+        """        Execute complete content creation and distribution workflow.
         
         Args:
             user_id: User identifier
@@ -359,8 +332,7 @@ class BusinessServiceOrchestrator:
             
         Returns:
             Workflow execution results
-        """
-        workflow_results = {
+        """        workflow_results = {
             "workflow_id": f"wf_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}",
             "user_id": user_id,
             "started_at": datetime.utcnow(),
@@ -450,52 +422,40 @@ service_orchestrator = BusinessServiceOrchestrator(service_registry)
 
 # Service factory functions for dependency injection
 def get_user_service() -> UserService:
-    """Get UserService instance."""
-    return service_registry.get_service('user')
+    """Get UserService instance."""    return service_registry.get_service('user')
 
 def get_content_service() -> ContentService:
-    """Get ContentService instance."""
-    return service_registry.get_service('content')
+    """Get ContentService instance."""    return service_registry.get_service('content')
 
 def get_ai_processing_service() -> AIProcessingService:
-    """Get AIProcessingService instance."""
-    return service_registry.get_service('ai_processing')
+    """Get AIProcessingService instance."""    return service_registry.get_service('ai_processing')
 
 def get_protection_service() -> ProtectionService:
-    """Get ProtectionService instance."""
-    return service_registry.get_service('protection')
+    """Get ProtectionService instance."""    return service_registry.get_service('protection')
 
 def get_collaboration_service() -> CollaborationService:
-    """Get CollaborationService instance."""
-    return service_registry.get_service('collaboration')
+    """Get CollaborationService instance."""    return service_registry.get_service('collaboration')
 
 def get_matching_service() -> MatchingService:
-    """Get MatchingService instance."""
-    return service_registry.get_service('matching')
+    """Get MatchingService instance."""    return service_registry.get_service('matching')
 
 def get_notification_service() -> NotificationService:
-    """Get NotificationService instance."""
-    return service_registry.get_service('notification')
+    """Get NotificationService instance."""    return service_registry.get_service('notification')
 
 def get_monetization_service() -> MonetizationService:
-    """Get MonetizationService instance."""
-    return service_registry.get_service('monetization')
+    """Get MonetizationService instance."""    return service_registry.get_service('monetization')
 
 def get_analytics_service() -> AnalyticsService:
-    """Get AnalyticsService instance."""
-    return service_registry.get_service('analytics')
+    """Get AnalyticsService instance."""    return service_registry.get_service('analytics')
 
 def get_seo_service() -> SEOService:
-    """Get SEOService instance."""
-    return service_registry.get_service('seo')
+    """Get SEOService instance."""    return service_registry.get_service('seo')
 
 def get_distribution_service() -> DistributionService:
-    """Get DistributionService instance."""
-    return service_registry.get_service('distribution')
+    """Get DistributionService instance."""    return service_registry.get_service('distribution')
 
 def get_service_orchestrator() -> BusinessServiceOrchestrator:
-    """Get BusinessServiceOrchestrator instance."""
-    return service_orchestrator
+    """Get BusinessServiceOrchestrator instance."""    return service_orchestrator
 
 # Core business services
 from .user_service import UserService, UserManager, ProfileManager
@@ -516,16 +476,14 @@ from .orchestrator import BusinessOrchestrator, ServiceCoordinator, WorkflowMana
 
 
 def initialize_business_services(core_services):
-    """
-    Initialize all business services with core dependencies
+    """    Initialize all business services with core dependencies
     
     Args:
         core_services: Core platform services (database, security, etc.)
         
     Returns:
         dict: Initialized business services
-    """
-    services = {
+    """    services = {
         'user_service': UserService(core_services),
         'content_service': ContentService(core_services),
         'ai_processing_service': AIProcessingService(core_services),
@@ -543,49 +501,40 @@ def initialize_business_services(core_services):
 
 
 def get_business_orchestrator(core_services):
-    """Get business orchestrator with all services initialized"""
-    services = initialize_business_services(core_services)
+    """Get business orchestrator with all services initialized"""    services = initialize_business_services(core_services)
     return services['orchestrator']
 
 
 def get_user_service(core_services):
-    """Get standalone user service"""
-    return UserService(core_services)
+    """Get standalone user service"""    return UserService(core_services)
 
 
 def get_content_service(core_services):
-    """Get standalone content service"""
-    return ContentService(core_services)
+    """Get standalone content service"""    return ContentService(core_services)
 
 
 def get_ai_processing_service(core_services):
-    """Get standalone AI processing service"""
-    return AIProcessingService(core_services)
+    """Get standalone AI processing service"""    return AIProcessingService(core_services)
 
 
 def get_protection_service(core_services):
-    """Get standalone protection service"""
-    return ProtectionService(core_services)
+    """Get standalone protection service"""    return ProtectionService(core_services)
 
 
 def get_collaboration_service(core_services):
-    """Get standalone collaboration service"""
-    return CollaborationService(core_services)
+    """Get standalone collaboration service"""    return CollaborationService(core_services)
 
 
 def get_matching_service(core_services):
-    """Get standalone matching service"""
-    return MatchingService(core_services)
+    """Get standalone matching service"""    return MatchingService(core_services)
 
 
 def get_monetization_service(core_services):
-    """Get standalone monetization service"""
-    return MonetizationService(core_services)
+    """Get standalone monetization service"""    return MonetizationService(core_services)
 
 
 def get_notification_service(core_services):
-    """Get standalone notification service"""
-    return NotificationService(core_services)
+    """Get standalone notification service"""    return NotificationService(core_services)
 
 
 # Service factory aliases

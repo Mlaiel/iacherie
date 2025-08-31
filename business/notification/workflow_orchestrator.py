@@ -1,5 +1,4 @@
-"""
-Workflow Orchestrator - Advanced Multi-Step Notification Workflow Management
+"""Workflow Orchestrator - Advanced Multi-Step Notification Workflow Management
 
 Advanced workflow orchestration engine for IA Influencer Agent notification system.
 Manages complex multi-step notification workflows, conditional logic, business rules,
@@ -29,7 +28,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission from the author is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing and usage rights.
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable
 import logging
 import asyncio
@@ -49,8 +47,7 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status."""
-    PENDING = "pending"                # Waiting to start
+    """Workflow execution status."""    PENDING = "pending"                # Waiting to start
     RUNNING = "running"                # Currently executing
     PAUSED = "paused"                  # Temporarily paused
     WAITING = "waiting"                # Waiting for user response
@@ -61,8 +58,7 @@ class WorkflowStatus(Enum):
 
 
 class WorkflowStepType(Enum):
-    """Types of workflow steps."""
-    NOTIFICATION = "notification"      # Send notification
+    """Types of workflow steps."""    NOTIFICATION = "notification"      # Send notification
     WAIT = "wait"                     # Wait for specified time
     CONDITION = "condition"           # Conditional branching
     ACTION = "action"                 # Execute custom action
@@ -72,8 +68,7 @@ class WorkflowStepType(Enum):
 
 
 class WorkflowTrigger(Enum):
-    """Workflow trigger types."""
-    IMMEDIATE = "immediate"            # Execute immediately
+    """Workflow trigger types."""    IMMEDIATE = "immediate"            # Execute immediately
     SCHEDULED = "scheduled"            # Execute at specific time
     CONDITIONAL = "conditional"        # Execute when condition met
     USER_ACTION = "user_action"        # Execute on user action
@@ -82,8 +77,7 @@ class WorkflowTrigger(Enum):
 
 @dataclass
 class WorkflowStep:
-    """Individual workflow step definition."""
-    id: str
+    """Individual workflow step definition."""    id: str
     name: str
     type: WorkflowStepType
     config: Dict[str, Any]
@@ -98,8 +92,7 @@ class WorkflowStep:
 
 @dataclass
 class WorkflowDefinition:
-    """Complete workflow definition."""
-    id: str
+    """Complete workflow definition."""    id: str
     name: str
     description: str
     version: str
@@ -115,8 +108,7 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution instance."""
-    id: str
+    """Workflow execution instance."""    id: str
     workflow_id: str
     user_id: str
     status: WorkflowStatus
@@ -132,8 +124,7 @@ class WorkflowExecution:
 
 @dataclass
 class WorkflowMetrics:
-    """Workflow performance metrics."""
-    workflow_id: str
+    """Workflow performance metrics."""    workflow_id: str
     total_executions: int
     successful_completions: int
     failed_executions: int
@@ -146,20 +137,17 @@ class WorkflowMetrics:
 
 
 class WorkflowOrchestrator:
-    """
-    Advanced notification workflow orchestration engine.
+    """    Advanced notification workflow orchestration engine.
     
     Manages complex multi-step workflows with conditional logic,
     business rule integration, and comprehensive performance monitoring.
-    """
-    
+    """    
     def __init__(
         self,
         notification_service: NotificationService,
         config: NotificationConfig
     ):
-        """Initialize workflow orchestrator."""
-        self.notification_service = notification_service
+        """Initialize workflow orchestrator."""        self.notification_service = notification_service
         self.config = config
         self.business_rules = BUSINESS_RULES
         self.escalation_rules = ESCALATION_RULES
@@ -211,8 +199,7 @@ class WorkflowOrchestrator:
         context: Optional[Dict[str, Any]] = None,
         trigger: WorkflowTrigger = WorkflowTrigger.IMMEDIATE
     ) -> str:
-        """
-        Start a new workflow execution.
+        """        Start a new workflow execution.
         
         Args:
             workflow_id: ID of the workflow definition to execute
@@ -222,8 +209,7 @@ class WorkflowOrchestrator:
             
         Returns:
             Execution ID of the started workflow
-        """
-        try:
+        """        try:
             # Validate workflow exists
             if workflow_id not in self._workflow_definitions:
                 raise ValueError(f"Workflow '{workflow_id}' not found")
@@ -270,8 +256,7 @@ class WorkflowOrchestrator:
             raise
     
     async def _execute_workflow(self, execution_id: str):
-        """Execute workflow steps."""
-        try:
+        """Execute workflow steps."""        try:
             execution = self._active_executions.get(execution_id)
             if not execution:
                 logger.error(f"Execution '{execution_id}' not found")
@@ -346,8 +331,7 @@ class WorkflowOrchestrator:
                 execution.updated_at = datetime.now(timezone.utc)
     
     async def _execute_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute individual workflow step."""
-        try:
+        """Execute individual workflow step."""        try:
             step_start_time = datetime.now(timezone.utc)
             
             logger.debug(f"Executing step '{step.id}' in workflow '{execution.workflow_id}'")
@@ -398,8 +382,7 @@ class WorkflowOrchestrator:
             }
     
     async def _execute_step_by_type(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute step based on its type."""
-        try:
+        """Execute step based on its type."""        try:
             if step.type == WorkflowStepType.NOTIFICATION:
                 return await self._execute_notification_step(execution, step)
                 
@@ -437,8 +420,7 @@ class WorkflowOrchestrator:
             }
     
     async def _execute_notification_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute notification step."""
-        try:
+        """Execute notification step."""        try:
             config = step.config
             
             # Build notification request
@@ -492,8 +474,7 @@ class WorkflowOrchestrator:
             }
     
     async def _execute_wait_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute wait step."""
-        try:
+        """Execute wait step."""        try:
             config = step.config
             wait_duration = config.get("duration", 300)  # Default 5 minutes
             wait_type = config.get("type", "fixed")
@@ -536,8 +517,7 @@ class WorkflowOrchestrator:
             }
     
     async def _execute_condition_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute conditional step."""
-        try:
+        """Execute conditional step."""        try:
             config = step.config
             conditions = config.get("conditions", [])
             
@@ -569,8 +549,7 @@ class WorkflowOrchestrator:
             }
     
     async def _execute_action_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute custom action step."""
-        try:
+        """Execute custom action step."""        try:
             config = step.config
             action_type = config.get("action_type")
             
@@ -611,8 +590,7 @@ class WorkflowOrchestrator:
             }
     
     async def _execute_escalation_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute escalation step."""
-        try:
+        """Execute escalation step."""        try:
             config = step.config
             escalation_type = config.get("escalation_type", "priority")
             
@@ -653,8 +631,7 @@ class WorkflowOrchestrator:
             }
     
     async def _execute_follow_up_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute follow-up step."""
-        try:
+        """Execute follow-up step."""        try:
             config = step.config
             follow_up_type = config.get("follow_up_type", "reminder")
             
@@ -693,8 +670,7 @@ class WorkflowOrchestrator:
             }
     
     async def _execute_completion_step(self, execution: WorkflowExecution, step: WorkflowStep) -> Dict[str, Any]:
-        """Execute workflow completion step."""
-        try:
+        """Execute workflow completion step."""        try:
             config = step.config
             
             # Execute completion actions
@@ -736,8 +712,7 @@ class WorkflowOrchestrator:
             }
     
     def _build_notification_content(self, config: Dict[str, Any], context: Dict[str, Any]):
-        """Build notification content from step configuration and context."""
-        # This would be implemented to create NotificationContent object
+        """Build notification content from step configuration and context."""        # This would be implemented to create NotificationContent object
         # For now, return a mock implementation
         from .notification_models import NotificationContent
         
@@ -750,8 +725,7 @@ class WorkflowOrchestrator:
         )
     
     def _render_template(self, template: str, context: Dict[str, Any]) -> str:
-        """Render message template with context variables."""
-        try:
+        """Render message template with context variables."""        try:
             for key, value in context.items():
                 placeholder = f"{{{key}}}"
                 if placeholder in template:
@@ -762,8 +736,7 @@ class WorkflowOrchestrator:
             return template
     
     async def _check_step_dependencies(self, execution: WorkflowExecution, step: WorkflowStep) -> bool:
-        """Check if step dependencies are satisfied."""
-        try:
+        """Check if step dependencies are satisfied."""        try:
             for dep_step_id in step.dependencies:
                 # Check if dependency step completed successfully
                 completed_steps = [
@@ -777,8 +750,7 @@ class WorkflowOrchestrator:
             return False
     
     async def _evaluate_step_conditions(self, execution: WorkflowExecution, step: WorkflowStep) -> bool:
-        """Evaluate step execution conditions."""
-        try:
+        """Evaluate step execution conditions."""        try:
             for condition in step.conditions:
                 if not await self._evaluate_condition(execution, condition):
                     return False
@@ -787,8 +759,7 @@ class WorkflowOrchestrator:
             return False
     
     async def _evaluate_condition(self, execution: WorkflowExecution, condition: Dict[str, Any]) -> bool:
-        """Evaluate a single condition."""
-        try:
+        """Evaluate a single condition."""        try:
             condition_type = condition.get("type", "context")
             
             if condition_type == "context":
@@ -827,8 +798,7 @@ class WorkflowOrchestrator:
             return False
     
     def _evaluate_time_condition(self, condition: Dict[str, Any]) -> bool:
-        """Evaluate time-based condition."""
-        try:
+        """Evaluate time-based condition."""        try:
             time_type = condition.get("time_type", "business_hours")
             current_time = datetime.now(timezone.utc)
             
@@ -846,8 +816,7 @@ class WorkflowOrchestrator:
             return False
     
     async def _evaluate_business_rule_condition(self, execution: WorkflowExecution, condition: Dict[str, Any]) -> bool:
-        """Evaluate business rule condition."""
-        try:
+        """Evaluate business rule condition."""        try:
             rule_name = condition.get("rule_name")
             rule_config = self.business_rules.get(rule_name, {})
             
@@ -859,8 +828,7 @@ class WorkflowOrchestrator:
             return False
     
     def _should_retry_step(self, execution: WorkflowExecution, step: WorkflowStep) -> bool:
-        """Determine if step should be retried."""
-        if not step.retry_config:
+        """Determine if step should be retried."""        if not step.retry_config:
             return False
         
         max_retries = step.retry_config.get("max_retries", 3)
@@ -869,22 +837,19 @@ class WorkflowOrchestrator:
         return retry_count < max_retries
     
     def _is_workflow_expired(self, execution: WorkflowExecution, workflow_def: WorkflowDefinition) -> bool:
-        """Check if workflow has exceeded timeout."""
-        if not workflow_def.timeout:
+        """Check if workflow has exceeded timeout."""        if not workflow_def.timeout:
             return False
         
         elapsed_time = (datetime.now(timezone.utc) - execution.created_at).total_seconds()
         return elapsed_time > workflow_def.timeout
     
     def _get_next_sequential_step(self, execution: WorkflowExecution, current_step: WorkflowStep) -> Optional[str]:
-        """Get next sequential step if no explicit next step defined."""
-        # This would implement logic to find the next step
+        """Get next sequential step if no explicit next step defined."""        # This would implement logic to find the next step
         # For now, return None to end workflow
         return None
     
     def _create_escalated_notification(self, execution: WorkflowExecution, config: Dict[str, Any]):
-        """Create escalated notification request."""
-        from .notification_models import NotificationRequest, NotificationContent
+        """Create escalated notification request."""        from .notification_models import NotificationRequest, NotificationContent
         
         return NotificationRequest(
             type="escalated_notification",
@@ -899,8 +864,7 @@ class WorkflowOrchestrator:
         )
     
     def _create_supervisor_notification(self, execution: WorkflowExecution, config: Dict[str, Any]):
-        """Create supervisor notification request."""
-        from .notification_models import NotificationRequest, NotificationContent
+        """Create supervisor notification request."""        from .notification_models import NotificationRequest, NotificationContent
         
         supervisor_id = config.get("supervisor_id", "admin")
         
@@ -921,13 +885,11 @@ class WorkflowOrchestrator:
         )
     
     async def _trigger_external_escalation(self, execution: WorkflowExecution, config: Dict[str, Any]):
-        """Trigger external escalation process."""
-        # This would integrate with external systems
+        """Trigger external escalation process."""        # This would integrate with external systems
         logger.info(f"External escalation triggered for workflow {execution.workflow_id}")
     
     def _create_follow_up_notification(self, execution: WorkflowExecution, config: Dict[str, Any]):
-        """Create follow-up notification request."""
-        from .notification_models import NotificationRequest, NotificationContent
+        """Create follow-up notification request."""        from .notification_models import NotificationRequest, NotificationContent
         
         return NotificationRequest(
             type="follow_up",
@@ -945,8 +907,7 @@ class WorkflowOrchestrator:
         )
     
     def _create_completion_notification(self, execution: WorkflowExecution, config: Dict[str, Any]):
-        """Create workflow completion notification."""
-        from .notification_models import NotificationRequest, NotificationContent
+        """Create workflow completion notification."""        from .notification_models import NotificationRequest, NotificationContent
         
         return NotificationRequest(
             type="workflow_completion",
@@ -964,28 +925,23 @@ class WorkflowOrchestrator:
         )
     
     async def _update_user_workflow_status(self, execution: WorkflowExecution, config: Dict[str, Any]):
-        """Update user's workflow status."""
-        # This would update user status in database
+        """Update user's workflow status."""        # This would update user status in database
         logger.info(f"Updated workflow status for user {execution.user_id}")
     
     async def _make_api_call(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Make external API call."""
-        # This would implement API call logic
+        """Make external API call."""        # This would implement API call logic
         return {"api_call_result": "success"}
     
     async def _process_workflow_data(self, execution: WorkflowExecution, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Process workflow data."""
-        # This would implement data processing logic
+        """Process workflow data."""        # This would implement data processing logic
         return {"processing_result": "completed"}
     
     async def _execute_business_logic(self, execution: WorkflowExecution, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute business logic."""
-        # This would implement business logic
+        """Execute business logic."""        # This would implement business logic
         return {"business_logic_result": "executed"}
     
     async def _update_workflow_metrics(self, execution: WorkflowExecution):
-        """Update workflow performance metrics."""
-        try:
+        """Update workflow performance metrics."""        try:
             metrics = self._workflow_metrics[execution.workflow_id]
             
             if execution.status == WorkflowStatus.COMPLETED:
@@ -1026,16 +982,14 @@ class WorkflowOrchestrator:
             logger.error(f"Workflow metrics update failed: {e}")
     
     async def _cleanup_execution(self, execution_id: str, delay: int = 3600):
-        """Cleanup completed workflow execution after delay."""
-        await asyncio.sleep(delay)
+        """Cleanup completed workflow execution after delay."""        await asyncio.sleep(delay)
         
         if execution_id in self._active_executions:
             del self._active_executions[execution_id]
             logger.debug(f"Cleaned up workflow execution {execution_id}")
     
     def _start_background_monitoring(self):
-        """Start background monitoring tasks."""
-        try:
+        """Start background monitoring tasks."""        try:
             # Monitor workflow timeouts
             timeout_task = asyncio.create_task(self._monitor_workflow_timeouts())
             self._background_tasks.append(timeout_task)
@@ -1054,8 +1008,7 @@ class WorkflowOrchestrator:
             logger.error(f"Failed to start background monitoring: {e}")
     
     async def _monitor_workflow_timeouts(self):
-        """Monitor and handle workflow timeouts."""
-        while True:
+        """Monitor and handle workflow timeouts."""        while True:
             try:
                 current_time = datetime.now(timezone.utc)
                 
@@ -1077,8 +1030,7 @@ class WorkflowOrchestrator:
                 await asyncio.sleep(60)
     
     async def _monitor_waiting_workflows(self):
-        """Monitor workflows waiting for user response."""
-        while True:
+        """Monitor workflows waiting for user response."""        while True:
             try:
                 current_time = datetime.now(timezone.utc)
                 
@@ -1106,8 +1058,7 @@ class WorkflowOrchestrator:
                 await asyncio.sleep(30)
     
     async def _monitor_performance(self):
-        """Monitor workflow performance and update statistics."""
-        while True:
+        """Monitor workflow performance and update statistics."""        while True:
             try:
                 # Update orchestrator statistics
                 active_count = len([
@@ -1138,8 +1089,7 @@ class WorkflowOrchestrator:
                 await asyncio.sleep(300)
     
     def _load_workflow_templates(self):
-        """Load workflow templates from configuration."""
-        try:
+        """Load workflow templates from configuration."""        try:
             # Load predefined workflow templates
             templates = WORKFLOW_TEMPLATES
             
@@ -1153,8 +1103,7 @@ class WorkflowOrchestrator:
             logger.error(f"Failed to load workflow templates: {e}")
     
     def _parse_workflow_template(self, template_id: str, template_data: Dict[str, Any]) -> WorkflowDefinition:
-        """Parse workflow template into WorkflowDefinition."""
-        try:
+        """Parse workflow template into WorkflowDefinition."""        try:
             # Parse steps
             steps = {}
             for step_data in template_data.get("steps", []):
@@ -1201,8 +1150,7 @@ class WorkflowOrchestrator:
     # Public API methods
     
     async def pause_workflow(self, execution_id: str) -> bool:
-        """Pause workflow execution."""
-        try:
+        """Pause workflow execution."""        try:
             execution = self._active_executions.get(execution_id)
             if execution and execution.status == WorkflowStatus.RUNNING:
                 execution.status = WorkflowStatus.PAUSED
@@ -1215,8 +1163,7 @@ class WorkflowOrchestrator:
             return False
     
     async def resume_workflow(self, execution_id: str) -> bool:
-        """Resume paused workflow execution."""
-        try:
+        """Resume paused workflow execution."""        try:
             execution = self._active_executions.get(execution_id)
             if execution and execution.status == WorkflowStatus.PAUSED:
                 execution.status = WorkflowStatus.RUNNING
@@ -1233,8 +1180,7 @@ class WorkflowOrchestrator:
             return False
     
     async def cancel_workflow(self, execution_id: str) -> bool:
-        """Cancel workflow execution."""
-        try:
+        """Cancel workflow execution."""        try:
             execution = self._active_executions.get(execution_id)
             if execution and execution.status in [WorkflowStatus.RUNNING, WorkflowStatus.PAUSED, WorkflowStatus.WAITING]:
                 execution.status = WorkflowStatus.CANCELLED
@@ -1249,8 +1195,7 @@ class WorkflowOrchestrator:
             return False
     
     async def trigger_waiting_workflow(self, execution_id: str, response_data: Dict[str, Any]) -> bool:
-        """Trigger waiting workflow with user response."""
-        try:
+        """Trigger waiting workflow with user response."""        try:
             execution = self._active_executions.get(execution_id)
             if execution and execution.status == WorkflowStatus.WAITING:
                 # Add response data to context
@@ -1272,28 +1217,22 @@ class WorkflowOrchestrator:
             return False
     
     def get_workflow_status(self, execution_id: str) -> Optional[WorkflowExecution]:
-        """Get workflow execution status."""
-        return self._active_executions.get(execution_id)
+        """Get workflow execution status."""        return self._active_executions.get(execution_id)
     
     def get_workflow_metrics(self, workflow_id: str) -> Optional[WorkflowMetrics]:
-        """Get workflow performance metrics."""
-        return self._workflow_metrics.get(workflow_id)
+        """Get workflow performance metrics."""        return self._workflow_metrics.get(workflow_id)
     
     def get_orchestrator_stats(self) -> Dict[str, Any]:
-        """Get orchestrator performance statistics."""
-        return self.orchestrator_stats.copy()
+        """Get orchestrator performance statistics."""        return self.orchestrator_stats.copy()
     
     def list_active_workflows(self) -> List[WorkflowExecution]:
-        """List all active workflow executions."""
-        return list(self._active_executions.values())
+        """List all active workflow executions."""        return list(self._active_executions.values())
     
     def list_workflow_definitions(self) -> List[WorkflowDefinition]:
-        """List all available workflow definitions."""
-        return list(self._workflow_definitions.values())
+        """List all available workflow definitions."""        return list(self._workflow_definitions.values())
     
     async def shutdown(self):
-        """Shutdown workflow orchestrator."""
-        try:
+        """Shutdown workflow orchestrator."""        try:
             # Cancel background tasks
             for task in self._background_tasks:
                 task.cancel()

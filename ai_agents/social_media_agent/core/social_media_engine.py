@@ -1,5 +1,4 @@
-"""
-SocialMedia Engine - Ultra-Advanced Processing Engine
+"""SocialMedia Engine - Ultra-Advanced Processing Engine
 
 Core processing engine for social_media operations with intelligent
 optimization and comprehensive functionality.
@@ -7,7 +6,6 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,24 +16,21 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class SocialMediaJob:
-    """Job configuration for social_media operations"""
-    job_id: str
+    """Job configuration for social_media operations"""    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class SocialMediaResult:
-    """Result of social_media operations"""
-    job_id: str
+    """Result of social_media operations"""    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class SocialMediaEngine:
-    """
-    Ultra-Advanced SocialMedia Processing Engine
+    """    Ultra-Advanced SocialMedia Processing Engine
     
     Provides enterprise-grade social_media processing with:
     - High-performance operation handling
@@ -43,8 +38,7 @@ class SocialMediaEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -53,8 +47,7 @@ class SocialMediaEngine:
         logger.info("SocialMediaEngine initialized")
 
     async def start(self) -> None:
-        """Start the social_media processing engine"""
-        try:
+        """Start the social_media processing engine"""        try:
             self.is_running = True
             logger.info("SocialMediaEngine started successfully")
         except Exception as e:
@@ -62,8 +55,7 @@ class SocialMediaEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> SocialMediaResult:
-        """Process social_media operation"""
-        try:
+        """Process social_media operation"""        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -90,6 +82,5 @@ class SocialMediaEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""
-        self.is_running = False
+        """Graceful shutdown of the processing engine"""        self.is_running = False
         logger.info("SocialMediaEngine shutdown complete")

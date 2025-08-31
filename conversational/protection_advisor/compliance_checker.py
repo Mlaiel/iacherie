@@ -1,5 +1,4 @@
-"""
-Compliance Checker Module - Automated compliance verification and monitoring.
+"""Compliance Checker Module - Automated compliance verification and monitoring.
 
 Ensures content and protection strategies comply with regulations, platform policies,
 and industry standards across different jurisdictions.
@@ -7,7 +6,6 @@ and industry standards across different jurisdictions.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -23,8 +21,7 @@ logger = get_logger(__name__)
 
 
 class ComplianceType(str, Enum):
-    """Types of compliance requirements."""
-    LEGAL = "legal"
+    """Types of compliance requirements."""    LEGAL = "legal"
     PLATFORM = "platform"
     INDUSTRY = "industry"
     REGIONAL = "regional"
@@ -32,8 +29,7 @@ class ComplianceType(str, Enum):
 
 
 class ComplianceStatus(str, Enum):
-    """Compliance status levels."""
-    COMPLIANT = "compliant"
+    """Compliance status levels."""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
@@ -41,8 +37,7 @@ class ComplianceStatus(str, Enum):
 
 
 class ComplianceArea(str, Enum):
-    """Areas of compliance."""
-    COPYRIGHT = "copyright"
+    """Areas of compliance."""    COPYRIGHT = "copyright"
     PRIVACY = "privacy"
     DATA_PROTECTION = "data_protection"
     CONTENT_POLICY = "content_policy"
@@ -54,8 +49,7 @@ class ComplianceArea(str, Enum):
 
 @dataclass
 class ComplianceRequirement:
-    """Individual compliance requirement."""
-    requirement_id: str
+    """Individual compliance requirement."""    requirement_id: str
     name: str
     description: str
     compliance_type: ComplianceType
@@ -75,8 +69,7 @@ class ComplianceRequirement:
 
 @dataclass
 class ComplianceCheck:
-    """Result of compliance verification."""
-    check_id: str
+    """Result of compliance verification."""    check_id: str
     requirement_id: str
     content_id: Optional[str]
     status: ComplianceStatus
@@ -92,8 +85,7 @@ class ComplianceCheck:
 
 @dataclass
 class ComplianceReport:
-    """Comprehensive compliance assessment report."""
-    report_id: str
+    """Comprehensive compliance assessment report."""    report_id: str
     user_id: str
     scope: str
     total_requirements: int
@@ -110,8 +102,7 @@ class ComplianceReport:
 
 
 class ComplianceChecker:
-    """
-    Automated compliance checker for content protection.
+    """    Automated compliance checker for content protection.
     
     Provides comprehensive compliance verification including:
     - Legal and regulatory compliance
@@ -120,7 +111,6 @@ class ComplianceChecker:
     - Regional and international requirements
     - Automated monitoring and alerts
     """
-
     def __init__(self):
         self.compliance_rules = self._load_compliance_rules()
         self.jurisdiction_map = self._load_jurisdiction_map()
@@ -133,8 +123,7 @@ class ComplianceChecker:
         jurisdiction: str,
         target_platforms: List[str]
     ) -> ComplianceReport:
-        """
-        Perform comprehensive compliance check for content.
+        """        Perform comprehensive compliance check for content.
         
         Args:
             user_id: Creator user ID
@@ -144,8 +133,7 @@ class ComplianceChecker:
             
         Returns:
             ComplianceReport with detailed assessment
-        """
-        try:
+        """        try:
             logger.info(f"Starting compliance check for content {content_id}")
             
             # Get content metadata
@@ -216,8 +204,7 @@ class ComplianceChecker:
         platform: str,
         content_portfolio: List[str]
     ) -> Dict[str, Any]:
-        """
-        Check compliance with specific platform policies.
+        """        Check compliance with specific platform policies.
         
         Args:
             user_id: Creator user ID
@@ -226,8 +213,7 @@ class ComplianceChecker:
             
         Returns:
             Platform compliance assessment
-        """
-        try:
+        """        try:
             logger.info(f"Checking {platform} compliance for user {user_id}")
             
             # Get platform-specific requirements
@@ -288,8 +274,7 @@ class ComplianceChecker:
         jurisdictions: List[str],
         monitoring_config: Dict[str, Any]
     ) -> str:
-        """
-        Set up monitoring for regulatory changes.
+        """        Set up monitoring for regulatory changes.
         
         Args:
             user_id: Creator user ID
@@ -298,8 +283,7 @@ class ComplianceChecker:
             
         Returns:
             Monitoring session ID
-        """
-        try:
+        """        try:
             logger.info(f"Setting up regulatory monitoring for user {user_id}")
             
             # Create monitoring session
@@ -350,8 +334,7 @@ class ComplianceChecker:
         compliance_report: ComplianceReport,
         document_type: str
     ) -> Dict[str, Any]:
-        """
-        Generate compliance documentation.
+        """        Generate compliance documentation.
         
         Args:
             user_id: Creator user ID
@@ -360,8 +343,7 @@ class ComplianceChecker:
             
         Returns:
             Generated compliance documentation
-        """
-        try:
+        """        try:
             logger.info(f"Generating {document_type} documentation for user {user_id}")
             
             # Select document template based on type
@@ -418,8 +400,7 @@ class ComplianceChecker:
     # Private helper methods
     
     def _load_compliance_rules(self) -> Dict[str, List[ComplianceRequirement]]:
-        """Load compliance rules and requirements."""
-        # This would typically load from a database or configuration files
+        """Load compliance rules and requirements."""        # This would typically load from a database or configuration files
         rules = {
             "copyright": [
                 ComplianceRequirement(
@@ -465,8 +446,7 @@ class ComplianceChecker:
         return rules
     
     def _load_jurisdiction_map(self) -> Dict[str, Dict[str, Any]]:
-        """Load jurisdiction-specific compliance mappings."""
-        return {
+        """Load jurisdiction-specific compliance mappings."""        return {
             "EU": {
                 "regulations": ["gdpr", "copyright_directive", "digital_services_act"],
                 "data_protection_authority": "EDPB",
@@ -490,8 +470,7 @@ class ComplianceChecker:
         jurisdiction: str,
         target_platforms: List[str]
     ) -> List[ComplianceRequirement]:
-        """Identify compliance requirements applicable to content."""
-        try:
+        """Identify compliance requirements applicable to content."""        try:
             applicable_requirements = []
             
             content_type = content_metadata.get("type", "unknown")
@@ -532,8 +511,7 @@ class ComplianceChecker:
         content_metadata: Dict[str, Any],
         user_id: str
     ) -> ComplianceCheck:
-        """Perform individual compliance check."""
-        try:
+        """Perform individual compliance check."""        try:
             check_id = f"check_{requirement.requirement_id}_{int(datetime.utcnow().timestamp())}"
             
             # Perform verification based on method
@@ -599,8 +577,7 @@ class ComplianceChecker:
     # Additional helper methods (simplified implementations)
     
     async def _get_content_metadata(self, user_id: str, content_id: str) -> Dict[str, Any]:
-        """Get content metadata for compliance checking."""
-        return {
+        """Get content metadata for compliance checking."""        return {
             "id": content_id,
             "type": "video",
             "title": "Sample Content",
@@ -610,8 +587,7 @@ class ComplianceChecker:
         }
     
     async def _calculate_compliance_metrics(self, checks: List[ComplianceCheck]) -> Dict[str, Any]:
-        """Calculate overall compliance metrics."""
-        if not checks:
+        """Calculate overall compliance metrics."""        if not checks:
             return {"compliant": 0, "non_compliant": 0, "partially_compliant": 0, "overall_score": 0.0}
         
         compliant = len([c for c in checks if c.status == ComplianceStatus.COMPLIANT])
@@ -629,8 +605,7 @@ class ComplianceChecker:
         }
     
     async def _identify_critical_issues(self, checks: List[ComplianceCheck], requirements: List[ComplianceRequirement]) -> List[str]:
-        """Identify critical compliance issues."""
-        critical_issues = []
+        """Identify critical compliance issues."""        critical_issues = []
         
         for check in checks:
             if check.status == ComplianceStatus.NON_COMPLIANT:
@@ -641,8 +616,7 @@ class ComplianceChecker:
         return critical_issues
     
     async def _check_upcoming_deadlines(self, requirements: List[ComplianceRequirement]) -> List[Dict[str, Any]]:
-        """Check for upcoming compliance deadlines."""
-        upcoming = []
+        """Check for upcoming compliance deadlines."""        upcoming = []
         now = datetime.utcnow()
         
         for requirement in requirements:
@@ -660,8 +634,7 @@ class ComplianceChecker:
         return upcoming
     
     async def _generate_compliance_recommendations(self, checks: List[ComplianceCheck], critical_issues: List[str]) -> List[str]:
-        """Generate compliance recommendations."""
-        recommendations = set()
+        """Generate compliance recommendations."""        recommendations = set()
         
         for check in checks:
             if check.status != ComplianceStatus.COMPLIANT:
@@ -673,8 +646,7 @@ class ComplianceChecker:
         return list(recommendations)
     
     async def _cache_compliance_report(self, user_id: str, content_id: str, report: ComplianceReport):
-        """Cache compliance report."""
-        try:
+        """Cache compliance report."""        try:
             cache_key = f"compliance_report:{user_id}:{content_id}"
             await cache_manager.set(cache_key, report.__dict__, ttl=self.cache_ttl)
         except Exception as e:

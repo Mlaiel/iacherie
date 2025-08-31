@@ -1,12 +1,10 @@
-"""
-Core Content Protection Engine
+"""Core Content Protection Engine
 
 Central orchestrator for all content protection functionalities.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import hashlib
 import json
@@ -20,21 +18,18 @@ logger = logging.getLogger(__name__)
 
 
 def utc_now() -> datetime:
-    """Get current UTC datetime using the modern timezone-aware approach"""
-    return datetime.now(timezone.utc)
+    """Get current UTC datetime using the modern timezone-aware approach"""    return datetime.now(timezone.utc)
 
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
 
 
 class ContentType(Enum):
-    """Supported content types for protection"""
-    AUDIO = "audio"
+    """Supported content types for protection"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -43,8 +38,7 @@ class ContentType(Enum):
 
 @dataclass
 class ProtectionResult:
-    """Result of content protection operation"""
-    success: bool
+    """Result of content protection operation"""    success: bool
     protection_id: str
     protection_level: ProtectionLevel
     watermark_applied: bool
@@ -59,8 +53,7 @@ class ProtectionResult:
 
 @dataclass
 class ContentItem:
-    """Content item to be protected"""
-    content_id: str
+    """Content item to be protected"""    content_id: str
     creator_id: str
     content_type: ContentType
     file_path: Optional[str] = None
@@ -71,8 +64,7 @@ class ContentItem:
 
 
 class ContentProtector:
-    """
-    Advanced AI-powered content protection system
+    """    Advanced AI-powered content protection system
     
     Provides comprehensive protection including:
     - Digital watermarking
@@ -80,11 +72,9 @@ class ContentProtector:
     - Blockchain verification
     - Encryption and secure storage
     - Piracy detection and monitoring
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize content protector"""
-        self.config = config or {}
+        """Initialize content protector"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Protection components
@@ -108,8 +98,7 @@ class ContentProtector:
         }
     
     async def initialize(self) -> bool:
-        """Initialize all protection components"""
-        try:
+        """Initialize all protection components"""        try:
             self.logger.info("Initializing content protection system...")
             
             # Initialize protection engines
@@ -134,8 +123,7 @@ class ContentProtector:
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD,
         options: Optional[Dict[str, Any]] = None
     ) -> ProtectionResult:
-        """
-        Apply comprehensive protection to content
+        """        Apply comprehensive protection to content
         
         Args:
             content: Content item to protect
@@ -144,8 +132,7 @@ class ContentProtector:
             
         Returns:
             ProtectionResult with protection details
-        """
-        try:
+        """        try:
             self.logger.info(f"Protecting content {content.content_id} with level {protection_level.value}")
             
             # Generate protection ID
@@ -223,8 +210,7 @@ class ContentProtector:
             )
     
     async def verify_protection(self, protection_id: str) -> Dict[str, Any]:
-        """Verify the status and integrity of content protection"""
-        try:
+        """Verify the status and integrity of content protection"""        try:
             if protection_id in self._protection_cache:
                 result = self._protection_cache[protection_id]
                 
@@ -256,8 +242,7 @@ class ContentProtector:
             return {'valid': False, 'reason': str(e)}
     
     async def detect_unauthorized_use(self, content_id: str) -> Dict[str, Any]:
-        """Detect unauthorized use of protected content"""
-        try:
+        """Detect unauthorized use of protected content"""        try:
             if self._piracy_detector:
                 detections = await self._piracy_detector.scan_for_unauthorized_use(content_id)
                 
@@ -282,8 +267,7 @@ class ContentProtector:
             return {'error': str(e)}
     
     async def get_protection_analytics(self, creator_id: Optional[str] = None) -> Dict[str, Any]:
-        """Get analytics for content protection"""
-        try:
+        """Get analytics for content protection"""        try:
             analytics = {
                 'total_protections': self.metrics['protections_applied'],
                 'piracy_detections': self.metrics['piracy_detections'],
@@ -307,13 +291,11 @@ class ContentProtector:
     # Private helper methods
     
     def _generate_protection_id(self, content: ContentItem) -> str:
-        """Generate unique protection ID"""
-        data = f"{content.content_id}_{content.creator_id}_{utc_now().isoformat()}"
+        """Generate unique protection ID"""        data = f"{content.content_id}_{content.creator_id}_{utc_now().isoformat()}"
         return hashlib.sha256(data.encode()).hexdigest()[:16]
     
     async def _apply_fingerprinting(self, content: ContentItem, result: ProtectionResult):
-        """Apply content fingerprinting"""
-        try:
+        """Apply content fingerprinting"""        try:
             if self._fingerprinter:
                 fingerprint = await self._fingerprinter.create_fingerprint(content)
                 result.fingerprint_created = True
@@ -322,8 +304,7 @@ class ContentProtector:
             result.errors.append(f"Fingerprinting failed: {str(e)}")
     
     async def _apply_watermarking(self, content: ContentItem, result: ProtectionResult):
-        """Apply digital watermarking"""
-        try:
+        """Apply digital watermarking"""        try:
             if self._watermark_engine:
                 watermark = await self._watermark_engine.apply_watermark(content)
                 result.watermark_applied = True
@@ -332,8 +313,7 @@ class ContentProtector:
             result.errors.append(f"Watermarking failed: {str(e)}")
     
     async def _apply_blockchain_verification(self, content: ContentItem, result: ProtectionResult):
-        """Apply blockchain verification"""
-        try:
+        """Apply blockchain verification"""        try:
             if self._blockchain_verifier:
                 proof = await self._blockchain_verifier.register_ownership(content, result.protection_id)
                 result.blockchain_registered = True
@@ -342,8 +322,7 @@ class ContentProtector:
             result.errors.append(f"Blockchain verification failed: {str(e)}")
     
     async def _apply_encryption(self, content: ContentItem, result: ProtectionResult):
-        """Apply content encryption"""
-        try:
+        """Apply content encryption"""        try:
             if self._encryption_engine:
                 encryption_key = await self._encryption_engine.encrypt_content(content)
                 result.encryption_applied = True
@@ -352,8 +331,7 @@ class ContentProtector:
             result.errors.append(f"Encryption failed: {str(e)}")
     
     async def _register_with_rights_management(self, content: ContentItem, result: ProtectionResult):
-        """Register with rights management system"""
-        try:
+        """Register with rights management system"""        try:
             if self._rights_manager:
                 registration = await self._rights_manager.register_content(content, result.protection_id)
                 result.protection_metadata['rights_registration'] = registration
@@ -361,8 +339,7 @@ class ContentProtector:
             result.errors.append(f"Rights management registration failed: {str(e)}")
     
     async def _setup_advanced_monitoring(self, content: ContentItem, result: ProtectionResult):
-        """Setup advanced monitoring for enterprise protection"""
-        try:
+        """Setup advanced monitoring for enterprise protection"""        try:
             if self._piracy_detector:
                 monitoring = await self._piracy_detector.setup_monitoring(content.content_id)
                 result.protection_metadata['monitoring_setup'] = monitoring
@@ -370,8 +347,7 @@ class ContentProtector:
             result.errors.append(f"Advanced monitoring setup failed: {str(e)}")
     
     def _calculate_protection_strength(self, result: ProtectionResult) -> float:
-        """Calculate overall protection strength"""
-        strength = 0.0
+        """Calculate overall protection strength"""        strength = 0.0
         
         if result.fingerprint_created:
             strength += 0.2
@@ -385,8 +361,7 @@ class ContentProtector:
         return min(strength, 1.0)
     
     def _calculate_expiration(self, protection_level: ProtectionLevel) -> datetime:
-        """Calculate protection expiration based on level"""
-        days_map = {
+        """Calculate protection expiration based on level"""        days_map = {
             ProtectionLevel.BASIC: 30,
             ProtectionLevel.STANDARD: 90,
             ProtectionLevel.PREMIUM: 365,
@@ -397,8 +372,7 @@ class ContentProtector:
         return utc_now() + timedelta(days=days)
     
     async def _initiate_takedown(self, detection: Dict[str, Any]):
-        """Initiate DMCA takedown for serious violations"""
-        try:
+        """Initiate DMCA takedown for serious violations"""        try:
             if self._dmca_manager:
                 await self._dmca_manager.initiate_takedown(detection)
                 self.metrics['successful_takedowns'] += 1
@@ -408,8 +382,7 @@ class ContentProtector:
     # Component initialization methods
     
     async def _init_watermark_engine(self):
-        """Initialize watermark engine"""
-        try:
+        """Initialize watermark engine"""        try:
             from .watermarking import WatermarkEngine
             self._watermark_engine = WatermarkEngine(self.config.get('watermark', {}))
             await self._watermark_engine.initialize()
@@ -417,8 +390,7 @@ class ContentProtector:
             self.logger.warning("Watermark engine not available")
     
     async def _init_fingerprinter(self):
-        """Initialize content fingerprinter"""
-        try:
+        """Initialize content fingerprinter"""        try:
             from .fingerprinting import ContentFingerprinter
             self._fingerprinter = ContentFingerprinter(self.config.get('fingerprint', {}))
             await self._fingerprinter.initialize()
@@ -426,8 +398,7 @@ class ContentProtector:
             self.logger.warning("Content fingerprinter not available")
     
     async def _init_rights_manager(self):
-        """Initialize rights manager"""
-        try:
+        """Initialize rights manager"""        try:
             from .rights_management import RightsManager
             self._rights_manager = RightsManager(self.config.get('rights', {}))
             await self._rights_manager.initialize()
@@ -435,8 +406,7 @@ class ContentProtector:
             self.logger.warning("Rights manager not available")
     
     async def _init_dmca_manager(self):
-        """Initialize DMCA manager"""
-        try:
+        """Initialize DMCA manager"""        try:
             from .dmca import DMCAManager
             self._dmca_manager = DMCAManager(self.config.get('dmca', {}))
             await self._dmca_manager.initialize()
@@ -444,8 +414,7 @@ class ContentProtector:
             self.logger.warning("DMCA manager not available")
     
     async def _init_blockchain_verifier(self):
-        """Initialize blockchain verifier"""
-        try:
+        """Initialize blockchain verifier"""        try:
             from .blockchain import BlockchainVerifier
             self._blockchain_verifier = BlockchainVerifier(self.config.get('blockchain', {}))
             await self._blockchain_verifier.initialize()
@@ -453,8 +422,7 @@ class ContentProtector:
             self.logger.warning("Blockchain verifier not available")
     
     async def _init_piracy_detector(self):
-        """Initialize piracy detector"""
-        try:
+        """Initialize piracy detector"""        try:
             from .detection import PiracyDetector
             self._piracy_detector = PiracyDetector(self.config.get('detection', {}))
             await self._piracy_detector.initialize()
@@ -462,8 +430,7 @@ class ContentProtector:
             self.logger.warning("Piracy detector not available")
     
     async def _init_encryption_engine(self):
-        """Initialize encryption engine"""
-        try:
+        """Initialize encryption engine"""        try:
             from .encryption import ContentEncryption
             self._encryption_engine = ContentEncryption(self.config.get('encryption', {}))
             await self._encryption_engine.initialize()

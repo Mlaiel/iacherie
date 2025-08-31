@@ -1,5 +1,4 @@
-"""
-Marketing Templates - Professional marketing content templates
+"""Marketing Templates - Professional marketing content templates
 
 Comprehensive template system for creating high-converting marketing content
 across different channels and campaign types.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime
@@ -18,8 +16,7 @@ import random
 
 
 class MarketingTemplates:
-    """
-    Professional marketing template collection providing:
+    """    Professional marketing template collection providing:
     
     - Email marketing campaigns
     - Sales page templates
@@ -29,11 +26,9 @@ class MarketingTemplates:
     - Lead magnet templates
     - Newsletter templates
     - Conversion-optimized structures
-    """
-    
+    """    
     def __init__(self):
-        """Initialize marketing templates"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize marketing templates"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Email Marketing Templates
         self.email_templates = {
@@ -465,8 +460,7 @@ Final URL: {final_url}""",
         template_type: str,
         content_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Get marketing template for specific category and type.
+        """        Get marketing template for specific category and type.
         
         Args:
             template_category: Category (email, sales, landing, ad, launch)
@@ -475,8 +469,7 @@ Final URL: {final_url}""",
             
         Returns:
             Template structure and metadata
-        """
-        try:
+        """        try:
             category_templates = getattr(self, f"{template_category}_templates", {})
             template = category_templates.get(template_type, {})
             
@@ -496,8 +489,7 @@ Final URL: {final_url}""",
         template_type: str,
         content_data: Dict[str, Any]
     ) -> str:
-        """
-        Fill marketing template with content data.
+        """        Fill marketing template with content data.
         
         Args:
             template_category: Template category
@@ -506,8 +498,7 @@ Final URL: {final_url}""",
             
         Returns:
             Complete marketing content
-        """
-        try:
+        """        try:
             template = self.get_template(template_category, template_type, content_data)
             
             if not template:
@@ -533,8 +524,7 @@ Final URL: {final_url}""",
         content_data: Dict[str, Any], 
         template: Dict[str, Any]
     ) -> str:
-        """Fill placeholders in marketing template"""
-        filled = structure
+        """Fill placeholders in marketing template"""        filled = structure
         
         # Fill direct data mappings
         for key, value in content_data.items():
@@ -552,8 +542,7 @@ Final URL: {final_url}""",
         return filled
     
     def _fill_marketing_hooks(self, content: str, template: Dict[str, Any], content_data: Dict[str, Any]) -> str:
-        """Fill marketing hook placeholders"""
-        # Fill welcome messages
+        """Fill marketing hook placeholders"""        # Fill welcome messages
         if '{personal_welcome}' in content:
             welcomes = template.get('welcomes', ['Welcome to our community!'])
             selected_welcome = random.choice(welcomes)
@@ -579,8 +568,7 @@ Final URL: {final_url}""",
         return content
     
     def _fill_benefits_lists(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill benefits and features lists"""
-        # Fill benefits list
+        """Fill benefits and features lists"""        # Fill benefits list
         if '{benefits_list}' in content:
             benefits = content_data.get('benefits', [])
             if benefits:
@@ -607,8 +595,7 @@ Final URL: {final_url}""",
         return content
     
     def _fill_social_proof(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill social proof elements"""
-        # Fill testimonials
+        """Fill social proof elements"""        # Fill testimonials
         if '{testimonials}' in content:
             testimonials = content_data.get('testimonials', [])
             if testimonials:
@@ -637,8 +624,7 @@ Final URL: {final_url}""",
         return content
     
     def _fill_urgency_elements(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill urgency and scarcity elements"""
-        # Fill urgency element
+        """Fill urgency and scarcity elements"""        # Fill urgency element
         if '{urgency_element}' in content:
             urgency_triggers = self.conversion_elements['urgency_triggers']
             selected_urgency = random.choice(urgency_triggers)
@@ -659,14 +645,12 @@ Final URL: {final_url}""",
 
 {content_data.get('urgency_reason', 'This special pricing won\'t last long.')}
 
-{content_data.get('consequence', 'Don\'t miss your chance to save.')}"""
-            content = content.replace('{urgency_section}', urgency_section)
+{content_data.get('consequence', 'Don\'t miss your chance to save.')}"""            content = content.replace('{urgency_section}', urgency_section)
         
         return content
     
     def _fill_ctas(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill call-to-action elements"""
-        # Fill main CTA
+        """Fill call-to-action elements"""        # Fill main CTA
         if '{call_to_action}' in content:
             cta_text = content_data.get('cta_text', 'Get Started Now')
             cta_url = content_data.get('cta_url', '#')
@@ -687,8 +671,7 @@ Final URL: {final_url}""",
         return content
     
     def _apply_conversion_optimizations(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Apply conversion rate optimization techniques"""
-        # Add guarantee if not present
+        """Apply conversion rate optimization techniques"""        # Add guarantee if not present
         if '{guarantee}' in content:
             guarantee_text = content_data.get('guarantee', '30-day money-back guarantee')
             guarantee = f"🛡️ **{guarantee_text}** - Risk-free purchase!"
@@ -700,8 +683,7 @@ Final URL: {final_url}""",
             original_price = content_data.get('original_price', '$197')
             pricing = f"""### Special Launch Price: ~~{original_price}~~ **{price}**
 
-Save {int(original_price.replace('$', '')) - int(price.replace('$', ''))}$ today only!"""
-            content = content.replace('{pricing_section}', pricing)
+Save {int(original_price.replace('$', '')) - int(price.replace('$', ''))}$ today only!"""            content = content.replace('{pricing_section}', pricing)
         
         # Add FAQ section
         if '{faq_section}' in content:
@@ -719,8 +701,7 @@ Save {int(original_price.replace('$', '')) - int(price.replace('$', ''))}$ today
         return content
     
     def _get_default_marketing_template(self, category: str) -> Dict[str, Any]:
-        """Get default template for marketing category"""
-        default_templates = {
+        """Get default template for marketing category"""        default_templates = {
             'email': {
                 'structure': """Subject: {subject}
 
@@ -769,8 +750,7 @@ Best regards,
         })
     
     def _create_basic_marketing_content(self, content_data: Dict[str, Any]) -> str:
-        """Create basic marketing content when template fails"""
-        headline = content_data.get('headline', content_data.get('title', 'Amazing Offer'))
+        """Create basic marketing content when template fails"""        headline = content_data.get('headline', content_data.get('title', 'Amazing Offer'))
         content = content_data.get('content', content_data.get('message', 'Great value inside!'))
         cta = content_data.get('cta_text', 'Get Started Now')
         
@@ -784,11 +764,9 @@ Best regards,
 
 ---
 
-*Questions? Just reach out - we're here to help!*"""
-    
+*Questions? Just reach out - we're here to help!*"""    
     def optimize_for_conversion(self, content: str, optimization_type: str = 'general') -> str:
-        """Apply conversion rate optimization to marketing content"""
-        optimizations = {
+        """Apply conversion rate optimization to marketing content"""        optimizations = {
             'urgency': [
                 'Limited time offer',
                 'Only available today',
@@ -818,8 +796,7 @@ Best regards,
         return content
     
     def generate_subject_lines(self, content_type: str, data: Dict[str, Any]) -> List[str]:
-        """Generate email subject line variations"""
-        subject_formulas = {
+        """Generate email subject line variations"""        subject_formulas = {
             'sales': [
                 "{benefit} in just {timeframe}",
                 "Your {desired_outcome} is waiting",
@@ -853,8 +830,7 @@ Best regards,
         return subject_lines
     
     def A_B_test_variations(self, content: str, variation_type: str) -> Dict[str, str]:
-        """Generate A/B test variations of marketing content"""
-        variations = {}
+        """Generate A/B test variations of marketing content"""        variations = {}
         
         if variation_type == 'headline':
             # Extract current headline
@@ -892,8 +868,7 @@ Best regards,
 
 
 class CampaignTemplate:
-    """Marketing campaign template for structured campaigns"""
-    
+    """Marketing campaign template for structured campaigns"""    
     def __init__(self, **kwargs):
         self.campaign_type = kwargs.get('campaign_type', 'email')
         self.title = kwargs.get('title', '')
@@ -906,14 +881,12 @@ class CampaignTemplate:
         self.kpis = kwargs.get('kpis', [])
     
     def render(self, data: Dict[str, Any]) -> str:
-        """Render campaign template with data"""
-        title = data.get('title', self.title)
+        """Render campaign template with data"""        title = data.get('title', self.title)
         description = data.get('description', self.description)
         return f"# {title}\n\n{description}"
     
     def get_structure(self) -> Dict[str, Any]:
-        """Get campaign template structure"""
-        return {
+        """Get campaign template structure"""        return {
             'campaign_type': self.campaign_type,
             'title': self.title,
             'description': self.description,
@@ -927,8 +900,7 @@ class CampaignTemplate:
 
 
 class CampaignType:
-    """Campaign type enumeration"""
-    EMAIL = "email"
+    """Campaign type enumeration"""    EMAIL = "email"
     SOCIAL_MEDIA = "social_media"
     CONTENT = "content"
     PAID_ADS = "paid_ads"

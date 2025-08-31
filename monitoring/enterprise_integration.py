@@ -1,5 +1,4 @@
-"""
-Enterprise Integration and Analytics Service
+"""Enterprise Integration and Analytics Service
 ===========================================
 
 Advanced enterprise monitoring and integration for production environments.
@@ -14,7 +13,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import json
@@ -31,8 +29,7 @@ import ssl
 
 
 class IntegrationType(Enum):
-    """Types of enterprise integrations"""
-    SLACK = "slack"
+    """Types of enterprise integrations"""    SLACK = "slack"
     TEAMS = "teams"
     JIRA = "jira"
     DATADOG = "datadog"
@@ -46,8 +43,7 @@ class IntegrationType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels for enterprise systems"""
-    CRITICAL = "critical"
+    """Alert severity levels for enterprise systems"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -56,8 +52,7 @@ class AlertSeverity(Enum):
 
 @dataclass
 class EnterpriseAlert:
-    """Enterprise alert structure"""
-    alert_id: str
+    """Enterprise alert structure"""    alert_id: str
     title: str
     description: str
     severity: AlertSeverity
@@ -71,8 +66,7 @@ class EnterpriseAlert:
 
 @dataclass
 class IntegrationConfig:
-    """Configuration for enterprise integrations"""
-    integration_type: IntegrationType
+    """Configuration for enterprise integrations"""    integration_type: IntegrationType
     enabled: bool
     credentials: Dict[str, str]
     endpoints: Dict[str, str]
@@ -80,8 +74,7 @@ class IntegrationConfig:
 
 
 class BaseEnterpriseIntegration:
-    """Base class for enterprise integrations"""
-    
+    """Base class for enterprise integrations"""    
     def __init__(self, config: IntegrationConfig):
         self.config = config
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -96,13 +89,11 @@ class BaseEnterpriseIntegration:
             await self.session.close()
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
-        """Send alert to enterprise system"""
-        self.logger.warning(f"Base implementation called for {self.__class__.__name__}")
+        """Send alert to enterprise system"""        self.logger.warning(f"Base implementation called for {self.__class__.__name__}")
         return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get metrics from enterprise system"""
-        return {
+        """Get metrics from enterprise system"""        return {
             "integration_type": "base",
             "connection_status": False,
             "last_alert_sent": None,
@@ -111,17 +102,14 @@ class BaseEnterpriseIntegration:
         }
     
     async def test_connection(self) -> bool:
-        """Test connection to enterprise system"""
-        self.logger.info(f"Testing connection for {self.__class__.__name__}")
+        """Test connection to enterprise system"""        self.logger.info(f"Testing connection for {self.__class__.__name__}")
         return False
 
 
 class SlackIntegration(BaseEnterpriseIntegration):
-    """Slack integration for alerts and notifications"""
-    
+    """Slack integration for alerts and notifications"""    
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
-        """Send alert to Slack"""
-        try:
+        """Send alert to Slack"""        try:
             webhook_url = self.config.endpoints.get("webhook_url")
             if not webhook_url:
                 self.logger.error("Slack webhook URL not configured")
@@ -173,8 +161,7 @@ class SlackIntegration(BaseEnterpriseIntegration):
             return False
     
     async def test_connection(self) -> bool:
-        """Test Slack connection"""
-        try:
+        """Test Slack connection"""        try:
             webhook_url = self.config.endpoints.get("webhook_url")
             if not webhook_url:
                 return False
@@ -191,8 +178,7 @@ class SlackIntegration(BaseEnterpriseIntegration):
             return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get Slack integration metrics"""
-        return {
+        """Get Slack integration metrics"""        return {
             "integration_type": "slack",
             "last_alert_sent": getattr(self, "_last_alert_sent", None),
             "total_alerts_sent": getattr(self, "_total_alerts_sent", 0),
@@ -201,11 +187,9 @@ class SlackIntegration(BaseEnterpriseIntegration):
 
 
 class DatadogIntegration(BaseEnterpriseIntegration):
-    """Datadog integration for metrics and alerts"""
-    
+    """Datadog integration for metrics and alerts"""    
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
-        """Send alert to Datadog as event"""
-        try:
+        """Send alert to Datadog as event"""        try:
             api_key = self.config.credentials.get("api_key")
             if not api_key:
                 self.logger.error("Datadog API key not configured")
@@ -246,8 +230,7 @@ class DatadogIntegration(BaseEnterpriseIntegration):
             return False
     
     async def send_metrics(self, metrics: Dict[str, Any]) -> bool:
-        """Send custom metrics to Datadog"""
-        try:
+        """Send custom metrics to Datadog"""        try:
             api_key = self.config.credentials.get("api_key")
             if not api_key:
                 return False
@@ -282,8 +265,7 @@ class DatadogIntegration(BaseEnterpriseIntegration):
             return False
     
     async def test_connection(self) -> bool:
-        """Test Datadog connection"""
-        try:
+        """Test Datadog connection"""        try:
             api_key = self.config.credentials.get("api_key")
             if not api_key:
                 return False
@@ -300,8 +282,7 @@ class DatadogIntegration(BaseEnterpriseIntegration):
             return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get Datadog integration metrics"""
-        return {
+        """Get Datadog integration metrics"""        return {
             "integration_type": "datadog",
             "connection_status": await self.test_connection(),
             "last_metric_sent": getattr(self, "_last_metric_sent", None),
@@ -310,11 +291,9 @@ class DatadogIntegration(BaseEnterpriseIntegration):
 
 
 class PagerDutyIntegration(BaseEnterpriseIntegration):
-    """PagerDuty integration for incident management"""
-    
+    """PagerDuty integration for incident management"""    
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
-        """Send alert to PagerDuty as incident"""
-        try:
+        """Send alert to PagerDuty as incident"""        try:
             integration_key = self.config.credentials.get("integration_key")
             if not integration_key:
                 self.logger.error("PagerDuty integration key not configured")
@@ -350,8 +329,7 @@ class PagerDutyIntegration(BaseEnterpriseIntegration):
             return False
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Resolve alert in PagerDuty"""
-        try:
+        """Resolve alert in PagerDuty"""        try:
             integration_key = self.config.credentials.get("integration_key")
             if not integration_key:
                 return False
@@ -372,8 +350,7 @@ class PagerDutyIntegration(BaseEnterpriseIntegration):
             return False
     
     async def test_connection(self) -> bool:
-        """Test PagerDuty connection"""
-        try:
+        """Test PagerDuty connection"""        try:
             integration_key = self.config.credentials.get("integration_key")
             if not integration_key:
                 return False
@@ -411,8 +388,7 @@ class PagerDutyIntegration(BaseEnterpriseIntegration):
             return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get PagerDuty integration metrics"""
-        return {
+        """Get PagerDuty integration metrics"""        return {
             "integration_type": "pagerduty",
             "connection_status": await self.test_connection(),
             "last_incident_created": getattr(self, "_last_incident_created", None),
@@ -421,16 +397,14 @@ class PagerDutyIntegration(BaseEnterpriseIntegration):
 
 
 class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
-    """AWS CloudWatch integration for metrics and alarms"""
-    
+    """AWS CloudWatch integration for metrics and alarms"""    
     def __init__(self, config: IntegrationConfig):
         super().__init__(config)
         self.cloudwatch_client = None
         self._initialize_aws_client()
     
     def _initialize_aws_client(self):
-        """Initialize AWS CloudWatch client"""
-        try:
+        """Initialize AWS CloudWatch client"""        try:
             aws_access_key = self.config.credentials.get("aws_access_key_id")
             aws_secret_key = self.config.credentials.get("aws_secret_access_key")
             region = self.config.settings.get("region", "us-east-1")
@@ -450,8 +424,7 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
             self.logger.error(f"Error initializing AWS CloudWatch client: {e}")
     
     async def send_metrics(self, metrics: Dict[str, Any]) -> bool:
-        """Send custom metrics to CloudWatch"""
-        try:
+        """Send custom metrics to CloudWatch"""        try:
             if not self.cloudwatch_client:
                 return False
             
@@ -490,8 +463,7 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
             return False
     
     async def create_alarm(self, alarm_config: Dict[str, Any]) -> bool:
-        """Create CloudWatch alarm"""
-        try:
+        """Create CloudWatch alarm"""        try:
             if not self.cloudwatch_client:
                 return False
             
@@ -503,8 +475,7 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
             return False
     
     async def test_connection(self) -> bool:
-        """Test AWS CloudWatch connection"""
-        try:
+        """Test AWS CloudWatch connection"""        try:
             if not self.cloudwatch_client:
                 return False
             
@@ -517,16 +488,14 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
             return False
     
     async def send_alert(self, alert: EnterpriseAlert) -> bool:
-        """Send alert as CloudWatch custom metric"""
-        metrics = {
+        """Send alert as CloudWatch custom metric"""        metrics = {
             f"Alert_{alert.severity.value}": 1,
             "TotalAlerts": 1
         }
         return await self.send_metrics(metrics)
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get CloudWatch integration metrics"""
-        return {
+        """Get CloudWatch integration metrics"""        return {
             "integration_type": "aws_cloudwatch",
             "connection_status": await self.test_connection(),
             "namespace": self.config.settings.get("namespace", "AIInfluencer/Platform"),
@@ -535,13 +504,11 @@ class AWSCloudWatchIntegration(BaseEnterpriseIntegration):
 
 
 class EnterpriseIntegrationManager:
-    """
-    Central manager for enterprise integrations
+    """    Central manager for enterprise integrations
     
     Coordinates multiple enterprise integrations and provides
     unified interface for alerts, metrics, and monitoring.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -559,8 +526,7 @@ class EnterpriseIntegrationManager:
         }
     
     async def add_integration(self, integration_config: IntegrationConfig) -> bool:
-        """Add enterprise integration"""
-        try:
+        """Add enterprise integration"""        try:
             integration_class_map = {
                 IntegrationType.SLACK: SlackIntegration,
                 IntegrationType.DATADOG: DatadogIntegration,
@@ -592,8 +558,7 @@ class EnterpriseIntegrationManager:
             return False
     
     async def send_alert_to_all(self, alert: EnterpriseAlert) -> Dict[IntegrationType, bool]:
-        """Send alert to all configured integrations"""
-        results = {}
+        """Send alert to all configured integrations"""        results = {}
         
         for integration_type, integration in self.integrations.items():
             try:
@@ -617,8 +582,7 @@ class EnterpriseIntegrationManager:
         return results
     
     async def send_metrics_to_all(self, metrics: Dict[str, Any]) -> Dict[IntegrationType, bool]:
-        """Send metrics to all configured integrations that support metrics"""
-        results = {}
+        """Send metrics to all configured integrations that support metrics"""        results = {}
         
         for integration_type, integration in self.integrations.items():
             # Only send to integrations that support metrics
@@ -641,8 +605,7 @@ class EnterpriseIntegrationManager:
         return results
     
     async def resolve_alert(self, alert_id: str) -> Dict[IntegrationType, bool]:
-        """Resolve alert in all integrations"""
-        results = {}
+        """Resolve alert in all integrations"""        results = {}
         
         if alert_id in self.active_alerts:
             alert = self.active_alerts[alert_id]
@@ -663,8 +626,7 @@ class EnterpriseIntegrationManager:
         return results
     
     async def test_all_connections(self) -> Dict[IntegrationType, bool]:
-        """Test all integration connections"""
-        results = {}
+        """Test all integration connections"""        results = {}
         
         for integration_type, integration in self.integrations.items():
             try:
@@ -679,8 +641,7 @@ class EnterpriseIntegrationManager:
         return results
     
     async def get_integration_status(self) -> Dict[str, Any]:
-        """Get status of all integrations"""
-        status = {
+        """Get status of all integrations"""        status = {
             "total_integrations": len(self.integrations),
             "active_integrations": [],
             "connection_status": {},
@@ -705,8 +666,7 @@ class EnterpriseIntegrationManager:
         source: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """Create and send governance alert to all integrations"""
-        alert = EnterpriseAlert(
+        """Create and send governance alert to all integrations"""        alert = EnterpriseAlert(
             alert_id=f"gov_{datetime.utcnow().timestamp()}",
             title=title,
             description=description,
@@ -726,16 +686,14 @@ class EnterpriseIntegrationManager:
 
 # Factory function for easy integration setup
 async def create_enterprise_integrations(integrations_config: List[Dict[str, Any]]) -> EnterpriseIntegrationManager:
-    """
-    Factory function to create enterprise integration manager with multiple integrations
+    """    Factory function to create enterprise integration manager with multiple integrations
     
     Args:
         integrations_config: List of integration configurations
         
     Returns:
         EnterpriseIntegrationManager: Configured integration manager
-    """
-    manager = EnterpriseIntegrationManager()
+    """    manager = EnterpriseIntegrationManager()
     
     for config_dict in integrations_config:
         try:

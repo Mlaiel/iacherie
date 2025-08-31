@@ -1,5 +1,4 @@
-"""
-Metrics Collector for Load Balancer
+"""Metrics Collector for Load Balancer
 
 Advanced metrics collection and monitoring system for the IA Influencer
 Agent platform's load balancer services, providing real-time analytics,
@@ -13,7 +12,6 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
-
 import time
 import asyncio
 import logging
@@ -48,16 +46,14 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Metric types"""
-    COUNTER = "counter"
+    """Metric types"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
 
 
 class MetricScope(Enum):
-    """Metric scope"""
-    GLOBAL = "global"
+    """Metric scope"""    GLOBAL = "global"
     PER_SERVICE = "per_service"
     PER_ENDPOINT = "per_endpoint"
     PER_SERVER = "per_server"
@@ -66,8 +62,7 @@ class MetricScope(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition"""
-    name: str
+    """Metric definition"""    name: str
     type: MetricType
     scope: MetricScope
     description: str
@@ -79,8 +74,7 @@ class MetricDefinition:
 
 @dataclass
 class MetricData:
-    """Metric data point"""
-    name: str
+    """Metric data point"""    name: str
     value: Union[int, float]
     labels: Dict[str, str] = field(default_factory=dict)
     timestamp: datetime = field(default_factory=datetime.now)
@@ -89,8 +83,7 @@ class MetricData:
 
 @dataclass
 class LoadBalancerMetrics:
-    """Load balancer performance metrics"""
-    requests_per_second: float = 0.0
+    """Load balancer performance metrics"""    requests_per_second: float = 0.0
     response_time_avg: float = 0.0
     response_time_p50: float = 0.0
     response_time_p95: float = 0.0
@@ -105,8 +98,7 @@ class LoadBalancerMetrics:
 
 
 class MetricsBuffer:
-    """Buffered metrics storage for batch processing"""
-    
+    """Buffered metrics storage for batch processing"""    
     def __init__(self, max_size: int = 10000, flush_interval: int = 30):
         self.max_size = max_size
         self.flush_interval = flush_interval
@@ -116,12 +108,10 @@ class MetricsBuffer:
         self.flush_callbacks: List[Callable] = []
     
     def add_callback(self, callback: Callable[[List[MetricData]], None]) -> None:
-        """Add flush callback"""
-        self.flush_callbacks.append(callback)
+        """Add flush callback"""        self.flush_callbacks.append(callback)
     
     def add_metric(self, metric: MetricData) -> None:
-        """Add metric to buffer"""
-        with self.lock:
+        """Add metric to buffer"""        with self.lock:
             self.buffer.append(metric)
             
             # Check if we need to flush
@@ -130,8 +120,7 @@ class MetricsBuffer:
                 self._flush()
     
     def _flush(self) -> None:
-        """Flush buffer to callbacks"""
-        if not self.buffer:
+        """Flush buffer to callbacks"""        if not self.buffer:
             return
         
         metrics_to_flush = list(self.buffer)
@@ -146,14 +135,12 @@ class MetricsBuffer:
                 logger.error(f"Metrics flush callback failed: {e}")
     
     def force_flush(self) -> None:
-        """Force flush buffer"""
-        with self.lock:
+        """Force flush buffer"""        with self.lock:
             self._flush()
 
 
 class PrometheusExporter:
-    """Prometheus metrics exporter"""
-    
+    """Prometheus metrics exporter"""    
     def __init__(self, registry: Optional[CollectorRegistry] = None):
         if not PROMETHEUS_AVAILABLE:
             raise ImportError("Prometheus client not available")
@@ -163,8 +150,7 @@ class PrometheusExporter:
         self.lock = threading.Lock()
     
     def register_metric(self, definition: MetricDefinition) -> None:
-        """Register metric with Prometheus"""
-        with self.lock:
+        """Register metric with Prometheus"""        with self.lock:
             if definition.name in self.metrics:
                 return
             
@@ -208,8 +194,7 @@ class PrometheusExporter:
                 logger.error(f"Failed to register Prometheus metric {definition.name}: {e}")
     
     def update_metric(self, metric_data: MetricData) -> None:
-        """Update Prometheus metric"""
-        with self.lock:
+        """Update Prometheus metric"""        with self.lock:
             if metric_data.name not in self.metrics:
                 logger.warning(f"Prometheus metric {metric_data.name} not registered")
                 return
@@ -237,8 +222,7 @@ class PrometheusExporter:
                 logger.error(f"Failed to update Prometheus metric {metric_data.name}: {e}")
     
     def get_metrics_text(self) -> str:
-        """Get metrics in Prometheus text format"""
-        try:
+        """Get metrics in Prometheus text format"""        try:
             return generate_latest(self.registry).decode('utf-8')
         except Exception as e:
             logger.error(f"Failed to generate Prometheus metrics: {e}")
@@ -246,8 +230,7 @@ class PrometheusExporter:
 
 
 class InfluxDBExporter:
-    """InfluxDB metrics exporter"""
-    
+    """InfluxDB metrics exporter"""    
     def __init__(self, url: str, token: str, org: str, bucket: str):
         if not INFLUXDB_AVAILABLE:
             raise ImportError("InfluxDB client not available")
@@ -258,8 +241,7 @@ class InfluxDBExporter:
         self.org = org
     
     def write_metrics(self, metrics: List[MetricData]) -> None:
-        """Write metrics to InfluxDB"""
-        try:
+        """Write metrics to InfluxDB"""        try:
             points = []
             for metric in metrics:
                 point = Point(metric.name) \
@@ -282,14 +264,12 @@ class InfluxDBExporter:
             logger.error(f"Failed to write metrics to InfluxDB: {e}")
     
     def close(self) -> None:
-        """Close InfluxDB client"""
-        if self.client:
+        """Close InfluxDB client"""        if self.client:
             self.client.close()
 
 
 class SystemMetricsCollector:
-    """System metrics collector using psutil"""
-    
+    """System metrics collector using psutil"""    
     def __init__(self):
         self.last_network_io = None
         self.last_disk_io = None
@@ -297,8 +277,7 @@ class SystemMetricsCollector:
         self.last_measurement_time = None
     
     def collect_system_metrics(self) -> Dict[str, float]:
-        """Collect system metrics"""
-        try:
+        """Collect system metrics"""        try:
             current_time = time.time()
             metrics = {}
             
@@ -411,21 +390,18 @@ class SystemMetricsCollector:
 
 
 class ResponseTimeTracker:
-    """Track response times with percentile calculations"""
-    
+    """Track response times with percentile calculations"""    
     def __init__(self, window_size: int = 1000):
         self.window_size = window_size
         self.response_times = deque(maxlen=window_size)
         self.lock = threading.Lock()
     
     def add_response_time(self, response_time: float) -> None:
-        """Add response time measurement"""
-        with self.lock:
+        """Add response time measurement"""        with self.lock:
             self.response_times.append(response_time)
     
     def get_statistics(self) -> Dict[str, float]:
-        """Get response time statistics"""
-        with self.lock:
+        """Get response time statistics"""        with self.lock:
             if not self.response_times:
                 return {
                     'avg': 0.0,
@@ -454,8 +430,7 @@ class ResponseTimeTracker:
 
 
 class MetricsCollector:
-    """Enterprise Metrics Collector for Load Balancer"""
-    
+    """Enterprise Metrics Collector for Load Balancer"""    
     def __init__(self, 
                  prometheus_enabled: bool = True,
                  influxdb_config: Optional[Dict[str, str]] = None,
@@ -497,8 +472,7 @@ class MetricsCollector:
                 logger.error(f"Failed to initialize InfluxDB exporter: {e}")
     
     def register_metric(self, definition: MetricDefinition) -> bool:
-        """Register metric definition"""
-        try:
+        """Register metric definition"""        try:
             with self.lock:
                 self.metric_definitions[definition.name] = definition
                 
@@ -514,8 +488,7 @@ class MetricsCollector:
             return False
     
     def record_metric(self, name: str, value: Union[int, float], labels: Dict[str, str] = None) -> None:
-        """Record metric value"""
-        try:
+        """Record metric value"""        try:
             labels = labels or {}
             metric_data = MetricData(
                 name=name,
@@ -539,8 +512,7 @@ class MetricsCollector:
                       bytes_received: int = 0,
                       client_ip: str = "",
                       user_id: str = "") -> None:
-        """Record HTTP request metrics"""
-        try:
+        """Record HTTP request metrics"""        try:
             # Basic labels
             labels = {
                 'service': service,
@@ -585,8 +557,7 @@ class MetricsCollector:
             logger.error(f"Failed to record request metrics: {e}")
     
     def record_connection_event(self, service: str, event_type: str, client_ip: str = "") -> None:
-        """Record connection events (open/close)"""
-        try:
+        """Record connection events (open/close)"""        try:
             labels = {
                 'service': service,
                 'event_type': event_type
@@ -615,8 +586,7 @@ class MetricsCollector:
                                    response_time: float,
                                    error_count: int,
                                    active_connections: int) -> None:
-        """Record load balancer specific metrics"""
-        try:
+        """Record load balancer specific metrics"""        try:
             labels = {'server_id': server_id}
             
             self.record_metric('lb_server_requests_total', requests_count, labels)
@@ -633,16 +603,14 @@ class MetricsCollector:
             logger.error(f"Failed to record load balancer metrics: {e}")
     
     def _update_prometheus_metrics(self, metrics: List[MetricData]) -> None:
-        """Update Prometheus metrics from buffer"""
-        if not self.prometheus_exporter:
+        """Update Prometheus metrics from buffer"""        if not self.prometheus_exporter:
             return
         
         for metric in metrics:
             self.prometheus_exporter.update_metric(metric)
     
     async def _collect_system_metrics(self) -> None:
-        """Collect system metrics periodically"""
-        while self.running:
+        """Collect system metrics periodically"""        while self.running:
             try:
                 # Collect system metrics
                 system_metrics = self.system_collector.collect_system_metrics()
@@ -679,8 +647,7 @@ class MetricsCollector:
                 await asyncio.sleep(5)  # Wait before retrying
     
     async def start_collection(self) -> None:
-        """Start metrics collection"""
-        if self.running:
+        """Start metrics collection"""        if self.running:
             logger.warning("Metrics collection already running")
             return
         
@@ -689,8 +656,7 @@ class MetricsCollector:
         logger.info("Metrics collection started")
     
     async def stop_collection(self) -> None:
-        """Stop metrics collection"""
-        if not self.running:
+        """Stop metrics collection"""        if not self.running:
             logger.warning("Metrics collection not running")
             return
         
@@ -709,8 +675,7 @@ class MetricsCollector:
         logger.info("Metrics collection stopped")
     
     def configure_platform_metrics(self) -> bool:
-        """Configure metrics for platform services"""
-        try:
+        """Configure metrics for platform services"""        try:
             metric_definitions = [
                 # HTTP request metrics
                 MetricDefinition(
@@ -907,14 +872,12 @@ class MetricsCollector:
             return False
     
     def get_prometheus_metrics(self) -> str:
-        """Get metrics in Prometheus format"""
-        if self.prometheus_exporter:
+        """Get metrics in Prometheus format"""        if self.prometheus_exporter:
             return self.prometheus_exporter.get_metrics_text()
         return "# Prometheus metrics not available\n"
     
     def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get metrics summary"""
-        with self.lock:
+        """Get metrics summary"""        with self.lock:
             summary = {
                 "registered_metrics": len(self.metric_definitions),
                 "active_response_trackers": len(self.response_trackers),
@@ -936,8 +899,7 @@ class MetricsCollector:
             return summary
     
     def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if self.influxdb_exporter:
                 self.influxdb_exporter.close()
         except Exception as e:

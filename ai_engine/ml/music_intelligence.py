@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Music Intelligence Module for IA-Influencer-Agent
+"""Music Intelligence Module for IA-Influencer-Agent
 =================================================
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -19,7 +18,6 @@ Features:
 - Comprehensive style analysis
 - Professional music insights
 """
-
 import logging
 import numpy as np
 import torch
@@ -57,8 +55,7 @@ except ImportError:
 
 
 class MusicGenre(Enum):
-    """Music genres for classification"""
-    CLASSICAL = "classical"
+    """Music genres for classification"""    CLASSICAL = "classical"
     JAZZ = "jazz"
     ROCK = "rock"
     POP = "pop"
@@ -76,8 +73,7 @@ class MusicGenre(Enum):
 
 
 class MusicKey(Enum):
-    """Musical keys"""
-    C_MAJOR = "C major"
+    """Musical keys"""    C_MAJOR = "C major"
     C_MINOR = "C minor"
     C_SHARP_MAJOR = "C# major"
     C_SHARP_MINOR = "C# minor"
@@ -104,8 +100,7 @@ class MusicKey(Enum):
 
 
 class TimeSignature(Enum):
-    """Time signatures"""
-    FOUR_FOUR = "4/4"
+    """Time signatures"""    FOUR_FOUR = "4/4"
     THREE_FOUR = "3/4"
     TWO_FOUR = "2/4"
     SIX_EIGHT = "6/8"
@@ -116,8 +111,7 @@ class TimeSignature(Enum):
 
 
 class ChordType(Enum):
-    """Chord types"""
-    MAJOR = "major"
+    """Chord types"""    MAJOR = "major"
     MINOR = "minor"
     DIMINISHED = "diminished"
     AUGMENTED = "augmented"
@@ -132,8 +126,7 @@ class ChordType(Enum):
 
 @dataclass
 class MusicStyleResult:
-    """Result from music style analysis"""
-    genre: MusicGenre
+    """Result from music style analysis"""    genre: MusicGenre
     confidence: float
     characteristics: Dict[str, float]
     sub_genres: List[Dict[str, float]]
@@ -143,8 +136,7 @@ class MusicStyleResult:
 
 @dataclass
 class BeatAnalysisResult:
-    """Result from beat detection and analysis"""
-    tempo: float
+    """Result from beat detection and analysis"""    tempo: float
     beats: np.ndarray
     time_signature: TimeSignature
     downbeats: np.ndarray
@@ -156,8 +148,7 @@ class BeatAnalysisResult:
 
 @dataclass
 class HarmonyAnalysisResult:
-    """Result from harmony analysis"""
-    key: MusicKey
+    """Result from harmony analysis"""    key: MusicKey
     key_confidence: float
     chord_progression: List[Dict[str, Any]]
     harmonic_complexity: float
@@ -168,8 +159,7 @@ class HarmonyAnalysisResult:
 
 @dataclass
 class MusicFeatures:
-    """Comprehensive music features"""
-    spectral_features: Dict[str, np.ndarray]
+    """Comprehensive music features"""    spectral_features: Dict[str, np.ndarray]
     rhythmic_features: Dict[str, float]
     harmonic_features: Dict[str, Any]
     temporal_features: Dict[str, float]
@@ -179,8 +169,7 @@ class MusicFeatures:
 
 
 class BaseMusicAnalyzer(ABC):
-    """Base class for music analyzers"""
-    
+    """Base class for music analyzers"""    
     def __init__(self, analyzer_name: str = "base_music"):
         self.analyzer_name = analyzer_name
         self.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -190,12 +179,10 @@ class BaseMusicAnalyzer(ABC):
         
     @abstractmethod
     def load_model(self) -> bool:
-        """Load the music analysis model"""
-        pass
+        """Load the music analysis model"""        pass
         
     def load_audio(self, file_path: str) -> Tuple[np.ndarray, int]:
-        """Load audio file for music analysis"""
-        try:
+        """Load audio file for music analysis"""        try:
             if LIBROSA_AVAILABLE:
                 audio, sr = librosa.load(file_path, sr=self.sample_rate)
                 return audio, sr
@@ -219,16 +206,14 @@ class BaseMusicAnalyzer(ABC):
 
 
 class MusicStyleAnalyzer(BaseMusicAnalyzer):
-    """Advanced music style analysis and genre classification"""
-    
+    """Advanced music style analysis and genre classification"""    
     def __init__(self, model_name: str = "style_analyzer_v1"):
         super().__init__(f"style_{model_name}")
         self.genres = [genre.value for genre in MusicGenre]
         self.style_features = ['spectral', 'rhythmic', 'harmonic', 'timbral']
         
     def load_model(self) -> bool:
-        """Load music style analysis model"""
-        try:
+        """Load music style analysis model"""        try:
             # Create style analysis model
             self.model = self._create_style_model()
             self.model.to(self.device)
@@ -242,8 +227,7 @@ class MusicStyleAnalyzer(BaseMusicAnalyzer):
             return False
     
     def _create_style_model(self):
-        """Create music style analysis model"""
-        class MusicStyleModel(nn.Module):
+        """Create music style analysis model"""        class MusicStyleModel(nn.Module):
             def __init__(self, input_size=128, num_genres=len(MusicGenre)):
                 super().__init__()
                 
@@ -282,8 +266,7 @@ class MusicStyleAnalyzer(BaseMusicAnalyzer):
     
     def analyze_style(self, audio: Union[str, np.ndarray], 
                      sample_rate: int = None) -> MusicStyleResult:
-        """Analyze music style and genre"""
-        start_time = time.time()
+        """Analyze music style and genre"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -352,8 +335,7 @@ class MusicStyleAnalyzer(BaseMusicAnalyzer):
             )
     
     def _extract_style_features(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract features for style analysis"""
-        features = []
+        """Extract features for style analysis"""        features = []
         
         try:
             if LIBROSA_AVAILABLE:
@@ -402,8 +384,7 @@ class MusicStyleAnalyzer(BaseMusicAnalyzer):
             return np.random.normal(0, 1, 128).astype(np.float32)
     
     def _simple_style_features(self, audio: np.ndarray, sample_rate: int) -> List[float]:
-        """Extract simple style features without advanced libraries"""
-        features = []
+        """Extract simple style features without advanced libraries"""        features = []
         
         # Basic spectral features
         fft = np.abs(np.fft.fft(audio))
@@ -441,8 +422,7 @@ class MusicStyleAnalyzer(BaseMusicAnalyzer):
         return features
     
     def _estimate_tempo_simple(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Simple tempo estimation"""
-        # Basic onset detection using energy changes
+        """Simple tempo estimation"""        # Basic onset detection using energy changes
         frame_length = 1024
         hop_length = 512
         
@@ -472,8 +452,7 @@ class MusicStyleAnalyzer(BaseMusicAnalyzer):
         return 120.0  # Default tempo
     
     def _map_style_characteristics(self, characteristics: np.ndarray) -> Dict[str, float]:
-        """Map neural network output to interpretable characteristics"""
-        char_names = [
+        """Map neural network output to interpretable characteristics"""        char_names = [
             'energy', 'danceability', 'valence', 'acousticness',
             'instrumentalness', 'speechiness', 'liveness', 'complexity',
             'rhythm_strength', 'harmonic_richness', 'timbral_diversity',
@@ -497,15 +476,13 @@ class MusicStyleAnalyzer(BaseMusicAnalyzer):
 
 
 class BeatDetector(BaseMusicAnalyzer):
-    """Advanced beat detection and rhythm analysis"""
-    
+    """Advanced beat detection and rhythm analysis"""    
     def __init__(self, model_name: str = "beat_detector_v1"):
         super().__init__(f"beat_{model_name}")
         self.time_signatures = [ts.value for ts in TimeSignature]
         
     def load_model(self) -> bool:
-        """Load beat detection model"""
-        try:
+        """Load beat detection model"""        try:
             # Create beat detection model
             self.model = self._create_beat_model()
             self.model.to(self.device)
@@ -519,8 +496,7 @@ class BeatDetector(BaseMusicAnalyzer):
             return False
     
     def _create_beat_model(self):
-        """Create beat detection model"""
-        class BeatDetectionModel(nn.Module):
+        """Create beat detection model"""        class BeatDetectionModel(nn.Module):
             def __init__(self, input_size=512):
                 super().__init__()
                 
@@ -559,8 +535,7 @@ class BeatDetector(BaseMusicAnalyzer):
     
     def detect_beats(self, audio: Union[str, np.ndarray], 
                     sample_rate: int = None) -> BeatAnalysisResult:
-        """Comprehensive beat detection and rhythm analysis"""
-        start_time = time.time()
+        """Comprehensive beat detection and rhythm analysis"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -627,8 +602,7 @@ class BeatDetector(BaseMusicAnalyzer):
             )
     
     def _detect_tempo(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Detect tempo using multiple methods"""
-        try:
+        """Detect tempo using multiple methods"""        try:
             if LIBROSA_AVAILABLE:
                 tempo, _ = librosa.beat.beat_track(y=audio, sr=sample_rate)
                 return float(tempo)
@@ -639,8 +613,7 @@ class BeatDetector(BaseMusicAnalyzer):
             return 120.0  # Default fallback
     
     def _autocorrelation_tempo(self, audio: np.ndarray, sample_rate: int) -> float:
-        """Autocorrelation-based tempo estimation"""
-        # Simple onset detection using energy differences
+        """Autocorrelation-based tempo estimation"""        # Simple onset detection using energy differences
         frame_size = 1024
         hop_size = 512
         
@@ -677,8 +650,7 @@ class BeatDetector(BaseMusicAnalyzer):
         return 120.0  # Default
     
     def _detect_beat_positions(self, audio: np.ndarray, sample_rate: int, tempo: float) -> np.ndarray:
-        """Detect beat positions in the audio"""
-        try:
+        """Detect beat positions in the audio"""        try:
             if LIBROSA_AVAILABLE:
                 tempo_est, beats = librosa.beat.beat_track(y=audio, sr=sample_rate, bpm=tempo)
                 return librosa.frames_to_time(beats, sr=sample_rate)
@@ -694,8 +666,7 @@ class BeatDetector(BaseMusicAnalyzer):
             return np.arange(0, duration, beat_interval)
     
     def _detect_downbeats(self, audio: np.ndarray, sample_rate: int, beats: np.ndarray) -> np.ndarray:
-        """Detect downbeat positions"""
-        try:
+        """Detect downbeat positions"""        try:
             # Simple downbeat detection - assume 4/4 time for now
             # In real implementation, this would be more sophisticated
             downbeat_indices = np.arange(0, len(beats), 4)
@@ -704,8 +675,7 @@ class BeatDetector(BaseMusicAnalyzer):
             return beats[::4]  # Every 4th beat as fallback
     
     def _analyze_time_signature(self, beats: np.ndarray, downbeats: np.ndarray) -> TimeSignature:
-        """Analyze time signature from beat pattern"""
-        try:
+        """Analyze time signature from beat pattern"""        try:
             if len(downbeats) > 1 and len(beats) > 4:
                 # Calculate average beats per measure
                 beats_per_measure = []
@@ -735,8 +705,7 @@ class BeatDetector(BaseMusicAnalyzer):
             return TimeSignature.FOUR_FOUR
     
     def _extract_rhythm_pattern(self, beats: np.ndarray, audio: np.ndarray, sample_rate: int) -> List[float]:
-        """Extract rhythm pattern from beats"""
-        try:
+        """Extract rhythm pattern from beats"""        try:
             pattern = []
             
             for i, beat_time in enumerate(beats[:8]):  # Analyze first 8 beats
@@ -764,8 +733,7 @@ class BeatDetector(BaseMusicAnalyzer):
             return [1.0, 0.5, 0.7, 0.5]  # Default 4/4 pattern
     
     def _calculate_beat_confidence(self, beats: np.ndarray, audio: np.ndarray, sample_rate: int) -> float:
-        """Calculate confidence in beat detection"""
-        try:
+        """Calculate confidence in beat detection"""        try:
             if len(beats) < 2:
                 return 0.0
             
@@ -812,16 +780,14 @@ class BeatDetector(BaseMusicAnalyzer):
 
 
 class HarmonyAnalyzer(BaseMusicAnalyzer):
-    """Advanced harmony analysis and chord recognition"""
-    
+    """Advanced harmony analysis and chord recognition"""    
     def __init__(self, model_name: str = "harmony_analyzer_v1"):
         super().__init__(f"harmony_{model_name}")
         self.keys = [key.value for key in MusicKey]
         self.chord_types = [chord.value for chord in ChordType]
         
     def load_model(self) -> bool:
-        """Load harmony analysis model"""
-        try:
+        """Load harmony analysis model"""        try:
             # Create harmony analysis models
             self.key_model = self._create_key_detection_model()
             self.chord_model = self._create_chord_recognition_model()
@@ -841,8 +807,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
             return False
     
     def _create_key_detection_model(self):
-        """Create key detection model"""
-        class KeyDetectionModel(nn.Module):
+        """Create key detection model"""        class KeyDetectionModel(nn.Module):
             def __init__(self, input_size=12, num_keys=len(MusicKey)):
                 super().__init__()
                 self.classifier = nn.Sequential(
@@ -860,8 +825,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
         return KeyDetectionModel()
     
     def _create_chord_recognition_model(self):
-        """Create chord recognition model"""
-        class ChordRecognitionModel(nn.Module):
+        """Create chord recognition model"""        class ChordRecognitionModel(nn.Module):
             def __init__(self, input_size=84):  # 12 pitch classes x 7 harmonics
                 super().__init__()
                 
@@ -888,8 +852,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
     
     def analyze_harmony(self, audio: Union[str, np.ndarray], 
                        sample_rate: int = None) -> HarmonyAnalysisResult:
-        """Comprehensive harmony analysis"""
-        start_time = time.time()
+        """Comprehensive harmony analysis"""        start_time = time.time()
         
         try:
             if not self.is_loaded:
@@ -947,8 +910,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
             )
     
     def _extract_chroma_features(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract chroma features for harmony analysis"""
-        try:
+        """Extract chroma features for harmony analysis"""        try:
             if LIBROSA_AVAILABLE:
                 chroma = librosa.feature.chroma_cqt(y=audio, sr=sample_rate)
                 return np.mean(chroma, axis=1)
@@ -959,8 +921,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
             return np.random.uniform(0, 1, 12)  # Fallback random chroma
     
     def _simple_chroma_extraction(self, audio: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Simple chroma extraction without librosa"""
-        # Basic pitch class profiling using FFT
+        """Simple chroma extraction without librosa"""        # Basic pitch class profiling using FFT
         fft = np.abs(np.fft.fft(audio))
         freqs = np.fft.fftfreq(len(audio), 1/sample_rate)
         
@@ -983,8 +944,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
         return chroma
     
     def _detect_key(self, chroma_features: np.ndarray) -> Tuple[MusicKey, float]:
-        """Detect musical key from chroma features"""
-        try:
+        """Detect musical key from chroma features"""        try:
             with torch.no_grad():
                 input_tensor = torch.FloatTensor(chroma_features).unsqueeze(0).to(self.device)
                 key_logits = self.key_model(input_tensor)
@@ -1002,8 +962,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
             return self._template_key_detection(chroma_features)
     
     def _template_key_detection(self, chroma: np.ndarray) -> Tuple[MusicKey, float]:
-        """Template-based key detection fallback"""
-        # Krumhansl-Schmuckler key profiles (simplified)
+        """Template-based key detection fallback"""        # Krumhansl-Schmuckler key profiles (simplified)
         major_profile = np.array([6.35, 2.23, 3.48, 2.33, 4.38, 4.09, 2.52, 5.19, 2.39, 3.66, 2.29, 2.88])
         minor_profile = np.array([6.33, 2.68, 3.52, 5.38, 2.60, 3.53, 2.54, 4.75, 3.98, 2.69, 3.34, 3.17])
         
@@ -1039,8 +998,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
         return best_key, confidence
     
     def _analyze_chord_progression(self, audio: np.ndarray, sample_rate: int) -> List[Dict[str, Any]]:
-        """Analyze chord progression in the audio"""
-        try:
+        """Analyze chord progression in the audio"""        try:
             # Segment audio for chord analysis
             segment_duration = 2.0  # 2 seconds per chord
             segment_samples = int(segment_duration * sample_rate)
@@ -1069,8 +1027,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
             return []
     
     def _extract_chord_features(self, audio_segment: np.ndarray, sample_rate: int) -> np.ndarray:
-        """Extract features for chord recognition"""
-        # Extract chroma and add harmonic information
+        """Extract features for chord recognition"""        # Extract chroma and add harmonic information
         chroma = self._extract_chroma_features(audio_segment, sample_rate)
         
         # Add harmonic context (simplified)
@@ -1082,8 +1039,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
         return np.array(harmonic_features[:84])  # Ensure fixed size
     
     def _recognize_chord(self, features: np.ndarray) -> Dict[str, Any]:
-        """Recognize chord from features"""
-        try:
+        """Recognize chord from features"""        try:
             with torch.no_grad():
                 input_tensor = torch.FloatTensor(features).unsqueeze(0).to(self.device)
                 root_logits, quality_logits = self.chord_model(input_tensor)
@@ -1122,8 +1078,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
     
     def _calculate_harmonic_complexity(self, chord_progression: List[Dict[str, Any]], 
                                      chroma_features: np.ndarray) -> float:
-        """Calculate harmonic complexity score"""
-        try:
+        """Calculate harmonic complexity score"""        try:
             if not chord_progression:
                 return 0.5
             
@@ -1157,8 +1112,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
     
     def _detect_modulations(self, audio: np.ndarray, sample_rate: int, 
                            primary_key: MusicKey) -> List[Dict[str, Any]]:
-        """Detect key modulations in the music"""
-        try:
+        """Detect key modulations in the music"""        try:
             modulations = []
             
             # Analyze key in segments
@@ -1194,8 +1148,7 @@ class HarmonyAnalyzer(BaseMusicAnalyzer):
             return []
     
     def _classify_modulation(self, from_key: MusicKey, to_key: MusicKey) -> str:
-        """Classify the type of modulation"""
-        # Simplified modulation classification
+        """Classify the type of modulation"""        # Simplified modulation classification
         from_tonic = from_key.value.split()[0]
         to_tonic = to_key.value.split()[0]
         

@@ -28,8 +28,7 @@ Team Specialties:
 - AI Research Team: Advanced Language Models, Semantic Understanding
 - Protection Team: Content Security, Plagiarism Detection
 - Engineering Team: Performance Optimization, Scalable Infrastructure
-"""
-import logging
+"""import logging
 from typing import Dict, List, Any, Optional, Union
 
 # Import configuration

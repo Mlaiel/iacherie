@@ -1,5 +1,4 @@
-"""
-Competitor Monitoring Agent - Main Entry Point and Index
+"""Competitor Monitoring Agent - Main Entry Point and Index
 Advanced AI-powered competitive intelligence system entry point.
 
 This index provides easy access to all competitor monitoring functionalities
@@ -9,7 +8,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -31,16 +29,13 @@ __description__ = "Advanced AI-powered competitor monitoring and market intellig
 
 
 class CompetitorMonitoringSystem:
-    """
-    Main system orchestrator for competitor monitoring.
+    """    Main system orchestrator for competitor monitoring.
     
     Provides unified access to all competitor monitoring capabilities
     including data collection, analysis, alerting, and reporting.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the competitor monitoring system."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize the competitor monitoring system."""        self.logger = logging.getLogger(__name__)
         
         # Load configuration
         self.config_manager = ConfigurationManager()
@@ -61,8 +56,7 @@ class CompetitorMonitoringSystem:
         self.logger.info("CompetitorMonitoringSystem created")
     
     async def initialize(self) -> bool:
-        """Initialize all system components."""
-        try:
+        """Initialize all system components."""        try:
             self.logger.info("Initializing CompetitorMonitoringSystem...")
             
             # Initialize core components
@@ -100,8 +94,7 @@ class CompetitorMonitoringSystem:
             return False
     
     async def add_competitor(self, competitor_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Add a new competitor to monitor."""
-        if not self.is_initialized:
+        """Add a new competitor to monitor."""        if not self.is_initialized:
             return {"status": "error", "message": "System not initialized"}
         
         try:
@@ -119,8 +112,7 @@ class CompetitorMonitoringSystem:
             return {"status": "error", "message": str(e)}
     
     async def analyze_competitor(self, competitor_id: str) -> Dict[str, Any]:
-        """Perform comprehensive competitor analysis."""
-        if not self.is_initialized:
+        """Perform comprehensive competitor analysis."""        if not self.is_initialized:
             return {"status": "error", "message": "System not initialized"}
         
         try:
@@ -138,8 +130,7 @@ class CompetitorMonitoringSystem:
             return {"status": "error", "message": str(e)}
     
     async def get_market_intelligence(self, segment: str) -> Dict[str, Any]:
-        """Get market intelligence for a specific segment."""
-        if not self.is_initialized:
+        """Get market intelligence for a specific segment."""        if not self.is_initialized:
             return {"status": "error", "message": "System not initialized"}
         
         try:
@@ -157,8 +148,7 @@ class CompetitorMonitoringSystem:
             return {"status": "error", "message": str(e)}
     
     async def collect_competitor_data(self, competitor_id: str, data_types: List[str] = None) -> List[Any]:
-        """Collect data for a specific competitor."""
-        if not self.is_initialized:
+        """Collect data for a specific competitor."""        if not self.is_initialized:
             return []
         
         try:
@@ -174,8 +164,7 @@ class CompetitorMonitoringSystem:
             return []
     
     async def generate_swot_analysis(self, competitor_id: str, competitor_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate SWOT analysis for a competitor."""
-        if not self.is_initialized:
+        """Generate SWOT analysis for a competitor."""        if not self.is_initialized:
             return {"status": "error", "message": "System not initialized"}
         
         try:
@@ -191,8 +180,7 @@ class CompetitorMonitoringSystem:
             return {"status": "error", "message": str(e)}
     
     async def assess_competitive_threat(self, competitor_id: str, threat_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess competitive threat level."""
-        if not self.is_initialized:
+        """Assess competitive threat level."""        if not self.is_initialized:
             return {"status": "error", "message": "System not initialized"}
         
         try:
@@ -208,8 +196,7 @@ class CompetitorMonitoringSystem:
             return {"status": "error", "message": str(e)}
     
     async def create_alert_rule(self, rule_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create a new alert rule."""
-        if not self.is_initialized:
+        """Create a new alert rule."""        if not self.is_initialized:
             return {"status": "error", "message": "System not initialized"}
         
         try:
@@ -223,8 +210,7 @@ class CompetitorMonitoringSystem:
             return {"status": "error", "message": str(e)}
     
     async def get_active_alerts(self, filters: Dict[str, Any] = None) -> List[Any]:
-        """Get active monitoring alerts."""
-        if not self.is_initialized:
+        """Get active monitoring alerts."""        if not self.is_initialized:
             return []
         
         try:
@@ -238,8 +224,7 @@ class CompetitorMonitoringSystem:
             return []
     
     async def generate_report(self, template_id: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate a comprehensive report."""
-        if not self.is_initialized:
+        """Generate a comprehensive report."""        if not self.is_initialized:
             return {"status": "error", "message": "System not initialized"}
         
         try:
@@ -253,8 +238,7 @@ class CompetitorMonitoringSystem:
             return {"status": "error", "message": str(e)}
     
     async def get_competitive_intelligence(self, params: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate comprehensive competitive intelligence."""
-        if not self.is_initialized:
+        """Generate comprehensive competitive intelligence."""        if not self.is_initialized:
             return {"status": "error", "message": "System not initialized"}
         
         try:
@@ -272,8 +256,7 @@ class CompetitorMonitoringSystem:
             return {"status": "error", "message": str(e)}
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
-        try:
+        """Get comprehensive system status."""        try:
             status = {
                 "system_info": {
                     "version": __version__,
@@ -296,8 +279,7 @@ class CompetitorMonitoringSystem:
             return {"error": str(e)}
     
     async def shutdown(self):
-        """Gracefully shutdown the system."""
-        try:
+        """Gracefully shutdown the system."""        try:
             self.logger.info("Shutting down CompetitorMonitoringSystem...")
             
             # Shutdown components if needed
@@ -314,15 +296,13 @@ class CompetitorMonitoringSystem:
 
 # Factory functions for easy instantiation
 async def create_competitor_monitoring_system(config: Optional[Dict[str, Any]] = None) -> CompetitorMonitoringSystem:
-    """Create and initialize a competitor monitoring system."""
-    system = CompetitorMonitoringSystem(config)
+    """Create and initialize a competitor monitoring system."""    system = CompetitorMonitoringSystem(config)
     await system.initialize()
     return system
 
 
 def get_system_info() -> Dict[str, Any]:
-    """Get system information."""
-    return {
+    """Get system information."""    return {
         "name": "Competitor Monitoring Agent",
         "version": __version__,
         "author": __author__,
@@ -342,8 +322,7 @@ def get_system_info() -> Dict[str, Any]:
 
 # Quick access functions
 async def quick_competitor_analysis(competitor_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Quick competitor analysis with default settings."""
-    try:
+    """Quick competitor analysis with default settings."""    try:
         system = await create_competitor_monitoring_system()
         
         # Add competitor
@@ -364,8 +343,7 @@ async def quick_competitor_analysis(competitor_data: Dict[str, Any]) -> Dict[str
 
 
 async def quick_market_intelligence(segment: str) -> Dict[str, Any]:
-    """Quick market intelligence for a segment."""
-    try:
+    """Quick market intelligence for a segment."""    try:
         system = await create_competitor_monitoring_system()
         
         result = await system.get_market_intelligence(segment)

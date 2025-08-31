@@ -1,5 +1,4 @@
-"""
-Protection Pipeline for AI-Powered Content Rights Management
+"""Protection Pipeline for AI-Powered Content Rights Management
 ===========================================================
 
 Professional content protection system with AI fingerprinting, violation detection,
@@ -20,7 +19,6 @@ This proprietary AI protection technology belongs exclusively to Fahed Mlaiel.
 Unauthorized use, reverse engineering, or intellectual property theft will
 result in immediate prosecution under international copyright and patent laws.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -65,8 +63,7 @@ settings = get_settings()
 
 
 class ViolationType(str, Enum):
-    """Types of content violations"""
-    EXACT_COPY = "exact_copy"
+    """Types of content violations"""    EXACT_COPY = "exact_copy"
     PARTIAL_COPY = "partial_copy"
     REMIXED = "remixed"
     CROPPED = "cropped"
@@ -77,17 +74,14 @@ class ViolationType(str, Enum):
 
 
 class ProtectionLevel(str, Enum):
-    """Protection sensitivity levels"""
-    STRICT = "strict"      # 95%+ similarity threshold
+    """Protection sensitivity levels"""    STRICT = "strict"      # 95%+ similarity threshold
     STANDARD = "standard"  # 85%+ similarity threshold
     RELAXED = "relaxed"    # 75%+ similarity threshold
 
 
 class FingerprintingEngine:
-    """
-    Advanced AI-powered fingerprinting engine for multi-format content protection
-    """
-    
+    """    Advanced AI-powered fingerprinting engine for multi-format content protection
+    """    
     def __init__(self):
         self.audio_fingerprinter = AudioFingerprinter()
         self.video_fingerprinter = VideoFingerprinter()
@@ -111,10 +105,8 @@ class FingerprintingEngine:
         content_type: str, 
         file_path: str
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive AI fingerprint for content protection
-        """
-        try:
+        """        Generate comprehensive AI fingerprint for content protection
+        """        try:
             logger.info(f"Generating fingerprint for content {content_id}")
             
             fingerprint_data = {
@@ -155,8 +147,7 @@ class FingerprintingEngine:
             raise FingerprintingError(f"Fingerprinting failed: {str(e)}")
 
     async def _generate_audio_fingerprint(self, file_path: str) -> Dict[str, Any]:
-        """Generate audio-specific fingerprint"""
-        try:
+        """Generate audio-specific fingerprint"""        try:
             # Load audio
             y, sr = librosa.load(file_path, sr=22050)
             
@@ -190,8 +181,7 @@ class FingerprintingEngine:
             raise FingerprintingError(f"Audio fingerprinting failed: {str(e)}")
 
     async def _generate_video_fingerprint(self, file_path: str) -> Dict[str, Any]:
-        """Generate video-specific fingerprint"""
-        try:
+        """Generate video-specific fingerprint"""        try:
             cap = cv2.VideoCapture(file_path)
             fingerprints = {}
             
@@ -273,8 +263,7 @@ class FingerprintingEngine:
             raise FingerprintingError(f"Video fingerprinting failed: {str(e)}")
 
     async def _generate_image_fingerprint(self, file_path: str) -> Dict[str, Any]:
-        """Generate image-specific fingerprint"""
-        try:
+        """Generate image-specific fingerprint"""        try:
             import cv2
             from PIL import Image
             import imagehash
@@ -321,8 +310,7 @@ class FingerprintingEngine:
             raise FingerprintingError(f"Image fingerprinting failed: {str(e)}")
 
     async def _generate_text_fingerprint(self, file_path: str) -> Dict[str, Any]:
-        """Generate text-specific fingerprint"""
-        try:
+        """Generate text-specific fingerprint"""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 text = f.read()
             
@@ -370,8 +358,7 @@ class FingerprintingEngine:
         file_path: str, 
         content_type: str
     ) -> np.ndarray:
-        """Generate CLIP embedding for cross-modal similarity"""
-        try:
+        """Generate CLIP embedding for cross-modal similarity"""        try:
             if content_type == "image":
                 from PIL import Image
                 image = Image.open(file_path)
@@ -403,10 +390,8 @@ class FingerprintingEngine:
         fingerprint2: Dict[str, Any],
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> Tuple[float, ViolationType]:
-        """
-        Compare two fingerprints and return similarity score and violation type
-        """
-        try:
+        """        Compare two fingerprints and return similarity score and violation type
+        """        try:
             content_type = fingerprint1.get("content_type")
             threshold = self.similarity_thresholds[protection_level]
             
@@ -447,8 +432,7 @@ class FingerprintingEngine:
         fp1: Dict[str, Any], 
         fp2: Dict[str, Any]
     ) -> float:
-        """Compare audio fingerprints"""
-        similarities = []
+        """Compare audio fingerprints"""        similarities = []
         
         # Compare MFCC features
         if "mfcc" in fp1 and "mfcc" in fp2:
@@ -482,8 +466,7 @@ class FingerprintingEngine:
         fp1: Dict[str, Any], 
         fp2: Dict[str, Any]
     ) -> float:
-        """Compare video fingerprints"""
-        similarities = []
+        """Compare video fingerprints"""        similarities = []
         
         # Compare frame hashes
         if "frame_hashes" in fp1 and "frame_hashes" in fp2:
@@ -539,8 +522,7 @@ class FingerprintingEngine:
         fp1: Dict[str, Any], 
         fp2: Dict[str, Any]
     ) -> float:
-        """Compare image fingerprints"""
-        similarities = []
+        """Compare image fingerprints"""        similarities = []
         
         # Compare perceptual hashes
         hash_types = ["average_hash", "phash", "dhash", "whash"]
@@ -577,8 +559,7 @@ class FingerprintingEngine:
         fp1: Dict[str, Any], 
         fp2: Dict[str, Any]
     ) -> float:
-        """Compare text fingerprints"""
-        similarities = []
+        """Compare text fingerprints"""        similarities = []
         
         # Compare n-gram hashes
         if "char_ngram_hash" in fp1 and "char_ngram_hash" in fp2:
@@ -621,8 +602,7 @@ class FingerprintingEngine:
         similarity: float, 
         content_type: str
     ) -> ViolationType:
-        """Determine violation type based on similarity score"""
-        if similarity >= 0.98:
+        """Determine violation type based on similarity score"""        if similarity >= 0.98:
             return ViolationType.EXACT_COPY
         elif similarity >= 0.90:
             return ViolationType.PARTIAL_COPY
@@ -640,11 +620,9 @@ class FingerprintingEngine:
 
 
 class ProtectionPipeline:
-    """
-    Comprehensive content protection pipeline orchestrating fingerprinting,
+    """    Comprehensive content protection pipeline orchestrating fingerprinting,
     monitoring, violation detection, and automated takedown processes
-    """
-    
+    """    
     def __init__(self):
         self.fingerprinting_engine = FingerprintingEngine()
         self.platform_crawler = PlatformCrawler()
@@ -657,10 +635,8 @@ class ProtectionPipeline:
         user_id: int,
         protection_level: ProtectionLevel = ProtectionLevel.STANDARD
     ) -> Dict[str, Any]:
-        """
-        Initiate comprehensive protection for uploaded content
-        """
-        try:
+        """        Initiate comprehensive protection for uploaded content
+        """        try:
             logger.info(f"Starting content protection for {content_id}")
             
             # Step 1: Generate fingerprint
@@ -697,10 +673,8 @@ class ProtectionPipeline:
         fingerprint_id: str,
         platforms: Optional[List[str]] = None
     ) -> List[Dict[str, Any]]:
-        """
-        Scan platforms for content violations
-        """
-        try:
+        """        Scan platforms for content violations
+        """        try:
             # Get fingerprint data
             async with AsyncDatabaseSession() as session:
                 fingerprint = await session.get(FingerprintModel, fingerprint_id)
@@ -739,10 +713,8 @@ class ProtectionPipeline:
         violation_id: str,
         user_id: int
     ) -> Dict[str, Any]:
-        """
-        Process automated takedown request for detected violation
-        """
-        try:
+        """        Process automated takedown request for detected violation
+        """        try:
             # Get violation details
             async with AsyncDatabaseSession() as session:
                 violation = await session.get(ViolationAlert, violation_id)
@@ -787,10 +759,8 @@ class ProtectionPipeline:
         user_id: int,
         content_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive protection status for user's content
-        """
-        async with AsyncDatabaseSession() as session:
+        """        Get comprehensive protection status for user's content
+        """        async with AsyncDatabaseSession() as session:
             query = session.query(FingerprintModel).filter(
                 FingerprintModel.user_id == user_id
             )
@@ -840,8 +810,7 @@ class ProtectionPipeline:
 
     # Private helper methods for complete protection implementation
     async def _generate_content_fingerprint(self, content_id: str) -> Dict[str, Any]:
-        """Generate comprehensive fingerprint for content"""
-        try:
+        """Generate comprehensive fingerprint for content"""        try:
             # Retrieve content metadata and file path
             async with AsyncDatabaseSession() as session:
                 from backend.models.content import ContentModel
@@ -868,8 +837,7 @@ class ProtectionPipeline:
         fingerprint_data: Dict[str, Any],
         protection_level: ProtectionLevel
     ) -> FingerprintModel:
-        """Save fingerprint to database with full metadata"""
-        async with AsyncDatabaseSession() as session:
+        """Save fingerprint to database with full metadata"""        async with AsyncDatabaseSession() as session:
             fingerprint_model = FingerprintModel(
                 id=str(uuid4()),
                 content_id=content_id,
@@ -896,8 +864,7 @@ class ProtectionPipeline:
         fingerprint_id: str,
         protection_level: ProtectionLevel
     ) -> str:
-        """Initiate comprehensive content monitoring across platforms"""
-        try:
+        """Initiate comprehensive content monitoring across platforms"""        try:
             monitoring_id = str(uuid4())
             
             # Schedule immediate scan
@@ -929,8 +896,7 @@ class ProtectionPipeline:
             raise ProtectionError(f"Monitoring initiation failed: {str(e)}")
 
     async def _schedule_protection_scans(self, fingerprint_id: str):
-        """Schedule comprehensive protection scanning tasks"""
-        try:
+        """Schedule comprehensive protection scanning tasks"""        try:
             # Schedule platform-specific scans
             platforms = {
                 "youtube": {"priority": "high", "scan_depth": "deep"},
@@ -964,8 +930,7 @@ class ProtectionPipeline:
         fingerprint: FingerprintModel,
         platform: str
     ) -> List[Dict[str, Any]]:
-        """Scan specific platform for content violations using AI matching"""
-        try:
+        """Scan specific platform for content violations using AI matching"""        try:
             violations = []
             
             # Get platform-specific crawler
@@ -1011,8 +976,7 @@ class ProtectionPipeline:
         content: 'ContentModel', 
         fingerprint: FingerprintModel
     ) -> List[str]:
-        """Generate intelligent search queries for content discovery"""
-        queries = []
+        """Generate intelligent search queries for content discovery"""        queries = []
         
         # Basic metadata queries
         if content.filename:
@@ -1058,8 +1022,7 @@ class ProtectionPipeline:
         return list(set(queries))  # Remove duplicates
 
     async def _generate_ai_search_queries(self, fingerprint_data: Dict[str, Any]) -> List[str]:
-        """Generate AI-powered search queries based on content analysis"""
-        queries = []
+        """Generate AI-powered search queries based on content analysis"""        queries = []
         
         try:
             # Use CLIP embeddings to generate descriptive queries
@@ -1097,8 +1060,7 @@ class ProtectionPipeline:
         search_result: Dict[str, Any],
         platform: str
     ) -> Optional[Dict[str, Any]]:
-        """Analyze potential violation using AI fingerprint comparison"""
-        try:
+        """Analyze potential violation using AI fingerprint comparison"""        try:
             # Download content for analysis
             content_url = search_result.get("content_url")
             if not content_url:
@@ -1157,8 +1119,7 @@ class ProtectionPipeline:
         content_url: str, 
         platform: str
     ) -> Optional[str]:
-        """Download content temporarily for fingerprint analysis"""
-        try:
+        """Download content temporarily for fingerprint analysis"""        try:
             import aiohttp
             import tempfile
             
@@ -1181,8 +1142,7 @@ class ProtectionPipeline:
         return None
 
     async def _save_violation_alert(self, violation_data: Dict[str, Any]):
-        """Save violation alert to database with comprehensive metadata"""
-        async with AsyncDatabaseSession() as session:
+        """Save violation alert to database with comprehensive metadata"""        async with AsyncDatabaseSession() as session:
             violation_alert = ViolationAlert(
                 id=str(uuid4()),
                 fingerprint_id=violation_data["fingerprint_id"],
@@ -1216,8 +1176,7 @@ class ProtectionPipeline:
         self,
         violation: ViolationAlert
     ) -> Dict[str, Any]:
-        """Generate comprehensive automated takedown request with legal compliance"""
-        try:
+        """Generate comprehensive automated takedown request with legal compliance"""        try:
             # Get original content information
             async with AsyncDatabaseSession() as session:
                 fingerprint = await session.get(FingerprintModel, violation.fingerprint_id)
@@ -1282,8 +1241,7 @@ class ProtectionPipeline:
             raise TakedownError(f"Takedown request generation failed: {str(e)}")
 
     def _determine_takedown_severity(self, similarity_score: float) -> str:
-        """Determine takedown request severity based on similarity"""
-        if similarity_score >= 0.98:
+        """Determine takedown request severity based on similarity"""        if similarity_score >= 0.98:
             return "critical"
         elif similarity_score >= 0.90:
             return "high"
@@ -1293,24 +1251,19 @@ class ProtectionPipeline:
             return "low"
 
     def _generate_legal_basis(self, violation: ViolationAlert) -> str:
-        """Generate legal basis for takedown request"""
-        return f"""
-        This takedown request is submitted under the Digital Millennium Copyright Act (DMCA) 
+        """Generate legal basis for takedown request"""        return f"""        This takedown request is submitted under the Digital Millennium Copyright Act (DMCA) 
         and applicable international copyright laws. The infringing content at {violation.detected_url} 
         contains substantial similarity ({violation.similarity_score:.2%}) to the original copyrighted 
         work owned by the rights holder. The unauthorized use constitutes {violation.violation_type} 
         and infringes upon the exclusive rights of the copyright owner.
         """
-
     def _generate_dmca_notice(
         self, 
         violation: ViolationAlert, 
         user: 'User', 
         original_content: 'ContentModel'
     ) -> str:
-        """Generate formal DMCA takedown notice"""
-        return f"""
-        DMCA TAKEDOWN NOTICE
+        """Generate formal DMCA takedown notice"""        return f"""        DMCA TAKEDOWN NOTICE
         
         To: {violation.platform.title()} Copyright Department
         
@@ -1336,14 +1289,12 @@ class ProtectionPipeline:
         
         Requested Action: Complete removal of infringing content
         """
-
     async def _submit_takedown_to_platform(
         self,
         platform: str,
         takedown_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Submit takedown request to platform using official APIs/forms"""
-        try:
+        """Submit takedown request to platform using official APIs/forms"""        try:
             platform_handlers = {
                 "youtube": self._submit_youtube_takedown,
                 "instagram": self._submit_instagram_takedown,
@@ -1373,8 +1324,7 @@ class ProtectionPipeline:
             raise TakedownError(f"Submission failed: {str(e)}")
 
     async def _submit_youtube_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown to YouTube using official API"""
-        try:
+        """Submit takedown to YouTube using official API"""        try:
             from backend.integrations.youtube import YouTubeAPI
             youtube_api = YouTubeAPI()
             
@@ -1397,8 +1347,7 @@ class ProtectionPipeline:
             return {"status": "failed", "error": str(e)}
 
     async def _submit_instagram_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown to Instagram using official reporting"""
-        try:
+        """Submit takedown to Instagram using official reporting"""        try:
             from backend.integrations.instagram import InstagramAPI
             instagram_api = InstagramAPI()
             
@@ -1419,8 +1368,7 @@ class ProtectionPipeline:
             return {"status": "failed", "error": str(e)}
 
     async def _submit_tiktok_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown to TikTok using official reporting"""
-        try:
+        """Submit takedown to TikTok using official reporting"""        try:
             from backend.integrations.tiktok import TikTokAPI
             tiktok_api = TikTokAPI()
             
@@ -1441,8 +1389,7 @@ class ProtectionPipeline:
             return {"status": "failed", "error": str(e)}
 
     async def _submit_twitter_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown to Twitter using official reporting"""
-        try:
+        """Submit takedown to Twitter using official reporting"""        try:
             from backend.integrations.twitter import TwitterAPI
             twitter_api = TwitterAPI()
             
@@ -1463,8 +1410,7 @@ class ProtectionPipeline:
             return {"status": "failed", "error": str(e)}
 
     async def _submit_facebook_takedown(self, takedown_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Submit takedown to Facebook using official reporting"""
-        try:
+        """Submit takedown to Facebook using official reporting"""        try:
             from backend.integrations.facebook import FacebookAPI
             facebook_api = FacebookAPI()
             
@@ -1490,8 +1436,7 @@ class ProtectionPipeline:
         takedown_data: Dict[str, Any],
         submission_result: Dict[str, Any]
     ) -> TakedownRequest:
-        """Save comprehensive takedown request to database"""
-        async with AsyncDatabaseSession() as session:
+        """Save comprehensive takedown request to database"""        async with AsyncDatabaseSession() as session:
             takedown_request = TakedownRequest(
                 id=str(uuid4()),
                 violation_id=violation_id,
@@ -1522,8 +1467,7 @@ class ProtectionPipeline:
         user_id: int,
         new_settings: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Update protection settings for existing fingerprint"""
-        async with AsyncDatabaseSession() as session:
+        """Update protection settings for existing fingerprint"""        async with AsyncDatabaseSession() as session:
             fingerprint = await session.get(FingerprintModel, fingerprint_id)
             if not fingerprint or fingerprint.user_id != user_id:
                 raise ProtectionError("Fingerprint not found or unauthorized")
@@ -1556,8 +1500,7 @@ class ProtectionPipeline:
         user_id: int,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get comprehensive violation statistics for user"""
-        async with AsyncDatabaseSession() as session:
+        """Get comprehensive violation statistics for user"""        async with AsyncDatabaseSession() as session:
             since_date = datetime.utcnow() - timedelta(days=period_days)
             
             # Get user's fingerprints
@@ -1615,8 +1558,7 @@ class ProtectionPipeline:
             }
 
     def _calculate_takedown_success_rate(self, takedowns: List[TakedownRequest]) -> float:
-        """Calculate takedown success rate"""
-        if not takedowns:
+        """Calculate takedown success rate"""        if not takedowns:
             return 0.0
         
         successful = sum(1 for td in takedowns if td.status in ["successful", "completed", "removed"])

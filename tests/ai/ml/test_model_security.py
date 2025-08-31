@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Model Security Tests - Enterprise Grade Test Suite
+"""Model Security Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for ML model security, adversarial defense, privacy protection,
 data protection, audit logging, and compliance validation systems.
@@ -26,7 +23,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
-
 import pytest
 import sys
 import os
@@ -62,11 +58,9 @@ from ai.ml.model_security import (
 
 
 class TestModelSecurityManager:
-    """Tests for core model security management functionality"""
-    
+    """Tests for core model security management functionality"""    
     def test_init_security_manager(self):
-        """Test security manager initialization"""
-        manager = ModelSecurityManager(
+        """Test security manager initialization"""        manager = ModelSecurityManager(
             security_policies=["encryption", "access_control", "audit_logging"],
             threat_detection_enabled=True,
             compliance_standards=["GDPR", "HIPAA", "SOX"],
@@ -81,8 +75,7 @@ class TestModelSecurityManager:
         assert manager.privacy_level == "high"
 
     def test_security_assessment(self, trained_model):
-        """Test comprehensive security assessment"""
-        manager = ModelSecurityManager()
+        """Test comprehensive security assessment"""        manager = ModelSecurityManager()
         
         assessment_config = {
             "model": trained_model,
@@ -137,8 +130,7 @@ class TestModelSecurityManager:
             )
 
     def test_threat_modeling(self):
-        """Test threat modeling for ML systems"""
-        manager = ModelSecurityManager(threat_detection_enabled=True)
+        """Test threat modeling for ML systems"""        manager = ModelSecurityManager(threat_detection_enabled=True)
         
         threat_model_config = {
             "model_type": "neural_network",
@@ -194,8 +186,7 @@ class TestModelSecurityManager:
             assert len(threat_model["identified_threats"]) >= 2
 
     def test_security_policy_enforcement(self):
-        """Test security policy enforcement"""
-        manager = ModelSecurityManager(
+        """Test security policy enforcement"""        manager = ModelSecurityManager(
             security_policies=["data_encryption", "access_control", "audit_logging"]
         )
         
@@ -229,11 +220,9 @@ class TestModelSecurityManager:
 
 
 class TestAdversarialDefense:
-    """Tests for adversarial attack defense mechanisms"""
-    
+    """Tests for adversarial attack defense mechanisms"""    
     def test_init_adversarial_defense(self):
-        """Test adversarial defense initialization"""
-        defense = AdversarialDefense(
+        """Test adversarial defense initialization"""        defense = AdversarialDefense(
             defense_methods=["adversarial_training", "input_preprocessing", "certified_defense"],
             detection_enabled=True,
             response_strategy="adaptive",
@@ -245,8 +234,7 @@ class TestAdversarialDefense:
         assert defense.response_strategy == "adaptive"
 
     def test_fgsm_attack_detection(self, trained_model, sample_inputs):
-        """Test FGSM (Fast Gradient Sign Method) attack detection"""
-        defense = AdversarialDefense(detection_enabled=True)
+        """Test FGSM (Fast Gradient Sign Method) attack detection"""        defense = AdversarialDefense(detection_enabled=True)
         
         # Simulate FGSM attack
         attack_config = {
@@ -278,8 +266,7 @@ class TestAdversarialDefense:
             assert detection_result["attack_success_rate"] < 0.2
 
     def test_pgd_attack_defense(self, trained_model, sample_inputs):
-        """Test PGD (Projected Gradient Descent) attack defense"""
-        defense = AdversarialDefense(
+        """Test PGD (Projected Gradient Descent) attack defense"""        defense = AdversarialDefense(
             defense_methods=["input_preprocessing", "adversarial_training"]
         )
         
@@ -312,8 +299,7 @@ class TestAdversarialDefense:
             assert defense_result["robustness_improvement"] > 0.2
 
     def test_cw_attack_mitigation(self, trained_model, sample_inputs):
-        """Test Carlini & Wagner attack mitigation"""
-        defense = AdversarialDefense(defense_methods=["certified_defense"])
+        """Test Carlini & Wagner attack mitigation"""        defense = AdversarialDefense(defense_methods=["certified_defense"])
         
         cw_config = {
             "attack_type": "c&w",
@@ -344,8 +330,7 @@ class TestAdversarialDefense:
             assert mitigation_result["certified_robustness"] > 0.8
 
     def test_adversarial_training(self, base_model, training_data):
-        """Test adversarial training process"""
-        defense = AdversarialDefense(defense_methods=["adversarial_training"])
+        """Test adversarial training process"""        defense = AdversarialDefense(defense_methods=["adversarial_training"])
         
         training_config = {
             "epochs": 10,
@@ -377,8 +362,7 @@ class TestAdversarialDefense:
             assert training_result["robustness_gain"] > 0.3
 
     def test_certified_defense(self, trained_model):
-        """Test certified defense mechanisms"""
-        defense = AdversarialDefense(defense_methods=["certified_defense"])
+        """Test certified defense mechanisms"""        defense = AdversarialDefense(defense_methods=["certified_defense"])
         
         certification_config = {
             "certification_method": "randomized_smoothing",
@@ -409,11 +393,9 @@ class TestAdversarialDefense:
 
 
 class TestPrivacyPreserver:
-    """Tests for privacy preservation mechanisms"""
-    
+    """Tests for privacy preservation mechanisms"""    
     def test_init_privacy_preserver(self):
-        """Test privacy preserver initialization"""
-        preserver = PrivacyPreserver(
+        """Test privacy preserver initialization"""        preserver = PrivacyPreserver(
             privacy_techniques=["differential_privacy", "federated_learning", "homomorphic_encryption"],
             privacy_budget=1.0,
             noise_mechanism="gaussian",
@@ -426,8 +408,7 @@ class TestPrivacyPreserver:
         assert preserver.enable_secure_aggregation
 
     def test_differential_privacy_training(self, training_data):
-        """Test differential privacy in training"""
-        preserver = PrivacyPreserver(
+        """Test differential privacy in training"""        preserver = PrivacyPreserver(
             privacy_techniques=["differential_privacy"],
             privacy_budget=1.0
         )
@@ -462,8 +443,7 @@ class TestPrivacyPreserver:
             assert dp_result["model_accuracy"] > 0.85
 
     def test_federated_learning_privacy(self, distributed_data):
-        """Test privacy in federated learning"""
-        preserver = PrivacyPreserver(
+        """Test privacy in federated learning"""        preserver = PrivacyPreserver(
             privacy_techniques=["federated_learning"],
             enable_secure_aggregation=True
         )
@@ -499,8 +479,7 @@ class TestPrivacyPreserver:
             assert fl_result["global_model_accuracy"] > 0.9
 
     def test_homomorphic_encryption(self, sensitive_data):
-        """Test homomorphic encryption for secure computation"""
-        preserver = PrivacyPreserver(
+        """Test homomorphic encryption for secure computation"""        preserver = PrivacyPreserver(
             privacy_techniques=["homomorphic_encryption"]
         )
         
@@ -533,8 +512,7 @@ class TestPrivacyPreserver:
             assert he_result["computation_performed"] is True
 
     def test_secure_multiparty_computation(self, multi_party_data):
-        """Test secure multi-party computation"""
-        preserver = PrivacyPreserver()
+        """Test secure multi-party computation"""        preserver = PrivacyPreserver()
         
         smc_config = {
             "num_parties": 3,
@@ -565,8 +543,7 @@ class TestPrivacyPreserver:
             assert smc_result["security_threshold_met"] is True
 
     def test_membership_inference_protection(self, trained_model, training_data, test_data):
-        """Test protection against membership inference attacks"""
-        preserver = PrivacyPreserver()
+        """Test protection against membership inference attacks"""        preserver = PrivacyPreserver()
         
         protection_config = {
             "protection_method": "differential_privacy",
@@ -599,11 +576,9 @@ class TestPrivacyPreserver:
 
 
 class TestModelEncryption:
-    """Tests for model encryption and secure storage"""
-    
+    """Tests for model encryption and secure storage"""    
     def test_init_model_encryption(self):
-        """Test model encryption initialization"""
-        encryption = ModelEncryption(
+        """Test model encryption initialization"""        encryption = ModelEncryption(
             encryption_algorithms=["AES-256", "RSA-2048", "ChaCha20"],
             key_management_system="vault",
             enable_key_rotation=True,
@@ -618,8 +593,7 @@ class TestModelEncryption:
         assert encryption.encryption_in_transit
 
     def test_model_encryption_aes(self, trained_model, temp_dir):
-        """Test AES model encryption"""
-        encryption = ModelEncryption(encryption_algorithms=["AES-256"])
+        """Test AES model encryption"""        encryption = ModelEncryption(encryption_algorithms=["AES-256"])
         
         encryption_config = {
             "algorithm": "AES-256",
@@ -655,8 +629,7 @@ class TestModelEncryption:
             assert "integrity_hash" in encryption_result
 
     def test_model_decryption(self, encrypted_model_path, decryption_key):
-        """Test model decryption"""
-        encryption = ModelEncryption()
+        """Test model decryption"""        encryption = ModelEncryption()
         
         decryption_config = {
             "encryption_key_id": "key_123",
@@ -685,8 +658,7 @@ class TestModelEncryption:
             assert decryption_result["decrypted_model"] is not None
 
     def test_key_management(self):
-        """Test cryptographic key management"""
-        encryption = ModelEncryption(
+        """Test cryptographic key management"""        encryption = ModelEncryption(
             key_management_system="vault",
             enable_key_rotation=True
         )
@@ -720,8 +692,7 @@ class TestModelEncryption:
             assert key_result["key_rotation_scheduled"] is True
 
     def test_secure_model_sharing(self, trained_model):
-        """Test secure model sharing between parties"""
-        encryption = ModelEncryption()
+        """Test secure model sharing between parties"""        encryption = ModelEncryption()
         
         sharing_config = {
             "recipient_public_key": "recipient_pubkey.pem",
@@ -753,11 +724,9 @@ class TestModelEncryption:
 
 
 class TestAccessController:
-    """Tests for access control and authorization"""
-    
+    """Tests for access control and authorization"""    
     def test_init_access_controller(self):
-        """Test access controller initialization"""
-        controller = AccessController(
+        """Test access controller initialization"""        controller = AccessController(
             authentication_methods=["oauth2", "jwt", "api_key"],
             authorization_model="rbac",
             enable_mfa=True,
@@ -772,8 +741,7 @@ class TestAccessController:
         assert controller.audit_all_access
 
     def test_user_authentication(self):
-        """Test user authentication mechanisms"""
-        controller = AccessController(authentication_methods=["jwt", "oauth2"])
+        """Test user authentication mechanisms"""        controller = AccessController(authentication_methods=["jwt", "oauth2"])
         
         auth_request = {
             "user_id": "user_123",
@@ -801,8 +769,7 @@ class TestAccessController:
             assert "session_token" in auth_result
 
     def test_role_based_authorization(self):
-        """Test role-based access control (RBAC)"""
-        controller = AccessController(authorization_model="rbac")
+        """Test role-based access control (RBAC)"""        controller = AccessController(authorization_model="rbac")
         
         authorization_request = {
             "user_id": "user_123",
@@ -832,8 +799,7 @@ class TestAccessController:
             assert "access_denied_reason" in authz_result
 
     def test_attribute_based_authorization(self):
-        """Test attribute-based access control (ABAC)"""
-        controller = AccessController(authorization_model="abac")
+        """Test attribute-based access control (ABAC)"""        controller = AccessController(authorization_model="abac")
         
         abac_request = {
             "user_attributes": {
@@ -874,8 +840,7 @@ class TestAccessController:
             assert "conditions" in abac_result
 
     def test_api_rate_limiting(self):
-        """Test API rate limiting and throttling"""
-        controller = AccessController()
+        """Test API rate limiting and throttling"""        controller = AccessController()
         
         rate_limit_config = {
             "user_id": "user_123",
@@ -913,11 +878,9 @@ class TestAccessController:
 
 
 class TestAuditLogger:
-    """Tests for audit logging and compliance tracking"""
-    
+    """Tests for audit logging and compliance tracking"""    
     def test_init_audit_logger(self):
-        """Test audit logger initialization"""
-        logger = AuditLogger(
+        """Test audit logger initialization"""        logger = AuditLogger(
             log_levels=["INFO", "WARN", "ERROR", "AUDIT"],
             storage_backend="elasticsearch",
             retention_period="7y",
@@ -931,8 +894,7 @@ class TestAuditLogger:
         assert logger.enable_tamper_protection
 
     def test_model_access_logging(self):
-        """Test model access audit logging"""
-        logger = AuditLogger()
+        """Test model access audit logging"""        logger = AuditLogger()
         
         access_event = {
             "event_type": "model_access",
@@ -965,8 +927,7 @@ class TestAuditLogger:
             assert "compliance_tags" in log_result
 
     def test_security_event_logging(self):
-        """Test security event audit logging"""
-        logger = AuditLogger(enable_tamper_protection=True)
+        """Test security event audit logging"""        logger = AuditLogger(enable_tamper_protection=True)
         
         security_event = {
             "event_type": "security_incident",
@@ -1001,8 +962,7 @@ class TestAuditLogger:
             assert security_result["tamper_protection_enabled"] is True
 
     def test_compliance_reporting(self):
-        """Test compliance reporting generation"""
-        logger = AuditLogger(compliance_standards=["GDPR", "HIPAA"])
+        """Test compliance reporting generation"""        logger = AuditLogger(compliance_standards=["GDPR", "HIPAA"])
         
         report_config = {
             "report_type": "compliance_summary",
@@ -1043,12 +1003,10 @@ class TestAuditLogger:
 
 @pytest.mark.integration
 class TestModelSecurityIntegration:
-    """Integration tests for model security systems"""
-    
+    """Integration tests for model security systems"""    
     @pytest.mark.slow
     def test_end_to_end_security_pipeline(self, trained_model, temp_dir):
-        """Test complete security pipeline integration"""
-        # Initialize security components
+        """Test complete security pipeline integration"""        # Initialize security components
         security_manager = ModelSecurityManager(
             security_policies=["encryption", "access_control", "audit_logging"],
             threat_detection_enabled=True
@@ -1132,8 +1090,7 @@ class TestModelSecurityIntegration:
             assert log_result["event_logged"] is True
 
     def test_multi_layer_security_validation(self, trained_model):
-        """Test multi-layer security validation"""
-        security_layers = [
+        """Test multi-layer security validation"""        security_layers = [
             ("input_validation", {"enabled": True}),
             ("adversarial_detection", {"threshold": 0.8}),
             ("privacy_protection", {"epsilon": 1.0}),

@@ -1,5 +1,4 @@
-"""
-🚨 Unified Alert Coordinator - Central Intelligent Alert System
+"""🚨 Unified Alert Coordinator - Central Intelligent Alert System
 ===============================================================
 
 Central coordinator that unifies Business, Technical, and AI alerts into a
@@ -8,7 +7,6 @@ comprehensive intelligent alert management system for the Ainflue platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -26,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class SystemHealthStatus(Enum):
-    """Overall system health status"""
-    HEALTHY = "healthy"
+    """Overall system health status"""    HEALTHY = "healthy"
     WARNING = "warning" 
     CRITICAL = "critical"
     EMERGENCY = "emergency"
@@ -35,8 +32,7 @@ class SystemHealthStatus(Enum):
 
 @dataclass
 class UnifiedAlertSummary:
-    """Unified alert summary across all categories"""
-    timestamp: datetime
+    """Unified alert summary across all categories"""    timestamp: datetime
     system_health: SystemHealthStatus
     total_active_alerts: int
     alerts_by_category: Dict[str, int]
@@ -49,8 +45,7 @@ class UnifiedAlertSummary:
 
 
 class AlertCoordinator:
-    """
-    Unified Alert Coordinator - Central Intelligence for Alert Management
+    """    Unified Alert Coordinator - Central Intelligence for Alert Management
     
     Features:
     - Coordinates Business, Technical, and AI alert managers
@@ -59,11 +54,9 @@ class AlertCoordinator:
     - Offers comprehensive system health assessment
     - Handles escalation coordination
     - Provides unified reporting and dashboards
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the unified alert coordinator"""
-        # Initialize core alert manager
+        """Initialize the unified alert coordinator"""        # Initialize core alert manager
         self.alert_manager = IntelligentAlertManager()
         
         # Initialize category-specific managers
@@ -90,10 +83,8 @@ class AlertCoordinator:
                                  business_metrics: Optional[BusinessMetrics] = None,
                                  technical_metrics: Optional[TechnicalMetrics] = None,
                                  ai_metrics: Optional[List[ModelMetrics]] = None) -> UnifiedAlertSummary:
-        """
-        Evaluate all metrics across categories and provide unified alert management
-        """
-        try:
+        """        Evaluate all metrics across categories and provide unified alert management
+        """        try:
             start_time = datetime.utcnow()
             all_triggered_alerts = []
             
@@ -158,8 +149,7 @@ class AlertCoordinator:
             return await self._create_error_summary(str(e))
     
     async def process_security_event(self, event: SecurityEvent) -> List[IntelligentAlert]:
-        """Process security event through the technical manager"""
-        try:
+        """Process security event through the technical manager"""        try:
             return await self.technical_manager.process_security_event(event)
         except Exception as e:
             logger.error(f"Error processing security event: {e}")
@@ -167,24 +157,21 @@ class AlertCoordinator:
     
     async def process_training_failure(self, model_id: str, model_name: str, 
                                      failure_details: Dict[str, Any]) -> List[IntelligentAlert]:
-        """Process AI training failure through the AI manager"""
-        try:
+        """Process AI training failure through the AI manager"""        try:
             return await self.ai_manager.process_training_failure(model_id, model_name, failure_details)
         except Exception as e:
             logger.error(f"Error processing training failure: {e}")
             return []
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an alert across all managers"""
-        try:
+        """Acknowledge an alert across all managers"""        try:
             return await self.alert_manager.acknowledge_alert(alert_id, acknowledged_by)
         except Exception as e:
             logger.error(f"Error acknowledging alert: {e}")
             return False
     
     async def resolve_alert(self, alert_id: str, auto_resolved: bool = False) -> bool:
-        """Resolve an alert across all managers"""
-        try:
+        """Resolve an alert across all managers"""        try:
             return await self.alert_manager.resolve_alert(alert_id, auto_resolved)
         except Exception as e:
             logger.error(f"Error resolving alert: {e}")
@@ -192,8 +179,7 @@ class AlertCoordinator:
     
     async def get_active_alerts(self, category: Optional[AlertCategory] = None,
                               severity: Optional[AlertSeverity] = None) -> List[IntelligentAlert]:
-        """Get active alerts with optional filtering"""
-        try:
+        """Get active alerts with optional filtering"""        try:
             active_alerts = list(self.alert_manager.active_alerts.values())
             
             if category:
@@ -220,8 +206,7 @@ class AlertCoordinator:
     
     async def get_alert_history(self, hours: int = 24, 
                               category: Optional[AlertCategory] = None) -> List[IntelligentAlert]:
-        """Get alert history with optional filtering"""
-        try:
+        """Get alert history with optional filtering"""        try:
             cutoff_time = datetime.utcnow() - timedelta(hours=hours)
             
             history = [
@@ -242,8 +227,7 @@ class AlertCoordinator:
                                                  business_alerts: List[IntelligentAlert],
                                                  technical_alerts: List[IntelligentAlert],
                                                  ai_alerts: List[IntelligentAlert]) -> List[Dict[str, Any]]:
-        """Process correlations between different alert categories"""
-        correlations = []
+        """Process correlations between different alert categories"""        correlations = []
         
         try:
             # Example correlations:
@@ -298,8 +282,7 @@ class AlertCoordinator:
             return []
     
     async def _calculate_system_health(self) -> SystemHealthStatus:
-        """Calculate overall system health status"""
-        try:
+        """Calculate overall system health status"""        try:
             active_alerts = self.alert_manager.active_alerts.values()
             
             # Count alerts by severity
@@ -322,8 +305,7 @@ class AlertCoordinator:
             return SystemHealthStatus.WARNING
     
     async def _identify_trending_issues(self) -> List[str]:
-        """Identify trending issues across the system"""
-        trending_issues = []
+        """Identify trending issues across the system"""        trending_issues = []
         
         try:
             # Analyze recent alert patterns
@@ -360,8 +342,7 @@ class AlertCoordinator:
     
     async def _generate_recommendations(self, system_health: SystemHealthStatus, 
                                       alerts: List[IntelligentAlert]) -> List[str]:
-        """Generate actionable recommendations based on system state"""
-        recommendations = []
+        """Generate actionable recommendations based on system state"""        recommendations = []
         
         try:
             if system_health == SystemHealthStatus.EMERGENCY:
@@ -415,8 +396,7 @@ class AlertCoordinator:
                                     alerts: List[IntelligentAlert],
                                     trending_issues: List[str],
                                     recommendations: List[str]) -> UnifiedAlertSummary:
-        """Create comprehensive unified alert summary"""
-        try:
+        """Create comprehensive unified alert summary"""        try:
             # Count active alerts
             active_alerts = list(self.alert_manager.active_alerts.values())
             
@@ -456,8 +436,7 @@ class AlertCoordinator:
             return await self._create_error_summary(str(e))
     
     async def _create_error_summary(self, error_message: str) -> UnifiedAlertSummary:
-        """Create error summary when evaluation fails"""
-        return UnifiedAlertSummary(
+        """Create error summary when evaluation fails"""        return UnifiedAlertSummary(
             timestamp=datetime.utcnow(),
             system_health=SystemHealthStatus.WARNING,
             total_active_alerts=0,
@@ -471,8 +450,7 @@ class AlertCoordinator:
         )
     
     async def get_comprehensive_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status across all categories"""
-        try:
+        """Get comprehensive system status across all categories"""        try:
             # Get unified summary with current state
             current_summary = await self._create_unified_summary(
                 await self._calculate_system_health(),

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Module d'Observabilité Index
+"""IA Influencer Agent - Module d'Observabilité Index
 =================================================
 
 Point d'entrée principal et gestionnaire centralisé pour l'infrastructure d'observabilité
@@ -12,7 +11,6 @@ Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Ce code est la propriété exclusive de Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -32,8 +30,7 @@ from .health import HealthChecker, ServiceHealthMonitor, DatabaseHealthChecker
 
 @dataclass
 class ObservabilityConfig:
-    """Configuration centralisée pour le module d'observabilité."""
-    
+    """Configuration centralisée pour le module d'observabilité."""    
     service_name: str = "ia-influencer-agent"
     environment: str = "production"
     
@@ -77,16 +74,13 @@ class ObservabilityConfig:
 
 
 class ObservabilityIndex:
-    """
-    Gestionnaire centralisé de l'infrastructure d'observabilité.
+    """    Gestionnaire centralisé de l'infrastructure d'observabilité.
     
     Coordonne tous les composants d'observabilité et fournit une interface
     unifiée pour la surveillance, les métriques, le tracing et les alertes.
-    """
-    
+    """    
     def __init__(self, config: Optional[ObservabilityConfig] = None):
-        """Initialise l'index d'observabilité."""
-        self.config = config or ObservabilityConfig()
+        """Initialise l'index d'observabilité."""        self.config = config or ObservabilityConfig()
         self.logger = logging.getLogger(__name__)
         
         # État du système
@@ -120,8 +114,7 @@ class ObservabilityIndex:
         self._monitoring_tasks: List[asyncio.Task] = []
         
     async def initialize(self) -> None:
-        """Initialise tous les composants d'observabilité."""
-        if self._initialized:
+        """Initialise tous les composants d'observabilité."""        if self._initialized:
             return
             
         self.logger.info(f"Initialisation du module d'observabilité pour {self.config.service_name}")
@@ -167,8 +160,7 @@ class ObservabilityIndex:
             raise
             
     async def _initialize_metrics(self) -> None:
-        """Initialise les collecteurs de métriques."""
-        self._metrics_collector = MetricsCollector(
+        """Initialise les collecteurs de métriques."""        self._metrics_collector = MetricsCollector(
             service_name=self.config.service_name,
             retention_hours=self.config.metrics_retention_hours
         )
@@ -182,8 +174,7 @@ class ObservabilityIndex:
             await self._metrics_collector.start_prometheus_server(self.config.prometheus_port)
             
     async def _initialize_tracing(self) -> None:
-        """Initialise les composants de tracing."""
-        self._tracing_manager = TracingManager(
+        """Initialise les composants de tracing."""        self._tracing_manager = TracingManager(
             service_name=self.config.service_name,
             sample_rate=self.config.tracing_sample_rate
         )
@@ -197,8 +188,7 @@ class ObservabilityIndex:
             self._request_tracer = RequestTracer(self._tracing_manager)
             
     async def _initialize_alerting(self) -> None:
-        """Initialise le système d'alertes."""
-        self._alert_manager = AlertManager(
+        """Initialise le système d'alertes."""        self._alert_manager = AlertManager(
             evaluation_interval=self.config.alert_evaluation_interval,
             default_channels=self.config.notification_channels
         )
@@ -207,22 +197,19 @@ class ObservabilityIndex:
         await self._configure_default_alerts()
         
     async def _initialize_monitoring(self) -> None:
-        """Initialise les composants de surveillance."""
-        self._system_monitor = SystemMonitor(
+        """Initialise les composants de surveillance."""        self._system_monitor = SystemMonitor(
             monitoring_interval=self.config.monitoring_interval
         )
         self._performance_monitor = PerformanceMonitor()
         self._resource_monitor = ResourceMonitor()
         
     async def _initialize_sla(self) -> None:
-        """Initialise le monitoring SLA."""
-        self._sla_monitor = SLAMonitor(self.config.default_sla_targets)
+        """Initialise le monitoring SLA."""        self._sla_monitor = SLAMonitor(self.config.default_sla_targets)
         self._service_tracker = ServiceLevelTracker()
         self._availability_calculator = AvailabilityCalculator()
         
     async def _initialize_logging(self) -> None:
-        """Initialise les systèmes de logging."""
-        self._structured_logger = StructuredLogger(
+        """Initialise les systèmes de logging."""        self._structured_logger = StructuredLogger(
             service_name=self.config.service_name,
             log_level=self.config.log_level
         )
@@ -234,8 +221,7 @@ class ObservabilityIndex:
             self._security_logger = SecurityLogger(self._structured_logger)
             
     async def _initialize_dashboards(self) -> None:
-        """Initialise les tableaux de bord."""
-        if not self.config.enable_realtime_dashboards:
+        """Initialise les tableaux de bord."""        if not self.config.enable_realtime_dashboards:
             return
             
         self._dashboard_manager = DashboardManager(
@@ -252,14 +238,12 @@ class ObservabilityIndex:
         await self._dashboard_manager.register_dashboard("alerts", alert_dashboard)
         
     async def _initialize_health_checks(self) -> None:
-        """Initialise les vérifications de santé."""
-        self._health_checker = HealthChecker(timeout=self.config.health_check_timeout)
+        """Initialise les vérifications de santé."""        self._health_checker = HealthChecker(timeout=self.config.health_check_timeout)
         self._service_health_monitor = ServiceHealthMonitor(self._health_checker)
         self._db_health_checker = DatabaseHealthChecker()
         
     async def _configure_default_alerts(self) -> None:
-        """Configure les règles d'alerte par défaut."""
-        if not self._alert_manager:
+        """Configure les règles d'alerte par défaut."""        if not self._alert_manager:
             return
             
         # Alerte taux d'échec upload de contenu élevé
@@ -299,8 +283,7 @@ class ObservabilityIndex:
         ))
         
     async def start(self) -> None:
-        """Démarre tous les composants d'observabilité."""
-        if not self._initialized:
+        """Démarre tous les composants d'observabilité."""        if not self._initialized:
             await self.initialize()
             
         if self._running:
@@ -350,8 +333,7 @@ class ObservabilityIndex:
             raise
             
     async def stop(self) -> None:
-        """Arrête tous les composants d'observabilité."""
-        if not self._running:
+        """Arrête tous les composants d'observabilité."""        if not self._running:
             return
             
         self.logger.info("Arrêt du système d'observabilité")
@@ -375,8 +357,7 @@ class ObservabilityIndex:
         self.logger.info("Système d'observabilité arrêté")
         
     async def get_status(self) -> Dict[str, Any]:
-        """Retourne l'état complet du système d'observabilité."""
-        return {
+        """Retourne l'état complet du système d'observabilité."""        return {
             "initialized": self._initialized,
             "running": self._running,
             "startup_time": self._startup_time.isoformat() if self._startup_time else None,
@@ -407,73 +388,59 @@ class ObservabilityIndex:
     # Propriétés d'accès aux composants
     @property
     def metrics(self) -> Optional[MetricsCollector]:
-        """Accès au collecteur de métriques."""
-        return self._metrics_collector
+        """Accès au collecteur de métriques."""        return self._metrics_collector
         
     @property
     def content_metrics(self) -> Optional[ContentMetricsCollector]:
-        """Accès aux métriques de contenu."""
-        return self._content_metrics
+        """Accès aux métriques de contenu."""        return self._content_metrics
         
     @property
     def ai_metrics(self) -> Optional[AIMetricsCollector]:
-        """Accès aux métriques IA."""
-        return self._ai_metrics
+        """Accès aux métriques IA."""        return self._ai_metrics
         
     @property
     def tracing(self) -> Optional[TracingManager]:
-        """Accès au gestionnaire de tracing."""
-        return self._tracing_manager
+        """Accès au gestionnaire de tracing."""        return self._tracing_manager
         
     @property
     def distributed_tracer(self) -> Optional[DistributedTracer]:
-        """Accès au traceur distribué."""
-        return self._distributed_tracer
+        """Accès au traceur distribué."""        return self._distributed_tracer
         
     @property
     def request_tracer(self) -> Optional[RequestTracer]:
-        """Accès au traceur de requêtes."""
-        return self._request_tracer
+        """Accès au traceur de requêtes."""        return self._request_tracer
         
     @property
     def alerts(self) -> Optional[AlertManager]:
-        """Accès au gestionnaire d'alertes."""
-        return self._alert_manager
+        """Accès au gestionnaire d'alertes."""        return self._alert_manager
         
     @property
     def monitoring(self) -> Optional[SystemMonitor]:
-        """Accès au surveillant système."""
-        return self._system_monitor
+        """Accès au surveillant système."""        return self._system_monitor
         
     @property
     def sla(self) -> Optional[SLAMonitor]:
-        """Accès au moniteur SLA."""
-        return self._sla_monitor
+        """Accès au moniteur SLA."""        return self._sla_monitor
         
     @property
     def logger(self) -> Optional[StructuredLogger]:
-        """Accès au logger structuré."""
-        return self._structured_logger
+        """Accès au logger structuré."""        return self._structured_logger
         
     @property
     def audit_logger(self) -> Optional[AuditLogger]:
-        """Accès au logger d'audit."""
-        return self._audit_logger
+        """Accès au logger d'audit."""        return self._audit_logger
         
     @property
     def security_logger(self) -> Optional[SecurityLogger]:
-        """Accès au logger de sécurité."""
-        return self._security_logger
+        """Accès au logger de sécurité."""        return self._security_logger
         
     @property
     def dashboards(self) -> Optional[DashboardManager]:
-        """Accès au gestionnaire de dashboards."""
-        return self._dashboard_manager
+        """Accès au gestionnaire de dashboards."""        return self._dashboard_manager
         
     @property
     def health(self) -> Optional[HealthChecker]:
-        """Accès au vérificateur de santé."""
-        return self._health_checker
+        """Accès au vérificateur de santé."""        return self._health_checker
 
 
 # Instance globale par défaut
@@ -481,13 +448,11 @@ _default_observability_index: Optional[ObservabilityIndex] = None
 
 
 def get_observability() -> ObservabilityIndex:
-    """
-    Retourne l'instance globale du gestionnaire d'observabilité.
+    """    Retourne l'instance globale du gestionnaire d'observabilité.
     
     Returns:
         ObservabilityIndex: Instance du gestionnaire d'observabilité
-    """
-    global _default_observability_index
+    """    global _default_observability_index
     
     if _default_observability_index is None:
         _default_observability_index = ObservabilityIndex()
@@ -496,16 +461,14 @@ def get_observability() -> ObservabilityIndex:
 
 
 def initialize_observability(config: Optional[ObservabilityConfig] = None) -> ObservabilityIndex:
-    """
-    Initialise l'instance globale d'observabilité avec une configuration.
+    """    Initialise l'instance globale d'observabilité avec une configuration.
     
     Args:
         config: Configuration d'observabilité optionnelle
         
     Returns:
         ObservabilityIndex: Instance configurée du gestionnaire d'observabilité
-    """
-    global _default_observability_index
+    """    global _default_observability_index
     
     _default_observability_index = ObservabilityIndex(config)
     return _default_observability_index
@@ -513,15 +476,13 @@ def initialize_observability(config: Optional[ObservabilityConfig] = None) -> Ob
 
 @asynccontextmanager
 async def observability_context(config: Optional[ObservabilityConfig] = None):
-    """
-    Gestionnaire de contexte pour l'observabilité.
+    """    Gestionnaire de contexte pour l'observabilité.
     
     Usage:
         async with observability_context() as obs:
             # Utiliser l'observabilité
             await obs.metrics.record_event("test", 1)
-    """
-    obs = initialize_observability(config)
+    """    obs = initialize_observability(config)
     
     try:
         await obs.start()
@@ -532,24 +493,21 @@ async def observability_context(config: Optional[ObservabilityConfig] = None):
 
 # Fonctions utilitaires d'accès rapide
 async def record_metric(name: str, value: float, tags: Optional[Dict[str, str]] = None) -> None:
-    """Enregistre une métrique rapidement."""
-    obs = get_observability()
+    """Enregistre une métrique rapidement."""    obs = get_observability()
     if obs.metrics:
         obs.metrics.record_gauge(name, value, tags or {})
 
 
 async def record_content_event(event_type: str, content_type: str, user_id: str, 
                              metadata: Optional[Dict[str, Any]] = None) -> None:
-    """Enregistre un événement de contenu rapidement."""
-    obs = get_observability()
+    """Enregistre un événement de contenu rapidement."""    obs = get_observability()
     if obs.content_metrics:
         await obs.content_metrics.record_content_event(event_type, content_type, user_id, metadata or {})
 
 
 async def log_security_event(event_type: str, user_id: Optional[str] = None, 
                            details: Optional[Dict[str, Any]] = None) -> None:
-    """Enregistre un événement de sécurité rapidement."""
-    obs = get_observability()
+    """Enregistre un événement de sécurité rapidement."""    obs = get_observability()
     if obs.security_logger:
         await obs.security_logger.log_security_event(event_type, user_id, details or {})
 

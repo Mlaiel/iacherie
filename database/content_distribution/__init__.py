@@ -19,8 +19,7 @@ Contact: mlaiel@live.de for licensing inquiries.
 Version: 2.0.0
 Created: December 2024
 Enhanced: January 2025
-"""
-from .distribution_channels import (
+"""from .distribution_channels import (
     DistributionChannel,
     ChannelPerformanceMetric,
     DistributionChannelManager,

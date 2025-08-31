@@ -1,5 +1,4 @@
-"""
-Threat Intelligence Module
+"""Threat Intelligence Module
 Advanced threat detection and security intelligence for IA Influencer Agent
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -29,7 +28,6 @@ Violators will face:
 
 Contact: mlaiel@live.de for any authorization requests.
 """
-
 import asyncio
 import json
 import hashlib
@@ -54,8 +52,7 @@ settings = get_settings()
 
 
 class ThreatSeverity(Enum):
-    """Threat severity levels"""
-    INFO = "info"
+    """Threat severity levels"""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -64,8 +61,7 @@ class ThreatSeverity(Enum):
 
 
 class ThreatCategory(Enum):
-    """Threat categories"""
-    PIRACY = "content_piracy"
+    """Threat categories"""    PIRACY = "content_piracy"
     UNAUTHORIZED_USE = "unauthorized_use"
     COPYRIGHT_VIOLATION = "copyright_violation"
     TRADEMARK_INFRINGEMENT = "trademark_infringement"
@@ -78,8 +74,7 @@ class ThreatCategory(Enum):
 
 
 class ThreatSource(Enum):
-    """Threat source types"""
-    WEB_CRAWLER = "web_crawler"
+    """Threat source types"""    WEB_CRAWLER = "web_crawler"
     API_MONITORING = "api_monitoring"
     USER_REPORT = "user_report"
     AUTOMATED_DETECTION = "automated_detection"
@@ -89,8 +84,7 @@ class ThreatSource(Enum):
 
 
 class ActionStatus(Enum):
-    """Mitigation action status"""
-    PENDING = "pending"
+    """Mitigation action status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -99,8 +93,7 @@ class ActionStatus(Enum):
 
 @dataclass
 class ThreatIndicator:
-    """Threat indicator for pattern matching"""
-    indicator_id: str = field(default_factory=lambda: secrets.token_hex(8))
+    """Threat indicator for pattern matching"""    indicator_id: str = field(default_factory=lambda: secrets.token_hex(8))
     indicator_type: str = "url_pattern"
     pattern: str = ""
     threat_category: ThreatCategory = ThreatCategory.PIRACY
@@ -111,8 +104,7 @@ class ThreatIndicator:
 
 @dataclass
 class SecurityThreat:
-    """Comprehensive security threat record"""
-    threat_id: str = field(default_factory=lambda: secrets.token_hex(16))
+    """Comprehensive security threat record"""    threat_id: str = field(default_factory=lambda: secrets.token_hex(16))
     threat_type: ThreatCategory = ThreatCategory.UNAUTHORIZED_USE
     severity: ThreatSeverity = ThreatSeverity.MEDIUM
     
@@ -147,8 +139,7 @@ class SecurityThreat:
     resolved_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "threat_id": self.threat_id,
             "threat_type": self.threat_type.value,
             "severity": self.severity.value,
@@ -183,8 +174,7 @@ class SecurityThreat:
 
 @dataclass
 class ThreatIntelligenceReport:
-    """Comprehensive threat intelligence report"""
-    report_id: str = field(default_factory=lambda: secrets.token_hex(12))
+    """Comprehensive threat intelligence report"""    report_id: str = field(default_factory=lambda: secrets.token_hex(12))
     period_start: datetime = field(default_factory=lambda: datetime.now(timezone.utc) - timedelta(days=7))
     period_end: datetime = field(default_factory=lambda: datetime.now(timezone.utc))
     
@@ -209,8 +199,7 @@ class ThreatIntelligenceReport:
 
 
 class ThreatIntelligenceEngine:
-    """Advanced threat intelligence and detection engine"""
-    
+    """Advanced threat intelligence and detection engine"""    
     def __init__(self):
         self.cache = CacheManager()
         self.threats: Dict[str, SecurityThreat] = {}
@@ -221,8 +210,7 @@ class ThreatIntelligenceEngine:
         self._setup_monitoring_systems()
     
     def _setup_threat_patterns(self):
-        """Initialize threat detection patterns"""
-        self.threat_patterns = {
+        """Initialize threat detection patterns"""        self.threat_patterns = {
             ThreatCategory.PIRACY: [
                 r'pirate.*download',
                 r'free.*mp3.*download',
@@ -252,8 +240,7 @@ class ThreatIntelligenceEngine:
         }
     
     def _setup_monitoring_systems(self):
-        """Initialize monitoring and detection systems"""
-        self.monitoring_platforms = [
+        """Initialize monitoring and detection systems"""        self.monitoring_platforms = [
             'youtube.com', 'instagram.com', 'tiktok.com', 'twitter.com',
             'facebook.com', 'spotify.com', 'soundcloud.com', 'reddit.com'
         ]
@@ -276,8 +263,7 @@ class ThreatIntelligenceEngine:
         content_data: Optional[bytes] = None,
         context: Dict[str, Any] = None
     ) -> SecurityThreat:
-        """Analyze potential security threat"""
-        try:
+        """Analyze potential security threat"""        try:
             context = context or {}
             
             # Parse URL for analysis
@@ -338,8 +324,7 @@ class ThreatIntelligenceEngine:
             raise
     
     async def _analyze_domain(self, domain: str) -> Dict[str, Any]:
-        """Analyze domain for threat indicators"""
-        try:
+        """Analyze domain for threat indicators"""        try:
             analysis = {
                 "domain": domain,
                 "is_suspicious": False,
@@ -373,8 +358,7 @@ class ThreatIntelligenceEngine:
             return {"domain": domain, "error": str(e)}
     
     async def _analyze_url_patterns(self, url: str) -> Dict[str, Any]:
-        """Analyze URL for threat patterns"""
-        try:
+        """Analyze URL for threat patterns"""        try:
             analysis = {
                 "url": url,
                 "matched_patterns": [],
@@ -415,8 +399,7 @@ class ThreatIntelligenceEngine:
             return {"url": url, "error": str(e)}
     
     async def _analyze_content(self, content_data: bytes) -> Dict[str, Any]:
-        """Analyze content for threat indicators"""
-        try:
+        """Analyze content for threat indicators"""        try:
             analysis = {
                 "size": len(content_data),
                 "content_hash": hashlib.sha256(content_data).hexdigest(),
@@ -463,8 +446,7 @@ class ThreatIntelligenceEngine:
             return {"error": str(e)}
     
     def _calculate_confidence_score(self, evidence: Dict[str, Any]) -> float:
-        """Calculate confidence score for threat detection"""
-        try:
+        """Calculate confidence score for threat detection"""        try:
             confidence = 0.0
             
             # Domain analysis confidence
@@ -495,8 +477,7 @@ class ThreatIntelligenceEngine:
         evidence: Dict[str, Any],
         domain_analysis: Dict[str, Any]
     ) -> float:
-        """Calculate risk score for threat"""
-        try:
+        """Calculate risk score for threat"""        try:
             risk = 0.0
             
             # Domain risk factors
@@ -524,8 +505,7 @@ class ThreatIntelligenceEngine:
             return 0.0
     
     def _classify_threat_category(self, evidence: Dict[str, Any]) -> ThreatCategory:
-        """Classify threat category based on evidence"""
-        try:
+        """Classify threat category based on evidence"""        try:
             # Check URL patterns
             url_analysis = evidence.get('url_analysis', {})
             matched_patterns = url_analysis.get('matched_patterns', [])
@@ -556,8 +536,7 @@ class ThreatIntelligenceEngine:
             return ThreatCategory.UNAUTHORIZED_USE
     
     def _assess_threat_severity(self, risk_score: float) -> ThreatSeverity:
-        """Assess threat severity based on risk score"""
-        if risk_score >= 0.9:
+        """Assess threat severity based on risk score"""        if risk_score >= 0.9:
             return ThreatSeverity.EXTREME
         elif risk_score >= 0.75:
             return ThreatSeverity.CRITICAL
@@ -575,8 +554,7 @@ class ThreatIntelligenceEngine:
         url: str,
         evidence: Dict[str, Any]
     ) -> List[ThreatIndicator]:
-        """Extract threat indicators from analysis"""
-        try:
+        """Extract threat indicators from analysis"""        try:
             indicators = []
             
             # Domain indicators
@@ -614,8 +592,7 @@ class ThreatIntelligenceEngine:
             return []
     
     async def _assess_threat_impact(self, threat: SecurityThreat) -> Dict[str, Any]:
-        """Assess potential impact of threat"""
-        try:
+        """Assess potential impact of threat"""        try:
             impact_assessment = {
                 "financial_impact": "medium",
                 "reputational_impact": "medium",
@@ -650,8 +627,7 @@ class ThreatIntelligenceEngine:
             return {}
     
     async def _generate_mitigation_actions(self, threat: SecurityThreat) -> List[Dict[str, Any]]:
-        """Generate appropriate mitigation actions for threat"""
-        try:
+        """Generate appropriate mitigation actions for threat"""        try:
             actions = []
             
             # Standard actions based on threat type
@@ -727,8 +703,7 @@ class ThreatIntelligenceEngine:
         content_fingerprints: List[str],
         monitoring_duration: int = 3600
     ) -> List[SecurityThreat]:
-        """Monitor platforms for threats related to content fingerprints"""
-        detected_threats = []
+        """Monitor platforms for threats related to content fingerprints"""        detected_threats = []
         
         try:
             # Simulate platform monitoring
@@ -761,8 +736,7 @@ class ThreatIntelligenceEngine:
         self,
         period_days: int = 7
     ) -> ThreatIntelligenceReport:
-        """Generate comprehensive threat intelligence report"""
-        try:
+        """Generate comprehensive threat intelligence report"""        try:
             end_date = datetime.now(timezone.utc)
             start_date = end_date - timedelta(days=period_days)
             
@@ -821,8 +795,7 @@ class ThreatIntelligenceEngine:
         self,
         threats: List[SecurityThreat]
     ) -> List[str]:
-        """Generate security recommendations based on threat analysis"""
-        recommendations = []
+        """Generate security recommendations based on threat analysis"""        recommendations = []
         
         try:
             if not threats:
@@ -875,16 +848,13 @@ async def analyze_security_threat(
     content_data: Optional[bytes] = None,
     context: Dict[str, Any] = None
 ) -> SecurityThreat:
-    """Analyze security threat from URL and content"""
-    return await threat_intelligence.analyze_threat(content_url, content_data, context)
+    """Analyze security threat from URL and content"""    return await threat_intelligence.analyze_threat(content_url, content_data, context)
 
 async def monitor_content_platforms(
     content_fingerprints: List[str],
     duration: int = 3600
 ) -> List[SecurityThreat]:
-    """Monitor platforms for content threats"""
-    return await threat_intelligence.monitor_platforms(content_fingerprints, duration)
+    """Monitor platforms for content threats"""    return await threat_intelligence.monitor_platforms(content_fingerprints, duration)
 
 async def generate_threat_report(period_days: int = 7) -> ThreatIntelligenceReport:
-    """Generate threat intelligence report"""
-    return await threat_intelligence.generate_intelligence_report(period_days)
+    """Generate threat intelligence report"""    return await threat_intelligence.generate_intelligence_report(period_days)

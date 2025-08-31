@@ -1,5 +1,4 @@
-"""
-Content Validator - Multi-Format Content Validation Engine
+"""Content Validator - Multi-Format Content Validation Engine
 ==========================================================
 
 The ContentValidator ensures content integrity, security, and compliance
@@ -8,7 +7,6 @@ before processing in the IA Influencer Agent platform.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 import mimetypes
@@ -33,13 +31,11 @@ from ..config.settings import get_settings
 
 
 class ValidationError(Exception):
-    """Content validation error"""
-    pass
+    """Content validation error"""    pass
 
 
 class ValidationRule:
-    """Content validation rule definition"""
-    
+    """Content validation rule definition"""    
     def __init__(
         self,
         name: str,
@@ -54,8 +50,7 @@ class ValidationRule:
 
 
 class ContentValidator:
-    """
-    Multi-Format Content Validation Engine
+    """    Multi-Format Content Validation Engine
     
     Provides comprehensive validation for all supported content types
     including security scanning, format verification, quality checks,
@@ -67,8 +62,7 @@ class ContentValidator:
     - Content quality assessment
     - Legal compliance checking
     - User permissions and quotas
-    """
-    
+    """    
     def __init__(self, settings=None):
         self.settings = settings or get_settings()
         self.logger = logging.getLogger(__name__)
@@ -123,8 +117,7 @@ class ContentValidator:
         user_id: int,
         additional_checks: List[str] = None
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive content validation
+        """        Perform comprehensive content validation
         
         Args:
             file_path: Path to content file
@@ -134,8 +127,7 @@ class ContentValidator:
             
         Returns:
             Validation result with status and details
-        """
-        validation_start = datetime.utcnow()
+        """        validation_start = datetime.utcnow()
         
         try:
             self.logger.info(f"Validating content {file_path} for user {user_id}")
@@ -236,8 +228,7 @@ class ContentValidator:
             }
 
     def _setup_validation_rules(self):
-        """Initialize validation rules"""
-        self.validation_rules = {
+        """Initialize validation rules"""        self.validation_rules = {
             "file_format": ValidationRule(
                 "file_format",
                 self._check_file_format,
@@ -295,8 +286,7 @@ class ContentValidator:
         user_id: int,
         validation_result: Dict
     ) -> Dict[str, Any]:
-        """Check if file format is supported"""
-        try:
+        """Check if file format is supported"""        try:
             file_ext = Path(file_path).suffix.lower()
             supported_exts = self.supported_formats.get(content_type, [])
             
@@ -325,8 +315,7 @@ class ContentValidator:
         user_id: int,
         validation_result: Dict
     ) -> Dict[str, Any]:
-        """Check if file size is within limits"""
-        try:
+        """Check if file size is within limits"""        try:
             file_size = await aiofiles.os.path.getsize(file_path)
             size_limit = self.size_limits.get(content_type, 0)
             
@@ -357,8 +346,7 @@ class ContentValidator:
         user_id: int,
         validation_result: Dict
     ) -> Dict[str, Any]:
-        """Check MIME type validity"""
-        try:
+        """Check MIME type validity"""        try:
             # Use python-magic for accurate MIME detection
             mime_type = magic.from_file(file_path, mime=True)
             expected_mimes = self.mime_types.get(content_type, [])
@@ -388,8 +376,7 @@ class ContentValidator:
         user_id: int,
         validation_result: Dict
     ) -> Dict[str, Any]:
-        """Check file integrity and corruption"""
-        try:
+        """Check file integrity and corruption"""        try:
             if content_type == "image":
                 return await self._check_image_integrity(file_path)
             elif content_type == "audio":
@@ -408,8 +395,7 @@ class ContentValidator:
             }
 
     async def _check_image_integrity(self, file_path: str) -> Dict[str, Any]:
-        """Check image file integrity"""
-        try:
+        """Check image file integrity"""        try:
             with Image.open(file_path) as img:
                 # Try to load the image data
                 img.load()
@@ -438,8 +424,7 @@ class ContentValidator:
             }
 
     async def _check_audio_integrity(self, file_path: str) -> Dict[str, Any]:
-        """Check audio file integrity"""
-        try:
+        """Check audio file integrity"""        try:
             # Try to load audio with librosa
             audio_data, sample_rate = librosa.load(file_path, sr=None, duration=1.0)
             
@@ -471,8 +456,7 @@ class ContentValidator:
             }
 
     async def _check_video_integrity(self, file_path: str) -> Dict[str, Any]:
-        """Check video file integrity"""
-        try:
+        """Check video file integrity"""        try:
             cap = cv2.VideoCapture(file_path)
             
             if not cap.isOpened():
@@ -513,8 +497,7 @@ class ContentValidator:
             }
 
     async def _check_text_integrity(self, file_path: str) -> Dict[str, Any]:
-        """Check text file integrity"""
-        try:
+        """Check text file integrity"""        try:
             # Detect encoding
             async with aiofiles.open(file_path, 'rb') as f:
                 raw_data = await f.read(10240)  # Read first 10KB for encoding detection
@@ -556,8 +539,7 @@ class ContentValidator:
         user_id: int,
         validation_result: Dict
     ) -> Dict[str, Any]:
-        """Perform virus scanning"""
-        try:
+        """Perform virus scanning"""        try:
             scan_result = await self.virus_scanner.scan_file(file_path)
             
             if scan_result.get("threat_detected", False):
@@ -589,8 +571,7 @@ class ContentValidator:
         user_id: int,
         validation_result: Dict
     ) -> Dict[str, Any]:
-        """Check content quality metrics"""
-        try:
+        """Check content quality metrics"""        try:
             if content_type == "image":
                 return await self._assess_image_quality(file_path)
             elif content_type == "audio":
@@ -607,8 +588,7 @@ class ContentValidator:
             }
 
     async def _assess_image_quality(self, file_path: str) -> Dict[str, Any]:
-        """Assess image quality"""
-        try:
+        """Assess image quality"""        try:
             with Image.open(file_path) as img:
                 width, height = img.size
                 
@@ -638,8 +618,7 @@ class ContentValidator:
             }
 
     async def _assess_audio_quality(self, file_path: str) -> Dict[str, Any]:
-        """Assess audio quality"""
-        try:
+        """Assess audio quality"""        try:
             audio_data, sample_rate = librosa.load(file_path, sr=None, duration=10.0)
             
             # Basic quality checks
@@ -676,8 +655,7 @@ class ContentValidator:
             }
 
     async def _assess_video_quality(self, file_path: str) -> Dict[str, Any]:
-        """Assess video quality"""
-        try:
+        """Assess video quality"""        try:
             cap = cv2.VideoCapture(file_path)
             
             if not cap.isOpened():
@@ -731,8 +709,7 @@ class ContentValidator:
         user_id: int,
         validation_result: Dict
     ) -> Dict[str, Any]:
-        """Check user upload quota"""
-        try:
+        """Check user upload quota"""        try:
             # This would integrate with user management system
             # For now, return passed
             return {
@@ -753,8 +730,7 @@ class ContentValidator:
         user_id: int,
         validation_result: Dict
     ) -> Dict[str, Any]:
-        """Validate metadata can be extracted"""
-        try:
+        """Validate metadata can be extracted"""        try:
             # Basic metadata extraction test
             file_stats = await aiofiles.os.stat(file_path)
             

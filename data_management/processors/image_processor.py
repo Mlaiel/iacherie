@@ -1,5 +1,4 @@
-"""
-🖼️ Image Processor - IA Influencer Agent Platform Enterprise
+"""🖼️ Image Processor - IA Influencer Agent Platform Enterprise
 =============================================================
 Module: backend/data_management/processors/image_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER IMAGE PROCESSOR:
 Image Upload → Format Detection → Quality Analysis → Metadata Extraction → 
 Fingerprinting → Watermark Detection → Content Analysis → Optimization → Protection
 """
-
 import cv2
 import numpy as np
 from PIL import Image, ImageStat, ExifTags
@@ -38,8 +36,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class ImageProcessor(BaseProcessor):
-    """Processeur avancé pour images - Production Enterprise"""
-    
+    """Processeur avancé pour images - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.supported_formats = {
@@ -62,8 +59,7 @@ class ImageProcessor(BaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     def _init_ai_models(self):
-        """Initialize AI models for content analysis"""
-        try:
+        """Initialize AI models for content analysis"""        try:
             # CLIP model for semantic analysis
             self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
             self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
@@ -77,8 +73,7 @@ class ImageProcessor(BaseProcessor):
             self.clip_processor = None
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données image d'entrée"""
-        if isinstance(input_data, str):
+        """Valide les données image d'entrée"""        if isinstance(input_data, str):
             # File path validation
             return Path(input_data).exists() and Path(input_data).suffix.upper()[1:] in self.supported_formats
         elif isinstance(input_data, bytes):
@@ -94,8 +89,7 @@ class ImageProcessor(BaseProcessor):
         return False
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite une image complètement"""
-        try:
+        """Traite une image complètement"""        try:
             # Load image
             image_data = self._load_image(input_data)
             
@@ -142,8 +136,7 @@ class ImageProcessor(BaseProcessor):
             }
     
     def _load_image(self, input_data: Any) -> Tuple[np.ndarray, Image.Image]:
-        """Charge une image depuis différentes sources"""
-        if isinstance(input_data, str):
+        """Charge une image depuis différentes sources"""        if isinstance(input_data, str):
             # File path
             pil_image = Image.open(input_data)
         elif isinstance(input_data, bytes):
@@ -167,8 +160,7 @@ class ImageProcessor(BaseProcessor):
         return cv_image, pil_image
     
     def _extract_metadata(self, image_data: Tuple[np.ndarray, Image.Image]) -> Dict[str, Any]:
-        """Extrait les métadonnées complètes"""
-        cv_image, pil_image = image_data
+        """Extrait les métadonnées complètes"""        cv_image, pil_image = image_data
         
         metadata = {
             "format": pil_image.format,
@@ -198,8 +190,7 @@ class ImageProcessor(BaseProcessor):
         return metadata
     
     def _analyze_quality(self, image_data: Tuple[np.ndarray, Image.Image]) -> Dict[str, Any]:
-        """Analyse la qualité de l'image"""
-        cv_image, pil_image = image_data
+        """Analyse la qualité de l'image"""        cv_image, pil_image = image_data
         
         # Sharpness analysis using Laplacian variance
         gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
@@ -229,8 +220,7 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _generate_fingerprints(self, image_data: Tuple[np.ndarray, Image.Image]) -> Dict[str, Any]:
-        """Génère différents types d'empreintes"""
-        cv_image, pil_image = image_data
+        """Génère différents types d'empreintes"""        cv_image, pil_image = image_data
         
         # Perceptual hashes for similarity detection
         phash = str(imagehash.phash(pil_image))
@@ -261,8 +251,7 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _analyze_content(self, image_data: Tuple[np.ndarray, Image.Image]) -> Dict[str, Any]:
-        """Analyse le contenu avec IA"""
-        cv_image, pil_image = image_data
+        """Analyse le contenu avec IA"""        cv_image, pil_image = image_data
         
         content_analysis = {
             "content_type": "image",
@@ -280,8 +269,7 @@ class ImageProcessor(BaseProcessor):
         return content_analysis
     
     def _security_analysis(self, image_data: Tuple[np.ndarray, Image.Image]) -> Dict[str, Any]:
-        """Analyse de sécurité du contenu"""
-        cv_image, pil_image = image_data
+        """Analyse de sécurité du contenu"""        cv_image, pil_image = image_data
         
         return {
             "watermark_detected": self._detect_watermarks(cv_image),
@@ -292,8 +280,7 @@ class ImageProcessor(BaseProcessor):
     
     def _generate_optimization_suggestions(self, image_data: Tuple[np.ndarray, Image.Image], 
                                          quality_analysis: Dict) -> Dict[str, Any]:
-        """Génère des suggestions d'optimisation"""
-        cv_image, pil_image = image_data
+        """Génère des suggestions d'optimisation"""        cv_image, pil_image = image_data
         
         suggestions = []
         
@@ -327,8 +314,7 @@ class ImageProcessor(BaseProcessor):
     
     # Utility methods
     def _analyze_color_distribution(self, pil_image: Image.Image) -> Dict[str, Any]:
-        """Analyse la distribution des couleurs"""
-        stat = ImageStat.Stat(pil_image)
+        """Analyse la distribution des couleurs"""        stat = ImageStat.Stat(pil_image)
         return {
             "mean_rgb": stat.mean,
             "median_rgb": stat.median,
@@ -337,13 +323,11 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _estimate_noise(self, gray_image: np.ndarray) -> float:
-        """Estime le niveau de bruit"""
-        return cv2.fastNlMeansDenoising(gray_image).var()
+        """Estime le niveau de bruit"""        return cv2.fastNlMeansDenoising(gray_image).var()
     
     def _calculate_quality_score(self, sharpness: float, brightness: float, 
                                 contrast: float, noise: float) -> float:
-        """Calcule un score de qualité global"""
-        # Normalize and weight different factors
+        """Calcule un score de qualité global"""        # Normalize and weight different factors
         sharpness_score = min(sharpness / 1000, 1.0) * 0.4
         brightness_score = (1.0 - abs(brightness - 128) / 128) * 0.2
         contrast_score = min(contrast / 64, 1.0) * 0.3
@@ -352,15 +336,13 @@ class ImageProcessor(BaseProcessor):
         return sharpness_score + brightness_score + contrast_score + noise_score
     
     def _get_quality_rating(self, score: float) -> str:
-        """Convertit le score en rating"""
-        for rating, threshold in self.quality_thresholds.items():
+        """Convertit le score en rating"""        for rating, threshold in self.quality_thresholds.items():
             if score >= threshold:
                 return rating
         return "very_poor"
     
     def _assess_resolution_quality(self, width: int, height: int) -> str:
-        """Évalue la qualité de la résolution"""
-        total_pixels = width * height
+        """Évalue la qualité de la résolution"""        total_pixels = width * height
         
         if total_pixels >= 8000000:  # 8MP+
             return "excellent"
@@ -372,8 +354,7 @@ class ImageProcessor(BaseProcessor):
             return "poor"
     
     def _detect_compression_artifacts(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Détecte les artefacts de compression"""
-        # JPEG blocking artifacts detection
+        """Détecte les artefacts de compression"""        # JPEG blocking artifacts detection
         gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         
         # DCT analysis for JPEG artifacts
@@ -393,8 +374,7 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _generate_color_histogram_fingerprint(self, cv_image: np.ndarray) -> List[float]:
-        """Génère une empreinte basée sur l'histogramme des couleurs"""
-        hist_b = cv2.calcHist([cv_image], [0], None, [256], [0, 256])
+        """Génère une empreinte basée sur l'histogramme des couleurs"""        hist_b = cv2.calcHist([cv_image], [0], None, [256], [0, 256])
         hist_g = cv2.calcHist([cv_image], [1], None, [256], [0, 256])
         hist_r = cv2.calcHist([cv_image], [2], None, [256], [0, 256])
         
@@ -405,8 +385,7 @@ class ImageProcessor(BaseProcessor):
         return hist_normalized.tolist()[:64]  # Reduce dimensionality
     
     def _generate_edge_fingerprint(self, cv_image: np.ndarray) -> List[float]:
-        """Génère une empreinte basée sur les contours"""
-        gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
+        """Génère une empreinte basée sur les contours"""        gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         edges = cv2.Canny(gray, 50, 150)
         
         # Create edge histogram
@@ -416,8 +395,7 @@ class ImageProcessor(BaseProcessor):
         return edge_normalized.tolist()[:32]  # Reduce dimensionality
     
     def _extract_dominant_colors(self, pil_image: Image.Image) -> List[Dict[str, Any]]:
-        """Extrait les couleurs dominantes"""
-        # Convert to numpy for K-means
+        """Extrait les couleurs dominantes"""        # Convert to numpy for K-means
         img_array = np.array(pil_image.resize((100, 100)))  # Resize for performance
         img_reshaped = img_array.reshape(-1, 3)
         
@@ -439,8 +417,7 @@ class ImageProcessor(BaseProcessor):
         return dominant_colors
     
     def _detect_objects(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Détection d'objets basique"""
-        # This would use YOLO or similar in production
+        """Détection d'objets basique"""        # This would use YOLO or similar in production
         return {
             "objects_detected": [],
             "confidence_threshold": 0.5,
@@ -448,8 +425,7 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _detect_text(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Détection de texte dans l'image"""
-        # This would use OCR like Tesseract in production
+        """Détection de texte dans l'image"""        # This would use OCR like Tesseract in production
         return {
             "text_regions": [],
             "has_text": False,
@@ -457,8 +433,7 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _detect_faces(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Détection de visages"""
-        # Load Haar cascade for face detection
+        """Détection de visages"""        # Load Haar cascade for face detection
         try:
             face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
             gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
@@ -478,8 +453,7 @@ class ImageProcessor(BaseProcessor):
             }
     
     def _extract_semantic_features(self, pil_image: Image.Image) -> Dict[str, Any]:
-        """Extraction de caractéristiques sémantiques avec CLIP"""
-        try:
+        """Extraction de caractéristiques sémantiques avec CLIP"""        try:
             inputs = self.clip_processor(images=pil_image, return_tensors="pt")
             with torch.no_grad():
                 image_features = self.clip_model.get_image_features(**inputs)
@@ -493,8 +467,7 @@ class ImageProcessor(BaseProcessor):
             return {"feature_vector": [], "model": "none"}
     
     def _detect_watermarks(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Détection de filigranes"""
-        # Basic watermark detection using frequency domain analysis
+        """Détection de filigranes"""        # Basic watermark detection using frequency domain analysis
         gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         
         # FFT analysis for repeating patterns
@@ -512,8 +485,7 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _assess_metadata_privacy(self, pil_image: Image.Image) -> Dict[str, Any]:
-        """Évalue les risques de confidentialité des métadonnées"""
-        privacy_risks = []
+        """Évalue les risques de confidentialité des métadonnées"""        privacy_risks = []
         
         if hasattr(pil_image, '_getexif') and pil_image._getexif():
             exif = pil_image._getexif()
@@ -537,14 +509,12 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _assess_content_safety(self, pil_image: Image.Image) -> float:
-        """Évalue la sécurité du contenu"""
-        # Basic content safety assessment
+        """Évalue la sécurité du contenu"""        # Basic content safety assessment
         # In production, this would use specialized ML models
         return 0.95  # Placeholder score
     
     def _detect_steganography_risk(self, cv_image: np.ndarray) -> Dict[str, Any]:
-        """Détecte les risques de stéganographie"""
-        # Basic steganography detection using statistical analysis
+        """Détecte les risques de stéganographie"""        # Basic steganography detection using statistical analysis
         gray = cv2.cvtColor(cv_image, cv2.COLOR_BGR2GRAY)
         
         # Chi-square test for randomness
@@ -558,8 +528,7 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _suggest_optimal_format(self, pil_image: Image.Image) -> Optional[Dict[str, Any]]:
-        """Suggère le format optimal"""
-        current_format = pil_image.format
+        """Suggère le format optimal"""        current_format = pil_image.format
         
         # Simple format recommendation logic
         if pil_image.mode == 'RGBA':
@@ -580,8 +549,7 @@ class ImageProcessor(BaseProcessor):
         return None
     
     def _estimate_compression_savings(self, pil_image: Image.Image) -> Dict[str, Any]:
-        """Estime les économies de compression"""
-        import io
+        """Estime les économies de compression"""        import io
         
         current_size = len(pil_image.tobytes())
         
@@ -603,8 +571,7 @@ class ImageProcessor(BaseProcessor):
         }
     
     def _generate_seo_recommendations(self, pil_image: Image.Image) -> List[str]:
-        """Génère des recommandations SEO"""
-        recommendations = []
+        """Génère des recommandations SEO"""        recommendations = []
         
         if pil_image.width > 2000 or pil_image.height > 2000:
             recommendations.append("Optimize image size for faster loading")
@@ -620,16 +587,14 @@ class ImageProcessor(BaseProcessor):
 
 
 class AsyncImageProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur d'images"""
-    
+    """Version asynchrone du processeur d'images"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = ImageProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Version asynchrone de la validation"""
-        loop = asyncio.get_event_loop()
+        """Version asynchrone de la validation"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.validate_input, 
@@ -637,8 +602,7 @@ class AsyncImageProcessor(AsyncBaseProcessor):
         )
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Version asynchrone du traitement"""
-        loop = asyncio.get_event_loop()
+        """Version asynchrone du traitement"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process, 
@@ -646,6 +610,5 @@ class AsyncImageProcessor(AsyncBaseProcessor):
         )
     
     async def process_batch(self, input_batch: List[Any]) -> List[Dict[str, Any]]:
-        """Traitement en lot asynchrone"""
-        tasks = [self.process(item) for item in input_batch]
+        """Traitement en lot asynchrone"""        tasks = [self.process(item) for item in input_batch]
         return await asyncio.gather(*tasks, return_exceptions=True)

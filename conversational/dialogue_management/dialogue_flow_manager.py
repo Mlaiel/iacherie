@@ -1,5 +1,4 @@
-"""
-Dialogue Flow Manager - Core Conversation Flow Management
+"""Dialogue Flow Manager - Core Conversation Flow Management
 
 Enterprise-grade dialogue flow management system for IA Influencer Agent platform.
 Orchestrates multi-turn conversations with content creators, handles complex 
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -46,8 +44,7 @@ from backend.services.monetization.revenue_service import RevenueService
 logger = logging.getLogger(__name__)
 
 class DialogueState(Enum):
-    """Core dialogue states for IA Influencer platform"""
-    IDLE = "idle"
+    """Core dialogue states for IA Influencer platform"""    IDLE = "idle"
     GREETING = "greeting"
     INTENT_DETECTION = "intent_detection"
     
@@ -78,8 +75,7 @@ class DialogueState(Enum):
     TERMINATED = "terminated"
 
 class DialogueIntent(Enum):
-    """Business intent categories for content creators"""
-    # Core Business Intents
+    """Business intent categories for content creators"""    # Core Business Intents
     CONTENT_PROTECTION = "content_protection"
     CONTENT_MONETIZATION = "content_monetization" 
     COLLABORATION_SEEKING = "collaboration_seeking"
@@ -109,8 +105,7 @@ class DialogueIntent(Enum):
     GOODBYE = "goodbye"
 
 class CreatorType(Enum):
-    """Content creator categories"""
-    MUSICIAN = "musician"
+    """Content creator categories"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -121,8 +116,7 @@ class CreatorType(Enum):
 
 @dataclass
 class DialogueContext:
-    """Comprehensive dialogue context for content creators"""
-    conversation_id: str
+    """Comprehensive dialogue context for content creators"""    conversation_id: str
     user_id: str
     session_id: str
     creator_type: Optional[CreatorType] = None
@@ -156,8 +150,7 @@ class DialogueContext:
 
 @dataclass
 class DialogueResponse:
-    """Structured dialogue response"""
-    message: str
+    """Structured dialogue response"""    message: str
     state: DialogueState
     intent: Optional[DialogueIntent]
     confidence: float
@@ -176,8 +169,7 @@ class DialogueResponse:
 
 @dataclass
 class FlowTransition:
-    """Dialogue flow transition definition"""
-    from_state: DialogueState
+    """Dialogue flow transition definition"""    from_state: DialogueState
     to_state: DialogueState
     trigger: str
     conditions: List[str] = field(default_factory=list)
@@ -186,8 +178,7 @@ class FlowTransition:
     business_rules: Dict[str, Any] = field(default_factory=dict)
 
 class DialogueFlowManager:
-    """
-    Enterprise-grade dialogue flow management system for IA Influencer platform.
+    """    Enterprise-grade dialogue flow management system for IA Influencer platform.
     
     Manages complex business workflows for content creators including:
     - Multi-format content processing flows
@@ -195,8 +186,7 @@ class DialogueFlowManager:
     - Creator collaboration matchmaking
     - Revenue optimization and monetization
     - Multi-platform distribution orchestration
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: aioredis.Redis,
@@ -249,8 +239,7 @@ class DialogueFlowManager:
         logger.info("DialogueFlowManager initialized with enterprise business flows")
 
     def _initialize_business_flows(self):
-        """Initialize dialogue flows for creator business workflows"""
-        
+        """Initialize dialogue flows for creator business workflows"""        
         # Define flow states with business context
         flow_states = {
             DialogueState.IDLE: {
@@ -437,8 +426,7 @@ class DialogueFlowManager:
         logger.info("Business workflow flows initialized successfully")
 
     def _setup_state_machines(self):
-        """Setup state machines for dialogue flow management"""
-        self.state_transitions = {
+        """Setup state machines for dialogue flow management"""        self.state_transitions = {
             'trigger': 'user_message',
             'source': list(DialogueState),
             'dest': list(DialogueState),
@@ -453,8 +441,7 @@ class DialogueFlowManager:
         initial_message: Optional[str] = None,
         creator_type: Optional[CreatorType] = None
     ) -> DialogueResponse:
-        """
-        Start new dialogue session for content creator
+        """        Start new dialogue session for content creator
         
         Args:
             user_id: Creator's user ID
@@ -464,8 +451,7 @@ class DialogueFlowManager:
             
         Returns:
             DialogueResponse with personalized greeting
-        """
-        conversation_id = str(uuid.uuid4())
+        """        conversation_id = str(uuid.uuid4())
         
         # Create dialogue context with business context
         context = DialogueContext(
@@ -513,8 +499,7 @@ class DialogueFlowManager:
         message: str,
         user_id: str
     ) -> DialogueResponse:
-        """
-        Process creator message and manage dialogue flow
+        """        Process creator message and manage dialogue flow
         
         Args:
             conversation_id: Conversation identifier
@@ -523,8 +508,7 @@ class DialogueFlowManager:
             
         Returns:
             DialogueResponse with appropriate business response
-        """
-        start_time = datetime.now(timezone.utc)
+        """        start_time = datetime.now(timezone.utc)
         
         # Get or load context
         if conversation_id not in self.active_contexts:
@@ -589,8 +573,7 @@ class DialogueFlowManager:
             return await self._handle_error(context, str(e))
 
     async def _classify_business_intent(self, message: str) -> Dict[str, Any]:
-        """Classify message into business intent categories"""
-        try:
+        """Classify message into business intent categories"""        try:
             # Use zero-shot classification for business intents
             result = self.intent_classifier(message, self.business_intent_labels)
             
@@ -626,8 +609,7 @@ class DialogueFlowManager:
             }
 
     async def _analyze_sentiment(self, message: str) -> Dict[str, float]:
-        """Analyze message sentiment for creator experience optimization"""
-        try:
+        """Analyze message sentiment for creator experience optimization"""        try:
             result = self.sentiment_analyzer(message)
             
             # Convert to standardized format
@@ -661,8 +643,7 @@ class DialogueFlowManager:
         intent: DialogueIntent,
         sentiment: Dict[str, float]
     ) -> DialogueState:
-        """Determine next dialogue state based on business logic"""
-        current_state = context.current_state
+        """Determine next dialogue state based on business logic"""        current_state = context.current_state
         
         # Business workflow routing logic
         if current_state == DialogueState.IDLE:
@@ -730,8 +711,7 @@ class DialogueFlowManager:
         user_message: str,
         intent: DialogueIntent
     ) -> Dict[str, Any]:
-        """Execute business workflow transition and generate response"""
-        
+        """Execute business workflow transition and generate response"""        
         # Update state
         context.previous_state = context.current_state
         context.state_history.append(context.current_state)
@@ -769,8 +749,7 @@ class DialogueFlowManager:
         return response
 
     async def _generate_greeting_response(self, context: DialogueContext) -> Dict[str, Any]:
-        """Generate personalized greeting for content creators"""
-        creator_type = context.creator_type
+        """Generate personalized greeting for content creators"""        creator_type = context.creator_type
         
         # Personalize based on creator type
         if creator_type == CreatorType.MUSICIAN:
@@ -811,8 +790,7 @@ class DialogueFlowManager:
         }
 
     async def _generate_content_upload_response(self, context: DialogueContext) -> Dict[str, Any]:
-        """Generate content upload guidance response"""
-        return {
+        """Generate content upload guidance response"""        return {
             "message": "Perfect! Let's get your content uploaded and protected. I'll guide you through our secure upload process.\n\n" +
                       "Which type of content are you uploading today?",
             "quick_replies": [
@@ -837,8 +815,7 @@ class DialogueFlowManager:
         }
 
     async def _generate_protection_setup_response(self, context: DialogueContext) -> Dict[str, Any]:
-        """Generate content protection setup response"""
-        return {
+        """Generate content protection setup response"""        return {
             "message": "Excellent! Your content has been uploaded successfully. Now let's set up AI-powered protection.\n\n" +
                       "I'll configure:\n" +
                       "• Digital fingerprinting for copyright detection\n" +
@@ -866,8 +843,7 @@ class DialogueFlowManager:
         }
 
     async def _generate_collaboration_response(self, context: DialogueContext) -> Dict[str, Any]:
-        """Generate collaboration matching response"""
-        return {
+        """Generate collaboration matching response"""        return {
             "message": "Great choice! Collaborations can significantly boost your reach and revenue. Let me help you find the perfect creative partners.\n\n" +
                       "What type of collaboration are you looking for?",
             "quick_replies": [
@@ -893,8 +869,7 @@ class DialogueFlowManager:
         }
 
     async def _generate_monetization_response(self, context: DialogueContext) -> Dict[str, Any]:
-        """Generate monetization optimization response"""
-        return {
+        """Generate monetization optimization response"""        return {
             "message": "Smart focus on revenue! I'll analyze your content and audience to maximize your earning potential.\n\n" +
                       "Let's explore your monetization opportunities:\n" +
                       "• Platform revenue optimization\n" +
@@ -924,8 +899,7 @@ class DialogueFlowManager:
         }
 
     async def _generate_support_response(self, context: DialogueContext) -> Dict[str, Any]:
-        """Generate technical support response"""
-        return {
+        """Generate technical support response"""        return {
             "message": "I'm here to help resolve any technical issues you're experiencing. Let me assist you quickly and efficiently.\n\n" +
                       "What specific problem are you encountering?",
             "quick_replies": [
@@ -951,8 +925,7 @@ class DialogueFlowManager:
         }
 
     async def _generate_feedback_response(self, context: DialogueContext) -> Dict[str, Any]:
-        """Generate feedback collection response"""
-        return {
+        """Generate feedback collection response"""        return {
             "message": "Thank you for using IA-Influencer! I hope I was able to help you achieve your goals today.\n\n" +
                       "How would you rate your experience with me?",
             "quick_replies": [
@@ -977,8 +950,7 @@ class DialogueFlowManager:
         }
 
     async def _generate_closing_response(self, context: DialogueContext) -> Dict[str, Any]:
-        """Generate conversation closing response"""
-        session_duration = datetime.now(timezone.utc) - context.created_at
+        """Generate conversation closing response"""        session_duration = datetime.now(timezone.utc) - context.created_at
         
         return {
             "message": "It's been a pleasure helping you today! Your content is now better protected, optimized, and ready to generate more revenue.\n\n" +
@@ -1011,8 +983,7 @@ class DialogueFlowManager:
         context: DialogueContext, 
         intent: DialogueIntent
     ) -> Dict[str, Any]:
-        """Generate default business response for unhandled states"""
-        return {
+        """Generate default business response for unhandled states"""        return {
             "message": "I'm here to help you with content protection, collaborations, and monetization. " +
                       "Could you please clarify what you'd like to accomplish?",
             "quick_replies": [
@@ -1041,8 +1012,7 @@ class DialogueFlowManager:
         new_state: DialogueState, 
         trigger: str
     ):
-        """Execute state transition with business logic validation"""
-        old_state = context.current_state
+        """Execute state transition with business logic validation"""        old_state = context.current_state
         context.previous_state = old_state
         context.current_state = new_state
         context.state_history.append(old_state)
@@ -1051,8 +1021,7 @@ class DialogueFlowManager:
         logger.info(f"Business transition: {old_state.value} -> {new_state.value} (trigger: {trigger})")
 
     async def _persist_context(self, context: DialogueContext):
-        """Persist dialogue context to Redis for session management"""
-        try:
+        """Persist dialogue context to Redis for session management"""        try:
             context_data = {
                 "conversation_id": context.conversation_id,
                 "user_id": context.user_id,
@@ -1079,8 +1048,7 @@ class DialogueFlowManager:
             logger.error(f"Error persisting dialogue context: {str(e)}")
 
     async def _load_context(self, conversation_id: str) -> Optional[DialogueContext]:
-        """Load dialogue context from Redis"""
-        try:
+        """Load dialogue context from Redis"""        try:
             context_data = await self.redis_client.get(f"dialogue_context:{conversation_id}")
             if not context_data:
                 return None
@@ -1113,8 +1081,7 @@ class DialogueFlowManager:
             return None
 
     async def _handle_error(self, context: DialogueContext, error_message: str) -> DialogueResponse:
-        """Handle dialogue errors gracefully"""
-        logger.error(f"Dialogue error in conversation {context.conversation_id}: {error_message}")
+        """Handle dialogue errors gracefully"""        logger.error(f"Dialogue error in conversation {context.conversation_id}: {error_message}")
         
         return DialogueResponse(
             message="I apologize, but I encountered an issue processing your request. Let me connect you with human support to ensure you get the help you need.",
@@ -1128,8 +1095,7 @@ class DialogueFlowManager:
         )
 
     async def get_conversation_analytics(self, conversation_id: str) -> Dict[str, Any]:
-        """Get comprehensive analytics for conversation"""
-        context = self.active_contexts.get(conversation_id) or await self._load_context(conversation_id)
+        """Get comprehensive analytics for conversation"""        context = self.active_contexts.get(conversation_id) or await self._load_context(conversation_id)
         
         if not context:
             return {"error": "Conversation not found"}
@@ -1178,8 +1144,7 @@ class DialogueFlowManager:
         }
 
     async def end_conversation(self, conversation_id: str, reason: str = "user_initiated") -> bool:
-        """End conversation and cleanup resources"""
-        try:
+        """End conversation and cleanup resources"""        try:
             context = self.active_contexts.get(conversation_id)
             if context:
                 # Update completion status
@@ -1202,12 +1167,10 @@ class DialogueFlowManager:
             return False
 
     def get_active_conversations(self) -> List[str]:
-        """Get list of active conversation IDs"""
-        return list(self.active_contexts.keys())
+        """Get list of active conversation IDs"""        return list(self.active_contexts.keys())
 
     async def get_conversation_summary(self, conversation_id: str) -> Dict[str, Any]:
-        """Get summary of conversation for reporting"""
-        analytics = await self.get_conversation_analytics(conversation_id)
+        """Get summary of conversation for reporting"""        analytics = await self.get_conversation_analytics(conversation_id)
         
         if "error" in analytics:
             return analytics
@@ -1236,8 +1199,7 @@ class DialogueFlowManager:
 
 @dataclass
 class FlowState:
-    """Enhanced flow state with enterprise features"""
-    state_id: str
+    """Enhanced flow state with enterprise features"""    state_id: str
     state_name: DialogueState
     description: str
     entry_conditions: List[str] = field(default_factory=list)
@@ -1248,8 +1210,7 @@ class FlowState:
 
 @dataclass 
 class FlowCondition:
-    """Flow condition with business logic"""
-    condition_id: str
+    """Flow condition with business logic"""    condition_id: str
     condition_type: str  # business_rule, user_input, system_state
     expression: str
     priority: int = 0
@@ -1258,8 +1219,7 @@ class FlowCondition:
 
 @dataclass
 class DialogueMetrics:
-    """Comprehensive dialogue performance metrics"""
-    metrics_id: str
+    """Comprehensive dialogue performance metrics"""    metrics_id: str
     conversation_id: str
     
     # Performance metrics
@@ -1282,8 +1242,7 @@ class DialogueMetrics:
 
 @dataclass
 class FlowExecutionResult:
-    """Result of flow execution with detailed information"""
-    execution_id: str
+    """Result of flow execution with detailed information"""    execution_id: str
     flow_id: str
     success: bool
     final_state: DialogueState
@@ -1305,8 +1264,7 @@ class FlowExecutionResult:
 
 @dataclass
 class ConversationFlow:
-    """High-level conversation flow definition"""
-    flow_id: str
+    """High-level conversation flow definition"""    flow_id: str
     flow_name: str
     flow_type: str  # business_workflow, support_flow, onboarding_flow
     creator_types: List[CreatorType] = field(default_factory=list)
@@ -1330,8 +1288,7 @@ class ConversationFlow:
 
 @dataclass
 class DialogueFlow:
-    """Complete dialogue flow with all components"""
-    dialogue_id: str
+    """Complete dialogue flow with all components"""    dialogue_id: str
     conversation_flow: ConversationFlow
     current_context: DialogueContext
     

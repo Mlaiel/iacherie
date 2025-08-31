@@ -43,8 +43,7 @@ Creator Types Supported:
 - Photographers: Image processing, watermarking, licensing automation
 - Influencers: Multi-format optimization, platform targeting, viral analysis
 - Comedians: Video timing analysis, audience optimization, engagement prediction
-"""
-from .adaptation_engine import (
+"""from .adaptation_engine import (
     AdaptationEngine,
     AdaptationWorkflow,
     CreatorType,

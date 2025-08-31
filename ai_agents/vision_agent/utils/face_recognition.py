@@ -1,5 +1,4 @@
-"""
-Face Recognition - Enterprise Facial Recognition & Analysis System
+"""Face Recognition - Enterprise Facial Recognition & Analysis System
 =================================================================
 
 Advanced facial recognition system with identity verification, emotion detection,
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import cv2
@@ -40,11 +38,9 @@ from ...security.privacy_manager import PrivacyManager
 logger = logging.getLogger(__name__)
 
 class FaceRecognition(BaseAgent):
-    """
-    Enterprise-grade facial recognition system providing comprehensive
+    """    Enterprise-grade facial recognition system providing comprehensive
     face detection, recognition, and analysis capabilities with privacy protection.
-    """
-    
+    """    
     def __init__(self):
         super().__init__(
             agent_id="face_recognition",
@@ -69,8 +65,7 @@ class FaceRecognition(BaseAgent):
         self.store_face_embeddings = False  # Don't store biometric data by default
 
     async def initialize(self) -> bool:
-        """Initialize face recognition components"""
-        try:
+        """Initialize face recognition components"""        try:
             logger.info("Initializing Face Recognition...")
             
             # Initialize face detection cascade
@@ -101,8 +96,7 @@ class FaceRecognition(BaseAgent):
             return False
 
     def _init_quality_assessment(self):
-        """Initialize face quality assessment parameters"""
-        self.quality_thresholds = {
+        """Initialize face quality assessment parameters"""        self.quality_thresholds = {
             'min_face_size': (50, 50),
             'max_face_size': (800, 800),
             'blur_threshold': 50.0,
@@ -116,8 +110,7 @@ class FaceRecognition(BaseAgent):
         include_analysis: bool = True,
         privacy_mode: bool = None
     ) -> Dict[str, Any]:
-        """
-        Detect and analyze faces in image with privacy protection
+        """        Detect and analyze faces in image with privacy protection
         
         Args:
             image: Input image as numpy array
@@ -126,8 +119,7 @@ class FaceRecognition(BaseAgent):
             
         Returns:
             Face detection results with privacy protection
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         privacy_enabled = privacy_mode if privacy_mode is not None else self.privacy_mode
         
         try:
@@ -229,8 +221,7 @@ class FaceRecognition(BaseAgent):
         face_roi: np.ndarray, 
         bbox: Tuple[int, int, int, int]
     ) -> Dict[str, Any]:
-        """Assess technical quality of detected face"""
-        try:
+        """Assess technical quality of detected face"""        try:
             x, y, w, h = bbox
             quality_metrics = {}
             
@@ -282,8 +273,7 @@ class FaceRecognition(BaseAgent):
             return {'overall_score': 0.5, 'quality_rating': 'unknown'}
 
     def _rate_quality(self, score: float) -> str:
-        """Rate face quality based on score"""
-        if score >= 0.8:
+        """Rate face quality based on score"""        if score >= 0.8:
             return 'excellent'
         elif score >= 0.6:
             return 'good'
@@ -293,8 +283,7 @@ class FaceRecognition(BaseAgent):
             return 'poor'
 
     async def _detect_emotions(self, face_roi: np.ndarray) -> Dict[str, Any]:
-        """Basic emotion detection (privacy-aware)"""
-        try:
+        """Basic emotion detection (privacy-aware)"""        try:
             # This is a simplified emotion detection
             # In production, use proper emotion recognition models
             
@@ -337,8 +326,7 @@ class FaceRecognition(BaseAgent):
             return {'dominant_emotion': 'neutral', 'confidence': 0.5}
 
     async def _estimate_demographics(self, face_roi: np.ndarray) -> Dict[str, Any]:
-        """Basic demographic estimation (privacy-sensitive)"""
-        try:
+        """Basic demographic estimation (privacy-sensitive)"""        try:
             # Note: This is a very basic implementation
             # Real demographic estimation requires specialized models
             # and should be used carefully with privacy considerations
@@ -371,8 +359,7 @@ class FaceRecognition(BaseAgent):
             return {'age_range': 'unknown', 'gender': 'unknown', 'confidence': 0.0}
 
     async def _estimate_pose(self, face_roi: np.ndarray) -> Dict[str, Any]:
-        """Estimate face pose and orientation"""
-        try:
+        """Estimate face pose and orientation"""        try:
             # Basic pose estimation using face geometry
             height, width = face_roi.shape[:2]
             
@@ -410,8 +397,7 @@ class FaceRecognition(BaseAgent):
             return {'frontal_probability': 0.5, 'pose_quality': 'unknown'}
 
     async def _apply_privacy_protection(self, face_info: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply privacy protection to face information"""
-        try:
+        """Apply privacy protection to face information"""        try:
             # Remove or anonymize sensitive information
             protected_info = face_info.copy()
             
@@ -449,12 +435,10 @@ class FaceRecognition(BaseAgent):
         image: np.ndarray,
         known_faces_db: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Recognize known faces in image (privacy-protected)
+        """        Recognize known faces in image (privacy-protected)
         
         Note: This implementation prioritizes privacy and doesn't store biometric data
-        """
-        try:
+        """        try:
             logger.warning("Face recognition disabled for privacy protection")
             
             # Detect faces but don't perform identification
@@ -483,8 +467,7 @@ class FaceRecognition(BaseAgent):
         blur_all: bool = False,
         blur_strength: int = 21
     ) -> np.ndarray:
-        """
-        Apply blur to faces for privacy protection
+        """        Apply blur to faces for privacy protection
         
         Args:
             image: Input image
@@ -493,8 +476,7 @@ class FaceRecognition(BaseAgent):
             
         Returns:
             Image with blurred faces
-        """
-        try:
+        """        try:
             # Ensure blur strength is odd
             if blur_strength % 2 == 0:
                 blur_strength += 1
@@ -530,8 +512,7 @@ class FaceRecognition(BaseAgent):
         image: np.ndarray,
         method: str = 'pixelate'
     ) -> np.ndarray:
-        """
-        Anonymize faces using various methods
+        """        Anonymize faces using various methods
         
         Args:
             image: Input image
@@ -539,8 +520,7 @@ class FaceRecognition(BaseAgent):
             
         Returns:
             Image with anonymized faces
-        """
-        try:
+        """        try:
             if method == 'blur':
                 return await self.blur_faces(image, blur_all=True)
             elif method == 'pixelate':
@@ -556,8 +536,7 @@ class FaceRecognition(BaseAgent):
             return image
 
     async def _pixelate_faces(self, image: np.ndarray) -> np.ndarray:
-        """Apply pixelation to faces"""
-        result_image = image.copy()
+        """Apply pixelation to faces"""        result_image = image.copy()
         
         # Detect faces
         face_detection = await self.detect_faces(image, privacy_mode=True)
@@ -579,8 +558,7 @@ class FaceRecognition(BaseAgent):
         return result_image
 
     async def _mask_faces(self, image: np.ndarray) -> np.ndarray:
-        """Apply mask overlay to faces"""
-        result_image = image.copy()
+        """Apply mask overlay to faces"""        result_image = image.copy()
         
         # Detect faces
         face_detection = await self.detect_faces(image, privacy_mode=True)
@@ -601,13 +579,11 @@ class FaceRecognition(BaseAgent):
         return result_image
 
     def set_privacy_mode(self, enabled: bool) -> None:
-        """Enable or disable privacy protection mode"""
-        self.privacy_mode = enabled
+        """Enable or disable privacy protection mode"""        self.privacy_mode = enabled
         logger.info(f"Privacy mode {'enabled' if enabled else 'disabled'}")
 
     def get_privacy_settings(self) -> Dict[str, Any]:
-        """Get current privacy settings"""
-        return {
+        """Get current privacy settings"""        return {
             'privacy_mode_enabled': self.privacy_mode,
             'blur_unknown_faces': self.blur_unknown_faces,
             'store_face_embeddings': self.store_face_embeddings,
@@ -616,8 +592,7 @@ class FaceRecognition(BaseAgent):
         }
 
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             await self.performance_monitor.close()
             await self.privacy_manager.cleanup()
             logger.info("Face Recognition cleanup completed")
@@ -625,8 +600,7 @@ class FaceRecognition(BaseAgent):
             logger.error(f"Face Recognition cleanup failed: {e}")
 
     def get_detection_capabilities(self) -> Dict[str, Any]:
-        """Get face detection capabilities"""
-        return {
+        """Get face detection capabilities"""        return {
             'max_faces_per_image': self.max_faces_per_image,
             'detection_confidence_threshold': self.detection_confidence_threshold,
             'supported_anonymization_methods': ['blur', 'pixelate', 'mask'],

@@ -1,5 +1,4 @@
-"""
-Business Intelligence Monitor - Strategic Analytics Engine
+"""Business Intelligence Monitor - Strategic Analytics Engine
 ==========================================================
 
 Professional business intelligence and analytics monitoring for IA-Influencer-Agent platform.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -41,8 +39,7 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class BusinessMetricType(Enum):
-    """Types of business metrics."""
-    REVENUE = "revenue"
+    """Types of business metrics."""    REVENUE = "revenue"
     USER_ENGAGEMENT = "user_engagement"
     CONTENT_PERFORMANCE = "content_performance"
     PLATFORM_GROWTH = "platform_growth"
@@ -54,8 +51,7 @@ class BusinessMetricType(Enum):
     OPERATIONAL_EFFICIENCY = "operational_efficiency"
 
 class KPICategory(Enum):
-    """Key Performance Indicator categories."""
-    FINANCIAL = "financial"
+    """Key Performance Indicator categories."""    FINANCIAL = "financial"
     OPERATIONAL = "operational"
     STRATEGIC = "strategic"
     TACTICAL = "tactical"
@@ -65,8 +61,7 @@ class KPICategory(Enum):
     RETENTION = "retention"
 
 class TrendDirection(Enum):
-    """Trend direction indicators."""
-    INCREASING = "increasing"
+    """Trend direction indicators."""    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -74,8 +69,7 @@ class TrendDirection(Enum):
 
 @dataclass
 class BusinessMetric:
-    """Business metric data structure."""
-    metric_id: str
+    """Business metric data structure."""    metric_id: str
     name: str
     metric_type: BusinessMetricType
     category: KPICategory
@@ -89,8 +83,7 @@ class BusinessMetric:
 
 @dataclass
 class KPIAnalysis:
-    """KPI analysis results."""
-    kpi_name: str
+    """KPI analysis results."""    kpi_name: str
     current_value: float
     target_value: float
     variance: float
@@ -102,8 +95,7 @@ class KPIAnalysis:
 
 @dataclass
 class BusinessInsight:
-    """Business insight data structure."""
-    insight_id: str
+    """Business insight data structure."""    insight_id: str
     title: str
     description: str
     category: str
@@ -114,11 +106,9 @@ class BusinessInsight:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class BusinessIntelligenceMonitor(MonitorEngine):
-    """
-    Advanced business intelligence monitoring engine.
+    """    Advanced business intelligence monitoring engine.
     Tracks KPIs, analyzes trends, and generates strategic insights.
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfiguration):
         super().__init__(config)
         self.metrics_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
@@ -132,8 +122,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         self._initialize_alert_thresholds()
     
     def _initialize_kpi_targets(self) -> None:
-        """Initialize KPI targets and benchmarks."""
-        self.kpi_targets = {
+        """Initialize KPI targets and benchmarks."""        self.kpi_targets = {
             "monthly_revenue": 50000.0,
             "user_growth_rate": 0.15,  # 15% monthly growth
             "content_protection_rate": 0.95,  # 95% protection success
@@ -147,8 +136,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         }
     
     def _initialize_alert_thresholds(self) -> None:
-        """Initialize alert thresholds for business metrics."""
-        self.alert_thresholds = {
+        """Initialize alert thresholds for business metrics."""        self.alert_thresholds = {
             "revenue_decline": {"warning": -0.10, "critical": -0.25},
             "user_churn": {"warning": 0.10, "critical": 0.20},
             "protection_failure": {"warning": 0.10, "critical": 0.20},
@@ -157,8 +145,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         }
     
     async def initialize(self) -> bool:
-        """Initialize business intelligence monitoring."""
-        try:
+        """Initialize business intelligence monitoring."""        try:
             logger.info("Initializing business intelligence monitor...")
             
             # Load historical data
@@ -178,8 +165,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
             return False
     
     async def start_monitoring(self, targets: List[Any]) -> bool:
-        """Start business intelligence monitoring."""
-        try:
+        """Start business intelligence monitoring."""        try:
             logger.info("Starting business intelligence monitoring...")
             
             # Start monitoring tasks
@@ -201,8 +187,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
             return False
     
     async def stop_monitoring(self) -> bool:
-        """Stop business intelligence monitoring."""
-        try:
+        """Stop business intelligence monitoring."""        try:
             await self.cleanup()
             return True
         except Exception as e:
@@ -210,8 +195,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
             return False
     
     async def collect_metrics(self) -> Any:
-        """Collect business intelligence metrics."""
-        from .monitor_engine import MonitoringMetrics
+        """Collect business intelligence metrics."""        from .monitor_engine import MonitoringMetrics
         
         metrics = MonitoringMetrics()
         
@@ -229,13 +213,11 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         return metrics
     
     async def process_events(self, events: List[Any]) -> None:
-        """Process business events and extract metrics."""
-        for event in events:
+        """Process business events and extract metrics."""        for event in events:
             await self._process_business_event(event)
     
     async def _process_business_event(self, event: Dict[str, Any]) -> None:
-        """Process individual business event."""
-        try:
+        """Process individual business event."""        try:
             event_type = event.get("type", "")
             
             if event_type == "revenue":
@@ -253,8 +235,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
             logger.error(f"Failed to process business event: {e}")
     
     async def _process_revenue_event(self, event: Dict[str, Any]) -> None:
-        """Process revenue-related events."""
-        amount = event.get("amount", 0.0)
+        """Process revenue-related events."""        amount = event.get("amount", 0.0)
         creator_id = event.get("creator_id")
         platform = event.get("platform", "")
         
@@ -276,8 +257,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         await self._record_metric(revenue_metric)
     
     async def _process_user_engagement_event(self, event: Dict[str, Any]) -> None:
-        """Process user engagement events."""
-        user_id = event.get("user_id")
+        """Process user engagement events."""        user_id = event.get("user_id")
         action = event.get("action", "")
         duration = event.get("duration", 0.0)
         
@@ -299,8 +279,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         await self._record_metric(engagement_metric)
     
     async def _process_content_event(self, event: Dict[str, Any]) -> None:
-        """Process content-related events."""
-        content_id = event.get("content_id")
+        """Process content-related events."""        content_id = event.get("content_id")
         content_type = event.get("content_type", "")
         creator_id = event.get("creator_id")
         
@@ -323,8 +302,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         await self._record_metric(content_metric)
     
     async def _process_protection_event(self, event: Dict[str, Any]) -> None:
-        """Process content protection events."""
-        success = event.get("success", False)
+        """Process content protection events."""        success = event.get("success", False)
         threat_type = event.get("threat_type", "")
         
         # Record protection effectiveness metric
@@ -345,8 +323,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         await self._record_metric(protection_metric)
     
     async def _process_collaboration_event(self, event: Dict[str, Any]) -> None:
-        """Process collaboration events."""
-        success = event.get("success", False)
+        """Process collaboration events."""        success = event.get("success", False)
         collaboration_type = event.get("type", "")
         
         # Record collaboration success metric
@@ -367,16 +344,14 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         await self._record_metric(collaboration_metric)
     
     async def _record_metric(self, metric: BusinessMetric) -> None:
-        """Record business metric in history."""
-        metric_key = f"{metric.metric_type.value}_{metric.category.value}"
+        """Record business metric in history."""        metric_key = f"{metric.metric_type.value}_{metric.category.value}"
         self.metrics_history[metric_key].append(metric)
         
         # Check for alerts
         await self._check_metric_alerts(metric)
     
     async def _check_metric_alerts(self, metric: BusinessMetric) -> None:
-        """Check if metric triggers any alerts."""
-        try:
+        """Check if metric triggers any alerts."""        try:
             # Calculate recent trends
             metric_key = f"{metric.metric_type.value}_{metric.category.value}"
             recent_metrics = list(self.metrics_history[metric_key])[-10:]  # Last 10 values
@@ -400,8 +375,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
             logger.error(f"Alert check failed: {e}")
     
     async def _check_revenue_alerts(self, trend: float, values: List[float]) -> None:
-        """Check revenue-specific alerts."""
-        if trend < self.alert_thresholds["revenue_decline"]["critical"]:
+        """Check revenue-specific alerts."""        if trend < self.alert_thresholds["revenue_decline"]["critical"]:
             await self.trigger_alert("critical_revenue_decline", {
                 "trend": trend,
                 "current_value": values[-1],
@@ -415,8 +389,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
             })
     
     async def _check_protection_alerts(self, trend: float, values: List[float]) -> None:
-        """Check protection effectiveness alerts."""
-        recent_failures = sum(1 for v in values[-5:] if v == 0.0) / 5.0
+        """Check protection effectiveness alerts."""        recent_failures = sum(1 for v in values[-5:] if v == 0.0) / 5.0
         
         if recent_failures > self.alert_thresholds["protection_failure"]["critical"]:
             await self.trigger_alert("critical_protection_failure", {
@@ -430,8 +403,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
             })
     
     async def _check_engagement_alerts(self, trend: float, values: List[float]) -> None:
-        """Check user engagement alerts."""
-        avg_engagement = statistics.mean(values[-5:]) if values else 0
+        """Check user engagement alerts."""        avg_engagement = statistics.mean(values[-5:]) if values else 0
         target_engagement = 300.0  # 5 minutes average target
         
         if avg_engagement < target_engagement * 0.5:
@@ -442,8 +414,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
             })
     
     def _calculate_trend(self, values: List[float]) -> float:
-        """Calculate trend from series of values."""
-        if len(values) < 2:
+        """Calculate trend from series of values."""        if len(values) < 2:
             return 0.0
         
         # Simple linear trend calculation
@@ -465,8 +436,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         return correlation
     
     async def _calculate_current_metrics(self) -> Dict[str, Any]:
-        """Calculate current business metrics summary."""
-        metrics_summary = {}
+        """Calculate current business metrics summary."""        metrics_summary = {}
         
         try:
             # Calculate revenue metrics
@@ -497,8 +467,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         return metrics_summary
     
     async def _get_trend_summary(self) -> Dict[str, Any]:
-        """Get summary of trends across all metrics."""
-        trend_summary = {}
+        """Get summary of trends across all metrics."""        trend_summary = {}
         
         for metric_key, history in self.metrics_history.items():
             if len(history) >= 5:
@@ -521,8 +490,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         return trend_summary
     
     async def generate_kpi_analysis(self) -> List[KPIAnalysis]:
-        """Generate comprehensive KPI analysis."""
-        analyses = []
+        """Generate comprehensive KPI analysis."""        analyses = []
         
         try:
             current_metrics = await self._calculate_current_metrics()
@@ -573,8 +541,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         target_value: float, 
         variance_percentage: float
     ) -> tuple[List[str], List[str]]:
-        """Generate insights and recommendations for KPI."""
-        insights = []
+        """Generate insights and recommendations for KPI."""        insights = []
         recommendations = []
         
         if "revenue" in kpi_name.lower():
@@ -613,18 +580,15 @@ class BusinessIntelligenceMonitor(MonitorEngine):
         return insights, recommendations
     
     async def _load_historical_data(self) -> None:
-        """Load historical business data."""
-        # Implementation would load from database
+        """Load historical business data."""        # Implementation would load from database
         pass
     
     async def _initialize_analytics_models(self) -> None:
-        """Initialize analytics and ML models."""
-        # Implementation would initialize predictive models
+        """Initialize analytics and ML models."""        # Implementation would initialize predictive models
         pass
     
     async def _monitor_revenue_metrics(self) -> None:
-        """Monitor revenue-related metrics."""
-        while True:
+        """Monitor revenue-related metrics."""        while True:
             try:
                 # Collect revenue data from various sources
                 await asyncio.sleep(300)  # 5 minutes
@@ -633,8 +597,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
                 await asyncio.sleep(60)
     
     async def _monitor_user_engagement(self) -> None:
-        """Monitor user engagement metrics."""
-        while True:
+        """Monitor user engagement metrics."""        while True:
             try:
                 # Collect engagement data
                 await asyncio.sleep(180)  # 3 minutes
@@ -643,8 +606,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
                 await asyncio.sleep(60)
     
     async def _monitor_content_performance(self) -> None:
-        """Monitor content performance metrics."""
-        while True:
+        """Monitor content performance metrics."""        while True:
             try:
                 # Collect content performance data
                 await asyncio.sleep(600)  # 10 minutes
@@ -653,8 +615,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
                 await asyncio.sleep(120)
     
     async def _monitor_creator_success(self) -> None:
-        """Monitor creator success metrics."""
-        while True:
+        """Monitor creator success metrics."""        while True:
             try:
                 # Collect creator success data
                 await asyncio.sleep(900)  # 15 minutes
@@ -663,8 +624,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
                 await asyncio.sleep(180)
     
     async def _monitor_protection_effectiveness(self) -> None:
-        """Monitor protection effectiveness metrics."""
-        while True:
+        """Monitor protection effectiveness metrics."""        while True:
             try:
                 # Collect protection data
                 await asyncio.sleep(120)  # 2 minutes
@@ -673,8 +633,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
                 await asyncio.sleep(60)
     
     async def _generate_business_insights(self) -> None:
-        """Generate strategic business insights."""
-        while True:
+        """Generate strategic business insights."""        while True:
             try:
                 # Generate insights from collected data
                 await asyncio.sleep(3600)  # 1 hour
@@ -683,8 +642,7 @@ class BusinessIntelligenceMonitor(MonitorEngine):
                 await asyncio.sleep(600)
     
     async def _analyze_trends(self) -> None:
-        """Analyze business trends and patterns."""
-        while True:
+        """Analyze business trends and patterns."""        while True:
             try:
                 # Perform trend analysis
                 await asyncio.sleep(1800)  # 30 minutes

@@ -1,5 +1,4 @@
-"""
-Performance Optimization Infrastructure Management
+"""Performance Optimization Infrastructure Management
 
 Provides comprehensive performance optimization infrastructure for the
 IA Influencer Agent platform including caching strategies, CDN integration,
@@ -10,7 +9,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
-
 import asyncio
 import logging
 import json
@@ -29,16 +27,14 @@ import numpy as np
 logger = logging.getLogger(__name__)
 
 class PerformanceTier(Enum):
-    """Performance optimization tiers"""
-    BASIC = "basic"
+    """Performance optimization tiers"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
     ULTRA_HIGH_PERFORMANCE = "ultra_high_performance"
 
 class CacheStrategy(Enum):
-    """Caching strategies"""
-    LRU = "lru"  # Least Recently Used
+    """Caching strategies"""    LRU = "lru"  # Least Recently Used
     LFU = "lfu"  # Least Frequently Used
     TTL = "ttl"  # Time To Live
     WRITE_THROUGH = "write_through"
@@ -46,16 +42,14 @@ class CacheStrategy(Enum):
     WRITE_AROUND = "write_around"
 
 class OptimizationTarget(Enum):
-    """Optimization targets"""
-    LATENCY = "latency"
+    """Optimization targets"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     COST = "cost"
     ENERGY_EFFICIENCY = "energy_efficiency"
     USER_EXPERIENCE = "user_experience"
 
 class StorageTier(Enum):
-    """Storage performance tiers"""
-    NVME_SSD = "nvme_ssd"      # Ultra-fast NVMe SSD
+    """Storage performance tiers"""    NVME_SSD = "nvme_ssd"      # Ultra-fast NVMe SSD
     SSD = "ssd"                # Standard SSD
     HDD = "hdd"                # Traditional HDD
     NETWORK_ATTACHED = "nas"    # Network attached storage
@@ -63,8 +57,7 @@ class StorageTier(Enum):
 
 @dataclass
 class CacheConfiguration:
-    """Cache configuration specification"""
-    name: str
+    """Cache configuration specification"""    name: str
     cache_type: str  # redis, memcached, application
     strategy: CacheStrategy
     max_memory: str  # e.g., "2Gi"
@@ -76,8 +69,7 @@ class CacheConfiguration:
 
 @dataclass
 class CDNConfiguration:
-    """CDN configuration specification"""
-    provider: str  # cloudflare, aws_cloudfront, gcp_cdn
+    """CDN configuration specification"""    provider: str  # cloudflare, aws_cloudfront, gcp_cdn
     edge_locations: List[str]
     cache_behaviors: List[Dict[str, Any]]
     compression_enabled: bool = True
@@ -87,8 +79,7 @@ class CDNConfiguration:
 
 @dataclass
 class DatabaseOptimizationConfig:
-    """Database optimization configuration"""
-    connection_pooling: Dict[str, Any]
+    """Database optimization configuration"""    connection_pooling: Dict[str, Any]
     query_optimization: Dict[str, Any]
     indexing_strategy: Dict[str, Any]
     partitioning_strategy: Dict[str, Any]
@@ -98,8 +89,7 @@ class DatabaseOptimizationConfig:
 
 @dataclass
 class AIModelOptimizationConfig:
-    """AI model optimization configuration"""
-    model_quantization: bool = True
+    """AI model optimization configuration"""    model_quantization: bool = True
     model_pruning: bool = True
     knowledge_distillation: bool = False
     tensor_rt_optimization: bool = True
@@ -109,8 +99,7 @@ class AIModelOptimizationConfig:
 
 @dataclass
 class PerformanceSpec:
-    """Complete performance optimization specification"""
-    namespace: str = "ia-influencer-performance"
+    """Complete performance optimization specification"""    namespace: str = "ia-influencer-performance"
     performance_tier: PerformanceTier = PerformanceTier.PREMIUM
     optimization_targets: List[OptimizationTarget] = field(default_factory=lambda: [OptimizationTarget.LATENCY, OptimizationTarget.THROUGHPUT])
     
@@ -133,8 +122,7 @@ class PerformanceSpec:
     sla_targets: Dict[str, float] = field(default_factory=dict)
 
 class PerformanceOptimizationManager:
-    """Advanced performance optimization manager for IA Influencer platform"""
-    
+    """Advanced performance optimization manager for IA Influencer platform"""    
     def __init__(self, k8s_client=None, redis_client=None):
         self.k8s_client = k8s_client
         self.redis_client = redis_client
@@ -147,8 +135,7 @@ class PerformanceOptimizationManager:
         self.optimization_history = {}
         
     async def deploy_performance_infrastructure(self, spec: PerformanceSpec) -> Dict[str, Any]:
-        """Deploy comprehensive performance optimization infrastructure"""
-        try:
+        """Deploy comprehensive performance optimization infrastructure"""        try:
             results = {}
             logger.info(f"Deploying performance optimization infrastructure for IA Influencer platform")
             logger.info(f"Performance tier: {spec.performance_tier.value}")
@@ -213,8 +200,7 @@ class PerformanceOptimizationManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_caching_infrastructure(self, spec: PerformanceSpec) -> Dict[str, Any]:
-        """Deploy multi-layer caching infrastructure"""
-        try:
+        """Deploy multi-layer caching infrastructure"""        try:
             results = {}
             
             # Deploy Redis Cluster for high-performance caching
@@ -247,8 +233,7 @@ class PerformanceOptimizationManager:
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_redis_cluster(self, spec: PerformanceSpec) -> Dict[str, Any]:
-        """Deploy high-performance Redis cluster"""
-        try:
+        """Deploy high-performance Redis cluster"""        try:
             # Redis cluster configuration
             redis_cluster_config = client.V1ConfigMap(
                 metadata=client.V1ObjectMeta(
@@ -256,8 +241,7 @@ class PerformanceOptimizationManager:
                     namespace=spec.namespace
                 ),
                 data={
-                    'redis.conf': """
-# Redis Cluster Configuration for IA Influencer Platform
+                    'redis.conf': """# Redis Cluster Configuration for IA Influencer Platform
 port 6379
 cluster-enabled yes
 cluster-config-file nodes.conf
@@ -295,8 +279,7 @@ masterauth ia-influencer-redis-secret
 loglevel notice
 syslog-enabled yes
 syslog-ident redis
-"""
-                }
+"""                }
             )
             
             # Deploy Redis StatefulSet
@@ -439,8 +422,7 @@ syslog-ident redis
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_vector_db_optimization(self, spec: PerformanceSpec) -> Dict[str, Any]:
-        """Deploy vector database performance optimization"""
-        try:
+        """Deploy vector database performance optimization"""        try:
             # Deploy FAISS optimization service
             faiss_optimizer_deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -549,8 +531,7 @@ syslog-ident redis
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_ai_optimization(self, spec: PerformanceSpec) -> Dict[str, Any]:
-        """Deploy AI/ML model optimization infrastructure"""
-        try:
+        """Deploy AI/ML model optimization infrastructure"""        try:
             # Deploy TensorRT optimization service
             tensorrt_optimizer = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -678,8 +659,7 @@ syslog-ident redis
             return {'status': 'error', 'message': str(e)}
     
     async def _deploy_performance_monitoring(self, spec: PerformanceSpec) -> Dict[str, Any]:
-        """Deploy comprehensive performance monitoring"""
-        try:
+        """Deploy comprehensive performance monitoring"""        try:
             # Deploy custom performance metrics collector
             metrics_collector = client.V1DaemonSet(
                 metadata=client.V1ObjectMeta(
@@ -778,8 +758,7 @@ syslog-ident redis
             return {'status': 'error', 'message': str(e)}
     
     async def get_performance_status(self, namespace: str = "ia-influencer-performance") -> Dict[str, Any]:
-        """Get comprehensive performance status"""
-        try:
+        """Get comprehensive performance status"""        try:
             # Simulate performance metrics (in real implementation, collect from monitoring systems)
             performance_metrics = {
                 'api_latency': {
@@ -879,8 +858,7 @@ syslog-ident redis
 
 # Utility functions for performance optimization
 def calculate_optimal_cache_size(memory_available: int, cache_hit_ratio_target: float = 0.95) -> int:
-    """Calculate optimal cache size based on available memory and target hit ratio"""
-    # Use 70% of available memory for cache to leave room for other operations
+    """Calculate optimal cache size based on available memory and target hit ratio"""    # Use 70% of available memory for cache to leave room for other operations
     max_cache_memory = int(memory_available * 0.7)
     
     # Adjust based on target hit ratio
@@ -894,8 +872,7 @@ def calculate_optimal_cache_size(memory_available: int, cache_hit_ratio_target: 
         return int(max_cache_memory * 0.4)
 
 def optimize_batch_size(model_complexity: str, available_gpu_memory: int) -> int:
-    """Calculate optimal batch size for AI model inference"""
-    base_batch_sizes = {
+    """Calculate optimal batch size for AI model inference"""    base_batch_sizes = {
         'simple': 128,
         'medium': 64,
         'complex': 32,
@@ -915,8 +892,7 @@ def optimize_batch_size(model_complexity: str, available_gpu_memory: int) -> int
         return max(base_batch // 4, 1)
 
 def calculate_connection_pool_size(expected_concurrent_requests: int) -> Dict[str, int]:
-    """Calculate optimal database connection pool sizes"""
-    return {
+    """Calculate optimal database connection pool sizes"""    return {
         'postgres_pool_size': min(max(expected_concurrent_requests // 10, 10), 100),
         'redis_pool_size': min(max(expected_concurrent_requests // 5, 20), 200),
         'mongodb_pool_size': min(max(expected_concurrent_requests // 8, 15), 150)

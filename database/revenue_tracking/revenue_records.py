@@ -1,5 +1,4 @@
-"""
-Revenue Records Database Models
+"""Revenue Records Database Models
 
 Gestion des enregistrements de revenus avec tracking complet
 des transactions financières pour la plateforme IA Influencer Agent.
@@ -7,7 +6,6 @@ des transactions financières pour la plateforme IA Influencer Agent.
 Auteur: Fahed Mlaiel <mlaiel@live.de>
 Équipe: Lead AI Developer & Financial Systems Architect
 """
-
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 from decimal import Decimal
@@ -31,8 +29,7 @@ Base = declarative_base()
 
 
 class TransactionStatus(Enum):
-    """Status des transactions de revenus"""
-    PENDING = "pending"
+    """Status des transactions de revenus"""    PENDING = "pending"
     CONFIRMED = "confirmed"
     PROCESSED = "processed"
     DISPUTED = "disputed"
@@ -41,8 +38,7 @@ class TransactionStatus(Enum):
 
 
 class TransactionType(Enum):
-    """Types de transactions financières"""
-    PLATFORM_REVENUE = "platform_revenue"
+    """Types de transactions financières"""    PLATFORM_REVENUE = "platform_revenue"
     COMMISSION = "commission"
     ROYALTY = "royalty"
     LICENSING_FEE = "licensing_fee"
@@ -54,8 +50,7 @@ class TransactionType(Enum):
 
 
 class RevenueSource(Enum):
-    """Sources de revenus par plateforme"""
-    SPOTIFY = "spotify"
+    """Sources de revenus par plateforme"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
@@ -71,10 +66,8 @@ class RevenueSource(Enum):
 
 @dataclass
 class RevenueRecord(BaseModel, TimestampMixin):
-    """
-    Modèle principal pour les enregistrements de revenus
-    """
-    __tablename__ = "revenue_records"
+    """    Modèle principal pour les enregistrements de revenus
+    """    __tablename__ = "revenue_records"
 
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"), nullable=False, index=True)
@@ -121,29 +114,24 @@ class RevenueRecord(BaseModel, TimestampMixin):
     audit_logs = relationship("RevenueAuditLog", back_populates="revenue_record")
 
     def __init__(self, **kwargs):
-        """Initialisation avec calculs automatiques"""
-        super().__init__(**kwargs)
+        """Initialisation avec calculs automatiques"""        super().__init__(**kwargs)
         self.transaction_id = self.transaction_id or self._generate_transaction_id()
         self._calculate_commission_and_payout()
 
     def _generate_transaction_id(self) -> str:
-        """Génère un ID unique pour la transaction"""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Génère un ID unique pour la transaction"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         unique_id = str(uuid.uuid4())[:8]
         return f"REV_{timestamp}_{unique_id}"
 
     def _calculate_commission_and_payout(self):
-        """Calcule automatiquement les commissions et le payout créateur"""
-        if self.amount_net and self.commission_percentage:
+        """Calcule automatiquement les commissions et le payout créateur"""        if self.amount_net and self.commission_percentage:
             self.commission_amount = self.amount_net * (self.commission_percentage / 100)
             self.creator_payout = self.amount_net - self.commission_amount
 
 
 class RevenueRecordManager:
-    """
-    Manager pour la gestion des enregistrements de revenus
-    """
-    
+    """    Manager pour la gestion des enregistrements de revenus
+    """    
     def __init__(self, db_manager: DatabaseManager):
         self.db = db_manager
         self.encryption = EncryptionService()
@@ -165,8 +153,7 @@ class RevenueRecordManager:
         commission_percentage: Optional[Decimal] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> RevenueRecord:
-        """
-        Crée un nouvel enregistrement de revenus
+        """        Crée un nouvel enregistrement de revenus
         
         Args:
             user_id: ID utilisateur
@@ -183,8 +170,7 @@ class RevenueRecordManager:
             
         Returns:
             RevenueRecord: Enregistrement créé
-        """
-        try:
+        """        try:
             # Calcul du montant net après frais plateforme
             platform_fee = Decimal("0")
             if platform_fee_percentage:
@@ -243,8 +229,7 @@ class RevenueRecordManager:
         new_status: TransactionStatus,
         notes: Optional[str] = None
     ) -> RevenueRecord:
-        """
-        Met à jour le statut d'une transaction
+        """        Met à jour le statut d'une transaction
         
         Args:
             transaction_id: ID de la transaction
@@ -253,8 +238,7 @@ class RevenueRecordManager:
             
         Returns:
             RevenueRecord: Enregistrement mis à jour
-        """
-        try:
+        """        try:
             async with self.db.get_session() as session:
                 record = await session.query(RevenueRecord).filter(
                     RevenueRecord.transaction_id == transaction_id
@@ -298,8 +282,7 @@ class RevenueRecordManager:
         end_date: Optional[datetime] = None,
         currency: str = "EUR"
     ) -> Dict[str, Any]:
-        """
-        Récupère un résumé des revenus pour un utilisateur
+        """        Récupère un résumé des revenus pour un utilisateur
         
         Args:
             user_id: ID utilisateur
@@ -309,8 +292,7 @@ class RevenueRecordManager:
             
         Returns:
             Dict: Résumé des revenus
-        """
-        try:
+        """        try:
             if not start_date:
                 start_date = datetime.utcnow() - timedelta(days=30)
             if not end_date:
@@ -407,16 +389,14 @@ class RevenueRecordManager:
         self,
         transactions: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """
-        Traite plusieurs transactions en lot
+        """        Traite plusieurs transactions en lot
         
         Args:
             transactions: Liste des transactions à traiter
             
         Returns:
             Dict: Résultats du traitement en lot
-        """
-        try:
+        """        try:
             results = {
                 "success_count": 0,
                 "error_count": 0,
@@ -472,8 +452,7 @@ class RevenueRecordManager:
         user_id: uuid.UUID,
         revenue_source: RevenueSource
     ) -> Decimal:
-        """Récupère le taux de commission par défaut pour un utilisateur"""
-        # Cette logique pourrait être configurée par utilisateur/plan
+        """Récupère le taux de commission par défaut pour un utilisateur"""        # Cette logique pourrait être configurée par utilisateur/plan
         default_rates = {
             RevenueSource.SPOTIFY: Decimal("15.0"),
             RevenueSource.YOUTUBE: Decimal("20.0"),
@@ -490,8 +469,7 @@ class RevenueRecordManager:
         action: str,
         description: str
     ):
-        """Log les actions sur les enregistrements de revenus"""
-        # Cette méthode sera implémentée avec le système d'audit
+        """Log les actions sur les enregistrements de revenus"""        # Cette méthode sera implémentée avec le système d'audit
         pass
 
 

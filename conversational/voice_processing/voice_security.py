@@ -1,5 +1,4 @@
-"""
-Voice Security Module - IA Influencer Agent
+"""Voice Security Module - IA Influencer Agent
 
 Advanced voice security, protection, and anti-fraud system for content creators
 with voice fingerprinting, authentication, and spoofing detection.
@@ -7,7 +6,6 @@ with voice fingerprinting, authentication, and spoofing detection.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 import numpy as np
@@ -22,8 +20,7 @@ from .models import VoiceFingerprint, FingerprintType
 logger = logging.getLogger(__name__)
 
 class VoiceProtectionManager:
-    """Advanced voice security and protection system"""
-    
+    """Advanced voice security and protection system"""    
     def __init__(self, config: ProtectionConfig):
         self.config = config
         self.is_initialized = False
@@ -47,8 +44,7 @@ class VoiceProtectionManager:
                                  sample_rate: int = 16000,
                                  fingerprint_type: FingerprintType = FingerprintType.PERCEPTUAL,
                                  security_level: str = "standard") -> VoiceFingerprint:
-        """Generate voice fingerprint for content protection"""
-        try:
+        """Generate voice fingerprint for content protection"""        try:
             # Extract fingerprint features
             spectral_features = self._extract_spectral_features(audio_data, sample_rate)
             temporal_features = self._extract_temporal_features(audio_data, sample_rate)
@@ -83,8 +79,7 @@ class VoiceProtectionManager:
             raise
     
     def _extract_spectral_features(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract spectral features for fingerprinting"""
-        fft = np.fft.fft(audio)
+        """Extract spectral features for fingerprinting"""        fft = np.fft.fft(audio)
         magnitude = np.abs(fft)
         
         return {
@@ -94,24 +89,21 @@ class VoiceProtectionManager:
         }
     
     def _extract_temporal_features(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract temporal features for fingerprinting"""
-        return {
+        """Extract temporal features for fingerprinting"""        return {
             "duration": len(audio) / sample_rate,
             "energy": float(np.sum(audio ** 2)),
             "zero_crossings": float(np.sum(np.diff(np.sign(audio)) != 0))
         }
     
     def _extract_prosodic_features(self, audio: np.ndarray, sample_rate: int) -> Dict[str, float]:
-        """Extract prosodic features for fingerprinting"""
-        return {
+        """Extract prosodic features for fingerprinting"""        return {
             "rms_energy": float(np.sqrt(np.mean(audio ** 2))),
             "peak_energy": float(np.max(np.abs(audio))),
             "energy_variance": float(np.var(audio))
         }
     
     def _create_feature_vector(self, spectral: Dict, temporal: Dict, prosodic: Dict) -> np.ndarray:
-        """Create feature vector from extracted features"""
-        all_features = {**spectral, **temporal, **prosodic}
+        """Create feature vector from extracted features"""        all_features = {**spectral, **temporal, **prosodic}
         feature_values = list(all_features.values())
         return np.array(feature_values, dtype=np.float32)
     

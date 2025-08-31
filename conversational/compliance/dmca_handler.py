@@ -1,5 +1,4 @@
-"""
-DMCA Compliance Handler - Digital Millennium Copyright Act Enforcement
+"""DMCA Compliance Handler - Digital Millennium Copyright Act Enforcement
 
 This module provides comprehensive DMCA compliance management for content protection,
 automated takedown notice processing, counter-notifications, and safe harbor provisions.
@@ -12,7 +11,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
     This system is proprietary and protected by international copyright laws.
     Violations will be prosecuted to the full extent of the law.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -34,24 +32,21 @@ from ..models.dmca_models import DMCANotice, DMCAStatus, CounterNotification
 
 
 class DMCANoticeType(Enum):
-    """Types of DMCA notices"""
-    TAKEDOWN = "takedown"
+    """Types of DMCA notices"""    TAKEDOWN = "takedown"
     COUNTER_NOTIFICATION = "counter_notification"
     REPEAT_INFRINGER = "repeat_infringer"
     SAFE_HARBOR = "safe_harbor"
 
 
 class DMCACompliance(Enum):
-    """DMCA compliance levels"""
-    FULL_COMPLIANCE = "full_compliance"
+    """DMCA compliance levels"""    FULL_COMPLIANCE = "full_compliance"
     PARTIAL_COMPLIANCE = "partial_compliance"
     NON_COMPLIANCE = "non_compliance"
     PENDING_REVIEW = "pending_review"
 
 
 class TakedownAction(Enum):
-    """Actions for takedown notices"""
-    REMOVE_CONTENT = "remove_content"
+    """Actions for takedown notices"""    REMOVE_CONTENT = "remove_content"
     DISABLE_ACCESS = "disable_access"
     FORWARD_TO_USER = "forward_to_user"
     REJECT_INVALID = "reject_invalid"
@@ -59,8 +54,7 @@ class TakedownAction(Enum):
 
 @dataclass
 class DMCARequest:
-    """DMCA takedown request structure"""
-    content_id: str
+    """DMCA takedown request structure"""    content_id: str
     content_url: str
     infringing_url: str
     complainant_name: str
@@ -78,8 +72,7 @@ class DMCARequest:
 
 @dataclass
 class DMCAResponse:
-    """DMCA response structure"""
-    request_id: str
+    """DMCA response structure"""    request_id: str
     notice_id: str
     status: DMCACompliance
     action_taken: TakedownAction
@@ -91,13 +84,11 @@ class DMCAResponse:
 
 
 class DMCAHandler:
-    """
-    Digital Millennium Copyright Act (DMCA) Compliance Handler
+    """    Digital Millennium Copyright Act (DMCA) Compliance Handler
     
     Provides automated DMCA takedown processing, counter-notifications,
     safe harbor compliance, and repeat infringer management.
-    """
-    
+    """    
     def __init__(self, 
                  db_manager: DatabaseManager,
                  cache_manager: CacheManager,
@@ -132,16 +123,14 @@ class DMCAHandler:
         }
     
     async def process_takedown_request(self, request: DMCARequest) -> DMCAResponse:
-        """
-        Process DMCA takedown request with automated validation and action
+        """        Process DMCA takedown request with automated validation and action
         
         Args:
             request: DMCA takedown request data
             
         Returns:
             DMCAResponse: Processing result with compliance status
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Validate DMCA notice completeness
@@ -212,8 +201,7 @@ class DMCAHandler:
     async def process_counter_notification(self, 
                                          notice_id: str, 
                                          counter_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Process DMCA counter-notification under safe harbor provisions
+        """        Process DMCA counter-notification under safe harbor provisions
         
         Args:
             notice_id: Original DMCA notice ID
@@ -221,8 +209,7 @@ class DMCAHandler:
             
         Returns:
             Dict: Counter-notification processing result
-        """
-        try:
+        """        try:
             # Validate counter-notification requirements
             validation = await self._validate_counter_notification(counter_data)
             
@@ -277,16 +264,14 @@ class DMCAHandler:
             }
     
     async def check_repeat_infringer(self, user_id: int) -> Dict[str, Any]:
-        """
-        Check if user qualifies as repeat infringer under DMCA
+        """        Check if user qualifies as repeat infringer under DMCA
         
         Args:
             user_id: User ID to check
             
         Returns:
             Dict: Repeat infringer assessment
-        """
-        try:
+        """        try:
             # Get user's DMCA history
             with self.db_manager.get_session() as session:
                 notices = session.query(DMCANotice).filter(
@@ -331,16 +316,14 @@ class DMCAHandler:
             }
     
     async def generate_safe_harbor_report(self, period_days: int = 30) -> Dict[str, Any]:
-        """
-        Generate DMCA safe harbor compliance report
+        """        Generate DMCA safe harbor compliance report
         
         Args:
             period_days: Reporting period in days
             
         Returns:
             Dict: Comprehensive compliance report
-        """
-        try:
+        """        try:
             start_date = datetime.now() - timedelta(days=period_days)
             
             with self.db_manager.get_session() as session:
@@ -401,8 +384,7 @@ class DMCAHandler:
             return {"error": str(e)}
     
     async def _validate_dmca_notice(self, request: DMCARequest) -> Dict[str, Any]:
-        """Validate DMCA notice completeness and legal requirements"""
-        errors = []
+        """Validate DMCA notice completeness and legal requirements"""        errors = []
         
         # Required fields validation
         required_fields = [
@@ -442,8 +424,7 @@ class DMCAHandler:
         }
     
     async def _assess_compliance_level(self, request: DMCARequest) -> Dict[str, Any]:
-        """Assess DMCA compliance level and required actions"""
-        score = 0.0
+        """Assess DMCA compliance level and required actions"""        score = 0.0
         factors = []
         
         # Completeness score (40%)
@@ -485,8 +466,7 @@ class DMCAHandler:
     async def _determine_takedown_action(self, 
                                        request: DMCARequest, 
                                        assessment: Dict[str, Any]) -> TakedownAction:
-        """Determine appropriate takedown action based on compliance assessment"""
-        if assessment["status"] == DMCACompliance.NON_COMPLIANCE:
+        """Determine appropriate takedown action based on compliance assessment"""        if assessment["status"] == DMCACompliance.NON_COMPLIANCE:
             return TakedownAction.REJECT_INVALID
         
         if assessment["score"] >= self.config["auto_process_threshold"]:
@@ -501,8 +481,7 @@ class DMCAHandler:
         return TakedownAction.DISABLE_ACCESS
     
     async def _create_dmca_notice(self, request: DMCARequest) -> str:
-        """Create DMCA notice record in database"""
-        try:
+        """Create DMCA notice record in database"""        try:
             with self.db_manager.get_session() as session:
                 notice = DMCANotice(
                     request_id=request.request_id,
@@ -533,8 +512,7 @@ class DMCAHandler:
             raise
     
     async def _execute_takedown_action(self, request: DMCARequest, action: TakedownAction):
-        """Execute the determined takedown action"""
-        try:
+        """Execute the determined takedown action"""        try:
             if action == TakedownAction.REMOVE_CONTENT:
                 # Remove content from all platforms
                 await self._remove_content(request.content_id)
@@ -557,8 +535,7 @@ class DMCAHandler:
                                      request: DMCARequest, 
                                      notice_id: str, 
                                      action: TakedownAction):
-        """Send DMCA-related notifications to relevant parties"""
-        try:
+        """Send DMCA-related notifications to relevant parties"""        try:
             # Notify complainant
             await self.email_service.send_templated_email(
                 to_email=request.complainant_email,
@@ -579,8 +556,7 @@ class DMCAHandler:
             self.logger.error(f"Error sending DMCA notifications: {str(e)}")
     
     async def get_compliance_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive DMCA compliance metrics"""
-        try:
+        """Get comprehensive DMCA compliance metrics"""        try:
             cache_key = "dmca_metrics"
             cached_metrics = await self.cache_manager.get(cache_key)
             

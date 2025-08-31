@@ -10,8 +10,7 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-# Master Distribution Manager
+"""# Master Distribution Manager
 from .manager import (
     DistributionManager,
     DistributionSystemStatus
@@ -118,8 +117,7 @@ __all__ = [
     'DistributionManagerLegacy'
 ]
 prosecuted to the full extent of the law.
-"""
-# Core Distribution Engine Imports
+"""# Core Distribution Engine Imports
 from .core.distribution_engine import (
     DistributionEngine,
     DistributionJob,
@@ -235,8 +233,7 @@ __all__ = [
     "AdapterStatus"
 ] 
 prosecuted to the full extent of the law.
-"""
-# Core Distribution Agent Components
+"""# Core Distribution Agent Components
 from .distribution_agent import (
     # Main Agent Classes
     DistributionAgent,
@@ -441,8 +438,7 @@ refer to the comprehensive README files and technical documentation.
 
 © 2025 Fahed Mlaiel. All rights reserved. Proprietary software protected under 
 international intellectual property law.
-"""
-# Initialization Function
+"""# Initialization Function
 def get_distribution_agent(config: dict = None) -> DistributionAgent:
     """    Factory function to create and initialize a Distribution Agent instance.
     

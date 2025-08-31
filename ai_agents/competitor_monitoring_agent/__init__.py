@@ -6,8 +6,7 @@ and strategic intelligence for content creators and businesses.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: Fahed Mlaiel. All rights reserved.
 WARNING: Unauthorized use, copying, or distribution is strictly prohibited.
-"""
-from .competitor_agent import CompetitorMonitoringAgent
+"""from .competitor_agent import CompetitorMonitoringAgent
 from .data_collection import DataCollectionManager
 from .market_intelligence import MarketIntelligenceEngine
 from .alert_system import AlertSystem

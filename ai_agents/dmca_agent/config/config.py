@@ -1,5 +1,4 @@
-"""
-DMCA Agent Configuration - Enterprise Legal Protection System Settings
+"""DMCA Agent Configuration - Enterprise Legal Protection System Settings
 ====================================================================
 
 Comprehensive configuration system for the DMCA Agent with production-ready
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in immediate legal action.
 """
-
 import os
 from typing import Dict, List, Any, Optional, Union
 from dataclasses import dataclass, field
@@ -22,15 +20,13 @@ import json
 from pathlib import Path
 
 class EnvironmentType(Enum):
-    """Environment types for configuration"""
-    DEVELOPMENT = "development"
+    """Environment types for configuration"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 class LogLevel(Enum):
-    """Logging levels"""
-    DEBUG = "DEBUG"
+    """Logging levels"""    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -38,8 +34,7 @@ class LogLevel(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""
-    host: str = "localhost"
+    """Database configuration"""    host: str = "localhost"
     port: int = 5432
     name: str = "dmca_agent_db"
     username: str = "dmca_user"
@@ -66,8 +61,7 @@ class DatabaseConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration"""
-    # Encryption settings
+    """Security configuration"""    # Encryption settings
     encryption_key: str = ""
     jwt_secret: str = ""
     jwt_expiry_hours: int = 24
@@ -93,8 +87,7 @@ class SecurityConfig:
 
 @dataclass
 class LegalConfig:
-    """Legal compliance configuration"""
-    # Default legal framework
+    """Legal compliance configuration"""    # Default legal framework
     default_framework: str = "dmca_us"
     
     # Supported jurisdictions
@@ -127,8 +120,7 @@ class LegalConfig:
 
 @dataclass
 class TakedownConfig:
-    """Takedown automation configuration"""
-    # Platform configurations
+    """Takedown automation configuration"""    # Platform configurations
     platform_configs: Dict[str, Dict[str, Any]] = field(default_factory=dict)
     
     # Retry settings
@@ -163,8 +155,7 @@ class TakedownConfig:
 
 @dataclass
 class CopyrightConfig:
-    """Copyright verification configuration"""
-    # Verification methods
+    """Copyright verification configuration"""    # Verification methods
     enabled_methods: List[str] = field(default_factory=lambda: [
         "blockchain", "digital_signature", "registry_lookup", 
         "timestamp_verification", "metadata_analysis", "hash_comparison"
@@ -197,8 +188,7 @@ class CopyrightConfig:
 
 @dataclass
 class DocumentConfig:
-    """Document generation configuration"""
-    # Template settings
+    """Document generation configuration"""    # Template settings
     template_directory: str = "templates"
     custom_template_directory: str = "custom_templates"
     
@@ -234,8 +224,7 @@ class DocumentConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and alerting configuration"""
-    # Metrics collection
+    """Monitoring and alerting configuration"""    # Metrics collection
     metrics_enabled: bool = True
     metrics_endpoint: str = "/metrics"
     metrics_port: int = 8080
@@ -269,8 +258,7 @@ class MonitoringConfig:
 
 @dataclass
 class DMCAAgentConfig:
-    """Complete DMCA Agent configuration"""
-    # Environment settings
+    """Complete DMCA Agent configuration"""    # Environment settings
     environment: EnvironmentType = EnvironmentType.DEVELOPMENT
     debug_mode: bool = False
     testing_mode: bool = False
@@ -311,13 +299,11 @@ class DMCAAgentConfig:
     
     @classmethod
     def from_environment(cls) -> 'DMCAAgentConfig':
-        """
-        Create configuration from environment variables
+        """        Create configuration from environment variables
         
         Returns:
             DMCAAgentConfig: Configuration loaded from environment
-        """
-        config = cls()
+        """        config = cls()
         
         # Load environment type
         env_type = os.getenv("DMCA_ENVIRONMENT", "development").lower()
@@ -360,16 +346,14 @@ class DMCAAgentConfig:
     
     @classmethod
     def from_file(cls, config_file: Union[str, Path]) -> 'DMCAAgentConfig':
-        """
-        Load configuration from JSON file
+        """        Load configuration from JSON file
         
         Args:
             config_file: Path to configuration file
             
         Returns:
             DMCAAgentConfig: Loaded configuration
-        """
-        config_path = Path(config_file)
+        """        config_path = Path(config_file)
         if not config_path.exists():
             raise FileNotFoundError(f"Configuration file not found: {config_file}")
         
@@ -379,13 +363,11 @@ class DMCAAgentConfig:
         return cls(**config_data)
     
     def to_file(self, config_file: Union[str, Path]) -> None:
-        """
-        Save configuration to JSON file
+        """        Save configuration to JSON file
         
         Args:
             config_file: Path to save configuration
-        """
-        config_path = Path(config_file)
+        """        config_path = Path(config_file)
         config_path.parent.mkdir(parents=True, exist_ok=True)
         
         # Convert to dictionary, handling enums and dataclasses
@@ -409,13 +391,11 @@ class DMCAAgentConfig:
             json.dump(config_dict, f, indent=2, ensure_ascii=False)
     
     def validate(self) -> List[str]:
-        """
-        Validate configuration and return list of issues
+        """        Validate configuration and return list of issues
         
         Returns:
             List[str]: List of validation errors
-        """
-        errors = []
+        """        errors = []
         
         # Validate required security settings for production
         if self.environment == EnvironmentType.PRODUCTION:
@@ -446,63 +426,53 @@ class DMCAAgentConfig:
         return errors
     
     def get_platform_config(self, platform: str) -> Dict[str, Any]:
-        """
-        Get configuration for a specific platform
+        """        Get configuration for a specific platform
         
         Args:
             platform: Platform name
             
         Returns:
             Dict containing platform-specific configuration
-        """
-        return self.takedown.platform_configs.get(platform, {})
+        """        return self.takedown.platform_configs.get(platform, {})
     
     def update_platform_config(self, platform: str, config: Dict[str, Any]) -> None:
-        """
-        Update configuration for a specific platform
+        """        Update configuration for a specific platform
         
         Args:
             platform: Platform name
             config: Platform configuration
-        """
-        self.takedown.platform_configs[platform] = config
+        """        self.takedown.platform_configs[platform] = config
 
 # Global configuration instance
 _global_config: Optional[DMCAAgentConfig] = None
 
 def get_config() -> DMCAAgentConfig:
-    """
-    Get global DMCA Agent configuration
+    """    Get global DMCA Agent configuration
     
     Returns:
         DMCAAgentConfig: Current configuration
-    """
-    global _global_config
+    """    global _global_config
     if _global_config is None:
         _global_config = DMCAAgentConfig.from_environment()
     return _global_config
 
 def set_config(config: DMCAAgentConfig) -> None:
-    """
-    Set global DMCA Agent configuration
+    """    Set global DMCA Agent configuration
     
     Args:
         config: Configuration to set as global
-    """
-    global _global_config
+    """    global _global_config
     _global_config = config
 
 def reload_config(config_file: Optional[Union[str, Path]] = None) -> DMCAAgentConfig:
-    """
-    Reload configuration from environment or file
+    """    Reload configuration from environment or file
     
     Args:
         config_file: Optional configuration file path
         
     Returns:
         DMCAAgentConfig: Reloaded configuration
-    """
-    global _global_config
+    """    global _global_config
     if config_file:
         _global_config = DMCAAgentConfig.from_file(config_file)
     else:
@@ -563,8 +533,7 @@ DEFAULT_PLATFORM_CONFIGS = {
 
 # Initialize default platform configurations
 def initialize_default_configs():
-    """Initialize default platform configurations"""
-    config = get_config()
+    """Initialize default platform configurations"""    config = get_config()
     for platform, platform_config in DEFAULT_PLATFORM_CONFIGS.items():
         if platform not in config.takedown.platform_configs:
             config.update_platform_config(platform, platform_config)

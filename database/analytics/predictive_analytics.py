@@ -1,5 +1,4 @@
-"""
-Predictive Analytics Module - IA Influencer Agent + Content Protection Platform
+"""Predictive Analytics Module - IA Influencer Agent + Content Protection Platform
 
 Advanced ML-powered predictive analytics for multi-format content creators
 (musicians, bloggers, photographers, influencers, comedians) with AI forecasting.
@@ -24,7 +23,6 @@ Specialties of Project Team:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -52,8 +50,7 @@ except ImportError:
 logger = logging.getLogger(__name__)
 
 class PredictionType(str, Enum):
-    """Types of predictions available"""
-    ENGAGEMENT = "engagement"
+    """Types of predictions available"""    ENGAGEMENT = "engagement"
     REVENUE = "revenue"
     AUDIENCE_GROWTH = "audience_growth"
     CONTENT_PERFORMANCE = "content_performance"
@@ -61,16 +58,14 @@ class PredictionType(str, Enum):
     MONETIZATION_POTENTIAL = "monetization_potential"
 
 class TimeHorizon(str, Enum):
-    """Prediction time horizons"""
-    DAILY = "daily"
+    """Prediction time horizons"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
     YEARLY = "yearly"
 
 class ModelType(str, Enum):
-    """Available ML model types"""
-    LINEAR_REGRESSION = "linear_regression"
+    """Available ML model types"""    LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     ENSEMBLE = "ensemble"
@@ -78,8 +73,7 @@ class ModelType(str, Enum):
 
 @dataclass
 class PredictionResult:
-    """Prediction result container"""
-    prediction_type: PredictionType
+    """Prediction result container"""    prediction_type: PredictionType
     predicted_value: float
     confidence_score: float
     confidence_interval: Tuple[float, float]
@@ -92,8 +86,7 @@ class PredictionResult:
 
 @dataclass
 class ModelPerformance:
-    """Model performance metrics"""
-    model_type: ModelType
+    """Model performance metrics"""    model_type: ModelType
     mae: float
     r2_score: float
     accuracy_percentage: float
@@ -102,8 +95,7 @@ class ModelPerformance:
     feature_count: int
 
 class PredictiveAnalytics:
-    """
-    Enterprise-grade predictive analytics engine
+    """    Enterprise-grade predictive analytics engine
     
     Provides ML-powered predictions for content creators including:
     - Engagement forecasting
@@ -112,16 +104,13 @@ class PredictiveAnalytics:
     - Content performance predictions
     - Collaboration success probability
     - Monetization potential analysis
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize predictive analytics engine
+        """        Initialize predictive analytics engine
         
         Args:
             db_session: Database session for data access
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.logger = logging.getLogger(__name__)
         self.scaler = StandardScaler()
         self.models = {}
@@ -134,8 +123,7 @@ class PredictiveAnalytics:
             self.logger.warning("ML libraries not available. Using statistical methods.")
     
     def _initialize_ml_models(self):
-        """Initialize ML models for different prediction types"""
-        try:
+        """Initialize ML models for different prediction types"""        try:
             self.models = {
                 PredictionType.ENGAGEMENT: {
                     ModelType.LINEAR_REGRESSION: LinearRegression(),
@@ -177,8 +165,7 @@ class PredictiveAnalytics:
         time_horizon: TimeHorizon = TimeHorizon.WEEKLY,
         model_type: ModelType = ModelType.ENSEMBLE
     ) -> PredictionResult:
-        """
-        Predict content engagement metrics
+        """        Predict content engagement metrics
         
         Args:
             user_id: User identifier
@@ -188,8 +175,7 @@ class PredictiveAnalytics:
             
         Returns:
             PredictionResult with engagement prediction
-        """
-        try:
+        """        try:
             self.logger.info(f"Predicting engagement for user {user_id}")
             
             # Get historical engagement data
@@ -229,8 +215,7 @@ class PredictiveAnalytics:
         time_horizon: TimeHorizon = TimeHorizon.MONTHLY,
         model_type: ModelType = ModelType.ENSEMBLE
     ) -> PredictionResult:
-        """
-        Predict revenue for specified time horizon
+        """        Predict revenue for specified time horizon
         
         Args:
             user_id: User identifier
@@ -240,8 +225,7 @@ class PredictiveAnalytics:
             
         Returns:
             PredictionResult with revenue prediction
-        """
-        try:
+        """        try:
             self.logger.info(f"Predicting revenue for user {user_id}")
             
             # Get historical revenue data
@@ -281,8 +265,7 @@ class PredictiveAnalytics:
         time_horizon: TimeHorizon = TimeHorizon.MONTHLY,
         model_type: ModelType = ModelType.ENSEMBLE
     ) -> PredictionResult:
-        """
-        Predict audience growth metrics
+        """        Predict audience growth metrics
         
         Args:
             user_id: User identifier
@@ -292,8 +275,7 @@ class PredictiveAnalytics:
             
         Returns:
             PredictionResult with audience growth prediction
-        """
-        try:
+        """        try:
             self.logger.info(f"Predicting audience growth for user {user_id}")
             
             # Get historical audience data
@@ -332,8 +314,7 @@ class PredictiveAnalytics:
         collaboration_features: Dict[str, Any],
         partner_user_id: Optional[int] = None
     ) -> PredictionResult:
-        """
-        Predict collaboration success probability
+        """        Predict collaboration success probability
         
         Args:
             user_id: Primary user identifier
@@ -342,8 +323,7 @@ class PredictiveAnalytics:
             
         Returns:
             PredictionResult with collaboration success prediction
-        """
-        try:
+        """        try:
             self.logger.info(f"Predicting collaboration success for user {user_id}")
             
             # Analyze user compatibility
@@ -409,8 +389,7 @@ class PredictiveAnalytics:
         monetization_features: Dict[str, Any],
         time_horizon: TimeHorizon = TimeHorizon.QUARTERLY
     ) -> PredictionResult:
-        """
-        Predict monetization potential for content creator
+        """        Predict monetization potential for content creator
         
         Args:
             user_id: User identifier
@@ -419,8 +398,7 @@ class PredictiveAnalytics:
             
         Returns:
             PredictionResult with monetization potential prediction
-        """
-        try:
+        """        try:
             self.logger.info(f"Predicting monetization potential for user {user_id}")
             
             # Get user's current performance metrics
@@ -492,8 +470,7 @@ class PredictiveAnalytics:
         time_horizon: TimeHorizon = TimeHorizon.MONTHLY,
         confidence_threshold: float = 0.7
     ) -> Dict[PredictionType, PredictionResult]:
-        """
-        Generate ensemble predictions for multiple types
+        """        Generate ensemble predictions for multiple types
         
         Args:
             user_id: User identifier
@@ -503,8 +480,7 @@ class PredictiveAnalytics:
             
         Returns:
             Dict mapping prediction types to results
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating ensemble forecast for user {user_id}")
             
             results = {}
@@ -555,16 +531,14 @@ class PredictiveAnalytics:
             raise
     
     def get_model_performance(self, prediction_type: PredictionType) -> Optional[ModelPerformance]:
-        """Get performance metrics for specific model type"""
-        return self.model_performance.get(prediction_type)
+        """Get performance metrics for specific model type"""        return self.model_performance.get(prediction_type)
     
     async def retrain_models(
         self,
         prediction_type: Optional[PredictionType] = None,
         min_samples: int = 50
     ) -> Dict[PredictionType, ModelPerformance]:
-        """
-        Retrain ML models with latest data
+        """        Retrain ML models with latest data
         
         Args:
             prediction_type: Specific prediction type to retrain (None for all)
@@ -572,8 +546,7 @@ class PredictiveAnalytics:
             
         Returns:
             Dict with model performance metrics
-        """
-        try:
+        """        try:
             self.logger.info("Starting model retraining process")
             
             if not ML_AVAILABLE:
@@ -619,8 +592,7 @@ class PredictiveAnalytics:
         content_features: Dict[str, Any],
         time_horizon: TimeHorizon
     ) -> PredictionResult:
-        """Statistical engagement prediction fallback"""
-        
+        """Statistical engagement prediction fallback"""        
         # Get recent engagement data
         recent_data = await self._get_recent_engagement_data(user_id, days=30)
         
@@ -680,8 +652,7 @@ class PredictiveAnalytics:
         revenue_features: Dict[str, Any],
         time_horizon: TimeHorizon
     ) -> PredictionResult:
-        """Statistical revenue prediction fallback"""
-        
+        """Statistical revenue prediction fallback"""        
         # Get recent revenue data
         recent_data = await self._get_recent_revenue_data(user_id, days=90)
         
@@ -737,8 +708,7 @@ class PredictiveAnalytics:
         growth_features: Dict[str, Any],
         time_horizon: TimeHorizon
     ) -> PredictionResult:
-        """Statistical audience growth prediction fallback"""
-        
+        """Statistical audience growth prediction fallback"""        
         # Get recent audience data
         recent_data = await self._get_recent_audience_data(user_id, days=60)
         
@@ -792,8 +762,7 @@ class PredictiveAnalytics:
     # Helper methods
     
     def _get_time_horizon_delta(self, time_horizon: TimeHorizon) -> timedelta:
-        """Convert time horizon to timedelta"""
-        horizon_map = {
+        """Convert time horizon to timedelta"""        horizon_map = {
             TimeHorizon.DAILY: timedelta(days=1),
             TimeHorizon.WEEKLY: timedelta(days=7),
             TimeHorizon.MONTHLY: timedelta(days=30),
@@ -803,8 +772,7 @@ class PredictiveAnalytics:
         return horizon_map.get(time_horizon, timedelta(days=30))
     
     def _get_time_periods_for_horizon(self, time_horizon: TimeHorizon) -> int:
-        """Get number of time periods for horizon"""
-        period_map = {
+        """Get number of time periods for horizon"""        period_map = {
             TimeHorizon.DAILY: 1,
             TimeHorizon.WEEKLY: 7,
             TimeHorizon.MONTHLY: 30,
@@ -814,8 +782,7 @@ class PredictiveAnalytics:
         return period_map.get(time_horizon, 30)
     
     def _get_seasonal_multiplier(self, time_horizon: TimeHorizon) -> float:
-        """Calculate seasonal multiplier for revenue"""
-        current_month = datetime.utcnow().month
+        """Calculate seasonal multiplier for revenue"""        current_month = datetime.utcnow().month
         
         # Simple seasonal adjustment (can be enhanced with historical data)
         seasonal_factors = {
@@ -836,19 +803,16 @@ class PredictiveAnalytics:
         return seasonal_factors.get(current_month, 1.0)
     
     async def _get_historical_engagement_data(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get historical engagement data for ML training"""
-        # This would query the content_performance_analytics table
+        """Get historical engagement data for ML training"""        # This would query the content_performance_analytics table
         # For now, return empty list (would be implemented with actual DB queries)
         return []
     
     async def _get_historical_revenue_data(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get historical revenue data for ML training"""
-        # This would query the revenue_analytics table
+        """Get historical revenue data for ML training"""        # This would query the revenue_analytics table
         return []
     
     async def _get_historical_audience_data(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get historical audience data for ML training"""
-        # This would query the audience_intelligence table
+        """Get historical audience data for ML training"""        # This would query the audience_intelligence table
         return []
     
     def _calculate_monetization_readiness(
@@ -857,8 +821,7 @@ class PredictiveAnalytics:
         audience_quality: float,
         monetization_features: Dict[str, Any]
     ) -> float:
-        """Calculate readiness score for monetization (0-1)"""
-        
+        """Calculate readiness score for monetization (0-1)"""        
         # Base factors
         audience_size_score = min(1.0, current_metrics.get('audience_size', 0) / 10000)
         engagement_score = min(1.0, current_metrics.get('engagement_rate', 0) / 0.05)
@@ -881,8 +844,7 @@ class PredictiveAnalytics:
         monetization_features: Dict[str, Any],
         time_horizon: TimeHorizon
     ) -> float:
-        """Estimate potential revenue based on metrics"""
-        
+        """Estimate potential revenue based on metrics"""        
         audience_size = current_metrics.get('audience_size', 0)
         engagement_rate = current_metrics.get('engagement_rate', 0)
         
@@ -907,8 +869,7 @@ class PredictiveAnalytics:
         return monthly_potential * time_multiplier
     
     async def _get_current_performance_metrics(self, user_id: int) -> Dict[str, Any]:
-        """Get current performance metrics for user"""
-        # This would query current audience and engagement data
+        """Get current performance metrics for user"""        # This would query current audience and engagement data
         # Returning defaults for now
         return {
             'audience_size': 1000,
@@ -918,28 +879,23 @@ class PredictiveAnalytics:
         }
     
     async def _analyze_audience_quality(self, user_id: int) -> float:
-        """Analyze audience quality score (0-1)"""
-        # This would analyze audience authenticity, engagement patterns, etc.
+        """Analyze audience quality score (0-1)"""        # This would analyze audience authenticity, engagement patterns, etc.
         # For now, return a default quality score
         return 0.75
 
 
 class ForecastEngine:
-    """
-    Advanced forecasting engine with time series analysis
+    """    Advanced forecasting engine with time series analysis
     
     Provides specialized forecasting capabilities with trend analysis,
     seasonality detection, and confidence intervals.
-    """
-    
+    """    
     def __init__(self, predictive_analytics: PredictiveAnalytics):
-        """
-        Initialize forecast engine
+        """        Initialize forecast engine
         
         Args:
             predictive_analytics: Instance of PredictiveAnalytics
-        """
-        self.predictive_analytics = predictive_analytics
+        """        self.predictive_analytics = predictive_analytics
         self.logger = logging.getLogger(__name__)
     
     async def generate_multi_horizon_forecast(
@@ -948,8 +904,7 @@ class ForecastEngine:
         prediction_type: PredictionType,
         horizons: List[TimeHorizon] = None
     ) -> Dict[TimeHorizon, PredictionResult]:
-        """
-        Generate forecasts for multiple time horizons
+        """        Generate forecasts for multiple time horizons
         
         Args:
             user_id: User identifier
@@ -958,8 +913,7 @@ class ForecastEngine:
             
         Returns:
             Dict mapping time horizons to prediction results
-        """
-        try:
+        """        try:
             if horizons is None:
                 horizons = [TimeHorizon.WEEKLY, TimeHorizon.MONTHLY, TimeHorizon.QUARTERLY]
             
@@ -1000,8 +954,7 @@ class ForecastEngine:
         metric_type: str,
         lookback_days: int = 90
     ) -> Dict[str, Any]:
-        """
-        Detect trends in user metrics
+        """        Detect trends in user metrics
         
         Args:
             user_id: User identifier
@@ -1010,8 +963,7 @@ class ForecastEngine:
             
         Returns:
             Dict with trend analysis results
-        """
-        try:
+        """        try:
             # This would implement trend detection algorithms
             # For now, return placeholder analysis
             

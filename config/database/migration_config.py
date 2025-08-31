@@ -1,5 +1,4 @@
-"""
-Database Migration Configuration for IA-Influencer Agent Platform
+"""Database Migration Configuration for IA-Influencer Agent Platform
 ================================================================
 
 Professional database migration management for PostgreSQL schema evolution,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import json
 from typing import Dict, List, Optional, Any, Union, Callable
@@ -39,16 +37,14 @@ logger = logging.getLogger(__name__)
 
 
 class MigrationEnvironment(Enum):
-    """Migration environment types"""
-    DEVELOPMENT = "development"
+    """Migration environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class MigrationStatus(Enum):
-    """Migration status types"""
-    PENDING = "pending"
+    """Migration status types"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,8 +52,7 @@ class MigrationStatus(Enum):
 
 
 class DatabaseSchema(Enum):
-    """Database schema types for different domains"""
-    CORE = "core"                          # Core platform schemas
+    """Database schema types for different domains"""    CORE = "core"                          # Core platform schemas
     CONTENT_PROTECTION = "content_protection"  # Content fingerprinting and protection
     ANALYTICS = "analytics"                 # Analytics and reporting
     MONETIZATION = "monetization"          # Revenue tracking and payments
@@ -67,8 +62,7 @@ class DatabaseSchema(Enum):
 
 @dataclass
 class MigrationConfig:
-    """Migration configuration settings"""
-    migration_path: str = "migrations"
+    """Migration configuration settings"""    migration_path: str = "migrations"
     backup_enabled: bool = True
     backup_path: str = "backups/migrations"
     auto_backup_before_migration: bool = True
@@ -83,8 +77,7 @@ class MigrationConfig:
 
 @dataclass
 class MigrationRecord:
-    """Migration execution record"""
-    migration_id: str
+    """Migration execution record"""    migration_id: str
     schema: DatabaseSchema
     version: str
     description: str
@@ -99,8 +92,7 @@ class MigrationRecord:
 
 
 class PostgreSQLMigrationManager:
-    """PostgreSQL-specific migration management using Alembic"""
-    
+    """PostgreSQL-specific migration management using Alembic"""    
     def __init__(self, engine: Engine, schema: DatabaseSchema, config: MigrationConfig):
         self.engine = engine
         self.schema = schema
@@ -109,8 +101,7 @@ class PostgreSQLMigrationManager:
         self.logger = logging.getLogger(f"postgres_migration.{schema.value}")
 
     def _setup_alembic_config(self) -> AlembicConfig:
-        """Setup Alembic configuration"""
-        try:
+        """Setup Alembic configuration"""        try:
             # Create migration directory structure
             migration_dir = Path(self.config.migration_path) / "postgresql" / self.schema.value
             migration_dir.mkdir(parents=True, exist_ok=True)
@@ -138,9 +129,7 @@ class PostgreSQLMigrationManager:
             raise
 
     def _create_alembic_ini(self, ini_path: Path) -> None:
-        """Create Alembic configuration file"""
-        ini_content = f"""
-[alembic]
+        """Create Alembic configuration file"""        ini_content = f"""[alembic]
 script_location = {self.config.migration_path}/postgresql/{self.schema.value}
 prepend_sys_path = .
 version_path_separator = os
@@ -178,16 +167,14 @@ formatter = generic
 [formatter_generic]
 format = %(levelname)-5.5s [%(name)s] %(message)s
 datefmt = %H:%M:%S
-"""
-        
+"""        
         with open(ini_path, 'w') as f:
             f.write(ini_content.strip())
 
     def create_migration(self, description: str, 
                         upgrade_sql: str, 
                         downgrade_sql: Optional[str] = None) -> str:
-        """
-        Create new migration
+        """        Create new migration
         
         Args:
             description: Migration description
@@ -196,8 +183,7 @@ datefmt = %H:%M:%S
             
         Returns:
             Migration ID
-        """
-        try:
+        """        try:
             # Generate migration
             revision = command.revision(
                 self.alembic_config,
@@ -210,15 +196,13 @@ datefmt = %H:%M:%S
             migration_file = script_dir.get_revision(revision.revision).path
             
             # Customize migration file content
-            migration_content = f'''"""
-{description}
+            migration_content = f'''"""{description}
 
 Revision ID: {revision.revision}
 Revises: {revision.down_revision}
 Create Date: {datetime.now()}
 
-"""
-from alembic import op
+"""from alembic import op
 import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
@@ -228,13 +212,11 @@ branch_labels = None
 depends_on = None
 
 def upgrade():
-    """Upgrade database schema"""
-    # Custom upgrade SQL
+    """Upgrade database schema"""    # Custom upgrade SQL
     {self._format_sql_for_migration(upgrade_sql)}
 
 def downgrade():
-    """Downgrade database schema"""
-    # Custom downgrade SQL
+    """Downgrade database schema"""    # Custom downgrade SQL
     {self._format_sql_for_migration(downgrade_sql) if downgrade_sql else "pass"}
 '''
             
@@ -250,8 +232,7 @@ def downgrade():
             raise
 
     def _format_sql_for_migration(self, sql: str) -> str:
-        """Format SQL for inclusion in migration file"""
-        if not sql:
+        """Format SQL for inclusion in migration file"""        if not sql:
             return "pass"
         
         # Split SQL into statements and format for Alembic
@@ -264,16 +245,14 @@ def downgrade():
         return '\n'.join(formatted_statements)
 
     def run_migrations(self, target_revision: str = "head") -> List[MigrationRecord]:
-        """
-        Run migrations to target revision
+        """        Run migrations to target revision
         
         Args:
             target_revision: Target revision (default: "head")
             
         Returns:
             List of executed migrations
-        """
-        migration_records = []
+        """        migration_records = []
         
         try:
             # Get pending migrations
@@ -342,16 +321,14 @@ def downgrade():
             raise
 
     def rollback_migration(self, target_revision: str) -> MigrationRecord:
-        """
-        Rollback to specific revision
+        """        Rollback to specific revision
         
         Args:
             target_revision: Target revision to rollback to
             
         Returns:
             Migration record
-        """
-        try:
+        """        try:
             record = MigrationRecord(
                 migration_id=f"rollback_{target_revision}",
                 schema=self.schema,
@@ -378,8 +355,7 @@ def downgrade():
             raise
 
     def _create_backup(self, migration_id: str) -> str:
-        """Create database backup before migration"""
-        try:
+        """Create database backup before migration"""        try:
             backup_dir = Path(self.config.backup_path) / self.schema.value
             backup_dir.mkdir(parents=True, exist_ok=True)
             
@@ -411,8 +387,7 @@ def downgrade():
             return ""
 
     def _calculate_checksum(self, file_path: str) -> str:
-        """Calculate checksum for migration file"""
-        try:
+        """Calculate checksum for migration file"""        try:
             with open(file_path, 'rb') as f:
                 content = f.read()
                 return hashlib.md5(content).hexdigest()
@@ -421,8 +396,7 @@ def downgrade():
 
 
 class MongoDBMigrationManager:
-    """MongoDB-specific migration management"""
-    
+    """MongoDB-specific migration management"""    
     def __init__(self, client: Any, database_name: str, config: MigrationConfig):
         self.client = client
         self.database_name = database_name
@@ -433,8 +407,7 @@ class MongoDBMigrationManager:
 
     def create_migration(self, description: str, 
                         migration_function: Callable) -> str:
-        """
-        Create MongoDB migration
+        """        Create MongoDB migration
         
         Args:
             description: Migration description
@@ -442,8 +415,7 @@ class MongoDBMigrationManager:
             
         Returns:
             Migration ID
-        """
-        migration_id = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{description.replace(' ', '_')}"
+        """        migration_id = f"{datetime.now().strftime('%Y%m%d_%H%M%S')}_{description.replace(' ', '_')}"
         
         try:
             migration_record = {
@@ -464,8 +436,7 @@ class MongoDBMigrationManager:
             raise
 
     def run_pending_migrations(self) -> List[MigrationRecord]:
-        """Run all pending MongoDB migrations"""
-        migration_records = []
+        """Run all pending MongoDB migrations"""        migration_records = []
         
         try:
             pending_migrations = self.migrations_collection.find({"status": "pending"})
@@ -535,10 +506,8 @@ class MongoDBMigrationManager:
 
 
 class MigrationManager:
-    """
-    Main migration manager orchestrating all database migrations
-    """
-    
+    """    Main migration manager orchestrating all database migrations
+    """    
     def __init__(self, 
                  environment: MigrationEnvironment = MigrationEnvironment.DEVELOPMENT,
                  config: Optional[MigrationConfig] = None):
@@ -549,8 +518,7 @@ class MigrationManager:
         self._setup_logging()
 
     def _setup_logging(self) -> None:
-        """Setup migration logging"""
-        self.logger = logging.getLogger(f"migration_manager.{self.environment.value}")
+        """Setup migration logging"""        self.logger = logging.getLogger(f"migration_manager.{self.environment.value}")
         if not self.logger.handlers:
             handler = logging.StreamHandler()
             formatter = logging.Formatter(
@@ -561,8 +529,7 @@ class MigrationManager:
             self.logger.setLevel(logging.INFO)
 
     def add_postgresql_manager(self, schema: DatabaseSchema, engine: Engine) -> None:
-        """Add PostgreSQL migration manager for specific schema"""
-        try:
+        """Add PostgreSQL migration manager for specific schema"""        try:
             manager = PostgreSQLMigrationManager(engine, schema, self.config)
             self.postgresql_managers[schema] = manager
             self.logger.info(f"Added PostgreSQL migration manager for schema: {schema.value}")
@@ -571,8 +538,7 @@ class MigrationManager:
             raise
 
     def add_mongodb_manager(self, database_name: str, client: Any) -> None:
-        """Add MongoDB migration manager for specific database"""
-        try:
+        """Add MongoDB migration manager for specific database"""        try:
             manager = MongoDBMigrationManager(client, database_name, self.config)
             self.mongodb_managers[database_name] = manager
             self.logger.info(f"Added MongoDB migration manager for database: {database_name}")
@@ -581,8 +547,7 @@ class MigrationManager:
             raise
 
     def run_all_migrations(self) -> Dict[str, List[MigrationRecord]]:
-        """Run all pending migrations across all databases"""
-        results = {
+        """Run all pending migrations across all databases"""        results = {
             "postgresql": {},
             "mongodb": {}
         }
@@ -613,8 +578,7 @@ class MigrationManager:
             raise
 
     def get_migration_status(self) -> Dict[str, Any]:
-        """Get status of all migrations"""
-        status = {
+        """Get status of all migrations"""        status = {
             "environment": self.environment.value,
             "postgresql": {},
             "mongodb": {},
@@ -670,8 +634,7 @@ class MigrationManager:
                               description: str,
                               upgrade_sql: str,
                               downgrade_sql: Optional[str] = None) -> str:
-        """Create PostgreSQL schema migration"""
-        if schema not in self.postgresql_managers:
+        """Create PostgreSQL schema migration"""        if schema not in self.postgresql_managers:
             raise ValueError(f"No PostgreSQL manager found for schema: {schema.value}")
         
         return self.postgresql_managers[schema].create_migration(
@@ -679,8 +642,7 @@ class MigrationManager:
         )
 
     def health_check(self) -> Dict[str, Any]:
-        """Perform health check on migration system"""
-        health_status = {
+        """Perform health check on migration system"""        health_status = {
             "status": "healthy",
             "environment": self.environment.value,
             "managers": {

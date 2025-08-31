@@ -1,11 +1,9 @@
-"""
-Violation Detection System
+"""Violation Detection System
 Advanced violation detection and analysis.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from typing import Dict, Any, List, Optional
 from datetime import datetime
 
@@ -15,16 +13,14 @@ from ..ai_engine.vector_database import vector_database
 
 
 class ViolationDetector:
-    """Advanced violation detection using AI fingerprinting"""
-    
+    """Advanced violation detection using AI fingerprinting"""    
     def __init__(self):
         self.detection_algorithms = ["fingerprint", "visual", "audio", "text"]
         self.confidence_threshold = 0.85
     
     async def detect_violation(self, original_content: Dict[str, Any], 
                              suspected_content: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect if suspected content violates original content"""
-        try:
+        """Detect if suspected content violates original content"""        try:
             content_type = original_content.get("content_type", "unknown")
             
             # Generate fingerprint for suspected content
@@ -68,8 +64,7 @@ class ViolationDetector:
             }
     
     def _calculate_confidence(self, similarity_score: float) -> str:
-        """Calculate confidence level based on similarity score"""
-        if similarity_score >= 0.95:
+        """Calculate confidence level based on similarity score"""        if similarity_score >= 0.95:
             return "very_high"
         elif similarity_score >= 0.90:
             return "high"

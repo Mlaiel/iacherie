@@ -1,5 +1,4 @@
-"""
-🎯 Challenge Engine Core - IA Influencer Agent Platform Enterprise
+"""🎯 Challenge Engine Core - IA Influencer Agent Platform Enterprise
 ===================================================================
 Module: backend/core/challenges/challenge_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -21,7 +20,6 @@ CHALLENGE ENGINE ARCHITECTURE:
 Challenge Factory → Lifecycle Manager → Progress Tracker → 
 Validation Engine → Reward Calculator → Analytics Collector
 """
-
 from typing import Dict, List, Optional, Any, Union, Callable
 from dataclasses import dataclass, field
 from enum import Enum, IntEnum
@@ -33,8 +31,7 @@ import uuid
 from abc import ABC, abstractmethod
 
 class ChallengeType(Enum):
-    """Types of challenges available in the platform"""
-    DAILY = "daily"
+    """Types of challenges available in the platform"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     SEASONAL = "seasonal"
@@ -45,8 +42,7 @@ class ChallengeType(Enum):
     COMPETITIVE = "competitive"
 
 class ChallengeCategory(Enum):
-    """Challenge categories based on content type and activity"""
-    CONTENT_CREATION = "content_creation"
+    """Challenge categories based on content type and activity"""    CONTENT_CREATION = "content_creation"
     COLLABORATION = "collaboration"
     ENGAGEMENT = "engagement"
     TECHNICAL_SKILL = "technical_skill"
@@ -58,8 +54,7 @@ class ChallengeCategory(Enum):
     LEARNING = "learning"
 
 class ChallengeStatus(Enum):
-    """Challenge lifecycle status"""
-    DRAFT = "draft"
+    """Challenge lifecycle status"""    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     APPROVED = "approved"
     ACTIVE = "active"
@@ -69,8 +64,7 @@ class ChallengeStatus(Enum):
     ARCHIVED = "archived"
 
 class ChallengeDifficulty(IntEnum):
-    """Challenge difficulty levels (1-10)"""
-    BEGINNER = 1
+    """Challenge difficulty levels (1-10)"""    BEGINNER = 1
     EASY = 2
     NOVICE = 3
     INTERMEDIATE = 4
@@ -82,8 +76,7 @@ class ChallengeDifficulty(IntEnum):
     LEGENDARY = 10
 
 class ChallengeVisibility(Enum):
-    """Challenge visibility levels"""
-    PUBLIC = "public"
+    """Challenge visibility levels"""    PUBLIC = "public"
     PRIVATE = "private"
     INVITE_ONLY = "invite_only"
     TIER_RESTRICTED = "tier_restricted"
@@ -91,8 +84,7 @@ class ChallengeVisibility(Enum):
 
 @dataclass
 class ChallengeRequirement:
-    """Individual challenge requirement specification"""
-    requirement_id: str
+    """Individual challenge requirement specification"""    requirement_id: str
     name: str
     description: str
     metric_type: str  # e.g., "upload_count", "quality_score", "views", "revenue"
@@ -106,8 +98,7 @@ class ChallengeRequirement:
 
 @dataclass
 class ChallengeReward:
-    """Challenge reward specification"""
-    reward_id: str
+    """Challenge reward specification"""    reward_id: str
     reward_type: str  # "virtual_currency", "real_money", "badge", "feature_unlock"
     reward_value: Union[int, float, Decimal, str]
     reward_description: str
@@ -118,8 +109,7 @@ class ChallengeReward:
 
 @dataclass
 class ChallengeMilestone:
-    """Challenge milestone for progressive rewards"""
-    milestone_id: str
+    """Challenge milestone for progressive rewards"""    milestone_id: str
     milestone_name: str
     progress_percentage: float  # 0.0 to 100.0
     reward: Optional[ChallengeReward] = None
@@ -128,8 +118,7 @@ class ChallengeMilestone:
 
 @dataclass
 class ChallengeConfiguration:
-    """Complete challenge configuration"""
-    challenge_id: str
+    """Complete challenge configuration"""    challenge_id: str
     title: str
     description: str
     challenge_type: ChallengeType
@@ -177,8 +166,7 @@ class ChallengeConfiguration:
     version: str = "1.0"
 
 class ChallengeEngine:
-    """Core challenge engine for creating and managing challenges"""
-    
+    """Core challenge engine for creating and managing challenges"""    
     def __init__(self, 
                  challenge_repository=None,
                  user_service=None,
@@ -187,8 +175,7 @@ class ChallengeEngine:
                  reward_service=None,
                  validation_service=None,
                  gamification_service=None):
-        """Initialize challenge engine with dependencies"""
-        self.challenge_repository = challenge_repository
+        """Initialize challenge engine with dependencies"""        self.challenge_repository = challenge_repository
         self.user_service = user_service
         self.analytics_service = analytics_service
         self.notification_service = notification_service
@@ -247,8 +234,7 @@ class ChallengeEngine:
         }
     
     async def create_challenge(self, config: ChallengeConfiguration) -> Dict[str, Any]:
-        """Create a new challenge with comprehensive validation"""
-        try:
+        """Create a new challenge with comprehensive validation"""        try:
             # Validate challenge configuration
             validation_result = await self._validate_challenge_config(config)
             if not validation_result["is_valid"]:
@@ -324,8 +310,7 @@ class ChallengeEngine:
                                         challenge_id: str, 
                                         user_id: str,
                                         team_id: Optional[str] = None) -> Dict[str, Any]:
-        """Register user for challenge participation"""
-        try:
+        """Register user for challenge participation"""        try:
             # Get challenge configuration
             challenge = await self.challenge_repository.get_challenge(challenge_id)
             if not challenge:
@@ -403,8 +388,7 @@ class ChallengeEngine:
                                  challenge_id: str, 
                                  user_id: str,
                                  progress_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Update user progress on challenge"""
-        try:
+        """Update user progress on challenge"""        try:
             # Get current participation
             participation = await self.challenge_repository.get_user_participation(
                 challenge_id, user_id
@@ -482,8 +466,7 @@ class ChallengeEngine:
                                   user_id: Optional[str] = None,
                                   category: Optional[ChallengeCategory] = None,
                                   difficulty: Optional[ChallengeDifficulty] = None) -> List[Dict[str, Any]]:
-        """Get list of active challenges with optional filtering"""
-        try:
+        """Get list of active challenges with optional filtering"""        try:
             # Build filter criteria
             filters = {"status": ChallengeStatus.ACTIVE.value}
             
@@ -512,8 +495,7 @@ class ChallengeEngine:
     async def get_challenge_leaderboard(self, 
                                       challenge_id: str,
                                       limit: int = 100) -> Dict[str, Any]:
-        """Get challenge leaderboard with rankings"""
-        try:
+        """Get challenge leaderboard with rankings"""        try:
             # Get challenge configuration
             challenge = await self.challenge_repository.get_challenge(challenge_id)
             if not challenge:
@@ -547,8 +529,7 @@ class ChallengeEngine:
     # Private helper methods
     
     async def _validate_challenge_config(self, config: ChallengeConfiguration) -> Dict[str, Any]:
-        """Validate challenge configuration"""
-        errors = []
+        """Validate challenge configuration"""        errors = []
         
         # Basic validation
         if not config.title or len(config.title.strip()) < 3:
@@ -582,8 +563,7 @@ class ChallengeEngine:
         }
     
     def _apply_challenge_type_defaults(self, config: ChallengeConfiguration) -> ChallengeConfiguration:
-        """Apply default settings based on challenge type"""
-        type_config = self._challenge_type_configs.get(config.challenge_type, {})
+        """Apply default settings based on challenge type"""        type_config = self._challenge_type_configs.get(config.challenge_type, {})
         
         # Set default duration if not specified
         if config.duration_days == 0:
@@ -596,8 +576,7 @@ class ChallengeEngine:
         return config
     
     def _calculate_challenge_rewards(self, config: ChallengeConfiguration) -> ChallengeConfiguration:
-        """Calculate experience points and rewards based on difficulty and type"""
-        type_config = self._challenge_type_configs.get(config.challenge_type, {})
+        """Calculate experience points and rewards based on difficulty and type"""        type_config = self._challenge_type_configs.get(config.challenge_type, {})
         type_multiplier = type_config.get("experience_multiplier", 1.0)
         difficulty_multiplier = self._difficulty_multipliers.get(config.difficulty, 1.0)
         
@@ -617,8 +596,7 @@ class ChallengeEngine:
                                             challenge_id: str, 
                                             user_id: str,
                                             config: ChallengeConfiguration) -> Dict[str, Any]:
-        """Check if user is eligible to register for challenge"""
-        # Check if challenge is active for registration
+        """Check if user is eligible to register for challenge"""        # Check if challenge is active for registration
         if datetime.now(timezone.utc) > config.start_date:
             return {"eligible": False, "reason": "Challenge has already started"}
         
@@ -647,8 +625,7 @@ class ChallengeEngine:
         return {"eligible": True}
     
     def _get_requirements_summary(self, config: ChallengeConfiguration) -> List[Dict[str, Any]]:
-        """Get summarized requirements for user display"""
-        return [
+        """Get summarized requirements for user display"""        return [
             {
                 "name": req.name,
                 "description": req.description,
@@ -663,8 +640,7 @@ class ChallengeEngine:
                                      config: ChallengeConfiguration,
                                      participation: Dict[str, Any],
                                      progress_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process and validate progress update"""
-        try:
+        """Process and validate progress update"""        try:
             current_progress = participation.get("progress", {})
             updated_progress = current_progress.copy()
             
@@ -709,8 +685,7 @@ class ChallengeEngine:
     def _calculate_completion_percentage(self, 
                                        config: ChallengeConfiguration,
                                        progress: Dict[str, Any]) -> float:
-        """Calculate overall completion percentage"""
-        total_weight = sum(req.weight for req in config.requirements)
+        """Calculate overall completion percentage"""        total_weight = sum(req.weight for req in config.requirements)
         weighted_completion = 0.0
         
         for requirement in config.requirements:
@@ -725,8 +700,7 @@ class ChallengeEngine:
     async def _check_milestone_achievements(self, 
                                           config: ChallengeConfiguration,
                                           participation: Dict[str, Any]) -> Dict[str, Any]:
-        """Check for milestone achievements"""
-        current_percentage = participation.get("completion_percentage", 0.0)
+        """Check for milestone achievements"""        current_percentage = participation.get("completion_percentage", 0.0)
         achieved_milestones = participation.get("milestones_achieved", [])
         
         new_milestones = []
@@ -748,8 +722,7 @@ class ChallengeEngine:
     async def _check_challenge_completion(self, 
                                         config: ChallengeConfiguration,
                                         participation: Dict[str, Any]) -> Dict[str, Any]:
-        """Check if challenge is completed"""
-        completion_percentage = participation.get("completion_percentage", 0.0)
+        """Check if challenge is completed"""        completion_percentage = participation.get("completion_percentage", 0.0)
         progress = participation.get("progress", {})
         
         # Check if all mandatory requirements are met
@@ -781,8 +754,7 @@ class ChallengeEngine:
     async def _grant_milestone_rewards(self, 
                                      user_id: str,
                                      milestones: List[ChallengeMilestone]) -> List[Dict[str, Any]]:
-        """Grant rewards for achieved milestones"""
-        granted_rewards = []
+        """Grant rewards for achieved milestones"""        granted_rewards = []
         
         for milestone in milestones:
             if milestone.reward and self.reward_service:
@@ -804,8 +776,7 @@ class ChallengeEngine:
                                       user_id: str,
                                       config: ChallengeConfiguration,
                                       completion_result: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Grant rewards for challenge completion"""
-        granted_rewards = []
+        """Grant rewards for challenge completion"""        granted_rewards = []
         
         # Grant completion rewards
         for reward in config.completion_rewards:
@@ -839,8 +810,7 @@ class ChallengeEngine:
         return granted_rewards
     
     def _estimate_participants(self, config: ChallengeConfiguration) -> int:
-        """Estimate expected number of participants"""
-        base_estimate = {
+        """Estimate expected number of participants"""        base_estimate = {
             ChallengeType.DAILY: 1000,
             ChallengeType.WEEKLY: 500,
             ChallengeType.MONTHLY: 200,
@@ -873,8 +843,7 @@ class ChallengeEngine:
     async def _enrich_challenges_for_user(self, 
                                         challenges: List[Dict[str, Any]],
                                         user_id: str) -> List[Dict[str, Any]]:
-        """Enrich challenges with user-specific data"""
-        enriched = []
+        """Enrich challenges with user-specific data"""        enriched = []
         
         for challenge in challenges:
             challenge_id = challenge["challenge_id"]
@@ -900,8 +869,7 @@ class ChallengeEngine:
     def _sort_challenges_by_relevance(self, 
                                     challenges: List[Dict[str, Any]],
                                     user_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Sort challenges by relevance and engagement"""
-        def relevance_score(challenge):
+        """Sort challenges by relevance and engagement"""        def relevance_score(challenge):
             score = 0
             
             # Prioritize challenges user is participating in
@@ -931,8 +899,7 @@ class ChallengeEngine:
                                             config: ChallengeConfiguration,
                                             participations: List[Dict[str, Any]],
                                             limit: int) -> List[Dict[str, Any]]:
-        """Calculate leaderboard rankings for challenge"""
-        scored_participants = []
+        """Calculate leaderboard rankings for challenge"""        scored_participants = []
         
         for participation in participations:
             score = self._calculate_participant_score(config, participation)
@@ -961,8 +928,7 @@ class ChallengeEngine:
     def _calculate_participant_score(self, 
                                    config: ChallengeConfiguration,
                                    participation: Dict[str, Any]) -> float:
-        """Calculate score for participant in challenge"""
-        base_score = participation.get("completion_percentage", 0.0)
+        """Calculate score for participant in challenge"""        base_score = participation.get("completion_percentage", 0.0)
         
         # Bonus for milestones
         milestones_bonus = len(participation.get("milestones_achieved", [])) * 10
@@ -982,8 +948,7 @@ class ChallengeEngine:
                                          config: ChallengeConfiguration,
                                          milestone_results: Dict[str, Any],
                                          completion_result: Dict[str, Any]):
-        """Send appropriate notifications for progress updates"""
-        if not self.notification_service:
+        """Send appropriate notifications for progress updates"""        if not self.notification_service:
             return
         
         # Milestone achievement notifications
@@ -1011,8 +976,7 @@ class ChallengeEngine:
             )
     
     async def _get_user_tier(self, user_id: str) -> str:
-        """Get user tier from user service"""
-        if self.user_service:
+        """Get user tier from user service"""        if self.user_service:
             try:
                 user_data = await self.user_service.get_user_profile(user_id)
                 return user_data.get("tier", "basic")
@@ -1021,8 +985,7 @@ class ChallengeEngine:
         return "basic"
     
     def _check_tier_eligibility(self, user_tier: str, config: ChallengeConfiguration) -> bool:
-        """Check if user tier is eligible for challenge"""
-        # Simplified tier checking - would implement proper business logic
+        """Check if user tier is eligible for challenge"""        # Simplified tier checking - would implement proper business logic
         tier_hierarchy = ["basic", "premium", "pro", "vip", "elite"]
         required_tier_index = tier_hierarchy.index("premium")  # Default requirement
         user_tier_index = tier_hierarchy.index(user_tier) if user_tier in tier_hierarchy else 0
@@ -1030,8 +993,7 @@ class ChallengeEngine:
         return user_tier_index >= required_tier_index
     
     async def _get_user_rank_in_challenge(self, challenge_id: str, user_id: str) -> Optional[int]:
-        """Get user's current rank in challenge"""
-        try:
+        """Get user's current rank in challenge"""        try:
             leaderboard_result = await self.get_challenge_leaderboard(challenge_id, limit=1000)
             if leaderboard_result["success"]:
                 for entry in leaderboard_result["leaderboard"]:

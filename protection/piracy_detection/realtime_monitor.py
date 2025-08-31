@@ -1,5 +1,4 @@
-"""
-📡 Real-time Violation Monitor
+"""📡 Real-time Violation Monitor
 =============================
 
 Advanced real-time monitoring system for content violation detection and alerting.
@@ -31,7 +30,6 @@ This module provides:
 - Multi-channel notification delivery
 - Advanced threat intelligence integration
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Set
@@ -49,16 +47,14 @@ import statistics
 logger = logging.getLogger(__name__)
 
 class AlertSeverity(Enum):
-    """Alert severity levels."""
-    INFO = "info"
+    """Alert severity levels."""    INFO = "info"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class ViolationType(Enum):
-    """Types of violations detected."""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of violations detected."""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     UNAUTHORIZED_DISTRIBUTION = "unauthorized_distribution"
     CONTENT_THEFT = "content_theft"
@@ -67,8 +63,7 @@ class ViolationType(Enum):
     METADATA_TAMPERING = "metadata_tampering"
 
 class NotificationChannel(Enum):
-    """Notification delivery channels."""
-    EMAIL = "email"
+    """Notification delivery channels."""    EMAIL = "email"
     SMS = "sms"
     WEBHOOK = "webhook"
     SLACK = "slack"
@@ -77,8 +72,7 @@ class NotificationChannel(Enum):
     WEBSOCKET = "websocket"
 
 class MonitoringStatus(Enum):
-    """Monitoring system status."""
-    ACTIVE = "active"
+    """Monitoring system status."""    ACTIVE = "active"
     PAUSED = "paused"
     MAINTENANCE = "maintenance"
     ERROR = "error"
@@ -86,8 +80,7 @@ class MonitoringStatus(Enum):
 
 @dataclass
 class ViolationAlert:
-    """Real-time violation alert."""
-    alert_id: str
+    """Real-time violation alert."""    alert_id: str
     violation_type: ViolationType
     severity: AlertSeverity
     content_id: str
@@ -104,8 +97,7 @@ class ViolationAlert:
 
 @dataclass
 class MonitoringRule:
-    """Rule for monitoring and alerting."""
-    rule_id: str
+    """Rule for monitoring and alerting."""    rule_id: str
     rule_name: str
     description: str
     conditions: Dict[str, Any]
@@ -119,8 +111,7 @@ class MonitoringRule:
 
 @dataclass
 class NotificationTemplate:
-    """Template for notifications."""
-    template_id: str
+    """Template for notifications."""    template_id: str
     channel: NotificationChannel
     severity: AlertSeverity
     subject_template: str
@@ -130,8 +121,7 @@ class NotificationTemplate:
 
 @dataclass
 class EscalationPolicy:
-    """Escalation policy for alerts."""
-    policy_id: str
+    """Escalation policy for alerts."""    policy_id: str
     name: str
     levels: List[Dict[str, Any]]
     max_escalation_level: int
@@ -140,20 +130,17 @@ class EscalationPolicy:
     active: bool
 
 class WebSocketManager:
-    """Manages WebSocket connections for real-time updates."""
-    
+    """Manages WebSocket connections for real-time updates."""    
     def __init__(self):
         self.connections: Set[WebSocketServerProtocol] = set()
         self.subscriptions: Dict[str, Set[WebSocketServerProtocol]] = defaultdict(set)
     
     def add_connection(self, websocket: WebSocketServerProtocol):
-        """Add new WebSocket connection."""
-        self.connections.add(websocket)
+        """Add new WebSocket connection."""        self.connections.add(websocket)
         logger.info(f"WebSocket connection added: {websocket.remote_address}")
     
     def remove_connection(self, websocket: WebSocketServerProtocol):
-        """Remove WebSocket connection."""
-        self.connections.discard(websocket)
+        """Remove WebSocket connection."""        self.connections.discard(websocket)
         
         # Remove from all subscriptions
         for topic_connections in self.subscriptions.values():
@@ -162,17 +149,14 @@ class WebSocketManager:
         logger.info(f"WebSocket connection removed: {websocket.remote_address}")
     
     def subscribe_to_topic(self, websocket: WebSocketServerProtocol, topic: str):
-        """Subscribe connection to specific topic."""
-        self.subscriptions[topic].add(websocket)
+        """Subscribe connection to specific topic."""        self.subscriptions[topic].add(websocket)
         logger.info(f"WebSocket subscribed to topic {topic}: {websocket.remote_address}")
     
     def unsubscribe_from_topic(self, websocket: WebSocketServerProtocol, topic: str):
-        """Unsubscribe connection from topic."""
-        self.subscriptions[topic].discard(websocket)
+        """Unsubscribe connection from topic."""        self.subscriptions[topic].discard(websocket)
     
     async def broadcast_to_all(self, message: Dict[str, Any]):
-        """Broadcast message to all connected clients."""
-        if not self.connections:
+        """Broadcast message to all connected clients."""        if not self.connections:
             return
         
         message_json = json.dumps(message, default=str)
@@ -192,8 +176,7 @@ class WebSocketManager:
             self.remove_connection(websocket)
     
     async def broadcast_to_topic(self, topic: str, message: Dict[str, Any]):
-        """Broadcast message to subscribers of specific topic."""
-        topic_connections = self.subscriptions.get(topic, set())
+        """Broadcast message to subscribers of specific topic."""        topic_connections = self.subscriptions.get(topic, set())
         if not topic_connections:
             return
         
@@ -214,16 +197,14 @@ class WebSocketManager:
             self.remove_connection(websocket)
 
 class NotificationService:
-    """Handles multi-channel notifications."""
-    
+    """Handles multi-channel notifications."""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.templates = {}
         self._load_notification_templates()
     
     def _load_notification_templates(self):
-        """Load notification templates."""
-        self.templates = {
+        """Load notification templates."""        self.templates = {
             'copyright_violation_email': NotificationTemplate(
                 template_id='copyright_violation_email',
                 channel=NotificationChannel.EMAIL,
@@ -279,8 +260,7 @@ class NotificationService:
                               template_id: str,
                               variables: Dict[str, Any],
                               recipient: str) -> bool:
-        """Send notification through specified channel."""
-        try:
+        """Send notification through specified channel."""        try:
             template = self.templates.get(template_id)
             if not template or template.channel != channel:
                 logger.error(f"Template not found or channel mismatch: {template_id}")
@@ -306,14 +286,12 @@ class NotificationService:
             return False
     
     async def _send_email(self, recipient: str, subject: str, body: str) -> bool:
-        """Send email notification."""
-        # Implementation would use actual email service
+        """Send email notification."""        # Implementation would use actual email service
         logger.info(f"EMAIL to {recipient}: {subject}")
         return True
     
     async def _send_slack_message(self, webhook_url: str, message: str) -> bool:
-        """Send Slack notification."""
-        try:
+        """Send Slack notification."""        try:
             async with aiohttp.ClientSession() as session:
                 if message.startswith('{'):
                     # JSON format
@@ -331,8 +309,7 @@ class NotificationService:
             return False
     
     async def _send_webhook(self, url: str, payload: Dict[str, Any]) -> bool:
-        """Send webhook notification."""
-        try:
+        """Send webhook notification."""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(url, json=payload) as response:
                     return response.status == 200
@@ -341,8 +318,7 @@ class NotificationService:
             return False
 
 class AlertEngine:
-    """Processes violations and generates alerts."""
-    
+    """Processes violations and generates alerts."""    
     def __init__(self, notification_service: NotificationService):
         self.notification_service = notification_service
         self.monitoring_rules = {}
@@ -351,18 +327,15 @@ class AlertEngine:
         self.active_alerts = {}
     
     def add_monitoring_rule(self, rule: MonitoringRule):
-        """Add new monitoring rule."""
-        self.monitoring_rules[rule.rule_id] = rule
+        """Add new monitoring rule."""        self.monitoring_rules[rule.rule_id] = rule
         logger.info(f"Monitoring rule added: {rule.rule_name}")
     
     def add_escalation_policy(self, policy: EscalationPolicy):
-        """Add escalation policy."""
-        self.escalation_policies[policy.policy_id] = policy
+        """Add escalation policy."""        self.escalation_policies[policy.policy_id] = policy
         logger.info(f"Escalation policy added: {policy.name}")
     
     async def process_violation(self, violation_data: Dict[str, Any]) -> List[ViolationAlert]:
-        """Process violation and generate alerts."""
-        alerts = []
+        """Process violation and generate alerts."""        alerts = []
         
         try:
             # Check against monitoring rules
@@ -395,8 +368,7 @@ class AlertEngine:
             return []
     
     async def _matches_rule_conditions(self, violation_data: Dict[str, Any], rule: MonitoringRule) -> bool:
-        """Check if violation matches rule conditions."""
-        conditions = rule.conditions
+        """Check if violation matches rule conditions."""        conditions = rule.conditions
         
         # Check violation type
         if 'violation_types' in conditions:
@@ -425,8 +397,7 @@ class AlertEngine:
         return True
     
     async def _create_alert(self, violation_data: Dict[str, Any], rule: MonitoringRule) -> ViolationAlert:
-        """Create violation alert."""
-        alert_id = f"alert_{rule.rule_id}_{int(datetime.now().timestamp())}"
+        """Create violation alert."""        alert_id = f"alert_{rule.rule_id}_{int(datetime.now().timestamp())}"
         
         # Calculate recommended actions
         recommended_actions = self._generate_recommended_actions(violation_data, rule)
@@ -454,8 +425,7 @@ class AlertEngine:
         return alert
     
     def _generate_recommended_actions(self, violation_data: Dict[str, Any], rule: MonitoringRule) -> List[str]:
-        """Generate recommended actions based on violation."""
-        actions = []
+        """Generate recommended actions based on violation."""        actions = []
         
         confidence = violation_data.get('confidence_score', 0)
         violation_type = violation_data.get('violation_type')
@@ -481,8 +451,7 @@ class AlertEngine:
         return actions
     
     async def _estimate_violation_impact(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Estimate impact of violation."""
-        # Simplified impact estimation
+        """Estimate impact of violation."""        # Simplified impact estimation
         confidence = violation_data.get('confidence_score', 0)
         
         impact = {
@@ -506,8 +475,7 @@ class AlertEngine:
         return impact
     
     async def _is_in_cooldown(self, rule_id: str, violation_data: Dict[str, Any]) -> bool:
-        """Check if rule is in cooldown period."""
-        rule = self.monitoring_rules.get(rule_id)
+        """Check if rule is in cooldown period."""        rule = self.monitoring_rules.get(rule_id)
         if not rule or rule.cooldown_minutes <= 0:
             return False
         
@@ -526,8 +494,7 @@ class AlertEngine:
         return False
     
     async def _send_rule_notifications(self, alert: ViolationAlert, rule: MonitoringRule):
-        """Send notifications for rule-triggered alert."""
-        for channel in rule.notification_channels:
+        """Send notifications for rule-triggered alert."""        for channel in rule.notification_channels:
             try:
                 template_id = f"{alert.violation_type.value}_{channel.value}"
                 
@@ -560,26 +527,21 @@ class AlertEngine:
                 logger.error(f"Failed to send {channel.value} notification: {e}")
     
     async def _start_escalation(self, alert: ViolationAlert, rule: MonitoringRule):
-        """Start escalation process for alert."""
-        # Implementation would handle escalation logic
+        """Start escalation process for alert."""        # Implementation would handle escalation logic
         logger.info(f"Starting escalation for alert: {alert.alert_id}")
 
 class RealtimeViolationMonitor:
-    """
-    Real-time violation monitoring and alerting system.
+    """    Real-time violation monitoring and alerting system.
     
     Provides comprehensive real-time monitoring capabilities for content violations
     with advanced alerting, escalation, and notification features.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize the Real-time Violation Monitor.
+        """        Initialize the Real-time Violation Monitor.
         
         Args:
             config: Monitor configuration parameters
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialized = False
         
         # Initialize components
@@ -611,13 +573,11 @@ class RealtimeViolationMonitor:
         logger.info("Real-time Violation Monitor initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize monitoring components.
+        """        Initialize monitoring components.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Initialize Redis connection
             redis_config = self.config.get('redis', {})
             if redis_config:
@@ -643,16 +603,14 @@ class RealtimeViolationMonitor:
             return False
     
     async def start_monitoring(self, content_ids: List[str]) -> bool:
-        """
-        Start monitoring for specific content.
+        """        Start monitoring for specific content.
         
         Args:
             content_ids: List of content IDs to monitor
             
         Returns:
             bool: True if monitoring started successfully
-        """
-        if not self._initialized:
+        """        if not self._initialized:
             await self.initialize()
         
         try:
@@ -669,16 +627,14 @@ class RealtimeViolationMonitor:
             return False
     
     async def submit_violation(self, violation_data: Dict[str, Any]) -> str:
-        """
-        Submit violation for real-time processing.
+        """        Submit violation for real-time processing.
         
         Args:
             violation_data: Violation information
             
         Returns:
             Processing ID
-        """
-        try:
+        """        try:
             processing_id = f"proc_{int(datetime.now().timestamp())}"
             violation_data['processing_id'] = processing_id
             violation_data['submission_timestamp'] = datetime.now().isoformat()
@@ -700,8 +656,7 @@ class RealtimeViolationMonitor:
             raise
     
     async def _start_websocket_server(self):
-        """Start WebSocket server for real-time updates."""
-        async def handle_websocket(websocket, path):
+        """Start WebSocket server for real-time updates."""        async def handle_websocket(websocket, path):
             self.websocket_manager.add_connection(websocket)
             try:
                 async for message in websocket:
@@ -718,8 +673,7 @@ class RealtimeViolationMonitor:
         logger.info(f"WebSocket server started on port {self.websocket_port}")
     
     async def _handle_websocket_message(self, websocket: WebSocketServerProtocol, message: str):
-        """Handle incoming WebSocket message."""
-        try:
+        """Handle incoming WebSocket message."""        try:
             data = json.loads(message)
             message_type = data.get('type')
             
@@ -743,8 +697,7 @@ class RealtimeViolationMonitor:
             logger.error(f"WebSocket message handling failed: {e}")
     
     async def _process_violation_queue(self):
-        """Process violations from queue."""
-        while True:
+        """Process violations from queue."""        while True:
             try:
                 violation_data = await self.violation_queue.get()
                 
@@ -773,8 +726,7 @@ class RealtimeViolationMonitor:
                 await asyncio.sleep(1)
     
     async def _monitor_content(self, content_id: str):
-        """Monitor specific content for violations."""
-        while content_id in self.monitoring_tasks:
+        """Monitor specific content for violations."""        while content_id in self.monitoring_tasks:
             try:
                 # This would integrate with detection systems
                 # For now, it's a placeholder
@@ -785,8 +737,7 @@ class RealtimeViolationMonitor:
                 await asyncio.sleep(60)
     
     async def _store_violation_in_redis(self, violation_data: Dict[str, Any], alerts: List[ViolationAlert]):
-        """Store violation and alerts in Redis."""
-        try:
+        """Store violation and alerts in Redis."""        try:
             # Store violation data
             violation_key = f"violation:{violation_data['processing_id']}"
             await self.redis_client.setex(
@@ -808,8 +759,7 @@ class RealtimeViolationMonitor:
             logger.error(f"Redis storage failed: {e}")
     
     async def get_real_time_statistics(self) -> Dict[str, Any]:
-        """Get real-time monitoring statistics."""
-        uptime = datetime.now() - self.monitor_stats['uptime_start']
+        """Get real-time monitoring statistics."""        uptime = datetime.now() - self.monitor_stats['uptime_start']
         
         return {
             **self.monitor_stats,
@@ -822,8 +772,7 @@ class RealtimeViolationMonitor:
         }
     
     async def shutdown(self):
-        """Gracefully shutdown monitoring system."""
-        try:
+        """Gracefully shutdown monitoring system."""        try:
             self.status = MonitoringStatus.MAINTENANCE
             
             # Cancel monitoring tasks
@@ -845,8 +794,7 @@ class RealtimeViolationMonitor:
             logger.error(f"Shutdown error: {e}")
     
     def get_monitoring_statistics(self) -> Dict[str, Any]:
-        """Get monitoring statistics."""
-        return {
+        """Get monitoring statistics."""        return {
             **self.monitor_stats,
             'status': self.status.value,
             'monitoring_rules_count': len(self.alert_engine.monitoring_rules),

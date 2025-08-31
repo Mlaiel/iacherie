@@ -1,5 +1,4 @@
-"""
-Quality Assessor
+"""Quality Assessor
 
 Professional content quality assessment system with comprehensive metrics
 for multimedia content evaluation and scoring.
@@ -17,7 +16,6 @@ Any unauthorized use, copying, or distribution without explicit written permissi
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted
 to the full extent of the law.
 """
-
 import numpy as np
 from typing import Dict, List, Optional, Tuple, Any, Union
 import logging
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityAssessor:
-    """
-    Enterprise-grade quality assessment system for multimedia content.
+    """    Enterprise-grade quality assessment system for multimedia content.
     
     Features:
     - Multi-dimensional quality scoring
@@ -45,11 +42,9 @@ class QualityAssessor:
     - Platform-specific optimization scores
     - Quality improvement recommendations
     - Benchmarking against industry standards
-    """
-    
+    """    
     def __init__(self):
-        """Initialize quality assessor."""
-        self.settings = get_settings()
+        """Initialize quality assessor."""        self.settings = get_settings()
         
         # Initialize quality frameworks and standards
         self._init_quality_frameworks()
@@ -67,8 +62,7 @@ class QualityAssessor:
         }
 
     def _init_quality_frameworks(self):
-        """Initialize quality assessment frameworks."""
-        
+        """Initialize quality assessment frameworks."""        
         # Technical quality metrics by content type
         self.technical_metrics = {
             'audio': {
@@ -198,8 +192,7 @@ class QualityAssessor:
         content_type: str,
         options: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive quality assessment of content.
+        """        Comprehensive quality assessment of content.
         
         Args:
             content_data: Analyzed content data
@@ -208,8 +201,7 @@ class QualityAssessor:
             
         Returns:
             Detailed quality assessment results
-        """
-        try:
+        """        try:
             if not content_data:
                 raise ClassificationError("No content data provided")
             
@@ -285,8 +277,7 @@ class QualityAssessor:
             raise ClassificationError(f"Quality assessment failed: {e}")
 
     def _assess_technical_quality(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Assess technical quality metrics."""
-        try:
+        """Assess technical quality metrics."""        try:
             assessment = {
                 'score': 0.0,
                 'metrics': {},
@@ -323,8 +314,7 @@ class QualityAssessor:
             return {'score': 0.0, 'metrics': {}, 'details': {}}
 
     def _assess_audio_technical(self, features: Dict[str, Any], metrics: Dict[str, Any]) -> Dict[str, float]:
-        """Assess audio technical quality."""
-        scores = {}
+        """Assess audio technical quality."""        scores = {}
         
         try:
             # Sample rate assessment
@@ -405,8 +395,7 @@ class QualityAssessor:
         return scores
 
     def _assess_video_technical(self, features: Dict[str, Any], metrics: Dict[str, Any]) -> Dict[str, float]:
-        """Assess video technical quality."""
-        scores = {}
+        """Assess video technical quality."""        scores = {}
         
         try:
             # Resolution assessment
@@ -477,8 +466,7 @@ class QualityAssessor:
         return scores
 
     def _assess_image_technical(self, features: Dict[str, Any], metrics: Dict[str, Any]) -> Dict[str, float]:
-        """Assess image technical quality."""
-        scores = {}
+        """Assess image technical quality."""        scores = {}
         
         try:
             # Resolution assessment
@@ -561,8 +549,7 @@ class QualityAssessor:
         return scores
 
     def _assess_text_technical(self, features: Dict[str, Any], metrics: Dict[str, Any]) -> Dict[str, float]:
-        """Assess text technical quality."""
-        scores = {}
+        """Assess text technical quality."""        scores = {}
         
         try:
             # Readability assessment
@@ -625,8 +612,7 @@ class QualityAssessor:
         return scores
 
     def _assess_content_quality(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Assess content quality dimensions."""
-        try:
+        """Assess content quality dimensions."""        try:
             assessment = {
                 'score': 0.0,
                 'metrics': {},
@@ -663,8 +649,7 @@ class QualityAssessor:
         features: Dict[str, Any], 
         content_type: str
     ) -> float:
-        """Assess a specific content quality dimension."""
-        try:
+        """Assess a specific content quality dimension."""        try:
             dimension_score = 0.0
             total_weight = 0.0
             
@@ -696,8 +681,7 @@ class QualityAssessor:
         features: Dict[str, Any], 
         content_type: str
     ) -> float:
-        """Evaluate specific aspect metrics."""
-        try:
+        """Evaluate specific aspect metrics."""        try:
             scores = []
             
             # Map metrics to actual data extraction
@@ -746,8 +730,7 @@ class QualityAssessor:
         features: Dict[str, Any], 
         content_type: str
     ) -> Optional[float]:
-        """Extract score for a specific metric."""
-        try:
+        """Extract score for a specific metric."""        try:
             # Map metric names to data locations
             metric_mapping = {
                 'uniqueness': ('similarity_analysis', 'uniqueness_score'),
@@ -795,8 +778,7 @@ class QualityAssessor:
         features: Dict[str, Any], 
         content_type: str
     ) -> float:
-        """Generic metric evaluation when specific mapping not available."""
-        try:
+        """Generic metric evaluation when specific mapping not available."""        try:
             # Basic heuristics for common metrics
             if 'quality' in metric.lower():
                 return 0.7  # Assume good quality if no specific data
@@ -815,8 +797,7 @@ class QualityAssessor:
             return 0.5
 
     def _assess_engagement_potential(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Assess engagement potential of content."""
-        try:
+        """Assess engagement potential of content."""        try:
             assessment = {
                 'score': 0.0,
                 'metrics': {}
@@ -889,8 +870,7 @@ class QualityAssessor:
             return {'score': 0.5, 'metrics': {}}
 
     def _calculate_overall_score(self, technical: float, content: float, engagement: float) -> float:
-        """Calculate overall quality score."""
-        try:
+        """Calculate overall quality score."""        try:
             weighted_score = (
                 technical * self.config['weight_technical'] +
                 content * self.config['weight_content'] +
@@ -904,8 +884,7 @@ class QualityAssessor:
             return 0.0
 
     def _assess_platform_compliance(self, content_data: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Assess compliance with platform-specific standards."""
-        try:
+        """Assess compliance with platform-specific standards."""        try:
             platform_scores = {}
             
             for platform, standards in self.platform_standards.items():
@@ -928,8 +907,7 @@ class QualityAssessor:
         platform: str, 
         standards: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Evaluate compliance with specific platform standards."""
-        try:
+        """Evaluate compliance with specific platform standards."""        try:
             compliance = {
                 'overall_score': 0.0,
                 'compliance_factors': {},
@@ -1023,8 +1001,7 @@ class QualityAssessor:
             return {'overall_score': 0.0, 'compliance_factors': {}, 'recommendations': []}
 
     def _compare_to_benchmarks(self, assessment: Dict[str, Any], content_type: str) -> Dict[str, Any]:
-        """Compare assessment results to industry benchmarks."""
-        try:
+        """Compare assessment results to industry benchmarks."""        try:
             benchmark_comparison = {
                 'industry_category': 'unknown',
                 'benchmark_level': 'amateur',
@@ -1084,8 +1061,7 @@ class QualityAssessor:
             return {}
 
     def _determine_quality_level(self, overall_score: float) -> str:
-        """Determine quality level based on overall score."""
-        if overall_score >= self.config['expert_threshold']:
+        """Determine quality level based on overall score."""        if overall_score >= self.config['expert_threshold']:
             return 'expert'
         elif overall_score >= self.config['professional_threshold']:
             return 'professional'
@@ -1095,8 +1071,7 @@ class QualityAssessor:
             return 'needs_improvement'
 
     def _identify_strengths_weaknesses(self, assessment: Dict[str, Any]) -> Tuple[List[str], List[str]]:
-        """Identify strengths and weaknesses from assessment."""
-        strengths = []
+        """Identify strengths and weaknesses from assessment."""        strengths = []
         weaknesses = []
         
         try:
@@ -1130,8 +1105,7 @@ class QualityAssessor:
         return strengths[:5], weaknesses[:5]  # Limit to top 5 each
 
     def _generate_recommendations(self, assessment: Dict[str, Any], content_type: str) -> List[str]:
-        """Generate improvement recommendations."""
-        recommendations = []
+        """Generate improvement recommendations."""        recommendations = []
         
         try:
             overall_score = assessment.get('overall_score', 0)
@@ -1214,8 +1188,7 @@ class QualityAssessor:
         return recommendations[:10]  # Limit to top 10 recommendations
 
     def _award_quality_badges(self, assessment: Dict[str, Any]) -> List[str]:
-        """Award quality badges based on assessment results."""
-        badges = []
+        """Award quality badges based on assessment results."""        badges = []
         
         try:
             overall_score = assessment.get('overall_score', 0)
@@ -1273,13 +1246,11 @@ class QualityAssessor:
         return badges
 
     def _get_timestamp(self) -> str:
-        """Get current timestamp."""
-        from datetime import datetime
+        """Get current timestamp."""        from datetime import datetime
         return datetime.now().isoformat()
 
     def get_quality_info(self, quality_level: str) -> Dict[str, Any]:
-        """Get information about a quality level."""
-        try:
+        """Get information about a quality level."""        try:
             quality_info = {
                 'needs_improvement': {
                     'score_range': '0.0 - 0.59',
@@ -1314,8 +1285,7 @@ class QualityAssessor:
             return {'error': str(e)}
 
     def compare_quality(self, assessment1: Dict[str, Any], assessment2: Dict[str, Any]) -> Dict[str, Any]:
-        """Compare two quality assessments."""
-        try:
+        """Compare two quality assessments."""        try:
             comparison = {
                 'overall_difference': 0.0,
                 'technical_difference': 0.0,
@@ -1369,8 +1339,7 @@ class QualityAssessor:
             return {}
 
     def get_assessment_summary(self, assessment: Dict[str, Any]) -> str:
-        """Generate a human-readable summary of quality assessment."""
-        try:
+        """Generate a human-readable summary of quality assessment."""        try:
             summary_parts = []
             
             # Overall quality

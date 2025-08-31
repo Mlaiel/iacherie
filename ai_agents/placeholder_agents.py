@@ -1,9 +1,7 @@
-"""
-Placeholder Agent Implementations for Business Logic Core
+"""Placeholder Agent Implementations for Business Logic Core
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 from typing import Dict, Any, Optional
 from ..base import BaseAgent, AgentRequest, AgentResponse
@@ -12,22 +10,18 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionAgent(BaseAgent):
-    """AI-powered content protection agent"""
-    
+    """AI-powered content protection agent"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_type="protection", config=config)
     
     async def _load_models_and_resources(self):
-        """Load protection models and resources"""
-        logger.info("Protection agent models loaded")
+        """Load protection models and resources"""        logger.info("Protection agent models loaded")
     
     def get_required_config_keys(self) -> list:
-        """Return required configuration keys"""
-        return ["fingerprint_threshold", "protection_level"]
+        """Return required configuration keys"""        return ["fingerprint_threshold", "protection_level"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process content protection request"""
-        content_id = request.get("content_id")
+        """Process content protection request"""        content_id = request.get("content_id")
         creator_id = request.get("creator_id")
         
         # Simulate protection processing
@@ -44,22 +38,18 @@ class ProtectionAgent(BaseAgent):
 
 
 class SEOAgent(BaseAgent):
-    """SEO optimization agent"""
-    
+    """SEO optimization agent"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_type="seo", config=config)
     
     async def _load_models_and_resources(self):
-        """Load SEO models and resources"""
-        logger.info("SEO agent models loaded")
+        """Load SEO models and resources"""        logger.info("SEO agent models loaded")
     
     def get_required_config_keys(self) -> list:
-        """Return required configuration keys"""
-        return ["seo_level", "target_platforms"]
+        """Return required configuration keys"""        return ["seo_level", "target_platforms"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process SEO optimization request"""
-        content_id = request.get("content_id")
+        """Process SEO optimization request"""        content_id = request.get("content_id")
         
         # Simulate SEO processing
         seo_result = {
@@ -75,22 +65,18 @@ class SEOAgent(BaseAgent):
 
 
 class CollaborationAgent(BaseAgent):
-    """Collaboration matching agent"""
-    
+    """Collaboration matching agent"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_type="collaboration", config=config)
     
     async def _load_models_and_resources(self):
-        """Load collaboration models and resources"""
-        logger.info("Collaboration agent models loaded")
+        """Load collaboration models and resources"""        logger.info("Collaboration agent models loaded")
     
     def get_required_config_keys(self) -> list:
-        """Return required configuration keys"""
-        return ["matching_algorithm", "min_score"]
+        """Return required configuration keys"""        return ["matching_algorithm", "min_score"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process collaboration matching request"""
-        creator_id = request.get("creator_id")
+        """Process collaboration matching request"""        creator_id = request.get("creator_id")
         content_id = request.get("content_id")
         
         # Simulate collaboration matching
@@ -118,22 +104,18 @@ class CollaborationAgent(BaseAgent):
 
 
 class DistributionAgent(BaseAgent):
-    """Multi-platform distribution agent"""
-    
+    """Multi-platform distribution agent"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_type="distribution", config=config)
     
     async def _load_models_and_resources(self):
-        """Load distribution models and resources"""
-        logger.info("Distribution agent models loaded")
+        """Load distribution models and resources"""        logger.info("Distribution agent models loaded")
     
     def get_required_config_keys(self) -> list:
-        """Return required configuration keys"""
-        return ["target_platforms", "distribution_strategy"]
+        """Return required configuration keys"""        return ["target_platforms", "distribution_strategy"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process distribution request"""
-        content_id = request.get("content_id")
+        """Process distribution request"""        content_id = request.get("content_id")
         platforms = request.get("target_platforms", ["youtube", "instagram", "tiktok"])
         
         # Simulate distribution processing
@@ -157,22 +139,18 @@ class DistributionAgent(BaseAgent):
 
 
 class MonetizationAgent(BaseAgent):
-    """Monetization tracking agent"""
-    
+    """Monetization tracking agent"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(agent_type="monetization", config=config)
     
     async def _load_models_and_resources(self):
-        """Load monetization models and resources"""
-        logger.info("Monetization agent models loaded")
+        """Load monetization models and resources"""        logger.info("Monetization agent models loaded")
     
     def get_required_config_keys(self) -> list:
-        """Return required configuration keys"""
-        return ["revenue_model", "tracking_level"]
+        """Return required configuration keys"""        return ["revenue_model", "tracking_level"]
     
     async def process(self, request: Dict[str, Any]) -> Dict[str, Any]:
-        """Process monetization setup request"""
-        content_id = request.get("content_id")
+        """Process monetization setup request"""        content_id = request.get("content_id")
         creator_id = request.get("creator_id")
         
         # Simulate monetization processing

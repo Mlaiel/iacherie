@@ -1,5 +1,4 @@
-"""
-🔍 Elasticsearch Cluster Configuration - IA-Influencer-Agent Platform
+"""🔍 Elasticsearch Cluster Configuration - IA-Influencer-Agent Platform
 ======================================================================
 Expert: Search Engineer + Data Specialist + Performance Analyst
 Creator: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ interdite et constituera une violation des lois sur le droit d'auteur.
 Production-ready Elasticsearch cluster for search, analytics,
 and content indexing with optimal performance configuration.
 """
-
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import logging
@@ -23,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ElasticsearchClusterDockerConfig:
-    """Production Elasticsearch Cluster Configuration"""
-    
+    """Production Elasticsearch Cluster Configuration"""    
     # Elasticsearch Configuration
     es_version: str = "8.11.0"
     cluster_name: str = "ia-influencer-cluster"
@@ -50,9 +47,7 @@ class ElasticsearchClusterDockerConfig:
     indices_fielddata_cache_size: str = "20%"
     
     def generate_elasticsearch_config(self) -> str:
-        """Generate Elasticsearch configuration file"""
-        config = f"""
-# Elasticsearch Configuration for IA-Influencer Platform
+        """Generate Elasticsearch configuration file"""        config = f"""# Elasticsearch Configuration for IA-Influencer Platform
 # High-performance search and analytics engine
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -147,13 +142,11 @@ cluster.routing.allocation.disk.threshold_enabled: true
 cluster.routing.allocation.disk.watermark.low: 85%
 cluster.routing.allocation.disk.watermark.high: 90%
 cluster.routing.allocation.disk.watermark.flood_stage: 95%
-"""
-        
+"""        
         return config.strip()
     
     def generate_docker_compose_service(self) -> Dict[str, Any]:
-        """Generate Elasticsearch Docker Compose service"""
-        service = {
+        """Generate Elasticsearch Docker Compose service"""        service = {
             "image": f"docker.elastic.co/elasticsearch/elasticsearch:{self.es_version}",
             "container_name": "ia-influencer-elasticsearch",
             "restart": "unless-stopped",
@@ -217,8 +210,7 @@ cluster.routing.allocation.disk.watermark.flood_stage: 95%
         return service
     
     def generate_kibana_service(self) -> Dict[str, Any]:
-        """Generate Kibana service for Elasticsearch visualization"""
-        return {
+        """Generate Kibana service for Elasticsearch visualization"""        return {
             "image": f"docker.elastic.co/kibana/kibana:{self.es_version}",
             "container_name": "ia-influencer-kibana",
             "restart": "unless-stopped",
@@ -256,9 +248,7 @@ cluster.routing.allocation.disk.watermark.flood_stage: 95%
         }
     
     def generate_kibana_config(self) -> str:
-        """Generate Kibana configuration file"""
-        return f"""
-# Kibana Configuration for IA-Influencer Platform
+        """Generate Kibana configuration file"""        return f"""# Kibana Configuration for IA-Influencer Platform
 # Analytics and visualization interface
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -298,12 +288,9 @@ xpack.canvas.enabled: true
 xpack.infra.enabled: true
 xpack.apm.enabled: true
 xpack.uptime.enabled: true
-"""
-    
+"""    
     def generate_jvm_options(self) -> str:
-        """Generate JVM options for Elasticsearch"""
-        return f"""
-# JVM Options for IA-Influencer Elasticsearch
+        """Generate JVM options for Elasticsearch"""        return f"""# JVM Options for IA-Influencer Elasticsearch
 # Optimized for production performance
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -352,11 +339,9 @@ xpack.uptime.enabled: true
 
 # Temporary Directory
 -Djava.io.tmpdir=/tmp
-"""
-    
+"""    
     def generate_elasticsearch_exporter_service(self) -> Dict[str, Any]:
-        """Generate Elasticsearch Exporter for Prometheus monitoring"""
-        return {
+        """Generate Elasticsearch Exporter for Prometheus monitoring"""        return {
             "image": "quay.io/prometheuscommunity/elasticsearch-exporter:latest",
             "container_name": "ia-influencer-elasticsearch-exporter",
             "restart": "unless-stopped",
@@ -389,9 +374,7 @@ xpack.uptime.enabled: true
         }
     
     def generate_dockerfile(self) -> str:
-        """Generate custom Elasticsearch Dockerfile"""
-        return f"""
-# IA-Influencer Elasticsearch Dockerfile
+        """Generate custom Elasticsearch Dockerfile"""        return f"""# IA-Influencer Elasticsearch Dockerfile
 # Production-optimized search engine
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -432,11 +415,9 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \\
 
 # Expose ports
 EXPOSE 9200 9300
-"""
-    
+"""    
     def generate_healthcheck_script(self) -> str:
-        """Generate Elasticsearch health check script"""
-        return """#!/bin/bash
+        """Generate Elasticsearch health check script"""        return """#!/bin/bash
 # Elasticsearch Health Check Script
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 
@@ -450,11 +431,9 @@ else
     echo "Elasticsearch cluster is unhealthy: $HEALTH"
     exit 1
 fi
-"""
-    
+"""    
     def save_config_files(self, output_dir: str) -> List[str]:
-        """Save all Elasticsearch configuration files"""
-        from pathlib import Path
+        """Save all Elasticsearch configuration files"""        from pathlib import Path
         
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
@@ -528,9 +507,7 @@ fi
         return files_created
     
     def _generate_log4j_config(self) -> str:
-        """Generate Log4j configuration for Elasticsearch"""
-        return """
-# Log4j Configuration for IA-Influencer Elasticsearch
+        """Generate Log4j configuration for Elasticsearch"""        return """# Log4j Configuration for IA-Influencer Elasticsearch
 # Optimized logging configuration
 # Creator: Fahed Mlaiel <mlaiel@live.de>
 

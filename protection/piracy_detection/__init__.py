@@ -50,8 +50,7 @@ UNAUTHORIZED ACCESS IS INTERNATIONAL CRIMINAL OFFENSE:
 
 Contact mlaiel@live.de for MANDATORY law enforcement authorization.
 Unauthorized access triggers automatic Interpol investigation protocols.
-"""
-import logging
+"""import logging
 from typing import Optional, Dict, Any, List
 from datetime import datetime
 
@@ -361,8 +360,7 @@ __legal_notice__ = """⚖️ LEGAL WARNING: This software is the exclusive intel
 Unauthorized use, copying, distribution, or reverse engineering is strictly prohibited
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
-"""
-# Public API exports
+"""# Public API exports
 __all__ = [
     # Core detection system
     'PiracyDetector',

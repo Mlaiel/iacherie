@@ -1,11 +1,9 @@
-"""
-Advanced Collaboration Analytics Engine for IA Influencer Agent
+"""Advanced Collaboration Analytics Engine for IA Influencer Agent
 Professional analytics and insights for collaboration performance
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime, timedelta
 import asyncio
@@ -28,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsMetric(Enum):
-    """Types of analytics metrics"""
-    PERFORMANCE = "performance"
+    """Types of analytics metrics"""    PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     FINANCIAL = "financial"
     QUALITY = "quality"
@@ -41,8 +38,7 @@ class AnalyticsMetric(Enum):
 
 @dataclass
 class AnalyticsInsight:
-    """Represents an analytics insight"""
-    metric_type: AnalyticsMetric
+    """Represents an analytics insight"""    metric_type: AnalyticsMetric
     title: str
     description: str
     value: float
@@ -55,8 +51,7 @@ class AnalyticsInsight:
 
 @dataclass
 class CollaborationTrendData:
-    """Trend data for collaboration metrics"""
-    metric_name: str
+    """Trend data for collaboration metrics"""    metric_name: str
     time_series_data: List[Dict[str, Any]]
     trend_slope: float
     trend_direction: str
@@ -65,8 +60,7 @@ class CollaborationTrendData:
 
 
 class CollaborationAnalyticsEngine:
-    """Advanced analytics engine for collaboration data"""
-    
+    """Advanced analytics engine for collaboration data"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.analytics_cache = {}
@@ -77,8 +71,7 @@ class CollaborationAnalyticsEngine:
         collaboration_data: List[Dict[str, Any]],
         time_period: Dict[str, datetime] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive performance analytics"""
-        try:
+        """Generate comprehensive performance analytics"""        try:
             if not collaboration_data:
                 return self._empty_analytics_response("No collaboration data available")
             
@@ -131,8 +124,7 @@ class CollaborationAnalyticsEngine:
         collaboration_data: List[Dict[str, Any]],
         financial_data: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive financial analytics"""
-        try:
+        """Generate comprehensive financial analytics"""        try:
             if not collaboration_data:
                 return self._empty_analytics_response("No collaboration data available")
             
@@ -193,8 +185,7 @@ class CollaborationAnalyticsEngine:
         collaboration_data: List[Dict[str, Any]],
         engagement_data: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Generate engagement and interaction analytics"""
-        try:
+        """Generate engagement and interaction analytics"""        try:
             # Communication analytics
             communication_metrics = self._analyze_communication_patterns(
                 collaboration_data, engagement_data
@@ -250,8 +241,7 @@ class CollaborationAnalyticsEngine:
         historical_data: List[Dict[str, Any]],
         current_collaborations: List[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate predictive analytics and forecasts"""
-        try:
+        """Generate predictive analytics and forecasts"""        try:
             if len(historical_data) < 10:
                 return {
                     'error': 'Insufficient historical data for predictions',
@@ -302,8 +292,7 @@ class CollaborationAnalyticsEngine:
             return {'error': str(e), 'success': False}
     
     def _calculate_completion_metrics(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate collaboration completion metrics"""
-        if not data:
+        """Calculate collaboration completion metrics"""        if not data:
             return {}
         
         total_collaborations = len(data)
@@ -341,8 +330,7 @@ class CollaborationAnalyticsEngine:
         }
     
     def _calculate_quality_metrics(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate collaboration quality metrics"""
-        if not data:
+        """Calculate collaboration quality metrics"""        if not data:
             return {}
         
         # Quality scores
@@ -373,8 +361,7 @@ class CollaborationAnalyticsEngine:
         }
     
     def _calculate_efficiency_metrics(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate collaboration efficiency metrics"""
-        if not data:
+        """Calculate collaboration efficiency metrics"""        if not data:
             return {}
         
         # Time efficiency
@@ -422,8 +409,7 @@ class CollaborationAnalyticsEngine:
         }
     
     def _calculate_satisfaction_metrics(self, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Calculate collaboration satisfaction metrics"""
-        if not data:
+        """Calculate collaboration satisfaction metrics"""        if not data:
             return {}
         
         # Overall satisfaction scores
@@ -460,8 +446,7 @@ class CollaborationAnalyticsEngine:
         }
     
     async def _analyze_performance_trends(self, data: List[Dict[str, Any]]) -> List[CollaborationTrendData]:
-        """Analyze performance trends over time"""
-        if not data:
+        """Analyze performance trends over time"""        if not data:
             return []
         
         # Sort data by date
@@ -490,8 +475,7 @@ class CollaborationAnalyticsEngine:
         return trends
     
     def _generate_performance_insights(self, *metrics_groups) -> List[AnalyticsInsight]:
-        """Generate performance insights from metrics"""
-        insights = []
+        """Generate performance insights from metrics"""        insights = []
         
         completion_metrics, quality_metrics, efficiency_metrics, satisfaction_metrics, trends = metrics_groups
         
@@ -561,8 +545,7 @@ class CollaborationAnalyticsEngine:
 
 
 class CollaborationReportGenerator:
-    """Generate comprehensive collaboration reports"""
-    
+    """Generate comprehensive collaboration reports"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.analytics_engine = CollaborationAnalyticsEngine(config)
@@ -574,8 +557,7 @@ class CollaborationReportGenerator:
         report_type: str = "monthly",
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive collaboration report"""
-        try:
+        """Generate comprehensive collaboration report"""        try:
             # Determine time period based on report type
             time_period = self._get_report_time_period(report_type)
             
@@ -632,8 +614,7 @@ class CollaborationReportGenerator:
             return {'error': str(e), 'success': False}
     
     def _generate_executive_summary(self, *analytics_data) -> Dict[str, Any]:
-        """Generate executive summary from analytics data"""
-        performance, financial, engagement, predictive = analytics_data
+        """Generate executive summary from analytics data"""        performance, financial, engagement, predictive = analytics_data
         
         # Extract key metrics
         key_metrics = {

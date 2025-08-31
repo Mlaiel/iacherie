@@ -1,5 +1,4 @@
-"""
-Enforcement Engine
+"""Enforcement Engine
 
 Enterprise-grade automated enforcement system for DMCA takedown notices with
 intelligent escalation, legal action preparation, multi-jurisdiction support,
@@ -27,7 +26,6 @@ ADVANCED ENFORCEMENT FEATURES:
 - Integration with Legal Case Management Systems
 - Comprehensive Evidence Collection & Documentation
 """
-
 import asyncio
 import logging
 import uuid
@@ -53,8 +51,7 @@ logger = logging.getLogger(__name__)
 
 
 class EnforcementStage(Enum):
-    """Enforcement escalation stages"""
-    NONE = "none"
+    """Enforcement escalation stages"""    NONE = "none"
     INITIAL_NOTICE = "initial_notice"
     FIRST_REMINDER = "first_reminder"
     FINAL_WARNING = "final_warning"
@@ -74,8 +71,7 @@ class EnforcementStage(Enum):
 
 
 class EnforcementType(Enum):
-    """Types of enforcement actions"""
-    ADMINISTRATIVE = "administrative"
+    """Types of enforcement actions"""    ADMINISTRATIVE = "administrative"
     CIVIL_LITIGATION = "civil_litigation"
     CRIMINAL_REFERRAL = "criminal_referral"
     REGULATORY_COMPLAINT = "regulatory_complaint"
@@ -90,8 +86,7 @@ class EnforcementType(Enum):
 
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions for enforcement"""
-    US_FEDERAL = "us_federal"
+    """Legal jurisdictions for enforcement"""    US_FEDERAL = "us_federal"
     US_STATE_CALIFORNIA = "us_state_california"
     US_STATE_NEW_YORK = "us_state_new_york"
     US_STATE_TEXAS = "us_state_texas"
@@ -110,8 +105,7 @@ class LegalJurisdiction(Enum):
 
 
 class EnforcementPriority(Enum):
-    """Priority levels for enforcement actions"""
-    LOW = "low"
+    """Priority levels for enforcement actions"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
@@ -121,8 +115,7 @@ class EnforcementPriority(Enum):
 
 @dataclass
 class EnforcementConfig:
-    """Configuration for enforcement operations"""
-    enforcement_id: str
+    """Configuration for enforcement operations"""    enforcement_id: str
     notice_id: str
     enforcement_type: EnforcementType
     jurisdiction: LegalJurisdiction
@@ -139,8 +132,7 @@ class EnforcementConfig:
 
 @dataclass
 class EnforcementMetrics:
-    """Metrics for enforcement performance tracking"""
-    enforcement_id: str
+    """Metrics for enforcement performance tracking"""    enforcement_id: str
     success_rate: float
     cost_efficiency: float
     timeline_performance: float
@@ -155,8 +147,7 @@ class EnforcementMetrics:
 
 @dataclass
 class LegalActionPlan:
-    """Comprehensive legal action plan"""
-    plan_id: str
+    """Comprehensive legal action plan"""    plan_id: str
     enforcement_id: str
     action_type: EnforcementType
     jurisdiction: LegalJurisdiction
@@ -175,8 +166,7 @@ class LegalActionPlan:
 
 @dataclass
 class SettlementProposal:
-    """Settlement proposal details"""
-    proposal_id: str
+    """Settlement proposal details"""    proposal_id: str
     enforcement_id: str
     monetary_amount: Optional[Decimal]
     non_monetary_terms: List[str]
@@ -191,8 +181,7 @@ class SettlementProposal:
 
 
 class EnforcementEngine:
-    """
-    Enterprise-Grade Automated Enforcement System for DMCA & Content Protection
+    """    Enterprise-Grade Automated Enforcement System for DMCA & Content Protection
     
     Advanced Features:
     - AI-powered legal strategy optimization
@@ -205,11 +194,9 @@ class EnforcementEngine:
     - Comprehensive evidence management
     - International enforcement coordination
     - Regulatory compliance automation
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize enterprise enforcement engine"""
-        self.config = config or {}
+        """Initialize enterprise enforcement engine"""        self.config = config or {}
         self.db = get_database()
         self.validation_service = ValidationService(config)
         self.notification_service = NotificationService(config)
@@ -299,8 +286,7 @@ class EnforcementEngine:
     async def initiate_enforcement(self, 
                                  notice_id: str,
                                  enforcement_policy: str = "standard") -> Dict[str, Any]:
-        """
-        Initiate comprehensive enforcement action for a DMCA notice
+        """        Initiate comprehensive enforcement action for a DMCA notice
         
         Args:
             notice_id: ID of the DMCA notice requiring enforcement
@@ -308,8 +294,7 @@ class EnforcementEngine:
             
         Returns:
             Enforcement initiation result with strategy and timeline
-        """
-        try:
+        """        try:
             self.logger.info(f"Initiating enforcement for notice: {notice_id}")
             
             # Generate enforcement ID
@@ -412,16 +397,14 @@ class EnforcementEngine:
             raise ContentProtectionError(f"Enforcement initiation failed: {str(e)}")
     
     async def monitor_enforcement_progress(self, enforcement_id: str) -> Dict[str, Any]:
-        """
-        Monitor progress of an active enforcement action
+        """        Monitor progress of an active enforcement action
         
         Args:
             enforcement_id: ID of the enforcement action to monitor
             
         Returns:
             Comprehensive enforcement progress report
-        """
-        try:
+        """        try:
             self.logger.info(f"Monitoring enforcement progress: {enforcement_id}")
             
             # Retrieve enforcement record
@@ -503,16 +486,14 @@ class EnforcementEngine:
     
     async def generate_enforcement_analytics(self, 
                                            time_range: Optional[Dict[str, datetime]] = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive enforcement analytics and insights
+        """        Generate comprehensive enforcement analytics and insights
         
         Args:
             time_range: Optional time range for analytics
             
         Returns:
             Detailed enforcement analytics report
-        """
-        try:
+        """        try:
             self.logger.info("Generating comprehensive enforcement analytics")
             
             # Set default time range
@@ -597,8 +578,7 @@ class EnforcementEngine:
     # Private helper methods continue...
     
     async def _get_notice_details(self, notice_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieve notice details for enforcement analysis"""
-        try:
+        """Retrieve notice details for enforcement analysis"""        try:
             query = "SELECT * FROM dmca_notices WHERE notice_id = %s"
             result = await self.db.fetch_one(query, [notice_id])
             return dict(result) if result else None
@@ -609,8 +589,7 @@ class EnforcementEngine:
     async def _analyze_enforcement_requirements(self, 
                                               notice_details: Dict[str, Any],
                                               policy: str) -> Dict[str, Any]:
-        """Analyze requirements for enforcement action"""
-        # AI-powered analysis of enforcement requirements
+        """Analyze requirements for enforcement action"""        # AI-powered analysis of enforcement requirements
         analysis = {
             'priority_level': EnforcementPriority.MEDIUM,
             'urgency_factors': [],
@@ -635,8 +614,7 @@ class EnforcementEngine:
     async def _select_optimal_jurisdiction(self, 
                                          notice_details: Dict[str, Any],
                                          analysis: Dict[str, Any]) -> LegalJurisdiction:
-        """Select optimal jurisdiction for enforcement"""
-        # AI-powered jurisdiction selection
+        """Select optimal jurisdiction for enforcement"""        # AI-powered jurisdiction selection
         jurisdiction_scores = {}
         
         # Analyze defendant location
@@ -675,8 +653,7 @@ class EnforcementEngine:
                                      notice_details: Dict[str, Any],
                                      analysis: Dict[str, Any],
                                      jurisdiction: LegalJurisdiction) -> Dict[str, Any]:
-        """Generate comprehensive legal strategy"""
-        jurisdiction_config = self.jurisdiction_configs.get(jurisdiction, {})
+        """Generate comprehensive legal strategy"""        jurisdiction_config = self.jurisdiction_configs.get(jurisdiction, {})
         
         strategy = {
             'recommended_type': EnforcementType.CIVIL_LITIGATION,
@@ -708,8 +685,7 @@ class EnforcementEngine:
     async def _perform_cost_benefit_analysis(self, 
                                            strategy: Dict[str, Any],
                                            notice_details: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform comprehensive cost-benefit analysis"""
-        estimated_costs = strategy.get('estimated_cost', Decimal('0'))
+        """Perform comprehensive cost-benefit analysis"""        estimated_costs = strategy.get('estimated_cost', Decimal('0'))
         
         # Estimate potential recovery
         content_value = Decimal(notice_details.get('content_value', '5000'))
@@ -752,8 +728,7 @@ logger = logging.getLogger(__name__)
 
 
 class EnforcementStage(Enum):
-    """Enforcement stages"""
-    INITIAL_NOTICE = "initial_notice"
+    """Enforcement stages"""    INITIAL_NOTICE = "initial_notice"
     FIRST_REMINDER = "first_reminder"
     FINAL_WARNING = "final_warning"
     LEGAL_DEMAND = "legal_demand"
@@ -763,8 +738,7 @@ class EnforcementStage(Enum):
 
 
 class EnforcementType(Enum):
-    """Types of enforcement actions"""
-    AUTOMATED_REMINDER = "automated_reminder"
+    """Types of enforcement actions"""    AUTOMATED_REMINDER = "automated_reminder"
     ENHANCED_NOTICE = "enhanced_notice"
     LEGAL_WARNING = "legal_warning"
     CEASE_DESIST = "cease_desist"
@@ -774,8 +748,7 @@ class EnforcementType(Enum):
 
 
 class LegalStrategy(Enum):
-    """Legal strategy approaches"""
-    AGGRESSIVE = "aggressive"
+    """Legal strategy approaches"""    AGGRESSIVE = "aggressive"
     MODERATE = "moderate"
     DIPLOMATIC = "diplomatic"
     ECONOMIC = "economic"
@@ -783,8 +756,7 @@ class LegalStrategy(Enum):
 
 @dataclass
 class EnforcementPolicy:
-    """Enforcement policy configuration"""
-    policy_id: str
+    """Enforcement policy configuration"""    policy_id: str
     name: str
     escalation_timeline: List[timedelta]
     enforcement_stages: List[EnforcementStage]
@@ -797,8 +769,7 @@ class EnforcementPolicy:
 
 @dataclass
 class EnforcementContext:
-    """Context for enforcement decisions"""
-    content_value: float
+    """Context for enforcement decisions"""    content_value: float
     infringement_severity: float
     repeat_offender: bool
     platform_cooperation_history: float
@@ -810,8 +781,7 @@ class EnforcementContext:
 
 @dataclass
 class LegalActionPlan:
-    """Comprehensive legal action plan"""
-    action_id: str
+    """Comprehensive legal action plan"""    action_id: str
     strategy: LegalStrategy
     timeline: List[Dict[str, Any]]
     required_evidence: List[str]
@@ -822,8 +792,7 @@ class LegalActionPlan:
 
 
 class EnforcementEngine:
-    """
-    Advanced DMCA enforcement system with intelligent escalation
+    """    Advanced DMCA enforcement system with intelligent escalation
     
     Features:
     - Automated enforcement progression
@@ -832,11 +801,9 @@ class EnforcementEngine:
     - Cost-benefit analysis
     - Multi-jurisdiction support
     - Evidence coordination
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize enforcement engine"""
-        self.config = config or {}
+        """Initialize enforcement engine"""        self.config = config or {}
         self.db = get_database()
         self.compliance_tracker = ComplianceTracker(config)
         self.delivery_manager = DeliveryManager(config)
@@ -874,8 +841,7 @@ class EnforcementEngine:
     async def initiate_enforcement(self, 
                                  notice_id: str,
                                  enforcement_policy: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Initiate enforcement process for a DMCA notice
+        """        Initiate enforcement process for a DMCA notice
         
         Args:
             notice_id: ID of the DMCA notice
@@ -883,8 +849,7 @@ class EnforcementEngine:
             
         Returns:
             Enforcement initiation result
-        """
-        try:
+        """        try:
             self.logger.info(f"Initiating enforcement for notice: {notice_id}")
             
             # Retrieve notice details
@@ -938,8 +903,7 @@ class EnforcementEngine:
     async def escalate_enforcement(self, 
                                  enforcement_id: str,
                                  override_policy: Optional[bool] = False) -> Dict[str, Any]:
-        """
-        Escalate enforcement to the next stage
+        """        Escalate enforcement to the next stage
         
         Args:
             enforcement_id: ID of the enforcement process
@@ -947,8 +911,7 @@ class EnforcementEngine:
             
         Returns:
             Escalation result
-        """
-        try:
+        """        try:
             self.logger.info(f"Escalating enforcement: {enforcement_id}")
             
             # Retrieve enforcement record
@@ -1014,8 +977,7 @@ class EnforcementEngine:
     async def coordinate_legal_action(self, 
                                     enforcement_id: str,
                                     action_type: EnforcementType) -> Dict[str, Any]:
-        """
-        Coordinate legal action for enforcement
+        """        Coordinate legal action for enforcement
         
         Args:
             enforcement_id: ID of the enforcement process
@@ -1023,8 +985,7 @@ class EnforcementEngine:
             
         Returns:
             Legal action coordination result
-        """
-        try:
+        """        try:
             self.logger.info(f"Coordinating legal action: {action_type.value} for {enforcement_id}")
             
             # Retrieve enforcement context
@@ -1077,16 +1038,14 @@ class EnforcementEngine:
     
     async def monitor_enforcement_progress(self, 
                                          enforcement_id: str) -> Dict[str, Any]:
-        """
-        Monitor progress of enforcement process
+        """        Monitor progress of enforcement process
         
         Args:
             enforcement_id: ID of the enforcement process
             
         Returns:
             Comprehensive progress report
-        """
-        try:
+        """        try:
             # Retrieve enforcement record
             enforcement_record = await self._get_enforcement_record(enforcement_id)
             if not enforcement_record:
@@ -1129,16 +1088,14 @@ class EnforcementEngine:
     
     async def generate_enforcement_analytics(self, 
                                            filters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive enforcement analytics
+        """        Generate comprehensive enforcement analytics
         
         Args:
             filters: Optional filters for analytics data
             
         Returns:
             Detailed enforcement analytics
-        """
-        try:
+        """        try:
             self.logger.info("Generating enforcement analytics")
             
             # Set default filters
@@ -1203,8 +1160,7 @@ class EnforcementEngine:
     # Private helper methods
     
     def _initialize_enforcement_policies(self) -> None:
-        """Initialize enforcement policies"""
-        # Standard policy for most cases
+        """Initialize enforcement policies"""        # Standard policy for most cases
         self.policies['standard'] = EnforcementPolicy(
             policy_id='standard',
             name='Standard Enforcement',
@@ -1278,8 +1234,7 @@ class EnforcementEngine:
         )
     
     async def _analyze_enforcement_context(self, notice: Any) -> EnforcementContext:
-        """Analyze context for enforcement decisions"""
-        # Extract platform from URL
+        """Analyze context for enforcement decisions"""        # Extract platform from URL
         platform = notice.infringing_url.split('/')[2] if notice.infringing_url else 'unknown'
         
         return EnforcementContext(
@@ -1297,8 +1252,7 @@ class EnforcementEngine:
                                        notice: Any,
                                        context: EnforcementContext,
                                        requested_policy: Optional[str]) -> EnforcementPolicy:
-        """Select appropriate enforcement policy"""
-        if requested_policy and requested_policy in self.policies:
+        """Select appropriate enforcement policy"""        if requested_policy and requested_policy in self.policies:
             return self.policies[requested_policy]
         
         # Select based on context
@@ -1313,8 +1267,7 @@ class EnforcementEngine:
                                      notice: Any,
                                      policy: EnforcementPolicy,
                                      context: EnforcementContext) -> Dict[str, Any]:
-        """Create detailed enforcement plan"""
-        return {
+        """Create detailed enforcement plan"""        return {
             'plan_id': str(uuid.uuid4()),
             'policy_used': policy.policy_id,
             'estimated_duration': sum(policy.escalation_timeline, timedelta()),
@@ -1333,8 +1286,7 @@ class EnforcementEngine:
         }
     
     def _calculate_success_probability(self, context: EnforcementContext) -> float:
-        """Calculate probability of enforcement success"""
-        base_probability = 0.7
+        """Calculate probability of enforcement success"""        base_probability = 0.7
         
         # Adjust based on context factors
         if context.platform_cooperation_history > 0.8:
@@ -1351,8 +1303,7 @@ class EnforcementEngine:
         return min(max(base_probability, 0.0), 1.0)
     
     def _assess_enforcement_risks(self, context: EnforcementContext) -> Dict[str, Any]:
-        """Assess risks associated with enforcement"""
-        return {
+        """Assess risks associated with enforcement"""        return {
             'financial_risk': 'low' if context.enforcement_costs < context.potential_damages else 'high',
             'reputation_risk': 'low' if context.platform_cooperation_history > 0.7 else 'medium',
             'legal_risk': 'low' if context.legal_precedent_strength > 0.7 else 'medium',
@@ -1363,8 +1314,7 @@ class EnforcementEngine:
                                        enforcement_id: str,
                                        stage: EnforcementStage,
                                        context: EnforcementContext) -> Dict[str, Any]:
-        """Execute specific enforcement stage"""
-        self.logger.info(f"Executing enforcement stage: {stage.value}")
+        """Execute specific enforcement stage"""        self.logger.info(f"Executing enforcement stage: {stage.value}")
         
         if stage == EnforcementStage.INITIAL_NOTICE:
             return await self._send_initial_notice(enforcement_id)
@@ -1382,8 +1332,7 @@ class EnforcementEngine:
             return {'action': 'no_action', 'result': 'stage_not_implemented'}
     
     async def _send_initial_notice(self, enforcement_id: str) -> Dict[str, Any]:
-        """Send initial DMCA notice"""
-        return {
+        """Send initial DMCA notice"""        return {
             'action': 'initial_notice_sent',
             'method': 'email',
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -1391,8 +1340,7 @@ class EnforcementEngine:
         }
     
     async def _send_reminder_notice(self, enforcement_id: str) -> Dict[str, Any]:
-        """Send reminder notice"""
-        return {
+        """Send reminder notice"""        return {
             'action': 'reminder_sent',
             'method': 'email',
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -1401,8 +1349,7 @@ class EnforcementEngine:
         }
     
     async def _send_final_warning(self, enforcement_id: str) -> Dict[str, Any]:
-        """Send final warning notice"""
-        return {
+        """Send final warning notice"""        return {
             'action': 'final_warning_sent',
             'method': 'registered_mail',
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -1411,8 +1358,7 @@ class EnforcementEngine:
         }
     
     async def _send_legal_demand(self, enforcement_id: str) -> Dict[str, Any]:
-        """Send legal demand letter"""
-        return {
+        """Send legal demand letter"""        return {
             'action': 'legal_demand_sent',
             'method': 'legal_counsel',
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -1421,8 +1367,7 @@ class EnforcementEngine:
         }
     
     async def _escalate_to_platform(self, enforcement_id: str) -> Dict[str, Any]:
-        """Escalate to platform abuse team"""
-        return {
+        """Escalate to platform abuse team"""        return {
             'action': 'platform_escalation',
             'method': 'platform_abuse_report',
             'timestamp': datetime.now(timezone.utc).isoformat(),
@@ -1431,8 +1376,7 @@ class EnforcementEngine:
         }
     
     async def _initiate_legal_proceedings(self, enforcement_id: str) -> Dict[str, Any]:
-        """Initiate legal proceedings"""
-        return {
+        """Initiate legal proceedings"""        return {
             'action': 'legal_proceedings_initiated',
             'case_number': f"CASE_{datetime.now().strftime('%Y%m%d_%H%M%S')}",
             'timestamp': datetime.now(timezone.utc).isoformat(),

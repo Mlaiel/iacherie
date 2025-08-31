@@ -1,5 +1,4 @@
-"""
-Platform-specific Crawler Configurations
+"""Platform-specific Crawler Configurations
 =======================================
 
 Advanced configuration system for platform-specific web crawlers.
@@ -16,7 +15,6 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized use, reproduction, modification, or distribution is strictly prohibited.
 Legal action will be taken against violators.
 """
-
 import os
 from typing import Dict, List, Optional, Union
 from dataclasses import dataclass, field
@@ -25,8 +23,7 @@ import json
 from pathlib import Path
 
 class PlatformType(Enum):
-    """Supported platform types for content surveillance."""
-    YOUTUBE = "youtube"
+    """Supported platform types for content surveillance."""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -42,16 +39,14 @@ class PlatformType(Enum):
     GENERIC_WEB = "generic_web"
 
 class ContentType(Enum):
-    """Content types for surveillance and protection."""
-    AUDIO = "audio"
+    """Content types for surveillance and protection."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
     MIXED = "mixed"
 
 class AuthMethod(Enum):
-    """Authentication methods for platform APIs."""
-    API_KEY = "api_key"
+    """Authentication methods for platform APIs."""    API_KEY = "api_key"
     OAUTH2 = "oauth2"
     BEARER_TOKEN = "bearer_token"
     BASIC_AUTH = "basic_auth"
@@ -60,8 +55,7 @@ class AuthMethod(Enum):
     NONE = "none"
 
 class ScrapeMethod(Enum):
-    """Scraping methods for content extraction."""
-    API_OFFICIAL = "api_official"
+    """Scraping methods for content extraction."""    API_OFFICIAL = "api_official"
     SELENIUM = "selenium"
     PLAYWRIGHT = "playwright"
     REQUESTS = "requests"
@@ -70,8 +64,7 @@ class ScrapeMethod(Enum):
 
 @dataclass
 class RateLimitConfig:
-    """Rate limiting configuration for platform crawlers."""
-    requests_per_second: float = 1.0
+    """Rate limiting configuration for platform crawlers."""    requests_per_second: float = 1.0
     requests_per_minute: int = 60
     requests_per_hour: int = 3600
     burst_limit: int = 10
@@ -83,8 +76,7 @@ class RateLimitConfig:
 
 @dataclass
 class ProxyConfig:
-    """Proxy configuration for crawler anonymity."""
-    enabled: bool = True
+    """Proxy configuration for crawler anonymity."""    enabled: bool = True
     rotation_enabled: bool = True
     proxy_list: List[str] = field(default_factory=list)
     proxy_type: str = "http"  # http, https, socks4, socks5
@@ -96,8 +88,7 @@ class ProxyConfig:
 
 @dataclass
 class UserAgentConfig:
-    """User-Agent rotation configuration."""
-    enabled: bool = True
+    """User-Agent rotation configuration."""    enabled: bool = True
     rotation_enabled: bool = True
     custom_agents: List[str] = field(default_factory=list)
     browser_types: List[str] = field(default_factory=lambda: ["chrome", "firefox", "safari", "edge"])
@@ -107,8 +98,7 @@ class UserAgentConfig:
 
 @dataclass
 class ContentExtractionConfig:
-    """Content extraction configuration."""
-    extract_metadata: bool = True
+    """Content extraction configuration."""    extract_metadata: bool = True
     extract_thumbnails: bool = True
     extract_transcripts: bool = True
     extract_comments: bool = True
@@ -120,8 +110,7 @@ class ContentExtractionConfig:
 
 @dataclass
 class PlatformAPIConfig:
-    """Platform API configuration."""
-    api_base_url: str
+    """Platform API configuration."""    api_base_url: str
     api_version: str = "v1"
     auth_method: AuthMethod = AuthMethod.API_KEY
     api_key: Optional[str] = None
@@ -136,8 +125,7 @@ class PlatformAPIConfig:
 
 @dataclass
 class PlatformScrapingConfig:
-    """Platform scraping configuration."""
-    scrape_method: ScrapeMethod = ScrapeMethod.REQUESTS
+    """Platform scraping configuration."""    scrape_method: ScrapeMethod = ScrapeMethod.REQUESTS
     base_urls: List[str] = field(default_factory=list)
     search_endpoints: Dict[str, str] = field(default_factory=dict)
     content_selectors: Dict[str, str] = field(default_factory=dict)
@@ -151,8 +139,7 @@ class PlatformScrapingConfig:
 
 @dataclass
 class ViolationDetectionConfig:
-    """Violation detection configuration."""
-    enabled: bool = True
+    """Violation detection configuration."""    enabled: bool = True
     similarity_threshold: float = 0.85
     fingerprint_matching: bool = True
     audio_fingerprinting: bool = True
@@ -166,8 +153,7 @@ class ViolationDetectionConfig:
 
 @dataclass
 class PlatformConfig:
-    """Complete platform configuration."""
-    platform: PlatformType
+    """Complete platform configuration."""    platform: PlatformType
     enabled: bool = True
     priority: int = 1  # 1=highest, 5=lowest
     supported_content_types: List[ContentType] = field(default_factory=lambda: [ContentType.MIXED])
@@ -199,18 +185,15 @@ class PlatformConfig:
     backup_enabled: bool = True
 
 class PlatformConfigManager:
-    """Manager for platform configurations."""
-    
+    """Manager for platform configurations."""    
     def __init__(self, config_dir: Optional[str] = None):
-        """Initialize platform config manager."""
-        self.config_dir = Path(config_dir or os.getenv("CRAWLER_CONFIG_DIR", "./configs"))
+        """Initialize platform config manager."""        self.config_dir = Path(config_dir or os.getenv("CRAWLER_CONFIG_DIR", "./configs"))
         self.config_dir.mkdir(parents=True, exist_ok=True)
         self._configs: Dict[PlatformType, PlatformConfig] = {}
         self._load_default_configs()
     
     def _load_default_configs(self) -> None:
-        """Load default platform configurations."""
-        # Load YouTube configuration
+        """Load default platform configurations."""        # Load YouTube configuration
         self._configs[PlatformType.YOUTUBE] = PlatformConfig(
             platform=PlatformType.YOUTUBE,
             enabled=True,
@@ -343,33 +326,28 @@ class PlatformConfigManager:
         )
     
     def get_config(self, platform: PlatformType) -> Optional[PlatformConfig]:
-        """Get configuration for specific platform."""
-        return self._configs.get(platform)
+        """Get configuration for specific platform."""        return self._configs.get(platform)
     
     def get_enabled_configs(self) -> Dict[PlatformType, PlatformConfig]:
-        """Get all enabled platform configurations."""
-        return {
+        """Get all enabled platform configurations."""        return {
             platform: config 
             for platform, config in self._configs.items() 
             if config.enabled
         }
     
     def update_config(self, platform: PlatformType, config: PlatformConfig) -> None:
-        """Update platform configuration."""
-        self._configs[platform] = config
+        """Update platform configuration."""        self._configs[platform] = config
         self.save_config(platform)
     
     def save_config(self, platform: PlatformType) -> None:
-        """Save platform configuration to file."""
-        config = self._configs.get(platform)
+        """Save platform configuration to file."""        config = self._configs.get(platform)
         if config:
             config_file = self.config_dir / f"{platform.value}_config.json"
             with open(config_file, 'w') as f:
                 json.dump(config.__dict__, f, indent=2, default=str)
     
     def load_config(self, platform: PlatformType) -> Optional[PlatformConfig]:
-        """Load platform configuration from file."""
-        config_file = self.config_dir / f"{platform.value}_config.json"
+        """Load platform configuration from file."""        config_file = self.config_dir / f"{platform.value}_config.json"
         if config_file.exists():
             with open(config_file, 'r') as f:
                 data = json.load(f)
@@ -379,14 +357,12 @@ class PlatformConfigManager:
         return None
     
     def _deserialize_config(self, data: dict) -> PlatformConfig:
-        """Deserialize configuration data to PlatformConfig object."""
-        # Implementation for converting dict back to PlatformConfig
+        """Deserialize configuration data to PlatformConfig object."""        # Implementation for converting dict back to PlatformConfig
         # This would include proper enum conversion and nested object creation
         pass
     
     def validate_config(self, config: PlatformConfig) -> List[str]:
-        """Validate platform configuration."""
-        errors = []
+        """Validate platform configuration."""        errors = []
         
         if not config.platform:
             errors.append("Platform type is required")
@@ -408,8 +384,7 @@ class PlatformConfigManager:
         return errors
     
     def export_configs(self, file_path: str) -> None:
-        """Export all configurations to a single file."""
-        export_data = {
+        """Export all configurations to a single file."""        export_data = {
             platform.value: config.__dict__ 
             for platform, config in self._configs.items()
         }
@@ -417,8 +392,7 @@ class PlatformConfigManager:
             json.dump(export_data, f, indent=2, default=str)
     
     def import_configs(self, file_path: str) -> None:
-        """Import configurations from file."""
-        with open(file_path, 'r') as f:
+        """Import configurations from file."""        with open(file_path, 'r') as f:
             data = json.load(f)
             for platform_name, config_data in data.items():
                 platform = PlatformType(platform_name)

@@ -1,5 +1,4 @@
-"""
-Google Cloud Storage Configuration for IA-Influencer Agent Platform
+"""Google Cloud Storage Configuration for IA-Influencer Agent Platform
 ===================================================================
 
 Professional Google Cloud Storage configuration for scalable content management.
@@ -15,7 +14,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import json
 from typing import Dict, List, Optional, Any
@@ -26,8 +24,7 @@ from google.api_core import exceptions
 
 @dataclass
 class GCSBucketConfig:
-    """Google Cloud Storage bucket configuration for specific content types."""
-    
+    """Google Cloud Storage bucket configuration for specific content types."""    
     name: str
     location: str = 'EU'
     storage_class: str = 'STANDARD'  # STANDARD, NEARLINE, COLDLINE, ARCHIVE
@@ -38,11 +35,9 @@ class GCSBucketConfig:
 
 @dataclass
 class GCSConfig:
-    """
-    Comprehensive Google Cloud Storage configuration for IA-Influencer Agent platform.
+    """    Comprehensive Google Cloud Storage configuration for IA-Influencer Agent platform.
     Provides enterprise-grade object storage with intelligent tiering.
-    """
-    
+    """    
     # GCP Project and Authentication
     project_id: str = os.getenv('GCP_PROJECT_ID', '')
     credentials_path: str = os.getenv('GOOGLE_APPLICATION_CREDENTIALS', '')
@@ -70,13 +65,11 @@ class GCSConfig:
     cdn_cache_control: str = "public, max-age=31536000"  # 1 year
     
     def __post_init__(self):
-        """Initialize bucket configurations if not provided."""
-        if self.buckets is None:
+        """Initialize bucket configurations if not provided."""        if self.buckets is None:
             self.buckets = self._get_default_bucket_config()
     
     def _get_default_bucket_config(self) -> Dict[str, GCSBucketConfig]:
-        """Default bucket configuration for different content types."""
-        env = os.getenv('ENVIRONMENT', 'development')
+        """Default bucket configuration for different content types."""        env = os.getenv('ENVIRONMENT', 'development')
         project_prefix = self.project_id.replace('_', '-').lower()
         
         return {
@@ -200,8 +193,7 @@ class GCSConfig:
         }
     
     def get_credentials(self) -> service_account.Credentials:
-        """Get Google Cloud credentials from various sources."""
-        if self.credentials_json:
+        """Get Google Cloud credentials from various sources."""        if self.credentials_json:
             # Load from JSON string (environment variable)
             credentials_info = json.loads(self.credentials_json)
             return service_account.Credentials.from_service_account_info(
@@ -217,8 +209,7 @@ class GCSConfig:
             return None
     
     def get_client(self) -> storage.Client:
-        """Create and configure Google Cloud Storage client."""
-        credentials = self.get_credentials()
+        """Create and configure Google Cloud Storage client."""        credentials = self.get_credentials()
         
         if credentials:
             return storage.Client(
@@ -230,8 +221,7 @@ class GCSConfig:
             return storage.Client(project=self.project_id)
     
     def validate_configuration(self) -> bool:
-        """Validate GCS configuration and connectivity."""
-        try:
+        """Validate GCS configuration and connectivity."""        try:
             client = self.get_client()
             # Test connectivity by listing buckets
             list(client.list_buckets(max_results=1))
@@ -241,8 +231,7 @@ class GCSConfig:
             return False
     
     def get_bucket_name(self, content_type: str) -> str:
-        """Get bucket name for specific content type."""
-        # Map content types to bucket keys
+        """Get bucket name for specific content type."""        # Map content types to bucket keys
         content_mapping = {
             'audio': 'audio_content',
             'video': 'video_content',
@@ -259,21 +248,18 @@ class GCSConfig:
         return self.buckets[bucket_key].name
     
     def get_content_types(self) -> List[str]:
-        """Get list of supported content types."""
-        return ['audio', 'video', 'image', 'document', 'model', 
+        """Get list of supported content types."""        return ['audio', 'video', 'image', 'document', 'model', 
                 'fingerprint', 'upload', 'backup', 'analytics']
     
     def get_storage_class_for_content(self, content_type: str) -> str:
-        """Get appropriate storage class for content type."""
-        bucket_name = self.get_bucket_name(content_type)
+        """Get appropriate storage class for content type."""        bucket_name = self.get_bucket_name(content_type)
         for bucket_config in self.buckets.values():
             if bucket_config.name == bucket_name:
                 return bucket_config.storage_class
         return self.default_storage_class
     
     def get_signed_url_config(self) -> Dict[str, Any]:
-        """Get configuration for signed URL generation."""
-        return {
+        """Get configuration for signed URL generation."""        return {
             'method': 'GET',
             'expiration': 3600,  # 1 hour
             'version': 'v4',
@@ -281,8 +267,7 @@ class GCSConfig:
         }
     
     def get_transfer_manager_config(self) -> Dict[str, Any]:
-        """Get configuration for transfer manager (large file uploads)."""
-        return {
+        """Get configuration for transfer manager (large file uploads)."""        return {
             'chunk_size': self.chunk_size,
             'timeout': self.timeout,
             'max_workers': 8,
@@ -290,8 +275,7 @@ class GCSConfig:
         }
     
     def get_bucket_iam_policy(self, bucket_name: str) -> Dict[str, Any]:
-        """Get IAM policy template for bucket security."""
-        return {
+        """Get IAM policy template for bucket security."""        return {
             'bindings': [
                 {
                     'role': 'roles/storage.objectViewer',

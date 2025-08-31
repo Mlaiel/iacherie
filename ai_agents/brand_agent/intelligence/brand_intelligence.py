@@ -1,5 +1,4 @@
-"""
-Brand Intelligence - Ultra-Advanced Brand Analytics & Competitive Intelligence
+"""Brand Intelligence - Ultra-Advanced Brand Analytics & Competitive Intelligence
 
 Comprehensive brand intelligence system providing deep market analysis,
 competitive intelligence, trend prediction, and strategic recommendations.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -57,8 +55,7 @@ from ...utils.market_data import MarketDataProvider, CompetitorTracker
 logger = logging.getLogger(__name__)
 
 class IntelligenceType(Enum):
-    """Types of brand intelligence analysis"""
-    COMPETITIVE = "competitive"
+    """Types of brand intelligence analysis"""    COMPETITIVE = "competitive"
     MARKET_TRENDS = "market_trends"
     CONSUMER_BEHAVIOR = "consumer_behavior"
     SENTIMENT_EVOLUTION = "sentiment_evolution"
@@ -68,8 +65,7 @@ class IntelligenceType(Enum):
     OPPORTUNITY_IDENTIFICATION = "opportunity_identification"
 
 class MarketSegment(Enum):
-    """Market segments for analysis"""
-    LUXURY = "luxury"
+    """Market segments for analysis"""    LUXURY = "luxury"
     MASS_MARKET = "mass_market"
     NICHE = "niche"
     EMERGING = "emerging"
@@ -78,8 +74,7 @@ class MarketSegment(Enum):
     TRADITIONAL = "traditional"
 
 class CompetitiveAdvantage(Enum):
-    """Types of competitive advantages"""
-    COST_LEADERSHIP = "cost_leadership"
+    """Types of competitive advantages"""    COST_LEADERSHIP = "cost_leadership"
     DIFFERENTIATION = "differentiation"
     FOCUS_NICHE = "focus_niche"
     INNOVATION = "innovation"
@@ -89,8 +84,7 @@ class CompetitiveAdvantage(Enum):
 
 @dataclass
 class CompetitorProfile:
-    """Comprehensive competitor analysis profile"""
-    competitor_id: str
+    """Comprehensive competitor analysis profile"""    competitor_id: str
     brand_name: str
     market_segment: MarketSegment
     estimated_revenue: float = 0.0
@@ -110,8 +104,7 @@ class CompetitorProfile:
 
 @dataclass
 class MarketTrend:
-    """Market trend analysis with predictions"""
-    trend_id: str
+    """Market trend analysis with predictions"""    trend_id: str
     category: str
     description: str
     trend_strength: float = 0.0
@@ -129,8 +122,7 @@ class MarketTrend:
 
 @dataclass
 class BrandIntelligenceReport:
-    """Comprehensive brand intelligence report"""
-    report_id: str
+    """Comprehensive brand intelligence report"""    report_id: str
     brand_id: str
     analysis_type: IntelligenceType
     generated_at: datetime = field(default_factory=datetime.utcnow)
@@ -144,8 +136,7 @@ class BrandIntelligenceReport:
     confidence_scores: Dict[str, float] = field(default_factory=dict)
 
 class BrandIntelligenceEngine:
-    """
-    Ultra-Advanced Brand Intelligence & Competitive Analysis Engine
+    """    Ultra-Advanced Brand Intelligence & Competitive Analysis Engine
     
     Provides comprehensive market intelligence including:
     - Competitive landscape analysis
@@ -155,7 +146,6 @@ class BrandIntelligenceEngine:
     - Threat and opportunity identification
     - Strategic recommendation generation
     """
-
     def __init__(self):
         self.name = "Brand Intelligence Engine"
         self.version = "1.0.0"
@@ -180,8 +170,7 @@ class BrandIntelligenceEngine:
         logger.info("Brand Intelligence Engine initialized successfully")
 
     def _initialize_intelligence_models(self) -> None:
-        """Initialize ML models for intelligence analysis"""
-        try:
+        """Initialize ML models for intelligence analysis"""        try:
             # Sentiment analysis pipeline
             self.sentiment_analyzer = pipeline(
                 "sentiment-analysis",
@@ -218,8 +207,7 @@ class BrandIntelligenceEngine:
             raise
 
     async def generate_competitive_intelligence(self, brand_id: str, competitors: List[str]) -> Dict[str, Any]:
-        """Generate comprehensive competitive intelligence report"""
-        try:
+        """Generate comprehensive competitive intelligence report"""        try:
             intelligence_data = {
                 "brand_id": brand_id,
                 "competitive_landscape": {},
@@ -265,8 +253,7 @@ class BrandIntelligenceEngine:
             raise
 
     async def _analyze_competitor(self, competitor_name: str, reference_brand_id: str) -> CompetitorProfile:
-        """Comprehensive competitor analysis"""
-        try:
+        """Comprehensive competitor analysis"""        try:
             competitor_id = f"comp_{competitor_name.lower().replace(' ', '_')}"
             
             # Initialize competitor profile
@@ -318,8 +305,7 @@ class BrandIntelligenceEngine:
             )
 
     async def _gather_competitor_social_data(self, competitor_name: str) -> Dict[str, Any]:
-        """Gather social media data for competitor"""
-        try:
+        """Gather social media data for competitor"""        try:
             social_data = {
                 "followers": {},
                 "engagement_rate": 0.0,
@@ -366,8 +352,7 @@ class BrandIntelligenceEngine:
             return {"followers": {}, "engagement_rate": 0.0, "sentiment_score": 0.0}
 
     async def _analyze_competitor_web_presence(self, competitor_name: str) -> Dict[str, Any]:
-        """Analyze competitor's web presence and digital footprint"""
-        try:
+        """Analyze competitor's web presence and digital footprint"""        try:
             web_data = {
                 "domain_authority": 0.0,
                 "traffic_estimate": 0,
@@ -400,8 +385,7 @@ class BrandIntelligenceEngine:
             return {"domain_authority": 0.0, "traffic_estimate": 0, "seo_score": 0.0}
 
     async def _gather_competitor_market_data(self, competitor_name: str) -> Dict[str, Any]:
-        """Gather market and financial data for competitor"""
-        try:
+        """Gather market and financial data for competitor"""        try:
             market_data = {
                 "estimated_revenue": 0.0,
                 "market_share": 0.0,
@@ -436,8 +420,7 @@ class BrandIntelligenceEngine:
             return {"estimated_revenue": 0.0, "market_share": 0.0, "brand_value": 0.0}
 
     async def predict_market_trends(self, industry: str, time_horizon: int = 12) -> List[MarketTrend]:
-        """Predict market trends using advanced ML algorithms"""
-        try:
+        """Predict market trends using advanced ML algorithms"""        try:
             trends = []
             
             # Gather historical market data
@@ -475,8 +458,7 @@ class BrandIntelligenceEngine:
             return []
 
     def _competitor_to_dict(self, competitor: CompetitorProfile) -> Dict[str, Any]:
-        """Convert competitor profile to dictionary"""
-        return {
+        """Convert competitor profile to dictionary"""        return {
             "competitor_id": competitor.competitor_id,
             "brand_name": competitor.brand_name,
             "market_segment": competitor.market_segment.value if competitor.market_segment else None,
@@ -497,8 +479,7 @@ class BrandIntelligenceEngine:
         }
 
 class BrandValueCalculator:
-    """Advanced brand value calculation using multiple methodologies"""
-    
+    """Advanced brand value calculation using multiple methodologies"""    
     def __init__(self):
         self.name = "Brand Value Calculator"
         self.methodologies = [
@@ -510,8 +491,7 @@ class BrandValueCalculator:
         ]
         
     async def calculate_comprehensive_brand_value(self, brand_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate brand value using multiple methodologies"""
-        try:
+        """Calculate brand value using multiple methodologies"""        try:
             valuations = {}
             
             for methodology in self.methodologies:
@@ -544,8 +524,7 @@ class BrandValueCalculator:
             return {"total_brand_value": 0.0, "error": str(e)}
             
     async def _calculate_by_methodology(self, brand_data: Dict[str, Any], methodology: str) -> float:
-        """Calculate brand value using specific methodology"""
-        try:
+        """Calculate brand value using specific methodology"""        try:
             if methodology == "cost_based":
                 return await self._cost_based_valuation(brand_data)
             elif methodology == "market_based":

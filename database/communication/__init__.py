@@ -22,8 +22,7 @@ Expert Project Team - Fahed Mlaiel:
 - Audio Processing Engineer
 - DevOps Engineer
 - AI Prompt Engineer
-"""
-from .websocket_manager import WebSocketManager, ConnectionPool
+"""from .websocket_manager import WebSocketManager, ConnectionPool
 from .message_broker import MessageBroker, MessageQueue, get_message_broker
 from .notification_engine import NotificationEngine, NotificationChannel
 from .live_collaboration import LiveCollaboration, CollaborationRoom, get_live_collaboration

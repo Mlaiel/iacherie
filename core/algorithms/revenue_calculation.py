@@ -1,5 +1,4 @@
-"""
-Revenue Calculation Engine - Advanced Monetization Analytics
+"""Revenue Calculation Engine - Advanced Monetization Analytics
 ===========================================================
 
 Professional revenue calculation engine for content creators providing:
@@ -17,7 +16,6 @@ Professional revenue calculation engine for content creators providing:
 Created by: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
-
 import numpy as np
 from typing import Dict, List, Any, Optional, Tuple, Union
 import logging
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RevenueStream:
-    """Revenue stream definition"""
-    stream_id: str
+    """Revenue stream definition"""    stream_id: str
     stream_type: str
     platform: str
     amount: float
@@ -44,8 +41,7 @@ class RevenueStream:
 
 @dataclass
 class RevenueAnalysis:
-    """Revenue analysis result"""
-    total_revenue: float
+    """Revenue analysis result"""    total_revenue: float
     revenue_by_stream: Dict[str, float]
     revenue_by_platform: Dict[str, float]
     growth_rate: float
@@ -54,8 +50,7 @@ class RevenueAnalysis:
 
 @dataclass
 class RevenueProjection:
-    """Revenue projection result"""
-    projected_revenue: float
+    """Revenue projection result"""    projected_revenue: float
     confidence_interval: Tuple[float, float]
     projection_period: str
     key_factors: List[str]
@@ -63,8 +58,7 @@ class RevenueProjection:
 
 @dataclass
 class MonetizationOpportunity:
-    """Monetization opportunity"""
-    opportunity_type: str
+    """Monetization opportunity"""    opportunity_type: str
     platform: str
     estimated_revenue: float
     implementation_effort: str
@@ -72,10 +66,8 @@ class MonetizationOpportunity:
     requirements: List[str]
 
 class RevenueCalculationEngine:
-    """
-    Industrial-grade revenue calculation engine for content creators
-    """
-    
+    """    Industrial-grade revenue calculation engine for content creators
+    """    
     def __init__(self, base_currency: str = 'USD'):
         self.base_currency = base_currency
         
@@ -91,8 +83,7 @@ class RevenueCalculationEngine:
         logger.info("RevenueCalculationEngine initialized successfully")
     
     def _initialize_revenue_models(self) -> None:
-        """Initialize revenue calculation models"""
-        try:
+        """Initialize revenue calculation models"""        try:
             # Revenue stream types and their calculation methods
             self.revenue_stream_types = {
                 'advertising': {
@@ -161,8 +152,7 @@ class RevenueCalculationEngine:
             raise
     
     def _initialize_platform_configs(self) -> None:
-        """Initialize platform-specific configurations"""
-        try:
+        """Initialize platform-specific configurations"""        try:
             # Platform revenue sharing and payment structures
             self.platform_configs = {
                 'youtube': {
@@ -225,8 +215,7 @@ class RevenueCalculationEngine:
             raise
     
     def _initialize_calculation_algorithms(self) -> None:
-        """Initialize revenue calculation algorithms"""
-        try:
+        """Initialize revenue calculation algorithms"""        try:
             # Machine learning models for revenue prediction
             self.revenue_predictors = {
                 'linear_model': LinearRegression(),
@@ -255,8 +244,7 @@ class RevenueCalculationEngine:
     
     def calculate(self, revenue_data: Dict[str, Any], 
                  config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Comprehensive revenue calculation pipeline
+        """        Comprehensive revenue calculation pipeline
         
         Args:
             revenue_data: Revenue and performance data
@@ -264,8 +252,7 @@ class RevenueCalculationEngine:
             
         Returns:
             Revenue calculation results and analytics
-        """
-        try:
+        """        try:
             # Process revenue streams
             revenue_streams = self._process_revenue_streams(revenue_data, config)
             
@@ -309,8 +296,7 @@ class RevenueCalculationEngine:
             raise
     
     def _process_revenue_streams(self, revenue_data: Dict[str, Any], config: Dict[str, Any]) -> List[RevenueStream]:
-        """Process and categorize revenue streams"""
-        try:
+        """Process and categorize revenue streams"""        try:
             revenue_streams = []
             
             # Process different revenue sources
@@ -341,8 +327,7 @@ class RevenueCalculationEngine:
             return []
     
     def _process_advertising_revenue(self, ad_data: Dict[str, Any], config: Dict[str, Any]) -> List[RevenueStream]:
-        """Process advertising revenue streams"""
-        try:
+        """Process advertising revenue streams"""        try:
             streams = []
             
             for platform, platform_data in ad_data.items():
@@ -385,8 +370,7 @@ class RevenueCalculationEngine:
             return []
     
     def _process_subscription_revenue(self, sub_data: Dict[str, Any], config: Dict[str, Any]) -> List[RevenueStream]:
-        """Process subscription revenue streams"""
-        try:
+        """Process subscription revenue streams"""        try:
             streams = []
             
             for platform, platform_data in sub_data.items():
@@ -446,8 +430,7 @@ class RevenueCalculationEngine:
             return []
     
     def _process_sponsorship_revenue(self, sponsor_data: Dict[str, Any], config: Dict[str, Any]) -> List[RevenueStream]:
-        """Process sponsorship revenue streams"""
-        try:
+        """Process sponsorship revenue streams"""        try:
             streams = []
             
             for platform, platform_data in sponsor_data.items():
@@ -503,8 +486,7 @@ class RevenueCalculationEngine:
             return []
     
     def _process_merchandise_revenue(self, merch_data: Dict[str, Any], config: Dict[str, Any]) -> List[RevenueStream]:
-        """Process merchandise revenue streams"""
-        try:
+        """Process merchandise revenue streams"""        try:
             streams = []
             
             for product_type, product_data in merch_data.items():
@@ -537,8 +519,7 @@ class RevenueCalculationEngine:
             return []
     
     def _process_licensing_revenue(self, license_data: Dict[str, Any], config: Dict[str, Any]) -> List[RevenueStream]:
-        """Process licensing and royalty revenue streams"""
-        try:
+        """Process licensing and royalty revenue streams"""        try:
             streams = []
             
             # Sync licensing revenue
@@ -603,8 +584,7 @@ class RevenueCalculationEngine:
             return []
     
     def _process_streaming_revenue(self, streaming_data: Dict[str, Any], config: Dict[str, Any]) -> List[RevenueStream]:
-        """Process streaming platform revenue"""
-        try:
+        """Process streaming platform revenue"""        try:
             streams = []
             
             for platform, platform_data in streaming_data.items():
@@ -644,8 +624,7 @@ class RevenueCalculationEngine:
             return []
     
     def _process_direct_sales_revenue(self, sales_data: Dict[str, Any], config: Dict[str, Any]) -> List[RevenueStream]:
-        """Process direct sales revenue"""
-        try:
+        """Process direct sales revenue"""        try:
             streams = []
             
             for product, product_data in sales_data.items():
@@ -670,8 +649,7 @@ class RevenueCalculationEngine:
             return []
     
     def _process_generic_revenue(self, revenue_data: Dict[str, Any], stream_type: str, config: Dict[str, Any]) -> List[RevenueStream]:
-        """Process generic revenue streams"""
-        try:
+        """Process generic revenue streams"""        try:
             streams = []
             
             for source, amount in revenue_data.items():
@@ -695,8 +673,7 @@ class RevenueCalculationEngine:
             return []
     
     def _analyze_revenue(self, revenue_streams: List[RevenueStream], config: Dict[str, Any]) -> RevenueAnalysis:
-        """Analyze revenue streams and calculate metrics"""
-        try:
+        """Analyze revenue streams and calculate metrics"""        try:
             if not revenue_streams:
                 return RevenueAnalysis(0.0, {}, {}, 0.0, {}, [])
             
@@ -741,8 +718,7 @@ class RevenueCalculationEngine:
             return RevenueAnalysis(0.0, {}, {}, 0.0, {}, [])
     
     def _convert_currency(self, revenue_streams: List[RevenueStream], config: Dict[str, Any]) -> List[RevenueStream]:
-        """Convert revenue streams to base currency"""
-        try:
+        """Convert revenue streams to base currency"""        try:
             converted_streams = []
             base_currency = config.get('currency', self.base_currency)
             
@@ -774,8 +750,7 @@ class RevenueCalculationEngine:
             return revenue_streams
     
     def _calculate_performance_metrics(self, revenue_streams: List[RevenueStream], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate performance metrics"""
-        try:
+        """Calculate performance metrics"""        try:
             metrics = {}
             
             # Revenue diversity (Herfindahl-Hirschman Index)
@@ -820,8 +795,7 @@ class RevenueCalculationEngine:
             return {}
     
     def _project_revenue(self, revenue_streams: List[RevenueStream], config: Dict[str, Any]) -> RevenueProjection:
-        """Project future revenue based on current streams"""
-        try:
+        """Project future revenue based on current streams"""        try:
             current_monthly_revenue = sum(stream.amount for stream in revenue_streams)
             
             # Growth assumptions
@@ -864,8 +838,7 @@ class RevenueCalculationEngine:
             return RevenueProjection(0.0, (0.0, 0.0), "0 months", [], {})
     
     def _identify_monetization_opportunities(self, revenue_data: Dict[str, Any], config: Dict[str, Any]) -> List[MonetizationOpportunity]:
-        """Identify new monetization opportunities"""
-        try:
+        """Identify new monetization opportunities"""        try:
             opportunities = []
             
             # Analyze current revenue streams
@@ -921,8 +894,7 @@ class RevenueCalculationEngine:
             return []
     
     def _calculate_opportunity_priority(self, stream_info: Dict[str, Any]) -> float:
-        """Calculate priority score for monetization opportunity"""
-        try:
+        """Calculate priority score for monetization opportunity"""        try:
             revenue_weight = 0.5
             effort_weight = 0.3
             market_weight = 0.2
@@ -951,8 +923,7 @@ class RevenueCalculationEngine:
             return 0.0
     
     def _get_opportunity_requirements(self, stream_type: str, platform: str) -> List[str]:
-        """Get requirements for implementing monetization opportunity"""
-        requirements_map = {
+        """Get requirements for implementing monetization opportunity"""        requirements_map = {
             'subscriptions': [
                 'Consistent content creation schedule',
                 'Engaged audience base',
@@ -982,8 +953,7 @@ class RevenueCalculationEngine:
         return requirements_map.get(stream_type, ['Platform-specific requirements'])
     
     def _calculate_tax_implications(self, revenue_analysis: RevenueAnalysis, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate tax implications"""
-        try:
+        """Calculate tax implications"""        try:
             region = config.get('tax_region', 'US')
             tax_rates = self.tax_rates.get(region, self.tax_rates['US'])
             
@@ -1037,8 +1007,7 @@ class RevenueCalculationEngine:
             return {}
     
     def _analyze_roi(self, revenue_data: Dict[str, Any], revenue_analysis: RevenueAnalysis, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze return on investment"""
-        try:
+        """Analyze return on investment"""        try:
             total_revenue = revenue_analysis.total_revenue
             
             # Investment costs (simplified)
@@ -1090,8 +1059,7 @@ class RevenueCalculationEngine:
             return {}
     
     def _benchmark_performance(self, revenue_analysis: RevenueAnalysis, revenue_data: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Benchmark performance against industry standards"""
-        try:
+        """Benchmark performance against industry standards"""        try:
             content_type = config.get('content_type', 'general')
             benchmark_data = {}
             
@@ -1132,8 +1100,7 @@ class RevenueCalculationEngine:
             return {}
     
     def _calculate_performance_rating(self, actual_revenue: float, benchmarks: Dict[str, Any]) -> str:
-        """Calculate performance rating"""
-        # Simplified rating based on revenue (would use more sophisticated metrics in production)
+        """Calculate performance rating"""        # Simplified rating based on revenue (would use more sophisticated metrics in production)
         benchmark_revenue = benchmarks.get('avg_cpm', 2.0) * 1000  # Assume 1M impressions
         
         if actual_revenue >= benchmark_revenue * 1.5:
@@ -1146,8 +1113,7 @@ class RevenueCalculationEngine:
             return 'below_average'
     
     def _identify_improvement_areas(self, revenue_analysis: RevenueAnalysis, benchmark_data: Dict[str, Any]) -> List[str]:
-        """Identify areas for improvement"""
-        improvement_areas = []
+        """Identify areas for improvement"""        improvement_areas = []
         
         # Revenue diversification
         if revenue_analysis.performance_metrics.get('revenue_diversity', 0) < 0.5:
@@ -1167,8 +1133,7 @@ class RevenueCalculationEngine:
     def _generate_revenue_optimization_suggestions(self, revenue_by_stream: Dict[str, float], 
                                                   revenue_by_platform: Dict[str, float],
                                                   performance_metrics: Dict[str, Any]) -> List[str]:
-        """Generate revenue optimization suggestions"""
-        suggestions = []
+        """Generate revenue optimization suggestions"""        suggestions = []
         
         # Suggest focusing on high-performing streams
         if revenue_by_stream:
@@ -1191,8 +1156,7 @@ class RevenueCalculationEngine:
                                              revenue_projections: RevenueProjection,
                                              monetization_opportunities: List[MonetizationOpportunity],
                                              config: Dict[str, Any]) -> List[str]:
-        """Generate comprehensive optimization recommendations"""
-        recommendations = []
+        """Generate comprehensive optimization recommendations"""        recommendations = []
         
         # Revenue analysis recommendations
         recommendations.extend(revenue_analysis.optimization_suggestions)
@@ -1211,21 +1175,17 @@ class RevenueCalculationEngine:
     
     # Optimization algorithm implementations
     def _optimize_content_timing(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content timing for maximum revenue"""
-        # Simplified implementation
+        """Optimize content timing for maximum revenue"""        # Simplified implementation
         return {'optimal_posting_times': ['9:00 AM', '2:00 PM', '7:00 PM']}
     
     def _optimize_platform_allocation(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize platform resource allocation"""
-        # Simplified implementation
+        """Optimize platform resource allocation"""        # Simplified implementation
         return {'recommended_allocation': {'youtube': 0.4, 'instagram': 0.3, 'tiktok': 0.3}}
     
     def _optimize_pricing_strategy(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize pricing strategy"""
-        # Simplified implementation
+        """Optimize pricing strategy"""        # Simplified implementation
         return {'recommended_prices': {'subscription': 9.99, 'merchandise': 25.0}}
     
     def _optimize_audience_targeting(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize audience targeting"""
-        # Simplified implementation
+        """Optimize audience targeting"""        # Simplified implementation
         return {'target_demographics': ['18-35 years', 'music enthusiasts', 'digital content consumers']}

@@ -18,7 +18,6 @@ Features:
 - DMCA notice generation
 - Revenue recovery tracking
 """
-
 from .manager import ContentProtectionManager
 from .core.protection_engine import ContentProtectionEngine
 from .core.platform_monitor import PlatformMonitor

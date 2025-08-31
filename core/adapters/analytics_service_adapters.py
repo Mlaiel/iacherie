@@ -1,5 +1,4 @@
-"""
-Analytics Service Adapters - Enterprise Data Intelligence
+"""Analytics Service Adapters - Enterprise Data Intelligence
 
 This module provides comprehensive adapters for major analytics platforms
 including Google Analytics, Facebook Analytics, Adobe Analytics, and others.
@@ -21,7 +20,6 @@ Supported Platforms:
 - Hotjar: Heatmaps, Session recordings, User feedback
 - Custom Analytics: Self-hosted analytics solutions
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -40,8 +38,7 @@ from .base_adapter import (
 logger = logging.getLogger(__name__)
 
 class AnalyticsPlatform(Enum):
-    """Supported analytics platforms."""
-    GOOGLE_ANALYTICS = "google_analytics"
+    """Supported analytics platforms."""    GOOGLE_ANALYTICS = "google_analytics"
     FACEBOOK_ANALYTICS = "facebook_analytics"
     ADOBE_ANALYTICS = "adobe_analytics"
     MIXPANEL = "mixpanel"
@@ -53,8 +50,7 @@ class AnalyticsPlatform(Enum):
     INSTAGRAM_INSIGHTS = "instagram_insights"
 
 class EventType(Enum):
-    """Analytics event types."""
-    PAGE_VIEW = "page_view"
+    """Analytics event types."""    PAGE_VIEW = "page_view"
     CLICK = "click"
     CONVERSION = "conversion"
     PURCHASE = "purchase"
@@ -72,8 +68,7 @@ class EventType(Enum):
     CUSTOM = "custom"
 
 class MetricType(Enum):
-    """Analytics metric types."""
-    USERS = "users"
+    """Analytics metric types."""    USERS = "users"
     SESSIONS = "sessions"
     PAGE_VIEWS = "page_views"
     BOUNCE_RATE = "bounce_rate"
@@ -88,8 +83,7 @@ class MetricType(Enum):
 
 @dataclass
 class AnalyticsEvent:
-    """Analytics event data structure."""
-    event_type: EventType
+    """Analytics event data structure."""    event_type: EventType
     user_id: Optional[str] = None
     session_id: Optional[str] = None
     timestamp: Optional[datetime] = None
@@ -106,8 +100,7 @@ class AnalyticsEvent:
 
 @dataclass
 class AnalyticsQuery:
-    """Analytics query parameters."""
-    start_date: datetime
+    """Analytics query parameters."""    start_date: datetime
     end_date: datetime
     metrics: List[MetricType]
     dimensions: List[str] = field(default_factory=list)
@@ -120,8 +113,7 @@ class AnalyticsQuery:
 
 @dataclass
 class AnalyticsReport:
-    """Analytics report data structure."""
-    query: AnalyticsQuery
+    """Analytics report data structure."""    query: AnalyticsQuery
     data: List[Dict[str, Any]] = field(default_factory=list)
     totals: Dict[str, Any] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -130,8 +122,7 @@ class AnalyticsReport:
     report_id: Optional[str] = None
 
 class GoogleAnalyticsAdapter(BasePlatformAdapter):
-    """
-    Enterprise Google Analytics adapter with GA4 and Universal Analytics support.
+    """    Enterprise Google Analytics adapter with GA4 and Universal Analytics support.
     
     Supports:
     - Google Analytics 4 (GA4) Measurement Protocol
@@ -141,8 +132,7 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
     - Goal tracking and conversion measurement
     - Audience segmentation and cohort analysis
     - Real-time reporting and data streaming
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=10.0,
@@ -167,8 +157,7 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
         self.property_id = credentials.custom_headers.get('property_id')
     
     async def authenticate(self) -> bool:
-        """Authenticate with Google Analytics."""
-        try:
+        """Authenticate with Google Analytics."""        try:
             if self.credentials.auth_type == AuthenticationType.API_KEY:
                 # For Measurement Protocol, we just need to validate the measurement ID and API secret
                 if self.measurement_id and self.api_secret:
@@ -204,8 +193,7 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
             return False
     
     async def track_event(self, event: AnalyticsEvent) -> bool:
-        """Track event using GA4 Measurement Protocol."""
-        try:
+        """Track event using GA4 Measurement Protocol."""        try:
             # Prepare event data for GA4 Measurement Protocol
             event_data = {
                 "client_id": event.user_id or str(uuid.uuid4()),
@@ -242,8 +230,7 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
             return False
     
     async def get_report(self, query: AnalyticsQuery) -> AnalyticsReport:
-        """Get analytics report from GA4 Reporting API."""
-        try:
+        """Get analytics report from GA4 Reporting API."""        try:
             # Prepare reporting request
             request_data = {
                 "property": f"properties/{self.property_id}",
@@ -318,8 +305,7 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
             return AnalyticsReport(query=query, platform="google_analytics")
     
     def _map_event_type(self, event_type: EventType) -> str:
-        """Map EventType to GA4 event name."""
-        mapping = {
+        """Map EventType to GA4 event name."""        mapping = {
             EventType.PAGE_VIEW: "page_view",
             EventType.CLICK: "click",
             EventType.CONVERSION: "conversion",
@@ -339,8 +325,7 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
         return mapping.get(event_type, "custom_event")
     
     def _map_metric_type(self, metric_type: MetricType) -> str:
-        """Map MetricType to GA4 metric name."""
-        mapping = {
+        """Map MetricType to GA4 metric name."""        mapping = {
             MetricType.USERS: "activeUsers",
             MetricType.SESSIONS: "sessions",
             MetricType.PAGE_VIEWS: "screenPageViews",
@@ -354,8 +339,7 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
         return mapping.get(metric_type, str(metric_type.value))
     
     def _build_filters(self, filters: Dict[str, Any]) -> Dict[str, Any]:
-        """Build GA4 dimension filter from query filters."""
-        # Simplified filter builder - real implementation would be more comprehensive
+        """Build GA4 dimension filter from query filters."""        # Simplified filter builder - real implementation would be more comprehensive
         filter_expressions = []
         
         for dimension, value in filters.items():
@@ -381,8 +365,7 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
         return {}
     
     async def health_check(self) -> bool:
-        """Perform Google Analytics health check."""
-        try:
+        """Perform Google Analytics health check."""        try:
             if self.measurement_id and self.api_secret:
                 return True
             elif self.property_id and self.credentials.access_token:
@@ -406,8 +389,7 @@ class GoogleAnalyticsAdapter(BasePlatformAdapter):
             return False
 
 class MixpanelAdapter(BasePlatformAdapter):
-    """
-    Enterprise Mixpanel analytics adapter.
+    """    Enterprise Mixpanel analytics adapter.
     
     Supports:
     - Event tracking and user profiles
@@ -416,8 +398,7 @@ class MixpanelAdapter(BasePlatformAdapter):
     - Revenue tracking and LTV analysis
     - Real-time data streaming
     - Custom properties and user segmentation
-    """
-    
+    """    
     def __init__(self, credentials: AdapterCredentials, redis_client=None):
         rate_config = RateLimitConfig(
             requests_per_second=60.0,
@@ -440,8 +421,7 @@ class MixpanelAdapter(BasePlatformAdapter):
         self.project_token = credentials.custom_headers.get('project_token')
     
     async def authenticate(self) -> bool:
-        """Authenticate with Mixpanel API."""
-        try:
+        """Authenticate with Mixpanel API."""        try:
             # Test authentication with a simple query
             response = await self.make_request(
                 method="GET",
@@ -466,8 +446,7 @@ class MixpanelAdapter(BasePlatformAdapter):
             return False
     
     async def track_event(self, event: AnalyticsEvent) -> bool:
-        """Track event in Mixpanel."""
-        try:
+        """Track event in Mixpanel."""        try:
             event_data = {
                 "event": self._map_event_type(event.event_type),
                 "properties": {
@@ -515,8 +494,7 @@ class MixpanelAdapter(BasePlatformAdapter):
             return False
     
     def _map_event_type(self, event_type: EventType) -> str:
-        """Map EventType to Mixpanel event name."""
-        mapping = {
+        """Map EventType to Mixpanel event name."""        mapping = {
             EventType.PAGE_VIEW: "Page View",
             EventType.CLICK: "Click",
             EventType.CONVERSION: "Conversion",
@@ -536,8 +514,7 @@ class MixpanelAdapter(BasePlatformAdapter):
         return mapping.get(event_type, "Custom Event")
     
     async def health_check(self) -> bool:
-        """Perform Mixpanel health check."""
-        try:
+        """Perform Mixpanel health check."""        try:
             response = await self.make_request(
                 method="GET",
                 endpoint="query/events",
@@ -554,8 +531,7 @@ class MixpanelAdapter(BasePlatformAdapter):
             return False
 
 class AnalyticsAdapterFactory:
-    """Factory for creating analytics platform adapters."""
-    
+    """Factory for creating analytics platform adapters."""    
     _adapters = {
         AnalyticsPlatform.GOOGLE_ANALYTICS: GoogleAnalyticsAdapter,
         AnalyticsPlatform.MIXPANEL: MixpanelAdapter,
@@ -564,8 +540,7 @@ class AnalyticsAdapterFactory:
     
     @classmethod
     def create_adapter(cls, platform: AnalyticsPlatform, credentials: AdapterCredentials, redis_client=None) -> BasePlatformAdapter:
-        """Create adapter for specified analytics platform."""
-        if platform not in cls._adapters:
+        """Create adapter for specified analytics platform."""        if platform not in cls._adapters:
             raise AdapterError(f"Unsupported analytics platform: {platform}")
         
         adapter_class = cls._adapters[platform]
@@ -573,8 +548,7 @@ class AnalyticsAdapterFactory:
     
     @classmethod
     def get_supported_platforms(cls) -> List[AnalyticsPlatform]:
-        """Get list of supported analytics platforms."""
-        return list(cls._adapters.keys())
+        """Get list of supported analytics platforms."""        return list(cls._adapters.keys())
 
 # Export all classes
 __all__ = [

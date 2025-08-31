@@ -1,5 +1,4 @@
-"""
-Advanced Crawlers Module - Main Entry Point
+"""Advanced Crawlers Module - Main Entry Point
 ==========================================
 
 Professional entry point for the advanced crawlers module providing
@@ -14,7 +13,6 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Unauthorized use, copying, modification, or distribution is strictly prohibited.
 Violators will face immediate legal action under German and international law.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -38,8 +36,7 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class CrawlerManagerSingleton:
-    """Singleton manager for the entire crawler system."""
-    
+    """Singleton manager for the entire crawler system."""    
     _instance = None
     _initialized = False
     
@@ -56,8 +53,7 @@ class CrawlerManagerSingleton:
             self._initialized = True
     
     def initialize(self, config: Dict[str, Any]):
-        """Initialize the crawler system with configuration."""
-        try:
+        """Initialize the crawler system with configuration."""        try:
             self.config = config
             self.orchestrator = CrawlerOrchestrator(config)
             self.monitor = RealTimeMonitor(self.orchestrator)
@@ -70,8 +66,7 @@ class CrawlerManagerSingleton:
             return False
     
     async def start_system(self):
-        """Start the entire crawler system."""
-        if not self.orchestrator or not self.monitor:
+        """Start the entire crawler system."""        if not self.orchestrator or not self.monitor:
             raise RuntimeError("System not initialized. Call initialize() first.")
         
         try:
@@ -86,8 +81,7 @@ class CrawlerManagerSingleton:
             raise
     
     def stop_system(self):
-        """Stop the entire crawler system."""
-        if self.orchestrator:
+        """Stop the entire crawler system."""        if self.orchestrator:
             self.orchestrator.stop_monitoring()
         if self.monitor:
             self.monitor.stop_monitoring()
@@ -95,8 +89,7 @@ class CrawlerManagerSingleton:
         logger.info("Crawler system stopped")
     
     def get_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
-        if not self.orchestrator:
+        """Get comprehensive system status."""        if not self.orchestrator:
             return {'status': 'not_initialized'}
         
         return {
@@ -109,28 +102,23 @@ class CrawlerManagerSingleton:
 crawler_manager = CrawlerManagerSingleton()
 
 def initialize_crawler_system(config: Dict[str, Any]) -> bool:
-    """
-    Initialize the crawler system with configuration.
+    """    Initialize the crawler system with configuration.
     
     Args:
         config: Configuration dictionary with API keys and settings
         
     Returns:
         bool: True if initialization successful, False otherwise
-    """
-    return crawler_manager.initialize(config)
+    """    return crawler_manager.initialize(config)
 
 async def start_crawler_system():
-    """Start the complete crawler monitoring system."""
-    await crawler_manager.start_system()
+    """Start the complete crawler monitoring system."""    await crawler_manager.start_system()
 
 def stop_crawler_system():
-    """Stop the complete crawler monitoring system."""
-    crawler_manager.stop_system()
+    """Stop the complete crawler monitoring system."""    crawler_manager.stop_system()
 
 def get_system_status() -> Dict[str, Any]:
-    """Get comprehensive system status and metrics."""
-    return crawler_manager.get_status()
+    """Get comprehensive system status and metrics."""    return crawler_manager.get_status()
 
 def create_monitoring_task(
     task_id: str,
@@ -142,8 +130,7 @@ def create_monitoring_task(
     max_results: int = 100,
     **kwargs
 ) -> CrawlingTask:
-    """
-    Create a monitoring task with simplified parameters.
+    """    Create a monitoring task with simplified parameters.
     
     Args:
         task_id: Unique identifier for the task
@@ -157,8 +144,7 @@ def create_monitoring_task(
         
     Returns:
         CrawlingTask: Configured crawling task
-    """
-    parameters = {'operation': operation}
+    """    parameters = {'operation': operation}
     parameters.update(kwargs)
     
     return CrawlingTask(
@@ -172,36 +158,31 @@ def create_monitoring_task(
     )
 
 def add_monitoring_task(task: CrawlingTask) -> str:
-    """Add a monitoring task to the orchestrator."""
-    if not crawler_manager.orchestrator:
+    """Add a monitoring task to the orchestrator."""    if not crawler_manager.orchestrator:
         raise RuntimeError("System not initialized")
     
     return crawler_manager.orchestrator.add_monitoring_task(task)
 
 def remove_monitoring_task(task_id: str) -> bool:
-    """Remove a monitoring task from the orchestrator."""
-    if not crawler_manager.orchestrator:
+    """Remove a monitoring task from the orchestrator."""    if not crawler_manager.orchestrator:
         raise RuntimeError("System not initialized")
     
     return crawler_manager.orchestrator.remove_monitoring_task(task_id)
 
 def get_task_status(task_id: str) -> Optional[Dict[str, Any]]:
-    """Get status of a specific monitoring task."""
-    if not crawler_manager.orchestrator:
+    """Get status of a specific monitoring task."""    if not crawler_manager.orchestrator:
         return None
     
     return crawler_manager.orchestrator.get_task_status(task_id)
 
 def get_real_time_metrics() -> Dict[str, Any]:
-    """Get real-time system metrics and performance data."""
-    if not crawler_manager.monitor:
+    """Get real-time system metrics and performance data."""    if not crawler_manager.monitor:
         return {}
     
     return crawler_manager.monitor.get_real_time_dashboard_data()
 
 def get_violation_analytics(time_range: timedelta = timedelta(days=7)) -> Dict[str, Any]:
-    """Get comprehensive violation analytics."""
-    if not crawler_manager.monitor:
+    """Get comprehensive violation analytics."""    if not crawler_manager.monitor:
         return {}
     
     return crawler_manager.monitor.get_violation_analytics(time_range)
@@ -210,32 +191,26 @@ def get_historical_metrics(
     crawler_type: Optional[CrawlerType] = None,
     time_range: timedelta = timedelta(hours=24)
 ) -> Dict[str, Any]:
-    """Get historical performance metrics."""
-    if not crawler_manager.monitor:
+    """Get historical performance metrics."""    if not crawler_manager.monitor:
         return {}
     
     return crawler_manager.monitor.get_historical_metrics(crawler_type, time_range)
 
 # Convenience functions for quick crawler creation
 def create_youtube_crawler(config: Dict[str, Any]) -> YouTubeCrawler:
-    """Create and configure a YouTube crawler."""
-    return YouTubeCrawler(config)
+    """Create and configure a YouTube crawler."""    return YouTubeCrawler(config)
 
 def create_tiktok_crawler(config: Dict[str, Any]) -> TikTokCrawler:
-    """Create and configure a TikTok crawler."""
-    return TikTokCrawler(config)
+    """Create and configure a TikTok crawler."""    return TikTokCrawler(config)
 
 def create_instagram_crawler(config: Dict[str, Any]) -> InstagramCrawler:
-    """Create and configure an Instagram crawler."""
-    return InstagramCrawler(config)
+    """Create and configure an Instagram crawler."""    return InstagramCrawler(config)
 
 def create_twitter_crawler(config: Dict[str, Any]) -> TwitterCrawler:
-    """Create and configure a Twitter crawler."""
-    return TwitterCrawler(config)
+    """Create and configure a Twitter crawler."""    return TwitterCrawler(config)
 
 def create_web_crawler(config: Dict[str, Any]) -> UniversalWebCrawler:
-    """Create and configure a universal web crawler."""
-    return UniversalWebCrawler(config)
+    """Create and configure a universal web crawler."""    return UniversalWebCrawler(config)
 
 # Quick setup functions
 def quick_setup_youtube_monitoring(
@@ -243,8 +218,7 @@ def quick_setup_youtube_monitoring(
     search_queries: List[str],
     similarity_threshold: float = 0.85
 ) -> List[str]:
-    """
-    Quick setup for YouTube content monitoring.
+    """    Quick setup for YouTube content monitoring.
     
     Args:
         api_key: YouTube API key
@@ -253,8 +227,7 @@ def quick_setup_youtube_monitoring(
         
     Returns:
         List[str]: Task IDs for created monitoring tasks
-    """
-    config = {'youtube_api_key': api_key}
+    """    config = {'youtube_api_key': api_key}
     
     if not crawler_manager._initialized:
         initialize_crawler_system(config)
@@ -276,8 +249,7 @@ def quick_setup_multi_platform_monitoring(
     config: Dict[str, Any],
     monitoring_targets: Dict[str, List[str]]
 ) -> Dict[str, List[str]]:
-    """
-    Quick setup for multi-platform monitoring.
+    """    Quick setup for multi-platform monitoring.
     
     Args:
         config: Complete configuration with all API keys
@@ -285,8 +257,7 @@ def quick_setup_multi_platform_monitoring(
         
     Returns:
         Dict[str, List[str]]: Task IDs organized by platform
-    """
-    if not crawler_manager._initialized:
+    """    if not crawler_manager._initialized:
         initialize_crawler_system(config)
     
     task_ids = {}

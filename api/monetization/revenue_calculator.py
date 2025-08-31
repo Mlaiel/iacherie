@@ -1,5 +1,4 @@
-"""
-Advanced revenue calculation engine with AI-powered estimation algorithms.
+"""Advanced revenue calculation engine with AI-powered estimation algorithms.
 
 This module implements sophisticated revenue calculation models including:
 - Multi-platform revenue aggregation
@@ -25,7 +24,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -47,8 +45,7 @@ from ..core.exceptions import MonetizationException, CalculationException
 
 
 class RevenueCalculationMethod(Enum):
-    """Revenue calculation methodologies."""
-    REAL_TIME = "real_time"
+    """Revenue calculation methodologies."""    REAL_TIME = "real_time"
     PREDICTIVE = "predictive"
     HISTORICAL_AVERAGE = "historical_average"
     MACHINE_LEARNING = "machine_learning"
@@ -57,8 +54,7 @@ class RevenueCalculationMethod(Enum):
 
 
 class PlatformMetric(Enum):
-    """Platform-specific revenue metrics."""
-    SPOTIFY_STREAMS = "spotify_streams"
+    """Platform-specific revenue metrics."""    SPOTIFY_STREAMS = "spotify_streams"
     YOUTUBE_VIEWS = "youtube_views"
     INSTAGRAM_ENGAGEMENT = "instagram_engagement"
     TIKTOK_VIEWS = "tiktok_views"
@@ -70,8 +66,7 @@ class PlatformMetric(Enum):
 
 @dataclass
 class PlatformRevenueData:
-    """Platform-specific revenue and engagement data."""
-    platform: str
+    """Platform-specific revenue and engagement data."""    platform: str
     metric_type: PlatformMetric
     raw_value: Union[int, float]
     revenue_per_unit: Decimal
@@ -85,8 +80,7 @@ class PlatformRevenueData:
 
 @dataclass
 class RevenueProjection:
-    """Revenue forecast and projection data."""
-    creator_id: str
+    """Revenue forecast and projection data."""    creator_id: str
     projection_period: Tuple[datetime, datetime]
     conservative_estimate: Decimal
     optimistic_estimate: Decimal
@@ -102,8 +96,7 @@ class RevenueProjection:
 
 @dataclass
 class CreatorPerformanceMetrics:
-    """Comprehensive creator performance analytics."""
-    creator_id: str
+    """Comprehensive creator performance analytics."""    creator_id: str
     total_followers: int
     engagement_rate: float
     content_frequency: float
@@ -118,13 +111,11 @@ class CreatorPerformanceMetrics:
 
 
 class AdvancedRevenueCalculator:
-    """
-    AI-powered revenue calculation and forecasting engine.
+    """    AI-powered revenue calculation and forecasting engine.
     
     Provides sophisticated revenue estimation, prediction, and optimization
     capabilities using machine learning algorithms and multi-platform data analysis.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger("monetization.revenue_calculator")
@@ -161,8 +152,7 @@ class AdvancedRevenueCalculator:
         self.logger.info("AdvancedRevenueCalculator initialized successfully")
     
     def _initialize_ml_models(self):
-        """Initialize machine learning models for revenue prediction."""
-        try:
+        """Initialize machine learning models for revenue prediction."""        try:
             # Revenue prediction models
             self.models = {
                 "revenue_forecast": GradientBoostingRegressor(
@@ -197,8 +187,7 @@ class AdvancedRevenueCalculator:
         platforms: Optional[List[str]] = None,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, PlatformRevenueData]:
-        """
-        Calculate real-time revenue across specified platforms.
+        """        Calculate real-time revenue across specified platforms.
         
         Args:
             creator_id: Unique creator identifier
@@ -207,8 +196,7 @@ class AdvancedRevenueCalculator:
             
         Returns:
             Dictionary of platform revenue data
-        """
-        try:
+        """        try:
             self.logger.info(f"Calculating real-time revenue for creator: {creator_id}")
             
             # Set default time range if not provided
@@ -247,14 +235,11 @@ class AdvancedRevenueCalculator:
         platforms: Optional[List[str]],
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Dict[str, Any]]:
-        """Fetch data from various platforms."""
-        try:
-            query = """
-            SELECT platform, metric_type, value, engagement_rate, created_at
+        """Fetch data from various platforms."""        try:
+            query = """            SELECT platform, metric_type, value, engagement_rate, created_at
             FROM creator_platform_metrics 
             WHERE creator_id = $1 AND created_at BETWEEN $2 AND $3
-            """
-            
+            """            
             if platforms:
                 platform_filter = " AND platform = ANY($4)"
                 query += platform_filter
@@ -288,8 +273,7 @@ class AdvancedRevenueCalculator:
         data: List[Dict[str, Any]],
         time_range: Tuple[datetime, datetime]
     ) -> PlatformRevenueData:
-        """Calculate revenue for specific platform."""
-        try:
+        """Calculate revenue for specific platform."""        try:
             # Determine primary metric for platform
             metric_mapping = {
                 "spotify": PlatformMetric.SPOTIFY_STREAMS,
@@ -345,8 +329,7 @@ class AdvancedRevenueCalculator:
         data: List[Dict[str, Any]],
         time_range: Tuple[datetime, datetime]
     ) -> float:
-        """Calculate growth rate for platform metrics."""
-        if len(data) < 2:
+        """Calculate growth rate for platform metrics."""        if len(data) < 2:
             return 0.0
         
         # Sort by timestamp
@@ -372,8 +355,7 @@ class AdvancedRevenueCalculator:
         engagement_rate: float,
         growth_rate: float
     ) -> Decimal:
-        """Apply dynamic factors to revenue calculations."""
-        multiplier = Decimal("1.0")
+        """Apply dynamic factors to revenue calculations."""        multiplier = Decimal("1.0")
         
         # Engagement bonus
         if engagement_rate > 0.05:  # 5% engagement
@@ -406,8 +388,7 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         projection_days: int = 90
     ) -> RevenueProjection:
-        """
-        Generate AI-powered revenue projections for creator.
+        """        Generate AI-powered revenue projections for creator.
         
         Args:
             creator_id: Unique creator identifier
@@ -415,8 +396,7 @@ class AdvancedRevenueCalculator:
             
         Returns:
             Comprehensive revenue projection with confidence scores
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating revenue projection for creator: {creator_id}")
             
             # Get historical data for ML training
@@ -480,13 +460,11 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         days: int = 180
     ) -> pd.DataFrame:
-        """Fetch historical revenue data for ML training."""
-        try:
+        """Fetch historical revenue data for ML training."""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=days)
             
-            query = """
-            SELECT 
+            query = """            SELECT 
                 platform,
                 revenue_amount,
                 metric_value,
@@ -499,8 +477,7 @@ class AdvancedRevenueCalculator:
             WHERE rt.user_id = (SELECT id FROM users WHERE creator_id = $1)
             AND rt.created_at BETWEEN $2 AND $3
             ORDER BY rt.created_at
-            """
-            
+            """            
             results = await self.db.fetch(query, creator_id, start_date, end_date)
             
             # Convert to pandas DataFrame
@@ -525,8 +502,7 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         historical_data: pd.DataFrame
     ) -> np.ndarray:
-        """Prepare feature matrix for ML projection models."""
-        try:
+        """Prepare feature matrix for ML projection models."""        try:
             if historical_data.empty:
                 # Return default features if no historical data
                 return np.array([[1000, 0.03, 0.1, 1, 0, 0, 1]])
@@ -566,8 +542,7 @@ class AdvancedRevenueCalculator:
             return np.array([[1000, 100, 0.05, 0.03, 0.01, 2, 150, 50, 30]])
     
     def _calculate_trend(self, series: pd.Series) -> float:
-        """Calculate trend coefficient for time series data."""
-        if len(series) < 2:
+        """Calculate trend coefficient for time series data."""        if len(series) < 2:
             return 0.0
         
         x = np.arange(len(series))
@@ -579,8 +554,7 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         features: np.ndarray
     ) -> GradientBoostingRegressor:
-        """Get cached or train new projection model."""
-        model_key = f"projection_{creator_id}"
+        """Get cached or train new projection model."""        model_key = f"projection_{creator_id}"
         
         if model_key in self.model_cache:
             return self.model_cache[model_key]
@@ -615,8 +589,7 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         features: np.ndarray
     ) -> Tuple[np.ndarray, np.ndarray]:
-        """Generate training data for model fitting."""
-        # This is a simplified example - in production, use actual historical data
+        """Generate training data for model fitting."""        # This is a simplified example - in production, use actual historical data
         base_features = features[0]
         
         # Generate variations around base features
@@ -646,8 +619,7 @@ class AdvancedRevenueCalculator:
         model: GradientBoostingRegressor,
         features: np.ndarray
     ) -> Decimal:
-        """Calculate conservative revenue projection (5th percentile)."""
-        try:
+        """Calculate conservative revenue projection (5th percentile)."""        try:
             model_key = f"projection_model"
             scaler = self.scaler_cache.get(model_key, StandardScaler().fit(features))
             
@@ -670,8 +642,7 @@ class AdvancedRevenueCalculator:
         model: GradientBoostingRegressor,
         features: np.ndarray
     ) -> Decimal:
-        """Calculate optimistic revenue projection (95th percentile)."""
-        try:
+        """Calculate optimistic revenue projection (95th percentile)."""        try:
             model_key = f"projection_model"
             scaler = self.scaler_cache.get(model_key, StandardScaler().fit(features))
             
@@ -694,8 +665,7 @@ class AdvancedRevenueCalculator:
         model: GradientBoostingRegressor,
         features: np.ndarray
     ) -> Decimal:
-        """Calculate most likely revenue projection (median)."""
-        try:
+        """Calculate most likely revenue projection (median)."""        try:
             model_key = f"projection_model"
             scaler = self.scaler_cache.get(model_key, StandardScaler().fit(features))
             
@@ -715,8 +685,7 @@ class AdvancedRevenueCalculator:
         model: GradientBoostingRegressor,
         features: np.ndarray
     ) -> float:
-        """Calculate confidence score for projection."""
-        try:
+        """Calculate confidence score for projection."""        try:
             # Base confidence on feature quality and model performance
             feature_quality = min(1.0, features[0][8] / 100)  # Data points / 100
             
@@ -737,8 +706,7 @@ class AdvancedRevenueCalculator:
         model: GradientBoostingRegressor,
         features: np.ndarray
     ) -> List[str]:
-        """Identify key factors driving revenue projections."""
-        try:
+        """Identify key factors driving revenue projections."""        try:
             # Feature importance from model
             importance = model.feature_importances_
             
@@ -769,8 +737,7 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         features: np.ndarray
     ) -> List[str]:
-        """Identify potential risk factors for revenue."""
-        risks = []
+        """Identify potential risk factors for revenue."""        risks = []
         
         try:
             # Check feature values for risk indicators
@@ -804,8 +771,7 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         features: np.ndarray
     ) -> List[str]:
-        """Identify growth opportunities for creator."""
-        opportunities = []
+        """Identify growth opportunities for creator."""        opportunities = []
         
         try:
             # Feature-based opportunities
@@ -829,8 +795,7 @@ class AdvancedRevenueCalculator:
             return ["Diversify content types", "Collaborate with other creators"]
     
     async def _assess_platform_risks(self, creator_id: str) -> List[str]:
-        """Assess platform-specific risks."""
-        risks = []
+        """Assess platform-specific risks."""        risks = []
         
         # This would analyze platform-specific data
         # For now, return common risks
@@ -843,8 +808,7 @@ class AdvancedRevenueCalculator:
         return risks
     
     async def _assess_content_opportunities(self, creator_id: str) -> List[str]:
-        """Assess content-based growth opportunities."""
-        opportunities = []
+        """Assess content-based growth opportunities."""        opportunities = []
         
         # This would analyze content performance data
         # For now, return common opportunities
@@ -862,8 +826,7 @@ class AdvancedRevenueCalculator:
         total_projection: Decimal,
         projection_days: int
     ) -> Dict[str, Decimal]:
-        """Generate platform-specific revenue breakdown."""
-        try:
+        """Generate platform-specific revenue breakdown."""        try:
             # Get current platform distribution
             current_data = await self.calculate_real_time_revenue(creator_id)
             
@@ -898,18 +861,15 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         revenue_data: Dict[str, PlatformRevenueData]
     ):
-        """Store revenue calculation results in database."""
-        try:
+        """Store revenue calculation results in database."""        try:
             for platform, data in revenue_data.items():
-                query = """
-                INSERT INTO revenue_calculations (
+                query = """                INSERT INTO revenue_calculations (
                     creator_id, platform, metric_type, raw_value,
                     revenue_per_unit, total_revenue, currency,
                     time_period_start, time_period_end, engagement_rate,
                     growth_rate, metadata, created_at
                 ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-                """
-                
+                """                
                 await self.db.execute(
                     query,
                     creator_id,
@@ -931,17 +891,14 @@ class AdvancedRevenueCalculator:
             self.logger.error(f"Revenue calculation storage failed: {e}")
     
     async def _store_revenue_projection(self, projection: RevenueProjection):
-        """Store revenue projection in database."""
-        try:
-            query = """
-            INSERT INTO revenue_projections (
+        """Store revenue projection in database."""        try:
+            query = """            INSERT INTO revenue_projections (
                 creator_id, projection_start, projection_end,
                 conservative_estimate, optimistic_estimate, most_likely_estimate,
                 confidence_score, methodology, key_factors, risk_factors,
                 growth_opportunities, platform_breakdown, created_at
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-            """
-            
+            """            
             await self.db.execute(
                 query,
                 projection.creator_id,
@@ -966,16 +923,14 @@ class AdvancedRevenueCalculator:
         self,
         creator_id: str
     ) -> CreatorPerformanceMetrics:
-        """
-        Comprehensive creator performance analysis.
+        """        Comprehensive creator performance analysis.
         
         Args:
             creator_id: Unique creator identifier
             
         Returns:
             Detailed performance metrics and recommendations
-        """
-        try:
+        """        try:
             self.logger.info(f"Analyzing performance for creator: {creator_id}")
             
             # Get creator statistics
@@ -1031,10 +986,8 @@ class AdvancedRevenueCalculator:
             raise CalculationException(f"Performance analysis error: {e}")
     
     async def _get_creator_statistics(self, creator_id: str) -> Dict[str, Any]:
-        """Get basic creator statistics from database."""
-        try:
-            query = """
-            SELECT 
+        """Get basic creator statistics from database."""        try:
+            query = """            SELECT 
                 COUNT(DISTINCT platform) as platform_count,
                 SUM(followers) as total_followers,
                 AVG(engagement_rate) as avg_engagement,
@@ -1042,8 +995,7 @@ class AdvancedRevenueCalculator:
             FROM creator_platform_metrics 
             WHERE creator_id = $1 
             AND created_at >= NOW() - INTERVAL '90 days'
-            """
-            
+            """            
             result = await self.db.fetchrow(query, creator_id)
             
             return {
@@ -1058,15 +1010,12 @@ class AdvancedRevenueCalculator:
             return {}
     
     async def _calculate_overall_engagement(self, creator_id: str) -> float:
-        """Calculate overall engagement rate across platforms."""
-        try:
-            query = """
-            SELECT AVG(engagement_rate) as avg_engagement
+        """Calculate overall engagement rate across platforms."""        try:
+            query = """            SELECT AVG(engagement_rate) as avg_engagement
             FROM creator_platform_metrics 
             WHERE creator_id = $1 
             AND created_at >= NOW() - INTERVAL '30 days'
-            """
-            
+            """            
             result = await self.db.fetchrow(query, creator_id)
             return float(result["avg_engagement"] or 0)
             
@@ -1075,15 +1024,12 @@ class AdvancedRevenueCalculator:
             return 0.0
     
     async def _calculate_content_frequency(self, creator_id: str) -> float:
-        """Calculate content posting frequency."""
-        try:
-            query = """
-            SELECT COUNT(*) as post_count
+        """Calculate content posting frequency."""        try:
+            query = """            SELECT COUNT(*) as post_count
             FROM creator_platform_metrics 
             WHERE creator_id = $1 
             AND created_at >= NOW() - INTERVAL '30 days'
-            """
-            
+            """            
             result = await self.db.fetchrow(query, creator_id)
             post_count = result["post_count"] or 0
             
@@ -1095,15 +1041,12 @@ class AdvancedRevenueCalculator:
             return 0.0
     
     async def _calculate_platform_diversity(self, creator_id: str) -> int:
-        """Calculate number of active platforms."""
-        try:
-            query = """
-            SELECT COUNT(DISTINCT platform) as platform_count
+        """Calculate number of active platforms."""        try:
+            query = """            SELECT COUNT(DISTINCT platform) as platform_count
             FROM creator_platform_metrics 
             WHERE creator_id = $1 
             AND created_at >= NOW() - INTERVAL '30 days'
-            """
-            
+            """            
             result = await self.db.fetchrow(query, creator_id)
             return result["platform_count"] or 0
             
@@ -1112,16 +1055,13 @@ class AdvancedRevenueCalculator:
             return 0
     
     async def _calculate_revenue_consistency(self, creator_id: str) -> float:
-        """Calculate revenue consistency score."""
-        try:
-            query = """
-            SELECT revenue_amount, created_at
+        """Calculate revenue consistency score."""        try:
+            query = """            SELECT revenue_amount, created_at
             FROM revenue_tracking 
             WHERE user_id = (SELECT id FROM users WHERE creator_id = $1)
             AND created_at >= NOW() - INTERVAL '90 days'
             ORDER BY created_at
-            """
-            
+            """            
             results = await self.db.fetch(query, creator_id)
             
             if not results:
@@ -1151,10 +1091,8 @@ class AdvancedRevenueCalculator:
             return 0.0
     
     async def _calculate_growth_velocity(self, creator_id: str) -> float:
-        """Calculate growth velocity across metrics."""
-        try:
-            query = """
-            SELECT 
+        """Calculate growth velocity across metrics."""        try:
+            query = """            SELECT 
                 DATE_TRUNC('week', created_at) as week,
                 AVG(followers) as avg_followers,
                 AVG(engagement_rate) as avg_engagement
@@ -1163,8 +1101,7 @@ class AdvancedRevenueCalculator:
             AND created_at >= NOW() - INTERVAL '12 weeks'
             GROUP BY DATE_TRUNC('week', created_at)
             ORDER BY week
-            """
-            
+            """            
             results = await self.db.fetch(query, creator_id)
             
             if len(results) < 2:
@@ -1193,8 +1130,7 @@ class AdvancedRevenueCalculator:
             return 0.0
     
     async def _assess_market_position(self, creator_id: str, stats: Dict[str, Any]) -> str:
-        """Assess creator's market position."""
-        total_followers = stats.get("total_followers", 0)
+        """Assess creator's market position."""        total_followers = stats.get("total_followers", 0)
         avg_engagement = stats.get("avg_engagement", 0)
         platform_count = stats.get("platform_count", 0)
         
@@ -1218,8 +1154,7 @@ class AdvancedRevenueCalculator:
         revenue_consistency: float,
         growth_velocity: float
     ) -> float:
-        """Calculate overall performance score."""
-        # Normalize metrics to 0-1 scale
+        """Calculate overall performance score."""        # Normalize metrics to 0-1 scale
         engagement_score = min(engagement_rate / 0.1, 1.0)  # 10% engagement = perfect
         frequency_score = min(content_frequency / 2.0, 1.0)  # 2 posts/day = perfect
         diversity_score = min(platform_diversity / 5.0, 1.0)  # 5 platforms = perfect
@@ -1238,8 +1173,7 @@ class AdvancedRevenueCalculator:
         return round(performance_score * 100, 2)  # Convert to 0-100 scale
     
     async def _identify_strengths(self, creator_id: str, stats: Dict[str, Any]) -> List[str]:
-        """Identify creator strengths."""
-        strengths = []
+        """Identify creator strengths."""        strengths = []
         
         if stats.get("avg_engagement", 0) > 0.05:
             strengths.append("High audience engagement")
@@ -1255,8 +1189,7 @@ class AdvancedRevenueCalculator:
         return strengths
     
     async def _identify_improvement_areas(self, creator_id: str, stats: Dict[str, Any]) -> List[str]:
-        """Identify areas for improvement."""
-        improvements = []
+        """Identify areas for improvement."""        improvements = []
         
         if stats.get("avg_engagement", 0) < 0.02:
             improvements.append("Increase audience engagement")
@@ -1274,8 +1207,7 @@ class AdvancedRevenueCalculator:
         creator_id: str,
         stats: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Benchmark creator against industry averages."""
-        # Industry benchmarks (simplified examples)
+        """Benchmark creator against industry averages."""        # Industry benchmarks (simplified examples)
         industry_benchmarks = {
             "engagement_rate": 0.03,
             "platform_diversity": 2.5,
@@ -1301,17 +1233,14 @@ class AdvancedRevenueCalculator:
         return comparison
     
     async def _store_performance_analysis(self, performance: CreatorPerformanceMetrics):
-        """Store performance analysis in database."""
-        try:
-            query = """
-            INSERT INTO creator_performance_analysis (
+        """Store performance analysis in database."""        try:
+            query = """            INSERT INTO creator_performance_analysis (
                 creator_id, total_followers, engagement_rate, content_frequency,
                 platform_diversity, revenue_consistency, growth_velocity,
                 market_position, performance_score, strengths, improvement_areas,
                 benchmark_comparison, analyzed_at
             ) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
-            """
-            
+            """            
             await self.db.execute(
                 query,
                 performance.creator_id,
@@ -1333,8 +1262,7 @@ class AdvancedRevenueCalculator:
             self.logger.error(f"Performance analysis storage failed: {e}")
     
     def __del__(self):
-        """Cleanup resources."""
-        try:
+        """Cleanup resources."""        try:
             if hasattr(self, 'executor') and self.executor:
                 self.executor.shutdown(wait=False)
         except Exception:
@@ -1343,5 +1271,4 @@ class AdvancedRevenueCalculator:
 
 # Factory function for easy instantiation
 def create_revenue_calculator(config: Optional[Dict[str, Any]] = None) -> AdvancedRevenueCalculator:
-    """Create and return configured revenue calculator instance."""
-    return AdvancedRevenueCalculator(config)
+    """Create and return configured revenue calculator instance."""    return AdvancedRevenueCalculator(config)

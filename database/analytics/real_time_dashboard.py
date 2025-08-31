@@ -1,5 +1,4 @@
-"""
-Real-Time Analytics Dashboard - IA Influencer Agent Platform
+"""Real-Time Analytics Dashboard - IA Influencer Agent Platform
 
 Live analytics dashboard with real-time metrics, alerts, and insights.
 Provides instant visibility into content performance across all platforms.
@@ -11,7 +10,6 @@ Development Team: Lead AI Developer, Senior Backend Engineer, ML Engineer, DBA, 
 This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 """
-
 from typing import Dict, List, Optional, Tuple, Any, Union, AsyncGenerator
 from datetime import datetime, timedelta
 from dataclasses import dataclass, field
@@ -34,8 +32,7 @@ Base = declarative_base()
 
 
 class DashboardWidget(Enum):
-    """Available dashboard widgets"""
-    REAL_TIME_METRICS = "real_time_metrics"
+    """Available dashboard widgets"""    REAL_TIME_METRICS = "real_time_metrics"
     PERFORMANCE_OVERVIEW = "performance_overview"
     PLATFORM_COMPARISON = "platform_comparison"
     TRENDING_CONTENT = "trending_content"
@@ -48,8 +45,7 @@ class DashboardWidget(Enum):
 
 
 class MetricTimeframe(Enum):
-    """Time frames for analytics"""
-    LIVE = "live"
+    """Time frames for analytics"""    LIVE = "live"
     LAST_HOUR = "last_hour"
     LAST_24H = "last_24h"
     LAST_7D = "last_7d"
@@ -59,8 +55,7 @@ class MetricTimeframe(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -69,8 +64,7 @@ class AlertSeverity(Enum):
 
 @dataclass
 class RealTimeMetric:
-    """Real-time metric data structure"""
-    metric_name: str
+    """Real-time metric data structure"""    metric_name: str
     current_value: Union[int, float]
     previous_value: Union[int, float]
     change_percentage: float
@@ -78,16 +72,14 @@ class RealTimeMetric:
     timestamp: datetime = field(default_factory=datetime.utcnow)
     
     def calculate_change(self) -> float:
-        """Calculate percentage change from previous value"""
-        if self.previous_value == 0:
+        """Calculate percentage change from previous value"""        if self.previous_value == 0:
             return 100.0 if self.current_value > 0 else 0.0
         return ((self.current_value - self.previous_value) / self.previous_value) * 100
 
 
 @dataclass
 class DashboardAlert:
-    """Dashboard alert data structure"""
-    id: str
+    """Dashboard alert data structure"""    id: str
     title: str
     message: str
     severity: AlertSeverity
@@ -98,8 +90,7 @@ class DashboardAlert:
     dismiss_after: int = 300  # seconds
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary for JSON serialization"""
-        return {
+        """Convert to dictionary for JSON serialization"""        return {
             "id": self.id,
             "title": self.title,
             "message": self.message,
@@ -113,8 +104,7 @@ class DashboardAlert:
 
 
 class DashboardSession(Base):
-    """Database model for dashboard sessions"""
-    __tablename__ = "dashboard_sessions"
+    """Database model for dashboard sessions"""    __tablename__ = "dashboard_sessions"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     user_id = Column(String, nullable=False, index=True)
@@ -139,8 +129,7 @@ class DashboardSession(Base):
 
 
 class DashboardMetrics(Base):
-    """Database model for dashboard metrics cache"""
-    __tablename__ = "dashboard_metrics_cache"
+    """Database model for dashboard metrics cache"""    __tablename__ = "dashboard_metrics_cache"
     
     id = Column(String, primary_key=True, default=lambda: str(uuid4()))
     user_id = Column(String, nullable=False, index=True)
@@ -159,11 +148,9 @@ class DashboardMetrics(Base):
 
 
 class RealTimeDashboard:
-    """
-    Real-time analytics dashboard with live updates, alerts, and insights.
+    """    Real-time analytics dashboard with live updates, alerts, and insights.
     Provides WebSocket-based real-time data streaming to frontend.
-    """
-    
+    """    
     def __init__(self, db_session: Session, redis_client: Optional[redis.Redis] = None):
         self.db_session = db_session
         self.redis_client = redis_client or redis.Redis(host='localhost', port=6379, db=0)
@@ -172,8 +159,7 @@ class RealTimeDashboard:
         self.alert_manager = AlertManager(self.redis_client)
         
     async def connect_user(self, user_id: str, websocket: WebSocket, session_config: Dict[str, Any] = None) -> str:
-        """Connect user to real-time dashboard"""
-        await websocket.accept()
+        """Connect user to real-time dashboard"""        await websocket.accept()
         
         # Generate session token
         session_token = str(uuid4())
@@ -203,8 +189,7 @@ class RealTimeDashboard:
         return session_token
     
     async def disconnect_user(self, session_token: str):
-        """Disconnect user from dashboard"""
-        if session_token in self.active_connections:
+        """Disconnect user from dashboard"""        if session_token in self.active_connections:
             del self.active_connections[session_token]
         
         if session_token in self.user_sessions:
@@ -213,8 +198,7 @@ class RealTimeDashboard:
             del self.user_sessions[session_token]
     
     async def _save_session_to_db(self, user_id: str, session_token: str, config: Dict[str, Any]):
-        """Save dashboard session to database"""
-        try:
+        """Save dashboard session to database"""        try:
             session = DashboardSession(
                 user_id=user_id,
                 session_token=session_token,
@@ -233,8 +217,7 @@ class RealTimeDashboard:
             print(f"Failed to save dashboard session: {e}")
     
     async def _update_session_status(self, session_token: str, is_active: bool):
-        """Update session status in database"""
-        try:
+        """Update session status in database"""        try:
             session = self.db_session.query(DashboardSession).filter(
                 DashboardSession.session_token == session_token
             ).first()
@@ -249,8 +232,7 @@ class RealTimeDashboard:
             print(f"Failed to update session status: {e}")
     
     async def _send_initial_dashboard_data(self, session_token: str):
-        """Send initial dashboard data to connected user"""
-        try:
+        """Send initial dashboard data to connected user"""        try:
             session_info = self.user_sessions.get(session_token)
             if not session_info:
                 return
@@ -278,8 +260,7 @@ class RealTimeDashboard:
             print(f"Failed to send initial dashboard data: {e}")
     
     async def _get_widget_data(self, user_id: str, widget: DashboardWidget) -> Dict[str, Any]:
-        """Get data for specific dashboard widget"""
-        try:
+        """Get data for specific dashboard widget"""        try:
             if widget == DashboardWidget.REAL_TIME_METRICS:
                 return await self._get_real_time_metrics(user_id)
             elif widget == DashboardWidget.PERFORMANCE_OVERVIEW:
@@ -307,8 +288,7 @@ class RealTimeDashboard:
             return {"error": f"Failed to load widget data: {str(e)}"}
     
     async def _get_real_time_metrics(self, user_id: str) -> Dict[str, Any]:
-        """Get real-time metrics for dashboard"""
-        # Check cache first
+        """Get real-time metrics for dashboard"""        # Check cache first
         cache_key = f"real_time_metrics:{user_id}"
         cached_data = self.redis_client.get(cache_key)
         
@@ -362,8 +342,7 @@ class RealTimeDashboard:
         }
     
     async def _get_performance_overview(self, user_id: str) -> Dict[str, Any]:
-        """Get performance overview for last 24 hours"""
-        # This would query actual analytics data
+        """Get performance overview for last 24 hours"""        # This would query actual analytics data
         return {
             "widget_type": "performance_overview",
             "data": {
@@ -378,8 +357,7 @@ class RealTimeDashboard:
         }
     
     async def _get_platform_comparison(self, user_id: str) -> Dict[str, Any]:
-        """Get platform comparison data"""
-        return {
+        """Get platform comparison data"""        return {
             "widget_type": "platform_comparison",
             "data": {
                 "platforms": {
@@ -407,8 +385,7 @@ class RealTimeDashboard:
         }
     
     async def _get_trending_content(self, user_id: str) -> Dict[str, Any]:
-        """Get trending content data"""
-        return {
+        """Get trending content data"""        return {
             "widget_type": "trending_content",
             "data": {
                 "trending_posts": [
@@ -434,8 +411,7 @@ class RealTimeDashboard:
         }
     
     async def _get_audience_insights(self, user_id: str) -> Dict[str, Any]:
-        """Get audience insights data"""
-        return {
+        """Get audience insights data"""        return {
             "widget_type": "audience_insights",
             "data": {
                 "demographics": {
@@ -454,8 +430,7 @@ class RealTimeDashboard:
         }
     
     async def _get_revenue_tracking(self, user_id: str) -> Dict[str, Any]:
-        """Get revenue tracking data"""
-        return {
+        """Get revenue tracking data"""        return {
             "widget_type": "revenue_tracking",
             "data": {
                 "daily_revenue": 156.80,
@@ -473,8 +448,7 @@ class RealTimeDashboard:
         }
     
     async def _get_alerts_panel(self, user_id: str) -> Dict[str, Any]:
-        """Get active alerts for user"""
-        alerts = await self.alert_manager.get_user_alerts(user_id)
+        """Get active alerts for user"""        alerts = await self.alert_manager.get_user_alerts(user_id)
         
         return {
             "widget_type": "alerts_panel",
@@ -488,8 +462,7 @@ class RealTimeDashboard:
         }
     
     async def _get_optimization_suggestions(self, user_id: str) -> Dict[str, Any]:
-        """Get optimization suggestions"""
-        return {
+        """Get optimization suggestions"""        return {
             "widget_type": "optimization_suggestions",
             "data": {
                 "suggestions": [
@@ -511,8 +484,7 @@ class RealTimeDashboard:
         }
     
     async def _get_growth_trends(self, user_id: str) -> Dict[str, Any]:
-        """Get growth trends data"""
-        return {
+        """Get growth trends data"""        return {
             "widget_type": "growth_trends",
             "data": {
                 "follower_growth": {
@@ -535,8 +507,7 @@ class RealTimeDashboard:
         }
     
     async def _get_competitor_analysis(self, user_id: str) -> Dict[str, Any]:
-        """Get competitor analysis data"""
-        return {
+        """Get competitor analysis data"""        return {
             "widget_type": "competitor_analysis",
             "data": {
                 "position_ranking": 3,
@@ -554,8 +525,7 @@ class RealTimeDashboard:
         }
     
     async def _start_real_time_updates(self, session_token: str):
-        """Start real-time updates for connected user"""
-        try:
+        """Start real-time updates for connected user"""        try:
             session_info = self.user_sessions.get(session_token)
             if not session_info:
                 return
@@ -592,8 +562,7 @@ class RealTimeDashboard:
             print(f"Failed to start real-time updates: {e}")
     
     async def _check_and_send_alerts(self, session_token: str, user_id: str):
-        """Check for new alerts and send to user"""
-        try:
+        """Check for new alerts and send to user"""        try:
             new_alerts = await self.alert_manager.get_new_alerts(user_id)
             
             if new_alerts:
@@ -609,8 +578,7 @@ class RealTimeDashboard:
             print(f"Failed to check alerts: {e}")
     
     async def _send_to_user(self, session_token: str, message: Dict[str, Any]):
-        """Send message to specific user via WebSocket"""
-        if session_token in self.active_connections:
+        """Send message to specific user via WebSocket"""        if session_token in self.active_connections:
             try:
                 websocket = self.active_connections[session_token]
                 await websocket.send_text(json.dumps(message))
@@ -625,8 +593,7 @@ class RealTimeDashboard:
                 print(f"Failed to send message to user: {e}")
     
     async def broadcast_to_all_users(self, message: Dict[str, Any]):
-        """Broadcast message to all connected users"""
-        disconnected_sessions = []
+        """Broadcast message to all connected users"""        disconnected_sessions = []
         
         for session_token, websocket in self.active_connections.items():
             try:
@@ -642,8 +609,7 @@ class RealTimeDashboard:
             await self.disconnect_user(session_token)
     
     async def update_widget_configuration(self, session_token: str, widget_config: Dict[str, Any]) -> bool:
-        """Update widget configuration for user session"""
-        try:
+        """Update widget configuration for user session"""        try:
             if session_token not in self.user_sessions:
                 return False
             
@@ -673,15 +639,13 @@ class RealTimeDashboard:
 
 
 class AlertManager:
-    """Manages dashboard alerts and notifications"""
-    
+    """Manages dashboard alerts and notifications"""    
     def __init__(self, redis_client: redis.Redis):
         self.redis_client = redis_client
         self.alert_cache_ttl = 3600  # 1 hour
     
     async def create_alert(self, user_id: str, alert: DashboardAlert) -> bool:
-        """Create new alert for user"""
-        try:
+        """Create new alert for user"""        try:
             alert_key = f"alerts:{user_id}:{alert.id}"
             alert_data = json.dumps(alert.to_dict())
             
@@ -700,8 +664,7 @@ class AlertManager:
             return False
     
     async def get_user_alerts(self, user_id: str) -> List[DashboardAlert]:
-        """Get all active alerts for user"""
-        try:
+        """Get all active alerts for user"""        try:
             user_alerts_key = f"user_alerts:{user_id}"
             alert_ids = self.redis_client.lrange(user_alerts_key, 0, -1)
             
@@ -732,8 +695,7 @@ class AlertManager:
             return []
     
     async def get_new_alerts(self, user_id: str, since: datetime = None) -> List[DashboardAlert]:
-        """Get new alerts since last check"""
-        if since is None:
+        """Get new alerts since last check"""        if since is None:
             since = datetime.utcnow() - timedelta(minutes=5)
         
         all_alerts = await self.get_user_alerts(user_id)
@@ -742,8 +704,7 @@ class AlertManager:
         return new_alerts
     
     async def dismiss_alert(self, user_id: str, alert_id: str) -> bool:
-        """Dismiss specific alert"""
-        try:
+        """Dismiss specific alert"""        try:
             alert_key = f"alerts:{user_id}:{alert_id}"
             user_alerts_key = f"user_alerts:{user_id}"
             

@@ -1,5 +1,4 @@
-"""
-Enhanced Cache Tuning for Critical Business Operations
+"""Enhanced Cache Tuning for Critical Business Operations
 ====================================================
 
 Redis and Memcached optimization specifically tuned for Ainflue platform's
@@ -8,7 +7,6 @@ analytics, protection monitoring, and collaboration.
 
 Author: Performance Optimization Team
 """
-
 import asyncio
 import time
 import json
@@ -25,15 +23,13 @@ logger = logging.getLogger(__name__)
 
 
 class CacheBackend(Enum):
-    """Supported cache backends"""
-    REDIS = "redis"
+    """Supported cache backends"""    REDIS = "redis"
     MEMCACHED = "memcached"
     MEMORY = "memory"
 
 
 class BusinessOperation(Enum):
-    """Critical business operations"""
-    USER_AUTHENTICATION = "user_auth"
+    """Critical business operations"""    USER_AUTHENTICATION = "user_auth"
     CONTENT_UPLOAD = "content_upload"
     FINGERPRINT_PROCESSING = "fingerprint_proc"
     REVENUE_ANALYTICS = "revenue_analytics"
@@ -44,8 +40,7 @@ class BusinessOperation(Enum):
 
 @dataclass
 class CacheConfiguration:
-    """Cache configuration for specific business operation"""
-    operation: BusinessOperation
+    """Cache configuration for specific business operation"""    operation: BusinessOperation
     backend: CacheBackend
     ttl_seconds: int
     max_memory_mb: int
@@ -59,8 +54,7 @@ class CacheConfiguration:
 
 @dataclass
 class CachePerformanceMetrics:
-    """Cache performance metrics"""
-    operation: BusinessOperation
+    """Cache performance metrics"""    operation: BusinessOperation
     hit_ratio: float
     miss_ratio: float
     avg_latency_ms: float
@@ -75,8 +69,7 @@ class CachePerformanceMetrics:
 
 
 class CriticalCacheTuner:
-    """Enhanced cache tuning for critical business operations"""
-    
+    """Enhanced cache tuning for critical business operations"""    
     def __init__(self):
         self.configurations = self._define_optimal_configurations()
         self.performance_targets = self._define_performance_targets()
@@ -84,8 +77,7 @@ class CriticalCacheTuner:
         self.memcached_optimizations = self._define_memcached_optimizations()
         
     def _define_optimal_configurations(self) -> Dict[BusinessOperation, CacheConfiguration]:
-        """Define optimal cache configurations for each business operation"""
-        return {
+        """Define optimal cache configurations for each business operation"""        return {
             BusinessOperation.USER_AUTHENTICATION: CacheConfiguration(
                 operation=BusinessOperation.USER_AUTHENTICATION,
                 backend=CacheBackend.REDIS,
@@ -173,8 +165,7 @@ class CriticalCacheTuner:
         }
     
     def _define_performance_targets(self) -> Dict[BusinessOperation, Dict[str, float]]:
-        """Define performance targets for each business operation"""
-        return {
+        """Define performance targets for each business operation"""        return {
             BusinessOperation.USER_AUTHENTICATION: {
                 "target_hit_ratio": 0.95,
                 "max_latency_ms": 10,
@@ -227,8 +218,7 @@ class CriticalCacheTuner:
         }
     
     def _define_redis_optimizations(self) -> Dict[str, Any]:
-        """Define Redis-specific optimizations for critical operations"""
-        return {
+        """Define Redis-specific optimizations for critical operations"""        return {
             "global_settings": {
                 # Memory optimization
                 "maxmemory": "4gb",
@@ -297,8 +287,7 @@ class CriticalCacheTuner:
         }
     
     def _define_memcached_optimizations(self) -> Dict[str, Any]:
-        """Define Memcached-specific optimizations for critical operations"""
-        return {
+        """Define Memcached-specific optimizations for critical operations"""        return {
             "global_settings": {
                 # Memory settings
                 "memory_limit": "4096m",
@@ -341,8 +330,7 @@ class CriticalCacheTuner:
         }
     
     def generate_redis_configuration(self) -> Dict[str, Any]:
-        """Generate optimized Redis configuration"""
-        redis_opts = self.redis_optimizations
+        """Generate optimized Redis configuration"""        redis_opts = self.redis_optimizations
         global_settings = redis_opts["global_settings"]
         
         config = {
@@ -399,8 +387,7 @@ class CriticalCacheTuner:
         return config
     
     def generate_memcached_configuration(self) -> Dict[str, Any]:
-        """Generate optimized Memcached configuration"""
-        memcached_opts = self.memcached_optimizations
+        """Generate optimized Memcached configuration"""        memcached_opts = self.memcached_optimizations
         global_settings = memcached_opts["global_settings"]
         
         config = {
@@ -464,8 +451,7 @@ class CriticalCacheTuner:
         return config
     
     def analyze_cache_performance(self, metrics: List[CachePerformanceMetrics]) -> Dict[str, Any]:
-        """Analyze cache performance across all business operations"""
-        analysis = {
+        """Analyze cache performance across all business operations"""        analysis = {
             "overall_health": "healthy",
             "performance_summary": {},
             "bottlenecks": [],
@@ -563,8 +549,7 @@ class CriticalCacheTuner:
         return analysis
     
     def generate_comprehensive_tuning_plan(self) -> Dict[str, Any]:
-        """Generate comprehensive cache tuning plan for all critical operations"""
-        redis_config = self.generate_redis_configuration()
+        """Generate comprehensive cache tuning plan for all critical operations"""        redis_config = self.generate_redis_configuration()
         memcached_config = self.generate_memcached_configuration()
         
         plan = {

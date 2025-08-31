@@ -1,5 +1,4 @@
-"""
-🚀 Content Validation System - IA Influencer Agent Platform Enterprise
+"""🚀 Content Validation System - IA Influencer Agent Platform Enterprise
 =====================================================================
 Module: backend/data_management/validation/content_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Validation avancée pour musiciens, influenceurs, photographes, blogueurs, comé
 - Validation métadonnées et structure
 - Support multi-format avec AI
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 import asyncio
 import logging
@@ -59,8 +57,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ContentValidationResult:
-    """Résultat de validation de contenu"""
-    is_valid: bool
+    """Résultat de validation de contenu"""    is_valid: bool
     quality_score: float  # 0.0 - 1.0
     content_type: str
     format_detected: str
@@ -70,16 +67,14 @@ class ContentValidationResult:
     analysis_data: Dict[str, Any]
 
 class AudioContentValidator:
-    """Validateur spécialisé pour contenu audio"""
-    
+    """Validateur spécialisé pour contenu audio"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AudioContentValidator")
         self.min_duration = 1.0  # secondes
         self.max_duration = 3600.0  # 1 heure
         
     def validate_audio_content(self, file_path: str) -> ContentValidationResult:
-        """Valide le contenu audio avec analyse avancée"""
-        errors = []
+        """Valide le contenu audio avec analyse avancée"""        errors = []
         warnings = []
         metadata = {}
         analysis_data = {}
@@ -142,8 +137,7 @@ class AudioContentValidator:
             )
     
     def _analyze_audio_quality(self, y: np.ndarray, sr: int, analysis_data: Dict) -> float:
-        """Analyse la qualité audio globale"""
-        scores = []
+        """Analyse la qualité audio globale"""        scores = []
         
         # 1. Analyse du niveau RMS
         rms = librosa.feature.rms(y=y)[0]
@@ -180,8 +174,7 @@ class AudioContentValidator:
         return np.mean(scores)
     
     def _detect_silence_issues(self, y: np.ndarray, sr: int, warnings: List[str], analysis_data: Dict):
-        """Détecte les problèmes de silence"""
-        # Détection des segments silencieux
+        """Détecte les problèmes de silence"""        # Détection des segments silencieux
         threshold = 0.01
         silent_samples = np.abs(y) < threshold
         silent_percentage = np.sum(silent_samples) / len(y) * 100
@@ -214,8 +207,7 @@ class AudioContentValidator:
             warnings.append(f"Silence long en fin: {end_silence:.1f}s")
     
     def _analyze_spectrum(self, y: np.ndarray, sr: int, analysis_data: Dict, warnings: List[str]):
-        """Analyse spectrale avancée"""
-        # FFT analysis
+        """Analyse spectrale avancée"""        # FFT analysis
         fft = np.fft.fft(y)
         freqs = np.fft.fftfreq(len(fft), 1/sr)
         magnitude = np.abs(fft)
@@ -232,8 +224,7 @@ class AudioContentValidator:
             warnings.append("Fréquences très hautes dominantes")
     
     def _detect_clipping(self, y: np.ndarray, warnings: List[str], analysis_data: Dict):
-        """Détecte l'écrêtage audio"""
-        clipped_samples = np.sum(np.abs(y) >= 0.99)
+        """Détecte l'écrêtage audio"""        clipped_samples = np.sum(np.abs(y) >= 0.99)
         clipping_percentage = clipped_samples / len(y) * 100
         
         analysis_data["clipping_percentage"] = float(clipping_percentage)
@@ -242,8 +233,7 @@ class AudioContentValidator:
             warnings.append(f"Écrêtage détecté: {clipping_percentage:.2f}%")
     
     def _analyze_dynamics(self, y: np.ndarray, analysis_data: Dict, warnings: List[str]):
-        """Analyse la dynamique audio"""
-        # Calcul de la plage dynamique
+        """Analyse la dynamique audio"""        # Calcul de la plage dynamique
         rms = librosa.feature.rms(y=y)[0]
         dynamic_range = np.max(rms) / np.mean(rms) if np.mean(rms) > 0 else 0
         
@@ -253,8 +243,7 @@ class AudioContentValidator:
             warnings.append("Plage dynamique faible (audio compressé)")
 
 class VideoContentValidator:
-    """Validateur spécialisé pour contenu vidéo"""
-    
+    """Validateur spécialisé pour contenu vidéo"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.VideoContentValidator")
         self.min_duration = 1.0
@@ -263,8 +252,7 @@ class VideoContentValidator:
         self.max_resolution = (7680, 4320)  # 8K
         
     def validate_video_content(self, file_path: str) -> ContentValidationResult:
-        """Valide le contenu vidéo avec analyse avancée"""
-        errors = []
+        """Valide le contenu vidéo avec analyse avancée"""        errors = []
         warnings = []
         metadata = {}
         analysis_data = {}
@@ -333,8 +321,7 @@ class VideoContentValidator:
             return self._create_error_result([f"Erreur lecture vidéo: {str(e)}"])
     
     def _analyze_video_quality(self, cap: cv2.VideoCapture, analysis_data: Dict, warnings: List[str]) -> float:
-        """Analyse la qualité vidéo"""
-        scores = []
+        """Analyse la qualité vidéo"""        scores = []
         frame_count = 0
         brightness_values = []
         blur_values = []
@@ -396,8 +383,7 @@ class VideoContentValidator:
         return np.mean(scores) if scores else 0.5
     
     def _analyze_video_content(self, cap: cv2.VideoCapture, analysis_data: Dict, warnings: List[str]):
-        """Analyse le contenu vidéo pour détecter des problèmes"""
-        # Détection de frames corrompues ou noires
+        """Analyse le contenu vidéo pour détecter des problèmes"""        # Détection de frames corrompues ou noires
         total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
         black_frames = 0
         corrupted_frames = 0
@@ -430,8 +416,7 @@ class VideoContentValidator:
             warnings.append(f"Frames corrompues: {corrupted_frame_percentage:.1f}%")
     
     def _create_error_result(self, errors: List[str]) -> ContentValidationResult:
-        """Crée un résultat d'erreur"""
-        return ContentValidationResult(
+        """Crée un résultat d'erreur"""        return ContentValidationResult(
             is_valid=False,
             quality_score=0.0,
             content_type="video",
@@ -443,8 +428,7 @@ class VideoContentValidator:
         )
 
 class ImageContentValidator:
-    """Validateur spécialisé pour contenu image"""
-    
+    """Validateur spécialisé pour contenu image"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ImageContentValidator")
         self.min_resolution = (100, 100)
@@ -458,8 +442,7 @@ class ImageContentValidator:
             self.logger.warning("NudeDetector non disponible")
     
     def validate_image_content(self, file_path: str) -> ContentValidationResult:
-        """Valide le contenu image avec analyse avancée"""
-        errors = []
+        """Valide le contenu image avec analyse avancée"""        errors = []
         warnings = []
         metadata = {}
         analysis_data = {}
@@ -519,8 +502,7 @@ class ImageContentValidator:
             )
     
     def _analyze_image_quality(self, img: Image.Image, analysis_data: Dict, warnings: List[str]) -> float:
-        """Analyse la qualité de l'image"""
-        scores = []
+        """Analyse la qualité de l'image"""        scores = []
         
         # Conversion en RGB si nécessaire
         if img.mode != 'RGB':
@@ -575,8 +557,7 @@ class ImageContentValidator:
         return np.mean(scores)
     
     def _extract_exif_data(self, img: Image.Image, metadata: Dict, analysis_data: Dict):
-        """Extrait les données EXIF"""
-        try:
+        """Extrait les données EXIF"""        try:
             exif = img._getexif()
             if exif:
                 exif_data = {}
@@ -598,8 +579,7 @@ class ImageContentValidator:
             self.logger.debug(f"Impossible d'extraire EXIF: {e}")
     
     def _analyze_image_content(self, file_path: str, analysis_data: Dict, warnings: List[str]):
-        """Analyse le contenu de l'image"""
-        try:
+        """Analyse le contenu de l'image"""        try:
             # Détection de contenu inapproprié
             if self.nude_detector:
                 detections = self.nude_detector.detect(file_path)
@@ -625,8 +605,7 @@ class ImageContentValidator:
             self.logger.debug(f"Erreur analyse contenu image: {e}")
 
 class TextContentValidator:
-    """Validateur spécialisé pour contenu textuel"""
-    
+    """Validateur spécialisé pour contenu textuel"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.TextContentValidator")
         self.min_words = 5
@@ -651,8 +630,7 @@ class TextContentValidator:
             self.logger.warning("Content classifier non disponible")
     
     def validate_text_content(self, file_path: str) -> ContentValidationResult:
-        """Valide le contenu textuel avec analyse avancée"""
-        errors = []
+        """Valide le contenu textuel avec analyse avancée"""        errors = []
         warnings = []
         metadata = {}
         analysis_data = {}
@@ -729,8 +707,7 @@ class TextContentValidator:
             )
     
     def _analyze_text_quality(self, content: str, analysis_data: Dict, warnings: List[str]) -> float:
-        """Analyse la qualité du texte"""
-        scores = []
+        """Analyse la qualité du texte"""        scores = []
         
         # Analyse lisibilité
         try:
@@ -788,8 +765,7 @@ class TextContentValidator:
         return np.mean(scores) if scores else 0.5
     
     def _analyze_text_content(self, content: str, analysis_data: Dict, warnings: List[str]):
-        """Analyse le contenu textuel pour détecter des problèmes"""
-        # Détection de contenu toxique
+        """Analyse le contenu textuel pour détecter des problèmes"""        # Détection de contenu toxique
         if self.content_classifier:
             try:
                 # Analyser par chunks pour gérer les longs textes
@@ -829,8 +805,7 @@ class TextContentValidator:
             warnings.append("Vocabulaire limité")
 
 class ContentValidator:
-    """Validateur principal de contenu multimédia"""
-    
+    """Validateur principal de contenu multimédia"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ContentValidator")
         
@@ -849,8 +824,7 @@ class ContentValidator:
         }
     
     def validate_content(self, file_path: str, content_type: Optional[str] = None) -> ContentValidationResult:
-        """Valide le contenu d'un fichier selon son type"""
-        
+        """Valide le contenu d'un fichier selon son type"""        
         if not os.path.exists(file_path):
             return ContentValidationResult(
                 is_valid=False,
@@ -903,8 +877,7 @@ class ContentValidator:
             )
     
     def _detect_content_type(self, file_path: str) -> str:
-        """Détecte automatiquement le type de contenu"""
-        try:
+        """Détecte automatiquement le type de contenu"""        try:
             # Détection par extension
             extension = Path(file_path).suffix.lower().lstrip('.')
             
@@ -943,15 +916,13 @@ class ContentValidator:
             return 'unknown'
 
 class AsyncContentValidator:
-    """Version asynchrone du validateur de contenu"""
-    
+    """Version asynchrone du validateur de contenu"""    
     def __init__(self):
         self.sync_validator = ContentValidator()
         self.logger = logging.getLogger(f"{__name__}.AsyncContentValidator")
     
     async def validate_content(self, file_path: str, content_type: Optional[str] = None) -> ContentValidationResult:
-        """Valide le contenu de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Valide le contenu de manière asynchrone"""        loop = asyncio.get_event_loop()
         
         # Exécution synchrone dans un thread pool
         result = await loop.run_in_executor(
@@ -964,8 +935,7 @@ class AsyncContentValidator:
         return result
     
     async def validate_batch(self, file_paths: List[str], content_types: Optional[List[str]] = None) -> Dict[str, ContentValidationResult]:
-        """Valide un lot de fichiers de manière asynchrone"""
-        if content_types is None:
+        """Valide un lot de fichiers de manière asynchrone"""        if content_types is None:
             content_types = [None] * len(file_paths)
         
         # Création des tâches asynchrones

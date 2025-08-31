@@ -1,11 +1,9 @@
-"""
-Mobile API Gateway
+"""Mobile API Gateway
 Mobile-optimized API endpoints with offline support and sync
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Efficient mobile API access for content management and collaboration
 """
-
 import asyncio
 import json
 import logging
@@ -46,8 +44,7 @@ except ImportError:
 
 @dataclass
 class OfflineRequest:
-    """Offline request storage for sync."""
-    request_id: str
+    """Offline request storage for sync."""    request_id: str
     user_id: str
     device_id: str
     endpoint: str
@@ -64,8 +61,7 @@ class OfflineRequest:
 
 @dataclass
 class SyncOperation:
-    """Data synchronization operation."""
-    sync_id: str
+    """Data synchronization operation."""    sync_id: str
     user_id: str
     device_id: str
     operation_type: str  # upload, download, conflict_resolution
@@ -83,8 +79,7 @@ class SyncOperation:
 
 
 class MobileResponseOptimizer:
-    """Mobile response optimization for bandwidth and performance."""
-    
+    """Mobile response optimization for bandwidth and performance."""    
     def __init__(self):
         self.logger = get_logger("mobile.response_optimizer")
     
@@ -94,8 +89,7 @@ class MobileResponseOptimizer:
         request: Request,
         compression_level: int = 6
     ) -> Dict[str, Any]:
-        """Optimize API response for mobile clients."""
-        
+        """Optimize API response for mobile clients."""        
         # Get client info from headers
         user_agent = request.headers.get("user-agent", "").lower()
         connection_type = request.headers.get("x-connection-type", "unknown")
@@ -128,8 +122,7 @@ class MobileResponseOptimizer:
         response: Dict[str, Any],
         connection_type: str
     ) -> Dict[str, Any]:
-        """Apply mobile-specific optimizations."""
-        
+        """Apply mobile-specific optimizations."""        
         # Reduce image quality for mobile
         if "images" in response.get("data", {}):
             response["data"]["images"] = self._optimize_images_for_mobile(
@@ -147,8 +140,7 @@ class MobileResponseOptimizer:
         return response
     
     def _apply_compression_optimizations(self, response: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply compression optimizations for slow connections."""
-        
+        """Apply compression optimizations for slow connections."""        
         # Remove non-essential fields for slow connections
         if "metadata" in response:
             response["metadata"]["compressed"] = True
@@ -170,8 +162,7 @@ class MobileResponseOptimizer:
         images: List[Dict[str, Any]],
         connection_type: str
     ) -> List[Dict[str, Any]]:
-        """Optimize images for mobile display."""
-        
+        """Optimize images for mobile display."""        
         optimized_images = []
         
         for image in images:
@@ -190,8 +181,7 @@ class MobileResponseOptimizer:
         return optimized_images
     
     def _paginate_response(self, response: Dict[str, Any]) -> Dict[str, Any]:
-        """Paginate large response data."""
-        
+        """Paginate large response data."""        
         data = response["data"]
         page_size = 20
         
@@ -211,8 +201,7 @@ class MobileResponseOptimizer:
 
 
 class OfflineSyncManager:
-    """Professional offline synchronization management."""
-    
+    """Professional offline synchronization management."""    
     def __init__(self):
         self.logger = get_logger("mobile.offline_sync")
         self.offline_requests: Dict[str, OfflineRequest] = {}
@@ -227,8 +216,7 @@ class OfflineSyncManager:
         method: str,
         payload: Dict[str, Any]
     ) -> str:
-        """Queue request for later synchronization."""
-        
+        """Queue request for later synchronization."""        
         request_id = str(uuid.uuid4())
         
         offline_request = OfflineRequest(
@@ -255,8 +243,7 @@ class OfflineSyncManager:
         user_id: str,
         device_id: str
     ) -> Dict[str, Any]:
-        """Synchronize all pending requests for user/device."""
-        
+        """Synchronize all pending requests for user/device."""        
         user_requests = [
             req for req in self.offline_requests.values()
             if req.user_id == user_id and req.device_id == device_id and not req.synced
@@ -308,8 +295,7 @@ class OfflineSyncManager:
         operation_type: str,
         data_type: str
     ) -> SyncOperation:
-        """Create new data synchronization operation."""
-        
+        """Create new data synchronization operation."""        
         sync_id = str(uuid.uuid4())
         
         operation = SyncOperation(
@@ -334,8 +320,7 @@ class OfflineSyncManager:
         user_id: str,
         device_id: str
     ) -> Dict[str, Any]:
-        """Get synchronization status for user/device."""
-        
+        """Get synchronization status for user/device."""        
         user_operations = [
             op for op in self.sync_operations.values()
             if op.user_id == user_id and op.device_id == device_id
@@ -357,8 +342,7 @@ class OfflineSyncManager:
         }
     
     async def _process_offline_request(self, request: OfflineRequest) -> Dict[str, Any]:
-        """Process a single offline request."""
-        
+        """Process a single offline request."""        
         # Simulate request processing
         await asyncio.sleep(0.1)
         
@@ -372,8 +356,7 @@ class OfflineSyncManager:
 
 
 class MobileAPIRouter:
-    """Professional mobile API routing and optimization."""
-    
+    """Professional mobile API routing and optimization."""    
     def __init__(self):
         self.logger = get_logger("mobile.api_router")
         self.response_optimizer = MobileResponseOptimizer()
@@ -382,8 +365,7 @@ class MobileAPIRouter:
         self.collaboration_service = create_mobile_collaboration_service()
     
     def create_mobile_routes(self, app: FastAPI):
-        """Create mobile-optimized API routes."""
-        
+        """Create mobile-optimized API routes."""        
         # Mobile content management routes
         @app.post("/mobile/content/upload")
         async def mobile_upload_content(
@@ -391,8 +373,7 @@ class MobileAPIRouter:
             upload_data: Dict[str, Any],
             current_user: Dict[str, Any] = Depends(get_mobile_user)
         ):
-            """Mobile-optimized content upload."""
-            
+            """Mobile-optimized content upload."""            
             try:
                 # Create upload
                 upload = await self.content_service.create_mobile_upload(
@@ -439,8 +420,7 @@ class MobileAPIRouter:
             request: Request,
             current_user: Dict[str, Any] = Depends(get_mobile_user)
         ):
-            """Get mobile upload progress."""
-            
+            """Get mobile upload progress."""            
             try:
                 progress = await self.content_service.get_upload_progress(upload_id)
                 
@@ -463,8 +443,7 @@ class MobileAPIRouter:
             collab_data: Dict[str, Any],
             current_user: Dict[str, Any] = Depends(get_mobile_user)
         ):
-            """Create mobile collaboration request."""
-            
+            """Create mobile collaboration request."""            
             try:
                 collaboration_request = await self.collaboration_service.create_collaboration_request(
                     requester_id=current_user["user_id"],
@@ -494,8 +473,7 @@ class MobileAPIRouter:
             collaboration_type: str,
             current_user: Dict[str, Any] = Depends(get_mobile_user)
         ):
-            """Find collaboration matches for mobile users."""
-            
+            """Find collaboration matches for mobile users."""            
             try:
                 matches = await self.collaboration_service.find_collaboration_matches(
                     current_user["user_id"], content_id, collaboration_type
@@ -519,8 +497,7 @@ class MobileAPIRouter:
             request: Request,
             current_user: Dict[str, Any] = Depends(get_mobile_user)
         ):
-            """Synchronize offline requests."""
-            
+            """Synchronize offline requests."""            
             try:
                 sync_result = await self.offline_sync_manager.sync_pending_requests(
                     current_user["user_id"], current_user["device_id"]
@@ -543,8 +520,7 @@ class MobileAPIRouter:
             request: Request,
             current_user: Dict[str, Any] = Depends(get_mobile_user)
         ):
-            """Get synchronization status."""
-            
+            """Get synchronization status."""            
             try:
                 sync_status = await self.offline_sync_manager.get_sync_status(
                     current_user["user_id"], current_user["device_id"]
@@ -568,8 +544,7 @@ class MobileAPIRouter:
             request: Request,
             current_user: Dict[str, Any] = Depends(get_mobile_user)
         ):
-            """Get mobile-optimized analytics dashboard."""
-            
+            """Get mobile-optimized analytics dashboard."""            
             try:
                 # Simulate dashboard data
                 dashboard_data = {
@@ -599,8 +574,7 @@ class MobileAPIRouter:
             request: Request,
             current_user: Dict[str, Any] = Depends(get_mobile_user)
         ):
-            """Get mobile app configuration."""
-            
+            """Get mobile app configuration."""            
             try:
                 config = {
                     "app_version": "1.0.0",
@@ -633,8 +607,7 @@ class MobileAPIRouter:
 
 
 def create_mobile_api_app() -> FastAPI:
-    """Create mobile-optimized FastAPI application."""
-    
+    """Create mobile-optimized FastAPI application."""    
     @asynccontextmanager
     async def lifespan(app: FastAPI):
         # Startup
@@ -670,8 +643,7 @@ def create_mobile_api_app() -> FastAPI:
     # Add middleware for mobile optimization
     @app.middleware("http")
     async def mobile_optimization_middleware(request: Request, call_next):
-        """Mobile-specific request/response optimization."""
-        
+        """Mobile-specific request/response optimization."""        
         start_time = datetime.utcnow()
         
         # Add mobile context to request
@@ -701,8 +673,7 @@ async def handle_offline_request(
     method: str,
     payload: Dict[str, Any]
 ) -> str:
-    """Handle offline request queueing."""
-    
+    """Handle offline request queueing."""    
     sync_manager = OfflineSyncManager()
     return await sync_manager.queue_offline_request(
         user_id, device_id, endpoint, method, payload
@@ -713,26 +684,22 @@ def optimize_response_for_mobile(
     data: Any,
     request: Request
 ) -> Dict[str, Any]:
-    """Optimize response for mobile client."""
-    
+    """Optimize response for mobile client."""    
     optimizer = MobileResponseOptimizer()
     return optimizer.optimize_response(data, request)
 
 
 # Dependency injection functions
 def get_mobile_api_router() -> MobileAPIRouter:
-    """Get mobile API router instance."""
-    return MobileAPIRouter()
+    """Get mobile API router instance."""    return MobileAPIRouter()
 
 
 def get_response_optimizer() -> MobileResponseOptimizer:
-    """Get response optimizer instance."""
-    return MobileResponseOptimizer()
+    """Get response optimizer instance."""    return MobileResponseOptimizer()
 
 
 def get_offline_sync_manager() -> OfflineSyncManager:
-    """Get offline sync manager instance."""
-    return OfflineSyncManager()
+    """Get offline sync manager instance."""    return OfflineSyncManager()
 
 
 # Main execution

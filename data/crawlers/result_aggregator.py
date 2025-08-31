@@ -1,5 +1,4 @@
-"""
-Result Aggregator Implementation
+"""Result Aggregator Implementation
 ===============================
 
 Advanced result aggregation system for combining and analyzing crawler results.
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import asyncio
 import hashlib
 import json
@@ -42,16 +40,14 @@ from .platform_crawler import ContentMatch, CrawlerResult
 
 
 class AggregationMethod(Enum):
-    """Methods for aggregating results"""
-    WEIGHTED_AVERAGE = "weighted_average"
+    """Methods for aggregating results"""    WEIGHTED_AVERAGE = "weighted_average"
     MAXIMUM_SCORE = "maximum_score"
     CONSENSUS_VOTING = "consensus_voting"
     MACHINE_LEARNING = "machine_learning"
 
 
 class EvidenceType(Enum):
-    """Types of evidence for content matches"""
-    FINGERPRINT_MATCH = "fingerprint_match"
+    """Types of evidence for content matches"""    FINGERPRINT_MATCH = "fingerprint_match"
     METADATA_SIMILARITY = "metadata_similarity"
     VISUAL_SIMILARITY = "visual_similarity"
     AUDIO_SIMILARITY = "audio_similarity"
@@ -62,8 +58,7 @@ class EvidenceType(Enum):
 
 @dataclass
 class MatchScore:
-    """Comprehensive scoring for content matches"""
-    overall_score: float
+    """Comprehensive scoring for content matches"""    overall_score: float
     confidence_level: float
     evidence_strength: float
     platform_reliability: float
@@ -77,8 +72,7 @@ class MatchScore:
 
 @dataclass
 class EvidenceItem:
-    """Individual piece of evidence for a match"""
-    evidence_type: EvidenceType
+    """Individual piece of evidence for a match"""    evidence_type: EvidenceType
     source_platform: str
     evidence_data: Dict[str, Any]
     confidence_score: float
@@ -89,8 +83,7 @@ class EvidenceItem:
 
 @dataclass
 class AggregatedResult:
-    """Aggregated result from multiple crawler sources"""
-    result_id: str
+    """Aggregated result from multiple crawler sources"""    result_id: str
     original_content_id: str
     detected_urls: List[str]
     platforms: List[str]
@@ -107,8 +100,7 @@ class AggregatedResult:
 
 
 class ResultAggregator:
-    """
-    Advanced result aggregation system for combining and analyzing crawler results.
+    """    Advanced result aggregation system for combining and analyzing crawler results.
     
     Features:
     - Multi-platform result correlation
@@ -119,8 +111,7 @@ class ResultAggregator:
     - False positive filtering
     - Automated decision recommendations
     - Cross-reference validation
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -164,8 +155,7 @@ class ResultAggregator:
     async def aggregate_crawler_results(self, 
                                       crawler_results: List[CrawlerResult],
                                       original_content_id: str) -> AggregatedResult:
-        """
-        Aggregate results from multiple crawler sources.
+        """        Aggregate results from multiple crawler sources.
         
         Args:
             crawler_results: List of crawler results to aggregate
@@ -173,8 +163,7 @@ class ResultAggregator:
             
         Returns:
             Aggregated result with comprehensive analysis
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             
             # Extract all matches from crawler results
@@ -246,16 +235,14 @@ class ResultAggregator:
     
     async def correlate_cross_platform_matches(self, 
                                              time_window_hours: int = 24) -> List[Dict[str, Any]]:
-        """
-        Correlate matches across platforms within a time window.
+        """        Correlate matches across platforms within a time window.
         
         Args:
             time_window_hours: Time window for correlation analysis
             
         Returns:
             List of cross-platform correlations
-        """
-        try:
+        """        try:
             correlations = []
             cutoff_time = datetime.utcnow() - timedelta(hours=time_window_hours)
             
@@ -283,16 +270,14 @@ class ResultAggregator:
     
     async def analyze_detection_trends(self, 
                                      time_period_days: int = 30) -> Dict[str, Any]:
-        """
-        Analyze detection trends over time period.
+        """        Analyze detection trends over time period.
         
         Args:
             time_period_days: Number of days to analyze
             
         Returns:
             Trend analysis data
-        """
-        try:
+        """        try:
             cutoff_time = datetime.utcnow() - timedelta(days=time_period_days)
             
             # Filter results by time period
@@ -353,8 +338,7 @@ class ResultAggregator:
     async def filter_false_positives(self, 
                                    results: List[AggregatedResult],
                                    strict_mode: bool = False) -> List[AggregatedResult]:
-        """
-        Filter out likely false positive results.
+        """        Filter out likely false positive results.
         
         Args:
             results: List of aggregated results to filter
@@ -362,8 +346,7 @@ class ResultAggregator:
             
         Returns:
             Filtered list of results
-        """
-        try:
+        """        try:
             filtered_results = []
             false_positive_threshold = 0.7 if strict_mode else 0.5
             
@@ -391,8 +374,7 @@ class ResultAggregator:
     # Private helper methods
     
     async def _deduplicate_matches(self, matches: List[ContentMatch]) -> List[ContentMatch]:
-        """Remove duplicate matches based on URL and similarity"""
-        try:
+        """Remove duplicate matches based on URL and similarity"""        try:
             seen_urls = set()
             unique_matches = []
             
@@ -414,8 +396,7 @@ class ResultAggregator:
             return matches
     
     async def _cluster_similar_matches(self, matches: List[ContentMatch]) -> List[ContentMatch]:
-        """Cluster similar matches to identify related content"""
-        try:
+        """Cluster similar matches to identify related content"""        try:
             if len(matches) < 2:
                 return matches
             
@@ -460,8 +441,7 @@ class ResultAggregator:
     async def _generate_evidence_items(self, 
                                      matches: List[ContentMatch],
                                      crawler_results: List[CrawlerResult]) -> List[EvidenceItem]:
-        """Generate evidence items from matches and crawler results"""
-        try:
+        """Generate evidence items from matches and crawler results"""        try:
             evidence_items = []
             
             for match in matches:
@@ -520,8 +500,7 @@ class ResultAggregator:
                                            matches: List[ContentMatch],
                                            evidence_items: List[EvidenceItem],
                                            platforms: List[str]) -> MatchScore:
-        """Calculate comprehensive match score"""
-        try:
+        """Calculate comprehensive match score"""        try:
             if not matches:
                 return MatchScore(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0)
             
@@ -599,8 +578,7 @@ class ResultAggregator:
             return MatchScore(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0)
     
     async def _analyze_temporal_patterns(self, crawler_results: List[CrawlerResult]) -> List[Dict[str, Any]]:
-        """Analyze temporal patterns in crawler results"""
-        try:
+        """Analyze temporal patterns in crawler results"""        try:
             timeline = []
             
             for result in crawler_results:
@@ -623,8 +601,7 @@ class ResultAggregator:
             return []
     
     async def _analyze_geographic_distribution(self, matches: List[ContentMatch]) -> Dict[str, int]:
-        """Analyze geographic distribution of matches"""
-        try:
+        """Analyze geographic distribution of matches"""        try:
             # This would analyze location data from matches
             # Placeholder implementation
             geo_distribution = defaultdict(int)
@@ -644,8 +621,7 @@ class ResultAggregator:
                                         matches: List[ContentMatch],
                                         evidence_items: List[EvidenceItem],
                                         platforms: List[str]) -> Dict[str, Any]:
-        """Generate comprehensive detection summary"""
-        try:
+        """Generate comprehensive detection summary"""        try:
             summary = {
                 'total_matches': len(matches),
                 'platforms_detected': len(set(platforms)),
@@ -665,8 +641,7 @@ class ResultAggregator:
     
     async def _generate_recommendation(self, match_score: MatchScore, 
                                      evidence_items: List[EvidenceItem]) -> str:
-        """Generate action recommendation based on analysis"""
-        try:
+        """Generate action recommendation based on analysis"""        try:
             overall_score = match_score.overall_score
             confidence = match_score.confidence_level
             evidence_strength = match_score.evidence_strength
@@ -692,8 +667,7 @@ class ResultAggregator:
             return "investigate"
     
     async def _determine_priority_level(self, match_score: MatchScore, num_matches: int) -> str:
-        """Determine priority level for the detection"""
-        try:
+        """Determine priority level for the detection"""        try:
             score = match_score.overall_score
             confidence = match_score.confidence_level
             
@@ -718,8 +692,7 @@ class ResultAggregator:
             return "medium"
     
     def _normalize_url(self, url: str) -> str:
-        """Normalize URL for comparison"""
-        try:
+        """Normalize URL for comparison"""        try:
             from urllib.parse import urlparse, parse_qs
             
             parsed = urlparse(url)
@@ -746,8 +719,7 @@ class ResultAggregator:
             return url.lower()
     
     async def _calculate_metadata_confidence(self, match: ContentMatch) -> float:
-        """Calculate confidence score for metadata similarity"""
-        try:
+        """Calculate confidence score for metadata similarity"""        try:
             confidence_factors = []
             
             # Title presence and length
@@ -774,8 +746,7 @@ class ResultAggregator:
             return 0.0
     
     async def _calculate_metadata_consistency(self, matches: List[ContentMatch]) -> float:
-        """Calculate metadata consistency across matches"""
-        try:
+        """Calculate metadata consistency across matches"""        try:
             if len(matches) <= 1:
                 return 1.0
             
@@ -797,8 +768,7 @@ class ResultAggregator:
                                                  matches: List[ContentMatch],
                                                  evidence_items: List[EvidenceItem],
                                                  platforms: List[str]) -> float:
-        """Estimate probability of false positive"""
-        try:
+        """Estimate probability of false positive"""        try:
             # Base false positive rate by platform
             platform_fp_rates = {
                 'youtube': 0.05,
@@ -840,8 +810,7 @@ class ResultAggregator:
             return 0.15
     
     def _analyze_content_distribution(self, matches: List[ContentMatch]) -> Dict[str, int]:
-        """Analyze distribution of content types in matches"""
-        try:
+        """Analyze distribution of content types in matches"""        try:
             distribution = defaultdict(int)
             
             for match in matches:
@@ -859,8 +828,7 @@ class ResultAggregator:
             return {}
     
     def _update_analytics(self, result: AggregatedResult, processing_time: float):
-        """Update analytics with new result"""
-        try:
+        """Update analytics with new result"""        try:
             self.analytics['total_results'] += 1
             self.analytics['platforms_analyzed'].update(result.platforms)
             self.analytics['processing_times'].append(processing_time)
@@ -873,8 +841,7 @@ class ResultAggregator:
             self.logger.error(f"Error updating analytics: {str(e)}")
     
     def get_aggregation_statistics(self) -> Dict[str, Any]:
-        """Get aggregation system statistics"""
-        try:
+        """Get aggregation system statistics"""        try:
             stats = {
                 'total_aggregated_results': len(self.aggregated_results),
                 'total_processed': self.analytics['total_results'],

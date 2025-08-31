@@ -1,5 +1,4 @@
-"""
-Enterprise Multi-Platform Distribution Service - Automated Content Publishing
+"""Enterprise Multi-Platform Distribution Service - Automated Content Publishing
 Intelligent distribution across social media, streaming, and content platforms
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -104,11 +102,9 @@ class DistributionRequest:
 
 
 class MultiPlatformDistributionService:
-    """
-    Professional multi-platform distribution service with intelligent
+    """    Professional multi-platform distribution service with intelligent
     content optimization and automated publishing workflows
-    """
-    
+    """    
     PLATFORM_CONFIGS = {
         Platform.YOUTUBE: PlatformConfig(
             name="YouTube",
@@ -175,10 +171,8 @@ class MultiPlatformDistributionService:
         db: Session,
         request: DistributionRequest
     ) -> List[DistributionResult]:
-        """
-        Distribute content to multiple platforms with intelligent optimization
-        """
-        try:
+        """        Distribute content to multiple platforms with intelligent optimization
+        """        try:
             asset = db.query(ContentAsset).filter(ContentAsset.id == request.asset_id).first()
             if not asset:
                 raise DistributionError(f"Asset {request.asset_id} not found")
@@ -206,10 +200,8 @@ class MultiPlatformDistributionService:
         asset: ContentAsset,
         request: DistributionRequest
     ) -> Dict[Platform, Dict[str, Any]]:
-        """
-        Prepare platform-specific content variants with optimal formats
-        """
-        variants = {}
+        """        Prepare platform-specific content variants with optimal formats
+        """        variants = {}
         source_path = Path(asset.storage_uri)
         
         for platform in request.platforms:
@@ -248,8 +240,7 @@ class MultiPlatformDistributionService:
         target_format: ContentFormat,
         config: PlatformConfig
     ) -> Dict[str, Any]:
-        """Process video content for platform-specific requirements"""
-        try:
+        """Process video content for platform-specific requirements"""        try:
             from moviepy.editor import VideoFileClip
             
             with VideoFileClip(str(source_path)) as clip:
@@ -308,8 +299,7 @@ class MultiPlatformDistributionService:
         target_format: ContentFormat,
         config: PlatformConfig
     ) -> Dict[str, Any]:
-        """Process image content for platform-specific requirements"""
-        try:
+        """Process image content for platform-specific requirements"""        try:
             from PIL import Image, ImageEnhance
             
             with Image.open(source_path) as img:
@@ -356,8 +346,7 @@ class MultiPlatformDistributionService:
         target_format: ContentFormat,
         config: PlatformConfig
     ) -> Dict[str, Any]:
-        """Process audio content for platform-specific requirements"""
-        try:
+        """Process audio content for platform-specific requirements"""        try:
             import librosa
             import soundfile as sf
             
@@ -404,10 +393,8 @@ class MultiPlatformDistributionService:
         asset: ContentAsset,
         request: DistributionRequest
     ) -> Dict[Platform, Dict[str, Any]]:
-        """
-        Optimize metadata for each platform using SEO and platform-specific best practices
-        """
-        optimized_metadata = {}
+        """        Optimize metadata for each platform using SEO and platform-specific best practices
+        """        optimized_metadata = {}
         base_metadata = asset.metadata or {}
         
         for platform in request.platforms:
@@ -485,10 +472,8 @@ class MultiPlatformDistributionService:
         prepared_content: Dict[Platform, Dict[str, Any]],
         optimized_metadata: Dict[Platform, Dict[str, Any]]
     ) -> List[DistributionResult]:
-        """
-        Execute immediate distribution to all platforms
-        """
-        results = []
+        """        Execute immediate distribution to all platforms
+        """        results = []
         
         # Create semaphore to limit concurrent uploads
         semaphore = asyncio.Semaphore(self.max_concurrent_uploads)
@@ -531,10 +516,8 @@ class MultiPlatformDistributionService:
         metadata: Dict[str, Any],
         request: DistributionRequest
     ) -> DistributionResult:
-        """
-        Distribute content to a single platform with retry logic
-        """
-        for attempt in range(self.retry_attempts):
+        """        Distribute content to a single platform with retry logic
+        """        for attempt in range(self.retry_attempts):
             try:
                 # Get platform credentials
                 credentials = await self._get_platform_credentials(db, asset.creator_id, platform)
@@ -589,8 +572,7 @@ class MultiPlatformDistributionService:
         metadata: Dict[str, Any],
         credentials: Dict[str, Any]
     ) -> DistributionResult:
-        """Upload content to YouTube using API"""
-        try:
+        """Upload content to YouTube using API"""        try:
             # This would implement actual YouTube API integration
             # For now, simulate successful upload
             platform_id = f"YT_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
@@ -617,8 +599,7 @@ class MultiPlatformDistributionService:
         metadata: Dict[str, Any],
         credentials: Dict[str, Any]
     ) -> DistributionResult:
-        """Upload content to Instagram using API"""
-        try:
+        """Upload content to Instagram using API"""        try:
             # Simulate Instagram upload
             platform_id = f"IG_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             platform_url = f"https://instagram.com/p/{platform_id}"
@@ -644,8 +625,7 @@ class MultiPlatformDistributionService:
         metadata: Dict[str, Any],
         credentials: Dict[str, Any]
     ) -> DistributionResult:
-        """Upload content to TikTok using API"""
-        try:
+        """Upload content to TikTok using API"""        try:
             # Simulate TikTok upload
             platform_id = f"TT_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             platform_url = f"https://tiktok.com/@user/video/{platform_id}"
@@ -671,8 +651,7 @@ class MultiPlatformDistributionService:
         metadata: Dict[str, Any],
         credentials: Dict[str, Any]
     ) -> DistributionResult:
-        """Upload content to Twitter using API"""
-        try:
+        """Upload content to Twitter using API"""        try:
             # Simulate Twitter upload
             platform_id = f"TW_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             platform_url = f"https://twitter.com/user/status/{platform_id}"
@@ -699,8 +678,7 @@ class MultiPlatformDistributionService:
         metadata: Dict[str, Any],
         credentials: Dict[str, Any]
     ) -> DistributionResult:
-        """Generic upload handler for other platforms"""
-        try:
+        """Generic upload handler for other platforms"""        try:
             # Simulate generic platform upload
             platform_id = f"{platform.value.upper()}_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
@@ -725,8 +703,7 @@ class MultiPlatformDistributionService:
         creator_id: int,
         platform: Platform
     ) -> Optional[Dict[str, Any]]:
-        """Get platform credentials for creator"""
-        # This would fetch from actual credentials storage
+        """Get platform credentials for creator"""        # This would fetch from actual credentials storage
         # For now, return simulated credentials
         return {
             'access_token': f"token_{platform.value}_{creator_id}",
@@ -742,8 +719,7 @@ class MultiPlatformDistributionService:
         prepared_content: Dict[Platform, Dict[str, Any]],
         optimized_metadata: Dict[Platform, Dict[str, Any]]
     ) -> List[DistributionResult]:
-        """Schedule distribution for later execution"""
-        scheduled_results = []
+        """Schedule distribution for later execution"""        scheduled_results = []
         
         for platform in request.platforms:
             result = DistributionResult(
@@ -774,8 +750,7 @@ class MultiPlatformDistributionService:
         content_data: Dict[str, Any],
         metadata: Dict[str, Any]
     ) -> None:
-        """Store scheduled distribution job"""
-        # This would create a scheduled task in the database
+        """Store scheduled distribution job"""        # This would create a scheduled task in the database
         logger.info(f"Scheduled distribution for asset {asset_id} to {platform.value} at {schedule_time}")
 
     async def _log_distribution_result(
@@ -783,8 +758,7 @@ class MultiPlatformDistributionService:
         db: Session,
         result: DistributionResult
     ) -> None:
-        """Log distribution result to database"""
-        try:
+        """Log distribution result to database"""        try:
             # This would save to DistributionLog table
             logger.info(f"Distribution to {result.platform.value}: {result.status.value}")
         except Exception as e:
@@ -795,8 +769,7 @@ class MultiPlatformDistributionService:
         asset: ContentAsset,
         metadata: Dict[str, Any]
     ) -> str:
-        """Determine appropriate YouTube category"""
-        if asset.media_type == 'audio':
+        """Determine appropriate YouTube category"""        if asset.media_type == 'audio':
             return 'Music'
         elif 'education' in str(metadata).lower():
             return 'Education'
@@ -810,8 +783,7 @@ class MultiPlatformDistributionService:
         seo_data: Dict[str, Any],
         base_metadata: Dict[str, Any]
     ) -> str:
-        """Create optimized Instagram caption"""
-        caption_parts = []
+        """Create optimized Instagram caption"""        caption_parts = []
         
         # Main description
         description = seo_data.get('description', '')
@@ -829,8 +801,7 @@ class MultiPlatformDistributionService:
         return ''.join(caption_parts)
 
     def _create_tiktok_description(self, seo_data: Dict[str, Any]) -> str:
-        """Create optimized TikTok description"""
-        description = seo_data.get('description', '')[:100]  # TikTok limit
+        """Create optimized TikTok description"""        description = seo_data.get('description', '')[:100]  # TikTok limit
         hashtags = seo_data.get('hashtags', [])[:5]  # Limited hashtags for TikTok
         
         if hashtags:
@@ -839,8 +810,7 @@ class MultiPlatformDistributionService:
         return description
 
     def _create_twitter_text(self, seo_data: Dict[str, Any]) -> str:
-        """Create optimized Twitter text"""
-        text = seo_data.get('description', '')[:200]  # Leave room for hashtags
+        """Create optimized Twitter text"""        text = seo_data.get('description', '')[:200]  # Leave room for hashtags
         hashtags = seo_data.get('hashtags', [])[:3]  # Limited hashtags for Twitter
         
         if hashtags:
@@ -856,8 +826,7 @@ class MultiPlatformDistributionService:
         asset_id: int,
         platform: Optional[Platform] = None
     ) -> Dict[str, Any]:
-        """Get distribution analytics for content"""
-        try:
+        """Get distribution analytics for content"""        try:
             # This would aggregate analytics from DistributionLog table
             analytics = {
                 'total_platforms': 5,
@@ -881,8 +850,7 @@ class MultiPlatformDistributionService:
 
     # Legacy method for backward compatibility
     def publish(self, asset: ContentAsset, platforms: List[str]) -> List[dict]:
-        """Legacy publish method - deprecated, use distribute_content instead"""
-        logger.warning("Using deprecated publish method. Switch to distribute_content")
+        """Legacy publish method - deprecated, use distribute_content instead"""        logger.warning("Using deprecated publish method. Switch to distribute_content")
         
         results = []
         for p in platforms:

@@ -1,5 +1,4 @@
-"""
-AI Module Index - Ultra-Industrial Content Processing System
+"""AI Module Index - Ultra-Industrial Content Processing System
 IA-Influencer-Agent | Enterprise Content Protection Platform
 
 Main entry point for AI-powered content analysis and processing.
@@ -10,7 +9,6 @@ Contact: mlaiel@live.de
 Business Logic Flow:
 Upload → AI Analysis → Protection → SEO → Collaboration → Distribution
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -36,8 +34,7 @@ from .config import AIModuleConfig
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Content type enumeration for processing pipeline"""
-    AUDIO = "audio"
+    """Content type enumeration for processing pipeline"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -45,8 +42,7 @@ class ContentType(Enum):
     MIXED = "mixed"
 
 class ProcessingStage(Enum):
-    """Processing pipeline stages"""
-    UPLOAD = "upload"
+    """Processing pipeline stages"""    UPLOAD = "upload"
     ANALYSIS = "analysis"
     PROTECTION = "protection"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -56,8 +52,7 @@ class ProcessingStage(Enum):
 
 @dataclass
 class ProcessingResult:
-    """Result container for AI processing operations"""
-    content_id: str
+    """Result container for AI processing operations"""    content_id: str
     content_type: ContentType
     stage: ProcessingStage
     success: bool
@@ -68,17 +63,14 @@ class ProcessingResult:
     errors: List[str] = None
 
 class AIModuleIndex:
-    """
-    Ultra-Industrial AI Module Index
+    """    Ultra-Industrial AI Module Index
     
     Central orchestrator for all AI processing operations in the
     IA-Influencer-Agent platform. Manages the complete business logic
     flow from content upload to multi-platform distribution.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize AI Module Index with all subsystems"""
-        self.config = AIModuleConfig()
+        """Initialize AI Module Index with all subsystems"""        self.config = AIModuleConfig()
         
         # Initialize core AI engines
         self.ai_core = AICore()
@@ -102,13 +94,11 @@ class AIModuleIndex:
         logger.info("AI Module Index initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize all AI subsystems
+        """        Initialize all AI subsystems
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing AI Module Index...")
             
             # Initialize all engines in parallel
@@ -155,8 +145,7 @@ class AIModuleIndex:
         user_id: str,
         processing_options: Optional[Dict[str, Any]] = None
     ) -> ProcessingResult:
-        """
-        Process content through complete AI pipeline
+        """        Process content through complete AI pipeline
         
         Args:
             content_data: Raw content bytes
@@ -167,8 +156,7 @@ class AIModuleIndex:
             
         Returns:
             ProcessingResult: Complete processing results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         content_id = f"content_{int(start_time)}_{hash(content_data) % 10000}"
         
         try:
@@ -251,8 +239,7 @@ class AIModuleIndex:
         metadata: Dict[str, Any],
         user_id: str
     ) -> Dict[str, Any]:
-        """Process content upload and initial analysis"""
-        logger.info("Processing content upload...")
+        """Process content upload and initial analysis"""        logger.info("Processing content upload...")
         
         # Analyze content based on type
         if content_type == ContentType.AUDIO:
@@ -285,8 +272,7 @@ class AIModuleIndex:
         content_type: ContentType,
         upload_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process content protection and fingerprinting"""
-        logger.info(f"Processing content protection for {content_id}...")
+        """Process content protection and fingerprinting"""        logger.info(f"Processing content protection for {content_id}...")
         
         # Generate content fingerprints
         fingerprints = await self.protection_engine.generate_fingerprints(
@@ -317,8 +303,7 @@ class AIModuleIndex:
         metadata: Dict[str, Any],
         protection_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process SEO optimization"""
-        logger.info(f"Processing SEO optimization for {content_id}...")
+        """Process SEO optimization"""        logger.info(f"Processing SEO optimization for {content_id}...")
         
         # Generate SEO-optimized metadata
         seo_metadata = await self.content_generation_engine.generate_seo_metadata(
@@ -349,8 +334,7 @@ class AIModuleIndex:
         metadata: Dict[str, Any],
         seo_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process collaboration matching"""
-        logger.info(f"Processing collaboration matching for {content_id}...")
+        """Process collaboration matching"""        logger.info(f"Processing collaboration matching for {content_id}...")
         
         # Find potential collaborators
         collaborator_matches = await self.recommendation_engine.find_collaborators(
@@ -374,8 +358,7 @@ class AIModuleIndex:
         content_type: ContentType,
         collaboration_result: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process distribution preparation"""
-        logger.info(f"Processing distribution preparation for {content_id}...")
+        """Process distribution preparation"""        logger.info(f"Processing distribution preparation for {content_id}...")
         
         # Determine optimal platforms
         platform_recommendations = await self.recommendation_engine.recommend_platforms(
@@ -394,8 +377,7 @@ class AIModuleIndex:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check for AI module"""
-        if not self._initialized:
+        """Comprehensive health check for AI module"""        if not self._initialized:
             return {'status': 'not_initialized', 'healthy': False}
         
         health_status = {
@@ -443,16 +425,13 @@ ai_module_index = AIModuleIndex()
 
 # Export main interface functions
 async def process_content(*args, **kwargs) -> ProcessingResult:
-    """Global content processing function"""
-    return await ai_module_index.process_content(*args, **kwargs)
+    """Global content processing function"""    return await ai_module_index.process_content(*args, **kwargs)
 
 async def initialize_ai_module() -> bool:
-    """Global AI module initialization"""
-    return await ai_module_index.initialize()
+    """Global AI module initialization"""    return await ai_module_index.initialize()
 
 async def health_check() -> Dict[str, Any]:
-    """Global health check function"""
-    return await ai_module_index.health_check()
+    """Global health check function"""    return await ai_module_index.health_check()
 
 # Module exports
 __all__ = [
@@ -475,18 +454,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 class AIModuleIndex:
-    """
-    Central index for AI module capabilities and quick access to functionalities.
-    """
-    
+    """    Central index for AI module capabilities and quick access to functionalities.
+    """    
     def __init__(self):
-        """Initialize the AI module index."""
-        self.module_registry = self._build_module_registry()
+        """Initialize the AI module index."""        self.module_registry = self._build_module_registry()
         logger.info("AI Module Index initialized successfully")
     
     def _build_module_registry(self) -> Dict[str, Dict[str, Any]]:
-        """Build comprehensive registry of all AI modules and their capabilities."""
-        return {
+        """Build comprehensive registry of all AI modules and their capabilities."""        return {
             "audio_processing": {
                 "description": "Advanced audio processing and music intelligence",
                 "capabilities": [
@@ -705,23 +680,19 @@ class AIModuleIndex:
         }
     
     def get_module_info(self, module_name: str) -> Dict[str, Any]:
-        """Get detailed information about a specific module."""
-        return self.module_registry.get(module_name, {})
+        """Get detailed information about a specific module."""        return self.module_registry.get(module_name, {})
     
     def list_all_modules(self) -> List[str]:
-        """Get list of all available AI modules."""
-        return list(self.module_registry.keys())
+        """Get list of all available AI modules."""        return list(self.module_registry.keys())
     
     def get_capabilities_summary(self) -> Dict[str, List[str]]:
-        """Get summary of capabilities for all modules."""
-        return {
+        """Get summary of capabilities for all modules."""        return {
             module: info.get("capabilities", [])
             for module, info in self.module_registry.items()
         }
     
     def search_by_capability(self, capability_keyword: str) -> List[str]:
-        """Search modules by capability keyword."""
-        matching_modules = []
+        """Search modules by capability keyword."""        matching_modules = []
         keyword_lower = capability_keyword.lower()
         
         for module_name, info in self.module_registry.items():
@@ -740,8 +711,7 @@ class AIModuleIndex:
         return matching_modules
     
     def get_quick_start_guide(self) -> Dict[str, str]:
-        """Get quick start information for each module."""
-        return {
+        """Get quick start information for each module."""        return {
             "audio_processing": "from backend.ai.audio_processing import AudioProcessor",
             "computer_vision": "from backend.ai.computer_vision import ImageProcessor",
             "content_generation": "from backend.ai.content_generation import ContentGenerator",
@@ -757,9 +727,7 @@ class AIModuleIndex:
         }
     
     def display_module_tree(self) -> str:
-        """Display the complete module tree structure."""
-        tree = """
-🤖 IA-Influencer-Agent AI Module Structure
+        """Display the complete module tree structure."""        tree = """🤖 IA-Influencer-Agent AI Module Structure
 ├── 📚 Documentation
 │   ├── README.md (English)
 │   ├── README.de.md (German)
@@ -776,8 +744,7 @@ class AIModuleIndex:
 ├── 🎯 personalization/ - User Personalization AI
 ├── ✅ quality_assessment/ - Content Quality Analysis
 └── 🔍 recommendation/ - Intelligent Recommendations
-        """
-        return tree
+        """        return tree
 
 # Create global index instance
 ai_index = AIModuleIndex()

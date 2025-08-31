@@ -40,8 +40,7 @@ FEATURES:
 ✅ Legal compliance and audit trails
 ✅ Enterprise-grade security and performance
 ✅ Industrial scalability and reliability
-"""
-from .fingerprint_engine_config import (
+"""from .fingerprint_engine_config import (
     FingerprintEngineConfig,
     ContentType,
     FingerprintAlgorithm,

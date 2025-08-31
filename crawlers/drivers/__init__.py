@@ -29,8 +29,7 @@ Professional Development Team Specialties:
 🥇 Database Administrator & Security Expert - Data protection and performance
 🥇 Microservices Architect & DevOps Engineer - Scalable infrastructure
 🥇 AI Prompt Engineer & Content Protection Specialist - Content security
-"""
-# Browser Management
+"""# Browser Management
 from .browser_manager import (
     BrowserManager,
     BrowserType,

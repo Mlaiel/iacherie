@@ -1,5 +1,4 @@
-"""
-Performance & Optimization Configuration Module
+"""Performance & Optimization Configuration Module
 
 Advanced performance tuning, caching strategies, and optimization settings
 for the IA Influencer Agent enterprise platform.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -25,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class CacheStrategy(Enum):
-    """Caching strategies"""
-    NO_CACHE = "no_cache"
+    """Caching strategies"""    NO_CACHE = "no_cache"
     MEMORY_CACHE = "memory_cache"
     REDIS_CACHE = "redis_cache"
     DISTRIBUTED_CACHE = "distributed_cache"
@@ -35,8 +32,7 @@ class CacheStrategy(Enum):
 
 
 class OptimizationLevel(Enum):
-    """Optimization levels"""
-    BASIC = "basic"
+    """Optimization levels"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     AGGRESSIVE = "aggressive"
@@ -44,8 +40,7 @@ class OptimizationLevel(Enum):
 
 
 class CompressionType(Enum):
-    """Compression types"""
-    NONE = "none"
+    """Compression types"""    NONE = "none"
     GZIP = "gzip"
     BROTLI = "brotli"
     LZ4 = "lz4"
@@ -53,8 +48,7 @@ class CompressionType(Enum):
 
 
 class LoadBalancingStrategy(Enum):
-    """Load balancing strategies"""
-    ROUND_ROBIN = "round_robin"
+    """Load balancing strategies"""    ROUND_ROBIN = "round_robin"
     LEAST_CONNECTIONS = "least_connections"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     IP_HASH = "ip_hash"
@@ -64,8 +58,7 @@ class LoadBalancingStrategy(Enum):
 
 @dataclass
 class CacheConfig:
-    """Advanced caching configuration"""
-    
+    """Advanced caching configuration"""    
     # General cache settings
     enabled: bool = True
     strategy: CacheStrategy = CacheStrategy.HYBRID_CACHE
@@ -127,8 +120,7 @@ class CacheConfig:
 
 @dataclass
 class DatabaseOptimizationConfig:
-    """Database performance optimization"""
-    
+    """Database performance optimization"""    
     # Connection pooling
     connection_pool_enabled: bool = True
     max_connections: int = 100
@@ -178,8 +170,7 @@ class DatabaseOptimizationConfig:
 
 @dataclass
 class APIOptimizationConfig:
-    """API performance optimization"""
-    
+    """API performance optimization"""    
     # Rate limiting
     rate_limiting_enabled: bool = True
     global_rate_limit_per_minute: int = 60000
@@ -225,8 +216,7 @@ class APIOptimizationConfig:
 
 @dataclass
 class ContentDeliveryConfig:
-    """Content delivery optimization"""
-    
+    """Content delivery optimization"""    
     # CDN settings
     cdn_enabled: bool = True
     cdn_provider: str = "cloudflare"
@@ -272,8 +262,7 @@ class ContentDeliveryConfig:
 
 @dataclass
 class LoadBalancingConfig:
-    """Load balancing optimization"""
-    
+    """Load balancing optimization"""    
     # Strategy
     strategy: LoadBalancingStrategy = LoadBalancingStrategy.LEAST_RESPONSE_TIME
     
@@ -311,8 +300,7 @@ class LoadBalancingConfig:
 
 @dataclass
 class ResourceOptimizationConfig:
-    """System resource optimization"""
-    
+    """System resource optimization"""    
     # CPU optimization
     cpu_optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED
     cpu_affinity_enabled: bool = True
@@ -346,8 +334,7 @@ class ResourceOptimizationConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Performance monitoring configuration"""
-    
+    """Performance monitoring configuration"""    
     # Metrics collection
     metrics_enabled: bool = True
     metrics_interval_seconds: int = 60
@@ -379,8 +366,7 @@ class MonitoringConfig:
 
 @dataclass
 class OptimizationConfig:
-    """Master optimization configuration"""
-    
+    """Master optimization configuration"""    
     # Core settings
     enabled: bool = True
     optimization_level: OptimizationLevel = OptimizationLevel.ADVANCED
@@ -400,8 +386,7 @@ class OptimizationConfig:
     cost_optimization_mode: bool = False
     
     def get_optimization_summary(self) -> Dict[str, Any]:
-        """Get comprehensive optimization summary"""
-        return {
+        """Get comprehensive optimization summary"""        return {
             "optimization_level": self.optimization_level.value,
             "performance_mode": self.performance_mode,
             "cache": {
@@ -433,8 +418,7 @@ class OptimizationConfig:
         }
     
     def optimize_for_workload(self, workload_type: str) -> Dict[str, Any]:
-        """Optimize configuration for specific workload type"""
-        
+        """Optimize configuration for specific workload type"""        
         optimizations = {}
         
         if workload_type == "high_throughput":
@@ -472,8 +456,7 @@ class OptimizationConfig:
         return optimizations
     
     def validate_configuration(self) -> List[str]:
-        """Validate optimization configuration"""
-        issues = []
+        """Validate optimization configuration"""        issues = []
         
         # Cache validation
         if self.cache.enabled and self.cache.max_cache_size_mb < 64:

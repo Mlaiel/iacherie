@@ -1,5 +1,4 @@
-"""
-Platform Performance Comparator - Cross-platform performance analysis
+"""Platform Performance Comparator - Cross-platform performance analysis
 =====================================================================
 
 Advanced platform comparison system with competitive analysis, performance benchmarking,
@@ -8,7 +7,6 @@ and cross-platform optimization recommendations for content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -24,8 +22,7 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Supported platform types"""
-    YOUTUBE = "youtube"
+    """Supported platform types"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -36,8 +33,7 @@ class PlatformType(Enum):
 
 @dataclass
 class PlatformMetrics:
-    """Platform-specific performance metrics"""
-    platform: PlatformType
+    """Platform-specific performance metrics"""    platform: PlatformType
     followers: int
     engagement_rate: float
     reach: int
@@ -48,18 +44,15 @@ class PlatformMetrics:
     growth_rate: float
 
 class PlatformPerformanceComparator:
-    """
-    Cross-platform performance analysis system with competitive benchmarking
+    """    Cross-platform performance analysis system with competitive benchmarking
     and optimization recommendations for multi-platform content creators.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
         
     async def initialize(self) -> None:
-        """Initialize platform comparator"""
-        try:
+        """Initialize platform comparator"""        try:
             await self._setup_database_tables()
             logger.info("Platform Performance Comparator initialized successfully")
         except Exception as e:
@@ -67,10 +60,8 @@ class PlatformPerformanceComparator:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup database tables for platform comparison"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS platform_metrics (
+        """Setup database tables for platform comparison"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS platform_metrics (
                     id SERIAL PRIMARY KEY,
                     creator_id VARCHAR(255) NOT NULL,
                     platform VARCHAR(50) NOT NULL,
@@ -88,8 +79,7 @@ class PlatformPerformanceComparator:
             """)
 
     async def compare_platform_performance(self, creator_id: str) -> Dict[str, Any]:
-        """Compare performance across all creator's platforms"""
-        try:
+        """Compare performance across all creator's platforms"""        try:
             # Get latest metrics for all platforms
             platform_data = await self._get_platform_metrics(creator_id)
             
@@ -114,11 +104,9 @@ class PlatformPerformanceComparator:
             raise HTTPException(status_code=500, detail="Platform comparison failed")
 
     async def _get_platform_metrics(self, creator_id: str) -> List[PlatformMetrics]:
-        """Get latest platform metrics for creator"""
-        try:
+        """Get latest platform metrics for creator"""        try:
             async with self.db_pool.acquire() as conn:
-                records = await conn.fetch("""
-                    SELECT DISTINCT ON (platform) platform, followers, engagement_rate, reach, impressions,
+                records = await conn.fetch("""                    SELECT DISTINCT ON (platform) platform, followers, engagement_rate, reach, impressions,
                            content_count, avg_performance_score, top_performing_format, growth_rate
                     FROM platform_metrics 
                     WHERE creator_id = $1 
@@ -146,8 +134,7 @@ class PlatformPerformanceComparator:
             return []
 
     def _rank_platforms(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
-        """Rank platforms by various performance metrics"""
-        try:
+        """Rank platforms by various performance metrics"""        try:
             rankings = {
                 'by_followers': sorted(platform_data, key=lambda x: x.followers, reverse=True),
                 'by_engagement': sorted(platform_data, key=lambda x: x.engagement_rate, reverse=True),
@@ -175,8 +162,7 @@ class PlatformPerformanceComparator:
             return {}
 
     def _analyze_engagement_patterns(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
-        """Analyze engagement patterns across platforms"""
-        try:
+        """Analyze engagement patterns across platforms"""        try:
             if not platform_data:
                 return {}
             
@@ -207,8 +193,7 @@ class PlatformPerformanceComparator:
             return {}
 
     def _analyze_growth_patterns(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
-        """Analyze growth patterns across platforms"""
-        try:
+        """Analyze growth patterns across platforms"""        try:
             growth_rates = [p.growth_rate for p in platform_data]
             
             if not growth_rates:
@@ -235,8 +220,7 @@ class PlatformPerformanceComparator:
             return {}
 
     def _analyze_content_formats(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
-        """Analyze top performing content formats by platform"""
-        try:
+        """Analyze top performing content formats by platform"""        try:
             format_analysis = {}
             
             for platform_metric in platform_data:
@@ -271,8 +255,7 @@ class PlatformPerformanceComparator:
             return {}
 
     def _generate_optimization_recommendations(self, platform_data: List[PlatformMetrics]) -> List[Dict[str, Any]]:
-        """Generate platform-specific optimization recommendations"""
-        recommendations = []
+        """Generate platform-specific optimization recommendations"""        recommendations = []
         
         try:
             # Calculate benchmarks
@@ -325,8 +308,7 @@ class PlatformPerformanceComparator:
             return []
 
     def _suggest_cross_platform_strategy(self, platform_data: List[PlatformMetrics]) -> Dict[str, Any]:
-        """Suggest cross-platform content and growth strategy"""
-        try:
+        """Suggest cross-platform content and growth strategy"""        try:
             # Identify strongest and weakest platforms
             strongest_platform = max(platform_data, key=lambda x: x.avg_performance_score)
             weakest_platform = min(platform_data, key=lambda x: x.avg_performance_score)
@@ -373,8 +355,7 @@ class PlatformPerformanceComparator:
             return {}
 
     async def get_competitive_analysis(self, creator_id: str, competitor_ids: List[str]) -> Dict[str, Any]:
-        """Get competitive analysis against other creators"""
-        try:
+        """Get competitive analysis against other creators"""        try:
             # Get creator's metrics
             creator_metrics = await self._get_platform_metrics(creator_id)
             
@@ -408,8 +389,7 @@ class PlatformPerformanceComparator:
 
     def _calculate_competitive_benchmarks(self, creator_metrics: List[PlatformMetrics], 
                                         competitor_data: Dict[str, List[PlatformMetrics]]) -> Dict[str, Any]:
-        """Calculate competitive benchmarks"""
-        try:
+        """Calculate competitive benchmarks"""        try:
             benchmarks = {}
             
             for platform_metric in creator_metrics:
@@ -443,8 +423,7 @@ class PlatformPerformanceComparator:
             return {}
 
     def _calculate_percentile(self, value: float, competitor_values: List[float]) -> float:
-        """Calculate percentile ranking against competitors"""
-        if not competitor_values:
+        """Calculate percentile ranking against competitors"""        if not competitor_values:
             return 50.0  # Default to median
         
         competitor_values.append(value)
@@ -455,8 +434,7 @@ class PlatformPerformanceComparator:
 
     def _identify_competitive_opportunities(self, creator_metrics: List[PlatformMetrics], 
                                           competitor_data: Dict[str, List[PlatformMetrics]]) -> List[Dict[str, Any]]:
-        """Identify opportunities based on competitive analysis"""
-        opportunities = []
+        """Identify opportunities based on competitive analysis"""        opportunities = []
         
         try:
             for platform_metric in creator_metrics:

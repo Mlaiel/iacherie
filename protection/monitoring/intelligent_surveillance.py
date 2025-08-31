@@ -1,5 +1,4 @@
-"""
-🧠 Intelligent Surveillance Engine
+"""🧠 Intelligent Surveillance Engine
 ==================================
 
 Ultra-advanced AI-powered surveillance system with predictive threat detection,
@@ -21,7 +20,6 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import json
@@ -45,8 +43,7 @@ import networkx as nx
 logger = logging.getLogger(__name__)
 
 class ThreatSeverity(str, Enum):
-    """AI-assessed threat severity levels."""
-    EXTREME = "extreme"         # Nation-state level, coordinated attacks
+    """AI-assessed threat severity levels."""    EXTREME = "extreme"         # Nation-state level, coordinated attacks
     CRITICAL = "critical"       # Organized crime, large-scale operations
     HIGH = "high"              # Professional piracy operations
     MEDIUM = "medium"          # Semi-organized infringement
@@ -54,8 +51,7 @@ class ThreatSeverity(str, Enum):
     MINIMAL = "minimal"        # Accidental or fair use
 
 class BehaviorPattern(str, Enum):
-    """Behavioral pattern classifications."""
-    SYSTEMATIC_SCRAPING = "systematic_scraping"
+    """Behavioral pattern classifications."""    SYSTEMATIC_SCRAPING = "systematic_scraping"
     MASS_DISTRIBUTION = "mass_distribution"
     MONETIZATION_FOCUSED = "monetization_focused"
     TRANSFORMATION_EVASION = "transformation_evasion"
@@ -65,8 +61,7 @@ class BehaviorPattern(str, Enum):
     LEGITIMATE_USE = "legitimate_use"
 
 class IntelligenceType(str, Enum):
-    """Types of intelligence sources."""
-    BEHAVIORAL = "behavioral"
+    """Types of intelligence sources."""    BEHAVIORAL = "behavioral"
     TECHNICAL = "technical"
     CONTEXTUAL = "contextual"
     SOCIAL = "social"
@@ -75,8 +70,7 @@ class IntelligenceType(str, Enum):
 
 @dataclass
 class ThreatIntelligence:
-    """Comprehensive threat intelligence data."""
-    threat_id: str
+    """Comprehensive threat intelligence data."""    threat_id: str
     first_detected: datetime
     last_updated: datetime
     severity: ThreatSeverity
@@ -91,8 +85,7 @@ class ThreatIntelligence:
 
 @dataclass
 class BehavioralSignature:
-    """Behavioral signature for threat actors."""
-    signature_id: str
+    """Behavioral signature for threat actors."""    signature_id: str
     actor_fingerprint: str
     timing_patterns: Dict[str, Any]
     platform_preferences: List[str]
@@ -102,8 +95,7 @@ class BehavioralSignature:
     success_indicators: Dict[str, float]
 
 class PredictiveThreatModel(BaseModel):
-    """Predictive threat assessment model."""
-    model_id: str
+    """Predictive threat assessment model."""    model_id: str
     threat_type: str
     prediction_horizon: int  # hours
     accuracy_score: float
@@ -113,11 +105,9 @@ class PredictiveThreatModel(BaseModel):
     training_data_size: int
 
 class IntelligentSurveillanceEngine:
-    """Ultra-advanced AI surveillance and threat intelligence system."""
-    
+    """Ultra-advanced AI surveillance and threat intelligence system."""    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the intelligent surveillance engine."""
-        self.config = config
+        """Initialize the intelligent surveillance engine."""        self.config = config
         self.redis_client = None
         self.db_session = None
         
@@ -145,8 +135,7 @@ class IntelligentSurveillanceEngine:
         logger.info("Intelligent Surveillance Engine initialized")
 
     async def initialize(self, redis_client: aioredis.Redis, db_session: AsyncSession):
-        """Initialize surveillance engine with dependencies."""
-        self.redis_client = redis_client
+        """Initialize surveillance engine with dependencies."""        self.redis_client = redis_client
         self.db_session = db_session
         
         # Initialize AI models
@@ -161,8 +150,7 @@ class IntelligentSurveillanceEngine:
         logger.info("Intelligent Surveillance Engine fully initialized")
 
     async def _initialize_ai_models(self):
-        """Initialize and load AI models for surveillance."""
-        try:
+        """Initialize and load AI models for surveillance."""        try:
             # Initialize anomaly detection model
             self._anomaly_detector = IsolationForest(
                 contamination=0.1,
@@ -204,8 +192,7 @@ class IntelligentSurveillanceEngine:
         content_fingerprint: str,
         surveillance_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Start intelligent surveillance for content."""
-        surveillance_id = f"intel_surv_{content_fingerprint}_{int(datetime.utcnow().timestamp())}"
+        """Start intelligent surveillance for content."""        surveillance_id = f"intel_surv_{content_fingerprint}_{int(datetime.utcnow().timestamp())}"
         
         try:
             # Create surveillance session
@@ -260,8 +247,7 @@ class IntelligentSurveillanceEngine:
             raise
 
     async def _start_behavioral_analysis(self, surveillance_id: str, content_fingerprint: str):
-        """Start behavioral pattern analysis for content."""
-        try:
+        """Start behavioral pattern analysis for content."""        try:
             while True:
                 # Collect behavioral data
                 behavioral_data = await self._collect_behavioral_data(content_fingerprint)
@@ -294,8 +280,7 @@ class IntelligentSurveillanceEngine:
             logger.error(f"Behavioral analysis error for {surveillance_id}: {e}")
 
     async def _collect_behavioral_data(self, content_fingerprint: str) -> Dict[str, Any]:
-        """Collect comprehensive behavioral data for analysis."""
-        try:
+        """Collect comprehensive behavioral data for analysis."""        try:
             # Query detection events from the last 24 hours
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=24)
@@ -335,8 +320,7 @@ class IntelligentSurveillanceEngine:
             return {}
 
     async def _analyze_behavioral_patterns(self, behavioral_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze behavioral patterns using AI models."""
-        try:
+        """Analyze behavioral patterns using AI models."""        try:
             patterns = {
                 "timing_analysis": {},
                 "platform_analysis": {},
@@ -391,8 +375,7 @@ class IntelligentSurveillanceEngine:
             return {}
 
     def _find_peak_hours(self, hours: List[int]) -> List[int]:
-        """Find peak activity hours."""
-        hour_counts = np.bincount(hours, minlength=24)
+        """Find peak activity hours."""        hour_counts = np.bincount(hours, minlength=24)
         mean_activity = np.mean(hour_counts)
         std_activity = np.std(hour_counts)
         threshold = mean_activity + std_activity
@@ -400,8 +383,7 @@ class IntelligentSurveillanceEngine:
         return [hour for hour, count in enumerate(hour_counts) if count > threshold]
 
     def _calculate_timing_consistency(self, hours: List[int]) -> float:
-        """Calculate consistency of timing patterns."""
-        if len(hours) < 2:
+        """Calculate consistency of timing patterns."""        if len(hours) < 2:
             return 0.0
         
         hour_counts = np.bincount(hours, minlength=24)
@@ -411,8 +393,7 @@ class IntelligentSurveillanceEngine:
         return 1.0 - (entropy / max_entropy)
 
     def _detect_platform_hopping(self, time_patterns: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Detect platform hopping behavior."""
-        if len(time_patterns) < 2:
+        """Detect platform hopping behavior."""        if len(time_patterns) < 2:
             return {"detected": False}
         
         # Sort by timestamp
@@ -434,8 +415,7 @@ class IntelligentSurveillanceEngine:
         }
 
     def _detect_burst_activity(self, intervals: List[float]) -> Dict[str, Any]:
-        """Detect burst activity patterns."""
-        if not intervals:
+        """Detect burst activity patterns."""        if not intervals:
             return {"detected": False}
         
         # Look for clusters of short intervals
@@ -450,8 +430,7 @@ class IntelligentSurveillanceEngine:
         }
 
     def _detect_systematic_timing(self, intervals: List[float]) -> Dict[str, Any]:
-        """Detect systematic/automated timing patterns."""
-        if len(intervals) < 5:
+        """Detect systematic/automated timing patterns."""        if len(intervals) < 5:
             return {"detected": False}
         
         # Check for regular intervals (indicating automation)
@@ -470,8 +449,7 @@ class IntelligentSurveillanceEngine:
         }
 
     async def _detect_behavioral_anomalies(self, behavioral_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect behavioral anomalies using machine learning."""
-        try:
+        """Detect behavioral anomalies using machine learning."""        try:
             anomalies = []
             
             if not self._anomaly_detector or not behavioral_data.get("detections"):
@@ -511,8 +489,7 @@ class IntelligentSurveillanceEngine:
             return []
 
     def _extract_anomaly_features(self, detection: Dict[str, Any]) -> List[float]:
-        """Extract features for anomaly detection."""
-        try:
+        """Extract features for anomaly detection."""        try:
             features = []
             
             # Temporal features
@@ -551,8 +528,7 @@ class IntelligentSurveillanceEngine:
             return []
 
     def _calculate_anomaly_severity(self, feature_vector: List[float]) -> str:
-        """Calculate severity of detected anomaly."""
-        # Simple severity calculation based on feature magnitudes
+        """Calculate severity of detected anomaly."""        # Simple severity calculation based on feature magnitudes
         magnitude = np.linalg.norm(feature_vector)
         
         if magnitude > 10:
@@ -563,8 +539,7 @@ class IntelligentSurveillanceEngine:
             return "low"
 
     def _assess_threat_level(self, patterns: Dict[str, Any], anomalies: List[Dict[str, Any]]) -> float:
-        """Assess overall threat level based on patterns and anomalies."""
-        threat_score = 0.0
+        """Assess overall threat level based on patterns and anomalies."""        threat_score = 0.0
         
         # Platform hopping indicators
         platform_analysis = patterns.get("platform_analysis", {})
@@ -593,8 +568,7 @@ class IntelligentSurveillanceEngine:
         patterns: Dict[str, Any],
         anomalies: List[Dict[str, Any]]
     ):
-        """Trigger automated threat response."""
-        try:
+        """Trigger automated threat response."""        try:
             threat_response = {
                 "surveillance_id": surveillance_id,
                 "trigger_time": datetime.utcnow().isoformat(),
@@ -626,8 +600,7 @@ class IntelligentSurveillanceEngine:
             logger.error(f"Failed to trigger threat response: {e}")
 
     async def _start_predictive_monitoring(self, surveillance_id: str, config: Dict[str, Any]):
-        """Start predictive threat monitoring."""
-        try:
+        """Start predictive threat monitoring."""        try:
             while True:
                 # Generate threat predictions
                 predictions = await self._generate_threat_predictions(surveillance_id)
@@ -653,8 +626,7 @@ class IntelligentSurveillanceEngine:
             logger.error(f"Predictive monitoring error for {surveillance_id}: {e}")
 
     async def _generate_threat_predictions(self, surveillance_id: str) -> List[Dict[str, Any]]:
-        """Generate AI-powered threat predictions."""
-        try:
+        """Generate AI-powered threat predictions."""        try:
             predictions = []
             
             # Collect historical data for prediction
@@ -684,8 +656,7 @@ class IntelligentSurveillanceEngine:
             return []
 
     async def _collect_prediction_features(self, surveillance_id: str) -> Dict[str, Any]:
-        """Collect features for threat prediction."""
-        try:
+        """Collect features for threat prediction."""        try:
             # Get surveillance data
             surveillance_data = await self.redis_client.hgetall(f"intel_surveillance:{surveillance_id}")
             if not surveillance_data:
@@ -731,8 +702,7 @@ class IntelligentSurveillanceEngine:
             return {}
 
     async def _predict_threat_probability(self, features: Dict[str, Any], horizon_hours: int) -> Dict[str, Any]:
-        """Predict threat probability using AI model."""
-        try:
+        """Predict threat probability using AI model."""        try:
             temporal_features = features.get("temporal_features", [])
             if len(temporal_features) < 24:  # Need at least 24 hours of data
                 return {}
@@ -784,8 +754,7 @@ class IntelligentSurveillanceEngine:
             return {}
 
     async def _preemptive_threat_response(self, surveillance_id: str, prediction: Dict[str, Any]):
-        """Execute preemptive response to high-probability threats."""
-        try:
+        """Execute preemptive response to high-probability threats."""        try:
             response_data = {
                 "surveillance_id": surveillance_id,
                 "trigger_type": "predictive",
@@ -820,8 +789,7 @@ class IntelligentSurveillanceEngine:
             logger.error(f"Failed to execute preemptive threat response: {e}")
 
     async def _start_cross_platform_correlation(self, surveillance_id: str):
-        """Start cross-platform intelligence correlation."""
-        try:
+        """Start cross-platform intelligence correlation."""        try:
             while True:
                 # Perform cross-platform correlation analysis
                 correlations = await self._analyze_cross_platform_correlations(surveillance_id)
@@ -846,8 +814,7 @@ class IntelligentSurveillanceEngine:
             logger.error(f"Cross-platform correlation error for {surveillance_id}: {e}")
 
     async def _analyze_cross_platform_correlations(self, surveillance_id: str) -> Dict[str, Any]:
-        """Analyze correlations across multiple platforms."""
-        try:
+        """Analyze correlations across multiple platforms."""        try:
             correlations = {
                 "platform_clusters": [],
                 "timing_correlations": {},
@@ -891,8 +858,7 @@ class IntelligentSurveillanceEngine:
             return {}
 
     async def _analyze_timing_correlations(self, platform_detections: Dict[str, List[Dict]]) -> Dict[str, Any]:
-        """Analyze timing correlations between platforms."""
-        try:
+        """Analyze timing correlations between platforms."""        try:
             platforms = list(platform_detections.keys())
             correlations = {}
             
@@ -921,8 +887,7 @@ class IntelligentSurveillanceEngine:
             return {}
 
     def _calculate_timing_correlation(self, times1: List[datetime], times2: List[datetime]) -> float:
-        """Calculate timing correlation between two platform detection sequences."""
-        try:
+        """Calculate timing correlation between two platform detection sequences."""        try:
             # Convert to hourly bins for correlation analysis
             start_time = min(min(times1), min(times2))
             end_time = max(max(times1), max(times2))
@@ -951,8 +916,7 @@ class IntelligentSurveillanceEngine:
             return 0.0
 
     async def _detect_platform_clusters(self, platform_detections: Dict[str, List[Dict]]) -> List[Dict[str, Any]]:
-        """Detect clusters of related platform activity."""
-        try:
+        """Detect clusters of related platform activity."""        try:
             clusters = []
             
             platforms = list(platform_detections.keys())
@@ -1008,8 +972,7 @@ class IntelligentSurveillanceEngine:
             return []
 
     def _calculate_cluster_similarity(self, platforms: List[str], platform_detections: Dict[str, List[Dict]]) -> float:
-        """Calculate similarity score for a platform cluster."""
-        try:
+        """Calculate similarity score for a platform cluster."""        try:
             if len(platforms) < 2:
                 return 0.0
             
@@ -1035,8 +998,7 @@ class IntelligentSurveillanceEngine:
             return 0.0
 
     def _analyze_cluster_coordination(self, platforms: List[str], platform_detections: Dict[str, List[Dict]]) -> Dict[str, Any]:
-        """Analyze coordination indicators for a platform cluster."""
-        try:
+        """Analyze coordination indicators for a platform cluster."""        try:
             coordination = {
                 "synchronized_timing": False,
                 "similar_patterns": False,
@@ -1068,8 +1030,7 @@ class IntelligentSurveillanceEngine:
             return {}
 
     def _calculate_coordination_probability(self, timing_correlations: Dict[str, Any], platform_clusters: List[Dict]) -> float:
-        """Calculate probability of coordinated attack."""
-        try:
+        """Calculate probability of coordinated attack."""        try:
             coordination_score = 0.0
             
             # Factor in timing correlations
@@ -1091,8 +1052,7 @@ class IntelligentSurveillanceEngine:
             return 0.0
 
     async def _handle_coordinated_attack(self, surveillance_id: str, correlations: Dict[str, Any]):
-        """Handle detected coordinated attack."""
-        try:
+        """Handle detected coordinated attack."""        try:
             response_data = {
                 "surveillance_id": surveillance_id,
                 "attack_type": "coordinated_multi_platform",
@@ -1131,8 +1091,7 @@ class IntelligentSurveillanceEngine:
             logger.error(f"Failed to handle coordinated attack: {e}")
 
     async def get_surveillance_intelligence(self, surveillance_id: str) -> Dict[str, Any]:
-        """Get comprehensive intelligence for a surveillance session."""
-        try:
+        """Get comprehensive intelligence for a surveillance session."""        try:
             # Get base surveillance data
             surveillance_data = await self.redis_client.hgetall(f"intel_surveillance:{surveillance_id}")
             
@@ -1180,8 +1139,7 @@ class IntelligentSurveillanceEngine:
             return {"error": str(e)}
 
     def _generate_threat_assessment(self, intelligence: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate overall threat assessment from intelligence data."""
-        try:
+        """Generate overall threat assessment from intelligence data."""        try:
             assessment = {
                 "threat_level": "low",
                 "confidence": 0.0,
@@ -1268,8 +1226,7 @@ class IntelligentSurveillanceEngine:
             return {"threat_level": "unknown", "error": str(e)}
 
     async def stop_intelligent_surveillance(self, surveillance_id: str) -> Dict[str, Any]:
-        """Stop intelligent surveillance session."""
-        try:
+        """Stop intelligent surveillance session."""        try:
             # Update surveillance status
             await self.redis_client.hset(
                 f"intel_surveillance:{surveillance_id}",
@@ -1299,8 +1256,7 @@ class IntelligentSurveillanceEngine:
             return {"error": str(e)}
 
     async def shutdown(self):
-        """Shutdown the intelligent surveillance engine."""
-        logger.info("Shutting down Intelligent Surveillance Engine...")
+        """Shutdown the intelligent surveillance engine."""        logger.info("Shutting down Intelligent Surveillance Engine...")
         
         self._surveillance_active = False
         

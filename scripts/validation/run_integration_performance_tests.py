@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Comprehensive Test Runner for Ainflue Platform
+"""Comprehensive Test Runner for Ainflue Platform
 
 Runs all integration tests and performance tests to validate
 API endpoints and system performance characteristics.
@@ -8,7 +7,6 @@ API endpoints and system performance characteristics.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import os
 import sys
 import subprocess
@@ -16,8 +14,7 @@ import time
 from pathlib import Path
 
 def run_command(cmd, description):
-    """Run a command and print results."""
-    print(f"\n{'='*60}")
+    """Run a command and print results."""    print(f"\n{'='*60}")
     print(f"Running: {description}")
     print(f"Command: {cmd}")
     print(f"{'='*60}")
@@ -43,8 +40,7 @@ def run_command(cmd, description):
         return False
 
 def main():
-    """Main test runner."""
-    print("🚀 Ainflue Platform - Comprehensive Test Suite")
+    """Main test runner."""    print("🚀 Ainflue Platform - Comprehensive Test Suite")
     print("=" * 60)
     
     # Change to project directory

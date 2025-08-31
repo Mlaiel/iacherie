@@ -1,5 +1,4 @@
-"""
-Platform Storage Module
+"""Platform Storage Module
 =======================
 
 Professional platform-specific storage system for IA-Influencer-Agent platform.
@@ -24,7 +23,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, AsyncIterator, Tuple
@@ -44,8 +42,7 @@ from .interfaces import (
 logger = logging.getLogger(__name__)
 
 class PlatformType(Enum):
-    """Platform type categories."""
-    SOCIAL_MEDIA = "social_media"
+    """Platform type categories."""    SOCIAL_MEDIA = "social_media"
     STREAMING_AUDIO = "streaming_audio"
     STREAMING_VIDEO = "streaming_video"
     PROFESSIONAL = "professional"
@@ -55,8 +52,7 @@ class PlatformType(Enum):
     PODCAST = "podcast"
 
 class ContentSpecification(Enum):
-    """Platform content specifications."""
-    # Video specifications
+    """Platform content specifications."""    # Video specifications
     VIDEO_HD = "video_hd"
     VIDEO_4K = "video_4k"
     VIDEO_VERTICAL = "video_vertical"
@@ -80,8 +76,7 @@ class ContentSpecification(Enum):
     TEXT_HASHTAGS = "text_hashtags"
 
 class PlatformFeature(Enum):
-    """Platform feature types."""
-    AUTO_POSTING = "auto_posting"
+    """Platform feature types."""    AUTO_POSTING = "auto_posting"
     LIVE_STREAMING = "live_streaming"
     STORIES = "stories"
     REELS = "reels"
@@ -98,8 +93,7 @@ class PlatformFeature(Enum):
 
 @dataclass
 class PlatformConfiguration:
-    """Platform configuration data."""
-    platform_id: str
+    """Platform configuration data."""    platform_id: str
     platform_name: str
     platform_type: PlatformType
     api_version: str
@@ -120,8 +114,7 @@ class PlatformConfiguration:
 
 @dataclass
 class PlatformAccount:
-    """Platform account information."""
-    account_id: str
+    """Platform account information."""    account_id: str
     user_id: str
     platform_id: str
     platform_username: str
@@ -142,8 +135,7 @@ class PlatformAccount:
 
 @dataclass
 class PlatformContent:
-    """Platform-specific content record."""
-    platform_content_id: str
+    """Platform-specific content record."""    platform_content_id: str
     content_id: str
     platform_id: str
     account_id: str
@@ -172,8 +164,7 @@ class PlatformContent:
 
 @dataclass
 class PlatformAnalytics:
-    """Platform analytics data."""
-    analytics_id: str
+    """Platform analytics data."""    analytics_id: str
     platform_id: str
     account_id: str
     content_id: Optional[str]
@@ -188,8 +179,7 @@ class PlatformAnalytics:
 
 @dataclass
 class PlatformOptimization:
-    """Platform optimization recommendations."""
-    optimization_id: str
+    """Platform optimization recommendations."""    optimization_id: str
     platform_id: str
     content_id: str
     optimization_type: str
@@ -201,8 +191,7 @@ class PlatformOptimization:
     results: Optional[Dict[str, Any]] = None
 
 class PlatformStorageProvider(BaseStorageProvider):
-    """
-    Professional platform storage provider for multi-platform content management.
+    """    Professional platform storage provider for multi-platform content management.
     
     Features:
     - Platform-specific configurations
@@ -212,7 +201,6 @@ class PlatformStorageProvider(BaseStorageProvider):
     - Algorithm insights
     - Cross-platform synchronization
     """
-
     def __init__(self, provider_id: str, config: Dict[str, Any]):
         super().__init__(provider_id, config)
         self.connection_pool = None
@@ -221,8 +209,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         self.analytics_retention_days = config.get('analytics_retention_days', 365)
 
     async def initialize(self) -> None:
-        """Initialize platform storage provider."""
-        try:
+        """Initialize platform storage provider."""        try:
             await self._create_connections()
             await self._create_tables()
             await self._load_platform_configurations()
@@ -233,8 +220,7 @@ class PlatformStorageProvider(BaseStorageProvider):
             raise
 
     async def store_platform_configuration(self, config: PlatformConfiguration) -> bool:
-        """Store platform configuration."""
-        try:
+        """Store platform configuration."""        try:
             await self._store_platform_config_data(config)
             self.platform_configs[config.platform_id] = config
             logger.info(f"Stored platform configuration: {config.platform_id}")
@@ -244,8 +230,7 @@ class PlatformStorageProvider(BaseStorageProvider):
             return False
 
     async def store_platform_account(self, account: PlatformAccount) -> bool:
-        """Store platform account information."""
-        try:
+        """Store platform account information."""        try:
             # Encrypt sensitive data
             encrypted_account = await self._encrypt_account_data(account)
             
@@ -257,8 +242,7 @@ class PlatformStorageProvider(BaseStorageProvider):
             return False
 
     async def store_platform_content(self, content: PlatformContent) -> bool:
-        """Store platform-specific content record."""
-        try:
+        """Store platform-specific content record."""        try:
             await self._store_content_data(content)
             
             # Update content analytics
@@ -274,8 +258,7 @@ class PlatformStorageProvider(BaseStorageProvider):
             return False
 
     async def store_platform_analytics(self, analytics: PlatformAnalytics) -> bool:
-        """Store platform analytics data."""
-        try:
+        """Store platform analytics data."""        try:
             await self._store_analytics_data(analytics)
             
             # Update aggregated metrics
@@ -291,8 +274,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         platform_type: Optional[PlatformType] = None,
         supported_content_type: Optional[ContentType] = None
     ) -> List[PlatformConfiguration]:
-        """Get platform configurations with filters."""
-        try:
+        """Get platform configurations with filters."""        try:
             filters = {}
             if platform_type:
                 filters['platform_type'] = platform_type.value
@@ -313,8 +295,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         platform_id: Optional[str] = None,
         status: Optional[str] = None
     ) -> List[PlatformAccount]:
-        """Get platform accounts with filters."""
-        try:
+        """Get platform accounts with filters."""        try:
             filters = {}
             if user_id:
                 filters['user_id'] = user_id
@@ -345,8 +326,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[PlatformContent]:
-        """Get platform content with filters."""
-        try:
+        """Get platform content with filters."""        try:
             filters = {}
             if platform_id:
                 filters['platform_id'] = platform_id
@@ -372,8 +352,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         content_id: str,
         platform_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive content performance across platforms."""
-        try:
+        """Get comprehensive content performance across platforms."""        try:
             filters = {'content_id': content_id}
             if platform_id:
                 filters['platform_id'] = platform_id
@@ -460,8 +439,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[PlatformAnalytics]:
-        """Get platform analytics data."""
-        try:
+        """Get platform analytics data."""        try:
             filters = {'platform_id': platform_id}
             if account_id:
                 filters['account_id'] = account_id
@@ -485,8 +463,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         content_id: str,
         platform_id: str
     ) -> PlatformOptimization:
-        """Generate platform-specific content optimization."""
-        try:
+        """Generate platform-specific content optimization."""        try:
             # Get platform configuration
             platform_config = self.platform_configs.get(platform_id)
             if not platform_config:
@@ -550,8 +527,7 @@ class PlatformStorageProvider(BaseStorageProvider):
             raise
 
     async def sync_platform_data(self, account_id: str) -> Dict[str, Any]:
-        """Synchronize data from platform APIs."""
-        try:
+        """Synchronize data from platform APIs."""        try:
             # Get account information
             accounts = await self.get_platform_accounts()
             account = next((a for a in accounts if a.account_id == account_id), None)
@@ -607,8 +583,7 @@ class PlatformStorageProvider(BaseStorageProvider):
             raise
 
     async def get_health_status(self) -> HealthStatus:
-        """Get health status of platform storage."""
-        try:
+        """Get health status of platform storage."""        try:
             status = HealthStatus(
                 provider_id=self.provider_id,
                 is_healthy=True,
@@ -665,86 +640,70 @@ class PlatformStorageProvider(BaseStorageProvider):
 
     # Private helper methods
     async def _create_connections(self) -> None:
-        """Create database connections."""
-        # Implementation depends on storage backend
+        """Create database connections."""        # Implementation depends on storage backend
         pass
 
     async def _create_tables(self) -> None:
-        """Create platform tables with proper schema."""
-        # Implementation depends on storage backend
+        """Create platform tables with proper schema."""        # Implementation depends on storage backend
         pass
 
     async def _load_platform_configurations(self) -> None:
-        """Load platform configurations from storage."""
-        # Implementation to load platform configs
+        """Load platform configurations from storage."""        # Implementation to load platform configs
         configs_data = await self._query_platform_configs({})
         for data in configs_data:
             config = self._data_to_platform_config(data)
             self.platform_configs[config.platform_id] = config
 
     async def _setup_analytics_processing(self) -> None:
-        """Setup analytics processing pipeline."""
-        # Implementation for analytics processing
+        """Setup analytics processing pipeline."""        # Implementation for analytics processing
         pass
 
     async def _encrypt_account_data(self, account: PlatformAccount) -> PlatformAccount:
-        """Encrypt sensitive account data."""
-        # Implementation for account data encryption
+        """Encrypt sensitive account data."""        # Implementation for account data encryption
         return account
 
     async def _decrypt_account_data(self, account: PlatformAccount) -> PlatformAccount:
-        """Decrypt account data."""
-        # Implementation for account data decryption
+        """Decrypt account data."""        # Implementation for account data decryption
         return account
 
     async def _store_platform_config_data(self, config: PlatformConfiguration) -> None:
-        """Store platform configuration data."""
-        # Implementation depends on storage backend
+        """Store platform configuration data."""        # Implementation depends on storage backend
         pass
 
     async def _store_account_data(self, account: PlatformAccount) -> None:
-        """Store account data."""
-        # Implementation depends on storage backend
+        """Store account data."""        # Implementation depends on storage backend
         pass
 
     async def _store_content_data(self, content: PlatformContent) -> None:
-        """Store content data."""
-        # Implementation depends on storage backend
+        """Store content data."""        # Implementation depends on storage backend
         pass
 
     async def _store_analytics_data(self, analytics: PlatformAnalytics) -> None:
-        """Store analytics data."""
-        # Implementation depends on storage backend
+        """Store analytics data."""        # Implementation depends on storage backend
         pass
 
     async def _store_optimization_data(self, optimization: PlatformOptimization) -> None:
-        """Store optimization data."""
-        # Implementation depends on storage backend
+        """Store optimization data."""        # Implementation depends on storage backend
         pass
 
     async def _query_platform_configs(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query platform configurations."""
-        # Implementation depends on storage backend
+        """Query platform configurations."""        # Implementation depends on storage backend
         return []
 
     async def _query_accounts(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query platform accounts."""
-        # Implementation depends on storage backend
+        """Query platform accounts."""        # Implementation depends on storage backend
         return []
 
     async def _query_content(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query platform content."""
-        # Implementation depends on storage backend
+        """Query platform content."""        # Implementation depends on storage backend
         return []
 
     async def _query_analytics(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query analytics data."""
-        # Implementation depends on storage backend
+        """Query analytics data."""        # Implementation depends on storage backend
         return []
 
     def _data_to_platform_config(self, data: Dict[str, Any]) -> PlatformConfiguration:
-        """Convert database data to PlatformConfiguration."""
-        # Implementation depends on storage backend
+        """Convert database data to PlatformConfiguration."""        # Implementation depends on storage backend
         return PlatformConfiguration(
             platform_id=data.get('platform_id', ''),
             platform_name=data.get('platform_name', ''),
@@ -765,8 +724,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         )
 
     def _data_to_account(self, data: Dict[str, Any]) -> PlatformAccount:
-        """Convert database data to PlatformAccount."""
-        # Implementation depends on storage backend
+        """Convert database data to PlatformAccount."""        # Implementation depends on storage backend
         return PlatformAccount(
             account_id=data.get('account_id', ''),
             user_id=data.get('user_id', ''),
@@ -778,8 +736,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         )
 
     def _data_to_content(self, data: Dict[str, Any]) -> PlatformContent:
-        """Convert database data to PlatformContent."""
-        # Implementation depends on storage backend
+        """Convert database data to PlatformContent."""        # Implementation depends on storage backend
         return PlatformContent(
             platform_content_id=data.get('platform_content_id', ''),
             content_id=data.get('content_id', ''),
@@ -792,8 +749,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         )
 
     def _data_to_analytics(self, data: Dict[str, Any]) -> PlatformAnalytics:
-        """Convert database data to PlatformAnalytics."""
-        # Implementation depends on storage backend
+        """Convert database data to PlatformAnalytics."""        # Implementation depends on storage backend
         return PlatformAnalytics(
             analytics_id=data.get('analytics_id', ''),
             platform_id=data.get('platform_id', ''),
@@ -805,18 +761,15 @@ class PlatformStorageProvider(BaseStorageProvider):
         )
 
     async def _update_content_analytics(self, content: PlatformContent) -> None:
-        """Update content analytics after storing."""
-        # Implementation for analytics update
+        """Update content analytics after storing."""        # Implementation for analytics update
         pass
 
     async def _generate_optimization_recommendations(self, content: PlatformContent) -> None:
-        """Generate optimization recommendations."""
-        # Implementation for optimization generation
+        """Generate optimization recommendations."""        # Implementation for optimization generation
         pass
 
     async def _update_aggregated_metrics(self, analytics: PlatformAnalytics) -> None:
-        """Update aggregated metrics."""
-        # Implementation for metrics aggregation
+        """Update aggregated metrics."""        # Implementation for metrics aggregation
         pass
 
     async def _identify_optimization_opportunities(
@@ -824,18 +777,15 @@ class PlatformStorageProvider(BaseStorageProvider):
         content_id: str, 
         platform_performances: Dict[str, Any]
     ) -> List[str]:
-        """Identify optimization opportunities."""
-        # Implementation for opportunity identification
+        """Identify optimization opportunities."""        # Implementation for opportunity identification
         return []
 
     async def _analyze_algorithm_preferences(self, platform_id: str, content_id: str) -> Dict[str, Any]:
-        """Analyze platform algorithm preferences."""
-        # Implementation for algorithm analysis
+        """Analyze platform algorithm preferences."""        # Implementation for algorithm analysis
         return {}
 
     def _calculate_priority(self, expected_improvement: Dict[str, float]) -> int:
-        """Calculate implementation priority."""
-        # Implementation for priority calculation
+        """Calculate implementation priority."""        # Implementation for priority calculation
         total_improvement = sum(expected_improvement.values())
         return min(100, max(1, int(total_improvement * 100)))
 
@@ -844,8 +794,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         account: PlatformAccount, 
         config: PlatformConfiguration
     ) -> Optional[Dict[str, Any]]:
-        """Fetch account data from platform API."""
-        # Implementation for API data fetching
+        """Fetch account data from platform API."""        # Implementation for API data fetching
         return {}
 
     async def _fetch_content_data(
@@ -853,8 +802,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         account: PlatformAccount, 
         config: PlatformConfiguration
     ) -> List[Dict[str, Any]]:
-        """Fetch content data from platform API."""
-        # Implementation for API content fetching
+        """Fetch content data from platform API."""        # Implementation for API content fetching
         return []
 
     async def _fetch_analytics_data(
@@ -862,13 +810,11 @@ class PlatformStorageProvider(BaseStorageProvider):
         account: PlatformAccount, 
         config: PlatformConfiguration
     ) -> List[Dict[str, Any]]:
-        """Fetch analytics data from platform API."""
-        # Implementation for API analytics fetching
+        """Fetch analytics data from platform API."""        # Implementation for API analytics fetching
         return []
 
     def _api_data_to_content(self, api_data: Dict[str, Any], account: PlatformAccount) -> PlatformContent:
-        """Convert API data to PlatformContent."""
-        # Implementation for API data conversion
+        """Convert API data to PlatformContent."""        # Implementation for API data conversion
         return PlatformContent(
             platform_content_id=str(uuid.uuid4()),
             content_id=api_data.get('content_id', ''),
@@ -881,8 +827,7 @@ class PlatformStorageProvider(BaseStorageProvider):
         )
 
     def _api_data_to_analytics(self, api_data: Dict[str, Any], account: PlatformAccount) -> PlatformAnalytics:
-        """Convert API data to PlatformAnalytics."""
-        # Implementation for API analytics conversion
+        """Convert API data to PlatformAnalytics."""        # Implementation for API analytics conversion
         return PlatformAnalytics(
             analytics_id=str(uuid.uuid4()),
             platform_id=account.platform_id,
@@ -894,13 +839,11 @@ class PlatformStorageProvider(BaseStorageProvider):
         )
 
     async def _test_connection(self) -> bool:
-        """Test database connection."""
-        # Implementation for connection test
+        """Test database connection."""        # Implementation for connection test
         return True
 
 class InMemoryPlatformStorage(PlatformStorageProvider):
-    """In-memory platform storage for testing and development."""
-    
+    """In-memory platform storage for testing and development."""    
     def __init__(self, provider_id: str, config: Dict[str, Any]):
         super().__init__(provider_id, config)
         self.configs_store: List[PlatformConfiguration] = []
@@ -910,17 +853,14 @@ class InMemoryPlatformStorage(PlatformStorageProvider):
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize in-memory storage."""
-        self.is_initialized = True
+        """Initialize in-memory storage."""        self.is_initialized = True
         logger.info(f"In-memory platform storage {self.provider_id} initialized")
     
     async def _store_account_data(self, account: PlatformAccount) -> None:
-        """Store account in memory."""
-        self.accounts_store.append(account)
+        """Store account in memory."""        self.accounts_store.append(account)
     
     async def _query_accounts(self, filters: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Query accounts from memory."""
-        # Simple implementation for testing
+        """Query accounts from memory."""        # Simple implementation for testing
         return [{'account_id': a.account_id, 'status': a.status} for a in self.accounts_store]
 
 # Platform storage factory
@@ -929,8 +869,7 @@ def create_platform_storage(
     provider_id: str, 
     config: Dict[str, Any]
 ) -> PlatformStorageProvider:
-    """Create platform storage provider instance."""
-    if provider_type == 'memory':
+    """Create platform storage provider instance."""    if provider_type == 'memory':
         return InMemoryPlatformStorage(provider_id, config)
     elif provider_type == 'postgresql':
         # Return PostgreSQL-based platform storage

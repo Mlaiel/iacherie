@@ -1,5 +1,4 @@
-"""
-Sync Configurations Management Module
+"""Sync Configurations Management Module
 
 Gestion des configurations de synchronisation pour les intégrations plateformes
 dans la plateforme IA Influencer Agent.
@@ -23,7 +22,6 @@ judiciaires selon le droit allemand et international.
 
 Contact pour autorisation: mlaiel@live.de
 """
-
 from sqlalchemy import Column, Integer, String, Boolean, DateTime, Text, JSON, Enum as SQLEnum, Float
 from sqlalchemy.dialects.postgresql import UUID, JSONB
 from sqlalchemy.sql import func
@@ -41,16 +39,14 @@ logger = logging.getLogger(__name__)
 
 
 class SyncDirection(Enum):
-    """Directions de synchronisation."""
-    INBOUND = "inbound"  # De la plateforme vers notre système
+    """Directions de synchronisation."""    INBOUND = "inbound"  # De la plateforme vers notre système
     OUTBOUND = "outbound"  # De notre système vers la plateforme
     BIDIRECTIONAL = "bidirectional"  # Dans les deux sens
     MIRROR = "mirror"  # Miroir exact (synchronisation complète)
 
 
 class SyncStrategy(Enum):
-    """Stratégies de synchronisation."""
-    FULL = "full"  # Synchronisation complète
+    """Stratégies de synchronisation."""    FULL = "full"  # Synchronisation complète
     INCREMENTAL = "incremental"  # Synchronisation incrémentale
     DELTA = "delta"  # Synchronisation des changements uniquement
     REAL_TIME = "real_time"  # Synchronisation temps réel (webhooks)
@@ -60,8 +56,7 @@ class SyncStrategy(Enum):
 
 
 class SyncStatus(Enum):
-    """Statuts de synchronisation."""
-    PENDING = "pending"
+    """Statuts de synchronisation."""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     PAUSED = "paused"
@@ -72,8 +67,7 @@ class SyncStatus(Enum):
 
 
 class DataType(Enum):
-    """Types de données synchronisées."""
-    CONTENT = "content"
+    """Types de données synchronisées."""    CONTENT = "content"
     METADATA = "metadata"
     ANALYTICS = "analytics"
     USER_PROFILE = "user_profile"
@@ -88,8 +82,7 @@ class DataType(Enum):
 
 
 class ConflictResolution(Enum):
-    """Stratégies de résolution de conflits."""
-    SOURCE_WINS = "source_wins"  # La source a toujours raison
+    """Stratégies de résolution de conflits."""    SOURCE_WINS = "source_wins"  # La source a toujours raison
     TARGET_WINS = "target_wins"  # La cible a toujours raison
     LATEST_WINS = "latest_wins"  # La dernière modification gagne
     MERGE = "merge"  # Fusion des données
@@ -99,13 +92,11 @@ class ConflictResolution(Enum):
 
 
 class SyncConfiguration(BaseModel):
-    """
-    Configuration principale des synchronisations entre plateformes.
+    """    Configuration principale des synchronisations entre plateformes.
     
     Définit comment, quand et quelles données synchroniser
     entre notre système et les plateformes externes.
-    """
-    
+    """    
     __tablename__ = "sync_configurations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -172,8 +163,7 @@ class SyncConfiguration(BaseModel):
     
     @property
     def is_due_for_sync(self) -> bool:
-        """Vérifie si une synchronisation est due."""
-        if not self.is_enabled:
+        """Vérifie si une synchronisation est due."""        if not self.is_enabled:
             return False
         
         if self.sync_strategy == SyncStrategy.REAL_TIME:
@@ -198,8 +188,7 @@ class SyncConfiguration(BaseModel):
     
     @property
     def health_score(self) -> float:
-        """Calcule un score de santé de la synchronisation (0-100)."""
-        if self.total_syncs_executed == 0:
+        """Calcule un score de santé de la synchronisation (0-100)."""        if self.total_syncs_executed == 0:
             return 100.0
         
         # Facteurs de calcul du score
@@ -222,8 +211,7 @@ class SyncConfiguration(BaseModel):
         return max(0.0, min(100.0, health_score))
     
     def update_performance_metrics(self, duration_seconds: int, records_count: int, success: bool):
-        """Met à jour les métriques de performance."""
-        self.total_syncs_executed += 1
+        """Met à jour les métriques de performance."""        self.total_syncs_executed += 1
         
         if success:
             self.last_success_at = datetime.utcnow()
@@ -244,13 +232,11 @@ class SyncConfiguration(BaseModel):
 
 
 class SyncExecution(BaseModel):
-    """
-    Historique des exécutions de synchronisation.
+    """    Historique des exécutions de synchronisation.
     
     Enregistre les détails de chaque exécution pour audit,
     debugging et optimisation des performances.
-    """
-    
+    """    
     __tablename__ = "sync_executions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -303,8 +289,7 @@ class SyncExecution(BaseModel):
     
     @property
     def duration_seconds(self) -> int:
-        """Calcule la durée d'exécution en secondes."""
-        if not self.completed_at or not self.started_at:
+        """Calcule la durée d'exécution en secondes."""        if not self.completed_at or not self.started_at:
             return 0
         
         duration = self.completed_at - self.started_at
@@ -312,16 +297,14 @@ class SyncExecution(BaseModel):
     
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès de cette exécution."""
-        if self.records_processed == 0:
+        """Calcule le taux de succès de cette exécution."""        if self.records_processed == 0:
             return 100.0
         
         return (self.records_successful / self.records_processed) * 100
     
     @property
     def throughput_per_second(self) -> float:
-        """Calcule le débit en enregistrements par seconde."""
-        duration = self.duration_seconds
+        """Calcule le débit en enregistrements par seconde."""        duration = self.duration_seconds
         if duration == 0:
             return 0.0
         
@@ -329,13 +312,11 @@ class SyncExecution(BaseModel):
 
 
 class SyncFieldMapping(BaseModel):
-    """
-    Mapping des champs entre plateformes.
+    """    Mapping des champs entre plateformes.
     
     Définit comment mapper les champs de données
     entre notre système et les plateformes externes.
-    """
-    
+    """    
     __tablename__ = "sync_field_mappings"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -370,8 +351,7 @@ class SyncFieldMapping(BaseModel):
         return f"<SyncFieldMapping(platform={self.platform_name}, {self.source_field}->{self.target_field})>"
     
     def apply_transformation(self, value: Any) -> Any:
-        """Applique les règles de transformation à une valeur."""
-        if not self.transformation_rules:
+        """Applique les règles de transformation à une valeur."""        if not self.transformation_rules:
             return value
         
         transformed_value = value
@@ -414,13 +394,11 @@ class SyncFieldMapping(BaseModel):
 
 
 class DataTransformationRule(BaseModel):
-    """
-    Règles de transformation avancées pour les données.
+    """    Règles de transformation avancées pour les données.
     
     Permet de définir des transformations complexes
     appliquées lors de la synchronisation.
-    """
-    
+    """    
     __tablename__ = "data_transformation_rules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -460,13 +438,11 @@ class DataTransformationRule(BaseModel):
 
 
 class SyncBenchmark(BaseModel):
-    """
-    Benchmarks de performance des synchronisations.
+    """    Benchmarks de performance des synchronisations.
     
     Enregistre les métriques de performance pour
     optimiser et surveiller les synchronisations.
-    """
-    
+    """    
     __tablename__ = "sync_benchmarks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -587,8 +563,7 @@ def create_default_sync_configurations(
     platform_connection_id: str,
     platform_name: str
 ) -> List[SyncConfiguration]:
-    """
-    Crée les configurations de synchronisation par défaut pour une plateforme.
+    """    Crée les configurations de synchronisation par défaut pour une plateforme.
     
     Args:
         user_id: ID de l'utilisateur
@@ -597,8 +572,7 @@ def create_default_sync_configurations(
         
     Returns:
         Liste des configurations créées
-    """
-    if platform_name not in DEFAULT_SYNC_CONFIGURATIONS:
+    """    if platform_name not in DEFAULT_SYNC_CONFIGURATIONS:
         raise ValueError(f"No default sync configurations defined for platform: {platform_name}")
     
     platform_configs = DEFAULT_SYNC_CONFIGURATIONS[platform_name]
@@ -638,23 +612,20 @@ logger = logging.getLogger(__name__)
 
 
 class SyncDirection(str, Enum):
-    """Directions de synchronisation."""
-    IMPORT = "import"  # Depuis la plateforme vers notre système
+    """Directions de synchronisation."""    IMPORT = "import"  # Depuis la plateforme vers notre système
     EXPORT = "export"  # Depuis notre système vers la plateforme
     BIDIRECTIONAL = "bidirectional"  # Dans les deux sens
 
 
 class SyncStrategy(str, Enum):
-    """Stratégies de synchronisation."""
-    FULL = "full"  # Synchronisation complète
+    """Stratégies de synchronisation."""    FULL = "full"  # Synchronisation complète
     INCREMENTAL = "incremental"  # Synchronisation incrémentale
     DELTA = "delta"  # Synchronisation des changements uniquement
     REAL_TIME = "real_time"  # Synchronisation en temps réel
 
 
 class SyncStatus(str, Enum):
-    """Statuts de synchronisation."""
-    PENDING = "pending"
+    """Statuts de synchronisation."""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -663,13 +634,11 @@ class SyncStatus(str, Enum):
 
 
 class SyncConfiguration(BaseModel):
-    """
-    Modèle pour les configurations de synchronisation.
+    """    Modèle pour les configurations de synchronisation.
     
     Définit comment et quand synchroniser les données
     entre notre système et les plateformes externes.
-    """
-    
+    """    
     __tablename__ = "sync_configurations"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -736,14 +705,12 @@ class SyncConfiguration(BaseModel):
     
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès des synchronisations."""
-        if self.total_syncs == 0:
+        """Calcule le taux de succès des synchronisations."""        if self.total_syncs == 0:
             return 0.0
         return (self.successful_syncs / self.total_syncs) * 100
     
     def should_run_now(self) -> bool:
-        """Vérifie si la synchronisation doit être exécutée maintenant."""
-        if not self.is_active:
+        """Vérifie si la synchronisation doit être exécutée maintenant."""        if not self.is_active:
             return False
         
         now = datetime.utcnow()
@@ -769,8 +736,7 @@ class SyncConfiguration(BaseModel):
         return False
     
     def calculate_next_sync(self) -> Optional[datetime]:
-        """Calcule la prochaine date de synchronisation."""
-        if not self.is_active or self.schedule_type == "manual":
+        """Calcule la prochaine date de synchronisation."""        if not self.is_active or self.schedule_type == "manual":
             return None
         
         now = datetime.utcnow()
@@ -786,13 +752,11 @@ class SyncConfiguration(BaseModel):
 
 
 class SyncExecution(BaseModel):
-    """
-    Modèle pour les exécutions de synchronisation.
+    """    Modèle pour les exécutions de synchronisation.
     
     Stocke les détails et résultats de chaque exécution
     de synchronisation.
-    """
-    
+    """    
     __tablename__ = "sync_executions"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -838,14 +802,12 @@ class SyncExecution(BaseModel):
     
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès de cette exécution."""
-        if self.records_processed == 0:
+        """Calcule le taux de succès de cette exécution."""        if self.records_processed == 0:
             return 0.0
         return (self.records_successful / self.records_processed) * 100
     
     def add_error(self, error_type: str, error_message: str, record_id: str = None):
-        """Ajoute une erreur à l'exécution."""
-        if not self.error_details:
+        """Ajoute une erreur à l'exécution."""        if not self.error_details:
             self.error_details = []
         
         error_entry = {
@@ -860,21 +822,18 @@ class SyncExecution(BaseModel):
     
     def update_progress(self, processed: int = 0, successful: int = 0, 
                        failed: int = 0, skipped: int = 0):
-        """Met à jour les métriques de progression."""
-        self.records_processed += processed
+        """Met à jour les métriques de progression."""        self.records_processed += processed
         self.records_successful += successful
         self.records_failed += failed
         self.records_skipped += skipped
 
 
 class SyncFieldMapping(BaseModel):
-    """
-    Modèle pour le mapping des champs entre systèmes.
+    """    Modèle pour le mapping des champs entre systèmes.
     
     Définit la correspondance entre les champs de notre système
     et ceux des plateformes externes.
-    """
-    
+    """    
     __tablename__ = "sync_field_mappings"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -911,13 +870,11 @@ class SyncFieldMapping(BaseModel):
 
 
 class DataTransformationRule(BaseModel):
-    """
-    Modèle pour les règles de transformation des données.
+    """    Modèle pour les règles de transformation des données.
     
     Définit comment transformer les données lors de la synchronisation
     entre notre système et les plateformes externes.
-    """
-    
+    """    
     __tablename__ = "data_transformation_rules"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -952,13 +909,11 @@ class DataTransformationRule(BaseModel):
 
 
 class SyncBenchmark(BaseModel):
-    """
-    Modèle pour les benchmarks de synchronisation.
+    """    Modèle pour les benchmarks de synchronisation.
     
     Stocke les métriques de performance pour optimiser
     les configurations de synchronisation.
-    """
-    
+    """    
     __tablename__ = "sync_benchmarks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -993,8 +948,7 @@ class SyncBenchmark(BaseModel):
     
     @property
     def duration_hours(self) -> float:
-        """Calcule la durée de la période de mesure en heures."""
-        if not self.measurement_end or not self.measurement_start:
+        """Calcule la durée de la période de mesure en heures."""        if not self.measurement_end or not self.measurement_start:
             return 0.0
         
         delta = self.measurement_end - self.measurement_start
@@ -1069,8 +1023,7 @@ DEFAULT_SYNC_CONFIGURATIONS = {
 
 
 def create_default_sync_configurations(platform_name: str, user_id: str) -> List[SyncConfiguration]:
-    """
-    Crée les configurations de synchronisation par défaut pour une plateforme.
+    """    Crée les configurations de synchronisation par défaut pour une plateforme.
     
     Args:
         platform_name: Nom de la plateforme
@@ -1078,8 +1031,7 @@ def create_default_sync_configurations(platform_name: str, user_id: str) -> List
     
     Returns:
         List[SyncConfiguration]: Liste des configurations créées
-    """
-    if platform_name not in DEFAULT_SYNC_CONFIGURATIONS:
+    """    if platform_name not in DEFAULT_SYNC_CONFIGURATIONS:
         return []
     
     configurations = []

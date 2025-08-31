@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Simplified Tests for AI Engines Module
+"""Simplified Tests for AI Engines Module
 
 Direct testing without complex import dependencies.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -29,7 +26,6 @@ Unauthorized use, modification, or distribution by any individual or entity
 without explicit written consent from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 Violators will face legal action under international copyright law.
 """
-
 import pytest
 import sys
 import os
@@ -45,10 +41,8 @@ from datetime import datetime, timezone
 
 class TestAIEnginesStructure:
     """Test the AI engines module structure and functionality"""
-
     def test_module_directory_structure(self):
-        """Test that all required module directories exist"""
-        base_path = "/workspaces/Ainflue/backend/ai/engines"
+        """Test that all required module directories exist"""        base_path = "/workspaces/Ainflue/backend/ai/engines"
         
         required_files = [
             "__init__.py",
@@ -75,8 +69,7 @@ class TestAIEnginesStructure:
             assert os.path.exists(file_path), f"Required file missing: {file_name}"
 
     def test_test_directory_structure(self):
-        """Test that all test files exist"""
-        test_base_path = "/workspaces/Ainflue/tests_backend/ai/engines"
+        """Test that all test files exist"""        test_base_path = "/workspaces/Ainflue/tests_backend/ai/engines"
         
         required_test_files = [
             "__init__.py",
@@ -103,8 +96,7 @@ class TestAIEnginesStructure:
             assert os.path.exists(file_path), f"Required test file missing: {file_name}"
 
     def test_readme_files_exist(self):
-        """Test that README files exist in multiple languages"""
-        test_base_path = "/workspaces/Ainflue/tests_backend/ai/engines"
+        """Test that README files exist in multiple languages"""        test_base_path = "/workspaces/Ainflue/tests_backend/ai/engines"
         
         readme_files = [
             "README.md",
@@ -117,8 +109,7 @@ class TestAIEnginesStructure:
             assert os.path.exists(file_path), f"README file missing: {readme_file}"
 
     def test_readme_content_structure(self):
-        """Test README files have proper structure and copyright"""
-        test_base_path = "/workspaces/Ainflue/tests_backend/ai/engines"
+        """Test README files have proper structure and copyright"""        test_base_path = "/workspaces/Ainflue/tests_backend/ai/engines"
         
         for readme_file in ["README.md", "README.de.md", "README.fr.md"]:
             file_path = os.path.join(test_base_path, readme_file)
@@ -133,8 +124,7 @@ class TestAIEnginesStructure:
             assert "Enterprise Team" in content or "Enterprise" in content, f"Team info missing in {readme_file}"
 
     def test_python_file_syntax(self):
-        """Test that all Python files have valid syntax"""
-        import ast
+        """Test that all Python files have valid syntax"""        import ast
         
         # Test main engine files
         engine_files = [
@@ -153,8 +143,7 @@ class TestAIEnginesStructure:
                     pytest.fail(f"Syntax error in {file_path}: {e}")
 
     def test_test_files_syntax(self):
-        """Test that all test files have valid syntax"""
-        import ast
+        """Test that all test files have valid syntax"""        import ast
         
         test_files = [
             "/workspaces/Ainflue/tests_backend/ai/engines/test_collaboration_engine.py",
@@ -172,8 +161,7 @@ class TestAIEnginesStructure:
                     pytest.fail(f"Syntax error in {file_path}: {e}")
 
     def test_copyright_headers_in_test_files(self):
-        """Test that test files have proper copyright headers"""
-        test_files = [
+        """Test that test files have proper copyright headers"""        test_files = [
             "/workspaces/Ainflue/tests_backend/ai/engines/test_collaboration_engine.py",
             "/workspaces/Ainflue/tests_backend/ai/engines/test_seo_engine.py",
             "/workspaces/Ainflue/tests_backend/ai/engines/test_index.py"
@@ -191,8 +179,7 @@ class TestAIEnginesStructure:
 
     @pytest.mark.asyncio
     async def test_basic_engine_patterns(self):
-        """Test basic engine patterns and structures"""
-        
+        """Test basic engine patterns and structures"""        
         # Mock engine class for testing
         class MockEngine:
             def __init__(self, name, config=None):
@@ -233,8 +220,7 @@ class TestAIEnginesStructure:
         assert len(errors) == 0
 
     def test_configuration_validation(self):
-        """Test configuration validation patterns"""
-        
+        """Test configuration validation patterns"""        
         # Test valid configuration
         valid_config = {
             'timeout': 30,
@@ -274,8 +260,7 @@ class TestAIEnginesStructure:
         assert len(errors) > 0
 
     def test_engine_metrics_structure(self):
-        """Test engine metrics structure"""
-        
+        """Test engine metrics structure"""        
         # Mock metrics structure
         metrics = {
             'total_processed': 1000,
@@ -299,8 +284,7 @@ class TestAIEnginesStructure:
             assert isinstance(metrics[field], (int, float)), f"Metric {field} must be numeric"
 
     def test_content_type_enum_pattern(self):
-        """Test content type enumeration patterns"""
-        from enum import Enum
+        """Test content type enumeration patterns"""        from enum import Enum
         
         class ContentType(Enum):
             AUDIO = "audio"
@@ -324,8 +308,7 @@ class TestAIEnginesStructure:
 
     @pytest.mark.asyncio
     async def test_engine_manager_patterns(self):
-        """Test engine manager patterns"""
-        
+        """Test engine manager patterns"""        
         class MockEngineManager:
             def __init__(self):
                 self.engines = {}
@@ -366,8 +349,7 @@ class TestAIEnginesStructure:
         assert 'status' in result
 
     def test_error_handling_patterns(self):
-        """Test error handling patterns"""
-        
+        """Test error handling patterns"""        
         def process_with_error_handling(content):
             try:
                 if not content:
@@ -416,8 +398,7 @@ class TestAIEnginesStructure:
         assert len(result['errors']) > 0
 
     def test_documentation_completeness(self):
-        """Test documentation completeness in test files"""
-        test_files = [
+        """Test documentation completeness in test files"""        test_files = [
             "/workspaces/Ainflue/tests_backend/ai/engines/test_collaboration_engine.py",
             "/workspaces/Ainflue/tests_backend/ai/engines/test_seo_engine.py",
             "/workspaces/Ainflue/tests_backend/ai/engines/test_index.py"
@@ -447,12 +428,10 @@ class TestAIEnginesStructure:
 
     @pytest.mark.asyncio
     async def test_performance_patterns(self):
-        """Test performance measurement patterns"""
-        import time
+        """Test performance measurement patterns"""        import time
         
         async def mock_processing_task(duration=0.1):
-            """Mock processing task for performance testing"""
-            await asyncio.sleep(duration)
+            """Mock processing task for performance testing"""            await asyncio.sleep(duration)
             return {'processed': True, 'data': 'test_result'}
         
         # Measure processing time

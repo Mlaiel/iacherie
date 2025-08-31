@@ -1,5 +1,4 @@
-"""
-AI-Powered Load Balancer Optimization Engine for IA Influencer Agent Platform
+"""AI-Powered Load Balancer Optimization Engine for IA Influencer Agent Platform
 
 Provides intelligent load balancing optimization using machine learning algorithms
 for content protection, fingerprinting, and monetization services with adaptive
@@ -13,7 +12,6 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
-
 import asyncio
 import logging
 import json
@@ -59,8 +57,7 @@ AI_MODEL_TRAINING_TIME = Histogram('ai_model_training_time_seconds', 'Model trai
 
 
 class OptimizationType(Enum):
-    """Types of AI optimizations"""
-    TRAFFIC_DISTRIBUTION = "traffic_distribution"
+    """Types of AI optimizations"""    TRAFFIC_DISTRIBUTION = "traffic_distribution"
     CAPACITY_SCALING = "capacity_scaling"
     ROUTING_OPTIMIZATION = "routing_optimization"
     RESOURCE_ALLOCATION = "resource_allocation"
@@ -69,8 +66,7 @@ class OptimizationType(Enum):
 
 
 class MLModel(Enum):
-    """Machine learning models available"""
-    LINEAR_REGRESSION = "linear_regression"
+    """Machine learning models available"""    LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     ENSEMBLE = "ensemble"
@@ -78,16 +74,14 @@ class MLModel(Enum):
 
 @dataclass
 class TrainingData:
-    """Training data for ML models"""
-    timestamp: datetime
+    """Training data for ML models"""    timestamp: datetime
     service_name: str
     features: Dict[str, float]  # Input features
     targets: Dict[str, float]   # Target values to predict
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'timestamp': self.timestamp.isoformat(),
             'service_name': self.service_name,
             'features': self.features,
@@ -98,8 +92,7 @@ class TrainingData:
 
 @dataclass
 class OptimizationRecommendation:
-    """AI optimization recommendation"""
-    optimization_type: OptimizationType
+    """AI optimization recommendation"""    optimization_type: OptimizationType
     service_name: str
     confidence: float  # 0.0 to 1.0
     expected_improvement: float  # Expected percentage improvement
@@ -111,8 +104,7 @@ class OptimizationRecommendation:
     results: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'optimization_type': self.optimization_type.value,
             'service_name': self.service_name,
             'confidence': self.confidence,
@@ -127,15 +119,13 @@ class OptimizationRecommendation:
 
 
 class FeatureExtractor:
-    """Extract features for ML models"""
-    
+    """Extract features for ML models"""    
     def __init__(self):
         self.feature_history: Dict[str, deque] = defaultdict(lambda: deque(maxlen=1000))
     
     def extract_features(self, service_metrics: List[Dict[str, Any]], 
                         timestamp: datetime) -> Dict[str, float]:
-        """Extract features from service metrics"""
-        features = {}
+        """Extract features from service metrics"""        features = {}
         
         if not service_metrics:
             return features
@@ -183,8 +173,7 @@ class FeatureExtractor:
 
 
 class PredictiveModel:
-    """ML model for performance prediction"""
-    
+    """ML model for performance prediction"""    
     def __init__(self, model_type: MLModel = MLModel.RANDOM_FOREST):
         self.model_type = model_type
         self.model = None
@@ -196,8 +185,7 @@ class PredictiveModel:
         self.last_training_time = None
         
     def _create_model(self) -> Any:
-        """Create ML model based on type"""
-        if not ML_AVAILABLE:
+        """Create ML model based on type"""        if not ML_AVAILABLE:
             return None
         
         if self.model_type == MLModel.LINEAR_REGRESSION:
@@ -217,8 +205,7 @@ class PredictiveModel:
         return None
     
     def train(self, training_data: List[TrainingData], target_metric: str) -> bool:
-        """Train the model with provided data"""
-        if not ML_AVAILABLE or not training_data:
+        """Train the model with provided data"""        if not ML_AVAILABLE or not training_data:
             return False
         
         try:
@@ -294,8 +281,7 @@ class PredictiveModel:
             return False
     
     def _predict_ensemble(self, X: np.ndarray) -> np.ndarray:
-        """Make predictions using ensemble model"""
-        if not isinstance(self.model, dict):
+        """Make predictions using ensemble model"""        if not isinstance(self.model, dict):
             return np.array([])
         
         predictions = []
@@ -307,8 +293,7 @@ class PredictiveModel:
         return np.mean(predictions, axis=0)
     
     def predict(self, features: Dict[str, float]) -> Optional[float]:
-        """Make prediction for given features"""
-        if not self.is_trained or not ML_AVAILABLE:
+        """Make prediction for given features"""        if not self.is_trained or not ML_AVAILABLE:
             return None
         
         try:
@@ -332,8 +317,7 @@ class PredictiveModel:
             return None
     
     def get_feature_importance(self) -> Dict[str, float]:
-        """Get feature importance for tree-based models"""
-        if not self.is_trained or not ML_AVAILABLE:
+        """Get feature importance for tree-based models"""        if not self.is_trained or not ML_AVAILABLE:
             return {}
         
         try:
@@ -361,8 +345,7 @@ class PredictiveModel:
         return {}
     
     def save_model(self, filepath: str) -> bool:
-        """Save trained model to file"""
-        if not self.is_trained or not ML_AVAILABLE:
+        """Save trained model to file"""        if not self.is_trained or not ML_AVAILABLE:
             return False
         
         try:
@@ -385,8 +368,7 @@ class PredictiveModel:
             return False
     
     def load_model(self, filepath: str) -> bool:
-        """Load trained model from file"""
-        if not ML_AVAILABLE:
+        """Load trained model from file"""        if not ML_AVAILABLE:
             return False
         
         try:
@@ -413,8 +395,7 @@ class PredictiveModel:
 
 
 class AILoadBalancerOptimizer:
-    """
-    AI-Powered Load Balancer Optimization Engine
+    """    AI-Powered Load Balancer Optimization Engine
     
     Provides intelligent optimization using machine learning:
     - Predictive traffic analysis
@@ -422,8 +403,7 @@ class AILoadBalancerOptimizer:
     - Intelligent routing optimization
     - Performance anomaly detection
     - Cost optimization recommendations
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "/etc/ia-influencer/ai-optimizer.yaml"
         self.config = {}
@@ -452,8 +432,7 @@ class AILoadBalancerOptimizer:
         logger.info("AI Load Balancer Optimizer initialized")
     
     async def initialize(self) -> bool:
-        """Initialize AI optimization system"""
-        try:
+        """Initialize AI optimization system"""        try:
             # Load configuration
             await self._load_configuration()
             
@@ -474,8 +453,7 @@ class AILoadBalancerOptimizer:
             return False
     
     async def _load_configuration(self) -> None:
-        """Load AI optimizer configuration"""
-        try:
+        """Load AI optimizer configuration"""        try:
             config_file = Path(self.config_path)
             if config_file.exists():
                 async with aiofiles.open(config_file, 'r') as f:
@@ -491,8 +469,7 @@ class AILoadBalancerOptimizer:
             self.config = self._get_default_configuration()
     
     def _get_default_configuration(self) -> Dict[str, Any]:
-        """Get default AI optimizer configuration"""
-        return {
+        """Get default AI optimizer configuration"""        return {
             'optimization': {
                 'interval_seconds': 300,  # 5 minutes
                 'min_confidence_threshold': 0.7,
@@ -536,8 +513,7 @@ class AILoadBalancerOptimizer:
         }
     
     async def _initialize_redis(self) -> None:
-        """Initialize Redis connection for distributed optimization"""
-        try:
+        """Initialize Redis connection for distributed optimization"""        try:
             self.redis_client = redis.Redis(
                 host='localhost',
                 port=6379,
@@ -553,8 +529,7 @@ class AILoadBalancerOptimizer:
             self.redis_client = None
     
     def _initialize_models(self) -> None:
-        """Initialize ML models"""
-        models_config = self.config.get('models', {})
+        """Initialize ML models"""        models_config = self.config.get('models', {})
         
         for model_name, model_config in models_config.items():
             if not model_config.get('enabled', True):
@@ -569,8 +544,7 @@ class AILoadBalancerOptimizer:
                 logger.error(f"Invalid model type: {model_type_str}")
     
     async def _load_pretrained_models(self) -> None:
-        """Load pre-trained models if available"""
-        models_dir = Path("/var/lib/ia-influencer/ai-models")
+        """Load pre-trained models if available"""        models_dir = Path("/var/lib/ia-influencer/ai-models")
         models_dir.mkdir(parents=True, exist_ok=True)
         
         for model_name, model in self.models.items():
@@ -581,8 +555,7 @@ class AILoadBalancerOptimizer:
                     logger.info(f"Loaded pre-trained model: {model_name}")
     
     async def start_optimization(self) -> None:
-        """Start AI optimization engine"""
-        if self.is_optimizing:
+        """Start AI optimization engine"""        if self.is_optimizing:
             logger.warning("AI optimization already started")
             return
         
@@ -595,8 +568,7 @@ class AILoadBalancerOptimizer:
         logger.info("AI optimization engine started")
     
     def _optimization_loop(self) -> None:
-        """Main AI optimization loop"""
-        interval = self.config.get('optimization', {}).get('interval_seconds', 300)
+        """Main AI optimization loop"""        interval = self.config.get('optimization', {}).get('interval_seconds', 300)
         
         while self.is_optimizing:
             try:
@@ -616,8 +588,7 @@ class AILoadBalancerOptimizer:
                 time.sleep(interval * 2)  # Wait longer on error
     
     async def _run_optimization_cycle(self) -> None:
-        """Run one optimization cycle"""
-        try:
+        """Run one optimization cycle"""        try:
             start_time = time.time()
             
             # Analyze current performance
@@ -642,8 +613,7 @@ class AILoadBalancerOptimizer:
             logger.error(f"Failed to run optimization cycle: {e}")
     
     async def _analyze_current_performance(self) -> Dict[str, Any]:
-        """Analyze current system performance"""
-        analysis = {
+        """Analyze current system performance"""        analysis = {
             'services': {},
             'overall_performance': 0.0,
             'bottlenecks': [],
@@ -679,8 +649,7 @@ class AILoadBalancerOptimizer:
         return analysis
     
     async def _analyze_service_performance(self, service_name: str) -> Dict[str, Any]:
-        """Analyze performance of specific service"""
-        analysis = {
+        """Analyze performance of specific service"""        analysis = {
             'performance_score': 0.0,
             'response_time': 0.0,
             'throughput': 0.0,
@@ -742,8 +711,7 @@ class AILoadBalancerOptimizer:
         return analysis
     
     def _simulate_service_metrics(self, service_name: str) -> Dict[str, Any]:
-        """Simulate service metrics for demo purposes"""
-        # In real implementation, this would fetch from monitoring system
+        """Simulate service metrics for demo purposes"""        # In real implementation, this would fetch from monitoring system
         base_metrics = {
             'fingerprinting': {'response_time': 1.5, 'throughput': 50, 'error_rate': 0.02},
             'protection': {'response_time': 0.8, 'throughput': 100, 'error_rate': 0.01},
@@ -770,8 +738,7 @@ class AILoadBalancerOptimizer:
         return metrics
     
     def _calculate_service_performance_score(self, analysis: Dict[str, Any]) -> float:
-        """Calculate performance score for service"""
-        try:
+        """Calculate performance score for service"""        try:
             # Response time score (inverse)
             response_score = max(0, 100 - (analysis['response_time'] * 50))
             
@@ -801,8 +768,7 @@ class AILoadBalancerOptimizer:
             return 0.0
     
     async def _generate_recommendations(self, performance_analysis: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Generate AI optimization recommendations"""
-        recommendations = []
+        """Generate AI optimization recommendations"""        recommendations = []
         
         try:
             for service_name, service_analysis in performance_analysis['services'].items():
@@ -819,8 +785,7 @@ class AILoadBalancerOptimizer:
     
     async def _generate_service_recommendations(self, service_name: str, 
                                               analysis: Dict[str, Any]) -> List[OptimizationRecommendation]:
-        """Generate recommendations for specific service"""
-        recommendations = []
+        """Generate recommendations for specific service"""        recommendations = []
         
         try:
             performance_score = analysis.get('performance_score', 0.0)
@@ -905,8 +870,7 @@ class AILoadBalancerOptimizer:
         return recommendations
     
     async def _apply_optimizations(self) -> None:
-        """Apply high-confidence optimizations automatically"""
-        auto_apply_threshold = self.config.get('optimization', {}).get('auto_apply_threshold', 0.9)
+        """Apply high-confidence optimizations automatically"""        auto_apply_threshold = self.config.get('optimization', {}).get('auto_apply_threshold', 0.9)
         
         for service_name, recommendation in list(self.active_optimizations.items()):
             if recommendation.applied or recommendation.confidence < auto_apply_threshold:
@@ -927,8 +891,7 @@ class AILoadBalancerOptimizer:
                 logger.error(f"Failed to apply optimization for {service_name}: {e}")
     
     async def _apply_optimization(self, recommendation: OptimizationRecommendation) -> bool:
-        """Apply specific optimization recommendation"""
-        try:
+        """Apply specific optimization recommendation"""        try:
             # This would implement actual optimization logic
             # For demo purposes, we'll simulate the application
             
@@ -975,8 +938,7 @@ class AILoadBalancerOptimizer:
             return False
     
     async def _retrain_models_if_needed(self) -> None:
-        """Retrain ML models if needed"""
-        retrain_interval = self.config.get('optimization', {}).get('retraining_interval_hours', 24)
+        """Retrain ML models if needed"""        retrain_interval = self.config.get('optimization', {}).get('retraining_interval_hours', 24)
         
         for model_name, model in self.models.items():
             try:
@@ -1017,8 +979,7 @@ class AILoadBalancerOptimizer:
     
     def add_training_data(self, service_name: str, features: Dict[str, float], 
                          targets: Dict[str, float]) -> None:
-        """Add training data for ML models"""
-        training_data = TrainingData(
+        """Add training data for ML models"""        training_data = TrainingData(
             timestamp=datetime.now(),
             service_name=service_name,
             features=features,
@@ -1038,20 +999,17 @@ class AILoadBalancerOptimizer:
                 logger.error(f"Failed to store training data in Redis: {e}")
     
     def get_recommendations(self, service_name: Optional[str] = None) -> List[OptimizationRecommendation]:
-        """Get current optimization recommendations"""
-        if service_name:
+        """Get current optimization recommendations"""        if service_name:
             recommendation = self.active_optimizations.get(service_name)
             return [recommendation] if recommendation else []
         else:
             return list(self.active_optimizations.values())
     
     def get_optimization_history(self) -> List[Dict[str, Any]]:
-        """Get optimization history"""
-        return [opt.to_dict() for opt in self.optimization_history]
+        """Get optimization history"""        return [opt.to_dict() for opt in self.optimization_history]
     
     def get_model_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all ML models"""
-        status = {}
+        """Get status of all ML models"""        status = {}
         
         for model_name, model in self.models.items():
             status[model_name] = {
@@ -1067,8 +1025,7 @@ class AILoadBalancerOptimizer:
         return status
     
     async def stop_optimization(self) -> None:
-        """Stop AI optimization engine"""
-        self.is_optimizing = False
+        """Stop AI optimization engine"""        self.is_optimizing = False
         
         if self.optimizer_thread and self.optimizer_thread.is_alive():
             self.optimizer_thread.join(timeout=10)
@@ -1076,8 +1033,7 @@ class AILoadBalancerOptimizer:
         logger.info("AI optimization engine stopped")
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of AI optimizer"""
-        return {
+        """Get comprehensive status of AI optimizer"""        return {
             'is_optimizing': self.is_optimizing,
             'ml_available': ML_AVAILABLE,
             'models_trained': sum(1 for model in self.models.values() if model.is_trained),
@@ -1093,8 +1049,7 @@ class AILoadBalancerOptimizer:
 
 
 async def main():
-    """Demo function for AI optimization"""
-    optimizer = AILoadBalancerOptimizer()
+    """Demo function for AI optimization"""    optimizer = AILoadBalancerOptimizer()
     
     try:
         # Initialize optimizer

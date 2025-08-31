@@ -1,5 +1,4 @@
-"""
-Comprehensive Integration Tests for Ainflue Platform
+"""Comprehensive Integration Tests for Ainflue Platform
 
 Tests the complete system integration including:
 - API endpoints functionality
@@ -12,7 +11,6 @@ Tests the complete system integration including:
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import asyncio
 import json
@@ -32,16 +30,14 @@ TEST_CONFIG = {
 
 
 class AinfluePlatformTests:
-    """Comprehensive platform tests"""
-    
+    """Comprehensive platform tests"""    
     def __init__(self):
         self.client = None
         self.test_data = {}
         self.setup_complete = False
     
     async def setup_test_environment(self):
-        """Setup test environment"""
-        try:
+        """Setup test environment"""        try:
             # Initialize test client
             from api.main import app
             self.client = TestClient(app)
@@ -57,8 +53,7 @@ class AinfluePlatformTests:
             raise
     
     async def _create_test_data(self):
-        """Create test data for various scenarios"""
-        self.test_data = {
+        """Create test data for various scenarios"""        self.test_data = {
             "users": [
                 {
                     "user_id": "user_001",
@@ -89,8 +84,7 @@ class AinfluePlatformTests:
     
     # API Tests
     async def test_authentication_api(self) -> Dict[str, Any]:
-        """Test authentication API endpoints"""
-        results = {
+        """Test authentication API endpoints"""        results = {
             "test_name": "Authentication API",
             "status": "passed",
             "details": [],
@@ -138,8 +132,7 @@ class AinfluePlatformTests:
         return results
     
     async def test_fingerprinting_api(self) -> Dict[str, Any]:
-        """Test fingerprinting API endpoints"""
-        results = {
+        """Test fingerprinting API endpoints"""        results = {
             "test_name": "Fingerprinting API",
             "status": "passed",
             "details": [],
@@ -184,8 +177,7 @@ class AinfluePlatformTests:
         return results
     
     async def test_monitoring_api(self) -> Dict[str, Any]:
-        """Test monitoring API endpoints"""
-        results = {
+        """Test monitoring API endpoints"""        results = {
             "test_name": "Monitoring API",
             "status": "passed",
             "details": [],
@@ -224,8 +216,7 @@ class AinfluePlatformTests:
         return results
     
     async def test_internationalization(self) -> Dict[str, Any]:
-        """Test internationalization support"""
-        results = {
+        """Test internationalization support"""        results = {
             "test_name": "Internationalization",
             "status": "passed", 
             "details": [],
@@ -277,8 +268,7 @@ class AinfluePlatformTests:
         return results
     
     async def test_frontend_components(self) -> Dict[str, Any]:
-        """Test frontend components"""
-        results = {
+        """Test frontend components"""        results = {
             "test_name": "Frontend Components",
             "status": "passed",
             "details": [],
@@ -325,8 +315,7 @@ class AinfluePlatformTests:
         return results
     
     async def test_backend_modules(self) -> Dict[str, Any]:
-        """Test backend module structure"""
-        results = {
+        """Test backend module structure"""        results = {
             "test_name": "Backend Modules",
             "status": "passed",
             "details": [],
@@ -366,8 +355,7 @@ class AinfluePlatformTests:
         return results
     
     async def run_comprehensive_tests(self) -> Dict[str, Any]:
-        """Run all comprehensive tests"""
-        print("🚀 Starting Ainflue Comprehensive Platform Tests...")
+        """Run all comprehensive tests"""        print("🚀 Starting Ainflue Comprehensive Platform Tests...")
         print("=" * 60)
         
         if not self.setup_complete:
@@ -455,8 +443,7 @@ class AinfluePlatformTests:
 
 # Test execution
 async def main():
-    """Main test execution function"""
-    tester = AinfluePlatformTests()
+    """Main test execution function"""    tester = AinfluePlatformTests()
     results = await tester.run_comprehensive_tests()
     
     # Save results to file

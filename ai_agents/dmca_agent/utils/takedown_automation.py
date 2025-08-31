@@ -1,5 +1,4 @@
-"""
-Takedown Automation - Enterprise DMCA Takedown Processing System
+"""Takedown Automation - Enterprise DMCA Takedown Processing System
 ===============================================================
 
 Advanced automated takedown system for multi-platform copyright enforcement
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Tuple, Set, Callable
@@ -47,16 +45,14 @@ from ...models.dmca import DMCACase, TakedownStatus, PlatformResponse
 logger = logging.getLogger(__name__)
 
 class TakedownMethod(Enum):
-    """Takedown delivery methods"""
-    API_CALL = "api_call"
+    """Takedown delivery methods"""    API_CALL = "api_call"
     EMAIL_FORM = "email_form"
     WEB_FORM = "web_form"
     MANUAL_REVIEW = "manual_review"
     LEGAL_NOTICE = "legal_notice"
 
 class ResponseType(Enum):
-    """Platform response types"""
-    AUTOMATED_ACK = "automated_acknowledgment"
+    """Platform response types"""    AUTOMATED_ACK = "automated_acknowledgment"
     HUMAN_REVIEW = "human_review"
     CONTENT_REMOVED = "content_removed"
     COUNTER_NOTICE = "counter_notice"
@@ -65,16 +61,14 @@ class ResponseType(Enum):
     NO_RESPONSE = "no_response"
 
 class EscalationLevel(Enum):
-    """Escalation levels for takedown processing"""
-    STANDARD = "standard"
+    """Escalation levels for takedown processing"""    STANDARD = "standard"
     PRIORITY = "priority"
     URGENT = "urgent"
     LEGAL_ACTION = "legal_action"
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific takedown configuration"""
-    platform_name: str
+    """Platform-specific takedown configuration"""    platform_name: str
     takedown_methods: List[TakedownMethod]
     api_endpoint: Optional[str]
     email_address: Optional[str]
@@ -87,8 +81,7 @@ class PlatformConfig:
     
 @dataclass 
 class TakedownAttempt:
-    """Individual takedown attempt record"""
-    attempt_id: str
+    """Individual takedown attempt record"""    attempt_id: str
     case_id: str
     platform: str
     method: TakedownMethod
@@ -101,8 +94,7 @@ class TakedownAttempt:
 
 @dataclass
 class TakedownResult:
-    """Complete takedown operation result"""
-    case_id: str
+    """Complete takedown operation result"""    case_id: str
     platform: str
     success: bool
     attempts: List[TakedownAttempt]
@@ -115,13 +107,11 @@ class TakedownResult:
     cost_estimate: float
 
 class TakedownAutomation:
-    """
-    Enterprise Takedown Automation System
+    """    Enterprise Takedown Automation System
     
     Handles automated DMCA takedown processing across multiple platforms
     with intelligent retry logic, escalation management, and compliance tracking.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.email_sender = EmailSender()
@@ -146,8 +136,7 @@ class TakedownAutomation:
         self.logger.info("Takedown Automation initialized successfully")
     
     def _initialize_platform_configs(self) -> Dict[str, PlatformConfig]:
-        """Initialize platform-specific configurations"""
-        configs = {
+        """Initialize platform-specific configurations"""        configs = {
             "youtube": PlatformConfig(
                 platform_name="YouTube",
                 takedown_methods=[TakedownMethod.API_CALL, TakedownMethod.WEB_FORM],
@@ -235,8 +224,7 @@ class TakedownAutomation:
         legal_notice: str,
         priority: EscalationLevel = EscalationLevel.STANDARD
     ) -> TakedownResult:
-        """
-        Execute automated takedown process
+        """        Execute automated takedown process
         
         Args:
             case_data: DMCA case information
@@ -245,8 +233,7 @@ class TakedownAutomation:
             
         Returns:
             TakedownResult with complete processing information
-        """
-        try:
+        """        try:
             case_id = case_data.get('case_id', '')
             platform = case_data.get('platform', '').lower()
             
@@ -311,8 +298,7 @@ class TakedownAutomation:
         priority: EscalationLevel,
         result: TakedownResult
     ) -> bool:
-        """Execute takedown attempts with intelligent retry logic"""
-        methods_to_try = self._prioritize_takedown_methods(platform_config, priority)
+        """Execute takedown attempts with intelligent retry logic"""        methods_to_try = self._prioritize_takedown_methods(platform_config, priority)
         
         for method in methods_to_try:
             attempt_success = await self._attempt_takedown_method(
@@ -333,8 +319,7 @@ class TakedownAutomation:
         platform_config: PlatformConfig,
         priority: EscalationLevel
     ) -> List[TakedownMethod]:
-        """Prioritize takedown methods based on success rates and priority"""
-        methods = platform_config.takedown_methods.copy()
+        """Prioritize takedown methods based on success rates and priority"""        methods = platform_config.takedown_methods.copy()
         
         # Sort by historical success rate
         platform_name = platform_config.platform_name.lower()
@@ -368,8 +353,7 @@ class TakedownAutomation:
         method: TakedownMethod,
         result: TakedownResult
     ) -> bool:
-        """Attempt takedown using specific method"""
-        attempt = TakedownAttempt(
+        """Attempt takedown using specific method"""        attempt = TakedownAttempt(
             attempt_id=f"{case_data.get('case_id', '')}_{method.value}_{int(time.time())}",
             case_id=case_data.get('case_id', ''),
             platform=platform_config.platform_name,
@@ -421,8 +405,7 @@ class TakedownAutomation:
         platform_config: PlatformConfig,
         attempt: TakedownAttempt
     ) -> bool:
-        """Send takedown via platform API"""
-        try:
+        """Send takedown via platform API"""        try:
             if not platform_config.api_endpoint:
                 return False
             
@@ -464,8 +447,7 @@ class TakedownAutomation:
         platform_config: PlatformConfig,
         attempt: TakedownAttempt
     ) -> bool:
-        """Send takedown via email"""
-        try:
+        """Send takedown via email"""        try:
             if not platform_config.email_address:
                 return False
             
@@ -497,8 +479,7 @@ class TakedownAutomation:
         platform_config: PlatformConfig,
         attempt: TakedownAttempt
     ) -> bool:
-        """Send takedown via web form"""
-        try:
+        """Send takedown via web form"""        try:
             if not platform_config.web_form_url:
                 return False
             
@@ -529,8 +510,7 @@ class TakedownAutomation:
         legal_notice: str,
         platform_config: PlatformConfig
     ) -> Dict[str, Any]:
-        """Prepare API payload for specific platform"""
-        platform_name = platform_config.platform_name.lower()
+        """Prepare API payload for specific platform"""        platform_name = platform_config.platform_name.lower()
         
         if platform_name == "youtube":
             return {
@@ -563,8 +543,7 @@ class TakedownAutomation:
             }
     
     async def _get_auth_headers(self, platform_config: PlatformConfig) -> Dict[str, str]:
-        """Get authentication headers for platform API"""
-        headers = {}
+        """Get authentication headers for platform API"""        headers = {}
         auth = platform_config.authentication
         
         if "api_key" in auth:
@@ -586,8 +565,7 @@ class TakedownAutomation:
         response_data: Dict[str, Any],
         success_indicators: List[str]
     ) -> bool:
-        """Check if API response indicates success"""
-        response_str = json.dumps(response_data).lower()
+        """Check if API response indicates success"""        response_str = json.dumps(response_data).lower()
         
         for indicator in success_indicators:
             if indicator.lower() in response_str:
@@ -606,8 +584,7 @@ class TakedownAutomation:
         self,
         case_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Prepare email attachments for DMCA notice"""
-        attachments = []
+        """Prepare email attachments for DMCA notice"""        attachments = []
         
         # Add evidence files if available
         evidence_files = case_data.get("evidence_files", [])
@@ -627,8 +604,7 @@ class TakedownAutomation:
         legal_notice: str,
         platform_config: PlatformConfig
     ) -> Dict[str, str]:
-        """Prepare form data for web form submission"""
-        form_data = {
+        """Prepare form data for web form submission"""        form_data = {
             "copyright_owner": case_data.get("copyright_owner_name", ""),
             "email": case_data.get("contact_email", ""),
             "description": case_data.get("copyrighted_work_identification", ""),
@@ -657,8 +633,7 @@ class TakedownAutomation:
         platform_config: PlatformConfig,
         method: TakedownMethod
     ) -> None:
-        """Wait for rate limit compliance"""
-        platform_name = platform_config.platform_name.lower()
+        """Wait for rate limit compliance"""        platform_name = platform_config.platform_name.lower()
         rate_limits = platform_config.rate_limits
         
         # Calculate wait time based on rate limits
@@ -672,8 +647,7 @@ class TakedownAutomation:
         platform_config: PlatformConfig,
         result: TakedownResult
     ) -> bool:
-        """Check for platform response to takedown notice"""
-        try:
+        """Check for platform response to takedown notice"""        try:
             # Wait for expected response time
             await asyncio.sleep(min(300, platform_config.response_time_sla * 60))  # Max 5 min for test
             
@@ -712,8 +686,7 @@ class TakedownAutomation:
         platform_config: PlatformConfig,
         result: TakedownResult
     ) -> bool:
-        """Verify if platform complied with takedown notice"""
-        try:
+        """Verify if platform complied with takedown notice"""        try:
             # Check if infringing content is still accessible
             infringing_urls = case_data.get("infringing_urls", [])
             if isinstance(infringing_urls, str):
@@ -742,8 +715,7 @@ class TakedownAutomation:
         platform_config: PlatformConfig,
         priority: EscalationLevel
     ) -> None:
-        """Finalize takedown result and determine next actions"""
-        if result.success and result.compliance_achieved:
+        """Finalize takedown result and determine next actions"""        if result.success and result.compliance_achieved:
             result.final_status = TakedownStatus.COMPLIED
             result.next_actions = ["Monitor for re-uploads", "Update success metrics"]
         
@@ -770,8 +742,7 @@ class TakedownAutomation:
         method: TakedownMethod,
         success: bool
     ) -> None:
-        """Update success rate statistics for platform/method combination"""
-        platform_key = platform.lower()
+        """Update success rate statistics for platform/method combination"""        platform_key = platform.lower()
         method_key = method.value
         
         if platform_key not in self.success_rates:
@@ -787,8 +758,7 @@ class TakedownAutomation:
             stats["successes"] += 1
     
     async def _calculate_cost_estimate(self, result: TakedownResult) -> float:
-        """Calculate cost estimate for takedown process"""
-        base_cost = 10.0  # Base processing cost
+        """Calculate cost estimate for takedown process"""        base_cost = 10.0  # Base processing cost
         
         # Add costs per attempt
         attempt_cost = len(result.attempts) * 5.0
@@ -803,8 +773,7 @@ class TakedownAutomation:
         return base_cost + attempt_cost + time_cost
     
     async def _check_email_responses(self, case_id: str) -> bool:
-        """Check for email responses from platforms"""
-        # Implement email checking logic
+        """Check for email responses from platforms"""        # Implement email checking logic
         return False  # Placeholder
     
     async def _check_api_status(
@@ -812,18 +781,15 @@ class TakedownAutomation:
         case_data: Dict[str, Any],
         platform_config: PlatformConfig
     ) -> bool:
-        """Check API status for takedown progress"""
-        # Implement API status checking logic
+        """Check API status for takedown progress"""        # Implement API status checking logic
         return False  # Placeholder
     
     async def _check_content_status(self, case_data: Dict[str, Any]) -> Dict[str, bool]:
-        """Check if infringing content is still accessible"""
-        # Implement content status checking logic
+        """Check if infringing content is still accessible"""        # Implement content status checking logic
         return {"removed": False, "restricted": False}  # Placeholder
     
     async def _check_url_accessibility(self, url: str) -> bool:
-        """Check if URL is still accessible"""
-        try:
+        """Check if URL is still accessible"""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.head(url, timeout=aiohttp.ClientTimeout(total=10)) as response:
                     return response.status == 200
@@ -831,8 +797,7 @@ class TakedownAutomation:
             return False  # Assume removed if not accessible
     
     async def get_platform_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive platform statistics"""
-        stats = {}
+        """Get comprehensive platform statistics"""        stats = {}
         
         for platform, methods in self.success_rates.items():
             platform_stats = {
@@ -874,8 +839,7 @@ class TakedownAutomation:
         legal_notices: List[str],
         priority: EscalationLevel = EscalationLevel.STANDARD
     ) -> List[TakedownResult]:
-        """Execute multiple takedowns in batch with concurrency control"""
-        max_concurrent = 5  # Limit concurrent executions
+        """Execute multiple takedowns in batch with concurrency control"""        max_concurrent = 5  # Limit concurrent executions
         semaphore = asyncio.Semaphore(max_concurrent)
         
         async def execute_single(case_data, legal_notice):

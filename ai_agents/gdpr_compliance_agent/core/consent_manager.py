@@ -1,5 +1,4 @@
-"""
-Consent Manager - Advanced GDPR Consent Management
+"""Consent Manager - Advanced GDPR Consent Management
 Sophisticated consent collection, validation, and lifecycle management system
 
 Project: IA-Influencer Agent
@@ -9,7 +8,6 @@ Company: Ultra-Industrial AI Solutions
 
 ⚠️ COPYRIGHT PROTECTION - FAHED MLAIEL ⚠️
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,23 +34,20 @@ from ...schemas.gdpr_schemas import ConsentRequest, ConsentUpdateRequest
 logger = get_logger(__name__)
 
 class ConsentStatus(Enum):
-    """Consent status types"""
-    GRANTED = "granted"
+    """Consent status types"""    GRANTED = "granted"
     DENIED = "denied"
     WITHDRAWN = "withdrawn"
     EXPIRED = "expired"
     PENDING = "pending"
 
 class ConsentType(Enum):
-    """Types of consent according to GDPR"""
-    EXPLICIT = "explicit"
+    """Types of consent according to GDPR"""    EXPLICIT = "explicit"
     IMPLIED = "implied"
     OPT_IN = "opt_in"
     OPT_OUT = "opt_out"
 
 class ProcessingPurpose(Enum):
-    """Data processing purposes requiring consent"""
-    CONTENT_PROTECTION = "content_protection"
+    """Data processing purposes requiring consent"""    CONTENT_PROTECTION = "content_protection"
     ANALYTICS = "analytics"
     MARKETING = "marketing"
     PERSONALIZATION = "personalization"
@@ -63,8 +58,7 @@ class ProcessingPurpose(Enum):
 
 @dataclass
 class ConsentDetails:
-    """Detailed consent information"""
-    purpose: ProcessingPurpose
+    """Detailed consent information"""    purpose: ProcessingPurpose
     status: ConsentStatus
     consent_type: ConsentType
     granted_at: Optional[datetime]
@@ -77,8 +71,7 @@ class ConsentDetails:
 
 @dataclass
 class ConsentMetrics:
-    """Consent collection and management metrics"""
-    total_consents: int
+    """Consent collection and management metrics"""    total_consents: int
     granted_consents: int
     denied_consents: int
     withdrawn_consents: int
@@ -88,11 +81,9 @@ class ConsentMetrics:
     average_consent_duration: float
 
 class ConsentManager:
-    """
-    Advanced GDPR Consent Manager
+    """    Advanced GDPR Consent Manager
     Manages consent collection, validation, withdrawal, and compliance tracking
-    """
-    
+    """    
     def __init__(self):
         self._consent_cache: Dict[str, Dict[str, ConsentDetails]] = {}
         self._consent_templates: Dict[ProcessingPurpose, Dict[str, str]] = {}
@@ -122,8 +113,7 @@ class ConsentManager:
         logger.info("Consent Manager initialized successfully")
     
     def _initialize_consent_templates(self):
-        """Initialize consent text templates for different purposes"""
-        self._consent_templates = {
+        """Initialize consent text templates for different purposes"""        self._consent_templates = {
             ProcessingPurpose.CONTENT_PROTECTION: {
                 "title": "Content Protection Consent",
                 "description": "We would like to process your content data to protect your intellectual property rights and detect unauthorized use.",
@@ -175,8 +165,7 @@ class ConsentManager:
         }
     
     async def initialize_consent_framework(self, user_id: str) -> Dict[str, Any]:
-        """Initialize consent framework for a new user"""
-        try:
+        """Initialize consent framework for a new user"""        try:
             consent_records = {}
             
             # Create default consent records for all purposes
@@ -233,8 +222,7 @@ class ConsentManager:
         consent_granted: bool,
         consent_details: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Collect and record user consent for specific processing purpose"""
-        try:
+        """Collect and record user consent for specific processing purpose"""        try:
             consent_id = str(uuid.uuid4())
             
             # Validate consent collection
@@ -313,8 +301,7 @@ class ConsentManager:
             raise HTTPException(status_code=500, detail=f"Consent collection failed: {str(e)}")
     
     async def verify_consent(self, user_id: str, purpose: str) -> bool:
-        """Verify if user has valid consent for processing purpose"""
-        try:
+        """Verify if user has valid consent for processing purpose"""        try:
             # Check cache first
             if user_id in self._consent_cache:
                 cached_consent = self._consent_cache[user_id].get(purpose)
@@ -361,8 +348,7 @@ class ConsentManager:
         purpose: ProcessingPurpose,
         withdrawal_reason: str = None
     ) -> Dict[str, Any]:
-        """Withdraw user consent for specific processing purpose"""
-        try:
+        """Withdraw user consent for specific processing purpose"""        try:
             async with get_db() as db:
                 # Find active consent record
                 consent_query = await db.execute(
@@ -432,8 +418,7 @@ class ConsentManager:
         user_id: str,
         preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Update user's granular consent preferences"""
-        try:
+        """Update user's granular consent preferences"""        try:
             updated_consents = {}
             
             for purpose_str, preference_data in preferences.items():
@@ -509,8 +494,7 @@ class ConsentManager:
             raise HTTPException(status_code=500, detail=f"Preference update failed: {str(e)}")
     
     async def get_consent_status(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive consent status for user"""
-        try:
+        """Get comprehensive consent status for user"""        try:
             async with get_db() as db:
                 # Get all consent records for user
                 consent_query = await db.execute(
@@ -563,8 +547,7 @@ class ConsentManager:
             raise HTTPException(status_code=500, detail=f"Status retrieval failed: {str(e)}")
     
     async def get_consent_metrics(self, user_id: str) -> ConsentMetrics:
-        """Get detailed consent metrics for user"""
-        try:
+        """Get detailed consent metrics for user"""        try:
             async with get_db() as db:
                 consent_query = await db.execute(
                     select(ConsentRecord).where(ConsentRecord.user_id == user_id)
@@ -617,8 +600,7 @@ class ConsentManager:
             return ConsentMetrics(0, 0, 0, 0, 0, 0.0, 0.0, 0.0)
     
     async def generate_consent_receipt(self, consent_id: str) -> Dict[str, Any]:
-        """Generate GDPR-compliant consent receipt"""
-        try:
+        """Generate GDPR-compliant consent receipt"""        try:
             async with get_db() as db:
                 consent_query = await db.execute(
                     select(ConsentRecord).where(ConsentRecord.consent_id == consent_id)
@@ -686,8 +668,7 @@ class ConsentManager:
     # Helper methods
     
     def _get_consent_text(self, purpose: ProcessingPurpose) -> str:
-        """Get consent text for processing purpose"""
-        template = self._consent_templates.get(purpose, {})
+        """Get consent text for processing purpose"""        template = self._consent_templates.get(purpose, {})
         return f"{template.get('title', '')}: {template.get('description', '')}"
     
     async def _validate_consent_collection(
@@ -697,8 +678,7 @@ class ConsentManager:
         consent_granted: bool, 
         consent_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate consent collection parameters"""
-        try:
+        """Validate consent collection parameters"""        try:
             validation_errors = []
             
             # Check if purpose requires specific consent type
@@ -745,8 +725,7 @@ class ConsentManager:
             return {"valid": False, "error": str(e)}
     
     async def _update_consent_cache(self, user_id: str, purpose: ProcessingPurpose, consent_record: ConsentRecord):
-        """Update consent cache with new consent record"""
-        if user_id not in self._consent_cache:
+        """Update consent cache with new consent record"""        if user_id not in self._consent_cache:
             self._consent_cache[user_id] = {}
         
         consent_details = ConsentDetails(
@@ -765,8 +744,7 @@ class ConsentManager:
         self._consent_cache[user_id][purpose.value] = consent_details
     
     async def _update_consent_cache_from_record(self, user_id: str, consent_record: ConsentRecord):
-        """Update consent cache from database record"""
-        try:
+        """Update consent cache from database record"""        try:
             purpose = ProcessingPurpose(consent_record.purpose)
             await self._update_consent_cache(user_id, purpose, consent_record)
         except ValueError:
@@ -779,8 +757,7 @@ class ConsentManager:
         action: str,
         details: Dict[str, Any]
     ):
-        """Record consent history entry"""
-        try:
+        """Record consent history entry"""        try:
             async with get_db() as db:
                 history_entry = ConsentHistory(
                     user_id=user_id,
@@ -797,8 +774,7 @@ class ConsentManager:
             logger.error(f"Error recording consent history: {str(e)}")
     
     async def _expire_consent(self, consent_id: str):
-        """Mark consent as expired"""
-        try:
+        """Mark consent as expired"""        try:
             async with get_db() as db:
                 await db.execute(
                     update(ConsentRecord)
@@ -818,8 +794,7 @@ class ConsentManager:
         consent_id: str,
         expires_at: datetime
     ):
-        """Schedule consent renewal reminder"""
-        # In production, this would schedule a background task or notification
+        """Schedule consent renewal reminder"""        # In production, this would schedule a background task or notification
         reminder_date = expires_at - timedelta(days=30)  # 30 days before expiration
         logger.info(f"Consent renewal reminder scheduled for {user_id} on {reminder_date}")
     
@@ -829,8 +804,7 @@ class ConsentManager:
         purpose: ProcessingPurpose,
         status: ConsentStatus
     ) -> List[str]:
-        """Get recommended next actions after consent collection"""
-        actions = []
+        """Get recommended next actions after consent collection"""        actions = []
         
         if status == ConsentStatus.GRANTED:
             actions.extend([
@@ -848,13 +822,11 @@ class ConsentManager:
         return actions
     
     async def _trigger_processing_stop(self, user_id: str, purpose: ProcessingPurpose):
-        """Trigger immediate stop of data processing for withdrawn consent"""
-        # In production, this would send signals to all processing systems
+        """Trigger immediate stop of data processing for withdrawn consent"""        # In production, this would send signals to all processing systems
         logger.info(f"Processing stop triggered for user {user_id}, purpose {purpose.value}")
     
     async def _assess_withdrawal_impact(self, user_id: str, purpose: ProcessingPurpose) -> List[str]:
-        """Assess impact of consent withdrawal on user experience"""
-        impacts = []
+        """Assess impact of consent withdrawal on user experience"""        impacts = []
         
         if purpose == ProcessingPurpose.CONTENT_PROTECTION:
             impacts.extend([
@@ -878,8 +850,7 @@ class ConsentManager:
         return impacts
     
     async def _assess_consent_compliance(self, current_consents: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess overall consent compliance status"""
-        total_purposes = len(ProcessingPurpose)
+        """Assess overall consent compliance status"""        total_purposes = len(ProcessingPurpose)
         granted_consents = len([c for c in current_consents.values() if c["status"] == ConsentStatus.GRANTED.value])
         expired_consents = len([c for c in current_consents.values() if c.get("is_expired", False)])
         
@@ -899,8 +870,7 @@ class ConsentManager:
         user_id: str, 
         current_consents: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Generate consent management recommendations"""
-        recommendations = []
+        """Generate consent management recommendations"""        recommendations = []
         
         # Check for expired consents
         expired_consents = [p for p, c in current_consents.items() if c.get("is_expired", False)]
@@ -931,8 +901,7 @@ class ConsentManager:
         return recommendations
     
     async def _generate_consent_signature(self, consent_record: ConsentRecord) -> str:
-        """Generate digital signature for consent record"""
-        import hashlib
+        """Generate digital signature for consent record"""        import hashlib
         
         # Create signature from consent record data
         signature_data = f"{consent_record.consent_id}_{consent_record.user_id}_{consent_record.purpose}_{consent_record.status}_{consent_record.created_at.isoformat()}"
@@ -941,8 +910,7 @@ class ConsentManager:
         return signature
     
     async def process_consent_renewal(self, user_id: str, consent_id: str) -> Dict[str, Any]:
-        """Process consent renewal for expiring consents"""
-        try:
+        """Process consent renewal for expiring consents"""        try:
             async with get_db() as db:
                 consent_query = await db.execute(
                     select(ConsentRecord).where(ConsentRecord.consent_id == consent_id)
@@ -988,8 +956,7 @@ class ConsentManager:
             raise HTTPException(status_code=500, detail=f"Consent renewal failed: {str(e)}")
 
     async def cleanup_expired_consents(self) -> Dict[str, Any]:
-        """Clean up expired consents and related data"""
-        try:
+        """Clean up expired consents and related data"""        try:
             async with get_db() as db:
                 # Find expired consents
                 expired_query = await db.execute(

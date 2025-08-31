@@ -1,5 +1,4 @@
-"""
-Database Connection Factory - IA Influencer Agent Platform
+"""Database Connection Factory - IA Influencer Agent Platform
 
 Centralized factory for creating and configuring database connections:
 - Database connection instantiation
@@ -12,7 +11,6 @@ Centralized factory for creating and configuring database connections:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, Type, Union, List
@@ -45,8 +43,7 @@ from .config_manager import (
 
 @dataclass
 class ConnectionSpec:
-    """Connection specification for factory"""
-    handler_type: str
+    """Connection specification for factory"""    handler_type: str
     config: Dict[str, Any]
     tenant_id: Optional[str] = None
     pool_size: int = 10
@@ -56,8 +53,7 @@ class ConnectionSpec:
 
 
 class DatabaseConnectionFactory:
-    """
-    Factory for creating and managing database connections.
+    """    Factory for creating and managing database connections.
     
     Provides:
     - Centralized connection creation
@@ -65,8 +61,7 @@ class DatabaseConnectionFactory:
     - Dependency injection
     - Connection validation
     - Infrastructure setup
-    """
-    
+    """    
     def __init__(self, environment: Environment = Environment.DEVELOPMENT):
         self.logger = logging.getLogger(__name__)
         self.environment = environment
@@ -104,8 +99,7 @@ class DatabaseConnectionFactory:
         }
     
     async def initialize(self, config_dir: Optional[str] = None) -> None:
-        """Initialize the connection factory"""
-        
+        """Initialize the connection factory"""        
         self.logger.info("Initializing database connection factory...")
         
         # Initialize configuration manager
@@ -119,8 +113,7 @@ class DatabaseConnectionFactory:
         self.logger.info("Database connection factory initialized successfully")
     
     async def _setup_infrastructure(self) -> None:
-        """Setup infrastructure components"""
-        
+        """Setup infrastructure components"""        
         # Health monitor
         self.health_monitor = DatabaseHealthMonitor()
         await self.health_monitor.initialize()
@@ -149,8 +142,7 @@ class DatabaseConnectionFactory:
                               handler_type: str, 
                               tenant_id: Optional[str] = None,
                               custom_config: Optional[Dict[str, Any]] = None) -> Any:
-        """Create a database connection handler"""
-        
+        """Create a database connection handler"""        
         try:
             # Validate handler type
             if handler_type not in self.handler_classes:
@@ -188,8 +180,7 @@ class DatabaseConnectionFactory:
                                    handler_type: str, 
                                    tenant_id: Optional[str],
                                    custom_config: Optional[Dict[str, Any]]) -> Dict[str, Any]:
-        """Get connection configuration"""
-        
+        """Get connection configuration"""        
         # Start with configuration from config manager
         config = self.config_manager.get_database_config(handler_type, tenant_id)
         
@@ -209,8 +200,7 @@ class DatabaseConnectionFactory:
         return config_dict
     
     async def _integrate_handler(self, handler: Any, handler_type: str, tenant_id: Optional[str]) -> None:
-        """Integrate handler with infrastructure components"""
-        
+        """Integrate handler with infrastructure components"""        
         # Set up health monitoring
         if self.health_monitor and hasattr(handler, 'set_health_monitor'):
             handler.set_health_monitor(self.health_monitor)
@@ -238,8 +228,7 @@ class DatabaseConnectionFactory:
             pass
     
     async def create_tenant_connections(self, tenant_id: str) -> Dict[str, Any]:
-        """Create all connections for a specific tenant"""
-        
+        """Create all connections for a specific tenant"""        
         if not self.config_manager:
             raise RuntimeError("Factory not initialized")
         
@@ -261,8 +250,7 @@ class DatabaseConnectionFactory:
         return connections
     
     async def create_global_connections(self) -> Dict[str, Any]:
-        """Create global (shared) connections"""
-        
+        """Create global (shared) connections"""        
         connections = {}
         
         for handler_type in self.handler_classes.keys():
@@ -276,17 +264,14 @@ class DatabaseConnectionFactory:
         return connections
     
     def get_connection(self, handler_type: str, tenant_id: Optional[str] = None) -> Optional[Any]:
-        """Get existing connection handler"""
-        handler_key = f"{handler_type}:{tenant_id or 'global'}"
+        """Get existing connection handler"""        handler_key = f"{handler_type}:{tenant_id or 'global'}"
         return self.handlers.get(handler_key)
     
     def list_connections(self) -> List[str]:
-        """List all active connections"""
-        return list(self.handlers.keys())
+        """List all active connections"""        return list(self.handlers.keys())
     
     async def validate_connection(self, handler_type: str, tenant_id: Optional[str] = None) -> bool:
-        """Validate a connection"""
-        
+        """Validate a connection"""        
         handler = self.get_connection(handler_type, tenant_id)
         if not handler:
             return False
@@ -301,8 +286,7 @@ class DatabaseConnectionFactory:
             return False
     
     async def close_connection(self, handler_type: str, tenant_id: Optional[str] = None) -> bool:
-        """Close a specific connection"""
-        
+        """Close a specific connection"""        
         handler_key = f"{handler_type}:{tenant_id or 'global'}"
         handler = self.handlers.get(handler_key)
         
@@ -322,8 +306,7 @@ class DatabaseConnectionFactory:
             return False
     
     async def close_tenant_connections(self, tenant_id: str) -> int:
-        """Close all connections for a tenant"""
-        
+        """Close all connections for a tenant"""        
         closed_count = 0
         handler_keys = [key for key in self.handlers.keys() if key.endswith(f":{tenant_id}")]
         
@@ -336,8 +319,7 @@ class DatabaseConnectionFactory:
         return closed_count
     
     async def refresh_connection(self, handler_type: str, tenant_id: Optional[str] = None) -> bool:
-        """Refresh a connection (close and recreate)"""
-        
+        """Refresh a connection (close and recreate)"""        
         try:
             # Close existing connection
             await self.close_connection(handler_type, tenant_id)
@@ -353,8 +335,7 @@ class DatabaseConnectionFactory:
             return False
     
     async def test_all_connections(self) -> Dict[str, bool]:
-        """Test all active connections"""
-        
+        """Test all active connections"""        
         results = {}
         
         for handler_key in self.handlers.keys():
@@ -370,8 +351,7 @@ class DatabaseConnectionFactory:
         return results
     
     async def add_tenant(self, tenant_config: TenantConfig) -> bool:
-        """Add a new tenant and create its connections"""
-        
+        """Add a new tenant and create its connections"""        
         try:
             # Add tenant to configuration manager
             success = await self.config_manager.add_tenant(tenant_config)
@@ -389,8 +369,7 @@ class DatabaseConnectionFactory:
             return False
     
     async def remove_tenant(self, tenant_id: str) -> bool:
-        """Remove a tenant and close its connections"""
-        
+        """Remove a tenant and close its connections"""        
         try:
             # Close tenant connections
             closed_count = await self.close_tenant_connections(tenant_id)
@@ -406,8 +385,7 @@ class DatabaseConnectionFactory:
             return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get factory metrics"""
-        
+        """Get factory metrics"""        
         # Connection status
         connection_status = {}
         for handler_key, handler in self.handlers.items():
@@ -454,8 +432,7 @@ class DatabaseConnectionFactory:
         }
     
     async def shutdown(self) -> None:
-        """Shutdown the connection factory"""
-        
+        """Shutdown the connection factory"""        
         self.logger.info("Shutting down database connection factory...")
         
         # Close all connections
@@ -504,8 +481,7 @@ _factory_instance: Optional[DatabaseConnectionFactory] = None
 
 
 async def get_factory(environment: Environment = Environment.DEVELOPMENT) -> DatabaseConnectionFactory:
-    """Get global factory instance"""
-    global _factory_instance
+    """Get global factory instance"""    global _factory_instance
     
     if _factory_instance is None:
         _factory_instance = DatabaseConnectionFactory(environment)
@@ -515,8 +491,7 @@ async def get_factory(environment: Environment = Environment.DEVELOPMENT) -> Dat
 
 
 async def shutdown_factory() -> None:
-    """Shutdown global factory instance"""
-    global _factory_instance
+    """Shutdown global factory instance"""    global _factory_instance
     
     if _factory_instance:
         await _factory_instance.shutdown()

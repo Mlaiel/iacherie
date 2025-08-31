@@ -1,11 +1,9 @@
-"""
-Monitoring API Routes
+"""Monitoring API Routes
 Real-time content monitoring and violation detection endpoints.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from typing import List, Dict, Any, Optional
 from datetime import datetime, timedelta
@@ -103,8 +101,7 @@ dmca_automation = DMCAAutomation()
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
-    """Get current authenticated user"""
-    if not credentials:
+    """Get current authenticated user"""    if not credentials:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication required"
@@ -126,12 +123,10 @@ async def create_monitoring_target(
     target: MonitoringTarget,
     user: dict = Depends(get_current_user)
 ):
-    """Create a new monitoring target for content protection"""
-    try:
+    """Create a new monitoring target for content protection"""    try:
         # Verify fingerprint exists and belongs to user
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT cf.fingerprint_id, cf.content_type
+            result = await session.execute("""                SELECT cf.fingerprint_id, cf.content_type
                 FROM content_fingerprints cf
                 JOIN uploaded_files uf ON cf.file_id = uf.file_id
                 WHERE cf.fingerprint_id = %s AND uf.user_id = %s
@@ -148,8 +143,7 @@ async def create_monitoring_target(
         
         # Create monitoring target
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO monitoring_targets (target_id, user_id, fingerprint_id, platform,
+            await session.execute("""                INSERT INTO monitoring_targets (target_id, user_id, fingerprint_id, platform,
                                               monitoring_frequency, alert_threshold, auto_takedown,
                                               notification_channels, content_type, status, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -186,10 +180,8 @@ async def get_monitoring_targets(
     status: Optional[str] = None,
     user: dict = Depends(get_current_user)
 ):
-    """Get all monitoring targets for the user"""
-    try:
-        query = """
-            SELECT mt.target_id, mt.fingerprint_id, mt.platform, mt.monitoring_frequency,
+    """Get all monitoring targets for the user"""    try:
+        query = """            SELECT mt.target_id, mt.fingerprint_id, mt.platform, mt.monitoring_frequency,
                    mt.alert_threshold, mt.auto_takedown, mt.notification_channels,
                    mt.status, mt.created_at, mt.last_scan,
                    uf.original_filename, cf.content_type
@@ -197,8 +189,7 @@ async def get_monitoring_targets(
             JOIN content_fingerprints cf ON mt.fingerprint_id = cf.fingerprint_id
             JOIN uploaded_files uf ON cf.file_id = uf.file_id
             WHERE mt.user_id = %s
-        """
-        params = [user['user_id']]
+        """        params = [user['user_id']]
         
         if platform:
             query += " AND mt.platform = %s"
@@ -247,15 +238,13 @@ async def manual_platform_scan(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Manually trigger a platform scan for violations"""
-    try:
+    """Manually trigger a platform scan for violations"""    try:
         scan_id = str(uuid.uuid4())
         
         # Verify all fingerprints belong to user
         async with database_manager.get_postgres_session() as session:
             for fingerprint_id in scan_request.fingerprint_ids:
-                result = await session.execute("""
-                    SELECT COUNT(*)
+                result = await session.execute("""                    SELECT COUNT(*)
                     FROM content_fingerprints cf
                     JOIN uploaded_files uf ON cf.file_id = uf.file_id
                     WHERE cf.fingerprint_id = %s AND uf.user_id = %s
@@ -270,8 +259,7 @@ async def manual_platform_scan(
         
         # Create scan job
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO platform_scan_jobs (scan_id, user_id, platform, fingerprint_ids,
+            await session.execute("""                INSERT INTO platform_scan_jobs (scan_id, user_id, platform, fingerprint_ids,
                                                search_terms, scan_depth, time_range, status, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (
@@ -311,16 +299,13 @@ async def get_monitoring_alerts(
     days: int = Field(default=7, ge=1, le=90),
     user: dict = Depends(get_current_user)
 ):
-    """Get monitoring alerts for the user"""
-    try:
-        query = """
-            SELECT alert_id, target_id, violation_type, platform, detected_url,
+    """Get monitoring alerts for the user"""    try:
+        query = """            SELECT alert_id, target_id, violation_type, platform, detected_url,
                    similarity_score, confidence_level, status, evidence_data,
                    detected_at, resolved_at
             FROM monitoring_alerts
             WHERE user_id = %s AND detected_at >= %s
-        """
-        params = [user['user_id'], datetime.utcnow() - timedelta(days=days)]
+        """        params = [user['user_id'], datetime.utcnow() - timedelta(days=days)]
         
         if platform:
             query += " AND platform = %s"
@@ -368,12 +353,10 @@ async def submit_dmca_takedown(
     background_tasks: BackgroundTasks,
     user: dict = Depends(get_current_user)
 ):
-    """Submit DMCA takedown request"""
-    try:
+    """Submit DMCA takedown request"""    try:
         # Verify target ownership
         async with database_manager.get_postgres_session() as session:
-            result = await session.execute("""
-                SELECT mt.target_id, cf.fingerprint_data
+            result = await session.execute("""                SELECT mt.target_id, cf.fingerprint_data
                 FROM monitoring_targets mt
                 JOIN content_fingerprints cf ON mt.fingerprint_id = cf.fingerprint_id
                 JOIN uploaded_files uf ON cf.file_id = uf.file_id
@@ -391,8 +374,7 @@ async def submit_dmca_takedown(
         
         # Create DMCA request record
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO dmca_requests (dmca_id, user_id, target_id, violation_url,
+            await session.execute("""                INSERT INTO dmca_requests (dmca_id, user_id, target_id, violation_url,
                                          evidence_fingerprint_id, claim_type, urgency,
                                          custom_message, status, created_at)
                 VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -429,8 +411,7 @@ async def get_violation_report(
     days: int = Field(default=30, ge=1, le=365),
     user: dict = Depends(get_current_user)
 ):
-    """Generate violation detection report"""
-    try:
+    """Generate violation detection report"""    try:
         report_id = str(uuid.uuid4())
         start_date = datetime.utcnow() - timedelta(days=days)
         end_date = datetime.utcnow()
@@ -438,37 +419,32 @@ async def get_violation_report(
         # Get violation statistics
         async with database_manager.get_postgres_session() as session:
             # Count violations
-            result = await session.execute("""
-                SELECT COUNT(*) FROM monitoring_alerts
+            result = await session.execute("""                SELECT COUNT(*) FROM monitoring_alerts
                 WHERE user_id = %s AND detected_at >= %s AND detected_at <= %s
             """, (user['user_id'], start_date, end_date))
             violations_count = result.fetchone()[0]
             
             # Get platforms monitored
-            result = await session.execute("""
-                SELECT DISTINCT platform FROM monitoring_alerts
+            result = await session.execute("""                SELECT DISTINCT platform FROM monitoring_alerts
                 WHERE user_id = %s AND detected_at >= %s AND detected_at <= %s
             """, (user['user_id'], start_date, end_date))
             platforms = [row[0] for row in result.fetchall()]
             
             # Get highest similarity
-            result = await session.execute("""
-                SELECT MAX(similarity_score) FROM monitoring_alerts
+            result = await session.execute("""                SELECT MAX(similarity_score) FROM monitoring_alerts
                 WHERE user_id = %s AND detected_at >= %s AND detected_at <= %s
             """, (user['user_id'], start_date, end_date))
             highest_similarity = result.fetchone()[0] or 0.0
             
             # Count takedowns
-            result = await session.execute("""
-                SELECT COUNT(*) FROM dmca_requests
+            result = await session.execute("""                SELECT COUNT(*) FROM dmca_requests
                 WHERE user_id = %s AND created_at >= %s AND created_at <= %s
                   AND status = 'completed'
             """, (user['user_id'], start_date, end_date))
             takedowns_count = result.fetchone()[0]
             
             # Count pending actions
-            result = await session.execute("""
-                SELECT COUNT(*) FROM monitoring_alerts
+            result = await session.execute("""                SELECT COUNT(*) FROM monitoring_alerts
                 WHERE user_id = %s AND detected_at >= %s AND detected_at <= %s
                   AND status = 'pending'
             """, (user['user_id'], start_date, end_date))
@@ -508,12 +484,10 @@ async def update_monitoring_settings(
     settings: MonitoringSettings,
     user: dict = Depends(get_current_user)
 ):
-    """Update user monitoring settings"""
-    try:
+    """Update user monitoring settings"""    try:
         # Update or insert monitoring settings
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                INSERT INTO monitoring_settings (user_id, auto_monitoring_enabled, 
+            await session.execute("""                INSERT INTO monitoring_settings (user_id, auto_monitoring_enabled, 
                                                notification_preferences, alert_threshold,
                                                auto_takedown_enabled, monitoring_frequency,
                                                platforms_enabled, updated_at)
@@ -551,12 +525,10 @@ async def delete_monitoring_target(
     target_id: str,
     user: dict = Depends(get_current_user)
 ):
-    """Delete a monitoring target"""
-    try:
+    """Delete a monitoring target"""    try:
         async with database_manager.get_postgres_session() as session:
             # Verify ownership
-            result = await session.execute("""
-                SELECT target_id FROM monitoring_targets
+            result = await session.execute("""                SELECT target_id FROM monitoring_targets
                 WHERE target_id = %s AND user_id = %s
             """, (target_id, user['user_id']))
             
@@ -567,8 +539,7 @@ async def delete_monitoring_target(
                 )
             
             # Delete target
-            await session.execute("""
-                DELETE FROM monitoring_targets WHERE target_id = %s
+            await session.execute("""                DELETE FROM monitoring_targets WHERE target_id = %s
             """, (target_id,))
             await session.commit()
         
@@ -589,12 +560,10 @@ async def delete_monitoring_target(
 
 # Background task functions
 async def _execute_platform_scan(scan_id: str, scan_request: PlatformScanRequest, user: dict):
-    """Execute platform scan in background"""
-    try:
+    """Execute platform scan in background"""    try:
         # Update scan status to processing
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                UPDATE platform_scan_jobs 
+            await session.execute("""                UPDATE platform_scan_jobs 
                 SET status = 'processing', started_at = %s
                 WHERE scan_id = %s
             """, (datetime.utcnow(), scan_id))
@@ -616,8 +585,7 @@ async def _execute_platform_scan(scan_id: str, scan_request: PlatformScanRequest
         async with database_manager.get_postgres_session() as session:
             for violation in violations_found:
                 alert_id = str(uuid.uuid4())
-                await session.execute("""
-                    INSERT INTO monitoring_alerts (alert_id, user_id, target_id, violation_type,
+                await session.execute("""                    INSERT INTO monitoring_alerts (alert_id, user_id, target_id, violation_type,
                                                  platform, detected_url, similarity_score,
                                                  confidence_level, status, evidence_data, detected_at)
                     VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
@@ -629,8 +597,7 @@ async def _execute_platform_scan(scan_id: str, scan_request: PlatformScanRequest
                 ))
             
             # Update scan job
-            await session.execute("""
-                UPDATE platform_scan_jobs 
+            await session.execute("""                UPDATE platform_scan_jobs 
                 SET status = 'completed', completed_at = %s, violations_found = %s
                 WHERE scan_id = %s
             """, (datetime.utcnow(), len(violations_found), scan_id))
@@ -647,8 +614,7 @@ async def _execute_platform_scan(scan_id: str, scan_request: PlatformScanRequest
         
         # Mark scan as failed
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                UPDATE platform_scan_jobs 
+            await session.execute("""                UPDATE platform_scan_jobs 
                 SET status = 'failed', error_message = %s
                 WHERE scan_id = %s
             """, (str(e), scan_id))
@@ -656,12 +622,10 @@ async def _execute_platform_scan(scan_id: str, scan_request: PlatformScanRequest
 
 
 async def _process_dmca_request(dmca_id: str, dmca_request: DMCARequest, user: dict):
-    """Process DMCA takedown request"""
-    try:
+    """Process DMCA takedown request"""    try:
         # Update status to processing
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                UPDATE dmca_requests 
+            await session.execute("""                UPDATE dmca_requests 
                 SET status = 'processing', started_at = %s
                 WHERE dmca_id = %s
             """, (datetime.utcnow(), dmca_id))
@@ -679,8 +643,7 @@ async def _process_dmca_request(dmca_id: str, dmca_request: DMCARequest, user: d
         
         # Update request with results
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                UPDATE dmca_requests 
+            await session.execute("""                UPDATE dmca_requests 
                 SET status = %s, dmca_notice = %s, platform_response = %s, completed_at = %s
                 WHERE dmca_id = %s
             """, (
@@ -699,8 +662,7 @@ async def _process_dmca_request(dmca_id: str, dmca_request: DMCARequest, user: d
         
         # Mark as failed
         async with database_manager.get_postgres_session() as session:
-            await session.execute("""
-                UPDATE dmca_requests 
+            await session.execute("""                UPDATE dmca_requests 
                 SET status = 'failed', error_message = %s
                 WHERE dmca_id = %s
             """, (str(e), dmca_id))
@@ -709,21 +671,18 @@ async def _process_dmca_request(dmca_id: str, dmca_request: DMCARequest, user: d
 
 # Platform-specific scanning functions
 async def _scan_youtube(scan_request: PlatformScanRequest, user: dict) -> List[Dict[str, Any]]:
-    """Scan YouTube for violations"""
-    # Implementation would use YouTube API to search for content
+    """Scan YouTube for violations"""    # Implementation would use YouTube API to search for content
     # This is a placeholder implementation
     return []
 
 
 async def _scan_instagram(scan_request: PlatformScanRequest, user: dict) -> List[Dict[str, Any]]:
-    """Scan Instagram for violations"""
-    # Implementation would use Instagram API to search for content
+    """Scan Instagram for violations"""    # Implementation would use Instagram API to search for content
     # This is a placeholder implementation
     return []
 
 
 async def _scan_tiktok(scan_request: PlatformScanRequest, user: dict) -> List[Dict[str, Any]]:
-    """Scan TikTok for violations"""
-    # Implementation would use TikTok API to search for content
+    """Scan TikTok for violations"""    # Implementation would use TikTok API to search for content
     # This is a placeholder implementation
     return []

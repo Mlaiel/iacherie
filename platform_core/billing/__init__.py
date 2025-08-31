@@ -14,8 +14,7 @@ Gestion complète de facturation et paiements pour plateforme IA
 - Facturation automatique et récurrente
 - Gestion des taxes internationales (TVA/TPS/HST)
 - Rapports financiers et comptabilité analytique
-"""
-from .payment_processor import PaymentProcessor, StripeProcessor, PayPalProcessor
+"""from .payment_processor import PaymentProcessor, StripeProcessor, PayPalProcessor
 from .invoice_manager import InvoiceManager, Invoice, InvoiceItem
 from .subscription_billing import SubscriptionBilling, BillingCycle
 from .tax_calculator import TaxCalculator, TaxRule

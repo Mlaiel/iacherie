@@ -1,5 +1,4 @@
-"""
-Setup Configuration for IA Influencer Agent Data Models
+"""Setup Configuration for IA Influencer Agent Data Models
 ======================================================
 
 Professional setup script for the data models module.
@@ -14,7 +13,6 @@ Any unauthorized copying, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from setuptools import setup, find_packages
 import os
 import sys
@@ -220,9 +218,7 @@ setup(
 
 
 def post_install_message():
-    """Display post-installation message"""
-    print("""
-╔═══════════════════════════════════════════════════════════════╗
+    """Display post-installation message"""    print("""╔═══════════════════════════════════════════════════════════════╗
 ║                IA INFLUENCER AGENT DATA MODELS               ║
 ║                     Successfully Installed!                  ║
 ╠═══════════════════════════════════════════════════════════════╣

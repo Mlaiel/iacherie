@@ -1,5 +1,4 @@
-"""
-Queue Performance Optimizer - IA-Influencer-Agent
+"""Queue Performance Optimizer - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/queues/queue_performance_optimizer.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Performance analysis → Bottleneck detection → ML optimization → Strategy adjustment →
 Resource allocation → Predictive scaling → Performance validation → Continuous learning
 """
-
 from typing import Any, Dict, List, Optional, Union, Set, Tuple, Callable
 import logging
 import asyncio
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationStrategy(Enum):
-    """Performance optimization strategies"""
-    THROUGHPUT_MAXIMIZATION = "throughput_maximization"
+    """Performance optimization strategies"""    THROUGHPUT_MAXIMIZATION = "throughput_maximization"
     LATENCY_MINIMIZATION = "latency_minimization"
     RESOURCE_EFFICIENCY = "resource_efficiency"
     BALANCED_PERFORMANCE = "balanced_performance"
@@ -46,8 +43,7 @@ class OptimizationStrategy(Enum):
 
 
 class OptimizationScope(Enum):
-    """Optimization scope levels"""
-    QUEUE_LEVEL = "queue_level"
+    """Optimization scope levels"""    QUEUE_LEVEL = "queue_level"
     WORKER_LEVEL = "worker_level"
     SYSTEM_LEVEL = "system_level"
     PLATFORM_LEVEL = "platform_level"
@@ -55,8 +51,7 @@ class OptimizationScope(Enum):
 
 
 class OptimizationTechnique(Enum):
-    """Available optimization techniques"""
-    DYNAMIC_SCALING = "dynamic_scaling"
+    """Available optimization techniques"""    DYNAMIC_SCALING = "dynamic_scaling"
     LOAD_REBALANCING = "load_rebalancing"
     PRIORITY_ADJUSTMENT = "priority_adjustment"
     RESOURCE_REALLOCATION = "resource_reallocation"
@@ -68,8 +63,7 @@ class OptimizationTechnique(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data structure"""
-    metric_name: str
+    """Performance metric data structure"""    metric_name: str
     current_value: float
     target_value: float
     threshold_min: Optional[float] = None
@@ -82,8 +76,7 @@ class PerformanceMetric:
 
 @dataclass
 class OptimizationOpportunity:
-    """Optimization opportunity identification"""
-    opportunity_id: str
+    """Optimization opportunity identification"""    opportunity_id: str
     scope: OptimizationScope
     technique: OptimizationTechnique
     potential_improvement: float
@@ -99,8 +92,7 @@ class OptimizationOpportunity:
 
 @dataclass
 class OptimizationPlan:
-    """Comprehensive optimization plan"""
-    plan_id: str
+    """Comprehensive optimization plan"""    plan_id: str
     strategy: OptimizationStrategy
     opportunities: List[OptimizationOpportunity]
     execution_phases: List[Dict[str, Any]]
@@ -114,8 +106,7 @@ class OptimizationPlan:
 
 @dataclass
 class OptimizationResult:
-    """Optimization execution result"""
-    result_id: str
+    """Optimization execution result"""    result_id: str
     plan_id: str
     execution_status: str  # success, partial, failed
     implemented_techniques: List[OptimizationTechnique]
@@ -129,8 +120,7 @@ class OptimizationResult:
 
 
 class MLPerformancePredictor:
-    """Machine learning performance prediction engine"""
-    
+    """Machine learning performance prediction engine"""    
     def __init__(self):
         self.models = {}
         self.training_data = defaultdict(list)
@@ -143,8 +133,7 @@ class MLPerformancePredictor:
         current_metrics: Dict[str, float],
         proposed_changes: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Predict performance impact of optimization"""
-        
+        """Predict performance impact of optimization"""        
         # Generate prediction key
         prediction_key = self._generate_prediction_key(
             optimization_technique, current_metrics, proposed_changes
@@ -175,8 +164,7 @@ class MLPerformancePredictor:
         metrics: Dict[str, float],
         changes: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Generate ML-based performance prediction"""
-        
+        """Generate ML-based performance prediction"""        
         # Feature engineering
         features = self._extract_features(metrics, changes)
         
@@ -199,8 +187,7 @@ class MLPerformancePredictor:
         metrics: Dict[str, float],
         changes: Dict[str, Any]
     ) -> np.ndarray:
-        """Extract ML features from metrics and changes"""
-        
+        """Extract ML features from metrics and changes"""        
         features = []
         
         # Current performance features
@@ -232,8 +219,7 @@ class MLPerformancePredictor:
         return np.array(features)
     
     async def _initialize_model(self, technique: OptimizationTechnique):
-        """Initialize ML model for specific optimization technique"""
-        
+        """Initialize ML model for specific optimization technique"""        
         # Placeholder for actual ML model initialization
         # In production, this would load pre-trained models or initialize new ones
         return {
@@ -248,8 +234,7 @@ class MLPerformancePredictor:
         model: Dict[str, Any],
         features: np.ndarray
     ) -> Dict[str, float]:
-        """Generate prediction using model"""
-        
+        """Generate prediction using model"""        
         # Placeholder for actual ML prediction
         # In production, this would use trained models
         
@@ -269,8 +254,7 @@ class MLPerformancePredictor:
         metrics: Dict[str, float],
         changes: Dict[str, Any]
     ) -> str:
-        """Generate cache key for prediction"""
-        
+        """Generate cache key for prediction"""        
         key_data = {
             'technique': technique.value,
             'metrics_hash': hashlib.md5(
@@ -285,8 +269,7 @@ class MLPerformancePredictor:
 
 
 class QueuePerformanceOptimizer:
-    """Enterprise-grade queue performance optimization engine"""
-    
+    """Enterprise-grade queue performance optimization engine"""    
     def __init__(
         self,
         optimization_strategy: OptimizationStrategy = OptimizationStrategy.BALANCED_PERFORMANCE,
@@ -320,8 +303,7 @@ class QueuePerformanceOptimizer:
         logger.info(f"QueuePerformanceOptimizer initialized with strategy: {optimization_strategy.value}")
     
     async def initialize(self, queue_manager=None, distribution_engine=None):
-        """Initialize optimizer with system components"""
-        
+        """Initialize optimizer with system components"""        
         self.queue_manager = queue_manager
         self.distribution_engine = distribution_engine
         
@@ -335,8 +317,7 @@ class QueuePerformanceOptimizer:
         return True
     
     async def start_continuous_optimization(self):
-        """Start continuous performance optimization"""
-        
+        """Start continuous performance optimization"""        
         if self.continuous_optimization:
             logger.warning("Continuous optimization already running")
             return
@@ -348,8 +329,7 @@ class QueuePerformanceOptimizer:
         asyncio.create_task(self._continuous_optimization_loop())
     
     async def stop_continuous_optimization(self):
-        """Stop continuous performance optimization"""
-        
+        """Stop continuous performance optimization"""        
         self.continuous_optimization = False
         logger.info("Stopping continuous performance optimization")
     
@@ -357,8 +337,7 @@ class QueuePerformanceOptimizer:
         self,
         include_ml_predictions: bool = True
     ) -> List[OptimizationOpportunity]:
-        """Analyze current performance and identify optimization opportunities"""
-        
+        """Analyze current performance and identify optimization opportunities"""        
         # Collect current performance metrics
         current_metrics = await self._collect_current_metrics()
         
@@ -390,8 +369,7 @@ class QueuePerformanceOptimizer:
         max_complexity: str = "medium",
         target_timeframe: timedelta = timedelta(hours=1)
     ) -> OptimizationPlan:
-        """Create comprehensive optimization plan"""
-        
+        """Create comprehensive optimization plan"""        
         # Filter opportunities by complexity and timeframe
         suitable_opportunities = [
             opp for opp in opportunities
@@ -430,8 +408,7 @@ class QueuePerformanceOptimizer:
         plan: OptimizationPlan,
         dry_run: bool = False
     ) -> OptimizationResult:
-        """Execute optimization plan"""
-        
+        """Execute optimization plan"""        
         result_id = f"opt_result_{uuid.uuid4().hex[:8]}"
         start_time = datetime.now()
         
@@ -502,8 +479,7 @@ class QueuePerformanceOptimizer:
         return result
     
     async def get_optimization_status(self) -> Dict[str, Any]:
-        """Get current optimization status"""
-        
+        """Get current optimization status"""        
         current_metrics = await self._collect_current_metrics()
         
         return {
@@ -527,8 +503,7 @@ class QueuePerformanceOptimizer:
     # Private methods
     
     async def _continuous_optimization_loop(self):
-        """Continuous optimization loop"""
-        
+        """Continuous optimization loop"""        
         while self.continuous_optimization:
             try:
                 # Check if optimization is needed
@@ -553,8 +528,7 @@ class QueuePerformanceOptimizer:
                 await asyncio.sleep(60)  # Wait before retrying
     
     async def _collect_current_metrics(self) -> Dict[str, float]:
-        """Collect current performance metrics"""
-        
+        """Collect current performance metrics"""        
         metrics = {}
         
         try:
@@ -589,14 +563,12 @@ class QueuePerformanceOptimizer:
         return metrics
     
     async def _collect_baseline_metrics(self):
-        """Collect baseline performance metrics"""
-        
+        """Collect baseline performance metrics"""        
         self.baseline_metrics = await self._collect_current_metrics()
         logger.info(f"Baseline metrics collected: {len(self.baseline_metrics)} metrics")
     
     async def _set_optimization_targets(self):
-        """Set optimization targets based on strategy"""
-        
+        """Set optimization targets based on strategy"""        
         if self.optimization_strategy == OptimizationStrategy.THROUGHPUT_MAXIMIZATION:
             self.optimization_targets = {
                 'throughput_improvement': 0.20,  # 20% improvement
@@ -617,8 +589,7 @@ class QueuePerformanceOptimizer:
             }
     
     async def _identify_bottlenecks(self, metrics: Dict[str, float]) -> List[Dict[str, Any]]:
-        """Identify performance bottlenecks"""
-        
+        """Identify performance bottlenecks"""        
         bottlenecks = []
         
         # Queue size bottleneck
@@ -669,8 +640,7 @@ class QueuePerformanceOptimizer:
         metrics: Dict[str, float],
         include_ml_predictions: bool
     ) -> Optional[OptimizationOpportunity]:
-        """Generate optimization opportunity from bottleneck"""
-        
+        """Generate optimization opportunity from bottleneck"""        
         bottleneck_type = bottleneck['type']
         
         # Map bottleneck types to optimization techniques
@@ -717,8 +687,7 @@ class QueuePerformanceOptimizer:
         )
     
     def _calculate_potential_improvement(self, bottleneck: Dict[str, Any]) -> float:
-        """Calculate potential improvement percentage"""
-        
+        """Calculate potential improvement percentage"""        
         current = bottleneck['current_value']
         threshold = bottleneck['threshold']
         
@@ -735,8 +704,7 @@ class QueuePerformanceOptimizer:
         max_complexity: str,
         target_timeframe: timedelta
     ) -> bool:
-        """Check if opportunity is suitable for current constraints"""
-        
+        """Check if opportunity is suitable for current constraints"""        
         # Complexity check
         complexity_order = ['low', 'medium', 'high']
         if complexity_order.index(opportunity.implementation_complexity) > complexity_order.index(max_complexity):
@@ -752,8 +720,7 @@ class QueuePerformanceOptimizer:
         self,
         opportunities: List[OptimizationOpportunity]
     ) -> List[Dict[str, Any]]:
-        """Create execution phases for opportunities"""
-        
+        """Create execution phases for opportunities"""        
         phases = []
         
         # Group opportunities by technique
@@ -779,8 +746,7 @@ class QueuePerformanceOptimizer:
         self,
         opportunities: List[OptimizationOpportunity]
     ) -> Dict[str, float]:
-        """Calculate expected outcomes from opportunities"""
-        
+        """Calculate expected outcomes from opportunities"""        
         outcomes = defaultdict(float)
         
         for opp in opportunities:
@@ -794,8 +760,7 @@ class QueuePerformanceOptimizer:
         self,
         expected_outcomes: Dict[str, float]
     ) -> Dict[str, float]:
-        """Define success criteria based on expected outcomes"""
-        
+        """Define success criteria based on expected outcomes"""        
         # Success criteria is typically 70% of expected outcomes
         return {
             metric: improvement * 0.7
@@ -806,8 +771,7 @@ class QueuePerformanceOptimizer:
         self,
         opportunities: List[OptimizationOpportunity]
     ) -> Dict[str, Any]:
-        """Create rollback plan for optimization"""
-        
+        """Create rollback plan for optimization"""        
         return {
             'rollback_enabled': True,
             'rollback_triggers': [
@@ -827,8 +791,7 @@ class QueuePerformanceOptimizer:
         self,
         opportunities: List[OptimizationOpportunity]
     ) -> List[str]:
-        """Get monitoring requirements for optimization"""
-        
+        """Get monitoring requirements for optimization"""        
         requirements = set(['throughput', 'latency', 'error_rate'])
         
         for opp in opportunities:
@@ -840,8 +803,7 @@ class QueuePerformanceOptimizer:
         return list(requirements)
     
     async def _execute_optimization_phase(self, phase: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute single optimization phase"""
-        
+        """Execute single optimization phase"""        
         technique = phase['technique']
         opportunities = phase['opportunities']
         
@@ -865,23 +827,19 @@ class QueuePerformanceOptimizer:
         return result
     
     async def _execute_dynamic_scaling(self, opportunities: List[OptimizationOpportunity]):
-        """Execute dynamic scaling optimization"""
-        logger.info("Executing dynamic scaling optimization")
+        """Execute dynamic scaling optimization"""        logger.info("Executing dynamic scaling optimization")
         # Implementation placeholder
         
     async def _execute_load_rebalancing(self, opportunities: List[OptimizationOpportunity]):
-        """Execute load rebalancing optimization"""
-        logger.info("Executing load rebalancing optimization")
+        """Execute load rebalancing optimization"""        logger.info("Executing load rebalancing optimization")
         # Implementation placeholder
         
     async def _execute_resource_reallocation(self, opportunities: List[OptimizationOpportunity]):
-        """Execute resource reallocation optimization"""
-        logger.info("Executing resource reallocation optimization")
+        """Execute resource reallocation optimization"""        logger.info("Executing resource reallocation optimization")
         # Implementation placeholder
         
     async def _execute_routing_optimization(self, opportunities: List[OptimizationOpportunity]):
-        """Execute routing optimization"""
-        logger.info("Executing routing optimization")
+        """Execute routing optimization"""        logger.info("Executing routing optimization")
         # Implementation placeholder
     
     def _calculate_improvements(
@@ -889,8 +847,7 @@ class QueuePerformanceOptimizer:
         pre_metrics: Dict[str, float],
         post_metrics: Dict[str, float]
     ) -> Dict[str, float]:
-        """Calculate performance improvements"""
-        
+        """Calculate performance improvements"""        
         improvements = {}
         
         for metric in pre_metrics:
@@ -909,8 +866,7 @@ class QueuePerformanceOptimizer:
         actual: Dict[str, float],
         expected: Dict[str, float]
     ) -> Dict[str, Tuple[float, float]]:
-        """Compare actual vs expected improvements"""
-        
+        """Compare actual vs expected improvements"""        
         comparison = {}
         
         for metric in expected:
@@ -925,8 +881,7 @@ class QueuePerformanceOptimizer:
         plan: OptimizationPlan,
         improvements: Dict[str, float]
     ) -> List[str]:
-        """Extract lessons learned from optimization"""
-        
+        """Extract lessons learned from optimization"""        
         lessons = []
         
         # Analyze improvement vs expectations
@@ -943,8 +898,7 @@ class QueuePerformanceOptimizer:
         self,
         improvements: Dict[str, float]
     ) -> List[str]:
-        """Generate recommendations for future optimizations"""
-        
+        """Generate recommendations for future optimizations"""        
         recommendations = []
         
         # Analyze which optimizations worked best
@@ -963,8 +917,7 @@ class QueuePerformanceOptimizer:
         return recommendations
     
     def _compare_to_baseline(self, current_metrics: Dict[str, float]) -> Dict[str, float]:
-        """Compare current metrics to baseline"""
-        
+        """Compare current metrics to baseline"""        
         comparison = {}
         
         for metric in self.baseline_metrics:
@@ -979,8 +932,7 @@ class QueuePerformanceOptimizer:
         return comparison
     
     def _calculate_recent_success_rate(self) -> float:
-        """Calculate recent optimization success rate"""
-        
+        """Calculate recent optimization success rate"""        
         recent_results = self.optimization_history[-10:]  # Last 10 optimizations
         if not recent_results:
             return 0.0
@@ -989,8 +941,7 @@ class QueuePerformanceOptimizer:
         return successes / len(recent_results)
     
     def _calculate_average_improvement(self) -> float:
-        """Calculate average improvement from optimizations"""
-        
+        """Calculate average improvement from optimizations"""        
         recent_results = self.optimization_history[-10:]
         if not recent_results:
             return 0.0
@@ -1007,8 +958,7 @@ class QueuePerformanceOptimizer:
         return total_improvement / count if count > 0 else 0.0
     
     async def _get_immediate_recommendations(self) -> List[str]:
-        """Get immediate optimization recommendations"""
-        
+        """Get immediate optimization recommendations"""        
         recommendations = []
         current_metrics = await self._collect_current_metrics()
         
@@ -1025,8 +975,7 @@ class QueuePerformanceOptimizer:
         return recommendations
     
     async def _should_optimize(self) -> bool:
-        """Determine if optimization should be triggered"""
-        
+        """Determine if optimization should be triggered"""        
         current_metrics = await self._collect_current_metrics()
         
         # Check if any metric is significantly below target
@@ -1040,8 +989,7 @@ class QueuePerformanceOptimizer:
         return False
     
     async def _execute_rollback(self, rollback_plan: Dict[str, Any]):
-        """Execute rollback plan"""
-        
+        """Execute rollback plan"""        
         logger.warning("Executing optimization rollback")
         
         # Placeholder for rollback implementation
@@ -1056,8 +1004,7 @@ def create_queue_performance_optimizer(
     enable_ml_prediction: bool = True,
     optimization_interval_seconds: int = 300
 ) -> QueuePerformanceOptimizer:
-    """Create queue performance optimizer instance"""
-    
+    """Create queue performance optimizer instance"""    
     return QueuePerformanceOptimizer(
         optimization_strategy=optimization_strategy,
         enable_ml_prediction=enable_ml_prediction,

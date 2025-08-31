@@ -1,5 +1,4 @@
-"""
-Content Rights Management Module - Advanced Rights & Licensing System
+"""Content Rights Management Module - Advanced Rights & Licensing System
 
 Module gérant les droits d'auteur, les licences, la conformité légale
 et la gestion des droits intellectuels pour le contenu multimédia.
@@ -14,7 +13,6 @@ Toute utilisation, copie, modification ou distribution non autorisée
 est strictement interdite et fera l'objet de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple, Set
 from dataclasses import dataclass, field
 from datetime import datetime, timezone, timedelta
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RightType(Enum):
-    """Types of intellectual property rights"""
-    COPYRIGHT = "copyright"
+    """Types of intellectual property rights"""    COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PATENT = "patent"
     PUBLISHING_RIGHTS = "publishing_rights"
@@ -52,8 +49,7 @@ class RightType(Enum):
     PUBLICITY_RIGHTS = "publicity_rights"
 
 class LicenseType(Enum):
-    """Content licensing types"""
-    EXCLUSIVE = "exclusive"
+    """Content licensing types"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
@@ -68,8 +64,7 @@ class LicenseType(Enum):
     SYNC_LICENSE = "sync_license"
 
 class RightsStatus(Enum):
-    """Rights status classifications"""
-    OWNED = "owned"
+    """Rights status classifications"""    OWNED = "owned"
     LICENSED_IN = "licensed_in"
     LICENSED_OUT = "licensed_out"
     SHARED = "shared"
@@ -81,8 +76,7 @@ class RightsStatus(Enum):
     UNKNOWN = "unknown"
 
 class ComplianceStatus(Enum):
-    """Legal compliance status"""
-    COMPLIANT = "compliant"
+    """Legal compliance status"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     UNDER_REVIEW = "under_review"
     PENDING_DOCUMENTATION = "pending_documentation"
@@ -91,8 +85,7 @@ class ComplianceStatus(Enum):
     EXEMPTED = "exempted"
 
 class GeographicScope(Enum):
-    """Geographic scope of rights"""
-    WORLDWIDE = "worldwide"
+    """Geographic scope of rights"""    WORLDWIDE = "worldwide"
     EUROPE = "europe"
     NORTH_AMERICA = "north_america"
     ASIA_PACIFIC = "asia_pacific"
@@ -101,8 +94,7 @@ class GeographicScope(Enum):
     EXCLUDED_TERRITORIES = "excluded_territories"
 
 class ContentRights(Base):
-    """Content rights and ownership information"""
-    __tablename__ = "content_rights"
+    """Content rights and ownership information"""    __tablename__ = "content_rights"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -159,8 +151,7 @@ class ContentRights(Base):
     clearances = relationship("RightsClearance", back_populates="content_rights")
 
 class ContentLicense(Base):
-    """Content licensing agreements"""
-    __tablename__ = "content_licenses"
+    """Content licensing agreements"""    __tablename__ = "content_licenses"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_rights_id = Column(UUID(as_uuid=True), ForeignKey('content_rights.id'), nullable=False)
@@ -235,8 +226,7 @@ class ContentLicense(Base):
     usage_reports = relationship("LicenseUsageReport", back_populates="license")
 
 class RightsClearance(Base):
-    """Rights clearance tracking"""
-    __tablename__ = "rights_clearances"
+    """Rights clearance tracking"""    __tablename__ = "rights_clearances"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     content_rights_id = Column(UUID(as_uuid=True), ForeignKey('content_rights.id'), nullable=False)
@@ -282,8 +272,7 @@ class RightsClearance(Base):
     content_rights = relationship("ContentRights", back_populates="clearances")
 
 class LicenseUsageReport(Base):
-    """License usage reporting"""
-    __tablename__ = "license_usage_reports"
+    """License usage reporting"""    __tablename__ = "license_usage_reports"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     license_id = Column(UUID(as_uuid=True), ForeignKey('content_licenses.id'), nullable=False)
@@ -332,8 +321,7 @@ class LicenseUsageReport(Base):
 
 @dataclass
 class RightsAnalysisResult:
-    """Rights analysis result structure"""
-    content_id: str
+    """Rights analysis result structure"""    content_id: str
     overall_compliance: bool
     compliance_score: float
     identified_risks: List[str]
@@ -344,16 +332,14 @@ class RightsAnalysisResult:
     analysis_confidence: float
 
 class RightsManager:
-    """Advanced rights management system"""
-    
+    """Advanced rights management system"""    
     def __init__(self):
         self.clearance_agencies = {}
         self.rights_databases = {}
         self.compliance_rules = self._initialize_compliance_rules()
     
     def _initialize_compliance_rules(self) -> Dict[str, Any]:
-        """Initialize compliance rules for different jurisdictions"""
-        return {
+        """Initialize compliance rules for different jurisdictions"""        return {
             "EU": {
                 "copyright_duration": 70,  # years after death
                 "neighboring_rights_duration": 50,
@@ -384,8 +370,7 @@ class RightsManager:
         target_territories: List[str],
         intended_uses: List[str]
     ) -> RightsAnalysisResult:
-        """Comprehensive rights analysis for content"""
-        try:
+        """Comprehensive rights analysis for content"""        try:
             # Get existing rights information
             existing_rights = await self._get_content_rights(content_id)
             
@@ -451,8 +436,7 @@ class RightsManager:
         source_information: Dict[str, Any],
         usage_terms: Dict[str, Any]
     ) -> str:
-        """Obtain rights clearance for content"""
-        try:
+        """Obtain rights clearance for content"""        try:
             clearance_id = str(uuid.uuid4())
             
             # Identify rights holders
@@ -505,8 +489,7 @@ class RightsManager:
         licensee_id: str,
         license_terms: Dict[str, Any]
     ) -> str:
-        """Create comprehensive license agreement"""
-        try:
+        """Create comprehensive license agreement"""        try:
             license_id = str(uuid.uuid4())
             
             # Validate license terms
@@ -552,8 +535,7 @@ class RightsManager:
         content_id: str,
         monitoring_period: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Monitor compliance with rights and licensing terms"""
-        try:
+        """Monitor compliance with rights and licensing terms"""        try:
             # Get content rights and licenses
             content_rights = await self._get_content_rights(content_id)
             content_licenses = await self._get_content_licenses(content_id)
@@ -610,8 +592,7 @@ class RightsManager:
         metadata: Dict[str, Any],
         territories: List[str]
     ) -> Dict[str, Any]:
-        """Analyze copyright status in specified territories"""
-        try:
+        """Analyze copyright status in specified territories"""        try:
             copyright_status = {}
             
             for territory in territories:
@@ -646,16 +627,13 @@ class RightsManager:
     # Additional helper methods would be implemented here...
     
     async def _get_content_rights(self, content_id: str) -> List[ContentRights]:
-        """Get content rights from database"""
-        pass
+        """Get content rights from database"""        pass
     
     async def _detect_copyright_issues(self, metadata, existing_rights) -> List[str]:
-        """Detect potential copyright issues"""
-        pass
+        """Detect potential copyright issues"""        pass
     
     async def _analyze_licensing_requirements(self, uses, territories, copyright_analysis) -> List[str]:
-        """Analyze licensing requirements"""
-        pass
+        """Analyze licensing requirements"""        pass
 
 # Export classes and functions
 __all__ = [

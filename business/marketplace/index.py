@@ -1,5 +1,4 @@
-"""
-Marketplace Index - Centralized Endpoint and Service Registry
+"""Marketplace Index - Centralized Endpoint and Service Registry
 ==============================================================
 
 Entry point for all marketplace services and API endpoints.
@@ -15,7 +14,6 @@ This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
 """
-
 from typing import Dict, Any, List, Optional, Union
 from fastapi import APIRouter, HTTPException, Depends, status
 from fastapi.responses import JSONResponse
@@ -37,19 +35,16 @@ from ..core.auth import AuthenticationManager
 logger = logging.getLogger(__name__)
 
 class MarketplaceIndex:
-    """
-    Central marketplace coordinator and service registry.
+    """    Central marketplace coordinator and service registry.
     Provides unified access to all marketplace functionalities.
-    """
-    
+    """    
     def __init__(self):
         self.router = APIRouter(prefix="/marketplace", tags=["marketplace"])
         self.services = self._initialize_services()
         self.setup_routes()
         
     def _initialize_services(self) -> Dict[str, Any]:
-        """Initialize all marketplace services"""
-        return {
+        """Initialize all marketplace services"""        return {
             'content_manager': ContentManager(),
             'creator_profile': CreatorProfileManager(),
             'collaboration_engine': CollaborationEngine(),
@@ -63,12 +58,10 @@ class MarketplaceIndex:
         }
     
     def setup_routes(self):
-        """Setup all marketplace API routes"""
-        
+        """Setup all marketplace API routes"""        
         @self.router.get("/", response_model=Dict[str, Any])
         async def marketplace_index():
-            """Get marketplace overview and available services"""
-            return {
+            """Get marketplace overview and available services"""            return {
                 "marketplace": "IA Influencer Agent Marketplace",
                 "version": "1.0.0",
                 "services": list(self.services.keys()),
@@ -80,8 +73,7 @@ class MarketplaceIndex:
         
         @self.router.get("/health", response_model=Dict[str, Any])
         async def health_check():
-            """Comprehensive health check for all marketplace services"""
-            health_status = {}
+            """Comprehensive health check for all marketplace services"""            health_status = {}
             overall_healthy = True
             
             for service_name, service in self.services.items():
@@ -108,16 +100,14 @@ class MarketplaceIndex:
         
         @self.router.get("/metrics", response_model=MarketplaceMetrics)
         async def get_marketplace_metrics():
-            """Get comprehensive marketplace metrics"""
-            return await self.services['metrics_collector'].collect_metrics()
+            """Get comprehensive marketplace metrics"""            return await self.services['metrics_collector'].collect_metrics()
         
         @self.router.post("/content/upload")
         async def upload_content(
             content_data: Dict[str, Any],
             creator_id: str = Depends(self._get_current_user)
         ):
-            """Upload and process content"""
-            try:
+            """Upload and process content"""            try:
                 # Content processing
                 content_metadata = await self.services['content_manager'].process_content(
                     content_data, creator_id
@@ -157,8 +147,7 @@ class MarketplaceIndex:
             creator_id: str,
             current_user: str = Depends(self._get_current_user)
         ):
-            """Get creator dashboard with all relevant information"""
-            if creator_id != current_user:
+            """Get creator dashboard with all relevant information"""            if creator_id != current_user:
                 raise HTTPException(
                     status_code=status.HTTP_403_FORBIDDEN,
                     detail="Access denied"
@@ -203,8 +192,7 @@ class MarketplaceIndex:
             criteria: Dict[str, Any],
             creator_id: str = Depends(self._get_current_user)
         ):
-            """Find collaboration opportunities based on criteria"""
-            try:
+            """Find collaboration opportunities based on criteria"""            try:
                 opportunities = await self.services['collaboration_engine'].find_matches(
                     creator_id, criteria
                 )
@@ -228,8 +216,7 @@ class MarketplaceIndex:
             strategy_data: Dict[str, Any],
             creator_id: str = Depends(self._get_current_user)
         ):
-            """Create or update monetization strategy"""
-            try:
+            """Create or update monetization strategy"""            try:
                 strategy = await self.services['monetization_engine'].create_strategy(
                     creator_id, strategy_data
                 )
@@ -253,8 +240,7 @@ class MarketplaceIndex:
             distribution_config: Dict[str, Any],
             creator_id: str = Depends(self._get_current_user)
         ):
-            """Distribute content across multiple platforms"""
-            try:
+            """Distribute content across multiple platforms"""            try:
                 distribution_results = await self.services['distribution_manager'].distribute_content(
                     creator_id, distribution_config
                 )
@@ -278,18 +264,15 @@ class MarketplaceIndex:
                 )
     
     async def _get_current_user(self) -> str:
-        """Get current authenticated user ID"""
-        # This would typically use JWT token validation
+        """Get current authenticated user ID"""        # This would typically use JWT token validation
         # For now, returning a placeholder - integrate with actual auth system
         return "authenticated_user_id"
     
     def get_service(self, service_name: str) -> Optional[Any]:
-        """Get specific marketplace service"""
-        return self.services.get(service_name)
+        """Get specific marketplace service"""        return self.services.get(service_name)
     
     async def shutdown(self):
-        """Graceful shutdown of all marketplace services"""
-        logger.info("Shutting down marketplace services...")
+        """Graceful shutdown of all marketplace services"""        logger.info("Shutting down marketplace services...")
         
         for service_name, service in self.services.items():
             try:
@@ -303,33 +286,27 @@ class MarketplaceIndex:
 
 
 class MarketplaceServiceRegistry:
-    """
-    Service registry for marketplace components.
+    """    Service registry for marketplace components.
     Manages service discovery and dependency injection.
-    """
-    
+    """    
     def __init__(self):
         self._services = {}
         self._dependencies = {}
     
     def register_service(self, name: str, service: Any, dependencies: List[str] = None):
-        """Register a service with optional dependencies"""
-        self._services[name] = service
+        """Register a service with optional dependencies"""        self._services[name] = service
         self._dependencies[name] = dependencies or []
     
     def get_service(self, name: str) -> Any:
-        """Get registered service"""
-        if name not in self._services:
+        """Get registered service"""        if name not in self._services:
             raise ValueError(f"Service {name} not registered")
         return self._services[name]
     
     def get_all_services(self) -> Dict[str, Any]:
-        """Get all registered services"""
-        return self._services.copy()
+        """Get all registered services"""        return self._services.copy()
     
     async def initialize_services(self):
-        """Initialize all services in dependency order"""
-        initialized = set()
+        """Initialize all services in dependency order"""        initialized = set()
         
         async def init_service(name: str):
             if name in initialized:

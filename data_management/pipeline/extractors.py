@@ -1,11 +1,9 @@
-"""
-Content Extractors Module
+"""Content Extractors Module
 Author: Fahed Mlaiel <mlaiel@live.de>
 
 Advanced content extraction systems for multi-format media processing
 with AI-powered metadata analysis and intelligent feature detection.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -48,11 +46,9 @@ from ..utils.file_handler import FileHandler
 
 
 class MultiFormatExtractor:
-    """
-    Advanced multi-format content extractor supporting audio, video, image,
+    """    Advanced multi-format content extractor supporting audio, video, image,
     and text content with intelligent metadata analysis and feature extraction.
-    """
-    
+    """    
     def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -71,8 +67,7 @@ class MultiFormatExtractor:
         self._load_ai_models()
     
     def _load_ai_models(self):
-        """Load AI models for advanced feature extraction."""
-        self.ai_models = {}
+        """Load AI models for advanced feature extraction."""        self.ai_models = {}
         
         try:
             # Audio analysis models
@@ -106,8 +101,7 @@ class MultiFormatExtractor:
         content_type: str,
         extraction_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Extract comprehensive metadata from content file.
+        """        Extract comprehensive metadata from content file.
         
         Args:
             file_path: Path to content file
@@ -116,8 +110,7 @@ class MultiFormatExtractor:
             
         Returns:
             Dict containing comprehensive metadata
-        """
-        options = extraction_options or {}
+        """        options = extraction_options or {}
         
         metadata = {
             'file_info': await self._extract_file_metadata(file_path),
@@ -164,8 +157,7 @@ class MultiFormatExtractor:
         return metadata
     
     async def _extract_file_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract basic file metadata."""
-        try:
+        """Extract basic file metadata."""        try:
             file_stat = Path(file_path).stat()
             
             return {
@@ -184,8 +176,7 @@ class MultiFormatExtractor:
             return {'error': str(e)}
     
     def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA-256 hash of file."""
-        try:
+        """Calculate SHA-256 hash of file."""        try:
             hash_sha256 = hashlib.sha256()
             with open(file_path, "rb") as f:
                 for chunk in iter(lambda: f.read(4096), b""):
@@ -200,8 +191,7 @@ class MultiFormatExtractor:
         content_type: str,
         options: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Extract AI-powered analysis."""
-        ai_analysis = {}
+        """Extract AI-powered analysis."""        ai_analysis = {}
         
         try:
             if content_type == 'audio':
@@ -220,8 +210,7 @@ class MultiFormatExtractor:
         return ai_analysis
     
     async def _analyze_audio_with_ai(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """AI-powered audio analysis."""
-        analysis = {}
+        """AI-powered audio analysis."""        analysis = {}
         
         try:
             # Load audio
@@ -260,8 +249,7 @@ class MultiFormatExtractor:
         return analysis
     
     async def _analyze_video_with_ai(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """AI-powered video analysis."""
-        analysis = {}
+        """AI-powered video analysis."""        analysis = {}
         
         try:
             cap = cv2.VideoCapture(file_path)
@@ -339,8 +327,7 @@ class MultiFormatExtractor:
         return analysis
     
     async def _analyze_image_with_ai(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """AI-powered image analysis."""
-        analysis = {}
+        """AI-powered image analysis."""        analysis = {}
         
         try:
             # Load image
@@ -424,8 +411,7 @@ class MultiFormatExtractor:
         return analysis
     
     async def _analyze_text_with_ai(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """AI-powered text analysis."""
-        analysis = {}
+        """AI-powered text analysis."""        analysis = {}
         
         try:
             # Read text content
@@ -540,8 +526,7 @@ class MultiFormatExtractor:
         return analysis
     
     def _rgb_to_color_name(self, rgb: np.ndarray) -> str:
-        """Convert RGB values to approximate color name."""
-        r, g, b = rgb
+        """Convert RGB values to approximate color name."""        r, g, b = rgb
         
         # Simple color name mapping
         if r > 200 and g > 200 and b > 200:
@@ -564,8 +549,7 @@ class MultiFormatExtractor:
             return "mixed"
     
     def _analyze_rule_of_thirds(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze if image follows rule of thirds."""
-        height, width = image.shape[:2]
+        """Analyze if image follows rule of thirds."""        height, width = image.shape[:2]
         
         # Rule of thirds grid points
         third_width = width // 3
@@ -611,8 +595,7 @@ class MultiFormatExtractor:
         }
     
     def _analyze_symmetry(self, image: np.ndarray) -> Dict[str, Any]:
-        """Analyze symmetry in image."""
-        height, width = image.shape[:2]
+        """Analyze symmetry in image."""        height, width = image.shape[:2]
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Horizontal symmetry
@@ -652,8 +635,7 @@ class MultiFormatExtractor:
         }
     
     def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text using TF-IDF."""
-        try:
+        """Extract keywords from text using TF-IDF."""        try:
             # Simple keyword extraction using word frequency
             words = text.lower().split()
             
@@ -680,8 +662,7 @@ class MultiFormatExtractor:
             return []
     
     def _calculate_flesch_score(self, text: str) -> float:
-        """Calculate Flesch Reading Ease score."""
-        try:
+        """Calculate Flesch Reading Ease score."""        try:
             sentences = [s.strip() for s in text.split('.') if s.strip()]
             words = text.split()
             syllables = sum(self._count_syllables(word) for word in words)
@@ -697,8 +678,7 @@ class MultiFormatExtractor:
             return 50.0  # Default middle score
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)."""
-        word = word.lower().strip('.,!?;:"()[]{}')
+        """Count syllables in a word (simplified)."""        word = word.lower().strip('.,!?;:"()[]{}')
         if len(word) <= 3:
             return 1
         
@@ -720,15 +700,13 @@ class MultiFormatExtractor:
 
 
 class AudioFeatureExtractor:
-    """Specialized audio feature extraction with advanced signal processing."""
-    
+    """Specialized audio feature extraction with advanced signal processing."""    
     def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
     
     async def extract_technical_metadata(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract technical audio metadata."""
-        try:
+        """Extract technical audio metadata."""        try:
             # Load audio file
             y, sr = librosa.load(file_path)
             duration = len(y) / sr
@@ -761,8 +739,7 @@ class AudioFeatureExtractor:
             return {'error': str(e)}
     
     async def extract_content_features(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract advanced audio content features."""
-        try:
+        """Extract advanced audio content features."""        try:
             y, sr = librosa.load(file_path)
             
             # Comprehensive feature extraction
@@ -860,8 +837,7 @@ class AudioFeatureExtractor:
             return {'error': str(e)}
     
     async def assess_quality(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess audio quality metrics."""
-        try:
+        """Assess audio quality metrics."""        try:
             y, sr = librosa.load(file_path)
             
             quality_metrics = {}
@@ -907,8 +883,7 @@ class AudioFeatureExtractor:
             return {'error': str(e)}
     
     def _calculate_rhythm_regularity(self, beats: np.ndarray) -> float:
-        """Calculate rhythm regularity from beat positions."""
-        if len(beats) < 3:
+        """Calculate rhythm regularity from beat positions."""        if len(beats) < 3:
             return 0.0
         
         # Calculate intervals between beats
@@ -925,8 +900,7 @@ class AudioFeatureExtractor:
         return float(regularity)
     
     def _calculate_harmonic_ratio(self, y: np.ndarray, sr: int) -> float:
-        """Calculate harmonic to percussive ratio."""
-        try:
+        """Calculate harmonic to percussive ratio."""        try:
             # Separate harmonic and percussive components
             y_harmonic, y_percussive = librosa.effects.hpss(y)
             
@@ -946,8 +920,7 @@ class AudioFeatureExtractor:
             return 1.0
     
     def _analyze_energy_distribution(self, y: np.ndarray) -> Dict[str, float]:
-        """Analyze energy distribution across the audio."""
-        # Divide audio into segments
+        """Analyze energy distribution across the audio."""        # Divide audio into segments
         segment_length = len(y) // 10  # 10 segments
         if segment_length == 0:
             return {'uniformity': 0.0, 'peak_position': 0.0}
@@ -977,8 +950,7 @@ class AudioFeatureExtractor:
         }
     
     def _estimate_snr(self, y: np.ndarray) -> float:
-        """Estimate signal-to-noise ratio."""
-        try:
+        """Estimate signal-to-noise ratio."""        try:
             # Simple SNR estimation using spectral analysis
             stft = librosa.stft(y)
             magnitude = np.abs(stft)
@@ -1001,8 +973,7 @@ class AudioFeatureExtractor:
             return 20.0  # Default reasonable SNR
     
     def _assess_spectral_balance(self, freq_response: np.ndarray) -> Dict[str, float]:
-        """Assess spectral balance across frequency bands."""
-        total_energy = np.sum(freq_response)
+        """Assess spectral balance across frequency bands."""        total_energy = np.sum(freq_response)
         
         if total_energy == 0:
             return {'bass': 0.0, 'midrange': 0.0, 'treble': 0.0, 'balance_score': 0.0}
@@ -1031,8 +1002,7 @@ class AudioFeatureExtractor:
         }
     
     def _calculate_overall_quality_score(self, quality_metrics: Dict[str, Any]) -> float:
-        """Calculate overall quality score from individual metrics."""
-        score = 100.0  # Start with perfect score
+        """Calculate overall quality score from individual metrics."""        score = 100.0  # Start with perfect score
         
         # Penalize clipping
         if quality_metrics.get('clipping', {}).get('has_clipping', False):
@@ -1057,15 +1027,13 @@ class AudioFeatureExtractor:
 
 
 class VideoFeatureExtractor:
-    """Specialized video feature extraction with computer vision analysis."""
-    
+    """Specialized video feature extraction with computer vision analysis."""    
     def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
     
     async def extract_technical_metadata(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract technical video metadata."""
-        try:
+        """Extract technical video metadata."""        try:
             cap = cv2.VideoCapture(file_path)
             
             if not cap.isOpened():
@@ -1106,8 +1074,7 @@ class VideoFeatureExtractor:
             return {'error': str(e)}
     
     async def extract_content_features(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract video content features using computer vision."""
-        try:
+        """Extract video content features using computer vision."""        try:
             cap = cv2.VideoCapture(file_path)
             
             if not cap.isOpened():
@@ -1165,8 +1132,7 @@ class VideoFeatureExtractor:
             return {'error': str(e)}
     
     async def assess_quality(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess video quality metrics."""
-        try:
+        """Assess video quality metrics."""        try:
             cap = cv2.VideoCapture(file_path)
             
             if not cap.isOpened():
@@ -1250,8 +1216,7 @@ class VideoFeatureExtractor:
             return {'error': str(e)}
     
     def _extract_frame_features(self, frame: np.ndarray, frame_number: int, fps: float) -> Dict[str, Any]:
-        """Extract features from a single frame."""
-        height, width = frame.shape[:2]
+        """Extract features from a single frame."""        height, width = frame.shape[:2]
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         # Edge detection
@@ -1276,8 +1241,7 @@ class VideoFeatureExtractor:
         }
     
     def _extract_motion_features(self, prev_frame: np.ndarray, curr_frame: np.ndarray) -> Dict[str, Any]:
-        """Extract motion features between consecutive frames."""
-        # Convert to grayscale
+        """Extract motion features between consecutive frames."""        # Convert to grayscale
         prev_gray = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY)
         curr_gray = cv2.cvtColor(curr_frame, cv2.COLOR_BGR2GRAY)
         
@@ -1311,8 +1275,7 @@ class VideoFeatureExtractor:
         }
     
     def _extract_color_features(self, frame: np.ndarray) -> Dict[str, Any]:
-        """Extract color features from frame."""
-        # Convert to different color spaces
+        """Extract color features from frame."""        # Convert to different color spaces
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         
         # Color statistics
@@ -1346,8 +1309,7 @@ class VideoFeatureExtractor:
         }
     
     def _extract_composition_features(self, frame: np.ndarray) -> Dict[str, Any]:
-        """Extract composition features from frame."""
-        height, width = frame.shape[:2]
+        """Extract composition features from frame."""        height, width = frame.shape[:2]
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         # Rule of thirds analysis
@@ -1389,15 +1351,13 @@ class VideoFeatureExtractor:
         }
     
     def _estimate_frame_noise(self, gray_frame: np.ndarray) -> float:
-        """Estimate noise level in frame."""
-        # Use Laplacian to estimate noise
+        """Estimate noise level in frame."""        # Use Laplacian to estimate noise
         laplacian = cv2.Laplacian(gray_frame, cv2.CV_64F)
         noise_estimate = np.var(laplacian)
         return float(noise_estimate)
     
     def _aggregate_video_features(self, features: Dict[str, List]) -> Dict[str, Any]:
-        """Aggregate frame-level features into video-level features."""
-        aggregated = {}
+        """Aggregate frame-level features into video-level features."""        aggregated = {}
         
         # Aggregate visual features
         if features['visual_features']:
@@ -1470,8 +1430,7 @@ class VideoFeatureExtractor:
         return aggregated
     
     def _calculate_video_quality_score(self, quality_metrics: Dict[str, Any]) -> float:
-        """Calculate overall video quality score."""
-        score = 100.0
+        """Calculate overall video quality score."""        score = 100.0
         
         # Sharpness assessment
         sharpness = quality_metrics.get('sharpness', {}).get('mean', 0)
@@ -1497,15 +1456,13 @@ class VideoFeatureExtractor:
 
 
 class ImageFeatureExtractor:
-    """Specialized image feature extraction with computer vision analysis."""
-    
+    """Specialized image feature extraction with computer vision analysis."""    
     def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
     
     async def extract_technical_metadata(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract technical image metadata."""
-        try:
+        """Extract technical image metadata."""        try:
             with Image.open(file_path) as img:
                 # Basic image properties
                 width, height = img.size
@@ -1546,8 +1503,7 @@ class ImageFeatureExtractor:
             return {'error': str(e)}
     
     async def extract_content_features(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract image content features using computer vision."""
-        try:
+        """Extract image content features using computer vision."""        try:
             # Load image with OpenCV for analysis
             image = cv2.imread(file_path)
             if image is None:
@@ -1576,8 +1532,7 @@ class ImageFeatureExtractor:
             return {'error': str(e)}
     
     async def assess_quality(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess image quality metrics."""
-        try:
+        """Assess image quality metrics."""        try:
             image = cv2.imread(file_path)
             if image is None:
                 raise ValueError("Could not load image")
@@ -1627,8 +1582,7 @@ class ImageFeatureExtractor:
             return {'error': str(e)}
     
     def _estimate_bits_per_pixel(self, mode: str) -> int:
-        """Estimate bits per pixel based on image mode."""
-        mode_bits = {
+        """Estimate bits per pixel based on image mode."""        mode_bits = {
             '1': 1,      # 1-bit pixels, black and white
             'L': 8,      # 8-bit pixels, black and white
             'P': 8,      # 8-bit pixels, mapped to any other mode using a color palette
@@ -1642,8 +1596,7 @@ class ImageFeatureExtractor:
         return mode_bits.get(mode, 8)
     
     async def _extract_color_features(self, image: np.ndarray) -> Dict[str, Any]:
-        """Extract comprehensive color features."""
-        # Convert to different color spaces
+        """Extract comprehensive color features."""        # Convert to different color spaces
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
         
@@ -1693,8 +1646,7 @@ class ImageFeatureExtractor:
         return color_stats
     
     def _calculate_image_quality_score(self, quality_metrics: Dict[str, Any]) -> float:
-        """Calculate overall image quality score."""
-        score = 100.0
+        """Calculate overall image quality score."""        score = 100.0
         
         # Sharpness assessment
         sharpness = quality_metrics.get('sharpness', 0)
@@ -1731,8 +1683,7 @@ class ImageFeatureExtractor:
 
 
 class TextFeatureExtractor:
-    """Specialized text feature extraction with NLP and linguistic analysis."""
-    
+    """Specialized text feature extraction with NLP and linguistic analysis."""    
     def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -1741,8 +1692,7 @@ class TextFeatureExtractor:
         self._initialize_nlp_tools()
     
     def _initialize_nlp_tools(self):
-        """Initialize NLP processing tools."""
-        try:
+        """Initialize NLP processing tools."""        try:
             import spacy
             # Try to load a language model
             try:
@@ -1756,8 +1706,7 @@ class TextFeatureExtractor:
             self.logger.warning("spaCy not available, some features will be limited")
     
     async def extract_technical_metadata(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract technical text metadata."""
-        try:
+        """Extract technical text metadata."""        try:
             # Read text file
             with open(file_path, 'r', encoding='utf-8') as f:
                 text = f.read()
@@ -1800,8 +1749,7 @@ class TextFeatureExtractor:
             return {'error': str(e)}
     
     async def extract_content_features(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract text content features using NLP."""
-        try:
+        """Extract text content features using NLP."""        try:
             # Read text file
             with open(file_path, 'r', encoding='utf-8') as f:
                 text = f.read()
@@ -1829,8 +1777,7 @@ class TextFeatureExtractor:
             return {'error': str(e)}
     
     async def assess_quality(self, file_path: str, options: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess text quality metrics."""
-        try:
+        """Assess text quality metrics."""        try:
             # Read text file
             with open(file_path, 'r', encoding='utf-8') as f:
                 text = f.read()
@@ -1867,8 +1814,7 @@ class TextFeatureExtractor:
             return {'error': str(e)}
     
     def _count_sentences(self, text: str) -> int:
-        """Count sentences in text."""
-        if self.nlp:
+        """Count sentences in text."""        if self.nlp:
             doc = self.nlp(text)
             return len(list(doc.sents))
         else:
@@ -1877,8 +1823,7 @@ class TextFeatureExtractor:
             return max(1, sentence_endings)
     
     async def _detect_language(self, text_sample: str) -> Dict[str, Any]:
-        """Detect text language."""
-        try:
+        """Detect text language."""        try:
             from langdetect import detect, detect_langs
             
             detected_lang = detect(text_sample)
@@ -1895,8 +1840,7 @@ class TextFeatureExtractor:
             return {'detected_language': 'unknown', 'confidence': 0.0, 'all_probabilities': []}
     
     async def _extract_linguistic_features(self, text: str) -> Dict[str, Any]:
-        """Extract linguistic features from text."""
-        features = {}
+        """Extract linguistic features from text."""        features = {}
         
         if self.nlp:
             # Process with spaCy
@@ -1936,8 +1880,7 @@ class TextFeatureExtractor:
         return features
     
     async def _extract_semantic_features(self, text: str) -> Dict[str, Any]:
-        """Extract semantic features from text."""
-        features = {}
+        """Extract semantic features from text."""        features = {}
         
         # Topic modeling (simplified)
         features['topic_keywords'] = await self._extract_topic_keywords(text)
@@ -1951,8 +1894,7 @@ class TextFeatureExtractor:
         return features
     
     async def _extract_stylistic_features(self, text: str) -> Dict[str, Any]:
-        """Extract stylistic features from text."""
-        features = {}
+        """Extract stylistic features from text."""        features = {}
         
         words = text.split()
         sentences = text.split('.')
@@ -1978,8 +1920,7 @@ class TextFeatureExtractor:
         return features
     
     async def _extract_readability_features(self, text: str) -> Dict[str, Any]:
-        """Extract readability features."""
-        features = {}
+        """Extract readability features."""        features = {}
         
         words = text.split()
         sentences = self._count_sentences(text)
@@ -2005,8 +1946,7 @@ class TextFeatureExtractor:
         return features
     
     async def _extract_text_statistics(self, text: str) -> Dict[str, Any]:
-        """Extract statistical features from text."""
-        stats = {}
+        """Extract statistical features from text."""        stats = {}
         
         words = text.split()
         chars = list(text)
@@ -2041,8 +1981,7 @@ class TextFeatureExtractor:
         return stats
     
     def _get_word_frequency(self, words: List[str]) -> Dict[str, int]:
-        """Get word frequency distribution."""
-        word_freq = {}
+        """Get word frequency distribution."""        word_freq = {}
         for word in words:
             clean_word = word.lower().strip('.,!?;:"()[]')
             if clean_word:
@@ -2053,8 +1992,7 @@ class TextFeatureExtractor:
         return dict(sorted_words[:20])
     
     async def _extract_topic_keywords(self, text: str) -> List[str]:
-        """Extract topic keywords from text."""
-        try:
+        """Extract topic keywords from text."""        try:
             from sklearn.feature_extraction.text import TfidfVectorizer
             
             # Simple TF-IDF based keyword extraction
@@ -2090,8 +2028,7 @@ class TextFeatureExtractor:
             return [word for word, freq in sorted_words[:10]]
     
     async def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze sentiment of text."""
-        try:
+        """Analyze sentiment of text."""        try:
             from textblob import TextBlob
             
             blob = TextBlob(text)
@@ -2138,8 +2075,7 @@ class TextFeatureExtractor:
             }
     
     async def _calculate_semantic_density(self, text: str) -> float:
-        """Calculate semantic density of text."""
-        words = text.split()
+        """Calculate semantic density of text."""        words = text.split()
         if not words:
             return 0.0
         
@@ -2155,8 +2091,7 @@ class TextFeatureExtractor:
         return content_words / len(words)
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (approximate)."""
-        word = word.lower().strip('.,!?;:"()[]')
+        """Count syllables in a word (approximate)."""        word = word.lower().strip('.,!?;:"()[]')
         if not word:
             return 0
         
@@ -2179,8 +2114,7 @@ class TextFeatureExtractor:
         return max(1, syllable_count)
     
     async def _assess_grammar_quality(self, text: str) -> Dict[str, Any]:
-        """Assess grammar quality of text."""
-        try:
+        """Assess grammar quality of text."""        try:
             import language_tool_python
             
             tool = language_tool_python.LanguageTool('en-US')
@@ -2238,8 +2172,7 @@ class TextFeatureExtractor:
             }
     
     async def _assess_readability(self, text: str) -> Dict[str, Any]:
-        """Assess readability of text."""
-        readability_features = await self._extract_readability_features(text)
+        """Assess readability of text."""        readability_features = await self._extract_readability_features(text)
         
         # Average the readability scores
         scores = []
@@ -2259,8 +2192,7 @@ class TextFeatureExtractor:
         }
     
     async def _assess_coherence(self, text: str) -> Dict[str, Any]:
-        """Assess coherence and cohesion of text."""
-        sentences = [s.strip() for s in text.split('.') if s.strip()]
+        """Assess coherence and cohesion of text."""        sentences = [s.strip() for s in text.split('.') if s.strip()]
         
         if len(sentences) < 2:
             return {'coherence_score': 50.0, 'metrics': {}}
@@ -2303,8 +2235,7 @@ class TextFeatureExtractor:
         }
     
     async def _assess_vocabulary_richness(self, text: str) -> Dict[str, Any]:
-        """Assess vocabulary richness and diversity."""
-        words = [word.lower().strip('.,!?;:"()[]') for word in text.split() if word]
+        """Assess vocabulary richness and diversity."""        words = [word.lower().strip('.,!?;:"()[]') for word in text.split() if word]
         
         if not words:
             return {'richness_score': 0.0, 'metrics': {}}
@@ -2347,8 +2278,7 @@ class TextFeatureExtractor:
         }
     
     async def _assess_completeness(self, text: str) -> Dict[str, Any]:
-        """Assess completeness of text content."""
-        # Simple completeness heuristics
+        """Assess completeness of text content."""        # Simple completeness heuristics
         completeness_metrics = {}
         
         # Check for proper structure
@@ -2393,8 +2323,7 @@ class TextFeatureExtractor:
         }
     
     async def _assess_formality(self, text: str) -> float:
-        """Assess formality level of text."""
-        # Simple formality indicators
+        """Assess formality level of text."""        # Simple formality indicators
         formal_indicators = ['therefore', 'furthermore', 'consequently', 'moreover', 'nevertheless', 'however']
         informal_indicators = ["don't", "can't", "won't", "it's", "that's", 'really', 'very', 'pretty', 'quite']
         
@@ -2412,8 +2341,7 @@ class TextFeatureExtractor:
         return formality_ratio
     
     def _calculate_text_quality_score(self, quality_metrics: Dict[str, Any]) -> float:
-        """Calculate overall text quality score."""
-        score = 100.0
+        """Calculate overall text quality score."""        score = 100.0
         
         # Grammar quality (30% weight)
         grammar = quality_metrics.get('grammar', {})
@@ -2444,8 +2372,7 @@ class TextFeatureExtractor:
 
 
 class MultiFormatExtractor:
-    """Multi-format content extractor supporting audio, video, image, and text files."""
-    
+    """Multi-format content extractor supporting audio, video, image, and text files."""    
     def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -2464,8 +2391,7 @@ class MultiFormatExtractor:
         self.format_mappings = self._build_format_mappings()
     
     def _build_format_mappings(self) -> Dict[str, str]:
-        """Build mapping from file extensions to content types."""
-        return {
+        """Build mapping from file extensions to content types."""        return {
             # Audio formats
             '.mp3': 'audio', '.wav': 'audio', '.flac': 'audio', '.aac': 'audio',
             '.ogg': 'audio', '.m4a': 'audio', '.wma': 'audio',
@@ -2489,8 +2415,7 @@ class MultiFormatExtractor:
         source_path: Union[str, Path],
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Extract content from file with automatic format detection.
+        """        Extract content from file with automatic format detection.
         
         Args:
             source_path: Path to content file
@@ -2498,8 +2423,7 @@ class MultiFormatExtractor:
             
         Returns:
             Extracted content data with metadata
-        """
-        source_path = Path(source_path)
+        """        source_path = Path(source_path)
         
         if not source_path.exists():
             raise ExtractionError(f"Source file not found: {source_path}")
@@ -2544,8 +2468,7 @@ class MultiFormatExtractor:
             raise ExtractionError(f"Content extraction failed: {e}")
     
     async def _detect_content_type(self, file_path: Path) -> str:
-        """Detect content type from file extension and MIME type."""
-        
+        """Detect content type from file extension and MIME type."""        
         # Check file extension
         extension = file_path.suffix.lower()
         if extension in self.format_mappings:
@@ -2572,8 +2495,7 @@ class MultiFormatExtractor:
     
     @cache_result(ttl=3600)
     async def get_supported_formats(self) -> Dict[str, List[str]]:
-        """Get list of supported formats by content type."""
-        
+        """Get list of supported formats by content type."""        
         supported = {}
         for extension, content_type in self.format_mappings.items():
             if content_type not in supported:
@@ -2584,11 +2506,9 @@ class MultiFormatExtractor:
 
 
 class MetadataExtractor:
-    """
-    Comprehensive metadata extraction for all content types
+    """    Comprehensive metadata extraction for all content types
     with AI-powered analysis and semantic understanding.
-    """
-    
+    """    
     def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -2598,8 +2518,7 @@ class MetadataExtractor:
         self._initialize_ai_models()
     
     def _initialize_ai_models(self):
-        """Initialize AI models for metadata analysis."""
-        
+        """Initialize AI models for metadata analysis."""        
         # Text analysis models
         self.text_classifier = pipeline("text-classification", 
                                        model="cardiffnlp/twitter-roberta-base-emotion")
@@ -2618,8 +2537,7 @@ class MetadataExtractor:
         content_path: Union[str, Path],
         content_type: str
     ) -> Dict[str, Any]:
-        """
-        Extract comprehensive metadata from content.
+        """        Extract comprehensive metadata from content.
         
         Args:
             content_path: Path to content file
@@ -2627,8 +2545,7 @@ class MetadataExtractor:
             
         Returns:
             Comprehensive metadata dictionary
-        """
-        
+        """        
         content_path = Path(content_path)
         
         # Extract basic file metadata
@@ -2652,8 +2569,7 @@ class MetadataExtractor:
         return complete_metadata
     
     async def _extract_basic_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract basic file system metadata."""
-        
+        """Extract basic file system metadata."""        
         stat = file_path.stat()
         
         return {
@@ -2667,8 +2583,7 @@ class MetadataExtractor:
         }
     
     async def _calculate_file_hash(self, file_path: Path, algorithm: str) -> str:
-        """Calculate file hash using specified algorithm."""
-        
+        """Calculate file hash using specified algorithm."""        
         hash_func = getattr(hashlib, algorithm)()
         
         with open(file_path, 'rb') as f:
@@ -2682,8 +2597,7 @@ class MetadataExtractor:
         file_path: Path,
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract content-type specific metadata."""
-        
+        """Extract content-type specific metadata."""        
         if content_type == 'audio':
             return await self._extract_audio_metadata(file_path)
         elif content_type == 'video':
@@ -2696,8 +2610,7 @@ class MetadataExtractor:
             return {}
     
     async def _extract_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract audio-specific metadata."""
-        
+        """Extract audio-specific metadata."""        
         metadata = {}
         
         try:
@@ -2732,8 +2645,7 @@ class MetadataExtractor:
         return metadata
     
     async def _extract_video_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract video-specific metadata."""
-        
+        """Extract video-specific metadata."""        
         metadata = {}
         
         try:
@@ -2771,8 +2683,7 @@ class MetadataExtractor:
         return metadata
     
     async def _extract_image_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract image-specific metadata."""
-        
+        """Extract image-specific metadata."""        
         metadata = {}
         
         try:
@@ -2811,8 +2722,7 @@ class MetadataExtractor:
         return metadata
     
     def _extract_dominant_colors(self, img_array: np.ndarray, k: int = 5) -> List[List[int]]:
-        """Extract dominant colors from image using K-means clustering."""
-        
+        """Extract dominant colors from image using K-means clustering."""        
         try:
             from sklearn.cluster import KMeans
             
@@ -2832,8 +2742,7 @@ class MetadataExtractor:
             return []
     
     async def _extract_text_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract text-specific metadata."""
-        
+        """Extract text-specific metadata."""        
         metadata = {}
         
         try:
@@ -2870,8 +2779,7 @@ class MetadataExtractor:
         return metadata
     
     def _detect_language(self, text: str) -> str:
-        """Detect language of text content."""
-        
+        """Detect language of text content."""        
         try:
             from langdetect import detect
             return detect(text)
@@ -2883,8 +2791,7 @@ class MetadataExtractor:
         file_path: Path,
         content_type: str
     ) -> Dict[str, Any]:
-        """Extract AI-powered semantic metadata."""
-        
+        """Extract AI-powered semantic metadata."""        
         semantic_data = {}
         
         try:
@@ -2904,8 +2811,7 @@ class MetadataExtractor:
         return semantic_data
     
     async def _analyze_text_semantics(self, file_path: Path) -> Dict[str, Any]:
-        """Analyze text content for semantic meaning."""
-        
+        """Analyze text content for semantic meaning."""        
         with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
             text = f.read()
         
@@ -2925,8 +2831,7 @@ class MetadataExtractor:
         }
     
     def _extract_semantic_tags(self, text: str) -> List[str]:
-        """Extract semantic tags from text using NLP."""
-        
+        """Extract semantic tags from text using NLP."""        
         try:
             # Use spaCy for named entity recognition
             nlp = spacy.load("en_core_web_sm")
@@ -2943,8 +2848,7 @@ class MetadataExtractor:
             return []
     
     async def _analyze_image_semantics(self, file_path: Path) -> Dict[str, Any]:
-        """Analyze image content for semantic meaning."""
-        
+        """Analyze image content for semantic meaning."""        
         try:
             # Image classification
             image = Image.open(file_path).convert('RGB')
@@ -2959,8 +2863,7 @@ class MetadataExtractor:
             return {'analysis_error': str(e)}
     
     def _classify_scene_type(self, classification_result: List[Dict]) -> str:
-        """Classify scene type based on detected objects."""
-        
+        """Classify scene type based on detected objects."""        
         # Simple scene classification based on detected objects
         outdoor_keywords = ['mountain', 'tree', 'sky', 'beach', 'field']
         indoor_keywords = ['room', 'furniture', 'kitchen', 'bedroom']
@@ -2979,11 +2882,9 @@ class MetadataExtractor:
 
 
 class FeatureExtractor:
-    """
-    Advanced feature extraction for machine learning and AI processing
+    """    Advanced feature extraction for machine learning and AI processing
     with content-specific feature engineering and optimization.
-    """
-    
+    """    
     def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -2991,8 +2892,7 @@ class FeatureExtractor:
         self._initialize_feature_extractors()
     
     def _initialize_feature_extractors(self):
-        """Initialize specialized feature extractors."""
-        
+        """Initialize specialized feature extractors."""        
         self.feature_extractors = {
             'audio': AudioFeatureExtractor(),
             'video': VideoFeatureExtractor(),
@@ -3006,8 +2906,7 @@ class FeatureExtractor:
         content_data: Dict[str, Any],
         feature_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Extract comprehensive features for ML/AI processing.
+        """        Extract comprehensive features for ML/AI processing.
         
         Args:
             content_data: Content data with metadata
@@ -3015,8 +2914,7 @@ class FeatureExtractor:
             
         Returns:
             Extracted features dictionary
-        """
-        
+        """        
         content_type = content_data.get('type')
         if content_type not in self.feature_extractors:
             raise ExtractionError(f"No feature extractor for {content_type}")
@@ -3037,11 +2935,9 @@ class FeatureExtractor:
 
 
 class ContentExtractor:
-    """
-    Unified content extractor orchestrating all extraction processes
+    """    Unified content extractor orchestrating all extraction processes
     with intelligent caching and optimization strategies.
-    """
-    
+    """    
     def __init__(self, config: ExtractionConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -3063,8 +2959,7 @@ class ContentExtractor:
         source_path: Union[str, Path],
         extraction_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Perform complete content extraction including data, metadata, and features.
+        """        Perform complete content extraction including data, metadata, and features.
         
         Args:
             source_path: Path to content file
@@ -3072,8 +2967,7 @@ class ContentExtractor:
             
         Returns:
             Complete extraction results
-        """
-        
+        """        
         extraction_options = extraction_options or {}
         
         # Extract basic content

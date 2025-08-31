@@ -1,5 +1,4 @@
-"""
-Performance Analytics Engine - Real-time performance monitoring and optimization
+"""Performance Analytics Engine - Real-time performance monitoring and optimization
 ==============================================================================
 
 Advanced performance tracking system for multi-format content creators with
@@ -8,7 +7,6 @@ real-time metrics, AI-powered insights, and automated optimization recommendatio
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -26,8 +24,7 @@ from fastapi import HTTPException
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for performance analysis"""
-    AUDIO = "audio"
+    """Supported content types for performance analysis"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -35,8 +32,7 @@ class ContentType(Enum):
     LIVESTREAM = "livestream"
 
 class PerformanceMetric(Enum):
-    """Key performance indicators for content analysis"""
-    VIEWS = "views"
+    """Key performance indicators for content analysis"""    VIEWS = "views"
     ENGAGEMENT_RATE = "engagement_rate"
     REACH = "reach"
     IMPRESSIONS = "impressions"
@@ -49,8 +45,7 @@ class PerformanceMetric(Enum):
 
 @dataclass
 class PerformanceSnapshot:
-    """Real-time performance snapshot for content"""
-    content_id: str
+    """Real-time performance snapshot for content"""    content_id: str
     creator_id: str
     content_type: ContentType
     platform: str
@@ -62,8 +57,7 @@ class PerformanceSnapshot:
 
 @dataclass
 class PerformanceInsight:
-    """AI-generated performance insight with recommendations"""
-    insight_id: str
+    """AI-generated performance insight with recommendations"""    insight_id: str
     content_id: str
     insight_type: str
     confidence_score: float
@@ -73,11 +67,9 @@ class PerformanceInsight:
     estimated_improvement: float
 
 class PerformanceAnalyticsEngine:
-    """
-    Enterprise-grade performance analytics engine with real-time monitoring,
+    """    Enterprise-grade performance analytics engine with real-time monitoring,
     AI-powered insights, and predictive optimization for content creators.
-    """
-    
+    """    
     def __init__(self, redis_client: redis.Redis, db_pool: asyncpg.Pool):
         self.redis = redis_client
         self.db_pool = db_pool
@@ -87,8 +79,7 @@ class PerformanceAnalyticsEngine:
         self.clustering_model = KMeansCluster(n_clusters=5, random_state=42)
         
     async def initialize(self) -> None:
-        """Initialize analytics engine with database connections and models"""
-        try:
+        """Initialize analytics engine with database connections and models"""        try:
             await self._setup_database_tables()
             await self._load_historical_data()
             await self._initialize_ml_models()
@@ -98,10 +89,8 @@ class PerformanceAnalyticsEngine:
             raise
 
     async def _setup_database_tables(self) -> None:
-        """Setup required database tables for performance tracking"""
-        async with self.db_pool.acquire() as conn:
-            await conn.execute("""
-                CREATE TABLE IF NOT EXISTS performance_snapshots (
+        """Setup required database tables for performance tracking"""        async with self.db_pool.acquire() as conn:
+            await conn.execute("""                CREATE TABLE IF NOT EXISTS performance_snapshots (
                     id SERIAL PRIMARY KEY,
                     content_id VARCHAR(255) NOT NULL,
                     creator_id VARCHAR(255) NOT NULL,
@@ -132,10 +121,8 @@ class PerformanceAnalyticsEngine:
             """)
 
     async def _load_historical_data(self) -> None:
-        """Load historical performance data for model training"""
-        async with self.db_pool.acquire() as conn:
-            historical_data = await conn.fetch("""
-                SELECT content_id, metrics, score, trending_probability 
+        """Load historical performance data for model training"""        async with self.db_pool.acquire() as conn:
+            historical_data = await conn.fetch("""                SELECT content_id, metrics, score, trending_probability 
                 FROM performance_snapshots 
                 WHERE created_at >= NOW() - INTERVAL '90 days'
                 ORDER BY created_at DESC
@@ -146,8 +133,7 @@ class PerformanceAnalyticsEngine:
                 self._train_performance_models(df)
 
     def _train_performance_models(self, df: pd.DataFrame) -> None:
-        """Train ML models with historical performance data"""
-        try:
+        """Train ML models with historical performance data"""        try:
             # Extract features from metrics
             metrics_features = []
             for _, row in df.iterrows():
@@ -172,13 +158,11 @@ class PerformanceAnalyticsEngine:
             logger.error(f"Failed to train performance models: {e}")
 
     async def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for performance prediction"""
-        # Initialize models would go here in full implementation
+        """Initialize machine learning models for performance prediction"""        # Initialize models would go here in full implementation
         pass
 
     async def track_performance_real_time(self, content_id: str, platform: str) -> PerformanceSnapshot:
-        """Track real-time performance metrics for content"""
-        try:
+        """Track real-time performance metrics for content"""        try:
             # Get current metrics from platform APIs
             current_metrics = await self._fetch_platform_metrics(content_id, platform)
             
@@ -219,8 +203,7 @@ class PerformanceAnalyticsEngine:
             raise HTTPException(status_code=500, detail="Performance tracking failed")
 
     async def _fetch_platform_metrics(self, content_id: str, platform: str) -> Dict[str, Any]:
-        """Fetch current metrics from platform APIs"""
-        # Implementation would integrate with actual platform APIs
+        """Fetch current metrics from platform APIs"""        # Implementation would integrate with actual platform APIs
         # For now, return simulated data
         return {
             'creator_id': f"creator_{content_id[:8]}",
@@ -241,8 +224,7 @@ class PerformanceAnalyticsEngine:
         }
 
     async def _calculate_performance_score(self, metrics: Dict[str, Any], platform: str) -> float:
-        """Calculate normalized performance score (0-100)"""
-        try:
+        """Calculate normalized performance score (0-100)"""        try:
             # Weighted scoring based on platform characteristics
             platform_weights = {
                 'youtube': {'views': 0.3, 'engagement_rate': 0.4, 'shares': 0.3},
@@ -266,8 +248,7 @@ class PerformanceAnalyticsEngine:
             return 0.0
 
     async def _calculate_trending_probability(self, metrics: Dict[str, Any], content_id: str) -> float:
-        """Calculate probability of content trending (0-1)"""
-        try:
+        """Calculate probability of content trending (0-1)"""        try:
             # Get historical performance for comparison
             historical_avg = await self._get_historical_average_performance(content_id)
             
@@ -292,11 +273,9 @@ class PerformanceAnalyticsEngine:
             return 0.0
 
     async def _get_historical_average_performance(self, content_id: str) -> Dict[str, float]:
-        """Get historical average performance metrics"""
-        try:
+        """Get historical average performance metrics"""        try:
             async with self.db_pool.acquire() as conn:
-                result = await conn.fetchrow("""
-                    SELECT AVG((metrics->>'engagement_rate')::float) as avg_engagement_rate,
+                result = await conn.fetchrow("""                    SELECT AVG((metrics->>'engagement_rate')::float) as avg_engagement_rate,
                            AVG((metrics->>'views')::float) as avg_views,
                            AVG(score) as avg_score
                     FROM performance_snapshots 
@@ -317,11 +296,9 @@ class PerformanceAnalyticsEngine:
             return {'engagement_rate': 0.01, 'views': 100, 'score': 50}
 
     async def _store_performance_snapshot(self, snapshot: PerformanceSnapshot) -> None:
-        """Store performance snapshot in database"""
-        try:
+        """Store performance snapshot in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO performance_snapshots 
+                await conn.execute("""                    INSERT INTO performance_snapshots 
                     (content_id, creator_id, content_type, platform, metrics, metadata, score, trending_probability)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
                 """, 
@@ -338,8 +315,7 @@ class PerformanceAnalyticsEngine:
             logger.error(f"Failed to store performance snapshot: {e}")
 
     async def generate_performance_insights(self, content_id: str) -> List[PerformanceInsight]:
-        """Generate AI-powered performance insights and recommendations"""
-        try:
+        """Generate AI-powered performance insights and recommendations"""        try:
             # Get recent performance data
             recent_snapshots = await self._get_recent_snapshots(content_id, limit=10)
             
@@ -374,11 +350,9 @@ class PerformanceAnalyticsEngine:
             return []
 
     async def _get_recent_snapshots(self, content_id: str, limit: int = 10) -> List[PerformanceSnapshot]:
-        """Get recent performance snapshots for analysis"""
-        try:
+        """Get recent performance snapshots for analysis"""        try:
             async with self.db_pool.acquire() as conn:
-                records = await conn.fetch("""
-                    SELECT * FROM performance_snapshots 
+                records = await conn.fetch("""                    SELECT * FROM performance_snapshots 
                     WHERE content_id = $1 
                     ORDER BY created_at DESC 
                     LIMIT $2
@@ -406,8 +380,7 @@ class PerformanceAnalyticsEngine:
             return []
 
     async def _analyze_performance_trends(self, snapshots: List[PerformanceSnapshot]) -> Optional[PerformanceInsight]:
-        """Analyze performance trends and generate insights"""
-        if len(snapshots) < 3:
+        """Analyze performance trends and generate insights"""        if len(snapshots) < 3:
             return None
         
         try:
@@ -448,8 +421,7 @@ class PerformanceAnalyticsEngine:
             return None
 
     async def _analyze_engagement_patterns(self, snapshots: List[PerformanceSnapshot]) -> Optional[PerformanceInsight]:
-        """Analyze engagement patterns for optimization"""
-        try:
+        """Analyze engagement patterns for optimization"""        try:
             engagement_rates = [s.metrics.get('engagement_rate', 0) for s in snapshots]
             avg_engagement = np.mean(engagement_rates)
             
@@ -473,8 +445,7 @@ class PerformanceAnalyticsEngine:
             return None
 
     async def _analyze_optimal_timing(self, snapshots: List[PerformanceSnapshot]) -> Optional[PerformanceInsight]:
-        """Analyze optimal posting timing"""
-        try:
+        """Analyze optimal posting timing"""        try:
             # Group by hour and calculate average performance
             hourly_performance = {}
             for snapshot in snapshots:
@@ -510,11 +481,9 @@ class PerformanceAnalyticsEngine:
             return None
 
     async def _store_performance_insight(self, insight: PerformanceInsight) -> None:
-        """Store performance insight in database"""
-        try:
+        """Store performance insight in database"""        try:
             async with self.db_pool.acquire() as conn:
-                await conn.execute("""
-                    INSERT INTO performance_insights 
+                await conn.execute("""                    INSERT INTO performance_insights 
                     (insight_id, content_id, insight_type, confidence_score, recommendation, 
                      impact_prediction, implementation_priority, estimated_improvement)
                     VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
@@ -533,8 +502,7 @@ class PerformanceAnalyticsEngine:
             logger.error(f"Failed to store performance insight: {e}")
 
     async def get_performance_dashboard_data(self, creator_id: str, timeframe: str = "7d") -> Dict[str, Any]:
-        """Get comprehensive performance data for dashboard"""
-        try:
+        """Get comprehensive performance data for dashboard"""        try:
             timeframe_mapping = {
                 '1d': timedelta(days=1),
                 '7d': timedelta(days=7),
@@ -547,8 +515,7 @@ class PerformanceAnalyticsEngine:
             
             async with self.db_pool.acquire() as conn:
                 # Get performance overview
-                overview = await conn.fetchrow("""
-                    SELECT 
+                overview = await conn.fetchrow("""                    SELECT 
                         COUNT(*) as total_content,
                         AVG(score) as avg_score,
                         AVG(trending_probability) as avg_trending_prob,
@@ -558,8 +525,7 @@ class PerformanceAnalyticsEngine:
                 """, creator_id, start_date)
                 
                 # Get top performing content
-                top_content = await conn.fetch("""
-                    SELECT content_id, platform, MAX(score) as best_score, 
+                top_content = await conn.fetch("""                    SELECT content_id, platform, MAX(score) as best_score, 
                            AVG((metrics->>'views')::float) as avg_views
                     FROM performance_snapshots 
                     WHERE creator_id = $1 AND created_at >= $2
@@ -569,8 +535,7 @@ class PerformanceAnalyticsEngine:
                 """, creator_id, start_date)
                 
                 # Get platform performance
-                platform_performance = await conn.fetch("""
-                    SELECT platform, 
+                platform_performance = await conn.fetch("""                    SELECT platform, 
                            AVG(score) as avg_score,
                            COUNT(*) as content_count,
                            AVG((metrics->>'engagement_rate')::float) as avg_engagement
@@ -581,8 +546,7 @@ class PerformanceAnalyticsEngine:
                 """, creator_id, start_date)
                 
                 # Get recent insights
-                recent_insights = await conn.fetch("""
-                    SELECT insight_type, recommendation, confidence_score, 
+                recent_insights = await conn.fetch("""                    SELECT insight_type, recommendation, confidence_score, 
                            implementation_priority, created_at
                     FROM performance_insights pi
                     JOIN performance_snapshots ps ON pi.content_id = ps.content_id
@@ -607,8 +571,7 @@ class PerformanceAnalyticsEngine:
             raise HTTPException(status_code=500, detail="Dashboard data retrieval failed")
 
     async def optimize_content_strategy(self, creator_id: str) -> Dict[str, Any]:
-        """Generate AI-powered content strategy optimization recommendations"""
-        try:
+        """Generate AI-powered content strategy optimization recommendations"""        try:
             # Get comprehensive performance data
             dashboard_data = await self.get_performance_dashboard_data(creator_id, "30d")
             
@@ -634,8 +597,7 @@ class PerformanceAnalyticsEngine:
             raise HTTPException(status_code=500, detail="Strategy optimization failed")
 
     async def _optimize_posting_schedule(self, creator_id: str) -> Dict[str, Any]:
-        """Optimize posting schedule based on historical performance"""
-        # Implementation for posting schedule optimization
+        """Optimize posting schedule based on historical performance"""        # Implementation for posting schedule optimization
         return {
             'recommended_times': ['09:00', '15:00', '19:00'],
             'best_days': ['Tuesday', 'Wednesday', 'Sunday'],
@@ -644,8 +606,7 @@ class PerformanceAnalyticsEngine:
         }
 
     async def _optimize_platform_strategy(self, creator_id: str) -> Dict[str, Any]:
-        """Optimize platform allocation strategy"""
-        # Implementation for platform strategy optimization
+        """Optimize platform allocation strategy"""        # Implementation for platform strategy optimization
         return {
             'primary_platforms': ['YouTube', 'Instagram'],
             'growth_opportunities': ['TikTok', 'Spotify'],
@@ -654,8 +615,7 @@ class PerformanceAnalyticsEngine:
         }
 
     async def _optimize_content_format(self, creator_id: str) -> Dict[str, Any]:
-        """Optimize content format strategy"""
-        return {
+        """Optimize content format strategy"""        return {
             'high_performing_formats': ['Short-form video', 'Carousel posts', 'Stories'],
             'underperforming_formats': ['Long-form text', 'Static images'],
             'format_recommendations': {
@@ -667,8 +627,7 @@ class PerformanceAnalyticsEngine:
         }
 
     async def _optimize_engagement_strategy(self, creator_id: str) -> Dict[str, Any]:
-        """Optimize audience engagement tactics"""
-        return {
+        """Optimize audience engagement tactics"""        return {
             'engagement_tactics': [
                 'Use interactive stickers in stories',
                 'Ask questions in captions',
@@ -681,8 +640,7 @@ class PerformanceAnalyticsEngine:
         }
 
     async def _set_performance_targets(self, creator_id: str) -> Dict[str, Any]:
-        """Set realistic performance targets based on historical data"""
-        return {
+        """Set realistic performance targets based on historical data"""        return {
             'monthly_targets': {
                 'engagement_rate': 4.5,
                 'follower_growth': 15.0,

@@ -1,5 +1,4 @@
-"""
-Storage Agent - Index Principal & Point d'Entrée Central
+"""Storage Agent - Index Principal & Point d'Entrée Central
 ========================================================
 
 Point d'entrée principal pour le système de stockage multi-backend intelligent.
@@ -21,7 +20,6 @@ Spécialités de l'Équipe:
 - Architecte Microservices & Ingénieur DevOps: Fahed Mlaiel
 - Ingénieur Prompt IA & Spécialiste Protection Contenu: Fahed Mlaiel
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -38,25 +36,20 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class StorageAgentIndex:
-    """
-    Index principal et coordinateur central pour le Storage Agent.
+    """    Index principal et coordinateur central pour le Storage Agent.
     Fournit une interface unifiée pour toutes les opérations de stockage.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialise l'index principal du Storage Agent
+        """        Initialise l'index principal du Storage Agent
         
         Args:
             config: Configuration optionnelle pour tous les composants
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self._initialize_components()
         self._setup_logging()
         
     def _initialize_components(self):
-        """Initialise tous les composants du Storage Agent"""
-        logger.info("🚀 Initialisation des composants Storage Agent...")
+        """Initialise tous les composants du Storage Agent"""        logger.info("🚀 Initialisation des composants Storage Agent...")
         
         # Orchestrateur principal
         self.orchestrator = StorageOrchestrator(self.config.get('orchestrator', {}))
@@ -76,18 +69,15 @@ class StorageAgentIndex:
         logger.info("✅ Tous les composants Storage Agent initialisés avec succès")
         
     def _setup_logging(self):
-        """Configure le logging pour tous les composants"""
-        log_level = self.config.get('log_level', 'INFO')
+        """Configure le logging pour tous les composants"""        log_level = self.config.get('log_level', 'INFO')
         logging.getLogger('storage_agent').setLevel(getattr(logging, log_level))
         
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Vérifie la santé de tous les composants du Storage Agent
+        """        Vérifie la santé de tous les composants du Storage Agent
         
         Returns:
             Dict contenant l'état de santé de tous les composants
-        """
-        logger.info("🔍 Vérification santé Storage Agent...")
+        """        logger.info("🔍 Vérification santé Storage Agent...")
         
         health_status = {
             'overall_status': 'healthy',
@@ -149,8 +139,7 @@ class StorageAgentIndex:
         backup: bool = True,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Interface principale pour stocker du contenu avec traitement complet
+        """        Interface principale pour stocker du contenu avec traitement complet
         
         Args:
             file_path: Chemin vers le fichier à stocker
@@ -162,8 +151,7 @@ class StorageAgentIndex:
             
         Returns:
             Dict contenant les résultats de l'opération de stockage
-        """
-        logger.info(f"📁 Stockage contenu: {file_path} avec stratégie {strategy.value}")
+        """        logger.info(f"📁 Stockage contenu: {file_path} avec stratégie {strategy.value}")
         
         try:
             # Créer la requête de stockage
@@ -203,8 +191,7 @@ class StorageAgentIndex:
         prefer_cdn: bool = True,
         quality: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Récupère du contenu stocké
+        """        Récupère du contenu stocké
         
         Args:
             file_id: Identifiant du fichier à récupérer
@@ -213,8 +200,7 @@ class StorageAgentIndex:
             
         Returns:
             Dict contenant les informations et URLs du fichier
-        """
-        logger.info(f"📥 Récupération contenu: {file_id}")
+        """        logger.info(f"📥 Récupération contenu: {file_id}")
         
         try:
             file_info = await self.orchestrator.retrieve_file(
@@ -243,8 +229,7 @@ class StorageAgentIndex:
         optimization_type: OptimizationType = OptimizationType.COMPREHENSIVE,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Optimise du contenu existant
+        """        Optimise du contenu existant
         
         Args:
             file_path: Chemin vers le fichier à optimiser
@@ -253,8 +238,7 @@ class StorageAgentIndex:
             
         Returns:
             Dict contenant les résultats de l'optimisation
-        """
-        logger.info(f"🎨 Optimisation contenu: {file_path}")
+        """        logger.info(f"🎨 Optimisation contenu: {file_path}")
         
         try:
             result = await self.content_optimizer.optimize_content(
@@ -283,8 +267,7 @@ class StorageAgentIndex:
         backup_type: BackupType = BackupType.INCREMENTAL,
         destination_backends: Optional[List[StorageBackend]] = None
     ) -> Dict[str, Any]:
-        """
-        Crée une sauvegarde de fichiers spécifiés
+        """        Crée une sauvegarde de fichiers spécifiés
         
         Args:
             file_ids: Liste des identifiants de fichiers à sauvegarder
@@ -293,8 +276,7 @@ class StorageAgentIndex:
             
         Returns:
             Dict contenant les informations de sauvegarde
-        """
-        logger.info(f"💾 Création sauvegarde pour {len(file_ids)} fichiers")
+        """        logger.info(f"💾 Création sauvegarde pour {len(file_ids)} fichiers")
         
         try:
             backup_result = await self.backup_manager.create_backup(
@@ -318,13 +300,11 @@ class StorageAgentIndex:
             }
             
     async def get_analytics(self) -> Dict[str, Any]:
-        """
-        Récupère les analytics et métriques du Storage Agent
+        """        Récupère les analytics et métriques du Storage Agent
         
         Returns:
             Dict contenant toutes les métriques système
-        """
-        logger.info("📊 Récupération analytics Storage Agent")
+        """        logger.info("📊 Récupération analytics Storage Agent")
         
         try:
             analytics = {
@@ -343,8 +323,7 @@ class StorageAgentIndex:
             return {'error': str(e)}
             
     async def _get_storage_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques de stockage"""
-        return {
+        """Récupère les statistiques de stockage"""        return {
             'total_files': getattr(self.orchestrator, 'total_files', 0),
             'total_size': getattr(self.orchestrator, 'total_size', 0),
             'backend_usage': await self.backend_manager.get_usage_stats(),
@@ -352,8 +331,7 @@ class StorageAgentIndex:
         }
         
     async def _get_processing_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques de traitement"""
-        return {
+        """Récupère les statistiques de traitement"""        return {
             'files_processed': getattr(self.file_processor, 'files_processed', 0),
             'processing_time_avg': getattr(self.file_processor, 'avg_processing_time', 0),
             'format_distribution': getattr(self.file_processor, 'format_stats', {}),
@@ -361,8 +339,7 @@ class StorageAgentIndex:
         }
         
     async def _get_optimization_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques d'optimisation"""
-        return {
+        """Récupère les statistiques d'optimisation"""        return {
             'optimizations_performed': getattr(self.content_optimizer, 'optimizations_count', 0),
             'avg_size_reduction': getattr(self.content_optimizer, 'avg_size_reduction', 0),
             'seo_improvements': getattr(self.content_optimizer, 'seo_improvements', 0),
@@ -370,8 +347,7 @@ class StorageAgentIndex:
         }
         
     async def _get_backup_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques de sauvegarde"""
-        return {
+        """Récupère les statistiques de sauvegarde"""        return {
             'total_backups': getattr(self.backup_manager, 'total_backups', 0),
             'backup_size': getattr(self.backup_manager, 'total_backup_size', 0),
             'success_rate': getattr(self.backup_manager, 'backup_success_rate', 0),
@@ -379,8 +355,7 @@ class StorageAgentIndex:
         }
         
     async def _get_performance_metrics(self) -> Dict[str, Any]:
-        """Récupère les métriques de performance système"""
-        return {
+        """Récupère les métriques de performance système"""        return {
             'response_time': getattr(self, 'avg_response_time', 0),
             'throughput': getattr(self, 'throughput', 0),
             'cpu_usage': getattr(self, 'cpu_usage', 0),
@@ -390,16 +365,14 @@ class StorageAgentIndex:
 
 # Fonction factory principale pour créer l'index
 def create_storage_agent_index(config: Optional[Dict[str, Any]] = None) -> StorageAgentIndex:
-    """
-    Factory function pour créer l'index principal du Storage Agent
+    """    Factory function pour créer l'index principal du Storage Agent
     
     Args:
         config: Configuration optionnelle pour tous les composants
         
     Returns:
         StorageAgentIndex: Instance configurée de l'index principal
-    """
-    return StorageAgentIndex(config)
+    """    return StorageAgentIndex(config)
 
 # Configuration par défaut recommandée
 DEFAULT_CONFIG = {

@@ -1,5 +1,4 @@
-"""
-📊 Financial Analytics - Industrial-Grade Revenue Intelligence & Forecasting
+"""📊 Financial Analytics - Industrial-Grade Revenue Intelligence & Forecasting
 ==================================================================
 
 Ultra-sophisticated financial analytics engine with AI-powered forecasting,
@@ -15,7 +14,6 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Data Collection → AI Analysis → Predictive Modeling → Actionable Insights
 ==================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -96,8 +94,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsPeriod(Enum):
-    """Analytics time periods"""
-    DAILY = "daily"
+    """Analytics time periods"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -106,8 +103,7 @@ class AnalyticsPeriod(Enum):
 
 
 class MetricType(Enum):
-    """Financial metric types"""
-    REVENUE = "revenue"
+    """Financial metric types"""    REVENUE = "revenue"
     PROFIT = "profit"
     MARGIN = "margin"
     GROWTH_RATE = "growth_rate"
@@ -120,8 +116,7 @@ class MetricType(Enum):
 
 
 class ReportType(Enum):
-    """Financial report types"""
-    REVENUE_SUMMARY = "revenue_summary"
+    """Financial report types"""    REVENUE_SUMMARY = "revenue_summary"
     PROFIT_LOSS = "profit_loss"
     PLATFORM_COMPARISON = "platform_comparison"
     GROWTH_ANALYSIS = "growth_analysis"
@@ -132,8 +127,7 @@ class ReportType(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend analysis directions"""
-    UPWARD = "upward"
+    """Trend analysis directions"""    UPWARD = "upward"
     DOWNWARD = "downward"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -141,8 +135,7 @@ class TrendDirection(Enum):
 
 @dataclass
 class FinancialMetric:
-    """Individual financial metric"""
-    metric_id: str
+    """Individual financial metric"""    metric_id: str
     metric_type: MetricType
     value: Decimal
     currency: str
@@ -158,8 +151,7 @@ class FinancialMetric:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis results"""
-    metric_type: MetricType
+    """Trend analysis results"""    metric_type: MetricType
     direction: TrendDirection
     percentage_change: float
     confidence_score: float
@@ -173,8 +165,7 @@ class TrendAnalysis:
 
 @dataclass
 class ROIAnalysis:
-    """Return on Investment analysis"""
-    investment_category: str
+    """Return on Investment analysis"""    investment_category: str
     total_investment: Decimal
     total_return: Decimal
     roi_percentage: float
@@ -189,8 +180,7 @@ class ROIAnalysis:
 
 @dataclass
 class MarketIntelligence:
-    """Market intelligence data"""
-    industry_averages: Dict[str, float]
+    """Market intelligence data"""    industry_averages: Dict[str, float]
     competitor_analysis: Dict[str, Any]
     market_trends: List[Dict[str, Any]]
     opportunity_score: float  # 0.0 to 1.0
@@ -204,8 +194,7 @@ class MarketIntelligence:
 
 @dataclass
 class FinancialForecast:
-    """Financial forecasting data"""
-    forecast_id: str
+    """Financial forecasting data"""    forecast_id: str
     metric_type: MetricType
     forecast_period: AnalyticsPeriod
     predicted_values: List[Tuple[datetime, Decimal]]
@@ -219,8 +208,7 @@ class FinancialForecast:
 
 
 class FinancialCalculator:
-    """Advanced financial calculations and metrics"""
-    
+    """Advanced financial calculations and metrics"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.FinancialCalculator")
     
@@ -230,8 +218,7 @@ class FinancialCalculator:
         returns: Decimal,
         time_period_days: int = 365
     ) -> Dict[str, float]:
-        """Calculate comprehensive ROI metrics"""
-        try:
+        """Calculate comprehensive ROI metrics"""        try:
             if investment <= 0:
                 return {'error': 'Investment must be positive'}
             
@@ -256,8 +243,7 @@ class FinancialCalculator:
         churn_rate: float,
         profit_margin: float = 0.2
     ) -> Dict[str, float]:
-        """Calculate Customer Lifetime Value"""
-        try:
+        """Calculate Customer Lifetime Value"""        try:
             if churn_rate <= 0 or churn_rate >= 1:
                 return {'error': 'Churn rate must be between 0 and 1'}
             
@@ -280,8 +266,7 @@ class FinancialCalculator:
         previous_value: Decimal,
         periods: int = 1
     ) -> Dict[str, float]:
-        """Calculate various growth rates"""
-        try:
+        """Calculate various growth rates"""        try:
             if previous_value <= 0:
                 return {'error': 'Previous value must be positive'}
             
@@ -305,8 +290,7 @@ class FinancialCalculator:
         revenue: Decimal,
         engagement_weights: Optional[Dict[str, float]] = None
     ) -> Dict[str, float]:
-        """Calculate monetary value of engagement"""
-        try:
+        """Calculate monetary value of engagement"""        try:
             if not engagement_weights:
                 engagement_weights = {
                     'likes': 1.0,
@@ -344,8 +328,7 @@ class FinancialCalculator:
 
 
 class TrendAnalyzer:
-    """Advanced trend analysis using statistical methods"""
-    
+    """Advanced trend analysis using statistical methods"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.TrendAnalyzer")
     
@@ -354,8 +337,7 @@ class TrendAnalyzer:
         data_points: List[Tuple[datetime, Decimal]],
         metric_type: MetricType
     ) -> TrendAnalysis:
-        """Analyze trend in time series data"""
-        try:
+        """Analyze trend in time series data"""        try:
             if len(data_points) < 3:
                 return TrendAnalysis(
                     metric_type=metric_type,
@@ -455,8 +437,7 @@ class TrendAnalyzer:
         trend_strength: float,
         metric_type: MetricType
     ) -> List[str]:
-        """Generate actionable recommendations based on trend analysis"""
-        recommendations = []
+        """Generate actionable recommendations based on trend analysis"""        recommendations = []
         
         if direction == TrendDirection.DOWNWARD:
             if metric_type == MetricType.REVENUE:
@@ -497,8 +478,7 @@ class TrendAnalyzer:
         values: List[float],
         time_index: List[int]
     ) -> List[str]:
-        """Identify potential contributing factors to trends"""
-        factors = []
+        """Identify potential contributing factors to trends"""        factors = []
         
         # Check for seasonality (simplified)
         if len(values) >= 12:
@@ -527,8 +507,7 @@ class TrendAnalyzer:
 
 
 class ReportGenerator:
-    """Generate comprehensive financial reports"""
-    
+    """Generate comprehensive financial reports"""    
     def __init__(self, database: DatabaseManager):
         self.database = database
         self.calculator = FinancialCalculator()
@@ -541,8 +520,7 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate executive dashboard with KPIs"""
-        try:
+        """Generate executive dashboard with KPIs"""        try:
             # Fetch key metrics
             revenue_data = await self._fetch_revenue_metrics(user_id, period_start, period_end)
             engagement_data = await self._fetch_engagement_metrics(user_id, period_start, period_end)
@@ -597,8 +575,7 @@ class ReportGenerator:
         forecast_periods: int = 12,
         period_type: AnalyticsPeriod = AnalyticsPeriod.MONTHLY
     ) -> FinancialForecast:
-        """Generate AI-powered financial forecasts"""
-        try:
+        """Generate AI-powered financial forecasts"""        try:
             # Fetch historical data
             historical_data = await self._fetch_historical_metrics(
                 user_id, metric_type, periods=24  # 2 years of data
@@ -687,8 +664,7 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate comprehensive ROI analysis report"""
-        try:
+        """Generate comprehensive ROI analysis report"""        try:
             # Investment categories
             investment_categories = [
                 'content_creation', 'marketing', 'equipment', 'software',
@@ -771,8 +747,7 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> List[FinancialMetric]:
-        """Fetch revenue metrics from database"""
-        # This would query the database
+        """Fetch revenue metrics from database"""        # This would query the database
         return []
     
     async def _fetch_engagement_metrics(
@@ -781,8 +756,7 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> List[FinancialMetric]:
-        """Fetch engagement metrics from database"""
-        # This would query the database
+        """Fetch engagement metrics from database"""        # This would query the database
         return []
     
     async def _fetch_platform_metrics(
@@ -791,8 +765,7 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, List[FinancialMetric]]:
-        """Fetch platform-specific metrics"""
-        # This would query the database
+        """Fetch platform-specific metrics"""        # This would query the database
         return {}
     
     async def _calculate_growth_vs_previous_period(
@@ -802,13 +775,11 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> float:
-        """Calculate growth compared to previous period"""
-        # This would calculate actual growth
+        """Calculate growth compared to previous period"""        # This would calculate actual growth
         return 15.5  # Placeholder
     
     async def _generate_market_intelligence(self, user_id: str) -> MarketIntelligence:
-        """Generate market intelligence analysis"""
-        return MarketIntelligence(
+        """Generate market intelligence analysis"""        return MarketIntelligence(
             industry_averages={'cpm': 2.5, 'engagement_rate': 0.045},
             competitor_analysis={'avg_revenue': 5000, 'top_platforms': ['youtube', 'instagram']},
             market_trends=[{'trend': 'video_content_growth', 'impact': 'positive'}],
@@ -825,8 +796,7 @@ class ReportGenerator:
         user_id: str,
         revenue_data: List[FinancialMetric]
     ) -> List[Dict[str, Any]]:
-        """Generate performance alerts and warnings"""
-        alerts = []
+        """Generate performance alerts and warnings"""        alerts = []
         
         if not revenue_data:
             alerts.append({
@@ -843,8 +813,7 @@ class ReportGenerator:
         engagement_data: List[FinancialMetric],
         platform_data: Dict[str, List[FinancialMetric]]
     ) -> List[str]:
-        """Generate executive-level recommendations"""
-        recommendations = []
+        """Generate executive-level recommendations"""        recommendations = []
         
         if len(platform_data) < 3:
             recommendations.append("Consider expanding to additional platforms for revenue diversification")
@@ -856,8 +825,7 @@ class ReportGenerator:
         user_id: str,
         revenue_data: List[FinancialMetric]
     ) -> List[Dict[str, Any]]:
-        """Identify priority actions for the user"""
-        return [
+        """Identify priority actions for the user"""        return [
             {
                 'action': 'Optimize top-performing content',
                 'priority': 'high',
@@ -870,8 +838,7 @@ class ReportGenerator:
         self,
         engagement_data: List[FinancialMetric]
     ) -> float:
-        """Calculate average engagement value"""
-        if not engagement_data:
+        """Calculate average engagement value"""        if not engagement_data:
             return 0.0
         
         return float(sum(m.value for m in engagement_data) / len(engagement_data))
@@ -882,8 +849,7 @@ class ReportGenerator:
         metric_type: MetricType,
         periods: int
     ) -> List[Tuple[datetime, Decimal]]:
-        """Fetch historical metrics for forecasting"""
-        # This would query the database
+        """Fetch historical metrics for forecasting"""        # This would query the database
         return []  # Placeholder
     
     def _create_forecast_features(
@@ -891,8 +857,7 @@ class ReportGenerator:
         dates: List[datetime],
         values: List[float]
     ) -> List[List[float]]:
-        """Create features for forecasting model"""
-        features = []
+        """Create features for forecasting model"""        features = []
         
         for i in range(1, len(values)):
             feature_vector = [
@@ -912,8 +877,7 @@ class ReportGenerator:
         current_features: List[float],
         prediction: float
     ) -> List[float]:
-        """Update features for next period prediction"""
-        # This would properly update features based on the prediction
+        """Update features for next period prediction"""        # This would properly update features based on the prediction
         return current_features  # Simplified
     
     async def _fetch_investment_data(
@@ -923,8 +887,7 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Fetch investment data by category"""
-        # This would query the database
+        """Fetch investment data by category"""        # This would query the database
         return Decimal('100')  # Placeholder
     
     async def _fetch_return_data(
@@ -934,8 +897,7 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Fetch return data by category"""
-        # This would query the database
+        """Fetch return data by category"""        # This would query the database
         return Decimal('150')  # Placeholder
     
     async def _analyze_roi_trends(
@@ -944,8 +906,7 @@ class ReportGenerator:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Analyze ROI trends over time"""
-        return {
+        """Analyze ROI trends over time"""        return {
             'direction': 'upward',
             'confidence': 0.8,
             'forecast': 'continued_growth'
@@ -955,8 +916,7 @@ class ReportGenerator:
         self,
         roi_analyses: Dict[str, ROIAnalysis]
     ) -> List[str]:
-        """Generate ROI optimization recommendations"""
-        recommendations = []
+        """Generate ROI optimization recommendations"""        recommendations = []
         
         # Find lowest performing categories
         sorted_categories = sorted(
@@ -973,8 +933,7 @@ class ReportGenerator:
 
 
 class FinancialAnalytics:
-    """Main financial analytics orchestrator"""
-    
+    """Main financial analytics orchestrator"""    
     def __init__(
         self,
         database: DatabaseManager,
@@ -990,8 +949,7 @@ class FinancialAnalytics:
         self.logger = logging.getLogger(f"{__name__}.FinancialAnalytics")
     
     async def initialize(self) -> bool:
-        """Initialize financial analytics system"""
-        try:
+        """Initialize financial analytics system"""        try:
             self.logger.info("🚀 Initializing Financial Analytics System...")
             
             # Initialize ML models
@@ -1014,8 +972,7 @@ class FinancialAnalytics:
         period_end: datetime,
         metrics: List[MetricType]
     ) -> Dict[str, FinancialMetric]:
-        """Calculate comprehensive financial metrics"""
-        try:
+        """Calculate comprehensive financial metrics"""        try:
             calculated_metrics = {}
             
             for metric_type in metrics:
@@ -1052,8 +1009,7 @@ class FinancialAnalytics:
         metric_type: MetricType,
         period_months: int = 6
     ) -> TrendAnalysis:
-        """Analyze trends for specific metrics"""
-        try:
+        """Analyze trends for specific metrics"""        try:
             # Fetch historical data
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_months * 30)
@@ -1084,8 +1040,7 @@ class FinancialAnalytics:
         period_end: datetime,
         **kwargs
     ) -> Dict[str, Any]:
-        """Generate comprehensive financial reports"""
-        try:
+        """Generate comprehensive financial reports"""        try:
             if report_type == ReportType.EXECUTIVE_DASHBOARD:
                 return await self.report_generator.generate_executive_dashboard(
                     user_id, period_start, period_end
@@ -1115,8 +1070,7 @@ class FinancialAnalytics:
         self,
         user_id: str
     ) -> Dict[str, Any]:
-        """Get real-time financial insights and alerts"""
-        try:
+        """Get real-time financial insights and alerts"""        try:
             current_time = datetime.utcnow()
             today_start = current_time.replace(hour=0, minute=0, second=0, microsecond=0)
             
@@ -1180,16 +1134,14 @@ class FinancialAnalytics:
     # Private helper methods
     
     async def _initialize_prediction_models(self):
-        """Initialize ML models for predictions"""
-        try:
+        """Initialize ML models for predictions"""        try:
             # This would initialize actual ML models
             pass
         except Exception as e:
             self.logger.error(f"Model initialization error: {e}")
     
     async def _setup_analytics_tables(self):
-        """Setup database tables for analytics"""
-        try:
+        """Setup database tables for analytics"""        try:
             # This would create database tables
             pass
         except Exception as e:
@@ -1201,8 +1153,7 @@ class FinancialAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate total revenue for period"""
-        # This would query actual revenue data
+        """Calculate total revenue for period"""        # This would query actual revenue data
         return Decimal('1000.00')  # Placeholder
     
     async def _calculate_total_roi(
@@ -1211,8 +1162,7 @@ class FinancialAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate total ROI for period"""
-        # This would calculate actual ROI
+        """Calculate total ROI for period"""        # This would calculate actual ROI
         return Decimal('25.5')  # 25.5% ROI placeholder
     
     async def _calculate_growth_rate(
@@ -1221,8 +1171,7 @@ class FinancialAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate growth rate for period"""
-        # This would calculate actual growth rate
+        """Calculate growth rate for period"""        # This would calculate actual growth rate
         return Decimal('15.2')  # 15.2% growth placeholder
     
     async def _calculate_engagement_value(
@@ -1231,8 +1180,7 @@ class FinancialAnalytics:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate engagement value for period"""
-        # This would calculate actual engagement value
+        """Calculate engagement value for period"""        # This would calculate actual engagement value
         return Decimal('500.00')  # Placeholder
     
     async def _fetch_metric_history(
@@ -1242,13 +1190,11 @@ class FinancialAnalytics:
         start_date: datetime,
         end_date: datetime
     ) -> List[Tuple[datetime, Decimal]]:
-        """Fetch historical metric data"""
-        # This would query the database
+        """Fetch historical metric data"""        # This would query the database
         return []  # Placeholder
     
     async def _generate_forecast_chart(self, forecast: FinancialForecast) -> str:
-        """Generate forecast visualization chart"""
-        try:
+        """Generate forecast visualization chart"""        try:
             # Create plot
             plt.figure(figsize=(12, 6))
             
@@ -1291,8 +1237,7 @@ class FinancialAnalytics:
         user_id: str,
         metrics: Dict[str, FinancialMetric]
     ) -> List[Dict[str, str]]:
-        """Generate quick action recommendations"""
-        actions = []
+        """Generate quick action recommendations"""        actions = []
         
         revenue_metric = metrics.get('revenue')
         if revenue_metric and revenue_metric.value < Decimal('100'):

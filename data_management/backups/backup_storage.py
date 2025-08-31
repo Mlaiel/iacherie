@@ -1,5 +1,4 @@
-"""
-🗄️ Backup Storage - Multi-Cloud Storage Management System
+"""🗄️ Backup Storage - Multi-Cloud Storage Management System
 ======================================================
 Module: backend/data_management/backups/backup_storage.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -13,7 +12,6 @@ Responsibility: Stockage multi-cloud sécurisé avec redondance et optimisation
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class StorageConfig:
-    """Configuration pour les différents providers de stockage"""
-    provider: str
+    """Configuration pour les différents providers de stockage"""    provider: str
     region: str
     bucket_name: str
     access_key: Optional[str] = None
@@ -50,8 +47,7 @@ class StorageConfig:
     lifecycle_enabled: bool = True
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit la configuration en dictionnaire"""
-        return {
+        """Convertit la configuration en dictionnaire"""        return {
             "provider": self.provider,
             "region": self.region,
             "bucket_name": self.bucket_name,
@@ -64,8 +60,7 @@ class StorageConfig:
 
 @dataclass
 class UploadProgress:
-    """Suivi de progression d'upload"""
-    total_size: int = 0
+    """Suivi de progression d'upload"""    total_size: int = 0
     uploaded_size: int = 0
     current_file: Optional[str] = None
     start_time: Optional[datetime] = None
@@ -73,15 +68,13 @@ class UploadProgress:
     
     @property
     def progress_percentage(self) -> float:
-        """Calcule le pourcentage de progression"""
-        if self.total_size == 0:
+        """Calcule le pourcentage de progression"""        if self.total_size == 0:
             return 0.0
         return (self.uploaded_size / self.total_size) * 100
 
 
 class StorageProvider(ABC):
-    """Interface abstraite pour les providers de stockage"""
-    
+    """Interface abstraite pour les providers de stockage"""    
     @abstractmethod
     async def upload_file(
         self,
@@ -89,8 +82,7 @@ class StorageProvider(ABC):
         remote_path: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> StorageLocation:
-        """Upload un fichier vers le storage"""
-        pass
+        """Upload un fichier vers le storage"""        pass
     
     @abstractmethod
     async def download_file(
@@ -98,13 +90,11 @@ class StorageProvider(ABC):
         remote_path: str,
         local_path: Path
     ) -> bool:
-        """Download un fichier depuis le storage"""
-        pass
+        """Download un fichier depuis le storage"""        pass
     
     @abstractmethod
     async def delete_file(self, remote_path: str) -> bool:
-        """Supprime un fichier du storage"""
-        pass
+        """Supprime un fichier du storage"""        pass
     
     @abstractmethod
     async def list_files(
@@ -112,18 +102,15 @@ class StorageProvider(ABC):
         prefix: str = "",
         limit: int = 1000
     ) -> List[Dict[str, Any]]:
-        """Liste les fichiers dans le storage"""
-        pass
+        """Liste les fichiers dans le storage"""        pass
     
     @abstractmethod
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Récupère les métadonnées d'un fichier"""
-        pass
+        """Récupère les métadonnées d'un fichier"""        pass
 
 
 class S3StorageProvider(StorageProvider):
-    """
-    Provider de stockage AWS S3 avec fonctionnalités avancées
+    """    Provider de stockage AWS S3 avec fonctionnalités avancées
     
     Fonctionnalités:
     - Upload multipart pour gros fichiers
@@ -131,8 +118,7 @@ class S3StorageProvider(StorageProvider):
     - Chiffrement server-side
     - Storage classes optimisées
     - Monitoring et métriques
-    """
-    
+    """    
     def __init__(self, config: StorageConfig):
         self.config = config
         self.client = None
@@ -142,8 +128,7 @@ class S3StorageProvider(StorageProvider):
         logger.info(f"S3StorageProvider initialized for bucket: {config.bucket_name}")
     
     def _initialize_client(self):
-        """Initialise le client S3"""
-        try:
+        """Initialise le client S3"""        try:
             session_config = {}
             
             if self.config.access_key and self.config.secret_key:
@@ -178,8 +163,7 @@ class S3StorageProvider(StorageProvider):
         remote_path: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> StorageLocation:
-        """
-        Upload un fichier vers S3 avec multipart pour gros fichiers
+        """        Upload un fichier vers S3 avec multipart pour gros fichiers
         
         Args:
             local_path: Chemin local du fichier
@@ -188,8 +172,7 @@ class S3StorageProvider(StorageProvider):
             
         Returns:
             StorageLocation: Informations sur l'emplacement de stockage
-        """
-        try:
+        """        try:
             file_size = local_path.stat().st_size
             start_time = datetime.now()
             
@@ -246,8 +229,7 @@ class S3StorageProvider(StorageProvider):
             raise StorageUploadException(f"S3 upload failed: {e}")
     
     async def _simple_upload(self, local_path: Path, remote_path: str, extra_args: Dict[str, Any]):
-        """Upload simple pour petits fichiers"""
-        loop = asyncio.get_event_loop()
+        """Upload simple pour petits fichiers"""        loop = asyncio.get_event_loop()
         with ThreadPoolExecutor() as executor:
             await loop.run_in_executor(
                 executor,
@@ -259,8 +241,7 @@ class S3StorageProvider(StorageProvider):
             )
     
     async def _multipart_upload(self, local_path: Path, remote_path: str, extra_args: Dict[str, Any]):
-        """Upload multipart pour gros fichiers avec progression"""
-        part_size = 100 * 1024 * 1024  # 100MB par partie
+        """Upload multipart pour gros fichiers avec progression"""        part_size = 100 * 1024 * 1024  # 100MB par partie
         file_size = local_path.stat().st_size
         
         # Initiation multipart upload
@@ -316,8 +297,7 @@ class S3StorageProvider(StorageProvider):
             raise e
     
     async def _verify_upload(self, remote_path: str, expected_size: int):
-        """Vérifie que l'upload s'est bien déroulé"""
-        try:
+        """Vérifie que l'upload s'est bien déroulé"""        try:
             response = self.client.head_object(
                 Bucket=self.config.bucket_name,
                 Key=remote_path
@@ -331,8 +311,7 @@ class S3StorageProvider(StorageProvider):
             raise StorageException(f"Upload verification failed: {e}")
     
     async def download_file(self, remote_path: str, local_path: Path) -> bool:
-        """
-        Download un fichier depuis S3
+        """        Download un fichier depuis S3
         
         Args:
             remote_path: Chemin dans S3
@@ -340,8 +319,7 @@ class S3StorageProvider(StorageProvider):
             
         Returns:
             bool: True si le download a réussi
-        """
-        try:
+        """        try:
             local_path.parent.mkdir(parents=True, exist_ok=True)
             
             loop = asyncio.get_event_loop()
@@ -362,16 +340,14 @@ class S3StorageProvider(StorageProvider):
             return False
     
     async def delete_file(self, remote_path: str) -> bool:
-        """
-        Supprime un fichier de S3
+        """        Supprime un fichier de S3
         
         Args:
             remote_path: Chemin du fichier dans S3
             
         Returns:
             bool: True si la suppression a réussi
-        """
-        try:
+        """        try:
             self.client.delete_object(
                 Bucket=self.config.bucket_name,
                 Key=remote_path
@@ -385,8 +361,7 @@ class S3StorageProvider(StorageProvider):
             return False
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
-        """
-        Liste les fichiers dans S3
+        """        Liste les fichiers dans S3
         
         Args:
             prefix: Préfixe pour filtrer les fichiers
@@ -394,8 +369,7 @@ class S3StorageProvider(StorageProvider):
             
         Returns:
             List[Dict[str, Any]]: Liste des fichiers avec métadonnées
-        """
-        try:
+        """        try:
             files = []
             paginator = self.client.get_paginator("list_objects_v2")
             
@@ -423,16 +397,14 @@ class S3StorageProvider(StorageProvider):
             return []
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """
-        Récupère les métadonnées d'un fichier S3
+        """        Récupère les métadonnées d'un fichier S3
         
         Args:
             remote_path: Chemin du fichier dans S3
             
         Returns:
             Dict[str, Any]: Métadonnées du fichier
-        """
-        try:
+        """        try:
             response = self.client.head_object(
                 Bucket=self.config.bucket_name,
                 Key=remote_path
@@ -453,14 +425,12 @@ class S3StorageProvider(StorageProvider):
             return {}
     
     def _guess_content_type(self, file_path: Path) -> str:
-        """Devine le type de contenu d'un fichier"""
-        import mimetypes
+        """Devine le type de contenu d'un fichier"""        import mimetypes
         content_type, _ = mimetypes.guess_type(str(file_path))
         return content_type or "application/octet-stream"
     
     async def _calculate_file_checksum(self, file_path: Path, algorithm: str = "md5") -> str:
-        """Calcule le checksum d'un fichier"""
-        hash_obj = hashlib.new(algorithm)
+        """Calcule le checksum d'un fichier"""        hash_obj = hashlib.new(algorithm)
         
         with open(file_path, 'rb') as f:
             while chunk := f.read(8192):
@@ -470,20 +440,17 @@ class S3StorageProvider(StorageProvider):
 
 
 class AzureStorageProvider(StorageProvider):
-    """
-    Provider de stockage Azure Blob Storage
+    """    Provider de stockage Azure Blob Storage
     
     Fonctionnalités similaires à S3 avec APIs Azure
-    """
-    
+    """    
     def __init__(self, config: StorageConfig):
         self.config = config
         self.client = None
         logger.info("AzureStorageProvider initialized (implementation pending)")
     
     async def upload_file(self, local_path: Path, remote_path: str, metadata: Optional[Dict[str, Any]] = None) -> StorageLocation:
-        """Upload vers Azure Blob Storage"""
-        try:
+        """Upload vers Azure Blob Storage"""        try:
             # Basic Azure Blob Storage implementation placeholder
             logger.info(f"Azure upload: {local_path} -> {remote_path}")
             
@@ -506,8 +473,7 @@ class AzureStorageProvider(StorageProvider):
             raise
     
     async def download_file(self, remote_path: str, local_path: Path) -> bool:
-        """Download depuis Azure Blob Storage"""
-        try:
+        """Download depuis Azure Blob Storage"""        try:
             logger.info(f"Azure download: {remote_path} -> {local_path}")
             # Placeholder implementation - would normally download from Azure
             # For now, just create empty file to avoid errors
@@ -519,8 +485,7 @@ class AzureStorageProvider(StorageProvider):
             return False
     
     async def delete_file(self, remote_path: str) -> bool:
-        """Suppression depuis Azure Blob Storage"""
-        try:
+        """Suppression depuis Azure Blob Storage"""        try:
             logger.info(f"Azure delete: {remote_path}")
             # Placeholder implementation - would normally delete from Azure
             return True
@@ -529,8 +494,7 @@ class AzureStorageProvider(StorageProvider):
             return False
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
-        """Liste des fichiers Azure Blob Storage"""
-        try:
+        """Liste des fichiers Azure Blob Storage"""        try:
             logger.info(f"Azure list files with prefix: {prefix}")
             # Placeholder implementation - would normally list from Azure
             return []
@@ -539,8 +503,7 @@ class AzureStorageProvider(StorageProvider):
             return []
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Métadonnées Azure Blob Storage"""
-        try:
+        """Métadonnées Azure Blob Storage"""        try:
             logger.info(f"Azure get metadata: {remote_path}")
             # Placeholder implementation - would normally get metadata from Azure
             return {
@@ -556,20 +519,17 @@ class AzureStorageProvider(StorageProvider):
 
 
 class GoogleCloudStorageProvider(StorageProvider):
-    """
-    Provider de stockage Google Cloud Storage
+    """    Provider de stockage Google Cloud Storage
     
     Fonctionnalités similaires à S3 avec APIs GCP
-    """
-    
+    """    
     def __init__(self, config: StorageConfig):
         self.config = config
         self.client = None
         logger.info("GoogleCloudStorageProvider initialized (implementation pending)")
     
     async def upload_file(self, local_path: Path, remote_path: str, metadata: Optional[Dict[str, Any]] = None) -> StorageLocation:
-        """Upload vers Google Cloud Storage"""
-        try:
+        """Upload vers Google Cloud Storage"""        try:
             # Basic Google Cloud Storage implementation placeholder
             logger.info(f"GCS upload: {local_path} -> {remote_path}")
             
@@ -592,8 +552,7 @@ class GoogleCloudStorageProvider(StorageProvider):
             raise
     
     async def download_file(self, remote_path: str, local_path: Path) -> bool:
-        """Download depuis Google Cloud Storage"""
-        try:
+        """Download depuis Google Cloud Storage"""        try:
             logger.info(f"GCS download: {remote_path} -> {local_path}")
             # Placeholder implementation - would normally download from GCS
             # For now, just create empty file to avoid errors
@@ -605,8 +564,7 @@ class GoogleCloudStorageProvider(StorageProvider):
             return False
     
     async def delete_file(self, remote_path: str) -> bool:
-        """Suppression depuis Google Cloud Storage"""
-        try:
+        """Suppression depuis Google Cloud Storage"""        try:
             logger.info(f"GCS delete: {remote_path}")
             # Placeholder implementation - would normally delete from GCS
             return True
@@ -615,8 +573,7 @@ class GoogleCloudStorageProvider(StorageProvider):
             return False
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
-        """Liste des fichiers Google Cloud Storage"""
-        try:
+        """Liste des fichiers Google Cloud Storage"""        try:
             logger.info(f"GCS list files with prefix: {prefix}")
             # Placeholder implementation - would normally list from GCS
             return []
@@ -625,8 +582,7 @@ class GoogleCloudStorageProvider(StorageProvider):
             return []
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Métadonnées Google Cloud Storage"""
-        try:
+        """Métadonnées Google Cloud Storage"""        try:
             logger.info(f"GCS get metadata: {remote_path}")
             # Placeholder implementation - would normally get metadata from GCS
             return {
@@ -642,16 +598,14 @@ class GoogleCloudStorageProvider(StorageProvider):
 
 
 class LocalStorageProvider(StorageProvider):
-    """
-    Provider de stockage local pour développement et testing
+    """    Provider de stockage local pour développement et testing
     
     Fonctionnalités:
     - Stockage système de fichiers local
     - Simulation des APIs cloud
     - Métadonnées JSON
     - Organisation hiérarchique
-    """
-    
+    """    
     def __init__(self, config: StorageConfig):
         self.config = config
         self.storage_root = Path(config.bucket_name)
@@ -662,8 +616,7 @@ class LocalStorageProvider(StorageProvider):
         logger.info(f"LocalStorageProvider initialized at: {self.storage_root}")
     
     async def upload_file(self, local_path: Path, remote_path: str, metadata: Optional[Dict[str, Any]] = None) -> StorageLocation:
-        """Upload vers stockage local"""
-        try:
+        """Upload vers stockage local"""        try:
             dest_path = self.storage_root / remote_path
             dest_path.parent.mkdir(parents=True, exist_ok=True)
             
@@ -704,8 +657,7 @@ class LocalStorageProvider(StorageProvider):
             raise StorageUploadException(f"Local upload failed: {e}")
     
     async def download_file(self, remote_path: str, local_path: Path) -> bool:
-        """Download depuis stockage local"""
-        try:
+        """Download depuis stockage local"""        try:
             source_path = self.storage_root / remote_path
             
             if not source_path.exists():
@@ -724,8 +676,7 @@ class LocalStorageProvider(StorageProvider):
             return False
     
     async def delete_file(self, remote_path: str) -> bool:
-        """Supprime un fichier du stockage local"""
-        try:
+        """Supprime un fichier du stockage local"""        try:
             file_path = self.storage_root / remote_path
             metadata_path = self.metadata_dir / f"{remote_path.replace('/', '_')}.json"
             
@@ -743,8 +694,7 @@ class LocalStorageProvider(StorageProvider):
             return False
     
     async def list_files(self, prefix: str = "", limit: int = 1000) -> List[Dict[str, Any]]:
-        """Liste les fichiers du stockage local"""
-        try:
+        """Liste les fichiers du stockage local"""        try:
             files = []
             search_path = self.storage_root / prefix if prefix else self.storage_root
             
@@ -764,8 +714,7 @@ class LocalStorageProvider(StorageProvider):
             return []
     
     async def get_file_metadata(self, remote_path: str) -> Dict[str, Any]:
-        """Récupère les métadonnées d'un fichier local"""
-        try:
+        """Récupère les métadonnées d'un fichier local"""        try:
             metadata_path = self.metadata_dir / f"{remote_path.replace('/', '_')}.json"
             
             if metadata_path.exists():
@@ -789,8 +738,7 @@ class LocalStorageProvider(StorageProvider):
             return {}
     
     async def _get_file_info(self, file_path: Path) -> Dict[str, Any]:
-        """Récupère les informations d'un fichier"""
-        stat = file_path.stat()
+        """Récupère les informations d'un fichier"""        stat = file_path.stat()
         relative_path = file_path.relative_to(self.storage_root)
         
         return {
@@ -801,8 +749,7 @@ class LocalStorageProvider(StorageProvider):
         }
     
     async def _calculate_file_checksum(self, file_path: Path) -> str:
-        """Calcule le checksum MD5 d'un fichier"""
-        hash_md5 = hashlib.md5()
+        """Calcule le checksum MD5 d'un fichier"""        hash_md5 = hashlib.md5()
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_md5.update(chunk)
@@ -810,16 +757,14 @@ class LocalStorageProvider(StorageProvider):
 
 
 class BackupStorage:
-    """
-    Gestionnaire de stockage unifié pour les sauvegardes
+    """    Gestionnaire de stockage unifié pour les sauvegardes
     
     Fonctionnalités:
     - Support multi-provider
     - Load balancing intelligent
     - Failover automatique
     - Optimisation coûts
-    """
-    
+    """    
     def __init__(self, primary_config: StorageConfig, backup_configs: Optional[List[StorageConfig]] = None):
         self.primary_config = primary_config
         self.backup_configs = backup_configs or []
@@ -831,8 +776,7 @@ class BackupStorage:
         logger.info(f"BackupStorage initialized with {1 + len(self.backup_providers)} providers")
     
     def _create_provider(self, config: StorageConfig) -> StorageProvider:
-        """Factory pour créer les providers de stockage"""
-        provider_map = {
+        """Factory pour créer les providers de stockage"""        provider_map = {
             "s3": S3StorageProvider,
             "azure": AzureStorageProvider,
             "gcp": GoogleCloudStorageProvider,
@@ -851,8 +795,7 @@ class BackupStorage:
         backup_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[StorageLocation]:
-        """
-        Stocke une sauvegarde sur tous les providers configurés
+        """        Stocke une sauvegarde sur tous les providers configurés
         
         Args:
             local_path: Chemin local du fichier/dossier
@@ -861,8 +804,7 @@ class BackupStorage:
             
         Returns:
             List[StorageLocation]: Emplacements de stockage
-        """
-        locations = []
+        """        locations = []
         remote_path = f"backups/{datetime.now().strftime('%Y/%m/%d')}/{backup_id}/{local_path.name}"
         
         # Stockage sur provider principal
@@ -902,8 +844,7 @@ class BackupStorage:
         metadata: Optional[Dict[str, Any]],
         max_retries: int = 3
     ) -> Optional[StorageLocation]:
-        """Stockage avec retry automatique"""
-        for attempt in range(max_retries):
+        """Stockage avec retry automatique"""        for attempt in range(max_retries):
             try:
                 return await provider.upload_file(local_path, remote_path, metadata)
             except Exception as e:
@@ -921,8 +862,7 @@ class BackupStorage:
         local_path: Path,
         preferred_provider: Optional[str] = None
     ) -> bool:
-        """
-        Récupère une sauvegarde depuis le stockage
+        """        Récupère une sauvegarde depuis le stockage
         
         Args:
             backup_id: ID de la sauvegarde
@@ -931,8 +871,7 @@ class BackupStorage:
             
         Returns:
             bool: True si la récupération a réussi
-        """
-        # Recherche de la sauvegarde dans tous les providers
+        """        # Recherche de la sauvegarde dans tous les providers
         providers_to_try = [self.primary_provider] + self.backup_providers
         
         if preferred_provider:
@@ -971,16 +910,14 @@ class BackupStorage:
         return False
     
     async def delete_backup(self, backup_id: str) -> Dict[str, bool]:
-        """
-        Supprime une sauvegarde de tous les providers
+        """        Supprime une sauvegarde de tous les providers
         
         Args:
             backup_id: ID de la sauvegarde à supprimer
             
         Returns:
             Dict[str, bool]: Résultats de suppression par provider
-        """
-        results = {}
+        """        results = {}
         all_providers = [self.primary_provider] + self.backup_providers
         
         for provider in all_providers:
@@ -1008,16 +945,14 @@ class BackupStorage:
         return results
     
     async def list_backups(self, limit: int = 100) -> List[Dict[str, Any]]:
-        """
-        Liste toutes les sauvegardes disponibles
+        """        Liste toutes les sauvegardes disponibles
         
         Args:
             limit: Nombre maximum de sauvegardes à retourner
             
         Returns:
             List[Dict[str, Any]]: Liste des sauvegardes
-        """
-        try:
+        """        try:
             files = await self.primary_provider.list_files("backups/", limit * 10)  # Marge pour filtering
             
             # Regroupement par backup_id
@@ -1058,13 +993,11 @@ class BackupStorage:
             return []
     
     async def get_storage_stats(self) -> Dict[str, Any]:
-        """
-        Récupère les statistiques de stockage
+        """        Récupère les statistiques de stockage
         
         Returns:
             Dict[str, Any]: Statistiques par provider
-        """
-        stats = {}
+        """        stats = {}
         all_providers = [self.primary_provider] + self.backup_providers
         
         for provider in all_providers:
@@ -1089,16 +1022,14 @@ class BackupStorage:
 
 
 class MultiCloudStorage(BackupStorage):
-    """
-    Gestionnaire de stockage multi-cloud avec intelligence avancée
+    """    Gestionnaire de stockage multi-cloud avec intelligence avancée
     
     Fonctionnalités:
     - Optimisation coûts automatique
     - Geo-distribution intelligente  
     - Performance monitoring
     - Auto-scaling selon usage
-    """
-    
+    """    
     def __init__(self, configs: List[StorageConfig]):
         if not configs:
             raise ValueError("At least one storage configuration required")
@@ -1119,8 +1050,7 @@ class MultiCloudStorage(BackupStorage):
         file_size: int,
         access_pattern: str = "standard"
     ) -> StorageProvider:
-        """
-        Sélection intelligente du provider optimal selon le contexte
+        """        Sélection intelligente du provider optimal selon le contexte
         
         Args:
             content_type: Type de contenu (audio, video, etc.)
@@ -1129,8 +1059,7 @@ class MultiCloudStorage(BackupStorage):
             
         Returns:
             StorageProvider: Provider optimal sélectionné
-        """
-        # Logique de sélection intelligente
+        """        # Logique de sélection intelligente
         # (implémentation simplifiée)
         
         if access_pattern == "frequent":
@@ -1142,16 +1071,14 @@ class MultiCloudStorage(BackupStorage):
 
 
 class EncryptedStorage:
-    """
-    Wrapper de chiffrement pour tous les providers de stockage
+    """    Wrapper de chiffrement pour tous les providers de stockage
     
     Fonctionnalités:
     - Chiffrement bout-en-bout AES-256
     - Gestion clés sécurisée
     - Déchiffrement transparent
     - Rotation clés automatique
-    """
-    
+    """    
     def __init__(self, storage_provider: StorageProvider, encryption_manager: EncryptionManager):
         self.storage_provider = storage_provider
         self.encryption_manager = encryption_manager
@@ -1165,8 +1092,7 @@ class EncryptedStorage:
         user_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> StorageLocation:
-        """
-        Stocke une sauvegarde avec chiffrement bout-en-bout
+        """        Stocke une sauvegarde avec chiffrement bout-en-bout
         
         Args:
             local_path: Fichier local à chiffrer et stocker
@@ -1176,8 +1102,7 @@ class EncryptedStorage:
             
         Returns:
             StorageLocation: Emplacement du fichier chiffré
-        """
-        try:
+        """        try:
             # Génération clé de chiffrement
             encryption_key = await self.encryption_manager.generate_backup_key(user_id, backup_id)
             
@@ -1213,8 +1138,7 @@ class EncryptedStorage:
         user_id: str,
         local_path: Path
     ) -> bool:
-        """
-        Récupère et déchiffre une sauvegarde
+        """        Récupère et déchiffre une sauvegarde
         
         Args:
             backup_id: ID de la sauvegarde
@@ -1223,8 +1147,7 @@ class EncryptedStorage:
             
         Returns:
             bool: True si la récupération a réussi
-        """
-        try:
+        """        try:
             # Recherche fichiers chiffrés
             remote_path = f"encrypted_backups/{user_id}/{backup_id}/"
             files = await self.storage_provider.list_files(remote_path)
@@ -1267,23 +1190,20 @@ class EncryptedStorage:
 
 
 class CostOptimizer:
-    """
-    Optimisateur de coûts pour stockage multi-cloud
+    """    Optimisateur de coûts pour stockage multi-cloud
     
     Fonctionnalités:
     - Analyse coûts temps réel
     - Recommandations storage class
     - Migration automatique données froides
     - Optimisation lifecycle policies
-    """
-    
+    """    
     def __init__(self):
         self.cost_models = self._load_cost_models()
         logger.info("CostOptimizer initialized")
     
     def _load_cost_models(self) -> Dict[str, Any]:
-        """Charge les modèles de coût des différents providers"""
-        return {
+        """Charge les modèles de coût des différents providers"""        return {
             "s3": {
                 "standard": {"storage": 0.023, "requests": 0.0004},
                 "ia": {"storage": 0.0125, "requests": 0.001},
@@ -1307,8 +1227,7 @@ class CostOptimizer:
         access_frequency: int,
         file_size_gb: float
     ) -> Dict[str, str]:
-        """
-        Recommande la classe de stockage optimale par provider
+        """        Recommande la classe de stockage optimale par provider
         
         Args:
             file_age_days: Âge du fichier en jours
@@ -1317,8 +1236,7 @@ class CostOptimizer:
             
         Returns:
             Dict[str, str]: Recommandations par provider
-        """
-        recommendations = {}
+        """        recommendations = {}
         
         for provider, cost_model in self.cost_models.items():
             if file_age_days < 30 and access_frequency > 10:
@@ -1340,8 +1258,7 @@ class CostOptimizer:
         provider: str,
         storage_class: str
     ) -> float:
-        """
-        Calcule les coûts mensuels estimés
+        """        Calcule les coûts mensuels estimés
         
         Args:
             total_storage_gb: Stockage total en GB
@@ -1351,8 +1268,7 @@ class CostOptimizer:
             
         Returns:
             float: Coût mensuel estimé en USD
-        """
-        if provider not in self.cost_models:
+        """        if provider not in self.cost_models:
             return 0.0
         
         cost_model = self.cost_models[provider].get(storage_class, {})

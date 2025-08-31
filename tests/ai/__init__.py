@@ -42,8 +42,7 @@ Creator Support Matrix:
 - Comedians: Entertainment content analysis, audience engagement, viral optimization
 
 Test Modules Architecture:
-"""
-__version__ = "2.0.0"
+"""__version__ = "2.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
@@ -299,8 +298,7 @@ def run_comprehensive_test_suite():
     
     Returns:
         dict: Test results summary with coverage metrics
-    """
-    results = {
+    """    results = {
         'total_tests': 0,
         'passed': 0,
         'failed': 0,
@@ -319,8 +317,7 @@ def validate_business_logic():
     
     Returns:
         dict: Business logic validation results
-    """
-    validation_results = {
+    """    validation_results = {
         'upload_flow': True,
         'protection_flow': True, 
         'seo_flow': True,

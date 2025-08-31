@@ -1,5 +1,4 @@
-"""
-Parser Configuration Module
+"""Parser Configuration Module
 ===========================
 
 Configuration management for content parsers in the IA Influencer Agent platform.
@@ -13,7 +12,6 @@ This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, Any, Optional, List, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -22,8 +20,7 @@ from pathlib import Path
 
 
 class ParserType(Enum):
-    """Enumeration of parser types"""
-    PLATFORM = "platform"
+    """Enumeration of parser types"""    PLATFORM = "platform"
     MEDIA = "media"
     METADATA = "metadata"
     CONTENT = "content"
@@ -34,8 +31,7 @@ class ParserType(Enum):
 
 
 class PlatformType(Enum):
-    """Enumeration of supported platforms"""
-    YOUTUBE = "youtube"
+    """Enumeration of supported platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -48,8 +44,7 @@ class PlatformType(Enum):
 
 
 class MediaFormat(Enum):
-    """Enumeration of supported media formats"""
-    # Audio formats
+    """Enumeration of supported media formats"""    # Audio formats
     MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
@@ -85,8 +80,7 @@ class MediaFormat(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Configuration for platform-specific parsers"""
-    platform: PlatformType
+    """Configuration for platform-specific parsers"""    platform: PlatformType
     api_key: Optional[str] = None
     api_secret: Optional[str] = None
     access_token: Optional[str] = None
@@ -105,8 +99,7 @@ class PlatformConfig:
 
 @dataclass
 class MediaConfig:
-    """Configuration for media parsers"""
-    supported_formats: List[MediaFormat] = field(default_factory=list)
+    """Configuration for media parsers"""    supported_formats: List[MediaFormat] = field(default_factory=list)
     max_file_size: int = 100 * 1024 * 1024  # 100MB
     quality_threshold: float = 0.7
     enable_compression: bool = True
@@ -121,8 +114,7 @@ class MediaConfig:
 
 @dataclass
 class FingerprintConfig:
-    """Configuration for fingerprint parsing"""
-    enable_audio_fingerprint: bool = True
+    """Configuration for fingerprint parsing"""    enable_audio_fingerprint: bool = True
     enable_video_fingerprint: bool = True
     enable_image_fingerprint: bool = True
     enable_text_fingerprint: bool = True
@@ -149,8 +141,7 @@ class FingerprintConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """Configuration for analytics parsers"""
-    date_range_days: int = 30
+    """Configuration for analytics parsers"""    date_range_days: int = 30
     metrics_to_collect: List[str] = field(default_factory=lambda: [
         "views", "likes", "shares", "comments", "engagement_rate"
     ])
@@ -163,8 +154,7 @@ class AnalyticsConfig:
 
 @dataclass
 class RevenueConfig:
-    """Configuration for revenue parsers"""
-    currency: str = "EUR"
+    """Configuration for revenue parsers"""    currency: str = "EUR"
     decimal_places: int = 2
     include_tax: bool = True
     tax_rate: float = 0.19  # 19% VAT
@@ -177,8 +167,7 @@ class RevenueConfig:
 
 @dataclass
 class ValidationConfig:
-    """Configuration for content validation"""
-    strict_mode: bool = False
+    """Configuration for content validation"""    strict_mode: bool = False
     required_fields: List[str] = field(default_factory=list)
     field_validators: Dict[str, Any] = field(default_factory=dict)
     content_safety_check: bool = True
@@ -190,8 +179,7 @@ class ValidationConfig:
 
 @dataclass
 class CacheConfig:
-    """Configuration for parser caching"""
-    enable_cache: bool = True
+    """Configuration for parser caching"""    enable_cache: bool = True
     cache_ttl: int = 3600  # seconds
     cache_backend: str = "redis"  # redis, memory, file
     cache_prefix: str = "parser_cache"
@@ -201,8 +189,7 @@ class CacheConfig:
 
 @dataclass
 class SecurityConfig:
-    """Configuration for parser security"""
-    sanitize_input: bool = True
+    """Configuration for parser security"""    sanitize_input: bool = True
     validate_urls: bool = True
     allowed_domains: List[str] = field(default_factory=list)
     blocked_domains: List[str] = field(default_factory=list)
@@ -214,8 +201,7 @@ class SecurityConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Configuration for parser performance"""
-    max_concurrent_requests: int = 10
+    """Configuration for parser performance"""    max_concurrent_requests: int = 10
     request_timeout: float = 30.0
     connection_pool_size: int = 100
     keep_alive: bool = True
@@ -226,15 +212,13 @@ class PerformanceConfig:
 
 
 class ParserConfig:
-    """Main configuration class for all parsers"""
-    
+    """Main configuration class for all parsers"""    
     def __init__(self, config_file: Optional[str] = None):
         self.config_file = config_file
         self._load_config()
     
     def _load_config(self):
-        """Load configuration from file or environment"""
-        # Default configurations
+        """Load configuration from file or environment"""        # Default configurations
         self.platform = self._get_platform_configs()
         self.media = MediaConfig()
         self.fingerprint = FingerprintConfig()
@@ -253,8 +237,7 @@ class ParserConfig:
         self._load_from_env()
     
     def _get_platform_configs(self) -> Dict[PlatformType, PlatformConfig]:
-        """Get default platform configurations"""
-        return {
+        """Get default platform configurations"""        return {
             PlatformType.YOUTUBE: PlatformConfig(
                 platform=PlatformType.YOUTUBE,
                 base_url="https://www.googleapis.com/youtube/v3",
@@ -318,8 +301,7 @@ class ParserConfig:
         }
     
     def _load_from_file(self):
-        """Load configuration from YAML/JSON file"""
-        import yaml
+        """Load configuration from YAML/JSON file"""        import yaml
         
         try:
             with open(self.config_file, 'r') as f:
@@ -336,8 +318,7 @@ class ParserConfig:
             print(f"Warning: Could not load config file {self.config_file}: {e}")
     
     def _load_from_env(self):
-        """Load configuration from environment variables"""
-        # Platform API keys
+        """Load configuration from environment variables"""        # Platform API keys
         for platform_type in PlatformType:
             platform_name = platform_type.value.upper()
             
@@ -368,18 +349,15 @@ class ParserConfig:
             self.performance.max_concurrent_requests = int(max_concurrent)
     
     def _update_config_from_dict(self, config_data: Dict[str, Any]):
-        """Update configuration from dictionary"""
-        # This method would update the config objects from parsed file data
+        """Update configuration from dictionary"""        # This method would update the config objects from parsed file data
         # Implementation would depend on the specific file structure
         pass
     
     def get_platform_config(self, platform: PlatformType) -> PlatformConfig:
-        """Get configuration for specific platform"""
-        return self.platform.get(platform, PlatformConfig(platform=platform))
+        """Get configuration for specific platform"""        return self.platform.get(platform, PlatformConfig(platform=platform))
     
     def validate_config(self) -> bool:
-        """Validate configuration settings"""
-        try:
+        """Validate configuration settings"""        try:
             # Validate platform configs
             for platform_type, config in self.platform.items():
                 if config.rate_limit <= 0:
@@ -403,8 +381,7 @@ class ParserConfig:
             return False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        return {
+        """Convert configuration to dictionary"""        return {
             "platform": {k.value: v.__dict__ for k, v in self.platform.items()},
             "media": self.media.__dict__,
             "fingerprint": self.fingerprint.__dict__,

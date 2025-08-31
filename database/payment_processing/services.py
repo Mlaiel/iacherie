@@ -1,5 +1,4 @@
-"""
-Payment Processing Service Layer - Enterprise Grade
+"""Payment Processing Service Layer - Enterprise Grade
 
 Advanced service layer for payment processing operations,
 implementing business logic, multi-gateway integration, revenue tracking,
@@ -28,7 +27,6 @@ ENTERPRISE FEATURES:
 - Advanced dispute management and chargeback prevention
 - Comprehensive audit logging and regulatory reporting
 """
-
 from typing import Dict, Any, Optional, List, Union, Tuple, Callable
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -82,8 +80,7 @@ settings = get_settings()
 
 @dataclass
 class PaymentRequest:
-    """Comprehensive payment request structure"""
-    user_id: str
+    """Comprehensive payment request structure"""    user_id: str
     amount: Decimal
     currency: str
     payment_method_id: str
@@ -104,8 +101,7 @@ class PaymentRequest:
 
 @dataclass
 class PaymentResult:
-    """Comprehensive payment result structure"""
-    transaction_id: str
+    """Comprehensive payment result structure"""    transaction_id: str
     status: PaymentStatus
     amount: Decimal
     currency: str
@@ -126,8 +122,7 @@ class PaymentResult:
 
 @dataclass
 class RevenueAnalytics:
-    """Comprehensive revenue analytics structure"""
-    total_revenue: Decimal
+    """Comprehensive revenue analytics structure"""    total_revenue: Decimal
     net_revenue: Decimal
     gross_revenue: Decimal
     platform_fees: Decimal
@@ -150,8 +145,7 @@ class RevenueAnalytics:
 
 @dataclass
 class PayoutRequest:
-    """Comprehensive payout request structure"""
-    creator_id: str
+    """Comprehensive payout request structure"""    creator_id: str
     amount: Decimal
     currency: str
     payout_method: str
@@ -169,8 +163,7 @@ class PayoutRequest:
 
 @dataclass
 class PayoutResult:
-    """Comprehensive payout result structure"""
-    payout_id: str
+    """Comprehensive payout result structure"""    payout_id: str
     status: PayoutStatus
     amount: Decimal
     net_amount: Decimal
@@ -187,8 +180,7 @@ class PayoutResult:
 
 
 class EnterprisePaymentProcessingService:
-    """
-    Enterprise-grade payment processing service with advanced features
+    """    Enterprise-grade payment processing service with advanced features
     
     Features:
     - Multi-gateway processing with automatic failover
@@ -197,8 +189,7 @@ class EnterprisePaymentProcessingService:
     - Multi-currency support with dynamic exchange rates
     - AI-powered transaction routing and optimization
     - Comprehensive audit logging and compliance tracking
-    """
-    
+    """    
     def __init__(self):
         # Repository dependencies
         self.transaction_repo = PaymentTransactionRepository()
@@ -227,10 +218,8 @@ class EnterprisePaymentProcessingService:
         logger.info("Enterprise Payment Processing Service initialized")
     
     async def process_payment(self, request: PaymentRequest) -> PaymentResult:
-        """
-        Process payment with comprehensive validation, fraud detection, and optimization
-        """
-        start_time = datetime.utcnow()
+        """        Process payment with comprehensive validation, fraud detection, and optimization
+        """        start_time = datetime.utcnow()
         
         try:
             # Step 1: Input validation
@@ -337,8 +326,7 @@ class EnterprisePaymentProcessingService:
             raise PaymentProcessingError(f"Payment processing failed: {str(e)}")
     
     async def _validate_payment_request(self, request: PaymentRequest) -> None:
-        """Comprehensive payment request validation"""
-        # Amount validation
+        """Comprehensive payment request validation"""        # Amount validation
         if not self.validator.validate_amount(request.amount, request.currency):
             raise ValidationError("Invalid amount or currency")
         
@@ -367,8 +355,7 @@ class EnterprisePaymentProcessingService:
         transaction: Any, 
         request: PaymentRequest
     ) -> None:
-        """Trigger asynchronous post-processing tasks"""
-        # Revenue tracking
+        """Trigger asynchronous post-processing tasks"""        # Revenue tracking
         if request.revenue_source:
             await self._schedule_revenue_tracking(transaction, request)
         
@@ -388,8 +375,7 @@ class EnterprisePaymentProcessingService:
         gateway_result: Any, 
         fraud_result: Any
     ) -> List[str]:
-        """Generate AI-powered recommendations for optimization"""
-        recommendations = []
+        """Generate AI-powered recommendations for optimization"""        recommendations = []
         
         # Gateway optimization recommendations
         if gateway_result.processing_time > 5.0:
@@ -410,8 +396,7 @@ class EnterprisePaymentProcessingService:
 
 
 class RevenueTrackingService:
-    """
-    Advanced revenue tracking and analytics service
+    """    Advanced revenue tracking and analytics service
     
     Features:
     - Real-time revenue aggregation across platforms
@@ -419,8 +404,7 @@ class RevenueTrackingService:
     - AI-powered revenue forecasting
     - Performance analytics and insights
     - Creator revenue optimization recommendations
-    """
-    
+    """    
     def __init__(self):
         self.revenue_repo = RevenueTrackingRepository()
         self.analytics_repo = PaymentAnalyticsRepository()
@@ -435,10 +419,8 @@ class RevenueTrackingService:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> RevenueAnalytics:
-        """
-        Aggregate revenue across multiple platforms with advanced analytics
-        """
-        # Calculate period dates if not provided
+        """        Aggregate revenue across multiple platforms with advanced analytics
+        """        # Calculate period dates if not provided
         if not start_date or not end_date:
             start_date, end_date = self._calculate_period_dates(period)
         
@@ -520,8 +502,7 @@ class RevenueTrackingService:
         )
     
     async def _calculate_period_dates(self, period: str) -> Tuple[datetime, datetime]:
-        """Calculate start and end dates for the given period"""
-        now = datetime.utcnow()
+        """Calculate start and end dates for the given period"""        now = datetime.utcnow()
         
         if period == "daily":
             start_date = now.replace(hour=0, minute=0, second=0, microsecond=0)
@@ -550,8 +531,7 @@ class RevenueTrackingService:
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by source"""
-        return await self.revenue_repo.get_revenue_by_source(
+        """Calculate revenue breakdown by source"""        return await self.revenue_repo.get_revenue_by_source(
             creator_id=creator_id,
             start_date=start_date,
             end_date=end_date
@@ -563,8 +543,7 @@ class RevenueTrackingService:
         start_date: datetime, 
         end_date: datetime
     ) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by country"""
-        return await self.revenue_repo.get_revenue_by_country(
+        """Calculate revenue breakdown by country"""        return await self.revenue_repo.get_revenue_by_country(
             creator_id=creator_id,
             start_date=start_date,
             end_date=end_date
@@ -577,8 +556,7 @@ class RevenueTrackingService:
         start_date: datetime, 
         end_date: datetime
     ) -> float:
-        """Calculate revenue growth rate compared to previous period"""
-        period_duration = end_date - start_date
+        """Calculate revenue growth rate compared to previous period"""        period_duration = end_date - start_date
         previous_start = start_date - period_duration
         previous_end = start_date
         
@@ -608,8 +586,7 @@ class RevenueTrackingService:
         platform_revenues: Dict[str, Decimal], 
         growth_rate: float
     ) -> List[str]:
-        """Generate AI-powered revenue optimization recommendations"""
-        recommendations = []
+        """Generate AI-powered revenue optimization recommendations"""        recommendations = []
         
         # Platform performance analysis
         sorted_platforms = sorted(platform_revenues.items(), key=lambda x: x[1], reverse=True)
@@ -635,8 +612,7 @@ class RevenueTrackingService:
         creator_id: str, 
         platforms: List[str]
     ) -> Dict[str, Any]:
-        """Calculate revenue trends and patterns"""
-        # Get historical data for trend analysis
+        """Calculate revenue trends and patterns"""        # Get historical data for trend analysis
         historical_data = await self.revenue_repo.get_historical_revenue(
             creator_id=creator_id,
             platforms=platforms,
@@ -660,8 +636,7 @@ class RevenueTrackingService:
         self, 
         platforms: List[str]
     ) -> Dict[str, Any]:
-        """Calculate industry benchmarks for comparison"""
-        benchmarks = {}
+        """Calculate industry benchmarks for comparison"""        benchmarks = {}
         
         for platform in platforms:
             platform_benchmark = await self.analytics_repo.get_platform_benchmark(platform)
@@ -675,8 +650,7 @@ class RevenueTrackingService:
 
 
 class AutomatedPayoutService:
-    """
-    Advanced automated payout service with intelligent scheduling
+    """    Advanced automated payout service with intelligent scheduling
     
     Features:
     - Intelligent payout scheduling and optimization
@@ -684,8 +658,7 @@ class AutomatedPayoutService:
     - Tax withholding and compliance
     - Currency optimization
     - Risk-based payout verification
-    """
-    
+    """    
     def __init__(self):
         self.payout_repo = AutomatedPayoutRepository()
         self.transaction_repo = PaymentTransactionRepository()
@@ -695,10 +668,8 @@ class AutomatedPayoutService:
         self.currency_service = CurrencyExchangeService()
         
     async def execute_automated_payout(self, request: PayoutRequest) -> PayoutResult:
-        """
-        Execute automated payout with comprehensive validation and optimization
-        """
-        start_time = datetime.utcnow()
+        """        Execute automated payout with comprehensive validation and optimization
+        """        start_time = datetime.utcnow()
         
         try:
             # Step 1: Validate payout request
@@ -794,8 +765,7 @@ class AutomatedPayoutService:
             raise PaymentProcessingError(f"Payout execution failed: {str(e)}")
     
     async def _validate_payout_request(self, request: PayoutRequest) -> None:
-        """Validate payout request parameters"""
-        # Amount validation
+        """Validate payout request parameters"""        # Amount validation
         if request.amount <= 0:
             raise ValidationError("Payout amount must be positive")
         
@@ -821,8 +791,7 @@ class AutomatedPayoutService:
         tax_withholding: Decimal,
         fees: Any
     ) -> Any:
-        """Execute payout with revenue sharing splits"""
-        split_results = []
+        """Execute payout with revenue sharing splits"""        split_results = []
         
         for recipient in request.split_recipients:
             recipient_amount = request.amount * Decimal(str(recipient['percentage'])) / 100
@@ -860,39 +829,32 @@ logger = logging.getLogger(__name__)
 
 # Custom exceptions
 class PaymentProcessingError(Exception):
-    """Base exception for payment processing errors"""
-    pass
+    """Base exception for payment processing errors"""    pass
 
 
 class InsufficientFundsError(PaymentProcessingError):
-    """Raised when there are insufficient funds for a transaction"""
-    pass
+    """Raised when there are insufficient funds for a transaction"""    pass
 
 
 class PaymentMethodError(PaymentProcessingError):
-    """Raised when there's an issue with the payment method"""
-    pass
+    """Raised when there's an issue with the payment method"""    pass
 
 
 class GatewayError(PaymentProcessingError):
-    """Raised when there's an issue with payment gateway"""
-    pass
+    """Raised when there's an issue with payment gateway"""    pass
 
 
 class FraudDetectionError(PaymentProcessingError):
-    """Raised when fraud is detected"""
-    pass
+    """Raised when fraud is detected"""    pass
 
 
 class ConfigurationError(PaymentProcessingError):
-    """Raised when there's a configuration issue"""
-    pass
+    """Raised when there's a configuration issue"""    pass
 
 
 @dataclass
 class PaymentResult:
-    """Payment processing result container"""
-    success: bool
+    """Payment processing result container"""    success: bool
     transaction_id: Optional[str] = None
     gateway_response: Optional[GatewayResponse] = None
     error_message: Optional[str] = None
@@ -902,8 +864,7 @@ class PaymentResult:
 
 @dataclass
 class RevenueReport:
-    """Revenue report container"""
-    total_revenue: Decimal
+    """Revenue report container"""    total_revenue: Decimal
     net_revenue: Decimal
     platform_fees: Decimal
     gateway_fees: Decimal
@@ -915,10 +876,8 @@ class RevenueReport:
 
 
 class PaymentProcessingService:
-    """
-    Core payment processing service with multi-gateway support
-    """
-    
+    """    Core payment processing service with multi-gateway support
+    """    
     def __init__(self):
         self.transaction_repo = PaymentTransactionRepository()
         self.payment_method_repo = PaymentMethodRepository()
@@ -938,10 +897,8 @@ class PaymentProcessingService:
         metadata: Optional[Dict[str, Any]] = None,
         content_id: Optional[str] = None
     ) -> PaymentResult:
-        """
-        Process a payment transaction with comprehensive validation and fraud detection
-        """
-        try:
+        """        Process a payment transaction with comprehensive validation and fraud detection
+        """        try:
             # Validate input parameters
             if not self.validator.validate_amount(amount, currency):
                 raise PaymentProcessingError("Invalid amount or currency")
@@ -1025,8 +982,7 @@ class PaymentProcessingService:
             )
     
     async def _process_revenue_tracking(self, transaction):
-        """Process revenue tracking for content-related transactions"""
-        # Implementation for revenue tracking
+        """Process revenue tracking for content-related transactions"""        # Implementation for revenue tracking
         pass
     
     async def refund_payment(
@@ -1035,10 +991,8 @@ class PaymentProcessingService:
         amount: Optional[Decimal] = None,
         reason: Optional[str] = None
     ) -> PaymentResult:
-        """
-        Process a payment refund
-        """
-        try:
+        """        Process a payment refund
+        """        try:
             # Get original transaction
             transaction = await self.transaction_repo.get_by_id(transaction_id)
             if not transaction:
@@ -1107,10 +1061,8 @@ class PaymentProcessingService:
 
 
 class RevenueTrackingService:
-    """
-    Revenue tracking service for monitoring income from various sources
-    """
-    
+    """    Revenue tracking service for monitoring income from various sources
+    """    
     def __init__(self):
         self.revenue_repo = RevenueTrackingRepository()
         self.analytics_repo = PaymentAnalyticsRepository()
@@ -1127,10 +1079,8 @@ class RevenueTrackingService:
         period_start: datetime,
         period_end: datetime
     ) -> bool:
-        """
-        Track revenue from external platforms (YouTube, Instagram, Spotify, etc.)
-        """
-        try:
+        """        Track revenue from external platforms (YouTube, Instagram, Spotify, etc.)
+        """        try:
             # Calculate fees and net revenue
             platform_fee = self.calculator.calculate_platform_fee(gross_revenue, revenue_source)
             our_commission = self.calculator.calculate_our_commission(gross_revenue, revenue_source)
@@ -1168,8 +1118,7 @@ class RevenueTrackingService:
             return False
     
     async def _update_revenue_analytics(self, revenue_record):
-        """Update analytics based on new revenue data"""
-        # Implementation for analytics updates
+        """Update analytics based on new revenue data"""        # Implementation for analytics updates
         pass
     
     async def get_revenue_report(
@@ -1179,10 +1128,8 @@ class RevenueTrackingService:
         period_end: datetime,
         currency: Optional[str] = "EUR"
     ) -> RevenueReport:
-        """
-        Generate comprehensive revenue report for a user
-        """
-        try:
+        """        Generate comprehensive revenue report for a user
+        """        try:
             revenues = await self.revenue_repo.get_by_user_period(
                 user_id=user_id,
                 period_start=period_start,
@@ -1222,8 +1169,7 @@ class RevenueTrackingService:
             )
     
     async def _get_top_performing_content(self, revenues):
-        """Get top performing content from revenue data"""
-        content_performance = {}
+        """Get top performing content from revenue data"""        content_performance = {}
         for revenue in revenues:
             if revenue.content_id:
                 if revenue.content_id not in content_performance:
@@ -1238,10 +1184,8 @@ class RevenueTrackingService:
 
 
 class AutomatedPayoutService:
-    """
-    Automated payout service for distributing earnings to creators
-    """
-    
+    """    Automated payout service for distributing earnings to creators
+    """    
     def __init__(self):
         self.payout_repo = AutomatedPayoutRepository()
         self.transaction_repo = PaymentTransactionRepository()
@@ -1249,10 +1193,8 @@ class AutomatedPayoutService:
         self.gateway_factory = PaymentGatewayFactory()
         
     async def schedule_payouts(self, frequency: str = "monthly") -> List[str]:
-        """
-        Schedule automated payouts for eligible users
-        """
-        try:
+        """        Schedule automated payouts for eligible users
+        """        try:
             # Get users eligible for payouts
             eligible_users = await self._get_eligible_users(frequency)
             scheduled_payouts = []
@@ -1282,20 +1224,16 @@ class AutomatedPayoutService:
             return []
     
     async def _get_eligible_users(self, frequency: str) -> List[str]:
-        """Get users eligible for payouts based on frequency"""
-        # Implementation to get eligible users
+        """Get users eligible for payouts based on frequency"""        # Implementation to get eligible users
         pass
     
     async def _calculate_payout_amount(self, user_id: str, frequency: str) -> Decimal:
-        """Calculate payout amount for a user"""
-        # Implementation to calculate payout amount
+        """Calculate payout amount for a user"""        # Implementation to calculate payout amount
         pass
     
     async def process_scheduled_payouts(self) -> Dict[str, Any]:
-        """
-        Process all scheduled payouts
-        """
-        try:
+        """        Process all scheduled payouts
+        """        try:
             # Get scheduled payouts
             scheduled_payouts = await self.payout_repo.get_scheduled()
             
@@ -1335,16 +1273,13 @@ class AutomatedPayoutService:
             return {"processed": 0, "failed": 0, "total": 0, "errors": [str(e)]}
     
     async def _process_individual_payout(self, payout) -> bool:
-        """Process an individual payout"""
-        # Implementation for individual payout processing
+        """Process an individual payout"""        # Implementation for individual payout processing
         pass
 
 
 class FinancialAnalyticsService:
-    """
-    Financial analytics service for generating insights and reports
-    """
-    
+    """    Financial analytics service for generating insights and reports
+    """    
     def __init__(self):
         self.analytics_repo = PaymentAnalyticsRepository()
         self.transaction_repo = PaymentTransactionRepository()
@@ -1356,10 +1291,8 @@ class FinancialAnalyticsService:
         period_start: Optional[datetime] = None,
         period_end: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive financial insights and analytics
-        """
-        try:
+        """        Generate comprehensive financial insights and analytics
+        """        try:
             insights = {
                 "revenue_metrics": await self._calculate_revenue_metrics(user_id, period_start, period_end),
                 "payment_metrics": await self._calculate_payment_metrics(user_id, period_start, period_end),
@@ -1375,36 +1308,29 @@ class FinancialAnalyticsService:
             return {}
     
     async def _calculate_revenue_metrics(self, user_id, period_start, period_end):
-        """Calculate revenue-related metrics"""
-        # Implementation for revenue metrics
+        """Calculate revenue-related metrics"""        # Implementation for revenue metrics
         pass
     
     async def _calculate_payment_metrics(self, user_id, period_start, period_end):
-        """Calculate payment-related metrics"""
-        # Implementation for payment metrics
+        """Calculate payment-related metrics"""        # Implementation for payment metrics
         pass
     
     async def _calculate_performance_trends(self, user_id, period_start, period_end):
-        """Calculate performance trends"""
-        # Implementation for performance trends
+        """Calculate performance trends"""        # Implementation for performance trends
         pass
     
     async def _generate_revenue_forecast(self, user_id):
-        """Generate revenue forecast using AI/ML"""
-        # Implementation for revenue forecasting
+        """Generate revenue forecast using AI/ML"""        # Implementation for revenue forecasting
         pass
     
     async def _generate_recommendations(self, user_id):
-        """Generate financial recommendations"""
-        # Implementation for recommendations
+        """Generate financial recommendations"""        # Implementation for recommendations
         pass
 
 
 class PaymentSecurityService:
-    """
-    Payment security service for fraud detection and prevention
-    """
-    
+    """    Payment security service for fraud detection and prevention
+    """    
     def __init__(self):
         self.security_manager = PaymentSecurityManager()
         self.fraud_detector = FraudDetectionEngine()
@@ -1415,10 +1341,8 @@ class PaymentSecurityService:
         payment_data: Dict[str, Any],
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Comprehensive payment security validation
-        """
-        try:
+        """        Comprehensive payment security validation
+        """        try:
             # Fraud detection
             fraud_score = await self.fraud_detector.calculate_risk_score(
                 user_id=user_id,
@@ -1458,8 +1382,7 @@ class PaymentSecurityService:
             }
     
     def _assess_risk_level(self, fraud_score: int) -> FraudRisk:
-        """Assess risk level based on fraud score"""
-        if fraud_score >= 80:
+        """Assess risk level based on fraud score"""        if fraud_score >= 80:
             return FraudRisk.CRITICAL
         elif fraud_score >= 60:
             return FraudRisk.HIGH
@@ -1469,8 +1392,7 @@ class PaymentSecurityService:
             return FraudRisk.LOW
     
     async def _get_security_recommendations(self, fraud_score, security_level):
-        """Get security recommendations based on assessment"""
-        recommendations = []
+        """Get security recommendations based on assessment"""        recommendations = []
         
         if fraud_score > 50:
             recommendations.append("Additional identity verification required")
@@ -1485,10 +1407,8 @@ class PaymentSecurityService:
 
 
 class MultiCurrencyService:
-    """
-    Multi-currency service for handling international payments
-    """
-    
+    """    Multi-currency service for handling international payments
+    """    
     def __init__(self):
         self.currency_converter = CurrencyConverter()
         
@@ -1499,10 +1419,8 @@ class MultiCurrencyService:
         to_currency: str,
         rate_date: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Convert currency with real-time rates
-        """
-        try:
+        """        Convert currency with real-time rates
+        """        try:
             rate = await self.currency_converter.get_exchange_rate(
                 from_currency, to_currency, rate_date
             )
@@ -1529,13 +1447,11 @@ class MultiCurrencyService:
             }
     
     def _calculate_conversion_fee(self, amount: Decimal, from_currency: str, to_currency: str) -> Decimal:
-        """Calculate currency conversion fee"""
-        # Standard conversion fee of 0.5%
+        """Calculate currency conversion fee"""        # Standard conversion fee of 0.5%
         return amount * Decimal('0.005')
     
     async def get_supported_currencies(self) -> List[Dict[str, Any]]:
-        """Get list of supported currencies with metadata"""
-        currencies = []
+        """Get list of supported currencies with metadata"""        currencies = []
         
         for currency in CurrencyCode:
             currency_info = {
@@ -1550,8 +1466,7 @@ class MultiCurrencyService:
         return currencies
     
     def _get_currency_name(self, code: str) -> str:
-        """Get currency name from code"""
-        currency_names = {
+        """Get currency name from code"""        currency_names = {
             "USD": "US Dollar",
             "EUR": "Euro",
             "GBP": "British Pound Sterling",
@@ -1578,8 +1493,7 @@ class MultiCurrencyService:
         return currency_names.get(code, code)
     
     def _get_currency_symbol(self, code: str) -> str:
-        """Get currency symbol from code"""
-        currency_symbols = {
+        """Get currency symbol from code"""        currency_symbols = {
             "USD": "$",
             "EUR": "€",
             "GBP": "£",
@@ -1608,13 +1522,11 @@ class MultiCurrencyService:
 
 
 class ProcessorError(PaymentProcessingError):
-    """Raised when there's an issue with the payment processor"""
-    pass
+    """Raised when there's an issue with the payment processor"""    pass
 
 
 class PaymentTransactionService:
-    """Service for managing payment transactions"""
-    
+    """Service for managing payment transactions"""    
     def __init__(self, transaction_repo: PaymentTransactionRepository):
         self.transaction_repo = transaction_repo
         self.fee_calculator = PaymentFeeCalculator()
@@ -1625,10 +1537,8 @@ class PaymentTransactionService:
         transaction_data: PaymentTransactionCreateSchema,
         validate_funds: bool = True
     ) -> Dict[str, Any]:
-        """
-        Create a new payment transaction with validation and fraud detection
-        """
-        try:
+        """        Create a new payment transaction with validation and fraud detection
+        """        try:
             # Validate transaction data
             await self._validate_transaction(transaction_data)
             
@@ -1682,8 +1592,7 @@ class PaymentTransactionService:
         transaction_id: uuid.UUID,
         processor_response: Dict[str, Any]
     ) -> bool:
-        """Process a transaction with external processor response"""
-        try:
+        """Process a transaction with external processor response"""        try:
             transaction = self.transaction_repo.get_transaction_by_id(transaction_id)
             if not transaction:
                 raise PaymentProcessingError("Transaction not found")
@@ -1718,8 +1627,7 @@ class PaymentTransactionService:
         refund_amount: Optional[Decimal] = None,
         reason: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Process a transaction refund"""
-        try:
+        """Process a transaction refund"""        try:
             original_transaction = self.transaction_repo.get_transaction_by_id(transaction_id)
             if not original_transaction:
                 raise PaymentProcessingError("Original transaction not found")
@@ -1757,8 +1665,7 @@ class PaymentTransactionService:
             raise PaymentProcessingError(f"Refund failed: {str(e)}")
     
     async def _validate_transaction(self, transaction_data: PaymentTransactionCreateSchema):
-        """Validate transaction data"""
-        # Check minimum amount
+        """Validate transaction data"""        # Check minimum amount
         if transaction_data.amount < Decimal('0.50'):
             raise PaymentProcessingError("Transaction amount too small")
         
@@ -1774,13 +1681,11 @@ class PaymentTransactionService:
             raise PaymentProcessingError(f"Amount exceeds processor limit")
     
     def _validate_processor_response(self, response: Dict[str, Any]) -> bool:
-        """Validate processor response format"""
-        required_fields = ['status', 'transaction_id']
+        """Validate processor response format"""        required_fields = ['status', 'transaction_id']
         return all(field in response for field in required_fields)
     
     def _map_processor_status(self, processor_status: str) -> str:
-        """Map processor status to internal status"""
-        status_mapping = {
+        """Map processor status to internal status"""        status_mapping = {
             'succeeded': PaymentStatus.COMPLETED.value,
             'pending': PaymentStatus.PROCESSING.value,
             'failed': PaymentStatus.FAILED.value,
@@ -1790,16 +1695,14 @@ class PaymentTransactionService:
         return status_mapping.get(processor_status, PaymentStatus.FAILED.value)
     
     async def _post_process_transaction(self, transaction):
-        """Post-processing tasks after successful transaction"""
-        # Update financial records
+        """Post-processing tasks after successful transaction"""        # Update financial records
         # Trigger analytics updates
         # Send notifications
         pass
 
 
 class PaymentMethodService:
-    """Service for managing payment methods"""
-    
+    """Service for managing payment methods"""    
     def __init__(self, payment_method_repo: PaymentMethodRepository):
         self.payment_method_repo = payment_method_repo
         self.encryption_service = PaymentEncryptionService()
@@ -1809,8 +1712,7 @@ class PaymentMethodService:
         method_data: PaymentMethodCreateSchema,
         encrypted_data: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Add a new payment method with encryption"""
-        try:
+        """Add a new payment method with encryption"""        try:
             # Encrypt sensitive data
             encrypted_details = await self.encryption_service.encrypt_payment_data(
                 encrypted_data
@@ -1853,8 +1755,7 @@ class PaymentMethodService:
         payment_method_id: uuid.UUID,
         verification_data: Dict[str, Any]
     ) -> bool:
-        """Verify a payment method with provider"""
-        try:
+        """Verify a payment method with provider"""        try:
             # Implementation would integrate with payment provider APIs
             # For now, return mock verification
             return True
@@ -1864,8 +1765,7 @@ class PaymentMethodService:
             return False
     
     async def _verify_payment_method(self, payment_method) -> Dict[str, Any]:
-        """Internal verification with payment provider"""
-        # Mock verification - would integrate with actual provider APIs
+        """Internal verification with payment provider"""        # Mock verification - would integrate with actual provider APIs
         return {
             'status': 'verified',
             'verified': True,
@@ -1874,8 +1774,7 @@ class PaymentMethodService:
 
 
 class BillingService:
-    """Service for managing billing and subscriptions"""
-    
+    """Service for managing billing and subscriptions"""    
     def __init__(self, billing_repo: BillingRecordRepository):
         self.billing_repo = billing_repo
         self.subscription_manager = SubscriptionManager()
@@ -1886,8 +1785,7 @@ class BillingService:
         subscription_type: str,
         billing_frequency: str
     ) -> Dict[str, Any]:
-        """Create a new billing cycle"""
-        try:
+        """Create a new billing cycle"""        try:
             # Calculate billing period
             period_start = datetime.utcnow()
             period_end = self._calculate_period_end(period_start, billing_frequency)
@@ -1926,8 +1824,7 @@ class BillingService:
             raise PaymentProcessingError(f"Billing cycle creation failed: {str(e)}")
     
     def _calculate_period_end(self, start_date: datetime, frequency: str) -> datetime:
-        """Calculate billing period end date"""
-        frequency_mapping = {
+        """Calculate billing period end date"""        frequency_mapping = {
             'weekly': timedelta(weeks=1),
             'monthly': timedelta(days=30),
             'quarterly': timedelta(days=90),
@@ -1939,8 +1836,7 @@ class BillingService:
 
 
 class PayoutService:
-    """Service for managing automated payouts"""
-    
+    """Service for managing automated payouts"""    
     def __init__(self, payout_repo: AutomatedPayoutRepository):
         self.payout_repo = payout_repo
         self.payout_processor = PayoutProcessor()
@@ -1949,8 +1845,7 @@ class PayoutService:
         self,
         payout_data: AutomatedPayoutCreateSchema
     ) -> Dict[str, Any]:
-        """Schedule an automated payout"""
-        try:
+        """Schedule an automated payout"""        try:
             # Validate payout eligibility
             await self._validate_payout_eligibility(payout_data)
             
@@ -1986,8 +1881,7 @@ class PayoutService:
             raise PaymentProcessingError(f"Payout scheduling failed: {str(e)}")
     
     async def process_pending_payouts(self) -> List[Dict[str, Any]]:
-        """Process all pending payouts"""
-        try:
+        """Process all pending payouts"""        try:
             pending_payouts = self.payout_repo.get_pending_payouts()
             results = []
             
@@ -2024,13 +1918,11 @@ class PayoutService:
             raise PaymentProcessingError(f"Payout processing failed: {str(e)}")
     
     async def _validate_payout_eligibility(self, payout_data: AutomatedPayoutCreateSchema):
-        """Validate payout eligibility"""
-        if payout_data.total_amount < payout_data.minimum_amount:
+        """Validate payout eligibility"""        if payout_data.total_amount < payout_data.minimum_amount:
             raise PaymentProcessingError("Payout amount below minimum threshold")
     
     def _calculate_payout_fees(self, amount: Decimal, processor: str) -> Decimal:
-        """Calculate payout processing fees"""
-        fee_rates = {
+        """Calculate payout processing fees"""        fee_rates = {
             'stripe': Decimal('0.0025'),  # 0.25%
             'wise': Decimal('0.005'),     # 0.5%
             'paypal': Decimal('0.01')     # 1%
@@ -2042,11 +1934,9 @@ class PayoutService:
 
 # Helper classes
 class PaymentFeeCalculator:
-    """Calculator for payment processing fees"""
-    
+    """Calculator for payment processing fees"""    
     def calculate_fees(self, amount: Decimal, processor: str, currency: str) -> Dict[str, Decimal]:
-        """Calculate processing fees"""
-        base_rates = {
+        """Calculate processing fees"""        base_rates = {
             'stripe': {'rate': Decimal('0.029'), 'fixed': Decimal('0.30')},
             'paypal': {'rate': Decimal('0.034'), 'fixed': Decimal('0.30')},
             'wise': {'rate': Decimal('0.015'), 'fixed': Decimal('0.50')}
@@ -2067,11 +1957,9 @@ class PaymentFeeCalculator:
 
 
 class FraudDetectionService:
-    """Service for fraud detection and risk assessment"""
-    
+    """Service for fraud detection and risk assessment"""    
     async def assess_transaction_risk(self, transaction_data: Dict[str, Any]) -> float:
-        """Assess fraud risk for a transaction (0.0 = low risk, 1.0 = high risk)"""
-        # Mock implementation - would use ML models and external APIs
+        """Assess fraud risk for a transaction (0.0 = low risk, 1.0 = high risk)"""        # Mock implementation - would use ML models and external APIs
         risk_score = 0.1  # Default low risk
         
         # Add risk factors
@@ -2085,20 +1973,16 @@ class FraudDetectionService:
 
 
 class PaymentEncryptionService:
-    """Service for encrypting sensitive payment data"""
-    
+    """Service for encrypting sensitive payment data"""    
     async def encrypt_payment_data(self, data: Dict[str, str]) -> Dict[str, str]:
-        """Encrypt sensitive payment data"""
-        # Mock implementation - would use proper encryption
+        """Encrypt sensitive payment data"""        # Mock implementation - would use proper encryption
         return {key: f"encrypted_{value}" for key, value in data.items()}
 
 
 class SubscriptionManager:
-    """Manager for subscription details and pricing"""
-    
+    """Manager for subscription details and pricing"""    
     async def get_subscription_details(self, user_id: int, subscription_type: str) -> Dict[str, Any]:
-        """Get subscription details"""
-        # Mock implementation
+        """Get subscription details"""        # Mock implementation
         subscription_plans = {
             'basic': {'amount': Decimal('9.99'), 'currency': 'EUR'},
             'premium': {'amount': Decimal('19.99'), 'currency': 'EUR'},
@@ -2109,11 +1993,9 @@ class SubscriptionManager:
 
 
 class PayoutProcessor:
-    """Processor for external payout operations"""
-    
+    """Processor for external payout operations"""    
     async def process_payout(self, payout) -> Dict[str, Any]:
-        """Process payout with external provider"""
-        # Mock implementation - would integrate with payment providers
+        """Process payout with external provider"""        # Mock implementation - would integrate with payment providers
         return {
             'success': True,
             'external_id': f"payout_{uuid.uuid4().hex[:8]}",

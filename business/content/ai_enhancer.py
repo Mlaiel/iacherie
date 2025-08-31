@@ -1,5 +1,4 @@
-"""
-Content AI Enhancer - IA Influencer Agent Platform
+"""Content AI Enhancer - IA Influencer Agent Platform
 =================================================
 
 Advanced AI-powered content enhancement system with machine learning models for
@@ -8,7 +7,6 @@ automatic content improvement, optimization, and intelligent recommendations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import tempfile
@@ -40,8 +38,7 @@ settings = get_settings()
 
 
 class ContentAIEnhancer:
-    """Advanced AI-powered content enhancement system."""
-    
+    """Advanced AI-powered content enhancement system."""    
     def __init__(self):
         self.ai_processor = AIProcessor()
         self.enhancement_models = {}
@@ -73,8 +70,7 @@ class ContentAIEnhancer:
         }
     
     def _initialize_models(self):
-        """Initialize AI models for content enhancement."""
-        try:
+        """Initialize AI models for content enhancement."""        try:
             # CLIP model for image-text understanding
             self.processors['clip'] = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
             self.enhancement_models['clip'] = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
@@ -96,8 +92,7 @@ class ContentAIEnhancer:
             self._initialize_fallback_models()
     
     def _initialize_fallback_models(self):
-        """Initialize fallback models if main models fail."""
-        try:
+        """Initialize fallback models if main models fail."""        try:
             # Basic text processing
             self.enhancement_models['basic_text'] = pipeline("fill-mask", 
                                                            model="distilbert-base-uncased")
@@ -112,8 +107,7 @@ class ContentAIEnhancer:
         enhancement_options: Dict[str, Any],
         user_preferences: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Enhance content using AI-powered algorithms.
+        """        Enhance content using AI-powered algorithms.
         
         Args:
             file_path: Path to content file
@@ -123,8 +117,7 @@ class ContentAIEnhancer:
             
         Returns:
             Enhancement results with improved content and metrics
-        """
-        try:
+        """        try:
             # Validate enhancement options
             available_features = self.enhancement_features.get(content_type, [])
             requested_features = enhancement_options.get('features', [])
@@ -178,8 +171,7 @@ class ContentAIEnhancer:
         features: List[str],
         preferences: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Apply enhancements based on content type."""
-        start_time = datetime.utcnow()
+        """Apply enhancements based on content type."""        start_time = datetime.utcnow()
         
         if content_type == 'audio':
             result = await self._enhance_audio(file_path, features, preferences)
@@ -203,8 +195,7 @@ class ContentAIEnhancer:
         features: List[str],
         preferences: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Enhance audio content with AI algorithms."""
-        try:
+        """Enhance audio content with AI algorithms."""        try:
             # Load audio
             y, sr = librosa.load(str(file_path), sr=None)
             enhanced_audio = y.copy()
@@ -265,8 +256,7 @@ class ContentAIEnhancer:
         features: List[str],
         preferences: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Enhance video content with AI algorithms."""
-        try:
+        """Enhance video content with AI algorithms."""        try:
             # Load video
             cap = cv2.VideoCapture(str(file_path))
             fps = cap.get(cv2.CAP_PROP_FPS)
@@ -352,8 +342,7 @@ class ContentAIEnhancer:
         features: List[str],
         preferences: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Enhance image content with AI algorithms."""
-        try:
+        """Enhance image content with AI algorithms."""        try:
             # Load image
             with Image.open(file_path) as img:
                 enhanced_img = img.copy()
@@ -435,8 +424,7 @@ class ContentAIEnhancer:
         features: List[str],
         preferences: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Enhance text content with AI algorithms."""
-        try:
+        """Enhance text content with AI algorithms."""        try:
             # Read text
             with open(file_path, 'r', encoding='utf-8') as f:
                 original_text = f.read()
@@ -514,8 +502,7 @@ class ContentAIEnhancer:
     
     # Audio enhancement methods
     def _reduce_audio_noise(self, audio: np.ndarray, sr: int) -> np.ndarray:
-        """Reduce noise in audio using spectral subtraction."""
-        # Simple noise reduction using spectral subtraction
+        """Reduce noise in audio using spectral subtraction."""        # Simple noise reduction using spectral subtraction
         stft = librosa.stft(audio)
         magnitude, phase = np.abs(stft), np.angle(stft)
         
@@ -533,8 +520,7 @@ class ContentAIEnhancer:
         return librosa.istft(stft_denoised)
     
     def _normalize_loudness(self, audio: np.ndarray, sr: int, target_lufs: float) -> np.ndarray:
-        """Normalize audio loudness to target LUFS."""
-        # Calculate current loudness (simplified)
+        """Normalize audio loudness to target LUFS."""        # Calculate current loudness (simplified)
         current_rms = np.sqrt(np.mean(audio**2))
         current_lufs = -23.0 + 20 * np.log10(current_rms + 1e-10)
         
@@ -545,8 +531,7 @@ class ContentAIEnhancer:
         return audio * gain_linear
     
     def _optimize_eq(self, audio: np.ndarray, sr: int) -> np.ndarray:
-        """Optimize EQ for better frequency balance."""
-        # Simple EQ using filtering
+        """Optimize EQ for better frequency balance."""        # Simple EQ using filtering
         # High-pass filter to remove rumble
         from scipy import signal
         
@@ -560,8 +545,7 @@ class ContentAIEnhancer:
         return filtered_audio
     
     def _enhance_stereo_width(self, audio: np.ndarray) -> np.ndarray:
-        """Enhance stereo width for stereo audio."""
-        if len(audio.shape) != 2:
+        """Enhance stereo width for stereo audio."""        if len(audio.shape) != 2:
             return audio
         
         # Simple stereo widening
@@ -579,8 +563,7 @@ class ContentAIEnhancer:
         return np.array([left_enhanced, right_enhanced])
     
     def _optimize_dynamic_range(self, audio: np.ndarray) -> np.ndarray:
-        """Optimize dynamic range with gentle compression."""
-        # Simple compression
+        """Optimize dynamic range with gentle compression."""        # Simple compression
         threshold = 0.7
         ratio = 4.0
         
@@ -595,8 +578,7 @@ class ContentAIEnhancer:
         return compressed
     
     def _apply_mastering(self, audio: np.ndarray, sr: int) -> np.ndarray:
-        """Apply basic mastering chain."""
-        # Apply gentle EQ, compression, and limiting
+        """Apply basic mastering chain."""        # Apply gentle EQ, compression, and limiting
         mastered = self._optimize_eq(audio, sr)
         mastered = self._optimize_dynamic_range(mastered)
         
@@ -610,16 +592,14 @@ class ContentAIEnhancer:
         original: np.ndarray, 
         enhanced: np.ndarray
     ) -> float:
-        """Calculate dynamic range improvement."""
-        orig_dr = np.max(original) - np.min(original)
+        """Calculate dynamic range improvement."""        orig_dr = np.max(original) - np.min(original)
         enhanced_dr = np.max(enhanced) - np.min(enhanced)
         
         return float(enhanced_dr / orig_dr) if orig_dr > 0 else 1.0
     
     # Video enhancement methods
     def _stabilize_frame(self, current_frame: np.ndarray, prev_frame: np.ndarray) -> np.ndarray:
-        """Basic frame stabilization using motion estimation."""
-        # Convert to grayscale for motion estimation
+        """Basic frame stabilization using motion estimation."""        # Convert to grayscale for motion estimation
         curr_gray = cv2.cvtColor(current_frame, cv2.COLOR_BGR2GRAY)
         prev_gray = cv2.cvtColor(prev_frame, cv2.COLOR_BGR2GRAY)
         
@@ -634,8 +614,7 @@ class ContentAIEnhancer:
         return current_frame  # Return original for now
     
     def _correct_colors(self, frame: np.ndarray) -> np.ndarray:
-        """Correct colors in video frame."""
-        # Simple white balance correction
+        """Correct colors in video frame."""        # Simple white balance correction
         lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
         avg_a = np.average(lab[:, :, 1])
         avg_b = np.average(lab[:, :, 2])
@@ -646,8 +625,7 @@ class ContentAIEnhancer:
         return cv2.cvtColor(lab, cv2.COLOR_LAB2BGR)
     
     def _optimize_brightness(self, frame: np.ndarray) -> np.ndarray:
-        """Optimize brightness of video frame."""
-        # Calculate optimal brightness
+        """Optimize brightness of video frame."""        # Calculate optimal brightness
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         mean_brightness = np.mean(gray)
         target_brightness = 128
@@ -658,8 +636,7 @@ class ContentAIEnhancer:
         return cv2.convertScaleAbs(frame, alpha=brightness_factor, beta=0)
     
     def _enhance_contrast(self, frame: np.ndarray) -> np.ndarray:
-        """Enhance contrast of video frame."""
-        # Apply CLAHE (Contrast Limited Adaptive Histogram Equalization)
+        """Enhance contrast of video frame."""        # Apply CLAHE (Contrast Limited Adaptive Histogram Equalization)
         lab = cv2.cvtColor(frame, cv2.COLOR_BGR2LAB)
         l_channel, a, b = cv2.split(lab)
         
@@ -670,20 +647,17 @@ class ContentAIEnhancer:
         return cv2.cvtColor(enhanced, cv2.COLOR_LAB2BGR)
     
     def _reduce_video_noise(self, frame: np.ndarray) -> np.ndarray:
-        """Reduce noise in video frame."""
-        return cv2.bilateralFilter(frame, 9, 75, 75)
+        """Reduce noise in video frame."""        return cv2.bilateralFilter(frame, 9, 75, 75)
     
     def _sharpen_frame(self, frame: np.ndarray) -> np.ndarray:
-        """Sharpen video frame."""
-        kernel = np.array([[-1, -1, -1],
+        """Sharpen video frame."""        kernel = np.array([[-1, -1, -1],
                           [-1,  9, -1],
                           [-1, -1, -1]])
         return cv2.filter2D(frame, -1, kernel)
     
     # Image enhancement methods
     def _correct_image_brightness(self, img: Image.Image) -> Image.Image:
-        """Correct image brightness automatically."""
-        enhancer = ImageEnhance.Brightness(img)
+        """Correct image brightness automatically."""        enhancer = ImageEnhance.Brightness(img)
         
         # Analyze current brightness
         grayscale = img.convert('L')
@@ -698,8 +672,7 @@ class ContentAIEnhancer:
         return enhancer.enhance(factor)
     
     def _boost_saturation(self, img: Image.Image) -> Image.Image:
-        """Boost image saturation intelligently."""
-        if img.mode != 'RGB':
+        """Boost image saturation intelligently."""        if img.mode != 'RGB':
             img = img.convert('RGB')
         
         # Convert to HSV to work with saturation
@@ -719,8 +692,7 @@ class ContentAIEnhancer:
         return enhanced_hsv.convert('RGB')
     
     def _apply_hdr_effect(self, img: Image.Image) -> Image.Image:
-        """Apply HDR-like effect to image."""
-        # Convert to numpy array
+        """Apply HDR-like effect to image."""        # Convert to numpy array
         img_array = np.array(img)
         
         # Apply tone mapping (simplified)
@@ -741,8 +713,7 @@ class ContentAIEnhancer:
         return Image.fromarray(hdr_effect)
     
     def _apply_artistic_filter(self, img: Image.Image, filter_type: str) -> Image.Image:
-        """Apply artistic filter to image."""
-        if filter_type == 'vintage':
+        """Apply artistic filter to image."""        if filter_type == 'vintage':
             # Vintage filter
             enhancer = ImageEnhance.Color(img)
             img = enhancer.enhance(0.8)  # Reduce saturation
@@ -770,8 +741,7 @@ class ContentAIEnhancer:
         return img  # Return original if unknown filter
     
     def _remove_background_simple(self, img: Image.Image) -> Image.Image:
-        """Simple background removal using edge detection."""
-        # This is a very basic implementation
+        """Simple background removal using edge detection."""        # This is a very basic implementation
         # Real background removal would use more sophisticated AI models
         
         if img.mode != 'RGBA':
@@ -795,8 +765,7 @@ class ContentAIEnhancer:
     
     # Text enhancement methods
     async def _correct_grammar(self, text: str) -> str:
-        """Correct grammar in text using AI."""
-        try:
+        """Correct grammar in text using AI."""        try:
             # Use text generation model for grammar correction
             if 'text_processor' in self.enhancement_models:
                 prompt = f"Correct the grammar in this text: {text}"
@@ -810,8 +779,7 @@ class ContentAIEnhancer:
             return text
     
     async def _improve_style(self, text: str, preferences: Optional[Dict[str, Any]]) -> str:
-        """Improve text style based on preferences."""
-        # Simple style improvements
+        """Improve text style based on preferences."""        # Simple style improvements
         lines = text.split('\n')
         improved_lines = []
         
@@ -832,8 +800,7 @@ class ContentAIEnhancer:
         return '\n'.join(improved_lines)
     
     async def _optimize_readability(self, text: str) -> str:
-        """Optimize text for better readability."""
-        # Break long sentences
+        """Optimize text for better readability."""        # Break long sentences
         sentences = text.split('. ')
         optimized_sentences = []
         
@@ -858,8 +825,7 @@ class ContentAIEnhancer:
         return '. '.join(optimized_sentences)
     
     async def _enhance_sentiment(self, text: str) -> str:
-        """Enhance text sentiment."""
-        try:
+        """Enhance text sentiment."""        try:
             # Analyze current sentiment
             if 'sentiment' in self.enhancement_models:
                 sentiment = self.enhancement_models['sentiment'](text)[0]
@@ -875,8 +841,7 @@ class ContentAIEnhancer:
             return text
     
     async def _optimize_keywords(self, text: str, keywords: List[str]) -> str:
-        """Optimize text for specific keywords."""
-        if not keywords:
+        """Optimize text for specific keywords."""        if not keywords:
             return text
         
         # Simple keyword optimization
@@ -890,8 +855,7 @@ class ContentAIEnhancer:
         return optimized_text
     
     async def _generate_title(self, text: str) -> str:
-        """Generate title for text content."""
-        try:
+        """Generate title for text content."""        try:
             # Extract first sentence or use summarization
             first_sentence = text.split('.')[0].strip()
             
@@ -904,8 +868,7 @@ class ContentAIEnhancer:
             return "Untitled Content"
     
     async def _generate_hashtags(self, text: str) -> List[str]:
-        """Generate hashtags for text content."""
-        try:
+        """Generate hashtags for text content."""        try:
             # Extract keywords and convert to hashtags
             words = text.lower().split()
             
@@ -927,8 +890,7 @@ class ContentAIEnhancer:
             return ["#content", "#ai", "#enhanced"]
     
     async def _generate_summary(self, text: str) -> str:
-        """Generate summary of text content."""
-        try:
+        """Generate summary of text content."""        try:
             if 'summarizer' in self.enhancement_models and len(text) > 100:
                 # Use summarization model
                 summary = self.enhancement_models['summarizer'](
@@ -950,8 +912,7 @@ class ContentAIEnhancer:
         enhanced_path: Optional[str],
         content_type: str
     ) -> Dict[str, Any]:
-        """Calculate improvement metrics between original and enhanced content."""
-        if not enhanced_path or not Path(enhanced_path).exists():
+        """Calculate improvement metrics between original and enhanced content."""        if not enhanced_path or not Path(enhanced_path).exists():
             return {'overall_score': 0.0, 'metrics': {}}
         
         metrics = {}
@@ -992,8 +953,7 @@ class ContentAIEnhancer:
         original_path: Path, 
         enhanced_path: Path
     ) -> Dict[str, float]:
-        """Calculate audio improvement metrics."""
-        try:
+        """Calculate audio improvement metrics."""        try:
             # Load both audio files
             y_orig, sr_orig = librosa.load(str(original_path), sr=None)
             y_enh, sr_enh = librosa.load(str(enhanced_path), sr=None)
@@ -1031,8 +991,7 @@ class ContentAIEnhancer:
         original_path: Path, 
         enhanced_path: Path
     ) -> Dict[str, float]:
-        """Calculate video improvement metrics."""
-        try:
+        """Calculate video improvement metrics."""        try:
             # Basic file size and quality metrics
             orig_size = original_path.stat().st_size
             enh_size = enhanced_path.stat().st_size
@@ -1052,8 +1011,7 @@ class ContentAIEnhancer:
         original_path: Path, 
         enhanced_path: Path
     ) -> Dict[str, float]:
-        """Calculate image improvement metrics."""
-        try:
+        """Calculate image improvement metrics."""        try:
             with Image.open(original_path) as orig_img, Image.open(enhanced_path) as enh_img:
                 # Convert to numpy arrays
                 orig_array = np.array(orig_img)
@@ -1084,8 +1042,7 @@ class ContentAIEnhancer:
         original_path: Path, 
         enhanced_path: Path
     ) -> Dict[str, float]:
-        """Calculate text improvement metrics."""
-        try:
+        """Calculate text improvement metrics."""        try:
             with open(original_path, 'r', encoding='utf-8') as f:
                 orig_text = f.read()
             with open(enhanced_path, 'r', encoding='utf-8') as f:
@@ -1120,8 +1077,7 @@ class ContentAIEnhancer:
         applied_features: List[str],
         improvement_metrics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate AI insights about applied enhancements."""
-        insights = {
+        """Generate AI insights about applied enhancements."""        insights = {
             'success_factors': [],
             'improvement_areas': [],
             'recommendations': [],
@@ -1175,8 +1131,7 @@ class ContentAIEnhancer:
         content_type: str,
         improvement_metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate recommendations for further enhancement."""
-        recommendations = []
+        """Generate recommendations for further enhancement."""        recommendations = []
         overall_score = improvement_metrics.get('overall_score', 0.5)
         
         if overall_score < 0.7:
@@ -1212,8 +1167,7 @@ class ContentAIEnhancer:
         return recommendations
     
     def _create_no_enhancement_result(self, file_path: Path, content_type: str) -> Dict[str, Any]:
-        """Create result when no enhancements are applied."""
-        return {
+        """Create result when no enhancements are applied."""        return {
             'original_file': str(file_path),
             'enhanced_file': str(file_path),  # Same as original
             'content_type': content_type,
@@ -1231,8 +1185,7 @@ class ContentAIEnhancer:
         }
     
     async def get_available_enhancements(self, content_type: str) -> List[str]:
-        """Get available enhancement features for content type."""
-        return self.enhancement_features.get(content_type, [])
+        """Get available enhancement features for content type."""        return self.enhancement_features.get(content_type, [])
     
     async def preview_enhancement(
         self,
@@ -1240,8 +1193,7 @@ class ContentAIEnhancer:
         content_type: str,
         enhancement_feature: str
     ) -> Dict[str, Any]:
-        """Preview a single enhancement without saving."""
-        # This would create a temporary preview - simplified implementation
+        """Preview a single enhancement without saving."""        # This would create a temporary preview - simplified implementation
         return {
             'feature': enhancement_feature,
             'preview_available': True,

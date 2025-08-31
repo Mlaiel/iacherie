@@ -1,5 +1,4 @@
-"""
-OnlyFans Content Crawling Engine
+"""OnlyFans Content Crawling Engine
 
 Advanced industry-grade engine for OnlyFans content crawling and protection.
 Implements full content lifecycle management with AI-powered content protection.
@@ -11,7 +10,6 @@ WARNING: This code is proprietary and confidential.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator
@@ -29,8 +27,7 @@ from ...monitoring.metrics import MetricsCollector
 
 
 class ContentType(Enum):
-    """Content types for OnlyFans"""
-    IMAGE = "image"
+    """Content types for OnlyFans"""    IMAGE = "image"
     VIDEO = "video"
     LIVE_STREAM = "live_stream"
     MESSAGE = "message"
@@ -40,8 +37,7 @@ class ContentType(Enum):
 
 @dataclass
 class OnlyFansContent:
-    """OnlyFans content data structure"""
-    content_id: str
+    """OnlyFans content data structure"""    content_id: str
     creator_id: str
     content_type: ContentType
     title: Optional[str]
@@ -61,11 +57,9 @@ class OnlyFansContent:
 
 
 class OnlyFansEngine(BaseCrawlerEngine):
-    """
-    Professional OnlyFans crawling engine with advanced content protection
+    """    Professional OnlyFans crawling engine with advanced content protection
     and monetization features for creator content management.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         super().__init__(config)
         self.platform = OnlyFansPlatform(config.get('onlyfans', {}))
@@ -87,8 +81,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         content_types: List[ContentType] = None,
         date_range: Optional[tuple] = None
     ) -> AsyncGenerator[OnlyFansContent, None]:
-        """
-        Crawl content from a specific OnlyFans creator with advanced filtering
+        """        Crawl content from a specific OnlyFans creator with advanced filtering
         
         Args:
             creator_id: Creator identifier
@@ -97,8 +90,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
             
         Yields:
             OnlyFansContent: Processed content objects
-        """
-        self.logger.info(f"Starting content crawl for creator: {creator_id}")
+        """        self.logger.info(f"Starting content crawl for creator: {creator_id}")
         
         try:
             # Initialize rate limiting and session management
@@ -126,8 +118,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         content_type: ContentType,
         date_range: Optional[tuple]
     ) -> AsyncGenerator[Dict[str, Any], None]:
-        """Crawl content by specific type with advanced filtering"""
-        
+        """Crawl content by specific type with advanced filtering"""        
         page = 1
         max_pages = 100  # Prevent infinite loops
         
@@ -165,8 +156,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         page: int,
         date_range: Optional[tuple]
     ) -> Dict[str, Any]:
-        """Fetch a single page of content with advanced error handling"""
-        
+        """Fetch a single page of content with advanced error handling"""        
         url = f"https://onlyfans.com/api2/v2/users/{creator_id}/posts"
         
         params = {
@@ -203,8 +193,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
             return {}
             
     async def _process_content(self, raw_content: Dict[str, Any]) -> Optional[OnlyFansContent]:
-        """Process and protect content with advanced AI analysis"""
-        
+        """Process and protect content with advanced AI analysis"""        
         try:
             # Extract content metadata
             content_id = raw_content.get('id')
@@ -274,8 +263,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
             return None
             
     def _determine_content_type(self, content: Dict[str, Any]) -> ContentType:
-        """Determine content type from raw data"""
-        
+        """Determine content type from raw data"""        
         media = content.get('media', [])
         if not media:
             return ContentType.MESSAGE
@@ -291,8 +279,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
             return ContentType.POST
             
     def _extract_media_urls(self, content: Dict[str, Any]) -> List[str]:
-        """Extract media URLs from content"""
-        
+        """Extract media URLs from content"""        
         urls = []
         media = content.get('media', [])
         
@@ -305,8 +292,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         return urls
         
     def _calculate_engagement_rate(self, content: Dict[str, Any]) -> float:
-        """Calculate engagement rate for content"""
-        
+        """Calculate engagement rate for content"""        
         likes = content.get('favoritesCount', 0)
         comments = content.get('commentsCount', 0)
         subscribers = content.get('author', {}).get('subscribersCount', 1)
@@ -318,8 +304,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         return min(engagement_rate, 1.0)  # Cap at 100%
         
     async def _determine_monetization_tier(self, content: Dict[str, Any]) -> str:
-        """Determine monetization tier based on content analysis"""
-        
+        """Determine monetization tier based on content analysis"""        
         price = content.get('price', 0)
         engagement = self._calculate_engagement_rate(content)
         
@@ -335,8 +320,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         limit: int = 100,
         content_types: List[ContentType] = None
     ) -> List[OnlyFansContent]:
-        """Crawl trending content across the platform"""
-        
+        """Crawl trending content across the platform"""        
         self.logger.info(f"Crawling trending content, limit: {limit}")
         
         trending_content = []
@@ -361,8 +345,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         content_type: ContentType,
         limit: int
     ) -> List[OnlyFansContent]:
-        """Fetch trending content by type"""
-        
+        """Fetch trending content by type"""        
         url = "https://onlyfans.com/api2/v2/posts/trending"
         
         params = {
@@ -394,8 +377,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         creator_id: str,
         monitoring_period: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """Monitor creator performance metrics"""
-        
+        """Monitor creator performance metrics"""        
         self.logger.info(f"Monitoring creator performance: {creator_id}")
         
         end_date = datetime.now()
@@ -432,8 +414,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
             return {}
             
     def _calculate_content_distribution(self, content_list: List[OnlyFansContent]) -> Dict[str, float]:
-        """Calculate content type distribution"""
-        
+        """Calculate content type distribution"""        
         if not content_list:
             return {}
             
@@ -447,8 +428,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         return distribution
         
     def _calculate_monetization_potential(self, content_list: List[OnlyFansContent]) -> float:
-        """Calculate monetization potential score"""
-        
+        """Calculate monetization potential score"""        
         if not content_list:
             return 0.0
             
@@ -468,8 +448,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         content_types: List[ContentType] = None,
         filters: Dict[str, Any] = None
     ) -> List[OnlyFansContent]:
-        """Search content with advanced filtering"""
-        
+        """Search content with advanced filtering"""        
         self.logger.info(f"Searching content: {query}")
         
         content_types = content_types or list(ContentType)
@@ -497,8 +476,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         content_type: ContentType,
         filters: Dict[str, Any]
     ) -> List[OnlyFansContent]:
-        """Search content by type with filters"""
-        
+        """Search content by type with filters"""        
         url = "https://onlyfans.com/api2/v2/posts/search"
         
         params = {
@@ -534,8 +512,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         return results
         
     def _matches_filters(self, content: OnlyFansContent, filters: Dict[str, Any]) -> bool:
-        """Check if content matches additional filters"""
-        
+        """Check if content matches additional filters"""        
         if filters.get('min_engagement') and content.engagement_rate < filters['min_engagement']:
             return False
             
@@ -551,8 +528,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         return True
         
     async def _get_authenticated_headers(self) -> Dict[str, str]:
-        """Get authenticated headers for API requests"""
-        
+        """Get authenticated headers for API requests"""        
         return {
             'User-Agent': 'OnlyFans/1.0',
             'Accept': 'application/json',
@@ -562,8 +538,7 @@ class OnlyFansEngine(BaseCrawlerEngine):
         }
         
     async def _create_session(self) -> aiohttp.ClientSession:
-        """Create configured HTTP session"""
-        
+        """Create configured HTTP session"""        
         connector = aiohttp.TCPConnector(
             limit=self.max_concurrent_requests,
             limit_per_host=self.max_concurrent_requests
@@ -577,7 +552,6 @@ class OnlyFansEngine(BaseCrawlerEngine):
         )
         
     async def _apply_rate_limiting(self):
-        """Apply rate limiting to prevent API abuse"""
-        
+        """Apply rate limiting to prevent API abuse"""        
         # Simple rate limiting implementation
         await asyncio.sleep(60 / self.rate_limit_per_minute)

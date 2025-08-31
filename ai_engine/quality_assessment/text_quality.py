@@ -1,5 +1,4 @@
-"""
-Text Quality Assessment Module
+"""Text Quality Assessment Module
 
 Advanced text quality analysis for writers, content creators, and digital marketers.
 Implements professional text metrics and industry-standard content quality assessment.
@@ -14,7 +13,6 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
-
 import asyncio
 import logging
 import re
@@ -40,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class TextType(Enum):
-    """Text content types"""
-    ARTICLE = "article"
+    """Text content types"""    ARTICLE = "article"
     BLOG_POST = "blog_post"
     SOCIAL_MEDIA = "social_media"
     MARKETING_COPY = "marketing_copy"
@@ -54,8 +51,7 @@ class TextType(Enum):
 
 
 class WritingTone(Enum):
-    """Writing tone categories"""
-    PROFESSIONAL = "professional"
+    """Writing tone categories"""    PROFESSIONAL = "professional"
     CASUAL = "casual"
     FORMAL = "formal"
     FRIENDLY = "friendly"
@@ -66,8 +62,7 @@ class WritingTone(Enum):
 
 
 class ReadabilityLevel(Enum):
-    """Text readability levels"""
-    VERY_EASY = "very_easy"
+    """Text readability levels"""    VERY_EASY = "very_easy"
     EASY = "easy"
     FAIRLY_EASY = "fairly_easy"
     STANDARD = "standard"
@@ -78,8 +73,7 @@ class ReadabilityLevel(Enum):
 
 @dataclass
 class GrammarAnalysis:
-    """Grammar and language analysis results"""
-    total_errors: int = field(default=0)
+    """Grammar and language analysis results"""    total_errors: int = field(default=0)
     grammar_errors: int = field(default=0)
     spelling_errors: int = field(default=0)
     style_errors: int = field(default=0)
@@ -98,8 +92,7 @@ class GrammarAnalysis:
 
 @dataclass
 class ReadabilityAnalysis:
-    """Text readability analysis"""
-    flesch_score: float = field(default=0.0)
+    """Text readability analysis"""    flesch_score: float = field(default=0.0)
     flesch_kincaid_grade: float = field(default=0.0)
     gunning_fog_index: float = field(default=0.0)
     automated_readability_index: float = field(default=0.0)
@@ -119,8 +112,7 @@ class ReadabilityAnalysis:
 
 @dataclass
 class ContentStructure:
-    """Content structure analysis"""
-    word_count: int = field(default=0)
+    """Content structure analysis"""    word_count: int = field(default=0)
     sentence_count: int = field(default=0)
     paragraph_count: int = field(default=0)
     character_count: int = field(default=0)
@@ -145,8 +137,7 @@ class ContentStructure:
 
 @dataclass
 class SentimentAnalysis:
-    """Text sentiment and emotion analysis"""
-    polarity: float = field(default=0.0)  # -1 to 1
+    """Text sentiment and emotion analysis"""    polarity: float = field(default=0.0)  # -1 to 1
     subjectivity: float = field(default=0.0)  # 0 to 1
     
     # Sentiment classification
@@ -160,8 +151,7 @@ class SentimentAnalysis:
 
 @dataclass
 class StyleAnalysis:
-    """Writing style analysis"""
-    writing_tone: WritingTone = field(default=WritingTone.INFORMATIVE)
+    """Writing style analysis"""    writing_tone: WritingTone = field(default=WritingTone.INFORMATIVE)
     formality_score: float = field(default=50.0)
     
     # Vocabulary analysis
@@ -182,8 +172,7 @@ class StyleAnalysis:
 
 @dataclass
 class TextQualityProfile:
-    """Comprehensive text quality profile"""
-    # Basic properties
+    """Comprehensive text quality profile"""    # Basic properties
     content_type: TextType = field(default=TextType.ARTICLE)
     text_length: int = field(default=0)
     reading_time_minutes: float = field(default=0.0)
@@ -218,8 +207,7 @@ class TextQualityProfile:
 
 @dataclass
 class TextQualityMetrics:
-    """Text quality metrics container"""
-    profile: TextQualityProfile = field(default_factory=TextQualityProfile)
+    """Text quality metrics container"""    profile: TextQualityProfile = field(default_factory=TextQualityProfile)
     
     # Platform compliance
     social_media_ready: bool = field(default=False)
@@ -244,8 +232,7 @@ class TextQualityMetrics:
 
 
 class TextQualityAnalyzer(BaseAIModel):
-    """
-    Professional Text Quality Analyzer
+    """    Professional Text Quality Analyzer
     
     Provides comprehensive text quality assessment for:
     - Content creators and bloggers
@@ -253,11 +240,9 @@ class TextQualityAnalyzer(BaseAIModel):
     - Social media managers
     - Technical writers and journalists
     - SEO optimization specialists
-    """
-    
+    """    
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize text quality analyzer"""
-        super().__init__(config or ModelConfig(
+        """Initialize text quality analyzer"""        super().__init__(config or ModelConfig(
             name="text_quality_analyzer",
             model_type=ModelType.TEXT_MODEL,
             provider=ModelProvider.LOCAL
@@ -337,8 +322,7 @@ class TextQualityAnalyzer(BaseAIModel):
         logger.info("Text Quality Analyzer initialized successfully")
     
     def _initialize_nltk(self):
-        """Initialize required NLTK components"""
-        try:
+        """Initialize required NLTK components"""        try:
             # Download required NLTK data
             required_packages = ['punkt', 'stopwords', 'averaged_perceptron_tagger', 'vader_lexicon']
             for package in required_packages:
@@ -359,8 +343,7 @@ class TextQualityAnalyzer(BaseAIModel):
         content_type: Optional[TextType] = None,
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive text quality analysis
+        """        Comprehensive text quality analysis
         
         Args:
             text: Text content to analyze
@@ -373,8 +356,7 @@ class TextQualityAnalyzer(BaseAIModel):
         Raises:
             QualityCheckError: If analysis fails
             ContentValidationError: If text content is invalid
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             if not text or not text.strip():
@@ -510,21 +492,17 @@ class TextQualityAnalyzer(BaseAIModel):
             raise QualityCheckError(f"Text quality analysis failed: {str(e)}") from e
     
     async def connect(self) -> bool:
-        """Connect to text processing services."""
-        return True
+        """Connect to text processing services."""        return True
     
     async def disconnect(self) -> bool:
-        """Disconnect from text processing services."""
-        return True
+        """Disconnect from text processing services."""        return True
     
     async def process(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text quality assessment."""
-        return await self.analyze_text_quality(data.get('text', ''), 
+        """Process text quality assessment."""        return await self.analyze_text_quality(data.get('text', ''), 
                                               data.get('profile', TextQualityProfile()))
     
     def _detect_content_type(self, text: str) -> TextType:
-        """Detect content type based on text characteristics"""
-        try:
+        """Detect content type based on text characteristics"""        try:
             text_lower = text.lower()
             
             # Check for email patterns
@@ -556,8 +534,7 @@ class TextQualityAnalyzer(BaseAIModel):
             return TextType.ARTICLE
     
     def _estimate_reading_time(self, text: str) -> float:
-        """Estimate reading time in minutes"""
-        try:
+        """Estimate reading time in minutes"""        try:
             words = len(text.split())
             # Average reading speed: 225 words per minute
             return words / 225.0
@@ -565,8 +542,7 @@ class TextQualityAnalyzer(BaseAIModel):
             return 0.0
     
     async def _analyze_grammar_and_language(self, text: str, profile: TextQualityProfile):
-        """Analyze grammar and language quality"""
-        try:
+        """Analyze grammar and language quality"""        try:
             # Language detection using TextBlob
             blob = TextBlob(text)
             try:
@@ -620,8 +596,7 @@ class TextQualityAnalyzer(BaseAIModel):
             profile.grammar.grammar_score = 70  # Default score
     
     async def _analyze_readability(self, text: str, profile: TextQualityProfile):
-        """Analyze text readability"""
-        try:
+        """Analyze text readability"""        try:
             # Calculate readability metrics
             profile.readability.flesch_score = flesch_reading_ease(text)
             profile.readability.flesch_kincaid_grade = flesch_kincaid_grade(text)
@@ -685,8 +660,7 @@ class TextQualityAnalyzer(BaseAIModel):
             profile.readability.readability_score = 50
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified algorithm)"""
-        try:
+        """Count syllables in a word (simplified algorithm)"""        try:
             word = word.lower().strip(string.punctuation)
             if not word:
                 return 0
@@ -715,8 +689,7 @@ class TextQualityAnalyzer(BaseAIModel):
             return 1
     
     async def _analyze_content_structure(self, text: str, profile: TextQualityProfile):
-        """Analyze content structure and organization"""
-        try:
+        """Analyze content structure and organization"""        try:
             structure = profile.structure
             
             # Basic counts
@@ -783,8 +756,7 @@ class TextQualityAnalyzer(BaseAIModel):
             profile.structure.structure_score = 50
     
     async def _analyze_keywords(self, text: str, structure: ContentStructure):
-        """Analyze keywords and their density"""
-        try:
+        """Analyze keywords and their density"""        try:
             # Clean and tokenize text
             words = re.findall(r'\b[a-zA-Z]{3,}\b', text.lower())
             
@@ -821,8 +793,7 @@ class TextQualityAnalyzer(BaseAIModel):
             logger.warning(f"Keyword analysis failed: {str(e)}")
     
     async def _analyze_sentiment_and_emotion(self, text: str, profile: TextQualityProfile):
-        """Analyze sentiment and emotional content"""
-        try:
+        """Analyze sentiment and emotional content"""        try:
             blob = TextBlob(text)
             
             # Basic sentiment analysis
@@ -870,8 +841,7 @@ class TextQualityAnalyzer(BaseAIModel):
             profile.sentiment.engagement_score = 50
     
     async def _analyze_writing_style(self, text: str, profile: TextQualityProfile):
-        """Analyze writing style and tone"""
-        try:
+        """Analyze writing style and tone"""        try:
             style = profile.style
             words = text.split()
             
@@ -937,8 +907,7 @@ class TextQualityAnalyzer(BaseAIModel):
             profile.style.style_score = 50
     
     def _detect_writing_tone(self, text: str) -> WritingTone:
-        """Detect the writing tone of the text"""
-        try:
+        """Detect the writing tone of the text"""        try:
             text_lower = text.lower()
             
             # Tone indicators
@@ -966,8 +935,7 @@ class TextQualityAnalyzer(BaseAIModel):
             return WritingTone.INFORMATIVE
     
     def _calculate_formality_score(self, text: str, style: StyleAnalysis) -> float:
-        """Calculate formality score"""
-        try:
+        """Calculate formality score"""        try:
             formality_factors = []
             
             # Advanced vocabulary increases formality
@@ -1000,8 +968,7 @@ class TextQualityAnalyzer(BaseAIModel):
             return 50.0
     
     async def _analyze_seo_factors(self, text: str, profile: TextQualityProfile):
-        """Analyze SEO-related factors"""
-        try:
+        """Analyze SEO-related factors"""        try:
             # Basic SEO score calculation
             seo_factors = []
             
@@ -1064,8 +1031,7 @@ class TextQualityAnalyzer(BaseAIModel):
             profile.seo_score = 50
     
     def _calculate_quality_scores(self, profile: TextQualityProfile):
-        """Calculate comprehensive quality scores"""
-        try:
+        """Calculate comprehensive quality scores"""        try:
             # Technical score
             tech_score = (
                 profile.grammar.grammar_score * 0.4 +
@@ -1115,8 +1081,7 @@ class TextQualityAnalyzer(BaseAIModel):
             profile.quality_level = "needs_improvement"
     
     def _generate_text_recommendations(self, profile: TextQualityProfile):
-        """Generate text-specific recommendations"""
-        recommendations = []
+        """Generate text-specific recommendations"""        recommendations = []
         
         # Grammar recommendations
         if profile.grammar.grammar_score < 80:
@@ -1184,8 +1149,7 @@ class TextQualityAnalyzer(BaseAIModel):
         profile: TextQualityProfile,
         metrics: TextQualityMetrics
     ):
-        """Analyze compliance with platform requirements"""
-        try:
+        """Analyze compliance with platform requirements"""        try:
             word_count = profile.structure.word_count
             
             # Social media compliance
@@ -1228,8 +1192,7 @@ class TextQualityAnalyzer(BaseAIModel):
         profile: TextQualityProfile,
         metrics: TextQualityMetrics
     ):
-        """Analyze content performance indicators"""
-        try:
+        """Analyze content performance indicators"""        try:
             # Viral potential
             viral_factors = []
             
@@ -1299,8 +1262,7 @@ class TextQualityAnalyzer(BaseAIModel):
             metrics.originality_score = 50
     
     def _calculate_confidence(self, profile: TextQualityProfile) -> float:
-        """Calculate analysis confidence score"""
-        confidence = 0.9  # Base confidence
+        """Calculate analysis confidence score"""        confidence = 0.9  # Base confidence
         
         # Adjust based on text length
         word_count = profile.structure.word_count
@@ -1324,8 +1286,7 @@ class TextQualityAnalyzer(BaseAIModel):
 
 
 async def analyze_text_quality(text: str, content_type: Optional[TextType] = None) -> Dict[str, Any]:
-    """
-    Convenient function for text quality analysis
+    """    Convenient function for text quality analysis
     
     Args:
         text: Text content to analyze
@@ -1333,8 +1294,7 @@ async def analyze_text_quality(text: str, content_type: Optional[TextType] = Non
         
     Returns:
         Dict containing text quality analysis results
-    """
-    try:
+    """    try:
         result = await text_quality_analyzer.analyze_quality(text, content_type)
         return result
     except Exception as e:

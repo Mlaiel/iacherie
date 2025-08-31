@@ -1,5 +1,4 @@
-"""
-🎵 Audio Processor - IA Influencer Agent Platform Enterprise
+"""🎵 Audio Processor - IA Influencer Agent Platform Enterprise
 ============================================================
 Module: backend/data_management/processors/audio_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER AUDIO PROCESSOR:
 Audio Upload → Format Detection → Quality Analysis → Feature Extraction → 
 Fingerprinting → Content Analysis → Noise Reduction → Protection Preparation
 """
-
 import librosa
 import numpy as np
 import soundfile as sf
@@ -42,8 +40,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class AudioProcessor(BaseProcessor):
-    """Processeur avancé pour audio - Production Enterprise"""
-    
+    """Processeur avancé pour audio - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.supported_formats = {
@@ -73,8 +70,7 @@ class AudioProcessor(BaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     def _init_audio_models(self):
-        """Initialize audio AI models"""
-        try:
+        """Initialize audio AI models"""        try:
             # Audio classification pipeline
             self.audio_classifier = pipeline(
                 "audio-classification",
@@ -97,8 +93,7 @@ class AudioProcessor(BaseProcessor):
             self.speech_recognizer = None
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données audio d'entrée"""
-        if isinstance(input_data, str):
+        """Valide les données audio d'entrée"""        if isinstance(input_data, str):
             # File path validation
             path = Path(input_data)
             return (path.exists() and 
@@ -117,8 +112,7 @@ class AudioProcessor(BaseProcessor):
         return False
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite un fichier audio complètement"""
-        try:
+        """Traite un fichier audio complètement"""        try:
             # Load audio data
             audio_data, metadata = self._load_audio(input_data)
             
@@ -174,8 +168,7 @@ class AudioProcessor(BaseProcessor):
             }
     
     def _load_audio(self, input_data: Any) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Charge les données audio"""
-        if isinstance(input_data, str):
+        """Charge les données audio"""        if isinstance(input_data, str):
             # File path
             audio_data, sr = librosa.load(input_data, sr=self.sample_rate)
             metadata = self._extract_file_metadata(input_data)
@@ -200,8 +193,7 @@ class AudioProcessor(BaseProcessor):
         return audio_data, metadata
     
     def _extract_file_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extrait les métadonnées du fichier audio"""
-        metadata = {
+        """Extrait les métadonnées du fichier audio"""        metadata = {
             "filename": Path(file_path).name,
             "file_extension": Path(file_path).suffix,
             "file_size_bytes": Path(file_path).stat().st_size
@@ -244,8 +236,7 @@ class AudioProcessor(BaseProcessor):
         return metadata
     
     def _extract_audio_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques audio avancées"""
-        features = {}
+        """Extrait les caractéristiques audio avancées"""        features = {}
         
         try:
             # Spectral features
@@ -273,8 +264,7 @@ class AudioProcessor(BaseProcessor):
         return features
     
     def _extract_spectral_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques spectrales"""
-        # MFCC (Mel-frequency cepstral coefficients)
+        """Extrait les caractéristiques spectrales"""        # MFCC (Mel-frequency cepstral coefficients)
         mfccs = librosa.feature.mfcc(y=audio_data, sr=sr, n_mfcc=self.n_mfcc)
         
         # Spectral centroid
@@ -309,8 +299,7 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _extract_rhythmic_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques rythmiques"""
-        # Tempo and beat tracking
+        """Extrait les caractéristiques rythmiques"""        # Tempo and beat tracking
         tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sr)
         
         # Onset detection
@@ -331,8 +320,7 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _extract_harmonic_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques harmoniques"""
-        # Chroma features
+        """Extrait les caractéristiques harmoniques"""        # Chroma features
         chroma = librosa.feature.chroma_stft(y=audio_data, sr=sr)
         
         # Harmonic-percussive separation
@@ -355,8 +343,7 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _extract_timbral_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques timbrales"""
-        # Spectral contrast
+        """Extrait les caractéristiques timbrales"""        # Spectral contrast
         spectral_contrast = librosa.feature.spectral_contrast(y=audio_data, sr=sr)
         
         # Spectral flatness
@@ -377,8 +364,7 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _extract_energy_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques énergétiques"""
-        # RMS energy
+        """Extrait les caractéristiques énergétiques"""        # RMS energy
         rms = librosa.feature.rms(y=audio_data)[0]
         
         # Short-time energy
@@ -403,8 +389,7 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _extract_temporal_features(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Extrait les caractéristiques temporelles"""
-        # Autocorrelation
+        """Extrait les caractéristiques temporelles"""        # Autocorrelation
         autocorr = np.correlate(audio_data, audio_data, mode='full')
         autocorr = autocorr[autocorr.size // 2:]
         
@@ -421,8 +406,7 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _generate_audio_fingerprints(self, audio_data: np.ndarray, metadata: Dict) -> Dict[str, Any]:
-        """Génère les empreintes audio"""
-        fingerprints = {}
+        """Génère les empreintes audio"""        fingerprints = {}
         
         try:
             # Chromaprint fingerprint
@@ -461,8 +445,7 @@ class AudioProcessor(BaseProcessor):
         return fingerprints
     
     def _analyze_audio_quality(self, audio_data: np.ndarray, metadata: Dict) -> Dict[str, Any]:
-        """Analyse la qualité audio"""
-        quality_metrics = {}
+        """Analyse la qualité audio"""        quality_metrics = {}
         
         try:
             # Signal-to-noise ratio estimation
@@ -498,8 +481,7 @@ class AudioProcessor(BaseProcessor):
         return quality_metrics
     
     def _analyze_audio_content(self, audio_data: np.ndarray, metadata: Dict) -> Dict[str, Any]:
-        """Analyse le contenu audio avec IA"""
-        content_analysis = {}
+        """Analyse le contenu audio avec IA"""        content_analysis = {}
         
         try:
             # Audio classification if model is available
@@ -524,8 +506,7 @@ class AudioProcessor(BaseProcessor):
         return content_analysis
     
     def _analyze_music_features(self, audio_data: np.ndarray, metadata: Dict) -> Dict[str, Any]:
-        """Analyse spécifique à la musique"""
-        music_analysis = {}
+        """Analyse spécifique à la musique"""        music_analysis = {}
         
         try:
             # Key detection
@@ -555,8 +536,7 @@ class AudioProcessor(BaseProcessor):
         return music_analysis
     
     def _analyze_speech_content(self, audio_data: np.ndarray, metadata: Dict) -> Dict[str, Any]:
-        """Analyse du contenu vocal"""
-        speech_analysis = {}
+        """Analyse du contenu vocal"""        speech_analysis = {}
         
         try:
             # Speech detection
@@ -586,8 +566,7 @@ class AudioProcessor(BaseProcessor):
         return speech_analysis
     
     def _extract_technical_specs(self, input_data: Any, metadata: Dict) -> Dict[str, Any]:
-        """Extrait les spécifications techniques"""
-        return {
+        """Extrait les spécifications techniques"""        return {
             "format": metadata.get("file_extension", "unknown"),
             "duration_seconds": metadata.get("duration", 0),
             "sample_rate_hz": metadata.get("sample_rate", self.sample_rate),
@@ -599,8 +578,7 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _generate_protection_metadata(self, fingerprints: Dict, metadata: Dict) -> Dict[str, Any]:
-        """Génère les métadonnées de protection"""
-        return {
+        """Génère les métadonnées de protection"""        return {
             "protection_ready": True,
             "fingerprint_confidence": 0.95,
             "protection_methods": ["chromaprint", "spectral_hash", "harmonic_hash"],
@@ -614,8 +592,7 @@ class AudioProcessor(BaseProcessor):
     # [Continuing with all the helper methods for quality analysis, content detection, etc.]
     
     def _estimate_snr(self, audio_data: np.ndarray) -> float:
-        """Estime le rapport signal/bruit"""
-        # Simple SNR estimation
+        """Estime le rapport signal/bruit"""        # Simple SNR estimation
         signal_power = np.mean(audio_data ** 2)
         noise_floor = np.percentile(np.abs(audio_data), 10)  # Estimate noise as 10th percentile
         noise_power = noise_floor ** 2
@@ -626,15 +603,13 @@ class AudioProcessor(BaseProcessor):
         return 100.0  # Very high SNR if no noise detected
     
     def _detect_clipping(self, audio_data: np.ndarray) -> float:
-        """Détecte le clipping audio"""
-        clipping_threshold = 0.99
+        """Détecte le clipping audio"""        clipping_threshold = 0.99
         clipped_samples = np.sum(np.abs(audio_data) >= clipping_threshold)
         clipping_percentage = (clipped_samples / len(audio_data)) * 100
         return float(clipping_percentage)
     
     def _analyze_frequency_response(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse la réponse en fréquence"""
-        # FFT analysis
+        """Analyse la réponse en fréquence"""        # FFT analysis
         fft = np.fft.fft(audio_data)
         freqs = np.fft.fftfreq(len(fft), 1/sr)
         magnitude = np.abs(fft)
@@ -648,8 +623,7 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _calculate_dynamic_range(self, audio_data: np.ndarray) -> float:
-        """Calcule la plage dynamique"""
-        peak = np.max(np.abs(audio_data))
+        """Calcule la plage dynamique"""        peak = np.max(np.abs(audio_data))
         rms = np.sqrt(np.mean(audio_data ** 2))
         
         if rms > 0:
@@ -658,8 +632,7 @@ class AudioProcessor(BaseProcessor):
         return 0.0
     
     def _calculate_quality_score(self, snr: float, clipping: float, dynamic_range: float) -> float:
-        """Calcule un score de qualité global"""
-        # Normalize and weight different factors
+        """Calcule un score de qualité global"""        # Normalize and weight different factors
         snr_score = min(snr / 60, 1.0) * 0.4  # Good SNR is 60dB+
         clipping_score = max(0, 1.0 - clipping / 5) * 0.3  # Penalize clipping
         dynamic_score = min(dynamic_range / 20, 1.0) * 0.3  # Good dynamic range is 20dB+
@@ -667,15 +640,13 @@ class AudioProcessor(BaseProcessor):
         return snr_score + clipping_score + dynamic_score
     
     def _get_quality_rating(self, score: float) -> str:
-        """Convertit le score en rating"""
-        for rating, threshold in self.quality_thresholds.items():
+        """Convertit le score en rating"""        for rating, threshold in self.quality_thresholds.items():
             if score >= threshold:
                 return rating
         return "very_poor"
     
     def _detect_content_type(self, audio_data: np.ndarray, metadata: Dict) -> str:
-        """Détecte le type de contenu"""
-        # Simplified content type detection
+        """Détecte le type de contenu"""        # Simplified content type detection
         if self._is_music(audio_data, metadata):
             return "music"
         elif self._detect_speech(audio_data, metadata):
@@ -684,22 +655,19 @@ class AudioProcessor(BaseProcessor):
             return "other"
     
     def _is_music(self, audio_data: np.ndarray, metadata: Dict) -> bool:
-        """Détermine si c'est de la musique"""
-        # Simple heuristic based on harmonic content
+        """Détermine si c'est de la musique"""        # Simple heuristic based on harmonic content
         chroma = librosa.feature.chroma_stft(y=audio_data, sr=metadata.get('sample_rate', self.sample_rate))
         harmonic_strength = np.var(np.mean(chroma, axis=1))
         return harmonic_strength > 0.01  # Threshold for harmonic content
     
     def _detect_speech(self, audio_data: np.ndarray, metadata: Dict) -> bool:
-        """Détecte la présence de parole"""
-        # Simple speech detection based on spectral characteristics
+        """Détecte la présence de parole"""        # Simple speech detection based on spectral characteristics
         mfccs = librosa.feature.mfcc(y=audio_data, sr=metadata.get('sample_rate', self.sample_rate))
         speech_like = np.mean(mfccs[1:3])  # Focus on speech-relevant MFCC coefficients
         return -20 < speech_like < 20  # Typical range for speech
     
     def _analyze_mood_energy(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse l'humeur et l'énergie"""
-        # Energy analysis
+        """Analyse l'humeur et l'énergie"""        # Energy analysis
         rms = librosa.feature.rms(y=audio_data)[0]
         energy_level = float(np.mean(rms))
         
@@ -720,21 +688,18 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _estimate_key(self, chroma_profile: np.ndarray) -> str:
-        """Estime la tonalité musicale"""
-        # Simplified key estimation using chroma profiles
+        """Estime la tonalité musicale"""        # Simplified key estimation using chroma profiles
         key_names = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
         estimated_key_idx = np.argmax(chroma_profile)
         return key_names[estimated_key_idx]
     
     def _estimate_genre(self, audio_data: np.ndarray, metadata: Dict) -> str:
-        """Estime le genre musical"""
-        # Placeholder for genre classification
+        """Estime le genre musical"""        # Placeholder for genre classification
         # In production, this would use a trained genre classification model
         return "unknown"
     
     def _analyze_musical_structure(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse la structure musicale"""
-        # Beat tracking
+        """Analyse la structure musicale"""        # Beat tracking
         tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sr)
         
         # Segment analysis
@@ -749,16 +714,14 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _estimate_instrumentalness(self, audio_data: np.ndarray) -> float:
-        """Estime le caractère instrumental"""
-        # Simplified instrumentalness estimation
+        """Estime le caractère instrumental"""        # Simplified instrumentalness estimation
         # Based on harmonic vs percussive content
         harmonic, percussive = librosa.effects.hpss(audio_data)
         harmonic_ratio = np.mean(np.abs(harmonic)) / (np.mean(np.abs(audio_data)) + 1e-8)
         return float(harmonic_ratio)
     
     def _estimate_danceability(self, audio_data: np.ndarray, sr: int) -> float:
-        """Estime la dansabilité"""
-        # Based on rhythm regularity and tempo
+        """Estime la dansabilité"""        # Based on rhythm regularity and tempo
         tempo, beats = librosa.beat.beat_track(y=audio_data, sr=sr)
         beat_regularity = 1.0 / (np.std(np.diff(beats)) + 1e-8) if len(beats) > 1 else 0.0
         
@@ -769,8 +732,7 @@ class AudioProcessor(BaseProcessor):
         return float(min(danceability, 1.0))
     
     def _analyze_voice_characteristics(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyse les caractéristiques vocales"""
-        # Fundamental frequency (pitch)
+        """Analyse les caractéristiques vocales"""        # Fundamental frequency (pitch)
         f0 = librosa.yin(audio_data, fmin=80, fmax=400)
         f0_clean = f0[f0 > 0]  # Remove unvoiced frames
         
@@ -786,8 +748,7 @@ class AudioProcessor(BaseProcessor):
         }
     
     def _classify_mood(self, energy: float, tempo: float, brightness: float) -> str:
-        """Classifie l'humeur"""
-        if energy > 0.3 and tempo > 120 and brightness > 2000:
+        """Classifie l'humeur"""        if energy > 0.3 and tempo > 120 and brightness > 2000:
             return "energetic"
         elif energy < 0.1 and tempo < 80:
             return "calm"
@@ -799,8 +760,7 @@ class AudioProcessor(BaseProcessor):
             return "neutral"
     
     def _estimate_valence(self, audio_data: np.ndarray, sr: int) -> float:
-        """Estime la valence (positivité)"""
-        # Simplified valence estimation based on spectral features
+        """Estime la valence (positivité)"""        # Simplified valence estimation based on spectral features
         chroma = librosa.feature.chroma_stft(y=audio_data, sr=sr)
         major_chord_strength = np.mean(chroma[[0, 4, 7]])  # C, E, G
         minor_chord_strength = np.mean(chroma[[0, 3, 7]])  # C, Eb, G
@@ -809,15 +769,13 @@ class AudioProcessor(BaseProcessor):
         return float(valence)
     
     def _calculate_attack_time(self, audio_data: np.ndarray, sr: int) -> float:
-        """Calcule le temps d'attaque"""
-        # Find the onset and calculate time to peak
+        """Calcule le temps d'attaque"""        # Find the onset and calculate time to peak
         envelope = np.abs(audio_data)
         peak_idx = np.argmax(envelope[:sr])  # Look in first second
         return float(peak_idx / sr * 1000)  # Return in milliseconds
     
     def _calculate_decay_time(self, audio_data: np.ndarray, sr: int) -> float:
-        """Calcule le temps de déclin"""
-        # Simple decay time estimation
+        """Calcule le temps de déclin"""        # Simple decay time estimation
         envelope = np.abs(audio_data)
         peak_idx = np.argmax(envelope)
         
@@ -834,8 +792,7 @@ class AudioProcessor(BaseProcessor):
         return 0.0
     
     def _detect_codec(self, input_data: Any, metadata: Dict) -> str:
-        """Détecte le codec audio"""
-        file_ext = metadata.get("file_extension", "").lower()
+        """Détecte le codec audio"""        file_ext = metadata.get("file_extension", "").lower()
         
         codec_mapping = {
             '.mp3': 'MP3',
@@ -850,8 +807,7 @@ class AudioProcessor(BaseProcessor):
         return codec_mapping.get(file_ext, 'Unknown')
     
     def _estimate_speaking_rate(self, audio_data: np.ndarray, sr: int) -> float:
-        """Estime le débit de parole"""
-        # Simplified speaking rate estimation based on syllable detection
+        """Estime le débit de parole"""        # Simplified speaking rate estimation based on syllable detection
         onset_frames = librosa.onset.onset_detect(y=audio_data, sr=sr)
         duration = len(audio_data) / sr
         
@@ -863,16 +819,14 @@ class AudioProcessor(BaseProcessor):
 
 
 class AsyncAudioProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur audio"""
-    
+    """Version asynchrone du processeur audio"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = AudioProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Version asynchrone de la validation"""
-        loop = asyncio.get_event_loop()
+        """Version asynchrone de la validation"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.validate_input, 
@@ -880,8 +834,7 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         )
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Version asynchrone du traitement"""
-        loop = asyncio.get_event_loop()
+        """Version asynchrone du traitement"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process, 
@@ -889,11 +842,9 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         )
     
     async def process_batch(self, input_batch: List[Any]) -> List[Dict[str, Any]]:
-        """Traitement en lot asynchrone"""
-        tasks = [self.process(item) for item in input_batch]
+        """Traitement en lot asynchrone"""        tasks = [self.process(item) for item in input_batch]
         return await asyncio.gather(*tasks, return_exceptions=True)
-    """Processeur audio asynchrone"""
-    
+    """Processeur audio asynchrone"""    
     SUPPORTED_FORMATS = ['mp3', 'wav', 'flac', 'ogg', 'm4a', 'aiff', 'wma']
     
     def __init__(self, config: Dict[str, Any] = None):
@@ -901,8 +852,7 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Valide les données audio de manière asynchrone"""
-        if isinstance(input_data, dict):
+        """Valide les données audio de manière asynchrone"""        if isinstance(input_data, dict):
             file_path = input_data.get('file_path')
             if file_path:
                 ext = Path(file_path).suffix.lower().lstrip('.')
@@ -910,8 +860,7 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         return False
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite un fichier audio de manière asynchrone"""
-        file_path = input_data.get('file_path')
+        """Traite un fichier audio de manière asynchrone"""        file_path = input_data.get('file_path')
         
         # Traitement parallèle asynchrone
         metadata = await self._extract_metadata_async(file_path)
@@ -931,8 +880,7 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         return result
     
     async def _extract_metadata_async(self, file_path: str) -> Dict[str, Any]:
-        """Extraction asynchrone des métadonnées"""
-        # Simulation asynchrone
+        """Extraction asynchrone des métadonnées"""        # Simulation asynchrone
         return {
             "duration": 180.5,
             "sample_rate": 44100,
@@ -942,22 +890,19 @@ class AsyncAudioProcessor(AsyncBaseProcessor):
         }
     
     async def _extract_features_async(self, file_path: str) -> Dict[str, Any]:
-        """Extraction asynchrone des features"""
-        return {
+        """Extraction asynchrone des features"""        return {
             "mfcc": [0.1, 0.2, 0.3, 0.4, 0.5],
             "tempo": 128.0
         }
     
     async def _generate_fingerprint_async(self, file_path: str) -> Dict[str, Any]:
-        """Génération asynchrone d'empreinte"""
-        return {
+        """Génération asynchrone d'empreinte"""        return {
             "chromaprint": "AQAAEwkjrUmSJQqUHk-QJoqUIAqSPSgOHcejPEGOPkeSAcdRxOiB5MgJSyG0RMgON",
             "confidence": 0.95
         }
     
     async def _analyze_quality_async(self, file_path: str) -> Dict[str, Any]:
-        """Analyse asynchrone de la qualité"""
-        return {
+        """Analyse asynchrone de la qualité"""        return {
             "quality_score": 8.5,
             "noise_level": 0.02
         }

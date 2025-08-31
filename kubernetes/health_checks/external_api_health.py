@@ -1,5 +1,4 @@
-"""
-External API Integrations Health Monitoring
+"""External API Integrations Health Monitoring
 Comprehensive health checking for third-party service integrations
 
 This module provides health monitoring for:
@@ -18,7 +17,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution without explicit written permission from
 Fahed Mlaiel is strictly prohibited and may result in legal action.
 """
-
 import asyncio
 import time
 import json
@@ -35,8 +33,7 @@ from .core_health import HealthStatus, HealthCheckResult
 
 @dataclass
 class APIEndpointMetrics:
-    """External API endpoint performance metrics"""
-    service_name: str
+    """External API endpoint performance metrics"""    service_name: str
     endpoint_name: str
     response_time_ms: float
     status_code: int
@@ -48,21 +45,17 @@ class APIEndpointMetrics:
 
 
 class ExternalAPIHealthChecker:
-    """
-    External API integrations health monitoring system
+    """    External API integrations health monitoring system
     
     Monitors all third-party service integrations and API connectivity
     for the IA Influencer Agent platform.
     """
-
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize external API health checker
+        """        Initialize external API health checker
         
         Args:
             config: External API configuration dictionary
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(__name__)
         
         # API configurations
@@ -79,13 +72,11 @@ class ExternalAPIHealthChecker:
         self.success_rate_threshold = config.get("health_checks", {}).get("api_success_rate_threshold", 95.0)
 
     async def check_social_media_apis(self) -> HealthCheckResult:
-        """
-        Check social media platform API integrations
+        """        Check social media platform API integrations
         
         Returns:
             HealthCheckResult: Social media APIs health status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             details = {
@@ -296,13 +287,11 @@ class ExternalAPIHealthChecker:
             )
 
     async def check_music_platform_apis(self) -> HealthCheckResult:
-        """
-        Check music streaming platform API integrations
+        """        Check music streaming platform API integrations
         
         Returns:
             HealthCheckResult: Music platform APIs health status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             details = {
@@ -484,13 +473,11 @@ class ExternalAPIHealthChecker:
             )
 
     async def check_ai_service_apis(self) -> HealthCheckResult:
-        """
-        Check AI/ML service API integrations
+        """        Check AI/ML service API integrations
         
         Returns:
             HealthCheckResult: AI service APIs health status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             details = {
@@ -650,13 +637,11 @@ class ExternalAPIHealthChecker:
             )
 
     async def check_communication_apis(self) -> HealthCheckResult:
-        """
-        Check communication service API integrations
+        """        Check communication service API integrations
         
         Returns:
             HealthCheckResult: Communication APIs health status
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             details = {
@@ -839,13 +824,11 @@ class ExternalAPIHealthChecker:
             )
 
     async def perform_comprehensive_check(self) -> List[HealthCheckResult]:
-        """
-        Perform all external API health checks concurrently
+        """        Perform all external API health checks concurrently
         
         Returns:
             List[HealthCheckResult]: All external API health check results
-        """
-        checks = await asyncio.gather(
+        """        checks = await asyncio.gather(
             self.check_social_media_apis(),
             self.check_music_platform_apis(),
             self.check_ai_service_apis(),
@@ -871,13 +854,11 @@ class ExternalAPIHealthChecker:
         return results
 
     async def get_external_api_health_summary(self) -> Dict[str, Any]:
-        """
-        Get comprehensive external API health summary
+        """        Get comprehensive external API health summary
         
         Returns:
             Dict[str, Any]: External API health summary with overall status
-        """
-        results = await self.perform_comprehensive_check()
+        """        results = await self.perform_comprehensive_check()
         
         # Calculate overall external API health
         status_weights = {

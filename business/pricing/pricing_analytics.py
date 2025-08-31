@@ -1,5 +1,4 @@
-"""
-🚀 Pricing Analytics - Advanced Analytics Engine for Pricing Performance
+"""🚀 Pricing Analytics - Advanced Analytics Engine for Pricing Performance
 =======================================================================
 
 Comprehensive analytics system for pricing performance monitoring, trend analysis,
@@ -33,7 +32,6 @@ Email: mlaiel@live.de
 All usage must be pre-approved in writing.
 =======================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -56,8 +54,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Supported analytics timeframes"""
-    HOUR = "1h"
+    """Supported analytics timeframes"""    HOUR = "1h"
     DAY = "1d"
     WEEK = "7d"
     MONTH = "30d"
@@ -67,8 +64,7 @@ class AnalyticsTimeframe(Enum):
 
 @dataclass
 class PricingPerformanceMetrics:
-    """Pricing performance analytics data"""
-    total_calculations: int
+    """Pricing performance analytics data"""    total_calculations: int
     successful_calculations: int
     average_confidence_score: float
     average_price_increase: Decimal
@@ -82,8 +78,7 @@ class PricingPerformanceMetrics:
 
 @dataclass
 class RevenueAnalytics:
-    """Revenue analytics data"""
-    total_revenue: Decimal
+    """Revenue analytics data"""    total_revenue: Decimal
     revenue_growth_rate: float
     average_revenue_per_creator: Decimal
     revenue_by_tier: Dict[str, Decimal]
@@ -94,8 +89,7 @@ class RevenueAnalytics:
 
 
 class PricingAnalytics:
-    """
-    Advanced pricing analytics engine
+    """    Advanced pricing analytics engine
     
     Features:
     - Real-time performance monitoring
@@ -103,8 +97,7 @@ class PricingAnalytics:
     - ROI calculation and tracking
     - Comparative analysis
     - Custom dashboard metrics
-    """
-    
+    """    
     def __init__(
         self,
         db_manager: DatabaseManager,
@@ -121,8 +114,7 @@ class PricingAnalytics:
         creator_id: Optional[str] = None,
         platform: Optional[str] = None
     ) -> PricingPerformanceMetrics:
-        """Get comprehensive pricing performance metrics"""
-        
+        """Get comprehensive pricing performance metrics"""        
         try:
             # Calculate date range
             end_date = datetime.utcnow()
@@ -194,8 +186,7 @@ class PricingAnalytics:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH,
         creator_id: Optional[str] = None
     ) -> RevenueAnalytics:
-        """Get comprehensive revenue analytics"""
-        
+        """Get comprehensive revenue analytics"""        
         try:
             end_date = datetime.utcnow()
             start_date = self._calculate_start_date(end_date, timeframe)
@@ -263,8 +254,7 @@ class PricingAnalytics:
         self,
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH
     ) -> Dict[str, Any]:
-        """Get tier usage and performance analytics"""
-        
+        """Get tier usage and performance analytics"""        
         try:
             end_date = datetime.utcnow()
             start_date = self._calculate_start_date(end_date, timeframe)
@@ -332,8 +322,7 @@ class PricingAnalytics:
         creator_id: str,
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTH
     ) -> Dict[str, Any]:
-        """Generate actionable pricing insights for a creator"""
-        
+        """Generate actionable pricing insights for a creator"""        
         try:
             # Get creator's pricing performance
             performance = await self.get_pricing_performance_metrics(
@@ -426,8 +415,7 @@ class PricingAnalytics:
     
     # Helper methods
     def _calculate_start_date(self, end_date: datetime, timeframe: AnalyticsTimeframe) -> datetime:
-        """Calculate start date based on timeframe"""
-        
+        """Calculate start date based on timeframe"""        
         timeframe_deltas = {
             AnalyticsTimeframe.HOUR: timedelta(hours=1),
             AnalyticsTimeframe.DAY: timedelta(days=1),
@@ -441,8 +429,7 @@ class PricingAnalytics:
         return end_date - delta
         
     async def _analyze_strategy_performance(self, calculations: List[Any]) -> List[Dict[str, Any]]:
-        """Analyze performance of different pricing strategies"""
-        
+        """Analyze performance of different pricing strategies"""        
         strategy_stats = {}
         
         for calc in calculations:
@@ -478,8 +465,7 @@ class PricingAnalytics:
         return sorted(performance_list, key=lambda x: x['score'], reverse=True)
         
     async def _analyze_platform_performance(self, calculations: List[Any]) -> Dict[str, Any]:
-        """Analyze performance by platform"""
-        
+        """Analyze performance by platform"""        
         platform_stats = {}
         
         for calc in calculations:
@@ -510,8 +496,7 @@ class PricingAnalytics:
         return platform_stats
         
     async def _analyze_geographic_performance(self, calculations: List[Any]) -> Dict[str, Any]:
-        """Analyze performance by geographic market"""
-        
+        """Analyze performance by geographic market"""        
         geo_stats = {}
         
         for calc in calculations:
@@ -539,8 +524,7 @@ class PricingAnalytics:
         return geo_stats
         
     async def _analyze_content_performance(self, calculations: List[Any]) -> Dict[str, Any]:
-        """Analyze performance by content type"""
-        
+        """Analyze performance by content type"""        
         content_stats = {}
         
         for calc in calculations:
@@ -566,8 +550,7 @@ class PricingAnalytics:
         return content_stats
         
     async def _calculate_revenue_by_tier(self, billing_events: List[Any], session) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by tier"""
-        
+        """Calculate revenue breakdown by tier"""        
         revenue_by_tier = {}
         
         for event in billing_events:
@@ -585,8 +568,7 @@ class PricingAnalytics:
         return revenue_by_tier
         
     async def _calculate_revenue_by_platform(self, billing_events: List[Any]) -> Dict[str, Decimal]:
-        """Calculate revenue breakdown by platform (mock implementation)"""
-        
+        """Calculate revenue breakdown by platform (mock implementation)"""        
         # This would require additional data linking billing to platforms
         return {
             'spotify': Decimal('15000'),
@@ -602,8 +584,7 @@ class PricingAnalytics:
         creator_id: Optional[str],
         session
     ) -> Decimal:
-        """Get revenue for previous period for growth calculation"""
-        
+        """Get revenue for previous period for growth calculation"""        
         query = session.query(BillingEvent).filter(
             BillingEvent.created_at >= start_date,
             BillingEvent.created_at < end_date,
@@ -623,8 +604,7 @@ class PricingAnalytics:
         creator_id: Optional[str],
         session
     ) -> List[Dict[str, Any]]:
-        """Generate revenue trends over time"""
-        
+        """Generate revenue trends over time"""        
         # Generate daily revenue data points
         trends = []
         current_date = start_date
@@ -655,8 +635,7 @@ class PricingAnalytics:
         return trends
         
     async def _project_future_revenue(self, revenue_trends: List[Dict[str, Any]]) -> Decimal:
-        """Project future revenue based on trends"""
-        
+        """Project future revenue based on trends"""        
         if len(revenue_trends) < 7:
             return Decimal('0')
         

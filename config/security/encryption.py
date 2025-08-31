@@ -1,5 +1,4 @@
-"""
-Encryption Configuration Module
+"""Encryption Configuration Module
 ===============================
 
 Advanced encryption configuration for IA Influencer Agent platform.
@@ -21,7 +20,6 @@ Any unauthorized use, copying, or distribution without explicit
 written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
@@ -30,8 +28,7 @@ from pathlib import Path
 
 
 class EncryptionAlgorithm(Enum):
-    """Supported encryption algorithms."""
-    AES_256_GCM = "aes-256-gcm"
+    """Supported encryption algorithms."""    AES_256_GCM = "aes-256-gcm"
     AES_256_CBC = "aes-256-cbc"
     ChaCha20_Poly1305 = "chacha20-poly1305"
     RSA_4096 = "rsa-4096"
@@ -40,8 +37,7 @@ class EncryptionAlgorithm(Enum):
 
 
 class KeyType(Enum):
-    """Encryption key types."""
-    MASTER_KEY = "master"
+    """Encryption key types."""    MASTER_KEY = "master"
     DATA_KEY = "data"
     CONTENT_KEY = "content"
     API_KEY = "api"
@@ -51,8 +47,7 @@ class KeyType(Enum):
 
 
 class KeyDerivationFunction(Enum):
-    """Key derivation functions."""
-    PBKDF2_SHA256 = "pbkdf2-sha256"
+    """Key derivation functions."""    PBKDF2_SHA256 = "pbkdf2-sha256"
     SCRYPT = "scrypt"
     ARGON2ID = "argon2id"
     HKDF_SHA256 = "hkdf-sha256"
@@ -60,8 +55,7 @@ class KeyDerivationFunction(Enum):
 
 @dataclass
 class KeyConfiguration:
-    """Individual key configuration settings."""
-    key_type: KeyType
+    """Individual key configuration settings."""    key_type: KeyType
     algorithm: EncryptionAlgorithm
     key_size: int
     rotation_days: int = 90
@@ -81,8 +75,7 @@ class KeyConfiguration:
 
 @dataclass
 class ContentEncryptionConfig:
-    """Content-specific encryption configuration."""
-    
+    """Content-specific encryption configuration."""    
     # File encryption settings
     file_encryption_algorithm: EncryptionAlgorithm = EncryptionAlgorithm.AES_256_GCM
     chunk_size: int = 64 * 1024  # 64KB chunks
@@ -150,8 +143,7 @@ class ContentEncryptionConfig:
 
 @dataclass
 class DatabaseEncryptionConfig:
-    """Database encryption configuration."""
-    
+    """Database encryption configuration."""    
     # Table-level encryption settings
     encrypted_tables: List[str] = field(default_factory=lambda: [
         "users",
@@ -191,8 +183,7 @@ class DatabaseEncryptionConfig:
 
 @dataclass
 class TransmissionEncryptionConfig:
-    """Data transmission encryption configuration."""
-    
+    """Data transmission encryption configuration."""    
     # TLS configuration
     tls_version: str = "1.3"
     cipher_suites: List[str] = field(default_factory=lambda: [
@@ -234,8 +225,7 @@ class TransmissionEncryptionConfig:
 
 @dataclass
 class KeyManagementConfig:
-    """Key management system configuration."""
-    
+    """Key management system configuration."""    
     # Key storage
     key_storage_backend: str = "hsm"  # hsm, vault, kms, local
     key_storage_config: Dict[str, Any] = field(default_factory=lambda: {
@@ -286,8 +276,7 @@ class KeyManagementConfig:
 
 @dataclass
 class QuantumResistanceConfig:
-    """Quantum-resistant encryption configuration."""
-    
+    """Quantum-resistant encryption configuration."""    
     # Post-quantum cryptography
     quantum_safe_algorithms: List[str] = field(default_factory=lambda: [
         "CRYSTALS-Kyber",
@@ -309,8 +298,7 @@ class QuantumResistanceConfig:
 
 @dataclass
 class ComplianceEncryptionConfig:
-    """Compliance-specific encryption requirements."""
-    
+    """Compliance-specific encryption requirements."""    
     # Regulatory compliance
     gdpr_compliant_encryption: bool = True
     ccpa_compliant_encryption: bool = True
@@ -332,8 +320,7 @@ class ComplianceEncryptionConfig:
 
 @dataclass
 class PerformanceConfig:
-    """Encryption performance optimization configuration."""
-    
+    """Encryption performance optimization configuration."""    
     # Hardware acceleration
     hardware_acceleration: bool = True
     aes_ni_enabled: bool = True  # AES New Instructions
@@ -357,8 +344,7 @@ class PerformanceConfig:
 
 @dataclass
 class EncryptionConfig:
-    """Main encryption configuration container."""
-    
+    """Main encryption configuration container."""    
     # Core configurations
     content_encryption: ContentEncryptionConfig = field(default_factory=ContentEncryptionConfig)
     database_encryption: DatabaseEncryptionConfig = field(default_factory=DatabaseEncryptionConfig)
@@ -416,13 +402,11 @@ encryption_config = EncryptionConfig()
 
 
 def get_encryption_config() -> EncryptionConfig:
-    """Get the encryption configuration instance."""
-    return encryption_config
+    """Get the encryption configuration instance."""    return encryption_config
 
 
 def get_content_encryption_config(content_type: str, tier: str) -> Dict[str, Any]:
-    """Get encryption configuration for specific content type and tier."""
-    config = get_encryption_config()
+    """Get encryption configuration for specific content type and tier."""    config = get_encryption_config()
     
     # Get content type specific config
     content_config = config.content_encryption.content_type_configs.get(
@@ -440,8 +424,7 @@ def get_content_encryption_config(content_type: str, tier: str) -> Dict[str, Any
 
 
 def validate_encryption_config(config: EncryptionConfig) -> bool:
-    """Validate encryption configuration settings."""
-    # Validate key configurations
+    """Validate encryption configuration settings."""    # Validate key configurations
     for key_config in config.key_configs.values():
         if key_config.key_size < 128:
             raise ValueError(f"Key size too small: {key_config.key_size}")

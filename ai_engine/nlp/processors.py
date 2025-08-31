@@ -1,5 +1,4 @@
-"""
-Content Processors Module for IA Influencer Agent Platform
+"""Content Processors Module for IA Influencer Agent Platform
 
 Advanced content processing capabilities for multi-format content handling,
 text preprocessing, and content optimization for creators and influencers.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 ⚠️ STRICT COPYRIGHT WARNING - Unauthorized use prohibited ⚠️
 This software is proprietary and confidential. Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import re
@@ -29,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ProcessingResult:
-    """Result of content processing"""
-    original_content: str
+    """Result of content processing"""    original_content: str
     processed_content: str
     metadata: Dict[str, Any] = field(default_factory=dict)
     processing_steps: List[str] = field(default_factory=list)
@@ -38,33 +35,28 @@ class ProcessingResult:
     timestamp: datetime = field(default_factory=datetime.utcnow)
 
 class ContentProcessor(ABC):
-    """Abstract base class for content processors"""
-    
+    """Abstract base class for content processors"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.name = self.__class__.__name__
     
     @abstractmethod
     async def process(self, content: str, metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process content and return result"""
-        pass
+        """Process content and return result"""        pass
     
     def _log_processing_step(self, step: str, result: ProcessingResult):
-        """Log processing step"""
-        result.processing_steps.append(f"{self.name}: {step}")
+        """Log processing step"""        result.processing_steps.append(f"{self.name}: {step}")
         logger.debug(f"{self.name} - {step}")
 
 class TextNormalizer(ContentProcessor):
-    """
-    Advanced text normalization processor
+    """    Advanced text normalization processor
     
     Handles:
     - Unicode normalization
     - Encoding fixes
     - Character cleanup
     - Whitespace normalization
-    """
-    
+    """    
     async def process(self, content: str, metadata: Dict[str, Any] = None) -> ProcessingResult:
         result = ProcessingResult(original_content=content, processed_content=content)
         metadata = metadata or {}
@@ -107,8 +99,7 @@ class TextNormalizer(ContentProcessor):
             return result
 
 class SocialMediaProcessor(ContentProcessor):
-    """
-    Social media content processor
+    """    Social media content processor
     
     Handles:
     - Hashtag extraction and normalization
@@ -116,8 +107,7 @@ class SocialMediaProcessor(ContentProcessor):
     - URL extraction and validation
     - Emoji processing
     - Social media specific cleanup
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.hashtag_pattern = re.compile(r'#(\w+)')
@@ -176,8 +166,7 @@ class SocialMediaProcessor(ContentProcessor):
             return result
     
     def _calculate_social_metrics(self, content: str) -> Dict[str, Any]:
-        """Calculate social media specific metrics"""
-        words = content.split()
+        """Calculate social media specific metrics"""        words = content.split()
         
         return {
             'hashtag_density': len(self.hashtag_pattern.findall(content)) / max(len(words), 1),
@@ -189,8 +178,7 @@ class SocialMediaProcessor(ContentProcessor):
         }
     
     def _calculate_engagement_potential(self, content: str) -> float:
-        """Calculate potential for social media engagement"""
-        engagement_triggers = [
+        """Calculate potential for social media engagement"""        engagement_triggers = [
             'what', 'how', 'why', 'when', 'where', 'who',
             'amazing', 'incredible', 'unbelievable', 'shocking',
             'tips', 'secrets', 'hack', 'trick',
@@ -213,8 +201,7 @@ class SocialMediaProcessor(ContentProcessor):
         return min(1.0, base_score * question_boost * cta_boost)
     
     def _calculate_virality_score(self, content: str) -> float:
-        """Calculate potential for viral spread"""
-        viral_indicators = [
+        """Calculate potential for viral spread"""        viral_indicators = [
             'breaking', 'exclusive', 'leaked', 'revealed',
             'crazy', 'insane', 'wild', 'epic',
             'never', 'always', 'everyone', 'nobody',
@@ -238,16 +225,14 @@ class SocialMediaProcessor(ContentProcessor):
         return min(1.0, base_virality * emotion_boost * urgency_boost)
 
 class MarkdownProcessor(ContentProcessor):
-    """
-    Markdown content processor
+    """    Markdown content processor
     
     Handles:
     - Markdown parsing and conversion
     - Structure extraction
     - Link validation
     - Code block processing
-    """
-    
+    """    
     async def process(self, content: str, metadata: Dict[str, Any] = None) -> ProcessingResult:
         result = ProcessingResult(original_content=content, processed_content=content)
         metadata = metadata or {}
@@ -297,8 +282,7 @@ class MarkdownProcessor(ContentProcessor):
             return result
     
     def _calculate_document_metrics(self, markdown_content: str, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Calculate document structure and quality metrics"""
-        lines = markdown_content.split('\n')
+        """Calculate document structure and quality metrics"""        lines = markdown_content.split('\n')
         
         return {
             'total_lines': len(lines),
@@ -312,8 +296,7 @@ class MarkdownProcessor(ContentProcessor):
         }
     
     def _calculate_structure_complexity(self, soup: BeautifulSoup) -> float:
-        """Calculate document structure complexity"""
-        elements = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul', 'ol', 'table'])
+        """Calculate document structure complexity"""        elements = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'ul', 'ol', 'table'])
         
         if not elements:
             return 0.0
@@ -328,8 +311,7 @@ class MarkdownProcessor(ContentProcessor):
         return total_complexity / len(elements)
     
     def _assess_readability_structure(self, soup: BeautifulSoup) -> Dict[str, Any]:
-        """Assess document structure for readability"""
-        headers = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
+        """Assess document structure for readability"""        headers = soup.find_all(['h1', 'h2', 'h3', 'h4', 'h5', 'h6'])
         paragraphs = soup.find_all('p')
         
         return {
@@ -340,16 +322,14 @@ class MarkdownProcessor(ContentProcessor):
         }
 
 class ContentSanitizer(ContentProcessor):
-    """
-    Content sanitization processor
+    """    Content sanitization processor
     
     Handles:
     - Profanity filtering
     - Sensitive information removal
     - Content policy compliance
     - Brand safety checks
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.profanity_words = self._load_profanity_list()
@@ -395,16 +375,14 @@ class ContentSanitizer(ContentProcessor):
             return result
     
     def _load_profanity_list(self) -> List[str]:
-        """Load profanity word list"""
-        # Basic profanity list - should be loaded from external source in production
+        """Load profanity word list"""        # Basic profanity list - should be loaded from external source in production
         return [
             'damn', 'hell', 'crap', 'stupid', 'idiot',
             # Add more comprehensive list in production
         ]
     
     def _load_sensitive_patterns(self) -> List[re.Pattern]:
-        """Load patterns for sensitive information detection"""
-        patterns = [
+        """Load patterns for sensitive information detection"""        patterns = [
             re.compile(r'\b\d{3}-\d{2}-\d{4}\b'),  # SSN pattern
             re.compile(r'\b\d{4}[-\s]?\d{4}[-\s]?\d{4}[-\s]?\d{4}\b'),  # Credit card pattern
             re.compile(r'\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b'),  # Email pattern
@@ -413,14 +391,12 @@ class ContentSanitizer(ContentProcessor):
         return patterns
     
     def _detect_profanity(self, content: str) -> List[str]:
-        """Detect profanity in content"""
-        words = content.lower().split()
+        """Detect profanity in content"""        words = content.lower().split()
         detected = [word for word in words if word in self.profanity_words]
         return list(set(detected))
     
     def _detect_sensitive_info(self, content: str) -> List[Dict[str, str]]:
-        """Detect sensitive information patterns"""
-        detected = []
+        """Detect sensitive information patterns"""        detected = []
         
         pattern_names = ['SSN', 'Credit Card', 'Email', 'Phone']
         
@@ -436,8 +412,7 @@ class ContentSanitizer(ContentProcessor):
         return detected
     
     def _assess_brand_safety(self, content: str) -> Dict[str, Any]:
-        """Assess content for brand safety"""
-        risky_topics = [
+        """Assess content for brand safety"""        risky_topics = [
             'violence', 'hate', 'discrimination', 'illegal',
             'drugs', 'alcohol', 'gambling', 'adult'
         ]
@@ -463,8 +438,7 @@ class ContentSanitizer(ContentProcessor):
         }
     
     def _get_safety_recommendation(self, score: float) -> str:
-        """Get safety recommendation based on score"""
-        if score >= 0.9:
+        """Get safety recommendation based on score"""        if score >= 0.9:
             return "Brand safe - suitable for all audiences"
         elif score >= 0.7:
             return "Generally safe - minor review recommended"
@@ -474,8 +448,7 @@ class ContentSanitizer(ContentProcessor):
             return "High risk - significant editing required"
     
     def _sanitize_content(self, content: str, profanity: List[str], sensitive_info: List[Dict[str, str]]) -> str:
-        """Sanitize content by removing/replacing problematic elements"""
-        sanitized = content
+        """Sanitize content by removing/replacing problematic elements"""        sanitized = content
         
         # Replace profanity
         for word in profanity:
@@ -488,8 +461,7 @@ class ContentSanitizer(ContentProcessor):
         return sanitized
     
     def _calculate_safety_score(self, profanity: List[str], sensitive_info: List[Dict[str, str]], brand_safety: Dict[str, Any]) -> float:
-        """Calculate overall content safety score"""
-        # Penalties for issues
+        """Calculate overall content safety score"""        # Penalties for issues
         profanity_penalty = len(profanity) * 0.1
         sensitive_penalty = len(sensitive_info) * 0.2
         brand_safety_score = brand_safety['score']
@@ -499,10 +471,8 @@ class ContentSanitizer(ContentProcessor):
         return max(0.0, min(1.0, final_score))
 
 class ContentProcessorPipeline:
-    """
-    Content processing pipeline that chains multiple processors
-    """
-    
+    """    Content processing pipeline that chains multiple processors
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.processors = []
@@ -513,13 +483,11 @@ class ContentProcessorPipeline:
         }
     
     def add_processor(self, processor: ContentProcessor):
-        """Add a processor to the pipeline"""
-        self.processors.append(processor)
+        """Add a processor to the pipeline"""        self.processors.append(processor)
         logger.info(f"Added processor: {processor.name}")
     
     async def process(self, content: str, metadata: Dict[str, Any] = None) -> ProcessingResult:
-        """Process content through the entire pipeline"""
-        start_time = datetime.utcnow()
+        """Process content through the entire pipeline"""        start_time = datetime.utcnow()
         current_content = content
         all_metadata = metadata or {}
         all_steps = []
@@ -563,8 +531,7 @@ class ContentProcessorPipeline:
             raise
     
     def _update_stats(self, processing_time: float, success: bool):
-        """Update processing statistics"""
-        if success:
+        """Update processing statistics"""        if success:
             self.processing_stats['total_processed'] += 1
             current_avg = self.processing_stats['avg_processing_time']
             total = self.processing_stats['total_processed']
@@ -577,12 +544,10 @@ class ContentProcessorPipeline:
             self.processing_stats['error_count'] += 1
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get processing statistics"""
-        return self.processing_stats.copy()
+        """Get processing statistics"""        return self.processing_stats.copy()
     
     async def batch_process(self, contents: List[str], metadata_list: List[Dict[str, Any]] = None) -> List[ProcessingResult]:
-        """Process multiple contents in batch"""
-        if metadata_list is None:
+        """Process multiple contents in batch"""        if metadata_list is None:
             metadata_list = [{}] * len(contents)
         
         tasks = [
@@ -612,32 +577,28 @@ class ContentProcessorPipeline:
 
 # Predefined pipeline configurations
 def create_social_media_pipeline(config: Dict[str, Any] = None) -> ContentProcessorPipeline:
-    """Create a pipeline optimized for social media content"""
-    pipeline = ContentProcessorPipeline(config)
+    """Create a pipeline optimized for social media content"""    pipeline = ContentProcessorPipeline(config)
     pipeline.add_processor(TextNormalizer(config))
     pipeline.add_processor(SocialMediaProcessor(config))
     pipeline.add_processor(ContentSanitizer(config))
     return pipeline
 
 def create_blog_pipeline(config: Dict[str, Any] = None) -> ContentProcessorPipeline:
-    """Create a pipeline optimized for blog content"""
-    pipeline = ContentProcessorPipeline(config)
+    """Create a pipeline optimized for blog content"""    pipeline = ContentProcessorPipeline(config)
     pipeline.add_processor(TextNormalizer(config))
     pipeline.add_processor(MarkdownProcessor(config))
     pipeline.add_processor(ContentSanitizer(config))
     return pipeline
 
 def create_general_pipeline(config: Dict[str, Any] = None) -> ContentProcessorPipeline:
-    """Create a general-purpose content processing pipeline"""
-    pipeline = ContentProcessorPipeline(config)
+    """Create a general-purpose content processing pipeline"""    pipeline = ContentProcessorPipeline(config)
     pipeline.add_processor(TextNormalizer(config))
     pipeline.add_processor(ContentSanitizer(config))
     return pipeline
 
 # Utility functions
 async def quick_process_social_media(content: str) -> Dict[str, Any]:
-    """Quick processing for social media content"""
-    pipeline = create_social_media_pipeline()
+    """Quick processing for social media content"""    pipeline = create_social_media_pipeline()
     result = await pipeline.process(content)
     return {
         'processed_content': result.processed_content,
@@ -648,8 +609,7 @@ async def quick_process_social_media(content: str) -> Dict[str, Any]:
     }
 
 async def quick_process_blog(content: str) -> Dict[str, Any]:
-    """Quick processing for blog content"""
-    pipeline = create_blog_pipeline()
+    """Quick processing for blog content"""    pipeline = create_blog_pipeline()
     result = await pipeline.process(content)
     return {
         'processed_content': result.processed_content,

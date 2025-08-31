@@ -1,5 +1,4 @@
-"""
-Complete Fingerprinting Deployment Orchestrator
+"""Complete Fingerprinting Deployment Orchestrator
 Enterprise multi-modal content protection deployment system
 
 This module orchestrates the deployment of all fingerprinting services
@@ -14,7 +13,6 @@ Any unauthorized copying, distribution, or use without written permission
 will result in legal action under German and international copyright law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class DeploymentMode(Enum):
-    """Deployment modes for fingerprinting infrastructure"""
-    DEVELOPMENT = "development"
+    """Deployment modes for fingerprinting infrastructure"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     HIGH_AVAILABILITY = "high_availability"
@@ -47,8 +44,7 @@ class DeploymentMode(Enum):
 
 
 class ContentProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"
+    """Content protection levels"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
@@ -56,8 +52,7 @@ class ContentProtectionLevel(Enum):
 
 
 class ScalingStrategy(Enum):
-    """Auto-scaling strategies"""
-    CONSERVATIVE = "conservative"
+    """Auto-scaling strategies"""    CONSERVATIVE = "conservative"
     BALANCED = "balanced"
     AGGRESSIVE = "aggressive"
     PREDICTIVE = "predictive"
@@ -66,8 +61,7 @@ class ScalingStrategy(Enum):
 
 @dataclass
 class FingerprintingDeploymentConfig:
-    """Complete fingerprinting deployment configuration"""
-    deployment_name: str = "ia-influencer-fingerprinting"
+    """Complete fingerprinting deployment configuration"""    deployment_name: str = "ia-influencer-fingerprinting"
     namespace: str = "ia-influencer-protection"
     deployment_mode: DeploymentMode = DeploymentMode.PRODUCTION
     protection_level: ContentProtectionLevel = ContentProtectionLevel.ENTERPRISE
@@ -111,8 +105,7 @@ class FingerprintingDeploymentConfig:
 
 
 class FingerprintingDeploymentOrchestrator:
-    """
-    Enterprise fingerprinting deployment orchestrator
+    """    Enterprise fingerprinting deployment orchestrator
     
     Manages the complete deployment and orchestration of:
     - Audio fingerprinting services (Chromaprint, Essentia)
@@ -123,16 +116,13 @@ class FingerprintingDeploymentOrchestrator:
     - Unified API gateway and monitoring
     - Auto-scaling and load balancing
     - Disaster recovery and backup
-    """
-    
+    """    
     def __init__(self, config: FingerprintingDeploymentConfig):
-        """
-        Initialize fingerprinting deployment orchestrator
+        """        Initialize fingerprinting deployment orchestrator
         
         Args:
             config: Complete deployment configuration
-        """
-        self.config = config
+        """        self.config = config
         self.deployment_status = "initializing"
         self.deployed_services = {}
         self.performance_metrics = {}
@@ -144,8 +134,7 @@ class FingerprintingDeploymentOrchestrator:
         self._initialize_deployment_components()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes and infrastructure clients"""
-        try:
+        """Initialize Kubernetes and infrastructure clients"""        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -172,8 +161,7 @@ class FingerprintingDeploymentOrchestrator:
             raise
     
     def _initialize_deployment_components(self) -> None:
-        """Initialize individual fingerprinting deployment components"""
-        try:
+        """Initialize individual fingerprinting deployment components"""        try:
             # Configure individual deployment components based on enabled features
             if self.config.audio_enabled:
                 self.audio_config = AudioFingerprintConfig(
@@ -222,13 +210,11 @@ class FingerprintingDeploymentOrchestrator:
             raise
     
     async def deploy_complete_fingerprinting_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete multi-modal fingerprinting infrastructure
+        """        Deploy complete multi-modal fingerprinting infrastructure
         
         Returns:
             Comprehensive deployment summary
-        """
-        try:
+        """        try:
             self.deployment_status = "deploying_infrastructure"
             logger.info("Starting complete fingerprinting infrastructure deployment")
             
@@ -316,8 +302,7 @@ class FingerprintingDeploymentOrchestrator:
             raise
     
     async def _deploy_core_infrastructure(self) -> Dict[str, Any]:
-        """Deploy core shared infrastructure"""
-        try:
+        """Deploy core shared infrastructure"""        try:
             logger.info("Deploying core fingerprinting infrastructure")
             
             # Create namespace with proper labels
@@ -352,8 +337,7 @@ class FingerprintingDeploymentOrchestrator:
             raise
     
     async def _deploy_fingerprinting_services(self) -> Dict[str, Any]:
-        """Deploy all fingerprinting services in parallel"""
-        try:
+        """Deploy all fingerprinting services in parallel"""        try:
             logger.info("Deploying fingerprinting services")
             
             deployment_tasks = []
@@ -411,8 +395,7 @@ class FingerprintingDeploymentOrchestrator:
             raise
     
     async def _deploy_unified_api_gateway(self) -> Dict[str, Any]:
-        """Deploy unified API gateway for all fingerprinting services"""
-        gateway_deployment = {
+        """Deploy unified API gateway for all fingerprinting services"""        gateway_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -504,8 +487,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _deploy_cross_modal_engine(self) -> Dict[str, Any]:
-        """Deploy cross-modal similarity detection engine"""
-        cross_modal_deployment = {
+        """Deploy cross-modal similarity detection engine"""        cross_modal_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -583,8 +565,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _deploy_comprehensive_monitoring(self) -> Dict[str, Any]:
-        """Deploy comprehensive monitoring and observability stack"""
-        # Prometheus for metrics
+        """Deploy comprehensive monitoring and observability stack"""        # Prometheus for metrics
         prometheus_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -706,8 +687,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _deploy_auto_scaling_infrastructure(self) -> Dict[str, Any]:
-        """Deploy auto-scaling infrastructure"""
-        # Vertical Pod Autoscaler for GPU workloads
+        """Deploy auto-scaling infrastructure"""        # Vertical Pod Autoscaler for GPU workloads
         vpa_spec = {
             "apiVersion": "autoscaling.k8s.io/v1",
             "kind": "VerticalPodAutoscaler",
@@ -774,8 +754,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _deploy_backup_infrastructure(self) -> Dict[str, Any]:
-        """Deploy backup and disaster recovery infrastructure"""
-        backup_deployment = {
+        """Deploy backup and disaster recovery infrastructure"""        backup_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -821,8 +800,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _deploy_compliance_infrastructure(self) -> Dict[str, Any]:
-        """Deploy compliance and audit logging infrastructure"""
-        compliance_deployment = {
+        """Deploy compliance and audit logging infrastructure"""        compliance_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -869,8 +847,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _ensure_namespace(self) -> None:
-        """Create namespace if it doesn't exist"""
-        try:
+        """Create namespace if it doesn't exist"""        try:
             self.k8s_core_v1.read_namespace(name=self.config.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -891,8 +868,7 @@ class FingerprintingDeploymentOrchestrator:
                 logger.info(f"Created namespace: {self.config.namespace}")
     
     async def _deploy_orchestrator_redis(self) -> Dict[str, Any]:
-        """Deploy Redis cluster for orchestration coordination"""
-        redis_cluster = {
+        """Deploy Redis cluster for orchestration coordination"""        redis_cluster = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -945,8 +921,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _deploy_shared_vector_database(self) -> Dict[str, Any]:
-        """Deploy shared FAISS vector database cluster"""
-        # Implementation similar to individual vector databases but shared
+        """Deploy shared FAISS vector database cluster"""        # Implementation similar to individual vector databases but shared
         vector_db_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -997,8 +972,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _deploy_shared_storage(self) -> Dict[str, Any]:
-        """Deploy shared storage infrastructure"""
-        # Large persistent volume claim for all content
+        """Deploy shared storage infrastructure"""        # Large persistent volume claim for all content
         pvc_spec = {
             "apiVersion": "v1",
             "kind": "PersistentVolumeClaim",
@@ -1027,8 +1001,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _deploy_message_queue(self) -> Dict[str, Any]:
-        """Deploy message queue for inter-service communication"""
-        kafka_deployment = {
+        """Deploy message queue for inter-service communication"""        kafka_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1073,8 +1046,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _deploy_shared_cache_layer(self) -> Dict[str, Any]:
-        """Deploy shared cache layer"""
-        # Memcached for shared caching
+        """Deploy shared cache layer"""        # Memcached for shared caching
         memcached_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
@@ -1115,8 +1087,7 @@ class FingerprintingDeploymentOrchestrator:
         }
     
     async def _configure_enterprise_networking(self) -> None:
-        """Configure enterprise networking and security"""
-        # Network policy for comprehensive security
+        """Configure enterprise networking and security"""        # Network policy for comprehensive security
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1152,8 +1123,7 @@ class FingerprintingDeploymentOrchestrator:
         logger.info("Configured enterprise networking policies")
     
     def _get_enabled_content_types(self) -> List[str]:
-        """Get list of enabled content types"""
-        enabled_types = []
+        """Get list of enabled content types"""        enabled_types = []
         if self.config.audio_enabled:
             enabled_types.append("audio")
         if self.config.video_enabled:
@@ -1165,8 +1135,7 @@ class FingerprintingDeploymentOrchestrator:
         return enabled_types
     
     def _count_total_algorithms(self) -> int:
-        """Count total number of algorithms across all content types"""
-        total = 0
+        """Count total number of algorithms across all content types"""        total = 0
         if self.config.audio_enabled:
             total += len(self.audio_config.algorithms) if hasattr(self, 'audio_config') else 3
         if self.config.video_enabled:
@@ -1178,8 +1147,7 @@ class FingerprintingDeploymentOrchestrator:
         return total
     
     async def _validate_complete_deployment(self) -> bool:
-        """Validate the complete deployment"""
-        try:
+        """Validate the complete deployment"""        try:
             # Check core infrastructure
             core_services = [
                 "fingerprinting-orchestrator-redis",
@@ -1241,8 +1209,7 @@ class FingerprintingDeploymentOrchestrator:
             return False
     
     async def get_complete_deployment_status(self) -> Dict[str, Any]:
-        """Get comprehensive deployment status"""
-        try:
+        """Get comprehensive deployment status"""        try:
             status = {
                 "deployment_status": self.deployment_status,
                 "deployment_name": self.config.deployment_name,
@@ -1286,8 +1253,7 @@ class FingerprintingDeploymentOrchestrator:
             return {"error": str(e)}
     
     async def _cleanup_failed_deployment(self) -> None:
-        """Clean up failed deployment"""
-        try:
+        """Clean up failed deployment"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.config.namespace)
             logger.info("Cleaned up failed fingerprinting deployment")
@@ -1295,8 +1261,7 @@ class FingerprintingDeploymentOrchestrator:
             logger.error(f"Cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up the entire deployment"""
-        try:
+        """Clean up the entire deployment"""        try:
             # Cleanup individual deployments
             cleanup_tasks = []
             

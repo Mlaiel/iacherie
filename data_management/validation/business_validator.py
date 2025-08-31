@@ -1,5 +1,4 @@
-"""
-🚀 Business Rules Validation System - IA Influencer Agent Platform Enterprise
+"""🚀 Business Rules Validation System - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/data_management/validation/business_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Validation des règles business pour musiciens, influenceurs, photographes, blog
 - Contrôle qualité selon standards métier
 - Validation workflows et processus
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -41,31 +39,27 @@ import langdetect
 logger = logging.getLogger(__name__)
 
 class CreatorType(Enum):
-    """Types de créateurs supportés"""
-    MUSICIAN = "musician"
+    """Types de créateurs supportés"""    MUSICIAN = "musician"
     INFLUENCER = "influencer" 
     PHOTOGRAPHER = "photographer"
     BLOGGER = "blogger"
     COMEDIAN = "comedian"
 
 class ContentCategory(Enum):
-    """Catégories de contenu"""
-    AUDIO = "audio"
+    """Catégories de contenu"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     DOCUMENT = "document"
 
 class QualityLevel(Enum):
-    """Niveaux de qualité"""
-    BASIC = "basic"
+    """Niveaux de qualité"""    BASIC = "basic"
     STANDARD = "standard"
     PROFESSIONAL = "professional"
     PREMIUM = "premium"
 
 @dataclass
 class BusinessValidationResult:
-    """Résultat de validation métier"""
-    is_valid: bool
+    """Résultat de validation métier"""    is_valid: bool
     compliance_score: float  # 0.0 - 1.0
     business_category: str
     quality_level: QualityLevel
@@ -76,8 +70,7 @@ class BusinessValidationResult:
     quotas_usage: Dict[str, Any]
 
 class CreatorQuotaManager:
-    """Gestionnaire des quotas par type de créateur"""
-    
+    """Gestionnaire des quotas par type de créateur"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.CreatorQuotaManager")
         
@@ -166,8 +159,7 @@ class CreatorQuotaManager:
         }
     
     def check_quotas(self, creator_type: CreatorType, file_info: Dict[str, Any], user_usage: Dict[str, Any]) -> Dict[str, Any]:
-        """Vérifie les quotas pour un créateur"""
-        quota_status = {
+        """Vérifie les quotas pour un créateur"""        quota_status = {
             'within_limits': True,
             'violations': [],
             'warnings': [],
@@ -243,8 +235,7 @@ class CreatorQuotaManager:
             return quota_status
 
 class ContentQualityAnalyzer:
-    """Analyseur de qualité de contenu selon les standards métier"""
-    
+    """Analyseur de qualité de contenu selon les standards métier"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ContentQualityAnalyzer")
         
@@ -319,8 +310,7 @@ class ContentQualityAnalyzer:
         }
     
     def analyze_content_quality(self, file_path: str, creator_type: CreatorType, content_type: str) -> Dict[str, Any]:
-        """Analyse la qualité du contenu selon les standards métier"""
-        quality_analysis = {
+        """Analyse la qualité du contenu selon les standards métier"""        quality_analysis = {
             'quality_level': QualityLevel.BASIC,
             'quality_score': 0.0,
             'meets_standards': {},
@@ -345,8 +335,7 @@ class ContentQualityAnalyzer:
             return quality_analysis
     
     def _analyze_audio_quality(self, file_path: str, creator_type: CreatorType) -> Dict[str, Any]:
-        """Analyse spécifique qualité audio"""
-        analysis = {
+        """Analyse spécifique qualité audio"""        analysis = {
             'audio_bitrate': 0,
             'audio_sample_rate': 0,
             'dynamic_range': 0.0,
@@ -414,8 +403,7 @@ class ContentQualityAnalyzer:
             return analysis
     
     def _analyze_video_quality(self, file_path: str, creator_type: CreatorType) -> Dict[str, Any]:
-        """Analyse spécifique qualité vidéo"""
-        analysis = {
+        """Analyse spécifique qualité vidéo"""        analysis = {
             'video_width': 0,
             'video_height': 0,
             'video_fps': 0,
@@ -512,8 +500,7 @@ class ContentQualityAnalyzer:
             return analysis
     
     def _analyze_image_quality(self, file_path: str, creator_type: CreatorType) -> Dict[str, Any]:
-        """Analyse spécifique qualité image"""
-        analysis = {
+        """Analyse spécifique qualité image"""        analysis = {
             'image_width': 0,
             'image_height': 0,
             'image_quality': 0,
@@ -585,8 +572,7 @@ class ContentQualityAnalyzer:
             return analysis
     
     def _analyze_document_quality(self, file_path: str, creator_type: CreatorType) -> Dict[str, Any]:
-        """Analyse spécifique qualité document"""
-        analysis = {
+        """Analyse spécifique qualité document"""        analysis = {
             'word_count': 0,
             'readability_score': 0,
             'structure_score': 0.0,
@@ -677,8 +663,7 @@ class ContentQualityAnalyzer:
             return analysis
     
     def _estimate_jpeg_quality(self, img: Image.Image) -> int:
-        """Estime la qualité JPEG basée sur les tables de quantification"""
-        try:
+        """Estime la qualité JPEG basée sur les tables de quantification"""        try:
             # Méthode approximative basée sur la taille et la résolution
             file_size = len(img.tobytes())
             pixel_count = img.width * img.height
@@ -703,8 +688,7 @@ class ContentQualityAnalyzer:
             return 75
     
     def _analyze_image_composition(self, img_array: np.ndarray) -> float:
-        """Analyse la composition d'une image"""
-        try:
+        """Analyse la composition d'une image"""        try:
             # Conversion en niveaux de gris pour l'analyse
             if len(img_array.shape) == 3:
                 gray = np.mean(img_array, axis=2)
@@ -738,8 +722,7 @@ class ContentQualityAnalyzer:
             return 0.5
 
 class WorkflowValidator:
-    """Validateur des workflows et processus métier"""
-    
+    """Validateur des workflows et processus métier"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.WorkflowValidator")
         
@@ -763,8 +746,7 @@ class WorkflowValidator:
         }
     
     def validate_workflow_compliance(self, creator_type: CreatorType, workflow_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Valide la conformité des workflows"""
-        validation_result = {
+        """Valide la conformité des workflows"""        validation_result = {
             'is_compliant': True,
             'completed_steps': [],
             'missing_steps': [],
@@ -804,8 +786,7 @@ class WorkflowValidator:
             return validation_result
 
 class BusinessValidator:
-    """Validateur principal des règles métier"""
-    
+    """Validateur principal des règles métier"""    
     def __init__(self, config: Optional[Any] = None):
         self.logger = logging.getLogger(f"{__name__}.BusinessValidator")
         self.config = config
@@ -816,8 +797,7 @@ class BusinessValidator:
         self.workflow_validator = WorkflowValidator()
     
     def validate_business_rules(self, file_path: str, creator_type: str, content_type: str, user_data: Optional[Dict] = None) -> BusinessValidationResult:
-        """Valide les règles métier pour un fichier"""
-        
+        """Valide les règles métier pour un fichier"""        
         try:
             # Conversion du type de créateur
             creator_enum = CreatorType(creator_type.lower())
@@ -926,8 +906,7 @@ class BusinessValidator:
             )
     
     def _validate_content_coherence(self, creator_type: CreatorType, content_type: str, quality_analysis: Dict) -> Dict[str, Any]:
-        """Valide la cohérence entre le type de créateur et le contenu"""
-        coherence_result = {
+        """Valide la cohérence entre le type de créateur et le contenu"""        coherence_result = {
             'is_coherent': True,
             'warnings': [],
             'suggestions': []
@@ -989,8 +968,7 @@ class BusinessValidator:
         return coherence_result
     
     def _calculate_compliance_score(self, quota_status: Dict, quality_analysis: Dict, metadata: Dict) -> float:
-        """Calcule le score de conformité global"""
-        scores = []
+        """Calcule le score de conformité global"""        scores = []
         
         # Score quotas (50%)
         if quota_status['within_limits']:
@@ -1012,8 +990,7 @@ class BusinessValidator:
         return sum(scores)
     
     def _determine_business_category(self, creator_type: CreatorType, content_type: str, quality_analysis: Dict) -> str:
-        """Détermine la catégorie métier du contenu"""
-        quality_level = quality_analysis.get('quality_level', QualityLevel.BASIC)
+        """Détermine la catégorie métier du contenu"""        quality_level = quality_analysis.get('quality_level', QualityLevel.BASIC)
         
         categories = {
             (CreatorType.MUSICIAN, 'audio'): {
@@ -1043,15 +1020,13 @@ class BusinessValidator:
         return f"{creator_type.value}_{content_type}"
 
 class AsyncBusinessValidator:
-    """Version asynchrone du validateur métier"""
-    
+    """Version asynchrone du validateur métier"""    
     def __init__(self, config: Optional[Any] = None):
         self.sync_validator = BusinessValidator(config)
         self.logger = logging.getLogger(f"{__name__}.AsyncBusinessValidator")
     
     async def validate_business_rules(self, file_path: str, creator_type: str, content_type: str, user_data: Optional[Dict] = None) -> BusinessValidationResult:
-        """Valide les règles métier de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Valide les règles métier de manière asynchrone"""        loop = asyncio.get_event_loop()
         
         result = await loop.run_in_executor(
             None,

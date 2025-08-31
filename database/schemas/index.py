@@ -1,5 +1,4 @@
-"""
-Database Schemas Index
+"""Database Schemas Index
 
 Entry point and utility functions for the IA Influencer Agent database schemas module.
 Provides quick access to all schemas and validation utilities.
@@ -14,7 +13,6 @@ intellectual property of Fahed Mlaiel (mlaiel@live.de). Unauthorized use, copyin
 modification, or distribution is strictly prohibited and will result in immediate 
 legal action under German and international copyright law.
 """
-
 from typing import Dict, List, Type, Any, Optional
 from datetime import datetime
 import inspect
@@ -102,16 +100,14 @@ from . import (
 
 
 class SchemaManager:
-    """Enhanced schema management utilities for the IA Influencer Agent platform"""
-    
+    """Enhanced schema management utilities for the IA Influencer Agent platform"""    
     def __init__(self):
         self.schemas = SCHEMA_REGISTRY
         self._schema_categories = self._build_schema_categories()
         self._validation_cache = {}
     
     def _build_schema_categories(self) -> Dict[str, List[str]]:
-        """Build categorized schema registry"""
-        categories = {
+        """Build categorized schema registry"""        categories = {
             'content': [],
             'protection': [],
             'monetization': [],
@@ -158,20 +154,16 @@ class SchemaManager:
         return categories
     
     def get_schemas_by_category(self, category: str) -> List[str]:
-        """Get schemas by category"""
-        return self._schema_categories.get(category, [])
+        """Get schemas by category"""        return self._schema_categories.get(category, [])
     
     def get_all_categories(self) -> List[str]:
-        """Get all available schema categories"""
-        return list(self._schema_categories.keys())
+        """Get all available schema categories"""        return list(self._schema_categories.keys())
     
     def get_schema_by_name(self, name: str) -> Optional[Type]:
-        """Get schema class by name"""
-        return get_schema(name)
+        """Get schema class by name"""        return get_schema(name)
     
     def validate_schema_data(self, schema_name: str, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate data against a specific schema"""
-        schema_class = self.get_schema_by_name(schema_name)
+        """Validate data against a specific schema"""        schema_class = self.get_schema_by_name(schema_name)
         if not schema_class:
             raise ValueError(f"Schema '{schema_name}' not found")
         
@@ -190,8 +182,7 @@ class SchemaManager:
             }
     
     def get_schema_documentation(self, schema_name: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive documentation for a schema"""
-        schema_class = self.get_schema_by_name(schema_name)
+        """Get comprehensive documentation for a schema"""        schema_class = self.get_schema_by_name(schema_name)
         if not schema_class:
             return None
         
@@ -215,8 +206,7 @@ class SchemaManager:
         }
     
     def generate_schema_summary(self) -> Dict[str, Any]:
-        """Generate comprehensive summary of all schemas"""
-        summary = {
+        """Generate comprehensive summary of all schemas"""        summary = {
             'total_schemas': len(self.schemas),
             'categories': {},
             'last_updated': datetime.now().isoformat(),
@@ -232,8 +222,7 @@ class SchemaManager:
         return summary
     
     def search_schemas(self, query: str) -> List[Dict[str, Any]]:
-        """Search schemas by name or description"""
-        results = []
+        """Search schemas by name or description"""        results = []
         query_lower = query.lower()
         
         for schema_name, schema_class in self.schemas.items():
@@ -274,46 +263,38 @@ schema_manager = SchemaManager()
 
 
 def get_content_schemas() -> List[str]:
-    """Get all content-related schemas"""
-    return schema_manager.get_schemas_by_category('content')
+    """Get all content-related schemas"""    return schema_manager.get_schemas_by_category('content')
 
 
 def get_protection_schemas() -> List[str]:
-    """Get all protection-related schemas"""
-    return schema_manager.get_schemas_by_category('protection')
+    """Get all protection-related schemas"""    return schema_manager.get_schemas_by_category('protection')
 
 
 def get_monetization_schemas() -> List[str]:
-    """Get all monetization-related schemas"""
-    return schema_manager.get_schemas_by_category('monetization')
+    """Get all monetization-related schemas"""    return schema_manager.get_schemas_by_category('monetization')
 
 
 def get_ai_schemas() -> List[str]:
-    """Get all AI/ML-related schemas"""
-    return schema_manager.get_schemas_by_category('ai_analytics')
+    """Get all AI/ML-related schemas"""    return schema_manager.get_schemas_by_category('ai_analytics')
 
 
 def validate_content_data(data: Dict[str, Any], schema_type: str = 'create') -> Dict[str, Any]:
-    """Validate content-related data"""
-    schema_name = f"content_fingerprint_{schema_type}"
+    """Validate content-related data"""    schema_name = f"content_fingerprint_{schema_type}"
     return schema_manager.validate_schema_data(schema_name, data)
 
 
 def validate_protection_data(data: Dict[str, Any], schema_type: str = 'create') -> Dict[str, Any]:
-    """Validate protection-related data"""
-    schema_name = f"protection_alert_{schema_type}"
+    """Validate protection-related data"""    schema_name = f"protection_alert_{schema_type}"
     return schema_manager.validate_schema_data(schema_name, data)
 
 
 def validate_revenue_data(data: Dict[str, Any], schema_type: str = 'create') -> Dict[str, Any]:
-    """Validate revenue-related data"""
-    schema_name = f"revenue_tracking_{schema_type}"
+    """Validate revenue-related data"""    schema_name = f"revenue_tracking_{schema_type}"
     return schema_manager.validate_schema_data(schema_name, data)
 
 
 def get_business_logic_flow() -> Dict[str, Any]:
-    """Get the complete business logic flow as represented by schemas"""
-    return {
+    """Get the complete business logic flow as represented by schemas"""    return {
         'flow_description': 'User (Musician/Blogger/Photographer/Influencer/Comedian) → Upload Multi-format Content → AI Content Protection & Rights Management → Professional SEO Optimization → Collaboration Matching → Multi-platform Distribution & Monetization',
         'stages': {
             'content_upload': {
@@ -345,8 +326,7 @@ def get_business_logic_flow() -> Dict[str, Any]:
 
 
 def generate_api_documentation() -> Dict[str, Any]:
-    """Generate API documentation based on schemas"""
-    return {
+    """Generate API documentation based on schemas"""    return {
         'title': 'IA Influencer Agent + Content Protection Platform API',
         'version': '2.0.0',
         'description': 'Comprehensive API for content creators with AI-powered protection and monetization',

@@ -1,5 +1,4 @@
-"""
-Content Synchronizer - Real-Time Content Synchronization Engine
+"""Content Synchronizer - Real-Time Content Synchronization Engine
 ==============================================================
 
 The ContentSynchronizer ensures data consistency across platforms,
@@ -8,7 +7,6 @@ manages real-time updates, and handles conflict resolution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Set, Tuple
@@ -27,8 +25,7 @@ from ..events.event_publisher import EventPublisher
 
 
 class SyncStatus(Enum):
-    """Synchronization status enumeration"""
-    PENDING = "pending"
+    """Synchronization status enumeration"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -37,8 +34,7 @@ class SyncStatus(Enum):
 
 
 class ConflictResolutionStrategy(Enum):
-    """Conflict resolution strategy enumeration"""
-    LATEST_WINS = "latest_wins"
+    """Conflict resolution strategy enumeration"""    LATEST_WINS = "latest_wins"
     SOURCE_PRIORITY = "source_priority"
     MANUAL_REVIEW = "manual_review"
     MERGE_CHANGES = "merge_changes"
@@ -48,8 +44,7 @@ class ConflictResolutionStrategy(Enum):
 
 @dataclass
 class SyncTask:
-    """Content synchronization task container"""
-    task_id: str
+    """Content synchronization task container"""    task_id: str
     content_id: str
     source_platform: str
     target_platforms: List[str]
@@ -63,8 +58,7 @@ class SyncTask:
 
 @dataclass
 class SyncConflict:
-    """Content synchronization conflict container"""
-    conflict_id: str
+    """Content synchronization conflict container"""    conflict_id: str
     content_id: str
     platform_a: str
     platform_b: str
@@ -77,8 +71,7 @@ class SyncConflict:
 
 @dataclass
 class SyncResult:
-    """Content synchronization result container"""
-    task_id: str
+    """Content synchronization result container"""    task_id: str
     content_id: str
     success: bool
     platforms_synced: List[str]
@@ -89,8 +82,7 @@ class SyncResult:
 
 
 class ContentSynchronizer:
-    """
-    Real-Time Content Synchronization Engine
+    """    Real-Time Content Synchronization Engine
     
     Provides comprehensive content synchronization including:
     - Real-time content sync across multiple platforms
@@ -100,8 +92,7 @@ class ContentSynchronizer:
     - Change tracking and audit logging
     - Batch synchronization operations
     - Platform-specific sync rules and mappings
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession):
         self.db = db_session
         self.logger = logging.getLogger(__name__)
@@ -137,8 +128,7 @@ class ContentSynchronizer:
         priority: int = 1,
         force_sync: bool = False
     ) -> Dict[str, Any]:
-        """
-        Synchronize content across platforms
+        """        Synchronize content across platforms
         
         Args:
             content_id: Content identifier
@@ -149,8 +139,7 @@ class ContentSynchronizer:
             
         Returns:
             Synchronization result with status and conflicts
-        """
-        sync_start = datetime.utcnow()
+        """        sync_start = datetime.utcnow()
         
         try:
             self.logger.info(f"Starting content synchronization for {content_id}")
@@ -239,8 +228,7 @@ class ContentSynchronizer:
         content_filter: Dict[str, Any] = None,
         conflict_strategy: ConflictResolutionStrategy = ConflictResolutionStrategy.LATEST_WINS
     ) -> Dict[str, Any]:
-        """
-        Synchronize content from a platform to local storage
+        """        Synchronize content from a platform to local storage
         
         Args:
             platform_name: Source platform name
@@ -249,8 +237,7 @@ class ContentSynchronizer:
             
         Returns:
             Platform sync result with statistics
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting platform synchronization from {platform_name}")
             
             # Get platform sync configuration
@@ -373,16 +360,14 @@ class ContentSynchronizer:
             }
 
     async def _execute_sync_task(self, sync_task: SyncTask) -> SyncResult:
-        """
-        Execute a synchronization task
+        """        Execute a synchronization task
         
         Args:
             sync_task: Synchronization task to execute
             
         Returns:
             Synchronization result
-        """
-        try:
+        """        try:
             sync_task.status = SyncStatus.IN_PROGRESS
             self.active_sync_tasks[sync_task.task_id] = sync_task
             
@@ -443,8 +428,7 @@ class ContentSynchronizer:
         platform: str,
         sync_type: str
     ) -> Dict[str, Any]:
-        """
-        Synchronize content to a specific platform
+        """        Synchronize content to a specific platform
         
         Args:
             content_data: Content data to sync
@@ -453,8 +437,7 @@ class ContentSynchronizer:
             
         Returns:
             Platform sync result
-        """
-        try:
+        """        try:
             # Get platform-specific sync configuration
             platform_config = self.platform_sync_configs.get(platform, {})
             
@@ -515,8 +498,7 @@ class ContentSynchronizer:
         platform_content: Dict[str, Any],
         platform: str
     ) -> Optional[SyncConflict]:
-        """
-        Detect synchronization conflicts between local and platform content
+        """        Detect synchronization conflicts between local and platform content
         
         Args:
             local_content: Local content record
@@ -525,8 +507,7 @@ class ContentSynchronizer:
             
         Returns:
             Conflict object if conflict detected, None otherwise
-        """
-        try:
+        """        try:
             conflicting_fields = []
             
             # Check for conflicts in key fields
@@ -582,8 +563,7 @@ class ContentSynchronizer:
         local_content: Any,
         platform_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve conflict by using the latest modification time"""
-        local_modified = getattr(local_content, "updated_at", datetime.min)
+        """Resolve conflict by using the latest modification time"""        local_modified = getattr(local_content, "updated_at", datetime.min)
         platform_modified = platform_content.get("updated_at")
         
         if platform_modified:
@@ -603,8 +583,7 @@ class ContentSynchronizer:
         local_content: Any,
         platform_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve conflict based on configured source priority"""
-        # Local storage has higher priority by default
+        """Resolve conflict based on configured source priority"""        # Local storage has higher priority by default
         return self._content_to_dict(local_content)
 
     async def _resolve_conflict_merge_changes(
@@ -613,8 +592,7 @@ class ContentSynchronizer:
         local_content: Any,
         platform_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve conflict by merging non-conflicting changes"""
-        merged_content = self._content_to_dict(local_content)
+        """Resolve conflict by merging non-conflicting changes"""        merged_content = self._content_to_dict(local_content)
         
         # Merge fields that don't conflict
         for field, platform_value in platform_content.items():
@@ -629,8 +607,7 @@ class ContentSynchronizer:
         local_content: Any,
         platform_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve conflict by preserving local content"""
-        return self._content_to_dict(local_content)
+        """Resolve conflict by preserving local content"""        return self._content_to_dict(local_content)
 
     async def _resolve_conflict_preserve_remote(
         self,
@@ -638,14 +615,12 @@ class ContentSynchronizer:
         local_content: Any,
         platform_content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Resolve conflict by preserving remote/platform content"""
-        return platform_content
+        """Resolve conflict by preserving remote/platform content"""        return platform_content
 
     # Helper methods
 
     def _load_platform_sync_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific synchronization configurations"""
-        return {
+        """Load platform-specific synchronization configurations"""        return {
             "youtube": {
                 "field_mappings": {
                     "title": "snippet.title",
@@ -674,8 +649,7 @@ class ContentSynchronizer:
         }
 
     def _normalize_field_value(self, value: Any) -> str:
-        """Normalize field value for comparison"""
-        if value is None:
+        """Normalize field value for comparison"""        if value is None:
             return ""
         elif isinstance(value, (list, dict)):
             return json.dumps(value, sort_keys=True)
@@ -683,8 +657,7 @@ class ContentSynchronizer:
             return str(value).strip().lower()
 
     def _content_to_dict(self, content: Any) -> Dict[str, Any]:
-        """Convert content object to dictionary"""
-        return {
+        """Convert content object to dictionary"""        return {
             "id": content.id,
             "title": content.title,
             "description": content.description,
@@ -695,8 +668,7 @@ class ContentSynchronizer:
         }
 
     async def _start_sync_processor(self):
-        """Start background sync task processor"""
-        while True:
+        """Start background sync task processor"""        while True:
             try:
                 # Process sync queue
                 if not self.sync_queue.empty():
@@ -712,24 +684,19 @@ class ContentSynchronizer:
 
     # Placeholder methods for actual implementations
     async def _get_content_data(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get content data from database"""
-        return None
+        """Get content data from database"""        return None
 
     async def _get_configured_platforms(self, content_id: str) -> List[str]:
-        """Get configured platforms for content"""
-        return ["youtube", "instagram"]
+        """Get configured platforms for content"""        return ["youtube", "instagram"]
 
     async def _sync_needed(self, content_id: str, platforms: List[str]) -> bool:
-        """Check if synchronization is needed"""
-        return True
+        """Check if synchronization is needed"""        return True
 
     async def _log_sync_operation(self, sync_task: SyncTask, sync_result: SyncResult) -> None:
-        """Log synchronization operation"""
-        pass
+        """Log synchronization operation"""        pass
 
     def _serialize_sync_result(self, result: SyncResult) -> Dict[str, Any]:
-        """Convert sync result to serializable format"""
-        return {
+        """Convert sync result to serializable format"""        return {
             "task_id": result.task_id,
             "content_id": result.content_id,
             "success": result.success,

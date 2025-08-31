@@ -1,5 +1,4 @@
-"""
-Enterprise Personalization Engine for IA Influencer Platform
+"""Enterprise Personalization Engine for IA Influencer Platform
 
 Advanced personalization system providing individualized user experience,
 behavior prediction, and preference modeling for multi-modal content creators.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 import asyncio
 import numpy as np
 from typing import Dict, List, Optional, Any, Tuple
@@ -32,11 +30,9 @@ from .models import (
 
 
 class PersonalizationEngine(IPersonalizationEngine):
-    """
-    Enterprise-grade personalization engine providing advanced user modeling,
+    """    Enterprise-grade personalization engine providing advanced user modeling,
     preference learning, and behavior prediction capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: redis.Redis,
@@ -84,11 +80,9 @@ class PersonalizationEngine(IPersonalizationEngine):
         user_id: str,
         interaction_history: List[InteractionEvent]
     ) -> UserProfile:
-        """
-        Build comprehensive user profile from interaction history using
+        """        Build comprehensive user profile from interaction history using
         advanced behavioral analysis and preference extraction.
-        """
-        try:
+        """        try:
             self.logger.info(f"Building user profile for user {user_id}")
             
             # Initialize profile structure
@@ -153,11 +147,9 @@ class PersonalizationEngine(IPersonalizationEngine):
         user_id: str,
         new_interactions: List[InteractionEvent]
     ) -> PersonalizationVector:
-        """
-        Update user personalization vector with new interaction data using
+        """        Update user personalization vector with new interaction data using
         incremental learning and temporal weighting.
-        """
-        try:
+        """        try:
             self.logger.info(f"Updating personalization vector for user {user_id}")
             
             # Get existing vector or create new one
@@ -227,11 +219,9 @@ class PersonalizationEngine(IPersonalizationEngine):
         self,
         user_id: str
     ) -> Dict[str, float]:
-        """
-        Calculate comprehensive user preferences across multiple dimensions
+        """        Calculate comprehensive user preferences across multiple dimensions
         including content types, categories, creators, and behavioral patterns.
-        """
-        try:
+        """        try:
             user_profile = await self._get_user_profile(user_id)
             if not user_profile:
                 return {}
@@ -282,11 +272,9 @@ class PersonalizationEngine(IPersonalizationEngine):
         user_id: str,
         content_ids: List[str]
     ) -> Dict[str, float]:
-        """
-        Predict user behavior for given content items using machine learning models
+        """        Predict user behavior for given content items using machine learning models
         and behavioral pattern analysis.
-        """
-        try:
+        """        try:
             user_vector = await self._get_personalization_vector(user_id)
             if not user_vector:
                 return {content_id: 0.5 for content_id in content_ids}  # Default prediction
@@ -325,8 +313,7 @@ class PersonalizationEngine(IPersonalizationEngine):
         self,
         interactions: List[InteractionEvent]
     ) -> Dict[ContentType, float]:
-        """Analyze user preferences for different content types"""
-        content_interactions = {}
+        """Analyze user preferences for different content types"""        content_interactions = {}
         
         for interaction in interactions:
             content_type = await self._get_content_type(interaction.content_id)
@@ -362,8 +349,7 @@ class PersonalizationEngine(IPersonalizationEngine):
         self,
         interactions: List[InteractionEvent]
     ) -> Dict[str, float]:
-        """Analyze user affinities for different creators"""
-        creator_interactions = {}
+        """Analyze user affinities for different creators"""        creator_interactions = {}
         
         for interaction in interactions:
             creator_id = interaction.creator_id
@@ -395,8 +381,7 @@ class PersonalizationEngine(IPersonalizationEngine):
         self,
         interactions: List[InteractionEvent]
     ) -> Dict[str, float]:
-        """Extract behavioral patterns from interaction data"""
-        if not interactions:
+        """Extract behavioral patterns from interaction data"""        if not interactions:
             return {}
         
         patterns = {}
@@ -444,8 +429,7 @@ class PersonalizationEngine(IPersonalizationEngine):
         self,
         interactions: List[InteractionEvent]
     ) -> Dict[str, float]:
-        """Analyze temporal usage patterns"""
-        if not interactions:
+        """Analyze temporal usage patterns"""        if not interactions:
             return {}
         
         patterns = {}
@@ -489,17 +473,14 @@ class PersonalizationEngine(IPersonalizationEngine):
         return patterns
     
     def _calculate_temporal_weight(self, timestamp: datetime) -> float:
-        """Calculate temporal weight for interaction based on recency"""
-        time_diff = (datetime.now() - timestamp).total_seconds() / (24 * 3600)  # Days
+        """Calculate temporal weight for interaction based on recency"""        time_diff = (datetime.now() - timestamp).total_seconds() / (24 * 3600)  # Days
         return np.exp(-self.temporal_decay_lambda * time_diff)
     
     def _get_vector_dimension(self) -> int:
-        """Get the dimension of personalization vectors"""
-        return len(ContentType) * 3 + 50  # Content types + behavior features
+        """Get the dimension of personalization vectors"""        return len(ContentType) * 3 + 50  # Content types + behavior features
     
     def _get_feature_names(self) -> List[str]:
-        """Get feature names for personalization vector"""
-        features = []
+        """Get feature names for personalization vector"""        features = []
         
         # Content type features
         for content_type in ContentType:
@@ -523,8 +504,7 @@ class PersonalizationEngine(IPersonalizationEngine):
         return features
     
     async def _create_default_profile(self, profile: UserProfile) -> UserProfile:
-        """Create a default profile for new users"""
-        # Set default preferences
+        """Create a default profile for new users"""        # Set default preferences
         profile.content_preferences = {
             content_type: 1.0 / len(ContentType) for content_type in ContentType
         }

@@ -1,5 +1,4 @@
-"""
-Exemple d'Intégration Complète - Notification Systems Business Logic
+"""Exemple d'Intégration Complète - Notification Systems Business Logic
 
 Démonstrateur de l'implémentation complète du workflow business:
 Creator Upload → AI Fingerprinting → Rights Protection → SEO Optimization → 
@@ -18,7 +17,6 @@ Toute utilisation, copie, modification, distribution ou tentative de reverse eng
 non autorisée par écrit est formellement interdite et passible de poursuites judiciaires
 selon le droit allemand et international. Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -58,8 +56,7 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessLogicIntegrationDemo:
-    """
-    Démonstration complète de l'intégration des notifications selon la logique métier.
+    """    Démonstration complète de l'intégration des notifications selon la logique métier.
     
     Cette classe orchestre le workflow complet:
     1. Upload de contenu créateur
@@ -69,17 +66,14 @@ class BusinessLogicIntegrationDemo:
     5. Matching de collaboration
     6. Distribution multi-plateforme
     7. Suivi des revenus
-    """
-    
+    """    
     def __init__(self, db_pool, redis_client):
-        """
-        Initialise la démo avec tous les gestionnaires nécessaires.
+        """        Initialise la démo avec tous les gestionnaires nécessaires.
         
         Args:
             db_pool: Pool de connexions PostgreSQL
             redis_client: Client Redis pour cache et temps réel
-        """
-        self.db_pool = db_pool
+        """        self.db_pool = db_pool
         self.redis = redis_client
         
         # Initialisation des gestionnaires
@@ -102,16 +96,14 @@ class BusinessLogicIntegrationDemo:
         logger.info("BusinessLogicIntegrationDemo initialisé avec succès")
 
     async def demonstrate_complete_workflow(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Démontre le workflow business complet selon le cahier des charges.
+        """        Démontre le workflow business complet selon le cahier des charges.
         
         Args:
             content_data: Données du contenu uploadé par le créateur
             
         Returns:
             Rapport complet du workflow
-        """
-        workflow_id = f"workflow_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
+        """        workflow_id = f"workflow_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
         user_id = content_data["user_id"]
         content_id = content_data["content_id"]
         
@@ -176,8 +168,7 @@ class BusinessLogicIntegrationDemo:
             return workflow_report
 
     async def _step_1_ai_fingerprinting(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """ÉTAPE 1: Analyse IA et fingerprinting du contenu"""
-        
+        """ÉTAPE 1: Analyse IA et fingerprinting du contenu"""        
         # Simulation d'analyse IA avec scores réalistes
         fingerprint_data = FingerprintNotificationData(
             user_id=content_data["user_id"],
@@ -235,8 +226,7 @@ class BusinessLogicIntegrationDemo:
         }
 
     async def _step_2_rights_protection(self, content_data: Dict[str, Any], fingerprint_result: Dict[str, Any]) -> Dict[str, Any]:
-        """ÉTAPE 2: Protection des droits et configuration surveillance"""
-        
+        """ÉTAPE 2: Protection des droits et configuration surveillance"""        
         surveillance_data = SurveillanceNotificationData(
             user_id=content_data["user_id"],
             content_id=content_data["content_id"],
@@ -277,8 +267,7 @@ class BusinessLogicIntegrationDemo:
         }
 
     async def _step_3_seo_optimization(self, content_data: Dict[str, Any], fingerprint_result: Dict[str, Any]) -> Dict[str, Any]:
-        """ÉTAPE 3: Optimisation SEO et marketing digital"""
-        
+        """ÉTAPE 3: Optimisation SEO et marketing digital"""        
         # Analyse des mots-clés basée sur l'IA insights
         ai_insights = fingerprint_result["fingerprint_data"].ai_insights
         target_keywords = ai_insights["recommended_tags"] + ai_insights["genre_classification"]
@@ -341,8 +330,7 @@ class BusinessLogicIntegrationDemo:
         }
 
     async def _step_4_collaboration_matching(self, content_data: Dict[str, Any], fingerprint_result: Dict[str, Any]) -> Dict[str, Any]:
-        """ÉTAPE 4: Matching de collaboration et partenariats"""
-        
+        """ÉTAPE 4: Matching de collaboration et partenariats"""        
         from .collaboration_matching_notifications import CollaboratorProfile, CollaborationOpportunity
         
         # Simulation d'un profil collaborateur compatible
@@ -421,8 +409,7 @@ class BusinessLogicIntegrationDemo:
         }
 
     async def _step_5_licensing_setup(self, content_data: Dict[str, Any], fingerprint_result: Dict[str, Any]) -> Dict[str, Any]:
-        """ÉTAPE 5: Configuration licensing et monétisation"""
-        
+        """ÉTAPE 5: Configuration licensing et monétisation"""        
         # Configuration automatique du licensing basée sur la qualité
         quality_score = fingerprint_result["quality_score"]
         
@@ -474,8 +461,7 @@ class BusinessLogicIntegrationDemo:
         }
 
     async def _step_6_continuous_monitoring(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """ÉTAPE 6: Configuration surveillance continue"""
-        
+        """ÉTAPE 6: Configuration surveillance continue"""        
         # Configuration des tâches de monitoring en arrière-plan
         monitoring_config = {
             "content_id": content_data["content_id"],
@@ -508,8 +494,7 @@ class BusinessLogicIntegrationDemo:
 
     # Méthodes de configuration
     def _get_fingerprinting_config(self) -> Dict[str, Any]:
-        """Configuration pour le gestionnaire de fingerprinting"""
-        return {
+        """Configuration pour le gestionnaire de fingerprinting"""        return {
             "quality_thresholds": {
                 "excellent": 0.95,
                 "good": 0.85,
@@ -526,8 +511,7 @@ class BusinessLogicIntegrationDemo:
         }
 
     def _get_surveillance_config(self) -> Dict[str, Any]:
-        """Configuration pour la surveillance"""
-        return {
+        """Configuration pour la surveillance"""        return {
             "platforms": ["youtube", "tiktok", "instagram", "spotify"],
             "scan_frequency": 3600,
             "enable_real_time": True,
@@ -535,8 +519,7 @@ class BusinessLogicIntegrationDemo:
         }
 
     def _get_licensing_config(self) -> Dict[str, Any]:
-        """Configuration pour le licensing"""
-        return {
+        """Configuration pour le licensing"""        return {
             "supported_currencies": ["EUR", "USD", "GBP"],
             "auto_payment_threshold": 50.00,
             "revenue_milestones": [100, 500, 1000, 5000],
@@ -544,16 +527,14 @@ class BusinessLogicIntegrationDemo:
         }
 
     def _get_seo_config(self) -> Dict[str, Any]:
-        """Configuration pour SEO"""
-        return {
+        """Configuration pour SEO"""        return {
             "target_search_engines": ["google", "youtube", "bing"],
             "tracking_keywords_limit": 50,
             "enable_competitor_analysis": True
         }
 
     def _get_collaboration_config(self) -> Dict[str, Any]:
-        """Configuration pour collaboration"""
-        return {
+        """Configuration pour collaboration"""        return {
             "matching_algorithm": "ml_enhanced",
             "min_match_score": 0.6,
             "max_matches_per_request": 10,
@@ -563,11 +544,9 @@ class BusinessLogicIntegrationDemo:
 
 # Fonction d'exemple d'utilisation
 async def demo_complete_business_workflow():
-    """
-    Fonction de démonstration du workflow business complet.
+    """    Fonction de démonstration du workflow business complet.
     Cette fonction montre comment utiliser tous les gestionnaires ensemble.
-    """
-    # Note: En production, ces connexions seraient configurées via DI
+    """    # Note: En production, ces connexions seraient configurées via DI
     db_pool = None  # await asyncpg.create_pool(...)
     redis_client = None  # await aioredis.create_redis_pool(...)
     

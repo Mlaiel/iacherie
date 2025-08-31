@@ -1,5 +1,4 @@
-"""
-Stealth Scraper - IA-Influencer-Agent
+"""Stealth Scraper - IA-Influencer-Agent
 =====================================
 
 Advanced anti-detection scraping with stealth techniques.
@@ -12,7 +11,6 @@ Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 UNAUTHORIZED USE, COPYING, OR DISTRIBUTION IS STRICTLY PROHIBITED AND WILL RESULT IN IMMEDIATE LEGAL ACTION.
 This technology is EXCLUSIVE property of Fahed Mlaiel. Contact: mlaiel@live.de for licensing.
 """
-
 import asyncio
 import random
 import time
@@ -36,8 +34,7 @@ import hashlib
 
 @dataclass
 class StealthConfig:
-    """Stealth scraping configuration."""
-    use_proxies: bool = True
+    """Stealth scraping configuration."""    use_proxies: bool = True
     rotate_user_agents: bool = True
     randomize_headers: bool = True
     add_noise_delay: bool = True
@@ -53,16 +50,14 @@ class StealthConfig:
 
 @dataclass
 class ProxyConfig:
-    """Proxy configuration."""
-    host: str
+    """Proxy configuration."""    host: str
     port: int
     username: Optional[str] = None
     password: Optional[str] = None
     protocol: str = 'http'  # http, https, socks4, socks5
 
 class StealthScraper:
-    """
-    Advanced stealth web scraper with anti-detection capabilities.
+    """    Advanced stealth web scraper with anti-detection capabilities.
     
     Features:
     - Proxy rotation
@@ -73,8 +68,7 @@ class StealthScraper:
     - CAPTCHA detection
     - Session management
     - Request timing randomization
-    """
-    
+    """    
     def __init__(self, config: Optional[StealthConfig] = None):
         self.config = config or StealthConfig()
         self.logger = logging.getLogger(__name__)
@@ -88,17 +82,14 @@ class StealthScraper:
         self.fingerprint_cache = {}
         
     async def __aenter__(self):
-        """Async context manager entry."""
-        await self._initialize_session()
+        """Async context manager entry."""        await self._initialize_session()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        await self._cleanup()
+        """Async context manager exit."""        await self._cleanup()
         
     async def _initialize_session(self):
-        """Initialize stealth session."""
-        if self.config.use_proxies:
+        """Initialize stealth session."""        if self.config.use_proxies:
             await self._load_proxy_pool()
             
         connector = aiohttp.TCPConnector(
@@ -117,16 +108,14 @@ class StealthScraper:
         )
         
     async def _cleanup(self):
-        """Cleanup resources."""
-        if self.session:
+        """Cleanup resources."""        if self.session:
             await self.session.close()
             
         if self.driver:
             self.driver.quit()
             
     async def _load_proxy_pool(self):
-        """Load and validate proxy pool."""
-        # In production, load from secure proxy service
+        """Load and validate proxy pool."""        # In production, load from secure proxy service
         # For now, using placeholder
         sample_proxies = [
             ProxyConfig('proxy1.example.com', 8080),
@@ -144,8 +133,7 @@ class StealthScraper:
         self.logger.info(f"Loaded {len(self.proxy_pool)} valid proxies")
         
     async def _validate_proxy(self, proxy: ProxyConfig) -> bool:
-        """Validate proxy connectivity."""
-        try:
+        """Validate proxy connectivity."""        try:
             proxy_url = f"{proxy.protocol}://"
             if proxy.username and proxy.password:
                 proxy_url += f"{proxy.username}:{proxy.password}@"
@@ -169,8 +157,7 @@ class StealthScraper:
             return False
             
     def _get_random_proxy(self) -> Optional[ProxyConfig]:
-        """Get random proxy from pool."""
-        if not self.proxy_pool:
+        """Get random proxy from pool."""        if not self.proxy_pool:
             return None
             
         # Rotate through proxies
@@ -179,8 +166,7 @@ class StealthScraper:
         return proxy
         
     def _generate_stealth_headers(self) -> Dict[str, str]:
-        """Generate randomized stealth headers."""
-        headers = {
+        """Generate randomized stealth headers."""        headers = {
             'Accept': random.choice([
                 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8',
                 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
@@ -218,8 +204,7 @@ class StealthScraper:
         return headers
         
     def _get_random_user_agent(self) -> str:
-        """Get randomized user agent."""
-        try:
+        """Get randomized user agent."""        try:
             return self.user_agent.random
         except:
             # Fallback user agents
@@ -233,14 +218,12 @@ class StealthScraper:
             return random.choice(fallback_agents)
             
     async def _add_behavioral_delay(self):
-        """Add human-like behavioral delay."""
-        if self.config.add_noise_delay:
+        """Add human-like behavioral delay."""        if self.config.add_noise_delay:
             delay = random.uniform(self.config.min_delay, self.config.max_delay)
             await asyncio.sleep(delay)
             
     async def _check_session_rotation(self):
-        """Check if session should be rotated."""
-        self.request_count += 1
+        """Check if session should be rotated."""        self.request_count += 1
         
         if (self.request_count >= self.config.session_rotation_interval or
             datetime.now() - self.session_start_time > timedelta(hours=1)):
@@ -248,8 +231,7 @@ class StealthScraper:
             await self._rotate_session()
             
     async def _rotate_session(self):
-        """Rotate session to avoid detection."""
-        self.logger.info("Rotating session for stealth")
+        """Rotate session to avoid detection."""        self.logger.info("Rotating session for stealth")
         
         if self.session:
             await self.session.close()
@@ -261,8 +243,7 @@ class StealthScraper:
         self.session_start_time = datetime.now()
         
     async def stealth_get(self, url: str, **kwargs) -> aiohttp.ClientResponse:
-        """Perform stealth GET request."""
-        await self._check_session_rotation()
+        """Perform stealth GET request."""        await self._check_session_rotation()
         await self._add_behavioral_delay()
         
         headers = self._generate_stealth_headers()
@@ -283,8 +264,7 @@ class StealthScraper:
         return await self.session.get(url, **kwargs)
         
     def _create_stealth_driver(self) -> webdriver.Chrome:
-        """Create stealth Selenium driver."""
-        options = uc.ChromeOptions()
+        """Create stealth Selenium driver."""        options = uc.ChromeOptions()
         
         if self.config.headless:
             options.add_argument('--headless')
@@ -330,8 +310,7 @@ class StealthScraper:
         
     async def stealth_selenium_get(self, url: str, wait_for_element: Optional[str] = None,
                                  wait_timeout: int = 10) -> str:
-        """Get page content using stealth Selenium."""
-        if not self.driver:
+        """Get page content using stealth Selenium."""        if not self.driver:
             self.driver = self._create_stealth_driver()
             
         try:
@@ -362,8 +341,7 @@ class StealthScraper:
             raise
             
     async def _simulate_human_behavior(self):
-        """Simulate human browsing behavior."""
-        if not self.driver:
+        """Simulate human browsing behavior."""        if not self.driver:
             return
             
         # Random scroll
@@ -375,8 +353,7 @@ class StealthScraper:
             
         # Random mouse movement simulation
         if random.random() > 0.8:
-            self.driver.execute_script("""
-                var event = new MouseEvent('mousemove', {
+            self.driver.execute_script("""                var event = new MouseEvent('mousemove', {
                     'view': window,
                     'bubbles': true,
                     'cancelable': true,
@@ -387,8 +364,7 @@ class StealthScraper:
             """)
             
     def detect_captcha(self, html: str) -> bool:
-        """Detect CAPTCHA presence in HTML."""
-        captcha_indicators = [
+        """Detect CAPTCHA presence in HTML."""        captcha_indicators = [
             'captcha', 'recaptcha', 'hcaptcha', 'cloudflare',
             'verify you are human', 'robot', 'automation',
             'security check', 'blocked', 'access denied'
@@ -398,8 +374,7 @@ class StealthScraper:
         return any(indicator in html_lower for indicator in captcha_indicators)
         
     def detect_bot_detection(self, html: str, status_code: int) -> bool:
-        """Detect bot detection mechanisms."""
-        if status_code in [403, 429, 503]:
+        """Detect bot detection mechanisms."""        if status_code in [403, 429, 503]:
             return True
             
         bot_detection_indicators = [
@@ -412,8 +387,7 @@ class StealthScraper:
         return any(indicator in html_lower for indicator in bot_detection_indicators)
         
     async def handle_challenge(self, url: str, html: str) -> Optional[str]:
-        """Handle anti-bot challenges."""
-        self.logger.warning(f"Challenge detected for {url}")
+        """Handle anti-bot challenges."""        self.logger.warning(f"Challenge detected for {url}")
         
         if self.detect_captcha(html):
             self.logger.warning("CAPTCHA detected - manual intervention required")
@@ -438,20 +412,17 @@ class StealthScraper:
         return None
         
     async def _retry_with_new_session(self, url: str) -> Optional[str]:
-        """Retry with new session."""
-        await self._rotate_session()
+        """Retry with new session."""        await self._rotate_session()
         await asyncio.sleep(random.uniform(5, 10))
         
         async with await self.stealth_get(url) as response:
             return await response.text()
             
     async def _retry_with_selenium(self, url: str) -> Optional[str]:
-        """Retry with Selenium."""
-        return await self.stealth_selenium_get(url)
+        """Retry with Selenium."""        return await self.stealth_selenium_get(url)
         
     async def _retry_with_different_proxy(self, url: str) -> Optional[str]:
-        """Retry with different proxy."""
-        if self.proxy_pool and len(self.proxy_pool) > 1:
+        """Retry with different proxy."""        if self.proxy_pool and len(self.proxy_pool) > 1:
             # Force proxy rotation
             self.current_proxy_index = (self.current_proxy_index + 1) % len(self.proxy_pool)
             
@@ -461,8 +432,7 @@ class StealthScraper:
         return None
         
     def generate_session_fingerprint(self) -> str:
-        """Generate unique session fingerprint."""
-        components = [
+        """Generate unique session fingerprint."""        components = [
             self._get_random_user_agent(),
             str(random.randint(1200, 1920)),  # screen width
             str(random.randint(800, 1080)),   # screen height
@@ -475,8 +445,7 @@ class StealthScraper:
         return hashlib.md5(fingerprint_string.encode()).hexdigest()
         
     async def stealth_scrape(self, url: str, use_selenium: Optional[bool] = None) -> Optional[str]:
-        """Main stealth scraping method."""
-        use_sel = use_selenium if use_selenium is not None else self.config.use_selenium
+        """Main stealth scraping method."""        use_sel = use_selenium if use_selenium is not None else self.config.use_selenium
         
         try:
             if use_sel:
@@ -495,8 +464,7 @@ class StealthScraper:
             return None
             
     def get_stealth_stats(self) -> Dict[str, Any]:
-        """Get stealth scraping statistics."""
-        return {
+        """Get stealth scraping statistics."""        return {
             'request_count': self.request_count,
             'session_age': (datetime.now() - self.session_start_time).total_seconds(),
             'proxy_pool_size': len(self.proxy_pool),

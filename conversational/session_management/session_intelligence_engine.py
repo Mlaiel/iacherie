@@ -1,5 +1,4 @@
-"""
-Session Intelligence Engine - IA Influencer Agent
+"""Session Intelligence Engine - IA Influencer Agent
 
 Enterprise-grade session intelligence with ML-powered conversation prediction,
 session optimization algorithms, user engagement forecasting, and intelligent
@@ -25,7 +24,6 @@ Team Specialists:
 - DevOps: ML Model Deployment & Scaling
 - IA Prompt Engineer: Conversational Intelligence Optimization
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -70,8 +68,7 @@ logger = get_logger(__name__)
 
 
 class PredictionType(Enum):
-    """Types of session predictions"""
-    ENGAGEMENT_LEVEL = "engagement_level"
+    """Types of session predictions"""    ENGAGEMENT_LEVEL = "engagement_level"
     SESSION_DURATION = "session_duration"
     CONVERSION_PROBABILITY = "conversion_probability"
     CHURN_RISK = "churn_risk"
@@ -82,8 +79,7 @@ class PredictionType(Enum):
 
 
 class OptimizationType(Enum):
-    """Types of session optimizations"""
-    RESPONSE_TIME = "response_time"
+    """Types of session optimizations"""    RESPONSE_TIME = "response_time"
     USER_SATISFACTION = "user_satisfaction"
     ENGAGEMENT_RATE = "engagement_rate"
     CONVERSION_RATE = "conversion_rate"
@@ -94,8 +90,7 @@ class OptimizationType(Enum):
 
 
 class SessionFeatures(BaseModel):
-    """Session feature representation for ML models"""
-    session_id: str
+    """Session feature representation for ML models"""    session_id: str
     user_id: str
     
     # Temporal features
@@ -142,8 +137,7 @@ class SessionFeatures(BaseModel):
 
 
 class PredictionResult(BaseModel):
-    """ML prediction result"""
-    prediction_id: str = Field(default_factory=lambda: str(uuid4()))
+    """ML prediction result"""    prediction_id: str = Field(default_factory=lambda: str(uuid4()))
     session_id: str
     prediction_type: PredictionType
     predicted_value: Union[float, int, str, bool]
@@ -161,8 +155,7 @@ class PredictionResult(BaseModel):
 
 
 class OptimizationRecommendation(BaseModel):
-    """Session optimization recommendation"""
-    recommendation_id: str = Field(default_factory=lambda: str(uuid4()))
+    """Session optimization recommendation"""    recommendation_id: str = Field(default_factory=lambda: str(uuid4()))
     session_id: str
     optimization_type: OptimizationType
     recommendation: str
@@ -183,8 +176,7 @@ class OptimizationRecommendation(BaseModel):
 
 @dataclass
 class IntelligenceConfig:
-    """Session intelligence configuration"""
-    enable_real_time_prediction: bool = True
+    """Session intelligence configuration"""    enable_real_time_prediction: bool = True
     enable_batch_prediction: bool = True
     model_update_frequency: int = 3600  # seconds
     feature_cache_ttl: int = 1800  # seconds
@@ -197,8 +189,7 @@ class IntelligenceConfig:
 
 
 class ConversationPredictionModel:
-    """ML model for conversation outcome prediction"""
-    
+    """ML model for conversation outcome prediction"""    
     def __init__(self, config: IntelligenceConfig):
         self.config = config
         self.model_manager = MLModelManager()
@@ -219,8 +210,7 @@ class ConversationPredictionModel:
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize ML models for different prediction types"""
-        
+        """Initialize ML models for different prediction types"""        
         try:
             # Engagement prediction model
             self.models["engagement"] = GradientBoostingRegressor(
@@ -274,8 +264,7 @@ class ConversationPredictionModel:
             self.logger.error(f"Failed to initialize ML models: {str(e)}")
     
     async def extract_session_features(self, session_id: str) -> Optional[SessionFeatures]:
-        """Extract features from session data for ML prediction"""
-        
+        """Extract features from session data for ML prediction"""        
         try:
             # Get session data
             async with get_async_session() as session:
@@ -387,8 +376,7 @@ class ConversationPredictionModel:
         positive_feedback: int,
         negative_feedback: int
     ) -> float:
-        """Calculate engagement score based on session metrics"""
-        
+        """Calculate engagement score based on session metrics"""        
         try:
             # Normalize components
             duration_score = min(session_duration / 60, 1.0)  # Normalize to 0-1 over 60 minutes
@@ -413,8 +401,7 @@ class ConversationPredictionModel:
             return 0.5  # Default neutral score
     
     def _features_to_array(self, features: SessionFeatures) -> np.ndarray:
-        """Convert features to numpy array for ML models"""
-        
+        """Convert features to numpy array for ML models"""        
         try:
             # Numeric features
             numeric_features = [
@@ -467,8 +454,7 @@ class ConversationPredictionModel:
             return np.array([]).reshape(1, -1)
     
     async def predict_engagement(self, features: SessionFeatures) -> PredictionResult:
-        """Predict user engagement level"""
-        
+        """Predict user engagement level"""        
         try:
             feature_array = self._features_to_array(features)
             
@@ -521,8 +507,7 @@ class ConversationPredictionModel:
             )
     
     async def predict_session_duration(self, features: SessionFeatures) -> PredictionResult:
-        """Predict remaining session duration"""
-        
+        """Predict remaining session duration"""        
         try:
             feature_array = self._features_to_array(features)
             
@@ -577,8 +562,7 @@ class ConversationPredictionModel:
             )
     
     async def predict_conversion_probability(self, features: SessionFeatures) -> PredictionResult:
-        """Predict conversion probability (upgrade, purchase, etc.)"""
-        
+        """Predict conversion probability (upgrade, purchase, etc.)"""        
         try:
             feature_array = self._features_to_array(features)
             
@@ -624,8 +608,7 @@ class ConversationPredictionModel:
             )
     
     def _calculate_heuristic_conversion_probability(self, features: SessionFeatures) -> float:
-        """Calculate conversion probability using heuristics"""
-        
+        """Calculate conversion probability using heuristics"""        
         try:
             # Base probability
             base_prob = 0.05
@@ -650,8 +633,7 @@ class ConversationPredictionModel:
             return 0.05  # Default low probability
     
     async def train_model(self, model_type: str, training_data: List[Dict[str, Any]]) -> bool:
-        """Train or retrain a specific model"""
-        
+        """Train or retrain a specific model"""        
         try:
             if model_type not in self.models:
                 self.logger.error(f"Unknown model type: {model_type}")
@@ -691,8 +673,7 @@ class ConversationPredictionModel:
             return False
     
     def _prepare_training_data(self, training_data: List[Dict[str, Any]], model_type: str) -> Tuple[np.ndarray, np.ndarray]:
-        """Prepare training data for ML models"""
-        
+        """Prepare training data for ML models"""        
         try:
             X = []
             y = []
@@ -714,8 +695,7 @@ class ConversationPredictionModel:
             return np.array([]), np.array([])
     
     def _evaluate_model(self, model: Any, X: np.ndarray, y: np.ndarray, model_type: str) -> float:
-        """Evaluate model performance"""
-        
+        """Evaluate model performance"""        
         try:
             if model_type == "conversion":  # Classification
                 predictions = model.predict(X)
@@ -731,8 +711,7 @@ class ConversationPredictionModel:
             return 0.0
     
     async def _save_model(self, model_type: str, model: Any, scaler: StandardScaler):
-        """Save trained model and scaler"""
-        
+        """Save trained model and scaler"""        
         try:
             model_data = {
                 "model": pickle.dumps(model),
@@ -755,8 +734,7 @@ class ConversationPredictionModel:
 
 
 class SessionOptimizationAlgorithm:
-    """Algorithms for session optimization recommendations"""
-    
+    """Algorithms for session optimization recommendations"""    
     def __init__(self, config: IntelligenceConfig):
         self.config = config
         self.prediction_model = ConversationPredictionModel(config)
@@ -767,8 +745,7 @@ class SessionOptimizationAlgorithm:
         session_id: str,
         features: SessionFeatures
     ) -> List[OptimizationRecommendation]:
-        """Generate comprehensive optimization recommendations"""
-        
+        """Generate comprehensive optimization recommendations"""        
         try:
             recommendations = []
             
@@ -808,8 +785,7 @@ class SessionOptimizationAlgorithm:
         features: SessionFeatures,
         engagement_pred: PredictionResult
     ) -> List[OptimizationRecommendation]:
-        """Generate engagement optimization recommendations"""
-        
+        """Generate engagement optimization recommendations"""        
         recommendations = []
         
         try:
@@ -867,8 +843,7 @@ class SessionOptimizationAlgorithm:
         session_id: str,
         features: SessionFeatures
     ) -> List[OptimizationRecommendation]:
-        """Generate response time optimization recommendations"""
-        
+        """Generate response time optimization recommendations"""        
         recommendations = []
         
         try:
@@ -908,8 +883,7 @@ class SessionOptimizationAlgorithm:
         features: SessionFeatures,
         conversion_pred: PredictionResult
     ) -> List[OptimizationRecommendation]:
-        """Generate conversion optimization recommendations"""
-        
+        """Generate conversion optimization recommendations"""        
         recommendations = []
         
         try:
@@ -951,8 +925,7 @@ class SessionOptimizationAlgorithm:
         session_id: str,
         features: SessionFeatures
     ) -> List[OptimizationRecommendation]:
-        """Generate content strategy optimization recommendations"""
-        
+        """Generate content strategy optimization recommendations"""        
         recommendations = []
         
         try:
@@ -1001,8 +974,7 @@ class SessionOptimizationAlgorithm:
 
 
 class UserEngagementPredictor:
-    """Specialized predictor for user engagement patterns"""
-    
+    """Specialized predictor for user engagement patterns"""    
     def __init__(self, config: IntelligenceConfig):
         self.config = config
         self.logger = get_logger(self.__class__.__name__)
@@ -1013,8 +985,7 @@ class UserEngagementPredictor:
         self.user_profiles: Dict[str, Dict[str, Any]] = {}
     
     async def analyze_engagement_patterns(self, user_id: str, historical_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze user engagement patterns over time"""
-        
+        """Analyze user engagement patterns over time"""        
         try:
             if len(historical_data) < 3:
                 return {"pattern": "insufficient_data", "confidence": 0.0}
@@ -1062,8 +1033,7 @@ class UserEngagementPredictor:
             return {"pattern": "analysis_error", "confidence": 0.0}
     
     def _calculate_engagement_trend(self, engagement_scores: List[float]) -> str:
-        """Calculate overall engagement trend"""
-        
+        """Calculate overall engagement trend"""        
         try:
             if len(engagement_scores) < 2:
                 return "stable"
@@ -1083,8 +1053,7 @@ class UserEngagementPredictor:
             return "stable"
     
     def _detect_engagement_patterns(self, engagement_scores: List[float], timestamps: List[datetime]) -> Dict[str, Any]:
-        """Detect engagement patterns in user behavior"""
-        
+        """Detect engagement patterns in user behavior"""        
         try:
             if len(engagement_scores) < 3:
                 return {"pattern": "insufficient_data", "confidence": 0.0}
@@ -1119,8 +1088,7 @@ class UserEngagementPredictor:
             return {"pattern": "unknown", "confidence": 0.0}
     
     def _predict_future_engagement(self, engagement_scores: List[float]) -> float:
-        """Predict future engagement based on historical data"""
-        
+        """Predict future engagement based on historical data"""        
         try:
             if len(engagement_scores) < 2:
                 return 0.5  # Neutral prediction
@@ -1144,8 +1112,7 @@ class UserEngagementPredictor:
             return 0.5
     
     async def get_engagement_recommendations(self, user_id: str) -> List[str]:
-        """Get personalized engagement recommendations"""
-        
+        """Get personalized engagement recommendations"""        
         try:
             if user_id not in self.user_profiles:
                 return ["Insufficient data for personalized recommendations"]
@@ -1187,8 +1154,7 @@ class UserEngagementPredictor:
 
 
 class SessionIntelligenceEngine:
-    """Main session intelligence engine coordinating all ML components"""
-    
+    """Main session intelligence engine coordinating all ML components"""    
     def __init__(self, config: Optional[IntelligenceConfig] = None):
         self.config = config or IntelligenceConfig()
         self.prediction_model = ConversationPredictionModel(self.config)
@@ -1206,8 +1172,7 @@ class SessionIntelligenceEngine:
         self.background_tasks: List[asyncio.Task] = []
     
     async def initialize(self):
-        """Initialize the intelligence engine"""
-        
+        """Initialize the intelligence engine"""        
         # Start background tasks
         if self.config.enable_batch_prediction:
             task = asyncio.create_task(self._batch_prediction_loop())
@@ -1220,8 +1185,7 @@ class SessionIntelligenceEngine:
         self.logger.info("Session intelligence engine initialized")
     
     async def shutdown(self):
-        """Shutdown the intelligence engine"""
-        
+        """Shutdown the intelligence engine"""        
         # Cancel background tasks
         for task in self.background_tasks:
             task.cancel()
@@ -1233,8 +1197,7 @@ class SessionIntelligenceEngine:
         self.logger.info("Session intelligence engine shutdown")
     
     async def analyze_session(self, session_id: str) -> Dict[str, Any]:
-        """Comprehensive session analysis with ML predictions"""
-        
+        """Comprehensive session analysis with ML predictions"""        
         try:
             # Extract features
             features = await self.prediction_model.extract_session_features(session_id)
@@ -1282,8 +1245,7 @@ class SessionIntelligenceEngine:
             return {"error": str(e)}
     
     async def predict_user_behavior(self, user_id: str, prediction_type: PredictionType) -> Optional[PredictionResult]:
-        """Predict specific user behavior"""
-        
+        """Predict specific user behavior"""        
         try:
             # Get user's current session or most recent session
             async with get_async_session() as session:
@@ -1325,8 +1287,7 @@ class SessionIntelligenceEngine:
             return None
     
     async def optimize_session(self, session_id: str, optimization_type: OptimizationType) -> List[OptimizationRecommendation]:
-        """Generate specific optimization recommendations"""
-        
+        """Generate specific optimization recommendations"""        
         try:
             features = self.feature_cache.get(session_id)
             if not features:
@@ -1354,8 +1315,7 @@ class SessionIntelligenceEngine:
             return []
     
     async def analyze_user_engagement(self, user_id: str) -> Dict[str, Any]:
-        """Comprehensive user engagement analysis"""
-        
+        """Comprehensive user engagement analysis"""        
         try:
             # Get user's historical session data
             async with get_async_session() as session:
@@ -1397,8 +1357,7 @@ class SessionIntelligenceEngine:
             return {"error": str(e)}
     
     async def _cache_analysis_result(self, session_id: str, analysis_result: Dict[str, Any]):
-        """Cache analysis result"""
-        
+        """Cache analysis result"""        
         try:
             cache_key = f"session_analysis:{session_id}"
             await self.cache_manager.set(
@@ -1411,8 +1370,7 @@ class SessionIntelligenceEngine:
             self.logger.error(f"Analysis result caching failed: {str(e)}")
     
     async def _batch_prediction_loop(self):
-        """Background batch prediction processing"""
-        
+        """Background batch prediction processing"""        
         try:
             while True:
                 await asyncio.sleep(300)  # Run every 5 minutes
@@ -1434,8 +1392,7 @@ class SessionIntelligenceEngine:
             self.logger.error(f"Batch prediction loop error: {str(e)}")
     
     async def _model_update_loop(self):
-        """Background model update and retraining"""
-        
+        """Background model update and retraining"""        
         try:
             while True:
                 await asyncio.sleep(self.config.model_update_frequency)
@@ -1453,8 +1410,7 @@ class SessionIntelligenceEngine:
             self.logger.error(f"Model update loop error: {str(e)}")
     
     async def get_intelligence_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive intelligence engine statistics"""
-        
+        """Get comprehensive intelligence engine statistics"""        
         try:
             return {
                 "cached_features": len(self.feature_cache),

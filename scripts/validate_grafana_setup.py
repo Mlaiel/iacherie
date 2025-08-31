@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""
-Grafana Setup Validation and Dashboard Deployment Script
+"""Grafana Setup Validation and Dashboard Deployment Script
 
 This script validates that the Grafana setup is complete and properly configured
 for the Ainflue platform dashboards and visualization requirements.
 """
-
 import json
 import os
 import sys
@@ -25,16 +23,14 @@ class DashboardInfo:
     tags: List[str]
 
 class GrafanaSetupValidator:
-    """Validates and manages Grafana setup for Ainflue platform"""
-    
+    """Validates and manages Grafana setup for Ainflue platform"""    
     def __init__(self, project_root: str = "/home/runner/work/Ainflue/Ainflue"):
         self.project_root = Path(project_root)
         self.grafana_dir = self.project_root / "monitoring" / "grafana"
         self.provisioning_dir = self.grafana_dir / "provisioning"
         
     def validate_setup(self) -> Dict[str, Any]:
-        """Validate the complete Grafana setup"""
-        results = {
+        """Validate the complete Grafana setup"""        results = {
             "overall_status": "PASS",
             "checks": {},
             "dashboards": {},
@@ -68,8 +64,7 @@ class GrafanaSetupValidator:
         return results
     
     def _check_docker_compose(self) -> Dict[str, Any]:
-        """Check Docker Compose monitoring configuration"""
-        compose_file = self.project_root / "docker-compose.monitoring.yml"
+        """Check Docker Compose monitoring configuration"""        compose_file = self.project_root / "docker-compose.monitoring.yml"
         
         if not compose_file.exists():
             return {
@@ -110,8 +105,7 @@ class GrafanaSetupValidator:
             }
     
     def _check_dashboard_files(self) -> Dict[str, Any]:
-        """Check dashboard JSON files"""
-        if not self.grafana_dir.exists():
+        """Check dashboard JSON files"""        if not self.grafana_dir.exists():
             return {
                 "status": False,
                 "message": "Grafana directory not found",
@@ -130,8 +124,7 @@ class GrafanaSetupValidator:
         }
     
     def _check_provisioning_config(self) -> Dict[str, Any]:
-        """Check Grafana provisioning configuration"""
-        if not self.provisioning_dir.exists():
+        """Check Grafana provisioning configuration"""        if not self.provisioning_dir.exists():
             return {
                 "status": False,
                 "message": "Provisioning directory not found",
@@ -156,8 +149,7 @@ class GrafanaSetupValidator:
         }
     
     def _validate_dashboards(self) -> Dict[str, DashboardInfo]:
-        """Validate individual dashboard files"""
-        dashboards = {}
+        """Validate individual dashboard files"""        dashboards = {}
         
         for dashboard_file in self.grafana_dir.glob("*.json"):
             try:
@@ -194,8 +186,7 @@ class GrafanaSetupValidator:
         return dashboards
     
     def _check_requirements_mapping(self) -> Dict[str, Any]:
-        """Check if all required dashboards are covered"""
-        required_dashboards = {
+        """Check if all required dashboards are covered"""        required_dashboards = {
             "Business overview dashboard": ["business_metrics", "business"],
             "Technical performance dashboard": ["platform_performance", "system_health", "performance"],
             "Security monitoring dashboard": ["security_monitoring", "security"],
@@ -234,8 +225,7 @@ class GrafanaSetupValidator:
         }
     
     def _generate_recommendations(self, results: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on validation results"""
-        recommendations = []
+        """Generate recommendations based on validation results"""        recommendations = []
         
         # Check for missing provisioning
         if not results["checks"]["provisioning"]["status"]:
@@ -270,8 +260,7 @@ class GrafanaSetupValidator:
         return recommendations
     
     def print_results(self, results: Dict[str, Any]) -> None:
-        """Print validation results in a readable format"""
-        print("=" * 60)
+        """Print validation results in a readable format"""        print("=" * 60)
         print("GRAFANA SETUP VALIDATION REPORT")
         print("=" * 60)
         print(f"Overall Status: {results['overall_status']}")
@@ -303,8 +292,7 @@ class GrafanaSetupValidator:
         print("=" * 60)
 
 def main():
-    """Main validation function"""
-    validator = GrafanaSetupValidator()
+    """Main validation function"""    validator = GrafanaSetupValidator()
     results = validator.validate_setup()
     validator.print_results(results)
     

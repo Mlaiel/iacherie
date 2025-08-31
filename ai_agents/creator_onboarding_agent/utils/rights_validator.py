@@ -1,12 +1,10 @@
-"""
-Rights Validator - Advanced Content Rights and Protection System
+"""Rights Validator - Advanced Content Rights and Protection System
 
 Enterprise-grade rights validation, copyright analysis, and protection setup
 for creator content with AI-powered similarity detection.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 import hashlib
@@ -48,24 +46,21 @@ from ...integrations.copyright_apis import CopyrightAPIClient
 logger = logging.getLogger(__name__)
 
 class RightsStatus(Enum):
-    """Content rights validation status"""
-    VERIFIED = "verified"
+    """Content rights validation status"""    VERIFIED = "verified"
     PENDING = "pending"
     DISPUTED = "disputed"
     REJECTED = "rejected"
     UNKNOWN = "unknown"
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    BASIC = "basic"           # Standard fingerprinting
+    """Content protection levels"""    BASIC = "basic"           # Standard fingerprinting
     STANDARD = "standard"     # Enhanced monitoring
     PREMIUM = "premium"       # Advanced AI protection
     ENTERPRISE = "enterprise" # Full legal protection
 
 @dataclass
 class RightsValidationResult:
-    """Comprehensive rights validation results"""
-    content_id: str
+    """Comprehensive rights validation results"""    content_id: str
     user_id: str
     validation_status: RightsStatus = RightsStatus.UNKNOWN
     
@@ -98,8 +93,7 @@ class RightsValidationResult:
     validation_notes: List[str] = field(default_factory=list)
 
 class RightsValidator:
-    """
-    Advanced rights validation and content protection system.
+    """    Advanced rights validation and content protection system.
     
     Core Capabilities:
     - Multi-format content fingerprinting
@@ -109,8 +103,7 @@ class RightsValidator:
     - DMCA compliance and monitoring
     - Automated protection setup
     - Legal evidence collection
-    """
-    
+    """    
     def __init__(self):
         self.audio_fingerprinter = AudioFingerprinter()
         self.image_fingerprinter = ImageFingerprinter()
@@ -128,8 +121,7 @@ class RightsValidator:
         logger.info("RightsValidator initialized successfully")
     
     def _initialize_similarity_index(self):
-        """Initialize FAISS similarity index for fingerprint matching."""
-        try:
+        """Initialize FAISS similarity index for fingerprint matching."""        try:
             # Create FAISS index for similarity search
             dimension = 256  # Standard fingerprint dimension
             self.fingerprint_index = faiss.IndexFlatL2(dimension)
@@ -140,10 +132,8 @@ class RightsValidator:
     async def validate_rights(self, content: Dict[str, Any], 
                             user_id: str,
                             validation_level: str = "standard") -> RightsValidationResult:
-        """
-        Comprehensive content rights validation with similarity analysis.
-        """
-        try:
+        """        Comprehensive content rights validation with similarity analysis.
+        """        try:
             content_id = content.get('id', str(uuid.uuid4()))
             
             # Initialize validation result
@@ -184,10 +174,8 @@ class RightsValidator:
     async def setup_protection(self, user_id: str, 
                              content_samples: List[Dict[str, Any]],
                              protection_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Setup comprehensive content protection for creator.
-        """
-        try:
+        """        Setup comprehensive content protection for creator.
+        """        try:
             protection_level = ProtectionLevel(
                 protection_config.get('level', 'standard')
             )
@@ -241,10 +229,8 @@ class RightsValidator:
     
     async def setup_monitoring(self, user_id: str, 
                              protection_results: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Setup automated content monitoring and alert system.
-        """
-        try:
+        """        Setup automated content monitoring and alert system.
+        """        try:
             monitoring_config = {
                 'user_id': user_id,
                 'monitoring_active': True,
@@ -292,8 +278,7 @@ class RightsValidator:
             raise RightsValidationError(f"Monitoring setup failed: {str(e)}")
     
     async def _generate_fingerprint(self, content: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Generate content fingerprint based on content type."""
-        try:
+        """Generate content fingerprint based on content type."""        try:
             content_type = content.get('type', '').lower()
             content_data = content.get('data') or content.get('content')
             
@@ -330,8 +315,7 @@ class RightsValidator:
     
     async def _perform_similarity_analysis(self, result: RightsValidationResult, 
                                          fingerprint: Optional[Dict[str, Any]]) -> None:
-        """Perform similarity analysis against existing fingerprints."""
-        try:
+        """Perform similarity analysis against existing fingerprints."""        try:
             if not fingerprint or not self.fingerprint_index:
                 return
             
@@ -384,8 +368,7 @@ class RightsValidator:
     
     async def _check_copyright_databases(self, result: RightsValidationResult, 
                                        content: Dict[str, Any]) -> None:
-        """Check content against copyright databases."""
-        try:
+        """Check content against copyright databases."""        try:
             # Check major copyright databases
             databases_to_check = [
                 'us_copyright_office',
@@ -424,8 +407,7 @@ class RightsValidator:
     
     async def _verify_ownership(self, result: RightsValidationResult, 
                               content: Dict[str, Any], user_id: str) -> None:
-        """Verify user ownership of content."""
-        try:
+        """Verify user ownership of content."""        try:
             ownership_evidence = []
             ownership_score = 0.0
             
@@ -487,8 +469,7 @@ class RightsValidator:
     async def _setup_content_protection(self, content: Dict[str, Any], 
                                       user_id: str, 
                                       protection_level: ProtectionLevel) -> Dict[str, Any]:
-        """Setup protection for individual content item."""
-        try:
+        """Setup protection for individual content item."""        try:
             content_id = content.get('id', str(uuid.uuid4()))
             
             protection_result = {
@@ -538,8 +519,7 @@ class RightsValidator:
             return {'content_id': content.get('id', 'unknown'), 'error': str(e)}
     
     def _calculate_confidence_score(self, result: RightsValidationResult) -> float:
-        """Calculate overall confidence score for rights validation."""
-        factors = []
+        """Calculate overall confidence score for rights validation."""        factors = []
         
         # Ownership score weight: 40%
         factors.append(('ownership', result.ownership_score, 0.4))
@@ -565,8 +545,7 @@ class RightsValidator:
         return max(0.0, min(1.0, total_score))
     
     def _determine_validation_status(self, result: RightsValidationResult) -> RightsStatus:
-        """Determine final validation status based on analysis results."""
-        # High confidence and no conflicts
+        """Determine final validation status based on analysis results."""        # High confidence and no conflicts
         if result.confidence_score > 0.8 and not result.potential_conflicts:
             return RightsStatus.VERIFIED
         
@@ -587,8 +566,7 @@ class RightsValidator:
             return RightsStatus.UNKNOWN
     
     def _classify_match_type(self, similarity_score: float) -> str:
-        """Classify similarity match type."""
-        if similarity_score > 0.95:
+        """Classify similarity match type."""        if similarity_score > 0.95:
             return "exact_match"
         elif similarity_score > 0.85:
             return "near_duplicate"
@@ -600,8 +578,7 @@ class RightsValidator:
             return "low_similarity"
     
     def _fingerprint_to_vector(self, fingerprint_data: Any) -> Optional[np.ndarray]:
-        """Convert fingerprint data to vector for similarity search."""
-        try:
+        """Convert fingerprint data to vector for similarity search."""        try:
             # Convert fingerprint to fixed-size vector
             if isinstance(fingerprint_data, dict):
                 # Extract numeric features from fingerprint
@@ -632,11 +609,9 @@ class RightsValidator:
             return None
     
     async def _check_existing_ownership_claims(self, content_id: str, user_id: str) -> List[Dict[str, Any]]:
-        """Check for existing ownership claims on content."""
-        try:
+        """Check for existing ownership claims on content."""        try:
             async with get_db_session() as db:
-                result = await db.fetch("""
-                    SELECT claimant_id, claim_date, claim_type, status
+                result = await db.fetch("""                    SELECT claimant_id, claim_date, claim_type, status
                     FROM ownership_claims
                     WHERE content_id = $1 AND status = 'active'
                 """, content_id)
@@ -649,11 +624,9 @@ class RightsValidator:
     
     async def _store_fingerprint(self, content_id: str, user_id: str, 
                                fingerprint: Dict[str, Any]) -> None:
-        """Store fingerprint in database."""
-        try:
+        """Store fingerprint in database."""        try:
             async with get_db_session() as db:
-                await db.execute("""
-                    INSERT INTO content_fingerprints (
+                await db.execute("""                    INSERT INTO content_fingerprints (
                         content_id, user_id, fingerprint_hash,
                         fingerprint_data, content_type, created_at
                     ) VALUES ($1, $2, $3, $4, $5, $6)
@@ -672,11 +645,9 @@ class RightsValidator:
     
     async def _store_protection_config(self, user_id: str, 
                                      protection_results: Dict[str, Any]) -> None:
-        """Store protection configuration in database."""
-        try:
+        """Store protection configuration in database."""        try:
             async with get_db_session() as db:
-                await db.execute("""
-                    INSERT INTO protection_configurations (
+                await db.execute("""                    INSERT INTO protection_configurations (
                         user_id, protection_level, configuration_data,
                         created_at, active
                     ) VALUES ($1, $2, $3, $4, $5)
@@ -695,8 +666,7 @@ class RightsValidator:
     # Placeholder implementations for advanced features
     async def _register_blockchain_ownership(self, user_id: str, 
                                            content_samples: List[Dict[str, Any]]) -> bool:
-        """Register ownership on blockchain."""
-        try:
+        """Register ownership on blockchain."""        try:
             for content in content_samples:
                 await self.blockchain_registry.register_ownership(
                     content_id=content.get('id'),
@@ -710,29 +680,24 @@ class RightsValidator:
     
     async def _setup_legal_protection(self, user_id: str, 
                                     content_samples: List[Dict[str, Any]]) -> bool:
-        """Setup legal protection and documentation."""
-        # Placeholder - would integrate with legal services
+        """Setup legal protection and documentation."""        # Placeholder - would integrate with legal services
         return True
     
     async def _setup_monitoring_tasks(self, user_id: str, 
                                     monitoring_config: Dict[str, Any]) -> None:
-        """Schedule automated monitoring tasks."""
-        # Placeholder - would setup Celery tasks
+        """Schedule automated monitoring tasks."""        # Placeholder - would setup Celery tasks
         pass
     
     async def _setup_alert_system(self, user_id: str, 
                                 monitoring_config: Dict[str, Any]) -> None:
-        """Configure alert system."""
-        # Placeholder - would setup notification system
+        """Configure alert system."""        # Placeholder - would setup notification system
         pass
     
     async def _create_monitoring_entries(self, user_id: str, 
                                        monitoring_config: Dict[str, Any]) -> None:
-        """Create database entries for monitoring."""
-        try:
+        """Create database entries for monitoring."""        try:
             async with get_db_session() as db:
-                await db.execute("""
-                    INSERT INTO monitoring_configurations (
+                await db.execute("""                    INSERT INTO monitoring_configurations (
                         user_id, config_data, active, created_at
                     ) VALUES ($1, $2, $3, $4)
                     ON CONFLICT (user_id) DO UPDATE SET
@@ -745,6 +710,5 @@ class RightsValidator:
             logger.error(f"Error creating monitoring entries: {str(e)}")
     
     async def _apply_watermark(self, content: Dict[str, Any], user_id: str) -> bool:
-        """Apply digital watermark to content."""
-        # Placeholder - would implement watermarking
+        """Apply digital watermark to content."""        # Placeholder - would implement watermarking
         return True

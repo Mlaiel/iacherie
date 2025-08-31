@@ -1,5 +1,4 @@
-"""
-Database Provisioning System
+"""Database Provisioning System
 
 Provides comprehensive database management for PostgreSQL, Redis, MongoDB,
 Elasticsearch and Vector databases with high availability configurations.
@@ -9,7 +8,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 
 ⚠️  PROPRIETARY SOFTWARE - UNAUTHORIZED USE STRICTLY PROHIBITED ⚠️
 """
-
 import asyncio
 import logging
 import json
@@ -29,24 +27,21 @@ from kubernetes import client, config
 logger = logging.getLogger(__name__)
 
 class DatabaseType(Enum):
-    """Supported database types"""
-    POSTGRESQL = "postgresql"
+    """Supported database types"""    POSTGRESQL = "postgresql"
     REDIS = "redis"
     MONGODB = "mongodb"
     ELASTICSEARCH = "elasticsearch"
     VECTOR_DB = "vector_db"
 
 class DatabaseMode(Enum):
-    """Database deployment modes"""
-    STANDALONE = "standalone"
+    """Database deployment modes"""    STANDALONE = "standalone"
     REPLICA_SET = "replica_set"
     CLUSTER = "cluster"
     HIGH_AVAILABILITY = "high_availability"
 
 @dataclass
 class DatabaseSpec:
-    """Database specification"""
-    name: str
+    """Database specification"""    name: str
     db_type: DatabaseType
     mode: DatabaseMode = DatabaseMode.STANDALONE
     version: str = "latest"
@@ -59,8 +54,7 @@ class DatabaseSpec:
 
 @dataclass
 class DatabaseCredentials:
-    """Database credentials"""
-    username: str
+    """Database credentials"""    username: str
     password: str
     database: str
     host: str = "localhost"
@@ -68,39 +62,32 @@ class DatabaseCredentials:
     ssl_mode: str = "require"
 
 class DatabaseProvisionerInterface(ABC):
-    """Abstract interface for database provisioners"""
-    
+    """Abstract interface for database provisioners"""    
     @abstractmethod
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision database instance"""
-        pass
+        """Provision database instance"""        pass
     
     @abstractmethod
     async def configure_backup(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Configure database backup"""
-        pass
+        """Configure database backup"""        pass
     
     @abstractmethod
     async def setup_monitoring(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Setup database monitoring"""
-        pass
+        """Setup database monitoring"""        pass
     
     @abstractmethod
     async def scale_database(self, name: str, replicas: int) -> Dict[str, Any]:
-        """Scale database replicas"""
-        pass
+        """Scale database replicas"""        pass
 
 class PostgreSQLProvisioner(DatabaseProvisionerInterface):
-    """PostgreSQL database provisioner"""
-    
+    """PostgreSQL database provisioner"""    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
         
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision PostgreSQL database"""
-        try:
+        """Provision PostgreSQL database"""        try:
             if spec.mode == DatabaseMode.HIGH_AVAILABILITY:
                 return await self._provision_postgresql_ha(spec)
             else:
@@ -110,8 +97,7 @@ class PostgreSQLProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def _provision_postgresql_standalone(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision standalone PostgreSQL"""
-        try:
+        """Provision standalone PostgreSQL"""        try:
             # Create secret for credentials
             secret = client.V1Secret(
                 metadata=client.V1ObjectMeta(name=f"{spec.name}-secret"),
@@ -224,8 +210,7 @@ class PostgreSQLProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def _provision_postgresql_ha(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision PostgreSQL with high availability (Patroni + etcd)"""
-        try:
+        """Provision PostgreSQL with high availability (Patroni + etcd)"""        try:
             # Implementation for PostgreSQL HA cluster
             logger.info(f"Provisioning PostgreSQL HA cluster: {spec.name}")
             return {
@@ -239,8 +224,7 @@ class PostgreSQLProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def configure_backup(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Configure PostgreSQL backup using pg_dump"""
-        try:
+        """Configure PostgreSQL backup using pg_dump"""        try:
             # Create backup CronJob
             cronjob = client.V1CronJob(
                 metadata=client.V1ObjectMeta(
@@ -283,8 +267,7 @@ class PostgreSQLProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def setup_monitoring(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Setup PostgreSQL monitoring with postgres_exporter"""
-        try:
+        """Setup PostgreSQL monitoring with postgres_exporter"""        try:
             # Deploy postgres_exporter
             deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -327,8 +310,7 @@ class PostgreSQLProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def scale_database(self, name: str, replicas: int) -> Dict[str, Any]:
-        """Scale PostgreSQL read replicas"""
-        try:
+        """Scale PostgreSQL read replicas"""        try:
             logger.info(f"Scaling PostgreSQL {name} to {replicas} replicas")
             return {'status': 'success', 'replicas': replicas}
         except Exception as e:
@@ -336,16 +318,14 @@ class PostgreSQLProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
 
 class RedisProvisioner(DatabaseProvisionerInterface):
-    """Redis database provisioner"""
-    
+    """Redis database provisioner"""    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
     
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision Redis database"""
-        try:
+        """Provision Redis database"""        try:
             if spec.mode == DatabaseMode.CLUSTER:
                 return await self._provision_redis_cluster(spec)
             else:
@@ -355,8 +335,7 @@ class RedisProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def _provision_redis_standalone(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision standalone Redis"""
-        try:
+        """Provision standalone Redis"""        try:
             # Create deployment
             deployment = client.V1Deployment(
                 metadata=client.V1ObjectMeta(
@@ -422,8 +401,7 @@ class RedisProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def _provision_redis_cluster(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision Redis cluster"""
-        try:
+        """Provision Redis cluster"""        try:
             # Implementation for Redis cluster
             logger.info(f"Provisioning Redis cluster: {spec.name}")
             return {
@@ -437,8 +415,7 @@ class RedisProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def configure_backup(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Configure Redis backup using RDB snapshots"""
-        try:
+        """Configure Redis backup using RDB snapshots"""        try:
             logger.info(f"Configured Redis backup: {spec.name}")
             return {'status': 'success', 'backup': 'configured'}
         except Exception as e:
@@ -446,8 +423,7 @@ class RedisProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def setup_monitoring(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Setup Redis monitoring with redis_exporter"""
-        try:
+        """Setup Redis monitoring with redis_exporter"""        try:
             logger.info(f"Setup Redis monitoring: {spec.name}")
             return {'status': 'success', 'monitoring': 'configured'}
         except Exception as e:
@@ -455,8 +431,7 @@ class RedisProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def scale_database(self, name: str, replicas: int) -> Dict[str, Any]:
-        """Scale Redis cluster nodes"""
-        try:
+        """Scale Redis cluster nodes"""        try:
             logger.info(f"Scaling Redis {name} to {replicas} nodes")
             return {'status': 'success', 'replicas': replicas}
         except Exception as e:
@@ -464,16 +439,14 @@ class RedisProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
 
 class MongoDBProvisioner(DatabaseProvisionerInterface):
-    """MongoDB database provisioner"""
-    
+    """MongoDB database provisioner"""    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
     
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision MongoDB database"""
-        try:
+        """Provision MongoDB database"""        try:
             if spec.mode == DatabaseMode.REPLICA_SET:
                 return await self._provision_mongodb_replica_set(spec)
             else:
@@ -483,8 +456,7 @@ class MongoDBProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def _provision_mongodb_standalone(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision standalone MongoDB"""
-        try:
+        """Provision standalone MongoDB"""        try:
             logger.info(f"Provisioning MongoDB standalone: {spec.name}")
             return {
                 'status': 'success',
@@ -497,8 +469,7 @@ class MongoDBProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def _provision_mongodb_replica_set(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision MongoDB replica set"""
-        try:
+        """Provision MongoDB replica set"""        try:
             logger.info(f"Provisioning MongoDB replica set: {spec.name}")
             return {
                 'status': 'success',
@@ -511,8 +482,7 @@ class MongoDBProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def configure_backup(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Configure MongoDB backup using mongodump"""
-        try:
+        """Configure MongoDB backup using mongodump"""        try:
             logger.info(f"Configured MongoDB backup: {spec.name}")
             return {'status': 'success', 'backup': 'configured'}
         except Exception as e:
@@ -520,8 +490,7 @@ class MongoDBProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def setup_monitoring(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Setup MongoDB monitoring with mongodb_exporter"""
-        try:
+        """Setup MongoDB monitoring with mongodb_exporter"""        try:
             logger.info(f"Setup MongoDB monitoring: {spec.name}")
             return {'status': 'success', 'monitoring': 'configured'}
         except Exception as e:
@@ -529,8 +498,7 @@ class MongoDBProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def scale_database(self, name: str, replicas: int) -> Dict[str, Any]:
-        """Scale MongoDB replica set"""
-        try:
+        """Scale MongoDB replica set"""        try:
             logger.info(f"Scaling MongoDB {name} to {replicas} replicas")
             return {'status': 'success', 'replicas': replicas}
         except Exception as e:
@@ -538,16 +506,14 @@ class MongoDBProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
 
 class ElasticsearchProvisioner(DatabaseProvisionerInterface):
-    """Elasticsearch provisioner"""
-    
+    """Elasticsearch provisioner"""    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.apps_v1 = client.AppsV1Api() if k8s_client else None
         self.core_v1 = client.CoreV1Api() if k8s_client else None
     
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision Elasticsearch cluster"""
-        try:
+        """Provision Elasticsearch cluster"""        try:
             logger.info(f"Provisioning Elasticsearch cluster: {spec.name}")
             return {
                 'status': 'success',
@@ -560,8 +526,7 @@ class ElasticsearchProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def configure_backup(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Configure Elasticsearch backup using snapshots"""
-        try:
+        """Configure Elasticsearch backup using snapshots"""        try:
             logger.info(f"Configured Elasticsearch backup: {spec.name}")
             return {'status': 'success', 'backup': 'configured'}
         except Exception as e:
@@ -569,8 +534,7 @@ class ElasticsearchProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def setup_monitoring(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Setup Elasticsearch monitoring"""
-        try:
+        """Setup Elasticsearch monitoring"""        try:
             logger.info(f"Setup Elasticsearch monitoring: {spec.name}")
             return {'status': 'success', 'monitoring': 'configured'}
         except Exception as e:
@@ -578,8 +542,7 @@ class ElasticsearchProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
     
     async def scale_database(self, name: str, replicas: int) -> Dict[str, Any]:
-        """Scale Elasticsearch cluster nodes"""
-        try:
+        """Scale Elasticsearch cluster nodes"""        try:
             logger.info(f"Scaling Elasticsearch {name} to {replicas} nodes")
             return {'status': 'success', 'replicas': replicas}
         except Exception as e:
@@ -587,8 +550,7 @@ class ElasticsearchProvisioner(DatabaseProvisionerInterface):
             return {'status': 'error', 'message': str(e)}
 
 class DatabaseProvisioner:
-    """Main database provisioner manager"""
-    
+    """Main database provisioner manager"""    
     def __init__(self, k8s_client=None):
         self.k8s_client = k8s_client
         self.provisioners = {
@@ -599,8 +561,7 @@ class DatabaseProvisioner:
         }
     
     async def provision_database(self, spec: DatabaseSpec) -> Dict[str, Any]:
-        """Provision database based on type"""
-        try:
+        """Provision database based on type"""        try:
             provisioner = self.provisioners.get(spec.db_type)
             if not provisioner:
                 return {'status': 'error', 'message': f'Unsupported database type: {spec.db_type}'}
@@ -624,8 +585,7 @@ class DatabaseProvisioner:
             return {'status': 'error', 'message': str(e)}
     
     async def provision_complete_stack(self, namespace: str = "ia-influencer") -> Dict[str, Any]:
-        """Provision complete database stack for IA Influencer platform"""
-        try:
+        """Provision complete database stack for IA Influencer platform"""        try:
             results = {}
             
             # PostgreSQL for main application data
@@ -699,8 +659,7 @@ class DatabaseProvisioner:
             return {'status': 'error', 'message': str(e)}
     
     async def get_database_status(self, name: str, db_type: DatabaseType) -> Dict[str, Any]:
-        """Get database status"""
-        try:
+        """Get database status"""        try:
             provisioner = self.provisioners.get(db_type)
             if not provisioner:
                 return {'status': 'error', 'message': f'Unsupported database type: {db_type}'}
@@ -718,8 +677,7 @@ class DatabaseProvisioner:
             return {'status': 'error', 'message': str(e)}
     
     async def backup_database(self, name: str, db_type: DatabaseType) -> Dict[str, Any]:
-        """Trigger database backup"""
-        try:
+        """Trigger database backup"""        try:
             provisioner = self.provisioners.get(db_type)
             if not provisioner:
                 return {'status': 'error', 'message': f'Unsupported database type: {db_type}'}

@@ -1,11 +1,9 @@
-"""
-Alert System for Content Protection
+"""Alert System for Content Protection
 Real-time alert management and notification system.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from typing import Dict, Any, List
 from datetime import datetime
@@ -16,15 +14,13 @@ from ..core.logging import logger
 
 
 class AlertSystem:
-    """Advanced alert system for content protection violations"""
-    
+    """Advanced alert system for content protection violations"""    
     def __init__(self):
         self.alert_channels = ["email", "push", "webhook"]
         self.severity_levels = ["low", "medium", "high", "critical"]
     
     async def send_violation_alert(self, user_id: str, violation_data: Dict[str, Any]):
-        """Send alert for content protection violation"""
-        try:
+        """Send alert for content protection violation"""        try:
             # Determine alert severity
             similarity_score = violation_data.get("similarity_score", 0.0)
             severity = self._calculate_severity(similarity_score)
@@ -50,8 +46,7 @@ class AlertSystem:
             logger.error(f"Failed to send violation alert: {str(e)}")
     
     def _calculate_severity(self, similarity_score: float) -> str:
-        """Calculate alert severity based on similarity score"""
-        if similarity_score >= 0.95:
+        """Calculate alert severity based on similarity score"""        if similarity_score >= 0.95:
             return "critical"
         elif similarity_score >= 0.90:
             return "high"
@@ -61,8 +56,7 @@ class AlertSystem:
             return "low"
     
     def _create_alert_message(self, violation_data: Dict[str, Any], severity: str) -> Dict[str, Any]:
-        """Create structured alert message"""
-        return {
+        """Create structured alert message"""        return {
             "title": f"Content Protection Alert - {severity.upper()}",
             "message": f"Potential violation detected on {violation_data['platform']}",
             "details": {
@@ -76,8 +70,7 @@ class AlertSystem:
         }
     
     async def _get_user_preferences(self, user_id: str) -> Dict[str, Any]:
-        """Get user notification preferences"""
-        # Default preferences
+        """Get user notification preferences"""        # Default preferences
         return {
             "enabled_channels": ["email"],
             "severity_threshold": "medium",
@@ -86,8 +79,7 @@ class AlertSystem:
     
     async def _send_alert_via_channel(self, channel: str, user_id: str, 
                                     message: Dict[str, Any], severity: str):
-        """Send alert through specific channel"""
-        try:
+        """Send alert through specific channel"""        try:
             if channel == "email":
                 await self._send_email_alert(user_id, message)
             elif channel == "push":
@@ -99,28 +91,23 @@ class AlertSystem:
             logger.error(f"Failed to send alert via {channel}: {str(e)}")
     
     async def _send_email_alert(self, user_id: str, message: Dict[str, Any]):
-        """Send email alert"""
-        # Implementation would integrate with email service
+        """Send email alert"""        # Implementation would integrate with email service
         logger.info(f"Email alert would be sent to user {user_id}")
     
     async def _send_push_alert(self, user_id: str, message: Dict[str, Any]):
-        """Send push notification"""
-        # Implementation would integrate with push notification service
+        """Send push notification"""        # Implementation would integrate with push notification service
         logger.info(f"Push alert would be sent to user {user_id}")
     
     async def _send_webhook_alert(self, user_id: str, message: Dict[str, Any]):
-        """Send webhook alert"""
-        # Implementation would call user's webhook URL
+        """Send webhook alert"""        # Implementation would call user's webhook URL
         logger.info(f"Webhook alert would be sent to user {user_id}")
     
     async def _store_alert(self, user_id: str, violation_data: Dict[str, Any], 
                          message: Dict[str, Any], severity: str):
-        """Store alert in database"""
-        try:
+        """Store alert in database"""        try:
             async with database_manager.get_postgres_session() as session:
                 await session.execute(
-                    """
-                    INSERT INTO user_alerts 
+                    """                    INSERT INTO user_alerts 
                     (user_id, alert_type, severity, message, related_violation_id, 
                      created_at, read_at)
                     VALUES (%s, %s, %s, %s, %s, %s, %s)

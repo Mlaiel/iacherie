@@ -1,5 +1,4 @@
-"""
-Advanced Takedown Management System
+"""Advanced Takedown Management System
 ==================================
 
 Industrial-grade automated takedown and legal action orchestration.
@@ -14,7 +13,6 @@ Toute utilisation, reproduction, modification ou distribution sans autorisation
 écrite explicite de l'auteur est strictement interdite et constitue une violation 
 du droit d'auteur. Les contrevenants s'exposent à des poursuites judiciaires.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -44,8 +42,7 @@ from .platform_crawler import PlatformCrawler
 
 
 class TakedownStatus(Enum):
-    """Takedown request status"""
-    PENDING = "pending"
+    """Takedown request status"""    PENDING = "pending"
     SENT = "sent"
     ACKNOWLEDGED = "acknowledged"
     COMPLIED = "complied"
@@ -57,8 +54,7 @@ class TakedownStatus(Enum):
 
 
 class PlatformResponseType(Enum):
-    """Platform response types"""
-    AUTOMATED_REMOVAL = "automated_removal"
+    """Platform response types"""    AUTOMATED_REMOVAL = "automated_removal"
     MANUAL_REVIEW = "manual_review"
     COMPLIANCE_CONFIRMED = "compliance_confirmed"
     COUNTER_NOTICE = "counter_notice"
@@ -68,8 +64,7 @@ class PlatformResponseType(Enum):
 
 
 class EscalationLevel(Enum):
-    """Escalation levels for takedown campaigns"""
-    INITIAL_NOTICE = "initial_notice"
+    """Escalation levels for takedown campaigns"""    INITIAL_NOTICE = "initial_notice"
     FOLLOW_UP = "follow_up"
     CEASE_DESIST = "cease_desist"
     LEGAL_THREAT = "legal_threat"
@@ -79,8 +74,7 @@ class EscalationLevel(Enum):
 
 @dataclass
 class TakedownRequest:
-    """Takedown request data structure"""
-    request_id: str
+    """Takedown request data structure"""    request_id: str
     violation_id: str
     content_id: str
     platform: str
@@ -103,8 +97,7 @@ class TakedownRequest:
 
 @dataclass
 class PlatformResponse:
-    """Platform response to takedown request"""
-    response_id: str
+    """Platform response to takedown request"""    response_id: str
     takedown_request_id: str
     platform: str
     response_type: PlatformResponseType
@@ -118,8 +111,7 @@ class PlatformResponse:
 
 @dataclass
 class EscalationCampaign:
-    """Escalation campaign for persistent violations"""
-    campaign_id: str
+    """Escalation campaign for persistent violations"""    campaign_id: str
     violation_id: str
     current_level: EscalationLevel
     takedown_requests: List[str]  # List of takedown request IDs
@@ -132,20 +124,17 @@ class EscalationCampaign:
 
 
 class TakedownManager:
-    """
-    Advanced Takedown Management System.
+    """    Advanced Takedown Management System.
     
     Orchestrates automated DMCA takedowns, legal document generation,
     and escalation campaigns for comprehensive content protection.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis,
                  legal_templates: LegalTemplateManager,
                  violation_detector: ViolationDetector,
                  fingerprinting_engine: FingerprintingEngine,
                  platform_crawler: PlatformCrawler):
-        """
-        Initialize TakedownManager.
+        """        Initialize TakedownManager.
         
         Args:
             db_session: Async database session
@@ -154,8 +143,7 @@ class TakedownManager:
             violation_detector: Violation detection engine
             fingerprinting_engine: Content fingerprinting engine
             platform_crawler: Platform monitoring crawler
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.legal_templates = legal_templates
         self.violation_detector = violation_detector
@@ -232,8 +220,7 @@ class TakedownManager:
     
     async def create_takedown_request(self, violation_data: Dict[str, Any],
                                     priority: int = 5) -> TakedownRequest:
-        """
-        Create new takedown request.
+        """        Create new takedown request.
         
         Args:
             violation_data: Violation information
@@ -241,8 +228,7 @@ class TakedownManager:
             
         Returns:
             Created takedown request
-        """
-        try:
+        """        try:
             # Generate unique request ID
             request_id = str(uuid.uuid4())
             
@@ -291,16 +277,14 @@ class TakedownManager:
             raise
     
     async def send_dmca_notice(self, takedown_request: TakedownRequest) -> bool:
-        """
-        Send DMCA takedown notice to platform.
+        """        Send DMCA takedown notice to platform.
         
         Args:
             takedown_request: Takedown request to process
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Prepare DMCA data
             dmca_data = DMCATemplate(
                 copyright_owner=takedown_request.copyright_owner,
@@ -370,16 +354,14 @@ class TakedownManager:
             return False
     
     async def process_platform_response(self, response_data: Dict[str, Any]) -> PlatformResponse:
-        """
-        Process platform response to takedown request.
+        """        Process platform response to takedown request.
         
         Args:
             response_data: Platform response information
             
         Returns:
             Processed platform response
-        """
-        try:
+        """        try:
             # Create platform response record
             platform_response = PlatformResponse(
                 response_id=str(uuid.uuid4()),
@@ -433,13 +415,11 @@ class TakedownManager:
             raise
     
     async def monitor_takedown_requests(self) -> Dict[str, Any]:
-        """
-        Monitor all active takedown requests.
+        """        Monitor all active takedown requests.
         
         Returns:
             Monitoring report with status updates
-        """
-        try:
+        """        try:
             active_requests = await self._get_active_takedown_requests()
             monitoring_report = {
                 'total_active': len(active_requests),
@@ -488,8 +468,7 @@ class TakedownManager:
     
     async def create_escalation_campaign(self, violation_id: str,
                                        target_outcome: str = "content_removal") -> EscalationCampaign:
-        """
-        Create escalation campaign for persistent violations.
+        """        Create escalation campaign for persistent violations.
         
         Args:
             violation_id: Violation to escalate
@@ -497,8 +476,7 @@ class TakedownManager:
             
         Returns:
             Created escalation campaign
-        """
-        try:
+        """        try:
             # Analyze violation and previous takedown attempts
             violation_data = await self.violation_detector.get_violation_details(violation_id)
             previous_requests = await self._get_takedown_requests_by_violation(violation_id)
@@ -553,8 +531,7 @@ class TakedownManager:
     
     async def batch_takedown_processing(self, violation_ids: List[str],
                                       batch_size: int = 10) -> Dict[str, Any]:
-        """
-        Process multiple takedown requests in batches.
+        """        Process multiple takedown requests in batches.
         
         Args:
             violation_ids: List of violations to process
@@ -562,8 +539,7 @@ class TakedownManager:
             
         Returns:
             Batch processing results
-        """
-        try:
+        """        try:
             results = {
                 'total_processed': 0,
                 'successful': 0,
@@ -613,8 +589,7 @@ class TakedownManager:
     # Private helper methods
     
     def _determine_jurisdiction(self, violation_data: Dict[str, Any]) -> JurisdictionType:
-        """Determine appropriate legal jurisdiction"""
-        # Simple jurisdiction determination logic
+        """Determine appropriate legal jurisdiction"""        # Simple jurisdiction determination logic
         owner_location = violation_data.get('owner_location', 'US')
         platform = violation_data.get('platform', '').lower()
         
@@ -628,8 +603,7 @@ class TakedownManager:
             return JurisdictionType.INTERNATIONAL
     
     def _calculate_response_deadline(self, platform: str, jurisdiction: JurisdictionType) -> datetime:
-        """Calculate response deadline based on platform and jurisdiction"""
-        platform_config = self.platform_configs.get(platform.lower(), {})
+        """Calculate response deadline based on platform and jurisdiction"""        platform_config = self.platform_configs.get(platform.lower(), {})
         jurisdiction_config = self.jurisdiction_requirements.get(jurisdiction, {})
         
         # Use the shorter of platform response time or jurisdiction requirement
@@ -640,14 +614,12 @@ class TakedownManager:
         return datetime.utcnow() + timedelta(hours=deadline_hours)
     
     def _generate_good_faith_statement(self) -> str:
-        """Generate good faith belief statement"""
-        return ("I have a good faith belief that the use of the copyrighted material "
+        """Generate good faith belief statement"""        return ("I have a good faith belief that the use of the copyrighted material "
                 "described above is not authorized by the copyright owner, its agent, "
                 "or the law.")
     
     def _generate_penalty_statement(self, jurisdiction: JurisdictionType) -> str:
-        """Generate penalty of perjury statement"""
-        if jurisdiction == JurisdictionType.US_FEDERAL:
+        """Generate penalty of perjury statement"""        if jurisdiction == JurisdictionType.US_FEDERAL:
             return ("I swear, under penalty of perjury, that the information in this "
                    "notification is accurate and that I am the copyright owner, or am "
                    "authorized to act on behalf of the owner, of an exclusive right that "
@@ -658,8 +630,7 @@ class TakedownManager:
                    "of the copyright owner.")
     
     async def _send_to_platform(self, platform: str, dmca_document, takedown_request: TakedownRequest) -> bool:
-        """Send DMCA notice to specific platform"""
-        try:
+        """Send DMCA notice to specific platform"""        try:
             platform_config = self.platform_configs.get(platform.lower())
             if not platform_config:
                 self.logger.error(f"No configuration found for platform: {platform}")
@@ -683,8 +654,7 @@ class TakedownManager:
             return False
     
     async def _send_youtube_takedown(self, dmca_document, takedown_request: TakedownRequest) -> bool:
-        """Send takedown to YouTube"""
-        try:
+        """Send takedown to YouTube"""        try:
             # YouTube API or form submission logic
             # This would integrate with YouTube's Copyright Management API
             self.logger.info(f"Sent YouTube takedown for {takedown_request.request_id}")
@@ -694,8 +664,7 @@ class TakedownManager:
             return False
     
     async def _send_instagram_takedown(self, dmca_document, takedown_request: TakedownRequest) -> bool:
-        """Send takedown to Instagram"""
-        try:
+        """Send takedown to Instagram"""        try:
             # Instagram/Meta API submission logic
             self.logger.info(f"Sent Instagram takedown for {takedown_request.request_id}")
             return True
@@ -704,8 +673,7 @@ class TakedownManager:
             return False
     
     async def _send_tiktok_takedown(self, dmca_document, takedown_request: TakedownRequest) -> bool:
-        """Send takedown to TikTok"""
-        try:
+        """Send takedown to TikTok"""        try:
             # TikTok submission logic
             self.logger.info(f"Sent TikTok takedown for {takedown_request.request_id}")
             return True
@@ -714,8 +682,7 @@ class TakedownManager:
             return False
     
     async def _send_twitter_takedown(self, dmca_document, takedown_request: TakedownRequest) -> bool:
-        """Send takedown to Twitter/X"""
-        try:
+        """Send takedown to Twitter/X"""        try:
             # Twitter API submission logic
             self.logger.info(f"Sent Twitter takedown for {takedown_request.request_id}")
             return True
@@ -724,8 +691,7 @@ class TakedownManager:
             return False
     
     async def _send_generic_takedown(self, dmca_document, takedown_request: TakedownRequest, platform_config: Dict) -> bool:
-        """Send takedown via generic web form"""
-        try:
+        """Send takedown via generic web form"""        try:
             # Generic web form submission using Selenium
             # This would handle platforms without specific API integration
             self.logger.info(f"Sent generic takedown for {takedown_request.request_id}")
@@ -735,8 +701,7 @@ class TakedownManager:
             return False
     
     async def _verify_content_removal(self, takedown_request: TakedownRequest) -> Dict[str, Any]:
-        """Verify that content was actually removed"""
-        try:
+        """Verify that content was actually removed"""        try:
             # Use platform crawler to check if content still exists
             verification_result = await self.platform_crawler.check_url_status(
                 takedown_request.infringing_url
@@ -754,8 +719,7 @@ class TakedownManager:
             return {'content_removed': False, 'error': str(e)}
     
     async def _initiate_escalation(self, takedown_request: TakedownRequest):
-        """Initiate escalation for failed takedown"""
-        try:
+        """Initiate escalation for failed takedown"""        try:
             escalation_campaign = await self.create_escalation_campaign(
                 takedown_request.violation_id
             )
@@ -768,8 +732,7 @@ class TakedownManager:
             self.logger.error(f"Error initiating escalation: {str(e)}")
     
     async def _handle_counter_notice(self, takedown_request: TakedownRequest, platform_response: PlatformResponse):
-        """Handle platform counter-notice"""
-        try:
+        """Handle platform counter-notice"""        try:
             # Analyze counter-notice validity
             counter_notice_data = platform_response.metadata
             
@@ -791,8 +754,7 @@ class TakedownManager:
             self.logger.error(f"Error handling counter-notice: {str(e)}")
     
     async def _calculate_escalation_probability(self, violation_data: Dict, level: EscalationLevel) -> float:
-        """Calculate success probability for escalation level"""
-        base_probability = 0.7  # 70% base success rate
+        """Calculate success probability for escalation level"""        base_probability = 0.7  # 70% base success rate
         
         # Adjust based on evidence quality
         evidence_score = len(violation_data.get('evidence_urls', [])) * 0.1
@@ -811,8 +773,7 @@ class TakedownManager:
         return max(0.1, min(0.95, probability))  # Clamp between 10% and 95%
     
     async def _estimate_escalation_cost(self, violation_data: Dict, level: EscalationLevel) -> float:
-        """Estimate cost for escalation campaign"""
-        base_costs = {
+        """Estimate cost for escalation campaign"""        base_costs = {
             EscalationLevel.INITIAL_NOTICE: 0,
             EscalationLevel.FOLLOW_UP: 50,
             EscalationLevel.CEASE_DESIST: 200,
@@ -824,8 +785,7 @@ class TakedownManager:
         return base_costs.get(level, 100)
     
     async def _generate_escalation_actions(self, violation_data: Dict, level: EscalationLevel) -> List[str]:
-        """Generate recommended escalation actions"""
-        actions = {
+        """Generate recommended escalation actions"""        actions = {
             EscalationLevel.INITIAL_NOTICE: [
                 "send_formal_dmca_notice",
                 "document_violation_evidence",
@@ -861,8 +821,7 @@ class TakedownManager:
         return actions.get(level, ["consult_legal_expert"])
     
     async def _execute_escalation_action(self, campaign: EscalationCampaign, action: str):
-        """Execute specific escalation action"""
-        try:
+        """Execute specific escalation action"""        try:
             if action == "send_formal_dmca_notice":
                 # Logic for sending DMCA notice
                 pass
@@ -877,8 +836,7 @@ class TakedownManager:
             self.logger.error(f"Error executing escalation action {action}: {str(e)}")
     
     async def _process_single_takedown(self, violation_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Process single takedown request"""
-        try:
+        """Process single takedown request"""        try:
             # Create takedown request
             takedown_request = await self.create_takedown_request(violation_data)
             
@@ -898,24 +856,21 @@ class TakedownManager:
     # Database and caching methods
     
     async def _store_takedown_request(self, request: TakedownRequest):
-        """Store takedown request in database"""
-        try:
+        """Store takedown request in database"""        try:
             # Database storage implementation
             pass
         except Exception as e:
             self.logger.error(f"Error storing takedown request: {str(e)}")
     
     async def _update_takedown_request(self, request: TakedownRequest):
-        """Update takedown request in database"""
-        try:
+        """Update takedown request in database"""        try:
             # Database update implementation
             pass
         except Exception as e:
             self.logger.error(f"Error updating takedown request: {str(e)}")
     
     async def _get_takedown_request(self, request_id: str) -> Optional[TakedownRequest]:
-        """Get takedown request by ID"""
-        try:
+        """Get takedown request by ID"""        try:
             # Database retrieval implementation
             return None
         except Exception as e:
@@ -923,8 +878,7 @@ class TakedownManager:
             return None
     
     async def _get_active_takedown_requests(self) -> List[TakedownRequest]:
-        """Get all active takedown requests"""
-        try:
+        """Get all active takedown requests"""        try:
             # Database query implementation
             return []
         except Exception as e:
@@ -932,8 +886,7 @@ class TakedownManager:
             return []
     
     async def _get_takedown_requests_by_violation(self, violation_id: str) -> List[TakedownRequest]:
-        """Get takedown requests for specific violation"""
-        try:
+        """Get takedown requests for specific violation"""        try:
             # Database query implementation
             return []
         except Exception as e:
@@ -941,24 +894,21 @@ class TakedownManager:
             return []
     
     async def _store_platform_response(self, response: PlatformResponse):
-        """Store platform response in database"""
-        try:
+        """Store platform response in database"""        try:
             # Database storage implementation
             pass
         except Exception as e:
             self.logger.error(f"Error storing platform response: {str(e)}")
     
     async def _store_escalation_campaign(self, campaign: EscalationCampaign):
-        """Store escalation campaign in database"""
-        try:
+        """Store escalation campaign in database"""        try:
             # Database storage implementation
             pass
         except Exception as e:
             self.logger.error(f"Error storing escalation campaign: {str(e)}")
     
     async def _cache_takedown_request(self, request: TakedownRequest):
-        """Cache takedown request in Redis"""
-        try:
+        """Cache takedown request in Redis"""        try:
             cache_key = f"takedown_request:{request.request_id}"
             request_data = asdict(request)
             
@@ -979,8 +929,7 @@ class TakedownManager:
             self.logger.error(f"Error caching takedown request: {str(e)}")
     
     async def _cache_monitoring_report(self, report: Dict[str, Any]):
-        """Cache monitoring report in Redis"""
-        try:
+        """Cache monitoring report in Redis"""        try:
             cache_key = "takedown_monitoring_report"
             await self.redis.setex(
                 cache_key,
@@ -992,8 +941,7 @@ class TakedownManager:
             self.logger.error(f"Error caching monitoring report: {str(e)}")
     
     async def _schedule_follow_up(self, request: TakedownRequest):
-        """Schedule follow-up check for takedown request"""
-        try:
+        """Schedule follow-up check for takedown request"""        try:
             # Schedule follow-up task (would integrate with task queue like Celery)
             follow_up_time = request.deadline or (datetime.utcnow() + timedelta(days=7))
             
@@ -1062,8 +1010,7 @@ from redis import Redis
 
 
 class TakedownType(Enum):
-    """Takedown request types"""
-    DMCA = "dmca"
+    """Takedown request types"""    DMCA = "dmca"
     COPYRIGHT = "copyright"
     TRADEMARK = "trademark"
     PRIVACY = "privacy"
@@ -1072,8 +1019,7 @@ class TakedownType(Enum):
 
 
 class TakedownStatus(Enum):
-    """Takedown request status"""
-    PENDING = "pending"
+    """Takedown request status"""    PENDING = "pending"
     SUBMITTED = "submitted"
     ACKNOWLEDGED = "acknowledged"
     PROCESSING = "processing"
@@ -1084,8 +1030,7 @@ class TakedownStatus(Enum):
 
 
 class PlatformTakedownMethod(Enum):
-    """Platform takedown methods"""
-    API_REQUEST = "api_request"
+    """Platform takedown methods"""    API_REQUEST = "api_request"
     WEB_FORM = "web_form"
     EMAIL_SUBMISSION = "email_submission"
     MANUAL_REVIEW = "manual_review"
@@ -1093,8 +1038,7 @@ class PlatformTakedownMethod(Enum):
 
 @dataclass
 class TakedownRequest:
-    """Takedown request data"""
-    request_id: str
+    """Takedown request data"""    request_id: str
     content_id: str
     violation_id: str
     requester_id: str
@@ -1113,8 +1057,7 @@ class TakedownRequest:
 
 @dataclass
 class DMCANotice:
-    """DMCA takedown notice"""
-    notice_id: str
+    """DMCA takedown notice"""    notice_id: str
     takedown_request_id: str
     claimant_name: str
     claimant_email: str
@@ -1131,8 +1074,7 @@ class DMCANotice:
 
 @dataclass
 class TakedownResponse:
-    """Platform takedown response"""
-    response_id: str
+    """Platform takedown response"""    response_id: str
     takedown_request_id: str
     platform: str
     response_status: str
@@ -1145,8 +1087,7 @@ class TakedownResponse:
 
 @dataclass
 class TakedownResult:
-    """Takedown operation result"""
-    result_id: str
+    """Takedown operation result"""    result_id: str
     takedown_request_id: str
     success: bool
     platform_action: str
@@ -1159,22 +1100,18 @@ class TakedownResult:
 
 
 class TakedownManager:
-    """
-    Professional automated takedown management system.
+    """    Professional automated takedown management system.
     
     Handles DMCA notices, platform-specific takedown requests, and
     comprehensive legal compliance for content protection.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """
-        Initialize TakedownManager.
+        """        Initialize TakedownManager.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.logger = logging.getLogger(__name__)
         
@@ -1227,16 +1164,14 @@ class TakedownManager:
         self.copyright_template_path = Path(__file__).parent / "templates" / "copyright_claim.html"
     
     async def submit_takedown_request(self, request_data: Dict[str, Any]) -> str:
-        """
-        Submit automated takedown request.
+        """        Submit automated takedown request.
         
         Args:
             request_data: Takedown request data
             
         Returns:
             Takedown request ID
-        """
-        try:
+        """        try:
             # Create takedown request
             request_id = str(uuid.uuid4())
             takedown_request = TakedownRequest(
@@ -1288,8 +1223,7 @@ class TakedownManager:
     
     async def generate_dmca_notice(self, takedown_request: TakedownRequest,
                                  claimant_data: Dict[str, Any]) -> str:
-        """
-        Generate formal DMCA takedown notice.
+        """        Generate formal DMCA takedown notice.
         
         Args:
             takedown_request: Takedown request data
@@ -1297,8 +1231,7 @@ class TakedownManager:
             
         Returns:
             DMCA notice ID
-        """
-        try:
+        """        try:
             notice_id = str(uuid.uuid4())
             
             # Create DMCA notice
@@ -1336,16 +1269,14 @@ class TakedownManager:
             raise
     
     async def check_takedown_status(self, request_id: str) -> Dict[str, Any]:
-        """
-        Check status of takedown request.
+        """        Check status of takedown request.
         
         Args:
             request_id: Takedown request ID
             
         Returns:
             Current status information
-        """
-        try:
+        """        try:
             # Get request from database
             takedown_request = await self._get_takedown_request(request_id)
             if not takedown_request:
@@ -1379,16 +1310,14 @@ class TakedownManager:
             return {'error': str(e)}
     
     async def process_platform_response(self, response_data: Dict[str, Any]) -> bool:
-        """
-        Process response from platform about takedown request.
+        """        Process response from platform about takedown request.
         
         Args:
             response_data: Platform response data
             
         Returns:
             Processing success status
-        """
-        try:
+        """        try:
             # Create response record
             response = TakedownResponse(
                 response_id=str(uuid.uuid4()),
@@ -1423,16 +1352,14 @@ class TakedownManager:
             return False
     
     async def bulk_submit_takedowns(self, requests_data: List[Dict[str, Any]]) -> Dict[str, str]:
-        """
-        Submit multiple takedown requests in bulk.
+        """        Submit multiple takedown requests in bulk.
         
         Args:
             requests_data: List of takedown request data
             
         Returns:
             Dictionary mapping original data to request IDs
-        """
-        results = {}
+        """        results = {}
         
         # Create semaphore for concurrent processing
         semaphore = asyncio.Semaphore(self.max_concurrent_requests)
@@ -1461,8 +1388,7 @@ class TakedownManager:
         return results
     
     async def generate_takedown_report(self, user_id: str, period_days: int = 30) -> Dict[str, Any]:
-        """
-        Generate comprehensive takedown activity report.
+        """        Generate comprehensive takedown activity report.
         
         Args:
             user_id: User identifier
@@ -1470,8 +1396,7 @@ class TakedownManager:
             
         Returns:
             Takedown activity report
-        """
-        try:
+        """        try:
             # Calculate date range
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
@@ -1509,8 +1434,7 @@ class TakedownManager:
             raise
     
     async def escalate_takedown(self, request_id: str, escalation_reason: str) -> bool:
-        """
-        Escalate takedown request for manual review.
+        """        Escalate takedown request for manual review.
         
         Args:
             request_id: Takedown request ID
@@ -1518,8 +1442,7 @@ class TakedownManager:
             
         Returns:
             Escalation success status
-        """
-        try:
+        """        try:
             # Get takedown request
             takedown_request = await self._get_takedown_request(request_id)
             if not takedown_request:
@@ -1551,8 +1474,7 @@ class TakedownManager:
     # Private helper methods
     
     async def _validate_takedown_request(self, request: TakedownRequest) -> bool:
-        """Validate takedown request data"""
-        # Check required fields
+        """Validate takedown request data"""        # Check required fields
         if not all([request.content_id, request.violation_id, request.infringing_url]):
             return False
         
@@ -1567,22 +1489,18 @@ class TakedownManager:
         return True
     
     async def _store_takedown_request(self, request: TakedownRequest):
-        """Store takedown request in database"""
-        # Implementation would store request in database
+        """Store takedown request in database"""        # Implementation would store request in database
         pass
     
     async def _generate_dmca_notice(self, request: TakedownRequest, claimant_data: Dict) -> str:
-        """Generate DMCA notice for request"""
-        return await self.generate_dmca_notice(request, claimant_data)
+        """Generate DMCA notice for request"""        return await self.generate_dmca_notice(request, claimant_data)
     
     async def _generate_copyright_claim(self, request: TakedownRequest, claimant_data: Dict) -> str:
-        """Generate copyright claim for request"""
-        # Implementation would generate copyright claim
+        """Generate copyright claim for request"""        # Implementation would generate copyright claim
         return str(uuid.uuid4())
     
     async def _submit_to_platform(self, request: TakedownRequest) -> Dict[str, Any]:
-        """Submit takedown request to platform"""
-        platform_config = self.platform_configs.get(request.platform, {})
+        """Submit takedown request to platform"""        platform_config = self.platform_configs.get(request.platform, {})
         
         if platform_config.get('method') == PlatformTakedownMethod.API_REQUEST:
             return await self._submit_via_api(request, platform_config)
@@ -1590,23 +1508,19 @@ class TakedownManager:
             return await self._submit_via_form(request, platform_config)
     
     async def _submit_via_api(self, request: TakedownRequest, config: Dict) -> Dict[str, Any]:
-        """Submit takedown via API"""
-        # Implementation would submit via platform API
+        """Submit takedown via API"""        # Implementation would submit via platform API
         return {'status': 'submitted', 'reference': f"API_{request.request_id[:8]}"}
     
     async def _submit_via_form(self, request: TakedownRequest, config: Dict) -> Dict[str, Any]:
-        """Submit takedown via web form"""
-        # Implementation would submit via web form automation
+        """Submit takedown via web form"""        # Implementation would submit via web form automation
         return {'status': 'submitted', 'reference': f"FORM_{request.request_id[:8]}"}
     
     async def _update_takedown_status(self, request_id: str, status: TakedownStatus):
-        """Update takedown request status"""
-        # Implementation would update status in database
+        """Update takedown request status"""        # Implementation would update status in database
         pass
     
     async def _schedule_takedown_monitoring(self, request: TakedownRequest):
-        """Schedule monitoring for takedown request"""
-        monitoring_data = {
+        """Schedule monitoring for takedown request"""        monitoring_data = {
             'request_id': request.request_id,
             'platform': request.platform,
             'next_check': datetime.utcnow() + timedelta(hours=24)
@@ -1620,8 +1534,7 @@ class TakedownManager:
         )
     
     async def _render_dmca_notice(self, notice: DMCANotice) -> str:
-        """Render DMCA notice from template"""
-        try:
+        """Render DMCA notice from template"""        try:
             async with aiofiles.open(self.dmca_template_path, 'r') as f:
                 template_content = await f.read()
             
@@ -1639,9 +1552,7 @@ class TakedownManager:
             return self._generate_basic_dmca_notice(notice)
     
     def _generate_basic_dmca_notice(self, notice: DMCANotice) -> str:
-        """Generate basic DMCA notice without template"""
-        return f"""
-DMCA Takedown Notice
+        """Generate basic DMCA notice without template"""        return f"""DMCA Takedown Notice
 
 To: Platform Copyright Team
 From: {notice.claimant_name} ({notice.claimant_email})
@@ -1658,74 +1569,60 @@ Perjury Statement: {notice.perjury_statement}
 
 Signature: {notice.signature}
 Address: {notice.claimant_address}
-"""
-    
+"""    
     def _generate_good_faith_statement(self) -> str:
-        """Generate standard good faith statement"""
-        return ("I have a good faith belief that use of the copyrighted materials described above "
+        """Generate standard good faith statement"""        return ("I have a good faith belief that use of the copyrighted materials described above "
                 "on the infringing web pages is not authorized by the copyright owner, or its agent, "
                 "or the law.")
     
     def _generate_perjury_statement(self) -> str:
-        """Generate standard perjury statement"""
-        return ("I swear, under penalty of perjury, that the information in this notification is "
+        """Generate standard perjury statement"""        return ("I swear, under penalty of perjury, that the information in this notification is "
                 "accurate and that I am the copyright owner, or am authorized to act on behalf of "
                 "the owner, of an exclusive right that is allegedly infringed.")
     
     async def _store_dmca_notice(self, notice: DMCANotice, content: str):
-        """Store DMCA notice in database"""
-        # Implementation would store notice and content
+        """Store DMCA notice in database"""        # Implementation would store notice and content
         pass
     
     async def _store_notice_hash(self, notice_id: str, notice_hash: str):
-        """Store notice hash for integrity verification"""
-        hash_key = f"notice_hash:{notice_id}"
+        """Store notice hash for integrity verification"""        hash_key = f"notice_hash:{notice_id}"
         await self.redis.setex(hash_key, 86400 * 365, notice_hash)  # 1 year
     
     async def _get_takedown_request(self, request_id: str) -> Optional[TakedownRequest]:
-        """Get takedown request from database"""
-        # Implementation would query database
+        """Get takedown request from database"""        # Implementation would query database
         return None
     
     async def _get_latest_platform_response(self, request_id: str) -> Optional[TakedownResponse]:
-        """Get latest platform response for request"""
-        # Implementation would query latest response
+        """Get latest platform response for request"""        # Implementation would query latest response
         return None
     
     async def _get_takedown_result(self, request_id: str) -> Optional[TakedownResult]:
-        """Get takedown result if completed"""
-        # Implementation would query takedown result
+        """Get takedown result if completed"""        # Implementation would query takedown result
         return None
     
     async def _check_follow_up_needed(self, request: TakedownRequest) -> bool:
-        """Check if manual follow-up is needed"""
-        # Implementation would check various conditions
+        """Check if manual follow-up is needed"""        # Implementation would check various conditions
         return False
     
     async def _store_platform_response(self, response: TakedownResponse):
-        """Store platform response in database"""
-        # Implementation would store response
+        """Store platform response in database"""        # Implementation would store response
         pass
     
     async def _update_takedown_status_from_response(self, response: TakedownResponse):
-        """Update takedown status based on platform response"""
-        # Implementation would update status based on response
+        """Update takedown status based on platform response"""        # Implementation would update status based on response
         pass
     
     async def _verify_takedown_completion(self, response: TakedownResponse):
-        """Verify that takedown was actually completed"""
-        # Implementation would verify content removal
+        """Verify that takedown was actually completed"""        # Implementation would verify content removal
         pass
     
     async def _send_status_notifications(self, response: TakedownResponse):
-        """Send status update notifications"""
-        # Implementation would send notifications
+        """Send status update notifications"""        # Implementation would send notifications
         pass
     
     async def _get_takedown_statistics(self, user_id: str, start_date: datetime, 
                                      end_date: datetime) -> Dict[str, Any]:
-        """Get takedown statistics for period"""
-        # Implementation would calculate statistics
+        """Get takedown statistics for period"""        # Implementation would calculate statistics
         return {
             'total_requests': 25,
             'completed': 20,
@@ -1736,8 +1633,7 @@ Address: {notice.claimant_address}
     
     async def _get_platform_breakdown(self, user_id: str, start_date: datetime,
                                     end_date: datetime) -> Dict[str, Any]:
-        """Get platform breakdown statistics"""
-        # Implementation would calculate platform breakdown
+        """Get platform breakdown statistics"""        # Implementation would calculate platform breakdown
         return {
             'youtube': {'total': 10, 'success': 8},
             'instagram': {'total': 8, 'success': 7},
@@ -1747,8 +1643,7 @@ Address: {notice.claimant_address}
     
     async def _calculate_success_rates(self, user_id: str, start_date: datetime,
                                      end_date: datetime) -> Dict[str, float]:
-        """Calculate success rates by platform"""
-        # Implementation would calculate success rates
+        """Calculate success rates by platform"""        # Implementation would calculate success rates
         return {
             'overall': 0.80,
             'youtube': 0.80,
@@ -1758,16 +1653,13 @@ Address: {notice.claimant_address}
         }
     
     async def _get_pending_requests(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get pending takedown requests for user"""
-        # Implementation would query pending requests
+        """Get pending takedown requests for user"""        # Implementation would query pending requests
         return []
     
     async def _store_escalation_record(self, escalation_data: Dict[str, Any]):
-        """Store escalation record"""
-        # Implementation would store escalation
+        """Store escalation record"""        # Implementation would store escalation
         pass
     
     async def _send_escalation_notifications(self, request: TakedownRequest, reason: str):
-        """Send escalation notifications"""
-        # Implementation would send notifications
+        """Send escalation notifications"""        # Implementation would send notifications
         pass

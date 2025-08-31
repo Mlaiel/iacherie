@@ -1,5 +1,4 @@
-"""
-Content Performance Events Module
+"""Content Performance Events Module
 
 Advanced content performance tracking and optimization for multi-format creators.
 Provides real-time content analytics, performance prediction, and optimization recommendations.
@@ -13,7 +12,6 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import json
 import numpy as np
@@ -43,8 +41,7 @@ logger = get_logger(__name__)
 
 
 class ContentType(Enum):
-    """Types of content"""
-    AUDIO = "audio"
+    """Types of content"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -59,8 +56,7 @@ class ContentType(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types"""
-    SHORT_FORM = "short_form"
+    """Content format types"""    SHORT_FORM = "short_form"
     LONG_FORM = "long_form"
     INTERACTIVE = "interactive"
     CAROUSEL = "carousel"
@@ -71,8 +67,7 @@ class ContentFormat(Enum):
 
 
 class PerformanceMetric(Enum):
-    """Performance metric types"""
-    VIEWS = "views"
+    """Performance metric types"""    VIEWS = "views"
     ENGAGEMENT = "engagement"
     SHARES = "shares"
     SAVES = "saves"
@@ -88,8 +83,7 @@ class PerformanceMetric(Enum):
 
 @dataclass
 class ContentPerformanceEvent(BaseEvent):
-    """Represents a content performance event"""
-    content_id: str
+    """Represents a content performance event"""    content_id: str
     creator_id: str
     content_type: ContentType
     content_format: ContentFormat
@@ -104,8 +98,7 @@ class ContentPerformanceEvent(BaseEvent):
     trend_score: Optional[float] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert content performance event to dictionary"""
-        return {
+        """Convert content performance event to dictionary"""        return {
             **asdict(self),
             'content_type': self.content_type.value,
             'content_format': self.content_format.value,
@@ -115,8 +108,7 @@ class ContentPerformanceEvent(BaseEvent):
 
 @dataclass
 class ContentOptimizationRecommendation:
-    """Content optimization recommendation structure"""
-    recommendation_id: str
+    """Content optimization recommendation structure"""    recommendation_id: str
     recommendation_type: str
     priority: str
     title: str
@@ -131,8 +123,7 @@ class ContentOptimizationRecommendation:
 
 
 class ContentPerformanceEventHandler(BaseEventHandler):
-    """Handles content performance events with advanced analytics"""
-    
+    """Handles content performance events with advanced analytics"""    
     def __init__(self):
         super().__init__()
         self.cache_manager = CacheManager()
@@ -143,8 +134,7 @@ class ContentPerformanceEventHandler(BaseEventHandler):
         self.trend_predictor = ContentTrendPredictor()
         
     async def handle(self, event: ContentPerformanceEvent) -> Dict[str, Any]:
-        """Process content performance event with comprehensive analysis"""
-        try:
+        """Process content performance event with comprehensive analysis"""        try:
             # Validate event data
             await self._validate_event(event)
             
@@ -197,8 +187,7 @@ class ContentPerformanceEventHandler(BaseEventHandler):
             raise
     
     async def _validate_event(self, event: ContentPerformanceEvent) -> None:
-        """Validate content performance event data"""
-        required_fields = ['content_id', 'creator_id', 'content_type', 'platform']
+        """Validate content performance event data"""        required_fields = ['content_id', 'creator_id', 'content_type', 'platform']
         for field in required_fields:
             if not getattr(event, field):
                 raise ValueError(f"Missing required field: {field}")
@@ -213,11 +202,9 @@ class ContentPerformanceEventHandler(BaseEventHandler):
                 raise ValueError(f"Invalid metric value for {metric}: {value}")
     
     async def _store_content_performance_data(self, event: ContentPerformanceEvent) -> None:
-        """Store content performance data in database"""
-        async with self.db_manager.get_session() as session:
+        """Store content performance data in database"""        async with self.db_manager.get_session() as session:
             await session.execute(
-                """
-                INSERT INTO content_performance_events 
+                """                INSERT INTO content_performance_events 
                 (event_id, content_id, creator_id, content_type, content_format, 
                  platform, performance_metrics, engagement_data, audience_data, 
                  content_metadata, timestamp, quality_score, viral_coefficient, trend_score)
@@ -234,8 +221,7 @@ class ContentPerformanceEventHandler(BaseEventHandler):
             )
     
     async def _calculate_content_quality_score(self, event: ContentPerformanceEvent) -> Dict[str, float]:
-        """Calculate comprehensive content quality score"""
-        # Performance quality indicators
+        """Calculate comprehensive content quality score"""        # Performance quality indicators
         engagement_quality = await self._calculate_engagement_quality(event)
         retention_quality = await self._calculate_retention_quality(event)
         reach_quality = await self._calculate_reach_quality(event)
@@ -286,8 +272,7 @@ class ContentPerformanceEventHandler(BaseEventHandler):
         }
     
     async def _detect_viral_potential(self, event: ContentPerformanceEvent) -> Dict[str, Any]:
-        """Detect viral potential of content"""
-        # Calculate viral coefficient
+        """Detect viral potential of content"""        # Calculate viral coefficient
         viral_coefficient = await self._calculate_viral_coefficient(event)
         
         # Analyze growth velocity
@@ -311,16 +296,14 @@ class ContentPerformanceEventHandler(BaseEventHandler):
 
 
 class ContentPerformanceTracker:
-    """Tracks comprehensive content performance metrics"""
-    
+    """Tracks comprehensive content performance metrics"""    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.db_manager = DatabaseManager()
         self.performance_calculator = PerformanceCalculator()
         
     async def track_performance(self, event: ContentPerformanceEvent) -> Dict[str, Any]:
-        """Track comprehensive content performance"""
-        # Extract and validate metrics
+        """Track comprehensive content performance"""        # Extract and validate metrics
         raw_metrics = await self._extract_raw_metrics(event)
         
         # Calculate derived metrics
@@ -357,8 +340,7 @@ class ContentPerformanceTracker:
         }
     
     async def _extract_raw_metrics(self, event: ContentPerformanceEvent) -> Dict[str, float]:
-        """Extract and validate raw performance metrics"""
-        metrics = event.performance_metrics
+        """Extract and validate raw performance metrics"""        metrics = event.performance_metrics
         
         return {
             'views': metrics.get('views', 0),
@@ -375,8 +357,7 @@ class ContentPerformanceTracker:
     
     async def _calculate_derived_metrics(self, event: ContentPerformanceEvent, 
                                        raw_metrics: Dict[str, float]) -> Dict[str, float]:
-        """Calculate derived performance metrics"""
-        views = raw_metrics['views']
+        """Calculate derived performance metrics"""        views = raw_metrics['views']
         impressions = raw_metrics['impressions']
         likes = raw_metrics['likes']
         comments = raw_metrics['comments']
@@ -409,16 +390,14 @@ class ContentPerformanceTracker:
 
 
 class ContentAnalyticsEngine:
-    """Advanced content analytics using AI"""
-    
+    """Advanced content analytics using AI"""    
     def __init__(self):
         self.content_analyzer = ContentAnalyzer()
         self.nlp_pipeline = pipeline("sentiment-analysis")
         self.content_classifier = pipeline("text-classification")
         
     async def analyze_content(self, event: ContentPerformanceEvent) -> Dict[str, Any]:
-        """Analyze content using AI techniques"""
-        # Analyze content sentiment
+        """Analyze content using AI techniques"""        # Analyze content sentiment
         sentiment_analysis = await self._analyze_content_sentiment(event)
         
         # Analyze content topics and themes
@@ -451,8 +430,7 @@ class ContentAnalyticsEngine:
         }
     
     async def _analyze_content_sentiment(self, event: ContentPerformanceEvent) -> Dict[str, Any]:
-        """Analyze content sentiment and emotional impact"""
-        content_text = event.content_metadata.get('description', '') + ' ' + event.content_metadata.get('title', '')
+        """Analyze content sentiment and emotional impact"""        content_text = event.content_metadata.get('description', '') + ' ' + event.content_metadata.get('title', '')
         
         if not content_text.strip():
             return {'sentiment': 'neutral', 'confidence': 0.0, 'emotional_tone': 'unknown'}
@@ -476,16 +454,14 @@ class ContentAnalyticsEngine:
 
 
 class ContentOptimizationEngine:
-    """Optimizes content performance using ML"""
-    
+    """Optimizes content performance using ML"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.content_predictor = ContentPredictor()
         self.optimization_models = {}
         
     async def optimize_content(self, event: ContentPerformanceEvent) -> List[ContentOptimizationRecommendation]:
-        """Generate content optimization recommendations"""
-        # Analyze current content performance
+        """Generate content optimization recommendations"""        # Analyze current content performance
         current_performance = await self._analyze_current_performance(event)
         
         # Get similar high-performing content
@@ -523,8 +499,7 @@ class ContentOptimizationEngine:
     
     async def _optimize_title_description(self, event: ContentPerformanceEvent, 
                                         high_performers: List[Dict]) -> Optional[ContentOptimizationRecommendation]:
-        """Optimize title and description based on high performers"""
-        current_title = event.content_metadata.get('title', '')
+        """Optimize title and description based on high performers"""        current_title = event.content_metadata.get('title', '')
         current_description = event.content_metadata.get('description', '')
         
         # Analyze high-performing titles and descriptions
@@ -560,16 +535,14 @@ class ContentOptimizationEngine:
 
 
 class ContentTrendPredictor:
-    """Predicts content trends and viral potential"""
-    
+    """Predicts content trends and viral potential"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.trend_detector = TrendDetector()
         self.prediction_model = ContentPredictor()
         
     async def predict_trends(self, event: ContentPerformanceEvent) -> Dict[str, Any]:
-        """Predict content trends and future performance"""
-        # Predict performance trajectory
+        """Predict content trends and future performance"""        # Predict performance trajectory
         performance_prediction = await self._predict_performance_trajectory(event)
         
         # Predict viral potential
@@ -595,8 +568,7 @@ class ContentTrendPredictor:
         }
     
     async def _predict_performance_trajectory(self, event: ContentPerformanceEvent) -> Dict[str, Any]:
-        """Predict how content performance will evolve"""
-        # Get historical performance data
+        """Predict how content performance will evolve"""        # Get historical performance data
         historical_data = await self._get_content_performance_history(event.content_id)
         
         if len(historical_data) < 5:  # Need minimum data points

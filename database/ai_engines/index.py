@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-AI Engines Database Module - Index and Entry Point
+"""AI Engines Database Module - Index and Entry Point
 
 Main entry point for the AI Engines Database Module of the IA Influencer Agent platform.
 Provides centralized initialization and management of all AI engine components.
@@ -14,7 +13,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import sys
 import asyncio
 import logging
@@ -73,16 +71,13 @@ except ImportError as e:
     raise
 
 class AIEnginesIndex:
-    """
-    Main index class for AI Engines Database Module.
+    """    Main index class for AI Engines Database Module.
     
     Provides centralized access to all AI engine components and
     coordinates their initialization, configuration, and management.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize AI Engines Index."""
-        self.config = config or self._load_default_config()
+        """Initialize AI Engines Index."""        self.config = config or self._load_default_config()
         self.components: Dict[str, Any] = {}
         self.initialized = False
         self.start_time = datetime.now()
@@ -90,8 +85,7 @@ class AIEnginesIndex:
         logger.info(f"AI Engines Index initialized with config: {len(self.config)} items")
     
     def _load_default_config(self) -> Dict[str, Any]:
-        """Load default configuration for AI Engines."""
-        return {
+        """Load default configuration for AI Engines."""        return {
             "database": {
                 "host": "localhost",
                 "port": 5432,
@@ -163,8 +157,7 @@ class AIEnginesIndex:
         }
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all AI engine components."""
-        try:
+        """Initialize all AI engine components."""        try:
             logger.info("Initializing AI Engines components...")
             
             # Initialize core AI engines
@@ -206,8 +199,7 @@ class AIEnginesIndex:
             raise
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get comprehensive health status of all components."""
-        try:
+        """Get comprehensive health status of all components."""        try:
             if not self.initialized:
                 return {
                     "status": "not_initialized",
@@ -243,16 +235,13 @@ class AIEnginesIndex:
             }
     
     def get_component(self, component_name: str) -> Optional[Any]:
-        """Get a specific AI engine component by name."""
-        return self.components.get(component_name)
+        """Get a specific AI engine component by name."""        return self.components.get(component_name)
     
     def list_components(self) -> List[str]:
-        """List all available AI engine components."""
-        return list(self.components.keys())
+        """List all available AI engine components."""        return list(self.components.keys())
     
     async def shutdown(self) -> Dict[str, Any]:
-        """Gracefully shutdown all AI engine components."""
-        try:
+        """Gracefully shutdown all AI engine components."""        try:
             logger.info("Shutting down AI Engines components...")
             
             shutdown_results = {}
@@ -297,23 +286,20 @@ class AIEnginesIndex:
 _ai_engines_index: Optional[AIEnginesIndex] = None
 
 def get_ai_engines_index(config: Optional[Dict[str, Any]] = None) -> AIEnginesIndex:
-    """
-    Get the global AI Engines Index instance.
+    """    Get the global AI Engines Index instance.
     
     Args:
         config: Optional configuration dictionary
         
     Returns:
         AIEnginesIndex: Global index instance
-    """
-    global _ai_engines_index
+    """    global _ai_engines_index
     if _ai_engines_index is None:
         _ai_engines_index = AIEnginesIndex(config)
     return _ai_engines_index
 
 async def main():
-    """Main entry point for AI Engines module."""
-    try:
+    """Main entry point for AI Engines module."""    try:
         print(f"AI Engines Database Module v{__version__}")
         print(f"Author: {__author__} <{__email__}>")
         print(f"Copyright: {__copyright__}")
@@ -365,8 +351,7 @@ async def main():
     return 0
 
 def get_version_info() -> Dict[str, str]:
-    """Get version and metadata information."""
-    return {
+    """Get version and metadata information."""    return {
         "version": __version__,
         "author": __author__,
         "email": __email__,
@@ -377,9 +362,7 @@ def get_version_info() -> Dict[str, str]:
     }
 
 def print_banner():
-    """Print module banner."""
-    banner = f"""
-╔══════════════════════════════════════════════════════════════════════════════╗
+    """Print module banner."""    banner = f"""╔══════════════════════════════════════════════════════════════════════════════╗
 ║                      AI ENGINES DATABASE MODULE                             ║
 ║                    IA Influencer Agent Platform                             ║
 ║                                                                              ║
@@ -390,8 +373,7 @@ def print_banner():
 ║  modification, or distribution is strictly prohibited and may result        ║
 ║  in legal action. Contact {__email__} for licensing.               ║
 ╚══════════════════════════════════════════════════════════════════════════════╝
-"""
-    print(banner)
+"""    print(banner)
 
 if __name__ == "__main__":
     print_banner()

@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test Response Handler Module
+"""Test Response Handler Module
 
 Tests for API response processing, validation, and normalization.
 
@@ -23,7 +20,6 @@ Author: Fahed Mlaiel (Legal Copyright)
 Copyright © 2025 Fahed Mlaiel. Tous droits réservés.
 Propriété intellectuelle protégée sous toutes juridictions.
 """
-
 import pytest
 import sys
 import os
@@ -51,10 +47,8 @@ from crawlers.handlers.response_handler import (
 
 class TestPlatformResponse:
     """Test suite for platform response models."""
-
     def test_youtube_response_creation(self):
-        """Test YouTube response model."""
-        response = YouTubeResponse(
+        """Test YouTube response model."""        response = YouTubeResponse(
             video_id="abc123",
             title="Test Video",
             description="Test Description",
@@ -75,8 +69,7 @@ class TestPlatformResponse:
         assert len(response.tags) == 2
 
     def test_instagram_response_creation(self):
-        """Test Instagram response model."""
-        response = InstagramResponse(
+        """Test Instagram response model."""        response = InstagramResponse(
             media_id="insta123",
             media_type="photo",
             caption="Test post",
@@ -95,8 +88,7 @@ class TestPlatformResponse:
         assert len(response.hashtags) == 2
 
     def test_tiktok_response_creation(self):
-        """Test TikTok response model."""
-        response = TikTokResponse(
+        """Test TikTok response model."""        response = TikTokResponse(
             video_id="tiktok123",
             description="Test TikTok",
             username="tiktokuser",
@@ -119,8 +111,7 @@ class TestPlatformResponse:
         assert response.music_info["title"] == "Test Song"
 
     def test_twitter_response_creation(self):
-        """Test Twitter response model."""
-        response = TwitterResponse(
+        """Test Twitter response model."""        response = TwitterResponse(
             tweet_id="tweet123",
             text="Test tweet content",
             username="twitteruser",
@@ -142,16 +133,13 @@ class TestPlatformResponse:
 
 class TestResponseValidator:
     """Test suite for ResponseValidator class."""
-
     def test_validator_initialization(self):
-        """Test validator setup."""
-        validator = ResponseValidator()
+        """Test validator setup."""        validator = ResponseValidator()
         assert validator.schemas is not None
         assert len(validator.schemas) > 0
 
     def test_validate_youtube_response(self):
-        """Test YouTube response validation."""
-        validator = ResponseValidator()
+        """Test YouTube response validation."""        validator = ResponseValidator()
         
         valid_data = {
             "video_id": "abc123",
@@ -173,8 +161,7 @@ class TestResponseValidator:
         assert len(result.errors) == 0
 
     def test_validate_invalid_youtube_response(self):
-        """Test validation with invalid YouTube data."""
-        validator = ResponseValidator()
+        """Test validation with invalid YouTube data."""        validator = ResponseValidator()
         
         invalid_data = {
             "video_id": "",  # Invalid empty ID
@@ -188,8 +175,7 @@ class TestResponseValidator:
         assert len(result.errors) > 0
 
     def test_validate_instagram_response(self):
-        """Test Instagram response validation."""
-        validator = ResponseValidator()
+        """Test Instagram response validation."""        validator = ResponseValidator()
         
         valid_data = {
             "media_id": "insta123",
@@ -208,16 +194,14 @@ class TestResponseValidator:
         assert result.is_valid
 
     def test_validate_unsupported_platform(self):
-        """Test validation with unsupported platform."""
-        validator = ResponseValidator()
+        """Test validation with unsupported platform."""        validator = ResponseValidator()
         
         result = validator.validate("unknown_platform", {})
         assert not result.is_valid
         assert "Unsupported platform" in str(result.errors)
 
     def test_validate_required_fields(self):
-        """Test validation of required fields."""
-        validator = ResponseValidator()
+        """Test validation of required fields."""        validator = ResponseValidator()
         
         # Missing required fields
         incomplete_data = {
@@ -230,8 +214,7 @@ class TestResponseValidator:
         assert len(result.errors) > 0
 
     def test_validate_field_types(self):
-        """Test validation of field types."""
-        validator = ResponseValidator()
+        """Test validation of field types."""        validator = ResponseValidator()
         
         wrong_types_data = {
             "video_id": 123,  # Should be string
@@ -246,16 +229,13 @@ class TestResponseValidator:
 
 class TestResponseNormalizer:
     """Test suite for ResponseNormalizer class."""
-
     def test_normalizer_initialization(self):
-        """Test normalizer setup."""
-        normalizer = ResponseNormalizer()
+        """Test normalizer setup."""        normalizer = ResponseNormalizer()
         assert hasattr(normalizer, 'field_mappings')
         assert 'youtube' in normalizer.field_mappings
 
     def test_normalize_youtube_response(self):
-        """Test YouTube response normalization."""
-        normalizer = ResponseNormalizer()
+        """Test YouTube response normalization."""        normalizer = ResponseNormalizer()
         
         youtube_data = YouTubeResponse(
             video_id="abc123",
@@ -283,8 +263,7 @@ class TestResponseNormalizer:
         assert normalized.engagement.likes == 50
 
     def test_normalize_instagram_response(self):
-        """Test Instagram response normalization."""
-        normalizer = ResponseNormalizer()
+        """Test Instagram response normalization."""        normalizer = ResponseNormalizer()
         
         instagram_data = InstagramResponse(
             media_id="insta123",
@@ -308,8 +287,7 @@ class TestResponseNormalizer:
         assert normalized.content_type == "photo"
 
     def test_normalize_tiktok_response(self):
-        """Test TikTok response normalization."""
-        normalizer = ResponseNormalizer()
+        """Test TikTok response normalization."""        normalizer = ResponseNormalizer()
         
         tiktok_data = TikTokResponse(
             video_id="tiktok123",
@@ -334,8 +312,7 @@ class TestResponseNormalizer:
         assert normalized.engagement.shares == 20
 
     def test_extract_hashtags(self):
-        """Test hashtag extraction and normalization."""
-        normalizer = ResponseNormalizer()
+        """Test hashtag extraction and normalization."""        normalizer = ResponseNormalizer()
         
         # Test with text containing hashtags
         text = "This is a test post #testing #social #media"
@@ -346,8 +323,7 @@ class TestResponseNormalizer:
         assert "media" in hashtags
 
     def test_parse_duration(self):
-        """Test duration parsing."""
-        normalizer = ResponseNormalizer()
+        """Test duration parsing."""        normalizer = ResponseNormalizer()
         
         # YouTube ISO 8601 duration
         duration_seconds = normalizer._parse_duration("PT5M30S")
@@ -358,8 +334,7 @@ class TestResponseNormalizer:
         assert duration_seconds == 120
 
     def test_normalize_timestamp(self):
-        """Test timestamp normalization."""
-        normalizer = ResponseNormalizer()
+        """Test timestamp normalization."""        normalizer = ResponseNormalizer()
         
         # ISO 8601 format
         timestamp = normalizer._normalize_timestamp("2025-01-01T10:00:00Z")
@@ -372,17 +347,14 @@ class TestResponseNormalizer:
 
 class TestResponseProcessor:
     """Test suite for ResponseProcessor class."""
-
     def test_processor_initialization(self):
-        """Test processor setup."""
-        processor = ResponseProcessor()
+        """Test processor setup."""        processor = ResponseProcessor()
         assert processor.validator is not None
         assert processor.normalizer is not None
 
     @pytest.mark.asyncio
     async def test_process_youtube_response(self):
-        """Test complete YouTube response processing."""
-        processor = ResponseProcessor()
+        """Test complete YouTube response processing."""        processor = ResponseProcessor()
         
         raw_response = {
             "items": [{
@@ -416,8 +388,7 @@ class TestResponseProcessor:
 
     @pytest.mark.asyncio
     async def test_process_instagram_response(self):
-        """Test Instagram response processing."""
-        processor = ResponseProcessor()
+        """Test Instagram response processing."""        processor = ResponseProcessor()
         
         raw_response = {
             "data": [{
@@ -453,8 +424,7 @@ class TestResponseProcessor:
 
     @pytest.mark.asyncio
     async def test_process_invalid_response(self):
-        """Test processing invalid response data."""
-        processor = ResponseProcessor()
+        """Test processing invalid response data."""        processor = ResponseProcessor()
         
         invalid_response = {
             "invalid": "data structure"
@@ -467,8 +437,7 @@ class TestResponseProcessor:
 
     @pytest.mark.asyncio
     async def test_process_empty_response(self):
-        """Test processing empty response."""
-        processor = ResponseProcessor()
+        """Test processing empty response."""        processor = ResponseProcessor()
         
         empty_response = {"items": []}
         
@@ -478,8 +447,7 @@ class TestResponseProcessor:
         assert len(result.normalized_data) == 0
 
     def test_extract_youtube_data(self):
-        """Test YouTube data extraction."""
-        processor = ResponseProcessor()
+        """Test YouTube data extraction."""        processor = ResponseProcessor()
         
         item = {
             "id": "abc123",
@@ -510,8 +478,7 @@ class TestResponseProcessor:
         assert youtube_response.view_count == 1000
 
     def test_extract_instagram_data(self):
-        """Test Instagram data extraction."""
-        processor = ResponseProcessor()
+        """Test Instagram data extraction."""        processor = ResponseProcessor()
         
         item = {
             "id": "insta123",
@@ -534,11 +501,9 @@ class TestResponseProcessor:
 
 class TestIntegration:
     """Integration tests for response handling system."""
-
     @pytest.mark.asyncio
     async def test_end_to_end_processing(self):
-        """Test complete response processing pipeline."""
-        processor = ResponseProcessor()
+        """Test complete response processing pipeline."""        processor = ResponseProcessor()
         
         # Simulate YouTube API response
         api_response = {
@@ -589,8 +554,7 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_multiple_platform_responses(self):
-        """Test processing responses from multiple platforms."""
-        processor = ResponseProcessor()
+        """Test processing responses from multiple platforms."""        processor = ResponseProcessor()
         
         # YouTube response
         youtube_response = {
@@ -627,8 +591,7 @@ class TestIntegration:
 
     @pytest.mark.asyncio
     async def test_error_handling_and_recovery(self):
-        """Test error handling in response processing."""
-        processor = ResponseProcessor()
+        """Test error handling in response processing."""        processor = ResponseProcessor()
         
         # Malformed response
         malformed_response = {

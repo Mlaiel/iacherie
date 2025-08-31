@@ -16,8 +16,7 @@ WARNING: Proprietary technology - Unauthorized copying, modification or distribu
 is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de
-"""
-from .revenue_optimizer import RevenueOptimizer
+"""from .revenue_optimizer import RevenueOptimizer
 from .platform_analytics import PlatformAnalyticsEngine
 from .collaboration_matcher import CollaborationMatcher
 from .licensing_engine import LicensingEngine

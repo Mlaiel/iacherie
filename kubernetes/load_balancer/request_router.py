@@ -1,5 +1,4 @@
-"""
-Advanced Request Router for IA Influencer Agent Platform
+"""Advanced Request Router for IA Influencer Agent Platform
 
 Provides intelligent request routing with microservices orchestration,
 service mesh integration, and adaptive load distribution for content
@@ -13,7 +12,6 @@ Unauthorized copying, distribution, or use without explicit written
 permission from Fahed Mlaiel is strictly prohibited and may result
 in legal action.
 """
-
 import asyncio
 import logging
 import json
@@ -47,8 +45,7 @@ CIRCUIT_BREAKER_STATE = Gauge('circuit_breaker_state', 'Circuit breaker state', 
 
 
 class RoutingStrategy(Enum):
-    """Request routing strategies"""
-    ROUND_ROBIN = "round_robin"
+    """Request routing strategies"""    ROUND_ROBIN = "round_robin"
     WEIGHTED_ROUND_ROBIN = "weighted_round_robin"
     LEAST_CONNECTIONS = "least_connections"
     LEAST_RESPONSE_TIME = "least_response_time"
@@ -59,8 +56,7 @@ class RoutingStrategy(Enum):
 
 
 class ServiceType(Enum):
-    """Platform service types"""
-    FINGERPRINTING = "fingerprinting"
+    """Platform service types"""    FINGERPRINTING = "fingerprinting"
     PROTECTION = "protection"
     MONETIZATION = "monetization"
     AI_AGENT = "ai_agent"
@@ -71,8 +67,7 @@ class ServiceType(Enum):
 
 
 class HealthStatus(Enum):
-    """Service health status"""
-    HEALTHY = "healthy"
+    """Service health status"""    HEALTHY = "healthy"
     UNHEALTHY = "unhealthy"
     DEGRADED = "degraded"
     MAINTENANCE = "maintenance"
@@ -81,8 +76,7 @@ class HealthStatus(Enum):
 
 @dataclass
 class ServiceInstance:
-    """Service instance configuration"""
-    id: str
+    """Service instance configuration"""    id: str
     service_name: str
     host: str
     port: int
@@ -128,8 +122,7 @@ class ServiceInstance:
     
     @property
     def load_score(self) -> float:
-        """Calculate load score (lower is better)"""
-        connection_load = self.active_connections / self.max_connections
+        """Calculate load score (lower is better)"""        connection_load = self.active_connections / self.max_connections
         cpu_load = self.cpu_usage / 100.0
         memory_load = self.memory_usage / 100.0
         return (connection_load + cpu_load + memory_load) / 3.0
@@ -137,8 +130,7 @@ class ServiceInstance:
 
 @dataclass
 class RoutingRule:
-    """Request routing rule configuration"""
-    name: str
+    """Request routing rule configuration"""    name: str
     description: str
     enabled: bool = True
     priority: int = 100
@@ -177,8 +169,7 @@ class RoutingRule:
 
 @dataclass
 class RoutingContext:
-    """Request routing context"""
-    request_id: str
+    """Request routing context"""    request_id: str
     client_ip: str
     user_agent: str
     method: str
@@ -213,8 +204,7 @@ class RoutingContext:
 
 
 class RequestRouter:
-    """
-    Advanced Request Router for IA Influencer Agent Platform
+    """    Advanced Request Router for IA Influencer Agent Platform
     
     Provides intelligent request routing with:
     - Microservices orchestration and service discovery
@@ -222,8 +212,7 @@ class RequestRouter:
     - Circuit breaker patterns and fault tolerance
     - Multi-tenant request isolation
     - Service mesh integration
-    """
-    
+    """    
     def __init__(
         self,
         config_file: Optional[str] = None,
@@ -271,8 +260,7 @@ class RequestRouter:
         logger.info("Request Router initialized for IA Influencer Agent platform")
     
     async def initialize(self) -> bool:
-        """Initialize request router with platform configuration"""
-        try:
+        """Initialize request router with platform configuration"""        try:
             # Load configuration
             await self._load_configuration()
             
@@ -303,8 +291,7 @@ class RequestRouter:
             return False
     
     async def _load_configuration(self) -> None:
-        """Load router configuration"""
-        try:
+        """Load router configuration"""        try:
             if self.config_file and Path(self.config_file).exists():
                 with open(self.config_file, 'r') as f:
                     file_config = yaml.safe_load(f)
@@ -317,8 +304,7 @@ class RequestRouter:
             logger.warning(f"Failed to load configuration: {e}, using defaults")
     
     async def _initialize_routing_strategies(self) -> None:
-        """Initialize routing strategy implementations"""
-        try:
+        """Initialize routing strategy implementations"""        try:
             self.routing_strategies = {
                 RoutingStrategy.ROUND_ROBIN.value: self._route_round_robin,
                 RoutingStrategy.WEIGHTED_ROUND_ROBIN.value: self._route_weighted_round_robin,
@@ -337,8 +323,7 @@ class RequestRouter:
             raise
     
     async def _configure_platform_services(self) -> None:
-        """Configure service instances for IA Influencer Agent platform"""
-        try:
+        """Configure service instances for IA Influencer Agent platform"""        try:
             # Fingerprinting service instances
             fingerprinting_instances = [
                 ServiceInstance(
@@ -532,8 +517,7 @@ class RequestRouter:
             raise
     
     async def _configure_routing_rules(self) -> None:
-        """Configure routing rules for platform endpoints"""
-        try:
+        """Configure routing rules for platform endpoints"""        try:
             # Fingerprinting API routes
             fingerprinting_rule = RoutingRule(
                 name="fingerprinting_api",
@@ -658,11 +642,9 @@ class RequestRouter:
             raise
     
     async def route_request(self, context: RoutingContext) -> Optional[ServiceInstance]:
-        """
-        Route request to optimal service instance
+        """        Route request to optimal service instance
         Returns the selected service instance or None if routing fails
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Find matching routing rule
@@ -748,8 +730,7 @@ class RequestRouter:
             return None
     
     async def _find_matching_rule(self, context: RoutingContext) -> Optional[RoutingRule]:
-        """Find the best matching routing rule for the request"""
-        try:
+        """Find the best matching routing rule for the request"""        try:
             for rule in self.routing_rules:
                 if not rule.enabled:
                     continue
@@ -806,8 +787,7 @@ class RequestRouter:
             return None
     
     def _match_path_pattern(self, path: str, pattern: str) -> bool:
-        """Check if path matches pattern (supports wildcards)"""
-        try:
+        """Check if path matches pattern (supports wildcards)"""        try:
             # Convert pattern to regex
             regex_pattern = pattern.replace("*", ".*").replace("?", ".")
             return re.match(f"^{regex_pattern}$", path) is not None
@@ -817,8 +797,7 @@ class RequestRouter:
             return False
     
     def _ip_in_network(self, ip_str: str, network_str: str) -> bool:
-        """Check if IP is in network"""
-        try:
+        """Check if IP is in network"""        try:
             ip = ip_address(ip_str)
             network = ip_network(network_str, strict=False)
             return ip in network
@@ -828,8 +807,7 @@ class RequestRouter:
             return False
     
     def _is_instance_healthy(self, instance: ServiceInstance) -> bool:
-        """Check if service instance is healthy"""
-        try:
+        """Check if service instance is healthy"""        try:
             # Check basic health status
             if instance.health_status != HealthStatus.HEALTHY:
                 return False
@@ -859,8 +837,7 @@ class RequestRouter:
         affinity_key: Optional[str],
         instances: List[ServiceInstance]
     ) -> Optional[ServiceInstance]:
-        """Get instance based on session affinity"""
-        try:
+        """Get instance based on session affinity"""        try:
             cache_key = f"affinity:{session_id}"
             if affinity_key:
                 cache_key += f":{affinity_key}"
@@ -881,8 +858,7 @@ class RequestRouter:
             return None
     
     async def _set_session_affinity(self, session_id: str, instance_id: str) -> None:
-        """Set session affinity for future requests"""
-        try:
+        """Set session affinity for future requests"""        try:
             cache_key = f"affinity:{session_id}"
             
             if self.redis_client:
@@ -905,8 +881,7 @@ class RequestRouter:
         context: RoutingContext,
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
-        """Round robin routing strategy"""
-        try:
+        """Round robin routing strategy"""        try:
             if not instances:
                 return None
             
@@ -928,8 +903,7 @@ class RequestRouter:
         context: RoutingContext,
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
-        """Weighted round robin routing strategy"""
-        try:
+        """Weighted round robin routing strategy"""        try:
             if not instances:
                 return None
             
@@ -963,8 +937,7 @@ class RequestRouter:
         context: RoutingContext,
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
-        """Least connections routing strategy"""
-        try:
+        """Least connections routing strategy"""        try:
             if not instances:
                 return None
             
@@ -982,8 +955,7 @@ class RequestRouter:
         context: RoutingContext,
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
-        """Least response time routing strategy"""
-        try:
+        """Least response time routing strategy"""        try:
             if not instances:
                 return None
             
@@ -1001,8 +973,7 @@ class RequestRouter:
         context: RoutingContext,
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
-        """IP hash routing strategy"""
-        try:
+        """IP hash routing strategy"""        try:
             if not instances:
                 return None
             
@@ -1023,8 +994,7 @@ class RequestRouter:
         context: RoutingContext,
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
-        """Geographic routing strategy"""
-        try:
+        """Geographic routing strategy"""        try:
             if not instances:
                 return None
             
@@ -1050,8 +1020,7 @@ class RequestRouter:
         context: RoutingContext,
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
-        """Service mesh routing strategy"""
-        try:
+        """Service mesh routing strategy"""        try:
             if not instances:
                 return None
             
@@ -1077,8 +1046,7 @@ class RequestRouter:
         context: RoutingContext,
         rule: RoutingRule
     ) -> Optional[ServiceInstance]:
-        """AI-optimized routing strategy combining multiple factors"""
-        try:
+        """AI-optimized routing strategy combining multiple factors"""        try:
             if not instances:
                 return None
             
@@ -1118,8 +1086,7 @@ class RequestRouter:
             return instances[0] if instances else None
     
     async def _start_service_discovery(self) -> None:
-        """Start service discovery monitoring"""
-        try:
+        """Start service discovery monitoring"""        try:
             self._discovery_active = True
             
             async def discover_services():
@@ -1141,8 +1108,7 @@ class RequestRouter:
             logger.error(f"Failed to start service discovery: {e}")
     
     async def _update_from_consul(self) -> None:
-        """Update service instances from Consul"""
-        try:
+        """Update service instances from Consul"""        try:
             # Get services from Consul
             services = self.consul_client.health.service(
                 service="ia-influencer-*",
@@ -1189,8 +1155,7 @@ class RequestRouter:
             logger.error(f"Failed to update from Consul: {e}")
     
     async def _start_health_monitoring(self) -> None:
-        """Start health monitoring for service instances"""
-        try:
+        """Start health monitoring for service instances"""        try:
             self._monitoring_active = True
             
             async def monitor_health():
@@ -1210,8 +1175,7 @@ class RequestRouter:
             logger.error(f"Failed to start health monitoring: {e}")
     
     async def _check_all_instances_health(self) -> None:
-        """Check health of all service instances"""
-        try:
+        """Check health of all service instances"""        try:
             tasks = []
             
             for service_name, instances in self.service_instances.items():
@@ -1226,8 +1190,7 @@ class RequestRouter:
             logger.error(f"Failed to check all instances health: {e}")
     
     async def _check_instance_health(self, instance: ServiceInstance) -> None:
-        """Check health of a specific service instance"""
-        try:
+        """Check health of a specific service instance"""        try:
             start_time = time.time()
             
             health_url = f"{instance.endpoint_url}/health"
@@ -1257,8 +1220,7 @@ class RequestRouter:
             SERVICE_INSTANCES_AVAILABLE.labels(service=instance.service_name).set(0)
     
     async def _initialize_circuit_breakers(self) -> None:
-        """Initialize circuit breakers for service instances"""
-        try:
+        """Initialize circuit breakers for service instances"""        try:
             for service_name, instances in self.service_instances.items():
                 for instance in instances:
                     self.circuit_breakers[instance.id] = {
@@ -1279,8 +1241,7 @@ class RequestRouter:
         instance: ServiceInstance,
         start_time: float
     ) -> None:
-        """Update routing performance metrics"""
-        try:
+        """Update routing performance metrics"""        try:
             routing_latency = time.time() - start_time
             
             ROUTING_LATENCY.observe(routing_latency)
@@ -1297,8 +1258,7 @@ class RequestRouter:
             logger.error(f"Failed to update routing metrics: {e}")
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get comprehensive status of request router"""
-        try:
+        """Get comprehensive status of request router"""        try:
             # Service instance statistics
             total_instances = sum(len(instances) for instances in self.service_instances.values())
             healthy_instances = sum(
@@ -1354,8 +1314,7 @@ class RequestRouter:
             return {"error": str(e), "timestamp": datetime.now().isoformat()}
     
     async def shutdown(self) -> None:
-        """Shutdown request router"""
-        try:
+        """Shutdown request router"""        try:
             logger.info("Shutting down Request Router...")
             
             self._monitoring_active = False
@@ -1380,8 +1339,7 @@ async def route_fingerprinting_request(
     file_size_mb: float,
     user_id: str
 ) -> Optional[ServiceInstance]:
-    """Route fingerprinting request with content-type optimization"""
-    try:
+    """Route fingerprinting request with content-type optimization"""    try:
         context = RoutingContext(
             request_id=f"fingerprint_{int(time.time())}",
             client_ip=client_ip,
@@ -1410,8 +1368,7 @@ async def route_ai_agent_request(
     request_type: str = "recommendation",
     session_id: Optional[str] = None
 ) -> Optional[ServiceInstance]:
-    """Route AI agent request with session affinity and low latency"""
-    try:
+    """Route AI agent request with session affinity and low latency"""    try:
         context = RoutingContext(
             request_id=f"ai_agent_{int(time.time())}",
             client_ip=client_ip,
@@ -1442,8 +1399,7 @@ async def route_monetization_request(
     operation: str = "payment",
     region: Optional[str] = None
 ) -> Optional[ServiceInstance]:
-    """Route monetization request with security and compliance"""
-    try:
+    """Route monetization request with security and compliance"""    try:
         context = RoutingContext(
             request_id=f"monetization_{int(time.time())}",
             client_ip=client_ip,

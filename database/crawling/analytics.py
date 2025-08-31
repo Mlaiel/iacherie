@@ -1,5 +1,4 @@
-"""
-Enterprise Crawling Analytics Manager
+"""Enterprise Crawling Analytics Manager
 
 Advanced analytics and performance monitoring for crawling operations
 with comprehensive metrics and business intelligence.
@@ -12,7 +11,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Team: Lead AI Developer + Backend Senior + ML Engineer + DBA + Security Expert
 Copyright: All rights reserved
 """
-
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -34,8 +32,7 @@ from ..core.exceptions import (
 
 
 class CrawlingAnalyticsManager(DatabaseManager):
-    """
-    Enterprise-grade analytics manager for crawling operations.
+    """    Enterprise-grade analytics manager for crawling operations.
     
     Handles:
     - Performance metrics collection
@@ -43,16 +40,13 @@ class CrawlingAnalyticsManager(DatabaseManager):
     - Real-time monitoring data
     - Trend analysis and forecasting
     - Custom dashboard metrics
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize crawling analytics manager.
+        """        Initialize crawling analytics manager.
         
         Args:
             db_session: SQLAlchemy database session
-        """
-        super().__init__(db_session)
+        """        super().__init__(db_session)
         self.table = CrawlingAnalytics
     
     async def log_session_start(
@@ -62,8 +56,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         user_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Log session start event with comprehensive metadata.
+        """        Log session start event with comprehensive metadata.
         
         Args:
             session_id: Session identifier
@@ -73,8 +66,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Analytics event ID
-        """
-        try:
+        """        try:
             return await self._log_analytics_event(
                 event_type=AnalyticsEventType.SESSION_START.value,
                 session_id=session_id,
@@ -95,8 +87,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         targets_count: int,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Log job scheduling event.
+        """        Log job scheduling event.
         
         Args:
             job_id: Job identifier
@@ -107,8 +98,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Analytics event ID
-        """
-        try:
+        """        try:
             event_metadata = {
                 'job_id': job_id,
                 'job_type': job_type,
@@ -135,8 +125,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         confidence_score: float = 0.0,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Log content discovery event.
+        """        Log content discovery event.
         
         Args:
             discovery_id: Discovery identifier
@@ -148,8 +137,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Analytics event ID
-        """
-        try:
+        """        try:
             event_metadata = {
                 'discovery_id': discovery_id,
                 'job_id': job_id,
@@ -177,8 +165,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         platform: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Log custom performance metric.
+        """        Log custom performance metric.
         
         Args:
             session_id: Session identifier
@@ -190,8 +177,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Analytics event ID
-        """
-        try:
+        """        try:
             return await self._log_analytics_event(
                 event_type=AnalyticsEventType.PERFORMANCE_METRIC.value,
                 session_id=session_id,
@@ -211,8 +197,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         session_id: Optional[str] = None,
         severity: str = 'error'
     ) -> str:
-        """
-        Log error event with comprehensive error data.
+        """        Log error event with comprehensive error data.
         
         Args:
             error_type: Type/category of error
@@ -222,8 +207,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Analytics event ID
-        """
-        try:
+        """        try:
             error_metadata = {
                 'error_type': error_type,
                 'severity': severity,
@@ -247,8 +231,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         cleanup_stats: Dict[str, int],
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Log cleanup operation results.
+        """        Log cleanup operation results.
         
         Args:
             cleanup_stats: Statistics from cleanup operation
@@ -256,8 +239,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Analytics event ID
-        """
-        try:
+        """        try:
             event_metadata = {
                 'cleanup_stats': cleanup_stats,
                 **(metadata or {})
@@ -283,8 +265,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         metric_type: str = MetricType.COUNTER.value,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Internal method to log analytics events.
+        """        Internal method to log analytics events.
         
         Args:
             event_type: Type of analytics event
@@ -298,8 +279,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Analytics event ID
-        """
-        try:
+        """        try:
             event_id = str(uuid4())
             
             analytics_data = {
@@ -331,8 +311,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         since: Optional[datetime] = None,
         time_range: timedelta = timedelta(days=7)
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive analytics summary for a user.
+        """        Get comprehensive analytics summary for a user.
         
         Args:
             user_id: User identifier
@@ -341,15 +320,13 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Dict containing user analytics summary
-        """
-        try:
+        """        try:
             if since is None:
                 since = datetime.utcnow() - time_range
             
             # Get total discoveries
             discoveries_result = await self.db.execute(
-                text("""
-                SELECT COUNT(*) as total_discoveries,
+                text("""                SELECT COUNT(*) as total_discoveries,
                        AVG(metric_value) as avg_confidence
                 FROM crawling_analytics
                 WHERE user_id = :user_id
@@ -365,8 +342,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
             # Get platform breakdown
             platform_result = await self.db.execute(
-                text("""
-                SELECT platform,
+                text("""                SELECT platform,
                        COUNT(*) as events_count,
                        COUNT(CASE WHEN event_type = :discovery_event THEN 1 END) as discoveries
                 FROM crawling_analytics
@@ -384,8 +360,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
             # Get success rate (successful vs error events)
             success_result = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     COUNT(CASE WHEN event_type != :error_event THEN 1 END) as successful_events,
                     COUNT(CASE WHEN event_type = :error_event THEN 1 END) as error_events,
                     COUNT(*) as total_events
@@ -402,8 +377,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
             # Get average response time from performance metrics
             response_time_result = await self.db.execute(
-                text("""
-                SELECT AVG(metric_value) as avg_response_time
+                text("""                SELECT AVG(metric_value) as avg_response_time
                 FROM crawling_analytics
                 WHERE user_id = :user_id
                   AND metric_name = 'response_time'
@@ -452,8 +426,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         platform: str,
         time_range: timedelta = timedelta(days=30)
     ) -> Dict[str, Any]:
-        """
-        Get comprehensive analytics for a specific platform.
+        """        Get comprehensive analytics for a specific platform.
         
         Args:
             platform: Platform to analyze
@@ -461,14 +434,12 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Dict containing platform analytics
-        """
-        try:
+        """        try:
             since = datetime.utcnow() - time_range
             
             # Get activity timeline (hourly breakdown)
             timeline_result = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     DATE_TRUNC('hour', created_at) as hour,
                     COUNT(*) as events_count,
                     COUNT(CASE WHEN event_type = :discovery_event THEN 1 END) as discoveries,
@@ -489,8 +460,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
             # Get top metrics
             metrics_result = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     metric_name,
                     COUNT(*) as metric_count,
                     AVG(metric_value) as avg_value,
@@ -512,8 +482,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
             # Get user activity
             users_result = await self.db.execute(
-                text("""
-                SELECT 
+                text("""                SELECT 
                     user_id,
                     COUNT(*) as events_count,
                     COUNT(CASE WHEN event_type = :discovery_event THEN 1 END) as discoveries,
@@ -583,8 +552,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
         time_range: timedelta = timedelta(days=30),
         granularity: str = 'daily'
     ) -> Dict[str, Any]:
-        """
-        Get performance trends for specified metrics.
+        """        Get performance trends for specified metrics.
         
         Args:
             metric_names: List of metric names to analyze
@@ -593,8 +561,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
         Returns:
             Dict containing trend analysis
-        """
-        try:
+        """        try:
             since = datetime.utcnow() - time_range
             
             # Determine date truncation based on granularity
@@ -608,8 +575,7 @@ class CrawlingAnalyticsManager(DatabaseManager):
             
             for metric_name in metric_names:
                 trend_result = await self.db.execute(
-                    text(f"""
-                    SELECT 
+                    text(f"""                    SELECT 
                         DATE_TRUNC(:granularity, created_at) as time_period,
                         COUNT(*) as data_points,
                         AVG(metric_value) as avg_value,
@@ -662,16 +628,14 @@ class CrawlingAnalyticsManager(DatabaseManager):
         self,
         retention_days: int = 90
     ) -> Dict[str, int]:
-        """
-        Clean up old analytics data beyond retention period.
+        """        Clean up old analytics data beyond retention period.
         
         Args:
             retention_days: Number of days to retain analytics data
             
         Returns:
             Dict containing cleanup statistics
-        """
-        try:
+        """        try:
             cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
             
             # Archive old data first (optional - implement if needed)
@@ -696,13 +660,11 @@ class CrawlingAnalyticsManager(DatabaseManager):
             raise DatabaseError(f"Failed to cleanup old analytics: {str(e)}")
     
     async def health_check(self) -> Dict[str, Any]:
-        """
-        Perform health check of analytics system.
+        """        Perform health check of analytics system.
         
         Returns:
             Dict containing health status
-        """
-        try:
+        """        try:
             # Check recent analytics activity
             recent_events = await self.db.query(func.count(CrawlingAnalytics.event_id)).filter(
                 CrawlingAnalytics.created_at >= datetime.utcnow() - timedelta(hours=1)

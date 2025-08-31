@@ -1,5 +1,4 @@
-"""
-Distributed Transaction Manager - Cross-Service Transaction Coordination
+"""Distributed Transaction Manager - Cross-Service Transaction Coordination
 
 Enterprise-grade distributed transaction management providing two-phase commit
 protocol, saga pattern implementation, and microservices transaction coordination
@@ -14,7 +13,6 @@ the exclusive intellectual property of Fahed Mlaiel (mlaiel@live.de).
 Any use, copying, distribution, or exploitation without explicit written 
 authorization is STRICTLY PROHIBITED and will be prosecuted.
 """
-
 import asyncio
 import uuid
 import json
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 
 class DistributedTransactionState(Enum):
-    """Distributed transaction state enumeration"""
-    INIT = "initialized"
+    """Distributed transaction state enumeration"""    INIT = "initialized"
     COORDINATING = "coordinating"
     PREPARING = "preparing"
     PREPARED = "prepared"
@@ -45,8 +42,7 @@ class DistributedTransactionState(Enum):
 
 
 class ParticipantState(Enum):
-    """Participant state in distributed transaction"""
-    PENDING = "pending"
+    """Participant state in distributed transaction"""    PENDING = "pending"
     PREPARED = "prepared"
     COMMITTED = "committed"
     ABORTED = "aborted"
@@ -56,8 +52,7 @@ class ParticipantState(Enum):
 
 @dataclass
 class ServiceParticipant:
-    """Service participant in distributed transaction"""
-    service_id: str
+    """Service participant in distributed transaction"""    service_id: str
     endpoint: str
     state: ParticipantState = ParticipantState.PENDING
     prepare_timeout: int = 10
@@ -71,8 +66,7 @@ class ServiceParticipant:
 
 @dataclass
 class DistributedTransaction:
-    """Distributed transaction context"""
-    transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Distributed transaction context"""    transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     state: DistributedTransactionState = DistributedTransactionState.INIT
     participants: List[ServiceParticipant] = field(default_factory=list)
     coordinator_id: str = ""
@@ -85,8 +79,7 @@ class DistributedTransaction:
     
     @property
     def duration(self) -> Optional[float]:
-        """Calculate transaction duration"""
-        if self.started_at and self.completed_at:
+        """Calculate transaction duration"""        if self.started_at and self.completed_at:
             return (self.completed_at - self.started_at).total_seconds()
         elif self.started_at:
             return (datetime.now(timezone.utc) - self.started_at).total_seconds()
@@ -94,24 +87,21 @@ class DistributedTransaction:
     
     @property
     def is_expired(self) -> bool:
-        """Check if transaction has expired"""
-        if self.started_at:
+        """Check if transaction has expired"""        if self.started_at:
             elapsed = (datetime.now(timezone.utc) - self.started_at).total_seconds()
             return elapsed > self.timeout
         return False
 
 
 class SagaOrchestrator:
-    """Saga pattern orchestrator for long-running distributed transactions"""
-    
+    """Saga pattern orchestrator for long-running distributed transactions"""    
     def __init__(self, redis_client: redis.Redis):
         self.redis = redis_client
         self.active_sagas: Dict[str, DistributedTransaction] = {}
         self.compensation_handlers: Dict[str, Callable] = {}
     
     async def execute_saga(self, transaction: DistributedTransaction) -> bool:
-        """Execute saga pattern with compensation"""
-        try:
+        """Execute saga pattern with compensation"""        try:
             transaction.state = DistributedTransactionState.COORDINATING
             self.active_sagas[transaction.transaction_id] = transaction
             
@@ -149,8 +139,7 @@ class SagaOrchestrator:
             self.active_sagas.pop(transaction.transaction_id, None)
     
     async def _execute_saga_step(self, step: Dict[str, Any], transaction: DistributedTransaction) -> bool:
-        """Execute individual saga step"""
-        service_url = step.get('service_url')
+        """Execute individual saga step"""        service_url = step.get('service_url')
         action = step.get('action')
         payload = step.get('payload', {})
         
@@ -175,8 +164,7 @@ class SagaOrchestrator:
             return False
     
     async def _compensate_saga_steps(self, executed_steps: List[tuple], transaction: DistributedTransaction) -> None:
-        """Execute compensation for completed saga steps"""
-        transaction.state = DistributedTransactionState.COMPENSATING
+        """Execute compensation for completed saga steps"""        transaction.state = DistributedTransactionState.COMPENSATING
         
         # Compensate in reverse order
         for step_index, step in reversed(executed_steps):
@@ -192,8 +180,7 @@ class SagaOrchestrator:
     
     async def _execute_compensation(self, compensation_url: str, step: Dict[str, Any], 
                                   transaction: DistributedTransaction) -> None:
-        """Execute compensation for a specific step"""
-        try:
+        """Execute compensation for a specific step"""        try:
             async with aiohttp.ClientSession() as session:
                 async with session.post(
                     compensation_url,
@@ -210,8 +197,7 @@ class SagaOrchestrator:
 
 
 class DistributedTransactionManager:
-    """
-    Distributed transaction manager providing enterprise-grade coordination
+    """    Distributed transaction manager providing enterprise-grade coordination
     
     Features:
     - Two-phase commit protocol (2PC)
@@ -221,8 +207,7 @@ class DistributedTransactionManager:
     - Redis-based coordination state
     - Timeout and failure handling
     - Performance monitoring
-    """
-    
+    """    
     def __init__(self, redis_url: str = "redis://localhost:6379", coordinator_id: Optional[str] = None):
         self.coordinator_id = coordinator_id or f"coord-{uuid.uuid4().hex[:8]}"
         self.redis_client = None
@@ -237,8 +222,7 @@ class DistributedTransactionManager:
                    self.coordinator_id)
     
     async def initialize(self) -> None:
-        """Initialize Redis connection and saga orchestrator"""
-        try:
+        """Initialize Redis connection and saga orchestrator"""        try:
             self.redis_client = redis.from_url(self.redis_url)
             await self.redis_client.ping()
             
@@ -256,8 +240,7 @@ class DistributedTransactionManager:
     
     async def register_service(self, service_id: str, endpoint: str, 
                              capabilities: Optional[List[str]] = None) -> None:
-        """Register a service participant"""
-        service_info = {
+        """Register a service participant"""        service_info = {
             'endpoint': endpoint,
             'capabilities': capabilities or [],
             'registered_at': datetime.now(timezone.utc).isoformat(),
@@ -282,8 +265,7 @@ class DistributedTransactionManager:
         use_saga: bool = False,
         metadata: Optional[Dict[str, Any]] = None
     ) -> DistributedTransaction:
-        """Begin a new distributed transaction"""
-        
+        """Begin a new distributed transaction"""        
         transaction = DistributedTransaction(
             coordinator_id=self.coordinator_id,
             timeout=timeout,
@@ -318,8 +300,7 @@ class DistributedTransactionManager:
         return transaction
     
     async def execute_two_phase_commit(self, transaction_id: str) -> bool:
-        """Execute two-phase commit protocol"""
-        
+        """Execute two-phase commit protocol"""        
         transaction = self.active_transactions.get(transaction_id)
         if not transaction:
             logger.error("Transaction not found: %s", transaction_id)
@@ -367,8 +348,7 @@ class DistributedTransactionManager:
             return False
     
     async def execute_saga_transaction(self, transaction_id: str) -> bool:
-        """Execute saga pattern transaction"""
-        
+        """Execute saga pattern transaction"""        
         transaction = self.active_transactions.get(transaction_id)
         if not transaction:
             logger.error("Transaction not found: %s", transaction_id)
@@ -397,8 +377,7 @@ class DistributedTransactionManager:
             return False
     
     async def _prepare_all_participants(self, transaction: DistributedTransaction) -> bool:
-        """Prepare all transaction participants"""
-        
+        """Prepare all transaction participants"""        
         prepare_tasks = []
         for participant in transaction.participants:
             task = asyncio.create_task(self._prepare_participant(participant, transaction))
@@ -426,8 +405,7 @@ class DistributedTransactionManager:
         return all_prepared
     
     async def _commit_all_participants(self, transaction: DistributedTransaction) -> bool:
-        """Commit all transaction participants"""
-        
+        """Commit all transaction participants"""        
         commit_tasks = []
         for participant in transaction.participants:
             if participant.state == ParticipantState.PREPARED:
@@ -459,8 +437,7 @@ class DistributedTransactionManager:
     
     async def _prepare_participant(self, participant: ServiceParticipant, 
                                  transaction: DistributedTransaction) -> bool:
-        """Prepare individual participant"""
-        
+        """Prepare individual participant"""        
         try:
             async with aiohttp.ClientSession() as session:
                 prepare_data = {
@@ -493,8 +470,7 @@ class DistributedTransactionManager:
     
     async def _commit_participant(self, participant: ServiceParticipant, 
                                 transaction: DistributedTransaction) -> bool:
-        """Commit individual participant"""
-        
+        """Commit individual participant"""        
         try:
             async with aiohttp.ClientSession() as session:
                 commit_data = {
@@ -526,8 +502,7 @@ class DistributedTransactionManager:
     
     async def _abort_transaction(self, transaction: DistributedTransaction, 
                                state: DistributedTransactionState) -> None:
-        """Abort transaction and notify participants"""
-        
+        """Abort transaction and notify participants"""        
         transaction.state = state
         transaction.completed_at = datetime.now(timezone.utc)
         
@@ -548,8 +523,7 @@ class DistributedTransactionManager:
     
     async def _abort_participant(self, participant: ServiceParticipant, 
                                transaction: DistributedTransaction) -> None:
-        """Abort individual participant"""
-        
+        """Abort individual participant"""        
         try:
             async with aiohttp.ClientSession() as session:
                 abort_data = {
@@ -573,8 +547,7 @@ class DistributedTransactionManager:
             logger.error("Abort failed for participant %s: %s", participant.service_id, str(e))
     
     async def _persist_transaction_state(self, transaction: DistributedTransaction) -> None:
-        """Persist transaction state to Redis"""
-        
+        """Persist transaction state to Redis"""        
         if not self.redis_client:
             return
         
@@ -610,8 +583,7 @@ class DistributedTransactionManager:
             logger.error("Failed to persist transaction state: %s", str(e))
     
     async def get_transaction_status(self, transaction_id: str) -> Optional[Dict[str, Any]]:
-        """Get transaction status"""
-        
+        """Get transaction status"""        
         transaction = self.active_transactions.get(transaction_id)
         if transaction:
             return {
@@ -641,8 +613,7 @@ class DistributedTransactionManager:
         return None
     
     async def _monitor_transactions(self) -> None:
-        """Background task to monitor transaction health"""
-        while not self._shutdown:
+        """Background task to monitor transaction health"""        while not self._shutdown:
             try:
                 current_time = datetime.now(timezone.utc)
                 
@@ -658,8 +629,7 @@ class DistributedTransactionManager:
                 await asyncio.sleep(10)
     
     async def _cleanup_expired_transactions(self) -> None:
-        """Cleanup expired transactions from memory"""
-        while not self._shutdown:
+        """Cleanup expired transactions from memory"""        while not self._shutdown:
             try:
                 expired_transactions = []
                 
@@ -684,8 +654,7 @@ class DistributedTransactionManager:
                 await asyncio.sleep(60)
     
     async def shutdown(self) -> None:
-        """Graceful shutdown"""
-        logger.info("Shutting down DistributedTransactionManager...")
+        """Graceful shutdown"""        logger.info("Shutting down DistributedTransactionManager...")
         self._shutdown = True
         
         # Abort all active transactions

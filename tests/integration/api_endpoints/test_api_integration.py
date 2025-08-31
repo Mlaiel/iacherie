@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Simplified API Integration Tests
+"""Simplified API Integration Tests
 
 Comprehensive integration tests for all API endpoints with mock responses
 to validate endpoint structure, authentication, validation, and error handling.
@@ -23,7 +20,6 @@ to validate endpoint structure, authentication, validation, and error handling.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -41,58 +37,47 @@ MOCK_AUTH_TOKEN = "mock_jwt_token_123"
 
 
 class MockAPIClient:
-    """Mock API test client that simulates responses without actual HTTP calls."""
-    
+    """Mock API test client that simulates responses without actual HTTP calls."""    
     def __init__(self):
         self.auth_token: Optional[str] = None
         self.user_id: str = MOCK_USER_ID
         
     async def __aenter__(self):
-        """Async context manager entry."""
-        return self
+        """Async context manager entry."""        return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        pass
+        """Async context manager exit."""        pass
     
     async def authenticate(self):
-        """Mock authentication and store auth token."""
-        self.auth_token = MOCK_AUTH_TOKEN
+        """Mock authentication and store auth token."""        self.auth_token = MOCK_AUTH_TOKEN
         return True
     
     def get_auth_headers(self) -> Dict[str, str]:
-        """Get authorization headers."""
-        headers = {"Content-Type": "application/json"}
+        """Get authorization headers."""        headers = {"Content-Type": "application/json"}
         if self.auth_token:
             headers["Authorization"] = f"Bearer {self.auth_token}"
         return headers
     
     def _mock_response(self, status: int, data: Any = None):
-        """Create a mock response."""
-        response = Mock()
+        """Create a mock response."""        response = Mock()
         response.status = status
         response.json = AsyncMock(return_value=data or {})
         return response
     
     async def post(self, endpoint: str, data: Any = None):
-        """Mock POST request."""
-        return self._handle_mock_request("POST", endpoint, data=data)
+        """Mock POST request."""        return self._handle_mock_request("POST", endpoint, data=data)
     
     async def get(self, endpoint: str):
-        """Mock GET request."""
-        return self._handle_mock_request("GET", endpoint)
+        """Mock GET request."""        return self._handle_mock_request("GET", endpoint)
     
     async def put(self, endpoint: str, data: Any = None):
-        """Mock PUT request."""
-        return self._handle_mock_request("PUT", endpoint, data=data)
+        """Mock PUT request."""        return self._handle_mock_request("PUT", endpoint, data=data)
     
     async def delete(self, endpoint: str):
-        """Mock DELETE request."""
-        return self._handle_mock_request("DELETE", endpoint)
+        """Mock DELETE request."""        return self._handle_mock_request("DELETE", endpoint)
     
     def _handle_mock_request(self, method: str, endpoint: str, data: Any = None):
-        """Handle mock request and return appropriate response."""
-        # Simulate different endpoints
+        """Handle mock request and return appropriate response."""        # Simulate different endpoints
         if "/auth/login" in endpoint:
             return self._mock_response(200, {
                 "access_token": MOCK_AUTH_TOKEN,
@@ -146,13 +131,11 @@ class MockAPIClient:
 
 
 class TestAuthenticationIntegration:
-    """Test authentication endpoints integration."""
-    
+    """Test authentication endpoints integration."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_registration_flow(self):
-        """Test complete user registration flow."""
-        async with MockAPIClient() as client:
+        """Test complete user registration flow."""        async with MockAPIClient() as client:
             user_data = {
                 "email": f"test_{uuid.uuid4().hex[:8]}@example.com",
                 "password": "secure_password_123",
@@ -172,8 +155,7 @@ class TestAuthenticationIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_login_flow(self):
-        """Test user login flow."""
-        async with MockAPIClient() as client:
+        """Test user login flow."""        async with MockAPIClient() as client:
             login_data = {"email": "test@example.com", "password": "password123"}
             response = await client.post("/auth/login", login_data)
             
@@ -186,8 +168,7 @@ class TestAuthenticationIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_authenticated_request(self):
-        """Test authenticated API request."""
-        async with MockAPIClient() as client:
+        """Test authenticated API request."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             headers = client.get_auth_headers()
@@ -196,13 +177,11 @@ class TestAuthenticationIntegration:
 
 
 class TestContentManagementIntegration:
-    """Test content management endpoints integration."""
-    
+    """Test content management endpoints integration."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_upload_flow(self):
-        """Test content upload workflow."""
-        async with MockAPIClient() as client:
+        """Test content upload workflow."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             content_data = {
@@ -223,8 +202,7 @@ class TestContentManagementIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_content_lifecycle(self):
-        """Test complete content lifecycle (upload, update, delete)."""
-        async with MockAPIClient() as client:
+        """Test complete content lifecycle (upload, update, delete)."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             # Upload
@@ -250,13 +228,11 @@ class TestContentManagementIntegration:
 
 
 class TestFingerprintingIntegration:
-    """Test fingerprinting system integration."""
-    
+    """Test fingerprinting system integration."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_fingerprint_creation(self):
-        """Test fingerprint creation process."""
-        async with MockAPIClient() as client:
+        """Test fingerprint creation process."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             fingerprint_data = {
@@ -275,8 +251,7 @@ class TestFingerprintingIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_fingerprint_search(self):
-        """Test fingerprint search functionality."""
-        async with MockAPIClient() as client:
+        """Test fingerprint search functionality."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             search_data = {
@@ -292,13 +267,11 @@ class TestFingerprintingIntegration:
 
 
 class TestProtectionIntegration:
-    """Test content protection system integration."""
-    
+    """Test content protection system integration."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_monitoring_activation(self):
-        """Test content monitoring activation."""
-        async with MockAPIClient() as client:
+        """Test content monitoring activation."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             monitoring_data = {
@@ -317,8 +290,7 @@ class TestProtectionIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_protection_workflow(self):
-        """Test complete protection workflow."""
-        async with MockAPIClient() as client:
+        """Test complete protection workflow."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             # Enable monitoring
@@ -341,13 +313,11 @@ class TestProtectionIntegration:
 
 
 class TestAnalyticsIntegration:
-    """Test analytics system integration."""
-    
+    """Test analytics system integration."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_analytics_retrieval(self):
-        """Test analytics data retrieval."""
-        async with MockAPIClient() as client:
+        """Test analytics data retrieval."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             response = await client.get("/analytics/content/test_content_123")
@@ -361,8 +331,7 @@ class TestAnalyticsIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_revenue_tracking(self):
-        """Test revenue tracking functionality."""
-        async with MockAPIClient() as client:
+        """Test revenue tracking functionality."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             response = await client.get("/analytics/revenue")
@@ -373,13 +342,11 @@ class TestAnalyticsIntegration:
 
 
 class TestCollaborationIntegration:
-    """Test collaboration system integration."""
-    
+    """Test collaboration system integration."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_collaborator_matching(self):
-        """Test collaborator matching system."""
-        async with MockAPIClient() as client:
+        """Test collaborator matching system."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             search_criteria = {
@@ -397,8 +364,7 @@ class TestCollaborationIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_collaboration_workflow(self):
-        """Test complete collaboration workflow."""
-        async with MockAPIClient() as client:
+        """Test complete collaboration workflow."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             # Find collaborators
@@ -420,13 +386,11 @@ class TestCollaborationIntegration:
 
 
 class TestErrorHandlingIntegration:
-    """Test API error handling and validation."""
-    
+    """Test API error handling and validation."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_unauthenticated_request(self):
-        """Test unauthenticated request handling."""
-        async with MockAPIClient() as client:
+        """Test unauthenticated request handling."""        async with MockAPIClient() as client:
             # Don't authenticate
             headers = client.get_auth_headers()
             
@@ -436,8 +400,7 @@ class TestErrorHandlingIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_malformed_data_handling(self):
-        """Test handling of malformed request data."""
-        async with MockAPIClient() as client:
+        """Test handling of malformed request data."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             # Send incomplete data
@@ -450,13 +413,11 @@ class TestErrorHandlingIntegration:
 
 
 class TestPerformanceIntegration:
-    """Test performance characteristics in integration scenarios."""
-    
+    """Test performance characteristics in integration scenarios."""    
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_concurrent_api_requests(self):
-        """Test concurrent API request handling."""
-        import time
+        """Test concurrent API request handling."""        import time
         
         async def make_request():
             async with MockAPIClient() as client:
@@ -482,8 +443,7 @@ class TestPerformanceIntegration:
     @pytest.mark.integration
     @pytest.mark.asyncio
     async def test_large_payload_handling(self):
-        """Test handling of large request payloads."""
-        async with MockAPIClient() as client:
+        """Test handling of large request payloads."""        async with MockAPIClient() as client:
             await client.authenticate()
             
             large_data = {

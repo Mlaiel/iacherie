@@ -1,5 +1,4 @@
-"""
-👥 Audience Repository - IA Influencer Agent Platform Enterprise
+"""👥 Audience Repository - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/repositories/audience_repository.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -22,7 +21,6 @@ Audience Segmentation → Behavior Analysis → Engagement Tracking →
 Growth Optimization → Trend Prediction → Content Personalization → 
 Cross-Platform Insights → ROI Analysis
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 import logging
 import asyncio
@@ -34,8 +32,7 @@ from enum import Enum
 from .base_repository import BaseRepository, AsyncBaseRepository, OperationType
 
 class AudiencePlatform(Enum):
-    """Audience tracking platforms"""
-    YOUTUBE = "youtube"
+    """Audience tracking platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -46,8 +43,7 @@ class AudiencePlatform(Enum):
     DISCORD = "discord"
 
 class EngagementType(Enum):
-    """Types of audience engagement"""
-    LIKE = "like"
+    """Types of audience engagement"""    LIKE = "like"
     COMMENT = "comment"
     SHARE = "share"
     SAVE = "save"
@@ -59,8 +55,7 @@ class EngagementType(Enum):
     SUBSCRIBE = "subscribe"
 
 class AudienceSegment(Enum):
-    """Audience segmentation categories"""
-    DEMOGRAPHICS = "demographics"
+    """Audience segmentation categories"""    DEMOGRAPHICS = "demographics"
     GEOGRAPHIC = "geographic"
     BEHAVIORAL = "behavioral"
     PSYCHOGRAPHIC = "psychographic"
@@ -69,8 +64,7 @@ class AudienceSegment(Enum):
     CONTENT_INTEREST = "content_interest"
 
 class GrowthMetric(Enum):
-    """Growth tracking metrics"""
-    FOLLOWER_GROWTH = "follower_growth"
+    """Growth tracking metrics"""    FOLLOWER_GROWTH = "follower_growth"
     ENGAGEMENT_RATE = "engagement_rate"
     REACH_GROWTH = "reach_growth"
     CONVERSION_RATE = "conversion_rate"
@@ -79,8 +73,7 @@ class GrowthMetric(Enum):
 
 @dataclass
 class AudienceDemographics:
-    """Audience demographic data"""
-    age_distribution: Dict[str, float]  # age ranges to percentages
+    """Audience demographic data"""    age_distribution: Dict[str, float]  # age ranges to percentages
     gender_distribution: Dict[str, float]
     location_distribution: Dict[str, float]  # countries/cities to percentages
     language_distribution: Dict[str, float]
@@ -92,8 +85,7 @@ class AudienceDemographics:
 
 @dataclass
 class EngagementMetrics:
-    """Engagement tracking metrics"""
-    content_id: str
+    """Engagement tracking metrics"""    content_id: str
     platform: AudiencePlatform
     timestamp: datetime
     engagement_type: EngagementType
@@ -108,8 +100,7 @@ class EngagementMetrics:
 
 @dataclass
 class AudienceInsight:
-    """Audience behavior insights"""
-    insight_id: str
+    """Audience behavior insights"""    insight_id: str
     creator_id: str
     platform: AudiencePlatform
     insight_type: str
@@ -124,8 +115,7 @@ class AudienceInsight:
 
 @dataclass
 class GrowthStrategy:
-    """Audience growth strategy"""
-    strategy_id: str
+    """Audience growth strategy"""    strategy_id: str
     creator_id: str
     target_platforms: List[AudiencePlatform]
     growth_goals: Dict[str, float]
@@ -138,8 +128,7 @@ class GrowthStrategy:
 
 @dataclass
 class ContentPersonalization:
-    """Content personalization recommendations"""
-    recommendation_id: str
+    """Content personalization recommendations"""    recommendation_id: str
     creator_id: str
     audience_segment: str
     content_suggestions: List[Dict[str, Any]]
@@ -151,8 +140,7 @@ class ContentPersonalization:
 
 @dataclass
 class AudienceRetention:
-    """Audience retention analysis"""
-    analysis_id: str
+    """Audience retention analysis"""    analysis_id: str
     creator_id: str
     platform: AudiencePlatform
     retention_rate: float
@@ -164,8 +152,7 @@ class AudienceRetention:
     predicted_lifetime_value: float
 
 class AudienceRepository(BaseRepository):
-    """
-    Advanced audience repository for comprehensive audience management
+    """    Advanced audience repository for comprehensive audience management
     
     Features:
     - Multi-platform audience analytics
@@ -176,8 +163,7 @@ class AudienceRepository(BaseRepository):
     - Retention analysis
     - Cross-platform correlation
     - Predictive analytics
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None, logger=None,
                  audit_service=None, metrics_collector=None, analytics_service=None,
                  ai_service=None, platform_apis=None):
@@ -201,8 +187,7 @@ class AudienceRepository(BaseRepository):
         }
 
     def create(self, entity, **kwargs):
-        """Create audience entity"""
-        self._validate_entity(entity)
+        """Create audience entity"""        self._validate_entity(entity)
         
         # Generate ID if not provided
         if hasattr(entity, 'insight_id') and not entity.insight_id:
@@ -230,8 +215,7 @@ class AudienceRepository(BaseRepository):
         return created_entity
 
     def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get audience entity by ID"""
-        if use_cache and self._cache_enabled and self.cache:
+        """Get audience entity by ID"""        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_audience_by_id", entity_id=entity_id)
             cached_result = self.cache.get(cache_key)
             if cached_result:
@@ -247,8 +231,7 @@ class AudienceRepository(BaseRepository):
         return audience_entity
 
     def update(self, entity, **kwargs):
-        """Update audience entity"""
-        self._validate_entity(entity)
+        """Update audience entity"""        self._validate_entity(entity)
         
         # Get current entity for audit
         current_entity = self.get_by_id(self._get_entity_id(entity), use_cache=False)
@@ -277,8 +260,7 @@ class AudienceRepository(BaseRepository):
         return updated_entity
 
     def delete(self, entity_id: str, soft_delete: bool = False):
-        """Delete audience entity"""
-        # Get entity for audit
+        """Delete audience entity"""        # Get entity for audit
         entity = self.get_by_id(entity_id, use_cache=False)
         if not entity:
             return False
@@ -304,8 +286,7 @@ class AudienceRepository(BaseRepository):
 
     def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
              offset: int = 0, order_by: str = None):
-        """List audience entities with filters"""
-        filters = filters or {}
+        """List audience entities with filters"""        filters = filters or {}
         
         # Check cache for list results
         if self._cache_enabled and self.cache:
@@ -325,8 +306,7 @@ class AudienceRepository(BaseRepository):
 
     def track_engagement(self, content_id: str, platform: AudiencePlatform,
                         engagement_data: Dict[str, Any]) -> EngagementMetrics:
-        """Track audience engagement event"""
-        try:
+        """Track audience engagement event"""        try:
             engagement = EngagementMetrics(
                 content_id=content_id,
                 platform=platform,
@@ -362,8 +342,7 @@ class AudienceRepository(BaseRepository):
 
     def analyze_audience_demographics(self, creator_id: str, platform: AudiencePlatform = None,
                                     time_range: str = "30d") -> AudienceDemographics:
-        """Analyze audience demographics"""
-        try:
+        """Analyze audience demographics"""        try:
             # Get engagement data
             engagement_data = self._fetch_engagement_data(creator_id, platform, time_range)
             
@@ -383,8 +362,7 @@ class AudienceRepository(BaseRepository):
 
     def generate_audience_insights(self, creator_id: str, platforms: List[AudiencePlatform] = None,
                                  insight_types: List[str] = None) -> List[AudienceInsight]:
-        """Generate AI-powered audience insights"""
-        try:
+        """Generate AI-powered audience insights"""        try:
             platforms = platforms or list(AudiencePlatform)
             insight_types = insight_types or ['engagement', 'growth', 'content', 'timing']
             
@@ -414,8 +392,7 @@ class AudienceRepository(BaseRepository):
     def create_growth_strategy(self, creator_id: str, growth_goals: Dict[str, float],
                              target_platforms: List[AudiencePlatform] = None,
                              timeline_months: int = 6) -> GrowthStrategy:
-        """Create AI-optimized growth strategy"""
-        try:
+        """Create AI-optimized growth strategy"""        try:
             target_platforms = target_platforms or list(AudiencePlatform)
             
             # Analyze current performance
@@ -442,8 +419,7 @@ class AudienceRepository(BaseRepository):
 
     def get_content_personalization(self, creator_id: str, audience_segment: str = None,
                                   content_types: List[str] = None) -> List[ContentPersonalization]:
-        """Get personalized content recommendations"""
-        try:
+        """Get personalized content recommendations"""        try:
             # Get audience segments
             segments = [audience_segment] if audience_segment else self._get_audience_segments(creator_id)
             content_types = content_types or ['video', 'image', 'audio', 'text']
@@ -475,8 +451,7 @@ class AudienceRepository(BaseRepository):
 
     def analyze_audience_retention(self, creator_id: str, platform: AudiencePlatform,
                                  analysis_period: str = "90d") -> AudienceRetention:
-        """Analyze audience retention and churn"""
-        try:
+        """Analyze audience retention and churn"""        try:
             # Get retention data
             retention_data = self._fetch_retention_data(creator_id, platform, analysis_period)
             
@@ -499,8 +474,7 @@ class AudienceRepository(BaseRepository):
             raise
 
     def get_cross_platform_correlation(self, creator_id: str, metrics: List[str] = None) -> Dict[str, Any]:
-        """Analyze cross-platform audience correlation"""
-        try:
+        """Analyze cross-platform audience correlation"""        try:
             metrics = metrics or ['engagement_rate', 'growth_rate', 'conversion_rate']
             
             # Get data from all platforms
@@ -533,8 +507,7 @@ class AudienceRepository(BaseRepository):
 
     def predict_audience_growth(self, creator_id: str, prediction_period: str = "30d",
                               scenarios: List[str] = None) -> Dict[str, Any]:
-        """Predict audience growth using AI"""
-        try:
+        """Predict audience growth using AI"""        try:
             scenarios = scenarios or ['current_trend', 'optimistic', 'pessimistic', 'with_strategy']
             
             # Get historical data
@@ -570,8 +543,7 @@ class AudienceRepository(BaseRepository):
 
     def get_engagement_analytics(self, creator_id: str, platform: AudiencePlatform = None,
                                time_range: str = "30d") -> Dict[str, Any]:
-        """Get comprehensive engagement analytics"""
-        try:
+        """Get comprehensive engagement analytics"""        try:
             # Get engagement data
             if platform:
                 platforms = [platform]
@@ -611,81 +583,66 @@ class AudienceRepository(BaseRepository):
     # Private helper methods
 
     def _generate_entity_id(self, entity_type: str) -> str:
-        """Generate unique entity ID"""
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        """Generate unique entity ID"""        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         random_hash = hashlib.md5(str(datetime.now()).encode()).hexdigest()[:8]
         return f"{entity_type}_{timestamp}_{random_hash}"
 
     def _get_entity_id(self, entity) -> str:
-        """Get entity ID from entity object"""
-        for id_field in ['insight_id', 'strategy_id', 'recommendation_id', 'analysis_id']:
+        """Get entity ID from entity object"""        for id_field in ['insight_id', 'strategy_id', 'recommendation_id', 'analysis_id']:
             if hasattr(entity, id_field):
                 return getattr(entity, id_field)
         return None
 
     def _store_audience_entity(self, entity):
-        """Store audience entity in database"""
-        # Implementation would store in database
+        """Store audience entity in database"""        # Implementation would store in database
         return entity
 
     def _trigger_real_time_processing(self, entity):
-        """Trigger real-time processing"""
-        # Implementation would trigger real-time processing
+        """Trigger real-time processing"""        # Implementation would trigger real-time processing
         pass
 
     def _fetch_audience_by_id(self, entity_id: str):
-        """Fetch audience entity by ID"""
-        # Implementation would fetch from database
+        """Fetch audience entity by ID"""        # Implementation would fetch from database
         return None
 
     def _update_audience_entity(self, entity):
-        """Update audience entity in database"""
-        # Implementation would update database
+        """Update audience entity in database"""        # Implementation would update database
         return entity
 
     def _should_update_insights(self, current_entity, updated_entity) -> bool:
-        """Check if insights should be updated"""
-        # Implementation would check for significant changes
+        """Check if insights should be updated"""        # Implementation would check for significant changes
         return True
 
     def _update_related_insights(self, entity):
-        """Update related insights"""
-        # Implementation would update insights
+        """Update related insights"""        # Implementation would update insights
         pass
 
     def _delete_audience_entity(self, entity_id: str, soft_delete: bool) -> bool:
-        """Delete audience entity"""
-        # Implementation would delete from database
+        """Delete audience entity"""        # Implementation would delete from database
         return True
 
     def _fetch_audience_list(self, filters, limit, offset, order_by):
-        """Fetch audience entities list"""
-        # Implementation would fetch from database
+        """Fetch audience entities list"""        # Implementation would fetch from database
         return []
 
     def _store_engagement_metrics(self, engagement: EngagementMetrics) -> EngagementMetrics:
-        """Store engagement metrics"""
-        # Implementation would store engagement data
+        """Store engagement metrics"""        # Implementation would store engagement data
         return engagement
 
     def _update_real_time_analytics(self, engagement: EngagementMetrics):
-        """Update real-time analytics"""
-        # Implementation would update real-time analytics
+        """Update real-time analytics"""        # Implementation would update real-time analytics
         pass
 
     def _check_insight_triggers(self, engagement: EngagementMetrics):
-        """Check if insights should be triggered"""
-        # Implementation would check triggers
+        """Check if insights should be triggered"""        # Implementation would check triggers
         pass
 
     def _fetch_engagement_data(self, creator_id: str, platform: AudiencePlatform, time_range: str):
-        """Fetch engagement data"""
-        # Implementation would fetch engagement data
+        """Fetch engagement data"""        # Implementation would fetch engagement data
         return []
 
     def _analyze_demographics_with_ai(self, engagement_data) -> AudienceDemographics:
-        """Analyze demographics using AI"""
-        # Implementation would use AI for analysis
+        """Analyze demographics using AI"""        # Implementation would use AI for analysis
         return AudienceDemographics(
             age_distribution={},
             gender_distribution={},
@@ -699,13 +656,11 @@ class AudienceRepository(BaseRepository):
         )
 
     def _store_demographics_analysis(self, creator_id: str, platform: AudiencePlatform, demographics: AudienceDemographics):
-        """Store demographics analysis"""
-        # Implementation would store analysis
+        """Store demographics analysis"""        # Implementation would store analysis
         pass
 
     def _generate_platform_insight(self, creator_id: str, platform: AudiencePlatform, insight_type: str) -> Optional[AudienceInsight]:
-        """Generate platform-specific insight"""
-        # Implementation would generate insights using AI
+        """Generate platform-specific insight"""        # Implementation would generate insights using AI
         return AudienceInsight(
             insight_id=self._generate_entity_id('insight'),
             creator_id=creator_id,
@@ -722,20 +677,17 @@ class AudienceRepository(BaseRepository):
         )
 
     def _impact_score(self, impact_potential: str) -> float:
-        """Convert impact potential to numeric score"""
-        impact_scores = {'low': 0.3, 'medium': 0.6, 'high': 1.0}
+        """Convert impact potential to numeric score"""        impact_scores = {'low': 0.3, 'medium': 0.6, 'high': 1.0}
         return impact_scores.get(impact_potential, 0.5)
 
     def _analyze_current_performance(self, creator_id: str, platforms: List[AudiencePlatform]) -> Dict[str, Any]:
-        """Analyze current performance"""
-        # Implementation would analyze performance
+        """Analyze current performance"""        # Implementation would analyze performance
         return {}
 
     def _generate_growth_strategy_with_ai(self, creator_id: str, growth_goals: Dict[str, float],
                                         platforms: List[AudiencePlatform], timeline_months: int,
                                         current_metrics: Dict[str, Any]) -> GrowthStrategy:
-        """Generate growth strategy using AI"""
-        # Implementation would use AI to generate strategy
+        """Generate growth strategy using AI"""        # Implementation would use AI to generate strategy
         return GrowthStrategy(
             strategy_id=self._generate_entity_id('strategy'),
             creator_id=creator_id,
@@ -750,18 +702,15 @@ class AudienceRepository(BaseRepository):
         )
 
     def _initialize_strategy_tracking(self, strategy: GrowthStrategy):
-        """Initialize strategy tracking"""
-        # Implementation would initialize tracking
+        """Initialize strategy tracking"""        # Implementation would initialize tracking
         pass
 
     def _get_audience_segments(self, creator_id: str) -> List[str]:
-        """Get audience segments for creator"""
-        # Implementation would get segments
+        """Get audience segments for creator"""        # Implementation would get segments
         return []
 
     def _generate_content_personalization(self, creator_id: str, segment: str, content_type: str) -> Optional[ContentPersonalization]:
-        """Generate content personalization"""
-        # Implementation would generate personalization
+        """Generate content personalization"""        # Implementation would generate personalization
         return ContentPersonalization(
             recommendation_id=self._generate_entity_id('recommendation'),
             creator_id=creator_id,
@@ -775,13 +724,11 @@ class AudienceRepository(BaseRepository):
         )
 
     def _fetch_retention_data(self, creator_id: str, platform: AudiencePlatform, period: str):
-        """Fetch retention data"""
-        # Implementation would fetch retention data
+        """Fetch retention data"""        # Implementation would fetch retention data
         return {}
 
     def _analyze_retention_with_ai(self, retention_data) -> AudienceRetention:
-        """Analyze retention using AI"""
-        # Implementation would analyze retention
+        """Analyze retention using AI"""        # Implementation would analyze retention
         return AudienceRetention(
             analysis_id=self._generate_entity_id('analysis'),
             creator_id="",
@@ -796,13 +743,11 @@ class AudienceRepository(BaseRepository):
         )
 
     def _store_retention_analysis(self, analysis: AudienceRetention) -> AudienceRetention:
-        """Store retention analysis"""
-        # Implementation would store analysis
+        """Store retention analysis"""        # Implementation would store analysis
         return analysis
 
     def _generate_retention_improvement_recommendations(self, analysis: AudienceRetention):
-        """Generate retention improvement recommendations"""
-        try:
+        """Generate retention improvement recommendations"""        try:
             recommendations = []
             
             # Analyze churn patterns and generate specific recommendations
@@ -855,89 +800,72 @@ class AudienceRepository(BaseRepository):
             return []
 
     def _fetch_platform_metrics(self, creator_id: str, platform: AudiencePlatform, metrics: List[str]):
-        """Fetch platform metrics"""
-        # Implementation would fetch metrics
+        """Fetch platform metrics"""        # Implementation would fetch metrics
         return {}
 
     def _calculate_cross_platform_correlations(self, platform_data: Dict[str, Any], metrics: List[str]) -> Dict[str, Any]:
-        """Calculate cross-platform correlations"""
-        # Implementation would calculate correlations
+        """Calculate cross-platform correlations"""        # Implementation would calculate correlations
         return {}
 
     def _generate_correlation_insights(self, correlations: Dict[str, Any]) -> List[str]:
-        """Generate correlation insights"""
-        # Implementation would generate insights
+        """Generate correlation insights"""        # Implementation would generate insights
         return []
 
     def _generate_correlation_recommendations(self, correlations: Dict[str, Any]) -> List[str]:
-        """Generate correlation recommendations"""
-        # Implementation would generate recommendations
+        """Generate correlation recommendations"""        # Implementation would generate recommendations
         return []
 
     def _identify_sync_opportunities(self, correlations: Dict[str, Any]) -> List[str]:
-        """Identify synchronization opportunities"""
-        # Implementation would identify opportunities
+        """Identify synchronization opportunities"""        # Implementation would identify opportunities
         return []
 
     def _fetch_historical_growth_data(self, creator_id: str) -> Dict[str, Any]:
-        """Fetch historical growth data"""
-        # Implementation would fetch historical data
+        """Fetch historical growth data"""        # Implementation would fetch historical data
         return {}
 
     def _predict_growth_scenario(self, historical_data: Dict[str, Any], scenario: str, period: str) -> Dict[str, Any]:
-        """Predict growth scenario"""
-        # Implementation would predict growth
+        """Predict growth scenario"""        # Implementation would predict growth
         return {}
 
     def _calculate_prediction_confidence(self, predictions: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate prediction confidence"""
-        # Implementation would calculate confidence
+        """Calculate prediction confidence"""        # Implementation would calculate confidence
         return {}
 
     def _generate_growth_recommendations(self, predictions: Dict[str, Any]) -> List[str]:
-        """Generate growth recommendations"""
-        # Implementation would generate recommendations
+        """Generate growth recommendations"""        # Implementation would generate recommendations
         return []
 
     def _analyze_growth_factors(self, historical_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze growth factors"""
-        # Implementation would analyze factors
+        """Analyze growth factors"""        # Implementation would analyze factors
         return {}
 
     def _assess_growth_risks(self, predictions: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess growth risks"""
-        # Implementation would assess risks
+        """Assess growth risks"""        # Implementation would assess risks
         return {}
 
     def _calculate_platform_engagement_analytics(self, creator_id: str, platform: AudiencePlatform, time_range: str) -> Dict[str, Any]:
-        """Calculate platform engagement analytics"""
-        # Implementation would calculate analytics
+        """Calculate platform engagement analytics"""        # Implementation would calculate analytics
         return {}
 
     def _calculate_overall_engagement_analytics(self, platform_analytics: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate overall engagement analytics"""
-        # Implementation would calculate overall analytics
+        """Calculate overall engagement analytics"""        # Implementation would calculate overall analytics
         return {}
 
     def _generate_engagement_insights(self, analytics: Dict[str, Any]) -> List[str]:
-        """Generate engagement insights"""
-        # Implementation would generate insights
+        """Generate engagement insights"""        # Implementation would generate insights
         return []
 
     def _get_engagement_benchmarks(self, creator_id: str) -> Dict[str, Any]:
-        """Get engagement benchmarks"""
-        # Implementation would get benchmarks
+        """Get engagement benchmarks"""        # Implementation would get benchmarks
         return {}
 
     def _identify_engagement_optimization_opportunities(self, analytics: Dict[str, Any]) -> List[str]:
-        """Identify engagement optimization opportunities"""
-        # Implementation would identify opportunities
+        """Identify engagement optimization opportunities"""        # Implementation would identify opportunities
         return []
 
 
 class AsyncAudienceRepository(AsyncBaseRepository):
-    """
-    Advanced asynchronous audience repository for high-performance analytics
+    """    Advanced asynchronous audience repository for high-performance analytics
     
     Features:
     - Concurrent multi-platform analysis
@@ -945,8 +873,7 @@ class AsyncAudienceRepository(AsyncBaseRepository):
     - Parallel insight generation
     - Async demographic analysis
     - Batch processing for large datasets
-    """
-    
+    """    
     def __init__(self, db_connection=None, cache_manager=None, logger=None,
                  audit_service=None, metrics_collector=None, analytics_service=None,
                  ai_service=None, platform_apis=None):
@@ -962,8 +889,7 @@ class AsyncAudienceRepository(AsyncBaseRepository):
         )
 
     async def create(self, entity, **kwargs):
-        """Create audience entity asynchronously"""
-        await self._validate_entity(entity)
+        """Create audience entity asynchronously"""        await self._validate_entity(entity)
         
         # Generate ID if not provided
         if hasattr(entity, 'insight_id') and not entity.insight_id:
@@ -991,8 +917,7 @@ class AsyncAudienceRepository(AsyncBaseRepository):
         return created_entity
 
     async def get_by_id(self, entity_id: str, use_cache: bool = True):
-        """Get audience entity by ID asynchronously"""
-        if use_cache and self._cache_enabled and self.cache:
+        """Get audience entity by ID asynchronously"""        if use_cache and self._cache_enabled and self.cache:
             cache_key = self._generate_cache_key("get_audience_by_id", entity_id=entity_id)
             cached_result = await self.cache.get_async(cache_key)
             if cached_result:
@@ -1008,8 +933,7 @@ class AsyncAudienceRepository(AsyncBaseRepository):
         return audience_entity
 
     async def update(self, entity, **kwargs):
-        """Update audience entity asynchronously"""
-        await self._validate_entity(entity)
+        """Update audience entity asynchronously"""        await self._validate_entity(entity)
         
         # Get current entity for audit
         current_entity = await self.get_by_id(self.sync_repo._get_entity_id(entity), use_cache=False)
@@ -1038,8 +962,7 @@ class AsyncAudienceRepository(AsyncBaseRepository):
         return updated_entity
 
     async def delete(self, entity_id: str, soft_delete: bool = False):
-        """Delete audience entity asynchronously"""
-        # Get entity for audit
+        """Delete audience entity asynchronously"""        # Get entity for audit
         entity = await self.get_by_id(entity_id, use_cache=False)
         if not entity:
             return False
@@ -1065,8 +988,7 @@ class AsyncAudienceRepository(AsyncBaseRepository):
 
     async def list(self, filters: Dict[str, Any] = None, limit: int = 100, 
                   offset: int = 0, order_by: str = None):
-        """List audience entities with filters asynchronously"""
-        filters = filters or {}
+        """List audience entities with filters asynchronously"""        filters = filters or {}
         
         # Check cache for list results
         if self._cache_enabled and self.cache:
@@ -1085,8 +1007,7 @@ class AsyncAudienceRepository(AsyncBaseRepository):
         return audience_list
 
     async def batch_track_engagement(self, engagement_events: List[Dict[str, Any]]) -> List[EngagementMetrics]:
-        """Track multiple engagement events concurrently"""
-        try:
+        """Track multiple engagement events concurrently"""        try:
             semaphore = asyncio.Semaphore(self._max_concurrent_operations)
             
             async def track_engagement_with_semaphore(event_data):
@@ -1111,8 +1032,7 @@ class AsyncAudienceRepository(AsyncBaseRepository):
 
     async def generate_multi_platform_insights_async(self, creator_id: str, 
                                                    platforms: List[AudiencePlatform] = None) -> List[AudienceInsight]:
-        """Generate insights for multiple platforms concurrently"""
-        try:
+        """Generate insights for multiple platforms concurrently"""        try:
             platforms = platforms or list(AudiencePlatform)
             insight_types = ['engagement', 'growth', 'content', 'timing']
             
@@ -1151,44 +1071,36 @@ class AsyncAudienceRepository(AsyncBaseRepository):
     # Async versions of private methods
 
     async def _store_audience_entity_async(self, entity):
-        """Store audience entity in database asynchronously"""
-        # Implementation would store in database
+        """Store audience entity in database asynchronously"""        # Implementation would store in database
         return entity
 
     async def _trigger_real_time_processing_async(self, entity):
-        """Trigger real-time processing asynchronously"""
-        # Implementation would trigger real-time processing
+        """Trigger real-time processing asynchronously"""        # Implementation would trigger real-time processing
         pass
 
     async def _fetch_audience_by_id_async(self, entity_id: str):
-        """Fetch audience entity by ID asynchronously"""
-        # Implementation would fetch from database
+        """Fetch audience entity by ID asynchronously"""        # Implementation would fetch from database
         return None
 
     async def _update_audience_entity_async(self, entity):
-        """Update audience entity in database asynchronously"""
-        # Implementation would update database
+        """Update audience entity in database asynchronously"""        # Implementation would update database
         return entity
 
     async def _update_related_insights_async(self, entity):
-        """Update related insights asynchronously"""
-        # Implementation would update insights
+        """Update related insights asynchronously"""        # Implementation would update insights
         pass
 
     async def _delete_audience_entity_async(self, entity_id: str, soft_delete: bool) -> bool:
-        """Delete audience entity asynchronously"""
-        # Implementation would delete from database
+        """Delete audience entity asynchronously"""        # Implementation would delete from database
         return True
 
     async def _fetch_audience_list_async(self, filters, limit, offset, order_by):
-        """Fetch audience entities list asynchronously"""
-        # Implementation would fetch from database
+        """Fetch audience entities list asynchronously"""        # Implementation would fetch from database
         return []
 
     async def _track_engagement_async(self, content_id: str, platform: AudiencePlatform, 
                                     engagement_data: Dict[str, Any]) -> EngagementMetrics:
-        """Track engagement asynchronously"""
-        engagement = EngagementMetrics(
+        """Track engagement asynchronously"""        engagement = EngagementMetrics(
             content_id=content_id,
             platform=platform,
             timestamp=datetime.now(timezone.utc),
@@ -1214,8 +1126,7 @@ class AsyncAudienceRepository(AsyncBaseRepository):
 
     async def _generate_platform_insight_async(self, creator_id: str, platform: AudiencePlatform, 
                                              insight_type: str) -> Optional[AudienceInsight]:
-        """Generate platform-specific insight asynchronously"""
-        # Implementation would generate insights using AI
+        """Generate platform-specific insight asynchronously"""        # Implementation would generate insights using AI
         return AudienceInsight(
             insight_id=self.sync_repo._generate_entity_id('insight'),
             creator_id=creator_id,
@@ -1232,11 +1143,9 @@ class AsyncAudienceRepository(AsyncBaseRepository):
         )
 
     async def _store_engagement_metrics_async(self, engagement: EngagementMetrics) -> EngagementMetrics:
-        """Store engagement metrics asynchronously"""
-        # Implementation would store engagement data
+        """Store engagement metrics asynchronously"""        # Implementation would store engagement data
         return engagement
 
     async def _update_real_time_analytics_async(self, engagement: EngagementMetrics):
-        """Update real-time analytics asynchronously"""
-        # Implementation would update real-time analytics
+        """Update real-time analytics asynchronously"""        # Implementation would update real-time analytics
         pass

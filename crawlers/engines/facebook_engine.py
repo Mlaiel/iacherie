@@ -1,5 +1,4 @@
-"""
-Facebook Crawling Engine
+"""Facebook Crawling Engine
 =======================
 
 Advanced Facebook crawler for content discovery, analytics, and business insights.
@@ -22,7 +21,6 @@ Les contrevenants seront poursuivis selon la loi allemande et internationale.
 • DevOps Engineer : Infrastructure cloud & déploiement
 • Audio/Video Specialist : Traitement multimédia avancé
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Union
@@ -67,8 +65,7 @@ settings = get_settings()
 
 @dataclass
 class FacebookPostData:
-    """Facebook post data structure"""
-    post_id: str
+    """Facebook post data structure"""    post_id: str
     message: str
     story: str
     created_time: datetime
@@ -96,8 +93,7 @@ class FacebookPostData:
 
 @dataclass
 class FacebookPageData:
-    """Facebook page data structure"""
-    page_id: str
+    """Facebook page data structure"""    page_id: str
     name: str
     username: str
     about: str
@@ -131,8 +127,7 @@ class FacebookPageData:
 
 @dataclass
 class FacebookGroupData:
-    """Facebook group data structure"""
-    group_id: str
+    """Facebook group data structure"""    group_id: str
     name: str
     description: str
     privacy: str  # CLOSED, PUBLIC, SECRET
@@ -155,8 +150,7 @@ class FacebookGroupData:
 
 @dataclass
 class FacebookBusinessData:
-    """Facebook business data structure"""
-    business_id: str
+    """Facebook business data structure"""    business_id: str
     name: str
     primary_page: Dict[str, Any]
     accounts: List[Dict[str, Any]]
@@ -176,8 +170,7 @@ class FacebookBusinessData:
 
 
 class FacebookCrawlerEngine(BaseCrawlerEngine):
-    """
-    Advanced Facebook crawler engine with comprehensive API integration.
+    """    Advanced Facebook crawler engine with comprehensive API integration.
     
     Features:
     - Graph API integration for official data access
@@ -189,7 +182,6 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
     - Rate limiting and quota management
     - Content classification and filtering
     """
-
     def __init__(self, 
                  access_token: Optional[str] = None,
                  app_id: Optional[str] = None,
@@ -197,8 +189,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
                  use_selenium: bool = True,
                  proxy_config: Optional[Dict] = None,
                  rate_limit_config: Optional[Dict] = None):
-        """
-        Initialize Facebook crawler engine.
+        """        Initialize Facebook crawler engine.
         
         Args:
             access_token: Facebook Graph API access token
@@ -207,8 +198,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
             use_selenium: Whether to use Selenium for scraping
             proxy_config: Proxy configuration
             rate_limit_config: Rate limiting configuration
-        """
-        super().__init__()
+        """        super().__init__()
         
         # API Configuration
         self.access_token = access_token or settings.FACEBOOK_ACCESS_TOKEN
@@ -251,8 +241,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
             self.proxy_manager = None
 
     async def authenticate(self) -> bool:
-        """Authenticate with Facebook API"""
-        try:
+        """Authenticate with Facebook API"""        try:
             if not self.graph:
                 return False
             
@@ -269,8 +258,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
                           limit: int = 100,
                           post_type: Optional[str] = None,
                           date_range: Optional[tuple] = None) -> List[FacebookPostData]:
-        """
-        Search for Facebook posts by query.
+        """        Search for Facebook posts by query.
         
         Args:
             query: Search query
@@ -280,8 +268,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of FacebookPostData objects
-        """
-        cache_key = f"search_posts_{hashlib.md5(query.encode()).hexdigest()}_{limit}"
+        """        cache_key = f"search_posts_{hashlib.md5(query.encode()).hexdigest()}_{limit}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [FacebookPostData(**post) for post in cached_result]
@@ -325,16 +312,14 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
         return posts
 
     async def get_page_info(self, page_id: str) -> FacebookPageData:
-        """
-        Get comprehensive Facebook page information.
+        """        Get comprehensive Facebook page information.
         
         Args:
             page_id: Facebook page ID or username
         
         Returns:
             FacebookPageData object
-        """
-        cache_key = f"page_info_{page_id}"
+        """        cache_key = f"page_info_{page_id}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return FacebookPageData(**cached_result)
@@ -412,8 +397,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
                            limit: int = 100,
                            since: Optional[datetime] = None,
                            until: Optional[datetime] = None) -> List[FacebookPostData]:
-        """
-        Get posts from a Facebook page.
+        """        Get posts from a Facebook page.
         
         Args:
             page_id: Facebook page ID or username
@@ -423,8 +407,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
         
         Returns:
             List of FacebookPostData objects
-        """
-        cache_key = f"page_posts_{page_id}_{limit}_{since}_{until}"
+        """        cache_key = f"page_posts_{page_id}_{limit}_{since}_{until}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return [FacebookPostData(**post) for post in cached_result]
@@ -472,16 +455,14 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
         return posts
 
     async def get_group_info(self, group_id: str) -> FacebookGroupData:
-        """
-        Get Facebook group information.
+        """        Get Facebook group information.
         
         Args:
             group_id: Facebook group ID
         
         Returns:
             FacebookGroupData object
-        """
-        cache_key = f"group_info_{group_id}"
+        """        cache_key = f"group_info_{group_id}"
         cached_result = await self.cache_manager.get(cache_key)
         if cached_result:
             return FacebookGroupData(**cached_result)
@@ -531,8 +512,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
                             targets: List[str],
                             keywords: List[str],
                             check_interval: int = 300) -> AsyncGenerator[Dict[str, Any], None]:
-        """
-        Monitor Facebook content for copyright infringement.
+        """        Monitor Facebook content for copyright infringement.
         
         Args:
             targets: List of page IDs, group IDs, or usernames to monitor
@@ -541,8 +521,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
         
         Yields:
             Dictionary containing monitoring results
-        """
-        logger.info(f"Starting Facebook content monitoring for {len(targets)} targets")
+        """        logger.info(f"Starting Facebook content monitoring for {len(targets)} targets")
         
         while True:
             for target in targets:
@@ -590,8 +569,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
             await asyncio.sleep(check_interval)
 
     async def _process_post_data(self, post_data: Dict[str, Any]) -> Optional[FacebookPostData]:
-        """Process raw Facebook post data into FacebookPostData object"""
-        try:
+        """Process raw Facebook post data into FacebookPostData object"""        try:
             # Extract hashtags and mentions
             message = post_data.get('message', '')
             hashtags = re.findall(r'#(\w+)', message)
@@ -643,8 +621,7 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
                     post: FacebookPostData, 
                     post_type: Optional[str] = None,
                     date_range: Optional[tuple] = None) -> bool:
-        """Filter post based on criteria"""
-        if post_type and post.type != post_type:
+        """Filter post based on criteria"""        if post_type and post.type != post_type:
             return False
         
         if date_range:
@@ -659,15 +636,13 @@ class FacebookCrawlerEngine(BaseCrawlerEngine):
                                    limit: int,
                                    post_type: Optional[str] = None,
                                    date_range: Optional[tuple] = None) -> List[FacebookPostData]:
-        """Fallback Selenium scraping for public content"""
-        # This would implement Selenium-based scraping for public Facebook content
+        """Fallback Selenium scraping for public content"""        # This would implement Selenium-based scraping for public Facebook content
         # Note: Facebook heavily restricts scraping, so this should only be used for public content
         logger.warning("Selenium scraping for Facebook is limited due to platform restrictions")
         return []
 
     def __del__(self):
-        """Cleanup resources"""
-        if self.driver:
+        """Cleanup resources"""        if self.driver:
             try:
                 self.driver.quit()
             except:

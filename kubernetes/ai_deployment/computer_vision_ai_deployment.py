@@ -1,5 +1,4 @@
-"""
-Computer Vision AI Deployment Manager
+"""Computer Vision AI Deployment Manager
 Enterprise computer vision AI infrastructure for visual content analysis
 
 This module provides comprehensive computer vision AI deployment capabilities
@@ -9,7 +8,6 @@ object detection, scene analysis, and visual AI applications.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComputerVisionAIType(Enum):
-    """Computer vision AI model types"""
-    IMAGE_CLASSIFICATION = "image_classification"
+    """Computer vision AI model types"""    IMAGE_CLASSIFICATION = "image_classification"
     OBJECT_DETECTION = "object_detection"
     SEMANTIC_SEGMENTATION = "semantic_segmentation"
     INSTANCE_SEGMENTATION = "instance_segmentation"
@@ -52,8 +49,7 @@ class ComputerVisionAIType(Enum):
 
 
 class VisualModality(Enum):
-    """Visual content modalities"""
-    STATIC_IMAGE = "static_image"
+    """Visual content modalities"""    STATIC_IMAGE = "static_image"
     VIDEO_STREAM = "video_stream"
     LIVE_CAMERA = "live_camera"
     DEPTH_SENSING = "depth_sensing"
@@ -66,8 +62,7 @@ class VisualModality(Enum):
 
 
 class ProcessingMode(Enum):
-    """Visual processing modes"""
-    REAL_TIME = "real_time"
+    """Visual processing modes"""    REAL_TIME = "real_time"
     BATCH_PROCESSING = "batch_processing"
     STREAMING = "streaming"
     ON_DEMAND = "on_demand"
@@ -76,8 +71,7 @@ class ProcessingMode(Enum):
 
 
 class QualityLevel(Enum):
-    """Visual processing quality levels"""
-    FAST = "fast"
+    """Visual processing quality levels"""    FAST = "fast"
     BALANCED = "balanced"
     ACCURATE = "accurate"
     ULTRA_PRECISE = "ultra_precise"
@@ -85,8 +79,7 @@ class QualityLevel(Enum):
 
 
 class OutputFormat(Enum):
-    """Output format types"""
-    BOUNDING_BOXES = "bounding_boxes"
+    """Output format types"""    BOUNDING_BOXES = "bounding_boxes"
     SEGMENTATION_MASKS = "segmentation_masks"
     KEYPOINTS = "keypoints"
     CLASSIFICATIONS = "classifications"
@@ -98,8 +91,7 @@ class OutputFormat(Enum):
 
 @dataclass
 class ComputerVisionAIConfig:
-    """Computer vision AI deployment configuration"""
-    deployment_name: str
+    """Computer vision AI deployment configuration"""    deployment_name: str
     ai_type: ComputerVisionAIType
     visual_modality: VisualModality
     processing_mode: ProcessingMode = ProcessingMode.REAL_TIME
@@ -172,8 +164,7 @@ class ComputerVisionAIConfig:
 
 
 class ComputerVisionAIDeployment:
-    """
-    Enterprise computer vision AI deployment system
+    """    Enterprise computer vision AI deployment system
     
     Provides comprehensive computer vision AI infrastructure with:
     - Advanced image and video processing capabilities
@@ -184,16 +175,13 @@ class ComputerVisionAIDeployment:
     - Edge deployment support
     - Professional-grade accuracy and performance
     - Comprehensive analytics and monitoring
-    """
-    
+    """    
     def __init__(self, namespace: str = "ia-influencer-computer-vision"):
-        """
-        Initialize computer vision AI deployment
+        """        Initialize computer vision AI deployment
         
         Args:
             namespace: Kubernetes namespace for computer vision AI infrastructure
-        """
-        self.namespace = namespace
+        """        self.namespace = namespace
         self.vision_deployments = {}
         self.vision_models = {}
         self.processing_streams = {}
@@ -204,8 +192,7 @@ class ComputerVisionAIDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, and Redis clients"""
-        try:
+        """Initialize Kubernetes, Docker, and Redis clients"""        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -231,13 +218,11 @@ class ComputerVisionAIDeployment:
             raise
     
     async def deploy_computer_vision_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete computer vision AI infrastructure
+        """        Deploy complete computer vision AI infrastructure
         
         Returns:
             Computer vision AI infrastructure deployment summary
-        """
-        try:
+        """        try:
             self.status = "deploying_computer_vision_infrastructure"
             logger.info("Deploying computer vision AI infrastructure")
             
@@ -323,16 +308,14 @@ class ComputerVisionAIDeployment:
             raise
     
     async def deploy_computer_vision_ai(self, config: ComputerVisionAIConfig) -> Dict[str, Any]:
-        """
-        Deploy computer vision AI model/service
+        """        Deploy computer vision AI model/service
         
         Args:
             config: Computer vision AI deployment configuration
             
         Returns:
             Computer vision AI deployment result
-        """
-        try:
+        """        try:
             deployment_id = f"{config.deployment_name}-{int(time.time())}"
             logger.info(f"Deploying computer vision AI: {deployment_id}")
             
@@ -418,8 +401,7 @@ class ComputerVisionAIDeployment:
             raise
     
     async def _ensure_computer_vision_namespace(self) -> None:
-        """Create computer vision namespace"""
-        try:
+        """Create computer vision namespace"""        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -438,8 +420,7 @@ class ComputerVisionAIDeployment:
                 logger.info(f"Created computer vision namespace: {self.namespace}")
     
     async def _deploy_vision_processing_orchestrator(self) -> Dict[str, Any]:
-        """Deploy vision processing orchestrator"""
-        orchestrator = {
+        """Deploy vision processing orchestrator"""        orchestrator = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -489,8 +470,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_image_processing_engines(self) -> Dict[str, Any]:
-        """Deploy image processing engines"""
-        image_engines = {
+        """Deploy image processing engines"""        image_engines = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -548,8 +528,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_video_processing_engines(self) -> Dict[str, Any]:
-        """Deploy video processing engines"""
-        video_engines = {
+        """Deploy video processing engines"""        video_engines = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -607,8 +586,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_object_detection_service(self) -> Dict[str, Any]:
-        """Deploy object detection service"""
-        object_detection = {
+        """Deploy object detection service"""        object_detection = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -666,8 +644,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_face_recognition_service(self) -> Dict[str, Any]:
-        """Deploy face recognition service"""
-        face_recognition = {
+        """Deploy face recognition service"""        face_recognition = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -725,8 +702,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_scene_analysis_service(self) -> Dict[str, Any]:
-        """Deploy scene analysis service"""
-        scene_analysis = {
+        """Deploy scene analysis service"""        scene_analysis = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -784,8 +760,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_visual_search_engine(self) -> Dict[str, Any]:
-        """Deploy visual search engine"""
-        visual_search = {
+        """Deploy visual search engine"""        visual_search = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -843,8 +818,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_quality_assessment_service(self) -> Dict[str, Any]:
-        """Deploy quality assessment service"""
-        quality_assessment = {
+        """Deploy quality assessment service"""        quality_assessment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -894,8 +868,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_annotation_service(self) -> Dict[str, Any]:
-        """Deploy annotation service"""
-        annotation_service = {
+        """Deploy annotation service"""        annotation_service = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -945,8 +918,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_vision_analytics_platform(self) -> Dict[str, Any]:
-        """Deploy vision analytics platform"""
-        analytics_platform = {
+        """Deploy vision analytics platform"""        analytics_platform = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -996,8 +968,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _deploy_edge_computing_support(self) -> Dict[str, Any]:
-        """Deploy edge computing support"""
-        edge_support = {
+        """Deploy edge computing support"""        edge_support = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1047,8 +1018,7 @@ class ComputerVisionAIDeployment:
         }
     
     async def _configure_computer_vision_networking(self) -> None:
-        """Configure networking for computer vision infrastructure"""
-        # Computer vision network policy
+        """Configure networking for computer vision infrastructure"""        # Computer vision network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1084,8 +1054,7 @@ class ComputerVisionAIDeployment:
         logger.info("Configured computer vision networking policies")
     
     async def _validate_computer_vision_infrastructure(self) -> bool:
-        """Validate computer vision infrastructure deployment"""
-        try:
+        """Validate computer vision infrastructure deployment"""        try:
             # Check essential computer vision services
             essential_services = [
                 "vision-processing-orchestrator", "image-processing-engines", "video-processing-engines",
@@ -1123,8 +1092,7 @@ class ComputerVisionAIDeployment:
             return False
     
     async def get_computer_vision_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive computer vision metrics"""
-        try:
+        """Get comprehensive computer vision metrics"""        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "active_deployments": len(self.vision_deployments),
@@ -1158,72 +1126,56 @@ class ComputerVisionAIDeployment:
     
     # Placeholder methods for specific AI type deployments and setups
     async def _validate_computer_vision_config(self, config: ComputerVisionAIConfig) -> None:
-        """Validate computer vision configuration"""
-        pass
+        """Validate computer vision configuration"""        pass
     
     async def _optimize_vision_model(self, config: ComputerVisionAIConfig) -> Dict[str, Any]:
-        """Optimize model for vision workload"""
-        return {"optimized": True}
+        """Optimize model for vision workload"""        return {"optimized": True}
     
     async def _create_computer_vision_deployment_spec(self, config: ComputerVisionAIConfig, deployment_id: str) -> Dict[str, Any]:
-        """Create computer vision deployment specification"""
-        return {"deployment_id": deployment_id}
+        """Create computer vision deployment specification"""        return {"deployment_id": deployment_id}
     
     async def _deploy_object_detection_ai(self, config: ComputerVisionAIConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy object detection AI"""
-        return {"ai_type": "object_detection"}
+        """Deploy object detection AI"""        return {"ai_type": "object_detection"}
     
     async def _deploy_face_recognition_ai(self, config: ComputerVisionAIConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy face recognition AI"""
-        return {"ai_type": "face_recognition"}
+        """Deploy face recognition AI"""        return {"ai_type": "face_recognition"}
     
     async def _deploy_video_analysis_ai(self, config: ComputerVisionAIConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy video analysis AI"""
-        return {"ai_type": "video_analysis"}
+        """Deploy video analysis AI"""        return {"ai_type": "video_analysis"}
     
     async def _deploy_scene_understanding_ai(self, config: ComputerVisionAIConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy scene understanding AI"""
-        return {"ai_type": "scene_understanding"}
+        """Deploy scene understanding AI"""        return {"ai_type": "scene_understanding"}
     
     async def _deploy_medical_imaging_ai(self, config: ComputerVisionAIConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy medical imaging AI"""
-        return {"ai_type": "medical_imaging"}
+        """Deploy medical imaging AI"""        return {"ai_type": "medical_imaging"}
     
     async def _deploy_industrial_inspection_ai(self, config: ComputerVisionAIConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy industrial inspection AI"""
-        return {"ai_type": "industrial_inspection"}
+        """Deploy industrial inspection AI"""        return {"ai_type": "industrial_inspection"}
     
     async def _deploy_generic_computer_vision_ai(self, config: ComputerVisionAIConfig, deployment_spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy generic computer vision AI"""
-        return {"ai_type": config.ai_type.value}
+        """Deploy generic computer vision AI"""        return {"ai_type": config.ai_type.value}
     
     async def _setup_processing_pipeline(self, config: ComputerVisionAIConfig, deployment_id: str) -> Dict[str, Any]:
-        """Set up processing pipeline"""
-        return {"pipeline": "configured"}
+        """Set up processing pipeline"""        return {"pipeline": "configured"}
     
     async def _setup_performance_monitoring(self, config: ComputerVisionAIConfig, deployment_id: str) -> Dict[str, Any]:
-        """Set up performance monitoring"""
-        return {"monitoring": "enabled"}
+        """Set up performance monitoring"""        return {"monitoring": "enabled"}
     
     async def _setup_analytics_tracking(self, config: ComputerVisionAIConfig, deployment_id: str) -> Dict[str, Any]:
-        """Set up analytics tracking"""
-        return {"analytics": "enabled"}
+        """Set up analytics tracking"""        return {"analytics": "enabled"}
     
     async def _setup_streaming_processing(self, config: ComputerVisionAIConfig, deployment_id: str) -> Dict[str, Any]:
-        """Set up streaming processing"""
-        return {"streaming": "enabled"}
+        """Set up streaming processing"""        return {"streaming": "enabled"}
     
     async def _cleanup_failed_computer_vision_infrastructure(self) -> None:
-        """Clean up failed computer vision infrastructure deployment"""
-        try:
+        """Clean up failed computer vision infrastructure deployment"""        try:
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed computer vision infrastructure")
         except Exception as e:
             logger.error(f"Computer vision infrastructure cleanup failed: {e}")
     
     async def _cleanup_failed_computer_vision_deployment(self, deployment_name: str) -> None:
-        """Clean up failed computer vision deployment"""
-        try:
+        """Clean up failed computer vision deployment"""        try:
             deployment_keys = self._redis_client.keys(f"vision:*{deployment_name}*")
             if deployment_keys:
                 self._redis_client.delete(*deployment_keys)
@@ -1232,8 +1184,7 @@ class ComputerVisionAIDeployment:
             logger.error(f"Computer vision deployment cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire computer vision infrastructure"""
-        try:
+        """Clean up entire computer vision infrastructure"""        try:
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             self.status = "stopped"
             self.vision_deployments = {}

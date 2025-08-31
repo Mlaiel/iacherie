@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for Revenue Optimization System
+"""Comprehensive Tests for Revenue Optimization System
 Testing revenue optimization, monetization strategies, and financial analytics
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -37,7 +34,6 @@ Team Specialties:
 ✅ DevOps Engineer
 ✅ IA Prompt Engineer
 """
-
 import pytest
 import sys
 import os
@@ -59,12 +55,10 @@ from ai.recommendation.exceptions import RecommendationError, ValidationError
 
 
 class TestRevenueOptimizer:
-    """Comprehensive tests for the main revenue optimizer"""
-    
+    """Comprehensive tests for the main revenue optimizer"""    
     @pytest.mark.asyncio
     async def test_optimizer_initialization(self):
-        """Test revenue optimizer initialization"""
-        optimizer = RevenueOptimizer()
+        """Test revenue optimizer initialization"""        optimizer = RevenueOptimizer()
         
         # Test initial state
         assert optimizer.status.name == "INITIALIZING"
@@ -82,8 +76,7 @@ class TestRevenueOptimizer:
     
     @pytest.mark.asyncio
     async def test_optimize_revenue_streams(self, revenue_optimizer, sample_creator_musician):
-        """Test revenue stream optimization"""
-        creator = sample_creator_musician
+        """Test revenue stream optimization"""        creator = sample_creator_musician
         
         optimization = await revenue_optimizer.optimize_revenue_streams(
             creator_profile=creator,
@@ -110,8 +103,7 @@ class TestRevenueOptimizer:
     
     @pytest.mark.asyncio
     async def test_analyze_monetization_opportunities(self, revenue_optimizer, sample_creator_musician):
-        """Test monetization opportunity analysis"""
-        creator = sample_creator_musician
+        """Test monetization opportunity analysis"""        creator = sample_creator_musician
         
         opportunities = await revenue_optimizer.analyze_monetization_opportunities(
             creator_profile=creator,
@@ -130,8 +122,7 @@ class TestRevenueOptimizer:
     
     @pytest.mark.asyncio
     async def test_optimize_content_pricing(self, revenue_optimizer, sample_creator_musician):
-        """Test content pricing optimization"""
-        creator = sample_creator_musician
+        """Test content pricing optimization"""        creator = sample_creator_musician
         
         pricing_optimization = await revenue_optimizer.optimize_content_pricing(
             creator_profile=creator,
@@ -155,8 +146,7 @@ class TestRevenueOptimizer:
     
     @pytest.mark.asyncio
     async def test_predict_revenue_trends(self, revenue_optimizer, sample_creator_musician):
-        """Test revenue trend prediction"""
-        creator = sample_creator_musician
+        """Test revenue trend prediction"""        creator = sample_creator_musician
         
         revenue_predictions = await revenue_optimizer.predict_revenue_trends(
             creator_profile=creator,
@@ -180,8 +170,7 @@ class TestRevenueOptimizer:
     
     @pytest.mark.asyncio
     async def test_optimize_ad_revenue(self, revenue_optimizer, sample_creator_musician):
-        """Test advertising revenue optimization"""
-        creator = sample_creator_musician
+        """Test advertising revenue optimization"""        creator = sample_creator_musician
         
         ad_optimization = await revenue_optimizer.optimize_ad_revenue(
             creator_profile=creator,
@@ -206,8 +195,7 @@ class TestRevenueOptimizer:
     
     @pytest.mark.asyncio
     async def test_analyze_revenue_diversification(self, revenue_optimizer, sample_creator_musician):
-        """Test revenue diversification analysis"""
-        creator = sample_creator_musician
+        """Test revenue diversification analysis"""        creator = sample_creator_musician
         
         diversification_analysis = await revenue_optimizer.analyze_revenue_diversification(
             creator_profile=creator,
@@ -236,12 +224,10 @@ class TestRevenueOptimizer:
 
 
 class TestMonetizationAnalyzer:
-    """Tests for monetization analysis algorithms"""
-    
+    """Tests for monetization analysis algorithms"""    
     @pytest.mark.asyncio
     async def test_analyze_current_monetization(self, monetization_analyzer, sample_creator_musician):
-        """Test current monetization analysis"""
-        creator = sample_creator_musician
+        """Test current monetization analysis"""        creator = sample_creator_musician
         
         analysis = await monetization_analyzer.analyze_current_monetization(creator)
         
@@ -261,8 +247,7 @@ class TestMonetizationAnalyzer:
     
     @pytest.mark.asyncio
     async def test_identify_untapped_revenue_sources(self, monetization_analyzer, sample_creator_musician):
-        """Test identification of untapped revenue sources"""
-        creator = sample_creator_musician
+        """Test identification of untapped revenue sources"""        creator = sample_creator_musician
         
         untapped_sources = await monetization_analyzer.identify_untapped_revenue_sources(
             creator_profile=creator,
@@ -284,8 +269,7 @@ class TestMonetizationAnalyzer:
     
     @pytest.mark.asyncio
     async def test_analyze_monetization_trends(self, monetization_analyzer):
-        """Test monetization trend analysis"""
-        trends = await monetization_analyzer.analyze_monetization_trends(
+        """Test monetization trend analysis"""        trends = await monetization_analyzer.analyze_monetization_trends(
             industry="Music Content Creation",
             time_period=timedelta(days=365),
             platforms=[Platform.YOUTUBE, Platform.SPOTIFY, Platform.INSTAGRAM]
@@ -308,8 +292,7 @@ class TestMonetizationAnalyzer:
     
     @pytest.mark.asyncio
     async def test_calculate_lifetime_value(self, monetization_analyzer, sample_creator_musician):
-        """Test customer lifetime value calculation"""
-        creator = sample_creator_musician
+        """Test customer lifetime value calculation"""        creator = sample_creator_musician
         
         ltv_analysis = await monetization_analyzer.calculate_lifetime_value(
             creator_profile=creator,
@@ -333,12 +316,10 @@ class TestMonetizationAnalyzer:
 
 
 class TestPricingOptimizer:
-    """Tests for pricing optimization algorithms"""
-    
+    """Tests for pricing optimization algorithms"""    
     @pytest.mark.asyncio
     async def test_optimize_subscription_pricing(self, pricing_optimizer, sample_creator_musician):
-        """Test subscription pricing optimization"""
-        creator = sample_creator_musician
+        """Test subscription pricing optimization"""        creator = sample_creator_musician
         
         pricing_optimization = await pricing_optimizer.optimize_subscription_pricing(
             creator_profile=creator,
@@ -361,8 +342,7 @@ class TestPricingOptimizer:
     
     @pytest.mark.asyncio
     async def test_analyze_price_sensitivity(self, pricing_optimizer, sample_creator_musician):
-        """Test price sensitivity analysis"""
-        creator = sample_creator_musician
+        """Test price sensitivity analysis"""        creator = sample_creator_musician
         
         sensitivity_analysis = await pricing_optimizer.analyze_price_sensitivity(
             creator_profile=creator,
@@ -388,8 +368,7 @@ class TestPricingOptimizer:
     
     @pytest.mark.asyncio
     async def test_dynamic_pricing_strategy(self, pricing_optimizer, sample_creator_musician):
-        """Test dynamic pricing strategy development"""
-        creator = sample_creator_musician
+        """Test dynamic pricing strategy development"""        creator = sample_creator_musician
         
         dynamic_strategy = await pricing_optimizer.develop_dynamic_pricing_strategy(
             creator_profile=creator,
@@ -411,8 +390,7 @@ class TestPricingOptimizer:
     
     @pytest.mark.asyncio
     async def test_competitor_pricing_analysis(self, pricing_optimizer, sample_creator_musician):
-        """Test competitor pricing analysis"""
-        creator = sample_creator_musician
+        """Test competitor pricing analysis"""        creator = sample_creator_musician
         
         competitor_analysis = await pricing_optimizer.analyze_competitor_pricing(
             creator_profile=creator,
@@ -437,12 +415,10 @@ class TestPricingOptimizer:
 
 
 class TestSponsorshipMatcher:
-    """Tests for sponsorship matching algorithms"""
-    
+    """Tests for sponsorship matching algorithms"""    
     @pytest.mark.asyncio
     async def test_find_sponsorship_opportunities(self, sponsorship_matcher, sample_creator_musician):
-        """Test finding sponsorship opportunities"""
-        creator = sample_creator_musician
+        """Test finding sponsorship opportunities"""        creator = sample_creator_musician
         
         opportunities = await sponsorship_matcher.find_sponsorship_opportunities(
             creator_profile=creator,
@@ -462,8 +438,7 @@ class TestSponsorshipMatcher:
     
     @pytest.mark.asyncio
     async def test_calculate_brand_compatibility(self, sponsorship_matcher, sample_creator_musician):
-        """Test brand compatibility calculation"""
-        creator = sample_creator_musician
+        """Test brand compatibility calculation"""        creator = sample_creator_musician
         
         # Mock brand data
         brand_data = {
@@ -491,8 +466,7 @@ class TestSponsorshipMatcher:
     
     @pytest.mark.asyncio
     async def test_estimate_sponsorship_value(self, sponsorship_matcher, sample_creator_musician):
-        """Test sponsorship value estimation"""
-        creator = sample_creator_musician
+        """Test sponsorship value estimation"""        creator = sample_creator_musician
         
         value_estimation = await sponsorship_matcher.estimate_sponsorship_value(
             creator_profile=creator,
@@ -517,8 +491,7 @@ class TestSponsorshipMatcher:
     
     @pytest.mark.asyncio
     async def test_optimize_sponsorship_portfolio(self, sponsorship_matcher, sample_creator_musician):
-        """Test sponsorship portfolio optimization"""
-        creator = sample_creator_musician
+        """Test sponsorship portfolio optimization"""        creator = sample_creator_musician
         
         portfolio_optimization = await sponsorship_matcher.optimize_sponsorship_portfolio(
             creator_profile=creator,
@@ -542,12 +515,10 @@ class TestSponsorshipMatcher:
 
 
 class TestAdRevenuePredictor:
-    """Tests for advertising revenue prediction"""
-    
+    """Tests for advertising revenue prediction"""    
     @pytest.mark.asyncio
     async def test_predict_ad_revenue(self, ad_revenue_predictor, sample_creator_musician):
-        """Test ad revenue prediction"""
-        creator = sample_creator_musician
+        """Test ad revenue prediction"""        creator = sample_creator_musician
         
         prediction = await ad_revenue_predictor.predict_ad_revenue(
             creator_profile=creator,
@@ -569,8 +540,7 @@ class TestAdRevenuePredictor:
     
     @pytest.mark.asyncio
     async def test_optimize_ad_placement(self, ad_revenue_predictor, sample_creator_musician):
-        """Test ad placement optimization"""
-        creator = sample_creator_musician
+        """Test ad placement optimization"""        creator = sample_creator_musician
         
         placement_optimization = await ad_revenue_predictor.optimize_ad_placement(
             creator_profile=creator,
@@ -590,8 +560,7 @@ class TestAdRevenuePredictor:
     
     @pytest.mark.asyncio
     async def test_analyze_cpm_trends(self, ad_revenue_predictor):
-        """Test CPM trend analysis"""
-        cpm_analysis = await ad_revenue_predictor.analyze_cpm_trends(
+        """Test CPM trend analysis"""        cpm_analysis = await ad_revenue_predictor.analyze_cpm_trends(
             platforms=[Platform.YOUTUBE, Platform.INSTAGRAM, Platform.TIKTOK],
             content_categories=["Music", "Entertainment", "Technology"],
             time_period=timedelta(days=365)
@@ -611,13 +580,11 @@ class TestAdRevenuePredictor:
 
 
 class TestRevenueOptimizationPerformance:
-    """Performance tests for revenue optimization"""
-    
+    """Performance tests for revenue optimization"""    
     @pytest.mark.asyncio
     @pytest.mark.benchmark
     async def test_revenue_optimization_performance(self, benchmark, revenue_optimizer, sample_creator_musician):
-        """Benchmark revenue optimization performance"""
-        creator = sample_creator_musician
+        """Benchmark revenue optimization performance"""        creator = sample_creator_musician
         
         async def optimize_revenue():
             return await revenue_optimizer.optimize_revenue_streams(
@@ -631,8 +598,7 @@ class TestRevenueOptimizationPerformance:
     
     @pytest.mark.asyncio
     async def test_batch_pricing_optimization(self, pricing_optimizer, sample_creator_musician, sample_creator_blogger):
-        """Test batch pricing optimization performance"""
-        creators = [sample_creator_musician, sample_creator_blogger]
+        """Test batch pricing optimization performance"""        creators = [sample_creator_musician, sample_creator_blogger]
         
         start_time = datetime.now()
         
@@ -651,8 +617,7 @@ class TestRevenueOptimizationPerformance:
     
     @pytest.mark.asyncio
     async def test_concurrent_sponsorship_matching(self, sponsorship_matcher, sample_creator_musician):
-        """Test concurrent sponsorship matching"""
-        creator = sample_creator_musician
+        """Test concurrent sponsorship matching"""        creator = sample_creator_musician
         
         # Create multiple concurrent requests
         tasks = []
@@ -678,12 +643,10 @@ class TestRevenueOptimizationPerformance:
 
 
 class TestRevenueOptimizationEdgeCases:
-    """Tests for edge cases and error scenarios"""
-    
+    """Tests for edge cases and error scenarios"""    
     @pytest.mark.asyncio
     async def test_optimization_for_low_revenue_creator(self, revenue_optimizer):
-        """Test optimization for creators with very low revenue"""
-        low_revenue_creator = CreatorProfile(
+        """Test optimization for creators with very low revenue"""        low_revenue_creator = CreatorProfile(
             creator_id="low_revenue_creator",
             display_name="Starting Creator",
             platforms=[Platform.YOUTUBE],
@@ -710,8 +673,7 @@ class TestRevenueOptimizationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_optimization_with_zero_target_increase(self, revenue_optimizer, sample_creator_musician):
-        """Test optimization with zero target increase"""
-        creator = sample_creator_musician
+        """Test optimization with zero target increase"""        creator = sample_creator_musician
         
         with pytest.raises(ValidationError):
             await revenue_optimizer.optimize_revenue_streams(
@@ -722,8 +684,7 @@ class TestRevenueOptimizationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_pricing_optimization_with_invalid_range(self, pricing_optimizer, sample_creator_musician):
-        """Test pricing optimization with invalid price range"""
-        creator = sample_creator_musician
+        """Test pricing optimization with invalid price range"""        creator = sample_creator_musician
         
         with pytest.raises(ValidationError):
             await pricing_optimizer.analyze_price_sensitivity(
@@ -735,8 +696,7 @@ class TestRevenueOptimizationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_sponsorship_matching_with_no_budget(self, sponsorship_matcher, sample_creator_musician):
-        """Test sponsorship matching with unrealistic budget requirements"""
-        creator = sample_creator_musician
+        """Test sponsorship matching with unrealistic budget requirements"""        creator = sample_creator_musician
         
         # Try to find sponsorships with unrealistically high minimum value
         opportunities = await sponsorship_matcher.find_sponsorship_opportunities(
@@ -750,8 +710,7 @@ class TestRevenueOptimizationEdgeCases:
     
     @pytest.mark.asyncio
     async def test_revenue_prediction_timeout_handling(self, revenue_optimizer, sample_creator_musician):
-        """Test revenue prediction timeout handling"""
-        creator = sample_creator_musician
+        """Test revenue prediction timeout handling"""        creator = sample_creator_musician
         
         try:
             # Set timeout to test timeout handling
@@ -772,12 +731,10 @@ class TestRevenueOptimizationEdgeCases:
 
 
 class TestRevenueDataValidation:
-    """Tests for revenue data validation and accuracy"""
-    
+    """Tests for revenue data validation and accuracy"""    
     @pytest.mark.asyncio
     async def test_revenue_calculation_accuracy(self, monetization_analyzer, sample_creator_musician):
-        """Test accuracy of revenue calculations"""
-        creator = sample_creator_musician
+        """Test accuracy of revenue calculations"""        creator = sample_creator_musician
         
         analysis = await monetization_analyzer.analyze_current_monetization(creator)
         
@@ -792,8 +749,7 @@ class TestRevenueDataValidation:
     
     @pytest.mark.asyncio
     async def test_pricing_model_consistency(self, pricing_optimizer, sample_creator_musician):
-        """Test consistency of pricing models"""
-        creator = sample_creator_musician
+        """Test consistency of pricing models"""        creator = sample_creator_musician
         
         # Get pricing optimization multiple times
         optimization_1 = await pricing_optimizer.optimize_subscription_pricing(
@@ -817,8 +773,7 @@ class TestRevenueDataValidation:
     
     @pytest.mark.asyncio
     async def test_sponsorship_value_logic(self, sponsorship_matcher, sample_creator_musician):
-        """Test logical consistency of sponsorship value calculations"""
-        creator = sample_creator_musician
+        """Test logical consistency of sponsorship value calculations"""        creator = sample_creator_musician
         
         # Estimate values for different campaign durations
         short_campaign = await sponsorship_matcher.estimate_sponsorship_value(

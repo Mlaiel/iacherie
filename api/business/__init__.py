@@ -11,8 +11,7 @@ WARNING: This code is proprietary intellectual property of Fahed Mlaiel.
 Any unauthorized use, reproduction, modification, or distribution is strictly
 prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
-"""
-from .user_service import UserService
+"""from .user_service import UserService
 from .content_service import ContentService
 from .ai_processing_service import AIProcessingService
 from .protection_service import ProtectionService

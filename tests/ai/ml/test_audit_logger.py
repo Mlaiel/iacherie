@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Audit Logger Tests - Enterprise Grade Security & Compliance Test Suite
+"""Audit Logger Tests - Enterprise Grade Security & Compliance Test Suite
 
 Comprehensive tests for audit logging, compliance tracking, security event monitoring,
 forensic analysis, and regulatory compliance systems.
@@ -26,7 +23,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
-
 import pytest
 import sys
 import os
@@ -60,11 +56,9 @@ from ai.ml.audit_logger import (
 
 
 class TestAuditLogger:
-    """Tests for core audit logging functionality"""
-    
+    """Tests for core audit logging functionality"""    
     def test_init_audit_logger(self):
-        """Test audit logger initialization"""
-        logger = AuditLogger(
+        """Test audit logger initialization"""        logger = AuditLogger(
             log_level="INFO",
             output_formats=["json", "csv", "database"],
             enable_encryption=True,
@@ -81,8 +75,7 @@ class TestAuditLogger:
         assert logger.real_time_monitoring
 
     def test_log_entry_creation(self, temp_dir):
-        """Test audit log entry creation and formatting"""
-        logger = AuditLogger(output_directory=str(temp_dir))
+        """Test audit log entry creation and formatting"""        logger = AuditLogger(output_directory=str(temp_dir))
         
         log_entry_data = {
             "user_id": "user_12345",
@@ -131,8 +124,7 @@ class TestAuditLogger:
             assert log_result["data_sensitivity"]["impact_level"] == "HIGH"
 
     def test_batch_log_processing(self, sample_log_events):
-        """Test batch processing of audit log entries"""
-        logger = AuditLogger()
+        """Test batch processing of audit log entries"""        logger = AuditLogger()
         
         batch_config = {
             "batch_size": 1000,
@@ -176,8 +168,7 @@ class TestAuditLogger:
             assert batch_result["integrity_checks_passed"]
 
     def test_log_encryption_and_security(self, sensitive_log_data):
-        """Test log encryption and security features"""
-        logger = AuditLogger(enable_encryption=True)
+        """Test log encryption and security features"""        logger = AuditLogger(enable_encryption=True)
         
         encryption_config = {
             "algorithm": "AES-256-GCM",
@@ -233,8 +224,7 @@ class TestAuditLogger:
             assert encryption_result["encrypted_log"]["request_payload"].startswith("ENC[AES256]:")
 
     def test_log_integrity_verification(self, temp_dir):
-        """Test log integrity verification and tamper detection"""
-        logger = AuditLogger()
+        """Test log integrity verification and tamper detection"""        logger = AuditLogger()
         
         # Create sample log file
         log_file = temp_dir / "audit_logs.json"
@@ -292,11 +282,9 @@ class TestAuditLogger:
 
 
 class TestSecurityAuditLogger:
-    """Tests for security-specific audit logging"""
-    
+    """Tests for security-specific audit logging"""    
     def test_init_security_audit_logger(self):
-        """Test security audit logger initialization"""
-        security_logger = SecurityAuditLogger(
+        """Test security audit logger initialization"""        security_logger = SecurityAuditLogger(
             security_events=["authentication", "authorization", "data_access", "configuration_change"],
             threat_intelligence_integration=True,
             real_time_alerting=True,
@@ -309,8 +297,7 @@ class TestSecurityAuditLogger:
         assert security_logger.siem_integration
 
     def test_security_event_classification(self, security_events_sample):
-        """Test security event classification and severity assignment"""
-        security_logger = SecurityAuditLogger()
+        """Test security event classification and severity assignment"""        security_logger = SecurityAuditLogger()
         
         if not security_events_sample:
             security_events_sample = [
@@ -400,8 +387,7 @@ class TestSecurityAuditLogger:
             )
 
     def test_threat_intelligence_correlation(self, known_threats_db, suspicious_events):
-        """Test correlation with threat intelligence feeds"""
-        security_logger = SecurityAuditLogger(threat_intelligence_integration=True)
+        """Test correlation with threat intelligence feeds"""        security_logger = SecurityAuditLogger(threat_intelligence_integration=True)
         
         if not known_threats_db:
             known_threats_db = {
@@ -481,8 +467,7 @@ class TestSecurityAuditLogger:
             assert correlation_result["overall_threat_assessment"]["active_campaign_suspected"]
 
     def test_real_time_security_monitoring(self):
-        """Test real-time security monitoring and alerting"""
-        security_logger = SecurityAuditLogger(real_time_alerting=True)
+        """Test real-time security monitoring and alerting"""        security_logger = SecurityAuditLogger(real_time_alerting=True)
         
         monitoring_config = {
             "alert_thresholds": {
@@ -543,11 +528,9 @@ class TestSecurityAuditLogger:
 
 
 class TestComplianceLogger:
-    """Tests for compliance-specific logging functionality"""
-    
+    """Tests for compliance-specific logging functionality"""    
     def test_init_compliance_logger(self):
-        """Test compliance logger initialization"""
-        compliance_logger = ComplianceLogger(
+        """Test compliance logger initialization"""        compliance_logger = ComplianceLogger(
             compliance_frameworks=["GDPR", "SOX", "HIPAA", "PCI_DSS", "ISO27001"],
             automatic_compliance_checking=True,
             generate_compliance_reports=True,
@@ -560,8 +543,7 @@ class TestComplianceLogger:
         assert compliance_logger.data_retention_policies["financial"] == 3650
 
     def test_gdpr_compliance_logging(self, gdpr_relevant_events):
-        """Test GDPR compliance logging and validation"""
-        compliance_logger = ComplianceLogger(compliance_frameworks=["GDPR"])
+        """Test GDPR compliance logging and validation"""        compliance_logger = ComplianceLogger(compliance_frameworks=["GDPR"])
         
         if not gdpr_relevant_events:
             gdpr_relevant_events = [
@@ -655,8 +637,7 @@ class TestComplianceLogger:
             assert gdpr_result["overall_gdpr_compliance"]["violations_detected"] == 0
 
     def test_sox_compliance_logging(self, financial_audit_events):
-        """Test SOX compliance logging for financial controls"""
-        compliance_logger = ComplianceLogger(compliance_frameworks=["SOX"])
+        """Test SOX compliance logging for financial controls"""        compliance_logger = ComplianceLogger(compliance_frameworks=["SOX"])
         
         if not financial_audit_events:
             financial_audit_events = [
@@ -734,8 +715,7 @@ class TestComplianceLogger:
             assert sox_result["section_404_readiness"]["management_assertion"] == "REASONABLE_ASSURANCE"
 
     def test_compliance_report_generation(self, temp_dir):
-        """Test automated compliance report generation"""
-        compliance_logger = ComplianceLogger(generate_compliance_reports=True)
+        """Test automated compliance report generation"""        compliance_logger = ComplianceLogger(generate_compliance_reports=True)
         
         report_config = {
             "report_types": ["quarterly", "annual", "audit_preparation"],
@@ -816,11 +796,9 @@ class TestComplianceLogger:
 
 
 class TestLogRetentionManager:
-    """Tests for log retention and archival management"""
-    
+    """Tests for log retention and archival management"""    
     def test_init_retention_manager(self):
-        """Test retention manager initialization"""
-        retention_manager = LogRetentionManager(
+        """Test retention manager initialization"""        retention_manager = LogRetentionManager(
             default_retention_days=2555,  # 7 years
             retention_policies={
                 "security_logs": 3650,  # 10 years
@@ -838,8 +816,7 @@ class TestLogRetentionManager:
         assert retention_manager.compression_enabled
 
     def test_log_archival_process(self, old_log_files, temp_dir):
-        """Test automated log archival process"""
-        retention_manager = LogRetentionManager()
+        """Test automated log archival process"""        retention_manager = LogRetentionManager()
         
         if not old_log_files:
             # Create sample old log files
@@ -901,8 +878,7 @@ class TestLogRetentionManager:
             assert archive_result["integrity_verification"]["all_checksums_verified"]
 
     def test_log_deletion_policy_enforcement(self, expired_logs):
-        """Test enforcement of log deletion policies"""
-        retention_manager = LogRetentionManager()
+        """Test enforcement of log deletion policies"""        retention_manager = LogRetentionManager()
         
         if not expired_logs:
             expired_logs = [
@@ -977,12 +953,10 @@ class TestLogRetentionManager:
 
 @pytest.mark.integration
 class TestAuditLoggerIntegration:
-    """Integration tests for audit logging systems"""
-    
+    """Integration tests for audit logging systems"""    
     @pytest.mark.slow
     def test_end_to_end_audit_pipeline(self, temp_dir):
-        """Test complete audit logging pipeline from event to archive"""
-        # Initialize components
+        """Test complete audit logging pipeline from event to archive"""        # Initialize components
         audit_logger = AuditLogger(output_directory=str(temp_dir))
         security_logger = SecurityAuditLogger()
         compliance_logger = ComplianceLogger()
@@ -1058,8 +1032,7 @@ class TestAuditLoggerIntegration:
             assert retention_result["retention_applied"]
 
     def test_high_volume_audit_logging(self):
-        """Test audit logging under high volume conditions"""
-        audit_logger = AuditLogger()
+        """Test audit logging under high volume conditions"""        audit_logger = AuditLogger()
         
         # Simulate high volume of events
         high_volume_events = [

@@ -1,5 +1,4 @@
-"""
-Enterprise Content Cache for IA Influencer Agent Platform
+"""Enterprise Content Cache for IA Influencer Agent Platform
 Advanced multimedia content caching with AI processing, protection, and monetization features
 
 Business Logic Integration:
@@ -15,7 +14,6 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
       Microservices Architect + Audio Processing Expert + DevOps Engineer + IA Prompt Engineer
 """
-
 import asyncio
 import logging
 import json
@@ -41,8 +39,7 @@ from .vector_cache import VectorCache, FAISSCache, ContentType as VectorContentT
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Enhanced content types for IA Influencer Agent platform"""
-    AUDIO = "audio"
+    """Enhanced content types for IA Influencer Agent platform"""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -57,8 +54,7 @@ class ContentType(Enum):
     UNKNOWN = "unknown"
 
 class ProcessingStatus(Enum):
-    """Enhanced processing status tracking"""
-    PENDING = "pending"
+    """Enhanced processing status tracking"""    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     ANALYZING = "analyzing"
@@ -72,24 +68,21 @@ class ProcessingStatus(Enum):
     QUARANTINED = "quarantined"
 
 class ContentPriority(Enum):
-    """Content priority levels for processing and caching"""
-    URGENT = 5      # Live content, revenue-critical
+    """Content priority levels for processing and caching"""    URGENT = 5      # Live content, revenue-critical
     HIGH = 4        # Premium creator content  
     NORMAL = 3      # Standard content
     LOW = 2         # Bulk uploads
     BACKGROUND = 1  # Archive content
 
 class ProtectionLevel(Enum):
-    """Content protection levels"""
-    NONE = "none"
+    """Content protection levels"""    NONE = "none"
     BASIC = "basic"         # Simple fingerprinting
     ADVANCED = "advanced"   # Multi-vector fingerprinting
     PREMIUM = "premium"     # Real-time monitoring
     ENTERPRISE = "enterprise"  # Custom protection
 
 class MonetizationStatus(Enum):
-    """Content monetization status"""
-    NOT_MONETIZED = "not_monetized"
+    """Content monetization status"""    NOT_MONETIZED = "not_monetized"
     PENDING_APPROVAL = "pending_approval"
     APPROVED = "approved"
     GENERATING_REVENUE = "generating_revenue"
@@ -98,8 +91,7 @@ class MonetizationStatus(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Enhanced content metadata for IA Influencer Agent platform"""
-    content_id: str
+    """Enhanced content metadata for IA Influencer Agent platform"""    content_id: str
     creator_id: str  # Changed from user_id for consistency
     tenant_id: Optional[str]
     content_type: ContentType
@@ -186,8 +178,7 @@ class ContentMetadata:
     content_similarity_hash: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary with proper serialization"""
-        data = {}
+        """Convert to dictionary with proper serialization"""        data = {}
         for key, value in asdict(self).items():
             if isinstance(value, Enum):
                 data[key] = value.value
@@ -201,8 +192,7 @@ class ContentMetadata:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ContentMetadata':
-        """Create from dictionary with proper deserialization"""
-        # Convert enum fields
+        """Create from dictionary with proper deserialization"""        # Convert enum fields
         if 'content_type' in data:
             data['content_type'] = ContentType(data['content_type'])
         if 'processing_status' in data:
@@ -244,32 +234,27 @@ class ContentMetadata:
         return cls(**data)
     
     def update_analytics(self, metric: str, value: Union[int, float] = 1):
-        """Update analytics metrics"""
-        if hasattr(self, metric):
+        """Update analytics metrics"""        if hasattr(self, metric):
             current_value = getattr(self, metric)
             if isinstance(current_value, (int, float)):
                 setattr(self, metric, current_value + value)
     
     def add_platform_view(self, platform: str, count: int = 1):
-        """Add platform-specific view"""
-        self.platform_views[platform] = self.platform_views.get(platform, 0) + count
+        """Add platform-specific view"""        self.platform_views[platform] = self.platform_views.get(platform, 0) + count
         self.view_count += count
     
     def add_geographic_view(self, country: str, count: int = 1):
-        """Add geographic view"""
-        self.geographic_views[country] = self.geographic_views.get(country, 0) + count
+        """Add geographic view"""        self.geographic_views[country] = self.geographic_views.get(country, 0) + count
     
     def calculate_engagement_rate(self) -> float:
-        """Calculate engagement rate"""
-        if self.view_count == 0:
+        """Calculate engagement rate"""        if self.view_count == 0:
             return 0.0
         
         total_engagement = self.like_count + self.comment_count + self.share_count
         return (total_engagement / self.view_count) * 100
     
     def calculate_completion_rate(self) -> float:
-        """Calculate content completion rate"""
-        if not self.duration or self.view_count == 0:
+        """Calculate content completion rate"""        if not self.duration or self.view_count == 0:
             return 0.0
         
         expected_total_time = self.duration * self.view_count
@@ -277,8 +262,7 @@ class ContentMetadata:
 
 @dataclass
 class ProcessingResult:
-    """Enhanced content processing result"""
-    content_id: str
+    """Enhanced content processing result"""    content_id: str
     processing_type: str
     result_data: Dict[str, Any]
     confidence_score: Optional[float] = None
@@ -298,22 +282,19 @@ class ProcessingResult:
             self.created_at = datetime.utcnow()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['created_at'] = self.created_at.isoformat()
         return data
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'ProcessingResult':
-        """Create from dictionary"""
-        if 'created_at' in data:
+        """Create from dictionary"""        if 'created_at' in data:
             data['created_at'] = datetime.fromisoformat(data['created_at'])
         return cls(**data)
 
 @dataclass
 class ContentAnalytics:
-    """Comprehensive content analytics"""
-    content_id: str
+    """Comprehensive content analytics"""    content_id: str
     creator_id: str
     
     # Time-based metrics
@@ -340,8 +321,7 @@ class ContentAnalytics:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def add_view(self, timestamp: datetime = None):
-        """Add a view with timestamp tracking"""
-        if not timestamp:
+        """Add a view with timestamp tracking"""        if not timestamp:
             timestamp = datetime.utcnow()
         
         hour_key = timestamp.strftime('%Y-%m-%d-%H')
@@ -352,8 +332,7 @@ class ContentAnalytics:
         self.last_updated = datetime.utcnow()
     
     def add_revenue(self, amount: float, timestamp: datetime = None):
-        """Add revenue with monthly tracking"""
-        if not timestamp:
+        """Add revenue with monthly tracking"""        if not timestamp:
             timestamp = datetime.utcnow()
         
         month_key = timestamp.strftime('%Y-%m')
@@ -361,8 +340,7 @@ class ContentAnalytics:
         self.last_updated = datetime.utcnow()
     
     def get_trend_data(self, days: int = 30) -> Dict[str, Any]:
-        """Get trend data for specified days"""
-        cutoff_date = datetime.utcnow() - timedelta(days=days)
+        """Get trend data for specified days"""        cutoff_date = datetime.utcnow() - timedelta(days=days)
         
         recent_views = {}
         total_views = 0
@@ -381,8 +359,7 @@ class ContentAnalytics:
         }
 
 class EnterpriseContentCache:
-    """
-    Enterprise-grade content cache for IA Influencer Agent Platform
+    """    Enterprise-grade content cache for IA Influencer Agent Platform
     
     Features:
     - Multi-tenant creator content management
@@ -393,8 +370,7 @@ class EnterpriseContentCache:
     - Collaboration and team sharing
     - Multi-platform distribution support
     - Comprehensive analytics and reporting
-    """
-    
+    """    
     def __init__(self,
                  redis_config: RedisConfig,
                  vector_cache: Optional[VectorCache] = None,
@@ -462,8 +438,7 @@ class EnterpriseContentCache:
         logger.info("EnterpriseContentCache initialized")
     
     async def initialize(self):
-        """Initialize cache connections and background tasks"""
-        await self.redis_cache.connect()
+        """Initialize cache connections and background tasks"""        await self.redis_cache.connect()
         
         # Start background maintenance tasks
         self._background_tasks.add(
@@ -480,8 +455,7 @@ class EnterpriseContentCache:
     
     def _get_enhanced_content_type(self, filename: str, mime_type: Optional[str] = None, 
                                   metadata: Optional[Dict[str, Any]] = None) -> ContentType:
-        """Enhanced content type detection with AI assistance"""
-        
+        """Enhanced content type detection with AI assistance"""        
         # Check metadata hints first
         if metadata:
             category = metadata.get('category', '').lower()
@@ -562,8 +536,7 @@ class EnterpriseContentCache:
     
     def _generate_enhanced_content_id(self, creator_id: str, filename: str, 
                                     file_content: bytes, metadata: Optional[Dict[str, Any]] = None) -> str:
-        """Generate enhanced content ID with business logic"""
-        
+        """Generate enhanced content ID with business logic"""        
         # Create compound hash for uniqueness
         content_hash = hashlib.sha256(file_content).hexdigest()[:16]
         metadata_hash = hashlib.md5(json.dumps(metadata or {}, sort_keys=True).encode()).hexdigest()[:8]
@@ -575,8 +548,7 @@ class EnterpriseContentCache:
         return f"{creator_id}_{timestamp}_{content_hash}_{metadata_hash}{tenant_suffix}"
     
     async def _chunk_content_async(self, content: bytes, content_id: str) -> List[Tuple[str, str]]:
-        """Asynchronously chunk content for storage"""
-        chunks = []
+        """Asynchronously chunk content for storage"""        chunks = []
         chunk_keys = []
         
         for i in range(0, len(content), self.chunk_size):
@@ -604,8 +576,7 @@ class EnterpriseContentCache:
                            enable_ai_analysis: bool = True,
                            enable_protection: bool = True,
                            monetization_enabled: bool = False) -> Optional[str]:
-        """Enhanced content upload with comprehensive business logic"""
-        
+        """Enhanced content upload with comprehensive business logic"""        
         upload_start_time = time.time()
         
         try:
@@ -720,8 +691,7 @@ class EnterpriseContentCache:
             return None
     
     async def get_content_metadata(self, content_id: str, use_cache: bool = True) -> Optional[ContentMetadata]:
-        """Get content metadata with intelligent caching"""
-        
+        """Get content metadata with intelligent caching"""        
         if use_cache:
             # Try memory cache first
             cached_metadata = self.memory_cache.get(f"meta:{content_id}")
@@ -756,8 +726,7 @@ class EnterpriseContentCache:
     
     async def download_content(self, content_id: str, creator_id: Optional[str] = None,
                              track_analytics: bool = True) -> Optional[bytes]:
-        """Enhanced content download with analytics and optimization"""
-        
+        """Enhanced content download with analytics and optimization"""        
         download_start_time = time.time()
         
         try:
@@ -837,8 +806,7 @@ class EnterpriseContentCache:
             return None
     
     async def update_content_metadata(self, content_id: str, updates: Dict[str, Any]) -> bool:
-        """Update content metadata"""
-        metadata = await self.get_content_metadata(content_id)
+        """Update content metadata"""        metadata = await self.get_content_metadata(content_id)
         if not metadata:
             return False
         
@@ -866,8 +834,7 @@ class EnterpriseContentCache:
                                     processing_type: str,
                                     result_data: Dict[str, Any],
                                     confidence_score: Optional[float] = None) -> bool:
-        """Store content processing result"""
-        
+        """Store content processing result"""        
         result = ProcessingResult(
             content_id=content_id,
             processing_type=processing_type,
@@ -905,8 +872,7 @@ class EnterpriseContentCache:
         return True
     
     async def get_processing_result(self, content_id: str, processing_type: str) -> Optional[ProcessingResult]:
-        """Get processing result"""
-        result_key = f"{self.PROCESSING_PREFIX}:{content_id}:{processing_type}"
+        """Get processing result"""        result_key = f"{self.PROCESSING_PREFIX}:{content_id}:{processing_type}"
         result_data = await self.redis_cache.get(result_key)
         
         if result_data:
@@ -921,8 +887,7 @@ class EnterpriseContentCache:
                               fingerprint_vector: List[float],
                               fingerprint_hash: str,
                               metadata: Dict[str, Any]) -> bool:
-        """Store content fingerprint in vector cache"""
-        
+        """Store content fingerprint in vector cache"""        
         if not self.vector_cache:
             logger.warning("Vector cache not available for fingerprint storage")
             return False
@@ -963,8 +928,7 @@ class EnterpriseContentCache:
                                    content_type: Optional[str] = None,
                                    top_k: int = 10,
                                    min_similarity: float = 0.8) -> List[Dict[str, Any]]:
-        """Search for similar content using fingerprint vectors"""
-        
+        """Search for similar content using fingerprint vectors"""        
         if not self.vector_cache:
             logger.warning("Vector cache not available for similarity search")
             return []
@@ -992,8 +956,7 @@ class EnterpriseContentCache:
         return enriched_results
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content and all associated data"""
-        try:
+        """Delete content and all associated data"""        try:
             # Get metadata first
             metadata = await self.get_content_metadata(content_id)
             if not metadata:
@@ -1050,8 +1013,7 @@ class EnterpriseContentCache:
             return False
     
     async def get_user_content(self, user_id: str, limit: int = 100) -> List[ContentMetadata]:
-        """Get content list for user"""
-        user_content_key = f"{self.USER_CONTENT_PREFIX}:{user_id}"
+        """Get content list for user"""        user_content_key = f"{self.USER_CONTENT_PREFIX}:{user_id}"
         content_ids_data = await self.redis_cache.get(user_content_key)
         
         if not content_ids_data:
@@ -1068,8 +1030,7 @@ class EnterpriseContentCache:
         return content_list
     
     async def _add_user_content(self, user_id: str, content_id: str):
-        """Add content to user's content list"""
-        user_content_key = f"{self.USER_CONTENT_PREFIX}:{user_id}"
+        """Add content to user's content list"""        user_content_key = f"{self.USER_CONTENT_PREFIX}:{user_id}"
         content_ids_data = await self.redis_cache.get(user_content_key)
         
         content_ids = json.loads(content_ids_data) if content_ids_data else []
@@ -1083,8 +1044,7 @@ class EnterpriseContentCache:
         )
     
     async def _remove_user_content(self, user_id: str, content_id: str):
-        """Remove content from user's content list"""
-        user_content_key = f"{self.USER_CONTENT_PREFIX}:{user_id}"
+        """Remove content from user's content list"""        user_content_key = f"{self.USER_CONTENT_PREFIX}:{user_id}"
         content_ids_data = await self.redis_cache.get(user_content_key)
         
         if content_ids_data:
@@ -1098,8 +1058,7 @@ class EnterpriseContentCache:
                 )
     
     async def _update_analytics(self, content_id: str, metric: str):
-        """Update content analytics"""
-        analytics_key = f"{self.ANALYTICS_PREFIX}:{content_id}"
+        """Update content analytics"""        analytics_key = f"{self.ANALYTICS_PREFIX}:{content_id}"
         analytics_data = await self.redis_cache.get(analytics_key)
         
         analytics = json.loads(analytics_data) if analytics_data else {}
@@ -1109,8 +1068,7 @@ class EnterpriseContentCache:
         await self.redis_cache.set(analytics_key, json.dumps(analytics), ttl=self.default_ttl * 7)
     
     async def get_stats(self) -> Dict[str, Any]:
-        """Get cache statistics"""
-        redis_stats = await self.redis_cache.get_stats()
+        """Get cache statistics"""        redis_stats = await self.redis_cache.get_stats()
         memory_stats = self.memory_cache.get_stats()
         vector_stats = self.vector_cache.get_stats() if self.vector_cache else {}
         
@@ -1125,18 +1083,15 @@ class EnterpriseContentCache:
         }
     
     async def close(self):
-        """Close cache connections"""
-        await self.redis_cache.close()
+        """Close cache connections"""        await self.redis_cache.close()
         self.memory_cache.close()
         if self.vector_cache:
             self.vector_cache.clear()
 
 class MediaCache(ContentCache):
-    """
-    Specialized cache for audio and video content
+    """    Specialized cache for audio and video content
     Includes additional features for media processing
-    """
-    
+    """    
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         
@@ -1146,8 +1101,7 @@ class MediaCache(ContentCache):
         self.PREVIEW_PREFIX = "media:preview"
     
     async def store_thumbnail(self, content_id: str, thumbnail_data: bytes) -> bool:
-        """Store thumbnail for video/image content"""
-        thumbnail_key = f"{self.THUMBNAIL_PREFIX}:{content_id}"
+        """Store thumbnail for video/image content"""        thumbnail_key = f"{self.THUMBNAIL_PREFIX}:{content_id}"
         thumbnail_b64 = base64.b64encode(thumbnail_data).decode('utf-8')
         
         return await self.redis_cache.set(
@@ -1157,8 +1111,7 @@ class MediaCache(ContentCache):
         )
     
     async def get_thumbnail(self, content_id: str) -> Optional[bytes]:
-        """Get thumbnail for content"""
-        thumbnail_key = f"{self.THUMBNAIL_PREFIX}:{content_id}"
+        """Get thumbnail for content"""        thumbnail_key = f"{self.THUMBNAIL_PREFIX}:{content_id}"
         thumbnail_b64 = await self.redis_cache.get(thumbnail_key)
         
         if thumbnail_b64:
@@ -1166,8 +1119,7 @@ class MediaCache(ContentCache):
         return None
     
     async def store_waveform(self, content_id: str, waveform_data: List[float]) -> bool:
-        """Store audio waveform data"""
-        waveform_key = f"{self.WAVEFORM_PREFIX}:{content_id}"
+        """Store audio waveform data"""        waveform_key = f"{self.WAVEFORM_PREFIX}:{content_id}"
         waveform_json = json.dumps(waveform_data)
         
         return await self.redis_cache.set(
@@ -1177,8 +1129,7 @@ class MediaCache(ContentCache):
         )
     
     async def get_waveform(self, content_id: str) -> Optional[List[float]]:
-        """Get audio waveform data"""
-        waveform_key = f"{self.WAVEFORM_PREFIX}:{content_id}"
+        """Get audio waveform data"""        waveform_key = f"{self.WAVEFORM_PREFIX}:{content_id}"
         waveform_json = await self.redis_cache.get(waveform_key)
         
         if waveform_json:

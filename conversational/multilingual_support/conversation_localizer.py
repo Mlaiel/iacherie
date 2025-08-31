@@ -1,5 +1,4 @@
-"""
-Conversation Localizer - Advanced Multilingual Conversation Management
+"""Conversation Localizer - Advanced Multilingual Conversation Management
 
 Enterprise-grade conversation localization system providing real-time
 message translation, response localization, and template management
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -40,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class MessageType(Enum):
-    """Types of messages in conversations"""
-    USER_MESSAGE = "user_message"
+    """Types of messages in conversations"""    USER_MESSAGE = "user_message"
     SYSTEM_RESPONSE = "system_response"
     NOTIFICATION = "notification"
     ERROR_MESSAGE = "error_message"
@@ -54,8 +51,7 @@ class MessageType(Enum):
 
 
 class LocalizationLevel(Enum):
-    """Levels of localization to apply"""
-    BASIC = "basic"          # Translation only
+    """Levels of localization to apply"""    BASIC = "basic"          # Translation only
     STANDARD = "standard"    # Translation + basic cultural adaptation
     ADVANCED = "advanced"    # Full cultural adaptation + regional customization
     PREMIUM = "premium"      # Advanced + context-aware personalization
@@ -63,8 +59,7 @@ class LocalizationLevel(Enum):
 
 @dataclass
 class ConversationContext:
-    """Context information for conversation localization"""
-    user_id: str
+    """Context information for conversation localization"""    user_id: str
     session_id: str
     conversation_id: str
     primary_language: SupportedLanguage
@@ -82,8 +77,7 @@ class ConversationContext:
 
 @dataclass
 class LocalizedMessage:
-    """Localized message with metadata"""
-    original_text: str
+    """Localized message with metadata"""    original_text: str
     localized_text: str
     source_language: SupportedLanguage
     target_language: SupportedLanguage
@@ -100,8 +94,7 @@ class LocalizedMessage:
 
 @dataclass
 class TemplateData:
-    """Template data for localized responses"""
-    template_id: str
+    """Template data for localized responses"""    template_id: str
     template_category: str
     original_template: str
     localized_versions: Dict[str, str] = field(default_factory=dict)
@@ -113,8 +106,7 @@ class TemplateData:
 
 
 class MessageLocalizer:
-    """Advanced message localization with context awareness"""
-    
+    """Advanced message localization with context awareness"""    
     def __init__(
         self,
         translation_engine: TranslationEngine,
@@ -143,10 +135,8 @@ class MessageLocalizer:
         message_type: MessageType,
         conversation_context: ConversationContext
     ) -> LocalizedMessage:
-        """
-        Localize a message with full cultural adaptation
-        """
-        start_time = datetime.now()
+        """        Localize a message with full cultural adaptation
+        """        start_time = datetime.now()
         
         try:
             # Check if localization is needed
@@ -265,8 +255,7 @@ class MessageLocalizer:
         message_type: MessageType,
         context: ConversationContext
     ) -> str:
-        """Preprocess message before translation"""
-        preprocessed = message
+        """Preprocess message before translation"""        preprocessed = message
         
         # Handle message type specific preprocessing
         if message_type in self.message_handlers:
@@ -287,8 +276,7 @@ class MessageLocalizer:
         message_type: MessageType,
         context: ConversationContext
     ) -> Tuple[str, List[str]]:
-        """Postprocess message after translation"""
-        postprocessed = message
+        """Postprocess message after translation"""        postprocessed = message
         adaptations = []
         
         # Handle message type specific postprocessing
@@ -307,8 +295,7 @@ class MessageLocalizer:
         message: str,
         context: ConversationContext
     ) -> Tuple[str, List[str]]:
-        """Apply conversation-specific context adaptations"""
-        adaptations = []
+        """Apply conversation-specific context adaptations"""        adaptations = []
         adapted_message = message
         
         # Relationship stage adaptations
@@ -339,8 +326,7 @@ class MessageLocalizer:
         return adapted_message, adaptations
     
     def _build_translation_context(self, conversation_context: ConversationContext) -> str:
-        """Build context string for translation"""
-        context_parts = []
+        """Build context string for translation"""        context_parts = []
         
         if conversation_context.domain != "general":
             context_parts.append(f"Domain: {conversation_context.domain}")
@@ -360,8 +346,7 @@ class MessageLocalizer:
         translation_result: TranslationResult,
         context: ConversationContext
     ) -> float:
-        """Calculate overall localization confidence"""
-        base_confidence = translation_result.confidence_score
+        """Calculate overall localization confidence"""        base_confidence = translation_result.confidence_score
         
         # Adjust based on localization level
         level_adjustment = {
@@ -380,8 +365,7 @@ class MessageLocalizer:
         return min(confidence, 1.0)
     
     def _clean_message_text(self, text: str) -> str:
-        """Clean and normalize message text"""
-        # Remove extra whitespace
+        """Clean and normalize message text"""        # Remove extra whitespace
         text = ' '.join(text.split())
         
         # Normalize quotes
@@ -397,8 +381,7 @@ class MessageLocalizer:
         context: ConversationContext, 
         phase: str
     ) -> str:
-        """Handle greeting messages"""
-        if phase == "postprocess" and context.cultural_context:
+        """Handle greeting messages"""        if phase == "postprocess" and context.cultural_context:
             # Add culturally appropriate greetings
             if context.cultural_context.language == SupportedLanguage.JAPANESE:
                 if "hello" in message.lower():
@@ -415,8 +398,7 @@ class MessageLocalizer:
         context: ConversationContext, 
         phase: str
     ) -> str:
-        """Handle farewell messages"""
-        if phase == "postprocess" and context.cultural_context:
+        """Handle farewell messages"""        if phase == "postprocess" and context.cultural_context:
             # Add culturally appropriate farewells
             if context.cultural_context.formality_preference > 0.7:
                 message = re.sub(r"\bbye\b", "goodbye", message, flags=re.IGNORECASE)
@@ -429,8 +411,7 @@ class MessageLocalizer:
         context: ConversationContext, 
         phase: str
     ) -> str:
-        """Handle error messages"""
-        if phase == "postprocess" and context.cultural_context:
+        """Handle error messages"""        if phase == "postprocess" and context.cultural_context:
             # Soften error messages for high-context cultures
             if context.cultural_context.directness_level < 0.4:
                 message = re.sub(r"Error:", "We encountered an issue:", message)
@@ -444,8 +425,7 @@ class MessageLocalizer:
         context: ConversationContext, 
         phase: str
     ) -> str:
-        """Handle confirmation messages"""
-        if phase == "postprocess" and context.cultural_context:
+        """Handle confirmation messages"""        if phase == "postprocess" and context.cultural_context:
             # Adjust confirmation style based on culture
             if context.cultural_context.formality_preference > 0.7:
                 message = re.sub(r"\bOK\b", "Confirmed", message)
@@ -459,8 +439,7 @@ class MessageLocalizer:
         context: ConversationContext, 
         phase: str
     ) -> str:
-        """Handle question messages"""
-        if phase == "postprocess" and context.cultural_context:
+        """Handle question messages"""        if phase == "postprocess" and context.cultural_context:
             # Soften questions for indirect cultures
             if context.cultural_context.directness_level < 0.4:
                 if message.startswith("What"):
@@ -476,8 +455,7 @@ class MessageLocalizer:
         context: ConversationContext, 
         phase: str
     ) -> str:
-        """Handle instruction messages"""
-        if phase == "postprocess" and context.cultural_context:
+        """Handle instruction messages"""        if phase == "postprocess" and context.cultural_context:
             # Soften instructions for indirect cultures
             if context.cultural_context.directness_level < 0.4:
                 message = re.sub(r"^You must", "Please", message)
@@ -491,8 +469,7 @@ class MessageLocalizer:
         context: ConversationContext, 
         phase: str
     ) -> str:
-        """Handle feedback messages"""
-        if phase == "postprocess" and context.cultural_context:
+        """Handle feedback messages"""        if phase == "postprocess" and context.cultural_context:
             # Adjust feedback style based on culture
             if context.cultural_context.language == SupportedLanguage.JAPANESE:
                 # Add appropriate honorifics and softening
@@ -503,8 +480,7 @@ class MessageLocalizer:
 
 
 class ResponseLocalizer:
-    """Specialized response localization for system responses"""
-    
+    """Specialized response localization for system responses"""    
     def __init__(
         self,
         message_localizer: MessageLocalizer,
@@ -521,8 +497,7 @@ class ResponseLocalizer:
         conversation_context: ConversationContext,
         variables: Optional[Dict[str, Any]] = None
     ) -> LocalizedMessage:
-        """Localize system response with variable substitution"""
-        try:
+        """Localize system response with variable substitution"""        try:
             # Substitute variables if provided
             if variables:
                 response_content = await self._substitute_variables(
@@ -567,8 +542,7 @@ class ResponseLocalizer:
         variables: Dict[str, Any],
         context: ConversationContext
     ) -> str:
-        """Substitute variables with localized values"""
-        substituted_content = content
+        """Substitute variables with localized values"""        substituted_content = content
         
         for var_name, value in variables.items():
             placeholder = f"{{{var_name}}}"
@@ -592,8 +566,7 @@ class ResponseLocalizer:
         var_name: str,
         context: ConversationContext
     ) -> Any:
-        """Localize individual variable values"""
-        if isinstance(value, datetime):
+        """Localize individual variable values"""        if isinstance(value, datetime):
             # Localize datetime
             if context.cultural_context:
                 return value.strftime(context.cultural_context.datetime_format)
@@ -609,8 +582,7 @@ class ResponseLocalizer:
         return value
     
     def _determine_message_type(self, response_type: str) -> MessageType:
-        """Determine message type from response type"""
-        type_mapping = {
+        """Determine message type from response type"""        type_mapping = {
             "greeting": MessageType.GREETING,
             "farewell": MessageType.FAREWELL,
             "error": MessageType.ERROR_MESSAGE,
@@ -629,8 +601,7 @@ class ResponseLocalizer:
         response_type: str,
         context: ConversationContext
     ) -> str:
-        """Apply response-type specific enhancements"""
-        enhanced = response
+        """Apply response-type specific enhancements"""        enhanced = response
         
         if response_type == "success_confirmation":
             # Add positive reinforcement
@@ -646,8 +617,7 @@ class ResponseLocalizer:
 
 
 class TemplateLocalizer:
-    """Advanced template localization with caching"""
-    
+    """Advanced template localization with caching"""    
     def __init__(self, redis_client: aioredis.Redis, db_session: AsyncSession):
         self.redis_client = redis_client
         self.db_session = db_session
@@ -660,8 +630,7 @@ class TemplateLocalizer:
         variables: Optional[Dict[str, Any]] = None,
         cultural_context: Optional[CulturalContext] = None
     ) -> str:
-        """Localize template with variables and cultural adaptation"""
-        try:
+        """Localize template with variables and cultural adaptation"""        try:
             # Get localized template
             localized_template = await self._get_localized_template(
                 template_id,
@@ -696,8 +665,7 @@ class TemplateLocalizer:
         template_id: str,
         target_language: SupportedLanguage
     ) -> Optional[str]:
-        """Get localized template from cache or database"""
-        cache_key = f"template:{template_id}:{target_language.value}"
+        """Get localized template from cache or database"""        cache_key = f"template:{template_id}:{target_language.value}"
         
         # Check cache
         cached_template = await self.redis_client.get(cache_key)
@@ -708,14 +676,12 @@ class TemplateLocalizer:
         try:
             # Query database for localized template
             async with self.session_factory() as session:
-                query = """
-                    SELECT localized_content 
+                query = """                    SELECT localized_content 
                     FROM conversation_templates 
                     WHERE template_id = $1 AND language_code = $2 AND is_active = true
                     ORDER BY version DESC 
                     LIMIT 1
-                """
-                result = await session.execute(query, [template_id, target_language.value])
+                """                result = await session.execute(query, [template_id, target_language.value])
                 row = result.fetchone()
                 
                 if row:
@@ -744,8 +710,7 @@ class TemplateLocalizer:
         variables: Dict[str, Any],
         cultural_context: Optional[CulturalContext]
     ) -> str:
-        """Substitute variables in template with cultural formatting"""
-        substituted = template
+        """Substitute variables in template with cultural formatting"""        substituted = template
         
         for var_name, value in variables.items():
             placeholder = f"{{{var_name}}}"
@@ -766,8 +731,7 @@ class TemplateLocalizer:
         var_name: str,
         cultural_context: Optional[CulturalContext]
     ) -> str:
-        """Format template value according to cultural context"""
-        if isinstance(value, datetime) and cultural_context:
+        """Format template value according to cultural context"""        if isinstance(value, datetime) and cultural_context:
             return value.strftime(cultural_context.datetime_format)
         elif isinstance(value, (int, float)) and "amount" in var_name and cultural_context:
             return f"{cultural_context.currency_symbol}{value:,.2f}"
@@ -776,8 +740,7 @@ class TemplateLocalizer:
 
 
 class LocalizedResponseGenerator:
-    """High-level localized response generation"""
-    
+    """High-level localized response generation"""    
     def __init__(
         self,
         message_localizer: MessageLocalizer,
@@ -795,8 +758,7 @@ class LocalizedResponseGenerator:
         conversation_context: ConversationContext,
         variables: Optional[Dict[str, Any]] = None
     ) -> LocalizedMessage:
-        """Generate complete localized response"""
-        try:
+        """Generate complete localized response"""        try:
             # Use template if provided
             if response_template_id:
                 template_content = await self.template_localizer.localize_template(
@@ -829,8 +791,7 @@ class LocalizedResponseGenerator:
 
 
 class ConversationLocalizer:
-    """Master conversation localization orchestrator"""
-    
+    """Master conversation localization orchestrator"""    
     def __init__(
         self,
         language_manager: LanguageManager,
@@ -876,8 +837,7 @@ class ConversationLocalizer:
         target_language: SupportedLanguage,
         **kwargs
     ) -> ConversationContext:
-        """Create comprehensive conversation context"""
-        try:
+        """Create comprehensive conversation context"""        try:
             # Get user language context
             user_context = await self.language_manager.get_user_language_context(user_id)
             
@@ -918,8 +878,7 @@ class ConversationLocalizer:
             )
     
     async def _generate_fallback_template(self, template_id: str, target_language: SupportedLanguage) -> Optional[str]:
-        """Generate fallback template when database lookup fails."""
-        try:
+        """Generate fallback template when database lookup fails."""        try:
             # Define common templates for content creators
             default_templates = {
                 "welcome_creator": "Welcome to IA Influencer Agent! How can I help you create amazing content today?",
@@ -960,8 +919,7 @@ class ConversationLocalizer:
         system_response: str,
         conversation_context: ConversationContext
     ) -> Tuple[LocalizedMessage, LocalizedMessage]:
-        """Process a complete conversation turn"""
-        try:
+        """Process a complete conversation turn"""        try:
             # Localize user message (if needed)
             localized_user_message = await self.message_localizer.localize_message(
                 user_message,
@@ -990,8 +948,7 @@ class ConversationLocalizer:
             raise
     
     async def get_localization_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive localization statistics"""
-        return {
+        """Get comprehensive localization statistics"""        return {
             "message_localizer_stats": dict(self.message_localizer.localization_stats),
             "cultural_adaptor_stats": dict(self.cultural_adaptor.adaptation_stats),
             "translation_stats": await self.translation_engine.get_translation_statistics()

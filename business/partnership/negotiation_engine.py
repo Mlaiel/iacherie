@@ -1,5 +1,4 @@
-"""
-Negotiation Engine for IA Influencer Agent
+"""Negotiation Engine for IA Influencer Agent
 AI-powered negotiation and deal optimization system
 
 ⚠️ STRICT COPYRIGHT WARNING ⚠️
@@ -20,7 +19,6 @@ Development Team Specialties:
 - AI Prompt Engineering Specialist
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -41,8 +39,7 @@ logger = logging.getLogger(__name__)
 
 
 class NegotiationStrategy(Enum):
-    """Negotiation strategy types"""
-    COLLABORATIVE = "collaborative"
+    """Negotiation strategy types"""    COLLABORATIVE = "collaborative"
     COMPETITIVE = "competitive"
     ACCOMMODATING = "accommodating" 
     AVOIDING = "avoiding"
@@ -50,8 +47,7 @@ class NegotiationStrategy(Enum):
 
 
 class NegotiationTactic(Enum):
-    """Specific negotiation tactics"""
-    ANCHORING = "anchoring"
+    """Specific negotiation tactics"""    ANCHORING = "anchoring"
     CONCESSION_TRADING = "concession_trading"
     DEADLINE_PRESSURE = "deadline_pressure"
     BEST_ALTERNATIVE = "best_alternative"
@@ -60,19 +56,16 @@ class NegotiationTactic(Enum):
 
 
 class NegotiationPriority(Enum):
-    """Priority levels for negotiation points"""
-    MUST_HAVE = "must_have"
+    """Priority levels for negotiation points"""    MUST_HAVE = "must_have"
     IMPORTANT = "important"
     NICE_TO_HAVE = "nice_to_have"
     TRADE_OFF = "trade_off"
 
 
 class NegotiationEngine:
-    """
-    Advanced AI-powered negotiation engine for partnership deals.
+    """    Advanced AI-powered negotiation engine for partnership deals.
     Handles strategy optimization, term negotiation, and deal closing.
     """
-
     def __init__(self):
         self.logger = logger
         self.negotiation_strategies = self._load_negotiation_strategies()
@@ -84,8 +77,7 @@ class NegotiationEngine:
         creator_preferences: Dict[str, Any],
         negotiation_strategy: Optional[NegotiationStrategy] = None
     ) -> NegotiationRecord:
-        """Initiate negotiation process with AI-optimized strategy"""
-        try:
+        """Initiate negotiation process with AI-optimized strategy"""        try:
             # Determine optimal negotiation strategy
             if not negotiation_strategy:
                 negotiation_strategy = await self._determine_optimal_strategy(
@@ -133,8 +125,7 @@ class NegotiationEngine:
         market_data: Dict[str, Any],
         competitor_analysis: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Analyze current negotiation position and recommend strategy"""
-        try:
+        """Analyze current negotiation position and recommend strategy"""        try:
             analysis = {
                 'position_strength': 0.0,
                 'leverage_factors': [],
@@ -194,8 +185,7 @@ class NegotiationEngine:
         partner_proposal: Dict[str, Any],
         negotiation_analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate AI-optimized counter-proposal"""
-        try:
+        """Generate AI-optimized counter-proposal"""        try:
             # Analyze partner proposal
             proposal_analysis = await self._analyze_partner_proposal(
                 partner_proposal, negotiation, negotiation_analysis
@@ -268,8 +258,7 @@ class NegotiationEngine:
         creator_preferences: Dict[str, Any],
         market_benchmarks: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Evaluate deal attractiveness using AI analysis"""
-        try:
+        """Evaluate deal attractiveness using AI analysis"""        try:
             evaluation = {
                 'overall_score': 0.0,
                 'financial_attractiveness': 0.0,
@@ -361,8 +350,7 @@ class NegotiationEngine:
         current_terms: Dict[str, Any],
         timeline_constraints: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize strategy for closing the deal"""
-        try:
+        """Optimize strategy for closing the deal"""        try:
             closing_strategy = {
                 'primary_approach': '',
                 'urgency_factors': [],
@@ -418,8 +406,7 @@ class NegotiationEngine:
     # Private helper methods
 
     def _load_negotiation_strategies(self) -> Dict[str, Any]:
-        """Load negotiation strategy configurations"""
-        return {
+        """Load negotiation strategy configurations"""        return {
             NegotiationStrategy.COLLABORATIVE: {
                 'focus': 'mutual_benefit',
                 'tactics': [NegotiationTactic.VALUE_CREATION, NegotiationTactic.RELATIONSHIP_BUILDING],
@@ -438,8 +425,7 @@ class NegotiationEngine:
         }
 
     def _load_market_benchmarks(self) -> Dict[str, Any]:
-        """Load market benchmark data"""
-        return {
+        """Load market benchmark data"""        return {
             'commission_rates': {
                 'brand_ambassador': {'min': 0.10, 'avg': 0.15, 'max': 0.25},
                 'content_licensing': {'min': 0.20, 'avg': 0.30, 'max': 0.40},
@@ -461,8 +447,7 @@ class NegotiationEngine:
         opportunity: PartnershipOpportunity,
         creator_preferences: Dict[str, Any]
     ) -> NegotiationStrategy:
-        """Determine optimal negotiation strategy using AI"""
-        # Strategic analysis
+        """Determine optimal negotiation strategy using AI"""        # Strategic analysis
         if opportunity.match_score > 0.8 and opportunity.strategic_alignment > 0.7:
             return NegotiationStrategy.COLLABORATIVE
         elif opportunity.revenue_potential > Decimal('10000') and opportunity.risk_assessment < 0.3:
@@ -476,8 +461,7 @@ class NegotiationEngine:
         creator_preferences: Dict[str, Any],
         strategy: NegotiationStrategy
     ) -> Dict[str, Any]:
-        """Generate AI-optimized initial proposal"""
-        base_terms = opportunity.recommended_terms.copy()
+        """Generate AI-optimized initial proposal"""        base_terms = opportunity.recommended_terms.copy()
         
         # Apply strategy adjustments
         if strategy == NegotiationStrategy.COMPETITIVE:
@@ -497,8 +481,7 @@ class NegotiationEngine:
         self,
         opportunity: PartnershipOpportunity
     ) -> int:
-        """Calculate expected negotiation duration in days"""
-        base_duration = 21  # 3 weeks base
+        """Calculate expected negotiation duration in days"""        base_duration = 21  # 3 weeks base
         
         # Adjust based on deal complexity
         if opportunity.revenue_potential > Decimal('20000'):
@@ -514,8 +497,7 @@ class NegotiationEngine:
         negotiation: NegotiationRecord,
         market_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Analyze negotiation position strength"""
-        strength_factors = {
+        """Analyze negotiation position strength"""        strength_factors = {
             'market_demand': 0.7,  # High demand for creator content
             'unique_value': 0.8,   # Unique creator value proposition
             'alternatives': 0.6,   # Alternative partnership options
@@ -531,8 +513,7 @@ class NegotiationEngine:
         market_data: Dict[str, Any],
         competitor_analysis: Optional[Dict[str, Any]]
     ) -> List[str]:
-        """Identify leverage factors in negotiation"""
-        return [
+        """Identify leverage factors in negotiation"""        return [
             'Strong audience engagement metrics',
             'Exclusive content creation capabilities',
             'Multiple partnership alternatives available',
@@ -544,8 +525,7 @@ class NegotiationEngine:
         negotiation: NegotiationRecord,
         market_data: Dict[str, Any]
     ) -> List[str]:
-        """Identify weakness factors"""
-        return [
+        """Identify weakness factors"""        return [
             'Limited negotiation experience',
             'Time pressure to secure partnership',
             'Market saturation in content category'
@@ -556,8 +536,7 @@ class NegotiationEngine:
         position_strength: float,
         stage: NegotiationStage
     ) -> List[str]:
-        """Recommend specific negotiation tactics"""
-        if position_strength > 0.7:
+        """Recommend specific negotiation tactics"""        if position_strength > 0.7:
             return ['Use anchoring for key terms', 'Emphasize unique value proposition']
         elif position_strength > 0.4:
             return ['Focus on value creation', 'Build relationship trust']
@@ -570,8 +549,7 @@ class NegotiationEngine:
         negotiation: NegotiationRecord,
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze partner's proposal"""
-        return {
+        """Analyze partner's proposal"""        return {
             'favorable_terms': [
                 term for term, value in partner_proposal.items()
                 if self._is_term_favorable(term, value)
@@ -585,8 +563,7 @@ class NegotiationEngine:
         }
 
     def _is_term_favorable(self, term: str, value: Any) -> bool:
-        """Check if term is favorable to creator"""
-        # Simplified evaluation logic
+        """Check if term is favorable to creator"""        # Simplified evaluation logic
         if term == 'commission_rate':
             return float(value) >= 0.15
         elif term == 'contract_duration':
@@ -594,8 +571,7 @@ class NegotiationEngine:
         return True
 
     async def _identify_negotiation_gaps(self, proposal: Dict[str, Any]) -> List[str]:
-        """Identify gaps between positions"""
-        return [
+        """Identify gaps between positions"""        return [
             'Commission rate below market average',
             'Contract duration longer than preferred',
             'Limited exclusivity terms'
@@ -606,8 +582,7 @@ class NegotiationEngine:
         proposal_analysis: Dict[str, Any],
         negotiation_analysis: Dict[str, Any]
     ) -> Dict[str, str]:
-        """Generate counter-proposal strategy"""
-        return {
+        """Generate counter-proposal strategy"""        return {
             'primary_focus': 'improve_financial_terms',
             'secondary_focus': 'reduce_contract_duration',
             'concession_strategy': 'gradual_concessions',
@@ -620,8 +595,7 @@ class NegotiationEngine:
         analysis: Dict[str, Any],
         strategy: Dict[str, str]
     ) -> Dict[str, Any]:
-        """Optimize proposal terms based on analysis"""
-        optimized = partner_proposal.copy()
+        """Optimize proposal terms based on analysis"""        optimized = partner_proposal.copy()
         
         # Improve key terms
         if 'commission_rate' in optimized:
@@ -641,8 +615,7 @@ class NegotiationEngine:
         analysis: Dict[str, Any],
         strategy: Dict[str, str]
     ) -> str:
-        """Generate rationale for specific terms"""
-        rationale_map = {
+        """Generate rationale for specific terms"""        rationale_map = {
             'commission_rate': f"Rate of {term_value} reflects market standards and creator value",
             'contract_duration': f"{term_value} months allows for performance evaluation while maintaining flexibility",
             'exclusivity': f"Exclusivity terms balanced to protect creator opportunities"
@@ -655,8 +628,7 @@ class NegotiationEngine:
         preferences: Dict[str, Any],
         benchmarks: Dict[str, Any]
     ) -> float:
-        """Evaluate financial attractiveness of terms"""
-        commission_rate = float(terms.get('commission_rate', 0.10))
+        """Evaluate financial attractiveness of terms"""        commission_rate = float(terms.get('commission_rate', 0.10))
         market_avg = benchmarks.get('commission_rates', {}).get('brand_ambassador', {}).get('avg', 0.15)
         
         # Score based on how terms compare to market
@@ -670,8 +642,7 @@ class NegotiationEngine:
         terms: Dict[str, Any],
         preferences: Dict[str, Any]
     ) -> float:
-        """Assess strategic value of partnership"""
-        strategic_factors = [
+        """Assess strategic value of partnership"""        strategic_factors = [
             'brand_alignment' in terms and terms['brand_alignment'],
             'content_categories' in terms,
             'platform_expansion' in terms,
@@ -685,8 +656,7 @@ class NegotiationEngine:
         overall_score: float,
         evaluation: Dict[str, Any]
     ) -> str:
-        """Generate deal recommendation"""
-        if overall_score >= 0.8:
+        """Generate deal recommendation"""        if overall_score >= 0.8:
             return "Strongly recommend accepting - excellent terms"
         elif overall_score >= 0.6:
             return "Recommend accepting with minor improvements"
@@ -700,8 +670,7 @@ class NegotiationEngine:
         negotiation: NegotiationRecord,
         terms: Dict[str, Any]
     ) -> str:
-        """Determine optimal closing approach"""
-        if negotiation.close_probability > 0.8:
+        """Determine optimal closing approach"""        if negotiation.close_probability > 0.8:
             return "direct_close"
         elif negotiation.close_probability > 0.6:
             return "assumptive_close"
@@ -713,8 +682,7 @@ class NegotiationEngine:
         negotiation: NegotiationRecord,
         strategy: Dict[str, Any]
     ) -> float:
-        """Calculate probability of successful deal closing"""
-        base_probability = negotiation.close_probability
+        """Calculate probability of successful deal closing"""        base_probability = negotiation.close_probability
         
         # Adjust based on strategy factors
         if strategy['primary_approach'] == 'direct_close':

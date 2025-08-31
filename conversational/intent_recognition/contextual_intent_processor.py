@@ -1,5 +1,4 @@
-"""
-Contextual Intent Processing and Enhancement
+"""Contextual Intent Processing and Enhancement
 
 Advanced context-aware intent processing system that enhances intent recognition
 through conversation context, user profile, and environmental factors.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContextType(Enum):
-    """Types of context information"""
-    CONVERSATION = "conversation"
+    """Types of context information"""    CONVERSATION = "conversation"
     USER_PROFILE = "user_profile"
     TEMPORAL = "temporal"
     ENVIRONMENTAL = "environmental"
@@ -40,8 +37,7 @@ class ContextType(Enum):
 
 
 class ContextualWeight(Enum):
-    """Context weighting categories"""
-    CRITICAL = 1.0
+    """Context weighting categories"""    CRITICAL = 1.0
     HIGH = 0.8
     MEDIUM = 0.6
     LOW = 0.3
@@ -50,8 +46,7 @@ class ContextualWeight(Enum):
 
 @dataclass
 class ConversationContext:
-    """Conversation-specific context information"""
-    
+    """Conversation-specific context information"""    
     # Message history
     message_history: List[Dict[str, Any]] = field(default_factory=list)
     turn_count: int = 0
@@ -74,8 +69,7 @@ class ConversationContext:
 
 @dataclass
 class UserProfileContext:
-    """User profile and preference context"""
-    
+    """User profile and preference context"""    
     # Creator profile
     creator_type: str = "unknown"  # musician, influencer, photographer, etc.
     experience_level: str = "intermediate"
@@ -99,8 +93,7 @@ class UserProfileContext:
 
 @dataclass
 class TemporalContext:
-    """Time-based context information"""
-    
+    """Time-based context information"""    
     # Current timing
     current_time: datetime = field(default_factory=datetime.now)
     day_of_week: int = 0
@@ -122,8 +115,7 @@ class TemporalContext:
 
 @dataclass
 class BusinessContext:
-    """Business and monetization context"""
-    
+    """Business and monetization context"""    
     # Current projects
     active_projects: List[Dict[str, Any]] = field(default_factory=list)
     project_deadlines: List[datetime] = field(default_factory=list)
@@ -144,8 +136,7 @@ class BusinessContext:
 
 @dataclass
 class ContextualEnhancement:
-    """Context-based intent enhancement result"""
-    
+    """Context-based intent enhancement result"""    
     # Enhanced intent
     enhanced_intent: str
     confidence_boost: float
@@ -161,8 +152,7 @@ class ContextualEnhancement:
 
 
 class ContextualEnhancer:
-    """Context-based intent enhancement engine"""
-    
+    """Context-based intent enhancement engine"""    
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
         self.context_weights = self._initialize_context_weights()
@@ -170,8 +160,7 @@ class ContextualEnhancer:
         self.pattern_matchers = self._initialize_pattern_matchers()
     
     def _initialize_context_weights(self) -> Dict[ContextType, float]:
-        """Initialize context type weights"""
-        return {
+        """Initialize context type weights"""        return {
             ContextType.CONVERSATION: 0.9,
             ContextType.USER_PROFILE: 0.8,
             ContextType.TEMPORAL: 0.6,
@@ -181,8 +170,7 @@ class ContextualEnhancer:
         }
     
     def _load_enhancement_rules(self) -> Dict[str, List[Dict[str, Any]]]:
-        """Load context-based enhancement rules"""
-        return {
+        """Load context-based enhancement rules"""        return {
             "music_creation": [
                 {
                     "condition": "previous_intent == 'upload_audio'",
@@ -212,8 +200,7 @@ class ContextualEnhancer:
         }
     
     def _initialize_pattern_matchers(self) -> Dict[str, re.Pattern]:
-        """Initialize pattern matching rules"""
-        return {
+        """Initialize pattern matching rules"""        return {
             "urgency_indicators": re.compile(r'\b(urgent|asap|quickly|now|immediately|deadline)\b', re.IGNORECASE),
             "creative_workflow": re.compile(r'\b(create|upload|edit|mix|master|publish|share)\b', re.IGNORECASE),
             "business_terms": re.compile(r'\b(revenue|monetize|earnings|collaboration|brand|sponsor)\b', re.IGNORECASE),
@@ -231,8 +218,7 @@ class ContextualEnhancer:
         business_context: Optional[BusinessContext] = None,
         message_text: Optional[str] = None
     ) -> ContextualEnhancement:
-        """
-        Enhance intent recognition using comprehensive context
+        """        Enhance intent recognition using comprehensive context
         
         Args:
             base_intent: Original detected intent
@@ -245,8 +231,7 @@ class ContextualEnhancer:
             
         Returns:
             ContextualEnhancement: Enhanced intent with context analysis
-        """
-        try:
+        """        try:
             enhancement_factors = {}
             reasoning = []
             warnings = []
@@ -320,8 +305,7 @@ class ContextualEnhancer:
         context: ConversationContext,
         message_text: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Analyze conversation-specific context factors"""
-        factors = []
+        """Analyze conversation-specific context factors"""        factors = []
         reasoning = []
         enhancement_factor = 0.0
         
@@ -387,8 +371,7 @@ class ContextualEnhancer:
         intent: str,
         context: UserProfileContext
     ) -> Dict[str, Any]:
-        """Analyze user profile context factors"""
-        enhancement_factor = 0.0
+        """Analyze user profile context factors"""        enhancement_factor = 0.0
         reasoning = []
         
         try:
@@ -450,8 +433,7 @@ class ContextualEnhancer:
         temporal_context: TemporalContext,
         user_context: UserProfileContext
     ) -> Dict[str, Any]:
-        """Analyze time-based context factors"""
-        enhancement_factor = 0.0
+        """Analyze time-based context factors"""        enhancement_factor = 0.0
         reasoning = []
         
         try:
@@ -498,8 +480,7 @@ class ContextualEnhancer:
         intent: str,
         context: BusinessContext
     ) -> Dict[str, Any]:
-        """Analyze business and monetization context"""
-        enhancement_factor = 0.0
+        """Analyze business and monetization context"""        enhancement_factor = 0.0
         reasoning = []
         
         try:
@@ -547,8 +528,7 @@ class ContextualEnhancer:
         }
     
     def _calculate_confidence_boost(self, enhancement_factors: Dict[str, float]) -> float:
-        """Calculate overall confidence boost from context factors"""
-        weighted_boost = 0.0
+        """Calculate overall confidence boost from context factors"""        weighted_boost = 0.0
         total_weight = 0.0
         
         for context_type_str, factor in enhancement_factors.items():
@@ -571,8 +551,7 @@ class ContextualEnhancer:
             return 0.0
     
     def _refine_intent(self, base_intent: str, enhancement_factors: Dict[str, float]) -> str:
-        """Refine intent based on context analysis"""
-        # For now, return the base intent
+        """Refine intent based on context analysis"""        # For now, return the base intent
         # Future enhancement: use context to suggest more specific intents
         
         # Apply intent refinement rules
@@ -600,8 +579,7 @@ class ContextualEnhancer:
         enhancement_factors: Dict[str, float],
         message_text: Optional[str] = None
     ) -> List[str]:
-        """Detect potential ambiguities in context interpretation"""
-        ambiguities = []
+        """Detect potential ambiguities in context interpretation"""        ambiguities = []
         
         # Check for conflicting context signals
         if 'conversation' in enhancement_factors and 'temporal' in enhancement_factors:
@@ -627,8 +605,7 @@ class ContextualEnhancer:
         enhancement_factors: Dict[str, float],
         conversation_context: ConversationContext
     ) -> List[Tuple[str, float]]:
-        """Generate alternative intent interpretations"""
-        alternatives = []
+        """Generate alternative intent interpretations"""        alternatives = []
         
         # Generate alternatives based on context strength
         intent_alternatives = {
@@ -668,8 +645,7 @@ class ContextualEnhancer:
         temporal_context: TemporalContext,
         business_context: Optional[BusinessContext] = None
     ) -> List[str]:
-        """Generate context-based warnings and recommendations"""
-        warnings = []
+        """Generate context-based warnings and recommendations"""        warnings = []
         
         # Low context confidence warning
         if all(factor < 0.2 for factor in enhancement_factors.values()):
@@ -694,12 +670,10 @@ class ContextualEnhancer:
 
 
 class ContextualIntentProcessor:
-    """
-    Main contextual intent processing system
+    """    Main contextual intent processing system
     
     Orchestrates context gathering, analysis, and intent enhancement
-    """
-    
+    """    
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
         self.enhancer = ContextualEnhancer(config)
@@ -715,8 +689,7 @@ class ContextualIntentProcessor:
         message_text: str,
         additional_context: Optional[Dict[str, Any]] = None
     ) -> ContextualEnhancement:
-        """
-        Process intent with full contextual enhancement
+        """        Process intent with full contextual enhancement
         
         Args:
             intent: Detected intent
@@ -728,8 +701,7 @@ class ContextualIntentProcessor:
             
         Returns:
             ContextualEnhancement: Enhanced intent with context analysis
-        """
-        try:
+        """        try:
             # Gather context information
             conversation_context = self._gather_conversation_context(session_id)
             user_context = self._gather_user_context(user_id)
@@ -767,20 +739,17 @@ class ContextualIntentProcessor:
             raise ContextProcessingError(f"Processing failed: {e}")
     
     def _gather_conversation_context(self, session_id: str) -> ConversationContext:
-        """Gather conversation-specific context"""
-        # Implementation would fetch from conversation history storage
+        """Gather conversation-specific context"""        # Implementation would fetch from conversation history storage
         # For now, return default context
         return ConversationContext()
     
     def _gather_user_context(self, user_id: str) -> UserProfileContext:
-        """Gather user profile context"""
-        # Implementation would fetch from user profile database
+        """Gather user profile context"""        # Implementation would fetch from user profile database
         # For now, return default context
         return UserProfileContext()
     
     def _gather_temporal_context(self) -> TemporalContext:
-        """Gather current temporal context"""
-        now = datetime.now()
+        """Gather current temporal context"""        now = datetime.now()
         return TemporalContext(
             current_time=now,
             day_of_week=now.weekday(),
@@ -790,8 +759,7 @@ class ContextualIntentProcessor:
         )
     
     def _gather_business_context(self, user_id: str) -> Optional[BusinessContext]:
-        """Gather business and monetization context"""
-        # Implementation would fetch from business data storage
+        """Gather business and monetization context"""        # Implementation would fetch from business data storage
         # For now, return None
         return None
     
@@ -802,8 +770,7 @@ class ContextualIntentProcessor:
         message_text: str,
         context: ConversationContext
     ):
-        """Update conversation context with current interaction"""
-        context.turn_count += 1
+        """Update conversation context with current interaction"""        context.turn_count += 1
         context.previous_intents.append(intent)
         
         if intent in context.intent_patterns:
@@ -819,14 +786,11 @@ class ContextualIntentProcessor:
         })
     
     def _store_session_context(self, session_id: str, context_data: Dict[str, Any]):
-        """Store session context for future reference"""
-        self.session_contexts[session_id] = context_data
+        """Store session context for future reference"""        self.session_contexts[session_id] = context_data
     
     def get_context_summary(self, session_id: str) -> Dict[str, Any]:
-        """Get summary of current session context"""
-        return self.session_contexts.get(session_id, {})
+        """Get summary of current session context"""        return self.session_contexts.get(session_id, {})
     
     def clear_session_context(self, session_id: str):
-        """Clear stored context for a session"""
-        if session_id in self.session_contexts:
+        """Clear stored context for a session"""        if session_id in self.session_contexts:
             del self.session_contexts[session_id]

@@ -1,5 +1,4 @@
-"""
-Audio Fingerprinting System - Main Index Module
+"""Audio Fingerprinting System - Main Index Module
 Industrial-grade entry point for audio content protection and identification system.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -21,7 +20,6 @@ Team Specialization:
 - DevOps Engineer: Production deployment and monitoring
 - AI Prompt Engineer: Intelligent content analysis
 """
-
 import asyncio
 import logging
 import signal
@@ -61,14 +59,11 @@ logger = logging.getLogger(__name__)
 
 
 class AudioFingerprintingService:
-    """
-    Main service orchestrator for the audio fingerprinting system.
+    """    Main service orchestrator for the audio fingerprinting system.
     Coordinates all components and provides high-level API for audio content protection.
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None, database_url: Optional[str] = None):
-        """Initialize the audio fingerprinting service."""
-        self.config_path = config_path
+        """Initialize the audio fingerprinting service."""        self.config_path = config_path
         self.database_url = database_url
         
         # Core components
@@ -95,13 +90,11 @@ class AudioFingerprintingService:
         logger.info("AudioFingerprintingService initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize all service components.
+        """        Initialize all service components.
         
         Returns:
             True if initialization successful, False otherwise
-        """
-        try:
+        """        try:
             logger.info("Initializing Audio Fingerprinting Service...")
             start_time = datetime.now()
             
@@ -165,8 +158,7 @@ class AudioFingerprintingService:
             return False
     
     def _setup_signal_handlers(self):
-        """Setup signal handlers for graceful shutdown."""
-        def signal_handler(signum, frame):
+        """Setup signal handlers for graceful shutdown."""        def signal_handler(signum, frame):
             logger.info("Received signal %d, initiating graceful shutdown...", signum)
             self._shutdown_event.set()
         
@@ -174,13 +166,11 @@ class AudioFingerprintingService:
         signal.signal(signal.SIGTERM, signal_handler)
     
     async def start(self) -> bool:
-        """
-        Start the fingerprinting service.
+        """        Start the fingerprinting service.
         
         Returns:
             True if service started successfully
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             logger.error("Service not initialized. Call initialize() first.")
             return False
         
@@ -200,8 +190,7 @@ class AudioFingerprintingService:
             return False
     
     async def _start_background_tasks(self):
-        """Start background monitoring and maintenance tasks."""
-        # Performance monitoring task
+        """Start background monitoring and maintenance tasks."""        # Performance monitoring task
         if self.config_manager.monitoring.enable_metrics_collection:
             asyncio.create_task(self._performance_monitoring_task())
         
@@ -210,8 +199,7 @@ class AudioFingerprintingService:
             asyncio.create_task(self._health_check_task())
     
     async def _performance_monitoring_task(self):
-        """Background task for performance monitoring."""
-        interval = self.config_manager.monitoring.metrics_interval_seconds
+        """Background task for performance monitoring."""        interval = self.config_manager.monitoring.metrics_interval_seconds
         
         while self.is_running and not self._shutdown_event.is_set():
             try:
@@ -227,8 +215,7 @@ class AudioFingerprintingService:
                 await asyncio.sleep(interval)
     
     async def _health_check_task(self):
-        """Background task for system health checks."""
-        interval = self.config_manager.monitoring.health_check_interval
+        """Background task for system health checks."""        interval = self.config_manager.monitoring.health_check_interval
         
         while self.is_running and not self._shutdown_event.is_set():
             try:
@@ -250,8 +237,7 @@ class AudioFingerprintingService:
         user_id: Optional[int] = None,
         metadata: Optional[Dict] = None
     ) -> Optional[FingerprintResult]:
-        """
-        High-level API to fingerprint an audio file.
+        """        High-level API to fingerprint an audio file.
         
         Args:
             file_path: Path to the audio file
@@ -260,8 +246,7 @@ class AudioFingerprintingService:
             
         Returns:
             FingerprintResult or None if failed
-        """
-        try:
+        """        try:
             if not self.is_running:
                 logger.error("Service not running")
                 return None
@@ -311,8 +296,7 @@ class AudioFingerprintingService:
         max_results: int = 50,
         user_id: Optional[int] = None
     ) -> List[Dict]:
-        """
-        Find matches for a given fingerprint hash.
+        """        Find matches for a given fingerprint hash.
         
         Args:
             fingerprint_hash: Target fingerprint hash
@@ -322,8 +306,7 @@ class AudioFingerprintingService:
             
         Returns:
             List of match results
-        """
-        try:
+        """        try:
             if not self.is_running:
                 logger.error("Service not running")
                 return []
@@ -366,8 +349,7 @@ class AudioFingerprintingService:
         user_id: Optional[int] = None,
         progress_callback: Optional[callable] = None
     ) -> List[Optional[FingerprintResult]]:
-        """
-        Fingerprint multiple audio files in parallel.
+        """        Fingerprint multiple audio files in parallel.
         
         Args:
             file_paths: List of audio file paths
@@ -376,8 +358,7 @@ class AudioFingerprintingService:
             
         Returns:
             List of FingerprintResult objects (None for failed files)
-        """
-        try:
+        """        try:
             logger.info("Starting batch fingerprinting of %d files", len(file_paths))
             
             results = []
@@ -403,8 +384,7 @@ class AudioFingerprintingService:
             return []
     
     async def get_service_stats(self) -> Dict[str, Any]:
-        """Get comprehensive service statistics."""
-        try:
+        """Get comprehensive service statistics."""        try:
             stats = {
                 'service_info': {
                     'is_running': self.is_running,
@@ -436,8 +416,7 @@ class AudioFingerprintingService:
             return {}
     
     async def get_health_status(self) -> Dict[str, Any]:
-        """Get system health status."""
-        try:
+        """Get system health status."""        try:
             health = {
                 'healthy': True,
                 'components': {},
@@ -465,8 +444,7 @@ class AudioFingerprintingService:
             return {'healthy': False, 'error': str(e)}
     
     async def shutdown(self):
-        """Gracefully shutdown the service."""
-        try:
+        """Gracefully shutdown the service."""        try:
             logger.info("Shutting down Audio Fingerprinting Service...")
             self.is_running = False
             
@@ -495,25 +473,20 @@ class AudioFingerprintingService:
             logger.error("Error during service shutdown: %s", str(e))
     
     async def __aenter__(self):
-        """Async context manager entry."""
-        await self.initialize()
+        """Async context manager entry."""        await self.initialize()
         await self.start()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit."""
-        await self.shutdown()
+        """Async context manager exit."""        await self.shutdown()
 
 
 class AudioFingerprintingAPI:
-    """
-    RESTful API wrapper for the audio fingerprinting service.
+    """    RESTful API wrapper for the audio fingerprinting service.
     Provides HTTP endpoints for integration with web applications.
-    """
-    
+    """    
     def __init__(self, service: AudioFingerprintingService):
-        """Initialize the API wrapper."""
-        self.service = service
+        """Initialize the API wrapper."""        self.service = service
         self.temp_upload_dir = Path("temp_uploads")
         self.temp_upload_dir.mkdir(exist_ok=True)
         
@@ -526,8 +499,7 @@ class AudioFingerprintingAPI:
         user_id: Optional[int] = None,
         metadata: Optional[Dict] = None
     ) -> Dict[str, Any]:
-        """
-        Handle file upload and fingerprinting via API.
+        """        Handle file upload and fingerprinting via API.
         
         Args:
             file_data: Binary file data
@@ -537,8 +509,7 @@ class AudioFingerprintingAPI:
             
         Returns:
             API response dictionary
-        """
-        temp_file_path = None
+        """        temp_file_path = None
         
         try:
             # Create temporary file
@@ -591,8 +562,7 @@ def create_service(
     config_path: Optional[str] = None,
     database_url: Optional[str] = None
 ) -> AudioFingerprintingService:
-    """
-    Factory function to create a configured fingerprinting service.
+    """    Factory function to create a configured fingerprinting service.
     
     Args:
         config_path: Optional path to configuration file
@@ -600,16 +570,14 @@ def create_service(
         
     Returns:
         Configured AudioFingerprintingService instance
-    """
-    return AudioFingerprintingService(config_path=config_path, database_url=database_url)
+    """    return AudioFingerprintingService(config_path=config_path, database_url=database_url)
 
 
 def create_api_service(
     config_path: Optional[str] = None,
     database_url: Optional[str] = None
 ) -> AudioFingerprintingAPI:
-    """
-    Factory function to create an API-enabled fingerprinting service.
+    """    Factory function to create an API-enabled fingerprinting service.
     
     Args:
         config_path: Optional path to configuration file
@@ -617,17 +585,14 @@ def create_api_service(
         
     Returns:
         Configured AudioFingerprintingAPI instance
-    """
-    service = create_service(config_path, database_url)
+    """    service = create_service(config_path, database_url)
     return AudioFingerprintingAPI(service)
 
 
 async def main():
-    """
-    Main entry point for standalone service execution.
+    """    Main entry point for standalone service execution.
     Demonstrates complete service lifecycle management.
-    """
-    logger.info("Starting Audio Fingerprinting Service (Standalone Mode)")
+    """    logger.info("Starting Audio Fingerprinting Service (Standalone Mode)")
     
     # Create and configure service
     service = create_service()

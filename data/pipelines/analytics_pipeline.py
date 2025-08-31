@@ -1,5 +1,4 @@
-"""
-Analytics Pipeline for Advanced Creator Performance Intelligence
+"""Analytics Pipeline for Advanced Creator Performance Intelligence
 ===============================================================
 
 Professional analytics system providing comprehensive performance metrics,
@@ -20,7 +19,6 @@ This proprietary analytics technology and algorithms belong exclusively to
 Fahed Mlaiel. Any unauthorized use, data extraction, or competitive analysis
 without explicit written permission will result in immediate legal action.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -67,8 +65,7 @@ settings = get_settings()
 
 
 class MetricType(str, Enum):
-    """Types of analytics metrics"""
-    ENGAGEMENT = "engagement"
+    """Types of analytics metrics"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     GROWTH = "growth"
     REVENUE = "revenue"
@@ -79,8 +76,7 @@ class MetricType(str, Enum):
 
 
 class TimeRange(str, Enum):
-    """Analytics time ranges"""
-    LAST_7_DAYS = "last_7_days"
+    """Analytics time ranges"""    LAST_7_DAYS = "last_7_days"
     LAST_30_DAYS = "last_30_days"
     LAST_90_DAYS = "last_90_days"
     LAST_YEAR = "last_year"
@@ -88,8 +84,7 @@ class TimeRange(str, Enum):
 
 
 class ReportType(str, Enum):
-    """Types of analytics reports"""
-    DAILY = "daily"
+    """Types of analytics reports"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -99,18 +94,15 @@ class ReportType(str, Enum):
 
 
 class CompetitorLevel(str, Enum):
-    """Competitor analysis levels"""
-    DIRECT = "direct"          # Same niche, similar audience
+    """Competitor analysis levels"""    DIRECT = "direct"          # Same niche, similar audience
     INDIRECT = "indirect"      # Same platform, different niche
     ASPIRATIONAL = "aspirational"  # Target creators to emulate
     MARKET = "market"          # Overall market leaders
 
 
 class MetricsAggregator:
-    """
-    Advanced metrics aggregation and calculation engine
-    """
-    
+    """    Advanced metrics aggregation and calculation engine
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.platform_integration = PlatformIntegration()
@@ -156,10 +148,8 @@ class MetricsAggregator:
         time_range: TimeRange = TimeRange.LAST_30_DAYS,
         platforms: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Calculate comprehensive performance metrics across all platforms
-        """
-        try:
+        """        Calculate comprehensive performance metrics across all platforms
+        """        try:
             logger.info(f"Calculating comprehensive metrics for user {user_id}")
             
             # Determine time period
@@ -272,8 +262,7 @@ class MetricsAggregator:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Calculate overall performance score using weighted metrics"""
-        try:
+        """Calculate overall performance score using weighted metrics"""        try:
             # Collect platform data
             platform_scores = {}
             total_weighted_score = 0.0
@@ -343,8 +332,7 @@ class MetricsAggregator:
             return {"overall_score": 0, "error": str(e)}
 
     def _calculate_engagement_score(self, platform_data: Dict[str, Any], platform: str) -> float:
-        """Calculate engagement score based on platform benchmarks"""
-        engagement_rate = platform_data.get("engagement_rate", 0)
+        """Calculate engagement score based on platform benchmarks"""        engagement_rate = platform_data.get("engagement_rate", 0)
         benchmarks = self.platform_benchmarks.get(platform, {})
         
         excellent_threshold = benchmarks.get("excellent_engagement", 0.05)
@@ -361,8 +349,7 @@ class MetricsAggregator:
             return max(0, engagement_rate / average_threshold * 50)
 
     def _calculate_growth_score(self, platform_data: Dict[str, Any], platform: str) -> float:
-        """Calculate growth score based on follower growth rate"""
-        growth_rate = platform_data.get("follower_growth_rate", 0)
+        """Calculate growth score based on follower growth rate"""        growth_rate = platform_data.get("follower_growth_rate", 0)
         benchmarks = self.platform_benchmarks.get(platform, {})
         
         excellent_threshold = benchmarks.get("excellent_growth", 0.15)
@@ -378,8 +365,7 @@ class MetricsAggregator:
             return max(0, 50 + growth_rate * 500)  # Penalty for negative growth
 
     def _calculate_content_quality_score(self, platform_data: Dict[str, Any]) -> float:
-        """Calculate content quality score based on various factors"""
-        # Factors: avg views per post, share rate, save rate, comment sentiment
+        """Calculate content quality score based on various factors"""        # Factors: avg views per post, share rate, save rate, comment sentiment
         avg_views = platform_data.get("avg_views_per_post", 0)
         total_followers = platform_data.get("follower_count", 1)
         view_rate = avg_views / total_followers if total_followers > 0 else 0
@@ -399,8 +385,7 @@ class MetricsAggregator:
         return min(100, quality_score)
 
     def _calculate_audience_retention_score(self, platform_data: Dict[str, Any]) -> float:
-        """Calculate audience retention and loyalty score"""
-        # Factors: repeat viewers, average watch time, bounce rate
+        """Calculate audience retention and loyalty score"""        # Factors: repeat viewers, average watch time, bounce rate
         repeat_viewer_rate = platform_data.get("repeat_viewer_rate", 0.3)
         avg_watch_time_rate = platform_data.get("avg_watch_time_rate", 0.5)  # % of video watched
         return_visitor_rate = platform_data.get("return_visitor_rate", 0.4)
@@ -414,8 +399,7 @@ class MetricsAggregator:
         return min(100, retention_score)
 
     def _calculate_posting_consistency_score(self, platform_data: Dict[str, Any]) -> float:
-        """Calculate posting consistency and frequency score"""
-        posts_per_week = platform_data.get("posts_per_week", 0)
+        """Calculate posting consistency and frequency score"""        posts_per_week = platform_data.get("posts_per_week", 0)
         posting_variance = platform_data.get("posting_time_variance", 1.0)  # Lower is better
         
         # Optimal posting frequency varies by platform
@@ -441,8 +425,7 @@ class MetricsAggregator:
         return (frequency_score * 0.7 + consistency_score * 0.3)
 
     def _determine_performance_level(self, overall_score: float) -> str:
-        """Determine performance level based on overall score"""
-        if overall_score >= 90:
+        """Determine performance level based on overall score"""        if overall_score >= 90:
             return "Exceptional"
         elif overall_score >= 80:
             return "Excellent"
@@ -456,8 +439,7 @@ class MetricsAggregator:
             return "Needs Improvement"
 
     def _identify_improvement_areas(self, platform_scores: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Identify areas that need improvement based on scores"""
-        improvement_areas = []
+        """Identify areas that need improvement based on scores"""        improvement_areas = []
         
         # Analyze each metric across platforms
         metric_averages = {
@@ -504,8 +486,7 @@ class MetricsAggregator:
         return improvement_areas
 
     def _get_start_date(self, time_range: TimeRange, end_date: datetime) -> datetime:
-        """Get start date based on time range"""
-        if time_range == TimeRange.LAST_7_DAYS:
+        """Get start date based on time range"""        if time_range == TimeRange.LAST_7_DAYS:
             return end_date - timedelta(days=7)
         elif time_range == TimeRange.LAST_30_DAYS:
             return end_date - timedelta(days=30)
@@ -517,16 +498,14 @@ class MetricsAggregator:
             return end_date - timedelta(days=30)  # Default to 30 days
 
     async def _get_user_content_ids(self, user_id: int) -> List[str]:
-        """Get all content IDs for a user"""
-        async with AsyncDatabaseSession() as session:
+        """Get all content IDs for a user"""        async with AsyncDatabaseSession() as session:
             contents = await session.query(ContentModel).filter(
                 ContentModel.user_id == user_id
             ).all()
             return [content.id for content in contents]
 
     async def _get_user_platforms(self, user_id: int) -> List[str]:
-        """Get platforms where user has content"""
-        async with AsyncDatabaseSession() as session:
+        """Get platforms where user has content"""        async with AsyncDatabaseSession() as session:
             result = await session.query(ContentModel.platform).filter(
                 ContentModel.user_id == user_id
             ).distinct().all()
@@ -541,8 +520,7 @@ class MetricsAggregator:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Calculate detailed metrics for specific platform"""
-        try:
+        """Calculate detailed metrics for specific platform"""        try:
             platform_data = await self._get_platform_analytics_data(
                 user_id, platform, start_date, end_date
             )
@@ -574,8 +552,7 @@ class MetricsAggregator:
             return {"error": str(e)}
 
     def _get_platform_specific_metrics(self, platform: str, platform_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get platform-specific metrics"""
-        if platform == "youtube":
+        """Get platform-specific metrics"""        if platform == "youtube":
             return {
                 "watch_time_hours": platform_data.get("watch_time_hours", 0),
                 "average_view_duration": platform_data.get("avg_view_duration", 0),
@@ -611,8 +588,7 @@ class MetricsAggregator:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Analyze individual content performance"""
-        try:
+        """Analyze individual content performance"""        try:
             content_analysis = {
                 "total_content_analyzed": len(content_ids),
                 "top_performing_content": [],
@@ -665,8 +641,7 @@ class MetricsAggregator:
         start_date: datetime,
         end_date: datetime
     ) -> Dict[str, Any]:
-        """Generate comprehensive audience insights"""
-        try:
+        """Generate comprehensive audience insights"""        try:
             audience_insights = {
                 "total_audience_size": 0,
                 "audience_growth": 0,
@@ -722,43 +697,35 @@ class MetricsAggregator:
 
     # Continue with remaining implementation methods...
     async def _get_platform_analytics_data(self, user_id: int, platform: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get analytics data from platform APIs"""
-        # Implementation would integrate with platform APIs
+        """Get analytics data from platform APIs"""        # Implementation would integrate with platform APIs
         pass
 
     async def _get_content_performance_data(self, content_id: str, start_date: datetime, end_date: datetime) -> Dict[str, Any]:
-        """Get performance data for specific content"""
-        # Implementation would get content performance metrics
+        """Get performance data for specific content"""        # Implementation would get content performance metrics
         pass
 
     def _analyze_content_types(self, content_performances: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze performance by content type"""
-        # Implementation would analyze different content types
+        """Analyze performance by content type"""        # Implementation would analyze different content types
         pass
 
     def _analyze_posting_times(self, content_performances: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze optimal posting times"""
-        # Implementation would analyze posting time patterns
+        """Analyze optimal posting times"""        # Implementation would analyze posting time patterns
         pass
 
     def _analyze_content_length(self, content_performances: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze performance by content length"""
-        # Implementation would analyze content length impact
+        """Analyze performance by content length"""        # Implementation would analyze content length impact
         pass
 
     def _analyze_performance_distribution(self, content_performances: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze distribution of content performance"""
-        # Implementation would analyze performance distribution
+        """Analyze distribution of content performance"""        # Implementation would analyze performance distribution
         pass
 
     # Additional methods for comprehensive analytics implementation...
 
 
 class AnalyticsPipeline:
-    """
-    Main analytics pipeline orchestrating all analytics operations
-    """
-    
+    """    Main analytics pipeline orchestrating all analytics operations
+    """    
     def __init__(self):
         self.metrics_aggregator = MetricsAggregator()
         self.cache_manager = CacheManager()
@@ -770,10 +737,8 @@ class AnalyticsPipeline:
         report_type: ReportType = ReportType.MONTHLY,
         custom_period: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive analytics report
-        """
-        try:
+        """        Generate comprehensive analytics report
+        """        try:
             logger.info(f"Generating {report_type.value} report for user {user_id}")
             
             # Determine time range
@@ -829,8 +794,7 @@ class AnalyticsPipeline:
             raise ReportGenerationError(f"Report generation failed: {str(e)}")
 
     def _report_type_to_time_range(self, report_type: ReportType) -> TimeRange:
-        """Convert report type to time range"""
-        mapping = {
+        """Convert report type to time range"""        mapping = {
             ReportType.WEEKLY: TimeRange.LAST_7_DAYS,
             ReportType.MONTHLY: TimeRange.LAST_30_DAYS,
             ReportType.QUARTERLY: TimeRange.LAST_90_DAYS,
@@ -839,8 +803,7 @@ class AnalyticsPipeline:
         return mapping.get(report_type, TimeRange.LAST_30_DAYS)
 
     async def _generate_report_visualizations(self, metrics: Dict[str, Any]) -> Dict[str, str]:
-        """Generate visualization charts for the report"""
-        visualizations = {}
+        """Generate visualization charts for the report"""        visualizations = {}
         
         try:
             # Performance trend chart
@@ -865,8 +828,7 @@ class AnalyticsPipeline:
         return visualizations
 
     async def _generate_actionable_insights(self, metrics: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate actionable insights from metrics"""
-        insights = []
+        """Generate actionable insights from metrics"""        insights = []
         
         try:
             # Performance insights
@@ -915,8 +877,7 @@ class AnalyticsPipeline:
         return insights
 
     async def _create_executive_summary(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Create executive summary of analytics"""
-        summary = {
+        """Create executive summary of analytics"""        summary = {
             "performance_overview": "No data available",
             "key_achievements": [],
             "areas_for_improvement": [],
@@ -966,8 +927,7 @@ class AnalyticsPipeline:
         return summary
 
     async def _generate_trend_forecasts(self, metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate trend forecasts based on historical data"""
-        forecasts = {
+        """Generate trend forecasts based on historical data"""        forecasts = {
             "follower_growth_forecast": {},
             "engagement_trend_forecast": {},
             "revenue_potential_forecast": {},
@@ -1001,8 +961,7 @@ class AnalyticsPipeline:
         return forecasts
 
     def _extrapolate_growth(self, growth_trend: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Extrapolate growth trend for forecasting"""
-        # Simple implementation - could be enhanced with ML models
+        """Extrapolate growth trend for forecasting"""        # Simple implementation - could be enhanced with ML models
         if len(growth_trend) < 2:
             return {"projected_growth": 0, "method": "insufficient_data"}
         
@@ -1030,8 +989,7 @@ class AnalyticsPipeline:
         return {"projected_growth": 0, "method": "calculation_failed"}
 
     def _extrapolate_engagement(self, engagement_trend: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Extrapolate engagement trend for forecasting"""
-        # Similar to growth extrapolation but for engagement metrics
+        """Extrapolate engagement trend for forecasting"""        # Similar to growth extrapolation but for engagement metrics
         if len(engagement_trend) < 2:
             return {"projected_engagement": 0, "method": "insufficient_data"}
         
@@ -1047,8 +1005,7 @@ class AnalyticsPipeline:
         return {"projected_engagement": 0, "method": "calculation_failed"}
 
     async def _save_analytics_report(self, report: Dict[str, Any]):
-        """Save analytics report to database"""
-        try:
+        """Save analytics report to database"""        try:
             async with AsyncDatabaseSession() as session:
                 analytics_model = AnalyticsModel(
                     id=report["report_id"],
@@ -1070,21 +1027,17 @@ class AnalyticsPipeline:
 
     # Visualization helper methods
     async def _create_performance_trend_chart(self, metrics: Dict[str, Any]) -> str:
-        """Create performance trend visualization"""
-        # Implementation would create charts using plotly/matplotlib
+        """Create performance trend visualization"""        # Implementation would create charts using plotly/matplotlib
         return "performance_trend_chart_url"
 
     async def _create_platform_comparison_chart(self, metrics: Dict[str, Any]) -> str:
-        """Create platform comparison chart"""
-        return "platform_comparison_chart_url"
+        """Create platform comparison chart"""        return "platform_comparison_chart_url"
 
     async def _create_demographics_chart(self, metrics: Dict[str, Any]) -> str:
-        """Create audience demographics chart"""
-        return "demographics_chart_url"
+        """Create audience demographics chart"""        return "demographics_chart_url"
 
     async def _create_growth_metrics_chart(self, metrics: Dict[str, Any]) -> str:
-        """Create growth metrics chart"""
-        return "growth_metrics_chart_url"
+        """Create growth metrics chart"""        return "growth_metrics_chart_url"
 )
 from backend.models.content import ContentModel
 from backend.utils.logging import get_logger
@@ -1095,8 +1048,7 @@ settings = get_settings()
 
 
 class MetricType(str, Enum):
-    """Types of analytics metrics"""
-    ENGAGEMENT = "engagement"
+    """Types of analytics metrics"""    ENGAGEMENT = "engagement"
     REACH = "reach"
     REVENUE = "revenue"
     GROWTH = "growth"
@@ -1107,8 +1059,7 @@ class MetricType(str, Enum):
 
 
 class TimePeriod(str, Enum):
-    """Analytics time periods"""
-    DAILY = "daily"
+    """Analytics time periods"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -1117,8 +1068,7 @@ class TimePeriod(str, Enum):
 
 
 class AnalyticsGranularity(str, Enum):
-    """Data granularity levels"""
-    REAL_TIME = "real_time"
+    """Data granularity levels"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -1126,10 +1076,8 @@ class AnalyticsGranularity(str, Enum):
 
 
 class MetricsAggregator:
-    """
-    Advanced metrics aggregation engine with AI-powered insights
-    """
-    
+    """    Advanced metrics aggregation engine with AI-powered insights
+    """    
     def __init__(self):
         self.cache_manager = CacheManager()
         self.scaler = StandardScaler()
@@ -1170,10 +1118,8 @@ class MetricsAggregator:
         period_start: Optional[datetime] = None,
         period_end: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """
-        Aggregate comprehensive performance metrics across platforms
-        """
-        try:
+        """        Aggregate comprehensive performance metrics across platforms
+        """        try:
             logger.info(f"Aggregating performance metrics for user {user_id}")
             
             # Set default time period if not provided
@@ -1224,10 +1170,8 @@ class MetricsAggregator:
         content_id: str,
         platform: str
     ) -> Dict[str, Any]:
-        """
-        Calculate advanced engagement score with AI insights
-        """
-        try:
+        """        Calculate advanced engagement score with AI insights
+        """        try:
             # Get content metrics
             content_metrics = await self._get_content_metrics(content_id, platform)
             
@@ -1274,10 +1218,8 @@ class MetricsAggregator:
         user_id: int,
         analysis_period_days: int = 30
     ) -> Dict[str, Any]:
-        """
-        Advanced audience behavior analysis with ML clustering
-        """
-        try:
+        """        Advanced audience behavior analysis with ML clustering
+        """        try:
             logger.info(f"Analyzing audience behavior for user {user_id}")
             
             # Collect audience data
@@ -1329,10 +1271,8 @@ class MetricsAggregator:
         user_id: int,
         content_ids: List[str]
     ) -> Dict[str, Any]:
-        """
-        Generate AI-powered content optimization recommendations
-        """
-        try:
+        """        Generate AI-powered content optimization recommendations
+        """        try:
             optimization_report = {
                 "user_id": user_id,
                 "analyzed_content_count": len(content_ids),
@@ -1382,8 +1322,7 @@ class MetricsAggregator:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Dict[str, Any]]:
-        """Collect raw metrics from all platforms"""
-        raw_metrics = {}
+        """Collect raw metrics from all platforms"""        raw_metrics = {}
         
         # Query content models
         async with AsyncDatabaseSession() as session:
@@ -1429,8 +1368,7 @@ class MetricsAggregator:
     async def _calculate_unified_metrics(
         self, raw_metrics: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Calculate platform-weighted unified metrics"""
-        unified = {
+        """Calculate platform-weighted unified metrics"""        unified = {
             "total_weighted_views": 0.0,
             "total_weighted_engagement": 0.0,
             "total_weighted_revenue": 0.0,
@@ -1468,8 +1406,7 @@ class MetricsAggregator:
     async def _generate_performance_insights(
         self, unified_metrics: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered performance insights"""
-        insights = []
+        """Generate AI-powered performance insights"""        insights = []
         
         # Performance level insights
         overall_score = unified_metrics.get("overall_performance_score", 0)
@@ -1531,8 +1468,7 @@ class MetricsAggregator:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Calculate performance trends and predictions"""
-        # Get historical data for comparison
+        """Calculate performance trends and predictions"""        # Get historical data for comparison
         prev_period_start = period_start - (period_end - period_start)
         prev_period_end = period_start
         
@@ -1563,8 +1499,7 @@ class MetricsAggregator:
         return trends
 
     def _calculate_base_engagement(self, content_metrics: Dict[str, Any]) -> float:
-        """Calculate base engagement score"""
-        views = content_metrics.get("views", 0)
+        """Calculate base engagement score"""        views = content_metrics.get("views", 0)
         likes = content_metrics.get("likes", 0)
         comments = content_metrics.get("comments", 0)
         shares = content_metrics.get("shares", 0)
@@ -1580,8 +1515,7 @@ class MetricsAggregator:
         return min(100.0, engagement_rate * 10)  # Scale factor for typical engagement rates
 
     def _apply_platform_adjustments(self, base_score: float, platform: str) -> float:
-        """Apply platform-specific engagement adjustments"""
-        platform_multipliers = {
+        """Apply platform-specific engagement adjustments"""        platform_multipliers = {
             "youtube": 1.0,     # Baseline
             "instagram": 1.2,   # Higher engagement expected
             "tiktok": 0.8,      # Lower engagement rates typical
@@ -1594,8 +1528,7 @@ class MetricsAggregator:
     async def _analyze_temporal_engagement(
         self, content_id: str, platform: str
     ) -> Dict[str, Any]:
-        """Analyze engagement patterns over time"""
-        # This would analyze hourly/daily engagement patterns
+        """Analyze engagement patterns over time"""        # This would analyze hourly/daily engagement patterns
         # Simplified implementation
         return {
             "peak_engagement_hours": [19, 20, 21],  # 7-9 PM typical peak
@@ -1610,8 +1543,7 @@ class MetricsAggregator:
         temporal_patterns: Dict[str, Any],
         platform: str
     ) -> List[str]:
-        """Generate engagement insights and recommendations"""
-        insights = []
+        """Generate engagement insights and recommendations"""        insights = []
         
         if engagement_score >= 80:
             insights.append("Exceptional engagement - content resonates strongly with audience")
@@ -1634,8 +1566,7 @@ class MetricsAggregator:
     def _calculate_engagement_quality(
         self, content_metrics: Dict[str, Any], platform: str
     ) -> float:
-        """Calculate engagement quality score"""
-        # Quality factors: comment-to-like ratio, share rate, etc.
+        """Calculate engagement quality score"""        # Quality factors: comment-to-like ratio, share rate, etc.
         likes = content_metrics.get("likes", 0)
         comments = content_metrics.get("comments", 0)
         shares = content_metrics.get("shares", 0)
@@ -1659,97 +1590,82 @@ class MetricsAggregator:
     async def _collect_audience_data(
         self, user_id: int, analysis_period_days: int
     ) -> List[Dict[str, Any]]:
-        """Collect comprehensive audience data"""
-        # Implementation would collect audience data from platforms
+        """Collect comprehensive audience data"""        # Implementation would collect audience data from platforms
         pass
 
     async def _perform_audience_segmentation(
         self, audience_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Perform ML-based audience segmentation"""
-        # Implementation would use ML clustering
+        """Perform ML-based audience segmentation"""        # Implementation would use ML clustering
         pass
 
     async def _analyze_audience_engagement_patterns(
         self, audience_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze audience engagement patterns"""
-        # Implementation would analyze engagement patterns
+        """Analyze audience engagement patterns"""        # Implementation would analyze engagement patterns
         pass
 
     async def _calculate_audience_growth(
         self, user_id: int, analysis_period_days: int
     ) -> Dict[str, Any]:
-        """Calculate audience growth metrics"""
-        # Implementation would calculate growth metrics
+        """Calculate audience growth metrics"""        # Implementation would calculate growth metrics
         pass
 
     async def _analyze_audience_demographics(
         self, audience_data: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze audience demographics"""
-        # Implementation would analyze demographics
+        """Analyze audience demographics"""        # Implementation would analyze demographics
         pass
 
     async def _predict_audience_behavior(
         self, audience_data: List[Dict[str, Any]], segments: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict future audience behavior"""
-        # Implementation would use ML for predictions
+        """Predict future audience behavior"""        # Implementation would use ML for predictions
         pass
 
     async def _get_content_metrics(self, content_id: str, platform: str) -> Dict[str, Any]:
-        """Get metrics for specific content"""
-        # Implementation would fetch content metrics
+        """Get metrics for specific content"""        # Implementation would fetch content metrics
         pass
 
     def _calculate_platform_performance_score(
         self, metrics: Dict[str, Any], weights: Dict[str, float]
     ) -> float:
-        """Calculate platform performance score"""
-        # Implementation would calculate performance score
+        """Calculate platform performance score"""        # Implementation would calculate performance score
         return 75.0  # Placeholder
 
     async def _calculate_industry_benchmarks(
         self, unified_metrics: Dict[str, Any], platforms: List[str]
     ) -> Dict[str, Any]:
-        """Calculate industry benchmark comparisons"""
-        # Implementation would compare against industry data
+        """Calculate industry benchmark comparisons"""        # Implementation would compare against industry data
         pass
 
     async def _analyze_content_performance(self, content_id: str) -> Dict[str, Any]:
-        """Analyze individual content performance"""
-        # Implementation would analyze content
+        """Analyze individual content performance"""        # Implementation would analyze content
         pass
 
     async def _generate_content_recommendations(
         self, content_id: str, performance: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate content optimization recommendations"""
-        # Implementation would generate recommendations
+        """Generate content optimization recommendations"""        # Implementation would generate recommendations
         pass
 
     async def _identify_best_practices(
         self, performance_analysis: Dict[str, Dict[str, Any]]
     ) -> List[str]:
-        """Identify best practices from high-performing content"""
-        # Implementation would identify patterns
+        """Identify best practices from high-performing content"""        # Implementation would identify patterns
         pass
 
     async def _predict_optimization_impact(
         self, recommendations: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Predict impact of optimization recommendations"""
-        # Implementation would predict improvements
+        """Predict impact of optimization recommendations"""        # Implementation would predict improvements
         pass
 
 
 class AnalyticsPipeline:
-    """
-    Comprehensive analytics pipeline orchestrating data collection,
+    """    Comprehensive analytics pipeline orchestrating data collection,
     processing, analysis, and insight generation for creators
-    """
-    
+    """    
     def __init__(self):
         self.metrics_aggregator = MetricsAggregator()
         self.cache_manager = CacheManager()
@@ -1760,10 +1676,8 @@ class AnalyticsPipeline:
         report_type: str = "monthly",
         custom_period: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive analytics report for creator
-        """
-        try:
+        """        Generate comprehensive analytics report for creator
+        """        try:
             logger.info(f"Generating comprehensive analytics report for user {user_id}")
             
             # Determine reporting period
@@ -1848,10 +1762,8 @@ class AnalyticsPipeline:
             raise ReportGenerationError(f"Report generation failed: {str(e)}")
 
     async def get_real_time_dashboard(self, user_id: int) -> Dict[str, Any]:
-        """
-        Get real-time dashboard data for creator
-        """
-        try:
+        """        Get real-time dashboard data for creator
+        """        try:
             # Check cache first
             cached_dashboard = await self.cache_manager.get(
                 f"dashboard:{user_id}"
@@ -1909,27 +1821,23 @@ class AnalyticsPipeline:
     async def _generate_content_performance_summary(
         self, user_id: int, period_start: datetime, period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate content performance summary"""
-        # Implementation would analyze content performance
+        """Generate content performance summary"""        # Implementation would analyze content performance
         pass
 
     async def _generate_revenue_analytics(
         self, user_id: int, period_start: datetime, period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate revenue analytics"""
-        # Implementation would analyze revenue data
+        """Generate revenue analytics"""        # Implementation would analyze revenue data
         pass
 
     async def _generate_growth_analysis(
         self, user_id: int, period_start: datetime, period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate growth analysis"""
-        # Implementation would analyze growth metrics
+        """Generate growth analysis"""        # Implementation would analyze growth metrics
         pass
 
     async def _generate_competitive_analysis(self, user_id: int) -> Dict[str, Any]:
-        """Generate competitive analysis"""
-        # Implementation would analyze competitive positioning
+        """Generate competitive analysis"""        # Implementation would analyze competitive positioning
         pass
 
     async def _generate_executive_summary(
@@ -1937,8 +1845,7 @@ class AnalyticsPipeline:
         audience_analysis: Dict[str, Any],
         revenue_analytics: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate executive summary of analytics"""
-        # Implementation would generate summary
+        """Generate executive summary of analytics"""        # Implementation would generate summary
         pass
 
     async def _generate_action_recommendations(
@@ -1946,26 +1853,21 @@ class AnalyticsPipeline:
         audience_analysis: Dict[str, Any],
         content_summary: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate actionable recommendations"""
-        # Implementation would generate recommendations
+        """Generate actionable recommendations"""        # Implementation would generate recommendations
         pass
 
     async def _get_live_performance_indicators(self, user_id: int) -> Dict[str, Any]:
-        """Get live performance indicators"""
-        # Implementation would get real-time indicators
+        """Get live performance indicators"""        # Implementation would get real-time indicators
         pass
 
     async def _get_recent_content_performance(self, user_id: int) -> Dict[str, Any]:
-        """Get recent content performance"""
-        # Implementation would get recent content data
+        """Get recent content performance"""        # Implementation would get recent content data
         pass
 
     async def _get_trending_content(self, user_id: int) -> Dict[str, Any]:
-        """Get trending content"""
-        # Implementation would identify trending content
+        """Get trending content"""        # Implementation would identify trending content
         pass
 
     async def _get_audience_activity(self, user_id: int) -> Dict[str, Any]:
-        """Get current audience activity"""
-        # Implementation would get audience activity
+        """Get current audience activity"""        # Implementation would get audience activity
         pass

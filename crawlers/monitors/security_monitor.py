@@ -1,5 +1,4 @@
-"""
-Security Monitor - Cybersecurity Intelligence Engine
+"""Security Monitor - Cybersecurity Intelligence Engine
 ====================================================
 
 Professional security monitoring and intrusion detection for IA-Influencer-Agent platform.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 import hashlib
@@ -42,8 +40,7 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration
 logger = logging.getLogger(__name__)
 
 class SecurityEventType(Enum):
-    """Security event types."""
-    AUTHENTICATION_FAILURE = "authentication_failure"
+    """Security event types."""    AUTHENTICATION_FAILURE = "authentication_failure"
     AUTHORIZATION_VIOLATION = "authorization_violation"
     SUSPICIOUS_LOGIN = "suspicious_login"
     BRUTE_FORCE_ATTACK = "brute_force_attack"
@@ -58,16 +55,14 @@ class SecurityEventType(Enum):
     SUSPICIOUS_ACTIVITY = "suspicious_activity"
 
 class SecuritySeverity(Enum):
-    """Security event severity levels."""
-    LOW = "low"
+    """Security event severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class IntrusionType(Enum):
-    """Intrusion detection types."""
-    NETWORK_SCAN = "network_scan"
+    """Intrusion detection types."""    NETWORK_SCAN = "network_scan"
     PORT_SCAN = "port_scan"
     VULNERABILITY_SCAN = "vulnerability_scan"
     UNAUTHORIZED_ACCESS = "unauthorized_access"
@@ -77,8 +72,7 @@ class IntrusionType(Enum):
 
 @dataclass
 class SecurityEvent:
-    """Security event record."""
-    event_id: str
+    """Security event record."""    event_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     event_type: SecurityEventType = SecurityEventType.SUSPICIOUS_ACTIVITY
     severity: SecuritySeverity = SecuritySeverity.MEDIUM
@@ -98,8 +92,7 @@ class SecurityEvent:
 
 @dataclass
 class SecurityIncident:
-    """Security incident record."""
-    incident_id: str
+    """Security incident record."""    incident_id: str
     timestamp: datetime = field(default_factory=datetime.utcnow)
     incident_type: str = ""
     severity: SecuritySeverity = SecuritySeverity.MEDIUM
@@ -115,8 +108,7 @@ class SecurityIncident:
     resolved_at: Optional[datetime] = None
 
 class IntrusionDetector:
-    """Intrusion detection system component."""
-    
+    """Intrusion detection system component."""    
     def __init__(self):
         self.failed_login_attempts: Dict[str, deque] = defaultdict(lambda: deque(maxlen=100))
         self.suspicious_ips: Set[str] = set()
@@ -127,8 +119,7 @@ class IntrusionDetector:
         self._initialize_attack_patterns()
     
     def _initialize_attack_patterns(self) -> None:
-        """Initialize known attack patterns for detection."""
-        self.malicious_patterns = {
+        """Initialize known attack patterns for detection."""        self.malicious_patterns = {
             "sql_injection": [
                 r"(?i)(union|select|insert|update|delete|drop|create|alter)\s+",
                 r"(?i)(\bor\b|\band\b)\s+\d+\s*=\s*\d+",
@@ -158,8 +149,7 @@ class IntrusionDetector:
         }
     
     async def detect_intrusion(self, event: Dict[str, Any]) -> List[SecurityEvent]:
-        """Detect potential intrusions from event data."""
-        security_events = []
+        """Detect potential intrusions from event data."""        security_events = []
         
         try:
             source_ip = event.get("source_ip", "")
@@ -219,8 +209,7 @@ class IntrusionDetector:
         return security_events
     
     def _detect_sql_injection(self, path: str, data: str) -> bool:
-        """Detect SQL injection patterns."""
-        combined_input = f"{path} {data}".lower()
+        """Detect SQL injection patterns."""        combined_input = f"{path} {data}".lower()
         patterns = self.malicious_patterns.get("sql_injection", [])
         
         for pattern in patterns:
@@ -229,8 +218,7 @@ class IntrusionDetector:
         return False
     
     def _detect_xss_attempt(self, path: str, data: str) -> bool:
-        """Detect XSS attempt patterns."""
-        combined_input = f"{path} {data}".lower()
+        """Detect XSS attempt patterns."""        combined_input = f"{path} {data}".lower()
         patterns = self.malicious_patterns.get("xss", [])
         
         for pattern in patterns:
@@ -239,8 +227,7 @@ class IntrusionDetector:
         return False
     
     async def _detect_brute_force(self, source_ip: str, user_id: str, event: Dict[str, Any]) -> bool:
-        """Detect brute force attacks."""
-        if not source_ip:
+        """Detect brute force attacks."""        if not source_ip:
             return False
         
         # Check for authentication failures
@@ -260,8 +247,7 @@ class IntrusionDetector:
         return False
     
     def _detect_suspicious_user_agent(self, user_agent: str) -> bool:
-        """Detect suspicious user agents."""
-        suspicious_patterns = [
+        """Detect suspicious user agents."""        suspicious_patterns = [
             r"(?i)(sqlmap|nikto|nmap|masscan|burp|zap)",
             r"(?i)(python-requests|curl|wget)(?!\s+compatible)",
             r"(?i)(bot|crawler|spider|scraper)(?!.*google|bing|yahoo)",
@@ -274,8 +260,7 @@ class IntrusionDetector:
         return False
     
     async def _detect_unusual_behavior(self, user_id: str, event: Dict[str, Any]) -> bool:
-        """Detect unusual user behavior patterns."""
-        try:
+        """Detect unusual user behavior patterns."""        try:
             # Get user baseline behavior
             baseline = self.user_behavior_baselines.get(user_id, {})
             
@@ -324,8 +309,7 @@ class IntrusionDetector:
         original_event: Dict[str, Any],
         threat_indicators: List[str]
     ) -> SecurityEvent:
-        """Create security event from detected threat."""
-        return SecurityEvent(
+        """Create security event from detected threat."""        return SecurityEvent(
             event_id=f"sec_{datetime.utcnow().timestamp()}_{event_type.value}",
             event_type=event_type,
             severity=severity,
@@ -341,11 +325,9 @@ class IntrusionDetector:
         )
 
 class SecurityMonitor(MonitorEngine):
-    """
-    Advanced security monitoring engine.
+    """    Advanced security monitoring engine.
     Monitors security events, detects threats, and manages incident response.
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfiguration):
         super().__init__(config)
         self.intrusion_detector = IntrusionDetector()
@@ -359,8 +341,7 @@ class SecurityMonitor(MonitorEngine):
         self._initialize_security_rules()
     
     def _initialize_security_rules(self) -> None:
-        """Initialize security monitoring rules."""
-        self.security_rules = {
+        """Initialize security monitoring rules."""        self.security_rules = {
             "authentication_failure_threshold": {
                 "threshold": 5,
                 "window_minutes": 5,
@@ -382,8 +363,7 @@ class SecurityMonitor(MonitorEngine):
         }
     
     async def initialize(self) -> bool:
-        """Initialize security monitoring engine."""
-        try:
+        """Initialize security monitoring engine."""        try:
             logger.info("Initializing security monitor...")
             
             # Load threat intelligence
@@ -403,8 +383,7 @@ class SecurityMonitor(MonitorEngine):
             return False
     
     async def start_monitoring(self, targets: List[Any]) -> bool:
-        """Start security monitoring operations."""
-        try:
+        """Start security monitoring operations."""        try:
             logger.info("Starting security monitoring...")
             
             # Start monitoring tasks
@@ -425,8 +404,7 @@ class SecurityMonitor(MonitorEngine):
             return False
     
     async def stop_monitoring(self) -> bool:
-        """Stop security monitoring operations."""
-        try:
+        """Stop security monitoring operations."""        try:
             await self.cleanup()
             return True
         except Exception as e:
@@ -434,8 +412,7 @@ class SecurityMonitor(MonitorEngine):
             return False
     
     async def collect_metrics(self) -> Any:
-        """Collect security monitoring metrics."""
-        from .monitor_engine import MonitoringMetrics
+        """Collect security monitoring metrics."""        from .monitor_engine import MonitoringMetrics
         
         # Calculate security metrics
         recent_events = [e for e in self.security_events 
@@ -467,13 +444,11 @@ class SecurityMonitor(MonitorEngine):
         return metrics
     
     async def process_events(self, events: List[Any]) -> None:
-        """Process security events."""
-        for event in events:
+        """Process security events."""        for event in events:
             await self._process_security_event(event)
     
     async def _process_security_event(self, event: Dict[str, Any]) -> None:
-        """Process individual security event."""
-        try:
+        """Process individual security event."""        try:
             # Detect intrusions
             security_events = await self.intrusion_detector.detect_intrusion(event)
             
@@ -491,8 +466,7 @@ class SecurityMonitor(MonitorEngine):
             logger.error(f"Failed to process security event: {e}")
     
     async def _handle_security_event(self, security_event: SecurityEvent) -> None:
-        """Handle detected security event."""
-        try:
+        """Handle detected security event."""        try:
             # Log security event
             logger.warning(
                 f"Security event: {security_event.event_type.value} "
@@ -521,8 +495,7 @@ class SecurityMonitor(MonitorEngine):
             logger.error(f"Failed to handle security event: {e}")
     
     async def _apply_security_rules(self, security_event: SecurityEvent) -> None:
-        """Apply security rules to event."""
-        try:
+        """Apply security rules to event."""        try:
             # Check critical event response
             critical_rule = self.security_rules.get("critical_event_response", {})
             critical_types = critical_rule.get("event_types", [])
@@ -544,8 +517,7 @@ class SecurityMonitor(MonitorEngine):
             logger.error(f"Failed to apply security rules: {e}")
     
     async def _check_auth_failure_threshold(self, security_event: SecurityEvent) -> None:
-        """Check authentication failure threshold."""
-        rule = self.security_rules.get("authentication_failure_threshold", {})
+        """Check authentication failure threshold."""        rule = self.security_rules.get("authentication_failure_threshold", {})
         threshold = rule.get("threshold", 5)
         window_minutes = rule.get("window_minutes", 5)
         
@@ -563,8 +535,7 @@ class SecurityMonitor(MonitorEngine):
             security_event.blocked = True
     
     async def _check_suspicious_activity_threshold(self, security_event: SecurityEvent) -> None:
-        """Check suspicious activity threshold."""
-        rule = self.security_rules.get("suspicious_activity_threshold", {})
+        """Check suspicious activity threshold."""        rule = self.security_rules.get("suspicious_activity_threshold", {})
         threshold = rule.get("threshold", 10)
         window_minutes = rule.get("window_minutes", 15)
         
@@ -587,8 +558,7 @@ class SecurityMonitor(MonitorEngine):
             )
     
     async def _block_ip(self, ip_address: str, reason: str) -> None:
-        """Block malicious IP address."""
-        try:
+        """Block malicious IP address."""        try:
             self.blocked_ips.add(ip_address)
             
             # Log blocking action
@@ -601,8 +571,7 @@ class SecurityMonitor(MonitorEngine):
             logger.error(f"Failed to block IP {ip_address}: {e}")
     
     async def _check_incident_creation(self, security_event: SecurityEvent) -> None:
-        """Check if security incident should be created."""
-        try:
+        """Check if security incident should be created."""        try:
             # Create incident for critical events
             if security_event.severity in [SecuritySeverity.CRITICAL, SecuritySeverity.EMERGENCY]:
                 await self._create_security_incident(
@@ -642,8 +611,7 @@ class SecurityMonitor(MonitorEngine):
         affected_systems: List[str],
         affected_users: List[str]
     ) -> None:
-        """Create security incident."""
-        incident_id = f"incident_{datetime.utcnow().timestamp()}_{incident_type}"
+        """Create security incident."""        incident_id = f"incident_{datetime.utcnow().timestamp()}_{incident_type}"
         
         incident = SecurityIncident(
             incident_id=incident_id,
@@ -670,8 +638,7 @@ class SecurityMonitor(MonitorEngine):
         logger.error(f"Security incident created: {incident_id} - {description}")
     
     async def _update_threat_intelligence(self, security_event: SecurityEvent) -> None:
-        """Update threat intelligence with event data."""
-        try:
+        """Update threat intelligence with event data."""        try:
             source_ip = security_event.source_ip
             
             if source_ip:
@@ -701,8 +668,7 @@ class SecurityMonitor(MonitorEngine):
             logger.error(f"Failed to update threat intelligence: {e}")
     
     def _calculate_threat_score(self, intel: Dict[str, Any], event_severity: SecuritySeverity) -> float:
-        """Calculate threat score for IP address."""
-        base_score = intel.get("event_count", 0) * 5  # 5 points per event
+        """Calculate threat score for IP address."""        base_score = intel.get("event_count", 0) * 5  # 5 points per event
         
         # Add severity bonus
         severity_multiplier = {
@@ -724,18 +690,15 @@ class SecurityMonitor(MonitorEngine):
         return final_score
     
     async def _load_threat_intelligence(self) -> None:
-        """Load threat intelligence from external sources."""
-        # Implementation would load from threat intelligence feeds
+        """Load threat intelligence from external sources."""        # Implementation would load from threat intelligence feeds
         pass
     
     async def _initialize_security_baseline(self) -> None:
-        """Initialize security monitoring baseline."""
-        # Implementation would establish normal behavior patterns
+        """Initialize security monitoring baseline."""        # Implementation would establish normal behavior patterns
         pass
     
     async def _monitor_authentication_events(self) -> None:
-        """Monitor authentication-related events."""
-        while True:
+        """Monitor authentication-related events."""        while True:
             try:
                 # Monitor authentication events
                 await asyncio.sleep(30)  # Check every 30 seconds
@@ -745,8 +708,7 @@ class SecurityMonitor(MonitorEngine):
                 await asyncio.sleep(60)
     
     async def _monitor_network_activity(self) -> None:
-        """Monitor network activity for intrusions."""
-        while True:
+        """Monitor network activity for intrusions."""        while True:
             try:
                 # Monitor network activity
                 await asyncio.sleep(60)  # Check every minute
@@ -756,8 +718,7 @@ class SecurityMonitor(MonitorEngine):
                 await asyncio.sleep(120)
     
     async def _monitor_file_system_activity(self) -> None:
-        """Monitor file system activity for security events."""
-        while True:
+        """Monitor file system activity for security events."""        while True:
             try:
                 # Monitor file system
                 await asyncio.sleep(120)  # Check every 2 minutes
@@ -767,8 +728,7 @@ class SecurityMonitor(MonitorEngine):
                 await asyncio.sleep(180)
     
     async def _monitor_database_access(self) -> None:
-        """Monitor database access for security violations."""
-        while True:
+        """Monitor database access for security violations."""        while True:
             try:
                 # Monitor database access
                 await asyncio.sleep(180)  # Check every 3 minutes
@@ -778,8 +738,7 @@ class SecurityMonitor(MonitorEngine):
                 await asyncio.sleep(300)
     
     async def _analyze_security_trends(self) -> None:
-        """Analyze security trends and patterns."""
-        while True:
+        """Analyze security trends and patterns."""        while True:
             try:
                 # Analyze security trends
                 await asyncio.sleep(1800)  # Analyze every 30 minutes
@@ -789,8 +748,7 @@ class SecurityMonitor(MonitorEngine):
                 await asyncio.sleep(3600)
     
     async def _manage_security_incidents(self) -> None:
-        """Manage active security incidents."""
-        while True:
+        """Manage active security incidents."""        while True:
             try:
                 # Manage incidents
                 await asyncio.sleep(300)  # Check every 5 minutes

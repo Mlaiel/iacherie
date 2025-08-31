@@ -1,5 +1,4 @@
-"""
-Enterprise Monetization Service - AI-Powered Revenue Optimization
+"""Enterprise Monetization Service - AI-Powered Revenue Optimization
 Comprehensive revenue tracking, prediction, and automated payment processing
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ This code and concept are proprietary to Fahed Mlaiel.
 Unauthorized copying, distribution, or use without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -106,11 +104,9 @@ class PaymentTransaction:
 
 
 class EnterpriseMonetizationService:
-    """
-    Professional monetization service providing comprehensive revenue optimization,
+    """    Professional monetization service providing comprehensive revenue optimization,
     multi-stream tracking, and automated payment processing
-    """
-    
+    """    
     # Platform-specific revenue rates (per 1000 views/streams)
     PLATFORM_RATES = {
         'youtube': {'cpm': 2.5, 'cpc': 0.8, 'revenue_share': 0.68},
@@ -162,10 +158,8 @@ class EnterpriseMonetizationService:
         asset: ContentAsset,
         projection_months: int = 12
     ) -> RevenueEstimation:
-        """
-        Generate comprehensive revenue estimation using AI algorithms
-        """
-        try:
+        """        Generate comprehensive revenue estimation using AI algorithms
+        """        try:
             # Get analytics data for revenue calculations
             analytics = await self.analytics_service.get_comprehensive_metrics(db, asset)
             
@@ -215,8 +209,7 @@ class EnterpriseMonetizationService:
         asset: ContentAsset,
         analytics: Any
     ) -> Dict[str, float]:
-        """Calculate base monetization rates"""
-        
+        """Calculate base monetization rates"""        
         # Base CPM calculation
         base_cpm = 5.0  # USD per 1000 impressions
         
@@ -252,8 +245,7 @@ class EnterpriseMonetizationService:
         asset: ContentAsset,
         analytics: Any
     ) -> Dict[str, float]:
-        """Calculate expected revenue by platform"""
-        platform_revenue = {}
+        """Calculate expected revenue by platform"""        platform_revenue = {}
         
         # Get platform data from asset metadata
         platform_data = asset.metadata.get('platforms', {})
@@ -286,8 +278,7 @@ class EnterpriseMonetizationService:
         analytics: Any,
         months: int
     ) -> Dict[str, float]:
-        """Calculate revenue growth projections using trend analysis"""
-        
+        """Calculate revenue growth projections using trend analysis"""        
         # Get historical performance data (would query actual data)
         current_monthly_revenue = sum((await self._calculate_platform_revenue(asset, analytics)).values())
         
@@ -317,8 +308,7 @@ class EnterpriseMonetizationService:
         }
 
     def _determine_quality_factor(self, asset: ContentAsset) -> float:
-        """Determine quality factor based on asset characteristics"""
-        factors = []
+        """Determine quality factor based on asset characteristics"""        factors = []
         
         # File size factor (larger files often indicate higher quality)
         if asset.file_size:
@@ -350,8 +340,7 @@ class EnterpriseMonetizationService:
         analytics: Any,
         platform_breakdown: Dict[str, float]
     ) -> List[str]:
-        """Generate AI-powered monetization recommendations"""
-        recommendations = []
+        """Generate AI-powered monetization recommendations"""        recommendations = []
         
         # Platform optimization recommendations
         best_platform = max(platform_breakdown.items(), key=lambda x: x[1])[0] if platform_breakdown else None
@@ -377,8 +366,7 @@ class EnterpriseMonetizationService:
         return recommendations[:5]  # Return top 5 recommendations
 
     async def _calculate_confidence_score(self, asset: ContentAsset, analytics: Any) -> float:
-        """Calculate confidence score for revenue projections"""
-        factors = []
+        """Calculate confidence score for revenue projections"""        factors = []
         
         # Data quality factor
         if asset.metadata and len(asset.metadata) > 5:
@@ -410,10 +398,8 @@ class EnterpriseMonetizationService:
         creator_id: int,
         asset_id: Optional[int] = None
     ) -> List[MonetizationOpportunity]:
-        """
-        Discover new monetization opportunities using AI analysis
-        """
-        try:
+        """        Discover new monetization opportunities using AI analysis
+        """        try:
             opportunities = []
             
             # Get creator's content and performance data
@@ -482,10 +468,8 @@ class EnterpriseMonetizationService:
         currency: str = "USD",
         provider: PaymentProvider = PaymentProvider.STRIPE
     ) -> PaymentTransaction:
-        """
-        Process payment to creator using specified provider
-        """
-        try:
+        """        Process payment to creator using specified provider
+        """        try:
             # Validate payment amount
             if amount < self.min_payout_threshold:
                 raise PaymentError(f"Amount below minimum threshold: ${self.min_payout_threshold}")
@@ -543,8 +527,7 @@ class EnterpriseMonetizationService:
         amount: Decimal,
         currency: str
     ) -> Dict[str, Any]:
-        """Process payment through Stripe"""
-        try:
+        """Process payment through Stripe"""        try:
             # Convert to cents for Stripe
             amount_cents = int(amount * 100)
             
@@ -576,8 +559,7 @@ class EnterpriseMonetizationService:
         amount: Decimal,
         currency: str
     ) -> Dict[str, Any]:
-        """Process payment through PayPal"""
-        try:
+        """Process payment through PayPal"""        try:
             # This would implement actual PayPal API integration
             transaction_id = f"PP_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             
@@ -601,16 +583,14 @@ class EnterpriseMonetizationService:
         db: Session,
         transaction: PaymentTransaction
     ) -> None:
-        """Log payment transaction to database"""
-        try:
+        """Log payment transaction to database"""        try:
             # This would save to PaymentTransaction table
             logger.info(f"Payment processed: {transaction.transaction_id} - ${transaction.amount}")
         except Exception as e:
             logger.error(f"Failed to log transaction: {str(e)}")
 
     async def _cache_estimation(self, asset_id: int, estimation: RevenueEstimation) -> None:
-        """Cache revenue estimation"""
-        try:
+        """Cache revenue estimation"""        try:
             cache_key = f"monetization:estimation:{asset_id}"
             self.redis_client.setex(
                 cache_key,
@@ -626,8 +606,7 @@ class EnterpriseMonetizationService:
         creator_id: int,
         period_days: int = 30
     ) -> Dict[str, Any]:
-        """Get comprehensive revenue analytics for creator"""
-        try:
+        """Get comprehensive revenue analytics for creator"""        try:
             start_date = datetime.now() - timedelta(days=period_days)
             
             # Get revenue records (would query actual RevenueTracking table)
@@ -670,8 +649,7 @@ class EnterpriseMonetizationService:
 
     # Legacy method for backward compatibility
     def estimate(self, asset: ContentAsset) -> Dict:
-        """Legacy estimate method - deprecated, use generate_comprehensive_revenue_estimation instead"""
-        logger.warning("Using deprecated estimate method. Switch to generate_comprehensive_revenue_estimation")
+        """Legacy estimate method - deprecated, use generate_comprehensive_revenue_estimation instead"""        logger.warning("Using deprecated estimate method. Switch to generate_comprehensive_revenue_estimation")
         
         base_rate = 5.0  # USD per 1k impressions baseline
         boost = 1.0 + (len((asset.metadata or {}).get("tags", [])) * 0.05)

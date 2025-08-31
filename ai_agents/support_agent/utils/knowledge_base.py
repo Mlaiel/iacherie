@@ -1,5 +1,4 @@
-"""
-Knowledge Base Manager - Ultra-Advanced AI Knowledge Management System
+"""Knowledge Base Manager - Ultra-Advanced AI Knowledge Management System
 
 Enterprise-grade knowledge management system providing semantic search, intelligent
 content curation, dynamic learning, and contextual information retrieval for
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -46,8 +44,7 @@ from sqlalchemy import select, update, delete, func
 logger = logging.getLogger(__name__)
 
 class KnowledgeCategory(Enum):
-    """Knowledge base categories"""
-    TECHNICAL_SUPPORT = "technical_support"
+    """Knowledge base categories"""    TECHNICAL_SUPPORT = "technical_support"
     USER_GUIDES = "user_guides"
     API_DOCUMENTATION = "api_documentation"
     TROUBLESHOOTING = "troubleshooting"
@@ -61,8 +58,7 @@ class KnowledgeCategory(Enum):
     COMPLIANCE = "compliance"
 
 class ContentType(Enum):
-    """Types of knowledge content"""
-    ARTICLE = "article"
+    """Types of knowledge content"""    ARTICLE = "article"
     FAQ = "faq"
     TUTORIAL = "tutorial"
     VIDEO = "video"
@@ -72,16 +68,14 @@ class ContentType(Enum):
     POLICY_DOCUMENT = "policy_document"
 
 class ContentStatus(Enum):
-    """Content status"""
-    DRAFT = "draft"
+    """Content status"""    DRAFT = "draft"
     PUBLISHED = "published"
     ARCHIVED = "archived"
     UNDER_REVIEW = "under_review"
 
 @dataclass
 class KnowledgeArticle:
-    """Knowledge base article structure"""
-    id: str
+    """Knowledge base article structure"""    id: str
     title: str
     content: str
     category: KnowledgeCategory
@@ -117,8 +111,7 @@ class KnowledgeArticle:
 
 @dataclass
 class SearchQuery:
-    """Search query with context"""
-    query: str
+    """Search query with context"""    query: str
     user_id: str
     session_id: str
     
@@ -143,8 +136,7 @@ class SearchQuery:
 
 @dataclass
 class SearchResult:
-    """Search result with relevance scoring"""
-    article: KnowledgeArticle
+    """Search result with relevance scoring"""    article: KnowledgeArticle
     relevance_score: float
     match_type: str  # "exact", "semantic", "keyword", "related"
     
@@ -159,8 +151,7 @@ class SearchResult:
     recency_score: float = 1.0
 
 class KnowledgeBaseManager:
-    """Ultra-advanced knowledge base management system"""
-    
+    """Ultra-advanced knowledge base management system"""    
     def __init__(
         self,
         redis_client: aioredis.Redis,
@@ -199,8 +190,7 @@ class KnowledgeBaseManager:
         asyncio.create_task(self._initialize_knowledge_base())
     
     async def _initialize_knowledge_base(self):
-        """Initialize knowledge base with default content"""
-        try:
+        """Initialize knowledge base with default content"""        try:
             await self._load_existing_articles()
             await self._create_default_articles()
             await self._build_vector_index()
@@ -212,14 +202,12 @@ class KnowledgeBaseManager:
             logger.error(f"Failed to initialize knowledge base: {str(e)}")
     
     async def _create_default_articles(self):
-        """Create comprehensive default knowledge base articles"""
-        default_articles = [
+        """Create comprehensive default knowledge base articles"""        default_articles = [
             # Technical Support Articles
             KnowledgeArticle(
                 id="tech_001",
                 title="Audio Upload Issues - Complete Troubleshooting Guide",
-                content="""
-                # Audio Upload Issues - Complete Troubleshooting Guide
+                content="""                # Audio Upload Issues - Complete Troubleshooting Guide
                 
                 ## Common Upload Problems and Solutions
                 
@@ -296,8 +284,7 @@ class KnowledgeBaseManager:
             KnowledgeArticle(
                 id="content_001",
                 title="Content Protection and Copyright Detection System",
-                content="""
-                # Content Protection and Copyright Detection System
+                content="""                # Content Protection and Copyright Detection System
                 
                 ## How Our AI Protection Works
                 
@@ -397,8 +384,7 @@ class KnowledgeBaseManager:
             KnowledgeArticle(
                 id="collab_001",
                 title="Collaboration Features and Creator Matching",
-                content="""
-                # Collaboration Features and Creator Matching
+                content="""                # Collaboration Features and Creator Matching
                 
                 ## AI-Powered Creator Discovery
                 
@@ -554,8 +540,7 @@ class KnowledgeBaseManager:
             KnowledgeArticle(
                 id="billing_001",
                 title="Subscription Plans and Billing Management",
-                content="""
-                # Subscription Plans and Billing Management
+                content="""                # Subscription Plans and Billing Management
                 
                 ## Available Subscription Tiers
                 
@@ -763,8 +748,7 @@ class KnowledgeBaseManager:
         logger.info(f"Created {len(default_articles)} default knowledge articles")
     
     async def add_article(self, article: KnowledgeArticle) -> bool:
-        """Add new article to knowledge base"""
-        try:
+        """Add new article to knowledge base"""        try:
             # Generate embedding
             article.embedding = self.embedding_model.encode(
                 f"{article.title} {article.content}",
@@ -789,8 +773,7 @@ class KnowledgeBaseManager:
             return False
     
     async def search(self, query: SearchQuery) -> List[SearchResult]:
-        """Perform comprehensive knowledge base search"""
-        try:
+        """Perform comprehensive knowledge base search"""        try:
             start_time = datetime.now()
             
             # Generate query embedding
@@ -855,8 +838,7 @@ class KnowledgeBaseManager:
         query: SearchQuery,
         query_embedding: np.ndarray
     ) -> List[SearchResult]:
-        """Perform semantic similarity search"""
-        if not self.faiss_index:
+        """Perform semantic similarity search"""        if not self.faiss_index:
             return []
         
         try:
@@ -894,8 +876,7 @@ class KnowledgeBaseManager:
             return []
     
     async def _keyword_search(self, query: SearchQuery) -> List[SearchResult]:
-        """Perform keyword-based search"""
-        results = []
+        """Perform keyword-based search"""        results = []
         query_lower = query.query.lower()
         query_terms = self._extract_keywords(query.query)
         
@@ -946,8 +927,7 @@ class KnowledgeBaseManager:
         return results
     
     async def _exact_match_search(self, query: SearchQuery) -> List[SearchResult]:
-        """Perform exact phrase matching"""
-        results = []
+        """Perform exact phrase matching"""        results = []
         query_lower = query.query.lower().strip()
         
         if len(query_lower) < 3:
@@ -985,8 +965,7 @@ class KnowledgeBaseManager:
         results: List[SearchResult],
         query: SearchQuery
     ) -> List[SearchResult]:
-        """Apply filters and context-based boosting"""
-        filtered_results = []
+        """Apply filters and context-based boosting"""        filtered_results = []
         
         for result in results:
             article = result.article
@@ -1040,8 +1019,7 @@ class KnowledgeBaseManager:
         results: List[SearchResult],
         query: SearchQuery
     ) -> List[SearchResult]:
-        """Add related articles to search results"""
-        if not results:
+        """Add related articles to search results"""        if not results:
             return results
         
         # Get related articles for top results
@@ -1066,8 +1044,7 @@ class KnowledgeBaseManager:
         return results
     
     async def _generate_snippet(self, article: KnowledgeArticle, query: str) -> str:
-        """Generate contextual snippet from article"""
-        try:
+        """Generate contextual snippet from article"""        try:
             # Use QA model to find relevant snippet
             qa_input = {
                 'question': query,
@@ -1100,8 +1077,7 @@ class KnowledgeBaseManager:
             return article.content[:200] + "..."
     
     def _extract_keywords(self, text: str) -> List[str]:
-        """Extract keywords from text"""
-        # Remove common stop words and extract meaningful terms
+        """Extract keywords from text"""        # Remove common stop words and extract meaningful terms
         doc = self.nlp(text.lower())
         keywords = []
         
@@ -1115,8 +1091,7 @@ class KnowledgeBaseManager:
         return keywords
     
     async def _process_article_content(self, article: KnowledgeArticle):
-        """Process article content to extract metadata"""
-        # Extract keywords using NLP
+        """Process article content to extract metadata"""        # Extract keywords using NLP
         doc = self.nlp(article.content)
         
         # Extract noun phrases and entities
@@ -1148,8 +1123,7 @@ class KnowledgeBaseManager:
                                 article.search_terms.append(relevant_part)
     
     async def _build_vector_index(self):
-        """Build FAISS vector index for semantic search"""
-        if not self.knowledge_articles:
+        """Build FAISS vector index for semantic search"""        if not self.knowledge_articles:
             return
         
         try:
@@ -1192,8 +1166,7 @@ class KnowledgeBaseManager:
             logger.error(f"Failed to build vector index: {str(e)}")
     
     async def _update_vector_index(self, article: KnowledgeArticle):
-        """Update vector index with new article"""
-        try:
+        """Update vector index with new article"""        try:
             if self.faiss_index is None:
                 await self._build_vector_index()
                 return
@@ -1213,8 +1186,7 @@ class KnowledgeBaseManager:
             logger.error(f"Failed to update vector index: {str(e)}")
     
     async def _precompute_relationships(self):
-        """Precompute article relationships"""
-        for article_id, article in self.knowledge_articles.items():
+        """Precompute article relationships"""        for article_id, article in self.knowledge_articles.items():
             if not article.related_articles:
                 # Find related articles based on category and tags
                 related = []
@@ -1235,8 +1207,7 @@ class KnowledgeBaseManager:
                 article.related_articles = related[:5]  # Limit to 5 related articles
     
     async def _cache_article(self, article: KnowledgeArticle):
-        """Cache article in Redis"""
-        try:
+        """Cache article in Redis"""        try:
             article_data = {
                 "id": article.id,
                 "title": article.title,
@@ -1267,8 +1238,7 @@ class KnowledgeBaseManager:
             logger.error(f"Failed to cache article {article.id}: {str(e)}")
     
     async def _load_existing_articles(self):
-        """Load existing articles from database or cache"""
-        try:
+        """Load existing articles from database or cache"""        try:
             # Try to load from Redis cache first
             cached_articles = await self.redis_client.keys("knowledge_article:*")
             
@@ -1305,8 +1275,7 @@ class KnowledgeBaseManager:
             logger.error(f"Failed to load existing articles: {str(e)}")
     
     async def _update_search_stats(self, query: SearchQuery, result_count: int, search_time: float):
-        """Update search statistics"""
-        try:
+        """Update search statistics"""        try:
             stats_key = f"search_stats:{datetime.now().strftime('%Y-%m-%d')}"
             
             stats = {
@@ -1328,8 +1297,7 @@ class KnowledgeBaseManager:
             logger.error(f"Failed to update search stats: {str(e)}")
     
     async def get_article_by_id(self, article_id: str) -> Optional[KnowledgeArticle]:
-        """Get article by ID"""
-        if article_id in self.knowledge_articles:
+        """Get article by ID"""        if article_id in self.knowledge_articles:
             article = self.knowledge_articles[article_id]
             article.view_count += 1
             await self._cache_article(article)  # Update cache
@@ -1343,8 +1311,7 @@ class KnowledgeBaseManager:
         helpful: bool,
         user_feedback: Optional[str] = None
     ):
-        """Update article feedback and usefulness score"""
-        if article_id not in self.knowledge_articles:
+        """Update article feedback and usefulness score"""        if article_id not in self.knowledge_articles:
             return
         
         article = self.knowledge_articles[article_id]
@@ -1366,8 +1333,7 @@ class KnowledgeBaseManager:
         logger.info(f"Updated feedback for article {article_id}: helpful={helpful}")
     
     async def get_knowledge_analytics(self) -> Dict[str, Any]:
-        """Get knowledge base analytics"""
-        return {
+        """Get knowledge base analytics"""        return {
             "total_articles": len(self.knowledge_articles),
             "categories": {
                 category.value: len([a for a in self.knowledge_articles.values() if a.category == category])

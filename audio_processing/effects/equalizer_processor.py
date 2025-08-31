@@ -1,5 +1,4 @@
-"""
-🎚️ Equalizer Processor - Professional Multi-Band EQ System
+"""🎚️ Equalizer Processor - Professional Multi-Band EQ System
 
 Industrial-grade equalizer processing with parametric EQ, graphic EQ, linear-phase EQ,
 and professional filtering capabilities for precise frequency shaping and audio enhancement.
@@ -35,7 +34,6 @@ Unauthorized reproduction, distribution, or reverse engineering is strictly
 prohibited under international copyright law.
 =============================================================================
 """
-
 import numpy as np
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any
@@ -49,8 +47,7 @@ from concurrent.futures import ThreadPoolExecutor
 
 
 class FilterType(Enum):
-    """Professional EQ filter types"""
-    LOWPASS = "lowpass"
+    """Professional EQ filter types"""    LOWPASS = "lowpass"
     HIGHPASS = "highpass"
     BANDPASS = "bandpass"
     BANDSTOP = "bandstop"
@@ -62,8 +59,7 @@ class FilterType(Enum):
 
 
 class EQType(Enum):
-    """EQ processing types"""
-    PARAMETRIC = "parametric"
+    """EQ processing types"""    PARAMETRIC = "parametric"
     GRAPHIC = "graphic"
     LINEAR_PHASE = "linear_phase"
     MINIMUM_PHASE = "minimum_phase"
@@ -72,8 +68,7 @@ class EQType(Enum):
 
 
 class EQPreset(Enum):
-    """Professional EQ presets"""
-    FLAT = "flat"
+    """Professional EQ presets"""    FLAT = "flat"
     VOCAL_CLARITY = "vocal_clarity"
     BASS_ENHANCEMENT = "bass_enhancement"
     PRESENCE_BOOST = "presence_boost"
@@ -87,8 +82,7 @@ class EQPreset(Enum):
 
 @dataclass
 class EQBand:
-    """Professional EQ band configuration"""
-    frequency: float
+    """Professional EQ band configuration"""    frequency: float
     gain: float  # dB
     q_factor: float
     filter_type: FilterType
@@ -103,16 +97,14 @@ class EQBand:
 
 @dataclass 
 class EQCurvePoint:
-    """EQ frequency response curve point"""
-    frequency: float
+    """EQ frequency response curve point"""    frequency: float
     magnitude: float  # dB
     phase: float  # degrees
 
 
 @dataclass
 class EQAnalysisResult:
-    """AI-powered EQ analysis result"""
-    recommended_bands: List[EQBand]
+    """AI-powered EQ analysis result"""    recommended_bands: List[EQBand]
     frequency_issues: List[str]
     mastering_suggestions: List[str]
     genre_optimizations: Dict[str, List[EQBand]]
@@ -121,8 +113,7 @@ class EQAnalysisResult:
 
 
 class SpectralAnalyzer:
-    """Real-time spectrum analysis for EQ guidance"""
-    
+    """Real-time spectrum analysis for EQ guidance"""    
     def __init__(self, sample_rate: int, fft_size: int = 4096):
         self.sample_rate = sample_rate
         self.fft_size = fft_size
@@ -130,8 +121,7 @@ class SpectralAnalyzer:
         self.freq_bins = np.fft.fftfreq(fft_size, 1/sample_rate)[:fft_size//2]
         
     def analyze_spectrum(self, audio_data: np.ndarray) -> Dict[str, np.ndarray]:
-        """Analyze frequency spectrum"""
-        if len(audio_data) < self.fft_size:
+        """Analyze frequency spectrum"""        if len(audio_data) < self.fft_size:
             audio_data = np.pad(audio_data, (0, self.fft_size - len(audio_data)))
         
         windowed = audio_data[:self.fft_size] * self.window
@@ -148,8 +138,7 @@ class SpectralAnalyzer:
 
 
 class EqualizerProcessor:
-    """Professional multi-band equalizer processor with AI assistance"""
-    
+    """Professional multi-band equalizer processor with AI assistance"""    
     def __init__(self, sample_rate: int = 44100, eq_type: EQType = EQType.PARAMETRIC):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -183,8 +172,7 @@ class EqualizerProcessor:
         
     
     def _initialize_professional_bands(self) -> List[EQBand]:
-        """Initialize professional 31-band EQ configuration"""
-        professional_frequencies = [
+        """Initialize professional 31-band EQ configuration"""        professional_frequencies = [
             20, 25, 31.5, 40, 50, 63, 80, 100, 125, 160, 200, 250, 315, 400, 500,
             630, 800, 1000, 1250, 1600, 2000, 2500, 3150, 4000, 5000, 6300, 8000,
             10000, 12500, 16000, 20000
@@ -213,8 +201,7 @@ class EqualizerProcessor:
         return bands
     
     def _load_professional_presets(self) -> Dict[EQPreset, List[EQBand]]:
-        """Load professional EQ presets"""
-        presets = {}
+        """Load professional EQ presets"""        presets = {}
         
         # Vocal Clarity preset
         vocal_bands = self._initialize_professional_bands()
@@ -247,8 +234,7 @@ class EqualizerProcessor:
         return presets
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Process audio through EQ chain with professional quality"""
-        try:
+        """Process audio through EQ chain with professional quality"""        try:
             if audio_data.size == 0:
                 return audio_data
             
@@ -288,8 +274,7 @@ class EqualizerProcessor:
             return audio_data
     
     def _apply_eq_band(self, audio_data: np.ndarray, band: EQBand) -> np.ndarray:
-        """Apply individual EQ band processing"""
-        try:
+        """Apply individual EQ band processing"""        try:
             # Calculate filter coefficients based on type
             if band.filter_type == FilterType.PEAKING:
                 b, a = self._design_peaking_filter(band)
@@ -323,8 +308,7 @@ class EqualizerProcessor:
             return audio_data
     
     def _design_peaking_filter(self, band: EQBand) -> Tuple[np.ndarray, np.ndarray]:
-        """Design peaking EQ filter"""
-        omega = 2 * np.pi * band.frequency / self.sample_rate
+        """Design peaking EQ filter"""        omega = 2 * np.pi * band.frequency / self.sample_rate
         alpha = np.sin(omega) / (2 * band.q_factor)
         A = 10 ** (band.gain / 40.0)
         
@@ -340,8 +324,7 @@ class EqualizerProcessor:
         return np.array([b0, b1, b2]) / a0, np.array([a0, a1, a2]) / a0
     
     def _design_shelf_filter(self, band: EQBand, shelf_type: str) -> Tuple[np.ndarray, np.ndarray]:
-        """Design shelving filter"""
-        omega = 2 * np.pi * band.frequency / self.sample_rate
+        """Design shelving filter"""        omega = 2 * np.pi * band.frequency / self.sample_rate
         A = 10 ** (band.gain / 40.0)
         S = band.q_factor
         beta = np.sqrt(A) / S
@@ -367,8 +350,7 @@ class EqualizerProcessor:
         return np.array([b0, b1, b2]) / a0, np.array([a0, a1, a2]) / a0
     
     def _design_butterworth_filter(self, band: EQBand, filter_type: str) -> Tuple[np.ndarray, np.ndarray]:
-        """Design Butterworth filter"""
-        nyquist = self.sample_rate / 2
+        """Design Butterworth filter"""        nyquist = self.sample_rate / 2
         normal_freq = band.frequency / nyquist
         
         order = max(1, int(band.q_factor))
@@ -377,38 +359,32 @@ class EqualizerProcessor:
         return b, a
     
     def _upsample(self, audio_data: np.ndarray) -> np.ndarray:
-        """Upsample audio for high-quality processing"""
-        from scipy import signal
+        """Upsample audio for high-quality processing"""        from scipy import signal
         upsampled = signal.resample(audio_data, len(audio_data) * self.oversampling_factor)
         return upsampled
     
     def _downsample(self, audio_data: np.ndarray) -> np.ndarray:
-        """Downsample audio after processing"""
-        from scipy import signal
+        """Downsample audio after processing"""        from scipy import signal
         downsampled = signal.resample(audio_data, len(audio_data) // self.oversampling_factor)
         return downsampled
     
     def _soft_limit(self, audio_data: np.ndarray, threshold: float = 0.95) -> np.ndarray:
-        """Apply soft limiting to prevent clipping"""
-        limited = np.tanh(audio_data / threshold) * threshold
+        """Apply soft limiting to prevent clipping"""        limited = np.tanh(audio_data / threshold) * threshold
         return limited
     
     def _apply_vintage_saturation(self, audio_data: np.ndarray, amount: float) -> np.ndarray:
-        """Apply vintage-style harmonic saturation"""
-        saturated = np.tanh(audio_data * (1 + amount)) / (1 + amount * 0.5)
+        """Apply vintage-style harmonic saturation"""        saturated = np.tanh(audio_data * (1 + amount)) / (1 + amount * 0.5)
         return saturated
     
     def apply_preset(self, preset: EQPreset) -> None:
-        """Apply professional EQ preset"""
-        if preset in self.presets:
+        """Apply professional EQ preset"""        if preset in self.presets:
             self.eq_bands = self.presets[preset].copy()
             self.logger.info(f"Applied EQ preset: {preset.value}")
         else:
             self.logger.warning(f"Preset not found: {preset.value}")
     
     def analyze_and_suggest(self, audio_data: np.ndarray) -> EQAnalysisResult:
-        """AI-powered EQ analysis and suggestions"""
-        try:
+        """AI-powered EQ analysis and suggestions"""        try:
             analysis_start = asyncio.get_event_loop().time()
             
             # Analyze spectrum
@@ -467,8 +443,7 @@ class EqualizerProcessor:
             return EQAnalysisResult([], [], [], {}, 0.0, 0.0)
     
     def get_frequency_response(self, frequencies: Optional[np.ndarray] = None) -> List[EQCurvePoint]:
-        """Calculate EQ frequency response curve"""
-        if frequencies is None:
+        """Calculate EQ frequency response curve"""        if frequencies is None:
             frequencies = np.logspace(1, 4.3, 1000)  # 10Hz to 20kHz
         
         response_points = []
@@ -493,8 +468,7 @@ class EqualizerProcessor:
         return response_points
     
     def _calculate_band_response(self, frequency: float, band: EQBand) -> Dict[str, float]:
-        """Calculate individual band frequency response"""
-        omega = 2 * np.pi * frequency / self.sample_rate
+        """Calculate individual band frequency response"""        omega = 2 * np.pi * frequency / self.sample_rate
         
         if band.filter_type == FilterType.PEAKING:
             # Peaking filter response calculation
@@ -518,8 +492,7 @@ class EqualizerProcessor:
         return {'magnitude': magnitude, 'phase': phase}
     
     def reset(self) -> None:
-        """Reset EQ to flat response"""
-        for band in self.eq_bands:
+        """Reset EQ to flat response"""        for band in self.eq_bands:
             band.gain = 0.0
             band.enabled = True
             band.bypass = False
@@ -529,8 +502,7 @@ class EqualizerProcessor:
         self.logger.info("EQ reset to flat response")
     
     def get_processing_metrics(self) -> Dict[str, Any]:
-        """Get processing performance metrics"""
-        enabled_bands = sum(1 for band in self.eq_bands if band.enabled)
+        """Get processing performance metrics"""        enabled_bands = sum(1 for band in self.eq_bands if band.enabled)
         
         return {
             'enabled_bands': enabled_bands,
@@ -543,8 +515,7 @@ class EqualizerProcessor:
             'output_gain': self.output_gain,
             'processing_history_length': len(self.processing_history)
         }
-        """Apply EQ processing"""
-        try:
+        """Apply EQ processing"""        try:
             processed_audio = audio_data.copy()
             
             for band in self.eq_bands:
@@ -559,8 +530,7 @@ class EqualizerProcessor:
             return audio_data
     
     def _apply_eq_band(self, audio_data: np.ndarray, band: EQBand) -> np.ndarray:
-        """Apply single EQ band"""
-        nyquist = self.sample_rate / 2
+        """Apply single EQ band"""        nyquist = self.sample_rate / 2
         normalized_freq = band.frequency / nyquist
         
         # Design filter based on type
@@ -578,8 +548,7 @@ class EqualizerProcessor:
         return filtered_audio
     
     def _design_peaking_filter(self, freq: float, gain_db: float, q: float) -> Tuple[np.ndarray, np.ndarray]:
-        """Design peaking EQ filter"""
-        A = 10 ** (gain_db / 40)
+        """Design peaking EQ filter"""        A = 10 ** (gain_db / 40)
         w0 = 2 * np.pi * freq
         alpha = np.sin(w0) / (2 * q)
         
@@ -598,8 +567,7 @@ class EqualizerProcessor:
         return b, a
     
     def _design_shelf_filter(self, freq: float, gain_db: float, shelf_type: str) -> Tuple[np.ndarray, np.ndarray]:
-        """Design shelf filter"""
-        A = 10 ** (gain_db / 40)
+        """Design shelf filter"""        A = 10 ** (gain_db / 40)
         w0 = 2 * np.pi * freq
         S = 1  # Shelf slope
         alpha = np.sin(w0) / 2 * np.sqrt((A + 1/A) * (1/S - 1) + 2)
@@ -628,14 +596,12 @@ class EqualizerProcessor:
         return b, a
     
     def set_band_gain(self, band_index: int, gain_db: float):
-        """Set gain for specific EQ band"""
-        if 0 <= band_index < len(self.eq_bands):
+        """Set gain for specific EQ band"""        if 0 <= band_index < len(self.eq_bands):
             self.eq_bands[band_index].gain = gain_db
             self.logger.debug(f"Set band {band_index} gain to {gain_db:.1f} dB")
     
     def set_preset(self, preset_name: str):
-        """Apply EQ preset"""
-        presets = {
+        """Apply EQ preset"""        presets = {
             'flat': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
             'rock': [3, 2, -1, -2, 1, 2, 3, 2, 1, 0],
             'pop': [1, 2, 0, -1, 0, 1, 2, 1, 0, -1],
@@ -654,8 +620,7 @@ class EqualizerProcessor:
             self.logger.info(f"Applied EQ preset: {preset_name}")
     
     def analyze_frequency_response(self) -> Tuple[np.ndarray, np.ndarray]:
-        """Analyze current EQ frequency response"""
-        frequencies = np.logspace(1, 4.3, 1000)  # 10 Hz to 20 kHz
+        """Analyze current EQ frequency response"""        frequencies = np.logspace(1, 4.3, 1000)  # 10 Hz to 20 kHz
         response = np.ones_like(frequencies)
         
         for band in self.eq_bands:
@@ -667,8 +632,7 @@ class EqualizerProcessor:
         return frequencies, 20 * np.log10(response)
     
     def _compute_band_response(self, frequencies: np.ndarray, band: EQBand) -> np.ndarray:
-        """Compute frequency response for single band"""
-        # Simplified bell curve response for peaking filters
+        """Compute frequency response for single band"""        # Simplified bell curve response for peaking filters
         if band.filter_type == FilterType.PEAKING:
             bandwidth = band.frequency / band.q_factor
             response = 1 + (band.gain / 20) * np.exp(-0.5 * ((frequencies - band.frequency) / bandwidth) ** 2)

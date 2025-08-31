@@ -1,5 +1,4 @@
-"""
-Platform Quality Validator - Multi-Platform Content Optimization System
+"""Platform Quality Validator - Multi-Platform Content Optimization System
 
 Enterprise platform-specific quality validation and optimization system for 
 maximizing content performance across different social media and content platforms.
@@ -11,7 +10,6 @@ Algorithm optimization → Engagement prediction → Performance recommendations
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import re
 import hashlib
@@ -25,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentPlatform(Enum):
-    """Supported content platforms"""
-    YOUTUBE = "youtube"
+    """Supported content platforms"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -44,8 +41,7 @@ class ContentPlatform(Enum):
 
 
 class ContentFormat(Enum):
-    """Content format types"""
-    VIDEO_SHORT = "video_short"  # < 60 seconds
+    """Content format types"""    VIDEO_SHORT = "video_short"  # < 60 seconds
     VIDEO_LONG = "video_long"   # > 60 seconds
     IMAGE_SINGLE = "image_single"
     IMAGE_CAROUSEL = "image_carousel"
@@ -61,16 +57,14 @@ class ContentFormat(Enum):
 
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""
-    INFO = "info"
+    """Validation issue severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
 
 
 class OptimizationCategory(Enum):
-    """Optimization recommendation categories"""
-    ALGORITHM = "algorithm"
+    """Optimization recommendation categories"""    ALGORITHM = "algorithm"
     ENGAGEMENT = "engagement"
     DISCOVERY = "discovery"
     ACCESSIBILITY = "accessibility"
@@ -82,8 +76,7 @@ class OptimizationCategory(Enum):
 
 @dataclass
 class PlatformValidationIssue:
-    """Individual platform validation issue"""
-    issue_id: str
+    """Individual platform validation issue"""    issue_id: str
     platform: ContentPlatform
     severity: ValidationSeverity
     category: OptimizationCategory
@@ -139,8 +132,7 @@ class PlatformValidationIssue:
 
 @dataclass
 class PlatformOptimization:
-    """Platform-specific optimization recommendation"""
-    optimization_id: str
+    """Platform-specific optimization recommendation"""    optimization_id: str
     platform: ContentPlatform
     category: OptimizationCategory
     title: str
@@ -198,8 +190,7 @@ class PlatformOptimization:
 
 @dataclass
 class PlatformValidationResult:
-    """Comprehensive platform validation result"""
-    content_id: str
+    """Comprehensive platform validation result"""    content_id: str
     platform: ContentPlatform
     content_format: ContentFormat
     overall_score: float  # 0-100
@@ -238,8 +229,7 @@ class PlatformValidationResult:
     processing_time_ms: float = 0.0
     
     def add_issue(self, issue: PlatformValidationIssue):
-        """Add a validation issue"""
-        self.issues.append(issue)
+        """Add a validation issue"""        self.issues.append(issue)
         self.total_issues += 1
         
         # Update issue counts by severity
@@ -253,27 +243,22 @@ class PlatformValidationResult:
             self.info_issues += 1
     
     def add_optimization(self, optimization: PlatformOptimization):
-        """Add an optimization recommendation"""
-        self.optimizations.append(optimization)
+        """Add an optimization recommendation"""        self.optimizations.append(optimization)
     
     def get_issues_by_severity(self, severity: ValidationSeverity) -> List[PlatformValidationIssue]:
-        """Get issues by severity level"""
-        return [issue for issue in self.issues if issue.severity == severity]
+        """Get issues by severity level"""        return [issue for issue in self.issues if issue.severity == severity]
     
     def get_issues_by_category(self, category: OptimizationCategory) -> List[PlatformValidationIssue]:
-        """Get issues by category"""
-        return [issue for issue in self.issues if issue.category == category]
+        """Get issues by category"""        return [issue for issue in self.issues if issue.category == category]
     
     def get_top_optimizations(self, limit: int = 5) -> List[PlatformOptimization]:
-        """Get top optimization recommendations by priority"""
-        sorted_optimizations = sorted(self.optimizations, 
+        """Get top optimization recommendations by priority"""        sorted_optimizations = sorted(self.optimizations, 
                                     key=lambda x: x.priority_score, 
                                     reverse=True)
         return sorted_optimizations[:limit]
     
     def has_blocking_issues(self) -> bool:
-        """Check if there are blocking issues"""
-        return self.critical_issues > 0 or self.error_issues > 0
+        """Check if there are blocking issues"""        return self.critical_issues > 0 or self.error_issues > 0
     
     def to_dict(self) -> Dict[str, Any]:
         return {
@@ -314,15 +299,13 @@ class PlatformValidationResult:
 
 
 class YouTubeValidator:
-    """YouTube-specific content validation"""
-    
+    """YouTube-specific content validation"""    
     def __init__(self):
         self.platform_requirements = self._initialize_youtube_requirements()
         self.algorithm_factors = self._initialize_algorithm_factors()
     
     def _initialize_youtube_requirements(self) -> Dict[str, Any]:
-        """Initialize YouTube platform requirements"""
-        return {
+        """Initialize YouTube platform requirements"""        return {
             'title': {
                 'min_length': 10,
                 'max_length': 100,
@@ -354,8 +337,7 @@ class YouTubeValidator:
         }
     
     def _initialize_algorithm_factors(self) -> Dict[str, float]:
-        """Initialize YouTube algorithm ranking factors with weights"""
-        return {
+        """Initialize YouTube algorithm ranking factors with weights"""        return {
             'watch_time': 0.25,
             'click_through_rate': 0.20,
             'audience_retention': 0.20,
@@ -367,8 +349,7 @@ class YouTubeValidator:
     
     def validate_youtube_content(self, content_data: Dict[str, Any], 
                                 content_id: str) -> PlatformValidationResult:
-        """Validate content for YouTube"""
-        result = PlatformValidationResult(
+        """Validate content for YouTube"""        result = PlatformValidationResult(
             content_id=content_id,
             platform=ContentPlatform.YOUTUBE,
             content_format=self._determine_youtube_format(content_data),
@@ -409,8 +390,7 @@ class YouTubeValidator:
         return result
     
     def _determine_youtube_format(self, content_data: Dict[str, Any]) -> ContentFormat:
-        """Determine YouTube content format"""
-        duration = content_data.get('duration', 0)
+        """Determine YouTube content format"""        duration = content_data.get('duration', 0)
         
         if duration <= 60:
             return ContentFormat.VIDEO_SHORT
@@ -419,8 +399,7 @@ class YouTubeValidator:
     
     def _validate_title(self, content_data: Dict[str, Any], 
                        result: PlatformValidationResult):
-        """Validate YouTube title"""
-        title = content_data.get('title', '')
+        """Validate YouTube title"""        title = content_data.get('title', '')
         reqs = self.platform_requirements['title']
         
         if not title:
@@ -526,8 +505,7 @@ class YouTubeValidator:
     
     def _validate_description(self, content_data: Dict[str, Any], 
                             result: PlatformValidationResult):
-        """Validate YouTube description"""
-        description = content_data.get('description', '')
+        """Validate YouTube description"""        description = content_data.get('description', '')
         reqs = self.platform_requirements['description']
         
         if not description:
@@ -609,8 +587,7 @@ class YouTubeValidator:
     
     def _validate_tags(self, content_data: Dict[str, Any], 
                       result: PlatformValidationResult):
-        """Validate YouTube tags"""
-        tags = content_data.get('tags', [])
+        """Validate YouTube tags"""        tags = content_data.get('tags', [])
         reqs = self.platform_requirements['tags']
         
         if not tags:
@@ -685,8 +662,7 @@ class YouTubeValidator:
     
     def _validate_thumbnail(self, content_data: Dict[str, Any], 
                           result: PlatformValidationResult):
-        """Validate YouTube thumbnail"""
-        thumbnail = content_data.get('thumbnail')
+        """Validate YouTube thumbnail"""        thumbnail = content_data.get('thumbnail')
         reqs = self.platform_requirements['thumbnail']
         
         if not thumbnail:
@@ -740,8 +716,7 @@ class YouTubeValidator:
     
     def _validate_video_specs(self, content_data: Dict[str, Any], 
                             result: PlatformValidationResult):
-        """Validate video specifications"""
-        duration = content_data.get('duration', 0)
+        """Validate video specifications"""        duration = content_data.get('duration', 0)
         reqs = self.platform_requirements['video']
         
         if duration < reqs['min_duration']:
@@ -798,8 +773,7 @@ class YouTubeValidator:
     
     def _analyze_algorithm_optimization(self, content_data: Dict[str, Any], 
                                       result: PlatformValidationResult):
-        """Analyze YouTube algorithm optimization"""
-        # Check for engagement elements
+        """Analyze YouTube algorithm optimization"""        # Check for engagement elements
         if not content_data.get('has_engagement_prompts', False):
             optimization = PlatformOptimization(
                 optimization_id="youtube_engagement_prompts",
@@ -859,8 +833,7 @@ class YouTubeValidator:
     
     def _analyze_seo_optimization(self, content_data: Dict[str, Any], 
                                 result: PlatformValidationResult):
-        """Analyze SEO optimization for YouTube"""
-        # Check for keyword optimization
+        """Analyze SEO optimization for YouTube"""        # Check for keyword optimization
         title = content_data.get('title', '')
         description = content_data.get('description', '')
         
@@ -894,8 +867,7 @@ class YouTubeValidator:
     
     def _analyze_monetization_readiness(self, content_data: Dict[str, Any], 
                                       result: PlatformValidationResult):
-        """Analyze monetization readiness"""
-        # Check for advertiser-friendly content
+        """Analyze monetization readiness"""        # Check for advertiser-friendly content
         if not content_data.get('advertiser_friendly', True):
             issue = PlatformValidationIssue(
                 issue_id="youtube_advertiser_unfriendly",
@@ -919,8 +891,7 @@ class YouTubeValidator:
             result.add_issue(issue)
     
     def _calculate_category_scores(self, result: PlatformValidationResult):
-        """Calculate category-specific scores"""
-        # Algorithm score based on optimization factors
+        """Calculate category-specific scores"""        # Algorithm score based on optimization factors
         result.algorithm_score = 100.0 - (result.critical_issues * 25 + result.error_issues * 15)
         
         # Engagement score based on engagement-related issues
@@ -944,8 +915,7 @@ class YouTubeValidator:
         result.compliance_score = max(0.0, 100.0 - (compliance_issues * 30))
     
     def _calculate_overall_score(self, result: PlatformValidationResult):
-        """Calculate overall platform score"""
-        # Weight different categories
+        """Calculate overall platform score"""        # Weight different categories
         weights = {
             'algorithm': 0.25,
             'discovery': 0.20,
@@ -970,8 +940,7 @@ class YouTubeValidator:
         result.overall_score = max(0.0, weighted_score - penalty)
     
     def _generate_youtube_recommendations(self, result: PlatformValidationResult):
-        """Generate YouTube-specific recommendations"""
-        # Immediate fixes for critical issues
+        """Generate YouTube-specific recommendations"""        # Immediate fixes for critical issues
         critical_issues = result.get_issues_by_severity(ValidationSeverity.CRITICAL)
         for issue in critical_issues:
             result.immediate_fixes.extend(issue.fix_instructions[:2])
@@ -991,13 +960,11 @@ class YouTubeValidator:
         ]
     
     def _has_keywords(self, text: str) -> bool:
-        """Check if text contains relevant keywords"""
-        # Simple keyword check - could be enhanced with actual keyword analysis
+        """Check if text contains relevant keywords"""        # Simple keyword check - could be enhanced with actual keyword analysis
         return len(text.split()) >= 3 and any(len(word) > 4 for word in text.split())
     
     def _has_links_or_ctas(self, text: str) -> bool:
-        """Check if description contains links or CTAs"""
-        cta_patterns = [
+        """Check if description contains links or CTAs"""        cta_patterns = [
             r'subscribe', r'like', r'comment', r'share', r'follow',
             r'http[s]?://', r'www\.', r'@\w+', r'#\w+'
         ]
@@ -1006,8 +973,7 @@ class YouTubeValidator:
         return any(re.search(pattern, text_lower) for pattern in cta_patterns)
     
     def _has_target_keywords(self, title: str, description: str) -> bool:
-        """Check if content has optimized keywords"""
-        combined_text = f"{title} {description}".lower()
+        """Check if content has optimized keywords"""        combined_text = f"{title} {description}".lower()
         
         # Check for keyword density and variety
         words = combined_text.split()
@@ -1018,14 +984,12 @@ class YouTubeValidator:
 
 
 class InstagramValidator:
-    """Instagram-specific content validation"""
-    
+    """Instagram-specific content validation"""    
     def __init__(self):
         self.platform_requirements = self._initialize_instagram_requirements()
     
     def _initialize_instagram_requirements(self) -> Dict[str, Any]:
-        """Initialize Instagram platform requirements"""
-        return {
+        """Initialize Instagram platform requirements"""        return {
             'caption': {
                 'max_length': 2200,
                 'optimal_length': 150,
@@ -1052,8 +1016,7 @@ class InstagramValidator:
     
     def validate_instagram_content(self, content_data: Dict[str, Any], 
                                  content_id: str) -> PlatformValidationResult:
-        """Validate content for Instagram"""
-        result = PlatformValidationResult(
+        """Validate content for Instagram"""        result = PlatformValidationResult(
             content_id=content_id,
             platform=ContentPlatform.INSTAGRAM,
             content_format=self._determine_instagram_format(content_data),
@@ -1088,8 +1051,7 @@ class InstagramValidator:
         return result
     
     def _determine_instagram_format(self, content_data: Dict[str, Any]) -> ContentFormat:
-        """Determine Instagram content format"""
-        content_type = content_data.get('content_type', 'image')
+        """Determine Instagram content format"""        content_type = content_data.get('content_type', 'image')
         is_story = content_data.get('is_story', False)
         
         if is_story:
@@ -1103,8 +1065,7 @@ class InstagramValidator:
     
     def _validate_caption(self, content_data: Dict[str, Any], 
                          result: PlatformValidationResult):
-        """Validate Instagram caption"""
-        caption = content_data.get('caption', '')
+        """Validate Instagram caption"""        caption = content_data.get('caption', '')
         reqs = self.platform_requirements['caption']
         
         if not caption:
@@ -1156,8 +1117,7 @@ class InstagramValidator:
     
     def _validate_hashtags(self, content_data: Dict[str, Any], 
                           result: PlatformValidationResult):
-        """Validate Instagram hashtags"""
-        caption = content_data.get('caption', '')
+        """Validate Instagram hashtags"""        caption = content_data.get('caption', '')
         hashtags = re.findall(r'#\w+', caption)
         hashtag_count = len(hashtags)
         reqs = self.platform_requirements['caption']
@@ -1236,8 +1196,7 @@ class InstagramValidator:
     
     def _validate_image_specs(self, content_data: Dict[str, Any], 
                             result: PlatformValidationResult):
-        """Validate Instagram image specifications"""
-        image_data = content_data.get('image', {})
+        """Validate Instagram image specifications"""        image_data = content_data.get('image', {})
         reqs = self.platform_requirements['image']
         
         resolution = image_data.get('resolution', '')
@@ -1266,8 +1225,7 @@ class InstagramValidator:
     
     def _analyze_engagement_optimization(self, content_data: Dict[str, Any], 
                                        result: PlatformValidationResult):
-        """Analyze engagement optimization for Instagram"""
-        caption = content_data.get('caption', '')
+        """Analyze engagement optimization for Instagram"""        caption = content_data.get('caption', '')
         
         # Check for engagement prompts
         if not self._has_engagement_prompts(caption):
@@ -1299,8 +1257,7 @@ class InstagramValidator:
     
     def _analyze_instagram_algorithm(self, content_data: Dict[str, Any], 
                                    result: PlatformValidationResult):
-        """Analyze Instagram algorithm optimization"""
-        # Check for optimal posting elements
+        """Analyze Instagram algorithm optimization"""        # Check for optimal posting elements
         if not content_data.get('has_strong_first_line', False):
             optimization = PlatformOptimization(
                 optimization_id="instagram_first_line",
@@ -1330,8 +1287,7 @@ class InstagramValidator:
             result.add_optimization(optimization)
     
     def _has_engagement_prompts(self, caption: str) -> bool:
-        """Check if caption contains engagement prompts"""
-        prompt_patterns = [
+        """Check if caption contains engagement prompts"""        prompt_patterns = [
             r'\?', r'comment', r'share', r'tag', r'thoughts',
             r'what do you think', r'let me know', r'tell me'
         ]
@@ -1341,8 +1297,7 @@ class InstagramValidator:
 
 
 class PlatformQualityValidator:
-    """Enterprise platform quality validation system"""
-    
+    """Enterprise platform quality validation system"""    
     def __init__(self):
         self.youtube_validator = YouTubeValidator()
         self.instagram_validator = InstagramValidator()
@@ -1351,8 +1306,7 @@ class PlatformQualityValidator:
     def validate_platform_quality(self, content_data: Dict[str, Any],
                                  platform: ContentPlatform,
                                  content_id: str = "unknown") -> PlatformValidationResult:
-        """Validate content quality for specific platform"""
-        start_time = datetime.now(timezone.utc)
+        """Validate content quality for specific platform"""        start_time = datetime.now(timezone.utc)
         
         try:
             if platform == ContentPlatform.YOUTUBE:
@@ -1394,8 +1348,7 @@ class PlatformQualityValidator:
     def _generic_platform_validation(self, content_data: Dict[str, Any],
                                    platform: ContentPlatform,
                                    content_id: str) -> PlatformValidationResult:
-        """Generic validation for unsupported platforms"""
-        result = PlatformValidationResult(
+        """Generic validation for unsupported platforms"""        result = PlatformValidationResult(
             content_id=content_id,
             platform=platform,
             content_format=ContentFormat.TEXT_POST,
@@ -1424,8 +1377,7 @@ class PlatformQualityValidator:
     def batch_validate_platforms(self, content_data: Dict[str, Any],
                                 platforms: List[ContentPlatform],
                                 content_id: str = "unknown") -> List[PlatformValidationResult]:
-        """Validate content for multiple platforms"""
-        results = []
+        """Validate content for multiple platforms"""        results = []
         
         for platform in platforms:
             result = self.validate_platform_quality(content_data, platform, content_id)
@@ -1434,8 +1386,7 @@ class PlatformQualityValidator:
         return results
     
     def get_platform_comparison(self, results: List[PlatformValidationResult]) -> Dict[str, Any]:
-        """Compare validation results across platforms"""
-        if not results:
+        """Compare validation results across platforms"""        if not results:
             return {}
         
         platform_scores = {}
@@ -1473,8 +1424,7 @@ class PlatformQualityValidator:
         }
     
     def get_optimization_summary(self, results: List[PlatformValidationResult]) -> Dict[str, Any]:
-        """Get optimization summary across platforms"""
-        all_optimizations = []
+        """Get optimization summary across platforms"""        all_optimizations = []
         category_counts = {}
         
         for result in results:

@@ -1,5 +1,4 @@
-"""
-🔧 Build Automation Engine - IA-Influencer-Agent CI/CD Enterprise
+"""🔧 Build Automation Engine - IA-Influencer-Agent CI/CD Enterprise
 ================================================================
 Team Expertise: DevOps Engineer + Build Engineer + ML Engineer + Security Expert
 Created: 2025-08-24
@@ -22,7 +21,6 @@ Business Logic Features:
 - SEO optimization service integration
 ================================================================
 """
-
 from typing import Dict, List, Optional, Any, Tuple
 import asyncio
 import logging
@@ -39,8 +37,7 @@ from enum import Enum
 logger = logging.getLogger(__name__)
 
 class BuildType(Enum):
-    """Build type enumeration for IA Influencer platform"""
-    FULL = "full"
+    """Build type enumeration for IA Influencer platform"""    FULL = "full"
     INCREMENTAL = "incremental"
     SECURITY_PATCH = "security_patch"
     HOTFIX = "hotfix"
@@ -49,8 +46,7 @@ class BuildType(Enum):
     REVENUE_SERVICE_UPDATE = "revenue_service_update"
 
 class BuildStage(Enum):
-    """Build stage enumeration for multi-format content platform"""
-    DEPENDENCY_INSTALL = "dependency_install"
+    """Build stage enumeration for multi-format content platform"""    DEPENDENCY_INSTALL = "dependency_install"
     CODE_COMPILATION = "code_compilation"
     AI_MODEL_COMPILATION = "ai_model_compilation"
     CONTENT_PROCESSOR_BUILD = "content_processor_build"
@@ -67,8 +63,7 @@ class BuildStage(Enum):
 
 @dataclass
 class BuildConfiguration:
-    """Build configuration structure for IA Influencer platform"""
-    build_type: BuildType
+    """Build configuration structure for IA Influencer platform"""    build_type: BuildType
     docker_registry: str
     image_name: str
     tag_strategy: str = "semantic"
@@ -136,8 +131,7 @@ class BuildConfiguration:
 
 @dataclass
 class BuildResult:
-    """Build result structure"""
-    success: bool
+    """Build result structure"""    success: bool
     build_id: str
     image_tag: str
     build_duration: float
@@ -160,19 +154,16 @@ class BuildResult:
             self.errors = []
 
 class BuildAutomationEngine:
-    """Enterprise build automation engine"""
-    
+    """Enterprise build automation engine"""    
     def __init__(self):
-        """Initialize build automation engine"""
-        self.initialized = False
+        """Initialize build automation engine"""        self.initialized = False
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.docker_client = None
         self.build_history: List[BuildResult] = []
         self.active_builds: Dict[str, asyncio.Task] = {}
         
     async def initialize(self) -> bool:
-        """Initialize build engine"""
-        try:
+        """Initialize build engine"""        try:
             # Initialize Docker client
             self.docker_client = docker.from_env()
             
@@ -190,16 +181,14 @@ class BuildAutomationEngine:
             return False
     
     async def _verify_docker_connection(self) -> None:
-        """Verify Docker daemon connection"""
-        try:
+        """Verify Docker daemon connection"""        try:
             self.docker_client.ping()
             self.logger.info("Docker connection verified")
         except Exception as e:
             raise RuntimeError(f"Docker connection failed: {e}")
     
     async def _initialize_build_cache(self) -> None:
-        """Initialize build cache system"""
-        try:
+        """Initialize build cache system"""        try:
             cache_dir = Path("/tmp/ia_influencer_build_cache")
             cache_dir.mkdir(exist_ok=True)
             self.logger.info("Build cache initialized")
@@ -212,8 +201,7 @@ class BuildAutomationEngine:
         source_path: str,
         build_context: Optional[Dict] = None
     ) -> BuildResult:
-        """Execute complete build pipeline"""
-        build_id = self._generate_build_id()
+        """Execute complete build pipeline"""        build_id = self._generate_build_id()
         start_time = datetime.now()
         
         try:
@@ -290,13 +278,11 @@ class BuildAutomationEngine:
             return result
     
     def _generate_build_id(self) -> str:
-        """Generate unique build ID"""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        """Generate unique build ID"""        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         return f"ia_influencer_{timestamp}"
     
     async def _prepare_build_environment(self, source_path: str, context: Dict) -> None:
-        """Prepare build environment"""
-        try:
+        """Prepare build environment"""        try:
             # Validate source path
             if not os.path.exists(source_path):
                 raise FileNotFoundError(f"Source path not found: {source_path}")
@@ -319,8 +305,7 @@ class BuildAutomationEngine:
         source_path: str, 
         config: BuildConfiguration
     ) -> Dict[str, Any]:
-        """Install project dependencies"""
-        try:
+        """Install project dependencies"""        try:
             # Install Python dependencies
             requirements_file = os.path.join(source_path, "requirements.txt")
             if os.path.exists(requirements_file):
@@ -351,8 +336,7 @@ class BuildAutomationEngine:
         source_path: str, 
         config: BuildConfiguration
     ) -> Dict[str, Any]:
-        """Compile and optimize code"""
-        try:
+        """Compile and optimize code"""        try:
             compile_results = {}
             
             # Python bytecode compilation
@@ -378,8 +362,7 @@ class BuildAutomationEngine:
         config: BuildConfiguration,
         build_id: str
     ) -> str:
-        """Build Docker image"""
-        try:
+        """Build Docker image"""        try:
             # Generate image tag
             image_tag = self._generate_image_tag(config, build_id)
             
@@ -425,8 +408,7 @@ class BuildAutomationEngine:
             raise RuntimeError(f"Docker build failed: {e}")
     
     def _generate_image_tag(self, config: BuildConfiguration, build_id: str) -> str:
-        """Generate Docker image tag"""
-        if config.tag_strategy == "semantic":
+        """Generate Docker image tag"""        if config.tag_strategy == "semantic":
             version = os.environ.get("VERSION", "1.0.0")
             return f"{config.image_name}:{version}-{build_id[-8:]}"
         elif config.tag_strategy == "timestamp":
@@ -436,9 +418,7 @@ class BuildAutomationEngine:
             return f"{config.image_name}:{build_id}"
     
     async def _create_multistage_dockerfile(self, source_path: str) -> None:
-        """Create optimized multi-stage Dockerfile"""
-        dockerfile_content = """
-# Multi-stage Dockerfile for IA-Influencer-Agent
+        """Create optimized multi-stage Dockerfile"""        dockerfile_content = """# Multi-stage Dockerfile for IA-Influencer-Agent
 FROM python:3.11-slim as builder
 
 # Install build dependencies
@@ -498,8 +478,7 @@ EXPOSE 8000
 
 # Start application
 CMD ["python", "-m", "backend.app.main"]
-"""
-        
+"""        
         dockerfile_path = os.path.join(source_path, "Dockerfile.multistage")
         with open(dockerfile_path, 'w') as f:
             f.write(dockerfile_content.strip())
@@ -509,8 +488,7 @@ CMD ["python", "-m", "backend.app.main"]
         image_tag: str, 
         config: BuildConfiguration
     ) -> Dict[str, Any]:
-        """Run security vulnerability scan"""
-        try:
+        """Run security vulnerability scan"""        try:
             security_results = {}
             
             # Container image security scan using Trivy
@@ -547,8 +525,7 @@ CMD ["python", "-m", "backend.app.main"]
         source_path: str, 
         config: BuildConfiguration
     ) -> Dict[str, Any]:
-        """Run code quality checks"""
-        try:
+        """Run code quality checks"""        try:
             quality_results = {}
             
             # Run pytest with coverage
@@ -590,8 +567,7 @@ CMD ["python", "-m", "backend.app.main"]
         image_tag: str, 
         config: BuildConfiguration
     ) -> List[str]:
-        """Create build artifacts"""
-        try:
+        """Create build artifacts"""        try:
             artifacts = []
             
             # Save Docker image as artifact
@@ -630,8 +606,7 @@ CMD ["python", "-m", "backend.app.main"]
         cwd: Optional[str] = None,
         timeout: int = 3600
     ) -> subprocess.CompletedProcess:
-        """Run shell command asynchronously"""
-        try:
+        """Run shell command asynchronously"""        try:
             process = await asyncio.create_subprocess_exec(
                 *cmd,
                 cwd=cwd,
@@ -657,8 +632,7 @@ CMD ["python", "-m", "backend.app.main"]
             raise RuntimeError(f"Command failed: {e}")
     
     async def cancel_build(self, build_id: str) -> bool:
-        """Cancel active build"""
-        try:
+        """Cancel active build"""        try:
             if build_id in self.active_builds:
                 task = self.active_builds[build_id]
                 task.cancel()
@@ -671,8 +645,7 @@ CMD ["python", "-m", "backend.app.main"]
             return False
 
 class AdvancedBuildOptimizer:
-    """Advanced build optimization for IA Influencer platform"""
-    
+    """Advanced build optimization for IA Influencer platform"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.optimization_strategies = {
@@ -684,8 +657,7 @@ class AdvancedBuildOptimizer:
         }
     
     async def optimize_build(self, config: BuildConfiguration, source_path: str) -> Dict[str, Any]:
-        """Execute comprehensive build optimization"""
-        optimization_results = {}
+        """Execute comprehensive build optimization"""        optimization_results = {}
         
         try:
             # AI Models optimization
@@ -714,8 +686,7 @@ class AdvancedBuildOptimizer:
             return {"error": str(e)}
     
     async def _optimize_ai_models(self, source_path: str) -> Dict[str, Any]:
-        """Optimize AI models for production"""
-        results = {
+        """Optimize AI models for production"""        results = {
             "model_compression": False,
             "quantization": False,
             "pruning": False,
@@ -754,8 +725,7 @@ class AdvancedBuildOptimizer:
             return results
     
     async def _compress_models(self, model_files: List[str]) -> bool:
-        """Compress AI models to reduce size"""
-        try:
+        """Compress AI models to reduce size"""        try:
             for model_file in model_files:
                 if model_file.endswith('.h5'):
                     # TensorFlow model compression
@@ -785,8 +755,7 @@ class AdvancedBuildOptimizer:
             return False
     
     async def _quantize_models(self, model_files: List[str]) -> bool:
-        """Quantize models for faster inference"""
-        try:
+        """Quantize models for faster inference"""        try:
             for model_file in model_files:
                 if model_file.endswith('.h5'):
                     import tensorflow as tf
@@ -809,8 +778,7 @@ class AdvancedBuildOptimizer:
             return False
     
     async def _prune_models(self, model_files: List[str]) -> bool:
-        """Prune neural network models"""
-        try:
+        """Prune neural network models"""        try:
             # Model pruning implementation for different frameworks
             return True
         except Exception as e:
@@ -818,8 +786,7 @@ class AdvancedBuildOptimizer:
             return False
     
     async def _optimize_tensorrt(self, model_files: List[str]) -> bool:
-        """Optimize models with TensorRT for GPU inference"""
-        try:
+        """Optimize models with TensorRT for GPU inference"""        try:
             # TensorRT optimization for NVIDIA GPUs
             return True
         except Exception as e:
@@ -827,8 +794,7 @@ class AdvancedBuildOptimizer:
             return False
     
     async def _convert_to_onnx(self, model_files: List[str]) -> bool:
-        """Convert models to ONNX format"""
-        try:
+        """Convert models to ONNX format"""        try:
             # ONNX conversion for cross-platform compatibility
             return True
         except Exception as e:
@@ -836,8 +802,7 @@ class AdvancedBuildOptimizer:
             return False
     
     async def _optimize_content_processing(self, source_path: str) -> Dict[str, Any]:
-        """Optimize content processing components"""
-        return {
+        """Optimize content processing components"""        return {
             "fingerprinting_optimization": True,
             "codec_optimization": True,
             "parallel_processing": True,
@@ -846,8 +811,7 @@ class AdvancedBuildOptimizer:
         }
     
     async def _optimize_microservices(self, source_path: str) -> Dict[str, Any]:
-        """Optimize microservices architecture"""
-        return {
+        """Optimize microservices architecture"""        return {
             "service_mesh_ready": True,
             "health_checks": True,
             "metrics_enabled": True,
@@ -856,8 +820,7 @@ class AdvancedBuildOptimizer:
         }
     
     async def _optimize_dependencies(self, source_path: str) -> Dict[str, Any]:
-        """Optimize project dependencies"""
-        results = {
+        """Optimize project dependencies"""        results = {
             "unused_dependencies": [],
             "security_updates": [],
             "performance_updates": [],
@@ -882,24 +845,21 @@ class AdvancedBuildOptimizer:
             return results
     
     async def _analyze_python_dependencies(self, requirements_file: str) -> Dict[str, Any]:
-        """Analyze Python dependencies for optimization"""
-        return {
+        """Analyze Python dependencies for optimization"""        return {
             "python_optimization": True,
             "vulnerable_packages": [],
             "outdated_packages": []
         }
     
     async def _analyze_nodejs_dependencies(self, package_json: str) -> Dict[str, Any]:
-        """Analyze Node.js dependencies for optimization"""
-        return {
+        """Analyze Node.js dependencies for optimization"""        return {
             "nodejs_optimization": True,
             "npm_audit_clean": True,
             "bundle_size_optimized": True
         }
     
     async def _optimize_docker_layers(self, source_path: str) -> Dict[str, Any]:
-        """Optimize Docker image layers"""
-        return {
+        """Optimize Docker image layers"""        return {
             "layer_reduction": True,
             "cache_optimization": True,
             "multi_stage_build": True,
@@ -908,15 +868,13 @@ class AdvancedBuildOptimizer:
         }
 
 class BuildMetricsCollector:
-    """Collect and analyze build metrics"""
-    
+    """Collect and analyze build metrics"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self.metrics_storage = {}
     
     async def collect_build_metrics(self, build_result: BuildResult) -> Dict[str, Any]:
-        """Collect comprehensive build metrics"""
-        metrics = {
+        """Collect comprehensive build metrics"""        metrics = {
             "build_performance": await self._collect_performance_metrics(build_result),
             "resource_usage": await self._collect_resource_metrics(build_result),
             "quality_metrics": await self._collect_quality_metrics(build_result),
@@ -930,8 +888,7 @@ class BuildMetricsCollector:
         return metrics
     
     async def _collect_performance_metrics(self, build_result: BuildResult) -> Dict[str, Any]:
-        """Collect performance metrics"""
-        return {
+        """Collect performance metrics"""        return {
             "build_duration": build_result.build_duration,
             "throughput": 1.0 / build_result.build_duration if build_result.build_duration > 0 else 0,
             "cache_hit_rate": 0.85,  # Would be calculated from actual cache usage
@@ -939,8 +896,7 @@ class BuildMetricsCollector:
         }
     
     async def _collect_resource_metrics(self, build_result: BuildResult) -> Dict[str, Any]:
-        """Collect resource usage metrics"""
-        return {
+        """Collect resource usage metrics"""        return {
             "cpu_usage_peak": 85.0,
             "memory_usage_peak": 4.2,
             "disk_usage": 15.8,
@@ -949,8 +905,7 @@ class BuildMetricsCollector:
         }
     
     async def _collect_quality_metrics(self, build_result: BuildResult) -> Dict[str, Any]:
-        """Collect code quality metrics"""
-        return {
+        """Collect code quality metrics"""        return {
             "code_coverage": 92.5,
             "test_pass_rate": 100.0,
             "linting_score": 9.8,
@@ -959,8 +914,7 @@ class BuildMetricsCollector:
         }
     
     async def _collect_security_metrics(self, build_result: BuildResult) -> Dict[str, Any]:
-        """Collect security metrics"""
-        return {
+        """Collect security metrics"""        return {
             "vulnerability_count": 0,
             "security_score": build_result.security_score or 95.0,
             "compliance_score": 98.0,
@@ -968,8 +922,7 @@ class BuildMetricsCollector:
         }
     
     async def _collect_ai_metrics(self, build_result: BuildResult) -> Dict[str, Any]:
-        """Collect AI-specific metrics"""
-        return {
+        """Collect AI-specific metrics"""        return {
             "model_accuracy": 96.8,
             "inference_latency": 125.0,
             "model_size_mb": 85.2,
@@ -977,15 +930,13 @@ class BuildMetricsCollector:
         }
     
     def get_historical_metrics(self, build_ids: List[str]) -> Dict[str, Any]:
-        """Get historical metrics for analysis"""
-        return {
+        """Get historical metrics for analysis"""        return {
             build_id: self.metrics_storage.get(build_id, {})
             for build_id in build_ids
         }
     
     def generate_trends_report(self) -> Dict[str, Any]:
-        """Generate trends report from historical data"""
-        if not self.metrics_storage:
+        """Generate trends report from historical data"""        if not self.metrics_storage:
             return {"error": "No historical data available"}
         
         # Calculate trends
@@ -1006,12 +957,10 @@ build_engine = BuildAutomationEngine()
 build_optimizer = AdvancedBuildOptimizer()
 metrics_collector = BuildMetricsCollector()
     def get_build_history(self, limit: int = 10) -> List[BuildResult]:
-        """Get build history"""
-        return self.build_history[-limit:]
+        """Get build history"""        return self.build_history[-limit:]
     
     def get_build_statistics(self) -> Dict[str, Any]:
-        """Get build statistics"""
-        if not self.build_history:
+        """Get build statistics"""        if not self.build_history:
             return {}
         
         successful_builds = [b for b in self.build_history if b.success]

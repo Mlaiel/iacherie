@@ -1,5 +1,4 @@
-"""
-Advanced Revenue Optimization Engine - ML-powered revenue maximization.
+"""Advanced Revenue Optimization Engine - ML-powered revenue maximization.
 Uses machine learning to optimize pricing, timing, and monetization strategies.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -21,7 +20,6 @@ Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying, distribution,
 modification, or theft of this code or concept without explicit written permission 
 is strictly prohibited and will result in immediate legal action.
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from decimal import Decimal, ROUND_HALF_UP
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationStrategy(Enum):
-    """Revenue optimization strategies."""
-    MAXIMIZE_REVENUE = "maximize_revenue"
+    """Revenue optimization strategies."""    MAXIMIZE_REVENUE = "maximize_revenue"
     MAXIMIZE_REACH = "maximize_reach" 
     MAXIMIZE_ENGAGEMENT = "maximize_engagement"
     BALANCED_APPROACH = "balanced_approach"
@@ -49,8 +46,7 @@ class OptimizationStrategy(Enum):
 
 
 class MarketCondition(Enum):
-    """Market condition indicators."""
-    BULL_MARKET = "bull_market"
+    """Market condition indicators."""    BULL_MARKET = "bull_market"
     BEAR_MARKET = "bear_market"
     STABLE_MARKET = "stable_market"
     VOLATILE_MARKET = "volatile_market"
@@ -59,8 +55,7 @@ class MarketCondition(Enum):
 
 
 class RevenueChannel(Enum):
-    """Revenue generation channels."""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Revenue generation channels."""    STREAMING_ROYALTIES = "streaming_royalties"
     ADVERTISING_REVENUE = "advertising_revenue"
     SUBSCRIPTION_FEES = "subscription_fees"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -72,8 +67,7 @@ class RevenueChannel(Enum):
 
 @dataclass
 class MarketAnalysis:
-    """Market analysis data structure."""
-    market_condition: MarketCondition
+    """Market analysis data structure."""    market_condition: MarketCondition
     demand_forecast: Dict[str, float]  # channel -> demand score
     price_elasticity: Dict[str, float]  # channel -> elasticity
     competition_level: Dict[str, float]  # channel -> competition
@@ -86,8 +80,7 @@ class MarketAnalysis:
 
 @dataclass
 class RevenueOptimizationResult:
-    """Revenue optimization recommendation result."""
-    strategy: OptimizationStrategy
+    """Revenue optimization recommendation result."""    strategy: OptimizationStrategy
     channel_allocations: Dict[RevenueChannel, Decimal]  # Percentage allocation
     pricing_recommendations: Dict[str, Decimal]
     timing_recommendations: Dict[str, datetime]
@@ -101,8 +94,7 @@ class RevenueOptimizationResult:
 
 @dataclass
 class PerformanceMetrics:
-    """Revenue optimization performance tracking."""
-    optimization_id: str
+    """Revenue optimization performance tracking."""    optimization_id: str
     baseline_revenue: Decimal
     optimized_revenue: Decimal
     improvement_percentage: Decimal
@@ -115,15 +107,13 @@ class PerformanceMetrics:
     
     @property
     def roi(self) -> Decimal:
-        """Calculate return on investment."""
-        if self.baseline_revenue > 0:
+        """Calculate return on investment."""        if self.baseline_revenue > 0:
             return ((self.optimized_revenue - self.baseline_revenue) / self.baseline_revenue) * 100
         return Decimal('0')
 
 
 class MLRevenuePredictor:
-    """Machine learning revenue prediction engine."""
-    
+    """Machine learning revenue prediction engine."""    
     def __init__(self):
         self.models: Dict[str, Any] = {}
         self.feature_scalers: Dict[str, Any] = {}
@@ -131,8 +121,7 @@ class MLRevenuePredictor:
         self.model_performance: Dict[str, float] = {}
     
     async def train_revenue_model(self, historical_data: List[Dict[str, Any]]) -> bool:
-        """Train ML models for revenue prediction."""
-        try:
+        """Train ML models for revenue prediction."""        try:
             self.training_data = historical_data
             
             # Prepare features and targets
@@ -164,8 +153,7 @@ class MLRevenuePredictor:
             return False
     
     def _prepare_training_data(self, data: List[Dict[str, Any]]) -> Tuple[np.ndarray, Dict[str, np.ndarray]]:
-        """Prepare training data for ML models."""
-        try:
+        """Prepare training data for ML models."""        try:
             # Extract features
             features = []
             targets = {
@@ -205,8 +193,7 @@ class MLRevenuePredictor:
             return np.array([]), {}
     
     async def _train_daily_revenue_model(self, features: np.ndarray, targets: Dict[str, np.ndarray]) -> Tuple[Any, float]:
-        """Train daily revenue prediction model."""
-        try:
+        """Train daily revenue prediction model."""        try:
             # Simulate advanced ML model training
             # In production, this would use scikit-learn, TensorFlow, or PyTorch
             
@@ -229,8 +216,7 @@ class MLRevenuePredictor:
             return None, 0.0
     
     async def _train_channel_model(self, features: np.ndarray, targets: Dict[str, np.ndarray]) -> Tuple[Any, float]:
-        """Train channel performance model."""
-        try:
+        """Train channel performance model."""        try:
             model = {
                 'type': 'channel_classifier',
                 'weights': np.random.randn(features.shape[1], len(RevenueChannel)),
@@ -247,8 +233,7 @@ class MLRevenuePredictor:
             return None, 0.0
     
     async def _train_pricing_model(self, features: np.ndarray, targets: Dict[str, np.ndarray]) -> Tuple[Any, float]:
-        """Train pricing optimization model."""
-        try:
+        """Train pricing optimization model."""        try:
             model = {
                 'type': 'pricing_optimizer',
                 'price_elasticity_weights': np.random.randn(features.shape[1]),
@@ -265,8 +250,7 @@ class MLRevenuePredictor:
             return None, 0.0
     
     async def _train_demand_model(self, features: np.ndarray, targets: Dict[str, np.ndarray]) -> Tuple[Any, float]:
-        """Train demand forecasting model."""
-        try:
+        """Train demand forecasting model."""        try:
             model = {
                 'type': 'demand_forecaster',
                 'seasonal_weights': np.random.randn(12),  # Monthly seasonality
@@ -283,8 +267,7 @@ class MLRevenuePredictor:
             return None, 0.0
     
     async def predict_revenue(self, input_features: Dict[str, Any], prediction_horizon: int = 30) -> Dict[str, Any]:
-        """Predict revenue for given time horizon."""
-        try:
+        """Predict revenue for given time horizon."""        try:
             if 'daily_revenue' not in self.models:
                 logger.warning("Daily revenue model not available")
                 return {}
@@ -320,8 +303,7 @@ class MLRevenuePredictor:
             return {}
     
     def _prepare_feature_vector(self, input_features: Dict[str, Any]) -> np.ndarray:
-        """Prepare feature vector from input."""
-        now = datetime.utcnow()
+        """Prepare feature vector from input."""        now = datetime.utcnow()
         
         feature_vector = np.array([
             now.weekday(),  # day_of_week
@@ -336,8 +318,7 @@ class MLRevenuePredictor:
         return feature_vector
     
     async def _analyze_feature_impact(self, features: np.ndarray, model: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze impact of different features on prediction."""
-        try:
+        """Analyze impact of different features on prediction."""        try:
             coefficients = model['coefficients']
             feature_names = ['day_of_week', 'hour', 'month', 'genre', 'audience_size', 'previous_revenue', 'market_condition']
             
@@ -361,15 +342,13 @@ class MLRevenuePredictor:
 
 
 class MarketAnalyzer:
-    """Advanced market analysis engine."""
-    
+    """Advanced market analysis engine."""    
     def __init__(self):
         self.market_data_cache: Dict[str, MarketAnalysis] = {}
         self.trend_indicators: Dict[str, float] = {}
     
     async def analyze_market_conditions(self, content_type: str, genre: str, target_audience: Dict[str, Any]) -> MarketAnalysis:
-        """Analyze current market conditions for content optimization."""
-        try:
+        """Analyze current market conditions for content optimization."""        try:
             cache_key = f"{content_type}_{genre}_{hash(str(target_audience))}"
             
             # Check cache (1 hour expiry)
@@ -423,8 +402,7 @@ class MarketAnalyzer:
             raise
     
     async def _determine_market_condition(self, content_type: str, genre: str) -> MarketCondition:
-        """Determine current market condition."""
-        # Simulate market analysis
+        """Determine current market condition."""        # Simulate market analysis
         now = datetime.utcnow()
         
         # Seasonal considerations
@@ -446,8 +424,7 @@ class MarketAnalyzer:
             return MarketCondition.BEAR_MARKET
     
     async def _forecast_channel_demand(self, content_type: str, genre: str, target_audience: Dict[str, Any]) -> Dict[str, float]:
-        """Forecast demand for different revenue channels."""
-        base_demand = {
+        """Forecast demand for different revenue channels."""        base_demand = {
             RevenueChannel.STREAMING_ROYALTIES.value: 0.7,
             RevenueChannel.ADVERTISING_REVENUE.value: 0.6,
             RevenueChannel.SUBSCRIPTION_FEES.value: 0.5,
@@ -474,8 +451,7 @@ class MarketAnalyzer:
         return base_demand
     
     async def _calculate_price_elasticity(self, content_type: str, genre: str) -> Dict[str, float]:
-        """Calculate price elasticity for different channels."""
-        # Base elasticity values (negative values indicate normal goods)
+        """Calculate price elasticity for different channels."""        # Base elasticity values (negative values indicate normal goods)
         elasticity = {
             RevenueChannel.STREAMING_ROYALTIES.value: -0.5,  # Low elasticity
             RevenueChannel.SUBSCRIPTION_FEES.value: -1.2,   # High elasticity
@@ -487,8 +463,7 @@ class MarketAnalyzer:
         return elasticity
     
     async def _assess_competition(self, content_type: str, genre: str) -> Dict[str, float]:
-        """Assess competition levels by channel."""
-        base_competition = {
+        """Assess competition levels by channel."""        base_competition = {
             RevenueChannel.STREAMING_ROYALTIES.value: 0.8,  # High competition
             RevenueChannel.ADVERTISING_REVENUE.value: 0.7,  # High competition
             RevenueChannel.SUBSCRIPTION_FEES.value: 0.6,    # Medium competition
@@ -500,8 +475,7 @@ class MarketAnalyzer:
         return base_competition
     
     async def _analyze_seasonal_patterns(self, content_type: str, genre: str) -> Dict[str, float]:
-        """Analyze seasonal patterns for content type/genre."""
-        # Base seasonal factors (1.0 = average, >1.0 = above average, <1.0 = below average)
+        """Analyze seasonal patterns for content type/genre."""        # Base seasonal factors (1.0 = average, >1.0 = above average, <1.0 = below average)
         seasonal_factors = {
             '1': 0.8,   # January (post-holiday low)
             '2': 0.9,   # February
@@ -520,8 +494,7 @@ class MarketAnalyzer:
         return seasonal_factors
     
     async def _identify_trending_genres(self, content_type: str) -> List[str]:
-        """Identify trending genres for content type."""
-        trending_genres = {
+        """Identify trending genres for content type."""        trending_genres = {
             'music': ['pop', 'hip-hop', 'electronic', 'indie', 'lo-fi'],
             'video': ['entertainment', 'education', 'gaming', 'lifestyle', 'tech'],
             'podcast': ['true-crime', 'business', 'self-help', 'comedy', 'news']
@@ -530,8 +503,7 @@ class MarketAnalyzer:
         return trending_genres.get(content_type, [])
     
     async def _analyze_audience_behavior(self, target_audience: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze target audience behavior patterns."""
-        behavior = {
+        """Analyze target audience behavior patterns."""        behavior = {
             'engagement_peak_hours': [18, 19, 20, 21],  # Evening hours
             'platform_preferences': ['youtube', 'instagram', 'tiktok'],
             'content_consumption_pattern': 'binge',  # vs 'regular'
@@ -553,8 +525,7 @@ class MarketAnalyzer:
         return behavior
     
     async def _calculate_market_volatility(self, content_type: str, genre: str) -> float:
-        """Calculate market volatility score."""
-        # Base volatility by content type
+        """Calculate market volatility score."""        # Base volatility by content type
         volatility_base = {
             'music': 0.6,
             'video': 0.7,
@@ -571,8 +542,7 @@ class MarketAnalyzer:
 
 
 class RevenueOptimizationEngine:
-    """Main revenue optimization engine combining ML and market analysis."""
-    
+    """Main revenue optimization engine combining ML and market analysis."""    
     def __init__(self):
         self.ml_predictor = MLRevenuePredictor()
         self.market_analyzer = MarketAnalyzer()
@@ -580,8 +550,7 @@ class RevenueOptimizationEngine:
         self.performance_tracker: Dict[str, PerformanceMetrics] = {}
     
     async def initialize(self, historical_data: List[Dict[str, Any]]) -> bool:
-        """Initialize the optimization engine with historical data."""
-        try:
+        """Initialize the optimization engine with historical data."""        try:
             # Train ML models
             success = await self.ml_predictor.train_revenue_model(historical_data)
             
@@ -604,8 +573,7 @@ class RevenueOptimizationEngine:
         optimization_strategy: OptimizationStrategy = OptimizationStrategy.BALANCED_APPROACH,
         time_horizon_days: int = 30
     ) -> RevenueOptimizationResult:
-        """Generate comprehensive revenue optimization recommendations."""
-        try:
+        """Generate comprehensive revenue optimization recommendations."""        try:
             # Analyze market conditions
             market_analysis = await self.market_analyzer.analyze_market_conditions(
                 content_data.get('content_type', 'music'),
@@ -685,8 +653,7 @@ class RevenueOptimizationEngine:
             raise
     
     def _market_condition_to_score(self, condition: MarketCondition) -> float:
-        """Convert market condition to numerical score."""
-        scores = {
+        """Convert market condition to numerical score."""        scores = {
             MarketCondition.BULL_MARKET: 0.9,
             MarketCondition.STABLE_MARKET: 0.7,
             MarketCondition.BEAR_MARKET: 0.3,
@@ -702,8 +669,7 @@ class RevenueOptimizationEngine:
         revenue_predictions: Dict[str, Any],
         strategy: OptimizationStrategy
     ) -> Dict[RevenueChannel, Decimal]:
-        """Optimize allocation across revenue channels."""
-        try:
+        """Optimize allocation across revenue channels."""        try:
             # Base allocation
             allocations = {}
             
@@ -765,8 +731,7 @@ class RevenueOptimizationEngine:
         content_data: Dict[str, Any],
         strategy: OptimizationStrategy
     ) -> Dict[str, Decimal]:
-        """Optimize pricing across different revenue streams."""
-        try:
+        """Optimize pricing across different revenue streams."""        try:
             # Base pricing recommendations
             pricing = {
                 'subscription_monthly': Decimal('9.99'),
@@ -812,8 +777,7 @@ class RevenueOptimizationEngine:
         content_data: Dict[str, Any],
         time_horizon_days: int
     ) -> Dict[str, datetime]:
-        """Optimize timing for different revenue activities."""
-        try:
+        """Optimize timing for different revenue activities."""        try:
             now = datetime.utcnow()
             timing = {}
             
@@ -847,8 +811,7 @@ class RevenueOptimizationEngine:
             return {}
     
     async def _find_optimal_release_day(self, market_analysis: MarketAnalysis) -> int:
-        """Find optimal day for content release."""
-        # Analyze audience behavior peak hours and days
+        """Find optimal day for content release."""        # Analyze audience behavior peak hours and days
         audience_behavior = market_analysis.audience_behavior
         peak_hours = audience_behavior.get('engagement_peak_hours', [18, 19, 20])
         
@@ -873,8 +836,7 @@ class RevenueOptimizationEngine:
         content_data: Dict[str, Any],
         strategy: OptimizationStrategy
     ) -> List[Dict[str, Any]]:
-        """Generate content optimization suggestions."""
-        suggestions = []
+        """Generate content optimization suggestions."""        suggestions = []
         
         # Genre trending suggestions
         trending_genres = market_analysis.trending_genres
@@ -921,8 +883,7 @@ class RevenueOptimizationEngine:
         channel_allocations: Dict[RevenueChannel, Decimal],
         pricing_recommendations: Dict[str, Decimal]
     ) -> Decimal:
-        """Calculate expected revenue increase percentage."""
-        try:
+        """Calculate expected revenue increase percentage."""        try:
             current_total = Decimal(str(current_revenue_data.get('total_revenue', 0)))
             
             if current_total == 0:
@@ -955,8 +916,7 @@ class RevenueOptimizationEngine:
         market_analysis: MarketAnalysis,
         revenue_predictions: Dict[str, Any]
     ) -> float:
-        """Calculate confidence score for optimization recommendations."""
-        try:
+        """Calculate confidence score for optimization recommendations."""        try:
             confidence_factors = []
             
             # Market stability factor
@@ -998,8 +958,7 @@ class RevenueOptimizationEngine:
         market_analysis: MarketAnalysis,
         strategy: OptimizationStrategy
     ) -> Dict[str, float]:
-        """Assess risks associated with optimization strategy."""
-        try:
+        """Assess risks associated with optimization strategy."""        try:
             risks = {
                 'market_volatility_risk': market_analysis.market_volatility,
                 'competition_risk': sum(market_analysis.competition_level.values()) / len(market_analysis.competition_level),
@@ -1031,8 +990,7 @@ class RevenueOptimizationEngine:
         pricing_recommendations: Dict[str, Decimal],
         timing_recommendations: Dict[str, datetime]
     ) -> List[str]:
-        """Prioritize implementation steps based on impact and effort."""
-        try:
+        """Prioritize implementation steps based on impact and effort."""        try:
             priorities = []
             
             # High-impact, low-effort actions first

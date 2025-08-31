@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""
-Ainflue Production Security Validator
+"""Ainflue Production Security Validator
 Author: Fahed Mlaiel (mlaiel@live.de)
 
 Validates production configuration and secrets for security compliance.
 """
-
 import os
 import re
 import sys
@@ -19,8 +17,7 @@ from pathlib import Path
 
 @dataclass
 class ValidationResult:
-    """Validation result for a security check."""
-    check_name: str
+    """Validation result for a security check."""    check_name: str
     passed: bool
     message: str
     severity: str  # 'critical', 'high', 'medium', 'low'
@@ -28,8 +25,7 @@ class ValidationResult:
 
 
 class ProductionSecurityValidator:
-    """Validates production configuration security."""
-    
+    """Validates production configuration security."""    
     def __init__(self, env_file_path: str = ".env.production"):
         self.env_file_path = env_file_path
         self.validation_results: List[ValidationResult] = []
@@ -40,8 +36,7 @@ class ProductionSecurityValidator:
         ]
         
     def validate_all(self) -> List[ValidationResult]:
-        """Run all security validations."""
-        self.validation_results = []
+        """Run all security validations."""        self.validation_results = []
         
         # Load environment variables
         env_vars = self._load_env_file()
@@ -68,8 +63,7 @@ class ProductionSecurityValidator:
         return self.validation_results
     
     def _load_env_file(self) -> Dict[str, str]:
-        """Load environment variables from file."""
-        env_vars = {}
+        """Load environment variables from file."""        env_vars = {}
         
         if not os.path.exists(self.env_file_path):
             return env_vars
@@ -87,8 +81,7 @@ class ProductionSecurityValidator:
         return env_vars
     
     def _validate_secret_strength(self, env_vars: Dict[str, str]) -> None:
-        """Validate the strength of critical secrets."""
-        for secret_name in self.critical_secrets:
+        """Validate the strength of critical secrets."""        for secret_name in self.critical_secrets:
             value = env_vars.get(secret_name, "")
             
             # Check if secret exists
@@ -137,8 +130,7 @@ class ProductionSecurityValidator:
                 ))
     
     def _validate_placeholder_values(self, env_vars: Dict[str, str]) -> None:
-        """Check for remaining placeholder values in production."""
-        placeholder_patterns = [
+        """Check for remaining placeholder values in production."""        placeholder_patterns = [
             r'placeholder', r'change_me', r'your_.*_here', r'example',
             r'test', r'demo', r'localhost', r'127\.0\.0\.1'
         ]
@@ -158,8 +150,7 @@ class ProductionSecurityValidator:
                     break
     
     def _validate_production_settings(self, env_vars: Dict[str, str]) -> None:
-        """Validate production-specific settings."""
-        # Debug mode check
+        """Validate production-specific settings."""        # Debug mode check
         debug = env_vars.get('DEBUG', 'false').lower()
         if debug not in ['false', '0', 'no']:
             self.validation_results.append(ValidationResult(
@@ -193,8 +184,7 @@ class ProductionSecurityValidator:
             ))
     
     def _validate_security_headers(self, env_vars: Dict[str, str]) -> None:
-        """Validate security headers configuration."""
-        # HSTS configuration
+        """Validate security headers configuration."""        # HSTS configuration
         hsts_max_age = env_vars.get('HSTS_MAX_AGE', '0')
         try:
             hsts_age = int(hsts_max_age)
@@ -227,8 +217,7 @@ class ProductionSecurityValidator:
             ))
     
     def _validate_database_security(self, env_vars: Dict[str, str]) -> None:
-        """Validate database security configuration."""
-        # PostgreSQL SSL mode
+        """Validate database security configuration."""        # PostgreSQL SSL mode
         postgres_host = env_vars.get('POSTGRES_HOST', '')
         if 'localhost' in postgres_host or '127.0.0.1' in postgres_host:
             self.validation_results.append(ValidationResult(
@@ -255,8 +244,7 @@ class ProductionSecurityValidator:
             pass
     
     def _validate_api_security(self, env_vars: Dict[str, str]) -> None:
-        """Validate API security settings."""
-        # Rate limiting
+        """Validate API security settings."""        # Rate limiting
         rate_limit = env_vars.get('API_RATE_LIMIT', '0')
         try:
             rate_int = int(rate_limit)
@@ -283,8 +271,7 @@ class ProductionSecurityValidator:
             ))
     
     def _validate_monitoring_security(self, env_vars: Dict[str, str]) -> None:
-        """Validate monitoring and logging security."""
-        # Sentry DSN
+        """Validate monitoring and logging security."""        # Sentry DSN
         sentry_dsn = env_vars.get('SENTRY_DSN', '')
         if not sentry_dsn or 'placeholder' in sentry_dsn:
             self.validation_results.append(ValidationResult(
@@ -307,8 +294,7 @@ class ProductionSecurityValidator:
             ))
     
     def _calculate_entropy(self, text: str) -> float:
-        """Calculate Shannon entropy of text."""
-        if not text:
+        """Calculate Shannon entropy of text."""        if not text:
             return 0.0
         
         # Count character frequencies
@@ -326,12 +312,10 @@ class ProductionSecurityValidator:
         return entropy
     
     def generate_secure_key(self, length: int = 32) -> str:
-        """Generate a cryptographically secure random key."""
-        return secrets.token_urlsafe(length)
+        """Generate a cryptographically secure random key."""        return secrets.token_urlsafe(length)
     
     def print_report(self) -> None:
-        """Print validation report."""
-        print("=" * 80)
+        """Print validation report."""        print("=" * 80)
         print("AINFLUE PRODUCTION SECURITY VALIDATION REPORT")
         print("=" * 80)
         
@@ -384,8 +368,7 @@ class ProductionSecurityValidator:
 
 
 def main():
-    """Main function."""
-    import argparse
+    """Main function."""    import argparse
     
     parser = argparse.ArgumentParser(description="Validate Ainflue production security configuration")
     parser.add_argument("--env-file", default=".env.production", help="Environment file to validate")

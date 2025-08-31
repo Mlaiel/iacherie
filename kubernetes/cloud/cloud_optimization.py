@@ -1,5 +1,4 @@
-"""
-Cloud Cost Optimization Manager - Enterprise Cost Control and Performance Optimization
+"""Cloud Cost Optimization Manager - Enterprise Cost Control and Performance Optimization
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
@@ -15,7 +14,6 @@ This module provides enterprise-grade cloud cost optimization and performance
 management for the IA Influencer Agent platform, enabling automatic cost
 reduction and resource optimization across multi-cloud environments.
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Optional, Tuple, Any
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationStrategy(Enum):
-    """Cloud optimization strategies"""
-    COST_FOCUSED = "cost_focused"
+    """Cloud optimization strategies"""    COST_FOCUSED = "cost_focused"
     PERFORMANCE_FOCUSED = "performance_focused"
     BALANCED = "balanced"
     CREATOR_OPTIMIZED = "creator_optimized"
@@ -42,8 +39,7 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class CostMetrics:
-    """Cost metrics and recommendations"""
-    current_cost: Decimal
+    """Cost metrics and recommendations"""    current_cost: Decimal
     projected_cost: Decimal
     potential_savings: Decimal
     optimization_opportunities: List[str]
@@ -53,8 +49,7 @@ class CostMetrics:
 
 @dataclass
 class ResourceUtilization:
-    """Resource utilization metrics"""
-    cpu_utilization: float
+    """Resource utilization metrics"""    cpu_utilization: float
     memory_utilization: float
     storage_utilization: float
     network_utilization: float
@@ -63,15 +58,12 @@ class ResourceUtilization:
 
 
 class CloudCostOptimizer:
-    """
-    Enterprise cloud cost optimization and performance management system
+    """    Enterprise cloud cost optimization and performance management system
     for IA Influencer Agent platform supporting creator content protection,
     AI processing, and monetization workflows.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize cloud cost optimizer"""
-        self.config = config
+        """Initialize cloud cost optimizer"""        self.config = config
         self.aws_client = None
         self.azure_client = None
         self.gcp_client = None
@@ -79,8 +71,7 @@ class CloudCostOptimizer:
         self.creator_patterns = self._load_creator_usage_patterns()
         
     async def initialize_clients(self):
-        """Initialize cloud provider clients"""
-        try:
+        """Initialize cloud provider clients"""        try:
             # AWS Cost Explorer and CloudWatch
             if self.config.get('aws', {}).get('enabled'):
                 self.aws_client = {
@@ -120,8 +111,7 @@ class CloudCostOptimizer:
             raise
     
     def _load_optimization_rules(self) -> Dict[str, Any]:
-        """Load optimization rules for creator platform"""
-        return {
+        """Load optimization rules for creator platform"""        return {
             'storage_optimization': {
                 'audio_fingerprint_lifecycle': {
                     'hot_tier_days': 30,
@@ -159,8 +149,7 @@ class CloudCostOptimizer:
         }
     
     def _load_creator_usage_patterns(self) -> Dict[str, Any]:
-        """Load creator platform usage patterns"""
-        return {
+        """Load creator platform usage patterns"""        return {
             'content_upload_patterns': {
                 'peak_hours': ['18:00-23:00', '12:00-14:00'],
                 'weekend_multiplier': 1.5,
@@ -183,8 +172,7 @@ class CloudCostOptimizer:
         }
     
     async def analyze_current_costs(self, timeframe_days: int = 30) -> CostMetrics:
-        """Analyze current cloud costs across all providers"""
-        try:
+        """Analyze current cloud costs across all providers"""        try:
             total_cost = Decimal('0')
             cost_breakdown = {}
             optimization_opportunities = []
@@ -228,8 +216,7 @@ class CloudCostOptimizer:
             raise
     
     async def _analyze_aws_costs(self, timeframe_days: int) -> Dict[str, Any]:
-        """Analyze AWS costs and identify optimization opportunities"""
-        try:
+        """Analyze AWS costs and identify optimization opportunities"""        try:
             end_date = datetime.now().date()
             start_date = end_date - timedelta(days=timeframe_days)
             
@@ -276,8 +263,7 @@ class CloudCostOptimizer:
             return {'total': Decimal('0'), 'services': {}, 'opportunities': []}
     
     async def _identify_aws_opportunities(self, service_costs: Dict[str, Decimal]) -> List[str]:
-        """Identify AWS-specific optimization opportunities"""
-        opportunities = []
+        """Identify AWS-specific optimization opportunities"""        opportunities = []
         
         # EC2 optimization
         if 'Amazon Elastic Compute Cloud - Compute' in service_costs:
@@ -314,8 +300,7 @@ class CloudCostOptimizer:
         return opportunities
     
     async def _analyze_azure_costs(self, timeframe_days: int) -> Dict[str, Any]:
-        """Analyze Azure costs and identify optimization opportunities"""
-        try:
+        """Analyze Azure costs and identify optimization opportunities"""        try:
             # Azure cost analysis implementation
             total_cost = Decimal('0')
             service_costs = {}
@@ -340,8 +325,7 @@ class CloudCostOptimizer:
             return {'total': Decimal('0'), 'services': {}, 'opportunities': []}
     
     async def _analyze_gcp_costs(self, timeframe_days: int) -> Dict[str, Any]:
-        """Analyze GCP costs and identify optimization opportunities"""
-        try:
+        """Analyze GCP costs and identify optimization opportunities"""        try:
             # GCP cost analysis implementation
             total_cost = Decimal('0')
             service_costs = {}
@@ -366,8 +350,7 @@ class CloudCostOptimizer:
             return {'total': Decimal('0'), 'services': {}, 'opportunities': []}
     
     def _calculate_projected_costs(self, cost_breakdown: Dict[str, Any]) -> Decimal:
-        """Calculate projected costs based on growth patterns"""
-        try:
+        """Calculate projected costs based on growth patterns"""        try:
             total_current = sum(
                 provider_data.get('total', Decimal('0')) 
                 for provider_data in cost_breakdown.values()
@@ -384,8 +367,7 @@ class CloudCostOptimizer:
             return Decimal('0')
     
     def _calculate_growth_factor(self) -> float:
-        """Calculate growth factor based on creator platform patterns"""
-        base_growth = 1.15  # 15% monthly growth expected
+        """Calculate growth factor based on creator platform patterns"""        base_growth = 1.15  # 15% monthly growth expected
         
         # Adjust for seasonal patterns
         current_month = datetime.now().month
@@ -401,8 +383,7 @@ class CloudCostOptimizer:
         return base_growth * seasonal_factor
     
     def _calculate_potential_savings(self, opportunities: List[str]) -> Decimal:
-        """Calculate potential savings from optimization opportunities"""
-        # Estimate savings based on opportunity types
+        """Calculate potential savings from optimization opportunities"""        # Estimate savings based on opportunity types
         savings_estimates = {
             'Reserved Instances': 0.4,  # 40% savings
             'Spot Instances': 0.8,      # 80% savings
@@ -424,8 +405,7 @@ class CloudCostOptimizer:
         return total_potential
     
     def _assess_optimization_risks(self, opportunities: List[str]) -> str:
-        """Assess risks associated with optimization opportunities"""
-        risk_factors = []
+        """Assess risks associated with optimization opportunities"""        risk_factors = []
         
         if any('Spot' in opp for opp in opportunities):
             risk_factors.append("Spot instance interruptions may affect AI processing")
@@ -444,8 +424,7 @@ class CloudCostOptimizer:
             return f"High risk - Careful implementation needed: {'; '.join(risk_factors)}"
     
     def _calculate_confidence_score(self, cost_breakdown: Dict[str, Any]) -> float:
-        """Calculate confidence score for cost analysis"""
-        factors = []
+        """Calculate confidence score for cost analysis"""        factors = []
         
         # Data completeness
         providers_with_data = sum(1 for data in cost_breakdown.values() if data.get('total', 0) > 0)
@@ -460,8 +439,7 @@ class CloudCostOptimizer:
         return np.mean(factors)
     
     async def get_resource_utilization(self) -> ResourceUtilization:
-        """Get current resource utilization across all cloud providers"""
-        try:
+        """Get current resource utilization across all cloud providers"""        try:
             cpu_util = await self._get_cpu_utilization()
             memory_util = await self._get_memory_utilization()
             storage_util = await self._get_storage_utilization()
@@ -484,8 +462,7 @@ class CloudCostOptimizer:
             raise
     
     async def _get_cpu_utilization(self) -> float:
-        """Get average CPU utilization across all instances"""
-        utilizations = []
+        """Get average CPU utilization across all instances"""        utilizations = []
         
         # AWS EC2 CPU utilization
         if self.aws_client:
@@ -512,23 +489,19 @@ class CloudCostOptimizer:
         return np.mean(utilizations) if utilizations else 0.0
     
     async def _get_memory_utilization(self) -> float:
-        """Get average memory utilization"""
-        # Implementation for memory utilization across cloud providers
+        """Get average memory utilization"""        # Implementation for memory utilization across cloud providers
         return 0.65  # Placeholder
     
     async def _get_storage_utilization(self) -> float:
-        """Get storage utilization"""
-        # Implementation for storage utilization
+        """Get storage utilization"""        # Implementation for storage utilization
         return 0.72  # Placeholder
     
     async def _get_network_utilization(self) -> float:
-        """Get network utilization"""
-        # Implementation for network utilization
+        """Get network utilization"""        # Implementation for network utilization
         return 0.45  # Placeholder
     
     async def _identify_idle_resources(self) -> List[str]:
-        """Identify idle or underutilized resources"""
-        idle_resources = []
+        """Identify idle or underutilized resources"""        idle_resources = []
         
         # Check for idle EC2 instances
         if self.aws_client:
@@ -548,8 +521,7 @@ class CloudCostOptimizer:
         return idle_resources
     
     async def _identify_overprovisioned_resources(self) -> List[str]:
-        """Identify overprovisioned resources"""
-        overprovisioned = []
+        """Identify overprovisioned resources"""        overprovisioned = []
         
         # Check for oversized instances
         # Check for excessive storage allocations
@@ -562,8 +534,7 @@ class CloudCostOptimizer:
         strategy: OptimizationStrategy,
         auto_apply: bool = False
     ) -> Dict[str, Any]:
-        """Implement selected optimization strategy"""
-        try:
+        """Implement selected optimization strategy"""        try:
             optimization_plan = await self._create_optimization_plan(strategy)
             
             if auto_apply:
@@ -583,8 +554,7 @@ class CloudCostOptimizer:
             raise
     
     async def _create_optimization_plan(self, strategy: OptimizationStrategy) -> Dict[str, Any]:
-        """Create detailed optimization plan based on strategy"""
-        plan = {
+        """Create detailed optimization plan based on strategy"""        plan = {
             'strategy': strategy.value,
             'steps': [],
             'estimated_savings': Decimal('0'),
@@ -619,8 +589,7 @@ class CloudCostOptimizer:
         return plan
     
     async def _apply_optimizations(self, plan: Dict[str, Any]) -> Dict[str, Any]:
-        """Apply optimization plan to cloud resources"""
-        results = {
+        """Apply optimization plan to cloud resources"""        results = {
             'applied_optimizations': [],
             'failed_optimizations': [],
             'actual_savings': Decimal('0'),
@@ -640,14 +609,12 @@ class CloudCostOptimizer:
         return results
     
     async def _apply_single_optimization(self, optimization: str):
-        """Apply a single optimization"""
-        # Implementation for specific optimization steps
+        """Apply a single optimization"""        # Implementation for specific optimization steps
         logger.info(f"Applying optimization: {optimization}")
         # Add actual implementation logic here
     
     async def generate_cost_report(self, report_type: str = "comprehensive") -> Dict[str, Any]:
-        """Generate comprehensive cost optimization report"""
-        try:
+        """Generate comprehensive cost optimization report"""        try:
             cost_metrics = await self.analyze_current_costs()
             utilization = await self.get_resource_utilization()
             
@@ -683,8 +650,7 @@ class CloudCostOptimizer:
             raise
     
     async def _get_creator_specific_insights(self) -> Dict[str, Any]:
-        """Get insights specific to creator platform"""
-        return {
+        """Get insights specific to creator platform"""        return {
             'content_storage_growth': "15% monthly increase in audio fingerprint data",
             'ai_processing_patterns': "Peak usage during evening hours (18-23 UTC)",
             'creator_behavior': "Batch uploads common on weekends",
@@ -697,8 +663,7 @@ class CloudCostOptimizer:
         cost_metrics: CostMetrics, 
         utilization: ResourceUtilization
     ) -> List[Dict[str, Any]]:
-        """Generate specific recommendations"""
-        recommendations = []
+        """Generate specific recommendations"""        recommendations = []
         
         # Cost-based recommendations
         if cost_metrics.potential_savings > Decimal('500'):

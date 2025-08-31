@@ -1,5 +1,4 @@
-"""
-Centralized Index for Internationalization Core Module - Ainflue Platform
+"""Centralized Index for Internationalization Core Module - Ainflue Platform
 ================================================================================
 Module: core/i18n/index.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ BUSINESS LOGIC:
 Component registry → Module discovery → Service coordination → 
 Health monitoring → Performance tracking → Centralized management
 """
-
 import logging
 import asyncio
 from typing import Dict, List, Any, Optional, Type, Union
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComponentStatus(Enum):
-    """Component operational status"""
-    INITIALIZED = "initialized"
+    """Component operational status"""    INITIALIZED = "initialized"
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -39,8 +36,7 @@ class ComponentStatus(Enum):
 
 
 class ComponentType(Enum):
-    """Component types in the i18n system"""
-    MANAGER = "manager"
+    """Component types in the i18n system"""    MANAGER = "manager"
     ENGINE = "engine"
     PROCESSOR = "processor"
     LOCALIZATION = "localization"
@@ -51,8 +47,7 @@ class ComponentType(Enum):
 
 @dataclass
 class ComponentInfo:
-    """Information about registered components"""
-    name: str
+    """Information about registered components"""    name: str
     component_type: ComponentType
     class_ref: Type
     instance: Optional[Any] = None
@@ -67,8 +62,7 @@ class ComponentInfo:
 
 
 class InternationalizationIndex:
-    """Central registry and coordinator for all i18n components"""
-    
+    """Central registry and coordinator for all i18n components"""    
     def __init__(self):
         self.components: Dict[str, ComponentInfo] = {}
         self.component_instances: Dict[str, Any] = {}
@@ -87,8 +81,7 @@ class InternationalizationIndex:
         capabilities: List[str] = None,
         version: str = "1.0.0"
     ) -> bool:
-        """Register a component in the index"""
-        try:
+        """Register a component in the index"""        try:
             if name in self.components:
                 logger.warning(f"Component {name} already registered, updating...")
             
@@ -112,20 +105,17 @@ class InternationalizationIndex:
             return False
     
     def get_component(self, name: str) -> Optional[Any]:
-        """Get component instance by name"""
-        return self.component_instances.get(name)
+        """Get component instance by name"""        return self.component_instances.get(name)
     
     def get_component_info(self, name: str) -> Optional[ComponentInfo]:
-        """Get component information"""
-        return self.components.get(name)
+        """Get component information"""        return self.components.get(name)
     
     def list_components(
         self,
         component_type: Optional[ComponentType] = None,
         status: Optional[ComponentStatus] = None
     ) -> List[ComponentInfo]:
-        """List components by type and/or status"""
-        components = list(self.components.values())
+        """List components by type and/or status"""        components = list(self.components.values())
         
         if component_type:
             components = [c for c in components if c.component_type == component_type]
@@ -136,8 +126,7 @@ class InternationalizationIndex:
         return components
     
     def resolve_dependencies(self) -> List[str]:
-        """Resolve component dependencies and return initialization order"""
-        try:
+        """Resolve component dependencies and return initialization order"""        try:
             # Topological sort for dependency resolution
             visited = set()
             temp_visited = set()
@@ -173,8 +162,7 @@ class InternationalizationIndex:
             return list(self.components.keys())
     
     async def initialize_component(self, name: str, **kwargs) -> bool:
-        """Initialize a specific component"""
-        try:
+        """Initialize a specific component"""        try:
             if name not in self.components:
                 logger.error(f"Component {name} not registered")
                 return False
@@ -232,8 +220,7 @@ class InternationalizationIndex:
             return False
     
     async def initialize_all_components(self, **kwargs) -> bool:
-        """Initialize all components in dependency order"""
-        try:
+        """Initialize all components in dependency order"""        try:
             order = self.resolve_dependencies()
             
             success_count = 0
@@ -251,8 +238,7 @@ class InternationalizationIndex:
             return False
     
     async def health_check(self, component_name: Optional[str] = None) -> Dict[str, bool]:
-        """Perform health check on components"""
-        results = {}
+        """Perform health check on components"""        results = {}
         
         components_to_check = [component_name] if component_name else list(self.component_instances.keys())
         
@@ -286,8 +272,7 @@ class InternationalizationIndex:
         return results
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        health_results = await self.health_check()
+        """Get comprehensive system status"""        health_results = await self.health_check()
         
         status = {
             "total_components": len(self.components),
@@ -312,8 +297,7 @@ class InternationalizationIndex:
         return status
     
     def shutdown_component(self, name: str) -> bool:
-        """Shutdown a specific component"""
-        try:
+        """Shutdown a specific component"""        try:
             if name in self.component_instances:
                 instance = self.component_instances[name]
                 
@@ -337,8 +321,7 @@ class InternationalizationIndex:
             return False
     
     def shutdown_all_components(self) -> bool:
-        """Shutdown all components in reverse dependency order"""
-        try:
+        """Shutdown all components in reverse dependency order"""        try:
             # Shutdown in reverse order
             shutdown_order = list(reversed(self.initialization_order))
             
@@ -358,8 +341,7 @@ _global_index: Optional[InternationalizationIndex] = None
 
 
 def get_i18n_index() -> InternationalizationIndex:
-    """Get the global internationalization index"""
-    global _global_index
+    """Get the global internationalization index"""    global _global_index
     if _global_index is None:
         _global_index = InternationalizationIndex()
     return _global_index
@@ -373,16 +355,14 @@ def register_i18n_component(
     capabilities: List[str] = None,
     version: str = "1.0.0"
 ) -> bool:
-    """Convenience function to register a component"""
-    return get_i18n_index().register_component(
+    """Convenience function to register a component"""    return get_i18n_index().register_component(
         name, component_class, component_type, dependencies, capabilities, version
     )
 
 
 # Auto-register core components when module is imported
 def _auto_register_components():
-    """Auto-register core i18n components"""
-    try:
+    """Auto-register core i18n components"""    try:
         index = get_i18n_index()
         
         # Import and register components

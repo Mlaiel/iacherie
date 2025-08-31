@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Elasticsearch Logging Manager
+"""IA Influencer Agent - Elasticsearch Logging Manager
 Advanced Elasticsearch integration for centralized logging
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ Any unauthorized use, reproduction, or distribution without explicit
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import json
 import logging
@@ -28,8 +26,7 @@ from .log_aggregator import LogEntry, LogLevel
 
 
 class IndexStrategy(str, Enum):
-    """Elasticsearch index strategies"""
-    DAILY = "daily"
+    """Elasticsearch index strategies"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     YEARLY = "yearly"
@@ -38,8 +35,7 @@ class IndexStrategy(str, Enum):
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch configuration"""
-    hosts: List[str]
+    """Elasticsearch configuration"""    hosts: List[str]
     username: Optional[str] = None
     password: Optional[str] = None
     use_ssl: bool = True
@@ -53,14 +49,12 @@ class ElasticsearchConfig:
 
 
 class IndexTemplate:
-    """Elasticsearch index template management"""
-    
+    """Elasticsearch index template management"""    
     def __init__(self, template_name: str = "ia-influencer-logs"):
         self.template_name = template_name
     
     def get_template(self) -> Dict[str, Any]:
-        """Get index template configuration"""
-        return {
+        """Get index template configuration"""        return {
             "index_patterns": [f"{self.template_name}-*"],
             "settings": {
                 "number_of_shards": 1,
@@ -153,14 +147,12 @@ class IndexTemplate:
 
 
 class QueryBuilder:
-    """Elasticsearch query builder for logs"""
-    
+    """Elasticsearch query builder for logs"""    
     def __init__(self):
         self.query = {"bool": {"must": [], "filter": [], "should": [], "must_not": []}}
     
     def add_time_range(self, start_time: datetime, end_time: datetime):
-        """Add time range filter"""
-        self.query["bool"]["filter"].append({
+        """Add time range filter"""        self.query["bool"]["filter"].append({
             "range": {
                 "timestamp": {
                     "gte": start_time.isoformat(),
@@ -171,8 +163,7 @@ class QueryBuilder:
         return self
     
     def add_service_filter(self, services: Union[str, List[str]]):
-        """Add service filter"""
-        if isinstance(services, str):
+        """Add service filter"""        if isinstance(services, str):
             services = [services]
         
         self.query["bool"]["filter"].append({
@@ -181,8 +172,7 @@ class QueryBuilder:
         return self
     
     def add_level_filter(self, levels: Union[LogLevel, List[LogLevel]]):
-        """Add log level filter"""
-        if isinstance(levels, LogLevel):
+        """Add log level filter"""        if isinstance(levels, LogLevel):
             levels = [levels]
         
         level_values = [level.value for level in levels]
@@ -192,8 +182,7 @@ class QueryBuilder:
         return self
     
     def add_user_filter(self, user_ids: Union[str, List[str]]):
-        """Add user ID filter"""
-        if isinstance(user_ids, str):
+        """Add user ID filter"""        if isinstance(user_ids, str):
             user_ids = [user_ids]
         
         self.query["bool"]["filter"].append({
@@ -202,8 +191,7 @@ class QueryBuilder:
         return self
     
     def add_text_search(self, text: str, fields: Optional[List[str]] = None):
-        """Add full-text search"""
-        if not fields:
+        """Add full-text search"""        if not fields:
             fields = ["message", "metadata.*"]
         
         self.query["bool"]["must"].append({
@@ -216,28 +204,24 @@ class QueryBuilder:
         return self
     
     def add_metadata_filter(self, metadata_filters: Dict[str, Any]):
-        """Add metadata filters"""
-        for key, value in metadata_filters.items():
+        """Add metadata filters"""        for key, value in metadata_filters.items():
             self.query["bool"]["filter"].append({
                 "term": {f"metadata.{key}": value}
             })
         return self
     
     def add_aggregation(self, name: str, agg_config: Dict[str, Any]):
-        """Add aggregation to query"""
-        if "aggs" not in self.query:
+        """Add aggregation to query"""        if "aggs" not in self.query:
             self.query["aggs"] = {}
         self.query["aggs"][name] = agg_config
         return self
     
     def build(self) -> Dict[str, Any]:
-        """Build final query"""
-        return self.query
+        """Build final query"""        return self.query
 
 
 class ElasticsearchManager:
-    """Advanced Elasticsearch manager for IA Influencer Agent logging"""
-    
+    """Advanced Elasticsearch manager for IA Influencer Agent logging"""    
     def __init__(self, config: ElasticsearchConfig):
         self.config = config
         self.client: Optional[AsyncElasticsearch] = None
@@ -247,8 +231,7 @@ class ElasticsearchManager:
         self.is_connected = False
         
     async def connect(self) -> bool:
-        """Connect to Elasticsearch cluster"""
-        try:
+        """Connect to Elasticsearch cluster"""        try:
             client_config = {
                 'hosts': self.config.hosts,
                 'timeout': self.config.timeout,
@@ -288,15 +271,13 @@ class ElasticsearchManager:
             return False
     
     async def disconnect(self):
-        """Disconnect from Elasticsearch"""
-        if self.client:
+        """Disconnect from Elasticsearch"""        if self.client:
             await self.client.close()
             self.is_connected = False
             logging.info("Disconnected from Elasticsearch")
     
     async def _setup_index_template(self):
-        """Setup index template for log indices"""
-        try:
+        """Setup index template for log indices"""        try:
             template = self.template_manager.get_template()
             
             await self.client.indices.put_index_template(
@@ -311,8 +292,7 @@ class ElasticsearchManager:
             raise ElasticsearchError(f"Template setup failed: {e}")
     
     def _get_index_name(self, timestamp: datetime) -> str:
-        """Generate index name based on strategy and timestamp"""
-        if self.index_strategy == IndexStrategy.DAILY:
+        """Generate index name based on strategy and timestamp"""        if self.index_strategy == IndexStrategy.DAILY:
             suffix = timestamp.strftime("%Y.%m.%d")
         elif self.index_strategy == IndexStrategy.WEEKLY:
             year, week, _ = timestamp.isocalendar()
@@ -327,8 +307,7 @@ class ElasticsearchManager:
         return f"{self.base_index_name}-{suffix}"
     
     async def index_log(self, log_entry: LogEntry) -> bool:
-        """Index a single log entry"""
-        if not self.is_connected:
+        """Index a single log entry"""        if not self.is_connected:
             raise ElasticsearchError("Not connected to Elasticsearch")
         
         try:
@@ -346,8 +325,7 @@ class ElasticsearchManager:
             return False
     
     async def bulk_index_logs(self, log_entries: List[LogEntry]) -> Dict[str, Any]:
-        """Bulk index multiple log entries"""
-        if not self.is_connected:
+        """Bulk index multiple log entries"""        if not self.is_connected:
             raise ElasticsearchError("Not connected to Elasticsearch")
         
         if not log_entries:
@@ -386,8 +364,7 @@ class ElasticsearchManager:
                          size: int = 100,
                          from_: int = 0,
                          sort: Optional[List[Dict[str, Any]]] = None) -> Dict[str, Any]:
-        """Search logs using query builder"""
-        if not self.is_connected:
+        """Search logs using query builder"""        if not self.is_connected:
             raise ElasticsearchError("Not connected to Elasticsearch")
         
         try:
@@ -425,8 +402,7 @@ class ElasticsearchManager:
     async def get_log_statistics(self, 
                                 start_time: datetime,
                                 end_time: datetime) -> Dict[str, Any]:
-        """Get log statistics for time range"""
-        query = QueryBuilder().add_time_range(start_time, end_time)
+        """Get log statistics for time range"""        query = QueryBuilder().add_time_range(start_time, end_time)
         
         # Add aggregations for statistics
         query.add_aggregation("levels", {
@@ -470,8 +446,7 @@ class ElasticsearchManager:
     async def get_recent_errors(self, 
                                hours: int = 24,
                                size: int = 100) -> List[Dict[str, Any]]:
-        """Get recent error logs"""
-        end_time = datetime.now(timezone.utc)
+        """Get recent error logs"""        end_time = datetime.now(timezone.utc)
         start_time = end_time - timedelta(hours=hours)
         
         query = (QueryBuilder()
@@ -482,8 +457,7 @@ class ElasticsearchManager:
         return result["hits"]
     
     async def cleanup_old_indices(self, retention_days: int = 30):
-        """Cleanup old log indices based on retention policy"""
-        if not self.is_connected:
+        """Cleanup old log indices based on retention policy"""        if not self.is_connected:
             raise ElasticsearchError("Not connected to Elasticsearch")
         
         try:
@@ -518,8 +492,7 @@ class ElasticsearchManager:
             raise ElasticsearchError(f"Cleanup failed: {e}")
     
     async def get_cluster_health(self) -> Dict[str, Any]:
-        """Get Elasticsearch cluster health"""
-        if not self.is_connected:
+        """Get Elasticsearch cluster health"""        if not self.is_connected:
             raise ElasticsearchError("Not connected to Elasticsearch")
         
         try:
@@ -550,8 +523,7 @@ class ElasticsearchManager:
             raise ElasticsearchError(f"Health check failed: {e}")
     
     async def create_dashboard_queries(self) -> Dict[str, QueryBuilder]:
-        """Create predefined queries for dashboard"""
-        queries = {}
+        """Create predefined queries for dashboard"""        queries = {}
         
         # Recent activity (last 24 hours)
         end_time = datetime.now(timezone.utc)

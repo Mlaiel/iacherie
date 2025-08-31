@@ -1,5 +1,4 @@
-"""
-Chat Analytics - Enterprise conversation analytics and performance insights
+"""Chat Analytics - Enterprise conversation analytics and performance insights
 =========================================================================
 
 Advanced conversation analytics system for multi-format content creators
@@ -21,7 +20,6 @@ WARNING: This code and concept are proprietary intellectual property of Fahed Ml
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 import uuid
@@ -44,8 +42,7 @@ from backend.utils.ml_insights import MLInsightsEngine
 
 
 class AnalyticsMetricType(Enum):
-    """Types of analytics metrics"""
-    CONVERSATION_QUALITY = "conversation_quality"
+    """Types of analytics metrics"""    CONVERSATION_QUALITY = "conversation_quality"
     CREATOR_PERFORMANCE = "creator_performance"
     ENGAGEMENT_METRICS = "engagement_metrics"
     MONETIZATION_ANALYTICS = "monetization_analytics"
@@ -58,8 +55,7 @@ class AnalyticsMetricType(Enum):
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
-    REAL_TIME = "real_time"
+    """Analytics timeframe options"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -70,8 +66,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class InsightSeverity(Enum):
-    """Insight severity levels"""
-    CRITICAL = "critical"
+    """Insight severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -79,8 +74,7 @@ class InsightSeverity(Enum):
 
 
 class RecommendationType(Enum):
-    """Types of recommendations"""
-    PERFORMANCE_OPTIMIZATION = "performance_optimization"
+    """Types of recommendations"""    PERFORMANCE_OPTIMIZATION = "performance_optimization"
     MONETIZATION_OPPORTUNITY = "monetization_opportunity"
     COLLABORATION_SUGGESTION = "collaboration_suggestion"
     CONTENT_STRATEGY = "content_strategy"
@@ -92,8 +86,7 @@ class RecommendationType(Enum):
 
 @dataclass
 class ConversationMetrics:
-    """Comprehensive conversation metrics"""
-    total_conversations: int = 0
+    """Comprehensive conversation metrics"""    total_conversations: int = 0
     total_messages: int = 0
     avg_conversation_length: float = 0.0
     avg_response_time: float = 0.0
@@ -110,8 +103,7 @@ class ConversationMetrics:
 
 @dataclass
 class CreatorPerformanceMetrics:
-    """Creator-specific performance metrics"""
-    creator_profile_id: str
+    """Creator-specific performance metrics"""    creator_profile_id: str
     creator_type: str
     content_creation_rate: float = 0.0
     collaboration_success_rate: float = 0.0
@@ -128,8 +120,7 @@ class CreatorPerformanceMetrics:
 
 @dataclass
 class MonetizationAnalytics:
-    """Monetization performance analytics"""
-    total_revenue_opportunities: int = 0
+    """Monetization performance analytics"""    total_revenue_opportunities: int = 0
     converted_opportunities: int = 0
     conversion_rate: float = 0.0
     avg_revenue_per_opportunity: float = 0.0
@@ -143,8 +134,7 @@ class MonetizationAnalytics:
 
 @dataclass
 class CollaborationAnalytics:
-    """Collaboration performance analytics"""
-    total_collaborations: int = 0
+    """Collaboration performance analytics"""    total_collaborations: int = 0
     successful_collaborations: int = 0
     collaboration_success_rate: float = 0.0
     avg_collaboration_duration: float = 0.0
@@ -158,8 +148,7 @@ class CollaborationAnalytics:
 
 @dataclass
 class ProtectionAnalytics:
-    """Content protection analytics"""
-    total_content_scanned: int = 0
+    """Content protection analytics"""    total_content_scanned: int = 0
     threats_detected: int = 0
     threats_mitigated: int = 0
     threat_detection_rate: float = 0.0
@@ -173,8 +162,7 @@ class ProtectionAnalytics:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight with recommendations"""
-    insight_id: str
+    """Analytics insight with recommendations"""    insight_id: str
     insight_type: str
     severity: InsightSeverity
     title: str
@@ -192,8 +180,7 @@ class AnalyticsInsight:
 
 @dataclass
 class OptimizationRecommendation:
-    """Optimization recommendation with implementation details"""
-    recommendation_id: str
+    """Optimization recommendation with implementation details"""    recommendation_id: str
     recommendation_type: RecommendationType
     priority: str
     title: str
@@ -212,8 +199,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    report_id: str
+    """Comprehensive analytics report"""    report_id: str
     report_type: str
     timeframe: AnalyticsTimeframe
     date_range: Tuple[datetime, datetime]
@@ -234,8 +220,7 @@ class AnalyticsReport:
 
 
 class EnterpriseChatAnalytics:
-    """
-    Enterprise-grade conversation analytics system providing comprehensive
+    """    Enterprise-grade conversation analytics system providing comprehensive
     insights into conversation performance, creator metrics, monetization
     analytics, and intelligent optimization recommendations.
     
@@ -246,8 +231,7 @@ class EnterpriseChatAnalytics:
     - Real-time collaboration analytics and team performance
     - Content protection analytics and threat intelligence
     - Intelligent recommendations and optimization insights
-    """
-    
+    """    
     def __init__(
         self,
         analytics_store: AnalyticsStore,
@@ -296,8 +280,7 @@ class EnterpriseChatAnalytics:
         creator_profile: Any,
         timestamp: Optional[datetime] = None
     ) -> None:
-        """
-        Track conversation event for analytics
+        """        Track conversation event for analytics
         
         Args:
             session_id: Session identifier
@@ -305,8 +288,7 @@ class EnterpriseChatAnalytics:
             event_data: Event data and metrics
             creator_profile: Creator profile information
             timestamp: Optional event timestamp
-        """
-        
+        """        
         if timestamp is None:
             timestamp = datetime.utcnow()
         
@@ -352,8 +334,7 @@ class EnterpriseChatAnalytics:
         opportunity_data: Dict[str, Any],
         timestamp: Optional[datetime] = None
     ) -> None:
-        """
-        Track monetization event for revenue analytics
+        """        Track monetization event for revenue analytics
         
         Args:
             creator_profile_id: Creator profile identifier
@@ -361,8 +342,7 @@ class EnterpriseChatAnalytics:
             revenue_amount: Revenue amount generated
             opportunity_data: Monetization opportunity data
             timestamp: Optional event timestamp
-        """
-        
+        """        
         if timestamp is None:
             timestamp = datetime.utcnow()
         
@@ -401,8 +381,7 @@ class EnterpriseChatAnalytics:
         collaboration_data: Dict[str, Any],
         timestamp: Optional[datetime] = None
     ) -> None:
-        """
-        Track collaboration event for team analytics
+        """        Track collaboration event for team analytics
         
         Args:
             collaboration_id: Collaboration identifier
@@ -410,8 +389,7 @@ class EnterpriseChatAnalytics:
             participants: List of participant IDs
             collaboration_data: Collaboration event data
             timestamp: Optional event timestamp
-        """
-        
+        """        
         if timestamp is None:
             timestamp = datetime.utcnow()
         
@@ -451,8 +429,7 @@ class EnterpriseChatAnalytics:
         threat_data: Dict[str, Any],
         timestamp: Optional[datetime] = None
     ) -> None:
-        """
-        Track content protection event for security analytics
+        """        Track content protection event for security analytics
         
         Args:
             content_id: Content identifier
@@ -460,8 +437,7 @@ class EnterpriseChatAnalytics:
             protection_action: Protection action taken
             threat_data: Threat detection data
             timestamp: Optional event timestamp
-        """
-        
+        """        
         if timestamp is None:
             timestamp = datetime.utcnow()
         
@@ -501,8 +477,7 @@ class EnterpriseChatAnalytics:
         creator_filter: Optional[List[str]] = None,
         include_predictions: bool = True
     ) -> AnalyticsReport:
-        """
-        Generate comprehensive analytics report
+        """        Generate comprehensive analytics report
         
         Args:
             report_type: Type of report to generate
@@ -513,8 +488,7 @@ class EnterpriseChatAnalytics:
             
         Returns:
             AnalyticsReport with comprehensive insights
-        """
-        
+        """        
         report_id = str(uuid.uuid4())
         
         try:
@@ -629,16 +603,14 @@ class EnterpriseChatAnalytics:
         self,
         metric_types: Optional[List[AnalyticsMetricType]] = None
     ) -> Dict[str, Any]:
-        """
-        Get real-time analytics metrics
+        """        Get real-time analytics metrics
         
         Args:
             metric_types: Optional list of specific metric types to retrieve
             
         Returns:
             Dict containing real-time metrics
-        """
-        
+        """        
         if metric_types is None:
             return self.real_time_metrics.copy()
         
@@ -655,8 +627,7 @@ class EnterpriseChatAnalytics:
         creator_profile_id: str,
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY
     ) -> Dict[str, Any]:
-        """
-        Get performance insights for specific creator
+        """        Get performance insights for specific creator
         
         Args:
             creator_profile_id: Creator profile identifier
@@ -664,8 +635,7 @@ class EnterpriseChatAnalytics:
             
         Returns:
             Dict containing creator performance insights
-        """
-        
+        """        
         try:
             # Get creator metrics from cache or generate
             if creator_profile_id in self.creator_metrics_cache:
@@ -706,8 +676,7 @@ class EnterpriseChatAnalytics:
         timeframe: AnalyticsTimeframe = AnalyticsTimeframe.MONTHLY,
         creator_filter: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Get monetization insights and opportunities
+        """        Get monetization insights and opportunities
         
         Args:
             timeframe: Analytics timeframe
@@ -715,8 +684,7 @@ class EnterpriseChatAnalytics:
             
         Returns:
             Dict containing monetization insights
-        """
-        
+        """        
         try:
             date_range = self._get_default_date_range(timeframe)
             
@@ -760,8 +728,7 @@ class EnterpriseChatAnalytics:
         date_range: Tuple[datetime, datetime],
         creator_filter: Optional[List[str]]
     ) -> ConversationMetrics:
-        """Generate conversation metrics for date range"""
-        
+        """Generate conversation metrics for date range"""        
         # Filter conversation data by date range and creator
         filtered_conversations = [
             conv for conv in self.conversation_data
@@ -816,8 +783,7 @@ class EnterpriseChatAnalytics:
         date_range: Tuple[datetime, datetime],
         creator_filter: Optional[List[str]]
     ) -> Dict[str, CreatorPerformanceMetrics]:
-        """Generate creator performance metrics"""
-        
+        """Generate creator performance metrics"""        
         creator_metrics = {}
         
         # Get unique creators from filtered data
@@ -834,8 +800,7 @@ class EnterpriseChatAnalytics:
         return creator_metrics
     
     async def _generate_creator_metrics(self, creator_profile_id: str) -> CreatorPerformanceMetrics:
-        """Generate metrics for specific creator"""
-        
+        """Generate metrics for specific creator"""        
         # Get creator's conversation data
         creator_conversations = [
             conv for conv in self.conversation_data
@@ -877,8 +842,7 @@ class EnterpriseChatAnalytics:
         date_range: Tuple[datetime, datetime],
         creator_filter: Optional[List[str]]
     ) -> MonetizationAnalytics:
-        """Generate monetization analytics"""
-        
+        """Generate monetization analytics"""        
         # Filter monetization events
         filtered_events = [
             event for event in self.monetization_events
@@ -912,8 +876,7 @@ class EnterpriseChatAnalytics:
         date_range: Tuple[datetime, datetime],
         creator_filter: Optional[List[str]]
     ) -> CollaborationAnalytics:
-        """Generate collaboration analytics"""
-        
+        """Generate collaboration analytics"""        
         # Filter collaboration events
         filtered_events = [
             event for event in self.collaboration_events
@@ -951,8 +914,7 @@ class EnterpriseChatAnalytics:
         date_range: Tuple[datetime, datetime],
         creator_filter: Optional[List[str]]
     ) -> ProtectionAnalytics:
-        """Generate content protection analytics"""
-        
+        """Generate content protection analytics"""        
         # Filter protection events
         filtered_events = [
             event for event in self.protection_events
@@ -995,8 +957,7 @@ class EnterpriseChatAnalytics:
         protection_analytics: ProtectionAnalytics,
         date_range: Tuple[datetime, datetime]
     ) -> List[AnalyticsInsight]:
-        """Generate analytics insights from metrics"""
-        
+        """Generate analytics insights from metrics"""        
         insights = []
         
         # Conversation quality insight
@@ -1097,8 +1058,7 @@ class EnterpriseChatAnalytics:
         conversation_metrics: ConversationMetrics,
         creator_metrics: Dict[str, CreatorPerformanceMetrics]
     ) -> List[OptimizationRecommendation]:
-        """Generate optimization recommendations from insights"""
-        
+        """Generate optimization recommendations from insights"""        
         recommendations = []
         
         # Performance optimization recommendation
@@ -1162,8 +1122,7 @@ class EnterpriseChatAnalytics:
     
     # Real-time analytics methods
     async def _update_real_time_conversation_metrics(self, conversation_event: Dict[str, Any]) -> None:
-        """Update real-time conversation metrics"""
-        
+        """Update real-time conversation metrics"""        
         if "conversation_quality" not in self.real_time_metrics:
             self.real_time_metrics["conversation_quality"] = {
                 "total_messages": 0,
@@ -1189,8 +1148,7 @@ class EnterpriseChatAnalytics:
             metrics["satisfaction_score"] = (current_score * 0.9) + (new_score * 0.1)
     
     async def _update_real_time_monetization_metrics(self, monetization_event: Dict[str, Any]) -> None:
-        """Update real-time monetization metrics"""
-        
+        """Update real-time monetization metrics"""        
         if "monetization_analytics" not in self.real_time_metrics:
             self.real_time_metrics["monetization_analytics"] = {
                 "total_revenue": 0.0,
@@ -1210,8 +1168,7 @@ class EnterpriseChatAnalytics:
         metrics["conversion_rate"] = (current_rate * 0.95) + (converted * 0.05)
     
     async def _update_real_time_collaboration_metrics(self, collaboration_event: Dict[str, Any]) -> None:
-        """Update real-time collaboration metrics"""
-        
+        """Update real-time collaboration metrics"""        
         if "collaboration_metrics" not in self.real_time_metrics:
             self.real_time_metrics["collaboration_metrics"] = {
                 "active_collaborations": set(),
@@ -1239,8 +1196,7 @@ class EnterpriseChatAnalytics:
             metrics["success_rate"] = (current_rate * 0.9) + (success * 0.1)
     
     async def _update_real_time_protection_metrics(self, protection_event: Dict[str, Any]) -> None:
-        """Update real-time protection metrics"""
-        
+        """Update real-time protection metrics"""        
         if "protection_analytics" not in self.real_time_metrics:
             self.real_time_metrics["protection_analytics"] = {
                 "total_scans": 0,
@@ -1270,8 +1226,7 @@ class EnterpriseChatAnalytics:
         event_type: str,
         event_data: Dict[str, Any]
     ) -> None:
-        """Update creator performance cache with new event"""
-        
+        """Update creator performance cache with new event"""        
         if creator_profile_id not in self.creator_metrics_cache:
             return
         
@@ -1286,8 +1241,7 @@ class EnterpriseChatAnalytics:
             creator_metrics.collaboration_success_rate = min(1.0, creator_metrics.collaboration_success_rate + 0.001)
     
     def _get_default_date_range(self, timeframe: AnalyticsTimeframe) -> Tuple[datetime, datetime]:
-        """Get default date range for timeframe"""
-        
+        """Get default date range for timeframe"""        
         end_date = datetime.utcnow()
         
         if timeframe == AnalyticsTimeframe.DAILY:
@@ -1307,8 +1261,7 @@ class EnterpriseChatAnalytics:
     
     # Background task methods
     async def _real_time_analytics_loop(self) -> None:
-        """Background task for real-time analytics updates"""
-        
+        """Background task for real-time analytics updates"""        
         while True:
             try:
                 await asyncio.sleep(30)  # Update every 30 seconds
@@ -1320,8 +1273,7 @@ class EnterpriseChatAnalytics:
                 self.logger.error(f"Real-time analytics error: {str(e)}")
     
     async def _insights_generation_loop(self) -> None:
-        """Background task for insights generation"""
-        
+        """Background task for insights generation"""        
         while True:
             try:
                 await asyncio.sleep(3600)  # Generate insights every hour
@@ -1333,8 +1285,7 @@ class EnterpriseChatAnalytics:
                 self.logger.error(f"Insights generation error: {str(e)}")
     
     async def _data_cleanup_loop(self) -> None:
-        """Background task for data cleanup"""
-        
+        """Background task for data cleanup"""        
         while True:
             try:
                 await asyncio.sleep(86400)  # Clean up daily
@@ -1344,8 +1295,7 @@ class EnterpriseChatAnalytics:
                 self.logger.error(f"Data cleanup error: {str(e)}")
     
     async def _process_real_time_analytics(self) -> None:
-        """Process real-time analytics updates"""
-        
+        """Process real-time analytics updates"""        
         # Update metric aggregators
         current_time = datetime.utcnow()
         
@@ -1358,8 +1308,7 @@ class EnterpriseChatAnalytics:
             ]
     
     async def _generate_automated_insights(self) -> None:
-        """Generate automated insights using ML"""
-        
+        """Generate automated insights using ML"""        
         try:
             # Use ML insights engine to generate automated insights
             if self.ml_insights:
@@ -1378,8 +1327,7 @@ class EnterpriseChatAnalytics:
             self.logger.error(f"Automated insights generation failed: {str(e)}")
     
     async def _cleanup_old_analytics_data(self) -> None:
-        """Clean up old analytics data"""
-        
+        """Clean up old analytics data"""        
         cutoff_date = datetime.utcnow() - timedelta(days=self.analytics_retention_days)
         
         # Clean up conversation data
@@ -1449,8 +1397,7 @@ class EnterpriseChatAnalytics:
     
     # Public interface methods
     def get_analytics_summary(self) -> Dict[str, Any]:
-        """Get summary of current analytics state"""
-        
+        """Get summary of current analytics state"""        
         return {
             "total_conversations_tracked": len(self.conversation_data),
             "total_monetization_events": len(self.monetization_events),

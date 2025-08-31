@@ -1,5 +1,4 @@
-"""
-📝 License Template Engine - Professional License Generation System
+"""📝 License Template Engine - Professional License Generation System
 ================================================================
 
 Professional license template management and generation system:
@@ -13,7 +12,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Team: Lead Dev IA + Legal Template Specialist + Content Manager + Localization Expert
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 from typing import Dict, Any, List, Optional, Union
@@ -28,8 +26,7 @@ from jinja2 import Environment, FileSystemLoader, Template
 logger = logging.getLogger(__name__)
 
 class TemplateCategory(Enum):
-    """License template categories"""
-    MUSIC_LICENSING = "music_licensing"
+    """License template categories"""    MUSIC_LICENSING = "music_licensing"
     SYNC_LICENSING = "sync_licensing"
     DISTRIBUTION = "distribution"
     PUBLISHING = "publishing"
@@ -39,8 +36,7 @@ class TemplateCategory(Enum):
     CREATIVE_COMMONS = "creative_commons"
 
 class ClauseType(Enum):
-    """Legal clause types"""
-    GRANT_OF_RIGHTS = "grant_of_rights"
+    """Legal clause types"""    GRANT_OF_RIGHTS = "grant_of_rights"
     TERRITORY = "territory"
     DURATION = "duration"
     REVENUE_SHARING = "revenue_sharing"
@@ -52,8 +48,7 @@ class ClauseType(Enum):
     MORAL_RIGHTS = "moral_rights"
 
 class LanguageCode(Enum):
-    """Supported languages"""
-    ENGLISH = "en"
+    """Supported languages"""    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -65,8 +60,7 @@ class LanguageCode(Enum):
 
 @dataclass
 class ClauseTemplate:
-    """Individual clause template"""
-    clause_id: str
+    """Individual clause template"""    clause_id: str
     clause_type: ClauseType
     title: str
     template_text: str
@@ -79,8 +73,7 @@ class ClauseTemplate:
 
 @dataclass
 class LicenseTemplate:
-    """Complete license template"""
-    template_id: str
+    """Complete license template"""    template_id: str
     category: TemplateCategory
     name: str
     description: str
@@ -95,16 +88,13 @@ class LicenseTemplate:
     last_modified: datetime
 
 class LicenseTemplateEngine:
-    """
-    🚀 Professional license template generation engine
+    """    🚀 Professional license template generation engine
     
     Advanced system for generating legally compliant license templates
     with multi-language support and dynamic customization.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize license template engine with configuration."""
-        self.config = config
+        """Initialize license template engine with configuration."""        self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Template storage
@@ -138,8 +128,7 @@ class LicenseTemplateEngine:
         self._register_custom_filters()
     
     def _load_license_templates(self):
-        """Load comprehensive license templates."""
-        templates_data = {
+        """Load comprehensive license templates."""        templates_data = {
             'standard_music_license': LicenseTemplate(
                 template_id='standard_music_license',
                 category=TemplateCategory.MUSIC_LICENSING,
@@ -247,15 +236,13 @@ class LicenseTemplateEngine:
         self.logger.info(f"Loaded {len(templates_data)} license templates")
     
     def _load_clause_templates(self):
-        """Load individual clause templates."""
-        clauses_data = {
+        """Load individual clause templates."""        clauses_data = {
             # Grant of Rights Clauses
             'grant_exclusive_en': ClauseTemplate(
                 clause_id='grant_exclusive_en',
                 clause_type=ClauseType.GRANT_OF_RIGHTS,
                 title='Exclusive Grant of Rights',
-                template_text="""
-                The Licensor hereby grants to the Licensee an exclusive license to {{ usage_rights|join(', ') }} 
+                template_text="""                The Licensor hereby grants to the Licensee an exclusive license to {{ usage_rights|join(', ') }} 
                 the Work "{{ work_title }}" (the "Work") within the territory of {{ territory }} 
                 for the period from {{ start_date }} to {{ end_date }}, subject to the terms and conditions 
                 set forth herein.
@@ -272,8 +259,7 @@ class LicenseTemplateEngine:
                 clause_id='grant_non_exclusive_en',
                 clause_type=ClauseType.GRANT_OF_RIGHTS,
                 title='Non-Exclusive Grant of Rights',
-                template_text="""
-                The Licensor hereby grants to the Licensee a non-exclusive license to {{ usage_rights|join(', ') }} 
+                template_text="""                The Licensor hereby grants to the Licensee a non-exclusive license to {{ usage_rights|join(', ') }} 
                 the Work "{{ work_title }}" within the territory of {{ territory }} 
                 for the duration of {{ duration }}, subject to the terms and conditions herein.
                 """,
@@ -290,8 +276,7 @@ class LicenseTemplateEngine:
                 clause_id='revenue_percentage_en',
                 clause_type=ClauseType.REVENUE_SHARING,
                 title='Percentage Revenue Sharing',
-                template_text="""
-                In consideration for the rights granted herein, the Licensee agrees to pay the Licensor 
+                template_text="""                In consideration for the rights granted herein, the Licensee agrees to pay the Licensor 
                 {{ revenue_percentage }}% of all Net Revenues derived from the exploitation of the Work. 
                 Net Revenues shall mean gross revenues less actual costs of collection, 
                 distribution, and applicable taxes.
@@ -313,8 +298,7 @@ class LicenseTemplateEngine:
                 clause_id='territory_worldwide_en',
                 clause_type=ClauseType.TERRITORY,
                 title='Worldwide Territory',
-                template_text="""
-                The territory covered by this Agreement shall be worldwide, including all countries, 
+                template_text="""                The territory covered by this Agreement shall be worldwide, including all countries, 
                 territories, and possessions, whether now existing or hereafter created.
                 """,
                 required_variables=[],
@@ -329,8 +313,7 @@ class LicenseTemplateEngine:
                 clause_id='territory_specific_en',
                 clause_type=ClauseType.TERRITORY,
                 title='Specific Territory',
-                template_text="""
-                The territory covered by this Agreement shall be limited to {{ territories|join(', ') }}.
+                template_text="""                The territory covered by this Agreement shall be limited to {{ territories|join(', ') }}.
                 The Licensee may not exercise any rights outside of this designated territory.
                 """,
                 required_variables=['territories'],
@@ -346,8 +329,7 @@ class LicenseTemplateEngine:
                 clause_id='grant_exclusive_de',
                 clause_type=ClauseType.GRANT_OF_RIGHTS,
                 title='Ausschließliche Rechteeinräumung',
-                template_text="""
-                Der Lizenzgeber räumt dem Lizenznehmer hiermit das ausschließliche Recht ein, 
+                template_text="""                Der Lizenzgeber räumt dem Lizenznehmer hiermit das ausschließliche Recht ein, 
                 das Werk "{{ work_title }}" {{ usage_rights|join(', ') }} zu nutzen 
                 im Gebiet {{ territory }} für die Dauer vom {{ start_date }} bis {{ end_date }}, 
                 vorbehaltlich der hierin enthaltenen Bedingungen.
@@ -365,8 +347,7 @@ class LicenseTemplateEngine:
                 clause_id='moral_rights_germany_de',
                 clause_type=ClauseType.MORAL_RIGHTS,
                 title='Urheberpersönlichkeitsrechte',
-                template_text="""
-                Der Lizenzgeber behält alle Urheberpersönlichkeitsrechte am Werk. 
+                template_text="""                Der Lizenzgeber behält alle Urheberpersönlichkeitsrechte am Werk. 
                 Der Lizenznehmer verpflichtet sich, das Werk nicht zu entstellen oder zu verändern 
                 und den Urheber angemessen zu bezeichnen. Eine Verletzung der Urheberpersönlichkeitsrechte 
                 berechtigt den Lizenzgeber zur sofortigen Kündigung dieser Vereinbarung.
@@ -384,8 +365,7 @@ class LicenseTemplateEngine:
         self.logger.info(f"Loaded {len(clauses_data)} clause templates")
     
     def _load_translations(self):
-        """Load translation dictionaries for multi-language support."""
-        translations_data = {
+        """Load translation dictionaries for multi-language support."""        translations_data = {
             LanguageCode.ENGLISH: {
                 'licensor': 'Licensor',
                 'licensee': 'Licensee',
@@ -431,15 +411,13 @@ class LicenseTemplateEngine:
         self.logger.info(f"Loaded translations for {len(translations_data)} languages")
     
     def _register_custom_filters(self):
-        """Register custom Jinja2 filters for template processing."""
-        self.jinja_env.filters['currency_format'] = self._currency_format_filter
+        """Register custom Jinja2 filters for template processing."""        self.jinja_env.filters['currency_format'] = self._currency_format_filter
         self.jinja_env.filters['date_format'] = self._date_format_filter
         self.jinja_env.filters['legal_format'] = self._legal_format_filter
         self.jinja_env.filters['translate'] = self._translate_filter
     
     def _currency_format_filter(self, amount: float, currency: str = 'USD') -> str:
-        """Format currency amounts for legal documents."""
-        if currency == 'USD':
+        """Format currency amounts for legal documents."""        if currency == 'USD':
             return f"${amount:,.2f}"
         elif currency == 'EUR':
             return f"€{amount:,.2f}"
@@ -449,8 +427,7 @@ class LicenseTemplateEngine:
             return f"{amount:,.2f} {currency}"
     
     def _date_format_filter(self, date_obj: datetime, format_type: str = 'legal') -> str:
-        """Format dates for legal documents."""
-        if format_type == 'legal':
+        """Format dates for legal documents."""        if format_type == 'legal':
             return date_obj.strftime("%B %d, %Y")
         elif format_type == 'short':
             return date_obj.strftime("%m/%d/%Y")
@@ -458,15 +435,13 @@ class LicenseTemplateEngine:
             return date_obj.strftime("%Y-%m-%d")
     
     def _legal_format_filter(self, text: str) -> str:
-        """Format text for legal document standards."""
-        # Capitalize first letter of sentences
+        """Format text for legal document standards."""        # Capitalize first letter of sentences
         sentences = re.split(r'(?<=[.!?])\s+', text)
         formatted_sentences = [s.capitalize() for s in sentences]
         return ' '.join(formatted_sentences)
     
     def _translate_filter(self, key: str, language: LanguageCode) -> str:
-        """Translate terms to specified language."""
-        language_dict = self.translations.get(language, self.translations[LanguageCode.ENGLISH])
+        """Translate terms to specified language."""        language_dict = self.translations.get(language, self.translations[LanguageCode.ENGLISH])
         return language_dict.get(key, key)
     
     async def generate_license_template(
@@ -476,8 +451,7 @@ class LicenseTemplateEngine:
         compliance_requirements: Dict[str, Any],
         language: LanguageCode = LanguageCode.ENGLISH
     ) -> Dict[str, Any]:
-        """
-        📝 Generate complete license template
+        """        📝 Generate complete license template
         
         Args:
             license_type: Type of license to generate
@@ -487,8 +461,7 @@ class LicenseTemplateEngine:
             
         Returns:
             generated_template: Complete license template
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating license template: {license_type} for {jurisdiction}")
             
             # Get base template
@@ -559,8 +532,7 @@ class LicenseTemplateEngine:
         compliance_requirements: Dict[str, Any],
         language: LanguageCode
     ) -> List[ClauseTemplate]:
-        """Select appropriate clauses based on jurisdiction requirements."""
-        selected_clauses = []
+        """Select appropriate clauses based on jurisdiction requirements."""        selected_clauses = []
         
         # Always include required clauses
         for clause_type in base_template.required_clauses:
@@ -599,8 +571,7 @@ class LicenseTemplateEngine:
         jurisdiction: str,
         language: LanguageCode
     ) -> Optional[ClauseTemplate]:
-        """Get the best clause template for the given context."""
-        # Find all clauses of the specified type
+        """Get the best clause template for the given context."""        # Find all clauses of the specified type
         matching_clauses = [
             clause for clause in self.clause_templates.values()
             if clause.clause_type == clause_type
@@ -635,8 +606,7 @@ class LicenseTemplateEngine:
         clause_type: ClauseType,
         compliance_requirements: Dict[str, Any]
     ) -> bool:
-        """Check if a clause is recommended based on compliance requirements."""
-        recommended_clauses = compliance_requirements.get('recommended_clauses', [])
+        """Check if a clause is recommended based on compliance requirements."""        recommended_clauses = compliance_requirements.get('recommended_clauses', [])
         
         clause_recommendations = {
             ClauseType.WARRANTIES: 'warranties_recommended',
@@ -657,8 +627,7 @@ class LicenseTemplateEngine:
         selected_clauses: List[ClauseTemplate],
         language: LanguageCode
     ) -> Dict[str, Any]:
-        """Build the complete template structure."""
-        structure = base_template.template_structure.copy()
+        """Build the complete template structure."""        structure = base_template.template_structure.copy()
         
         # Add clause mapping
         structure['clause_mapping'] = {}
@@ -683,8 +652,7 @@ class LicenseTemplateEngine:
         return structure
     
     def _map_clause_to_section(self, clause_type: ClauseType) -> str:
-        """Map clause types to document sections."""
-        section_mapping = {
+        """Map clause types to document sections."""        section_mapping = {
             ClauseType.GRANT_OF_RIGHTS: 'grant_of_rights',
             ClauseType.TERRITORY: 'territory_and_duration',
             ClauseType.DURATION: 'territory_and_duration',
@@ -704,8 +672,7 @@ class LicenseTemplateEngine:
         selected_clauses: List[ClauseTemplate],
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Generate template variable definitions."""
-        # Collect all required variables from clauses
+        """Generate template variable definitions."""        # Collect all required variables from clauses
         required_variables = set()
         optional_variables = set()
         
@@ -766,8 +733,7 @@ class LicenseTemplateEngine:
         template_variables: Dict[str, Any],
         language: LanguageCode
     ) -> Dict[str, Any]:
-        """Generate usage instructions for the template."""
-        instructions = {
+        """Generate usage instructions for the template."""        instructions = {
             'overview': self._get_template_overview(language),
             'variable_instructions': self._get_variable_instructions(template_variables, language),
             'customization_guide': self._get_customization_guide(template_structure, language),
@@ -778,8 +744,7 @@ class LicenseTemplateEngine:
         return instructions
     
     def _get_template_overview(self, language: LanguageCode) -> str:
-        """Get template overview in specified language."""
-        overviews = {
+        """Get template overview in specified language."""        overviews = {
             LanguageCode.ENGLISH: "This template provides a legally compliant license agreement framework. Fill in the required variables and customize clauses as needed for your specific use case.",
             LanguageCode.GERMAN: "Diese Vorlage bietet einen rechtlich konformen Rahmen für Lizenzvereinbarungen. Füllen Sie die erforderlichen Variablen aus und passen Sie die Klauseln nach Bedarf an.",
             LanguageCode.FRENCH: "Ce modèle fournit un cadre d'accord de licence juridiquement conforme. Remplissez les variables requises et personnalisez les clauses selon vos besoins."
@@ -788,8 +753,7 @@ class LicenseTemplateEngine:
         return overviews.get(language, overviews[LanguageCode.ENGLISH])
     
     def _get_variable_instructions(self, template_variables: Dict[str, Any], language: LanguageCode) -> List[str]:
-        """Get variable filling instructions."""
-        instructions = []
+        """Get variable filling instructions."""        instructions = []
         variable_definitions = template_variables.get('variable_definitions', {})
         
         if language == LanguageCode.ENGLISH:
@@ -806,8 +770,7 @@ class LicenseTemplateEngine:
         return instructions
     
     def _get_customization_guide(self, template_structure: Dict[str, Any], language: LanguageCode) -> List[str]:
-        """Get template customization guidelines."""
-        if language == LanguageCode.ENGLISH:
+        """Get template customization guidelines."""        if language == LanguageCode.ENGLISH:
             return [
                 "Review all clauses for applicability to your situation",
                 "Consult legal counsel before finalizing any agreement",
@@ -825,8 +788,7 @@ class LicenseTemplateEngine:
             return self._get_customization_guide(template_structure, LanguageCode.ENGLISH)
     
     def _get_legal_notices(self, language: LanguageCode) -> List[str]:
-        """Get legal disclaimer notices."""
-        if language == LanguageCode.ENGLISH:
+        """Get legal disclaimer notices."""        if language == LanguageCode.ENGLISH:
             return [
                 "This template is for informational purposes only",
                 "Always consult qualified legal counsel",
@@ -844,8 +806,7 @@ class LicenseTemplateEngine:
             return self._get_legal_notices(LanguageCode.ENGLISH)
     
     def _get_best_practices(self, language: LanguageCode) -> List[str]:
-        """Get template best practices."""
-        if language == LanguageCode.ENGLISH:
+        """Get template best practices."""        if language == LanguageCode.ENGLISH:
             return [
                 "Keep detailed records of all license agreements",
                 "Implement regular compliance reviews",
@@ -863,8 +824,7 @@ class LicenseTemplateEngine:
             return self._get_best_practices(LanguageCode.ENGLISH)
     
     def get_available_templates(self) -> List[Dict[str, Any]]:
-        """Get list of available license templates."""
-        return [
+        """Get list of available license templates."""        return [
             {
                 'template_id': template.template_id,
                 'category': template.category.value,
@@ -879,8 +839,7 @@ class LicenseTemplateEngine:
         ]
     
     def get_template_metrics(self) -> Dict[str, Any]:
-        """Get template engine performance metrics."""
-        return {
+        """Get template engine performance metrics."""        return {
             **self.metrics,
             'available_templates': len(self.license_templates),
             'available_clauses': len(self.clause_templates),

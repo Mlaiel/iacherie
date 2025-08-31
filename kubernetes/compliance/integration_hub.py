@@ -1,11 +1,9 @@
-"""
-IA Influencer Agent - Compliance Integration Hub
+"""IA Influencer Agent - Compliance Integration Hub
 Central integration point for all compliance systems and external regulatory services
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
-
 import asyncio
 import json
 import logging
@@ -36,8 +34,7 @@ logger = get_logger(__name__)
 
 
 class IntegrationType(str, Enum):
-    """Types of compliance integrations"""
-    REGULATORY_API = "regulatory_api"
+    """Types of compliance integrations"""    REGULATORY_API = "regulatory_api"
     VERIFICATION_SERVICE = "verification_service"
     REPORTING_PLATFORM = "reporting_platform"
     MONITORING_SYSTEM = "monitoring_system"
@@ -48,8 +45,7 @@ class IntegrationType(str, Enum):
 
 
 class IntegrationStatus(str, Enum):
-    """Integration connection status"""
-    ACTIVE = "active"
+    """Integration connection status"""    ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
     MAINTENANCE = "maintenance"
@@ -59,8 +55,7 @@ class IntegrationStatus(str, Enum):
 
 @dataclass
 class ExternalServiceConfig:
-    """External service configuration"""
-    service_id: str
+    """External service configuration"""    service_id: str
     name: str
     service_type: IntegrationType
     base_url: str
@@ -79,8 +74,7 @@ class ExternalServiceConfig:
 
 @dataclass
 class ComplianceWorkflow:
-    """Automated compliance workflow definition"""
-    workflow_id: str
+    """Automated compliance workflow definition"""    workflow_id: str
     name: str
     description: str
     trigger_conditions: List[Dict[str, Any]]
@@ -95,8 +89,7 @@ class ComplianceWorkflow:
 
 @dataclass
 class ComplianceMetrics:
-    """Comprehensive compliance metrics"""
-    period_start: datetime
+    """Comprehensive compliance metrics"""    period_start: datetime
     period_end: datetime
     overall_compliance_score: float
     framework_scores: Dict[str, float]
@@ -111,8 +104,7 @@ class ComplianceMetrics:
 
 
 class ComplianceIntegrationHub:
-    """Central hub for all compliance system integrations"""
-    
+    """Central hub for all compliance system integrations"""    
     def __init__(self):
         self.logger = logger
         self.audit_logger = AuditLogger()
@@ -142,8 +134,7 @@ class ComplianceIntegrationHub:
         asyncio.create_task(self._initialize_external_services())
     
     async def initialize_compliance_ecosystem(self) -> Dict[str, Any]:
-        """Initialize complete compliance ecosystem"""
-        try:
+        """Initialize complete compliance ecosystem"""        try:
             initialization_results = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "modules_initialized": [],
@@ -209,8 +200,7 @@ class ComplianceIntegrationHub:
         frameworks: List[ComplianceFramework],
         comprehensive: bool = True
     ) -> Dict[str, Any]:
-        """Orchestrate comprehensive compliance check across all systems"""
-        try:
+        """Orchestrate comprehensive compliance check across all systems"""        try:
             check_id = f"CC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
             
             orchestration_results = {
@@ -316,8 +306,7 @@ class ComplianceIntegrationHub:
         self,
         service_config: ExternalServiceConfig
     ) -> str:
-        """Integrate new external compliance service"""
-        try:
+        """Integrate new external compliance service"""        try:
             # Validate service configuration
             await self._validate_service_config(service_config)
             
@@ -393,8 +382,7 @@ class ComplianceIntegrationHub:
         trigger_data: Dict[str, Any],
         background_tasks: BackgroundTasks
     ) -> str:
-        """Execute automated compliance workflow"""
-        try:
+        """Execute automated compliance workflow"""        try:
             if workflow_id not in self.active_workflows:
                 raise HTTPException(status_code=404, detail="Workflow not found")
             
@@ -441,8 +429,7 @@ class ComplianceIntegrationHub:
         timeframe_days: int = 30,
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive compliance dashboard"""
-        try:
+        """Generate comprehensive compliance dashboard"""        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=timeframe_days)
             
@@ -520,8 +507,7 @@ class ComplianceIntegrationHub:
             raise HTTPException(status_code=500, detail="Failed to generate compliance dashboard")
     
     async def health_check_integrations(self) -> Dict[str, Any]:
-        """Perform health check on all external integrations"""
-        try:
+        """Perform health check on all external integrations"""        try:
             health_status = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "overall_status": "healthy",

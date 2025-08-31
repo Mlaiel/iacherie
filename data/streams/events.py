@@ -1,5 +1,4 @@
-"""
-Advanced Event Streaming System for IA Influencer Agent Platform
+"""Advanced Event Streaming System for IA Influencer Agent Platform
 ===============================================================
 
 Ultra-modern enterprise-grade event streaming infrastructure for real-time content processing,
@@ -28,7 +27,6 @@ Violations will be prosecuted under German and international copyright law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Set, Union, Tuple
@@ -56,8 +54,7 @@ settings = get_settings()
 
 
 class EventPriority(int, Enum):
-    """Advanced event priority levels for intelligent routing"""
-    LOW = 1
+    """Advanced event priority levels for intelligent routing"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
@@ -65,16 +62,14 @@ class EventPriority(int, Enum):
 
 
 class DeliveryMode(str, Enum):
-    """Event delivery guarantee modes"""
-    FIRE_AND_FORGET = "fire_and_forget"
+    """Event delivery guarantee modes"""    FIRE_AND_FORGET = "fire_and_forget"
     AT_LEAST_ONCE = "at_least_once"
     EXACTLY_ONCE = "exactly_once"
     TRANSACTIONAL = "transactional"
 
 
 class EventCategory(str, Enum):
-    """Event categorization for AI routing"""
-    CONTENT_PROCESSING = "content_processing"
+    """Event categorization for AI routing"""    CONTENT_PROCESSING = "content_processing"
     PROTECTION_VIOLATION = "protection_violation"
     REVENUE_TRACKING = "revenue_tracking"
     USER_ACTIVITY = "user_activity"
@@ -85,16 +80,14 @@ class EventCategory(str, Enum):
 
 
 class CircuitBreakerState(str, Enum):
-    """Circuit breaker states for fault tolerance"""
-    CLOSED = "closed"
+    """Circuit breaker states for fault tolerance"""    CLOSED = "closed"
     OPEN = "open"
     HALF_OPEN = "half_open"
 
 
 @dataclass
 class EventTrace:
-    """Distributed tracing information for events"""
-    trace_id: str
+    """Distributed tracing information for events"""    trace_id: str
     span_id: str
     parent_span_id: Optional[str]
     operation_name: str
@@ -106,8 +99,7 @@ class EventTrace:
 
 @dataclass
 class CircuitBreaker:
-    """Circuit breaker for fault tolerance"""
-    failure_threshold: int = 5
+    """Circuit breaker for fault tolerance"""    failure_threshold: int = 5
     recovery_timeout: float = 60.0
     state: CircuitBreakerState = CircuitBreakerState.CLOSED
     failure_count: int = 0
@@ -117,8 +109,7 @@ class CircuitBreaker:
 
 @dataclass
 class EventSubscription:
-    """Advanced event subscription configuration with AI filtering"""
-    subscriber_id: str
+    """Advanced event subscription configuration with AI filtering"""    subscriber_id: str
     event_types: Set[str]
     event_categories: Set[EventCategory]
     callback: Callable[[StreamEvent], None]
@@ -136,8 +127,7 @@ class EventSubscription:
 
 
 class AdvancedEventFilter(BaseModel):
-    """Advanced AI-powered event filtering configuration"""
-    event_types: Optional[List[str]] = Field(default=None, description="Allowed event types")
+    """Advanced AI-powered event filtering configuration"""    event_types: Optional[List[str]] = Field(default=None, description="Allowed event types")
     event_categories: Optional[List[EventCategory]] = Field(default=None, description="Allowed event categories")
     user_ids: Optional[List[str]] = Field(default=None, description="Allowed user IDs")
     content_types: Optional[List[str]] = Field(default=None, description="Allowed content types")
@@ -159,8 +149,7 @@ class AdvancedEventFilter(BaseModel):
 
 
 class EventStreamMetrics(BaseModel):
-    """Comprehensive event streaming metrics with AI insights"""
-    # Basic metrics
+    """Comprehensive event streaming metrics with AI insights"""    # Basic metrics
     total_events: int = Field(default=0, description="Total events processed")
     events_per_second: float = Field(default=0.0, description="Current events per second")
     events_per_minute: float = Field(default=0.0, description="Current events per minute")
@@ -208,8 +197,7 @@ class EventStreamMetrics(BaseModel):
 
 
 class DeadLetterEvent(BaseModel):
-    """Dead letter queue event structure"""
-    original_event: StreamEvent = Field(description="Original failed event")
+    """Dead letter queue event structure"""    original_event: StreamEvent = Field(description="Original failed event")
     subscription_id: str = Field(description="Failed subscription ID")
     failure_reason: str = Field(description="Failure reason")
     retry_count: int = Field(description="Number of retry attempts")
@@ -219,8 +207,7 @@ class DeadLetterEvent(BaseModel):
 
 
 class EventStreamer:
-    """
-    Ultra-modern enterprise-grade event streaming system for real-time content processing,
+    """    Ultra-modern enterprise-grade event streaming system for real-time content processing,
     AI-powered protection monitoring, revenue tracking with advanced features:
     
     - Guaranteed delivery with circuit breakers
@@ -232,8 +219,7 @@ class EventStreamer:
     - Cross-platform synchronization
     - Rate limiting and backpressure
     - Event replay and time-travel debugging
-    """
-    
+    """    
     def __init__(self):
         self.redis: Optional[Redis] = None
         self.subscriptions: Dict[str, EventSubscription] = {}
@@ -262,8 +248,7 @@ class EventStreamer:
         self.webhook_session: Optional[aiohttp.ClientSession] = None
         
     async def initialize(self) -> None:
-        """Initialize ultra-modern event streamer with AI and security components"""
-        try:
+        """Initialize ultra-modern event streamer with AI and security components"""        try:
             from ...core.cache import get_redis_client
             self.redis = await get_redis_client()
             
@@ -313,8 +298,7 @@ class EventStreamer:
             raise
             
     async def _register_event_routers(self) -> None:
-        """Register specialized event routers for different categories"""
-        self.event_routers = {
+        """Register specialized event routers for different categories"""        self.event_routers = {
             EventCategory.CONTENT_PROCESSING: self._route_content_event,
             EventCategory.PROTECTION_VIOLATION: self._route_protection_event,
             EventCategory.REVENUE_TRACKING: self._route_revenue_event,
@@ -333,8 +317,7 @@ class EventStreamer:
         delivery_mode: DeliveryMode = DeliveryMode.AT_LEAST_ONCE,
         trace_context: Optional[Dict[str, str]] = None
     ) -> bool:
-        """
-        Publish event with advanced AI routing and protection monitoring
+        """        Publish event with advanced AI routing and protection monitoring
         
         Args:
             event: Stream event to publish
@@ -345,8 +328,7 @@ class EventStreamer:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Start distributed trace
             trace = self._start_trace(event, trace_context)
             
@@ -431,8 +413,7 @@ class EventStreamer:
         rate_limit: Optional[int] = None,
         ai_filter_enabled: bool = False
     ) -> str:
-        """
-        Advanced subscription with AI filtering, webhooks, and rate limiting
+        """        Advanced subscription with AI filtering, webhooks, and rate limiting
         
         Args:
             subscriber_id: Unique subscriber identifier
@@ -447,8 +428,7 @@ class EventStreamer:
             
         Returns:
             Subscription identifier
-        """
-        try:
+        """        try:
             subscription_id = f"{subscriber_id}_{uuid4().hex[:8]}"
             
             subscription = EventSubscription(
@@ -495,8 +475,7 @@ class EventStreamer:
         event: StreamEvent, 
         category: EventCategory
     ) -> List[EventSubscription]:
-        """Advanced subscription filtering with AI and security"""
-        filtered = []
+        """Advanced subscription filtering with AI and security"""        filtered = []
         
         for subscription_id, subscription in self.subscriptions.items():
             if not subscription.active:
@@ -534,8 +513,7 @@ class EventStreamer:
         return filtered
         
     async def _passes_advanced_filters(self, event: StreamEvent, subscription_id: str) -> bool:
-        """Check if event passes advanced subscription filters"""
-        if subscription_id not in self.event_filters:
+        """Check if event passes advanced subscription filters"""        if subscription_id not in self.event_filters:
             return True
             
         event_filter = self.event_filters[subscription_id]
@@ -603,8 +581,7 @@ class EventStreamer:
         return True
         
     async def _passes_ai_filter(self, event: StreamEvent, subscription: EventSubscription) -> bool:
-        """AI-powered event filtering"""
-        try:
+        """AI-powered event filtering"""        try:
             if not self.event_analyzer:
                 return True
                 
@@ -638,8 +615,7 @@ class EventStreamer:
             return True  # Default to pass on error
             
     async def _check_rate_limit(self, subscription_id: str) -> bool:
-        """Check and update rate limiting for subscription"""
-        if subscription_id not in self.rate_limiters:
+        """Check and update rate limiting for subscription"""        if subscription_id not in self.rate_limiters:
             return True
             
         limiter = self.rate_limiters[subscription_id]
@@ -659,8 +635,7 @@ class EventStreamer:
         return True
         
     async def _should_attempt_recovery(self, subscription: EventSubscription) -> bool:
-        """Check if circuit breaker should attempt recovery"""
-        if subscription.circuit_breaker.state != CircuitBreakerState.OPEN:
+        """Check if circuit breaker should attempt recovery"""        if subscription.circuit_breaker.state != CircuitBreakerState.OPEN:
             return True
             
         if not subscription.circuit_breaker.last_failure_time:
@@ -678,8 +653,7 @@ class EventStreamer:
             
     # Specialized Event Routers
     async def _route_content_event(self, event: StreamEvent, subscriptions: List[EventSubscription]) -> None:
-        """Route content processing events with AI analysis"""
-        try:
+        """Route content processing events with AI analysis"""        try:
             # Extract content metadata
             content_data = event.data.get("content", {})
             content_type = content_data.get("type", "unknown")
@@ -698,8 +672,7 @@ class EventStreamer:
             logger.error(f"Content routing error: {e}")
             
     async def _route_protection_event(self, event: StreamEvent, subscriptions: List[EventSubscription]) -> None:
-        """Route protection violation events with priority escalation"""
-        try:
+        """Route protection violation events with priority escalation"""        try:
             violation_data = event.data.get("violation", {})
             severity = violation_data.get("severity", "low")
             
@@ -724,8 +697,7 @@ class EventStreamer:
             logger.error(f"Protection routing error: {e}")
             
     async def _route_revenue_event(self, event: StreamEvent, subscriptions: List[EventSubscription]) -> None:
-        """Route revenue tracking events with analytics enrichment"""
-        try:
+        """Route revenue tracking events with analytics enrichment"""        try:
             revenue_data = event.data.get("revenue", {})
             amount = revenue_data.get("amount", 0)
             currency = revenue_data.get("currency", "USD")
@@ -749,8 +721,7 @@ class EventStreamer:
             logger.error(f"Revenue routing error: {e}")
             
     async def _route_user_event(self, event: StreamEvent, subscriptions: List[EventSubscription]) -> None:
-        """Route user activity events with behavior analysis"""
-        try:
+        """Route user activity events with behavior analysis"""        try:
             user_data = event.data.get("user", {})
             activity_type = user_data.get("activity_type", "unknown")
             
@@ -765,8 +736,7 @@ class EventStreamer:
             logger.error(f"User routing error: {e}")
             
     async def _route_system_event(self, event: StreamEvent, subscriptions: List[EventSubscription]) -> None:
-        """Route system health events with monitoring integration"""
-        try:
+        """Route system health events with monitoring integration"""        try:
             system_data = event.data.get("system", {})
             metric_type = system_data.get("metric_type", "unknown")
             
@@ -781,8 +751,7 @@ class EventStreamer:
             logger.error(f"System routing error: {e}")
             
     async def _route_ai_event(self, event: StreamEvent, subscriptions: List[EventSubscription]) -> None:
-        """Route AI analysis events with model insights"""
-        try:
+        """Route AI analysis events with model insights"""        try:
             ai_data = event.data.get("ai", {})
             model_type = ai_data.get("model_type", "unknown")
             
@@ -797,8 +766,7 @@ class EventStreamer:
             logger.error(f"AI routing error: {e}")
             
     async def _route_platform_event(self, event: StreamEvent, subscriptions: List[EventSubscription]) -> None:
-        """Route platform synchronization events"""
-        try:
+        """Route platform synchronization events"""        try:
             platform_data = event.data.get("platform", {})
             platform_name = platform_data.get("name", "unknown")
             
@@ -813,8 +781,7 @@ class EventStreamer:
             logger.error(f"Platform routing error: {e}")
             
     async def _route_notification_event(self, event: StreamEvent, subscriptions: List[EventSubscription]) -> None:
-        """Route notification events with delivery preferences"""
-        try:
+        """Route notification events with delivery preferences"""        try:
             notification_data = event.data.get("notification", {})
             notification_type = notification_data.get("type", "info")
             
@@ -830,8 +797,7 @@ class EventStreamer:
             
     # Advanced Worker Methods
     async def _ai_event_processor(self) -> None:
-        """Specialized worker for AI-powered event processing"""
-        logger.info("Started AI event processor")
+        """Specialized worker for AI-powered event processing"""        logger.info("Started AI event processor")
         
         while not self._shutdown_event.is_set():
             try:
@@ -849,8 +815,7 @@ class EventStreamer:
                 logger.error(f"AI event processor error: {e}")
                 
     async def _protection_monitor(self) -> None:
-        """Specialized worker for protection violation monitoring"""
-        logger.info("Started protection monitor")
+        """Specialized worker for protection violation monitoring"""        logger.info("Started protection monitor")
         
         while not self._shutdown_event.is_set():
             try:
@@ -866,8 +831,7 @@ class EventStreamer:
                 logger.error(f"Protection monitor error: {e}")
                 
     async def _revenue_tracker(self) -> None:
-        """Specialized worker for revenue tracking and optimization"""
-        logger.info("Started revenue tracker")
+        """Specialized worker for revenue tracking and optimization"""        logger.info("Started revenue tracker")
         
         while not self._shutdown_event.is_set():
             try:
@@ -883,8 +847,7 @@ class EventStreamer:
                 logger.error(f"Revenue tracker error: {e}")
                 
     async def _dead_letter_processor(self) -> None:
-        """Process failed events in dead letter queue"""
-        logger.info("Started dead letter processor")
+        """Process failed events in dead letter queue"""        logger.info("Started dead letter processor")
         
         while not self._shutdown_event.is_set():
             try:
@@ -898,8 +861,7 @@ class EventStreamer:
                 logger.error(f"Dead letter processor error: {e}")
                 
     async def _circuit_breaker_monitor(self) -> None:
-        """Monitor and manage circuit breaker states"""
-        logger.info("Started circuit breaker monitor")
+        """Monitor and manage circuit breaker states"""        logger.info("Started circuit breaker monitor")
         
         while not self._shutdown_event.is_set():
             try:
@@ -913,8 +875,7 @@ class EventStreamer:
                 
     # Helper Methods for Advanced Features
     async def _send_urgent_notification(self, event: StreamEvent, subscription: EventSubscription) -> None:
-        """Send urgent notification for critical events"""
-        try:
+        """Send urgent notification for critical events"""        try:
             if subscription.webhook_url:
                 await self._send_webhook_notification(event, subscription, urgent=True)
             else:
@@ -933,8 +894,7 @@ class EventStreamer:
         subscription: EventSubscription,
         urgent: bool = False
     ) -> None:
-        """Send webhook notification with retry logic"""
-        try:
+        """Send webhook notification with retry logic"""        try:
             payload = {
                 "event": {
                     "id": event.id,
@@ -974,8 +934,7 @@ class EventStreamer:
             # Could implement retry logic here
             
     async def _analyze_event_patterns(self) -> None:
-        """Analyze event patterns for insights and optimizations"""
-        try:
+        """Analyze event patterns for insights and optimizations"""        try:
             # This would implement sophisticated pattern analysis
             # For now, just a placeholder
             pass
@@ -983,16 +942,14 @@ class EventStreamer:
             logger.error(f"Event pattern analysis error: {e}")
             
     async def _monitor_protection_patterns(self) -> None:
-        """Monitor protection violation patterns for threat intelligence"""
-        try:
+        """Monitor protection violation patterns for threat intelligence"""        try:
             # This would implement protection pattern monitoring
             pass
         except Exception as e:
             logger.error(f"Protection pattern monitoring error: {e}")
             
     async def _track_revenue_trends(self) -> None:
-        """Track revenue trends and generate insights"""
-        try:
+        """Track revenue trends and generate insights"""        try:
             # This would implement revenue trend analysis
             pass
         except Exception as e:
@@ -1000,13 +957,11 @@ class EventStreamer:
             
     # Utility Methods
     def _generate_event_hash(self, event: StreamEvent) -> str:
-        """Generate unique hash for event deduplication"""
-        event_string = f"{event.id}_{event.event_type}_{event.timestamp.isoformat()}"
+        """Generate unique hash for event deduplication"""        event_string = f"{event.id}_{event.event_type}_{event.timestamp.isoformat()}"
         return hashlib.sha256(event_string.encode()).hexdigest()[:16]
         
     def _start_trace(self, event: StreamEvent, trace_context: Optional[Dict[str, str]] = None) -> EventTrace:
-        """Start distributed trace for event processing"""
-        trace_id = trace_context.get("trace_id") if trace_context else str(uuid4())
+        """Start distributed trace for event processing"""        trace_id = trace_context.get("trace_id") if trace_context else str(uuid4())
         parent_span_id = trace_context.get("span_id") if trace_context else None
         span_id = str(uuid4())
         
@@ -1028,8 +983,7 @@ class EventStreamer:
         return trace
         
     def _end_trace(self, trace: EventTrace, success: bool, error: Optional[str] = None) -> None:
-        """End distributed trace with results"""
-        trace.end_time = datetime.now(timezone.utc)
+        """End distributed trace with results"""        trace.end_time = datetime.now(timezone.utc)
         trace.tags["success"] = success
         
         if error:
@@ -1050,8 +1004,7 @@ class EventStreamer:
         priority: EventPriority, 
         category: EventCategory
     ) -> None:
-        """Persist event with advanced indexing and partitioning"""
-        try:
+        """Persist event with advanced indexing and partitioning"""        try:
             # Multi-stream persistence for better query performance
             streams = [
                 f"event_stream:all",  # Global stream
@@ -1090,8 +1043,7 @@ class EventStreamer:
         subscription: EventSubscription,
         priority: EventPriority
     ) -> None:
-        """Advanced queuing with priority and backpressure handling"""
-        subscription_id = next(
+        """Advanced queuing with priority and backpressure handling"""        subscription_id = next(
             (sid for sid, sub in self.subscriptions.items() if sub == subscription),
             None
         )
@@ -1141,8 +1093,7 @@ class EventStreamer:
         priority: EventPriority, 
         subscriber_count: int
     ) -> None:
-        """Update comprehensive metrics with AI insights"""
-        self.metrics.total_events += 1
+        """Update comprehensive metrics with AI insights"""        self.metrics.total_events += 1
         self.metrics.last_event_time = datetime.now(timezone.utc)
         
         # Category metrics
@@ -1180,8 +1131,7 @@ class EventStreamer:
         self.event_rate_history.append(time.time())
         
     async def unsubscribe_advanced(self, subscription_id: str) -> bool:
-        """Advanced unsubscription with cleanup"""
-        try:
+        """Advanced unsubscription with cleanup"""        try:
             subscription = self.subscriptions.get(subscription_id)
             
             if subscription_id in self.subscriptions:
@@ -1224,8 +1174,7 @@ class EventStreamer:
         end_time: Optional[datetime] = None,
         limit: int = 100
     ) -> List[StreamEvent]:
-        """Advanced event history retrieval with filtering"""
-        try:
+        """Advanced event history retrieval with filtering"""        try:
             events = []
             
             # Build stream key based on filters
@@ -1276,8 +1225,7 @@ class EventStreamer:
             return []
             
     async def get_metrics_advanced(self) -> EventStreamMetrics:
-        """Get comprehensive streaming metrics"""
-        try:
+        """Get comprehensive streaming metrics"""        try:
             # Update real-time metrics
             self.metrics.uptime = (datetime.now(timezone.utc) - self._start_time).total_seconds()
             self.metrics.active_subscriptions = len(self.subscriptions)
@@ -1312,8 +1260,7 @@ class EventStreamer:
             return self.metrics
             
     async def shutdown(self) -> None:
-        """Gracefully shutdown ultra-modern event streamer"""
-        try:
+        """Gracefully shutdown ultra-modern event streamer"""        try:
             logger.info("Starting EventStreamer shutdown...")
             self._shutdown_event.set()
             
@@ -1346,20 +1293,16 @@ class EventStreamer:
             
     # Additional helper methods for processing workers
     async def _update_ai_models(self) -> None:
-        """Update AI models based on event feedback"""
-        pass  # Implementation would depend on specific AI framework
+        """Update AI models based on event feedback"""        pass  # Implementation would depend on specific AI framework
         
     async def _update_threat_intelligence(self) -> None:
-        """Update threat intelligence from protection events"""
-        pass  # Implementation would integrate with security systems
+        """Update threat intelligence from protection events"""        pass  # Implementation would integrate with security systems
         
     async def _optimize_revenue_streams(self) -> None:
-        """Optimize revenue streams based on performance data"""
-        pass  # Implementation would include revenue optimization algorithms
+        """Optimize revenue streams based on performance data"""        pass  # Implementation would include revenue optimization algorithms
         
     async def _process_dead_letter_event(self, dead_event: DeadLetterEvent) -> None:
-        """Process events from dead letter queue"""
-        try:
+        """Process events from dead letter queue"""        try:
             # Log the failure for analysis
             logger.warning(f"Processing dead letter event: {dead_event.failure_reason}")
             
@@ -1372,8 +1315,7 @@ class EventStreamer:
             logger.error(f"Failed to process dead letter event: {e}")
             
     async def _check_circuit_breaker_health(self, subscription: EventSubscription) -> None:
-        """Check and update circuit breaker health"""
-        try:
+        """Check and update circuit breaker health"""        try:
             # Implement circuit breaker health checks
             # This would monitor success/failure rates and adjust states
             pass
@@ -1382,8 +1324,7 @@ class EventStreamer:
             logger.error(f"Circuit breaker health check error: {e}")
             
     async def _delivery_worker(self, worker_id: str) -> None:
-        """Enhanced delivery worker with advanced features"""
-        logger.info(f"Started enhanced delivery worker {worker_id}")
+        """Enhanced delivery worker with advanced features"""        logger.info(f"Started enhanced delivery worker {worker_id}")
         
         while not self._shutdown_event.is_set():
             try:
@@ -1414,8 +1355,7 @@ class EventStreamer:
         logger.info(f"Stopped enhanced delivery worker {worker_id}")
         
     async def _deliver_event_advanced(self, delivery_item: Dict[str, Any], subscription_id: str) -> None:
-        """Advanced event delivery with webhooks and circuit breakers"""
-        event = delivery_item["event"]
+        """Advanced event delivery with webhooks and circuit breakers"""        event = delivery_item["event"]
         subscription = delivery_item["subscription"]
         attempts = delivery_item["attempts"]
         
@@ -1491,8 +1431,7 @@ class EventStreamer:
             self._update_delivery_metrics_advanced(False, 0)
             
     def _update_delivery_metrics_advanced(self, success: bool, latency: float) -> None:
-        """Update advanced delivery performance metrics"""
-        if success:
+        """Update advanced delivery performance metrics"""        if success:
             # Update success rate with exponential moving average
             total_deliveries = self.metrics.total_events - self.metrics.failed_deliveries
             if total_deliveries > 0:
@@ -1513,8 +1452,7 @@ class EventStreamer:
                 self.metrics.delivery_success_rate = (success_count / total_attempts) * 100
                 
     async def _metrics_collector(self) -> None:
-        """Enhanced metrics collection with AI insights"""
-        last_event_count = 0
+        """Enhanced metrics collection with AI insights"""        last_event_count = 0
         last_timestamp = datetime.now(timezone.utc)
         
         while not self._shutdown_event.is_set():

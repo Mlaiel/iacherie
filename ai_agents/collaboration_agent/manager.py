@@ -1,5 +1,4 @@
-"""
-Collaboration Manager - Ultra-Advanced Enterprise Management System
+"""Collaboration Manager - Ultra-Advanced Enterprise Management System
 
 Unified interface for the entire collaboration system providing comprehensive
 control, monitoring, and optimization capabilities.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -38,15 +36,13 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class CollaborationSystemStatus:
-    """Overall collaboration system status"""
-    is_healthy: bool = True
+    """Overall collaboration system status"""    is_healthy: bool = True
     active_operations: int = 0
     system_load: float = 0.0
     last_updated: datetime = None
 
 class CollaborationManager(BaseAgent):
-    """
-    Master Collaboration Manager
+    """    Master Collaboration Manager
     
     Unified interface for the entire collaboration system providing:
     - Single point of control for all collaboration operations
@@ -55,8 +51,7 @@ class CollaborationManager(BaseAgent):
     - Performance analytics and reporting
     - Resource management and scaling
     - Error handling and recovery
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         
@@ -69,8 +64,7 @@ class CollaborationManager(BaseAgent):
         logger.info("CollaborationManager initialized")
 
     async def start(self) -> None:
-        """Start the complete collaboration system"""
-        if self.is_running:
+        """Start the complete collaboration system"""        if self.is_running:
             logger.warning("Collaboration system is already running")
             return
         
@@ -85,8 +79,7 @@ class CollaborationManager(BaseAgent):
             raise
 
     async def get_system_status(self) -> CollaborationSystemStatus:
-        """Get comprehensive system status"""
-        try:
+        """Get comprehensive system status"""        try:
             return CollaborationSystemStatus(
                 is_healthy=self.is_running,
                 active_operations=0,  # Implementation specific
@@ -98,15 +91,13 @@ class CollaborationManager(BaseAgent):
             return CollaborationSystemStatus(is_healthy=False)
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the entire collaboration system"""
-        logger.info("Shutting down Collaboration System...")
+        """Graceful shutdown of the entire collaboration system"""        logger.info("Shutting down Collaboration System...")
         self.is_running = False
         await self.engine.shutdown()
         logger.info("Collaboration System shutdown complete")
 
     async def process(self, data: Dict[str, Any]) -> AgentResponse:
-        """Base agent interface implementation"""
-        try:
+        """Base agent interface implementation"""        try:
             # Implementation specific to collaboration operations
             result = await self.engine.process(data)
             return AgentResponse(success=True, data=result)

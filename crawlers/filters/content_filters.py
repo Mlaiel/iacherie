@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Content Filters
+"""IA Influencer Agent - Content Filters
 ====================================
 
 Ultra-advanced professional content filtering system for multimedia analysis.
@@ -29,7 +28,6 @@ Technical Team Expertise:
 
 Project Owner: Fahed Mlaiel - mlaiel@live.de
 """
-
 import asyncio
 import logging
 import hashlib
@@ -48,8 +46,7 @@ from .filter_engine import FilterResponse, FilterResult, FilterType, ContentItem
 
 
 class ContentCategory(Enum):
-    """Content categories for filtering."""
-    MUSIC = "music"
+    """Content categories for filtering."""    MUSIC = "music"
     PODCAST = "podcast"
     SPEECH = "speech"
     VIDEO_MUSIC = "video_music"
@@ -63,8 +60,7 @@ class ContentCategory(Enum):
 
 
 class ContentComplexity(Enum):
-    """Content complexity levels."""
-    SIMPLE = "simple"
+    """Content complexity levels."""    SIMPLE = "simple"
     MODERATE = "moderate"
     COMPLEX = "complex"
     ULTRA_COMPLEX = "ultra_complex"
@@ -72,8 +68,7 @@ class ContentComplexity(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Content metadata structure."""
-    title: Optional[str] = None
+    """Content metadata structure."""    title: Optional[str] = None
     artist: Optional[str] = None
     genre: Optional[str] = None
     duration: Optional[float] = None
@@ -94,11 +89,9 @@ class ContentMetadata:
 
 
 class IntelligentContentAnalyzer:
-    """AI-powered content analysis system for advanced classification."""
-    
+    """AI-powered content analysis system for advanced classification."""    
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize intelligent content analyzer."""
-        self.config_manager = config_manager
+        """Initialize intelligent content analyzer."""        self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         
         # Content analysis patterns
@@ -138,8 +131,7 @@ class IntelligentContentAnalyzer:
         }
     
     async def analyze_content_comprehensive(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Perform comprehensive content analysis."""
-        try:
+        """Perform comprehensive content analysis."""        try:
             analysis_result = {
                 "content_type": await self._classify_content_type(content_item),
                 "category": await self._determine_content_category(content_item),
@@ -163,8 +155,7 @@ class IntelligentContentAnalyzer:
             return {"error": str(e), "timestamp": time.time()}
     
     async def _classify_content_type(self, content_item: ContentItem) -> str:
-        """Classify the basic content type."""
-        try:
+        """Classify the basic content type."""        try:
             mime_type = content_item.mime_type or mimetypes.guess_type(content_item.source_path or "")[0]
             
             if mime_type:
@@ -196,8 +187,7 @@ class IntelligentContentAnalyzer:
             return "unknown"
     
     async def _determine_content_category(self, content_item: ContentItem) -> ContentCategory:
-        """Determine specific content category."""
-        try:
+        """Determine specific content category."""        try:
             content_type = await self._classify_content_type(content_item)
             
             # Analyze content based on type
@@ -217,8 +207,7 @@ class IntelligentContentAnalyzer:
             return ContentCategory.UNKNOWN
     
     async def _categorize_audio_content(self, content_item: ContentItem) -> ContentCategory:
-        """Categorize audio content specifically."""
-        try:
+        """Categorize audio content specifically."""        try:
             # Analyze filename and metadata for clues
             filename = content_item.filename or ""
             metadata = content_item.metadata or {}
@@ -253,8 +242,7 @@ class IntelligentContentAnalyzer:
             return ContentCategory.MUSIC
     
     async def _categorize_video_content(self, content_item: ContentItem) -> ContentCategory:
-        """Categorize video content specifically."""
-        try:
+        """Categorize video content specifically."""        try:
             filename = content_item.filename or ""
             
             # Check for music video indicators
@@ -271,8 +259,7 @@ class IntelligentContentAnalyzer:
             return ContentCategory.VIDEO_CONTENT
     
     async def _categorize_image_content(self, content_item: ContentItem) -> ContentCategory:
-        """Categorize image content specifically."""
-        try:
+        """Categorize image content specifically."""        try:
             filename = content_item.filename or ""
             
             # Check for artwork indicators
@@ -289,8 +276,7 @@ class IntelligentContentAnalyzer:
             return ContentCategory.IMAGE_PHOTO
     
     async def _categorize_text_content(self, content_item: ContentItem) -> ContentCategory:
-        """Categorize text content specifically."""
-        try:
+        """Categorize text content specifically."""        try:
             filename = content_item.filename or ""
             content_text = str(content_item.raw_content or "")
             
@@ -314,8 +300,7 @@ class IntelligentContentAnalyzer:
             return ContentCategory.TEXT_LYRICS
     
     async def _assess_content_complexity(self, content_item: ContentItem) -> ContentComplexity:
-        """Assess the complexity level of content."""
-        try:
+        """Assess the complexity level of content."""        try:
             complexity_score = 0
             
             # File size indicator
@@ -353,8 +338,7 @@ class IntelligentContentAnalyzer:
             return ContentComplexity.MODERATE
     
     async def _extract_content_metadata(self, content_item: ContentItem) -> ContentMetadata:
-        """Extract comprehensive metadata from content."""
-        try:
+        """Extract comprehensive metadata from content."""        try:
             metadata = ContentMetadata()
             
             # Basic information
@@ -382,8 +366,7 @@ class IntelligentContentAnalyzer:
             return ContentMetadata()
     
     async def _extract_keywords(self, content_item: ContentItem) -> List[str]:
-        """Extract relevant keywords from content."""
-        keywords = []
+        """Extract relevant keywords from content."""        keywords = []
         
         try:
             # Extract from filename
@@ -411,8 +394,7 @@ class IntelligentContentAnalyzer:
             return []
     
     async def _generate_content_tags(self, content_item: ContentItem) -> List[str]:
-        """Generate relevant tags for content."""
-        tags = []
+        """Generate relevant tags for content."""        tags = []
         
         try:
             category = await self._determine_content_category(content_item)
@@ -440,8 +422,7 @@ class IntelligentContentAnalyzer:
             return []
     
     async def _calculate_quality_score(self, content_item: ContentItem) -> float:
-        """Calculate content quality score."""
-        try:
+        """Calculate content quality score."""        try:
             score = 0.5  # Base score
             
             # File size consideration
@@ -470,8 +451,7 @@ class IntelligentContentAnalyzer:
             return 0.5
     
     async def _calculate_authenticity_score(self, content_item: ContentItem) -> float:
-        """Calculate content authenticity score."""
-        try:
+        """Calculate content authenticity score."""        try:
             score = 0.7  # Base authenticity score
             
             # Check for suspicious patterns
@@ -496,8 +476,7 @@ class IntelligentContentAnalyzer:
             return 0.5
     
     async def _assess_content_quality(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Assess overall content quality."""
-        return {
+        """Assess overall content quality."""        return {
             "overall_score": await self._calculate_quality_score(content_item),
             "authenticity_score": await self._calculate_authenticity_score(content_item),
             "metadata_completeness": len(content_item.metadata or {}) / 10.0,
@@ -505,8 +484,7 @@ class IntelligentContentAnalyzer:
         }
     
     async def _assess_protection_needs(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Assess content protection requirements."""
-        category = await self._determine_content_category(content_item)
+        """Assess content protection requirements."""        category = await self._determine_content_category(content_item)
         quality_score = await self._calculate_quality_score(content_item)
         
         protection_level = "low"
@@ -524,8 +502,7 @@ class IntelligentContentAnalyzer:
         }
     
     async def _assess_monetization_potential(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Assess monetization potential."""
-        category = await self._determine_content_category(content_item)
+        """Assess monetization potential."""        category = await self._determine_content_category(content_item)
         quality_score = await self._calculate_quality_score(content_item)
         
         monetization_score = quality_score * 0.7
@@ -544,8 +521,7 @@ class IntelligentContentAnalyzer:
         }
     
     async def _recommend_monetization_platforms(self, category: ContentCategory) -> List[str]:
-        """Recommend monetization platforms based on content category."""
-        platforms = []
+        """Recommend monetization platforms based on content category."""        platforms = []
         
         if category == ContentCategory.MUSIC:
             platforms.extend(["spotify", "apple_music", "youtube_music", "bandcamp"])
@@ -561,8 +537,7 @@ class IntelligentContentAnalyzer:
         return platforms
     
     async def _identify_collaboration_opportunities(self, content_item: ContentItem) -> Dict[str, Any]:
-        """Identify potential collaboration opportunities."""
-        category = await self._determine_content_category(content_item)
+        """Identify potential collaboration opportunities."""        category = await self._determine_content_category(content_item)
         keywords = await self._extract_keywords(content_item)
         
         collaborations = {
@@ -586,8 +561,7 @@ class IntelligentContentAnalyzer:
         return collaborations
     
     async def _recommend_distribution_channels(self, content_item: ContentItem) -> List[str]:
-        """Recommend distribution channels."""
-        category = await self._determine_content_category(content_item)
+        """Recommend distribution channels."""        category = await self._determine_content_category(content_item)
         quality_score = await self._calculate_quality_score(content_item)
         
         channels = []
@@ -610,8 +584,7 @@ class IntelligentContentAnalyzer:
         return channels
     
     async def _generate_content_fingerprint(self, content_item: ContentItem, analysis: Dict[str, Any]) -> str:
-        """Generate unique content fingerprint."""
-        try:
+        """Generate unique content fingerprint."""        try:
             fingerprint_data = {
                 "filename": content_item.filename,
                 "size": content_item.size,
@@ -630,17 +603,14 @@ class IntelligentContentAnalyzer:
 
 
 class ContentFilterOrchestrator:
-    """Orchestrates all content filtering operations."""
-    
+    """Orchestrates all content filtering operations."""    
     def __init__(self, config_manager: FilterConfigManager):
-        """Initialize content filter orchestrator."""
-        self.config_manager = config_manager
+        """Initialize content filter orchestrator."""        self.config_manager = config_manager
         self.logger = logging.getLogger(__name__)
         self.analyzer = IntelligentContentAnalyzer(config_manager)
     
     async def process_content_comprehensive(self, content_item: ContentItem) -> FilterResponse:
-        """Process content through comprehensive filtering pipeline."""
-        try:
+        """Process content through comprehensive filtering pipeline."""        try:
             start_time = time.time()
             
             # Perform comprehensive analysis

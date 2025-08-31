@@ -1,5 +1,4 @@
-"""
-Contract Management - Enterprise Contract Lifecycle Management
+"""Contract Management - Enterprise Contract Lifecycle Management
 
 Ultra-advanced contract management system with automated workflows,
 digital signatures, compliance tracking, and AI-powered contract analysis.
@@ -26,7 +25,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
-
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, UniqueConstraint,
@@ -45,8 +43,7 @@ Base = declarative_base()
 
 
 class ContractType(Enum):
-    """Types of contracts in the system"""
-    LICENSE_AGREEMENT = "license_agreement"
+    """Types of contracts in the system"""    LICENSE_AGREEMENT = "license_agreement"
     COLLABORATION_AGREEMENT = "collaboration_agreement"
     DISTRIBUTION_AGREEMENT = "distribution_agreement"
     PUBLISHING_AGREEMENT = "publishing_agreement"
@@ -65,8 +62,7 @@ class ContractType(Enum):
 
 
 class ContractStatus(Enum):
-    """Contract lifecycle status"""
-    DRAFT = "draft"
+    """Contract lifecycle status"""    DRAFT = "draft"
     UNDER_REVIEW = "under_review"
     PENDING_APPROVAL = "pending_approval"
     UNDER_NEGOTIATION = "under_negotiation"
@@ -83,8 +79,7 @@ class ContractStatus(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Workflow step status"""
-    PENDING = "pending"
+    """Workflow step status"""    PENDING = "pending"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     SKIPPED = "skipped"
@@ -94,8 +89,7 @@ class WorkflowStatus(Enum):
 
 
 class SignatureType(Enum):
-    """Types of signatures"""
-    ELECTRONIC = "electronic"
+    """Types of signatures"""    ELECTRONIC = "electronic"
     DIGITAL = "digital"
     WET_SIGNATURE = "wet_signature"
     BIOMETRIC = "biometric"
@@ -104,8 +98,7 @@ class SignatureType(Enum):
 
 
 class ApprovalAction(Enum):
-    """Approval actions"""
-    APPROVE = "approve"
+    """Approval actions"""    APPROVE = "approve"
     REJECT = "reject"
     REQUEST_CHANGES = "request_changes"
     DELEGATE = "delegate"
@@ -114,13 +107,11 @@ class ApprovalAction(Enum):
 
 
 class Contract(Base):
-    """
-    Contract Model
+    """    Contract Model
     
     Comprehensive contract management with automated workflows,
     version control, digital signatures, and compliance tracking.
-    """
-    __tablename__ = "contracts"
+    """    __tablename__ = "contracts"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -255,8 +246,7 @@ class Contract(Base):
     
     @property
     def is_active(self) -> bool:
-        """Check if contract is currently active"""
-        now = datetime.utcnow()
+        """Check if contract is currently active"""        now = datetime.utcnow()
         return (
             self.contract_status == ContractStatus.ACTIVE and
             (self.effective_date is None or self.effective_date <= now) and
@@ -265,26 +255,22 @@ class Contract(Base):
     
     @property
     def days_until_expiration(self) -> Optional[int]:
-        """Calculate days until contract expiration"""
-        if self.expiration_date:
+        """Calculate days until contract expiration"""        if self.expiration_date:
             delta = self.expiration_date - datetime.utcnow()
             return max(0, delta.days)
         return None
     
     @property
     def is_renewable(self) -> bool:
-        """Check if contract can be renewed"""
-        return self.auto_renewal or self.contract_status == ContractStatus.ACTIVE
+        """Check if contract can be renewed"""        return self.auto_renewal or self.contract_status == ContractStatus.ACTIVE
 
 
 class ContractSignature(Base):
-    """
-    Contract Signature Model
+    """    Contract Signature Model
     
     Tracks digital signatures with advanced security, verification,
     and compliance features for legally binding agreements.
-    """
-    __tablename__ = "contract_signatures"
+    """    __tablename__ = "contract_signatures"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -371,13 +357,11 @@ class ContractSignature(Base):
 
 
 class ContractWorkflowStep(Base):
-    """
-    Contract Workflow Step Model
+    """    Contract Workflow Step Model
     
     Manages automated workflow steps for contract processing,
     approvals, and lifecycle management.
-    """
-    __tablename__ = "contract_workflow_steps"
+    """    __tablename__ = "contract_workflow_steps"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -451,13 +435,11 @@ class ContractWorkflowStep(Base):
 
 
 class ContractApproval(Base):
-    """
-    Contract Approval Model
+    """    Contract Approval Model
     
     Tracks approval decisions with detailed comments,
     conditions, and delegation history.
-    """
-    __tablename__ = "contract_approvals"
+    """    __tablename__ = "contract_approvals"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -522,13 +504,11 @@ class ContractApproval(Base):
 
 
 class ContractAmendment(Base):
-    """
-    Contract Amendment Model
+    """    Contract Amendment Model
     
     Tracks contract modifications, addendums, and change history
     with version control and approval workflows.
-    """
-    __tablename__ = "contract_amendments"
+    """    __tablename__ = "contract_amendments"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -601,8 +581,7 @@ class ContractAmendment(Base):
 # Event listeners for automatic processing
 @event.listens_for(Contract, 'before_insert')
 def generate_contract_number(mapper, connection, target):
-    """Generate contract number if not provided"""
-    if not target.contract_number:
+    """Generate contract number if not provided"""    if not target.contract_number:
         prefix = target.contract_type.value.upper()[:3]
         timestamp = datetime.utcnow().strftime('%Y%m%d')
         unique_id = str(uuid.uuid4())[:8].upper()
@@ -611,8 +590,7 @@ def generate_contract_number(mapper, connection, target):
 
 @event.listens_for(ContractAmendment, 'before_insert')
 def generate_amendment_number(mapper, connection, target):
-    """Generate amendment number if not provided"""
-    if not target.amendment_number:
+    """Generate amendment number if not provided"""    if not target.amendment_number:
         timestamp = datetime.utcnow().strftime('%Y%m%d')
         unique_id = str(uuid.uuid4())[:6].upper()
         target.amendment_number = f"AMD-{timestamp}-{unique_id}"

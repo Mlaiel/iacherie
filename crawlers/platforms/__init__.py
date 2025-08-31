@@ -22,8 +22,7 @@ Project Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: CI/CD and infrastructure automation
 - IA Prompt Engineer: Intelligent prompt optimization
-"""
-# Social Media Platforms
+"""# Social Media Platforms
 from .youtube_crawler import YouTubeCrawler
 from .instagram_crawler import InstagramCrawler
 from .tiktok_crawler import TikTokCrawler

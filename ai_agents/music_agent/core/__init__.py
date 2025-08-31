@@ -1,7 +1,5 @@
-"""
-Core module initialization
-"""
-from .spectral_analyzer import SpectralAnalyzer, SpectralFeatures, RealTimeAnalysisResult
+"""Core module initialization
+"""from .spectral_analyzer import SpectralAnalyzer, SpectralFeatures, RealTimeAnalysisResult
 
 __all__ = [
     'SpectralAnalyzer',

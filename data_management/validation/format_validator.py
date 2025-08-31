@@ -1,5 +1,4 @@
-"""
-🚀 Format Validation System - IA Influencer Agent Platform Enterprise
+"""🚀 Format Validation System - IA Influencer Agent Platform Enterprise
 ==================================================================
 Module: backend/data_management/validation/format_validator.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Validation avancée des formats pour tous types de créateurs
 - Validation headers et métadonnées
 - Support formats professionnels
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
 import asyncio
 import logging
@@ -56,8 +54,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class FormatValidationResult:
-    """Résultat de validation de format"""
-    is_valid: bool
+    """Résultat de validation de format"""    is_valid: bool
     format_detected: str
     mime_type: str
     file_extension: str
@@ -68,8 +65,7 @@ class FormatValidationResult:
     integrity_score: float  # 0.0 - 1.0
 
 class FormatDetector:
-    """Détecteur avancé de formats de fichiers"""
-    
+    """Détecteur avancé de formats de fichiers"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.FormatDetector")
         
@@ -108,8 +104,7 @@ class FormatDetector:
         }
     
     def detect_format(self, file_path: str) -> Tuple[str, str, Dict[str, Any]]:
-        """Détecte le format et le type MIME d'un fichier"""
-        metadata = {}
+        """Détecte le format et le type MIME d'un fichier"""        metadata = {}
         
         try:
             # 1. Détection par extension
@@ -158,8 +153,7 @@ class FormatDetector:
             return 'unknown', 'application/octet-stream', {'error': str(e)}
     
     def _validate_file_signature(self, file_path: str, format_name: str) -> bool:
-        """Valide la signature binaire du fichier"""
-        try:
+        """Valide la signature binaire du fichier"""        try:
             if format_name not in self.file_signatures:
                 return True  # Pas de signature à vérifier
             
@@ -181,8 +175,7 @@ class FormatDetector:
             return False
 
 class AudioFormatValidator:
-    """Validateur spécialisé pour formats audio"""
-    
+    """Validateur spécialisé pour formats audio"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.AudioFormatValidator")
         
@@ -197,8 +190,7 @@ class AudioFormatValidator:
         }
     
     def validate_audio_format(self, file_path: str, expected_format: str) -> FormatValidationResult:
-        """Valide un format audio spécifique"""
-        errors = []
+        """Valide un format audio spécifique"""        errors = []
         warnings = []
         metadata = {}
         
@@ -308,8 +300,7 @@ class AudioFormatValidator:
             )
     
     def _calculate_audio_integrity(self, file_path: str, metadata: Dict) -> float:
-        """Calcule le score d'intégrité du fichier audio"""
-        scores = []
+        """Calcule le score d'intégrité du fichier audio"""        scores = []
         
         # 1. Cohérence des métadonnées
         if 'duration' in metadata and metadata['duration'] > 0:
@@ -338,8 +329,7 @@ class AudioFormatValidator:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _detect_audio_format(self, file_path: str, metadata: Dict) -> str:
-        """Détecte le format audio réel"""
-        extension = Path(file_path).suffix.lower().lstrip('.')
+        """Détecte le format audio réel"""        extension = Path(file_path).suffix.lower().lstrip('.')
         
         # Validation basée sur les informations Mutagen
         if 'mutagen' in metadata:
@@ -407,8 +397,7 @@ class AudioFormatValidator:
         return extension if extension in self.supported_formats else 'unknown'
 
 class VideoFormatValidator:
-    """Validateur spécialisé pour formats vidéo"""
-    
+    """Validateur spécialisé pour formats vidéo"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.VideoFormatValidator")
         
@@ -422,8 +411,7 @@ class VideoFormatValidator:
         }
     
     def validate_video_format(self, file_path: str, expected_format: str) -> FormatValidationResult:
-        """Valide un format vidéo spécifique"""
-        errors = []
+        """Valide un format vidéo spécifique"""        errors = []
         warnings = []
         metadata = {}
         
@@ -530,8 +518,7 @@ class VideoFormatValidator:
             )
     
     def _calculate_video_integrity(self, file_path: str, metadata: Dict) -> float:
-        """Calcule le score d'intégrité du fichier vidéo"""
-        scores = []
+        """Calcule le score d'intégrité du fichier vidéo"""        scores = []
         
         # 1. Métadonnées valides
         if 'duration' in metadata and metadata['duration'] > 0:
@@ -568,8 +555,7 @@ class VideoFormatValidator:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _detect_video_format(self, file_path: str, metadata: Dict) -> str:
-        """Détecte le format vidéo réel"""
-        extension = Path(file_path).suffix.lower().lstrip('.')
+        """Détecte le format vidéo réel"""        extension = Path(file_path).suffix.lower().lstrip('.')
         
         # Validation basée sur fourcc et autres métadonnées
         if 'fourcc' in metadata:
@@ -674,8 +660,7 @@ class VideoFormatValidator:
         return extension if extension in self.supported_formats else 'unknown'
 
 class ImageFormatValidator:
-    """Validateur spécialisé pour formats image"""
-    
+    """Validateur spécialisé pour formats image"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.ImageFormatValidator")
         
@@ -692,8 +677,7 @@ class ImageFormatValidator:
         }
     
     def validate_image_format(self, file_path: str, expected_format: str) -> FormatValidationResult:
-        """Valide un format image spécifique"""
-        errors = []
+        """Valide un format image spécifique"""        errors = []
         warnings = []
         metadata = {}
         
@@ -796,8 +780,7 @@ class ImageFormatValidator:
             )
     
     def _calculate_image_integrity(self, file_path: str, metadata: Dict) -> float:
-        """Calcule le score d'intégrité du fichier image"""
-        scores = []
+        """Calcule le score d'intégrité du fichier image"""        scores = []
         
         # 1. Dimensions valides
         if 'width' in metadata and 'height' in metadata:
@@ -833,16 +816,14 @@ class ImageFormatValidator:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _detect_image_format(self, file_path: str, metadata: Dict) -> str:
-        """Détecte le format image réel"""
-        if 'pil_format' in metadata:
+        """Détecte le format image réel"""        if 'pil_format' in metadata:
             return metadata['pil_format']
         
         extension = Path(file_path).suffix.lower().lstrip('.')
         return extension if extension in self.supported_formats else 'unknown'
 
 class DocumentFormatValidator:
-    """Validateur spécialisé pour formats de documents"""
-    
+    """Validateur spécialisé pour formats de documents"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.DocumentFormatValidator")
         
@@ -858,8 +839,7 @@ class DocumentFormatValidator:
         }
     
     def validate_document_format(self, file_path: str, expected_format: str) -> FormatValidationResult:
-        """Valide un format de document spécifique"""
-        errors = []
+        """Valide un format de document spécifique"""        errors = []
         warnings = []
         metadata = {}
         
@@ -934,8 +914,7 @@ class DocumentFormatValidator:
             )
     
     def _validate_pdf(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
-        """Validation spécifique PDF"""
-        try:
+        """Validation spécifique PDF"""        try:
             with open(file_path, 'rb') as f:
                 pdf_reader = PyPDF2.PdfReader(f)
                 
@@ -967,8 +946,7 @@ class DocumentFormatValidator:
             errors.append(f"Erreur lecture PDF: {str(e)}")
     
     def _validate_docx(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
-        """Validation spécifique DOCX"""
-        try:
+        """Validation spécifique DOCX"""        try:
             doc = docx.Document(file_path)
             
             metadata.update({
@@ -999,8 +977,7 @@ class DocumentFormatValidator:
             errors.append(f"Erreur lecture DOCX: {str(e)}")
     
     def _validate_text(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
-        """Validation spécifique fichiers texte"""
-        try:
+        """Validation spécifique fichiers texte"""        try:
             encoding = metadata.get('detected_encoding', 'utf-8')
             
             with open(file_path, 'r', encoding=encoding, errors='ignore') as f:
@@ -1020,8 +997,7 @@ class DocumentFormatValidator:
             errors.append(f"Erreur lecture fichier texte: {str(e)}")
     
     def _validate_json(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
-        """Validation spécifique JSON"""
-        try:
+        """Validation spécifique JSON"""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 data = json.load(f)
             
@@ -1041,8 +1017,7 @@ class DocumentFormatValidator:
             errors.append(f"Erreur lecture JSON: {str(e)}")
     
     def _validate_xml(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
-        """Validation spécifique XML"""
-        try:
+        """Validation spécifique XML"""        try:
             import xml.etree.ElementTree as ET
             
             tree = ET.parse(file_path)
@@ -1060,8 +1035,7 @@ class DocumentFormatValidator:
             errors.append(f"Erreur lecture XML: {str(e)}")
     
     def _validate_html(self, file_path: str, metadata: Dict, errors: List[str], warnings: List[str]):
-        """Validation spécifique HTML"""
-        try:
+        """Validation spécifique HTML"""        try:
             from bs4 import BeautifulSoup
             
             with open(file_path, 'r', encoding='utf-8') as f:
@@ -1083,8 +1057,7 @@ class DocumentFormatValidator:
             warnings.append(f"Erreur parsing HTML: {str(e)}")
     
     def _calculate_document_integrity(self, file_path: str, metadata: Dict, format_name: str) -> float:
-        """Calcule le score d'intégrité du document"""
-        scores = []
+        """Calcule le score d'intégrité du document"""        scores = []
         
         # 1. Fichier lisible
         try:
@@ -1123,8 +1096,7 @@ class DocumentFormatValidator:
         return sum(scores) / len(scores) if scores else 0.0
     
     def _get_document_mime_type(self, format_name: str) -> str:
-        """Retourne le type MIME pour un format de document"""
-        mime_types = {
+        """Retourne le type MIME pour un format de document"""        mime_types = {
             'txt': 'text/plain',
             'md': 'text/markdown',
             'html': 'text/html',
@@ -1138,8 +1110,7 @@ class DocumentFormatValidator:
         return mime_types.get(format_name, 'application/octet-stream')
 
 class FormatValidator:
-    """Validateur principal de formats"""
-    
+    """Validateur principal de formats"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.FormatValidator")
         
@@ -1159,8 +1130,7 @@ class FormatValidator:
         }
     
     def validate_format(self, file_path: str, expected_content_type: Optional[str] = None) -> FormatValidationResult:
-        """Valide le format d'un fichier"""
-        
+        """Valide le format d'un fichier"""        
         if not os.path.exists(file_path):
             return FormatValidationResult(
                 is_valid=False,
@@ -1224,8 +1194,7 @@ class FormatValidator:
             )
     
     def _determine_content_type(self, format_name: str, expected_type: Optional[str]) -> str:
-        """Détermine le type de contenu basé sur le format détecté"""
-        
+        """Détermine le type de contenu basé sur le format détecté"""        
         # Si un type est attendu, vérifier la cohérence
         if expected_type:
             expected_formats = self.content_type_mapping.get(expected_type, [])
@@ -1240,15 +1209,13 @@ class FormatValidator:
         return 'unknown'
 
 class AsyncFormatValidator:
-    """Version asynchrone du validateur de formats"""
-    
+    """Version asynchrone du validateur de formats"""    
     def __init__(self):
         self.sync_validator = FormatValidator()
         self.logger = logging.getLogger(f"{__name__}.AsyncFormatValidator")
     
     async def validate_format(self, file_path: str, expected_content_type: Optional[str] = None) -> FormatValidationResult:
-        """Valide le format de manière asynchrone"""
-        loop = asyncio.get_event_loop()
+        """Valide le format de manière asynchrone"""        loop = asyncio.get_event_loop()
         
         result = await loop.run_in_executor(
             None,
@@ -1260,8 +1227,7 @@ class AsyncFormatValidator:
         return result
     
     async def validate_batch(self, file_paths: List[str], expected_types: Optional[List[str]] = None) -> Dict[str, FormatValidationResult]:
-        """Valide un lot de fichiers de manière asynchrone"""
-        if expected_types is None:
+        """Valide un lot de fichiers de manière asynchrone"""        if expected_types is None:
             expected_types = [None] * len(file_paths)
         
         # Création des tâches asynchrones

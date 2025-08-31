@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Content Module Health Check & Verification System
+"""Content Module Health Check & Verification System
 ================================================
 
 Comprehensive system health monitoring and verification for all content management engines
@@ -17,7 +16,6 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
-
 import os
 import sys
 import asyncio
@@ -40,8 +38,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentModuleHealthCheck:
-    """Comprehensive health check system for content management module."""
-    
+    """Comprehensive health check system for content management module."""    
     def __init__(self):
         self.start_time = time.time()
         self.health_results = {}
@@ -65,8 +62,7 @@ class ContentModuleHealthCheck:
         }
     
     async def run_comprehensive_health_check(self) -> Dict[str, Any]:
-        """Execute comprehensive health check across all systems."""
-        logger.info("🔍 Starting Comprehensive Health Check...")
+        """Execute comprehensive health check across all systems."""        logger.info("🔍 Starting Comprehensive Health Check...")
         
         # Phase 1: Module Integrity Check
         module_check = await self._check_module_integrity()
@@ -103,8 +99,7 @@ class ContentModuleHealthCheck:
         return final_report
     
     async def _check_module_integrity(self) -> Dict[str, Any]:
-        """Check integrity of all module files and dependencies."""
-        logger.info("🔧 Checking Module Integrity...")
+        """Check integrity of all module files and dependencies."""        logger.info("🔧 Checking Module Integrity...")
         
         results = {
             'status': 'passed',
@@ -165,8 +160,7 @@ class ContentModuleHealthCheck:
         return results
     
     async def _check_engine_functionality(self) -> Dict[str, Any]:
-        """Check basic functionality of each engine."""
-        logger.info("⚙️ Checking Engine Functionality...")
+        """Check basic functionality of each engine."""        logger.info("⚙️ Checking Engine Functionality...")
         
         results = {
             'status': 'passed',
@@ -223,8 +217,7 @@ class ContentModuleHealthCheck:
         return results
     
     async def _run_performance_benchmarks(self) -> Dict[str, Any]:
-        """Run basic performance benchmarks."""
-        logger.info("⏱️ Running Performance Benchmarks...")
+        """Run basic performance benchmarks."""        logger.info("⏱️ Running Performance Benchmarks...")
         
         results = {
             'status': 'passed',
@@ -270,8 +263,7 @@ class ContentModuleHealthCheck:
         return results
     
     async def _benchmark_file_io(self) -> Dict[str, Any]:
-        """Benchmark file I/O operations."""
-        try:
+        """Benchmark file I/O operations."""        try:
             # Write test
             test_data = "x" * 10000  # 10KB test data
             test_file = Path("temp_benchmark.txt")
@@ -301,8 +293,7 @@ class ContentModuleHealthCheck:
             }
     
     async def _benchmark_memory(self) -> Dict[str, Any]:
-        """Benchmark memory allocation."""
-        try:
+        """Benchmark memory allocation."""        try:
             # Allocate memory
             start_memory = psutil.Process().memory_info().rss
             
@@ -328,8 +319,7 @@ class ContentModuleHealthCheck:
             }
     
     async def _benchmark_json_processing(self) -> Dict[str, Any]:
-        """Benchmark JSON processing."""
-        try:
+        """Benchmark JSON processing."""        try:
             # Create test data
             test_data = {
                 'users': [{'id': i, 'name': f'User{i}', 'data': list(range(100))} for i in range(1000)]
@@ -358,8 +348,7 @@ class ContentModuleHealthCheck:
             }
     
     async def _run_integration_tests(self) -> Dict[str, Any]:
-        """Run basic integration tests."""
-        logger.info("🔗 Running Integration Tests...")
+        """Run basic integration tests."""        logger.info("🔗 Running Integration Tests...")
         
         results = {
             'status': 'passed',
@@ -424,8 +413,7 @@ class ContentModuleHealthCheck:
         return results
     
     async def _validate_security(self) -> Dict[str, Any]:
-        """Validate security configurations."""
-        logger.info("🔒 Validating Security...")
+        """Validate security configurations."""        logger.info("🔒 Validating Security...")
         
         results = {
             'status': 'passed',
@@ -456,8 +444,7 @@ class ContentModuleHealthCheck:
         return results
     
     async def _assess_resource_usage(self) -> Dict[str, Any]:
-        """Assess current resource usage."""
-        logger.info("📊 Assessing Resource Usage...")
+        """Assess current resource usage."""        logger.info("📊 Assessing Resource Usage...")
         
         process = psutil.Process()
         
@@ -472,8 +459,7 @@ class ContentModuleHealthCheck:
         }
     
     async def _validate_configuration(self) -> Dict[str, Any]:
-        """Validate system configuration."""
-        logger.info("⚙️ Validating Configuration...")
+        """Validate system configuration."""        logger.info("⚙️ Validating Configuration...")
         
         results = {
             'status': 'passed',
@@ -514,8 +500,7 @@ class ContentModuleHealthCheck:
         return results
     
     async def _compile_health_report(self, check_results: Dict[str, Any]) -> Dict[str, Any]:
-        """Compile final health report."""
-        logger.info("📋 Compiling Health Report...")
+        """Compile final health report."""        logger.info("📋 Compiling Health Report...")
         
         total_time = time.time() - self.start_time
         
@@ -551,8 +536,7 @@ class ContentModuleHealthCheck:
         return report
     
     def _generate_recommendations(self, status: str, results: Dict[str, Any]) -> List[str]:
-        """Generate actionable recommendations."""
-        recommendations = []
+        """Generate actionable recommendations."""        recommendations = []
         
         if status == 'critical':
             recommendations.append("❗ CRITICAL: Address all failed engine imports immediately")
@@ -590,8 +574,7 @@ class ContentModuleHealthCheck:
         return recommendations
     
     def save_report(self, report: Dict[str, Any]):
-        """Save health check report."""
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        """Save health check report."""        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         report_file = f"health_check_report_{timestamp}.json"
         
         # Create reports directory
@@ -606,8 +589,7 @@ class ContentModuleHealthCheck:
         return report_path
     
     def print_health_summary(self, report: Dict[str, Any]):
-        """Print formatted health summary."""
-        summary = report['health_check_summary']
+        """Print formatted health summary."""        summary = report['health_check_summary']
         
         # Status emoji mapping
         status_emoji = {
@@ -616,8 +598,7 @@ class ContentModuleHealthCheck:
             'critical': '❌'
         }
         
-        print(f"""
-╔══════════════════════════════════════════════════════════════════════════════╗
+        print(f"""╔══════════════════════════════════════════════════════════════════════════════╗
 ║                        CONTENT MODULE HEALTH REPORT                         ║
 ╠══════════════════════════════════════════════════════════════════════════════╣
 ║                                                                              ║
@@ -652,9 +633,7 @@ class ContentModuleHealthCheck:
 
 
 async def main():
-    """Main health check execution."""
-    print("""
-╔══════════════════════════════════════════════════════════════════════════════╗
+    """Main health check execution."""    print("""╔══════════════════════════════════════════════════════════════════════════════╗
 ║               IA Influencer Agent - Content Module Health Check             ║
 ║                                                                              ║
 ║  Author: Fahed Mlaiel <mlaiel@live.de>                                      ║

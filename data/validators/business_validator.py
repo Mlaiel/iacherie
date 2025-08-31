@@ -1,5 +1,4 @@
-"""
-Business Validator - Industrial business rules validation for IA Influencer Agent Platform
+"""Business Validator - Industrial business rules validation for IA Influencer Agent Platform
 ==========================================================================================
 
 Comprehensive business logic validation system for creator workflows, monetization rules,
@@ -20,7 +19,6 @@ Features:
 - Automated workflow orchestration
 - Real-time business intelligence
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Set, Tuple
@@ -48,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessRuleType(Enum):
-    """Types of business rules for creator workflows."""
-    CONTENT_POLICY = "content_policy"
+    """Types of business rules for creator workflows."""    CONTENT_POLICY = "content_policy"
     MONETIZATION = "monetization"
     PLATFORM_COMPLIANCE = "platform_compliance"
     QUALITY_STANDARDS = "quality_standards"
@@ -67,8 +64,7 @@ class BusinessRuleType(Enum):
 
 
 class RuleSeverity(Enum):
-    """Business rule violation severity levels."""
-    INFO = "info"
+    """Business rule violation severity levels."""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -76,8 +72,7 @@ class RuleSeverity(Enum):
 
 
 class ValidationContext(Enum):
-    """Validation context for business rules."""
-    UPLOAD = "upload"
+    """Validation context for business rules."""    UPLOAD = "upload"
     PUBLISH = "publish"
     MONETIZE = "monetize"
     COLLABORATE = "collaborate"
@@ -87,8 +82,7 @@ class ValidationContext(Enum):
 
 
 class CreatorType(Enum):
-    """Creator types for specialized validation."""
-    MUSICIAN = "musician"
+    """Creator types for specialized validation."""    MUSICIAN = "musician"
     PODCASTER = "podcaster"
     VIDEO_CREATOR = "video_creator"
     PHOTOGRAPHER = "photographer"
@@ -101,8 +95,7 @@ class CreatorType(Enum):
 
 
 class MonetizationModel(Enum):
-    """Monetization models supported."""
-    SUBSCRIPTION = "subscription"
+    """Monetization models supported."""    SUBSCRIPTION = "subscription"
     PAY_PER_VIEW = "pay_per_view"
     ADVERTISING = "advertising"
     SPONSORSHIP = "sponsorship"
@@ -115,8 +108,7 @@ class MonetizationModel(Enum):
 
 
 class PlatformType(Enum):
-    """Platform types for compliance."""
-    MUSIC_STREAMING = "music_streaming"  # Spotify, Apple Music
+    """Platform types for compliance."""    MUSIC_STREAMING = "music_streaming"  # Spotify, Apple Music
     VIDEO_PLATFORM = "video_platform"    # YouTube, Vimeo
     SOCIAL_MEDIA = "social_media"        # Instagram, TikTok
     PODCAST_PLATFORM = "podcast_platform" # Apple Podcasts, Spotify
@@ -126,8 +118,7 @@ class PlatformType(Enum):
 
 
 class CollaborationType(Enum):
-    """Types of collaborations."""
-    FEATURE = "feature"                  # Featured artist
+    """Types of collaborations."""    FEATURE = "feature"                  # Featured artist
     REMIX = "remix"                      # Remix collaboration
     SPLIT = "split"                      # Revenue split
     LICENSING = "licensing"              # Licensing deal
@@ -138,8 +129,7 @@ class CollaborationType(Enum):
 
 @dataclass
 class BusinessRule:
-    """Enhanced business rule definition."""
-    rule_id: str
+    """Enhanced business rule definition."""    rule_id: str
     rule_type: BusinessRuleType
     name: str
     description: str
@@ -180,8 +170,7 @@ class BusinessRule:
 
 @dataclass
 class BusinessRuleResult:
-    """Enhanced business rule validation result."""
-    rule_id: str
+    """Enhanced business rule validation result."""    rule_id: str
     rule_name: str
     passed: bool
     severity: RuleSeverity
@@ -212,8 +201,7 @@ class BusinessRuleResult:
 
 @dataclass
 class CreatorProfile:
-    """Enhanced creator profile for business validation."""
-    creator_id: str
+    """Enhanced creator profile for business validation."""    creator_id: str
     creator_type: CreatorType
     name: str
     email: str
@@ -270,8 +258,7 @@ class CreatorProfile:
 
 @dataclass
 class ContentLicensingInfo:
-    """Content licensing and rights information."""
-    license_id: str
+    """Content licensing and rights information."""    license_id: str
     content_id: str
     
     # Rights information
@@ -302,8 +289,7 @@ class ContentLicensingInfo:
 
 @dataclass
 class MonetizationEligibility:
-    """Monetization eligibility assessment."""
-    creator_id: str
+    """Monetization eligibility assessment."""    creator_id: str
     platform: PlatformType
     monetization_model: MonetizationModel
     
@@ -329,8 +315,7 @@ class MonetizationEligibility:
 
 
 class BusinessValidator:
-    """
-    Industrial-grade business validator for the IA Influencer Agent Platform.
+    """    Industrial-grade business validator for the IA Influencer Agent Platform.
     
     Provides comprehensive business logic validation for creator workflows,
     monetization optimization, platform compliance, and revenue maximization.
@@ -344,8 +329,7 @@ class BusinessValidator:
     - Performance metrics and business intelligence
     - Automated workflow orchestration
     - Real-time business rule execution
-    """
-    
+    """    
     VERSION = "2.0.0"
     
     def __init__(
@@ -354,15 +338,13 @@ class BusinessValidator:
         enable_analytics: bool = True,
         enable_automation: bool = True
     ):
-        """
-        Initialize business validator.
+        """        Initialize business validator.
         
         Args:
             config: Validator configuration
             enable_analytics: Enable business analytics features
             enable_automation: Enable workflow automation
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.enable_analytics = enable_analytics and ANALYTICS_FEATURES
         self.enable_automation = enable_automation
         
@@ -395,8 +377,7 @@ class BusinessValidator:
         logger.info(f"Automation: {'Enabled' if self.enable_automation else 'Disabled'}")
     
     def _initialize_builtin_rules(self) -> None:
-        """Initialize built-in business rules."""
-        try:
+        """Initialize built-in business rules."""        try:
             # Creator eligibility rules
             self._register_creator_eligibility_rules()
             
@@ -430,8 +411,7 @@ class BusinessValidator:
             logger.error(f"Failed to initialize built-in rules: {e}")
     
     def _register_creator_eligibility_rules(self) -> None:
-        """Register creator eligibility validation rules."""
-        
+        """Register creator eligibility validation rules."""        
         # Profile completeness rule
         self.register_rule(BusinessRule(
             rule_id="creator_profile_complete",
@@ -491,8 +471,7 @@ class BusinessValidator:
         ))
     
     def _register_monetization_rules(self) -> None:
-        """Register monetization validation rules."""
-        
+        """Register monetization validation rules."""        
         # Revenue sharing validation
         self.register_rule(BusinessRule(
             rule_id="revenue_sharing_valid",
@@ -552,8 +531,7 @@ class BusinessValidator:
         ))
     
     def _register_platform_compliance_rules(self) -> None:
-        """Register platform compliance validation rules."""
-        
+        """Register platform compliance validation rules."""        
         # Content length compliance
         self.register_rule(BusinessRule(
             rule_id="content_length_compliance",
@@ -616,8 +594,7 @@ class BusinessValidator:
         ))
     
     def _register_content_policy_rules(self) -> None:
-        """Register content policy validation rules."""
-        
+        """Register content policy validation rules."""        
         # Age restriction compliance
         self.register_rule(BusinessRule(
             rule_id="age_restriction_compliance",
@@ -657,8 +634,7 @@ class BusinessValidator:
         ))
     
     def _register_quality_standards_rules(self) -> None:
-        """Register quality standards validation rules."""
-        
+        """Register quality standards validation rules."""        
         # Minimum quality threshold
         self.register_rule(BusinessRule(
             rule_id="minimum_quality_threshold",
@@ -697,8 +673,7 @@ class BusinessValidator:
         ))
     
     def _register_copyright_licensing_rules(self) -> None:
-        """Register copyright and licensing validation rules."""
-        
+        """Register copyright and licensing validation rules."""        
         # Copyright clearance
         self.register_rule(BusinessRule(
             rule_id="copyright_clearance_required",
@@ -738,8 +713,7 @@ class BusinessValidator:
         ))
     
     def _register_collaboration_rules(self) -> None:
-        """Register collaboration validation rules."""
-        
+        """Register collaboration validation rules."""        
         # Collaboration agreement validation
         self.register_rule(BusinessRule(
             rule_id="collaboration_agreement_valid",
@@ -777,8 +751,7 @@ class BusinessValidator:
         ))
     
     def _register_brand_safety_rules(self) -> None:
-        """Register brand safety validation rules."""
-        
+        """Register brand safety validation rules."""        
         # Brand safety score threshold
         self.register_rule(BusinessRule(
             rule_id="brand_safety_threshold",
@@ -798,8 +771,7 @@ class BusinessValidator:
         ))
     
     def _register_performance_rules(self) -> None:
-        """Register performance validation rules."""
-        
+        """Register performance validation rules."""        
         # Performance metrics threshold
         self.register_rule(BusinessRule(
             rule_id="performance_metrics_threshold",
@@ -826,8 +798,7 @@ class BusinessValidator:
         target_platforms: Optional[List[PlatformType]] = None,
         **kwargs
     ) -> List[BusinessRuleResult]:
-        """
-        Validate business rules for given data and context.
+        """        Validate business rules for given data and context.
         
         Args:
             data: Data to validate
@@ -838,8 +809,7 @@ class BusinessValidator:
             
         Returns:
             List of business rule validation results
-        """
-        validation_start = time.time()
+        """        validation_start = time.time()
         
         try:
             self._stats["total_validations"] += 1
@@ -903,8 +873,7 @@ class BusinessValidator:
 
 @dataclass
 class BusinessRule:
-    """Individual business rule definition."""
-    rule_id: str
+    """Individual business rule definition."""    rule_id: str
     rule_type: BusinessRuleType
     name: str
     description: str
@@ -933,8 +902,7 @@ class BusinessRule:
 
 @dataclass
 class BusinessRuleViolation:
-    """Business rule violation."""
-    rule: BusinessRule
+    """Business rule violation."""    rule: BusinessRule
     field_path: str
     violation_message: str
     
@@ -954,8 +922,7 @@ class BusinessRuleViolation:
 
 @dataclass
 class BusinessValidationResult:
-    """Comprehensive business validation result."""
-    is_compliant: bool
+    """Comprehensive business validation result."""    is_compliant: bool
     total_rules_checked: int
     
     # Validation context
@@ -992,26 +959,22 @@ class BusinessValidationResult:
 
 
 class BusinessValidator:
-    """
-    Business rules validator for the IA Influencer Agent Platform.
+    """    Business rules validator for the IA Influencer Agent Platform.
     
     Validates content and creator data against business rules,
     platform policies, and monetization requirements.
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[Dict[str, Any]] = None,
         rules_file: Optional[str] = None
     ):
-        """
-        Initialize business validator.
+        """        Initialize business validator.
         
         Args:
             config: Validator configuration
             rules_file: Path to business rules file
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.rules_file = rules_file
         
         # Business rules registry
@@ -1042,8 +1005,7 @@ class BusinessValidator:
         target_platforms: Optional[List[str]] = None,
         creator_data: Optional[Dict[str, Any]] = None
     ) -> BusinessValidationResult:
-        """
-        Validate content against business rules.
+        """        Validate content against business rules.
         
         Args:
             content_data: Content data to validate
@@ -1053,8 +1015,7 @@ class BusinessValidator:
             
         Returns:
             Business validation result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             result = BusinessValidationResult(
@@ -1117,8 +1078,7 @@ class BusinessValidator:
         creator_data: Dict[str, Any],
         eligibility_type: str = "general"
     ) -> BusinessValidationResult:
-        """
-        Validate creator eligibility for platform features.
+        """        Validate creator eligibility for platform features.
         
         Args:
             creator_data: Creator data to validate
@@ -1126,8 +1086,7 @@ class BusinessValidator:
             
         Returns:
             Business validation result
-        """
-        try:
+        """        try:
             result = BusinessValidationResult(
                 is_compliant=True,
                 total_rules_checked=0,
@@ -1165,8 +1124,7 @@ class BusinessValidator:
         monetization_data: Dict[str, Any],
         creator_data: Dict[str, Any]
     ) -> BusinessValidationResult:
-        """
-        Validate monetization setup and configuration.
+        """        Validate monetization setup and configuration.
         
         Args:
             monetization_data: Monetization configuration
@@ -1174,8 +1132,7 @@ class BusinessValidator:
             
         Returns:
             Business validation result
-        """
-        try:
+        """        try:
             result = BusinessValidationResult(
                 is_compliant=True,
                 total_rules_checked=0,
@@ -1221,8 +1178,7 @@ class BusinessValidator:
         content_data: Dict[str, Any],
         platform: str
     ) -> BusinessValidationResult:
-        """
-        Check compliance with specific platform policies.
+        """        Check compliance with specific platform policies.
         
         Args:
             content_data: Content data
@@ -1230,8 +1186,7 @@ class BusinessValidator:
             
         Returns:
             Business validation result
-        """
-        try:
+        """        try:
             result = BusinessValidationResult(
                 is_compliant=True,
                 total_rules_checked=0,
@@ -1280,8 +1235,7 @@ class BusinessValidator:
         target_goals: List[str],
         creator_profile: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """
-        Get business recommendations for content optimization.
+        """        Get business recommendations for content optimization.
         
         Args:
             content_data: Content data
@@ -1290,8 +1244,7 @@ class BusinessValidator:
             
         Returns:
             List of business recommendations
-        """
-        try:
+        """        try:
             recommendations = []
             
             # Goal-specific recommendations
@@ -1335,8 +1288,7 @@ class BusinessValidator:
         target_platforms: Optional[List[str]] = None,
         creator_data: Optional[Dict[str, Any]] = None
     ) -> List[BusinessRuleViolation]:
-        """Validate a single business rule."""
-        violations = []
+        """Validate a single business rule."""        violations = []
         
         try:
             if not rule.is_active:
@@ -1391,8 +1343,7 @@ class BusinessValidator:
         creator_data: Dict[str, Any],
         eligibility_type: str
     ) -> List[BusinessRuleViolation]:
-        """Validate creator-specific rule."""
-        violations = []
+        """Validate creator-specific rule."""        violations = []
         
         try:
             if not rule.is_active:
@@ -1422,8 +1373,7 @@ class BusinessValidator:
         monetization_data: Dict[str, Any],
         creator_data: Dict[str, Any]
     ) -> List[BusinessRuleViolation]:
-        """Validate monetization-specific rule."""
-        violations = []
+        """Validate monetization-specific rule."""        violations = []
         
         try:
             if not rule.is_active:
@@ -1455,8 +1405,7 @@ class BusinessValidator:
         creator_data: Optional[Dict[str, Any]],
         context: ValidationContext
     ) -> Optional[BusinessRuleViolation]:
-        """Evaluate rule expression."""
-        try:
+        """Evaluate rule expression."""        try:
             # This would implement expression evaluation
             # For now, return None (no violation)
             return None
@@ -1466,8 +1415,7 @@ class BusinessValidator:
             return None
     
     async def _categorize_violations(self, result: BusinessValidationResult):
-        """Categorize violations by severity."""
-        try:
+        """Categorize violations by severity."""        try:
             for violation in result.violations:
                 severity = violation.rule.severity
                 
@@ -1491,8 +1439,7 @@ class BusinessValidator:
         target_platforms: List[str],
         result: BusinessValidationResult
     ):
-        """Check platform-specific compliance."""
-        try:
+        """Check platform-specific compliance."""        try:
             for platform in target_platforms:
                 is_compliant = True
                 
@@ -1529,8 +1476,7 @@ class BusinessValidator:
         creator_data: Optional[Dict[str, Any]],
         result: BusinessValidationResult
     ):
-        """Check monetization eligibility."""
-        try:
+        """Check monetization eligibility."""        try:
             is_eligible = True
             
             # Basic content requirements
@@ -1561,8 +1507,7 @@ class BusinessValidator:
         content_data: Dict[str, Any],
         result: BusinessValidationResult
     ):
-        """Assess content quality metrics."""
-        try:
+        """Assess content quality metrics."""        try:
             quality_assessment = {}
             
             # Technical quality
@@ -1601,8 +1546,7 @@ class BusinessValidator:
             logger.error(f"Content quality assessment failed: {str(e)}")
     
     async def _calculate_compliance_score(self, result: BusinessValidationResult) -> float:
-        """Calculate overall compliance score."""
-        try:
+        """Calculate overall compliance score."""        try:
             if result.total_rules_checked == 0:
                 return 100.0
             
@@ -1632,8 +1576,7 @@ class BusinessValidator:
             return 50.0
     
     async def _calculate_risk_level(self, result: BusinessValidationResult) -> str:
-        """Calculate risk level."""
-        try:
+        """Calculate risk level."""        try:
             if result.blocking_violations:
                 return "critical"
             elif result.critical_violations:
@@ -1649,8 +1592,7 @@ class BusinessValidator:
             return "unknown"
     
     async def _generate_business_recommendations(self, result: BusinessValidationResult):
-        """Generate business recommendations."""
-        try:
+        """Generate business recommendations."""        try:
             recommendations = []
             required_actions = []
             
@@ -1697,8 +1639,7 @@ class BusinessValidator:
         content_data: Dict[str, Any],
         creator_profile: Optional[Dict[str, Any]]
     ) -> List[str]:
-        """Get monetization-specific recommendations."""
-        recommendations = []
+        """Get monetization-specific recommendations."""        recommendations = []
         
         try:
             # Quality recommendations
@@ -1728,8 +1669,7 @@ class BusinessValidator:
             return []
     
     async def _get_engagement_recommendations(self, content_data: Dict[str, Any]) -> List[str]:
-        """Get engagement-specific recommendations."""
-        recommendations = []
+        """Get engagement-specific recommendations."""        recommendations = []
         
         try:
             # Title optimization
@@ -1757,8 +1697,7 @@ class BusinessValidator:
             return []
     
     async def _get_reach_recommendations(self, content_data: Dict[str, Any]) -> List[str]:
-        """Get reach-specific recommendations."""
-        recommendations = []
+        """Get reach-specific recommendations."""        recommendations = []
         
         try:
             # SEO optimization
@@ -1784,8 +1723,7 @@ class BusinessValidator:
             return []
     
     async def _get_quality_recommendations(self, content_data: Dict[str, Any]) -> List[str]:
-        """Get quality-specific recommendations."""
-        recommendations = []
+        """Get quality-specific recommendations."""        recommendations = []
         
         try:
             # Technical quality
@@ -1815,8 +1753,7 @@ class BusinessValidator:
         context: ValidationContext,
         target_platforms: Optional[List[str]]
     ) -> List[BusinessRule]:
-        """Filter rules applicable to current validation."""
-        try:
+        """Filter rules applicable to current validation."""        try:
             applicable_rules = []
             
             for rule in self.business_rules:
@@ -1850,8 +1787,7 @@ class BusinessValidator:
             return []
     
     def _create_error_result(self, error_message: str, context: ValidationContext) -> BusinessValidationResult:
-        """Create error validation result."""
-        return BusinessValidationResult(
+        """Create error validation result."""        return BusinessValidationResult(
             is_compliant=False,
             total_rules_checked=0,
             validation_context=context,
@@ -1870,8 +1806,7 @@ class BusinessValidator:
         )
     
     def _init_business_rules(self) -> List[BusinessRule]:
-        """Initialize business rules."""
-        rules = []
+        """Initialize business rules."""        rules = []
         
         # Content quality rules
         rules.append(BusinessRule(
@@ -1922,8 +1857,7 @@ class BusinessValidator:
         return rules
     
     def _init_platform_policies(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize platform-specific policies."""
-        return {
+        """Initialize platform-specific policies."""        return {
             "youtube": {
                 "max_file_size": 12 * 1024 * 1024 * 1024,  # 12GB
                 "max_duration": 12 * 3600,  # 12 hours
@@ -1945,8 +1879,7 @@ class BusinessValidator:
         }
     
     def _init_monetization_rules(self) -> Dict[str, Any]:
-        """Initialize monetization rules."""
-        return {
+        """Initialize monetization rules."""        return {
             "min_quality_score": 70,
             "min_subscriber_count": 1000,
             "required_account_status": "verified",
@@ -1955,8 +1888,7 @@ class BusinessValidator:
         }
     
     def _init_quality_standards(self) -> Dict[str, Any]:
-        """Initialize quality standards."""
-        return {
+        """Initialize quality standards."""        return {
             "min_overall_score": 60,
             "min_technical_score": 50,
             "min_seo_score": 40,
@@ -1964,8 +1896,7 @@ class BusinessValidator:
         }
     
     def _init_content_policies(self) -> Dict[str, Any]:
-        """Initialize content policies."""
-        return {
+        """Initialize content policies."""        return {
             "required_fields": ["title", "content_type", "creator_id"],
             "max_title_length": 200,
             "max_description_length": 5000,
@@ -1974,8 +1905,7 @@ class BusinessValidator:
         }
     
     def _load_custom_rules(self, rules_file: str):
-        """Load custom business rules from file."""
-        try:
+        """Load custom business rules from file."""        try:
             if Path(rules_file).exists():
                 with open(rules_file, 'r') as f:
                     custom_rules_data = json.load(f)
@@ -1987,8 +1917,7 @@ class BusinessValidator:
     
     # Rule validation functions
     async def _validate_quality_score(self, content_data: Dict[str, Any], creator_data: Optional[Dict[str, Any]], context: ValidationContext) -> Optional[Dict[str, Any]]:
-        """Validate content quality score."""
-        quality_score = content_data.get("quality_score", 0)
+        """Validate content quality score."""        quality_score = content_data.get("quality_score", 0)
         min_score = self.quality_standards["min_overall_score"]
         
         if quality_score < min_score:
@@ -2001,13 +1930,11 @@ class BusinessValidator:
         return None
     
     async def _validate_monetization_quality(self, monetization_data: Dict[str, Any], creator_data: Dict[str, Any]) -> Optional[Dict[str, Any]]:
-        """Validate monetization quality requirements."""
-        # This would be implemented based on specific monetization rules
+        """Validate monetization quality requirements."""        # This would be implemented based on specific monetization rules
         return None
     
     async def _validate_youtube_duration(self, content_data: Dict[str, Any], creator_data: Optional[Dict[str, Any]], context: ValidationContext) -> Optional[Dict[str, Any]]:
-        """Validate YouTube duration limits."""
-        duration = content_data.get("duration", 0)
+        """Validate YouTube duration limits."""        duration = content_data.get("duration", 0)
         max_duration = self.platform_policies["youtube"]["max_duration"]
         
         if duration > max_duration:
@@ -2020,8 +1947,7 @@ class BusinessValidator:
         return None
     
     async def _validate_metadata_completeness(self, content_data: Dict[str, Any], creator_data: Optional[Dict[str, Any]], context: ValidationContext) -> Optional[Dict[str, Any]]:
-        """Validate metadata completeness."""
-        required_fields = self.content_policies["required_fields"]
+        """Validate metadata completeness."""        required_fields = self.content_policies["required_fields"]
         missing_fields = [field for field in required_fields if not content_data.get(field)]
         
         if missing_fields:

@@ -1,5 +1,4 @@
-"""
-📊 PERFORMANCE TRACKER - Discovery Engine Analytics & Optimization
+"""📊 PERFORMANCE TRACKER - Discovery Engine Analytics & Optimization
 ===============================================================
 
 Team Specialties:
@@ -35,7 +34,6 @@ Features:
 - Automated anomaly detection and alerting
 - Comprehensive analytics reporting and dashboards
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -63,8 +61,7 @@ from prometheus_client import Counter, Histogram, Gauge, start_http_server
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Performance metric types"""
-    RESPONSE_TIME = "response_time"
+    """Performance metric types"""    RESPONSE_TIME = "response_time"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     CACHE_HIT_RATE = "cache_hit_rate"
@@ -76,24 +73,21 @@ class MetricType(Enum):
     CONVERSION_RATE = "conversion_rate"
 
 class PerformanceLevel(Enum):
-    """Performance level indicators"""
-    EXCELLENT = "excellent"
+    """Performance level indicators"""    EXCELLENT = "excellent"
     GOOD = "good"
     FAIR = "fair"
     POOR = "poor"
     CRITICAL = "critical"
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
     INFO = "info"
 
 class UserAction(Enum):
-    """User action types for engagement tracking"""
-    SEARCH = "search"
+    """User action types for engagement tracking"""    SEARCH = "search"
     VIEW_RESULT = "view_result"
     CLICK_CONTENT = "click_content"
     SHARE_CONTENT = "share_content"
@@ -106,8 +100,7 @@ class UserAction(Enum):
 
 @dataclass
 class DiscoveryMetrics:
-    """Core discovery engine metrics"""
-    timestamp: datetime
+    """Core discovery engine metrics"""    timestamp: datetime
     search_count: int = 0
     unique_users: int = 0
     total_response_time: float = 0.0
@@ -125,8 +118,7 @@ class DiscoveryMetrics:
 
 @dataclass
 class SearchPerformance:
-    """Search-specific performance metrics"""
-    query_id: str
+    """Search-specific performance metrics"""    query_id: str
     user_id: Optional[str]
     query_text: str
     search_type: str
@@ -146,8 +138,7 @@ class SearchPerformance:
 
 @dataclass
 class UserEngagement:
-    """User engagement tracking"""
-    user_id: str
+    """User engagement tracking"""    user_id: str
     session_id: str
     timestamp: datetime
     action: UserAction
@@ -162,8 +153,7 @@ class UserEngagement:
 
 @dataclass
 class ConversionMetrics:
-    """Conversion tracking metrics"""
-    timestamp: datetime
+    """Conversion tracking metrics"""    timestamp: datetime
     conversion_type: str
     user_id: str
     content_id: str
@@ -175,8 +165,7 @@ class ConversionMetrics:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    report_id: str
+    """Comprehensive analytics report"""    report_id: str
     generated_at: datetime
     period_start: datetime
     period_end: datetime
@@ -192,13 +181,10 @@ class AnalyticsReport:
     alerts: List[Dict[str, Any]]
 
 class PerformanceTracker:
-    """
-    Comprehensive performance tracking and analytics system
-    """
-    
+    """    Comprehensive performance tracking and analytics system
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize performance tracker"""
-        self.config = config or {}
+        """Initialize performance tracker"""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Metrics storage
@@ -248,8 +234,7 @@ class PerformanceTracker:
         self._lock = threading.Lock()
 
     async def initialize(self) -> bool:
-        """Initialize performance tracker"""
-        try:
+        """Initialize performance tracker"""        try:
             # Initialize anomaly detection
             await self._setup_anomaly_detection()
             
@@ -268,8 +253,7 @@ class PerformanceTracker:
             return False
 
     async def track_search_performance(self, performance_data: SearchPerformance):
-        """Track individual search performance"""
-        try:
+        """Track individual search performance"""        try:
             with self._lock:
                 # Add to buffer
                 self.search_performance_buffer.append(performance_data)
@@ -287,8 +271,7 @@ class PerformanceTracker:
             self.logger.error(f"Failed to track search performance: {e}")
 
     async def track_user_engagement(self, engagement_data: UserEngagement):
-        """Track user engagement metrics"""
-        try:
+        """Track user engagement metrics"""        try:
             with self._lock:
                 # Add to buffer
                 self.engagement_buffer.append(engagement_data)
@@ -300,8 +283,7 @@ class PerformanceTracker:
             self.logger.error(f"Failed to track user engagement: {e}")
 
     async def track_conversion(self, conversion_data: ConversionMetrics):
-        """Track conversion events"""
-        try:
+        """Track conversion events"""        try:
             with self._lock:
                 # Add to buffer
                 self.conversion_buffer.append(conversion_data)
@@ -313,8 +295,7 @@ class PerformanceTracker:
             self.logger.error(f"Failed to track conversion: {e}")
 
     async def get_realtime_metrics(self) -> Dict[str, Any]:
-        """Get real-time performance metrics"""
-        try:
+        """Get real-time performance metrics"""        try:
             with self._lock:
                 metrics = {
                     'current_metrics': self.current_metrics,
@@ -340,8 +321,7 @@ class PerformanceTracker:
         end_time: datetime,
         include_details: bool = True
     ) -> AnalyticsReport:
-        """Generate comprehensive performance report"""
-        try:
+        """Generate comprehensive performance report"""        try:
             # Filter data by time range
             filtered_searches = [
                 p for p in self.search_performance_buffer
@@ -415,8 +395,7 @@ class PerformanceTracker:
             )
 
     async def optimize_performance(self) -> Dict[str, Any]:
-        """Analyze performance and suggest optimizations"""
-        try:
+        """Analyze performance and suggest optimizations"""        try:
             # Analyze recent performance data
             recent_searches = list(self.search_performance_buffer)[-1000:]
             
@@ -438,8 +417,7 @@ class PerformanceTracker:
         self,
         future_load: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Predict performance under different load scenarios"""
-        try:
+        """Predict performance under different load scenarios"""        try:
             # Analyze historical data
             historical_data = await self._prepare_historical_data()
             
@@ -468,8 +446,7 @@ class PerformanceTracker:
             return {}
 
     async def create_performance_dashboard(self) -> Dict[str, Any]:
-        """Create performance dashboard data"""
-        try:
+        """Create performance dashboard data"""        try:
             # Get recent metrics
             current_time = datetime.now()
             last_hour = current_time - timedelta(hours=1)
@@ -522,8 +499,7 @@ class PerformanceTracker:
     # Private methods for internal processing
 
     def _setup_prometheus_metrics(self):
-        """Setup Prometheus metrics"""
-        try:
+        """Setup Prometheus metrics"""        try:
             # Counter metrics
             self.search_total = Counter(
                 'discovery_searches_total',
@@ -559,8 +535,7 @@ class PerformanceTracker:
             self.logger.error(f"Failed to setup Prometheus metrics: {e}")
 
     async def _setup_anomaly_detection(self):
-        """Setup anomaly detection models"""
-        try:
+        """Setup anomaly detection models"""        try:
             self.anomaly_detector = IsolationForest(
                 contamination=0.1,
                 random_state=42
@@ -577,8 +552,7 @@ class PerformanceTracker:
             self.logger.error(f"Failed to setup anomaly detection: {e}")
 
     async def _start_background_tasks(self):
-        """Start background monitoring tasks"""
-        try:
+        """Start background monitoring tasks"""        try:
             # Start monitoring task
             self._monitoring_task = asyncio.create_task(self._monitoring_loop())
             
@@ -589,8 +563,7 @@ class PerformanceTracker:
             self.logger.error(f"Failed to start background tasks: {e}")
 
     async def _monitoring_loop(self):
-        """Background monitoring loop"""
-        while True:
+        """Background monitoring loop"""        while True:
             try:
                 await asyncio.sleep(30)  # Monitor every 30 seconds
                 
@@ -607,8 +580,7 @@ class PerformanceTracker:
                 self.logger.error(f"Error in monitoring loop: {e}")
 
     async def _cleanup_loop(self):
-        """Background cleanup loop"""
-        while True:
+        """Background cleanup loop"""        while True:
             try:
                 await asyncio.sleep(3600)  # Cleanup every hour
                 
@@ -625,13 +597,11 @@ class PerformanceTracker:
                 self.logger.error(f"Error in cleanup loop: {e}")
 
     def _cleanup_buffer(self, buffer: deque, cutoff_time: datetime):
-        """Cleanup old entries from buffer"""
-        while buffer and buffer[0].timestamp < cutoff_time:
+        """Cleanup old entries from buffer"""        while buffer and buffer[0].timestamp < cutoff_time:
             buffer.popleft()
 
     async def _update_realtime_metrics(self, performance_data: SearchPerformance):
-        """Update real-time metrics with new performance data"""
-        try:
+        """Update real-time metrics with new performance data"""        try:
             # Update search count
             self.current_metrics.search_count += 1
             
@@ -671,8 +641,7 @@ class PerformanceTracker:
             self.logger.error(f"Failed to update realtime metrics: {e}")
 
     def _update_prometheus_metrics(self, performance_data: SearchPerformance):
-        """Update Prometheus metrics"""
-        try:
+        """Update Prometheus metrics"""        try:
             # Update counters
             status = 'success' if performance_data.success else 'error'
             self.search_total.labels(
@@ -692,8 +661,7 @@ class PerformanceTracker:
             self.logger.error(f"Failed to update Prometheus metrics: {e}")
 
     async def _check_performance_anomalies(self, performance_data: SearchPerformance):
-        """Check for performance anomalies"""
-        try:
+        """Check for performance anomalies"""        try:
             if self.anomaly_detector is None:
                 return
             
@@ -720,8 +688,7 @@ class PerformanceTracker:
         performance_data: SearchPerformance,
         anomaly_score: float
     ):
-        """Handle detected performance anomaly"""
-        try:
+        """Handle detected performance anomaly"""        try:
             alert = {
                 'timestamp': datetime.now(),
                 'type': 'performance_anomaly',
@@ -738,8 +705,7 @@ class PerformanceTracker:
             self.logger.error(f"Failed to handle performance anomaly: {e}")
 
     def _calculate_recent_error_rate(self) -> float:
-        """Calculate error rate for recent searches"""
-        try:
+        """Calculate error rate for recent searches"""        try:
             recent_searches = [
                 p for p in self.search_performance_buffer
                 if (datetime.now() - p.start_time).seconds < 300  # Last 5 minutes
@@ -756,8 +722,7 @@ class PerformanceTracker:
             return 0.0
 
     def _calculate_cache_performance(self) -> Dict[str, float]:
-        """Calculate cache performance metrics"""
-        try:
+        """Calculate cache performance metrics"""        try:
             recent_searches = [
                 p for p in self.search_performance_buffer
                 if (datetime.now() - p.start_time).seconds < 300  # Last 5 minutes
@@ -780,8 +745,7 @@ class PerformanceTracker:
             return {'hit_rate': 0.0, 'miss_rate': 1.0}
 
     async def _assess_system_health(self) -> Dict[str, Any]:
-        """Assess overall system health"""
-        try:
+        """Assess overall system health"""        try:
             recent_metrics = self.current_metrics
             
             # Assess response time health
@@ -832,8 +796,7 @@ class PerformanceTracker:
         thresholds: Dict[str, float],
         lower_is_better: bool = False
     ) -> Dict[str, Any]:
-        """Assess health of a specific metric"""
-        try:
+        """Assess health of a specific metric"""        try:
             if lower_is_better:
                 if value <= thresholds['excellent']:
                     return {'score': 1.0, 'status': PerformanceLevel.EXCELLENT}
@@ -862,8 +825,7 @@ class PerformanceTracker:
             return {'score': 0.0, 'status': PerformanceLevel.CRITICAL}
 
     def _score_to_status(self, score: float) -> str:
-        """Convert numeric score to status string"""
-        if score >= 0.9:
+        """Convert numeric score to status string"""        if score >= 0.9:
             return 'excellent'
         elif score >= 0.7:
             return 'good'
@@ -877,8 +839,7 @@ class PerformanceTracker:
     # Additional helper methods for data analysis
 
     async def _analyze_top_queries(self, searches: List[SearchPerformance]) -> List[Dict[str, Any]]:
-        """Analyze top performing queries"""
-        query_stats = defaultdict(lambda: {'count': 0, 'avg_response_time': 0, 'success_rate': 0})
+        """Analyze top performing queries"""        query_stats = defaultdict(lambda: {'count': 0, 'avg_response_time': 0, 'success_rate': 0})
         
         for search in searches:
             stats = query_stats[search.query_text]
@@ -901,8 +862,7 @@ class PerformanceTracker:
         return sorted(top_queries, key=lambda x: x['count'], reverse=True)[:10]
 
     async def _analyze_performance_trends(self, searches: List[SearchPerformance]) -> Dict[str, List[float]]:
-        """Analyze performance trends over time"""
-        # Group by hour and calculate metrics
+        """Analyze performance trends over time"""        # Group by hour and calculate metrics
         hourly_metrics = defaultdict(lambda: {'response_times': [], 'error_count': 0, 'total_count': 0})
         
         for search in searches:
@@ -931,8 +891,7 @@ class PerformanceTracker:
         return trends
 
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive performance metrics"""
-        try:
+        """Get comprehensive performance metrics"""        try:
             return {
                 'realtime_metrics': await self.get_realtime_metrics(),
                 'system_health': await self._assess_system_health(),
@@ -949,8 +908,7 @@ class PerformanceTracker:
             return {}
 
     async def shutdown(self):
-        """Cleanup and shutdown performance tracker"""
-        try:
+        """Cleanup and shutdown performance tracker"""        try:
             # Cancel background tasks
             if self._monitoring_task:
                 self._monitoring_task.cancel()

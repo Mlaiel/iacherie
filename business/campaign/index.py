@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Campaign Management Index
+"""IA Influencer Agent - Campaign Management Index
 ==============================================
 
 Central index and configuration module for the campaign management system.
@@ -12,7 +11,6 @@ WARNING: This code is protected by copyright law. Unauthorized use, reproduction
 or distribution without explicit written permission from Fahed Mlaiel is strictly
 prohibited and may result in legal action.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -45,8 +43,7 @@ from .seo_optimizer import SEOOptimizer
 
 
 class CampaignModuleStatus(str, Enum):
-    """Campaign module status enumeration"""
-    INITIALIZING = "initializing"
+    """Campaign module status enumeration"""    INITIALIZING = "initializing"
     ACTIVE = "active"
     INACTIVE = "inactive"
     ERROR = "error"
@@ -54,8 +51,7 @@ class CampaignModuleStatus(str, Enum):
 
 
 class ServicePriority(str, Enum):
-    """Service priority levels"""
-    CRITICAL = "critical"
+    """Service priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -63,8 +59,7 @@ class ServicePriority(str, Enum):
 
 @dataclass
 class ModuleInfo:
-    """Module information structure"""
-    name: str
+    """Module information structure"""    name: str
     version: str
     status: CampaignModuleStatus
     priority: ServicePriority
@@ -76,8 +71,7 @@ class ModuleInfo:
 
 @dataclass
 class CampaignSystemConfig:
-    """Campaign system configuration"""
-    max_concurrent_campaigns: int = 10000
+    """Campaign system configuration"""    max_concurrent_campaigns: int = 10000
     max_content_size_mb: int = 500
     cache_ttl_seconds: int = 3600
     monitoring_interval: int = 30
@@ -90,13 +84,11 @@ class CampaignSystemConfig:
 
 
 class CampaignSystemIndex:
-    """
-    Central Campaign System Index
+    """    Central Campaign System Index
     
     Provides unified access, initialization, and coordination for all campaign modules.
     Manages system health, configuration, monitoring, and inter-module communication.
-    """
-    
+    """    
     def __init__(self):
         self.logger = get_logger(__name__)
         self.settings = get_settings()
@@ -137,16 +129,14 @@ class CampaignSystemIndex:
         self.logger.info(f"Campaign System Index initialized: {self.system_id}")
     
     async def initialize_system(self, config: Optional[CampaignSystemConfig] = None) -> Dict[str, Any]:
-        """
-        Initialize the complete campaign management system
+        """        Initialize the complete campaign management system
         
         Args:
             config: Optional system configuration
             
         Returns:
             System initialization results
-        """
-        try:
+        """        try:
             if config:
                 self.config = config
             
@@ -192,73 +182,61 @@ class CampaignSystemIndex:
             raise
     
     async def get_campaign_manager(self) -> CampaignManager:
-        """Get campaign manager instance"""
-        if not self.campaign_manager:
+        """Get campaign manager instance"""        if not self.campaign_manager:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.campaign_manager
     
     async def get_analytics_manager(self) -> CampaignAnalytics:
-        """Get analytics manager instance"""
-        if not self.analytics_manager:
+        """Get analytics manager instance"""        if not self.analytics_manager:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.analytics_manager
     
     async def get_optimization_engine(self) -> CampaignOptimizer:
-        """Get optimization engine instance"""
-        if not self.optimization_engine:
+        """Get optimization engine instance"""        if not self.optimization_engine:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.optimization_engine
     
     async def get_content_integration(self) -> ContentIntegration:
-        """Get content integration instance"""
-        if not self.content_integration:
+        """Get content integration instance"""        if not self.content_integration:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.content_integration
     
     async def get_collaboration_engine(self) -> CollaborationEngine:
-        """Get collaboration engine instance"""
-        if not self.collaboration_engine:
+        """Get collaboration engine instance"""        if not self.collaboration_engine:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.collaboration_engine
     
     async def get_protection_manager(self) -> ProtectionManager:
-        """Get protection manager instance"""
-        if not self.protection_manager:
+        """Get protection manager instance"""        if not self.protection_manager:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.protection_manager
     
     async def get_monetization_engine(self) -> MonetizationEngine:
-        """Get monetization engine instance"""
-        if not self.monetization_engine:
+        """Get monetization engine instance"""        if not self.monetization_engine:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.monetization_engine
     
     async def get_distribution_manager(self) -> DistributionManager:
-        """Get distribution manager instance"""
-        if not self.distribution_manager:
+        """Get distribution manager instance"""        if not self.distribution_manager:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.distribution_manager
     
     async def get_performance_tracker(self) -> PerformanceTracker:
-        """Get performance tracker instance"""
-        if not self.performance_tracker:
+        """Get performance tracker instance"""        if not self.performance_tracker:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.performance_tracker
     
     async def get_seo_optimizer(self) -> SEOOptimizer:
-        """Get SEO optimizer instance"""
-        if not self.seo_optimizer:
+        """Get SEO optimizer instance"""        if not self.seo_optimizer:
             raise RuntimeError("Campaign system not initialized. Call initialize_system() first.")
         return self.seo_optimizer
     
     async def perform_system_health_check(self) -> Dict[str, Any]:
-        """
-        Perform comprehensive system health check
+        """        Perform comprehensive system health check
         
         Returns:
             Complete health check results
-        """
-        try:
+        """        try:
             health_results = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "system_id": self.system_id,
@@ -313,13 +291,11 @@ class CampaignSystemIndex:
             }
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """
-        Get comprehensive system status
+        """        Get comprehensive system status
         
         Returns:
             Complete system status information
-        """
-        return {
+        """        return {
             "system_id": self.system_id,
             "status": self.system_status.value,
             "health_score": self.health_score,
@@ -338,16 +314,14 @@ class CampaignSystemIndex:
         }
     
     async def shutdown_system(self, graceful: bool = True) -> Dict[str, Any]:
-        """
-        Shutdown the campaign system
+        """        Shutdown the campaign system
         
         Args:
             graceful: Whether to perform graceful shutdown
             
         Returns:
             Shutdown results
-        """
-        try:
+        """        try:
             self.logger.info(f"Initiating system shutdown (graceful={graceful})...")
             
             shutdown_results = {
@@ -395,8 +369,7 @@ class CampaignSystemIndex:
     # Private helper methods
     
     async def _initialize_core_managers(self) -> None:
-        """Initialize core system managers"""
-        try:
+        """Initialize core system managers"""        try:
             # Initialize database manager
             self.db_manager = DatabaseManager()
             await self.db_manager.initialize()
@@ -416,8 +389,7 @@ class CampaignSystemIndex:
             raise
     
     async def _initialize_campaign_modules(self) -> None:
-        """Initialize all campaign modules"""
-        try:
+        """Initialize all campaign modules"""        try:
             # Initialize Campaign Manager
             self.campaign_manager = CampaignManager()
             self.modules["campaign_manager"] = ModuleInfo(
@@ -555,8 +527,7 @@ class CampaignSystemIndex:
             raise
     
     async def _setup_module_communication(self) -> None:
-        """Setup inter-module communication"""
-        try:
+        """Setup inter-module communication"""        try:
             # Configure module dependencies and communication channels
             # This would typically involve setting up message queues, event handlers, etc.
             
@@ -567,8 +538,7 @@ class CampaignSystemIndex:
             raise
     
     async def _start_background_tasks(self) -> None:
-        """Start background monitoring tasks"""
-        try:
+        """Start background monitoring tasks"""        try:
             # Start monitoring task
             self._monitoring_task = asyncio.create_task(self._monitoring_loop())
             
@@ -585,8 +555,7 @@ class CampaignSystemIndex:
             raise
     
     async def _monitoring_loop(self) -> None:
-        """Background monitoring loop"""
-        while True:
+        """Background monitoring loop"""        while True:
             try:
                 await self._perform_monitoring_checks()
                 await asyncio.sleep(self.config.monitoring_interval)
@@ -597,8 +566,7 @@ class CampaignSystemIndex:
                 await asyncio.sleep(60)
     
     async def _health_check_loop(self) -> None:
-        """Background health check loop"""
-        while True:
+        """Background health check loop"""        while True:
             try:
                 await self.perform_system_health_check()
                 await asyncio.sleep(300)  # Check every 5 minutes
@@ -609,8 +577,7 @@ class CampaignSystemIndex:
                 await asyncio.sleep(300)
     
     async def _cleanup_loop(self) -> None:
-        """Background cleanup loop"""
-        while True:
+        """Background cleanup loop"""        while True:
             try:
                 await self._perform_cleanup_tasks()
                 await asyncio.sleep(3600)  # Cleanup every hour
@@ -621,18 +588,15 @@ class CampaignSystemIndex:
                 await asyncio.sleep(3600)
     
     async def _perform_monitoring_checks(self) -> None:
-        """Perform monitoring checks"""
-        # Implementation for monitoring checks
+        """Perform monitoring checks"""        # Implementation for monitoring checks
         pass
     
     async def _perform_cleanup_tasks(self) -> None:
-        """Perform cleanup tasks"""
-        # Implementation for cleanup tasks
+        """Perform cleanup tasks"""        # Implementation for cleanup tasks
         pass
     
     async def _check_core_services_health(self) -> Dict[str, Any]:
-        """Check health of core services"""
-        return {
+        """Check health of core services"""        return {
             "overall_score": 95.0,
             "database": {"status": "healthy", "score": 98.0},
             "cache": {"status": "healthy", "score": 97.0},
@@ -640,8 +604,7 @@ class CampaignSystemIndex:
         }
     
     async def _check_module_health(self, module_name: str, module_info: ModuleInfo) -> Dict[str, Any]:
-        """Check health of specific module"""
-        return {
+        """Check health of specific module"""        return {
             "score": module_info.health_score,
             "status": module_info.status.value,
             "error_count": module_info.error_count,
@@ -649,8 +612,7 @@ class CampaignSystemIndex:
         }
     
     async def _collect_performance_metrics(self) -> Dict[str, Any]:
-        """Collect system performance metrics"""
-        return {
+        """Collect system performance metrics"""        return {
             "overall_score": 96.0,
             "cpu_usage": 45.2,
             "memory_usage": 67.8,
@@ -659,22 +621,19 @@ class CampaignSystemIndex:
         }
     
     async def _generate_health_alerts(self, health_results: Dict[str, Any]) -> List[str]:
-        """Generate health alerts based on results"""
-        alerts = []
+        """Generate health alerts based on results"""        alerts = []
         if health_results["overall_score"] < 80:
             alerts.append("System health score below threshold")
         return alerts
     
     async def _generate_health_recommendations(self, health_results: Dict[str, Any]) -> List[str]:
-        """Generate health recommendations"""
-        recommendations = []
+        """Generate health recommendations"""        recommendations = []
         if health_results["overall_score"] < 90:
             recommendations.append("Consider system optimization")
         return recommendations
     
     async def _shutdown_module(self, module_name: str, graceful: bool = True) -> None:
-        """Shutdown specific module"""
-        if module_name in self.modules:
+        """Shutdown specific module"""        if module_name in self.modules:
             self.modules[module_name].status = CampaignModuleStatus.INACTIVE
 
 
@@ -683,13 +642,11 @@ _campaign_system_index: Optional[CampaignSystemIndex] = None
 
 
 async def get_campaign_system() -> CampaignSystemIndex:
-    """
-    Get the global campaign system index instance
+    """    Get the global campaign system index instance
     
     Returns:
         CampaignSystemIndex instance
-    """
-    global _campaign_system_index
+    """    global _campaign_system_index
     
     if _campaign_system_index is None:
         _campaign_system_index = CampaignSystemIndex()
@@ -699,32 +656,28 @@ async def get_campaign_system() -> CampaignSystemIndex:
 
 
 async def initialize_campaign_system(config: Optional[CampaignSystemConfig] = None) -> Dict[str, Any]:
-    """
-    Initialize the campaign system with optional configuration
+    """    Initialize the campaign system with optional configuration
     
     Args:
         config: Optional system configuration
         
     Returns:
         System initialization results
-    """
-    global _campaign_system_index
+    """    global _campaign_system_index
     
     _campaign_system_index = CampaignSystemIndex()
     return await _campaign_system_index.initialize_system(config)
 
 
 async def shutdown_campaign_system(graceful: bool = True) -> Dict[str, Any]:
-    """
-    Shutdown the campaign system
+    """    Shutdown the campaign system
     
     Args:
         graceful: Whether to perform graceful shutdown
         
     Returns:
         Shutdown results
-    """
-    global _campaign_system_index
+    """    global _campaign_system_index
     
     if _campaign_system_index:
         return await _campaign_system_index.shutdown_system(graceful)

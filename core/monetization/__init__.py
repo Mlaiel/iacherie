@@ -1,5 +1,4 @@
-"""
-Advanced Monetization Core Module for IA Influencer Agent Platform
+"""Advanced Monetization Core Module for IA Influencer Agent Platform
 Enterprise-grade revenue tracking, licensing, and payment processing system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -17,7 +16,6 @@ Expert Team Specialties:
 - DevOps & Infrastructure Engineer
 - IA Prompt Engineering Specialist
 """
-
 from .payment_processor import PaymentProcessor, PaymentConfig
 from .revenue_calculator import RevenueCalculator, RevenueMetrics
 from .platform_connector import PlatformConnector, PlatformManager

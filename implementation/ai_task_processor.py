@@ -1,12 +1,10 @@
-"""
-Advanced AI Task Execution System
+"""Advanced AI Task Execution System
 
 Comprehensive implementation of AI task routing, execution, and result processing
 for the Ainflue platform.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 """
-
 import asyncio
 import logging
 import json
@@ -21,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class TaskType(Enum):
-    """Available AI task types"""
-    CONTENT_ANALYSIS = "content_analysis"
+    """Available AI task types"""    CONTENT_ANALYSIS = "content_analysis"
     FINGERPRINT_GENERATION = "fingerprint_generation"
     SIMILARITY_DETECTION = "similarity_detection"
     COPYRIGHT_DETECTION = "copyright_detection"
@@ -37,8 +34,7 @@ class TaskType(Enum):
 
 
 class TaskStatus(Enum):
-    """Task execution status"""
-    PENDING = "pending"
+    """Task execution status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -46,8 +42,7 @@ class TaskStatus(Enum):
 
 
 class TaskPriority(Enum):
-    """Task priority levels"""
-    LOW = "low"
+    """Task priority levels"""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     CRITICAL = "critical"
@@ -55,8 +50,7 @@ class TaskPriority(Enum):
 
 @dataclass
 class TaskContext:
-    """Task execution context"""
-    content_id: Optional[str] = None
+    """Task execution context"""    content_id: Optional[str] = None
     content_type: Optional[str] = None
     content_data: Optional[Dict[str, Any]] = None
     parameters: Dict[str, Any] = field(default_factory=dict)
@@ -67,8 +61,7 @@ class TaskContext:
 
 @dataclass
 class TaskResult:
-    """Task execution result"""
-    task_id: str
+    """Task execution result"""    task_id: str
     task_type: TaskType
     status: TaskStatus
     result_data: Dict[str, Any]
@@ -81,8 +74,7 @@ class TaskResult:
 
 @dataclass
 class AITask:
-    """AI task definition"""
-    task_id: str
+    """AI task definition"""    task_id: str
     task_type: TaskType
     context: TaskContext
     priority: TaskPriority = TaskPriority.NORMAL
@@ -96,11 +88,9 @@ class AITask:
 
 
 class AITaskProcessor:
-    """
-    Advanced AI task processor with capability routing, 
+    """    Advanced AI task processor with capability routing, 
     load balancing, and intelligent execution
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -146,8 +136,7 @@ class AITaskProcessor:
         priority: TaskPriority = TaskPriority.NORMAL,
         timeout: Optional[int] = None
     ) -> str:
-        """
-        Submit a new AI task for execution
+        """        Submit a new AI task for execution
         
         Args:
             task_type: Type of task to execute
@@ -157,8 +146,7 @@ class AITaskProcessor:
             
         Returns:
             Task ID for tracking
-        """
-        task_id = str(uuid.uuid4())
+        """        task_id = str(uuid.uuid4())
         
         task = AITask(
             task_id=task_id,
@@ -180,8 +168,7 @@ class AITaskProcessor:
         return task_id
     
     async def get_task_result(self, task_id: str, wait: bool = False, timeout: int = 60) -> Optional[TaskResult]:
-        """
-        Get task result by ID
+        """        Get task result by ID
         
         Args:
             task_id: Task ID to retrieve
@@ -190,8 +177,7 @@ class AITaskProcessor:
             
         Returns:
             Task result or None if not found
-        """
-        if task_id in self.completed_tasks:
+        """        if task_id in self.completed_tasks:
             return self.completed_tasks[task_id]
         
         if not wait:
@@ -208,16 +194,14 @@ class AITaskProcessor:
         return None
     
     async def cancel_task(self, task_id: str) -> bool:
-        """
-        Cancel a pending or running task
+        """        Cancel a pending or running task
         
         Args:
             task_id: Task ID to cancel
             
         Returns:
             True if cancelled successfully
-        """
-        # Remove from queue if pending
+        """        # Remove from queue if pending
         self.task_queue = [t for t in self.task_queue if t.task_id != task_id]
         
         # Mark active task as cancelled
@@ -245,8 +229,7 @@ class AITaskProcessor:
         return False
     
     async def _process_tasks(self):
-        """Process tasks from queue"""
-        while self.task_queue and len(self.active_tasks) < self.max_concurrent_tasks:
+        """Process tasks from queue"""        while self.task_queue and len(self.active_tasks) < self.max_concurrent_tasks:
             task = self.task_queue.pop(0)
             
             if task.status == TaskStatus.CANCELLED:
@@ -261,8 +244,7 @@ class AITaskProcessor:
             asyncio.create_task(self._execute_task(task))
     
     async def _execute_task(self, task: AITask):
-        """Execute individual task"""
-        start_time = datetime.utcnow()
+        """Execute individual task"""        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"Executing task {task.task_id}: {task.task_type.value}")
@@ -329,8 +311,7 @@ class AITaskProcessor:
             asyncio.create_task(self._process_tasks())
     
     def _create_error_result(self, task: AITask, error_msg: str, start_time: datetime) -> TaskResult:
-        """Create error result for failed task"""
-        execution_time = (datetime.utcnow() - start_time).total_seconds()
+        """Create error result for failed task"""        execution_time = (datetime.utcnow() - start_time).total_seconds()
         
         task.status = TaskStatus.FAILED
         task.completed_at = datetime.utcnow()
@@ -349,8 +330,7 @@ class AITaskProcessor:
     # Task Handlers
     
     async def _handle_content_analysis(self, task: AITask) -> Dict[str, Any]:
-        """Handle content analysis task"""
-        content_data = task.context.content_data or {}
+        """Handle content analysis task"""        content_data = task.context.content_data or {}
         content_type = task.context.content_type or "unknown"
         
         # Simulate content analysis
@@ -374,8 +354,7 @@ class AITaskProcessor:
         return analysis_result
     
     async def _handle_fingerprint_generation(self, task: AITask) -> Dict[str, Any]:
-        """Handle fingerprint generation task"""
-        content_id = task.context.content_id or "unknown"
+        """Handle fingerprint generation task"""        content_id = task.context.content_id or "unknown"
         content_data = task.context.content_data or {}
         
         # Simulate fingerprint generation
@@ -399,8 +378,7 @@ class AITaskProcessor:
         }
     
     async def _handle_similarity_detection(self, task: AITask) -> Dict[str, Any]:
-        """Handle similarity detection task"""
-        parameters = task.context.parameters
+        """Handle similarity detection task"""        parameters = task.context.parameters
         source_id = parameters.get("source_id")
         target_id = parameters.get("target_id")
         
@@ -420,8 +398,7 @@ class AITaskProcessor:
         }
     
     async def _handle_copyright_detection(self, task: AITask) -> Dict[str, Any]:
-        """Handle copyright detection task"""
-        content_id = task.context.content_id
+        """Handle copyright detection task"""        content_id = task.context.content_id
         
         # Simulate copyright detection
         await asyncio.sleep(2.5)
@@ -444,8 +421,7 @@ class AITaskProcessor:
         }
     
     async def _handle_content_generation(self, task: AITask) -> Dict[str, Any]:
-        """Handle content generation task"""
-        parameters = task.context.parameters
+        """Handle content generation task"""        parameters = task.context.parameters
         content_type = parameters.get("content_type", "text")
         prompt = parameters.get("prompt", "")
         max_length = parameters.get("max_length", 100)
@@ -467,8 +443,7 @@ class AITaskProcessor:
         }
     
     async def _handle_optimization(self, task: AITask) -> Dict[str, Any]:
-        """Handle optimization task"""
-        content_id = task.context.content_id
+        """Handle optimization task"""        content_id = task.context.content_id
         optimization_type = task.context.parameters.get("type", "quality")
         
         # Simulate optimization process
@@ -491,8 +466,7 @@ class AITaskProcessor:
         }
     
     async def _handle_classification(self, task: AITask) -> Dict[str, Any]:
-        """Handle classification task"""
-        content_data = task.context.content_data or {}
+        """Handle classification task"""        content_data = task.context.content_data or {}
         
         # Simulate classification
         await asyncio.sleep(1)
@@ -513,8 +487,7 @@ class AITaskProcessor:
         }
     
     async def _handle_sentiment_analysis(self, task: AITask) -> Dict[str, Any]:
-        """Handle sentiment analysis task"""
-        text_content = task.context.parameters.get("text", "")
+        """Handle sentiment analysis task"""        text_content = task.context.parameters.get("text", "")
         
         # Simulate sentiment analysis
         await asyncio.sleep(0.5)
@@ -537,8 +510,7 @@ class AITaskProcessor:
         }
     
     async def _handle_transcription(self, task: AITask) -> Dict[str, Any]:
-        """Handle transcription task"""
-        audio_content = task.context.content_data or {}
+        """Handle transcription task"""        audio_content = task.context.content_data or {}
         language = task.context.parameters.get("language", "auto")
         
         # Simulate transcription
@@ -559,8 +531,7 @@ class AITaskProcessor:
         }
     
     async def _handle_translation(self, task: AITask) -> Dict[str, Any]:
-        """Handle translation task"""
-        source_text = task.context.parameters.get("text", "")
+        """Handle translation task"""        source_text = task.context.parameters.get("text", "")
         target_language = task.context.parameters.get("target_language", "en")
         source_language = task.context.parameters.get("source_language", "auto")
         
@@ -578,8 +549,7 @@ class AITaskProcessor:
         }
     
     async def _handle_summarization(self, task: AITask) -> Dict[str, Any]:
-        """Handle summarization task"""
-        text_content = task.context.parameters.get("text", "")
+        """Handle summarization task"""        text_content = task.context.parameters.get("text", "")
         max_summary_length = task.context.parameters.get("max_length", 100)
         
         # Simulate summarization
@@ -598,8 +568,7 @@ class AITaskProcessor:
         }
     
     async def _handle_health_check(self, task: AITask) -> Dict[str, Any]:
-        """Handle health check task"""
-        return {
+        """Handle health check task"""        return {
             "status": "healthy",
             "active_tasks": len(self.active_tasks),
             "queued_tasks": len(self.task_queue),
@@ -614,8 +583,7 @@ class AITaskProcessor:
         }
     
     async def _handle_generic_task(self, task: AITask) -> Dict[str, Any]:
-        """Handle any task type with a generic approach"""
-        self.logger.info(f"Handling task {task.task_id} with generic handler")
+        """Handle any task type with a generic approach"""        self.logger.info(f"Handling task {task.task_id} with generic handler")
         
         # Simulate generic processing
         await asyncio.sleep(0.5)
@@ -637,8 +605,7 @@ class AITaskProcessor:
         }
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status"""
-        return {
+        """Get comprehensive system status"""        return {
             "processor_status": "running",
             "active_tasks": len(self.active_tasks),
             "queued_tasks": len(self.task_queue),

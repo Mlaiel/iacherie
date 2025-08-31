@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Web Surveillance and Crawling Pipeline System
+"""IA Influencer Agent - Web Surveillance and Crawling Pipeline System
 Enterprise-Grade Automated Content Monitoring and Violation Detection
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -28,7 +27,6 @@ Platforms Supported:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
-
 import asyncio
 import logging
 import json
@@ -73,8 +71,7 @@ except ImportError:
     BEAUTIFULSOUP_AVAILABLE = False
 
 class Platform(Enum):
-    """Supported platform enumeration"""
-    YOUTUBE = "youtube"
+    """Supported platform enumeration"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     TWITTER = "twitter"
@@ -85,16 +82,14 @@ class Platform(Enum):
     GENERIC = "generic"
 
 class CrawlingMethod(Enum):
-    """Crawling method types"""
-    API_OFFICIAL = "api_official"
+    """Crawling method types"""    API_OFFICIAL = "api_official"
     WEB_SCRAPING = "web_scraping"
     SELENIUM_AUTOMATION = "selenium_automation"
     RSS_FEEDS = "rss_feeds"
     WEBHOOK_MONITORING = "webhook_monitoring"
 
 class ViolationType(Enum):
-    """Content violation types"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Content violation types"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     UNAUTHORIZED_USE = "unauthorized_use"
     CONTENT_THEFT = "content_theft"
     TRADEMARK_VIOLATION = "trademark_violation"
@@ -102,16 +97,14 @@ class ViolationType(Enum):
     SPAM_CONTENT = "spam_content"
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    LOW = "low"
+    """Alert severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class SurveillanceTarget:
-    """Content surveillance target configuration"""
-    target_id: str
+    """Content surveillance target configuration"""    target_id: str
     platform: Platform
     content_keywords: List[str]
     content_fingerprints: List[str]
@@ -126,8 +119,7 @@ class SurveillanceTarget:
 
 @dataclass
 class ContentMatch:
-    """Detected content match result"""
-    match_id: str
+    """Detected content match result"""    match_id: str
     target_id: str
     platform: Platform
     detected_url: str
@@ -147,8 +139,7 @@ class ContentMatch:
 
 @dataclass
 class CrawlingJob:
-    """Web crawling job configuration"""
-    job_id: str
+    """Web crawling job configuration"""    job_id: str
     platform: Platform
     method: CrawlingMethod
     targets: List[SurveillanceTarget]
@@ -164,23 +155,20 @@ class CrawlingJob:
             self.metadata = {}
 
 class YouTubeCrawler:
-    """YouTube platform crawler and monitor"""
-    
+    """YouTube platform crawler and monitor"""    
     def __init__(self, api_key: Optional[str] = None):
         self.api_key = api_key
         self.base_url = "https://www.googleapis.com/youtube/v3"
         self.logger = logging.getLogger(f"{__name__}.YouTubeCrawler")
         
     async def search_content(self, query: str, max_results: int = 50) -> List[Dict[str, Any]]:
-        """Search YouTube content using API or web scraping"""
-        if self.api_key:
+        """Search YouTube content using API or web scraping"""        if self.api_key:
             return await self._api_search(query, max_results)
         else:
             return await self._web_search(query, max_results)
             
     async def _api_search(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Search using YouTube Data API"""
-        url = f"{self.base_url}/search"
+        """Search using YouTube Data API"""        url = f"{self.base_url}/search"
         params = {
             'part': 'snippet',
             'q': query,
@@ -219,8 +207,7 @@ class YouTubeCrawler:
             return []
             
     async def _web_search(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Search using web scraping as fallback"""
-        if not SELENIUM_AVAILABLE:
+        """Search using web scraping as fallback"""        if not SELENIUM_AVAILABLE:
             self.logger.warning("Selenium not available for YouTube web scraping")
             return []
             
@@ -285,15 +272,13 @@ class YouTubeCrawler:
         return results
 
 class TikTokCrawler:
-    """TikTok platform crawler and monitor"""
-    
+    """TikTok platform crawler and monitor"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.TikTokCrawler")
         self.base_url = "https://www.tiktok.com"
         
     async def search_content(self, query: str, max_results: int = 50) -> List[Dict[str, Any]]:
-        """Search TikTok content using web scraping"""
-        if not SELENIUM_AVAILABLE:
+        """Search TikTok content using web scraping"""        if not SELENIUM_AVAILABLE:
             self.logger.warning("Selenium not available for TikTok scraping")
             return []
             
@@ -366,29 +351,25 @@ class TikTokCrawler:
         return results
         
     def _extract_video_id(self, url: str) -> str:
-        """Extract video ID from TikTok URL"""
-        if "/video/" in url:
+        """Extract video ID from TikTok URL"""        if "/video/" in url:
             return url.split("/video/")[1].split("?")[0]
         return hashlib.md5(url.encode()).hexdigest()[:16]
 
 class InstagramCrawler:
-    """Instagram platform crawler and monitor"""
-    
+    """Instagram platform crawler and monitor"""    
     def __init__(self, access_token: Optional[str] = None):
         self.access_token = access_token
         self.base_url = "https://graph.instagram.com"
         self.logger = logging.getLogger(f"{__name__}.InstagramCrawler")
         
     async def search_content(self, query: str, max_results: int = 50) -> List[Dict[str, Any]]:
-        """Search Instagram content using API or hashtag monitoring"""
-        if self.access_token:
+        """Search Instagram content using API or hashtag monitoring"""        if self.access_token:
             return await self._api_search(query, max_results)
         else:
             return await self._web_search(query, max_results)
             
     async def _api_search(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Search using Instagram Basic Display API"""
-        # Note: Instagram API has limited search capabilities
+        """Search using Instagram Basic Display API"""        # Note: Instagram API has limited search capabilities
         # This is a simplified implementation
         results = []
         
@@ -423,8 +404,7 @@ class InstagramCrawler:
         return results
         
     async def _web_search(self, query: str, max_results: int) -> List[Dict[str, Any]]:
-        """Search using web scraping (hashtag monitoring)"""
-        # Instagram web scraping is limited due to anti-bot measures
+        """Search using web scraping (hashtag monitoring)"""        # Instagram web scraping is limited due to anti-bot measures
         # This is a basic implementation for hashtag monitoring
         results = []
         
@@ -471,22 +451,19 @@ class InstagramCrawler:
         return results
         
     def _extract_post_id(self, url: str) -> str:
-        """Extract post ID from Instagram URL"""
-        if "/p/" in url:
+        """Extract post ID from Instagram URL"""        if "/p/" in url:
             return url.split("/p/")[1].split("/")[0]
         return hashlib.md5(url.encode()).hexdigest()[:16]
 
 class TwitterCrawler:
-    """Twitter/X platform crawler and monitor"""
-    
+    """Twitter/X platform crawler and monitor"""    
     def __init__(self, bearer_token: Optional[str] = None):
         self.bearer_token = bearer_token
         self.base_url = "https://api.twitter.com/2"
         self.logger = logging.getLogger(f"{__name__}.TwitterCrawler")
         
     async def search_content(self, query: str, max_results: int = 100) -> List[Dict[str, Any]]:
-        """Search Twitter content using API"""
-        if not self.bearer_token:
+        """Search Twitter content using API"""        if not self.bearer_token:
             self.logger.warning("Twitter API bearer token not available")
             return []
             
@@ -538,15 +515,13 @@ class TwitterCrawler:
         return results
 
 class GenericWebCrawler:
-    """Generic web crawler for any website"""
-    
+    """Generic web crawler for any website"""    
     def __init__(self):
         self.logger = logging.getLogger(f"{__name__}.GenericCrawler")
         
     async def crawl_website(self, base_url: str, search_terms: List[str], 
                            max_pages: int = 10) -> List[Dict[str, Any]]:
-        """Crawl website for content matching search terms"""
-        if not BEAUTIFULSOUP_AVAILABLE:
+        """Crawl website for content matching search terms"""        if not BEAUTIFULSOUP_AVAILABLE:
             self.logger.warning("BeautifulSoup not available for web crawling")
             return []
             
@@ -602,8 +577,7 @@ class GenericWebCrawler:
         return results
 
 class WebSurveillancePipelineManager:
-    """
-    Enterprise Web Surveillance and Crawling Pipeline Manager
+    """    Enterprise Web Surveillance and Crawling Pipeline Manager
     
     Provides comprehensive web monitoring capabilities for:
     - Multi-platform content surveillance and violation detection
@@ -611,8 +585,7 @@ class WebSurveillancePipelineManager:
     - Automated evidence collection and documentation
     - Content matching and similarity analysis
     - Alert generation and notification management
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -645,8 +618,7 @@ class WebSurveillancePipelineManager:
         }
         
     async def add_surveillance_target(self, target: SurveillanceTarget) -> str:
-        """Add new content surveillance target"""
-        self.active_targets[target.target_id] = target
+        """Add new content surveillance target"""        self.active_targets[target.target_id] = target
         self.surveillance_stats['active_targets'] = len(self.active_targets)
         
         self.logger.info(f"Added surveillance target: {target.target_id} for {target.platform.value}")
@@ -657,8 +629,7 @@ class WebSurveillancePipelineManager:
         return target.target_id
         
     async def _monitor_target(self, target: SurveillanceTarget):
-        """Continuously monitor surveillance target"""
-        while target.target_id in self.active_targets:
+        """Continuously monitor surveillance target"""        while target.target_id in self.active_targets:
             try:
                 # Perform crawling based on platform
                 crawler = self._get_platform_crawler(target.platform)
@@ -690,8 +661,7 @@ class WebSurveillancePipelineManager:
                 await asyncio.sleep(300)  # Wait 5 minutes on error
                 
     def _get_platform_crawler(self, platform: Platform):
-        """Get appropriate crawler for platform"""
-        crawler_map = {
+        """Get appropriate crawler for platform"""        crawler_map = {
             Platform.YOUTUBE: self.youtube_crawler,
             Platform.TIKTOK: self.tiktok_crawler,
             Platform.INSTAGRAM: self.instagram_crawler,
@@ -702,8 +672,7 @@ class WebSurveillancePipelineManager:
         
     async def _crawl_platform(self, platform: Platform, query: str, 
                              max_results: int = 100) -> List[Dict[str, Any]]:
-        """Crawl specific platform for content"""
-        crawler = self._get_platform_crawler(platform)
+        """Crawl specific platform for content"""        crawler = self._get_platform_crawler(platform)
         
         if not crawler:
             return []
@@ -721,8 +690,7 @@ class WebSurveillancePipelineManager:
             
     async def _analyze_search_results(self, search_results: List[Dict[str, Any]], 
                                     target: SurveillanceTarget) -> List[ContentMatch]:
-        """Analyze search results for potential matches"""
-        matches = []
+        """Analyze search results for potential matches"""        matches = []
         
         for result in search_results:
             # Calculate similarity score (simplified)
@@ -751,8 +719,7 @@ class WebSurveillancePipelineManager:
         
     def _calculate_content_similarity(self, result: Dict[str, Any], 
                                     target: SurveillanceTarget) -> float:
-        """Calculate content similarity score (simplified implementation)"""
-        score = 0.0
+        """Calculate content similarity score (simplified implementation)"""        score = 0.0
         content_text = f"{result.get('title', '')} {result.get('description', '')}".lower()
         
         # Keyword matching
@@ -775,8 +742,7 @@ class WebSurveillancePipelineManager:
         return min(score, 1.0)
         
     def _parse_upload_date(self, date_str: Optional[str]) -> datetime:
-        """Parse upload date from various formats"""
-        if not date_str:
+        """Parse upload date from various formats"""        if not date_str:
             return datetime.utcnow()
             
         try:
@@ -791,8 +757,7 @@ class WebSurveillancePipelineManager:
                 return datetime.utcnow()
                 
     async def _process_detected_match(self, match: ContentMatch):
-        """Process detected content match"""
-        self.detected_matches.append(match)
+        """Process detected content match"""        self.detected_matches.append(match)
         self.surveillance_stats['matches_detected'] += 1
         
         # Take screenshot if possible
@@ -807,8 +772,7 @@ class WebSurveillancePipelineManager:
                         f"(similarity: {match.similarity_score:.2f})")
         
     async def _capture_evidence_screenshot(self, url: str) -> Optional[str]:
-        """Capture screenshot evidence of detected content"""
-        try:
+        """Capture screenshot evidence of detected content"""        try:
             chrome_options = Options()
             chrome_options.add_argument("--headless")
             chrome_options.add_argument("--no-sandbox")
@@ -836,8 +800,7 @@ class WebSurveillancePipelineManager:
             return None
             
     async def _generate_violation_alert(self, match: ContentMatch):
-        """Generate violation alert for detected match"""
-        alert_data = {
+        """Generate violation alert for detected match"""        alert_data = {
             'alert_id': f"alert_{match.match_id}",
             'match': asdict(match),
             'severity': self._determine_alert_severity(match),
@@ -854,8 +817,7 @@ class WebSurveillancePipelineManager:
         return alert_data
         
     def _determine_alert_severity(self, match: ContentMatch) -> AlertSeverity:
-        """Determine alert severity based on match characteristics"""
-        if match.similarity_score >= 0.95:
+        """Determine alert severity based on match characteristics"""        if match.similarity_score >= 0.95:
             return AlertSeverity.CRITICAL
         elif match.similarity_score >= 0.85:
             return AlertSeverity.HIGH
@@ -865,8 +827,7 @@ class WebSurveillancePipelineManager:
             return AlertSeverity.LOW
             
     def _get_recommended_actions(self, match: ContentMatch) -> List[str]:
-        """Get recommended actions for violation"""
-        actions = [
+        """Get recommended actions for violation"""        actions = [
             "Review detected content for copyright infringement",
             "Collect additional evidence if needed",
             "Contact platform for content removal"
@@ -881,8 +842,7 @@ class WebSurveillancePipelineManager:
         return actions
         
     def get_surveillance_statistics(self) -> Dict[str, Any]:
-        """Get surveillance system statistics"""
-        return {
+        """Get surveillance system statistics"""        return {
             **self.surveillance_stats,
             'recent_matches': len([m for m in self.detected_matches 
                                  if (datetime.utcnow() - m.upload_date).days <= 7]),
@@ -891,16 +851,14 @@ class WebSurveillancePipelineManager:
         }
         
     def _get_platform_distribution(self) -> Dict[str, int]:
-        """Get distribution of matches by platform"""
-        distribution = {}
+        """Get distribution of matches by platform"""        distribution = {}
         for match in self.detected_matches:
             platform = match.platform.value
             distribution[platform] = distribution.get(platform, 0) + 1
         return distribution
         
     def _get_system_capabilities(self) -> Dict[str, bool]:
-        """Get system capabilities status"""
-        return {
+        """Get system capabilities status"""        return {
             'selenium_available': SELENIUM_AVAILABLE,
             'scrapy_available': SCRAPY_AVAILABLE,
             'beautifulsoup_available': BEAUTIFULSOUP_AVAILABLE,
@@ -913,5 +871,4 @@ class WebSurveillancePipelineManager:
 surveillance_pipeline_manager = WebSurveillancePipelineManager()
 
 def get_surveillance_pipeline_manager() -> WebSurveillancePipelineManager:
-    """Get global surveillance pipeline manager instance"""
-    return surveillance_pipeline_manager
+    """Get global surveillance pipeline manager instance"""    return surveillance_pipeline_manager

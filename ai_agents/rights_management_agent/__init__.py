@@ -19,7 +19,6 @@ Features:
 - License management and tracking
 - Revenue optimization
 """
-
 from .manager import RightsManagementManager
 from .core.ownership_registry import OwnershipRegistry
 from .core.license_manager import LicenseManager

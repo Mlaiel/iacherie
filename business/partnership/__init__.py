@@ -22,8 +22,7 @@ Contact: mlaiel@live.de
 
 This module manages strategic partnerships, business relationships,
 contract management, and partnership monetization for creators.
-"""
-from .partnership_manager import PartnershipManager
+"""from .partnership_manager import PartnershipManager
 from .contract_engine import ContractEngine
 from .negotiation_engine import NegotiationEngine
 from .revenue_distribution import RevenueDistributionService

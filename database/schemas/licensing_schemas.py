@@ -1,5 +1,4 @@
-"""
-Licensing and Rights Management Schemas
+"""Licensing and Rights Management Schemas
 
 Comprehensive Pydantic schemas for licensing agreements, rights management,
 and intellectual property protection in the IA Influencer Agent platform.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent + Content Protection Platform
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 from datetime import datetime, date
 from decimal import Decimal
 from enum import Enum
@@ -20,8 +18,7 @@ from pydantic.types import PositiveInt, PositiveFloat
 
 
 class LicenseTypeEnum(str, Enum):
-    """Types of content licenses"""
-    EXCLUSIVE = "exclusive"
+    """Types of content licenses"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     CREATIVE_COMMONS = "creative_commons"
     ROYALTY_FREE = "royalty_free"
@@ -39,8 +36,7 @@ class LicenseTypeEnum(str, Enum):
 
 
 class UsageRightsEnum(str, Enum):
-    """Types of usage rights"""
-    REPRODUCTION = "reproduction"
+    """Types of usage rights"""    REPRODUCTION = "reproduction"
     DISTRIBUTION = "distribution"
     PUBLIC_PERFORMANCE = "public_performance"
     PUBLIC_DISPLAY = "public_display"
@@ -59,8 +55,7 @@ class UsageRightsEnum(str, Enum):
 
 
 class LicenseStatusEnum(str, Enum):
-    """License agreement status"""
-    DRAFT = "draft"
+    """License agreement status"""    DRAFT = "draft"
     PENDING_APPROVAL = "pending_approval"
     ACTIVE = "active"
     SUSPENDED = "suspended"
@@ -72,8 +67,7 @@ class LicenseStatusEnum(str, Enum):
 
 
 class TerritoryEnum(str, Enum):
-    """Geographic territories for licensing"""
-    WORLDWIDE = "worldwide"
+    """Geographic territories for licensing"""    WORLDWIDE = "worldwide"
     NORTH_AMERICA = "north_america"
     EUROPE = "europe"
     ASIA_PACIFIC = "asia_pacific"
@@ -91,8 +85,7 @@ class TerritoryEnum(str, Enum):
 
 
 class PaymentTermsEnum(str, Enum):
-    """Payment terms for licensing"""
-    UPFRONT = "upfront"
+    """Payment terms for licensing"""    UPFRONT = "upfront"
     QUARTERLY = "quarterly"
     SEMI_ANNUALLY = "semi_annually"
     ANNUALLY = "annually"
@@ -105,8 +98,7 @@ class PaymentTermsEnum(str, Enum):
 
 
 class RoyaltyStructureSchema(BaseModel):
-    """Schema for royalty payment structure"""
-    royalty_type: str = Field(..., description="Type of royalty (percentage, fixed, tiered)")
+    """Schema for royalty payment structure"""    royalty_type: str = Field(..., description="Type of royalty (percentage, fixed, tiered)")
     base_rate: Decimal = Field(..., description="Base royalty rate")
     currency: str = Field(..., description="Currency for payments")
     minimum_guarantee: Optional[Decimal] = Field(None, description="Minimum guaranteed payment")
@@ -139,8 +131,7 @@ class RoyaltyStructureSchema(BaseModel):
 
 
 class UsageRestrictionsSchema(BaseModel):
-    """Schema for usage restrictions and limitations"""
-    # Content restrictions
+    """Schema for usage restrictions and limitations"""    # Content restrictions
     adult_content_allowed: bool = Field(False, description="Adult content allowed")
     violence_content_allowed: bool = Field(False, description="Violence content allowed")
     political_content_allowed: bool = Field(True, description="Political content allowed")
@@ -181,8 +172,7 @@ class UsageRestrictionsSchema(BaseModel):
 
 
 class LicenseeInformationSchema(BaseModel):
-    """Schema for licensee information"""
-    # Basic information
+    """Schema for licensee information"""    # Basic information
     name: str = Field(..., description="Licensee name")
     company: Optional[str] = Field(None, description="Company name")
     email: str = Field(..., description="Contact email")
@@ -222,8 +212,7 @@ class LicenseeInformationSchema(BaseModel):
 
 
 class LicensingAgreementBaseSchema(BaseModel):
-    """Base schema for licensing agreements"""
-    # Agreement identification
+    """Base schema for licensing agreements"""    # Agreement identification
     agreement_title: str = Field(..., description="Title of the licensing agreement")
     license_type: LicenseTypeEnum = Field(..., description="Type of license")
     content_id: PositiveInt = Field(..., description="Licensed content ID")
@@ -263,16 +252,14 @@ class LicensingAgreementBaseSchema(BaseModel):
     @field_validator('expiration_date')
     @classmethod
     def validate_expiration_date(cls, v, values):
-        """Validate expiration date is after effective date"""
-        effective_date = values.get('effective_date')
+        """Validate expiration date is after effective date"""        effective_date = values.get('effective_date')
         if v and effective_date and v <= effective_date:
             raise ValueError("Expiration date must be after effective date")
         return v
 
 
 class LicensingAgreementCreateSchema(LicensingAgreementBaseSchema):
-    """Schema for creating licensing agreements"""
-    # Additional creation options
+    """Schema for creating licensing agreements"""    # Additional creation options
     template_id: Optional[PositiveInt] = Field(None, description="License template ID")
     auto_approve: bool = Field(False, description="Auto-approve if conditions met")
     notification_enabled: bool = Field(True, description="Enable notifications")
@@ -308,8 +295,7 @@ class LicensingAgreementCreateSchema(LicensingAgreementBaseSchema):
 
 
 class LicensingAgreementUpdateSchema(BaseModel):
-    """Schema for updating licensing agreements"""
-    agreement_title: Optional[str] = Field(None, description="Updated agreement title")
+    """Schema for updating licensing agreements"""    agreement_title: Optional[str] = Field(None, description="Updated agreement title")
     expiration_date: Optional[date] = Field(None, description="Updated expiration date")
     auto_renewal: Optional[bool] = Field(None, description="Updated auto-renewal setting")
     royalty_structure: Optional[RoyaltyStructureSchema] = Field(None, description="Updated royalty structure")
@@ -329,8 +315,7 @@ class LicensingAgreementUpdateSchema(BaseModel):
 
 
 class LicenseComplianceSchema(BaseModel):
-    """Schema for license compliance monitoring"""
-    agreement_id: PositiveInt = Field(..., description="License agreement ID")
+    """Schema for license compliance monitoring"""    agreement_id: PositiveInt = Field(..., description="License agreement ID")
     compliance_check_date: datetime = Field(..., description="Compliance check date")
     overall_compliance: bool = Field(..., description="Overall compliance status")
     compliance_score: float = Field(..., ge=0.0, le=1.0, description="Compliance score")
@@ -366,8 +351,7 @@ class LicenseComplianceSchema(BaseModel):
 
 
 class LicensingAgreementResponseSchema(LicensingAgreementBaseSchema):
-    """Schema for licensing agreement responses"""
-    id: PositiveInt = Field(..., description="Unique agreement ID")
+    """Schema for licensing agreement responses"""    id: PositiveInt = Field(..., description="Unique agreement ID")
     agreement_reference: str = Field(..., description="Human-readable agreement reference")
     
     # Status and tracking
@@ -423,8 +407,7 @@ class LicensingAgreementResponseSchema(LicensingAgreementBaseSchema):
 
 
 class RightsManagementSchema(BaseModel):
-    """Schema for intellectual property rights management"""
-    content_id: PositiveInt = Field(..., description="Content ID")
+    """Schema for intellectual property rights management"""    content_id: PositiveInt = Field(..., description="Content ID")
     copyright_owner: str = Field(..., description="Copyright owner name")
     copyright_year: int = Field(..., description="Copyright year")
     copyright_registration: Optional[str] = Field(None, description="Copyright registration number")
@@ -459,8 +442,7 @@ class RightsManagementSchema(BaseModel):
 
 
 class LicensingDashboardSchema(BaseModel):
-    """Schema for licensing dashboard metrics"""
-    # Agreement summary
+    """Schema for licensing dashboard metrics"""    # Agreement summary
     total_agreements: int = Field(..., description="Total number of agreements")
     active_agreements: int = Field(..., description="Number of active agreements")
     pending_agreements: int = Field(..., description="Number of pending agreements")

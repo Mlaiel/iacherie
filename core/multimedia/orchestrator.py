@@ -1,5 +1,4 @@
-"""
-Multimedia Orchestrator - Enterprise Content Processing Coordinator
+"""Multimedia Orchestrator - Enterprise Content Processing Coordinator
 
 Central orchestration system for managing complex multimedia workflows.
 Coordinates multiple processing engines and ensures optimal resource utilization.
@@ -12,7 +11,6 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Union, Callable
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels"""
-    CRITICAL = "critical"
+    """Processing priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     NORMAL = "normal"
     LOW = "low"
@@ -43,8 +40,7 @@ class ProcessingPriority(Enum):
 
 
 class WorkflowStatus(Enum):
-    """Workflow execution status"""
-    PENDING = "pending"
+    """Workflow execution status"""    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -54,8 +50,7 @@ class WorkflowStatus(Enum):
 
 @dataclass
 class ProcessingRequest:
-    """Multimedia processing request"""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Multimedia processing request"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     content_type: str = ""
     content_source: Union[str, bytes] = ""
@@ -76,8 +71,7 @@ class ProcessingRequest:
 
 @dataclass
 class WorkflowDefinition:
-    """Multimedia workflow definition"""
-    workflow_id: str
+    """Multimedia workflow definition"""    workflow_id: str
     name: str
     description: str
     pipeline_steps: List[Dict[str, Any]]
@@ -94,8 +88,7 @@ class WorkflowDefinition:
 
 
 class MultimediaOrchestrator:
-    """Enterprise multimedia processing orchestrator"""
-    
+    """Enterprise multimedia processing orchestrator"""    
     def __init__(
         self, 
         config: Dict[str, Any],
@@ -139,8 +132,7 @@ class MultimediaOrchestrator:
         self._setup_event_handlers()
         
     async def initialize(self):
-        """Initialize orchestrator components"""
-        try:
+        """Initialize orchestrator components"""        try:
             # Initialize core components
             await self.registry.initialize()
             await self.pipeline.initialize()
@@ -161,15 +153,13 @@ class MultimediaOrchestrator:
             raise
             
     def _initialize_queues(self):
-        """Initialize processing queues for different priorities"""
-        for priority in ProcessingPriority:
+        """Initialize processing queues for different priorities"""        for priority in ProcessingPriority:
             self.processing_queues[priority] = asyncio.Queue(
                 maxsize=self.config.get(f"queue_size_{priority.value}", 1000)
             )
             
     def _setup_event_handlers(self):
-        """Setup event handlers for workflow lifecycle"""
-        self.event_dispatcher.subscribe("request_created", self._handle_request_created)
+        """Setup event handlers for workflow lifecycle"""        self.event_dispatcher.subscribe("request_created", self._handle_request_created)
         self.event_dispatcher.subscribe("request_started", self._handle_request_started)
         self.event_dispatcher.subscribe("request_progress", self._handle_request_progress)
         self.event_dispatcher.subscribe("request_completed", self._handle_request_completed)
@@ -180,8 +170,7 @@ class MultimediaOrchestrator:
         request: ProcessingRequest,
         workflow_id: Optional[str] = None
     ) -> str:
-        """Submit multimedia processing request"""
-        try:
+        """Submit multimedia processing request"""        try:
             # Validate request
             validation_result = await self.validator.validate_request(request)
             if not validation_result.is_valid:
@@ -225,8 +214,7 @@ class MultimediaOrchestrator:
             raise
             
     async def get_request_status(self, request_id: str) -> Dict[str, Any]:
-        """Get processing request status"""
-        request = self.active_requests.get(request_id)
+        """Get processing request status"""        request = self.active_requests.get(request_id)
         if not request:
             # Check cache for completed requests
             cached_result = await self.cache.get_request_result(request_id)
@@ -246,8 +234,7 @@ class MultimediaOrchestrator:
         }
         
     async def cancel_request(self, request_id: str) -> bool:
-        """Cancel processing request"""
-        try:
+        """Cancel processing request"""        try:
             request = self.active_requests.get(request_id)
             if not request:
                 return False
@@ -272,8 +259,7 @@ class MultimediaOrchestrator:
             return False
             
     async def pause_request(self, request_id: str) -> bool:
-        """Pause processing request"""
-        try:
+        """Pause processing request"""        try:
             request = self.active_requests.get(request_id)
             if not request or request.status != WorkflowStatus.RUNNING:
                 return False
@@ -294,8 +280,7 @@ class MultimediaOrchestrator:
             return False
             
     async def resume_request(self, request_id: str) -> bool:
-        """Resume paused processing request"""
-        try:
+        """Resume paused processing request"""        try:
             request = self.active_requests.get(request_id)
             if not request or request.status != WorkflowStatus.PAUSED:
                 return False
@@ -316,8 +301,7 @@ class MultimediaOrchestrator:
             return False
             
     async def register_workflow(self, workflow: WorkflowDefinition) -> bool:
-        """Register new workflow definition"""
-        try:
+        """Register new workflow definition"""        try:
             # Validate workflow
             validation_result = await self._validate_workflow(workflow)
             if not validation_result:
@@ -336,8 +320,7 @@ class MultimediaOrchestrator:
             return False
             
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get orchestrator performance metrics"""
-        return {
+        """Get orchestrator performance metrics"""        return {
             **self.performance_metrics,
             "timestamp": datetime.now(timezone.utc).isoformat(),
             "active_requests": len(self.active_requests),
@@ -349,8 +332,7 @@ class MultimediaOrchestrator:
         }
         
     async def health_check(self) -> Dict[str, Any]:
-        """Comprehensive health check"""
-        try:
+        """Comprehensive health check"""        try:
             health_status = {
                 "status": "healthy",
                 "timestamp": datetime.now(timezone.utc).isoformat(),
@@ -385,8 +367,7 @@ class MultimediaOrchestrator:
             }
             
     async def shutdown(self):
-        """Graceful shutdown of orchestrator"""
-        try:
+        """Graceful shutdown of orchestrator"""        try:
             logger.info("Shutting down multimedia orchestrator...")
             
             # Cancel all background tasks
@@ -410,8 +391,7 @@ class MultimediaOrchestrator:
     # Private methods
     
     async def _start_background_tasks(self):
-        """Start background worker tasks"""
-        # Start worker pools for each priority level
+        """Start background worker tasks"""        # Start worker pools for each priority level
         for priority in ProcessingPriority:
             workers = []
             worker_count = self.max_workers_per_type
@@ -434,8 +414,7 @@ class MultimediaOrchestrator:
         ]
         
     async def _process_queue_worker(self, priority: ProcessingPriority):
-        """Worker for processing requests from priority queue"""
-        queue = self.processing_queues[priority]
+        """Worker for processing requests from priority queue"""        queue = self.processing_queues[priority]
         
         while True:
             try:
@@ -457,8 +436,7 @@ class MultimediaOrchestrator:
                 await asyncio.sleep(1)
                 
     async def _process_request(self, request: ProcessingRequest, workflow: WorkflowDefinition):
-        """Process individual multimedia request"""
-        try:
+        """Process individual multimedia request"""        try:
             # Update request status
             request.status = WorkflowStatus.RUNNING
             request.started_at = datetime.now(timezone.utc)
@@ -522,8 +500,7 @@ class MultimediaOrchestrator:
             self.performance_metrics["active_workflows"] -= 1
             
     async def _select_optimal_workflow(self, request: ProcessingRequest) -> WorkflowDefinition:
-        """Select optimal workflow for processing request"""
-        # This is a simplified implementation
+        """Select optimal workflow for processing request"""        # This is a simplified implementation
         # In production, this would use AI/ML for optimal workflow selection
         
         content_type = request.content_type.lower()
@@ -560,8 +537,7 @@ class MultimediaOrchestrator:
         return workflow
         
     async def _validate_workflow(self, workflow: WorkflowDefinition) -> bool:
-        """Validate workflow definition"""
-        try:
+        """Validate workflow definition"""        try:
             # Basic validation
             if not workflow.workflow_id or not workflow.name:
                 return False
@@ -581,8 +557,7 @@ class MultimediaOrchestrator:
             return False
             
     async def _health_monitor_worker(self):
-        """Background health monitoring worker"""
-        while True:
+        """Background health monitoring worker"""        while True:
             try:
                 await asyncio.sleep(self.health_check_interval)
                 
@@ -602,8 +577,7 @@ class MultimediaOrchestrator:
                 logger.error(f"Health monitor error: {e}")
                 
     async def _cleanup_worker(self):
-        """Background cleanup worker"""
-        while True:
+        """Background cleanup worker"""        while True:
             try:
                 await asyncio.sleep(self.cleanup_interval)
                 
@@ -622,8 +596,7 @@ class MultimediaOrchestrator:
                 logger.error(f"Cleanup worker error: {e}")
                 
     async def _cleanup_completed_requests(self):
-        """Cleanup completed requests from memory"""
-        current_time = datetime.now(timezone.utc)
+        """Cleanup completed requests from memory"""        current_time = datetime.now(timezone.utc)
         retention_period = self.config.get("completed_request_retention", 3600)  # 1 hour
         
         requests_to_remove = []
@@ -642,15 +615,13 @@ class MultimediaOrchestrator:
             logger.info(f"Cleaned up {len(requests_to_remove)} completed requests")
             
     def _update_queue_metrics(self):
-        """Update queue size metrics"""
-        self.performance_metrics["queue_sizes"] = {
+        """Update queue size metrics"""        self.performance_metrics["queue_sizes"] = {
             priority.value: queue.qsize()
             for priority, queue in self.processing_queues.items()
         }
         
     def _update_processing_time_metric(self, request: ProcessingRequest):
-        """Update average processing time metric"""
-        if request.started_at and request.completed_at:
+        """Update average processing time metric"""        if request.started_at and request.completed_at:
             processing_time = (request.completed_at - request.started_at).total_seconds()
             current_avg = self.performance_metrics["average_processing_time"]
             total_processed = self.performance_metrics["requests_processed"]
@@ -660,8 +631,7 @@ class MultimediaOrchestrator:
             self.performance_metrics["average_processing_time"] = new_avg
             
     async def _get_component_health(self) -> Dict[str, str]:
-        """Get health status of all components"""
-        try:
+        """Get health status of all components"""        try:
             components = {
                 "registry": await self.registry.health_check(),
                 "pipeline": await self.pipeline.health_check(),
@@ -680,8 +650,7 @@ class MultimediaOrchestrator:
             return {}
             
     async def _wait_for_active_requests(self, timeout: int = 60):
-        """Wait for active requests to complete"""
-        start_time = time.time()
+        """Wait for active requests to complete"""        start_time = time.time()
         
         while self.active_requests and (time.time() - start_time) < timeout:
             active_count = len([
@@ -703,8 +672,7 @@ class MultimediaOrchestrator:
             logger.warning(f"{remaining_active} requests still active after timeout")
             
     async def _load_workflow_definitions(self):
-        """Load workflow definitions from configuration"""
-        # This would typically load from database or configuration files
+        """Load workflow definitions from configuration"""        # This would typically load from database or configuration files
         # For now, we'll create some default workflows
         
         default_workflows = [
@@ -761,25 +729,20 @@ class MultimediaOrchestrator:
     # Event handlers
     
     async def _handle_request_created(self, event_data: Dict[str, Any]):
-        """Handle request created event"""
-        logger.info(f"Request created: {event_data['request_id']}")
+        """Handle request created event"""        logger.info(f"Request created: {event_data['request_id']}")
         
     async def _handle_request_started(self, event_data: Dict[str, Any]):
-        """Handle request started event"""
-        logger.info(f"Request started: {event_data['request_id']}")
+        """Handle request started event"""        logger.info(f"Request started: {event_data['request_id']}")
         
     async def _handle_request_progress(self, event_data: Dict[str, Any]):
-        """Handle request progress event"""
-        request_id = event_data.get("request_id")
+        """Handle request progress event"""        request_id = event_data.get("request_id")
         progress = event_data.get("progress", 0)
         
         if request_id in self.active_requests:
             self.active_requests[request_id].progress = progress
             
     async def _handle_request_completed(self, event_data: Dict[str, Any]):
-        """Handle request completed event"""
-        logger.info(f"Request completed: {event_data['request_id']}")
+        """Handle request completed event"""        logger.info(f"Request completed: {event_data['request_id']}")
         
     async def _handle_request_failed(self, event_data: Dict[str, Any]):
-        """Handle request failed event"""
-        logger.error(f"Request failed: {event_data['request_id']} - {event_data.get('error')}")
+        """Handle request failed event"""        logger.error(f"Request failed: {event_data['request_id']} - {event_data.get('error')}")

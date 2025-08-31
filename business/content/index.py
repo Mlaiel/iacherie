@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Content Management System Index
+"""IA Influencer Agent - Content Management System Index
 ==================================================
 
 Central initialization and coordination hub for all content management engines
@@ -17,7 +16,6 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Any, Optional, Type
@@ -49,17 +47,14 @@ logger = logging.getLogger(__name__)
 
 
 class ContentManagementSystem:
-    """
-    Central orchestrator for all content management engines.
+    """    Central orchestrator for all content management engines.
     
     This class provides unified access to all content processing capabilities,
     manages engine lifecycle, handles inter-engine communication, and ensures
     system-wide consistency and reliability.
-    """
-    
+    """    
     def __init__(self, config: Optional[ContentConfig] = None):
-        """Initialize the content management system."""
-        self.config = config or ContentConfig()
+        """Initialize the content management system."""        self.config = config or ContentConfig()
         self.engines = {}
         self.is_initialized = False
         self.startup_time = None
@@ -95,13 +90,11 @@ class ContentManagementSystem:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize all engines in the correct dependency order.
+        """        Initialize all engines in the correct dependency order.
         
         Returns:
             bool: True if initialization successful, False otherwise
-        """
-        logger.info("🚀 Initializing IA Influencer Content Management System...")
+        """        logger.info("🚀 Initializing IA Influencer Content Management System...")
         start_time = datetime.now()
         
         try:
@@ -138,8 +131,7 @@ class ContentManagementSystem:
             return False
     
     def _resolve_dependency_order(self) -> List[str]:
-        """Resolve engine initialization order based on dependencies."""
-        ordered = []
+        """Resolve engine initialization order based on dependencies."""        ordered = []
         remaining = set(self.engine_registry.keys())
         
         # Start with engines that have no dependencies
@@ -162,8 +154,7 @@ class ContentManagementSystem:
         return ordered
     
     async def _initialize_engine(self, engine_name: str) -> bool:
-        """Initialize a specific engine."""
-        try:
+        """Initialize a specific engine."""        try:
             engine_class = self.engine_registry[engine_name]
             
             logger.info(f"🔧 Initializing {engine_name}...")
@@ -203,8 +194,7 @@ class ContentManagementSystem:
             return False
     
     async def _validate_system(self) -> bool:
-        """Validate system integrity after initialization."""
-        logger.info("🔍 Validating system integrity...")
+        """Validate system integrity after initialization."""        logger.info("🔍 Validating system integrity...")
         
         validation_checks = [
             self._validate_engine_connectivity(),
@@ -228,8 +218,7 @@ class ContentManagementSystem:
         return all_passed
     
     async def _validate_engine_connectivity(self) -> bool:
-        """Validate that all engines can communicate properly."""
-        try:
+        """Validate that all engines can communicate properly."""        try:
             # Test basic engine availability
             required_engines = ['content_processor', 'format_handler', 'ai_enhancer']
             for engine_name in required_engines:
@@ -258,8 +247,7 @@ class ContentManagementSystem:
             return False
     
     async def _validate_configuration(self) -> bool:
-        """Validate system configuration."""
-        try:
+        """Validate system configuration."""        try:
             # Check essential configuration
             if not hasattr(self.config, 'CONTENT_PROCESSING'):
                 logger.error("Missing content processing configuration")
@@ -280,8 +268,7 @@ class ContentManagementSystem:
             return False
     
     async def _validate_resources(self) -> bool:
-        """Validate system resources."""
-        try:
+        """Validate system resources."""        try:
             import psutil
             
             # Memory check
@@ -304,8 +291,7 @@ class ContentManagementSystem:
             return False
     
     async def _validate_security(self) -> bool:
-        """Validate security settings."""
-        try:
+        """Validate security settings."""        try:
             # Check for sensitive files exposure
             sensitive_patterns = ['.env', '*.key', '*.pem']
             for pattern in sensitive_patterns:
@@ -319,16 +305,13 @@ class ContentManagementSystem:
             return False
     
     def get_engine(self, engine_name: str) -> Optional[Any]:
-        """Get a specific engine instance."""
-        return self.engines.get(engine_name)
+        """Get a specific engine instance."""        return self.engines.get(engine_name)
     
     def get_all_engines(self) -> Dict[str, Any]:
-        """Get all engine instances."""
-        return self.engines.copy()
+        """Get all engine instances."""        return self.engines.copy()
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive system health check."""
-        if not self.is_initialized:
+        """Perform comprehensive system health check."""        if not self.is_initialized:
             return {
                 'status': 'not_initialized',
                 'message': 'System not initialized'
@@ -389,8 +372,7 @@ class ContentManagementSystem:
         return health_results
     
     async def shutdown(self):
-        """Gracefully shutdown all engines."""
-        logger.info("🛑 Shutting down Content Management System...")
+        """Gracefully shutdown all engines."""        logger.info("🛑 Shutting down Content Management System...")
         
         # Shutdown engines in reverse dependency order
         shutdown_order = list(reversed(self._resolve_dependency_order()))
@@ -416,8 +398,7 @@ class ContentManagementSystem:
         logger.info("✅ Content Management System shutdown complete")
     
     def get_system_info(self) -> Dict[str, Any]:
-        """Get comprehensive system information."""
-        return {
+        """Get comprehensive system information."""        return {
             'system_name': 'IA Influencer Agent - Content Management System',
             'version': '1.0.0',
             'author': 'Fahed Mlaiel <mlaiel@live.de>',
@@ -431,13 +412,11 @@ class ContentManagementSystem:
         }
     
     async def process_content(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        High-level content processing orchestration.
+        """        High-level content processing orchestration.
         
         This method coordinates multiple engines to process content through
         the complete pipeline: processing → enhancement → quality assurance → protection.
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RuntimeError("System not initialized")
         
         logger.info("🎬 Starting content processing pipeline...")
@@ -494,8 +473,7 @@ _content_system = None
 
 
 async def initialize_content_system(config: Optional[ContentConfig] = None) -> ContentManagementSystem:
-    """Initialize and return the global content management system."""
-    global _content_system
+    """Initialize and return the global content management system."""    global _content_system
     
     if _content_system is None:
         _content_system = ContentManagementSystem(config)
@@ -505,13 +483,11 @@ async def initialize_content_system(config: Optional[ContentConfig] = None) -> C
 
 
 def get_content_system() -> Optional[ContentManagementSystem]:
-    """Get the global content management system instance."""
-    return _content_system
+    """Get the global content management system instance."""    return _content_system
 
 
 async def shutdown_content_system():
-    """Shutdown the global content management system."""
-    global _content_system
+    """Shutdown the global content management system."""    global _content_system
     
     if _content_system:
         await _content_system.shutdown()
@@ -520,32 +496,27 @@ async def shutdown_content_system():
 
 # Convenience functions for direct engine access
 def get_content_processor():
-    """Get the content processor engine."""
-    system = get_content_system()
+    """Get the content processor engine."""    system = get_content_system()
     return system.get_engine('content_processor') if system else None
 
 
 def get_ai_enhancer():
-    """Get the AI enhancer engine."""
-    system = get_content_system()
+    """Get the AI enhancer engine."""    system = get_content_system()
     return system.get_engine('ai_enhancer') if system else None
 
 
 def get_distribution_manager():
-    """Get the distribution manager engine."""
-    system = get_content_system()
+    """Get the distribution manager engine."""    system = get_content_system()
     return system.get_engine('distribution_manager') if system else None
 
 
 def get_monetization_engine():
-    """Get the monetization engine."""
-    system = get_content_system()
+    """Get the monetization engine."""    system = get_content_system()
     return system.get_engine('monetization_engine') if system else None
 
 
 def get_protection_engine():
-    """Get the content protection engine."""
-    system = get_content_system()
+    """Get the content protection engine."""    system = get_content_system()
     return system.get_engine('protection_engine') if system else None
 
 
@@ -565,9 +536,7 @@ __all__ = [
 
 # Example usage and integration test
 async def main():
-    """Example usage of the content management system."""
-    print("""
-╔══════════════════════════════════════════════════════════════════════════════╗
+    """Example usage of the content management system."""    print("""╔══════════════════════════════════════════════════════════════════════════════╗
 ║                IA Influencer Agent - Content Management System              ║
 ║                                                                              ║
 ║  Industrial-Grade Content Processing Platform                               ║

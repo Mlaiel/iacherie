@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Security Integration Tests
+"""Security Integration Tests
 
 Tests for security features including authentication, authorization,
 rate limiting, data protection, and security headers.
@@ -23,7 +20,6 @@ rate limiting, data protection, and security headers.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -49,8 +45,7 @@ TEST_ENCRYPTION_KEY = Fernet.generate_key()
 
 
 class SecurityTestClient:
-    """Enhanced test client for security testing."""
-    
+    """Enhanced test client for security testing."""    
     def __init__(self, base_url: str = TEST_BASE_URL):
         self.base_url = base_url
         self.session: Optional[aiohttp.ClientSession] = None
@@ -67,8 +62,7 @@ class SecurityTestClient:
             await self.session.close()
     
     async def register_user(self, user_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Register a new user."""
-        response = await self.session.post(
+        """Register a new user."""        response = await self.session.post(
             f"{self.base_url}/auth/register",
             json=user_data
         )
@@ -80,8 +74,7 @@ class SecurityTestClient:
         return await response.json()
     
     async def login(self, email: str, password: str) -> Dict[str, Any]:
-        """Login and store tokens."""
-        login_data = {"email": email, "password": password}
+        """Login and store tokens."""        login_data = {"email": email, "password": password}
         response = await self.session.post(
             f"{self.base_url}/auth/login",
             json=login_data
@@ -99,8 +92,7 @@ class SecurityTestClient:
         return data
     
     def get_auth_headers(self, include_bearer: bool = True) -> Dict[str, str]:
-        """Get authorization headers."""
-        headers = {"Content-Type": "application/json"}
+        """Get authorization headers."""        headers = {"Content-Type": "application/json"}
         if self.access_token and include_bearer:
             headers["Authorization"] = f"Bearer {self.access_token}"
         elif self.access_token and not include_bearer:
@@ -110,8 +102,7 @@ class SecurityTestClient:
     async def make_authenticated_request(
         self, method: str, endpoint: str, **kwargs
     ) -> aiohttp.ClientResponse:
-        """Make authenticated request."""
-        headers = kwargs.pop("headers", {})
+        """Make authenticated request."""        headers = kwargs.pop("headers", {})
         headers.update(self.get_auth_headers())
         
         return await self.session.request(
@@ -121,15 +112,13 @@ class SecurityTestClient:
 
 @pytest.fixture
 async def security_client():
-    """Create security test client."""
-    async with SecurityTestClient() as client:
+    """Create security test client."""    async with SecurityTestClient() as client:
         yield client
 
 
 @pytest.fixture
 async def authenticated_user(security_client):
-    """Create and authenticate a test user."""
-    user_data = {
+    """Create and authenticate a test user."""    user_data = {
         "email": f"security_test_{uuid.uuid4()}@example.com",
         "password": "secure_password_123!",
         "first_name": "Security",
@@ -144,14 +133,12 @@ async def authenticated_user(security_client):
 
 
 class TestAuthenticationSecurity:
-    """Test authentication security mechanisms."""
-    
+    """Test authentication security mechanisms."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     @pytest.mark.security
     async def test_password_hashing_security(self, security_client):
-        """Test that passwords are properly hashed and stored."""
-        user_data = {
+        """Test that passwords are properly hashed and stored."""        user_data = {
             "email": f"hash_test_{uuid.uuid4()}@example.com",
             "password": "test_password_123!",
             "first_name": "Hash",
@@ -177,8 +164,7 @@ class TestAuthenticationSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_password_strength_requirements(self, security_client):
-        """Test password strength requirements enforcement."""
-        weak_passwords = [
+        """Test password strength requirements enforcement."""        weak_passwords = [
             "123",  # Too short
             "password",  # Too common
             "12345678",  # No special characters
@@ -202,8 +188,7 @@ class TestAuthenticationSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_account_lockout_after_failed_attempts(self, security_client):
-        """Test account lockout after multiple failed login attempts."""
-        user_data = {
+        """Test account lockout after multiple failed login attempts."""        user_data = {
             "email": f"lockout_test_{uuid.uuid4()}@example.com",
             "password": "correct_password_123!",
             "first_name": "Lockout",
@@ -233,8 +218,7 @@ class TestAuthenticationSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_session_timeout(self, security_client, authenticated_user):
-        """Test session timeout functionality."""
-        # Make initial authenticated request
+        """Test session timeout functionality."""        # Make initial authenticated request
         response = await security_client.make_authenticated_request("GET", "/user/profile")
         assert response.status == 200
         
@@ -256,8 +240,7 @@ class TestAuthenticationSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_token_refresh_security(self, security_client, authenticated_user):
-        """Test token refresh mechanism security."""
-        # Get initial tokens
+        """Test token refresh mechanism security."""        # Get initial tokens
         original_access_token = security_client.access_token
         original_refresh_token = security_client.refresh_token
         
@@ -285,14 +268,12 @@ class TestAuthenticationSecurity:
 
 
 class TestAuthorizationSecurity:
-    """Test authorization and access control mechanisms."""
-    
+    """Test authorization and access control mechanisms."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     @pytest.mark.security
     async def test_role_based_access_control(self, security_client):
-        """Test role-based access control (RBAC)."""
-        # Create regular user
+        """Test role-based access control (RBAC)."""        # Create regular user
         regular_user_data = {
             "email": f"regular_{uuid.uuid4()}@example.com",
             "password": "regular_password_123!",
@@ -320,8 +301,7 @@ class TestAuthorizationSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_resource_ownership_authorization(self, security_client):
-        """Test that users can only access their own resources."""
-        # Create two users
+        """Test that users can only access their own resources."""        # Create two users
         user1_data = {
             "email": f"user1_{uuid.uuid4()}@example.com",
             "password": "user1_password_123!",
@@ -372,8 +352,7 @@ class TestAuthorizationSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_api_key_authorization(self, security_client, authenticated_user):
-        """Test API key-based authorization."""
-        # Generate API key
+        """Test API key-based authorization."""        # Generate API key
         api_key_response = await security_client.make_authenticated_request(
             "POST", "/auth/api-key/generate",
             json={"name": "Test API Key", "permissions": ["read", "write"]}
@@ -403,14 +382,12 @@ class TestAuthorizationSecurity:
 
 
 class TestRateLimitingSecurity:
-    """Test rate limiting and DDoS protection."""
-    
+    """Test rate limiting and DDoS protection."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     @pytest.mark.security
     async def test_api_rate_limiting(self, security_client, authenticated_user):
-        """Test API rate limiting enforcement."""
-        # Make rapid requests to trigger rate limiting
+        """Test API rate limiting enforcement."""        # Make rapid requests to trigger rate limiting
         responses = []
         request_count = 100
         
@@ -430,8 +407,7 @@ class TestRateLimitingSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_login_rate_limiting(self, security_client):
-        """Test login endpoint rate limiting."""
-        user_data = {
+        """Test login endpoint rate limiting."""        user_data = {
             "email": f"rate_limit_test_{uuid.uuid4()}@example.com",
             "password": "test_password_123!",
             "first_name": "Rate",
@@ -463,8 +439,7 @@ class TestRateLimitingSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_per_user_rate_limiting(self, security_client):
-        """Test per-user rate limiting."""
-        # Create two users
+        """Test per-user rate limiting."""        # Create two users
         user1_data = {
             "email": f"user1_rate_{uuid.uuid4()}@example.com",
             "password": "password_123!",
@@ -503,14 +478,12 @@ class TestRateLimitingSecurity:
 
 
 class TestDataEncryptionSecurity:
-    """Test data encryption and protection mechanisms."""
-    
+    """Test data encryption and protection mechanisms."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     @pytest.mark.security
     async def test_sensitive_data_encryption(self, security_client, authenticated_user):
-        """Test that sensitive data is encrypted in transit and at rest."""
-        # Test payment information encryption
+        """Test that sensitive data is encrypted in transit and at rest."""        # Test payment information encryption
         payment_data = {
             "card_number": "4242424242424242",
             "exp_month": "12",
@@ -535,8 +508,7 @@ class TestDataEncryptionSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_pii_data_protection(self, security_client, authenticated_user):
-        """Test protection of personally identifiable information (PII)."""
-        # Update profile with sensitive information
+        """Test protection of personally identifiable information (PII)."""        # Update profile with sensitive information
         sensitive_data = {
             "ssn": "123-45-6789",
             "phone": "+1234567890",
@@ -570,8 +542,7 @@ class TestDataEncryptionSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_content_encryption(self, security_client, authenticated_user):
-        """Test content encryption for sensitive uploads."""
-        # Upload sensitive content
+        """Test content encryption for sensitive uploads."""        # Upload sensitive content
         sensitive_content = {
             "title": "Confidential Content",
             "description": "This content should be encrypted",
@@ -595,14 +566,12 @@ class TestDataEncryptionSecurity:
 
 
 class TestInputValidationSecurity:
-    """Test input validation and sanitization."""
-    
+    """Test input validation and sanitization."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     @pytest.mark.security
     async def test_sql_injection_prevention(self, security_client, authenticated_user):
-        """Test prevention of SQL injection attacks."""
-        # Attempt SQL injection in various inputs
+        """Test prevention of SQL injection attacks."""        # Attempt SQL injection in various inputs
         sql_injection_payloads = [
             "'; DROP TABLE users; --",
             "1' OR '1'='1",
@@ -630,8 +599,7 @@ class TestInputValidationSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_xss_prevention(self, security_client, authenticated_user):
-        """Test prevention of Cross-Site Scripting (XSS) attacks."""
-        # XSS payloads
+        """Test prevention of Cross-Site Scripting (XSS) attacks."""        # XSS payloads
         xss_payloads = [
             "<script>alert('XSS')</script>",
             "javascript:alert('XSS')",
@@ -668,8 +636,7 @@ class TestInputValidationSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_file_upload_validation(self, security_client, authenticated_user):
-        """Test file upload validation and security."""
-        # Test malicious file uploads
+        """Test file upload validation and security."""        # Test malicious file uploads
         malicious_files = [
             ("malware.exe", b"MZ\x90\x00"),  # PE executable header
             ("script.php", b"<?php system($_GET['cmd']); ?>"),
@@ -703,8 +670,7 @@ class TestInputValidationSecurity:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_request_size_limits(self, security_client, authenticated_user):
-        """Test request size limits to prevent DoS."""
-        # Attempt large payload
+        """Test request size limits to prevent DoS."""        # Attempt large payload
         large_data = {
             "description": "x" * 1000000,  # 1MB description
             "metadata": {"large_field": "y" * 500000}
@@ -720,14 +686,12 @@ class TestInputValidationSecurity:
 
 
 class TestSecurityHeadersAndCORS:
-    """Test security headers and CORS configuration."""
-    
+    """Test security headers and CORS configuration."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     @pytest.mark.security
     async def test_security_headers(self, security_client):
-        """Test that proper security headers are set."""
-        response = await security_client.session.get(f"{security_client.base_url}/")
+        """Test that proper security headers are set."""        response = await security_client.session.get(f"{security_client.base_url}/")
         
         # Check for important security headers
         headers = response.headers
@@ -752,8 +716,7 @@ class TestSecurityHeadersAndCORS:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_cors_configuration(self, security_client):
-        """Test CORS configuration."""
-        # Test preflight request
+        """Test CORS configuration."""        # Test preflight request
         preflight_response = await security_client.session.options(
             f"{security_client.base_url}/auth/login",
             headers={
@@ -778,8 +741,7 @@ class TestSecurityHeadersAndCORS:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_content_type_validation(self, security_client):
-        """Test content type validation."""
-        # Send request with wrong content type
+        """Test content type validation."""        # Send request with wrong content type
         wrong_content_response = await security_client.session.post(
             f"{security_client.base_url}/auth/login",
             data="email=test@example.com&password=password",  # Form data instead of JSON
@@ -791,14 +753,12 @@ class TestSecurityHeadersAndCORS:
 
 
 class TestAuditingAndLogging:
-    """Test security auditing and logging."""
-    
+    """Test security auditing and logging."""    
     @pytest.mark.asyncio
     @pytest.mark.integration
     @pytest.mark.security
     async def test_security_event_logging(self, security_client):
-        """Test that security events are properly logged."""
-        # Perform actions that should be logged
+        """Test that security events are properly logged."""        # Perform actions that should be logged
         user_data = {
             "email": f"audit_test_{uuid.uuid4()}@example.com",
             "password": "audit_password_123!",
@@ -833,8 +793,7 @@ class TestAuditingAndLogging:
     @pytest.mark.integration
     @pytest.mark.security
     async def test_sensitive_data_not_logged(self, security_client, authenticated_user):
-        """Test that sensitive data is not logged in plain text."""
-        # Update password
+        """Test that sensitive data is not logged in plain text."""        # Update password
         password_change_data = {
             "current_password": "secure_password_123!",
             "new_password": "new_secure_password_456!"

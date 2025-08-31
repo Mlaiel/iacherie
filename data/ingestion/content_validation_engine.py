@@ -1,5 +1,4 @@
-"""
-Content Validation Engine
+"""Content Validation Engine
 ========================
 
 Enterprise-grade content validation system for comprehensive content analysis,
@@ -24,7 +23,6 @@ PROJECT TEAM SPECIALTIES:
 - Microservices Architect: Distributed systems and service orchestration
 - IA Prompt Engineer: AI model fine-tuning and content analysis
 """
-
 import asyncio
 import logging
 import json
@@ -67,8 +65,7 @@ from ...ml.models.toxicity_detector import ToxicityDetector
 
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""
-    INFO = "info"
+    """Validation issue severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -76,8 +73,7 @@ class ValidationSeverity(Enum):
 
 
 class ValidationCategory(Enum):
-    """Content validation categories"""
-    TECHNICAL = "technical"
+    """Content validation categories"""    TECHNICAL = "technical"
     QUALITY = "quality"
     SECURITY = "security"
     POLICY = "policy"
@@ -88,8 +84,7 @@ class ValidationCategory(Enum):
 
 
 class ContentPolicy(Enum):
-    """Content policy types"""
-    GENERAL = "general"
+    """Content policy types"""    GENERAL = "general"
     ADULT_CONTENT = "adult_content"
     VIOLENCE = "violence"
     HATE_SPEECH = "hate_speech"
@@ -103,8 +98,7 @@ class ContentPolicy(Enum):
 
 @dataclass
 class ValidationIssue:
-    """Individual validation issue"""
-    id: str
+    """Individual validation issue"""    id: str
     category: ValidationCategory
     severity: ValidationSeverity
     policy: Optional[ContentPolicy]
@@ -120,8 +114,7 @@ class ValidationIssue:
 
 @dataclass
 class ValidationMetrics:
-    """Content validation metrics"""
-    total_checks: int = 0
+    """Content validation metrics"""    total_checks: int = 0
     passed_checks: int = 0
     failed_checks: int = 0
     warnings: int = 0
@@ -136,8 +129,7 @@ class ValidationMetrics:
 
 @dataclass
 class ValidationResult:
-    """Comprehensive validation result"""
-    is_valid: bool
+    """Comprehensive validation result"""    is_valid: bool
     content_id: str
     validation_id: str
     overall_score: float
@@ -153,23 +145,19 @@ class ValidationResult:
 
 
 class ContentValidationEngine:
-    """
-    Enterprise content validation engine for IA Influencer Agent platform.
+    """    Enterprise content validation engine for IA Influencer Agent platform.
     
     Provides comprehensive content validation including technical quality assessment,
     security scanning, policy compliance, AI-powered content analysis, accessibility
     checks, and automated fix suggestions with detailed reporting.
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, redis_client: Redis):
-        """
-        Initialize ContentValidationEngine.
+        """        Initialize ContentValidationEngine.
         
         Args:
             db_session: Async database session
             redis_client: Redis client for caching
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.redis = redis_client
         self.logger = get_logger(__name__)
         self.settings = get_settings()
@@ -224,8 +212,7 @@ class ContentValidationEngine:
         self.content_policies = self._load_content_policies()
         
     def _initialize_ai_models(self):
-        """Initialize AI models for content analysis"""
-        try:
+        """Initialize AI models for content analysis"""        try:
             # Text classification models
             self.text_classifier = pipeline(
                 "text-classification",
@@ -260,8 +247,7 @@ class ContentValidationEngine:
             self.nsfw_classifier = None
     
     def _load_nlp_models(self):
-        """Load NLP models for different languages"""
-        try:
+        """Load NLP models for different languages"""        try:
             # Load primary language models
             languages = ['en', 'de', 'fr', 'es', 'it']
             for lang in languages:
@@ -280,8 +266,7 @@ class ContentValidationEngine:
             self.logger.warning(f"NLP models loading failed: {str(e)}")
     
     def _load_content_policies(self) -> Dict[str, Any]:
-        """Load content policy definitions"""
-        return {
+        """Load content policy definitions"""        return {
             ContentPolicy.GENERAL: {
                 'description': 'General content guidelines',
                 'rules': [
@@ -336,8 +321,7 @@ class ContentValidationEngine:
     async def validate_content(self, file_path: str, content_type: str, 
                              metadata: Optional[Dict[str, Any]] = None,
                              validation_options: Optional[Dict[str, Any]] = None) -> ValidationResult:
-        """
-        Perform comprehensive content validation.
+        """        Perform comprehensive content validation.
         
         Args:
             file_path: Path to content file
@@ -347,8 +331,7 @@ class ContentValidationEngine:
             
         Returns:
             Complete validation result
-        """
-        validation_id = str(uuid.uuid4())
+        """        validation_id = str(uuid.uuid4())
         content_id = metadata.get('content_id', str(uuid.uuid4())) if metadata else str(uuid.uuid4())
         start_time = datetime.now(timezone.utc)
         
@@ -442,8 +425,7 @@ class ContentValidationEngine:
         return result
     
     async def _validate_file_basics(self, file_path: str, content_type: str, result: ValidationResult):
-        """Validate basic file properties"""
-        try:
+        """Validate basic file properties"""        try:
             file_path_obj = Path(file_path)
             
             # Check file exists
@@ -566,8 +548,7 @@ class ContentValidationEngine:
             ))
     
     async def _validate_technical_quality(self, file_path: str, content_type: str, result: ValidationResult):
-        """Validate technical quality based on content type"""
-        try:
+        """Validate technical quality based on content type"""        try:
             if content_type == 'audio':
                 await self._validate_audio_quality(file_path, result)
             elif content_type == 'video':
@@ -591,8 +572,7 @@ class ContentValidationEngine:
             ))
     
     async def _validate_audio_quality(self, file_path: str, result: ValidationResult):
-        """Validate audio file quality"""
-        try:
+        """Validate audio file quality"""        try:
             # Load audio file
             y, sr = librosa.load(file_path, sr=None)
             duration = librosa.get_duration(y=y, sr=sr)
@@ -676,8 +656,7 @@ class ContentValidationEngine:
             ))
     
     async def _validate_image_quality(self, file_path: str, result: ValidationResult):
-        """Validate image file quality"""
-        try:
+        """Validate image file quality"""        try:
             # Load image
             image = Image.open(file_path)
             width, height = image.size
@@ -794,8 +773,7 @@ class ContentValidationEngine:
             ))
     
     async def _validate_security(self, file_path: str, content_type: str, result: ValidationResult):
-        """Perform security validation"""
-        try:
+        """Perform security validation"""        try:
             # Use security scanner
             security_result = await self.security_scanner.scan_file(file_path)
             
@@ -832,8 +810,7 @@ class ContentValidationEngine:
             ))
     
     async def _validate_content_policies(self, file_path: str, content_type: str, result: ValidationResult):
-        """Validate content against policies"""
-        try:
+        """Validate content against policies"""        try:
             for policy, config in self.content_policies.items():
                 if not config.get('auto_check', False):
                     continue
@@ -876,8 +853,7 @@ class ContentValidationEngine:
             ))
     
     async def _perform_ai_content_analysis(self, file_path: str, content_type: str, result: ValidationResult):
-        """Perform AI-powered content analysis"""
-        try:
+        """Perform AI-powered content analysis"""        try:
             if content_type == 'image' and self.nsfw_classifier:
                 # NSFW detection for images
                 nsfw_result = await self._detect_nsfw_content(file_path)
@@ -925,8 +901,7 @@ class ContentValidationEngine:
             ))
     
     def _calculate_validation_scores(self, result: ValidationResult, strict_mode: bool = False):
-        """Calculate validation scores"""
-        total_issues = len(result.issues)
+        """Calculate validation scores"""        total_issues = len(result.issues)
         
         # Count issues by severity
         for issue in result.issues:
@@ -968,8 +943,7 @@ class ContentValidationEngine:
             result.metrics.security_score = 1.0 if result.metrics.errors == 0 else 0.7
     
     def _determine_validation_status(self, result: ValidationResult, strict_mode: bool = False) -> bool:
-        """Determine if content passes validation"""
-        # Check for blocking issues
+        """Determine if content passes validation"""        # Check for blocking issues
         blocking_issues = [i for i in result.issues if i.severity == ValidationSeverity.BLOCKING]
         if blocking_issues:
             result.blocked_reasons = [issue.title for issue in blocking_issues]
@@ -1000,8 +974,7 @@ class ContentValidationEngine:
         return True
     
     async def _generate_recommendations(self, result: ValidationResult) -> List[str]:
-        """Generate improvement recommendations"""
-        recommendations = []
+        """Generate improvement recommendations"""        recommendations = []
         
         # Analyze issues and suggest fixes
         issue_categories = {}
@@ -1041,60 +1014,46 @@ class ContentValidationEngine:
     
     # Helper methods (placeholder implementations)
     async def _check_file_headers(self, file_path: str, content_type: str, result: ValidationResult):
-        """Check file headers for anomalies"""
-        pass
+        """Check file headers for anomalies"""        pass
     
     async def _check_embedded_content(self, file_path: str, content_type: str, result: ValidationResult):
-        """Check for embedded malicious content"""
-        pass
+        """Check for embedded malicious content"""        pass
     
     async def _check_policy_with_ai(self, file_path: str, content_type: str, policy: ContentPolicy) -> Dict[str, Any]:
-        """Check content policy using AI"""
-        return {'violation': False, 'confidence': 0.0}
+        """Check content policy using AI"""        return {'violation': False, 'confidence': 0.0}
     
     async def _detect_nsfw_content(self, file_path: str) -> Dict[str, Any]:
-        """Detect NSFW content in images"""
-        return {'is_nsfw': False, 'confidence': 0.0}
+        """Detect NSFW content in images"""        return {'is_nsfw': False, 'confidence': 0.0}
     
     async def _extract_text_content(self, file_path: str, content_type: str) -> Optional[str]:
-        """Extract text content from files"""
-        return None
+        """Extract text content from files"""        return None
     
     async def _detect_text_toxicity(self, text: str) -> Dict[str, Any]:
-        """Detect toxicity in text"""
-        return {'is_toxic': False, 'confidence': 0.0}
+        """Detect toxicity in text"""        return {'is_toxic': False, 'confidence': 0.0}
     
     async def _validate_video_quality(self, file_path: str, result: ValidationResult):
-        """Validate video quality"""
-        pass
+        """Validate video quality"""        pass
     
     async def _validate_text_quality(self, file_path: str, result: ValidationResult):
-        """Validate text quality"""
-        pass
+        """Validate text quality"""        pass
     
     async def _validate_document_quality(self, file_path: str, result: ValidationResult):
-        """Validate document quality"""
-        pass
+        """Validate document quality"""        pass
     
     async def _validate_accessibility(self, file_path: str, content_type: str, result: ValidationResult):
-        """Validate accessibility compliance"""
-        pass
+        """Validate accessibility compliance"""        pass
     
     async def _validate_metadata(self, metadata: Dict[str, Any], result: ValidationResult):
-        """Validate content metadata"""
-        pass
+        """Validate content metadata"""        pass
     
     async def _validate_legal_compliance(self, file_path: str, content_type: str, result: ValidationResult):
-        """Validate legal compliance"""
-        pass
+        """Validate legal compliance"""        pass
     
     async def _apply_auto_fixes(self, file_path: str, content_type: str, result: ValidationResult):
-        """Apply automatic fixes where possible"""
-        pass
+        """Apply automatic fixes where possible"""        pass
     
     async def _cache_validation_result(self, result: ValidationResult):
-        """Cache validation result in Redis"""
-        try:
+        """Cache validation result in Redis"""        try:
             cache_key = f"validation_result:{result.validation_id}"
             cache_data = {
                 'validation_id': result.validation_id,

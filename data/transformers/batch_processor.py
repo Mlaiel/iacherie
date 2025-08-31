@@ -1,5 +1,4 @@
-"""
-Batch Processor - High-performance batch processing for IA Influencer Agent Platform
+"""Batch Processor - High-performance batch processing for IA Influencer Agent Platform
 ==================================================================================
 
 Advanced batch processing system for high-throughput content transformation workflows.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Iterator
@@ -26,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProcessingMode(Enum):
-    """Processing execution modes."""
-    SEQUENTIAL = "sequential"
+    """Processing execution modes."""    SEQUENTIAL = "sequential"
     PARALLEL_THREAD = "parallel_thread"
     PARALLEL_PROCESS = "parallel_process"
     HYBRID = "hybrid"
@@ -35,8 +32,7 @@ class ProcessingMode(Enum):
 
 
 class BatchPriority(Enum):
-    """Batch processing priority levels."""
-    LOW = "low"
+    """Batch processing priority levels."""    LOW = "low"
     NORMAL = "normal"
     HIGH = "high"
     URGENT = "urgent"
@@ -44,8 +40,7 @@ class BatchPriority(Enum):
 
 
 class TaskStatus(Enum):
-    """Task processing status."""
-    PENDING = "pending"
+    """Task processing status."""    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -56,8 +51,7 @@ class TaskStatus(Enum):
 
 @dataclass
 class BatchTask:
-    """Individual task in a batch processing job."""
-    id: str
+    """Individual task in a batch processing job."""    id: str
     input_file: str
     output_file: str
     transform_type: str
@@ -89,8 +83,7 @@ class BatchTask:
 
 @dataclass
 class BatchJob:
-    """Batch processing job containing multiple tasks."""
-    id: str
+    """Batch processing job containing multiple tasks."""    id: str
     name: str
     description: str = ""
     
@@ -127,15 +120,13 @@ class BatchJob:
     results: List[Dict[str, Any]] = field(default_factory=list)
     
     def get_progress_percent(self) -> float:
-        """Get overall job progress percentage."""
-        if self.total_tasks == 0:
+        """Get overall job progress percentage."""        if self.total_tasks == 0:
             return 0.0
         
         return (self.completed_tasks + self.failed_tasks) / self.total_tasks * 100
     
     def get_success_rate(self) -> float:
-        """Get success rate percentage."""
-        processed_tasks = self.completed_tasks + self.failed_tasks
+        """Get success rate percentage."""        processed_tasks = self.completed_tasks + self.failed_tasks
         if processed_tasks == 0:
             return 0.0
         
@@ -144,8 +135,7 @@ class BatchJob:
 
 @dataclass
 class BatchConfiguration:
-    """Batch processor configuration."""
-    # Worker configuration
+    """Batch processor configuration."""    # Worker configuration
     max_thread_workers: int = 4
     max_process_workers: int = 2
     worker_timeout: float = 300.0  # 5 minutes
@@ -178,26 +168,22 @@ class BatchConfiguration:
 
 
 class BatchProcessor:
-    """
-    High-performance batch processor for the IA Influencer Agent Platform.
+    """    High-performance batch processor for the IA Influencer Agent Platform.
     
     Provides scalable batch processing capabilities for content transformation
     workflows with advanced scheduling, monitoring, and error handling.
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[BatchConfiguration] = None,
         transformer_registry: Optional[Dict[str, Callable]] = None
     ):
-        """
-        Initialize batch processor.
+        """        Initialize batch processor.
         
         Args:
             config: Batch processing configuration
             transformer_registry: Registry of available transformers
-        """
-        self.config = config or BatchConfiguration()
+        """        self.config = config or BatchConfiguration()
         self.transformer_registry = transformer_registry or {}
         
         # Processing state
@@ -240,8 +226,7 @@ class BatchProcessor:
         job: BatchJob,
         start_immediately: bool = True
     ) -> str:
-        """
-        Submit a batch job for processing.
+        """        Submit a batch job for processing.
         
         Args:
             job: Batch job to process
@@ -249,8 +234,7 @@ class BatchProcessor:
             
         Returns:
             Job ID
-        """
-        try:
+        """        try:
             # Validate job
             if not job.tasks:
                 raise ValueError("Job must contain at least one task")
@@ -282,8 +266,7 @@ class BatchProcessor:
         mode: ProcessingMode = ProcessingMode.PARALLEL_THREAD,
         priority: BatchPriority = BatchPriority.NORMAL
     ) -> BatchJob:
-        """
-        Create a batch job from input files.
+        """        Create a batch job from input files.
         
         Args:
             name: Job name
@@ -296,8 +279,7 @@ class BatchProcessor:
             
         Returns:
             Created batch job
-        """
-        try:
+        """        try:
             # Generate job ID
             job_id = f"batch_{int(time.time())}_{len(self.active_jobs)}"
             
@@ -337,16 +319,14 @@ class BatchProcessor:
             raise
     
     async def process_job(self, job_id: str) -> BatchJob:
-        """
-        Process a specific batch job.
+        """        Process a specific batch job.
         
         Args:
             job_id: Job ID to process
             
         Returns:
             Processed job
-        """
-        try:
+        """        try:
             job = self.active_jobs.get(job_id)
             if not job:
                 raise ValueError(f"Job not found: {job_id}")
@@ -383,8 +363,7 @@ class BatchProcessor:
             raise
     
     async def _schedule_job(self, job: BatchJob):
-        """Schedule job for processing."""
-        try:
+        """Schedule job for processing."""        try:
             # Priority-based scheduling
             priority_value = {
                 BatchPriority.LOW: 5,
@@ -404,8 +383,7 @@ class BatchProcessor:
             raise
     
     async def _process_sequential(self, job: BatchJob):
-        """Process job tasks sequentially."""
-        try:
+        """Process job tasks sequentially."""        try:
             for task in job.tasks:
                 if self.shutdown_requested or (job.stop_on_error and job.failed_tasks > 0):
                     task.status = TaskStatus.CANCELLED
@@ -427,8 +405,7 @@ class BatchProcessor:
             raise
     
     async def _process_parallel_thread(self, job: BatchJob):
-        """Process job tasks using thread parallelism."""
-        try:
+        """Process job tasks using thread parallelism."""        try:
             # Create semaphore for worker limiting
             semaphore = asyncio.Semaphore(job.max_workers or self.config.max_thread_workers)
             
@@ -450,8 +427,7 @@ class BatchProcessor:
             raise
     
     async def _process_parallel_process(self, job: BatchJob):
-        """Process job tasks using process parallelism."""
-        try:
+        """Process job tasks using process parallelism."""        try:
             loop = asyncio.get_event_loop()
             
             # Create process tasks
@@ -488,8 +464,7 @@ class BatchProcessor:
             raise
     
     async def _process_hybrid(self, job: BatchJob):
-        """Process job using hybrid thread/process approach."""
-        try:
+        """Process job using hybrid thread/process approach."""        try:
             # Determine optimal split
             cpu_intensive_tasks = []
             io_intensive_tasks = []
@@ -531,8 +506,7 @@ class BatchProcessor:
             raise
     
     async def _process_task(self, task: BatchTask):
-        """Process individual task."""
-        try:
+        """Process individual task."""        try:
             task.status = TaskStatus.PROCESSING
             task.started_at = time.time()
             
@@ -583,8 +557,7 @@ class BatchProcessor:
             task.completed_at = time.time()
     
     def _process_task_sync(self, task: BatchTask) -> BatchTask:
-        """Synchronous task processing for process pools."""
-        try:
+        """Synchronous task processing for process pools."""        try:
             # This would be called in a separate process
             # Need to handle transformer execution differently
             task.status = TaskStatus.PROCESSING
@@ -607,8 +580,7 @@ class BatchProcessor:
             return task
     
     def get_job_status(self, job_id: str) -> Optional[Dict[str, Any]]:
-        """Get current status of a job."""
-        job = self.active_jobs.get(job_id)
+        """Get current status of a job."""        job = self.active_jobs.get(job_id)
         if not job:
             # Check history
             for historical_job in self.job_history:
@@ -636,8 +608,7 @@ class BatchProcessor:
         }
     
     def get_system_metrics(self) -> Dict[str, Any]:
-        """Get system processing metrics."""
-        return {
+        """Get system processing metrics."""        return {
             "active_jobs": len(self.active_jobs),
             "queue_size": self.task_queue.qsize(),
             "metrics": self.metrics,
@@ -649,8 +620,7 @@ class BatchProcessor:
         }
     
     def cancel_job(self, job_id: str) -> bool:
-        """Cancel a running job."""
-        try:
+        """Cancel a running job."""        try:
             job = self.active_jobs.get(job_id)
             if not job:
                 return False
@@ -676,8 +646,7 @@ class BatchProcessor:
             return False
     
     async def shutdown(self, timeout: float = 30.0):
-        """Shutdown batch processor gracefully."""
-        try:
+        """Shutdown batch processor gracefully."""        try:
             logger.info("Shutting down batch processor...")
             self.shutdown_requested = True
             
@@ -700,8 +669,7 @@ class BatchProcessor:
             logger.error(f"Shutdown failed: {str(e)}")
     
     def _calculate_optimal_workers(self, task_count: int, mode: ProcessingMode) -> int:
-        """Calculate optimal number of workers."""
-        if mode == ProcessingMode.PARALLEL_THREAD:
+        """Calculate optimal number of workers."""        if mode == ProcessingMode.PARALLEL_THREAD:
             return min(task_count, self.config.max_thread_workers)
         elif mode == ProcessingMode.PARALLEL_PROCESS:
             return min(task_count, self.config.max_process_workers)
@@ -709,16 +677,14 @@ class BatchProcessor:
             return 1
     
     def _is_cpu_intensive(self, transform_type: str) -> bool:
-        """Determine if transformation is CPU-intensive."""
-        cpu_intensive_types = {
+        """Determine if transformation is CPU-intensive."""        cpu_intensive_types = {
             "video_encoding", "image_processing", "audio_analysis",
             "ml_inference", "compression", "encryption"
         }
         return transform_type in cpu_intensive_types
     
     def _update_metrics(self, job: BatchJob):
-        """Update processing metrics."""
-        self.metrics["jobs_processed"] += 1
+        """Update processing metrics."""        self.metrics["jobs_processed"] += 1
         self.metrics["tasks_processed"] += job.total_tasks
         
         if job.started_at and job.completed_at:
@@ -739,8 +705,7 @@ class BatchProcessor:
         self.metrics["error_count"] += job.failed_tasks
     
     def _estimate_completion_time(self, job: BatchJob) -> Optional[float]:
-        """Estimate job completion time."""
-        try:
+        """Estimate job completion time."""        try:
             if job.completed_at:
                 return job.completed_at
             
@@ -758,8 +723,7 @@ class BatchProcessor:
             return None
     
     def _get_system_resources(self) -> Dict[str, Any]:
-        """Get current system resource usage."""
-        try:
+        """Get current system resource usage."""        try:
             import psutil
             return {
                 "cpu_percent": psutil.cpu_percent(),
@@ -775,8 +739,7 @@ class BatchProcessor:
 
 
 class BatchJobBuilder:
-    """Builder pattern for creating batch jobs."""
-    
+    """Builder pattern for creating batch jobs."""    
     def __init__(self, name: str):
         self.name = name
         self.tasks = []
@@ -791,8 +754,7 @@ class BatchJobBuilder:
         transform_type: str,
         task_parameters: Optional[Dict[str, Any]] = None
     ) -> 'BatchJobBuilder':
-        """Add a task to the batch."""
-        task = BatchTask(
+        """Add a task to the batch."""        task = BatchTask(
             id=f"task_{len(self.tasks)}",
             input_file=input_file,
             output_file=output_file,
@@ -804,18 +766,15 @@ class BatchJobBuilder:
         return self
     
     def set_mode(self, mode: ProcessingMode) -> 'BatchJobBuilder':
-        """Set processing mode."""
-        self.mode = mode
+        """Set processing mode."""        self.mode = mode
         return self
     
     def set_priority(self, priority: BatchPriority) -> 'BatchJobBuilder':
-        """Set job priority."""
-        self.priority = priority
+        """Set job priority."""        self.priority = priority
         return self
     
     def build(self) -> BatchJob:
-        """Build the batch job."""
-        job_id = f"batch_{int(time.time())}_{hash(self.name) % 10000}"
+        """Build the batch job."""        job_id = f"batch_{int(time.time())}_{hash(self.name) % 10000}"
         
         return BatchJob(
             id=job_id,
@@ -827,8 +786,7 @@ class BatchJobBuilder:
 
 
 class BatchScheduler:
-    """Advanced batch job scheduler."""
-    
+    """Advanced batch job scheduler."""    
     def __init__(self, processor: BatchProcessor):
         self.processor = processor
         self.scheduled_jobs = []
@@ -840,8 +798,7 @@ class BatchScheduler:
         schedule_time: float,
         repeat_interval: Optional[float] = None
     ):
-        """Schedule a job for future execution."""
-        self.scheduled_jobs.append({
+        """Schedule a job for future execution."""        self.scheduled_jobs.append({
             "job": job,
             "schedule_time": schedule_time,
             "repeat_interval": repeat_interval,
@@ -849,8 +806,7 @@ class BatchScheduler:
         })
     
     async def start_scheduler(self):
-        """Start the job scheduler."""
-        self.scheduler_running = True
+        """Start the job scheduler."""        self.scheduler_running = True
         
         while self.scheduler_running:
             current_time = time.time()
@@ -870,5 +826,4 @@ class BatchScheduler:
             await asyncio.sleep(1)  # Check every second
     
     def stop_scheduler(self):
-        """Stop the job scheduler."""
-        self.scheduler_running = False
+        """Stop the job scheduler."""        self.scheduler_running = False

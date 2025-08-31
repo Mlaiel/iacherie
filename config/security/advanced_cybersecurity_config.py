@@ -1,5 +1,4 @@
-"""
-Advanced Cybersecurity Configuration - IA-Influencer Agent Platform
+"""Advanced Cybersecurity Configuration - IA-Influencer Agent Platform
 ==================================================================
 Professional cybersecurity configuration for threat detection,
 prevention, and incident response automation.
@@ -11,7 +10,6 @@ Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservice
 Toute tentative de copie, vol ou réutilisation sans autorisation écrite
 de Fahed Mlaiel (mlaiel@live.de) sera poursuivie en justice selon la loi allemande.
 """
-
 from typing import Dict, List, Optional, Any, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -21,8 +19,7 @@ from datetime import datetime, timedelta
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels."""
-    LOW = "low"
+    """Threat severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -30,8 +27,7 @@ class ThreatLevel(Enum):
 
 
 class AttackType(Enum):
-    """Types of cyber attacks."""
-    DDoS = "ddos"
+    """Types of cyber attacks."""    DDoS = "ddos"
     SQL_INJECTION = "sql_injection"
     XSS = "xss"
     CSRF = "csrf"
@@ -49,8 +45,7 @@ class AttackType(Enum):
 
 
 class SecurityAction(Enum):
-    """Security response actions."""
-    MONITOR = "monitor"
+    """Security response actions."""    MONITOR = "monitor"
     LOG = "log"
     ALERT = "alert"
     BLOCK = "block"
@@ -66,8 +61,7 @@ class SecurityAction(Enum):
 
 @dataclass
 class ThreatDetectionRule:
-    """Threat detection rule configuration."""
-    rule_name: str
+    """Threat detection rule configuration."""    rule_name: str
     attack_types: List[AttackType]
     detection_criteria: Dict[str, Any]
     threshold_values: Dict[str, Union[int, float]]
@@ -82,8 +76,7 @@ class ThreatDetectionRule:
 
 @dataclass
 class SecurityMonitoringConfig:
-    """Security monitoring configuration."""
-    monitoring_enabled: bool
+    """Security monitoring configuration."""    monitoring_enabled: bool
     real_time_monitoring: bool
     behavioral_analysis: bool
     anomaly_detection: bool
@@ -97,8 +90,7 @@ class SecurityMonitoringConfig:
 
 @dataclass
 class IncidentResponseConfig:
-    """Incident response configuration."""
-    auto_response_enabled: bool
+    """Incident response configuration."""    auto_response_enabled: bool
     escalation_matrix: Dict[ThreatLevel, List[str]]
     response_time_sla: Dict[ThreatLevel, int]  # minutes
     communication_channels: List[str]
@@ -110,11 +102,9 @@ class IncidentResponseConfig:
 
 
 class AdvancedCybersecurityConfig:
-    """Advanced cybersecurity configuration for enterprise protection."""
-    
+    """Advanced cybersecurity configuration for enterprise protection."""    
     def __init__(self):
-        """Initialize cybersecurity configuration."""
-        self.threat_detection_rules = self._get_threat_detection_rules()
+        """Initialize cybersecurity configuration."""        self.threat_detection_rules = self._get_threat_detection_rules()
         self.security_monitoring = self._get_security_monitoring_config()
         self.incident_response = self._get_incident_response_config()
         self.firewall_configs = self._get_firewall_configurations()
@@ -124,8 +114,7 @@ class AdvancedCybersecurityConfig:
         self.security_automation = self._get_security_automation_config()
     
     def _get_threat_detection_rules(self) -> Dict[str, ThreatDetectionRule]:
-        """Get threat detection rules."""
-        return {
+        """Get threat detection rules."""        return {
             'ddos_detection': ThreatDetectionRule(
                 rule_name="ddos_detection",
                 attack_types=[AttackType.DDoS],
@@ -268,8 +257,7 @@ class AdvancedCybersecurityConfig:
         }
     
     def _get_security_monitoring_config(self) -> SecurityMonitoringConfig:
-        """Get security monitoring configuration."""
-        return SecurityMonitoringConfig(
+        """Get security monitoring configuration."""        return SecurityMonitoringConfig(
             monitoring_enabled=True,
             real_time_monitoring=True,
             behavioral_analysis=True,
@@ -283,8 +271,7 @@ class AdvancedCybersecurityConfig:
         )
     
     def _get_incident_response_config(self) -> IncidentResponseConfig:
-        """Get incident response configuration."""
-        return IncidentResponseConfig(
+        """Get incident response configuration."""        return IncidentResponseConfig(
             auto_response_enabled=True,
             escalation_matrix={
                 ThreatLevel.LOW: ["security_analyst"],
@@ -319,8 +306,7 @@ class AdvancedCybersecurityConfig:
         )
     
     def _get_firewall_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Get firewall configurations."""
-        return {
+        """Get firewall configurations."""        return {
             'web_application_firewall': {
                 "enabled": True,
                 "mode": "blocking",
@@ -387,8 +373,7 @@ class AdvancedCybersecurityConfig:
         }
     
     def _get_intrusion_detection_config(self) -> Dict[str, Dict[str, Any]]:
-        """Get intrusion detection system configuration."""
-        return {
+        """Get intrusion detection system configuration."""        return {
             'network_ids': {
                 "enabled": True,
                 "monitoring_interfaces": ["eth0", "eth1"],
@@ -446,8 +431,7 @@ class AdvancedCybersecurityConfig:
         }
     
     def _get_vulnerability_management_config(self) -> Dict[str, Dict[str, Any]]:
-        """Get vulnerability management configuration."""
-        return {
+        """Get vulnerability management configuration."""        return {
             'vulnerability_scanning': {
                 "automated_scanning": True,
                 "scan_frequency": "daily",
@@ -513,8 +497,7 @@ class AdvancedCybersecurityConfig:
         }
     
     def _get_compliance_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Get security compliance configurations."""
-        return {
+        """Get security compliance configurations."""        return {
             'gdpr_compliance': {
                 "data_protection_officer": True,
                 "privacy_by_design": True,
@@ -560,8 +543,7 @@ class AdvancedCybersecurityConfig:
         }
     
     def _get_security_automation_config(self) -> Dict[str, Dict[str, Any]]:
-        """Get security automation configuration."""
-        return {
+        """Get security automation configuration."""        return {
             'soar_integration': {
                 "enabled": True,
                 "platform": "phantom",
@@ -631,12 +613,10 @@ class AdvancedCybersecurityConfig:
         }
     
     def get_threat_rule(self, rule_name: str) -> Optional[ThreatDetectionRule]:
-        """Get threat detection rule by name."""
-        return self.threat_detection_rules.get(rule_name)
+        """Get threat detection rule by name."""        return self.threat_detection_rules.get(rule_name)
     
     def evaluate_threat_level(self, attack_indicators: Dict[str, Any]) -> ThreatLevel:
-        """Evaluate threat level based on attack indicators."""
-        score = 0
+        """Evaluate threat level based on attack indicators."""        score = 0
         
         # Score based on attack type severity
         if attack_indicators.get('attack_type') in [AttackType.SQL_INJECTION, AttackType.DATA_BREACH]:
@@ -675,8 +655,7 @@ class AdvancedCybersecurityConfig:
             return ThreatLevel.LOW
     
     def get_required_actions(self, threat_level: ThreatLevel, attack_type: AttackType) -> List[SecurityAction]:
-        """Get required security actions for threat level and attack type."""
-        base_actions = {
+        """Get required security actions for threat level and attack type."""        base_actions = {
             ThreatLevel.LOW: [SecurityAction.MONITOR, SecurityAction.LOG],
             ThreatLevel.MEDIUM: [SecurityAction.MONITOR, SecurityAction.LOG, SecurityAction.ALERT],
             ThreatLevel.HIGH: [SecurityAction.BLOCK, SecurityAction.ALERT, SecurityAction.LOG, SecurityAction.ESCALATE],
@@ -702,15 +681,12 @@ advanced_cybersecurity_config = AdvancedCybersecurityConfig()
 
 
 def get_threat_detection_rule(rule_name: str) -> Optional[ThreatDetectionRule]:
-    """Get threat detection rule."""
-    return advanced_cybersecurity_config.get_threat_rule(rule_name)
+    """Get threat detection rule."""    return advanced_cybersecurity_config.get_threat_rule(rule_name)
 
 
 def assess_threat_level(attack_indicators: Dict[str, Any]) -> ThreatLevel:
-    """Assess threat level based on indicators."""
-    return advanced_cybersecurity_config.evaluate_threat_level(attack_indicators)
+    """Assess threat level based on indicators."""    return advanced_cybersecurity_config.evaluate_threat_level(attack_indicators)
 
 
 def get_security_actions(threat_level: ThreatLevel, attack_type: AttackType) -> List[SecurityAction]:
-    """Get required security actions."""
-    return advanced_cybersecurity_config.get_required_actions(threat_level, attack_type)
+    """Get required security actions."""    return advanced_cybersecurity_config.get_required_actions(threat_level, attack_type)

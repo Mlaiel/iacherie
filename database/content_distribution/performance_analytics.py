@@ -1,5 +1,4 @@
-"""
-Performance Analytics Database Module - Enterprise Content Distribution Performance Analytics
+"""Performance Analytics Database Module - Enterprise Content Distribution Performance Analytics
 
 Advanced database architecture for comprehensive performance analytics, monitoring,
 and optimization insights within the IA Influencer Agent ecosystem.
@@ -16,7 +15,6 @@ Contact: mlaiel@live.de for licensing inquiries.
 Team Specialties: Lead AI Developer + Senior Backend Engineer + Database Administrator + 
 Analytics Engineer + Performance Engineer + ML Engineer + Data Scientist
 """
-
 import asyncio
 import json
 import uuid
@@ -44,8 +42,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class MetricType(str, Enum):
-    """Performance metric types"""
-    LATENCY = "latency"
+    """Performance metric types"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     SUCCESS_RATE = "success_rate"
     ERROR_RATE = "error_rate"
@@ -55,8 +52,7 @@ class MetricType(str, Enum):
     ENGAGEMENT = "engagement"
 
 class AnalyticsPeriod(str, Enum):
-    """Analytics aggregation periods"""
-    REAL_TIME = "real_time"
+    """Analytics aggregation periods"""    REAL_TIME = "real_time"
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -66,16 +62,14 @@ class AnalyticsPeriod(str, Enum):
     YEAR = "year"
 
 class AlertSeverity(str, Enum):
-    """Alert severity levels"""
-    INFO = "info"
+    """Alert severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class TrendDirection(str, Enum):
-    """Trend direction indicators"""
-    IMPROVING = "improving"
+    """Trend direction indicators"""    IMPROVING = "improving"
     DEGRADING = "degrading"
     STABLE = "stable"
     VOLATILE = "volatile"
@@ -83,8 +77,7 @@ class TrendDirection(str, Enum):
 
 @dataclass
 class PerformanceThresholds:
-    """Performance threshold definitions"""
-    warning_threshold: float = 0.0
+    """Performance threshold definitions"""    warning_threshold: float = 0.0
     critical_threshold: float = 0.0
     emergency_threshold: float = 0.0
     target_value: float = 0.0
@@ -93,8 +86,7 @@ class PerformanceThresholds:
 
 @dataclass
 class StatisticalSummary:
-    """Statistical summary of metrics"""
-    mean: float = 0.0
+    """Statistical summary of metrics"""    mean: float = 0.0
     median: float = 0.0
     std_dev: float = 0.0
     min_value: float = 0.0
@@ -105,8 +97,7 @@ class StatisticalSummary:
     percentile_99: float = 0.0
 
 class PerformanceMetric(Base):
-    """Performance metrics database model"""
-    __tablename__ = "performance_metrics"
+    """Performance metrics database model"""    __tablename__ = "performance_metrics"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -171,8 +162,7 @@ class PerformanceMetric(Base):
     data_quality_score = Column(Float, nullable=False, default=100.0)
 
 class AnalyticsReport(Base):
-    """Analytics reports database model"""
-    __tablename__ = "analytics_reports"
+    """Analytics reports database model"""    __tablename__ = "analytics_reports"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -240,8 +230,7 @@ class AnalyticsReport(Base):
     next_generation = Column(DateTime(timezone=True), nullable=True)
 
 class PerformanceAlert(Base):
-    """Performance alerts database model"""
-    __tablename__ = "performance_alerts"
+    """Performance alerts database model"""    __tablename__ = "performance_alerts"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -295,8 +284,7 @@ class PerformanceAlert(Base):
     created_by = Column(String(100), nullable=True)
 
 class PerformanceBenchmark(Base):
-    """Performance benchmarks database model"""
-    __tablename__ = "performance_benchmarks"
+    """Performance benchmarks database model"""    __tablename__ = "performance_benchmarks"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     benchmark_name = Column(String(200), nullable=False)
@@ -351,8 +339,7 @@ class PerformanceBenchmark(Base):
     data_source = Column(String(100), nullable=True)
 
 class TrendAnalysis(Base):
-    """Trend analysis database model"""
-    __tablename__ = "trend_analyses"
+    """Trend analysis database model"""    __tablename__ = "trend_analyses"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     user_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -416,8 +403,7 @@ class TrendAnalysis(Base):
 
 # Pydantic Models for API
 class MetricRequest(BaseModel):
-    """Request model for performance metrics"""
-    content_id: Optional[str] = None
+    """Request model for performance metrics"""    content_id: Optional[str] = None
     platform_name: str
     metric_type: MetricType
     metric_value: float
@@ -429,8 +415,7 @@ class MetricRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = None
 
 class AnalyticsReportRequest(BaseModel):
-    """Request model for analytics reports"""
-    report_name: str
+    """Request model for analytics reports"""    report_name: str
     report_type: str
     period_type: AnalyticsPeriod
     period_start: datetime
@@ -442,8 +427,7 @@ class AnalyticsReportRequest(BaseModel):
     include_recommendations: bool = True
 
 class AlertConfigurationRequest(BaseModel):
-    """Request model for performance alerts"""
-    alert_name: str
+    """Request model for performance alerts"""    alert_name: str
     alert_type: str
     metric_type: MetricType
     platform_name: Optional[str] = None
@@ -456,8 +440,7 @@ class AlertConfigurationRequest(BaseModel):
     notification_channels: Optional[List[str]] = None
 
 class BenchmarkRequest(BaseModel):
-    """Request model for performance benchmarks"""
-    benchmark_name: str
+    """Request model for performance benchmarks"""    benchmark_name: str
     platform_name: str
     content_type: str
     benchmark_type: str
@@ -468,8 +451,7 @@ class BenchmarkRequest(BaseModel):
     quality_score_benchmark: Optional[float] = None
 
 class PerformanceAnalyticsManager:
-    """Enterprise performance analytics management system"""
-    
+    """Enterprise performance analytics management system"""    
     def __init__(self, db_session: AsyncSession, redis_client: aioredis.Redis):
         self.db_session = db_session
         self.redis_client = redis_client
@@ -481,8 +463,7 @@ class PerformanceAnalyticsManager:
         user_id: str,
         metric_request: MetricRequest
     ) -> PerformanceMetric:
-        """Record performance metric"""
-        try:
+        """Record performance metric"""        try:
             # Create metric instance
             metric = PerformanceMetric(
                 user_id=uuid.UUID(user_id),
@@ -538,8 +519,7 @@ class PerformanceAnalyticsManager:
         user_id: str,
         report_request: AnalyticsReportRequest
     ) -> AnalyticsReport:
-        """Generate comprehensive analytics report"""
-        try:
+        """Generate comprehensive analytics report"""        try:
             # Get metrics for the specified period
             metrics = await self._get_metrics_for_period(
                 user_id=user_id,
@@ -626,8 +606,7 @@ class PerformanceAnalyticsManager:
         user_id: str,
         alert_request: AlertConfigurationRequest
     ) -> PerformanceAlert:
-        """Create performance alert configuration"""
-        try:
+        """Create performance alert configuration"""        try:
             # Validate alert configuration
             await self._validate_alert_configuration(alert_request)
             
@@ -667,8 +646,7 @@ class PerformanceAnalyticsManager:
         user_id: str,
         benchmark_request: BenchmarkRequest
     ) -> PerformanceBenchmark:
-        """Create performance benchmark"""
-        try:
+        """Create performance benchmark"""        try:
             # Calculate benchmark values from historical data
             benchmark_values = await self._calculate_benchmark_values(
                 user_id=user_id,
@@ -714,8 +692,7 @@ class PerformanceAnalyticsManager:
         platform_name: str,
         analysis_period_hours: int = 168  # 1 week
     ) -> TrendAnalysis:
-        """Perform detailed trend analysis"""
-        try:
+        """Perform detailed trend analysis"""        try:
             # Get historical metrics
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=analysis_period_hours)
@@ -781,8 +758,7 @@ class PerformanceAnalyticsManager:
         user_id: str,
         platforms: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive performance dashboard data"""
-        try:
+        """Get comprehensive performance dashboard data"""        try:
             # Get recent metrics (last 24 hours)
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=24)
@@ -839,26 +815,22 @@ class PerformanceAnalyticsManager:
             return {'error': str(e)}
     
     async def _get_baseline_value(self, user_id: str, platform: str, metric_type: str) -> Optional[float]:
-        """Get baseline value for metric comparison"""
-        # This would calculate baseline from historical data
+        """Get baseline value for metric comparison"""        # This would calculate baseline from historical data
         # For now, return None to indicate no baseline available
         return None
     
     async def _detect_metric_anomaly(self, user_id: str, metric: PerformanceMetric) -> Dict[str, Any]:
-        """Detect if metric value is anomalous"""
-        # This would use statistical methods or ML to detect anomalies
+        """Detect if metric value is anomalous"""        # This would use statistical methods or ML to detect anomalies
         # For now, return no anomaly detected
         return {'is_anomaly': False, 'score': 0.0}
     
     async def _calculate_percentile_rank(self, user_id: str, metric: PerformanceMetric) -> Optional[float]:
-        """Calculate percentile rank of metric value"""
-        # This would compare against historical values
+        """Calculate percentile rank of metric value"""        # This would compare against historical values
         # For now, return None
         return None
     
     async def _check_performance_alerts(self, user_id: str, metric: PerformanceMetric):
-        """Check if metric triggers any alerts"""
-        # Get relevant alerts
+        """Check if metric triggers any alerts"""        # Get relevant alerts
         alerts = await self.db_session.query(PerformanceAlert).filter(
             PerformanceAlert.user_id == uuid.UUID(user_id),
             PerformanceAlert.metric_type == metric.metric_type,
@@ -896,8 +868,7 @@ class PerformanceAnalyticsManager:
         await self.db_session.commit()
     
     async def _evaluate_alert_threshold(self, alert: PerformanceAlert, value: float) -> bool:
-        """Evaluate if value breaches alert threshold"""
-        if alert.comparison_operator == '>':
+        """Evaluate if value breaches alert threshold"""        if alert.comparison_operator == '>':
             return value > alert.threshold_value
         elif alert.comparison_operator == '<':
             return value < alert.threshold_value

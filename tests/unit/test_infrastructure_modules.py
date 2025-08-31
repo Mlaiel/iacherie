@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Unit Tests for Core Infrastructure and Workflow Modules
+"""Unit Tests for Core Infrastructure and Workflow Modules
 =======================================================
 
 Comprehensive unit tests for core infrastructure including:
@@ -29,7 +26,6 @@ Comprehensive unit tests for core infrastructure including:
 Author: Copilot Assistant for Fahed Mlaiel  
 Purpose: Ensure infrastructure reliability and performance
 """
-
 import pytest
 import sys
 import os
@@ -44,12 +40,10 @@ import uuid
 
 
 class TestWorkflowOrchestration:
-    """Unit tests for workflow orchestration system"""
-    
+    """Unit tests for workflow orchestration system"""    
     @pytest.fixture
     def mock_workflow_engine(self):
-        """Mock workflow orchestration engine"""
-        engine = Mock()
+        """Mock workflow orchestration engine"""        engine = Mock()
         engine.create_workflow = AsyncMock(return_value={
             'workflow_id': 'wf_12345',
             'status': 'created',
@@ -69,8 +63,7 @@ class TestWorkflowOrchestration:
     
     @pytest.mark.asyncio
     async def test_workflow_creation(self, mock_workflow_engine):
-        """Test workflow creation"""
-        workflow_definition = {
+        """Test workflow creation"""        workflow_definition = {
             'name': 'content_processing',
             'steps': [
                 {'name': 'validate', 'action': 'validate_content'},
@@ -88,8 +81,7 @@ class TestWorkflowOrchestration:
     
     @pytest.mark.asyncio
     async def test_workflow_execution(self, mock_workflow_engine):
-        """Test workflow execution"""
-        workflow_id = 'wf_12345'
+        """Test workflow execution"""        workflow_id = 'wf_12345'
         execution_context = {'user_id': 'user_123', 'content_id': 'content_456'}
         
         result = await mock_workflow_engine.execute_workflow(workflow_id, execution_context)
@@ -99,8 +91,7 @@ class TestWorkflowOrchestration:
         assert result['steps_completed'] == 3
     
     def test_workflow_status_check(self, mock_workflow_engine):
-        """Test workflow status checking"""
-        workflow_id = 'wf_12345'
+        """Test workflow status checking"""        workflow_id = 'wf_12345'
         
         status = mock_workflow_engine.get_workflow_status(workflow_id)
         
@@ -108,8 +99,7 @@ class TestWorkflowOrchestration:
     
     @pytest.mark.asyncio
     async def test_workflow_pause_resume(self, mock_workflow_engine):
-        """Test workflow pause and resume functionality"""
-        workflow_id = 'wf_12345'
+        """Test workflow pause and resume functionality"""        workflow_id = 'wf_12345'
         
         # Test pause
         pause_result = await mock_workflow_engine.pause_workflow(workflow_id)
@@ -121,12 +111,10 @@ class TestWorkflowOrchestration:
 
 
 class TestSystemHealthMonitoring:
-    """Unit tests for system health monitoring"""
-    
+    """Unit tests for system health monitoring"""    
     @pytest.fixture
     def mock_health_monitor(self):
-        """Mock health monitoring system"""
-        monitor = Mock()
+        """Mock health monitoring system"""        monitor = Mock()
         monitor.get_system_health = Mock(return_value={
             'overall_status': 'healthy',
             'services': {
@@ -151,8 +139,7 @@ class TestSystemHealthMonitoring:
         return monitor
     
     def test_system_health_overview(self, mock_health_monitor):
-        """Test system health overview retrieval"""
-        health_status = mock_health_monitor.get_system_health()
+        """Test system health overview retrieval"""        health_status = mock_health_monitor.get_system_health()
         
         assert health_status['overall_status'] == 'healthy'
         assert 'services' in health_status
@@ -162,8 +149,7 @@ class TestSystemHealthMonitoring:
     
     @pytest.mark.asyncio
     async def test_individual_service_health_check(self, mock_health_monitor):
-        """Test individual service health checking"""
-        service_name = 'api_gateway'
+        """Test individual service health checking"""        service_name = 'api_gateway'
         
         result = await mock_health_monitor.check_service_health(service_name)
         
@@ -174,8 +160,7 @@ class TestSystemHealthMonitoring:
     
     @pytest.mark.asyncio
     async def test_health_alert_triggering(self, mock_health_monitor):
-        """Test health alert triggering"""
-        alert_data = {
+        """Test health alert triggering"""        alert_data = {
             'service': 'database',
             'issue': 'high_response_time',
             'severity': 'warning'
@@ -187,12 +172,10 @@ class TestSystemHealthMonitoring:
 
 
 class TestPerformanceOptimization:
-    """Unit tests for performance optimization system"""
-    
+    """Unit tests for performance optimization system"""    
     @pytest.fixture
     def mock_performance_optimizer(self):
-        """Mock performance optimization system"""
-        optimizer = Mock()
+        """Mock performance optimization system"""        optimizer = Mock()
         optimizer.analyze_performance = AsyncMock(return_value={
             'analysis_id': 'perf_123',
             'metrics': {
@@ -221,8 +204,7 @@ class TestPerformanceOptimization:
     
     @pytest.mark.asyncio
     async def test_performance_analysis(self, mock_performance_optimizer):
-        """Test performance analysis"""
-        time_range = {
+        """Test performance analysis"""        time_range = {
             'start': '2025-01-01T00:00:00Z',
             'end': '2025-01-31T23:59:59Z'
         }
@@ -237,8 +219,7 @@ class TestPerformanceOptimization:
     
     @pytest.mark.asyncio
     async def test_optimization_application(self, mock_performance_optimizer):
-        """Test optimization application"""
-        optimization_config = {
+        """Test optimization application"""        optimization_config = {
             'type': 'cache_optimization',
             'parameters': {'ttl': 3600, 'max_size': '500MB'}
         }
@@ -251,8 +232,7 @@ class TestPerformanceOptimization:
     
     @pytest.mark.asyncio
     async def test_optimization_impact_monitoring(self, mock_performance_optimizer):
-        """Test optimization impact monitoring"""
-        optimization_id = 'opt_456'
+        """Test optimization impact monitoring"""        optimization_id = 'opt_456'
         
         result = await mock_performance_optimizer.monitor_optimization_impact(optimization_id)
         
@@ -263,12 +243,10 @@ class TestPerformanceOptimization:
 
 
 class TestConfigurationManagement:
-    """Unit tests for configuration management system"""
-    
+    """Unit tests for configuration management system"""    
     @pytest.fixture
     def mock_config_manager(self):
-        """Mock configuration management system"""
-        manager = Mock()
+        """Mock configuration management system"""        manager = Mock()
         manager.get_config = Mock(return_value={
             'database': {'host': 'db.example.com', 'port': 5432},
             'redis': {'host': 'cache.example.com', 'port': 6379},
@@ -281,8 +259,7 @@ class TestConfigurationManagement:
         return manager
     
     def test_configuration_retrieval(self, mock_config_manager):
-        """Test configuration retrieval"""
-        config_key = 'database'
+        """Test configuration retrieval"""        config_key = 'database'
         
         config = mock_config_manager.get_config(config_key)
         
@@ -292,8 +269,7 @@ class TestConfigurationManagement:
     
     @pytest.mark.asyncio
     async def test_configuration_update(self, mock_config_manager):
-        """Test configuration update"""
-        config_update = {
+        """Test configuration update"""        config_update = {
             'api': {'timeout': 45}
         }
         
@@ -302,8 +278,7 @@ class TestConfigurationManagement:
         assert result['updated'] is True
     
     def test_configuration_validation(self, mock_config_manager):
-        """Test configuration validation"""
-        config_data = {
+        """Test configuration validation"""        config_data = {
             'database': {'host': 'db.example.com', 'port': 5432},
             'api': {'base_url': 'https://api.example.com'}
         }
@@ -315,25 +290,21 @@ class TestConfigurationManagement:
     
     @pytest.mark.asyncio
     async def test_configuration_reload(self, mock_config_manager):
-        """Test configuration reload"""
-        result = await mock_config_manager.reload_config()
+        """Test configuration reload"""        result = await mock_config_manager.reload_config()
         
         assert result['reloaded'] is True
     
     def test_environment_configuration(self, mock_config_manager):
-        """Test environment-specific configuration"""
-        environment = mock_config_manager.get_environment_config()
+        """Test environment-specific configuration"""        environment = mock_config_manager.get_environment_config()
         
         assert environment in ['development', 'staging', 'production']
 
 
 class TestServiceDiscovery:
-    """Unit tests for service discovery system"""
-    
+    """Unit tests for service discovery system"""    
     @pytest.fixture
     def mock_service_discovery(self):
-        """Mock service discovery system"""
-        discovery = Mock()
+        """Mock service discovery system"""        discovery = Mock()
         discovery.register_service = AsyncMock(return_value={
             'service_id': 'srv_123',
             'registered': True,
@@ -355,8 +326,7 @@ class TestServiceDiscovery:
     
     @pytest.mark.asyncio
     async def test_service_registration(self, mock_service_discovery):
-        """Test service registration"""
-        service_info = {
+        """Test service registration"""        service_info = {
             'name': 'api_gateway',
             'endpoint': 'https://api1.example.com',
             'health_check': '/health'
@@ -369,8 +339,7 @@ class TestServiceDiscovery:
         assert 'endpoint' in result
     
     def test_service_discovery(self, mock_service_discovery):
-        """Test service discovery"""
-        service_name = 'api_gateway'
+        """Test service discovery"""        service_name = 'api_gateway'
         
         result = mock_service_discovery.discover_service(service_name)
         
@@ -380,28 +349,24 @@ class TestServiceDiscovery:
     
     @pytest.mark.asyncio
     async def test_service_deregistration(self, mock_service_discovery):
-        """Test service deregistration"""
-        service_id = 'srv_123'
+        """Test service deregistration"""        service_id = 'srv_123'
         
         result = await mock_service_discovery.deregister_service(service_id)
         
         assert result['deregistered'] is True
     
     def test_load_balancer_configuration(self, mock_service_discovery):
-        """Test load balancer configuration"""
-        config = mock_service_discovery.get_load_balancer_config()
+        """Test load balancer configuration"""        config = mock_service_discovery.get_load_balancer_config()
         
         assert config['algorithm'] == 'round_robin'
         assert config['health_check_interval'] == 30
 
 
 class TestEventHandling:
-    """Unit tests for event handling and messaging system"""
-    
+    """Unit tests for event handling and messaging system"""    
     @pytest.fixture
     def mock_event_system(self):
-        """Mock event handling system"""
-        system = Mock()
+        """Mock event handling system"""        system = Mock()
         system.publish_event = AsyncMock(return_value={
             'event_id': 'evt_789',
             'published': True,
@@ -425,8 +390,7 @@ class TestEventHandling:
     
     @pytest.mark.asyncio
     async def test_event_publishing(self, mock_event_system):
-        """Test event publishing"""
-        event_data = {
+        """Test event publishing"""        event_data = {
             'type': 'content_uploaded',
             'payload': {
                 'content_id': 'content_123',
@@ -443,8 +407,7 @@ class TestEventHandling:
     
     @pytest.mark.asyncio
     async def test_event_subscription(self, mock_event_system):
-        """Test event subscription"""
-        subscription_config = {
+        """Test event subscription"""        subscription_config = {
             'event_type': 'content_uploaded',
             'handler': 'process_content_upload',
             'filter': {'file_type': 'video'}
@@ -458,8 +421,7 @@ class TestEventHandling:
     
     @pytest.mark.asyncio
     async def test_event_processing(self, mock_event_system):
-        """Test event processing"""
-        event_id = 'evt_789'
+        """Test event processing"""        event_id = 'evt_789'
         
         result = await mock_event_system.process_event(event_id)
         
@@ -468,8 +430,7 @@ class TestEventHandling:
         assert result['processing_time'] > 0
     
     def test_event_history_retrieval(self, mock_event_system):
-        """Test event history retrieval"""
-        time_range = {
+        """Test event history retrieval"""        time_range = {
             'start': '2025-01-15T00:00:00Z',
             'end': '2025-01-15T23:59:59Z'
         }
@@ -483,12 +444,10 @@ class TestEventHandling:
 
 
 class TestInfrastructureIntegration:
-    """Integration tests for infrastructure components"""
-    
+    """Integration tests for infrastructure components"""    
     @pytest.fixture
     def mock_infrastructure_system(self):
-        """Mock complete infrastructure system"""
-        system = Mock()
+        """Mock complete infrastructure system"""        system = Mock()
         system.workflow_engine = Mock()
         system.health_monitor = Mock()
         system.performance_optimizer = Mock()
@@ -499,8 +458,7 @@ class TestInfrastructureIntegration:
     
     @pytest.mark.asyncio
     async def test_complete_infrastructure_workflow(self, mock_infrastructure_system):
-        """Test complete infrastructure workflow"""
-        # Mock the full infrastructure workflow
+        """Test complete infrastructure workflow"""        # Mock the full infrastructure workflow
         workflow_data = {
             'type': 'content_processing',
             'content_id': 'content_123',
@@ -540,8 +498,7 @@ class TestInfrastructureIntegration:
     
     @pytest.mark.asyncio
     async def test_infrastructure_scaling_scenario(self, mock_infrastructure_system):
-        """Test infrastructure scaling scenario"""
-        # Mock scaling scenario
+        """Test infrastructure scaling scenario"""        # Mock scaling scenario
         scaling_trigger = {
             'metric': 'cpu_usage',
             'threshold': 80,
@@ -570,8 +527,7 @@ class TestInfrastructureIntegration:
         assert scale_event['published'] is True
     
     def test_infrastructure_health_dashboard(self, mock_infrastructure_system):
-        """Test infrastructure health dashboard"""
-        # Mock dashboard data aggregation
+        """Test infrastructure health dashboard"""        # Mock dashboard data aggregation
         dashboard_data = {
             'system_health': {'overall_status': 'healthy'},
             'performance_metrics': {'avg_response_time': 120},

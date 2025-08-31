@@ -1,5 +1,4 @@
-"""
-Backup Metrics and Performance Monitoring for IA Influencer Agent Platform.
+"""Backup Metrics and Performance Monitoring for IA Influencer Agent Platform.
 
 Provides comprehensive metrics collection, performance monitoring, and
 analytics for backup operations with Prometheus integration.
@@ -12,7 +11,6 @@ WARNING: This code and concept are the exclusive intellectual property of Fahed 
 Any unauthorized use, copying, or distribution is strictly prohibited and will result
 in immediate legal action under German and international law.
 """
-
 import asyncio
 import logging
 import time
@@ -36,16 +34,14 @@ from ...core.exceptions import MetricsError
 
 
 class MetricType(Enum):
-    """Metric type enumeration."""
-    COUNTER = "counter"
+    """Metric type enumeration."""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     INFO = "info"
 
 
 class BackupOperationType(Enum):
-    """Backup operation type enumeration."""
-    FULL_BACKUP = "full_backup"
+    """Backup operation type enumeration."""    FULL_BACKUP = "full_backup"
     INCREMENTAL_BACKUP = "incremental_backup"
     CONTENT_BACKUP = "content_backup"
     USER_BACKUP = "user_backup"
@@ -56,8 +52,7 @@ class BackupOperationType(Enum):
 
 @dataclass
 class MetricValue:
-    """Metric value with metadata."""
-    name: str
+    """Metric value with metadata."""    name: str
     value: float
     labels: Dict[str, str] = field(default_factory=dict)
     timestamp: datetime = field(default_factory=datetime.now)
@@ -66,8 +61,7 @@ class MetricValue:
 
 @dataclass
 class OperationMetrics:
-    """Operation-specific metrics."""
-    operation_id: str
+    """Operation-specific metrics."""    operation_id: str
     operation_type: BackupOperationType
     started_at: datetime
     completed_at: Optional[datetime] = None
@@ -81,21 +75,17 @@ class OperationMetrics:
 
 
 class BackupMetrics:
-    """
-    Comprehensive backup metrics collection and monitoring system.
+    """    Comprehensive backup metrics collection and monitoring system.
     
     Provides real-time metrics collection, Prometheus integration,
     performance analytics, and operational insights.
     """
-
     def __init__(self, enable_prometheus: bool = True):
-        """
-        Initialize backup metrics system.
+        """        Initialize backup metrics system.
         
         Args:
             enable_prometheus: Enable Prometheus metrics export
-        """
-        self.logger = logging.getLogger(__name__)
+        """        self.logger = logging.getLogger(__name__)
         self.enable_prometheus = enable_prometheus and PROMETHEUS_AVAILABLE
         
         # Metrics storage
@@ -119,8 +109,7 @@ class BackupMetrics:
         self._start_metrics_collection()
 
     def _init_prometheus_metrics(self) -> None:
-        """Initialize Prometheus metrics."""
-        if not PROMETHEUS_AVAILABLE:
+        """Initialize Prometheus metrics."""        if not PROMETHEUS_AVAILABLE:
             self.logger.warning("Prometheus client not available")
             return
         
@@ -256,8 +245,7 @@ class BackupMetrics:
         success: bool,
         error_message: Optional[str] = None
     ) -> None:
-        """
-        Record backup operation metrics.
+        """        Record backup operation metrics.
         
         Args:
             operation_id: Operation identifier
@@ -267,8 +255,7 @@ class BackupMetrics:
             files_processed: Files processed
             success: Operation success status
             error_message: Error message if failed
-        """
-        with self._metrics_lock:
+        """        with self._metrics_lock:
             # Create operation metrics
             metrics = OperationMetrics(
                 operation_id=operation_id,
@@ -304,14 +291,12 @@ class BackupMetrics:
         operation_id: str,
         operation_type: BackupOperationType
     ) -> None:
-        """
-        Start tracking a backup operation.
+        """        Start tracking a backup operation.
         
         Args:
             operation_id: Operation identifier
             operation_type: Type of backup operation
-        """
-        with self._metrics_lock:
+        """        with self._metrics_lock:
             metrics = OperationMetrics(
                 operation_id=operation_id,
                 operation_type=operation_type,
@@ -331,16 +316,14 @@ class BackupMetrics:
         bytes_processed: int = 0,
         files_processed: int = 0
     ) -> None:
-        """
-        Update operation progress.
+        """        Update operation progress.
         
         Args:
             operation_id: Operation identifier
             progress_percent: Progress percentage (0-100)
             bytes_processed: Bytes processed so far
             files_processed: Files processed so far
-        """
-        with self._metrics_lock:
+        """        with self._metrics_lock:
             if operation_id in self.operation_metrics:
                 metrics = self.operation_metrics[operation_id]
                 metrics.progress_percent = progress_percent
@@ -366,15 +349,13 @@ class BackupMetrics:
         success: bool,
         error_message: Optional[str] = None
     ) -> None:
-        """
-        Complete operation tracking.
+        """        Complete operation tracking.
         
         Args:
             operation_id: Operation identifier
             success: Operation success status
             error_message: Error message if failed
-        """
-        with self._metrics_lock:
+        """        with self._metrics_lock:
             if operation_id in self.operation_metrics:
                 metrics = self.operation_metrics[operation_id]
                 metrics.completed_at = datetime.now()
@@ -406,15 +387,13 @@ class BackupMetrics:
         used_bytes: int,
         available_bytes: int
     ) -> None:
-        """
-        Record storage usage metrics.
+        """        Record storage usage metrics.
         
         Args:
             storage_backend: Storage backend name
             used_bytes: Used storage in bytes
             available_bytes: Available storage in bytes
-        """
-        with self._metrics_lock:
+        """        with self._metrics_lock:
             if self.enable_prometheus:
                 self.backup_storage_used_bytes.labels(
                     storage_backend=storage_backend
@@ -445,15 +424,13 @@ class BackupMetrics:
         operation_type: BackupOperationType,
         error_message: str
     ) -> None:
-        """
-        Record backup error.
+        """        Record backup error.
         
         Args:
             error_type: Type of error
             operation_type: Backup operation type
             error_message: Error message
-        """
-        with self._metrics_lock:
+        """        with self._metrics_lock:
             if self.enable_prometheus:
                 self.backup_errors_total.labels(
                     error_type=error_type,
@@ -480,8 +457,7 @@ class BackupMetrics:
         operation_type: Optional[BackupOperationType] = None,
         time_window_hours: int = 24
     ) -> Dict[str, Any]:
-        """
-        Get operation statistics.
+        """        Get operation statistics.
         
         Args:
             operation_type: Filter by operation type
@@ -489,8 +465,7 @@ class BackupMetrics:
             
         Returns:
             Operation statistics
-        """
-        cutoff_time = datetime.now() - timedelta(hours=time_window_hours)
+        """        cutoff_time = datetime.now() - timedelta(hours=time_window_hours)
         
         # Filter operations by time and type
         filtered_ops = [
@@ -543,8 +518,7 @@ class BackupMetrics:
         metric_name: str,
         time_window_hours: int = 24
     ) -> Dict[str, Any]:
-        """
-        Get performance trends for specific metric.
+        """        Get performance trends for specific metric.
         
         Args:
             metric_name: Name of the metric
@@ -552,8 +526,7 @@ class BackupMetrics:
             
         Returns:
             Performance trend data
-        """
-        if metric_name not in self.performance_history:
+        """        if metric_name not in self.performance_history:
             return {"error": f"Metric {metric_name} not found"}
         
         cutoff_time = datetime.now() - timedelta(hours=time_window_hours)
@@ -582,13 +555,11 @@ class BackupMetrics:
         }
 
     def export_prometheus_metrics(self) -> str:
-        """
-        Export metrics in Prometheus format.
+        """        Export metrics in Prometheus format.
         
         Returns:
             Prometheus-formatted metrics
-        """
-        if not self.enable_prometheus:
+        """        if not self.enable_prometheus:
             return "# Prometheus metrics not enabled"
         
         try:
@@ -598,13 +569,11 @@ class BackupMetrics:
             return f"# Error exporting metrics: {e}"
 
     def get_health_summary(self) -> Dict[str, Any]:
-        """
-        Get backup system health summary.
+        """        Get backup system health summary.
         
         Returns:
             Health summary
-        """
-        recent_stats = self.get_operation_statistics(time_window_hours=1)
+        """        recent_stats = self.get_operation_statistics(time_window_hours=1)
         
         # Calculate health score
         health_score = self._calculate_health_score(recent_stats)
@@ -626,16 +595,14 @@ class BackupMetrics:
         }
 
     def _calculate_throughput(self, bytes_processed: int, duration_seconds: float) -> float:
-        """Calculate throughput in MB/s."""
-        if duration_seconds <= 0:
+        """Calculate throughput in MB/s."""        if duration_seconds <= 0:
             return 0.0
         
         megabytes = bytes_processed / (1024 * 1024)
         return megabytes / duration_seconds
 
     def _update_prometheus_metrics(self, metrics: OperationMetrics) -> None:
-        """Update Prometheus metrics with operation data."""
-        if not self.enable_prometheus:
+        """Update Prometheus metrics with operation data."""        if not self.enable_prometheus:
             return
         
         try:
@@ -670,8 +637,7 @@ class BackupMetrics:
             self.logger.error(f"Failed to update Prometheus metrics: {e}")
 
     def _update_performance_history(self, metrics: OperationMetrics) -> None:
-        """Update performance history with operation metrics."""
-        timestamp = metrics.completed_at or datetime.now()
+        """Update performance history with operation metrics."""        timestamp = metrics.completed_at or datetime.now()
         
         # Store various performance metrics
         self.performance_history["duration"].append((timestamp, metrics.duration_seconds))
@@ -680,8 +646,7 @@ class BackupMetrics:
         self.performance_history["files_processed"].append((timestamp, metrics.files_processed))
 
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction from values."""
-        if len(values) < 2:
+        """Calculate trend direction from values."""        if len(values) < 2:
             return "stable"
         
         # Simple linear trend calculation
@@ -701,8 +666,7 @@ class BackupMetrics:
             return "stable"
 
     def _calculate_health_score(self, stats: Dict[str, Any]) -> float:
-        """Calculate overall health score (0-1)."""
-        success_rate = stats.get("success_rate", 0)
+        """Calculate overall health score (0-1)."""        success_rate = stats.get("success_rate", 0)
         throughput = stats.get("average_throughput", 0)
         
         # Base score from success rate
@@ -716,8 +680,7 @@ class BackupMetrics:
         return min(score, 1.0)
 
     def _get_health_status(self, health_score: float) -> str:
-        """Get health status from score."""
-        if health_score >= 0.9:
+        """Get health status from score."""        if health_score >= 0.9:
             return "excellent"
         elif health_score >= 0.7:
             return "good"
@@ -729,8 +692,7 @@ class BackupMetrics:
             return "critical"
 
     def _start_metrics_collection(self) -> None:
-        """Start background metrics collection task."""
-        if self._metrics_task is None:
+        """Start background metrics collection task."""        if self._metrics_task is None:
             self._metrics_task = threading.Thread(
                 target=self._metrics_collection_loop,
                 daemon=True
@@ -738,8 +700,7 @@ class BackupMetrics:
             self._metrics_task.start()
 
     def _metrics_collection_loop(self) -> None:
-        """Background metrics collection loop."""
-        while True:
+        """Background metrics collection loop."""        while True:
             try:
                 # Perform periodic metrics collection
                 self._collect_system_metrics()
@@ -750,8 +711,7 @@ class BackupMetrics:
                 time.sleep(60)
 
     def _collect_system_metrics(self) -> None:
-        """Collect system-level metrics."""
-        # Update queue size
+        """Collect system-level metrics."""        # Update queue size
         if self.enable_prometheus:
             queue_size = len([
                 op for op in self.operation_metrics.values()
@@ -765,8 +725,7 @@ backup_metrics = BackupMetrics()
 
 
 def get_backup_metrics() -> BackupMetrics:
-    """Get global backup metrics instance."""
-    return backup_metrics
+    """Get global backup metrics instance."""    return backup_metrics
 
 
 def record_operation_metrics(
@@ -776,8 +735,7 @@ def record_operation_metrics(
     bytes_processed: int,
     success: bool
 ) -> None:
-    """Convenience function to record operation metrics."""
-    backup_metrics.record_backup_operation(
+    """Convenience function to record operation metrics."""    backup_metrics.record_backup_operation(
         operation_id=operation_id,
         operation_type=BackupOperationType(operation_type),
         duration_seconds=duration_seconds,

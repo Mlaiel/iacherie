@@ -1,5 +1,4 @@
-"""
-Model Registry Deployment
+"""Model Registry Deployment
 Enterprise model lifecycle management and versioning
 
 This module provides comprehensive model registry capabilities including
@@ -13,7 +12,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 This software is protected by international copyright laws.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -35,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class ModelStage(Enum):
-    """Model lifecycle stages"""
-    DEVELOPMENT = "development"
+    """Model lifecycle stages"""    DEVELOPMENT = "development"
     STAGING = "staging" 
     PRODUCTION = "production"
     ARCHIVED = "archived"
@@ -44,8 +41,7 @@ class ModelStage(Enum):
 
 
 class ModelFormat(Enum):
-    """Supported model formats"""
-    TENSORFLOW = "tensorflow"
+    """Supported model formats"""    TENSORFLOW = "tensorflow"
     PYTORCH = "pytorch"
     ONNX = "onnx"
     SCIKIT_LEARN = "scikit_learn"
@@ -55,8 +51,7 @@ class ModelFormat(Enum):
 
 
 class DeploymentStrategy(Enum):
-    """Model deployment strategies"""
-    BLUE_GREEN = "blue_green"
+    """Model deployment strategies"""    BLUE_GREEN = "blue_green"
     ROLLING = "rolling"
     CANARY = "canary"
     A_B_TESTING = "a_b_testing"
@@ -65,8 +60,7 @@ class DeploymentStrategy(Enum):
 
 @dataclass
 class ModelRegistryConfig:
-    """Model registry configuration"""
-    registry_name: str = "ia-influencer-models"
+    """Model registry configuration"""    registry_name: str = "ia-influencer-models"
     storage_backend: str = "s3"
     versioning_strategy: str = "semantic"
     auto_validation: bool = True
@@ -83,8 +77,7 @@ class ModelRegistryConfig:
 
 
 class ModelRegistryDeployment:
-    """
-    Enterprise model registry deployment system
+    """    Enterprise model registry deployment system
     
     Provides comprehensive model lifecycle management with:
     - Model versioning and artifact storage
@@ -94,16 +87,13 @@ class ModelRegistryDeployment:
     - A/B testing and canary deployments
     - Compliance and security scanning
     - Model governance and audit trails
-    """
-    
+    """    
     def __init__(self, namespace: str = "ia-influencer-registry"):
-        """
-        Initialize model registry deployment
+        """        Initialize model registry deployment
         
         Args:
             namespace: Kubernetes namespace for registry infrastructure
-        """
-        self.namespace = namespace
+        """        self.namespace = namespace
         self.config = ModelRegistryConfig()
         self.deployed_models = {}
         self.model_versions = {}
@@ -114,8 +104,7 @@ class ModelRegistryDeployment:
         self._initialize_clients()
     
     def _initialize_clients(self) -> None:
-        """Initialize Kubernetes, Docker, S3, and Redis clients"""
-        try:
+        """Initialize Kubernetes, Docker, S3, and Redis clients"""        try:
             # Kubernetes client
             config.load_incluster_config()
             self.k8s_apps_v1 = client.AppsV1Api()
@@ -144,13 +133,11 @@ class ModelRegistryDeployment:
             raise
     
     async def deploy_registry_infrastructure(self) -> Dict[str, Any]:
-        """
-        Deploy complete model registry infrastructure
+        """        Deploy complete model registry infrastructure
         
         Returns:
             Infrastructure deployment summary
-        """
-        try:
+        """        try:
             self.status = "deploying_infrastructure"
             logger.info("Deploying model registry infrastructure")
             
@@ -219,16 +206,14 @@ class ModelRegistryDeployment:
             raise
     
     async def register_model(self, model_metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Register a new model in the registry
+        """        Register a new model in the registry
         
         Args:
             model_metadata: Model metadata and configuration
             
         Returns:
             Model registration result
-        """
-        try:
+        """        try:
             model_name = model_metadata.get("name")
             model_version = model_metadata.get("version", "1.0.0")
             model_format = model_metadata.get("format", "custom")
@@ -303,8 +288,7 @@ class ModelRegistryDeployment:
             raise
     
     async def promote_model(self, model_id: str, target_stage: ModelStage) -> Dict[str, Any]:
-        """
-        Promote model to next stage in lifecycle
+        """        Promote model to next stage in lifecycle
         
         Args:
             model_id: Model identifier
@@ -312,8 +296,7 @@ class ModelRegistryDeployment:
             
         Returns:
             Promotion result
-        """
-        try:
+        """        try:
             logger.info(f"Promoting model {model_id} to {target_stage.value}")
             
             # Get current model entry
@@ -362,8 +345,7 @@ class ModelRegistryDeployment:
             raise
     
     async def deploy_model(self, model_id: str, deployment_config: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Deploy model using specified strategy
+        """        Deploy model using specified strategy
         
         Args:
             model_id: Model identifier
@@ -371,8 +353,7 @@ class ModelRegistryDeployment:
             
         Returns:
             Deployment result
-        """
-        try:
+        """        try:
             strategy = DeploymentStrategy(deployment_config.get("strategy", "rolling"))
             logger.info(f"Deploying model {model_id} with {strategy.value} strategy")
             
@@ -429,8 +410,7 @@ class ModelRegistryDeployment:
             raise
     
     async def _ensure_registry_namespace(self) -> None:
-        """Create registry namespace"""
-        try:
+        """Create registry namespace"""        try:
             self.k8s_core_v1.read_namespace(name=self.namespace)
         except client.exceptions.ApiException as e:
             if e.status == 404:
@@ -449,8 +429,7 @@ class ModelRegistryDeployment:
                 logger.info(f"Created registry namespace: {self.namespace}")
     
     async def _deploy_registry_redis(self) -> Dict[str, Any]:
-        """Deploy Redis cluster for registry metadata"""
-        redis_cluster = {
+        """Deploy Redis cluster for registry metadata"""        redis_cluster = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -516,8 +495,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_model_storage(self) -> Dict[str, Any]:
-        """Deploy model artifact storage system"""
-        # MinIO for object storage
+        """Deploy model artifact storage system"""        # MinIO for object storage
         minio_deployment = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
@@ -614,8 +592,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_registry_database(self) -> Dict[str, Any]:
-        """Deploy PostgreSQL database for registry metadata"""
-        postgres_deployment = {
+        """Deploy PostgreSQL database for registry metadata"""        postgres_deployment = {
             "apiVersion": "apps/v1",
             "kind": "StatefulSet",
             "metadata": {
@@ -675,8 +652,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_registry_api(self) -> Dict[str, Any]:
-        """Deploy model registry REST API"""
-        api_deployment = {
+        """Deploy model registry REST API"""        api_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -735,8 +711,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_model_validator(self) -> Dict[str, Any]:
-        """Deploy model validation service"""
-        validator_deployment = {
+        """Deploy model validation service"""        validator_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -783,8 +758,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_security_scanner(self) -> Dict[str, Any]:
-        """Deploy security scanning service"""
-        scanner_deployment = {
+        """Deploy security scanning service"""        scanner_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -831,8 +805,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_deployment_pipeline(self) -> Dict[str, Any]:
-        """Deploy automated deployment pipeline"""
-        pipeline_deployment = {
+        """Deploy automated deployment pipeline"""        pipeline_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -879,8 +852,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_ab_testing_manager(self) -> Dict[str, Any]:
-        """Deploy A/B testing management service"""
-        ab_testing_deployment = {
+        """Deploy A/B testing management service"""        ab_testing_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -927,8 +899,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_registry_monitoring(self) -> Dict[str, Any]:
-        """Deploy registry monitoring and observability"""
-        monitoring_deployment = {
+        """Deploy registry monitoring and observability"""        monitoring_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -975,8 +946,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_model_governance(self) -> Dict[str, Any]:
-        """Deploy model governance and compliance service"""
-        governance_deployment = {
+        """Deploy model governance and compliance service"""        governance_deployment = {
             "apiVersion": "apps/v1",
             "kind": "Deployment",
             "metadata": {
@@ -1023,8 +993,7 @@ class ModelRegistryDeployment:
         }
     
     async def _configure_registry_networking(self) -> None:
-        """Configure networking for registry infrastructure"""
-        # Registry network policy
+        """Configure networking for registry infrastructure"""        # Registry network policy
         network_policy = {
             "apiVersion": "networking.k8s.io/v1",
             "kind": "NetworkPolicy",
@@ -1060,13 +1029,11 @@ class ModelRegistryDeployment:
         logger.info("Configured registry networking policies")
     
     async def _setup_registry_security(self) -> None:
-        """Set up security configurations for registry"""
-        # Security context and RBAC configurations would go here
+        """Set up security configurations for registry"""        # Security context and RBAC configurations would go here
         logger.info("Configured registry security settings")
     
     async def _validate_registry_infrastructure(self) -> bool:
-        """Validate registry infrastructure deployment"""
-        try:
+        """Validate registry infrastructure deployment"""        try:
             # Check essential services
             essential_services = [
                 "registry-redis", "model-storage", "registry-postgres",
@@ -1102,8 +1069,7 @@ class ModelRegistryDeployment:
             return False
     
     async def _validate_model_metadata(self, metadata: Dict[str, Any]) -> None:
-        """Validate model metadata"""
-        required_fields = ["name", "format", "description"]
+        """Validate model metadata"""        required_fields = ["name", "format", "description"]
         for field in required_fields:
             if field not in metadata:
                 raise ValueError(f"Required field '{field}' missing from metadata")
@@ -1111,14 +1077,12 @@ class ModelRegistryDeployment:
         logger.info("Model metadata validation passed")
     
     async def _generate_model_hash(self, metadata: Dict[str, Any]) -> str:
-        """Generate hash for model artifacts"""
-        # Create deterministic hash from model metadata and content
+        """Generate hash for model artifacts"""        # Create deterministic hash from model metadata and content
         model_content = json.dumps(metadata, sort_keys=True)
         return hashlib.sha256(model_content.encode()).hexdigest()
     
     async def _upload_model_artifacts(self, metadata: Dict[str, Any]) -> str:
-        """Upload model artifacts to storage"""
-        try:
+        """Upload model artifacts to storage"""        try:
             model_name = metadata["name"]
             model_version = metadata.get("version", "1.0.0")
             bucket_name = f"models-{self.config.registry_name}"
@@ -1139,8 +1103,7 @@ class ModelRegistryDeployment:
             raise
     
     async def _validate_model(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate model functionality and performance"""
-        # Placeholder for model validation logic
+        """Validate model functionality and performance"""        # Placeholder for model validation logic
         return {
             "status": "passed",
             "checks": ["format_valid", "performance_acceptable", "no_bias_detected"],
@@ -1149,8 +1112,7 @@ class ModelRegistryDeployment:
         }
     
     async def _scan_model_security(self, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Scan model for security vulnerabilities"""
-        # Placeholder for security scanning logic
+        """Scan model for security vulnerabilities"""        # Placeholder for security scanning logic
         return {
             "status": "clean",
             "vulnerabilities_found": 0,
@@ -1160,8 +1122,7 @@ class ModelRegistryDeployment:
         }
     
     async def _store_model_entry(self, entry: Dict[str, Any]) -> None:
-        """Store model entry in registry database"""
-        # Store in Redis for quick access
+        """Store model entry in registry database"""        # Store in Redis for quick access
         self._redis_client.hset(
             f"model:{entry['model_id']}",
             mapping=entry
@@ -1171,8 +1132,7 @@ class ModelRegistryDeployment:
         logger.info(f"Stored model entry: {entry['model_id']}")
     
     async def _get_model_entry(self, model_id: str) -> Optional[Dict[str, Any]]:
-        """Get model entry from registry"""
-        try:
+        """Get model entry from registry"""        try:
             entry = self._redis_client.hgetall(f"model:{model_id}")
             return entry if entry else None
         except Exception as e:
@@ -1180,8 +1140,7 @@ class ModelRegistryDeployment:
             return None
     
     async def _validate_promotion(self, current_stage: ModelStage, target_stage: ModelStage) -> None:
-        """Validate promotion path between stages"""
-        valid_transitions = {
+        """Validate promotion path between stages"""        valid_transitions = {
             ModelStage.DEVELOPMENT: [ModelStage.STAGING, ModelStage.ARCHIVED],
             ModelStage.STAGING: [ModelStage.PRODUCTION, ModelStage.DEVELOPMENT, ModelStage.ARCHIVED],
             ModelStage.PRODUCTION: [ModelStage.DEPRECATED, ModelStage.ARCHIVED],
@@ -1193,8 +1152,7 @@ class ModelRegistryDeployment:
             raise ValueError(f"Invalid promotion from {current_stage.value} to {target_stage.value}")
     
     async def _run_stage_validations(self, model_id: str, target_stage: ModelStage) -> Dict[str, Any]:
-        """Run validations specific to target stage"""
-        validations = {
+        """Run validations specific to target stage"""        validations = {
             "stage": target_stage.value,
             "checks_passed": [],
             "checks_failed": [],
@@ -1209,18 +1167,15 @@ class ModelRegistryDeployment:
         return validations
     
     async def _setup_staging_deployment(self, model_id: str) -> None:
-        """Set up staging environment for model"""
-        logger.info(f"Setting up staging deployment for {model_id}")
+        """Set up staging environment for model"""        logger.info(f"Setting up staging deployment for {model_id}")
         # Placeholder for staging setup
     
     async def _setup_production_deployment(self, model_id: str) -> None:
-        """Set up production environment for model"""
-        logger.info(f"Setting up production deployment for {model_id}")
+        """Set up production environment for model"""        logger.info(f"Setting up production deployment for {model_id}")
         # Placeholder for production setup
     
     async def _get_deployment_info(self, model_id: str) -> Dict[str, Any]:
-        """Get deployment information for model"""
-        return {
+        """Get deployment information for model"""        return {
             "endpoints": [],
             "monitoring": True,
             "health_checks": True,
@@ -1228,16 +1183,14 @@ class ModelRegistryDeployment:
         }
     
     async def _validate_deployment_eligibility(self, model_entry: Dict[str, Any]) -> None:
-        """Validate if model is eligible for deployment"""
-        if model_entry["stage"] not in ["staging", "production"]:
+        """Validate if model is eligible for deployment"""        if model_entry["stage"] not in ["staging", "production"]:
             raise ValueError("Model must be in staging or production stage for deployment")
         
         if "validation_result" not in model_entry or model_entry["validation_result"]["status"] != "passed":
             raise ValueError("Model must pass validation before deployment")
     
     async def _create_deployment_spec(self, model_entry: Dict[str, Any], config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create deployment specification"""
-        return {
+        """Create deployment specification"""        return {
             "model_id": model_entry["model_id"],
             "image": f"ia-influencer/model-server:{model_entry['format']}",
             "replicas": config.get("replicas", 3),
@@ -1250,8 +1203,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_blue_green(self, model_id: str, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy using blue-green strategy"""
-        deployment_id = f"bg-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
+        """Deploy using blue-green strategy"""        deployment_id = f"bg-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
         
         # Placeholder for blue-green deployment logic
         return {
@@ -1261,8 +1213,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_canary(self, model_id: str, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy using canary strategy"""
-        deployment_id = f"canary-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
+        """Deploy using canary strategy"""        deployment_id = f"canary-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
         
         # Placeholder for canary deployment logic
         return {
@@ -1273,8 +1224,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_ab_testing(self, model_id: str, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy using A/B testing strategy"""
-        deployment_id = f"ab-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
+        """Deploy using A/B testing strategy"""        deployment_id = f"ab-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
         
         # Placeholder for A/B testing deployment logic
         return {
@@ -1285,8 +1235,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_shadow(self, model_id: str, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy using shadow strategy"""
-        deployment_id = f"shadow-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
+        """Deploy using shadow strategy"""        deployment_id = f"shadow-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
         
         # Placeholder for shadow deployment logic
         return {
@@ -1297,8 +1246,7 @@ class ModelRegistryDeployment:
         }
     
     async def _deploy_rolling(self, model_id: str, spec: Dict[str, Any]) -> Dict[str, Any]:
-        """Deploy using rolling update strategy"""
-        deployment_id = f"rolling-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
+        """Deploy using rolling update strategy"""        deployment_id = f"rolling-{model_id}-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
         
         # Placeholder for rolling deployment logic
         return {
@@ -1308,8 +1256,7 @@ class ModelRegistryDeployment:
         }
     
     async def _setup_deployment_monitoring(self, model_id: str, deployment_result: Dict[str, Any]) -> None:
-        """Set up monitoring for model deployment"""
-        monitoring_config = {
+        """Set up monitoring for model deployment"""        monitoring_config = {
             "model_id": model_id,
             "deployment_id": deployment_result["deployment_id"],
             "metrics": ["latency", "throughput", "accuracy", "error_rate"],
@@ -1325,16 +1272,14 @@ class ModelRegistryDeployment:
         logger.info(f"Configured monitoring for deployment {model_id}")
     
     async def _rollback_failed_deployment(self, model_id: str) -> None:
-        """Rollback failed deployment"""
-        try:
+        """Rollback failed deployment"""        try:
             # Placeholder for rollback logic
             logger.info(f"Rolling back failed deployment for {model_id}")
         except Exception as e:
             logger.error(f"Rollback failed for {model_id}: {e}")
     
     async def get_registry_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive registry metrics"""
-        try:
+        """Get comprehensive registry metrics"""        try:
             metrics = {
                 "infrastructure_status": self.status,
                 "total_models": len(self.model_versions),
@@ -1358,8 +1303,7 @@ class ModelRegistryDeployment:
             return {"error": str(e)}
     
     async def _cleanup_failed_infrastructure(self) -> None:
-        """Clean up failed registry infrastructure"""
-        try:
+        """Clean up failed registry infrastructure"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             logger.info("Cleaned up failed registry infrastructure")
@@ -1367,8 +1311,7 @@ class ModelRegistryDeployment:
             logger.error(f"Registry infrastructure cleanup failed: {e}")
     
     async def cleanup(self) -> None:
-        """Clean up entire registry infrastructure"""
-        try:
+        """Clean up entire registry infrastructure"""        try:
             # Delete namespace (removes all resources)
             self.k8s_core_v1.delete_namespace(name=self.namespace)
             

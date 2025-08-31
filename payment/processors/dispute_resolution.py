@@ -1,5 +1,4 @@
-"""
-⚖️ Dispute Resolution Payment Processor
+"""⚖️ Dispute Resolution Payment Processor
 ======================================
 
 Advanced dispute resolution system for payment disputes, chargebacks,
@@ -8,7 +7,6 @@ and customer conflicts with automated mediation and escalation.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class DisputeType(Enum):
-    """Types of payment disputes"""
-    CHARGEBACK = "chargeback"
+    """Types of payment disputes"""    CHARGEBACK = "chargeback"
     REFUND_REQUEST = "refund_request"
     BILLING_DISPUTE = "billing_dispute"
     QUALITY_DISPUTE = "quality_dispute"
@@ -35,8 +32,7 @@ class DisputeType(Enum):
 
 
 class DisputeStatus(Enum):
-    """Dispute resolution status"""
-    OPEN = "open"
+    """Dispute resolution status"""    OPEN = "open"
     INVESTIGATING = "investigating"
     AWAITING_RESPONSE = "awaiting_response"
     MEDIATION = "mediation"
@@ -47,8 +43,7 @@ class DisputeStatus(Enum):
 
 
 class DisputeResolution(Enum):
-    """Dispute resolution outcomes"""
-    FAVOR_CUSTOMER = "favor_customer"
+    """Dispute resolution outcomes"""    FAVOR_CUSTOMER = "favor_customer"
     FAVOR_MERCHANT = "favor_merchant"
     PARTIAL_REFUND = "partial_refund"
     MEDIATED_SETTLEMENT = "mediated_settlement"
@@ -57,8 +52,7 @@ class DisputeResolution(Enum):
 
 
 class EvidenceType(Enum):
-    """Types of dispute evidence"""
-    RECEIPT = "receipt"
+    """Types of dispute evidence"""    RECEIPT = "receipt"
     SHIPPING_PROOF = "shipping_proof"
     COMMUNICATION = "communication"
     REFUND_POLICY = "refund_policy"
@@ -70,8 +64,7 @@ class EvidenceType(Enum):
 
 @dataclass
 class DisputeCase:
-    """Payment dispute case"""
-    id: str
+    """Payment dispute case"""    id: str
     transaction_id: str
     dispute_type: DisputeType
     status: DisputeStatus
@@ -93,8 +86,7 @@ class DisputeCase:
 
 @dataclass
 class Evidence:
-    """Dispute evidence document"""
-    id: str
+    """Dispute evidence document"""    id: str
     case_id: str
     evidence_type: EvidenceType
     file_url: str
@@ -106,8 +98,7 @@ class Evidence:
 
 @dataclass
 class DisputeMessage:
-    """Dispute communication message"""
-    id: str
+    """Dispute communication message"""    id: str
     case_id: str
     sender_id: str
     sender_type: str  # customer, merchant, mediator, system
@@ -117,20 +108,17 @@ class DisputeMessage:
 
 
 class DisputeResolutionProcessor:
-    """
-    Advanced dispute resolution processor
+    """    Advanced dispute resolution processor
     
     Handles payment disputes, chargebacks, and customer conflicts
     with automated mediation, evidence collection, and resolution.
-    """
-    
+    """    
     def __init__(
         self,
         config: Dict[str, Any],
         ai_mediation_enabled: bool = True
     ):
-        """Initialize dispute resolution processor"""
-        self.config = config
+        """Initialize dispute resolution processor"""        self.config = config
         self.ai_mediation_enabled = ai_mediation_enabled
         self.logger = logging.getLogger(__name__)
         
@@ -161,8 +149,7 @@ class DisputeResolutionProcessor:
         reason: str,
         description: str
     ) -> DisputeCase:
-        """Create a new dispute case"""
-        try:
+        """Create a new dispute case"""        try:
             case_id = f"dispute_{uuid.uuid4().hex[:12]}"
             
             # Calculate deadline based on dispute type
@@ -212,8 +199,7 @@ class DisputeResolutionProcessor:
         description: str,
         submitted_by: str
     ) -> Evidence:
-        """Submit evidence for a dispute case"""
-        try:
+        """Submit evidence for a dispute case"""        try:
             evidence_id = f"ev_{uuid.uuid4().hex[:12]}"
             
             evidence = Evidence(
@@ -243,8 +229,7 @@ class DisputeResolutionProcessor:
             raise
     
     async def mediate_dispute(self, case_id: str) -> Dict[str, Any]:
-        """Start mediation process for a dispute"""
-        try:
+        """Start mediation process for a dispute"""        try:
             case = await self._get_dispute_case(case_id)
             
             if case.status != DisputeStatus.INVESTIGATING:
@@ -282,8 +267,7 @@ class DisputeResolutionProcessor:
         resolution_amount: Optional[Decimal] = None,
         notes: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Resolve a dispute case"""
-        try:
+        """Resolve a dispute case"""        try:
             case = await self._get_dispute_case(case_id)
             
             # Update case with resolution
@@ -318,8 +302,7 @@ class DisputeResolutionProcessor:
             return {"success": False, "error": str(e)}
     
     async def escalate_dispute(self, case_id: str, reason: str) -> Dict[str, Any]:
-        """Escalate dispute to higher level resolution"""
-        try:
+        """Escalate dispute to higher level resolution"""        try:
             case = await self._get_dispute_case(case_id)
             
             case.status = DisputeStatus.ESCALATED
@@ -350,8 +333,7 @@ class DisputeResolutionProcessor:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Generate dispute analytics and metrics"""
-        try:
+        """Generate dispute analytics and metrics"""        try:
             # Mock analytics data (in production, query actual database)
             total_disputes = 125
             resolved_disputes = 98
@@ -412,8 +394,7 @@ class DisputeResolutionProcessor:
         dispute_type: DisputeType,
         amount: Decimal
     ) -> int:
-        """Calculate dispute priority (1-10)"""
-        # Base priority by type
+        """Calculate dispute priority (1-10)"""        # Base priority by type
         type_priorities = {
             DisputeType.FRAUD_CLAIM: 10,
             DisputeType.CHARGEBACK: 8,
@@ -437,8 +418,7 @@ class DisputeResolutionProcessor:
         return base_priority
     
     async def _should_auto_resolve(self, case: DisputeCase) -> bool:
-        """Determine if case should be auto-resolved"""
-        # Auto-resolve small amounts from high-rated merchants
+        """Determine if case should be auto-resolved"""        # Auto-resolve small amounts from high-rated merchants
         if case.amount <= self.auto_resolution_thresholds["low_amount"]:
             merchant_rating = await self._get_merchant_rating(case.merchant_id)
             if merchant_rating >= self.auto_resolution_thresholds["merchant_high_rating"]:
@@ -451,8 +431,7 @@ class DisputeResolutionProcessor:
         return False
     
     async def _auto_resolve_dispute(self, case: DisputeCase) -> None:
-        """Automatically resolve dispute case"""
-        if case.dispute_type == DisputeType.DUPLICATE_CHARGE:
+        """Automatically resolve dispute case"""        if case.dispute_type == DisputeType.DUPLICATE_CHARGE:
             case.resolution = DisputeResolution.FAVOR_CUSTOMER
             case.resolution_amount = case.amount
         else:
@@ -466,18 +445,15 @@ class DisputeResolutionProcessor:
         await self._notify_resolution(case)
     
     async def _notify_dispute_parties(self, case: DisputeCase) -> None:
-        """Notify involved parties about new dispute"""
-        # Mock notification (in production, send actual notifications)
+        """Notify involved parties about new dispute"""        # Mock notification (in production, send actual notifications)
         self.logger.info(f"Notified parties about dispute {case.id}")
     
     async def _request_initial_evidence(self, case: DisputeCase) -> None:
-        """Request initial evidence from parties"""
-        # Mock evidence request (in production, send actual requests)
+        """Request initial evidence from parties"""        # Mock evidence request (in production, send actual requests)
         self.logger.info(f"Requested evidence for dispute {case.id}")
     
     async def _get_dispute_case(self, case_id: str) -> DisputeCase:
-        """Get dispute case by ID"""
-        # Mock case retrieval (in production, fetch from database)
+        """Get dispute case by ID"""        # Mock case retrieval (in production, fetch from database)
         return DisputeCase(
             id=case_id,
             transaction_id="tx_123",
@@ -496,23 +472,19 @@ class DisputeResolutionProcessor:
         )
     
     async def _auto_verify_evidence(self, evidence: Evidence) -> bool:
-        """Automatically verify evidence if possible"""
-        # Mock verification (in production, use ML/AI to verify documents)
+        """Automatically verify evidence if possible"""        # Mock verification (in production, use ML/AI to verify documents)
         return True
     
     async def _has_sufficient_evidence(self, case: DisputeCase) -> bool:
-        """Check if sufficient evidence has been collected"""
-        # Mock check (in production, analyze evidence completeness)
+        """Check if sufficient evidence has been collected"""        # Mock check (in production, analyze evidence completeness)
         return len(case.evidence_submitted) >= 2
     
     async def _proceed_to_resolution(self, case: DisputeCase) -> None:
-        """Proceed case to resolution phase"""
-        case.status = DisputeStatus.INVESTIGATING
+        """Proceed case to resolution phase"""        case.status = DisputeStatus.INVESTIGATING
         case.updated_at = datetime.now()
     
     async def _ai_mediation(self, case: DisputeCase) -> Dict[str, Any]:
-        """AI-powered dispute mediation"""
-        # Mock AI mediation (in production, use ML models)
+        """AI-powered dispute mediation"""        # Mock AI mediation (in production, use ML models)
         return {
             "recommendation": DisputeResolution.PARTIAL_REFUND.value,
             "confidence": 0.85,
@@ -521,16 +493,14 @@ class DisputeResolutionProcessor:
         }
     
     async def _human_mediation(self, case: DisputeCase) -> Dict[str, Any]:
-        """Human mediator assignment"""
-        return {
+        """Human mediator assignment"""        return {
             "mediator_assigned": "John Smith",
             "estimated_completion": "48 hours",
             "contact_method": "email"
         }
     
     async def _process_resolution_payment(self, case: DisputeCase) -> Dict[str, Any]:
-        """Process payment based on resolution"""
-        if case.resolution == DisputeResolution.FAVOR_CUSTOMER:
+        """Process payment based on resolution"""        if case.resolution == DisputeResolution.FAVOR_CUSTOMER:
             # Process refund
             return {
                 "action": "refund_processed",
@@ -549,28 +519,24 @@ class DisputeResolutionProcessor:
             return {"action": "no_payment_required"}
     
     async def _notify_resolution(self, case: DisputeCase) -> None:
-        """Notify parties about dispute resolution"""
-        self.logger.info(f"Notified parties about resolution of dispute {case.id}")
+        """Notify parties about dispute resolution"""        self.logger.info(f"Notified parties about resolution of dispute {case.id}")
     
     async def _update_dispute_metrics(self, case: DisputeCase) -> None:
-        """Update merchant and customer dispute metrics"""
-        self.logger.info(f"Updated dispute metrics for case {case.id}")
+        """Update merchant and customer dispute metrics"""        self.logger.info(f"Updated dispute metrics for case {case.id}")
     
     async def _assign_escalated_case(
         self,
         case: DisputeCase,
         reason: str
     ) -> Dict[str, Any]:
-        """Assign escalated case to appropriate handler"""
-        return {
+        """Assign escalated case to appropriate handler"""        return {
             "assigned_to": "Senior Mediator Team",
             "assignment_id": f"assign_{uuid.uuid4().hex[:8]}",
             "reason": reason
         }
     
     async def _get_merchant_rating(self, merchant_id: str) -> float:
-        """Get merchant rating"""
-        # Mock rating (in production, fetch from database)
+        """Get merchant rating"""        # Mock rating (in production, fetch from database)
         return 4.8
 
 

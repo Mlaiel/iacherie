@@ -14,8 +14,7 @@ Contact: mlaiel@live.de
 
 Enterprise-grade deployment configuration management system.
 ==================================================================
-"""
-from .environment_manager import (
+"""from .environment_manager import (
     EnvironmentManager,
     EnvironmentConfiguration,
     CloudProvider,

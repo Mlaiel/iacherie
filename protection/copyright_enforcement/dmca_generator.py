@@ -1,5 +1,4 @@
-"""
-DMCA Generator and Template Management System
+"""DMCA Generator and Template Management System
 
 Ultra-advanced automated generation of DMCA takedown notices with platform-specific templates,
 AI-powered legal compliance validation, automated submission tracking, and intelligent escalation.
@@ -20,7 +19,6 @@ Copyright: All rights reserved. Unauthorized use prohibited.
 Project: IA Influencer Agent - Ultra-Advanced Industrial Platform
 Team: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + DevOps + Legal Automation
 """
-
 import asyncio
 import logging
 import hashlib
@@ -55,8 +53,7 @@ logger = logging.getLogger(__name__)
 
 
 class DMCAStatus(Enum):
-    """DMCA notice processing status"""
-    DRAFT = "draft"
+    """DMCA notice processing status"""    DRAFT = "draft"
     VALIDATING = "validating"
     READY = "ready"
     SUBMITTING = "submitting"
@@ -70,8 +67,7 @@ class DMCAStatus(Enum):
 
 
 class PlatformType(Enum):
-    """Supported platforms for DMCA submission"""
-    YOUTUBE = "youtube"
+    """Supported platforms for DMCA submission"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     FACEBOOK = "facebook"
@@ -88,8 +84,7 @@ class PlatformType(Enum):
 
 
 class SubmissionMethod(Enum):
-    """DMCA submission methods"""
-    API = "api"
+    """DMCA submission methods"""    API = "api"
     EMAIL = "email"
     WEB_FORM = "web_form"
     POSTAL_MAIL = "postal_mail"
@@ -98,8 +93,7 @@ class SubmissionMethod(Enum):
 
 @dataclass
 class LegalContact:
-    """Legal contact information structure"""
-    name: str
+    """Legal contact information structure"""    name: str
     title: str
     organization: str
     email: str
@@ -111,8 +105,7 @@ class LegalContact:
 
 @dataclass
 class ContentEvidence:
-    """Content evidence data structure"""
-    original_url: str
+    """Content evidence data structure"""    original_url: str
     infringing_url: str
     screenshot_urls: List[str] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -124,8 +117,7 @@ class ContentEvidence:
 
 @dataclass
 class DMCARequest:
-    """Ultra-advanced DMCA takedown request data structure"""
-    content_id: str
+    """Ultra-advanced DMCA takedown request data structure"""    content_id: str
     violation_case_id: str
     platform: PlatformType
     violation_url: str
@@ -151,8 +143,7 @@ class DMCARequest:
     currency: str = "USD"
     
     def __post_init__(self):
-        """Validate request data after initialization"""
-        if not self.violation_case_id:
+        """Validate request data after initialization"""        if not self.violation_case_id:
             self.violation_case_id = str(uuid.uuid4())
         if not self.submission_date:
             self.submission_date = datetime.utcnow()
@@ -160,8 +151,7 @@ class DMCARequest:
 
 @dataclass
 class DMCATemplate:
-    """Ultra-advanced DMCA template configuration"""
-    platform: PlatformType
+    """Ultra-advanced DMCA template configuration"""    platform: PlatformType
     template_name: str
     template_content: str
     template_version: str
@@ -180,8 +170,7 @@ class DMCATemplate:
     supported_languages: List[str] = field(default_factory=list)
     
     def __post_init__(self):
-        """Initialize template configuration"""
-        if not self.supported_languages:
+        """Initialize template configuration"""        if not self.supported_languages:
             self.supported_languages = ["en"]
         if not self.retry_config:
             self.retry_config = {
@@ -192,8 +181,7 @@ class DMCATemplate:
 
 
 class DMCAValidationResult(BaseModel):
-    """DMCA validation result structure"""
-    is_valid: bool
+    """DMCA validation result structure"""    is_valid: bool
     validation_score: float = Field(ge=0.0, le=1.0)
     errors: List[str] = Field(default_factory=list)
     warnings: List[str] = Field(default_factory=list)
@@ -204,8 +192,7 @@ class DMCAValidationResult(BaseModel):
 
 
 class DMCASubmissionResult(BaseModel):
-    """DMCA submission result structure"""
-    submission_id: str
+    """DMCA submission result structure"""    submission_id: str
     status: DMCAStatus
     platform_reference: Optional[str] = None
     submission_timestamp: datetime
@@ -218,8 +205,7 @@ class DMCASubmissionResult(BaseModel):
 
 
 class DMCATemplateManager:
-    """Ultra-advanced DMCA template management system"""
-    
+    """Ultra-advanced DMCA template management system"""    
     def __init__(self):
         self.templates: Dict[PlatformType, DMCATemplate] = {}
         self.template_env = jinja2.Environment(
@@ -234,8 +220,7 @@ class DMCATemplateManager:
         self._setup_ai_enhancement()
     
     def _setup_ai_enhancement(self) -> None:
-        """Setup AI enhancement for template generation"""
-        self.ai_config = {
+        """Setup AI enhancement for template generation"""        self.ai_config = {
             "model": "gpt-4",
             "temperature": 0.3,
             "max_tokens": 2000,
@@ -244,8 +229,7 @@ class DMCATemplateManager:
         }
     
     async def _load_platform_templates(self) -> None:
-        """Load and initialize all platform-specific DMCA templates"""
-        
+        """Load and initialize all platform-specific DMCA templates"""        
         # YouTube DMCA template - Enhanced
         youtube_template = DMCATemplate(
             platform=PlatformType.YOUTUBE,
@@ -383,9 +367,7 @@ class DMCATemplateManager:
         self.templates[PlatformType.SPOTIFY] = spotify_template
     
     def _get_youtube_template(self) -> str:
-        """Get YouTube DMCA template content"""
-        return """
-DMCA Takedown Notice for YouTube
+        """Get YouTube DMCA template content"""        return """DMCA Takedown Notice for YouTube
 
 To: YouTube Legal Department - Copyright Team
 From: {{ copyright_owner.name }}{% if copyright_owner.organization %}, {{ copyright_owner.organization }}{% endif %}
@@ -447,12 +429,9 @@ Email: {{ copyright_owner.email }}
 
 Respectfully submitted,
 {{ copyright_owner.name }}
-        """
-    
+        """    
     def _get_instagram_template(self) -> str:
-        """Get Instagram DMCA template content"""
-        return """
-Instagram Copyright Infringement Report
+        """Get Instagram DMCA template content"""        return """Instagram Copyright Infringement Report
 
 To: Instagram Legal Team
 From: {{ copyright_owner.name }}
@@ -481,12 +460,9 @@ LEGAL DECLARATIONS:
 
 Signature: {{ electronic_signature }}
 Date: {{ submission_date.strftime('%B %d, %Y') }}
-        """
-    
+        """    
     def _get_tiktok_template(self) -> str:
-        """Get TikTok DMCA template content"""
-        return """
-Subject: DMCA Takedown Notice - Copyright Infringement Report
+        """Get TikTok DMCA template content"""        return """Subject: DMCA Takedown Notice - Copyright Infringement Report
 
 To: TikTok Copyright Team (copyright@tiktok.com)
 From: {{ copyright_owner.email }}
@@ -523,12 +499,9 @@ Date: {{ submission_date.strftime('%B %d, %Y') }}
 
 Best regards,
 {{ copyright_owner.name }}
-        """
-    
+        """    
     def _get_facebook_template(self) -> str:
-        """Get Facebook DMCA template content"""
-        return """
-Facebook Copyright Infringement Report
+        """Get Facebook DMCA template content"""        return """Facebook Copyright Infringement Report
 
 To: Facebook Intellectual Property Team
 From: {{ copyright_owner.name }}
@@ -557,12 +530,9 @@ SWORN STATEMENTS:
 
 Signature: {{ electronic_signature }}
 Submission Date: {{ submission_date.strftime('%B %d, %Y') }}
-        """
-    
+        """    
     def _get_twitter_template(self) -> str:
-        """Get Twitter DMCA template content"""
-        return """
-Twitter Copyright Complaint
+        """Get Twitter DMCA template content"""        return """Twitter Copyright Complaint
 
 To: Twitter Legal Department
 From: {{ copyright_owner.email }}
@@ -591,12 +561,9 @@ LEGAL STATEMENTS:
 
 Electronic Signature: {{ electronic_signature }}
 Date: {{ submission_date.strftime('%B %d, %Y') }}
-        """
-    
+        """    
     def _get_spotify_template(self) -> str:
-        """Get Spotify DMCA template content"""
-        return """
-Subject: DMCA Takedown Notice - Spotify Copyright Infringement
+        """Get Spotify DMCA template content"""        return """Subject: DMCA Takedown Notice - Spotify Copyright Infringement
 
 To: Spotify Copyright Team (copyright@spotify.com)
 From: {{ copyright_owner.email }}
@@ -632,11 +599,9 @@ Submission Date: {{ submission_date.strftime('%B %d, %Y') }}
 
 Sincerely,
 {{ copyright_owner.name }}
-        """
-    
+        """    
     async def get_template(self, platform: PlatformType) -> Optional[DMCATemplate]:
-        """Get DMCA template for specific platform"""
-        try:
+        """Get DMCA template for specific platform"""        try:
             return self.templates.get(platform)
         except Exception as e:
             logger.error(f"Error retrieving template for {platform}: {e}")
@@ -647,8 +612,7 @@ Sincerely,
         platform: PlatformType, 
         request_data: Dict[str, Any]
     ) -> DMCAValidationResult:
-        """Validate DMCA request against template requirements"""
-        try:
+        """Validate DMCA request against template requirements"""        try:
             template = await self.get_template(platform)
             if not template:
                 return DMCAValidationResult(
@@ -719,8 +683,7 @@ Date: {{ submission_date }}
         instagram_template = DMCATemplate(
             platform="instagram",
             template_name="instagram_dmca",
-            template_content="""
-DMCA Takedown Notice for Instagram
+            template_content="""DMCA Takedown Notice for Instagram
 
 To: Instagram Legal Team
 From: {{ copyright_owner }}
@@ -765,8 +728,7 @@ Date: {{ submission_date }}
         tiktok_template = DMCATemplate(
             platform="tiktok",
             template_name="tiktok_dmca",
-            template_content="""
-TikTok Copyright Infringement Notice
+            template_content="""TikTok Copyright Infringement Notice
 
 To: TikTok Legal Department
 From: {{ copyright_owner }}
@@ -815,12 +777,10 @@ Date: {{ submission_date }}
         self.template_env.loader = jinja2.DictLoader(template_dict)
     
     def get_template(self, platform: str) -> Optional[DMCATemplate]:
-        """Get DMCA template for platform"""
-        return self.templates.get(platform.lower())
+        """Get DMCA template for platform"""        return self.templates.get(platform.lower())
     
     def add_custom_template(self, template: DMCATemplate) -> None:
-        """Add custom DMCA template"""
-        self.templates[template.platform] = template
+        """Add custom DMCA template"""        self.templates[template.platform] = template
         
         # Update Jinja2 loader
         template_dict = {
@@ -830,8 +790,7 @@ Date: {{ submission_date }}
         self.template_env.loader = jinja2.DictLoader(template_dict)
     
     def validate_template_data(self, platform: str, data: Dict[str, Any]) -> Tuple[bool, List[str]]:
-        """Validate required fields for template"""
-        template = self.get_template(platform)
+        """Validate required fields for template"""        template = self.get_template(platform)
         if not template:
             return False, [f"No template found for platform: {platform}"]
         
@@ -844,8 +803,7 @@ Date: {{ submission_date }}
 
 
 class DMCAGenerator:
-    """Advanced DMCA takedown notice generator"""
-    
+    """Advanced DMCA takedown notice generator"""    
     def __init__(self):
         self.template_manager = DMCATemplateManager()
         self.evidence_collector = EvidenceCollector()
@@ -857,13 +815,11 @@ class DMCAGenerator:
         request: DMCARequest,
         session: AsyncSession
     ) -> Tuple[bool, str, Optional[str]]:
-        """
-        Generate complete DMCA takedown notice
+        """        Generate complete DMCA takedown notice
         
         Returns:
             Tuple[success, notice_content, notice_id]
-        """
-        try:
+        """        try:
             # Validate request data
             is_valid, validation_errors = await self._validate_dmca_request(request)
             if not is_valid:
@@ -910,8 +866,7 @@ class DMCAGenerator:
         session: AsyncSession,
         auto_submit: bool = False
     ) -> Tuple[bool, str]:
-        """Submit DMCA notice to platform"""
-        try:
+        """Submit DMCA notice to platform"""        try:
             # Get notice from database
             notice = await self._get_notice_by_id(session, notice_id)
             if not notice:
@@ -950,8 +905,7 @@ class DMCAGenerator:
         notice_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Track response status of submitted DMCA notice"""
-        try:
+        """Track response status of submitted DMCA notice"""        try:
             notice = await self._get_notice_by_id(session, notice_id)
             if not notice:
                 return {"error": "Notice not found"}
@@ -974,8 +928,7 @@ class DMCAGenerator:
             return {"error": str(e)}
     
     async def _validate_dmca_request(self, request: DMCARequest) -> Tuple[bool, List[str]]:
-        """Validate DMCA request data"""
-        errors = []
+        """Validate DMCA request data"""        errors = []
         
         # Check required fields
         if not request.content_id:
@@ -1015,8 +968,7 @@ class DMCAGenerator:
         request: DMCARequest, 
         evidence_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Prepare data for template rendering"""
-        template_data = asdict(request)
+        """Prepare data for template rendering"""        template_data = asdict(request)
         template_data.update({
             "submission_date": datetime.utcnow().strftime("%Y-%m-%d"),
             "evidence_urls": evidence_data.get("screenshots", []),
@@ -1031,8 +983,7 @@ class DMCAGenerator:
         platform: str, 
         template_data: Dict[str, Any]
     ) -> str:
-        """Render DMCA notice using template"""
-        template = self.template_manager.template_env.get_template(platform)
+        """Render DMCA notice using template"""        template = self.template_manager.template_env.get_template(platform)
         return template.render(**template_data)
     
     async def _store_dmca_notice(
@@ -1042,8 +993,7 @@ class DMCAGenerator:
         notice_content: str,
         evidence_data: Dict[str, Any]
     ) -> str:
-        """Store DMCA notice in database"""
-        notice = DMCANotice(
+        """Store DMCA notice in database"""        notice = DMCANotice(
             content_id=request.content_id,
             platform=request.platform,
             violation_url=request.violation_url,
@@ -1066,8 +1016,7 @@ class DMCAGenerator:
         session: AsyncSession, 
         notice_id: str
     ) -> Optional[DMCANotice]:
-        """Get DMCA notice by ID"""
-        result = await session.execute(
+        """Get DMCA notice by ID"""        result = await session.execute(
             select(DMCANotice).where(DMCANotice.id == notice_id)
         )
         return result.scalar_one_or_none()
@@ -1077,8 +1026,7 @@ class DMCAGenerator:
         notice: DMCANotice, 
         template: DMCATemplate
     ) -> Tuple[bool, str]:
-        """Submit DMCA notice via API"""
-        # Implementation depends on platform API
+        """Submit DMCA notice via API"""        # Implementation depends on platform API
         logger.info(f"API submission for {notice.platform} - {template.submission_endpoint}")
         # This would contain actual API calls to platforms
         return True, "Submitted via API"
@@ -1088,8 +1036,7 @@ class DMCAGenerator:
         notice: DMCANotice, 
         template: DMCATemplate
     ) -> Tuple[bool, str]:
-        """Submit DMCA notice via email"""
-        try:
+        """Submit DMCA notice via email"""        try:
             await self.email_service.send_email(
                 to=template.submission_endpoint,
                 subject=f"DMCA Takedown Notice - {notice.violation_url}",
@@ -1105,8 +1052,7 @@ class DMCAGenerator:
         notice: DMCANotice, 
         template: DMCATemplate
     ) -> Tuple[bool, str]:
-        """Submit DMCA notice via web form"""
-        # Implementation would use Selenium/Playwright for form submission
+        """Submit DMCA notice via web form"""        # Implementation would use Selenium/Playwright for form submission
         logger.info(f"Web form submission for {notice.platform}")
         return True, "Submitted via web form"
     
@@ -1117,8 +1063,7 @@ class DMCAGenerator:
         status: str,
         message: str
     ) -> None:
-        """Update notice status in database"""
-        await session.execute(
+        """Update notice status in database"""        await session.execute(
             update(DMCANotice)
             .where(DMCANotice.id == notice_id)
             .values(
@@ -1130,8 +1075,7 @@ class DMCAGenerator:
         await session.commit()
     
     async def _check_platform_response(self, notice: DMCANotice) -> Dict[str, Any]:
-        """Check platform for DMCA notice response"""
-        # Implementation would check platform APIs/emails for responses
+        """Check platform for DMCA notice response"""        # Implementation would check platform APIs/emails for responses
         return {
             "status": "pending",
             "response": "Awaiting platform response",
@@ -1144,8 +1088,7 @@ class DMCAGenerator:
         notice_id: str,
         response_data: Dict[str, Any]
     ) -> None:
-        """Update notice with platform response"""
-        await session.execute(
+        """Update notice with platform response"""        await session.execute(
             update(DMCANotice)
             .where(DMCANotice.id == notice_id)
             .values(
@@ -1158,8 +1101,7 @@ class DMCAGenerator:
 
 # Bulk DMCA operations
 class BulkDMCAProcessor:
-    """Process multiple DMCA notices in bulk"""
-    
+    """Process multiple DMCA notices in bulk"""    
     def __init__(self):
         self.dmca_generator = DMCAGenerator()
     
@@ -1169,8 +1111,7 @@ class BulkDMCAProcessor:
         session: AsyncSession,
         batch_size: int = 10
     ) -> Dict[str, Any]:
-        """Process multiple violations as DMCA notices"""
-        results = {
+        """Process multiple violations as DMCA notices"""        results = {
             "total": len(violations),
             "processed": 0,
             "successful": 0,
@@ -1207,8 +1148,7 @@ class BulkDMCAProcessor:
         violation_data: Dict[str, Any],
         session: AsyncSession
     ) -> Tuple[bool, str, Optional[str]]:
-        """Process single violation into DMCA notice"""
-        try:
+        """Process single violation into DMCA notice"""        try:
             request = DMCARequest(**violation_data)
             return await self.dmca_generator.generate_dmca_notice(request, session)
         except Exception as e:

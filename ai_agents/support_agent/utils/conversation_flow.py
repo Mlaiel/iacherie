@@ -1,5 +1,4 @@
-"""
-Conversation Flow Manager - Ultra-Advanced Conversation State Management
+"""Conversation Flow Manager - Ultra-Advanced Conversation State Management
 
 Enterprise-grade conversation flow management system providing dynamic conversation
 routing, context preservation, multi-turn dialogue handling, and intelligent
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple, Set
@@ -36,8 +34,7 @@ import torch
 logger = logging.getLogger(__name__)
 
 class ConversationState(Enum):
-    """Conversation flow states"""
-    IDLE = "idle"
+    """Conversation flow states"""    IDLE = "idle"
     GREETING = "greeting"
     PROBLEM_GATHERING = "problem_gathering"
     SOLUTION_PROVIDING = "solution_providing"
@@ -48,16 +45,14 @@ class ConversationState(Enum):
     TERMINATED = "terminated"
 
 class FlowDirection(Enum):
-    """Flow direction types"""
-    FORWARD = "forward"
+    """Flow direction types"""    FORWARD = "forward"
     BACKWARD = "backward"
     BRANCH = "branch"
     LOOP = "loop"
     TERMINATE = "terminate"
 
 class ConversationIntent(Enum):
-    """Conversation intent categories"""
-    TECHNICAL_SUPPORT = "technical_support"
+    """Conversation intent categories"""    TECHNICAL_SUPPORT = "technical_support"
     ACCOUNT_HELP = "account_help"
     BILLING_INQUIRY = "billing_inquiry"
     FEATURE_REQUEST = "feature_request"
@@ -70,8 +65,7 @@ class ConversationIntent(Enum):
 
 @dataclass
 class ConversationContext:
-    """Comprehensive conversation context"""
-    conversation_id: str
+    """Comprehensive conversation context"""    conversation_id: str
     user_id: str
     session_id: str
     current_state: ConversationState
@@ -101,8 +95,7 @@ class ConversationContext:
 
 @dataclass
 class FlowTransition:
-    """Flow transition definition"""
-    from_state: ConversationState
+    """Flow transition definition"""    from_state: ConversationState
     to_state: ConversationState
     trigger: str
     conditions: List[Dict[str, Any]] = field(default_factory=list)
@@ -111,8 +104,7 @@ class FlowTransition:
 
 @dataclass
 class FlowNode:
-    """Conversation flow node"""
-    state: ConversationState
+    """Conversation flow node"""    state: ConversationState
     name: str
     description: str
     
@@ -130,8 +122,7 @@ class FlowNode:
     fallback_state: Optional[ConversationState] = None
 
 class ConversationFlowManager:
-    """Ultra-advanced conversation flow management system"""
-    
+    """Ultra-advanced conversation flow management system"""    
     def __init__(self, redis_client: aioredis.Redis):
         self.redis_client = redis_client
         self.flow_graph = nx.DiGraph()
@@ -155,8 +146,7 @@ class ConversationFlowManager:
         self._setup_state_machines()
     
     def _initialize_flow_graph(self):
-        """Initialize the conversation flow graph"""
-        # Define flow nodes
+        """Initialize the conversation flow graph"""        # Define flow nodes
         nodes = [
             FlowNode(
                 state=ConversationState.IDLE,
@@ -276,8 +266,7 @@ class ConversationFlowManager:
             )
     
     def _setup_state_machines(self):
-        """Setup state machines for conversation flow"""
-        self.state_transitions = {
+        """Setup state machines for conversation flow"""        self.state_transitions = {
             'trigger': 'user_message',
             'source': list(ConversationState),
             'dest': list(ConversationState),
@@ -291,8 +280,7 @@ class ConversationFlowManager:
         session_id: str,
         initial_message: Optional[str] = None
     ) -> ConversationContext:
-        """Create new conversation context"""
-        conversation_id = str(uuid.uuid4())
+        """Create new conversation context"""        conversation_id = str(uuid.uuid4())
         
         context = ConversationContext(
             conversation_id=conversation_id,
@@ -322,8 +310,7 @@ class ConversationFlowManager:
         message: str,
         user_id: str
     ) -> Dict[str, Any]:
-        """Process incoming message and manage conversation flow"""
-        start_time = datetime.now(timezone.utc)
+        """Process incoming message and manage conversation flow"""        start_time = datetime.now(timezone.utc)
         
         # Get or create context
         if conversation_id not in self.contexts:
@@ -380,8 +367,7 @@ class ConversationFlowManager:
             return await self._handle_error(context, str(e))
     
     async def _classify_intent(self, message: str) -> ConversationIntent:
-        """Classify message intent using AI"""
-        candidate_labels = [intent.value for intent in ConversationIntent]
+        """Classify message intent using AI"""        candidate_labels = [intent.value for intent in ConversationIntent]
         
         result = self.intent_classifier(message, candidate_labels)
         
@@ -398,8 +384,7 @@ class ConversationFlowManager:
         return ConversationIntent.GENERAL_INFO
     
     async def _analyze_sentiment(self, message: str) -> Dict[str, float]:
-        """Analyze message sentiment"""
-        result = self.sentiment_analyzer(message)
+        """Analyze message sentiment"""        result = self.sentiment_analyzer(message)
         
         sentiment_data = {
             "label": result[0]['label'],
@@ -417,8 +402,7 @@ class ConversationFlowManager:
         intent: ConversationIntent,
         sentiment: Dict[str, float]
     ) -> ConversationState:
-        """Determine next conversation state based on context"""
-        current_state = context.current_state
+        """Determine next conversation state based on context"""        current_state = context.current_state
         
         # State transition logic
         if current_state == ConversationState.IDLE:
@@ -472,8 +456,7 @@ class ConversationFlowManager:
         next_state: ConversationState,
         user_message: str
     ) -> Dict[str, Any]:
-        """Execute state transition and generate response"""
-        # Update state
+        """Execute state transition and generate response"""        # Update state
         context.state_history.append(context.current_state)
         context.current_state = next_state
         
@@ -510,8 +493,7 @@ class ConversationFlowManager:
         return response
     
     async def _generate_greeting_response(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate greeting response"""
-        node_data = self.flow_graph.nodes[ConversationState.GREETING]['data']
+        """Generate greeting response"""        node_data = self.flow_graph.nodes[ConversationState.GREETING]['data']
         
         # Personalize greeting based on user history
         greeting = "Hello! I'm your AI support assistant for the IA-Influencer platform."
@@ -540,8 +522,7 @@ class ConversationFlowManager:
         }
     
     async def _generate_problem_gathering_response(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate problem gathering response"""
-        questions = [
+        """Generate problem gathering response"""        questions = [
             "Can you provide more details about the issue you're experiencing?",
             "When did this problem first start?",
             "What were you trying to do when this happened?",
@@ -567,8 +548,7 @@ class ConversationFlowManager:
         }
     
     async def _generate_solution_response(self, context: ConversationContext, user_message: str) -> Dict[str, Any]:
-        """Generate solution response based on problem description"""
-        # Analyze problem and provide specific solution
+        """Generate solution response based on problem description"""        # Analyze problem and provide specific solution
         problem_type = await self._analyze_problem_type(user_message, context)
         
         solutions = {
@@ -601,8 +581,7 @@ class ConversationFlowManager:
         }
     
     async def _generate_troubleshooting_response(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate troubleshooting follow-up response"""
-        return {
+        """Generate troubleshooting follow-up response"""        return {
             "message": "How did that work for you? Did any of those steps help resolve the issue?",
             "suggestions": [
                 "Yes, it's working now!",
@@ -616,8 +595,7 @@ class ConversationFlowManager:
         }
     
     async def _generate_escalation_response(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate escalation response"""
-        return {
+        """Generate escalation response"""        return {
             "message": "I understand this issue needs more specialized help. Let me connect you with one of our human support specialists who can provide more detailed assistance.\n\nThey'll be able to access your account and provide personalized troubleshooting.\n\nExpected wait time: 5-10 minutes.",
             "escalation_ticket_id": str(uuid.uuid4()),
             "estimated_wait_time": "5-10 minutes",
@@ -626,8 +604,7 @@ class ConversationFlowManager:
         }
     
     async def _generate_feedback_response(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate feedback collection response"""
-        return {
+        """Generate feedback collection response"""        return {
             "message": "Before we wrap up, I'd love to get your feedback:\n\nHow would you rate the help you received today? Was I able to resolve your issue to your satisfaction?",
             "rating_options": ["Excellent", "Good", "Fair", "Poor"],
             "suggestions": [
@@ -642,8 +619,7 @@ class ConversationFlowManager:
         }
     
     async def _generate_closing_response(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate closing response"""
-        return {
+        """Generate closing response"""        return {
             "message": "Thank you for using IA-Influencer support! I'm glad I could help you today.\n\nFeel free to reach out anytime if you have more questions. Have a great day creating amazing content!",
             "session_summary": {
                 "duration": (datetime.now(timezone.utc) - context.created_at).total_seconds(),
@@ -656,16 +632,14 @@ class ConversationFlowManager:
         }
     
     async def _generate_default_response(self, context: ConversationContext) -> Dict[str, Any]:
-        """Generate default response for unknown states"""
-        return {
+        """Generate default response for unknown states"""        return {
             "message": "I'm here to help! Could you please let me know what specific issue you're facing with the IA-Influencer platform?",
             "confidence": 0.6,
             "response_type": "default"
         }
     
     async def _analyze_problem_type(self, message: str, context: ConversationContext) -> str:
-        """Analyze problem type from message"""
-        message_lower = message.lower()
+        """Analyze problem type from message"""        message_lower = message.lower()
         
         if any(keyword in message_lower for keyword in ["upload", "file", "upload error", "can't upload"]):
             return "upload_error"
@@ -681,8 +655,7 @@ class ConversationFlowManager:
         return "default"
     
     async def _persist_context(self, context: ConversationContext):
-        """Persist conversation context to Redis"""
-        try:
+        """Persist conversation context to Redis"""        try:
             context_data = {
                 "conversation_id": context.conversation_id,
                 "user_id": context.user_id,
@@ -708,8 +681,7 @@ class ConversationFlowManager:
             logger.error(f"Failed to persist context: {str(e)}")
     
     async def _load_context(self, conversation_id: str) -> Optional[ConversationContext]:
-        """Load conversation context from Redis"""
-        try:
+        """Load conversation context from Redis"""        try:
             data = await self.redis_client.get(f"conversation:{conversation_id}")
             if not data:
                 return None
@@ -742,8 +714,7 @@ class ConversationFlowManager:
             return None
     
     async def _handle_error(self, context: ConversationContext, error: str) -> Dict[str, Any]:
-        """Handle conversation errors"""
-        logger.error(f"Conversation error in {context.conversation_id}: {error}")
+        """Handle conversation errors"""        logger.error(f"Conversation error in {context.conversation_id}: {error}")
         
         return {
             "conversation_id": context.conversation_id,
@@ -757,8 +728,7 @@ class ConversationFlowManager:
         }
     
     async def get_conversation_analytics(self, conversation_id: str) -> Dict[str, Any]:
-        """Get conversation analytics and metrics"""
-        context = self.contexts.get(conversation_id)
+        """Get conversation analytics and metrics"""        context = self.contexts.get(conversation_id)
         if not context:
             context = await self._load_context(conversation_id)
         
@@ -779,8 +749,7 @@ class ConversationFlowManager:
         }
     
     async def cleanup_expired_conversations(self):
-        """Clean up expired conversation contexts"""
-        current_time = datetime.now(timezone.utc)
+        """Clean up expired conversation contexts"""        current_time = datetime.now(timezone.utc)
         expired_conversations = []
         
         for conv_id, context in self.contexts.items():

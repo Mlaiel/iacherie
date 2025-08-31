@@ -1,5 +1,4 @@
-"""
-Fingerprint Parsers Module
+"""Fingerprint Parsers Module
 ==========================
 
 Specialized parsers for preparing content data for fingerprinting and copyright protection.
@@ -13,7 +12,6 @@ This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import hashlib
 import json
@@ -50,36 +48,30 @@ except ImportError:
 
 
 class BaseFingerprintParser(ABC):
-    """Abstract base class for fingerprint parsers"""
-    
+    """Abstract base class for fingerprint parsers"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.fingerprint_config = config.fingerprint
         self.session = None
     
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         return self
     
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
     
     @abstractmethod
     async def parse_for_fingerprint(self, content_path: str, **kwargs) -> Dict[str, Any]:
-        """Parse content and prepare fingerprint data"""
-        pass
+        """Parse content and prepare fingerprint data"""        pass
     
     @abstractmethod
     def get_content_type(self) -> str:
-        """Get the content type this parser handles"""
-        pass
+        """Get the content type this parser handles"""        pass
     
     def _generate_hash(self, data: bytes, algorithm: str = "sha256") -> str:
-        """Generate hash of content data"""
-        if algorithm == "md5":
+        """Generate hash of content data"""        if algorithm == "md5":
             return hashlib.md5(data).hexdigest()
         elif algorithm == "sha1":
             return hashlib.sha1(data).hexdigest()
@@ -89,8 +81,7 @@ class BaseFingerprintParser(ABC):
             return hashlib.sha256(data).hexdigest()
     
     def _extract_file_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract basic file metadata"""
-        file_stats = os.stat(file_path)
+        """Extract basic file metadata"""        file_stats = os.stat(file_path)
         file_path_obj = Path(file_path)
         
         return {
@@ -103,21 +94,18 @@ class BaseFingerprintParser(ABC):
         }
     
     def _get_mime_type(self, file_path: str) -> str:
-        """Get MIME type of file"""
-        import mimetypes
+        """Get MIME type of file"""        import mimetypes
         mime_type, _ = mimetypes.guess_type(file_path)
         return mime_type or 'application/octet-stream'
 
 
 class AudioFingerprintParser(BaseFingerprintParser):
-    """Parser for audio content fingerprinting"""
-    
+    """Parser for audio content fingerprinting"""    
     def get_content_type(self) -> str:
         return "audio"
     
     async def parse_for_fingerprint(self, audio_path: str, **kwargs) -> Dict[str, Any]:
-        """Parse audio file for fingerprinting"""
-        try:
+        """Parse audio file for fingerprinting"""        try:
             if not AUDIO_AVAILABLE:
                 raise FingerprintParsingError(
                     "Audio processing libraries not available",
@@ -165,8 +153,7 @@ class AudioFingerprintParser(BaseFingerprintParser):
             )
     
     async def _load_audio_file(self, audio_path: str) -> Tuple[np.ndarray, int]:
-        """Load audio file using librosa"""
-        try:
+        """Load audio file using librosa"""        try:
             # Load with librosa, convert to mono and normalize
             audio_data, sample_rate = librosa.load(audio_path, sr=None, mono=True)
             return audio_data, sample_rate
@@ -178,8 +165,7 @@ class AudioFingerprintParser(BaseFingerprintParser):
             )
     
     async def _extract_audio_features(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Extract audio features for analysis"""
-        try:
+        """Extract audio features for analysis"""        try:
             # Extract MFCC features
             mfccs = librosa.feature.mfcc(y=audio_data, sr=sample_rate, n_mfcc=13)
             
@@ -229,8 +215,7 @@ class AudioFingerprintParser(BaseFingerprintParser):
             )
     
     async def _generate_audio_fingerprint(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Generate audio fingerprint for copyright detection"""
-        try:
+        """Generate audio fingerprint for copyright detection"""        try:
             # Simplified audio fingerprinting approach
             # In production, you'd use more sophisticated algorithms like Shazam's or Gracenote's
             
@@ -276,8 +261,7 @@ class AudioFingerprintParser(BaseFingerprintParser):
             )
     
     def _assess_fingerprint_quality(self, audio_data: np.ndarray, sample_rate: int) -> Dict[str, Any]:
-        """Assess the quality of the audio for fingerprinting"""
-        # Signal-to-noise ratio estimation
+        """Assess the quality of the audio for fingerprinting"""        # Signal-to-noise ratio estimation
         signal_power = np.mean(audio_data ** 2)
         noise_floor = np.percentile(np.abs(audio_data), 10)
         snr = 10 * np.log10(signal_power / (noise_floor ** 2 + 1e-10))
@@ -301,14 +285,12 @@ class AudioFingerprintParser(BaseFingerprintParser):
 
 
 class VideoFingerprintParser(BaseFingerprintParser):
-    """Parser for video content fingerprinting"""
-    
+    """Parser for video content fingerprinting"""    
     def get_content_type(self) -> str:
         return "video"
     
     async def parse_for_fingerprint(self, video_path: str, **kwargs) -> Dict[str, Any]:
-        """Parse video file for fingerprinting"""
-        try:
+        """Parse video file for fingerprinting"""        try:
             # Extract basic metadata
             file_metadata = self._extract_file_metadata(video_path)
             
@@ -345,8 +327,7 @@ class VideoFingerprintParser(BaseFingerprintParser):
             )
     
     async def _extract_video_properties(self, video_path: str) -> Dict[str, Any]:
-        """Extract video properties using OpenCV"""
-        try:
+        """Extract video properties using OpenCV"""        try:
             cap = cv2.VideoCapture(video_path)
             
             if not cap.isOpened():
@@ -384,8 +365,7 @@ class VideoFingerprintParser(BaseFingerprintParser):
             )
     
     async def _generate_visual_fingerprint(self, video_path: str) -> Dict[str, Any]:
-        """Generate visual fingerprint from video frames"""
-        try:
+        """Generate visual fingerprint from video frames"""        try:
             cap = cv2.VideoCapture(video_path)
             
             if not cap.isOpened():
@@ -446,8 +426,7 @@ class VideoFingerprintParser(BaseFingerprintParser):
             )
     
     def _generate_frame_fingerprint(self, frame: np.ndarray) -> Dict[str, Any]:
-        """Generate fingerprint for a single frame"""
-        # Convert to grayscale
+        """Generate fingerprint for a single frame"""        # Convert to grayscale
         gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         
         # Calculate histogram
@@ -474,8 +453,7 @@ class VideoFingerprintParser(BaseFingerprintParser):
         }
     
     def _detect_scene_changes(self, keyframes: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Detect scene changes in video"""
-        scene_changes = []
+        """Detect scene changes in video"""        scene_changes = []
         
         for i in range(1, len(keyframes)):
             curr_frame = keyframes[i]['fingerprint']
@@ -502,8 +480,7 @@ class VideoFingerprintParser(BaseFingerprintParser):
         return scene_changes
     
     def _assess_visual_fingerprint_quality(self, keyframes: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Assess the quality of visual fingerprint"""
-        if not keyframes:
+        """Assess the quality of visual fingerprint"""        if not keyframes:
             return {'quality_score': 0, 'suitable_for_fingerprinting': False}
         
         # Calculate average contrast and edge density
@@ -526,8 +503,7 @@ class VideoFingerprintParser(BaseFingerprintParser):
         }
     
     async def _extract_video_audio_fingerprint(self, video_path: str) -> Optional[Dict[str, Any]]:
-        """Extract audio fingerprint from video file"""
-        if not AUDIO_AVAILABLE:
+        """Extract audio fingerprint from video file"""        if not AUDIO_AVAILABLE:
             return None
         
         try:
@@ -561,14 +537,12 @@ class VideoFingerprintParser(BaseFingerprintParser):
 
 
 class ImageFingerprintParser(BaseFingerprintParser):
-    """Parser for image content fingerprinting"""
-    
+    """Parser for image content fingerprinting"""    
     def get_content_type(self) -> str:
         return "image"
     
     async def parse_for_fingerprint(self, image_path: str, **kwargs) -> Dict[str, Any]:
-        """Parse image file for fingerprinting"""
-        try:
+        """Parse image file for fingerprinting"""        try:
             # Extract basic metadata
             file_metadata = self._extract_file_metadata(image_path)
             
@@ -599,8 +573,7 @@ class ImageFingerprintParser(BaseFingerprintParser):
             )
     
     async def _extract_image_properties(self, image_path: str) -> Dict[str, Any]:
-        """Extract image properties and EXIF data"""
-        try:
+        """Extract image properties and EXIF data"""        try:
             with Image.open(image_path) as img:
                 # Basic properties
                 width, height = img.size
@@ -659,8 +632,7 @@ class ImageFingerprintParser(BaseFingerprintParser):
             )
     
     async def _generate_image_fingerprint(self, image_path: str) -> Dict[str, Any]:
-        """Generate perceptual fingerprint for image"""
-        try:
+        """Generate perceptual fingerprint for image"""        try:
             with Image.open(image_path) as img:
                 # Convert to RGB if necessary
                 if img.mode != 'RGB':
@@ -698,8 +670,7 @@ class ImageFingerprintParser(BaseFingerprintParser):
             )
     
     def _calculate_perceptual_hash(self, img: Image.Image, hash_size: int = 8) -> str:
-        """Calculate perceptual hash (pHash)"""
-        # Resize to hash_size x hash_size
+        """Calculate perceptual hash (pHash)"""        # Resize to hash_size x hash_size
         img = img.resize((hash_size * 4, hash_size * 4), Image.Resampling.LANCZOS)
         
         # Convert to grayscale
@@ -725,8 +696,7 @@ class ImageFingerprintParser(BaseFingerprintParser):
         return hex(int(hash_string, 2))[2:]
     
     def _calculate_difference_hash(self, img: Image.Image, hash_size: int = 8) -> str:
-        """Calculate difference hash (dHash)"""
-        # Resize to (hash_size + 1) x hash_size
+        """Calculate difference hash (dHash)"""        # Resize to (hash_size + 1) x hash_size
         img = img.resize((hash_size + 1, hash_size), Image.Resampling.LANCZOS)
         
         # Convert to grayscale
@@ -743,8 +713,7 @@ class ImageFingerprintParser(BaseFingerprintParser):
         return hex(int(hash_string, 2))[2:]
     
     def _calculate_average_hash(self, img: Image.Image, hash_size: int = 8) -> str:
-        """Calculate average hash (aHash)"""
-        # Resize to hash_size x hash_size
+        """Calculate average hash (aHash)"""        # Resize to hash_size x hash_size
         img = img.resize((hash_size, hash_size), Image.Resampling.LANCZOS)
         
         # Convert to grayscale
@@ -764,8 +733,7 @@ class ImageFingerprintParser(BaseFingerprintParser):
         return hex(int(hash_string, 2))[2:]
     
     def _extract_visual_features(self, img: Image.Image) -> Dict[str, Any]:
-        """Extract visual features from image"""
-        # Convert to numpy array
+        """Extract visual features from image"""        # Convert to numpy array
         img_array = np.array(img)
         
         # Convert to grayscale for some calculations
@@ -795,8 +763,7 @@ class ImageFingerprintParser(BaseFingerprintParser):
         }
     
     def _calculate_color_histogram(self, img: Image.Image) -> Dict[str, List[float]]:
-        """Calculate color histogram"""
-        img_array = np.array(img)
+        """Calculate color histogram"""        img_array = np.array(img)
         
         # Calculate histogram for each channel
         hist_r = np.histogram(img_array[:, :, 0], bins=16, range=(0, 256))[0]
@@ -816,8 +783,7 @@ class ImageFingerprintParser(BaseFingerprintParser):
         }
     
     def _assess_image_fingerprint_quality(self, img: Image.Image, visual_features: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess the quality of image fingerprint"""
-        # Quality based on visual complexity
+        """Assess the quality of image fingerprint"""        # Quality based on visual complexity
         edge_density = visual_features['edge_density']
         contrast = visual_features['contrast']
         sharpness = visual_features['sharpness']
@@ -835,14 +801,12 @@ class ImageFingerprintParser(BaseFingerprintParser):
 
 
 class TextFingerprintParser(BaseFingerprintParser):
-    """Parser for text content fingerprinting"""
-    
+    """Parser for text content fingerprinting"""    
     def get_content_type(self) -> str:
         return "text"
     
     async def parse_for_fingerprint(self, text_path: str, **kwargs) -> Dict[str, Any]:
-        """Parse text file for fingerprinting"""
-        try:
+        """Parse text file for fingerprinting"""        try:
             # Extract basic metadata
             file_metadata = self._extract_file_metadata(text_path)
             
@@ -876,8 +840,7 @@ class TextFingerprintParser(BaseFingerprintParser):
             )
     
     def _extract_text_properties(self, text: str) -> Dict[str, Any]:
-        """Extract properties from text content"""
-        import re
+        """Extract properties from text content"""        import re
         
         # Basic statistics
         char_count = len(text)
@@ -914,8 +877,7 @@ class TextFingerprintParser(BaseFingerprintParser):
         }
     
     def _detect_language(self, text: str) -> str:
-        """Simple language detection based on common words"""
-        # Simplified language detection
+        """Simple language detection based on common words"""        # Simplified language detection
         english_words = ['the', 'and', 'for', 'are', 'but', 'not', 'you', 'all', 'can', 'had', 'was', 'one', 'our', 'day']
         french_words = ['les', 'des', 'une', 'est', 'qui', 'sur', 'avec', 'son', 'que', 'dans', 'par', 'pour', 'pas', 'tout']
         german_words = ['der', 'die', 'und', 'von', 'den', 'des', 'mit', 'dem', 'ein', 'eine', 'ich', 'das', 'nicht', 'sie']
@@ -938,8 +900,7 @@ class TextFingerprintParser(BaseFingerprintParser):
         return max(scores.items(), key=lambda x: x[1])[0] if max(scores.values()) > 0 else 'unknown'
     
     async def _generate_text_fingerprint(self, text: str) -> Dict[str, Any]:
-        """Generate fingerprint for text content"""
-        try:
+        """Generate fingerprint for text content"""        try:
             import re
             
             # Clean text for fingerprinting
@@ -973,8 +934,7 @@ class TextFingerprintParser(BaseFingerprintParser):
             )
     
     def _generate_ngram_hashes(self, text: str, n: int = 3) -> List[str]:
-        """Generate n-gram hashes for text"""
-        words = text.split()
+        """Generate n-gram hashes for text"""        words = text.split()
         ngrams = []
         
         for i in range(len(words) - n + 1):
@@ -985,8 +945,7 @@ class TextFingerprintParser(BaseFingerprintParser):
         return ngrams[:50]  # Limit to prevent excessive data
     
     def _analyze_sentence_structure(self, text: str) -> Dict[str, Any]:
-        """Analyze sentence structure patterns"""
-        import re
+        """Analyze sentence structure patterns"""        import re
         
         sentences = re.split(r'[.!?]+', text)
         sentence_lengths = [len(s.split()) for s in sentences if s.strip()]
@@ -1002,8 +961,7 @@ class TextFingerprintParser(BaseFingerprintParser):
         }
     
     def _extract_semantic_features(self, text: str) -> Dict[str, Any]:
-        """Extract semantic features (simplified)"""
-        import re
+        """Extract semantic features (simplified)"""        import re
         
         # Count different types of words
         words = text.split()
@@ -1026,8 +984,7 @@ class TextFingerprintParser(BaseFingerprintParser):
         }
     
     def _generate_shingles(self, text: str, k: int = 5) -> List[str]:
-        """Generate k-shingles from text"""
-        # Character-based shingles
+        """Generate k-shingles from text"""        # Character-based shingles
         shingles = []
         text_clean = re.sub(r'\s+', '', text)  # Remove all whitespace
         
@@ -1039,8 +996,7 @@ class TextFingerprintParser(BaseFingerprintParser):
         return list(set(shingles))  # Return unique shingles
     
     def _assess_text_fingerprint_quality(self, text: str) -> Dict[str, Any]:
-        """Assess the quality of text fingerprint"""
-        words = text.split()
+        """Assess the quality of text fingerprint"""        words = text.split()
         unique_words = set(word.lower() for word in words)
         
         # Calculate metrics

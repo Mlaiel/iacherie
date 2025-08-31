@@ -15,8 +15,7 @@ Comprehensive deployment environment management for all deployment scenarios.
 Supports development, production, staging, testing, Docker, Kubernetes, cloud, 
 performance, security, and monitoring environments.
 ====================================================
-"""
-# Core Environment Managers
+"""# Core Environment Managers
 from .development import DevelopmentEnvironmentManager
 from .production import ProductionEnvironmentManager
 from .staging import StagingEnvironmentManager

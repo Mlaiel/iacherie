@@ -1,5 +1,4 @@
-"""
-Image Agent Utilities - Professional Utility Functions & Helpers
+"""Image Agent Utilities - Professional Utility Functions & Helpers
 
 Comprehensive utility functions, helpers, and tools for the Image Agent module
 providing common operations, validations, and data processing capabilities.
@@ -12,7 +11,6 @@ This code and concept are the exclusive intellectual property of Fahed Mlaiel.
 Any unauthorized use, copying, distribution, or commercialization without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import hashlib
 import logging
 import mimetypes
@@ -37,12 +35,10 @@ logger = logging.getLogger(__name__)
 
 
 class ImageMetrics:
-    """Image quality and analysis metrics calculator"""
-    
+    """Image quality and analysis metrics calculator"""    
     @staticmethod
     def calculate_sharpness(image: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""
-        try:
+        """Calculate image sharpness using Laplacian variance"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) if len(image.shape) == 3 else image
             laplacian_var = cv2.Laplacian(gray, cv2.CV_64F).var()
             return float(laplacian_var)
@@ -52,8 +48,7 @@ class ImageMetrics:
     
     @staticmethod
     def calculate_contrast(image: np.ndarray) -> float:
-        """Calculate image contrast using RMS contrast"""
-        try:
+        """Calculate image contrast using RMS contrast"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) if len(image.shape) == 3 else image
             return float(gray.std())
         except Exception as e:
@@ -62,8 +57,7 @@ class ImageMetrics:
     
     @staticmethod
     def calculate_brightness(image: np.ndarray) -> float:
-        """Calculate image brightness"""
-        try:
+        """Calculate image brightness"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) if len(image.shape) == 3 else image
             return float(gray.mean())
         except Exception as e:
@@ -72,8 +66,7 @@ class ImageMetrics:
     
     @staticmethod
     def calculate_color_diversity(image: np.ndarray) -> float:
-        """Calculate color diversity using histogram analysis"""
-        try:
+        """Calculate color diversity using histogram analysis"""        try:
             if len(image.shape) != 3:
                 return 0.0
             
@@ -101,8 +94,7 @@ class ImageMetrics:
     
     @staticmethod
     def detect_blur(image: np.ndarray, threshold: float = 100.0) -> bool:
-        """Detect if image is blurry using Laplacian method"""
-        try:
+        """Detect if image is blurry using Laplacian method"""        try:
             sharpness = ImageMetrics.calculate_sharpness(image)
             return sharpness < threshold
         except Exception as e:
@@ -111,8 +103,7 @@ class ImageMetrics:
     
     @staticmethod
     def calculate_noise_level(image: np.ndarray) -> float:
-        """Estimate noise level in image"""
-        try:
+        """Estimate noise level in image"""        try:
             gray = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY) if len(image.shape) == 3 else image
             
             # Use median filter to estimate noise
@@ -127,12 +118,10 @@ class ImageMetrics:
 
 
 class ImageHashGenerator:
-    """Advanced image hashing for fingerprinting and similarity detection"""
-    
+    """Advanced image hashing for fingerprinting and similarity detection"""    
     @staticmethod
     def generate_perceptual_hash(image_path: str) -> str:
-        """Generate perceptual hash using pHash algorithm"""
-        try:
+        """Generate perceptual hash using pHash algorithm"""        try:
             with Image.open(image_path) as img:
                 phash = imagehash.phash(img)
                 return str(phash)
@@ -142,8 +131,7 @@ class ImageHashGenerator:
     
     @staticmethod
     def generate_difference_hash(image_path: str) -> str:
-        """Generate difference hash (dHash)"""
-        try:
+        """Generate difference hash (dHash)"""        try:
             with Image.open(image_path) as img:
                 dhash = imagehash.dhash(img)
                 return str(dhash)
@@ -153,8 +141,7 @@ class ImageHashGenerator:
     
     @staticmethod
     def generate_average_hash(image_path: str) -> str:
-        """Generate average hash (aHash)"""
-        try:
+        """Generate average hash (aHash)"""        try:
             with Image.open(image_path) as img:
                 ahash = imagehash.average_hash(img)
                 return str(ahash)
@@ -164,8 +151,7 @@ class ImageHashGenerator:
     
     @staticmethod
     def generate_wavelet_hash(image_path: str) -> str:
-        """Generate wavelet hash"""
-        try:
+        """Generate wavelet hash"""        try:
             with Image.open(image_path) as img:
                 whash = imagehash.whash(img)
                 return str(whash)
@@ -175,8 +161,7 @@ class ImageHashGenerator:
     
     @staticmethod
     def generate_comprehensive_fingerprint(image_path: str) -> Dict[str, str]:
-        """Generate comprehensive image fingerprint with multiple hashes"""
-        return {
+        """Generate comprehensive image fingerprint with multiple hashes"""        return {
             "perceptual_hash": ImageHashGenerator.generate_perceptual_hash(image_path),
             "difference_hash": ImageHashGenerator.generate_difference_hash(image_path),
             "average_hash": ImageHashGenerator.generate_average_hash(image_path),
@@ -187,8 +172,7 @@ class ImageHashGenerator:
     
     @staticmethod
     def calculate_similarity(hash1: str, hash2: str) -> float:
-        """Calculate similarity between two hashes (0.0 = identical, 1.0 = completely different)"""
-        try:
+        """Calculate similarity between two hashes (0.0 = identical, 1.0 = completely different)"""        try:
             if not hash1 or not hash2:
                 return 1.0
             
@@ -210,8 +194,7 @@ class ImageHashGenerator:
 
 
 class FileUtils:
-    """File handling and validation utilities"""
-    
+    """File handling and validation utilities"""    
     SUPPORTED_IMAGE_FORMATS = {
         '.jpg', '.jpeg', '.png', '.webp', '.avif', '.heic', '.heif',
         '.tiff', '.tif', '.bmp', '.gif', '.svg', '.raw', '.ico'
@@ -221,8 +204,7 @@ class FileUtils:
     
     @staticmethod
     def validate_image_file(file_path: str) -> Dict[str, Any]:
-        """Comprehensive image file validation"""
-        result = {
+        """Comprehensive image file validation"""        result = {
             "valid": False,
             "errors": [],
             "warnings": [],
@@ -286,8 +268,7 @@ class FileUtils:
     
     @staticmethod
     def calculate_file_hash(file_path: str, algorithm: str = "sha256") -> str:
-        """Calculate file hash"""
-        try:
+        """Calculate file hash"""        try:
             hash_func = hashlib.new(algorithm)
             
             with open(file_path, 'rb') as f:
@@ -302,8 +283,7 @@ class FileUtils:
     
     @staticmethod
     def get_image_metadata(file_path: str) -> Dict[str, Any]:
-        """Extract comprehensive image metadata"""
-        metadata = {
+        """Extract comprehensive image metadata"""        metadata = {
             "basic_info": {},
             "exif_data": {},
             "technical_info": {},
@@ -351,8 +331,7 @@ class FileUtils:
     
     @staticmethod
     def create_secure_filename(original_filename: str) -> str:
-        """Create secure filename with UUID prefix"""
-        path = Path(original_filename)
+        """Create secure filename with UUID prefix"""        path = Path(original_filename)
         safe_name = "".join(c for c in path.stem if c.isalnum() or c in (' ', '-', '_')).strip()
         safe_name = safe_name[:50]  # Limit length
         
@@ -363,12 +342,10 @@ class FileUtils:
 
 
 class SEOUtils:
-    """SEO optimization utilities for images"""
-    
+    """SEO optimization utilities for images"""    
     @staticmethod
     def generate_alt_text(image_path: str, context: str = "") -> str:
-        """Generate SEO-optimized alt text for images"""
-        try:
+        """Generate SEO-optimized alt text for images"""        try:
             metadata = FileUtils.get_image_metadata(image_path)
             
             # Extract basic characteristics
@@ -420,8 +397,7 @@ class SEOUtils:
     
     @staticmethod
     def generate_seo_metadata(image_path: str, keywords: List[str] = None) -> Dict[str, str]:
-        """Generate comprehensive SEO metadata"""
-        try:
+        """Generate comprehensive SEO metadata"""        try:
             metadata = FileUtils.get_image_metadata(image_path)
             filename = Path(image_path).stem
             
@@ -472,15 +448,13 @@ class SEOUtils:
 
 
 class PerformanceTracker:
-    """Performance tracking and monitoring utilities"""
-    
+    """Performance tracking and monitoring utilities"""    
     def __init__(self):
         self.start_time = None
         self.metrics = {}
     
     def start_operation(self, operation_name: str):
-        """Start tracking an operation"""
-        self.start_time = time.perf_counter()
+        """Start tracking an operation"""        self.start_time = time.perf_counter()
         self.metrics[operation_name] = {
             "start_time": self.start_time,
             "operation": operation_name,
@@ -488,8 +462,7 @@ class PerformanceTracker:
         }
     
     def end_operation(self, operation_name: str, success: bool = True, details: Dict[str, Any] = None):
-        """End tracking an operation"""
-        end_time = time.perf_counter()
+        """End tracking an operation"""        end_time = time.perf_counter()
         
         if operation_name in self.metrics:
             self.metrics[operation_name].update({
@@ -500,23 +473,19 @@ class PerformanceTracker:
             })
     
     def get_metrics(self, operation_name: str = None) -> Dict[str, Any]:
-        """Get performance metrics"""
-        if operation_name:
+        """Get performance metrics"""        if operation_name:
             return self.metrics.get(operation_name, {})
         return self.metrics.copy()
     
     def clear_metrics(self):
-        """Clear all metrics"""
-        self.metrics.clear()
+        """Clear all metrics"""        self.metrics.clear()
 
 
 class BatchProcessor:
-    """Utilities for batch processing operations"""
-    
+    """Utilities for batch processing operations"""    
     @staticmethod
     def validate_batch_files(file_paths: List[str]) -> Dict[str, Any]:
-        """Validate multiple files for batch processing"""
-        results = {
+        """Validate multiple files for batch processing"""        results = {
             "valid_files": [],
             "invalid_files": [],
             "total_size": 0,
@@ -545,8 +514,7 @@ class BatchProcessor:
     
     @staticmethod
     def estimate_processing_time(file_count: int, operations: List[str]) -> Dict[str, float]:
-        """Estimate processing time for batch operations"""
-        # Base processing times (in seconds per file)
+        """Estimate processing time for batch operations"""        # Base processing times (in seconds per file)
         operation_times = {
             "analyze": 2.0,
             "enhance": 15.0,

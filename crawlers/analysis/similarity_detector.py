@@ -1,5 +1,4 @@
-"""
-Similarity Detector
+"""Similarity Detector
 ===================
 
 Advanced similarity detection system for content protection and copyright enforcement.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -48,8 +46,7 @@ from difflib import SequenceMatcher
 logger = logging.getLogger(__name__)
 
 class MatchingStrategy(Enum):
-    """Similarity matching strategy."""
-    EXACT_MATCH = "exact_match"
+    """Similarity matching strategy."""    EXACT_MATCH = "exact_match"
     SEMANTIC_SIMILARITY = "semantic_similarity"
     PERCEPTUAL_HASH = "perceptual_hash"
     FINGERPRINT_MATCH = "fingerprint_match"
@@ -57,8 +54,7 @@ class MatchingStrategy(Enum):
     DEEP_LEARNING = "deep_learning"
 
 class SimilarityMetric(Enum):
-    """Similarity measurement metrics."""
-    COSINE = "cosine"
+    """Similarity measurement metrics."""    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     JACCARD = "jaccard"
@@ -66,8 +62,7 @@ class SimilarityMetric(Enum):
     PEARSON = "pearson"
 
 class ContentDomain(Enum):
-    """Content domain for specialized processing."""
-    TEXT = "text"
+    """Content domain for specialized processing."""    TEXT = "text"
     IMAGE = "image"
     AUDIO = "audio"
     VIDEO = "video"
@@ -75,8 +70,7 @@ class ContentDomain(Enum):
 
 @dataclass
 class SimilarityScore:
-    """Similarity score with detailed breakdown."""
-    overall_score: float
+    """Similarity score with detailed breakdown."""    overall_score: float
     confidence: float
     strategy_used: MatchingStrategy
     metric_used: SimilarityMetric
@@ -88,8 +82,7 @@ class SimilarityScore:
 
 @dataclass
 class MatchResult:
-    """Complete similarity match result."""
-    query_id: str
+    """Complete similarity match result."""    query_id: str
     match_id: str
     similarity_score: SimilarityScore
     match_type: str
@@ -100,8 +93,7 @@ class MatchResult:
     created_at: datetime = field(default_factory=datetime.now)
 
 class SimilarityDetector:
-    """
-    Advanced similarity detection system with multi-modal capabilities.
+    """    Advanced similarity detection system with multi-modal capabilities.
     
     Features:
     - Multi-strategy similarity detection
@@ -110,8 +102,7 @@ class SimilarityDetector:
     - False positive reduction
     - Confidence scoring and uncertainty quantification
     - Performance optimization for large-scale content libraries
-    """
-    
+    """    
     def __init__(
         self,
         vector_db_path: str = "/tmp/similarity_vectors",
@@ -120,8 +111,7 @@ class SimilarityDetector:
         max_results: int = 100,
         cache_size: int = 10000
     ):
-        """
-        Initialize similarity detector.
+        """        Initialize similarity detector.
         
         Args:
             vector_db_path: Path for storing vector database
@@ -129,8 +119,7 @@ class SimilarityDetector:
             enable_gpu: Enable GPU acceleration for vector operations
             max_results: Maximum number of results to return
             cache_size: Size of similarity cache
-        """
-        self.vector_db_path = Path(vector_db_path)
+        """        self.vector_db_path = Path(vector_db_path)
         self.vector_db_path.mkdir(parents=True, exist_ok=True)
         
         self.default_threshold = default_threshold
@@ -163,8 +152,7 @@ class SimilarityDetector:
         logger.info(f"SimilarityDetector initialized with GPU: {self.enable_gpu}")
     
     def _initialize_models(self) -> None:
-        """Initialize similarity detection models."""
-        try:
+        """Initialize similarity detection models."""        try:
             # Text vectorizer
             self.text_vectorizer = TfidfVectorizer(
                 max_features=10000,
@@ -184,8 +172,7 @@ class SimilarityDetector:
             raise
     
     def _initialize_vector_indices(self) -> None:
-        """Initialize FAISS vector indices for different content types."""
-        # Text index (768-dimensional for sentence transformers)
+        """Initialize FAISS vector indices for different content types."""        # Text index (768-dimensional for sentence transformers)
         self.text_index = faiss.IndexFlatIP(768)
         if self.enable_gpu:
             self.text_index = faiss.index_cpu_to_gpu(faiss.StandardGpuResources(), 0, self.text_index)
@@ -209,8 +196,7 @@ class SimilarityDetector:
         threshold: Optional[float] = None,
         domain: Optional[ContentDomain] = None
     ) -> List[MatchResult]:
-        """
-        Detect similarity between query content and database.
+        """        Detect similarity between query content and database.
         
         Args:
             query_content: Content to search for
@@ -221,8 +207,7 @@ class SimilarityDetector:
             
         Returns:
             List[MatchResult]: Sorted list of similarity matches
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         threshold = threshold or self.default_threshold
         
         try:
@@ -253,8 +238,7 @@ class SimilarityDetector:
             return []
     
     def _determine_content_domain(self, content: Dict[str, Any]) -> ContentDomain:
-        """Determine the content domain based on available features."""
-        has_text = bool(content.get('text') or content.get('text_features'))
+        """Determine the content domain based on available features."""        has_text = bool(content.get('text') or content.get('text_features'))
         has_image = bool(content.get('image') or content.get('image_features'))
         has_audio = bool(content.get('audio') or content.get('audio_features'))
         has_video = bool(content.get('video') or content.get('video_features'))
@@ -277,8 +261,7 @@ class SimilarityDetector:
         content: Dict[str, Any],
         domain: ContentDomain
     ) -> Dict[str, Any]:
-        """Extract features for similarity comparison."""
-        features = {}
+        """Extract features for similarity comparison."""        features = {}
         
         if domain == ContentDomain.TEXT or domain == ContentDomain.MULTIMODAL:
             features['text'] = await self._extract_text_similarity_features(content)
@@ -295,8 +278,7 @@ class SimilarityDetector:
         return features
     
     async def _extract_text_similarity_features(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract text-specific similarity features."""
-        text_data = content.get('text', '')
+        """Extract text-specific similarity features."""        text_data = content.get('text', '')
         
         if not text_data and 'text_features' in content:
             return content['text_features']
@@ -316,8 +298,7 @@ class SimilarityDetector:
         return features
     
     async def _extract_image_similarity_features(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract image-specific similarity features."""
-        if 'image_features' in content:
+        """Extract image-specific similarity features."""        if 'image_features' in content:
             return content['image_features']
         
         image_path = content.get('image')
@@ -359,8 +340,7 @@ class SimilarityDetector:
             return {}
     
     async def _extract_audio_similarity_features(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract audio-specific similarity features."""
-        if 'audio_features' in content:
+        """Extract audio-specific similarity features."""        if 'audio_features' in content:
             return content['audio_features']
         
         audio_path = content.get('audio')
@@ -395,8 +375,7 @@ class SimilarityDetector:
             return {}
     
     async def _extract_video_similarity_features(self, content: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract video-specific similarity features."""
-        if 'video_features' in content:
+        """Extract video-specific similarity features."""        if 'video_features' in content:
             return content['video_features']
         
         video_path = content.get('video')
@@ -454,8 +433,7 @@ class SimilarityDetector:
         domain: ContentDomain,
         threshold: float
     ) -> List[MatchResult]:
-        """Search for similar content using specified strategy."""
-        matches = []
+        """Search for similar content using specified strategy."""        matches = []
         
         for content_item in content_database:
             content_id = content_item.get('id', str(hash(str(content_item))))
@@ -502,8 +480,7 @@ class SimilarityDetector:
         strategy: MatchingStrategy,
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate similarity score between two feature sets."""
-        start_time = datetime.now()
+        """Calculate similarity score between two feature sets."""        start_time = datetime.now()
         
         if strategy == MatchingStrategy.EXACT_MATCH:
             score = await self._exact_match_similarity(features1, features2, domain)
@@ -527,8 +504,7 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate exact match similarity."""
-        similarities = []
+        """Calculate exact match similarity."""        similarities = []
         breakdown = {}
         
         if domain == ContentDomain.TEXT:
@@ -572,8 +548,7 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate semantic similarity using embeddings."""
-        similarities = []
+        """Calculate semantic similarity using embeddings."""        similarities = []
         breakdown = {}
         
         if domain == ContentDomain.TEXT:
@@ -616,8 +591,7 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate perceptual hash similarity."""
-        similarities = []
+        """Calculate perceptual hash similarity."""        similarities = []
         breakdown = {}
         
         if domain == ContentDomain.IMAGE:
@@ -653,8 +627,7 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate fingerprint-based similarity."""
-        similarities = []
+        """Calculate fingerprint-based similarity."""        similarities = []
         breakdown = {}
         
         if domain == ContentDomain.AUDIO:
@@ -698,8 +671,7 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate deep learning-based similarity."""
-        # Placeholder for advanced deep learning similarity
+        """Calculate deep learning-based similarity."""        # Placeholder for advanced deep learning similarity
         # In production, this would use trained neural networks
         return await self._semantic_similarity(features1, features2, domain)
     
@@ -709,8 +681,7 @@ class SimilarityDetector:
         features2: Dict[str, Any],
         domain: ContentDomain
     ) -> SimilarityScore:
-        """Calculate hybrid similarity combining multiple strategies."""
-        strategies = [
+        """Calculate hybrid similarity combining multiple strategies."""        strategies = [
             MatchingStrategy.EXACT_MATCH,
             MatchingStrategy.SEMANTIC_SIMILARITY,
             MatchingStrategy.PERCEPTUAL_HASH,
@@ -757,8 +728,7 @@ class SimilarityDetector:
         )
     
     def _determine_match_type(self, similarity_score: float) -> str:
-        """Determine match type based on similarity score."""
-        if similarity_score >= 0.95:
+        """Determine match type based on similarity score."""        if similarity_score >= 0.95:
             return "exact_match"
         elif similarity_score >= 0.85:
             return "near_duplicate"
@@ -773,8 +743,7 @@ class SimilarityDetector:
         match_content: Dict[str, Any],
         similarity_score: SimilarityScore
     ) -> List[Dict[str, Any]]:
-        """Generate evidence for similarity match."""
-        evidence = []
+        """Generate evidence for similarity match."""        evidence = []
         
         for feature_type, score in similarity_score.breakdown.items():
             if score > 0.7:
@@ -792,8 +761,7 @@ class SimilarityDetector:
         return evidence
     
     def _estimate_false_positive_probability(self, similarity_score: SimilarityScore) -> float:
-        """Estimate probability of false positive based on similarity characteristics."""
-        # Higher confidence and specific features reduce false positive probability
+        """Estimate probability of false positive based on similarity characteristics."""        # Higher confidence and specific features reduce false positive probability
         fp_probability = 1.0 - similarity_score.confidence
         
         # Adjust based on strategy used
@@ -815,8 +783,7 @@ class SimilarityDetector:
         matches: List[MatchResult],
         threshold: float
     ) -> List[MatchResult]:
-        """Rank and filter matches based on comprehensive scoring."""
-        # Sort by similarity score and confidence
+        """Rank and filter matches based on comprehensive scoring."""        # Sort by similarity score and confidence
         ranked_matches = sorted(
             matches,
             key=lambda m: (m.similarity_score.overall_score, m.similarity_score.confidence),
@@ -841,26 +808,22 @@ class SimilarityDetector:
         return filtered_matches
     
     def _normalize_text(self, text: str) -> str:
-        """Normalize text for comparison."""
-        # Remove extra whitespace, convert to lowercase, remove special characters
+        """Normalize text for comparison."""        # Remove extra whitespace, convert to lowercase, remove special characters
         import re
         normalized = re.sub(r'\s+', ' ', text.lower().strip())
         normalized = re.sub(r'[^\w\s]', '', normalized)
         return normalized
     
     def _extract_character_ngrams(self, text: str, n: int = 3) -> List[str]:
-        """Extract character n-grams from text."""
-        normalized_text = self._normalize_text(text)
+        """Extract character n-grams from text."""        normalized_text = self._normalize_text(text)
         return [normalized_text[i:i+n] for i in range(len(normalized_text)-n+1)]
     
     def _extract_word_ngrams(self, text: str, n: int = 2) -> List[str]:
-        """Extract word n-grams from text."""
-        words = self._normalize_text(text).split()
+        """Extract word n-grams from text."""        words = self._normalize_text(text).split()
         return [' '.join(words[i:i+n]) for i in range(len(words)-n+1)]
     
     def _extract_readability_features(self, text: str) -> Dict[str, float]:
-        """Extract readability features from text."""
-        words = text.split()
+        """Extract readability features from text."""        words = text.split()
         sentences = [s for s in text.split('.') if s.strip()]
         
         return {
@@ -872,8 +835,7 @@ class SimilarityDetector:
         }
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics for the similarity detector."""
-        cache_hit_rate = self.cache_hits / max(1, self.cache_hits + self.cache_misses)
+        """Get performance metrics for the similarity detector."""        cache_hit_rate = self.cache_hits / max(1, self.cache_hits + self.cache_misses)
         avg_search_time = np.mean(self.search_times) if self.search_times else 0
         
         return {
@@ -895,8 +857,7 @@ class SimilarityDetector:
         content_features: Dict[str, Any],
         domain: ContentDomain
     ) -> None:
-        """Add content to the similarity index for future searches."""
-        try:
+        """Add content to the similarity index for future searches."""        try:
             if domain == ContentDomain.TEXT and 'text' in content_features:
                 embeddings = content_features['text'].get('embeddings')
                 if embeddings:
@@ -917,8 +878,7 @@ class SimilarityDetector:
             logger.error(f"Failed to add content to index: {e}")
     
     async def cleanup(self) -> None:
-        """Cleanup resources and clear caches."""
-        self.similarity_cache.clear()
+        """Cleanup resources and clear caches."""        self.similarity_cache.clear()
         self.content_mappings.clear()
         self.vector_mappings.clear()
         self.search_times.clear()

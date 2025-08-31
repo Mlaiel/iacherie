@@ -1,5 +1,4 @@
-"""
-Twitter/X Crawling Engine
+"""Twitter/X Crawling Engine
 ========================
 
 Advanced Twitter/X crawler for social media monitoring, tweet analysis, and trend tracking.
@@ -13,7 +12,6 @@ Ce code est la propriété exclusive de Fahed Mlaiel (mlaiel@live.de).
 Toute utilisation, reproduction, ou distribution sans autorisation écrite explicite est strictement interdite.
 Les contrevenants seront poursuivis selon la loi allemande et internationale.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, AsyncGenerator, Set
@@ -58,8 +56,7 @@ settings = get_settings()
 
 @dataclass
 class TwitterTweetData:
-    """Twitter tweet data structure"""
-    tweet_id: str
+    """Twitter tweet data structure"""    tweet_id: str
     url: str
     text: str
     created_at: datetime
@@ -96,8 +93,7 @@ class TwitterTweetData:
 
 @dataclass
 class TwitterUserData:
-    """Twitter user data structure"""
-    user_id: str
+    """Twitter user data structure"""    user_id: str
     username: str
     name: str
     description: str
@@ -124,8 +120,7 @@ class TwitterUserData:
 
 @dataclass
 class TwitterThreadData:
-    """Twitter thread data structure"""
-    thread_id: str
+    """Twitter thread data structure"""    thread_id: str
     author_id: str
     author_username: str
     tweets: List[TwitterTweetData]
@@ -139,8 +134,7 @@ class TwitterThreadData:
 
 
 class TwitterCrawlerEngine(BaseCrawlerEngine):
-    """
-    Advanced Twitter/X crawler engine with comprehensive data extraction.
+    """    Advanced Twitter/X crawler engine with comprehensive data extraction.
     
     Features:
     - Twitter API v2 integration
@@ -150,11 +144,9 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
     - Sentiment analysis integration
     - Bot detection algorithms
     - Rate limiting and error handling
-    """
-    
+    """    
     def __init__(self, api_credentials: Dict, config: Optional[Dict] = None):
-        """Initialize Twitter crawler engine"""
-        super().__init__(config)
+        """Initialize Twitter crawler engine"""        super().__init__(config)
         self.api_credentials = api_credentials
         self.client = None
         self.session = None
@@ -173,8 +165,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
         self._setup_selenium_driver()
     
     def _setup_twitter_client(self) -> None:
-        """Setup Twitter API v2 client"""
-        try:
+        """Setup Twitter API v2 client"""        try:
             self.client = tweepy.Client(
                 bearer_token=self.api_credentials.get('bearer_token'),
                 consumer_key=self.api_credentials.get('api_key'),
@@ -196,8 +187,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             raise AuthenticationError(f"Twitter API setup failed: {e}")
     
     def _setup_session(self) -> None:
-        """Setup HTTP session for web scraping"""
-        self.session = requests.Session()
+        """Setup HTTP session for web scraping"""        self.session = requests.Session()
         self.session.headers.update({
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
             'Accept': 'application/json, text/plain, */*',
@@ -209,8 +199,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
         logger.info("Twitter HTTP session initialized")
     
     def _setup_selenium_driver(self) -> None:
-        """Setup Selenium WebDriver for advanced scraping"""
-        try:
+        """Setup Selenium WebDriver for advanced scraping"""        try:
             chrome_options = webdriver.ChromeOptions()
             chrome_options.add_argument('--headless')
             chrome_options.add_argument('--no-sandbox')
@@ -230,16 +219,14 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             self.driver = None
     
     async def get_user_profile(self, username: str) -> Optional[TwitterUserData]:
-        """
-        Get comprehensive user profile data
+        """        Get comprehensive user profile data
         
         Args:
             username: Twitter username (with or without @)
             
         Returns:
             User profile data or None if not found
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         username = username.lstrip('@')  # Remove @ if present
         cache_key = f"user_{username.lower()}"
@@ -284,8 +271,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
         max_tweets: int = 100,
         include_retweets: bool = False
     ) -> List[TwitterTweetData]:
-        """
-        Get recent tweets from a user
+        """        Get recent tweets from a user
         
         Args:
             username: Twitter username
@@ -294,8 +280,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of tweet data
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         username = username.lstrip('@')
         
@@ -341,8 +326,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
         max_tweets: int = 100,
         result_type: str = 'recent'
     ) -> List[TwitterTweetData]:
-        """
-        Search for tweets using Twitter API
+        """        Search for tweets using Twitter API
         
         Args:
             query: Search query
@@ -351,8 +335,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of matching tweets
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             tweets_response = self.client.search_recent_tweets(
@@ -382,16 +365,14 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             raise CrawlerError(f"Tweet search failed: {e}")
     
     async def get_trending_topics(self, location_id: int = 1) -> List[Dict]:
-        """
-        Get trending topics for a specific location
+        """        Get trending topics for a specific location
         
         Args:
             location_id: WOEID (Where On Earth ID) for location (1 = worldwide)
             
         Returns:
             List of trending topics
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             # Note: This requires Twitter API v1.1 which may need different setup
@@ -404,16 +385,14 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return []
     
     async def detect_thread(self, tweet_id: str) -> Optional[TwitterThreadData]:
-        """
-        Detect and extract a Twitter thread starting from a tweet
+        """        Detect and extract a Twitter thread starting from a tweet
         
         Args:
             tweet_id: ID of the first tweet in the thread
             
         Returns:
             Thread data if thread detected, None otherwise
-        """
-        await self.rate_limiter.wait()
+        """        await self.rate_limiter.wait()
         
         try:
             # Get the initial tweet
@@ -492,8 +471,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return None
     
     async def monitor_hashtag(self, hashtag: str, duration_hours: int = 24) -> AsyncGenerator[TwitterTweetData, None]:
-        """
-        Monitor a hashtag for new tweets in real-time
+        """        Monitor a hashtag for new tweets in real-time
         
         Args:
             hashtag: Hashtag to monitor (with or without #)
@@ -501,8 +479,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             
         Yields:
             New tweets containing the hashtag
-        """
-        hashtag = hashtag.lstrip('#')
+        """        hashtag = hashtag.lstrip('#')
         query = f"#{hashtag} -is:retweet"
         
         end_time = datetime.now() + timedelta(hours=duration_hours)
@@ -544,8 +521,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
         original_tweet: Dict, 
         search_keywords: List[str]
     ) -> List[Dict]:
-        """
-        Detect potential content theft or plagiarism
+        """        Detect potential content theft or plagiarism
         
         Args:
             original_tweet: Original tweet metadata
@@ -553,8 +529,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             
         Returns:
             List of potential theft matches
-        """
-        theft_candidates = []
+        """        theft_candidates = []
         
         for keyword in search_keywords:
             try:
@@ -585,8 +560,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
         return theft_candidates
     
     async def _parse_user_data(self, user) -> TwitterUserData:
-        """Parse Twitter API user data into structured format"""
-        try:
+        """Parse Twitter API user data into structured format"""        try:
             # Extract hashtags, mentions, and URLs from bio
             bio_text = user.description or ""
             bio_hashtags = re.findall(r'#(\w+)', bio_text)
@@ -637,8 +611,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             raise
     
     async def _parse_tweet_data(self, tweet) -> TwitterTweetData:
-        """Parse Twitter API tweet data into structured format"""
-        try:
+        """Parse Twitter API tweet data into structured format"""        try:
             # Extract hashtags, mentions, and URLs
             hashtags = []
             mentions = []
@@ -712,8 +685,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             raise
     
     async def _calculate_user_engagement_rate(self, user) -> float:
-        """Calculate user's average engagement rate"""
-        try:
+        """Calculate user's average engagement rate"""        try:
             if not user.public_metrics:
                 return 0.0
             
@@ -729,8 +701,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _calculate_influence_score(self, user) -> float:
-        """Calculate user's influence score"""
-        try:
+        """Calculate user's influence score"""        try:
             if not user.public_metrics:
                 return 0.0
             
@@ -752,8 +723,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _calculate_bot_probability(self, user) -> float:
-        """Calculate probability that user is a bot"""
-        try:
+        """Calculate probability that user is a bot"""        try:
             bot_score = 0.0
             
             # Check various bot indicators
@@ -794,8 +764,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _calculate_tweet_similarity(self, original: Dict, candidate: Dict) -> float:
-        """Calculate similarity between original and candidate tweets"""
-        try:
+        """Calculate similarity between original and candidate tweets"""        try:
             # Text similarity
             original_text = original.get('text', '').lower()
             candidate_text = candidate.get('text', '').lower()
@@ -840,8 +809,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return 0.0
     
     async def _classify_theft_type(self, original: Dict, candidate: TwitterTweetData) -> str:
-        """Classify the type of potential content theft"""
-        try:
+        """Classify the type of potential content theft"""        try:
             # Exact copy
             if original.get('text', '').strip() == candidate.text.strip():
                 return "exact_copy"
@@ -867,8 +835,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             return "unknown"
     
     async def cleanup(self) -> None:
-        """Cleanup resources"""
-        try:
+        """Cleanup resources"""        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:
@@ -879,8 +846,7 @@ class TwitterCrawlerEngine(BaseCrawlerEngine):
             logger.error(f"Error during cleanup: {e}")
     
     def __del__(self):
-        """Destructor to ensure cleanup"""
-        try:
+        """Destructor to ensure cleanup"""        try:
             if hasattr(self, 'driver') and self.driver:
                 self.driver.quit()
             if hasattr(self, 'session') and self.session:

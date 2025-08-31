@@ -1,5 +1,4 @@
-"""
-File Processor - Advanced Multi-Format File Processing Engine
+"""File Processor - Advanced Multi-Format File Processing Engine
 
 Enterprise-grade file processing system supporting audio, video, image, and document
 processing with intelligent format conversion, compression, and quality optimization.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer: Fahed Mlaiel
 - AI Prompt Engineer & Content Protection Specialist: Fahed Mlaiel
 """
-
 import asyncio
 import logging
 import subprocess
@@ -72,8 +70,7 @@ from ...utils.compression_utils import CompressionManager
 logger = logging.getLogger(__name__)
 
 class ProcessingType(str, Enum):
-    """File processing types"""
-    AUDIO_CONVERSION = "audio_conversion"
+    """File processing types"""    AUDIO_CONVERSION = "audio_conversion"
     VIDEO_CONVERSION = "video_conversion"
     IMAGE_OPTIMIZATION = "image_optimization"
     DOCUMENT_EXTRACTION = "document_extraction"
@@ -81,8 +78,7 @@ class ProcessingType(str, Enum):
     FORMAT_VALIDATION = "format_validation"
 
 class AudioFormat(str, Enum):
-    """Supported audio formats"""
-    MP3 = "mp3"
+    """Supported audio formats"""    MP3 = "mp3"
     WAV = "wav"
     FLAC = "flac"
     AAC = "aac"
@@ -91,8 +87,7 @@ class AudioFormat(str, Enum):
     WMA = "wma"
 
 class VideoFormat(str, Enum):
-    """Supported video formats"""
-    MP4 = "mp4"
+    """Supported video formats"""    MP4 = "mp4"
     AVI = "avi"
     MOV = "mov"
     MKV = "mkv"
@@ -101,8 +96,7 @@ class VideoFormat(str, Enum):
     WMV = "wmv"
 
 class ImageFormat(str, Enum):
-    """Supported image formats"""
-    JPEG = "jpeg"
+    """Supported image formats"""    JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
     AVIF = "avif"
@@ -113,8 +107,7 @@ class ImageFormat(str, Enum):
 
 @dataclass
 class ProcessingOptions:
-    """File processing configuration options"""
-    compression_level: int = 5  # 1-9, higher = more compression
+    """File processing configuration options"""    compression_level: int = 5  # 1-9, higher = more compression
     quality: int = 85  # 1-100, higher = better quality
     format_conversion: bool = True
     progressive_enhancement: bool = True
@@ -127,8 +120,7 @@ class ProcessingOptions:
 
 @dataclass
 class ProcessingResult:
-    """File processing result"""
-    success: bool
+    """File processing result"""    success: bool
     input_path: str
     output_path: str
     processing_type: ProcessingType
@@ -142,11 +134,9 @@ class ProcessingResult:
     error: Optional[str] = None
 
 class FileProcessor:
-    """
-    Enterprise file processing engine with support for audio, video, image,
+    """    Enterprise file processing engine with support for audio, video, image,
     and document processing with intelligent format conversion and optimization.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or self._load_default_config()
         
@@ -201,8 +191,7 @@ class FileProcessor:
         logger.info("FileProcessor initialized successfully")
     
     def _load_default_config(self) -> Dict[str, Any]:
-        """Load default processing configuration"""
-        return {
+        """Load default processing configuration"""        return {
             'temp_dir': '/tmp/file_processing',
             'max_workers': 4,
             'chunk_size': 64 * 1024,
@@ -226,8 +215,7 @@ class FileProcessor:
         file_category: str,
         options: ProcessingOptions
     ) -> ProcessingResult:
-        """
-        Process file with intelligent format detection and optimization
+        """        Process file with intelligent format detection and optimization
         
         Args:
             input_path: Path to input file
@@ -236,8 +224,7 @@ class FileProcessor:
             
         Returns:
             ProcessingResult with processing details
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         input_path = Path(input_path)
         
         try:
@@ -327,8 +314,7 @@ class FileProcessor:
         options: ProcessingOptions,
         max_workers: Optional[int] = None
     ) -> List[ProcessingResult]:
-        """
-        Process multiple files concurrently
+        """        Process multiple files concurrently
         
         Args:
             file_paths: List of file paths
@@ -338,8 +324,7 @@ class FileProcessor:
             
         Returns:
             List of processing results
-        """
-        max_workers = max_workers or self.config.get('max_workers', 4)
+        """        max_workers = max_workers or self.config.get('max_workers', 4)
         
         if len(file_paths) != len(file_categories):
             raise ValueError("file_paths and file_categories must have same length")
@@ -385,16 +370,14 @@ class FileProcessor:
         return final_results
     
     async def get_file_info(self, file_path: Union[str, Path]) -> Dict[str, Any]:
-        """
-        Get comprehensive file information and metadata
+        """        Get comprehensive file information and metadata
         
         Args:
             file_path: Path to file
             
         Returns:
             Dictionary with file information
-        """
-        try:
+        """        try:
             file_path = Path(file_path)
             
             if not file_path.exists():
@@ -439,8 +422,7 @@ class FileProcessor:
         output_path: Path,
         options: ProcessingOptions
     ) -> ProcessingResult:
-        """Process audio file with format conversion and optimization"""
-        try:
+        """Process audio file with format conversion and optimization"""        try:
             # Load audio file
             audio_data, sample_rate = librosa.load(str(input_path), sr=options.sample_rate)
             
@@ -505,8 +487,7 @@ class FileProcessor:
         output_path: Path,
         options: ProcessingOptions
     ) -> ProcessingResult:
-        """Process video file with format conversion and optimization"""
-        try:
+        """Process video file with format conversion and optimization"""        try:
             # Determine target format
             target_format = self._get_best_video_format(input_path.suffix, options)
             output_path = output_path.with_suffix(f'.{target_format}')
@@ -568,8 +549,7 @@ class FileProcessor:
         output_path: Path,
         options: ProcessingOptions
     ) -> ProcessingResult:
-        """Process image with optimization and format conversion"""
-        try:
+        """Process image with optimization and format conversion"""        try:
             # Open image
             with Image.open(input_path) as img:
                 # Convert to RGB if necessary
@@ -642,8 +622,7 @@ class FileProcessor:
         output_path: Path,
         options: ProcessingOptions
     ) -> ProcessingResult:
-        """Process document with text extraction and optimization"""
-        try:
+        """Process document with text extraction and optimization"""        try:
             # Extract text content based on format
             text_content = ""
             original_format = input_path.suffix.lower()
@@ -704,8 +683,7 @@ class FileProcessor:
         output_path: Path,
         options: ProcessingOptions
     ) -> ProcessingResult:
-        """Generic file processing (compression only)"""
-        try:
+        """Generic file processing (compression only)"""        try:
             if options.compression_level > 0:
                 # Compress file
                 await self.compression_manager.compress_file(
@@ -738,8 +716,7 @@ class FileProcessor:
     # Metadata extraction methods
     
     async def _get_audio_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract audio metadata"""
-        try:
+        """Extract audio metadata"""        try:
             y, sr = librosa.load(str(file_path), sr=None)
             duration = librosa.get_duration(y=y, sr=sr)
             
@@ -761,8 +738,7 @@ class FileProcessor:
             return {}
     
     async def _get_video_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract video metadata"""
-        try:
+        """Extract video metadata"""        try:
             # Use OpenCV for basic info
             cap = cv2.VideoCapture(str(file_path))
             
@@ -792,8 +768,7 @@ class FileProcessor:
             return {}
     
     async def _get_image_metadata(self, file_path: Path) -> Dict[str, Any]:
-        """Extract image metadata"""
-        try:
+        """Extract image metadata"""        try:
             with Image.open(file_path) as img:
                 return {
                     'width': img.width,
@@ -812,12 +787,10 @@ class FileProcessor:
     # Utility methods
     
     def _detect_file_format(self, file_path: Path) -> str:
-        """Detect file format from path and content"""
-        return file_path.suffix[1:].lower() if file_path.suffix else ""
+        """Detect file format from path and content"""        return file_path.suffix[1:].lower() if file_path.suffix else ""
     
     def _determine_file_category(self, mime_type: Optional[str]) -> str:
-        """Determine file category from MIME type"""
-        if not mime_type:
+        """Determine file category from MIME type"""        if not mime_type:
             return "unknown"
         
         if mime_type.startswith('audio/'):
@@ -832,8 +805,7 @@ class FileProcessor:
             return "unknown"
     
     def _determine_processing_type(self, file_category: str, options: ProcessingOptions) -> ProcessingType:
-        """Determine processing type based on category and options"""
-        if file_category == "audio":
+        """Determine processing type based on category and options"""        if file_category == "audio":
             return ProcessingType.AUDIO_CONVERSION
         elif file_category == "video":
             return ProcessingType.VIDEO_CONVERSION
@@ -845,8 +817,7 @@ class FileProcessor:
             return ProcessingType.COMPRESSION
     
     def _get_best_audio_format(self, current_extension: str, options: ProcessingOptions) -> str:
-        """Get best audio format for optimization"""
-        priorities = self.config['format_priorities']['audio']
+        """Get best audio format for optimization"""        priorities = self.config['format_priorities']['audio']
         
         # If current format is already optimal, keep it
         current_format = current_extension[1:].lower()
@@ -857,8 +828,7 @@ class FileProcessor:
         return priorities[0].value
     
     def _get_best_video_format(self, current_extension: str, options: ProcessingOptions) -> str:
-        """Get best video format for optimization"""
-        priorities = self.config['format_priorities']['video']
+        """Get best video format for optimization"""        priorities = self.config['format_priorities']['video']
         
         current_format = current_extension[1:].lower()
         if current_format in [f.value for f in priorities[:2]]:
@@ -867,8 +837,7 @@ class FileProcessor:
         return priorities[0].value
     
     def _get_best_image_format(self, current_extension: str, options: ProcessingOptions) -> str:
-        """Get best image format for optimization"""
-        priorities = self.config['format_priorities']['image']
+        """Get best image format for optimization"""        priorities = self.config['format_priorities']['image']
         
         current_format = current_extension[1:].lower()
         
@@ -888,8 +857,7 @@ class FileProcessor:
         file_category: str,
         options: ProcessingOptions
     ) -> Path:
-        """Generate output path for processed file"""
-        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        """Generate output path for processed file"""        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         
         output_name = f"{input_path.stem}_processed_{timestamp}"
         
@@ -899,8 +867,7 @@ class FileProcessor:
         return output_path
     
     async def _extract_metadata(self, file_path: str, category: str) -> Dict[str, Any]:
-        """Extract comprehensive file metadata"""
-        try:
+        """Extract comprehensive file metadata"""        try:
             path = Path(file_path)
             
             if not path.exists():
@@ -925,8 +892,7 @@ class FileProcessor:
             return {}
     
     async def _calculate_checksum(self, file_path: Path) -> str:
-        """Calculate SHA256 checksum of file"""
-        hash_sha256 = hashlib.sha256()
+        """Calculate SHA256 checksum of file"""        hash_sha256 = hashlib.sha256()
         
         with open(file_path, 'rb') as f:
             for chunk in iter(lambda: f.read(4096), b""):
@@ -935,8 +901,7 @@ class FileProcessor:
         return hash_sha256.hexdigest()
     
     async def _update_statistics(self, result: ProcessingResult, processing_type: ProcessingType):
-        """Update processing statistics"""
-        self.stats['total_files_processed'] += 1
+        """Update processing statistics"""        self.stats['total_files_processed'] += 1
         self.stats['processing_by_type'][processing_type] += 1
         
         if result.success:
@@ -960,8 +925,7 @@ class FileProcessor:
             self.stats['failed_processing'] += 1
     
     async def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive processing statistics"""
-        return {
+        """Get comprehensive processing statistics"""        return {
             'statistics': self.stats.copy(),
             'supported_formats': {
                 'audio': [f.value for f in AudioFormat],
@@ -972,8 +936,7 @@ class FileProcessor:
         }
     
     async def cleanup(self):
-        """Cleanup processor resources"""
-        try:
+        """Cleanup processor resources"""        try:
             # Clean temporary files older than 1 hour
             cutoff_time = datetime.utcnow() - timedelta(hours=1)
             

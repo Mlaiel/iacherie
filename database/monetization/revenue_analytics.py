@@ -1,5 +1,4 @@
-"""
-Revenue Analytics - Advanced Revenue Analysis and Business Intelligence
+"""Revenue Analytics - Advanced Revenue Analysis and Business Intelligence
 
 Enterprise-grade revenue analytics system with AI-powered insights, predictive analytics,
 and comprehensive performance monitoring for content creators.
@@ -26,7 +25,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer & Automation Specialist
 """
-
 from sqlalchemy import (
     Column, String, Text, DateTime, Float, Integer, Boolean, JSON, 
     ForeignKey, Index, Enum as SQLEnum, Numeric, func, and_, or_
@@ -47,8 +45,7 @@ Base = declarative_base()
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics calculation timeframes"""
-    REAL_TIME = "real_time"
+    """Analytics calculation timeframes"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -59,8 +56,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Revenue metric types for analytics"""
-    GROSS_REVENUE = "gross_revenue"
+    """Revenue metric types for analytics"""    GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     PLATFORM_FEES = "platform_fees"
     TAX_DEDUCTIONS = "tax_deductions"
@@ -83,8 +79,7 @@ class MetricType(Enum):
 
 
 class AnalyticsStatus(Enum):
-    """Analytics calculation status"""
-    PENDING = "pending"
+    """Analytics calculation status"""    PENDING = "pending"
     CALCULATING = "calculating"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -94,8 +89,7 @@ class AnalyticsStatus(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Data class for revenue metrics"""
-    gross_revenue: Decimal
+    """Data class for revenue metrics"""    gross_revenue: Decimal
     net_revenue: Decimal
     total_transactions: int
     average_transaction: Decimal
@@ -109,8 +103,7 @@ class RevenueMetrics:
 
 @dataclass
 class PlatformPerformance:
-    """Platform-specific performance metrics"""
-    platform: str
+    """Platform-specific performance metrics"""    platform: str
     total_revenue: Decimal
     transaction_count: int
     average_revenue_per_transaction: Decimal
@@ -122,8 +115,7 @@ class PlatformPerformance:
 
 @dataclass
 class ContentPerformance:
-    """Content-specific performance metrics"""
-    content_id: str
+    """Content-specific performance metrics"""    content_id: str
     content_title: str
     total_revenue: Decimal
     platforms: List[str]
@@ -134,13 +126,11 @@ class ContentPerformance:
 
 
 class RevenueAnalytics(Base):
-    """
-    Revenue Analytics Model
+    """    Revenue Analytics Model
     
     Stores calculated analytics and metrics for revenue performance,
     trends analysis, and business intelligence reporting.
-    """
-    __tablename__ = "revenue_analytics"
+    """    __tablename__ = "revenue_analytics"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -212,13 +202,11 @@ class RevenueAnalytics(Base):
 
 
 class RevenueSnapshot(Base):
-    """
-    Revenue Snapshot Model
+    """    Revenue Snapshot Model
     
     Point-in-time snapshots of revenue data for historical tracking
     and trend analysis across different time periods.
-    """
-    __tablename__ = "revenue_snapshots"
+    """    __tablename__ = "revenue_snapshots"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -292,13 +280,11 @@ class RevenueSnapshot(Base):
 
 
 class PlatformAnalytics(Base):
-    """
-    Platform-Specific Analytics Model
+    """    Platform-Specific Analytics Model
     
     Detailed analytics for performance on individual platforms,
     including engagement metrics, audience insights, and optimization recommendations.
-    """
-    __tablename__ = "platform_analytics"
+    """    __tablename__ = "platform_analytics"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -378,13 +364,11 @@ class PlatformAnalytics(Base):
 
 
 class PerformanceBenchmark(Base):
-    """
-    Performance Benchmark Model
+    """    Performance Benchmark Model
     
     Industry benchmarks and comparative performance metrics
     for evaluating creator performance against market standards.
-    """
-    __tablename__ = "performance_benchmarks"
+    """    __tablename__ = "performance_benchmarks"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -441,13 +425,11 @@ class PerformanceBenchmark(Base):
 
 
 class RevenueTrend(Base):
-    """
-    Revenue Trend Model
+    """    Revenue Trend Model
     
     Tracks revenue trends, patterns, and forecasting data
     for predictive analytics and strategic planning.
-    """
-    __tablename__ = "revenue_trends"
+    """    __tablename__ = "revenue_trends"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -516,13 +498,11 @@ class RevenueTrend(Base):
 
 
 class AnalyticsJob(Base):
-    """
-    Analytics Job Model
+    """    Analytics Job Model
     
     Tracks analytics calculation jobs, scheduling, and processing status
     for automated analytics generation and monitoring.
-    """
-    __tablename__ = "analytics_jobs"
+    """    __tablename__ = "analytics_jobs"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

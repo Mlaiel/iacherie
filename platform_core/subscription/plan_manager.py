@@ -1,5 +1,4 @@
-"""
-🚀 Plan Manager - IA Influencer Agent Platform Enterprise
+"""🚀 Plan Manager - IA Influencer Agent Platform Enterprise
 ========================================================
 Module: backend/platform_core/subscription/plan_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Système de gestion intelligent des plans tarifaires
 - A/B testing automatique des prix
 - Optimisation revenue basée sur ML
 """
-
 import asyncio
 import json
 import logging
@@ -31,8 +29,7 @@ from decimal import Decimal
 logger = logging.getLogger(__name__)
 
 class PlanTier(Enum):
-    """Niveaux de plans"""
-    FREE = "free"
+    """Niveaux de plans"""    FREE = "free"
     STARTER = "starter"
     PROFESSIONAL = "professional"
     BUSINESS = "business"
@@ -40,16 +37,14 @@ class PlanTier(Enum):
     CUSTOM = "custom"
 
 class FeatureType(Enum):
-    """Types de fonctionnalités"""
-    BOOLEAN = "boolean"          # Activé/Désactivé
+    """Types de fonctionnalités"""    BOOLEAN = "boolean"          # Activé/Désactivé
     NUMERIC = "numeric"          # Limite numérique
     UNLIMITED = "unlimited"      # Illimité
     TIERED = "tiered"           # Par paliers
     USAGE_BASED = "usage_based"  # Basé sur l'usage
 
 class PricingStrategy(Enum):
-    """Stratégies de tarification"""
-    FIXED = "fixed"
+    """Stratégies de tarification"""    FIXED = "fixed"
     DYNAMIC = "dynamic"
     COMPETITIVE = "competitive"
     VALUE_BASED = "value_based"
@@ -58,8 +53,7 @@ class PricingStrategy(Enum):
 
 @dataclass
 class PlanFeature:
-    """Fonctionnalité d'un plan"""
-    feature_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Fonctionnalité d'un plan"""    feature_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     feature_type: FeatureType = FeatureType.BOOLEAN
@@ -82,8 +76,7 @@ class PlanFeature:
     dependencies: List[str] = field(default_factory=list)
     
     def get_effective_limit(self, usage_data: Optional[Dict[str, Any]] = None) -> Optional[int]:
-        """Retourne la limite effective selon le type"""
-        if self.feature_type == FeatureType.UNLIMITED or self.unlimited:
+        """Retourne la limite effective selon le type"""        if self.feature_type == FeatureType.UNLIMITED or self.unlimited:
             return None
         elif self.feature_type == FeatureType.NUMERIC:
             return self.limit_value
@@ -101,8 +94,7 @@ class PlanFeature:
 
 @dataclass
 class SubscriptionPlan:
-    """Plan d'abonnement intelligent"""
-    plan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Plan d'abonnement intelligent"""    plan_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     
@@ -153,8 +145,7 @@ class SubscriptionPlan:
     customer_satisfaction: float = 0.0
     
     def add_feature(self, feature: PlanFeature):
-        """Ajoute une fonctionnalité au plan"""
-        # Vérifier les dépendances
+        """Ajoute une fonctionnalité au plan"""        # Vérifier les dépendances
         for dep in feature.dependencies:
             if not any(f.feature_id == dep for f in self.features):
                 logger.warning(f"Dépendance manquante pour {feature.name}: {dep}")
@@ -163,22 +154,18 @@ class SubscriptionPlan:
         self.updated_at = datetime.utcnow()
         
     def remove_feature(self, feature_id: str):
-        """Supprime une fonctionnalité du plan"""
-        self.features = [f for f in self.features if f.feature_id != feature_id]
+        """Supprime une fonctionnalité du plan"""        self.features = [f for f in self.features if f.feature_id != feature_id]
         self.updated_at = datetime.utcnow()
         
     def get_feature(self, feature_name: str) -> Optional[PlanFeature]:
-        """Récupère une fonctionnalité par nom"""
-        return next((f for f in self.features if f.name == feature_name), None)
+        """Récupère une fonctionnalité par nom"""        return next((f for f in self.features if f.name == feature_name), None)
         
     def has_feature(self, feature_name: str) -> bool:
-        """Vérifie si le plan a une fonctionnalité"""
-        feature = self.get_feature(feature_name)
+        """Vérifie si le plan a une fonctionnalité"""        feature = self.get_feature(feature_name)
         return feature is not None and feature.enabled
         
     def get_feature_limit(self, feature_name: str, usage_data: Optional[Dict[str, Any]] = None) -> Optional[int]:
-        """Récupère la limite d'une fonctionnalité"""
-        feature = self.get_feature(feature_name)
+        """Récupère la limite d'une fonctionnalité"""        feature = self.get_feature(feature_name)
         if not feature:
             return None
         return feature.get_effective_limit(usage_data)
@@ -186,8 +173,7 @@ class SubscriptionPlan:
     def calculate_dynamic_price(self, 
                               customer_data: Optional[Dict[str, Any]] = None,
                               market_data: Optional[Dict[str, Any]] = None) -> Decimal:
-        """Calcule le prix dynamique selon la stratégie"""
-        if self.pricing_strategy == PricingStrategy.FIXED:
+        """Calcule le prix dynamique selon la stratégie"""        if self.pricing_strategy == PricingStrategy.FIXED:
             return self.base_price
             
         base_price = self.base_price
@@ -218,8 +204,7 @@ class SubscriptionPlan:
         return base_price
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit le plan en dictionnaire"""
-        return {
+        """Convertit le plan en dictionnaire"""        return {
             "plan_id": self.plan_id,
             "name": self.name,
             "description": self.description,
@@ -251,8 +236,7 @@ class SubscriptionPlan:
         }
 
 class PlanManager:
-    """Gestionnaire intelligent des plans d'abonnement"""
-    
+    """Gestionnaire intelligent des plans d'abonnement"""    
     def __init__(self, database_client: Optional[Any] = None):
         self.database_client = database_client
         self.plans: Dict[str, SubscriptionPlan] = {}
@@ -266,8 +250,7 @@ class PlanManager:
         self._load_default_plans()
         
     def _load_default_plans(self):
-        """Charge les plans par défaut de la plateforme"""
-        
+        """Charge les plans par défaut de la plateforme"""        
         # Plan Free
         free_plan = SubscriptionPlan(
             name="Free",
@@ -446,8 +429,7 @@ class PlanManager:
                          tier: PlanTier,
                          base_price: Decimal,
                          **kwargs) -> SubscriptionPlan:
-        """Crée un nouveau plan"""
-        plan = SubscriptionPlan(
+        """Crée un nouveau plan"""        plan = SubscriptionPlan(
             name=name,
             tier=tier,
             base_price=base_price,
@@ -463,8 +445,7 @@ class PlanManager:
         return plan
         
     async def get_plan(self, plan_id: str) -> Optional[SubscriptionPlan]:
-        """Récupère un plan par ID"""
-        if plan_id in self.plans:
+        """Récupère un plan par ID"""        if plan_id in self.plans:
             return self.plans[plan_id]
             
         if self.database_client:
@@ -476,14 +457,12 @@ class PlanManager:
         return None
         
     async def get_plans_by_tier(self, tier: PlanTier) -> List[SubscriptionPlan]:
-        """Récupère tous les plans d'un niveau"""
-        return [plan for plan in self.plans.values() if plan.tier == tier and plan.is_active]
+        """Récupère tous les plans d'un niveau"""        return [plan for plan in self.plans.values() if plan.tier == tier and plan.is_active]
         
     async def get_visible_plans(self, 
                               customer_data: Optional[Dict[str, Any]] = None,
                               include_ab_test: bool = True) -> List[SubscriptionPlan]:
-        """Récupère les plans visibles pour un client"""
-        visible_plans = []
+        """Récupère les plans visibles pour un client"""        visible_plans = []
         
         for plan in self.plans.values():
             if not plan.is_visible or not plan.is_active:
@@ -507,8 +486,7 @@ class PlanManager:
         return visible_plans
         
     async def update_plan(self, plan_id: str, updates: Dict[str, Any]) -> bool:
-        """Met à jour un plan"""
-        plan = await self.get_plan(plan_id)
+        """Met à jour un plan"""        plan = await self.get_plan(plan_id)
         if not plan:
             return False
             
@@ -526,14 +504,12 @@ class PlanManager:
         return True
         
     async def deactivate_plan(self, plan_id: str) -> bool:
-        """Désactive un plan"""
-        return await self.update_plan(plan_id, {"is_active": False})
+        """Désactive un plan"""        return await self.update_plan(plan_id, {"is_active": False})
         
     async def optimize_plan_pricing(self,
                                   plan_id: str,
                                   market_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimise le prix d'un plan selon les données marché"""
-        plan = await self.get_plan(plan_id)
+        """Optimise le prix d'un plan selon les données marché"""        plan = await self.get_plan(plan_id)
         if not plan or plan.pricing_strategy == PricingStrategy.FIXED:
             return {"optimized": False, "reason": "Plan not found or fixed pricing"}
             
@@ -582,8 +558,7 @@ class PlanManager:
                            variant_name: str,
                            changes: Dict[str, Any],
                            traffic_split: float = 0.5) -> bool:
-        """Crée un test A/B pour un plan"""
-        base_plan = await self.get_plan(plan_id)
+        """Crée un test A/B pour un plan"""        base_plan = await self.get_plan(plan_id)
         if not base_plan:
             return False
             
@@ -613,8 +588,7 @@ class PlanManager:
     def _should_show_ab_variant(self, 
                                plan: SubscriptionPlan, 
                                customer_data: Optional[Dict[str, Any]]) -> bool:
-        """Détermine si une variante A/B doit être montrée"""
-        if not customer_data:
+        """Détermine si une variante A/B doit être montrée"""        if not customer_data:
             return True
             
         # Hash du customer_id pour déterminer le segment
@@ -625,8 +599,7 @@ class PlanManager:
         return hash_value < (traffic_split * 100)
         
     async def get_plan_analytics(self, plan_id: str) -> Dict[str, Any]:
-        """Récupère les analytics d'un plan"""
-        plan = await self.get_plan(plan_id)
+        """Récupère les analytics d'un plan"""        plan = await self.get_plan(plan_id)
         if not plan:
             return {}
             
@@ -647,8 +620,7 @@ class PlanManager:
         }
         
     async def _save_plan(self, plan: SubscriptionPlan):
-        """Sauvegarde un plan en base"""
-        try:
+        """Sauvegarde un plan en base"""        try:
             logger.info(f"Saving subscription plan {plan.plan_id}")
             
             # Prepare plan data for storage
@@ -768,13 +740,11 @@ class PlanManager:
             raise
         
     async def _load_plan(self, plan_id: str) -> Optional[SubscriptionPlan]:
-        """Charge un plan depuis la base"""
-        # Implémentation de chargement
+        """Charge un plan depuis la base"""        # Implémentation de chargement
         return None
         
     def get_manager_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du gestionnaire"""
-        plans_by_tier = {}
+        """Retourne les statistiques du gestionnaire"""        plans_by_tier = {}
         for tier in PlanTier:
             count = len([p for p in self.plans.values() if p.tier == tier])
             plans_by_tier[tier.value] = count

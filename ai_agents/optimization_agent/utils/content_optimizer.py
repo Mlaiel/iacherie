@@ -1,5 +1,4 @@
-"""
-Content Optimizer - Advanced Multi-Format Content Optimization Engine
+"""Content Optimizer - Advanced Multi-Format Content Optimization Engine
 
 Enterprise-grade content optimization system for audio, video, image, and text formats.
 Implements intelligent compression, format conversion, SEO enhancement, and quality optimization.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import time
@@ -64,8 +62,7 @@ from ...utils.metrics import MetricsCollector
 logger = get_logger(__name__)
 
 class ContentFormat(Enum):
-    """Supported content formats for optimization."""
-    TEXT = "text"
+    """Supported content formats for optimization."""    TEXT = "text"
     IMAGE = "image"  
     VIDEO = "video"
     AUDIO = "audio"
@@ -74,23 +71,20 @@ class ContentFormat(Enum):
     MARKDOWN = "markdown"
 
 class OptimizationLevel(Enum):
-    """Content optimization levels."""
-    BASIC = "basic"
+    """Content optimization levels."""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     MAXIMUM = "maximum"
 
 class CompressionAlgorithm(Enum):
-    """Available compression algorithms."""
-    LOSSLESS = "lossless"
+    """Available compression algorithms."""    LOSSLESS = "lossless"
     LOSSY = "lossy"
     ADAPTIVE = "adaptive"
     ML_BASED = "ml_based"
 
 @dataclass
 class ContentAnalysis:
-    """Content analysis results."""
-    format_type: ContentFormat
+    """Content analysis results."""    format_type: ContentFormat
     file_size: int
     quality_score: float
     compression_ratio: float
@@ -101,8 +95,7 @@ class ContentAnalysis:
 
 @dataclass
 class OptimizationSettings:
-    """Content optimization settings."""
-    level: OptimizationLevel
+    """Content optimization settings."""    level: OptimizationLevel
     algorithm: CompressionAlgorithm
     target_quality: float = 0.85
     max_file_size: Optional[int] = None
@@ -112,8 +105,7 @@ class OptimizationSettings:
 
 @dataclass
 class ContentOptimizationResult:
-    """Optimization operation result."""
-    original_size: int
+    """Optimization operation result."""    original_size: int
     optimized_size: int
     compression_ratio: float
     quality_retained: float
@@ -123,16 +115,13 @@ class ContentOptimizationResult:
     performance_metrics: Dict[str, Any] = field(default_factory=dict)
 
 class ContentOptimizer:
-    """
-    Ultra-Advanced Content Optimization Engine
+    """    Ultra-Advanced Content Optimization Engine
     
     Enterprise-grade multi-format content optimization system with ML-powered
     compression, format conversion, SEO enhancement, and quality optimization.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the content optimizer with advanced configurations."""
-        self.logger = logger
+        """Initialize the content optimizer with advanced configurations."""        self.logger = logger
         self.metrics = MetricsCollector()
         self.db_path = "/tmp/content_optimizer.db"
         
@@ -159,8 +148,7 @@ class ContentOptimizer:
         self._setup_database()
         
     def _initialize_ml_models(self) -> None:
-        """Initialize machine learning models for content analysis."""
-        try:
+        """Initialize machine learning models for content analysis."""        try:
             # For text analysis and SEO optimization
             self.tokenizer = tiktoken.get_encoding("gpt2")
             
@@ -173,13 +161,11 @@ class ContentOptimizer:
             self.logger.error(f"Failed to initialize ML models: {e}")
             
     def _setup_database(self) -> None:
-        """Setup SQLite database for optimization tracking."""
-        try:
+        """Setup SQLite database for optimization tracking."""        try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS content_optimizations (
+            cursor.execute("""                CREATE TABLE IF NOT EXISTS content_optimizations (
                     id TEXT PRIMARY KEY,
                     content_hash TEXT,
                     original_size INTEGER,
@@ -194,8 +180,7 @@ class ContentOptimizer:
                 )
             """)
             
-            cursor.execute("""
-                CREATE TABLE IF NOT EXISTS optimization_analytics (
+            cursor.execute("""                CREATE TABLE IF NOT EXISTS optimization_analytics (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
                     date TEXT,
                     total_optimizations INTEGER,
@@ -217,8 +202,7 @@ class ContentOptimizer:
         content_path: str,
         content_data: Optional[bytes] = None
     ) -> ContentAnalysis:
-        """
-        Analyze content for optimization opportunities.
+        """        Analyze content for optimization opportunities.
         
         Args:
             content_path: Path to content file
@@ -226,8 +210,7 @@ class ContentOptimizer:
             
         Returns:
             ContentAnalysis with detailed analysis results
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Determine content format
@@ -285,8 +268,7 @@ class ContentOptimizer:
         settings: Optional[OptimizationSettings] = None,
         content_data: Optional[bytes] = None
     ) -> ContentOptimizationResult:
-        """
-        Optimize content based on analysis and settings.
+        """        Optimize content based on analysis and settings.
         
         Args:
             content_path: Path to source content
@@ -296,8 +278,7 @@ class ContentOptimizer:
             
         Returns:
             ContentOptimizationResult with optimization metrics
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             # Use default settings if none provided
@@ -353,8 +334,7 @@ class ContentOptimizer:
             raise ContentOptimizationError(f"Optimization failed: {e}")
     
     def _detect_content_format(self, content_path: str) -> ContentFormat:
-        """Detect content format based on file extension and content."""
-        path_obj = Path(content_path)
+        """Detect content format based on file extension and content."""        path_obj = Path(content_path)
         extension = path_obj.suffix.lower()
         
         format_mapping = {
@@ -387,8 +367,7 @@ class ContentOptimizer:
         format_type: ContentFormat,
         content_data: Optional[bytes] = None
     ) -> Dict[str, Any]:
-        """Perform format-specific content analysis."""
-        
+        """Perform format-specific content analysis."""        
         if format_type == ContentFormat.IMAGE:
             return await self._analyze_image(content_path)
         elif format_type == ContentFormat.VIDEO:
@@ -403,8 +382,7 @@ class ContentOptimizer:
             return {'metrics': {}, 'compression_potential': 0.2}
     
     async def _analyze_image(self, image_path: str) -> Dict[str, Any]:
-        """Analyze image content for optimization opportunities."""
-        try:
+        """Analyze image content for optimization opportunities."""        try:
             # Load image
             img = Image.open(image_path)
             
@@ -437,8 +415,7 @@ class ContentOptimizer:
             return {'metrics': {}, 'compression_potential': 0.3}
     
     async def _analyze_video(self, video_path: str) -> Dict[str, Any]:
-        """Analyze video content for optimization opportunities."""
-        try:
+        """Analyze video content for optimization opportunities."""        try:
             # Get video information using ffmpeg
             probe = ffmpeg.probe(video_path)
             video_stream = next(
@@ -479,8 +456,7 @@ class ContentOptimizer:
             return {'metrics': {}, 'compression_potential': 0.4}
     
     async def _analyze_audio(self, audio_path: str) -> Dict[str, Any]:
-        """Analyze audio content for optimization opportunities."""
-        try:
+        """Analyze audio content for optimization opportunities."""        try:
             # Load audio using librosa
             y, sr = librosa.load(audio_path)
             
@@ -515,8 +491,7 @@ class ContentOptimizer:
         text_path: str,
         content_data: Optional[bytes] = None
     ) -> Dict[str, Any]:
-        """Analyze text content for optimization and SEO opportunities."""
-        try:
+        """Analyze text content for optimization and SEO opportunities."""        try:
             # Read text content
             if content_data:
                 text = content_data.decode('utf-8')
@@ -565,8 +540,7 @@ class ContentOptimizer:
         html_path: str,
         content_data: Optional[bytes] = None
     ) -> Dict[str, Any]:
-        """Analyze HTML content for optimization and SEO opportunities."""
-        try:
+        """Analyze HTML content for optimization and SEO opportunities."""        try:
             # Read HTML content
             if content_data:
                 html_content = content_data.decode('utf-8')
@@ -625,8 +599,7 @@ class ContentOptimizer:
         metrics: Dict[str, Any],
         format_type: ContentFormat
     ) -> float:
-        """Calculate overall quality score for content."""
-        try:
+        """Calculate overall quality score for content."""        try:
             if format_type == ContentFormat.IMAGE:
                 # Image quality based on resolution and complexity
                 width = metrics.get('width', 0)
@@ -679,8 +652,7 @@ class ContentOptimizer:
             return 0.5
     
     def _calculate_seo_score(self, text: str) -> float:
-        """Calculate SEO score for text content."""
-        try:
+        """Calculate SEO score for text content."""        try:
             score = 0.0
             
             # Word count check (300-2000 words is optimal)
@@ -722,8 +694,7 @@ class ContentOptimizer:
             return 0.3
     
     def _calculate_html_seo_score(self, soup: BeautifulSoup) -> float:
-        """Calculate SEO score for HTML content."""
-        try:
+        """Calculate SEO score for HTML content."""        try:
             score = 0.0
             
             # Title tag
@@ -786,8 +757,7 @@ class ContentOptimizer:
         format_type: ContentFormat,
         file_size: int
     ) -> List[str]:
-        """Generate optimization suggestions based on analysis."""
-        suggestions = []
+        """Generate optimization suggestions based on analysis."""        suggestions = []
         
         try:
             metrics = analysis_result.get('metrics', {})
@@ -879,8 +849,7 @@ class ContentOptimizer:
         settings: OptimizationSettings,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Perform format-specific optimization."""
-        
+        """Perform format-specific optimization."""        
         if format_type == ContentFormat.IMAGE:
             return await self._optimize_image(content_path, settings, output_path)
         elif format_type == ContentFormat.VIDEO:
@@ -901,8 +870,7 @@ class ContentOptimizer:
         settings: OptimizationSettings,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Optimize image content."""
-        try:
+        """Optimize image content."""        try:
             # Load original image
             img = Image.open(image_path)
             original_size = os.path.getsize(image_path)
@@ -964,8 +932,7 @@ class ContentOptimizer:
         settings: OptimizationSettings,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Optimize video content."""
-        try:
+        """Optimize video content."""        try:
             # Prepare output path
             if not output_path:
                 path_obj = Path(video_path)
@@ -1029,8 +996,7 @@ class ContentOptimizer:
         settings: OptimizationSettings,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Optimize audio content."""
-        try:
+        """Optimize audio content."""        try:
             # Prepare output path
             if not output_path:
                 path_obj = Path(audio_path)
@@ -1092,8 +1058,7 @@ class ContentOptimizer:
         settings: OptimizationSettings,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Optimize text content."""
-        try:
+        """Optimize text content."""        try:
             # Read original text
             with open(text_path, 'r', encoding='utf-8') as f:
                 text = f.read()
@@ -1161,8 +1126,7 @@ class ContentOptimizer:
         settings: OptimizationSettings,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Optimize HTML content."""
-        try:
+        """Optimize HTML content."""        try:
             # Read original HTML
             with open(html_path, 'r', encoding='utf-8') as f:
                 html = f.read()
@@ -1252,8 +1216,7 @@ class ContentOptimizer:
         settings: OptimizationSettings,
         output_path: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Generic optimization for unknown formats."""
-        try:
+        """Generic optimization for unknown formats."""        try:
             # For unknown formats, just copy the file
             # In a real implementation, you might apply generic compression
             
@@ -1289,16 +1252,14 @@ class ContentOptimizer:
         result: ContentOptimizationResult,
         settings: OptimizationSettings
     ) -> None:
-        """Save optimization record to database."""
-        try:
+        """Save optimization record to database."""        try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             
             optimization_id = str(uuid.uuid4())
             content_hash = hashlib.md5(f"{analysis.file_size}{analysis.format_type.value}".encode()).hexdigest()
             
-            cursor.execute("""
-                INSERT INTO content_optimizations (
+            cursor.execute("""                INSERT INTO content_optimizations (
                     id, content_hash, original_size, optimized_size, compression_ratio,
                     quality_retained, format_type, optimization_level, algorithm,
                     timestamp, performance_metrics
@@ -1329,8 +1290,7 @@ class ContentOptimizer:
             self.logger.error(f"Failed to save optimization record: {e}")
     
     def _update_performance_stats(self, result: ContentOptimizationResult) -> None:
-        """Update global performance statistics."""
-        try:
+        """Update global performance statistics."""        try:
             self.performance_stats['total_optimizations'] += 1
             
             bytes_saved = result.original_size - result.optimized_size
@@ -1354,16 +1314,14 @@ class ContentOptimizer:
             self.logger.error(f"Failed to update performance stats: {e}")
     
     async def get_optimization_report(self, time_period_days: int = 30) -> Dict[str, Any]:
-        """Generate comprehensive optimization performance report."""
-        try:
+        """Generate comprehensive optimization performance report."""        try:
             conn = sqlite3.connect(self.db_path)
             cursor = conn.cursor()
             
             # Get data for the specified time period
             start_date = (datetime.now() - timedelta(days=time_period_days)).isoformat()
             
-            cursor.execute("""
-                SELECT 
+            cursor.execute("""                SELECT 
                     COUNT(*) as total_optimizations,
                     SUM(original_size - optimized_size) as total_bytes_saved,
                     AVG(compression_ratio) as avg_compression_ratio,
@@ -1457,8 +1415,7 @@ class ContentOptimizer:
         settings: Optional[OptimizationSettings] = None,
         output_directory: Optional[str] = None
     ) -> List[ContentOptimizationResult]:
-        """
-        Optimize multiple content files in batch.
+        """        Optimize multiple content files in batch.
         
         Args:
             content_paths: List of content file paths
@@ -1467,8 +1424,7 @@ class ContentOptimizer:
             
         Returns:
             List of optimization results
-        """
-        try:
+        """        try:
             if not settings:
                 settings = OptimizationSettings(
                     level=OptimizationLevel.STANDARD,
@@ -1524,8 +1480,7 @@ class ContentOptimizer:
             raise ContentOptimizationError(f"Batch optimization failed: {e}")
     
     def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get current performance metrics."""
-        return {
+        """Get current performance metrics."""        return {
             'performance_stats': self.performance_stats.copy(),
             'optimization_history_count': len(self.optimization_history),
             'active_workers': self.max_workers,
@@ -1534,8 +1489,7 @@ class ContentOptimizer:
         }
     
     def _get_memory_usage(self) -> Dict[str, int]:
-        """Get current memory usage statistics."""
-        try:
+        """Get current memory usage statistics."""        try:
             import psutil
             process = psutil.Process()
             memory_info = process.memory_info()
@@ -1552,16 +1506,14 @@ class ContentOptimizer:
             return {'rss_bytes': 0, 'vms_bytes': 0, 'percent': 0.0}
     
     async def cleanup_temp_files(self, max_age_hours: int = 24) -> int:
-        """
-        Cleanup temporary optimization files.
+        """        Cleanup temporary optimization files.
         
         Args:
             max_age_hours: Maximum age of temp files to keep
             
         Returns:
             Number of files cleaned up
-        """
-        try:
+        """        try:
             temp_dir = Path("/tmp")
             current_time = datetime.now()
             cutoff_time = current_time - timedelta(hours=max_age_hours)
@@ -1586,8 +1538,7 @@ class ContentOptimizer:
             return 0
     
     def __del__(self):
-        """Cleanup resources on destruction."""
-        try:
+        """Cleanup resources on destruction."""        try:
             if hasattr(self, 'executor'):
                 self.executor.shutdown(wait=False)
         except:
@@ -1609,8 +1560,7 @@ class ContentOptimizer:
 
 @dataclass
 class ContentMetrics:
-    """Content quality and performance metrics"""
-    file_size_bytes: int = 0
+    """Content quality and performance metrics"""    file_size_bytes: int = 0
     file_size_mb: float = 0.0
     compression_ratio: float = 0.0
     quality_score: float = 0.0
@@ -1623,8 +1573,7 @@ class ContentMetrics:
 
 @dataclass
 class OptimizationResult:
-    """Content optimization outcome"""
-    original_metrics: ContentMetrics
+    """Content optimization outcome"""    original_metrics: ContentMetrics
     optimized_metrics: ContentMetrics
     improvement_percentage: float
     format_changed: bool
@@ -1635,13 +1584,11 @@ class OptimizationResult:
     recommendations: List[str] = field(default_factory=list)
 
 class ContentOptimizer:
-    """
-    Advanced multi-format content optimization engine for creators.
+    """    Advanced multi-format content optimization engine for creators.
     
     Supports all major content types used by musicians, bloggers, photographers,
     influencers, and comedians with intelligent optimization strategies.
     """
-
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.file_handler = FileHandler()
@@ -1683,8 +1630,7 @@ class ContentOptimizer:
         target_format: Optional[CompressionFormat] = None,
         custom_settings: Optional[Dict[str, Any]] = None
     ) -> OptimizationResult:
-        """
-        Optimize content based on type and requirements
+        """        Optimize content based on type and requirements
         
         Args:
             content_path: Path to content file
@@ -1695,8 +1641,7 @@ class ContentOptimizer:
             
         Returns:
             Optimization results and metrics
-        """
-        try:
+        """        try:
             start_time = time.time()
             
             # Validate input content
@@ -1751,8 +1696,7 @@ class ContentOptimizer:
         normalize_audio: bool = True,
         remove_silence: bool = True
     ) -> OptimizationResult:
-        """
-        Optimize audio content for musicians and podcasters
+        """        Optimize audio content for musicians and podcasters
         
         Features:
         - Intelligent bitrate selection
@@ -1760,8 +1704,7 @@ class ContentOptimizer:
         - Silence removal and trimming
         - Format conversion optimization
         - Quality preservation algorithms
-        """
-        try:
+        """        try:
             # Load and analyze audio
             audio_data, sample_rate = librosa.load(audio_path, sr=None)
             original_size = os.path.getsize(audio_path)
@@ -1829,8 +1772,7 @@ class ContentOptimizer:
         max_height: Optional[int] = None,
         progressive: bool = True
     ) -> OptimizationResult:
-        """
-        Optimize image content for photographers and visual creators
+        """        Optimize image content for photographers and visual creators
         
         Features:
         - Smart format conversion (WebP, AVIF)
@@ -1838,8 +1780,7 @@ class ContentOptimizer:
         - Responsive image generation
         - Metadata optimization
         - Progressive loading optimization
-        """
-        try:
+        """        try:
             # Load and analyze image
             with Image.open(image_path) as img:
                 original_size = os.path.getsize(image_path)
@@ -1904,8 +1845,7 @@ class ContentOptimizer:
         target_bitrate: str = "2M",
         enable_hardware_acceleration: bool = True
     ) -> OptimizationResult:
-        """
-        Optimize video content for influencers and content creators
+        """        Optimize video content for influencers and content creators
         
         Features:
         - Resolution optimization
@@ -1913,8 +1853,7 @@ class ContentOptimizer:
         - Hardware-accelerated encoding
         - Multi-format support
         - Quality preservation
-        """
-        try:
+        """        try:
             # Analyze original video
             probe = ffmpeg.probe(video_path)
             video_info = next(s for s in probe['streams'] if s['codec_type'] == 'video')
@@ -2000,8 +1939,7 @@ class ContentOptimizer:
         seo_optimization: bool = True,
         target_keywords: Optional[List[str]] = None
     ) -> OptimizationResult:
-        """
-        Optimize text content for bloggers and writers
+        """        Optimize text content for bloggers and writers
         
         Features:
         - Readability optimization
@@ -2009,8 +1947,7 @@ class ContentOptimizer:
         - Keyword optimization
         - Structure improvement
         - Content enrichment
-        """
-        try:
+        """        try:
             original_length = len(text_content)
             original_words = len(text_content.split())
             
@@ -2072,8 +2009,7 @@ class ContentOptimizer:
             raise ContentOptimizationError(f"Text optimization failed: {str(e)}")
 
     async def _validate_content(self, content_path: str, content_type: ContentType) -> bool:
-        """Validate content file and type compatibility"""
-        if not os.path.exists(content_path):
+        """Validate content file and type compatibility"""        if not os.path.exists(content_path):
             raise ContentOptimizationError(f"Content file not found: {content_path}")
         
         # File size validation
@@ -2091,8 +2027,7 @@ class ContentOptimizer:
         return True
 
     async def _analyze_content(self, content_path: str, content_type: ContentType) -> ContentMetrics:
-        """Analyze content and extract metrics"""
-        file_size = os.path.getsize(content_path)
+        """Analyze content and extract metrics"""        file_size = os.path.getsize(content_path)
         
         metrics = ContentMetrics(
             file_size_bytes=file_size,
@@ -2118,8 +2053,7 @@ class ContentOptimizer:
         metrics: ContentMetrics,
         custom_settings: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Select optimal optimization strategy based on content analysis"""
-        
+        """Select optimal optimization strategy based on content analysis"""        
         base_strategy = self.quality_presets.get(optimization_level.value, self.quality_presets['standard'])
         
         strategy = {
@@ -2154,8 +2088,7 @@ class ContentOptimizer:
         strategy: Dict[str, Any],
         target_format: Optional[CompressionFormat]
     ) -> str:
-        """Execute the selected optimization strategy"""
-        
+        """Execute the selected optimization strategy"""        
         techniques = strategy['techniques']
         
         if content_type in [ContentType.AUDIO, ContentType.MUSIC, ContentType.PODCAST]:
@@ -2174,8 +2107,7 @@ class ContentOptimizer:
         original: ContentMetrics, 
         optimized: ContentMetrics
     ) -> float:
-        """Calculate overall improvement percentage"""
-        
+        """Calculate overall improvement percentage"""        
         improvements = []
         
         # File size improvement
@@ -2210,8 +2142,7 @@ class ContentOptimizer:
         optimized_metrics: ContentMetrics,
         processing_time: float
     ):
-        """Update processing statistics"""
-        
+        """Update processing statistics"""        
         self.processing_stats['total_files_processed'] += 1
         self.processing_stats['total_bytes_saved'] += (
             original_metrics.file_size_bytes - optimized_metrics.file_size_bytes
@@ -2231,8 +2162,7 @@ class ContentOptimizer:
         content_type: ContentType,
         target_usage: str = "web"
     ) -> List[str]:
-        """
-        Get intelligent optimization recommendations for content
+        """        Get intelligent optimization recommendations for content
         
         Args:
             content_path: Path to content file
@@ -2241,8 +2171,7 @@ class ContentOptimizer:
             
         Returns:
             List of optimization recommendations
-        """
-        recommendations = []
+        """        recommendations = []
         
         try:
             # Analyze current content
@@ -2300,8 +2229,7 @@ class ContentOptimizer:
         optimization_level: OptimizationLevel = OptimizationLevel.STANDARD,
         max_concurrent: int = 5
     ) -> List[OptimizationResult]:
-        """
-        Optimize multiple content files concurrently
+        """        Optimize multiple content files concurrently
         
         Args:
             content_files: List of (file_path, content_type) tuples
@@ -2310,8 +2238,7 @@ class ContentOptimizer:
             
         Returns:
             List of optimization results
-        """
-        results = []
+        """        results = []
         
         # Create semaphore to limit concurrent processing
         semaphore = asyncio.Semaphore(max_concurrent)
@@ -2343,8 +2270,7 @@ class ContentOptimizer:
         return valid_results
 
     async def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive processing statistics"""
-        stats = self.processing_stats.copy()
+        """Get comprehensive processing statistics"""        stats = self.processing_stats.copy()
         
         # Calculate additional metrics
         if stats['total_files_processed'] > 0:
@@ -2357,11 +2283,9 @@ class ContentOptimizer:
 
 
 class MultiFormatOptimizer:
-    """
-    Specialized optimizer for handling multiple content formats simultaneously.
+    """    Specialized optimizer for handling multiple content formats simultaneously.
     Ideal for creators who work with mixed content types.
     """
-
     def __init__(self, config: Dict[str, Any] = None):
         self.content_optimizer = ContentOptimizer(config)
         self.format_strategies = {}
@@ -2371,8 +2295,7 @@ class MultiFormatOptimizer:
         portfolio_path: str,
         creator_type: str = "influencer"
     ) -> Dict[str, List[OptimizationResult]]:
-        """
-        Optimize entire creator portfolio with format-specific strategies
+        """        Optimize entire creator portfolio with format-specific strategies
         
         Supports:
         - Musicians: Audio, images, videos
@@ -2380,8 +2303,7 @@ class MultiFormatOptimizer:
         - Bloggers: Text, images
         - Influencers: Multi-format content
         - Comedians: Audio, video content
-        """
-        results = {
+        """        results = {
             'audio': [],
             'video': [],
             'image': [],
@@ -2406,11 +2328,9 @@ class MultiFormatOptimizer:
 
 
 class SEOOptimizer:
-    """
-    Specialized SEO optimization for content creators.
+    """    Specialized SEO optimization for content creators.
     Integrates with content optimization for maximum search visibility.
     """
-
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.seo_analyzer = SEOAnalyzer()
@@ -2421,12 +2341,10 @@ class SEOOptimizer:
         target_keywords: List[str],
         content_type: ContentType = ContentType.BLOG_POST
     ) -> Tuple[str, float]:
-        """
-        Optimize content for search engine visibility
+        """        Optimize content for search engine visibility
         
         Returns optimized content and SEO score
-        """
-        try:
+        """        try:
             # Keyword density optimization
             optimized_content = await self._optimize_keyword_density(content, target_keywords)
             
@@ -2452,11 +2370,9 @@ class SEOOptimizer:
 
 
 class MediaCompressionEngine:
-    """
-    Advanced compression engine with intelligent quality preservation.
+    """    Advanced compression engine with intelligent quality preservation.
     Uses machine learning to predict optimal compression settings.
     """
-
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.ml_predictor = None  # ML model for compression prediction
@@ -2467,13 +2383,11 @@ class MediaCompressionEngine:
         target_size_mb: Optional[float] = None,
         quality_threshold: float = 85.0
     ) -> Tuple[str, Dict[str, float]]:
-        """
-        Use ML to determine optimal compression settings
+        """        Use ML to determine optimal compression settings
         
         Returns:
             Tuple of (compressed_file_path, compression_metrics)
-        """
-        try:
+        """        try:
             # Analyze content characteristics
             content_features = await self._extract_content_features(file_path)
             

@@ -1,5 +1,4 @@
-"""
-Enterprise Matching Module - Command Line Interface & Demo
+"""Enterprise Matching Module - Command Line Interface & Demo
 
 Executive demonstration and command-line interface for the enterprise creator
 collaboration matching system with comprehensive AI-powered analysis and
@@ -17,7 +16,6 @@ Copyright: 2025 Fahed Mlaiel. All rights reserved.
 This demonstration module showcases proprietary algorithms and AI systems
 developed by Fahed Mlaiel. Unauthorized use is strictly prohibited.
 """
-
 import argparse
 import asyncio
 import logging
@@ -73,14 +71,12 @@ except ImportError as e:
 
 
 class MockDatabaseSession:
-    """Mock database session for demonstration"""
-    
+    """Mock database session for demonstration"""    
     def __init__(self):
         self.creators = self._generate_mock_creators()
     
     def _generate_mock_creators(self) -> List[Dict[str, Any]]:
-        """Generate mock creator data for demonstration"""
-        creators = [
+        """Generate mock creator data for demonstration"""        creators = [
             {
                 'id': 1,
                 'name': 'TechTunes Producer',
@@ -131,13 +127,11 @@ class MockDatabaseSession:
         return creators
     
     def query(self, model):
-        """Mock query method"""
-        return MockQuery(self.creators)
+        """Mock query method"""        return MockQuery(self.creators)
 
 
 class MockQuery:
-    """Mock query object"""
-    
+    """Mock query object"""    
     def __init__(self, data):
         self.data = data
     
@@ -156,8 +150,7 @@ class MockQuery:
 
 
 class MockCacheManager:
-    """Mock cache manager for demonstration"""
-    
+    """Mock cache manager for demonstration"""    
     def __init__(self):
         self.cache = {}
     
@@ -173,8 +166,7 @@ class MockCacheManager:
 
 
 class MockMetricsCollector:
-    """Mock metrics collector for demonstration"""
-    
+    """Mock metrics collector for demonstration"""    
     def __init__(self):
         self.events = []
         self.errors = []
@@ -195,8 +187,7 @@ class MockMetricsCollector:
 
 
 class MockSecureHandler:
-    """Mock security handler for demonstration"""
-    
+    """Mock security handler for demonstration"""    
     def encrypt(self, data):
         return f"encrypted_{data}"
     
@@ -205,8 +196,7 @@ class MockSecureHandler:
 
 
 class MockEventPublisher:
-    """Mock event publisher for demonstration"""
-    
+    """Mock event publisher for demonstration"""    
     def __init__(self):
         self.published_events = []
     
@@ -219,8 +209,7 @@ class MockEventPublisher:
 
 
 class MatchingModuleDemo:
-    """Comprehensive demonstration of the matching module"""
-    
+    """Comprehensive demonstration of the matching module"""    
     def __init__(self):
         self.db_session = MockDatabaseSession()
         self.cache_manager = MockCacheManager()
@@ -249,8 +238,7 @@ class MatchingModuleDemo:
         )
     
     async def run_comprehensive_demo(self):
-        """Run comprehensive demonstration of all features"""
-        
+        """Run comprehensive demonstration of all features"""        
         print("🎯 " + "="*80)
         print("🎯 ENTERPRISE CREATOR COLLABORATION MATCHING SYSTEM")
         print("🎯 Advanced AI-Powered Demonstration")
@@ -284,8 +272,7 @@ class MatchingModuleDemo:
         print("🎉 " + "="*80)
     
     async def _demo_health_check(self):
-        """Demonstrate system health monitoring"""
-        
+        """Demonstrate system health monitoring"""        
         print("🔍 SYSTEM HEALTH CHECK")
         print("-" * 40)
         
@@ -309,8 +296,7 @@ class MatchingModuleDemo:
         print()
     
     async def _demo_creator_profiles(self):
-        """Demonstrate creator profile analysis"""
-        
+        """Demonstrate creator profile analysis"""        
         print("👥 CREATOR PROFILE ANALYSIS")
         print("-" * 40)
         
@@ -329,8 +315,7 @@ class MatchingModuleDemo:
             print()
     
     async def _demo_compatibility_analysis(self):
-        """Demonstrate compatibility analysis between creators"""
-        
+        """Demonstrate compatibility analysis between creators"""        
         print("🤝 COMPATIBILITY ANALYSIS")
         print("-" * 40)
         
@@ -369,8 +354,7 @@ class MatchingModuleDemo:
         print()
     
     async def _demo_recommendation_engine(self):
-        """Demonstrate AI-powered recommendation engine"""
-        
+        """Demonstrate AI-powered recommendation engine"""        
         print("🎯 AI RECOMMENDATION ENGINE")
         print("-" * 40)
         
@@ -406,8 +390,7 @@ class MatchingModuleDemo:
         print()
     
     async def _demo_advanced_scoring(self):
-        """Demonstrate advanced AI scoring algorithms"""
-        
+        """Demonstrate advanced AI scoring algorithms"""        
         print("🧠 ADVANCED AI SCORING SYSTEM")
         print("-" * 40)
         
@@ -450,8 +433,7 @@ class MatchingModuleDemo:
         print()
     
     async def _demo_workflow_management(self):
-        """Demonstrate enterprise workflow management"""
-        
+        """Demonstrate enterprise workflow management"""        
         print("⚙️  ENTERPRISE WORKFLOW MANAGEMENT")
         print("-" * 40)
         
@@ -485,8 +467,7 @@ class MatchingModuleDemo:
         print()
     
     async def _demo_performance_metrics(self):
-        """Demonstrate performance monitoring and metrics"""
-        
+        """Demonstrate performance monitoring and metrics"""        
         print("📈 PERFORMANCE METRICS & ANALYTICS")
         print("-" * 40)
         
@@ -527,8 +508,7 @@ class MatchingModuleDemo:
         print()
     
     async def run_quick_test(self):
-        """Run quick functionality test"""
-        
+        """Run quick functionality test"""        
         print("🧪 QUICK FUNCTIONALITY TEST")
         print("=" * 50)
         
@@ -561,34 +541,28 @@ class MatchingModuleDemo:
             print("⚠️  Some tests failed. Check system configuration.")
     
     async def _test_service_init(self):
-        """Test service initialization"""
-        assert self.matching_service is not None
+        """Test service initialization"""        assert self.matching_service is not None
         assert self.config is not None
     
     async def _test_profile_loading(self):
-        """Test creator profile loading"""
-        assert len(self.db_session.creators) > 0
+        """Test creator profile loading"""        assert len(self.db_session.creators) > 0
     
     async def _test_matching_algorithm(self):
-        """Test matching algorithm"""
-        # Simulate matching test
+        """Test matching algorithm"""        # Simulate matching test
         await asyncio.sleep(0.1)  # Simulate processing
         assert True  # In real implementation, would test actual matching
     
     async def _test_recommendation_generation(self):
-        """Test recommendation generation"""
-        # Simulate recommendation test
+        """Test recommendation generation"""        # Simulate recommendation test
         await asyncio.sleep(0.1)  # Simulate processing
         assert True  # In real implementation, would test actual recommendations
     
     async def _test_performance_monitoring(self):
-        """Test performance monitoring"""
-        assert len(self.metrics_collector.events) >= 0
+        """Test performance monitoring"""        assert len(self.metrics_collector.events) >= 0
         assert len(self.metrics_collector.errors) >= 0
     
     async def run_benchmark(self):
-        """Run performance benchmark"""
-        
+        """Run performance benchmark"""        
         print("🏁 PERFORMANCE BENCHMARK")
         print("=" * 50)
         
@@ -608,8 +582,7 @@ class MatchingModuleDemo:
                 print(f"❌ {benchmark_name}: Failed - {e}")
     
     async def _benchmark_profile_processing(self):
-        """Benchmark profile processing speed"""
-        start_time = time.time()
+        """Benchmark profile processing speed"""        start_time = time.time()
         
         # Simulate processing 1000 profiles
         for i in range(1000):
@@ -623,8 +596,7 @@ class MatchingModuleDemo:
         return f"{profiles_per_second:,.0f} profiles/second"
     
     async def _benchmark_compatibility_analysis(self):
-        """Benchmark compatibility analysis speed"""
-        start_time = time.time()
+        """Benchmark compatibility analysis speed"""        start_time = time.time()
         
         # Simulate 100 compatibility analyses
         for i in range(100):
@@ -637,8 +609,7 @@ class MatchingModuleDemo:
         return f"{analyses_per_second:.1f} analyses/second"
     
     async def _benchmark_recommendation_generation(self):
-        """Benchmark recommendation generation speed"""
-        start_time = time.time()
+        """Benchmark recommendation generation speed"""        start_time = time.time()
         
         # Simulate 50 recommendation generations
         for i in range(50):
@@ -651,8 +622,7 @@ class MatchingModuleDemo:
         return f"{recommendations_per_second:.1f} recommendations/second"
     
     async def _benchmark_concurrent_requests(self):
-        """Benchmark concurrent request handling"""
-        start_time = time.time()
+        """Benchmark concurrent request handling"""        start_time = time.time()
         
         # Simulate 20 concurrent requests
         tasks = []
@@ -669,19 +639,16 @@ class MatchingModuleDemo:
 
 
 def main():
-    """Main entry point for the matching module CLI"""
-    
+    """Main entry point for the matching module CLI"""    
     parser = argparse.ArgumentParser(
         description="Enterprise Creator Collaboration Matching System",
         formatter_class=argparse.RawDescriptionHelpFormatter,
-        epilog="""
-Examples:
+        epilog="""Examples:
     python -m backend.core.matching --demo
     python -m backend.core.matching --test
     python -m backend.core.matching --benchmark
     python -m backend.core.matching --help
-        """
-    )
+        """    )
     
     parser.add_argument(
         '--demo',

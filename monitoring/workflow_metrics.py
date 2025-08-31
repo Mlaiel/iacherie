@@ -1,9 +1,7 @@
-"""
-Monitoring and Notification Services
+"""Monitoring and Notification Services
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 from typing import Dict, Any, Optional
 import asyncio
@@ -13,14 +11,12 @@ logger = logging.getLogger(__name__)
 
 
 class WorkflowMetrics:
-    """Workflow metrics collection"""
-    
+    """Workflow metrics collection"""    
     def __init__(self):
         self.metrics = {}
     
     async def setup_content_tracking(self, config: Dict[str, Any]):
-        """Setup content tracking configuration"""
-        workflow_id = config.get("workflow_id")
+        """Setup content tracking configuration"""        workflow_id = config.get("workflow_id")
         content_id = config.get("content_id")
         
         tracking_config = {
@@ -35,14 +31,12 @@ class WorkflowMetrics:
 
 
 class NotificationService:
-    """Notification service for workflow updates"""
-    
+    """Notification service for workflow updates"""    
     def __init__(self):
         self.notifications = []
     
     async def send_notification(self, notification_data: Dict[str, Any]):
-        """Send notification to user"""
-        workflow_id = notification_data.get("workflow_id")
+        """Send notification to user"""        workflow_id = notification_data.get("workflow_id")
         creator_id = notification_data.get("creator_id")
         title = notification_data.get("title")
         message = notification_data.get("message")

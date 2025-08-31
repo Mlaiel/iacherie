@@ -1,8 +1,6 @@
-"""
-SLA Monitoring and Tracking System
+"""SLA Monitoring and Tracking System
 Implements performance requirements tracking with automated alerting
 """
-
 import asyncio
 import logging
 import statistics
@@ -14,8 +12,7 @@ import json
 
 @dataclass
 class SLAMetric:
-    """SLA metric definition"""
-    name: str
+    """SLA metric definition"""    name: str
     target_value: float
     current_value: float = 0.0
     unit: str = ""
@@ -26,19 +23,16 @@ class SLAMetric:
 
 @dataclass
 class SLATarget:
-    """SLA target configuration"""
-    response_time_p95_ms: float = 2000.0  # <2s for 95% of API calls
+    """SLA target configuration"""    response_time_p95_ms: float = 2000.0  # <2s for 95% of API calls
     throughput_rps: float = 10000.0  # 10,000+ requests/second
     uptime_percentage: float = 99.9  # 99.9% uptime
     max_downtime_hours_yearly: float = 8.77  # 8.77 hours max downtime/year
     availability_percentage: float = 99.9
 
 class SLATracker:
-    """
-    Comprehensive SLA tracking and monitoring system
+    """    Comprehensive SLA tracking and monitoring system
     Tracks performance against production requirements
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.sla_targets = SLATarget()
@@ -53,8 +47,7 @@ class SLATracker:
         self._initialize_sla_metrics()
         
     def _initialize_sla_metrics(self):
-        """Initialize SLA metrics with targets"""
-        self.metrics = {
+        """Initialize SLA metrics with targets"""        self.metrics = {
             "response_time_p95": SLAMetric(
                 name="API Response Time P95",
                 target_value=self.sla_targets.response_time_p95_ms,
@@ -90,8 +83,7 @@ class SLATracker:
         }
         
     async def record_api_request(self, response_time_ms: float, success: bool = True):
-        """Record API request metrics for SLA tracking"""
-        timestamp = datetime.now()
+        """Record API request metrics for SLA tracking"""        timestamp = datetime.now()
         
         # Record response time
         self.response_times.append({
@@ -107,8 +99,7 @@ class SLATracker:
         await self._check_sla_violations()
         
     async def record_throughput(self, request_count: int, time_window_seconds: int = 1):
-        """Record throughput metrics"""
-        timestamp = datetime.now()
+        """Record throughput metrics"""        timestamp = datetime.now()
         rps = request_count / time_window_seconds
         
         self.request_counts.append({
@@ -125,8 +116,7 @@ class SLATracker:
         
     async def record_downtime_event(self, start_time: datetime, end_time: datetime, 
                                    reason: str = "Unknown"):
-        """Record system downtime event"""
-        duration_minutes = (end_time - start_time).total_seconds() / 60
+        """Record system downtime event"""        duration_minutes = (end_time - start_time).total_seconds() / 60
         duration_hours = duration_minutes / 60
         
         downtime_event = {
@@ -145,8 +135,7 @@ class SLATracker:
         self.logger.warning(f"Downtime event recorded: {duration_minutes:.2f} minutes - {reason}")
         
     async def _update_response_time_p95(self):
-        """Update P95 response time metric"""
-        if len(self.response_times) < 20:  # Need minimum data points
+        """Update P95 response time metric"""        if len(self.response_times) < 20:  # Need minimum data points
             return
             
         # Get recent response times (last 5 minutes)
@@ -162,8 +151,7 @@ class SLATracker:
             self.metrics["response_time_p95"].last_updated = datetime.now()
             
     async def _update_uptime_metrics(self):
-        """Update uptime and availability metrics"""
-        now = datetime.now()
+        """Update uptime and availability metrics"""        now = datetime.now()
         
         # Calculate uptime for last 24 hours
         start_time = now - timedelta(hours=24)
@@ -186,8 +174,7 @@ class SLATracker:
             self.metrics[metric_name].last_updated = now
             
     async def _check_sla_violations(self):
-        """Check for SLA violations and generate alerts"""
-        violations = []
+        """Check for SLA violations and generate alerts"""        violations = []
         
         for metric_name, metric in self.metrics.items():
             if self._is_critical_violation(metric):
@@ -214,8 +201,7 @@ class SLATracker:
             await self._process_sla_violation(violation)
             
     def _is_critical_violation(self, metric: SLAMetric) -> bool:
-        """Check if metric is in critical violation"""
-        if metric.name in ["API Response Time P95"]:
+        """Check if metric is in critical violation"""        if metric.name in ["API Response Time P95"]:
             return metric.current_value > metric.threshold_critical
         elif metric.name in ["Requests Per Second"]:
             return metric.current_value < metric.threshold_critical
@@ -224,8 +210,7 @@ class SLATracker:
         return False
         
     def _is_warning_violation(self, metric: SLAMetric) -> bool:
-        """Check if metric is in warning state"""
-        if metric.name in ["API Response Time P95"]:
+        """Check if metric is in warning state"""        if metric.name in ["API Response Time P95"]:
             return metric.current_value > metric.threshold_warning
         elif metric.name in ["Requests Per Second"]:
             return metric.current_value < metric.threshold_warning
@@ -234,8 +219,7 @@ class SLATracker:
         return False
         
     async def _process_sla_violation(self, violation: Dict[str, Any]):
-        """Process SLA violation and generate alert"""
-        self.alerts.append(violation)
+        """Process SLA violation and generate alert"""        self.alerts.append(violation)
         
         self.logger.error(
             f"SLA {violation['level']} VIOLATION: {violation['metric']} = "
@@ -246,8 +230,7 @@ class SLATracker:
         # (Slack, PagerDuty, email, etc.)
         
     async def get_sla_status(self) -> Dict[str, Any]:
-        """Get current SLA status and compliance"""
-        status = {
+        """Get current SLA status and compliance"""        status = {
             'timestamp': datetime.now().isoformat(),
             'overall_compliance': True,
             'metrics': {},
@@ -277,8 +260,7 @@ class SLATracker:
         return status
         
     async def get_performance_report(self) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
-        now = datetime.now()
+        """Generate comprehensive performance report"""        now = datetime.now()
         
         # Calculate statistics for last 24 hours
         start_24h = now - timedelta(hours=24)

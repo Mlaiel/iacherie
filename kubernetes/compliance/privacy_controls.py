@@ -1,11 +1,9 @@
-"""
-IA Influencer Agent - Privacy Controls Manager
+"""IA Influencer Agent - Privacy Controls Manager
 Advanced privacy protection and user control systems
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved - Unauthorized use prohibited
 """
-
 import asyncio
 import json
 import logging
@@ -31,32 +29,28 @@ logger = get_logger(__name__)
 
 
 class PrivacyLevel(str, Enum):
-    """Privacy protection levels"""
-    MINIMAL = "minimal"
+    """Privacy protection levels"""    MINIMAL = "minimal"
     STANDARD = "standard"
     ENHANCED = "enhanced"
     MAXIMUM = "maximum"
 
 
 class DataMinimization(str, Enum):
-    """Data minimization strategies"""
-    COLLECT_MINIMAL = "collect_minimal"
+    """Data minimization strategies"""    COLLECT_MINIMAL = "collect_minimal"
     PROCESS_MINIMAL = "process_minimal"
     STORE_MINIMAL = "store_minimal"
     SHARE_MINIMAL = "share_minimal"
 
 
 class AnonymizationLevel(str, Enum):
-    """Data anonymization levels"""
-    NONE = "none"
+    """Data anonymization levels"""    NONE = "none"
     PSEUDONYMIZATION = "pseudonymization"
     ANONYMIZATION = "anonymization"
     DIFFERENTIAL_PRIVACY = "differential_privacy"
 
 
 class AccessRight(str, Enum):
-    """Data subject access rights"""
-    VIEW = "view"
+    """Data subject access rights"""    VIEW = "view"
     DOWNLOAD = "download"
     CORRECT = "correct"
     DELETE = "delete"
@@ -67,8 +61,7 @@ class AccessRight(str, Enum):
 
 @dataclass
 class PrivacyConfiguration:
-    """User privacy configuration"""
-    user_id: int
+    """User privacy configuration"""    user_id: int
     privacy_level: PrivacyLevel
     data_minimization: DataMinimization
     anonymization_level: AnonymizationLevel
@@ -84,8 +77,7 @@ class PrivacyConfiguration:
 
 @dataclass
 class PrivacyImpactAssessment:
-    """Privacy Impact Assessment (PIA) result"""
-    assessment_id: str
+    """Privacy Impact Assessment (PIA) result"""    assessment_id: str
     data_processing_activity: str
     privacy_risks: List[str]
     risk_severity: str
@@ -99,8 +91,7 @@ class PrivacyImpactAssessment:
 
 @dataclass
 class DataSubjectRequest:
-    """Data subject rights request"""
-    request_id: str
+    """Data subject rights request"""    request_id: str
     user_id: int
     request_type: AccessRight
     status: str
@@ -112,8 +103,7 @@ class DataSubjectRequest:
 
 
 class PrivacyControlsManager:
-    """Advanced privacy protection and user control system"""
-    
+    """Advanced privacy protection and user control system"""    
     def __init__(self):
         self.logger = logger
         self.audit_logger = AuditLogger()
@@ -160,8 +150,7 @@ class PrivacyControlsManager:
         privacy_level: PrivacyLevel = PrivacyLevel.STANDARD,
         jurisdiction: str = "EU"
     ) -> Dict[str, Any]:
-        """Initialize privacy settings for new user"""
-        try:
+        """Initialize privacy settings for new user"""        try:
             # Get privacy template for jurisdiction
             template = self._get_privacy_template(jurisdiction, privacy_level)
             
@@ -247,8 +236,7 @@ class PrivacyControlsManager:
         ip_address: str,
         user_agent: str
     ) -> Dict[str, Any]:
-        """Update user privacy preferences"""
-        try:
+        """Update user privacy preferences"""        try:
             # Get current privacy settings
             async with get_db_session() as session:
                 settings_result = await session.execute(
@@ -350,8 +338,7 @@ class PrivacyControlsManager:
         verification_data: Dict[str, Any],
         additional_details: str = None
     ) -> str:
-        """Process data subject access rights request"""
-        try:
+        """Process data subject access rights request"""        try:
             # Generate request ID
             request_id = f"DSR-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{user_id:08d}"
             
@@ -435,8 +422,7 @@ class PrivacyControlsManager:
         processing_purposes: List[str],
         risk_factors: List[str]
     ) -> PrivacyImpactAssessment:
-        """Conduct Privacy Impact Assessment (PIA)"""
-        try:
+        """Conduct Privacy Impact Assessment (PIA)"""        try:
             assessment_id = f"PIA-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
             
             # Analyze privacy risks
@@ -513,8 +499,7 @@ class PrivacyControlsManager:
         data_type: str,
         minimization_level: DataMinimization
     ) -> Dict[str, Any]:
-        """Apply data minimization principles to user data"""
-        try:
+        """Apply data minimization principles to user data"""        try:
             # Get current data inventory
             data_inventory = await self._get_user_data_inventory(user_id, data_type)
             
@@ -579,8 +564,7 @@ class PrivacyControlsManager:
             raise HTTPException(status_code=500, detail="Failed to apply data minimization")
     
     def _load_privacy_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Load privacy configuration templates"""
-        return {
+        """Load privacy configuration templates"""        return {
             "EU_MINIMAL": {
                 "template_id": "EU_MINIMAL",
                 "data_minimization": DataMinimization.COLLECT_MINIMAL,

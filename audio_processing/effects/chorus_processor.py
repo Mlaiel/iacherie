@@ -1,5 +1,4 @@
-"""
-🎵 Chorus Processor - Professional Modulation & Chorus Effects Engine
+"""🎵 Chorus Processor - Professional Modulation & Chorus Effects Engine
 
 Advanced chorus, flanger, and modulation effects with multi-voice processing,
 sophisticated LFO control, interpolation algorithms, and stereo width control.
@@ -8,7 +7,6 @@ Includes vintage and modern algorithm implementations.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import numpy as np
 import logging
 from typing import Optional, List, Dict, Any, Tuple
@@ -20,8 +18,7 @@ import threading
 
 
 class ModulationType(Enum):
-    """Modulation waveform types"""
-    SINE = "sine"
+    """Modulation waveform types"""    SINE = "sine"
     TRIANGLE = "triangle"
     SQUARE = "square"
     SAWTOOTH = "sawtooth"
@@ -30,8 +27,7 @@ class ModulationType(Enum):
 
 
 class ChorusMode(Enum):
-    """Chorus processing modes"""
-    CHORUS = "chorus"
+    """Chorus processing modes"""    CHORUS = "chorus"
     FLANGER = "flanger"
     VIBRATO = "vibrato"
     PHASER = "phaser"
@@ -40,8 +36,7 @@ class ChorusMode(Enum):
 
 
 class InterpolationType(Enum):
-    """Delay line interpolation types"""
-    LINEAR = "linear"
+    """Delay line interpolation types"""    LINEAR = "linear"
     CUBIC = "cubic"
     HERMITE = "hermite"
     LAGRANGE = "lagrange"
@@ -49,8 +44,7 @@ class InterpolationType(Enum):
 
 @dataclass
 class ChorusVoice:
-    """Individual chorus voice parameters"""
-    delay_ms: float = 10.0  # Base delay in milliseconds
+    """Individual chorus voice parameters"""    delay_ms: float = 10.0  # Base delay in milliseconds
     depth_ms: float = 2.0   # Modulation depth in milliseconds
     rate_hz: float = 1.0    # LFO rate in Hz
     phase_deg: float = 0.0  # LFO phase in degrees
@@ -62,8 +56,7 @@ class ChorusVoice:
 
 @dataclass
 class ChorusParams:
-    """Chorus processor parameters"""
-    mode: ChorusMode = ChorusMode.CHORUS
+    """Chorus processor parameters"""    mode: ChorusMode = ChorusMode.CHORUS
     voices: List[ChorusVoice] = None
     dry_level: float = 0.5
     wet_level: float = 0.5
@@ -83,8 +76,7 @@ class ChorusParams:
 
 
 class DelayLine:
-    """Professional delay line with multiple interpolation methods"""
-    
+    """Professional delay line with multiple interpolation methods"""    
     def __init__(self, max_delay_samples: int, interpolation: InterpolationType = InterpolationType.CUBIC):
         self.max_delay = max_delay_samples
         self.buffer = np.zeros(max_delay_samples + 16)  # Extra space for interpolation
@@ -92,13 +84,11 @@ class DelayLine:
         self.interpolation = interpolation
         
     def write(self, sample: float):
-        """Write sample to delay line"""
-        self.buffer[self.write_pos] = sample
+        """Write sample to delay line"""        self.buffer[self.write_pos] = sample
         self.write_pos = (self.write_pos + 1) % self.max_delay
     
     def read(self, delay_samples: float) -> float:
-        """Read from delay line with interpolation"""
-        # Calculate read position
+        """Read from delay line with interpolation"""        # Calculate read position
         read_pos = self.write_pos - delay_samples
         if read_pos < 0:
             read_pos += self.max_delay
@@ -119,14 +109,12 @@ class DelayLine:
             return self.buffer[int_pos % self.max_delay]
     
     def _linear_interpolate(self, pos: int, frac: float) -> float:
-        """Linear interpolation"""
-        sample1 = self.buffer[pos % self.max_delay]
+        """Linear interpolation"""        sample1 = self.buffer[pos % self.max_delay]
         sample2 = self.buffer[(pos + 1) % self.max_delay]
         return sample1 + frac * (sample2 - sample1)
     
     def _cubic_interpolate(self, pos: int, frac: float) -> float:
-        """Cubic interpolation"""
-        y0 = self.buffer[(pos - 1) % self.max_delay]
+        """Cubic interpolation"""        y0 = self.buffer[(pos - 1) % self.max_delay]
         y1 = self.buffer[pos % self.max_delay]
         y2 = self.buffer[(pos + 1) % self.max_delay]
         y3 = self.buffer[(pos + 2) % self.max_delay]
@@ -139,8 +127,7 @@ class DelayLine:
         return a0 * frac**3 + a1 * frac**2 + a2 * frac + a3
     
     def _hermite_interpolate(self, pos: int, frac: float) -> float:
-        """Hermite interpolation"""
-        y0 = self.buffer[(pos - 1) % self.max_delay]
+        """Hermite interpolation"""        y0 = self.buffer[(pos - 1) % self.max_delay]
         y1 = self.buffer[pos % self.max_delay]
         y2 = self.buffer[(pos + 1) % self.max_delay]
         y3 = self.buffer[(pos + 2) % self.max_delay]
@@ -153,8 +140,7 @@ class DelayLine:
         return ((c3 * frac + c2) * frac + c1) * frac + c0
     
     def _lagrange_interpolate(self, pos: int, frac: float) -> float:
-        """Lagrange interpolation"""
-        y0 = self.buffer[(pos - 1) % self.max_delay]
+        """Lagrange interpolation"""        y0 = self.buffer[(pos - 1) % self.max_delay]
         y1 = self.buffer[pos % self.max_delay]
         y2 = self.buffer[(pos + 1) % self.max_delay]
         y3 = self.buffer[(pos + 2) % self.max_delay]
@@ -168,8 +154,7 @@ class DelayLine:
 
 
 class LFO:
-    """Low Frequency Oscillator with multiple waveforms"""
-    
+    """Low Frequency Oscillator with multiple waveforms"""    
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
         self.phase = 0.0
@@ -179,8 +164,7 @@ class LFO:
         self.step_value = 0.0
         
     def generate(self, frequency: float, waveform: ModulationType, phase_offset: float = 0.0) -> float:
-        """Generate LFO sample"""
-        total_phase = self.phase + np.radians(phase_offset)
+        """Generate LFO sample"""        total_phase = self.phase + np.radians(phase_offset)
         
         if waveform == ModulationType.SINE:
             output = np.sin(total_phase)
@@ -211,8 +195,7 @@ class LFO:
         return output
     
     def _generate_random(self) -> float:
-        """Generate smooth random modulation"""
-        self.random_counter += 1
+        """Generate smooth random modulation"""        self.random_counter += 1
         
         # Change target every 1000 samples (approximately)
         if self.random_counter >= 1000:
@@ -226,28 +209,24 @@ class LFO:
         return self.random_state
     
     def _generate_stepped(self) -> float:
-        """Generate stepped waveform"""
-        phase_normalized = (self.phase % (2 * np.pi)) / (2 * np.pi)
+        """Generate stepped waveform"""        phase_normalized = (self.phase % (2 * np.pi)) / (2 * np.pi)
         step = int(phase_normalized * 8) / 8.0  # 8 steps
         return 2 * step - 1
     
     def reset(self):
-        """Reset LFO phase"""
-        self.phase = 0.0
+        """Reset LFO phase"""        self.phase = 0.0
         self.random_state = 0.0
         self.random_counter = 0
 
 
 class StereoProcessor:
-    """Stereo width and positioning processor"""
-    
+    """Stereo width and positioning processor"""    
     def __init__(self):
         self.mid_buffer = 0.0
         self.side_buffer = 0.0
     
     def process_stereo(self, left: float, right: float, width: float) -> Tuple[float, float]:
-        """Process stereo width"""
-        # Mid/Side processing
+        """Process stereo width"""        # Mid/Side processing
         mid = (left + right) * 0.5
         side = (left - right) * 0.5
         
@@ -261,8 +240,7 @@ class StereoProcessor:
         return new_left, new_right
     
     def apply_panning(self, mono_signal: float, pan: float) -> Tuple[float, float]:
-        """Apply panning to mono signal"""
-        # Equal power panning
+        """Apply panning to mono signal"""        # Equal power panning
         pan_rad = pan * np.pi / 4  # -45° to +45°
         left_gain = np.cos(pan_rad)
         right_gain = np.sin(pan_rad)
@@ -271,8 +249,7 @@ class StereoProcessor:
 
 
 class FilterBank:
-    """High and low cut filters"""
-    
+    """High and low cut filters"""    
     def __init__(self, sample_rate: int):
         self.sample_rate = sample_rate
         self.high_cut_filter = None
@@ -280,8 +257,7 @@ class FilterBank:
         self._update_filters(8000.0, 100.0)
     
     def _update_filters(self, high_cut_hz: float, low_cut_hz: float):
-        """Update filter coefficients"""
-        try:
+        """Update filter coefficients"""        try:
             # High cut (low pass)
             if high_cut_hz < self.sample_rate / 2:
                 b_hp, a_hp = scipy.signal.butter(2, high_cut_hz / (self.sample_rate / 2), 'low')
@@ -296,15 +272,13 @@ class FilterBank:
             logging.error(f"Filter update failed: {e}")
     
     def process(self, sample: float) -> float:
-        """Apply filtering"""
-        # For simplicity, return sample as-is
+        """Apply filtering"""        # For simplicity, return sample as-is
         # In a full implementation, you'd apply the filters here
         return sample
 
 
 class ChorusProcessor:
-    """Professional chorus processor with advanced modulation capabilities"""
-    
+    """Professional chorus processor with advanced modulation capabilities"""    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -323,8 +297,7 @@ class ChorusProcessor:
         self.processed_samples = 0
         
     def _init_processors(self):
-        """Initialize processing components"""
-        try:
+        """Initialize processing components"""        try:
             # Maximum delay calculation (50ms should cover all use cases)
             max_delay_ms = 50.0
             max_delay_samples = int(max_delay_ms * self.sample_rate / 1000)
@@ -356,8 +329,7 @@ class ChorusProcessor:
             raise
     
     def update_parameters(self, **kwargs):
-        """Update chorus parameters"""
-        for key, value in kwargs.items():
+        """Update chorus parameters"""        for key, value in kwargs.items():
             if hasattr(self.params, key):
                 setattr(self.params, key, value)
                 self.logger.debug(f"Updated parameter {key} = {value}")
@@ -367,8 +339,7 @@ class ChorusProcessor:
             self._init_processors()
     
     def add_voice(self, voice: ChorusVoice):
-        """Add a new chorus voice"""
-        self.params.voices.append(voice)
+        """Add a new chorus voice"""        self.params.voices.append(voice)
         
         # Add corresponding processing components
         max_delay_samples = int(50.0 * self.sample_rate / 1000)
@@ -379,8 +350,7 @@ class ChorusProcessor:
         self.logger.info(f"Added chorus voice, total: {len(self.params.voices)}")
     
     def remove_voice(self, index: int):
-        """Remove a chorus voice"""
-        if 0 <= index < len(self.params.voices):
+        """Remove a chorus voice"""        if 0 <= index < len(self.params.voices):
             self.params.voices.pop(index)
             self.delay_lines_left.pop(index)
             self.delay_lines_right.pop(index)
@@ -389,8 +359,7 @@ class ChorusProcessor:
             self.logger.info(f"Removed voice {index}, remaining: {len(self.params.voices)}")
     
     def process_sample(self, left: float, right: float) -> Tuple[float, float]:
-        """Process single stereo sample"""
-        try:
+        """Process single stereo sample"""        try:
             # Store dry signal
             dry_left, dry_right = left, right
             
@@ -482,8 +451,7 @@ class ChorusProcessor:
             return left, right
     
     def process_buffer(self, audio_buffer: np.ndarray) -> np.ndarray:
-        """Process audio buffer (stereo interleaved or separate channels)"""
-        if audio_buffer.ndim == 1:
+        """Process audio buffer (stereo interleaved or separate channels)"""        if audio_buffer.ndim == 1:
             # Mono to stereo
             stereo_buffer = np.column_stack([audio_buffer, audio_buffer])
         elif audio_buffer.ndim == 2 and audio_buffer.shape[1] == 2:
@@ -516,8 +484,7 @@ class ChorusProcessor:
                 self.is_processing = False
     
     def create_preset(self, name: str) -> Dict[str, Any]:
-        """Create preset from current parameters"""
-        presets = {
+        """Create preset from current parameters"""        presets = {
             'classic_chorus': {
                 'mode': ChorusMode.CHORUS,
                 'voices': [
@@ -577,8 +544,7 @@ class ChorusProcessor:
         return presets.get(name, presets['classic_chorus'])
     
     def apply_preset(self, name: str):
-        """Apply a preset to the processor"""
-        preset = self.create_preset(name)
+        """Apply a preset to the processor"""        preset = self.create_preset(name)
         
         # Update parameters from preset
         for key, value in preset.items():
@@ -591,8 +557,7 @@ class ChorusProcessor:
         self.logger.info(f"Applied preset: {name}")
     
     def get_processor_info(self) -> Dict[str, Any]:
-        """Get current processor information"""
-        return {
+        """Get current processor information"""        return {
             'mode': self.params.mode.value,
             'num_voices': len(self.params.voices),
             'sample_rate': self.sample_rate,
@@ -619,8 +584,7 @@ class ChorusProcessor:
         }
     
     def reset(self):
-        """Reset processor state"""
-        # Clear delay line buffers
+        """Reset processor state"""        # Clear delay line buffers
         for delay_line in self.delay_lines_left + self.delay_lines_right:
             delay_line.buffer.fill(0)
             delay_line.write_pos = 0
@@ -639,8 +603,7 @@ class ChorusProcessor:
         self.logger.info("Chorus processor reset")
     
     def __del__(self):
-        """Cleanup"""
-        if hasattr(self, 'processing_lock'):
+        """Cleanup"""        if hasattr(self, 'processing_lock'):
             with self.processing_lock:
                 pass  # Ensure any ongoing processing completes
         self.sample_rate = sample_rate
@@ -670,8 +633,7 @@ class ChorusProcessor:
         self.logger.info("ChorusProcessor initialized")
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply chorus processing"""
-        try:
+        """Apply chorus processing"""        try:
             processed_audio = np.zeros_like(audio_data)
             
             for i, sample in enumerate(audio_data):
@@ -687,8 +649,7 @@ class ChorusProcessor:
             return audio_data
     
     def _process_sample(self, input_sample: float) -> float:
-        """Process single sample with chorus"""
-        # Add input to delay buffer
+        """Process single sample with chorus"""        # Add input to delay buffer
         self.delay_buffer[self.buffer_index] = input_sample
         
         # Generate modulated outputs for each voice
@@ -728,8 +689,7 @@ class ChorusProcessor:
         return output
     
     def _generate_lfo(self, phase: float) -> float:
-        """Generate LFO modulation signal"""
-        if self.modulation_type == ModulationType.SINE:
+        """Generate LFO modulation signal"""        if self.modulation_type == ModulationType.SINE:
             return np.sin(phase)
         elif self.modulation_type == ModulationType.TRIANGLE:
             return 2 * np.arcsin(np.sin(phase)) / np.pi
@@ -741,8 +701,7 @@ class ChorusProcessor:
             return np.sin(phase)
     
     def _get_delayed_sample(self, delay_samples: float) -> float:
-        """Get delayed sample with linear interpolation"""
-        # Calculate buffer positions
+        """Get delayed sample with linear interpolation"""        # Calculate buffer positions
         delay_int = int(delay_samples)
         delay_frac = delay_samples - delay_int
         
@@ -759,8 +718,7 @@ class ChorusProcessor:
     def set_parameters(self, rate: float = None, depth: float = None,
                       delay_time: float = None, feedback: float = None,
                       wet_level: float = None, voices: int = None):
-        """Set chorus parameters"""
-        if rate is not None:
+        """Set chorus parameters"""        if rate is not None:
             self.rate = max(0.01, min(10.0, rate))
         if depth is not None:
             self.depth = np.clip(depth, 0.0, 1.0)
@@ -780,8 +738,7 @@ class ChorusProcessor:
 
 
 class FlangerProcessor:
-    """Professional flanger processor"""
-    
+    """Professional flanger processor"""    
     def __init__(self, sample_rate: int = 44100):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.sample_rate = sample_rate
@@ -803,8 +760,7 @@ class FlangerProcessor:
         self.logger.info("FlangerProcessor initialized")
     
     def process(self, audio_data: np.ndarray) -> np.ndarray:
-        """Apply flanger processing"""
-        try:
+        """Apply flanger processing"""        try:
             processed_audio = np.zeros_like(audio_data)
             
             for i, sample in enumerate(audio_data):
@@ -820,8 +776,7 @@ class FlangerProcessor:
             return audio_data
     
     def _process_sample(self, input_sample: float) -> float:
-        """Process single sample with flanger"""
-        # Add input to delay buffer with feedback
+        """Process single sample with flanger"""        # Add input to delay buffer with feedback
         self.delay_buffer[self.buffer_index] = input_sample
         
         # Generate LFO modulation
@@ -852,8 +807,7 @@ class FlangerProcessor:
         return output
     
     def _get_delayed_sample(self, delay_samples: float) -> float:
-        """Get delayed sample with interpolation"""
-        delay_int = int(delay_samples)
+        """Get delayed sample with interpolation"""        delay_int = int(delay_samples)
         delay_frac = delay_samples - delay_int
         
         read_pos1 = (self.buffer_index - delay_int) % len(self.delay_buffer)

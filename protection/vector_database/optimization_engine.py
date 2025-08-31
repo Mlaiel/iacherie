@@ -1,5 +1,4 @@
-"""
-🔧 Vector Database Optimization Engine
+"""🔧 Vector Database Optimization Engine
 ======================================
 
 Advanced optimization engine for vector database performance tuning.
@@ -17,7 +16,6 @@ des droits d'auteur passible de poursuites judiciaires.
 
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class OptimizationType(Enum):
-    """Types of optimizations supported"""
-    INDEX_STRUCTURE = "index_structure"
+    """Types of optimizations supported"""    INDEX_STRUCTURE = "index_structure"
     SEARCH_PARAMETERS = "search_parameters"
     MEMORY_USAGE = "memory_usage"
     QUERY_PERFORMANCE = "query_performance"
@@ -49,8 +46,7 @@ class OptimizationType(Enum):
 
 
 class OptimizationLevel(Enum):
-    """Optimization intensity levels"""
-    CONSERVATIVE = "conservative"
+    """Optimization intensity levels"""    CONSERVATIVE = "conservative"
     MODERATE = "moderate"
     AGGRESSIVE = "aggressive"
     EXPERT = "expert"
@@ -58,8 +54,7 @@ class OptimizationLevel(Enum):
 
 @dataclass
 class OptimizationRecommendation:
-    """Individual optimization recommendation"""
-    optimization_id: str
+    """Individual optimization recommendation"""    optimization_id: str
     optimization_type: OptimizationType
     current_value: Any
     recommended_value: Any
@@ -72,8 +67,7 @@ class OptimizationRecommendation:
 
 @dataclass
 class OptimizationResult:
-    """Result of optimization implementation"""
-    optimization_id: str
+    """Result of optimization implementation"""    optimization_id: str
     implemented_at: float
     before_metrics: Dict[str, float]
     after_metrics: Dict[str, float]
@@ -84,8 +78,7 @@ class OptimizationResult:
 
 @dataclass
 class PerformanceBenchmark:
-    """Performance benchmark measurement"""
-    benchmark_id: str
+    """Performance benchmark measurement"""    benchmark_id: str
     test_type: str
     dataset_size: int
     query_count: int
@@ -99,8 +92,7 @@ class PerformanceBenchmark:
 
 
 class IndexAnalyzer:
-    """Analyze index characteristics and performance"""
-    
+    """Analyze index characteristics and performance"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.IndexAnalyzer")
@@ -110,8 +102,7 @@ class IndexAnalyzer:
         self.cache_ttl = config.get('analysis_cache_ttl', 300)  # 5 minutes
     
     async def analyze_index_efficiency(self, index, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze current index efficiency and characteristics"""
-        try:
+        """Analyze current index efficiency and characteristics"""        try:
             analysis_key = f"{metadata.get('index_type', 'unknown')}_{metadata.get('total_vectors', 0)}"
             
             # Check cache
@@ -171,8 +162,7 @@ class IndexAnalyzer:
             return {'error': str(e)}
     
     def _assess_index_type_efficiency(self, index_type: str, total_vectors: int, dimension: int) -> float:
-        """Assess efficiency of current index type for dataset characteristics"""
-        
+        """Assess efficiency of current index type for dataset characteristics"""        
         # Efficiency scoring based on dataset size and characteristics
         if total_vectors < 1000:
             # Small dataset - flat indexes are fine
@@ -200,8 +190,7 @@ class IndexAnalyzer:
                 return 0.4  # Poor choice for large datasets
     
     def _generate_index_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate specific recommendations based on analysis"""
-        recommendations = []
+        """Generate specific recommendations based on analysis"""        recommendations = []
         
         total_vectors = analysis['total_vectors']
         dimension = analysis['dimension']
@@ -234,8 +223,7 @@ class IndexAnalyzer:
 
 
 class ParameterOptimizer:
-    """Optimize index and search parameters"""
-    
+    """Optimize index and search parameters"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ParameterOptimizer")
@@ -255,8 +243,7 @@ class ParameterOptimizer:
         current_params: Dict[str, Any],
         optimization_level: OptimizationLevel = OptimizationLevel.MODERATE
     ) -> List[OptimizationRecommendation]:
-        """Optimize search parameters through benchmarking"""
-        try:
+        """Optimize search parameters through benchmarking"""        try:
             recommendations = []
             
             index_type = current_params.get('index_type', 'unknown')
@@ -291,8 +278,7 @@ class ParameterOptimizer:
         optimization_level: OptimizationLevel,
         recommendations: List[OptimizationRecommendation]
     ):
-        """Optimize IVF-specific parameters"""
-        try:
+        """Optimize IVF-specific parameters"""        try:
             current_nprobe = current_params.get('nprobe', 1)
             total_vectors = current_params.get('total_vectors', 0)
             nlist = current_params.get('nlist', 100)
@@ -352,8 +338,7 @@ class ParameterOptimizer:
         optimization_level: OptimizationLevel,
         recommendations: List[OptimizationRecommendation]
     ):
-        """Optimize HNSW-specific parameters"""
-        try:
+        """Optimize HNSW-specific parameters"""        try:
             current_ef_search = current_params.get('ef_search', 50)
             
             # Define ef_search test range
@@ -411,8 +396,7 @@ class ParameterOptimizer:
         optimization_level: OptimizationLevel,
         recommendations: List[OptimizationRecommendation]
     ):
-        """Optimize general search parameters"""
-        try:
+        """Optimize general search parameters"""        try:
             # Batch size optimization
             current_batch_size = current_params.get('batch_size', 1)
             
@@ -439,8 +423,7 @@ class ParameterOptimizer:
 
 
 class BenchmarkRunner:
-    """Run performance benchmarks for optimization decisions"""
-    
+    """Run performance benchmarks for optimization decisions"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.BenchmarkRunner")
@@ -460,8 +443,7 @@ class BenchmarkRunner:
         configuration: Dict[str, Any],
         benchmark_name: str = "default"
     ) -> PerformanceBenchmark:
-        """Run comprehensive performance benchmark"""
-        try:
+        """Run comprehensive performance benchmark"""        try:
             benchmark_id = f"{benchmark_name}_{int(time.time())}"
             
             # Warmup
@@ -537,8 +519,7 @@ class BenchmarkRunner:
             raise
     
     def compare_benchmarks(self, benchmark1: PerformanceBenchmark, benchmark2: PerformanceBenchmark) -> Dict[str, float]:
-        """Compare two benchmarks and calculate improvement percentages"""
-        try:
+        """Compare two benchmarks and calculate improvement percentages"""        try:
             comparison = {}
             
             # Latency improvements (lower is better)
@@ -572,8 +553,7 @@ class BenchmarkRunner:
 
 
 class OptimizationEngine:
-    """Main optimization engine coordinating all optimization components"""
-    
+    """Main optimization engine coordinating all optimization components"""    
     def __init__(self, vector_store, config: Dict[str, Any]):
         self.vector_store = vector_store
         self.config = config
@@ -598,15 +578,13 @@ class OptimizationEngine:
         self.optimization_task = None
     
     async def start_optimization_engine(self):
-        """Start automatic optimization engine"""
-        if self.auto_optimization:
+        """Start automatic optimization engine"""        if self.auto_optimization:
             self.optimization_task = asyncio.create_task(self._optimization_loop())
         
         self.logger.info("Optimization engine started")
     
     async def stop_optimization_engine(self):
-        """Stop automatic optimization engine"""
-        if self.optimization_task:
+        """Stop automatic optimization engine"""        if self.optimization_task:
             self.optimization_task.cancel()
             try:
                 await self.optimization_task
@@ -621,8 +599,7 @@ class OptimizationEngine:
         test_queries: Optional[List[np.ndarray]] = None,
         optimization_level: OptimizationLevel = OptimizationLevel.MODERATE
     ) -> List[OptimizationRecommendation]:
-        """Perform comprehensive analysis and generate optimization recommendations"""
-        try:
+        """Perform comprehensive analysis and generate optimization recommendations"""        try:
             # Get current index metadata
             if hasattr(self.vector_store, 'get_stats'):
                 index_stats = await self.vector_store.get_stats()
@@ -691,8 +668,7 @@ class OptimizationEngine:
             return []
     
     async def implement_optimization(self, recommendation: OptimizationRecommendation) -> OptimizationResult:
-        """Implement a specific optimization recommendation"""
-        try:
+        """Implement a specific optimization recommendation"""        try:
             # Record before metrics
             before_benchmark = None
             if hasattr(self.vector_store, 'get_stats'):
@@ -767,8 +743,7 @@ class OptimizationEngine:
             )
     
     async def _implement_parameter_optimization(self, recommendation: OptimizationRecommendation) -> bool:
-        """Implement parameter optimization"""
-        try:
+        """Implement parameter optimization"""        try:
             parameter = recommendation.metadata.get('parameter')
             new_value = recommendation.recommended_value
             
@@ -795,8 +770,7 @@ class OptimizationEngine:
             return False
     
     async def _implement_index_optimization(self, recommendation: OptimizationRecommendation) -> bool:
-        """Implement index structure optimization"""
-        try:
+        """Implement index structure optimization"""        try:
             # Index structure changes require rebuilding, which is complex
             # For now, log the recommendation for manual implementation
             self.logger.info(f"Index optimization recommended: {recommendation.description}")
@@ -807,8 +781,7 @@ class OptimizationEngine:
             return False
     
     async def _implement_cache_optimization(self, recommendation: OptimizationRecommendation) -> bool:
-        """Implement cache optimization"""
-        try:
+        """Implement cache optimization"""        try:
             # Implement cache-related optimizations
             self.logger.info(f"Cache optimization recommended: {recommendation.description}")
             return True
@@ -818,8 +791,7 @@ class OptimizationEngine:
             return False
     
     async def _optimization_loop(self):
-        """Background optimization loop"""
-        while True:
+        """Background optimization loop"""        while True:
             try:
                 # Run optimization analysis
                 recommendations = await self.analyze_and_optimize()
@@ -844,8 +816,7 @@ class OptimizationEngine:
                 await asyncio.sleep(3600)  # Retry in 1 hour
     
     def get_optimization_summary(self) -> Dict[str, Any]:
-        """Get summary of optimization activities"""
-        try:
+        """Get summary of optimization activities"""        try:
             successful_optimizations = [
                 opt for opt in self.optimization_history 
                 if opt.success

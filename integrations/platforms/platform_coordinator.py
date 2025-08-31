@@ -1,5 +1,4 @@
-"""
-Platform Coordinator
+"""Platform Coordinator
 ===================
 
 Central coordinator for managing all platform API integrations.
@@ -8,7 +7,6 @@ Orchestrates authentication, data synchronization, and cross-platform operations
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -31,8 +29,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class PlatformStatus:
-    """Platform connection and health status"""
-    platform: str
+    """Platform connection and health status"""    platform: str
     is_connected: bool
     is_authenticated: bool
     last_sync: Optional[datetime] = None
@@ -43,8 +40,7 @@ class PlatformStatus:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Aggregated analytics across all platforms"""
-    date_range: Dict[str, str]
+    """Aggregated analytics across all platforms"""    date_range: Dict[str, str]
     total_content: int = 0
     total_views: int = 0
     total_engagement: int = 0
@@ -55,8 +51,7 @@ class CrossPlatformAnalytics:
 
 
 class PlatformCoordinator:
-    """Central coordinator for all platform integrations"""
-    
+    """Central coordinator for all platform integrations"""    
     def __init__(
         self,
         oauth_manager: Optional[PlatformOAuthManager] = None,
@@ -82,8 +77,7 @@ class PlatformCoordinator:
         self.platform_status: Dict[str, PlatformStatus] = {}
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        await self.oauth_manager.__aenter__()
+        """Async context manager entry"""        await self.oauth_manager.__aenter__()
         await self.rate_limiter.__aenter__()
         await self.youtube_api.__aenter__()
         await self.instagram_api.__aenter__()
@@ -95,8 +89,7 @@ class PlatformCoordinator:
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        await self.oauth_manager.__aexit__(exc_type, exc_val, exc_tb)
+        """Async context manager exit"""        await self.oauth_manager.__aexit__(exc_type, exc_val, exc_tb)
         await self.rate_limiter.__aexit__(exc_type, exc_val, exc_tb)
         await self.youtube_api.__aexit__(exc_type, exc_val, exc_tb)
         await self.instagram_api.__aexit__(exc_type, exc_val, exc_tb)
@@ -114,8 +107,7 @@ class PlatformCoordinator:
         redirect_uri: str,
         scopes: Optional[List[str]] = None
     ):
-        """Configure OAuth settings for a platform"""
-        self.oauth_manager.configure_platform(
+        """Configure OAuth settings for a platform"""        self.oauth_manager.configure_platform(
             platform, client_id, client_secret, redirect_uri, scopes
         )
         logger.info(f"Configured OAuth for platform: {platform}")
@@ -125,8 +117,7 @@ class PlatformCoordinator:
         platform: str,
         user_id: str
     ) -> str:
-        """Initiate OAuth authentication for a platform"""
-        auth_url, state = self.oauth_manager.generate_authorization_url(platform, user_id)
+        """Initiate OAuth authentication for a platform"""        auth_url, state = self.oauth_manager.generate_authorization_url(platform, user_id)
         logger.info(f"Generated auth URL for {platform}: {auth_url[:100]}...")
         return auth_url
         
@@ -137,8 +128,7 @@ class PlatformCoordinator:
         authorization_code: str,
         state: str
     ) -> bool:
-        """Complete OAuth authentication and store tokens"""
-        try:
+        """Complete OAuth authentication and store tokens"""        try:
             tokens = await self.oauth_manager.exchange_code_for_tokens(
                 platform, authorization_code, state
             )
@@ -171,8 +161,7 @@ class PlatformCoordinator:
             return False
             
     async def get_user_tokens(self, user_id: str, platform: str) -> Optional[OAuthTokens]:
-        """Get stored tokens for a user and platform"""
-        user_tokens = self.tokens_storage.get(user_id, {})
+        """Get stored tokens for a user and platform"""        user_tokens = self.tokens_storage.get(user_id, {})
         tokens = user_tokens.get(platform)
         
         if tokens and tokens.expires_at and datetime.now() >= tokens.expires_at:
@@ -195,8 +184,7 @@ class PlatformCoordinator:
         return tokens
         
     async def check_platform_health(self, user_id: str, platform: str) -> PlatformStatus:
-        """Check health status of a platform connection"""
-        tokens = await self.get_user_tokens(user_id, platform)
+        """Check health status of a platform connection"""        tokens = await self.get_user_tokens(user_id, platform)
         
         if not tokens:
             status = PlatformStatus(
@@ -234,8 +222,7 @@ class PlatformCoordinator:
         return status
         
     async def get_all_platform_status(self, user_id: str) -> Dict[str, PlatformStatus]:
-        """Get health status for all platforms for a user"""
-        supported_platforms = self.oauth_manager.get_supported_platforms()
+        """Get health status for all platforms for a user"""        supported_platforms = self.oauth_manager.get_supported_platforms()
         status_dict = {}
         
         tasks = []
@@ -266,8 +253,7 @@ class PlatformCoordinator:
         platforms: Optional[List[str]] = None,
         platform_specific_data: Optional[Dict[str, Dict[str, Any]]] = None
     ) -> Dict[str, Any]:
-        """Sync content across multiple platforms"""
-        
+        """Sync content across multiple platforms"""        
         platforms = platforms or ["youtube", "instagram", "tiktok", "twitter"]
         platform_specific_data = platform_specific_data or {}
         results = {}
@@ -336,8 +322,7 @@ class PlatformCoordinator:
         end_date: datetime,
         platforms: Optional[List[str]] = None
     ) -> CrossPlatformAnalytics:
-        """Get aggregated analytics across all platforms"""
-        
+        """Get aggregated analytics across all platforms"""        
         platforms = platforms or ["youtube", "instagram", "tiktok", "spotify", "twitter"]
         platform_breakdown = {}
         
@@ -434,8 +419,7 @@ class PlatformCoordinator:
         content_type: str,
         keywords: List[str]
     ) -> str:
-        """Set up content protection monitoring across platforms"""
-        
+        """Set up content protection monitoring across platforms"""        
         platforms = ["youtube", "facebook", "instagram", "tiktok"]
         
         monitor_id = await self.dmca_api.create_content_monitor(
@@ -452,8 +436,7 @@ class PlatformCoordinator:
         original_content_url: str,
         description: str
     ) -> str:
-        """Handle copyright infringement with automated takedown"""
-        
+        """Handle copyright infringement with automated takedown"""        
         copyright_holder = f"User {user_id}"  # In production, get from user profile
         
         takedown_request = await self.dmca_api.submit_takedown_request(
@@ -469,8 +452,7 @@ class PlatformCoordinator:
         platform: str,
         insight_type: str = "overview"
     ) -> Dict[str, Any]:
-        """Get detailed insights for a specific platform"""
-        
+        """Get detailed insights for a specific platform"""        
         tokens = await self.get_user_tokens(user_id, platform)
         if not tokens:
             return {"error": "No valid tokens for platform"}
@@ -504,8 +486,7 @@ class PlatformCoordinator:
             return {"error": str(e)}
             
     async def cleanup_expired_tokens(self):
-        """Clean up expired tokens and OAuth states"""
-        current_time = datetime.now()
+        """Clean up expired tokens and OAuth states"""        current_time = datetime.now()
         
         for user_id, user_tokens in self.tokens_storage.items():
             expired_platforms = []
@@ -522,8 +503,7 @@ class PlatformCoordinator:
         self.oauth_manager.cleanup_expired_states()
         
     async def disconnect_platform(self, user_id: str, platform: str) -> bool:
-        """Disconnect a platform for a user"""
-        try:
+        """Disconnect a platform for a user"""        try:
             # Remove stored tokens
             if user_id in self.tokens_storage and platform in self.tokens_storage[user_id]:
                 del self.tokens_storage[user_id][platform]

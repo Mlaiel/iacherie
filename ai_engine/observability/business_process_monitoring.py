@@ -1,5 +1,4 @@
-"""
-Business Process Monitoring - IA Influencer Agent
+"""Business Process Monitoring - IA Influencer Agent
 
 Advanced monitoring and analytics for the core business processes:
 - Multi-format content upload and processing
@@ -17,7 +16,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import asyncio
 import json
 import logging
@@ -35,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content type categories"""
-    MUSIC = "music"
+    """Content type categories"""    MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
     BLOG_POST = "blog_post"
@@ -46,8 +43,7 @@ class ContentType(Enum):
 
 
 class CreatorType(Enum):
-    """Creator type categories"""
-    MUSICIAN = "musician"
+    """Creator type categories"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -57,8 +53,7 @@ class CreatorType(Enum):
 
 
 class ProcessStage(Enum):
-    """Business process stages"""
-    UPLOAD = "upload"
+    """Business process stages"""    UPLOAD = "upload"
     AI_ANALYSIS = "ai_analysis"
     PROTECTION = "protection"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -70,8 +65,7 @@ class ProcessStage(Enum):
 
 
 class ProcessStatus(Enum):
-    """Process execution status"""
-    INITIATED = "initiated"
+    """Process execution status"""    INITIATED = "initiated"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -80,8 +74,7 @@ class ProcessStatus(Enum):
 
 
 class DistributionPlatform(Enum):
-    """Distribution platforms"""
-    YOUTUBE = "youtube"
+    """Distribution platforms"""    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -94,8 +87,7 @@ class DistributionPlatform(Enum):
 
 @dataclass
 class ContentProcessingMetric:
-    """Metrics for content processing"""
-    content_id: str
+    """Metrics for content processing"""    content_id: str
     content_type: ContentType
     creator_type: CreatorType
     stage: ProcessStage
@@ -118,8 +110,7 @@ class ContentProcessingMetric:
 
 @dataclass
 class BusinessProcessInsight:
-    """Business process insight"""
-    insight_type: str
+    """Business process insight"""    insight_type: str
     stage: ProcessStage
     message: str
     severity: str
@@ -131,8 +122,7 @@ class BusinessProcessInsight:
 
 
 class ContentProcessingMonitor:
-    """Monitor for content processing pipeline"""
-    
+    """Monitor for content processing pipeline"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -154,8 +144,7 @@ class ContentProcessingMonitor:
                                      stage: ProcessStage,
                                      status: ProcessStatus,
                                      **kwargs) -> None:
-        """Track content processing through pipeline"""
-        try:
+        """Track content processing through pipeline"""        try:
             metric = ContentProcessingMetric(
                 content_id=content_id,
                 content_type=content_type,
@@ -210,8 +199,7 @@ class ContentProcessingMonitor:
             self.logger.error(f"Error tracking content processing: {e}")
     
     async def _analyze_processing_trends(self, metric: ContentProcessingMetric) -> None:
-        """Analyze processing trends and generate insights"""
-        try:
+        """Analyze processing trends and generate insights"""        try:
             insights = []
             
             # Check for processing time anomalies
@@ -260,8 +248,7 @@ class ContentProcessingMonitor:
             self.logger.error(f"Error analyzing processing trends: {e}")
     
     async def _process_insight(self, insight: BusinessProcessInsight) -> None:
-        """Process business insight"""
-        try:
+        """Process business insight"""        try:
             self.logger.info(f"Business insight: {insight.message}")
             
             # Store insight for reporting
@@ -275,16 +262,14 @@ class ContentProcessingMonitor:
             self.logger.error(f"Error processing insight: {e}")
     
     async def _send_alert(self, insight: BusinessProcessInsight) -> None:
-        """Send alert for critical insights"""
-        try:
+        """Send alert for critical insights"""        try:
             # Implementation would send alerts via configured channels
             self.logger.warning(f"ALERT: {insight.message}")
         except Exception as e:
             self.logger.error(f"Error sending alert: {e}")
     
     async def get_pipeline_performance_report(self) -> Dict[str, Any]:
-        """Get comprehensive pipeline performance report"""
-        try:
+        """Get comprehensive pipeline performance report"""        try:
             with self._lock:
                 total_processed = len(self.processing_metrics)
                 
@@ -330,8 +315,7 @@ class ContentProcessingMonitor:
             return {}
     
     def _calculate_trend(self, values: List[float], window: int = 5) -> str:
-        """Calculate trend direction for a series of values"""
-        if len(values) < window:
+        """Calculate trend direction for a series of values"""        if len(values) < window:
             return "insufficient_data"
         
         recent_avg = statistics.mean(values[-window:])
@@ -346,8 +330,7 @@ class ContentProcessingMonitor:
 
 
 class CollaborationMonitor:
-    """Monitor collaboration matching and networking processes"""
-    
+    """Monitor collaboration matching and networking processes"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -365,8 +348,7 @@ class CollaborationMonitor:
                                       match_score: float,
                                       match_successful: bool,
                                       collaboration_type: str = "content") -> None:
-        """Track collaboration matching results"""
-        try:
+        """Track collaboration matching results"""        try:
             with self._lock:
                 match_key = f"{min(creator1_id, creator2_id)}_{max(creator1_id, creator2_id)}"
                 self.match_success_rates[collaboration_type].append(match_successful)
@@ -410,8 +392,7 @@ class CollaborationMonitor:
             self.logger.error(f"Error tracking collaboration match: {e}")
     
     async def get_collaboration_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive collaboration analytics"""
-        try:
+        """Get comprehensive collaboration analytics"""        try:
             with self._lock:
                 # Overall success rates by type
                 success_rates_by_type = {}
@@ -452,8 +433,7 @@ class CollaborationMonitor:
             return {}
     
     def _calculate_network_growth_trend(self) -> str:
-        """Calculate network growth trend"""
-        if len(self.collaboration_outcomes) < 10:
+        """Calculate network growth trend"""        if len(self.collaboration_outcomes) < 10:
             return "insufficient_data"
         
         # Compare recent growth vs historical
@@ -482,8 +462,7 @@ class CollaborationMonitor:
 
 
 class MonetizationMonitor:
-    """Monitor monetization and revenue generation processes"""
-    
+    """Monitor monetization and revenue generation processes"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -502,8 +481,7 @@ class MonetizationMonitor:
                                 revenue_type: str,
                                 amount: float,
                                 currency: str = "USD") -> None:
-        """Track revenue generation event"""
-        try:
+        """Track revenue generation event"""        try:
             with self._lock:
                 revenue_event = {
                     'timestamp': datetime.now(timezone.utc),
@@ -553,8 +531,7 @@ class MonetizationMonitor:
             self.logger.error(f"Error tracking revenue event: {e}")
     
     async def get_monetization_report(self) -> Dict[str, Any]:
-        """Get comprehensive monetization report"""
-        try:
+        """Get comprehensive monetization report"""        try:
             with self._lock:
                 # Calculate total revenue
                 total_revenue = sum(
@@ -613,8 +590,7 @@ class MonetizationMonitor:
 
 
 class BusinessProcessOrchestrator:
-    """Orchestrator for all business process monitoring"""
-    
+    """Orchestrator for all business process monitoring"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(self.__class__.__name__)
@@ -627,8 +603,7 @@ class BusinessProcessOrchestrator:
         self._active = True
     
     async def get_comprehensive_business_report(self) -> Dict[str, Any]:
-        """Get comprehensive business intelligence report"""
-        try:
+        """Get comprehensive business intelligence report"""        try:
             # Gather reports from all monitors
             pipeline_report = await self.content_monitor.get_pipeline_performance_report()
             collaboration_report = await self.collaboration_monitor.get_collaboration_analytics()
@@ -675,8 +650,7 @@ class BusinessProcessOrchestrator:
                                        pipeline_report: Dict,
                                        collaboration_report: Dict,
                                        monetization_report: Dict) -> float:
-        """Calculate overall platform health score (0-100)"""
-        try:
+        """Calculate overall platform health score (0-100)"""        try:
             scores = []
             
             # Pipeline health (30% weight)
@@ -701,11 +675,9 @@ class BusinessProcessOrchestrator:
             return 0.0
     
     async def start_monitoring(self) -> None:
-        """Start all monitoring processes"""
-        self.logger.info("Starting business process monitoring...")
+        """Start all monitoring processes"""        self.logger.info("Starting business process monitoring...")
         self._active = True
     
     async def stop_monitoring(self) -> None:
-        """Stop all monitoring processes"""
-        self.logger.info("Stopping business process monitoring...")
+        """Stop all monitoring processes"""        self.logger.info("Stopping business process monitoring...")
         self._active = False

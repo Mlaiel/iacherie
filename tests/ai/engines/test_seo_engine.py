@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-SEO Engine Testing Module
+"""SEO Engine Testing Module
 
 Comprehensive ultra-advanced testing suite for SEOEngine.
 Enterprise-grade validation with 100% coverage and industrial performance standards.
@@ -46,7 +43,6 @@ IN IMMEDIATE LEGAL PROSECUTION UNDER INTERNATIONAL COPYRIGHT LAW.
 
 🔒 NO UNAUTHORIZED USE, COPYING, MODIFICATION, OR DISTRIBUTION ALLOWED.
 """
-
 import pytest
 import sys
 import os
@@ -74,11 +70,9 @@ from seo_engine import (
 
 class TestSEOEngine:
     """Comprehensive test suite for SEOEngine"""
-
     @pytest.fixture
     async def seo_engine(self):
-        """Create SEO engine instance"""
-        config = {
+        """Create SEO engine instance"""        config = {
             'api_key': 'test_key',
             'max_keywords': 50,
             'analysis_depth': 'comprehensive',
@@ -92,8 +86,7 @@ class TestSEOEngine:
 
     @pytest.fixture
     def sample_content(self):
-        """Sample content for testing"""
-        return {
+        """Sample content for testing"""        return {
             'title': 'Ultimate Guide to Music Production in 2025',
             'content': '''
             Music production has evolved significantly in recent years. Modern producers use advanced 
@@ -121,8 +114,7 @@ class TestSEOEngine:
 
     @pytest.fixture
     def sample_seo_metadata(self):
-        """Sample SEO metadata"""
-        return SEOMetadata(
+        """Sample SEO metadata"""        return SEOMetadata(
             title="Music Production Guide 2025 | Professional Tips & Techniques",
             description="Learn professional music production techniques with our comprehensive guide. Discover the best DAWs, mixing tips, and industry secrets from expert producers.",
             keywords=["music production", "DAW", "audio engineering", "mixing", "mastering"],
@@ -145,8 +137,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_engine_initialization(self, seo_engine):
-        """Test SEO engine initialization"""
-        assert seo_engine.is_initialized
+        """Test SEO engine initialization"""        assert seo_engine.is_initialized
         assert seo_engine.config is not None
         assert hasattr(seo_engine, 'keyword_tools')
         assert hasattr(seo_engine, 'supported_platforms')
@@ -154,8 +145,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_keyword_extraction(self, seo_engine, sample_content):
-        """Test keyword extraction from content"""
-        keywords = await seo_engine.extract_keywords(
+        """Test keyword extraction from content"""        keywords = await seo_engine.extract_keywords(
             sample_content['content'],
             max_keywords=10
         )
@@ -173,8 +163,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_keyword_analysis(self, seo_engine):
-        """Test comprehensive keyword analysis"""
-        target_keywords = ['music production', 'DAW software', 'audio mixing']
+        """Test comprehensive keyword analysis"""        target_keywords = ['music production', 'DAW software', 'audio mixing']
         
         analysis = await seo_engine.analyze_keywords(target_keywords)
         
@@ -189,8 +178,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_content_optimization(self, seo_engine, sample_content):
-        """Test content optimization for SEO"""
-        target_keywords = ['music production', 'DAW', 'audio engineering']
+        """Test content optimization for SEO"""        target_keywords = ['music production', 'DAW', 'audio engineering']
         
         optimization = await seo_engine.optimize_content(
             content=sample_content['content'],
@@ -210,8 +198,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_meta_tags_generation(self, seo_engine, sample_content):
-        """Test meta tags generation"""
-        meta_tags = await seo_engine.generate_meta_tags(
+        """Test meta tags generation"""        meta_tags = await seo_engine.generate_meta_tags(
             title=sample_content['title'],
             content=sample_content['content'],
             target_keywords=['music production', 'DAW']
@@ -228,8 +215,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_readability_analysis(self, seo_engine, sample_content):
-        """Test content readability analysis"""
-        readability = await seo_engine.analyze_readability(sample_content['content'])
+        """Test content readability analysis"""        readability = await seo_engine.analyze_readability(sample_content['content'])
         
         assert 'flesch_reading_ease' in readability
         assert 'flesch_kincaid_grade' in readability
@@ -240,10 +226,8 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio 
     async def test_technical_seo_audit(self, seo_engine):
-        """Test technical SEO audit"""
-        url = "https://example.com/music-production-guide"
-        html_content = """
-        <!DOCTYPE html>
+        """Test technical SEO audit"""        url = "https://example.com/music-production-guide"
+        html_content = """        <!DOCTYPE html>
         <html lang="en">
         <head>
             <title>Music Production Guide</title>
@@ -255,8 +239,7 @@ class TestSEOEngine:
             <p>Content here...</p>
         </body>
         </html>
-        """
-        
+        """        
         audit = await seo_engine.technical_seo_audit(url, html_content)
         
         assert 'page_speed' in audit
@@ -269,8 +252,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_competitor_analysis(self, seo_engine):
-        """Test competitor SEO analysis"""
-        competitors = [
+        """Test competitor SEO analysis"""        competitors = [
             'https://competitor1.com/music-production',
             'https://competitor2.com/audio-engineering'
         ]
@@ -286,8 +268,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_local_seo_optimization(self, seo_engine):
-        """Test local SEO optimization"""
-        business_info = {
+        """Test local SEO optimization"""        business_info = {
             'name': 'Berlin Music Studio',
             'address': 'Alexanderplatz 1, Berlin, Germany',
             'phone': '+49 30 12345678',
@@ -306,8 +287,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_platform_specific_optimization(self, seo_engine, sample_content):
-        """Test platform-specific SEO optimization"""
-        platforms = ['youtube', 'instagram', 'tiktok', 'spotify']
+        """Test platform-specific SEO optimization"""        platforms = ['youtube', 'instagram', 'tiktok', 'spotify']
         
         for platform in platforms:
             optimization = await seo_engine.optimize_for_platform(
@@ -324,8 +304,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_schema_markup_generation(self, seo_engine, sample_content):
-        """Test structured data / schema markup generation"""
-        content_type = 'article'
+        """Test structured data / schema markup generation"""        content_type = 'article'
         
         schema = await seo_engine.generate_schema_markup(
             content=sample_content,
@@ -345,8 +324,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_seo_reporting(self, seo_engine, sample_content):
-        """Test comprehensive SEO reporting"""
-        analysis_data = {
+        """Test comprehensive SEO reporting"""        analysis_data = {
             'url': 'https://example.com/music-guide',
             'content': sample_content,
             'target_keywords': ['music production', 'DAW'],
@@ -365,8 +343,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_content_gap_analysis(self, seo_engine):
-        """Test content gap analysis"""
-        target_keywords = ['music production', 'audio mixing', 'DAW tutorial']
+        """Test content gap analysis"""        target_keywords = ['music production', 'audio mixing', 'DAW tutorial']
         competitor_urls = ['competitor1.com', 'competitor2.com']
         
         gap_analysis = await seo_engine.analyze_content_gaps(
@@ -381,8 +358,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_backlink_analysis(self, seo_engine):
-        """Test backlink profile analysis"""
-        domain = 'example.com'
+        """Test backlink profile analysis"""        domain = 'example.com'
         
         backlink_analysis = await seo_engine.analyze_backlinks(domain)
         
@@ -395,8 +371,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_keyword_rank_tracking(self, seo_engine):
-        """Test keyword ranking tracking"""
-        keywords = ['music production', 'DAW software', 'audio mixing']
+        """Test keyword ranking tracking"""        keywords = ['music production', 'DAW software', 'audio mixing']
         domain = 'example.com'
         
         tracking_setup = await seo_engine.setup_rank_tracking(
@@ -420,8 +395,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_sitemap_generation(self, seo_engine):
-        """Test XML sitemap generation"""
-        pages = [
+        """Test XML sitemap generation"""        pages = [
             {'url': 'https://example.com/', 'priority': 1.0, 'changefreq': 'daily'},
             {'url': 'https://example.com/music-production', 'priority': 0.8, 'changefreq': 'weekly'},
             {'url': 'https://example.com/tutorials', 'priority': 0.6, 'changefreq': 'monthly'}
@@ -438,8 +412,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_robots_txt_generation(self, seo_engine):
-        """Test robots.txt generation"""
-        config = {
+        """Test robots.txt generation"""        config = {
             'user_agent': '*',
             'disallow': ['/admin/', '/private/'],
             'allow': ['/public/'],
@@ -456,8 +429,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_page_speed_analysis(self, seo_engine):
-        """Test page speed analysis"""
-        url = 'https://example.com/music-guide'
+        """Test page speed analysis"""        url = 'https://example.com/music-guide'
         
         speed_analysis = await seo_engine.analyze_page_speed(url)
         
@@ -469,8 +441,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_international_seo(self, seo_engine):
-        """Test international SEO optimization"""
-        content_variations = {
+        """Test international SEO optimization"""        content_variations = {
             'en': {'title': 'Music Production Guide', 'content': 'English content...'},
             'de': {'title': 'Musikproduktion Leitfaden', 'content': 'German content...'},
             'fr': {'title': 'Guide de Production Musicale', 'content': 'French content...'}
@@ -488,8 +459,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_voice_search_optimization(self, seo_engine, sample_content):
-        """Test voice search optimization"""
-        voice_optimization = await seo_engine.optimize_for_voice_search(
+        """Test voice search optimization"""        voice_optimization = await seo_engine.optimize_for_voice_search(
             content=sample_content['content'],
             target_queries=['how to produce music', 'best DAW for beginners']
         )
@@ -501,8 +471,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_mobile_seo_optimization(self, seo_engine):
-        """Test mobile SEO optimization"""
-        mobile_config = {
+        """Test mobile SEO optimization"""        mobile_config = {
             'url': 'https://example.com/music-guide',
             'mobile_url': 'https://m.example.com/music-guide',
             'responsive': True
@@ -517,8 +486,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_seo_automation(self, seo_engine, sample_content):
-        """Test SEO automation workflows"""
-        automation_config = {
+        """Test SEO automation workflows"""        automation_config = {
             'content': sample_content,
             'target_keywords': ['music production'],
             'automation_level': 'full',
@@ -534,8 +502,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_ai_content_optimization(self, seo_engine, sample_content):
-        """Test AI-powered content optimization"""
-        ai_optimization = await seo_engine.ai_optimize_content(
+        """Test AI-powered content optimization"""        ai_optimization = await seo_engine.ai_optimize_content(
             content=sample_content['content'],
             optimization_goals=['seo_score', 'readability', 'engagement']
         )
@@ -547,8 +514,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_performance_metrics(self, seo_engine, sample_content):
-        """Test performance and efficiency metrics"""
-        start_time = time.time()
+        """Test performance and efficiency metrics"""        start_time = time.time()
         
         # Run multiple optimization tasks concurrently
         tasks = [
@@ -566,8 +532,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_error_handling(self, seo_engine):
-        """Test error handling and edge cases"""
-        # Test with empty content
+        """Test error handling and edge cases"""        # Test with empty content
         with pytest.raises(ValueError):
             await seo_engine.extract_keywords("")
         
@@ -581,8 +546,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_content_freshness_analysis(self, seo_engine, sample_content):
-        """Test content freshness and update recommendations"""
-        content_age = 365  # days
+        """Test content freshness and update recommendations"""        content_age = 365  # days
         
         freshness_analysis = await seo_engine.analyze_content_freshness(
             content=sample_content['content'],
@@ -595,8 +559,7 @@ class TestSEOEngine:
         assert 'content_decay_factors' in freshness_analysis
 
     def test_data_validation(self, seo_engine):
-        """Test data validation and sanitization"""
-        # Test keyword validation
+        """Test data validation and sanitization"""        # Test keyword validation
         valid_keywords = seo_engine._validate_keywords(['music production', 'daw software'])
         assert len(valid_keywords) == 2
         
@@ -611,8 +574,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_concurrent_operations(self, seo_engine, sample_content):
-        """Test concurrent operations and thread safety"""
-        tasks = []
+        """Test concurrent operations and thread safety"""        tasks = []
         
         # Run multiple keyword extractions concurrently
         for i in range(5):
@@ -630,8 +592,7 @@ class TestSEOEngine:
 
     @pytest.mark.asyncio
     async def test_integration_with_analytics(self, seo_engine):
-        """Test integration with analytics platforms"""
-        analytics_data = {
+        """Test integration with analytics platforms"""        analytics_data = {
             'google_analytics': {
                 'property_id': 'GA-12345',
                 'view_id': '123456789'

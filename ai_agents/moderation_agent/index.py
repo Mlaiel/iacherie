@@ -1,5 +1,4 @@
-"""
-Moderation Agent Index - Ultra-Advanced Content Moderation System
+"""Moderation Agent Index - Ultra-Advanced Content Moderation System
 
 Comprehensive index and quick reference for the enterprise-grade moderation system.
 Provides easy access to all components, configurations, and utilities.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 # Core Components
 from .moderation_agent import (
     ModerationAgent,
@@ -84,8 +82,7 @@ __copyright__ = "© 2025 Fahed Mlaiel. All rights reserved."
 
 # Quick Start Guide
 QUICK_START_EXAMPLES = {
-    "basic_agent_creation": """
-# Create and initialize a moderation agent
+    "basic_agent_creation": """# Create and initialize a moderation agent
 from moderation_agent import ModerationAgent, get_moderation_config
 
 config = get_moderation_config(ModerationLevel.STANDARD)
@@ -93,14 +90,12 @@ agent = ModerationAgent("mod_agent_001", config)
 await agent.initialize()
 """,
     
-    "text_moderation": """
-# Moderate text content
+    "text_moderation": """# Moderate text content
 from moderation_agent import AgentRequest
 
 # Quick start examples for different use cases
 QUICK_START_EXAMPLES = {
-    "basic_text_moderation": """
-# Basic text content moderation
+    "basic_text_moderation": """# Basic text content moderation
 from moderation_agent import ModerationAgent
 
 # Initialize agent
@@ -124,8 +119,7 @@ print(f"Confidence Score: {result.confidence}")
 print(f"Detected Violations: {result.violations}")
 """,
     
-    "advanced_image_analysis": """
-# Advanced image moderation with creator protection
+    "advanced_image_analysis": """# Advanced image moderation with creator protection
 from moderation_agent import ModerationAgent
 
 agent = ModerationAgent(
@@ -161,8 +155,7 @@ else:
     print(f"Improvement Suggestions: {result.improvement_recommendations}")
 """,
     
-    "multi_format_creator_pipeline": """
-# Complete creator content pipeline with monetization ready check
+    "multi_format_creator_pipeline": """# Complete creator content pipeline with monetization ready check
 from moderation_agent import ModerationAgent, ContentType
 
 # Initialize with creator-focused configuration
@@ -253,8 +246,7 @@ print(f"Platform Readiness: {creator_report.platform_readiness}")
 print(f"Revenue Optimization Score: {creator_report.revenue_optimization_score}")
 """,
     
-    "live_stream_professional_monitoring": """
-# Professional live stream monitoring for creators
+    "live_stream_professional_monitoring": """# Professional live stream monitoring for creators
 from moderation_agent import ModerationAgent
 
 # Configure for live streaming with creator focus
@@ -312,8 +304,7 @@ print(f"Content Quality Score: {stream_report.content_quality_score}")
 print(f"Monetization Performance: {stream_report.monetization_metrics}")
 """,
     
-    "enterprise_batch_processing": """
-# Enterprise-scale batch processing for content platforms
+    "enterprise_batch_processing": """# Enterprise-scale batch processing for content platforms
 from moderation_agent import ModerationAgent, BatchProcessor
 
 # Initialize enterprise-grade batch processor
@@ -361,8 +352,7 @@ for violation_type, count in violation_summary.items():
     print(f"{violation_type}: {count} occurrences")
 """,
     
-    "custom_configuration_advanced": """
-# Advanced custom configuration for specific use cases
+    "custom_configuration_advanced": """# Advanced custom configuration for specific use cases
 from moderation_agent import ModerationAgent, ModerationLevel, RegionalCompliance
 
 # Custom configuration for educational content platform
@@ -434,8 +424,7 @@ educational_result = await moderate_educational_content(
     "Quantum mechanics explanation with examples",
     "physics"
 )
-"""
-}
+"""}
 
 # Comprehensive component descriptions with business value
 COMPONENT_DESCRIPTIONS = {
@@ -635,8 +624,7 @@ INTEGRATION_PATTERNS = {
             "Artist collaboration matching",
             "Revenue optimization"
         ],
-        "code_example": """
-# Music platform integration
+        "code_example": """# Music platform integration
 from moderation_agent import ModerationAgent, AudioContentClassifier
 
 class MusicPlatformModerator:
@@ -675,8 +663,7 @@ class MusicPlatformModerator:
             "playlist_recommendations": result.playlist_optimization_suggestions,
             "monetization_potential": result.revenue_prediction
         }
-"""
-    },
+"""    },
     
     "social_media_platform": {
         "description": "Multi-format content moderation for social platforms",
@@ -687,8 +674,7 @@ class MusicPlatformModerator:
             "Influencer brand safety",
             "Viral content detection"
         ],
-        "code_example": """
-# Social media platform integration
+        "code_example": """# Social media platform integration
 class SocialMediaModerator:
     def __init__(self):
         self.agent = ModerationAgent(
@@ -740,8 +726,7 @@ class SocialMediaModerator:
             "viral_potential": results.get("viral_score", 0),
             "brand_safety_score": results.get("brand_safety", 0)
         }
-"""
-    },
+"""    },
     
     "educational_platform": {
         "description": "Educational content moderation with academic focus",
@@ -752,8 +737,7 @@ class SocialMediaModerator:
             "Misinformation detection",
             "Learning outcome optimization"
         ],
-        "code_example": """
-# Educational platform integration
+        "code_example": """# Educational platform integration
 class EducationalContentModerator:
     def __init__(self):
         self.agent = ModerationAgent(
@@ -788,8 +772,7 @@ class EducationalContentModerator:
             "learning_effectiveness": result.educational_metrics["effectiveness"],
             "improvement_suggestions": result.educational_recommendations
         }
-"""
-    },
+"""    },
     
     "enterprise_communication": {
         "description": "Corporate communication and collaboration platform",
@@ -800,8 +783,7 @@ class EducationalContentModerator:
             "Workplace harassment prevention",
             "Brand consistency monitoring"
         ],
-        "code_example": """
-# Enterprise communication platform
+        "code_example": """# Enterprise communication platform
 class EnterpriseCommunicationModerator:
     def __init__(self, company_policies):
         self.agent = ModerationAgent(
@@ -835,8 +817,7 @@ class EnterpriseCommunicationModerator:
             "sensitivity_flags": result.workplace_metrics["sensitive_content"],
             "improvement_suggestions": result.workplace_recommendations
         }
-"""
-    }
+"""    }
 }
 
 # Professional best practices for production deployment
@@ -948,8 +929,7 @@ TROUBLESHOOTING = {
     },
     
     "diagnostic_commands": {
-        "check_system_resources": """
-# Check system resources
+        "check_system_resources": """# Check system resources
 import psutil
 import GPUtil
 
@@ -971,8 +951,7 @@ def diagnose_system():
         print(f"  Temperature: {gpu.temperature}°C")
 """,
         
-        "test_model_loading": """
-# Test model loading performance
+        "test_model_loading": """# Test model loading performance
 import time
 from moderation_agent import ModerationAgent
 
@@ -993,8 +972,7 @@ async def test_model_loading():
     print(f"First inference time: {inference_time:.2f} seconds")
 """,
         
-        "check_configuration": """
-# Validate configuration
+        "check_configuration": """# Validate configuration
 from moderation_agent.config import get_moderation_config
 
 def validate_config(config):
@@ -1016,8 +994,7 @@ def validate_config(config):
         print("❌ Invalid threshold configuration")
     else:
         print("✅ Threshold configuration valid")
-"""
-    }
+"""    }
 }
 
 # Component Descriptions
@@ -1244,8 +1221,7 @@ TROUBLESHOOTING = {
 }
 
 def print_quick_reference():
-    """Print a quick reference guide for the moderation system"""
-    print("=" * 80)
+    """Print a quick reference guide for the moderation system"""    print("=" * 80)
     print("MODERATION AGENT - QUICK REFERENCE")
     print("=" * 80)
     print(f"Version: {__version__}")
@@ -1308,16 +1284,13 @@ __all__ = [
 ]
 
 def print_quick_reference():
-    """
-    Print comprehensive quick reference guide for Moderation Agent
+    """    Print comprehensive quick reference guide for Moderation Agent
     
     This function provides an extensive overview of the moderation system,
     including setup examples, performance metrics, and integration patterns.
     Perfect for developers getting started or needing quick reference.
-    """
-    
-    print("""
-╔══════════════════════════════════════════════════════════════════════════════════╗
+    """    
+    print("""╔══════════════════════════════════════════════════════════════════════════════════╗
 ║                    MODERATION AGENT - QUICK REFERENCE GUIDE                     ║
 ║                      Ultra-Advanced AI Content Safety System                    ║
 ║                                                                                  ║
@@ -1565,8 +1538,7 @@ support contracts, contact: mlaiel@live.de
 
 # Additional helper function for component exploration
 def explore_components():
-    """Print detailed component information"""
-    print("\\n🔍 MODERATION AGENT COMPONENTS EXPLORER:")
+    """Print detailed component information"""    print("\\n🔍 MODERATION AGENT COMPONENTS EXPLORER:")
     print("=" * 80)
     
     for component_name, details in COMPONENT_DESCRIPTIONS.items():
@@ -1584,8 +1556,7 @@ def explore_components():
         print("-" * 60)
 
 def show_performance_metrics():
-    """Display comprehensive performance metrics"""
-    print("\\n📊 COMPREHENSIVE PERFORMANCE METRICS:")
+    """Display comprehensive performance metrics"""    print("\\n📊 COMPREHENSIVE PERFORMANCE METRICS:")
     print("=" * 80)
     
     for category, metrics in PERFORMANCE_BENCHMARKS.items():

@@ -1,5 +1,4 @@
-"""
-Redis Cache Configuration for IA-Influencer Agent Platform
+"""Redis Cache Configuration for IA-Influencer Agent Platform
 ==========================================================
 
 Enterprise-grade Redis configuration and connection management
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import ssl
 from typing import Dict, Optional, List, Any
 from dataclasses import dataclass, field
@@ -28,15 +26,13 @@ from pydantic import BaseModel, validator
 
 
 class RedisMode(str, Enum):
-    """Redis deployment modes"""
-    STANDALONE = "standalone"
+    """Redis deployment modes"""    STANDALONE = "standalone"
     CLUSTER = "cluster"
     SENTINEL = "sentinel"
     
 
 class RedisCompressionType(str, Enum):
-    """Redis compression algorithms"""
-    GZIP = "gzip"
+    """Redis compression algorithms"""    GZIP = "gzip"
     LZ4 = "lz4"
     ZSTD = "zstd"
     NONE = "none"
@@ -44,8 +40,7 @@ class RedisCompressionType(str, Enum):
 
 @dataclass
 class RedisConnectionConfig:
-    """Redis connection configuration"""
-    host: str = "localhost"
+    """Redis connection configuration"""    host: str = "localhost"
     port: int = 6379
     db: int = 0
     password: Optional[str] = None
@@ -67,8 +62,7 @@ class RedisConnectionConfig:
 
 @dataclass
 class RedisPoolConfig:
-    """Redis connection pool configuration"""
-    max_connections: int = 100
+    """Redis connection pool configuration"""    max_connections: int = 100
     connection_pool_class: type = ConnectionPool
     connection_pool_class_kwargs: Dict[str, Any] = field(default_factory=dict)
     socket_keepalive: bool = True
@@ -77,8 +71,7 @@ class RedisPoolConfig:
 
 @dataclass
 class RedisSentinelConfig:
-    """Redis Sentinel configuration for high availability"""
-    sentinels: List[tuple] = field(default_factory=list)
+    """Redis Sentinel configuration for high availability"""    sentinels: List[tuple] = field(default_factory=list)
     service_name: str = "mymaster"
     sentinel_kwargs: Dict[str, Any] = field(default_factory=dict)
     password: Optional[str] = None
@@ -88,8 +81,7 @@ class RedisSentinelConfig:
 
 @dataclass
 class RedisClusterConfig:
-    """Redis Cluster configuration"""
-    startup_nodes: List[Dict[str, Any]] = field(default_factory=list)
+    """Redis Cluster configuration"""    startup_nodes: List[Dict[str, Any]] = field(default_factory=list)
     max_connections: int = 32
     max_connections_per_node: int = 50
     readonly_mode: bool = False
@@ -99,10 +91,8 @@ class RedisClusterConfig:
 
 
 class RedisCacheConfig(BaseModel):
-    """
-    Comprehensive Redis cache configuration for enterprise deployment
-    """
-    
+    """    Comprehensive Redis cache configuration for enterprise deployment
+    """    
     # Connection configuration
     connection: RedisConnectionConfig = RedisConnectionConfig()
     pool: RedisPoolConfig = RedisPoolConfig()
@@ -162,10 +152,8 @@ class RedisCacheConfig(BaseModel):
         return v
     
     def get_redis_client(self) -> redis.Redis:
-        """
-        Create and return configured Redis client
-        """
-        if self.mode == RedisMode.STANDALONE:
+        """        Create and return configured Redis client
+        """        if self.mode == RedisMode.STANDALONE:
             return self._create_standalone_client()
         elif self.mode == RedisMode.SENTINEL:
             return self._create_sentinel_client()
@@ -175,8 +163,7 @@ class RedisCacheConfig(BaseModel):
             raise ValueError(f"Unsupported Redis mode: {self.mode}")
     
     def _create_standalone_client(self) -> redis.Redis:
-        """Create standalone Redis client"""
-        connection_kwargs = {
+        """Create standalone Redis client"""        connection_kwargs = {
             'host': self.connection.host,
             'port': self.connection.port,
             'db': self.connection.db,
@@ -211,8 +198,7 @@ class RedisCacheConfig(BaseModel):
         return redis.Redis(**connection_kwargs)
     
     def _create_sentinel_client(self) -> redis.Redis:
-        """Create Redis client with Sentinel support"""
-        if not self.sentinel:
+        """Create Redis client with Sentinel support"""        if not self.sentinel:
             raise ValueError("Sentinel configuration required for sentinel mode")
         
         sentinel = Sentinel(
@@ -229,8 +215,7 @@ class RedisCacheConfig(BaseModel):
         )
     
     def _create_cluster_client(self) -> redis.RedisCluster:
-        """Create Redis Cluster client"""
-        if not self.cluster:
+        """Create Redis Cluster client"""        if not self.cluster:
             raise ValueError("Cluster configuration required for cluster mode")
         
         from redis.cluster import RedisCluster
@@ -247,14 +232,12 @@ class RedisCacheConfig(BaseModel):
         )
     
     def generate_tenant_key(self, tenant_id: str, key: str) -> str:
-        """Generate tenant-isolated cache key"""
-        if self.tenant_isolation:
+        """Generate tenant-isolated cache key"""        if self.tenant_isolation:
             return f"{self.key_prefix}{tenant_id}:{key}"
         return f"{self.key_prefix}{key}"
     
     def get_connection_info(self) -> Dict[str, Any]:
-        """Get connection information for monitoring"""
-        return {
+        """Get connection information for monitoring"""        return {
             "mode": self.mode,
             "host": self.connection.host,
             "port": self.connection.port,

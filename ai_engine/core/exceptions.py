@@ -1,5 +1,4 @@
-"""
-Core Exceptions Module
+"""Core Exceptions Module
 
 Advanced exception hierarchy for industrial-grade AI content processing system.
 Provides comprehensive error handling for multi-format content creators platform.
@@ -9,7 +8,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
-
 import traceback
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
@@ -17,16 +15,14 @@ from enum import Enum
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels for monitoring and alerting"""
-    LOW = "low"
+    """Error severity levels for monitoring and alerting"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ErrorCategory(Enum):
-    """Error categories for systematic classification"""
-    AUTHENTICATION = "authentication"
+    """Error categories for systematic classification"""    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     VALIDATION = "validation"
     PROCESSING = "processing"
@@ -39,16 +35,14 @@ class ErrorCategory(Enum):
 
 
 class BaseAIException(Exception):
-    """
-    Base exception class for all AI Core exceptions
+    """    Base exception class for all AI Core exceptions
     
     Provides standardized error handling with:
     - Error tracking and correlation
     - Detailed context capture
     - Monitoring integration
     - Security-safe error messages
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -73,8 +67,7 @@ class BaseAIException(Exception):
         self.traceback_str = traceback.format_exc()
         
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for logging/monitoring"""
-        return {
+        """Convert exception to dictionary for logging/monitoring"""        return {
             "error_code": self.error_code,
             "message": self.message,
             "user_message": self.user_message,
@@ -92,8 +85,7 @@ class BaseAIException(Exception):
 
 
 class ContentGenerationError(BaseAIException):
-    """Base exception for content generation pipeline errors"""
-    
+    """Base exception for content generation pipeline errors"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -103,16 +95,14 @@ class ContentGenerationError(BaseAIException):
 
 
 class ModelConnectionError(ContentGenerationError):
-    """
-    Exception raised when AI model connection or loading fails
+    """    Exception raised when AI model connection or loading fails
     
     Common scenarios:
     - Model server unavailable
     - GPU memory exhaustion
     - Model file corruption
     - Network connectivity issues
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -139,16 +129,14 @@ class ModelConnectionError(ContentGenerationError):
 
 
 class ContentValidationError(ContentGenerationError):
-    """
-    Exception raised when content validation fails
+    """    Exception raised when content validation fails
     
     Handles validation of:
     - Multi-format content (audio, video, image, text)
     - Content quality standards
     - Copyright compliance
     - Platform-specific requirements
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -174,15 +162,13 @@ class ContentValidationError(ContentGenerationError):
 
 
 class RateLimitError(ContentGenerationError):
-    """
-    Exception raised when API rate limits are exceeded
+    """    Exception raised when API rate limits are exceeded
     
     Provides intelligent rate limiting for:
     - AI model inference requests
     - External API calls (Spotify, social platforms)
     - Content processing quotas
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -216,16 +202,14 @@ class RateLimitError(ContentGenerationError):
 
 
 class ConfigurationError(ContentGenerationError):
-    """
-    Exception raised when system configuration is invalid
+    """    Exception raised when system configuration is invalid
     
     Covers configuration issues for:
     - AI model settings
     - Environment variables
     - Service integrations
     - Security parameters
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -251,16 +235,14 @@ class ConfigurationError(ContentGenerationError):
 
 
 class QualityCheckError(ContentGenerationError):
-    """
-    Exception raised when content quality checks fail
+    """    Exception raised when content quality checks fail
     
     Enforces quality standards for:
     - Content authenticity verification
     - Brand safety compliance
     - Professional content standards
     - Platform optimization requirements
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -288,16 +270,14 @@ class QualityCheckError(ContentGenerationError):
 
 
 class DistributionError(ContentGenerationError):
-    """
-    Exception raised when content distribution fails
+    """    Exception raised when content distribution fails
     
     Handles distribution to:
     - Social media platforms
     - Music streaming services
     - Content delivery networks
     - Collaboration platforms
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -324,16 +304,14 @@ class DistributionError(ContentGenerationError):
 
 
 class OptimizationError(ContentGenerationError):
-    """
-    Exception raised when content optimization fails
+    """    Exception raised when content optimization fails
     
     Covers optimization failures for:
     - SEO enhancement
     - Performance optimization
     - Format conversion
     - Quality enhancement
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -359,16 +337,14 @@ class OptimizationError(ContentGenerationError):
 
 
 class ProtectionError(ContentGenerationError):
-    """
-    Exception raised when content protection mechanisms fail
+    """    Exception raised when content protection mechanisms fail
     
     Critical for:
     - Rights management
     - Fingerprinting technology
     - Copyright detection
     - Legal compliance
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -394,16 +370,14 @@ class ProtectionError(ContentGenerationError):
 
 
 class CollaborationError(ContentGenerationError):
-    """
-    Exception raised when collaboration features fail
+    """    Exception raised when collaboration features fail
     
     Manages errors in:
     - Creator matching algorithms
     - Collaboration invitations
     - Shared project management
     - Revenue sharing calculations
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -429,16 +403,14 @@ class CollaborationError(ContentGenerationError):
 
 
 class MonetizationError(ContentGenerationError):
-    """
-    Exception raised when monetization processes fail
+    """    Exception raised when monetization processes fail
     
     Critical for:
     - Revenue calculation
     - Payment processing
     - Rights royalty distribution
     - Analytics reporting
-    """
-    
+    """    
     def __init__(
         self,
         message: str,
@@ -466,8 +438,7 @@ class MonetizationError(ContentGenerationError):
 
 
 class AuthenticationError(BaseAIException):
-    """Exception raised for authentication failures"""
-    
+    """Exception raised for authentication failures"""    
     def __init__(self, message: str = "Authentication failed", **kwargs):
         super().__init__(
             message,
@@ -479,8 +450,7 @@ class AuthenticationError(BaseAIException):
 
 
 class AuthorizationError(BaseAIException):
-    """Exception raised for authorization failures"""
-    
+    """Exception raised for authorization failures"""    
     def __init__(self, message: str = "Access denied", **kwargs):
         super().__init__(
             message,
@@ -492,8 +462,7 @@ class AuthorizationError(BaseAIException):
 
 
 class ResourceNotFoundError(BaseAIException):
-    """Raised when requested resource cannot be found"""
-    
+    """Raised when requested resource cannot be found"""    
     def __init__(
         self,
         message: str = "Requested resource not found",
@@ -518,8 +487,7 @@ class ResourceNotFoundError(BaseAIException):
 
 # AI Model specific exceptions
 class AIModelError(BaseAIException):
-    """Base exception for all AI model related errors"""
-    
+    """Base exception for all AI model related errors"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -531,13 +499,11 @@ class AIModelError(BaseAIException):
 
 
 class ModelError(AIModelError):
-    """General model operation error"""
-    pass
+    """General model operation error"""    pass
 
 
 class ValidationError(AIModelError):
-    """Data validation error"""
-    
+    """Data validation error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -549,8 +515,7 @@ class ValidationError(AIModelError):
 
 
 class ProcessingError(AIModelError):
-    """Model processing error"""
-    
+    """Model processing error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -562,8 +527,7 @@ class ProcessingError(AIModelError):
 
 
 class TimeoutError(AIModelError):
-    """Operation timeout error"""
-    
+    """Operation timeout error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -575,8 +539,7 @@ class TimeoutError(AIModelError):
 
 
 class PerformanceError(AIModelError):
-    """Performance monitoring and analysis error"""
-    
+    """Performance monitoring and analysis error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -588,8 +551,7 @@ class PerformanceError(AIModelError):
 
 
 class MonitoringError(AIModelError):
-    """Monitoring system error"""
-    
+    """Monitoring system error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -601,8 +563,7 @@ class MonitoringError(AIModelError):
 
 
 class ContentProcessingError(AIModelError):
-    """Content processing and analysis error"""
-    
+    """Content processing and analysis error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -614,8 +575,7 @@ class ContentProcessingError(AIModelError):
 
 
 class BusinessMetricsError(AIModelError):
-    """Business metrics collection and analysis error"""
-    
+    """Business metrics collection and analysis error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -627,8 +587,7 @@ class BusinessMetricsError(AIModelError):
 
 
 class HealthCheckError(AIModelError):
-    """Health check system error"""
-    
+    """Health check system error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -640,8 +599,7 @@ class HealthCheckError(AIModelError):
 
 
 class AlertingError(AIModelError):
-    """Real-time alerting system error"""
-    
+    """Real-time alerting system error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -653,8 +611,7 @@ class AlertingError(AIModelError):
 
 
 class ReportingError(AIModelError):
-    """Reporting and analytics error"""
-    
+    """Reporting and analytics error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -666,8 +623,7 @@ class ReportingError(AIModelError):
 
 
 class DataProcessingError(AIModelError):
-    """Data processing and transformation error"""
-    
+    """Data processing and transformation error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -679,8 +635,7 @@ class DataProcessingError(AIModelError):
 
 
 class MetricsError(AIModelError):
-    """Metrics collection and processing error"""
-    
+    """Metrics collection and processing error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -692,8 +647,7 @@ class MetricsError(AIModelError):
 
 
 class ModelNotFoundError(AIModelError):
-    """Model not found error"""
-    
+    """Model not found error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -705,8 +659,7 @@ class ModelNotFoundError(AIModelError):
 
 
 class ModelLoadError(AIModelError):
-    """Model loading error"""
-    
+    """Model loading error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -718,8 +671,7 @@ class ModelLoadError(AIModelError):
 
 
 class ModelInitializationError(AIModelError):
-    """Model initialization error"""
-    
+    """Model initialization error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -731,28 +683,23 @@ class ModelInitializationError(AIModelError):
 
 
 class AudioProcessingError(ProcessingError):
-    """Audio-specific processing error"""
-    pass
+    """Audio-specific processing error"""    pass
 
 
 class VideoProcessingError(ProcessingError):
-    """Video-specific processing error"""
-    pass
+    """Video-specific processing error"""    pass
 
 
 class ImageProcessingError(ProcessingError):
-    """Image-specific processing error"""
-    pass
+    """Image-specific processing error"""    pass
 
 
 class TextProcessingError(ProcessingError):
-    """Text-specific processing error"""
-    pass
+    """Text-specific processing error"""    pass
 
 
 class MonitoringError(BaseAIException):
-    """Monitoring system error"""
-    
+    """Monitoring system error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -764,8 +711,7 @@ class MonitoringError(BaseAIException):
 
 
 class AnomalyDetectionError(BaseAIException):
-    """Anomaly detection system error"""
-    
+    """Anomaly detection system error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -777,8 +723,7 @@ class AnomalyDetectionError(BaseAIException):
 
 
 class PersonalizationError(BaseAIException):
-    """Personalization system error"""
-    
+    """Personalization system error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -790,8 +735,7 @@ class PersonalizationError(BaseAIException):
 
 
 class ModelConnectionError(BaseAIException):
-    """Model connection error"""
-    
+    """Model connection error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -840,13 +784,11 @@ EXCEPTION_REGISTRY = {
 
 
 class ComponentError(AIModelError):
-    """Component-level error"""
-    pass
+    """Component-level error"""    pass
 
 
 class AIOrchestrationError(BaseAIException):
-    """AI orchestration system error"""
-    
+    """AI orchestration system error"""    
     def __init__(self, message: str, component: str = None, context: Dict = None):
         super().__init__(
             message=message,
@@ -859,13 +801,11 @@ class AIOrchestrationError(BaseAIException):
 
 
 def get_exception_by_code(error_code: str) -> type:
-    """
-    Get exception class by error code
+    """    Get exception class by error code
     
     Args:
         error_code: The error code to look up
         
     Returns:
         Exception class or BaseAIException if not found
-    """
-    return EXCEPTION_REGISTRY.get(error_code.lower(), BaseAIException)
+    """    return EXCEPTION_REGISTRY.get(error_code.lower(), BaseAIException)

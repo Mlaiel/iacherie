@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Comprehensive Tests for Utility Functions and Helper Components
+"""Comprehensive Tests for Utility Functions and Helper Components
 Testing utility functions, helpers, validators, and common operations
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -37,7 +34,6 @@ Team Specialties:
 ✅ DevOps Engineer
 ✅ IA Prompt Engineer
 """
-
 import pytest
 import sys
 import os
@@ -61,11 +57,9 @@ from ai.recommendation.exceptions import ValidationError, RecommendationError
 
 
 class TestDataValidator:
-    """Tests for data validation utilities"""
-    
+    """Tests for data validation utilities"""    
     def test_validate_creator_profile(self, data_validator):
-        """Test creator profile validation"""
-        # Valid profile
+        """Test creator profile validation"""        # Valid profile
         valid_profile = {
             "creator_id": "test_creator_001",
             "display_name": "Test Creator",
@@ -93,8 +87,7 @@ class TestDataValidator:
         assert any('creator_id' in error for error in result['errors'])
     
     def test_validate_content_data(self, data_validator):
-        """Test content data validation"""
-        # Valid video content
+        """Test content data validation"""        # Valid video content
         valid_video = {
             "title": "Test Video",
             "description": "This is a test video description",
@@ -119,8 +112,7 @@ class TestDataValidator:
         assert any('title' in error for error in result['errors'])
     
     def test_validate_recommendation_request(self, data_validator):
-        """Test recommendation request validation"""
-        # Valid request
+        """Test recommendation request validation"""        # Valid request
         valid_request = {
             "creator_id": "test_creator_001",
             "limit": 10,
@@ -144,8 +136,7 @@ class TestDataValidator:
         assert any('limit' in error for error in result['errors'])
     
     def test_validate_metrics_data(self, data_validator):
-        """Test metrics data validation"""
-        # Valid metrics
+        """Test metrics data validation"""        # Valid metrics
         valid_metrics = {
             "views": 100000,
             "likes": 5000,
@@ -171,8 +162,7 @@ class TestDataValidator:
         assert len(result['errors']) >= 2  # At least 2 errors
     
     def test_validate_platform_constraints(self, data_validator):
-        """Test platform-specific constraint validation"""
-        # YouTube constraints
+        """Test platform-specific constraint validation"""        # YouTube constraints
         youtube_video = {
             "title": "Test Video",
             "duration": 3600,  # 1 hour
@@ -199,8 +189,7 @@ class TestDataValidator:
         assert result['is_valid'] is True
     
     def test_validate_email_format(self, data_validator):
-        """Test email format validation"""
-        # Valid emails
+        """Test email format validation"""        # Valid emails
         valid_emails = [
             "test@example.com",
             "user.name@domain.co.uk",
@@ -223,11 +212,9 @@ class TestDataValidator:
 
 
 class TestContentNormalizer:
-    """Tests for content normalization utilities"""
-    
+    """Tests for content normalization utilities"""    
     def test_normalize_text_content(self, content_normalizer):
-        """Test text content normalization"""
-        raw_text = "  This is a TEST text with MIXED case and   extra spaces!!! 🎵  "
+        """Test text content normalization"""        raw_text = "  This is a TEST text with MIXED case and   extra spaces!!! 🎵  "
         
         normalized = content_normalizer.normalize_text_content(
             raw_text,
@@ -241,8 +228,7 @@ class TestContentNormalizer:
         assert normalized == expected
     
     def test_normalize_hashtags(self, content_normalizer):
-        """Test hashtag normalization"""
-        hashtags = ["#Music", "#ELECTRONIC", "#house music", "#Tech-House", "#Progressive"]
+        """Test hashtag normalization"""        hashtags = ["#Music", "#ELECTRONIC", "#house music", "#Tech-House", "#Progressive"]
         
         normalized = content_normalizer.normalize_hashtags(hashtags)
         
@@ -254,8 +240,7 @@ class TestContentNormalizer:
         assert "#progressive" in normalized
     
     def test_normalize_creator_data(self, content_normalizer, sample_creator_musician):
-        """Test creator data normalization"""
-        creator_data = {
+        """Test creator data normalization"""        creator_data = {
             "creator_id": "  TEST_Creator_001  ",
             "display_name": "  John DOE  ",
             "email": "  JOHN.DOE@EXAMPLE.COM  ",
@@ -273,8 +258,7 @@ class TestContentNormalizer:
         assert "tech_house" in normalized['genres']
     
     def test_normalize_metrics_data(self, content_normalizer):
-        """Test metrics data normalization"""
-        raw_metrics = {
+        """Test metrics data normalization"""        raw_metrics = {
             "views": "10,000",
             "likes": "1.5K",
             "shares": "500",
@@ -293,8 +277,7 @@ class TestContentNormalizer:
         assert abs(normalized['revenue'] - 1250.50) < 0.01
     
     def test_normalize_platform_data(self, content_normalizer):
-        """Test platform-specific data normalization"""
-        platform_data = {
+        """Test platform-specific data normalization"""        platform_data = {
             "platform": "YouTube",
             "channel_url": "  https://www.youtube.com/channel/UC1234567890  ",
             "subscriber_count": "10K",
@@ -314,11 +297,9 @@ class TestContentNormalizer:
 
 
 class TestMetricsCalculator:
-    """Tests for metrics calculation utilities"""
-    
+    """Tests for metrics calculation utilities"""    
     def test_calculate_engagement_rate(self, metrics_calculator):
-        """Test engagement rate calculation"""
-        # Standard engagement rate
+        """Test engagement rate calculation"""        # Standard engagement rate
         metrics = {
             "views": 10000,
             "likes": 500,
@@ -342,8 +323,7 @@ class TestMetricsCalculator:
         assert engagement_rate == 0.0
     
     def test_calculate_virality_score(self, metrics_calculator):
-        """Test virality score calculation"""
-        metrics = {
+        """Test virality score calculation"""        metrics = {
             "views": 100000,
             "shares": 5000,
             "comments": 1000,
@@ -361,8 +341,7 @@ class TestMetricsCalculator:
         assert virality_score > 0.5
     
     def test_calculate_content_quality_score(self, metrics_calculator):
-        """Test content quality score calculation"""
-        quality_metrics = {
+        """Test content quality score calculation"""        quality_metrics = {
             "technical_quality": 0.85,
             "content_relevance": 0.90,
             "audience_engagement": 0.75,
@@ -377,8 +356,7 @@ class TestMetricsCalculator:
         assert abs(quality_score - expected_score) < 0.01
     
     def test_calculate_roi_metrics(self, metrics_calculator):
-        """Test ROI metrics calculation"""
-        investment_data = {
+        """Test ROI metrics calculation"""        investment_data = {
             "content_creation_cost": 500.0,
             "promotion_cost": 200.0,
             "time_investment_hours": 20,
@@ -409,8 +387,7 @@ class TestMetricsCalculator:
         assert abs(roi_metrics['roi_percentage']) < 0.01
     
     def test_calculate_trend_metrics(self, metrics_calculator):
-        """Test trend metrics calculation"""
-        time_series_data = [
+        """Test trend metrics calculation"""        time_series_data = [
             {"date": "2025-01-01", "value": 1000},
             {"date": "2025-01-02", "value": 1200},
             {"date": "2025-01-03", "value": 1100},
@@ -431,12 +408,10 @@ class TestMetricsCalculator:
 
 
 class TestCacheManager:
-    """Tests for cache management utilities"""
-    
+    """Tests for cache management utilities"""    
     @pytest.mark.asyncio
     async def test_cache_basic_operations(self, cache_manager):
-        """Test basic cache operations"""
-        # Set and get
+        """Test basic cache operations"""        # Set and get
         await cache_manager.set("test_key", "test_value", ttl=300)
         value = await cache_manager.get("test_key")
         assert value == "test_value"
@@ -452,8 +427,7 @@ class TestCacheManager:
     
     @pytest.mark.asyncio
     async def test_cache_complex_data(self, cache_manager):
-        """Test caching complex data structures"""
-        complex_data = {
+        """Test caching complex data structures"""        complex_data = {
             "creator_profile": {
                 "id": "creator_001",
                 "metrics": [1, 2, 3, 4, 5],
@@ -469,8 +443,7 @@ class TestCacheManager:
     
     @pytest.mark.asyncio
     async def test_cache_ttl_expiration(self, cache_manager):
-        """Test cache TTL expiration"""
-        # Set with very short TTL
+        """Test cache TTL expiration"""        # Set with very short TTL
         await cache_manager.set("expiring_key", "expiring_value", ttl=1)
         
         # Should exist immediately
@@ -486,8 +459,7 @@ class TestCacheManager:
     
     @pytest.mark.asyncio
     async def test_cache_batch_operations(self, cache_manager):
-        """Test batch cache operations"""
-        # Batch set
+        """Test batch cache operations"""        # Batch set
         batch_data = {
             "key1": "value1",
             "key2": "value2",
@@ -506,8 +478,7 @@ class TestCacheManager:
     
     @pytest.mark.asyncio
     async def test_cache_pattern_operations(self, cache_manager):
-        """Test cache pattern operations"""
-        # Set multiple keys with pattern
+        """Test cache pattern operations"""        # Set multiple keys with pattern
         await cache_manager.set("user:001:profile", "profile1", ttl=300)
         await cache_manager.set("user:002:profile", "profile2", ttl=300)
         await cache_manager.set("user:003:settings", "settings3", ttl=300)
@@ -527,12 +498,10 @@ class TestCacheManager:
 
 
 class TestRateLimiter:
-    """Tests for rate limiting utilities"""
-    
+    """Tests for rate limiting utilities"""    
     @pytest.mark.asyncio
     async def test_rate_limit_basic(self, rate_limiter):
-        """Test basic rate limiting"""
-        # Configure rate limit: 5 requests per 10 seconds
+        """Test basic rate limiting"""        # Configure rate limit: 5 requests per 10 seconds
         limiter_id = "test_basic"
         await rate_limiter.configure(limiter_id, max_requests=5, window_seconds=10)
         
@@ -547,8 +516,7 @@ class TestRateLimiter:
     
     @pytest.mark.asyncio
     async def test_rate_limit_different_users(self, rate_limiter):
-        """Test rate limiting for different users"""
-        limiter_id = "test_users"
+        """Test rate limiting for different users"""        limiter_id = "test_users"
         await rate_limiter.configure(limiter_id, max_requests=3, window_seconds=5)
         
         # User 1 makes 3 requests
@@ -566,8 +534,7 @@ class TestRateLimiter:
     
     @pytest.mark.asyncio
     async def test_rate_limit_window_reset(self, rate_limiter):
-        """Test rate limit window reset"""
-        limiter_id = "test_reset"
+        """Test rate limit window reset"""        limiter_id = "test_reset"
         await rate_limiter.configure(limiter_id, max_requests=2, window_seconds=2)
         
         # Make 2 requests
@@ -588,8 +555,7 @@ class TestRateLimiter:
     
     @pytest.mark.asyncio
     async def test_rate_limit_status_info(self, rate_limiter):
-        """Test rate limit status information"""
-        limiter_id = "test_status"
+        """Test rate limit status information"""        limiter_id = "test_status"
         await rate_limiter.configure(limiter_id, max_requests=5, window_seconds=10)
         
         # Make some requests
@@ -610,12 +576,10 @@ class TestRateLimiter:
 
 
 class TestPerformanceMonitor:
-    """Tests for performance monitoring utilities"""
-    
+    """Tests for performance monitoring utilities"""    
     @pytest.mark.asyncio
     async def test_monitor_function_performance(self, performance_monitor):
-        """Test function performance monitoring"""
-        @performance_monitor.monitor("test_function")
+        """Test function performance monitoring"""        @performance_monitor.monitor("test_function")
         async def test_function():
             await asyncio.sleep(0.1)  # Simulate work
             return "result"
@@ -638,8 +602,7 @@ class TestPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_monitor_memory_usage(self, performance_monitor):
-        """Test memory usage monitoring"""
-        # Start monitoring
+        """Test memory usage monitoring"""        # Start monitoring
         monitor_id = "memory_test"
         await performance_monitor.start_memory_monitoring(monitor_id)
         
@@ -658,8 +621,7 @@ class TestPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_monitor_system_resources(self, performance_monitor):
-        """Test system resource monitoring"""
-        system_stats = await performance_monitor.get_system_stats()
+        """Test system resource monitoring"""        system_stats = await performance_monitor.get_system_stats()
         
         assert 'cpu_percent' in system_stats
         assert 'memory_percent' in system_stats
@@ -673,8 +635,7 @@ class TestPerformanceMonitor:
     
     @pytest.mark.asyncio
     async def test_performance_alerts(self, performance_monitor):
-        """Test performance alerting"""
-        # Configure alert thresholds
+        """Test performance alerting"""        # Configure alert thresholds
         await performance_monitor.configure_alerts({
             "max_response_time": 1.0,  # 1 second
             "max_memory_usage": 100,   # 100 MB
@@ -697,16 +658,12 @@ class TestPerformanceMonitor:
 
 
 class TestTextProcessor:
-    """Tests for text processing utilities"""
-    
+    """Tests for text processing utilities"""    
     def test_extract_keywords(self, text_processor):
-        """Test keyword extraction"""
-        text = """
-        Artificial intelligence and machine learning are transforming the music industry.
+        """Test keyword extraction"""        text = """        Artificial intelligence and machine learning are transforming the music industry.
         AI-powered recommendation systems help creators discover trending content and
         optimize their creative process for better audience engagement.
-        """
-        
+        """        
         keywords = text_processor.extract_keywords(text, max_keywords=10)
         
         assert len(keywords) <= 10
@@ -715,8 +672,7 @@ class TestTextProcessor:
         assert any('music' in kw.lower() for kw in keywords)
     
     def test_analyze_sentiment(self, text_processor):
-        """Test sentiment analysis"""
-        positive_text = "This is an amazing and wonderful piece of music!"
+        """Test sentiment analysis"""        positive_text = "This is an amazing and wonderful piece of music!"
         negative_text = "This content is terrible and disappointing."
         neutral_text = "This is a technical documentation about API usage."
         
@@ -736,13 +692,10 @@ class TestTextProcessor:
         assert abs(neu_result['score']) < 0.3
     
     def test_extract_entities(self, text_processor):
-        """Test named entity extraction"""
-        text = """
-        Fahed Mlaiel is the lead developer working on AI recommendation systems.
+        """Test named entity extraction"""        text = """        Fahed Mlaiel is the lead developer working on AI recommendation systems.
         The project is based in Germany and uses TensorFlow and PyTorch.
         The team focuses on music and entertainment content for YouTube and Spotify.
-        """
-        
+        """        
         entities = text_processor.extract_entities(text)
         
         # Should extract person names
@@ -758,9 +711,7 @@ class TestTextProcessor:
         assert any('TensorFlow' in o['text'] for o in orgs)
     
     def test_generate_summary(self, text_processor):
-        """Test text summarization"""
-        long_text = """
-        Artificial intelligence has revolutionized many industries, and the music industry
+        """Test text summarization"""        long_text = """        Artificial intelligence has revolutionized many industries, and the music industry
         is no exception. AI-powered recommendation systems analyze user behavior, content
         features, and trending patterns to suggest relevant music and content to creators
         and listeners. These systems use complex algorithms including collaborative filtering,
@@ -775,8 +726,7 @@ class TestTextProcessor:
         accuracy of recommendations over time. The future of AI in music recommendation
         includes more sophisticated personalization, real-time adaptation, and integration
         with emerging technologies like voice assistants and augmented reality.
-        """
-        
+        """        
         summary = text_processor.generate_summary(
             long_text, 
             max_sentences=3,
@@ -788,8 +738,7 @@ class TestTextProcessor:
         assert 'AI' in summary or 'artificial intelligence' in summary.lower()
     
     def test_detect_language(self, text_processor):
-        """Test language detection"""
-        english_text = "This is a text written in English language."
+        """Test language detection"""        english_text = "This is a text written in English language."
         german_text = "Das ist ein Text, der in deutscher Sprache geschrieben wurde."
         french_text = "Ceci est un texte écrit en langue française."
         
@@ -810,11 +759,9 @@ class TestTextProcessor:
 
 
 class TestSecurityUtils:
-    """Tests for security utilities"""
-    
+    """Tests for security utilities"""    
     def test_hash_data(self, security_utils):
-        """Test data hashing"""
-        data = "sensitive_data_to_hash"
+        """Test data hashing"""        data = "sensitive_data_to_hash"
         
         # SHA256 hash
         hash_sha256 = security_utils.hash_data(data, algorithm="sha256")
@@ -829,8 +776,7 @@ class TestSecurityUtils:
         assert hash_sha256 == hash_again
     
     def test_encrypt_decrypt_data(self, security_utils):
-        """Test data encryption and decryption"""
-        original_data = "This is sensitive information that needs encryption"
+        """Test data encryption and decryption"""        original_data = "This is sensitive information that needs encryption"
         encryption_key = security_utils.generate_key()
         
         # Encrypt data
@@ -843,8 +789,7 @@ class TestSecurityUtils:
         assert decrypted_data == original_data
     
     def test_generate_secure_token(self, security_utils):
-        """Test secure token generation"""
-        # Generate tokens of different lengths
+        """Test secure token generation"""        # Generate tokens of different lengths
         token_16 = security_utils.generate_secure_token(16)
         token_32 = security_utils.generate_secure_token(32)
         token_64 = security_utils.generate_secure_token(64)
@@ -860,8 +805,7 @@ class TestSecurityUtils:
         assert all(c in '0123456789abcdef' for c in token_16.lower())
     
     def test_validate_jwt_token(self, security_utils):
-        """Test JWT token validation"""
-        payload = {
+        """Test JWT token validation"""        payload = {
             "user_id": "test_user_001",
             "permissions": ["read", "write"],
             "exp": datetime.utcnow() + timedelta(hours=1)
@@ -883,8 +827,7 @@ class TestSecurityUtils:
             security_utils.validate_jwt_token(invalid_token, secret_key)
     
     def test_sanitize_input(self, security_utils):
-        """Test input sanitization"""
-        # SQL injection attempt
+        """Test input sanitization"""        # SQL injection attempt
         sql_injection = "'; DROP TABLE users; --"
         sanitized_sql = security_utils.sanitize_input(sql_injection, input_type="sql")
         assert "DROP TABLE" not in sanitized_sql.upper()
@@ -902,11 +845,9 @@ class TestSecurityUtils:
 
 
 class TestRecommendationUtils:
-    """Tests for recommendation-specific utilities"""
-    
+    """Tests for recommendation-specific utilities"""    
     def test_calculate_similarity_matrix(self, recommendation_utils):
-        """Test similarity matrix calculation"""
-        # User-item matrix
+        """Test similarity matrix calculation"""        # User-item matrix
         user_item_matrix = np.array([
             [5, 3, 0, 1],
             [4, 0, 0, 1],
@@ -925,8 +866,7 @@ class TestRecommendationUtils:
         assert np.allclose(user_similarity, user_similarity.T)  # Symmetric matrix
     
     def test_apply_collaborative_filtering(self, recommendation_utils):
-        """Test collaborative filtering algorithm"""
-        # Mock user-item interactions
+        """Test collaborative filtering algorithm"""        # Mock user-item interactions
         interactions = {
             "user_1": {"item_A": 5, "item_B": 3, "item_C": 1},
             "user_2": {"item_A": 4, "item_B": 1, "item_D": 5},
@@ -946,8 +886,7 @@ class TestRecommendationUtils:
             assert 0 <= rec['confidence'] <= 1
     
     def test_apply_content_based_filtering(self, recommendation_utils):
-        """Test content-based filtering algorithm"""
-        # Mock item features
+        """Test content-based filtering algorithm"""        # Mock item features
         item_features = {
             "item_A": {"genre": "electronic", "tempo": 128, "energy": 0.8},
             "item_B": {"genre": "electronic", "tempo": 130, "energy": 0.9},
@@ -970,8 +909,7 @@ class TestRecommendationUtils:
             assert 0 <= rec['similarity_score'] <= 1
     
     def test_hybrid_recommendation_fusion(self, recommendation_utils):
-        """Test hybrid recommendation fusion"""
-        # Collaborative filtering results
+        """Test hybrid recommendation fusion"""        # Collaborative filtering results
         cf_results = [
             {"item_id": "item_A", "score": 0.9, "source": "collaborative"},
             {"item_id": "item_B", "score": 0.7, "source": "collaborative"},
@@ -1000,8 +938,7 @@ class TestRecommendationUtils:
         assert item_a_result['fused_score'] > 0.8
     
     def test_diversity_enhancement(self, recommendation_utils):
-        """Test recommendation diversity enhancement"""
-        # Homogeneous recommendations (all same genre)
+        """Test recommendation diversity enhancement"""        # Homogeneous recommendations (all same genre)
         recommendations = [
             {"item_id": "item_A", "score": 0.9, "features": {"genre": "electronic", "tempo": 128}},
             {"item_id": "item_B", "score": 0.8, "features": {"genre": "electronic", "tempo": 130}},

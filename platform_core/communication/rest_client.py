@@ -1,5 +1,4 @@
-"""
-🚀 REST Client & Service Registry - IA Influencer Agent Platform Enterprise
+"""🚀 REST Client & Service Registry - IA Influencer Agent Platform Enterprise
 =========================================================================
 Module: backend/platform_core/communication/rest_client.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Client HTTP intelligent avec découverte de services automatique
 - Retry automatique avec backoff exponentiel
 - Authentification centralisée et cache des tokens
 """
-
 import asyncio
 import json
 import logging
@@ -39,16 +37,14 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
-    """États des services"""
-    HEALTHY = "healthy"
+    """États des services"""    HEALTHY = "healthy"
     DEGRADED = "degraded"
     UNHEALTHY = "unhealthy"
     MAINTENANCE = "maintenance"
     UNKNOWN = "unknown"
 
 class RequestMethod(Enum):
-    """Méthodes HTTP supportées"""
-    GET = "GET"
+    """Méthodes HTTP supportées"""    GET = "GET"
     POST = "POST"
     PUT = "PUT"
     PATCH = "PATCH"
@@ -58,8 +54,7 @@ class RequestMethod(Enum):
 
 @dataclass
 class ServiceEndpoint:
-    """Définition d'un endpoint de service"""
-    service_id: str
+    """Définition d'un endpoint de service"""    service_id: str
     name: str
     url: str
     health_check_url: Optional[str] = None
@@ -73,13 +68,11 @@ class ServiceEndpoint:
     version: str = "1.0.0"
     
     def is_available(self) -> bool:
-        """Vérifie si le service est disponible"""
-        return self.status in [ServiceStatus.HEALTHY, ServiceStatus.DEGRADED]
+        """Vérifie si le service est disponible"""        return self.status in [ServiceStatus.HEALTHY, ServiceStatus.DEGRADED]
 
 @dataclass 
 class CircuitBreakerState:
-    """État du circuit breaker"""
-    failures: int = 0
+    """État du circuit breaker"""    failures: int = 0
     last_failure_time: Optional[datetime] = None
     state: str = "CLOSED"  # CLOSED, OPEN, HALF_OPEN
     next_attempt_time: Optional[datetime] = None
@@ -87,8 +80,7 @@ class CircuitBreakerState:
 
 @dataclass
 class RequestStats:
-    """Statistiques de requêtes"""
-    total_requests: int = 0
+    """Statistiques de requêtes"""    total_requests: int = 0
     successful_requests: int = 0
     failed_requests: int = 0
     total_response_time: float = 0.0
@@ -107,8 +99,7 @@ class RequestStats:
         return self.total_response_time / self.successful_requests
 
 class ServiceRegistry:
-    """Registre de services avec découverte automatique"""
-    
+    """Registre de services avec découverte automatique"""    
     def __init__(self, redis_client: Optional[aioredis.Redis] = None):
         self.services: Dict[str, List[ServiceEndpoint]] = {}
         self.circuit_breakers: Dict[str, CircuitBreakerState] = {}
@@ -120,19 +111,16 @@ class ServiceRegistry:
         self._health_check_task: Optional[asyncio.Task] = None
         
     async def start(self):
-        """Démarre le registre de services"""
-        logger.info("Démarrage du registre de services")
+        """Démarre le registre de services"""        logger.info("Démarrage du registre de services")
         self._health_check_task = asyncio.create_task(self._health_check_loop())
         
     async def stop(self):
-        """Arrête le registre de services"""
-        logger.info("Arrêt du registre de services")
+        """Arrête le registre de services"""        logger.info("Arrêt du registre de services")
         if self._health_check_task:
             self._health_check_task.cancel()
             
     async def register_service(self, endpoint: ServiceEndpoint):
-        """Enregistre un nouveau service"""
-        service_name = endpoint.name
+        """Enregistre un nouveau service"""        service_name = endpoint.name
         
         if service_name not in self.services:
             self.services[service_name] = []
@@ -162,8 +150,7 @@ class ServiceRegistry:
         logger.info(f"Service enregistré: {service_name} ({endpoint.service_id})")
         
     async def unregister_service(self, service_name: str, service_id: str):
-        """Désenregistre un service"""
-        if service_name in self.services:
+        """Désenregistre un service"""        if service_name in self.services:
             self.services[service_name] = [
                 s for s in self.services[service_name] 
                 if s.service_id != service_id
@@ -181,8 +168,7 @@ class ServiceRegistry:
         
     async def discover_service(self, service_name: str, 
                              tags: Optional[List[str]] = None) -> Optional[ServiceEndpoint]:
-        """Découvre un service disponible avec load balancing"""
-        if service_name not in self.services:
+        """Découvre un service disponible avec load balancing"""        if service_name not in self.services:
             return None
             
         candidates = []
@@ -209,8 +195,7 @@ class ServiceRegistry:
         return self._select_best_endpoint(candidates)
         
     def _select_best_endpoint(self, candidates: List[ServiceEndpoint]) -> ServiceEndpoint:
-        """Sélectionne le meilleur endpoint selon l'algorithme de load balancing"""
-        if len(candidates) == 1:
+        """Sélectionne le meilleur endpoint selon l'algorithme de load balancing"""        if len(candidates) == 1:
             return candidates[0]
             
         # Calculer les scores basés sur poids, temps de réponse et taux d'erreur
@@ -230,8 +215,7 @@ class ServiceRegistry:
         return scored_candidates[0][1]
         
     def _is_circuit_breaker_closed(self, circuit_breaker: CircuitBreakerState) -> bool:
-        """Vérifie si le circuit breaker permet les requêtes"""
-        now = datetime.utcnow()
+        """Vérifie si le circuit breaker permet les requêtes"""        now = datetime.utcnow()
         
         if circuit_breaker.state == "CLOSED":
             return True
@@ -248,8 +232,7 @@ class ServiceRegistry:
         return False
         
     async def _health_check_loop(self):
-        """Boucle de vérification de santé des services"""
-        while True:
+        """Boucle de vérification de santé des services"""        while True:
             try:
                 await asyncio.sleep(self.health_check_interval)
                 await self._check_all_services_health()
@@ -259,8 +242,7 @@ class ServiceRegistry:
                 logger.error(f"Erreur dans la vérification de santé: {e}")
                 
     async def _check_all_services_health(self):
-        """Vérifie la santé de tous les services"""
-        health_check_tasks = []
+        """Vérifie la santé de tous les services"""        health_check_tasks = []
         
         for service_name, endpoints in self.services.items():
             for endpoint in endpoints:
@@ -274,8 +256,7 @@ class ServiceRegistry:
             await asyncio.gather(*health_check_tasks, return_exceptions=True)
             
     async def _check_service_health(self, endpoint: ServiceEndpoint):
-        """Vérifie la santé d'un service spécifique"""
-        try:
+        """Vérifie la santé d'un service spécifique"""        try:
             start_time = time.time()
             
             async with aiohttp.ClientSession() as session:
@@ -300,8 +281,7 @@ class ServiceRegistry:
         endpoint.last_health_check = datetime.utcnow()
         
     async def _persist_service(self, endpoint: ServiceEndpoint):
-        """Persiste les informations du service dans Redis"""
-        if not self.redis_client:
+        """Persiste les informations du service dans Redis"""        if not self.redis_client:
             return
             
         key = f"service_registry:{endpoint.name}:{endpoint.service_id}"
@@ -321,8 +301,7 @@ class ServiceRegistry:
         await self.redis_client.set(key, json.dumps(data), ex=3600)  # TTL 1h
         
     def get_service_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques des services"""
-        return {
+        """Retourne les statistiques des services"""        return {
             "total_services": sum(len(endpoints) for endpoints in self.services.values()),
             "services_by_status": {
                 status.value: sum(
@@ -343,8 +322,7 @@ class ServiceRegistry:
         }
 
 class RestClient:
-    """Client REST intelligent avec fonctionnalités avancées"""
-    
+    """Client REST intelligent avec fonctionnalités avancées"""    
     def __init__(self, service_registry: ServiceRegistry, 
                  default_timeout: int = 30, 
                  max_retries: int = 3,
@@ -358,8 +336,7 @@ class RestClient:
         self.token_expiry: Dict[str, datetime] = {}
         
     async def start(self):
-        """Démarre le client REST"""
-        connector = aiohttp.TCPConnector(
+        """Démarre le client REST"""        connector = aiohttp.TCPConnector(
             limit=100,  # Pool de connexions
             limit_per_host=30,
             keepalive_timeout=30,
@@ -377,8 +354,7 @@ class RestClient:
         logger.info("RestClient démarré")
         
     async def stop(self):
-        """Arrête le client REST"""
-        if self.session:
+        """Arrête le client REST"""        if self.session:
             await self.session.close()
         logger.info("RestClient arrêté")
         
@@ -393,8 +369,7 @@ class RestClient:
                      timeout: Optional[int] = None,
                      auth_required: bool = False,
                      tags: Optional[List[str]] = None) -> Tuple[int, Dict[str, Any]]:
-        """Effectue une requête HTTP vers un service"""
-        
+        """Effectue une requête HTTP vers un service"""        
         # Découvrir le service
         endpoint = await self.service_registry.discover_service(service_name, tags)
         if not endpoint:
@@ -435,28 +410,22 @@ class RestClient:
         return await self._execute_request_with_retry(endpoint, **request_kwargs)
         
     async def get(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Requête GET"""
-        return await self.request(service_name, RequestMethod.GET, path, **kwargs)
+        """Requête GET"""        return await self.request(service_name, RequestMethod.GET, path, **kwargs)
         
     async def post(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Requête POST"""
-        return await self.request(service_name, RequestMethod.POST, path, **kwargs)
+        """Requête POST"""        return await self.request(service_name, RequestMethod.POST, path, **kwargs)
         
     async def put(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Requête PUT"""
-        return await self.request(service_name, RequestMethod.PUT, path, **kwargs)
+        """Requête PUT"""        return await self.request(service_name, RequestMethod.PUT, path, **kwargs)
         
     async def patch(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Requête PATCH"""
-        return await self.request(service_name, RequestMethod.PATCH, path, **kwargs)
+        """Requête PATCH"""        return await self.request(service_name, RequestMethod.PATCH, path, **kwargs)
         
     async def delete(self, service_name: str, path: str, **kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Requête DELETE"""
-        return await self.request(service_name, RequestMethod.DELETE, path, **kwargs)
+        """Requête DELETE"""        return await self.request(service_name, RequestMethod.DELETE, path, **kwargs)
         
     async def _execute_request_with_retry(self, endpoint: ServiceEndpoint, **request_kwargs) -> Tuple[int, Dict[str, Any]]:
-        """Exécute une requête avec retry automatique"""
-        circuit_breaker = self.service_registry.circuit_breakers.get(endpoint.service_id)
+        """Exécute une requête avec retry automatique"""        circuit_breaker = self.service_registry.circuit_breakers.get(endpoint.service_id)
         stats = self.service_registry.stats.get(endpoint.service_id)
         
         if not circuit_breaker or not stats:
@@ -517,8 +486,7 @@ class RestClient:
             raise Exception("Request failed after all retries")
             
     def _reset_circuit_breaker(self, circuit_breaker: CircuitBreakerState):
-        """Remet à zéro le circuit breaker après un succès"""
-        if circuit_breaker.state == "HALF_OPEN":
+        """Remet à zéro le circuit breaker après un succès"""        if circuit_breaker.state == "HALF_OPEN":
             circuit_breaker.success_count += 1
             if circuit_breaker.success_count >= 3:  # 3 succès pour fermer
                 circuit_breaker.state = "CLOSED"
@@ -527,8 +495,7 @@ class RestClient:
             circuit_breaker.failures = max(0, circuit_breaker.failures - 1)
             
     def _record_failure(self, circuit_breaker: CircuitBreakerState):
-        """Enregistre un échec et met à jour le circuit breaker"""
-        circuit_breaker.failures += 1
+        """Enregistre un échec et met à jour le circuit breaker"""        circuit_breaker.failures += 1
         circuit_breaker.last_failure_time = datetime.utcnow()
         
         if (circuit_breaker.state == "CLOSED" and 
@@ -540,8 +507,7 @@ class RestClient:
             logger.warning(f"Circuit breaker opened for service")
             
     async def _get_auth_token(self, service_name: str, endpoint: ServiceEndpoint) -> Optional[str]:
-        """Obtient un token d'authentification pour le service"""
-        # Vérifier si on a déjà un token valide
+        """Obtient un token d'authentification pour le service"""        # Vérifier si on a déjà un token valide
         if service_name in self.auth_tokens:
             expiry = self.token_expiry.get(service_name)
             if expiry and datetime.utcnow() < expiry:
@@ -578,8 +544,7 @@ class RestClient:
         return None
         
     def get_client_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques du client"""
-        return {
+        """Retourne les statistiques du client"""        return {
             "auth_tokens_cached": len(self.auth_tokens),
             "session_active": self.session is not None,
             "default_timeout": self.default_timeout,

@@ -1,5 +1,4 @@
-"""
-Media Processing Schemas for IA Influencer Agent Platform
+"""Media Processing Schemas for IA Influencer Agent Platform
 Professional media file handling, processing, and transformation schemas
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -8,7 +7,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 🚨 INTELLECTUAL PROPERTY WARNING: Unauthorized use prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
-
 from datetime import datetime
 from typing import Any, Dict, List, Optional, Union
 from uuid import UUID
@@ -19,8 +17,7 @@ from .base import BaseSchema, TimestampSchema, UUIDSchema, AuditSchema
 
 
 class MediaFileUpload(BaseSchema):
-    """Professional media file upload schema."""
-    
+    """Professional media file upload schema."""    
     content_id: UUID = Field(description="Associated content ID")
     file_type: str = Field(description="Media file type (audio, video, image, document)")
     mime_type: str = Field(description="MIME type of the file")
@@ -45,16 +42,14 @@ class MediaFileUpload(BaseSchema):
     
     @validator('file_type')
     def validate_file_type(cls, v):
-        """Validate file type."""
-        allowed_types = {'audio', 'video', 'image', 'document', 'archive', 'other'}
+        """Validate file type."""        allowed_types = {'audio', 'video', 'image', 'document', 'archive', 'other'}
         if v not in allowed_types:
             raise ValueError(f'File type must be one of: {", ".join(allowed_types)}')
         return v
 
 
 class MediaFileOut(UUIDSchema, TimestampSchema):
-    """Media file information schema."""
-    
+    """Media file information schema."""    
     content_id: UUID
     file_type: str
     mime_type: str
@@ -101,8 +96,7 @@ class MediaFileOut(UUIDSchema, TimestampSchema):
 
 
 class MediaProcessing(UUIDSchema, TimestampSchema):
-    """Media processing job configuration schema."""
-    
+    """Media processing job configuration schema."""    
     media_file_id: UUID
     processing_type: str = Field(description="Type of processing to perform")
     processing_priority: int = Field(default=5, ge=1, le=10, description="Processing priority")
@@ -130,8 +124,7 @@ class MediaProcessing(UUIDSchema, TimestampSchema):
     
     @validator('processing_type')
     def validate_processing_type(cls, v):
-        """Validate processing type."""
-        allowed_types = {
+        """Validate processing type."""        allowed_types = {
             'transcode', 'compress', 'thumbnail', 'preview', 'analysis',
             'watermark', 'normalize', 'enhance', 'extract_metadata'
         }
@@ -141,8 +134,7 @@ class MediaProcessing(UUIDSchema, TimestampSchema):
 
 
 class MediaTransform(BaseSchema):
-    """Media transformation configuration schema."""
-    
+    """Media transformation configuration schema."""    
     media_file_id: UUID
     transformation_name: str = Field(description="Transformation preset name")
     
@@ -175,8 +167,7 @@ class MediaTransform(BaseSchema):
 
 
 class MediaAnalysis(UUIDSchema, TimestampSchema):
-    """Media analysis results schema."""
-    
+    """Media analysis results schema."""    
     media_file_id: UUID
     analysis_type: str = Field(description="Type of analysis performed")
     analysis_version: str = Field(description="Analysis algorithm version")
@@ -216,8 +207,7 @@ class MediaAnalysis(UUIDSchema, TimestampSchema):
 
 
 class AudioProcessing(BaseSchema):
-    """Specialized audio processing schema."""
-    
+    """Specialized audio processing schema."""    
     media_file_id: UUID
     processing_preset: str = Field(description="Audio processing preset")
     
@@ -247,8 +237,7 @@ class AudioProcessing(BaseSchema):
 
 
 class VideoProcessing(BaseSchema):
-    """Specialized video processing schema."""
-    
+    """Specialized video processing schema."""    
     media_file_id: UUID
     processing_preset: str = Field(description="Video processing preset")
     
@@ -280,8 +269,7 @@ class VideoProcessing(BaseSchema):
 
 
 class ImageProcessing(BaseSchema):
-    """Specialized image processing schema."""
-    
+    """Specialized image processing schema."""    
     media_file_id: UUID
     processing_preset: str = Field(description="Image processing preset")
     
@@ -325,8 +313,7 @@ class ImageProcessing(BaseSchema):
 
 
 class MediaStreamingConfig(BaseSchema):
-    """Media streaming configuration schema."""
-    
+    """Media streaming configuration schema."""    
     media_file_id: UUID
     streaming_protocol: str = Field(description="Streaming protocol (HLS, DASH, etc.)")
     
@@ -352,8 +339,7 @@ class MediaStreamingConfig(BaseSchema):
 
 
 class MediaBackup(UUIDSchema, TimestampSchema):
-    """Media backup and archival schema."""
-    
+    """Media backup and archival schema."""    
     media_file_id: UUID
     backup_type: str = Field(description="Backup type (full, incremental, snapshot)")
     backup_location: str = Field(description="Backup storage location")
@@ -376,8 +362,7 @@ class MediaBackup(UUIDSchema, TimestampSchema):
     
     @validator('backup_type')
     def validate_backup_type(cls, v):
-        """Validate backup type."""
-        allowed_types = {'full', 'incremental', 'differential', 'snapshot', 'continuous'}
+        """Validate backup type."""        allowed_types = {'full', 'incremental', 'differential', 'snapshot', 'continuous'}
         if v not in allowed_types:
             raise ValueError(f'Backup type must be one of: {", ".join(allowed_types)}')
         return v

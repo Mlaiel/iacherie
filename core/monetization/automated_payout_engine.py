@@ -1,11 +1,9 @@
-"""
-Automated Payout Engine
+"""Automated Payout Engine
 Intelligent payout processing, scheduling and optimization system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -23,8 +21,7 @@ from .payment_processor import PaymentProcessor, PaymentConfig
 
 
 class PayoutStatus(Enum):
-    """Payout processing status"""
-    SCHEDULED = "scheduled"
+    """Payout processing status"""    SCHEDULED = "scheduled"
     PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
@@ -34,8 +31,7 @@ class PayoutStatus(Enum):
 
 
 class PayoutMethod(Enum):
-    """Available payout methods"""
-    BANK_TRANSFER = "bank_transfer"
+    """Available payout methods"""    BANK_TRANSFER = "bank_transfer"
     PAYPAL = "paypal"
     WISE = "wise"
     STRIPE_TRANSFER = "stripe_transfer"
@@ -44,8 +40,7 @@ class PayoutMethod(Enum):
 
 
 class PayoutFrequency(Enum):
-    """Payout frequency options"""
-    DAILY = "daily"
+    """Payout frequency options"""    DAILY = "daily"
     WEEKLY = "weekly"
     BIWEEKLY = "biweekly"
     MONTHLY = "monthly"
@@ -55,8 +50,7 @@ class PayoutFrequency(Enum):
 
 @dataclass
 class PayoutDestination:
-    """Payout destination details"""
-    method: PayoutMethod
+    """Payout destination details"""    method: PayoutMethod
     account_id: str
     account_name: str
     routing_details: Dict[str, str]
@@ -65,8 +59,7 @@ class PayoutDestination:
     verification_date: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "method": self.method.value,
             "account_id": self.account_id,
             "account_name": self.account_name,
@@ -79,8 +72,7 @@ class PayoutDestination:
 
 @dataclass
 class PayoutRequest:
-    """Payout request details"""
-    request_id: str
+    """Payout request details"""    request_id: str
     user_id: int
     amount: Decimal
     currency: str
@@ -96,14 +88,12 @@ class PayoutRequest:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def calculate_net_amount(self) -> Decimal:
-        """Calculate net amount after fees"""
-        if self.net_amount is None:
+        """Calculate net amount after fees"""        if self.net_amount is None:
             self.net_amount = self.amount - self.processing_fee
         return self.net_amount
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             "request_id": self.request_id,
             "user_id": self.user_id,
             "amount": float(self.amount),
@@ -123,8 +113,7 @@ class PayoutRequest:
 
 @dataclass
 class PayoutSchedule:
-    """User payout schedule configuration"""
-    user_id: int
+    """User payout schedule configuration"""    user_id: int
     frequency: PayoutFrequency
     minimum_amount: Decimal
     destination: PayoutDestination
@@ -134,8 +123,7 @@ class PayoutSchedule:
     next_payout_date: Optional[datetime] = None
     
     def calculate_next_payout_date(self, last_payout_date: Optional[datetime] = None) -> datetime:
-        """Calculate next payout date based on frequency"""
-        base_date = last_payout_date or datetime.now()
+        """Calculate next payout date based on frequency"""        base_date = last_payout_date or datetime.now()
         
         if self.frequency == PayoutFrequency.DAILY:
             next_date = base_date + timedelta(days=1)
@@ -167,8 +155,7 @@ class PayoutSchedule:
 
 
 class PayoutOptimizer:
-    """Payout cost optimization engine"""
-    
+    """Payout cost optimization engine"""    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         
@@ -206,8 +193,7 @@ class PayoutOptimizer:
         currency: str,
         available_methods: List[PayoutMethod]
     ) -> Tuple[PayoutMethod, Decimal]:
-        """Calculate optimal payout method with lowest fees"""
-        
+        """Calculate optimal payout method with lowest fees"""        
         best_method = None
         lowest_fee = None
         
@@ -224,8 +210,7 @@ class PayoutOptimizer:
         return best_method or PayoutMethod.BANK_TRANSFER, lowest_fee or Decimal("0")
     
     def calculate_fee(self, amount: Decimal, method: PayoutMethod) -> Decimal:
-        """Calculate fee for specific payout method"""
-        
+        """Calculate fee for specific payout method"""        
         if method not in self.fee_structures:
             return Decimal("0")
         
@@ -249,8 +234,7 @@ class PayoutOptimizer:
         current_balance: Decimal,
         schedule: PayoutSchedule
     ) -> Dict[str, Any]:
-        """Recommend optimal payout timing"""
-        
+        """Recommend optimal payout timing"""        
         now = datetime.now()
         
         # Check if minimum amount is met
@@ -285,8 +269,7 @@ class PayoutOptimizer:
 
 
 class PayoutEngine:
-    """Main payout processing engine"""
-    
+    """Main payout processing engine"""    
     def __init__(
         self,
         payment_processor: PaymentProcessor,
@@ -309,8 +292,7 @@ class PayoutEngine:
         scheduled_date: Optional[datetime] = None,
         session: AsyncSession
     ) -> PayoutRequest:
-        """Create a new payout request"""
-        
+        """Create a new payout request"""        
         try:
             # Validate destination
             if not destination.is_verified:
@@ -360,8 +342,7 @@ class PayoutEngine:
             raise
     
     async def process_scheduled_payouts(self, session: AsyncSession) -> List[PayoutRequest]:
-        """Process all scheduled payouts that are due"""
-        
+        """Process all scheduled payouts that are due"""        
         async with self.processing_lock:
             try:
                 # Get pending payouts
@@ -402,8 +383,7 @@ class PayoutEngine:
         request: PayoutRequest,
         session: AsyncSession
     ) -> PayoutRequest:
-        """Process a single payout request"""
-        
+        """Process a single payout request"""        
         try:
             # Update status to processing
             request.status = PayoutStatus.PROCESSING
@@ -449,8 +429,7 @@ class PayoutEngine:
             raise
     
     async def _process_paypal_payout(self, request: PayoutRequest) -> str:
-        """Process PayPal payout"""
-        
+        """Process PayPal payout"""        
         # Configure PayPal payment
         config = PaymentConfig(
             gateway="paypal",
@@ -469,8 +448,7 @@ class PayoutEngine:
         return result.get("transaction_id")
     
     async def _process_wise_payout(self, request: PayoutRequest) -> str:
-        """Process Wise (TransferWise) payout"""
-        
+        """Process Wise (TransferWise) payout"""        
         config = PaymentConfig(
             gateway="wise",
             amount=request.net_amount,
@@ -488,8 +466,7 @@ class PayoutEngine:
         return result.get("transaction_id")
     
     async def _process_stripe_payout(self, request: PayoutRequest) -> str:
-        """Process Stripe Connect payout"""
-        
+        """Process Stripe Connect payout"""        
         config = PaymentConfig(
             gateway="stripe",
             amount=request.net_amount,
@@ -506,8 +483,7 @@ class PayoutEngine:
         return result.get("transaction_id")
     
     async def _process_bank_transfer(self, request: PayoutRequest) -> str:
-        """Process direct bank transfer"""
-        
+        """Process direct bank transfer"""        
         # This would integrate with banking APIs or manual processing
         # For now, return a mock transaction ID
         transaction_id = f"BANK_{request.request_id[:8]}_{int(datetime.now().timestamp())}"
@@ -524,8 +500,7 @@ class PayoutEngine:
         user_id: int,
         session: AsyncSession
     ) -> Decimal:
-        """Get user's available balance for payout"""
-        
+        """Get user's available balance for payout"""        
         # Calculate total revenue
         revenue_result = await session.execute(
             select(func.sum(RevenueRecord.amount)).where(
@@ -553,8 +528,7 @@ class PayoutEngine:
         request: PayoutRequest,
         session: AsyncSession
     ) -> None:
-        """Record payout transaction in user's transaction history"""
-        
+        """Record payout transaction in user's transaction history"""        
         # This would create a transaction record
         # Implementation depends on your transaction model
         pass
@@ -564,8 +538,7 @@ class PayoutEngine:
         request: PayoutRequest,
         session: AsyncSession
     ) -> None:
-        """Update payout status in database"""
-        
+        """Update payout status in database"""        
         result = await session.execute(
             select(Payout).where(Payout.request_id == request.request_id)
         )
@@ -578,8 +551,7 @@ class PayoutEngine:
             await session.commit()
     
     async def _convert_record_to_request(self, record: Payout) -> PayoutRequest:
-        """Convert database record to PayoutRequest object"""
-        
+        """Convert database record to PayoutRequest object"""        
         # Reconstruct destination from metadata
         metadata = record.metadata or {}
         destination_data = metadata.get("destination", {})
@@ -617,8 +589,7 @@ class PayoutEngine:
         offset: int = 0,
         session: AsyncSession
     ) -> List[PayoutRequest]:
-        """Get user's payout history"""
-        
+        """Get user's payout history"""        
         try:
             result = await session.execute(
                 select(Payout)
@@ -641,8 +612,7 @@ class PayoutEngine:
 
 
 class PayoutScheduler:
-    """Automated payout scheduling service"""
-    
+    """Automated payout scheduling service"""    
     def __init__(self, payout_engine: PayoutEngine, optimizer: PayoutOptimizer):
         self.payout_engine = payout_engine
         self.optimizer = optimizer
@@ -650,8 +620,7 @@ class PayoutScheduler:
         self.scheduler_running = False
     
     async def start_scheduler(self, check_interval_minutes: int = 60):
-        """Start automated payout scheduler"""
-        
+        """Start automated payout scheduler"""        
         self.scheduler_running = True
         
         while self.scheduler_running:
@@ -664,12 +633,10 @@ class PayoutScheduler:
                 await asyncio.sleep(300)  # Wait 5 minutes before retry
     
     def stop_scheduler(self):
-        """Stop automated payout scheduler"""
-        self.scheduler_running = False
+        """Stop automated payout scheduler"""        self.scheduler_running = False
     
     async def _process_scheduled_payouts(self):
-        """Process all due scheduled payouts"""
-        
+        """Process all due scheduled payouts"""        
         # This would get database session and process payouts
         # Implementation depends on your database session management
         pass

@@ -1,5 +1,4 @@
-"""
-Tenant Connection Manager - IA Influencer Agent Platform
+"""Tenant Connection Manager - IA Influencer Agent Platform
 
 Advanced multi-tenant database connection management for content creators isolation.
 Ensures strict data separation between artists, labels, and content protection clients.
@@ -18,7 +17,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 from typing import Dict, Any, Optional, List, Set
@@ -38,8 +36,7 @@ logger = logging.getLogger(__name__)
 
 
 class TenantType(Enum):
-    """Content creator tenant types"""
-    INDIVIDUAL_ARTIST = "individual_artist"
+    """Content creator tenant types"""    INDIVIDUAL_ARTIST = "individual_artist"
     MUSIC_LABEL = "music_label"
     CONTENT_AGENCY = "content_agency"
     INFLUENCER_NETWORK = "influencer_network"
@@ -49,8 +46,7 @@ class TenantType(Enum):
 
 @dataclass
 class TenantConfig:
-    """Tenant-specific database configuration"""
-    tenant_id: str
+    """Tenant-specific database configuration"""    tenant_id: str
     tenant_type: TenantType
     schema_name: str
     database_prefix: str
@@ -68,8 +64,7 @@ class TenantConfig:
 
 
 class TenantConnectionManager:
-    """
-    Multi-tenant database connection manager with enterprise-grade isolation.
+    """    Multi-tenant database connection manager with enterprise-grade isolation.
     
     Features:
     - Per-tenant connection pools
@@ -78,8 +73,7 @@ class TenantConnectionManager:
     - Tenant-aware query routing
     - Resource quota enforcement
     - Cross-tenant collaboration controls
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.tenant_configs: Dict[str, TenantConfig] = {}
@@ -95,8 +89,7 @@ class TenantConnectionManager:
         tenant_type: TenantType,
         config_overrides: Optional[Dict[str, Any]] = None
     ) -> TenantConfig:
-        """
-        Register new content creator tenant with isolated resources.
+        """        Register new content creator tenant with isolated resources.
         
         Args:
             tenant_id: Unique tenant identifier (artist_id, label_id, etc.)
@@ -105,8 +98,7 @@ class TenantConnectionManager:
             
         Returns:
             TenantConfig: Configured tenant settings
-        """
-        async with self._lock:
+        """        async with self._lock:
             try:
                 # Generate secure schema/database names
                 schema_name = self._generate_tenant_schema(tenant_id, tenant_type)
@@ -145,8 +137,7 @@ class TenantConnectionManager:
         database_type: str,
         readonly: bool = False
     ) -> Any:
-        """
-        Get tenant-isolated database connection.
+        """        Get tenant-isolated database connection.
         
         Args:
             tenant_id: Tenant identifier
@@ -155,8 +146,7 @@ class TenantConnectionManager:
             
         Returns:
             Database connection with tenant isolation
-        """
-        if tenant_id not in self.tenant_configs:
+        """        if tenant_id not in self.tenant_configs:
             raise ValueError(f"Tenant {tenant_id} not registered")
             
         tenant_config = self.tenant_configs[tenant_id]
@@ -196,15 +186,13 @@ class TenantConnectionManager:
         database_type: str = "postgresql",
         readonly: bool = False
     ):
-        """
-        Context manager for tenant-isolated database sessions.
+        """        Context manager for tenant-isolated database sessions.
         
         Usage:
             async with tenant_manager.tenant_session("artist_123") as session:
                 # Perform tenant-isolated operations
                 result = await session.execute(query)
-        """
-        connection = None
+        """        connection = None
         try:
             connection = await self.get_tenant_connection(
                 tenant_id, database_type, readonly
@@ -221,8 +209,7 @@ class TenantConnectionManager:
         params: Optional[Dict[str, Any]] = None,
         database_type: str = "postgresql"
     ) -> Any:
-        """
-        Execute query with automatic tenant isolation.
+        """        Execute query with automatic tenant isolation.
         
         Args:
             tenant_id: Tenant identifier
@@ -232,8 +219,7 @@ class TenantConnectionManager:
             
         Returns:
             Query results with tenant context
-        """
-        async with self.tenant_session(tenant_id, database_type) as session:
+        """        async with self.tenant_session(tenant_id, database_type) as session:
             # Inject tenant context into query
             tenant_query = self._inject_tenant_context(
                 query, self.tenant_configs[tenant_id], database_type
@@ -260,8 +246,7 @@ class TenantConnectionManager:
         collaboration_type: str,
         permissions: Dict[str, List[str]]
     ) -> str:
-        """
-        Create secure collaboration between content creators.
+        """        Create secure collaboration between content creators.
         
         Args:
             primary_tenant_id: Primary content creator
@@ -271,8 +256,7 @@ class TenantConnectionManager:
             
         Returns:
             Collaboration session ID
-        """
-        collaboration_id = self._generate_collaboration_id(
+        """        collaboration_id = self._generate_collaboration_id(
             primary_tenant_id, collaborator_tenant_ids
         )
         
@@ -305,8 +289,7 @@ class TenantConnectionManager:
             raise
     
     async def get_tenant_metrics(self, tenant_id: str) -> Dict[str, Any]:
-        """Get comprehensive tenant connection and usage metrics."""
-        if tenant_id not in self.tenant_configs:
+        """Get comprehensive tenant connection and usage metrics."""        if tenant_id not in self.tenant_configs:
             raise ValueError(f"Tenant {tenant_id} not registered")
         
         metrics = {
@@ -321,8 +304,7 @@ class TenantConnectionManager:
         return metrics
     
     def _generate_tenant_schema(self, tenant_id: str, tenant_type: TenantType) -> str:
-        """Generate secure tenant schema name."""
-        type_prefix = {
+        """Generate secure tenant schema name."""        type_prefix = {
             TenantType.INDIVIDUAL_ARTIST: "artist",
             TenantType.MUSIC_LABEL: "label", 
             TenantType.CONTENT_AGENCY: "agency",
@@ -336,8 +318,7 @@ class TenantConnectionManager:
         return f"{prefix}_{sanitized_id}"
     
     def _generate_database_prefix(self, tenant_id: str) -> str:
-        """Generate secure database prefix for NoSQL isolation."""
-        tenant_hash = hashlib.sha256(tenant_id.encode()).hexdigest()[:12]
+        """Generate secure database prefix for NoSQL isolation."""        tenant_hash = hashlib.sha256(tenant_id.encode()).hexdigest()[:12]
         return f"tenant_{tenant_hash}"
     
     def _generate_collaboration_id(
@@ -345,15 +326,13 @@ class TenantConnectionManager:
         primary_tenant: str, 
         collaborators: List[str]
     ) -> str:
-        """Generate unique collaboration identifier."""
-        all_tenants = sorted([primary_tenant] + collaborators)
+        """Generate unique collaboration identifier."""        all_tenants = sorted([primary_tenant] + collaborators)
         tenant_string = "_".join(all_tenants)
         collab_hash = hashlib.sha256(tenant_string.encode()).hexdigest()[:16]
         return f"collab_{collab_hash}"
     
     async def _initialize_tenant_connections(self, tenant_config: TenantConfig):
-        """Initialize all database connections for tenant."""
-        tenant_id = tenant_config.tenant_id
+        """Initialize all database connections for tenant."""        tenant_id = tenant_config.tenant_id
         self.tenant_connections[tenant_id] = {}
         
         # PostgreSQL schema creation
@@ -374,8 +353,7 @@ class TenantConnectionManager:
         database_type: str,
         readonly: bool
     ) -> Any:
-        """Get database connection with tenant isolation."""
-        if database_type == "postgresql":
+        """Get database connection with tenant isolation."""        if database_type == "postgresql":
             return await self._get_postgresql_connection(tenant_config, readonly)
         elif database_type == "mongodb":
             return await self._get_mongodb_connection(tenant_config, readonly)
@@ -387,18 +365,15 @@ class TenantConnectionManager:
             raise ValueError(f"Unsupported database type: {database_type}")
     
     async def _create_postgresql_schema(self, tenant_config: TenantConfig):
-        """Create PostgreSQL schema for tenant isolation."""
-        # Implementation for creating tenant-specific PostgreSQL schema
+        """Create PostgreSQL schema for tenant isolation."""        # Implementation for creating tenant-specific PostgreSQL schema
         pass
     
     async def _initialize_mongodb_tenant(self, tenant_config: TenantConfig):
-        """Initialize MongoDB collections with tenant prefix."""
-        # Implementation for MongoDB tenant initialization
+        """Initialize MongoDB collections with tenant prefix."""        # Implementation for MongoDB tenant initialization
         pass
     
     async def _setup_redis_namespace(self, tenant_config: TenantConfig):
-        """Setup Redis key namespace for tenant."""
-        # Implementation for Redis namespace setup
+        """Setup Redis key namespace for tenant."""        # Implementation for Redis namespace setup
         pass
     
     def _inject_tenant_context(
@@ -407,25 +382,21 @@ class TenantConnectionManager:
         tenant_config: TenantConfig, 
         database_type: str
     ) -> str:
-        """Inject tenant context into database queries."""
-        if database_type == "postgresql":
+        """Inject tenant context into database queries."""        if database_type == "postgresql":
             # Prepend schema name to table references
             return f"SET search_path TO {tenant_config.schema_name}; {query}"
         return query
     
     def _get_tenant_collection_name(self, tenant_id: str, collection: str) -> str:
-        """Get MongoDB collection name with tenant prefix."""
-        tenant_config = self.tenant_configs[tenant_id]
+        """Get MongoDB collection name with tenant prefix."""        tenant_config = self.tenant_configs[tenant_id]
         return f"{tenant_config.database_prefix}_{collection}"
     
     def _get_tenant_redis_key(self, tenant_id: str, key: str) -> str:
-        """Get Redis key with tenant prefix."""
-        tenant_config = self.tenant_configs[tenant_id]
+        """Get Redis key with tenant prefix."""        tenant_config = self.tenant_configs[tenant_id]
         return f"{tenant_config.database_prefix}:{key}"
     
     async def _enforce_connection_limits(self, tenant_id: str, database_type: str):
-        """Enforce per-tenant connection limits."""
-        tenant_config = self.tenant_configs[tenant_id]
+        """Enforce per-tenant connection limits."""        tenant_config = self.tenant_configs[tenant_id]
         limit = tenant_config.connection_limits.get(database_type, 5)
         
         active_count = len([
@@ -442,8 +413,7 @@ class TenantConnectionManager:
         database_type: str, 
         action: str
     ):
-        """Update tenant connection metrics."""
-        if tenant_id not in self.tenant_metrics:
+        """Update tenant connection metrics."""        if tenant_id not in self.tenant_metrics:
             self.tenant_metrics[tenant_id] = {}
         
         metric_key = f"{database_type}_{action}_count"
@@ -452,18 +422,15 @@ class TenantConnectionManager:
         )
     
     async def _release_tenant_connection(self, tenant_id: str, connection: Any):
-        """Release and cleanup tenant connection."""
-        # Implementation for connection cleanup
+        """Release and cleanup tenant connection."""        # Implementation for connection cleanup
         pass
     
     async def _setup_tenant_monitoring(self, tenant_id: str):
-        """Setup monitoring for tenant connections."""
-        # Implementation for tenant monitoring setup
+        """Setup monitoring for tenant connections."""        # Implementation for tenant monitoring setup
         pass
     
     async def _get_tenant_resource_usage(self, tenant_id: str) -> Dict[str, Any]:
-        """Get detailed resource usage for tenant."""
-        return {
+        """Get detailed resource usage for tenant."""        return {
             "cpu_usage": 0.0,
             "memory_usage": 0.0,
             "storage_usage": 0.0,
@@ -471,16 +438,14 @@ class TenantConnectionManager:
         }
     
     async def _get_tenant_collaboration_count(self, tenant_id: str) -> int:
-        """Get number of active collaborations for tenant."""
-        return 0
+        """Get number of active collaborations for tenant."""        return 0
     
     def _apply_config_overrides(
         self, 
         tenant_config: TenantConfig, 
         overrides: Dict[str, Any]
     ):
-        """Apply configuration overrides to tenant config."""
-        for key, value in overrides.items():
+        """Apply configuration overrides to tenant config."""        for key, value in overrides.items():
             if hasattr(tenant_config, key):
                 setattr(tenant_config, key, value)
     
@@ -491,8 +456,7 @@ class TenantConnectionManager:
         collaborators: List[str],
         permissions: Dict[str, List[str]]
     ) -> Dict[str, Any]:
-        """Setup shared namespace for collaboration."""
-        return {
+        """Setup shared namespace for collaboration."""        return {
             "collaboration_id": collaboration_id,
             "namespace": f"collab_{collaboration_id}",
             "primary_tenant": primary_tenant,
@@ -506,16 +470,14 @@ class TenantConnectionManager:
         event_type: str,
         event_data: Dict[str, Any]
     ):
-        """Log collaboration events for audit trail."""
-        logger.info(f"Collaboration {collaboration_id}: {event_type} - {event_data}")
+        """Log collaboration events for audit trail."""        logger.info(f"Collaboration {collaboration_id}: {event_type} - {event_data}")
     
     async def _get_postgresql_connection(
         self, 
         tenant_config: TenantConfig, 
         readonly: bool
     ) -> AsyncSession:
-        """Get PostgreSQL connection with tenant schema."""
-        # Implementation for PostgreSQL connection
+        """Get PostgreSQL connection with tenant schema."""        # Implementation for PostgreSQL connection
         pass
     
     async def _get_mongodb_connection(
@@ -523,8 +485,7 @@ class TenantConnectionManager:
         tenant_config: TenantConfig, 
         readonly: bool
     ) -> AsyncIOMotorClient:
-        """Get MongoDB connection with tenant database."""
-        # Implementation for MongoDB connection
+        """Get MongoDB connection with tenant database."""        # Implementation for MongoDB connection
         pass
     
     async def _get_redis_connection(
@@ -532,8 +493,7 @@ class TenantConnectionManager:
         tenant_config: TenantConfig, 
         readonly: bool
     ) -> Redis:
-        """Get Redis connection with tenant namespace."""
-        # Implementation for Redis connection
+        """Get Redis connection with tenant namespace."""        # Implementation for Redis connection
         pass
     
     async def _get_elasticsearch_connection(
@@ -541,6 +501,5 @@ class TenantConnectionManager:
         tenant_config: TenantConfig, 
         readonly: bool
     ) -> Any:
-        """Get Elasticsearch connection with tenant index."""
-        # Implementation for Elasticsearch connection
+        """Get Elasticsearch connection with tenant index."""        # Implementation for Elasticsearch connection
         pass

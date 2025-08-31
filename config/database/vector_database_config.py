@@ -1,5 +1,4 @@
-"""
-Vector Database Configuration Module for IA-Influencer Agent Platform
+"""Vector Database Configuration Module for IA-Influencer Agent Platform
 ===================================================================
 
 Professional vector database configuration for content fingerprinting, similarity search,
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import logging
 import numpy as np
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class VectorIndexType(Enum):
-    """Vector index types for different use cases"""
-    FLAT = "flat"  # Exact search
+    """Vector index types for different use cases"""    FLAT = "flat"  # Exact search
     IVF_FLAT = "ivf_flat"  # Fast approximate search
     IVF_PQ = "ivf_pq"  # Memory optimized
     HNSW = "hnsw"  # Hierarchical navigable small world
@@ -43,16 +40,14 @@ class VectorIndexType(Enum):
 
 
 class SimilarityMetric(Enum):
-    """Similarity metrics for vector comparison"""
-    COSINE = "cosine"
+    """Similarity metrics for vector comparison"""    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     INNER_PRODUCT = "inner_product"
     HAMMING = "hamming"
 
 
 class ContentType(Enum):
-    """Content types for fingerprinting"""
-    AUDIO = "audio"
+    """Content types for fingerprinting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -61,8 +56,7 @@ class ContentType(Enum):
 
 @dataclass
 class VectorDatabaseCredentials:
-    """Vector database authentication credentials"""
-    api_key: Optional[str] = None
+    """Vector database authentication credentials"""    api_key: Optional[str] = None
     secret_key: Optional[str] = None
     token: Optional[str] = None
     username: Optional[str] = None
@@ -72,8 +66,7 @@ class VectorDatabaseCredentials:
 
 @dataclass
 class IndexConfiguration:
-    """Configuration for vector index"""
-    index_type: VectorIndexType
+    """Configuration for vector index"""    index_type: VectorIndexType
     dimension: int
     similarity_metric: SimilarityMetric
     nlist: int = 100  # Number of clusters for IVF
@@ -87,8 +80,7 @@ class IndexConfiguration:
 
 @dataclass
 class VectorDatabaseConfig:
-    """Professional vector database configuration"""
-    # Core configuration
+    """Professional vector database configuration"""    # Core configuration
     host: str = "localhost"
     port: int = 8000
     database_name: str = "ia_influencer_vectors"
@@ -168,8 +160,7 @@ class VectorDatabaseConfig:
 
 
 class VectorDatabaseManager:
-    """Professional vector database management system"""
-    
+    """Professional vector database management system"""    
     def __init__(self, config: VectorDatabaseConfig):
         self.config = config
         self.indexes: Dict[str, faiss.Index] = {}
@@ -178,8 +169,7 @@ class VectorDatabaseManager:
         self._setup_storage_directories()
         
     def _setup_storage_directories(self):
-        """Create necessary storage directories"""
-        for path in [
+        """Create necessary storage directories"""        for path in [
             self.config.index_storage_path,
             self.config.backup_storage_path,
             self.config.temp_storage_path
@@ -187,8 +177,7 @@ class VectorDatabaseManager:
             Path(path).mkdir(parents=True, exist_ok=True)
             
     def _create_faiss_index(self, config: IndexConfiguration) -> faiss.Index:
-        """Create FAISS index based on configuration"""
-        dimension = config.dimension
+        """Create FAISS index based on configuration"""        dimension = config.dimension
         
         if config.index_type == VectorIndexType.FLAT:
             if config.similarity_metric == SimilarityMetric.COSINE:
@@ -218,8 +207,7 @@ class VectorDatabaseManager:
         return index
         
     async def initialize_indexes(self) -> Dict[str, bool]:
-        """Initialize all vector indexes"""
-        results = {}
+        """Initialize all vector indexes"""        results = {}
         
         try:
             # Initialize content type indexes
@@ -273,8 +261,7 @@ class VectorDatabaseManager:
         vectors: np.ndarray,
         ids: Optional[List[int]] = None
     ) -> bool:
-        """Add vectors to specified index"""
-        try:
+        """Add vectors to specified index"""        try:
             if index_name not in self.indexes:
                 raise ValueError(f"Index {index_name} not found")
                 
@@ -321,8 +308,7 @@ class VectorDatabaseManager:
         top_k: int = 10,
         threshold: Optional[float] = None
     ) -> Tuple[np.ndarray, np.ndarray]:
-        """Search for similar vectors"""
-        try:
+        """Search for similar vectors"""        try:
             if index_name not in self.indexes:
                 raise ValueError(f"Index {index_name} not found")
                 
@@ -364,8 +350,7 @@ class VectorDatabaseManager:
             return np.array([]), np.array([])
             
     async def save_indexes(self) -> Dict[str, bool]:
-        """Save all indexes to disk"""
-        results = {}
+        """Save all indexes to disk"""        results = {}
         
         for index_name, index in self.indexes.items():
             try:
@@ -403,8 +388,7 @@ class VectorDatabaseManager:
         return results
         
     async def get_index_statistics(self, index_name: str) -> Dict[str, Any]:
-        """Get statistics for specific index"""
-        if index_name not in self.indexes:
+        """Get statistics for specific index"""        if index_name not in self.indexes:
             return {"error": "Index not found"}
             
         index = self.indexes[index_name]
@@ -424,8 +408,7 @@ class VectorDatabaseManager:
         }
         
     def _estimate_index_memory(self, index: faiss.Index) -> float:
-        """Estimate memory usage of index in MB"""
-        # Rough estimation based on vector count and dimension
+        """Estimate memory usage of index in MB"""        # Rough estimation based on vector count and dimension
         vector_count = index.ntotal
         if hasattr(index, 'd'):
             dimension = index.d
@@ -437,8 +420,7 @@ class VectorDatabaseManager:
         return estimated_bytes / (1024 * 1024)  # Convert to MB
         
     async def backup_indexes(self) -> Dict[str, str]:
-        """Create backup of all indexes"""
-        results = {}
+        """Create backup of all indexes"""        results = {}
         timestamp = int(time.time())
         
         for index_name in self.indexes:
@@ -471,8 +453,7 @@ class VectorDatabaseManager:
         return results
         
     async def cleanup_old_backups(self, keep_days: int = 7) -> int:
-        """Clean up old backup files"""
-        try:
+        """Clean up old backup files"""        try:
             cutoff_time = time.time() - (keep_days * 24 * 3600)
             removed_count = 0
             
@@ -500,8 +481,7 @@ def create_vector_database_config(
     environment: str = "development",
     custom_settings: Optional[Dict[str, Any]] = None
 ) -> VectorDatabaseConfig:
-    """Factory function to create vector database configuration"""
-    
+    """Factory function to create vector database configuration"""    
     # Environment-specific defaults
     config_defaults = {
         "development": {

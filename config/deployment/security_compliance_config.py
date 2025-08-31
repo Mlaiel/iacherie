@@ -1,5 +1,4 @@
-"""
-Security and Compliance Configuration Module for IA-Influencer Agent Platform
+"""Security and Compliance Configuration Module for IA-Influencer Agent Platform
 ==============================================================================
 
 Professional security, privacy, and compliance configuration
@@ -22,7 +21,6 @@ WILL FACE IMMEDIATE LEGAL ACTION under German and international intellectual pro
 
 📧 Contact: mlaiel@live.de for licensing and usage permissions ONLY.
 """
-
 import os
 import json
 import yaml
@@ -35,8 +33,7 @@ import logging
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks"""
-    GDPR = "gdpr"
+    """Supported compliance frameworks"""    GDPR = "gdpr"
     CCPA = "ccpa"
     SOC2 = "soc2"
     ISO27001 = "iso27001"
@@ -48,8 +45,7 @@ class ComplianceFramework(Enum):
 
 
 class SecurityLevel(Enum):
-    """Security levels"""
-    BASIC = "basic"
+    """Security levels"""    BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
     MAXIMUM = "maximum"
@@ -57,8 +53,7 @@ class SecurityLevel(Enum):
 
 
 class DataClassification(Enum):
-    """Data classification levels"""
-    PUBLIC = "public"
+    """Data classification levels"""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -66,8 +61,7 @@ class DataClassification(Enum):
 
 
 class EncryptionType(Enum):
-    """Encryption types"""
-    AES_256 = "aes_256"
+    """Encryption types"""    AES_256 = "aes_256"
     RSA_2048 = "rsa_2048"
     RSA_4096 = "rsa_4096"
     ECDSA = "ecdsa"
@@ -76,8 +70,7 @@ class EncryptionType(Enum):
 
 @dataclass
 class EncryptionConfig:
-    """Encryption configuration"""
-    at_rest: EncryptionType = EncryptionType.AES_256
+    """Encryption configuration"""    at_rest: EncryptionType = EncryptionType.AES_256
     in_transit: EncryptionType = EncryptionType.AES_256
     key_rotation_days: int = 90
     key_management_service: str = "aws_kms"
@@ -88,8 +81,7 @@ class EncryptionConfig:
 
 @dataclass
 class AuthenticationConfig:
-    """Authentication configuration"""
-    multi_factor_required: bool = True
+    """Authentication configuration"""    multi_factor_required: bool = True
     password_policy: Dict[str, Any] = field(default_factory=dict)
     session_timeout_minutes: int = 30
     max_login_attempts: int = 5
@@ -101,8 +93,7 @@ class AuthenticationConfig:
 
 @dataclass
 class AuditConfig:
-    """Audit and logging configuration"""
-    audit_all_access: bool = True
+    """Audit and logging configuration"""    audit_all_access: bool = True
     log_retention_days: int = 2555  # 7 years
     real_time_monitoring: bool = True
     anomaly_detection: bool = True
@@ -113,8 +104,7 @@ class AuditConfig:
 
 @dataclass
 class PrivacyConfig:
-    """Privacy and data protection configuration"""
-    data_minimization: bool = True
+    """Privacy and data protection configuration"""    data_minimization: bool = True
     consent_management: bool = True
     right_to_deletion: bool = True
     data_portability: bool = True
@@ -124,8 +114,7 @@ class PrivacyConfig:
 
 
 class SecurityComplianceConfig:
-    """
-    Professional security and compliance configuration for IA-Influencer Agent Platform.
+    """    Professional security and compliance configuration for IA-Influencer Agent Platform.
     
     Provides comprehensive security infrastructure:
     - Multi-framework compliance (GDPR, CCPA, SOC2, ISO27001)
@@ -140,8 +129,7 @@ class SecurityComplianceConfig:
     - Privacy-preserving analytics
     - Content protection and digital rights management
     - Legal compliance for international operations
-    """
-    
+    """    
     def __init__(self, environment: str = "development"):
         self.environment = environment
         self.project_name = "ia-influencer-agent-security"
@@ -155,8 +143,7 @@ class SecurityComplianceConfig:
         self.logger = self._setup_logging()
         
     def _initialize_encryption_config(self) -> EncryptionConfig:
-        """Initialize encryption configuration"""
-        return EncryptionConfig(
+        """Initialize encryption configuration"""        return EncryptionConfig(
             at_rest=EncryptionType.AES_256,
             in_transit=EncryptionType.AES_256,
             key_rotation_days=30 if self.environment == "production" else 90,
@@ -167,8 +154,7 @@ class SecurityComplianceConfig:
         )
     
     def _initialize_authentication_config(self) -> AuthenticationConfig:
-        """Initialize authentication configuration"""
-        password_policy = {
+        """Initialize authentication configuration"""        password_policy = {
             "min_length": 12,
             "require_uppercase": True,
             "require_lowercase": True,
@@ -200,8 +186,7 @@ class SecurityComplianceConfig:
         )
     
     def _initialize_audit_config(self) -> AuditConfig:
-        """Initialize audit configuration"""
-        return AuditConfig(
+        """Initialize audit configuration"""        return AuditConfig(
             audit_all_access=True,
             log_retention_days=2555,  # 7 years for compliance
             real_time_monitoring=True,
@@ -212,8 +197,7 @@ class SecurityComplianceConfig:
         )
     
     def _initialize_privacy_config(self) -> PrivacyConfig:
-        """Initialize privacy configuration"""
-        return PrivacyConfig(
+        """Initialize privacy configuration"""        return PrivacyConfig(
             data_minimization=True,
             consent_management=True,
             right_to_deletion=True,
@@ -224,8 +208,7 @@ class SecurityComplianceConfig:
         )
     
     def _initialize_compliance_frameworks(self) -> Dict[ComplianceFramework, Dict[str, Any]]:
-        """Initialize compliance framework configurations"""
-        frameworks = {}
+        """Initialize compliance framework configurations"""        frameworks = {}
         
         # GDPR Configuration
         frameworks[ComplianceFramework.GDPR] = {
@@ -310,8 +293,7 @@ class SecurityComplianceConfig:
         return frameworks
     
     def _setup_logging(self) -> logging.Logger:
-        """Setup logging configuration"""
-        logger = logging.getLogger("security_compliance")
+        """Setup logging configuration"""        logger = logging.getLogger("security_compliance")
         logger.setLevel(logging.INFO)
         
         if not logger.handlers:
@@ -325,12 +307,10 @@ class SecurityComplianceConfig:
         return logger
     
     def get_compliance_framework_config(self, framework: ComplianceFramework) -> Optional[Dict[str, Any]]:
-        """Get configuration for specific compliance framework"""
-        return self.compliance_frameworks.get(framework)
+        """Get configuration for specific compliance framework"""        return self.compliance_frameworks.get(framework)
     
     def generate_zero_trust_configuration(self) -> Dict[str, Any]:
-        """Generate zero trust network configuration"""
-        return {
+        """Generate zero trust network configuration"""        return {
             "principles": [
                 "verify_explicitly",
                 "use_least_privilege_access",
@@ -363,8 +343,7 @@ class SecurityComplianceConfig:
         }
     
     def generate_threat_detection_configuration(self) -> Dict[str, Any]:
-        """Generate threat detection and response configuration"""
-        return {
+        """Generate threat detection and response configuration"""        return {
             "detection_mechanisms": [
                 "signature_based",
                 "behavioral_analysis",
@@ -404,8 +383,7 @@ class SecurityComplianceConfig:
         }
     
     def generate_data_governance_configuration(self) -> Dict[str, Any]:
-        """Generate data governance configuration"""
-        return {
+        """Generate data governance configuration"""        return {
             "data_classification": {
                 "automatic_classification": True,
                 "classification_labels": [
@@ -442,8 +420,7 @@ class SecurityComplianceConfig:
         }
     
     def generate_vulnerability_management_configuration(self) -> Dict[str, Any]:
-        """Generate vulnerability management configuration"""
-        return {
+        """Generate vulnerability management configuration"""        return {
             "scanning_schedule": {
                 "infrastructure_scan": "weekly",
                 "application_scan": "daily", 
@@ -479,8 +456,7 @@ class SecurityComplianceConfig:
         }
     
     def generate_privacy_configuration(self) -> Dict[str, Any]:
-        """Generate privacy protection configuration"""
-        return {
+        """Generate privacy protection configuration"""        return {
             "consent_management": {
                 "granular_consent": True,
                 "consent_withdrawal": True,
@@ -516,8 +492,7 @@ class SecurityComplianceConfig:
         }
     
     def generate_compliance_monitoring_configuration(self) -> Dict[str, Any]:
-        """Generate compliance monitoring configuration"""
-        return {
+        """Generate compliance monitoring configuration"""        return {
             "continuous_compliance": {
                 "policy_enforcement": True,
                 "real_time_monitoring": True,
@@ -545,8 +520,7 @@ class SecurityComplianceConfig:
         }
     
     def export_configurations(self, output_dir: str = "./security-compliance-configs") -> Dict[str, str]:
-        """Export all security and compliance configurations to files"""
-        output_path = Path(output_dir)
+        """Export all security and compliance configurations to files"""        output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
         exported_files = {}
@@ -642,8 +616,7 @@ class SecurityComplianceConfig:
 
 # Factory function for different environments
 def create_security_compliance_config(environment: str = "development") -> SecurityComplianceConfig:
-    """Create security compliance configuration for specific environment"""
-    return SecurityComplianceConfig(environment=environment)
+    """Create security compliance configuration for specific environment"""    return SecurityComplianceConfig(environment=environment)
 
 
 # Export configuration instances

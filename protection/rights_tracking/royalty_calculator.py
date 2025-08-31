@@ -1,5 +1,4 @@
-"""
-Royalty Calculator - Advanced Multi-Currency Royalty Calculation Engine
+"""Royalty Calculator - Advanced Multi-Currency Royalty Calculation Engine
 Système de calcul de redevances avancé avec gestion multi-devises
 Moteur professionnel pour calculs complexes de royalties et distributions
 
@@ -12,7 +11,6 @@ Ce code est la propriété exclusive de Fahed Mlaiel et est protégé par les lo
 sur la propriété intellectuelle. Toute reproduction, distribution, ou utilisation
 non autorisée est strictement interdite et passible de poursuites judiciaires.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class CurrencyCode(Enum):
-    """Codes de devises supportées"""
-    USD = "USD"
+    """Codes de devises supportées"""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     JPY = "JPY"
@@ -46,8 +43,7 @@ class CurrencyCode(Enum):
 
 
 class RoyaltyType(Enum):
-    """Types de redevances"""
-    MECHANICAL = "mechanical"
+    """Types de redevances"""    MECHANICAL = "mechanical"
     PERFORMANCE = "performance"
     SYNCHRONIZATION = "synchronization"
     REPRODUCTION = "reproduction"
@@ -60,8 +56,7 @@ class RoyaltyType(Enum):
 
 
 class PaymentFrequency(Enum):
-    """Fréquences de paiement"""
-    REAL_TIME = "real_time"
+    """Fréquences de paiement"""    REAL_TIME = "real_time"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -71,8 +66,7 @@ class PaymentFrequency(Enum):
 
 
 class TaxJurisdiction(Enum):
-    """Juridictions fiscales"""
-    US = "US"
+    """Juridictions fiscales"""    US = "US"
     EU = "EU"
     UK = "UK"
     CANADA = "CA"
@@ -82,8 +76,7 @@ class TaxJurisdiction(Enum):
 
 
 class RoyaltyRule(BaseModel):
-    """Règle de calcul de redevances"""
-    rule_id: str = Field(..., description="ID unique de la règle")
+    """Règle de calcul de redevances"""    rule_id: str = Field(..., description="ID unique de la règle")
     rule_name: str
     
     # Applicabilité
@@ -121,8 +114,7 @@ class RoyaltyRule(BaseModel):
 
 
 class ExchangeRate(BaseModel):
-    """Taux de change entre devises"""
-    from_currency: CurrencyCode
+    """Taux de change entre devises"""    from_currency: CurrencyCode
     to_currency: CurrencyCode
     rate: Decimal
     timestamp: datetime = Field(default_factory=datetime.utcnow)
@@ -136,8 +128,7 @@ class ExchangeRate(BaseModel):
 
 
 class RoyaltyCalculation(BaseModel):
-    """Résultat de calcul de redevances"""
-    calculation_id: str = Field(..., description="ID unique du calcul")
+    """Résultat de calcul de redevances"""    calculation_id: str = Field(..., description="ID unique du calcul")
     content_id: str
     license_id: Optional[str] = None
     
@@ -184,8 +175,7 @@ class RoyaltyCalculation(BaseModel):
 
 
 class PaymentInstruction(BaseModel):
-    """Instructions de paiement"""
-    payment_id: str = Field(..., description="ID unique du paiement")
+    """Instructions de paiement"""    payment_id: str = Field(..., description="ID unique du paiement")
     calculation_id: str
     payee_id: str
     
@@ -215,8 +205,7 @@ class PaymentInstruction(BaseModel):
 
 
 class RoyaltyCalculator:
-    """Calculateur avancé de redevances avec IA et multi-devises"""
-    
+    """Calculateur avancé de redevances avec IA et multi-devises"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.royalty_rules: Dict[str, RoyaltyRule] = {}
@@ -240,8 +229,7 @@ class RoyaltyCalculator:
             asyncio.create_task(self._initialize_exchange_rates())
     
     async def _load_default_rules(self):
-        """Charge les règles de redevances par défaut"""
-        try:
+        """Charge les règles de redevances par défaut"""        try:
             # Règle streaming standard
             streaming_rule = RoyaltyRule(
                 rule_id="STREAM_STD_001",
@@ -336,8 +324,7 @@ class RoyaltyCalculator:
             logger.error(f"Erreur chargement règles: {e}")
     
     async def _initialize_exchange_rates(self):
-        """Initialise les taux de change"""
-        try:
+        """Initialise les taux de change"""        try:
             # Taux de change fictifs pour démonstration
             # Dans un environnement réel, intégrer des APIs comme ECB, Fed, etc.
             
@@ -391,8 +378,7 @@ class RoyaltyCalculator:
         license_id: Optional[str] = None,
         force_currency: Optional[CurrencyCode] = None
     ) -> RoyaltyCalculation:
-        """Calcule les redevances pour un contenu sur une période"""
-        try:
+        """Calcule les redevances pour un contenu sur une période"""        try:
             calculation_id = self._generate_calculation_id()
             
             # Extraction des données d'utilisation
@@ -532,8 +518,7 @@ class RoyaltyCalculator:
         rights_shares: Dict[str, float],
         holder_preferences: Optional[Dict[str, Dict[str, Any]]] = None
     ) -> Dict[str, PaymentInstruction]:
-        """Calcule la répartition des redevances entre détenteurs"""
-        try:
+        """Calcule la répartition des redevances entre détenteurs"""        try:
             if calculation_id not in self.calculations:
                 raise ValueError(f"Calcul {calculation_id} non trouvé")
             
@@ -643,8 +628,7 @@ class RoyaltyCalculator:
         bulk_data: List[Dict[str, Any]],
         parallel_processing: bool = True
     ) -> List[RoyaltyCalculation]:
-        """Traite des calculs de redevances en lot"""
-        try:
+        """Traite des calculs de redevances en lot"""        try:
             if parallel_processing:
                 # Traitement parallèle
                 tasks = []
@@ -702,8 +686,7 @@ class RoyaltyCalculator:
         historical_data: List[Dict[str, Any]],
         forecast_periods: int = 12
     ) -> Dict[str, Any]:
-        """Génère des prévisions de redevances basées sur l'historique"""
-        try:
+        """Génère des prévisions de redevances basées sur l'historique"""        try:
             if not historical_data:
                 return {'error': 'Pas de données historiques disponibles'}
             
@@ -771,8 +754,7 @@ class RoyaltyCalculator:
         territory: str,
         usage_type: RoyaltyType
     ) -> List[RoyaltyRule]:
-        """Sélectionne les règles applicables"""
-        applicable_rules = []
+        """Sélectionne les règles applicables"""        applicable_rules = []
         
         for rule in self.royalty_rules.values():
             if not rule.active:
@@ -809,8 +791,7 @@ class RoyaltyCalculator:
         usage_count: int,
         usage_data: Dict[str, Any]
     ) -> Decimal:
-        """Calcule la redevance de base selon la règle"""
-        if rule.rate_type == "percentage":
+        """Calcule la redevance de base selon la règle"""        if rule.rate_type == "percentage":
             return gross_revenue * rule.base_rate
         
         elif rule.rate_type == "fixed":
@@ -834,8 +815,7 @@ class RoyaltyCalculator:
             return gross_revenue * rule.base_rate
     
     def _calculate_trend(self, data: List[float]) -> float:
-        """Calcule la tendance linéaire des données"""
-        if len(data) < 2:
+        """Calcule la tendance linéaire des données"""        if len(data) < 2:
             return 0
         
         n = len(data)
@@ -855,16 +835,13 @@ class RoyaltyCalculator:
         return slope
     
     def _generate_calculation_id(self) -> str:
-        """Génère un ID unique pour le calcul"""
-        return f"CALC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+        """Génère un ID unique pour le calcul"""        return f"CALC-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     def _generate_payment_id(self) -> str:
-        """Génère un ID unique pour le paiement"""
-        return f"PAY-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
+        """Génère un ID unique pour le paiement"""        return f"PAY-{datetime.utcnow().strftime('%Y%m%d%H%M%S')}-{uuid.uuid4().hex[:8]}"
     
     async def get_calculator_statistics(self) -> Dict[str, Any]:
-        """Retourne les statistiques du calculateur"""
-        try:
+        """Retourne les statistiques du calculateur"""        try:
             total_calculations = len(self.calculations)
             total_payments = len(self.payment_instructions)
             
@@ -913,8 +890,7 @@ async def _apply_performance_multipliers(
     usage_data: Dict[str, Any],
     base_amount: Decimal
 ) -> Dict[str, float]:
-    """Applique les multiplicateurs de performance"""
-    multipliers = {}
+    """Applique les multiplicateurs de performance"""    multipliers = {}
     
     for factor, multiplier in rule.performance_multipliers.items():
         if factor in usage_data and usage_data[factor]:
@@ -927,8 +903,7 @@ async def _apply_volume_bonuses(
     usage_count: int,
     gross_revenue: Decimal
 ) -> Dict[str, Decimal]:
-    """Applique les bonus de volume"""
-    bonuses = {}
+    """Applique les bonus de volume"""    bonuses = {}
     
     for threshold_name, bonus_rate in rule.volume_bonuses.items():
         threshold_value = int(threshold_name.split('_')[-1]) if threshold_name.split('_')[-1].isdigit() else 0
@@ -943,8 +918,7 @@ async def _calculate_tax_withholding(
     territory: str,
     rule: RoyaltyRule
 ) -> Decimal:
-    """Calcule la retenue fiscale"""
-    withholding_rate = rule.tax_withholding.get(territory, 0.0)
+    """Calcule la retenue fiscale"""    withholding_rate = rule.tax_withholding.get(territory, 0.0)
     return gross_amount * Decimal(str(withholding_rate))
 
 async def _get_exchange_rate(
@@ -952,16 +926,14 @@ async def _get_exchange_rate(
     from_currency: CurrencyCode,
     to_currency: CurrencyCode
 ) -> Optional[ExchangeRate]:
-    """Récupère le taux de change"""
-    rate_key = (from_currency, to_currency)
+    """Récupère le taux de change"""    rate_key = (from_currency, to_currency)
     return self.exchange_rates.get(rate_key)
 
 async def _ai_optimize_calculation(
     calculation: RoyaltyCalculation,
     usage_data: Dict[str, Any]
 ) -> RoyaltyCalculation:
-    """Optimise le calcul avec l'IA"""
-    # Optimisations IA simples
+    """Optimise le calcul avec l'IA"""    # Optimisations IA simples
     # Dans un environnement réel, intégrer des modèles ML pour optimisation
     
     calculation.confidence_level = 0.95  # IA confidence score
@@ -970,8 +942,7 @@ async def _ai_optimize_calculation(
     return calculation
 
 async def _calculate_payment_due_date(frequency: PaymentFrequency) -> datetime:
-    """Calcule la date d'échéance du paiement"""
-    now = datetime.utcnow()
+    """Calcule la date d'échéance du paiement"""    now = datetime.utcnow()
     
     if frequency == PaymentFrequency.REAL_TIME:
         return now
@@ -995,8 +966,7 @@ async def _calculate_processing_fee(
     payment_method: str,
     currency: CurrencyCode
 ) -> Decimal:
-    """Calcule les frais de traitement"""
-    # Frais de traitement simples
+    """Calcule les frais de traitement"""    # Frais de traitement simples
     if payment_method == "bank_transfer":
         return min(Decimal('5.00'), amount * Decimal('0.01'))  # 1% max 5€
     elif payment_method == "paypal":

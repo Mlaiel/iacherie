@@ -14,8 +14,7 @@ This module provides comprehensive security infrastructure for:
 - Compliance and audit trails with automated reporting
 - Advanced input validation and malware scanning
 - Real-time threat intelligence and incident response
-"""
-# Core Authentication Components
+"""# Core Authentication Components
 from .authentication import (
     AuthenticationManager,
     JWTManager,

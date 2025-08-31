@@ -1,5 +1,4 @@
-"""
-Content Backup Service for IA Influencer Agent Platform.
+"""Content Backup Service for IA Influencer Agent Platform.
 
 Handles backup and recovery of all content protection data including
 audio fingerprints, video analysis, image hashes, and text embeddings.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 import hashlib
@@ -28,8 +26,7 @@ from ...database.repositories.fingerprint_repository import FingerprintRepositor
 
 @dataclass
 class ContentBackupRecord:
-    """Content backup record metadata."""
-    content_id: str
+    """Content backup record metadata."""    content_id: str
     content_type: str
     fingerprint_data: Dict[str, Any]
     original_metadata: Dict[str, Any]
@@ -39,21 +36,17 @@ class ContentBackupRecord:
 
 
 class ContentBackupService:
-    """
-    Enterprise content backup service for IA protection platform.
+    """    Enterprise content backup service for IA protection platform.
     
     Manages backup and recovery of all content protection data including
     fingerprints, metadata, and original content references.
     """
-
     def __init__(self, storage_config: Dict[str, Any]):
-        """
-        Initialize content backup service.
+        """        Initialize content backup service.
         
         Args:
             storage_config: Storage configuration
-        """
-        self.logger = logging.getLogger(__name__)
+        """        self.logger = logging.getLogger(__name__)
         self.storage_config = storage_config
         
         # Initialize fingerprint services
@@ -70,13 +63,11 @@ class ContentBackupService:
         self.backup_progress = {}
 
     async def backup_all_content(self) -> Dict[str, Any]:
-        """
-        Backup all content protection data.
+        """        Backup all content protection data.
         
         Returns:
             Complete content backup data
-        """
-        self.logger.info("Starting complete content backup...")
+        """        self.logger.info("Starting complete content backup...")
         
         backup_data = {
             "audio_content": {},
@@ -122,16 +113,14 @@ class ContentBackupService:
         return backup_data
 
     async def backup_changes_since(self, since_date: datetime) -> Dict[str, Any]:
-        """
-        Backup content changes since specified date.
+        """        Backup content changes since specified date.
         
         Args:
             since_date: Date to check for changes
             
         Returns:
             Incremental backup data
-        """
-        self.logger.info(f"Starting incremental content backup since {since_date}")
+        """        self.logger.info(f"Starting incremental content backup since {since_date}")
         
         backup_data = {
             "audio_content": {},
@@ -202,8 +191,7 @@ class ContentBackupService:
         backup_data: Dict[str, Any], 
         target_path: Optional[str] = None
     ) -> bool:
-        """
-        Restore content from backup data.
+        """        Restore content from backup data.
         
         Args:
             backup_data: Backup data to restore
@@ -211,8 +199,7 @@ class ContentBackupService:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             self.logger.info("Starting content restoration...")
             
             # Restore audio content
@@ -253,8 +240,7 @@ class ContentBackupService:
             return False
 
     async def _backup_audio_content(self) -> Dict[str, Any]:
-        """Backup all audio content and fingerprints."""
-        audio_content = await self.content_repo.get_all_content_by_type("audio")
+        """Backup all audio content and fingerprints."""        audio_content = await self.content_repo.get_all_content_by_type("audio")
         audio_backup = {}
         
         for content in audio_content:
@@ -286,8 +272,7 @@ class ContentBackupService:
         return audio_backup
 
     async def _backup_video_content(self) -> Dict[str, Any]:
-        """Backup all video content and fingerprints."""
-        video_content = await self.content_repo.get_all_content_by_type("video")
+        """Backup all video content and fingerprints."""        video_content = await self.content_repo.get_all_content_by_type("video")
         video_backup = {}
         
         for content in video_content:
@@ -318,8 +303,7 @@ class ContentBackupService:
         return video_backup
 
     async def _backup_image_content(self) -> Dict[str, Any]:
-        """Backup all image content and fingerprints."""
-        image_content = await self.content_repo.get_all_content_by_type("image")
+        """Backup all image content and fingerprints."""        image_content = await self.content_repo.get_all_content_by_type("image")
         image_backup = {}
         
         for content in image_content:
@@ -350,8 +334,7 @@ class ContentBackupService:
         return image_backup
 
     async def _backup_text_content(self) -> Dict[str, Any]:
-        """Backup all text content and fingerprints."""
-        text_content = await self.content_repo.get_all_content_by_type("text")
+        """Backup all text content and fingerprints."""        text_content = await self.content_repo.get_all_content_by_type("text")
         text_backup = {}
         
         for content in text_content:
@@ -382,8 +365,7 @@ class ContentBackupService:
         return text_backup
 
     async def _backup_fingerprint_index(self) -> Dict[str, Any]:
-        """Backup fingerprint index and similarity data."""
-        fingerprint_index = await self.fingerprint_repo.get_complete_index()
+        """Backup fingerprint index and similarity data."""        fingerprint_index = await self.fingerprint_repo.get_complete_index()
         
         index_backup = {
             "index_metadata": {
@@ -400,8 +382,7 @@ class ContentBackupService:
         return index_backup
 
     async def _backup_specific_audio(self, content_ids: List[str]) -> Dict[str, Any]:
-        """Backup specific audio content by IDs."""
-        audio_backup = {}
+        """Backup specific audio content by IDs."""        audio_backup = {}
         
         for content_id in content_ids:
             content = await self.content_repo.get_content_by_id(content_id)
@@ -429,8 +410,7 @@ class ContentBackupService:
         return audio_backup
 
     async def _backup_specific_video(self, content_ids: List[str]) -> Dict[str, Any]:
-        """Backup specific video content by IDs."""
-        video_backup = {}
+        """Backup specific video content by IDs."""        video_backup = {}
         
         for content_id in content_ids:
             content = await self.content_repo.get_content_by_id(content_id)
@@ -458,8 +438,7 @@ class ContentBackupService:
         return video_backup
 
     async def _backup_specific_image(self, content_ids: List[str]) -> Dict[str, Any]:
-        """Backup specific image content by IDs."""
-        image_backup = {}
+        """Backup specific image content by IDs."""        image_backup = {}
         
         for content_id in content_ids:
             content = await self.content_repo.get_content_by_id(content_id)
@@ -487,8 +466,7 @@ class ContentBackupService:
         return image_backup
 
     async def _backup_specific_text(self, content_ids: List[str]) -> Dict[str, Any]:
-        """Backup specific text content by IDs."""
-        text_backup = {}
+        """Backup specific text content by IDs."""        text_backup = {}
         
         for content_id in content_ids:
             content = await self.content_repo.get_content_by_id(content_id)
@@ -516,8 +494,7 @@ class ContentBackupService:
         return text_backup
 
     async def _backup_specific_fingerprints(self, fingerprint_ids: List[str]) -> Dict[str, Any]:
-        """Backup specific fingerprints by IDs."""
-        fingerprint_backup = {}
+        """Backup specific fingerprints by IDs."""        fingerprint_backup = {}
         
         for fingerprint_id in fingerprint_ids:
             fingerprint_data = await self.fingerprint_repo.get_fingerprint_by_id(
@@ -536,8 +513,7 @@ class ContentBackupService:
         audio_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore audio content from backup."""
-        for content_id, content_backup in audio_data.items():
+        """Restore audio content from backup."""        for content_id, content_backup in audio_data.items():
             # Restore content metadata
             await self.content_repo.restore_content(
                 content_backup["content_metadata"], target_path
@@ -553,8 +529,7 @@ class ContentBackupService:
         video_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore video content from backup."""
-        for content_id, content_backup in video_data.items():
+        """Restore video content from backup."""        for content_id, content_backup in video_data.items():
             await self.content_repo.restore_content(
                 content_backup["content_metadata"], target_path
             )
@@ -568,8 +543,7 @@ class ContentBackupService:
         image_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore image content from backup."""
-        for content_id, content_backup in image_data.items():
+        """Restore image content from backup."""        for content_id, content_backup in image_data.items():
             await self.content_repo.restore_content(
                 content_backup["content_metadata"], target_path
             )
@@ -583,8 +557,7 @@ class ContentBackupService:
         text_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore text content from backup."""
-        for content_id, content_backup in text_data.items():
+        """Restore text content from backup."""        for content_id, content_backup in text_data.items():
             await self.content_repo.restore_content(
                 content_backup["content_metadata"], target_path
             )
@@ -598,8 +571,7 @@ class ContentBackupService:
         fingerprint_data: Dict[str, Any], 
         target_path: Optional[str]
     ) -> None:
-        """Restore fingerprint index from backup."""
-        # Restore similarity mappings
+        """Restore fingerprint index from backup."""        # Restore similarity mappings
         if "similarity_mappings" in fingerprint_data:
             await self.fingerprint_repo.restore_similarity_mappings(
                 fingerprint_data["similarity_mappings"], target_path
@@ -618,21 +590,18 @@ class ContentBackupService:
             )
 
     def _calculate_content_checksum(self, content: Dict[str, Any]) -> str:
-        """Calculate checksum for content data."""
-        content_str = json.dumps(content, sort_keys=True, default=str)
+        """Calculate checksum for content data."""        content_str = json.dumps(content, sort_keys=True, default=str)
         return hashlib.sha256(content_str.encode()).hexdigest()
 
     async def get_backup_progress(self, operation_id: str) -> Dict[str, Any]:
-        """
-        Get backup operation progress.
+        """        Get backup operation progress.
         
         Args:
             operation_id: Backup operation identifier
             
         Returns:
             Progress information
-        """
-        if operation_id in self.backup_progress:
+        """        if operation_id in self.backup_progress:
             return self.backup_progress[operation_id]
         
         return {
@@ -642,16 +611,14 @@ class ContentBackupService:
         }
 
     async def validate_content_integrity(self, content_id: str) -> bool:
-        """
-        Validate content integrity against backup checksums.
+        """        Validate content integrity against backup checksums.
         
         Args:
             content_id: Content identifier
             
         Returns:
             Integrity status
-        """
-        try:
+        """        try:
             # Get current content
             current_content = await self.content_repo.get_content_by_id(content_id)
             if not current_content:

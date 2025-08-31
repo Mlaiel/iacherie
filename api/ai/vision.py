@@ -1,5 +1,4 @@
 """Computer Vision: object detection, scene analysis, content moderation."""
-
 import logging
 from typing import Dict, List, Tuple
 
@@ -34,8 +33,7 @@ class VisionProcessor:
             logger.info("Using fallback vision implementation")
 
     def detect_faces(self, image_path: str) -> Dict:
-        """Detect faces in image."""
-        if not CV2_AVAILABLE or self.face_cascade is None:
+        """Detect faces in image."""        if not CV2_AVAILABLE or self.face_cascade is None:
             # Fallback implementation when OpenCV is not available
             logger.info(f"Face detection requested for {image_path} - using fallback (OpenCV not available)")
             return {
@@ -87,8 +85,7 @@ class VisionProcessor:
             }
 
     def analyze_scene(self, image_path: str) -> Dict:
-        """Basic scene analysis."""
-        if not CV2_AVAILABLE:
+        """Basic scene analysis."""        if not CV2_AVAILABLE:
             logger.info(f"Scene analysis requested for {image_path} - using fallback (OpenCV not available)")
             return {
                 "scene_type": "unknown",
@@ -141,8 +138,7 @@ class VisionProcessor:
             return {"error": str(e)}
 
     def _classify_scene_type(self, hsv_img, color_means: List[float], brightness: float) -> str:
-        """Simple scene classification."""
-        # Basic heuristics for scene classification
+        """Simple scene classification."""        # Basic heuristics for scene classification
         blue_dominant = color_means[0] > color_means[1] and color_means[0] > color_means[2]  # B channel
         green_dominant = color_means[1] > color_means[0] and color_means[1] > color_means[2]  # G channel
         
@@ -158,8 +154,7 @@ class VisionProcessor:
             return "indoor_general"
 
     def detect_objects(self, image_path: str) -> Dict:
-        """Basic object detection using contours and shapes."""
-        if not CV2_AVAILABLE:
+        """Basic object detection using contours and shapes."""        if not CV2_AVAILABLE:
             logger.info(f"Object detection requested for {image_path} - using fallback (OpenCV not available)")
             return {
                 "objects": [],
@@ -208,8 +203,7 @@ class VisionProcessor:
             return {"objects": [], "object_count": 0, "error": str(e)}
 
     def _classify_shape(self, vertex_count: int) -> str:
-        """Classify shape based on vertex count."""
-        if vertex_count == 3:
+        """Classify shape based on vertex count."""        if vertex_count == 3:
             return "triangle"
         elif vertex_count == 4:
             return "rectangle"
@@ -221,8 +215,7 @@ class VisionProcessor:
             return f"polygon_{vertex_count}"
 
     def content_safety_check(self, image_path: str) -> Dict:
-        """Basic content safety analysis."""
-        if not CV2_AVAILABLE:
+        """Basic content safety analysis."""        if not CV2_AVAILABLE:
             logger.info(f"Content safety check requested for {image_path} - using fallback (OpenCV not available)")
             return {
                 "safe": True,

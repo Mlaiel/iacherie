@@ -1,5 +1,4 @@
-"""
-Blog Templates - Professional blog content templates and structures
+"""Blog Templates - Professional blog content templates and structures
 
 Comprehensive template system for creating high-quality blog content
 with optimized structures for different types of blog posts.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime
@@ -18,8 +16,7 @@ import random
 
 
 class BlogTemplates:
-    """
-    Professional blog template collection providing:
+    """    Professional blog template collection providing:
     
     - How-to and tutorial templates
     - List-based content templates  
@@ -29,11 +26,9 @@ class BlogTemplates:
     - Personal story templates
     - SEO-optimized structures
     - Engagement-driven layouts
-    """
-    
+    """    
     def __init__(self):
-        """Initialize blog templates"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize blog templates"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # How-to/Tutorial Templates
         self.tutorial_templates = {
@@ -303,8 +298,7 @@ class BlogTemplates:
 
 {recommendation}
 
-## Rating: {rating}"""
-            }
+## Rating: {rating}"""            }
         }
         
         # News and Analysis Templates
@@ -370,8 +364,7 @@ class BlogTemplates:
 
 ## Action Items
 
-{recommendations}"""
-            }
+{recommendations}"""            }
         }
         
         # Personal Story Templates
@@ -445,8 +438,7 @@ class BlogTemplates:
 
 ## Your Turn
 
-{encouragement}"""
-            }
+{encouragement}"""            }
         }
         
         # SEO-optimized structures
@@ -516,8 +508,7 @@ class BlogTemplates:
         template_type: str,
         content_data: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Get blog template for specific category and type.
+        """        Get blog template for specific category and type.
         
         Args:
             template_category: Category (tutorial, list, thought_leadership, etc.)
@@ -526,8 +517,7 @@ class BlogTemplates:
             
         Returns:
             Template structure and metadata
-        """
-        try:
+        """        try:
             category_templates = getattr(self, f"{template_category}_templates", {})
             template = category_templates.get(template_type, {})
             
@@ -547,8 +537,7 @@ class BlogTemplates:
         template_type: str,
         content_data: Dict[str, Any]
     ) -> str:
-        """
-        Fill blog template with content data.
+        """        Fill blog template with content data.
         
         Args:
             template_category: Template category
@@ -557,8 +546,7 @@ class BlogTemplates:
             
         Returns:
             Complete blog post content
-        """
-        try:
+        """        try:
             template = self.get_template(template_category, template_type, content_data)
             
             if not template:
@@ -584,8 +572,7 @@ class BlogTemplates:
         content_data: Dict[str, Any], 
         template: Dict[str, Any]
     ) -> str:
-        """Fill placeholders in blog template"""
-        filled = structure
+        """Fill placeholders in blog template"""        filled = structure
         
         # Fill direct data mappings
         for key, value in content_data.items():
@@ -602,8 +589,7 @@ class BlogTemplates:
         return filled
     
     def _fill_hooks(self, content: str, template: Dict[str, Any], content_data: Dict[str, Any]) -> str:
-        """Fill hook placeholders with engaging openers"""
-        hooks = template.get('hooks', [])
+        """Fill hook placeholders with engaging openers"""        hooks = template.get('hooks', [])
         
         if '{hook}' in content and hooks:
             selected_hook = random.choice(hooks)
@@ -615,8 +601,7 @@ class BlogTemplates:
         return content
     
     def _fill_lists(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill list-based content sections"""
-        # Fill tips list
+        """Fill list-based content sections"""        # Fill tips list
         if '{tips_list}' in content:
             tips = content_data.get('tips', [])
             if tips:
@@ -654,8 +639,7 @@ class BlogTemplates:
         return content
     
     def _fill_sections(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill major content sections"""
-        # Generate table of contents if needed
+        """Fill major content sections"""        # Generate table of contents if needed
         if '{toc}' in content:
             toc = self._generate_table_of_contents(content)
             content = content.replace('{toc}', toc)
@@ -680,8 +664,7 @@ class BlogTemplates:
         return content
     
     def _fill_meta_elements(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Fill meta elements like ratings, dates, etc."""
-        # Fill rating
+        """Fill meta elements like ratings, dates, etc."""        # Fill rating
         if '{rating}' in content:
             rating = content_data.get('rating', 4)
             stars = '⭐' * int(rating)
@@ -700,8 +683,7 @@ class BlogTemplates:
         return content
     
     def _generate_table_of_contents(self, content: str) -> str:
-        """Generate table of contents from headers"""
-        lines = content.split('\n')
+        """Generate table of contents from headers"""        lines = content.split('\n')
         toc_items = []
         
         for line in lines:
@@ -713,8 +695,7 @@ class BlogTemplates:
         return '\n'.join(toc_items)
     
     def _apply_seo_optimizations(self, content: str, content_data: Dict[str, Any]) -> str:
-        """Apply SEO optimizations to blog content"""
-        # Add meta description as comment
+        """Apply SEO optimizations to blog content"""        # Add meta description as comment
         meta_description = content_data.get('meta_description', '')
         if not meta_description:
             # Generate from first paragraph
@@ -729,8 +710,7 @@ class BlogTemplates:
         return seo_content
     
     def _get_default_blog_template(self) -> Dict[str, Any]:
-        """Get default blog template"""
-        return {
+        """Get default blog template"""        return {
             'structure': """# {title}
 
 ## Introduction
@@ -752,8 +732,7 @@ class BlogTemplates:
         }
     
     def _create_basic_blog_post(self, content_data: Dict[str, Any]) -> str:
-        """Create basic blog post when template fails"""
-        title = content_data.get('title', 'Blog Post')
+        """Create basic blog post when template fails"""        title = content_data.get('title', 'Blog Post')
         content = content_data.get('content', content_data.get('main_content', 'Great content here!'))
         
         return f"""# {title}
@@ -766,26 +745,22 @@ Thanks for reading! Share your thoughts in the comments below.
 
 ---
 
-*What did you think of this post? Let me know in the comments!*"""
-    
+*What did you think of this post? Let me know in the comments!*"""    
     def get_available_templates(self, category: str) -> List[str]:
-        """Get available templates for category"""
-        try:
+        """Get available templates for category"""        try:
             category_templates = getattr(self, f"{category}_templates", {})
             return list(category_templates.keys())
         except:
             return []
     
     def get_all_categories(self) -> List[str]:
-        """Get all template categories"""
-        return [
+        """Get all template categories"""        return [
             'tutorial', 'list', 'thought_leadership', 'review', 
             'news', 'story', 'seo'
         ]
     
     def optimize_for_readability(self, content: str) -> str:
-        """Optimize blog content for readability"""
-        lines = content.split('\n')
+        """Optimize blog content for readability"""        lines = content.split('\n')
         optimized_lines = []
         
         for line in lines:
@@ -808,8 +783,7 @@ Thanks for reading! Share your thoughts in the comments below.
         return '\n'.join(optimized_lines)
     
     def add_internal_linking_suggestions(self, content: str, related_topics: List[str]) -> str:
-        """Add internal linking suggestions"""
-        if not related_topics:
+        """Add internal linking suggestions"""        if not related_topics:
             return content
         
         suggestions = "\n\n## Related Articles\n\n"
@@ -819,8 +793,7 @@ Thanks for reading! Share your thoughts in the comments below.
         return content + suggestions
     
     def generate_social_sharing_snippets(self, content: str, title: str) -> Dict[str, str]:
-        """Generate social media sharing snippets from blog content"""
-        # Extract key points for social sharing
+        """Generate social media sharing snippets from blog content"""        # Extract key points for social sharing
         first_paragraph = content.split('\n\n')[1] if '\n\n' in content else content[:200]
         
         snippets = {
@@ -833,8 +806,7 @@ Thanks for reading! Share your thoughts in the comments below.
 
 
 class ArticleTemplate:
-    """Article template class for blog post generation"""
-    
+    """Article template class for blog post generation"""    
     def __init__(self, template_type: str = "standard", **kwargs):
         self.template_type = template_type
         self.title = kwargs.get('title', '')
@@ -842,20 +814,17 @@ class ArticleTemplate:
         self.metadata = kwargs.get('metadata', {})
     
     def render(self, data: Dict[str, Any]) -> str:
-        """Render the article template with data"""
-        return f"# {data.get('title', 'Article Title')}\n\n{data.get('content', 'Article content goes here.')}"
+        """Render the article template with data"""        return f"# {data.get('title', 'Article Title')}\n\n{data.get('content', 'Article content goes here.')}"
     
     def get_structure(self) -> Dict[str, Any]:
-        """Get the template structure"""
-        return {
+        """Get the template structure"""        return {
             'sections': self.content_sections,
             'metadata': self.metadata
         }
 
 
 class ArticleTemplate:
-    """Article template for structured blog content"""
-    
+    """Article template for structured blog content"""    
     def __init__(self, **kwargs):
         self.title = kwargs.get('title', '')
         self.subtitle = kwargs.get('subtitle', '')
@@ -865,14 +834,12 @@ class ArticleTemplate:
         self.tags = kwargs.get('tags', [])
     
     def render(self, data: Dict[str, Any]) -> str:
-        """Render the article template with data"""
-        title = data.get('title', self.title)
+        """Render the article template with data"""        title = data.get('title', self.title)
         content = data.get('content', 'Article content goes here.')
         return f"# {title}\n\n{content}"
     
     def get_structure(self) -> Dict[str, Any]:
-        """Get the template structure"""
-        return {
+        """Get the template structure"""        return {
             'title': self.title,
             'subtitle': self.subtitle,
             'sections': self.content_sections,

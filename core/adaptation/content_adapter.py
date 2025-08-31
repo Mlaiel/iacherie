@@ -1,5 +1,4 @@
-"""
-Enterprise Content Adapter - Ultra-Advanced Multi-Format Content Intelligence System
+"""Enterprise Content Adapter - Ultra-Advanced Multi-Format Content Intelligence System
 
 Revolutionary content adaptation engine providing industrial-strength transformation capabilities
 for all creator types: musicians, bloggers, photographers, influencers, and comedians.
@@ -20,7 +19,6 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: All rights reserved. Unauthorized use strictly prohibited.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Tuple, Set
@@ -55,8 +53,7 @@ from .exceptions import AdaptationError, UnsupportedFormatError, QualityValidati
 
 
 class ContentType(str, Enum):
-    """Comprehensive content types for all creator categories"""
-    AUDIO = "audio"
+    """Comprehensive content types for all creator categories"""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -78,8 +75,7 @@ class ContentType(str, Enum):
 
 
 class CreatorSpecialty(str, Enum):
-    """Creator specializations for targeted optimization"""
-    MUSICIAN = "musician"
+    """Creator specializations for targeted optimization"""    MUSICIAN = "musician"
     BLOGGER = "blogger"
     PHOTOGRAPHER = "photographer"
     INFLUENCER = "influencer"
@@ -98,8 +94,7 @@ class CreatorSpecialty(str, Enum):
 
 
 class AdaptationQuality(str, Enum):
-    """Advanced quality levels with AI optimization"""
-    ULTRA_HIGH = "ultra_high"        # Lossless, professional grade
+    """Advanced quality levels with AI optimization"""    ULTRA_HIGH = "ultra_high"        # Lossless, professional grade
     HIGH = "high"                    # Broadcast quality
     MEDIUM = "medium"                # Social media optimized
     OPTIMIZED = "optimized"          # Platform-specific optimization
@@ -111,8 +106,7 @@ class AdaptationQuality(str, Enum):
 
 
 class PlatformSpecification(str, Enum):
-    """Comprehensive platform specifications for optimization"""
-    YOUTUBE = "youtube"
+    """Comprehensive platform specifications for optimization"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -132,8 +126,7 @@ class PlatformSpecification(str, Enum):
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata with AI enhancement"""
-    content_id: str
+    """Comprehensive content metadata with AI enhancement"""    content_id: str
     creator_id: str
     creator_specialty: CreatorSpecialty
     content_type: ContentType
@@ -153,8 +146,7 @@ class ContentMetadata:
 
 @dataclass
 class AdaptationRequest:
-    """Enterprise-grade content adaptation request with comprehensive configuration"""
-    content_id: str
+    """Enterprise-grade content adaptation request with comprehensive configuration"""    content_id: str
     creator_id: str
     creator_specialty: CreatorSpecialty
     source_format: str
@@ -183,8 +175,7 @@ class AdaptationRequest:
 
 @dataclass
 class QualityMetrics:
-    """Advanced quality assessment metrics"""
-    technical_quality: float
+    """Advanced quality assessment metrics"""    technical_quality: float
     visual_appeal: float
     audio_clarity: float
     compression_efficiency: float
@@ -198,8 +189,7 @@ class QualityMetrics:
 
 @dataclass
 class AdaptationResult:
-    """Comprehensive result of content adaptation process with analytics"""
-    adaptation_id: str
+    """Comprehensive result of content adaptation process with analytics"""    adaptation_id: str
     original_content_id: str
     creator_id: str
     creator_specialty: CreatorSpecialty
@@ -221,8 +211,7 @@ class AdaptationResult:
 
 
 class ContentAdapter:
-    """
-    Ultra-Advanced Enterprise Content Adaptation Engine
+    """    Ultra-Advanced Enterprise Content Adaptation Engine
     
     Revolutionary content transformation system providing industrial-strength adaptation
     capabilities for all creator types with AI-powered optimization and real-time processing.
@@ -243,8 +232,7 @@ class ContentAdapter:
     - Photographers: Image enhancement, watermarking, portfolio optimization
     - Influencers: Multi-format optimization, viral potential analysis
     - Comedians: Timing optimization, audience engagement prediction
-    """
-    
+    """    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -290,8 +278,7 @@ class ContentAdapter:
         request: AdaptationRequest,
         session: AsyncSession = None
     ) -> AdaptationResult:
-        """
-        Adapt content according to request specifications
+        """        Adapt content according to request specifications
         
         Args:
             request: Adaptation configuration
@@ -299,8 +286,7 @@ class ContentAdapter:
             
         Returns:
             AdaptationResult: Processing results and adapted content
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         adaptation_id = f"adapt_{request.content_id}_{int(start_time.timestamp())}"
         
         try:
@@ -379,8 +365,7 @@ class ContentAdapter:
         max_concurrent: int = 5,
         session: AsyncSession = None
     ) -> List[AdaptationResult]:
-        """
-        Perform batch content adaptation with concurrency control
+        """        Perform batch content adaptation with concurrency control
         
         Args:
             requests: List of adaptation requests
@@ -389,8 +374,7 @@ class ContentAdapter:
             
         Returns:
             List[AdaptationResult]: Results for all adaptations
-        """
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def adapt_with_semaphore(request: AdaptationRequest):
             async with semaphore:
@@ -425,16 +409,14 @@ class ContentAdapter:
         self,
         content_type: ContentType
     ) -> Dict[str, Any]:
-        """
-        Get available adaptation capabilities for content type
+        """        Get available adaptation capabilities for content type
         
         Args:
             content_type: Type of content
             
         Returns:
             Dict containing available formats, platforms, and features
-        """
-        return {
+        """        return {
             'supported_formats': self.supported_formats.get(content_type, []),
             'supported_platforms': list(self.platform_requirements.keys()),
             'quality_levels': [level.value for level in AdaptationQuality],
@@ -453,8 +435,7 @@ class ContentAdapter:
         self,
         request: AdaptationRequest
     ) -> None:
-        """Validate adaptation request parameters"""
-        if not request.content_id:
+        """Validate adaptation request parameters"""        if not request.content_id:
             raise AdaptationError("Content ID is required")
         
         if not request.target_formats:
@@ -477,8 +458,7 @@ class ContentAdapter:
         content_id: str,
         session: AsyncSession
     ) -> Dict[str, Any]:
-        """Load source content from storage"""
-        # Implementation would load from database/storage
+        """Load source content from storage"""        # Implementation would load from database/storage
         # This is a placeholder for the actual implementation
         return {
             'id': content_id,
@@ -492,8 +472,7 @@ class ContentAdapter:
         self,
         content: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze content characteristics for optimization"""
-        return {
+        """Analyze content characteristics for optimization"""        return {
             'content_type': '',
             'quality_metrics': {},
             'technical_specs': {},
@@ -506,8 +485,7 @@ class ContentAdapter:
         request: AdaptationRequest,
         analysis: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate optimal adaptation strategy"""
-        return {
+        """Generate optimal adaptation strategy"""        return {
             'pipeline_steps': [],
             'optimization_targets': {},
             'quality_preservation_settings': {},
@@ -520,8 +498,7 @@ class ContentAdapter:
         strategy: Dict[str, Any],
         request: AdaptationRequest
     ) -> Dict[str, Any]:
-        """Execute the adaptation pipeline"""
-        return {
+        """Execute the adaptation pipeline"""        return {
             'adapted_versions': {},
             'processing_metadata': {},
             'quality_scores': {}
@@ -533,8 +510,7 @@ class ContentAdapter:
         adapted: Dict[str, Any],
         quality_level: AdaptationQuality
     ) -> Dict[str, float]:
-        """Validate that quality is preserved according to requirements"""
-        return {
+        """Validate that quality is preserved according to requirements"""        return {
             'overall_quality_score': 0.95,
             'format_fidelity': 0.98,
             'metadata_preservation': 1.0,
@@ -548,13 +524,11 @@ class ContentAdapter:
         quality_metrics: Dict[str, float],
         session: AsyncSession
     ) -> None:
-        """Store adaptation results in database"""
-        # Implementation would store in database
+        """Store adaptation results in database"""        # Implementation would store in database
         pass
     
     async def _detect_content_type(self, format_string: str) -> ContentType:
-        """Detect content type from format string"""
-        format_lower = format_string.lower()
+        """Detect content type from format string"""        format_lower = format_string.lower()
         
         for content_type, formats in self.supported_formats.items():
             if format_lower in formats:
@@ -563,8 +537,7 @@ class ContentAdapter:
         raise UnsupportedFormatError(f"Cannot detect content type for format: {format_string}")
     
     def _load_platform_requirements(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific requirements and constraints"""
-        return {
+        """Load platform-specific requirements and constraints"""        return {
             'youtube': {
                 'video': {'max_size': '128GB', 'formats': ['mp4', 'mov', 'avi']},
                 'audio': {'max_size': '128GB', 'formats': ['mp3', 'wav', 'flac']}

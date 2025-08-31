@@ -1,5 +1,4 @@
-"""
-Kubernetes Environment Manager - IA Influencer Agent
+"""Kubernetes Environment Manager - IA Influencer Agent
 ====================================================
 Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + Microservices + Audio + DevOps + IA Prompt Engineer
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -16,7 +15,6 @@ Kubernetes environment configuration for container orchestration.
 Handles scaling, service discovery, secrets management, and deployment strategies.
 ====================================================
 """
-
 import os
 import yaml
 import logging
@@ -29,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class KubernetesClusterConfig:
-    """Kubernetes cluster configuration"""
-    cluster_name: str = os.getenv('K8S_CLUSTER_NAME', 'ia-influencer-cluster')
+    """Kubernetes cluster configuration"""    cluster_name: str = os.getenv('K8S_CLUSTER_NAME', 'ia-influencer-cluster')
     namespace: str = os.getenv('K8S_NAMESPACE', 'ia-influencer')
     api_version: str = "v1"
     kubernetes_version: str = "1.28"
@@ -56,8 +53,7 @@ class KubernetesClusterConfig:
 
 @dataclass
 class KubernetesDeploymentConfig:
-    """Kubernetes deployment configuration"""
-    app_name: str = "ia-influencer-app"
+    """Kubernetes deployment configuration"""    app_name: str = "ia-influencer-app"
     replicas: int = int(os.getenv('K8S_REPLICAS', '3'))
     image_repository: str = os.getenv('K8S_IMAGE_REPO', 'ghcr.io/ia-influencer')
     image_tag: str = os.getenv('K8S_IMAGE_TAG', 'latest')
@@ -71,8 +67,7 @@ class KubernetesDeploymentConfig:
 
 @dataclass
 class KubernetesServiceConfig:
-    """Kubernetes service configuration"""
-    service_type: str = "ClusterIP"
+    """Kubernetes service configuration"""    service_type: str = "ClusterIP"
     port: int = 8000
     target_port: int = 8000
     protocol: str = "TCP"
@@ -84,8 +79,7 @@ class KubernetesServiceConfig:
 
 @dataclass
 class KubernetesIngressConfig:
-    """Kubernetes ingress configuration"""
-    enabled: bool = True
+    """Kubernetes ingress configuration"""    enabled: bool = True
     ingress_class: str = "nginx"
     host: str = os.getenv('K8S_INGRESS_HOST', 'api.ia-influencer.com')
     tls_enabled: bool = True
@@ -101,8 +95,7 @@ class KubernetesIngressConfig:
 
 @dataclass
 class KubernetesResourceConfig:
-    """Kubernetes resource limits and requests"""
-    cpu_request: str = os.getenv('K8S_CPU_REQUEST', '500m')
+    """Kubernetes resource limits and requests"""    cpu_request: str = os.getenv('K8S_CPU_REQUEST', '500m')
     cpu_limit: str = os.getenv('K8S_CPU_LIMIT', '2000m')
     memory_request: str = os.getenv('K8S_MEMORY_REQUEST', '1Gi')
     memory_limit: str = os.getenv('K8S_MEMORY_LIMIT', '4Gi')
@@ -113,8 +106,7 @@ class KubernetesResourceConfig:
 
 @dataclass
 class KubernetesSecurityConfig:
-    """Kubernetes security configuration"""
-    run_as_non_root: bool = True
+    """Kubernetes security configuration"""    run_as_non_root: bool = True
     run_as_user: int = 1000
     run_as_group: int = 1000
     fs_group: int = 1000
@@ -130,8 +122,7 @@ class KubernetesSecurityConfig:
 
 @dataclass
 class KubernetesAutoscalingConfig:
-    """Kubernetes autoscaling configuration"""
-    hpa_enabled: bool = True
+    """Kubernetes autoscaling configuration"""    hpa_enabled: bool = True
     min_replicas: int = 2
     max_replicas: int = 20
     target_cpu_utilization: int = 70
@@ -143,8 +134,7 @@ class KubernetesAutoscalingConfig:
 
 
 class KubernetesEnvironmentManager:
-    """
-    Kubernetes environment manager for container orchestration.
+    """    Kubernetes environment manager for container orchestration.
     
     Features:
     - Multi-environment deployment (dev, staging, prod)
@@ -155,8 +145,7 @@ class KubernetesEnvironmentManager:
     - Monitoring and observability stack
     - Disaster recovery and backup
     - Multi-region deployment support
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or "./k8s/config.yml"
         self.environment = "kubernetes"
@@ -179,8 +168,7 @@ class KubernetesEnvironmentManager:
         logger.info(f"Kubernetes environment manager initialized: {self.environment}")
     
     def load_configuration(self) -> Dict[str, Any]:
-        """Load Kubernetes environment configuration"""
-        try:
+        """Load Kubernetes environment configuration"""        try:
             config = {
                 'environment': self.environment,
                 'orchestrator': 'kubernetes',
@@ -298,8 +286,7 @@ class KubernetesEnvironmentManager:
             raise
     
     def generate_manifests(self, environment: str = "production") -> Dict[str, str]:
-        """Generate Kubernetes manifests for deployment"""
-        try:
+        """Generate Kubernetes manifests for deployment"""        try:
             manifests = {}
             
             # Generate namespace
@@ -347,8 +334,7 @@ class KubernetesEnvironmentManager:
             raise
     
     def deploy_to_cluster(self, environment: str = "production", dry_run: bool = False) -> bool:
-        """Deploy application to Kubernetes cluster"""
-        try:
+        """Deploy application to Kubernetes cluster"""        try:
             # Generate manifests
             manifests = self.generate_manifests(environment)
             
@@ -367,8 +353,7 @@ class KubernetesEnvironmentManager:
             return False
     
     def setup_monitoring_stack(self) -> bool:
-        """Setup monitoring and observability stack"""
-        try:
+        """Setup monitoring and observability stack"""        try:
             # Install Prometheus Operator
             self._install_prometheus_operator()
             
@@ -392,8 +377,7 @@ class KubernetesEnvironmentManager:
             return False
     
     def setup_service_mesh(self) -> bool:
-        """Setup service mesh (Istio)"""
-        try:
+        """Setup service mesh (Istio)"""        try:
             # Install Istio
             self._install_istio()
             
@@ -414,8 +398,7 @@ class KubernetesEnvironmentManager:
             return False
     
     def setup_gitops_deployment(self) -> bool:
-        """Setup GitOps deployment with ArgoCD"""
-        try:
+        """Setup GitOps deployment with ArgoCD"""        try:
             # Install ArgoCD
             self._install_argocd()
             
@@ -436,8 +419,7 @@ class KubernetesEnvironmentManager:
             return False
     
     def setup_disaster_recovery(self) -> bool:
-        """Setup disaster recovery and backup"""
-        try:
+        """Setup disaster recovery and backup"""        try:
             # Install Velero for backup
             self._install_velero()
             
@@ -458,8 +440,7 @@ class KubernetesEnvironmentManager:
             return False
     
     def validate_cluster_readiness(self) -> Dict[str, bool]:
-        """Validate Kubernetes cluster readiness"""
-        readiness_checks = {
+        """Validate Kubernetes cluster readiness"""        readiness_checks = {
             'cluster_connectivity': False,
             'namespace_creation': False,
             'rbac_configuration': False,
@@ -493,8 +474,7 @@ class KubernetesEnvironmentManager:
             return readiness_checks
     
     def get_health_status(self) -> Dict[str, Any]:
-        """Get Kubernetes environment health status"""
-        return {
+        """Get Kubernetes environment health status"""        return {
             'environment': self.environment,
             'status': 'healthy',
             'cluster_name': self.cluster.cluster_name,
@@ -511,8 +491,7 @@ class KubernetesEnvironmentManager:
     
     # Private helper methods for manifest generation
     def _generate_namespace_manifest(self) -> str:
-        """Generate namespace manifest"""
-        manifest = {
+        """Generate namespace manifest"""        manifest = {
             'apiVersion': 'v1',
             'kind': 'Namespace',
             'metadata': {
@@ -527,8 +506,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_configmap_manifest(self, environment: str) -> str:
-        """Generate ConfigMap manifest"""
-        manifest = {
+        """Generate ConfigMap manifest"""        manifest = {
             'apiVersion': 'v1',
             'kind': 'ConfigMap',
             'metadata': {
@@ -545,8 +523,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_secrets_manifest(self, environment: str) -> str:
-        """Generate Secrets manifest"""
-        manifest = {
+        """Generate Secrets manifest"""        manifest = {
             'apiVersion': 'v1',
             'kind': 'Secret',
             'metadata': {
@@ -562,8 +539,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_deployment_manifest(self) -> str:
-        """Generate Deployment manifest"""
-        manifest = {
+        """Generate Deployment manifest"""        manifest = {
             'apiVersion': 'apps/v1',
             'kind': 'Deployment',
             'metadata': {
@@ -706,8 +682,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_service_manifest(self) -> str:
-        """Generate Service manifest"""
-        manifest = {
+        """Generate Service manifest"""        manifest = {
             'apiVersion': 'v1',
             'kind': 'Service',
             'metadata': {
@@ -742,8 +717,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_ingress_manifest(self) -> str:
-        """Generate Ingress manifest"""
-        manifest = {
+        """Generate Ingress manifest"""        manifest = {
             'apiVersion': 'networking.k8s.io/v1',
             'kind': 'Ingress',
             'metadata': {
@@ -788,8 +762,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_hpa_manifest(self) -> str:
-        """Generate HorizontalPodAutoscaler manifest"""
-        manifest = {
+        """Generate HorizontalPodAutoscaler manifest"""        manifest = {
             'apiVersion': 'autoscaling/v2',
             'kind': 'HorizontalPodAutoscaler',
             'metadata': {
@@ -839,8 +812,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_vpa_manifest(self) -> str:
-        """Generate VerticalPodAutoscaler manifest"""
-        manifest = {
+        """Generate VerticalPodAutoscaler manifest"""        manifest = {
             'apiVersion': 'autoscaling.k8s.io/v1',
             'kind': 'VerticalPodAutoscaler',
             'metadata': {
@@ -861,8 +833,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_network_policy_manifest(self) -> str:
-        """Generate NetworkPolicy manifest"""
-        manifest = {
+        """Generate NetworkPolicy manifest"""        manifest = {
             'apiVersion': 'networking.k8s.io/v1',
             'kind': 'NetworkPolicy',
             'metadata': {
@@ -911,8 +882,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _generate_service_monitor_manifest(self) -> str:
-        """Generate ServiceMonitor manifest for Prometheus"""
-        manifest = {
+        """Generate ServiceMonitor manifest for Prometheus"""        manifest = {
             'apiVersion': 'monitoring.coreos.com/v1',
             'kind': 'ServiceMonitor',
             'metadata': {
@@ -940,8 +910,7 @@ class KubernetesEnvironmentManager:
         return yaml.dump(manifest, default_flow_style=False)
     
     def _write_manifests_to_files(self, manifests: Dict[str, str], environment: str):
-        """Write manifests to files"""
-        manifests_dir = Path(f"./k8s/{environment}")
+        """Write manifests to files"""        manifests_dir = Path(f"./k8s/{environment}")
         manifests_dir.mkdir(parents=True, exist_ok=True)
         
         for filename, content in manifests.items():
@@ -950,78 +919,60 @@ class KubernetesEnvironmentManager:
                 f.write(content)
     
     def _apply_manifests(self, manifests: Dict[str, str], dry_run: bool = False) -> bool:
-        """Apply manifests to cluster"""
-        # Implementation would use kubectl or Kubernetes Python client
+        """Apply manifests to cluster"""        # Implementation would use kubectl or Kubernetes Python client
         return True
     
     # Setup methods for additional components
     def _install_prometheus_operator(self):
-        """Install Prometheus Operator"""
-        pass
+        """Install Prometheus Operator"""        pass
     
     def _install_grafana(self):
-        """Install Grafana"""
-        pass
+        """Install Grafana"""        pass
     
     def _install_jaeger(self):
-        """Install Jaeger"""
-        pass
+        """Install Jaeger"""        pass
     
     def _install_elk_stack(self):
-        """Install ELK Stack"""
-        pass
+        """Install ELK Stack"""        pass
     
     def _setup_alertmanager(self):
-        """Setup AlertManager"""
-        pass
+        """Setup AlertManager"""        pass
     
     def _install_istio(self):
-        """Install Istio service mesh"""
-        pass
+        """Install Istio service mesh"""        pass
     
     def _configure_traffic_management(self):
-        """Configure traffic management"""
-        pass
+        """Configure traffic management"""        pass
     
     def _setup_service_mesh_security(self):
-        """Setup service mesh security"""
-        pass
+        """Setup service mesh security"""        pass
     
     def _configure_service_mesh_observability(self):
-        """Configure service mesh observability"""
-        pass
+        """Configure service mesh observability"""        pass
     
     def _install_argocd(self):
-        """Install ArgoCD"""
-        pass
+        """Install ArgoCD"""        pass
     
     def _configure_git_repository(self):
-        """Configure Git repository"""
-        pass
+        """Configure Git repository"""        pass
     
     def _setup_deployment_pipelines(self):
-        """Setup deployment pipelines"""
-        pass
+        """Setup deployment pipelines"""        pass
     
     def _configure_sync_policies(self):
-        """Configure sync policies"""
-        pass
+        """Configure sync policies"""        pass
     
     def _install_velero(self):
-        """Install Velero"""
-        pass
+        """Install Velero"""        pass
     
     def _configure_backup_schedules(self):
-        """Configure backup schedules"""
-        pass
+        """Configure backup schedules"""        pass
     
     def _setup_cross_region_replication(self):
-        """Setup cross-region replication"""
-        pass
+        """Setup cross-region replication"""        pass
     
     def _configure_restore_procedures(self):
-        """Configure restore procedures"""
-        pass
+        """Configure restore procedures"""        pass
     
     # Validation methods
     def _validate_cluster_connectivity(self) -> bool:

@@ -236,8 +236,7 @@ SUPPORT ET MAINTENANCE:
 - Canary deployments support
 - Feature flags pour adoption progressive
 - Automated rollback sur détection d'anomalies
-"""
-from typing import Dict, Any, Optional, List
+"""from typing import Dict, Any, Optional, List
 import asyncio
 from datetime import datetime
 

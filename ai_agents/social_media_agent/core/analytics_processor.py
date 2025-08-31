@@ -1,5 +1,4 @@
-"""
-Analytics Processor - Enterprise Business Intelligence & Advanced Analytics Engine
+"""Analytics Processor - Enterprise Business Intelligence & Advanced Analytics Engine
 
 Comprehensive multi-dimensional analytics processing, predictive modeling, performance tracking, 
 competitive analysis, audience insights, revenue attribution, and business intelligence across 
@@ -24,7 +23,6 @@ Expert Development Team Specialties:
 - AI Prompt Engineering Expert - Natural language analytics and content insights
 - Content Protection Specialist - Protected content analytics and revenue tracking
 """
-
 import asyncio
 from typing import Dict, Any, List, Optional, Tuple, Union, Callable
 from dataclasses import dataclass, field, asdict
@@ -44,8 +42,7 @@ import math
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Comprehensive social media and business metrics"""
-    # Engagement Metrics
+    """Comprehensive social media and business metrics"""    # Engagement Metrics
     ENGAGEMENT = "engagement"
     LIKES = "likes"
     COMMENTS = "comments"
@@ -116,8 +113,7 @@ class MetricType(Enum):
     INFRINGEMENT_RECOVERY = "infringement_recovery"
 
 class AnalyticsReportType(Enum):
-    """Types of analytics reports"""
-    DAILY_SUMMARY = "daily_summary"
+    """Types of analytics reports"""    DAILY_SUMMARY = "daily_summary"
     WEEKLY_PERFORMANCE = "weekly_performance"
     MONTHLY_OVERVIEW = "monthly_overview"
     QUARTERLY_BUSINESS = "quarterly_business"
@@ -133,8 +129,7 @@ class AnalyticsReportType(Enum):
     CUSTOM_REPORT = "custom_report"
 
 class DataVisualizationType(Enum):
-    """Data visualization formats"""
-    LINE_CHART = "line_chart"
+    """Data visualization formats"""    LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
     SCATTER_PLOT = "scatter_plot"
@@ -150,8 +145,7 @@ class DataVisualizationType(Enum):
     REVENUE = "revenue"
 
 class TimeFrame(Enum):
-    """Analysis time frames"""
-    HOURLY = "hourly"
+    """Analysis time frames"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -159,16 +153,14 @@ class TimeFrame(Enum):
     YEARLY = "yearly"
 
 class TrendDirection(Enum):
-    """Trend directions"""
-    INCREASING = "increasing"
+    """Trend directions"""    INCREASING = "increasing"
     DECREASING = "decreasing"
     STABLE = "stable"
     VOLATILE = "volatile"
 
 @dataclass
 class MetricData:
-    """Individual metric data point"""
-    platform: str
+    """Individual metric data point"""    platform: str
     content_id: str
     metric_type: MetricType
     value: float
@@ -177,8 +169,7 @@ class MetricData:
 
 @dataclass
 class AnalyticsSnapshot:
-    """Analytics snapshot for a specific time period"""
-    platform: str
+    """Analytics snapshot for a specific time period"""    platform: str
     time_frame: TimeFrame
     start_time: datetime
     end_time: datetime
@@ -189,8 +180,7 @@ class AnalyticsSnapshot:
 
 @dataclass
 class PerformanceReport:
-    """Comprehensive performance report"""
-    report_id: str
+    """Comprehensive performance report"""    report_id: str
     platform: str
     time_period: Tuple[datetime, datetime]
     total_posts: int
@@ -203,8 +193,7 @@ class PerformanceReport:
 
 @dataclass
 class CompetitorAnalysis:
-    """Competitor analysis data"""
-    competitor_id: str
+    """Competitor analysis data"""    competitor_id: str
     platform: str
     metrics_comparison: Dict[MetricType, Dict[str, float]]  # our_value, competitor_value, difference
     content_analysis: Dict[str, Any]
@@ -213,27 +202,23 @@ class CompetitorAnalysis:
     analyzed_at: datetime = field(default_factory=datetime.utcnow)
 
 class MetricsCalculator:
-    """Calculate derived metrics and KPIs"""
-    
+    """Calculate derived metrics and KPIs"""    
     @staticmethod
     def calculate_engagement_rate(likes: int, comments: int, shares: int, impressions: int) -> float:
-        """Calculate engagement rate"""
-        if impressions == 0:
+        """Calculate engagement rate"""        if impressions == 0:
             return 0.0
         total_engagement = likes + comments + shares
         return (total_engagement / impressions) * 100
     
     @staticmethod
     def calculate_reach_rate(reach: int, followers: int) -> float:
-        """Calculate reach rate"""
-        if followers == 0:
+        """Calculate reach rate"""        if followers == 0:
             return 0.0
         return (reach / followers) * 100
     
     @staticmethod
     def calculate_virality_score(shares: int, likes: int, comments: int, impressions: int) -> float:
-        """Calculate virality score (0-1)"""
-        if impressions == 0:
+        """Calculate virality score (0-1)"""        if impressions == 0:
             return 0.0
         
         # Weighted scoring: shares worth more than likes/comments
@@ -245,41 +230,35 @@ class MetricsCalculator:
     
     @staticmethod
     def calculate_growth_rate(current_value: float, previous_value: float) -> float:
-        """Calculate growth rate percentage"""
-        if previous_value == 0:
+        """Calculate growth rate percentage"""        if previous_value == 0:
             return 0.0 if current_value == 0 else 100.0
         return ((current_value - previous_value) / previous_value) * 100
     
     @staticmethod
     def calculate_ctr(clicks: int, impressions: int) -> float:
-        """Calculate click-through rate"""
-        if impressions == 0:
+        """Calculate click-through rate"""        if impressions == 0:
             return 0.0
         return (clicks / impressions) * 100
     
     @staticmethod
     def calculate_conversion_rate(conversions: int, clicks: int) -> float:
-        """Calculate conversion rate"""
-        if clicks == 0:
+        """Calculate conversion rate"""        if clicks == 0:
             return 0.0
         return (conversions / clicks) * 100
     
     @staticmethod
     def calculate_roi(revenue: float, cost: float) -> float:
-        """Calculate return on investment"""
-        if cost == 0:
+        """Calculate return on investment"""        if cost == 0:
             return 0.0 if revenue == 0 else 100.0
         return ((revenue - cost) / cost) * 100
 
 class TrendAnalyzer:
-    """Analyze trends in social media metrics"""
-    
+    """Analyze trends in social media metrics"""    
     def __init__(self, min_data_points: int = 5):
         self.min_data_points = min_data_points
     
     def analyze_trend(self, values: List[float], timestamps: List[datetime]) -> Dict[str, Any]:
-        """Analyze trend in time series data"""
-        if len(values) < self.min_data_points:
+        """Analyze trend in time series data"""        if len(values) < self.min_data_points:
             return {'direction': TrendDirection.STABLE, 'confidence': 0.0, 'strength': 0.0}
         
         # Calculate trend direction using linear regression
@@ -325,8 +304,7 @@ class TrendAnalyzer:
         }
     
     def detect_anomalies(self, values: List[float], threshold: float = 2.0) -> List[int]:
-        """Detect anomalies using z-score method"""
-        if len(values) < 3:
+        """Detect anomalies using z-score method"""        if len(values) < 3:
             return []
         
         values_array = np.array(values)
@@ -342,8 +320,7 @@ class TrendAnalyzer:
         return anomaly_indices
     
     def calculate_seasonality(self, values: List[float], timestamps: List[datetime]) -> Dict[str, Any]:
-        """Detect seasonal patterns in data"""
-        if len(values) < 14:  # Need at least 2 weeks of data
+        """Detect seasonal patterns in data"""        if len(values) < 14:  # Need at least 2 weeks of data
             return {'has_seasonality': False, 'pattern': None}
         
         df = pd.DataFrame({
@@ -384,15 +361,13 @@ class TrendAnalyzer:
         }
 
 class AudienceSegmenter:
-    """Segment audience based on engagement patterns"""
-    
+    """Segment audience based on engagement patterns"""    
     def __init__(self):
         self.scaler = StandardScaler()
         self.kmeans = None
         
     def segment_audience(self, audience_data: List[Dict[str, Any]], n_segments: int = 5) -> Dict[str, Any]:
-        """Segment audience using machine learning"""
-        if len(audience_data) < n_segments * 2:
+        """Segment audience using machine learning"""        if len(audience_data) < n_segments * 2:
             return {'segments': [], 'error': 'Insufficient data for segmentation'}
         
         # Prepare feature matrix
@@ -434,8 +409,7 @@ class AudienceSegmenter:
         }
     
     def _analyze_segment(self, users: List[Dict[str, Any]], segment_id: int) -> Dict[str, Any]:
-        """Analyze characteristics of a user segment"""
-        if not users:
+        """Analyze characteristics of a user segment"""        if not users:
             return {}
         
         # Calculate segment statistics
@@ -466,8 +440,7 @@ class AudienceSegmenter:
         }
     
     def _classify_segment_type(self, engagement: float, session_duration: float, followers: float) -> str:
-        """Classify segment type based on characteristics"""
-        if engagement > 0.1 and session_duration > 300:  # High engagement, long sessions
+        """Classify segment type based on characteristics"""        if engagement > 0.1 and session_duration > 300:  # High engagement, long sessions
             return "highly_engaged"
         elif engagement > 0.05 and followers > 1000:  # Moderate engagement, many followers
             return "influencers"
@@ -479,8 +452,7 @@ class AudienceSegmenter:
             return "casual_users"
     
     def _identify_behavior_patterns(self, users: List[Dict[str, Any]]) -> List[str]:
-        """Identify common behavior patterns in segment"""
-        patterns = []
+        """Identify common behavior patterns in segment"""        patterns = []
         
         # Analyze posting times
         posting_hours = []
@@ -506,24 +478,21 @@ class AudienceSegmenter:
         return patterns
     
     def _calculate_segmentation_quality(self, X: np.ndarray, labels: np.ndarray) -> float:
-        """Calculate silhouette score to measure segmentation quality"""
-        try:
+        """Calculate silhouette score to measure segmentation quality"""        try:
             from sklearn.metrics import silhouette_score
             return silhouette_score(X, labels)
         except:
             return 0.0
 
 class CompetitorAnalyzer:
-    """Analyze competitor performance and strategies"""
-    
+    """Analyze competitor performance and strategies"""    
     def __init__(self):
         self.competitor_cache: Dict[str, Dict[str, Any]] = {}
     
     async def analyze_competitor(self, competitor_id: str, platform: str, 
                                our_metrics: Dict[MetricType, float],
                                competitor_metrics: Dict[MetricType, float]) -> CompetitorAnalysis:
-        """Comprehensive competitor analysis"""
-        
+        """Comprehensive competitor analysis"""        
         # Compare metrics
         metrics_comparison = {}
         for metric in MetricType:
@@ -561,8 +530,7 @@ class CompetitorAnalyzer:
         )
     
     async def _analyze_competitor_content(self, competitor_id: str, platform: str) -> Dict[str, Any]:
-        """Analyze competitor's content strategy"""
-        # This would typically fetch competitor's content data
+        """Analyze competitor's content strategy"""        # This would typically fetch competitor's content data
         # For now, return simulated analysis
         
         return {
@@ -583,8 +551,7 @@ class CompetitorAnalyzer:
     
     def _generate_strategy_insights(self, metrics_comparison: Dict[MetricType, Dict[str, float]], 
                                   content_analysis: Dict[str, Any]) -> List[str]:
-        """Generate strategic insights based on competitor analysis"""
-        insights = []
+        """Generate strategic insights based on competitor analysis"""        insights = []
         
         # Engagement insights
         engagement_comparison = metrics_comparison.get(MetricType.ENGAGEMENT, {})
@@ -611,8 +578,7 @@ class CompetitorAnalyzer:
     
     def _identify_opportunities(self, metrics_comparison: Dict[MetricType, Dict[str, float]], 
                               content_analysis: Dict[str, Any]) -> List[str]:
-        """Identify opportunities based on competitor analysis"""
-        opportunities = []
+        """Identify opportunities based on competitor analysis"""        opportunities = []
         
         # Look for areas where we're underperforming
         weak_metrics = []
@@ -643,11 +609,9 @@ class CompetitorAnalyzer:
         return opportunities
 
 class AnalyticsProcessor:
-    """
-    Advanced Social Media Analytics & Intelligence Engine
+    """    Advanced Social Media Analytics & Intelligence Engine
     Comprehensive analytics processing, performance tracking, and business intelligence
-    """
-    
+    """    
     def __init__(self):
         self.metrics_data: List[MetricData] = []
         self.snapshots: List[AnalyticsSnapshot] = []
@@ -659,8 +623,7 @@ class AnalyticsProcessor:
         self.real_time_callbacks: List[Callable] = []
         
     async def process_metrics(self, metrics: List[MetricData]):
-        """Process new metrics data"""
-        self.metrics_data.extend(metrics)
+        """Process new metrics data"""        self.metrics_data.extend(metrics)
         
         # Limit data size to prevent memory issues
         if len(self.metrics_data) > 50000:
@@ -672,8 +635,7 @@ class AnalyticsProcessor:
         logger.info(f"Processed {len(metrics)} new metric data points")
     
     async def _process_real_time_alerts(self, new_metrics: List[MetricData]):
-        """Process real-time alerts and notifications"""
-        for metric in new_metrics:
+        """Process real-time alerts and notifications"""        for metric in new_metrics:
             # Check for significant changes
             recent_values = self._get_recent_values(metric.platform, metric.metric_type, hours=24)
             
@@ -688,8 +650,7 @@ class AnalyticsProcessor:
                     await self._trigger_alert("drop", metric, current_value, previous_avg)
     
     def _get_recent_values(self, platform: str, metric_type: MetricType, hours: int = 24) -> List[float]:
-        """Get recent metric values"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get recent metric values"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         recent_data = [
             data for data in self.metrics_data
@@ -702,8 +663,7 @@ class AnalyticsProcessor:
     
     async def _trigger_alert(self, alert_type: str, metric: MetricData, 
                            current_value: float, previous_avg: float):
-        """Trigger alert for significant metric changes"""
-        alert_data = {
+        """Trigger alert for significant metric changes"""        alert_data = {
             'type': alert_type,
             'platform': metric.platform,
             'metric': metric.metric_type.value,
@@ -721,13 +681,11 @@ class AnalyticsProcessor:
                 logger.error(f"Alert callback failed: {str(e)}")
     
     def register_real_time_callback(self, callback: Callable):
-        """Register callback for real-time alerts"""
-        self.real_time_callbacks.append(callback)
+        """Register callback for real-time alerts"""        self.real_time_callbacks.append(callback)
     
     async def generate_analytics_snapshot(self, platform: str, time_frame: TimeFrame,
                                         start_time: datetime, end_time: datetime) -> AnalyticsSnapshot:
-        """Generate analytics snapshot for specified time period"""
-        
+        """Generate analytics snapshot for specified time period"""        
         # Filter data for time period
         period_data = [
             data for data in self.metrics_data
@@ -769,8 +727,7 @@ class AnalyticsProcessor:
     
     async def _calculate_growth_rates(self, platform: str, time_frame: TimeFrame,
                                     current_start: datetime, current_metrics: Dict[MetricType, float]) -> Dict[MetricType, float]:
-        """Calculate growth rates compared to previous period"""
-        growth_rates = {}
+        """Calculate growth rates compared to previous period"""        growth_rates = {}
         
         # Determine previous period
         if time_frame == TimeFrame.DAILY:
@@ -807,8 +764,7 @@ class AnalyticsProcessor:
         return growth_rates
     
     async def _get_industry_benchmarks(self, platform: str) -> Dict[str, float]:
-        """Get industry benchmarks for comparison"""
-        # These would typically come from industry data APIs
+        """Get industry benchmarks for comparison"""        # These would typically come from industry data APIs
         benchmarks = {
             'engagement_rate': {
                 'instagram': 1.22,
@@ -840,8 +796,7 @@ class AnalyticsProcessor:
     async def _generate_insights(self, metrics: Dict[MetricType, float], 
                                growth_rates: Dict[MetricType, float],
                                benchmarks: Dict[str, float]) -> List[str]:
-        """Generate insights based on metrics analysis"""
-        insights = []
+        """Generate insights based on metrics analysis"""        insights = []
         
         # Engagement insights
         engagement = metrics.get(MetricType.ENGAGEMENT, 0)
@@ -872,8 +827,7 @@ class AnalyticsProcessor:
         return insights
     
     async def generate_performance_report(self, platform: str, days_back: int = 30) -> PerformanceReport:
-        """Generate comprehensive performance report"""
-        end_time = datetime.utcnow()
+        """Generate comprehensive performance report"""        end_time = datetime.utcnow()
         start_time = end_time - timedelta(days=days_back)
         
         # Get data for time period
@@ -921,8 +875,7 @@ class AnalyticsProcessor:
     
     async def _get_top_performing_content(self, platform: str, start_time: datetime, 
                                         end_time: datetime, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get top performing content for the period"""
-        # Group data by content_id and calculate total engagement
+        """Get top performing content for the period"""        # Group data by content_id and calculate total engagement
         content_performance = defaultdict(lambda: {'total_engagement': 0, 'metrics': {}})
         
         period_data = [
@@ -958,8 +911,7 @@ class AnalyticsProcessor:
     
     async def _analyze_audience_insights(self, platform: str, start_time: datetime, 
                                        end_time: datetime) -> Dict[str, Any]:
-        """Analyze audience behavior and demographics"""
-        # This would typically integrate with platform APIs for detailed audience data
+        """Analyze audience behavior and demographics"""        # This would typically integrate with platform APIs for detailed audience data
         # For now, return simulated insights based on our metrics
         
         period_data = [
@@ -995,8 +947,7 @@ class AnalyticsProcessor:
     
     async def _analyze_engagement_trends(self, platform: str, start_time: datetime, 
                                        end_time: datetime) -> Dict[str, Any]:
-        """Analyze engagement trends over the period"""
-        engagement_data = [
+        """Analyze engagement trends over the period"""        engagement_data = [
             data for data in self.metrics_data
             if (data.platform == platform and 
                 data.metric_type == MetricType.ENGAGEMENT and
@@ -1025,8 +976,7 @@ class AnalyticsProcessor:
     
     async def _calculate_period_growth_metrics(self, platform: str, start_time: datetime, 
                                              end_time: datetime) -> Dict[str, float]:
-        """Calculate growth metrics for the period"""
-        growth_metrics = {}
+        """Calculate growth metrics for the period"""        growth_metrics = {}
         
         # Split period in half to compare
         mid_point = start_time + (end_time - start_time) / 2
@@ -1057,8 +1007,7 @@ class AnalyticsProcessor:
     
     async def _generate_recommendations(self, platform: str, period_data: List[MetricData],
                                       growth_metrics: Dict[str, float]) -> List[str]:
-        """Generate actionable recommendations"""
-        recommendations = []
+        """Generate actionable recommendations"""        recommendations = []
         
         # Engagement recommendations
         engagement_growth = growth_metrics.get('engagement_growth', 0)
@@ -1087,8 +1036,7 @@ class AnalyticsProcessor:
         return recommendations[:5]  # Limit to top 5 recommendations
     
     async def get_real_time_analytics(self, platform: str, hours: int = 1) -> Dict[str, Any]:
-        """Get real-time analytics for immediate insights"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get real-time analytics for immediate insights"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         
         recent_data = [
             data for data in self.metrics_data

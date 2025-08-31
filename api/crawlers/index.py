@@ -1,5 +1,4 @@
-"""
-Professional Crawlers Module Index - IA-Influencer Platform
+"""Professional Crawlers Module Index - IA-Influencer Platform
 
 This index provides comprehensive access to all crawler components and utilities
 for content monitoring, protection, and analytics across multiple platforms.
@@ -10,7 +9,6 @@ Copyright (c) 2025 IA-Influencer Project. All rights reserved.
 LEGAL WARNING: All intellectual property belongs exclusively to Fahed Mlaiel.
 Unauthorized use will result in immediate legal action.
 """
-
 from typing import Dict, Any, List, Type
 import importlib
 import logging
@@ -113,19 +111,16 @@ FEATURE_MATRIX = {
 
 
 class CrawlerModuleIndex:
-    """
-    Index and registry for all crawler components.
+    """    Index and registry for all crawler components.
     Provides centralized access to crawler classes and utilities.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger("crawlers.index")
         self._loaded_classes: Dict[str, Type] = {}
         self._configurations: Dict[str, Dict[str, Any]] = {}
     
     def get_module_info(self) -> Dict[str, Any]:
-        """Get complete module information."""
-        return {
+        """Get complete module information."""        return {
             **MODULE_INFO,
             "supported_platforms": SUPPORTED_PLATFORMS,
             "feature_matrix": FEATURE_MATRIX,
@@ -133,8 +128,7 @@ class CrawlerModuleIndex:
         }
     
     def load_crawler_class(self, class_name: str) -> Type:
-        """Dynamically load a crawler class."""
-        if class_name in self._loaded_classes:
+        """Dynamically load a crawler class."""        if class_name in self._loaded_classes:
             return self._loaded_classes[class_name]
         
         if class_name not in CRAWLER_CLASSES:
@@ -156,20 +150,17 @@ class CrawlerModuleIndex:
             raise ImportError(f"Could not load {class_name}: {e}")
     
     def get_supported_platforms(self, category: str = None) -> List[str]:
-        """Get list of supported platforms."""
-        if category:
+        """Get list of supported platforms."""        if category:
             return SUPPORTED_PLATFORMS.get(category, [])
         return {k: v for k, v in SUPPORTED_PLATFORMS.items()}
     
     def get_feature_capabilities(self, component: str = None) -> Dict[str, Any]:
-        """Get feature capabilities for components."""
-        if component:
+        """Get feature capabilities for components."""        if component:
             return FEATURE_MATRIX.get(component, {})
         return FEATURE_MATRIX
     
     def validate_configuration(self, component: str, config: Dict[str, Any]) -> bool:
-        """Validate configuration for a component."""
-        try:
+        """Validate configuration for a component."""        try:
             # Basic validation - can be extended per component
             required_fields = {
                 "content_protection": ["platforms", "fingerprinting_enabled"],
@@ -198,8 +189,7 @@ class CrawlerModuleIndex:
         class_name: str, 
         config: Dict[str, Any] = None
     ) -> Any:
-        """Create an instance of a crawler class with configuration."""
-        try:
+        """Create an instance of a crawler class with configuration."""        try:
             crawler_class = self.load_crawler_class(class_name)
             
             if config:
@@ -218,8 +208,7 @@ class CrawlerModuleIndex:
             raise RuntimeError(f"Instance creation failed: {e}")
     
     def get_crawler_documentation(self, class_name: str) -> Dict[str, Any]:
-        """Get documentation for a crawler class."""
-        try:
+        """Get documentation for a crawler class."""        try:
             crawler_class = self.load_crawler_class(class_name)
             
             return {
@@ -245,24 +234,19 @@ crawler_index = CrawlerModuleIndex()
 
 # Convenience functions
 def list_crawlers() -> List[str]:
-    """List all available crawler classes."""
-    return list(CRAWLER_CLASSES.keys())
+    """List all available crawler classes."""    return list(CRAWLER_CLASSES.keys())
 
 def get_crawler(class_name: str, config: Dict[str, Any] = None):
-    """Get a crawler instance by name."""
-    return crawler_index.create_crawler_instance(class_name, config)
+    """Get a crawler instance by name."""    return crawler_index.create_crawler_instance(class_name, config)
 
 def get_platforms(category: str = None) -> List[str]:
-    """Get supported platforms."""
-    return crawler_index.get_supported_platforms(category)
+    """Get supported platforms."""    return crawler_index.get_supported_platforms(category)
 
 def get_features(component: str = None) -> Dict[str, Any]:
-    """Get feature capabilities."""
-    return crawler_index.get_feature_capabilities(component)
+    """Get feature capabilities."""    return crawler_index.get_feature_capabilities(component)
 
 def module_info() -> Dict[str, Any]:
-    """Get complete module information."""
-    return crawler_index.get_module_info()
+    """Get complete module information."""    return crawler_index.get_module_info()
 
 
 # Module initialization

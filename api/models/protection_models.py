@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent Platform - Content Protection Models
+"""IA Influencer Agent Platform - Content Protection Models
 Advanced AI-powered content protection and rights management system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ will result in legal action.
 Contact: mlaiel@live.de
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 from datetime import datetime, timezone
 from typing import Optional, Dict, Any, List
 from decimal import Decimal
@@ -32,8 +30,7 @@ from .base import (
 
 
 class ContentProtection(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, AuditMixin, StatusMixin):
-    """Core content protection orchestration and management"""
-    
+    """Core content protection orchestration and management"""    
     __tablename__ = 'content_protections'
     
     content_id: Mapped[UUID] = mapped_column(
@@ -172,8 +169,7 @@ class ContentProtection(BaseModel, UUIDMixin, TimestampMixin, SoftDeleteMixin, A
 
 
 class Fingerprint(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """AI-generated content fingerprints for similarity detection"""
-    
+    """AI-generated content fingerprints for similarity detection"""    
     __tablename__ = 'fingerprints'
     
     protection_id: Mapped[UUID] = mapped_column(
@@ -309,8 +305,7 @@ class Fingerprint(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin)
 
 
 class WatermarkRecord(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
-    """Digital watermarking records for content authentication"""
-    
+    """Digital watermarking records for content authentication"""    
     __tablename__ = 'watermark_records'
     
     protection_id: Mapped[UUID] = mapped_column(
@@ -434,8 +429,7 @@ class WatermarkRecord(BaseModel, UUIDMixin, TimestampMixin, AuditMixin):
 
 
 class ProtectionLog(BaseModel, UUIDMixin, TimestampMixin):
-    """Comprehensive logging for protection system activities"""
-    
+    """Comprehensive logging for protection system activities"""    
     __tablename__ = 'protection_logs'
     
     protection_id: Mapped[UUID] = mapped_column(
@@ -552,8 +546,7 @@ class ProtectionLog(BaseModel, UUIDMixin, TimestampMixin):
 
 
 class ViolationReport(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """Content violation detection and reporting system"""
-    
+    """Content violation detection and reporting system"""    
     __tablename__ = 'violation_reports'
     
     protection_id: Mapped[UUID] = mapped_column(
@@ -720,8 +713,7 @@ class ViolationReport(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMi
 
 
 class TakedownRequest(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """DMCA and takedown request management"""
-    
+    """DMCA and takedown request management"""    
     __tablename__ = 'takedown_requests'
     
     violation_report_id: Mapped[UUID] = mapped_column(
@@ -865,8 +857,7 @@ class TakedownRequest(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMi
 
 
 class LegalAction(BaseModel, UUIDMixin, TimestampMixin, AuditMixin, StatusMixin):
-    """Legal action tracking for serious copyright violations"""
-    
+    """Legal action tracking for serious copyright violations"""    
     __tablename__ = 'legal_actions'
     
     takedown_request_id: Mapped[Optional[UUID]] = mapped_column(

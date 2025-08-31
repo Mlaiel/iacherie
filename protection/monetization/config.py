@@ -1,5 +1,4 @@
-"""
-Advanced Configuration Module for Professional Monetization System.
+"""Advanced Configuration Module for Professional Monetization System.
 Provides comprehensive configuration management with environment-specific settings.
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ Fahed Mlaiel (mlaiel@live.de). Any unauthorized use, copying, distribution,
 modification, or theft of this code or concept without explicit written permission 
 is strictly prohibited and will result in immediate legal action.
 """
-
 import os
 import json
 import logging
@@ -27,16 +25,14 @@ logger = logging.getLogger(__name__)
 
 
 class EnvironmentType(Enum):
-    """Environment types for configuration."""
-    DEVELOPMENT = "development"
+    """Environment types for configuration."""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class SecurityLevel(Enum):
-    """Security levels for different configurations."""
-    LOW = "low"
+    """Security levels for different configurations."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     ULTRA = "ultra"
@@ -44,8 +40,7 @@ class SecurityLevel(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration settings."""
-    host: str = "localhost"
+    """Database configuration settings."""    host: str = "localhost"
     port: int = 5432
     database: str = "monetization_db"
     username: str = "monetization_user"
@@ -59,8 +54,7 @@ class DatabaseConfig:
 
 @dataclass
 class RedisConfig:
-    """Redis configuration for caching and sessions."""
-    host: str = "localhost"
+    """Redis configuration for caching and sessions."""    host: str = "localhost"
     port: int = 6379
     database: int = 0
     password: str = ""
@@ -73,8 +67,7 @@ class RedisConfig:
 
 @dataclass
 class ElasticsearchConfig:
-    """Elasticsearch configuration for search and analytics."""
-    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
+    """Elasticsearch configuration for search and analytics."""    hosts: List[str] = field(default_factory=lambda: ["localhost:9200"])
     username: str = ""
     password: str = ""
     use_ssl: bool = False
@@ -86,8 +79,7 @@ class ElasticsearchConfig:
 
 @dataclass
 class PaymentGatewayConfig:
-    """Payment gateway configuration."""
-    stripe_secret_key: str = ""
+    """Payment gateway configuration."""    stripe_secret_key: str = ""
     stripe_publishable_key: str = ""
     stripe_webhook_secret: str = ""
     paypal_client_id: str = ""
@@ -101,8 +93,7 @@ class PaymentGatewayConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration settings."""
-    security_level: SecurityLevel = SecurityLevel.HIGH
+    """Security configuration settings."""    security_level: SecurityLevel = SecurityLevel.HIGH
     secret_key: str = ""
     jwt_secret_key: str = ""
     jwt_algorithm: str = "HS256"
@@ -124,8 +115,7 @@ class SecurityConfig:
 
 @dataclass
 class MLConfig:
-    """Machine Learning configuration."""
-    models_path: str = "/app/models"
+    """Machine Learning configuration."""    models_path: str = "/app/models"
     enable_gpu: bool = False
     tensorflow_log_level: str = "ERROR"
     pytorch_num_threads: int = 4
@@ -140,8 +130,7 @@ class MLConfig:
 
 @dataclass
 class PlatformAPIConfig:
-    """Platform API configuration."""
-    spotify_client_id: str = ""
+    """Platform API configuration."""    spotify_client_id: str = ""
     spotify_client_secret: str = ""
     youtube_api_key: str = ""
     instagram_access_token: str = ""
@@ -160,8 +149,7 @@ class PlatformAPIConfig:
 
 @dataclass
 class MonitoringConfig:
-    """Monitoring and observability configuration."""
-    enable_metrics: bool = True
+    """Monitoring and observability configuration."""    enable_metrics: bool = True
     enable_tracing: bool = True
     enable_logging: bool = True
     log_level: str = "INFO"
@@ -177,8 +165,7 @@ class MonitoringConfig:
 
 @dataclass
 class CacheConfig:
-    """Caching configuration."""
-    default_ttl_seconds: int = 3600
+    """Caching configuration."""    default_ttl_seconds: int = 3600
     revenue_cache_ttl: int = 1800  # 30 minutes
     analytics_cache_ttl: int = 900  # 15 minutes
     user_cache_ttl: int = 3600  # 1 hour
@@ -190,8 +177,7 @@ class CacheConfig:
 
 @dataclass
 class BusinessRulesConfig:
-    """Business rules and limits configuration."""
-    min_payout_amount: Decimal = Decimal("10.00")
+    """Business rules and limits configuration."""    min_payout_amount: Decimal = Decimal("10.00")
     max_payout_amount: Decimal = Decimal("50000.00")
     commission_rate_default: float = 0.05  # 5%
     commission_rate_premium: float = 0.03  # 3%
@@ -205,8 +191,7 @@ class BusinessRulesConfig:
 
 @dataclass
 class MonetizationConfig:
-    """Complete monetization system configuration."""
-    
+    """Complete monetization system configuration."""    
     # Environment and basic settings
     environment: EnvironmentType = EnvironmentType.DEVELOPMENT
     debug: bool = False
@@ -248,8 +233,7 @@ class MonetizationConfig:
     max_file_upload_mb: int = 500
     
     def __post_init__(self):
-        """Post-initialization processing."""
-        # Adjust settings based on environment
+        """Post-initialization processing."""        # Adjust settings based on environment
         if self.environment == EnvironmentType.PRODUCTION:
             self.debug = False
             self.testing = False
@@ -268,8 +252,7 @@ class MonetizationConfig:
     
     @classmethod
     def from_env(cls) -> 'MonetizationConfig':
-        """Create configuration from environment variables."""
-        config = cls()
+        """Create configuration from environment variables."""        config = cls()
         
         # Basic settings
         config.environment = EnvironmentType(os.getenv('MONETIZATION_ENV', 'development'))
@@ -310,8 +293,7 @@ class MonetizationConfig:
     
     @classmethod
     def from_file(cls, file_path: Union[str, Path]) -> 'MonetizationConfig':
-        """Load configuration from a file (JSON, YAML, or INI)."""
-        file_path = Path(file_path)
+        """Load configuration from a file (JSON, YAML, or INI)."""        file_path = Path(file_path)
         
         if not file_path.exists():
             raise FileNotFoundError(f"Configuration file not found: {file_path}")
@@ -340,8 +322,7 @@ class MonetizationConfig:
     
     @classmethod
     def from_dict(cls, data: Dict[str, Any]) -> 'MonetizationConfig':
-        """Create configuration from dictionary."""
-        try:
+        """Create configuration from dictionary."""        try:
             # Convert nested dictionaries to dataclass instances
             if 'database' in data:
                 data['database'] = DatabaseConfig(**data['database'])
@@ -375,20 +356,17 @@ class MonetizationConfig:
             raise
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary."""
-        return asdict(self)
+        """Convert configuration to dictionary."""        return asdict(self)
     
     def to_json(self) -> str:
-        """Convert configuration to JSON string."""
-        data = self.to_dict()
+        """Convert configuration to JSON string."""        data = self.to_dict()
         # Convert enums to strings for JSON serialization
         if 'environment' in data:
             data['environment'] = data['environment'].value
         return json.dumps(data, indent=2, default=str)
     
     def save_to_file(self, file_path: Union[str, Path], format_type: str = 'json') -> None:
-        """Save configuration to file."""
-        file_path = Path(file_path)
+        """Save configuration to file."""        file_path = Path(file_path)
         data = self.to_dict()
         
         # Convert enums to strings
@@ -412,8 +390,7 @@ class MonetizationConfig:
             raise
     
     def validate(self) -> List[str]:
-        """Validate configuration and return list of issues."""
-        issues = []
+        """Validate configuration and return list of issues."""        issues = []
         
         # Validate required fields for production
         if self.environment == EnvironmentType.PRODUCTION:
@@ -446,13 +423,11 @@ class MonetizationConfig:
         return issues
     
     def is_valid(self) -> bool:
-        """Check if configuration is valid."""
-        return len(self.validate()) == 0
+        """Check if configuration is valid."""        return len(self.validate()) == 0
 
 
 class ConfigurationManager:
-    """Manager for configuration loading and management."""
-    
+    """Manager for configuration loading and management."""    
     def __init__(self):
         self._config: Optional[MonetizationConfig] = None
         self._config_file_path: Optional[Path] = None
@@ -460,8 +435,7 @@ class ConfigurationManager:
     def load_config(self, 
                    config_file: Optional[Union[str, Path]] = None,
                    from_env: bool = True) -> MonetizationConfig:
-        """Load configuration from various sources."""
-        
+        """Load configuration from various sources."""        
         if config_file:
             # Load from file
             self._config = MonetizationConfig.from_file(config_file)
@@ -483,21 +457,18 @@ class ConfigurationManager:
         return self._config
     
     def get_config(self) -> MonetizationConfig:
-        """Get current configuration."""
-        if self._config is None:
+        """Get current configuration."""        if self._config is None:
             self._config = self.load_config()
         return self._config
     
     def reload_config(self) -> MonetizationConfig:
-        """Reload configuration from source."""
-        if self._config_file_path:
+        """Reload configuration from source."""        if self._config_file_path:
             return self.load_config(self._config_file_path, from_env=False)
         else:
             return self.load_config(from_env=True)
     
     def update_config(self, updates: Dict[str, Any]) -> None:
-        """Update configuration with new values."""
-        if self._config is None:
+        """Update configuration with new values."""        if self._config is None:
             self._config = MonetizationConfig()
         
         # Apply updates (simple implementation, could be more sophisticated)
@@ -506,8 +477,7 @@ class ConfigurationManager:
                 setattr(self._config, key, value)
     
     def save_current_config(self, file_path: Union[str, Path], format_type: str = 'json') -> None:
-        """Save current configuration to file."""
-        if self._config is None:
+        """Save current configuration to file."""        if self._config is None:
             raise ValueError("No configuration loaded")
         
         self._config.save_to_file(file_path, format_type)
@@ -518,22 +488,19 @@ _config_manager: Optional[ConfigurationManager] = None
 
 
 def get_config_manager() -> ConfigurationManager:
-    """Get the global configuration manager."""
-    global _config_manager
+    """Get the global configuration manager."""    global _config_manager
     if _config_manager is None:
         _config_manager = ConfigurationManager()
     return _config_manager
 
 
 def get_config() -> MonetizationConfig:
-    """Get the current configuration."""
-    return get_config_manager().get_config()
+    """Get the current configuration."""    return get_config_manager().get_config()
 
 
 def load_config(config_file: Optional[Union[str, Path]] = None, 
                from_env: bool = True) -> MonetizationConfig:
-    """Load configuration."""
-    return get_config_manager().load_config(config_file, from_env)
+    """Load configuration."""    return get_config_manager().load_config(config_file, from_env)
 
 
 # Export all classes and functions

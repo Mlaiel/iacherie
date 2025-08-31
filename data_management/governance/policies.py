@@ -1,5 +1,4 @@
-"""
-Data Governance Policies Engine
+"""Data Governance Policies Engine
 
 Advanced policy management system for content governance, compliance enforcement,
 and business rule automation across all content types.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Union, Callable
 from datetime import datetime, timedelta
@@ -30,8 +28,7 @@ from ...core.cache import CacheManager
 
 
 class PolicyType(Enum):
-    """Types of data governance policies"""
-    COMPLIANCE = "compliance"
+    """Types of data governance policies"""    COMPLIANCE = "compliance"
     QUALITY = "quality"
     RETENTION = "retention"
     ACCESS = "access"
@@ -42,16 +39,14 @@ class PolicyType(Enum):
 
 
 class PolicySeverity(Enum):
-    """Policy violation severity levels"""
-    LOW = "low"
+    """Policy violation severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class PolicyAction(Enum):
-    """Actions to take when policy is violated"""
-    ALERT = "alert"
+    """Actions to take when policy is violated"""    ALERT = "alert"
     QUARANTINE = "quarantine"
     DELETE = "delete"
     ANONYMIZE = "anonymize"
@@ -63,8 +58,7 @@ class PolicyAction(Enum):
 
 @dataclass
 class PolicyRule:
-    """Individual policy rule definition"""
-    rule_id: str
+    """Individual policy rule definition"""    rule_id: str
     name: str
     description: str
     condition: str  # JSON-based condition expression
@@ -76,8 +70,7 @@ class PolicyRule:
 
 @dataclass
 class PolicyViolation:
-    """Policy violation record"""
-    violation_id: str
+    """Policy violation record"""    violation_id: str
     policy_id: str
     rule_id: str
     content_id: str
@@ -90,13 +83,11 @@ class PolicyViolation:
 
 
 class DataPolicy:
-    """
-    Data governance policy definition
+    """    Data governance policy definition
     
     Defines rules, conditions, and actions for content governance
     across all supported content types.
-    """
-    
+    """    
     def __init__(
         self,
         policy_id: str,
@@ -125,16 +116,14 @@ class DataPolicy:
         self.avg_execution_time = 0.0
     
     def add_rule(self, rule: PolicyRule) -> None:
-        """Add a new rule to the policy"""
-        if any(r.rule_id == rule.rule_id for r in self.rules):
+        """Add a new rule to the policy"""        if any(r.rule_id == rule.rule_id for r in self.rules):
             raise PolicyError(f"Rule {rule.rule_id} already exists in policy {self.policy_id}")
         
         self.rules.append(rule)
         self.updated_at = datetime.utcnow()
     
     def remove_rule(self, rule_id: str) -> bool:
-        """Remove a rule from the policy"""
-        original_count = len(self.rules)
+        """Remove a rule from the policy"""        original_count = len(self.rules)
         self.rules = [r for r in self.rules if r.rule_id != rule_id]
         
         if len(self.rules) < original_count:
@@ -143,8 +132,7 @@ class DataPolicy:
         return False
     
     def update_rule(self, rule_id: str, updates: Dict[str, Any]) -> bool:
-        """Update an existing rule"""
-        for rule in self.rules:
+        """Update an existing rule"""        for rule in self.rules:
             if rule.rule_id == rule_id:
                 for key, value in updates.items():
                     if hasattr(rule, key):
@@ -154,8 +142,7 @@ class DataPolicy:
         return False
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert policy to dictionary"""
-        return {
+        """Convert policy to dictionary"""        return {
             "policy_id": self.policy_id,
             "name": self.name,
             "description": self.description,
@@ -185,13 +172,11 @@ class DataPolicy:
 
 
 class PolicyConditionEvaluator:
-    """
-    Evaluates policy conditions against content metadata
+    """    Evaluates policy conditions against content metadata
     
     Supports complex condition expressions with JSON-based syntax
     for flexible rule definition and evaluation.
-    """
-    
+    """    
     def __init__(self):
         self.operators = {
             "eq": lambda a, b: a == b,
@@ -221,8 +206,7 @@ class PolicyConditionEvaluator:
         }
     
     def evaluate_condition(self, condition: Union[str, Dict], metadata: Dict[str, Any]) -> bool:
-        """
-        Evaluate a condition against content metadata
+        """        Evaluate a condition against content metadata
         
         Args:
             condition: JSON condition string or dict
@@ -230,8 +214,7 @@ class PolicyConditionEvaluator:
             
         Returns:
             bool: True if condition is met, False otherwise
-        """
-        try:
+        """        try:
             if isinstance(condition, str):
                 condition = json.loads(condition)
             
@@ -242,8 +225,7 @@ class PolicyConditionEvaluator:
             return False
     
     def _evaluate_dict_condition(self, condition: Dict, metadata: Dict[str, Any]) -> bool:
-        """Evaluate dictionary-based condition"""
-        # Handle logical operators
+        """Evaluate dictionary-based condition"""        # Handle logical operators
         if "and" in condition:
             return self.logical_operators["and"](condition["and"], metadata)
         
@@ -268,8 +250,7 @@ class PolicyConditionEvaluator:
         return self.operators[operator](field_value, value)
     
     def _get_nested_value(self, data: Dict, field_path: str) -> Any:
-        """Get value from nested dictionary using dot notation"""
-        keys = field_path.split(".")
+        """Get value from nested dictionary using dot notation"""        keys = field_path.split(".")
         current = data
         
         for key in keys:
@@ -282,16 +263,13 @@ class PolicyConditionEvaluator:
 
 
 class PolicyEngine(BaseManager):
-    """
-    Central policy management and enforcement engine
+    """    Central policy management and enforcement engine
     
     Manages all data governance policies, evaluates conditions,
     and enforces actions for content protection and compliance.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the policy engine"""
-        super().__init__(config)
+        """Initialize the policy engine"""        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -313,8 +291,7 @@ class PolicyEngine(BaseManager):
         }
     
     async def initialize(self) -> None:
-        """Initialize the policy engine"""
-        try:
+        """Initialize the policy engine"""        try:
             await self._load_policies()
             await self._create_default_policies()
             self.logger.info("Policy engine initialized successfully")
@@ -324,16 +301,14 @@ class PolicyEngine(BaseManager):
             raise PolicyError(f"Policy engine initialization failed: {e}")
     
     async def create_policy(self, policy: DataPolicy) -> bool:
-        """
-        Create a new data governance policy
+        """        Create a new data governance policy
         
         Args:
             policy: DataPolicy instance to create
             
         Returns:
             bool: True if policy created successfully
-        """
-        try:
+        """        try:
             # Validate policy
             await self._validate_policy(policy)
             
@@ -363,8 +338,7 @@ class PolicyEngine(BaseManager):
         policy_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update an existing policy
+        """        Update an existing policy
         
         Args:
             policy_id: ID of policy to update
@@ -372,8 +346,7 @@ class PolicyEngine(BaseManager):
             
         Returns:
             bool: True if policy updated successfully
-        """
-        try:
+        """        try:
             if policy_id not in self.policies:
                 raise PolicyError(f"Policy {policy_id} not found")
             
@@ -401,16 +374,14 @@ class PolicyEngine(BaseManager):
             raise PolicyError(f"Policy update failed: {e}")
     
     async def delete_policy(self, policy_id: str) -> bool:
-        """
-        Delete a policy
+        """        Delete a policy
         
         Args:
             policy_id: ID of policy to delete
             
         Returns:
             bool: True if policy deleted successfully
-        """
-        try:
+        """        try:
             if policy_id not in self.policies:
                 return False
             
@@ -443,8 +414,7 @@ class PolicyEngine(BaseManager):
         content_type: str,
         metadata: Dict[str, Any]
     ) -> List[PolicyViolation]:
-        """
-        Evaluate all applicable policies against content
+        """        Evaluate all applicable policies against content
         
         Args:
             content_id: ID of content to evaluate
@@ -453,8 +423,7 @@ class PolicyEngine(BaseManager):
             
         Returns:
             List[PolicyViolation]: List of policy violations found
-        """
-        violations = []
+        """        violations = []
         start_time = datetime.utcnow()
         
         try:
@@ -500,8 +469,7 @@ class PolicyEngine(BaseManager):
         content_id: str,
         metadata: Dict[str, Any]
     ) -> List[PolicyViolation]:
-        """Evaluate a single policy against content"""
-        violations = []
+        """Evaluate a single policy against content"""        violations = []
         
         try:
             for rule in policy.rules:
@@ -545,8 +513,7 @@ class PolicyEngine(BaseManager):
         content_id: str,
         violation: PolicyViolation
     ) -> None:
-        """Execute the action specified by a violated policy rule"""
-        try:
+        """Execute the action specified by a violated policy rule"""        try:
             action_handlers = {
                 PolicyAction.ALERT: self._handle_alert_action,
                 PolicyAction.QUARANTINE: self._handle_quarantine_action,
@@ -568,56 +535,47 @@ class PolicyEngine(BaseManager):
             self.logger.error(f"Error executing policy action {action}: {e}")
     
     async def _handle_alert_action(self, content_id: str, violation: PolicyViolation) -> None:
-        """Handle alert action"""
-        # Send alert to monitoring system
+        """Handle alert action"""        # Send alert to monitoring system
         self.logger.warning(f"Policy violation alert: {violation.description}")
         # Additional alert logic here
     
     async def _handle_quarantine_action(self, content_id: str, violation: PolicyViolation) -> None:
-        """Handle quarantine action"""
-        # Move content to quarantine
+        """Handle quarantine action"""        # Move content to quarantine
         self.logger.info(f"Quarantining content: {content_id}")
         # Quarantine logic here
     
     async def _handle_delete_action(self, content_id: str, violation: PolicyViolation) -> None:
-        """Handle delete action"""
-        # Delete content
+        """Handle delete action"""        # Delete content
         self.logger.warning(f"Deleting content due to policy violation: {content_id}")
         # Deletion logic here
     
     async def _handle_anonymize_action(self, content_id: str, violation: PolicyViolation) -> None:
-        """Handle anonymize action"""
-        # Anonymize sensitive data
+        """Handle anonymize action"""        # Anonymize sensitive data
         self.logger.info(f"Anonymizing content: {content_id}")
         # Anonymization logic here
     
     async def _handle_encrypt_action(self, content_id: str, violation: PolicyViolation) -> None:
-        """Handle encrypt action"""
-        # Encrypt content
+        """Handle encrypt action"""        # Encrypt content
         self.logger.info(f"Encrypting content: {content_id}")
         # Encryption logic here
     
     async def _handle_archive_action(self, content_id: str, violation: PolicyViolation) -> None:
-        """Handle archive action"""
-        # Archive content
+        """Handle archive action"""        # Archive content
         self.logger.info(f"Archiving content: {content_id}")
         # Archival logic here
     
     async def _handle_block_access_action(self, content_id: str, violation: PolicyViolation) -> None:
-        """Handle block access action"""
-        # Block access to content
+        """Handle block access action"""        # Block access to content
         self.logger.info(f"Blocking access to content: {content_id}")
         # Access blocking logic here
     
     async def _handle_notify_owner_action(self, content_id: str, violation: PolicyViolation) -> None:
-        """Handle notify owner action"""
-        # Notify content owner
+        """Handle notify owner action"""        # Notify content owner
         self.logger.info(f"Notifying owner about policy violation: {content_id}")
         # Notification logic here
     
     async def get_policy(self, policy_id: str) -> Optional[DataPolicy]:
-        """Get a specific policy by ID"""
-        return self.policies.get(policy_id)
+        """Get a specific policy by ID"""        return self.policies.get(policy_id)
     
     async def list_policies(
         self,
@@ -625,8 +583,7 @@ class PolicyEngine(BaseManager):
         content_type: Optional[str] = None,
         enabled_only: bool = False
     ) -> List[DataPolicy]:
-        """
-        List policies with optional filtering
+        """        List policies with optional filtering
         
         Args:
             policy_type: Filter by policy type
@@ -635,8 +592,7 @@ class PolicyEngine(BaseManager):
             
         Returns:
             List[DataPolicy]: Filtered list of policies
-        """
-        policies = list(self.policies.values())
+        """        policies = list(self.policies.values())
         
         if policy_type:
             policies = [p for p in policies if p.policy_type == policy_type]
@@ -659,8 +615,7 @@ class PolicyEngine(BaseManager):
         severity: Optional[PolicySeverity] = None,
         resolved: Optional[bool] = None
     ) -> List[PolicyViolation]:
-        """
-        Get policy violations with optional filtering
+        """        Get policy violations with optional filtering
         
         Args:
             content_id: Filter by content ID
@@ -670,8 +625,7 @@ class PolicyEngine(BaseManager):
             
         Returns:
             List[PolicyViolation]: Filtered list of violations
-        """
-        violations = self.policy_violations.copy()
+        """        violations = self.policy_violations.copy()
         
         if content_id:
             violations = [v for v in violations if v.content_id == content_id]
@@ -695,8 +649,7 @@ class PolicyEngine(BaseManager):
         violation_id: str,
         resolution_notes: Optional[str] = None
     ) -> bool:
-        """
-        Mark a policy violation as resolved
+        """        Mark a policy violation as resolved
         
         Args:
             violation_id: ID of violation to resolve
@@ -704,8 +657,7 @@ class PolicyEngine(BaseManager):
             
         Returns:
             bool: True if violation resolved successfully
-        """
-        for violation in self.policy_violations:
+        """        for violation in self.policy_violations:
             if violation.violation_id == violation_id:
                 violation.resolved_at = datetime.utcnow()
                 violation.resolution_notes = resolution_notes
@@ -716,8 +668,7 @@ class PolicyEngine(BaseManager):
         return False
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get policy engine metrics"""
-        return {
+        """Get policy engine metrics"""        return {
             **self.metrics,
             "policy_breakdown": {
                 policy_type.value: len([
@@ -736,8 +687,7 @@ class PolicyEngine(BaseManager):
         }
     
     async def _validate_policy(self, policy: DataPolicy) -> None:
-        """Validate policy configuration"""
-        if not policy.policy_id or not policy.name:
+        """Validate policy configuration"""        if not policy.policy_id or not policy.name:
             raise ValidationError("Policy ID and name are required")
         
         if not policy.rules:
@@ -753,8 +703,7 @@ class PolicyEngine(BaseManager):
                 raise ValidationError(f"Invalid condition syntax in rule {rule.rule_id}")
     
     async def _load_policies(self) -> None:
-        """Load policies from database"""
-        try:
+        """Load policies from database"""        try:
             logger.info("Loading data governance policies from database")
             
             # Simulate database query for policies
@@ -810,8 +759,7 @@ class PolicyEngine(BaseManager):
             await self._create_default_policies()
     
     async def _create_default_policies(self) -> None:
-        """Create default governance policies"""
-        # Create default GDPR compliance policy
+        """Create default governance policies"""        # Create default GDPR compliance policy
         gdpr_policy = DataPolicy(
             policy_id="gdpr_compliance",
             name="GDPR Compliance Policy",
@@ -854,8 +802,7 @@ class PolicyEngine(BaseManager):
         await self.create_policy(quality_policy)
     
     async def _persist_policy(self, policy: DataPolicy) -> None:
-        """Persist policy to database"""
-        try:
+        """Persist policy to database"""        try:
             self.logger.info(f"Persisting policy {policy.policy_id} to database")
             
             # Convert policy to dictionary for database storage
@@ -888,8 +835,7 @@ class PolicyEngine(BaseManager):
             raise PolicyError(f"Policy persistence failed: {str(e)}")
     
     async def _cache_policy(self, policy: DataPolicy) -> None:
-        """Cache policy for fast access"""
-        try:
+        """Cache policy for fast access"""        try:
             # Convert policy to cacheable format
             if hasattr(policy, 'policy_id'):
                 policy_id = policy.policy_id
@@ -918,8 +864,7 @@ class PolicyEngine(BaseManager):
             logger.error(f"Error caching policy: {str(e)}")
     
     async def _delete_policy_from_db(self, policy_id: str) -> None:
-        """Delete policy from database"""
-        try:
+        """Delete policy from database"""        try:
             logger.info(f"Deleting policy {policy_id} from database")
             
             # Simulate database deletion
@@ -945,8 +890,7 @@ class PolicyEngine(BaseManager):
             raise PolicyError(f"Failed to delete policy {policy_id}: {str(e)}")
     
     async def _remove_policy_from_cache(self, policy_id: str) -> None:
-        """Remove policy from cache"""
-        try:
+        """Remove policy from cache"""        try:
             logger.debug(f"Removing policy {policy_id} from cache")
             
             cache_key = f"policy:{policy_id}"

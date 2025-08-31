@@ -1,5 +1,4 @@
-"""
-Advanced Synchronization Manager - Real-Time Multi-Platform Data Synchronization System
+"""Advanced Synchronization Manager - Real-Time Multi-Platform Data Synchronization System
 
 Enterprise-grade synchronization system providing real-time data consistency,
 conflict resolution, and intelligent synchronization across all platforms.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 from typing import Dict, List, Optional, Any, Union, Tuple, Callable, Set
 from datetime import datetime, timedelta
@@ -60,8 +58,7 @@ from ...utils.retry_handler import ExponentialBackoffRetry
 
 
 class SyncType(Enum):
-    """Types of synchronization operations"""
-    REAL_TIME = "real_time"
+    """Types of synchronization operations"""    REAL_TIME = "real_time"
     SCHEDULED = "scheduled"
     ON_DEMAND = "on_demand"
     INCREMENTAL = "incremental"
@@ -70,16 +67,14 @@ class SyncType(Enum):
 
 
 class SyncDirection(Enum):
-    """Synchronization directions"""
-    BIDIRECTIONAL = "bidirectional"
+    """Synchronization directions"""    BIDIRECTIONAL = "bidirectional"
     PLATFORM_TO_LOCAL = "platform_to_local"
     LOCAL_TO_PLATFORM = "local_to_platform"
     PLATFORM_TO_PLATFORM = "platform_to_platform"
 
 
 class SyncPriority(Enum):
-    """Synchronization priority levels"""
-    CRITICAL = 1
+    """Synchronization priority levels"""    CRITICAL = 1
     HIGH = 2
     MEDIUM = 3
     LOW = 4
@@ -87,8 +82,7 @@ class SyncPriority(Enum):
 
 
 class ConflictStrategy(Enum):
-    """Conflict resolution strategies"""
-    LATEST_WINS = "latest_wins"
+    """Conflict resolution strategies"""    LATEST_WINS = "latest_wins"
     PLATFORM_PRIORITY = "platform_priority"
     USER_CHOICE = "user_choice"
     MERGE_INTELLIGENT = "merge_intelligent"
@@ -98,8 +92,7 @@ class ConflictStrategy(Enum):
 
 @dataclass
 class SyncConfiguration:
-    """Configuration for synchronization operations"""
-    sync_type: SyncType
+    """Configuration for synchronization operations"""    sync_type: SyncType
     sync_direction: SyncDirection
     priority: SyncPriority = SyncPriority.MEDIUM
     conflict_strategy: ConflictStrategy = ConflictStrategy.LATEST_WINS
@@ -118,8 +111,7 @@ class SyncConfiguration:
 
 @dataclass
 class SyncResult:
-    """Result of synchronization operation"""
-    sync_id: str
+    """Result of synchronization operation"""    sync_id: str
     success: bool
     platform: PlatformType
     sync_type: SyncType
@@ -137,8 +129,7 @@ class SyncResult:
 
 @dataclass
 class DataConflict:
-    """Data conflict representation"""
-    conflict_id: str
+    """Data conflict representation"""    conflict_id: str
     platform_a: PlatformType
     platform_b: PlatformType
     data_type: str
@@ -151,37 +142,30 @@ class DataConflict:
 
 
 class ISyncHandler(ABC):
-    """Interface for platform-specific sync handlers"""
-    
+    """Interface for platform-specific sync handlers"""    
     @abstractmethod
     async def fetch_data(self, data_type: str, filters: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """Fetch data from platform"""
-        pass
+        """Fetch data from platform"""        pass
     
     @abstractmethod
     async def push_data(self, data_type: str, data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Push data to platform"""
-        pass
+        """Push data to platform"""        pass
     
     @abstractmethod
     async def get_last_modified(self, data_type: str) -> datetime:
-        """Get last modification timestamp for data type"""
-        pass
+        """Get last modification timestamp for data type"""        pass
     
     @abstractmethod
     async def validate_data(self, data_type: str, data: Dict[str, Any]) -> bool:
-        """Validate data for platform compatibility"""
-        pass
+        """Validate data for platform compatibility"""        pass
 
 
 class SyncManager:
-    """
-    Advanced Synchronization Manager - Real-Time Multi-Platform Data Synchronization
+    """    Advanced Synchronization Manager - Real-Time Multi-Platform Data Synchronization
     
     Provides comprehensive data synchronization with real-time updates, 
     conflict resolution, and intelligent data consistency management.
-    """
-    
+    """    
     def __init__(self, platform_connector: PlatformConnector):
         self.platform_connector = platform_connector
         self.db_manager = DatabaseManager()
@@ -217,8 +201,7 @@ class SyncManager:
         self.logger = logging.getLogger(f"{__name__}.SyncManager")
 
     async def initialize(self) -> bool:
-        """Initialize synchronization manager and all services"""
-        try:
+        """Initialize synchronization manager and all services"""        try:
             # Initialize services
             await self.db_manager.initialize()
             await self.cache_manager.initialize()
@@ -258,8 +241,7 @@ class SyncManager:
         config: SyncConfiguration,
         immediate_execution: bool = True
     ) -> str:
-        """Create and optionally execute synchronization job"""
-        try:
+        """Create and optionally execute synchronization job"""        try:
             sync_id = str(uuid.uuid4())
             
             # Create sync job
@@ -290,8 +272,7 @@ class SyncManager:
             raise
 
     async def execute_sync_job(self, sync_id: str) -> Dict[str, Any]:
-        """Execute synchronization job"""
-        try:
+        """Execute synchronization job"""        try:
             # Get sync job
             sync_job = self.active_syncs.get(sync_id)
             if not sync_job:
@@ -349,8 +330,7 @@ class SyncManager:
             raise
 
     async def _execute_sync_operation(self, sync_job: SyncJob) -> Dict[PlatformType, SyncResult]:
-        """Execute the core synchronization operation"""
-        sync_results = {}
+        """Execute the core synchronization operation"""        sync_results = {}
         
         # Determine platforms to sync
         platforms = sync_job.config.platforms or list(self.sync_handlers.keys())
@@ -399,8 +379,7 @@ class SyncManager:
         platform: PlatformType,
         handler: ISyncHandler
     ) -> SyncResult:
-        """Synchronize data for specific platform"""
-        start_time = time.time()
+        """Synchronize data for specific platform"""        start_time = time.time()
         result = SyncResult(
             sync_id=sync_job.sync_id,
             success=False,
@@ -458,8 +437,7 @@ class SyncManager:
         handler: ISyncHandler,
         data_type: str
     ) -> Dict[str, int]:
-        """Synchronize specific data type"""
-        result = {
+        """Synchronize specific data type"""        result = {
             'processed': 0,
             'updated': 0,
             'created': 0,
@@ -515,8 +493,7 @@ class SyncManager:
         platforms: List[PlatformType],
         data_types: List[str] = None
     ) -> Dict[str, Any]:
-        """Enable real-time synchronization for user"""
-        try:
+        """Enable real-time synchronization for user"""        try:
             real_time_config = {
                 'user_id': user_id,
                 'platforms': platforms,
@@ -548,8 +525,7 @@ class SyncManager:
             raise
 
     async def disable_real_time_sync(self, user_id: str) -> Dict[str, Any]:
-        """Disable real-time synchronization for user"""
-        try:
+        """Disable real-time synchronization for user"""        try:
             # Get current configuration
             config = await self._get_real_time_config(user_id)
             
@@ -575,8 +551,7 @@ class SyncManager:
         platforms: List[PlatformType] = None,
         data_types: List[str] = None
     ) -> List[DataConflict]:
-        """Detect data conflicts across platforms"""
-        try:
+        """Detect data conflicts across platforms"""        try:
             conflicts = []
             platforms = platforms or list(self.sync_handlers.keys())
             data_types = data_types or ['profile', 'content', 'analytics']
@@ -607,8 +582,7 @@ class SyncManager:
         resolution_strategy: ConflictStrategy = None,
         user_choice: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Resolve specific data conflict"""
-        try:
+        """Resolve specific data conflict"""        try:
             # Get conflict
             conflict = await self._get_conflict(conflict_id)
             if not conflict:
@@ -639,8 +613,7 @@ class SyncManager:
             raise
 
     async def get_sync_status(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive synchronization status for user"""
-        try:
+        """Get comprehensive synchronization status for user"""        try:
             # Get active sync jobs
             active_syncs = [sync for sync in self.active_syncs.values() 
                           if sync.user_id == user_id]
@@ -682,8 +655,7 @@ class SyncManager:
         platforms: List[PlatformType] = None,
         clear_conflicts: bool = False
     ) -> Dict[str, Any]:
-        """Force full synchronization for user"""
-        try:
+        """Force full synchronization for user"""        try:
             if clear_conflicts:
                 await self._clear_user_conflicts(user_id)
             
@@ -733,8 +705,7 @@ class SyncManager:
         platforms: List[PlatformType] = None,
         data_types: List[str] = None
     ) -> str:
-        """Schedule periodic synchronization"""
-        try:
+        """Schedule periodic synchronization"""        try:
             schedule_id = str(uuid.uuid4())
             
             # Create periodic sync configuration
@@ -774,8 +745,7 @@ class SyncManager:
             raise
 
     async def cancel_scheduled_sync(self, schedule_id: str) -> Dict[str, Any]:
-        """Cancel scheduled periodic synchronization"""
-        try:
+        """Cancel scheduled periodic synchronization"""        try:
             # Get schedule
             schedule = self.sync_schedules.get(schedule_id)
             if not schedule:
@@ -800,8 +770,7 @@ class SyncManager:
             raise
 
     async def shutdown(self):
-        """Graceful shutdown of sync manager"""
-        try:
+        """Graceful shutdown of sync manager"""        try:
             self.logger.info("Shutting down Sync Manager...")
             
             # Stop all real-time streams
@@ -843,13 +812,11 @@ class SyncManager:
 
 
 class ConsistencyValidator:
-    """
-    Advanced Consistency Validator - Data Consistency Verification System
+    """    Advanced Consistency Validator - Data Consistency Verification System
     
     Provides comprehensive data consistency validation across platforms
     with intelligent anomaly detection and automatic correction suggestions.
-    """
-    
+    """    
     def __init__(self, sync_manager: SyncManager):
         self.sync_manager = sync_manager
         self.db_manager = sync_manager.db_manager
@@ -872,8 +839,7 @@ class ConsistencyValidator:
         platforms: List[PlatformType] = None,
         data_types: List[str] = None
     ) -> Dict[str, Any]:
-        """Validate data consistency across platforms"""
-        try:
+        """Validate data consistency across platforms"""        try:
             validation_id = str(uuid.uuid4())
             
             # Get data from all platforms
@@ -915,8 +881,7 @@ class ConsistencyValidator:
         validation_report: Dict[str, Any],
         auto_apply: bool = False
     ) -> Dict[str, Any]:
-        """Automatically correct detected inconsistencies"""
-        try:
+        """Automatically correct detected inconsistencies"""        try:
             correction_results = {
                 'validation_id': validation_report['validation_id'],
                 'corrections_applied': 0,
@@ -959,8 +924,7 @@ class ConsistencyValidator:
         user_id: str,
         monitoring_period_hours: int = 24
     ) -> Dict[str, Any]:
-        """Monitor data drift across platforms over time"""
-        try:
+        """Monitor data drift across platforms over time"""        try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=monitoring_period_hours)
             
@@ -991,8 +955,7 @@ class ConsistencyValidator:
             raise
 
     def _initialize_validation_rules(self) -> Dict[str, Any]:
-        """Initialize data validation rules"""
-        return {
+        """Initialize data validation rules"""        return {
             'profile_consistency': {
                 'required_fields': ['id', 'name', 'email'],
                 'unique_fields': ['id', 'email'],
@@ -1024,8 +987,7 @@ class ConsistencyValidator:
         }
 
     def _initialize_consistency_thresholds(self) -> Dict[str, float]:
-        """Initialize consistency thresholds"""
-        return {
+        """Initialize consistency thresholds"""        return {
             'field_match_threshold': 0.95,
             'value_deviation_threshold': 0.1,
             'timestamp_tolerance_seconds': 300,

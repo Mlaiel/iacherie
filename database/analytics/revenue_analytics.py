@@ -1,5 +1,4 @@
-"""
-Revenue Analytics Module - IA Influencer Agent + Content Protection Platform
+"""Revenue Analytics Module - IA Influencer Agent + Content Protection Platform
 
 Advanced revenue analytics and forecasting system for multi-format content creators
 (musicians, bloggers, photographers, influencers, comedians) with AI-powered insights.
@@ -13,7 +12,6 @@ This code is the exclusive property of Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution is STRICTLY PROHIBITED.
 Violations will be prosecuted under international copyright law.
 """
-
 from typing import Dict, List, Optional, Any, Tuple, Union
 from decimal import Decimal
 from datetime import datetime, timedelta
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 Base = declarative_base()
 
 class RevenueTimeframe(str, Enum):
-    """Revenue analysis timeframes"""
-    DAILY = "daily"
+    """Revenue analysis timeframes"""    DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
     QUARTERLY = "quarterly"
@@ -45,8 +42,7 @@ class RevenueTimeframe(str, Enum):
     CUSTOM = "custom"
 
 class RevenueSource(str, Enum):
-    """Revenue source types"""
-    STREAMING = "streaming"
+    """Revenue source types"""    STREAMING = "streaming"
     DOWNLOADS = "downloads"
     LICENSING = "licensing"
     SPONSORSHIP = "sponsorship"
@@ -58,8 +54,7 @@ class RevenueSource(str, Enum):
     COPYRIGHT_CLAIMS = "copyright_claims"
 
 class PredictionModel(str, Enum):
-    """ML prediction models"""
-    LINEAR_REGRESSION = "linear_regression"
+    """ML prediction models"""    LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     NEURAL_NETWORK = "neural_network"
     ARIMA = "arima"
@@ -67,8 +62,7 @@ class PredictionModel(str, Enum):
     ENSEMBLE = "ensemble"
 
 class RevenueOptimizationStrategy(str, Enum):
-    """Revenue optimization strategies"""
-    PLATFORM_DIVERSIFICATION = "platform_diversification"
+    """Revenue optimization strategies"""    PLATFORM_DIVERSIFICATION = "platform_diversification"
     CONTENT_FREQUENCY = "content_frequency"
     TIMING_OPTIMIZATION = "timing_optimization"
     AUDIENCE_TARGETING = "audience_targeting"
@@ -77,8 +71,7 @@ class RevenueOptimizationStrategy(str, Enum):
 
 @dataclass
 class RevenueInsight:
-    """Revenue insight data structure"""
-    insight_type: str
+    """Revenue insight data structure"""    insight_type: str
     confidence_score: float
     potential_impact: Decimal
     recommended_action: str
@@ -87,21 +80,18 @@ class RevenueInsight:
 
 @dataclass
 class RevenueForecast:
-    """Revenue forecast data structure"""
-    timeframe: str
+    """Revenue forecast data structure"""    timeframe: str
     predicted_revenue: Decimal
     confidence_interval: Tuple[Decimal, Decimal]
     model_accuracy: float
     contributing_factors: List[str]
 
 class RevenueAnalytics(Base):
-    """
-    Enterprise-grade revenue analytics and insights model
+    """    Enterprise-grade revenue analytics and insights model
     
     Provides comprehensive revenue analysis, forecasting, and optimization
     for multi-format content creators with AI-powered recommendations.
-    """
-    __tablename__ = "revenue_analytics"
+    """    __tablename__ = "revenue_analytics"
     
     # Primary Keys and Identity
     id = Column(Integer, primary_key=True, index=True)
@@ -186,10 +176,8 @@ class RevenueAnalytics(Base):
     )
 
 class RevenueOptimizationExperiment(Base):
-    """
-    A/B testing and optimization experiments for revenue enhancement
-    """
-    __tablename__ = "revenue_optimization_experiments"
+    """    A/B testing and optimization experiments for revenue enhancement
+    """    __tablename__ = "revenue_optimization_experiments"
     
     # Primary Keys
     id = Column(Integer, primary_key=True, index=True)
@@ -239,13 +227,11 @@ class RevenueOptimizationExperiment(Base):
 RevenueAnalytics.optimization_experiments = relationship("RevenueOptimizationExperiment", back_populates="analytics")
 
 class RevenueAnalyticsManager:
-    """
-    Enterprise-grade revenue analytics manager
+    """    Enterprise-grade revenue analytics manager
     
     Provides comprehensive revenue analysis, forecasting, and optimization
     services for multi-format content creators.
-    """
-    
+    """    
     def __init__(self, db_session):
         self.db_session = db_session
         self.logger = logging.getLogger(__name__)
@@ -258,8 +244,7 @@ class RevenueAnalyticsManager:
         period_end: datetime,
         advanced_analysis: bool = True
     ) -> RevenueAnalytics:
-        """
-        Generate comprehensive revenue analytics for a user
+        """        Generate comprehensive revenue analytics for a user
         
         Args:
             user_id: User identifier
@@ -270,8 +255,7 @@ class RevenueAnalyticsManager:
             
         Returns:
             RevenueAnalytics: Complete analytics object
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating revenue analytics for user {user_id}")
             
             # Collect revenue data from all sources
@@ -330,8 +314,7 @@ class RevenueAnalyticsManager:
         period_start: datetime, 
         period_end: datetime
     ) -> Dict[str, Decimal]:
-        """Collect revenue data from all integrated platforms"""
-        
+        """Collect revenue data from all integrated platforms"""        
         # This would integrate with actual revenue tracking tables
         # For now, returning simulated data structure
         return {
@@ -343,8 +326,7 @@ class RevenueAnalyticsManager:
         }
     
     async def _analyze_revenue_sources(self, revenue_data: Dict[str, Decimal]) -> Dict[str, Decimal]:
-        """Analyze revenue by source categories"""
-        
+        """Analyze revenue by source categories"""        
         source_mapping = {
             "spotify_streams": RevenueSource.STREAMING,
             "youtube_ad_revenue": RevenueSource.ADVERTISING,
@@ -361,8 +343,7 @@ class RevenueAnalyticsManager:
         return sources
     
     async def _analyze_platform_breakdown(self, revenue_data: Dict[str, Decimal]) -> Dict[str, Decimal]:
-        """Analyze revenue by platform"""
-        
+        """Analyze revenue by platform"""        
         platform_mapping = {
             "spotify_streams": "spotify",
             "youtube_ad_revenue": "youtube", 
@@ -384,8 +365,7 @@ class RevenueAnalyticsManager:
         period_start: datetime, 
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Analyze revenue trends and patterns"""
-        
+        """Analyze revenue trends and patterns"""        
         # This would query historical data
         # For now, returning simulated trend analysis
         return {
@@ -405,8 +385,7 @@ class RevenueAnalyticsManager:
         revenue_data: Dict[str, Decimal], 
         trend_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate AI-powered revenue predictions"""
-        
+        """Generate AI-powered revenue predictions"""        
         # This would use actual ML models
         # For now, returning simulated predictions
         current_total = sum(revenue_data.values())
@@ -432,8 +411,7 @@ class RevenueAnalyticsManager:
         revenue_data: Dict[str, Decimal], 
         trend_data: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate AI-powered optimization insights"""
-        
+        """Generate AI-powered optimization insights"""        
         insights = []
         
         # Platform diversification insight
@@ -476,10 +454,8 @@ class RevenueAnalyticsManager:
         treatment_config: Dict[str, Any],
         duration_days: int = 30
     ) -> RevenueOptimizationExperiment:
-        """
-        Create a new revenue optimization experiment
-        """
-        try:
+        """        Create a new revenue optimization experiment
+        """        try:
             experiment = RevenueOptimizationExperiment(
                 analytics_id=analytics_id,
                 user_id=user_id,
@@ -510,10 +486,8 @@ class RevenueAnalyticsManager:
         timeframe: RevenueTimeframe = RevenueTimeframe.MONTHLY,
         limit: int = 10
     ) -> List[RevenueAnalytics]:
-        """
-        Get recent revenue insights for a user
-        """
-        try:
+        """        Get recent revenue insights for a user
+        """        try:
             query = self.db_session.query(RevenueAnalytics).filter(
                 RevenueAnalytics.user_id == user_id,
                 RevenueAnalytics.timeframe == timeframe.value
@@ -530,10 +504,8 @@ class RevenueAnalyticsManager:
         self,
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """
-        Get trending optimization opportunities across all users
-        """
-        try:
+        """        Get trending optimization opportunities across all users
+        """        try:
             # This would analyze aggregated data to find trending opportunities
             # For now, returning simulated trending opportunities
             

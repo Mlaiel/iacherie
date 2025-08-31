@@ -1,5 +1,4 @@
-"""
-Conversation Router - Enterprise intelligent conversation routing system
+"""Conversation Router - Enterprise intelligent conversation routing system
 =======================================================================
 
 Advanced conversation routing system for multi-format content creators
@@ -24,7 +23,6 @@ WARNING: This code and concept are proprietary intellectual property of Fahed Ml
 Unauthorized copying, modification, distribution, or use without explicit written
 permission is strictly prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 import uuid
@@ -48,8 +46,7 @@ from backend.ai.ml.routing_optimizer import RoutingMLOptimizer
 
 
 class RoutingStrategy(Enum):
-    """Advanced conversation routing strategies"""
-    CREATOR_SPECIALIZED = "creator_specialized"
+    """Advanced conversation routing strategies"""    CREATOR_SPECIALIZED = "creator_specialized"
     CONTENT_ANALYSIS = "content_analysis"
     MONETIZATION_ADVICE = "monetization_advice"
     PROTECTION_GUIDANCE = "protection_guidance"
@@ -62,8 +59,7 @@ class RoutingStrategy(Enum):
 
 
 class EngineType(Enum):
-    """AI engine types for specialized processing"""
-    GENERAL_CONVERSATIONAL = "general_conversational"
+    """AI engine types for specialized processing"""    GENERAL_CONVERSATIONAL = "general_conversational"
     MUSIC_SPECIALIST = "music_specialist"
     CONTENT_SPECIALIST = "content_specialist"
     BUSINESS_ADVISOR = "business_advisor"
@@ -75,8 +71,7 @@ class EngineType(Enum):
 
 @dataclass
 class RoutingDecision:
-    """Routing decision with confidence and reasoning"""
-    strategy: RoutingStrategy
+    """Routing decision with confidence and reasoning"""    strategy: RoutingStrategy
     engine_type: EngineType
     confidence: float
     reasoning: str
@@ -86,12 +81,10 @@ class RoutingDecision:
 
 
 class ConversationRouter:
-    """
-    Intelligent conversation routing system that directs user queries to the most
+    """    Intelligent conversation routing system that directs user queries to the most
     appropriate AI engines and specialized handlers based on creator type, intent,
     and conversation context.
-    """
-    
+    """    
     def __init__(self, ai_engine: ConversationalAI, cache_manager: CacheManager):
         self.ai_engine = ai_engine
         self.cache = cache_manager
@@ -108,8 +101,7 @@ class ConversationRouter:
         context_analysis: Dict[str, Any],
         session: Any  # ChatSession type
     ) -> RoutingDecision:
-        """
-        Main routing logic that determines the best strategy and engine
+        """        Main routing logic that determines the best strategy and engine
         
         Args:
             intent_classification: User intent analysis results
@@ -118,8 +110,7 @@ class ConversationRouter:
             
         Returns:
             RoutingDecision: Complete routing decision with confidence
-        """
-        try:
+        """        try:
             # Extract key routing factors
             creator_type = session.creator_type
             primary_intent = intent_classification.get("primary_intent")
@@ -212,8 +203,7 @@ class ConversationRouter:
         context_analysis: Dict[str, Any],
         creator_rules: Dict[str, Any]
     ) -> Dict[RoutingStrategy, float]:
-        """Calculate confidence scores for each routing strategy"""
-        scores = {}
+        """Calculate confidence scores for each routing strategy"""        scores = {}
         
         # Base intent-to-strategy mappings
         intent_mappings = {
@@ -276,8 +266,7 @@ class ConversationRouter:
         creator_type: Any,
         user_expertise_level: str
     ) -> EngineType:
-        """Map routing strategy to appropriate AI engine"""
-        strategy_engine_map = {
+        """Map routing strategy to appropriate AI engine"""        strategy_engine_map = {
             RoutingStrategy.GENERAL_CHAT: EngineType.GENERAL_CONVERSATIONAL,
             RoutingStrategy.CONTENT_ANALYSIS: EngineType.CONTENT_SPECIALIST,
             RoutingStrategy.MONETIZATION_ADVICE: EngineType.BUSINESS_ADVISOR,
@@ -314,8 +303,7 @@ class ConversationRouter:
         creator_type: Any,
         intent_classification: Dict[str, Any]
     ) -> List[str]:
-        """Determine specialized handlers for the routing strategy"""
-        handlers = []
+        """Determine specialized handlers for the routing strategy"""        handlers = []
         
         # Strategy-specific handlers
         strategy_handlers = {
@@ -383,8 +371,7 @@ class ConversationRouter:
         session_context: Dict[str, Any],
         user_expertise_level: str
     ) -> Dict[str, Any]:
-        """Generate parameters for response generation"""
-        base_parameters = {
+        """Generate parameters for response generation"""        base_parameters = {
             "tone": self._determine_response_tone(strategy, user_expertise_level),
             "detail_level": self._determine_detail_level(user_expertise_level),
             "include_examples": user_expertise_level in ["beginner", "intermediate"],
@@ -426,8 +413,7 @@ class ConversationRouter:
         strategy_scores: Dict[RoutingStrategy, float],
         selected_strategy: RoutingStrategy
     ) -> Optional[RoutingStrategy]:
-        """Determine fallback strategy if primary fails"""
-        # Remove selected strategy and find next best
+        """Determine fallback strategy if primary fails"""        # Remove selected strategy and find next best
         remaining_scores = {k: v for k, v in strategy_scores.items() if k != selected_strategy}
         
         if remaining_scores:
@@ -437,8 +423,7 @@ class ConversationRouter:
         return RoutingStrategy.GENERAL_CHAT
     
     def _determine_response_tone(self, strategy: RoutingStrategy, expertise_level: str) -> str:
-        """Determine appropriate response tone"""
-        if strategy in [RoutingStrategy.TECHNICAL_SUPPORT, RoutingStrategy.PROTECTION_GUIDANCE]:
+        """Determine appropriate response tone"""        if strategy in [RoutingStrategy.TECHNICAL_SUPPORT, RoutingStrategy.PROTECTION_GUIDANCE]:
             return "professional"
         elif strategy == RoutingStrategy.CREATIVE_ASSISTANCE:
             return "encouraging"
@@ -448,8 +433,7 @@ class ConversationRouter:
             return "conversational"
     
     def _determine_detail_level(self, expertise_level: str) -> str:
-        """Determine response detail level"""
-        return {
+        """Determine response detail level"""        return {
             "beginner": "basic",
             "intermediate": "moderate",
             "expert": "detailed"
@@ -462,8 +446,7 @@ class ConversationRouter:
         intent: str,
         creator_type: Any
     ) -> str:
-        """Generate human-readable routing reasoning"""
-        creator_str = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
+        """Generate human-readable routing reasoning"""        creator_str = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
         
         return (
             f"Routed to {strategy.value} strategy using {engine.value} engine "
@@ -471,8 +454,7 @@ class ConversationRouter:
         )
     
     def _create_fallback_decision(self) -> RoutingDecision:
-        """Create safe fallback routing decision"""
-        return RoutingDecision(
+        """Create safe fallback routing decision"""        return RoutingDecision(
             strategy=RoutingStrategy.GENERAL_CHAT,
             engine_type=EngineType.GENERAL_CONVERSATIONAL,
             confidence=0.5,
@@ -486,8 +468,7 @@ class ConversationRouter:
         )
     
     def _initialize_routing_rules(self):
-        """Initialize routing rules and weights"""
-        self.routing_rules = {
+        """Initialize routing rules and weights"""        self.routing_rules = {
             "intent_weights": {
                 "content_upload": 0.9,
                 "monetization_question": 0.85,
@@ -505,8 +486,7 @@ class ConversationRouter:
         }
     
     def _load_creator_type_mappings(self):
-        """Load creator type specific routing mappings"""
-        self.creator_mappings = {
+        """Load creator type specific routing mappings"""        self.creator_mappings = {
             "musician": {
                 "strategy_boosts": {
                     "content_analysis": 0.3,
@@ -565,8 +545,7 @@ class ConversationRouter:
         }
     
     def _setup_engine_capabilities(self):
-        """Setup AI engine capabilities mapping"""
-        self.engine_capabilities = {
+        """Setup AI engine capabilities mapping"""        self.engine_capabilities = {
             EngineType.GENERAL_CONVERSATIONAL: {
                 "strengths": ["general_chat", "basic_guidance", "friendly_interaction"],
                 "limitations": ["technical_specifics", "specialized_analysis"]
@@ -594,13 +573,11 @@ class ConversationRouter:
         }
     
     def _get_creator_routing_rules(self, creator_type: Any) -> Dict[str, Any]:
-        """Get routing rules for specific creator type"""
-        creator_str = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
+        """Get routing rules for specific creator type"""        creator_str = creator_type.value if hasattr(creator_type, 'value') else str(creator_type)
         return self.creator_mappings.get(creator_str, {})
     
     async def _cache_routing_decision(self, session_id: str, decision: RoutingDecision):
-        """Cache routing decision for performance"""
-        cache_key = f"routing_decision:{session_id}"
+        """Cache routing decision for performance"""        cache_key = f"routing_decision:{session_id}"
         cache_data = {
             "strategy": decision.strategy.value,
             "engine_type": decision.engine_type.value,

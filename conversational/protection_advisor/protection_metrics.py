@@ -1,5 +1,4 @@
-"""
-Protection Metrics Module - Advanced metrics and analytics for protection effectiveness.
+"""Protection Metrics Module - Advanced metrics and analytics for protection effectiveness.
 
 Provides comprehensive metrics, KPIs, and analytics for measuring
 the effectiveness of content protection strategies and implementations.
@@ -7,7 +6,6 @@ the effectiveness of content protection strategies and implementations.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -24,8 +22,7 @@ logger = get_logger(__name__)
 
 
 class MetricType(str, Enum):
-    """Types of protection metrics."""
-    EFFECTIVENESS = "effectiveness"
+    """Types of protection metrics."""    EFFECTIVENESS = "effectiveness"
     COVERAGE = "coverage"
     PERFORMANCE = "performance"
     FINANCIAL = "financial"
@@ -35,8 +32,7 @@ class MetricType(str, Enum):
 
 
 class MetricCategory(str, Enum):
-    """Metric categories for organization."""
-    CORE_KPI = "core_kpi"
+    """Metric categories for organization."""    CORE_KPI = "core_kpi"
     OPERATIONAL = "operational"
     STRATEGIC = "strategic"
     TECHNICAL = "technical"
@@ -44,8 +40,7 @@ class MetricCategory(str, Enum):
 
 
 class TimeGranularity(str, Enum):
-    """Time granularity for metrics."""
-    HOURLY = "hourly"
+    """Time granularity for metrics."""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -55,8 +50,7 @@ class TimeGranularity(str, Enum):
 
 @dataclass
 class ProtectionMetric:
-    """Individual protection metric definition and value."""
-    metric_id: str
+    """Individual protection metric definition and value."""    metric_id: str
     name: str
     description: str
     metric_type: MetricType
@@ -75,8 +69,7 @@ class ProtectionMetric:
 
 @dataclass
 class MetricsDashboard:
-    """Comprehensive metrics dashboard."""
-    dashboard_id: str
+    """Comprehensive metrics dashboard."""    dashboard_id: str
     user_id: str
     metrics: List[ProtectionMetric]
     overall_protection_score: float
@@ -90,8 +83,7 @@ class MetricsDashboard:
 
 
 class ProtectionMetrics:
-    """
-    Advanced protection metrics and analytics system.
+    """    Advanced protection metrics and analytics system.
     
     Provides comprehensive measurement and analysis including:
     - Protection effectiveness metrics
@@ -101,7 +93,6 @@ class ProtectionMetrics:
     - Trend analysis and forecasting
     - Real-time monitoring dashboards
     """
-
     def __init__(self):
         self.metric_definitions = self._load_metric_definitions()
         self.benchmark_data = self._load_benchmark_data()
@@ -113,8 +104,7 @@ class ProtectionMetrics:
         content_ids: List[str],
         time_period: Optional[timedelta] = None
     ) -> Dict[str, Any]:
-        """
-        Calculate comprehensive protection effectiveness metrics.
+        """        Calculate comprehensive protection effectiveness metrics.
         
         Args:
             user_id: Creator user ID
@@ -123,8 +113,7 @@ class ProtectionMetrics:
             
         Returns:
             Comprehensive effectiveness analysis
-        """
-        try:
+        """        try:
             if time_period is None:
                 time_period = timedelta(days=30)
                 
@@ -202,8 +191,7 @@ class ProtectionMetrics:
         user_id: str,
         dashboard_config: Optional[Dict[str, Any]] = None
     ) -> MetricsDashboard:
-        """
-        Generate comprehensive metrics dashboard.
+        """        Generate comprehensive metrics dashboard.
         
         Args:
             user_id: Creator user ID
@@ -211,8 +199,7 @@ class ProtectionMetrics:
             
         Returns:
             MetricsDashboard with comprehensive metrics
-        """
-        try:
+        """        try:
             logger.info(f"Generating metrics dashboard for user {user_id}")
             
             # Use default config if not provided
@@ -291,8 +278,7 @@ class ProtectionMetrics:
         time_period: timedelta,
         granularity: TimeGranularity
     ) -> Dict[str, Any]:
-        """
-        Track specific metric over time with specified granularity.
+        """        Track specific metric over time with specified granularity.
         
         Args:
             user_id: Creator user ID
@@ -302,8 +288,7 @@ class ProtectionMetrics:
             
         Returns:
             Time series data for metric
-        """
-        try:
+        """        try:
             logger.info(f"Tracking metric {metric_id} for user {user_id}")
             
             end_date = datetime.utcnow()
@@ -368,8 +353,7 @@ class ProtectionMetrics:
         comparison_targets: List[str],
         metrics: List[str]
     ) -> Dict[str, Any]:
-        """
-        Compare protection performance against targets.
+        """        Compare protection performance against targets.
         
         Args:
             user_id: Creator user ID
@@ -378,8 +362,7 @@ class ProtectionMetrics:
             
         Returns:
             Comparative performance analysis
-        """
-        try:
+        """        try:
             logger.info(f"Comparing protection performance for user {user_id}")
             
             # Get user's current metrics
@@ -439,8 +422,7 @@ class ProtectionMetrics:
     # Private helper methods
     
     def _load_metric_definitions(self) -> Dict[str, Dict[str, Any]]:
-        """Load metric definitions and calculation methods."""
-        return {
+        """Load metric definitions and calculation methods."""        return {
             "threat_prevention_rate": {
                 "description": "Percentage of threats prevented before impact",
                 "calculation": "prevented_threats / total_threats_detected",
@@ -479,8 +461,7 @@ class ProtectionMetrics:
         }
     
     def _load_benchmark_data(self) -> Dict[str, Dict[str, float]]:
-        """Load industry benchmark data."""
-        return {
+        """Load industry benchmark data."""        return {
             "industry_average": {
                 "threat_prevention_rate": 0.75,
                 "detection_accuracy": 0.85,
@@ -500,8 +481,7 @@ class ProtectionMetrics:
     async def _calculate_threat_prevention_rate(
         self, user_id: str, content_ids: List[str], start_date: datetime, end_date: datetime
     ) -> Dict[str, float]:
-        """Calculate threat prevention rate."""
-        try:
+        """Calculate threat prevention rate."""        try:
             # This would query actual threat data
             total_threats = 10  # Simulated
             prevented_threats = 8  # Simulated
@@ -522,8 +502,7 @@ class ProtectionMetrics:
     async def _calculate_detection_accuracy(
         self, user_id: str, content_ids: List[str], start_date: datetime, end_date: datetime
     ) -> Dict[str, float]:
-        """Calculate detection accuracy metrics."""
-        try:
+        """Calculate detection accuracy metrics."""        try:
             # This would analyze detection results
             true_positives = 15  # Simulated
             false_positives = 2  # Simulated
@@ -550,8 +529,7 @@ class ProtectionMetrics:
     async def _calculate_response_time_metrics(
         self, user_id: str, content_ids: List[str], start_date: datetime, end_date: datetime
     ) -> Dict[str, float]:
-        """Calculate response time metrics."""
-        try:
+        """Calculate response time metrics."""        try:
             # This would analyze response times
             response_times = [5, 10, 15, 8, 12, 20, 7]  # Simulated in minutes
             
@@ -574,8 +552,7 @@ class ProtectionMetrics:
     async def _calculate_coverage_metrics(
         self, user_id: str, content_ids: List[str], start_date: datetime, end_date: datetime
     ) -> Dict[str, float]:
-        """Calculate protection coverage metrics."""
-        try:
+        """Calculate protection coverage metrics."""        try:
             total_content = len(content_ids)
             protected_content = len([cid for cid in content_ids if await self._is_content_protected(cid)])
             
@@ -595,8 +572,7 @@ class ProtectionMetrics:
     async def _calculate_financial_impact_metrics(
         self, user_id: str, content_ids: List[str], start_date: datetime, end_date: datetime
     ) -> Dict[str, float]:
-        """Calculate financial impact metrics."""
-        try:
+        """Calculate financial impact metrics."""        try:
             # This would analyze financial data
             potential_revenue_loss = 1000.0  # Simulated
             actual_revenue_loss = 150.0  # Simulated
@@ -622,8 +598,7 @@ class ProtectionMetrics:
     async def _calculate_compliance_metrics(
         self, user_id: str, content_ids: List[str], start_date: datetime, end_date: datetime
     ) -> Dict[str, float]:
-        """Calculate compliance metrics."""
-        try:
+        """Calculate compliance metrics."""        try:
             # This would check compliance status
             total_requirements = 10  # Simulated
             compliant_requirements = 8  # Simulated
@@ -644,8 +619,7 @@ class ProtectionMetrics:
     async def _calculate_user_experience_metrics(
         self, user_id: str, content_ids: List[str], start_date: datetime, end_date: datetime
     ) -> Dict[str, float]:
-        """Calculate user experience metrics."""
-        try:
+        """Calculate user experience metrics."""        try:
             # This would analyze user experience data
             false_positive_rate = 0.05  # Simulated
             system_uptime = 0.99  # Simulated
@@ -665,8 +639,7 @@ class ProtectionMetrics:
     # Additional helper methods (simplified implementations)
     
     async def _calculate_overall_effectiveness_score(self, metrics: Dict[str, Any]) -> float:
-        """Calculate overall effectiveness score from individual metrics."""
-        try:
+        """Calculate overall effectiveness score from individual metrics."""        try:
             # Weight different metric categories
             weights = {
                 "threat_prevention_rate": 0.25,
@@ -692,8 +665,7 @@ class ProtectionMetrics:
             return 0.0
     
     async def _generate_effectiveness_insights(self, metrics: Dict[str, Any]) -> List[str]:
-        """Generate insights from effectiveness metrics."""
-        insights = []
+        """Generate insights from effectiveness metrics."""        insights = []
         
         threat_prevention = metrics.get("threat_prevention_rate", 0.0)
         if threat_prevention >= 0.9:
@@ -712,8 +684,7 @@ class ProtectionMetrics:
         return insights
     
     async def _generate_effectiveness_recommendations(self, metrics: Dict[str, Any], overall_score: float) -> List[str]:
-        """Generate recommendations based on effectiveness metrics."""
-        recommendations = []
+        """Generate recommendations based on effectiveness metrics."""        recommendations = []
         
         if overall_score < 0.7:
             recommendations.append("Overall protection effectiveness needs improvement")

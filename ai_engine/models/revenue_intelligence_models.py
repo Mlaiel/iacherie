@@ -1,5 +1,4 @@
-"""
-Advanced Revenue Intelligence Models for IA Influencer Agent Platform
+"""Advanced Revenue Intelligence Models for IA Influencer Agent Platform
 Enterprise-grade monetization and revenue optimization AI systems
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
-
 import torch
 import torch.nn as nn
 import numpy as np
@@ -36,8 +34,7 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class RevenueStream(Enum):
-    """Revenue stream types"""
-    SUBSCRIPTION = "subscription"
+    """Revenue stream types"""    SUBSCRIPTION = "subscription"
     AD_REVENUE = "ad_revenue"
     SPONSORED_CONTENT = "sponsored_content"
     MERCHANDISE = "merchandise"
@@ -52,8 +49,7 @@ class RevenueStream(Enum):
 
 
 class MarketSegment(Enum):
-    """Market segment classifications"""
-    MUSIC_CREATORS = "music_creators"
+    """Market segment classifications"""    MUSIC_CREATORS = "music_creators"
     VIDEO_CONTENT = "video_content"
     PHOTOGRAPHY = "photography"
     PODCASTERS = "podcasters"
@@ -66,8 +62,7 @@ class MarketSegment(Enum):
 
 
 class OptimizationGoal(Enum):
-    """Revenue optimization goals"""
-    MAXIMIZE_REVENUE = "maximize_revenue"
+    """Revenue optimization goals"""    MAXIMIZE_REVENUE = "maximize_revenue"
     INCREASE_ENGAGEMENT = "increase_engagement"
     EXPAND_AUDIENCE = "expand_audience"
     IMPROVE_RETENTION = "improve_retention"
@@ -79,8 +74,7 @@ class OptimizationGoal(Enum):
 
 @dataclass
 class RevenueIntelligenceConfig:
-    """Configuration for revenue intelligence models"""
-    enabled_revenue_streams: List[RevenueStream]
+    """Configuration for revenue intelligence models"""    enabled_revenue_streams: List[RevenueStream]
     target_market_segments: List[MarketSegment]
     optimization_goals: List[OptimizationGoal]
     prediction_horizon_days: int = 30
@@ -96,8 +90,7 @@ class RevenueIntelligenceConfig:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics"""
-    total_revenue: float
+    """Revenue performance metrics"""    total_revenue: float
     revenue_by_stream: Dict[RevenueStream, float]
     growth_rate: float
     conversion_rates: Dict[str, float]
@@ -112,8 +105,7 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueOptimizationResult:
-    """Revenue optimization result"""
-    predicted_revenue: float
+    """Revenue optimization result"""    predicted_revenue: float
     confidence_interval: Tuple[float, float]
     optimization_recommendations: List[Dict[str, Any]]
     risk_assessment: Dict[str, float]
@@ -124,11 +116,9 @@ class RevenueOptimizationResult:
 
 
 class AdvancedRevenuePredictor(BaseAIModel):
-    """
-    Advanced revenue prediction model using ensemble methods
+    """    Advanced revenue prediction model using ensemble methods
     Predicts future revenue across multiple streams and time horizons
-    """
-    
+    """    
     def __init__(self, config: ModelConfig, revenue_config: RevenueIntelligenceConfig):
         super().__init__(config)
         self.revenue_config = revenue_config
@@ -151,8 +141,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
         self._initialize_models()
     
     def _initialize_models(self):
-        """Initialize all prediction models"""
-        try:
+        """Initialize all prediction models"""        try:
             # Revenue stream predictors
             for stream in self.revenue_config.enabled_revenue_streams:
                 self.revenue_predictors[stream] = self._create_revenue_predictor(stream)
@@ -182,8 +171,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
             raise ModelError(f"Revenue predictor initialization error: {e}")
     
     def _create_revenue_predictor(self, stream: RevenueStream) -> Any:
-        """Create revenue predictor for specific stream"""
-        try:
+        """Create revenue predictor for specific stream"""        try:
             if stream in [RevenueStream.SUBSCRIPTION, RevenueStream.PREMIUM_FEATURES]:
                 # Use LightGBM for subscription-based revenue
                 return lgb.LGBMRegressor(
@@ -216,8 +204,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
             return GradientBoostingRegressor(random_state=42)
     
     def _create_pricing_optimizer(self) -> nn.Module:
-        """Create neural network for dynamic pricing optimization"""
-        class PricingOptimizerNet(nn.Module):
+        """Create neural network for dynamic pricing optimization"""        class PricingOptimizerNet(nn.Module):
             def __init__(self, input_dim=50, hidden_dims=[128, 64, 32]):
                 super().__init__()
                 
@@ -250,8 +237,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
         prediction_horizon: int = None,
         include_confidence: bool = True
     ) -> Dict[str, Any]:
-        """
-        Predict future revenue across all streams
+        """        Predict future revenue across all streams
         
         Args:
             historical_data: Historical revenue and feature data
@@ -260,8 +246,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
             
         Returns:
             Revenue predictions with confidence intervals and insights
-        """
-        try:
+        """        try:
             if prediction_horizon is None:
                 prediction_horizon = self.revenue_config.prediction_horizon_days
             
@@ -332,8 +317,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
             raise ModelError(f"Revenue prediction error: {e}")
     
     def _prepare_prediction_features(self, historical_data: Dict[str, Any]) -> np.ndarray:
-        """Prepare features for revenue prediction"""
-        try:
+        """Prepare features for revenue prediction"""        try:
             features = []
             
             # Time-based features
@@ -433,8 +417,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
         features: np.ndarray, 
         prediction: float
     ) -> Tuple[float, float]:
-        """Calculate confidence interval for prediction"""
-        try:
+        """Calculate confidence interval for prediction"""        try:
             # Simplified confidence interval calculation
             # In production, use proper statistical methods
             
@@ -461,8 +444,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
             return (prediction * 0.8, prediction * 1.2)
     
     async def _predict_churn(self, features: np.ndarray) -> float:
-        """Predict user churn probability"""
-        try:
+        """Predict user churn probability"""        try:
             # Simplified churn prediction
             # In production, use trained churn model
             
@@ -482,8 +464,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
             return 0.15  # Default churn rate
     
     async def _predict_lifetime_value(self, features: np.ndarray) -> float:
-        """Predict customer lifetime value"""
-        try:
+        """Predict customer lifetime value"""        try:
             # Simplified LTV calculation
             avg_revenue_per_user = features[6] if len(features) > 6 else 10.0
             retention_rate = features[18] if len(features) > 18 else 0.7
@@ -502,8 +483,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
         features: np.ndarray, 
         historical_data: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Optimize pricing for different services"""
-        try:
+        """Optimize pricing for different services"""        try:
             # Simplified pricing optimization
             pricing_recommendations = {}
             
@@ -543,8 +523,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
             return {}
     
     async def _analyze_market_conditions(self, historical_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze current market conditions"""
-        try:
+        """Analyze current market conditions"""        try:
             market_conditions = {
                 "overall_trend": "stable",
                 "competition_level": "medium", 
@@ -580,8 +559,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
         historical_data: Dict[str, Any],
         market_conditions: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate actionable revenue insights"""
-        try:
+        """Generate actionable revenue insights"""        try:
             insights = []
             
             # Top revenue stream insight
@@ -635,8 +613,7 @@ class AdvancedRevenuePredictor(BaseAIModel):
             return []
     
     def _calculate_overall_confidence(self, confidence_intervals: Dict) -> float:
-        """Calculate overall prediction confidence"""
-        try:
+        """Calculate overall prediction confidence"""        try:
             if not confidence_intervals:
                 return 0.5
             
@@ -655,11 +632,9 @@ class AdvancedRevenuePredictor(BaseAIModel):
 
 
 class IntelligentContentRecommendationEngine(BaseAIModel):
-    """
-    Intelligent content recommendation system for revenue optimization
+    """    Intelligent content recommendation system for revenue optimization
     Uses collaborative filtering, content-based filtering, and deep learning
-    """
-    
+    """    
     def __init__(self, config: ModelConfig, revenue_config: RevenueIntelligenceConfig):
         super().__init__(config)
         self.revenue_config = revenue_config
@@ -677,8 +652,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         self.user_clusterer = KMeans(n_clusters=10, random_state=42)
         
     def _create_content_embedder(self) -> nn.Module:
-        """Create content embedding network"""
-        class ContentEmbedder(nn.Module):
+        """Create content embedding network"""        class ContentEmbedder(nn.Module):
             def __init__(self, input_dim=100, embedding_dim=128):
                 super().__init__()
                 self.embedder = nn.Sequential(
@@ -697,8 +671,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         return ContentEmbedder()
     
     def _create_user_embedder(self) -> nn.Module:
-        """Create user embedding network"""
-        class UserEmbedder(nn.Module):
+        """Create user embedding network"""        class UserEmbedder(nn.Module):
             def __init__(self, input_dim=50, embedding_dim=128):
                 super().__init__()
                 self.embedder = nn.Sequential(
@@ -715,8 +688,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         return UserEmbedder()
     
     def _create_recommendation_network(self) -> nn.Module:
-        """Create recommendation scoring network"""
-        class RecommendationNet(nn.Module):
+        """Create recommendation scoring network"""        class RecommendationNet(nn.Module):
             def __init__(self, embedding_dim=128):
                 super().__init__()
                 self.interaction_net = nn.Sequential(
@@ -738,8 +710,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         return RecommendationNet()
     
     def _create_trend_analyzer(self) -> Any:
-        """Create trend analysis model"""
-        return GradientBoostingRegressor(
+        """Create trend analysis model"""        return GradientBoostingRegressor(
             n_estimators=100,
             learning_rate=0.1,
             max_depth=4,
@@ -747,8 +718,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         )
     
     def _create_viral_predictor(self) -> Any:
-        """Create viral content prediction model"""
-        return RandomForestClassifier(
+        """Create viral content prediction model"""        return RandomForestClassifier(
             n_estimators=150,
             max_depth=8,
             random_state=42
@@ -761,8 +731,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         num_recommendations: int = 10,
         optimize_for: str = "revenue"
     ) -> List[Dict[str, Any]]:
-        """
-        Generate personalized content recommendations
+        """        Generate personalized content recommendations
         
         Args:
             user_profile: User preferences and history
@@ -772,8 +741,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
             
         Returns:
             List of recommended content with scores and reasoning
-        """
-        try:
+        """        try:
             self.logger.info(f"Generating {num_recommendations} content recommendations")
             
             # Prepare user embedding
@@ -835,8 +803,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
             raise ModelError(f"Recommendation error: {e}")
     
     def _extract_user_features(self, user_profile: Dict[str, Any]) -> np.ndarray:
-        """Extract numerical features from user profile"""
-        try:
+        """Extract numerical features from user profile"""        try:
             features = []
             
             # Demographics
@@ -899,8 +866,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
             return np.random.randn(50) * 0.1 + 0.5
     
     def _extract_content_features(self, content_item: Dict[str, Any]) -> np.ndarray:
-        """Extract numerical features from content item"""
-        try:
+        """Extract numerical features from content item"""        try:
             features = []
             
             # Content metadata
@@ -1006,8 +972,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
             return np.random.randn(100) * 0.1 + 0.5
     
     def _get_user_embedding(self, user_features: np.ndarray) -> np.ndarray:
-        """Get user embedding from features"""
-        try:
+        """Get user embedding from features"""        try:
             with torch.no_grad():
                 feature_tensor = torch.FloatTensor(user_features).unsqueeze(0)
                 embedding = self.user_embedder(feature_tensor)
@@ -1016,8 +981,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
             return np.random.randn(128) * 0.1
     
     def _get_content_embedding(self, content_features: np.ndarray) -> np.ndarray:
-        """Get content embedding from features"""
-        try:
+        """Get content embedding from features"""        try:
             with torch.no_grad():
                 feature_tensor = torch.FloatTensor(content_features).unsqueeze(0)
                 embedding = self.content_embedder(feature_tensor)
@@ -1031,8 +995,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         content_item: Dict[str, Any], 
         optimize_for: str
     ) -> float:
-        """Adjust recommendation score based on optimization target"""
-        try:
+        """Adjust recommendation score based on optimization target"""        try:
             if optimize_for == "revenue":
                 revenue_potential = content_item.get("revenue_metrics", {}).get("revenue_potential", 0.3)
                 return base_score * 0.7 + revenue_potential * 0.3
@@ -1052,8 +1015,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
             return base_score
     
     def _predict_viral_potential(self, content_features: np.ndarray) -> float:
-        """Predict viral potential of content"""
-        try:
+        """Predict viral potential of content"""        try:
             # Simplified viral prediction
             # In production, use trained viral predictor
             
@@ -1070,8 +1032,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
             return 0.2  # Default viral score
     
     def _estimate_content_revenue_potential(self, content_item: Dict[str, Any]) -> float:
-        """Estimate revenue potential of content"""
-        try:
+        """Estimate revenue potential of content"""        try:
             # Base revenue potential from content type
             type_multipliers = {
                 "music": 0.7,
@@ -1109,8 +1070,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         content_item: Dict[str, Any], 
         score: float
     ) -> str:
-        """Generate human-readable reasoning for recommendation"""
-        try:
+        """Generate human-readable reasoning for recommendation"""        try:
             reasons = []
             
             # Score-based reasoning
@@ -1152,8 +1112,7 @@ class IntelligentContentRecommendationEngine(BaseAIModel):
         self, 
         recommendations: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """Add diversity to recommendations"""
-        try:
+        """Add diversity to recommendations"""        try:
             if len(recommendations) <= 3:
                 return recommendations
             

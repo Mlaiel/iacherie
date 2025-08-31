@@ -1,5 +1,4 @@
-"""
-Usage Tracker
+"""Usage Tracker
 ============
 
 Real-time usage tracking system for licensed content monitoring,
@@ -8,7 +7,6 @@ analytics, and compliance verification.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 """
-
 from typing import Dict, List, Any, Optional, Tuple
 from datetime import datetime, date, timedelta
 from uuid import UUID
@@ -33,8 +31,7 @@ settings = get_settings()
 
 
 class TrackingEvent(Enum):
-    """Usage tracking event types"""
-    PLAY = "play"
+    """Usage tracking event types"""    PLAY = "play"
     STREAM = "stream"
     DOWNLOAD = "download"
     VIEW = "view"
@@ -47,8 +44,7 @@ class TrackingEvent(Enum):
 
 
 class TrackingSource(Enum):
-    """Tracking data sources"""
-    DIRECT_API = "direct_api"
+    """Tracking data sources"""    DIRECT_API = "direct_api"
     PLATFORM_WEBHOOK = "platform_webhook"
     BATCH_IMPORT = "batch_import"
     CRAWLER = "crawler"
@@ -57,11 +53,9 @@ class TrackingSource(Enum):
 
 
 class UsageTracker:
-    """
-    Industrial-grade usage tracking system with real-time monitoring,
+    """    Industrial-grade usage tracking system with real-time monitoring,
     analytics, and compliance validation capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         repository: LicensingRepository = None,
@@ -70,8 +64,7 @@ class UsageTracker:
         cache_manager: CacheManager = None,
         queue_manager: QueueManager = None
     ):
-        """Initialize usage tracker with dependencies"""
-        self.repository = repository or LicensingRepository()
+        """Initialize usage tracker with dependencies"""        self.repository = repository or LicensingRepository()
         self.compliance_engine = compliance_engine or ComplianceEngine()
         self.analytics_engine = analytics_engine or AnalyticsEngine()
         self.cache_manager = cache_manager or CacheManager()
@@ -98,8 +91,7 @@ class UsageTracker:
         event_data: Dict[str, Any],
         source: str = TrackingSource.DIRECT_API.value
     ) -> Dict[str, Any]:
-        """Track individual usage event with real-time compliance"""
-        try:
+        """Track individual usage event with real-time compliance"""        try:
             # Validate inputs
             await self._validate_tracking_event(license_agreement_id, event_type, event_data)
             
@@ -167,8 +159,7 @@ class UsageTracker:
         usage_events: List[Dict[str, Any]],
         source: str = TrackingSource.BATCH_IMPORT.value
     ) -> Dict[str, Any]:
-        """Track multiple usage events in batch"""
-        try:
+        """Track multiple usage events in batch"""        try:
             results = {
                 "total_events": len(usage_events),
                 "successful": 0,
@@ -206,8 +197,7 @@ class UsageTracker:
         metrics: List[str] = None,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Get comprehensive usage analytics"""
-        try:
+        """Get comprehensive usage analytics"""        try:
             # Validate access
             license_agreement = await self.repository.get_license_agreement(
                 license_agreement_id, user_id
@@ -266,8 +256,7 @@ class UsageTracker:
         license_agreement_id: UUID,
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Get real-time usage metrics"""
-        try:
+        """Get real-time usage metrics"""        try:
             # Check cache for recent metrics
             cache_key = f"real_time_metrics:{license_agreement_id}"
             cached_metrics = await self.cache_manager.get(cache_key)
@@ -327,8 +316,7 @@ class UsageTracker:
         format_type: str = "csv",
         user_id: UUID = None
     ) -> Dict[str, Any]:
-        """Export usage data for reporting"""
-        try:
+        """Export usage data for reporting"""        try:
             # Validate access and parameters
             license_agreement = await self.repository.get_license_agreement(
                 license_agreement_id, user_id
@@ -382,8 +370,7 @@ class UsageTracker:
         event_type: str,
         event_data: Dict[str, Any]
     ) -> None:
-        """Validate tracking event data"""
-        # Validate UUID
+        """Validate tracking event data"""        # Validate UUID
         if not isinstance(license_agreement_id, UUID):
             raise ValidationError("Invalid license agreement ID format")
         
@@ -403,8 +390,7 @@ class UsageTracker:
         license_agreement: LicenseAgreement,
         source: str
     ) -> Dict[str, Any]:
-        """Enrich event data with additional context"""
-        enriched_data = event_data.copy()
+        """Enrich event data with additional context"""        enriched_data = event_data.copy()
         
         # Add license context
         enriched_data["license_number"] = license_agreement.license_number
@@ -436,8 +422,7 @@ class UsageTracker:
         event_data: Dict[str, Any],
         source: str
     ) -> Dict[str, Any]:
-        """Create tracking record data structure"""
-        return {
+        """Create tracking record data structure"""        return {
             "license_agreement_id": license_agreement_id,
             "usage_date": event_data.get("normalized_timestamp", datetime.utcnow()),
             "usage_type": event_type,
@@ -471,8 +456,7 @@ class UsageTracker:
         tracking_record: LicenseUsageTracking,
         license_agreement: LicenseAgreement
     ) -> None:
-        """Process tracking record for analytics"""
-        if self.analytics_engine:
+        """Process tracking record for analytics"""        if self.analytics_engine:
             await self.analytics_engine.process_usage_event(
                 tracking_record, license_agreement
             )
@@ -481,8 +465,7 @@ class UsageTracker:
         self,
         tracking_record: LicenseUsageTracking
     ) -> None:
-        """Queue tracking record for batch processing"""
-        if self.queue_manager:
+        """Queue tracking record for batch processing"""        if self.queue_manager:
             await self.queue_manager.enqueue(
                 "usage_tracking_batch",
                 {
@@ -501,8 +484,7 @@ class UsageTracker:
         granularity: str,
         metrics: List[str] = None
     ) -> Dict[str, Any]:
-        """Generate detailed analytics for the specified period"""
-        # Implementation would generate time-series data, aggregations, etc.
+        """Generate detailed analytics for the specified period"""        # Implementation would generate time-series data, aggregations, etc.
         return {
             "time_series": await self._generate_time_series_data(
                 license_agreement_id, start_date, end_date, granularity
@@ -516,8 +498,7 @@ class UsageTracker:
         }
     
     def _start_background_tasks(self) -> None:
-        """Start background processing tasks"""
-        # Start batch processing task
+        """Start background processing tasks"""        # Start batch processing task
         task = asyncio.create_task(self._background_batch_processor())
         self._background_tasks.append(task)
         
@@ -526,8 +507,7 @@ class UsageTracker:
         self._background_tasks.append(task)
     
     async def _background_batch_processor(self) -> None:
-        """Background task for batch processing"""
-        while True:
+        """Background task for batch processing"""        while True:
             try:
                 await asyncio.sleep(self.flush_interval)
                 await self._flush_usage_buffer()
@@ -535,8 +515,7 @@ class UsageTracker:
                 self._logger.error(f"Error in background batch processor: {str(e)}")
     
     async def _background_cache_warmer(self) -> None:
-        """Background task for cache warming"""
-        while True:
+        """Background task for cache warming"""        while True:
             try:
                 await asyncio.sleep(300)  # 5 minutes
                 await self._warm_popular_caches()
@@ -544,6 +523,5 @@ class UsageTracker:
                 self._logger.error(f"Error in background cache warmer: {str(e)}")
     
     async def _generate_export_id(self) -> str:
-        """Generate unique export ID"""
-        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
+        """Generate unique export ID"""        timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S")
         return f"EXPORT-{timestamp}-{hash(timestamp) % 10000:04d}"

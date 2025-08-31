@@ -1,9 +1,7 @@
-"""
-Fingerprint Seeds Manager - AI Fingerprinting Configuration and Algorithms
+"""Fingerprint Seeds Manager - AI Fingerprinting Configuration and Algorithms
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: All rights reserved - Unauthorized use strictly prohibited
 """
-
 from typing import Dict, List, Any, Optional, Union, Set, Tuple
 import asyncio
 import logging
@@ -20,8 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class FingerprintType(str, Enum):
-    """Types of content fingerprinting supported."""
-    AUDIO_FINGERPRINT = "audio_fingerprint"
+    """Types of content fingerprinting supported."""    AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
     TEXT_FINGERPRINT = "text_fingerprint"
@@ -31,8 +28,7 @@ class FingerprintType(str, Enum):
 
 
 class FingerprintAlgorithm(str, Enum):
-    """Fingerprinting algorithms available."""
-    CHROMAPRINT = "chromaprint"
+    """Fingerprinting algorithms available."""    CHROMAPRINT = "chromaprint"
     PERCEPTUAL_HASH = "perceptual_hash"
     WAVELET_HASH = "wavelet_hash"
     SIFT_FEATURES = "sift_features"
@@ -44,8 +40,7 @@ class FingerprintAlgorithm(str, Enum):
 
 
 class SimilarityMetric(str, Enum):
-    """Similarity metrics for fingerprint comparison."""
-    HAMMING_DISTANCE = "hamming_distance"
+    """Similarity metrics for fingerprint comparison."""    HAMMING_DISTANCE = "hamming_distance"
     EUCLIDEAN_DISTANCE = "euclidean_distance"
     COSINE_SIMILARITY = "cosine_similarity"
     JACCARD_SIMILARITY = "jaccard_similarity"
@@ -54,8 +49,7 @@ class SimilarityMetric(str, Enum):
 
 
 class IndexingStrategy(str, Enum):
-    """Indexing strategies for fast fingerprint search."""
-    LSH_INDEX = "lsh_index"
+    """Indexing strategies for fast fingerprint search."""    LSH_INDEX = "lsh_index"
     FAISS_INDEX = "faiss_index"
     ANNOY_INDEX = "annoy_index"
     NMSLIB_INDEX = "nmslib_index"
@@ -64,8 +58,7 @@ class IndexingStrategy(str, Enum):
 
 
 class ContentCategory(str, Enum):
-    """Content categories for fingerprinting."""
-    MUSIC = "music"
+    """Content categories for fingerprinting."""    MUSIC = "music"
     SPEECH = "speech"
     VIDEO_CONTENT = "video_content"
     PHOTOGRAPHY = "photography"
@@ -76,8 +69,7 @@ class ContentCategory(str, Enum):
 
 @dataclass
 class FingerprintConfiguration:
-    """Fingerprint algorithm configuration."""
-    algorithm_id: str
+    """Fingerprint algorithm configuration."""    algorithm_id: str
     algorithm_name: str
     fingerprint_type: FingerprintType
     algorithm: FingerprintAlgorithm
@@ -92,8 +84,7 @@ class FingerprintConfiguration:
 
 @dataclass
 class MatchingConfiguration:
-    """Content matching configuration."""
-    matching_id: str
+    """Content matching configuration."""    matching_id: str
     matching_name: str
     similarity_metrics: List[SimilarityMetric] = field(default_factory=list)
     indexing_strategy: IndexingStrategy = IndexingStrategy.FAISS_INDEX
@@ -104,8 +95,7 @@ class MatchingConfiguration:
 
 
 class FingerprintSeedsManager:
-    """
-    Enterprise-grade fingerprint seeds manager for comprehensive AI fingerprinting configuration.
+    """    Enterprise-grade fingerprint seeds manager for comprehensive AI fingerprinting configuration.
     
     Handles:
     - Multi-format content fingerprinting (Audio, Video, Image, Text)
@@ -118,11 +108,9 @@ class FingerprintSeedsManager:
     - Precision-recall optimization and benchmarking
     - Cross-modal fingerprinting for mixed content
     - Blockchain-based fingerprint integrity verification
-    """
-    
+    """    
     def __init__(self):
-        """Initialize fingerprint seeds manager with enterprise configurations."""
-        self.fingerprint_algorithms = {}
+        """Initialize fingerprint seeds manager with enterprise configurations."""        self.fingerprint_algorithms = {}
         self.similarity_configurations = {}
         self.indexing_strategies = {}
         self.detection_pipelines = {}
@@ -134,8 +122,7 @@ class FingerprintSeedsManager:
         self.blockchain_configs = {}
     
     async def initialize(self) -> Dict[str, Any]:
-        """Initialize all fingerprinting-related seed data with full enterprise support."""
-        logger.info("Initializing comprehensive fingerprint seeds data...")
+        """Initialize all fingerprinting-related seed data with full enterprise support."""        logger.info("Initializing comprehensive fingerprint seeds data...")
         start_time = datetime.now(timezone.utc)
         
         results = {}
@@ -218,8 +205,7 @@ class FingerprintSeedsManager:
             raise
     
     async def _initialize_fingerprint_algorithms(self) -> Dict[str, Any]:
-        """Initialize comprehensive fingerprinting algorithms and configurations."""
-        algorithms = {
+        """Initialize comprehensive fingerprinting algorithms and configurations."""        algorithms = {
             # Audio Fingerprinting Algorithms
             'chromaprint_audio': {
                 'algorithm_name': 'Chromaprint Audio Fingerprinting',
@@ -560,8 +546,7 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_similarity_configurations(self) -> Dict[str, Any]:
-        """Initialize similarity metrics and comparison configurations."""
-        similarity_configs = {
+        """Initialize similarity metrics and comparison configurations."""        similarity_configs = {
             'distance_metrics': {
                 'hamming_distance': {
                     'metric_name': 'Hamming Distance',
@@ -715,8 +700,7 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_indexing_strategies(self) -> Dict[str, Any]:
-        """Initialize indexing strategies for efficient fingerprint search."""
-        indexing_strategies = {
+        """Initialize indexing strategies for efficient fingerprint search."""        indexing_strategies = {
             'vector_databases': {
                 'faiss_index': {
                     'index_name': 'Facebook AI Similarity Search',
@@ -903,8 +887,7 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_detection_pipelines(self) -> Dict[str, Any]:
-        """Initialize content detection and matching pipelines."""
-        detection_pipelines = {
+        """Initialize content detection and matching pipelines."""        detection_pipelines = {
             'real_time_detection_pipeline': {
                 'pipeline_name': 'Real-time Content Detection',
                 'processing_stages': [
@@ -1071,8 +1054,7 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_feature_extraction(self) -> Dict[str, Any]:
-        """Initialize feature extraction configurations for different content types."""
-        feature_extraction = {
+        """Initialize feature extraction configurations for different content types."""        feature_extraction = {
             'audio_feature_extraction': {
                 'time_domain_features': {
                     'zero_crossing_rate': {
@@ -1273,8 +1255,7 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_matching_configurations(self) -> Dict[str, Any]:
-        """Initialize matching configurations and strategies."""
-        matching_configs = {
+        """Initialize matching configurations and strategies."""        matching_configs = {
             'exact_matching': {
                 'binary_fingerprint_matching': {
                     'algorithm': 'bit_wise_comparison',
@@ -1379,8 +1360,7 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_performance_optimization(self) -> Dict[str, Any]:
-        """Initialize performance optimization configurations."""
-        optimization_configs = {
+        """Initialize performance optimization configurations."""        optimization_configs = {
             'computational_optimization': {
                 'parallel_processing': {
                     'multi_threading': {
@@ -1474,8 +1454,7 @@ class FingerprintSeedsManager:
         }
     
     async def _initialize_quality_assessment(self) -> Dict[str, Any]:
-        """Initialize quality assessment configurations for fingerprinting systems."""
-        quality_assessment = {
+        """Initialize quality assessment configurations for fingerprinting systems."""        quality_assessment = {
             'accuracy_metrics': {
                 'precision_recall_analysis': {
                     'true_positive_rate': 'recall',
@@ -1587,8 +1566,7 @@ class FingerprintSeedsManager:
         }
     
     async def reset(self) -> Dict[str, Any]:
-        """Reset all fingerprint seed data (use with caution)."""
-        logger.warning("Resetting fingerprint seeds data...")
+        """Reset all fingerprint seed data (use with caution)."""        logger.warning("Resetting fingerprint seeds data...")
         
         self.fingerprint_algorithms.clear()
         self.similarity_configurations.clear()

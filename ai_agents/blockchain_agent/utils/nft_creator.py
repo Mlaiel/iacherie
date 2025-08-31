@@ -1,5 +1,4 @@
-"""
-IA-Influencer Agent - NFT Creator System
+"""IA-Influencer Agent - NFT Creator System
 
 Enterprise NFT creation and management platform providing:
 - Multi-format content NFT creation (audio, video, image, text)
@@ -16,7 +15,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized copying, distribution, or use is strictly prohibited.
 Any violation will result in legal action.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -50,8 +48,7 @@ from .smart_contracts import SmartContractsManager
 
 
 class ContentType(Enum):
-    """Supported content types for NFT creation."""
-    AUDIO = "audio"
+    """Supported content types for NFT creation."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -60,16 +57,14 @@ class ContentType(Enum):
 
 
 class NFTStandard(Enum):
-    """Supported NFT standards."""
-    ERC721 = "erc721"
+    """Supported NFT standards."""    ERC721 = "erc721"
     ERC1155 = "erc1155"
     SPL_TOKEN = "spl_token"  # Solana
     CARDANO_NATIVE = "cardano_native"
 
 
 class MarketplaceType(Enum):
-    """Supported NFT marketplaces."""
-    OPENSEA = "opensea"
+    """Supported NFT marketplaces."""    OPENSEA = "opensea"
     RARIBLE = "rarible"
     FOUNDATION = "foundation"
     SUPERRARE = "superrare"
@@ -80,8 +75,7 @@ class MarketplaceType(Enum):
 
 
 class RarityTier(Enum):
-    """NFT rarity tiers based on attributes."""
-    COMMON = "common"
+    """NFT rarity tiers based on attributes."""    COMMON = "common"
     UNCOMMON = "uncommon"
     RARE = "rare"
     EPIC = "epic"
@@ -91,8 +85,7 @@ class RarityTier(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Enhanced content metadata for NFT creation."""
-    title: str
+    """Enhanced content metadata for NFT creation."""    title: str
     description: str
     creator: str
     content_type: ContentType
@@ -111,8 +104,7 @@ class ContentMetadata:
 
 @dataclass
 class NFTCollection:
-    """NFT collection definition and management."""
-    id: str
+    """NFT collection definition and management."""    id: str
     name: str
     symbol: str
     description: str
@@ -134,8 +126,7 @@ class NFTCollection:
 
 @dataclass
 class NFTRoyalty:
-    """NFT royalty configuration and tracking."""
-    token_id: str
+    """NFT royalty configuration and tracking."""    token_id: str
     creator_address: str
     royalty_percentage: float
     split_addresses: List[Dict[str, Any]] = field(default_factory=list)  # For revenue sharing
@@ -146,8 +137,7 @@ class NFTRoyalty:
 
 @dataclass
 class MarketplaceListing:
-    """NFT marketplace listing information."""
-    marketplace: MarketplaceType
+    """NFT marketplace listing information."""    marketplace: MarketplaceType
     token_id: str
     listing_price: Decimal
     currency: str
@@ -160,8 +150,7 @@ class MarketplaceListing:
 
 
 class NFTCreator:
-    """
-    Advanced NFT Creation and Management System.
+    """    Advanced NFT Creation and Management System.
     
     Provides comprehensive NFT creation services:
     - Multi-format content NFT creation
@@ -170,11 +159,9 @@ class NFTCreator:
     - Royalty management and distribution
     - Cross-chain NFT bridging
     - Collection management and analytics
-    """
-    
+    """    
     def __init__(self, blockchain_agent, smart_contracts_manager: SmartContractsManager, config: Optional[Dict] = None):
-        """Initialize the NFT Creator system."""
-        self.blockchain_agent = blockchain_agent
+        """Initialize the NFT Creator system."""        self.blockchain_agent = blockchain_agent
         self.smart_contracts = smart_contracts_manager
         self.config = config or {}
         
@@ -228,8 +215,7 @@ class NFTCreator:
         network: BlockchainNetwork = BlockchainNetwork.POLYGON,
         nft_standard: NFTStandard = NFTStandard.ERC721
     ) -> str:
-        """
-        Create an NFT from content file with comprehensive metadata.
+        """        Create an NFT from content file with comprehensive metadata.
         
         Args:
             content_file_path: Path to the content file
@@ -240,8 +226,7 @@ class NFTCreator:
             
         Returns:
             str: NFT token ID
-        """
-        try:
+        """        try:
             # Validate content file
             content_info = await self._validate_and_process_content(content_file_path, metadata)
             
@@ -335,8 +320,7 @@ class NFTCreator:
         network: BlockchainNetwork = BlockchainNetwork.POLYGON,
         collection_size: int = 10000
     ) -> str:
-        """
-        Create a new NFT collection with smart contract deployment.
+        """        Create a new NFT collection with smart contract deployment.
         
         Args:
             name: Collection name
@@ -348,8 +332,7 @@ class NFTCreator:
             
         Returns:
             str: Collection ID
-        """
-        try:
+        """        try:
             collection_id = str(uuid.uuid4())
             
             # Deploy collection smart contract
@@ -393,8 +376,7 @@ class NFTCreator:
         currency: str = "ETH",
         duration_days: int = 30
     ) -> str:
-        """
-        List an NFT on a specific marketplace.
+        """        List an NFT on a specific marketplace.
         
         Args:
             nft_id: NFT identifier
@@ -405,8 +387,7 @@ class NFTCreator:
             
         Returns:
             str: Listing ID
-        """
-        try:
+        """        try:
             if nft_id not in self.nfts:
                 raise ValueError(f"NFT not found: {nft_id}")
             
@@ -446,8 +427,7 @@ class NFTCreator:
         traits_config: Dict[str, List[str]],
         generation_count: int = 1000
     ) -> List[str]:
-        """
-        Generate procedural art for NFT collection with trait combinations.
+        """        Generate procedural art for NFT collection with trait combinations.
         
         Args:
             collection_id: Collection identifier
@@ -456,8 +436,7 @@ class NFTCreator:
             
         Returns:
             List[str]: List of generated NFT IDs
-        """
-        try:
+        """        try:
             if collection_id not in self.collections:
                 raise ValueError(f"Collection not found: {collection_id}")
             
@@ -528,8 +507,7 @@ class NFTCreator:
             raise
     
     async def _validate_and_process_content(self, file_path: str, metadata: ContentMetadata) -> Dict[str, Any]:
-        """Validate and extract information from content file."""
-        try:
+        """Validate and extract information from content file."""        try:
             file_path = Path(file_path)
             
             if not file_path.exists():
@@ -578,8 +556,7 @@ class NFTCreator:
             raise
     
     async def _generate_nft_metadata(self, content_info: Dict[str, Any], metadata: ContentMetadata) -> Dict[str, Any]:
-        """Generate comprehensive NFT metadata."""
-        nft_metadata = {
+        """Generate comprehensive NFT metadata."""        nft_metadata = {
             'name': metadata.title,
             'description': metadata.description,
             'creator': metadata.creator,
@@ -615,8 +592,7 @@ class NFTCreator:
         return nft_metadata
     
     async def _generate_nft_attributes(self, metadata: ContentMetadata, content_info: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate NFT attributes for marketplace compatibility."""
-        attributes = []
+        """Generate NFT attributes for marketplace compatibility."""        attributes = []
         
         # Basic attributes
         attributes.extend([
@@ -656,8 +632,7 @@ class NFTCreator:
         return attributes
     
     async def _upload_to_ipfs(self, content: Union[str, Dict], content_type: str) -> str:
-        """Upload content to IPFS with Pinata pinning service."""
-        try:
+        """Upload content to IPFS with Pinata pinning service."""        try:
             if self.pinata_api_key and self.pinata_secret:
                 # Use Pinata for IPFS pinning
                 url = "https://api.pinata.cloud/pinning/pinFileToIPFS"
@@ -698,8 +673,7 @@ class NFTCreator:
             return f"ipfs://Qm{mock_hash}"
     
     async def _deploy_nft_collection(self, name: str, symbol: str, network: BlockchainNetwork) -> str:
-        """Deploy NFT collection smart contract."""
-        try:
+        """Deploy NFT collection smart contract."""        try:
             from .smart_contracts import DeploymentConfig
             
             # Deploy NFT collection contract
@@ -726,8 +700,7 @@ class NFTCreator:
             raise
     
     async def _setup_nft_royalties(self, token_id: str, creator_address: str, royalty_percentage: float):
-        """Setup royalty tracking for NFT."""
-        royalty = NFTRoyalty(
+        """Setup royalty tracking for NFT."""        royalty = NFTRoyalty(
             token_id=token_id,
             creator_address=creator_address,
             royalty_percentage=royalty_percentage
@@ -736,8 +709,7 @@ class NFTCreator:
         self.royalties[token_id] = royalty
     
     async def _calculate_minting_cost(self, network: BlockchainNetwork) -> Dict[str, Any]:
-        """Calculate estimated minting cost."""
-        gas_estimates = {
+        """Calculate estimated minting cost."""        gas_estimates = {
             BlockchainNetwork.ETHEREUM: {'gas': 150000, 'price_gwei': 50},
             BlockchainNetwork.POLYGON: {'gas': 150000, 'price_gwei': 30},
             BlockchainNetwork.BINANCE_SMART_CHAIN: {'gas': 150000, 'price_gwei': 5}
@@ -754,16 +726,14 @@ class NFTCreator:
         }
     
     async def _calculate_file_hash(self, file_path: Path) -> str:
-        """Calculate SHA-256 hash of file content."""
-        sha256_hash = hashlib.sha256()
+        """Calculate SHA-256 hash of file content."""        sha256_hash = hashlib.sha256()
         with open(file_path, "rb") as f:
             for byte_block in iter(lambda: f.read(4096), b""):
                 sha256_hash.update(byte_block)
         return sha256_hash.hexdigest()
     
     def _get_mime_type(self, file_format: str) -> str:
-        """Get MIME type for file format."""
-        mime_types = {
+        """Get MIME type for file format."""        mime_types = {
             '.mp3': 'audio/mpeg',
             '.wav': 'audio/wav',
             '.flac': 'audio/flac',
@@ -780,8 +750,7 @@ class NFTCreator:
         return mime_types.get(file_format, 'application/octet-stream')
     
     def _extract_color_palette(self, image: Image.Image) -> List[str]:
-        """Extract dominant color palette from image."""
-        if not image:
+        """Extract dominant color palette from image."""        if not image:
             return []
         
         try:
@@ -806,8 +775,7 @@ class NFTCreator:
         return []
     
     async def get_nft_info(self, nft_id: str) -> Dict[str, Any]:
-        """Get comprehensive information about an NFT."""
-        if nft_id not in self.nfts:
+        """Get comprehensive information about an NFT."""        if nft_id not in self.nfts:
             raise ValueError(f"NFT not found: {nft_id}")
         
         nft = self.nfts[nft_id]
@@ -843,8 +811,7 @@ class NFTCreator:
         }
     
     async def get_nft_analytics(self) -> Dict[str, Any]:
-        """Get comprehensive NFT creation and management analytics."""
-        total_nfts = len(self.nfts)
+        """Get comprehensive NFT creation and management analytics."""        total_nfts = len(self.nfts)
         total_collections = len(self.collections)
         
         # NFT statistics by content type
@@ -880,8 +847,7 @@ class NFTCreator:
         }
     
     def _calculate_average_minting_cost(self) -> Dict[str, float]:
-        """Calculate average minting costs across all NFTs."""
-        costs = []
+        """Calculate average minting costs across all NFTs."""        costs = []
         for nft in self.nfts.values():
             if 'minting_cost' in nft and isinstance(nft['minting_cost'], dict):
                 cost_usd = nft['minting_cost'].get('cost_usd', 0)

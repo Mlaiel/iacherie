@@ -1,5 +1,4 @@
-"""
-AI Agents Module - IA Influencer Agent Platform
+"""AI Agents Module - IA Influencer Agent Platform
 Architecture consolidée avec agents métier regroupés
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -9,7 +8,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 Cette architecture est la propriété exclusive de Fahed Mlaiel.
 Contact: mlaiel@live.de
 """
-
 # Agent de Base - Core Framework
 from .base_agent import (
     BaseAIAgent,
@@ -81,9 +79,7 @@ MODULE_INFO = {
 }
 
 def get_module_info():
-    """Get module information"""
-    return MODULE_INFO.copy()
+    """Get module information"""    return MODULE_INFO.copy()
 
 def get_default_config():
-    """Get default configuration"""
-    return DEFAULT_CONFIG.copy()
+    """Get default configuration"""    return DEFAULT_CONFIG.copy()

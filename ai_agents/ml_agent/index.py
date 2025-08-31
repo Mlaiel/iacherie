@@ -1,5 +1,4 @@
-"""
-ML Agent Index - Central Access Point & Orchestration Hub
+"""ML Agent Index - Central Access Point & Orchestration Hub
 
 Ultra-advanced machine learning operations orchestrator providing centralized access,
 service discovery, health monitoring, and intelligent routing for all ML services
@@ -27,7 +26,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import time
@@ -83,16 +81,14 @@ from .model_registry import ModelRegistry, ModelVersion, ModelMetadata
 logger = logging.getLogger(__name__)
 
 class ServiceStatus(Enum):
-    """ML service operational status"""
-    HEALTHY = "healthy"
+    """ML service operational status"""    HEALTHY = "healthy"
     DEGRADED = "degraded" 
     UNHEALTHY = "unhealthy"
     MAINTENANCE = "maintenance"
     CRITICAL = "critical"
 
 class MLServiceType(Enum):
-    """Available ML service types"""
-    TRAINING = "training"
+    """Available ML service types"""    TRAINING = "training"
     INFERENCE = "inference"
     OPTIMIZATION = "optimization"
     FEATURE_EXTRACTION = "feature_extraction"
@@ -102,8 +98,7 @@ class MLServiceType(Enum):
 
 @dataclass
 class ServiceHealth:
-    """Service health information"""
-    service_type: MLServiceType
+    """Service health information"""    service_type: MLServiceType
     status: ServiceStatus
     response_time: float
     cpu_usage: float
@@ -114,8 +109,7 @@ class ServiceHealth:
 
 @dataclass
 class MLOperationRequest:
-    """Standardized ML operation request"""
-    operation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Standardized ML operation request"""    operation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     service_type: MLServiceType = MLServiceType.INFERENCE
     operation: str = ""
     data: Dict[str, Any] = field(default_factory=dict)
@@ -127,11 +121,9 @@ class MLOperationRequest:
     callback_url: Optional[str] = None
 
 class MLServiceOrchestrator:
-    """
-    Ultra-advanced ML service orchestrator managing all ML operations,
+    """    Ultra-advanced ML service orchestrator managing all ML operations,
     service health, intelligent routing, and performance optimization.
-    """
-    
+    """    
     def __init__(self):
         self.service_registry = {}
         self.health_monitor = HealthChecker()
@@ -141,8 +133,7 @@ class MLServiceOrchestrator:
         self._setup_monitoring()
         
     def _initialize_services(self):
-        """Initialize all ML services and components"""
-        try:
+        """Initialize all ML services and components"""        try:
             # Initialize core ML components
             self.ml_agent = MLAgent()
             self.model_trainer = ModelTrainer()
@@ -174,8 +165,7 @@ class MLServiceOrchestrator:
             raise MLError(f"Service initialization failed: {str(e)}")
     
     def _register_service(self, service_type: MLServiceType, service_instance: Any):
-        """Register a service in the registry"""
-        self.service_registry[service_type] = {
+        """Register a service in the registry"""        self.service_registry[service_type] = {
             'instance': service_instance,
             'circuit_breaker': CircuitBreaker(
                 failure_threshold=5,
@@ -187,8 +177,7 @@ class MLServiceOrchestrator:
         }
         
     def _setup_monitoring(self):
-        """Setup comprehensive monitoring and metrics collection"""
-        # Prometheus metrics
+        """Setup comprehensive monitoring and metrics collection"""        # Prometheus metrics
         self.request_counter = Counter(
             'ml_requests_total',
             'Total ML requests processed',
@@ -214,11 +203,9 @@ class MLServiceOrchestrator:
         )
 
     async def process_request(self, request: MLOperationRequest) -> Dict[str, Any]:
-        """
-        Process ML operation request with intelligent routing,
+        """        Process ML operation request with intelligent routing,
         circuit breaking, and comprehensive monitoring
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         operation_id = request.operation_id
         
         try:
@@ -279,8 +266,7 @@ class MLServiceOrchestrator:
             }
 
     async def _validate_request(self, request: MLOperationRequest):
-        """Validate incoming ML operation request"""
-        if not request.operation:
+        """Validate incoming ML operation request"""        if not request.operation:
             raise ValidationError("Operation type is required")
         
         if request.service_type not in self.service_registry:
@@ -296,8 +282,7 @@ class MLServiceOrchestrator:
                 raise ValidationError("Input data is required for inference operations")
 
     async def _execute_operation(self, service_instance: Any, request: MLOperationRequest) -> Any:
-        """Execute ML operation on the appropriate service instance"""
-        operation_method = getattr(service_instance, request.operation, None)
+        """Execute ML operation on the appropriate service instance"""        operation_method = getattr(service_instance, request.operation, None)
         
         if not operation_method:
             raise MLError(f"Operation '{request.operation}' not available on service")
@@ -310,8 +295,7 @@ class MLServiceOrchestrator:
             return await loop.run_in_executor(None, operation_method, **request.data)
 
     async def get_service_health(self, service_type: Optional[MLServiceType] = None) -> Dict[str, ServiceHealth]:
-        """Get comprehensive health status for ML services"""
-        health_status = {}
+        """Get comprehensive health status for ML services"""        health_status = {}
         
         services_to_check = [service_type] if service_type else list(self.service_registry.keys())
         
@@ -363,8 +347,7 @@ class MLServiceOrchestrator:
         return health_status
 
     async def get_service_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive performance metrics for all ML services"""
-        metrics = {
+        """Get comprehensive performance metrics for all ML services"""        metrics = {
             'timestamp': datetime.now(timezone.utc).isoformat(),
             'services': {},
             'system': {
@@ -393,8 +376,7 @@ class MLServiceOrchestrator:
         return metrics
 
     async def shutdown(self):
-        """Gracefully shutdown all ML services"""
-        logger.info("Initiating ML services shutdown...")
+        """Gracefully shutdown all ML services"""        logger.info("Initiating ML services shutdown...")
         
         # Shutdown all services
         for service_type, service_info in self.service_registry.items():
@@ -417,8 +399,7 @@ ml_orchestrator = MLServiceOrchestrator()
 
 # Convenience functions for direct service access
 async def process_training_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process ML model training request"""
-    request = MLOperationRequest(
+    """Process ML model training request"""    request = MLOperationRequest(
         service_type=MLServiceType.TRAINING,
         operation='train_model',
         data=request_data
@@ -426,8 +407,7 @@ async def process_training_request(request_data: Dict[str, Any]) -> Dict[str, An
     return await ml_orchestrator.process_request(request)
 
 async def process_inference_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process ML model inference request"""
-    request = MLOperationRequest(
+    """Process ML model inference request"""    request = MLOperationRequest(
         service_type=MLServiceType.INFERENCE,
         operation='predict',
         data=request_data
@@ -435,8 +415,7 @@ async def process_inference_request(request_data: Dict[str, Any]) -> Dict[str, A
     return await ml_orchestrator.process_request(request)
 
 async def process_optimization_request(request_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process model optimization request"""
-    request = MLOperationRequest(
+    """Process model optimization request"""    request = MLOperationRequest(
         service_type=MLServiceType.OPTIMIZATION,
         operation='optimize_model',
         data=request_data
@@ -444,8 +423,7 @@ async def process_optimization_request(request_data: Dict[str, Any]) -> Dict[str
     return await ml_orchestrator.process_request(request)
 
 async def extract_features(request_data: Dict[str, Any]) -> Dict[str, Any]:
-    """Process feature extraction request"""
-    request = MLOperationRequest(
+    """Process feature extraction request"""    request = MLOperationRequest(
         service_type=MLServiceType.FEATURE_EXTRACTION,
         operation='extract_features',
         data=request_data
@@ -453,12 +431,10 @@ async def extract_features(request_data: Dict[str, Any]) -> Dict[str, Any]:
     return await ml_orchestrator.process_request(request)
 
 async def get_ml_health() -> Dict[str, ServiceHealth]:
-    """Get health status of all ML services"""
-    return await ml_orchestrator.get_service_health()
+    """Get health status of all ML services"""    return await ml_orchestrator.get_service_health()
 
 async def get_ml_metrics() -> Dict[str, Any]:
-    """Get comprehensive ML performance metrics"""
-    return await ml_orchestrator.get_service_metrics()
+    """Get comprehensive ML performance metrics"""    return await ml_orchestrator.get_service_metrics()
 
 # Export all components for external access
 __all__ = [

@@ -1,5 +1,4 @@
-"""
-🔍 Advanced Audit Trail System - Ultra-Professional DRM Compliance Logging
+"""🔍 Advanced Audit Trail System - Ultra-Professional DRM Compliance Logging
 ========================================================================
 
 Comprehensive audit logging and compliance tracking system for digital rights
@@ -24,7 +23,6 @@ Contact: mlaiel@live.de for licensing and usage rights.
 - DevOps Engineer: Advanced deployment and infrastructure automation
 - IA Prompt Engineer: Advanced AI prompt engineering and optimization
 """
-
 import asyncio
 import logging
 import json
@@ -42,8 +40,7 @@ import base64
 logger = logging.getLogger(__name__)
 
 class EventType(str, Enum):
-    """Types of auditable events."""
-    ACCESS_GRANTED = "access_granted"
+    """Types of auditable events."""    ACCESS_GRANTED = "access_granted"
     ACCESS_DENIED = "access_denied"
     LICENSE_ISSUED = "license_issued"
     LICENSE_VALIDATED = "license_validated"
@@ -68,16 +65,14 @@ class EventType(str, Enum):
     SECURITY_ALERT = "security_alert"
 
 class EventSeverity(str, Enum):
-    """Event severity levels."""
-    LOW = "low"
+    """Event severity levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
     EMERGENCY = "emergency"
 
 class EventCategory(str, Enum):
-    """Event categories for compliance."""
-    SECURITY = "security"
+    """Event categories for compliance."""    SECURITY = "security"
     COMPLIANCE = "compliance"
     BUSINESS = "business"
     TECHNICAL = "technical"
@@ -85,8 +80,7 @@ class EventCategory(str, Enum):
     OPERATIONAL = "operational"
 
 class ComplianceStandard(str, Enum):
-    """Compliance standards."""
-    GDPR = "gdpr"
+    """Compliance standards."""    GDPR = "gdpr"
     CCPA = "ccpa"
     DMCA = "dmca"
     SOX = "sox"
@@ -96,8 +90,7 @@ class ComplianceStandard(str, Enum):
 
 @dataclass
 class AuditEvent:
-    """Comprehensive audit event record."""
-    event_id: str
+    """Comprehensive audit event record."""    event_id: str
     event_type: EventType
     severity: EventSeverity
     category: EventCategory
@@ -119,8 +112,7 @@ class AuditEvent:
 
 @dataclass
 class ComplianceReport:
-    """Compliance report for regulatory requirements."""
-    report_id: str
+    """Compliance report for regulatory requirements."""    report_id: str
     standard: ComplianceStandard
     report_type: str
     period_start: datetime
@@ -134,11 +126,9 @@ class ComplianceReport:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class AuditTrail:
-    """Advanced audit trail and compliance logging system."""
-    
+    """Advanced audit trail and compliance logging system."""    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize audit trail system."""
-        self.config = config
+        """Initialize audit trail system."""        self.config = config
         self.events: List[AuditEvent] = []
         self.retention_policy = config.get("retention_policy", {})
         self.encryption_enabled = config.get("encryption_enabled", True)
@@ -156,8 +146,7 @@ class AuditTrail:
         self.compliance_rules = {}
         
     async def initialize(self) -> bool:
-        """Initialize audit trail system."""
-        try:
+        """Initialize audit trail system."""        try:
             # Load compliance rules
             await self._load_compliance_rules()
             
@@ -175,8 +164,7 @@ class AuditTrail:
             return False
     
     async def _load_compliance_rules(self) -> None:
-        """Load compliance rules for different standards."""
-        # GDPR compliance rules
+        """Load compliance rules for different standards."""        # GDPR compliance rules
         self.compliance_rules[ComplianceStandard.GDPR] = {
             "retention_period": timedelta(days=2555),  # 7 years
             "required_events": {
@@ -211,8 +199,7 @@ class AuditTrail:
         }
     
     async def _initialize_event_processors(self) -> None:
-        """Initialize event processors for different event types."""
-        self.event_processors = {
+        """Initialize event processors for different event types."""        self.event_processors = {
             EventType.SECURITY_ALERT: self._process_security_alert,
             EventType.VIOLATION_DETECTED: self._process_violation,
             EventType.SYSTEM_ERROR: self._process_system_error,
@@ -233,8 +220,7 @@ class AuditTrail:
         event_data: Optional[Dict[str, Any]] = None,
         compliance_tags: Optional[Set[ComplianceStandard]] = None
     ) -> str:
-        """Log an audit event."""
-        try:
+        """Log an audit event."""        try:
             # Generate event ID
             event_id = str(uuid.uuid4())
             
@@ -284,8 +270,7 @@ class AuditTrail:
             raise
     
     async def _set_retention_period(self, event: AuditEvent) -> None:
-        """Set retention period based on compliance requirements."""
-        max_retention = None
+        """Set retention period based on compliance requirements."""        max_retention = None
         
         for standard in event.compliance_tags:
             if standard in self.compliance_rules:
@@ -301,8 +286,7 @@ class AuditTrail:
             event.retention_until = event.timestamp + default_retention
     
     def _requires_encryption(self, event: AuditEvent) -> bool:
-        """Determine if event requires encryption."""
-        sensitive_events = {
+        """Determine if event requires encryption."""        sensitive_events = {
             EventType.USER_AUTHENTICATED,
             EventType.PAYMENT_PROCESSED,
             EventType.SECURITY_ALERT,
@@ -314,8 +298,7 @@ class AuditTrail:
         }
     
     async def _encrypt_event(self, event: AuditEvent) -> None:
-        """Encrypt sensitive event data."""
-        try:
+        """Encrypt sensitive event data."""        try:
             if self.encryption_enabled and hasattr(self, 'cipher'):
                 # Encrypt event data
                 if event.event_data:
@@ -328,8 +311,7 @@ class AuditTrail:
             logger.error(f"Error encrypting event data: {e}")
     
     def _calculate_checksum(self, event: AuditEvent) -> str:
-        """Calculate SHA-256 checksum for event integrity."""
-        try:
+        """Calculate SHA-256 checksum for event integrity."""        try:
             # Create deterministic representation
             event_dict = asdict(event)
             event_dict.pop('checksum', None)  # Remove checksum field
@@ -346,8 +328,7 @@ class AuditTrail:
             return ""
     
     async def _sign_event(self, event: AuditEvent) -> str:
-        """Create digital signature for event."""
-        try:
+        """Create digital signature for event."""        try:
             # For simplicity, using HMAC-like signature
             # In production, use proper digital signatures
             signing_key = self.config.get("signing_key", "default_signing_key")
@@ -360,8 +341,7 @@ class AuditTrail:
             return ""
     
     async def _store_event(self, event: AuditEvent) -> None:
-        """Store event in appropriate storage."""
-        try:
+        """Store event in appropriate storage."""        try:
             # Add to in-memory storage
             self.events.append(event)
             
@@ -378,8 +358,7 @@ class AuditTrail:
             logger.error(f"Error storing event: {e}")
     
     async def _persist_event(self, event: AuditEvent) -> None:
-        """Persist event to permanent storage."""
-        try:
+        """Persist event to permanent storage."""        try:
             # This would integrate with database or file storage
             # For now, log to file
             log_entry = {
@@ -404,8 +383,7 @@ class AuditTrail:
             logger.error(f"Error persisting event: {e}")
     
     def _compress_data(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Compress event data."""
-        try:
+        """Compress event data."""        try:
             json_data = json.dumps(data)
             compressed = gzip.compress(json_data.encode())
             encoded = base64.b64encode(compressed).decode()
@@ -416,8 +394,7 @@ class AuditTrail:
             return data
     
     async def _archive_events(self, events: List[AuditEvent]) -> None:
-        """Archive events to long-term storage."""
-        try:
+        """Archive events to long-term storage."""        try:
             # This would integrate with archival storage
             logger.info(f"Archiving {len(events)} events")
             
@@ -425,8 +402,7 @@ class AuditTrail:
             logger.error(f"Error archiving events: {e}")
     
     async def _process_security_alert(self, event: AuditEvent) -> None:
-        """Process security alert events."""
-        try:
+        """Process security alert events."""        try:
             # Send immediate notifications for critical security events
             if event.severity in {EventSeverity.CRITICAL, EventSeverity.EMERGENCY}:
                 await self._send_security_notification(event)
@@ -438,8 +414,7 @@ class AuditTrail:
             logger.error(f"Error processing security alert: {e}")
     
     async def _process_violation(self, event: AuditEvent) -> None:
-        """Process violation detection events."""
-        try:
+        """Process violation detection events."""        try:
             # Log violation details
             violation_data = event.event_data.get("violation_details", {})
             logger.warning(f"Policy violation detected: {violation_data}")
@@ -451,8 +426,7 @@ class AuditTrail:
             logger.error(f"Error processing violation: {e}")
     
     async def _process_system_error(self, event: AuditEvent) -> None:
-        """Process system error events."""
-        try:
+        """Process system error events."""        try:
             # Alert on critical system errors
             if event.severity in {EventSeverity.HIGH, EventSeverity.CRITICAL}:
                 await self._send_error_notification(event)
@@ -461,8 +435,7 @@ class AuditTrail:
             logger.error(f"Error processing system error: {e}")
     
     async def _process_access_denied(self, event: AuditEvent) -> None:
-        """Process access denied events."""
-        try:
+        """Process access denied events."""        try:
             # Track failed access attempts
             user_id = event.user_id
             if user_id:
@@ -482,8 +455,7 @@ class AuditTrail:
         end_date: Optional[datetime] = None,
         limit: int = 1000
     ) -> List[AuditEvent]:
-        """Search audit events with filters."""
-        try:
+        """Search audit events with filters."""        try:
             filtered_events = self.events
             
             if event_types:
@@ -522,8 +494,7 @@ class AuditTrail:
         start_date: datetime,
         end_date: datetime
     ) -> ComplianceReport:
-        """Generate compliance report for specific standard."""
-        try:
+        """Generate compliance report for specific standard."""        try:
             report_id = str(uuid.uuid4())
             
             # Get compliance rules
@@ -575,8 +546,7 @@ class AuditTrail:
         events: List[AuditEvent],
         standard: ComplianceStandard
     ) -> Dict[str, Any]:
-        """Generate compliance summary."""
-        summary = {
+        """Generate compliance summary."""        summary = {
             "total_events": len(events),
             "events_by_type": {},
             "events_by_severity": {},
@@ -610,8 +580,7 @@ class AuditTrail:
         events: List[AuditEvent],
         standard: ComplianceStandard
     ) -> List[Dict[str, Any]]:
-        """Generate detailed compliance information."""
-        details = []
+        """Generate detailed compliance information."""        details = []
         
         for event in events:
             detail = {
@@ -632,8 +601,7 @@ class AuditTrail:
         events: List[AuditEvent],
         standard: ComplianceStandard
     ) -> List[str]:
-        """Generate compliance recommendations."""
-        recommendations = []
+        """Generate compliance recommendations."""        recommendations = []
         
         # Analyze events for compliance gaps
         high_severity_events = [e for e in events if e.severity in {
@@ -658,8 +626,7 @@ class AuditTrail:
         events: List[AuditEvent],
         standard: ComplianceStandard
     ) -> str:
-        """Determine overall compliance status."""
-        # Simple compliance scoring
+        """Determine overall compliance status."""        # Simple compliance scoring
         total_events = len(events)
         violation_events = len([e for e in events if e.event_type == EventType.VIOLATION_DETECTED])
         critical_events = len([e for e in events if e.severity == EventSeverity.CRITICAL])
@@ -672,8 +639,7 @@ class AuditTrail:
             return "COMPLIANT"
     
     async def _periodic_cleanup(self) -> None:
-        """Periodically clean up expired events."""
-        while True:
+        """Periodically clean up expired events."""        while True:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -699,22 +665,18 @@ class AuditTrail:
                 logger.error(f"Error during periodic cleanup: {e}")
     
     def _generate_encryption_key(self) -> bytes:
-        """Generate encryption key for sensitive data."""
-        return Fernet.generate_key()
+        """Generate encryption key for sensitive data."""        return Fernet.generate_key()
     
     async def _send_security_notification(self, event: AuditEvent) -> None:
-        """Send security notification for critical events."""
-        # This would integrate with notification system
+        """Send security notification for critical events."""        # This would integrate with notification system
         logger.critical(f"Security alert: {event.event_type.value} - {event.event_data}")
     
     async def _send_error_notification(self, event: AuditEvent) -> None:
-        """Send error notification."""
-        # This would integrate with notification system
+        """Send error notification."""        # This would integrate with notification system
         logger.error(f"System error: {event.event_type.value} - {event.event_data}")
     
     async def _update_security_metrics(self, event: AuditEvent) -> None:
-        """Update security metrics."""
-        try:
+        """Update security metrics."""        try:
             # Initialize security metrics if not exists
             if not hasattr(self, 'security_metrics'):
                 self.security_metrics = {
@@ -782,8 +744,7 @@ class AuditTrail:
             logger.error(f"Error updating security metrics: {str(e)}")
     
     async def _update_violation_metrics(self, event: AuditEvent) -> None:
-        """Update violation metrics."""
-        try:
+        """Update violation metrics."""        try:
             # Initialize violation metrics if not exists
             if not hasattr(self, 'violation_metrics'):
                 self.violation_metrics = {
@@ -844,8 +805,7 @@ class AuditTrail:
             logger.error(f"Error updating violation metrics: {str(e)}")
     
     async def _track_failed_access(self, user_id: str, event: AuditEvent) -> None:
-        """Track failed access attempts for user."""
-        try:
+        """Track failed access attempts for user."""        try:
             # Initialize failed access tracking
             if not hasattr(self, 'failed_access_tracking'):
                 self.failed_access_tracking = {}
@@ -915,8 +875,7 @@ class AuditTrail:
             logger.error(f"Error tracking failed access for user {user_id}: {str(e)}")
     
     def _classify_violation(self, event: AuditEvent) -> str:
-        """Classify violation type based on event data"""
-        event_type = event.event_type.value
+        """Classify violation type based on event data"""        event_type = event.event_type.value
         event_data = event.event_data
         
         # Map event types to violation categories
@@ -938,24 +897,21 @@ class AuditTrail:
             return 'terms_violations'
     
     async def _persist_security_metrics(self):
-        """Persist security metrics to storage"""
-        try:
+        """Persist security metrics to storage"""        try:
             if hasattr(self, 'storage_client'):
                 await self.storage_client.store_metrics('security', self.security_metrics)
         except Exception as e:
             logger.debug(f"Failed to persist security metrics: {str(e)}")
     
     async def _persist_violation_metrics(self):
-        """Persist violation metrics to storage"""
-        try:
+        """Persist violation metrics to storage"""        try:
             if hasattr(self, 'storage_client'):
                 await self.storage_client.store_metrics('violations', self.violation_metrics)
         except Exception as e:
             logger.debug(f"Failed to persist violation metrics: {str(e)}")
     
     async def _create_security_alert(self, user_id: str, alert_type: str, alert_data: dict):
-        """Create security alert for excessive failed access"""
-        try:
+        """Create security alert for excessive failed access"""        try:
             if hasattr(self, 'alert_client'):
                 await self.alert_client.create_alert({
                     'type': alert_type,
@@ -968,8 +924,7 @@ class AuditTrail:
             logger.debug(f"Failed to create security alert: {str(e)}")
     
     async def get_audit_statistics(self) -> Dict[str, Any]:
-        """Get audit trail statistics."""
-        try:
+        """Get audit trail statistics."""        try:
             total_events = len(self.events)
             
             stats = {
@@ -1007,8 +962,7 @@ class AuditTrail:
             return {}
     
     async def verify_event_integrity(self, event_id: str) -> bool:
-        """Verify integrity of an audit event."""
-        try:
+        """Verify integrity of an audit event."""        try:
             event = next((e for e in self.events if e.event_id == event_id), None)
             if not event:
                 return False
@@ -1033,8 +987,7 @@ class AuditTrail:
             return False
     
     async def cleanup(self) -> None:
-        """Cleanup audit trail resources."""
-        try:
+        """Cleanup audit trail resources."""        try:
             # Archive remaining events
             if self.events:
                 await self._archive_events(self.events)

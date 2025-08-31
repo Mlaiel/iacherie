@@ -1,5 +1,4 @@
-"""
-Subscription Validators
+"""Subscription Validators
 
 Comprehensive validation system for subscription operations, business rules,
 and data integrity checks across the subscription management system.
@@ -9,7 +8,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
-
 from datetime import datetime, timedelta
 from decimal import Decimal, InvalidOperation
 from typing import Optional, Dict, Any, List, Tuple
@@ -33,8 +31,7 @@ logger = get_logger(__name__)
 
 
 class SubscriptionValidators:
-    """
-    Comprehensive validation system for subscription operations.
+    """    Comprehensive validation system for subscription operations.
     
     Provides validation for:
     - Subscription plan configurations and business rules
@@ -45,11 +42,9 @@ class SubscriptionValidators:
     - Usage tracking and limit enforcement validations
     - Data integrity and consistency checks
     - Business rule compliance and policy enforcement
-    """
-    
+    """    
     def __init__(self):
-        """Initialize subscription validators."""
-        self.logger = get_logger(__name__)
+        """Initialize subscription validators."""        self.logger = get_logger(__name__)
         
         # Validation configuration
         self.min_plan_price = Decimal('0.00')
@@ -71,8 +66,7 @@ class SubscriptionValidators:
         plan_config: SubscriptionPlanConfig,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Validate subscription plan configuration.
+        """        Validate subscription plan configuration.
         
         Args:
             plan_config: Plan configuration to validate
@@ -80,8 +74,7 @@ class SubscriptionValidators:
             
         Returns:
             Validation result with errors and warnings
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         validation_result = {
@@ -127,8 +120,7 @@ class SubscriptionValidators:
         trial_days: Optional[int] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Validate subscription creation request.
+        """        Validate subscription creation request.
         
         Args:
             user_id: User ID
@@ -140,8 +132,7 @@ class SubscriptionValidators:
             
         Returns:
             Validation result
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         validation_result = {
@@ -201,8 +192,7 @@ class SubscriptionValidators:
         new_plan_id: Optional[int] = None,
         **kwargs
     ) -> Dict[str, Any]:
-        """
-        Validate subscription change request.
+        """        Validate subscription change request.
         
         Args:
             user_id: User ID
@@ -213,8 +203,7 @@ class SubscriptionValidators:
             
         Returns:
             Validation result
-        """
-        validation_result = {
+        """        validation_result = {
             "valid": True,
             "errors": [],
             "warnings": [],
@@ -264,8 +253,7 @@ class SubscriptionValidators:
         payment_data: Dict[str, Any],
         provider: str = "stripe"
     ) -> Dict[str, Any]:
-        """
-        Validate payment method data.
+        """        Validate payment method data.
         
         Args:
             user_id: User ID
@@ -274,8 +262,7 @@ class SubscriptionValidators:
             
         Returns:
             Validation result
-        """
-        validation_result = {
+        """        validation_result = {
             "valid": True,
             "errors": [],
             "warnings": [],
@@ -315,8 +302,7 @@ class SubscriptionValidators:
         usage_amount: int,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Validate usage tracking request.
+        """        Validate usage tracking request.
         
         Args:
             user_id: User ID
@@ -326,8 +312,7 @@ class SubscriptionValidators:
             
         Returns:
             Validation result
-        """
-        validation_result = {
+        """        validation_result = {
             "valid": True,
             "errors": [],
             "warnings": [],
@@ -380,8 +365,7 @@ class SubscriptionValidators:
         plan_config: SubscriptionPlanConfig, 
         result: Dict[str, Any]
     ) -> None:
-        """Validate basic plan fields."""
-        # Name validation
+        """Validate basic plan fields."""        # Name validation
         if not plan_config.name:
             result["errors"].append("Plan name is required")
         elif not re.match(r'^[a-z_][a-z0-9_]*$', plan_config.name):
@@ -410,8 +394,7 @@ class SubscriptionValidators:
         plan_config: SubscriptionPlanConfig, 
         result: Dict[str, Any]
     ) -> None:
-        """Validate plan pricing."""
-        try:
+        """Validate plan pricing."""        try:
             # Monthly price validation
             if plan_config.monthly_price < self.min_plan_price:
                 result["errors"].append(f"Monthly price must be at least {self.min_plan_price}")
@@ -440,8 +423,7 @@ class SubscriptionValidators:
         plan_config: SubscriptionPlanConfig, 
         result: Dict[str, Any]
     ) -> None:
-        """Validate plan features and limits."""
-        # Features validation
+        """Validate plan features and limits."""        # Features validation
         if not isinstance(plan_config.features, dict):
             result["errors"].append("Features must be a dictionary")
         else:
@@ -475,8 +457,7 @@ class SubscriptionValidators:
         result: Dict[str, Any], 
         db: Session
     ) -> None:
-        """Validate plan business rules."""
-        # Check for duplicate plan names
+        """Validate plan business rules."""        # Check for duplicate plan names
         existing_plan = db.query(SubscriptionPlan).filter(
             SubscriptionPlan.name == plan_config.name
         ).first()
@@ -500,8 +481,7 @@ class SubscriptionValidators:
         result: Dict[str, Any], 
         db: Session
     ) -> None:
-        """Validate plan tier hierarchy consistency."""
-        # Get existing plans at same tier level
+        """Validate plan tier hierarchy consistency."""        # Get existing plans at same tier level
         existing_same_tier = db.query(SubscriptionPlan).filter(
             SubscriptionPlan.tier_level == plan_config.tier_level,
             SubscriptionPlan.is_active == True
@@ -529,8 +509,7 @@ class SubscriptionValidators:
         result: Dict[str, Any], 
         db: Session
     ) -> None:
-        """Validate user eligibility for subscription."""
-        # Check for existing active subscriptions
+        """Validate user eligibility for subscription."""        # Check for existing active subscriptions
         existing_subscriptions = db.query(UserSubscription).filter(
             UserSubscription.user_id == user_id,
             UserSubscription.status.in_([
@@ -548,8 +527,7 @@ class SubscriptionValidators:
         result: Dict[str, Any], 
         db: Session
     ) -> Optional[SubscriptionPlan]:
-        """Validate plan exists and is available."""
-        plan = db.query(SubscriptionPlan).filter(
+        """Validate plan exists and is available."""        plan = db.query(SubscriptionPlan).filter(
             SubscriptionPlan.id == plan_id
         ).first()
         
@@ -568,8 +546,7 @@ class SubscriptionValidators:
         billing_cycle: str, 
         result: Dict[str, Any]
     ) -> None:
-        """Validate billing cycle."""
-        if billing_cycle not in self.valid_billing_cycles:
+        """Validate billing cycle."""        if billing_cycle not in self.valid_billing_cycles:
             result["errors"].append(f"Invalid billing cycle: {billing_cycle}")
     
     async def _validate_payment_method_requirements(
@@ -579,8 +556,7 @@ class SubscriptionValidators:
         result: Dict[str, Any], 
         db: Session
     ) -> None:
-        """Validate payment method requirements."""
-        # Check if payment method is required for paid plans
+        """Validate payment method requirements."""        # Check if payment method is required for paid plans
         if (self.require_payment_method_for_paid_plans and 
             plan.monthly_price > 0 and plan.yearly_price > 0 and 
             not payment_method_id):
@@ -602,8 +578,7 @@ class SubscriptionValidators:
         trial_days: Optional[int], 
         result: Dict[str, Any]
     ) -> None:
-        """Validate trial configuration."""
-        if trial_days is not None:
+        """Validate trial configuration."""        if trial_days is not None:
             if trial_days < self.min_trial_days or trial_days > self.max_trial_days:
                 result["errors"].append(
                     f"Trial days must be between {self.min_trial_days} and {self.max_trial_days}"
@@ -620,8 +595,7 @@ class SubscriptionValidators:
         result: Dict[str, Any], 
         db: Session
     ) -> None:
-        """Validate subscription business rules."""
-        # Check trial limitations if enabled
+        """Validate subscription business rules."""        # Check trial limitations if enabled
         if self.enforce_trial_limitations and plan:
             # Check if user has already used trial for this plan
             previous_trials = db.query(UserSubscription).filter(
@@ -638,8 +612,7 @@ class SubscriptionValidators:
         subscription: UserSubscription, 
         result: Dict[str, Any]
     ) -> None:
-        """Validate current subscription state."""
-        if subscription.status not in self.valid_subscription_statuses:
+        """Validate current subscription state."""        if subscription.status not in self.valid_subscription_statuses:
             result["errors"].append(f"Invalid subscription status: {subscription.status}")
         
         # Check subscription is not expired
@@ -651,8 +624,7 @@ class SubscriptionValidators:
         change_type: str, 
         result: Dict[str, Any]
     ) -> None:
-        """Validate subscription change type."""
-        valid_change_types = ["upgrade", "downgrade", "cancel", "reactivate", "convert_trial"]
+        """Validate subscription change type."""        valid_change_types = ["upgrade", "downgrade", "cancel", "reactivate", "convert_trial"]
         if change_type not in valid_change_types:
             result["errors"].append(f"Invalid change type: {change_type}")
     
@@ -663,8 +635,7 @@ class SubscriptionValidators:
         change_type: str, 
         result: Dict[str, Any]
     ) -> None:
-        """Validate plan change request."""
-        if not new_plan_id:
+        """Validate plan change request."""        if not new_plan_id:
             result["errors"].append("New plan ID is required for plan changes")
             return
         
@@ -681,8 +652,7 @@ class SubscriptionValidators:
         result: Dict[str, Any], 
         **kwargs
     ) -> None:
-        """Validate cancellation request."""
-        if subscription.status == SubscriptionStatus.CANCELLED.value:
+        """Validate cancellation request."""        if subscription.status == SubscriptionStatus.CANCELLED.value:
             result["errors"].append("Subscription is already cancelled")
         
         if subscription.status == SubscriptionStatus.EXPIRED.value:
@@ -694,8 +664,7 @@ class SubscriptionValidators:
         result: Dict[str, Any], 
         **kwargs
     ) -> None:
-        """Validate reactivation request."""
-        if subscription.status not in [SubscriptionStatus.CANCELLED.value, SubscriptionStatus.SUSPENDED.value]:
+        """Validate reactivation request."""        if subscription.status not in [SubscriptionStatus.CANCELLED.value, SubscriptionStatus.SUSPENDED.value]:
             result["errors"].append("Can only reactivate cancelled or suspended subscriptions")
         
         payment_method_id = kwargs.get("payment_method_id")
@@ -709,8 +678,7 @@ class SubscriptionValidators:
         result: Dict[str, Any], 
         **kwargs
     ) -> None:
-        """Validate business rules for subscription changes."""
-        # Implement business rule validations
+        """Validate business rules for subscription changes."""        # Implement business rule validations
         # For example, restrictions on downgrades, minimum subscription periods, etc.
         pass
     
@@ -719,8 +687,7 @@ class SubscriptionValidators:
         payment_data: Dict[str, Any], 
         result: Dict[str, Any]
     ) -> None:
-        """Validate Stripe payment method data."""
-        if "type" not in payment_data:
+        """Validate Stripe payment method data."""        if "type" not in payment_data:
             result["errors"].append("Payment method type is required")
         
         if payment_data.get("type") == "card":
@@ -732,8 +699,7 @@ class SubscriptionValidators:
         payment_data: Dict[str, Any], 
         result: Dict[str, Any]
     ) -> None:
-        """Validate PayPal payment method data."""
-        # PayPal-specific validation logic
+        """Validate PayPal payment method data."""        # PayPal-specific validation logic
         pass
     
     async def _validate_wise_payment_data(
@@ -741,8 +707,7 @@ class SubscriptionValidators:
         payment_data: Dict[str, Any], 
         result: Dict[str, Any]
     ) -> None:
-        """Validate Wise payment method data."""
-        # Wise-specific validation logic
+        """Validate Wise payment method data."""        # Wise-specific validation logic
         pass
     
     async def _validate_billing_details(
@@ -750,8 +715,7 @@ class SubscriptionValidators:
         payment_data: Dict[str, Any], 
         result: Dict[str, Any]
     ) -> None:
-        """Validate billing details."""
-        billing_details = payment_data.get("billing_details", {})
+        """Validate billing details."""        billing_details = payment_data.get("billing_details", {})
         
         # Name validation
         if "name" in billing_details:

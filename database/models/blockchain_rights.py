@@ -1,5 +1,4 @@
-"""
-Blockchain Rights Management Database Model
+"""Blockchain Rights Management Database Model
 
 Enterprise-grade SQLAlchemy model for blockchain-based rights management,
 NFT integration, and immutable copyright verification.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from sqlalchemy import Column, String, Text, DateTime, Float, Integer, Boolean, JSON, ForeignKey, Index, Enum as SQLEnum, Numeric
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import relationship
@@ -39,8 +37,7 @@ Base = declarative_base()
 
 
 class BlockchainNetwork(Enum):
-    """Supported blockchain networks"""
-    ETHEREUM = "ethereum"
+    """Supported blockchain networks"""    ETHEREUM = "ethereum"
     POLYGON = "polygon"
     BINANCE_SMART_CHAIN = "binance_smart_chain"
     AVALANCHE = "avalanche"
@@ -51,8 +48,7 @@ class BlockchainNetwork(Enum):
 
 
 class RightsType(Enum):
-    """Digital rights types"""
-    COPYRIGHT = "copyright"
+    """Digital rights types"""    COPYRIGHT = "copyright"
     PERFORMANCE_RIGHTS = "performance_rights"
     MECHANICAL_RIGHTS = "mechanical_rights"
     SYNC_RIGHTS = "sync_rights"
@@ -65,8 +61,7 @@ class RightsType(Enum):
 
 
 class SmartContractStatus(Enum):
-    """Smart contract status"""
-    PENDING_DEPLOYMENT = "pending_deployment"
+    """Smart contract status"""    PENDING_DEPLOYMENT = "pending_deployment"
     DEPLOYED = "deployed"
     ACTIVE = "active"
     PAUSED = "paused"
@@ -76,13 +71,11 @@ class SmartContractStatus(Enum):
 
 
 class BlockchainRights(Base):
-    """
-    Blockchain Rights Management Model
+    """    Blockchain Rights Management Model
     
     Manages immutable rights registration, NFT minting, and smart contract automation
     for content creators' intellectual property protection.
-    """
-    __tablename__ = "blockchain_rights"
+    """    __tablename__ = "blockchain_rights"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -183,8 +176,7 @@ class BlockchainRights(Base):
         return f"<BlockchainRights(id={self.id}, network={self.blockchain_network.value}, rights_type={self.rights_type.value})>"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert model to dictionary for API responses"""
-        return {
+        """Convert model to dictionary for API responses"""        return {
             "id": str(self.id),
             "content_fingerprint_id": str(self.content_fingerprint_id),
             "user_id": str(self.user_id),
@@ -239,12 +231,10 @@ class BlockchainRights(Base):
 
 
 class ViolationReport(Base):
-    """
-    Blockchain Violation Report Model
+    """    Blockchain Violation Report Model
     
     Tracks and documents intellectual property violations with immutable evidence.
-    """
-    __tablename__ = "violation_reports"
+    """    __tablename__ = "violation_reports"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -285,12 +275,10 @@ class ViolationReport(Base):
 
 
 class LicenseAutomation(Base):
-    """
-    License Automation Model
+    """    License Automation Model
     
     Manages automated licensing requests, negotiations, and smart contract execution.
-    """
-    __tablename__ = "license_automation"
+    """    __tablename__ = "license_automation"
     
     # Primary identification
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Fingerprinting Configuration
+"""IA Influencer Agent - Fingerprinting Configuration
 ================================================
 
 Configuration management for the fingerprinting system with advanced optimization
@@ -23,7 +22,6 @@ International Copyright Laws.
 
 For licensing inquiries, contact: mlaiel@live.de
 """
-
 import os
 from dataclasses import dataclass, field
 from typing import Dict, List, Optional, Any, Union
@@ -34,16 +32,14 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class PerformanceProfile(Enum):
-    """Performance optimization profiles"""
-    ULTRA_FAST = "ultra_fast"
+    """Performance optimization profiles"""    ULTRA_FAST = "ultra_fast"
     FAST = "fast"
     BALANCED = "balanced"
     QUALITY = "quality"
     ULTRA_QUALITY = "ultra_quality"
 
 class ProcessingMode(Enum):
-    """Processing mode configurations"""
-    SINGLE_THREADED = "single_threaded"
+    """Processing mode configurations"""    SINGLE_THREADED = "single_threaded"
     MULTI_THREADED = "multi_threaded"
     GPU_ACCELERATED = "gpu_accelerated"
     DISTRIBUTED = "distributed"
@@ -51,8 +47,7 @@ class ProcessingMode(Enum):
 
 @dataclass
 class AudioFingerprintConfig:
-    """Configuration for audio fingerprinting"""
-    # Core parameters
+    """Configuration for audio fingerprinting"""    # Core parameters
     sample_rate: int = 22050
     hop_length: int = 512
     n_fft: int = 2048
@@ -90,8 +85,7 @@ class AudioFingerprintConfig:
 
 @dataclass
 class VideoFingerprintConfig:
-    """Configuration for video fingerprinting"""
-    # Frame extraction
+    """Configuration for video fingerprinting"""    # Frame extraction
     fps: Optional[float] = 1.0  # Extract 1 frame per second
     max_frames: int = 300
     frame_width: int = 128
@@ -128,8 +122,7 @@ class VideoFingerprintConfig:
 
 @dataclass
 class ImageFingerprintConfig:
-    """Configuration for image fingerprinting"""
-    # Hash types and sizes
+    """Configuration for image fingerprinting"""    # Hash types and sizes
     hash_size: int = 16
     dhash_size: int = 16
     phash_size: int = 32
@@ -171,8 +164,7 @@ class ImageFingerprintConfig:
 
 @dataclass
 class TextFingerprintConfig:
-    """Configuration for text fingerprinting"""
-    # Language processing
+    """Configuration for text fingerprinting"""    # Language processing
     languages: List[str] = field(default_factory=lambda: ["en", "de", "fr", "es", "it"])
     max_text_length: int = 1000000  # 1M characters
     min_text_length: int = 50
@@ -213,8 +205,7 @@ class TextFingerprintConfig:
 
 @dataclass
 class VectorMatcherConfig:
-    """Configuration for vector matching operations"""
-    # FAISS parameters
+    """Configuration for vector matching operations"""    # FAISS parameters
     index_type: str = "IVF"
     nlist: int = 100
     nprobe: int = 10
@@ -241,8 +232,7 @@ class VectorMatcherConfig:
 
 @dataclass
 class FingerprintingSystemConfig:
-    """Master configuration for the fingerprinting system"""
-    # Component configurations
+    """Master configuration for the fingerprinting system"""    # Component configurations
     audio: AudioFingerprintConfig = field(default_factory=AudioFingerprintConfig)
     video: VideoFingerprintConfig = field(default_factory=VideoFingerprintConfig)
     image: ImageFingerprintConfig = field(default_factory=ImageFingerprintConfig)
@@ -273,16 +263,14 @@ class FingerprintingSystemConfig:
     disk_space_limit: int = 100 * 1024 * 1024 * 1024  # 100GB
 
 class ConfigManager:
-    """Advanced configuration manager with environment-specific settings"""
-    
+    """Advanced configuration manager with environment-specific settings"""    
     def __init__(self, config_path: Optional[str] = None):
         self.config_path = config_path or os.getenv("FINGERPRINTING_CONFIG_PATH")
         self._config_cache: Dict[str, Any] = {}
         self.logger = logging.getLogger(__name__)
     
     def load_config(self, environment: str = "production") -> FingerprintingSystemConfig:
-        """Load configuration for specific environment"""
-        try:
+        """Load configuration for specific environment"""        try:
             if environment in self._config_cache:
                 return self._config_cache[environment]
             
@@ -300,8 +288,7 @@ class ConfigManager:
             return self._get_default_config()
     
     def _create_environment_config(self, environment: str) -> FingerprintingSystemConfig:
-        """Create environment-specific configuration"""
-        base_config = FingerprintingSystemConfig()
+        """Create environment-specific configuration"""        base_config = FingerprintingSystemConfig()
         
         if environment == "development":
             # Development optimizations
@@ -340,8 +327,7 @@ class ConfigManager:
         return base_config
     
     def _apply_environment_overrides(self, config: FingerprintingSystemConfig, environment: str):
-        """Apply environment variable overrides"""
-        # System-level overrides
+        """Apply environment variable overrides"""        # System-level overrides
         if os.getenv("FINGERPRINTING_PERFORMANCE_PROFILE"):
             config.performance_profile = PerformanceProfile(
                 os.getenv("FINGERPRINTING_PERFORMANCE_PROFILE")
@@ -375,8 +361,7 @@ class ConfigManager:
             config.memory_limit = int(os.getenv("FINGERPRINTING_MEMORY_LIMIT"))
     
     def _validate_config(self, config: FingerprintingSystemConfig):
-        """Validate configuration parameters"""
-        # Validate storage path
+        """Validate configuration parameters"""        # Validate storage path
         storage_path = Path(config.storage_path)
         if not storage_path.exists():
             storage_path.mkdir(parents=True, exist_ok=True)
@@ -402,12 +387,10 @@ class ConfigManager:
             )
     
     def _get_default_config(self) -> FingerprintingSystemConfig:
-        """Get failsafe default configuration"""
-        return FingerprintingSystemConfig()
+        """Get failsafe default configuration"""        return FingerprintingSystemConfig()
     
     def optimize_for_hardware(self, config: FingerprintingSystemConfig) -> FingerprintingSystemConfig:
-        """Optimize configuration based on available hardware"""
-        try:
+        """Optimize configuration based on available hardware"""        try:
             import psutil
             import torch
             
@@ -450,8 +433,7 @@ class ConfigManager:
         return config
     
     def export_config(self, config: FingerprintingSystemConfig, path: str):
-        """Export configuration to file"""
-        try:
+        """Export configuration to file"""        try:
             import json
             from dataclasses import asdict
             
@@ -468,10 +450,8 @@ class ConfigManager:
 config_manager = ConfigManager()
 
 def get_config(environment: str = "production") -> FingerprintingSystemConfig:
-    """Get optimized configuration for the current environment"""
-    config = config_manager.load_config(environment)
+    """Get optimized configuration for the current environment"""    config = config_manager.load_config(environment)
     return config_manager.optimize_for_hardware(config)
 
 def reset_config_cache():
-    """Reset the configuration cache"""
-    config_manager._config_cache.clear()
+    """Reset the configuration cache"""    config_manager._config_cache.clear()

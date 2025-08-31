@@ -1,5 +1,4 @@
-"""
-Audio Processing Chain - Professional Audio Processing Pipeline
+"""Audio Processing Chain - Professional Audio Processing Pipeline
 
 Advanced audio processing pipeline with modular processors and effects chain management.
 Provides professional-grade audio processing capabilities for format conversion.
@@ -7,7 +6,6 @@ Provides professional-grade audio processing capabilities for format conversion.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Callable, Tuple, Union
@@ -28,16 +26,13 @@ logger = logging.getLogger(__name__)
 
 
 class AudioProcessor(ABC):
-    """
-    Abstract base class for audio processors
+    """    Abstract base class for audio processors
     
     Defines the interface for all audio processing components
     in the conversion pipeline.
-    """
-    
+    """    
     def __init__(self, name: str, config: Optional[Dict[str, Any]] = None):
-        """Initialize processor"""
-        self.name = name
+        """Initialize processor"""        self.name = name
         self.config = config or {}
         self.enabled = True
         self.bypass = False
@@ -47,8 +42,7 @@ class AudioProcessor(ABC):
                     audio_data: np.ndarray, 
                     sample_rate: int,
                     **kwargs) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """
-        Process audio data
+        """        Process audio data
         
         Args:
             audio_data: Input audio data
@@ -57,12 +51,10 @@ class AudioProcessor(ABC):
             
         Returns:
             Tuple of (processed_audio, processing_info)
-        """
-        pass
+        """        pass
     
     async def validate_input(self, audio_data: np.ndarray, sample_rate: int) -> bool:
-        """Validate input parameters"""
-        if audio_data is None or len(audio_data) == 0:
+        """Validate input parameters"""        if audio_data is None or len(audio_data) == 0:
             return False
         
         if sample_rate <= 0:
@@ -71,25 +63,20 @@ class AudioProcessor(ABC):
         return True
     
     def set_enabled(self, enabled: bool):
-        """Enable/disable processor"""
-        self.enabled = enabled
+        """Enable/disable processor"""        self.enabled = enabled
     
     def set_bypass(self, bypass: bool):
-        """Set bypass mode"""
-        self.bypass = bypass
+        """Set bypass mode"""        self.bypass = bypass
 
 
 class NormalizationProcessor(AudioProcessor):
-    """
-    Audio Normalization Processor
+    """    Audio Normalization Processor
     
     Provides multiple normalization algorithms including peak, RMS,
     and loudness-based normalization with professional standards compliance.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize normalization processor"""
-        super().__init__("Normalization", config)
+        """Initialize normalization processor"""        super().__init__("Normalization", config)
         self.normalization_type = self.config.get('type', 'peak')  # peak, rms, lufs
         self.target_level = self.config.get('target_level', -3.0)  # dB
         self.headroom = self.config.get('headroom', 1.0)  # dB
@@ -98,8 +85,7 @@ class NormalizationProcessor(AudioProcessor):
                     audio_data: np.ndarray, 
                     sample_rate: int,
                     **kwargs) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Process audio with normalization"""
-        if self.bypass or not self.enabled:
+        """Process audio with normalization"""        if self.bypass or not self.enabled:
             return audio_data, {'bypassed': True}
         
         try:
@@ -130,8 +116,7 @@ class NormalizationProcessor(AudioProcessor):
             return audio_data, {'error': str(e)}
     
     async def _peak_normalize(self, audio_data: np.ndarray) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Peak normalization"""
-        peak_level = np.max(np.abs(audio_data))
+        """Peak normalization"""        peak_level = np.max(np.abs(audio_data))
         if peak_level == 0:
             return audio_data, {'gain_applied': 0.0, 'original_peak': 0.0}
         
@@ -150,8 +135,7 @@ class NormalizationProcessor(AudioProcessor):
         return normalized_audio, info
     
     async def _rms_normalize(self, audio_data: np.ndarray) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """RMS normalization"""
-        rms_level = np.sqrt(np.mean(audio_data ** 2))
+        """RMS normalization"""        rms_level = np.sqrt(np.mean(audio_data ** 2))
         if rms_level == 0:
             return audio_data, {'gain_applied': 0.0, 'original_rms': -float('inf')}
         
@@ -177,8 +161,7 @@ class NormalizationProcessor(AudioProcessor):
         return normalized_audio, info
     
     async def _lufs_normalize(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """LUFS (Loudness Units relative to Full Scale) normalization"""
-        # Simplified LUFS calculation - in production use pyloudnorm
+        """LUFS (Loudness Units relative to Full Scale) normalization"""        # Simplified LUFS calculation - in production use pyloudnorm
         # This is a basic implementation
         
         # Apply K-weighting filter (simplified)
@@ -216,16 +199,13 @@ class NormalizationProcessor(AudioProcessor):
 
 
 class LimiterProcessor(AudioProcessor):
-    """
-    Professional Audio Limiter
+    """    Professional Audio Limiter
     
     Soft/hard limiting with lookahead and envelope following
     to prevent clipping and control peaks.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize limiter processor"""
-        super().__init__("Limiter", config)
+        """Initialize limiter processor"""        super().__init__("Limiter", config)
         self.threshold = self.config.get('threshold', -0.1)  # dB
         self.release_time = self.config.get('release_time', 0.05)  # seconds
         self.lookahead = self.config.get('lookahead', 0.005)  # seconds
@@ -235,8 +215,7 @@ class LimiterProcessor(AudioProcessor):
                     audio_data: np.ndarray, 
                     sample_rate: int,
                     **kwargs) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Process audio with limiting"""
-        if self.bypass or not self.enabled:
+        """Process audio with limiting"""        if self.bypass or not self.enabled:
             return audio_data, {'bypassed': True}
         
         try:
@@ -305,16 +284,13 @@ class LimiterProcessor(AudioProcessor):
 
 
 class EqualizerProcessor(AudioProcessor):
-    """
-    Professional Multi-band Equalizer
+    """    Professional Multi-band Equalizer
     
     Parametric EQ with multiple bands, high/low-pass filters,
     and professional audio processing capabilities.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize equalizer processor"""
-        super().__init__("Equalizer", config)
+        """Initialize equalizer processor"""        super().__init__("Equalizer", config)
         self.bands = self.config.get('bands', [])  # List of EQ bands
         self.high_pass_freq = self.config.get('high_pass_freq', None)
         self.low_pass_freq = self.config.get('low_pass_freq', None)
@@ -323,8 +299,7 @@ class EqualizerProcessor(AudioProcessor):
                     audio_data: np.ndarray, 
                     sample_rate: int,
                     **kwargs) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Process audio with equalization"""
-        if self.bypass or not self.enabled:
+        """Process audio with equalization"""        if self.bypass or not self.enabled:
             return audio_data, {'bypassed': True}
         
         try:
@@ -375,8 +350,7 @@ class EqualizerProcessor(AudioProcessor):
                             audio_data: np.ndarray, 
                             sample_rate: int, 
                             freq: float) -> np.ndarray:
-        """Apply high-pass filter"""
-        nyquist = sample_rate / 2
+        """Apply high-pass filter"""        nyquist = sample_rate / 2
         normalized_freq = freq / nyquist
         
         if normalized_freq >= 1.0:
@@ -389,8 +363,7 @@ class EqualizerProcessor(AudioProcessor):
                            audio_data: np.ndarray, 
                            sample_rate: int, 
                            freq: float) -> np.ndarray:
-        """Apply low-pass filter"""
-        nyquist = sample_rate / 2
+        """Apply low-pass filter"""        nyquist = sample_rate / 2
         normalized_freq = freq / nyquist
         
         if normalized_freq >= 1.0:
@@ -403,8 +376,7 @@ class EqualizerProcessor(AudioProcessor):
                            audio_data: np.ndarray, 
                            sample_rate: int, 
                            band: Dict[str, Any]) -> np.ndarray:
-        """Apply single EQ band"""
-        freq = band.get('frequency', 1000)
+        """Apply single EQ band"""        freq = band.get('frequency', 1000)
         gain = band.get('gain', 0)
         q = band.get('q', 1.0)
         eq_type = band.get('type', 'peak')
@@ -481,16 +453,13 @@ class EqualizerProcessor(AudioProcessor):
 
 
 class DitheringProcessor(AudioProcessor):
-    """
-    Professional Dithering Processor
+    """    Professional Dithering Processor
     
     Applies shaped dithering for bit-depth reduction with
     noise shaping and psychoacoustic optimization.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize dithering processor"""
-        super().__init__("Dithering", config)
+        """Initialize dithering processor"""        super().__init__("Dithering", config)
         self.target_bits = self.config.get('target_bits', 16)
         self.dither_type = self.config.get('type', 'triangular')  # triangular, rectangular, shaped
         self.noise_shaping = self.config.get('noise_shaping', True)
@@ -499,8 +468,7 @@ class DitheringProcessor(AudioProcessor):
                     audio_data: np.ndarray, 
                     sample_rate: int,
                     **kwargs) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Process audio with dithering"""
-        if self.bypass or not self.enabled:
+        """Process audio with dithering"""        if self.bypass or not self.enabled:
             return audio_data, {'bypassed': True}
         
         try:
@@ -560,8 +528,7 @@ class DitheringProcessor(AudioProcessor):
                                     shape: Tuple, 
                                     sample_rate: int, 
                                     quantization_step: float) -> np.ndarray:
-        """Generate noise-shaped dither"""
-        # Simple first-order noise shaping
+        """Generate noise-shaped dither"""        # Simple first-order noise shaping
         # In production, use more sophisticated psychoacoustic models
         
         # Generate white noise
@@ -588,24 +555,20 @@ class DitheringProcessor(AudioProcessor):
 
 
 class ProcessorChain:
-    """
-    Professional Audio Processing Chain
+    """    Professional Audio Processing Chain
     
     Manages a sequence of audio processors with sophisticated routing,
     parallel processing, and real-time parameter adjustment capabilities.
-    """
-    
+    """    
     def __init__(self, config: Optional[ProcessingConfig] = None):
-        """Initialize processing chain"""
-        self.config = config or ProcessingConfig()
+        """Initialize processing chain"""        self.config = config or ProcessingConfig()
         self.processors: List[AudioProcessor] = []
         self.processing_history: List[Dict[str, Any]] = []
         self.parallel_enabled = False
         self.max_workers = 4
         
     def add_processor(self, processor: AudioProcessor, position: Optional[int] = None):
-        """Add processor to chain"""
-        if position is None:
+        """Add processor to chain"""        if position is None:
             self.processors.append(processor)
         else:
             self.processors.insert(position, processor)
@@ -613,8 +576,7 @@ class ProcessorChain:
         logger.info(f"Added processor {processor.name} to chain")
     
     def remove_processor(self, processor_name: str) -> bool:
-        """Remove processor from chain"""
-        for i, processor in enumerate(self.processors):
+        """Remove processor from chain"""        for i, processor in enumerate(self.processors):
             if processor.name == processor_name:
                 removed = self.processors.pop(i)
                 logger.info(f"Removed processor {removed.name} from chain")
@@ -622,15 +584,13 @@ class ProcessorChain:
         return False
     
     def get_processor(self, processor_name: str) -> Optional[AudioProcessor]:
-        """Get processor by name"""
-        for processor in self.processors:
+        """Get processor by name"""        for processor in self.processors:
             if processor.name == processor_name:
                 return processor
         return None
     
     def reorder_processors(self, processor_names: List[str]):
-        """Reorder processors in chain"""
-        new_order = []
+        """Reorder processors in chain"""        new_order = []
         
         for name in processor_names:
             processor = self.get_processor(name)
@@ -649,8 +609,7 @@ class ProcessorChain:
                           audio_data: np.ndarray, 
                           sample_rate: int,
                           processing_options: Optional[ProcessingOptions] = None) -> Tuple[np.ndarray, List[Dict[str, Any]]]:
-        """
-        Process audio through the entire chain
+        """        Process audio through the entire chain
         
         Args:
             audio_data: Input audio data
@@ -659,8 +618,7 @@ class ProcessorChain:
             
         Returns:
             Tuple of (processed_audio, processing_info_list)
-        """
-        if not self.processors:
+        """        if not self.processors:
             return audio_data, []
         
         try:
@@ -736,8 +694,7 @@ class ProcessorChain:
             return audio_data, [{'error': f"Chain processing failed: {e}"}]
     
     def create_standard_chain(self, chain_type: str = "default") -> None:
-        """Create standard processing chain"""
-        self.processors.clear()
+        """Create standard processing chain"""        self.processors.clear()
         
         if chain_type == "mastering":
             # Professional mastering chain
@@ -799,8 +756,7 @@ class ProcessorChain:
             }))
     
     def get_chain_status(self) -> Dict[str, Any]:
-        """Get current chain status and statistics"""
-        return {
+        """Get current chain status and statistics"""        return {
             'total_processors': len(self.processors),
             'enabled_processors': len([p for p in self.processors if p.enabled]),
             'bypassed_processors': len([p for p in self.processors if p.bypass]),
@@ -811,16 +767,13 @@ class ProcessorChain:
 
 
 class EffectsProcessor(AudioProcessor):
-    """
-    Advanced Audio Effects Processor
+    """    Advanced Audio Effects Processor
     
     Provides creative audio effects including reverb, delay, chorus,
     and other time-based and spectral effects.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize effects processor"""
-        super().__init__("Effects", config)
+        """Initialize effects processor"""        super().__init__("Effects", config)
         self.effect_type = self.config.get('type', 'none')
         self.effect_params = self.config.get('params', {})
         
@@ -828,8 +781,7 @@ class EffectsProcessor(AudioProcessor):
                     audio_data: np.ndarray, 
                     sample_rate: int,
                     **kwargs) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Process audio with effects"""
-        if self.bypass or not self.enabled or self.effect_type == 'none':
+        """Process audio with effects"""        if self.bypass or not self.enabled or self.effect_type == 'none':
             return audio_data, {'bypassed': True}
         
         try:
@@ -850,8 +802,7 @@ class EffectsProcessor(AudioProcessor):
             return audio_data, {'error': str(e)}
     
     async def _apply_reverb(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply simple reverb effect"""
-        room_size = self.effect_params.get('room_size', 0.5)
+        """Apply simple reverb effect"""        room_size = self.effect_params.get('room_size', 0.5)
         decay_time = self.effect_params.get('decay_time', 1.0)
         wet_level = self.effect_params.get('wet_level', 0.3)
         
@@ -881,8 +832,7 @@ class EffectsProcessor(AudioProcessor):
         }
     
     async def _apply_delay(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply delay effect"""
-        delay_time = self.effect_params.get('delay_time', 0.25)  # seconds
+        """Apply delay effect"""        delay_time = self.effect_params.get('delay_time', 0.25)  # seconds
         feedback = self.effect_params.get('feedback', 0.3)
         wet_level = self.effect_params.get('wet_level', 0.3)
         
@@ -913,8 +863,7 @@ class EffectsProcessor(AudioProcessor):
         }
     
     async def _apply_chorus(self, audio_data: np.ndarray, sample_rate: int) -> Tuple[np.ndarray, Dict[str, Any]]:
-        """Apply chorus effect"""
-        rate = self.effect_params.get('rate', 1.0)  # Hz
+        """Apply chorus effect"""        rate = self.effect_params.get('rate', 1.0)  # Hz
         depth = self.effect_params.get('depth', 0.005)  # seconds
         wet_level = self.effect_params.get('wet_level', 0.5)
         

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Advanced Indexing Security
+"""IA Influencer Agent - Advanced Indexing Security
 ===============================================
 
 Enterprise-grade security system for content indexing operations
@@ -14,7 +13,6 @@ Any unauthorized use, copying, distribution, or reproduction
 without explicit written permission is strictly prohibited.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import hashlib
@@ -42,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityLevel(Enum):
-    """Security levels for content protection"""
-    PUBLIC = "public"
+    """Security levels for content protection"""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -51,8 +48,7 @@ class SecurityLevel(Enum):
 
 
 class AccessType(Enum):
-    """Types of access operations"""
-    READ = "read"
+    """Types of access operations"""    READ = "read"
     WRITE = "write"
     DELETE = "delete"
     ADMIN = "admin"
@@ -61,8 +57,7 @@ class AccessType(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
-    LOW = "low"
+    """Threat severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -70,8 +65,7 @@ class ThreatLevel(Enum):
 
 @dataclass
 class SecurityConfig:
-    """Security configuration settings"""
-    encryption_algorithm: str = "AES-256-GCM"
+    """Security configuration settings"""    encryption_algorithm: str = "AES-256-GCM"
     jwt_secret_key: str = secrets.token_urlsafe(32)
     jwt_expiration_hours: int = 24
     max_login_attempts: int = 5
@@ -87,8 +81,7 @@ class SecurityConfig:
 
 @dataclass
 class UserCredentials:
-    """User credentials structure"""
-    user_id: str
+    """User credentials structure"""    user_id: str
     username: str
     password_hash: str
     salt: str
@@ -104,8 +97,7 @@ class UserCredentials:
 
 @dataclass
 class AccessToken:
-    """Access token structure"""
-    token_id: str
+    """Access token structure"""    token_id: str
     user_id: str
     token_type: str  # "access", "refresh", "api"
     scopes: List[str]
@@ -117,8 +109,7 @@ class AccessToken:
 
 @dataclass
 class AuditLogEntry:
-    """Audit log entry structure"""
-    log_id: str
+    """Audit log entry structure"""    log_id: str
     user_id: str
     action: str
     resource: str
@@ -132,8 +123,7 @@ class AuditLogEntry:
 
 @dataclass
 class SecurityThreat:
-    """Security threat detection structure"""
-    threat_id: str
+    """Security threat detection structure"""    threat_id: str
     threat_type: str
     threat_level: ThreatLevel
     source_ip: str
@@ -145,8 +135,7 @@ class SecurityThreat:
 
 
 class EncryptionManager:
-    """Advanced encryption and decryption management"""
-    
+    """Advanced encryption and decryption management"""    
     def __init__(self, config: SecurityConfig):
         self.config = config
         self.master_key = None
@@ -154,8 +143,7 @@ class EncryptionManager:
         self.cipher_suite = None
         
     async def initialize(self):
-        """Initialize encryption manager"""
-        try:
+        """Initialize encryption manager"""        try:
             # Generate or load master key
             self.master_key = self._generate_master_key()
             self.cipher_suite = Fernet(self.master_key)
@@ -170,8 +158,7 @@ class EncryptionManager:
             raise
     
     def _generate_master_key(self) -> bytes:
-        """Generate or retrieve master encryption key"""
-        try:
+        """Generate or retrieve master encryption key"""        try:
             # In production, this would be retrieved from a secure key management service
             password = self.config.jwt_secret_key.encode()
             salt = b'ia_influencer_salt'  # In production, use random salt stored securely
@@ -191,8 +178,7 @@ class EncryptionManager:
             raise
     
     async def _generate_field_keys(self):
-        """Generate encryption keys for specific data fields"""
-        try:
+        """Generate encryption keys for specific data fields"""        try:
             sensitive_fields = [
                 "user_credentials", "personal_data", "financial_data",
                 "api_keys", "content_metadata", "search_queries"
@@ -211,8 +197,7 @@ class EncryptionManager:
         data: Union[str, Dict, List], 
         field_type: str = "general"
     ) -> str:
-        """Encrypt data with field-specific encryption"""
-        try:
+        """Encrypt data with field-specific encryption"""        try:
             # Serialize data
             if isinstance(data, (dict, list)):
                 data_str = json.dumps(data, default=str)
@@ -238,8 +223,7 @@ class EncryptionManager:
         encrypted_data: str, 
         field_type: str = "general"
     ) -> Union[str, Dict, List]:
-        """Decrypt data with field-specific decryption"""
-        try:
+        """Decrypt data with field-specific decryption"""        try:
             # Decode base64
             encrypted_bytes = base64.urlsafe_b64decode(encrypted_data.encode())
             
@@ -264,8 +248,7 @@ class EncryptionManager:
             raise
     
     async def generate_content_hash(self, content: bytes) -> str:
-        """Generate secure hash for content integrity"""
-        try:
+        """Generate secure hash for content integrity"""        try:
             sha256_hash = hashlib.sha256()
             sha256_hash.update(content)
             return sha256_hash.hexdigest()
@@ -275,8 +258,7 @@ class EncryptionManager:
             raise
     
     async def verify_content_integrity(self, content: bytes, expected_hash: str) -> bool:
-        """Verify content integrity using hash"""
-        try:
+        """Verify content integrity using hash"""        try:
             computed_hash = await self.generate_content_hash(content)
             return hmac.compare_digest(computed_hash, expected_hash)
             
@@ -286,8 +268,7 @@ class EncryptionManager:
 
 
 class AccessControlManager:
-    """Role-based access control management"""
-    
+    """Role-based access control management"""    
     def __init__(self, config: SecurityConfig, redis_client: Redis):
         self.config = config
         self.redis_client = redis_client
@@ -297,8 +278,7 @@ class AccessControlManager:
         self._setup_default_roles()
         
     def _setup_default_roles(self):
-        """Setup default roles and permissions"""
-        self.role_permissions = {
+        """Setup default roles and permissions"""        self.role_permissions = {
             "admin": [
                 AccessType.READ, AccessType.WRITE, AccessType.DELETE,
                 AccessType.ADMIN, AccessType.SEARCH, AccessType.INDEX
@@ -321,8 +301,7 @@ class AccessControlManager:
         roles: List[str],
         email: str = None
     ) -> str:
-        """Create new user with secure password hashing"""
-        try:
+        """Create new user with secure password hashing"""        try:
             # Generate user ID
             user_id = secrets.token_urlsafe(16)
             
@@ -357,8 +336,7 @@ class AccessControlManager:
             raise
     
     def _hash_password(self, password: str, salt: str) -> str:
-        """Hash password with salt using PBKDF2"""
-        try:
+        """Hash password with salt using PBKDF2"""        try:
             password_bytes = password.encode('utf-8')
             salt_bytes = salt.encode('utf-8')
             
@@ -377,8 +355,7 @@ class AccessControlManager:
             raise
     
     def _get_permissions_for_roles(self, roles: List[str]) -> List[str]:
-        """Get combined permissions for user roles"""
-        permissions = set()
+        """Get combined permissions for user roles"""        permissions = set()
         for role in roles:
             if role in self.role_permissions:
                 permissions.update([perm.value for perm in self.role_permissions[role]])
@@ -391,8 +368,7 @@ class AccessControlManager:
         ip_address: str = None,
         mfa_token: str = None
     ) -> Optional[str]:
-        """Authenticate user and return access token"""
-        try:
+        """Authenticate user and return access token"""        try:
             # Find user by username
             user_creds = None
             for creds in self.user_credentials.values():
@@ -450,8 +426,7 @@ class AccessControlManager:
             return None
     
     def _verify_mfa_token(self, secret: str, token: str) -> bool:
-        """Verify MFA token (TOTP)"""
-        try:
+        """Verify MFA token (TOTP)"""        try:
             import pyotp
             totp = pyotp.TOTP(secret)
             return totp.verify(token, valid_window=1)
@@ -459,8 +434,7 @@ class AccessControlManager:
             return False
     
     async def _generate_access_token(self, user_creds: UserCredentials) -> str:
-        """Generate JWT access token"""
-        try:
+        """Generate JWT access token"""        try:
             token_id = secrets.token_urlsafe(16)
             expires_at = datetime.now(timezone.utc) + timedelta(hours=self.config.jwt_expiration_hours)
             
@@ -500,8 +474,7 @@ class AccessControlManager:
             raise
     
     async def verify_access_token(self, token: str) -> Optional[Dict[str, Any]]:
-        """Verify and decode access token"""
-        try:
+        """Verify and decode access token"""        try:
             payload = jwt.decode(
                 token, 
                 self.config.jwt_secret_key, 
@@ -536,8 +509,7 @@ class AccessControlManager:
         resource: str, 
         access_type: AccessType
     ) -> bool:
-        """Check if user has permission for specific resource access"""
-        try:
+        """Check if user has permission for specific resource access"""        try:
             if user_id not in self.user_credentials:
                 return False
             
@@ -559,8 +531,7 @@ class AccessControlManager:
             return False
     
     async def _update_user_credentials(self, credentials: UserCredentials):
-        """Update user credentials in storage"""
-        try:
+        """Update user credentials in storage"""        try:
             self.user_credentials[credentials.user_id] = credentials
             await self.redis_client.hset(
                 "user_credentials",
@@ -572,8 +543,7 @@ class AccessControlManager:
 
 
 class AuditLogger:
-    """Comprehensive audit logging system"""
-    
+    """Comprehensive audit logging system"""    
     def __init__(self, config: SecurityConfig, redis_client: Redis):
         self.config = config
         self.redis_client = redis_client
@@ -590,8 +560,7 @@ class AuditLogger:
         details: Dict[str, Any] = None,
         security_level: SecurityLevel = SecurityLevel.INTERNAL
     ):
-        """Log user action for audit trail"""
-        try:
+        """Log user action for audit trail"""        try:
             log_entry = AuditLogEntry(
                 log_id=secrets.token_urlsafe(16),
                 user_id=user_id,
@@ -634,8 +603,7 @@ class AuditLogger:
         time_range: Dict[str, datetime] = None,
         limit: int = 100
     ) -> List[AuditLogEntry]:
-        """Retrieve audit logs with filters"""
-        try:
+        """Retrieve audit logs with filters"""        try:
             # Get logs from Redis
             if time_range:
                 start_time = time_range["start"].timestamp()
@@ -672,8 +640,7 @@ class AuditLogger:
 
 
 class ThreatDetector:
-    """Advanced threat detection and prevention"""
-    
+    """Advanced threat detection and prevention"""    
     def __init__(self, config: SecurityConfig, redis_client: Redis):
         self.config = config
         self.redis_client = redis_client
@@ -684,8 +651,7 @@ class ThreatDetector:
         self._setup_threat_patterns()
         
     def _setup_threat_patterns(self):
-        """Setup threat detection patterns"""
-        self.threat_patterns = {
+        """Setup threat detection patterns"""        self.threat_patterns = {
             "brute_force": {
                 "pattern": "multiple_failed_logins",
                 "threshold": 5,
@@ -718,8 +684,7 @@ class ThreatDetector:
         user_id: str = None,
         request_data: Dict[str, Any] = None
     ) -> Optional[SecurityThreat]:
-        """Analyze incoming request for threats"""
-        try:
+        """Analyze incoming request for threats"""        try:
             # Check rate limiting
             threat = await self._check_rate_limit(ip_address, user_id)
             if threat:
@@ -748,8 +713,7 @@ class ThreatDetector:
             return None
     
     async def _check_rate_limit(self, ip_address: str, user_id: str = None) -> Optional[SecurityThreat]:
-        """Check rate limiting violations"""
-        try:
+        """Check rate limiting violations"""        try:
             current_time = time.time()
             rate_key = f"{ip_address}:{user_id}" if user_id else ip_address
             
@@ -782,8 +746,7 @@ class ThreatDetector:
             return None
     
     async def _check_ip_reputation(self, ip_address: str) -> Optional[SecurityThreat]:
-        """Check IP address reputation"""
-        try:
+        """Check IP address reputation"""        try:
             # Check if IP is in known malicious list
             malicious_ips = await self.redis_client.sismember("malicious_ips", ip_address)
             
@@ -824,8 +787,7 @@ class ThreatDetector:
         ip_address: str, 
         request_data: Dict[str, Any]
     ) -> Optional[SecurityThreat]:
-        """Check for SQL injection patterns"""
-        try:
+        """Check for SQL injection patterns"""        try:
             sql_pattern = re.compile(
                 r"(union|select|insert|delete|drop|alter|exec|script|--|;|'|\"|%27|%22)",
                 re.IGNORECASE
@@ -857,8 +819,7 @@ class ThreatDetector:
         user_id: str = None,
         request_data: Dict[str, Any] = None
     ) -> Optional[SecurityThreat]:
-        """Check for other suspicious patterns"""
-        try:
+        """Check for other suspicious patterns"""        try:
             # Check for unusual access patterns
             if user_id:
                 # Get recent activity for user
@@ -890,8 +851,7 @@ class ThreatDetector:
             return None
     
     async def mitigate_threat(self, threat: SecurityThreat) -> Dict[str, Any]:
-        """Implement threat mitigation measures"""
-        try:
+        """Implement threat mitigation measures"""        try:
             mitigation_actions = []
             
             if threat.threat_type == "rate_limit_exceeded":

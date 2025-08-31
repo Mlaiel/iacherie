@@ -1,5 +1,4 @@
-"""
-Business Intelligence Monitoring Configuration for IA-Influencer Agent Platform
+"""Business Intelligence Monitoring Configuration for IA-Influencer Agent Platform
 ===============================================================================
 
 Professional business intelligence and KPI monitoring configuration for
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import asyncio
 from typing import Dict, List, Any, Optional, Callable, Union, Tuple
@@ -31,8 +29,7 @@ import numpy as np
 
 
 class BusinessMetricCategory(Enum):
-    """Business metric categories"""
-    REVENUE = "revenue"
+    """Business metric categories"""    REVENUE = "revenue"
     USER_ENGAGEMENT = "user_engagement"
     CONTENT_PERFORMANCE = "content_performance"
     PLATFORM_GROWTH = "platform_growth"
@@ -43,8 +40,7 @@ class BusinessMetricCategory(Enum):
 
 
 class KPIType(Enum):
-    """Key Performance Indicator types"""
-    COUNTER = "counter"
+    """Key Performance Indicator types"""    COUNTER = "counter"
     GAUGE = "gauge"
     RATE = "rate"
     RATIO = "ratio"
@@ -55,8 +51,7 @@ class KPIType(Enum):
 
 
 class BusinessDimension(Enum):
-    """Business analysis dimensions"""
-    TIME = "time"
+    """Business analysis dimensions"""    TIME = "time"
     GEOGRAPHY = "geography"
     USER_SEGMENT = "user_segment"
     CONTENT_TYPE = "content_type"
@@ -68,8 +63,7 @@ class BusinessDimension(Enum):
 
 @dataclass
 class BusinessKPI:
-    """Business Key Performance Indicator definition"""
-    name: str
+    """Business Key Performance Indicator definition"""    name: str
     category: BusinessMetricCategory
     kpi_type: KPIType
     description: str
@@ -86,8 +80,7 @@ class BusinessKPI:
 
 @dataclass
 class BusinessReport:
-    """Business intelligence report configuration"""
-    name: str
+    """Business intelligence report configuration"""    name: str
     report_type: str
     description: str
     kpis: List[str] = field(default_factory=list)
@@ -102,8 +95,7 @@ class BusinessReport:
 
 @dataclass
 class CompetitiveIntelligence:
-    """Competitive intelligence monitoring"""
-    competitor_name: str
+    """Competitive intelligence monitoring"""    competitor_name: str
     monitoring_areas: List[str] = field(default_factory=list)
     data_sources: List[str] = field(default_factory=list)
     update_frequency: str = "daily"
@@ -112,16 +104,13 @@ class CompetitiveIntelligence:
 
 
 class BusinessIntelligenceConfig:
-    """
-    Professional business intelligence monitoring configuration
+    """    Professional business intelligence monitoring configuration
     
     Manages comprehensive business KPIs, competitive intelligence,
     and automated business reporting with advanced analytics.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize business intelligence configuration"""
-        self._kpis = {}
+        """Initialize business intelligence configuration"""        self._kpis = {}
         self._reports = {}
         self._competitive_intelligence = {}
         self._dashboards = {}
@@ -165,15 +154,13 @@ class BusinessIntelligenceConfig:
         self._setup_competitive_intelligence()
     
     def _setup_revenue_kpis(self):
-        """Setup revenue-related KPIs"""
-        # Monthly Recurring Revenue
+        """Setup revenue-related KPIs"""        # Monthly Recurring Revenue
         self.register_kpi(BusinessKPI(
             name="monthly_recurring_revenue",
             category=BusinessMetricCategory.REVENUE,
             kpi_type=KPIType.CURRENCY,
             description="Total monthly recurring revenue from all subscription tiers",
-            calculation_formula="""
-                SELECT SUM(amount) as mrr
+            calculation_formula="""                SELECT SUM(amount) as mrr
                 FROM subscriptions s
                 JOIN subscription_plans sp ON s.plan_id = sp.id
                 WHERE s.status = 'active'
@@ -193,8 +180,7 @@ class BusinessIntelligenceConfig:
             category=BusinessMetricCategory.REVENUE,
             kpi_type=KPIType.CURRENCY,
             description="Average revenue generated per active user",
-            calculation_formula="""
-                WITH monthly_revenue AS (
+            calculation_formula="""                WITH monthly_revenue AS (
                     SELECT SUM(amount) as total_revenue
                     FROM revenue_transactions
                     WHERE created_at >= DATE_TRUNC('month', CURRENT_DATE)
@@ -220,8 +206,7 @@ class BusinessIntelligenceConfig:
             category=BusinessMetricCategory.REVENUE,
             kpi_type=KPIType.CURRENCY,
             description="Predicted lifetime value of customers",
-            calculation_formula="""
-                WITH user_metrics AS (
+            calculation_formula="""                WITH user_metrics AS (
                     SELECT 
                         user_id,
                         SUM(amount) as total_revenue,
@@ -246,8 +231,7 @@ class BusinessIntelligenceConfig:
             category=BusinessMetricCategory.REVENUE,
             kpi_type=KPIType.PERCENTAGE,
             description="Month-over-month revenue growth rate",
-            calculation_formula="""
-                WITH monthly_revenue AS (
+            calculation_formula="""                WITH monthly_revenue AS (
                     SELECT 
                         DATE_TRUNC('month', created_at) as month,
                         SUM(amount) as revenue
@@ -270,15 +254,13 @@ class BusinessIntelligenceConfig:
         ))
     
     def _setup_user_engagement_kpis(self):
-        """Setup user engagement KPIs"""
-        # Daily Active Users
+        """Setup user engagement KPIs"""        # Daily Active Users
         self.register_kpi(BusinessKPI(
             name="daily_active_users",
             category=BusinessMetricCategory.USER_ENGAGEMENT,
             kpi_type=KPIType.COUNTER,
             description="Number of unique users active daily",
-            calculation_formula="""
-                SELECT COUNT(DISTINCT user_id) as dau
+            calculation_formula="""                SELECT COUNT(DISTINCT user_id) as dau
                 FROM user_sessions
                 WHERE DATE(created_at) = CURRENT_DATE
             """,
@@ -295,8 +277,7 @@ class BusinessIntelligenceConfig:
             category=BusinessMetricCategory.USER_ENGAGEMENT,
             kpi_type=KPIType.PERCENTAGE,
             description="Percentage of users returning within 30 days",
-            calculation_formula="""
-                WITH new_users AS (
+            calculation_formula="""                WITH new_users AS (
                     SELECT user_id, MIN(created_at) as first_session
                     FROM user_sessions
                     WHERE created_at >= CURRENT_DATE - INTERVAL '60 days'
@@ -326,8 +307,7 @@ class BusinessIntelligenceConfig:
             category=BusinessMetricCategory.USER_ENGAGEMENT,
             kpi_type=KPIType.DURATION,
             description="Average time users spend in each session",
-            calculation_formula="""
-                SELECT AVG(EXTRACT(EPOCH FROM (ended_at - created_at))) as avg_duration
+            calculation_formula="""                SELECT AVG(EXTRACT(EPOCH FROM (ended_at - created_at))) as avg_duration
                 FROM user_sessions
                 WHERE DATE(created_at) = CURRENT_DATE
                 AND ended_at IS NOT NULL
@@ -340,15 +320,13 @@ class BusinessIntelligenceConfig:
         ))
     
     def _setup_content_performance_kpis(self):
-        """Setup content performance KPIs"""
-        # Content Upload Rate
+        """Setup content performance KPIs"""        # Content Upload Rate
         self.register_kpi(BusinessKPI(
             name="content_upload_rate",
             category=BusinessMetricCategory.CONTENT_PERFORMANCE,
             kpi_type=KPIType.RATE,
             description="Number of content pieces uploaded per day",
-            calculation_formula="""
-                SELECT COUNT(*) as upload_count
+            calculation_formula="""                SELECT COUNT(*) as upload_count
                 FROM content_uploads
                 WHERE DATE(created_at) = CURRENT_DATE
             """,
@@ -365,8 +343,7 @@ class BusinessIntelligenceConfig:
             category=BusinessMetricCategory.CONTENT_PERFORMANCE,
             kpi_type=KPIType.PERCENTAGE,
             description="Percentage of content processed successfully",
-            calculation_formula="""
-                SELECT 
+            calculation_formula="""                SELECT 
                     (COUNT(*) FILTER (WHERE status = 'completed') * 100.0 / COUNT(*)) as success_rate
                 FROM content_processing_jobs
                 WHERE DATE(created_at) = CURRENT_DATE
@@ -384,8 +361,7 @@ class BusinessIntelligenceConfig:
             category=BusinessMetricCategory.CONTENT_PERFORMANCE,
             kpi_type=KPIType.PERCENTAGE,
             description="Percentage of unauthorized content usage detected",
-            calculation_formula="""
-                WITH total_protected AS (
+            calculation_formula="""                WITH total_protected AS (
                     SELECT COUNT(*) as protected_count
                     FROM content_fingerprints
                     WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
@@ -407,15 +383,13 @@ class BusinessIntelligenceConfig:
         ))
     
     def _setup_growth_kpis(self):
-        """Setup platform growth KPIs"""
-        # New User Acquisition Rate
+        """Setup platform growth KPIs"""        # New User Acquisition Rate
         self.register_kpi(BusinessKPI(
             name="new_user_acquisition_rate",
             category=BusinessMetricCategory.PLATFORM_GROWTH,
             kpi_type=KPIType.COUNTER,
             description="Number of new users acquired daily",
-            calculation_formula="""
-                SELECT COUNT(*) as new_users
+            calculation_formula="""                SELECT COUNT(*) as new_users
                 FROM users
                 WHERE DATE(created_at) = CURRENT_DATE
             """,
@@ -432,8 +406,7 @@ class BusinessIntelligenceConfig:
             category=BusinessMetricCategory.PLATFORM_GROWTH,
             kpi_type=KPIType.PERCENTAGE,
             description="Percentage of signups that convert to paid subscriptions",
-            calculation_formula="""
-                WITH signups AS (
+            calculation_formula="""                WITH signups AS (
                     SELECT COUNT(*) as signup_count
                     FROM users
                     WHERE created_at >= CURRENT_DATE - INTERVAL '30 days'
@@ -455,15 +428,13 @@ class BusinessIntelligenceConfig:
         ))
     
     def _setup_operational_kpis(self):
-        """Setup operational efficiency KPIs"""
-        # System Uptime
+        """Setup operational efficiency KPIs"""        # System Uptime
         self.register_kpi(BusinessKPI(
             name="system_uptime",
             category=BusinessMetricCategory.OPERATIONAL_EFFICIENCY,
             kpi_type=KPIType.PERCENTAGE,
             description="System availability percentage",
-            calculation_formula="""
-                WITH uptime_data AS (
+            calculation_formula="""                WITH uptime_data AS (
                     SELECT 
                         COUNT(*) as total_checks,
                         COUNT(*) FILTER (WHERE status = 'up') as up_checks
@@ -486,8 +457,7 @@ class BusinessIntelligenceConfig:
             category=BusinessMetricCategory.OPERATIONAL_EFFICIENCY,
             kpi_type=KPIType.DURATION,
             description="Average time to first response for support tickets",
-            calculation_formula="""
-                SELECT AVG(EXTRACT(EPOCH FROM (first_response_at - created_at))) as avg_response_time
+            calculation_formula="""                SELECT AVG(EXTRACT(EPOCH FROM (first_response_at - created_at))) as avg_response_time
                 FROM support_tickets
                 WHERE DATE(created_at) = CURRENT_DATE
                 AND first_response_at IS NOT NULL
@@ -500,15 +470,13 @@ class BusinessIntelligenceConfig:
         ))
     
     def _setup_customer_satisfaction_kpis(self):
-        """Setup customer satisfaction KPIs"""
-        # Net Promoter Score
+        """Setup customer satisfaction KPIs"""        # Net Promoter Score
         self.register_kpi(BusinessKPI(
             name="net_promoter_score",
             category=BusinessMetricCategory.CUSTOMER_SATISFACTION,
             kpi_type=KPIType.SCORE,
             description="Customer satisfaction and loyalty score",
-            calculation_formula="""
-                WITH nps_scores AS (
+            calculation_formula="""                WITH nps_scores AS (
                     SELECT 
                         score,
                         CASE 
@@ -533,8 +501,7 @@ class BusinessIntelligenceConfig:
         ))
     
     def _setup_business_reports(self):
-        """Setup automated business reports"""
-        # Executive Summary Report
+        """Setup automated business reports"""        # Executive Summary Report
         self.register_report(BusinessReport(
             name="executive_summary",
             report_type="executive",
@@ -577,8 +544,7 @@ class BusinessIntelligenceConfig:
         ))
     
     def _setup_competitive_intelligence(self):
-        """Setup competitive intelligence monitoring"""
-        self.register_competitive_intelligence(CompetitiveIntelligence(
+        """Setup competitive intelligence monitoring"""        self.register_competitive_intelligence(CompetitiveIntelligence(
             competitor_name="Spotify for Artists",
             monitoring_areas=["pricing", "features", "user_acquisition", "market_share"],
             data_sources=["web_scraping", "public_apis", "social_media"],
@@ -605,43 +571,34 @@ class BusinessIntelligenceConfig:
         ))
     
     def register_kpi(self, kpi: BusinessKPI):
-        """Register business KPI"""
-        self._kpis[kpi.name] = kpi
+        """Register business KPI"""        self._kpis[kpi.name] = kpi
         logging.info(f"Registered business KPI: {kpi.name}")
     
     def register_report(self, report: BusinessReport):
-        """Register business report"""
-        self._reports[report.name] = report
+        """Register business report"""        self._reports[report.name] = report
         logging.info(f"Registered business report: {report.name}")
     
     def register_competitive_intelligence(self, competitive_intel: CompetitiveIntelligence):
-        """Register competitive intelligence monitoring"""
-        self._competitive_intelligence[competitive_intel.competitor_name] = competitive_intel
+        """Register competitive intelligence monitoring"""        self._competitive_intelligence[competitive_intel.competitor_name] = competitive_intel
         logging.info(f"Registered competitive intelligence: {competitive_intel.competitor_name}")
     
     def get_kpi(self, name: str) -> Optional[BusinessKPI]:
-        """Get KPI by name"""
-        return self._kpis.get(name)
+        """Get KPI by name"""        return self._kpis.get(name)
     
     def get_report(self, name: str) -> Optional[BusinessReport]:
-        """Get report by name"""
-        return self._reports.get(name)
+        """Get report by name"""        return self._reports.get(name)
     
     def get_competitive_intelligence(self, competitor: str) -> Optional[CompetitiveIntelligence]:
-        """Get competitive intelligence by competitor name"""
-        return self._competitive_intelligence.get(competitor)
+        """Get competitive intelligence by competitor name"""        return self._competitive_intelligence.get(competitor)
     
     def get_kpis_by_category(self, category: BusinessMetricCategory) -> List[BusinessKPI]:
-        """Get KPIs by category"""
-        return [kpi for kpi in self._kpis.values() if kpi.category == category]
+        """Get KPIs by category"""        return [kpi for kpi in self._kpis.values() if kpi.category == category]
     
     def get_kpis_by_owner(self, owner: str) -> List[BusinessKPI]:
-        """Get KPIs by business owner"""
-        return [kpi for kpi in self._kpis.values() if kpi.business_owner == owner]
+        """Get KPIs by business owner"""        return [kpi for kpi in self._kpis.values() if kpi.business_owner == owner]
     
     def export_configuration(self) -> Dict[str, Any]:
-        """Export complete business intelligence configuration"""
-        return {
+        """Export complete business intelligence configuration"""        return {
             "metadata": {
                 "generated_at": datetime.utcnow().isoformat(),
                 "version": "1.0.0",

@@ -1,5 +1,4 @@
-"""
-Content Understanding Networks for IA-Influencer-Agent
+"""Content Understanding Networks for IA-Influencer-Agent
 
 Advanced neural networks for understanding, analyzing, and extracting insights
 from multi-modal content created by influencers and content creators.
@@ -7,7 +6,6 @@ from multi-modal content created by influencers and content creators.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
@@ -21,8 +19,7 @@ from .transformer_models import TransformerConfig, MultiModalTransformer
 
 
 class ContentType(Enum):
-    """Types of content for analysis"""
-    AUDIO = "audio"
+    """Types of content for analysis"""    AUDIO = "audio"
     VIDEO = "video" 
     IMAGE = "image"
     TEXT = "text"
@@ -32,8 +29,7 @@ class ContentType(Enum):
 
 
 class AnalysisLevel(Enum):
-    """Levels of content analysis"""
-    BASIC = "basic"           # Genre, format, basic metadata
+    """Levels of content analysis"""    BASIC = "basic"           # Genre, format, basic metadata
     INTERMEDIATE = "intermediate"  # Emotion, style, quality
     ADVANCED = "advanced"     # Deep semantics, personality, trends
     EXPERT = "expert"         # Professional insights, market analysis
@@ -41,8 +37,7 @@ class AnalysisLevel(Enum):
 
 @dataclass
 class ContentAnalysisResult:
-    """Result of content analysis"""
-    
+    """Result of content analysis"""    
     content_id: str
     content_type: ContentType
     analysis_level: AnalysisLevel
@@ -78,13 +73,11 @@ class ContentAnalysisResult:
 
 
 class ContentUnderstandingNetwork(BaseNeuralNetwork):
-    """
-    Main network for understanding content across modalities
+    """    Main network for understanding content across modalities
     
     Provides unified interface for analyzing any type of content
     and extracting meaningful insights for creators.
-    """
-    
+    """    
     def __init__(self, config: TransformerConfig):
         super().__init__(config)
         self.config = config
@@ -172,10 +165,8 @@ class ContentUnderstandingNetwork(BaseNeuralNetwork):
         content_id: str,
         analysis_level: AnalysisLevel = AnalysisLevel.INTERMEDIATE
     ) -> ContentAnalysisResult:
-        """
-        Perform complete content analysis and return structured result
-        """
-        
+        """        Perform complete content analysis and return structured result
+        """        
         self.eval()
         with torch.no_grad():
             outputs = self.forward(inputs, analysis_level)
@@ -218,8 +209,7 @@ class ContentUnderstandingNetwork(BaseNeuralNetwork):
         predictions: Dict[str, torch.Tensor],
         targets: Dict[str, torch.Tensor]
     ) -> torch.Tensor:
-        """Multi-task loss computation"""
-        
+        """Multi-task loss computation"""        
         total_loss = 0.0
         num_tasks = 0
         
@@ -254,12 +244,10 @@ class ContentUnderstandingNetwork(BaseNeuralNetwork):
 
 
 class SemanticAnalysisNetwork(BaseNeuralNetwork):
-    """
-    Network for deep semantic analysis of content
+    """    Network for deep semantic analysis of content
     
     Extracts topics, themes, meanings, and contextual information.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -348,12 +336,10 @@ class SemanticAnalysisNetwork(BaseNeuralNetwork):
 
 
 class EmotionRecognitionNetwork(BaseNeuralNetwork):
-    """
-    Network for recognizing emotions in multi-modal content
+    """    Network for recognizing emotions in multi-modal content
     
     Supports audio, text, and visual emotion recognition.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -481,12 +467,10 @@ class EmotionRecognitionNetwork(BaseNeuralNetwork):
 
 
 class StyleAnalysisNetwork(BaseNeuralNetwork):
-    """
-    Network for analyzing artistic and stylistic elements in content
+    """    Network for analyzing artistic and stylistic elements in content
     
     Identifies style patterns, artistic techniques, and creative elements.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         
@@ -568,12 +552,10 @@ class StyleAnalysisNetwork(BaseNeuralNetwork):
 
 
 class QualityAssessmentNetwork(BaseNeuralNetwork):
-    """
-    Network for comprehensive quality assessment of content
+    """    Network for comprehensive quality assessment of content
     
     Evaluates technical quality, production value, and overall professionalism.
-    """
-    
+    """    
     def __init__(self, config: NetworkConfig):
         super().__init__(config)
         

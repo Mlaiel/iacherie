@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Image Generator Tests
+"""Image Generator Tests
 
 Comprehensive tests for the ImageGenerator class that handles
 AI-powered image creation and optimization.
@@ -26,7 +23,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -54,23 +50,19 @@ from ai.content_generation.content_models import ContentType, Platform
 
 
 class TestImageGenerator:
-    """Test suite for ImageGenerator"""
-    
+    """Test suite for ImageGenerator"""    
     @pytest.fixture
     def generator(self):
-        """Create an image generator instance"""
-        config = {'test': 'value'}  # Minimal config for testing
+        """Create an image generator instance"""        config = {'test': 'value'}  # Minimal config for testing
         return ImageContentGenerator(config)
     
     @pytest.fixture
     def sample_prompt(self):
-        """Create sample image generation prompt"""
-        return "A futuristic cityscape with flying cars, neon lights, and holographic advertisements, cyberpunk style, high detail, 4k resolution"
+        """Create sample image generation prompt"""        return "A futuristic cityscape with flying cars, neon lights, and holographic advertisements, cyberpunk style, high detail, 4k resolution"
     
     @pytest.fixture
     def image_config(self):
-        """Create sample image configuration"""
-        return ImageConfig(
+        """Create sample image configuration"""        return ImageConfig(
             width=1024,
             height=1024,
             quality=ImageQuality.HIGH,
@@ -81,8 +73,7 @@ class TestImageGenerator:
         )
     
     def test_generator_initialization(self, generator):
-        """Test image generator initialization"""
-        assert generator is not None
+        """Test image generator initialization"""        assert generator is not None
         assert hasattr(generator, 'image_models')
         assert hasattr(generator, 'supported_formats')
         assert hasattr(generator, 'supported_resolutions')
@@ -90,8 +81,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_basic_image_generation(self, generator, sample_prompt, image_config):
-        """Test basic AI image generation"""
-        with patch.object(generator, '_generate_with_ai') as mock_generation:
+        """Test basic AI image generation"""        with patch.object(generator, '_generate_with_ai') as mock_generation:
             mock_generation.return_value = {
                 "success": True,
                 "image_path": "/tmp/generated_image.png",
@@ -115,8 +105,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_style_transfer(self, generator):
-        """Test style transfer functionality"""
-        source_image = "/tmp/source_photo.jpg"
+        """Test style transfer functionality"""        source_image = "/tmp/source_photo.jpg"
         style_reference = "/tmp/style_reference.jpg"
         
         with patch.object(generator, '_apply_style_transfer') as mock_transfer:
@@ -141,8 +130,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_image_upscaling(self, generator):
-        """Test AI-powered image upscaling"""
-        low_res_image = "/tmp/low_res_image.jpg"
+        """Test AI-powered image upscaling"""        low_res_image = "/tmp/low_res_image.jpg"
         
         with patch.object(generator, '_upscale_image') as mock_upscale:
             mock_upscale.return_value = {
@@ -167,8 +155,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_batch_image_generation(self, generator, image_config):
-        """Test batch image generation"""
-        prompts = [
+        """Test batch image generation"""        prompts = [
             "A serene mountain landscape at sunset",
             "A bustling marketplace in Morocco",
             "A space station orbiting Earth"
@@ -195,8 +182,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_image_editing_inpainting(self, generator):
-        """Test image inpainting for editing"""
-        base_image = "/tmp/base_image.jpg"
+        """Test image inpainting for editing"""        base_image = "/tmp/base_image.jpg"
         mask_image = "/tmp/mask.png"
         edit_prompt = "Replace the sky with a dramatic sunset"
         
@@ -222,8 +208,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_background_removal(self, generator):
-        """Test background removal functionality"""
-        source_image = "/tmp/portrait.jpg"
+        """Test background removal functionality"""        source_image = "/tmp/portrait.jpg"
         
         with patch.object(generator, '_remove_background') as mock_removal:
             mock_removal.return_value = {
@@ -246,8 +231,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_logo_and_brand_generation(self, generator):
-        """Test logo and brand image generation"""
-        brand_info = {
+        """Test logo and brand image generation"""        brand_info = {
             "company_name": "TechFlow AI",
             "industry": "Technology",
             "style_preference": "modern minimalist",
@@ -279,8 +263,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_social_media_image_creation(self, generator):
-        """Test social media optimized image creation"""
-        content_data = {
+        """Test social media optimized image creation"""        content_data = {
             "title": "5 AI Trends in 2025",
             "subtitle": "Revolutionary Technologies",
             "author": "Fahed Mlaiel",
@@ -319,8 +302,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_product_mockup_generation(self, generator):
-        """Test product mockup generation"""
-        product_info = {
+        """Test product mockup generation"""        product_info = {
             "type": "mobile_app",
             "screenshots": ["/tmp/screen1.png", "/tmp/screen2.png"],
             "device": "iphone_15_pro",
@@ -348,8 +330,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_ai_model_comparison(self, generator, sample_prompt, image_config):
-        """Test comparison across different AI models"""
-        providers = [
+        """Test comparison across different AI models"""        providers = [
             GenerationProvider.DALLE,
             GenerationProvider.MIDJOURNEY,
             GenerationProvider.STABLE_DIFFUSION
@@ -382,8 +363,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_image_variation_generation(self, generator):
-        """Test generating variations of an existing image"""
-        source_image = "/tmp/original_image.jpg"
+        """Test generating variations of an existing image"""        source_image = "/tmp/original_image.jpg"
         
         with patch.object(generator, '_generate_variations') as mock_variations:
             mock_variations.return_value = {
@@ -409,8 +389,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_image_quality_enhancement(self, generator):
-        """Test image quality enhancement and restoration"""
-        damaged_image = "/tmp/low_quality_image.jpg"
+        """Test image quality enhancement and restoration"""        damaged_image = "/tmp/low_quality_image.jpg"
         
         with patch.object(generator, '_enhance_quality') as mock_enhance:
             mock_enhance.return_value = {
@@ -437,8 +416,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_copyright_safe_generation(self, generator, sample_prompt, image_config):
-        """Test copyright-safe image generation"""
-        with patch.object(generator, '_check_copyright_safety') as mock_safety:
+        """Test copyright-safe image generation"""        with patch.object(generator, '_check_copyright_safety') as mock_safety:
             mock_safety.return_value = {
                 "safe_to_use": True,
                 "similarity_to_existing": 0.15,
@@ -467,8 +445,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_image_format_conversion(self, generator):
-        """Test image format conversion and optimization"""
-        source_image = "/tmp/source.png"
+        """Test image format conversion and optimization"""        source_image = "/tmp/source.png"
         target_formats = [ImageFormat.JPEG, ImageFormat.WEBP, ImageFormat.AVIF]
         
         with patch.object(generator, '_convert_format') as mock_convert:
@@ -497,8 +474,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_image_metadata_management(self, generator):
-        """Test image metadata handling"""
-        image_path = "/tmp/metadata_image.jpg"
+        """Test image metadata handling"""        image_path = "/tmp/metadata_image.jpg"
         
         metadata = {
             "creator": "Fahed Mlaiel",
@@ -528,8 +504,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_real_time_image_streaming(self, generator):
-        """Test real-time image generation streaming"""
-        prompt = "Progressive AI artwork creation"
+        """Test real-time image generation streaming"""        prompt = "Progressive AI artwork creation"
         
         with patch.object(generator, '_stream_generation') as mock_stream:
             async def mock_stream_generator():
@@ -557,8 +532,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_error_handling_and_fallbacks(self, generator, sample_prompt, image_config):
-        """Test error handling and provider fallbacks"""
-        with patch.object(generator, '_generate_with_ai') as mock_generation:
+        """Test error handling and provider fallbacks"""        with patch.object(generator, '_generate_with_ai') as mock_generation:
             # First provider fails, second succeeds
             mock_generation.side_effect = [
                 Exception("Primary provider failed"),
@@ -581,8 +555,7 @@ class TestImageGenerator:
     
     @pytest.mark.asyncio
     async def test_performance_optimization(self, generator, image_config):
-        """Test performance optimization features"""
-        prompts = ["Fast generation test"] * 10
+        """Test performance optimization features"""        prompts = ["Fast generation test"] * 10
         
         with patch.object(generator, '_generate_with_ai') as mock_generation:
             mock_generation.return_value = {
@@ -611,11 +584,9 @@ class TestImageGenerator:
 
 
 class TestImageConfig:
-    """Test suite for ImageConfig model"""
-    
+    """Test suite for ImageConfig model"""    
     def test_image_config_creation(self):
-        """Test image configuration creation"""
-        config = ImageConfig(
+        """Test image configuration creation"""        config = ImageConfig(
             width=1024,
             height=768,
             quality=ImageQuality.HIGH,
@@ -633,8 +604,7 @@ class TestImageConfig:
         assert config.seed == 123
     
     def test_image_config_validation(self):
-        """Test image configuration validation"""
-        # Test invalid dimensions
+        """Test image configuration validation"""        # Test invalid dimensions
         with pytest.raises(Exception):  # Adjust based on actual validation
             ImageConfig(
                 width=0,  # Invalid
@@ -645,25 +615,21 @@ class TestImageConfig:
 
 
 class TestImageEnums:
-    """Test suite for image-related enums"""
-    
+    """Test suite for image-related enums"""    
     def test_image_format_enum(self):
-        """Test ImageFormat enum values"""
-        assert ImageFormat.PNG.value == "png"
+        """Test ImageFormat enum values"""        assert ImageFormat.PNG.value == "png"
         assert ImageFormat.JPEG.value == "jpeg"
         assert ImageFormat.WEBP.value == "webp"
         assert ImageFormat.SVG.value == "svg"
     
     def test_image_quality_enum(self):
-        """Test ImageQuality enum values"""
-        assert ImageQuality.LOW.value == "low"
+        """Test ImageQuality enum values"""        assert ImageQuality.LOW.value == "low"
         assert ImageQuality.MEDIUM.value == "medium"
         assert ImageQuality.HIGH.value == "high"
         assert ImageQuality.ULTRA.value == "ultra"
     
     def test_image_style_enum(self):
-        """Test ImageStyle enum values"""
-        assert ImageStyle.REALISTIC.value == "realistic"
+        """Test ImageStyle enum values"""        assert ImageStyle.REALISTIC.value == "realistic"
         assert ImageStyle.ARTISTIC.value == "artistic"
         assert ImageStyle.CARTOON.value == "cartoon"
         assert ImageStyle.ABSTRACT.value == "abstract"

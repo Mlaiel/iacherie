@@ -1,5 +1,4 @@
-"""
-Database Manager - Enterprise Database Management System
+"""Database Manager - Enterprise Database Management System
 Gestionnaire de base de données avancé pour le suivi des droits
 Système professionnel avec haute disponibilité et performance optimisée
 
@@ -12,7 +11,6 @@ Ce code est la propriété exclusive de Fahed Mlaiel et est protégé par les lo
 sur la propriété intellectuelle. Toute reproduction, distribution, ou utilisation
 non autorisée est strictement interdite et passible de poursuites judiciaires.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple, Union
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class DatabaseManager:
-    """Gestionnaire de base de données enterprise pour le rights tracking"""
-    
+    """Gestionnaire de base de données enterprise pour le rights tracking"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.engine = None
@@ -64,8 +61,7 @@ class DatabaseManager:
         self.batch_size = config.get('batch_size', 1000)
         
     async def initialize(self) -> bool:
-        """Initialise le gestionnaire de base de données"""
-        try:
+        """Initialise le gestionnaire de base de données"""        try:
             # Configuration de l'engine async
             self.engine = create_async_engine(
                 self.database_url,
@@ -112,8 +108,7 @@ class DatabaseManager:
     
     @asynccontextmanager
     async def get_session(self):
-        """Context manager pour les sessions de base de données"""
-        async with self.async_session_factory() as session:
+        """Context manager pour les sessions de base de données"""        async with self.async_session_factory() as session:
             try:
                 yield session
                 await session.commit()
@@ -132,8 +127,7 @@ class DatabaseManager:
         self, 
         content_data: Dict[str, Any]
     ) -> Optional[ContentMetadata]:
-        """Crée une nouvelle entrée de métadonnées de contenu"""
-        try:
+        """Crée une nouvelle entrée de métadonnées de contenu"""        try:
             async with self.get_session() as session:
                 content_metadata = ContentMetadata(**content_data)
                 session.add(content_metadata)
@@ -156,8 +150,7 @@ class DatabaseManager:
         content_id: str,
         include_relations: bool = False
     ) -> Optional[ContentMetadata]:
-        """Récupère les métadonnées d'un contenu"""
-        try:
+        """Récupère les métadonnées d'un contenu"""        try:
             # Vérification cache
             if self.cache_enabled:
                 cached = await self._get_cached_content_metadata(content_id)
@@ -191,8 +184,7 @@ class DatabaseManager:
         fingerprint_data: Dict[str, Any],
         similarity_threshold: float = 0.85
     ) -> List[ContentMetadata]:
-        """Recherche de contenu par empreinte digitale"""
-        try:
+        """Recherche de contenu par empreinte digitale"""        try:
             async with self.get_session() as session:
                 # Recherche par hash exact d'abord
                 if 'md5_hash' in fingerprint_data:
@@ -240,8 +232,7 @@ class DatabaseManager:
         self, 
         holder_data: Dict[str, Any]
     ) -> Optional[RightsHolder]:
-        """Crée un nouveau détenteur de droits"""
-        try:
+        """Crée un nouveau détenteur de droits"""        try:
             async with self.get_session() as session:
                 rights_holder = RightsHolder(**holder_data)
                 session.add(rights_holder)
@@ -264,8 +255,7 @@ class DatabaseManager:
         holder_id: str,
         include_relations: bool = False
     ) -> Optional[RightsHolder]:
-        """Récupère un détenteur de droits"""
-        try:
+        """Récupère un détenteur de droits"""        try:
             # Vérification cache
             if self.cache_enabled:
                 cached = await self._get_cached_rights_holder(holder_id)
@@ -300,8 +290,7 @@ class DatabaseManager:
         limit: int = 50,
         offset: int = 0
     ) -> Tuple[List[RightsHolder], int]:
-        """Recherche de détenteurs de droits avec pagination"""
-        try:
+        """Recherche de détenteurs de droits avec pagination"""        try:
             async with self.get_session() as session:
                 query = session.query(RightsHolder)
                 count_query = session.query(func.count(RightsHolder.id))
@@ -361,8 +350,7 @@ class DatabaseManager:
         record_data: Dict[str, Any],
         co_holders: Optional[List[Dict[str, Any]]] = None
     ) -> Optional[RightsRecord]:
-        """Crée un enregistrement de droits avec co-détenteurs"""
-        try:
+        """Crée un enregistrement de droits avec co-détenteurs"""        try:
             async with self.get_session() as session:
                 # Création de l'enregistrement principal
                 rights_record = RightsRecord(**record_data)
@@ -397,8 +385,7 @@ class DatabaseManager:
         record_id: str,
         include_relations: bool = False
     ) -> Optional[RightsRecord]:
-        """Récupère un enregistrement de droits"""
-        try:
+        """Récupère un enregistrement de droits"""        try:
             # Vérification cache
             if self.cache_enabled:
                 cached = await self._get_cached_rights_record(record_id)
@@ -434,8 +421,7 @@ class DatabaseManager:
         content_id: str,
         include_relations: bool = False
     ) -> List[RightsRecord]:
-        """Récupère tous les enregistrements de droits pour un contenu"""
-        try:
+        """Récupère tous les enregistrements de droits pour un contenu"""        try:
             async with self.get_session() as session:
                 query = session.query(RightsRecord).filter(
                     RightsRecord.content_id == content_id
@@ -461,8 +447,7 @@ class DatabaseManager:
         limit: int = 100,
         offset: int = 0
     ) -> Tuple[List[RightsRecord], int]:
-        """Récupère tous les droits d'un détenteur"""
-        try:
+        """Récupère tous les droits d'un détenteur"""        try:
             async with self.get_session() as session:
                 query = session.query(RightsRecord)
                 count_query = session.query(func.count(RightsRecord.id))
@@ -503,8 +488,7 @@ class DatabaseManager:
         self,
         license_data: Dict[str, Any]
     ) -> Optional[LicenseAgreement]:
-        """Crée un accord de licence"""
-        try:
+        """Crée un accord de licence"""        try:
             async with self.get_session() as session:
                 license_agreement = LicenseAgreement(**license_data)
                 session.add(license_agreement)
@@ -527,8 +511,7 @@ class DatabaseManager:
         license_id: str,
         include_relations: bool = False
     ) -> Optional[LicenseAgreement]:
-        """Récupère un accord de licence"""
-        try:
+        """Récupère un accord de licence"""        try:
             # Vérification cache
             if self.cache_enabled:
                 cached = await self._get_cached_license_agreement(license_id)
@@ -562,8 +545,7 @@ class DatabaseManager:
         self,
         content_id: str
     ) -> List[LicenseAgreement]:
-        """Récupère les licences actives pour un contenu"""
-        try:
+        """Récupère les licences actives pour un contenu"""        try:
             async with self.get_session() as session:
                 current_time = datetime.utcnow()
                 
@@ -597,8 +579,7 @@ class DatabaseManager:
         self,
         event_data: Dict[str, Any]
     ) -> Optional[UsageEvent]:
-        """Crée un événement d'utilisation"""
-        try:
+        """Crée un événement d'utilisation"""        try:
             async with self.get_session() as session:
                 usage_event = UsageEvent(**event_data)
                 session.add(usage_event)
@@ -616,8 +597,7 @@ class DatabaseManager:
         self,
         events_data: List[Dict[str, Any]]
     ) -> int:
-        """Création en lot d'événements d'utilisation"""
-        try:
+        """Création en lot d'événements d'utilisation"""        try:
             created_count = 0
             batch_size = self.batch_size
             
@@ -647,8 +627,7 @@ class DatabaseManager:
         limit: int = 1000,
         offset: int = 0
     ) -> Tuple[List[UsageEvent], int]:
-        """Récupère les événements d'utilisation pour un contenu"""
-        try:
+        """Récupère les événements d'utilisation pour un contenu"""        try:
             async with self.get_session() as session:
                 query = session.query(UsageEvent).filter(
                     UsageEvent.content_id == content_id
@@ -699,8 +678,7 @@ class DatabaseManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Génère des analytics d'utilisation pour un contenu"""
-        try:
+        """Génère des analytics d'utilisation pour un contenu"""        try:
             async with self.get_session() as session:
                 # Métriques de base
                 base_query = session.query(UsageEvent).filter(
@@ -798,8 +776,7 @@ class DatabaseManager:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Génère un résumé des revenus pour un détenteur"""
-        try:
+        """Génère un résumé des revenus pour un détenteur"""        try:
             async with self.get_session() as session:
                 # Jointure complexe pour récupérer les revenus
                 revenue_query = session.query(
@@ -873,8 +850,7 @@ class DatabaseManager:
     # =================================================================
     
     async def _cache_content_metadata(self, content_metadata: ContentMetadata):
-        """Met en cache les métadonnées de contenu"""
-        if not self.redis_client:
+        """Met en cache les métadonnées de contenu"""        if not self.redis_client:
             return
         
         try:
@@ -897,8 +873,7 @@ class DatabaseManager:
             logger.error(f"Erreur cache métadonnées contenu: {e}")
     
     async def _get_cached_content_metadata(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère les métadonnées de contenu du cache"""
-        if not self.redis_client:
+        """Récupère les métadonnées de contenu du cache"""        if not self.redis_client:
             return None
         
         try:
@@ -914,8 +889,7 @@ class DatabaseManager:
         return None
     
     async def _cache_rights_holder(self, rights_holder: RightsHolder):
-        """Met en cache un détenteur de droits"""
-        if not self.redis_client:
+        """Met en cache un détenteur de droits"""        if not self.redis_client:
             return
         
         try:
@@ -938,8 +912,7 @@ class DatabaseManager:
             logger.error(f"Erreur cache détenteur droits: {e}")
     
     async def _get_cached_rights_holder(self, holder_id: str) -> Optional[Dict[str, Any]]:
-        """Récupère un détenteur de droits du cache"""
-        if not self.redis_client:
+        """Récupère un détenteur de droits du cache"""        if not self.redis_client:
             return None
         
         try:
@@ -955,8 +928,7 @@ class DatabaseManager:
         return None
     
     async def invalidate_cache(self, pattern: str):
-        """Invalide les entrées de cache selon un pattern"""
-        if not self.redis_client:
+        """Invalide les entrées de cache selon un pattern"""        if not self.redis_client:
             return
         
         try:
@@ -977,8 +949,7 @@ class DatabaseManager:
         fingerprint1: Dict[str, Any],
         fingerprint2: Dict[str, Any]
     ) -> float:
-        """Calcule la similarité entre deux empreintes"""
-        # Implémentation simplifiée
+        """Calcule la similarité entre deux empreintes"""        # Implémentation simplifiée
         # En production, utiliser des algorithmes spécialisés
         
         if not fingerprint1 or not fingerprint2:
@@ -1002,8 +973,7 @@ class DatabaseManager:
         return matches / len(common_fields)
     
     async def health_check(self) -> Dict[str, Any]:
-        """Vérifie la santé de la base de données"""
-        try:
+        """Vérifie la santé de la base de données"""        try:
             health_status = {
                 'database': 'unknown',
                 'cache': 'unknown',
@@ -1039,8 +1009,7 @@ class DatabaseManager:
             }
     
     async def get_database_stats(self) -> Dict[str, Any]:
-        """Récupère les statistiques de la base de données"""
-        try:
+        """Récupère les statistiques de la base de données"""        try:
             async with self.get_session() as session:
                 stats = {}
                 
@@ -1098,8 +1067,7 @@ class DatabaseManager:
             return {'error': str(e)}
     
     async def cleanup_old_data(self, retention_days: int = 365):
-        """Nettoie les anciennes données selon la politique de rétention"""
-        try:
+        """Nettoie les anciennes données selon la politique de rétention"""        try:
             cutoff_date = datetime.utcnow() - timedelta(days=retention_days)
             deleted_counts = {}
             
@@ -1134,8 +1102,7 @@ class DatabaseManager:
             return {}
     
     async def shutdown(self):
-        """Arrêt propre du gestionnaire de base de données"""
-        try:
+        """Arrêt propre du gestionnaire de base de données"""        try:
             if self.redis_client:
                 await self.redis_client.close()
             
@@ -1153,8 +1120,7 @@ database_manager: Optional[DatabaseManager] = None
 
 
 async def get_database_manager(config: Optional[Dict[str, Any]] = None) -> DatabaseManager:
-    """Récupère l'instance du gestionnaire de base de données"""
-    global database_manager
+    """Récupère l'instance du gestionnaire de base de données"""    global database_manager
     
     if database_manager is None:
         if config is None:

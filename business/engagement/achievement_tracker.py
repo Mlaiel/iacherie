@@ -1,5 +1,4 @@
-"""
-Enterprise Achievement Tracker - Comprehensive achievement system for IA Influencer platform.
+"""Enterprise Achievement Tracker - Comprehensive achievement system for IA Influencer platform.
 
 This module provides a sophisticated achievement tracking system that monitors
 user progress, unlocks achievements, and manages the complete achievement lifecycle
@@ -27,7 +26,6 @@ Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Achievement Tracking → Distribution → Monetization → Analytics
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -42,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class AchievementCategory(str, Enum):
-    """Categories of achievements."""
-    CONTENT_CREATION = "content_creation"
+    """Categories of achievements."""    CONTENT_CREATION = "content_creation"
     COLLABORATION = "collaboration"
     MONETIZATION = "monetization"
     ENGAGEMENT = "engagement"
@@ -58,8 +55,7 @@ class AchievementCategory(str, Enum):
 
 
 class AchievementDifficulty(str, Enum):
-    """Difficulty levels for achievements."""
-    TRIVIAL = "trivial"        # Very easy, almost automatic
+    """Difficulty levels for achievements."""    TRIVIAL = "trivial"        # Very easy, almost automatic
     EASY = "easy"              # Requires minimal effort
     MEDIUM = "medium"          # Requires some dedication
     HARD = "hard"              # Requires significant effort
@@ -68,8 +64,7 @@ class AchievementDifficulty(str, Enum):
 
 
 class AchievementType(str, Enum):
-    """Types of achievement tracking."""
-    COUNTER = "counter"              # Track numeric progress (uploads, collaborations)
+    """Types of achievement tracking."""    COUNTER = "counter"              # Track numeric progress (uploads, collaborations)
     THRESHOLD = "threshold"          # Reach a specific value
     STREAK = "streak"               # Maintain consecutive activity
     PERCENTAGE = "percentage"        # Reach percentage targets
@@ -80,8 +75,7 @@ class AchievementType(str, Enum):
 
 
 class AchievementStatus(str, Enum):
-    """Status of user achievements."""
-    LOCKED = "locked"
+    """Status of user achievements."""    LOCKED = "locked"
     IN_PROGRESS = "in_progress"
     COMPLETED = "completed"
     CLAIMED = "claimed"
@@ -90,8 +84,7 @@ class AchievementStatus(str, Enum):
 
 @dataclass
 class AchievementCriteria:
-    """Defines criteria for achievement completion."""
-    criteria_id: str = field(default_factory=lambda: str(uuid4()))
+    """Defines criteria for achievement completion."""    criteria_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     description: str = ""
     
@@ -110,8 +103,7 @@ class AchievementCriteria:
     last_updated: datetime = field(default_factory=datetime.utcnow)
     
     def is_completed(self) -> bool:
-        """Check if this criteria is completed."""
-        try:
+        """Check if this criteria is completed."""        try:
             if self.comparison_operator == ">=":
                 return float(self.current_value) >= float(self.target_value)
             elif self.comparison_operator == ">":
@@ -130,8 +122,7 @@ class AchievementCriteria:
             return str(self.current_value) == str(self.target_value)
     
     def get_progress_percentage(self) -> float:
-        """Get progress percentage for this criteria."""
-        if self.comparison_operator in [">=", ">"]:
+        """Get progress percentage for this criteria."""        if self.comparison_operator in [">=", ">"]:
             try:
                 target = float(self.target_value)
                 current = float(self.current_value)
@@ -146,8 +137,7 @@ class AchievementCriteria:
 
 @dataclass
 class Achievement:
-    """Represents an achievement definition."""
-    achievement_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents an achievement definition."""    achievement_id: str = field(default_factory=lambda: str(uuid4()))
     name: str = ""
     description: str = ""
     detailed_description: str = ""
@@ -191,8 +181,7 @@ class Achievement:
     created_by: str = ""
     
     def is_available(self, timestamp: Optional[datetime] = None) -> bool:
-        """Check if achievement is currently available."""
-        if timestamp is None:
+        """Check if achievement is currently available."""        if timestamp is None:
             timestamp = datetime.utcnow()
         
         if self.available_from and timestamp < self.available_from:
@@ -204,8 +193,7 @@ class Achievement:
         return True
     
     def is_visible_to_user(self, user_profile: Dict[str, Any]) -> bool:
-        """Check if achievement should be visible to a user."""
-        if self.hidden:
+        """Check if achievement should be visible to a user."""        if self.hidden:
             return False
         
         # Check creator type requirements
@@ -224,8 +212,7 @@ class Achievement:
         return True
     
     def get_completion_time_estimate(self, user_profile: Dict[str, Any]) -> Optional[timedelta]:
-        """Estimate completion time for a user based on their activity level."""
-        if not self.average_completion_time:
+        """Estimate completion time for a user based on their activity level."""        if not self.average_completion_time:
             return None
         
         # Adjust based on user activity level
@@ -245,8 +232,7 @@ class Achievement:
 
 @dataclass
 class UserAchievementProgress:
-    """Tracks a user's progress on a specific achievement."""
-    progress_id: str = field(default_factory=lambda: str(uuid4()))
+    """Tracks a user's progress on a specific achievement."""    progress_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     achievement_id: str = ""
     
@@ -266,31 +252,25 @@ class UserAchievementProgress:
     milestone_history: List[Dict[str, Any]] = field(default_factory=list)
     
     def is_completed(self) -> bool:
-        """Check if achievement is completed."""
-        return self.status in [AchievementStatus.COMPLETED, AchievementStatus.CLAIMED]
+        """Check if achievement is completed."""        return self.status in [AchievementStatus.COMPLETED, AchievementStatus.CLAIMED]
     
     def can_be_claimed(self) -> bool:
-        """Check if achievement can be claimed."""
-        return self.status == AchievementStatus.COMPLETED
+        """Check if achievement can be claimed."""        return self.status == AchievementStatus.COMPLETED
     
     def get_time_to_completion(self) -> Optional[timedelta]:
-        """Get time taken to complete achievement."""
-        if self.started_at and self.completed_at:
+        """Get time taken to complete achievement."""        if self.started_at and self.completed_at:
             return self.completed_at - self.started_at
         return None
 
 
 class AchievementTracker:
-    """
-    Enterprise-grade achievement tracking system.
+    """    Enterprise-grade achievement tracking system.
     
     Manages the complete achievement lifecycle including definition,
     progress tracking, completion detection, and reward distribution.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the achievement tracker."""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the achievement tracker."""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._achievements: Dict[str, Achievement] = {}
         self._user_progress: Dict[str, Dict[str, UserAchievementProgress]] = {}
         self._metric_listeners: Dict[str, List[Callable]] = {}
@@ -301,8 +281,7 @@ class AchievementTracker:
         self.logger.info("AchievementTracker initialized successfully")
     
     def _initialize_core_achievements(self) -> None:
-        """Initialize core platform achievements."""
-        
+        """Initialize core platform achievements."""        
         # Content Creation Achievements
         self._create_first_upload_achievement()
         self._create_viral_hit_achievement()
@@ -331,8 +310,7 @@ class AchievementTracker:
         self._create_milestone_achievements()
     
     def _create_first_upload_achievement(self) -> None:
-        """Create first upload achievement."""
-        achievement = Achievement(
+        """Create first upload achievement."""        achievement = Achievement(
             name="First Steps",
             description="Upload your first piece of content",
             detailed_description="Welcome to the platform! Upload your first content to begin your creator journey.",
@@ -356,8 +334,7 @@ class AchievementTracker:
         self._achievements[achievement.achievement_id] = achievement
     
     def _create_viral_hit_achievement(self) -> None:
-        """Create viral content achievement."""
-        achievement = Achievement(
+        """Create viral content achievement."""        achievement = Achievement(
             name="Viral Sensation",
             description="Reach 1 million views/plays on a single piece of content",
             detailed_description="Create content that captures the world's attention and reaches viral status with over 1 million engagements.",
@@ -409,8 +386,7 @@ class AchievementTracker:
         self._achievements[viral_hit.achievement_id] = viral_hit
     
     def _create_consistency_achievements(self) -> None:
-        """Create consistency-based achievements."""
-        # 7-day streak
+        """Create consistency-based achievements."""        # 7-day streak
         streak_7 = Achievement(
             name="Week Warrior",
             description="Upload content for 7 consecutive days",
@@ -460,8 +436,7 @@ class AchievementTracker:
         self._achievements[streak_30.achievement_id] = streak_30
     
     def _create_quality_achievements(self) -> None:
-        """Create quality-based achievements."""
-        # Quality Master (95%+ quality score)
+        """Create quality-based achievements."""        # Quality Master (95%+ quality score)
         quality_master = Achievement(
             name="Quality Master",
             description="Achieve 95%+ quality score on content",
@@ -513,8 +488,7 @@ class AchievementTracker:
         self._achievements[perfect_score.achievement_id] = perfect_score
     
     def _create_multi_format_achievements(self) -> None:
-        """Create multi-format content achievements."""
-        multi_format = Achievement(
+        """Create multi-format content achievements."""        multi_format = Achievement(
             name="Multi-Format Creator",
             description="Create content in 5 different formats",
             detailed_description="Showcase your versatility by creating content across 5 different media formats.",
@@ -539,8 +513,7 @@ class AchievementTracker:
         self._achievements[multi_format.achievement_id] = multi_format
     
     def _create_collaboration_achievements(self) -> None:
-        """Create collaboration-based achievements."""
-        # Team Player (10 collaborations)
+        """Create collaboration-based achievements."""        # Team Player (10 collaborations)
         team_player = Achievement(
             name="Team Player",
             description="Complete 10 successful collaborations",
@@ -591,8 +564,7 @@ class AchievementTracker:
         self._achievements[global_collab.achievement_id] = global_collab
     
     def _create_mentorship_achievements(self) -> None:
-        """Create mentorship achievements."""
-        mentor = Achievement(
+        """Create mentorship achievements."""        mentor = Achievement(
             name="Mentor",
             description="Help 5 new creators get started",
             detailed_description="Give back to the community by mentoring and helping 5 new creators establish themselves on the platform.",
@@ -617,8 +589,7 @@ class AchievementTracker:
         self._achievements[mentor.achievement_id] = mentor
     
     def _create_networking_achievements(self) -> None:
-        """Create networking achievements."""
-        connector = Achievement(
+        """Create networking achievements."""        connector = Achievement(
             name="Super Connector",
             description="Facilitate 50 successful creator matchings",
             detailed_description="Become a networking powerhouse by facilitating 50 successful connections between creators.",
@@ -643,8 +614,7 @@ class AchievementTracker:
         self._achievements[connector.achievement_id] = connector
     
     def _create_revenue_achievements(self) -> None:
-        """Create revenue-based achievements."""
-        # First Dollar
+        """Create revenue-based achievements."""        # First Dollar
         first_dollar = Achievement(
             name="First Dollar",
             description="Earn your first revenue from content",
@@ -697,8 +667,7 @@ class AchievementTracker:
             self._achievements[milestone.achievement_id] = milestone
     
     def _create_optimization_achievements(self) -> None:
-        """Create optimization achievements."""
-        optimizer = Achievement(
+        """Create optimization achievements."""        optimizer = Achievement(
             name="Optimization Pro",
             description="Improve ROI by 50% in one month",
             detailed_description="Demonstrate business acumen by improving your return on investment by 50% or more in a single month.",
@@ -723,8 +692,7 @@ class AchievementTracker:
         self._achievements[optimizer.achievement_id] = optimizer
     
     def _create_engagement_achievements(self) -> None:
-        """Create engagement achievements."""
-        engagement_master = Achievement(
+        """Create engagement achievements."""        engagement_master = Achievement(
             name="Engagement Master",
             description="Achieve 25%+ average engagement rate",
             detailed_description="Build an incredibly engaged audience by maintaining an average engagement rate of 25% or higher.",
@@ -749,8 +717,7 @@ class AchievementTracker:
         self._achievements[engagement_master.achievement_id] = engagement_master
     
     def _create_community_achievements(self) -> None:
-        """Create community achievements."""
-        community_leader = Achievement(
+        """Create community achievements."""        community_leader = Achievement(
             name="Community Leader",
             description="Achieve 80+ community impact score",
             detailed_description="Become a positive force in the creator community by achieving a high community impact score.",
@@ -775,8 +742,7 @@ class AchievementTracker:
         self._achievements[community_leader.achievement_id] = community_leader
     
     def _create_platform_achievements(self) -> None:
-        """Create platform mastery achievements."""
-        platform_master = Achievement(
+        """Create platform mastery achievements."""        platform_master = Achievement(
             name="Platform Master",
             description="Connect and actively use 10+ platforms",
             detailed_description="Maximize your reach by successfully connecting and actively using 10 or more distribution platforms.",
@@ -801,8 +767,7 @@ class AchievementTracker:
         self._achievements[platform_master.achievement_id] = platform_master
     
     def _create_innovation_achievements(self) -> None:
-        """Create innovation achievements."""
-        innovator = Achievement(
+        """Create innovation achievements."""        innovator = Achievement(
             name="Innovation Pioneer",
             description="Be among first to use 10+ new platform features",
             detailed_description="Stay at the cutting edge by being among the first to adopt and use 10 or more new platform features.",
@@ -827,8 +792,7 @@ class AchievementTracker:
         self._achievements[innovator.achievement_id] = innovator
     
     def _create_milestone_achievements(self) -> None:
-        """Create milestone achievements."""
-        # Level milestones
+        """Create milestone achievements."""        # Level milestones
         for level in [10, 25, 50, 75, 100]:
             milestone = Achievement(
                 name=f"Level {level} Master",
@@ -861,8 +825,7 @@ class AchievementTracker:
         value: Union[int, float, str],
         metadata: Optional[Dict[str, Any]] = None
     ) -> List[str]:
-        """Track a metric update for a user and check for achievement progress."""
-        try:
+        """Track a metric update for a user and check for achievement progress."""        try:
             metadata = metadata or {}
             unlocked_achievements = []
             
@@ -911,8 +874,7 @@ class AchievementTracker:
             return []
     
     async def _initialize_user_progress(self, user_id: str) -> None:
-        """Initialize achievement progress tracking for a user."""
-        if user_id not in self._user_progress:
+        """Initialize achievement progress tracking for a user."""        if user_id not in self._user_progress:
             self._user_progress[user_id] = {}
         
         # Create progress entries for all available achievements
@@ -948,8 +910,7 @@ class AchievementTracker:
         achievement_id: str,
         metadata: Dict[str, Any]
     ) -> None:
-        """Update progress for a specific achievement."""
-        try:
+        """Update progress for a specific achievement."""        try:
             progress = self._user_progress[user_id][achievement_id]
             achievement = self._achievements[achievement_id]
             
@@ -994,8 +955,7 @@ class AchievementTracker:
             self.logger.error(f"Error updating achievement progress: {e}")
     
     async def _check_prerequisites(self, user_id: str, achievement: Achievement) -> bool:
-        """Check if achievement prerequisites are met."""
-        for criteria in achievement.criteria:
+        """Check if achievement prerequisites are met."""        for criteria in achievement.criteria:
             for prereq_id in criteria.prerequisite_achievements:
                 if prereq_id not in self._user_progress[user_id]:
                     return False
@@ -1012,8 +972,7 @@ class AchievementTracker:
         achievement_id: str,
         metadata: Dict[str, Any]
     ) -> None:
-        """Complete an achievement for a user."""
-        try:
+        """Complete an achievement for a user."""        try:
             progress = self._user_progress[user_id][achievement_id]
             achievement = self._achievements[achievement_id]
             
@@ -1058,8 +1017,7 @@ class AchievementTracker:
         user_id: str,
         achievement_id: str
     ) -> Dict[str, Any]:
-        """Claim rewards for a completed achievement."""
-        try:
+        """Claim rewards for a completed achievement."""        try:
             if user_id not in self._user_progress or achievement_id not in self._user_progress[user_id]:
                 raise ValueError(f"Achievement progress not found for user {user_id}")
             
@@ -1112,8 +1070,7 @@ class AchievementTracker:
         status_filter: Optional[AchievementStatus] = None,
         category_filter: Optional[AchievementCategory] = None
     ) -> List[Dict[str, Any]]:
-        """Get user's achievement progress with optional filtering."""
-        try:
+        """Get user's achievement progress with optional filtering."""        try:
             if user_id not in self._user_progress:
                 await self._initialize_user_progress(user_id)
             
@@ -1171,8 +1128,7 @@ class AchievementTracker:
             return []
     
     async def get_achievement_statistics(self) -> Dict[str, Any]:
-        """Get platform-wide achievement statistics."""
-        try:
+        """Get platform-wide achievement statistics."""        try:
             total_achievements = len(self._achievements)
             total_users = len(self._user_progress)
             
@@ -1221,8 +1177,7 @@ class AchievementTracker:
         achievement_data: Dict[str, Any],
         creator_id: str
     ) -> str:
-        """Create a custom achievement."""
-        try:
+        """Create a custom achievement."""        try:
             # Validate required fields
             required_fields = ["name", "description", "category", "criteria"]
             for field in required_fields:
@@ -1279,8 +1234,7 @@ class AchievementTracker:
             raise
     
     def add_metric_listener(self, metric_key: str, listener: Callable) -> None:
-        """Add a listener for metric updates."""
-        if metric_key not in self._metric_listeners:
+        """Add a listener for metric updates."""        if metric_key not in self._metric_listeners:
             self._metric_listeners[metric_key] = []
         self._metric_listeners[metric_key].append(listener)
 
@@ -1290,8 +1244,7 @@ _achievement_tracker: Optional[AchievementTracker] = None
 
 
 async def get_achievement_tracker() -> AchievementTracker:
-    """Get the global achievement tracker instance."""
-    global _achievement_tracker
+    """Get the global achievement tracker instance."""    global _achievement_tracker
     
     if _achievement_tracker is None:
         _achievement_tracker = AchievementTracker()
@@ -1306,14 +1259,12 @@ async def track_metric(
     value: Union[int, float, str],
     metadata: Optional[Dict[str, Any]] = None
 ) -> List[str]:
-    """Track a metric update (convenience function)."""
-    tracker = await get_achievement_tracker()
+    """Track a metric update (convenience function)."""    tracker = await get_achievement_tracker()
     return await tracker.track_user_metric(user_id, metric_key, value, metadata)
 
 
 async def get_user_achievement_summary(user_id: str) -> Dict[str, Any]:
-    """Get achievement summary for a user (convenience function)."""
-    tracker = await get_achievement_tracker()
+    """Get achievement summary for a user (convenience function)."""    tracker = await get_achievement_tracker()
     achievements = await tracker.get_user_achievements(user_id)
     
     # Calculate summary statistics

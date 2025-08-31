@@ -15,8 +15,7 @@ Contact: mlaiel@live.de
 ARCHITECTURE WORKERS:
 Crawler Worker → Worker Pool → Queue Processor → Resource Manager → 
 Task Orchestrator → Event Processor → Notification Engine → Background Processor
-"""
-from typing import Dict, Any, List, Optional, Type
+"""from typing import Dict, Any, List, Optional, Type
 import logging
 from enum import Enum
 

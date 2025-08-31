@@ -1,5 +1,4 @@
-"""
-Health Monitor for IA Influencer Agent Platform
+"""Health Monitor for IA Influencer Agent Platform
 ===============================================
 
 Industrial-grade health monitoring system with AI-powered diagnostics,
@@ -18,7 +17,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
-
 import asyncio
 import time
 import logging
@@ -42,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class HealthStatus(Enum):
-    """Health status enumeration with business impact levels"""
-    HEALTHY = "healthy"
+    """Health status enumeration with business impact levels"""    HEALTHY = "healthy"
     WARNING = "warning"
     CRITICAL = "critical"
     DEGRADED = "degraded"
@@ -52,8 +49,7 @@ class HealthStatus(Enum):
 
 
 class ServiceType(Enum):
-    """Service type classification for specialized monitoring"""
-    CORE_API = "core_api"
+    """Service type classification for specialized monitoring"""    CORE_API = "core_api"
     AI_ENGINE = "ai_engine"
     FINGERPRINT_SERVICE = "fingerprint_service"
     CONTENT_PROTECTION = "content_protection"
@@ -67,8 +63,7 @@ class ServiceType(Enum):
 
 @dataclass
 class HealthCheck:
-    """Enhanced health check configuration with business context"""
-    name: str
+    """Enhanced health check configuration with business context"""    name: str
     check_function: Callable
     service_type: ServiceType
     interval: int = 30
@@ -85,8 +80,7 @@ class HealthCheck:
 
 @dataclass
 class HealthResult:
-    """Enhanced health check result with detailed diagnostics"""
-    name: str
+    """Enhanced health check result with detailed diagnostics"""    name: str
     status: HealthStatus
     service_type: ServiceType
     value: Optional[float] = None
@@ -102,8 +96,7 @@ class HealthResult:
 
 @dataclass
 class CircuitBreakerState:
-    """Enhanced circuit breaker with adaptive thresholds"""
-    failure_count: int = 0
+    """Enhanced circuit breaker with adaptive thresholds"""    failure_count: int = 0
     last_failure_time: Optional[datetime] = None
     state: str = "closed"  # closed, open, half_open
     next_attempt_time: Optional[datetime] = None
@@ -115,8 +108,7 @@ class CircuitBreakerState:
 
 @dataclass
 class ServiceDependency:
-    """Service dependency mapping with impact assessment"""
-    service_name: str
+    """Service dependency mapping with impact assessment"""    service_name: str
     dependent_services: List[str]
     dependency_type: str = "hard"  # hard, soft, optional
     impact_weight: float = 1.0
@@ -125,8 +117,7 @@ class ServiceDependency:
 
 @dataclass
 class HealthTrend:
-    """Health trend analysis data"""
-    service_name: str
+    """Health trend analysis data"""    service_name: str
     trend_direction: str = "stable"  # improving, stable, degrading
     trend_strength: float = 0.0  # -1.0 to 1.0
     prediction_confidence: float = 0.0
@@ -135,14 +126,12 @@ class HealthTrend:
 
 
 class HealthMonitor:
-    """
-    Industrial-grade health monitoring system with AI-powered diagnostics,
+    """    Industrial-grade health monitoring system with AI-powered diagnostics,
     predictive failure detection, and automated recovery mechanisms.
     
     Specialized for IA Influencer Agent Platform with content protection,
     revenue tracking, and multi-platform integration monitoring.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -201,8 +190,7 @@ class HealthMonitor:
         self._register_default_health_checks()
         
     def _register_default_health_checks(self):
-        """Register default health checks for IA Influencer Agent Platform"""
-        
+        """Register default health checks for IA Influencer Agent Platform"""        
         # Core API health
         self.register_health_check(HealthCheck(
             name="core_api",
@@ -300,8 +288,7 @@ class HealthMonitor:
         ))
 
     async def _check_core_api_health(self) -> HealthResult:
-        """Check core API health with endpoint validation"""
-        start_time = time.time()
+        """Check core API health with endpoint validation"""        start_time = time.time()
         
         try:
             # Test critical endpoints
@@ -391,8 +378,7 @@ class HealthMonitor:
             )
 
     async def _check_ai_engine_health(self) -> HealthResult:
-        """Check AI fingerprinting engine health"""
-        start_time = time.time()
+        """Check AI fingerprinting engine health"""        start_time = time.time()
         
         try:
             # Test AI engine components
@@ -458,8 +444,7 @@ class HealthMonitor:
             )
 
     async def _check_content_protection_health(self) -> HealthResult:
-        """Check content protection service health"""
-        start_time = time.time()
+        """Check content protection service health"""        start_time = time.time()
         
         try:
             checks = {}
@@ -467,8 +452,7 @@ class HealthMonitor:
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
                     # Check fingerprint database health
-                    result = await conn.execute(text("""
-                        SELECT 
+                    result = await conn.execute(text("""                        SELECT 
                             COUNT(*) as total_fingerprints,
                             COUNT(CASE WHEN created_at > NOW() - INTERVAL '1 hour' THEN 1 END) as recent_fingerprints,
                             COUNT(CASE WHEN status = 'active' THEN 1 END) as active_protections
@@ -482,8 +466,7 @@ class HealthMonitor:
                         checks["active_protections"] = fingerprint_stats.active_protections
                     
                     # Check protection alerts
-                    result = await conn.execute(text("""
-                        SELECT 
+                    result = await conn.execute(text("""                        SELECT 
                             COUNT(*) as total_alerts,
                             COUNT(CASE WHEN status = 'pending' THEN 1 END) as pending_alerts,
                             AVG(similarity_score) as avg_similarity
@@ -540,8 +523,7 @@ class HealthMonitor:
             )
 
     async def _check_revenue_tracking_health(self) -> HealthResult:
-        """Check revenue tracking system health"""
-        start_time = time.time()
+        """Check revenue tracking system health"""        start_time = time.time()
         
         try:
             checks = {}
@@ -549,8 +531,7 @@ class HealthMonitor:
             if self.db_engine:
                 async with self.db_engine.begin() as conn:
                     # Check revenue data freshness
-                    result = await conn.execute(text("""
-                        SELECT 
+                    result = await conn.execute(text("""                        SELECT 
                             COUNT(*) as total_revenue_records,
                             COUNT(CASE WHEN created_at > NOW() - INTERVAL '1 hour' THEN 1 END) as recent_records,
                             SUM(revenue_amount) as total_revenue_24h,
@@ -567,8 +548,7 @@ class HealthMonitor:
                         checks["active_platforms"] = revenue_stats.active_platforms
                     
                     # Check for revenue sync issues
-                    result = await conn.execute(text("""
-                        SELECT platform, MAX(period_end) as last_sync
+                    result = await conn.execute(text("""                        SELECT platform, MAX(period_end) as last_sync
                         FROM revenue_tracking
                         GROUP BY platform
                     """))
@@ -628,8 +608,7 @@ class HealthMonitor:
             )
 
     async def _check_database_health(self) -> HealthResult:
-        """Check primary database health"""
-        start_time = time.time()
+        """Check primary database health"""        start_time = time.time()
         
         try:
             checks = {}
@@ -649,8 +628,7 @@ class HealthMonitor:
                     
                     # Check database performance
                     perf_start = time.time()
-                    result = await conn.execute(text("""
-                        SELECT 
+                    result = await conn.execute(text("""                        SELECT 
                             pg_database_size(current_database()) as db_size,
                             (SELECT count(*) FROM pg_stat_activity WHERE state = 'active') as active_connections,
                             (SELECT count(*) FROM pg_stat_activity WHERE state = 'idle') as idle_connections
@@ -665,8 +643,7 @@ class HealthMonitor:
                         checks["query_response_time"] = query_time
                     
                     # Check for slow queries
-                    result = await conn.execute(text("""
-                        SELECT count(*) as slow_queries
+                    result = await conn.execute(text("""                        SELECT count(*) as slow_queries
                         FROM pg_stat_statements 
                         WHERE mean_exec_time > 1000
                         LIMIT 1
@@ -715,8 +692,7 @@ class HealthMonitor:
             )
 
     async def _check_redis_health(self) -> HealthResult:
-        """Check Redis cache health"""
-        start_time = time.time()
+        """Check Redis cache health"""        start_time = time.time()
         
         try:
             checks = {}
@@ -858,8 +834,7 @@ class HealthMonitor:
         ))
         
     async def start_monitoring(self):
-        """Start health monitoring"""
-        if self._monitoring:
+        """Start health monitoring"""        if self._monitoring:
             logger.warning("Health monitoring already running")
             return
             
@@ -868,8 +843,7 @@ class HealthMonitor:
         logger.info("Health monitoring started")
         
     async def stop_monitoring(self):
-        """Stop health monitoring"""
-        self._monitoring = False
+        """Stop health monitoring"""        self._monitoring = False
         if self._monitor_task:
             self._monitor_task.cancel()
             try:
@@ -879,8 +853,7 @@ class HealthMonitor:
         logger.info("Health monitoring stopped")
         
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
-        while self._monitoring:
+        """Main monitoring loop"""        while self._monitoring:
             try:
                 await self._run_health_checks()
                 await self._process_results()
@@ -893,8 +866,7 @@ class HealthMonitor:
                 await asyncio.sleep(5)  # Backoff on error
                 
     async def _run_health_checks(self):
-        """Run all enabled health checks"""
-        tasks = []
+        """Run all enabled health checks"""        tasks = []
         
         for check_name, health_check in self._health_checks.items():
             if not health_check.enabled:
@@ -929,8 +901,7 @@ class HealthMonitor:
                     self._handle_circuit_breaker(check_name, False)
                     
     async def _execute_health_check(self, health_check: HealthCheck) -> HealthResult:
-        """Execute a single health check with timeout"""
-        start_time = time.time()
+        """Execute a single health check with timeout"""        start_time = time.time()
         
         try:
             # Execute with timeout
@@ -984,8 +955,7 @@ class HealthMonitor:
             return result
             
     def _determine_status(self, value: Any, health_check: HealthCheck) -> HealthStatus:
-        """Determine health status based on value and thresholds"""
-        if not isinstance(value, (int, float)):
+        """Determine health status based on value and thresholds"""        if not isinstance(value, (int, float)):
             return HealthStatus.HEALTHY
             
         if value >= health_check.critical_threshold:
@@ -996,8 +966,7 @@ class HealthMonitor:
             return HealthStatus.HEALTHY
             
     def _check_dependencies(self, health_check: HealthCheck) -> bool:
-        """Check if all dependencies are satisfied"""
-        for dep_name in health_check.dependencies:
+        """Check if all dependencies are satisfied"""        for dep_name in health_check.dependencies:
             if dep_name not in self._health_results:
                 return False
             if self._health_results[dep_name].status == HealthStatus.CRITICAL:
@@ -1005,8 +974,7 @@ class HealthMonitor:
         return True
         
     def _is_circuit_breaker_open(self, check_name: str) -> bool:
-        """Check if circuit breaker is open for a health check"""
-        if check_name not in self._circuit_breakers:
+        """Check if circuit breaker is open for a health check"""        if check_name not in self._circuit_breakers:
             return False
             
         cb_state = self._circuit_breakers[check_name]
@@ -1020,8 +988,7 @@ class HealthMonitor:
         return False
         
     def _handle_circuit_breaker(self, check_name: str, success: bool):
-        """Handle circuit breaker state transitions"""
-        if check_name not in self._circuit_breakers:
+        """Handle circuit breaker state transitions"""        if check_name not in self._circuit_breakers:
             self._circuit_breakers[check_name] = CircuitBreakerState()
             
         cb_state = self._circuit_breakers[check_name]
@@ -1042,8 +1009,7 @@ class HealthMonitor:
                 logger.warning(f"Circuit breaker opened for health check: {check_name}")
                 
     async def _process_results(self):
-        """Process health check results and trigger recovery if needed"""
-        overall_status = self.get_overall_status()
+        """Process health check results and trigger recovery if needed"""        overall_status = self.get_overall_status()
         
         # Store results in Redis
         if self.redis_client:
@@ -1092,21 +1058,17 @@ class HealthMonitor:
                     
     # System health check implementations
     async def _check_cpu_usage(self) -> float:
-        """Check CPU usage"""
-        return psutil.cpu_percent(interval=1)
+        """Check CPU usage"""        return psutil.cpu_percent(interval=1)
         
     async def _check_memory_usage(self) -> float:
-        """Check memory usage"""
-        return psutil.virtual_memory().percent
+        """Check memory usage"""        return psutil.virtual_memory().percent
         
     async def _check_disk_usage(self) -> float:
-        """Check disk usage"""
-        disk_usage = psutil.disk_usage('/')
+        """Check disk usage"""        disk_usage = psutil.disk_usage('/')
         return (disk_usage.used / disk_usage.total) * 100
         
     async def _check_database_health(self) -> HealthResult:
-        """Check database connection and performance"""
-        if not self.db_engine:
+        """Check database connection and performance"""        if not self.db_engine:
             return HealthResult(
                 name="database_connection",
                 status=HealthStatus.CRITICAL,
@@ -1156,8 +1118,7 @@ class HealthMonitor:
             )
             
     async def _check_redis_health(self) -> HealthResult:
-        """Check Redis connection and performance"""
-        if not self.redis_client:
+        """Check Redis connection and performance"""        if not self.redis_client:
             return HealthResult(
                 name="redis_connection",
                 status=HealthStatus.CRITICAL,
@@ -1200,8 +1161,7 @@ class HealthMonitor:
             )
             
     async def _check_api_endpoints(self) -> HealthResult:
-        """Check critical API endpoints"""
-        endpoints = [
+        """Check critical API endpoints"""        endpoints = [
             "http://localhost:8000/health",
             "http://localhost:8000/api/v1/status"
         ]
@@ -1247,8 +1207,7 @@ class HealthMonitor:
         )
         
     async def _check_fingerprint_service(self) -> HealthResult:
-        """Check fingerprint service health"""
-        if not self.db_engine:
+        """Check fingerprint service health"""        if not self.db_engine:
             return HealthResult(
                 name="fingerprint_service",
                 status=HealthStatus.CRITICAL,
@@ -1258,8 +1217,7 @@ class HealthMonitor:
         try:
             async with self.db_engine.begin() as conn:
                 # Check recent fingerprint operations
-                result = await conn.execute(text("""
-                    SELECT COUNT(*) FROM content_fingerprints 
+                result = await conn.execute(text("""                    SELECT COUNT(*) FROM content_fingerprints 
                     WHERE created_at > NOW() - INTERVAL '1 hour'
                 """))
                 recent_count = result.scalar()
@@ -1299,8 +1257,7 @@ class HealthMonitor:
             )
             
     async def _check_protection_alerts(self) -> HealthResult:
-        """Check protection alerts system"""
-        if not self.db_engine:
+        """Check protection alerts system"""        if not self.db_engine:
             return HealthResult(
                 name="protection_alerts",
                 status=HealthStatus.CRITICAL,
@@ -1310,15 +1267,13 @@ class HealthMonitor:
         try:
             async with self.db_engine.begin() as conn:
                 # Check recent alerts
-                result = await conn.execute(text("""
-                    SELECT COUNT(*) FROM protection_alerts 
+                result = await conn.execute(text("""                    SELECT COUNT(*) FROM protection_alerts 
                     WHERE created_at > NOW() - INTERVAL '1 day'
                 """))
                 daily_alerts = result.scalar()
                 
                 # Check pending alerts
-                result = await conn.execute(text("""
-                    SELECT COUNT(*) FROM protection_alerts 
+                result = await conn.execute(text("""                    SELECT COUNT(*) FROM protection_alerts 
                     WHERE status = 'pending'
                 """))
                 pending_alerts = result.scalar()
@@ -1353,26 +1308,22 @@ class HealthMonitor:
             
     # Public interface methods
     def register_check(self, health_check: HealthCheck):
-        """Register a new health check"""
-        self._health_checks[health_check.name] = health_check
+        """Register a new health check"""        self._health_checks[health_check.name] = health_check
         logger.info(f"Registered health check: {health_check.name}")
         
     def unregister_check(self, check_name: str):
-        """Unregister a health check"""
-        if check_name in self._health_checks:
+        """Unregister a health check"""        if check_name in self._health_checks:
             del self._health_checks[check_name]
             if check_name in self._health_results:
                 del self._health_results[check_name]
             logger.info(f"Unregistered health check: {check_name}")
             
     def register_recovery_handler(self, check_name: str, handler: Callable):
-        """Register a recovery handler for a health check"""
-        self._recovery_handlers[check_name] = handler
+        """Register a recovery handler for a health check"""        self._recovery_handlers[check_name] = handler
         logger.info(f"Registered recovery handler for: {check_name}")
         
     def get_overall_status(self) -> HealthStatus:
-        """Get overall system health status"""
-        if not self._health_results:
+        """Get overall system health status"""        if not self._health_results:
             return HealthStatus.UNKNOWN
             
         statuses = [result.status for result in self._health_results.values()]
@@ -1385,8 +1336,7 @@ class HealthMonitor:
             return HealthStatus.HEALTHY
             
     def get_health_summary(self) -> Dict[str, Any]:
-        """Get comprehensive health summary"""
-        overall_status = self.get_overall_status()
+        """Get comprehensive health summary"""        overall_status = self.get_overall_status()
         
         status_counts = {
             "healthy": 0,
@@ -1408,8 +1358,7 @@ class HealthMonitor:
         }
         
     def get_detailed_results(self) -> Dict[str, Dict[str, Any]]:
-        """Get detailed health check results"""
-        return {
+        """Get detailed health check results"""        return {
             name: {
                 "status": result.status.value,
                 "value": result.value,

@@ -1,5 +1,4 @@
-"""
-Compliance Module
+"""Compliance Module
 
 Advanced compliance and legal verification system for content creators and influencers.
 Ensures adherence to platform policies, legal requirements, and industry standards.
@@ -14,7 +13,6 @@ distribution, modification, or appropriation of this code, in whole or in part, 
 explicit written permission from Fahed Mlaiel is strictly prohibited and will be prosecuted 
 to the full extent of the law.
 """
-
 import asyncio
 import logging
 import re
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceLevel(Enum):
-    """Compliance severity levels"""
-    COMPLIANT = "compliant"
+    """Compliance severity levels"""    COMPLIANT = "compliant"
     WARNING = "warning"
     VIOLATION = "violation"
     CRITICAL_VIOLATION = "critical_violation"
@@ -43,8 +40,7 @@ class ComplianceLevel(Enum):
 
 
 class ViolationType(Enum):
-    """Types of compliance violations"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of compliance violations"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     TRADEMARK_VIOLATION = "trademark_violation"
     PRIVACY_VIOLATION = "privacy_violation"
     HARASSMENT_BULLYING = "harassment_bullying"
@@ -63,8 +59,7 @@ class ViolationType(Enum):
 
 
 class Platform(Enum):
-    """Supported platforms"""
-    INSTAGRAM = "instagram"
+    """Supported platforms"""    INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     YOUTUBE = "youtube"
     FACEBOOK = "facebook"
@@ -76,8 +71,7 @@ class Platform(Enum):
 
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions"""
-    UNITED_STATES = "united_states"
+    """Legal jurisdictions"""    UNITED_STATES = "united_states"
     EUROPEAN_UNION = "european_union"
     UNITED_KINGDOM = "united_kingdom"
     CANADA = "canada"
@@ -89,8 +83,7 @@ class LegalJurisdiction(Enum):
 
 @dataclass
 class ComplianceViolation:
-    """Individual compliance violation"""
-    violation_type: ViolationType
+    """Individual compliance violation"""    violation_type: ViolationType
     severity: ComplianceLevel
     description: str
     evidence: List[str] = field(default_factory=list)
@@ -103,8 +96,7 @@ class ComplianceViolation:
 
 @dataclass
 class PlatformCompliance:
-    """Platform-specific compliance analysis"""
-    platform: Platform
+    """Platform-specific compliance analysis"""    platform: Platform
     compliance_score: float = field(default=100.0)
     violations: List[ComplianceViolation] = field(default_factory=list)
     warnings: List[str] = field(default_factory=list)
@@ -125,8 +117,7 @@ class PlatformCompliance:
 
 @dataclass
 class LegalCompliance:
-    """Legal compliance analysis"""
-    jurisdiction: LegalJurisdiction
+    """Legal compliance analysis"""    jurisdiction: LegalJurisdiction
     overall_compliance_score: float = field(default=100.0)
     
     # Legal areas
@@ -150,8 +141,7 @@ class LegalCompliance:
 
 @dataclass
 class ContentSafety:
-    """Content safety and moderation analysis"""
-    safety_score: float = field(default=100.0)
+    """Content safety and moderation analysis"""    safety_score: float = field(default=100.0)
     
     # Safety categories
     violence_safety: float = field(default=100.0)
@@ -172,8 +162,7 @@ class ContentSafety:
 
 @dataclass
 class IntellectualPropertyCompliance:
-    """Intellectual property compliance analysis"""
-    ip_compliance_score: float = field(default=100.0)
+    """Intellectual property compliance analysis"""    ip_compliance_score: float = field(default=100.0)
     
     # IP categories
     copyright_score: float = field(default=100.0)
@@ -194,8 +183,7 @@ class IntellectualPropertyCompliance:
 
 @dataclass
 class ComplianceProfile:
-    """Comprehensive compliance profile"""
-    # Overall compliance
+    """Comprehensive compliance profile"""    # Overall compliance
     overall_compliance_score: float = field(default=100.0)
     compliance_level: ComplianceLevel = field(default=ComplianceLevel.COMPLIANT)
     
@@ -222,8 +210,7 @@ class ComplianceProfile:
 
 @dataclass
 class ComplianceAnalysisMetrics:
-    """Compliance analysis metrics container"""
-    profile: ComplianceProfile = field(default_factory=ComplianceProfile)
+    """Compliance analysis metrics container"""    profile: ComplianceProfile = field(default_factory=ComplianceProfile)
     
     # Analysis metadata
     platforms_analyzed: List[Platform] = field(default_factory=list)
@@ -243,8 +230,7 @@ class ComplianceAnalysisMetrics:
 
 
 class ComplianceAnalyzer(BaseAIModel):
-    """
-    Professional Compliance Analyzer
+    """    Professional Compliance Analyzer
     
     Provides comprehensive compliance verification for:
     - Content creators and influencers
@@ -252,11 +238,9 @@ class ComplianceAnalyzer(BaseAIModel):
     - Brand safety teams
     - Legal compliance departments
     - Platform risk management
-    """
-    
+    """    
     def __init__(self, config: Optional[ModelConfig] = None):
-        """Initialize compliance analyzer"""
-        super().__init__(config or ModelConfig(
+        """Initialize compliance analyzer"""        super().__init__(config or ModelConfig(
             model_name="compliance_analyzer",
             provider="internal",
             version="1.0.0"
@@ -273,8 +257,7 @@ class ComplianceAnalyzer(BaseAIModel):
         logger.info("Compliance Analyzer initialized successfully")
     
     def _initialize_compliance_rules(self):
-        """Initialize platform compliance rules"""
-        self.platform_rules = {
+        """Initialize platform compliance rules"""        self.platform_rules = {
             Platform.INSTAGRAM: {
                 'max_hashtags': 30,
                 'prohibited_content': ['nudity', 'hate_speech', 'violence', 'harassment'],
@@ -306,8 +289,7 @@ class ComplianceAnalyzer(BaseAIModel):
         }
     
     def _initialize_violation_patterns(self):
-        """Initialize violation detection patterns"""
-        self.violation_patterns = {
+        """Initialize violation detection patterns"""        self.violation_patterns = {
             ViolationType.HATE_SPEECH: {
                 'keywords': ['hate', 'racist', 'nazi', 'terrorist', 'kill'],
                 'severity': ComplianceLevel.CRITICAL_VIOLATION,
@@ -342,8 +324,7 @@ class ComplianceAnalyzer(BaseAIModel):
         }
     
     def _initialize_legal_requirements(self):
-        """Initialize legal requirements by jurisdiction"""
-        self.legal_requirements = {
+        """Initialize legal requirements by jurisdiction"""        self.legal_requirements = {
             LegalJurisdiction.UNITED_STATES: {
                 'ftc_disclosure_required': True,
                 'coppa_compliance': True,
@@ -371,8 +352,7 @@ class ComplianceAnalyzer(BaseAIModel):
         jurisdictions: Optional[List[LegalJurisdiction]] = None,
         analysis_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Comprehensive compliance analysis
+        """        Comprehensive compliance analysis
         
         Args:
             content_data: Content information and metadata
@@ -386,8 +366,7 @@ class ComplianceAnalyzer(BaseAIModel):
         Raises:
             QualityCheckError: If analysis fails
             QualityCheckError: If critical violations are detected
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             if not content_data:
@@ -538,8 +517,7 @@ class ComplianceAnalyzer(BaseAIModel):
             raise QualityCheckError(f"Compliance analysis failed: {str(e)}") from e
     
     async def _analyze_content_safety(self, content_data: Dict[str, Any], profile: ComplianceProfile):
-        """Analyze content safety and moderation requirements"""
-        try:
+        """Analyze content safety and moderation requirements"""        try:
             text_content = content_data.get('text', '').lower()
             media_type = content_data.get('media_type', 'unknown')
             metadata = content_data.get('metadata', {})
@@ -692,8 +670,7 @@ class ComplianceAnalyzer(BaseAIModel):
             logger.warning(f"Content safety analysis failed: {str(e)}")
     
     async def _analyze_intellectual_property(self, content_data: Dict[str, Any], profile: ComplianceProfile):
-        """Analyze intellectual property compliance"""
-        try:
+        """Analyze intellectual property compliance"""        try:
             text_content = content_data.get('text', '').lower()
             media_info = content_data.get('media_info', {})
             
@@ -799,8 +776,7 @@ class ComplianceAnalyzer(BaseAIModel):
             logger.warning(f"IP compliance analysis failed: {str(e)}")
     
     async def _analyze_platform_compliance(self, content_data: Dict[str, Any], platforms: List[Platform], profile: ComplianceProfile):
-        """Analyze platform-specific compliance"""
-        try:
+        """Analyze platform-specific compliance"""        try:
             text_content = content_data.get('text', '')
             hashtags = content_data.get('hashtags', [])
             media_info = content_data.get('media_info', {})
@@ -929,8 +905,7 @@ class ComplianceAnalyzer(BaseAIModel):
             logger.warning(f"Platform compliance analysis failed: {str(e)}")
     
     async def _analyze_legal_compliance(self, content_data: Dict[str, Any], jurisdictions: List[LegalJurisdiction], profile: ComplianceProfile):
-        """Analyze legal compliance requirements"""
-        try:
+        """Analyze legal compliance requirements"""        try:
             text_content = content_data.get('text', '')
             user_data = content_data.get('user_data', {})
             
@@ -1052,8 +1027,7 @@ class ComplianceAnalyzer(BaseAIModel):
             logger.warning(f"Legal compliance analysis failed: {str(e)}")
     
     def _calculate_overall_compliance(self, profile: ComplianceProfile):
-        """Calculate overall compliance score and level"""
-        try:
+        """Calculate overall compliance score and level"""        try:
             # Collect all compliance scores
             scores = []
             
@@ -1100,8 +1074,7 @@ class ComplianceAnalyzer(BaseAIModel):
             logger.warning(f"Overall compliance calculation failed: {str(e)}")
     
     def _generate_compliance_recommendations(self, profile: ComplianceProfile):
-        """Generate compliance recommendations"""
-        try:
+        """Generate compliance recommendations"""        try:
             priority_actions = []
             compliance_recommendations = []
             risk_mitigation = []
@@ -1163,8 +1136,7 @@ class ComplianceAnalyzer(BaseAIModel):
             logger.warning(f"Compliance recommendations generation failed: {str(e)}")
     
     def _assess_critical_violations(self, profile: ComplianceProfile):
-        """Assess and handle critical violations"""
-        try:
+        """Assess and handle critical violations"""        try:
             critical_types = [
                 ViolationType.HATE_SPEECH,
                 ViolationType.COPYRIGHT_INFRINGEMENT,
@@ -1197,8 +1169,7 @@ class ComplianceAnalyzer(BaseAIModel):
             logger.warning(f"Critical violation assessment failed: {str(e)}")
     
     async def _calculate_analysis_metrics(self, content_data: Dict[str, Any], profile: ComplianceProfile, metrics: ComplianceAnalysisMetrics):
-        """Calculate analysis metrics and statistics"""
-        try:
+        """Calculate analysis metrics and statistics"""        try:
             # Count total checks performed
             checks_performed = 0
             checks_performed += len(self.violation_patterns)  # Pattern checks
@@ -1240,8 +1211,7 @@ class ComplianceAnalyzer(BaseAIModel):
             logger.warning(f"Analysis metrics calculation failed: {str(e)}")
     
     def _calculate_confidence(self, profile: ComplianceProfile, content_data: Dict[str, Any]) -> float:
-        """Calculate analysis confidence score"""
-        confidence = 0.85  # Base confidence
+        """Calculate analysis confidence score"""        confidence = 0.85  # Base confidence
         
         # Adjust based on content completeness
         if content_data.get('text'):
@@ -1274,8 +1244,7 @@ async def analyze_content_compliance(
     platforms: Optional[List[Platform]] = None,
     jurisdictions: Optional[List[LegalJurisdiction]] = None
 ) -> Dict[str, Any]:
-    """
-    Convenient function for content compliance analysis
+    """    Convenient function for content compliance analysis
     
     Args:
         content_data: Content information and metadata
@@ -1284,8 +1253,7 @@ async def analyze_content_compliance(
         
     Returns:
         Dict containing compliance analysis results
-    """
-    try:
+    """    try:
         result = await compliance_analyzer.analyze_compliance(
             content_data, platforms, jurisdictions
         )

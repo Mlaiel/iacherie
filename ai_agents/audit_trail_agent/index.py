@@ -1,5 +1,4 @@
-"""
-Module Index - Audit Trail Agent Components Registry
+"""Module Index - Audit Trail Agent Components Registry
 
 Centralized index for all audit trail agent modules providing quick access,
 initialization coordination, and service discovery.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and intellectual property belong exclusively to Fahed Mlaiel.
 Unauthorized use, distribution, or commercialization is strictly prohibited.
 """
-
 from typing import Dict, List, Optional, Any, Type
 import logging
 
@@ -106,68 +104,56 @@ MODULE_DEPENDENCIES = {
 }
 
 def get_module_info(module_name: str) -> Optional[Dict[str, Any]]:
-    """
-    Get detailed information about a specific audit module
+    """    Get detailed information about a specific audit module
     
     Args:
         module_name: Name of the module
         
     Returns:
         Module information dictionary or None if not found
-    """
-    return AUDIT_MODULES.get(module_name)
+    """    return AUDIT_MODULES.get(module_name)
 
 def get_all_modules() -> Dict[str, Dict[str, Any]]:
-    """
-    Get information about all available audit modules
+    """    Get information about all available audit modules
     
     Returns:
         Dictionary of all module information
-    """
-    return AUDIT_MODULES.copy()
+    """    return AUDIT_MODULES.copy()
 
 def get_module_class(module_name: str) -> Optional[Type]:
-    """
-    Get the class for a specific audit module
+    """    Get the class for a specific audit module
     
     Args:
         module_name: Name of the module
         
     Returns:
         Module class or None if not found
-    """
-    module_info = AUDIT_MODULES.get(module_name)
+    """    module_info = AUDIT_MODULES.get(module_name)
     return module_info["class"] if module_info else None
 
 def get_initialization_order() -> List[str]:
-    """
-    Get the recommended initialization order for audit modules
+    """    Get the recommended initialization order for audit modules
     
     Returns:
         List of module names in initialization order
-    """
-    return sorted(AUDIT_MODULES.keys(), key=lambda x: AUDIT_MODULES[x]["priority"])
+    """    return sorted(AUDIT_MODULES.keys(), key=lambda x: AUDIT_MODULES[x]["priority"])
 
 def get_module_dependencies(module_name: str) -> List[str]:
-    """
-    Get the dependencies for a specific module
+    """    Get the dependencies for a specific module
     
     Args:
         module_name: Name of the module
         
     Returns:
         List of dependency module names
-    """
-    return MODULE_DEPENDENCIES.get(module_name, [])
+    """    return MODULE_DEPENDENCIES.get(module_name, [])
 
 def validate_module_dependencies() -> Dict[str, List[str]]:
-    """
-    Validate all module dependencies and identify any issues
+    """    Validate all module dependencies and identify any issues
     
     Returns:
         Dictionary of validation issues by module
-    """
-    issues = {}
+    """    issues = {}
     
     for module_name, dependencies in MODULE_DEPENDENCIES.items():
         module_issues = []
@@ -197,25 +183,21 @@ CAPABILITY_MATRIX = {
 }
 
 def get_modules_by_capability(capability: str) -> List[str]:
-    """
-    Get modules that provide a specific capability
+    """    Get modules that provide a specific capability
     
     Args:
         capability: Capability name
         
     Returns:
         List of module names that provide the capability
-    """
-    return CAPABILITY_MATRIX.get(capability, [])
+    """    return CAPABILITY_MATRIX.get(capability, [])
 
 def get_all_capabilities() -> List[str]:
-    """
-    Get all available capabilities across audit modules
+    """    Get all available capabilities across audit modules
     
     Returns:
         List of all capability names
-    """
-    return list(CAPABILITY_MATRIX.keys())
+    """    return list(CAPABILITY_MATRIX.keys())
 
 # Module Status Tracking
 module_status = {
@@ -229,58 +211,48 @@ module_status = {
 }
 
 def update_module_status(module_name: str, status_update: Dict[str, Any]) -> None:
-    """
-    Update the status of a specific module
+    """    Update the status of a specific module
     
     Args:
         module_name: Name of the module
         status_update: Status update dictionary
-    """
-    if module_name in module_status:
+    """    if module_name in module_status:
         module_status[module_name].update(status_update)
         logger.info(f"Module status updated: {module_name} - {status_update}")
 
 def get_module_status(module_name: str) -> Optional[Dict[str, Any]]:
-    """
-    Get the current status of a specific module
+    """    Get the current status of a specific module
     
     Args:
         module_name: Name of the module
         
     Returns:
         Module status dictionary or None if not found
-    """
-    return module_status.get(module_name)
+    """    return module_status.get(module_name)
 
 def get_all_module_statuses() -> Dict[str, Dict[str, Any]]:
-    """
-    Get the current status of all modules
+    """    Get the current status of all modules
     
     Returns:
         Dictionary of all module statuses
-    """
-    return module_status.copy()
+    """    return module_status.copy()
 
 def get_healthy_modules() -> List[str]:
-    """
-    Get list of all healthy/operational modules
+    """    Get list of all healthy/operational modules
     
     Returns:
         List of healthy module names
-    """
-    return [
+    """    return [
         name for name, status in module_status.items()
         if status.get("healthy", False) and status.get("initialized", False)
     ]
 
 def get_unhealthy_modules() -> List[str]:
-    """
-    Get list of all unhealthy/problematic modules
+    """    Get list of all unhealthy/problematic modules
     
     Returns:
         List of unhealthy module names
-    """
-    return [
+    """    return [
         name for name, status in module_status.items()
         if not status.get("healthy", False) or not status.get("initialized", False)
     ]
@@ -326,25 +298,21 @@ MODULE_CONFIG_TEMPLATES = {
 }
 
 def get_module_config_template(module_name: str) -> Optional[Dict[str, Any]]:
-    """
-    Get the configuration template for a specific module
+    """    Get the configuration template for a specific module
     
     Args:
         module_name: Name of the module
         
     Returns:
         Configuration template dictionary or None if not found
-    """
-    return MODULE_CONFIG_TEMPLATES.get(module_name, {}).copy()
+    """    return MODULE_CONFIG_TEMPLATES.get(module_name, {}).copy()
 
 def get_all_config_templates() -> Dict[str, Dict[str, Any]]:
-    """
-    Get configuration templates for all modules
+    """    Get configuration templates for all modules
     
     Returns:
         Dictionary of all configuration templates
-    """
-    return {name: template.copy() for name, template in MODULE_CONFIG_TEMPLATES.items()}
+    """    return {name: template.copy() for name, template in MODULE_CONFIG_TEMPLATES.items()}
 
 # Export all public components
 __all__ = [

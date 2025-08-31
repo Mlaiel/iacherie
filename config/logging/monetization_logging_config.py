@@ -1,5 +1,4 @@
-"""
-Monetization Logging Configuration for IA-Influencer Agent Platform
+"""Monetization Logging Configuration for IA-Influencer Agent Platform
 ==================================================================
 
 Industrial-grade logging configuration for revenue tracking, payment processing,
@@ -18,7 +17,6 @@ and will result in immediate legal action under German and International copyrig
 
 Contact: mlaiel@live.de for licensing inquiries only.
 """
-
 import logging
 import json
 from datetime import datetime
@@ -32,8 +30,7 @@ from pythonjsonlogger import jsonlogger
 
 
 class RevenueStreamType(str, Enum):
-    """Revenue stream types for monetization logging"""
-    STREAMING_ROYALTIES = "streaming_royalties"
+    """Revenue stream types for monetization logging"""    STREAMING_ROYALTIES = "streaming_royalties"
     LICENSING_FEES = "licensing_fees"
     BRAND_PARTNERSHIPS = "brand_partnerships"
     MERCHANDISE_SALES = "merchandise_sales"
@@ -50,8 +47,7 @@ class RevenueStreamType(str, Enum):
 
 
 class PlatformType(str, Enum):
-    """Platform types for revenue tracking"""
-    SPOTIFY = "spotify"
+    """Platform types for revenue tracking"""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -71,8 +67,7 @@ class PlatformType(str, Enum):
 
 
 class TransactionStatus(str, Enum):
-    """Transaction status for payment tracking"""
-    PENDING = "pending"
+    """Transaction status for payment tracking"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -86,8 +81,7 @@ class TransactionStatus(str, Enum):
 
 @dataclass
 class MonetizationLogConfig:
-    """Configuration for monetization logging"""
-    enable_revenue_tracking: bool = True
+    """Configuration for monetization logging"""    enable_revenue_tracking: bool = True
     enable_payment_processing: bool = True
     enable_licensing_logging: bool = True
     enable_partnership_logging: bool = True
@@ -123,15 +117,13 @@ class MonetizationLogConfig:
 
 
 class MonetizationLogger:
-    """Specialized logger for monetization operations"""
-    
+    """Specialized logger for monetization operations"""    
     def __init__(self, config: MonetizationLogConfig):
         self.config = config
         self.logger = self._setup_logger()
         
     def _setup_logger(self) -> structlog.BoundLogger:
-        """Setup structured logger for monetization"""
-        processors = [
+        """Setup structured logger for monetization"""        processors = [
             structlog.threadlocal.merge_threadlocal_context,
             structlog.processors.TimeStamper(fmt="iso"),
             structlog.processors.add_log_level,
@@ -157,16 +149,14 @@ class MonetizationLogger:
         return structlog.get_logger("ia_influencer_monetization")
     
     def _pci_dss_processor(self, logger, method_name, event_dict):
-        """PCI DSS compliance processor for financial data"""
-        sensitive_fields = ['credit_card', 'bank_account', 'ssn', 'tax_id']
+        """PCI DSS compliance processor for financial data"""        sensitive_fields = ['credit_card', 'bank_account', 'ssn', 'tax_id']
         for field in sensitive_fields:
             if field in event_dict:
                 event_dict[field] = "[PCI_MASKED]"
         return event_dict
     
     def _mask_amount(self, amount: float) -> str:
-        """Mask financial amounts if configured"""
-        if self.config.mask_sensitive_amounts and amount > 1000:
+        """Mask financial amounts if configured"""        if self.config.mask_sensitive_amounts and amount > 1000:
             return "[MASKED_HIGH_VALUE]"
         return str(amount)
     
@@ -181,8 +171,7 @@ class MonetizationLogger:
         transaction_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Log revenue generation events"""
-        if not self.config.enable_revenue_tracking:
+        """Log revenue generation events"""        if not self.config.enable_revenue_tracking:
             return
             
         log_data = {
@@ -219,8 +208,7 @@ class MonetizationLogger:
         fees: Optional[Decimal] = None,
         error_code: Optional[str] = None
     ) -> None:
-        """Log payment processing events"""
-        if not self.config.enable_payment_processing:
+        """Log payment processing events"""        if not self.config.enable_payment_processing:
             return
             
         log_data = {
@@ -264,8 +252,7 @@ class MonetizationLogger:
         territory: str,
         usage_rights: List[str]
     ) -> None:
-        """Log content licensing transactions"""
-        if not self.config.enable_licensing_logging:
+        """Log content licensing transactions"""        if not self.config.enable_licensing_logging:
             return
             
         log_data = {
@@ -301,8 +288,7 @@ class MonetizationLogger:
         deliverables_status: str,
         payment_terms: Dict[str, Any]
     ) -> None:
-        """Log brand partnership activities"""
-        if not self.config.enable_partnership_logging:
+        """Log brand partnership activities"""        if not self.config.enable_partnership_logging:
             return
             
         log_data = {
@@ -332,8 +318,7 @@ class MonetizationLogger:
         revenue_breakdown: Dict[str, Decimal],
         growth_indicators: Dict[str, float]
     ) -> None:
-        """Log platform analytics and performance metrics"""
-        if not self.config.enable_analytics_logging:
+        """Log platform analytics and performance metrics"""        if not self.config.enable_analytics_logging:
             return
             
         # Mask high-value revenue data if configured
@@ -367,8 +352,7 @@ class MonetizationLogger:
         jurisdiction: str,
         tax_document_id: str
     ) -> None:
-        """Log tax-related events for compliance"""
-        if not self.config.enable_tax_reporting:
+        """Log tax-related events for compliance"""        if not self.config.enable_tax_reporting:
             return
             
         log_data = {
@@ -398,8 +382,7 @@ class MonetizationLogger:
         action_taken: str,
         investigation_required: bool
     ) -> None:
-        """Log fraud detection events"""
-        if not self.config.enable_fraud_detection:
+        """Log fraud detection events"""        if not self.config.enable_fraud_detection:
             return
             
         log_data = {
@@ -421,13 +404,11 @@ class MonetizationLogger:
         self.logger.warning("Fraud detection event", **log_data)
     
     def _detect_fraud_indicators(self, transaction_data: Dict[str, Any]) -> bool:
-        """Simple fraud detection logic"""
-        # This would integrate with advanced fraud detection systems
+        """Simple fraud detection logic"""        # This would integrate with advanced fraud detection systems
         return False  # Placeholder implementation
     
     def get_monetization_metrics(self) -> Dict[str, Any]:
-        """Get monetization system metrics"""
-        return {
+        """Get monetization system metrics"""        return {
             "revenue_tracking_enabled": self.config.enable_revenue_tracking,
             "payment_processing_enabled": self.config.enable_payment_processing,
             "licensing_logging_enabled": self.config.enable_licensing_logging,
@@ -444,17 +425,14 @@ class MonetizationLogger:
 
 
 class MonetizationLoggingConfig:
-    """Main configuration class for monetization logging"""
-    
+    """Main configuration class for monetization logging"""    
     @staticmethod
     def create_default_config() -> MonetizationLogConfig:
-        """Create default monetization logging configuration"""
-        return MonetizationLogConfig()
+        """Create default monetization logging configuration"""        return MonetizationLogConfig()
     
     @staticmethod
     def create_enterprise_config() -> MonetizationLogConfig:
-        """Create enterprise-grade monetization logging configuration"""
-        return MonetizationLogConfig(
+        """Create enterprise-grade monetization logging configuration"""        return MonetizationLogConfig(
             enable_revenue_tracking=True,
             enable_payment_processing=True,
             enable_licensing_logging=True,

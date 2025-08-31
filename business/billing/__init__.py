@@ -9,8 +9,7 @@ Architecture: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité +
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
-"""
-# Core billing services
+"""# Core billing services
 from .invoice_generator import InvoiceGeneratorEngine, InvoiceData
 from .payment_processor import PaymentProcessorEngine, PaymentData, BulkPayoutResult
 from .commission_calculator import CommissionCalculatorEngine, CommissionData, TierLevel

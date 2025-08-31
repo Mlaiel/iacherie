@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,13 +12,11 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test suite for Performance Analyzer module.
+"""Test suite for Performance Analyzer module.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import unittest
 from unittest.mock import Mock, AsyncMock, patch
 import asyncio
@@ -31,10 +27,8 @@ import json
 
 class TestPerformanceAnalyzer(unittest.TestCase):
     """Test suite for PerformanceAnalyzer class"""
-
     def setUp(self):
-        """Set up test fixtures"""
-        self.analyzer = None  # Will be mocked
+        """Set up test fixtures"""        self.analyzer = None  # Will be mocked
         self.sample_metrics = {
             "content_id": "content_123",
             "platform": "youtube",
@@ -47,8 +41,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         }
 
     def test_performance_metrics_structure(self):
-        """Test performance metrics data structure"""
-        metrics = {
+        """Test performance metrics data structure"""        metrics = {
             "content_id": "test_123",
             "platform": "youtube",
             "views": 1000,
@@ -71,8 +64,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertIsInstance(metrics["timestamp"], datetime)
 
     def test_engagement_rate_calculation(self):
-        """Test engagement rate calculation logic"""
-        views = 10000
+        """Test engagement rate calculation logic"""        views = 10000
         likes = 500
         shares = 50
         comments = 100
@@ -85,8 +77,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertEqual(calculated_engagement, expected_engagement)
 
     def test_performance_comparison(self):
-        """Test performance comparison between periods"""
-        current_metrics = {
+        """Test performance comparison between periods"""        current_metrics = {
             "views": 15000,
             "likes": 800,
             "engagement_rate": 0.08
@@ -108,8 +99,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertAlmostEqual(engagement_growth, 23.08, places=2)  # ~23% increase
 
     def test_platform_performance_aggregation(self):
-        """Test aggregation of performance across platforms"""
-        platform_data = {
+        """Test aggregation of performance across platforms"""        platform_data = {
             "youtube": {"views": 10000, "engagement": 0.06},
             "instagram": {"views": 5000, "engagement": 0.08},
             "tiktok": {"views": 20000, "engagement": 0.12}
@@ -129,8 +119,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertAlmostEqual(weighted_engagement, 0.1, places=1)
 
     def test_trend_analysis(self):
-        """Test trend analysis functionality"""
-        # Sample data for 7 days
+        """Test trend analysis functionality"""        # Sample data for 7 days
         daily_views = [1000, 1200, 1100, 1300, 1500, 1400, 1600]
         
         # Simple trend calculation (linear)
@@ -147,8 +136,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertAlmostEqual(slope, 92.86, places=2)
 
     def test_performance_benchmarking(self):
-        """Test performance benchmarking against industry standards"""
-        content_metrics = {
+        """Test performance benchmarking against industry standards"""        content_metrics = {
             "engagement_rate": 0.08,
             "view_duration": 0.75,  # 75% completion rate
             "click_through_rate": 0.05
@@ -176,8 +164,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertAlmostEqual(performance_scores["click_through_rate"], 166.67, places=2)
 
     def test_anomaly_detection(self):
-        """Test anomaly detection in performance metrics"""
-        # Normal range of daily views
+        """Test anomaly detection in performance metrics"""        # Normal range of daily views
         normal_views = [1000, 1100, 950, 1050, 1200, 980, 1150]
         
         # Calculate mean and standard deviation
@@ -202,8 +189,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertNotIn(1100, anomalies)
 
     def test_roi_performance_correlation(self):
-        """Test correlation between performance metrics and ROI"""
-        performance_data = [
+        """Test correlation between performance metrics and ROI"""        performance_data = [
             {"engagement_rate": 0.05, "roi": 150},
             {"engagement_rate": 0.08, "roi": 200},
             {"engagement_rate": 0.12, "roi": 300},
@@ -233,8 +219,7 @@ class TestPerformanceAnalyzer(unittest.TestCase):
         self.assertLessEqual(correlation, 1.0)  # Correlation cannot exceed 1
 
     def test_multi_platform_performance_insights(self):
-        """Test generation of insights across multiple platforms"""
-        platform_performance = {
+        """Test generation of insights across multiple platforms"""        platform_performance = {
             "youtube": {
                 "total_views": 50000,
                 "engagement_rate": 0.06,

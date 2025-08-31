@@ -1,5 +1,4 @@
-"""
-Security Monitoring Configuration Module for IA-Influencer Agent Platform
+"""Security Monitoring Configuration Module for IA-Influencer Agent Platform
 ==========================================================================
 
 Professional security monitoring configuration for comprehensive
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, field
@@ -25,16 +23,14 @@ import ipaddress
 
 
 class ThreatLevel(Enum):
-    """Security threat levels"""
-    LOW = "low"
+    """Security threat levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class SecurityEventType(Enum):
-    """Security event types"""
-    AUTHENTICATION = "authentication"
+    """Security event types"""    AUTHENTICATION = "authentication"
     AUTHORIZATION = "authorization"
     DATA_ACCESS = "data_access"
     NETWORK_INTRUSION = "network_intrusion"
@@ -49,8 +45,7 @@ class SecurityEventType(Enum):
 
 
 class ResponseAction(Enum):
-    """Security response actions"""
-    ALERT = "alert"
+    """Security response actions"""    ALERT = "alert"
     BLOCK = "block"
     RATE_LIMIT = "rate_limit"
     QUARANTINE = "quarantine"
@@ -60,8 +55,7 @@ class ResponseAction(Enum):
 
 @dataclass
 class SecurityRule:
-    """Security monitoring rule"""
-    name: str
+    """Security monitoring rule"""    name: str
     event_type: SecurityEventType
     condition: str
     threat_level: ThreatLevel
@@ -74,8 +68,7 @@ class SecurityRule:
 
 @dataclass
 class ThreatIntelligence:
-    """Threat intelligence configuration"""
-    enabled: bool
+    """Threat intelligence configuration"""    enabled: bool
     feeds: List[str] = field(default_factory=list)
     update_interval: str = "1h"
     reputation_threshold: float = 0.7
@@ -83,8 +76,7 @@ class ThreatIntelligence:
 
 
 class SecurityMonitoringConfig:
-    """Professional security monitoring configuration for IA-Influencer platform"""
-    
+    """Professional security monitoring configuration for IA-Influencer platform"""    
     def __init__(self):
         self.security_monitoring_enabled = os.getenv("SECURITY_MONITORING_ENABLED", "true").lower() == "true"
         self.intrusion_detection_enabled = os.getenv("INTRUSION_DETECTION_ENABLED", "true").lower() == "true"
@@ -98,8 +90,7 @@ class SecurityMonitoringConfig:
         self.environment = os.getenv("ENVIRONMENT", "production")
     
     def get_authentication_monitoring_config(self) -> Dict[str, Any]:
-        """Get authentication monitoring configuration"""
-        return {
+        """Get authentication monitoring configuration"""        return {
             "enabled": self.security_monitoring_enabled,
             "failed_login_threshold": self.max_failed_attempts,
             "lockout_duration": self.account_lockout_duration,
@@ -144,8 +135,7 @@ class SecurityMonitoringConfig:
         }
     
     def get_network_security_monitoring_config(self) -> Dict[str, Any]:
-        """Get network security monitoring configuration"""
-        return {
+        """Get network security monitoring configuration"""        return {
             "enabled": self.security_monitoring_enabled,
             "intrusion_detection": {
                 "enabled": self.intrusion_detection_enabled,
@@ -188,8 +178,7 @@ class SecurityMonitoringConfig:
         }
     
     def get_application_security_monitoring_config(self) -> Dict[str, Any]:
-        """Get application security monitoring configuration"""
-        return {
+        """Get application security monitoring configuration"""        return {
             "enabled": self.security_monitoring_enabled,
             "web_application_firewall": {
                 "enabled": True,
@@ -260,8 +249,7 @@ class SecurityMonitoringConfig:
         }
     
     def get_data_security_monitoring_config(self) -> Dict[str, Any]:
-        """Get data security monitoring configuration"""
-        return {
+        """Get data security monitoring configuration"""        return {
             "enabled": self.security_monitoring_enabled,
             "data_loss_prevention": {
                 "enabled": True,
@@ -304,8 +292,7 @@ class SecurityMonitoringConfig:
         }
     
     def get_user_behavior_monitoring_config(self) -> Dict[str, Any]:
-        """Get user behavior monitoring configuration"""
-        return {
+        """Get user behavior monitoring configuration"""        return {
             "enabled": self.security_monitoring_enabled,
             "behavioral_analytics": {
                 "enabled": True,
@@ -339,8 +326,7 @@ class SecurityMonitoringConfig:
         }
     
     def get_security_rules(self) -> List[SecurityRule]:
-        """Get security monitoring rules"""
-        return [
+        """Get security monitoring rules"""        return [
             # Authentication rules
             SecurityRule(
                 name="Failed Login Attempts",
@@ -440,8 +426,7 @@ class SecurityMonitoringConfig:
         ]
     
     def get_threat_intelligence_config(self) -> ThreatIntelligence:
-        """Get threat intelligence configuration"""
-        return ThreatIntelligence(
+        """Get threat intelligence configuration"""        return ThreatIntelligence(
             enabled=self.threat_intelligence_enabled,
             feeds=[
                 "https://rules.emergingthreats.net/open/suricata/rules/",
@@ -455,8 +440,7 @@ class SecurityMonitoringConfig:
         )
     
     def get_incident_response_config(self) -> Dict[str, Any]:
-        """Get security incident response configuration"""
-        return {
+        """Get security incident response configuration"""        return {
             "enabled": True,
             "automated_response": {
                 "enabled": self.auto_response_enabled,
@@ -505,8 +489,7 @@ class SecurityMonitoringConfig:
         }
     
     def get_compliance_monitoring_config(self) -> Dict[str, Any]:
-        """Get compliance monitoring configuration"""
-        return {
+        """Get compliance monitoring configuration"""        return {
             "enabled": True,
             "frameworks": {
                 "gdpr": {
@@ -544,8 +527,7 @@ class SecurityMonitoringConfig:
         }
     
     def get_security_metrics_config(self) -> Dict[str, Any]:
-        """Get security metrics configuration"""
-        return {
+        """Get security metrics configuration"""        return {
             "key_metrics": {
                 "security_incidents_count": {
                     "enabled": True,
@@ -599,8 +581,7 @@ class SecurityMonitoringConfig:
         }
     
     def get_complete_config(self) -> Dict[str, Any]:
-        """Get complete security monitoring configuration"""
-        return {
+        """Get complete security monitoring configuration"""        return {
             "global": {
                 "enabled": self.security_monitoring_enabled,
                 "environment": self.environment,

@@ -1,5 +1,4 @@
-"""
-Platform Integration Database Models and Operations
+"""Platform Integration Database Models and Operations
 
 Gestion complète des intégrations multi-plateformes pour distribution
 automatisée et synchronisation des comptes créateurs.
@@ -14,7 +13,6 @@ Toute utilisation, reproduction ou distribution sans autorisation
 poursuites judiciaires selon la loi allemande.
 Email: mlaiel@live.de pour autorisation d'utilisation.
 """
-
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, Text, JSON, Enum, ForeignKey, Decimal
 from sqlalchemy.orm import relationship, Session
 from sqlalchemy.ext.declarative import declarative_base
@@ -33,8 +31,7 @@ Base = declarative_base()
 
 
 class PlatformType(PyEnum):
-    """Types de plateformes supportées."""
-    SPOTIFY = "spotify"
+    """Types de plateformes supportées."""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     SOUNDCLOUD = "soundcloud"
     INSTAGRAM = "instagram"
@@ -50,8 +47,7 @@ class PlatformType(PyEnum):
 
 
 class IntegrationStatus(PyEnum):
-    """Statuts d'intégration des plateformes."""
-    DISCONNECTED = "disconnected"
+    """Statuts d'intégration des plateformes."""    DISCONNECTED = "disconnected"
     CONNECTING = "connecting"
     CONNECTED = "connected"
     EXPIRED = "expired"
@@ -61,8 +57,7 @@ class IntegrationStatus(PyEnum):
 
 
 class SyncFrequency(PyEnum):
-    """Fréquences de synchronisation."""
-    REAL_TIME = "real_time"
+    """Fréquences de synchronisation."""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -70,8 +65,7 @@ class SyncFrequency(PyEnum):
 
 
 class DistributionChannel(PyEnum):
-    """Canaux de distribution."""
-    MUSIC_STREAMING = "music_streaming"
+    """Canaux de distribution."""    MUSIC_STREAMING = "music_streaming"
     VIDEO_PLATFORMS = "video_platforms"
     SOCIAL_MEDIA = "social_media"
     PODCAST_NETWORKS = "podcast_networks"
@@ -80,11 +74,9 @@ class DistributionChannel(PyEnum):
 
 
 class PlatformIntegration(Base):
-    """
-    Intégration principale avec les plateformes externes.
+    """    Intégration principale avec les plateformes externes.
     Gère l'authentification, la synchronisation et la distribution.
-    """
-    __tablename__ = "platform_integrations"
+    """    __tablename__ = "platform_integrations"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -148,10 +140,8 @@ class PlatformIntegration(Base):
 
 
 class ContentDistribution(Base):
-    """
-    Distribution de contenu vers les plateformes intégrées.
-    """
-    __tablename__ = "content_distributions"
+    """    Distribution de contenu vers les plateformes intégrées.
+    """    __tablename__ = "content_distributions"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -210,10 +200,8 @@ class ContentDistribution(Base):
 
 
 class SynchronizationTask(Base):
-    """
-    Tâches de synchronisation entre plateformes.
-    """
-    __tablename__ = "synchronization_tasks"
+    """    Tâches de synchronisation entre plateformes.
+    """    __tablename__ = "synchronization_tasks"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -262,10 +250,8 @@ class SynchronizationTask(Base):
 
 
 class PlatformAnalytics(Base):
-    """
-    Analytics consolidées des performances cross-platform.
-    """
-    __tablename__ = "platform_analytics"
+    """    Analytics consolidées des performances cross-platform.
+    """    __tablename__ = "platform_analytics"
 
     # Identifiants principaux
     id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
@@ -332,17 +318,14 @@ class PlatformAnalytics(Base):
 
 
 class PlatformIntegrationRepository:
+    """    Repository pour la gestion des intégrations de plateformes.
     """
-    Repository pour la gestion des intégrations de plateformes.
-    """
-
     def __init__(self, db_session: Session, encryption_key: bytes = None):
         self.db = db_session
         self.cipher = Fernet(encryption_key) if encryption_key else None
 
     def create_integration(self, integration_data: Dict[str, Any]) -> PlatformIntegration:
-        """Créer une nouvelle intégration de plateforme."""
-        try:
+        """Créer une nouvelle intégration de plateforme."""        try:
             # Chiffrer les tokens si disponible
             if self.cipher and 'access_token' in integration_data:
                 integration_data['access_token_encrypted'] = self.cipher.encrypt(
@@ -369,8 +352,7 @@ class PlatformIntegrationRepository:
 
     def update_integration_status(self, integration_id: str, status: IntegrationStatus, 
                                 error_message: str = None) -> bool:
-        """Mettre à jour le statut d'une intégration."""
-        try:
+        """Mettre à jour le statut d'une intégration."""        try:
             integration = self.db.query(PlatformIntegration).filter(
                 PlatformIntegration.id == integration_id
             ).first()
@@ -402,8 +384,7 @@ class PlatformIntegrationRepository:
             return False
 
     def schedule_content_distribution(self, distribution_data: Dict[str, Any]) -> ContentDistribution:
-        """Planifier une distribution de contenu."""
-        try:
+        """Planifier une distribution de contenu."""        try:
             distribution = ContentDistribution(**distribution_data)
             self.db.add(distribution)
             self.db.commit()
@@ -418,8 +399,7 @@ class PlatformIntegrationRepository:
             raise
 
     def create_sync_task(self, task_data: Dict[str, Any]) -> SynchronizationTask:
-        """Créer une tâche de synchronisation."""
-        try:
+        """Créer une tâche de synchronisation."""        try:
             task = SynchronizationTask(**task_data)
             self.db.add(task)
             self.db.commit()
@@ -434,8 +414,7 @@ class PlatformIntegrationRepository:
             raise
 
     def get_active_integrations(self, creator_id: str) -> List[PlatformIntegration]:
-        """Obtenir les intégrations actives d'un créateur."""
-        try:
+        """Obtenir les intégrations actives d'un créateur."""        try:
             integrations = self.db.query(PlatformIntegration).filter(
                 PlatformIntegration.creator_id == creator_id,
                 PlatformIntegration.status == IntegrationStatus.CONNECTED
@@ -449,8 +428,7 @@ class PlatformIntegrationRepository:
 
     def get_platform_analytics(self, creator_id: str, platform_type: PlatformType = None, 
                              days: int = 30) -> List[PlatformAnalytics]:
-        """Obtenir les analytics de plateforme."""
-        try:
+        """Obtenir les analytics de plateforme."""        try:
             query = self.db.query(PlatformAnalytics).filter(
                 PlatformAnalytics.creator_id == creator_id,
                 PlatformAnalytics.date >= datetime.utcnow() - timedelta(days=days)
@@ -470,8 +448,7 @@ class PlatformIntegrationRepository:
             return []
 
     def update_content_metrics(self, distribution_id: str, metrics: Dict[str, Any]) -> bool:
-        """Mettre à jour les métriques d'un contenu distribué."""
-        try:
+        """Mettre à jour les métriques d'un contenu distribué."""        try:
             distribution = self.db.query(ContentDistribution).filter(
                 ContentDistribution.id == distribution_id
             ).first()
@@ -497,8 +474,7 @@ class PlatformIntegrationRepository:
             return False
 
     def get_cross_platform_performance(self, creator_id: str) -> Dict[str, Any]:
-        """Obtenir la performance cross-platform d'un créateur."""
-        try:
+        """Obtenir la performance cross-platform d'un créateur."""        try:
             # Récupérer toutes les intégrations actives
             integrations = self.get_active_integrations(creator_id)
             
@@ -545,8 +521,7 @@ class PlatformIntegrationRepository:
             return {}
 
     def get_access_token(self, integration_id: str) -> Optional[str]:
-        """Récupérer le token d'accès déchiffré."""
-        try:
+        """Récupérer le token d'accès déchiffré."""        try:
             if not self.cipher:
                 logger.warning("Cipher non configuré pour déchiffrer les tokens")
                 return None

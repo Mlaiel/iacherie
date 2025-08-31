@@ -1,5 +1,4 @@
-"""
-Compliance Management System - Industrial Regulatory Compliance
+"""Compliance Management System - Industrial Regulatory Compliance
 
 Comprehensive compliance engine for tax calculations, KYC verification,
 AML screening, and regulatory reporting for international payments.
@@ -12,7 +11,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from datetime import datetime, timedelta, timezone
 from decimal import Decimal, ROUND_HALF_UP
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class ComplianceStatus(str, Enum):
-    """Compliance verification status"""
-    PENDING = "pending"
+    """Compliance verification status"""    PENDING = "pending"
     APPROVED = "approved"
     REJECTED = "rejected"
     REQUIRES_REVIEW = "requires_review"
@@ -42,15 +39,13 @@ class ComplianceStatus(str, Enum):
 
 
 class KYCLevel(str, Enum):
-    """KYC verification levels"""
-    BASIC = "basic"          # Basic identity verification
+    """KYC verification levels"""    BASIC = "basic"          # Basic identity verification
     STANDARD = "standard"    # Enhanced verification
     PREMIUM = "premium"      # Full verification with source of funds
 
 
 class RiskLevel(str, Enum):
-    """Risk assessment levels"""
-    LOW = "low"
+    """Risk assessment levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -58,8 +53,7 @@ class RiskLevel(str, Enum):
 
 @dataclass
 class KYCVerification:
-    """KYC verification data structure"""
-    creator_id: str
+    """KYC verification data structure"""    creator_id: str
     verification_level: KYCLevel
     status: ComplianceStatus
     documents_verified: List[str] = field(default_factory=list)
@@ -72,8 +66,7 @@ class KYCVerification:
 
 @dataclass
 class AMLScreening:
-    """AML screening result data structure"""
-    creator_id: str
+    """AML screening result data structure"""    creator_id: str
     screening_date: datetime
     risk_level: RiskLevel
     flagged: bool = False
@@ -87,8 +80,7 @@ class AMLScreening:
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""
-    creator_id: str
+    """Tax calculation result"""    creator_id: str
     gross_amount: Decimal
     tax_amount: Decimal
     net_amount: Decimal
@@ -101,8 +93,7 @@ class TaxCalculation:
 
 @dataclass
 class ComplianceReport:
-    """Compliance report data structure"""
-    report_type: str
+    """Compliance report data structure"""    report_type: str
     creator_id: Optional[str] = None
     period_start: Optional[datetime] = None
     period_end: Optional[datetime] = None
@@ -114,20 +105,17 @@ class ComplianceReport:
 
 
 class ComplianceManager:
-    """
-    Industrial compliance management system.
+    """    Industrial compliance management system.
     
     Handles KYC verification, AML screening, tax calculations,
     regulatory reporting, and compliance monitoring.
     """
-
     def __init__(
         self,
         config: Optional[PaymentConfig] = None,
         db_session: Optional[Session] = None
     ):
-        """Initialize compliance manager"""
-        self.config = config or PaymentConfig()
+        """Initialize compliance manager"""        self.config = config or PaymentConfig()
         self.db_session = db_session
         
         # Tax rates by jurisdiction (would be loaded from database/external service)
@@ -160,8 +148,7 @@ class ComplianceManager:
         documents: Dict[str, Any],
         verification_level: KYCLevel = KYCLevel.STANDARD
     ) -> KYCVerification:
-        """
-        Perform KYC verification for creator.
+        """        Perform KYC verification for creator.
         
         Args:
             creator_id: Creator account identifier
@@ -173,8 +160,7 @@ class ComplianceManager:
             
         Raises:
             KYCError: If verification fails
-        """
-        try:
+        """        try:
             logger.info(f"Starting KYC verification for creator {creator_id}")
             
             # Validate required documents
@@ -245,8 +231,7 @@ class ComplianceManager:
         creator_id: str,
         creator_data: Dict[str, Any]
     ) -> AMLScreening:
-        """
-        Perform AML screening and sanctions checking.
+        """        Perform AML screening and sanctions checking.
         
         Args:
             creator_id: Creator account identifier
@@ -257,8 +242,7 @@ class ComplianceManager:
             
         Raises:
             AMLError: If screening indicates high risk
-        """
-        try:
+        """        try:
             logger.info(f"Starting AML screening for creator {creator_id}")
             
             flags = []
@@ -344,8 +328,7 @@ class ComplianceManager:
         jurisdiction: str = "DE",
         transaction_type: str = "revenue"
     ) -> TaxCalculation:
-        """
-        Calculate tax obligations for transaction.
+        """        Calculate tax obligations for transaction.
         
         Args:
             creator_id: Creator account identifier
@@ -359,8 +342,7 @@ class ComplianceManager:
             
         Raises:
             TaxCalculationError: If calculation fails
-        """
-        try:
+        """        try:
             logger.info(f"Calculating taxes for {creator_id}: {gross_amount} {currency}")
             
             # Get tax configuration for creator
@@ -416,8 +398,7 @@ class ComplianceManager:
         year: int,
         country: str = "DE"
     ) -> ComplianceReport:
-        """
-        Generate annual tax report for creator.
+        """        Generate annual tax report for creator.
         
         Args:
             creator_id: Creator account identifier
@@ -426,8 +407,7 @@ class ComplianceManager:
             
         Returns:
             ComplianceReport with tax data
-        """
-        try:
+        """        try:
             logger.info(f"Generating tax report for {creator_id} - Year {year}")
             
             # Define reporting period
@@ -486,16 +466,14 @@ class ComplianceManager:
         self,
         transaction: PaymentTransaction
     ) -> Dict[str, Any]:
-        """
-        Check transaction compliance requirements.
+        """        Check transaction compliance requirements.
         
         Args:
             transaction: Payment transaction to check
             
         Returns:
             Dict with compliance check results
-        """
-        try:
+        """        try:
             compliance_result = {
                 "compliant": True,
                 "warnings": [],
@@ -536,8 +514,7 @@ class ComplianceManager:
 
     # Private methods for compliance operations
     async def _get_required_documents(self, verification_level: KYCLevel) -> List[str]:
-        """Get required documents for KYC level"""
-        if verification_level == KYCLevel.BASIC:
+        """Get required documents for KYC level"""        if verification_level == KYCLevel.BASIC:
             return ["government_id", "proof_of_address"]
         elif verification_level == KYCLevel.STANDARD:
             return ["government_id", "proof_of_address", "selfie", "bank_statement"]
@@ -552,8 +529,7 @@ class ComplianceManager:
         creator_id: str, 
         documents: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Verify submitted documents"""
-        # Mock implementation - would integrate with document verification service
+        """Verify submitted documents"""        # Mock implementation - would integrate with document verification service
         return {
             "passed": True,
             "verified_documents": list(documents.keys()),
@@ -565,8 +541,7 @@ class ComplianceManager:
         creator_id: str, 
         documents: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform identity verification checks"""
-        # Mock implementation - would integrate with identity verification service
+        """Perform identity verification checks"""        # Mock implementation - would integrate with identity verification service
         return {
             "passed": True,
             "identity_match": True,
@@ -579,8 +554,7 @@ class ComplianceManager:
         creator_id: str, 
         documents: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Perform address verification"""
-        # Mock implementation - would verify address documents
+        """Perform address verification"""        # Mock implementation - would verify address documents
         return {
             "passed": True,
             "address_verified": True,
@@ -593,8 +567,7 @@ class ComplianceManager:
         documents: Dict[str, Any],
         verification_results: Dict[str, Any]
     ) -> float:
-        """Calculate KYC risk score"""
-        # Mock implementation - would use ML models for risk scoring
+        """Calculate KYC risk score"""        # Mock implementation - would use ML models for risk scoring
         base_risk = 0.1
         
         # Adjust based on document quality
@@ -609,8 +582,7 @@ class ComplianceManager:
         return min(base_risk, 1.0)
 
     async def _check_sanctions_lists(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check against sanctions lists"""
-        flags = []
+        """Check against sanctions lists"""        flags = []
         flagged = False
         
         # Check nationality/residence country
@@ -626,18 +598,15 @@ class ComplianceManager:
         return {"flagged": flagged, "flags": flags}
 
     async def _check_pep_status(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check for Politically Exposed Person status"""
-        # Mock implementation - would check against PEP databases
+        """Check for Politically Exposed Person status"""        # Mock implementation - would check against PEP databases
         return {"flagged": False, "risk_level": "low"}
 
     async def _check_adverse_media(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check adverse media mentions"""
-        # Mock implementation - would check news/media databases
+        """Check adverse media mentions"""        # Mock implementation - would check news/media databases
         return {"flagged": False, "flags": []}
 
     async def _assess_geographic_risk(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess geographic risk factors"""
-        high_risk_countries = {'AF', 'IR', 'KP', 'SY', 'MM', 'SO'}
+        """Assess geographic risk factors"""        high_risk_countries = {'AF', 'IR', 'KP', 'SY', 'MM', 'SO'}
         country = creator_data.get("country", "").upper()
         
         return {
@@ -646,8 +615,7 @@ class ComplianceManager:
         }
 
     async def _assess_business_activity_risk(self, creator_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Assess business activity risk"""
-        high_risk_activities = {'cryptocurrency', 'gambling', 'adult_content'}
+        """Assess business activity risk"""        high_risk_activities = {'cryptocurrency', 'gambling', 'adult_content'}
         activity = creator_data.get("business_activity", "").lower()
         
         return {
@@ -660,8 +628,7 @@ class ComplianceManager:
         creator_id: str, 
         jurisdiction: str
     ) -> Dict[str, Any]:
-        """Get tax configuration for creator and jurisdiction"""
-        # Would query database for creator's tax settings
+        """Get tax configuration for creator and jurisdiction"""        # Would query database for creator's tax settings
         default_config = {
             "income_tax_rate": self.tax_rates.get(jurisdiction, {}).get("income_tax", Decimal("0.19")),
             "vat_rate": self.tax_rates.get(jurisdiction, {}).get("vat", Decimal("0.00")),
@@ -679,8 +646,7 @@ class ComplianceManager:
         transaction_type: str,
         tax_config: Dict[str, Any]
     ) -> Decimal:
-        """Determine applicable tax rate"""
-        if tax_config.get("tax_exemption"):
+        """Determine applicable tax rate"""        if tax_config.get("tax_exemption"):
             return Decimal("0.00")
         
         # Use income tax rate for revenue transactions
@@ -695,8 +661,7 @@ class ComplianceManager:
         start_date: datetime,
         end_date: datetime
     ) -> List[PaymentTransaction]:
-        """Get transactions for reporting period"""
-        if not self.db_session:
+        """Get transactions for reporting period"""        if not self.db_session:
             return []
         
         return self.db_session.query(PaymentTransaction).filter(
@@ -713,8 +678,7 @@ class ComplianceManager:
         transactions: List[PaymentTransaction], 
         country: str
     ) -> Dict[str, Any]:
-        """Calculate tax summary from transactions"""
-        total_gross = sum(t.amount for t in transactions)
+        """Calculate tax summary from transactions"""        total_gross = sum(t.amount for t in transactions)
         total_taxes = sum(t.taxes for t in transactions)
         total_net = sum(t.net_amount for t in transactions)
         
@@ -728,8 +692,7 @@ class ComplianceManager:
         }
 
     async def _check_amount_thresholds(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Check transaction amount against compliance thresholds"""
-        result = {"compliant": True, "actions": []}
+        """Check transaction amount against compliance thresholds"""        result = {"compliant": True, "actions": []}
         
         if transaction.amount >= self.thresholds["ctr_reporting"]:
             result["actions"].append("currency_transaction_reporting_required")
@@ -740,8 +703,7 @@ class ComplianceManager:
         return result
 
     async def _check_kyc_requirements(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Check KYC requirements for transaction"""
-        result = {"compliant": True, "actions": []}
+        """Check KYC requirements for transaction"""        result = {"compliant": True, "actions": []}
         
         if transaction.amount >= self.thresholds["kyc_required"]:
             # Would check if creator has valid KYC
@@ -753,8 +715,7 @@ class ComplianceManager:
         return result
 
     async def _check_aml_requirements(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Check AML requirements for transaction"""
-        result = {"compliant": True, "actions": []}
+        """Check AML requirements for transaction"""        result = {"compliant": True, "actions": []}
         
         # Would check AML screening status
         aml_valid = await self._is_aml_screening_valid(transaction.creator_id)
@@ -765,8 +726,7 @@ class ComplianceManager:
         return result
 
     async def _check_reporting_requirements(self, transaction: PaymentTransaction) -> Dict[str, Any]:
-        """Check reporting requirements"""
-        result = {"reporting_required": False, "actions": []}
+        """Check reporting requirements"""        result = {"reporting_required": False, "actions": []}
         
         if transaction.amount >= self.thresholds["ctr_reporting"]:
             result["reporting_required"] = True
@@ -775,11 +735,9 @@ class ComplianceManager:
         return result
 
     async def _is_kyc_valid(self, creator_id: str) -> bool:
-        """Check if creator has valid KYC verification"""
-        # Would check database for valid KYC record
+        """Check if creator has valid KYC verification"""        # Would check database for valid KYC record
         return True  # Mock implementation
 
     async def _is_aml_screening_valid(self, creator_id: str) -> bool:
-        """Check if creator has valid AML screening"""
-        # Would check database for valid AML screening
+        """Check if creator has valid AML screening"""        # Would check database for valid AML screening
         return True  # Mock implementation

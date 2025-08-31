@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-"""
-🔍 Ultra-Enterprise Log Management & Analytics Platform - IA Influencer Agent
+"""🔍 Ultra-Enterprise Log Management & Analytics Platform - IA Influencer Agent
 ================================================================================
 
 🚨 ULTRA-VERTRAULICHE PROPRIETÄRE SOFTWARE - ALLE RECHTE VORBEHALTEN 🚨
@@ -25,7 +24,6 @@ Lizenz: Strikt Proprietär - Unbefugte Nutzung strengstens verboten
 - 📈 Prädiktive Leistungsanalyse durch Log-Mining
 - 🌐 Multi-Tenant Log-Segregation mit Sicherheitsebenen
 """
-
 import asyncio
 import json
 import logging
@@ -84,8 +82,7 @@ logger = logging.getLogger(__name__)
 
 
 class LogLevel(Enum):
-    """Log level enumeration"""
-    DEBUG = "DEBUG"
+    """Log level enumeration"""    DEBUG = "DEBUG"
     INFO = "INFO"
     WARNING = "WARNING"
     ERROR = "ERROR"
@@ -93,8 +90,7 @@ class LogLevel(Enum):
 
 
 class LogSource(Enum):
-    """Log source enumeration"""
-    APPLICATION = "application"
+    """Log source enumeration"""    APPLICATION = "application"
     DATABASE = "database"
     NGINX = "nginx"
     KUBERNETES = "kubernetes"
@@ -104,8 +100,7 @@ class LogSource(Enum):
 
 @dataclass
 class LogEntry:
-    """Log entry data class"""
-    timestamp: datetime
+    """Log entry data class"""    timestamp: datetime
     level: LogLevel
     source: LogSource
     service: str
@@ -117,14 +112,11 @@ class LogEntry:
 
 
 class LogManager:
-    """
-    Enterprise-grade log management system
+    """    Enterprise-grade log management system
     Handles log collection, processing, storage, and analysis
-    """
-    
+    """    
     def __init__(self, config_path: Optional[str] = None):
-        """Initialize log manager"""
-        self.config_path = config_path or "/etc/logging/config.yaml"
+        """Initialize log manager"""        self.config_path = config_path or "/etc/logging/config.yaml"
         self.log_buffer = []
         self.buffer_lock = threading.Lock()
         self.running = False
@@ -136,8 +128,7 @@ class LogManager:
         self._setup_log_patterns()
     
     def _load_configuration(self) -> None:
-        """Load log management configuration"""
-        try:
+        """Load log management configuration"""        try:
             if os.path.exists(self.config_path):
                 with open(self.config_path, 'r') as f:
                     self.config = yaml.safe_load(f)
@@ -150,8 +141,7 @@ class LogManager:
             self.config = self._get_default_config()
     
     def _get_default_config(self) -> Dict[str, Any]:
-        """Get default log management configuration"""
-        return {
+        """Get default log management configuration"""        return {
             "elasticsearch": {
                 "hosts": ["localhost:9200"],
                 "index_pattern": "ia-influencer-logs-{date}",
@@ -199,8 +189,7 @@ class LogManager:
         }
     
     def _initialize_elasticsearch(self) -> None:
-        """Initialize Elasticsearch client"""
-        try:
+        """Initialize Elasticsearch client"""        try:
             es_config = self.config.get("elasticsearch", {})
             hosts = es_config.get("hosts", ["localhost:9200"])
             
@@ -223,8 +212,7 @@ class LogManager:
             self.es_client = None
     
     def _create_index_template(self) -> None:
-        """Create Elasticsearch index template"""
-        try:
+        """Create Elasticsearch index template"""        try:
             template_name = "ia-influencer-logs"
             index_pattern = "ia-influencer-logs-*"
             
@@ -266,8 +254,7 @@ class LogManager:
             logger.error(f"Index template creation error: {e}")
     
     def _setup_log_directories(self) -> None:
-        """Setup log directories"""
-        try:
+        """Setup log directories"""        try:
             log_dirs = self.config.get("collection", {}).get("log_directories", [])
             
             for log_dir in log_dirs:
@@ -282,8 +269,7 @@ class LogManager:
             logger.error(f"Log directories setup error: {e}")
     
     def _setup_log_patterns(self) -> None:
-        """Setup log parsing patterns"""
-        self.log_patterns = {
+        """Setup log parsing patterns"""        self.log_patterns = {
             "nginx_access": re.compile(
                 r'(?P<remote_addr>\S+) - (?P<remote_user>\S+) \[(?P<time_local>[^\]]+)\] '
                 r'"(?P<request>[^"]*)" (?P<status>\d+) (?P<body_bytes_sent>\d+) '
@@ -308,8 +294,7 @@ class LogManager:
         }
     
     def start_log_collection(self) -> None:
-        """Start log collection and processing"""
-        try:
+        """Start log collection and processing"""        try:
             logger.info("Starting log collection")
             self.running = True
             
@@ -329,14 +314,12 @@ class LogManager:
             logger.error(f"Log collection startup error: {e}")
     
     def stop_log_collection(self) -> None:
-        """Stop log collection"""
-        self.running = False
+        """Stop log collection"""        self.running = False
         self.executor.shutdown(wait=True)
         logger.info("Log collection stopped")
     
     def _watch_log_directory(self, log_dir: str) -> None:
-        """Watch log directory for new files and changes"""
-        try:
+        """Watch log directory for new files and changes"""        try:
             logger.info(f"Watching log directory: {log_dir}")
             
             file_patterns = self.config.get("collection", {}).get("file_patterns", ["*.log"])
@@ -363,8 +346,7 @@ class LogManager:
             logger.error(f"Log directory watcher error: {e}")
     
     def _process_log_file(self, file_path: Path, file_positions: Dict[str, int]) -> None:
-        """Process individual log file"""
-        try:
+        """Process individual log file"""        try:
             file_key = str(file_path)
             current_size = file_path.stat().st_size
             
@@ -394,8 +376,7 @@ class LogManager:
             logger.error(f"Log file processing error: {e}")
     
     def _parse_log_line(self, line: str, file_path: Path) -> Optional[LogEntry]:
-        """Parse log line and create LogEntry"""
-        try:
+        """Parse log line and create LogEntry"""        try:
             # Determine log source based on file path
             source = self._determine_log_source(file_path)
             
@@ -432,8 +413,7 @@ class LogManager:
             return None
     
     def _determine_log_source(self, file_path: Path) -> LogSource:
-        """Determine log source from file path"""
-        path_str = str(file_path).lower()
+        """Determine log source from file path"""        path_str = str(file_path).lower()
         
         if "nginx" in path_str:
             return LogSource.NGINX
@@ -449,8 +429,7 @@ class LogManager:
             return LogSource.APPLICATION
     
     def _parse_nginx_log(self, line: str) -> Optional[Dict[str, Any]]:
-        """Parse Nginx log line"""
-        try:
+        """Parse Nginx log line"""        try:
             # Try access log pattern
             match = self.log_patterns["nginx_access"].match(line)
             if match:
@@ -491,8 +470,7 @@ class LogManager:
             return None
     
     def _parse_postgresql_log(self, line: str) -> Optional[Dict[str, Any]]:
-        """Parse PostgreSQL log line"""
-        try:
+        """Parse PostgreSQL log line"""        try:
             match = self.log_patterns["postgresql"].match(line)
             if match:
                 data = match.groupdict()
@@ -514,8 +492,7 @@ class LogManager:
             return None
     
     def _parse_application_log(self, line: str) -> Optional[Dict[str, Any]]:
-        """Parse application log line"""
-        try:
+        """Parse application log line"""        try:
             # Try structured JSON format first
             if line.startswith('{'):
                 json_data = json.loads(line)
@@ -548,8 +525,7 @@ class LogManager:
             return None
     
     def _parse_kubernetes_log(self, line: str) -> Optional[Dict[str, Any]]:
-        """Parse Kubernetes log line"""
-        try:
+        """Parse Kubernetes log line"""        try:
             match = self.log_patterns["kubernetes"].match(line)
             if match:
                 data = match.groupdict()
@@ -570,8 +546,7 @@ class LogManager:
             return None
     
     def _parse_generic_log(self, line: str) -> Dict[str, Any]:
-        """Parse generic log line"""
-        return {
+        """Parse generic log line"""        return {
             "timestamp": datetime.now(),
             "level": "INFO",
             "service": "unknown",
@@ -579,8 +554,7 @@ class LogManager:
         }
     
     def _add_to_buffer(self, log_entry: LogEntry) -> None:
-        """Add log entry to buffer"""
-        try:
+        """Add log entry to buffer"""        try:
             with self.buffer_lock:
                 self.log_buffer.append(log_entry)
                 
@@ -593,8 +567,7 @@ class LogManager:
             logger.error(f"Buffer add error: {e}")
     
     def _process_log_buffer(self) -> None:
-        """Process log buffer periodically"""
-        try:
+        """Process log buffer periodically"""        try:
             while self.running:
                 time.sleep(10)  # Process buffer every 10 seconds
                 
@@ -606,8 +579,7 @@ class LogManager:
             logger.error(f"Buffer processing error: {e}")
     
     def _flush_buffer(self) -> None:
-        """Flush log buffer to outputs"""
-        try:
+        """Flush log buffer to outputs"""        try:
             if not self.log_buffer:
                 return
             
@@ -639,8 +611,7 @@ class LogManager:
             logger.error(f"Buffer flush error: {e}")
     
     def _enrich_logs(self, log_entries: List[LogEntry]) -> List[LogEntry]:
-        """Enrich log entries with additional metadata"""
-        try:
+        """Enrich log entries with additional metadata"""        try:
             for log_entry in log_entries:
                 if not log_entry.metadata:
                     log_entry.metadata = {}
@@ -661,8 +632,7 @@ class LogManager:
             return log_entries
     
     def _filter_logs(self, log_entries: List[LogEntry]) -> List[LogEntry]:
-        """Filter log entries based on rules"""
-        try:
+        """Filter log entries based on rules"""        try:
             filtered_logs = []
             
             for log_entry in log_entries:
@@ -684,8 +654,7 @@ class LogManager:
             return log_entries
     
     def _send_to_elasticsearch(self, log_entries: List[LogEntry]) -> None:
-        """Send log entries to Elasticsearch"""
-        try:
+        """Send log entries to Elasticsearch"""        try:
             if not self.es_client:
                 return
             
@@ -724,8 +693,7 @@ class LogManager:
             logger.error(f"Elasticsearch send error: {e}")
     
     def _write_to_file(self, log_entries: List[LogEntry]) -> None:
-        """Write log entries to file"""
-        try:
+        """Write log entries to file"""        try:
             log_file = f"/var/log/ia-influencer/application.log"
             
             with open(log_file, 'a', encoding='utf-8') as f:
@@ -747,8 +715,7 @@ class LogManager:
             logger.error(f"File write error: {e}")
     
     def _write_to_stdout(self, log_entries: List[LogEntry]) -> None:
-        """Write log entries to stdout"""
-        try:
+        """Write log entries to stdout"""        try:
             for log_entry in log_entries:
                 print(f"[{log_entry.timestamp}] {log_entry.level.value} "
                       f"{log_entry.source.value}/{log_entry.service}: {log_entry.message}")
@@ -757,8 +724,7 @@ class LogManager:
             logger.error(f"Stdout write error: {e}")
     
     def _check_log_alerts(self, log_entries: List[LogEntry]) -> None:
-        """Check log entries for alert conditions"""
-        try:
+        """Check log entries for alert conditions"""        try:
             alerting_config = self.config.get("alerting", {})
             error_threshold = alerting_config.get("error_threshold", 100)
             critical_threshold = alerting_config.get("critical_threshold", 10)
@@ -777,8 +743,7 @@ class LogManager:
             logger.error(f"Log alert check error: {e}")
     
     def _send_alert(self, severity: str, message: str) -> None:
-        """Send log alert"""
-        try:
+        """Send log alert"""        try:
             logger.warning(f"LOG ALERT [{severity}]: {message}")
             
             # In production, this would integrate with alerting systems
@@ -792,8 +757,7 @@ class LogManager:
                    log_level: Optional[LogLevel] = None,
                    service: Optional[str] = None,
                    limit: int = 100) -> List[Dict[str, Any]]:
-        """Search logs with filters"""
-        try:
+        """Search logs with filters"""        try:
             if not self.es_client:
                 logger.error("Elasticsearch not available for search")
                 return []
@@ -876,8 +840,7 @@ class LogManager:
     
     def get_log_statistics(self, start_time: Optional[datetime] = None,
                           end_time: Optional[datetime] = None) -> Dict[str, Any]:
-        """Get log statistics"""
-        try:
+        """Get log statistics"""        try:
             if not self.es_client:
                 return {"error": "Elasticsearch not available"}
             
@@ -963,8 +926,7 @@ class LogManager:
             return {"error": str(e)}
     
     def cleanup_old_logs(self) -> None:
-        """Clean up old log indices based on retention policy"""
-        try:
+        """Clean up old log indices based on retention policy"""        try:
             if not self.es_client:
                 return
             
@@ -1006,8 +968,7 @@ class LogManager:
 
 
 def main():
-    """Main function for standalone execution"""
-    import argparse
+    """Main function for standalone execution"""    import argparse
     
     parser = argparse.ArgumentParser(description="Log Management System")
     parser.add_argument("--action", required=True, 

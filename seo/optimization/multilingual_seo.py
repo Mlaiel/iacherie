@@ -1,5 +1,4 @@
-"""
-Multilingual SEO - International SEO Optimization
+"""Multilingual SEO - International SEO Optimization
 
 This module provides comprehensive multilingual SEO capabilities including
 content localization, hreflang implementation, international keyword research,
@@ -8,7 +7,6 @@ and cultural adaptation for global content distribution.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import re
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -20,8 +18,7 @@ logger = logging.getLogger(__name__)
 
 
 class Language(Enum):
-    """Supported languages for multilingual SEO"""
-    ENGLISH = "en"
+    """Supported languages for multilingual SEO"""    ENGLISH = "en"
     FRENCH = "fr"
     GERMAN = "de"
     SPANISH = "es"
@@ -37,8 +34,7 @@ class Language(Enum):
 
 
 class Region(Enum):
-    """Supported regions for localization"""
-    UNITED_STATES = "US"
+    """Supported regions for localization"""    UNITED_STATES = "US"
     UNITED_KINGDOM = "GB"
     CANADA = "CA"
     FRANCE = "FR"
@@ -59,16 +55,14 @@ class Region(Enum):
 
 
 class LocalizationLevel(Enum):
-    """Levels of localization"""
-    BASIC = "basic"  # Translation only
+    """Levels of localization"""    BASIC = "basic"  # Translation only
     INTERMEDIATE = "intermediate"  # Translation + cultural adaptation
     ADVANCED = "advanced"  # Full localization with regional specifics
 
 
 @dataclass
 class LocalizedContent:
-    """Localized content for a specific language/region"""
-    language: Language
+    """Localized content for a specific language/region"""    language: Language
     region: Region
     title: str
     description: str
@@ -81,8 +75,7 @@ class LocalizedContent:
 
 @dataclass
 class HreflangTag:
-    """Hreflang tag for international SEO"""
-    language: str
+    """Hreflang tag for international SEO"""    language: str
     region: Optional[str]
     url: str
     is_default: bool = False
@@ -90,8 +83,7 @@ class HreflangTag:
 
 @dataclass
 class MultilingualSEOResult:
-    """Complete multilingual SEO optimization result"""
-    original_language: Language
+    """Complete multilingual SEO optimization result"""    original_language: Language
     localized_versions: Dict[str, LocalizedContent]  # Key: language-region code
     hreflang_tags: List[HreflangTag]
     international_keywords: Dict[str, List[str]]  # Key: language code
@@ -101,14 +93,11 @@ class MultilingualSEOResult:
 
 
 class MultilingualSEO:
-    """
-    Comprehensive multilingual SEO system that handles content localization,
+    """    Comprehensive multilingual SEO system that handles content localization,
     international keyword research, and technical implementation for global reach.
     """
-
     def __init__(self):
-        """Initialize the multilingual SEO system."""
-        self.language_mappings = self._initialize_language_mappings()
+        """Initialize the multilingual SEO system."""        self.language_mappings = self._initialize_language_mappings()
         self.cultural_data = self._initialize_cultural_data()
         self.search_engines = self._initialize_search_engines()
         self.rtl_languages = {Language.ARABIC}  # Right-to-left languages
@@ -124,8 +113,7 @@ class MultilingualSEO:
         base_url: str,
         localization_level: LocalizationLevel = LocalizationLevel.INTERMEDIATE
     ) -> MultilingualSEOResult:
-        """
-        Optimize content for international markets with full localization.
+        """        Optimize content for international markets with full localization.
         
         Args:
             content: Original content to localize
@@ -139,8 +127,7 @@ class MultilingualSEO:
             
         Returns:
             MultilingualSEOResult with all localized versions and recommendations
-        """
-        try:
+        """        try:
             logger.info(f"Starting multilingual SEO optimization for {len(target_markets)} markets")
             
             localized_versions = {}
@@ -207,8 +194,7 @@ class MultilingualSEO:
         target_region: Region,
         localization_level: LocalizationLevel
     ) -> LocalizedContent:
-        """Localize content for a specific language and region"""
-        
+        """Localize content for a specific language and region"""        
         # Basic translation (simulated - in real implementation would use translation APIs)
         localized_title = self._translate_text(title, source_language, target_language)
         localized_description = self._translate_text(description, source_language, target_language)
@@ -264,8 +250,7 @@ class MultilingualSEO:
         )
 
     def _translate_text(self, text: str, source_lang: Language, target_lang: Language) -> str:
-        """Translate text between languages (simplified implementation)"""
-        
+        """Translate text between languages (simplified implementation)"""        
         if source_lang == target_lang:
             return text
         
@@ -297,8 +282,7 @@ class MultilingualSEO:
         language: Language, 
         region: Region
     ) -> Tuple[str, List[str]]:
-        """Apply cultural adaptations to content"""
-        
+        """Apply cultural adaptations to content"""        
         adaptations = []
         adapted_content = content
         
@@ -348,8 +332,7 @@ class MultilingualSEO:
         return adapted_content, adaptations
 
     def _apply_advanced_localization(self, content: str, region: Region) -> str:
-        """Apply advanced localization (currency, dates, measurements)"""
-        
+        """Apply advanced localization (currency, dates, measurements)"""        
         # Currency localization
         currency_map = {
             Region.UNITED_STATES: ("$", "USD"),
@@ -392,8 +375,7 @@ class MultilingualSEO:
         language: Language, 
         region: Region
     ) -> str:
-        """Apply region-specific SEO optimizations"""
-        
+        """Apply region-specific SEO optimizations"""        
         # Search engine preferences by region
         primary_search_engine = self.search_engines.get(region.value, "google")
         
@@ -428,8 +410,7 @@ class MultilingualSEO:
         language: Language, 
         region: Region
     ) -> List[str]:
-        """Adapt keywords for regional search behavior"""
-        
+        """Adapt keywords for regional search behavior"""        
         adapted_keywords = keywords.copy()
         
         # Add regional variations
@@ -472,8 +453,7 @@ class MultilingualSEO:
         language: Language, 
         region: Region
     ) -> List[str]:
-        """Generate international keywords for specific market"""
-        
+        """Generate international keywords for specific market"""        
         international_keywords = []
         
         # Translate base keywords
@@ -519,8 +499,7 @@ class MultilingualSEO:
         target_markets: List[Tuple[Language, Region]], 
         base_url: str
     ) -> List[HreflangTag]:
-        """Generate hreflang tags for international SEO"""
-        
+        """Generate hreflang tags for international SEO"""        
         hreflang_tags = []
         
         # Add hreflang for each target market
@@ -555,8 +534,7 @@ class MultilingualSEO:
         region: Region, 
         localization_level: LocalizationLevel
     ) -> List[str]:
-        """Get cultural considerations for the market"""
-        
+        """Get cultural considerations for the market"""        
         considerations = []
         
         # Basic cultural considerations
@@ -623,8 +601,7 @@ class MultilingualSEO:
         language: Language, 
         region: Region
     ) -> Dict[str, str]:
-        """Generate localized meta tags"""
-        
+        """Generate localized meta tags"""        
         meta_tags = {
             "title": title,
             "description": description,
@@ -652,8 +629,7 @@ class MultilingualSEO:
         target_markets: List[Tuple[Language, Region]], 
         localized_versions: Dict[str, LocalizedContent]
     ) -> List[str]:
-        """Generate technical SEO recommendations for international sites"""
-        
+        """Generate technical SEO recommendations for international sites"""        
         recommendations = []
         
         # URL structure recommendations
@@ -720,8 +696,7 @@ class MultilingualSEO:
         cultural_adaptations: List[str], 
         localization_level: LocalizationLevel
     ) -> float:
-        """Calculate localization quality score"""
-        
+        """Calculate localization quality score"""        
         score = 0.0
         
         # Base translation score (40 points)
@@ -748,8 +723,7 @@ class MultilingualSEO:
         hreflang_tags: List[HreflangTag], 
         technical_recommendations: List[str]
     ) -> float:
-        """Calculate overall international SEO score"""
-        
+        """Calculate overall international SEO score"""        
         score = 0.0
         
         # Localization quality (40 points)
@@ -775,8 +749,7 @@ class MultilingualSEO:
         return min(100.0, score)
 
     def _initialize_language_mappings(self) -> Dict[str, Dict[str, str]]:
-        """Initialize language mappings for translation"""
-        
+        """Initialize language mappings for translation"""        
         return {
             "common_terms": {
                 "hello": {
@@ -805,8 +778,7 @@ class MultilingualSEO:
         }
 
     def _initialize_cultural_data(self) -> Dict[str, Dict[str, Dict[str, Any]]]:
-        """Initialize cultural adaptation data"""
-        
+        """Initialize cultural adaptation data"""        
         return {
             "zh": {  # Chinese
                 "CN": {
@@ -833,8 +805,7 @@ class MultilingualSEO:
         }
 
     def _initialize_search_engines(self) -> Dict[str, str]:
-        """Initialize primary search engines by region"""
-        
+        """Initialize primary search engines by region"""        
         return {
             "CN": "baidu",
             "RU": "yandex", 
@@ -844,8 +815,7 @@ class MultilingualSEO:
         }
 
     def generate_hreflang_html(self, hreflang_tags: List[HreflangTag]) -> str:
-        """Generate HTML hreflang tags"""
-        
+        """Generate HTML hreflang tags"""        
         html_tags = []
         
         for tag in hreflang_tags:
@@ -860,8 +830,7 @@ class MultilingualSEO:
         return '\n'.join(html_tags)
 
     def validate_international_setup(self, base_url: str, target_markets: List[Tuple[Language, Region]]) -> Dict[str, Any]:
-        """Validate international SEO setup"""
-        
+        """Validate international SEO setup"""        
         validation_result = {
             "url_structure_valid": True,
             "hreflang_coverage": len(target_markets),
@@ -890,8 +859,7 @@ class MultilingualSEO:
         return validation_result
 
     def export_localization_report(self, result: MultilingualSEOResult, format: str = "json") -> str:
-        """Export multilingual SEO report"""
-        
+        """Export multilingual SEO report"""        
         if format == "json":
             return self._export_to_json(result)
         elif format == "csv":
@@ -900,8 +868,7 @@ class MultilingualSEO:
             raise ValueError(f"Unsupported export format: {format}")
 
     def _export_to_json(self, result: MultilingualSEOResult) -> str:
-        """Export result to JSON format"""
-        
+        """Export result to JSON format"""        
         export_data = {
             "overall_score": result.overall_score,
             "original_language": result.original_language.value,
@@ -934,8 +901,7 @@ class MultilingualSEO:
         return json.dumps(export_data, indent=2, ensure_ascii=False)
 
     def _export_to_csv(self, result: MultilingualSEOResult) -> str:
-        """Export result to CSV format"""
-        
+        """Export result to CSV format"""        
         csv_lines = ["Market,Language,Region,Title,Localization Score,Keywords Count"]
         
         for code, content in result.localized_versions.items():

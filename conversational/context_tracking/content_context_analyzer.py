@@ -1,5 +1,4 @@
-"""
-🎨 CONTENT CONTEXT ANALYZER - ENTERPRISE AI CONTENT INTELLIGENCE SYSTEM
+"""🎨 CONTENT CONTEXT ANALYZER - ENTERPRISE AI CONTENT INTELLIGENCE SYSTEM
 ========================================================================
 
 Ultra-sophisticated content context analysis engine for multi-format content creators
@@ -54,7 +53,6 @@ Multi-Format Upload → AI Content Analysis → Quality Assessment → Protectio
 SEO Optimization → Cross-Platform Strategy → Performance Prediction → 
 Content Enhancement → Brand Consistency → Monetization Assessment → Distribution
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -81,8 +79,7 @@ from ...ai.ml.content_intelligence import ContentIntelligenceEngine
 
 
 class ContentFormat(Enum):
-    """Supported content formats"""
-    AUDIO = "audio"
+    """Supported content formats"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -95,8 +92,7 @@ class ContentFormat(Enum):
 
 
 class ContentType(Enum):
-    """Content type classifications"""
-    ORIGINAL = "original"
+    """Content type classifications"""    ORIGINAL = "original"
     DERIVATIVE = "derivative"
     COLLABORATIVE = "collaborative"
     REMIX = "remix"
@@ -109,8 +105,7 @@ class ContentType(Enum):
 
 
 class ProtectionLevel(Enum):
-    """Content protection requirement levels"""
-    NONE = "none"
+    """Content protection requirement levels"""    NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
     ENHANCED = "enhanced"
@@ -119,8 +114,7 @@ class ProtectionLevel(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categorization for creators"""
-    MUSIC = "music"
+    """Content categorization for creators"""    MUSIC = "music"
     PODCAST = "podcast"
     VIDEO_BLOG = "video_blog"
     PHOTOGRAPHY = "photography"
@@ -139,8 +133,7 @@ class ContentCategory(Enum):
 
 @dataclass
 class ContentAnalysisResult:
-    """Comprehensive content analysis results"""
-    content_id: str
+    """Comprehensive content analysis results"""    content_id: str
     format: ContentFormat
     type: ContentType
     category: ContentCategory
@@ -158,8 +151,7 @@ class ContentAnalysisResult:
 
 @dataclass
 class ContentContext:
-    """Rich content context information"""
-    content_id: str
+    """Rich content context information"""    content_id: str
     creator_id: str
     session_id: str
     content_path: Optional[str]
@@ -176,8 +168,7 @@ class ContentContext:
 
 @dataclass
 class ProtectionAssessment:
-    """Content protection requirements assessment"""
-    content_id: str
+    """Content protection requirements assessment"""    content_id: str
     recommended_protection: ProtectionLevel
     fingerprint_required: bool
     watermark_required: bool
@@ -191,14 +182,12 @@ class ProtectionAssessment:
 
 
 class ContentContextAnalyzer:
-    """
-    Ultra-advanced content context analysis engine
+    """    Ultra-advanced content context analysis engine
     
     Provides comprehensive content intelligence for multi-format creators,
     including protection assessment, optimization recommendations, and
     collaboration matching based on content characteristics.
-    """
-    
+    """    
     def __init__(self, 
                  cache_manager: CacheManager,
                  security_manager: SecurityManager,
@@ -237,8 +226,7 @@ class ContentContextAnalyzer:
     async def analyze_content_context(self, 
                                     content_context: ContentContext,
                                     analysis_options: Dict[str, Any] = None) -> ContentAnalysisResult:
-        """
-        Perform comprehensive content context analysis
+        """        Perform comprehensive content context analysis
         
         Args:
             content_context: Content context information
@@ -246,8 +234,7 @@ class ContentContextAnalyzer:
             
         Returns:
             ContentAnalysisResult: Comprehensive analysis results
-        """
-        try:
+        """        try:
             # Validate content context
             await self._validate_content_context(content_context)
             
@@ -337,8 +324,7 @@ class ContentContextAnalyzer:
     async def assess_protection_requirements(self, 
                                            content_id: str,
                                            analysis_result: ContentAnalysisResult = None) -> ProtectionAssessment:
-        """
-        Assess comprehensive content protection requirements
+        """        Assess comprehensive content protection requirements
         
         Args:
             content_id: Content identifier
@@ -346,8 +332,7 @@ class ContentContextAnalyzer:
             
         Returns:
             ProtectionAssessment: Detailed protection requirements
-        """
-        try:
+        """        try:
             if not analysis_result:
                 analysis_result = await self._get_cached_analysis_result(content_id)
                 if not analysis_result:
@@ -406,8 +391,7 @@ class ContentContextAnalyzer:
     async def generate_seo_recommendations(self, 
                                          content_id: str,
                                          target_platforms: List[str] = None) -> Dict[str, Any]:
-        """
-        Generate SEO optimization recommendations for content
+        """        Generate SEO optimization recommendations for content
         
         Args:
             content_id: Content identifier
@@ -415,8 +399,7 @@ class ContentContextAnalyzer:
             
         Returns:
             Dict containing SEO recommendations
-        """
-        try:
+        """        try:
             # Get analysis result
             analysis_result = await self._get_cached_analysis_result(content_id)
             if not analysis_result:
@@ -480,8 +463,7 @@ class ContentContextAnalyzer:
     async def analyze_collaboration_opportunities(self, 
                                                 content_id: str,
                                                 creator_preferences: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Analyze potential collaboration opportunities based on content
+        """        Analyze potential collaboration opportunities based on content
         
         Args:
             content_id: Content identifier
@@ -489,8 +471,7 @@ class ContentContextAnalyzer:
             
         Returns:
             Dict containing collaboration opportunities
-        """
-        try:
+        """        try:
             # Get analysis result
             analysis_result = await self._get_cached_analysis_result(content_id)
             if not analysis_result:
@@ -553,8 +534,7 @@ class ContentContextAnalyzer:
     async def optimize_content_distribution(self, 
                                           content_id: str,
                                           distribution_goals: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Optimize content distribution strategy across platforms
+        """        Optimize content distribution strategy across platforms
         
         Args:
             content_id: Content identifier
@@ -562,8 +542,7 @@ class ContentContextAnalyzer:
             
         Returns:
             Dict containing distribution optimization strategy
-        """
-        try:
+        """        try:
             # Get analysis result
             analysis_result = await self._get_cached_analysis_result(content_id)
             if not analysis_result:
@@ -627,15 +606,13 @@ class ContentContextAnalyzer:
     # Private helper methods
 
     async def _validate_content_context(self, content_context: ContentContext):
-        """Validate content context data"""
-        required_fields = ["content_id", "creator_id", "original_filename", "mime_type"]
+        """Validate content context data"""        required_fields = ["content_id", "creator_id", "original_filename", "mime_type"]
         for field in required_fields:
             if not getattr(content_context, field):
                 raise ValidationError(f"Required field '{field}' is missing from content context")
 
     async def _determine_content_format(self, content_context: ContentContext) -> ContentFormat:
-        """Determine content format from context"""
-        mime_type = content_context.mime_type.lower()
+        """Determine content format from context"""        mime_type = content_context.mime_type.lower()
         file_extension = Path(content_context.original_filename).suffix.lower()
         
         if mime_type.startswith("audio/") or file_extension in self.supported_formats["audio"]:
@@ -650,8 +627,7 @@ class ContentContextAnalyzer:
             return ContentFormat.MIXED_MEDIA
 
     async def _analyze_content_type(self, content_context: ContentContext) -> ContentType:
-        """Analyze and classify content type"""
-        # Analyze filename, metadata, and content characteristics
+        """Analyze and classify content type"""        # Analyze filename, metadata, and content characteristics
         filename = content_context.original_filename.lower()
         metadata = content_context.metadata
         
@@ -671,8 +647,7 @@ class ContentContextAnalyzer:
         return ContentType.ORIGINAL
 
     async def _categorize_content(self, content_context: ContentContext) -> ContentCategory:
-        """Categorize content based on analysis"""
-        # This would use ML models to categorize content
+        """Categorize content based on analysis"""        # This would use ML models to categorize content
         # For now, using filename and metadata analysis
         filename = content_context.original_filename.lower()
         metadata = content_context.metadata
@@ -703,8 +678,7 @@ class ContentContextAnalyzer:
     async def _assess_content_quality(self, 
                                     content_context: ContentContext,
                                     content_format: ContentFormat) -> float:
-        """Assess content quality based on technical parameters"""
-        quality_score = 0.5  # Base score
+        """Assess content quality based on technical parameters"""        quality_score = 0.5  # Base score
         
         try:
             # Format-specific quality assessment
@@ -731,8 +705,7 @@ class ContentContextAnalyzer:
                                         content_context: ContentContext,
                                         content_type: ContentType,
                                         quality_score: float) -> ProtectionLevel:
-        """Determine appropriate protection level"""
-        # Base protection level
+        """Determine appropriate protection level"""        # Base protection level
         protection_score = 0.3
         
         # Content type factors
@@ -763,8 +736,7 @@ class ContentContextAnalyzer:
             return ProtectionLevel.NONE
 
     async def _cache_analysis_result(self, content_id: str, result: ContentAnalysisResult):
-        """Cache analysis result for future use"""
-        cache_key = f"content_analysis:{content_id}"
+        """Cache analysis result for future use"""        cache_key = f"content_analysis:{content_id}"
         
         # Convert to JSON-serializable format
         result_data = {
@@ -791,8 +763,7 @@ class ContentContextAnalyzer:
         )
 
     async def _get_cached_analysis_result(self, content_id: str) -> Optional[ContentAnalysisResult]:
-        """Retrieve cached analysis result"""
-        cache_key = f"content_analysis:{content_id}"
+        """Retrieve cached analysis result"""        cache_key = f"content_analysis:{content_id}"
         cached_data = await self.cache_manager.get(cache_key)
         
         if not cached_data:
@@ -823,8 +794,7 @@ class ContentContextAnalyzer:
             return None
 
     async def _assess_audio_quality(self, content_context: ContentContext) -> float:
-        """Assess audio content quality with comprehensive metrics"""
-        try:
+        """Assess audio content quality with comprehensive metrics"""        try:
             quality_factors = {
                 'bitrate': self._analyze_audio_bitrate(content_context.metadata.get('bitrate', 0)),
                 'sample_rate': self._analyze_sample_rate(content_context.metadata.get('sample_rate', 0)),
@@ -851,8 +821,7 @@ class ContentContextAnalyzer:
             return 0.5
     
     async def _assess_video_quality(self, content_context: ContentContext) -> float:
-        """Assess video content quality with comprehensive metrics"""
-        try:
+        """Assess video content quality with comprehensive metrics"""        try:
             quality_factors = {
                 'resolution': self._analyze_video_resolution(content_context.metadata.get('resolution', '')),
                 'framerate': self._analyze_video_framerate(content_context.metadata.get('framerate', 0)),
@@ -878,8 +847,7 @@ class ContentContextAnalyzer:
             return 0.5
     
     async def _assess_image_quality(self, content_context: ContentContext) -> float:
-        """Assess image content quality with comprehensive metrics"""
-        try:
+        """Assess image content quality with comprehensive metrics"""        try:
             quality_factors = {
                 'resolution': self._analyze_image_resolution(content_context.metadata.get('resolution', '')),
                 'color_depth': self._analyze_color_depth(content_context.metadata.get('color_depth', 0)),
@@ -905,8 +873,7 @@ class ContentContextAnalyzer:
             return 0.5
     
     async def _assess_text_quality(self, content_context: ContentContext) -> float:
-        """Assess text content quality with comprehensive metrics"""
-        try:
+        """Assess text content quality with comprehensive metrics"""        try:
             quality_factors = {
                 'readability': self._analyze_text_readability(content_context.content_text),
                 'grammar': self._analyze_grammar_quality(content_context.content_text),
@@ -932,8 +899,7 @@ class ContentContextAnalyzer:
             return 0.5
     
     async def _assess_file_size_quality(self, content_context: ContentContext, content_format: ContentFormat) -> float:
-        """Assess quality based on file size appropriateness for format and distribution"""
-        try:
+        """Assess quality based on file size appropriateness for format and distribution"""        try:
             file_size = content_context.metadata.get('file_size', 0)
             duration = content_context.metadata.get('duration', 0)
             
@@ -953,8 +919,7 @@ class ContentContextAnalyzer:
             return 0.5
 
     def _analyze_audio_bitrate(self, bitrate: int) -> float:
-        """Analyze audio bitrate quality (kbps)"""
-        if bitrate >= 320:
+        """Analyze audio bitrate quality (kbps)"""        if bitrate >= 320:
             return 1.0  # Excellent
         elif bitrate >= 256:
             return 0.9  # Very good
@@ -968,8 +933,7 @@ class ContentContextAnalyzer:
             return 0.2  # Very poor
 
     def _analyze_sample_rate(self, sample_rate: int) -> float:
-        """Analyze audio sample rate quality (Hz)"""
-        if sample_rate >= 48000:
+        """Analyze audio sample rate quality (Hz)"""        if sample_rate >= 48000:
             return 1.0  # Professional quality
         elif sample_rate >= 44100:
             return 0.9  # CD quality
@@ -979,8 +943,7 @@ class ContentContextAnalyzer:
             return 0.3  # Poor
 
     def _analyze_video_resolution(self, resolution: str) -> float:
-        """Analyze video resolution quality"""
-        resolution_scores = {
+        """Analyze video resolution quality"""        resolution_scores = {
             '4K': 1.0, '2160p': 1.0, '3840x2160': 1.0,
             'QHD': 0.9, '1440p': 0.9, '2560x1440': 0.9,
             'FHD': 0.8, '1080p': 0.8, '1920x1080': 0.8,
@@ -995,8 +958,7 @@ class ContentContextAnalyzer:
         return 0.5  # Default for unknown resolution
 
     def _analyze_text_readability(self, text: str) -> float:
-        """Analyze text readability using multiple metrics"""
-        if not text or len(text) < 10:
+        """Analyze text readability using multiple metrics"""        if not text or len(text) < 10:
             return 0.1
         
         # Basic readability metrics
@@ -1029,8 +991,7 @@ class ContentContextAnalyzer:
         return (sentence_score + word_score) / 2
 
     def _analyze_seo_quality(self, text: str, metadata: Dict[str, Any]) -> float:
-        """Analyze SEO optimization quality"""
-        if not text:
+        """Analyze SEO optimization quality"""        if not text:
             return 0.1
         
         seo_factors = {
@@ -1046,8 +1007,7 @@ class ContentContextAnalyzer:
         return sum(seo_factors.values()) / len(seo_factors)
 
     def _check_title_seo(self, title: str) -> float:
-        """Check title SEO optimization"""
-        if not title:
+        """Check title SEO optimization"""        if not title:
             return 0.0
         
         title_length = len(title)
@@ -1059,8 +1019,7 @@ class ContentContextAnalyzer:
             return 0.4
 
     def _check_keyword_presence(self, text: str, keywords: List[str]) -> float:
-        """Check keyword presence in content"""
-        if not keywords or not text:
+        """Check keyword presence in content"""        if not keywords or not text:
             return 0.5
         
         text_lower = text.lower()
@@ -1068,8 +1027,7 @@ class ContentContextAnalyzer:
         return min(keyword_count / len(keywords), 1.0)
 
     async def _calculate_protection_score(self, analysis_result) -> float:
-        """Calculate comprehensive protection score"""
-        try:
+        """Calculate comprehensive protection score"""        try:
             protection_factors = {
                 'content_uniqueness': analysis_result.uniqueness_score,
                 'commercial_value': analysis_result.commercial_value,
@@ -1096,8 +1054,7 @@ class ContentContextAnalyzer:
             return 0.7
 
     def _assess_format_vulnerability(self, content_format: ContentFormat) -> float:
-        """Assess vulnerability of content format to piracy"""
-        vulnerability_map = {
+        """Assess vulnerability of content format to piracy"""        vulnerability_map = {
             ContentFormat.AUDIO: 0.8,  # High vulnerability
             ContentFormat.VIDEO: 0.9,  # Very high vulnerability
             ContentFormat.IMAGE: 0.6,  # Medium vulnerability
@@ -1108,8 +1065,7 @@ class ContentContextAnalyzer:
         return vulnerability_map.get(content_format, 0.6)
 
     async def _predict_content_performance(self, analysis_result) -> Dict[str, Any]:
-        """Predict content performance using ML models"""
-        try:
+        """Predict content performance using ML models"""        try:
             performance_metrics = {
                 'engagement_score': self._predict_engagement(analysis_result),
                 'reach_potential': self._predict_reach(analysis_result),
@@ -1136,8 +1092,7 @@ class ContentContextAnalyzer:
             return {"overall_score": 0.6, "status": "prediction_failed"}
 
     def _predict_engagement(self, analysis_result) -> float:
-        """Predict content engagement score"""
-        factors = {
+        """Predict content engagement score"""        factors = {
             'quality_score': analysis_result.quality_score,
             'trending_topics': analysis_result.trending_alignment_score,
             'emotional_appeal': analysis_result.emotional_score,
@@ -1151,8 +1106,7 @@ class ContentContextAnalyzer:
         return sum(factors[factor] * weights[factor] for factor in weights)
 
     def _predict_reach(self, analysis_result) -> float:
-        """Predict content reach potential"""
-        reach_factors = {
+        """Predict content reach potential"""        reach_factors = {
             'seo_potential': analysis_result.seo_potential,
             'social_shareability': analysis_result.shareability_score,
             'cross_platform_compatibility': analysis_result.cross_platform_score,
@@ -1163,8 +1117,7 @@ class ContentContextAnalyzer:
         return sum(reach_factors.values()) / len(reach_factors)
 
     async def _analyze_competitive_positioning(self, analysis_result) -> Dict[str, Any]:
-        """Analyze competitive positioning of content"""
-        try:
+        """Analyze competitive positioning of content"""        try:
             competitive_analysis = {
                 'uniqueness_factor': analysis_result.uniqueness_score,
                 'market_saturation': await self._assess_market_saturation(analysis_result),
@@ -1193,8 +1146,7 @@ class ContentContextAnalyzer:
             return {"competitive_score": 0.6, "status": "analysis_failed"}
 
     async def _assess_market_saturation(self, analysis_result) -> float:
-        """Assess market saturation for content category"""
-        # Placeholder - would analyze market data
+        """Assess market saturation for content category"""        # Placeholder - would analyze market data
         category_saturation = {
             ContentCategory.MUSIC: 0.8,
             ContentCategory.PODCAST: 0.6,

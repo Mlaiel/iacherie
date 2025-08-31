@@ -1,5 +1,4 @@
-"""
-Queue Priority Manager - IA-Influencer-Agent
+"""Queue Priority Manager - IA-Influencer-Agent
 ================================================================================
 Module: backend/crawlers/queues/priority_manager.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER:
 Task analysis → Business impact scoring → ML priority prediction → 
 Dynamic adjustment → Queue positioning → Resource allocation → Execution optimization
 """
-
 from typing import Any, Dict, List, Optional, Tuple, Callable
 import logging
 import asyncio
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessImpact(Enum):
-    """Business impact levels for prioritization"""
-    CRITICAL_VIOLATION = "critical_violation"      # Copyright infringement
+    """Business impact levels for prioritization"""    CRITICAL_VIOLATION = "critical_violation"      # Copyright infringement
     BRAND_DAMAGE = "brand_damage"                  # Negative brand impact
     REVENUE_LOSS = "revenue_loss"                  # Direct revenue impact
     COMPETITIVE_INTELLIGENCE = "competitive_intelligence"  # Competitor analysis
@@ -48,8 +45,7 @@ class BusinessImpact(Enum):
 
 
 class UrgencyLevel(Enum):
-    """Time-sensitive urgency levels"""
-    IMMEDIATE = "immediate"          # < 5 minutes
+    """Time-sensitive urgency levels"""    IMMEDIATE = "immediate"          # < 5 minutes
     URGENT = "urgent"               # < 1 hour
     TIME_SENSITIVE = "time_sensitive"  # < 24 hours
     NORMAL = "normal"               # < 1 week
@@ -59,8 +55,7 @@ class UrgencyLevel(Enum):
 
 @dataclass
 class PriorityFactors:
-    """Factors influencing task priority calculation"""
-    # Business factors
+    """Factors influencing task priority calculation"""    # Business factors
     business_impact: BusinessImpact = BusinessImpact.ROUTINE_MONITORING
     urgency_level: UrgencyLevel = UrgencyLevel.NORMAL
     user_tier: str = "standard"  # standard, premium, enterprise
@@ -91,8 +86,7 @@ class PriorityFactors:
 
 @dataclass
 class PriorityScore:
-    """Comprehensive priority score with breakdown"""
-    total_score: float = 0.0
+    """Comprehensive priority score with breakdown"""    total_score: float = 0.0
     normalized_score: float = 0.0  # 0.0 to 1.0
     priority_level: CrawlerPriority = CrawlerPriority.BACKGROUND_CRAWL
     
@@ -111,8 +105,7 @@ class PriorityScore:
 
 
 class PriorityCalculator:
-    """
-    🧮 Advanced Priority Calculator - IA-Influencer-Agent
+    """    🧮 Advanced Priority Calculator - IA-Influencer-Agent
     
     AI-powered priority calculation engine featuring:
     - Multi-factor business impact analysis
@@ -120,8 +113,7 @@ class PriorityCalculator:
     - Dynamic urgency adjustment
     - Context-aware scoring
     - Historical performance optimization
-    """
-    
+    """    
     def __init__(self):
         # Scoring weights (configurable)
         self.weights = {
@@ -185,8 +177,7 @@ class PriorityCalculator:
         task: CrawlerTask, 
         factors: PriorityFactors
     ) -> PriorityScore:
-        """Calculate comprehensive priority score for task"""
-        try:
+        """Calculate comprehensive priority score for task"""        try:
             score = PriorityScore()
             
             # Calculate individual score components
@@ -236,8 +227,7 @@ class PriorityCalculator:
             )
     
     async def _calculate_business_score(self, factors: PriorityFactors) -> float:
-        """Calculate business impact score"""
-        base_score = self.business_impact_scores[factors.business_impact]
+        """Calculate business impact score"""        base_score = self.business_impact_scores[factors.business_impact]
         
         # Apply user tier multiplier
         tier_multiplier = self.user_tier_multipliers.get(factors.user_tier, 1.0)
@@ -248,8 +238,7 @@ class PriorityCalculator:
         return min(100.0, base_score * tier_multiplier + violation_boost)
     
     async def _calculate_urgency_score(self, factors: PriorityFactors) -> float:
-        """Calculate urgency score"""
-        base_score = self.urgency_scores[factors.urgency_level]
+        """Calculate urgency score"""        base_score = self.urgency_scores[factors.urgency_level]
         
         # Adjust based on deadline proximity
         if factors.deadline:
@@ -270,8 +259,7 @@ class PriorityCalculator:
         task: CrawlerTask, 
         factors: PriorityFactors
     ) -> float:
-        """Calculate technical complexity score"""
-        base_score = 50.0  # Neutral baseline
+        """Calculate technical complexity score"""        base_score = 50.0  # Neutral baseline
         
         # Platform importance
         platform_score = self.platform_scores.get(task.platform, 1.0)
@@ -290,8 +278,7 @@ class PriorityCalculator:
         return min(100.0, base_score)
     
     async def _calculate_context_score(self, factors: PriorityFactors) -> float:
-        """Calculate contextual score"""
-        base_score = 50.0
+        """Calculate contextual score"""        base_score = 50.0
         
         # Content similarity boost
         similarity_boost = factors.content_similarity_score * 30.0
@@ -302,8 +289,7 @@ class PriorityCalculator:
         return min(100.0, base_score + similarity_boost + dependency_boost)
     
     async def _calculate_temporal_score(self, factors: PriorityFactors) -> float:
-        """Calculate temporal score based on timing factors"""
-        base_score = 50.0
+        """Calculate temporal score based on timing factors"""        base_score = 50.0
         
         # Time since last check
         if factors.last_check_time:
@@ -319,8 +305,7 @@ class PriorityCalculator:
         return min(100.0, base_score)
     
     async def _map_score_to_priority(self, total_score: float) -> CrawlerPriority:
-        """Map numerical score to priority level"""
-        if total_score >= 85.0:
+        """Map numerical score to priority level"""        if total_score >= 85.0:
             return CrawlerPriority.PROTECTION_VIOLATION
         elif total_score >= 70.0:
             return CrawlerPriority.BRAND_MONITORING
@@ -338,8 +323,7 @@ class PriorityCalculator:
         task: CrawlerTask, 
         factors: PriorityFactors
     ) -> float:
-        """Calculate confidence in priority score"""
-        confidence = 1.0
+        """Calculate confidence in priority score"""        confidence = 1.0
         
         # Reduce confidence for tasks with missing information
         if not factors.deadline and factors.urgency_level != UrgencyLevel.BACKGROUND:
@@ -359,8 +343,7 @@ class PriorityCalculator:
         factors: PriorityFactors, 
         score: PriorityScore
     ) -> List[str]:
-        """Generate human-readable reasoning for priority score"""
-        reasoning = []
+        """Generate human-readable reasoning for priority score"""        reasoning = []
         
         # Business impact reasoning
         if score.business_score > 70:
@@ -397,8 +380,7 @@ class PriorityCalculator:
         factors: PriorityFactors, 
         score: PriorityScore
     ):
-        """Store calculation for ML optimization"""
-        calculation_record = {
+        """Store calculation for ML optimization"""        calculation_record = {
             "task_id": task.task_id,
             "platform": task.platform.value,
             "task_type": task.task_type.value,
@@ -410,8 +392,7 @@ class PriorityCalculator:
         self.priority_history.append(calculation_record)
     
     async def optimize_weights(self) -> Dict[str, float]:
-        """Optimize scoring weights based on historical performance"""
-        try:
+        """Optimize scoring weights based on historical performance"""        try:
             # Would implement ML-based weight optimization
             # For now, return current weights
             return self.weights.copy()
@@ -421,8 +402,7 @@ class PriorityCalculator:
             return self.weights.copy()
     
     async def get_priority_statistics(self) -> Dict[str, Any]:
-        """Get priority calculation statistics"""
-        try:
+        """Get priority calculation statistics"""        try:
             if not self.priority_history:
                 return {"message": "No priority history available"}
             
@@ -463,8 +443,7 @@ class PriorityCalculator:
 
 
 class DynamicPriorityManager:
-    """
-    🎯 Dynamic Priority Manager - IA-Influencer-Agent
+    """    🎯 Dynamic Priority Manager - IA-Influencer-Agent
     
     Advanced priority management system featuring:
     - Real-time priority adjustment
@@ -472,8 +451,7 @@ class DynamicPriorityManager:
     - ML-powered priority prediction
     - Business rule enforcement
     - Performance-based adaptation
-    """
-    
+    """    
     def __init__(self):
         self.calculator = PriorityCalculator()
         
@@ -495,8 +473,7 @@ class DynamicPriorityManager:
         self._background_tasks: List[asyncio.Task] = []
     
     async def initialize(self) -> bool:
-        """Initialize dynamic priority manager"""
-        try:
+        """Initialize dynamic priority manager"""        try:
             self._is_running = True
             
             # Start background optimization tasks
@@ -519,8 +496,7 @@ class DynamicPriorityManager:
         task: CrawlerTask, 
         priority_factors: Optional[PriorityFactors] = None
     ) -> PriorityScore:
-        """Calculate or retrieve cached priority for task"""
-        try:
+        """Calculate or retrieve cached priority for task"""        try:
             # Check cache first
             cached_score = await self._get_cached_priority(task.task_id)
             if cached_score:
@@ -553,8 +529,7 @@ class DynamicPriorityManager:
         new_factors: PriorityFactors,
         reason: str = "Manual adjustment"
     ) -> bool:
-        """Dynamically adjust task priority"""
-        try:
+        """Dynamically adjust task priority"""        try:
             # Remove from cache to force recalculation
             self.priority_cache.pop(task_id, None)
             self.cache_expiry.pop(task_id, None)
@@ -576,8 +551,7 @@ class DynamicPriorityManager:
             return False
     
     async def optimize_queue_priorities(self, queue_type: CrawlerQueueType) -> Dict[str, Any]:
-        """Optimize priorities for specific queue"""
-        try:
+        """Optimize priorities for specific queue"""        try:
             queue = self.priority_queues[queue_type]
             
             optimization_results = {
@@ -613,8 +587,7 @@ class DynamicPriorityManager:
             return {"error": str(e)}
     
     async def get_priority_insights(self) -> Dict[str, Any]:
-        """Get insights into priority management performance"""
-        try:
+        """Get insights into priority management performance"""        try:
             # Priority distribution
             priority_distribution = defaultdict(int)
             for task_id, score in self.priority_cache.items():
@@ -655,8 +628,7 @@ class DynamicPriorityManager:
             return {"error": str(e)}
     
     async def shutdown(self):
-        """Gracefully shutdown priority manager"""
-        try:
+        """Gracefully shutdown priority manager"""        try:
             self._is_running = False
             
             # Cancel background tasks
@@ -673,8 +645,7 @@ class DynamicPriorityManager:
             logger.error(f"❌ Priority manager shutdown error: {e}")
     
     async def _get_cached_priority(self, task_id: str) -> Optional[PriorityScore]:
-        """Get cached priority if still valid"""
-        if task_id not in self.priority_cache:
+        """Get cached priority if still valid"""        if task_id not in self.priority_cache:
             return None
         
         expiry_time = self.cache_expiry.get(task_id)
@@ -692,13 +663,11 @@ class DynamicPriorityManager:
         return self.priority_cache[task_id]
     
     async def _cache_priority(self, task_id: str, score: PriorityScore):
-        """Cache priority score with expiration"""
-        self.priority_cache[task_id] = score
+        """Cache priority score with expiration"""        self.priority_cache[task_id] = score
         self.cache_expiry[task_id] = score.expires_at or (datetime.now() + timedelta(hours=1))
     
     async def _create_default_factors(self, task: CrawlerTask) -> PriorityFactors:
-        """Create default priority factors for task"""
-        factors = PriorityFactors()
+        """Create default priority factors for task"""        factors = PriorityFactors()
         
         # Set business impact based on task type
         if task.task_type == CrawlerQueueType.PROTECTION_MONITOR:
@@ -723,8 +692,7 @@ class DynamicPriorityManager:
         return factors
     
     async def _priority_optimizer(self):
-        """Background task for priority optimization"""
-        while self._is_running:
+        """Background task for priority optimization"""        while self._is_running:
             try:
                 # Optimize calculator weights
                 await self.calculator.optimize_weights()
@@ -740,8 +708,7 @@ class DynamicPriorityManager:
                 await asyncio.sleep(300)
     
     async def _cache_cleaner(self):
-        """Background task for cache maintenance"""
-        while self._is_running:
+        """Background task for cache maintenance"""        while self._is_running:
             try:
                 current_time = datetime.now()
                 expired_keys = [
@@ -763,8 +730,7 @@ class DynamicPriorityManager:
                 await asyncio.sleep(60)
     
     async def _performance_monitor(self):
-        """Monitor priority management performance"""
-        while self._is_running:
+        """Monitor priority management performance"""        while self._is_running:
             try:
                 # Update performance metrics
                 await asyncio.sleep(60)  # Monitor every minute
@@ -774,8 +740,7 @@ class DynamicPriorityManager:
                 await asyncio.sleep(60)
     
     async def _queue_balancer(self):
-        """Balance priorities across queues"""
-        while self._is_running:
+        """Balance priorities across queues"""        while self._is_running:
             try:
                 # Balance queue priorities
                 await asyncio.sleep(120)  # Balance every 2 minutes
@@ -787,5 +752,4 @@ class DynamicPriorityManager:
 
 # Factory function
 def create_priority_manager() -> DynamicPriorityManager:
-    """Create and return configured priority manager"""
-    return DynamicPriorityManager()
+    """Create and return configured priority manager"""    return DynamicPriorityManager()

@@ -1,5 +1,4 @@
-"""
-Semantic AI Content Parsers Module
+"""Semantic AI Content Parsers Module
 ==================================
 
 Ultra-advanced semantic content parsers using AI for deep content understanding,
@@ -23,7 +22,6 @@ Development Team Specialties:
 - Security Expert: Content protection and compliance
 - Microservices Architect: Scalable system design
 """
-
 import asyncio
 import hashlib
 import json
@@ -52,8 +50,7 @@ from .parser_config import ParserConfig
 
 @dataclass
 class SemanticAnalysis:
-    """Container for semantic analysis results"""
-    sentiment_score: float = 0.0
+    """Container for semantic analysis results"""    sentiment_score: float = 0.0
     sentiment_label: str = "neutral"
     confidence: float = 0.0
     emotions: Dict[str, float] = field(default_factory=dict)
@@ -69,8 +66,7 @@ class SemanticAnalysis:
 
 @dataclass
 class ContentSemantics:
-    """Complete semantic analysis of content"""
-    text_analysis: SemanticAnalysis = field(default_factory=SemanticAnalysis)
+    """Complete semantic analysis of content"""    text_analysis: SemanticAnalysis = field(default_factory=SemanticAnalysis)
     summary: str = ""
     key_phrases: List[str] = field(default_factory=list)
     content_category: str = "unknown"
@@ -81,8 +77,7 @@ class ContentSemantics:
 
 
 class SemanticModelManager:
-    """Manages AI models for semantic analysis"""
-    
+    """Manages AI models for semantic analysis"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -91,8 +86,7 @@ class SemanticModelManager:
         self._initialized = False
     
     async def initialize(self) -> None:
-        """Initialize all AI models"""
-        try:
+        """Initialize all AI models"""        try:
             # Load SpaCy models
             await self._load_spacy_models()
             
@@ -113,8 +107,7 @@ class SemanticModelManager:
             raise ModelLoadError(f"Model initialization failed: {e}")
     
     async def _load_spacy_models(self) -> None:
-        """Load SpaCy NLP models"""
-        models = ['en_core_web_lg', 'de_core_news_lg', 'fr_core_news_lg']
+        """Load SpaCy NLP models"""        models = ['en_core_web_lg', 'de_core_news_lg', 'fr_core_news_lg']
         
         for model_name in models:
             try:
@@ -124,8 +117,7 @@ class SemanticModelManager:
                 self.logger.warning(f"SpaCy model not found: {model_name}")
     
     async def _load_bert_models(self) -> None:
-        """Load BERT-based models"""
-        models = {
+        """Load BERT-based models"""        models = {
             'bert_multilingual': 'bert-base-multilingual-cased',
             'bert_sentiment': 'nlptown/bert-base-multilingual-uncased-sentiment',
             'bert_emotion': 'j-hartmann/emotion-english-distilroberta-base'
@@ -140,8 +132,7 @@ class SemanticModelManager:
                 self.logger.warning(f"Failed to load BERT model {model_name}: {e}")
     
     async def _load_specialized_models(self) -> None:
-        """Load specialized AI models"""
-        try:
+        """Load specialized AI models"""        try:
             # Sentiment analysis
             self.models['sentiment_pipeline'] = pipeline(
                 "sentiment-analysis",
@@ -172,8 +163,7 @@ class SemanticModelManager:
             self.logger.warning(f"Failed to load specialized models: {e}")
     
     async def _load_sentence_transformers(self) -> None:
-        """Load sentence transformer models"""
-        models = [
+        """Load sentence transformer models"""        models = [
             'all-MiniLM-L6-v2',
             'all-mpnet-base-v2',
             'paraphrase-multilingual-MiniLM-L12-v2'
@@ -189,8 +179,7 @@ class SemanticModelManager:
 
 
 class SemanticContentParser:
-    """Ultra-advanced semantic content parser with AI capabilities"""
-    
+    """Ultra-advanced semantic content parser with AI capabilities"""    
     def __init__(self, config: ParserConfig):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -198,8 +187,7 @@ class SemanticContentParser:
         self._cache = {}
     
     async def initialize(self) -> None:
-        """Initialize the semantic parser"""
-        await self.model_manager.initialize()
+        """Initialize the semantic parser"""        await self.model_manager.initialize()
     
     async def parse_semantic_content(
         self, 
@@ -207,10 +195,8 @@ class SemanticContentParser:
         language: str = "auto",
         include_embeddings: bool = True
     ) -> ContentSemantics:
-        """
-        Perform comprehensive semantic analysis of text content
-        """
-        try:
+        """        Perform comprehensive semantic analysis of text content
+        """        try:
             # Detect language if auto
             if language == "auto":
                 language = await self._detect_language(text)
@@ -251,8 +237,7 @@ class SemanticContentParser:
             raise SemanticParsingError(f"Failed to parse semantic content: {e}")
     
     async def _analyze_text_semantics(self, text: str, language: str) -> SemanticAnalysis:
-        """Perform detailed semantic analysis"""
-        analysis = SemanticAnalysis()
+        """Perform detailed semantic analysis"""        analysis = SemanticAnalysis()
         
         # Sentiment analysis
         sentiment_result = await self._analyze_sentiment(text)
@@ -287,8 +272,7 @@ class SemanticContentParser:
         return analysis
     
     async def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyze sentiment with multiple models"""
-        try:
+        """Analyze sentiment with multiple models"""        try:
             if 'sentiment_pipeline' in self.model_manager.models:
                 result = self.model_manager.models['sentiment_pipeline'](text)[0]
                 
@@ -312,8 +296,7 @@ class SemanticContentParser:
             return {'score': 0.0, 'label': 'neutral', 'confidence': 0.0}
     
     async def _detect_emotions(self, text: str) -> Dict[str, float]:
-        """Detect emotions in text"""
-        try:
+        """Detect emotions in text"""        try:
             if 'emotion_pipeline' in self.model_manager.models:
                 results = self.model_manager.models['emotion_pipeline'](text)
                 
@@ -330,8 +313,7 @@ class SemanticContentParser:
             return {}
     
     async def _extract_topics(self, text: str) -> List[Dict[str, Any]]:
-        """Extract topics using advanced NLP"""
-        try:
+        """Extract topics using advanced NLP"""        try:
             # Use TF-IDF for basic topic extraction
             vectorizer = TfidfVectorizer(
                 max_features=20,
@@ -359,8 +341,7 @@ class SemanticContentParser:
             return []
     
     async def _extract_entities(self, text: str, language: str) -> List[Dict[str, Any]]:
-        """Extract named entities"""
-        entities = []
+        """Extract named entities"""        entities = []
         
         try:
             # Use SpaCy for entity extraction
@@ -390,8 +371,7 @@ class SemanticContentParser:
             return []
     
     async def _extract_keywords(self, text: str) -> List[Dict[str, float]]:
-        """Extract keywords with importance scores"""
-        try:
+        """Extract keywords with importance scores"""        try:
             # Use TF-IDF for keyword extraction
             vectorizer = TfidfVectorizer(
                 max_features=50,
@@ -418,8 +398,7 @@ class SemanticContentParser:
             return []
     
     async def _generate_semantic_fingerprint(self, text: str) -> str:
-        """Generate unique semantic fingerprint"""
-        try:
+        """Generate unique semantic fingerprint"""        try:
             # Create a hash based on semantic features
             normalized_text = re.sub(r'\W+', ' ', text.lower()).strip()
             
@@ -443,8 +422,7 @@ class SemanticContentParser:
             return hashlib.sha256(text.encode()).hexdigest()[:32]
     
     async def _create_vector_embedding(self, text: str) -> np.ndarray:
-        """Create vector embedding for semantic similarity"""
-        try:
+        """Create vector embedding for semantic similarity"""        try:
             model_key = 'sentence_transformer_all_MiniLM_L6_v2'
             if model_key in self.model_manager.models:
                 model = self.model_manager.models[model_key]
@@ -458,8 +436,7 @@ class SemanticContentParser:
             return np.array([])
     
     async def _detect_language(self, text: str) -> str:
-        """Detect text language"""
-        try:
+        """Detect text language"""        try:
             # Simple language detection based on common words
             english_words = set(['the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for'])
             german_words = set(['der', 'die', 'das', 'und', 'oder', 'aber', 'in', 'an', 'zu', 'für'])
@@ -482,8 +459,7 @@ class SemanticContentParser:
             return 'en'  # Default to English
     
     async def _generate_summary(self, text: str) -> str:
-        """Generate content summary"""
-        try:
+        """Generate content summary"""        try:
             if 'summarization_pipeline' in self.model_manager.models and len(text) > 100:
                 # Limit text length for summarization
                 max_length = min(len(text), 1024)
@@ -507,8 +483,7 @@ class SemanticContentParser:
             return text[:200] + '...' if len(text) > 200 else text
     
     async def _extract_key_phrases(self, text: str) -> List[str]:
-        """Extract key phrases using advanced NLP"""
-        try:
+        """Extract key phrases using advanced NLP"""        try:
             # Extract noun phrases and important keywords
             key_phrases = []
             
@@ -527,8 +502,7 @@ class SemanticContentParser:
             return []
     
     async def _classify_content_category(self, text: str) -> str:
-        """Classify content into categories"""
-        try:
+        """Classify content into categories"""        try:
             # Simple rule-based classification
             text_lower = text.lower()
             
@@ -551,8 +525,7 @@ class SemanticContentParser:
             return 'general'
     
     async def _analyze_intent(self, text: str) -> str:
-        """Analyze user intent"""
-        try:
+        """Analyze user intent"""        try:
             text_lower = text.lower()
             
             if any(word in text_lower for word in ['buy', 'purchase', 'order', 'price']):
@@ -572,8 +545,7 @@ class SemanticContentParser:
             return 'unknown'
     
     async def _calculate_quality_score(self, text: str) -> float:
-        """Calculate content quality score"""
-        try:
+        """Calculate content quality score"""        try:
             score = 0.0
             
             # Length score (optimal around 300-1000 words)
@@ -609,8 +581,7 @@ class SemanticContentParser:
             return 0.5  # Default moderate quality
     
     async def _calculate_originality_score(self, text: str) -> float:
-        """Calculate content originality score"""
-        try:
+        """Calculate content originality score"""        try:
             # Simple originality heuristics
             score = 0.5  # Base score
             
@@ -638,8 +609,7 @@ class SemanticContentParser:
             return 0.5
     
     async def _predict_engagement(self, text: str) -> float:
-        """Predict content engagement potential"""
-        try:
+        """Predict content engagement potential"""        try:
             score = 0.0
             
             # Question indicators
@@ -669,8 +639,7 @@ class SemanticContentParser:
             return 0.5
     
     async def _calculate_readability(self, text: str) -> float:
-        """Calculate readability score (simplified)"""
-        try:
+        """Calculate readability score (simplified)"""        try:
             words = text.split()
             sentences = text.split('.')
             
@@ -690,8 +659,7 @@ class SemanticContentParser:
             return 0.5
     
     def _count_syllables(self, word: str) -> int:
-        """Count syllables in a word (simplified)"""
-        word = word.lower()
+        """Count syllables in a word (simplified)"""        word = word.lower()
         vowels = 'aeiouy'
         syllable_count = 0
         previous_was_vowel = False
@@ -709,8 +677,7 @@ class SemanticContentParser:
         return max(1, syllable_count)
     
     async def _detect_toxicity(self, text: str) -> float:
-        """Detect content toxicity"""
-        try:
+        """Detect content toxicity"""        try:
             if 'toxicity_pipeline' in self.model_manager.models:
                 result = self.model_manager.models['toxicity_pipeline'](text)[0]
                 return result['score'] if result['label'] == 'TOXIC' else 1.0 - result['score']

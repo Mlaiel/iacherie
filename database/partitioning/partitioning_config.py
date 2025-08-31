@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Partitioning Configuration Example
+"""Partitioning Configuration Example
 
 Ultra-industrial configuration example for the database partitioning system.
 Provides comprehensive configuration templates for all partitioning components
@@ -26,7 +25,6 @@ and will be prosecuted to the full extent of the law. Legal action will be taken
 
 Copyright: All rights reserved. Unauthorized use, modification, or distribution prohibited.
 """
-
 import json
 from typing import Dict, Any
 
@@ -527,16 +525,14 @@ PARTITIONING_CONFIG: Dict[str, Any] = {
 }
 
 def get_config_for_environment(environment: str = "production") -> Dict[str, Any]:
-    """
-    Get configuration for specific environment
+    """    Get configuration for specific environment
     
     Args:
         environment: Environment name (development, staging, production)
         
     Returns:
         Dict containing environment-specific configuration
-    """
-    config = PARTITIONING_CONFIG.copy()
+    """    config = PARTITIONING_CONFIG.copy()
     
     if environment == "development":
         # Development overrides
@@ -565,16 +561,14 @@ def get_config_for_environment(environment: str = "production") -> Dict[str, Any
     return config
 
 def validate_config(config: Dict[str, Any]) -> List[str]:
-    """
-    Validate configuration for common issues
+    """    Validate configuration for common issues
     
     Args:
         config: Configuration dictionary to validate
         
     Returns:
         List of validation errors (empty if valid)
-    """
-    errors = []
+    """    errors = []
     
     # Required sections
     required_sections = ["system", "database", "partitioning"]
@@ -603,14 +597,12 @@ def validate_config(config: Dict[str, Any]) -> List[str]:
     return errors
 
 def export_config_template(file_path: str, environment: str = "production"):
-    """
-    Export configuration template to file
+    """    Export configuration template to file
     
     Args:
         file_path: Path to export configuration
         environment: Environment to export for
-    """
-    config = get_config_for_environment(environment)
+    """    config = get_config_for_environment(environment)
     
     with open(file_path, 'w') as f:
         json.dump(config, f, indent=2, sort_keys=True)

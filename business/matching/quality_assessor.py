@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-IA Influencer Agent - Advanced Quality Assessment System
+"""IA Influencer Agent - Advanced Quality Assessment System
 ========================================================
 
 Professional Quality Control & Compliance Validation System
@@ -35,7 +34,6 @@ CONSEQUENCES OF UNAUTHORIZED USE:
 
 AUTHORIZED USE: Contact mlaiel@live.de for licensing and authorization.
 """
-
 import asyncio
 import logging
 from typing import List, Dict, Any, Optional, Tuple, Set
@@ -55,8 +53,7 @@ logger = logging.getLogger(__name__)
 
 
 class QualityLevel(Enum):
-    """Quality level enumeration"""
-    EXCEPTIONAL = "exceptional"
+    """Quality level enumeration"""    EXCEPTIONAL = "exceptional"
     HIGH = "high"
     GOOD = "good"
     ACCEPTABLE = "acceptable"
@@ -65,8 +62,7 @@ class QualityLevel(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status enumeration"""
-    COMPLIANT = "compliant"
+    """Compliance status enumeration"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     REQUIRES_REVIEW = "requires_review"
     CONDITIONAL_COMPLIANCE = "conditional_compliance"
@@ -74,8 +70,7 @@ class ComplianceStatus(Enum):
 
 @dataclass
 class QualityMetrics:
-    """Comprehensive quality metrics"""
-    overall_score: float
+    """Comprehensive quality metrics"""    overall_score: float
     technical_quality: float
     content_quality: float
     engagement_quality: float
@@ -90,8 +85,7 @@ class QualityMetrics:
 
 @dataclass
 class ComplianceReport:
-    """Compliance validation report"""
-    compliance_id: str
+    """Compliance validation report"""    compliance_id: str
     assessment_type: str
     overall_status: ComplianceStatus
     compliance_checks: Dict[str, bool]
@@ -104,8 +98,7 @@ class ComplianceReport:
 
 
 class QualityAssessor:
-    """Advanced quality assessment and scoring system"""
-    
+    """Advanced quality assessment and scoring system"""    
     def __init__(self, db_session, ml_models, content_analyzer):
         self.db = db_session
         self.ml_models = ml_models
@@ -117,8 +110,7 @@ class QualityAssessor:
         creator_id: str,
         assessment_scope: str = "comprehensive"
     ) -> QualityMetrics:
-        """Comprehensive quality assessment for a creator"""
-        try:
+        """Comprehensive quality assessment for a creator"""        try:
             # Get creator data
             creator_data = await self._get_creator_data(creator_id)
             if not creator_data:
@@ -184,8 +176,7 @@ class QualityAssessor:
             return self._create_default_quality_metrics()
     
     async def _assess_technical_quality(self, creator_data: Dict[str, Any]) -> float:
-        """Assess technical quality of creator's content"""
-        try:
+        """Assess technical quality of creator's content"""        try:
             technical_scores = []
             
             # Video quality assessment
@@ -224,8 +215,7 @@ class QualityAssessor:
             return 0.0
     
     async def _assess_video_technical_quality(self, video_content: List[Dict[str, Any]]) -> float:
-        """Assess video technical quality"""
-        try:
+        """Assess video technical quality"""        try:
             if not video_content:
                 return 0.0
             
@@ -271,8 +261,7 @@ class QualityAssessor:
             return 0.0
     
     async def _assess_audio_technical_quality(self, audio_content: List[Dict[str, Any]]) -> float:
-        """Assess audio technical quality"""
-        try:
+        """Assess audio technical quality"""        try:
             if not audio_content:
                 return 0.0
             
@@ -319,8 +308,7 @@ class QualityAssessor:
 
 
 class ContentQualityAnalyzer:
-    """Advanced content quality analysis system"""
-    
+    """Advanced content quality analysis system"""    
     def __init__(self, db_session, nlp_analyzer, sentiment_analyzer):
         self.db = db_session
         self.nlp_analyzer = nlp_analyzer
@@ -332,8 +320,7 @@ class ContentQualityAnalyzer:
         content_id: str,
         content_type: str
     ) -> Dict[str, float]:
-        """Analyze quality of specific content"""
-        try:
+        """Analyze quality of specific content"""        try:
             # Get content data
             content_data = await self._get_content_data(content_id)
             if not content_data:
@@ -362,8 +349,7 @@ class ContentQualityAnalyzer:
             return {}
     
     async def _analyze_text_content_quality(self, content_data: Dict[str, Any]) -> Dict[str, float]:
-        """Analyze text content quality"""
-        try:
+        """Analyze text content quality"""        try:
             text_content = content_data.get('text_content', '')
             if not text_content:
                 return {}
@@ -404,8 +390,7 @@ class ContentQualityAnalyzer:
 
 
 class ProfileValidator:
-    """Creator profile validation and verification system"""
-    
+    """Creator profile validation and verification system"""    
     def __init__(self, db_session, verification_service, fraud_detector):
         self.db = db_session
         self.verification_service = verification_service
@@ -417,8 +402,7 @@ class ProfileValidator:
         creator_id: str,
         validation_level: str = "standard"
     ) -> Dict[str, Any]:
-        """Validate creator profile authenticity and completeness"""
-        try:
+        """Validate creator profile authenticity and completeness"""        try:
             # Get profile data
             profile_data = await self._get_profile_data(creator_id)
             if not profile_data:
@@ -467,8 +451,7 @@ class ProfileValidator:
 
 
 class MatchQualityChecker:
-    """Quality assessment system for creator matches"""
-    
+    """Quality assessment system for creator matches"""    
     def __init__(self, db_session, match_analyzer, success_predictor):
         self.db = db_session
         self.match_analyzer = match_analyzer
@@ -480,8 +463,7 @@ class MatchQualityChecker:
         match_id: str,
         assessment_criteria: List[str] = None
     ) -> Dict[str, Any]:
-        """Assess the quality of a creator match"""
-        try:
+        """Assess the quality of a creator match"""        try:
             # Get match details
             match_data = await self._get_match_data(match_id)
             if not match_data:
@@ -539,8 +521,7 @@ class MatchQualityChecker:
 
 
 class ComplianceValidator:
-    """Comprehensive compliance validation system"""
-    
+    """Comprehensive compliance validation system"""    
     def __init__(self, db_session, legal_checker, policy_engine):
         self.db = db_session
         self.legal_checker = legal_checker
@@ -553,8 +534,7 @@ class ComplianceValidator:
         entity_type: str,
         compliance_scope: List[str]
     ) -> ComplianceReport:
-        """Comprehensive compliance validation"""
-        try:
+        """Comprehensive compliance validation"""        try:
             # Get entity data
             entity_data = await self._get_entity_data(entity_id, entity_type)
             if not entity_data:
@@ -624,8 +604,7 @@ class ComplianceValidator:
             return self._create_failed_compliance_report(entity_id, str(e))
     
     async def _check_legal_compliance(self, entity_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Check legal compliance requirements"""
-        try:
+        """Check legal compliance requirements"""        try:
             compliance_result = {
                 'is_compliant': True,
                 'violations': [],

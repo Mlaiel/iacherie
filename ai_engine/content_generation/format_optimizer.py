@@ -1,5 +1,4 @@
-"""
-Format Optimizer - Advanced platform-specific content formatting
+"""Format Optimizer - Advanced platform-specific content formatting
 
 Professional content formatting system that optimizes content for different
 platforms, formats, and presentation requirements.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 import re
@@ -20,8 +18,7 @@ import json
 
 
 class FormatOptimizer:
-    """
-    Advanced format optimizer that adapts content for different platforms and formats:
+    """    Advanced format optimizer that adapts content for different platforms and formats:
     
     - Social media platforms (Instagram, Twitter, LinkedIn, TikTok)
     - Blog and website formats
@@ -30,11 +27,9 @@ class FormatOptimizer:
     - Mobile and responsive formats
     - Accessibility optimization
     - Multi-language formatting
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the format optimizer"""
-        self.logger = logging.getLogger(self.__class__.__name__)
+        """Initialize the format optimizer"""        self.logger = logging.getLogger(self.__class__.__name__)
         
         # Platform specifications
         self.platform_specs = {
@@ -141,8 +136,7 @@ class FormatOptimizer:
         target_platform: str,
         optimization_options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Optimize content format for specific platform.
+        """        Optimize content format for specific platform.
         
         Args:
             content: Content to optimize
@@ -151,8 +145,7 @@ class FormatOptimizer:
             
         Returns:
             Optimized content formatted for the target platform
-        """
-        try:
+        """        try:
             # Extract text content
             text_content = self._extract_text_content(content)
             
@@ -225,8 +218,7 @@ class FormatOptimizer:
             }
     
     def _extract_text_content(self, content: Any) -> str:
-        """Extract text content from various content types"""
-        if isinstance(content, str):
+        """Extract text content from various content types"""        if isinstance(content, str):
             return content
         elif isinstance(content, dict):
             if 'content' in content:
@@ -246,8 +238,7 @@ class FormatOptimizer:
         platform_spec: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Optimize content for Instagram"""
-        optimized = content
+        """Optimize content for Instagram"""        optimized = content
         
         # Add engaging hook if missing
         if not self._has_engaging_hook(optimized):
@@ -285,8 +276,7 @@ class FormatOptimizer:
         platform_spec: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Optimize content for Twitter"""
-        optimized = content
+        """Optimize content for Twitter"""        optimized = content
         
         # Ensure content fits Twitter limit
         if len(optimized) > platform_spec['max_length']:
@@ -303,8 +293,7 @@ class FormatOptimizer:
         platform_spec: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Optimize content for LinkedIn"""
-        optimized = content
+        """Optimize content for LinkedIn"""        optimized = content
         
         # Add professional hook
         if not self._has_professional_hook(optimized):
@@ -332,8 +321,7 @@ class FormatOptimizer:
         platform_spec: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Optimize content for TikTok"""
-        optimized = content
+        """Optimize content for TikTok"""        optimized = content
         
         # Keep it short and punchy
         if len(optimized) > platform_spec['max_length']:
@@ -353,8 +341,7 @@ class FormatOptimizer:
         platform_spec: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Optimize content for YouTube"""
-        optimized = content
+        """Optimize content for YouTube"""        optimized = content
         
         # Create structured description
         optimized = await self._create_youtube_description(optimized)
@@ -374,8 +361,7 @@ class FormatOptimizer:
         platform_spec: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Optimize content for blog format"""
-        optimized = content
+        """Optimize content for blog format"""        optimized = content
         
         # Add proper blog structure
         optimized = await self._add_blog_structure(optimized)
@@ -394,8 +380,7 @@ class FormatOptimizer:
         platform_spec: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Optimize content for email marketing"""
-        optimized = content
+        """Optimize content for email marketing"""        optimized = content
         
         # Add email structure
         optimized = await self._add_email_structure(optimized)
@@ -414,8 +399,7 @@ class FormatOptimizer:
         platform_spec: Dict[str, Any],
         options: Dict[str, Any]
     ) -> str:
-        """Optimize content for general format"""
-        optimized = content
+        """Optimize content for general format"""        optimized = content
         
         # Apply basic formatting improvements
         optimized = await self._apply_basic_formatting(optimized)
@@ -429,14 +413,12 @@ class FormatOptimizer:
         return optimized
     
     def _has_engaging_hook(self, content: str) -> bool:
-        """Check if content has an engaging hook"""
-        first_line = content.split('\n')[0].lower()
+        """Check if content has an engaging hook"""        first_line = content.split('\n')[0].lower()
         hook_indicators = ['did you know', 'imagine', 'what if', '💡', '🔥', '✨']
         return any(indicator in first_line for indicator in hook_indicators)
     
     async def _generate_social_hook(self, content: str, platform: str) -> str:
-        """Generate an engaging social media hook"""
-        hooks = {
+        """Generate an engaging social media hook"""        hooks = {
             'instagram': [
                 "✨ Ready to transform your perspective?",
                 "💡 Here's something that might surprise you:",
@@ -455,8 +437,7 @@ class FormatOptimizer:
         return platform_hooks[0]  # Use first hook for simplicity
     
     async def _truncate_content(self, content: str, max_length: int) -> str:
-        """Intelligently truncate content"""
-        if len(content) <= max_length:
+        """Intelligently truncate content"""        if len(content) <= max_length:
             return content
         
         # Try to truncate at sentence boundary
@@ -475,8 +456,7 @@ class FormatOptimizer:
         return truncated.strip() + "..."
     
     async def _add_instagram_line_breaks(self, content: str) -> str:
-        """Add Instagram-style line breaks"""
-        paragraphs = content.split('\n\n')
+        """Add Instagram-style line breaks"""        paragraphs = content.split('\n\n')
         formatted_paragraphs = []
         
         for paragraph in paragraphs:
@@ -495,8 +475,7 @@ class FormatOptimizer:
         return '\n\n'.join(formatted_paragraphs)
     
     async def _generate_hashtags(self, content: str, max_hashtags: int) -> str:
-        """Generate relevant hashtags"""
-        # Extract keywords for hashtags
+        """Generate relevant hashtags"""        # Extract keywords for hashtags
         words = re.findall(r'\b[a-zA-Z]{3,}\b', content.lower())
         
         # Common hashtags for different topics
@@ -521,8 +500,7 @@ class FormatOptimizer:
         return ' '.join(hashtags[:max_hashtags])
     
     async def _add_contextual_emojis(self, content: str, platform: str) -> str:
-        """Add contextual emojis to content"""
-        content_lower = content.lower()
+        """Add contextual emojis to content"""        content_lower = content.lower()
         
         # Add emojis based on content sentiment and context
         if any(word in content_lower for word in ['success', 'win', 'achieve']):
@@ -539,8 +517,7 @@ class FormatOptimizer:
         content: str, 
         elements: List[str]
     ) -> str:
-        """Add engagement elements to content"""
-        enhanced = content
+        """Add engagement elements to content"""        enhanced = content
         
         if 'questions' in elements and '?' not in enhanced:
             enhanced += "\n\nWhat's your experience with this? Share in the comments! 👇"
@@ -556,8 +533,7 @@ class FormatOptimizer:
         content: str, 
         platform_spec: Dict[str, Any]
     ) -> str:
-        """Create Twitter thread from long content"""
-        max_tweet_length = platform_spec['max_length'] - 10  # Leave space for thread numbers
+        """Create Twitter thread from long content"""        max_tweet_length = platform_spec['max_length'] - 10  # Leave space for thread numbers
         
         sentences = content.split('.')
         tweets = []
@@ -593,8 +569,7 @@ class FormatOptimizer:
         content: str, 
         platform_spec: Dict[str, Any]
     ) -> str:
-        """Optimize content for single tweet"""
-        optimized = content
+        """Optimize content for single tweet"""        optimized = content
         
         # Add Twitter-style formatting
         if not optimized.startswith(('💭', '🧵', '🔥', '💡')):
@@ -610,14 +585,12 @@ class FormatOptimizer:
         return optimized
     
     def _has_professional_hook(self, content: str) -> bool:
-        """Check if content has professional hook"""
-        first_line = content.split('\n')[0].lower()
+        """Check if content has professional hook"""        first_line = content.split('\n')[0].lower()
         professional_indicators = ['insight', 'analysis', 'strategy', 'industry', 'professional']
         return any(indicator in first_line for indicator in professional_indicators)
     
     async def _generate_professional_hook(self, content: str) -> str:
-        """Generate professional hook for LinkedIn"""
-        hooks = [
+        """Generate professional hook for LinkedIn"""        hooks = [
             "💼 Professional insight:",
             "📊 Industry analysis:",
             "🎯 Strategic perspective:",
@@ -626,8 +599,7 @@ class FormatOptimizer:
         return hooks[0]
     
     async def _professionalize_tone(self, content: str) -> str:
-        """Make content tone more professional"""
-        # Replace casual words with professional alternatives
+        """Make content tone more professional"""        # Replace casual words with professional alternatives
         replacements = {
             'awesome': 'excellent',
             'cool': 'impressive',
@@ -648,8 +620,7 @@ class FormatOptimizer:
         return professional
     
     async def _add_linkedin_formatting(self, content: str) -> str:
-        """Add LinkedIn-style formatting"""
-        paragraphs = content.split('\n\n')
+        """Add LinkedIn-style formatting"""        paragraphs = content.split('\n\n')
         
         # Add line breaks for better mobile readability
         formatted_paragraphs = []
@@ -668,8 +639,7 @@ class FormatOptimizer:
         return '\n\n'.join(formatted_paragraphs)
     
     async def _generate_professional_hashtags(self, content: str, max_hashtags: int) -> str:
-        """Generate professional hashtags for LinkedIn"""
-        professional_hashtags = [
+        """Generate professional hashtags for LinkedIn"""        professional_hashtags = [
             '#leadership', '#business', '#strategy', '#innovation',
             '#growth', '#management', '#professional', '#industry',
             '#insights', '#success', '#development', '#excellence'
@@ -684,8 +654,7 @@ class FormatOptimizer:
         content: str, 
         platform_spec: Dict[str, Any]
     ) -> str:
-        """Create punchy TikTok caption"""
-        # Extract the most engaging part
+        """Create punchy TikTok caption"""        # Extract the most engaging part
         sentences = content.split('.')
         if sentences:
             # Use first sentence as base
@@ -704,8 +673,7 @@ class FormatOptimizer:
         return content[:platform_spec['max_length']]
     
     async def _add_trending_elements(self, content: str) -> str:
-        """Add trending elements for TikTok"""
-        trending_words = ['viral', 'trending', 'POV', 'aesthetic', 'mood']
+        """Add trending elements for TikTok"""        trending_words = ['viral', 'trending', 'POV', 'aesthetic', 'mood']
         
         if not any(word in content.lower() for word in trending_words):
             content = f"POV: {content}"
@@ -713,8 +681,7 @@ class FormatOptimizer:
         return content
     
     async def _create_youtube_description(self, content: str) -> str:
-        """Create structured YouTube description"""
-        structure = f"""📖 {content}
+        """Create structured YouTube description"""        structure = f"""📖 {content}
 
 🔔 SUBSCRIBE for more content like this!
 👍 LIKE if this helped you
@@ -725,13 +692,11 @@ class FormatOptimizer:
 • Instagram: @youraccount
 • Twitter: @youraccount
 
-#YouTube #Content #Education"""
-        
+#YouTube #Content #Education"""        
         return structure
     
     async def _add_timestamps(self, content: str) -> str:
-        """Add timestamps to YouTube description"""
-        paragraphs = content.split('\n\n')
+        """Add timestamps to YouTube description"""        paragraphs = content.split('\n\n')
         
         if len(paragraphs) > 3:
             timestamped = "📚 TIMESTAMPS:\n"
@@ -752,15 +717,13 @@ class FormatOptimizer:
         return content
     
     async def _add_youtube_ctas(self, content: str) -> str:
-        """Add YouTube-specific calls to action"""
-        if 'subscribe' not in content.lower():
+        """Add YouTube-specific calls to action"""        if 'subscribe' not in content.lower():
             content += "\n\n🔔 Don't forget to SUBSCRIBE and turn on notifications!"
         
         return content
     
     async def _add_blog_structure(self, content: str) -> str:
-        """Add proper blog structure"""
-        paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
+        """Add proper blog structure"""        paragraphs = [p.strip() for p in content.split('\n\n') if p.strip()]
         
         if len(paragraphs) < 3:
             return content
@@ -784,8 +747,7 @@ class FormatOptimizer:
         return structured
     
     async def _improve_blog_readability(self, content: str) -> str:
-        """Improve blog readability"""
-        # Add bullet points for lists
+        """Improve blog readability"""        # Add bullet points for lists
         lines = content.split('\n')
         improved_lines = []
         
@@ -802,15 +764,13 @@ class FormatOptimizer:
         return '\n'.join(improved_lines)
     
     async def _add_blog_seo_elements(self, content: str) -> str:
-        """Add SEO elements to blog content"""
-        # Add meta description comment
+        """Add SEO elements to blog content"""        # Add meta description comment
         seo_content = f"<!-- Meta Description: {content[:150]}... -->\n\n{content}"
         
         return seo_content
     
     async def _add_email_structure(self, content: str) -> str:
-        """Add email marketing structure"""
-        # Basic email template
+        """Add email marketing structure"""        # Basic email template
         structured = f"""Subject: Important Update
 
 Hi [Name],
@@ -821,25 +781,21 @@ Best regards,
 [Your Name]
 
 ---
-Unsubscribe | Update Preferences | Contact Us"""
-        
+Unsubscribe | Update Preferences | Contact Us"""        
         return structured
     
     async def _add_personalization(self, content: str) -> str:
-        """Add personalization placeholders"""
-        personalized = content.replace('you', '[Name]', 1)  # Replace first occurrence
+        """Add personalization placeholders"""        personalized = content.replace('you', '[Name]', 1)  # Replace first occurrence
         return personalized
     
     async def _add_email_ctas(self, content: str) -> str:
-        """Add email-specific calls to action"""
-        if not any(cta in content.lower() for cta in ['click', 'visit', 'download', 'contact']):
+        """Add email-specific calls to action"""        if not any(cta in content.lower() for cta in ['click', 'visit', 'download', 'contact']):
             content += "\n\n👉 [CALL TO ACTION BUTTON]"
         
         return content
     
     async def _apply_basic_formatting(self, content: str) -> str:
-        """Apply basic formatting improvements"""
-        # Fix spacing
+        """Apply basic formatting improvements"""        # Fix spacing
         formatted = re.sub(r'\s+', ' ', content)  # Multiple spaces
         formatted = re.sub(r'\n\s*\n\s*\n', '\n\n', formatted)  # Multiple line breaks
         
@@ -854,8 +810,7 @@ Unsubscribe | Update Preferences | Contact Us"""
         optimized: str,
         platform_spec: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Calculate optimization metrics"""
-        return {
+        """Calculate optimization metrics"""        return {
             'length_optimization': {
                 'original_length': len(original),
                 'optimized_length': len(optimized),
@@ -880,8 +835,7 @@ Unsubscribe | Update Preferences | Contact Us"""
         }
     
     async def _get_format_changes(self, original: str, optimized: str) -> List[str]:
-        """Get list of format changes applied"""
-        changes = []
+        """Get list of format changes applied"""        changes = []
         
         if len(optimized) != len(original):
             changes.append("Length optimization")

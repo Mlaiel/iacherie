@@ -1,5 +1,4 @@
-"""
-Fraud Detection and Risk Management Configuration
+"""Fraud Detection and Risk Management Configuration
 ===============================================
 
 Professional fraud detection and risk management configuration for revenue protection.
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -26,8 +24,7 @@ from datetime import datetime, timedelta
 
 
 class RiskLevel(str, Enum):
-    """Risk level classification."""
-    VERY_LOW = "very_low"
+    """Risk level classification."""    VERY_LOW = "very_low"
     LOW = "low" 
     MEDIUM = "medium"
     HIGH = "high"
@@ -36,8 +33,7 @@ class RiskLevel(str, Enum):
 
 
 class FraudType(str, Enum):
-    """Types of fraud detection."""
-    PAYMENT_FRAUD = "payment_fraud"
+    """Types of fraud detection."""    PAYMENT_FRAUD = "payment_fraud"
     IDENTITY_FRAUD = "identity_fraud"
     ACCOUNT_TAKEOVER = "account_takeover"
     VELOCITY_ABUSE = "velocity_abuse"
@@ -50,8 +46,7 @@ class FraudType(str, Enum):
 
 
 class DetectionMethod(str, Enum):
-    """Fraud detection methods."""
-    RULE_BASED = "rule_based"
+    """Fraud detection methods."""    RULE_BASED = "rule_based"
     MACHINE_LEARNING = "machine_learning"
     BEHAVIORAL_ANALYSIS = "behavioral_analysis"
     DEVICE_FINGERPRINTING = "device_fingerprinting"
@@ -64,8 +59,7 @@ class DetectionMethod(str, Enum):
 
 
 class ActionType(str, Enum):
-    """Actions to take when fraud is detected."""
-    ALLOW = "allow"
+    """Actions to take when fraud is detected."""    ALLOW = "allow"
     REVIEW = "review"
     CHALLENGE = "challenge"  # Request additional verification
     BLOCK = "block"
@@ -79,8 +73,7 @@ class ActionType(str, Enum):
 
 @dataclass
 class RiskThreshold:
-    """Risk threshold configuration for different actions."""
-    risk_level: RiskLevel
+    """Risk threshold configuration for different actions."""    risk_level: RiskLevel
     min_score: Decimal
     max_score: Decimal
     action: ActionType
@@ -91,8 +84,7 @@ class RiskThreshold:
 
 @dataclass
 class FraudRule:
-    """Individual fraud detection rule configuration."""
-    rule_id: str
+    """Individual fraud detection rule configuration."""    rule_id: str
     rule_name: str
     fraud_type: FraudType
     detection_method: DetectionMethod
@@ -116,8 +108,7 @@ class FraudRule:
 
 @dataclass
 class MLModelConfig:
-    """Machine Learning model configuration for fraud detection."""
-    model_name: str
+    """Machine Learning model configuration for fraud detection."""    model_name: str
     model_type: str  # "random_forest", "neural_network", "gradient_boosting", etc.
     model_path: str
     enabled: bool = True
@@ -144,8 +135,7 @@ class MLModelConfig:
 
 @dataclass
 class DeviceFingerprinting:
-    """Device fingerprinting configuration."""
-    enabled: bool = True
+    """Device fingerprinting configuration."""    enabled: bool = True
     collect_browser_info: bool = True
     collect_screen_info: bool = True
     collect_timezone_info: bool = True
@@ -164,8 +154,7 @@ class DeviceFingerprinting:
 
 @dataclass
 class VelocityCheck:
-    """Velocity checking configuration."""
-    enabled: bool = True
+    """Velocity checking configuration."""    enabled: bool = True
     time_windows: List[int] = field(default_factory=lambda: [60, 300, 3600, 86400])  # 1m, 5m, 1h, 1d
     
     # Transaction Velocity Limits
@@ -186,14 +175,11 @@ class VelocityCheck:
 
 
 class FraudDetectionConfig:
-    """
-    Professional fraud detection and risk management configuration.
+    """    Professional fraud detection and risk management configuration.
     Comprehensive fraud prevention with ML, rule engine, and behavioral analysis.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize fraud detection configuration."""
-        
+        """Initialize fraud detection configuration."""        
         # Database Configuration
         self.FRAUD_DB_URL = os.getenv(
             "FRAUD_DB_URL",
@@ -307,8 +293,7 @@ class FraudDetectionConfig:
         }
     
     def _initialize_risk_thresholds(self) -> List[RiskThreshold]:
-        """Initialize risk threshold configurations."""
-        return [
+        """Initialize risk threshold configurations."""        return [
             RiskThreshold(
                 risk_level=RiskLevel.VERY_LOW,
                 min_score=Decimal("0.0"),
@@ -358,8 +343,7 @@ class FraudDetectionConfig:
         ]
     
     def _initialize_fraud_rules(self) -> List[FraudRule]:
-        """Initialize fraud detection rules."""
-        return [
+        """Initialize fraud detection rules."""        return [
             # Payment Fraud Rules
             FraudRule(
                 rule_id="PF001",
@@ -470,8 +454,7 @@ class FraudDetectionConfig:
         ]
     
     def _initialize_ml_models(self) -> Dict[str, MLModelConfig]:
-        """Initialize ML model configurations."""
-        return {
+        """Initialize ML model configurations."""        return {
             "payment_fraud_classifier": MLModelConfig(
                 model_name="Payment Fraud Classifier",
                 model_type="gradient_boosting",
@@ -514,30 +497,25 @@ class FraudDetectionConfig:
         }
     
     def get_risk_threshold(self, score: Decimal) -> Optional[RiskThreshold]:
-        """Get risk threshold for a given score."""
-        for threshold in self.RISK_THRESHOLDS:
+        """Get risk threshold for a given score."""        for threshold in self.RISK_THRESHOLDS:
             if threshold.min_score <= score <= threshold.max_score:
                 return threshold
         return None
     
     def get_fraud_rule(self, rule_id: str) -> Optional[FraudRule]:
-        """Get fraud rule by ID."""
-        return next((rule for rule in self.FRAUD_RULES if rule.rule_id == rule_id), None)
+        """Get fraud rule by ID."""        return next((rule for rule in self.FRAUD_RULES if rule.rule_id == rule_id), None)
     
     def get_enabled_rules(self, fraud_type: Optional[FraudType] = None) -> List[FraudRule]:
-        """Get enabled fraud rules, optionally filtered by fraud type."""
-        rules = [rule for rule in self.FRAUD_RULES if rule.enabled]
+        """Get enabled fraud rules, optionally filtered by fraud type."""        rules = [rule for rule in self.FRAUD_RULES if rule.enabled]
         if fraud_type:
             rules = [rule for rule in rules if rule.fraud_type == fraud_type]
         return rules
     
     def get_ml_model(self, model_name: str) -> Optional[MLModelConfig]:
-        """Get ML model configuration by name."""
-        return self.ML_MODELS.get(model_name)
+        """Get ML model configuration by name."""        return self.ML_MODELS.get(model_name)
     
     def calculate_composite_risk_score(self, individual_scores: Dict[str, Decimal]) -> Decimal:
-        """Calculate composite risk score from individual rule scores."""
-        if not individual_scores:
+        """Calculate composite risk score from individual rule scores."""        if not individual_scores:
             return Decimal("0.0")
         
         # Weighted average of all scores
@@ -560,15 +538,13 @@ class FraudDetectionConfig:
         return max(Decimal("0.0"), min(Decimal("1.0"), composite_score))
     
     def should_escalate(self, risk_score: Decimal) -> Tuple[bool, Optional[int]]:
-        """Determine if a case should be escalated and when."""
-        threshold = self.get_risk_threshold(risk_score)
+        """Determine if a case should be escalated and when."""        threshold = self.get_risk_threshold(risk_score)
         if threshold and threshold.automatic_escalation:
             return True, threshold.escalation_delay_minutes
         return False, None
     
     def get_recommended_action(self, risk_score: Decimal) -> ActionType:
-        """Get recommended action based on risk score."""
-        threshold = self.get_risk_threshold(risk_score)
+        """Get recommended action based on risk score."""        threshold = self.get_risk_threshold(risk_score)
         return threshold.action if threshold else ActionType.LOG_ONLY
 
 

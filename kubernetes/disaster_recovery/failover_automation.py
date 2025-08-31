@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Intelligent Failover Automation
+"""IA Influencer Agent - Intelligent Failover Automation
 Advanced automated failover with ML-based failure prediction
 
 This module provides intelligent failover automation:
@@ -12,7 +11,6 @@ This module provides intelligent failover automation:
 Author: Fahed Mlaiel <mlaiel@live.de>
 License: Proprietary - All rights reserved
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -33,8 +31,7 @@ from backend.deployment.disaster_recovery.recovery_planner import RecoveryPlanne
 
 
 class FailurePredictionModel(Enum):
-    """Types of failure prediction models"""
-    ANOMALY_DETECTION = "anomaly_detection"
+    """Types of failure prediction models"""    ANOMALY_DETECTION = "anomaly_detection"
     TIME_SERIES = "time_series"
     CLASSIFICATION = "classification"
     ENSEMBLE = "ensemble"
@@ -42,16 +39,14 @@ class FailurePredictionModel(Enum):
 
 
 class AutomationLevel(Enum):
-    """Levels of failover automation"""
-    MANUAL = "manual"              # Human approval required
+    """Levels of failover automation"""    MANUAL = "manual"              # Human approval required
     SEMI_AUTOMATIC = "semi_automatic"  # Automatic with human oversight
     AUTOMATIC = "automatic"        # Fully automated
     INTELLIGENT = "intelligent"    # AI-driven decisions
 
 
 class FailoverTrigger(Enum):
-    """Types of failover triggers"""
-    THRESHOLD_BREACH = "threshold_breach"
+    """Types of failover triggers"""    THRESHOLD_BREACH = "threshold_breach"
     PREDICTION_ALERT = "prediction_alert"
     CASCADING_FAILURE = "cascading_failure"
     MANUAL_TRIGGER = "manual_trigger"
@@ -60,8 +55,7 @@ class FailoverTrigger(Enum):
 
 @dataclass
 class FailureSignal:
-    """Failure prediction signal"""
-    signal_id: str
+    """Failure prediction signal"""    signal_id: str
     timestamp: datetime
     source_system: str
     signal_type: str
@@ -74,8 +68,7 @@ class FailureSignal:
 
 @dataclass
 class AutomationRule:
-    """Automation rule for failover decisions"""
-    rule_id: str
+    """Automation rule for failover decisions"""    rule_id: str
     name: str
     description: str
     conditions: List[Dict[str, Any]]
@@ -88,8 +81,7 @@ class AutomationRule:
 
 @dataclass
 class FailoverDecision:
-    """Automated failover decision"""
-    decision_id: str
+    """Automated failover decision"""    decision_id: str
     timestamp: datetime
     trigger_type: FailoverTrigger
     automation_level: AutomationLevel
@@ -103,8 +95,7 @@ class FailoverDecision:
 
 
 class PredictiveModel:
-    """Base class for failure prediction models"""
-    
+    """Base class for failure prediction models"""    
     def __init__(self, model_type: FailurePredictionModel):
         self.model_type = model_type
         self.model = None
@@ -113,35 +104,30 @@ class PredictiveModel:
         self.feature_importance = {}
         
     async def train(self, training_data: List[Dict[str, Any]]):
-        """Train the prediction model"""
-        # Default implementation for prediction models without training support
+        """Train the prediction model"""        # Default implementation for prediction models without training support
         logging.warning(f"Model training not implemented for {self.__class__.__name__}")
         pass
         
     async def predict(self, features: Dict[str, Any]) -> Tuple[float, Dict[str, Any]]:
-        """Predict failure probability and metadata"""
-        # Default implementation for prediction models without prediction support
+        """Predict failure probability and metadata"""        # Default implementation for prediction models without prediction support
         logging.warning(f"Failure prediction not implemented for {self.__class__.__name__}")
         return 0.0, {"prediction_supported": False}
         
     async def update_model(self, new_data: List[Dict[str, Any]]):
-        """Update model with new data"""
-        # Default implementation for prediction models without model updating
+        """Update model with new data"""        # Default implementation for prediction models without model updating
         logging.warning(f"Model updating not implemented for {self.__class__.__name__}")
         pass
 
 
 class AnomalyDetectionModel(PredictiveModel):
-    """Anomaly detection based failure prediction"""
-    
+    """Anomaly detection based failure prediction"""    
     def __init__(self):
         super().__init__(FailurePredictionModel.ANOMALY_DETECTION)
         self.baseline_metrics = {}
         self.anomaly_thresholds = {}
         
     async def train(self, training_data: List[Dict[str, Any]]):
-        """Train anomaly detection model"""
-        try:
+        """Train anomaly detection model"""        try:
             # Extract metrics from training data
             metrics_data = defaultdict(list)
             
@@ -174,8 +160,7 @@ class AnomalyDetectionModel(PredictiveModel):
             raise Exception(f"Anomaly detection training failed: {e}")
     
     async def predict(self, features: Dict[str, Any]) -> Tuple[float, Dict[str, Any]]:
-        """Predict failure probability based on anomalies"""
-        try:
+        """Predict failure probability based on anomalies"""        try:
             if not self.is_trained:
                 return 0.0, {'error': 'Model not trained'}
             
@@ -227,16 +212,14 @@ class AnomalyDetectionModel(PredictiveModel):
 
 
 class TimeSeriesPredictionModel(PredictiveModel):
-    """Time series based failure prediction"""
-    
+    """Time series based failure prediction"""    
     def __init__(self):
         super().__init__(FailurePredictionModel.TIME_SERIES)
         self.trend_models = {}
         self.seasonal_patterns = {}
         
     async def train(self, training_data: List[Dict[str, Any]]):
-        """Train time series prediction model"""
-        try:
+        """Train time series prediction model"""        try:
             # Group data by timestamp
             time_series_data = defaultdict(lambda: defaultdict(list))
             
@@ -280,8 +263,7 @@ class TimeSeriesPredictionModel(PredictiveModel):
             raise Exception(f"Time series training failed: {e}")
     
     async def predict(self, features: Dict[str, Any]) -> Tuple[float, Dict[str, Any]]:
-        """Predict failure based on time series trends"""
-        try:
+        """Predict failure based on time series trends"""        try:
             if not self.is_trained:
                 return 0.0, {'error': 'Model not trained'}
             
@@ -349,8 +331,7 @@ class TimeSeriesPredictionModel(PredictiveModel):
 
 
 class IntelligentFailoverAutomation:
-    """
-    Intelligent failover automation with ML-based prediction
+    """    Intelligent failover automation with ML-based prediction
     
     Features:
     - Multiple prediction models (anomaly detection, time series, ensemble)
@@ -360,7 +341,6 @@ class IntelligentFailoverAutomation:
     - Self-learning from historical incidents and outcomes
     - Context-aware automation rules and policies
     """
-
     def __init__(self, config: Config):
         self.config = config
         self.logger = logging.getLogger(__name__)
@@ -396,8 +376,7 @@ class IntelligentFailoverAutomation:
         self._initialize_automation_rules()
 
     async def initialize(self):
-        """Initialize the automation system"""
-        try:
+        """Initialize the automation system"""        try:
             # Initialize Redis connection
             self.redis_client = aioredis.from_url(
                 self.config.get('redis_url', 'redis://localhost:6379')
@@ -417,8 +396,7 @@ class IntelligentFailoverAutomation:
             raise
 
     def _initialize_automation_rules(self):
-        """Initialize default automation rules"""
-        default_rules = [
+        """Initialize default automation rules"""        default_rules = [
             {
                 'rule_id': 'high_confidence_auto_failover',
                 'name': 'High Confidence Automatic Failover',
@@ -501,8 +479,7 @@ class IntelligentFailoverAutomation:
             self.automation_rules[rule_config['rule_id']] = automation_rule
 
     async def _load_and_train_models(self):
-        """Load historical data and train prediction models"""
-        try:
+        """Load historical data and train prediction models"""        try:
             # Load historical incident and metrics data
             cutoff_date = datetime.utcnow() - timedelta(days=90)  # Last 90 days
             
@@ -523,8 +500,7 @@ class IntelligentFailoverAutomation:
             self.logger.error(f"Failed to load and train models: {e}")
 
     async def _continuous_monitoring(self):
-        """Continuous monitoring and failure prediction"""
-        while True:
+        """Continuous monitoring and failure prediction"""        while True:
             try:
                 # Collect current system metrics
                 current_metrics = await self._collect_current_metrics()
@@ -549,8 +525,7 @@ class IntelligentFailoverAutomation:
                 await asyncio.sleep(60)
 
     async def _collect_current_metrics(self) -> Dict[str, Any]:
-        """Collect current system metrics for prediction"""
-        try:
+        """Collect current system metrics for prediction"""        try:
             # Collect from various sources
             system_metrics = await self.metrics.get_system_metrics()
             application_metrics = await self.metrics.get_application_metrics()
@@ -573,8 +548,7 @@ class IntelligentFailoverAutomation:
             return {'timestamp': datetime.utcnow(), 'metrics': {}}
 
     async def _run_predictions(self, current_metrics: Dict[str, Any]) -> Dict[str, Tuple[float, Dict[str, Any]]]:
-        """Run failure predictions with all models"""
-        predictions = {}
+        """Run failure predictions with all models"""        predictions = {}
         
         for model_name, model in self.prediction_models.items():
             if model.is_trained:
@@ -589,8 +563,7 @@ class IntelligentFailoverAutomation:
 
     async def _analyze_predictions(self, predictions: Dict[str, Tuple[float, Dict[str, Any]]], 
                                  current_metrics: Dict[str, Any]) -> List[FailureSignal]:
-        """Analyze predictions and generate failure signals"""
-        failure_signals = []
+        """Analyze predictions and generate failure signals"""        failure_signals = []
         
         # Ensemble prediction (average of all models)
         valid_predictions = [(conf, meta) for conf, meta in predictions.values() 
@@ -635,8 +608,7 @@ class IntelligentFailoverAutomation:
 
     def _estimate_failure_time(self, current_metrics: Dict[str, Any], 
                              confidence: float) -> Optional[datetime]:
-        """Estimate when failure might occur"""
-        try:
+        """Estimate when failure might occur"""        try:
             # Simple heuristic based on confidence and current trends
             base_time = datetime.utcnow()
             
@@ -662,8 +634,7 @@ class IntelligentFailoverAutomation:
 
     async def _assess_failure_impact(self, current_metrics: Dict[str, Any], 
                                    confidence: float) -> Dict[str, Any]:
-        """Assess potential impact of predicted failure"""
-        try:
+        """Assess potential impact of predicted failure"""        try:
             # Get current system state
             active_services = await self.db_manager.get_active_services()
             active_users = await self.db_manager.get_active_user_count()
@@ -688,8 +659,7 @@ class IntelligentFailoverAutomation:
 
     def _calculate_business_impact_level(self, service_count: int, 
                                        user_count: int, confidence: float) -> str:
-        """Calculate business impact level"""
-        impact_score = (service_count * 0.1) + (user_count * 0.0001) + (confidence * 0.5)
+        """Calculate business impact level"""        impact_score = (service_count * 0.1) + (user_count * 0.0001) + (confidence * 0.5)
         
         if impact_score > 0.8:
             return 'critical'
@@ -703,8 +673,7 @@ class IntelligentFailoverAutomation:
     def _generate_recommendations(self, predictions: Dict[str, Tuple[float, Dict[str, Any]]], 
                                 impact_assessment: Dict[str, Any],
                                 confidence: float) -> List[str]:
-        """Generate actionable recommendations"""
-        recommendations = []
+        """Generate actionable recommendations"""        recommendations = []
         
         if confidence > 0.9:
             recommendations.extend([
@@ -734,8 +703,7 @@ class IntelligentFailoverAutomation:
         return recommendations
 
     async def _process_failure_signal(self, signal: FailureSignal):
-        """Process failure signal through automation rules"""
-        try:
+        """Process failure signal through automation rules"""        try:
             # Find applicable automation rules
             applicable_rules = []
             
@@ -776,8 +744,7 @@ class IntelligentFailoverAutomation:
             self.logger.error(f"Failed to process failure signal: {e}")
 
     def _evaluate_rule_conditions(self, rule: AutomationRule, signal: FailureSignal) -> bool:
-        """Evaluate if rule conditions are met"""
-        try:
+        """Evaluate if rule conditions are met"""        try:
             for condition in rule.conditions:
                 condition_type = condition['type']
                 operator = condition['operator']
@@ -805,8 +772,7 @@ class IntelligentFailoverAutomation:
             return False
 
     def _evaluate_condition(self, signal_value: Any, operator: str, threshold_value: Any) -> bool:
-        """Evaluate individual condition"""
-        if operator == '>':
+        """Evaluate individual condition"""        if operator == '>':
             return signal_value > threshold_value
         elif operator == '>=':
             return signal_value >= threshold_value
@@ -822,8 +788,7 @@ class IntelligentFailoverAutomation:
             return False
 
     async def _execute_decision(self, decision: FailoverDecision, rule: AutomationRule):
-        """Execute automated failover decision"""
-        try:
+        """Execute automated failover decision"""        try:
             execution_results = []
             
             for action in rule.actions:
@@ -861,8 +826,7 @@ class IntelligentFailoverAutomation:
             decision.execution_result = {'error': str(e)}
 
     async def get_automation_status(self) -> Dict[str, Any]:
-        """Get comprehensive automation system status"""
-        try:
+        """Get comprehensive automation system status"""        try:
             model_status = {}
             for name, model in self.prediction_models.items():
                 model_status[name] = {
@@ -894,8 +858,7 @@ class IntelligentFailoverAutomation:
             return {'error': str(e)}
 
     def _calculate_automation_effectiveness(self) -> Dict[str, float]:
-        """Calculate automation effectiveness metrics"""
-        if not self.decision_history:
+        """Calculate automation effectiveness metrics"""        if not self.decision_history:
             return {'insufficient_data': True}
         
         total_decisions = len(self.decision_history)

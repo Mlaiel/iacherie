@@ -1,8 +1,6 @@
-"""
-Blockchain Integration for Watermarking
+"""Blockchain Integration for Watermarking
 Immutable ownership records and watermark verification on blockchain
 """
-
 import asyncio
 import logging
 import json
@@ -27,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WatermarkRecord:
-    """Blockchain watermark record structure"""
-    watermark_id: str
+    """Blockchain watermark record structure"""    watermark_id: str
     content_hash: str
     owner_address: str
     creation_timestamp: int
@@ -40,8 +37,7 @@ class WatermarkRecord:
 
 @dataclass
 class OwnershipProof:
-    """Ownership proof structure"""
-    owner_id: str
+    """Ownership proof structure"""    owner_id: str
     content_id: str
     ownership_hash: str
     signature: str
@@ -50,8 +46,7 @@ class OwnershipProof:
 
 
 class BlockchainWatermarkRegistry:
-    """Professional blockchain integration for watermark registry and verification"""
-    
+    """Professional blockchain integration for watermark registry and verification"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.web3 = None
@@ -62,8 +57,7 @@ class BlockchainWatermarkRegistry:
             self._initialize_blockchain()
     
     def _initialize_blockchain(self):
-        """Initialize blockchain connection"""
-        try:
+        """Initialize blockchain connection"""        try:
             # Connect to blockchain network
             provider_url = self.config.get('provider_url', 'https://mainnet.infura.io/v3/YOUR_PROJECT_ID')
             self.web3 = Web3(Web3.HTTPProvider(provider_url))
@@ -95,11 +89,9 @@ class BlockchainWatermarkRegistry:
         content_hash: str,
         owner_id: str
     ) -> Dict[str, Any]:
-        """
-        Registers watermark on blockchain for immutable ownership proof
+        """        Registers watermark on blockchain for immutable ownership proof
         Creates permanent record with cryptographic verification
-        """
-        try:
+        """        try:
             if not BLOCKCHAIN_AVAILABLE or not self.web3:
                 return await self._register_local_watermark(watermark_data, content_hash, owner_id)
             
@@ -164,11 +156,9 @@ class BlockchainWatermarkRegistry:
         claimed_owner: str,
         watermark_evidence: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Verifies ownership using blockchain records
+        """        Verifies ownership using blockchain records
         Provides cryptographic proof of ownership
-        """
-        try:
+        """        try:
             if not BLOCKCHAIN_AVAILABLE or not self.web3:
                 return await self._verify_local_ownership(content_hash, claimed_owner)
             
@@ -229,11 +219,9 @@ class BlockchainWatermarkRegistry:
         content_id: str,
         watermark_evidence: Dict[str, Any]
     ) -> OwnershipProof:
-        """
-        Creates cryptographic ownership proof
+        """        Creates cryptographic ownership proof
         Generates legally admissible evidence
-        """
-        try:
+        """        try:
             # Create ownership hash
             ownership_data = {
                 'owner_id': owner_id,
@@ -283,11 +271,9 @@ class BlockchainWatermarkRegistry:
         watermark_id: str,
         current_watermark_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Verifies watermark integrity against blockchain records
+        """        Verifies watermark integrity against blockchain records
         Detects tampering and unauthorized modifications
-        """
-        try:
+        """        try:
             # Retrieve original record from blockchain
             original_record = await self._get_blockchain_record(watermark_id)
             
@@ -371,11 +357,9 @@ class BlockchainWatermarkRegistry:
         self,
         content_hash: str
     ) -> List[Dict[str, Any]]:
-        """
-        Retrieves complete ownership history from blockchain
+        """        Retrieves complete ownership history from blockchain
         Provides audit trail for content ownership
-        """
-        try:
+        """        try:
             if not BLOCKCHAIN_AVAILABLE or not self.web3:
                 return await self._get_local_ownership_history(content_hash)
             
@@ -414,8 +398,7 @@ class BlockchainWatermarkRegistry:
     # Private helper methods
     
     async def _submit_blockchain_transaction(self, record: WatermarkRecord) -> str:
-        """Submits transaction to blockchain"""
-        try:
+        """Submits transaction to blockchain"""        try:
             if not self.contract or not self.account:
                 return "local_tx_" + str(uuid.uuid4())[:8]
             
@@ -450,8 +433,7 @@ class BlockchainWatermarkRegistry:
             return "failed_tx_" + str(uuid.uuid4())[:8]
     
     async def _query_blockchain_records(self, content_hash: str) -> List[Dict[str, Any]]:
-        """Queries blockchain for records"""
-        try:
+        """Queries blockchain for records"""        try:
             if not self.contract:
                 return []
             
@@ -465,8 +447,7 @@ class BlockchainWatermarkRegistry:
             return []
     
     async def _verify_record_integrity(self, record: Dict[str, Any]) -> Dict[str, Any]:
-        """Verifies cryptographic integrity of record"""
-        try:
+        """Verifies cryptographic integrity of record"""        try:
             # Recreate verification hash
             watermark_hash = record.get('watermark_hash', '')
             owner_id = record.get('owner_id', '')
@@ -494,8 +475,7 @@ class BlockchainWatermarkRegistry:
             return {'valid': False, 'confidence': 0.0, 'error': str(e)}
     
     async def _get_blockchain_record(self, watermark_id: str) -> Optional[Dict[str, Any]]:
-        """Retrieves specific record from blockchain"""
-        try:
+        """Retrieves specific record from blockchain"""        try:
             if not self.contract:
                 return None
             
@@ -507,8 +487,7 @@ class BlockchainWatermarkRegistry:
             return None
     
     async def _submit_ownership_proof(self, ownership_data: Dict[str, Any], signature: str) -> str:
-        """Submits ownership proof to blockchain"""
-        try:
+        """Submits ownership proof to blockchain"""        try:
             if not self.contract or not self.account:
                 return "local_proof_" + str(uuid.uuid4())[:8]
             
@@ -523,8 +502,7 @@ class BlockchainWatermarkRegistry:
     # Fallback methods for local storage
     
     async def _register_local_watermark(self, watermark_data: Dict[str, Any], content_hash: str, owner_id: str) -> Dict[str, Any]:
-        """Local fallback for watermark registration"""
-        watermark_id = str(uuid.uuid4())
+        """Local fallback for watermark registration"""        watermark_id = str(uuid.uuid4())
         timestamp = int(time.time())
         
         return {
@@ -539,8 +517,7 @@ class BlockchainWatermarkRegistry:
         }
     
     async def _verify_local_ownership(self, content_hash: str, claimed_owner: str) -> Dict[str, Any]:
-        """Local fallback for ownership verification"""
-        return {
+        """Local fallback for ownership verification"""        return {
             "ownership_verified": False,
             "confidence": 0.0,
             "message": "Blockchain verification not available - local verification not implemented",
@@ -548,17 +525,14 @@ class BlockchainWatermarkRegistry:
         }
     
     async def _store_local_record(self, record: WatermarkRecord):
-        """Stores record locally for caching"""
-        # Implementation would store in local database
+        """Stores record locally for caching"""        # Implementation would store in local database
         pass
     
     async def _get_local_ownership_history(self, content_hash: str) -> List[Dict[str, Any]]:
-        """Local fallback for ownership history"""
-        return []
+        """Local fallback for ownership history"""        return []
     
     def _get_default_abi(self) -> List[Dict[str, Any]]:
-        """Returns default smart contract ABI"""
-        return [
+        """Returns default smart contract ABI"""        return [
             {
                 "inputs": [
                     {"name": "watermarkId", "type": "string"},

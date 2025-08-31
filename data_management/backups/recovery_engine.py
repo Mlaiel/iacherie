@@ -1,5 +1,4 @@
-"""
-🔄 Recovery Engine - Advanced Backup Recovery System
+"""🔄 Recovery Engine - Advanced Backup Recovery System
 ===================================================
 Module: backend/data_management/backups/recovery_engine.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -13,7 +12,6 @@ Responsibility: Récupération intelligente et restauration sauvegardes
 Usage non autorisé strictement interdit et passible de poursuites judiciaires.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import os
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class RecoveryStrategy(Enum):
-    """Stratégies de récupération"""
-    FULL_RESTORE = "full_restore"           # Restauration complète
+    """Stratégies de récupération"""    FULL_RESTORE = "full_restore"           # Restauration complète
     SELECTIVE_RESTORE = "selective_restore" # Restauration sélective
     INCREMENTAL_RESTORE = "incremental_restore" # Restauration incrémentale
     POINT_IN_TIME = "point_in_time"         # Restauration à un point dans le temps
@@ -45,8 +42,7 @@ class RecoveryStrategy(Enum):
 
 
 class RecoveryPriority(Enum):
-    """Priorités de récupération"""
-    CRITICAL = "critical"     # Critique (immédiat)
+    """Priorités de récupération"""    CRITICAL = "critical"     # Critique (immédiat)
     HIGH = "high"            # Haute priorité
     NORMAL = "normal"        # Priorité normale
     LOW = "low"              # Basse priorité
@@ -54,8 +50,7 @@ class RecoveryPriority(Enum):
 
 
 class RecoveryStatus(Enum):
-    """États de récupération"""
-    PENDING = "pending"
+    """États de récupération"""    PENDING = "pending"
     RUNNING = "running"
     PAUSED = "paused"
     COMPLETED = "completed"
@@ -65,8 +60,7 @@ class RecoveryStatus(Enum):
 
 @dataclass
 class RecoveryPlan:
-    """Plan de récupération détaillé"""
-    recovery_id: str
+    """Plan de récupération détaillé"""    recovery_id: str
     strategy: RecoveryStrategy
     priority: RecoveryPriority
     source_backup_id: str
@@ -83,8 +77,7 @@ class RecoveryPlan:
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "recovery_id": self.recovery_id,
             "strategy": self.strategy.value,
             "priority": self.priority.value,
@@ -104,8 +97,7 @@ class RecoveryPlan:
 
 @dataclass
 class RecoveryProgress:
-    """Progression de récupération"""
-    recovery_id: str
+    """Progression de récupération"""    recovery_id: str
     status: RecoveryStatus
     files_total: int = 0
     files_processed: int = 0
@@ -121,29 +113,25 @@ class RecoveryProgress:
     
     @property
     def progress_percentage(self) -> float:
-        """Pourcentage de progression"""
-        if self.files_total == 0:
+        """Pourcentage de progression"""        if self.files_total == 0:
             return 0.0
         return (self.files_processed / self.files_total) * 100
     
     @property
     def bytes_percentage(self) -> float:
-        """Pourcentage de bytes traités"""
-        if self.bytes_total == 0:
+        """Pourcentage de bytes traités"""        if self.bytes_total == 0:
             return 0.0
         return (self.bytes_processed / self.bytes_total) * 100
     
     @property
     def duration(self) -> Optional[timedelta]:
-        """Durée d'exécution"""
-        if not self.started_at:
+        """Durée d'exécution"""        if not self.started_at:
             return None
         end_time = self.completed_at or datetime.now()
         return end_time - self.started_at
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "recovery_id": self.recovery_id,
             "status": self.status.value,
             "files_total": self.files_total,
@@ -165,8 +153,7 @@ class RecoveryProgress:
 
 @dataclass
 class RecoveryConfig:
-    """Configuration de récupération"""
-    parallel_workers: int = 4
+    """Configuration de récupération"""    parallel_workers: int = 4
     chunk_size: int = 64 * 1024  # 64KB
     verify_checksums: bool = True
     auto_resume: bool = True
@@ -177,8 +164,7 @@ class RecoveryConfig:
     bandwidth_limit: Optional[int] = None  # bytes/sec
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convertit en dictionnaire"""
-        return {
+        """Convertit en dictionnaire"""        return {
             "parallel_workers": self.parallel_workers,
             "chunk_size": self.chunk_size,
             "verify_checksums": self.verify_checksums,
@@ -192,8 +178,7 @@ class RecoveryConfig:
 
 
 class RecoveryEngine:
-    """
-    Moteur de récupération avancé pour sauvegardes
+    """    Moteur de récupération avancé pour sauvegardes
     
     Fonctionnalités:
     - Récupération multi-stratégies
@@ -204,8 +189,7 @@ class RecoveryEngine:
     - Gestion erreurs et reprise
     - Monitoring temps réel
     - Récupération sélective
-    """
-    
+    """    
     def __init__(
         self,
         config: Optional[RecoveryConfig] = None,
@@ -246,8 +230,7 @@ class RecoveryEngine:
         target_location: Path,
         **kwargs
     ) -> RecoveryPlan:
-        """
-        Crée un plan de récupération
+        """        Crée un plan de récupération
         
         Args:
             backup_id: ID de la sauvegarde source
@@ -257,8 +240,7 @@ class RecoveryEngine:
             
         Returns:
             RecoveryPlan: Plan de récupération détaillé
-        """
-        try:
+        """        try:
             recovery_id = self._generate_recovery_id()
             
             # Récupération métadonnées de sauvegarde
@@ -300,14 +282,12 @@ class RecoveryEngine:
             raise RecoveryException(f"Recovery plan creation failed: {e}")
     
     def _generate_recovery_id(self) -> str:
-        """Génère un ID unique pour une récupération"""
-        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
+        """Génère un ID unique pour une récupération"""        timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
         import secrets
         return f"recovery_{timestamp}_{secrets.token_hex(8)}"
     
     async def _get_backup_metadata(self, backup_id: str) -> Optional[BackupMetadata]:
-        """Récupère les métadonnées d'une sauvegarde"""
-        # Vérification cache
+        """Récupère les métadonnées d'une sauvegarde"""        # Vérification cache
         if backup_id in self.backup_metadata_cache:
             return self.backup_metadata_cache[backup_id]
         
@@ -345,8 +325,7 @@ class RecoveryEngine:
         plan: RecoveryPlan,
         backup_metadata: BackupMetadata
     ):
-        """Valide un plan de récupération"""
-        # Vérification emplacement cible
+        """Valide un plan de récupération"""        # Vérification emplacement cible
         if not plan.target_location.parent.exists():
             raise RecoveryException(f"Target directory does not exist: {plan.target_location.parent}")
         
@@ -378,8 +357,7 @@ class RecoveryEngine:
         plan: RecoveryPlan,
         backup_metadata: BackupMetadata
     ):
-        """Optimise un plan de récupération"""
-        # Tri des fichiers par taille pour optimiser l'ordre
+        """Optimise un plan de récupération"""        # Tri des fichiers par taille pour optimiser l'ordre
         files_to_process = backup_metadata.files.copy()
         
         if plan.files_to_recover:
@@ -419,16 +397,14 @@ class RecoveryEngine:
         logger.debug(f"Recovery plan optimized: {len(files_to_process)} files to recover")
     
     async def execute_recovery(self, plan: RecoveryPlan) -> str:
-        """
-        Exécute un plan de récupération
+        """        Exécute un plan de récupération
         
         Args:
             plan: Plan de récupération à exécuter
             
         Returns:
             str: ID de la récupération lancée
-        """
-        try:
+        """        try:
             recovery_id = plan.recovery_id
             
             # Vérification si récupération déjà active
@@ -463,14 +439,12 @@ class RecoveryEngine:
         plan: RecoveryPlan,
         progress: RecoveryProgress
     ):
-        """
-        Tâche d'exécution de récupération
+        """        Tâche d'exécution de récupération
         
         Args:
             plan: Plan de récupération
             progress: Objet de progression
-        """
-        try:
+        """        try:
             # Récupération métadonnées
             backup_metadata = await self._get_backup_metadata(plan.source_backup_id)
             
@@ -532,8 +506,7 @@ class RecoveryEngine:
         plan: RecoveryPlan,
         backup_metadata: BackupMetadata
     ) -> List[Dict[str, Any]]:
-        """Prépare la liste des fichiers à récupérer"""
-        files = backup_metadata.files.copy()
+        """Prépare la liste des fichiers à récupérer"""        files = backup_metadata.files.copy()
         
         # Filtrage par fichiers spécifiques
         if plan.files_to_recover:
@@ -554,8 +527,7 @@ class RecoveryEngine:
         files_to_recover: List[Dict[str, Any]],
         progress: RecoveryProgress
     ):
-        """Exécute une restauration complète"""
-        semaphore = asyncio.Semaphore(self.config.parallel_workers)
+        """Exécute une restauration complète"""        semaphore = asyncio.Semaphore(self.config.parallel_workers)
         
         async def restore_single_file(file_info):
             async with semaphore:
@@ -571,8 +543,7 @@ class RecoveryEngine:
         files_to_recover: List[Dict[str, Any]],
         progress: RecoveryProgress
     ):
-        """Exécute une restauration sélective"""
-        # Même logique que restauration complète mais avec fichiers filtrés
+        """Exécute une restauration sélective"""        # Même logique que restauration complète mais avec fichiers filtrés
         await self._execute_full_restore(plan, files_to_recover, progress)
     
     async def _execute_incremental_restore(
@@ -581,8 +552,7 @@ class RecoveryEngine:
         files_to_recover: List[Dict[str, Any]],
         progress: RecoveryProgress
     ):
-        """Exécute une restauration incrémentale"""
-        # Tri par timestamp pour restauration chronologique
+        """Exécute une restauration incrémentale"""        # Tri par timestamp pour restauration chronologique
         files_sorted = sorted(
             files_to_recover,
             key=lambda x: datetime.fromisoformat(x.get("timestamp", "1970-01-01T00:00:00"))
@@ -598,8 +568,7 @@ class RecoveryEngine:
         files_to_recover: List[Dict[str, Any]],
         progress: RecoveryProgress
     ):
-        """Exécute une restauration point-in-time"""
-        if not plan.recovery_point:
+        """Exécute une restauration point-in-time"""        if not plan.recovery_point:
             raise RecoveryException("Recovery point not specified for point-in-time restore")
         
         # Fichiers déjà filtrés par _prepare_file_list
@@ -611,8 +580,7 @@ class RecoveryEngine:
         files_to_recover: List[Dict[str, Any]],
         progress: RecoveryProgress
     ):
-        """Exécute une récupération après sinistre"""
-        # Priorité aux fichiers critiques
+        """Exécute une récupération après sinistre"""        # Priorité aux fichiers critiques
         critical_patterns = ["*.db", "*.config", "*.key", "*.cert"]
         import fnmatch
         
@@ -644,15 +612,13 @@ class RecoveryEngine:
         file_info: Dict[str, Any],
         progress: RecoveryProgress
     ):
-        """
-        Restaure un fichier individuel
+        """        Restaure un fichier individuel
         
         Args:
             plan: Plan de récupération
             file_info: Informations du fichier
             progress: Objet de progression
-        """
-        try:
+        """        try:
             source_path = Path(file_info["path"])
             target_path = plan.target_location / source_path.name
             
@@ -723,8 +689,7 @@ class RecoveryEngine:
         backup_id: str,
         file_path: Path
     ) -> Optional[Path]:
-        """
-        Récupère un fichier depuis le stockage de sauvegarde
+        """        Récupère un fichier depuis le stockage de sauvegarde
         
         Args:
             backup_id: ID de la sauvegarde
@@ -732,8 +697,7 @@ class RecoveryEngine:
             
         Returns:
             Optional[Path]: Fichier temporaire récupéré
-        """
-        try:
+        """        try:
             # En production: récupération depuis le storage provider
             # Ici: simulation avec fichier local
             
@@ -759,8 +723,7 @@ class RecoveryEngine:
         encrypted_file: Path,
         file_info: Dict[str, Any]
     ) -> Optional[Path]:
-        """Déchiffre un fichier récupéré"""
-        try:
+        """Déchiffre un fichier récupéré"""        try:
             if not self.encryption_manager:
                 return None
             
@@ -790,8 +753,7 @@ class RecoveryEngine:
         compressed_file: Path,
         file_info: Dict[str, Any]
     ) -> Optional[Path]:
-        """Décompresse un fichier récupéré"""
-        try:
+        """Décompresse un fichier récupéré"""        try:
             if not self.compression_engine:
                 return None
             
@@ -821,8 +783,7 @@ class RecoveryEngine:
         restored_file: Path,
         file_info: Dict[str, Any]
     ):
-        """Vérifie l'intégrité du fichier restauré"""
-        try:
+        """Vérifie l'intégrité du fichier restauré"""        try:
             # Vérification taille
             expected_size = file_info.get("original_size", file_info.get("size"))
             actual_size = restored_file.stat().st_size
@@ -853,8 +814,7 @@ class RecoveryEngine:
         file_path: Path,
         file_info: Dict[str, Any]
     ):
-        """Restaure les permissions d'un fichier"""
-        try:
+        """Restaure les permissions d'un fichier"""        try:
             # Restauration permissions Unix
             if "permissions" in file_info:
                 permissions = file_info["permissions"]
@@ -874,8 +834,7 @@ class RecoveryEngine:
             logger.warning(f"Failed to restore file permissions: {e}")
     
     async def _apply_bandwidth_limit(self, bytes_transferred: int):
-        """Applique la limitation de bande passante"""
-        if not self.config.bandwidth_limit:
+        """Applique la limitation de bande passante"""        if not self.config.bandwidth_limit:
             return
         
         # Calcul délai nécessaire
@@ -885,8 +844,7 @@ class RecoveryEngine:
             await asyncio.sleep(delay)
     
     def _update_recovery_stats(self, progress: RecoveryProgress, success: bool):
-        """Met à jour les statistiques de récupération"""
-        self.recovery_stats["total_recoveries"] += 1
+        """Met à jour les statistiques de récupération"""        self.recovery_stats["total_recoveries"] += 1
         
         if success:
             self.recovery_stats["successful_recoveries"] += 1
@@ -916,16 +874,14 @@ class RecoveryEngine:
             )
     
     async def pause_recovery(self, recovery_id: str) -> bool:
-        """
-        Met en pause une récupération
+        """        Met en pause une récupération
         
         Args:
             recovery_id: ID de la récupération
             
         Returns:
             bool: True si mise en pause réussie
-        """
-        try:
+        """        try:
             if recovery_id not in self.active_recoveries:
                 return False
             
@@ -949,16 +905,14 @@ class RecoveryEngine:
             return False
     
     async def resume_recovery(self, recovery_id: str) -> bool:
-        """
-        Reprend une récupération en pause
+        """        Reprend une récupération en pause
         
         Args:
             recovery_id: ID de la récupération
             
         Returns:
             bool: True si reprise réussie
-        """
-        try:
+        """        try:
             if recovery_id not in self.active_recoveries:
                 return False
             
@@ -979,16 +933,14 @@ class RecoveryEngine:
             return False
     
     async def cancel_recovery(self, recovery_id: str) -> bool:
-        """
-        Annule une récupération
+        """        Annule une récupération
         
         Args:
             recovery_id: ID de la récupération
             
         Returns:
             bool: True si annulation réussie
-        """
-        try:
+        """        try:
             if recovery_id not in self.active_recoveries:
                 return False
             
@@ -1010,34 +962,28 @@ class RecoveryEngine:
             return False
     
     def get_recovery_progress(self, recovery_id: str) -> Optional[RecoveryProgress]:
-        """
-        Récupère la progression d'une récupération
+        """        Récupère la progression d'une récupération
         
         Args:
             recovery_id: ID de la récupération
             
         Returns:
             Optional[RecoveryProgress]: Progression actuelle
-        """
-        return self.active_recoveries.get(recovery_id)
+        """        return self.active_recoveries.get(recovery_id)
     
     def list_active_recoveries(self) -> List[RecoveryProgress]:
-        """
-        Liste les récupérations actives
+        """        Liste les récupérations actives
         
         Returns:
             List[RecoveryProgress]: Récupérations en cours
-        """
-        return list(self.active_recoveries.values())
+        """        return list(self.active_recoveries.values())
     
     def get_recovery_stats(self) -> Dict[str, Any]:
-        """
-        Récupère les statistiques de récupération
+        """        Récupère les statistiques de récupération
         
         Returns:
             Dict[str, Any]: Statistiques détaillées
-        """
-        stats = self.recovery_stats.copy()
+        """        stats = self.recovery_stats.copy()
         
         # Calculs additionnels
         total_recoveries = stats["total_recoveries"]

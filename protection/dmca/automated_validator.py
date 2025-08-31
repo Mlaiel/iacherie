@@ -1,5 +1,4 @@
-"""
-🤖 DMCA Automated Validation Engine
+"""🤖 DMCA Automated Validation Engine
 ==================================
 
 AI-powered validation system for DMCA claims with legal compliance checking.
@@ -32,7 +31,6 @@ Project Team Specialties:
 - Database Administrator: High-performance data systems
 - Microservices Architect: Distributed systems design
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Set, Union
@@ -61,8 +59,7 @@ logger = logging.getLogger(__name__)
 
 
 class ValidationResult(Enum):
-    """Validation outcome classifications"""
-    APPROVED = "approved"              # Strong case, proceed with confidence
+    """Validation outcome classifications"""    APPROVED = "approved"              # Strong case, proceed with confidence
     CONDITIONAL = "conditional"        # Good case, minor issues to address
     REVIEW_REQUIRED = "review_required"  # Manual review needed
     INSUFFICIENT = "insufficient"      # Weak case, need more evidence
@@ -70,8 +67,7 @@ class ValidationResult(Enum):
 
 
 class LegalRiskLevel(IntEnum):
-    """Legal risk assessment levels"""
-    MINIMAL = 1        # < 5% risk of counter-claim
+    """Legal risk assessment levels"""    MINIMAL = 1        # < 5% risk of counter-claim
     LOW = 2           # 5-15% risk
     MODERATE = 3      # 15-30% risk
     HIGH = 4          # 30-50% risk
@@ -80,8 +76,7 @@ class LegalRiskLevel(IntEnum):
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation assessment report"""
-    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive validation assessment report"""    validation_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     timestamp: datetime = field(default_factory=datetime.utcnow)
     result: ValidationResult = ValidationResult.REVIEW_REQUIRED
     confidence_score: float = 0.0  # 0.0 to 1.0
@@ -109,8 +104,7 @@ class ValidationReport:
 
 
 class DMCAAutomatedValidator:
-    """Enterprise-grade automated DMCA validation engine"""
-    
+    """Enterprise-grade automated DMCA validation engine"""    
     def __init__(self):
         self.text_vectorizer = TfidfVectorizer(
             max_features=5000,
@@ -121,8 +115,7 @@ class DMCAAutomatedValidator:
         self.legal_precedents: Dict[str, Any] = self._load_legal_precedents()
         
     def _load_legal_precedents(self) -> Dict[str, Any]:
-        """Load legal precedents and guidelines for validation"""
-        return {
+        """Load legal precedents and guidelines for validation"""        return {
             'fair_use_keywords': [
                 'parody', 'criticism', 'review', 'comment', 'news reporting',
                 'teaching', 'scholarship', 'research', 'educational'
@@ -152,8 +145,7 @@ class DMCAAutomatedValidator:
                                   infringement: DMCAInfringement,
                                   jurisdiction: LegalJurisdiction = LegalJurisdiction.US_FEDERAL
                                   ) -> ValidationReport:
-        """
-        Comprehensive automated validation of DMCA claim
+        """        Comprehensive automated validation of DMCA claim
         
         Args:
             original_content: Original copyrighted content
@@ -162,8 +154,7 @@ class DMCAAutomatedValidator:
             
         Returns:
             ValidationReport: Detailed validation assessment
-        """
-        logger.info(f"Starting automated validation for infringement {infringement.infringement_id}")
+        """        logger.info(f"Starting automated validation for infringement {infringement.infringement_id}")
         
         # Generate cache key
         cache_key = self._generate_cache_key(original_content, infringement)
@@ -238,8 +229,7 @@ class DMCAAutomatedValidator:
         return report
     
     async def _analyze_evidence_strength(self, evidence_list: List[DMCAEvidence]) -> float:
-        """Analyze the strength of provided evidence"""
-        if not evidence_list:
+        """Analyze the strength of provided evidence"""        if not evidence_list:
             return 0.0
         
         evidence_weights = {
@@ -284,8 +274,7 @@ class DMCAAutomatedValidator:
                                           original: DMCAContentInfo,
                                           infringement: DMCAInfringement
                                           ) -> Dict[str, float]:
-        """Analyze similarity between original and infringing content"""
-        similarities = {}
+        """Analyze similarity between original and infringing content"""        similarities = {}
         
         # Title similarity
         if original.title and infringement.content_title:
@@ -309,8 +298,7 @@ class DMCAAutomatedValidator:
         return similarities
     
     def _calculate_text_similarity(self, text1: str, text2: str) -> float:
-        """Calculate text similarity using TF-IDF and cosine similarity"""
-        try:
+        """Calculate text similarity using TF-IDF and cosine similarity"""        try:
             corpus = [text1.lower(), text2.lower()]
             tfidf_matrix = self.text_vectorizer.fit_transform(corpus)
             cosine_sim = cosine_similarity(tfidf_matrix[0:1], tfidf_matrix[1:2])
@@ -320,8 +308,7 @@ class DMCAAutomatedValidator:
     
     def _compare_metadata(self, original_meta: Dict[str, Any], 
                          infringement_meta: Dict[str, Any]) -> float:
-        """Compare metadata between original and infringing content"""
-        common_keys = set(original_meta.keys()) & set(infringement_meta.keys())
+        """Compare metadata between original and infringing content"""        common_keys = set(original_meta.keys()) & set(infringement_meta.keys())
         if not common_keys:
             return 0.0
         
@@ -337,8 +324,7 @@ class DMCAAutomatedValidator:
                                       infringement: DMCAInfringement,
                                       jurisdiction: LegalJurisdiction
                                       ) -> float:
-        """Check legal compliance requirements"""
-        compliance_score = 0.0
+        """Check legal compliance requirements"""        compliance_score = 0.0
         total_checks = 0
         
         # Check copyright registration (if applicable)
@@ -365,8 +351,7 @@ class DMCAAutomatedValidator:
         return compliance_score
     
     def _check_platform_requirements(self, platform: PlatformType) -> bool:
-        """Check platform-specific DMCA requirements"""
-        # Each platform has specific requirements
+        """Check platform-specific DMCA requirements"""        # Each platform has specific requirements
         platform_reqs = {
             PlatformType.YOUTUBE: True,  # Generally DMCA compliant
             PlatformType.INSTAGRAM: True,
@@ -381,8 +366,7 @@ class DMCAAutomatedValidator:
                                     original: DMCAContentInfo,
                                     infringement: DMCAInfringement
                                     ) -> float:
-        """Assess risk of fair use defense"""
-        risk_factors = 0.0
+        """Assess risk of fair use defense"""        risk_factors = 0.0
         
         # Check for fair use keywords in title/description
         content_text = (infringement.content_title or "").lower()
@@ -407,8 +391,7 @@ class DMCAAutomatedValidator:
         return min(1.0, risk_factors)
     
     async def _analyze_commercial_use(self, infringement: DMCAInfringement) -> float:
-        """Analyze evidence of commercial use"""
-        commercial_score = 0.0
+        """Analyze evidence of commercial use"""        commercial_score = 0.0
         
         # Check commercial indicators in content
         content_text = (infringement.content_title or "").lower()
@@ -436,8 +419,7 @@ class DMCAAutomatedValidator:
     def _calculate_confidence_score(self, evidence: float, similarity: float,
                                    compliance: float, fair_use_risk: float,
                                    commercial: float) -> float:
-        """Calculate overall confidence score"""
-        # Weighted average with risk adjustment
+        """Calculate overall confidence score"""        # Weighted average with risk adjustment
         weights = {
             'evidence': 0.30,
             'similarity': 0.25,
@@ -457,8 +439,7 @@ class DMCAAutomatedValidator:
         return max(0.0, min(1.0, confidence))
     
     def _determine_validation_result(self, report: ValidationReport) -> ValidationResult:
-        """Determine final validation result based on scores"""
-        confidence = report.confidence_score
+        """Determine final validation result based on scores"""        confidence = report.confidence_score
         
         if confidence >= 0.85 and report.fair_use_risk <= 0.2:
             return ValidationResult.APPROVED
@@ -472,8 +453,7 @@ class DMCAAutomatedValidator:
             return ValidationResult.REJECTED
     
     def _assess_legal_risk(self, report: ValidationReport) -> LegalRiskLevel:
-        """Assess legal risk level"""
-        risk_score = (
+        """Assess legal risk level"""        risk_score = (
             (1 - report.confidence_score) * 0.4 +
             report.fair_use_risk * 0.3 +
             (1 - report.legal_compliance) * 0.3
@@ -493,8 +473,7 @@ class DMCAAutomatedValidator:
     async def _generate_recommendations(self, report: ValidationReport,
                                        original: DMCAContentInfo,
                                        infringement: DMCAInfringement):
-        """Generate actionable recommendations"""
-        if report.evidence_strength < 0.7:
+        """Generate actionable recommendations"""        if report.evidence_strength < 0.7:
             report.recommendations.append(
                 "Gather additional evidence to strengthen the claim"
             )
@@ -526,8 +505,7 @@ class DMCAAutomatedValidator:
     
     def _calculate_success_probability(self, report: ValidationReport,
                                       platform: PlatformType) -> float:
-        """Calculate probability of successful DMCA takedown"""
-        base_probability = self.legal_precedents['platform_response_rates'].get(
+        """Calculate probability of successful DMCA takedown"""        base_probability = self.legal_precedents['platform_response_rates'].get(
             platform, 0.5
         )
         
@@ -544,8 +522,7 @@ class DMCAAutomatedValidator:
     
     def _estimate_statutory_damages(self, report: ValidationReport,
                                    commercial_use: bool) -> Tuple[float, float]:
-        """Estimate potential statutory damages range"""
-        base_min = 750.0
+        """Estimate potential statutory damages range"""        base_min = 750.0
         base_max = 30000.0
         
         # Adjust based on evidence strength
@@ -567,8 +544,7 @@ class DMCAAutomatedValidator:
     
     def _generate_cache_key(self, original: DMCAContentInfo,
                            infringement: DMCAInfringement) -> str:
-        """Generate cache key for validation results"""
-        content_hash = hashlib.md5(
+        """Generate cache key for validation results"""        content_hash = hashlib.md5(
             f"{original.content_id}{infringement.infringement_id}".encode()
         ).hexdigest()
         return f"validation_{content_hash}"
@@ -576,8 +552,7 @@ class DMCAAutomatedValidator:
     async def batch_validate_claims(self,
                                    claims: List[Tuple[DMCAContentInfo, DMCAInfringement]]
                                    ) -> List[ValidationReport]:
-        """Batch validate multiple DMCA claims"""
-        tasks = [
+        """Batch validate multiple DMCA claims"""        tasks = [
             self.validate_dmca_claim(original, infringement)
             for original, infringement in claims
         ]
@@ -585,8 +560,7 @@ class DMCAAutomatedValidator:
         return await asyncio.gather(*tasks)
     
     def get_validation_statistics(self) -> Dict[str, Any]:
-        """Get validation engine statistics"""
-        if not self.validation_cache:
+        """Get validation engine statistics"""        if not self.validation_cache:
             return {"total_validations": 0}
         
         reports = list(self.validation_cache.values())

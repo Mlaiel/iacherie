@@ -1,5 +1,4 @@
-"""
-SEO Configuration Module
+"""SEO Configuration Module
 
 Advanced SEO optimization system for multi-format content creators.
 Supports musicians, bloggers, photographers, influencers, and comedians.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -26,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class SEOLevel(Enum):
-    """SEO optimization levels"""
-    BASIC = "basic"
+    """SEO optimization levels"""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     PROFESSIONAL = "professional"
@@ -35,8 +32,7 @@ class SEOLevel(Enum):
 
 
 class ContentCategory(Enum):
-    """Content categories for SEO optimization"""
-    MUSIC = "music"
+    """Content categories for SEO optimization"""    MUSIC = "music"
     BLOG = "blog"
     PHOTOGRAPHY = "photography"
     VIDEO = "video"
@@ -49,8 +45,7 @@ class ContentCategory(Enum):
 
 
 class Platform(Enum):
-    """Target platforms for SEO optimization"""
-    GOOGLE = "google"
+    """Target platforms for SEO optimization"""    GOOGLE = "google"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -64,8 +59,7 @@ class Platform(Enum):
 
 
 class Language(Enum):
-    """Supported languages for SEO"""
-    ENGLISH = "en"
+    """Supported languages for SEO"""    ENGLISH = "en"
     GERMAN = "de"
     FRENCH = "fr"
     SPANISH = "es"
@@ -79,8 +73,7 @@ class Language(Enum):
 
 @dataclass
 class KeywordConfig:
-    """Keyword optimization configuration"""
-    enabled: bool = True
+    """Keyword optimization configuration"""    enabled: bool = True
     
     # Primary keywords
     primary_keywords: List[str] = field(default_factory=list)
@@ -110,8 +103,7 @@ class KeywordConfig:
 
 @dataclass
 class MetaTagsConfig:
-    """Meta tags configuration"""
-    enabled: bool = True
+    """Meta tags configuration"""    enabled: bool = True
     
     # Title optimization
     auto_title_generation: bool = True
@@ -152,8 +144,7 @@ class MetaTagsConfig:
 
 @dataclass
 class ContentStructureConfig:
-    """Content structure optimization configuration"""
-    enabled: bool = True
+    """Content structure optimization configuration"""    enabled: bool = True
     
     # Heading optimization
     h1_optimization: bool = True
@@ -194,8 +185,7 @@ class ContentStructureConfig:
 
 @dataclass
 class TechnicalSEOConfig:
-    """Technical SEO configuration"""
-    enabled: bool = True
+    """Technical SEO configuration"""    enabled: bool = True
     
     # URL optimization
     url_optimization: bool = True
@@ -236,8 +226,7 @@ class TechnicalSEOConfig:
 
 @dataclass
 class LocalSEOConfig:
-    """Local SEO configuration"""
-    enabled: bool = True
+    """Local SEO configuration"""    enabled: bool = True
     
     # Business information
     business_name: str = "IA Influencer Agent Platform"
@@ -269,8 +258,7 @@ class LocalSEOConfig:
 
 @dataclass
 class AnalyticsConfig:
-    """SEO analytics configuration"""
-    enabled: bool = True
+    """SEO analytics configuration"""    enabled: bool = True
     
     # Tracking codes
     google_analytics_id: str = ""
@@ -301,8 +289,7 @@ class AnalyticsConfig:
 
 @dataclass
 class PlatformSpecificConfig:
-    """Platform-specific SEO settings"""
-    enabled: bool = True
+    """Platform-specific SEO settings"""    enabled: bool = True
     
     # YouTube SEO
     youtube_title_optimization: bool = True
@@ -333,8 +320,7 @@ class PlatformSpecificConfig:
 
 @dataclass
 class SEOConfig:
-    """Main SEO configuration"""
-    
+    """Main SEO configuration"""    
     # Core settings
     enabled: bool = True
     seo_level: SEOLevel = SEOLevel.ENTERPRISE
@@ -378,15 +364,13 @@ class SEOConfig:
     brand_safety_check: bool = True
 
     def __post_init__(self):
-        """Initialize default configurations"""
-        if not self.creator_social_profiles:
+        """Initialize default configurations"""        if not self.creator_social_profiles:
             self._setup_default_social_profiles()
         if not self.content_category_settings:
             self._setup_content_category_settings()
 
     def _setup_default_social_profiles(self):
-        """Setup default social media profiles"""
-        self.creator_social_profiles = {
+        """Setup default social media profiles"""        self.creator_social_profiles = {
             "instagram": "@fahed_mlaiel",
             "twitter": "@fahed_mlaiel",
             "youtube": "@fahed_mlaiel",
@@ -395,8 +379,7 @@ class SEOConfig:
         }
 
     def _setup_content_category_settings(self):
-        """Setup content category specific settings"""
-        self.content_category_settings = {
+        """Setup content category specific settings"""        self.content_category_settings = {
             ContentCategory.MUSIC: {
                 "primary_keywords": ["music", "artist", "song", "album"],
                 "platforms": ["youtube", "spotify", "soundcloud"],
@@ -430,8 +413,7 @@ class SEOConfig:
         }
 
     def optimize_for_content_type(self, content_type: ContentCategory, content: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize content for specific content type"""
-        if content_type not in self.content_category_settings:
+        """Optimize content for specific content type"""        if content_type not in self.content_category_settings:
             logger.warning(f"No specific settings for content type: {content_type}")
             content_type = ContentCategory.BLOG  # Default fallback
         
@@ -474,8 +456,7 @@ class SEOConfig:
         return optimization_result
 
     def _generate_optimized_title(self, content: str, settings: Dict[str, Any], metadata: Dict[str, Any]) -> str:
-        """Generate SEO-optimized title"""
-        # Extract primary keyword
+        """Generate SEO-optimized title"""        # Extract primary keyword
         primary_keyword = settings["primary_keywords"][0] if settings["primary_keywords"] else "content"
         
         # Get content title from metadata or extract from content
@@ -502,8 +483,7 @@ class SEOConfig:
         return title
 
     def _generate_optimized_description(self, content: str, settings: Dict[str, Any], metadata: Dict[str, Any]) -> str:
-        """Generate SEO-optimized description"""
-        # Extract content summary (first 100 characters of meaningful content)
+        """Generate SEO-optimized description"""        # Extract content summary (first 100 characters of meaningful content)
         content_lines = [line.strip() for line in content.split('\n') if line.strip()]
         content_summary = ""
         
@@ -542,8 +522,7 @@ class SEOConfig:
         return description
 
     def _extract_and_optimize_keywords(self, content: str, settings: Dict[str, Any]) -> Dict[str, Any]:
-        """Extract and optimize keywords from content"""
-        # This is a simplified implementation
+        """Extract and optimize keywords from content"""        # This is a simplified implementation
         # In a real system, this would use NLP and keyword research APIs
         
         content_lower = content.lower()
@@ -573,8 +552,7 @@ class SEOConfig:
         }
 
     def _calculate_keyword_density(self, content: str, keywords: List[str]) -> Dict[str, float]:
-        """Calculate keyword density"""
-        content_lower = content.lower()
+        """Calculate keyword density"""        content_lower = content.lower()
         total_words = len(re.findall(r'\b\w+\b', content_lower))
         
         density = {}
@@ -585,8 +563,7 @@ class SEOConfig:
         return density
 
     def _adapt_for_platform(self, content: str, platform: str, settings: Dict[str, Any]) -> Dict[str, Any]:
-        """Adapt content for specific platform"""
-        platform_adaptations = {
+        """Adapt content for specific platform"""        platform_adaptations = {
             "youtube": {
                 "title_length": 100,
                 "description_length": 5000,
@@ -628,8 +605,7 @@ class SEOConfig:
         return adapted_content
 
     def _generate_hashtags(self, settings: Dict[str, Any], max_count: int) -> List[str]:
-        """Generate relevant hashtags"""
-        # Combine keywords to create hashtags
+        """Generate relevant hashtags"""        # Combine keywords to create hashtags
         keywords = settings.get("primary_keywords", [])
         hashtags = [f"#{keyword.replace(' ', '').lower()}" for keyword in keywords[:max_count]]
         
@@ -646,8 +622,7 @@ class SEOConfig:
         return hashtags[:max_count]
 
     def _calculate_seo_score(self, optimization_result: Dict[str, Any]) -> float:
-        """Calculate overall SEO score"""
-        score = 0.0
+        """Calculate overall SEO score"""        score = 0.0
         max_score = 100.0
         
         # Title optimization (20 points)
@@ -689,8 +664,7 @@ class SEOConfig:
         return min(score / max_score, 1.0)
 
     def validate_configuration(self) -> List[str]:
-        """Validate SEO configuration"""
-        issues = []
+        """Validate SEO configuration"""        issues = []
         
         # Check required fields
         if not self.creator_name:
@@ -711,8 +685,7 @@ class SEOConfig:
 
     @classmethod
     def from_env(cls) -> 'SEOConfig':
-        """Create configuration from environment variables"""
-        config = cls()
+        """Create configuration from environment variables"""        config = cls()
         
         # Load basic settings
         config.enabled = os.getenv("SEO_ENABLED", "true").lower() == "true"

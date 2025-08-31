@@ -1,5 +1,4 @@
-"""
-Content Handler Module
+"""Content Handler Module
 =====================
 
 Professional content handling system for multi-format content processing.
@@ -29,7 +28,6 @@ WARNING: This code is protected intellectual property. Any attempt to steal, cop
 without explicit written authorization from Fahed Mlaiel (mlaiel@live.de) will result 
 in legal action under German law.
 """
-
 import asyncio
 import logging
 import mimetypes
@@ -66,8 +64,7 @@ logger = get_logger(__name__)
 
 
 class ContentTypeDetector:
-    """Professional content type detection and validation system."""
-    
+    """Professional content type detection and validation system."""    
     SUPPORTED_FORMATS = {
         'audio': {
             'extensions': ['.mp3', '.wav', '.flac', '.m4a', '.ogg', '.aac', '.wma'],
@@ -105,16 +102,14 @@ class ContentTypeDetector:
         self.magic_desc = magic.Magic()
     
     def detect_content_type(self, file_path: str) -> Tuple[str, Dict[str, Any]]:
-        """
-        Detect content type with comprehensive analysis.
+        """        Detect content type with comprehensive analysis.
         
         Args:
             file_path: Path to the content file
             
         Returns:
             Tuple of (content_type, metadata)
-        """
-        try:
+        """        try:
             # Get file information
             file_stat = os.stat(file_path)
             file_ext = Path(file_path).suffix.lower()
@@ -154,8 +149,7 @@ class ContentTypeDetector:
             raise ContentProcessingError(f"Failed to detect content type: {e}")
     
     def _classify_content_type(self, file_ext: str, mime_type: str) -> str:
-        """Classify content type based on extension and MIME type."""
-        for content_type, config in self.SUPPORTED_FORMATS.items():
+        """Classify content type based on extension and MIME type."""        for content_type, config in self.SUPPORTED_FORMATS.items():
             if (file_ext in config['extensions'] or 
                 any(mime_type.startswith(mt) for mt in config['mime_types'])):
                 return content_type
@@ -165,16 +159,14 @@ class ContentTypeDetector:
         )
     
     def _calculate_md5(self, file_path: str) -> str:
-        """Calculate MD5 hash of file."""
-        hash_md5 = hashlib.md5()
+        """Calculate MD5 hash of file."""        hash_md5 = hashlib.md5()
         with open(file_path, "rb") as f:
             for chunk in iter(lambda: f.read(4096), b""):
                 hash_md5.update(chunk)
         return hash_md5.hexdigest()
     
     def _get_audio_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract audio-specific metadata."""
-        try:
+        """Extract audio-specific metadata."""        try:
             y, sr = librosa.load(file_path)
             duration = librosa.get_duration(y=y, sr=sr)
             
@@ -196,8 +188,7 @@ class ContentTypeDetector:
             return {'duration_seconds': 0}
     
     def _get_video_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract video-specific metadata."""
-        try:
+        """Extract video-specific metadata."""        try:
             cap = cv2.VideoCapture(file_path)
             
             fps = cap.get(cv2.CAP_PROP_FPS)
@@ -222,8 +213,7 @@ class ContentTypeDetector:
             return {'duration_seconds': 0}
     
     def _get_image_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract image-specific metadata."""
-        try:
+        """Extract image-specific metadata."""        try:
             with Image.open(file_path) as img:
                 metadata = {
                     'width': img.width,
@@ -251,8 +241,7 @@ class ContentTypeDetector:
             return {'width': 0, 'height': 0}
     
     def _get_text_metadata(self, file_path: str) -> Dict[str, Any]:
-        """Extract text-specific metadata."""
-        try:
+        """Extract text-specific metadata."""        try:
             # Detect encoding
             with open(file_path, 'rb') as f:
                 raw_data = f.read()
@@ -287,8 +276,7 @@ class ContentTypeDetector:
 
 
 class ContentProcessor:
-    """Professional content processing system with industry-grade capabilities."""
-    
+    """Professional content processing system with industry-grade capabilities."""    
     def __init__(self):
         self.detector = ContentTypeDetector()
         self.file_validator = FileValidator()
@@ -303,8 +291,7 @@ class ContentProcessor:
         user_id: int,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Process content with comprehensive validation and preparation.
+        """        Process content with comprehensive validation and preparation.
         
         Args:
             content_data: Raw content data or file path
@@ -314,8 +301,7 @@ class ContentProcessor:
             
         Returns:
             Processed content information
-        """
-        try:
+        """        try:
             # Security validation
             await self._validate_security(content_data, filename)
             
@@ -363,8 +349,7 @@ class ContentProcessor:
             raise ContentProcessingError(f"Failed to process content: {e}")
     
     async def _validate_security(self, content_data: Union[str, bytes], filename: str):
-        """Validate content security and safety."""
-        try:
+        """Validate content security and safety."""        try:
             # File extension validation
             if not self.file_validator.is_allowed_extension(filename):
                 raise ContentValidationError(f"File extension not allowed: {filename}")
@@ -386,8 +371,7 @@ class ContentProcessor:
         content_data: Union[str, bytes], 
         filename: str
     ) -> str:
-        """Save content to temporary file for processing."""
-        try:
+        """Save content to temporary file for processing."""        try:
             # Generate unique temporary filename
             timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
             unique_id = hashlib.md5(filename.encode()).hexdigest()[:8]
@@ -420,8 +404,7 @@ class ContentProcessor:
         content_type: str, 
         metadata: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Process content based on its type."""
-        try:
+        """Process content based on its type."""        try:
             if content_type == 'audio':
                 return await self._process_audio(file_path, metadata)
             elif content_type == 'video':
@@ -438,8 +421,7 @@ class ContentProcessor:
             raise ContentProcessingError(f"Failed to process {content_type}: {e}")
     
     async def _process_audio(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process audio content for fingerprinting."""
-        loop = asyncio.get_event_loop()
+        """Process audio content for fingerprinting."""        loop = asyncio.get_event_loop()
         
         def extract_features():
             y, sr = librosa.load(file_path)
@@ -463,8 +445,7 @@ class ContentProcessor:
         return await loop.run_in_executor(self.executor, extract_features)
     
     async def _process_video(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process video content for fingerprinting."""
-        loop = asyncio.get_event_loop()
+        """Process video content for fingerprinting."""        loop = asyncio.get_event_loop()
         
         def extract_frames():
             cap = cv2.VideoCapture(file_path)
@@ -498,8 +479,7 @@ class ContentProcessor:
         return await loop.run_in_executor(self.executor, extract_frames)
     
     async def _process_image(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process image content for fingerprinting."""
-        loop = asyncio.get_event_loop()
+        """Process image content for fingerprinting."""        loop = asyncio.get_event_loop()
         
         def extract_image_features():
             img = cv2.imread(file_path)
@@ -526,8 +506,7 @@ class ContentProcessor:
         return await loop.run_in_executor(self.executor, extract_image_features)
     
     async def _process_text(self, file_path: str, metadata: Dict[str, Any]) -> Dict[str, Any]:
-        """Process text content for fingerprinting."""
-        try:
+        """Process text content for fingerprinting."""        try:
             # Read text content
             encoding = metadata.get('encoding', 'utf-8')
             
@@ -571,8 +550,7 @@ class ContentProcessor:
         content_type: str, 
         processed_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Prepare processed content for fingerprinting systems."""
-        try:
+        """Prepare processed content for fingerprinting systems."""        try:
             fingerprint_data = {
                 'content_type': content_type,
                 'file_path': file_path,
@@ -609,8 +587,7 @@ class ContentProcessor:
             raise ContentProcessingError(f"Failed to prepare for fingerprinting: {e}")
     
     async def cleanup_temporary_file(self, file_path: str):
-        """Clean up temporary files after processing."""
-        try:
+        """Clean up temporary files after processing."""        try:
             if os.path.exists(file_path):
                 os.remove(file_path)
                 logger.info(f"Temporary file cleaned up: {file_path}")
@@ -619,8 +596,7 @@ class ContentProcessor:
 
 
 class ContentHandler:
-    """Main content handler orchestrating all content processing operations."""
-    
+    """Main content handler orchestrating all content processing operations."""    
     def __init__(self):
         self.processor = ContentProcessor()
         logger.info("Content Handler initialized successfully")
@@ -632,8 +608,7 @@ class ContentHandler:
         user_id: int,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Main entry point for content handling.
+        """        Main entry point for content handling.
         
         Args:
             content_data: Raw content data or file path
@@ -643,8 +618,7 @@ class ContentHandler:
             
         Returns:
             Complete processing result
-        """
-        try:
+        """        try:
             logger.info(f"Processing content: {filename} for user {user_id}")
             
             # Process content
@@ -660,11 +634,9 @@ class ContentHandler:
             raise
     
     async def cleanup_content(self, file_path: str):
-        """Clean up processed content."""
-        await self.processor.cleanup_temporary_file(file_path)
+        """Clean up processed content."""        await self.processor.cleanup_temporary_file(file_path)
 
 
 # Factory function for easy instantiation
 def create_content_handler() -> ContentHandler:
-    """Create and return a ContentHandler instance."""
-    return ContentHandler()
+    """Create and return a ContentHandler instance."""    return ContentHandler()

@@ -1,5 +1,4 @@
-"""
-Database Utilities for IA Influencer Agent Platform
+"""Database Utilities for IA Influencer Agent Platform
 Advanced database operations, connection management, and ORM utilities
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +6,6 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import sqlite3
 import asyncpg
 import aiosqlite
@@ -45,8 +43,7 @@ T = TypeVar('T')
 
 
 class DatabaseType(Enum):
-    """Supported database types"""
-    SQLITE = "sqlite"
+    """Supported database types"""    SQLITE = "sqlite"
     POSTGRESQL = "postgresql"
     MYSQL = "mysql"
     MONGODB = "mongodb"
@@ -55,8 +52,7 @@ class DatabaseType(Enum):
 
 @dataclass
 class DatabaseConfig:
-    """Database configuration"""
-    db_type: DatabaseType
+    """Database configuration"""    db_type: DatabaseType
     host: str = "localhost"
     port: int = 5432
     database: str = "ia_platform"
@@ -70,8 +66,7 @@ class DatabaseConfig:
     connection_timeout: int = 30
     
     def get_connection_string(self) -> str:
-        """Generate connection string"""
-        if self.db_type == DatabaseType.SQLITE:
+        """Generate connection string"""        if self.db_type == DatabaseType.SQLITE:
             return f"sqlite:///{self.database}"
         elif self.db_type == DatabaseType.POSTGRESQL:
             auth = f"{self.username}:{self.password}@" if self.username and self.password else ""
@@ -86,8 +81,7 @@ class DatabaseConfig:
 
 @dataclass
 class QueryResult:
-    """Query result container"""
-    success: bool
+    """Query result container"""    success: bool
     data: Optional[List[Dict[str, Any]]] = None
     affected_rows: int = 0
     execution_time: float = 0.0
@@ -95,8 +89,7 @@ class QueryResult:
     query_id: Optional[str] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'success': self.success,
             'data': self.data,
             'affected_rows': self.affected_rows,
@@ -108,21 +101,18 @@ class QueryResult:
 
 @dataclass
 class TransactionContext:
-    """Transaction context"""
-    transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Transaction context"""    transaction_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     start_time: datetime = field(default_factory=datetime.utcnow)
     operations: List[str] = field(default_factory=list)
     committed: bool = False
     rolled_back: bool = False
     
     def add_operation(self, operation: str):
-        """Add operation to transaction"""
-        self.operations.append(f"{datetime.utcnow().isoformat()}: {operation}")
+        """Add operation to transaction"""        self.operations.append(f"{datetime.utcnow().isoformat()}: {operation}")
 
 
 class DatabaseConnectionManager:
-    """Manage database connections and connection pools"""
-    
+    """Manage database connections and connection pools"""    
     def __init__(self, config: DatabaseConfig):
         self.config = config
         self.engine = None
@@ -132,8 +122,7 @@ class DatabaseConnectionManager:
         self._initialized = False
     
     def initialize(self):
-        """Initialize database connection"""
-        with self._lock:
+        """Initialize database connection"""        with self._lock:
             if self._initialized:
                 return
             
@@ -149,8 +138,7 @@ class DatabaseConnectionManager:
                 raise
     
     def _initialize_sqlalchemy(self):
-        """Initialize SQLAlchemy engine and session factory"""
-        connection_string = self.config.get_connection_string()
+        """Initialize SQLAlchemy engine and session factory"""        connection_string = self.config.get_connection_string()
         
         engine_kwargs = {
             'echo': False,
@@ -166,8 +154,7 @@ class DatabaseConnectionManager:
     
     @contextmanager
     def get_session(self):
-        """Get database session context manager"""
-        if not self._initialized:
+        """Get database session context manager"""        if not self._initialized:
             self.initialize()
         
         session = self.session_factory()
@@ -181,8 +168,7 @@ class DatabaseConnectionManager:
             session.close()
     
     def test_connection(self) -> bool:
-        """Test database connection"""
-        try:
+        """Test database connection"""        try:
             if self.config.db_type == DatabaseType.SQLITE:
                 return self._test_sqlite_connection()
             elif self.config.db_type == DatabaseType.POSTGRESQL:
@@ -195,8 +181,7 @@ class DatabaseConnectionManager:
             return False
     
     def _test_sqlite_connection(self) -> bool:
-        """Test SQLite connection"""
-        try:
+        """Test SQLite connection"""        try:
             with sqlite3.connect(self.config.database, timeout=5) as conn:
                 conn.execute("SELECT 1")
             return True
@@ -204,8 +189,7 @@ class DatabaseConnectionManager:
             return False
     
     def _test_postgresql_connection(self) -> bool:
-        """Test PostgreSQL connection"""
-        try:
+        """Test PostgreSQL connection"""        try:
             with self.get_session() as session:
                 session.execute(text("SELECT 1"))
             return True
@@ -213,8 +197,7 @@ class DatabaseConnectionManager:
             return False
     
     def _test_mysql_connection(self) -> bool:
-        """Test MySQL connection"""
-        try:
+        """Test MySQL connection"""        try:
             with self.get_session() as session:
                 session.execute(text("SELECT 1"))
             return True
@@ -222,15 +205,13 @@ class DatabaseConnectionManager:
             return False
     
     def close(self):
-        """Close database connections"""
-        if self.engine:
+        """Close database connections"""        if self.engine:
             self.engine.dispose()
         self._initialized = False
 
 
 class AsyncDatabaseManager:
-    """Asynchronous database operations manager"""
-    
+    """Asynchronous database operations manager"""    
     def __init__(self, config: DatabaseConfig):
         self.config = config
         self.pool = None
@@ -238,8 +219,7 @@ class AsyncDatabaseManager:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize async database connection"""
-        async with self._lock:
+        """Initialize async database connection"""        async with self._lock:
             if self._initialized:
                 return
             
@@ -257,8 +237,7 @@ class AsyncDatabaseManager:
                 raise
     
     async def _initialize_postgresql(self):
-        """Initialize PostgreSQL async connection pool"""
-        self.pool = await asyncpg.create_pool(
+        """Initialize PostgreSQL async connection pool"""        self.pool = await asyncpg.create_pool(
             host=self.config.host,
             port=self.config.port,
             database=self.config.database,
@@ -270,14 +249,12 @@ class AsyncDatabaseManager:
         )
     
     async def _initialize_sqlite(self):
-        """Initialize SQLite async connection"""
-        # For SQLite, we don't have a traditional pool
+        """Initialize SQLite async connection"""        # For SQLite, we don't have a traditional pool
         self.pool = self.config.database
     
     @asynccontextmanager
     async def get_connection(self):
-        """Get async database connection"""
-        if not self._initialized:
+        """Get async database connection"""        if not self._initialized:
             await self.initialize()
         
         if self.config.db_type == DatabaseType.POSTGRESQL:
@@ -288,8 +265,7 @@ class AsyncDatabaseManager:
                 yield connection
     
     async def execute_query(self, query: str, parameters: Optional[List[Any]] = None) -> QueryResult:
-        """Execute async query"""
-        start_time = time.time()
+        """Execute async query"""        start_time = time.time()
         query_id = str(uuid.uuid4())
         
         try:
@@ -336,8 +312,7 @@ class AsyncDatabaseManager:
             )
     
     async def execute_transaction(self, operations: List[Tuple[str, Optional[List[Any]]]]) -> QueryResult:
-        """Execute multiple operations in a transaction"""
-        start_time = time.time()
+        """Execute multiple operations in a transaction"""        start_time = time.time()
         transaction_id = str(uuid.uuid4())
         
         try:
@@ -396,15 +371,13 @@ class AsyncDatabaseManager:
             )
     
     async def close(self):
-        """Close async database connections"""
-        if self.pool and hasattr(self.pool, 'close'):
+        """Close async database connections"""        if self.pool and hasattr(self.pool, 'close'):
             await self.pool.close()
         self._initialized = False
 
 
 class RedisManager:
-    """Redis connection and operations manager"""
-    
+    """Redis connection and operations manager"""    
     def __init__(self, host: str = "localhost", port: int = 6379, 
                  db: int = 0, password: Optional[str] = None,
                  max_connections: int = 10):
@@ -418,8 +391,7 @@ class RedisManager:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize Redis connection"""
-        async with self._lock:
+        """Initialize Redis connection"""        async with self._lock:
             if self._initialized:
                 return
             
@@ -443,8 +415,7 @@ class RedisManager:
                 raise
     
     async def get(self, key: str) -> Optional[Any]:
-        """Get value from Redis"""
-        if not self._initialized:
+        """Get value from Redis"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -462,8 +433,7 @@ class RedisManager:
             return None
     
     async def set(self, key: str, value: Any, expire: Optional[int] = None) -> bool:
-        """Set value in Redis"""
-        if not self._initialized:
+        """Set value in Redis"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -479,8 +449,7 @@ class RedisManager:
             return False
     
     async def delete(self, key: str) -> bool:
-        """Delete key from Redis"""
-        if not self._initialized:
+        """Delete key from Redis"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -492,8 +461,7 @@ class RedisManager:
             return False
     
     async def exists(self, key: str) -> bool:
-        """Check if key exists in Redis"""
-        if not self._initialized:
+        """Check if key exists in Redis"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -505,8 +473,7 @@ class RedisManager:
             return False
     
     async def increment(self, key: str, amount: int = 1) -> Optional[int]:
-        """Increment value in Redis"""
-        if not self._initialized:
+        """Increment value in Redis"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -518,8 +485,7 @@ class RedisManager:
             return None
     
     async def expire(self, key: str, seconds: int) -> bool:
-        """Set expiration for key"""
-        if not self._initialized:
+        """Set expiration for key"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -531,8 +497,7 @@ class RedisManager:
             return False
     
     async def keys(self, pattern: str = "*") -> List[str]:
-        """Get keys matching pattern"""
-        if not self._initialized:
+        """Get keys matching pattern"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -544,15 +509,13 @@ class RedisManager:
             return []
     
     async def close(self):
-        """Close Redis connection"""
-        if self.redis_client:
+        """Close Redis connection"""        if self.redis_client:
             await self.redis_client.close()
         self._initialized = False
 
 
 class MongoDBManager:
-    """MongoDB connection and operations manager"""
-    
+    """MongoDB connection and operations manager"""    
     def __init__(self, connection_string: str, database_name: str):
         self.connection_string = connection_string
         self.database_name = database_name
@@ -562,8 +525,7 @@ class MongoDBManager:
         self._initialized = False
     
     async def initialize(self):
-        """Initialize MongoDB connection"""
-        async with self._lock:
+        """Initialize MongoDB connection"""        async with self._lock:
             if self._initialized:
                 return
             
@@ -581,8 +543,7 @@ class MongoDBManager:
                 raise
     
     async def insert_document(self, collection: str, document: Dict[str, Any]) -> Optional[str]:
-        """Insert document into collection"""
-        if not self._initialized:
+        """Insert document into collection"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -595,8 +556,7 @@ class MongoDBManager:
     
     async def find_documents(self, collection: str, query: Dict[str, Any] = None, 
                            limit: Optional[int] = None) -> List[Dict[str, Any]]:
-        """Find documents in collection"""
-        if not self._initialized:
+        """Find documents in collection"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -620,8 +580,7 @@ class MongoDBManager:
     
     async def update_document(self, collection: str, query: Dict[str, Any], 
                             update: Dict[str, Any]) -> int:
-        """Update documents in collection"""
-        if not self._initialized:
+        """Update documents in collection"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -633,8 +592,7 @@ class MongoDBManager:
             return 0
     
     async def delete_documents(self, collection: str, query: Dict[str, Any]) -> int:
-        """Delete documents from collection"""
-        if not self._initialized:
+        """Delete documents from collection"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -646,8 +604,7 @@ class MongoDBManager:
             return 0
     
     async def create_index(self, collection: str, index_spec: Union[str, List[Tuple[str, int]]]):
-        """Create index on collection"""
-        if not self._initialized:
+        """Create index on collection"""        if not self._initialized:
             await self.initialize()
         
         try:
@@ -658,22 +615,19 @@ class MongoDBManager:
             logger.error(f"MongoDB index creation failed: {str(e)}")
     
     async def close(self):
-        """Close MongoDB connection"""
-        if self.client:
+        """Close MongoDB connection"""        if self.client:
             self.client.close()
         self._initialized = False
 
 
 class QueryBuilder:
-    """SQL query builder utility"""
-    
+    """SQL query builder utility"""    
     def __init__(self, db_type: DatabaseType = DatabaseType.POSTGRESQL):
         self.db_type = db_type
         self.reset()
     
     def reset(self):
-        """Reset query builder"""
-        self._select_fields = []
+        """Reset query builder"""        self._select_fields = []
         self._from_table = None
         self._joins = []
         self._where_conditions = []
@@ -686,61 +640,51 @@ class QueryBuilder:
         return self
     
     def select(self, fields: Union[str, List[str]]):
-        """Add SELECT fields"""
-        if isinstance(fields, str):
+        """Add SELECT fields"""        if isinstance(fields, str):
             self._select_fields.append(fields)
         else:
             self._select_fields.extend(fields)
         return self
     
     def from_table(self, table: str):
-        """Set FROM table"""
-        self._from_table = table
+        """Set FROM table"""        self._from_table = table
         return self
     
     def join(self, table: str, condition: str, join_type: str = "INNER"):
-        """Add JOIN clause"""
-        self._joins.append(f"{join_type} JOIN {table} ON {condition}")
+        """Add JOIN clause"""        self._joins.append(f"{join_type} JOIN {table} ON {condition}")
         return self
     
     def where(self, condition: str, *params):
-        """Add WHERE condition"""
-        self._where_conditions.append(condition)
+        """Add WHERE condition"""        self._where_conditions.append(condition)
         self._parameters.extend(params)
         return self
     
     def group_by(self, fields: Union[str, List[str]]):
-        """Add GROUP BY fields"""
-        if isinstance(fields, str):
+        """Add GROUP BY fields"""        if isinstance(fields, str):
             self._group_by.append(fields)
         else:
             self._group_by.extend(fields)
         return self
     
     def having(self, condition: str, *params):
-        """Add HAVING condition"""
-        self._having_conditions.append(condition)
+        """Add HAVING condition"""        self._having_conditions.append(condition)
         self._parameters.extend(params)
         return self
     
     def order_by(self, field: str, direction: str = "ASC"):
-        """Add ORDER BY clause"""
-        self._order_by.append(f"{field} {direction}")
+        """Add ORDER BY clause"""        self._order_by.append(f"{field} {direction}")
         return self
     
     def limit(self, count: int):
-        """Add LIMIT clause"""
-        self._limit_value = count
+        """Add LIMIT clause"""        self._limit_value = count
         return self
     
     def offset(self, count: int):
-        """Add OFFSET clause"""
-        self._offset_value = count
+        """Add OFFSET clause"""        self._offset_value = count
         return self
     
     def build(self) -> Tuple[str, List[Any]]:
-        """Build the SQL query"""
-        if not self._select_fields or not self._from_table:
+        """Build the SQL query"""        if not self._select_fields or not self._from_table:
             raise ValueError("SELECT fields and FROM table are required")
         
         query_parts = []
@@ -798,16 +742,14 @@ class QueryBuilder:
 
 
 class DatabaseMigrationManager:
-    """Database migration management"""
-    
+    """Database migration management"""    
     def __init__(self, connection_manager: DatabaseConnectionManager):
         self.connection_manager = connection_manager
         self.migrations_dir = Path("migrations")
         self.migrations_dir.mkdir(exist_ok=True)
     
     def create_migration(self, name: str, up_sql: str, down_sql: str) -> str:
-        """Create a new migration file"""
-        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
+        """Create a new migration file"""        timestamp = datetime.utcnow().strftime("%Y%m%d_%H%M%S")
         filename = f"{timestamp}_{name}.sql"
         filepath = self.migrations_dir / filename
         
@@ -819,8 +761,7 @@ class DatabaseMigrationManager:
 
 -- DOWN (Rollback)
 {down_sql}
-"""
-        
+"""        
         with open(filepath, 'w') as f:
             f.write(migration_content)
         
@@ -828,11 +769,9 @@ class DatabaseMigrationManager:
         return str(filepath)
     
     def get_pending_migrations(self) -> List[str]:
-        """Get list of pending migrations"""
-        with self.connection_manager.get_session() as session:
+        """Get list of pending migrations"""        with self.connection_manager.get_session() as session:
             # Create migrations table if it doesn't exist
-            session.execute(text("""
-                CREATE TABLE IF NOT EXISTS schema_migrations (
+            session.execute(text("""                CREATE TABLE IF NOT EXISTS schema_migrations (
                     version VARCHAR(255) PRIMARY KEY,
                     applied_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
                 )
@@ -849,8 +788,7 @@ class DatabaseMigrationManager:
             return [m for m in migration_files if m not in applied]
     
     def apply_migrations(self) -> Dict[str, Any]:
-        """Apply pending migrations"""
-        pending = self.get_pending_migrations()
+        """Apply pending migrations"""        pending = self.get_pending_migrations()
         
         if not pending:
             return {"applied": 0, "migrations": [], "message": "No pending migrations"}
@@ -893,8 +831,7 @@ class DatabaseMigrationManager:
         }
     
     def rollback_migration(self, version: str) -> bool:
-        """Rollback a specific migration"""
-        migration_file = self.migrations_dir / f"{version}.sql"
+        """Rollback a specific migration"""        migration_file = self.migrations_dir / f"{version}.sql"
         
         if not migration_file.exists():
             logger.error(f"Migration file not found: {version}")
@@ -928,8 +865,7 @@ class DatabaseMigrationManager:
             return False
     
     def _extract_migration_section(self, content: str, section: str) -> Optional[str]:
-        """Extract UP or DOWN section from migration content"""
-        lines = content.split('\n')
+        """Extract UP or DOWN section from migration content"""        lines = content.split('\n')
         section_start = None
         section_end = None
         
@@ -948,25 +884,21 @@ class DatabaseMigrationManager:
 
 
 class DatabaseUtils:
-    """Database utility functions"""
-    
+    """Database utility functions"""    
     @staticmethod
     def sanitize_table_name(name: str) -> str:
-        """Sanitize table name for SQL safety"""
-        # Remove dangerous characters and ensure valid identifier
+        """Sanitize table name for SQL safety"""        # Remove dangerous characters and ensure valid identifier
         import re
         sanitized = re.sub(r'[^a-zA-Z0-9_]', '', name)
         return sanitized[:63]  # PostgreSQL limit
     
     @staticmethod
     def generate_uuid() -> str:
-        """Generate UUID for database records"""
-        return str(uuid.uuid4())
+        """Generate UUID for database records"""        return str(uuid.uuid4())
     
     @staticmethod
     def hash_password(password: str, salt: Optional[str] = None) -> str:
-        """Hash password for database storage"""
-        if salt is None:
+        """Hash password for database storage"""        if salt is None:
             salt = os.urandom(32).hex()
         
         password_hash = hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000)
@@ -974,8 +906,7 @@ class DatabaseUtils:
     
     @staticmethod
     def verify_password(password: str, hashed: str) -> bool:
-        """Verify password against hash"""
-        try:
+        """Verify password against hash"""        try:
             salt, password_hash = hashed.split('$')
             new_hash = hashlib.pbkdf2_hmac('sha256', password.encode(), salt.encode(), 100000)
             return password_hash == new_hash.hex()
@@ -984,21 +915,18 @@ class DatabaseUtils:
     
     @staticmethod
     def serialize_json(obj: Any) -> str:
-        """Serialize object to JSON for database storage"""
-        return json.dumps(obj, default=str, ensure_ascii=False)
+        """Serialize object to JSON for database storage"""        return json.dumps(obj, default=str, ensure_ascii=False)
     
     @staticmethod
     def deserialize_json(json_str: str) -> Any:
-        """Deserialize JSON from database"""
-        try:
+        """Deserialize JSON from database"""        try:
             return json.loads(json_str)
         except (json.JSONDecodeError, TypeError):
             return None
 
 
 class DatabaseError(Exception):
-    """Custom database exception"""
-    
+    """Custom database exception"""    
     def __init__(self, message: str, error_code: Optional[str] = None, 
                  query: Optional[str] = None):
         super().__init__(message)

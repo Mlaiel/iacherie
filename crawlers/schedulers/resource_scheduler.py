@@ -1,5 +1,4 @@
-"""
-Resource Scheduler Module
+"""Resource Scheduler Module
 ========================
 
 Advanced resource-aware scheduling system for crawler operations.
@@ -28,7 +27,6 @@ Resource monitoring → Intelligent allocation → Performance optimization →
 Scaling decisions → Cost optimization → SLA compliance → 
 Quality assurance → Business continuity → Revenue protection
 """
-
 import asyncio
 import logging
 import time
@@ -49,8 +47,7 @@ logger = logging.getLogger(__name__)
 
 
 class ResourceType(Enum):
-    """Types of system resources."""
-    CPU = "cpu"
+    """Types of system resources."""    CPU = "cpu"
     MEMORY = "memory"
     DISK = "disk"
     NETWORK = "network"
@@ -61,8 +58,7 @@ class ResourceType(Enum):
 
 
 class AllocationStrategy(Enum):
-    """Resource allocation strategies."""
-    FAIR_SHARE = "fair_share"
+    """Resource allocation strategies."""    FAIR_SHARE = "fair_share"
     PRIORITY_BASED = "priority_based"
     PERFORMANCE_BASED = "performance_based"
     COST_OPTIMIZED = "cost_optimized"
@@ -72,8 +68,7 @@ class AllocationStrategy(Enum):
 
 
 class ResourceStatus(Enum):
-    """Resource availability status."""
-    AVAILABLE = "available"
+    """Resource availability status."""    AVAILABLE = "available"
     ALLOCATED = "allocated"
     OVERLOADED = "overloaded"
     UNAVAILABLE = "unavailable"
@@ -82,8 +77,7 @@ class ResourceStatus(Enum):
 
 
 class ScalingAction(Enum):
-    """Auto-scaling actions."""
-    SCALE_UP = "scale_up"
+    """Auto-scaling actions."""    SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     SCALE_OUT = "scale_out"
     SCALE_IN = "scale_in"
@@ -93,8 +87,7 @@ class ScalingAction(Enum):
 
 @dataclass
 class ResourceQuota:
-    """Resource quota definition."""
-    cpu_cores: float = 0.0
+    """Resource quota definition."""    cpu_cores: float = 0.0
     memory_mb: int = 0
     disk_mb: int = 0
     network_mbps: float = 0.0
@@ -108,8 +101,7 @@ class ResourceQuota:
 
 @dataclass
 class ResourceUsage:
-    """Current resource usage statistics."""
-    cpu_percent: float = 0.0
+    """Current resource usage statistics."""    cpu_percent: float = 0.0
     memory_percent: float = 0.0
     disk_percent: float = 0.0
     network_percent: float = 0.0
@@ -123,8 +115,7 @@ class ResourceUsage:
 
 @dataclass
 class ResourcePool:
-    """Resource pool configuration."""
-    pool_id: str
+    """Resource pool configuration."""    pool_id: str
     resource_type: ResourceType
     total_capacity: ResourceQuota
     available_capacity: ResourceQuota
@@ -142,8 +133,7 @@ class ResourcePool:
 
 @dataclass
 class ResourceAllocation:
-    """Resource allocation record."""
-    allocation_id: str
+    """Resource allocation record."""    allocation_id: str
     task_id: str
     pool_id: str
     allocated_quota: ResourceQuota
@@ -159,8 +149,7 @@ class ResourceAllocation:
 
 @dataclass
 class ScalingEvent:
-    """Auto-scaling event record."""
-    event_id: str
+    """Auto-scaling event record."""    event_id: str
     pool_id: str
     action: ScalingAction
     trigger_metric: str
@@ -177,8 +166,7 @@ class ScalingEvent:
 
 @dataclass
 class ResourceMetrics:
-    """Resource scheduler performance metrics."""
-    total_allocations: int = 0
+    """Resource scheduler performance metrics."""    total_allocations: int = 0
     successful_allocations: int = 0
     failed_allocations: int = 0
     average_allocation_time: float = 0.0
@@ -191,8 +179,7 @@ class ResourceMetrics:
 
 
 class ResourceScheduler:
-    """
-    Advanced resource-aware scheduler for crawler operations.
+    """    Advanced resource-aware scheduler for crawler operations.
     
     Features:
     - Intelligent resource allocation and optimization
@@ -203,8 +190,7 @@ class ResourceScheduler:
     - Predictive resource planning
     - Performance-based resource adjustment
     - Emergency resource reallocation
-    """
-    
+    """    
     def __init__(
         self,
         enable_auto_scaling: bool = True,
@@ -214,8 +200,7 @@ class ResourceScheduler:
         scaling_cooldown: int = 300,  # seconds
         resource_history_size: int = 1000
     ):
-        """Initialize resource scheduler."""
-        self.enable_auto_scaling = enable_auto_scaling
+        """Initialize resource scheduler."""        self.enable_auto_scaling = enable_auto_scaling
         self.enable_cost_optimization = enable_cost_optimization
         self.enable_predictive_scaling = enable_predictive_scaling
         self.monitoring_interval = monitoring_interval
@@ -268,8 +253,7 @@ class ResourceScheduler:
         logger.info("Resource scheduler initialized")
     
     async def initialize(self) -> None:
-        """Initialize resource scheduler."""
-        try:
+        """Initialize resource scheduler."""        try:
             # Initialize default resource pools
             await self._initialize_default_pools()
             
@@ -283,8 +267,7 @@ class ResourceScheduler:
             raise
     
     async def _initialize_default_pools(self) -> None:
-        """Initialize default resource pools."""
-        # Get system resources
+        """Initialize default resource pools."""        # Get system resources
         system_info = await self._get_system_info()
         
         # CPU Pool
@@ -360,8 +343,7 @@ class ResourceScheduler:
         logger.info(f"Initialized {len(self.resource_pools)} resource pools")
     
     async def _get_system_info(self) -> Dict[str, Any]:
-        """Get system resource information."""
-        try:
+        """Get system resource information."""        try:
             # CPU information
             cpu_count = psutil.cpu_count(logical=True)
             cpu_freq = psutil.cpu_freq()
@@ -396,8 +378,7 @@ class ResourceScheduler:
             }
     
     async def start_monitoring(self) -> None:
-        """Start resource monitoring and optimization."""
-        if self.is_running:
+        """Start resource monitoring and optimization."""        if self.is_running:
             return
         
         self.is_running = True
@@ -414,8 +395,7 @@ class ResourceScheduler:
         logger.info("Resource monitoring started")
     
     async def stop_monitoring(self) -> None:
-        """Stop resource monitoring."""
-        self.is_running = False
+        """Stop resource monitoring."""        self.is_running = False
         
         for task in [self.monitor_task, self.scaling_task, self.cost_optimizer_task]:
             if task:
@@ -435,8 +415,7 @@ class ResourceScheduler:
         timeout: Optional[float] = None,
         allow_burst: bool = False
     ) -> Optional[ResourceAllocation]:
-        """Allocate resources for a task."""
-        try:
+        """Allocate resources for a task."""        try:
             allocation_start = time.time()
             timeout = timeout or self.config['allocation_timeout']
             
@@ -493,8 +472,7 @@ class ResourceScheduler:
         priority: int,
         allow_burst: bool
     ) -> Optional[Dict[str, Any]]:
-        """Plan optimal resource allocation."""
-        allocation_plan = {}
+        """Plan optimal resource allocation."""        allocation_plan = {}
         
         # Check each resource requirement
         resource_mappings = {
@@ -547,8 +525,7 @@ class ResourceScheduler:
         allocation_plan: Dict[str, Any],
         priority: int
     ) -> Optional[ResourceAllocation]:
-        """Execute the resource allocation plan."""
-        try:
+        """Execute the resource allocation plan."""        try:
             allocated_quota = ResourceQuota()
             pool_allocations = {}
             
@@ -598,8 +575,7 @@ class ResourceScheduler:
             return None
     
     async def _rollback_allocations(self, pool_allocations: Dict[str, Dict[str, Any]]) -> None:
-        """Rollback partial allocations."""
-        for pool_id, allocation_info in pool_allocations.items():
+        """Rollback partial allocations."""        for pool_id, allocation_info in pool_allocations.items():
             pool = self.resource_pools.get(pool_id)
             if pool:
                 resource_type = allocation_info['resource_type']
@@ -613,8 +589,7 @@ class ResourceScheduler:
                 setattr(pool.available_capacity, resource_type, current_available + amount)
     
     async def deallocate_resources(self, allocation_id: str) -> bool:
-        """Deallocate resources."""
-        try:
+        """Deallocate resources."""        try:
             allocation = self.active_allocations.get(allocation_id)
             if not allocation:
                 return False
@@ -663,8 +638,7 @@ class ResourceScheduler:
         allocation_id: str,
         usage: ResourceUsage
     ) -> None:
-        """Update actual resource usage for an allocation."""
-        allocation = self.active_allocations.get(allocation_id)
+        """Update actual resource usage for an allocation."""        allocation = self.active_allocations.get(allocation_id)
         if allocation:
             allocation.actual_usage = usage
             
@@ -677,8 +651,7 @@ class ResourceScheduler:
             self.resource_usage_history[allocation_id].append(usage)
     
     async def _resource_monitoring_loop(self) -> None:
-        """Resource monitoring background loop."""
-        while self.is_running:
+        """Resource monitoring background loop."""        while self.is_running:
             try:
                 await self._monitor_system_resources()
                 await self._monitor_pool_health()
@@ -691,8 +664,7 @@ class ResourceScheduler:
                 await asyncio.sleep(10)
     
     async def _monitor_system_resources(self) -> None:
-        """Monitor system resource usage."""
-        try:
+        """Monitor system resource usage."""        try:
             # Get current system usage
             cpu_percent = psutil.cpu_percent(interval=1)
             memory = psutil.virtual_memory()
@@ -724,8 +696,7 @@ class ResourceScheduler:
         warning_threshold: float,
         critical_threshold: float
     ) -> ResourceStatus:
-        """Determine pool status based on usage."""
-        if usage_percent >= critical_threshold:
+        """Determine pool status based on usage."""        if usage_percent >= critical_threshold:
             return ResourceStatus.OVERLOADED
         elif usage_percent >= warning_threshold:
             return ResourceStatus.ALLOCATED
@@ -733,8 +704,7 @@ class ResourceScheduler:
             return ResourceStatus.AVAILABLE
     
     async def _monitor_pool_health(self) -> None:
-        """Monitor health of resource pools."""
-        for pool_id, pool in self.resource_pools.items():
+        """Monitor health of resource pools."""        for pool_id, pool in self.resource_pools.items():
             try:
                 # Calculate utilization
                 total_capacity = pool.total_capacity
@@ -758,8 +728,7 @@ class ResourceScheduler:
                 logger.error(f"Pool health monitoring failed for {pool_id}: {e}")
     
     async def _auto_scaling_loop(self) -> None:
-        """Auto-scaling background loop."""
-        while self.is_running:
+        """Auto-scaling background loop."""        while self.is_running:
             try:
                 await self._evaluate_scaling_decisions()
                 await asyncio.sleep(60)  # Check every minute
@@ -769,8 +738,7 @@ class ResourceScheduler:
                 await asyncio.sleep(10)
     
     async def _check_scaling_triggers(self, pool: ResourcePool) -> None:
-        """Check if scaling is needed for a pool."""
-        if pool.pool_id in self.scaling_in_progress:
+        """Check if scaling is needed for a pool."""        if pool.pool_id in self.scaling_in_progress:
             return
         
         # Check cooldown period
@@ -801,8 +769,7 @@ class ResourceScheduler:
         action: ScalingAction,
         current_utilization: float
     ) -> None:
-        """Trigger scaling action for a pool."""
-        try:
+        """Trigger scaling action for a pool."""        try:
             self.scaling_in_progress.add(pool.pool_id)
             self.last_scaling_time[pool.pool_id] = datetime.utcnow()
             
@@ -847,8 +814,7 @@ class ResourceScheduler:
         action: ScalingAction,
         scaling_factor: float
     ) -> bool:
-        """Execute scaling action."""
-        try:
+        """Execute scaling action."""        try:
             if action == ScalingAction.SCALE_UP:
                 # Increase capacity
                 new_cpu_cores = pool.total_capacity.cpu_cores * scaling_factor
@@ -897,8 +863,7 @@ class ResourceScheduler:
             return False
     
     async def _cost_optimization_loop(self) -> None:
-        """Cost optimization background loop."""
-        while self.is_running:
+        """Cost optimization background loop."""        while self.is_running:
             try:
                 await self._optimize_resource_costs()
                 await asyncio.sleep(self.config['cost_optimization_interval'])
@@ -908,8 +873,7 @@ class ResourceScheduler:
                 await asyncio.sleep(60)
     
     async def _optimize_resource_costs(self) -> None:
-        """Optimize resource allocation for cost efficiency."""
-        if not self.enable_cost_optimization:
+        """Optimize resource allocation for cost efficiency."""        if not self.enable_cost_optimization:
             return
         
         try:
@@ -940,8 +904,7 @@ class ResourceScheduler:
             logger.error(f"Cost optimization failed: {e}")
     
     def _calculate_allocation_cost(self, allocation: ResourceAllocation) -> float:
-        """Calculate cost for an allocation."""
-        # Simplified cost calculation
+        """Calculate cost for an allocation."""        # Simplified cost calculation
         quota = allocation.allocated_quota
         
         cpu_cost = quota.cpu_cores * 0.1  # $0.1 per core-hour
@@ -951,8 +914,7 @@ class ResourceScheduler:
         return cpu_cost + memory_cost + network_cost
     
     async def _optimize_allocation(self, allocation: ResourceAllocation) -> None:
-        """Optimize a specific allocation."""
-        # This could involve:
+        """Optimize a specific allocation."""        # This could involve:
         # 1. Reducing allocated resources if underutilized
         # 2. Moving to cheaper resource pool
         # 3. Consolidating with other allocations
@@ -960,8 +922,7 @@ class ResourceScheduler:
         logger.info(f"Optimizing allocation {allocation.allocation_id} (efficiency: {allocation.allocation_efficiency:.1f}%)")
     
     async def _handle_emergency_condition(self) -> None:
-        """Handle emergency resource conditions."""
-        logger.critical("Emergency resource condition detected - initiating response")
+        """Handle emergency resource conditions."""        logger.critical("Emergency resource condition detected - initiating response")
         
         # Emergency actions:
         # 1. Pause low-priority allocations
@@ -972,8 +933,7 @@ class ResourceScheduler:
         await self._call_callbacks('emergency', {'timestamp': datetime.utcnow()})
     
     async def _update_resource_metrics(self) -> None:
-        """Update resource scheduler metrics."""
-        # Calculate allocation success rate
+        """Update resource scheduler metrics."""        # Calculate allocation success rate
         if self.metrics.total_allocations > 0:
             success_rate = (self.metrics.successful_allocations / self.metrics.total_allocations) * 100
             self.metrics.allocation_accuracy = success_rate
@@ -990,8 +950,7 @@ class ResourceScheduler:
         self.metrics.last_updated = datetime.utcnow()
     
     async def _evaluate_scaling_decisions(self) -> None:
-        """Evaluate and make scaling decisions."""
-        if not self.enable_predictive_scaling:
+        """Evaluate and make scaling decisions."""        if not self.enable_predictive_scaling:
             return
         
         # Predictive scaling based on historical patterns
@@ -999,8 +958,7 @@ class ResourceScheduler:
         pass
     
     async def get_resource_status(self) -> Dict[str, Any]:
-        """Get comprehensive resource status."""
-        pool_status = {}
+        """Get comprehensive resource status."""        pool_status = {}
         
         for pool_id, pool in self.resource_pools.items():
             # Calculate utilization percentages
@@ -1039,12 +997,10 @@ class ResourceScheduler:
         }
     
     def add_callback(self, event_type: str, callback: Callable) -> None:
-        """Add event callback."""
-        self.event_callbacks[event_type].append(callback)
+        """Add event callback."""        self.event_callbacks[event_type].append(callback)
     
     async def _call_callbacks(self, event_type: str, *args) -> None:
-        """Call registered callbacks for an event."""
-        for callback in self.event_callbacks.get(event_type, []):
+        """Call registered callbacks for an event."""        for callback in self.event_callbacks.get(event_type, []):
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback(*args)

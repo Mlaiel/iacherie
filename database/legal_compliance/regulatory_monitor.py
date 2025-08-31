@@ -1,5 +1,4 @@
-"""
-Regulatory Monitor - Multi-Jurisdictional Compliance Monitoring
+"""Regulatory Monitor - Multi-Jurisdictional Compliance Monitoring
 
 Monitors regulatory changes, compliance requirements, and jurisdiction-specific rules
 for the IA Influencer Agent platform across multiple legal frameworks.
@@ -7,7 +6,6 @@ for the IA Influencer Agent platform across multiple legal frameworks.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 from typing import Dict, List, Any, Optional, Union, Tuple
 from datetime import datetime, timedelta
 from enum import Enum
@@ -21,8 +19,7 @@ logger = logging.getLogger(__name__)
 
 
 class Jurisdiction(Enum):
-    """Legal jurisdictions supported."""
-    EU = "eu"
+    """Legal jurisdictions supported."""    EU = "eu"
     US = "us"
     UK = "uk"
     CANADA = "canada"
@@ -34,8 +31,7 @@ class Jurisdiction(Enum):
 
 
 class RegulatoryFramework(Enum):
-    """Regulatory frameworks monitored."""
-    GDPR = "gdpr"
+    """Regulatory frameworks monitored."""    GDPR = "gdpr"
     CCPA = "ccpa"
     PIPEDA = "pipeda"
     LGPD = "lgpd"
@@ -48,8 +44,7 @@ class RegulatoryFramework(Enum):
 
 
 class ComplianceRequirement(Enum):
-    """Types of compliance requirements."""
-    DATA_PROTECTION = "data_protection"
+    """Types of compliance requirements."""    DATA_PROTECTION = "data_protection"
     CONTENT_MODERATION = "content_moderation"
     ACCESSIBILITY = "accessibility"
     CONSUMER_PROTECTION = "consumer_protection"
@@ -61,8 +56,7 @@ class ComplianceRequirement(Enum):
 
 @dataclass
 class RegulatoryRule:
-    """Regulatory rule structure."""
-    rule_id: str
+    """Regulatory rule structure."""    rule_id: str
     framework: RegulatoryFramework
     jurisdiction: Jurisdiction
     requirement_type: ComplianceRequirement
@@ -79,8 +73,7 @@ class RegulatoryRule:
 
 @dataclass
 class ComplianceAlert:
-    """Compliance alert structure."""
-    alert_id: str
+    """Compliance alert structure."""    alert_id: str
     rule_id: str
     alert_type: str
     severity: str
@@ -95,21 +88,17 @@ class ComplianceAlert:
 
 
 class RegulatoryMonitor:
-    """
-    Comprehensive regulatory compliance monitoring system.
+    """    Comprehensive regulatory compliance monitoring system.
     
     Tracks regulatory changes, monitors compliance requirements,
     and generates alerts for multi-jurisdictional compliance.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the Regulatory Monitor.
+        """        Initialize the Regulatory Monitor.
         
         Args:
             config: Configuration dictionary with monitoring settings
-        """
-        self.config = config
+        """        self.config = config
         self.monitoring_config = config.get("regulatory_monitoring", {})
         
         # Regulatory data
@@ -143,8 +132,7 @@ class RegulatoryMonitor:
         logger.info("Regulatory Monitor initialized successfully")
     
     async def initialize_regulatory_rules(self) -> None:
-        """Initialize default regulatory rules for monitored jurisdictions."""
-        try:
+        """Initialize default regulatory rules for monitored jurisdictions."""        try:
             # GDPR rules
             await self._initialize_gdpr_rules()
             
@@ -170,8 +158,7 @@ class RegulatoryMonitor:
         user_data: Optional[Dict[str, Any]] = None,
         content_metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Check compliance against applicable regulatory rules.
+        """        Check compliance against applicable regulatory rules.
         
         Args:
             content_type: Type of content being checked
@@ -181,8 +168,7 @@ class RegulatoryMonitor:
             
         Returns:
             Compliance check results
-        """
-        try:
+        """        try:
             compliance_result = {
                 "content_type": content_type,
                 "jurisdiction": jurisdiction,
@@ -235,13 +221,11 @@ class RegulatoryMonitor:
             raise
     
     async def monitor_regulatory_changes(self) -> Dict[str, Any]:
-        """
-        Monitor for regulatory changes and updates.
+        """        Monitor for regulatory changes and updates.
         
         Returns:
             Monitoring results with detected changes
-        """
-        try:
+        """        try:
             monitoring_result = {
                 "monitoring_run_at": datetime.utcnow().isoformat(),
                 "frameworks_checked": len(self.supported_frameworks),
@@ -294,8 +278,7 @@ class RegulatoryMonitor:
         jurisdiction: str,
         content_type: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get compliance requirements for a specific jurisdiction.
+        """        Get compliance requirements for a specific jurisdiction.
         
         Args:
             jurisdiction: Legal jurisdiction to query
@@ -303,8 +286,7 @@ class RegulatoryMonitor:
             
         Returns:
             Jurisdiction-specific compliance requirements
-        """
-        try:
+        """        try:
             jurisdiction_enum = Jurisdiction(jurisdiction.lower())
             
             requirements = {
@@ -392,8 +374,7 @@ class RegulatoryMonitor:
         deadline: Optional[datetime] = None,
         affected_users: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Create a compliance alert for tracking and resolution.
+        """        Create a compliance alert for tracking and resolution.
         
         Args:
             rule_id: ID of the regulatory rule
@@ -406,8 +387,7 @@ class RegulatoryMonitor:
             
         Returns:
             Alert creation results
-        """
-        try:
+        """        try:
             # Generate alert ID
             alert_id = f"alert_{uuid.uuid4().hex[:12]}"
             
@@ -466,8 +446,7 @@ class RegulatoryMonitor:
         resolution_notes: str,
         resolved_by: str
     ) -> Dict[str, Any]:
-        """
-        Mark a compliance alert as resolved.
+        """        Mark a compliance alert as resolved.
         
         Args:
             alert_id: ID of alert to resolve
@@ -476,8 +455,7 @@ class RegulatoryMonitor:
             
         Returns:
             Resolution results
-        """
-        try:
+        """        try:
             if alert_id not in self.compliance_alerts:
                 raise ValueError(f"Alert {alert_id} not found")
             
@@ -514,8 +492,7 @@ class RegulatoryMonitor:
     
     # Private helper methods
     async def _initialize_gdpr_rules(self) -> None:
-        """Initialize GDPR compliance rules."""
-        gdpr_rules = [
+        """Initialize GDPR compliance rules."""        gdpr_rules = [
             {
                 "rule_id": "gdpr_consent_requirement",
                 "framework": RegulatoryFramework.GDPR,
@@ -552,8 +529,7 @@ class RegulatoryMonitor:
             await self._create_regulatory_rule(rule_data)
     
     async def _initialize_ccpa_rules(self) -> None:
-        """Initialize CCPA compliance rules."""
-        ccpa_rules = [
+        """Initialize CCPA compliance rules."""        ccpa_rules = [
             {
                 "rule_id": "ccpa_disclosure_requirement",
                 "framework": RegulatoryFramework.CCPA,
@@ -575,8 +551,7 @@ class RegulatoryMonitor:
             await self._create_regulatory_rule(rule_data)
     
     async def _initialize_dmca_rules(self) -> None:
-        """Initialize DMCA compliance rules."""
-        dmca_rules = [
+        """Initialize DMCA compliance rules."""        dmca_rules = [
             {
                 "rule_id": "dmca_takedown_response",
                 "framework": RegulatoryFramework.DMCA,
@@ -598,8 +573,7 @@ class RegulatoryMonitor:
             await self._create_regulatory_rule(rule_data)
     
     async def _initialize_platform_rules(self) -> None:
-        """Initialize platform-specific rules."""
-        platform_rules = [
+        """Initialize platform-specific rules."""        platform_rules = [
             {
                 "rule_id": "content_moderation_standards",
                 "framework": RegulatoryFramework.DSA,
@@ -621,8 +595,7 @@ class RegulatoryMonitor:
             await self._create_regulatory_rule(rule_data)
     
     async def _create_regulatory_rule(self, rule_data: Dict[str, Any]) -> RegulatoryRule:
-        """Create a new regulatory rule from data."""
-        rule = RegulatoryRule(
+        """Create a new regulatory rule from data."""        rule = RegulatoryRule(
             rule_id=rule_data["rule_id"],
             framework=rule_data["framework"],
             jurisdiction=rule_data["jurisdiction"],
@@ -646,8 +619,7 @@ class RegulatoryMonitor:
         jurisdiction: str, 
         content_type: str
     ) -> List[RegulatoryRule]:
-        """Get regulatory rules applicable to jurisdiction and content type."""
-        applicable_rules = []
+        """Get regulatory rules applicable to jurisdiction and content type."""        applicable_rules = []
         jurisdiction_enum = Jurisdiction(jurisdiction.lower())
         
         for rule in self.regulatory_rules.values():
@@ -666,8 +638,7 @@ class RegulatoryMonitor:
         rule: RegulatoryRule, 
         content_type: str
     ) -> bool:
-        """Check if a rule applies to the given content type."""
-        # For now, apply all rules to all content types
+        """Check if a rule applies to the given content type."""        # For now, apply all rules to all content types
         # In practice, this would have more sophisticated logic
         return True
     
@@ -678,8 +649,7 @@ class RegulatoryMonitor:
         user_data: Optional[Dict[str, Any]],
         content_metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Evaluate compliance with a specific rule."""
-        # Placeholder implementation
+        """Evaluate compliance with a specific rule."""        # Placeholder implementation
         # Real implementation would have rule-specific evaluation logic
         return {
             "rule_id": rule.rule_id,
@@ -694,8 +664,7 @@ class RegulatoryMonitor:
         self, 
         violations: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate compliance recommendations based on violations."""
-        recommendations = []
+        """Generate compliance recommendations based on violations."""        recommendations = []
         
         for violation in violations:
             if violation["framework"] == "gdpr":
@@ -708,8 +677,7 @@ class RegulatoryMonitor:
         return list(set(recommendations))  # Remove duplicates
     
     def _calculate_next_review_date(self, rules: List[RegulatoryRule]) -> str:
-        """Calculate next compliance review date."""
-        # Find the most frequent monitoring requirement
+        """Calculate next compliance review date."""        # Find the most frequent monitoring requirement
         min_frequency = min(
             self._frequency_to_days(rule.monitoring_frequency) for rule in rules
         )
@@ -718,8 +686,7 @@ class RegulatoryMonitor:
         return next_review.isoformat()
     
     def _frequency_to_days(self, frequency: str) -> int:
-        """Convert monitoring frequency to days."""
-        frequency_map = {
+        """Convert monitoring frequency to days."""        frequency_map = {
             "daily": 1,
             "weekly": 7,
             "monthly": 30,
@@ -730,16 +697,14 @@ class RegulatoryMonitor:
     
     # Placeholder methods for external monitoring
     def _should_monitor_framework(self, framework: RegulatoryFramework) -> bool:
-        """Check if framework should be monitored."""
-        return True  # Monitor all frameworks for now
+        """Check if framework should be monitored."""        return True  # Monitor all frameworks for now
     
     async def _check_framework_updates(
         self, 
         framework: RegulatoryFramework, 
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check for updates in a regulatory framework."""
-        # Placeholder - would integrate with external sources
+        """Check for updates in a regulatory framework."""        # Placeholder - would integrate with external sources
         return {
             "framework": framework.value,
             "changes_detected": False,
@@ -749,8 +714,7 @@ class RegulatoryMonitor:
         }
     
     async def _update_regulatory_rule(self, rule_data: Dict[str, Any]) -> RegulatoryRule:
-        """Update an existing regulatory rule."""
-        rule_id = rule_data["rule_id"]
+        """Update an existing regulatory rule."""        rule_id = rule_data["rule_id"]
         if rule_id in self.regulatory_rules:
             rule = self.regulatory_rules[rule_id]
             # Update rule with new data
@@ -759,16 +723,14 @@ class RegulatoryMonitor:
             return await self._create_regulatory_rule(rule_data)
     
     def _schedule_next_monitoring(self) -> str:
-        """Schedule next monitoring run."""
-        next_run = datetime.utcnow() + timedelta(hours=24)
+        """Schedule next monitoring run."""        next_run = datetime.utcnow() + timedelta(hours=24)
         return next_run.isoformat()
     
     async def _generate_change_alerts(
         self, 
         framework_changes: Dict[str, Any]
     ) -> List[str]:
-        """Generate alerts for regulatory changes."""
-        alerts = []
+        """Generate alerts for regulatory changes."""        alerts = []
         
         for new_rule in framework_changes.get("new_rules", []):
             alert_result = await self.create_compliance_alert(
@@ -783,8 +745,7 @@ class RegulatoryMonitor:
         return alerts
     
     async def _create_compliance_alerts(self, violations: List[Dict[str, Any]]) -> None:
-        """Create alerts for compliance violations."""
-        for violation in violations:
+        """Create alerts for compliance violations."""        for violation in violations:
             await self.create_compliance_alert(
                 rule_id=violation["rule_id"],
                 alert_type="compliance_violation",
@@ -794,15 +755,13 @@ class RegulatoryMonitor:
             )
     
     def _determine_required_actions(self, rule_id: str, alert_type: str) -> List[str]:
-        """Determine required actions for an alert."""
-        if rule_id in self.regulatory_rules:
+        """Determine required actions for an alert."""        if rule_id in self.regulatory_rules:
             rule = self.regulatory_rules[rule_id]
             return rule.compliance_actions
         return ["Review compliance requirements", "Contact legal team"]
     
     def _calculate_alert_urgency(self, alert: ComplianceAlert) -> str:
-        """Calculate urgency level for an alert."""
-        if alert.severity == "critical":
+        """Calculate urgency level for an alert."""        if alert.severity == "critical":
             return "critical"
         elif alert.severity == "high":
             return "high"
@@ -812,8 +771,7 @@ class RegulatoryMonitor:
             return "medium"
     
     def _estimate_resolution_time(self, alert: ComplianceAlert) -> str:
-        """Estimate time to resolve alert."""
-        severity_map = {
+        """Estimate time to resolve alert."""        severity_map = {
             "critical": "24 hours",
             "high": "3-5 days",
             "medium": "1-2 weeks",
@@ -825,8 +783,7 @@ class RegulatoryMonitor:
         self, 
         rules: List[RegulatoryRule]
     ) -> List[Dict[str, Any]]:
-        """Generate compliance checklist from rules."""
-        checklist = []
+        """Generate compliance checklist from rules."""        checklist = []
         
         for rule in rules:
             for action in rule.compliance_actions:
@@ -842,8 +799,7 @@ class RegulatoryMonitor:
     
     # Notification and logging methods
     async def _send_alert_notifications(self, alert: ComplianceAlert) -> List[str]:
-        """Send notifications for compliance alerts."""
-        logger.info(f"Sending notifications for alert {alert.alert_id}")
+        """Send notifications for compliance alerts."""        logger.info(f"Sending notifications for alert {alert.alert_id}")
         return ["email", "dashboard"]  # Placeholder
     
     async def _notify_users_of_resolution(
@@ -851,17 +807,13 @@ class RegulatoryMonitor:
         alert: ComplianceAlert, 
         resolution_notes: str
     ) -> None:
-        """Notify affected users of alert resolution."""
-        logger.info(f"Notifying {len(alert.affected_users)} users of alert resolution")
+        """Notify affected users of alert resolution."""        logger.info(f"Notifying {len(alert.affected_users)} users of alert resolution")
     
     async def _log_monitoring_results(self, monitoring_result: Dict[str, Any]) -> None:
-        """Log regulatory monitoring results."""
-        logger.info(f"Regulatory monitoring completed: {monitoring_result['changes_detected']} changes detected")
+        """Log regulatory monitoring results."""        logger.info(f"Regulatory monitoring completed: {monitoring_result['changes_detected']} changes detected")
     
     async def _log_alert_creation(self, alert: ComplianceAlert, result: Dict[str, Any]) -> None:
-        """Log alert creation."""
-        logger.info(f"Compliance alert created: {alert.alert_id} - {alert.title}")
+        """Log alert creation."""        logger.info(f"Compliance alert created: {alert.alert_id} - {alert.title}")
     
     async def _log_alert_resolution(self, alert: ComplianceAlert, result: Dict[str, Any]) -> None:
-        """Log alert resolution."""
-        logger.info(f"Compliance alert resolved: {alert.alert_id} - Resolution time: {result['resolution_time_hours']:.1f} hours")
+        """Log alert resolution."""        logger.info(f"Compliance alert resolved: {alert.alert_id} - Resolution time: {result['resolution_time_hours']:.1f} hours")

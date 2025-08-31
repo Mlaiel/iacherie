@@ -1,5 +1,4 @@
-"""
-Backup Scheduler for IA Influencer Agent Platform.
+"""Backup Scheduler for IA Influencer Agent Platform.
 
 Provides enterprise-grade scheduling capabilities for automated backups
 with support for various scheduling patterns and backup types.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 IA Influencer Agent Platform
 All Rights Reserved - Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta, time
@@ -24,8 +22,7 @@ from ...core.exceptions import SchedulerError
 
 
 class ScheduleType(Enum):
-    """Schedule type enumeration."""
-    ONCE = "once"
+    """Schedule type enumeration."""    ONCE = "once"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -34,8 +31,7 @@ class ScheduleType(Enum):
 
 
 class ScheduleStatus(Enum):
-    """Schedule status enumeration."""
-    ACTIVE = "active"
+    """Schedule status enumeration."""    ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
     ERROR = "error"
@@ -43,8 +39,7 @@ class ScheduleStatus(Enum):
 
 @dataclass
 class ScheduleConfig:
-    """Schedule configuration container."""
-    schedule_id: str
+    """Schedule configuration container."""    schedule_id: str
     name: str
     description: str
     schedule_type: ScheduleType
@@ -63,8 +58,7 @@ class ScheduleConfig:
 
 @dataclass
 class ScheduleExecution:
-    """Schedule execution record."""
-    execution_id: str
+    """Schedule execution record."""    execution_id: str
     schedule_id: str
     started_at: datetime
     completed_at: Optional[datetime]
@@ -76,16 +70,13 @@ class ScheduleExecution:
 
 
 class BackupScheduler:
-    """
-    Enterprise backup scheduler with advanced scheduling capabilities.
+    """    Enterprise backup scheduler with advanced scheduling capabilities.
     
     Supports various scheduling patterns including cron expressions,
     interval-based scheduling, and one-time executions.
     """
-
     def __init__(self):
-        """Initialize backup scheduler."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize backup scheduler."""        self.logger = logging.getLogger(__name__)
         self.schedules: Dict[str, ScheduleConfig] = {}
         self.executions: List[ScheduleExecution] = []
         self.running_tasks: Dict[str, asyncio.Task] = {}
@@ -94,8 +85,7 @@ class BackupScheduler:
         self._is_running = False
 
     async def start_scheduler(self) -> None:
-        """Start the scheduler service."""
-        if self._is_running:
+        """Start the scheduler service."""        if self._is_running:
             self.logger.warning("Scheduler is already running")
             return
         
@@ -104,8 +94,7 @@ class BackupScheduler:
         self._scheduler_task = asyncio.create_task(self._scheduler_loop())
 
     async def stop_scheduler(self) -> None:
-        """Stop the scheduler service."""
-        if not self._is_running:
+        """Stop the scheduler service."""        if not self._is_running:
             self.logger.warning("Scheduler is not running")
             return
         
@@ -134,8 +123,7 @@ class BackupScheduler:
         schedule_config: Dict[str, Any],
         backup_function: Callable
     ) -> str:
-        """
-        Add a new backup schedule.
+        """        Add a new backup schedule.
         
         Args:
             schedule_config: Schedule configuration
@@ -143,8 +131,7 @@ class BackupScheduler:
             
         Returns:
             Schedule ID
-        """
-        schedule_id = str(uuid.uuid4())
+        """        schedule_id = str(uuid.uuid4())
         
         # Validate schedule configuration
         validated_config = await self._validate_schedule_config(schedule_config)
@@ -179,8 +166,7 @@ class BackupScheduler:
         schedule_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update existing schedule.
+        """        Update existing schedule.
         
         Args:
             schedule_id: Schedule identifier
@@ -188,8 +174,7 @@ class BackupScheduler:
             
         Returns:
             Success status
-        """
-        if schedule_id not in self.schedules:
+        """        if schedule_id not in self.schedules:
             self.logger.error(f"Schedule not found: {schedule_id}")
             return False
         
@@ -206,16 +191,14 @@ class BackupScheduler:
         return True
 
     async def remove_schedule(self, schedule_id: str) -> bool:
-        """
-        Remove schedule.
+        """        Remove schedule.
         
         Args:
             schedule_id: Schedule identifier
             
         Returns:
             Success status
-        """
-        if schedule_id not in self.schedules:
+        """        if schedule_id not in self.schedules:
             self.logger.error(f"Schedule not found: {schedule_id}")
             return False
         
@@ -231,16 +214,14 @@ class BackupScheduler:
         return True
 
     async def pause_schedule(self, schedule_id: str) -> bool:
-        """
-        Pause schedule execution.
+        """        Pause schedule execution.
         
         Args:
             schedule_id: Schedule identifier
             
         Returns:
             Success status
-        """
-        if schedule_id not in self.schedules:
+        """        if schedule_id not in self.schedules:
             return False
         
         self.schedules[schedule_id].enabled = False
@@ -248,16 +229,14 @@ class BackupScheduler:
         return True
 
     async def resume_schedule(self, schedule_id: str) -> bool:
-        """
-        Resume schedule execution.
+        """        Resume schedule execution.
         
         Args:
             schedule_id: Schedule identifier
             
         Returns:
             Success status
-        """
-        if schedule_id not in self.schedules:
+        """        if schedule_id not in self.schedules:
             return False
         
         self.schedules[schedule_id].enabled = True
@@ -265,16 +244,14 @@ class BackupScheduler:
         return True
 
     async def execute_schedule_now(self, schedule_id: str) -> str:
-        """
-        Execute schedule immediately.
+        """        Execute schedule immediately.
         
         Args:
             schedule_id: Schedule identifier
             
         Returns:
             Execution ID
-        """
-        if schedule_id not in self.schedules:
+        """        if schedule_id not in self.schedules:
             raise SchedulerError(f"Schedule not found: {schedule_id}")
         
         schedule = self.schedules[schedule_id]
@@ -287,24 +264,21 @@ class BackupScheduler:
         return execution_id
 
     async def get_schedule(self, schedule_id: str) -> Optional[ScheduleConfig]:
-        """
-        Get schedule by ID.
+        """        Get schedule by ID.
         
         Args:
             schedule_id: Schedule identifier
             
         Returns:
             Schedule configuration
-        """
-        return self.schedules.get(schedule_id)
+        """        return self.schedules.get(schedule_id)
 
     async def list_schedules(
         self,
         enabled_only: bool = False,
         tags: Optional[List[str]] = None
     ) -> List[ScheduleConfig]:
-        """
-        List all schedules with filtering.
+        """        List all schedules with filtering.
         
         Args:
             enabled_only: Filter only enabled schedules
@@ -312,8 +286,7 @@ class BackupScheduler:
             
         Returns:
             List of schedules
-        """
-        schedules = list(self.schedules.values())
+        """        schedules = list(self.schedules.values())
         
         if enabled_only:
             schedules = [s for s in schedules if s.enabled]
@@ -331,8 +304,7 @@ class BackupScheduler:
         schedule_id: Optional[str] = None,
         limit: int = 100
     ) -> List[ScheduleExecution]:
-        """
-        Get schedule execution history.
+        """        Get schedule execution history.
         
         Args:
             schedule_id: Optional schedule filter
@@ -340,8 +312,7 @@ class BackupScheduler:
             
         Returns:
             List of executions
-        """
-        executions = self.executions
+        """        executions = self.executions
         
         if schedule_id:
             executions = [e for e in executions if e.schedule_id == schedule_id]
@@ -352,16 +323,14 @@ class BackupScheduler:
         return executions[:limit]
 
     async def get_next_execution_time(self, schedule_id: str) -> Optional[datetime]:
-        """
-        Get next execution time for schedule.
+        """        Get next execution time for schedule.
         
         Args:
             schedule_id: Schedule identifier
             
         Returns:
             Next execution time
-        """
-        if schedule_id not in self.schedules:
+        """        if schedule_id not in self.schedules:
             return None
         
         schedule = self.schedules[schedule_id]
@@ -371,13 +340,11 @@ class BackupScheduler:
         return await self._calculate_next_execution(schedule)
 
     async def get_scheduler_statistics(self) -> Dict[str, Any]:
-        """
-        Get scheduler statistics.
+        """        Get scheduler statistics.
         
         Returns:
             Scheduler statistics
-        """
-        total_schedules = len(self.schedules)
+        """        total_schedules = len(self.schedules)
         enabled_schedules = len([s for s in self.schedules.values() if s.enabled])
         running_executions = len(self.running_tasks)
         
@@ -401,8 +368,7 @@ class BackupScheduler:
         }
 
     async def _scheduler_loop(self) -> None:
-        """Main scheduler loop."""
-        self.logger.info("Scheduler loop started")
+        """Main scheduler loop."""        self.logger.info("Scheduler loop started")
         
         while self._is_running:
             try:
@@ -452,8 +418,7 @@ class BackupScheduler:
         schedule: ScheduleConfig, 
         current_time: datetime
     ) -> bool:
-        """Check if schedule should execute at current time."""
-        try:
+        """Check if schedule should execute at current time."""        try:
             # Check max executions limit
             if schedule.max_executions:
                 execution_count = len([
@@ -477,8 +442,7 @@ class BackupScheduler:
             return False
 
     async def _calculate_next_execution(self, schedule: ScheduleConfig) -> Optional[datetime]:
-        """Calculate next execution time for schedule."""
-        current_time = datetime.now()
+        """Calculate next execution time for schedule."""        current_time = datetime.now()
         
         try:
             if schedule.schedule_type == ScheduleType.ONCE:
@@ -573,8 +537,7 @@ class BackupScheduler:
         schedule: ScheduleConfig, 
         backup_function: Callable
     ) -> str:
-        """Execute backup function with error handling and retry logic."""
-        execution_id = str(uuid.uuid4())
+        """Execute backup function with error handling and retry logic."""        execution_id = str(uuid.uuid4())
         started_at = datetime.now()
         
         execution = ScheduleExecution(
@@ -652,8 +615,7 @@ class BackupScheduler:
         return execution_id
 
     async def _validate_schedule_config(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate schedule configuration."""
-        required_fields = ["name", "schedule_type", "schedule_pattern"]
+        """Validate schedule configuration."""        required_fields = ["name", "schedule_type", "schedule_pattern"]
         
         for field in required_fields:
             if field not in config:
@@ -734,8 +696,7 @@ class BackupScheduler:
         schedule: ScheduleConfig, 
         execution: ScheduleExecution
     ) -> None:
-        """Send success notification for backup execution."""
-        # Implementation would depend on notification system
+        """Send success notification for backup execution."""        # Implementation would depend on notification system
         self.logger.info(f"Backup execution successful notification sent for: {schedule.name}")
 
     async def _send_failure_notification(
@@ -743,21 +704,18 @@ class BackupScheduler:
         schedule: ScheduleConfig, 
         execution: ScheduleExecution
     ) -> None:
-        """Send failure notification for backup execution."""
-        # Implementation would depend on notification system
+        """Send failure notification for backup execution."""        # Implementation would depend on notification system
         self.logger.error(f"Backup execution failure notification sent for: {schedule.name}")
 
     def get_schedule_description(self, schedule_id: str) -> Optional[str]:
-        """
-        Get human-readable description of schedule.
+        """        Get human-readable description of schedule.
         
         Args:
             schedule_id: Schedule identifier
             
         Returns:
             Schedule description
-        """
-        if schedule_id not in self.schedules:
+        """        if schedule_id not in self.schedules:
             return None
         
         schedule = self.schedules[schedule_id]

@@ -1,5 +1,4 @@
-"""
-📈 Scaling Configuration Manager - IA-Influencer-Agent
+"""📈 Scaling Configuration Manager - IA-Influencer-Agent
 ==================================================================
 Project Creator & Lead Dev IA: Fahed Mlaiel <mlaiel@live.de>
 Experts: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security Expert + 
@@ -17,7 +16,6 @@ Enterprise-grade scaling and auto-scaling configuration
 → horizontal scaling → vertical scaling → load-based scaling → predictive scaling.
 ==================================================================
 """
-
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Callable
@@ -28,21 +26,18 @@ import json
 import math
 
 class ScalingStrategy(Enum):
-    """Scaling strategies"""
-    REACTIVE = "reactive"
+    """Scaling strategies"""    REACTIVE = "reactive"
     PREDICTIVE = "predictive"
     SCHEDULED = "scheduled"
     HYBRID = "hybrid"
 
 class ScalingDirection(Enum):
-    """Scaling directions"""
-    UP = "up"
+    """Scaling directions"""    UP = "up"
     DOWN = "down"
     BOTH = "both"
 
 class MetricType(Enum):
-    """Metric types for scaling decisions"""
-    CPU_UTILIZATION = "cpu_utilization"
+    """Metric types for scaling decisions"""    CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     REQUEST_RATE = "request_rate"
     RESPONSE_TIME = "response_time"
@@ -51,16 +46,14 @@ class MetricType(Enum):
     CUSTOM = "custom"
 
 class ScalingTrigger(Enum):
-    """Scaling triggers"""
-    THRESHOLD = "threshold"
+    """Scaling triggers"""    THRESHOLD = "threshold"
     TREND = "trend"
     SCHEDULE = "schedule"
     EVENT = "event"
     COMBINATION = "combination"
 
 class ResourceType(Enum):
-    """Resource types for scaling"""
-    PODS = "pods"
+    """Resource types for scaling"""    PODS = "pods"
     NODES = "nodes"
     CONTAINERS = "containers"
     VIRTUAL_MACHINES = "virtual_machines"
@@ -68,8 +61,7 @@ class ResourceType(Enum):
 
 @dataclass
 class MetricThreshold:
-    """Metric threshold configuration"""
-    metric_type: MetricType
+    """Metric threshold configuration"""    metric_type: MetricType
     threshold_value: float
     comparison: str = "greater_than"  # greater_than, less_than, equal_to
     duration_seconds: int = 300
@@ -78,8 +70,7 @@ class MetricThreshold:
 
 @dataclass
 class ScalingPolicy:
-    """Scaling policy configuration"""
-    name: str
+    """Scaling policy configuration"""    name: str
     resource_type: ResourceType
     strategy: ScalingStrategy
     direction: ScalingDirection
@@ -93,8 +84,7 @@ class ScalingPolicy:
 
 @dataclass
 class PredictiveScaling:
-    """Predictive scaling configuration"""
-    enabled: bool = False
+    """Predictive scaling configuration"""    enabled: bool = False
     forecast_horizon_hours: int = 24
     forecast_confidence_threshold: float = 0.8
     historical_data_days: int = 30
@@ -104,32 +94,28 @@ class PredictiveScaling:
 
 @dataclass
 class ScheduledScaling:
-    """Scheduled scaling configuration"""
-    enabled: bool = False
+    """Scheduled scaling configuration"""    enabled: bool = False
     schedules: List[Dict[str, Any]] = field(default_factory=list)
     timezone: str = "UTC"
     override_policies: bool = False
 
 @dataclass
 class ScalingMetrics:
-    """Scaling metrics configuration"""
-    collection_interval: int = 30
+    """Scaling metrics configuration"""    collection_interval: int = 30
     retention_days: int = 30
     custom_metrics: Dict[str, str] = field(default_factory=dict)
     external_metrics: Dict[str, Any] = field(default_factory=dict)
 
 @dataclass
 class NotificationConfig:
-    """Scaling notification configuration"""
-    enabled: bool = True
+    """Scaling notification configuration"""    enabled: bool = True
     channels: List[str] = field(default_factory=list)
     events: List[str] = field(default_factory=lambda: ["scale_up", "scale_down", "error"])
     rate_limit_minutes: int = 5
 
 @dataclass
 class ScalingConfiguration:
-    """Complete scaling configuration"""
-    service_name: str
+    """Complete scaling configuration"""    service_name: str
     namespace: str = "default"
     policies: List[ScalingPolicy] = field(default_factory=list)
     thresholds: List[MetricThreshold] = field(default_factory=list)
@@ -140,8 +126,7 @@ class ScalingConfiguration:
     custom_config: Dict[str, Any] = field(default_factory=dict)
 
 class ScalingConfigManager:
-    """
-    Enterprise auto-scaling configuration and policy management.
+    """    Enterprise auto-scaling configuration and policy management.
     
     Provides comprehensive scaling management:
     - Multi-strategy scaling (reactive, predictive, scheduled)
@@ -154,11 +139,9 @@ class ScalingConfigManager:
     - Cost optimization algorithms
     - Real-time monitoring and alerting
     - Scaling event tracking and analytics
-    """
-    
+    """    
     def __init__(self):
-        """Initialize scaling configuration manager"""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize scaling configuration manager"""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         
         # Scaling configurations
         self.scaling_configs = {}
@@ -180,13 +163,11 @@ class ScalingConfigManager:
         self.logger.info("Scaling configuration manager initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize scaling configuration manager.
+        """        Initialize scaling configuration manager.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             # Load default scaling configurations
             await self._load_default_configurations()
             
@@ -210,8 +191,7 @@ class ScalingConfigManager:
             return False
     
     async def _load_default_configurations(self) -> None:
-        """Load default scaling configurations"""
-        
+        """Load default scaling configurations"""        
         # Web tier scaling configuration
         web_config = ScalingConfiguration(
             service_name="web-tier",
@@ -448,13 +428,11 @@ class ScalingConfigManager:
         self.logger.info(f"Loaded {len(self.scaling_configs)} scaling configurations")
     
     async def _initialize_metrics_collection(self) -> None:
-        """Initialize metrics collection"""
-        asyncio.create_task(self._collect_metrics())
+        """Initialize metrics collection"""        asyncio.create_task(self._collect_metrics())
         self.logger.info("Metrics collection initialized")
     
     async def _collect_metrics(self) -> None:
-        """Collect scaling metrics continuously"""
-        while True:
+        """Collect scaling metrics continuously"""        while True:
             try:
                 for service_name, config in self.scaling_configs.items():
                     await self._collect_service_metrics(service_name, config)
@@ -467,8 +445,7 @@ class ScalingConfigManager:
                 await asyncio.sleep(60)
     
     async def _collect_service_metrics(self, service_name: str, config: ScalingConfiguration) -> None:
-        """Collect metrics for a service"""
-        # Simulate metric collection
+        """Collect metrics for a service"""        # Simulate metric collection
         metrics = {
             "cpu_utilization": 65.0 + (hash(service_name) % 30),
             "memory_utilization": 70.0 + (hash(service_name) % 25),
@@ -486,13 +463,11 @@ class ScalingConfigManager:
         self.current_metrics[service_name] = metrics
     
     async def _start_scaling_engine(self) -> None:
-        """Start scaling decision engine"""
-        asyncio.create_task(self._scaling_engine())
+        """Start scaling decision engine"""        asyncio.create_task(self._scaling_engine())
         self.logger.info("Scaling engine started")
     
     async def _scaling_engine(self) -> None:
-        """Scaling decision engine"""
-        while True:
+        """Scaling decision engine"""        while True:
             try:
                 for service_name, config in self.scaling_configs.items():
                     await self._evaluate_scaling_decisions(service_name, config)
@@ -504,8 +479,7 @@ class ScalingConfigManager:
                 await asyncio.sleep(120)
     
     async def _evaluate_scaling_decisions(self, service_name: str, config: ScalingConfiguration) -> None:
-        """Evaluate scaling decisions for a service"""
-        if service_name not in self.current_metrics:
+        """Evaluate scaling decisions for a service"""        if service_name not in self.current_metrics:
             return
         
         metrics = self.current_metrics[service_name]
@@ -525,8 +499,7 @@ class ScalingConfigManager:
                 await self._execute_scaling_action(service_name, policy, scaling_decision)
     
     async def _is_in_cooldown(self, service_name: str, policy_name: str) -> bool:
-        """Check if scaling action is in cooldown period"""
-        key = f"{service_name}:{policy_name}"
+        """Check if scaling action is in cooldown period"""        key = f"{service_name}:{policy_name}"
         if key in self.cooldown_timers:
             return datetime.now() < self.cooldown_timers[key]
         return False
@@ -537,8 +510,7 @@ class ScalingConfigManager:
         config: ScalingConfiguration,
         metrics: Dict[str, Any]
     ) -> Optional[Dict[str, Any]]:
-        """Evaluate scaling thresholds"""
-        violations = []
+        """Evaluate scaling thresholds"""        violations = []
         
         for threshold in config.thresholds:
             metric_value = metrics.get(threshold.metric_type.value)
@@ -576,8 +548,7 @@ class ScalingConfigManager:
         policy: ScalingPolicy,
         decision: Dict[str, Any]
     ) -> None:
-        """Execute scaling action"""
-        try:
+        """Execute scaling action"""        try:
             action = decision["action"]
             current_capacity = await self._get_current_capacity(service_name, policy.resource_type)
             
@@ -604,14 +575,12 @@ class ScalingConfigManager:
             self.logger.error(f"Failed to execute scaling action for {service_name}: {e}")
     
     async def _get_current_capacity(self, service_name: str, resource_type: ResourceType) -> int:
-        """Get current resource capacity"""
-        # Implementation would get actual capacity from Kubernetes, cloud provider, etc.
+        """Get current resource capacity"""        # Implementation would get actual capacity from Kubernetes, cloud provider, etc.
         # For now, return a simulated value
         return 3
     
     async def _scale_resource(self, service_name: str, policy: ScalingPolicy, new_capacity: int) -> bool:
-        """Scale resource to new capacity"""
-        try:
+        """Scale resource to new capacity"""        try:
             # Implementation would execute actual scaling
             # For Kubernetes: update HPA or deployment replicas
             # For cloud: update auto-scaling group
@@ -632,8 +601,7 @@ class ScalingConfigManager:
         new_capacity: int,
         decision: Dict[str, Any]
     ) -> None:
-        """Record scaling event"""
-        event = {
+        """Record scaling event"""        event = {
             "timestamp": datetime.now(),
             "service_name": service_name,
             "policy_name": policy.name,
@@ -659,16 +627,14 @@ class ScalingConfigManager:
         old_capacity: int,
         new_capacity: int
     ) -> None:
-        """Send scaling notification"""
-        if service_name in self.scaling_configs:
+        """Send scaling notification"""        if service_name in self.scaling_configs:
             config = self.scaling_configs[service_name]
             if config.notifications.enabled:
                 # Implementation would send notifications
                 self.logger.info(f"Scaling notification: {service_name} {action} {old_capacity}→{new_capacity}")
     
     async def _initialize_predictive_models(self) -> None:
-        """Initialize predictive scaling models"""
-        for service_name, config in self.scaling_configs.items():
+        """Initialize predictive scaling models"""        for service_name, config in self.scaling_configs.items():
             if config.predictive_scaling.enabled:
                 await self._train_prediction_model(service_name, config)
         
@@ -677,8 +643,7 @@ class ScalingConfigManager:
         self.logger.info("Predictive scaling models initialized")
     
     async def _train_prediction_model(self, service_name: str, config: ScalingConfiguration) -> None:
-        """Train prediction model for service"""
-        # Implementation would train actual ML model
+        """Train prediction model for service"""        # Implementation would train actual ML model
         # For now, create a simple model placeholder
         self.prediction_models[service_name] = {
             "model_type": config.predictive_scaling.prediction_model,
@@ -688,8 +653,7 @@ class ScalingConfigManager:
         }
     
     async def _predictive_scaling_engine(self) -> None:
-        """Predictive scaling engine"""
-        while True:
+        """Predictive scaling engine"""        while True:
             try:
                 for service_name, config in self.scaling_configs.items():
                     if config.predictive_scaling.enabled:
@@ -702,8 +666,7 @@ class ScalingConfigManager:
                 await asyncio.sleep(3600)
     
     async def _execute_predictive_scaling(self, service_name: str, config: ScalingConfiguration) -> None:
-        """Execute predictive scaling for service"""
-        if service_name not in self.prediction_models:
+        """Execute predictive scaling for service"""        if service_name not in self.prediction_models:
             return
         
         # Generate prediction
@@ -714,8 +677,7 @@ class ScalingConfigManager:
             await self._apply_predictive_scaling(service_name, config, prediction)
     
     async def _generate_prediction(self, service_name: str, config: ScalingConfiguration) -> Optional[Dict[str, Any]]:
-        """Generate capacity prediction"""
-        # Implementation would use actual ML model
+        """Generate capacity prediction"""        # Implementation would use actual ML model
         # For now, return a simulated prediction
         return {
             "predicted_capacity": 5,
@@ -730,8 +692,7 @@ class ScalingConfigManager:
         config: ScalingConfiguration,
         prediction: Dict[str, Any]
     ) -> None:
-        """Apply predictive scaling action"""
-        predicted_capacity = prediction["predicted_capacity"]
+        """Apply predictive scaling action"""        predicted_capacity = prediction["predicted_capacity"]
         current_capacity = await self._get_current_capacity(service_name, ResourceType.PODS)
         
         if predicted_capacity != current_capacity:
@@ -741,13 +702,11 @@ class ScalingConfigManager:
                     break
     
     async def _start_scheduled_scaling(self) -> None:
-        """Start scheduled scaling"""
-        asyncio.create_task(self._scheduled_scaling_engine())
+        """Start scheduled scaling"""        asyncio.create_task(self._scheduled_scaling_engine())
         self.logger.info("Scheduled scaling started")
     
     async def _scheduled_scaling_engine(self) -> None:
-        """Scheduled scaling engine"""
-        while True:
+        """Scheduled scaling engine"""        while True:
             try:
                 for service_name, config in self.scaling_configs.items():
                     if config.scheduled_scaling.enabled:
@@ -760,14 +719,12 @@ class ScalingConfigManager:
                 await asyncio.sleep(300)
     
     async def _check_scheduled_scaling(self, service_name: str, config: ScalingConfiguration) -> None:
-        """Check and execute scheduled scaling"""
-        # Implementation would parse cron schedules and execute scaling
+        """Check and execute scheduled scaling"""        # Implementation would parse cron schedules and execute scaling
         # For now, just log scheduled scaling checks
         pass
     
     async def add_scaling_config(self, service_name: str, config: ScalingConfiguration) -> bool:
-        """
-        Add scaling configuration for a service.
+        """        Add scaling configuration for a service.
         
         Args:
             service_name: Service name
@@ -775,8 +732,7 @@ class ScalingConfigManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             self.scaling_configs[service_name] = config
             
             # Initialize metrics collection for new service
@@ -801,8 +757,7 @@ class ScalingConfigManager:
         policy_name: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update scaling policy.
+        """        Update scaling policy.
         
         Args:
             service_name: Service name
@@ -811,8 +766,7 @@ class ScalingConfigManager:
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if service_name not in self.scaling_configs:
                 raise ValueError(f"Service not found: {service_name}")
             
@@ -836,16 +790,14 @@ class ScalingConfigManager:
             return False
     
     async def enable_predictive_scaling(self, service_name: str) -> bool:
-        """
-        Enable predictive scaling for a service.
+        """        Enable predictive scaling for a service.
         
         Args:
             service_name: Service name
             
         Returns:
             bool: True if successful
-        """
-        try:
+        """        try:
             if service_name not in self.scaling_configs:
                 raise ValueError(f"Service not found: {service_name}")
             
@@ -863,8 +815,7 @@ class ScalingConfigManager:
             return False
     
     async def get_scaling_status(self) -> Dict[str, Any]:
-        """Get comprehensive scaling status"""
-        recent_events = [
+        """Get comprehensive scaling status"""        recent_events = [
             event for event in self.scaling_events
             if (datetime.now() - event["timestamp"]).total_seconds() < 3600  # Last hour
         ]
@@ -897,8 +848,7 @@ class ScalingConfigManager:
         service_name: Optional[str] = None,
         hours: int = 24
     ) -> List[Dict[str, Any]]:
-        """Get scaling history"""
-        cutoff_time = datetime.now() - timedelta(hours=hours)
+        """Get scaling history"""        cutoff_time = datetime.now() - timedelta(hours=hours)
         
         history = [
             event for event in self.scaling_history
@@ -911,5 +861,4 @@ class ScalingConfigManager:
         return history
     
     async def get_status(self) -> Dict[str, Any]:
-        """Get scaling manager status"""
-        return await self.get_scaling_status()
+        """Get scaling manager status"""        return await self.get_scaling_status()

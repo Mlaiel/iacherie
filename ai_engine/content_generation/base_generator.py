@@ -1,5 +1,4 @@
-"""
-Base Content Generator - Foundation for all content generation engines
+"""Base Content Generator - Foundation for all content generation engines
 
 Professional enterprise-grade content generation base class providing
 common functionality and patterns for all content generators.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import asyncio
 import logging
 from abc import ABC, abstractmethod
@@ -25,8 +23,7 @@ from ..monitoring.metrics import MetricsCollector
 
 
 class GenerationMetrics(BaseModel):
-    """Performance metrics for content generation"""
-    generation_time: float = Field(default=0.0, description="Time taken for generation in seconds")
+    """Performance metrics for content generation"""    generation_time: float = Field(default=0.0, description="Time taken for generation in seconds")
     tokens_processed: int = Field(default=0, description="Number of tokens processed")
     quality_score: float = Field(default=0.0, description="Quality assessment score")
     resource_usage: Dict[str, Any] = Field(default_factory=dict)
@@ -35,8 +32,7 @@ class GenerationMetrics(BaseModel):
 
 
 class ContentGenerationContext(BaseModel):
-    """Context information for content generation"""
-    user_id: str = Field(description="User identifier")
+    """Context information for content generation"""    user_id: str = Field(description="User identifier")
     content_type: str = Field(description="Type of content to generate")
     target_audience: Optional[str] = Field(None, description="Target audience profile")
     brand_guidelines: Optional[Dict[str, Any]] = Field(None, description="Brand guidelines")
@@ -46,8 +42,7 @@ class ContentGenerationContext(BaseModel):
 
 
 class BaseContentGenerator(ABC):
-    """
-    Abstract base class for all content generators in the IA Influencer platform.
+    """    Abstract base class for all content generators in the IA Influencer platform.
     
     This class provides the foundation for implementing different types of content
     generators (text, audio, video, image) with common functionality including:
@@ -56,16 +51,13 @@ class BaseContentGenerator(ABC):
     - Error handling
     - Metrics collection
     - Resource management
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any]):
-        """
-        Initialize the base content generator.
+        """        Initialize the base content generator.
         
         Args:
             config: Configuration dictionary containing generator settings
-        """
-        self.config = config
+        """        self.config = config
         self.logger = logging.getLogger(f"{self.__class__.__name__}")
         self.performance_monitor = PerformanceMonitor()
         self.content_validator = ContentValidator()
@@ -80,8 +72,7 @@ class BaseContentGenerator(ABC):
         self._initialize_generator()
     
     def _initialize_generator(self) -> None:
-        """Initialize the specific generator implementation"""
-        try:
+        """Initialize the specific generator implementation"""        try:
             self._setup_models()
             self._setup_resources()
             self._setup_validation_rules()
@@ -93,18 +84,15 @@ class BaseContentGenerator(ABC):
     
     @abstractmethod
     def _setup_models(self) -> None:
-        """Setup AI models and dependencies"""
-        pass
+        """Setup AI models and dependencies"""        pass
     
     @abstractmethod
     def _setup_resources(self) -> None:
-        """Setup computational resources"""
-        pass
+        """Setup computational resources"""        pass
     
     @abstractmethod
     def _setup_validation_rules(self) -> None:
-        """Setup content validation rules"""
-        pass
+        """Setup content validation rules"""        pass
     
     @abstractmethod
     async def generate_content(
@@ -113,8 +101,7 @@ class BaseContentGenerator(ABC):
         prompt: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate content based on the provided context and prompt.
+        """        Generate content based on the provided context and prompt.
         
         Args:
             context: Generation context with user and platform information
@@ -123,21 +110,18 @@ class BaseContentGenerator(ABC):
             
         Returns:
             Generated content with metadata
-        """
-        pass
+        """        pass
     
     @abstractmethod
     async def validate_output(self, content: Any) -> bool:
-        """
-        Validate generated content quality and compliance.
+        """        Validate generated content quality and compliance.
         
         Args:
             content: Generated content to validate
             
         Returns:
             True if content meets quality standards
-        """
-        pass
+        """        pass
     
     async def generate_with_monitoring(
         self,
@@ -145,8 +129,7 @@ class BaseContentGenerator(ABC):
         prompt: str,
         options: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate content with full monitoring and error handling.
+        """        Generate content with full monitoring and error handling.
         
         Args:
             context: Generation context
@@ -155,8 +138,7 @@ class BaseContentGenerator(ABC):
             
         Returns:
             Generated content with complete metadata
-        """
-        if not self._is_initialized:
+        """        if not self._is_initialized:
             raise ContentGenerationError("Generator not properly initialized")
         
         generation_id = f"{context.user_id}_{datetime.now().timestamp()}"
@@ -207,8 +189,7 @@ class BaseContentGenerator(ABC):
         prompt: str,
         options: Optional[Dict[str, Any]]
     ) -> None:
-        """Validate input parameters before generation"""
-        if not context or not prompt:
+        """Validate input parameters before generation"""        if not context or not prompt:
             raise ContentGenerationError("Invalid input: context and prompt required")
         
         if not context.user_id:
@@ -227,8 +208,7 @@ class BaseContentGenerator(ABC):
         context: ContentGenerationContext,
         generation_id: str
     ) -> Dict[str, Any]:
-        """Enhance generation result with additional metadata"""
-        generation_info = self._active_generations.get(generation_id, {})
+        """Enhance generation result with additional metadata"""        generation_info = self._active_generations.get(generation_id, {})
         
         enhanced_result = {
             **result,
@@ -246,8 +226,7 @@ class BaseContentGenerator(ABC):
         return enhanced_result
     
     async def _calculate_quality_metrics(self, result: Dict[str, Any]) -> Dict[str, float]:
-        """Calculate quality metrics for generated content"""
-        return {
+        """Calculate quality metrics for generated content"""        return {
             'coherence_score': 0.95,  # To be implemented with actual scoring
             'relevance_score': 0.92,
             'creativity_score': 0.88,
@@ -260,8 +239,7 @@ class BaseContentGenerator(ABC):
         result: Dict[str, Any],
         context: ContentGenerationContext
     ) -> Dict[str, bool]:
-        """Check content compliance with platform requirements"""
-        return {
+        """Check content compliance with platform requirements"""        return {
             'brand_guidelines_compliant': True,
             'platform_requirements_met': True,
             'content_policy_compliant': True,
@@ -269,13 +247,11 @@ class BaseContentGenerator(ABC):
         }
     
     def _supports_content_type(self, content_type: str) -> bool:
-        """Check if generator supports the specified content type"""
-        # To be overridden by specific generators
+        """Check if generator supports the specified content type"""        # To be overridden by specific generators
         return True
     
     def _update_generation_metrics(self, generation_id: str, success: bool) -> None:
-        """Update internal generation metrics"""
-        if success:
+        """Update internal generation metrics"""        if success:
             self._generation_stats.success_rate = min(100.0, self._generation_stats.success_rate + 1)
         else:
             self._generation_stats.error_count += 1
@@ -288,16 +264,13 @@ class BaseContentGenerator(ABC):
         )
     
     def get_generator_stats(self) -> GenerationMetrics:
-        """Get current generator performance statistics"""
-        return self._generation_stats
+        """Get current generator performance statistics"""        return self._generation_stats
     
     def get_active_generations(self) -> Dict[str, Any]:
-        """Get information about currently active generations"""
-        return self._active_generations.copy()
+        """Get information about currently active generations"""        return self._active_generations.copy()
     
     async def cleanup_resources(self) -> None:
-        """Clean up generator resources"""
-        try:
+        """Clean up generator resources"""        try:
             # Cancel active generations
             for generation_id in list(self._active_generations.keys()):
                 del self._active_generations[generation_id]
@@ -311,8 +284,7 @@ class BaseContentGenerator(ABC):
             self.logger.error(f"Error during resource cleanup: {str(e)}")
     
     def get_memory_usage(self) -> float:
-        """Get current memory usage in MB"""
-        try:
+        """Get current memory usage in MB"""        try:
             import psutil
             process = psutil.Process()
             return process.memory_info().rss / 1024 / 1024
@@ -320,8 +292,7 @@ class BaseContentGenerator(ABC):
             return 50.0  # Mock value if psutil not available
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get performance metrics"""
-        return {
+        """Get performance metrics"""        return {
             'generations_count': len(self._active_generations),
             'memory_usage_mb': self.get_memory_usage(),
             'avg_generation_time': 2.5,  # Mock value
@@ -329,8 +300,7 @@ class BaseContentGenerator(ABC):
         }
     
     def _generate_cache_key(self, context: Union[ContentGenerationContext, str], prompt: str) -> str:
-        """Generate cache key for content caching"""
-        import hashlib
+        """Generate cache key for content caching"""        import hashlib
         
         # Handle different context types
         if isinstance(context, str):
@@ -343,13 +313,11 @@ class BaseContentGenerator(ABC):
         return hashlib.md5(content.encode()).hexdigest()
     
     def _validate_config(self, config: Dict[str, Any]) -> bool:
-        """Validate generator configuration"""
-        required_keys = ['api_key', 'model_name']
+        """Validate generator configuration"""        required_keys = ['api_key', 'model_name']
         return all(key in config for key in required_keys)
     
     async def generate_with_monitoring(self, context: ContentGenerationContext, prompt: str, options: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Generate content with performance monitoring"""
-        start_time = datetime.now()
+        """Generate content with performance monitoring"""        start_time = datetime.now()
         generation_id = f"gen_{int(start_time.timestamp())}"
         
         try:
@@ -376,8 +344,7 @@ class BaseContentGenerator(ABC):
                 del self._active_generations[generation_id]
     
     async def validate_output(self, content: Any, context: ContentGenerationContext) -> bool:
-        """Validate generated content with context"""
-        if not content:
+        """Validate generated content with context"""        if not content:
             return False
         
         # Basic validation
@@ -388,13 +355,10 @@ class BaseContentGenerator(ABC):
     
     @abstractmethod
     async def _release_model_resources(self) -> None:
-        """Release model-specific resources"""
-        pass
+        """Release model-specific resources"""        pass
     
     def __enter__(self):
-        """Context manager entry"""
-        return self
+        """Context manager entry"""        return self
     
     def __exit__(self, exc_type, exc_val, exc_tb):
-        """Context manager exit with resource cleanup"""
-        asyncio.create_task(self.cleanup_resources())
+        """Context manager exit with resource cleanup"""        asyncio.create_task(self.cleanup_resources())

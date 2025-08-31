@@ -1,5 +1,4 @@
-"""
-Image Processing Utilities for IA Influencer Agent Platform
+"""Image Processing Utilities for IA Influencer Agent Platform
 Advanced image analysis, fingerprinting, and visual content processing
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +6,6 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import cv2
 import numpy as np
 from PIL import Image, ImageEnhance, ImageFilter, ImageOps
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 
 class ImageFormat(Enum):
-    """Image format enumeration"""
-    JPEG = "jpeg"
+    """Image format enumeration"""    JPEG = "jpeg"
     PNG = "png"
     WEBP = "webp"
     GIF = "gif"
@@ -40,8 +37,7 @@ class ImageFormat(Enum):
 
 
 class HashType(Enum):
-    """Image hash type enumeration"""
-    PERCEPTUAL = "phash"
+    """Image hash type enumeration"""    PERCEPTUAL = "phash"
     DIFFERENCE = "dhash"
     AVERAGE = "average_hash"
     WAVELET = "whash"
@@ -50,8 +46,7 @@ class HashType(Enum):
 
 @dataclass
 class ImageFeatures:
-    """Comprehensive image features"""
-    dimensions: Tuple[int, int]
+    """Comprehensive image features"""    dimensions: Tuple[int, int]
     color_palette: List[Tuple[int, int, int]]
     dominant_colors: List[Tuple[int, int, int]]
     brightness: float
@@ -69,8 +64,7 @@ class ImageFeatures:
 
 @dataclass
 class ImageFingerprint:
-    """Image fingerprint for protection and similarity"""
-    image_id: str
+    """Image fingerprint for protection and similarity"""    image_id: str
     perceptual_hash: str
     difference_hash: str
     average_hash: str
@@ -84,14 +78,12 @@ class ImageFingerprint:
 
 
 class ImageAnalyzer:
-    """Professional image analysis and feature extraction"""
-    
+    """Professional image analysis and feature extraction"""    
     def __init__(self):
         self.supported_formats = ['.jpg', '.jpeg', '.png', '.gif', '.bmp', '.webp', '.tiff']
         
     async def analyze_image(self, image_path: str) -> ImageFeatures:
-        """Comprehensive image analysis"""
-        try:
+        """Comprehensive image analysis"""        try:
             # Load image
             pil_image = Image.open(image_path)
             cv_image = cv2.imread(image_path)
@@ -123,8 +115,7 @@ class ImageAnalyzer:
             raise ImageProcessingError(f"Image analysis failed: {str(e)}")
     
     def _extract_color_palette(self, image: Image.Image, num_colors: int = 8) -> List[Tuple[int, int, int]]:
-        """Extract color palette using quantization"""
-        # Convert to RGB if necessary
+        """Extract color palette using quantization"""        # Convert to RGB if necessary
         if image.mode != 'RGB':
             image = image.convert('RGB')
         
@@ -144,8 +135,7 @@ class ImageAnalyzer:
         return [tuple(color) for color in colors]
     
     def _extract_dominant_colors(self, image: np.ndarray, num_colors: int = 5) -> List[Tuple[int, int, int]]:
-        """Extract dominant colors using advanced clustering"""
-        # Convert BGR to RGB
+        """Extract dominant colors using advanced clustering"""        # Convert BGR to RGB
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         
         # Reshape image for clustering
@@ -176,26 +166,22 @@ class ImageAnalyzer:
         return dominant_colors
     
     def _calculate_brightness(self, image: np.ndarray) -> float:
-        """Calculate average brightness"""
-        # Convert to grayscale
+        """Calculate average brightness"""        # Convert to grayscale
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         return float(np.mean(gray) / 255.0)
     
     def _calculate_contrast(self, image: np.ndarray) -> float:
-        """Calculate image contrast"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Calculate image contrast"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         return float(np.std(gray) / 255.0)
     
     def _calculate_saturation(self, image: np.ndarray) -> float:
-        """Calculate average saturation"""
-        # Convert to HSV
+        """Calculate average saturation"""        # Convert to HSV
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
         saturation = hsv[:, :, 1]
         return float(np.mean(saturation) / 255.0)
     
     def _calculate_sharpness(self, image: Image.Image) -> float:
-        """Calculate image sharpness using variance of Laplacian"""
-        # Convert to grayscale
+        """Calculate image sharpness using variance of Laplacian"""        # Convert to grayscale
         if image.mode != 'L':
             gray_image = image.convert('L')
         else:
@@ -212,8 +198,7 @@ class ImageAnalyzer:
         return min(sharpness / 1000.0, 1.0)
     
     def _extract_texture_features(self, image: np.ndarray) -> Dict[str, float]:
-        """Extract texture features using Local Binary Patterns and GLCM"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Extract texture features using Local Binary Patterns and GLCM"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Local Binary Pattern
         lbp_features = self._calculate_lbp_features(gray)
@@ -231,8 +216,7 @@ class ImageAnalyzer:
         }
     
     def _calculate_lbp_features(self, gray: np.ndarray) -> Dict[str, float]:
-        """Calculate Local Binary Pattern features"""
-        from skimage.feature import local_binary_pattern
+        """Calculate Local Binary Pattern features"""        from skimage.feature import local_binary_pattern
         
         # Calculate LBP
         radius = 1
@@ -251,8 +235,7 @@ class ImageAnalyzer:
         }
     
     def _calculate_glcm_features(self, gray: np.ndarray) -> Dict[str, float]:
-        """Calculate Gray Level Co-occurrence Matrix features"""
-        from skimage.feature import graycomatrix, graycoprops
+        """Calculate Gray Level Co-occurrence Matrix features"""        from skimage.feature import graycomatrix, graycoprops
         
         # Reduce gray levels for computational efficiency
         gray_reduced = (gray // 32).astype(np.uint8)
@@ -280,8 +263,7 @@ class ImageAnalyzer:
         }
     
     def _calculate_gabor_features(self, gray: np.ndarray) -> Dict[str, float]:
-        """Calculate Gabor filter responses"""
-        # Define Gabor parameters
+        """Calculate Gabor filter responses"""        # Define Gabor parameters
         angles = [0, 45, 90, 135]  # degrees
         frequencies = [0.1, 0.3]
         
@@ -308,8 +290,7 @@ class ImageAnalyzer:
         }
     
     def _calculate_edge_density(self, image: np.ndarray) -> float:
-        """Calculate edge density using Canny edge detection"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Calculate edge density using Canny edge detection"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Apply Canny edge detection
         edges = cv2.Canny(gray, 50, 150)
@@ -321,8 +302,7 @@ class ImageAnalyzer:
         return float(edge_pixels / total_pixels)
     
     def _extract_color_histogram(self, image: np.ndarray) -> Dict[str, List[int]]:
-        """Extract color histograms for each channel"""
-        histograms = {}
+        """Extract color histograms for each channel"""        histograms = {}
         
         # BGR histograms
         for i, channel in enumerate(['blue', 'green', 'red']):
@@ -338,8 +318,7 @@ class ImageAnalyzer:
         return histograms
     
     def _generate_all_hashes(self, image: Image.Image) -> Dict[str, str]:
-        """Generate all types of perceptual hashes"""
-        hashes = {}
+        """Generate all types of perceptual hashes"""        hashes = {}
         
         # Standard hashes
         hashes['phash'] = str(imagehash.phash(image))
@@ -354,14 +333,12 @@ class ImageAnalyzer:
 
 
 class ImageFingerprinter:
-    """Advanced image fingerprinting for copyright protection"""
-    
+    """Advanced image fingerprinting for copyright protection"""    
     def __init__(self):
         self.hash_size = 16  # Size for perceptual hashes
         
     async def create_fingerprint(self, image_path: str, image_id: str) -> ImageFingerprint:
-        """Create comprehensive image fingerprint"""
-        try:
+        """Create comprehensive image fingerprint"""        try:
             # Load image
             pil_image = Image.open(image_path)
             cv_image = cv2.imread(image_path)
@@ -392,8 +369,7 @@ class ImageFingerprinter:
             raise ImageProcessingError(f"Image fingerprinting failed: {str(e)}")
     
     def _extract_color_histogram_vector(self, image: np.ndarray, bins: int = 32) -> List[float]:
-        """Extract normalized color histogram as feature vector"""
-        # Convert to RGB
+        """Extract normalized color histogram as feature vector"""        # Convert to RGB
         image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         
         # Calculate histogram for each channel
@@ -413,8 +389,7 @@ class ImageFingerprinter:
         return color_vector.tolist()
     
     def _extract_edge_histogram(self, image: np.ndarray) -> List[float]:
-        """Extract edge orientation histogram"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Extract edge orientation histogram"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Calculate gradients
         grad_x = cv2.Sobel(gray, cv2.CV_64F, 1, 0, ksize=3)
@@ -432,8 +407,7 @@ class ImageFingerprinter:
         return hist.tolist()
     
     def _extract_texture_descriptor(self, image: np.ndarray) -> List[float]:
-        """Extract texture descriptor using LBP"""
-        from skimage.feature import local_binary_pattern
+        """Extract texture descriptor using LBP"""        from skimage.feature import local_binary_pattern
         
         gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
@@ -449,8 +423,7 @@ class ImageFingerprinter:
         return hist.tolist()
     
     def _extract_comprehensive_features(self, image: np.ndarray) -> List[float]:
-        """Extract comprehensive feature vector for similarity matching"""
-        features = []
+        """Extract comprehensive feature vector for similarity matching"""        features = []
         
         # Color moments
         features.extend(self._calculate_color_moments(image))
@@ -464,8 +437,7 @@ class ImageFingerprinter:
         return features
     
     def _calculate_color_moments(self, image: np.ndarray) -> List[float]:
-        """Calculate color moments for each channel"""
-        moments = []
+        """Calculate color moments for each channel"""        moments = []
         
         for channel in range(3):  # BGR
             channel_data = image[:, :, channel].flatten()
@@ -488,8 +460,7 @@ class ImageFingerprinter:
         return moments
     
     def _calculate_texture_moments(self, image: np.ndarray) -> List[float]:
-        """Calculate texture-based moments"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Calculate texture-based moments"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Apply different filters
         filters = [
@@ -506,8 +477,7 @@ class ImageFingerprinter:
         return moments
     
     def _calculate_shape_features(self, image: np.ndarray) -> List[float]:
-        """Calculate basic shape features"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Calculate basic shape features"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         
         # Edge density
         edges = cv2.Canny(gray, 50, 150)
@@ -521,8 +491,7 @@ class ImageFingerprinter:
         return [edge_density, corner_density]
     
     def calculate_similarity(self, fp1: ImageFingerprint, fp2: ImageFingerprint) -> float:
-        """Calculate similarity between two image fingerprints"""
-        similarities = []
+        """Calculate similarity between two image fingerprints"""        similarities = []
         
         # Hash similarities
         hash_types = ['perceptual_hash', 'difference_hash', 'average_hash', 'wavelet_hash']
@@ -554,14 +523,12 @@ class ImageFingerprinter:
 
 
 class PerceptualHasher:
-    """Specialized perceptual hashing with advanced techniques"""
-    
+    """Specialized perceptual hashing with advanced techniques"""    
     def __init__(self):
         self.hash_sizes = [8, 16, 32]  # Multiple hash sizes for different precision levels
         
     def generate_robust_hash(self, image: Image.Image) -> Dict[str, str]:
-        """Generate multiple robust perceptual hashes"""
-        hashes = {}
+        """Generate multiple robust perceptual hashes"""        hashes = {}
         
         for size in self.hash_sizes:
             hashes[f'phash_{size}'] = str(imagehash.phash(image, hash_size=size))
@@ -577,21 +544,18 @@ class PerceptualHasher:
         return hashes
     
     def calculate_hash_distance(self, hash1: str, hash2: str) -> int:
-        """Calculate Hamming distance between two hashes"""
-        if len(hash1) != len(hash2):
+        """Calculate Hamming distance between two hashes"""        if len(hash1) != len(hash2):
             return float('inf')
         
         return sum(c1 != c2 for c1, c2 in zip(hash1, hash2))
     
     def is_similar(self, hash1: str, hash2: str, threshold: int = 5) -> bool:
-        """Check if two hashes represent similar images"""
-        distance = self.calculate_hash_distance(hash1, hash2)
+        """Check if two hashes represent similar images"""        distance = self.calculate_hash_distance(hash1, hash2)
         return distance <= threshold
 
 
 class ImageFeatureExtractor:
-    """Advanced image feature extraction for ML models"""
-    
+    """Advanced image feature extraction for ML models"""    
     def __init__(self):
         self.feature_extractors = {
             'color': self._extract_color_features,
@@ -602,8 +566,7 @@ class ImageFeatureExtractor:
     
     async def extract_features(self, image_path: str, 
                              feature_types: Optional[List[str]] = None) -> Dict[str, List[float]]:
-        """Extract specified types of features"""
-        if feature_types is None:
+        """Extract specified types of features"""        if feature_types is None:
             feature_types = list(self.feature_extractors.keys())
         
         try:
@@ -625,8 +588,7 @@ class ImageFeatureExtractor:
             raise ImageProcessingError(f"Feature extraction failed: {str(e)}")
     
     def _extract_color_features(self, image: np.ndarray) -> List[float]:
-        """Extract comprehensive color features"""
-        features = []
+        """Extract comprehensive color features"""        features = []
         
         # Convert to different color spaces
         hsv = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
@@ -650,8 +612,7 @@ class ImageFeatureExtractor:
         return features
     
     def _extract_texture_features(self, image: np.ndarray) -> List[float]:
-        """Extract comprehensive texture features"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Extract comprehensive texture features"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         features = []
         
         # Gabor filter bank
@@ -679,8 +640,7 @@ class ImageFeatureExtractor:
         return features
     
     def _extract_shape_features(self, image: np.ndarray) -> List[float]:
-        """Extract shape-based features"""
-        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+        """Extract shape-based features"""        gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
         features = []
         
         # Edge features
@@ -711,8 +671,7 @@ class ImageFeatureExtractor:
         return features
     
     def _extract_statistical_features(self, image: np.ndarray) -> List[float]:
-        """Extract statistical features"""
-        features = []
+        """Extract statistical features"""        features = []
         
         # Overall image statistics
         features.extend([
@@ -737,8 +696,7 @@ class ImageFeatureExtractor:
 
 
 class VisualContentProcessor:
-    """Advanced visual content processing and enhancement"""
-    
+    """Advanced visual content processing and enhancement"""    
     def __init__(self):
         self.enhancement_methods = {
             'brightness': self._adjust_brightness,
@@ -752,8 +710,7 @@ class VisualContentProcessor:
     async def process_image(self, image_path: str, 
                           enhancements: Dict[str, Any],
                           output_path: Optional[str] = None) -> Dict[str, Any]:
-        """Process image with specified enhancements"""
-        try:
+        """Process image with specified enhancements"""        try:
             # Load image
             image = Image.open(image_path)
             processed_image = image.copy()
@@ -796,28 +753,23 @@ class VisualContentProcessor:
             }
     
     def _adjust_brightness(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image brightness"""
-        enhancer = ImageEnhance.Brightness(image)
+        """Adjust image brightness"""        enhancer = ImageEnhance.Brightness(image)
         return enhancer.enhance(factor)
     
     def _adjust_contrast(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image contrast"""
-        enhancer = ImageEnhance.Contrast(image)
+        """Adjust image contrast"""        enhancer = ImageEnhance.Contrast(image)
         return enhancer.enhance(factor)
     
     def _adjust_saturation(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image saturation"""
-        enhancer = ImageEnhance.Color(image)
+        """Adjust image saturation"""        enhancer = ImageEnhance.Color(image)
         return enhancer.enhance(factor)
     
     def _adjust_sharpness(self, image: Image.Image, factor: float) -> Image.Image:
-        """Adjust image sharpness"""
-        enhancer = ImageEnhance.Sharpness(image)
+        """Adjust image sharpness"""        enhancer = ImageEnhance.Sharpness(image)
         return enhancer.enhance(factor)
     
     def _denoise_image(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Apply denoising filter"""
-        # Convert to numpy for OpenCV processing
+        """Apply denoising filter"""        # Convert to numpy for OpenCV processing
         img_array = np.array(image)
         
         # Apply bilateral filter for denoising
@@ -830,8 +782,7 @@ class VisualContentProcessor:
         return Image.fromarray(denoised)
     
     def _resize_image(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Resize image"""
-        size = params.get('size')
+        """Resize image"""        size = params.get('size')
         method = params.get('method', 'LANCZOS')
         
         if size:
@@ -841,8 +792,7 @@ class VisualContentProcessor:
         return image
     
     def create_thumbnail(self, image_path: str, size: Tuple[int, int] = (150, 150)) -> str:
-        """Create thumbnail of image"""
-        image = Image.open(image_path)
+        """Create thumbnail of image"""        image = Image.open(image_path)
         
         # Create thumbnail
         image.thumbnail(size, Image.LANCZOS)
@@ -858,5 +808,4 @@ class VisualContentProcessor:
 
 
 class ImageProcessingError(Exception):
-    """Custom exception for image processing errors"""
-    pass
+    """Custom exception for image processing errors"""    pass

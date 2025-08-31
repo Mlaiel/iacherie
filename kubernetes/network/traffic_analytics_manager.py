@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Traffic Analytics Manager
+"""IA Influencer Agent - Traffic Analytics Manager
 Enterprise traffic analysis and optimization for content protection platform
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Toute utilisation, copie, modification ou distribution sans autorisation
 écrite explicite est strictement interdite et passible de poursuites judiciaires.
 Contact autorisations: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class TrafficType(Enum):
-    """Types of network traffic"""
-    WEB_TRAFFIC = "web"
+    """Types of network traffic"""    WEB_TRAFFIC = "web"
     API_TRAFFIC = "api"
     CONTENT_DELIVERY = "content"
     UPLOAD_TRAFFIC = "upload"
@@ -54,8 +51,7 @@ class TrafficType(Enum):
 
 
 class AnalyticsMetric(Enum):
-    """Available analytics metrics"""
-    BANDWIDTH_USAGE = "bandwidth_usage"
+    """Available analytics metrics"""    BANDWIDTH_USAGE = "bandwidth_usage"
     REQUEST_COUNT = "request_count"
     LATENCY = "latency"
     ERROR_RATE = "error_rate"
@@ -66,8 +62,7 @@ class AnalyticsMetric(Enum):
 
 
 class TrafficPattern(Enum):
-    """Traffic patterns for optimization"""
-    PEAK_HOURS = "peak_hours"
+    """Traffic patterns for optimization"""    PEAK_HOURS = "peak_hours"
     OFF_PEAK = "off_peak"
     WEEKEND = "weekend"
     HOLIDAY = "holiday"
@@ -78,8 +73,7 @@ class TrafficPattern(Enum):
 
 @dataclass
 class TrafficData:
-    """Individual traffic data point"""
-    timestamp: datetime
+    """Individual traffic data point"""    timestamp: datetime
     source_ip: str
     user_agent: str
     request_method: str
@@ -97,8 +91,7 @@ class TrafficData:
 
 @dataclass
 class ContentAnalytics:
-    """Content-specific analytics"""
-    content_id: str
+    """Content-specific analytics"""    content_id: str
     content_type: str
     view_count: int
     unique_viewers: int
@@ -112,8 +105,7 @@ class ContentAnalytics:
 
 @dataclass
 class UserBehaviorMetrics:
-    """User behavior analytics"""
-    user_id: str
+    """User behavior analytics"""    user_id: str
     session_count: int
     total_duration: timedelta
     content_types_viewed: List[str]
@@ -124,11 +116,9 @@ class UserBehaviorMetrics:
 
 
 class TrafficAnalyticsManager:
-    """
-    Traffic Analytics Manager for IA Influencer Agent Platform
+    """    Traffic Analytics Manager for IA Influencer Agent Platform
     Provides comprehensive traffic analysis and optimization insights
-    """
-    
+    """    
     def __init__(
         self,
         database_url: str,
@@ -162,8 +152,7 @@ class TrafficAnalyticsManager:
         self.analytics_retention_days = 90
     
     async def initialize(self) -> bool:
-        """Initialize traffic analytics manager"""
-        try:
+        """Initialize traffic analytics manager"""        try:
             logger.info("Initializing Traffic Analytics Manager...")
             
             # Initialize database connection
@@ -197,8 +186,7 @@ class TrafficAnalyticsManager:
             return False
     
     async def record_traffic(self, traffic_data: TrafficData) -> None:
-        """Record traffic data for analysis"""
-        try:
+        """Record traffic data for analysis"""        try:
             # Enrich traffic data
             enriched_data = await self._enrich_traffic_data(traffic_data)
             
@@ -238,8 +226,7 @@ class TrafficAnalyticsManager:
         metrics: List[AnalyticsMetric],
         filters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Get comprehensive traffic analytics"""
-        try:
+        """Get comprehensive traffic analytics"""        try:
             analytics_result = {
                 'time_range': {
                     'start': start_time.isoformat(),
@@ -272,8 +259,7 @@ class TrafficAnalyticsManager:
         content_id: str,
         time_range: timedelta = timedelta(days=7)
     ) -> Optional[ContentAnalytics]:
-        """Get detailed content performance analytics"""
-        try:
+        """Get detailed content performance analytics"""        try:
             end_time = datetime.now()
             start_time = end_time - time_range
             
@@ -325,8 +311,7 @@ class TrafficAnalyticsManager:
         user_id: str,
         time_range: timedelta = timedelta(days=30)
     ) -> Optional[UserBehaviorMetrics]:
-        """Get detailed user behavior analysis"""
-        try:
+        """Get detailed user behavior analysis"""        try:
             end_time = datetime.now()
             start_time = end_time - time_range
             
@@ -370,8 +355,7 @@ class TrafficAnalyticsManager:
         self,
         prediction_horizon: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """Predict traffic patterns using ML models"""
-        try:
+        """Predict traffic patterns using ML models"""        try:
             if not self.traffic_prediction_model:
                 logger.warning("Traffic prediction model not loaded")
                 return {}
@@ -406,8 +390,7 @@ class TrafficAnalyticsManager:
         self,
         time_range: timedelta = timedelta(hours=1)
     ) -> List[Dict[str, Any]]:
-        """Detect traffic anomalies in recent data"""
-        try:
+        """Detect traffic anomalies in recent data"""        try:
             end_time = datetime.now()
             start_time = end_time - time_range
             
@@ -446,8 +429,7 @@ class TrafficAnalyticsManager:
         self,
         content_analytics: List[ContentAnalytics]
     ) -> Dict[str, Any]:
-        """Generate content delivery optimization recommendations"""
-        try:
+        """Generate content delivery optimization recommendations"""        try:
             optimization_recommendations = {
                 'caching_strategies': {},
                 'geo_distribution': {},
@@ -514,8 +496,7 @@ class TrafficAnalyticsManager:
             return {}
     
     async def get_real_time_dashboard_data(self) -> Dict[str, Any]:
-        """Get real-time dashboard data"""
-        try:
+        """Get real-time dashboard data"""        try:
             dashboard_data = {
                 'current_traffic': {},
                 'active_users': 0,
@@ -553,8 +534,7 @@ class TrafficAnalyticsManager:
     # Private methods
     
     async def _enrich_traffic_data(self, traffic_data: TrafficData) -> TrafficData:
-        """Enrich traffic data with additional information"""
-        try:
+        """Enrich traffic data with additional information"""        try:
             # Parse user agent
             if traffic_data.user_agent:
                 ua = parse_user_agent(traffic_data.user_agent)
@@ -575,8 +555,7 @@ class TrafficAnalyticsManager:
             return traffic_data
     
     async def _initialize_geoip(self) -> None:
-        """Initialize GeoIP database"""
-        try:
+        """Initialize GeoIP database"""        try:
             self.geoip_reader = geoip2.database.Reader(self.geoip_database_path)
             logger.info("GeoIP database initialized")
         except Exception as e:
@@ -584,8 +563,7 @@ class TrafficAnalyticsManager:
             self.geoip_reader = None
     
     async def _flush_traffic_buffer(self) -> None:
-        """Flush traffic buffer to database"""
-        try:
+        """Flush traffic buffer to database"""        try:
             if not self.traffic_buffer:
                 return
             
@@ -603,8 +581,7 @@ class TrafficAnalyticsManager:
             logger.error(f"Failed to flush traffic buffer: {e}")
     
     async def _buffer_flush_loop(self) -> None:
-        """Background task to flush traffic buffer"""
-        while True:
+        """Background task to flush traffic buffer"""        while True:
             try:
                 await asyncio.sleep(self.flush_interval)
                 await self._flush_traffic_buffer()
@@ -613,8 +590,7 @@ class TrafficAnalyticsManager:
                 await asyncio.sleep(self.flush_interval)
     
     async def _real_time_analytics_loop(self) -> None:
-        """Real-time analytics processing loop"""
-        while True:
+        """Real-time analytics processing loop"""        while True:
             try:
                 # Update real-time metrics
                 await self._update_real_time_dashboard()
@@ -629,8 +605,7 @@ class TrafficAnalyticsManager:
                 await asyncio.sleep(10)
     
     async def _anomaly_detection_loop(self) -> None:
-        """Anomaly detection loop"""
-        while True:
+        """Anomaly detection loop"""        while True:
             try:
                 # Run anomaly detection every 5 minutes
                 await asyncio.sleep(300)

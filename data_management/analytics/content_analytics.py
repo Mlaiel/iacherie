@@ -1,5 +1,4 @@
-"""
-Content Analytics Collector - Advanced Content Intelligence
+"""Content Analytics Collector - Advanced Content Intelligence
 ==========================================================
 
 Comprehensive content performance analytics and optimization system.
@@ -17,7 +16,6 @@ Author: Fahed Mlaiel
 Email: mlaiel@live.de
 Copyright: Proprietary - All rights reserved
 """
-
 import asyncio
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
@@ -39,8 +37,7 @@ from ...models.users import User
 
 
 class ContentCategory(Enum):
-    """Content analytics categories."""
-    PERFORMANCE = "performance"
+    """Content analytics categories."""    PERFORMANCE = "performance"
     PROTECTION = "protection"
     DISCOVERY = "discovery"
     MONETIZATION = "monetization"
@@ -49,8 +46,7 @@ class ContentCategory(Enum):
 
 
 class ContentType(Enum):
-    """Supported content types."""
-    AUDIO = "audio"
+    """Supported content types."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -59,8 +55,7 @@ class ContentType(Enum):
 
 @dataclass
 class ContentMetric:
-    """Structured content metric data."""
-    content_id: str
+    """Structured content metric data."""    content_id: str
     metric_name: str
     value: float
     category: ContentCategory
@@ -71,8 +66,7 @@ class ContentMetric:
 
 @dataclass
 class ContentPerformanceProfile:
-    """Comprehensive content performance profile."""
-    content_id: str
+    """Comprehensive content performance profile."""    content_id: str
     title: str
     content_type: str
     performance_score: float
@@ -84,13 +78,11 @@ class ContentPerformanceProfile:
 
 
 class ContentAnalyticsCollector:
-    """
-    Advanced content analytics and optimization system.
+    """    Advanced content analytics and optimization system.
     
     Provides comprehensive insights into content performance,
     protection effectiveness, and revenue optimization.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self._content_cache = {}
@@ -107,8 +99,7 @@ class ContentAnalyticsCollector:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> List[ContentMetric]:
-        """
-        Collect comprehensive content analytics metrics.
+        """        Collect comprehensive content analytics metrics.
         
         Args:
             content_id: Specific content to analyze
@@ -118,8 +109,7 @@ class ContentAnalyticsCollector:
             
         Returns:
             List of content metrics
-        """
-        if not start_date:
+        """        if not start_date:
             start_date = datetime.now() - timedelta(days=30)
         if not end_date:
             end_date = datetime.now()
@@ -171,8 +161,7 @@ class ContentAnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[ContentMetric]:
-        """Collect content performance metrics."""
-        
+        """Collect content performance metrics."""        
         async with get_database_session() as session:
             # Base query for content performance
             base_query = select(
@@ -280,8 +269,7 @@ class ContentAnalyticsCollector:
         shares: int,
         avg_duration: float
     ) -> float:
-        """Calculate weighted content performance score."""
-        
+        """Calculate weighted content performance score."""        
         # Normalize metrics to 0-100 scale
         view_score = min(views / 1000, 1.0) * 100  # Max 1000 views = 100
         interaction_score = min(interactions / 100, 1.0) * 100  # Max 100 interactions = 100
@@ -315,8 +303,7 @@ class ContentAnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[ContentMetric]:
-        """Collect content protection effectiveness metrics."""
-        
+        """Collect content protection effectiveness metrics."""        
         async with get_database_session() as session:
             # Protection events query
             protection_query = select(
@@ -412,8 +399,7 @@ class ContentAnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[ContentMetric]:
-        """Collect content discovery and recommendation metrics."""
-        
+        """Collect content discovery and recommendation metrics."""        
         async with get_database_session() as session:
             # Discovery metrics query
             discovery_query = select(
@@ -525,8 +511,7 @@ class ContentAnalyticsCollector:
         search_views: int,
         recommendation_views: int
     ) -> float:
-        """Calculate content discovery effectiveness score."""
-        
+        """Calculate content discovery effectiveness score."""        
         total_views = organic_views + search_views + recommendation_views
         
         if total_views == 0:
@@ -559,8 +544,7 @@ class ContentAnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[ContentMetric]:
-        """Collect content monetization performance metrics."""
-        
+        """Collect content monetization performance metrics."""        
         async with get_database_session() as session:
             # Monetization query
             monetization_query = select(
@@ -655,8 +639,7 @@ class ContentAnalyticsCollector:
         total_views: int,
         revenue_events: int
     ) -> float:
-        """Calculate content revenue potential score."""
-        
+        """Calculate content revenue potential score."""        
         if total_views == 0:
             return 0.0
             
@@ -680,8 +663,7 @@ class ContentAnalyticsCollector:
         start_date: datetime,
         end_date: datetime
     ) -> List[ContentMetric]:
-        """Collect content quality and technical metrics."""
-        
+        """Collect content quality and technical metrics."""        
         async with get_database_session() as session:
             # Quality metrics query
             quality_query = select(
@@ -789,8 +771,7 @@ class ContentAnalyticsCollector:
         duration: float,
         content_type: str
     ) -> float:
-        """Calculate technical quality score based on file characteristics."""
-        
+        """Calculate technical quality score based on file characteristics."""        
         quality_score = 50.0  # Base score
         
         # File size quality (bitrate estimation)
@@ -840,8 +821,7 @@ class ContentAnalyticsCollector:
         self,
         content_ids: Optional[List[str]] = None
     ) -> List[ContentPerformanceProfile]:
-        """Generate comprehensive content performance profiles."""
-        
+        """Generate comprehensive content performance profiles."""        
         try:
             # Collect all content metrics
             content_metrics = await self.collect_content_analytics()
@@ -903,8 +883,7 @@ class ContentAnalyticsCollector:
             raise
             
     async def _get_content_info(self, content_id: str) -> Optional[Dict[str, Any]]:
-        """Get basic content information."""
-        
+        """Get basic content information."""        
         async with get_database_session() as session:
             query = select(Content.title, Content.content_type).where(
                 Content.id == content_id
@@ -920,8 +899,7 @@ class ContentAnalyticsCollector:
             return None
             
     def _extract_metric_value(self, metrics: List[ContentMetric], metric_name: str) -> float:
-        """Extract specific metric value from metrics list."""
-        
+        """Extract specific metric value from metrics list."""        
         for metric in metrics:
             if metric.metric_name == metric_name:
                 return metric.value
@@ -931,8 +909,7 @@ class ContentAnalyticsCollector:
         self,
         metrics: List[ContentMetric]
     ) -> List[str]:
-        """Generate optimization recommendations based on metrics."""
-        
+        """Generate optimization recommendations based on metrics."""        
         recommendations = []
         
         # Performance optimization

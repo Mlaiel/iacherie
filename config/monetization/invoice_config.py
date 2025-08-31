@@ -1,5 +1,4 @@
-"""
-Invoice Configuration Module
+"""Invoice Configuration Module
 ============================
 
 Professional invoice generation and management system for IA-Influencer platform.
@@ -16,7 +15,6 @@ without explicit written permission from the author is strictly prohibited.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from decimal import Decimal
 from typing import Dict, List, Optional, Any, Set, Union
@@ -26,8 +24,7 @@ from datetime import datetime, timedelta
 
 
 class InvoiceType(str, Enum):
-    """Types of invoices in the system."""
-    STANDARD = "standard"  # Regular subscription/service invoice
+    """Types of invoices in the system."""    STANDARD = "standard"  # Regular subscription/service invoice
     PROFORMA = "proforma"  # Pro forma invoice
     CREDIT_NOTE = "credit_note"  # Credit note for refunds
     DEBIT_NOTE = "debit_note"  # Additional charges
@@ -43,8 +40,7 @@ class InvoiceType(str, Enum):
 
 
 class InvoiceStatus(str, Enum):
-    """Invoice processing status."""
-    DRAFT = "draft"
+    """Invoice processing status."""    DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
     DELIVERED = "delivered"
@@ -61,8 +57,7 @@ class InvoiceStatus(str, Enum):
 
 
 class PaymentTerms(str, Enum):
-    """Standard payment terms."""
-    IMMEDIATE = "immediate"  # Payment due immediately
+    """Standard payment terms."""    IMMEDIATE = "immediate"  # Payment due immediately
     NET_7 = "net_7"  # 7 days
     NET_15 = "net_15"  # 15 days  
     NET_30 = "net_30"  # 30 days
@@ -76,8 +71,7 @@ class PaymentTerms(str, Enum):
 
 
 class TaxType(str, Enum):
-    """Types of taxes applicable to invoices."""
-    VAT = "vat"  # Value Added Tax
+    """Types of taxes applicable to invoices."""    VAT = "vat"  # Value Added Tax
     GST = "gst"  # Goods and Services Tax
     SALES_TAX = "sales_tax"  # Sales tax
     WITHHOLDING_TAX = "withholding_tax"  # Withholding tax
@@ -89,8 +83,7 @@ class TaxType(str, Enum):
 
 
 class InvoiceFormat(str, Enum):
-    """Supported invoice formats."""
-    PDF = "pdf"
+    """Supported invoice formats."""    PDF = "pdf"
     HTML = "html"
     XML = "xml"  # For automated processing
     JSON = "json"  # API format
@@ -99,8 +92,7 @@ class InvoiceFormat(str, Enum):
 
 
 class DeliveryMethod(str, Enum):
-    """Invoice delivery methods."""
-    EMAIL = "email"
+    """Invoice delivery methods."""    EMAIL = "email"
     API_WEBHOOK = "api_webhook"
     DOWNLOAD_LINK = "download_link"
     POSTAL_MAIL = "postal_mail"
@@ -111,8 +103,7 @@ class DeliveryMethod(str, Enum):
 
 @dataclass
 class TaxConfiguration:
-    """Tax configuration for different jurisdictions."""
-    tax_type: TaxType
+    """Tax configuration for different jurisdictions."""    tax_type: TaxType
     tax_rate: Decimal
     tax_name: str
     jurisdiction: str  # Country/state code
@@ -134,8 +125,7 @@ class TaxConfiguration:
 
 @dataclass
 class InvoiceLineItem:
-    """Individual line item on an invoice."""
-    description: str
+    """Individual line item on an invoice."""    description: str
     quantity: Decimal
     unit_price: Decimal
     currency: str
@@ -159,8 +149,7 @@ class InvoiceLineItem:
 
 @dataclass
 class PaymentInformation:
-    """Payment details and instructions."""
-    payment_methods: List[str]  # Accepted payment methods
+    """Payment details and instructions."""    payment_methods: List[str]  # Accepted payment methods
     bank_details: Dict[str, str] = field(default_factory=dict)
     
     # Payment processing
@@ -176,8 +165,7 @@ class PaymentInformation:
 
 @dataclass
 class CompanyInformation:
-    """Company/organization information for invoices."""
-    name: str
+    """Company/organization information for invoices."""    name: str
     legal_name: Optional[str] = None
     
     # Address information
@@ -208,8 +196,7 @@ class CompanyInformation:
 
 @dataclass
 class InvoiceTemplate:
-    """Invoice template configuration."""
-    template_id: str
+    """Invoice template configuration."""    template_id: str
     template_name: str
     template_type: InvoiceType
     
@@ -238,8 +225,7 @@ class InvoiceTemplate:
 
 @dataclass
 class AutomationRule:
-    """Invoice automation rules."""
-    rule_id: str
+    """Invoice automation rules."""    rule_id: str
     rule_name: str
     trigger: str  # subscription_renewal, usage_threshold, etc.
     
@@ -260,8 +246,7 @@ class AutomationRule:
 
 @dataclass
 class InvoiceConfig:
-    """Professional invoice management configuration."""
-    
+    """Professional invoice management configuration."""    
     # Global Invoice Settings
     ENABLE_INVOICING: bool = True
     DEFAULT_CURRENCY: str = "EUR"
@@ -556,17 +541,14 @@ class InvoiceConfig:
     })
     
     def get_tax_configuration(self, jurisdiction: str) -> List[TaxConfiguration]:
-        """Get tax configuration for a specific jurisdiction."""
-        return self.TAX_CONFIGURATIONS.get(jurisdiction.upper(), [])
+        """Get tax configuration for a specific jurisdiction."""        return self.TAX_CONFIGURATIONS.get(jurisdiction.upper(), [])
     
     def get_invoice_template(self, template_id: str) -> Optional[InvoiceTemplate]:
-        """Get invoice template by ID."""
-        return self.INVOICE_TEMPLATES.get(template_id)
+        """Get invoice template by ID."""        return self.INVOICE_TEMPLATES.get(template_id)
     
     def calculate_tax(self, amount: Decimal, jurisdiction: str, 
                      b2b_transaction: bool = False) -> Dict[str, Decimal]:
-        """Calculate applicable taxes for an amount."""
-        tax_configs = self.get_tax_configuration(jurisdiction)
+        """Calculate applicable taxes for an amount."""        tax_configs = self.get_tax_configuration(jurisdiction)
         tax_breakdown = {}
         total_tax = Decimal("0.00")
         
@@ -592,8 +574,7 @@ class InvoiceConfig:
     
     def generate_invoice_number(self, invoice_type: InvoiceType = InvoiceType.STANDARD,
                                sequence: Optional[int] = None) -> str:
-        """Generate unique invoice number."""
-        current_year = datetime.now().year
+        """Generate unique invoice number."""        current_year = datetime.now().year
         
         if sequence is None:
             # In a real implementation, this would fetch from database
@@ -610,8 +591,7 @@ class InvoiceConfig:
         return f"{type_prefix}-{current_year}-{sequence:06d}"
     
     def get_payment_terms_days(self, payment_terms: PaymentTerms) -> int:
-        """Convert payment terms enum to number of days."""
-        terms_mapping = {
+        """Convert payment terms enum to number of days."""        terms_mapping = {
             PaymentTerms.IMMEDIATE: 0,
             PaymentTerms.NET_7: 7,
             PaymentTerms.NET_15: 15,
@@ -624,8 +604,7 @@ class InvoiceConfig:
     
     def calculate_due_date(self, issue_date: datetime, 
                           payment_terms: PaymentTerms) -> datetime:
-        """Calculate invoice due date based on payment terms."""
-        days = self.get_payment_terms_days(payment_terms)
+        """Calculate invoice due date based on payment terms."""        days = self.get_payment_terms_days(payment_terms)
         return issue_date + timedelta(days=days)
 
 
@@ -640,8 +619,7 @@ from enum import Enum
 
 
 class InvoiceStatus(str, Enum):
-    """Invoice status types."""
-    DRAFT = "draft"
+    """Invoice status types."""    DRAFT = "draft"
     PENDING = "pending"
     SENT = "sent"
     VIEWED = "viewed"
@@ -655,8 +633,7 @@ class InvoiceStatus(str, Enum):
 
 
 class InvoiceType(str, Enum):
-    """Invoice types."""
-    STANDARD = "standard"
+    """Invoice types."""    STANDARD = "standard"
     RECURRING = "recurring"
     CREDIT_NOTE = "credit_note"
     DEBIT_NOTE = "debit_note"
@@ -668,8 +645,7 @@ class InvoiceType(str, Enum):
 
 
 class PaymentTerms(str, Enum):
-    """Payment terms options."""
-    NET_0 = "net_0"      # Due immediately
+    """Payment terms options."""    NET_0 = "net_0"      # Due immediately
     NET_7 = "net_7"      # Due in 7 days
     NET_14 = "net_14"    # Due in 14 days
     NET_30 = "net_30"    # Due in 30 days
@@ -680,8 +656,7 @@ class PaymentTerms(str, Enum):
 
 
 class TaxType(str, Enum):
-    """Tax types for invoicing."""
-    VAT = "vat"
+    """Tax types for invoicing."""    VAT = "vat"
     GST = "gst"
     PST = "pst"
     HST = "hst"
@@ -692,8 +667,7 @@ class TaxType(str, Enum):
 
 @dataclass
 class InvoiceLineItem:
-    """Invoice line item configuration."""
-    description: str
+    """Invoice line item configuration."""    description: str
     quantity: Decimal
     unit_price: Decimal
     discount_percentage: Decimal = Decimal("0.00")
@@ -705,8 +679,7 @@ class InvoiceLineItem:
 
 @dataclass
 class TaxConfiguration:
-    """Tax configuration for invoices."""
-    tax_type: TaxType
+    """Tax configuration for invoices."""    tax_type: TaxType
     rate: Decimal
     description: str
     tax_number: Optional[str] = None
@@ -717,8 +690,7 @@ class TaxConfiguration:
 
 @dataclass
 class CompanyDetails:
-    """Company details for invoice generation."""
-    name: str
+    """Company details for invoice generation."""    name: str
     legal_name: str
     address_line1: str
     address_line2: Optional[str]
@@ -736,8 +708,7 @@ class CompanyDetails:
 
 @dataclass
 class InvoiceTemplate:
-    """Invoice template configuration."""
-    template_id: str
+    """Invoice template configuration."""    template_id: str
     name: str
     description: str
     html_template: str
@@ -752,8 +723,7 @@ class InvoiceTemplate:
 
 @dataclass
 class InvoiceConfig:
-    """Main invoice configuration class."""
-    
+    """Main invoice configuration class."""    
     # Database Configuration
     DATABASE_URL: str = os.getenv(
         "INVOICE_DB_URL", 
@@ -1042,12 +1012,10 @@ class InvoiceConfig:
     })
     
     def get_tax_config(self, country_code: str) -> List[TaxConfiguration]:
-        """Get tax configuration for a specific country."""
-        return self.TAX_CONFIGURATIONS.get(country_code.upper(), [])
+        """Get tax configuration for a specific country."""        return self.TAX_CONFIGURATIONS.get(country_code.upper(), [])
     
     def get_template(self, template_id: str) -> Optional[InvoiceTemplate]:
-        """Get invoice template configuration."""
-        return self.INVOICE_TEMPLATES.get(template_id)
+        """Get invoice template configuration."""        return self.INVOICE_TEMPLATES.get(template_id)
     
     def calculate_tax_amount(
         self, 
@@ -1055,8 +1023,7 @@ class InvoiceConfig:
         tax_rate: Decimal, 
         is_inclusive: bool = False
     ) -> Decimal:
-        """Calculate tax amount from subtotal and rate."""
-        if is_inclusive:
+        """Calculate tax amount from subtotal and rate."""        if is_inclusive:
             # Tax is included in the subtotal
             tax_amount = subtotal - (subtotal / (Decimal("1") + (tax_rate / Decimal("100"))))
         else:
@@ -1066,8 +1033,7 @@ class InvoiceConfig:
         return tax_amount.quantize(Decimal("0.01"))
     
     def generate_invoice_number(self, invoice_type: InvoiceType = InvoiceType.STANDARD) -> str:
-        """Generate next invoice number based on configuration."""
-        config = self.NUMBERING_CONFIG
+        """Generate next invoice number based on configuration."""        config = self.NUMBERING_CONFIG
         
         # Get type-specific configuration
         type_config = config.get("custom_sequences", {}).get(
@@ -1090,8 +1056,7 @@ class InvoiceConfig:
             return f"{type_config['prefix']}{config['separator']}000001"
     
     def get_payment_terms_days(self, terms: PaymentTerms) -> int:
-        """Get number of days for payment terms."""
-        terms_mapping = {
+        """Get number of days for payment terms."""        terms_mapping = {
             PaymentTerms.NET_0: 0,
             PaymentTerms.NET_7: 7,
             PaymentTerms.NET_14: 14,
@@ -1103,8 +1068,7 @@ class InvoiceConfig:
         return terms_mapping.get(terms, 30)  # Default to 30 days
     
     def calculate_line_item_total(self, line_item: InvoiceLineItem) -> Dict[str, Decimal]:
-        """Calculate totals for an invoice line item."""
-        subtotal = line_item.quantity * line_item.unit_price
+        """Calculate totals for an invoice line item."""        subtotal = line_item.quantity * line_item.unit_price
         
         # Apply discount
         discount_amount = subtotal * (line_item.discount_percentage / Decimal("100"))

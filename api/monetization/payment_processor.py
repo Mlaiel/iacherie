@@ -1,5 +1,4 @@
-"""
-Multi-gateway payment processing engine with comprehensive payment orchestration.
+"""Multi-gateway payment processing engine with comprehensive payment orchestration.
 
 This module implements advanced payment processing capabilities including:
 - Multi-gateway integration (Stripe, PayPal, Wise, Crypto)
@@ -25,7 +24,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 import asyncio
 import aiohttp
 import logging
@@ -53,8 +51,7 @@ from ..core.exceptions import PaymentException, FraudException
 
 
 class PaymentGateway(Enum):
-    """Supported payment gateways."""
-    STRIPE = "stripe"
+    """Supported payment gateways."""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BITCOIN = "bitcoin"
@@ -67,8 +64,7 @@ class PaymentGateway(Enum):
 
 
 class PaymentMethod(Enum):
-    """Payment method types."""
-    CREDIT_CARD = "credit_card"
+    """Payment method types."""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
     DIGITAL_WALLET = "digital_wallet"
@@ -79,8 +75,7 @@ class PaymentMethod(Enum):
 
 
 class PaymentStatus(Enum):
-    """Payment transaction status."""
-    PENDING = "pending"
+    """Payment transaction status."""    PENDING = "pending"
     PROCESSING = "processing"
     AUTHORIZED = "authorized"
     CAPTURED = "captured"
@@ -94,8 +89,7 @@ class PaymentStatus(Enum):
 
 
 class Currency(Enum):
-    """Supported currencies."""
-    USD = "USD"
+    """Supported currencies."""    USD = "USD"
     EUR = "EUR"
     GBP = "GBP"
     CAD = "CAD"
@@ -111,8 +105,7 @@ class Currency(Enum):
 
 
 class FraudRiskLevel(Enum):
-    """Fraud risk assessment levels."""
-    VERY_LOW = "very_low"
+    """Fraud risk assessment levels."""    VERY_LOW = "very_low"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -121,8 +114,7 @@ class FraudRiskLevel(Enum):
 
 @dataclass
 class PaymentGatewayConfig:
-    """Payment gateway configuration."""
-    gateway: PaymentGateway
+    """Payment gateway configuration."""    gateway: PaymentGateway
     api_key: str
     secret_key: str
     webhook_secret: Optional[str] = None
@@ -143,8 +135,7 @@ class PaymentGatewayConfig:
 
 @dataclass
 class PaymentRequest:
-    """Payment processing request."""
-    request_id: str
+    """Payment processing request."""    request_id: str
     amount: Decimal
     currency: Currency
     payment_method: PaymentMethod
@@ -167,8 +158,7 @@ class PaymentRequest:
 
 @dataclass
 class PaymentResult:
-    """Payment processing result."""
-    transaction_id: str
+    """Payment processing result."""    transaction_id: str
     gateway_transaction_id: str
     gateway: PaymentGateway
     status: PaymentStatus
@@ -189,8 +179,7 @@ class PaymentResult:
 
 @dataclass
 class FraudAssessment:
-    """Fraud risk assessment result."""
-    transaction_id: str
+    """Fraud risk assessment result."""    transaction_id: str
     risk_level: FraudRiskLevel
     risk_score: float  # 0-100
     risk_factors: List[str]
@@ -202,8 +191,7 @@ class FraudAssessment:
 
 @dataclass
 class PayoutRequest:
-    """Payout processing request."""
-    payout_id: str
+    """Payout processing request."""    payout_id: str
     recipient_id: str
     amount: Decimal
     currency: Currency
@@ -216,8 +204,7 @@ class PayoutRequest:
 
 
 class AdvancedPaymentProcessor:
-    """
-    Advanced multi-gateway payment processing engine.
+    """    Advanced multi-gateway payment processing engine.
     
     Provides comprehensive payment orchestration including:
     - Intelligent gateway routing and failover
@@ -225,8 +212,7 @@ class AdvancedPaymentProcessor:
     - Automated revenue distribution
     - Real-time payment monitoring and analytics
     - PCI DSS compliant payment handling
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger("monetization.payment_processor")
@@ -259,8 +245,7 @@ class AdvancedPaymentProcessor:
         self.logger.info("AdvancedPaymentProcessor initialized successfully")
     
     async def _initialize_payment_processor(self):
-        """Initialize payment processor components."""
-        try:
+        """Initialize payment processor components."""        try:
             # Initialize HTTP session
             await self._initialize_session()
             
@@ -280,8 +265,7 @@ class AdvancedPaymentProcessor:
             raise PaymentException(f"Processor initialization error: {e}")
     
     async def _initialize_session(self):
-        """Initialize aiohttp session for external API calls."""
-        try:
+        """Initialize aiohttp session for external API calls."""        try:
             connector = aiohttp.TCPConnector(
                 limit=100,
                 limit_per_host=20,
@@ -306,10 +290,8 @@ class AdvancedPaymentProcessor:
             raise PaymentException(f"Session initialization error: {e}")
     
     async def _load_gateway_configurations(self):
-        """Load payment gateway configurations from database."""
-        try:
-            query = """
-            SELECT 
+        """Load payment gateway configurations from database."""        try:
+            query = """            SELECT 
                 gateway, api_key, secret_key, webhook_secret, environment,
                 supported_currencies, supported_countries, transaction_fee_percentage,
                 transaction_fee_fixed, minimum_amount, maximum_amount,
@@ -317,8 +299,7 @@ class AdvancedPaymentProcessor:
                 fraud_protection, recurring_payments, instant_payouts, is_active
             FROM payment_gateway_configs
             WHERE is_active = true
-            """
-            
+            """            
             results = await self.db.fetch(query)
             
             for row in results:
@@ -354,8 +335,7 @@ class AdvancedPaymentProcessor:
             await self._initialize_default_gateway_configs()
     
     async def _initialize_default_gateway_configs(self):
-        """Initialize default gateway configurations."""
-        default_configs = {
+        """Initialize default gateway configurations."""        default_configs = {
             PaymentGateway.STRIPE: PaymentGatewayConfig(
                 gateway=PaymentGateway.STRIPE,
                 api_key=self.config.get("stripe_api_key", ""),
@@ -376,8 +356,7 @@ class AdvancedPaymentProcessor:
         self.gateway_configs.update(default_configs)
     
     async def _initialize_payment_gateways(self):
-        """Initialize payment gateway client connections."""
-        for gateway, config in self.gateway_configs.items():
+        """Initialize payment gateway client connections."""        for gateway, config in self.gateway_configs.items():
             try:
                 if gateway == PaymentGateway.STRIPE:
                     stripe.api_key = config.secret_key
@@ -396,8 +375,7 @@ class AdvancedPaymentProcessor:
                 self.logger.error(f"Gateway {gateway.value} initialization failed: {e}")
     
     def _create_paypal_client(self, config: PaymentGatewayConfig):
-        """Create PayPal client configuration."""
-        # This would return actual PayPal client in production
+        """Create PayPal client configuration."""        # This would return actual PayPal client in production
         return {
             "client_id": config.api_key,
             "client_secret": config.secret_key,
@@ -405,8 +383,7 @@ class AdvancedPaymentProcessor:
         }
     
     def _initialize_routing_rules(self) -> Dict[str, Any]:
-        """Initialize payment routing rules."""
-        return {
+        """Initialize payment routing rules."""        return {
             "default_gateway": PaymentGateway.STRIPE,
             "currency_routing": {
                 Currency.USD: [PaymentGateway.STRIPE, PaymentGateway.PAYPAL],
@@ -428,8 +405,7 @@ class AdvancedPaymentProcessor:
         }
     
     def _initialize_failover_rules(self) -> Dict[str, Any]:
-        """Initialize payment failover rules."""
-        return {
+        """Initialize payment failover rules."""        return {
             "max_retries": 3,
             "retry_delay_seconds": [1, 3, 5],
             "failover_gateways": {
@@ -448,8 +424,7 @@ class AdvancedPaymentProcessor:
         }
     
     def _initialize_fraud_rules(self) -> Dict[str, Any]:
-        """Initialize fraud detection rules."""
-        return {
+        """Initialize fraud detection rules."""        return {
             "velocity_checks": {
                 "transactions_per_hour": 10,
                 "transactions_per_day": 50,
@@ -474,8 +449,7 @@ class AdvancedPaymentProcessor:
         }
     
     async def _initialize_fraud_detection(self):
-        """Initialize advanced fraud detection system."""
-        try:
+        """Initialize advanced fraud detection system."""        try:
             # Load fraud detection models (in production, load ML models)
             self.fraud_models = {
                 "velocity_model": self._create_velocity_checker(),
@@ -490,29 +464,25 @@ class AdvancedPaymentProcessor:
             self.logger.error(f"Fraud detection initialization failed: {e}")
     
     def _create_velocity_checker(self):
-        """Create velocity-based fraud checker."""
-        def check_velocity(customer_id: str, amount: Decimal, timeframe: str = "hour") -> float:
+        """Create velocity-based fraud checker."""        def check_velocity(customer_id: str, amount: Decimal, timeframe: str = "hour") -> float:
             # Simplified velocity check - in production, use Redis for real-time tracking
             return 0.0  # Risk score
         return check_velocity
     
     def _create_behavioral_checker(self):
-        """Create behavioral analysis fraud checker."""
-        def check_behavior(request: PaymentRequest) -> float:
+        """Create behavioral analysis fraud checker."""        def check_behavior(request: PaymentRequest) -> float:
             # Simplified behavioral check
             return 0.0  # Risk score
         return check_behavior
     
     def _create_geographic_checker(self):
-        """Create geographic risk checker."""
-        def check_geographic(billing_country: str, ip_country: str) -> float:
+        """Create geographic risk checker."""        def check_geographic(billing_country: str, ip_country: str) -> float:
             # Simplified geographic check
             return 0.0  # Risk score
         return check_geographic
     
     def _create_amount_checker(self):
-        """Create amount-based risk checker."""
-        def check_amount(amount: Decimal, currency: Currency) -> float:
+        """Create amount-based risk checker."""        def check_amount(amount: Decimal, currency: Currency) -> float:
             # Simplified amount check
             return 0.0  # Risk score
         return check_amount
@@ -521,16 +491,14 @@ class AdvancedPaymentProcessor:
         self,
         payment_request: PaymentRequest
     ) -> PaymentResult:
-        """
-        Process payment with intelligent gateway routing and fraud detection.
+        """        Process payment with intelligent gateway routing and fraud detection.
         
         Args:
             payment_request: Payment processing request details
             
         Returns:
             Comprehensive payment processing result
-        """
-        try:
+        """        try:
             start_time = datetime.utcnow()
             self.logger.info(f"Processing payment request: {payment_request.request_id}")
             
@@ -607,8 +575,7 @@ class AdvancedPaymentProcessor:
             raise PaymentException(f"Payment processing error: {e}")
     
     async def _assess_fraud_risk(self, request: PaymentRequest) -> FraudAssessment:
-        """Comprehensive fraud risk assessment."""
-        try:
+        """Comprehensive fraud risk assessment."""        try:
             risk_factors = []
             total_risk_score = 0.0
             
@@ -696,8 +663,7 @@ class AdvancedPaymentProcessor:
             )
     
     async def _check_velocity_fraud(self, customer_id: str, amount: Decimal) -> float:
-        """Check for velocity-based fraud indicators."""
-        try:
+        """Check for velocity-based fraud indicators."""        try:
             # Check transaction velocity in Redis
             now = datetime.utcnow()
             hour_key = f"velocity:hour:{customer_id}:{now.hour}"
@@ -732,8 +698,7 @@ class AdvancedPaymentProcessor:
             return 0.0
     
     async def _check_geographic_fraud(self, request: PaymentRequest) -> float:
-        """Check for geographic risk indicators."""
-        try:
+        """Check for geographic risk indicators."""        try:
             risk_score = 0.0
             billing_details = request.billing_details
             
@@ -758,8 +723,7 @@ class AdvancedPaymentProcessor:
             return 0.0
     
     async def _check_behavioral_fraud(self, request: PaymentRequest) -> float:
-        """Check for behavioral fraud indicators."""
-        try:
+        """Check for behavioral fraud indicators."""        try:
             risk_score = 0.0
             
             # Check for new customer with large transaction
@@ -784,8 +748,7 @@ class AdvancedPaymentProcessor:
             return 0.0
     
     async def _check_amount_fraud(self, amount: Decimal, currency: Currency) -> float:
-        """Check for amount-based fraud indicators."""
-        try:
+        """Check for amount-based fraud indicators."""        try:
             risk_score = 0.0
             
             # Check for round amounts (potential fraud indicator)
@@ -808,10 +771,8 @@ class AdvancedPaymentProcessor:
             return 0.0
     
     async def _check_customer_history_fraud(self, customer_id: str) -> float:
-        """Check customer history for fraud indicators."""
-        try:
-            query = """
-            SELECT 
+        """Check customer history for fraud indicators."""        try:
+            query = """            SELECT 
                 COUNT(*) as total_transactions,
                 COUNT(CASE WHEN status = 'failed' THEN 1 END) as failed_count,
                 COUNT(CASE WHEN status = 'disputed' THEN 1 END) as disputed_count,
@@ -820,8 +781,7 @@ class AdvancedPaymentProcessor:
             FROM payment_transactions 
             WHERE customer_id = $1 
             AND created_at >= NOW() - INTERVAL '90 days'
-            """
-            
+            """            
             result = await self.db.fetchrow(query, customer_id)
             
             if not result or result["total_transactions"] == 0:
@@ -858,14 +818,11 @@ class AdvancedPaymentProcessor:
             return 0.0
     
     async def _is_new_customer(self, customer_id: str) -> bool:
-        """Check if customer is new (first transaction)."""
-        try:
-            query = """
-            SELECT COUNT(*) as transaction_count
+        """Check if customer is new (first transaction)."""        try:
+            query = """            SELECT COUNT(*) as transaction_count
             FROM payment_transactions 
             WHERE customer_id = $1
-            """
-            
+            """            
             result = await self.db.fetchrow(query, customer_id)
             return result["transaction_count"] == 0
             
@@ -874,8 +831,7 @@ class AdvancedPaymentProcessor:
             return False
     
     def _has_suspicious_metadata(self, metadata: Dict[str, Any]) -> bool:
-        """Check metadata for suspicious patterns."""
-        # Simplified suspicious metadata detection
+        """Check metadata for suspicious patterns."""        # Simplified suspicious metadata detection
         suspicious_patterns = [
             "test", "fake", "fraud", "scam", "dummy",
             "aaaa", "bbbb", "1111", "0000"
@@ -885,8 +841,7 @@ class AdvancedPaymentProcessor:
         return any(pattern in metadata_str for pattern in suspicious_patterns)
     
     async def _select_payment_gateway(self, request: PaymentRequest) -> Optional[PaymentGateway]:
-        """Select optimal payment gateway based on routing rules."""
-        try:
+        """Select optimal payment gateway based on routing rules."""        try:
             # Start with preferred gateway if specified
             if request.preferred_gateway and request.preferred_gateway in self.gateway_configs:
                 if await self._is_gateway_suitable(request.preferred_gateway, request):
@@ -935,8 +890,7 @@ class AdvancedPaymentProcessor:
             return self.routing_rules.get("default_gateway")
     
     async def _is_gateway_suitable(self, gateway: PaymentGateway, request: PaymentRequest) -> bool:
-        """Check if gateway is suitable for the payment request."""
-        config = self.gateway_configs.get(gateway)
+        """Check if gateway is suitable for the payment request."""        config = self.gateway_configs.get(gateway)
         if not config:
             return False
         
@@ -956,8 +910,7 @@ class AdvancedPaymentProcessor:
         return True
     
     async def _is_gateway_available(self, gateway: PaymentGateway) -> bool:
-        """Check if gateway is currently available."""
-        try:
+        """Check if gateway is currently available."""        try:
             # Check gateway health status in Redis
             health_key = f"gateway_health:{gateway.value}"
             health_status = await self.redis.get(health_key)
@@ -978,8 +931,7 @@ class AdvancedPaymentProcessor:
         available_gateways: List[PaymentGateway],
         request: PaymentRequest
     ) -> PaymentGateway:
-        """Select best performing gateway from available options."""
-        try:
+        """Select best performing gateway from available options."""        try:
             # Get performance metrics for each gateway
             gateway_scores = {}
             
@@ -1005,18 +957,15 @@ class AdvancedPaymentProcessor:
             return available_gateways[0] if available_gateways else None
     
     async def _get_gateway_performance_metrics(self, gateway: PaymentGateway) -> Dict[str, float]:
-        """Get performance metrics for gateway."""
-        try:
-            query = """
-            SELECT 
+        """Get performance metrics for gateway."""        try:
+            query = """            SELECT 
                 AVG(CASE WHEN status = 'completed' THEN 1.0 ELSE 0.0 END) as success_rate,
                 AVG(processing_time) as avg_processing_time,
                 AVG(fees / amount) as avg_fee_percentage
             FROM payment_transactions 
             WHERE gateway = $1 
             AND created_at >= NOW() - INTERVAL '24 hours'
-            """
-            
+            """            
             result = await self.db.fetchrow(query, gateway.value)
             
             return {
@@ -1038,5 +987,4 @@ class AdvancedPaymentProcessor:
 
 # Factory function for easy instantiation
 def create_payment_processor(config: Optional[Dict[str, Any]] = None) -> AdvancedPaymentProcessor:
-    """Create and return configured payment processor instance."""
-    return AdvancedPaymentProcessor(config)
+    """Create and return configured payment processor instance."""    return AdvancedPaymentProcessor(config)

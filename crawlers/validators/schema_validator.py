@@ -1,5 +1,4 @@
-"""
-Data Schema Validation Engine for Crawler System
+"""Data Schema Validation Engine for Crawler System
 ===============================================
 
 Industrial-grade schema validation system for the IA Influencer Agent Platform
@@ -16,7 +15,6 @@ Features:
 - Data type validation and coercion
 - Cross-field validation
 """
-
 import json
 import re
 from enum import Enum
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class SchemaType(Enum):
-    """Schema validation types"""
-    JSON_SCHEMA = "json_schema"
+    """Schema validation types"""    JSON_SCHEMA = "json_schema"
     PYDANTIC = "pydantic"
     CUSTOM = "custom"
     BUSINESS_OBJECT = "business_object"
@@ -54,8 +51,7 @@ class SchemaType(Enum):
 
 
 class ValidationSeverity(Enum):
-    """Validation issue severity levels"""
-    INFO = "info"
+    """Validation issue severity levels"""    INFO = "info"
     WARNING = "warning"
     ERROR = "error"
     CRITICAL = "critical"
@@ -63,8 +59,7 @@ class ValidationSeverity(Enum):
 
 @dataclass
 class SchemaValidationIssue:
-    """Individual schema validation issue"""
-    severity: ValidationSeverity
+    """Individual schema validation issue"""    severity: ValidationSeverity
     code: str
     message: str
     field_path: str
@@ -77,8 +72,7 @@ class SchemaValidationIssue:
 
 @dataclass
 class SchemaValidationResult:
-    """Comprehensive schema validation result"""
-    is_valid: bool
+    """Comprehensive schema validation result"""    is_valid: bool
     schema_type: SchemaType
     issues: List[SchemaValidationIssue] = field(default_factory=list)
     validated_data: Optional[Any] = None
@@ -93,36 +87,30 @@ class SchemaValidationResult:
     
     @property
     def has_errors(self) -> bool:
-        """Check if validation has errors"""
-        return any(issue.severity in [ValidationSeverity.ERROR, ValidationSeverity.CRITICAL] 
+        """Check if validation has errors"""        return any(issue.severity in [ValidationSeverity.ERROR, ValidationSeverity.CRITICAL] 
                   for issue in self.issues)
     
     @property
     def has_warnings(self) -> bool:
-        """Check if validation has warnings"""
-        return any(issue.severity == ValidationSeverity.WARNING for issue in self.issues)
+        """Check if validation has warnings"""        return any(issue.severity == ValidationSeverity.WARNING for issue in self.issues)
     
     @property
     def error_count(self) -> int:
-        """Count of error-level issues"""
-        return len([i for i in self.issues if i.severity in [ValidationSeverity.ERROR, ValidationSeverity.CRITICAL]])
+        """Count of error-level issues"""        return len([i for i in self.issues if i.severity in [ValidationSeverity.ERROR, ValidationSeverity.CRITICAL]])
     
     @property
     def warning_count(self) -> int:
-        """Count of warning-level issues"""
-        return len([i for i in self.issues if i.severity == ValidationSeverity.WARNING])
+        """Count of warning-level issues"""        return len([i for i in self.issues if i.severity == ValidationSeverity.WARNING])
     
     @property
     def success_rate(self) -> float:
-        """Calculate field validation success rate"""
-        if self.fields_validated == 0:
+        """Calculate field validation success rate"""        if self.fields_validated == 0:
             return 0.0
         return self.fields_passed / self.fields_validated
 
 
 class CustomValidationRule:
-    """Custom validation rule definition"""
-    
+    """Custom validation rule definition"""    
     def __init__(
         self,
         name: str,
@@ -140,8 +128,7 @@ class CustomValidationRule:
         self.suggestion = suggestion
     
     def validate(self, value: Any) -> Optional[SchemaValidationIssue]:
-        """Execute validation rule"""
-        try:
+        """Execute validation rule"""        try:
             if not self.validator_func(value):
                 return SchemaValidationIssue(
                     severity=self.severity,
@@ -165,8 +152,7 @@ class CustomValidationRule:
 
 
 class SchemaValidator:
-    """
-    Enterprise-grade schema validation engine for crawler data validation.
+    """    Enterprise-grade schema validation engine for crawler data validation.
     
     Supports multiple validation types:
     - JSON Schema validation
@@ -174,8 +160,7 @@ class SchemaValidator:
     - Custom business rule validation
     - Cross-field validation
     - Data type coercion
-    """
-    
+    """    
     def __init__(self):
         self.custom_rules = {}
         self.business_schemas = {}
@@ -190,8 +175,7 @@ class SchemaValidator:
         schema: Dict[str, Any],
         schema_name: Optional[str] = None
     ) -> SchemaValidationResult:
-        """
-        Validate data against JSON Schema.
+        """        Validate data against JSON Schema.
         
         Args:
             data: Data to validate
@@ -200,8 +184,7 @@ class SchemaValidator:
             
         Returns:
             SchemaValidationResult: Validation result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         if not JSONSCHEMA_AVAILABLE:
             raise ValidationException("jsonschema library not available")
@@ -250,8 +233,7 @@ class SchemaValidator:
         model_class: Type[BaseModel],
         schema_name: Optional[str] = None
     ) -> SchemaValidationResult:
-        """
-        Validate data against Pydantic model.
+        """        Validate data against Pydantic model.
         
         Args:
             data: Data to validate
@@ -260,8 +242,7 @@ class SchemaValidator:
             
         Returns:
             SchemaValidationResult: Validation result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         if not PYDANTIC_AVAILABLE:
             raise ValidationException("pydantic library not available")
@@ -312,8 +293,7 @@ class SchemaValidator:
         rules: List[CustomValidationRule],
         schema_name: Optional[str] = None
     ) -> SchemaValidationResult:
-        """
-        Validate data against custom validation rules.
+        """        Validate data against custom validation rules.
         
         Args:
             data: Data to validate
@@ -322,8 +302,7 @@ class SchemaValidator:
             
         Returns:
             SchemaValidationResult: Validation result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         result = SchemaValidationResult(
             is_valid=True,
@@ -379,8 +358,7 @@ class SchemaValidator:
         object_type: str,
         schema_name: Optional[str] = None
     ) -> SchemaValidationResult:
-        """
-        Validate business object according to predefined schemas.
+        """        Validate business object according to predefined schemas.
         
         Args:
             data: Data to validate
@@ -389,8 +367,7 @@ class SchemaValidator:
             
         Returns:
             SchemaValidationResult: Validation result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         if object_type not in self.business_schemas:
             raise ValidationException(f"Unknown business object type: {object_type}")
@@ -470,8 +447,7 @@ class SchemaValidator:
         schema: Dict[str, Any],
         coercion_rules: Optional[Dict[str, str]] = None
     ) -> SchemaValidationResult:
-        """
-        Validate data with automatic type coercion.
+        """        Validate data with automatic type coercion.
         
         Args:
             data: Data to validate
@@ -480,8 +456,7 @@ class SchemaValidator:
             
         Returns:
             SchemaValidationResult: Validation result with coerced data
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         result = SchemaValidationResult(
             is_valid=True,
@@ -521,26 +496,22 @@ class SchemaValidator:
         return result
     
     def add_custom_rule(self, rule: CustomValidationRule) -> None:
-        """Add a custom validation rule"""
-        self.custom_rules[rule.name] = rule
+        """Add a custom validation rule"""        self.custom_rules[rule.name] = rule
         logger.debug(f"Added custom validation rule: {rule.name}")
     
     def add_business_schema(self, object_type: str, schema_config: Dict[str, Any]) -> None:
-        """Add a business object schema"""
-        self.business_schemas[object_type] = schema_config
+        """Add a business object schema"""        self.business_schemas[object_type] = schema_config
         logger.debug(f"Added business object schema: {object_type}")
     
     def validate_format(self, value: str, format_name: str) -> bool:
-        """Validate string value against named format"""
-        if format_name in self.format_validators:
+        """Validate string value against named format"""        if format_name in self.format_validators:
             return self.format_validators[format_name](value)
         return True
     
     # Helper methods
     
     def _parse_jsonschema_error(self, error: JsonSchemaValidationError) -> SchemaValidationIssue:
-        """Parse JSON Schema validation error"""
-        field_path = ".".join(str(x) for x in error.absolute_path) or "root"
+        """Parse JSON Schema validation error"""        field_path = ".".join(str(x) for x in error.absolute_path) or "root"
         
         return SchemaValidationIssue(
             severity=ValidationSeverity.ERROR,
@@ -551,8 +522,7 @@ class SchemaValidator:
         )
     
     def _parse_pydantic_error(self, error: Dict[str, Any]) -> SchemaValidationIssue:
-        """Parse Pydantic validation error"""
-        field_path = ".".join(str(x) for x in error.get('loc', []))
+        """Parse Pydantic validation error"""        field_path = ".".join(str(x) for x in error.get('loc', []))
         error_type = error.get('type', 'validation_error')
         message = error.get('msg', 'Validation failed')
         
@@ -565,8 +535,7 @@ class SchemaValidator:
         )
     
     def _count_schema_fields(self, schema: Dict[str, Any]) -> int:
-        """Count fields in JSON schema"""
-        count = 0
+        """Count fields in JSON schema"""        count = 0
         if 'properties' in schema:
             count += len(schema['properties'])
             for prop_schema in schema['properties'].values():
@@ -575,8 +544,7 @@ class SchemaValidator:
         return count
     
     def _extract_field_value(self, data: Any, field_path: str) -> Any:
-        """Extract field value using dot notation path"""
-        keys = field_path.split('.')
+        """Extract field value using dot notation path"""        keys = field_path.split('.')
         value = data
         
         for key in keys:
@@ -590,8 +558,7 @@ class SchemaValidator:
         return value
     
     def _validate_field_type(self, value: Any, expected_type: str) -> bool:
-        """Validate field type"""
-        type_mapping = {
+        """Validate field type"""        type_mapping = {
             'string': str,
             'integer': int,
             'number': (int, float, Decimal),
@@ -608,8 +575,7 @@ class SchemaValidator:
         return True  # Unknown type, pass validation
     
     def _validate_constraint(self, value: Any, constraint: Dict[str, Any], field_path: str) -> Optional[SchemaValidationIssue]:
-        """Validate field constraint"""
-        constraint_type = constraint.get('type')
+        """Validate field constraint"""        constraint_type = constraint.get('type')
         
         if constraint_type == 'min_length' and isinstance(value, str):
             min_length = constraint.get('value', 0)
@@ -670,8 +636,7 @@ class SchemaValidator:
         return None
     
     def _validate_cross_field_rule(self, data: Dict[str, Any], rule: Dict[str, Any]) -> Optional[SchemaValidationIssue]:
-        """Validate cross-field business rule"""
-        rule_type = rule.get('type')
+        """Validate cross-field business rule"""        rule_type = rule.get('type')
         
         if rule_type == 'date_range':
             start_field = rule.get('start_field')
@@ -723,8 +688,7 @@ class SchemaValidator:
         return None
     
     def _coerce_value(self, value: Any, target_type: str, field_path: str) -> Tuple[Any, Optional[SchemaValidationIssue]]:
-        """Attempt to coerce value to target type"""
-        if target_type in self.type_coercers:
+        """Attempt to coerce value to target type"""        if target_type in self.type_coercers:
             try:
                 coerced_value = self.type_coercers[target_type](value)
                 return coerced_value, None
@@ -741,8 +705,7 @@ class SchemaValidator:
         return value, None
     
     def _initialize_type_coercers(self) -> Dict[str, Callable]:
-        """Initialize type coercion functions"""
-        def coerce_to_int(value):
+        """Initialize type coercion functions"""        def coerce_to_int(value):
             if isinstance(value, str):
                 value = value.strip()
                 if value.replace('-', '').replace('+', '').isdigit():
@@ -801,8 +764,7 @@ class SchemaValidator:
         }
     
     def _initialize_format_validators(self) -> Dict[str, Callable[[str], bool]]:
-        """Initialize format validation functions"""
-        def validate_email(value: str) -> bool:
+        """Initialize format validation functions"""        def validate_email(value: str) -> bool:
             pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
             return re.match(pattern, value) is not None
         

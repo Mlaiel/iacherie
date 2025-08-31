@@ -1,5 +1,4 @@
-"""
-Query Builders - IA Influencer Agent Platform
+"""Query Builders - IA Influencer Agent Platform
 Enterprise-grade query building with advanced features and optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -11,7 +10,6 @@ WARNING: This code is protected by copyright. Any unauthorized use, reproduction
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 Contact: mlaiel@live.de for licensing and permissions.
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple, Type, Generic, TypeVar
 from abc import ABC, abstractmethod
 from enum import Enum
@@ -44,8 +42,7 @@ T = TypeVar('T', bound=Base)
 
 
 class FilterOperator(Enum):
-    """Filter operators for query building"""
-    EQ = "="
+    """Filter operators for query building"""    EQ = "="
     NE = "!="
     GT = ">"
     GTE = ">="
@@ -70,14 +67,12 @@ class FilterOperator(Enum):
 
 
 class SortDirection(Enum):
-    """Sort direction enumeration"""
-    ASC = "ASC"
+    """Sort direction enumeration"""    ASC = "ASC"
     DESC = "DESC"
 
 
 class JoinType(Enum):
-    """Join type enumeration"""
-    INNER = "INNER"
+    """Join type enumeration"""    INNER = "INNER"
     LEFT = "LEFT"
     RIGHT = "RIGHT"
     FULL = "FULL"
@@ -86,16 +81,14 @@ class JoinType(Enum):
 
 @dataclass
 class FilterCondition:
-    """Filter condition definition"""
-    field: str
+    """Filter condition definition"""    field: str
     operator: FilterOperator
     value: Any
     table_alias: Optional[str] = None
     case_sensitive: bool = True
     
     def __post_init__(self):
-        """Validate filter condition"""
-        if self.operator in [FilterOperator.BETWEEN, FilterOperator.NOT_BETWEEN]:
+        """Validate filter condition"""        if self.operator in [FilterOperator.BETWEEN, FilterOperator.NOT_BETWEEN]:
             if not isinstance(self.value, (list, tuple)) or len(self.value) != 2:
                 raise ValueError(f"BETWEEN operator requires a list/tuple of 2 values, got: {self.value}")
         
@@ -106,8 +99,7 @@ class FilterCondition:
 
 @dataclass
 class SortCondition:
-    """Sort condition definition"""
-    field: str
+    """Sort condition definition"""    field: str
     direction: SortDirection = SortDirection.ASC
     table_alias: Optional[str] = None
     nulls_first: bool = False
@@ -115,8 +107,7 @@ class SortCondition:
 
 @dataclass
 class JoinCondition:
-    """Join condition definition"""
-    table: Union[str, Type[T]]
+    """Join condition definition"""    table: Union[str, Type[T]]
     join_type: JoinType = JoinType.INNER
     on_condition: Optional[str] = None
     alias: Optional[str] = None
@@ -124,14 +115,12 @@ class JoinCondition:
 
 @dataclass
 class PaginationInfo:
-    """Pagination information"""
-    page: int = 1
+    """Pagination information"""    page: int = 1
     page_size: int = 50
     max_page_size: int = 1000
     
     def __post_init__(self):
-        """Validate pagination parameters"""
-        if self.page < 1:
+        """Validate pagination parameters"""        if self.page < 1:
             raise ValueError("Page number must be >= 1")
         if self.page_size < 1:
             raise ValueError("Page size must be >= 1")
@@ -141,8 +130,7 @@ class PaginationInfo:
 
 @dataclass
 class QueryResult:
-    """Query execution result"""
-    data: Any
+    """Query execution result"""    data: Any
     total_count: Optional[int] = None
     page: Optional[int] = None
     page_size: Optional[int] = None
@@ -153,14 +141,12 @@ class QueryResult:
 
 
 class QueryBuilder:
-    """
-    Base query builder with essential functionality:
+    """    Base query builder with essential functionality:
     - Basic CRUD operations
     - Filtering and sorting
     - Pagination
     - SQL generation
-    """
-    
+    """    
     def __init__(self, model: Type[T]):
         self.model = model
         self.table = model.__table__
@@ -176,8 +162,7 @@ class QueryBuilder:
         self._offset: Optional[int] = None
         
     def reset(self) -> 'QueryBuilder':
-        """Reset query builder to initial state"""
-        self.query = None
+        """Reset query builder to initial state"""        self.query = None
         self.filters = []
         self.sorts = []
         self.joins = []
@@ -190,14 +175,12 @@ class QueryBuilder:
         return self
     
     def select(self, *fields: str) -> 'QueryBuilder':
-        """Select specific fields"""
-        self._select_fields.extend(fields)
+        """Select specific fields"""        self._select_fields.extend(fields)
         return self
     
     def where(self, field: str, operator: FilterOperator, value: Any, 
               table_alias: Optional[str] = None, case_sensitive: bool = True) -> 'QueryBuilder':
-        """Add WHERE condition"""
-        condition = FilterCondition(
+        """Add WHERE condition"""        condition = FilterCondition(
             field=field,
             operator=operator,
             value=value,
@@ -209,30 +192,25 @@ class QueryBuilder:
     
     def where_in(self, field: str, values: List[Any], 
                  table_alias: Optional[str] = None) -> 'QueryBuilder':
-        """Add WHERE IN condition"""
-        return self.where(field, FilterOperator.IN, values, table_alias)
+        """Add WHERE IN condition"""        return self.where(field, FilterOperator.IN, values, table_alias)
     
     def where_between(self, field: str, start: Any, end: Any,
                       table_alias: Optional[str] = None) -> 'QueryBuilder':
-        """Add WHERE BETWEEN condition"""
-        return self.where(field, FilterOperator.BETWEEN, [start, end], table_alias)
+        """Add WHERE BETWEEN condition"""        return self.where(field, FilterOperator.BETWEEN, [start, end], table_alias)
     
     def where_like(self, field: str, pattern: str, case_sensitive: bool = True,
                    table_alias: Optional[str] = None) -> 'QueryBuilder':
-        """Add WHERE LIKE condition"""
-        operator = FilterOperator.LIKE if case_sensitive else FilterOperator.ILIKE
+        """Add WHERE LIKE condition"""        operator = FilterOperator.LIKE if case_sensitive else FilterOperator.ILIKE
         return self.where(field, operator, pattern, table_alias, case_sensitive)
     
     def where_null(self, field: str, is_null: bool = True,
                    table_alias: Optional[str] = None) -> 'QueryBuilder':
-        """Add WHERE NULL condition"""
-        operator = FilterOperator.IS_NULL if is_null else FilterOperator.IS_NOT_NULL
+        """Add WHERE NULL condition"""        operator = FilterOperator.IS_NULL if is_null else FilterOperator.IS_NOT_NULL
         return self.where(field, operator, None, table_alias)
     
     def join(self, table: Union[str, Type[T]], join_type: JoinType = JoinType.INNER,
              on_condition: Optional[str] = None, alias: Optional[str] = None) -> 'QueryBuilder':
-        """Add JOIN clause"""
-        join_condition = JoinCondition(
+        """Add JOIN clause"""        join_condition = JoinCondition(
             table=table,
             join_type=join_type,
             on_condition=on_condition,
@@ -243,18 +221,15 @@ class QueryBuilder:
     
     def left_join(self, table: Union[str, Type[T]], on_condition: Optional[str] = None,
                   alias: Optional[str] = None) -> 'QueryBuilder':
-        """Add LEFT JOIN clause"""
-        return self.join(table, JoinType.LEFT, on_condition, alias)
+        """Add LEFT JOIN clause"""        return self.join(table, JoinType.LEFT, on_condition, alias)
     
     def inner_join(self, table: Union[str, Type[T]], on_condition: Optional[str] = None,
                    alias: Optional[str] = None) -> 'QueryBuilder':
-        """Add INNER JOIN clause"""
-        return self.join(table, JoinType.INNER, on_condition, alias)
+        """Add INNER JOIN clause"""        return self.join(table, JoinType.INNER, on_condition, alias)
     
     def order_by(self, field: str, direction: SortDirection = SortDirection.ASC,
                  table_alias: Optional[str] = None, nulls_first: bool = False) -> 'QueryBuilder':
-        """Add ORDER BY clause"""
-        sort_condition = SortCondition(
+        """Add ORDER BY clause"""        sort_condition = SortCondition(
             field=field,
             direction=direction,
             table_alias=table_alias,
@@ -264,18 +239,15 @@ class QueryBuilder:
         return self
     
     def order_by_desc(self, field: str, table_alias: Optional[str] = None) -> 'QueryBuilder':
-        """Add ORDER BY DESC clause"""
-        return self.order_by(field, SortDirection.DESC, table_alias)
+        """Add ORDER BY DESC clause"""        return self.order_by(field, SortDirection.DESC, table_alias)
     
     def group_by(self, *fields: str) -> 'QueryBuilder':
-        """Add GROUP BY clause"""
-        self._group_by_fields.extend(fields)
+        """Add GROUP BY clause"""        self._group_by_fields.extend(fields)
         return self
     
     def having(self, field: str, operator: FilterOperator, value: Any,
                table_alias: Optional[str] = None) -> 'QueryBuilder':
-        """Add HAVING condition"""
-        condition = FilterCondition(
+        """Add HAVING condition"""        condition = FilterCondition(
             field=field,
             operator=operator,
             value=value,
@@ -285,28 +257,24 @@ class QueryBuilder:
         return self
     
     def limit(self, count: int) -> 'QueryBuilder':
-        """Add LIMIT clause"""
-        if count < 0:
+        """Add LIMIT clause"""        if count < 0:
             raise ValueError("Limit must be non-negative")
         self._limit = count
         return self
     
     def offset(self, count: int) -> 'QueryBuilder':
-        """Add OFFSET clause"""
-        if count < 0:
+        """Add OFFSET clause"""        if count < 0:
             raise ValueError("Offset must be non-negative")
         self._offset = count
         return self
     
     def paginate(self, page: int = 1, page_size: int = 50,
                  max_page_size: int = 1000) -> 'QueryBuilder':
-        """Add pagination"""
-        self.pagination = PaginationInfo(page, page_size, max_page_size)
+        """Add pagination"""        self.pagination = PaginationInfo(page, page_size, max_page_size)
         return self
     
     def build_select(self) -> Select:
-        """Build SELECT query"""
-        # Start with base select
+        """Build SELECT query"""        # Start with base select
         if self._select_fields:
             # Select specific fields
             columns = []
@@ -361,8 +329,7 @@ class QueryBuilder:
         return query
     
     def build_count_query(self) -> Select:
-        """Build count query for pagination"""
-        query = select(func.count()).select_from(self.model)
+        """Build count query for pagination"""        query = select(func.count()).select_from(self.model)
         
         # Add JOINs
         for join_condition in self.joins:
@@ -376,8 +343,7 @@ class QueryBuilder:
         return query
     
     def _build_where_clause(self) -> ClauseElement:
-        """Build WHERE clause from filter conditions"""
-        if not self.filters:
+        """Build WHERE clause from filter conditions"""        if not self.filters:
             return text("1=1")  # Always true condition
         
         conditions = []
@@ -389,8 +355,7 @@ class QueryBuilder:
         return and_(*conditions) if len(conditions) > 1 else conditions[0]
     
     def _build_having_clause(self) -> ClauseElement:
-        """Build HAVING clause from having conditions"""
-        if not self._having_conditions:
+        """Build HAVING clause from having conditions"""        if not self._having_conditions:
             return text("1=1")
         
         conditions = []
@@ -401,8 +366,7 @@ class QueryBuilder:
         return and_(*conditions) if len(conditions) > 1 else conditions[0]
     
     def _build_filter_condition(self, filter_condition: FilterCondition) -> ClauseElement:
-        """Build individual filter condition"""
-        # Get the column
+        """Build individual filter condition"""        # Get the column
         if filter_condition.table_alias:
             # Handle aliased table (for joins)
             column = text(f"{filter_condition.table_alias}.{filter_condition.field}")
@@ -460,8 +424,7 @@ class QueryBuilder:
             raise ValueError(f"Unsupported filter operator: {filter_condition.operator}")
     
     def _apply_join(self, query: Select, join_condition: JoinCondition) -> Select:
-        """Apply JOIN to query"""
-        # Get target table
+        """Apply JOIN to query"""        # Get target table
         if isinstance(join_condition.table, str):
             target_table = text(join_condition.table)
         else:
@@ -493,8 +456,7 @@ class QueryBuilder:
             raise ValueError(f"Unsupported join type: {join_condition.join_type}")
     
     def _apply_sort(self, query: Select, sort_condition: SortCondition) -> Select:
-        """Apply ORDER BY to query"""
-        # Get the column
+        """Apply ORDER BY to query"""        # Get the column
         if sort_condition.table_alias:
             column = text(f"{sort_condition.table_alias}.{sort_condition.field}")
         elif hasattr(self.model, sort_condition.field):
@@ -515,16 +477,14 @@ class QueryBuilder:
                 return query.order_by(asc(column).nullslast())
     
     def get_sql(self, compile_kwargs: Optional[Dict[str, Any]] = None) -> str:
-        """Get SQL string representation of the query"""
-        query = self.build_select()
+        """Get SQL string representation of the query"""        query = self.build_select()
         return str(query.compile(
             dialect=postgresql.dialect(),
             compile_kwargs=compile_kwargs or {"literal_binds": True}
         ))
     
     async def execute(self, session: AsyncSession, include_count: bool = False) -> QueryResult:
-        """Execute the query and return results"""
-        start_time = datetime.utcnow()
+        """Execute the query and return results"""        start_time = datetime.utcnow()
         
         # Build and execute main query
         query = self.build_select()
@@ -561,15 +521,13 @@ class QueryBuilder:
 
 
 class AdvancedQueryBuilder(QueryBuilder):
-    """
-    Advanced query builder with complex operations:
+    """    Advanced query builder with complex operations:
     - Subqueries and CTEs
     - Window functions
     - JSON operations
     - Full-text search
     - Analytical functions
-    """
-    
+    """    
     def __init__(self, model: Type[T]):
         super().__init__(model)
         self.subqueries: Dict[str, Select] = {}
@@ -577,19 +535,16 @@ class AdvancedQueryBuilder(QueryBuilder):
         self.window_functions: List[Dict[str, Any]] = []
         
     def with_subquery(self, name: str, subquery: Select) -> 'AdvancedQueryBuilder':
-        """Add a subquery"""
-        self.subqueries[name] = subquery
+        """Add a subquery"""        self.subqueries[name] = subquery
         return self
     
     def with_cte(self, name: str, query: Select) -> 'AdvancedQueryBuilder':
-        """Add a Common Table Expression (CTE)"""
-        self.ctes[name] = query
+        """Add a Common Table Expression (CTE)"""        self.ctes[name] = query
         return self
     
     def add_window_function(self, function_name: str, partition_by: Optional[List[str]] = None,
                            order_by: Optional[List[str]] = None, alias: Optional[str] = None) -> 'AdvancedQueryBuilder':
-        """Add window function"""
-        window_func = {
+        """Add window function"""        window_func = {
             'function': function_name,
             'partition_by': partition_by or [],
             'order_by': order_by or [],
@@ -600,34 +555,28 @@ class AdvancedQueryBuilder(QueryBuilder):
     
     def where_json_contains(self, field: str, value: Dict[str, Any],
                            table_alias: Optional[str] = None) -> 'AdvancedQueryBuilder':
-        """Add JSON contains condition"""
-        return self.where(field, FilterOperator.CONTAINS, json.dumps(value), table_alias)
+        """Add JSON contains condition"""        return self.where(field, FilterOperator.CONTAINS, json.dumps(value), table_alias)
     
     def where_json_has_key(self, field: str, key: str,
                           table_alias: Optional[str] = None) -> 'AdvancedQueryBuilder':
-        """Add JSON has key condition"""
-        return self.where(field, FilterOperator.HAS_KEY, key, table_alias)
+        """Add JSON has key condition"""        return self.where(field, FilterOperator.HAS_KEY, key, table_alias)
     
     def where_full_text_search(self, field: str, search_terms: str,
                               language: str = 'english',
                               table_alias: Optional[str] = None) -> 'AdvancedQueryBuilder':
-        """Add full-text search condition"""
-        return self.where(field, FilterOperator.FULL_TEXT, f"{language}::{search_terms}", table_alias)
+        """Add full-text search condition"""        return self.where(field, FilterOperator.FULL_TEXT, f"{language}::{search_terms}", table_alias)
     
     def where_regex(self, field: str, pattern: str, case_sensitive: bool = True,
                     table_alias: Optional[str] = None) -> 'AdvancedQueryBuilder':
-        """Add regex condition"""
-        operator = FilterOperator.REGEX if case_sensitive else FilterOperator.IREGEX
+        """Add regex condition"""        operator = FilterOperator.REGEX if case_sensitive else FilterOperator.IREGEX
         return self.where(field, operator, pattern, table_alias)
     
     def distinct_on(self, *fields: str) -> 'AdvancedQueryBuilder':
-        """Add DISTINCT ON clause (PostgreSQL specific)"""
-        self._distinct_on_fields = fields
+        """Add DISTINCT ON clause (PostgreSQL specific)"""        self._distinct_on_fields = fields
         return self
     
     def build_select(self) -> Select:
-        """Build advanced SELECT query with CTEs and subqueries"""
-        # Start with base query
+        """Build advanced SELECT query with CTEs and subqueries"""        # Start with base query
         query = super().build_select()
         
         # Add CTEs
@@ -651,8 +600,7 @@ class AdvancedQueryBuilder(QueryBuilder):
         return query
     
     def _add_window_function(self, query: Select, window_func: Dict[str, Any]) -> Select:
-        """Add window function to query"""
-        # Build partition by clause
+        """Add window function to query"""        # Build partition by clause
         partition_columns = []
         for field in window_func['partition_by']:
             if hasattr(self.model, field):
@@ -704,21 +652,18 @@ class AdvancedQueryBuilder(QueryBuilder):
 
 
 class AggregationQueryBuilder(QueryBuilder):
-    """
-    Specialized query builder for aggregation operations:
+    """    Specialized query builder for aggregation operations:
     - COUNT, SUM, AVG, MIN, MAX
     - Group by with multiple levels
     - Having conditions
     - Rolling aggregations
-    """
-    
+    """    
     def __init__(self, model: Type[T]):
         super().__init__(model)
         self.aggregations: List[Dict[str, Any]] = []
         
     def count(self, field: str = '*', alias: str = 'count') -> 'AggregationQueryBuilder':
-        """Add COUNT aggregation"""
-        self.aggregations.append({
+        """Add COUNT aggregation"""        self.aggregations.append({
             'function': 'count',
             'field': field,
             'alias': alias
@@ -726,8 +671,7 @@ class AggregationQueryBuilder(QueryBuilder):
         return self
     
     def sum(self, field: str, alias: Optional[str] = None) -> 'AggregationQueryBuilder':
-        """Add SUM aggregation"""
-        self.aggregations.append({
+        """Add SUM aggregation"""        self.aggregations.append({
             'function': 'sum',
             'field': field,
             'alias': alias or f'sum_{field}'
@@ -735,8 +679,7 @@ class AggregationQueryBuilder(QueryBuilder):
         return self
     
     def avg(self, field: str, alias: Optional[str] = None) -> 'AggregationQueryBuilder':
-        """Add AVG aggregation"""
-        self.aggregations.append({
+        """Add AVG aggregation"""        self.aggregations.append({
             'function': 'avg',
             'field': field,
             'alias': alias or f'avg_{field}'
@@ -744,8 +687,7 @@ class AggregationQueryBuilder(QueryBuilder):
         return self
     
     def min(self, field: str, alias: Optional[str] = None) -> 'AggregationQueryBuilder':
-        """Add MIN aggregation"""
-        self.aggregations.append({
+        """Add MIN aggregation"""        self.aggregations.append({
             'function': 'min',
             'field': field,
             'alias': alias or f'min_{field}'
@@ -753,8 +695,7 @@ class AggregationQueryBuilder(QueryBuilder):
         return self
     
     def max(self, field: str, alias: Optional[str] = None) -> 'AggregationQueryBuilder':
-        """Add MAX aggregation"""
-        self.aggregations.append({
+        """Add MAX aggregation"""        self.aggregations.append({
             'function': 'max',
             'field': field,
             'alias': alias or f'max_{field}'
@@ -762,8 +703,7 @@ class AggregationQueryBuilder(QueryBuilder):
         return self
     
     def stddev(self, field: str, alias: Optional[str] = None) -> 'AggregationQueryBuilder':
-        """Add STDDEV aggregation"""
-        self.aggregations.append({
+        """Add STDDEV aggregation"""        self.aggregations.append({
             'function': 'stddev',
             'field': field,
             'alias': alias or f'stddev_{field}'
@@ -771,8 +711,7 @@ class AggregationQueryBuilder(QueryBuilder):
         return self
     
     def variance(self, field: str, alias: Optional[str] = None) -> 'AggregationQueryBuilder':
-        """Add VARIANCE aggregation"""
-        self.aggregations.append({
+        """Add VARIANCE aggregation"""        self.aggregations.append({
             'function': 'variance',
             'field': field,
             'alias': alias or f'variance_{field}'
@@ -780,8 +719,7 @@ class AggregationQueryBuilder(QueryBuilder):
         return self
     
     def build_select(self) -> Select:
-        """Build aggregation query"""
-        if not self.aggregations:
+        """Build aggregation query"""        if not self.aggregations:
             raise ValueError("No aggregations specified")
         
         # Build aggregation columns
@@ -847,42 +785,35 @@ class AggregationQueryBuilder(QueryBuilder):
 
 
 class JoinQueryBuilder(QueryBuilder):
-    """
-    Specialized query builder for complex joins:
+    """    Specialized query builder for complex joins:
     - Multiple table joins
     - Self joins
     - Lateral joins
     - Cross joins
-    """
-    
+    """    
     def __init__(self, model: Type[T]):
         super().__init__(model)
         self.table_aliases: Dict[str, str] = {}
         
     def add_table_alias(self, table: Union[str, Type[T]], alias: str) -> 'JoinQueryBuilder':
-        """Add table alias mapping"""
-        table_name = table.__tablename__ if hasattr(table, '__tablename__') else str(table)
+        """Add table alias mapping"""        table_name = table.__tablename__ if hasattr(table, '__tablename__') else str(table)
         self.table_aliases[alias] = table_name
         return self
     
     def cross_join(self, table: Union[str, Type[T]], alias: Optional[str] = None) -> 'JoinQueryBuilder':
-        """Add CROSS JOIN"""
-        return self.join(table, JoinType.CROSS, alias=alias)
+        """Add CROSS JOIN"""        return self.join(table, JoinType.CROSS, alias=alias)
     
     def self_join(self, alias: str, on_condition: str) -> 'JoinQueryBuilder':
-        """Add self join"""
-        return self.join(self.model, JoinType.INNER, on_condition, alias)
+        """Add self join"""        return self.join(self.model, JoinType.INNER, on_condition, alias)
     
     def lateral_join(self, subquery: Select, alias: str) -> 'JoinQueryBuilder':
-        """Add LATERAL JOIN (PostgreSQL specific)"""
-        # Note: This is a simplified implementation
+        """Add LATERAL JOIN (PostgreSQL specific)"""        # Note: This is a simplified implementation
         # Full lateral join support would require more complex SQLAlchemy usage
         logger.warning("Lateral joins require manual SQL construction in SQLAlchemy")
         return self
     
     def build_select(self) -> Select:
-        """Build query with complex joins"""
-        query = super().build_select()
+        """Build query with complex joins"""        query = super().build_select()
         
         # Apply table aliases
         if self.table_aliases:
@@ -894,40 +825,34 @@ class JoinQueryBuilder(QueryBuilder):
 
 
 class SubQueryBuilder(QueryBuilder):
-    """
-    Specialized query builder for subqueries:
+    """    Specialized query builder for subqueries:
     - Correlated subqueries
     - EXISTS/NOT EXISTS
     - IN subqueries
     - Scalar subqueries
-    """
-    
+    """    
     def __init__(self, model: Type[T]):
         super().__init__(model)
         self.exists_conditions: List[Dict[str, Any]] = []
         
     def where_exists(self, subquery: Select, negated: bool = False) -> 'SubQueryBuilder':
-        """Add EXISTS condition"""
-        self.exists_conditions.append({
+        """Add EXISTS condition"""        self.exists_conditions.append({
             'subquery': subquery,
             'negated': negated
         })
         return self
     
     def where_not_exists(self, subquery: Select) -> 'SubQueryBuilder':
-        """Add NOT EXISTS condition"""
-        return self.where_exists(subquery, negated=True)
+        """Add NOT EXISTS condition"""        return self.where_exists(subquery, negated=True)
     
     def where_in_subquery(self, field: str, subquery: Select,
                          table_alias: Optional[str] = None) -> 'SubQueryBuilder':
-        """Add IN subquery condition"""
-        # Convert subquery to scalar subquery for IN operation
+        """Add IN subquery condition"""        # Convert subquery to scalar subquery for IN operation
         scalar_subquery = subquery.scalar_subquery()
         return self.where(field, FilterOperator.IN, scalar_subquery, table_alias)
     
     def build_select(self) -> Select:
-        """Build query with subqueries"""
-        query = super().build_select()
+        """Build query with subqueries"""        query = super().build_select()
         
         # Add EXISTS conditions
         for exists_condition in self.exists_conditions:
@@ -939,9 +864,7 @@ class SubQueryBuilder(QueryBuilder):
         return query
     
     def as_scalar_subquery(self) -> Select:
-        """Return query as scalar subquery"""
-        return self.build_select().scalar_subquery()
+        """Return query as scalar subquery"""        return self.build_select().scalar_subquery()
     
     def as_cte(self, name: str) -> Select:
-        """Return query as CTE"""
-        return self.build_select().cte(name)
+        """Return query as CTE"""        return self.build_select().cte(name)

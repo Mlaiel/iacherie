@@ -1,5 +1,4 @@
-"""
-Notification business service for IA Influencer Agent platform.
+"""Notification business service for IA Influencer Agent platform.
 
 This service handles comprehensive notification management including real-time 
 alerts, email notifications, push notifications, and in-app messaging.
@@ -8,7 +7,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import uuid
 from datetime import datetime, timedelta
 from typing import Optional, List, Dict, Any
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 settings = get_settings()
 
 class NotificationType(str, Enum):
-    """Notification types for the platform."""
-    COLLABORATION_REQUEST = "collaboration_request"
+    """Notification types for the platform."""    COLLABORATION_REQUEST = "collaboration_request"
     COLLABORATION_ACCEPTED = "collaboration_accepted"
     COLLABORATION_COMPLETED = "collaboration_completed"
     CONTENT_PROTECTION_ALERT = "content_protection_alert"
@@ -50,23 +47,20 @@ class NotificationType(str, Enum):
     PLATFORM_UPDATE = "platform_update"
 
 class NotificationPriority(str, Enum):
-    """Notification priority levels."""
-    LOW = "low"
+    """Notification priority levels."""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     URGENT = "urgent"
 
 class NotificationChannel(str, Enum):
-    """Notification delivery channels."""
-    IN_APP = "in_app"
+    """Notification delivery channels."""    IN_APP = "in_app"
     EMAIL = "email"
     PUSH = "push"
     SMS = "sms"
     WEBSOCKET = "websocket"
 
 class NotificationService:
-    """
-    Comprehensive notification management service.
+    """    Comprehensive notification management service.
     
     Features:
     - Multi-channel notification delivery
@@ -77,8 +71,7 @@ class NotificationService:
     - User preference management
     - Analytics and tracking
     - Template management
-    """
-    
+    """    
     def __init__(self):
         self.email_sender = EmailSender()
         self.push_sender = PushNotificationSender()
@@ -98,8 +91,7 @@ class NotificationService:
         expires_at: Optional[datetime] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Send a notification through specified channels.
+        """        Send a notification through specified channels.
         
         Args:
             recipient_id: ID of the user to receive the notification
@@ -115,8 +107,7 @@ class NotificationService:
             
         Returns:
             Notification delivery status and details
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -191,8 +182,7 @@ class NotificationService:
         channels: Optional[List[NotificationChannel]] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Send bulk notifications to multiple users efficiently.
+        """        Send bulk notifications to multiple users efficiently.
         
         Args:
             recipient_ids: List of user IDs to receive the notification
@@ -206,8 +196,7 @@ class NotificationService:
             
         Returns:
             Bulk notification results
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -268,8 +257,7 @@ class NotificationService:
         user_id: uuid.UUID,
         db: Session = None
     ) -> bool:
-        """
-        Mark a notification as read by the user.
+        """        Mark a notification as read by the user.
         
         Args:
             notification_id: ID of the notification to mark as read
@@ -278,8 +266,7 @@ class NotificationService:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -319,8 +306,7 @@ class NotificationService:
         notification_types: Optional[List[NotificationType]] = None,
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Get notifications for a user with filtering options.
+        """        Get notifications for a user with filtering options.
         
         Args:
             user_id: ID of the user
@@ -332,8 +318,7 @@ class NotificationService:
             
         Returns:
             User notifications with metadata
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -406,8 +391,7 @@ class NotificationService:
         preferences: Dict[str, Any],
         db: Session = None
     ) -> Dict[str, Any]:
-        """
-        Update user notification preferences.
+        """        Update user notification preferences.
         
         Args:
             user_id: ID of the user
@@ -416,8 +400,7 @@ class NotificationService:
             
         Returns:
             Updated preferences
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -460,8 +443,7 @@ class NotificationService:
         collaboration_data: Dict[str, Any],
         db: Session = None
     ):
-        """
-        Send collaboration-specific notifications.
+        """        Send collaboration-specific notifications.
         
         Args:
             requester_id: ID of user making the request
@@ -470,8 +452,7 @@ class NotificationService:
             action: Action taken ('request', 'accept', 'reject', 'complete')
             collaboration_data: Collaboration details
             db: Database session
-        """
-        try:
+        """        try:
             # Get user information
             if not db:
                 db = next(get_db())
@@ -534,8 +515,7 @@ class NotificationService:
         violation_details: Dict[str, Any],
         db: Session = None
     ):
-        """
-        Send content protection violation alert.
+        """        Send content protection violation alert.
         
         Args:
             user_id: ID of the content owner
@@ -543,8 +523,7 @@ class NotificationService:
             violation_type: Type of violation detected
             violation_details: Details about the violation
             db: Database session
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -590,8 +569,7 @@ class NotificationService:
         details: Dict[str, Any],
         db: Session = None
     ):
-        """
-        Send monetization and revenue updates.
+        """        Send monetization and revenue updates.
         
         Args:
             user_id: ID of the user
@@ -600,8 +578,7 @@ class NotificationService:
             currency: Currency code
             details: Additional details
             db: Database session
-        """
-        try:
+        """        try:
             if update_type == "revenue":
                 title = f"New Revenue Generated"
                 message = f"You've earned {amount:.2f} {currency} from your protected content"
@@ -646,16 +623,14 @@ class NotificationService:
         recommendation_data: Dict[str, Any],
         db: Session = None
     ):
-        """
-        Send AI-generated recommendations to users.
+        """        Send AI-generated recommendations to users.
         
         Args:
             user_id: ID of the user
             recommendation_type: Type of recommendation ('match', 'optimization', 'trend')
             recommendation_data: Recommendation details
             db: Database session
-        """
-        try:
+        """        try:
             if recommendation_type == "match":
                 title = "New Collaboration Match Found"
                 message = f"We found {recommendation_data.get('match_count', 1)} potential collaboration partners for you"
@@ -690,13 +665,11 @@ class NotificationService:
             raise
     
     async def process_scheduled_notifications(self, db: Session = None):
-        """
-        Process notifications scheduled for delivery.
+        """        Process notifications scheduled for delivery.
         
         Args:
             db: Database session
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -753,13 +726,11 @@ class NotificationService:
             raise
     
     async def cleanup_expired_notifications(self, db: Session = None):
-        """
-        Clean up expired notifications.
+        """        Clean up expired notifications.
         
         Args:
             db: Database session
-        """
-        try:
+        """        try:
             if not db:
                 db = next(get_db())
             
@@ -788,8 +759,7 @@ class NotificationService:
         notification_type: NotificationType,
         db: Session
     ) -> List[NotificationChannel]:
-        """Get user's preferred notification channels for a specific type."""
-        try:
+        """Get user's preferred notification channels for a specific type."""        try:
             user_prefs = db.query(NotificationPreferences).filter(
                 NotificationPreferences.user_id == user_id
             ).first()
@@ -817,8 +787,7 @@ class NotificationService:
             return self._get_default_channels(notification_type)
     
     def _get_default_channels(self, notification_type: NotificationType) -> List[NotificationChannel]:
-        """Get default channels based on notification type and priority."""
-        urgent_types = {
+        """Get default channels based on notification type and priority."""        urgent_types = {
             NotificationType.CONTENT_VIOLATION_DETECTED,
             NotificationType.SECURITY_ALERT,
             NotificationType.REVENUE_PAYMENT
@@ -840,8 +809,7 @@ class NotificationService:
         recipient: User,
         channels: List[NotificationChannel]
     ) -> Dict[str, Any]:
-        """Deliver notification through specified channels."""
-        delivery_results = {}
+        """Deliver notification through specified channels."""        delivery_results = {}
         
         for channel in channels:
             try:
@@ -879,8 +847,7 @@ class NotificationService:
         notification: Notification,
         recipient: User
     ) -> Dict[str, Any]:
-        """Send notification via email."""
-        try:
+        """Send notification via email."""        try:
             email_data = {
                 "to": recipient.email,
                 "subject": notification.title,
@@ -915,8 +882,7 @@ class NotificationService:
         notification: Notification,
         recipient: User
     ) -> Dict[str, Any]:
-        """Send notification via push notification."""
-        try:
+        """Send notification via push notification."""        try:
             # Get user's push notification tokens
             push_tokens = getattr(recipient, 'push_notification_tokens', [])
             
@@ -955,8 +921,7 @@ class NotificationService:
         notification: Notification,
         recipient: User
     ) -> Dict[str, Any]:
-        """Send notification via WebSocket."""
-        try:
+        """Send notification via WebSocket."""        try:
             websocket_data = {
                 "type": "notification",
                 "notification": {
@@ -990,8 +955,7 @@ class NotificationService:
             }
     
     def _get_email_template(self, notification_type: str) -> str:
-        """Get email template name for notification type."""
-        template_mapping = {
+        """Get email template name for notification type."""        template_mapping = {
             NotificationType.COLLABORATION_REQUEST.value: "collaboration_request",
             NotificationType.COLLABORATION_ACCEPTED.value: "collaboration_accepted",
             NotificationType.CONTENT_VIOLATION_DETECTED.value: "content_violation_alert",

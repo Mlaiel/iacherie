@@ -1,5 +1,4 @@
-"""
-Analytics Engine Module
+"""Analytics Engine Module
 =======================
 
 Ultra-advanced, enterprise-grade analytics processing systems for comprehensive data analysis,
@@ -38,7 +37,6 @@ Legal Warning: This code and concept are the exclusive property of Fahed Mlaiel.
 Any unauthorized use without explicit written permission will result in legal action.
 Contact: mlaiel@live.de for authorization requests.
 """
-
 import asyncio
 import logging
 import warnings
@@ -127,16 +125,14 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsType(Enum):
-    """Analytics type enumeration with comprehensive categories."""
-    DESCRIPTIVE = "descriptive"
+    """Analytics type enumeration with comprehensive categories."""    DESCRIPTIVE = "descriptive"
     DIAGNOSTIC = "diagnostic"
     PREDICTIVE = "predictive"
     PRESCRIPTIVE = "prescriptive"
 
 
 class MetricType(Enum):
-    """Metric type enumeration."""
-    COUNT = "count"
+    """Metric type enumeration."""    COUNT = "count"
     RATE = "rate"
     AVERAGE = "average"
     PERCENTAGE = "percentage"
@@ -145,8 +141,7 @@ class MetricType(Enum):
 
 
 class TimeGranularity(Enum):
-    """Time granularity for analytics."""
-    HOURLY = "hourly"
+    """Time granularity for analytics."""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -156,8 +151,7 @@ class TimeGranularity(Enum):
 
 @dataclass
 class AnalyticsConfiguration:
-    """Analytics configuration dataclass."""
-    analytics_type: AnalyticsType = AnalyticsType.DESCRIPTIVE
+    """Analytics configuration dataclass."""    analytics_type: AnalyticsType = AnalyticsType.DESCRIPTIVE
     time_granularity: TimeGranularity = TimeGranularity.DAILY
     include_predictions: bool = False
     include_clustering: bool = False
@@ -168,8 +162,7 @@ class AnalyticsConfiguration:
 
 
 class AnalyticsResult(BaseModel):
-    """Analytics result model."""
-    metric_name: str
+    """Analytics result model."""    metric_name: str
     metric_type: MetricType
     value: Union[float, int, str, List, Dict]
     confidence_interval: Optional[Tuple[float, float]] = None
@@ -180,8 +173,7 @@ class AnalyticsResult(BaseModel):
 
 
 class AnalyticsEngine(ABC):
-    """
-    Abstract base class for analytics engines.
+    """    Abstract base class for analytics engines.
     
     Provides common functionality for all analytics engines including:
     - Statistical analysis
@@ -189,8 +181,7 @@ class AnalyticsEngine(ABC):
     - Clustering analysis
     - Predictive modeling
     - Anomaly detection
-    """
-    
+    """    
     def __init__(self, config: AnalyticsConfiguration):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
@@ -199,12 +190,10 @@ class AnalyticsEngine(ABC):
     
     @abstractmethod
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform analytics analysis on provided data."""
-        pass
+        """Perform analytics analysis on provided data."""        pass
     
     async def calculate_descriptive_stats(self, values: List[Union[int, float]]) -> Dict[str, float]:
-        """Calculate descriptive statistics for numerical data."""
-        if not values:
+        """Calculate descriptive statistics for numerical data."""        if not values:
             return {}
         
         try:
@@ -233,8 +222,7 @@ class AnalyticsEngine(ABC):
             return {}
     
     async def detect_trend(self, values: List[Union[int, float]], timestamps: List[datetime]) -> Dict[str, Any]:
-        """Detect trend in time series data."""
-        if len(values) < 3 or len(values) != len(timestamps):
+        """Detect trend in time series data."""        if len(values) < 3 or len(values) != len(timestamps):
             return {"direction": "insufficient_data", "strength": 0.0}
         
         try:
@@ -271,8 +259,7 @@ class AnalyticsEngine(ABC):
             return {"direction": "error", "strength": 0.0}
     
     async def detect_anomalies(self, values: List[Union[int, float]], method: str = "iqr") -> List[int]:
-        """Detect anomalies in data using specified method."""
-        if len(values) < 4:
+        """Detect anomalies in data using specified method."""        if len(values) < 4:
             return []
         
         try:
@@ -313,8 +300,7 @@ class AnalyticsEngine(ABC):
             return []
     
     async def perform_clustering(self, data: pd.DataFrame, n_clusters: int = 3) -> Dict[str, Any]:
-        """Perform clustering analysis on multi-dimensional data."""
-        if data.empty or len(data) < n_clusters:
+        """Perform clustering analysis on multi-dimensional data."""        if data.empty or len(data) < n_clusters:
             return {"clusters": [], "centroids": [], "silhouette_score": 0.0}
         
         try:
@@ -369,8 +355,7 @@ class AnalyticsEngine(ABC):
     async def generate_forecast(self, values: List[Union[int, float]], 
                               timestamps: List[datetime], 
                               forecast_periods: int = 7) -> Dict[str, Any]:
-        """Generate forecast for time series data."""
-        if len(values) < 10 or len(values) != len(timestamps):
+        """Generate forecast for time series data."""        if len(values) < 10 or len(values) != len(timestamps):
             return {"forecast": [], "confidence_intervals": [], "method": "insufficient_data"}
         
         try:
@@ -417,8 +402,7 @@ class AnalyticsEngine(ABC):
     
     def _calculate_prediction_interval(self, x_values: List[float], y_values: List[float],
                                      slope: float, intercept: float, std_err: float) -> Tuple[float, float]:
-        """Calculate prediction interval for regression."""
-        try:
+        """Calculate prediction interval for regression."""        try:
             n = len(x_values)
             x_mean = np.mean(x_values)
             ss_x = sum((x - x_mean)**2 for x in x_values)
@@ -437,8 +421,7 @@ class AnalyticsEngine(ABC):
             return (0.0, 0.0)
     
     async def _analyze_cluster_characteristics(self, cluster_data: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze characteristics of a cluster."""
-        characteristics = {}
+        """Analyze characteristics of a cluster."""        characteristics = {}
         
         for column in cluster_data.columns:
             if cluster_data[column].dtype in ['int64', 'float64']:
@@ -453,8 +436,7 @@ class AnalyticsEngine(ABC):
 
 
 class PerformanceAnalytics(AnalyticsEngine):
-    """
-    Performance analytics engine for crawler and system performance analysis.
+    """    Performance analytics engine for crawler and system performance analysis.
     
     Provides comprehensive performance analytics including:
     - Success rate analysis
@@ -462,11 +444,9 @@ class PerformanceAnalytics(AnalyticsEngine):
     - Resource utilization patterns
     - Performance trend detection
     - Bottleneck identification
-    """
-    
+    """    
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform performance analytics analysis."""
-        results = []
+        """Perform performance analytics analysis."""        results = []
         
         try:
             # Analyze crawler performance metrics
@@ -491,8 +471,7 @@ class PerformanceAnalytics(AnalyticsEngine):
             return []
     
     async def _analyze_crawler_performance(self, crawler_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze crawler performance data."""
-        results = []
+        """Analyze crawler performance data."""        results = []
         
         # Calculate overall success rate
         total_requests = sum(item["total_requests"] for item in crawler_data)
@@ -539,8 +518,7 @@ class PerformanceAnalytics(AnalyticsEngine):
         return results
     
     async def _analyze_system_resources(self, resource_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze system resource utilization."""
-        results = []
+        """Analyze system resource utilization."""        results = []
         
         if not resource_data:
             return results
@@ -591,8 +569,7 @@ class PerformanceAnalytics(AnalyticsEngine):
         return results
     
     async def _analyze_error_patterns(self, error_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze error patterns and distributions."""
-        results = []
+        """Analyze error patterns and distributions."""        results = []
         
         if not error_data:
             return results
@@ -632,8 +609,7 @@ class PerformanceAnalytics(AnalyticsEngine):
 
 
 class ContentAnalytics(AnalyticsEngine):
-    """
-    Content analytics engine for content discovery and protection analysis.
+    """    Content analytics engine for content discovery and protection analysis.
     
     Provides comprehensive content analytics including:
     - Content discovery patterns
@@ -641,11 +617,9 @@ class ContentAnalytics(AnalyticsEngine):
     - Creator engagement metrics
     - Protection coverage analysis
     - Content growth trends
-    """
-    
+    """    
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform content analytics analysis."""
-        results = []
+        """Perform content analytics analysis."""        results = []
         
         try:
             # Analyze content discovery patterns
@@ -670,8 +644,7 @@ class ContentAnalytics(AnalyticsEngine):
             return []
     
     async def _analyze_content_discovery(self, discovery_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze content discovery patterns."""
-        results = []
+        """Analyze content discovery patterns."""        results = []
         
         # Content type distribution
         content_type_distribution = defaultdict(int)
@@ -713,8 +686,7 @@ class ContentAnalytics(AnalyticsEngine):
         return results
     
     async def _analyze_protection_coverage(self, protection_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze protection coverage patterns."""
-        results = []
+        """Analyze protection coverage patterns."""        results = []
         
         # Protection status distribution
         protection_status_counts = defaultdict(int)
@@ -761,8 +733,7 @@ class ContentAnalytics(AnalyticsEngine):
         return results
     
     async def _analyze_fingerprinting(self, fingerprint_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze fingerprinting performance."""
-        results = []
+        """Analyze fingerprinting performance."""        results = []
         
         # Fingerprint type distribution
         fingerprint_distribution = {}
@@ -797,8 +768,7 @@ class ContentAnalytics(AnalyticsEngine):
 
 
 class ProtectionAnalytics(AnalyticsEngine):
-    """
-    Protection analytics engine for security and violation detection analysis.
+    """    Protection analytics engine for security and violation detection analysis.
     
     Provides comprehensive protection analytics including:
     - Violation detection patterns
@@ -806,11 +776,9 @@ class ProtectionAnalytics(AnalyticsEngine):
     - Security threat analysis
     - Protection system performance
     - Legal compliance tracking
-    """
-    
+    """    
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform protection analytics analysis."""
-        results = []
+        """Perform protection analytics analysis."""        results = []
         
         try:
             # Analyze violation detection patterns
@@ -835,8 +803,7 @@ class ProtectionAnalytics(AnalyticsEngine):
             return []
     
     async def _analyze_violation_detection(self, violation_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze violation detection patterns."""
-        results = []
+        """Analyze violation detection patterns."""        results = []
         
         # Violation type analysis
         violation_types = defaultdict(int)
@@ -875,8 +842,7 @@ class ProtectionAnalytics(AnalyticsEngine):
         return results
     
     async def _analyze_dmca_effectiveness(self, dmca_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze DMCA takedown effectiveness."""
-        results = []
+        """Analyze DMCA takedown effectiveness."""        results = []
         
         # DMCA status distribution
         status_distribution = defaultdict(int)
@@ -929,8 +895,7 @@ class ProtectionAnalytics(AnalyticsEngine):
         return results
     
     async def _analyze_content_matching(self, matching_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze content matching performance."""
-        results = []
+        """Analyze content matching performance."""        results = []
         
         # Match confidence distribution over time
         dates = []
@@ -980,8 +945,7 @@ class ProtectionAnalytics(AnalyticsEngine):
 
 
 class PlatformAnalytics(AnalyticsEngine):
-    """
-    Platform analytics engine for multi-platform comparative analysis.
+    """    Platform analytics engine for multi-platform comparative analysis.
     
     Provides comprehensive platform analytics including:
     - Cross-platform performance comparison
@@ -989,11 +953,9 @@ class PlatformAnalytics(AnalyticsEngine):
     - User engagement patterns
     - Content distribution analysis
     - Platform-specific optimization insights
-    """
-    
+    """    
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform platform analytics analysis."""
-        results = []
+        """Perform platform analytics analysis."""        results = []
         
         try:
             # Combine data from multiple sources for platform analysis
@@ -1015,8 +977,7 @@ class PlatformAnalytics(AnalyticsEngine):
             return []
     
     async def _aggregate_platform_data(self, data: Dict[str, Any]) -> Dict[str, Dict[str, Any]]:
-        """Aggregate data from multiple sources by platform."""
-        platform_metrics = defaultdict(lambda: {
+        """Aggregate data from multiple sources by platform."""        platform_metrics = defaultdict(lambda: {
             "content_count": 0,
             "success_rate": 0.0,
             "avg_response_time": 0.0,
@@ -1073,8 +1034,7 @@ class PlatformAnalytics(AnalyticsEngine):
         return dict(platform_metrics)
     
     async def _perform_comparative_analysis(self, platform_metrics: Dict[str, Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Perform comparative analysis across platforms."""
-        results = []
+        """Perform comparative analysis across platforms."""        results = []
         
         if not platform_metrics:
             return results
@@ -1132,8 +1092,7 @@ class PlatformAnalytics(AnalyticsEngine):
         return results
     
     async def _perform_platform_clustering(self, platform_metrics: Dict[str, Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Perform clustering analysis on platform data."""
-        if len(platform_metrics) < 3:
+        """Perform clustering analysis on platform data."""        if len(platform_metrics) < 3:
             return []
         
         # Prepare data for clustering
@@ -1181,8 +1140,7 @@ class PlatformAnalytics(AnalyticsEngine):
 
 
 class RevenueAnalytics(AnalyticsEngine):
-    """
-    Revenue analytics engine for monetization and financial analysis.
+    """    Revenue analytics engine for monetization and financial analysis.
     
     Provides comprehensive revenue analytics including:
     - Revenue trend analysis
@@ -1190,11 +1148,9 @@ class RevenueAnalytics(AnalyticsEngine):
     - Platform revenue comparison
     - Monetization effectiveness
     - Financial forecasting
-    """
-    
+    """    
     async def analyze(self, data: Dict[str, Any]) -> List[AnalyticsResult]:
-        """Perform revenue analytics analysis."""
-        results = []
+        """Perform revenue analytics analysis."""        results = []
         
         try:
             # Analyze revenue trends
@@ -1224,8 +1180,7 @@ class RevenueAnalytics(AnalyticsEngine):
             return []
     
     async def _analyze_revenue_trends(self, trend_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze revenue trends over time."""
-        results = []
+        """Analyze revenue trends over time."""        results = []
         
         if not trend_data:
             return results
@@ -1270,8 +1225,7 @@ class RevenueAnalytics(AnalyticsEngine):
         return results
     
     async def _analyze_platform_revenue(self, platform_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze revenue performance by platform."""
-        results = []
+        """Analyze revenue performance by platform."""        results = []
         
         # Revenue distribution by platform
         platform_revenue = defaultdict(float)
@@ -1314,8 +1268,7 @@ class RevenueAnalytics(AnalyticsEngine):
         return results
     
     async def _analyze_creator_performance(self, creator_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Analyze creator performance metrics."""
-        results = []
+        """Analyze creator performance metrics."""        results = []
         
         if not creator_data:
             return results
@@ -1364,8 +1317,7 @@ class RevenueAnalytics(AnalyticsEngine):
         return results
     
     async def _generate_revenue_forecasts(self, trend_data: List[Dict[str, Any]]) -> List[AnalyticsResult]:
-        """Generate revenue forecasts."""
-        results = []
+        """Generate revenue forecasts."""        results = []
         
         if len(trend_data) < 10:
             return results

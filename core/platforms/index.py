@@ -1,5 +1,4 @@
-"""
-Platform Integration Index Module
+"""Platform Integration Index Module
 
 Central index for all platform integrations and utilities.
 
@@ -7,7 +6,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 from typing import Dict, List, Type, Optional
 import logging
 
@@ -87,12 +85,10 @@ PLATFORM_REGISTRY: Dict[PlatformType, Type[PlatformBase]] = {
 
 
 class PlatformFactory:
-    """Factory for creating platform instances"""
-    
+    """Factory for creating platform instances"""    
     @staticmethod
     def create_platform(platform_type: PlatformType, config: PlatformConfig) -> PlatformBase:
-        """Create platform instance by type"""
-        platform_class = PLATFORM_REGISTRY.get(platform_type)
+        """Create platform instance by type"""        platform_class = PLATFORM_REGISTRY.get(platform_type)
         
         if not platform_class:
             raise ValueError(f"Unsupported platform type: {platform_type}")
@@ -101,13 +97,11 @@ class PlatformFactory:
     
     @staticmethod
     def get_available_platforms() -> List[PlatformType]:
-        """Get list of available platform types"""
-        return list(PLATFORM_REGISTRY.keys())
+        """Get list of available platform types"""        return list(PLATFORM_REGISTRY.keys())
     
     @staticmethod
     def get_platform_class(platform_type: PlatformType) -> Type[PlatformBase]:
-        """Get platform class by type"""
-        platform_class = PLATFORM_REGISTRY.get(platform_type)
+        """Get platform class by type"""        platform_class = PLATFORM_REGISTRY.get(platform_type)
         
         if not platform_class:
             raise ValueError(f"Unsupported platform type: {platform_type}")
@@ -116,24 +110,20 @@ class PlatformFactory:
     
     @staticmethod
     def is_platform_supported(platform_type: PlatformType) -> bool:
-        """Check if platform type is supported"""
-        return platform_type in PLATFORM_REGISTRY
+        """Check if platform type is supported"""        return platform_type in PLATFORM_REGISTRY
 
 
 class PlatformEcosystem:
-    """Complete platform ecosystem manager"""
-    
+    """Complete platform ecosystem manager"""    
     def __init__(self):
-        """Initialize platform ecosystem"""
-        self.factory = PlatformFactory()
+        """Initialize platform ecosystem"""        self.factory = PlatformFactory()
         self.connector: Optional[PlatformConnector] = None
         self.distributor: Optional[PlatformDistributor] = None
         self.aggregator: Optional[PlatformAggregator] = None
         self.monitor: Optional[PlatformMonitor] = None
         
     async def initialize(self):
-        """Initialize all ecosystem components"""
-        try:
+        """Initialize all ecosystem components"""        try:
             # Initialize connector
             self.connector = await get_connector()
             
@@ -146,8 +136,7 @@ class PlatformEcosystem:
             raise
     
     async def shutdown(self):
-        """Shutdown ecosystem components"""
-        try:
+        """Shutdown ecosystem components"""        try:
             if self.monitor:
                 await self.monitor.stop_monitoring()
             
@@ -160,8 +149,7 @@ class PlatformEcosystem:
             logger.error(f"Error during ecosystem shutdown: {e}")
     
     def get_platform_info(self, platform_type: PlatformType) -> Dict[str, str]:
-        """Get platform information"""
-        platform_info = {
+        """Get platform information"""        platform_info = {
             # Core platforms
             PlatformType.SPOTIFY: {
                 "name": "Spotify",
@@ -372,8 +360,7 @@ class PlatformEcosystem:
         })
     
     def get_ecosystem_stats(self) -> Dict[str, int]:
-        """Get ecosystem statistics"""
-        return {
+        """Get ecosystem statistics"""        return {
             "total_platforms": len(PLATFORM_REGISTRY),
             "core_platforms": 16,
             "extended_platforms": 12,
@@ -392,8 +379,7 @@ _global_ecosystem: Optional[PlatformEcosystem] = None
 
 
 async def get_ecosystem() -> PlatformEcosystem:
-    """Get global ecosystem instance"""
-    global _global_ecosystem
+    """Get global ecosystem instance"""    global _global_ecosystem
     
     if _global_ecosystem is None:
         _global_ecosystem = PlatformEcosystem()
@@ -403,8 +389,7 @@ async def get_ecosystem() -> PlatformEcosystem:
 
 
 async def shutdown_ecosystem():
-    """Shutdown global ecosystem"""
-    global _global_ecosystem
+    """Shutdown global ecosystem"""    global _global_ecosystem
     
     if _global_ecosystem:
         await _global_ecosystem.shutdown()
@@ -413,18 +398,15 @@ async def shutdown_ecosystem():
 
 # Convenience functions
 def create_platform(platform_type: PlatformType, config: PlatformConfig) -> PlatformBase:
-    """Create platform instance"""
-    return PlatformFactory.create_platform(platform_type, config)
+    """Create platform instance"""    return PlatformFactory.create_platform(platform_type, config)
 
 
 def get_available_platforms() -> List[PlatformType]:
-    """Get available platforms"""
-    return PlatformFactory.get_available_platforms()
+    """Get available platforms"""    return PlatformFactory.get_available_platforms()
 
 
 def is_platform_supported(platform_type: PlatformType) -> bool:
-    """Check if platform is supported"""
-    return PlatformFactory.is_platform_supported(platform_type)
+    """Check if platform is supported"""    return PlatformFactory.is_platform_supported(platform_type)
 
 
 # Export main components

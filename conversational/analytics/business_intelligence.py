@@ -1,5 +1,4 @@
-"""
-🧠 ENTERPRISE BUSINESS INTELLIGENCE ENGINE - ULTRA-ADVANCED STRATEGIC ANALYTICS
+"""🧠 ENTERPRISE BUSINESS INTELLIGENCE ENGINE - ULTRA-ADVANCED STRATEGIC ANALYTICS
 ============================================================================
 
 Enterprise-grade business intelligence engine for strategic decision-making,
@@ -39,7 +38,6 @@ Enterprise Features:
 - Customer lifetime value and retention analytics
 - Executive dashboards with strategic reporting
 """
-
 import asyncio
 import logging
 import uuid
@@ -62,8 +60,7 @@ logger = logging.getLogger(__name__)
 
 
 class BusinessIntelligenceType(Enum):
-    """Business intelligence analysis types for strategic insights."""
-    MARKET_ANALYSIS = "market_analysis"
+    """Business intelligence analysis types for strategic insights."""    MARKET_ANALYSIS = "market_analysis"
     COMPETITIVE_INTELLIGENCE = "competitive_intelligence"
     REVENUE_OPTIMIZATION = "revenue_optimization"
     GROWTH_FORECASTING = "growth_forecasting"
@@ -76,16 +73,14 @@ class BusinessIntelligenceType(Enum):
 
 
 class AnalysisPriority(Enum):
-    """Priority levels for business intelligence analysis."""
-    CRITICAL = "critical"
+    """Priority levels for business intelligence analysis."""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
 
 
 class MarketSegment(Enum):
-    """Market segments for business intelligence analysis."""
-    MUSICIANS = "musicians"
+    """Market segments for business intelligence analysis."""    MUSICIANS = "musicians"
     VIDEO_CREATORS = "video_creators"
     BLOGGERS = "bloggers"
     PHOTOGRAPHERS = "photographers"
@@ -99,8 +94,7 @@ class MarketSegment(Enum):
 
 @dataclass
 class BusinessIntelligenceMetric:
-    """Business intelligence metric with strategic context."""
-    metric_id: str
+    """Business intelligence metric with strategic context."""    metric_id: str
     analysis_type: BusinessIntelligenceType
     metric_name: str
     value: float
@@ -133,8 +127,7 @@ class BusinessIntelligenceMetric:
 
 @dataclass
 class MarketIntelligence:
-    """Comprehensive market intelligence report."""
-    intelligence_id: str
+    """Comprehensive market intelligence report."""    intelligence_id: str
     market_segment: MarketSegment
     analysis_date: datetime
     
@@ -168,8 +161,7 @@ class MarketIntelligence:
 
 @dataclass
 class StrategicInsight:
-    """Strategic business insight with actionable recommendations."""
-    insight_id: str
+    """Strategic business insight with actionable recommendations."""    insight_id: str
     insight_type: str
     title: str
     description: str
@@ -205,8 +197,7 @@ class StrategicInsight:
 
 
 class EnterpriseBusinessIntelligence:
-    """
-    🚀 ULTRA-ADVANCED ENTERPRISE BUSINESS INTELLIGENCE ENGINE
+    """    🚀 ULTRA-ADVANCED ENTERPRISE BUSINESS INTELLIGENCE ENGINE
     =========================================================
     
     Enterprise-grade business intelligence engine for strategic decision-making,
@@ -224,8 +215,7 @@ class EnterpriseBusinessIntelligence:
     - Risk assessment and business continuity planning
     - Customer lifetime value and retention analytics
     - Executive dashboards with strategic reporting
-    """
-    
+    """    
     def __init__(self, db_session: AsyncSession, cache_manager: Any = None,
                  config: Dict[str, Any] = None):
         self.db_session = db_session
@@ -257,8 +247,7 @@ class EnterpriseBusinessIntelligence:
         self.market_benchmarks = {}
     
     async def initialize_business_intelligence(self):
-        """Initialize enterprise business intelligence engine."""
-        try:
+        """Initialize enterprise business intelligence engine."""        try:
             self.logger.info("Initializing enterprise business intelligence engine")
             
             # Load ML models for predictive analytics
@@ -284,8 +273,7 @@ class EnterpriseBusinessIntelligence:
     
     async def analyze_market_intelligence(self, market_segment: MarketSegment, 
                                         analysis_depth: str = "comprehensive") -> MarketIntelligence:
-        """Perform comprehensive market intelligence analysis."""
-        try:
+        """Perform comprehensive market intelligence analysis."""        try:
             self.logger.info(f"Analyzing market intelligence for {market_segment.value}")
             
             # Check cache first
@@ -346,8 +334,7 @@ class EnterpriseBusinessIntelligence:
             raise
     
     async def _gather_market_data(self, market_segment: MarketSegment) -> Dict[str, Any]:
-        """Gather comprehensive market data for analysis."""
-        try:
+        """Gather comprehensive market data for analysis."""        try:
             # Query user engagement metrics
             engagement_query = select(
                 func.count().label('total_users'),
@@ -384,8 +371,7 @@ class EnterpriseBusinessIntelligence:
     
     async def _analyze_market_metrics(self, market_data: Dict[str, Any], 
                                     market_segment: MarketSegment) -> Dict[str, Any]:
-        """Analyze market size, growth, and key metrics."""
-        try:
+        """Analyze market size, growth, and key metrics."""        try:
             # Calculate market size indicators
             market_size = {
                 'total_addressable_market': self._estimate_tam(market_segment),
@@ -415,8 +401,7 @@ class EnterpriseBusinessIntelligence:
             return {'size': {}, 'growth_rate': 0, 'trends': [], 'drivers': []}
     
     async def _analyze_competitive_landscape(self, market_segment: MarketSegment) -> Dict[str, Any]:
-        """Analyze competitive landscape and market positioning."""
-        try:
+        """Analyze competitive landscape and market positioning."""        try:
             # Analyze direct competitors
             direct_competitors = await self._identify_direct_competitors(market_segment)
             
@@ -449,8 +434,7 @@ class EnterpriseBusinessIntelligence:
     
     async def generate_strategic_insights(self, business_area: str = None, 
                                         priority: AnalysisPriority = None) -> List[StrategicInsight]:
-        """Generate strategic business insights with actionable recommendations."""
-        try:
+        """Generate strategic business insights with actionable recommendations."""        try:
             self.logger.info("Generating strategic business insights")
             
             insights = []
@@ -491,8 +475,7 @@ class EnterpriseBusinessIntelligence:
     async def _generate_segment_insight(self, segment: MarketSegment, 
                                       analysis_type: BusinessIntelligenceType,
                                       segment_data: Dict[str, Any]) -> Optional[StrategicInsight]:
-        """Generate strategic insight for specific segment and analysis type."""
-        try:
+        """Generate strategic insight for specific segment and analysis type."""        try:
             # Analyze based on type
             if analysis_type == BusinessIntelligenceType.REVENUE_OPTIMIZATION:
                 return await self._generate_revenue_optimization_insight(segment, segment_data)
@@ -513,8 +496,7 @@ class EnterpriseBusinessIntelligence:
     
     async def _generate_revenue_optimization_insight(self, segment: MarketSegment, 
                                                    data: Dict[str, Any]) -> Optional[StrategicInsight]:
-        """Generate revenue optimization insight."""
-        try:
+        """Generate revenue optimization insight."""        try:
             # Analyze revenue patterns
             revenue_metrics = data.get('revenue_metrics', {})
             if not revenue_metrics:
@@ -573,8 +555,7 @@ class EnterpriseBusinessIntelligence:
             return None
     
     def _calculate_revenue_optimization_potential(self, revenue_metrics: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate revenue optimization potential based on current metrics."""
-        try:
+        """Calculate revenue optimization potential based on current metrics."""        try:
             # Mock calculation - in real implementation, this would use sophisticated ML models
             current_revenue = revenue_metrics.get('monthly_revenue', 0)
             user_count = revenue_metrics.get('active_users', 0)
@@ -637,13 +618,11 @@ class EnterpriseBusinessIntelligence:
             return {'potential_increase': 0}
     
     def _get_market_benchmark_rpu(self) -> float:
-        """Get market benchmark revenue per user."""
-        # Mock benchmark - in real implementation, this would come from market research
+        """Get market benchmark revenue per user."""        # Mock benchmark - in real implementation, this would come from market research
         return 25.0
     
     async def get_executive_dashboard(self, timeframe: str = "quarterly") -> Dict[str, Any]:
-        """Generate executive dashboard with strategic KPIs and insights."""
-        try:
+        """Generate executive dashboard with strategic KPIs and insights."""        try:
             self.logger.info(f"Generating executive dashboard for {timeframe}")
             
             # Calculate timeframe dates

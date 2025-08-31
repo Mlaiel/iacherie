@@ -1,5 +1,4 @@
-"""
-Privacy Management and Data Protection System
+"""Privacy Management and Data Protection System
 
 Advanced privacy controls including PII detection, anonymization,
 pseudonymization, and data masking for GDPR and other compliance.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import logging
 import re
 import hashlib
@@ -33,8 +31,7 @@ logger = logging.getLogger(__name__)
 
 
 class PIIType(Enum):
-    """Types of personally identifiable information"""
-    EMAIL = "email"
+    """Types of personally identifiable information"""    EMAIL = "email"
     PHONE = "phone"
     SSN = "ssn"
     CREDIT_CARD = "credit_card"
@@ -50,8 +47,7 @@ class PIIType(Enum):
 
 
 class AnonymizationTechnique(Enum):
-    """Data anonymization techniques"""
-    MASKING = "masking"
+    """Data anonymization techniques"""    MASKING = "masking"
     HASHING = "hashing"
     ENCRYPTION = "encryption"
     TOKENIZATION = "tokenization"
@@ -63,8 +59,7 @@ class AnonymizationTechnique(Enum):
 
 
 class PrivacyLevel(Enum):
-    """Privacy protection levels"""
-    PUBLIC = "public"
+    """Privacy protection levels"""    PUBLIC = "public"
     INTERNAL = "internal"
     CONFIDENTIAL = "confidential"
     RESTRICTED = "restricted"
@@ -73,8 +68,7 @@ class PrivacyLevel(Enum):
 
 @dataclass
 class PIIDetectionResult:
-    """Result of PII detection analysis"""
-    content_id: str
+    """Result of PII detection analysis"""    content_id: str
     pii_found: bool
     pii_types: List[PIIType]
     pii_locations: List[Dict[str, Any]]
@@ -86,8 +80,7 @@ class PIIDetectionResult:
 
 @dataclass
 class AnonymizationRule:
-    """Anonymization rule definition"""
-    rule_id: str
+    """Anonymization rule definition"""    rule_id: str
     name: str
     pii_types: List[PIIType]
     technique: AnonymizationTechnique
@@ -99,8 +92,7 @@ class AnonymizationRule:
 
 @dataclass
 class AnonymizationRecord:
-    """Record of anonymization operation"""
-    record_id: str
+    """Record of anonymization operation"""    record_id: str
     content_id: str
     original_hash: str
     anonymized_hash: str
@@ -112,13 +104,11 @@ class AnonymizationRecord:
 
 
 class PIIDetector:
-    """
-    Advanced PII detection system
+    """    Advanced PII detection system
     
     Uses multiple detection methods including regex patterns,
     named entity recognition, and ML models.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -141,8 +131,7 @@ class PIIDetector:
         content: str,
         content_type: str = "text"
     ) -> PIIDetectionResult:
-        """
-        Detect PII in content
+        """        Detect PII in content
         
         Args:
             content: Content to analyze
@@ -150,8 +139,7 @@ class PIIDetector:
             
         Returns:
             PIIDetectionResult: Detection results
-        """
-        try:
+        """        try:
             pii_found = False
             pii_types = []
             pii_locations = []
@@ -245,8 +233,7 @@ class PIIDetector:
             raise PrivacyError(f"PII detection failed: {e}")
     
     def _assess_risk_level(self, pii_types: List[PIIType], confidence: float) -> str:
-        """Assess privacy risk level based on PII types and confidence"""
-        high_risk_types = {PIIType.SSN, PIIType.CREDIT_CARD, PIIType.PASSPORT, PIIType.MEDICAL_ID}
+        """Assess privacy risk level based on PII types and confidence"""        high_risk_types = {PIIType.SSN, PIIType.CREDIT_CARD, PIIType.PASSPORT, PIIType.MEDICAL_ID}
         medium_risk_types = {PIIType.EMAIL, PIIType.PHONE, PIIType.ADDRESS, PIIType.DATE_OF_BIRTH}
         
         if any(pii_type in high_risk_types for pii_type in pii_types):
@@ -262,11 +249,9 @@ class PIIDetector:
 
 
 class BaseAnonymizer(ABC):
-    """Base class for anonymization techniques"""
-    
+    """Base class for anonymization techniques"""    
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Anonymize the data - base implementation"""
-        try:
+        """Anonymize the data - base implementation"""        try:
             logger.info(f"Anonymizing data with {self.__class__.__name__}")
             
             # Basic implementation that masks sensitive patterns
@@ -290,8 +275,7 @@ class BaseAnonymizer(ABC):
             return mask_char * len(data) if data else ""
     
     async def deanonymize(self, data: str, key: str) -> str:
-        """Reverse anonymization if possible - base implementation"""
-        try:
+        """Reverse anonymization if possible - base implementation"""        try:
             logger.warning(f"Deanonymization attempted with {self.__class__.__name__}")
             
             # Base implementation - cannot reverse simple masking
@@ -309,18 +293,15 @@ class BaseAnonymizer(ABC):
             return data
     
     def is_reversible(self) -> bool:
-        """Check if technique is reversible - base implementation"""
-        # Base implementation - simple masking is not reversible
+        """Check if technique is reversible - base implementation"""        # Base implementation - simple masking is not reversible
         # Subclasses should override with specific reversibility logic
         return False
 
 
 class MaskingAnonymizer(BaseAnonymizer):
-    """Data masking anonymizer"""
-    
+    """Data masking anonymizer"""    
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Mask data with specified character"""
-        mask_char = parameters.get("mask_char", "*")
+        """Mask data with specified character"""        mask_char = parameters.get("mask_char", "*")
         preserve_length = parameters.get("preserve_length", True)
         preserve_prefix = parameters.get("preserve_prefix", 0)
         preserve_suffix = parameters.get("preserve_suffix", 0)
@@ -338,19 +319,16 @@ class MaskingAnonymizer(BaseAnonymizer):
         return prefix + (mask_char * middle_length) + suffix
     
     async def deanonymize(self, data: str, key: str) -> str:
-        """Cannot reverse masking"""
-        raise PrivacyError("Masking is not reversible")
+        """Cannot reverse masking"""        raise PrivacyError("Masking is not reversible")
     
     def is_reversible(self) -> bool:
         return False
 
 
 class HashingAnonymizer(BaseAnonymizer):
-    """Hashing-based anonymizer"""
-    
+    """Hashing-based anonymizer"""    
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Hash data with salt"""
-        algorithm = parameters.get("algorithm", "sha256")
+        """Hash data with salt"""        algorithm = parameters.get("algorithm", "sha256")
         salt = parameters.get("salt", "")
         
         salted_data = salt + data
@@ -363,23 +341,20 @@ class HashingAnonymizer(BaseAnonymizer):
             return hashlib.sha256(salted_data.encode()).hexdigest()
     
     async def deanonymize(self, data: str, key: str) -> str:
-        """Cannot reverse hashing"""
-        raise PrivacyError("Hashing is not reversible")
+        """Cannot reverse hashing"""        raise PrivacyError("Hashing is not reversible")
     
     def is_reversible(self) -> bool:
         return False
 
 
 class TokenizationAnonymizer(BaseAnonymizer):
-    """Tokenization anonymizer"""
-    
+    """Tokenization anonymizer"""    
     def __init__(self):
         self.token_mapping: Dict[str, str] = {}
         self.reverse_mapping: Dict[str, str] = {}
     
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Replace data with random token"""
-        if data in self.token_mapping:
+        """Replace data with random token"""        if data in self.token_mapping:
             return self.token_mapping[data]
         
         token_prefix = parameters.get("prefix", "TOK_")
@@ -393,8 +368,7 @@ class TokenizationAnonymizer(BaseAnonymizer):
         return token
     
     async def deanonymize(self, data: str, key: str) -> str:
-        """Reverse tokenization"""
-        if data in self.reverse_mapping:
+        """Reverse tokenization"""        if data in self.reverse_mapping:
             return self.reverse_mapping[data]
         raise PrivacyError(f"Token {data} not found in mapping")
     
@@ -403,27 +377,23 @@ class TokenizationAnonymizer(BaseAnonymizer):
 
 
 class EncryptionAnonymizer(BaseAnonymizer):
-    """Encryption-based anonymizer"""
-    
+    """Encryption-based anonymizer"""    
     async def anonymize(self, data: str, parameters: Dict[str, Any]) -> str:
-        """Encrypt data"""
-        # This would use actual encryption libraries
+        """Encrypt data"""        # This would use actual encryption libraries
         # Simplified implementation for demonstration
         key = parameters.get("key", "default_key")
         encrypted = self._simple_encrypt(data, key)
         return encrypted
     
     async def deanonymize(self, data: str, key: str) -> str:
-        """Decrypt data"""
-        decrypted = self._simple_decrypt(data, key)
+        """Decrypt data"""        decrypted = self._simple_decrypt(data, key)
         return decrypted
     
     def is_reversible(self) -> bool:
         return True
     
     def _simple_encrypt(self, data: str, key: str) -> str:
-        """AES-256 encryption implementation"""
-        try:
+        """AES-256 encryption implementation"""        try:
             from cryptography.fernet import Fernet
             import base64
             
@@ -442,8 +412,7 @@ class EncryptionAnonymizer(BaseAnonymizer):
             return self._caesar_encrypt(data, len(key) % 25 + 1)
     
     def _simple_decrypt(self, data: str, key: str) -> str:
-        """AES-256 decryption implementation"""
-        try:
+        """AES-256 decryption implementation"""        try:
             from cryptography.fernet import Fernet
             import base64
             
@@ -463,8 +432,7 @@ class EncryptionAnonymizer(BaseAnonymizer):
             return self._caesar_decrypt(data, len(key) % 25 + 1)
     
     def _caesar_encrypt(self, text: str, shift: int) -> str:
-        """Simple Caesar cipher encryption as fallback"""
-        result = ""
+        """Simple Caesar cipher encryption as fallback"""        result = ""
         for char in text:
             if char.isalpha():
                 ascii_offset = 65 if char.isupper() else 97
@@ -474,18 +442,15 @@ class EncryptionAnonymizer(BaseAnonymizer):
         return result
     
     def _caesar_decrypt(self, text: str, shift: int) -> str:
-        """Simple Caesar cipher decryption as fallback"""
-        return self._caesar_encrypt(text, -shift)
+        """Simple Caesar cipher decryption as fallback"""        return self._caesar_encrypt(text, -shift)
 
 
 class AnonymizationEngine:
-    """
-    Advanced data anonymization engine
+    """    Advanced data anonymization engine
     
     Applies various anonymization techniques based on rules
     and privacy requirements.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -508,8 +473,7 @@ class AnonymizationEngine:
         pii_detections: PIIDetectionResult,
         rules: List[AnonymizationRule]
     ) -> Tuple[str, List[AnonymizationRecord]]:
-        """
-        Anonymize content based on PII detections and rules
+        """        Anonymize content based on PII detections and rules
         
         Args:
             content_id: Content identifier
@@ -519,8 +483,7 @@ class AnonymizationEngine:
             
         Returns:
             Tuple[str, List[AnonymizationRecord]]: Anonymized content and records
-        """
-        try:
+        """        try:
             anonymized_content = content
             records = []
             
@@ -594,8 +557,7 @@ class AnonymizationEngine:
         records: List[AnonymizationRecord],
         key: Optional[str] = None
     ) -> str:
-        """
-        Reverse anonymization if possible
+        """        Reverse anonymization if possible
         
         Args:
             content_id: Content identifier
@@ -605,8 +567,7 @@ class AnonymizationEngine:
             
         Returns:
             str: Original content
-        """
-        try:
+        """        try:
             deanonymized_content = anonymized_content
             
             # Process records in reverse order
@@ -635,24 +596,20 @@ class AnonymizationEngine:
         pii_type: PIIType,
         rules: List[AnonymizationRule]
     ) -> Optional[AnonymizationRule]:
-        """Find the most appropriate anonymization rule for PII type"""
-        for rule in rules:
+        """Find the most appropriate anonymization rule for PII type"""        for rule in rules:
             if pii_type in rule.pii_types:
                 return rule
         return None
 
 
 class PrivacyManager(BaseManager):
-    """
-    Central privacy management system
+    """    Central privacy management system
     
     Coordinates PII detection, anonymization, and privacy compliance
     across all content types in the platform.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the privacy manager"""
-        super().__init__(config)
+        """Initialize the privacy manager"""        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -673,8 +630,7 @@ class PrivacyManager(BaseManager):
         }
     
     async def initialize(self) -> None:
-        """Initialize the privacy manager"""
-        try:
+        """Initialize the privacy manager"""        try:
             await self._create_default_anonymization_rules()
             self.logger.info("Privacy manager initialized successfully")
             
@@ -688,8 +644,7 @@ class PrivacyManager(BaseManager):
         content: str,
         content_type: str = "text"
     ) -> PIIDetectionResult:
-        """
-        Scan content for personally identifiable information
+        """        Scan content for personally identifiable information
         
         Args:
             content_id: Content identifier
@@ -698,8 +653,7 @@ class PrivacyManager(BaseManager):
             
         Returns:
             PIIDetectionResult: Detection results
-        """
-        try:
+        """        try:
             # Perform PII detection
             detection_result = await self.pii_detector.detect_pii(content, content_type)
             detection_result.content_id = content_id
@@ -725,8 +679,7 @@ class PrivacyManager(BaseManager):
         content: str,
         privacy_level: PrivacyLevel = PrivacyLevel.CONFIDENTIAL
     ) -> Tuple[str, bool]:
-        """
-        Anonymize content based on privacy level
+        """        Anonymize content based on privacy level
         
         Args:
             content_id: Content identifier
@@ -735,8 +688,7 @@ class PrivacyManager(BaseManager):
             
         Returns:
             Tuple[str, bool]: Anonymized content and success flag
-        """
-        try:
+        """        try:
             # First scan for PII
             pii_detection = await self.scan_for_pii(content_id, content)
             
@@ -767,8 +719,7 @@ class PrivacyManager(BaseManager):
         content: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """
-        Assess privacy risk for content
+        """        Assess privacy risk for content
         
         Args:
             content_id: Content identifier
@@ -777,8 +728,7 @@ class PrivacyManager(BaseManager):
             
         Returns:
             Dict with privacy risk assessment
-        """
-        try:
+        """        try:
             # Scan for PII
             pii_detection = await self.scan_for_pii(content_id, content)
             
@@ -825,16 +775,14 @@ class PrivacyManager(BaseManager):
             return {"error": f"Privacy assessment failed: {e}"}
     
     async def create_anonymization_rule(self, rule: AnonymizationRule) -> bool:
-        """
-        Create a new anonymization rule
+        """        Create a new anonymization rule
         
         Args:
             rule: Anonymization rule to create
             
         Returns:
             bool: True if rule created successfully
-        """
-        try:
+        """        try:
             # Validate rule
             await self._validate_anonymization_rule(rule)
             
@@ -854,8 +802,7 @@ class PrivacyManager(BaseManager):
         pii_type: Optional[PIIType] = None,
         risk_level: Optional[str] = None
     ) -> List[PIIDetectionResult]:
-        """
-        Get PII detection results with optional filtering
+        """        Get PII detection results with optional filtering
         
         Args:
             content_id: Filter by content ID
@@ -864,8 +811,7 @@ class PrivacyManager(BaseManager):
             
         Returns:
             List of filtered PII detection results
-        """
-        results = list(self.pii_detections.values())
+        """        results = list(self.pii_detections.values())
         
         if content_id:
             results = [r for r in results if r.content_id == content_id]
@@ -879,8 +825,7 @@ class PrivacyManager(BaseManager):
         return results
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get privacy management metrics"""
-        return {
+        """Get privacy management metrics"""        return {
             **self.metrics,
             "total_rules": len(self.anonymization_rules),
             "total_assessments": len(self.privacy_assessments),
@@ -895,8 +840,7 @@ class PrivacyManager(BaseManager):
         pii_detection: PIIDetectionResult,
         metadata: Dict[str, Any]
     ) -> float:
-        """Calculate privacy risk score (0-100)"""
-        score = 0.0
+        """Calculate privacy risk score (0-100)"""        score = 0.0
         
         if not pii_detection.pii_found:
             return score
@@ -941,8 +885,7 @@ class PrivacyManager(BaseManager):
         pii_detection: PIIDetectionResult,
         risk_score: float
     ) -> List[str]:
-        """Generate privacy protection recommendations"""
-        recommendations = []
+        """Generate privacy protection recommendations"""        recommendations = []
         
         if not pii_detection.pii_found:
             recommendations.append("No PII detected - content appears safe")
@@ -972,8 +915,7 @@ class PrivacyManager(BaseManager):
         self,
         privacy_level: PrivacyLevel
     ) -> List[AnonymizationRule]:
-        """Get anonymization rules appropriate for privacy level"""
-        rules = []
+        """Get anonymization rules appropriate for privacy level"""        rules = []
         
         for rule in self.anonymization_rules.values():
             if not rule.enabled:
@@ -986,8 +928,7 @@ class PrivacyManager(BaseManager):
         return rules
     
     async def _validate_anonymization_rule(self, rule: AnonymizationRule) -> None:
-        """Validate anonymization rule configuration"""
-        if not rule.rule_id or not rule.name:
+        """Validate anonymization rule configuration"""        if not rule.rule_id or not rule.name:
             raise ValidationError("Rule ID and name are required")
         
         if not rule.pii_types:
@@ -997,8 +938,7 @@ class PrivacyManager(BaseManager):
             raise ValidationError(f"Unsupported anonymization technique: {rule.technique}")
     
     async def _create_default_anonymization_rules(self) -> None:
-        """Create default anonymization rules"""
-        # High-sensitivity PII rule
+        """Create default anonymization rules"""        # High-sensitivity PII rule
         high_sensitivity_rule = AnonymizationRule(
             rule_id="high_sensitivity_pii",
             name="High Sensitivity PII Protection",

@@ -1,5 +1,4 @@
-"""
-Image Specialist Agent
+"""Image Specialist Agent
 
 AI-powered image creation, editing, and optimization agent for influencers.
 
@@ -12,7 +11,6 @@ Any unauthorized use, copying, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Tuple
 from enum import Enum
@@ -28,8 +26,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class ImageFormat(Enum):
-    """Image format types"""
-    INSTAGRAM_POST = "instagram_post"
+    """Image format types"""    INSTAGRAM_POST = "instagram_post"
     INSTAGRAM_STORY = "instagram_story"
     TWITTER_POST = "twitter_post"
     YOUTUBE_THUMBNAIL = "youtube_thumbnail"
@@ -41,8 +38,7 @@ class ImageFormat(Enum):
     LOGO = "logo"
 
 class ImageStyle(Enum):
-    """Image style categories"""
-    MINIMALIST = "minimalist"
+    """Image style categories"""    MINIMALIST = "minimalist"
     VIBRANT = "vibrant"
     PROFESSIONAL = "professional"
     ARTISTIC = "artistic"
@@ -54,8 +50,7 @@ class ImageStyle(Enum):
     ABSTRACT = "abstract"
 
 class ProcessingType(Enum):
-    """Image processing types"""
-    ENHANCEMENT = "enhancement"
+    """Image processing types"""    ENHANCEMENT = "enhancement"
     COLOR_CORRECTION = "color_correction"
     BACKGROUND_REMOVAL = "background_removal"
     OBJECT_REMOVAL = "object_removal"
@@ -66,8 +61,7 @@ class ProcessingType(Enum):
 
 @dataclass
 class ImageProject:
-    """Image project data"""
-    project_id: str
+    """Image project data"""    project_id: str
     title: str
     format: ImageFormat
     style: ImageStyle
@@ -81,8 +75,7 @@ class ImageProject:
 
 @dataclass
 class ImageAsset:
-    """Image asset information"""
-    asset_id: str
+    """Image asset information"""    asset_id: str
     file_path: str
     dimensions: Tuple[int, int]
     file_size_mb: float
@@ -92,16 +85,14 @@ class ImageAsset:
 
 @dataclass
 class GenerationRequest:
-    """Image generation request"""
-    request_id: str
+    """Image generation request"""    request_id: str
     prompt: str
     style: ImageStyle
     format: ImageFormat
     additional_parameters: Dict[str, Any] = field(default_factory=dict)
 
 class ImageSpecialistAgent(BaseAIAgent):
-    """AI agent for image creation, editing, and optimization"""
-    
+    """AI agent for image creation, editing, and optimization"""    
     def __init__(self, config: AgentConfiguration):
         super().__init__(config)
         self.name = "ImageSpecialistAgent"
@@ -126,8 +117,7 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     async def create_image_project(self, title: str, format: ImageFormat, style: ImageStyle, 
                                  target_platforms: List[str]) -> ImageProject:
-        """Create a new image project"""
-        try:
+        """Create a new image project"""        try:
             dimensions = self._get_optimal_dimensions(format, target_platforms)
             
             project = ImageProject(
@@ -152,8 +142,7 @@ class ImageSpecialistAgent(BaseAIAgent):
             return None
     
     async def generate_image_from_prompt(self, prompt: str, style: ImageStyle, format: ImageFormat) -> str:
-        """Generate image using AI from text prompt"""
-        try:
+        """Generate image using AI from text prompt"""        try:
             request = GenerationRequest(
                 request_id=f"gen_{datetime.now().timestamp()}",
                 prompt=prompt,
@@ -175,8 +164,7 @@ class ImageSpecialistAgent(BaseAIAgent):
             return None
     
     async def enhance_image_quality(self, image_path: str, enhancement_type: str = "auto") -> str:
-        """Enhance image quality using AI"""
-        try:
+        """Enhance image quality using AI"""        try:
             enhanced_path = f"{image_path}_enhanced.jpg"
             
             # Apply enhancements based on type
@@ -196,8 +184,7 @@ class ImageSpecialistAgent(BaseAIAgent):
             return image_path
     
     async def optimize_for_platform(self, project_id: str, platform: str) -> Dict[str, Any]:
-        """Optimize image for specific platform requirements"""
-        try:
+        """Optimize image for specific platform requirements"""        try:
             if project_id not in self.active_projects:
                 return {"error": "Project not found"}
             
@@ -221,8 +208,7 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     async def create_brand_consistent_images(self, brand_guidelines: Dict[str, Any], 
                                            image_count: int = 5) -> List[str]:
-        """Create brand-consistent images based on guidelines"""
-        try:
+        """Create brand-consistent images based on guidelines"""        try:
             brand_images = []
             
             for i in range(image_count):
@@ -251,8 +237,7 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     async def batch_process_images(self, image_paths: List[str], 
                                  processing_type: ProcessingType) -> List[str]:
-        """Batch process multiple images"""
-        try:
+        """Batch process multiple images"""        try:
             processed_images = []
             
             for image_path in image_paths:
@@ -267,8 +252,7 @@ class ImageSpecialistAgent(BaseAIAgent):
             return []
     
     async def analyze_image_performance(self, image_path: str, platform_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze image performance and provide improvement suggestions"""
-        try:
+        """Analyze image performance and provide improvement suggestions"""        try:
             analysis = {
                 "visual_analysis": await self._analyze_visual_elements(image_path),
                 "platform_compliance": await self._check_platform_compliance(image_path, platform_data),
@@ -284,8 +268,7 @@ class ImageSpecialistAgent(BaseAIAgent):
             return {}
     
     async def create_image_variations(self, base_image_path: str, variation_count: int = 3) -> List[str]:
-        """Create variations of a base image"""
-        try:
+        """Create variations of a base image"""        try:
             variations = []
             
             for i in range(variation_count):
@@ -302,8 +285,7 @@ class ImageSpecialistAgent(BaseAIAgent):
     
     # Helper methods
     async def _generate_processing_tasks(self, project: ImageProject) -> List[ProcessingType]:
-        """Generate processing tasks based on project requirements"""
-        tasks = [ProcessingType.ENHANCEMENT]
+        """Generate processing tasks based on project requirements"""        tasks = [ProcessingType.ENHANCEMENT]
         
         if project.format in [ImageFormat.YOUTUBE_THUMBNAIL, ImageFormat.TIKTOK_COVER]:
             tasks.append(ProcessingType.COLOR_CORRECTION)
@@ -317,8 +299,7 @@ class ImageSpecialistAgent(BaseAIAgent):
         return tasks
     
     async def _process_generation_request(self, request: GenerationRequest) -> str:
-        """Process AI image generation request"""
-        # Simulate AI generation
+        """Process AI image generation request"""        # Simulate AI generation
         await asyncio.sleep(0.3)  # Simulate processing time
         
         generated_path = f"generated/img_{request.request_id}.jpg"
@@ -327,8 +308,7 @@ class ImageSpecialistAgent(BaseAIAgent):
         return generated_path
     
     async def _analyze_image_quality(self, image_path: str) -> Dict[str, Any]:
-        """Analyze image quality metrics"""
-        # Simulate quality analysis
+        """Analyze image quality metrics"""        # Simulate quality analysis
         import random
         return {
             "sharpness_score": random.uniform(0.7, 1.0),
@@ -339,22 +319,19 @@ class ImageSpecialistAgent(BaseAIAgent):
         }
     
     async def _analyze_enhancement_needs(self, image_path: str) -> List[str]:
-        """Analyze what enhancements an image needs"""
-        # Simulate enhancement analysis
+        """Analyze what enhancements an image needs"""        # Simulate enhancement analysis
         possible_enhancements = ["brightness", "contrast", "saturation", "sharpness"]
         import random
         return random.sample(possible_enhancements, k=random.randint(1, 3))
     
     async def _apply_enhancement(self, image_path: str, enhancement_type: str) -> bool:
-        """Apply specific enhancement to image"""
-        # Simulate enhancement application
+        """Apply specific enhancement to image"""        # Simulate enhancement application
         await asyncio.sleep(0.1)
         logger.info(f"Applied {enhancement_type} enhancement to {image_path}")
         return True
     
     async def _generate_brand_prompt(self, brand_guidelines: Dict[str, Any], index: int) -> str:
-        """Generate brand-specific image prompt"""
-        brand_keywords = brand_guidelines.get("keywords", ["professional", "modern"])
+        """Generate brand-specific image prompt"""        brand_keywords = brand_guidelines.get("keywords", ["professional", "modern"])
         colors = brand_guidelines.get("colors", ["blue", "white"])
         
         prompts = [
@@ -366,8 +343,7 @@ class ImageSpecialistAgent(BaseAIAgent):
         return prompts[index % len(prompts)]
     
     async def _determine_brand_style(self, brand_guidelines: Dict[str, Any]) -> ImageStyle:
-        """Determine image style based on brand guidelines"""
-        personality = brand_guidelines.get("personality", "professional")
+        """Determine image style based on brand guidelines"""        personality = brand_guidelines.get("personality", "professional")
         
         style_mapping = {
             "professional": ImageStyle.PROFESSIONAL,
@@ -380,23 +356,20 @@ class ImageSpecialistAgent(BaseAIAgent):
         return style_mapping.get(personality, ImageStyle.PROFESSIONAL)
     
     async def _apply_brand_elements(self, image_path: str, brand_guidelines: Dict[str, Any]) -> str:
-        """Apply brand elements to generated image"""
-        # Simulate brand element application
+        """Apply brand elements to generated image"""        # Simulate brand element application
         branded_path = f"{image_path}_branded.jpg"
         logger.info(f"Applied brand elements to {image_path}")
         return branded_path
     
     async def _process_single_image(self, image_path: str, processing_type: ProcessingType) -> str:
-        """Process a single image with specified processing type"""
-        # Simulate image processing
+        """Process a single image with specified processing type"""        # Simulate image processing
         await asyncio.sleep(0.2)
         processed_path = f"{image_path}_processed.jpg"
         logger.info(f"Processed {image_path} with {processing_type.value}")
         return processed_path
     
     async def _analyze_visual_elements(self, image_path: str) -> Dict[str, Any]:
-        """Analyze visual elements of an image"""
-        # Simulate visual analysis
+        """Analyze visual elements of an image"""        # Simulate visual analysis
         import random
         return {
             "dominant_colors": ["#FF6B6B", "#4ECDC4", "#45B7D1"],
@@ -407,8 +380,7 @@ class ImageSpecialistAgent(BaseAIAgent):
         }
     
     async def _predict_engagement(self, image_path: str, platform_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Predict engagement potential for image"""
-        import random
+        """Predict engagement potential for image"""        import random
         return {
             "predicted_likes": random.randint(100, 5000),
             "predicted_comments": random.randint(10, 200),
@@ -418,15 +390,13 @@ class ImageSpecialistAgent(BaseAIAgent):
         }
     
     async def _create_image_variation(self, base_image_path: str, variation_number: int) -> str:
-        """Create a variation of the base image"""
-        # Simulate variation creation
+        """Create a variation of the base image"""        # Simulate variation creation
         variation_path = f"{base_image_path}_variation_{variation_number}.jpg"
         logger.info(f"Created variation {variation_number} of {base_image_path}")
         return variation_path
     
     def _get_optimal_dimensions(self, format: ImageFormat, platforms: List[str]) -> Tuple[int, int]:
-        """Get optimal dimensions for image format and platforms"""
-        dimension_map = {
+        """Get optimal dimensions for image format and platforms"""        dimension_map = {
             ImageFormat.INSTAGRAM_POST: (1080, 1080),
             ImageFormat.INSTAGRAM_STORY: (1080, 1920),
             ImageFormat.TWITTER_POST: (1200, 675),
@@ -442,8 +412,7 @@ class ImageSpecialistAgent(BaseAIAgent):
         return dimension_map.get(format, (1080, 1080))
     
     def _load_style_presets(self) -> Dict[str, Dict[str, Any]]:
-        """Load predefined style presets"""
-        return {
+        """Load predefined style presets"""        return {
             "minimalist": {
                 "color_palette": ["#FFFFFF", "#F5F5F5", "#CCCCCC"],
                 "composition": "clean_lines",
@@ -465,8 +434,7 @@ class ImageSpecialistAgent(BaseAIAgent):
         }
     
     def _load_platform_specifications(self) -> Dict[str, Dict[str, Any]]:
-        """Load platform-specific image specifications"""
-        return {
+        """Load platform-specific image specifications"""        return {
             "instagram": {
                 "max_file_size_mb": 30,
                 "supported_formats": ["jpg", "png"],
@@ -488,8 +456,7 @@ class ImageSpecialistAgent(BaseAIAgent):
         }
     
     def _initialize_color_palettes(self) -> Dict[str, List[str]]:
-        """Initialize color palettes for different styles"""
-        return {
+        """Initialize color palettes for different styles"""        return {
             "warm": ["#FF6B6B", "#FF8E53", "#FF6B9D", "#C44569"],
             "cool": ["#4ECDC4", "#45B7D1", "#96CEB4", "#FFEAA7"],
             "neutral": ["#2C3E50", "#34495E", "#BDC3C7", "#ECF0F1"],

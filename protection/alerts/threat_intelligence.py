@@ -1,5 +1,4 @@
-"""
-Advanced Threat Intelligence Engine - IA Influencer Agent Enterprise System
+"""Advanced Threat Intelligence Engine - IA Influencer Agent Enterprise System
 Created by: Fahed Mlaiel (mlaiel@live.de)
 
 WARNING: This code is proprietary and confidential. Any unauthorized use, reproduction, 
@@ -11,7 +10,6 @@ Ultra-advanced threat intelligence engine for real-time threat detection,
 attribution analysis, campaign tracking, and predictive threat modeling.
 Business Logic: Threat detection → intelligence analysis → attribution → response coordination
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class ThreatType(Enum):
-    """Types of threats in content protection"""
-    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
+    """Types of threats in content protection"""    COPYRIGHT_INFRINGEMENT = "copyright_infringement"
     PIRACY_CAMPAIGN = "piracy_campaign"
     AUTOMATED_SCRAPING = "automated_scraping"
     CONTENT_FARMS = "content_farms"
@@ -59,8 +56,7 @@ class ThreatType(Enum):
 
 
 class ThreatSeverity(Enum):
-    """Threat severity levels"""
-    INFORMATIONAL = "informational"
+    """Threat severity levels"""    INFORMATIONAL = "informational"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
@@ -68,8 +64,7 @@ class ThreatSeverity(Enum):
 
 
 class ThreatConfidence(Enum):
-    """Confidence levels for threat intelligence"""
-    UNCONFIRMED = "unconfirmed"
+    """Confidence levels for threat intelligence"""    UNCONFIRMED = "unconfirmed"
     POSSIBLE = "possible"
     LIKELY = "likely"
     CONFIRMED = "confirmed"
@@ -78,8 +73,7 @@ class ThreatConfidence(Enum):
 
 @dataclass
 class ThreatIndicator:
-    """Indicator of Compromise (IoC) for threat intelligence"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Indicator of Compromise (IoC) for threat intelligence"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     type: str = "ip_address"  # ip_address, domain, url, file_hash, user_agent, etc.
     value: str = ""
     threat_types: List[ThreatType] = field(default_factory=list)
@@ -95,8 +89,7 @@ class ThreatIndicator:
 
 @dataclass
 class ThreatCampaign:
-    """Coordinated threat campaign tracking"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Coordinated threat campaign tracking"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     description: str = ""
     threat_types: List[ThreatType] = field(default_factory=list)
@@ -116,8 +109,7 @@ class ThreatCampaign:
 
 @dataclass
 class ThreatActor:
-    """Threat actor profile and attribution"""
-    id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Threat actor profile and attribution"""    id: str = field(default_factory=lambda: str(uuid.uuid4()))
     name: str = ""
     aliases: List[str] = field(default_factory=list)
     actor_type: str = "individual"  # individual, group, organization, state
@@ -136,11 +128,9 @@ class ThreatActor:
 
 
 class AdvancedThreatIntelligenceEngine:
-    """
-    Enterprise-grade threat intelligence engine with advanced analytics,
+    """    Enterprise-grade threat intelligence engine with advanced analytics,
     attribution modeling, campaign tracking, and predictive capabilities.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
         self.threat_feeds = ThreatFeedManager()
@@ -163,8 +153,7 @@ class AdvancedThreatIntelligenceEngine:
         self.predictive_engine = None
         
     async def initialize(self):
-        """Initialize threat intelligence engine"""
-        await self.threat_feeds.initialize()
+        """Initialize threat intelligence engine"""        await self.threat_feeds.initialize()
         await self.campaign_tracker.initialize()
         await self.ml_classifier.initialize()
         await self.cache.initialize()
@@ -187,8 +176,7 @@ class AdvancedThreatIntelligenceEngine:
         alert: ContentProtectionAlert,
         enrichment_level: str = "comprehensive"
     ) -> ThreatIntelligenceAlert:
-        """Analyze alert for threat intelligence and create enriched threat alert"""
-        try:
+        """Analyze alert for threat intelligence and create enriched threat alert"""        try:
             threat_alert = ThreatIntelligenceAlert(
                 alert_id=alert.id,
                 threat_type="copyright_infringement",
@@ -234,8 +222,7 @@ class AdvancedThreatIntelligenceEngine:
             raise
     
     async def _extract_indicators_from_alert(self, alert: ContentProtectionAlert) -> List[ThreatIndicator]:
-        """Extract threat indicators from content protection alert"""
-        indicators = []
+        """Extract threat indicators from content protection alert"""        indicators = []
         
         try:
             # Extract IP addresses
@@ -324,8 +311,7 @@ class AdvancedThreatIntelligenceEngine:
         indicators: List[ThreatIndicator], 
         enrichment_level: str
     ) -> List[Dict[str, Any]]:
-        """Enrich indicators with external threat intelligence"""
-        enriched_indicators = []
+        """Enrich indicators with external threat intelligence"""        enriched_indicators = []
         
         for indicator in indicators:
             try:
@@ -386,8 +372,7 @@ class AdvancedThreatIntelligenceEngine:
         return enriched_indicators
     
     async def _enrich_ip_address(self, ip_address: str, enrichment_level: str) -> Dict[str, Any]:
-        """Enrich IP address with geolocation, reputation, and threat data"""
-        enrichment = {
+        """Enrich IP address with geolocation, reputation, and threat data"""        enrichment = {
             'geolocation': {},
             'reputation': {},
             'network_info': {},
@@ -440,8 +425,7 @@ class AdvancedThreatIntelligenceEngine:
             return {'error': str(e)}
     
     async def _enrich_domain(self, domain: str, enrichment_level: str) -> Dict[str, Any]:
-        """Enrich domain with WHOIS, DNS, and reputation data"""
-        enrichment = {
+        """Enrich domain with WHOIS, DNS, and reputation data"""        enrichment = {
             'whois_data': {},
             'dns_records': {},
             'reputation': {},
@@ -491,8 +475,7 @@ class AdvancedThreatIntelligenceEngine:
             return {'error': str(e)}
     
     async def _enrich_file_hash(self, file_hash: str, enrichment_level: str) -> Dict[str, Any]:
-        """Enrich file hash with malware databases and threat intelligence"""
-        enrichment = {
+        """Enrich file hash with malware databases and threat intelligence"""        enrichment = {
             'malware_detection': {},
             'file_analysis': {},
             'threat_classification': {},
@@ -534,8 +517,7 @@ class AdvancedThreatIntelligenceEngine:
             return {'error': str(e)}
     
     async def _enrich_user_agent(self, user_agent: str, enrichment_level: str) -> Dict[str, Any]:
-        """Enrich user agent with browser analysis and bot detection"""
-        enrichment = {
+        """Enrich user agent with browser analysis and bot detection"""        enrichment = {
             'browser_analysis': {},
             'bot_detection': {},
             'anomaly_detection': {},
@@ -577,8 +559,7 @@ class AdvancedThreatIntelligenceEngine:
             return {'error': str(e)}
     
     async def _check_threat_feeds(self, indicator: ThreatIndicator) -> List[Dict[str, Any]]:
-        """Check indicator against threat intelligence feeds"""
-        feed_matches = []
+        """Check indicator against threat intelligence feeds"""        feed_matches = []
         
         try:
             # Commercial threat feeds
@@ -622,8 +603,7 @@ class AdvancedThreatIntelligenceEngine:
             return []
     
     async def _get_historical_data(self, indicator: ThreatIndicator) -> Dict[str, Any]:
-        """Get historical data for indicator"""
-        try:
+        """Get historical data for indicator"""        try:
             return {
                 'first_observed': (datetime.now(timezone.utc) - timedelta(days=30)).isoformat(),
                 'last_observed': datetime.now(timezone.utc).isoformat(),
@@ -647,8 +627,7 @@ class AdvancedThreatIntelligenceEngine:
             return {}
     
     async def _find_related_indicators(self, indicator: ThreatIndicator) -> List[Dict[str, Any]]:
-        """Find indicators related to the given indicator"""
-        try:
+        """Find indicators related to the given indicator"""        try:
             related = []
             
             # Infrastructure relationships
@@ -676,8 +655,7 @@ class AdvancedThreatIntelligenceEngine:
             return []
     
     async def _perform_attribution_analysis(self, enriched_indicators: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Perform threat attribution analysis"""
-        try:
+        """Perform threat attribution analysis"""        try:
             attribution = {
                 'threat_actor': {},
                 'infrastructure_analysis': {},
@@ -710,8 +688,7 @@ class AdvancedThreatIntelligenceEngine:
             return {}
     
     async def _analyze_infrastructure_patterns(self, enriched_indicators: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze infrastructure patterns for attribution"""
-        patterns = {
+        """Analyze infrastructure patterns for attribution"""        patterns = {
             'ip_patterns': {},
             'domain_patterns': {},
             'hosting_analysis': {},
@@ -746,8 +723,7 @@ class AdvancedThreatIntelligenceEngine:
             return {}
     
     async def _analyze_tactical_patterns(self, enriched_indicators: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Analyze tactical patterns for attribution"""
-        tactics = {
+        """Analyze tactical patterns for attribution"""        tactics = {
             'attack_patterns': [],
             'tools_identified': [],
             'techniques_used': [],
@@ -798,8 +774,7 @@ class AdvancedThreatIntelligenceEngine:
         infrastructure_patterns: Dict[str, Any], 
         tactical_patterns: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create threat actor profile based on patterns"""
-        profile = {
+        """Create threat actor profile based on patterns"""        profile = {
             'actor_type': 'unknown',
             'motivation': [],
             'capabilities': {},
@@ -848,8 +823,7 @@ class AdvancedThreatIntelligenceEngine:
             return {}
     
     async def _calculate_attribution_confidence(self, attribution: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate confidence levels for attribution analysis"""
-        confidence = {
+        """Calculate confidence levels for attribution analysis"""        confidence = {
             'infrastructure_confidence': 0.0,
             'tactical_confidence': 0.0,
             'actor_confidence': 0.0,
@@ -898,8 +872,7 @@ class AdvancedThreatIntelligenceEngine:
             return confidence
     
     async def _correlate_with_campaigns(self, enriched_indicators: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Correlate indicators with known threat campaigns"""
-        try:
+        """Correlate indicators with known threat campaigns"""        try:
             correlation = {
                 'matching_campaigns': [],
                 'new_campaign_detected': False,
@@ -950,8 +923,7 @@ class AdvancedThreatIntelligenceEngine:
         enriched_indicators: List[Dict[str, Any]], 
         campaign: ThreatCampaign
     ) -> float:
-        """Calculate match score between indicators and campaign"""
-        try:
+        """Calculate match score between indicators and campaign"""        try:
             if not campaign.indicators:
                 return 0.0
             
@@ -975,8 +947,7 @@ class AdvancedThreatIntelligenceEngine:
             return 0.0
     
     async def _assess_new_campaign_probability(self, enriched_indicators: List[Dict[str, Any]]) -> float:
-        """Assess probability that indicators represent a new campaign"""
-        try:
+        """Assess probability that indicators represent a new campaign"""        try:
             factors = {
                 'indicator_diversity': 0.0,
                 'coordination_evidence': 0.0,
@@ -1030,8 +1001,7 @@ class AdvancedThreatIntelligenceEngine:
         matching_campaigns: List[Dict[str, Any]], 
         enriched_indicators: List[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Analyze evolution of matching campaigns"""
-        try:
+        """Analyze evolution of matching campaigns"""        try:
             evolution = {
                 'infrastructure_changes': [],
                 'tactical_adaptations': [],
@@ -1074,8 +1044,7 @@ class AdvancedThreatIntelligenceEngine:
         attribution_result: Dict[str, Any], 
         campaign_correlation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Analyze threat actors based on attribution and campaign data"""
-        try:
+        """Analyze threat actors based on attribution and campaign data"""        try:
             actor_analysis = {
                 'identified_actors': [],
                 'actor_relationships': [],
@@ -1142,8 +1111,7 @@ class AdvancedThreatIntelligenceEngine:
         attribution_result: Dict[str, Any],
         campaign_correlation: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Assess overall threat risk based on intelligence analysis"""
-        try:
+        """Assess overall threat risk based on intelligence analysis"""        try:
             risk_assessment = {
                 'overall_risk_score': 0.0,
                 'risk_factors': [],
@@ -1221,8 +1189,7 @@ class AdvancedThreatIntelligenceEngine:
         actor_analysis: Dict[str, Any],
         risk_assessment: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive threat intelligence summary"""
-        try:
+        """Generate comprehensive threat intelligence summary"""        try:
             summary = {
                 'threat_overview': {},
                 'key_findings': [],
@@ -1332,8 +1299,7 @@ class AdvancedThreatIntelligenceEngine:
     # Background processing methods
     
     async def _threat_feed_processor(self):
-        """Background task to process threat feeds"""
-        while True:
+        """Background task to process threat feeds"""        while True:
             try:
                 # Process threat feeds every 30 minutes
                 await asyncio.sleep(1800)
@@ -1343,8 +1309,7 @@ class AdvancedThreatIntelligenceEngine:
                 self.logger.error(f"Threat feed processing error: {str(e)}")
     
     async def _indicator_processor(self):
-        """Background task to process indicator queue"""
-        while True:
+        """Background task to process indicator queue"""        while True:
             try:
                 if self.indicator_queue:
                     indicator = self.indicator_queue.popleft()
@@ -1355,8 +1320,7 @@ class AdvancedThreatIntelligenceEngine:
                 self.logger.error(f"Indicator processing error: {str(e)}")
     
     async def _campaign_analyzer(self):
-        """Background task to analyze campaigns"""
-        while True:
+        """Background task to analyze campaigns"""        while True:
             try:
                 # Analyze campaigns every hour
                 await asyncio.sleep(3600)
@@ -1366,8 +1330,7 @@ class AdvancedThreatIntelligenceEngine:
                 self.logger.error(f"Campaign analysis error: {str(e)}")
     
     async def _attribution_analyzer(self):
-        """Background task for attribution analysis"""
-        while True:
+        """Background task for attribution analysis"""        while True:
             try:
                 # Run attribution analysis every 2 hours
                 await asyncio.sleep(7200)
@@ -1379,8 +1342,7 @@ class AdvancedThreatIntelligenceEngine:
     # Utility methods
     
     def _get_ip_class(self, ip_address: str) -> str:
-        """Get IP address class"""
-        try:
+        """Get IP address class"""        try:
             ip = ipaddress.ip_address(ip_address)
             if ip.version == 4:
                 first_octet = int(str(ip).split('.')[0])
@@ -1398,8 +1360,7 @@ class AdvancedThreatIntelligenceEngine:
             return 'Invalid'
     
     async def _get_ip_threat_associations(self, ip_address: str) -> List[Dict[str, Any]]:
-        """Get threat associations for IP address"""
-        # Simulate threat associations
+        """Get threat associations for IP address"""        # Simulate threat associations
         return [
             {
                 'threat_type': 'copyright_infringement',
@@ -1411,19 +1372,16 @@ class AdvancedThreatIntelligenceEngine:
         ]
     
     async def _discover_subdomains(self, domain: str) -> List[str]:
-        """Discover subdomains for a domain"""
-        # Simulate subdomain discovery
+        """Discover subdomains for a domain"""        # Simulate subdomain discovery
         return [f'www.{domain}', f'mail.{domain}', f'ftp.{domain}']
     
     async def _find_related_domains(self, domain: str) -> List[str]:
-        """Find domains related to the given domain"""
-        # Simulate related domain discovery
+        """Find domains related to the given domain"""        # Simulate related domain discovery
         base = domain.split('.')[0]
         return [f'{base}1.com', f'{base}-copy.net', f'fake-{base}.org']
     
     async def _process_indicator(self, indicator: ThreatIndicator):
-        """Process individual threat indicator"""
-        # Add to storage
+        """Process individual threat indicator"""        # Add to storage
         self.indicators[indicator.id] = indicator
         
         # Update TTL and cleanup if needed
@@ -1432,28 +1390,23 @@ class AdvancedThreatIntelligenceEngine:
             pass
     
     async def _analyze_active_campaigns(self):
-        """Analyze all active campaigns"""
-        for campaign in self.campaigns.values():
+        """Analyze all active campaigns"""        for campaign in self.campaigns.values():
             if campaign.status == 'active':
                 # Update campaign intelligence
                 pass
     
     async def _update_attribution_models(self):
-        """Update attribution models with new data"""
-        # Update ML models for attribution
+        """Update attribution models with new data"""        # Update ML models for attribution
         pass
     
     async def _initialize_attribution_engine(self):
-        """Initialize attribution analysis engine"""
-        self.attribution_engine = "AttributionEngine"
+        """Initialize attribution analysis engine"""        self.attribution_engine = "AttributionEngine"
     
     async def _initialize_campaign_correlator(self):
-        """Initialize campaign correlation engine"""
-        self.campaign_correlator = "CampaignCorrelator"
+        """Initialize campaign correlation engine"""        self.campaign_correlator = "CampaignCorrelator"
     
     async def _initialize_predictive_engine(self):
-        """Initialize predictive analysis engine"""
-        self.predictive_engine = "PredictiveEngine"
+        """Initialize predictive analysis engine"""        self.predictive_engine = "PredictiveEngine"
 
 
 # Export main classes

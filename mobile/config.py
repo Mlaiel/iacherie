@@ -1,11 +1,9 @@
-"""
-Mobile Configuration Management
+"""Mobile Configuration Management
 Platform-specific configs, feature flags, and environment management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 Business Logic: Flexible mobile platform configuration for multi-environment deployment
 """
-
 import json
 import logging
 import os
@@ -29,24 +27,21 @@ except ImportError:
 
 
 class Environment(Enum):
-    """Environment types."""
-    DEVELOPMENT = "development"
+    """Environment types."""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
     TESTING = "testing"
 
 
 class Platform(Enum):
-    """Mobile platform types."""
-    ANDROID = "android"
+    """Mobile platform types."""    ANDROID = "android"
     IOS = "ios"
     REACT_NATIVE = "react_native"
 
 
 @dataclass
 class FeatureFlag:
-    """Feature flag configuration."""
-    flag_id: str
+    """Feature flag configuration."""    flag_id: str
     name: str
     description: str
     enabled: bool
@@ -64,8 +59,7 @@ class FeatureFlag:
         platform: Platform,
         environment: Environment
     ) -> bool:
-        """Check if feature is enabled for specific user/platform/environment."""
-        
+        """Check if feature is enabled for specific user/platform/environment."""        
         # Check if expired
         if self.expiry_date and datetime.utcnow() > self.expiry_date:
             return False
@@ -94,8 +88,7 @@ class FeatureFlag:
 
 @dataclass
 class PlatformSettings:
-    """Platform-specific settings."""
-    platform: Platform
+    """Platform-specific settings."""    platform: Platform
     app_version: str
     min_supported_version: str
     api_endpoints: Dict[str, str]
@@ -110,8 +103,7 @@ class PlatformSettings:
 
 @dataclass
 class MobileAppConfig:
-    """Complete mobile application configuration."""
-    config_id: str
+    """Complete mobile application configuration."""    config_id: str
     environment: Environment
     app_name: str
     app_version: str
@@ -127,8 +119,7 @@ class MobileAppConfig:
 
 
 class MobileConfig:
-    """Professional mobile configuration management system."""
-    
+    """Professional mobile configuration management system."""    
     def __init__(self):
         self.logger = get_logger("mobile.config")
         self.settings = get_settings()
@@ -143,8 +134,7 @@ class MobileConfig:
         self._initialize_default_configs()
     
     def _initialize_default_configs(self):
-        """Initialize default mobile configurations."""
-        
+        """Initialize default mobile configurations."""        
         # Default feature flags
         self._create_default_feature_flags()
         
@@ -155,8 +145,7 @@ class MobileConfig:
         self._create_default_app_config()
     
     def _create_default_feature_flags(self):
-        """Create default feature flags."""
-        
+        """Create default feature flags."""        
         default_flags = [
             {
                 "name": "offline_sync",
@@ -219,8 +208,7 @@ class MobileConfig:
             self.feature_flags[flag_data["name"]] = feature_flag
     
     def _create_default_platform_settings(self):
-        """Create default platform-specific settings."""
-        
+        """Create default platform-specific settings."""        
         # Android settings
         android_settings = PlatformSettings(
             platform=Platform.ANDROID,
@@ -357,8 +345,7 @@ class MobileConfig:
         self.platform_settings[Platform.REACT_NATIVE] = react_native_settings
     
     def _create_default_app_config(self):
-        """Create default application configuration."""
-        
+        """Create default application configuration."""        
         config_id = str(uuid.uuid4())
         
         # Environment-specific URLs
@@ -432,8 +419,7 @@ class MobileConfig:
         platform: Platform,
         environment: Optional[Environment] = None
     ) -> Dict[str, bool]:
-        """Get enabled feature flags for user/platform/environment."""
-        
+        """Get enabled feature flags for user/platform/environment."""        
         if environment is None:
             environment = self.current_environment
         
@@ -456,8 +442,7 @@ class MobileConfig:
         flag_name: str,
         **updates
     ) -> Optional[FeatureFlag]:
-        """Update feature flag configuration."""
-        
+        """Update feature flag configuration."""        
         if flag_name not in self.feature_flags:
             return None
         
@@ -480,8 +465,7 @@ class MobileConfig:
         enabled: bool = False,
         **kwargs
     ) -> FeatureFlag:
-        """Create new feature flag."""
-        
+        """Create new feature flag."""        
         flag_id = str(uuid.uuid4())
         
         feature_flag = FeatureFlag(
@@ -499,8 +483,7 @@ class MobileConfig:
         return feature_flag
     
     def get_platform_settings(self, platform: Platform) -> Optional[PlatformSettings]:
-        """Get platform-specific settings."""
-        
+        """Get platform-specific settings."""        
         return self.platform_settings.get(platform)
     
     def update_platform_settings(
@@ -508,8 +491,7 @@ class MobileConfig:
         platform: Platform,
         **updates
     ) -> Optional[PlatformSettings]:
-        """Update platform-specific settings."""
-        
+        """Update platform-specific settings."""        
         if platform not in self.platform_settings:
             return None
         
@@ -531,8 +513,7 @@ class MobileConfig:
         platform: Platform,
         app_version: str
     ) -> Dict[str, Any]:
-        """Get complete mobile configuration for client."""
-        
+        """Get complete mobile configuration for client."""        
         app_config = self.app_configs.get(self.current_environment.value)
         platform_settings = self.platform_settings.get(platform)
         feature_flags = self.get_feature_flags(user_id, platform)
@@ -585,8 +566,7 @@ class MobileConfig:
         client_version: str,
         min_supported_version: str
     ) -> bool:
-        """Check if client version is supported."""
-        
+        """Check if client version is supported."""        
         try:
             client_parts = [int(x) for x in client_version.split('.')]
             min_parts = [int(x) for x in min_supported_version.split('.')]
@@ -603,8 +583,7 @@ class MobileConfig:
             return False
     
     def export_config(self, platform: Optional[Platform] = None) -> Dict[str, Any]:
-        """Export configuration for backup or deployment."""
-        
+        """Export configuration for backup or deployment."""        
         export_data = {
             "environment": self.current_environment.value,
             "feature_flags": {
@@ -628,8 +607,7 @@ class MobileConfig:
         return export_data
     
     def import_config(self, config_data: Dict[str, Any]) -> bool:
-        """Import configuration from backup or deployment."""
-        
+        """Import configuration from backup or deployment."""        
         try:
             # Import feature flags
             if "feature_flags" in config_data:
@@ -664,13 +642,11 @@ class MobileConfig:
 
 # Utility functions
 def get_mobile_config() -> MobileConfig:
-    """Get mobile configuration instance."""
-    return MobileConfig()
+    """Get mobile configuration instance."""    return MobileConfig()
 
 
 def load_platform_settings(platform: Platform) -> Optional[PlatformSettings]:
-    """Load platform-specific settings."""
-    config = get_mobile_config()
+    """Load platform-specific settings."""    config = get_mobile_config()
     return config.get_platform_settings(platform)
 
 
@@ -679,8 +655,7 @@ def get_feature_flags_for_user(
     platform: Platform,
     environment: Optional[Environment] = None
 ) -> Dict[str, bool]:
-    """Get feature flags for specific user and platform."""
-    config = get_mobile_config()
+    """Get feature flags for specific user and platform."""    config = get_mobile_config()
     return config.get_feature_flags(user_id, platform, environment)
 
 

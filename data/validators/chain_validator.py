@@ -1,5 +1,4 @@
-"""
-Chain Validator - Validation chain orchestrator for IA Influencer Agent Platform
+"""Chain Validator - Validation chain orchestrator for IA Influencer Agent Platform
 ================================================================================
 
 Advanced validation chain system for orchestrating multiple validators
@@ -9,7 +8,6 @@ Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: © 2025 Fahed Mlaiel - All Rights Reserved
 Warning: Unauthorized use strictly prohibited
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Union, Any, Callable, Type
@@ -24,16 +22,14 @@ logger = logging.getLogger(__name__)
 
 
 class ChainExecutionMode(Enum):
-    """Chain execution modes."""
-    SEQUENTIAL = "sequential"
+    """Chain execution modes."""    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     CONDITIONAL = "conditional"
     PIPELINE = "pipeline"
 
 
 class ChainStepType(Enum):
-    """Types of validation chain steps."""
-    VALIDATOR = "validator"
+    """Types of validation chain steps."""    VALIDATOR = "validator"
     TRANSFORMER = "transformer"
     FILTER = "filter"
     AGGREGATOR = "aggregator"
@@ -42,8 +38,7 @@ class ChainStepType(Enum):
 
 
 class ChainStatus(Enum):
-    """Chain execution status."""
-    PENDING = "pending"
+    """Chain execution status."""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -53,8 +48,7 @@ class ChainStatus(Enum):
 
 @dataclass
 class ValidationStep:
-    """Individual validation step in a chain."""
-    step_id: str
+    """Individual validation step in a chain."""    step_id: str
     step_type: ChainStepType
     validator_name: str
     
@@ -83,8 +77,7 @@ class ValidationStep:
 
 @dataclass
 class ValidationPipeline:
-    """Validation pipeline configuration."""
-    pipeline_id: str
+    """Validation pipeline configuration."""    pipeline_id: str
     name: str
     description: str
     
@@ -105,8 +98,7 @@ class ValidationPipeline:
 
 @dataclass
 class ChainResult:
-    """Chain execution result."""
-    chain_id: str
+    """Chain execution result."""    chain_id: str
     pipeline_id: str
     success: bool
     status: ChainStatus
@@ -131,22 +123,18 @@ class ChainResult:
 
 
 class ValidationChain:
-    """
-    Validation chain execution engine.
+    """    Validation chain execution engine.
     
     Manages the execution of validation pipelines with support for
     sequential, parallel, and conditional execution patterns.
-    """
-    
+    """    
     def __init__(self, registry=None, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize validation chain.
+        """        Initialize validation chain.
         
         Args:
             registry: Validator registry instance
             config: Chain configuration
-        """
-        self.registry = registry
+        """        self.registry = registry
         self.config = config or {}
         
         # Execution state
@@ -164,8 +152,7 @@ class ValidationChain:
         data: Any,
         context: Optional[Dict[str, Any]] = None
     ) -> ChainResult:
-        """
-        Execute validation pipeline.
+        """        Execute validation pipeline.
         
         Args:
             pipeline: Pipeline object or pipeline ID
@@ -174,8 +161,7 @@ class ValidationChain:
             
         Returns:
             Chain execution result
-        """
-        chain_id = str(uuid.uuid4())
+        """        chain_id = str(uuid.uuid4())
         start_time = time.time()
         
         try:
@@ -242,8 +228,7 @@ class ValidationChain:
         data: Any,
         execution_mode: ChainExecutionMode = ChainExecutionMode.SEQUENTIAL
     ) -> ChainResult:
-        """
-        Execute validation steps directly.
+        """        Execute validation steps directly.
         
         Args:
             steps: List of step configurations
@@ -252,8 +237,7 @@ class ValidationChain:
             
         Returns:
             Chain execution result
-        """
-        # Create temporary pipeline
+        """        # Create temporary pipeline
         pipeline = ValidationPipeline(
             pipeline_id=f"temp_{int(time.time())}",
             name="Temporary Pipeline",
@@ -283,8 +267,7 @@ class ValidationChain:
         execution_mode: ChainExecutionMode = ChainExecutionMode.SEQUENTIAL,
         **kwargs
     ) -> str:
-        """
-        Create new validation pipeline.
+        """        Create new validation pipeline.
         
         Args:
             name: Pipeline name
@@ -294,8 +277,7 @@ class ValidationChain:
             
         Returns:
             Pipeline ID
-        """
-        pipeline_id = f"pipeline_{int(time.time())}_{hash(name)}"
+        """        pipeline_id = f"pipeline_{int(time.time())}_{hash(name)}"
         
         pipeline = ValidationPipeline(
             pipeline_id=pipeline_id,
@@ -329,28 +311,24 @@ class ValidationChain:
         return pipeline_id
     
     async def get_pipeline_status(self, chain_id: str) -> Optional[ChainResult]:
-        """
-        Get status of running chain.
+        """        Get status of running chain.
         
         Args:
             chain_id: Chain ID
             
         Returns:
             Chain result or None
-        """
-        return self.active_chains.get(chain_id)
+        """        return self.active_chains.get(chain_id)
     
     async def cancel_chain(self, chain_id: str) -> bool:
-        """
-        Cancel running chain.
+        """        Cancel running chain.
         
         Args:
             chain_id: Chain ID
             
         Returns:
             Success status
-        """
-        if chain_id in self.active_chains:
+        """        if chain_id in self.active_chains:
             self.active_chains[chain_id].status = ChainStatus.CANCELLED
             return True
         return False
@@ -362,8 +340,7 @@ class ValidationChain:
         result: ChainResult,
         context: Optional[Dict[str, Any]]
     ) -> None:
-        """Execute pipeline steps sequentially."""
-        current_data = data
+        """Execute pipeline steps sequentially."""        current_data = data
         
         try:
             # Sort steps by execution order
@@ -416,8 +393,7 @@ class ValidationChain:
         result: ChainResult,
         context: Optional[Dict[str, Any]]
     ) -> None:
-        """Execute pipeline steps in parallel."""
-        try:
+        """Execute pipeline steps in parallel."""        try:
             # Group steps that can run in parallel
             parallel_groups = self._group_parallel_steps(pipeline.steps)
             
@@ -486,8 +462,7 @@ class ValidationChain:
         result: ChainResult,
         context: Optional[Dict[str, Any]]
     ) -> None:
-        """Execute pipeline with conditional logic."""
-        try:
+        """Execute pipeline with conditional logic."""        try:
             current_data = data
             executed_steps = set()
             
@@ -556,8 +531,7 @@ class ValidationChain:
         result: ChainResult,
         context: Optional[Dict[str, Any]]
     ) -> None:
-        """Execute pipeline in pipeline mode (data flows through steps)."""
-        try:
+        """Execute pipeline in pipeline mode (data flows through steps)."""        try:
             current_data = data
             
             # Sort steps by execution order
@@ -607,8 +581,7 @@ class ValidationChain:
         data: Any,
         context: Optional[Dict[str, Any]]
     ) -> Any:
-        """Execute individual validation step."""
-        step.start_time = time.time()
+        """Execute individual validation step."""        step.start_time = time.time()
         step.status = ChainStatus.RUNNING
         
         try:
@@ -659,8 +632,7 @@ class ValidationChain:
             step.execution_time = step.end_time - (step.start_time or 0)
     
     async def _transform_data(self, step: ValidationStep, step_result: Any, original_data: Any) -> Any:
-        """Transform data based on step result."""
-        try:
+        """Transform data based on step result."""        try:
             # Check if step result has processed data
             if hasattr(step_result, 'processed_data'):
                 return step_result.processed_data
@@ -679,8 +651,7 @@ class ValidationChain:
             return original_data
     
     def _group_parallel_steps(self, steps: List[ValidationStep]) -> List[List[ValidationStep]]:
-        """Group steps that can be executed in parallel."""
-        groups = []
+        """Group steps that can be executed in parallel."""        groups = []
         remaining_steps = steps.copy()
         
         while remaining_steps:
@@ -718,8 +689,7 @@ class ValidationChain:
         executed_steps: set,
         result: ChainResult
     ) -> bool:
-        """Check if step dependencies are satisfied."""
-        if not step.dependencies:
+        """Check if step dependencies are satisfied."""        if not step.dependencies:
             return True
         
         for dependency in step.dependencies:
@@ -738,8 +708,7 @@ class ValidationChain:
         return True
     
     async def _get_pipeline(self, pipeline_id: str) -> ValidationPipeline:
-        """Get pipeline by ID."""
-        if pipeline_id in self.pipeline_cache:
+        """Get pipeline by ID."""        if pipeline_id in self.pipeline_cache:
             return self.pipeline_cache[pipeline_id]
         
         # Try to load from built-in pipelines
@@ -749,8 +718,7 @@ class ValidationChain:
         raise ValueError(f"Pipeline not found: {pipeline_id}")
     
     async def _generate_summary(self, result: ChainResult) -> Dict[str, Any]:
-        """Generate validation summary."""
-        try:
+        """Generate validation summary."""        try:
             total_steps = len(result.step_results) + len(result.failed_steps) + len(result.skipped_steps)
             successful_steps = len(result.step_results) - len(result.failed_steps)
             
@@ -769,8 +737,7 @@ class ValidationChain:
             return {}
     
     async def _calculate_overall_score(self, result: ChainResult) -> float:
-        """Calculate overall validation score."""
-        try:
+        """Calculate overall validation score."""        try:
             if not result.step_results:
                 return 0.0
             
@@ -798,8 +765,7 @@ class ValidationChain:
             return 0.0
     
     def _init_builtin_pipelines(self) -> None:
-        """Initialize built-in validation pipelines."""
-        self.builtin_pipelines = {}
+        """Initialize built-in validation pipelines."""        self.builtin_pipelines = {}
         
         # Content validation pipeline
         content_pipeline = ValidationPipeline(
@@ -908,29 +874,24 @@ class ValidationChain:
 
 
 class ChainValidator:
-    """
-    Main chain validator for the IA Influencer Agent Platform.
+    """    Main chain validator for the IA Influencer Agent Platform.
     
     Provides unified interface for executing validation chains and pipelines
     with support for complex validation workflows.
-    """
-    
+    """    
     def __init__(self, registry=None, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialize chain validator.
+        """        Initialize chain validator.
         
         Args:
             registry: Validator registry instance
             config: Validation configuration
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.chain = ValidationChain(registry, config)
         
         logger.info("ChainValidator initialized")
     
     async def validate_async(self, data: Any, **options) -> ChainResult:
-        """
-        Async validation interface.
+        """        Async validation interface.
         
         Args:
             data: Data to validate
@@ -938,8 +899,7 @@ class ChainValidator:
             
         Returns:
             Chain validation result
-        """
-        # Extract pipeline configuration
+        """        # Extract pipeline configuration
         pipeline_id = options.get("pipeline_id")
         steps = options.get("steps")
         execution_mode = ChainExecutionMode(options.get("execution_mode", "sequential"))
@@ -955,8 +915,7 @@ class ChainValidator:
             return await self.chain.execute_pipeline("content_validation", data)
     
     def validate(self, data: Any, **options) -> ChainResult:
-        """
-        Sync validation interface.
+        """        Sync validation interface.
         
         Args:
             data: Data to validate
@@ -964,8 +923,7 @@ class ChainValidator:
             
         Returns:
             Chain validation result
-        """
-        # Run async validation in sync context
+        """        # Run async validation in sync context
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
         try:
@@ -980,16 +938,13 @@ class ChainValidator:
         steps: List[Dict[str, Any]],
         **kwargs
     ) -> str:
-        """Create new validation pipeline."""
-        return await self.chain.create_pipeline(name, steps, **kwargs)
+        """Create new validation pipeline."""        return await self.chain.create_pipeline(name, steps, **kwargs)
     
     def get_builtin_pipelines(self) -> List[str]:
-        """Get list of built-in pipelines."""
-        return list(self.chain.builtin_pipelines.keys())
+        """Get list of built-in pipelines."""        return list(self.chain.builtin_pipelines.keys())
     
     async def get_pipeline_info(self, pipeline_id: str) -> Optional[Dict[str, Any]]:
-        """Get pipeline information."""
-        try:
+        """Get pipeline information."""        try:
             pipeline = await self.chain._get_pipeline(pipeline_id)
             return {
                 "pipeline_id": pipeline.pipeline_id,

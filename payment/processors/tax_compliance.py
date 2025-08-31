@@ -1,5 +1,4 @@
-"""
-📊 Tax Compliance Payment Processor
+"""📊 Tax Compliance Payment Processor
 ===================================
 
 Advanced tax compliance processor with automated tax calculations,
@@ -8,7 +7,6 @@ reporting, and remittance for global jurisdictions and payment types.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class TaxType(Enum):
-    """Tax types"""
-    VAT = "vat"  # Value Added Tax (EU)
+    """Tax types"""    VAT = "vat"  # Value Added Tax (EU)
     GST = "gst"  # Goods and Services Tax (CA, AU, IN)
     SALES_TAX = "sales_tax"  # US State Sales Tax
     WITHHOLDING_TAX = "withholding_tax"  # International withholding
@@ -35,8 +32,7 @@ class TaxType(Enum):
 
 
 class TaxJurisdiction(Enum):
-    """Tax jurisdictions"""
-    US_FEDERAL = "us_federal"
+    """Tax jurisdictions"""    US_FEDERAL = "us_federal"
     US_STATE = "us_state"
     EU_VAT = "eu_vat"
     UK_VAT = "uk_vat"
@@ -49,8 +45,7 @@ class TaxJurisdiction(Enum):
 
 
 class TransactionCategory(Enum):
-    """Transaction categories for tax purposes"""
-    DIGITAL_GOODS = "digital_goods"
+    """Transaction categories for tax purposes"""    DIGITAL_GOODS = "digital_goods"
     DIGITAL_SERVICES = "digital_services"
     PHYSICAL_GOODS = "physical_goods"
     LICENSING = "licensing"
@@ -63,8 +58,7 @@ class TransactionCategory(Enum):
 
 @dataclass
 class TaxRate:
-    """Tax rate configuration"""
-    jurisdiction: TaxJurisdiction
+    """Tax rate configuration"""    jurisdiction: TaxJurisdiction
     tax_type: TaxType
     rate: Decimal
     threshold: Optional[Decimal] = None
@@ -75,8 +69,7 @@ class TaxRate:
 
 @dataclass
 class TaxableTransaction:
-    """Taxable transaction details"""
-    id: str
+    """Taxable transaction details"""    id: str
     transaction_id: str
     amount: Decimal
     currency: str
@@ -93,8 +86,7 @@ class TaxableTransaction:
 
 @dataclass
 class TaxCalculation:
-    """Tax calculation result"""
-    transaction_id: str
+    """Tax calculation result"""    transaction_id: str
     gross_amount: Decimal
     net_amount: Decimal
     total_tax: Decimal
@@ -106,8 +98,7 @@ class TaxCalculation:
 
 @dataclass
 class TaxRemittance:
-    """Tax remittance record"""
-    id: str
+    """Tax remittance record"""    id: str
     jurisdiction: TaxJurisdiction
     tax_type: TaxType
     period_start: datetime
@@ -121,20 +112,17 @@ class TaxRemittance:
 
 
 class TaxComplianceProcessor:
-    """
-    Advanced tax compliance processor
+    """    Advanced tax compliance processor
     
     Handles automated tax calculations, real-time rate updates,
     multi-jurisdiction compliance, and automated remittance.
-    """
-    
+    """    
     def __init__(
         self,
         config: Dict[str, Any],
         tax_service_apis: Optional[Dict[str, str]] = None
     ):
-        """Initialize tax compliance processor"""
-        self.config = config
+        """Initialize tax compliance processor"""        self.config = config
         self.tax_service_apis = tax_service_apis or {}
         self.logger = logging.getLogger(__name__)
         
@@ -162,8 +150,7 @@ class TaxComplianceProcessor:
         self,
         transaction: TaxableTransaction
     ) -> TaxCalculation:
-        """Calculate tax for a transaction"""
-        try:
+        """Calculate tax for a transaction"""        try:
             applicable_rates = await self._get_applicable_rates(transaction)
             tax_breakdown = []
             total_tax = Decimal("0")
@@ -213,8 +200,7 @@ class TaxComplianceProcessor:
         country: str,
         id_type: str = "vat"
     ) -> Dict[str, Any]:
-        """Validate tax identification number"""
-        try:
+        """Validate tax identification number"""        try:
             # Mock validation (in production, use real tax ID validation APIs)
             await asyncio.sleep(0.1)
             
@@ -250,8 +236,7 @@ class TaxComplianceProcessor:
         tax_calculation: TaxCalculation,
         invoice_details: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate tax-compliant invoice"""
-        try:
+        """Generate tax-compliant invoice"""        try:
             invoice_id = f"inv_{uuid.uuid4().hex[:12]}"
             invoice_number = f"INV-{datetime.now().strftime('%Y%m%d')}-{uuid.uuid4().hex[:6].upper()}"
             
@@ -315,8 +300,7 @@ class TaxComplianceProcessor:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """File tax return for a jurisdiction and period"""
-        try:
+        """File tax return for a jurisdiction and period"""        try:
             # Aggregate transactions for the period
             period_data = await self._aggregate_period_data(
                 jurisdiction, period_start, period_end
@@ -378,8 +362,7 @@ class TaxComplianceProcessor:
         jurisdiction: TaxJurisdiction,
         annual_revenue: Decimal
     ) -> Dict[str, Any]:
-        """Check if tax registration is required"""
-        try:
+        """Check if tax registration is required"""        try:
             threshold = self.registration_thresholds.get(jurisdiction)
             
             if not threshold:
@@ -413,8 +396,7 @@ class TaxComplianceProcessor:
         period_end: datetime,
         jurisdictions: Optional[List[TaxJurisdiction]] = None
     ) -> Dict[str, Any]:
-        """Generate comprehensive tax compliance report"""
-        try:
+        """Generate comprehensive tax compliance report"""        try:
             if not jurisdictions:
                 jurisdictions = list(TaxJurisdiction)
             
@@ -468,8 +450,7 @@ class TaxComplianceProcessor:
             return {"error": str(e)}
     
     def _initialize_tax_rates(self) -> Dict[str, List[TaxRate]]:
-        """Initialize tax rates for different jurisdictions"""
-        return {
+        """Initialize tax rates for different jurisdictions"""        return {
             TaxJurisdiction.EU_VAT.value: [
                 TaxRate(TaxJurisdiction.EU_VAT, TaxType.VAT, Decimal("20.0")),  # Standard rate
                 TaxRate(TaxJurisdiction.EU_VAT, TaxType.VAT, Decimal("10.0"), category_specific=TransactionCategory.DIGITAL_SERVICES)
@@ -492,8 +473,7 @@ class TaxComplianceProcessor:
         self,
         transaction: TaxableTransaction
     ) -> List[TaxRate]:
-        """Get applicable tax rates for a transaction"""
-        applicable_rates = []
+        """Get applicable tax rates for a transaction"""        applicable_rates = []
         
         # Determine jurisdiction based on transaction details
         jurisdictions = self._determine_jurisdictions(transaction)
@@ -512,8 +492,7 @@ class TaxComplianceProcessor:
         self,
         transaction: TaxableTransaction
     ) -> List[TaxJurisdiction]:
-        """Determine applicable tax jurisdictions"""
-        jurisdictions = []
+        """Determine applicable tax jurisdictions"""        jurisdictions = []
         
         # EU VAT rules
         if transaction.customer_country in ["DE", "FR", "IT", "ES", "NL", "BE", "AT", "PT", "IE", "LU", "FI", "SE", "DK", "EE", "LV", "LT", "PL", "CZ", "SK", "HU", "SI", "BG", "RO", "HR", "CY", "MT"]:
@@ -542,8 +521,7 @@ class TaxComplianceProcessor:
         rate: TaxRate,
         transaction: TaxableTransaction
     ) -> bool:
-        """Check if a tax rate applies to a transaction"""
-        # Check category specificity
+        """Check if a tax rate applies to a transaction"""        # Check category specificity
         if rate.category_specific and rate.category_specific != transaction.category:
             return False
         
@@ -561,13 +539,11 @@ class TaxComplianceProcessor:
         return True
     
     def _calculate_tax_amount(self, amount: Decimal, rate: TaxRate) -> Decimal:
-        """Calculate tax amount for a given rate"""
-        tax_amount = amount * (rate.rate / Decimal("100"))
+        """Calculate tax amount for a given rate"""        tax_amount = amount * (rate.rate / Decimal("100"))
         return tax_amount.quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     
     def _get_tax_description(self, rate: TaxRate) -> str:
-        """Get human-readable tax description"""
-        descriptions = {
+        """Get human-readable tax description"""        descriptions = {
             TaxType.VAT: "Value Added Tax",
             TaxType.GST: "Goods and Services Tax",
             TaxType.SALES_TAX: "Sales Tax",
@@ -579,8 +555,7 @@ class TaxComplianceProcessor:
         return f"{base_description} - {rate.jurisdiction.value.upper()}"
     
     def _validate_tax_id_format(self, tax_id: str, country: str, id_type: str) -> bool:
-        """Validate tax ID format"""
-        # Simplified validation (in production, use comprehensive validation)
+        """Validate tax ID format"""        # Simplified validation (in production, use comprehensive validation)
         if not tax_id:
             return False
         
@@ -600,8 +575,7 @@ class TaxComplianceProcessor:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Decimal]:
-        """Aggregate tax data for a period"""
-        # Mock aggregation (in production, query actual database)
+        """Aggregate tax data for a period"""        # Mock aggregation (in production, query actual database)
         return {
             "total_sales": Decimal("50000.00"),
             "total_tax_collected": Decimal("8500.00"),
@@ -615,8 +589,7 @@ class TaxComplianceProcessor:
         jurisdiction: TaxJurisdiction,
         return_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Submit tax return to tax authority"""
-        # Mock submission (in production, use real tax authority APIs)
+        """Submit tax return to tax authority"""        # Mock submission (in production, use real tax authority APIs)
         return {
             "success": True,
             "reference_number": f"TAX-{uuid.uuid4().hex[:12].upper()}",
@@ -629,8 +602,7 @@ class TaxComplianceProcessor:
         jurisdiction: TaxJurisdiction,
         period_end: datetime
     ) -> datetime:
-        """Calculate tax return due date"""
-        # Standard due dates (varies by jurisdiction)
+        """Calculate tax return due date"""        # Standard due dates (varies by jurisdiction)
         due_date_offsets = {
             TaxJurisdiction.EU_VAT: 20,  # 20 days after period end
             TaxJurisdiction.UK_VAT: 30,  # 30 days after period end
@@ -643,8 +615,7 @@ class TaxComplianceProcessor:
         return period_end + timedelta(days=offset_days)
     
     def _get_compliance_notes(self, transaction: TaxableTransaction) -> List[str]:
-        """Get compliance notes for invoice"""
-        notes = []
+        """Get compliance notes for invoice"""        notes = []
         
         if transaction.is_b2b and transaction.customer_tax_id:
             notes.append("Reverse charge applies - Customer is responsible for VAT")
@@ -661,8 +632,7 @@ class TaxComplianceProcessor:
         revenue: Decimal,
         threshold: Decimal
     ) -> str:
-        """Get tax registration recommendation"""
-        if registration_required:
+        """Get tax registration recommendation"""        if registration_required:
             return f"Registration required - revenue exceeds threshold by {float(revenue - threshold)}"
         else:
             remaining = threshold - revenue
@@ -673,8 +643,7 @@ class TaxComplianceProcessor:
         jurisdiction: TaxJurisdiction,
         registration_required: bool
     ) -> List[str]:
-        """Get next steps for tax registration"""
-        if registration_required:
+        """Get next steps for tax registration"""        if registration_required:
             return [
                 "Apply for tax registration immediately",
                 "Set up automated tax calculation and collection",
@@ -694,8 +663,7 @@ class TaxComplianceProcessor:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Get jurisdiction-specific data for reporting"""
-        # Mock jurisdiction data
+        """Get jurisdiction-specific data for reporting"""        # Mock jurisdiction data
         return {
             "transactions": 125,
             "gross_revenue": 15000.00,
@@ -709,8 +677,7 @@ class TaxComplianceProcessor:
         self,
         jurisdiction: TaxJurisdiction
     ) -> Dict[str, Any]:
-        """Check compliance status for jurisdiction"""
-        return {
+        """Check compliance status for jurisdiction"""        return {
             "status": "compliant",
             "last_filing": "2024-12-31",
             "next_due_date": "2025-01-31",
@@ -722,8 +689,7 @@ class TaxComplianceProcessor:
         self,
         jurisdiction: TaxJurisdiction
     ) -> List[Dict[str, Any]]:
-        """Get upcoming tax deadlines"""
-        return [
+        """Get upcoming tax deadlines"""        return [
             {
                 "jurisdiction": jurisdiction.value,
                 "type": "quarterly_filing",
@@ -738,8 +704,7 @@ class TaxComplianceProcessor:
         period_start: datetime,
         period_end: datetime
     ) -> Dict[str, Any]:
-        """Get data for specific tax type"""
-        return {
+        """Get data for specific tax type"""        return {
             "total_collected": 5000.00,
             "transactions": 250,
             "average_rate": 15.0,
@@ -750,8 +715,7 @@ class TaxComplianceProcessor:
         self,
         report_data: Dict[str, Any]
     ) -> List[str]:
-        """Generate compliance recommendations"""
-        return [
+        """Generate compliance recommendations"""        return [
             "Consider voluntary registration in high-revenue jurisdictions",
             "Implement automated tax calculation for all transactions",
             "Set up monthly compliance monitoring",

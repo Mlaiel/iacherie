@@ -1,5 +1,4 @@
 """Rights Management Manager - Global Digital Rights Management"""
-
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -42,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class RightsManagementConfig:
-    """Configuration for rights management operations"""
-    enable_automatic_registration: bool = True
+    """Configuration for rights management operations"""    enable_automatic_registration: bool = True
     enable_blockchain_verification: bool = True
     enable_royalty_tracking: bool = True
     default_protection_level: str = "standard"
@@ -56,8 +54,7 @@ class RightsManagementConfig:
     })
 
 class RightsManagementManager(BaseAgent):
-    """
-    Enterprise Rights Management Manager
+    """    Enterprise Rights Management Manager
     
     Provides comprehensive digital rights management with:
     - Ownership registration and validation
@@ -66,8 +63,7 @@ class RightsManagementManager(BaseAgent):
     - Revenue optimization
     - Territorial rights control
     - Usage tracking and analytics
-    """
-    
+    """    
     def __init__(self, agent_id: str = "rights_management_manager"):
         super().__init__(
             agent_id=agent_id,
@@ -93,8 +89,7 @@ class RightsManagementManager(BaseAgent):
         self.usage_analytics: Dict[str, Any] = {}
         
     async def _load_models_and_resources(self):
-        """Load AI models and initialize resources"""
-        try:
+        """Load AI models and initialize resources"""        try:
             await self.rights_manager.initialize()
             await self.fingerprint_engine.initialize()
             await self.copyright_detector.initialize()
@@ -108,12 +103,10 @@ class RightsManagementManager(BaseAgent):
             raise
     
     def get_required_config_keys(self) -> List[str]:
-        """Required configuration keys"""
-        return ['supported_license_types', 'default_protection_level']
+        """Required configuration keys"""        return ['supported_license_types', 'default_protection_level']
     
     async def process(self, request: AgentRequest) -> AgentResponse:
-        """Main request processing logic"""
-        action = request.action.lower()
+        """Main request processing logic"""        action = request.action.lower()
         
         try:
             if action == "register_rights":
@@ -150,8 +143,7 @@ class RightsManagementManager(BaseAgent):
             )
     
     async def _register_rights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Register digital rights for content"""
-        content_id = data.get('content_id')
+        """Register digital rights for content"""        content_id = data.get('content_id')
         owner_info = data.get('owner_info', {})
         content_data = data.get('content_data')  # bytes
         protection_level = data.get('protection_level', self.config.default_protection_level)
@@ -198,8 +190,7 @@ class RightsManagementManager(BaseAgent):
         }
     
     async def _create_license(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Create and manage content licenses"""
-        content_id = data.get('content_id')
+        """Create and manage content licenses"""        content_id = data.get('content_id')
         license_type = data.get('license_type')
         licensee_info = data.get('licensee_info', {})
         terms = data.get('terms', {})
@@ -254,8 +245,7 @@ class RightsManagementManager(BaseAgent):
         }
     
     async def _validate_ownership(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Validate ownership claims"""
-        content_id = data.get('content_id')
+        """Validate ownership claims"""        content_id = data.get('content_id')
         claimant_info = data.get('claimant_info', {})
         
         if not content_id:
@@ -294,8 +284,7 @@ class RightsManagementManager(BaseAgent):
         return validation_result
     
     def _compare_owner_info(self, registered: Dict, claimed: Dict) -> bool:
-        """Compare owner information for validation"""
-        # Compare key identifying fields
+        """Compare owner information for validation"""        # Compare key identifying fields
         key_fields = ['name', 'email', 'organization', 'user_id']
         
         for field in key_fields:
@@ -306,8 +295,7 @@ class RightsManagementManager(BaseAgent):
         return False
     
     async def _calculate_royalties(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate and distribute royalties"""
-        content_id = data.get('content_id')
+        """Calculate and distribute royalties"""        content_id = data.get('content_id')
         usage_data = data.get('usage_data', [])
         calculation_period = data.get('period', 'current_month')
         
@@ -352,8 +340,7 @@ class RightsManagementManager(BaseAgent):
         }
     
     async def _track_usage(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Track content usage for royalty calculation"""
-        content_id = data.get('content_id')
+        """Track content usage for royalty calculation"""        content_id = data.get('content_id')
         usage_event = data.get('usage_event', {})
         
         if not content_id:
@@ -403,8 +390,7 @@ class RightsManagementManager(BaseAgent):
         }
     
     async def _optimize_revenue(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Optimize revenue strategies for content"""
-        content_id = data.get('content_id')
+        """Optimize revenue strategies for content"""        content_id = data.get('content_id')
         
         if not content_id:
             raise ValueError("content_id is required")
@@ -435,8 +421,7 @@ class RightsManagementManager(BaseAgent):
         return optimization_report
     
     async def _get_rights_status(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Get comprehensive rights status"""
-        content_id = data.get('content_id')
+        """Get comprehensive rights status"""        content_id = data.get('content_id')
         
         if content_id:
             if content_id not in self.registered_rights:
@@ -479,8 +464,7 @@ class RightsManagementManager(BaseAgent):
         }
     
     async def _transfer_rights(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Transfer rights ownership"""
-        content_id = data.get('content_id')
+        """Transfer rights ownership"""        content_id = data.get('content_id')
         current_owner = data.get('current_owner', {})
         new_owner = data.get('new_owner', {})
         transfer_terms = data.get('transfer_terms', {})

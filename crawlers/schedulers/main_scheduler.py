@@ -1,5 +1,4 @@
-"""
-Main Scheduler Module
+"""Main Scheduler Module
 ====================
 
 Central coordination module for all crawler scheduling systems.
@@ -29,7 +28,6 @@ Protection layer → Intelligent scheduling → Platform distribution →
 Performance monitoring → Revenue optimization → User satisfaction → 
 Business growth → Market leadership
 """
-
 import asyncio
 import logging
 import time
@@ -53,8 +51,7 @@ logger = logging.getLogger(__name__)
 
 
 class SchedulerType(Enum):
-    """Types of available schedulers."""
-    PRIORITY = "priority"
+    """Types of available schedulers."""    PRIORITY = "priority"
     INTELLIGENT = "intelligent"
     TIME_BASED = "time_based"
     RESOURCE_AWARE = "resource_aware"
@@ -65,8 +62,7 @@ class SchedulerType(Enum):
 
 
 class SchedulingStrategy(Enum):
-    """Overall scheduling strategies."""
-    PERFORMANCE_OPTIMIZED = "performance_optimized"
+    """Overall scheduling strategies."""    PERFORMANCE_OPTIMIZED = "performance_optimized"
     RESOURCE_OPTIMIZED = "resource_optimized"
     TIME_OPTIMIZED = "time_optimized"
     COST_OPTIMIZED = "cost_optimized"
@@ -77,8 +73,7 @@ class SchedulingStrategy(Enum):
 
 
 class TaskState(Enum):
-    """Task execution states."""
-    PENDING = "pending"
+    """Task execution states."""    PENDING = "pending"
     SCHEDULED = "scheduled"
     RUNNING = "running"
     COMPLETED = "completed"
@@ -90,8 +85,7 @@ class TaskState(Enum):
 
 @dataclass
 class SchedulerConfiguration:
-    """Configuration for scheduler system."""
-    enabled_schedulers: Set[SchedulerType] = field(default_factory=lambda: {
+    """Configuration for scheduler system."""    enabled_schedulers: Set[SchedulerType] = field(default_factory=lambda: {
         SchedulerType.PRIORITY,
         SchedulerType.INTELLIGENT,
         SchedulerType.TIME_BASED,
@@ -120,8 +114,7 @@ class SchedulerConfiguration:
 
 @dataclass
 class TaskRequest:
-    """Unified task request structure."""
-    task_id: str
+    """Unified task request structure."""    task_id: str
     task_type: str
     priority: float = 0.5
     data: Dict[str, Any] = field(default_factory=dict)
@@ -140,8 +133,7 @@ class TaskRequest:
 
 @dataclass
 class SchedulingDecision:
-    """Scheduling decision from coordinaton process."""
-    task_id: str
+    """Scheduling decision from coordinaton process."""    task_id: str
     selected_scheduler: SchedulerType
     scheduling_time: datetime
     priority_score: float
@@ -156,8 +148,7 @@ class SchedulingDecision:
 
 @dataclass
 class SchedulerMetrics:
-    """Metrics for individual scheduler."""
-    scheduler_type: SchedulerType
+    """Metrics for individual scheduler."""    scheduler_type: SchedulerType
     tasks_processed: int = 0
     tasks_completed: int = 0
     tasks_failed: int = 0
@@ -174,8 +165,7 @@ class SchedulerMetrics:
 
 @dataclass
 class SystemMetrics:
-    """Overall system metrics."""
-    total_tasks_processed: int = 0
+    """Overall system metrics."""    total_tasks_processed: int = 0
     total_tasks_completed: int = 0
     total_tasks_failed: int = 0
     average_scheduling_time: float = 0.0
@@ -191,32 +181,26 @@ class SystemMetrics:
 
 
 class BaseSchedulerInterface(ABC):
-    """Base interface for all schedulers."""
-    
+    """Base interface for all schedulers."""    
     @abstractmethod
     async def schedule_task(self, task: TaskRequest) -> bool:
-        """Schedule a task."""
-        pass
+        """Schedule a task."""        pass
     
     @abstractmethod
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get scheduler metrics."""
-        pass
+        """Get scheduler metrics."""        pass
     
     @abstractmethod
     async def health_check(self) -> bool:
-        """Check scheduler health."""
-        pass
+        """Check scheduler health."""        pass
     
     @abstractmethod
     async def stop(self) -> None:
-        """Stop scheduler."""
-        pass
+        """Stop scheduler."""        pass
 
 
 class MainScheduler:
-    """
-    Main scheduler coordination system.
+    """    Main scheduler coordination system.
     
     Features:
     - Multi-scheduler coordination and orchestration
@@ -229,11 +213,9 @@ class MainScheduler:
     - Predictive capacity planning
     - Auto-recovery and fault tolerance
     - Revenue and business impact optimization
-    """
-    
+    """    
     def __init__(self, configuration: Optional[SchedulerConfiguration] = None):
-        """Initialize main scheduler."""
-        self.config = configuration or SchedulerConfiguration()
+        """Initialize main scheduler."""        self.config = configuration or SchedulerConfiguration()
         
         # Scheduler instances
         self.schedulers: Dict[SchedulerType, BaseSchedulerInterface] = {}
@@ -281,8 +263,7 @@ class MainScheduler:
         logger.info("Main scheduler initialized")
     
     async def initialize(self) -> None:
-        """Initialize all scheduler systems."""
-        try:
+        """Initialize all scheduler systems."""        try:
             # Initialize enabled schedulers
             await self._initialize_schedulers()
             
@@ -300,8 +281,7 @@ class MainScheduler:
             raise
     
     async def _initialize_schedulers(self) -> None:
-        """Initialize all enabled scheduler types."""
-        try:
+        """Initialize all enabled scheduler types."""        try:
             # Priority Scheduler
             if SchedulerType.PRIORITY in self.config.enabled_schedulers:
                 self.schedulers[SchedulerType.PRIORITY] = PriorityScheduler()
@@ -349,16 +329,14 @@ class MainScheduler:
             raise
     
     async def _start_coordination(self) -> None:
-        """Start coordination processes."""
-        self.coordination_task = asyncio.create_task(self._coordination_loop())
+        """Start coordination processes."""        self.coordination_task = asyncio.create_task(self._coordination_loop())
         self.health_monitor_task = asyncio.create_task(self._health_monitor_loop())
         self.metrics_task = asyncio.create_task(self._metrics_loop())
         
         logger.info("Coordination processes started")
     
     async def _initialize_business_intelligence(self) -> None:
-        """Initialize business intelligence system."""
-        self.business_intelligence = {
+        """Initialize business intelligence system."""        self.business_intelligence = {
             'revenue_targets': {},
             'user_behavior_patterns': {},
             'competitive_analysis': {},
@@ -379,8 +357,7 @@ class MainScheduler:
         task: TaskRequest,
         preferred_scheduler: Optional[SchedulerType] = None
     ) -> SchedulingDecision:
-        """
-        Schedule a task through the coordination system.
+        """        Schedule a task through the coordination system.
         
         Args:
             task: Task request to schedule
@@ -388,8 +365,7 @@ class MainScheduler:
             
         Returns:
             Scheduling decision with selected scheduler and metadata
-        """
-        try:
+        """        try:
             # Validate task
             if not await self._validate_task(task):
                 raise ValueError(f"Invalid task: {task.task_id}")
@@ -444,8 +420,7 @@ class MainScheduler:
             return failure_decision
     
     async def _validate_task(self, task: TaskRequest) -> bool:
-        """Validate task request."""
-        # Check required fields
+        """Validate task request."""        # Check required fields
         if not task.task_id or not task.task_type:
             return False
         
@@ -470,8 +445,7 @@ class MainScheduler:
         return True
     
     async def _update_dependency_graph(self, task: TaskRequest) -> None:
-        """Update task dependency graph."""
-        if task.dependencies:
+        """Update task dependency graph."""        if task.dependencies:
             for dep_id in task.dependencies:
                 self.dependency_graph[task.task_id].add(dep_id)
     
@@ -480,8 +454,7 @@ class MainScheduler:
         task: TaskRequest,
         preferred_scheduler: Optional[SchedulerType] = None
     ) -> SchedulingDecision:
-        """Make intelligent scheduling decision."""
-        try:
+        """Make intelligent scheduling decision."""        try:
             # Calculate scheduler suitability scores
             scheduler_scores = await self._calculate_scheduler_suitability(task)
             
@@ -533,8 +506,7 @@ class MainScheduler:
             raise
     
     async def _calculate_scheduler_suitability(self, task: TaskRequest) -> Dict[SchedulerType, float]:
-        """Calculate suitability scores for each scheduler."""
-        scores = {}
+        """Calculate suitability scores for each scheduler."""        scores = {}
         
         for scheduler_type in self.schedulers.keys():
             score = 0.0
@@ -585,8 +557,7 @@ class MainScheduler:
         task: TaskRequest,
         scores: Dict[SchedulerType, float]
     ) -> Dict[SchedulerType, float]:
-        """Apply business intelligence to scheduling scores."""
-        if not self.config.enable_business_intelligence:
+        """Apply business intelligence to scheduling scores."""        if not self.config.enable_business_intelligence:
             return scores
         
         # Get business context
@@ -613,8 +584,7 @@ class MainScheduler:
         return adjusted_scores
     
     async def _apply_load_balancing(self, scores: Dict[SchedulerType, float]) -> Dict[SchedulerType, float]:
-        """Apply load balancing to scheduler selection."""
-        if not self.routing_config['load_balancing_enabled']:
+        """Apply load balancing to scheduler selection."""        if not self.routing_config['load_balancing_enabled']:
             return scores
         
         # Calculate current loads
@@ -644,8 +614,7 @@ class MainScheduler:
         task: TaskRequest,
         scheduler_scores: Dict[SchedulerType, float]
     ) -> Dict[str, Any]:
-        """Calculate factors that influenced the scheduling decision."""
-        return {
+        """Calculate factors that influenced the scheduling decision."""        return {
             'task_priority': task.priority,
             'task_type': task.task_type,
             'has_deadline': task.deadline is not None,
@@ -662,8 +631,7 @@ class MainScheduler:
         task: TaskRequest,
         scheduler_type: SchedulerType
     ) -> Optional[datetime]:
-        """Estimate task completion time."""
-        if task.estimated_duration:
+        """Estimate task completion time."""        if task.estimated_duration:
             base_duration = task.estimated_duration
         else:
             # Default estimates based on task type
@@ -692,8 +660,7 @@ class MainScheduler:
         return datetime.utcnow() + timedelta(seconds=estimated_seconds)
     
     async def _calculate_business_impact(self, task: TaskRequest) -> float:
-        """Calculate business impact score for the task."""
-        business_ctx = task.business_context
+        """Calculate business impact score for the task."""        business_ctx = task.business_context
         
         # Base business impact
         base_impact = business_ctx.get('business_impact', 0.5)
@@ -719,8 +686,7 @@ class MainScheduler:
         task: TaskRequest,
         decision: SchedulingDecision
     ) -> bool:
-        """Execute the scheduling decision."""
-        try:
+        """Execute the scheduling decision."""        try:
             scheduler = self.schedulers.get(decision.selected_scheduler)
             if not scheduler:
                 logger.error(f"Scheduler {decision.selected_scheduler.value} not available")
@@ -752,8 +718,7 @@ class MainScheduler:
         task: TaskRequest,
         original_decision: SchedulingDecision
     ) -> bool:
-        """Try fallback scheduling options."""
-        # Try alternative schedulers from decision
+        """Try fallback scheduling options."""        # Try alternative schedulers from decision
         for alt_scheduler in original_decision.alternative_schedulers:
             scheduler = self.schedulers.get(alt_scheduler)
             if scheduler and await scheduler.health_check():
@@ -789,8 +754,7 @@ class MainScheduler:
         task: TaskRequest,
         decision: SchedulingDecision
     ) -> None:
-        """Handle scheduling failure."""
-        # Move task to failed
+        """Handle scheduling failure."""        # Move task to failed
         self.failed_tasks.append({
             'task': task,
             'decision': decision,
@@ -813,16 +777,14 @@ class MainScheduler:
         logger.error(f"Task {task.task_id} scheduling failed permanently")
     
     async def _schedule_retry(self, task: TaskRequest, delay: int) -> None:
-        """Schedule task retry after delay."""
-        await asyncio.sleep(delay)
+        """Schedule task retry after delay."""        await asyncio.sleep(delay)
         try:
             await self.schedule_task(task)
         except Exception as e:
             logger.error(f"Task retry failed for {task.task_id}: {e}")
     
     async def _coordination_loop(self) -> None:
-        """Main coordination loop."""
-        while self.is_running:
+        """Main coordination loop."""        while self.is_running:
             try:
                 # Optimize cross-scheduler performance
                 if self.config.enable_cross_scheduler_optimization:
@@ -844,8 +806,7 @@ class MainScheduler:
                 await asyncio.sleep(10)
     
     async def _health_monitor_loop(self) -> None:
-        """Health monitoring loop."""
-        while self.is_running:
+        """Health monitoring loop."""        while self.is_running:
             try:
                 # Check scheduler health
                 for scheduler_type, scheduler in self.schedulers.items():
@@ -878,8 +839,7 @@ class MainScheduler:
                 await asyncio.sleep(10)
     
     async def _metrics_loop(self) -> None:
-        """Metrics collection loop."""
-        while self.is_running:
+        """Metrics collection loop."""        while self.is_running:
             try:
                 # Collect metrics from all schedulers
                 for scheduler_type, scheduler in self.schedulers.items():
@@ -908,8 +868,7 @@ class MainScheduler:
                 await asyncio.sleep(10)
     
     async def get_system_status(self) -> Dict[str, Any]:
-        """Get comprehensive system status."""
-        return {
+        """Get comprehensive system status."""        return {
             'is_running': self.is_running,
             'configuration': asdict(self.config),
             'enabled_schedulers': [s.value for s in self.config.enabled_schedulers],
@@ -938,8 +897,7 @@ class MainScheduler:
         }
     
     async def stop(self) -> None:
-        """Stop the main scheduler system."""
-        logger.info("Stopping main scheduler system...")
+        """Stop the main scheduler system."""        logger.info("Stopping main scheduler system...")
         
         self.is_running = False
         
@@ -963,12 +921,10 @@ class MainScheduler:
         logger.info("Main scheduler system stopped")
     
     def add_callback(self, event_type: str, callback: Callable) -> None:
-        """Add event callback."""
-        self.event_callbacks[event_type].append(callback)
+        """Add event callback."""        self.event_callbacks[event_type].append(callback)
     
     async def _call_callbacks(self, event_type: str, *args) -> None:
-        """Call registered callbacks for an event."""
-        for callback in self.event_callbacks.get(event_type, []):
+        """Call registered callbacks for an event."""        for callback in self.event_callbacks.get(event_type, []):
             try:
                 if asyncio.iscoroutinefunction(callback):
                     await callback(*args)

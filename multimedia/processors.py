@@ -1,5 +1,4 @@
-"""
-Core Multimedia Content Processors
+"""Core Multimedia Content Processors
 Advanced processing for multi-format content with AI-powered analysis
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -12,7 +11,6 @@ distribution, or modification without written permission from Fahed Mlaiel
 (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full 
 extent of the law. All rights reserved.
 """
-
 import asyncio
 import logging
 import io
@@ -44,8 +42,7 @@ settings = get_settings()
 
 @dataclass
 class ProcessingOptions:
-    """Processing configuration options"""
-    quality: str = "high"  # low, medium, high, ultra, studio
+    """Processing configuration options"""    quality: str = "high"  # low, medium, high, ultra, studio
     preserve_metadata: bool = True
     extract_thumbnails: bool = False
     generate_previews: bool = False
@@ -59,8 +56,7 @@ class ProcessingOptions:
 
 @dataclass
 class ProcessingResult:
-    """Result of content processing operation"""
-    success: bool
+    """Result of content processing operation"""    success: bool
     content_id: str
     original_format: ContentFormat
     processed_format: Optional[ContentFormat] = None
@@ -76,8 +72,7 @@ class ProcessingResult:
 
 @dataclass
 class ContentMetrics:
-    """Content quality and performance metrics"""
-    file_size: int
+    """Content quality and performance metrics"""    file_size: int
     duration: Optional[float] = None
     dimensions: Optional[Tuple[int, int]] = None
     quality_score: float = 0.0
@@ -88,8 +83,7 @@ class ContentMetrics:
 
 
 class ContentProcessor(ABC):
-    """Abstract base class for content processors"""
-    
+    """Abstract base class for content processors"""    
     def __init__(self, options: Optional[ProcessingOptions] = None):
         self.options = options or ProcessingOptions()
         self.temp_dir = self.options.temp_dir or Path(tempfile.gettempdir())
@@ -99,42 +93,35 @@ class ContentProcessor(ABC):
     @abstractmethod
     async def process(self, content_data: Union[bytes, str, Path], 
                      metadata: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process content and return result"""
-        pass
+        """Process content and return result"""        pass
     
     @abstractmethod
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if processor supports given format"""
-        pass
+        """Check if processor supports given format"""        pass
     
     def _generate_content_id(self, content_data: bytes) -> str:
-        """Generate unique content identifier"""
-        return hashlib.sha256(content_data[:1024]).hexdigest()[:16]
+        """Generate unique content identifier"""        return hashlib.sha256(content_data[:1024]).hexdigest()[:16]
     
     async def cleanup(self):
-        """Clean up resources"""
-        if hasattr(self, 'executor'):
+        """Clean up resources"""        if hasattr(self, 'executor'):
             self.executor.shutdown(wait=True)
 
 
 class AudioProcessor(ContentProcessor):
-    """Professional audio content processor"""
-    
+    """Professional audio content processor"""    
     def __init__(self, options: Optional[ProcessingOptions] = None):
         super().__init__(options)
         self.supported_formats = {fmt.value for fmt in AudioFormat}
         self.speech_recognizer = sr.Recognizer()
         
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if processor supports audio format"""
-        if isinstance(format_type, ContentFormat):
+        """Check if processor supports audio format"""        if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.AUDIO
         return format_type.lower() in self.supported_formats
     
     async def process(self, content_data: Union[bytes, str, Path], 
                      metadata: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process audio content with advanced analysis"""
-        start_time = datetime.now()
+        """Process audio content with advanced analysis"""        start_time = datetime.now()
         
         try:
             # Handle input data
@@ -196,8 +183,7 @@ class AudioProcessor(ContentProcessor):
             )
     
     async def _extract_audio_metadata(self, audio: np.ndarray, sr: int, path: Path) -> Dict[str, Any]:
-        """Extract comprehensive audio metadata"""
-        metadata = {
+        """Extract comprehensive audio metadata"""        metadata = {
             'sample_rate': sr,
             'duration': len(audio) / sr,
             'channels': 1 if audio.ndim == 1 else audio.shape[0],
@@ -214,8 +200,7 @@ class AudioProcessor(ContentProcessor):
         return metadata
     
     def _compute_audio_features(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Compute audio signal features"""
-        features = {}
+        """Compute audio signal features"""        features = {}
         
         try:
             # Spectral features
@@ -248,8 +233,7 @@ class AudioProcessor(ContentProcessor):
         return features
     
     async def _generate_audio_thumbnails(self, audio: np.ndarray, sr: int) -> List[str]:
-        """Generate audio waveform visualization thumbnails"""
-        thumbnails = []
+        """Generate audio waveform visualization thumbnails"""        thumbnails = []
         
         try:
             import matplotlib.pyplot as plt
@@ -287,8 +271,7 @@ class AudioProcessor(ContentProcessor):
         return thumbnails
     
     async def _analyze_audio_content(self, audio: np.ndarray, sr: int) -> Dict[str, Any]:
-        """AI-powered audio content analysis"""
-        analysis = {
+        """AI-powered audio content analysis"""        analysis = {
             'content_type': 'audio',
             'ai_confidence': 0.0,
             'detected_features': []
@@ -326,8 +309,7 @@ class AudioProcessor(ContentProcessor):
         return analysis
     
     def _detect_speech(self, audio: np.ndarray, sr: int) -> bool:
-        """Detect if audio contains speech"""
-        try:
+        """Detect if audio contains speech"""        try:
             # Simple speech detection using spectral features
             spectral_centroid = librosa.feature.spectral_centroid(y=audio, sr=sr)
             zcr = librosa.feature.zero_crossing_rate(audio)
@@ -342,8 +324,7 @@ class AudioProcessor(ContentProcessor):
             return False
     
     async def _enhance_audio(self, audio: np.ndarray, sr: int) -> np.ndarray:
-        """Apply audio enhancements"""
-        try:
+        """Apply audio enhancements"""        try:
             # Noise reduction
             enhanced = librosa.effects.preemphasis(audio)
             
@@ -357,30 +338,26 @@ class AudioProcessor(ContentProcessor):
             return audio
     
     def _create_temp_file(self, data: bytes, extension: str) -> Path:
-        """Create temporary file with data"""
-        temp_file = self.temp_dir / f"temp_{hashlib.md5(data).hexdigest()}{extension}"
+        """Create temporary file with data"""        temp_file = self.temp_dir / f"temp_{hashlib.md5(data).hexdigest()}{extension}"
         with open(temp_file, 'wb') as f:
             f.write(data)
         return temp_file
 
 
 class VideoProcessor(ContentProcessor):
-    """Professional video content processor"""
-    
+    """Professional video content processor"""    
     def __init__(self, options: Optional[ProcessingOptions] = None):
         super().__init__(options)
         self.supported_formats = {fmt.value for fmt in VideoFormat}
         
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if processor supports video format"""
-        if isinstance(format_type, ContentFormat):
+        """Check if processor supports video format"""        if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.VIDEO
         return format_type.lower() in self.supported_formats
     
     async def process(self, content_data: Union[bytes, str, Path], 
                      metadata: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process video content with advanced analysis"""
-        start_time = datetime.now()
+        """Process video content with advanced analysis"""        start_time = datetime.now()
         
         try:
             # Handle input data
@@ -443,8 +420,7 @@ class VideoProcessor(ContentProcessor):
             )
     
     async def _extract_video_metadata(self, video: VideoFileClip, path: Path) -> Dict[str, Any]:
-        """Extract comprehensive video metadata"""
-        metadata = {
+        """Extract comprehensive video metadata"""        metadata = {
             'duration': video.duration,
             'fps': video.fps,
             'width': int(video.w),
@@ -463,8 +439,7 @@ class VideoProcessor(ContentProcessor):
         return metadata
     
     def _analyze_video_properties(self, video: VideoFileClip) -> Dict[str, Any]:
-        """Analyze video technical properties"""
-        properties = {}
+        """Analyze video technical properties"""        properties = {}
         
         try:
             # Sample frames for analysis
@@ -490,8 +465,7 @@ class VideoProcessor(ContentProcessor):
         return properties
     
     def _calculate_scene_complexity(self, frames: List[np.ndarray]) -> float:
-        """Calculate scene complexity based on edge density"""
-        try:
+        """Calculate scene complexity based on edge density"""        try:
             complexities = []
             for frame in frames:
                 gray = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
@@ -503,8 +477,7 @@ class VideoProcessor(ContentProcessor):
             return 0.0
     
     def _estimate_motion(self, frames: List[np.ndarray]) -> float:
-        """Estimate motion between frames"""
-        try:
+        """Estimate motion between frames"""        try:
             if len(frames) < 2:
                 return 0.0
                 
@@ -522,8 +495,7 @@ class VideoProcessor(ContentProcessor):
             return 0.0
     
     async def _generate_video_thumbnails(self, video: VideoFileClip) -> List[str]:
-        """Generate video frame thumbnails"""
-        thumbnails = []
+        """Generate video frame thumbnails"""        thumbnails = []
         
         try:
             # Extract key frames
@@ -551,8 +523,7 @@ class VideoProcessor(ContentProcessor):
         return thumbnails
     
     async def _analyze_video_content(self, video: VideoFileClip) -> Dict[str, Any]:
-        """AI-powered video content analysis"""
-        analysis = {
+        """AI-powered video content analysis"""        analysis = {
             'content_type': 'video',
             'ai_confidence': 0.0,
             'detected_features': [],
@@ -584,8 +555,7 @@ class VideoProcessor(ContentProcessor):
         return analysis
     
     def _analyze_scene_content(self, frame: np.ndarray) -> Dict[str, Any]:
-        """Analyze scene content in a frame"""
-        features = {}
+        """Analyze scene content in a frame"""        features = {}
         
         try:
             # Color analysis
@@ -609,8 +579,7 @@ class VideoProcessor(ContentProcessor):
         return features
     
     async def _analyze_motion_patterns(self, video: VideoFileClip) -> Dict[str, Any]:
-        """Analyze motion patterns in video"""
-        motion_data = {
+        """Analyze motion patterns in video"""        motion_data = {
             'motion_intensity': 0.0,
             'scene_changes': 0,
             'camera_movement': 'static'
@@ -641,8 +610,7 @@ class VideoProcessor(ContentProcessor):
         return motion_data
     
     def _calculate_frame_motion(self, frame1: np.ndarray, frame2: np.ndarray) -> float:
-        """Calculate motion between two frames"""
-        try:
+        """Calculate motion between two frames"""        try:
             gray1 = cv2.cvtColor(frame1, cv2.COLOR_RGB2GRAY)
             gray2 = cv2.cvtColor(frame2, cv2.COLOR_RGB2GRAY)
             
@@ -654,8 +622,7 @@ class VideoProcessor(ContentProcessor):
             return 0.0
     
     async def _analyze_video_audio(self, video: VideoFileClip) -> Dict[str, Any]:
-        """Analyze audio track of video"""
-        audio_analysis = {}
+        """Analyze audio track of video"""        audio_analysis = {}
         
         try:
             if video.audio is not None:
@@ -680,8 +647,7 @@ class VideoProcessor(ContentProcessor):
         return audio_analysis
     
     async def _enhance_video(self, video: VideoFileClip) -> Path:
-        """Apply video enhancements"""
-        try:
+        """Apply video enhancements"""        try:
             # Simple enhancement: adjust contrast and brightness
             enhanced_path = self.temp_dir / f"enhanced_{self._generate_content_id(str(video).encode())}.mp4"
             
@@ -702,30 +668,26 @@ class VideoProcessor(ContentProcessor):
             return Path(video.filename)
     
     def _create_temp_file(self, data: bytes, extension: str) -> Path:
-        """Create temporary file with data"""
-        temp_file = self.temp_dir / f"temp_{hashlib.md5(data).hexdigest()}{extension}"
+        """Create temporary file with data"""        temp_file = self.temp_dir / f"temp_{hashlib.md5(data).hexdigest()}{extension}"
         with open(temp_file, 'wb') as f:
             f.write(data)
         return temp_file
 
 
 class ImageProcessor(ContentProcessor):
-    """Professional image content processor"""
-    
+    """Professional image content processor"""    
     def __init__(self, options: Optional[ProcessingOptions] = None):
         super().__init__(options)
         self.supported_formats = {fmt.value for fmt in ImageFormat}
         
     def supports_format(self, format_type: Union[str, ContentFormat]) -> bool:
-        """Check if processor supports image format"""
-        if isinstance(format_type, ContentFormat):
+        """Check if processor supports image format"""        if isinstance(format_type, ContentFormat):
             return format_type == ContentFormat.IMAGE
         return format_type.lower() in self.supported_formats
     
     async def process(self, content_data: Union[bytes, str, Path], 
                      metadata: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process image content with advanced analysis"""
-        start_time = datetime.now()
+        """Process image content with advanced analysis"""        start_time = datetime.now()
         
         try:
             # Handle input data
@@ -784,8 +746,7 @@ class ImageProcessor(ContentProcessor):
             )
     
     async def _extract_image_metadata(self, image: Image.Image, path: Path) -> Dict[str, Any]:
-        """Extract comprehensive image metadata"""
-        metadata = {
+        """Extract comprehensive image metadata"""        metadata = {
             'width': image.width,
             'height': image.height,
             'format': image.format,
@@ -815,8 +776,7 @@ class ImageProcessor(ContentProcessor):
         return metadata
     
     def _analyze_image_properties(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze image technical properties"""
-        properties = {}
+        """Analyze image technical properties"""        properties = {}
         
         try:
             # Convert to numpy array for analysis
@@ -852,8 +812,7 @@ class ImageProcessor(ContentProcessor):
         return properties
     
     def _calculate_texture_complexity(self, gray_image: np.ndarray) -> float:
-        """Calculate texture complexity using local binary patterns"""
-        try:
+        """Calculate texture complexity using local binary patterns"""        try:
             # Simplified texture analysis using gradient magnitude
             grad_x = cv2.Sobel(gray_image, cv2.CV_64F, 1, 0, ksize=3)
             grad_y = cv2.Sobel(gray_image, cv2.CV_64F, 0, 1, ksize=3)
@@ -864,8 +823,7 @@ class ImageProcessor(ContentProcessor):
             return 0.0
     
     def _assess_image_quality(self, img_array: np.ndarray) -> float:
-        """Assess image quality using multiple metrics"""
-        try:
+        """Assess image quality using multiple metrics"""        try:
             # Simple quality metrics
             sharpness = self._calculate_sharpness(img_array)
             noise_level = self._estimate_noise_level(img_array)
@@ -879,8 +837,7 @@ class ImageProcessor(ContentProcessor):
             return 0.5  # Default medium quality
     
     def _calculate_sharpness(self, img_array: np.ndarray) -> float:
-        """Calculate image sharpness using Laplacian variance"""
-        try:
+        """Calculate image sharpness using Laplacian variance"""        try:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             laplacian = cv2.Laplacian(gray, cv2.CV_64F)
             sharpness = laplacian.var()
@@ -891,8 +848,7 @@ class ImageProcessor(ContentProcessor):
             return 0.5
     
     def _estimate_noise_level(self, img_array: np.ndarray) -> float:
-        """Estimate noise level in image"""
-        try:
+        """Estimate noise level in image"""        try:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             
             # Use high-pass filter to estimate noise
@@ -909,8 +865,7 @@ class ImageProcessor(ContentProcessor):
             return 0.3
     
     def _calculate_contrast(self, img_array: np.ndarray) -> float:
-        """Calculate image contrast"""
-        try:
+        """Calculate image contrast"""        try:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             contrast = gray.std()
             
@@ -920,8 +875,7 @@ class ImageProcessor(ContentProcessor):
             return 0.5
     
     async def _generate_image_thumbnails(self, image: Image.Image) -> List[str]:
-        """Generate image thumbnails in different sizes"""
-        thumbnails = []
+        """Generate image thumbnails in different sizes"""        thumbnails = []
         
         try:
             thumbnail_sizes = [(150, 150), (300, 300), (600, 400)]
@@ -940,8 +894,7 @@ class ImageProcessor(ContentProcessor):
         return thumbnails
     
     async def _analyze_image_content(self, image: Image.Image) -> Dict[str, Any]:
-        """AI-powered image content analysis"""
-        analysis = {
+        """AI-powered image content analysis"""        analysis = {
             'content_type': 'image',
             'ai_confidence': 0.0,
             'detected_features': [],
@@ -975,8 +928,7 @@ class ImageProcessor(ContentProcessor):
         return analysis
     
     def _analyze_colors(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Analyze color composition"""
-        color_info = {}
+        """Analyze color composition"""        color_info = {}
         
         try:
             # Color histogram
@@ -1011,8 +963,7 @@ class ImageProcessor(ContentProcessor):
         return color_info
     
     def _analyze_composition(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Analyze image composition"""
-        composition = {}
+        """Analyze image composition"""        composition = {}
         
         try:
             h, w = img_array.shape[:2]
@@ -1052,8 +1003,7 @@ class ImageProcessor(ContentProcessor):
         return composition
     
     async def _detect_objects(self, img_array: np.ndarray) -> List[Dict[str, Any]]:
-        """Simplified object detection"""
-        objects = []
+        """Simplified object detection"""        objects = []
         
         try:
             # Simple contour-based object detection
@@ -1078,8 +1028,7 @@ class ImageProcessor(ContentProcessor):
         return objects
     
     def _classify_scene(self, img_array: np.ndarray) -> Dict[str, Any]:
-        """Simplified scene classification"""
-        scene_info = {
+        """Simplified scene classification"""        scene_info = {
             'type': 'unknown',
             'confidence': 0.0
         }
@@ -1112,8 +1061,7 @@ class ImageProcessor(ContentProcessor):
         return scene_info
     
     def _calculate_edge_density(self, img_array: np.ndarray) -> float:
-        """Calculate edge density in image"""
-        try:
+        """Calculate edge density in image"""        try:
             gray = cv2.cvtColor(img_array, cv2.COLOR_RGB2GRAY)
             edges = cv2.Canny(gray, 50, 150)
             return float(np.sum(edges > 0) / (edges.shape[0] * edges.shape[1]))
@@ -1121,8 +1069,7 @@ class ImageProcessor(ContentProcessor):
             return 0.0
     
     async def _enhance_image(self, image: Image.Image) -> Image.Image:
-        """Apply image enhancements"""
-        try:
+        """Apply image enhancements"""        try:
             enhanced = image.copy()
             
             # Auto-adjust contrast
@@ -1144,22 +1091,19 @@ class ImageProcessor(ContentProcessor):
             return image
     
     def _save_enhanced_image(self, image: Image.Image) -> Path:
-        """Save enhanced image to temporary file"""
-        enhanced_path = self.temp_dir / f"enhanced_{self._generate_content_id(str(image).encode())}.jpg"
+        """Save enhanced image to temporary file"""        enhanced_path = self.temp_dir / f"enhanced_{self._generate_content_id(str(image).encode())}.jpg"
         image.save(enhanced_path, 'JPEG', quality=95)
         return enhanced_path
     
     def _create_temp_file(self, data: bytes, extension: str) -> Path:
-        """Create temporary file with data"""
-        temp_file = self.temp_dir / f"temp_{hashlib.md5(data).hexdigest()}{extension}"
+        """Create temporary file with data"""        temp_file = self.temp_dir / f"temp_{hashlib.md5(data).hexdigest()}{extension}"
         with open(temp_file, 'wb') as f:
             f.write(data)
         return temp_file
 
 
 class MultimediaProcessor:
-    """Unified multimedia processor for all content types"""
-    
+    """Unified multimedia processor for all content types"""    
     def __init__(self, options: Optional[ProcessingOptions] = None):
         self.options = options or ProcessingOptions()
         self.processors = {
@@ -1171,8 +1115,7 @@ class MultimediaProcessor:
     async def process(self, content_data: Union[bytes, str, Path], 
                      content_type: Optional[Union[str, ContentFormat]] = None,
                      metadata: Optional[Dict[str, Any]] = None) -> ProcessingResult:
-        """Process multimedia content automatically detecting type"""
-        
+        """Process multimedia content automatically detecting type"""        
         # Auto-detect content type if not provided
         if content_type is None:
             content_type = await self._detect_content_type(content_data)
@@ -1189,8 +1132,7 @@ class MultimediaProcessor:
         return await processor.process(content_data, metadata)
     
     async def _detect_content_type(self, content_data: Union[bytes, str, Path]) -> ContentFormat:
-        """Auto-detect content type from data or filename"""
-        
+        """Auto-detect content type from data or filename"""        
         if isinstance(content_data, (str, Path)):
             # Detect from file extension
             extension = Path(content_data).suffix.lower().lstrip('.')
@@ -1217,14 +1159,12 @@ class MultimediaProcessor:
         raise UnsupportedFormatError("Unable to detect content type")
     
     def get_supported_formats(self) -> Dict[ContentFormat, List[str]]:
-        """Get all supported formats by content type"""
-        return {
+        """Get all supported formats by content type"""        return {
             ContentFormat.AUDIO: [fmt.value for fmt in AudioFormat],
             ContentFormat.VIDEO: [fmt.value for fmt in VideoFormat],
             ContentFormat.IMAGE: [fmt.value for fmt in ImageFormat]
         }
     
     async def cleanup(self):
-        """Clean up all processors"""
-        for processor in self.processors.values():
+        """Clean up all processors"""        for processor in self.processors.values():
             await processor.cleanup()

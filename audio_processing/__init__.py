@@ -1,5 +1,4 @@
-"""
-🎵 Audio Processing Engine - Professional Audio Intelligence System
+"""🎵 Audio Processing Engine - Professional Audio Intelligence System
 
 This module provides comprehensive audio processing, protection, and intelligence
 capabilities for the IA Influencer Agent platform.
@@ -27,7 +26,6 @@ and will result in legal action under German and International copyright law.
 
 For licensing inquiries: mlaiel@live.de
 """
-
 from .analysis import (
     SpectralAnalyzer,
     MelodyExtractor,

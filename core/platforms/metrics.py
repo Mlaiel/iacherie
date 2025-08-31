@@ -1,5 +1,4 @@
-"""
-Platform Metrics Module
+"""Platform Metrics Module
 
 Advanced metrics collection and analysis for platform performance.
 
@@ -7,7 +6,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import asyncio
 from typing import Dict, List, Optional, Any, Union
 from datetime import datetime, timedelta
@@ -24,8 +22,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics to collect"""
-    PERFORMANCE = "performance"
+    """Types of metrics to collect"""    PERFORMANCE = "performance"
     ENGAGEMENT = "engagement"
     GROWTH = "growth"
     REVENUE = "revenue"
@@ -34,8 +31,7 @@ class MetricType(Enum):
 
 
 class MetricInterval(Enum):
-    """Metric collection intervals"""
-    REAL_TIME = "real_time"
+    """Metric collection intervals"""    REAL_TIME = "real_time"
     MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
@@ -45,14 +41,12 @@ class MetricInterval(Enum):
 
 @dataclass
 class MetricPoint:
-    """Single metric data point"""
-    timestamp: datetime
+    """Single metric data point"""    timestamp: datetime
     value: Union[int, float]
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'timestamp': self.timestamp.isoformat(),
             'value': self.value,
             'metadata': self.metadata
@@ -61,16 +55,14 @@ class MetricPoint:
 
 @dataclass
 class MetricSeries:
-    """Time series of metric points"""
-    metric_name: str
+    """Time series of metric points"""    metric_name: str
     metric_type: MetricType
     platform_id: str
     data_points: List[MetricPoint] = field(default_factory=list)
     max_points: int = 1000
     
     def add_point(self, value: Union[int, float], metadata: Dict[str, Any] = None):
-        """Add data point to series"""
-        point = MetricPoint(
+        """Add data point to series"""        point = MetricPoint(
             timestamp=datetime.utcnow(),
             value=value,
             metadata=metadata or {}
@@ -83,14 +75,12 @@ class MetricSeries:
             self.data_points = self.data_points[-self.max_points:]
     
     def get_latest_value(self) -> Optional[Union[int, float]]:
-        """Get latest metric value"""
-        if self.data_points:
+        """Get latest metric value"""        if self.data_points:
             return self.data_points[-1].value
         return None
     
     def get_average(self, hours: int = 24) -> Optional[float]:
-        """Get average value over time period"""
-        cutoff = datetime.utcnow() - timedelta(hours=hours)
+        """Get average value over time period"""        cutoff = datetime.utcnow() - timedelta(hours=hours)
         relevant_points = [
             point for point in self.data_points 
             if point.timestamp > cutoff
@@ -101,8 +91,7 @@ class MetricSeries:
         return None
     
     def get_trend(self, hours: int = 24) -> Optional[str]:
-        """Get trend direction over time period"""
-        cutoff = datetime.utcnow() - timedelta(hours=hours)
+        """Get trend direction over time period"""        cutoff = datetime.utcnow() - timedelta(hours=hours)
         relevant_points = [
             point for point in self.data_points 
             if point.timestamp > cutoff
@@ -132,8 +121,7 @@ class MetricSeries:
             return "stable"
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'metric_name': self.metric_name,
             'metric_type': self.metric_type.value,
             'platform_id': self.platform_id,
@@ -146,8 +134,7 @@ class MetricSeries:
 
 @dataclass
 class PerformanceMetrics:
-    """Platform performance metrics"""
-    platform_id: str
+    """Platform performance metrics"""    platform_id: str
     response_time_ms: float
     success_rate: float
     error_rate: float
@@ -157,8 +144,7 @@ class PerformanceMetrics:
     last_updated: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'platform_id': self.platform_id,
             'response_time_ms': self.response_time_ms,
             'success_rate': self.success_rate,
@@ -172,8 +158,7 @@ class PerformanceMetrics:
 
 @dataclass
 class EngagementMetrics:
-    """Content engagement metrics"""
-    platform_id: str
+    """Content engagement metrics"""    platform_id: str
     total_views: int
     total_likes: int
     total_shares: int
@@ -186,8 +171,7 @@ class EngagementMetrics:
     last_updated: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'platform_id': self.platform_id,
             'total_views': self.total_views,
             'total_likes': self.total_likes,
@@ -203,16 +187,13 @@ class EngagementMetrics:
 
 
 class MetricsCollector:
-    """Collects and manages platform metrics"""
-    
+    """Collects and manages platform metrics"""    
     def __init__(self, collection_interval: int = 60):
-        """
-        Initialize metrics collector
+        """        Initialize metrics collector
         
         Args:
             collection_interval: Collection interval in seconds
-        """
-        self.collection_interval = collection_interval
+        """        self.collection_interval = collection_interval
         self.metrics: Dict[str, Dict[str, MetricSeries]] = defaultdict(dict)
         self.performance_metrics: Dict[str, PerformanceMetrics] = {}
         self.engagement_metrics: Dict[str, EngagementMetrics] = {}
@@ -221,8 +202,7 @@ class MetricsCollector:
         self.request_counters: Dict[str, deque] = defaultdict(lambda: deque(maxlen=60))
         
     def register_platform(self, platform: PlatformBase):
-        """Register platform for metrics collection"""
-        platform_id = platform.platform_id
+        """Register platform for metrics collection"""        platform_id = platform.platform_id
         
         # Initialize performance metrics
         self.metrics[platform_id]['response_time'] = MetricSeries(
@@ -255,8 +235,7 @@ class MetricsCollector:
         logger.info(f"Registered platform {platform_id} for metrics collection")
     
     def record_request_metric(self, platform_id: str, response_time_ms: float, success: bool):
-        """Record request metrics"""
-        current_time = datetime.utcnow()
+        """Record request metrics"""        current_time = datetime.utcnow()
         
         # Record response time
         if platform_id in self.metrics and 'response_time' in self.metrics[platform_id]:
@@ -278,8 +257,7 @@ class MetricsCollector:
         self.request_counters[platform_id].append(current_time)
     
     def record_engagement_metric(self, platform_id: str, analytics: AnalyticsData):
-        """Record engagement metrics"""
-        if platform_id not in self.metrics:
+        """Record engagement metrics"""        if platform_id not in self.metrics:
             return
         
         metrics_map = {
@@ -301,8 +279,7 @@ class MetricsCollector:
                 )
     
     async def collect_platform_metrics(self, platform: PlatformBase):
-        """Collect comprehensive metrics for a platform"""
-        platform_id = platform.platform_id
+        """Collect comprehensive metrics for a platform"""        platform_id = platform.platform_id
         
         try:
             # Collect performance metrics
@@ -359,8 +336,7 @@ class MetricsCollector:
             self.record_request_metric(platform_id, 0, False)
     
     def _calculate_success_rate(self, platform_id: str, hours: int = 1) -> Optional[float]:
-        """Calculate success rate over time period"""
-        if platform_id not in self.metrics:
+        """Calculate success rate over time period"""        if platform_id not in self.metrics:
             return None
         
         success_series = self.metrics[platform_id].get('success_rate')
@@ -395,13 +371,11 @@ class MetricsCollector:
         return successes / total
     
     def _calculate_uptime(self, platform_id: str, hours: int = 24) -> float:
-        """Calculate uptime percentage"""
-        success_rate = self._calculate_success_rate(platform_id, hours)
+        """Calculate uptime percentage"""        success_rate = self._calculate_success_rate(platform_id, hours)
         return (success_rate * 100) if success_rate is not None else 100.0
     
     async def start_collection(self, platforms: List[PlatformBase]):
-        """Start metrics collection"""
-        if self.collection_active:
+        """Start metrics collection"""        if self.collection_active:
             logger.warning("Metrics collection already active")
             return
         
@@ -414,8 +388,7 @@ class MetricsCollector:
         logger.info(f"Started metrics collection for {len(platforms)} platforms")
     
     async def stop_collection(self):
-        """Stop metrics collection"""
-        if not self.collection_active:
+        """Stop metrics collection"""        if not self.collection_active:
             return
         
         self.collection_active = False
@@ -430,8 +403,7 @@ class MetricsCollector:
         logger.info("Stopped metrics collection")
     
     async def _collection_loop(self, platforms: List[PlatformBase]):
-        """Main collection loop"""
-        try:
+        """Main collection loop"""        try:
             while self.collection_active:
                 logger.debug("Collecting platform metrics")
                 
@@ -453,8 +425,7 @@ class MetricsCollector:
             self.collection_active = False
     
     def get_platform_metrics(self, platform_id: str) -> Dict[str, Any]:
-        """Get all metrics for a platform"""
-        result = {
+        """Get all metrics for a platform"""        result = {
             'platform_id': platform_id,
             'performance': None,
             'engagement': None,
@@ -477,15 +448,13 @@ class MetricsCollector:
         return result
     
     def get_all_metrics(self) -> Dict[str, Any]:
-        """Get metrics for all platforms"""
-        return {
+        """Get metrics for all platforms"""        return {
             platform_id: self.get_platform_metrics(platform_id)
             for platform_id in self.metrics.keys()
         }
     
     def get_metrics_summary(self) -> Dict[str, Any]:
-        """Get metrics summary across all platforms"""
-        total_platforms = len(self.metrics)
+        """Get metrics summary across all platforms"""        total_platforms = len(self.metrics)
         
         if total_platforms == 0:
             return {'total_platforms': 0}
@@ -524,8 +493,7 @@ class MetricsCollector:
         }
     
     def export_metrics(self, platform_id: str = None, format: str = "json") -> Dict[str, Any]:
-        """Export metrics data"""
-        if platform_id:
+        """Export metrics data"""        if platform_id:
             data = self.get_platform_metrics(platform_id)
         else:
             data = self.get_all_metrics()
@@ -544,8 +512,7 @@ class MetricsCollector:
         return export_data
     
     def clear_metrics(self, platform_id: str = None):
-        """Clear metrics data"""
-        if platform_id:
+        """Clear metrics data"""        if platform_id:
             if platform_id in self.metrics:
                 del self.metrics[platform_id]
             if platform_id in self.performance_metrics:
@@ -568,8 +535,7 @@ _global_collector: Optional[MetricsCollector] = None
 
 
 def get_metrics_collector() -> MetricsCollector:
-    """Get global metrics collector instance"""
-    global _global_collector
+    """Get global metrics collector instance"""    global _global_collector
     
     if _global_collector is None:
         _global_collector = MetricsCollector()
@@ -578,14 +544,12 @@ def get_metrics_collector() -> MetricsCollector:
 
 
 async def start_metrics_collection(platforms: List[PlatformBase]):
-    """Start global metrics collection"""
-    collector = get_metrics_collector()
+    """Start global metrics collection"""    collector = get_metrics_collector()
     await collector.start_collection(platforms)
 
 
 async def stop_metrics_collection():
-    """Stop global metrics collection"""
-    global _global_collector
+    """Stop global metrics collection"""    global _global_collector
     
     if _global_collector:
         await _global_collector.stop_collection()

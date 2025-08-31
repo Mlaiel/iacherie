@@ -1,5 +1,4 @@
-"""
-Integration & Microservices Configuration Module
+"""Integration & Microservices Configuration Module
 
 Advanced integration configuration for microservices architecture, API management,
 external service connections, and enterprise-grade system integration.
@@ -10,7 +9,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 WARNING: This code is protected intellectual property. Unauthorized use is prohibited.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import os
 import json
 from typing import Dict, Any, List, Optional, Union, Tuple
@@ -25,8 +23,7 @@ logger = logging.getLogger(__name__)
 
 
 class ServiceType(Enum):
-    """Types of microservices"""
-    GATEWAY = "gateway"
+    """Types of microservices"""    GATEWAY = "gateway"
     AUTH = "auth"
     USER_MANAGEMENT = "user_management"
     CONTENT_PROCESSING = "content_processing"
@@ -44,8 +41,7 @@ class ServiceType(Enum):
 
 
 class IntegrationType(Enum):
-    """Types of external integrations"""
-    PAYMENT_GATEWAY = "payment_gateway"
+    """Types of external integrations"""    PAYMENT_GATEWAY = "payment_gateway"
     SOCIAL_MEDIA = "social_media"
     CLOUD_STORAGE = "cloud_storage"
     CDN_PROVIDER = "cdn_provider"
@@ -60,8 +56,7 @@ class IntegrationType(Enum):
 
 
 class CommunicationProtocol(Enum):
-    """Communication protocols between services"""
-    REST_API = "rest_api"
+    """Communication protocols between services"""    REST_API = "rest_api"
     GRAPHQL = "graphql"
     GRPC = "grpc"
     MESSAGE_QUEUE = "message_queue"
@@ -72,8 +67,7 @@ class CommunicationProtocol(Enum):
 
 @dataclass
 class ServiceEndpoint:
-    """Configuration for service endpoints"""
-    name: str
+    """Configuration for service endpoints"""    name: str
     url: str
     protocol: CommunicationProtocol
     authentication_required: bool = True
@@ -92,8 +86,7 @@ class ServiceEndpoint:
 
 @dataclass
 class MicroserviceConfig:
-    """Configuration for individual microservices"""
-    service_name: str
+    """Configuration for individual microservices"""    service_name: str
     service_type: ServiceType
     version: str = "1.0.0"
     
@@ -136,8 +129,7 @@ class MicroserviceConfig:
 
 @dataclass
 class APIGatewayConfig:
-    """Configuration for API Gateway"""
-    enabled: bool = True
+    """Configuration for API Gateway"""    enabled: bool = True
     
     # Gateway settings
     gateway_port: int = 80
@@ -175,8 +167,7 @@ class APIGatewayConfig:
 
 @dataclass
 class MessageQueueConfig:
-    """Configuration for message queuing system"""
-    enabled: bool = True
+    """Configuration for message queuing system"""    enabled: bool = True
     provider: str = "redis"  # redis, rabbitmq, kafka
     
     # Connection settings
@@ -203,8 +194,7 @@ class MessageQueueConfig:
 
 @dataclass
 class DatabaseIntegrationConfig:
-    """Configuration for database integrations"""
-    
+    """Configuration for database integrations"""    
     # Primary database
     primary_db_type: str = "postgresql"
     primary_db_host: str = "localhost"
@@ -243,8 +233,7 @@ class DatabaseIntegrationConfig:
 
 @dataclass
 class ExternalIntegrationConfig:
-    """Configuration for external service integrations"""
-    
+    """Configuration for external service integrations"""    
     # Payment providers
     stripe_enabled: bool = True
     stripe_api_key: Optional[str] = None
@@ -298,8 +287,7 @@ class ExternalIntegrationConfig:
 
 @dataclass
 class SecurityIntegrationConfig:
-    """Configuration for security integrations"""
-    
+    """Configuration for security integrations"""    
     # Certificate management
     ssl_enabled: bool = True
     ssl_provider: str = "letsencrypt"  # letsencrypt, custom, cloudflare
@@ -332,8 +320,7 @@ class SecurityIntegrationConfig:
 
 @dataclass
 class MonitoringIntegrationConfig:
-    """Configuration for monitoring and observability"""
-    
+    """Configuration for monitoring and observability"""    
     # Metrics collection
     prometheus_enabled: bool = True
     prometheus_port: int = 9090
@@ -371,8 +358,7 @@ class MonitoringIntegrationConfig:
 
 @dataclass
 class IntegrationConfig:
-    """Master integration configuration"""
-    
+    """Master integration configuration"""    
     # Core settings
     enabled: bool = True
     environment: str = "production"  # development, staging, production
@@ -395,13 +381,11 @@ class IntegrationConfig:
     monitoring_integration: MonitoringIntegrationConfig = field(default_factory=MonitoringIntegrationConfig)
     
     def add_microservice(self, service_name: str, service_type: ServiceType, config: MicroserviceConfig):
-        """Add microservice configuration"""
-        self.microservices[service_name] = config
+        """Add microservice configuration"""        self.microservices[service_name] = config
         logger.info(f"Added microservice: {service_name} of type {service_type.value}")
     
     def get_service_endpoints(self) -> Dict[str, ServiceEndpoint]:
-        """Get all service endpoints"""
-        endpoints = {}
+        """Get all service endpoints"""        endpoints = {}
         
         for service_name, config in self.microservices.items():
             endpoint = ServiceEndpoint(
@@ -415,8 +399,7 @@ class IntegrationConfig:
         return endpoints
     
     def validate_configuration(self) -> List[str]:
-        """Validate integration configuration"""
-        issues = []
+        """Validate integration configuration"""        issues = []
         
         # Check required services
         required_services = [
@@ -449,8 +432,7 @@ class IntegrationConfig:
         return issues
     
     def get_deployment_manifest(self) -> Dict[str, Any]:
-        """Generate Kubernetes deployment manifest"""
-        manifest = {
+        """Generate Kubernetes deployment manifest"""        manifest = {
             "apiVersion": "v1",
             "kind": "Namespace",
             "metadata": {
@@ -511,8 +493,7 @@ class IntegrationConfig:
 
 # Initialize default microservices
 def create_default_microservices() -> Dict[str, MicroserviceConfig]:
-    """Create default microservice configurations"""
-    services = {}
+    """Create default microservice configurations"""    services = {}
     
     # API Gateway
     services["api-gateway"] = MicroserviceConfig(

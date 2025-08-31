@@ -1,5 +1,4 @@
-"""
-Monetization Management System
+"""Monetization Management System
 =============================
 
 Enterprise-grade revenue management and monetization engine for multi-platform
@@ -21,7 +20,6 @@ This code is the intellectual property of Fahed Mlaiel. Any unauthorized use,
 reproduction, distribution, or commercialization without explicit written 
 permission is strictly prohibited and will result in legal action.
 """
-
 import asyncio
 import logging
 import time
@@ -61,8 +59,7 @@ from ...models.monetization import (
 
 
 class RevenueSource(Enum):
-    """Revenue source types."""
-    STREAMING = "streaming"
+    """Revenue source types."""    STREAMING = "streaming"
     LICENSING = "licensing"
     SPONSORSHIP = "sponsorship"
     MERCHANDISE = "merchandise"
@@ -77,8 +74,7 @@ class RevenueSource(Enum):
 
 
 class PlatformRevenue(Enum):
-    """Supported revenue platforms."""
-    YOUTUBE = "youtube"
+    """Supported revenue platforms."""    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     INSTAGRAM = "instagram"
@@ -94,8 +90,7 @@ class PlatformRevenue(Enum):
 
 
 class PaymentMethod(Enum):
-    """Payment processing methods."""
-    STRIPE = "stripe"
+    """Payment processing methods."""    STRIPE = "stripe"
     PAYPAL = "paypal"
     WISE = "wise"
     BANK_TRANSFER = "bank_transfer"
@@ -106,8 +101,7 @@ class PaymentMethod(Enum):
 
 
 class RevenueType(Enum):
-    """Types of revenue classification."""
-    GROSS_REVENUE = "gross_revenue"
+    """Types of revenue classification."""    GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     ROYALTIES = "royalties"
     COMMISSIONS = "commissions"
@@ -118,8 +112,7 @@ class RevenueType(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue performance metrics."""
-    total_revenue: Decimal
+    """Revenue performance metrics."""    total_revenue: Decimal
     monthly_revenue: Decimal
     weekly_revenue: Decimal
     daily_revenue: Decimal
@@ -133,8 +126,7 @@ class RevenueMetrics:
 
 @dataclass
 class RevenueStreamData:
-    """Individual revenue stream information."""
-    stream_id: str
+    """Individual revenue stream information."""    stream_id: str
     user_id: str
     platform: PlatformRevenue
     source: RevenueSource
@@ -151,8 +143,7 @@ class RevenueStreamData:
 
 @dataclass
 class LicensingAgreement:
-    """Licensing deal and agreement data."""
-    license_id: str
+    """Licensing deal and agreement data."""    license_id: str
     content_id: str
     licensee: str
     license_type: str
@@ -171,8 +162,7 @@ class LicensingAgreement:
 
 @dataclass
 class CollaborationRevenue:
-    """Revenue sharing for collaborations."""
-    collaboration_id: str
+    """Revenue sharing for collaborations."""    collaboration_id: str
     project_name: str
     collaborators: List[str]
     revenue_shares: Dict[str, float]  # user_id -> percentage
@@ -186,8 +176,7 @@ class CollaborationRevenue:
 
 @dataclass
 class PayoutRequest:
-    """Payout request data."""
-    payout_id: str
+    """Payout request data."""    payout_id: str
     user_id: str
     amount: Decimal
     currency: str
@@ -204,8 +193,7 @@ class PayoutRequest:
 
 
 class MonetizationManager:
-    """
-    Enterprise-grade monetization management system for content creators.
+    """    Enterprise-grade monetization management system for content creators.
     
     Features:
     - Multi-platform revenue tracking
@@ -215,11 +203,9 @@ class MonetizationManager:
     - Collaboration revenue sharing
     - Tax optimization and reporting
     - Real-time financial dashboards
-    """
-    
+    """    
     def __init__(self, config: Optional[MonetizationConfig] = None):
-        """Initialize monetization manager."""
-        self.config = config or MonetizationConfig()
+        """Initialize monetization manager."""        self.config = config or MonetizationConfig()
         self.logger = get_logger(__name__)
         self.encryption_manager = EncryptionManager()
         
@@ -246,8 +232,7 @@ class MonetizationManager:
         self._initialize_platform_clients()
     
     def _initialize_payment_processors(self):
-        """Initialize payment processing systems."""
-        try:
+        """Initialize payment processing systems."""        try:
             # Initialize Stripe
             if self.config.stripe_secret_key:
                 stripe.api_key = self.config.stripe_secret_key
@@ -267,8 +252,7 @@ class MonetizationManager:
             self.logger.error(f"Failed to initialize payment processors: {str(e)}")
     
     def _initialize_platform_clients(self):
-        """Initialize platform API clients for revenue tracking."""
-        # This would initialize various platform APIs for revenue data collection
+        """Initialize platform API clients for revenue tracking."""        # This would initialize various platform APIs for revenue data collection
         # Implementation depends on specific platform APIs and requirements
         pass
     
@@ -282,8 +266,7 @@ class MonetizationManager:
         description: str = "",
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Track a new revenue stream.
+        """        Track a new revenue stream.
         
         Args:
             user_id: User identifier
@@ -296,8 +279,7 @@ class MonetizationManager:
             
         Returns:
             str: Revenue stream ID
-        """
-        try:
+        """        try:
             stream_id = str(uuid.uuid4())
             
             # Calculate processing fees and net amount
@@ -351,8 +333,7 @@ class MonetizationManager:
         exclusivity: bool = False,
         auto_renewal: bool = False
     ) -> str:
-        """
-        Create a new licensing agreement.
+        """        Create a new licensing agreement.
         
         Args:
             content_id: Content identifier
@@ -367,8 +348,7 @@ class MonetizationManager:
             
         Returns:
             str: License agreement ID
-        """
-        try:
+        """        try:
             license_id = str(uuid.uuid4())
             start_date = datetime.utcnow()
             end_date = start_date + timedelta(days=duration_months * 30)
@@ -410,8 +390,7 @@ class MonetizationManager:
         collaborators: List[str],
         revenue_shares: Dict[str, float]
     ) -> str:
-        """
-        Set up revenue sharing for collaboration projects.
+        """        Set up revenue sharing for collaboration projects.
         
         Args:
             project_name: Name of the collaboration project
@@ -420,8 +399,7 @@ class MonetizationManager:
             
         Returns:
             str: Collaboration ID
-        """
-        try:
+        """        try:
             collaboration_id = str(uuid.uuid4())
             
             # Validate revenue shares sum to 100%
@@ -461,8 +439,7 @@ class MonetizationManager:
         destination_account: str,
         scheduled_date: Optional[datetime] = None
     ) -> str:
-        """
-        Process a payout request for a user.
+        """        Process a payout request for a user.
         
         Args:
             user_id: User identifier
@@ -474,8 +451,7 @@ class MonetizationManager:
             
         Returns:
             str: Payout request ID
-        """
-        try:
+        """        try:
             payout_id = str(uuid.uuid4())
             
             # Calculate processing fees
@@ -522,8 +498,7 @@ class MonetizationManager:
         start_date: Optional[datetime] = None,
         end_date: Optional[datetime] = None
     ) -> RevenueMetrics:
-        """
-        Get comprehensive revenue analytics for a user.
+        """        Get comprehensive revenue analytics for a user.
         
         Args:
             user_id: User identifier
@@ -532,8 +507,7 @@ class MonetizationManager:
             
         Returns:
             RevenueMetrics: Revenue analytics data
-        """
-        try:
+        """        try:
             # Use cache if available and recent
             cache_key = f"{user_id}_{start_date}_{end_date}"
             if cache_key in self.revenue_metrics_cache:
@@ -646,8 +620,7 @@ class MonetizationManager:
             raise
     
     async def _calculate_processing_fee(self, amount: Decimal, platform: PlatformRevenue) -> Decimal:
-        """Calculate processing fee for revenue stream."""
-        # Platform-specific fee structures
+        """Calculate processing fee for revenue stream."""        # Platform-specific fee structures
         fee_rates = {
             PlatformRevenue.STRIPE: Decimal("0.029"),  # 2.9%
             PlatformRevenue.PAYPAL: Decimal("0.034"),  # 3.4%
@@ -661,8 +634,7 @@ class MonetizationManager:
         return (amount * fee_rate).quantize(Decimal("0.01"), rounding=ROUND_HALF_UP)
     
     async def _calculate_payout_fee(self, amount: Decimal, payment_method: PaymentMethod) -> Decimal:
-        """Calculate payout processing fee."""
-        fee_structures = {
+        """Calculate payout processing fee."""        fee_structures = {
             PaymentMethod.STRIPE: Decimal("0.25"),  # $0.25 flat fee
             PaymentMethod.PAYPAL: Decimal("1.00"),  # $1.00 flat fee
             PaymentMethod.WISE: amount * Decimal("0.005"),  # 0.5%
@@ -672,8 +644,7 @@ class MonetizationManager:
         return fee_structures.get(payment_method, Decimal("1.00"))
     
     async def _get_user_balance(self, user_id: str, currency: str) -> Decimal:
-        """Get user's available balance."""
-        # Calculate total revenue
+        """Get user's available balance."""        # Calculate total revenue
         user_streams = [
             stream for stream in self.revenue_streams.values()
             if stream.user_id == user_id and stream.currency == currency
@@ -690,8 +661,7 @@ class MonetizationManager:
         return total_revenue - total_payouts
     
     async def _calculate_revenue_trends(self, streams: List[RevenueStreamData]) -> Dict[str, float]:
-        """Calculate revenue trends and patterns."""
-        if len(streams) < 2:
+        """Calculate revenue trends and patterns."""        if len(streams) < 2:
             return {}
         
         # Group by month
@@ -727,8 +697,7 @@ class MonetizationManager:
             return {}
     
     async def _forecast_revenue(self, streams: List[RevenueStreamData]) -> Dict[str, Decimal]:
-        """Generate revenue forecast using ML models."""
-        if len(streams) < 30:  # Need at least 30 data points
+        """Generate revenue forecast using ML models."""        if len(streams) < 30:  # Need at least 30 data points
             return {}
         
         try:
@@ -788,8 +757,7 @@ class MonetizationManager:
             return {}
     
     async def _process_immediate_payout(self, payout_request: PayoutRequest):
-        """Process immediate payout request."""
-        try:
+        """Process immediate payout request."""        try:
             processor = self.payment_processors.get(payout_request.payment_method)
             if not processor:
                 raise ValueError(f"Payment processor not available for {payout_request.payment_method.value}")
@@ -820,12 +788,10 @@ class MonetizationManager:
             raise
     
     async def _store_revenue_stream(self, stream: RevenueStreamData):
-        """Store revenue stream in database."""
-        try:
+        """Store revenue stream in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO revenue_streams (
+                    """                    INSERT INTO revenue_streams (
                         stream_id, user_id, platform, source, amount, currency,
                         transaction_date, description, metadata, processing_fee,
                         net_amount, status
@@ -857,12 +823,10 @@ class MonetizationManager:
             raise
     
     async def _store_licensing_agreement(self, agreement: LicensingAgreement):
-        """Store licensing agreement in database."""
-        try:
+        """Store licensing agreement in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO licensing_agreements (
+                    """                    INSERT INTO licensing_agreements (
                         license_id, content_id, licensee, license_type, territory,
                         duration_months, total_amount, payment_schedule, royalty_rate,
                         exclusivity, start_date, end_date, auto_renewal, status
@@ -896,12 +860,10 @@ class MonetizationManager:
             raise
     
     async def _store_collaboration(self, collaboration: CollaborationRevenue):
-        """Store collaboration in database."""
-        try:
+        """Store collaboration in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO collaborations (
+                    """                    INSERT INTO collaborations (
                         collaboration_id, project_name, collaborators, revenue_shares,
                         total_revenue, revenue_distribution, payment_schedule,
                         created_date, status
@@ -930,12 +892,10 @@ class MonetizationManager:
             raise
     
     async def _store_payout_request(self, payout: PayoutRequest):
-        """Store payout request in database."""
-        try:
+        """Store payout request in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    INSERT INTO payout_requests (
+                    """                    INSERT INTO payout_requests (
                         payout_id, user_id, amount, currency, payment_method,
                         destination_account, processing_fee, net_amount, request_date,
                         scheduled_date, status
@@ -966,12 +926,10 @@ class MonetizationManager:
             raise
     
     async def _update_payout_request(self, payout: PayoutRequest):
-        """Update payout request in database."""
-        try:
+        """Update payout request in database."""        try:
             async with get_database_session() as db:
                 await db.execute(
-                    """
-                    UPDATE payout_requests SET
+                    """                    UPDATE payout_requests SET
                         status = :status, processed_date = :processed_date,
                         transaction_reference = :transaction_reference, notes = :notes
                     WHERE payout_id = :payout_id
@@ -991,25 +949,21 @@ class MonetizationManager:
             raise
     
     async def _update_user_revenue_metrics(self, user_id: str):
-        """Update cached revenue metrics for user."""
-        # Clear cache to force recalculation
+        """Update cached revenue metrics for user."""        # Clear cache to force recalculation
         keys_to_remove = [key for key in self.revenue_metrics_cache.keys() if key.startswith(user_id)]
         for key in keys_to_remove:
             del self.revenue_metrics_cache[key]
     
     async def _check_automatic_payout_triggers(self, user_id: str):
-        """Check if automatic payout should be triggered."""
-        # Implementation for automatic payout triggers based on user preferences
+        """Check if automatic payout should be triggered."""        # Implementation for automatic payout triggers based on user preferences
         pass
     
     async def _schedule_licensing_payments(self, agreement: LicensingAgreement):
-        """Schedule recurring payments for licensing agreement."""
-        # Implementation for scheduling recurring licensing payments
+        """Schedule recurring payments for licensing agreement."""        # Implementation for scheduling recurring licensing payments
         pass
     
     async def close(self):
-        """Close and cleanup resources."""
-        try:
+        """Close and cleanup resources."""        try:
             # Clear caches
             self.revenue_streams.clear()
             self.licensing_agreements.clear()
@@ -1025,16 +979,14 @@ class MonetizationManager:
 
 # Factory functions
 async def create_monetization_manager(config: Optional[MonetizationConfig] = None) -> MonetizationManager:
-    """Create and initialize monetization manager."""
-    return MonetizationManager(config)
+    """Create and initialize monetization manager."""    return MonetizationManager(config)
 
 
 async def bulk_track_revenue_streams(
     manager: MonetizationManager,
     revenue_data: List[Tuple[str, PlatformRevenue, RevenueSource, Decimal, str]]
 ) -> List[str]:
-    """Track multiple revenue streams in bulk."""
-    stream_ids = []
+    """Track multiple revenue streams in bulk."""    stream_ids = []
     
     for user_id, platform, source, amount, currency in revenue_data:
         try:

@@ -23,8 +23,7 @@ User (Creator Multi-format) → Upload Content → AI Processing →
 Protection → SEO Pro → Collaboration Matching → Multi-platform Distribution
 
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
-"""
-import logging
+"""import logging
 from typing import Dict, Any, Optional, List
 from datetime import datetime
 from dataclasses import dataclass

@@ -1,5 +1,4 @@
-"""
-Enterprise Crawler Compliance Database Module
+"""Enterprise Crawler Compliance Database Module
 
 Advanced database layer for regulatory compliance, legal requirements,
 and industry standards compliance in crawling operations.
@@ -14,7 +13,6 @@ Team Specialties: Lead AI Developer + Backend Senior + ML Engineer + DBA + Secur
                  Microservices + Audio + DevOps + IA Prompt Engineer
 Copyright: All rights reserved
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from datetime import datetime, timedelta
 from sqlalchemy.orm import Session
@@ -36,8 +34,7 @@ from ..core.exceptions import (
 
 
 class ComplianceFramework(Enum):
-    """Supported compliance frameworks."""
-    GDPR = "gdpr"                    # General Data Protection Regulation (EU)
+    """Supported compliance frameworks."""    GDPR = "gdpr"                    # General Data Protection Regulation (EU)
     CCPA = "ccpa"                    # California Consumer Privacy Act
     COPPA = "coppa"                  # Children's Online Privacy Protection Act
     HIPAA = "hipaa"                  # Health Insurance Portability and Accountability Act
@@ -50,8 +47,7 @@ class ComplianceFramework(Enum):
 
 
 class ComplianceStatus(Enum):
-    """Compliance status levels."""
-    COMPLIANT = "compliant"
+    """Compliance status levels."""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PENDING_REVIEW = "pending_review"
     REMEDIATION_REQUIRED = "remediation_required"
@@ -59,8 +55,7 @@ class ComplianceStatus(Enum):
 
 
 class ViolationSeverity(Enum):
-    """Compliance violation severity levels."""
-    CRITICAL = "critical"           # Immediate action required
+    """Compliance violation severity levels."""    CRITICAL = "critical"           # Immediate action required
     HIGH = "high"                   # Action within 24 hours
     MEDIUM = "medium"               # Action within 7 days
     LOW = "low"                     # Action within 30 days
@@ -68,8 +63,7 @@ class ViolationSeverity(Enum):
 
 
 class DataCategory(Enum):
-    """Categories of data for compliance tracking."""
-    PERSONAL_IDENTIFIABLE = "personal_identifiable"
+    """Categories of data for compliance tracking."""    PERSONAL_IDENTIFIABLE = "personal_identifiable"
     SENSITIVE_PERSONAL = "sensitive_personal"
     BIOMETRIC = "biometric"
     FINANCIAL = "financial"
@@ -82,8 +76,7 @@ class DataCategory(Enum):
 
 
 class CrawlerComplianceManager(DatabaseManager):
-    """
-    Enterprise compliance management system for crawler operations.
+    """    Enterprise compliance management system for crawler operations.
     
     Manages:
     - Multi-framework compliance monitoring (GDPR, CCPA, DMCA, etc.)
@@ -92,11 +85,9 @@ class CrawlerComplianceManager(DatabaseManager):
     - Data retention and deletion policies
     - Consent management and user rights
     - Audit trail and compliance reporting
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize compliance manager."""
-        super().__init__(db_session)
+        """Initialize compliance manager."""        super().__init__(db_session)
         self.compliance_rules = {}
         self.active_audits = {}
         self._initialize_compliance_system()
@@ -111,8 +102,7 @@ class CrawlerComplianceManager(DatabaseManager):
         severity: ViolationSeverity,
         user_id: str
     ) -> str:
-        """
-        Create a new compliance rule for automated enforcement.
+        """        Create a new compliance rule for automated enforcement.
         
         Args:
             rule_name: Human-readable rule name
@@ -128,8 +118,7 @@ class CrawlerComplianceManager(DatabaseManager):
             
         Raises:
             ComplianceError: If rule creation fails
-        """
-        try:
+        """        try:
             rule_id = str(uuid4())
             
             # Validate rule configuration
@@ -169,8 +158,7 @@ class CrawlerComplianceManager(DatabaseManager):
         crawling_operation: Dict[str, Any],
         data_collected: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Perform comprehensive GDPR compliance check for crawling operation.
+        """        Perform comprehensive GDPR compliance check for crawling operation.
         
         Args:
             crawling_operation: Details of the crawling operation
@@ -178,8 +166,7 @@ class CrawlerComplianceManager(DatabaseManager):
             
         Returns:
             GDPR compliance assessment results
-        """
-        try:
+        """        try:
             compliance_check = {
                 "lawful_basis": await self._check_gdpr_lawful_basis(crawling_operation, data_collected),
                 "data_minimization": await self._check_gdpr_data_minimization(data_collected),
@@ -210,8 +197,7 @@ class CrawlerComplianceManager(DatabaseManager):
         content_data: Dict[str, Any],
         platform: str
     ) -> Dict[str, Any]:
-        """
-        Check DMCA compliance for content crawling operations.
+        """        Check DMCA compliance for content crawling operations.
         
         Args:
             content_data: Content data being crawled
@@ -219,8 +205,7 @@ class CrawlerComplianceManager(DatabaseManager):
             
         Returns:
             DMCA compliance assessment
-        """
-        try:
+        """        try:
             dmca_check = {
                 "safe_harbor_provisions": await self._check_dmca_safe_harbor(platform),
                 "takedown_procedures": await self._check_dmca_takedown_compliance(platform),
@@ -249,8 +234,7 @@ class CrawlerComplianceManager(DatabaseManager):
         user_agent: str,
         crawling_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Check robots.txt compliance for web crawling operations.
+        """        Check robots.txt compliance for web crawling operations.
         
         Args:
             target_url: URL being crawled
@@ -259,8 +243,7 @@ class CrawlerComplianceManager(DatabaseManager):
             
         Returns:
             Robots.txt compliance results
-        """
-        try:
+        """        try:
             robots_compliance = {
                 "robots_txt_exists": await self._check_robots_txt_exists(target_url),
                 "user_agent_allowed": await self._check_user_agent_allowed(target_url, user_agent),
@@ -294,8 +277,7 @@ class CrawlerComplianceManager(DatabaseManager):
         legal_basis: str,
         user_id: str
     ) -> str:
-        """
-        Create a data retention policy for compliance management.
+        """        Create a data retention policy for compliance management.
         
         Args:
             policy_name: Human-readable policy name
@@ -308,8 +290,7 @@ class CrawlerComplianceManager(DatabaseManager):
             
         Returns:
             Data retention policy ID
-        """
-        try:
+        """        try:
             policy_id = str(uuid4())
             
             # Create data retention policy record
@@ -350,8 +331,7 @@ class CrawlerComplianceManager(DatabaseManager):
         consent_timestamp: datetime,
         consent_mechanism: str
     ) -> str:
-        """
-        Record user consent for data collection and processing.
+        """        Record user consent for data collection and processing.
         
         Args:
             user_identifier: User identifier (anonymized if required)
@@ -363,8 +343,7 @@ class CrawlerComplianceManager(DatabaseManager):
             
         Returns:
             Consent record ID
-        """
-        try:
+        """        try:
             consent_id = str(uuid4())
             
             # Create consent record
@@ -399,8 +378,7 @@ class CrawlerComplianceManager(DatabaseManager):
         audit_period: timedelta,
         auditor_id: str
     ) -> str:
-        """
-        Perform comprehensive compliance audit of crawling operations.
+        """        Perform comprehensive compliance audit of crawling operations.
         
         Args:
             audit_scope: Scope of the audit (systems, processes, data)
@@ -410,8 +388,7 @@ class CrawlerComplianceManager(DatabaseManager):
             
         Returns:
             Audit ID for tracking and reporting
-        """
-        try:
+        """        try:
             audit_id = str(uuid4())
             
             # Create compliance audit record
@@ -456,8 +433,7 @@ class CrawlerComplianceManager(DatabaseManager):
         request_details: Dict[str, Any],
         platform: str
     ) -> str:
-        """
-        Handle data subject requests (access, rectification, deletion, portability).
+        """        Handle data subject requests (access, rectification, deletion, portability).
         
         Args:
             request_type: Type of request (access, delete, rectify, port)
@@ -467,8 +443,7 @@ class CrawlerComplianceManager(DatabaseManager):
             
         Returns:
             Request handling ID
-        """
-        try:
+        """        try:
             request_id = str(uuid4())
             
             # Process request based on type
@@ -497,8 +472,7 @@ class CrawlerComplianceManager(DatabaseManager):
         report_period: timedelta,
         include_recommendations: bool = True
     ) -> Dict[str, Any]:
-        """
-        Generate comprehensive compliance report.
+        """        Generate comprehensive compliance report.
         
         Args:
             report_type: Type of compliance report
@@ -508,8 +482,7 @@ class CrawlerComplianceManager(DatabaseManager):
             
         Returns:
             Comprehensive compliance report
-        """
-        try:
+        """        try:
             report = {
                 "report_metadata": {
                     "report_type": report_type,
@@ -543,8 +516,7 @@ class CrawlerComplianceManager(DatabaseManager):
         conditions: Dict[str, Any],
         actions: List[Dict[str, Any]]
     ) -> bool:
-        """Validate compliance rule configuration."""
-        required_condition_fields = ["trigger_event", "evaluation_criteria"]
+        """Validate compliance rule configuration."""        required_condition_fields = ["trigger_event", "evaluation_criteria"]
         required_action_fields = ["action_type", "parameters"]
         
         for field in required_condition_fields:
@@ -568,8 +540,7 @@ class CrawlerComplianceManager(DatabaseManager):
         conditions: Dict[str, Any],
         actions: List[Dict[str, Any]]
     ) -> None:
-        """Activate compliance rule in monitoring system."""
-        self.compliance_rules[rule_id] = {
+        """Activate compliance rule in monitoring system."""        self.compliance_rules[rule_id] = {
             "conditions": conditions,
             "actions": actions,
             "activated_at": datetime.utcnow()
@@ -577,48 +548,37 @@ class CrawlerComplianceManager(DatabaseManager):
     
     # GDPR compliance check methods
     async def _check_gdpr_lawful_basis(self, operation: Dict, data: Dict) -> Dict[str, Any]:
-        """Check if there's a lawful basis for processing under GDPR."""
-        return {"has_lawful_basis": True, "basis": "legitimate_interests", "justification": "Content monitoring"}
+        """Check if there's a lawful basis for processing under GDPR."""        return {"has_lawful_basis": True, "basis": "legitimate_interests", "justification": "Content monitoring"}
     
     async def _check_gdpr_data_minimization(self, data: Dict) -> Dict[str, Any]:
-        """Check if data collection follows minimization principle."""
-        return {"compliant": True, "assessment": "Only necessary data collected"}
+        """Check if data collection follows minimization principle."""        return {"compliant": True, "assessment": "Only necessary data collected"}
     
     async def _check_gdpr_purpose_limitation(self, operation: Dict, data: Dict) -> Dict[str, Any]:
-        """Check if data use is limited to stated purposes."""
-        return {"compliant": True, "assessment": "Data used only for stated monitoring purposes"}
+        """Check if data use is limited to stated purposes."""        return {"compliant": True, "assessment": "Data used only for stated monitoring purposes"}
     
     async def _check_gdpr_storage_limitation(self, data: Dict) -> Dict[str, Any]:
-        """Check if storage limitation is respected."""
-        return {"compliant": True, "retention_period": "As per retention policy"}
+        """Check if storage limitation is respected."""        return {"compliant": True, "retention_period": "As per retention policy"}
     
     async def _check_gdpr_accuracy(self, data: Dict) -> Dict[str, Any]:
-        """Check data accuracy requirements."""
-        return {"compliant": True, "accuracy_measures": "Regular data validation"}
+        """Check data accuracy requirements."""        return {"compliant": True, "accuracy_measures": "Regular data validation"}
     
     async def _check_gdpr_security(self, data: Dict) -> Dict[str, Any]:
-        """Check security and confidentiality measures."""
-        return {"compliant": True, "security_measures": "Encryption, access controls"}
+        """Check security and confidentiality measures."""        return {"compliant": True, "security_measures": "Encryption, access controls"}
     
     async def _check_gdpr_accountability(self, operation: Dict) -> Dict[str, Any]:
-        """Check accountability and documentation."""
-        return {"compliant": True, "documentation": "Comprehensive audit trails"}
+        """Check accountability and documentation."""        return {"compliant": True, "documentation": "Comprehensive audit trails"}
     
     async def _check_gdpr_consent(self, operation: Dict, data: Dict) -> Dict[str, Any]:
-        """Check consent requirements if applicable."""
-        return {"consent_required": False, "justification": "Public data, legitimate interests"}
+        """Check consent requirements if applicable."""        return {"consent_required": False, "justification": "Public data, legitimate interests"}
     
     async def _check_gdpr_subject_rights(self, data: Dict) -> Dict[str, Any]:
-        """Check data subject rights implementation."""
-        return {"rights_supported": ["access", "rectification", "erasure", "portability"]}
+        """Check data subject rights implementation."""        return {"rights_supported": ["access", "rectification", "erasure", "portability"]}
     
     async def _check_gdpr_transfers(self, operation: Dict) -> Dict[str, Any]:
-        """Check cross-border data transfer compliance."""
-        return {"transfers_compliant": True, "safeguards": "Standard contractual clauses"}
+        """Check cross-border data transfer compliance."""        return {"transfers_compliant": True, "safeguards": "Standard contractual clauses"}
     
     async def _calculate_gdpr_overall_compliance(self, check_results: Dict) -> str:
-        """Calculate overall GDPR compliance status."""
-        # Simplified logic - would be more complex in practice
+        """Calculate overall GDPR compliance status."""        # Simplified logic - would be more complex in practice
         non_compliant_areas = [
             key for key, value in check_results.items()
             if isinstance(value, dict) and not value.get("compliant", True)
@@ -633,38 +593,29 @@ class CrawlerComplianceManager(DatabaseManager):
     
     # DMCA compliance check methods
     async def _check_dmca_safe_harbor(self, platform: str) -> Dict[str, Any]:
-        """Check DMCA safe harbor provisions compliance."""
-        return {"safe_harbor_compliant": True, "provisions_met": ["notice_takedown", "repeat_infringer"]}
+        """Check DMCA safe harbor provisions compliance."""        return {"safe_harbor_compliant": True, "provisions_met": ["notice_takedown", "repeat_infringer"]}
     
     async def _check_dmca_takedown_compliance(self, platform: str) -> Dict[str, Any]:
-        """Check takedown procedure compliance."""
-        return {"takedown_compliant": True, "response_time": "24_hours"}
+        """Check takedown procedure compliance."""        return {"takedown_compliant": True, "response_time": "24_hours"}
     
     async def _check_dmca_copyright_notices(self, content: Dict) -> Dict[str, Any]:
-        """Check for copyright notices in content."""
-        return {"notices_present": False, "automated_detection": True}
+        """Check for copyright notices in content."""        return {"notices_present": False, "automated_detection": True}
     
     async def _assess_fair_use(self, content: Dict) -> Dict[str, Any]:
-        """Assess fair use applicability."""
-        return {"fair_use_assessment": "likely_fair_use", "factors": ["transformative", "non_commercial"]}
+        """Assess fair use applicability."""        return {"fair_use_assessment": "likely_fair_use", "factors": ["transformative", "non_commercial"]}
     
     async def _check_repeat_infringer_policy(self, platform: str) -> Dict[str, Any]:
-        """Check repeat infringer policy implementation."""
-        return {"policy_present": True, "enforcement": "automated"}
+        """Check repeat infringer policy implementation."""        return {"policy_present": True, "enforcement": "automated"}
     
     async def _check_counter_notification_process(self, platform: str) -> Dict[str, Any]:
-        """Check counter-notification process."""
-        return {"process_available": True, "compliant": True}
+        """Check counter-notification process."""        return {"process_available": True, "compliant": True}
     
     async def _check_automated_content_filtering(self, platform: str) -> Dict[str, Any]:
-        """Check automated content filtering systems."""
-        return {"filtering_active": True, "system": "ContentID_equivalent"}
+        """Check automated content filtering systems."""        return {"filtering_active": True, "system": "ContentID_equivalent"}
     
     async def _calculate_dmca_compliance_score(self, check_results: Dict) -> float:
-        """Calculate DMCA compliance score."""
-        return 0.95  # 95% compliant
+        """Calculate DMCA compliance score."""        return 0.95  # 95% compliant
     
     def _initialize_compliance_system(self) -> None:
-        """Initialize compliance management system."""
-        self.compliance_rules = {}
+        """Initialize compliance management system."""        self.compliance_rules = {}
         self.active_audits = {}

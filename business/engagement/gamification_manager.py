@@ -1,5 +1,4 @@
-"""
-Enterprise Gamification Manager - Advanced gamification system for IA Influencer platform.
+"""Enterprise Gamification Manager - Advanced gamification system for IA Influencer platform.
 
 This module provides a comprehensive gamification management system that drives user 
 engagement through challenges, achievements, rewards, and competitive elements.
@@ -27,7 +26,6 @@ Business Logic Integration:
 Creator Upload → AI Processing → Protection → SEO → Collaboration Matching + Gamification →
 Distribution → Monetization → Analytics
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class GamificationEventType(str, Enum):
-    """Types of gamification events that trigger rewards."""
-    CONTENT_UPLOAD = "content_upload"
+    """Types of gamification events that trigger rewards."""    CONTENT_UPLOAD = "content_upload"
     FIRST_UPLOAD = "first_upload"
     DAILY_UPLOAD = "daily_upload"
     WEEKLY_STREAK = "weekly_streak"
@@ -69,8 +66,7 @@ class GamificationEventType(str, Enum):
 
 
 class GamificationMetricType(str, Enum):
-    """Types of metrics tracked for gamification."""
-    EXPERIENCE_POINTS = "experience_points"
+    """Types of metrics tracked for gamification."""    EXPERIENCE_POINTS = "experience_points"
     CONTENT_COUNT = "content_count"
     COLLABORATION_COUNT = "collaboration_count"
     REVENUE_TOTAL = "revenue_total"
@@ -84,8 +80,7 @@ class GamificationMetricType(str, Enum):
 
 
 class GamificationLevel(str, Enum):
-    """User progression levels in the gamification system."""
-    NEWCOMER = "newcomer"           # Level 1-5
+    """User progression levels in the gamification system."""    NEWCOMER = "newcomer"           # Level 1-5
     RISING_STAR = "rising_star"     # Level 6-15
     ESTABLISHED = "established"     # Level 16-30
     INFLUENCER = "influencer"       # Level 31-50
@@ -96,8 +91,7 @@ class GamificationLevel(str, Enum):
 
 @dataclass
 class GamificationProfile:
-    """Complete gamification profile for a user."""
-    user_id: str
+    """Complete gamification profile for a user."""    user_id: str
     level: int = 1
     experience_points: int = 0
     total_points_earned: int = 0
@@ -120,8 +114,7 @@ class GamificationProfile:
     notification_preferences: Dict[str, bool] = field(default_factory=dict)
     
     def get_level_category(self) -> GamificationLevel:
-        """Get the level category based on current level."""
-        if self.level <= 5:
+        """Get the level category based on current level."""        if self.level <= 5:
             return GamificationLevel.NEWCOMER
         elif self.level <= 15:
             return GamificationLevel.RISING_STAR
@@ -141,8 +134,7 @@ class GamificationProfile:
         
         Returns:
             Tuple of (current_level_threshold, next_level_threshold, progress_percentage)
-        """
-        level_thresholds = {
+        """        level_thresholds = {
             1: 0, 2: 100, 3: 300, 4: 600, 5: 1000,
             6: 1500, 7: 2500, 8: 4000, 9: 6000, 10: 10000,
             11: 15000, 12: 22000, 13: 31000, 14: 42000, 15: 55000,
@@ -171,8 +163,7 @@ class GamificationProfile:
 
 @dataclass
 class GamificationEvent:
-    """Represents a gamification event that occurred."""
-    event_id: str = field(default_factory=lambda: str(uuid4()))
+    """Represents a gamification event that occurred."""    event_id: str = field(default_factory=lambda: str(uuid4()))
     user_id: str = ""
     event_type: GamificationEventType = GamificationEventType.CONTENT_UPLOAD
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -184,16 +175,13 @@ class GamificationEvent:
 
 
 class GamificationManager:
-    """
-    Enterprise-grade gamification management system.
+    """    Enterprise-grade gamification management system.
     
     Manages user progression, achievements, rewards, and engagement mechanics
     across the entire IA Influencer platform ecosystem.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the gamification manager."""
-        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
+        """Initialize the gamification manager."""        self.logger = logging.getLogger(f"{__name__}.{self.__class__.__name__}")
         self._event_queue: List[GamificationEvent] = []
         self._processing_lock = asyncio.Lock()
         self._user_profiles: Dict[str, GamificationProfile] = {}
@@ -225,8 +213,7 @@ class GamificationManager:
         self.logger.info("GamificationManager initialized successfully")
     
     async def get_user_profile(self, user_id: str) -> GamificationProfile:
-        """Get or create a gamification profile for a user."""
-        if user_id not in self._user_profiles:
+        """Get or create a gamification profile for a user."""        if user_id not in self._user_profiles:
             profile = GamificationProfile(user_id=user_id)
             self._user_profiles[user_id] = profile
             self.logger.info(f"Created new gamification profile for user {user_id}")
@@ -239,8 +226,7 @@ class GamificationManager:
         event_type: GamificationEventType,
         metadata: Optional[Dict[str, Any]] = None
     ) -> GamificationEvent:
-        """Record a gamification event for processing."""
-        metadata = metadata or {}
+        """Record a gamification event for processing."""        metadata = metadata or {}
         
         event = GamificationEvent(
             user_id=user_id,
@@ -257,8 +243,7 @@ class GamificationManager:
         return event
     
     async def _process_event(self, event: GamificationEvent) -> None:
-        """Process a single gamification event."""
-        async with self._processing_lock:
+        """Process a single gamification event."""        async with self._processing_lock:
             try:
                 profile = await self.get_user_profile(event.user_id)
                 
@@ -316,8 +301,7 @@ class GamificationManager:
         profile: GamificationProfile,
         event: GamificationEvent
     ) -> float:
-        """Calculate point multiplier based on user context and event metadata."""
-        multiplier = 1.0
+        """Calculate point multiplier based on user context and event metadata."""        multiplier = 1.0
         
         # Streak bonus
         if profile.current_streak >= 7:
@@ -358,8 +342,7 @@ class GamificationManager:
         return multiplier
     
     async def _calculate_level(self, experience_points: int) -> int:
-        """Calculate user level based on experience points."""
-        # Level progression follows exponential curve
+        """Calculate user level based on experience points."""        # Level progression follows exponential curve
         level_thresholds = {
             1: 0, 2: 100, 3: 300, 4: 600, 5: 1000,
             6: 1500, 7: 2500, 8: 4000, 9: 6000, 10: 10000,
@@ -386,8 +369,7 @@ class GamificationManager:
         profile: GamificationProfile,
         event: GamificationEvent
     ) -> None:
-        """Update profile metrics based on the event."""
-        if not profile.metrics:
+        """Update profile metrics based on the event."""        if not profile.metrics:
             profile.metrics = {}
         
         # Update event-specific metrics
@@ -416,8 +398,7 @@ class GamificationManager:
         profile: GamificationProfile,
         event: GamificationEvent
     ) -> None:
-        """Update user activity streaks."""
-        now = datetime.utcnow()
+        """Update user activity streaks."""        now = datetime.utcnow()
         
         # Only certain events count towards streaks
         streak_events = {
@@ -452,8 +433,7 @@ class GamificationManager:
         profile: GamificationProfile,
         event: GamificationEvent
     ) -> List[str]:
-        """Check for new achievements based on the event and profile state."""
-        new_achievements = []
+        """Check for new achievements based on the event and profile state."""        new_achievements = []
         
         # Define achievement conditions
         achievement_conditions = {
@@ -528,8 +508,7 @@ class GamificationManager:
         profile: GamificationProfile,
         event: GamificationEvent
     ) -> List[str]:
-        """Check for new badges based on the event and profile state."""
-        new_badges = []
+        """Check for new badges based on the event and profile state."""        new_badges = []
         
         # Define badge conditions
         badge_conditions = {
@@ -563,8 +542,7 @@ class GamificationManager:
         return new_badges
     
     async def process_queue(self) -> int:
-        """Process all pending events in the queue."""
-        processed_count = 0
+        """Process all pending events in the queue."""        processed_count = 0
         
         async with self._processing_lock:
             events_to_process = [e for e in self._event_queue if not e.processed]
@@ -582,8 +560,7 @@ class GamificationManager:
         return processed_count
     
     async def get_user_statistics(self, user_id: str) -> Dict[str, Any]:
-        """Get comprehensive gamification statistics for a user."""
-        profile = await self.get_user_profile(user_id)
+        """Get comprehensive gamification statistics for a user."""        profile = await self.get_user_profile(user_id)
         
         current_threshold, next_threshold, progress = profile.calculate_next_level_progress()
         
@@ -617,8 +594,7 @@ class GamificationManager:
         }
     
     async def get_leaderboard_data(self, user_id: str) -> Dict[str, Any]:
-        """Get leaderboard-relevant data for a user."""
-        profile = await self.get_user_profile(user_id)
+        """Get leaderboard-relevant data for a user."""        profile = await self.get_user_profile(user_id)
         
         return {
             "user_id": user_id,
@@ -640,8 +616,7 @@ class GamificationManager:
         user_id: str,
         preferences: Dict[str, Any]
     ) -> bool:
-        """Update user gamification preferences."""
-        try:
+        """Update user gamification preferences."""        try:
             profile = await self.get_user_profile(user_id)
             
             # Update notification preferences
@@ -666,8 +641,7 @@ class GamificationManager:
         user_id: str,
         journey_events: List[Tuple[GamificationEventType, Dict[str, Any]]]
     ) -> Dict[str, Any]:
-        """Simulate a user journey for testing and preview purposes."""
-        initial_profile = await self.get_user_profile(user_id)
+        """Simulate a user journey for testing and preview purposes."""        initial_profile = await self.get_user_profile(user_id)
         initial_stats = await self.get_user_statistics(user_id)
         
         # Record all events in the journey
@@ -695,8 +669,7 @@ _gamification_manager: Optional[GamificationManager] = None
 
 
 async def get_gamification_manager() -> GamificationManager:
-    """Get the global gamification manager instance."""
-    global _gamification_manager
+    """Get the global gamification manager instance."""    global _gamification_manager
     
     if _gamification_manager is None:
         _gamification_manager = GamificationManager()
@@ -710,12 +683,10 @@ async def record_gamification_event(
     event_type: GamificationEventType,
     metadata: Optional[Dict[str, Any]] = None
 ) -> GamificationEvent:
-    """Record a gamification event (convenience function)."""
-    manager = await get_gamification_manager()
+    """Record a gamification event (convenience function)."""    manager = await get_gamification_manager()
     return await manager.record_event(user_id, event_type, metadata)
 
 
 async def get_user_gamification_stats(user_id: str) -> Dict[str, Any]:
-    """Get user gamification statistics (convenience function)."""
-    manager = await get_gamification_manager()
+    """Get user gamification statistics (convenience function)."""    manager = await get_gamification_manager()
     return await manager.get_user_statistics(user_id)

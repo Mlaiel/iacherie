@@ -1,5 +1,4 @@
-"""
-Quality Processor - Advanced Quality Processing Engine
+"""Quality Processor - Advanced Quality Processing Engine
 ===================================================
 
 Enterprise-grade quality processing engine for content optimization, enhancement,
@@ -16,7 +15,6 @@ is STRICTLY PROHIBITED and will be prosecuted under international copyright law.
 Business Logic: Quality assessment → Issue identification → Processing strategy → 
 Automated corrections → Enhancement application → Optimization → Quality verification
 """
-
 import logging
 import asyncio
 import numpy as np
@@ -69,8 +67,7 @@ from ..models.quality_models import QualityAssessment, ProcessingJob, Processing
 
 
 class ProcessingType(Enum):
-    """Types of quality processing operations"""
-    CORRECTION = "correction"
+    """Types of quality processing operations"""    CORRECTION = "correction"
     ENHANCEMENT = "enhancement"
     OPTIMIZATION = "optimization"
     STANDARDIZATION = "standardization"
@@ -80,8 +77,7 @@ class ProcessingType(Enum):
 
 
 class ProcessingPriority(Enum):
-    """Processing priority levels"""
-    CRITICAL = "critical"
+    """Processing priority levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -89,8 +85,7 @@ class ProcessingPriority(Enum):
 
 
 class ProcessingStatus(Enum):
-    """Processing job status"""
-    PENDING = "pending"
+    """Processing job status"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -99,8 +94,7 @@ class ProcessingStatus(Enum):
 
 @dataclass
 class ProcessingTask:
-    """Quality processing task structure"""
-    task_id: str
+    """Quality processing task structure"""    task_id: str
     content_id: str
     processing_type: ProcessingType
     priority: ProcessingPriority
@@ -119,8 +113,7 @@ class ProcessingTask:
 
 @dataclass
 class ProcessingResult:
-    """Quality processing result structure"""
-    task_id: str
+    """Quality processing result structure"""    task_id: str
     status: ProcessingStatus
     output_path: Optional[str]
     quality_improvement: float
@@ -133,8 +126,7 @@ class ProcessingResult:
 
 
 class AudioProcessor:
-    """Audio quality processing engine"""
-    
+    """Audio quality processing engine"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.AudioProcessor")
@@ -160,8 +152,7 @@ class AudioProcessor:
         operations: List[str],
         parameters: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Process audio file with specified operations."""
-        if not HAS_AUDIO_LIBS:
+        """Process audio file with specified operations."""        if not HAS_AUDIO_LIBS:
             raise RuntimeError("Audio processing libraries not available")
         
         try:
@@ -219,8 +210,7 @@ class AudioProcessor:
             return False, {'error': str(e)}
     
     async def _analyze_audio_quality(self, audio_data: np.ndarray, sr: int) -> Dict[str, Any]:
-        """Analyze audio quality metrics."""
-        metrics = {}
+        """Analyze audio quality metrics."""        metrics = {}
         
         try:
             # Loudness analysis
@@ -263,8 +253,7 @@ class AudioProcessor:
         return metrics
     
     async def _normalize_loudness(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Normalize audio loudness."""
-        target_lufs = params.get('target_lufs', -20.0)
+        """Normalize audio loudness."""        target_lufs = params.get('target_lufs', -20.0)
         
         # Simple RMS-based normalization (placeholder for proper LUFS)
         current_rms = np.sqrt(np.mean(audio**2))
@@ -277,8 +266,7 @@ class AudioProcessor:
         return audio
     
     async def _reduce_noise(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Reduce noise in audio."""
-        # Simple spectral gating noise reduction
+        """Reduce noise in audio."""        # Simple spectral gating noise reduction
         stft = librosa.stft(audio)
         magnitude = np.abs(stft)
         phase = np.angle(stft)
@@ -295,8 +283,7 @@ class AudioProcessor:
         return librosa.istft(cleaned_stft)
     
     async def _enhance_dynamics(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Enhance audio dynamics."""
-        # Simple compressor
+        """Enhance audio dynamics."""        # Simple compressor
         threshold = params.get('comp_threshold', -12.0)  # dB
         ratio = params.get('comp_ratio', 4.0)
         
@@ -315,8 +302,7 @@ class AudioProcessor:
         return audio * gain
     
     async def _fix_clipping(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Fix audio clipping."""
-        # Simple clipping detection and repair
+        """Fix audio clipping."""        # Simple clipping detection and repair
         threshold = params.get('clipping_threshold', 0.95)
         
         # Find clipped samples
@@ -337,8 +323,7 @@ class AudioProcessor:
         return audio
     
     async def _adjust_eq(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Adjust audio EQ."""
-        # Simple frequency domain EQ
+        """Adjust audio EQ."""        # Simple frequency domain EQ
         fft = np.fft.fft(audio)
         freqs = np.fft.fftfreq(len(fft), 1/sr)
         
@@ -358,8 +343,7 @@ class AudioProcessor:
         return np.real(np.fft.ifft(equalized_fft))
     
     async def _enhance_stereo(self, audio: np.ndarray, sr: int, params: Dict[str, Any]) -> np.ndarray:
-        """Enhance stereo width."""
-        if len(audio.shape) < 2:
+        """Enhance stereo width."""        if len(audio.shape) < 2:
             return audio  # Mono audio
         
         width = params.get('stereo_width', 1.2)
@@ -378,16 +362,14 @@ class AudioProcessor:
         return np.array([left, right])
     
     async def _save_audio(self, audio: np.ndarray, sr: int, output_path: str):
-        """Save processed audio."""
-        sf.write(output_path, audio.T if len(audio.shape) > 1 else audio, sr)
+        """Save processed audio."""        sf.write(output_path, audio.T if len(audio.shape) > 1 else audio, sr)
     
     async def _calculate_audio_improvement(
         self,
         original_metrics: Dict[str, Any],
         final_metrics: Dict[str, Any]
     ) -> float:
-        """Calculate audio quality improvement score."""
-        improvements = []
+        """Calculate audio quality improvement score."""        improvements = []
         
         # Dynamic range improvement
         orig_dr = original_metrics.get('dynamic_range', 0)
@@ -406,8 +388,7 @@ class AudioProcessor:
 
 
 class ImageProcessor:
-    """Image quality processing engine"""
-    
+    """Image quality processing engine"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.ImageProcessor")
@@ -424,8 +405,7 @@ class ImageProcessor:
         operations: List[str],
         parameters: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Process image file with specified operations."""
-        if not HAS_IMAGE_LIBS:
+        """Process image file with specified operations."""        if not HAS_IMAGE_LIBS:
             raise RuntimeError("Image processing libraries not available")
         
         try:
@@ -483,8 +463,7 @@ class ImageProcessor:
             return False, {'error': str(e)}
     
     async def _analyze_image_quality(self, image: Image.Image) -> Dict[str, Any]:
-        """Analyze image quality metrics."""
-        metrics = {}
+        """Analyze image quality metrics."""        metrics = {}
         
         try:
             # Convert to numpy array
@@ -532,26 +511,22 @@ class ImageProcessor:
         return metrics
     
     async def _enhance_contrast(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Enhance image contrast."""
-        factor = params.get('contrast_factor', 1.2)
+        """Enhance image contrast."""        factor = params.get('contrast_factor', 1.2)
         enhancer = ImageEnhance.Contrast(image)
         return enhancer.enhance(factor)
     
     async def _enhance_brightness(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Enhance image brightness."""
-        factor = params.get('brightness_factor', 1.1)
+        """Enhance image brightness."""        factor = params.get('brightness_factor', 1.1)
         enhancer = ImageEnhance.Brightness(image)
         return enhancer.enhance(factor)
     
     async def _enhance_sharpness(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Enhance image sharpness."""
-        factor = params.get('sharpness_factor', 1.3)
+        """Enhance image sharpness."""        factor = params.get('sharpness_factor', 1.3)
         enhancer = ImageEnhance.Sharpness(image)
         return enhancer.enhance(factor)
     
     async def _reduce_noise_image(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Reduce image noise."""
-        # Convert to numpy for OpenCV processing
+        """Reduce image noise."""        # Convert to numpy for OpenCV processing
         img_array = np.array(image)
         
         # Apply bilateral filter
@@ -563,14 +538,12 @@ class ImageProcessor:
         return Image.fromarray(denoised)
     
     async def _correct_colors(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Correct image colors."""
-        color_factor = params.get('color_factor', 1.1)
+        """Correct image colors."""        color_factor = params.get('color_factor', 1.1)
         enhancer = ImageEnhance.Color(image)
         return enhancer.enhance(color_factor)
     
     async def _resize_optimize(self, image: Image.Image, params: Dict[str, Any]) -> Image.Image:
-        """Optimize image size."""
-        max_size = params.get('max_dimension', self.max_dimension)
+        """Optimize image size."""        max_size = params.get('max_dimension', self.max_dimension)
         
         # Calculate new size maintaining aspect ratio
         width, height = image.size
@@ -587,16 +560,14 @@ class ImageProcessor:
         return image
     
     async def _save_image(self, image: Image.Image, output_path: str):
-        """Save processed image."""
-        image.save(output_path, format=self.target_format, quality=self.quality, optimize=True)
+        """Save processed image."""        image.save(output_path, format=self.target_format, quality=self.quality, optimize=True)
     
     async def _calculate_image_improvement(
         self,
         original_metrics: Dict[str, Any],
         final_metrics: Dict[str, Any]
     ) -> float:
-        """Calculate image quality improvement score."""
-        improvements = []
+        """Calculate image quality improvement score."""        improvements = []
         
         # Contrast improvement
         orig_contrast = original_metrics.get('contrast', 0)
@@ -620,8 +591,7 @@ class ImageProcessor:
 
 
 class VideoProcessor:
-    """Video quality processing engine"""
-    
+    """Video quality processing engine"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.VideoProcessor")
@@ -638,8 +608,7 @@ class VideoProcessor:
         operations: List[str],
         parameters: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Process video file with specified operations."""
-        if not HAS_VIDEO_LIBS:
+        """Process video file with specified operations."""        if not HAS_VIDEO_LIBS:
             raise RuntimeError("Video processing libraries not available")
         
         try:
@@ -706,8 +675,7 @@ class VideoProcessor:
             return False, {'error': str(e)}
     
     async def _analyze_video_quality(self, video_path: str) -> Dict[str, Any]:
-        """Analyze video quality metrics."""
-        try:
+        """Analyze video quality metrics."""        try:
             probe = ffmpeg.probe(video_path)
             
             video_stream = next((stream for stream in probe['streams'] if stream['codec_type'] == 'video'), None)
@@ -747,8 +715,7 @@ class VideoProcessor:
         original_metrics: Dict[str, Any],
         final_metrics: Dict[str, Any]
     ) -> float:
-        """Calculate video quality improvement score."""
-        # Simple improvement calculation based on bitrate efficiency
+        """Calculate video quality improvement score."""        # Simple improvement calculation based on bitrate efficiency
         orig_bitrate = original_metrics.get('bitrate', 1)
         final_bitrate = final_metrics.get('bitrate', 1)
         
@@ -760,8 +727,7 @@ class VideoProcessor:
 
 
 class TextProcessor:
-    """Text quality processing engine"""
-    
+    """Text quality processing engine"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.logger = logging.getLogger(f"{__name__}.TextProcessor")
@@ -772,8 +738,7 @@ class TextProcessor:
         operations: List[str],
         parameters: Dict[str, Any]
     ) -> Tuple[bool, Dict[str, Any]]:
-        """Process text content with specified operations."""
-        try:
+        """Process text content with specified operations."""        try:
             self.logger.info("Processing text content")
             
             original_metrics = await self._analyze_text_quality(content)
@@ -818,8 +783,7 @@ class TextProcessor:
             return False, {'error': str(e)}
     
     async def _analyze_text_quality(self, content: str) -> Dict[str, Any]:
-        """Analyze text quality metrics."""
-        metrics = {
+        """Analyze text quality metrics."""        metrics = {
             'length': len(content),
             'word_count': len(content.split()),
             'sentence_count': len([s for s in content.split('.') if s.strip()]),
@@ -837,20 +801,17 @@ class TextProcessor:
         return metrics
     
     async def _fix_spelling(self, content: str, params: Dict[str, Any]) -> str:
-        """Fix spelling errors in text."""
-        # Placeholder for spell checking implementation
+        """Fix spelling errors in text."""        # Placeholder for spell checking implementation
         # Would use libraries like pyspellchecker or language_tool_python
         return content
     
     async def _fix_grammar(self, content: str, params: Dict[str, Any]) -> str:
-        """Fix grammar errors in text."""
-        # Placeholder for grammar checking implementation
+        """Fix grammar errors in text."""        # Placeholder for grammar checking implementation
         # Would use libraries like language_tool_python or Grammarly API
         return content
     
     async def _improve_readability(self, content: str, params: Dict[str, Any]) -> str:
-        """Improve text readability."""
-        # Simple sentence splitting for long sentences
+        """Improve text readability."""        # Simple sentence splitting for long sentences
         sentences = content.split('. ')
         improved_sentences = []
         
@@ -868,14 +829,12 @@ class TextProcessor:
         return '. '.join(improved_sentences)
     
     async def _enhance_seo(self, content: str, params: Dict[str, Any]) -> str:
-        """Enhance content for SEO."""
-        # Placeholder for SEO enhancement
+        """Enhance content for SEO."""        # Placeholder for SEO enhancement
         # Would add meta descriptions, optimize keywords, etc.
         return content
     
     async def _format_content(self, content: str, params: Dict[str, Any]) -> str:
-        """Format content for better presentation."""
-        # Basic formatting improvements
+        """Format content for better presentation."""        # Basic formatting improvements
         lines = content.split('\n')
         formatted_lines = []
         
@@ -894,8 +853,7 @@ class TextProcessor:
         original_metrics: Dict[str, Any],
         final_metrics: Dict[str, Any]
     ) -> float:
-        """Calculate text quality improvement score."""
-        improvements = []
+        """Calculate text quality improvement score."""        improvements = []
         
         # Readability improvement
         orig_avg_words = original_metrics.get('avg_words_per_sentence', 20)
@@ -913,13 +871,11 @@ class TextProcessor:
 
 
 class QualityProcessor:
-    """
-    Enterprise quality processing engine.
+    """    Enterprise quality processing engine.
     
     Orchestrates automated quality improvements for all content types including
     audio, video, image, and text content with advanced processing algorithms.
-    """
-    
+    """    
     def __init__(
         self,
         db_session: sessionmaker,
@@ -953,8 +909,7 @@ class QualityProcessor:
         self.logger.info("QualityProcessor initialized successfully")
     
     async def start_processing_workers(self):
-        """Start background processing workers."""
-        for i in range(self.max_workers):
+        """Start background processing workers."""        for i in range(self.max_workers):
             asyncio.create_task(self._processing_worker(f"worker_{i}"))
         
         self.logger.info(f"Started {self.max_workers} processing workers")
@@ -969,8 +924,7 @@ class QualityProcessor:
         parameters: Optional[Dict[str, Any]] = None,
         session: Optional[AsyncSession] = None
     ) -> str:
-        """
-        Submit content for quality processing.
+        """        Submit content for quality processing.
         
         Args:
             content_id: Unique content identifier
@@ -983,8 +937,7 @@ class QualityProcessor:
             
         Returns:
             str: Task ID for tracking processing status
-        """
-        task_id = f"proc_{int(datetime.utcnow().timestamp())}_{content_id}"
+        """        task_id = f"proc_{int(datetime.utcnow().timestamp())}_{content_id}"
         
         # Create processing task
         task = ProcessingTask(
@@ -1010,12 +963,10 @@ class QualityProcessor:
         return task_id
     
     async def get_processing_status(self, task_id: str) -> Optional[ProcessingTask]:
-        """Get processing task status."""
-        return self.active_tasks.get(task_id)
+        """Get processing task status."""        return self.active_tasks.get(task_id)
     
     async def cancel_processing_task(self, task_id: str) -> bool:
-        """Cancel a processing task."""
-        if task_id in self.active_tasks:
+        """Cancel a processing task."""        if task_id in self.active_tasks:
             task = self.active_tasks[task_id]
             task.status = ProcessingStatus.CANCELLED
             return True
@@ -1029,8 +980,7 @@ class QualityProcessor:
         processing_operations: List[str],
         parameters: Optional[Dict[str, Any]] = None
     ) -> ProcessingResult:
-        """
-        Process content immediately (synchronous processing).
+        """        Process content immediately (synchronous processing).
         
         Args:
             content_id: Unique content identifier
@@ -1041,8 +991,7 @@ class QualityProcessor:
             
         Returns:
             ProcessingResult: Processing result
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         task_id = f"immediate_{int(start_time.timestamp())}_{content_id}"
         
         try:
@@ -1138,8 +1087,7 @@ class QualityProcessor:
             )
     
     async def _processing_worker(self, worker_name: str):
-        """Background processing worker."""
-        self.logger.info(f"Processing worker {worker_name} started")
+        """Background processing worker."""        self.logger.info(f"Processing worker {worker_name} started")
         
         while True:
             try:
@@ -1181,8 +1129,7 @@ class QualityProcessor:
                     task.completed_at = datetime.utcnow()
     
     def _generate_output_path(self, input_path: str, content_type: str) -> str:
-        """Generate output path for processed content."""
-        base_dir = self.config.get('output_directory', '/tmp/processed')
+        """Generate output path for processed content."""        base_dir = self.config.get('output_directory', '/tmp/processed')
         os.makedirs(base_dir, exist_ok=True)
         
         # Get file extension based on content type
@@ -1201,8 +1148,7 @@ class QualityProcessor:
         return os.path.join(base_dir, f"processed_{timestamp}{ext}")
     
     def _read_text_content(self, file_path: str) -> str:
-        """Read text content from file."""
-        try:
+        """Read text content from file."""        try:
             with open(file_path, 'r', encoding='utf-8') as f:
                 return f.read()
         except Exception as e:
@@ -1210,8 +1156,7 @@ class QualityProcessor:
             return ""
     
     def _generate_processing_recommendations(self, result_data: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on processing results."""
-        recommendations = []
+        """Generate recommendations based on processing results."""        recommendations = []
         
         improvement_score = result_data.get('improvement_score', 0.0)
         
@@ -1232,16 +1177,14 @@ class QualityProcessor:
         return recommendations
     
     async def _save_processing_job(self, task: ProcessingTask, session: AsyncSession):
-        """Save processing job to database."""
-        try:
+        """Save processing job to database."""        try:
             # Implementation would save ProcessingJob to database
             pass
         except Exception as e:
             self.logger.error(f"Error saving processing job: {str(e)}")
     
     async def get_processing_statistics(self) -> Dict[str, Any]:
-        """Get processing statistics."""
-        stats = self.stats.copy()
+        """Get processing statistics."""        stats = self.stats.copy()
         
         if stats['successful_processes'] > 0:
             stats['avg_processing_time'] = stats['total_processing_time'] / stats['successful_processes']
@@ -1256,8 +1199,7 @@ class QualityProcessor:
         return stats
     
     async def cleanup_completed_tasks(self, max_age_hours: int = 24):
-        """Clean up completed tasks older than specified age."""
-        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
+        """Clean up completed tasks older than specified age."""        cutoff_time = datetime.utcnow() - timedelta(hours=max_age_hours)
         
         tasks_to_remove = []
         for task_id, task in self.active_tasks.items():
@@ -1271,8 +1213,7 @@ class QualityProcessor:
         self.logger.info(f"Cleaned up {len(tasks_to_remove)} completed tasks")
     
     async def shutdown(self):
-        """Shutdown the processor and clean up resources."""
-        self.logger.info("Shutting down QualityProcessor")
+        """Shutdown the processor and clean up resources."""        self.logger.info("Shutting down QualityProcessor")
         
         # Cancel all pending tasks
         for task in self.active_tasks.values():

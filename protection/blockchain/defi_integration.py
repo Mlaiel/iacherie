@@ -1,5 +1,4 @@
-"""
-Decentralized Finance (DeFi) Integration for Content Protection
+"""Decentralized Finance (DeFi) Integration for Content Protection
 Professional implementation of DeFi protocols, yield farming, and liquidity provision
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -20,7 +19,6 @@ prohibited and will result in legal action.
 
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, AsyncGenerator
@@ -48,8 +46,7 @@ logger = logging.getLogger(__name__)
 
 
 class DeFiProtocol(Enum):
-    """Supported DeFi protocols"""
-    UNISWAP_V3 = "uniswap_v3"
+    """Supported DeFi protocols"""    UNISWAP_V3 = "uniswap_v3"
     COMPOUND = "compound"
     AAVE = "aave"
     CURVE = "curve"
@@ -60,8 +57,7 @@ class DeFiProtocol(Enum):
 
 
 class LiquidityStrategy(Enum):
-    """Liquidity provision strategies"""
-    CONSERVATIVE = "conservative"  # Low risk, stable returns
+    """Liquidity provision strategies"""    CONSERVATIVE = "conservative"  # Low risk, stable returns
     BALANCED = "balanced"  # Moderate risk/reward
     AGGRESSIVE = "aggressive"  # High risk, high reward
     YIELD_FARMING = "yield_farming"  # Focus on yield rewards
@@ -69,8 +65,7 @@ class LiquidityStrategy(Enum):
 
 
 class StakingType(Enum):
-    """Types of staking available"""
-    LIQUID_STAKING = "liquid_staking"  # Lido, Rocket Pool
+    """Types of staking available"""    LIQUID_STAKING = "liquid_staking"  # Lido, Rocket Pool
     GOVERNANCE_STAKING = "governance_staking"  # Platform governance
     YIELD_STAKING = "yield_staking"  # Yield farming rewards
     SECURITY_STAKING = "security_staking"  # Network security
@@ -78,8 +73,7 @@ class StakingType(Enum):
 
 @dataclass
 class LiquidityPosition:
-    """Liquidity provision position"""
-    position_id: str
+    """Liquidity provision position"""    position_id: str
     protocol: DeFiProtocol
     token_pair: Tuple[str, str]
     amount_token0: Decimal
@@ -103,14 +97,12 @@ class LiquidityPosition:
     transaction_hash: str = ""
     
     def calculate_pnl(self) -> Decimal:
-        """Calculate profit/loss including fees and impermanent loss"""
-        return self.current_value_usd - self.initial_value_usd + self.total_fees_earned - self.impermanent_loss
+        """Calculate profit/loss including fees and impermanent loss"""        return self.current_value_usd - self.initial_value_usd + self.total_fees_earned - self.impermanent_loss
 
 
 @dataclass
 class StakingPosition:
-    """Staking position tracking"""
-    position_id: str
+    """Staking position tracking"""    position_id: str
     protocol: DeFiProtocol
     staking_type: StakingType
     token_symbol: str
@@ -133,8 +125,7 @@ class StakingPosition:
 
 
 class UniswapV3Manager:
-    """Professional Uniswap V3 liquidity management"""
-    
+    """Professional Uniswap V3 liquidity management"""    
     def __init__(self, web3_client: Web3, private_key: str, config: Dict[str, Any]):
         self.w3 = web3_client
         self.private_key = private_key
@@ -155,8 +146,7 @@ class UniswapV3Manager:
         self.positions: Dict[str, LiquidityPosition] = {}
     
     async def initialize(self) -> bool:
-        """Initialize Uniswap V3 contracts"""
-        try:
+        """Initialize Uniswap V3 contracts"""        try:
             # Load contract ABIs (in production, load from files)
             router_abi = self._get_uniswap_router_abi()
             position_manager_abi = self._get_position_manager_abi()
@@ -188,8 +178,7 @@ class UniswapV3Manager:
         amount1: Decimal,
         price_range: Tuple[Decimal, Decimal]
     ) -> LiquidityPosition:
-        """Create new liquidity position on Uniswap V3"""
-        try:
+        """Create new liquidity position on Uniswap V3"""        try:
             if not self.position_manager_contract:
                 raise RuntimeError("Position manager not initialized")
             
@@ -258,8 +247,7 @@ class UniswapV3Manager:
             raise
     
     async def collect_fees(self, position_id: str) -> Tuple[Decimal, Decimal]:
-        """Collect accumulated fees from position"""
-        try:
+        """Collect accumulated fees from position"""        try:
             if not self.position_manager_contract:
                 raise RuntimeError("Position manager not initialized")
             
@@ -307,8 +295,7 @@ class UniswapV3Manager:
             return Decimal('0'), Decimal('0')
     
     def _price_to_ticks(self, price_range: Tuple[Decimal, Decimal], fee_tier: int) -> Tuple[int, int]:
-        """Convert price range to tick range"""
-        # Simplified tick calculation - in production, use proper math
+        """Convert price range to tick range"""        # Simplified tick calculation - in production, use proper math
         # This is a placeholder implementation
         tick_spacing = 60 if fee_tier == 3000 else 200  # Example tick spacing
         
@@ -321,32 +308,27 @@ class UniswapV3Manager:
         return tick_lower, tick_upper
     
     def _extract_token_id_from_receipt(self, receipt) -> int:
-        """Extract NFT token ID from transaction receipt"""
-        # Parse logs to find IncreaseLiquidity event
+        """Extract NFT token ID from transaction receipt"""        # Parse logs to find IncreaseLiquidity event
         for log in receipt.logs:
             # Simplified - in production, properly decode logs
             pass
         return 1  # Placeholder
     
     def _extract_collected_fees(self, receipt) -> Tuple[Decimal, Decimal]:
-        """Extract collected fee amounts from receipt"""
-        # Parse logs to find Collect event
+        """Extract collected fee amounts from receipt"""        # Parse logs to find Collect event
         return Decimal('0'), Decimal('0')  # Placeholder
     
     def _get_uniswap_router_abi(self) -> List[Dict[str, Any]]:
-        """Get Uniswap V3 router ABI"""
-        # Simplified ABI - in production, load complete ABI
+        """Get Uniswap V3 router ABI"""        # Simplified ABI - in production, load complete ABI
         return []
     
     def _get_position_manager_abi(self) -> List[Dict[str, Any]]:
-        """Get Uniswap V3 position manager ABI"""
-        # Simplified ABI - in production, load complete ABI
+        """Get Uniswap V3 position manager ABI"""        # Simplified ABI - in production, load complete ABI
         return []
 
 
 class CompoundManager:
-    """Professional Compound lending protocol integration"""
-    
+    """Professional Compound lending protocol integration"""    
     def __init__(self, web3_client: Web3, private_key: str):
         self.w3 = web3_client
         self.private_key = private_key
@@ -366,8 +348,7 @@ class CompoundManager:
         asset_address: str,
         amount: Decimal
     ) -> bool:
-        """Supply asset to Compound for lending"""
-        try:
+        """Supply asset to Compound for lending"""        try:
             # Get cToken contract for asset
             ctoken_address = self._get_ctoken_address(asset_address)
             if not ctoken_address:
@@ -393,8 +374,7 @@ class CompoundManager:
             return False
     
     def _get_ctoken_address(self, asset_address: str) -> Optional[str]:
-        """Get cToken address for underlying asset"""
-        # Map of asset addresses to cToken addresses
+        """Get cToken address for underlying asset"""        # Map of asset addresses to cToken addresses
         mapping = {
             "0xA0b86a33E6417c36ff7b76f04a3b86b97a3F5C6e": self.cusdc_address,  # USDC
             "0x0000000000000000000000000000000000000000": self.ceth_address   # ETH
@@ -403,8 +383,7 @@ class CompoundManager:
 
 
 class AaveManager:
-    """Professional Aave lending protocol integration"""
-    
+    """Professional Aave lending protocol integration"""    
     def __init__(self, web3_client: Web3, private_key: str):
         self.w3 = web3_client
         self.private_key = private_key
@@ -420,8 +399,7 @@ class AaveManager:
         amount: Decimal,
         interest_rate_mode: int = 2  # Variable rate
     ) -> bool:
-        """Deposit asset to Aave for earning interest"""
-        try:
+        """Deposit asset to Aave for earning interest"""        try:
             # In production, implement actual Aave V3 deposit
             position_id = f"aave_{asset_address}_{int(datetime.utcnow().timestamp())}"
             
@@ -442,8 +420,7 @@ class AaveManager:
 
 
 class YieldOptimizer:
-    """Automated yield optimization across DeFi protocols"""
-    
+    """Automated yield optimization across DeFi protocols"""    
     def __init__(self, web3_client: Web3, private_key: str, config: Dict[str, Any]):
         self.w3 = web3_client
         self.private_key = private_key
@@ -459,8 +436,7 @@ class YieldOptimizer:
         self.performance_history: List[Dict[str, Any]] = []
     
     async def initialize(self) -> bool:
-        """Initialize all protocol managers"""
-        try:
+        """Initialize all protocol managers"""        try:
             success_count = 0
             
             if await self.uniswap_manager.initialize():
@@ -482,8 +458,7 @@ class YieldOptimizer:
         strategy: LiquidityStrategy,
         risk_tolerance: Decimal
     ) -> Dict[str, Any]:
-        """Optimize yield across multiple DeFi protocols"""
-        try:
+        """Optimize yield across multiple DeFi protocols"""        try:
             optimization_result = {
                 'strategy': strategy,
                 'risk_tolerance': risk_tolerance,
@@ -514,8 +489,7 @@ class YieldOptimizer:
             return {}
     
     async def _get_protocol_yields(self) -> Dict[DeFiProtocol, Decimal]:
-        """Get current yields from all protocols"""
-        yields = {}
+        """Get current yields from all protocols"""        yields = {}
         
         # In production, would fetch real-time yields from each protocol
         yields[DeFiProtocol.COMPOUND] = Decimal('4.5')  # 4.5% APY
@@ -529,8 +503,7 @@ class YieldOptimizer:
         assets: Dict[str, Decimal],
         yields: Dict[DeFiProtocol, Decimal]
     ) -> Dict[str, Any]:
-        """Conservative allocation strategy"""
-        return {
+        """Conservative allocation strategy"""        return {
             'compound': 0.6,  # 60% to Compound
             'aave': 0.4,      # 40% to Aave
             'uniswap_v3': 0.0 # 0% to risky LP
@@ -541,8 +514,7 @@ class YieldOptimizer:
         assets: Dict[str, Decimal],
         yields: Dict[DeFiProtocol, Decimal]
     ) -> Dict[str, Any]:
-        """Aggressive allocation strategy"""
-        return {
+        """Aggressive allocation strategy"""        return {
             'compound': 0.2,  # 20% to Compound
             'aave': 0.2,      # 20% to Aave
             'uniswap_v3': 0.6 # 60% to high-yield LP
@@ -553,8 +525,7 @@ class YieldOptimizer:
         assets: Dict[str, Decimal],
         yields: Dict[DeFiProtocol, Decimal]
     ) -> Dict[str, Any]:
-        """Balanced allocation strategy"""
-        return {
+        """Balanced allocation strategy"""        return {
             'compound': 0.4,  # 40% to Compound
             'aave': 0.3,      # 30% to Aave
             'uniswap_v3': 0.3 # 30% to LP

@@ -1,5 +1,4 @@
-"""
-Advanced Audio AI Models for IA Influencer Agent Platform
+"""Advanced Audio AI Models for IA Influencer Agent Platform
 Enterprise-grade audio processing and analysis models
 
 Copyright (c) 2025 Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Development Team Specialties:
 - Microservices + Audio + DevOps + IA Prompt Engineer
 Email: mlaiel@live.de
 """
-
 import torch
 import torch.nn as nn
 import torchaudio
@@ -31,8 +29,7 @@ from ..core.exceptions import ModelError, ValidationError
 
 
 class AudioQuality(Enum):
-    """Audio quality levels for content analysis"""
-    LOW = "low"
+    """Audio quality levels for content analysis"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     PROFESSIONAL = "professional"
@@ -40,8 +37,7 @@ class AudioQuality(Enum):
 
 
 class AudioGenre(Enum):
-    """Audio genre classification"""
-    MUSIC = "music"
+    """Audio genre classification"""    MUSIC = "music"
     PODCAST = "podcast"
     VOICE_OVER = "voice_over"
     AMBIENT = "ambient"
@@ -53,8 +49,7 @@ class AudioGenre(Enum):
 
 @dataclass
 class AudioFeatures:
-    """Comprehensive audio feature extraction results"""
-    duration: float
+    """Comprehensive audio feature extraction results"""    duration: float
     sample_rate: int
     channels: int
     bitrate: Optional[int]
@@ -82,8 +77,7 @@ class AudioFeatures:
 
 @dataclass
 class AudioProtectionResult:
-    """Audio content protection analysis results"""
-    is_original: bool
+    """Audio content protection analysis results"""    is_original: bool
     confidence_score: float
     copyright_matches: List[Dict]
     watermark_detected: bool
@@ -94,8 +88,7 @@ class AudioProtectionResult:
 
 
 class AudioFeatureExtractor(BaseAIModel):
-    """Advanced audio feature extraction using multiple ML techniques"""
-    
+    """Advanced audio feature extraction using multiple ML techniques"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.sr = 22050  # Standard sample rate
@@ -108,8 +101,7 @@ class AudioFeatureExtractor(BaseAIModel):
         self._init_models()
         
     def _init_models(self):
-        """Initialize audio processing models"""
-        # Emotion recognition model
+        """Initialize audio processing models"""        # Emotion recognition model
         self.emotion_model = self._load_emotion_model()
         
         # Voice activity detection
@@ -122,35 +114,29 @@ class AudioFeatureExtractor(BaseAIModel):
         self.tempo_tracker = self._init_tempo_tracker()
         
     def _load_emotion_model(self):
-        """Load emotion recognition model"""
-        # In production, load pre-trained emotion model
+        """Load emotion recognition model"""        # In production, load pre-trained emotion model
         return None  # Placeholder for actual model
         
     def _load_vad_model(self):
-        """Load voice activity detection model"""
-        # In production, load VAD model
+        """Load voice activity detection model"""        # In production, load VAD model
         return None  # Placeholder for actual model
         
     def _load_genre_classifier(self):
-        """Load genre classification model"""
-        # In production, load genre classifier
+        """Load genre classification model"""        # In production, load genre classifier
         return None  # Placeholder for actual model
         
     def _init_tempo_tracker(self):
-        """Initialize tempo tracking algorithm"""
-        return None  # Placeholder for actual tempo tracker
+        """Initialize tempo tracking algorithm"""        return None  # Placeholder for actual tempo tracker
     
     def extract_features(self, audio_path: Union[str, Path]) -> AudioFeatures:
-        """
-        Extract comprehensive audio features
+        """        Extract comprehensive audio features
         
         Args:
             audio_path: Path to audio file
             
         Returns:
             AudioFeatures object with all extracted features
-        """
-        try:
+        """        try:
             # Load audio
             y, sr = librosa.load(str(audio_path), sr=self.sr)
             
@@ -232,8 +218,7 @@ class AudioFeatureExtractor(BaseAIModel):
             raise ModelError(f"Feature extraction failed: {str(e)}")
     
     def _detect_key(self, chroma: np.ndarray) -> str:
-        """Detect musical key from chroma features"""
-        # Simplified key detection
+        """Detect musical key from chroma features"""        # Simplified key detection
         key_profiles = {
             'C': [1, 0, 1, 0, 1, 1, 0, 1, 0, 1, 0, 1],
             'G': [1, 0, 1, 0, 1, 0, 1, 1, 0, 1, 0, 1],
@@ -253,25 +238,21 @@ class AudioFeatureExtractor(BaseAIModel):
         return best_key
     
     def _calculate_loudness(self, y: np.ndarray) -> float:
-        """Calculate perceptual loudness"""
-        rms = librosa.feature.rms(y=y)[0]
+        """Calculate perceptual loudness"""        rms = librosa.feature.rms(y=y)[0]
         return float(np.mean(rms))
     
     def _calculate_dynamics(self, y: np.ndarray) -> float:
-        """Calculate dynamic range"""
-        rms = librosa.feature.rms(y=y)[0]
+        """Calculate dynamic range"""        rms = librosa.feature.rms(y=y)[0]
         return float(np.max(rms) - np.min(rms))
     
     def _generate_fingerprint(self, y: np.ndarray, sr: int) -> str:
-        """Generate audio fingerprint for copyright detection"""
-        # Simplified fingerprinting
+        """Generate audio fingerprint for copyright detection"""        # Simplified fingerprinting
         mfcc = librosa.feature.mfcc(y=y, sr=sr, n_mfcc=12)
         fingerprint = np.mean(mfcc, axis=1)
         return str(hash(tuple(fingerprint.round(3))))
     
     def _detect_voice_activity(self, y: np.ndarray, sr: int) -> List[Tuple[float, float]]:
-        """Detect voice activity segments"""
-        # Simplified VAD using energy thresholding
+        """Detect voice activity segments"""        # Simplified VAD using energy thresholding
         frame_length = int(0.025 * sr)  # 25ms frames
         hop_length = int(0.01 * sr)     # 10ms hop
         
@@ -303,8 +284,7 @@ class AudioFeatureExtractor(BaseAIModel):
         return segments
     
     def _analyze_emotions(self, y: np.ndarray, sr: int) -> Dict[str, float]:
-        """Analyze emotional content of audio"""
-        # Simplified emotion analysis based on acoustic features
+        """Analyze emotional content of audio"""        # Simplified emotion analysis based on acoustic features
         # In production, use trained emotion recognition model
         
         # Extract features for emotion analysis
@@ -329,8 +309,7 @@ class AudioFeatureExtractor(BaseAIModel):
         return emotions
     
     def _assess_quality(self, y: np.ndarray, sr: int) -> AudioQuality:
-        """Assess audio quality"""
-        # Simplified quality assessment
+        """Assess audio quality"""        # Simplified quality assessment
         snr = self._estimate_snr(y)
         dynamic_range = self._calculate_dynamics(y)
         
@@ -346,15 +325,13 @@ class AudioFeatureExtractor(BaseAIModel):
             return AudioQuality.LOW
     
     def _estimate_snr(self, y: np.ndarray) -> float:
-        """Estimate signal-to-noise ratio"""
-        # Simplified SNR estimation
+        """Estimate signal-to-noise ratio"""        # Simplified SNR estimation
         signal_power = np.mean(y ** 2)
         noise_power = np.mean((y - np.mean(y)) ** 2) * 0.1  # Assume 10% noise
         return 10 * np.log10(signal_power / max(noise_power, 1e-10))
     
     def _classify_genre(self, y: np.ndarray, sr: int) -> AudioGenre:
-        """Classify audio genre"""
-        # Simplified genre classification
+        """Classify audio genre"""        # Simplified genre classification
         # In production, use trained genre classifier
         
         # Extract features for genre classification
@@ -375,8 +352,7 @@ class AudioFeatureExtractor(BaseAIModel):
             return AudioGenre.MUSIC  # Default
     
     def _generate_similarity_hash(self, mfcc: np.ndarray, chroma: np.ndarray) -> str:
-        """Generate hash for similarity comparison"""
-        combined_features = np.concatenate([
+        """Generate hash for similarity comparison"""        combined_features = np.concatenate([
             np.mean(mfcc, axis=1),
             np.mean(chroma, axis=1)
         ])
@@ -384,29 +360,25 @@ class AudioFeatureExtractor(BaseAIModel):
 
 
 class AudioCopyrightDetector(BaseAIModel):
-    """Advanced audio copyright detection and protection"""
-    
+    """Advanced audio copyright detection and protection"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.fingerprint_db = {}  # In production, use proper database
         self.watermark_detector = self._init_watermark_detector()
         
     def _init_watermark_detector(self):
-        """Initialize watermark detection system"""
-        # In production, load watermark detection model
+        """Initialize watermark detection system"""        # In production, load watermark detection model
         return None
     
     def analyze_protection(self, audio_features: AudioFeatures) -> AudioProtectionResult:
-        """
-        Analyze audio for copyright protection
+        """        Analyze audio for copyright protection
         
         Args:
             audio_features: Extracted audio features
             
         Returns:
             AudioProtectionResult with protection analysis
-        """
-        try:
+        """        try:
             # Check fingerprint database
             fingerprint_matches = self._check_fingerprint_matches(audio_features.audio_fingerprint)
             
@@ -453,8 +425,7 @@ class AudioCopyrightDetector(BaseAIModel):
             raise ModelError(f"Copyright analysis failed: {str(e)}")
     
     def _check_fingerprint_matches(self, fingerprint: str) -> List[Dict]:
-        """Check fingerprint against database"""
-        # In production, query fingerprint database
+        """Check fingerprint against database"""        # In production, query fingerprint database
         matches = []
         
         # Simulate database check
@@ -469,8 +440,7 @@ class AudioCopyrightDetector(BaseAIModel):
         return matches
     
     def _detect_watermarks(self, audio_features: AudioFeatures) -> bool:
-        """Detect digital watermarks in audio"""
-        # In production, use sophisticated watermark detection
+        """Detect digital watermarks in audio"""        # In production, use sophisticated watermark detection
         # Check for common watermark patterns in spectral domain
         
         # Simplified watermark detection
@@ -488,8 +458,7 @@ class AudioCopyrightDetector(BaseAIModel):
         return False
     
     def _check_similarity_matches(self, similarity_hash: str) -> List[Dict]:
-        """Check for similar content using hash comparison"""
-        # In production, use proper similarity search
+        """Check for similar content using hash comparison"""        # In production, use proper similarity search
         matches = []
         
         # Simulate similarity checking
@@ -498,8 +467,7 @@ class AudioCopyrightDetector(BaseAIModel):
         return matches
     
     def _analyze_copyright_markers(self, audio_features: AudioFeatures) -> List[Dict]:
-        """Analyze embedded copyright markers"""
-        # In production, check for embedded metadata, ID3 tags, etc.
+        """Analyze embedded copyright markers"""        # In production, check for embedded metadata, ID3 tags, etc.
         markers = []
         
         # Check for copyright information in audio metadata
@@ -510,8 +478,7 @@ class AudioCopyrightDetector(BaseAIModel):
     def _calculate_originality_confidence(self, fingerprint_matches: List[Dict], 
                                         watermark_detected: bool, 
                                         similarity_matches: List[Dict]) -> float:
-        """Calculate confidence score for content originality"""
-        base_confidence = 1.0
+        """Calculate confidence score for content originality"""        base_confidence = 1.0
         
         # Reduce confidence based on matches
         if fingerprint_matches:
@@ -528,8 +495,7 @@ class AudioCopyrightDetector(BaseAIModel):
     def _generate_protection_recommendations(self, is_original: bool, 
                                            confidence_score: float, 
                                            watermark_detected: bool) -> List[str]:
-        """Generate protection recommendations"""
-        recommendations = []
+        """Generate protection recommendations"""        recommendations = []
         
         if is_original and confidence_score > 0.9:
             recommendations.extend([
@@ -557,8 +523,7 @@ class AudioCopyrightDetector(BaseAIModel):
     
     def _assess_legal_status(self, is_original: bool, confidence_score: float, 
                            copyright_matches: List[Dict]) -> str:
-        """Assess legal status for publishing"""
-        if is_original and confidence_score > 0.9:
+        """Assess legal status for publishing"""        if is_original and confidence_score > 0.9:
             return "SAFE_TO_PUBLISH"
         elif confidence_score > 0.7:
             return "REVIEW_REQUIRED"
@@ -569,8 +534,7 @@ class AudioCopyrightDetector(BaseAIModel):
     
     def _determine_protection_level(self, confidence_score: float, 
                                   watermark_detected: bool) -> str:
-        """Determine content protection level"""
-        if confidence_score > 0.9:
+        """Determine content protection level"""        if confidence_score > 0.9:
             return "HIGH_PROTECTION"
         elif confidence_score > 0.7:
             return "MEDIUM_PROTECTION"
@@ -581,15 +545,13 @@ class AudioCopyrightDetector(BaseAIModel):
 
 
 class AudioEnhancer(BaseAIModel):
-    """Advanced audio enhancement and processing"""
-    
+    """Advanced audio enhancement and processing"""    
     def __init__(self, config: ModelConfig):
         super().__init__(config)
         self.enhancement_models = self._load_enhancement_models()
     
     def _load_enhancement_models(self):
-        """Load audio enhancement models"""
-        return {
+        """Load audio enhancement models"""        return {
             'noise_reduction': None,  # Load noise reduction model
             'upsampling': None,       # Load upsampling model
             'mastering': None,        # Load mastering model
@@ -598,8 +560,7 @@ class AudioEnhancer(BaseAIModel):
     
     def enhance_audio(self, audio_path: Union[str, Path], 
                      enhancement_type: str = "auto") -> Dict:
-        """
-        Enhance audio quality using AI models
+        """        Enhance audio quality using AI models
         
         Args:
             audio_path: Path to input audio
@@ -607,8 +568,7 @@ class AudioEnhancer(BaseAIModel):
             
         Returns:
             Dictionary with enhancement results
-        """
-        try:
+        """        try:
             # Load audio
             y, sr = librosa.load(str(audio_path), sr=None)
             
@@ -649,8 +609,7 @@ class AudioEnhancer(BaseAIModel):
             raise ModelError(f"Audio enhancement failed: {str(e)}")
     
     def _reduce_noise(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Apply noise reduction"""
-        # Simplified spectral subtraction noise reduction
+        """Apply noise reduction"""        # Simplified spectral subtraction noise reduction
         stft = librosa.stft(y)
         magnitude = np.abs(stft)
         phase = np.angle(stft)
@@ -671,8 +630,7 @@ class AudioEnhancer(BaseAIModel):
         return enhanced_y
     
     def _normalize_audio(self, y: np.ndarray) -> np.ndarray:
-        """Normalize audio levels"""
-        # RMS normalization
+        """Normalize audio levels"""        # RMS normalization
         rms = np.sqrt(np.mean(y**2))
         target_rms = 0.1  # Target RMS level
         
@@ -685,8 +643,7 @@ class AudioEnhancer(BaseAIModel):
         return y
     
     def _apply_eq(self, y: np.ndarray, sr: int) -> np.ndarray:
-        """Apply equalization"""
-        # Simple high-pass filter to remove low-frequency noise
+        """Apply equalization"""        # Simple high-pass filter to remove low-frequency noise
         from scipy import signal
         
         # High-pass filter at 80 Hz
@@ -698,8 +655,7 @@ class AudioEnhancer(BaseAIModel):
         return filtered_y
     
     def _apply_compression(self, y: np.ndarray) -> np.ndarray:
-        """Apply dynamic range compression"""
-        # Simple compression using soft knee
+        """Apply dynamic range compression"""        # Simple compression using soft knee
         threshold = 0.7
         ratio = 4.0
         
@@ -721,8 +677,7 @@ class AudioEnhancer(BaseAIModel):
         return compressed_y
     
     def _assess_audio_quality(self, y: np.ndarray, sr: int) -> float:
-        """Assess audio quality score (0-1)"""
-        # Multiple quality metrics
+        """Assess audio quality score (0-1)"""        # Multiple quality metrics
         
         # 1. Signal-to-noise ratio estimation
         snr = self._estimate_snr(y)
@@ -752,8 +707,7 @@ class AudioEnhancer(BaseAIModel):
         return max(0.0, min(1.0, quality_score))
     
     def _estimate_snr(self, y: np.ndarray) -> float:
-        """Estimate signal-to-noise ratio"""
-        # Simple SNR estimation
+        """Estimate signal-to-noise ratio"""        # Simple SNR estimation
         signal_power = np.mean(y ** 2)
         
         # Estimate noise from quietest 10% of signal
@@ -778,8 +732,7 @@ AUDIO_MODEL_REGISTRY = {
 
 
 def create_audio_model(model_type: str, config: ModelConfig) -> BaseAIModel:
-    """
-    Factory function to create audio models
+    """    Factory function to create audio models
     
     Args:
         model_type: Type of audio model to create
@@ -787,8 +740,7 @@ def create_audio_model(model_type: str, config: ModelConfig) -> BaseAIModel:
         
     Returns:
         Initialized audio model instance
-    """
-    if model_type not in AUDIO_MODEL_REGISTRY:
+    """    if model_type not in AUDIO_MODEL_REGISTRY:
         raise ValueError(f"Unknown audio model type: {model_type}")
     
     model_class = AUDIO_MODEL_REGISTRY[model_type]

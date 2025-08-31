@@ -1,5 +1,4 @@
-"""
-Compliance Checker - Legal & Regulatory Compliance Management System
+"""Compliance Checker - Legal & Regulatory Compliance Management System
 
 Comprehensive legal compliance monitoring, regulatory adherence checking,
 and automated compliance reporting for content licensing operations.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set
@@ -48,8 +46,7 @@ from ...security.audit_logger import ComplianceAuditLogger
 logger = logging.getLogger(__name__)
 
 class ComplianceArea(Enum):
-    """Areas of compliance monitoring"""
-    COPYRIGHT_LAW = "copyright_law"
+    """Areas of compliance monitoring"""    COPYRIGHT_LAW = "copyright_law"
     DATA_PROTECTION = "data_protection"
     CONSUMER_PROTECTION = "consumer_protection"
     ANTI_MONEY_LAUNDERING = "anti_money_laundering"
@@ -59,31 +56,27 @@ class ComplianceArea(Enum):
     PLATFORM_POLICIES = "platform_policies"
 
 class ComplianceStatus(Enum):
-    """Compliance status levels"""
-    COMPLIANT = "compliant"
+    """Compliance status levels"""    COMPLIANT = "compliant"
     NON_COMPLIANT = "non_compliant"
     PARTIALLY_COMPLIANT = "partially_compliant"
     UNDER_REVIEW = "under_review"
     REQUIRES_ACTION = "requires_action"
 
 class RiskLevel(Enum):
-    """Risk assessment levels"""
-    LOW = "low"
+    """Risk assessment levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class JurisdictionType(Enum):
-    """Types of legal jurisdictions"""
-    NATIONAL = "national"
+    """Types of legal jurisdictions"""    NATIONAL = "national"
     REGIONAL = "regional"
     INTERNATIONAL = "international"
     PLATFORM_SPECIFIC = "platform_specific"
 
 @dataclass
 class ComplianceRule:
-    """Individual compliance rule definition"""
-    rule_id: str
+    """Individual compliance rule definition"""    rule_id: str
     name: str
     description: str
     compliance_area: ComplianceArea
@@ -101,8 +94,7 @@ class ComplianceRule:
 
 @dataclass
 class ComplianceViolation:
-    """Compliance violation record"""
-    violation_id: str
+    """Compliance violation record"""    violation_id: str
     rule_id: str
     content_id: str
     license_id: Optional[str]
@@ -119,8 +111,7 @@ class ComplianceViolation:
 
 @dataclass
 class ComplianceReport:
-    """Comprehensive compliance assessment report"""
-    report_id: str
+    """Comprehensive compliance assessment report"""    report_id: str
     assessment_period: Dict[str, datetime]
     overall_status: ComplianceStatus
     risk_score: float
@@ -135,13 +126,11 @@ class ComplianceReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class ComplianceChecker:
-    """
-    Advanced Legal & Regulatory Compliance Management System
+    """    Advanced Legal & Regulatory Compliance Management System
     
     Monitors compliance with copyright laws, data protection regulations,
     consumer protection rules, and platform-specific policies across jurisdictions.
-    """
-    
+    """    
     def __init__(self):
         self.regulation_db = RegulationDatabase()
         self.court_api = CourtDecisionAPI()
@@ -166,8 +155,7 @@ class ComplianceChecker:
         }
 
     async def initialize(self):
-        """Initialize compliance checker with current regulations"""
-        await self._load_compliance_rules()
+        """Initialize compliance checker with current regulations"""        await self._load_compliance_rules()
         await self._initialize_jurisdiction_mapping()
         await self._setup_monitoring_schedules()
 
@@ -178,8 +166,7 @@ class ComplianceChecker:
         jurisdictions: Optional[List[str]] = None,
         areas: Optional[List[ComplianceArea]] = None
     ) -> ComplianceReport:
-        """
-        Perform comprehensive compliance assessment
+        """        Perform comprehensive compliance assessment
         
         Args:
             content_id: Content to assess
@@ -189,8 +176,7 @@ class ComplianceChecker:
             
         Returns:
             Detailed compliance assessment report
-        """
-        try:
+        """        try:
             assessment_start = datetime.utcnow()
             
             # Determine scope of assessment
@@ -304,8 +290,7 @@ class ComplianceChecker:
         jurisdictions: List[str],
         areas: List[ComplianceArea]
     ) -> Dict[str, Any]:
-        """
-        Monitor for new regulatory changes and updates
+        """        Monitor for new regulatory changes and updates
         
         Args:
             jurisdictions: Jurisdictions to monitor
@@ -313,8 +298,7 @@ class ComplianceChecker:
             
         Returns:
             Summary of regulatory changes and impacts
-        """
-        try:
+        """        try:
             monitoring_results = {
                 "new_regulations": [],
                 "updated_regulations": [],
@@ -384,8 +368,7 @@ class ComplianceChecker:
         contract_type: str,
         jurisdictions: List[str]
     ) -> Dict[str, Any]:
-        """
-        Validate contract for legal compliance across jurisdictions
+        """        Validate contract for legal compliance across jurisdictions
         
         Args:
             contract_text: Full contract text
@@ -394,8 +377,7 @@ class ComplianceChecker:
             
         Returns:
             Detailed compliance validation report
-        """
-        try:
+        """        try:
             validation_results = {
                 "overall_compliant": True,
                 "jurisdiction_compliance": {},
@@ -473,8 +455,7 @@ class ComplianceChecker:
         period_days: int = 30,
         jurisdictions: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Generate compliance monitoring dashboard data
+        """        Generate compliance monitoring dashboard data
         
         Args:
             period_days: Period for dashboard data
@@ -482,8 +463,7 @@ class ComplianceChecker:
             
         Returns:
             Dashboard data with metrics and visualizations
-        """
-        try:
+        """        try:
             end_date = datetime.utcnow()
             start_date = end_date - timedelta(days=period_days)
             
@@ -538,8 +518,7 @@ class ComplianceChecker:
         content_data: Dict[str, Any],
         license_data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Check compliance with individual rule"""
-        # Rule-specific compliance checking logic
+        """Check compliance with individual rule"""        # Rule-specific compliance checking logic
         if rule.automated_check:
             # Use AI/ML model for automated checking
             result = await self.compliance_ai.check_rule_compliance(
@@ -566,8 +545,7 @@ class ComplianceChecker:
         return result
 
     async def _load_compliance_rules(self):
-        """Load current compliance rules from regulation database"""
-        try:
+        """Load current compliance rules from regulation database"""        try:
             # Load rules by jurisdiction and area
             all_rules = await self.regulation_db.get_active_rules()
             
@@ -600,10 +578,8 @@ class ComplianceChecker:
 
 
 class LegalValidator:
-    """
-    Legal Validation and Advisory System
-    """
-    
+    """    Legal Validation and Advisory System
+    """    
     def __init__(self, compliance_checker: ComplianceChecker):
         self.compliance_checker = compliance_checker
         self.legal_research_ai = None  # Will be initialized with legal AI
@@ -614,8 +590,7 @@ class LegalValidator:
         strategy: Dict[str, Any],
         target_markets: List[str]
     ) -> Dict[str, Any]:
-        """Validate licensing strategy for legal soundness across multiple jurisdictions"""
-        try:
+        """Validate licensing strategy for legal soundness across multiple jurisdictions"""        try:
             validation_id = str(uuid.uuid4())
             logger.info(f"Validating licensing strategy {validation_id} for {len(target_markets)} markets")
             
@@ -692,8 +667,7 @@ class LegalValidator:
         jurisdiction: str,
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate comprehensive legal opinion on licensing matters using AI-powered legal analysis"""
-        try:
+        """Generate comprehensive legal opinion on licensing matters using AI-powered legal analysis"""        try:
             opinion_id = str(uuid.uuid4())
             logger.info(f"Generating legal opinion {opinion_id} for jurisdiction {jurisdiction}")
             

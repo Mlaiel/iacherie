@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-"""
-Crawlers Adapters Index - Enterprise Module Organization
+"""Crawlers Adapters Index - Enterprise Module Organization
 =======================================================
 
 Central index and registry for all adapter types in the IA-Influencer Agent platform.
@@ -15,7 +14,6 @@ WARNING: This code is protected by copyright law. Any unauthorized copying,
 distribution, or modification is strictly prohibited and will result in 
 legal action. Contact mlaiel@live.de for licensing.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Type, Union
@@ -28,8 +26,7 @@ logger = logging.getLogger(__name__)
 
 
 class AdapterType(Enum):
-    """Enumeration of all adapter types."""
-    CONTENT = "content"
+    """Enumeration of all adapter types."""    CONTENT = "content"
     PLATFORM = "platform"
     AUTHENTICATION = "authentication"
     DATA = "data"
@@ -40,8 +37,7 @@ class AdapterType(Enum):
 
 
 class AdapterStatus(Enum):
-    """Adapter status enumeration."""
-    INACTIVE = "inactive"
+    """Adapter status enumeration."""    INACTIVE = "inactive"
     INITIALIZING = "initializing"
     ACTIVE = "active"
     ERROR = "error"
@@ -51,8 +47,7 @@ class AdapterStatus(Enum):
 
 @dataclass
 class AdapterInfo:
-    """Adapter information and metadata."""
-    name: str
+    """Adapter information and metadata."""    name: str
     adapter_type: AdapterType
     version: str
     description: str
@@ -69,8 +64,7 @@ class AdapterInfo:
 
 
 class AdapterRegistry:
-    """
-    Enterprise Adapter Registry System
+    """    Enterprise Adapter Registry System
     
     Centralized registry for all adapters with advanced features:
     - Dynamic adapter discovery and registration
@@ -79,11 +73,9 @@ class AdapterRegistry:
     - Configuration management
     - Dependency resolution
     - Load balancing and failover
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the adapter registry."""
-        self._adapters: Dict[str, AdapterInfo] = {}
+        """Initialize the adapter registry."""        self._adapters: Dict[str, AdapterInfo] = {}
         self._instances: Dict[str, Any] = {}
         self._type_mapping: Dict[AdapterType, List[str]] = {
             adapter_type: [] for adapter_type in AdapterType
@@ -91,8 +83,7 @@ class AdapterRegistry:
         self._initialized = False
     
     def register_adapter(self, adapter_info: AdapterInfo, instance: Any = None) -> bool:
-        """Register a new adapter with the registry."""
-        try:
+        """Register a new adapter with the registry."""        try:
             adapter_name = adapter_info.name
             
             # Validate adapter info
@@ -117,8 +108,7 @@ class AdapterRegistry:
             return False
     
     def unregister_adapter(self, adapter_name: str) -> bool:
-        """Unregister an adapter from the registry."""
-        try:
+        """Unregister an adapter from the registry."""        try:
             if adapter_name not in self._adapters:
                 logger.warning(f"Adapter '{adapter_name}' not found in registry")
                 return False
@@ -142,55 +132,46 @@ class AdapterRegistry:
             return False
     
     def get_adapter(self, adapter_name: str) -> Optional[AdapterInfo]:
-        """Get adapter information by name."""
-        return self._adapters.get(adapter_name)
+        """Get adapter information by name."""        return self._adapters.get(adapter_name)
     
     def get_adapter_instance(self, adapter_name: str) -> Optional[Any]:
-        """Get adapter instance by name."""
-        return self._instances.get(adapter_name)
+        """Get adapter instance by name."""        return self._instances.get(adapter_name)
     
     def get_adapters_by_type(self, adapter_type: AdapterType) -> List[AdapterInfo]:
-        """Get all adapters of a specific type."""
-        adapter_names = self._type_mapping.get(adapter_type, [])
+        """Get all adapters of a specific type."""        adapter_names = self._type_mapping.get(adapter_type, [])
         return [self._adapters[name] for name in adapter_names if name in self._adapters]
     
     def get_active_adapters(self) -> List[AdapterInfo]:
-        """Get all active adapters."""
-        return [
+        """Get all active adapters."""        return [
             adapter for adapter in self._adapters.values()
             if adapter.status == AdapterStatus.ACTIVE
         ]
     
     def get_adapter_capabilities(self, adapter_name: str) -> List[str]:
-        """Get capabilities of a specific adapter."""
-        adapter = self.get_adapter(adapter_name)
+        """Get capabilities of a specific adapter."""        adapter = self.get_adapter(adapter_name)
         return adapter.capabilities if adapter else []
     
     def find_adapters_by_capability(self, capability: str) -> List[AdapterInfo]:
-        """Find adapters that support a specific capability."""
-        return [
+        """Find adapters that support a specific capability."""        return [
             adapter for adapter in self._adapters.values()
             if capability in adapter.capabilities
         ]
     
     def update_adapter_status(self, adapter_name: str, status: AdapterStatus) -> bool:
-        """Update adapter status."""
-        if adapter_name in self._adapters:
+        """Update adapter status."""        if adapter_name in self._adapters:
             self._adapters[adapter_name].status = status
             self._adapters[adapter_name].last_health_check = datetime.utcnow()
             return True
         return False
     
     def update_adapter_metrics(self, adapter_name: str, metrics: Dict[str, Any]) -> bool:
-        """Update adapter performance metrics."""
-        if adapter_name in self._adapters:
+        """Update adapter performance metrics."""        if adapter_name in self._adapters:
             self._adapters[adapter_name].performance_metrics.update(metrics)
             return True
         return False
     
     def get_registry_status(self) -> Dict[str, Any]:
-        """Get comprehensive registry status."""
-        total_adapters = len(self._adapters)
+        """Get comprehensive registry status."""        total_adapters = len(self._adapters)
         active_adapters = len(self.get_active_adapters())
         
         status_counts = {}
@@ -215,8 +196,7 @@ class AdapterRegistry:
         }
     
     def _validate_adapter_info(self, adapter_info: AdapterInfo) -> bool:
-        """Validate adapter information."""
-        if not adapter_info.name:
+        """Validate adapter information."""        if not adapter_info.name:
             return False
         if not adapter_info.version:
             return False
@@ -225,8 +205,7 @@ class AdapterRegistry:
         return True
     
     async def initialize_registry(self) -> bool:
-        """Initialize the adapter registry."""
-        try:
+        """Initialize the adapter registry."""        try:
             logger.info("Initializing adapter registry...")
             self._register_builtin_adapters()
             self._initialized = True
@@ -237,8 +216,7 @@ class AdapterRegistry:
             return False
     
     def _register_builtin_adapters(self):
-        """Register all built-in adapters."""
-        
+        """Register all built-in adapters."""        
         # Content Adapters
         content_adapters = [
             AdapterInfo(
@@ -325,23 +303,19 @@ adapter_registry = AdapterRegistry()
 
 
 class AdapterIndex:
-    """
-    Enhanced Adapter Index System
+    """    Enhanced Adapter Index System
     
     Provides fast lookup and discovery capabilities for adapters.
-    """
-    
+    """    
     def __init__(self, registry: AdapterRegistry):
-        """Initialize with adapter registry."""
-        self.registry = registry
+        """Initialize with adapter registry."""        self.registry = registry
         self._capability_index: Dict[str, List[str]] = {}
         self._type_index: Dict[str, List[str]] = {}
         self._status_index: Dict[str, List[str]] = {}
         self._rebuild_indices()
     
     def _rebuild_indices(self):
-        """Rebuild all search indices."""
-        self._capability_index.clear()
+        """Rebuild all search indices."""        self._capability_index.clear()
         self._type_index.clear()
         self._status_index.clear()
         
@@ -365,24 +339,19 @@ class AdapterIndex:
             self._status_index[status].append(adapter_name)
     
     def search_by_capability(self, capability: str) -> List[str]:
-        """Search adapters by capability."""
-        return self._capability_index.get(capability, [])
+        """Search adapters by capability."""        return self._capability_index.get(capability, [])
     
     def search_by_type(self, adapter_type: str) -> List[str]:
-        """Search adapters by type."""
-        return self._type_index.get(adapter_type, [])
+        """Search adapters by type."""        return self._type_index.get(adapter_type, [])
     
     def search_by_status(self, status: str) -> List[str]:
-        """Search adapters by status."""
-        return self._status_index.get(status, [])
+        """Search adapters by status."""        return self._status_index.get(status, [])
     
     def get_available_capabilities(self) -> List[str]:
-        """Get all available capabilities."""
-        return list(self._capability_index.keys())
+        """Get all available capabilities."""        return list(self._capability_index.keys())
     
     def refresh_indices(self):
-        """Refresh all search indices."""
-        self._rebuild_indices()
+        """Refresh all search indices."""        self._rebuild_indices()
 
 
 # Global adapter index
@@ -391,8 +360,7 @@ adapter_index = AdapterIndex(adapter_registry)
 
 # Utility functions
 async def initialize_adapter_system():
-    """Initialize the complete adapter system."""
-    try:
+    """Initialize the complete adapter system."""    try:
         await adapter_registry.initialize_registry()
         adapter_index.refresh_indices()
         logger.info("Adapter system initialized successfully")
@@ -403,8 +371,7 @@ async def initialize_adapter_system():
 
 
 def get_adapter_summary() -> Dict[str, Any]:
-    """Get a summary of all registered adapters."""
-    return {
+    """Get a summary of all registered adapters."""    return {
         'registry_status': adapter_registry.get_registry_status(),
         'available_capabilities': adapter_index.get_available_capabilities(),
         'active_adapters': [
@@ -449,8 +416,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class AdapterConfig:
-    """Configuration for adapter instances."""
-    adapter_name: str
+    """Configuration for adapter instances."""    adapter_name: str
     adapter_type: AdapterType
     config_params: Dict[str, Any]
     auth_config: Optional[Dict[str, Any]] = None
@@ -462,17 +428,14 @@ class AdapterConfig:
     timeout: int = 30
 
 class AdapterFactory:
-    """Factory for creating and managing adapter instances."""
-    
+    """Factory for creating and managing adapter instances."""    
     def __init__(self):
-        """Initialize the adapter factory."""
-        self._instances: Dict[str, Any] = {}
+        """Initialize the adapter factory."""        self._instances: Dict[str, Any] = {}
         self._configs: Dict[str, AdapterConfig] = {}
         self.logger = logging.getLogger(self.__class__.__name__)
     
     async def create_adapter(self, config: AdapterConfig) -> Optional[Any]:
-        """Create an adapter instance from configuration."""
-        try:
+        """Create an adapter instance from configuration."""        try:
             # Check if instance already exists
             instance_key = f"{config.adapter_name}_{hash(str(config.config_params))}"
             if instance_key in self._instances:
@@ -506,8 +469,7 @@ class AdapterFactory:
             return None
     
     async def create_content_adapter(self, content_type: str, **kwargs) -> Optional[Any]:
-        """Create a content adapter for specific content type."""
-        adapter_mapping = {
+        """Create a content adapter for specific content type."""        adapter_mapping = {
             'audio': 'audio_content',
             'video': 'video_content', 
             'image': 'image_content',
@@ -529,8 +491,7 @@ class AdapterFactory:
         return await self.create_adapter(config)
     
     async def create_platform_adapter(self, platform: str, credentials: Dict[str, Any], **kwargs) -> Optional[Any]:
-        """Create a platform adapter for specific social media platform."""
-        config = AdapterConfig(
+        """Create a platform adapter for specific social media platform."""        config = AdapterConfig(
             adapter_name=platform.lower(),
             adapter_type=AdapterType.PLATFORM,
             config_params=kwargs,
@@ -540,8 +501,7 @@ class AdapterFactory:
         return await self.create_adapter(config)
     
     async def create_storage_adapter(self, storage_type: str, connection_config: Dict[str, Any], **kwargs) -> Optional[Any]:
-        """Create a storage adapter for specific storage backend."""
-        config = AdapterConfig(
+        """Create a storage adapter for specific storage backend."""        config = AdapterConfig(
             adapter_name=storage_type.lower(),
             adapter_type=AdapterType.STORAGE,
             config_params={**connection_config, **kwargs}
@@ -550,8 +510,7 @@ class AdapterFactory:
         return await self.create_adapter(config)
     
     def get_instance(self, adapter_name: str, config_hash: Optional[str] = None) -> Optional[Any]:
-        """Get existing adapter instance."""
-        if config_hash:
+        """Get existing adapter instance."""        if config_hash:
             instance_key = f"{adapter_name}_{config_hash}"
         else:
             # Find any instance with this adapter name
@@ -565,12 +524,10 @@ class AdapterFactory:
         return self._instances.get(instance_key)
     
     def list_instances(self) -> Dict[str, AdapterConfig]:
-        """List all active adapter instances."""
-        return {key: config for key, config in self._configs.items()}
+        """List all active adapter instances."""        return {key: config for key, config in self._configs.items()}
     
     async def cleanup_instances(self):
-        """Clean up all adapter instances."""
-        for instance_key, instance in self._instances.items():
+        """Clean up all adapter instances."""        for instance_key, instance in self._instances.items():
             try:
                 if hasattr(instance, 'disconnect'):
                     await instance.disconnect()
@@ -584,17 +541,14 @@ class AdapterFactory:
         self.logger.info("✅ All adapter instances cleaned up")
 
 class AdapterRegistry:
-    """Registry for adapter discovery and metadata."""
-    
+    """Registry for adapter discovery and metadata."""    
     def __init__(self):
-        """Initialize the adapter registry."""
-        self.factory = AdapterFactory()
+        """Initialize the adapter registry."""        self.factory = AdapterFactory()
         self.manager = adapter_manager
         self.logger = logging.getLogger(self.__class__.__name__)
     
     def discover_adapters(self) -> Dict[AdapterType, List[str]]:
-        """Discover all available adapters grouped by type."""
-        self.manager.initialize()
+        """Discover all available adapters grouped by type."""        self.manager.initialize()
         
         discovered = {}
         for adapter_type in AdapterType:
@@ -605,8 +559,7 @@ class AdapterRegistry:
         return discovered
     
     def get_adapter_capabilities(self, adapter_name: str) -> Optional[Dict[str, Any]]:
-        """Get comprehensive adapter capabilities and metadata."""
-        info = self.manager.get_adapter_info(adapter_name)
+        """Get comprehensive adapter capabilities and metadata."""        info = self.manager.get_adapter_info(adapter_name)
         if not info:
             return None
         
@@ -624,8 +577,7 @@ class AdapterRegistry:
                        adapter_type: Optional[AdapterType] = None,
                        format_support: Optional[str] = None,
                        requires_auth: Optional[bool] = None) -> List[str]:
-        """Search adapters by criteria."""
-        all_adapters = self.manager.list_all_adapters()
+        """Search adapters by criteria."""        all_adapters = self.manager.list_all_adapters()
         results = []
         
         for name, info in all_adapters.items():
@@ -646,8 +598,7 @@ class AdapterRegistry:
         return results
     
     async def validate_adapter(self, adapter_name: str) -> Dict[str, Any]:
-        """Validate adapter availability and functionality."""
-        try:
+        """Validate adapter availability and functionality."""        try:
             # Check if adapter exists
             adapter_class = get_adapter_by_name(adapter_name)
             if not adapter_class:
@@ -693,8 +644,7 @@ class AdapterRegistry:
             }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Perform comprehensive health check of adapter system."""
-        start_time = datetime.now()
+        """Perform comprehensive health check of adapter system."""        start_time = datetime.now()
         
         # Discover all adapters
         discovered = self.discover_adapters()
@@ -743,28 +693,22 @@ adapter_registry = AdapterRegistry()
 
 # Convenience functions
 async def create_content_adapter(content_type: str, **kwargs):
-    """Create a content adapter."""
-    return await adapter_factory.create_content_adapter(content_type, **kwargs)
+    """Create a content adapter."""    return await adapter_factory.create_content_adapter(content_type, **kwargs)
 
 async def create_platform_adapter(platform: str, credentials: Dict[str, Any], **kwargs):
-    """Create a platform adapter."""
-    return await adapter_factory.create_platform_adapter(platform, credentials, **kwargs)
+    """Create a platform adapter."""    return await adapter_factory.create_platform_adapter(platform, credentials, **kwargs)
 
 async def create_storage_adapter(storage_type: str, connection_config: Dict[str, Any], **kwargs):
-    """Create a storage adapter."""
-    return await adapter_factory.create_storage_adapter(storage_type, connection_config, **kwargs)
+    """Create a storage adapter."""    return await adapter_factory.create_storage_adapter(storage_type, connection_config, **kwargs)
 
 def discover_adapters():
-    """Discover all available adapters."""
-    return adapter_registry.discover_adapters()
+    """Discover all available adapters."""    return adapter_registry.discover_adapters()
 
 def search_adapters(**criteria):
-    """Search adapters by criteria."""
-    return adapter_registry.search_adapters(**criteria)
+    """Search adapters by criteria."""    return adapter_registry.search_adapters(**criteria)
 
 async def validate_system():
-    """Validate entire adapter system."""
-    return await adapter_registry.health_check()
+    """Validate entire adapter system."""    return await adapter_registry.health_check()
 
 # Export all public functions and classes
 __all__ = [

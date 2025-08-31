@@ -1,5 +1,4 @@
-"""
-Publishing Pipeline Database System
+"""Publishing Pipeline Database System
 
 Enterprise content publishing pipeline with multi-platform orchestration,
 content optimization, AI-powered scheduling, and performance analytics for
@@ -25,7 +24,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 import uuid
 import json
 from datetime import datetime, timezone, timedelta
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStatus(Enum):
-    """Publishing pipeline status"""
-    DRAFT = "draft"
+    """Publishing pipeline status"""    DRAFT = "draft"
     SCHEDULED = "scheduled"
     PROCESSING = "processing"
     PUBLISHED = "published"
@@ -56,8 +53,7 @@ class PipelineStatus(Enum):
 
 
 class ContentStatus(Enum):
-    """Individual content item status"""
-    PENDING = "pending"
+    """Individual content item status"""    PENDING = "pending"
     PROCESSING = "processing"
     OPTIMIZED = "optimized"
     SCHEDULED = "scheduled"
@@ -69,8 +65,7 @@ class ContentStatus(Enum):
 
 
 class PlatformType(Enum):
-    """Supported publishing platforms"""
-    YOUTUBE = "youtube"
+    """Supported publishing platforms"""    YOUTUBE = "youtube"
     TIKTOK = "tiktok"
     INSTAGRAM = "instagram"
     FACEBOOK = "facebook"
@@ -88,8 +83,7 @@ class PlatformType(Enum):
 
 
 class OptimizationType(Enum):
-    """Content optimization types"""
-    FORMAT_CONVERSION = "format_conversion"
+    """Content optimization types"""    FORMAT_CONVERSION = "format_conversion"
     COMPRESSION = "compression"
     RESOLUTION_SCALING = "resolution_scaling"
     AUDIO_NORMALIZATION = "audio_normalization"
@@ -102,8 +96,7 @@ class OptimizationType(Enum):
 
 
 class SchedulingStrategy(Enum):
-    """Content scheduling strategies"""
-    IMMEDIATE = "immediate"
+    """Content scheduling strategies"""    IMMEDIATE = "immediate"
     OPTIMAL_TIME = "optimal_time"
     CUSTOM_TIME = "custom_time"
     AUDIENCE_BASED = "audience_based"
@@ -114,8 +107,7 @@ class SchedulingStrategy(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform-specific configuration"""
-    platform: PlatformType
+    """Platform-specific configuration"""    platform: PlatformType
     account_id: str
     credentials: Dict[str, Any]
     content_limits: Dict[str, Any]
@@ -125,18 +117,15 @@ class PlatformConfig:
 
 @dataclass
 class ContentOptimization:
-    """Content optimization configuration"""
-    optimization_type: OptimizationType
+    """Content optimization configuration"""    optimization_type: OptimizationType
     parameters: Dict[str, Any]
     priority: int = 1
     required: bool = True
 
 
 class PublishingPipeline(Base):
-    """
-    Database model for publishing pipeline definitions
-    """
-    __tablename__ = "publishing_pipelines"
+    """    Database model for publishing pipeline definitions
+    """    __tablename__ = "publishing_pipelines"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     pipeline_name = Column(String(200), nullable=False)
@@ -200,10 +189,8 @@ class PublishingPipeline(Base):
 
 
 class PublishingJob(Base):
-    """
-    Database model for individual publishing jobs
-    """
-    __tablename__ = "publishing_jobs"
+    """    Database model for individual publishing jobs
+    """    __tablename__ = "publishing_jobs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     pipeline_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -267,10 +254,8 @@ class PublishingJob(Base):
 
 
 class PlatformPublication(Base):
-    """
-    Database model for individual platform publications
-    """
-    __tablename__ = "platform_publications"
+    """    Database model for individual platform publications
+    """    __tablename__ = "platform_publications"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     publishing_job_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -339,10 +324,8 @@ class PlatformPublication(Base):
 
 
 class ContentOptimizationJob(Base):
-    """
-    Database model for content optimization jobs
-    """
-    __tablename__ = "content_optimization_jobs"
+    """    Database model for content optimization jobs
+    """    __tablename__ = "content_optimization_jobs"
     
     id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     publishing_job_id = Column(UUID(as_uuid=True), nullable=False, index=True)
@@ -392,10 +375,8 @@ class ContentOptimizationJob(Base):
 
 
 class PublishingPipelineManager:
-    """
-    Enterprise publishing pipeline manager with AI optimization
-    """
-    
+    """    Enterprise publishing pipeline manager with AI optimization
+    """    
     def __init__(self, db_session: Session):
         self.db_session = db_session
         self.platform_adapters = {}
@@ -413,8 +394,7 @@ class PublishingPipelineManager:
         optimization_rules: List[ContentOptimization],
         metadata: Dict[str, Any] = None
     ) -> str:
-        """
-        Create new publishing pipeline
+        """        Create new publishing pipeline
         
         Args:
             pipeline_name: Name of the pipeline
@@ -426,8 +406,7 @@ class PublishingPipelineManager:
             
         Returns:
             Pipeline ID
-        """
-        # Convert configurations to JSON
+        """        # Convert configurations to JSON
         platforms_json = [asdict(platform) for platform in target_platforms]
         optimizations_json = [asdict(opt) for opt in optimization_rules]
         
@@ -466,8 +445,7 @@ class PublishingPipelineManager:
         scheduling_options: Dict[str, Any] = None,
         platform_customizations: Dict[str, Any] = None
     ) -> str:
-        """
-        Submit content for publishing through pipeline
+        """        Submit content for publishing through pipeline
         
         Args:
             pipeline_id: Pipeline to use
@@ -480,8 +458,7 @@ class PublishingPipelineManager:
             
         Returns:
             Job ID
-        """
-        # Get pipeline configuration
+        """        # Get pipeline configuration
         pipeline = self.db_session.query(PublishingPipeline).filter(
             PublishingPipeline.id == pipeline_id,
             PublishingPipeline.is_active == True
@@ -527,8 +504,7 @@ class PublishingPipelineManager:
         return str(job.id)
     
     async def _process_publishing_job(self, job_id: str):
-        """Process publishing job through pipeline stages"""
-        try:
+        """Process publishing job through pipeline stages"""        try:
             job = self.db_session.query(PublishingJob).filter(
                 PublishingJob.id == job_id
             ).first()
@@ -626,8 +602,7 @@ class PublishingPipelineManager:
         content_path: str,
         content_type: str
     ) -> Dict[str, Any]:
-        """Analyze content file and extract metadata"""
-        # Implementation would analyze content file
+        """Analyze content file and extract metadata"""        # Implementation would analyze content file
         # For now, return basic metadata
         return {
             'content_type': content_type,
@@ -641,16 +616,14 @@ class PublishingPipelineManager:
         }
     
     async def _validate_content_quality(self, job: PublishingJob):
-        """Validate content meets quality standards"""
-        # Quality validation implementation
+        """Validate content meets quality standards"""        # Quality validation implementation
         pass
     
     async def _optimize_content_for_platforms(
         self,
         job: PublishingJob
     ) -> Dict[str, Dict[str, Any]]:
-        """Optimize content for each target platform"""
-        optimization_results = {}
+        """Optimize content for each target platform"""        optimization_results = {}
         
         for platform_config in job.target_platforms:
             platform_type = platform_config['platform']
@@ -688,8 +661,7 @@ class PublishingPipelineManager:
         return optimization_results
     
     async def _handle_approval_workflow(self, job: PublishingJob):
-        """Handle approval workflow for content"""
-        # Implementation would handle approval process
+        """Handle approval workflow for content"""        # Implementation would handle approval process
         # For now, simulate automatic approval after delay
         await asyncio.sleep(1)  # Simulate approval time
         
@@ -702,8 +674,7 @@ class PublishingPipelineManager:
         job: PublishingJob,
         optimization_results: Dict[str, Dict[str, Any]]
     ) -> Dict[str, Dict[str, Any]]:
-        """Publish content to all target platforms"""
-        publication_results = {}
+        """Publish content to all target platforms"""        publication_results = {}
         
         for platform_config in job.target_platforms:
             platform_type = platform_config['platform']
@@ -755,13 +726,11 @@ class PublishingPipelineManager:
         job: PublishingJob,
         publication_results: Dict[str, Dict[str, Any]]
     ):
-        """Setup performance tracking for published content"""
-        # Implementation would setup analytics tracking
+        """Setup performance tracking for published content"""        # Implementation would setup analytics tracking
         pass
     
     async def get_publishing_job_status(self, job_id: str) -> Dict[str, Any]:
-        """Get detailed status of publishing job"""
-        job = self.db_session.query(PublishingJob).filter(
+        """Get detailed status of publishing job"""        job = self.db_session.query(PublishingJob).filter(
             PublishingJob.id == job_id
         ).first()
         
@@ -799,8 +768,7 @@ class PublishingPipelineManager:
 
 
 class AISchedulingOptimizer:
-    """AI-powered content scheduling optimization"""
-    
+    """AI-powered content scheduling optimization"""    
     def __init__(self, db_session: Session):
         self.db_session = db_session
     
@@ -810,8 +778,7 @@ class AISchedulingOptimizer:
         content_metadata: Dict[str, Any],
         user_preferences: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate optimal publishing schedule using AI"""
-        # Simplified scheduling logic - would use ML models in production
+        """Generate optimal publishing schedule using AI"""        # Simplified scheduling logic - would use ML models in production
         
         strategy = pipeline.scheduling_strategy
         
@@ -842,8 +809,7 @@ class AISchedulingOptimizer:
         pipeline: PublishingPipeline,
         content_metadata: Dict[str, Any]
     ) -> datetime:
-        """Calculate optimal publishing time based on data"""
-        # Simplified calculation - would use sophisticated ML in production
+        """Calculate optimal publishing time based on data"""        # Simplified calculation - would use sophisticated ML in production
         
         # Default to peak engagement time (8 PM user's timezone)
         optimal_time = datetime.now(timezone.utc).replace(
@@ -858,8 +824,7 @@ class AISchedulingOptimizer:
 
 
 class QualityValidator:
-    """Content quality validation engine"""
-    
+    """Content quality validation engine"""    
     def __init__(self):
         self.quality_checks = {
             'video': self._validate_video_quality,
@@ -874,8 +839,7 @@ class QualityValidator:
         content_type: str,
         quality_rules: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Validate content quality against rules"""
-        validator = self.quality_checks.get(content_type)
+        """Validate content quality against rules"""        validator = self.quality_checks.get(content_type)
         
         if not validator:
             return {'valid': True, 'score': 1.0, 'issues': []}
@@ -883,17 +847,13 @@ class QualityValidator:
         return await validator(content_path, quality_rules)
     
     async def _validate_video_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
-        """Validate video content quality"""
-        return {'valid': True, 'score': 0.95, 'issues': []}
+        """Validate video content quality"""        return {'valid': True, 'score': 0.95, 'issues': []}
     
     async def _validate_audio_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
-        """Validate audio content quality"""
-        return {'valid': True, 'score': 0.95, 'issues': []}
+        """Validate audio content quality"""        return {'valid': True, 'score': 0.95, 'issues': []}
     
     async def _validate_image_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
-        """Validate image content quality"""
-        return {'valid': True, 'score': 0.95, 'issues': []}
+        """Validate image content quality"""        return {'valid': True, 'score': 0.95, 'issues': []}
     
     async def _validate_text_quality(self, path: str, rules: Dict) -> Dict[str, Any]:
-        """Validate text content quality"""
-        return {'valid': True, 'score': 0.95, 'issues': []}
+        """Validate text content quality"""        return {'valid': True, 'score': 0.95, 'issues': []}

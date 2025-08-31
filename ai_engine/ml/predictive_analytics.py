@@ -1,11 +1,9 @@
-"""
-Predictive Analytics Engine - Advanced Predictive Modeling and Forecasting
+"""Predictive Analytics Engine - Advanced Predictive Modeling and Forecasting
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 
 This module provides comprehensive predictive analytics capabilities for the IA Influencer Agent platform.
 """
-
 import logging
 import numpy as np
 import pandas as pd
@@ -29,8 +27,7 @@ warnings.filterwarnings('ignore')
 logger = logging.getLogger(__name__)
 
 class PredictionType(Enum):
-    """Types of predictions supported"""
-    ENGAGEMENT_FORECAST = "engagement_forecast"
+    """Types of predictions supported"""    ENGAGEMENT_FORECAST = "engagement_forecast"
     TREND_PREDICTION = "trend_prediction"
     VIRAL_PROBABILITY = "viral_probability"
     AUDIENCE_GROWTH = "audience_growth"
@@ -44,8 +41,7 @@ class PredictionType(Enum):
     MARKET_OPPORTUNITY = "market_opportunity"
 
 class ModelType(Enum):
-    """Types of ML models"""
-    LINEAR_REGRESSION = "linear_regression"
+    """Types of ML models"""    LINEAR_REGRESSION = "linear_regression"
     RANDOM_FOREST = "random_forest"
     GRADIENT_BOOSTING = "gradient_boosting"
     LOGISTIC_REGRESSION = "logistic_regression"
@@ -53,16 +49,14 @@ class ModelType(Enum):
     NEURAL_NETWORK = "neural_network"
 
 class TimeHorizon(Enum):
-    """Prediction time horizons"""
-    SHORT_TERM = "short_term"  # 1-7 days
+    """Prediction time horizons"""    SHORT_TERM = "short_term"  # 1-7 days
     MEDIUM_TERM = "medium_term"  # 1-4 weeks
     LONG_TERM = "long_term"  # 1-6 months
     YEARLY = "yearly"  # 1+ years
 
 @dataclass
 class PredictionRequest:
-    """Prediction request configuration"""
-    prediction_type: PredictionType
+    """Prediction request configuration"""    prediction_type: PredictionType
     time_horizon: TimeHorizon
     model_type: Optional[ModelType] = None
     features: Dict[str, Any] = field(default_factory=dict)
@@ -73,8 +67,7 @@ class PredictionRequest:
     
 @dataclass
 class PredictionResult:
-    """Prediction result"""
-    request_id: str
+    """Prediction result"""    request_id: str
     prediction_type: PredictionType
     predicted_value: Union[float, int, str, List[Any]]
     confidence_score: float
@@ -90,8 +83,7 @@ class PredictionResult:
 
 @dataclass
 class ModelMetrics:
-    """Model performance metrics"""
-    model_id: str
+    """Model performance metrics"""    model_id: str
     model_type: ModelType
     accuracy: float
     precision: Optional[float] = None
@@ -106,8 +98,7 @@ class ModelMetrics:
 
 @dataclass
 class TrendData:
-    """Trend analysis data"""
-    metric_name: str
+    """Trend analysis data"""    metric_name: str
     values: List[float]
     timestamps: List[datetime]
     trend_direction: str  # "increasing", "decreasing", "stable"
@@ -117,8 +108,7 @@ class TrendData:
     forecast: Optional[List[float]] = None
 
 class PredictiveAnalyticsEngine:
-    """Main predictive analytics engine"""
-    
+    """Main predictive analytics engine"""    
     def __init__(self, cache_size: int = 1000):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.cache_size = cache_size
@@ -139,8 +129,7 @@ class PredictiveAnalyticsEngine:
         self.logger.info("PredictiveAnalyticsEngine initialized successfully")
     
     def _initialize_models(self):
-        """Initialize default prediction models"""
-        try:
+        """Initialize default prediction models"""        try:
             # Regression models
             self.models[ModelType.LINEAR_REGRESSION] = LinearRegression()
             self.models[ModelType.RANDOM_FOREST] = RandomForestRegressor(
@@ -163,8 +152,7 @@ class PredictiveAnalyticsEngine:
             self.logger.error(f"Failed to initialize models: {e}")
     
     def predict(self, request: PredictionRequest) -> PredictionResult:
-        """Make a prediction based on the request"""
-        start_time = time.time()
+        """Make a prediction based on the request"""        start_time = time.time()
         request_id = f"pred_{int(time.time())}_{request.prediction_type.value}"
         
         try:
@@ -220,8 +208,7 @@ class PredictiveAnalyticsEngine:
             )
     
     def _predict_engagement(self, request: PredictionRequest) -> PredictionResult:
-        """Predict content engagement metrics"""
-        try:
+        """Predict content engagement metrics"""        try:
             features = request.features
             
             # Extract engagement features
@@ -313,8 +300,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _predict_trends(self, request: PredictionRequest) -> PredictionResult:
-        """Predict trending topics and content trends"""
-        try:
+        """Predict trending topics and content trends"""        try:
             features = request.features
             
             # Mock trend data - in real implementation, this would analyze hashtags, keywords, etc.
@@ -370,8 +356,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _predict_viral_probability(self, request: PredictionRequest) -> PredictionResult:
-        """Predict the probability of content going viral"""
-        try:
+        """Predict the probability of content going viral"""        try:
             features = request.features
             
             # Extract viral prediction features
@@ -461,8 +446,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _predict_audience_growth(self, request: PredictionRequest) -> PredictionResult:
-        """Predict audience growth over time"""
-        try:
+        """Predict audience growth over time"""        try:
             features = request.features
             
             current_followers = features.get('current_followers', 1000)
@@ -533,8 +517,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _predict_content_performance(self, request: PredictionRequest) -> PredictionResult:
-        """Predict how specific content will perform"""
-        try:
+        """Predict how specific content will perform"""        try:
             features = request.features
             
             # Content characteristics
@@ -630,8 +613,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _predict_optimal_posting_time(self, request: PredictionRequest) -> PredictionResult:
-        """Predict optimal posting times for maximum engagement"""
-        try:
+        """Predict optimal posting times for maximum engagement"""        try:
             features = request.features
             
             # Audience data
@@ -711,8 +693,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _predict_collaboration_success(self, request: PredictionRequest) -> PredictionResult:
-        """Predict success probability of influencer collaborations"""
-        try:
+        """Predict success probability of influencer collaborations"""        try:
             features = request.features
             
             # Collaboration features
@@ -793,8 +774,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _predict_revenue_forecast(self, request: PredictionRequest) -> PredictionResult:
-        """Predict revenue and monetization potential"""
-        try:
+        """Predict revenue and monetization potential"""        try:
             features = request.features
             
             current_monthly_revenue = features.get('current_monthly_revenue', 0)
@@ -878,8 +858,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _predict_churn(self, request: PredictionRequest) -> PredictionResult:
-        """Predict follower churn and retention"""
-        try:
+        """Predict follower churn and retention"""        try:
             features = request.features
             
             # Churn indicators
@@ -964,8 +943,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _predict_seasonal_trends(self, request: PredictionRequest) -> PredictionResult:
-        """Predict seasonal trends and patterns"""
-        try:
+        """Predict seasonal trends and patterns"""        try:
             features = request.features
             
             current_month = datetime.now().month
@@ -1083,8 +1061,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def _get_seasonal_content_suggestions(self, niche: str, month: int) -> List[str]:
-        """Get seasonal content suggestions for a specific niche and month"""
-        suggestions_map = {
+        """Get seasonal content suggestions for a specific niche and month"""        suggestions_map = {
             'fashion': {
                 1: ['Winter coats', 'New Year outfits', 'Cozy layers'],
                 3: ['Spring jackets', 'Pastel colors', 'Transitional pieces'],
@@ -1106,8 +1083,7 @@ class PredictiveAnalyticsEngine:
         return suggestions_map.get(niche, {}).get(month, default_suggestions)
     
     def _generic_prediction(self, request: PredictionRequest) -> PredictionResult:
-        """Generic prediction for unsupported prediction types"""
-        try:
+        """Generic prediction for unsupported prediction types"""        try:
             features = request.features
             
             # Simple generic prediction based on available features
@@ -1132,8 +1108,7 @@ class PredictiveAnalyticsEngine:
             raise
     
     def get_prediction_history(self, prediction_type: Optional[PredictionType] = None) -> List[PredictionResult]:
-        """Get prediction history"""
-        try:
+        """Get prediction history"""        try:
             if prediction_type:
                 return self.prediction_history.get(prediction_type, [])
             else:
@@ -1146,12 +1121,10 @@ class PredictiveAnalyticsEngine:
             return []
     
     def get_model_metrics(self) -> Dict[str, ModelMetrics]:
-        """Get performance metrics for all models"""
-        return self.model_metrics.copy()
+        """Get performance metrics for all models"""        return self.model_metrics.copy()
     
     def clear_cache(self) -> bool:
-        """Clear prediction cache"""
-        try:
+        """Clear prediction cache"""        try:
             self.prediction_cache.clear()
             self.logger.info("Prediction cache cleared")
             return True
@@ -1160,8 +1133,7 @@ class PredictiveAnalyticsEngine:
             return False
     
     def export_predictions(self, format_type: str = "json") -> Union[str, Dict[str, Any]]:
-        """Export prediction data"""
-        try:
+        """Export prediction data"""        try:
             export_data = {
                 "export_timestamp": datetime.utcnow().isoformat(),
                 "total_predictions": len(self.prediction_cache),

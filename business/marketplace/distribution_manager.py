@@ -1,5 +1,4 @@
-"""
-Distribution Manager - Multi-Platform Content Distribution System
+"""Distribution Manager - Multi-Platform Content Distribution System
 =================================================================
 
 Advanced distribution system for content across multiple platforms
@@ -15,7 +14,6 @@ This code and concept are proprietary to Fahed Mlaiel (mlaiel@live.de).
 Any unauthorized use, copying, or distribution without explicit written permission is strictly prohibited.
 Legal action will be pursued against any infringement.
 """
-
 from typing import Dict, Any, List, Optional, Union
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
@@ -27,8 +25,7 @@ import logging
 logger = logging.getLogger(__name__)
 
 class DistributionChannel(Enum):
-    """Available distribution channels"""
-    YOUTUBE = "youtube"
+    """Available distribution channels"""    YOUTUBE = "youtube"
     SPOTIFY = "spotify"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -46,8 +43,7 @@ class DistributionChannel(Enum):
     OWN_WEBSITE = "own_website"
 
 class ContentFormat(Enum):
-    """Content formats for distribution"""
-    VIDEO = "video"
+    """Content formats for distribution"""    VIDEO = "video"
     AUDIO = "audio"
     IMAGE = "image"
     TEXT = "text"
@@ -57,8 +53,7 @@ class ContentFormat(Enum):
     ARTICLE = "article"
 
 class DistributionStatus(Enum):
-    """Distribution status states"""
-    PENDING = "pending"
+    """Distribution status states"""    PENDING = "pending"
     PROCESSING = "processing"
     PUBLISHED = "published"
     FAILED = "failed"
@@ -67,8 +62,7 @@ class DistributionStatus(Enum):
 
 @dataclass
 class PlatformResult:
-    """Result of distribution to a specific platform"""
-    platform: DistributionChannel
+    """Result of distribution to a specific platform"""    platform: DistributionChannel
     status: DistributionStatus
     platform_id: Optional[str] = None
     url: Optional[str] = None
@@ -80,8 +74,7 @@ class PlatformResult:
 
 @dataclass
 class DistributionResult:
-    """Complete distribution result"""
-    distribution_id: str
+    """Complete distribution result"""    distribution_id: str
     creator_id: str
     content_id: str
     platform_results: List[PlatformResult]
@@ -97,11 +90,9 @@ class DistributionResult:
     created_at: datetime = field(default_factory=datetime.utcnow)
 
 class DistributionManager:
-    """
-    Advanced multi-platform content distribution system with AI-powered
+    """    Advanced multi-platform content distribution system with AI-powered
     optimization and automated scheduling.
-    """
-    
+    """    
     def __init__(self):
         self.platform_configs = {
             DistributionChannel.YOUTUBE: {
@@ -158,8 +149,7 @@ class DistributionManager:
         }
     
     async def distribute_content(self, creator_id: str, distribution_config: Dict[str, Any]) -> DistributionResult:
-        """Distribute content across multiple platforms"""
-        try:
+        """Distribute content across multiple platforms"""        try:
             distribution_id = str(uuid.uuid4())
             content_id = distribution_config.get('content_id')
             
@@ -225,8 +215,7 @@ class DistributionManager:
             raise
     
     async def _get_content_metadata(self, content_id: str) -> Dict[str, Any]:
-        """Get content metadata for distribution"""
-        # This would fetch from content manager
+        """Get content metadata for distribution"""        # This would fetch from content manager
         return {
             'content_id': content_id,
             'title': 'Sample Content',
@@ -242,8 +231,7 @@ class DistributionManager:
         }
     
     async def _select_optimal_platforms(self, content_metadata: Dict[str, Any], requested_platforms: List[str]) -> List[DistributionChannel]:
-        """Select optimal platforms based on content and creator preferences"""
-        content_format = ContentFormat(content_metadata.get('content_type', 'video'))
+        """Select optimal platforms based on content and creator preferences"""        content_format = ContentFormat(content_metadata.get('content_type', 'video'))
         
         # Filter platforms that support the content format
         compatible_platforms = []
@@ -258,8 +246,7 @@ class DistributionManager:
         return optimized_platforms
     
     async def _ai_platform_selection(self, content_metadata: Dict[str, Any], compatible_platforms: List[DistributionChannel]) -> List[DistributionChannel]:
-        """AI-powered platform selection optimization"""
-        # This would use ML algorithms to select optimal platforms
+        """AI-powered platform selection optimization"""        # This would use ML algorithms to select optimal platforms
         # Based on content type, creator profile, audience, etc.
         
         platform_scores = {}
@@ -295,8 +282,7 @@ class DistributionManager:
         return [platform for platform, score in sorted_platforms if score > 0.3]
     
     async def _optimize_content_for_platforms(self, content_metadata: Dict[str, Any], platforms: List[DistributionChannel]) -> Dict[DistributionChannel, Dict[str, Any]]:
-        """Optimize content metadata for each platform"""
-        optimized_content = {}
+        """Optimize content metadata for each platform"""        optimized_content = {}
         
         for platform in platforms:
             platform_config = self.platform_configs.get(platform, {})
@@ -332,8 +318,7 @@ class DistributionManager:
         return optimized_content
     
     async def _optimize_title(self, original_title: str, platform: DistributionChannel) -> str:
-        """Optimize title for specific platform"""
-        optimizations = {
+        """Optimize title for specific platform"""        optimizations = {
             DistributionChannel.YOUTUBE: {
                 'max_length': 100,
                 'seo_boost': True,
@@ -361,8 +346,7 @@ class DistributionManager:
         return optimized_title
     
     async def _optimize_description(self, original_description: str, platform: DistributionChannel) -> str:
-        """Optimize description for specific platform"""
-        # Platform-specific description optimization
+        """Optimize description for specific platform"""        # Platform-specific description optimization
         optimizations = {
             DistributionChannel.YOUTUBE: lambda desc: f"{desc}\n\n🔔 Subscribe for more amazing content!\n\n#IA #Influencer #Creator",
             DistributionChannel.INSTAGRAM: lambda desc: f"{desc}\n\n✨ Follow for daily inspiration!\n\n",
@@ -373,8 +357,7 @@ class DistributionManager:
         return optimizer(original_description)
     
     async def _optimize_tags(self, original_tags: List[str], platform: DistributionChannel) -> List[str]:
-        """Optimize tags for specific platform"""
-        platform_specific_tags = {
+        """Optimize tags for specific platform"""        platform_specific_tags = {
             DistributionChannel.YOUTUBE: ['youtube', 'viral', '2025', 'trending'],
             DistributionChannel.INSTAGRAM: ['insta', 'daily', 'lifestyle', 'creator'],
             DistributionChannel.TIKTOK: ['fyp', 'viral', 'trending', 'foryou'],
@@ -389,15 +372,13 @@ class DistributionManager:
         return unique_tags[:15]  # Most platforms have tag limits
     
     async def _generate_thumbnail(self, content_metadata: Dict[str, Any], platform: DistributionChannel) -> Optional[str]:
-        """Generate optimized thumbnail for platform"""
-        if platform in [DistributionChannel.YOUTUBE, DistributionChannel.INSTAGRAM]:
+        """Generate optimized thumbnail for platform"""        if platform in [DistributionChannel.YOUTUBE, DistributionChannel.INSTAGRAM]:
             # This would generate/optimize thumbnails using AI
             return f"thumbnail_{platform.value}_{content_metadata['content_id']}.jpg"
         return None
     
     async def _calculate_optimal_posting_time(self, platform: DistributionChannel) -> datetime:
-        """Calculate optimal posting time for platform"""
-        optimal_hours = self.optimization_rules['posting_times'].get(
+        """Calculate optimal posting time for platform"""        optimal_hours = self.optimization_rules['posting_times'].get(
             platform, {'optimal_hours': [12, 15, 18]}
         )['optimal_hours']
         
@@ -419,8 +400,7 @@ class DistributionManager:
         return next_optimal
     
     async def _determine_youtube_category(self, content_metadata: Dict[str, Any]) -> str:
-        """Determine YouTube category based on content"""
-        tags = content_metadata.get('tags', [])
+        """Determine YouTube category based on content"""        tags = content_metadata.get('tags', [])
         if any(tag in ['music', 'song', 'audio'] for tag in tags):
             return 'Music'
         elif any(tag in ['entertainment', 'fun', 'comedy'] for tag in tags):
@@ -431,32 +411,27 @@ class DistributionManager:
             return 'Entertainment'
     
     async def _create_instagram_caption(self, content_metadata: Dict[str, Any]) -> str:
-        """Create optimized Instagram caption"""
-        base_caption = content_metadata.get('description', '')
+        """Create optimized Instagram caption"""        base_caption = content_metadata.get('description', '')
         emoji_enhanced = f"✨ {base_caption} ✨"
         return emoji_enhanced
     
     async def _generate_instagram_hashtags(self, content_metadata: Dict[str, Any]) -> List[str]:
-        """Generate Instagram-specific hashtags"""
-        base_tags = content_metadata.get('tags', [])
+        """Generate Instagram-specific hashtags"""        base_tags = content_metadata.get('tags', [])
         instagram_tags = [f"#{tag.replace(' ', '').lower()}" for tag in base_tags]
         instagram_tags.extend(['#creator', '#content', '#daily', '#inspiration', '#viral'])
         return instagram_tags[:30]  # Instagram limit
     
     async def _generate_tiktok_hashtags(self, content_metadata: Dict[str, Any]) -> List[str]:
-        """Generate TikTok-specific hashtags"""
-        base_tags = content_metadata.get('tags', [])
+        """Generate TikTok-specific hashtags"""        base_tags = content_metadata.get('tags', [])
         tiktok_tags = [f"#{tag.replace(' ', '').lower()}" for tag in base_tags]
         tiktok_tags.extend(['#fyp', '#viral', '#trending', '#foryou', '#creator'])
         return tiktok_tags[:20]  # TikTok practical limit
     
     async def _suggest_tiktok_effects(self, content_metadata: Dict[str, Any]) -> List[str]:
-        """Suggest TikTok effects based on content"""
-        return ['Original Sound', 'Trending Effect', 'Color Pop', 'Slow Motion']
+        """Suggest TikTok effects based on content"""        return ['Original Sound', 'Trending Effect', 'Color Pop', 'Slow Motion']
     
     async def _schedule_distribution(self, optimized_content: Dict[DistributionChannel, Dict[str, Any]], platforms: List[DistributionChannel], scheduled_time: str) -> List[PlatformResult]:
-        """Schedule content distribution"""
-        results = []
+        """Schedule content distribution"""        results = []
         
         for platform in platforms:
             content_config = optimized_content.get(platform, {})
@@ -478,8 +453,7 @@ class DistributionManager:
         return results
     
     async def _immediate_distribution(self, optimized_content: Dict[DistributionChannel, Dict[str, Any]], platforms: List[DistributionChannel]) -> List[PlatformResult]:
-        """Immediate content distribution"""
-        results = []
+        """Immediate content distribution"""        results = []
         
         for platform in platforms:
             try:
@@ -515,8 +489,7 @@ class DistributionManager:
         return results
     
     async def _distribute_to_platform(self, platform: DistributionChannel, content_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Simulate distribution to specific platform"""
-        # This would make actual API calls to platforms
+        """Simulate distribution to specific platform"""        # This would make actual API calls to platforms
         # For now, returning simulated response
         
         platform_id = f"{platform.value}_{uuid.uuid4().hex[:8]}"
@@ -532,8 +505,7 @@ class DistributionManager:
         }
     
     async def _estimate_reach(self, platform: DistributionChannel, content_config: Dict[str, Any]) -> int:
-        """Estimate potential reach for platform"""
-        base_reach = {
+        """Estimate potential reach for platform"""        base_reach = {
             DistributionChannel.YOUTUBE: 50000,
             DistributionChannel.INSTAGRAM: 25000,
             DistributionChannel.TIKTOK: 75000,
@@ -553,8 +525,7 @@ class DistributionManager:
         return estimated_reach
     
     async def _forecast_engagement(self, platform: DistributionChannel, content_config: Dict[str, Any]) -> float:
-        """Forecast engagement rate for platform"""
-        base_rates = {
+        """Forecast engagement rate for platform"""        base_rates = {
             DistributionChannel.YOUTUBE: 0.06,
             DistributionChannel.INSTAGRAM: 0.08,
             DistributionChannel.TIKTOK: 0.15,
@@ -571,8 +542,7 @@ class DistributionManager:
         return min(base_rate + quality_bonus, 0.25)  # Cap at 25%
     
     async def get_distribution_analytics(self, distribution_id: str) -> Dict[str, Any]:
-        """Get distribution analytics and performance metrics"""
-        # This would fetch real analytics data
+        """Get distribution analytics and performance metrics"""        # This would fetch real analytics data
         return {
             'distribution_id': distribution_id,
             'total_reach': 150000,
@@ -589,8 +559,7 @@ class DistributionManager:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for distribution manager"""
-        return {
+        """Health check for distribution manager"""        return {
             "status": "healthy",
             "supported_platforms": len(self.platform_configs),
             "optimization_rules": len(self.optimization_rules),
@@ -598,5 +567,4 @@ class DistributionManager:
         }
     
     async def shutdown(self):
-        """Graceful shutdown"""
-        logger.info("DistributionManager shutting down...")
+        """Graceful shutdown"""        logger.info("DistributionManager shutting down...")

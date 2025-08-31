@@ -1,5 +1,4 @@
-"""
-Repository Module Index
+"""Repository Module Index
 
 Central entry point for the database repositories module of the 
 IA Influencer Agent + Content Protection Platform.
@@ -27,7 +26,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from typing import Dict, List, Type, Any, Optional
 from sqlalchemy.orm import Session
 import logging
@@ -64,44 +62,36 @@ from . import (
 logger = logging.getLogger(__name__)
 
 class RepositoryManager:
-    """
-    Central manager for all repository operations and coordination
-    """
-    
+    """    Central manager for all repository operations and coordination
+    """    
     def __init__(self, db_session: Session):
-        """
-        Initialize repository manager
+        """        Initialize repository manager
         
         Args:
             db_session: SQLAlchemy database session
-        """
-        self.db_session = db_session
+        """        self.db_session = db_session
         self.factory = create_repository_factory(db_session)
         self._initialized_repositories: Dict[str, BaseRepository] = {}
         
     def get_repository(self, repository_name: str) -> BaseRepository:
-        """
-        Get repository instance by name with lazy loading
+        """        Get repository instance by name with lazy loading
         
         Args:
             repository_name: Name of repository to retrieve
             
         Returns:
             Repository instance
-        """
-        if repository_name not in self._initialized_repositories:
+        """        if repository_name not in self._initialized_repositories:
             self._initialized_repositories[repository_name] = self.factory.get_repository(repository_name)
             
         return self._initialized_repositories[repository_name]
     
     def health_check_all(self) -> Dict[str, Any]:
-        """
-        Perform health check on all repositories
+        """        Perform health check on all repositories
         
         Returns:
             Health status for all repositories
-        """
-        health_results = {
+        """        health_results = {
             'overall_status': 'healthy',
             'repository_health': {},
             'failed_repositories': [],
@@ -143,13 +133,11 @@ class RepositoryManager:
         return health_results
     
     def get_all_statistics(self) -> Dict[str, Any]:
-        """
-        Get statistics from all repositories
+        """        Get statistics from all repositories
         
         Returns:
             Aggregated statistics from all repositories
-        """
-        all_stats = {
+        """        all_stats = {
             'repository_statistics': {},
             'aggregate_metrics': {
                 'total_records': 0,
@@ -175,13 +163,11 @@ class RepositoryManager:
         return all_stats
     
     def optimize_all_tables(self) -> Dict[str, Any]:
-        """
-        Optimize all repository tables
+        """        Optimize all repository tables
         
         Returns:
             Optimization results for all repositories
-        """
-        optimization_results = {
+        """        optimization_results = {
             'optimization_summary': {},
             'successful_optimizations': 0,
             'failed_optimizations': 0
@@ -206,16 +192,14 @@ class RepositoryManager:
         return optimization_results
     
     def cleanup_old_data(self, days_to_keep: int = 90) -> Dict[str, Any]:
-        """
-        Cleanup old data from repositories that support it
+        """        Cleanup old data from repositories that support it
         
         Args:
             days_to_keep: Number of days to keep data
             
         Returns:
             Cleanup results
-        """
-        cleanup_results = {
+        """        cleanup_results = {
             'cleanup_summary': {},
             'total_records_cleaned': 0,
             'repositories_cleaned': 0
@@ -249,13 +233,11 @@ class RepositoryManager:
         return cleanup_results
     
     def get_repository_info(self) -> Dict[str, Any]:
-        """
-        Get comprehensive information about all repositories
+        """        Get comprehensive information about all repositories
         
         Returns:
             Repository information summary
-        """
-        info = {
+        """        info = {
             'repository_count': len(REPOSITORY_REGISTRY),
             'available_repositories': list(REPOSITORY_REGISTRY.keys()),
             'repository_categories': {
@@ -296,33 +278,28 @@ class RepositoryManager:
         return info
 
 def initialize_repository_manager(db_session: Session) -> RepositoryManager:
-    """
-    Initialize repository manager with database session
+    """    Initialize repository manager with database session
     
     Args:
         db_session: SQLAlchemy database session
         
     Returns:
         Configured repository manager
-    """
-    manager = RepositoryManager(db_session)
+    """    manager = RepositoryManager(db_session)
     logger.info("Repository manager initialized successfully")
     return manager
 
 # Quick access functions for common operations
 def quick_health_check(db_session: Session) -> Dict[str, Any]:
-    """Quick health check for all repositories"""
-    manager = initialize_repository_manager(db_session)
+    """Quick health check for all repositories"""    manager = initialize_repository_manager(db_session)
     return manager.health_check_all()
 
 def quick_statistics(db_session: Session) -> Dict[str, Any]:
-    """Quick statistics from all repositories"""
-    manager = initialize_repository_manager(db_session)
+    """Quick statistics from all repositories"""    manager = initialize_repository_manager(db_session)
     return manager.get_all_statistics()
 
 def quick_optimization(db_session: Session) -> Dict[str, Any]:
-    """Quick optimization for all repositories"""
-    manager = initialize_repository_manager(db_session)
+    """Quick optimization for all repositories"""    manager = initialize_repository_manager(db_session)
     return manager.optimize_all_tables()
 
 # Export main components

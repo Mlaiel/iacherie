@@ -1,5 +1,4 @@
-"""
-Ultra-Advanced Rights Allocator - Enterprise IP Rights Management & Distribution Engine
+"""Ultra-Advanced Rights Allocator - Enterprise IP Rights Management & Distribution Engine
 ======================================================================================
 
 Comprehensive intellectual property rights allocation system with multi-party
@@ -20,7 +19,6 @@ User (musician/blogger/photographer/influencer/comedian) → Upload multi-format
 → AI protection rights analysis → Professional SEO optimization → Collaboration matching
 → Multi-platform distribution → Automated licensing & royalty management
 """
-
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -44,8 +42,7 @@ from ..utils.legal_compliance import LegalComplianceValidator
 
 
 class RightType(Enum):
-    """Comprehensive types of intellectual property rights"""
-    COPYRIGHT = "copyright"
+    """Comprehensive types of intellectual property rights"""    COPYRIGHT = "copyright"
     PERFORMANCE = "performance"
     MECHANICAL = "mechanical"
     SYNCHRONIZATION = "synchronization"
@@ -68,8 +65,7 @@ class RightType(Enum):
 
 
 class AllocationStrategy(Enum):
-    """Advanced allocation strategies for rights distribution"""
-    PROPORTIONAL = "proportional"
+    """Advanced allocation strategies for rights distribution"""    PROPORTIONAL = "proportional"
     WEIGHTED = "weighted"
     HIERARCHICAL = "hierarchical"
     COLLABORATIVE = "collaborative"
@@ -82,8 +78,7 @@ class AllocationStrategy(Enum):
 
 
 class RightScope(Enum):
-    """Scope of rights allocation"""
-    GLOBAL = "global"
+    """Scope of rights allocation"""    GLOBAL = "global"
     REGIONAL = "regional"
     NATIONAL = "national"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -94,8 +89,7 @@ class RightScope(Enum):
 
 
 class ExclusivityLevel(Enum):
-    """Levels of exclusivity for rights"""
-    EXCLUSIVE = "exclusive"
+    """Levels of exclusivity for rights"""    EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
     SEMI_EXCLUSIVE = "semi_exclusive"
     CO_EXCLUSIVE = "co_exclusive"
@@ -104,8 +98,7 @@ class ExclusivityLevel(Enum):
 
 
 class TerritorialScope(Enum):
-    """Territorial scope for rights allocation"""
-    WORLDWIDE = "worldwide"
+    """Territorial scope for rights allocation"""    WORLDWIDE = "worldwide"
     EUROPE = "europe"
     NORTH_AMERICA = "north_america"
     ASIA_PACIFIC = "asia_pacific"
@@ -117,8 +110,7 @@ class TerritorialScope(Enum):
 
 @dataclass
 class EnhancedRightGrant:
-    """Enhanced data structure for rights grants"""
-    grant_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Enhanced data structure for rights grants"""    grant_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     right_type: RightType = RightType.COPYRIGHT
     allocation_strategy: AllocationStrategy = AllocationStrategy.PROPORTIONAL
     scope: RightScope = RightScope.GLOBAL
@@ -168,8 +160,7 @@ class EnhancedRightGrant:
 
 @dataclass
 class RightAllocationRequest:
-    """Comprehensive request for rights allocation"""
-    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive request for rights allocation"""    request_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     content_id: str = ""
     content_type: str = ""
     content_title: str = ""
@@ -209,8 +200,7 @@ class RightAllocationRequest:
 
 @dataclass
 class RightAllocationResult:
-    """Result of rights allocation processing"""
-    result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Result of rights allocation processing"""    result_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     request_id: str = ""
     status: str = "success"
     
@@ -249,11 +239,9 @@ class RightAllocationResult:
 
 
 class UltraAdvancedRightsAllocator:
-    """
-    Ultra-advanced rights allocation engine with comprehensive IP management,
+    """    Ultra-advanced rights allocation engine with comprehensive IP management,
     AI-powered optimization, blockchain verification, and global compliance
-    """
-    
+    """    
     def __init__(
         self,
         security_manager: SecurityManager,
@@ -279,8 +267,7 @@ class UltraAdvancedRightsAllocator:
         self._validate_business_logic()
     
     def _validate_business_logic(self) -> None:
-        """Validate business logic flow requirements"""
-        required_components = [
+        """Validate business logic flow requirements"""        required_components = [
             self.security_manager,
             self.blockchain_verifier,
             self.ai_optimizer,
@@ -297,11 +284,9 @@ class UltraAdvancedRightsAllocator:
         request: RightAllocationRequest,
         session: AsyncSession
     ) -> RightAllocationResult:
-        """
-        Allocate intellectual property rights with comprehensive validation,
+        """        Allocate intellectual property rights with comprehensive validation,
         AI optimization, and blockchain verification
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             # Validate request
@@ -409,8 +394,7 @@ class UltraAdvancedRightsAllocator:
             return result
     
     async def _validate_allocation_request(self, request: RightAllocationRequest) -> None:
-        """Validate rights allocation request"""
-        if not request.content_id:
+        """Validate rights allocation request"""        if not request.content_id:
             raise ValidationError("Content ID is required")
         
         if not request.primary_rights_holder:
@@ -436,8 +420,7 @@ class UltraAdvancedRightsAllocator:
         request: RightAllocationRequest,
         session: AsyncSession
     ) -> List[EnhancedRightGrant]:
-        """Process the actual rights allocation"""
-        allocated_rights = []
+        """Process the actual rights allocation"""        allocated_rights = []
         
         # Primary rights holder allocation
         for right_type in request.rights_to_allocate:
@@ -512,8 +495,7 @@ class UltraAdvancedRightsAllocator:
     async def _generate_allocation_summary(
         self, allocated_rights: List[EnhancedRightGrant]
     ) -> Dict[str, Any]:
-        """Generate comprehensive allocation summary"""
-        summary = {
+        """Generate comprehensive allocation summary"""        summary = {
             "total_grants": len(allocated_rights),
             "rights_by_type": {},
             "rights_by_holder": {},
@@ -550,8 +532,7 @@ class UltraAdvancedRightsAllocator:
         request: RightAllocationRequest,
         allocated_rights: List[EnhancedRightGrant]
     ) -> Dict[str, Decimal]:
-        """Calculate revenue allocation based on ownership and agreements"""
-        revenue_allocation = {}
+        """Calculate revenue allocation based on ownership and agreements"""        revenue_allocation = {}
         total_pool = request.total_revenue_pool
         
         if total_pool <= 0:
@@ -581,8 +562,7 @@ class UltraAdvancedRightsAllocator:
         request: RightAllocationRequest,
         allocated_rights: List[EnhancedRightGrant]
     ) -> Dict[str, Decimal]:
-        """Calculate royalty distribution for ongoing payments"""
-        royalty_distribution = {}
+        """Calculate royalty distribution for ongoing payments"""        royalty_distribution = {}
         
         # Standard royalty rates by right type
         standard_rates = {
@@ -614,8 +594,7 @@ class UltraAdvancedRightsAllocator:
         request: RightAllocationRequest,
         allocated_rights: List[EnhancedRightGrant]
     ) -> List[str]:
-        """Generate legal contracts for rights allocation"""
-        contracts = []
+        """Generate legal contracts for rights allocation"""        contracts = []
         
         # Generate master rights agreement
         master_contract_id = f"master_rights_{request.request_id}"
@@ -638,8 +617,7 @@ class UltraAdvancedRightsAllocator:
         request: RightAllocationRequest,
         allocated_rights: List[EnhancedRightGrant]
     ) -> List[str]:
-        """Generate legal documentation for rights allocation"""
-        documents = []
+        """Generate legal documentation for rights allocation"""        documents = []
         
         # Rights certificate
         certificate_id = f"rights_certificate_{request.request_id}"
@@ -656,8 +634,7 @@ class UltraAdvancedRightsAllocator:
         return documents
     
     async def _cache_allocation_result(self, result: RightAllocationResult) -> None:
-        """Cache allocation result for future reference"""
-        if not self.redis_client:
+        """Cache allocation result for future reference"""        if not self.redis_client:
             return
         
         try:
@@ -687,8 +664,7 @@ class UltraAdvancedRightsAllocator:
         content_id: str,
         session: AsyncSession
     ) -> List[Dict[str, Any]]:
-        """Get history of rights allocations for specific content"""
-        try:
+        """Get history of rights allocations for specific content"""        try:
             # Implementation would query database for historical allocations
             # This is a placeholder for the actual database query
             history = []
@@ -706,8 +682,7 @@ class UltraAdvancedRightsAllocator:
         right_type: RightType,
         session: AsyncSession
     ) -> bool:
-        """Validate rights ownership for specific content and right type"""
-        try:
+        """Validate rights ownership for specific content and right type"""        try:
             # Implementation would verify rights ownership in database
             # This is a placeholder for the actual validation logic
             
@@ -733,8 +708,7 @@ class UltraAdvancedRightsAllocator:
         transfer_percentage: Decimal,
         session: AsyncSession
     ) -> bool:
-        """Transfer rights between holders"""
-        try:
+        """Transfer rights between holders"""        try:
             # Validate source ownership
             if not await self.validate_rights_ownership(
                 content_id, from_holder_id, right_type, session
@@ -768,8 +742,7 @@ class UltraAdvancedRightsAllocator:
 
 @dataclass
 class RightsOwnership:
-    """Rights ownership record"""
-    ownership_id: str
+    """Rights ownership record"""    ownership_id: str
     content_id: str
     owner_id: str
     rights_type: RightsType
@@ -787,8 +760,7 @@ class RightsOwnership:
 
 @dataclass
 class RightsVerificationResult:
-    """Rights verification result"""
-    valid: bool
+    """Rights verification result"""    valid: bool
     ownership_records: List[RightsOwnership]
     validation_data: Dict[str, Any]
     error: Optional[str] = None
@@ -798,8 +770,7 @@ class RightsVerificationResult:
 
 @dataclass
 class RightsAllocation:
-    """Rights allocation for content"""
-    allocation_id: str
+    """Rights allocation for content"""    allocation_id: str
     content_id: str
     total_rights: List[RightsType]
     ownership_records: List[RightsOwnership]
@@ -811,8 +782,7 @@ class RightsAllocation:
 
 
 class RightsAllocator:
-    """
-    Advanced IP rights allocation and management system
+    """    Advanced IP rights allocation and management system
     
     Features:
     - Multi-party ownership tracking and verification
@@ -823,8 +793,7 @@ class RightsAllocator:
     - Rights transfer and assignment tracking
     - Real-time ownership verification
     - Comprehensive audit trails
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -847,8 +816,7 @@ class RightsAllocator:
         self.is_initialized = False
     
     async def initialize(self) -> None:
-        """Initialize rights allocator and verification systems"""
-        try:
+        """Initialize rights allocator and verification systems"""        try:
             self.logger.info("Initializing RightsAllocator")
             
             # Initialize components
@@ -877,8 +845,7 @@ class RightsAllocator:
         rights_data: Dict[str, Any],
         collaborators: Optional[List[Dict[str, Any]]] = None
     ) -> RightsAllocation:
-        """
-        Allocate rights for new content with creator and collaborator ownership
+        """        Allocate rights for new content with creator and collaborator ownership
         
         Args:
             content_id: Unique content identifier
@@ -888,8 +855,7 @@ class RightsAllocator:
             
         Returns:
             Complete rights allocation record
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RightsError("RightsAllocator not initialized")
         
         allocation_id = str(uuid.uuid4())
@@ -962,8 +928,7 @@ class RightsAllocator:
         content_id: str,
         requested_rights: List[str]
     ) -> RightsVerificationResult:
-        """
-        Validate creator's rights to license specific content
+        """        Validate creator's rights to license specific content
         
         Args:
             creator_id: Creator identifier
@@ -972,8 +937,7 @@ class RightsAllocator:
             
         Returns:
             Comprehensive rights verification result
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RightsError("RightsAllocator not initialized")
         
         try:
@@ -1058,8 +1022,7 @@ class RightsAllocator:
         transfer_percentage: Decimal,
         authorization: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Transfer rights between owners with proper authorization
+        """        Transfer rights between owners with proper authorization
         
         Args:
             from_owner_id: Current owner identifier
@@ -1071,8 +1034,7 @@ class RightsAllocator:
             
         Returns:
             Transfer result with new ownership records
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RightsError("RightsAllocator not initialized")
         
         try:
@@ -1194,16 +1156,14 @@ class RightsAllocator:
             raise RightsError(f"Rights transfer failed: {str(e)}")
     
     async def get_content_ownership(self, content_id: str) -> Optional[RightsAllocation]:
-        """Get complete ownership information for content"""
-        return await self._get_content_allocation(content_id)
+        """Get complete ownership information for content"""        return await self._get_content_allocation(content_id)
     
     async def get_owner_rights(
         self,
         owner_id: str,
         content_filter: Optional[str] = None
     ) -> List[RightsOwnership]:
-        """Get all rights owned by a specific owner"""
-        owner_rights = []
+        """Get all rights owned by a specific owner"""        owner_rights = []
         
         for record in self.ownership_records.values():
             if record.owner_id == owner_id:
@@ -1218,8 +1178,7 @@ class RightsAllocator:
         allocation_id: str,
         conflict_resolution: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Manually resolve rights conflicts"""
-        allocation = self.rights_allocations.get(allocation_id)
+        """Manually resolve rights conflicts"""        allocation = self.rights_allocations.get(allocation_id)
         if not allocation:
             raise ValidationError(f"Rights allocation not found: {allocation_id}")
         
@@ -1256,8 +1215,7 @@ class RightsAllocator:
         creator_id: str,
         rights_data: Dict[str, Any]
     ) -> RightsOwnership:
-        """Create primary creator ownership record"""
-        ownership_percentage = Decimal(str(rights_data.get('creator_percentage', 100)))
+        """Create primary creator ownership record"""        ownership_percentage = Decimal(str(rights_data.get('creator_percentage', 100)))
         
         return RightsOwnership(
             ownership_id=str(uuid.uuid4()),
@@ -1283,8 +1241,7 @@ class RightsAllocator:
         collaborators: List[Dict[str, Any]],
         creator_ownership: RightsOwnership
     ) -> List[RightsOwnership]:
-        """Process collaborator ownership records"""
-        collaborator_records = []
+        """Process collaborator ownership records"""        collaborator_records = []
         
         for collaborator in collaborators:
             collaborator_id = collaborator['collaborator_id']
@@ -1320,8 +1277,7 @@ class RightsAllocator:
         return collaborator_records
     
     async def _validate_ownership_percentages(self, ownership_records: List[RightsOwnership]) -> None:
-        """Validate that ownership percentages don't exceed 100% per rights type"""
-        rights_totals = {}
+        """Validate that ownership percentages don't exceed 100% per rights type"""        rights_totals = {}
         
         for record in ownership_records:
             rights_key = f"{record.rights_type.value}_{record.territory}"
@@ -1337,8 +1293,7 @@ class RightsAllocator:
                 )
     
     async def _detect_rights_conflicts(self, ownership_records: List[RightsOwnership]) -> List[str]:
-        """Detect potential rights conflicts"""
-        conflicts = []
+        """Detect potential rights conflicts"""        conflicts = []
         
         # Check for overlapping exclusive rights
         exclusive_rights = {}
@@ -1370,8 +1325,7 @@ class RightsAllocator:
         self,
         ownership_records: List[RightsOwnership]
     ) -> List[str]:
-        """Register ownership records on blockchain"""
-        if not self.blockchain_enabled:
+        """Register ownership records on blockchain"""        if not self.blockchain_enabled:
             return []
         
         blockchain_hashes = []
@@ -1396,8 +1350,7 @@ class RightsAllocator:
         return blockchain_hashes
     
     async def _get_content_allocation(self, content_id: str) -> Optional[RightsAllocation]:
-        """Get rights allocation for content"""
-        for allocation in self.rights_allocations.values():
+        """Get rights allocation for content"""        for allocation in self.rights_allocations.values():
             if allocation.content_id == content_id:
                 return allocation
         return None
@@ -1408,8 +1361,7 @@ class RightsAllocator:
         requested_rights: List[str],
         allocation: RightsAllocation
     ) -> Any:  # ValidationResult
-        """Validate creator has rights to license specific content"""
-        class ValidationResult:
+        """Validate creator has rights to license specific content"""        class ValidationResult:
             def __init__(self):
                 self.valid = True
                 self.data = {}
@@ -1464,8 +1416,7 @@ class RightsAllocator:
         content_id: str,
         ownership_records: List[RightsOwnership]
     ) -> bool:
-        """Verify ownership records on blockchain"""
-        if not self.blockchain_enabled:
+        """Verify ownership records on blockchain"""        if not self.blockchain_enabled:
             return False
         
         try:
@@ -1492,8 +1443,7 @@ class RightsAllocator:
         blockchain_verified: bool,
         allocation: RightsAllocation
     ) -> float:
-        """Calculate rights verification confidence score (0-100)"""
-        score = 0.0
+        """Calculate rights verification confidence score (0-100)"""        score = 0.0
         
         # Base score for having ownership records
         if creator_records:
@@ -1531,16 +1481,14 @@ class RightsAllocator:
         return max(0.0, min(100.0, score))
     
     def _get_cached_verification(self, cache_key: str) -> Optional[RightsVerificationResult]:
-        """Get cached verification result if still valid"""
-        if cache_key in self.verification_cache:
+        """Get cached verification result if still valid"""        if cache_key in self.verification_cache:
             cached_data = self.verification_cache[cache_key]
             if datetime.now() - cached_data['timestamp'] < timedelta(seconds=self.verification_cache_ttl):
                 return cached_data['result']
         return None
     
     def _cache_verification(self, cache_key: str, result: RightsVerificationResult) -> None:
-        """Cache verification result"""
-        self.verification_cache[cache_key] = {
+        """Cache verification result"""        self.verification_cache[cache_key] = {
             'result': result,
             'timestamp': datetime.now()
         }
@@ -1556,8 +1504,7 @@ class RightsAllocator:
                 del self.verification_cache[key]
     
     async def _validate_rights_data(self, rights_data: Dict[str, Any]) -> None:
-        """Validate rights allocation data"""
-        if not rights_data.get('rights_types'):
+        """Validate rights allocation data"""        if not rights_data.get('rights_types'):
             raise ValidationError("Rights types are required")
         
         creator_percentage = rights_data.get('creator_percentage', 100)
@@ -1569,8 +1516,7 @@ class RightsAllocator:
         authorization: Dict[str, Any],
         from_owner_id: str
     ) -> None:
-        """Validate rights transfer authorization"""
-        if not authorization.get('authorization_id'):
+        """Validate rights transfer authorization"""        if not authorization.get('authorization_id'):
             raise AuthorizationError("Authorization ID is required")
         
         if authorization.get('authorized_by') != from_owner_id:
@@ -1584,8 +1530,7 @@ class RightsAllocator:
         rights_to_transfer: List[RightsType],
         transfer_percentage: Decimal
     ) -> None:
-        """Validate that rights are available for transfer"""
-        for rights_type in rights_to_transfer:
+        """Validate that rights are available for transfer"""        for rights_type in rights_to_transfer:
             matching_record = next(
                 (record for record in source_records if record.rights_type == rights_type),
                 None
@@ -1609,8 +1554,7 @@ class RightsAllocator:
         new_records: List[RightsOwnership],
         authorization: Dict[str, Any]
     ) -> List[str]:
-        """Register rights transfer on blockchain"""
-        if not self.blockchain_enabled:
+        """Register rights transfer on blockchain"""        if not self.blockchain_enabled:
             return []
         
         transaction_hashes = []
@@ -1636,8 +1580,7 @@ class RightsAllocator:
         return transaction_hashes
     
     async def _auto_resolve_conflicts(self, allocation_id: str, conflicts: List[str]) -> None:
-        """Attempt automatic conflict resolution"""
-        # Mock auto-resolution - would implement actual conflict resolution logic
+        """Attempt automatic conflict resolution"""        # Mock auto-resolution - would implement actual conflict resolution logic
         self.logger.info(f"Auto-resolving conflicts for allocation {allocation_id}: {conflicts}")
     
     async def _apply_conflict_resolution(
@@ -1645,8 +1588,7 @@ class RightsAllocator:
         allocation: RightsAllocation,
         resolution: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply manual conflict resolution"""
-        # Mock resolution - would implement actual resolution logic
+        """Apply manual conflict resolution"""        # Mock resolution - would implement actual resolution logic
         return {
             'resolved': True,
             'remaining_conflicts': [],
@@ -1654,9 +1596,7 @@ class RightsAllocator:
         }
     
     async def _load_rights_data(self) -> None:
-        """Load existing rights data from storage"""
-        self.logger.info("Loading existing rights data")
+        """Load existing rights data from storage"""        self.logger.info("Loading existing rights data")
     
     async def _initialize_conflict_detection(self) -> None:
-        """Initialize conflict detection systems"""
-        self.logger.info("Conflict detection initialized")
+        """Initialize conflict detection systems"""        self.logger.info("Conflict detection initialized")

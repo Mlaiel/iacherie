@@ -1,5 +1,4 @@
-"""
-🚀 Revenue Analytics - Ultra-Advanced Revenue Analytics & Insights Engine
+"""🚀 Revenue Analytics - Ultra-Advanced Revenue Analytics & Insights Engine
 ========================================================================
 
 Industrial-grade revenue analytics system providing comprehensive insights,
@@ -18,7 +17,6 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Revenue Analytics
 ==========================================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -45,8 +43,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
-    HOURLY = "hourly"
+    """Analytics timeframe options"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -56,8 +53,7 @@ class AnalyticsTimeframe(Enum):
 
 
 class MetricType(Enum):
-    """Revenue metric types"""
-    GROSS_REVENUE = "gross_revenue"
+    """Revenue metric types"""    GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     PLATFORM_FEES = "platform_fees"
     TAX_WITHHOLDINGS = "tax_withholdings"
@@ -69,8 +65,7 @@ class MetricType(Enum):
 
 
 class ComparisonType(Enum):
-    """Comparison analysis types"""
-    PERIOD_OVER_PERIOD = "period_over_period"
+    """Comparison analysis types"""    PERIOD_OVER_PERIOD = "period_over_period"
     YEAR_OVER_YEAR = "year_over_year"
     PLATFORM_COMPARISON = "platform_comparison"
     PEER_BENCHMARKING = "peer_benchmarking"
@@ -79,8 +74,7 @@ class ComparisonType(Enum):
 
 @dataclass
 class RevenueMetrics:
-    """Revenue metrics data structure"""
-    creator_id: str
+    """Revenue metrics data structure"""    creator_id: str
     timeframe: AnalyticsTimeframe
     period_start: datetime
     period_end: datetime
@@ -96,8 +90,7 @@ class RevenueMetrics:
 
 @dataclass
 class AnalyticsInsight:
-    """Analytics insight data structure"""
-    insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Analytics insight data structure"""    insight_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     insight_type: str = ""
     title: str = ""
@@ -110,8 +103,7 @@ class AnalyticsInsight:
 
 
 class RevenueAnalytics:
-    """
-    Ultra-advanced revenue analytics system for content creators
+    """    Ultra-advanced revenue analytics system for content creators
     
     Features:
     - Real-time revenue analytics and KPI tracking
@@ -122,8 +114,7 @@ class RevenueAnalytics:
     - Industry benchmarking and peer comparison
     - Custom dashboard generation
     - Anomaly detection and trend analysis
-    """
-    
+    """    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -145,8 +136,7 @@ class RevenueAnalytics:
         self.pca = PCA(n_components=0.95)  # Retain 95% variance
         
     async def initialize(self):
-        """Initialize the revenue analytics system"""
-        try:
+        """Initialize the revenue analytics system"""        try:
             # Initialize analytics engine
             await self.analytics_engine.initialize()
             
@@ -174,8 +164,7 @@ class RevenueAnalytics:
                                     date_range: Optional[Tuple[datetime, datetime]] = None,
                                     include_predictions: bool = True,
                                     include_benchmarks: bool = True) -> Dict[str, Any]:
-        """
-        Generate comprehensive revenue analytics report
+        """        Generate comprehensive revenue analytics report
         
         Args:
             creator_id: Creator ID
@@ -186,8 +175,7 @@ class RevenueAnalytics:
             
         Returns:
             Comprehensive revenue analytics report
-        """
-        try:
+        """        try:
             # Determine date range based on timeframe
             if not date_range:
                 date_range = self._get_timeframe_date_range(timeframe)
@@ -285,11 +273,9 @@ class RevenueAnalytics:
                                        creator_id: str,
                                        timeframe: AnalyticsTimeframe,
                                        date_range: Tuple[datetime, datetime]) -> RevenueMetrics:
-        """Calculate comprehensive revenue metrics"""
-        try:
+        """Calculate comprehensive revenue metrics"""        try:
             # Query revenue data for the period
-            revenue_query = """
-                SELECT 
+            revenue_query = """                SELECT 
                     platform,
                     revenue_type,
                     SUM(gross_amount) as gross_revenue,
@@ -302,8 +288,7 @@ class RevenueAnalytics:
                 AND calculation_date BETWEEN %s AND %s
                 GROUP BY platform, revenue_type
                 ORDER BY gross_revenue DESC
-            """
-            
+            """            
             revenue_data = await self.db.fetch_all(revenue_query, (
                 creator_id, date_range[0], date_range[1]
             ))
@@ -356,8 +341,7 @@ class RevenueAnalytics:
                                            creator_id: str,
                                            metrics: RevenueMetrics,
                                            timeframe: AnalyticsTimeframe) -> List[AnalyticsInsight]:
-        """Generate AI-powered performance insights"""
-        try:
+        """Generate AI-powered performance insights"""        try:
             insights = []
             
             # Revenue growth insight
@@ -429,11 +413,9 @@ class RevenueAnalytics:
     async def _analyze_platform_performance(self,
                                           creator_id: str,
                                           date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Analyze performance across different platforms"""
-        try:
+        """Analyze performance across different platforms"""        try:
             # Get platform-specific metrics
-            platform_query = """
-                SELECT 
+            platform_query = """                SELECT 
                     platform,
                     SUM(gross_amount) as gross_revenue,
                     SUM(net_amount) as net_revenue,
@@ -447,8 +429,7 @@ class RevenueAnalytics:
                 AND calculation_date BETWEEN %s AND %s
                 GROUP BY platform
                 ORDER BY net_revenue DESC
-            """
-            
+            """            
             platform_data = await self.db.fetch_all(platform_query, (
                 creator_id, date_range[0], date_range[1]
             ))
@@ -524,8 +505,7 @@ class RevenueAnalytics:
                                     creator_id: str,
                                     timeframe: AnalyticsTimeframe,
                                     date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Perform comprehensive trend analysis"""
-        try:
+        """Perform comprehensive trend analysis"""        try:
             # Get time-series revenue data
             if timeframe == AnalyticsTimeframe.DAILY:
                 date_trunc = "day"
@@ -540,8 +520,7 @@ class RevenueAnalytics:
                 date_trunc = "day"
                 interval = "1 day"
             
-            trend_query = f"""
-                SELECT 
+            trend_query = f"""                SELECT 
                     DATE_TRUNC('{date_trunc}', calculation_date) as period,
                     SUM(net_amount) as revenue,
                     COUNT(*) as transactions,
@@ -551,8 +530,7 @@ class RevenueAnalytics:
                 AND calculation_date BETWEEN %s AND %s
                 GROUP BY DATE_TRUNC('{date_trunc}', calculation_date)
                 ORDER BY period ASC
-            """
-            
+            """            
             trend_data = await self.db.fetch_all(trend_query, (
                 creator_id, date_range[0], date_range[1]
             ))
@@ -614,8 +592,7 @@ class RevenueAnalytics:
     async def _generate_revenue_predictions(self,
                                           creator_id: str,
                                           timeframe: AnalyticsTimeframe) -> Dict[str, Any]:
-        """Generate AI-powered revenue predictions"""
-        try:
+        """Generate AI-powered revenue predictions"""        try:
             # Get historical data for prediction model
             historical_data = await self._get_historical_revenue_data(creator_id, 90)  # Last 90 days
             
@@ -653,11 +630,9 @@ class RevenueAnalytics:
     async def _perform_benchmark_analysis(self,
                                         creator_id: str,
                                         metrics: RevenueMetrics) -> Dict[str, Any]:
-        """Perform benchmark analysis against peers and industry"""
-        try:
+        """Perform benchmark analysis against peers and industry"""        try:
             # Get creator category and tier for benchmarking
-            creator_info = await self.db.fetch_one("""
-                SELECT category, tier, follower_count, content_type 
+            creator_info = await self.db.fetch_one("""                SELECT category, tier, follower_count, content_type 
                 FROM creators 
                 WHERE id = %s
             """, (creator_id,))
@@ -711,8 +686,7 @@ class RevenueAnalytics:
             return {}
 
     def _get_timeframe_date_range(self, timeframe: AnalyticsTimeframe) -> Tuple[datetime, datetime]:
-        """Get date range based on timeframe"""
-        end_date = datetime.utcnow()
+        """Get date range based on timeframe"""        end_date = datetime.utcnow()
         
         if timeframe == AnalyticsTimeframe.DAILY:
             start_date = end_date - timedelta(days=1)
@@ -730,8 +704,7 @@ class RevenueAnalytics:
         return start_date, end_date
 
     def _calculate_moving_average(self, data: List[float], window: int) -> List[float]:
-        """Calculate moving average for data series"""
-        if len(data) < window:
+        """Calculate moving average for data series"""        if len(data) < window:
             return []
         
         moving_averages = []
@@ -742,8 +715,7 @@ class RevenueAnalytics:
         return moving_averages
 
     async def cleanup(self):
-        """Cleanup analytics resources"""
-        try:
+        """Cleanup analytics resources"""        try:
             # Cleanup analytics engine
             await self.analytics_engine.cleanup()
             

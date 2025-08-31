@@ -1,5 +1,4 @@
-"""
-Voice Enhancement Module - IA Influencer Agent
+"""Voice Enhancement Module - IA Influencer Agent
 
 Professional voice enhancement, noise reduction, and audio quality optimization
 for content creators and conversational AI applications.
@@ -7,7 +6,6 @@ for content creators and conversational AI applications.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 import numpy as np
@@ -21,16 +19,14 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class EnhancementResult:
-    """Voice enhancement result"""
-    enhanced_audio: np.ndarray
+    """Voice enhancement result"""    enhanced_audio: np.ndarray
     original_audio: np.ndarray
     enhancement_metrics: Dict[str, float]
     processing_time: float
     quality_improvement: float
 
 class VoiceEnhancer:
-    """Advanced voice enhancement and optimization system"""
-    
+    """Advanced voice enhancement and optimization system"""    
     def __init__(self, config: EnhancementConfig):
         self.config = config
         self.is_initialized = False
@@ -51,8 +47,7 @@ class VoiceEnhancer:
                           noise_reduction: float = 0.5,
                           quality_enhancement: float = 0.7,
                           normalize_volume: bool = True) -> EnhancementResult:
-        """Enhanced voice with professional quality optimization"""
-        start_time = time.time()
+        """Enhanced voice with professional quality optimization"""        start_time = time.time()
         
         try:
             # Apply noise reduction
@@ -82,8 +77,7 @@ class VoiceEnhancer:
             raise
     
     def _apply_noise_reduction(self, audio: np.ndarray, strength: float) -> np.ndarray:
-        """Apply noise reduction to audio signal"""
-        # Simple spectral subtraction for demonstration
+        """Apply noise reduction to audio signal"""        # Simple spectral subtraction for demonstration
         fft = np.fft.fft(audio)
         magnitude = np.abs(fft)
         phase = np.angle(fft)
@@ -102,8 +96,7 @@ class VoiceEnhancer:
         return enhanced_audio.astype(np.float32)
     
     def _apply_quality_enhancement(self, audio: np.ndarray, strength: float) -> np.ndarray:
-        """Apply quality enhancement filters"""
-        # Simple high-pass filter to remove low-frequency noise
+        """Apply quality enhancement filters"""        # Simple high-pass filter to remove low-frequency noise
         if len(audio) > 1:
             # First-order high-pass filter
             alpha = 0.95
@@ -118,23 +111,20 @@ class VoiceEnhancer:
         return audio
     
     def _normalize_volume(self, audio: np.ndarray) -> np.ndarray:
-        """Normalize audio volume"""
-        max_val = np.max(np.abs(audio))
+        """Normalize audio volume"""        max_val = np.max(np.abs(audio))
         if max_val > 0:
             return audio / max_val * 0.8  # Target 80% of maximum
         return audio
     
     def _calculate_enhancement_metrics(self, original: np.ndarray, enhanced: np.ndarray) -> Dict[str, float]:
-        """Calculate enhancement quality metrics"""
-        return {
+        """Calculate enhancement quality metrics"""        return {
             "snr_improvement": 3.5,  # Mock improvement in dB
             "noise_reduction": 12.0,  # Mock noise reduction in dB
             "clarity_improvement": 0.25  # Mock clarity improvement
         }
     
     def _calculate_quality_improvement(self, original: np.ndarray, enhanced: np.ndarray) -> float:
-        """Calculate overall quality improvement score"""
-        return 0.75  # Mock quality improvement score
+        """Calculate overall quality improvement score"""        return 0.75  # Mock quality improvement score
     
     async def shutdown(self) -> None:
         self.is_initialized = False

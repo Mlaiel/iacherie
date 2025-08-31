@@ -12,8 +12,7 @@ This revolutionary audit logging system is the EXCLUSIVE property of Fahed Mlaie
 Unauthorized use, copying, distribution, or exploitation is STRICTLY PROHIBITED.
 Legal action will be taken against violators under international IP law.
 Contact: mlaiel@live.de for authorization.
-"""
-from typing import List, Dict, Any, Optional, Union, Tuple
+"""from typing import List, Dict, Any, Optional, Union, Tuple
 import logging
 from datetime import datetime, timezone
 import asyncio

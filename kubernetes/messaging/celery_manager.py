@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Celery Deployment Manager
+"""IA Influencer Agent - Celery Deployment Manager
 Enterprise Celery worker deployment and management for distributed task processing
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ Team Specialties:
 - Lead Dev IA + Backend Senior + ML Engineer + DBA + DevOps 
 - Audio Processing + Security + Microservices + IA Prompt Engineering
 """
-
 import asyncio
 import logging
 import subprocess
@@ -37,8 +35,7 @@ settings = get_settings()
 
 
 class CeleryWorkerConfig(BaseModel):
-    """Configuration for Celery worker deployment"""
-    name: str = Field(..., description="Worker name identifier")
+    """Configuration for Celery worker deployment"""    name: str = Field(..., description="Worker name identifier")
     concurrency: int = Field(default=4, description="Number of concurrent processes")
     queues: List[str] = Field(default=["default"], description="Queues to process")
     loglevel: str = Field(default="INFO", description="Logging level")
@@ -50,8 +47,7 @@ class CeleryWorkerConfig(BaseModel):
 
 
 class CeleryClusterConfig(BaseModel):
-    """Configuration for Celery cluster deployment"""
-    broker_url: str = Field(..., description="Message broker URL")
+    """Configuration for Celery cluster deployment"""    broker_url: str = Field(..., description="Message broker URL")
     result_backend: str = Field(..., description="Result backend URL")
     workers: List[CeleryWorkerConfig] = Field(..., description="Worker configurations")
     monitoring_enabled: bool = Field(default=True, description="Enable monitoring")
@@ -61,11 +57,9 @@ class CeleryClusterConfig(BaseModel):
 
 
 class CeleryManager:
-    """
-    Enterprise Celery deployment and management system
+    """    Enterprise Celery deployment and management system
     Handles distributed task processing for IA content protection
     """
-
     def __init__(self, config: Optional[CeleryClusterConfig] = None):
         self.config = config or self._get_default_config()
         self.docker_client = docker.from_env()
@@ -74,8 +68,7 @@ class CeleryManager:
         self.monitoring_tasks: List[asyncio.Task] = []
         
     def _get_default_config(self) -> CeleryClusterConfig:
-        """Get default Celery cluster configuration"""
-        return CeleryClusterConfig(
+        """Get default Celery cluster configuration"""        return CeleryClusterConfig(
             broker_url=settings.CELERY_BROKER_URL,
             result_backend=settings.CELERY_RESULT_BACKEND,
             workers=[
@@ -116,8 +109,7 @@ class CeleryManager:
         )
 
     async def deploy_cluster(self) -> Dict[str, Union[str, bool]]:
-        """Deploy complete Celery cluster"""
-        try:
+        """Deploy complete Celery cluster"""        try:
             logger.info("Starting Celery cluster deployment")
             
             # Validate broker connection
@@ -150,8 +142,7 @@ class CeleryManager:
             raise
 
     async def _deploy_worker(self, worker_config: CeleryWorkerConfig) -> Dict[str, Union[str, int]]:
-        """Deploy individual Celery worker"""
-        try:
+        """Deploy individual Celery worker"""        try:
             # Generate worker command
             command = self._generate_worker_command(worker_config)
             
@@ -198,8 +189,7 @@ class CeleryManager:
             raise
 
     def _generate_worker_command(self, config: CeleryWorkerConfig) -> List[str]:
-        """Generate Celery worker command"""
-        command = [
+        """Generate Celery worker command"""        command = [
             "celery", "-A", "backend.app.core.celery_app", "worker",
             "--hostname", f"{config.name}@%h",
             "--concurrency", str(config.concurrency),
@@ -217,8 +207,7 @@ class CeleryManager:
         return command
 
     async def _validate_broker_connection(self) -> bool:
-        """Validate connection to message broker"""
-        try:
+        """Validate connection to message broker"""        try:
             with Connection(self.config.broker_url) as conn:
                 conn.ensure_connection(max_retries=3)
             logger.info("Broker connection validated successfully")
@@ -229,8 +218,7 @@ class CeleryManager:
             raise
 
     async def _start_monitoring(self) -> None:
-        """Start worker monitoring tasks"""
-        try:
+        """Start worker monitoring tasks"""        try:
             # Start health monitoring
             health_task = asyncio.create_task(self._monitor_worker_health())
             self.monitoring_tasks.append(health_task)
@@ -246,8 +234,7 @@ class CeleryManager:
             raise
 
     async def _monitor_worker_health(self) -> None:
-        """Monitor worker health continuously"""
-        while True:
+        """Monitor worker health continuously"""        while True:
             try:
                 for worker_name, worker_info in self.workers.items():
                     container = worker_info["container"]
@@ -264,8 +251,7 @@ class CeleryManager:
                 await asyncio.sleep(60)
 
     async def _monitor_performance(self) -> None:
-        """Monitor worker performance metrics"""
-        while True:
+        """Monitor worker performance metrics"""        while True:
             try:
                 for worker_name, worker_info in self.workers.items():
                     # Get worker stats
@@ -285,8 +271,7 @@ class CeleryManager:
                 await asyncio.sleep(120)
 
     async def _enable_auto_scaling(self) -> None:
-        """Enable auto-scaling based on queue length and worker load"""
-        try:
+        """Enable auto-scaling based on queue length and worker load"""        try:
             scaling_task = asyncio.create_task(self._auto_scale_workers())
             self.monitoring_tasks.append(scaling_task)
             logger.info("Auto-scaling enabled")
@@ -296,8 +281,7 @@ class CeleryManager:
             raise
 
     async def _auto_scale_workers(self) -> None:
-        """Auto-scale workers based on demand"""
-        while True:
+        """Auto-scale workers based on demand"""        while True:
             try:
                 # Get queue lengths
                 queue_stats = await self._get_queue_stats()
@@ -317,8 +301,7 @@ class CeleryManager:
                 await asyncio.sleep(300)
 
     def _calculate_scaling_decision(self, queue_stats: Dict[str, int]) -> Dict[str, Union[str, int]]:
-        """Calculate scaling decision based on queue stats"""
-        total_pending = sum(queue_stats.values())
+        """Calculate scaling decision based on queue stats"""        total_pending = sum(queue_stats.values())
         active_workers = len([w for w in self.workers.values() if w["status"] == "running"])
         
         # Scale up if average queue length > 10 per worker
@@ -334,8 +317,7 @@ class CeleryManager:
         return {"action": "none", "count": 0}
 
     async def get_cluster_status(self) -> Dict[str, Union[str, int, List[Dict]]]:
-        """Get comprehensive cluster status"""
-        try:
+        """Get comprehensive cluster status"""        try:
             worker_statuses = []
             
             for worker_name, worker_info in self.workers.items():
@@ -369,8 +351,7 @@ class CeleryManager:
             return {"cluster_status": "error", "error": str(e)}
 
     async def _get_worker_stats(self, worker_name: str) -> Dict[str, Union[int, float]]:
-        """Get individual worker statistics"""
-        try:
+        """Get individual worker statistics"""        try:
             # This would integrate with Celery's monitoring API
             # For now, return mock data
             return {
@@ -385,8 +366,7 @@ class CeleryManager:
             return {}
 
     async def _get_queue_stats(self) -> Dict[str, int]:
-        """Get queue length statistics"""
-        try:
+        """Get queue length statistics"""        try:
             # This would integrate with broker API to get queue lengths
             # For now, return mock data
             return {
@@ -407,8 +387,7 @@ class CeleryManager:
             return {}
 
     async def _restart_worker(self, worker_name: str) -> bool:
-        """Restart a specific worker"""
-        try:
+        """Restart a specific worker"""        try:
             if worker_name not in self.workers:
                 raise ValueError(f"Worker {worker_name} not found")
                 
@@ -430,8 +409,7 @@ class CeleryManager:
             return False
 
     async def _scale_up_workers(self, count: int) -> None:
-        """Scale up workers by adding new instances"""
-        try:
+        """Scale up workers by adding new instances"""        try:
             for i in range(count):
                 # Create new worker config based on load
                 new_config = CeleryWorkerConfig(
@@ -448,8 +426,7 @@ class CeleryManager:
             logger.error(f"Failed to scale up workers: {e}")
 
     async def _scale_down_workers(self, count: int) -> None:
-        """Scale down workers by removing least active instances"""
-        try:
+        """Scale down workers by removing least active instances"""        try:
             # Find workers to remove (dynamic workers first)
             workers_to_remove = []
             for worker_name in list(self.workers.keys()):
@@ -468,8 +445,7 @@ class CeleryManager:
             logger.error(f"Failed to scale down workers: {e}")
 
     async def shutdown_cluster(self) -> Dict[str, Union[str, bool]]:
-        """Gracefully shutdown the entire cluster"""
-        try:
+        """Gracefully shutdown the entire cluster"""        try:
             logger.info("Starting cluster shutdown")
             
             # Stop monitoring tasks
@@ -492,8 +468,7 @@ class CeleryManager:
             return {"status": "error", "error": str(e)}
 
     def export_cluster_config(self) -> Dict:
-        """Export current cluster configuration"""
-        return {
+        """Export current cluster configuration"""        return {
             "cluster_config": self.config.dict(),
             "deployment_timestamp": time.time(),
             "workers_count": len(self.workers),
@@ -502,8 +477,7 @@ class CeleryManager:
 
     @classmethod
     def from_config_file(cls, config_path: str) -> "CeleryManager":
-        """Create CeleryManager from configuration file"""
-        with open(config_path, 'r') as f:
+        """Create CeleryManager from configuration file"""        with open(config_path, 'r') as f:
             config_data = yaml.safe_load(f)
         
         config = CeleryClusterConfig(**config_data)

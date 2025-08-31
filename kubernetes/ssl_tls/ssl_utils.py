@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - SSL/TLS Utilities and Validation
+"""IA Influencer Agent - SSL/TLS Utilities and Validation
 Advanced SSL/TLS utilities, validation, and security analysis
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -14,7 +13,6 @@ WARNING: This code and concept are protected by intellectual property rights.
 Any unauthorized copying, distribution, or use without explicit written 
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited.
 """
-
 import os
 import ssl
 import socket
@@ -41,8 +39,7 @@ from OpenSSL import crypto
 
 
 class SSLGrade(Enum):
-    """SSL security grade enumeration"""
-    A_PLUS = "A+"
+    """SSL security grade enumeration"""    A_PLUS = "A+"
     A = "A"
     A_MINUS = "A-"
     B = "B"
@@ -54,8 +51,7 @@ class SSLGrade(Enum):
 
 
 class VulnerabilityType(Enum):
-    """SSL vulnerability types"""
-    HEARTBLEED = "heartbleed"
+    """SSL vulnerability types"""    HEARTBLEED = "heartbleed"
     CCS_INJECTION = "ccs_injection"
     POODLE = "poodle"
     BEAST = "beast"
@@ -71,8 +67,7 @@ class VulnerabilityType(Enum):
 
 @dataclass
 class SSLScanResult:
-    """SSL scan result structure"""
-    hostname: str
+    """SSL scan result structure"""    hostname: str
     port: int
     scan_time: datetime
     
@@ -113,8 +108,7 @@ class SSLScanResult:
 
 @dataclass
 class CertificateValidationResult:
-    """Certificate validation result"""
-    valid: bool
+    """Certificate validation result"""    valid: bool
     issues: List[str]
     warnings: List[str]
     certificate_info: Dict[str, Any]
@@ -125,24 +119,19 @@ class CertificateValidationResult:
 
 
 class SSLValidationError(Exception):
-    """SSL validation exception"""
-    pass
+    """SSL validation exception"""    pass
 
 
 class SSLValidator:
-    """
-    Advanced SSL/TLS certificate and configuration validator
+    """    Advanced SSL/TLS certificate and configuration validator
     Provides comprehensive security analysis and recommendations
-    """
-    
+    """    
     def __init__(self, timeout: int = 10):
-        """
-        Initialize SSL validator
+        """        Initialize SSL validator
         
         Args:
             timeout: Connection timeout in seconds
-        """
-        self.timeout = timeout
+        """        self.timeout = timeout
         self.logger = logging.getLogger(__name__)
         
         # Security thresholds
@@ -153,16 +142,14 @@ class SSLValidator:
         self.logger.info("SSL validator initialized")
     
     def validate_certificate_file(self, cert_path: Path) -> CertificateValidationResult:
-        """
-        Validate certificate from file
+        """        Validate certificate from file
         
         Args:
             cert_path: Path to certificate file
             
         Returns:
             Validation result
-        """
-        try:
+        """        try:
             # Load certificate
             with open(cert_path, 'rb') as cert_file:
                 cert_data = cert_file.read()
@@ -195,8 +182,7 @@ class SSLValidator:
         chain_path: Optional[Path] = None,
         ca_path: Optional[Path] = None
     ) -> CertificateValidationResult:
-        """
-        Validate certificate chain
+        """        Validate certificate chain
         
         Args:
             cert_path: Path to certificate file
@@ -205,8 +191,7 @@ class SSLValidator:
             
         Returns:
             Validation result
-        """
-        try:
+        """        try:
             # Load certificate
             with open(cert_path, 'rb') as f:
                 cert_data = f.read()
@@ -261,8 +246,7 @@ class SSLValidator:
             )
     
     def _validate_certificate(self, certificate: x509.Certificate) -> CertificateValidationResult:
-        """Internal certificate validation"""
-        issues = []
+        """Internal certificate validation"""        issues = []
         warnings = []
         
         # Extract certificate information
@@ -341,8 +325,7 @@ class SSLValidator:
         )
     
     def _extract_certificate_info(self, certificate: x509.Certificate) -> Dict[str, Any]:
-        """Extract detailed certificate information"""
-        subject = certificate.subject
+        """Extract detailed certificate information"""        subject = certificate.subject
         issuer = certificate.issuer
         
         # Get common name
@@ -399,8 +382,7 @@ class SSLValidator:
         intermediate_certs: List[x509.Certificate],
         ca_path: Optional[Path]
     ) -> bool:
-        """Verify certificate chain using OpenSSL"""
-        try:
+        """Verify certificate chain using OpenSSL"""        try:
             with tempfile.TemporaryDirectory() as temp_dir:
                 temp_path = Path(temp_dir)
                 
@@ -448,20 +430,16 @@ class SSLValidator:
 
 
 class SSLScanner:
-    """
-    Comprehensive SSL/TLS security scanner
+    """    Comprehensive SSL/TLS security scanner
     Performs deep security analysis and vulnerability assessment
-    """
-    
+    """    
     def __init__(self, timeout: int = 10, threads: int = 5):
-        """
-        Initialize SSL scanner
+        """        Initialize SSL scanner
         
         Args:
             timeout: Connection timeout in seconds
             threads: Number of concurrent scan threads
-        """
-        self.timeout = timeout
+        """        self.timeout = timeout
         self.threads = threads
         self.logger = logging.getLogger(__name__)
         
@@ -481,8 +459,7 @@ class SSLScanner:
         self.logger.info("SSL scanner initialized")
     
     def scan_host(self, hostname: str, port: int = 443) -> SSLScanResult:
-        """
-        Perform comprehensive SSL scan of host
+        """        Perform comprehensive SSL scan of host
         
         Args:
             hostname: Target hostname
@@ -490,8 +467,7 @@ class SSLScanner:
             
         Returns:
             Scan result
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         
         try:
             self.logger.info(f"Starting SSL scan of {hostname}:{port}")
@@ -564,8 +540,7 @@ class SSLScanner:
             raise SSLValidationError(f"SSL scan failed: {e}")
     
     def _test_connectivity(self, hostname: str, port: int) -> float:
-        """Test basic connectivity"""
-        start_time = time.time()
+        """Test basic connectivity"""        start_time = time.time()
         try:
             sock = socket.create_connection((hostname, port), timeout=self.timeout)
             sock.close()
@@ -574,8 +549,7 @@ class SSLScanner:
             raise SSLValidationError(f"Connection failed: {e}")
     
     def _scan_certificate(self, hostname: str, port: int) -> Dict[str, Any]:
-        """Scan SSL certificate"""
-        try:
+        """Scan SSL certificate"""        try:
             context = ssl.create_default_context()
             
             with ssl.create_connection((hostname, port), timeout=self.timeout) as sock:
@@ -606,8 +580,7 @@ class SSLScanner:
             }
     
     def _scan_protocols(self, hostname: str, port: int) -> Dict[str, List[str]]:
-        """Scan supported SSL/TLS protocols"""
-        supported = []
+        """Scan supported SSL/TLS protocols"""        supported = []
         deprecated = []
         
         def test_protocol(protocol_name: str, protocol_version: int) -> bool:
@@ -645,8 +618,7 @@ class SSLScanner:
         }
     
     def _scan_cipher_suites(self, hostname: str, port: int) -> Dict[str, Any]:
-        """Scan supported cipher suites"""
-        supported_ciphers = []
+        """Scan supported cipher suites"""        supported_ciphers = []
         weak_ciphers = []
         
         try:
@@ -678,8 +650,7 @@ class SSLScanner:
         }
     
     def _is_weak_cipher(self, cipher_name: str) -> bool:
-        """Check if cipher is considered weak"""
-        weak_patterns = [
+        """Check if cipher is considered weak"""        weak_patterns = [
             'NULL', 'EXPORT', 'DES-CBC', 'RC4', 'RC2', 'MD5',
             'ADH', 'AECDH', 'aNULL', 'eNULL'
         ]
@@ -687,8 +658,7 @@ class SSLScanner:
         return any(pattern in cipher_name.upper() for pattern in weak_patterns)
     
     def _check_security_features(self, hostname: str, port: int) -> Dict[str, Any]:
-        """Check SSL security features"""
-        security_features = {
+        """Check SSL security features"""        security_features = {
             'hsts_enabled': False,
             'hsts_details': {},
             'ocsp_stapling': False,
@@ -733,8 +703,7 @@ class SSLScanner:
         return security_features
     
     def _parse_hsts_header(self, hsts_header: str) -> Dict[str, Any]:
-        """Parse HSTS header"""
-        details = {
+        """Parse HSTS header"""        details = {
             'max_age': 0,
             'include_subdomains': False,
             'preload': False
@@ -756,8 +725,7 @@ class SSLScanner:
         return details
     
     def _test_vulnerabilities(self, hostname: str, port: int) -> List[Dict[str, Any]]:
-        """Test for known SSL vulnerabilities"""
-        vulnerabilities = []
+        """Test for known SSL vulnerabilities"""        vulnerabilities = []
         
         # Test for Heartbleed
         if self._test_heartbleed(hostname, port):
@@ -780,8 +748,7 @@ class SSLScanner:
         return vulnerabilities
     
     def _test_heartbleed(self, hostname: str, port: int) -> bool:
-        """Test for Heartbleed vulnerability"""
-        # Simplified Heartbleed test
+        """Test for Heartbleed vulnerability"""        # Simplified Heartbleed test
         # In production, use specialized libraries like testssl.sh
         try:
             protocols_to_test = [ssl.PROTOCOL_TLSv1, ssl.PROTOCOL_TLSv1_1, ssl.PROTOCOL_TLSv1_2]
@@ -807,8 +774,7 @@ class SSLScanner:
         return False  # Conservative default
     
     def _test_poodle(self, hostname: str, port: int) -> bool:
-        """Test for POODLE vulnerability"""
-        # Test if SSLv3 is supported (basic POODLE indicator)
+        """Test for POODLE vulnerability"""        # Test if SSLv3 is supported (basic POODLE indicator)
         try:
             context = ssl.SSLContext(ssl.PROTOCOL_SSLv23)
             context.set_ciphers('ALL:!aNULL:!eNULL:!EXPORT:!DES:!RC4:!MD5:!PSK:!SRP:!CAMELLIA')
@@ -829,8 +795,7 @@ class SSLScanner:
         return False
     
     def _measure_handshake_time(self, hostname: str, port: int) -> float:
-        """Measure SSL handshake time"""
-        try:
+        """Measure SSL handshake time"""        try:
             start_time = time.time()
             
             context = ssl.create_default_context()
@@ -846,8 +811,7 @@ class SSLScanner:
             return 0.0
     
     def _calculate_certificate_grade(self, cert_result: Dict[str, Any]) -> SSLGrade:
-        """Calculate certificate grade"""
-        if not cert_result.get('valid', False):
+        """Calculate certificate grade"""        if not cert_result.get('valid', False):
             return SSLGrade.F
         
         issues = cert_result.get('issues', [])
@@ -869,8 +833,7 @@ class SSLScanner:
         return SSLGrade.A
     
     def _calculate_cipher_grade(self, cipher_result: Dict[str, Any]) -> SSLGrade:
-        """Calculate cipher grade"""
-        weak_ciphers = cipher_result.get('weak', [])
+        """Calculate cipher grade"""        weak_ciphers = cipher_result.get('weak', [])
         supported_ciphers = cipher_result.get('supported', [])
         
         if not supported_ciphers:
@@ -894,8 +857,7 @@ class SSLScanner:
             return SSLGrade.B
     
     def _calculate_vulnerability_grade(self, vulnerabilities: List[Dict[str, Any]]) -> SSLGrade:
-        """Calculate vulnerability grade"""
-        if not vulnerabilities:
+        """Calculate vulnerability grade"""        if not vulnerabilities:
             return SSLGrade.A
         
         critical_vulns = [v for v in vulnerabilities if v.get('severity') == 'critical']
@@ -914,8 +876,7 @@ class SSLScanner:
         cipher_grade: SSLGrade, 
         vuln_grade: SSLGrade
     ) -> SSLGrade:
-        """Calculate overall SSL grade"""
-        # Use worst grade as overall grade
+        """Calculate overall SSL grade"""        # Use worst grade as overall grade
         grades = [cert_grade, cipher_grade, vuln_grade]
         grade_values = {
             SSLGrade.A_PLUS: 6,
@@ -943,8 +904,7 @@ class SSLScanner:
         security_result: Dict[str, Any],
         vuln_result: List[Dict[str, Any]]
     ) -> List[str]:
-        """Generate security recommendations"""
-        recommendations = []
+        """Generate security recommendations"""        recommendations = []
         
         # Certificate recommendations
         if not cert_result.get('valid', False):
@@ -990,14 +950,11 @@ class SSLScanner:
 
 
 class CertificateConverter:
-    """
-    SSL/TLS certificate format converter
+    """    SSL/TLS certificate format converter
     Supports conversion between PEM, DER, PKCS#12, and other formats
-    """
-    
+    """    
     def __init__(self):
-        """Initialize certificate converter"""
-        self.logger = logging.getLogger(__name__)
+        """Initialize certificate converter"""        self.logger = logging.getLogger(__name__)
         self.logger.info("Certificate converter initialized")
     
     def convert_format(
@@ -1008,8 +965,7 @@ class CertificateConverter:
         output_format: str,
         password: Optional[str] = None
     ) -> bool:
-        """
-        Convert certificate format
+        """        Convert certificate format
         
         Args:
             input_path: Input file path
@@ -1020,8 +976,7 @@ class CertificateConverter:
             
         Returns:
             True if conversion successful
-        """
-        try:
+        """        try:
             # Load certificate based on input format
             if input_format.upper() == "PEM":
                 with open(input_path, 'rb') as f:
@@ -1066,8 +1021,7 @@ class CertificateConverter:
         output_format: str,
         password: Optional[str] = None
     ) -> bool:
-        """Convert PKCS#12 certificate"""
-        try:
+        """Convert PKCS#12 certificate"""        try:
             # Use OpenSSL for PKCS#12 conversion
             cmd = ["openssl", "pkcs12", "-in", str(input_path)]
             
@@ -1102,8 +1056,7 @@ class CertificateConverter:
         key_output_path: Path,
         password: Optional[str] = None
     ) -> bool:
-        """
-        Extract private key from PKCS#12 file
+        """        Extract private key from PKCS#12 file
         
         Args:
             pkcs12_path: PKCS#12 file path
@@ -1112,8 +1065,7 @@ class CertificateConverter:
             
         Returns:
             True if extraction successful
-        """
-        try:
+        """        try:
             cmd = [
                 "openssl", "pkcs12", "-in", str(pkcs12_path),
                 "-nocerts", "-out", str(key_output_path), "-nodes"
@@ -1141,20 +1093,16 @@ class CertificateConverter:
 
 
 class SSLTestServer:
-    """
-    SSL test server for certificate validation and testing
-    """
-    
+    """    SSL test server for certificate validation and testing
+    """    
     def __init__(self, cert_path: Path, key_path: Path, port: int = 8443):
-        """
-        Initialize SSL test server
+        """        Initialize SSL test server
         
         Args:
             cert_path: SSL certificate path
             key_path: Private key path
             port: Server port
-        """
-        self.cert_path = cert_path
+        """        self.cert_path = cert_path
         self.key_path = key_path
         self.port = port
         self.server = None
@@ -1162,13 +1110,11 @@ class SSLTestServer:
         self.logger = logging.getLogger(__name__)
     
     def start_server(self) -> bool:
-        """
-        Start SSL test server
+        """        Start SSL test server
         
         Returns:
             True if server started successfully
-        """
-        try:
+        """        try:
             import http.server
             import socketserver
             
@@ -1200,26 +1146,21 @@ class SSLTestServer:
             return False
     
     def stop_server(self) -> None:
-        """Stop SSL test server"""
-        if self.server:
+        """Stop SSL test server"""        if self.server:
             self.server.shutdown()
             self.server = None
             self.logger.info("SSL test server stopped")
 
 
 class OpenSSLWrapper:
-    """
-    Wrapper for OpenSSL command-line operations
-    """
-    
+    """    Wrapper for OpenSSL command-line operations
+    """    
     def __init__(self, timeout: int = 30):
-        """
-        Initialize OpenSSL wrapper
+        """        Initialize OpenSSL wrapper
         
         Args:
             timeout: Command timeout in seconds
-        """
-        self.timeout = timeout
+        """        self.timeout = timeout
         self.logger = logging.getLogger(__name__)
     
     def generate_private_key(
@@ -1228,8 +1169,7 @@ class OpenSSLWrapper:
         key_size: int = 2048,
         algorithm: str = "RSA"
     ) -> bool:
-        """
-        Generate private key using OpenSSL
+        """        Generate private key using OpenSSL
         
         Args:
             output_path: Output key file path
@@ -1238,8 +1178,7 @@ class OpenSSLWrapper:
             
         Returns:
             True if generation successful
-        """
-        try:
+        """        try:
             if algorithm.upper() == "RSA":
                 cmd = ["openssl", "genrsa", "-out", str(output_path), str(key_size)]
             elif algorithm.upper() == "EC":
@@ -1273,8 +1212,7 @@ class OpenSSLWrapper:
         subject: str,
         san_list: Optional[List[str]] = None
     ) -> bool:
-        """
-        Generate Certificate Signing Request
+        """        Generate Certificate Signing Request
         
         Args:
             key_path: Private key path
@@ -1284,8 +1222,7 @@ class OpenSSLWrapper:
             
         Returns:
             True if generation successful
-        """
-        try:
+        """        try:
             cmd = [
                 "openssl", "req", "-new",
                 "-key", str(key_path),
@@ -1345,8 +1282,7 @@ class OpenSSLWrapper:
         ca_path: Optional[Path] = None,
         chain_path: Optional[Path] = None
     ) -> Tuple[bool, str]:
-        """
-        Verify certificate using OpenSSL
+        """        Verify certificate using OpenSSL
         
         Args:
             cert_path: Certificate path
@@ -1355,8 +1291,7 @@ class OpenSSLWrapper:
             
         Returns:
             Tuple of (success, output)
-        """
-        try:
+        """        try:
             cmd = ["openssl", "verify"]
             
             if ca_path:
@@ -1386,8 +1321,7 @@ class OpenSSLWrapper:
 
 # Factory functions
 def create_ssl_scanner(timeout: int = 10, threads: int = 5) -> SSLScanner:
-    """
-    Factory function to create SSL scanner
+    """    Factory function to create SSL scanner
     
     Args:
         timeout: Connection timeout
@@ -1395,8 +1329,7 @@ def create_ssl_scanner(timeout: int = 10, threads: int = 5) -> SSLScanner:
         
     Returns:
         Configured SSL scanner
-    """
-    return SSLScanner(timeout=timeout, threads=threads)
+    """    return SSLScanner(timeout=timeout, threads=threads)
 
 
 def validate_ssl_configuration(
@@ -1405,8 +1338,7 @@ def validate_ssl_configuration(
     ca_path: Optional[Path] = None,
     chain_path: Optional[Path] = None
 ) -> CertificateValidationResult:
-    """
-    Validate complete SSL configuration
+    """    Validate complete SSL configuration
     
     Args:
         cert_path: Certificate file path
@@ -1416,8 +1348,7 @@ def validate_ssl_configuration(
         
     Returns:
         Validation result
-    """
-    validator = SSLValidator()
+    """    validator = SSLValidator()
     
     # Validate certificate
     result = validator.validate_certificate_file(cert_path)

@@ -1,5 +1,4 @@
-"""
-🚀 Commission Engine - Ultra-Advanced Commission Management System
+"""🚀 Commission Engine - Ultra-Advanced Commission Management System
 ================================================================
 
 Industrial-grade commission management system handling complex commission
@@ -18,7 +17,6 @@ Contact mlaiel@live.de for licensing inquiries.
 Business Logic: Multi-Format Upload → AI Protection → SEO → Collaboration → Commission Management
 ==============================================================================================
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class CommissionType(Enum):
-    """Commission types"""
-    FLAT_RATE = "flat_rate"
+    """Commission types"""    FLAT_RATE = "flat_rate"
     PERCENTAGE = "percentage"
     TIERED = "tiered"
     PERFORMANCE_BASED = "performance_based"
@@ -46,8 +43,7 @@ class CommissionType(Enum):
 
 
 class CommissionStatus(Enum):
-    """Commission calculation status"""
-    PENDING = "pending"
+    """Commission calculation status"""    PENDING = "pending"
     CALCULATED = "calculated"
     APPROVED = "approved"
     PAID = "paid"
@@ -57,8 +53,7 @@ class CommissionStatus(Enum):
 
 @dataclass
 class CommissionRule:
-    """Commission rule definition"""
-    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Commission rule definition"""    rule_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     creator_id: str = ""
     commission_type: CommissionType = CommissionType.PERCENTAGE
     rate: Decimal = Decimal('0')
@@ -72,8 +67,7 @@ class CommissionRule:
 
 
 class CommissionEngine:
-    """
-    Ultra-advanced commission management system
+    """    Ultra-advanced commission management system
     
     Features:
     - Multiple commission structures (flat, percentage, tiered, performance-based)
@@ -84,8 +78,7 @@ class CommissionEngine:
     - Dispute resolution tracking
     - Compliance and audit trails
     - Real-time commission calculations
-    """
-    
+    """    
     def __init__(self,
                  db_manager: DatabaseManager,
                  security_manager: SecurityManager,
@@ -99,8 +92,7 @@ class CommissionEngine:
         self._performance_cache = {}
         
     async def initialize(self):
-        """Initialize commission engine"""
-        try:
+        """Initialize commission engine"""        try:
             # Load commission rules
             await self._load_commission_rules()
             
@@ -116,8 +108,7 @@ class CommissionEngine:
                                  revenue_type: str,
                                  platform: str,
                                  calculation_date: datetime) -> Dict[str, Any]:
-        """
-        Calculate commission for a revenue transaction
+        """        Calculate commission for a revenue transaction
         
         Args:
             creator_id: Creator ID
@@ -128,8 +119,7 @@ class CommissionEngine:
             
         Returns:
             Commission calculation details
-        """
-        try:
+        """        try:
             # Get applicable commission rule
             rule = await self._get_applicable_commission_rule(
                 creator_id, revenue_type, platform, calculation_date
@@ -185,8 +175,7 @@ class CommissionEngine:
                                          revenue_amount: Decimal,
                                          creator_id: str,
                                          platform: str) -> Decimal:
-        """Calculate commission amount based on rule type"""
-        try:
+        """Calculate commission amount based on rule type"""        try:
             if rule.commission_type == CommissionType.FLAT_RATE:
                 return rule.rate
             
@@ -216,8 +205,7 @@ class CommissionEngine:
     async def _calculate_tiered_commission(self,
                                          rule: CommissionRule,
                                          revenue_amount: Decimal) -> Decimal:
-        """Calculate tiered commission based on revenue brackets"""
-        try:
+        """Calculate tiered commission based on revenue brackets"""        try:
             total_commission = Decimal('0')
             remaining_amount = revenue_amount
             
@@ -257,8 +245,7 @@ class CommissionEngine:
                                                     revenue_amount: Decimal,
                                                     creator_id: str,
                                                     platform: str) -> Decimal:
-        """Calculate performance-based commission"""
-        try:
+        """Calculate performance-based commission"""        try:
             # Get creator performance metrics
             performance_data = await self._get_creator_performance_metrics(
                 creator_id, platform
@@ -284,8 +271,7 @@ class CommissionEngine:
     async def create_commission_rule(self,
                                    creator_id: str,
                                    rule_config: Dict[str, Any]) -> str:
-        """Create new commission rule for a creator"""
-        try:
+        """Create new commission rule for a creator"""        try:
             # Validate rule configuration
             await self._validate_commission_rule_config(rule_config)
             
@@ -318,10 +304,8 @@ class CommissionEngine:
     async def get_commission_summary(self,
                                    creator_id: str,
                                    date_range: Tuple[datetime, datetime]) -> Dict[str, Any]:
-        """Get commission summary for a creator"""
-        try:
-            query = """
-                SELECT 
+        """Get commission summary for a creator"""        try:
+            query = """                SELECT 
                     COUNT(*) as total_calculations,
                     SUM(gross_revenue) as total_gross_revenue,
                     SUM(commission_amount) as total_commission,
@@ -333,15 +317,13 @@ class CommissionEngine:
                 WHERE creator_id = %s 
                 AND created_at BETWEEN %s AND %s
                 AND status != 'cancelled'
-            """
-            
+            """            
             summary_data = await self.db.fetch_one(query, (
                 creator_id, date_range[0], date_range[1]
             ))
             
             # Get commission breakdown by platform
-            platform_query = """
-                SELECT 
+            platform_query = """                SELECT 
                     metadata->>'platform' as platform,
                     COUNT(*) as calculations,
                     SUM(commission_amount) as total_commission,
@@ -352,8 +334,7 @@ class CommissionEngine:
                 AND status != 'cancelled'
                 GROUP BY metadata->>'platform'
                 ORDER BY total_commission DESC
-            """
-            
+            """            
             platform_data = await self.db.fetch_all(platform_query, (
                 creator_id, date_range[0], date_range[1]
             ))
@@ -392,8 +373,7 @@ class CommissionEngine:
             raise
 
     async def cleanup(self):
-        """Cleanup commission engine resources"""
-        try:
+        """Cleanup commission engine resources"""        try:
             # Clear caches
             self._commission_rules.clear()
             self._performance_cache.clear()

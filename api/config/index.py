@@ -1,12 +1,10 @@
-"""
-Configuration Index - IA Influencer Agent Platform
+"""Configuration Index - IA Influencer Agent Platform
 Main entry point for all configuration management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 # Core configuration classes
 from .app_config import AppConfig
 from .database_config import DatabaseConfig
@@ -49,16 +47,14 @@ from .loaders import (
 
 
 def get_app_config(environment: str = None) -> AppConfig:
-    """
-    Get application configuration for the specified environment
+    """    Get application configuration for the specified environment
     
     Args:
         environment: Target environment (development, production, testing, staging)
         
     Returns:
         AppConfig instance for the specified environment
-    """
-    if not environment:
+    """    if not environment:
         environment = ConfigManager.get_current_environment()
     
     config_map = {
@@ -73,16 +69,14 @@ def get_app_config(environment: str = None) -> AppConfig:
 
 
 def get_database_config(environment: str = None) -> DatabaseConfig:
-    """
-    Get database configuration for the specified environment
+    """    Get database configuration for the specified environment
     
     Args:
         environment: Target environment
         
     Returns:
         DatabaseConfig instance
-    """
-    app_config = get_app_config(environment)
+    """    app_config = get_app_config(environment)
     return DatabaseConfig(
         host=app_config.database_host,
         port=app_config.database_port,
@@ -95,16 +89,14 @@ def get_database_config(environment: str = None) -> DatabaseConfig:
 
 
 def get_blockchain_config(environment: str = None) -> BlockchainConfig:
-    """
-    Get blockchain configuration for the specified environment
+    """    Get blockchain configuration for the specified environment
     
     Args:
         environment: Target environment
         
     Returns:
         BlockchainConfig instance
-    """
-    app_config = get_app_config(environment)
+    """    app_config = get_app_config(environment)
     return BlockchainConfig(
         ethereum_rpc_url=app_config.ethereum_rpc_url,
         polygon_rpc_url=app_config.polygon_rpc_url,
@@ -118,16 +110,14 @@ def get_blockchain_config(environment: str = None) -> BlockchainConfig:
 
 
 def get_security_config(environment: str = None) -> SecurityConfig:
-    """
-    Get security configuration for the specified environment
+    """    Get security configuration for the specified environment
     
     Args:
         environment: Target environment
         
     Returns:
         SecurityConfig instance
-    """
-    app_config = get_app_config(environment)
+    """    app_config = get_app_config(environment)
     return SecurityConfig(
         secret_key=app_config.secret_key,
         jwt_secret=app_config.jwt_secret,
@@ -141,16 +131,14 @@ def get_security_config(environment: str = None) -> SecurityConfig:
 
 
 def get_monitoring_config(environment: str = None) -> MonitoringConfig:
-    """
-    Get monitoring configuration for the specified environment
+    """    Get monitoring configuration for the specified environment
     
     Args:
         environment: Target environment
         
     Returns:
         MonitoringConfig instance
-    """
-    app_config = get_app_config(environment)
+    """    app_config = get_app_config(environment)
     return MonitoringConfig(
         prometheus_host=app_config.prometheus_host,
         prometheus_port=app_config.prometheus_port,
@@ -163,16 +151,14 @@ def get_monitoring_config(environment: str = None) -> MonitoringConfig:
 
 
 def get_logging_config(environment: str = None) -> LoggingConfig:
-    """
-    Get logging configuration for the specified environment
+    """    Get logging configuration for the specified environment
     
     Args:
         environment: Target environment
         
     Returns:
         LoggingConfig instance
-    """
-    app_config = get_app_config(environment)
+    """    app_config = get_app_config(environment)
     return LoggingConfig(
         log_level=app_config.log_level,
         log_format=app_config.log_format,
@@ -185,16 +171,14 @@ def get_logging_config(environment: str = None) -> LoggingConfig:
 
 
 def initialize_all_configs(environment: str = None):
-    """
-    Initialize all configuration components for the application
+    """    Initialize all configuration components for the application
     
     Args:
         environment: Target environment
         
     Returns:
         Dictionary containing all initialized configurations
-    """
-    return {
+    """    return {
         'app': get_app_config(environment),
         'database': get_database_config(environment),
         'blockchain': get_blockchain_config(environment),
@@ -205,16 +189,14 @@ def initialize_all_configs(environment: str = None):
 
 
 def validate_all_configs(environment: str = None) -> bool:
-    """
-    Validate all configuration components
+    """    Validate all configuration components
     
     Args:
         environment: Target environment
         
     Returns:
         True if all configurations are valid, False otherwise
-    """
-    try:
+    """    try:
         configs = initialize_all_configs(environment)
         
         # Validate each configuration
@@ -230,43 +212,35 @@ def validate_all_configs(environment: str = None) -> bool:
 
 
 def get_config_manager() -> ConfigManager:
-    """
-    Get the centralized configuration manager
+    """    Get the centralized configuration manager
     
     Returns:
         ConfigManager instance
-    """
-    return ConfigManager()
+    """    return ConfigManager()
 
 
 def get_environment_manager() -> EnvironmentManager:
-    """
-    Get the environment management utility
+    """    Get the environment management utility
     
     Returns:
         EnvironmentManager instance
-    """
-    return EnvironmentManager()
+    """    return EnvironmentManager()
 
 
 def get_secret_manager() -> SecretManager:
-    """
-    Get the secrets management utility
+    """    Get the secrets management utility
     
     Returns:
         SecretManager instance
-    """
-    return SecretManager()
+    """    return SecretManager()
 
 
 def get_feature_toggle_manager() -> FeatureToggleManager:
-    """
-    Get the feature toggle management utility
+    """    Get the feature toggle management utility
     
     Returns:
         FeatureToggleManager instance
-    """
-    return FeatureToggleManager()
+    """    return FeatureToggleManager()
 
 
 __all__ = [

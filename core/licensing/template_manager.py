@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - License Template Manager
+"""IA Influencer Agent - License Template Manager
 ===========================================
 
 Gestionnaire de modèles de licences pour différents types de contenu et cas d'usage.
@@ -15,7 +14,6 @@ Les contrevenants s'exposent à des poursuites judiciaires.
 
 Contact autorisé: mlaiel@live.de
 """
-
 from typing import Dict, Any, List, Optional
 import json
 import logging
@@ -26,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class LicenseType(Enum):
-    """Types de licences disponibles."""
-    CREATIVE_COMMONS = "creative_commons"
+    """Types de licences disponibles."""    CREATIVE_COMMONS = "creative_commons"
     COMMERCIAL = "commercial"
     EXCLUSIVE = "exclusive"
     NON_EXCLUSIVE = "non_exclusive"
@@ -40,8 +37,7 @@ class LicenseType(Enum):
 
 
 class ContentFormat(Enum):
-    """Formats de contenu supportés."""
-    MUSIC = "music"
+    """Formats de contenu supportés."""    MUSIC = "music"
     VIDEO = "video"
     PHOTO = "photo"
     BLOG_ARTICLE = "blog_article"
@@ -54,8 +50,7 @@ class ContentFormat(Enum):
 
 
 class UsageScope(Enum):
-    """Portées d'utilisation."""
-    PERSONAL = "personal"
+    """Portées d'utilisation."""    PERSONAL = "personal"
     COMMERCIAL = "commercial"
     BROADCAST = "broadcast"
     DIGITAL = "digital"
@@ -66,21 +61,17 @@ class UsageScope(Enum):
 
 
 class LicenseTemplateManager:
-    """
-    Gestionnaire de modèles de licences avancé pour l'IA Influencer Agent.
+    """    Gestionnaire de modèles de licences avancé pour l'IA Influencer Agent.
     
     Fournit des templates personnalisables et optimisés pour tous les types
     de contenu et cas d'usage business.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """
-        Initialise le gestionnaire de templates.
+        """        Initialise le gestionnaire de templates.
         
         Args:
             config: Configuration du gestionnaire
-        """
-        self.config = config or {}
+        """        self.config = config or {}
         self.templates = {}
         self.custom_templates = {}
         self.is_initialized = False
@@ -88,8 +79,7 @@ class LicenseTemplateManager:
         logger.info("LicenseTemplateManager initialized")
     
     async def initialize(self):
-        """Initialise les templates par défaut."""
-        try:
+        """Initialise les templates par défaut."""        try:
             await self._load_default_templates()
             await self._load_custom_templates()
             self.is_initialized = True
@@ -99,8 +89,7 @@ class LicenseTemplateManager:
             raise
     
     async def _load_default_templates(self):
-        """Charge les templates par défaut."""
-        self.templates = {
+        """Charge les templates par défaut."""        self.templates = {
             # Templates pour contenu musical
             "music_commercial": {
                 "name": "Commercial Music License",
@@ -270,21 +259,18 @@ class LicenseTemplateManager:
         }
     
     async def _load_custom_templates(self):
-        """Charge les templates personnalisés."""
-        # Ici on pourrait charger depuis une base de données
+        """Charge les templates personnalisés."""        # Ici on pourrait charger depuis une base de données
         self.custom_templates = {}
     
     async def get_template(self, template_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Récupère un template de licence.
+        """        Récupère un template de licence.
         
         Args:
             template_id: ID du template
             
         Returns:
             Dict contenant le template ou None
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             await self.initialize()
         
         template = self.templates.get(template_id) or self.custom_templates.get(template_id)
@@ -296,8 +282,7 @@ class LicenseTemplateManager:
         return template
     
     async def create_custom_template(self, template_id: str, template_data: Dict[str, Any]) -> bool:
-        """
-        Crée un template personnalisé.
+        """        Crée un template personnalisé.
         
         Args:
             template_id: ID du nouveau template
@@ -305,8 +290,7 @@ class LicenseTemplateManager:
             
         Returns:
             bool: True si création réussie
-        """
-        try:
+        """        try:
             # Validation du template
             if not await self._validate_template(template_data):
                 return False
@@ -325,16 +309,14 @@ class LicenseTemplateManager:
             return False
     
     async def _validate_template(self, template_data: Dict[str, Any]) -> bool:
-        """
-        Valide la structure d'un template.
+        """        Valide la structure d'un template.
         
         Args:
             template_data: Données du template à valider
             
         Returns:
             bool: True si valide
-        """
-        required_fields = ["name", "content_format", "license_type", "terms"]
+        """        required_fields = ["name", "content_format", "license_type", "terms"]
         
         for field in required_fields:
             if field not in template_data:
@@ -354,8 +336,7 @@ class LicenseTemplateManager:
     
     async def get_templates_for_content(self, content_format: str, 
                                       usage_type: str = None) -> List[Dict[str, Any]]:
-        """
-        Récupère les templates appropriés pour un type de contenu.
+        """        Récupère les templates appropriés pour un type de contenu.
         
         Args:
             content_format: Format du contenu
@@ -363,8 +344,7 @@ class LicenseTemplateManager:
             
         Returns:
             Liste des templates appropriés
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             await self.initialize()
         
         matching_templates = []
@@ -384,8 +364,7 @@ class LicenseTemplateManager:
     
     async def calculate_pricing(self, template_id: str, 
                               customizations: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Calcule le prix basé sur un template et des personnalisations.
+        """        Calcule le prix basé sur un template et des personnalisations.
         
         Args:
             template_id: ID du template
@@ -393,8 +372,7 @@ class LicenseTemplateManager:
             
         Returns:
             Dict contenant les détails du pricing
-        """
-        template = await self.get_template(template_id)
+        """        template = await self.get_template(template_id)
         if not template:
             raise ValueError(f"Template {template_id} not found")
         
@@ -433,8 +411,7 @@ class LicenseTemplateManager:
                                            creator_id: str,
                                            licensee_id: str,
                                            customizations: Dict[str, Any] = None) -> Dict[str, Any]:
-        """
-        Génère une licence complète basée sur un template.
+        """        Génère une licence complète basée sur un template.
         
         Args:
             template_id: ID du template
@@ -445,8 +422,7 @@ class LicenseTemplateManager:
             
         Returns:
             Dict contenant la licence générée
-        """
-        template = await self.get_template(template_id)
+        """        template = await self.get_template(template_id)
         if not template:
             raise ValueError(f"Template {template_id} not found")
         
@@ -481,16 +457,14 @@ class LicenseTemplateManager:
         return license_data
     
     def _calculate_expiry_date(self, duration: str) -> datetime:
-        """
-        Calcule la date d'expiration basée sur la durée.
+        """        Calcule la date d'expiration basée sur la durée.
         
         Args:
             duration: Durée de la licence
             
         Returns:
             datetime: Date d'expiration
-        """
-        now = datetime.utcnow()
+        """        now = datetime.utcnow()
         
         duration_mapping = {
             "1_month": timedelta(days=30),
@@ -508,8 +482,7 @@ class LicenseTemplateManager:
     
     async def get_recommended_templates(self, content_id: str,
                                       creator_preferences: Dict[str, Any] = None) -> List[Dict[str, Any]]:
-        """
-        Recommande des templates basés sur le contenu et les préférences.
+        """        Recommande des templates basés sur le contenu et les préférences.
         
         Args:
             content_id: ID du contenu
@@ -517,8 +490,7 @@ class LicenseTemplateManager:
             
         Returns:
             Liste des templates recommandés
-        """
-        # Ici on intégrerait l'IA pour analyser le contenu et recommander
+        """        # Ici on intégrerait l'IA pour analyser le contenu et recommander
         # Pour l'instant, retournons quelques templates populaires
         
         recommended = []

@@ -1,12 +1,10 @@
-"""
-Advanced Digital Rights Management for IA Influencer Agent Platform
+"""Advanced Digital Rights Management for IA Influencer Agent Platform
 Blockchain-based content protection and usage rights enforcement
 
 Author: Fahed Mlaiel <mlaiel@live.de>
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timezone, timedelta
@@ -26,8 +24,7 @@ from .copyright_registry import CopyrightRegistryManager, CopyrightAsset
 
 
 class UsageRights(Enum):
-    """Digital content usage rights"""
-    VIEW_ONLY = "view_only"
+    """Digital content usage rights"""    VIEW_ONLY = "view_only"
     DOWNLOAD = "download"
     STREAM = "stream"
     REMIX = "remix"
@@ -40,8 +37,7 @@ class UsageRights(Enum):
 
 
 class AccessLevel(Enum):
-    """Content access levels"""
-    PUBLIC = "public"
+    """Content access levels"""    PUBLIC = "public"
     PREMIUM = "premium"
     EXCLUSIVE = "exclusive"
     PRIVATE = "private"
@@ -49,8 +45,7 @@ class AccessLevel(Enum):
 
 
 class LicenseType(Enum):
-    """Digital license types"""
-    SINGLE_USE = "single_use"
+    """Digital license types"""    SINGLE_USE = "single_use"
     LIMITED_TIME = "limited_time"
     UNLIMITED = "unlimited"
     SUBSCRIPTION = "subscription"
@@ -62,8 +57,7 @@ class LicenseType(Enum):
 
 @dataclass
 class DigitalLicense:
-    """Digital rights license representation"""
-    license_id: str
+    """Digital rights license representation"""    license_id: str
     asset_id: str
     licensor_id: str
     licensee_id: str
@@ -88,8 +82,7 @@ class DigitalLicense:
 
 @dataclass
 class UsageEvent:
-    """Content usage tracking event"""
-    event_id: str
+    """Content usage tracking event"""    event_id: str
     license_id: str
     asset_id: str
     user_id: str
@@ -104,8 +97,7 @@ class UsageEvent:
 
 @dataclass
 class ProtectionPolicy:
-    """Content protection policy"""
-    policy_id: str
+    """Content protection policy"""    policy_id: str
     asset_id: str
     creator_id: str
     watermarking_enabled: bool
@@ -123,11 +115,9 @@ class ProtectionPolicy:
 
 
 class DRMManager:
-    """
-    Advanced Digital Rights Management system
+    """    Advanced Digital Rights Management system
     Manages content protection, licensing, and usage enforcement
-    """
-    
+    """    
     def __init__(self, transaction_manager: TransactionManager,
                  smart_contract_manager: SmartContractManager,
                  copyright_registry: CopyrightRegistryManager,
@@ -143,8 +133,7 @@ class DRMManager:
     
     async def create_digital_license(self, asset_id: str, licensor_id: str,
                                    licensee_id: str, license_config: Dict[str, Any]) -> DigitalLicense:
-        """
-        Create digital license for content usage
+        """        Create digital license for content usage
         
         Args:
             asset_id: Content asset identifier
@@ -157,8 +146,7 @@ class DRMManager:
             
         Raises:
             DRMError: If license creation fails
-        """
-        try:
+        """        try:
             # Verify asset exists and ownership
             asset = await self.copyright_registry.get_copyright_asset(asset_id)
             if not asset:
@@ -238,8 +226,7 @@ class DRMManager:
     async def validate_usage_rights(self, license_id: str, usage_type: UsageRights,
                                   user_id: str, platform: str = None,
                                   location: str = None) -> Tuple[bool, Optional[str]]:
-        """
-        Validate content usage rights
+        """        Validate content usage rights
         
         Args:
             license_id: License identifier
@@ -250,8 +237,7 @@ class DRMManager:
             
         Returns:
             Tuple[bool, Optional[str]]: (is_valid, error_message)
-        """
-        try:
+        """        try:
             # Get license
             license_obj = await self.get_digital_license(license_id)
             if not license_obj:
@@ -297,8 +283,7 @@ class DRMManager:
     async def record_usage_event(self, license_id: str, user_id: str,
                                usage_type: UsageRights, platform: str,
                                session_data: Dict[str, Any]) -> UsageEvent:
-        """
-        Record content usage event for tracking and billing
+        """        Record content usage event for tracking and billing
         
         Args:
             license_id: License identifier
@@ -309,8 +294,7 @@ class DRMManager:
             
         Returns:
             UsageEvent: Recorded usage event
-        """
-        try:
+        """        try:
             # Get license to verify asset
             license_obj = await self.get_digital_license(license_id)
             if not license_obj:
@@ -364,8 +348,7 @@ class DRMManager:
     
     async def create_protection_policy(self, asset_id: str, creator_id: str,
                                      policy_config: Dict[str, Any]) -> ProtectionPolicy:
-        """
-        Create content protection policy
+        """        Create content protection policy
         
         Args:
             asset_id: Asset to protect
@@ -374,8 +357,7 @@ class DRMManager:
             
         Returns:
             ProtectionPolicy: Created protection policy
-        """
-        try:
+        """        try:
             # Verify asset ownership
             asset = await self.copyright_registry.get_copyright_asset(asset_id)
             if not asset or asset.creator_id != creator_id:
@@ -418,16 +400,14 @@ class DRMManager:
             raise DRMError(f"Failed to create protection policy: {str(e)}")
     
     async def get_digital_license(self, license_id: str) -> Optional[DigitalLicense]:
-        """
-        Retrieve digital license
+        """        Retrieve digital license
         
         Args:
             license_id: License identifier
             
         Returns:
             Optional[DigitalLicense]: License if found
-        """
-        try:
+        """        try:
             # Check cache first
             if license_id in self._license_cache:
                 return self._license_cache[license_id]
@@ -448,8 +428,7 @@ class DRMManager:
             return None
     
     async def get_user_licenses(self, user_id: str, active_only: bool = True) -> List[DigitalLicense]:
-        """
-        Get all licenses for a user
+        """        Get all licenses for a user
         
         Args:
             user_id: User identifier
@@ -457,8 +436,7 @@ class DRMManager:
             
         Returns:
             List[DigitalLicense]: User's licenses
-        """
-        try:
+        """        try:
             license_ids = await self.smart_contract_manager.get_user_licenses(user_id)
             licenses = []
             
@@ -481,8 +459,7 @@ class DRMManager:
     
     async def revoke_license(self, license_id: str, revoker_id: str,
                            reason: str) -> bool:
-        """
-        Revoke digital license
+        """        Revoke digital license
         
         Args:
             license_id: License to revoke
@@ -491,8 +468,7 @@ class DRMManager:
             
         Returns:
             bool: True if revocation successful
-        """
-        try:
+        """        try:
             license_obj = await self.get_digital_license(license_id)
             if not license_obj:
                 raise DRMError("License not found")
@@ -532,8 +508,7 @@ class DRMManager:
                                   user_id: str = None,
                                   start_date: datetime = None,
                                   end_date: datetime = None) -> Dict[str, Any]:
-        """
-        Generate comprehensive usage analytics report
+        """        Generate comprehensive usage analytics report
         
         Args:
             asset_id: Filter by asset ID
@@ -543,8 +518,7 @@ class DRMManager:
             
         Returns:
             Dict[str, Any]: Usage analytics report
-        """
-        try:
+        """        try:
             # Filter usage events
             filtered_events = self._filter_usage_events(
                 asset_id, user_id, start_date, end_date
@@ -605,16 +579,14 @@ class DRMManager:
             return {}
     
     def _generate_license_id(self, asset_id: str, licensee_id: str) -> str:
-        """Generate unique license identifier"""
-        timestamp = str(int(datetime.now().timestamp()))
+        """Generate unique license identifier"""        timestamp = str(int(datetime.now().timestamp()))
         hash_input = f"{asset_id}_{licensee_id}_{timestamp}"
         hash_suffix = hashlib.md5(hash_input.encode()).hexdigest()[:8]
         return f"license_{hash_suffix}_{timestamp}"
     
     def _filter_usage_events(self, asset_id: str = None, user_id: str = None,
                            start_date: datetime = None, end_date: datetime = None) -> List[UsageEvent]:
-        """Filter usage events by criteria"""
-        filtered = self._usage_events
+        """Filter usage events by criteria"""        filtered = self._usage_events
         
         if asset_id:
             filtered = [e for e in filtered if e.asset_id == asset_id]
@@ -631,13 +603,11 @@ class DRMManager:
         return filtered
     
     def _calculate_average_duration(self, events: List[UsageEvent]) -> Optional[float]:
-        """Calculate average session duration"""
-        durations = [e.session_duration for e in events if e.session_duration]
+        """Calculate average session duration"""        durations = [e.session_duration for e in events if e.session_duration]
         return sum(durations) / len(durations) if durations else None
     
     def _reconstruct_license_from_blockchain(self, blockchain_data: Dict[str, Any]) -> DigitalLicense:
-        """Reconstruct license object from blockchain data"""
-        return DigitalLicense(
+        """Reconstruct license object from blockchain data"""        return DigitalLicense(
             license_id=blockchain_data['license_id'],
             asset_id=blockchain_data['asset_id'],
             licensor_id=blockchain_data['licensor_id'],

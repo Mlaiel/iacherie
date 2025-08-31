@@ -1,5 +1,4 @@
-"""
-Distribution Validator - Content and Distribution Validation Engine
+"""Distribution Validator - Content and Distribution Validation Engine
 ===================================================================
 
 Comprehensive validation system for content and distribution processes
@@ -8,7 +7,6 @@ ensuring quality, compliance, and platform requirements adherence.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -28,8 +26,7 @@ from ..platform.requirements import PlatformRequirements
 
 
 class ValidationLevel(Enum):
-    """Validation level enumeration."""
-    BASIC = "basic"
+    """Validation level enumeration."""    BASIC = "basic"
     STANDARD = "standard"
     ADVANCED = "advanced"
     STRICT = "strict"
@@ -37,8 +34,7 @@ class ValidationLevel(Enum):
 
 
 class ValidationResult(Enum):
-    """Validation result enumeration."""
-    PASSED = "passed"
+    """Validation result enumeration."""    PASSED = "passed"
     WARNING = "warning"
     FAILED = "failed"
     BLOCKED = "blocked"
@@ -46,8 +42,7 @@ class ValidationResult(Enum):
 
 
 class ValidationType(Enum):
-    """Validation type enumeration."""
-    CONTENT_FORMAT = "content_format"
+    """Validation type enumeration."""    CONTENT_FORMAT = "content_format"
     CONTENT_QUALITY = "content_quality"
     PLATFORM_COMPLIANCE = "platform_compliance"
     SECURITY_SCAN = "security_scan"
@@ -61,8 +56,7 @@ class ValidationType(Enum):
 
 @dataclass
 class ValidationCheck:
-    """Individual validation check data structure."""
-    check_id: UUID = field(default_factory=uuid4)
+    """Individual validation check data structure."""    check_id: UUID = field(default_factory=uuid4)
     check_type: ValidationType = ValidationType.CONTENT_FORMAT
     check_name: str = ""
     description: str = ""
@@ -87,8 +81,7 @@ class ValidationCheck:
 
 @dataclass
 class ValidationIssue:
-    """Validation issue data structure."""
-    issue_id: UUID = field(default_factory=uuid4)
+    """Validation issue data structure."""    issue_id: UUID = field(default_factory=uuid4)
     check_id: UUID = field(default_factory=uuid4)
     
     # Issue details
@@ -123,8 +116,7 @@ class ValidationIssue:
 
 @dataclass
 class ValidationReport:
-    """Comprehensive validation report."""
-    report_id: UUID = field(default_factory=uuid4)
+    """Comprehensive validation report."""    report_id: UUID = field(default_factory=uuid4)
     validation_id: UUID = field(default_factory=uuid4)
     content_id: UUID = field(default_factory=uuid4)
     
@@ -160,16 +152,13 @@ class ValidationReport:
 
 
 class DistributionValidator:
-    """
-    Distribution Validator Engine
+    """    Distribution Validator Engine
     
     Comprehensive validation system for content and distribution processes
     ensuring quality, compliance, and platform requirements adherence.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize distribution validator."""
-        self.config = config or {}
+        """Initialize distribution validator."""        self.config = config or {}
         self.logger = logging.getLogger(__name__)
         
         # Core components
@@ -211,13 +200,11 @@ class DistributionValidator:
         }
     
     async def initialize(self) -> bool:
-        """
-        Initialize the distribution validator.
+        """        Initialize the distribution validator.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             self.logger.info("Initializing Distribution Validator")
             
             # Initialize core components
@@ -247,8 +234,7 @@ class DistributionValidator:
             return False
     
     async def shutdown(self) -> None:
-        """Shutdown the distribution validator."""
-        try:
+        """Shutdown the distribution validator."""        try:
             self.logger.info("Shutting down Distribution Validator")
             
             # Save validation data
@@ -272,8 +258,7 @@ class DistributionValidator:
         validation_level: Optional[ValidationLevel] = None,
         custom_checks: Optional[List[ValidationCheck]] = None
     ) -> ValidationReport:
-        """
-        Validate content for distribution.
+        """        Validate content for distribution.
         
         Args:
             content_data: Content data to validate
@@ -283,8 +268,7 @@ class DistributionValidator:
             
         Returns:
             ValidationReport: Comprehensive validation report
-        """
-        if not self.is_initialized:
+        """        if not self.is_initialized:
             raise RuntimeError("Distribution Validator not initialized")
         
         start_time = asyncio.get_event_loop().time()
@@ -437,16 +421,14 @@ class DistributionValidator:
         self,
         distribution_request: Dict[str, Any]
     ) -> ValidationReport:
-        """
-        Validate distribution request before processing.
+        """        Validate distribution request before processing.
         
         Args:
             distribution_request: Distribution request data
             
         Returns:
             ValidationReport: Validation report for distribution request
-        """
-        try:
+        """        try:
             self.logger.info("Validating distribution request")
             
             validation_id = uuid4()
@@ -525,16 +507,14 @@ class DistributionValidator:
         self,
         validation_requests: List[Dict[str, Any]]
     ) -> List[ValidationReport]:
-        """
-        Perform batch validation of multiple items.
+        """        Perform batch validation of multiple items.
         
         Args:
             validation_requests: List of validation requests
             
         Returns:
             List[ValidationReport]: List of validation reports
-        """
-        try:
+        """        try:
             self.logger.info(f"Starting batch validation of {len(validation_requests)} items")
             
             # Process requests in parallel
@@ -592,16 +572,14 @@ class DistributionValidator:
             return []
     
     async def add_custom_validation_check(self, check: ValidationCheck) -> bool:
-        """
-        Add custom validation check.
+        """        Add custom validation check.
         
         Args:
             check: Custom validation check
             
         Returns:
             bool: True if added successfully
-        """
-        try:
+        """        try:
             # Validate check configuration
             if not check.check_name or not check.description:
                 raise ValueError("Check name and description are required")
@@ -621,8 +599,7 @@ class DistributionValidator:
             return False
     
     async def register_custom_validator(self, name: str, validator_function: callable) -> bool:
-        """
-        Register custom validator function.
+        """        Register custom validator function.
         
         Args:
             name: Validator name
@@ -630,8 +607,7 @@ class DistributionValidator:
             
         Returns:
             bool: True if registered successfully
-        """
-        try:
+        """        try:
             if not callable(validator_function):
                 raise ValueError("Validator must be callable")
             
@@ -646,35 +622,30 @@ class DistributionValidator:
             return False
     
     async def get_validation_report(self, validation_id: UUID) -> Optional[ValidationReport]:
-        """
-        Get validation report by ID.
+        """        Get validation report by ID.
         
         Args:
             validation_id: Validation ID
             
         Returns:
             Optional[ValidationReport]: Validation report if found
-        """
-        return self.validation_history.get(validation_id)
+        """        return self.validation_history.get(validation_id)
     
     async def get_content_validation_history(self, content_id: UUID) -> List[ValidationReport]:
-        """
-        Get validation history for specific content.
+        """        Get validation history for specific content.
         
         Args:
             content_id: Content ID
             
         Returns:
             List[ValidationReport]: List of validation reports
-        """
-        return [
+        """        return [
             report for report in self.validation_history.values()
             if report.content_id == content_id
         ]
     
     async def _load_default_checks(self) -> None:
-        """Load default validation checks."""
-        default_checks = [
+        """Load default validation checks."""        default_checks = [
             # Content format checks
             ValidationCheck(
                 check_type=ValidationType.CONTENT_FORMAT,
@@ -846,8 +817,7 @@ class DistributionValidator:
         self.logger.info(f"Loaded {len(default_checks)} default validation checks")
     
     async def _load_validation_profiles(self) -> None:
-        """Load validation profiles."""
-        # Create validation profiles with different check combinations
+        """Load validation profiles."""        # Create validation profiles with different check combinations
         self.validation_profiles = {
             'basic': [
                 check.check_id for check in self.validation_checks.values()
@@ -873,8 +843,7 @@ class DistributionValidator:
         self.logger.info(f"Loaded {len(self.validation_profiles)} validation profiles")
     
     async def _load_custom_validators(self) -> None:
-        """Load custom validator functions."""
-        # Register built-in custom validators
+        """Load custom validator functions."""        # Register built-in custom validators
         self.custom_validators.update({
             'video_quality_check': self._validate_video_quality,
             'audio_quality_check': self._validate_audio_quality,
@@ -887,8 +856,7 @@ class DistributionValidator:
         self.logger.info(f"Loaded {len(self.custom_validators)} custom validators")
     
     async def _initialize_platform_rules(self) -> None:
-        """Initialize platform-specific validation rules."""
-        await self.platform_requirements.load_platform_rules([
+        """Initialize platform-specific validation rules."""        await self.platform_requirements.load_platform_rules([
             'youtube', 'instagram', 'tiktok', 'twitter', 'facebook', 'spotify'
         ])
     
@@ -899,8 +867,7 @@ class DistributionValidator:
         validation_level: ValidationLevel,
         custom_checks: Optional[List[ValidationCheck]] = None
     ) -> List[ValidationCheck]:
-        """Get applicable validation checks for content and platforms."""
-        applicable_checks = []
+        """Get applicable validation checks for content and platforms."""        applicable_checks = []
         
         # Get checks from validation profile
         if validation_level in self.validation_profiles:
@@ -940,8 +907,7 @@ class DistributionValidator:
         content_data: Dict[str, Any],
         platforms: List[str]
     ) -> Optional[ValidationIssue]:
-        """Execute individual validation check."""
-        try:
+        """Execute individual validation check."""        try:
             # Use custom validator if specified
             if check.validator_function and check.validator_function in self.custom_validators:
                 validator = self.custom_validators[check.validator_function]
@@ -981,8 +947,7 @@ class DistributionValidator:
     
     # Validation method implementations
     async def _validate_content_format(self, check: ValidationCheck, content_data: Dict[str, Any]) -> Optional[ValidationIssue]:
-        """Validate content format."""
-        rules = check.validation_rules
+        """Validate content format."""        rules = check.validation_rules
         file_path = content_data.get('file_path', '')
         
         if not file_path:
@@ -1013,8 +978,7 @@ class DistributionValidator:
         return None
     
     async def _validate_content_quality(self, check: ValidationCheck, content_data: Dict[str, Any]) -> Optional[ValidationIssue]:
-        """Validate content quality."""
-        rules = check.validation_rules
+        """Validate content quality."""        rules = check.validation_rules
         
         # Check metadata completeness
         required_fields = rules.get('required_fields', [])
@@ -1053,8 +1017,7 @@ class DistributionValidator:
         return None
     
     async def _validate_platform_compliance(self, check: ValidationCheck, content_data: Dict[str, Any], platforms: List[str]) -> Optional[ValidationIssue]:
-        """Validate platform compliance."""
-        # Check if check applies to any of the target platforms
+        """Validate platform compliance."""        # Check if check applies to any of the target platforms
         if not any(platform in check.required_platforms for platform in platforms):
             return None
         
@@ -1093,8 +1056,7 @@ class DistributionValidator:
         return None
     
     async def _validate_security(self, check: ValidationCheck, content_data: Dict[str, Any]) -> Optional[ValidationIssue]:
-        """Validate security requirements."""
-        # Use security scanner for comprehensive security validation
+        """Validate security requirements."""        # Use security scanner for comprehensive security validation
         scan_result = await self.security_scanner.scan_content(content_data)
         
         if scan_result.get('threats_detected', 0) > 0:
@@ -1111,8 +1073,7 @@ class DistributionValidator:
         return None
     
     async def _validate_copyright(self, check: ValidationCheck, content_data: Dict[str, Any]) -> Optional[ValidationIssue]:
-        """Validate copyright compliance."""
-        # Mock copyright validation
+        """Validate copyright compliance."""        # Mock copyright validation
         # In real implementation, this would use fingerprinting and matching services
         
         copyright_score = content_data.get('copyright_risk_score', 0)
@@ -1132,8 +1093,7 @@ class DistributionValidator:
         return None
     
     async def _validate_metadata(self, check: ValidationCheck, content_data: Dict[str, Any]) -> Optional[ValidationIssue]:
-        """Validate metadata requirements."""
-        metadata = content_data.get('metadata', {})
+        """Validate metadata requirements."""        metadata = content_data.get('metadata', {})
         
         if not metadata:
             return ValidationIssue(
@@ -1149,8 +1109,7 @@ class DistributionValidator:
         return None
     
     async def _validate_technical_specs(self, check: ValidationCheck, content_data: Dict[str, Any]) -> Optional[ValidationIssue]:
-        """Validate technical specifications."""
-        rules = check.validation_rules
+        """Validate technical specifications."""        rules = check.validation_rules
         
         # File size validation
         file_size = content_data.get('file_size', 0)
@@ -1182,8 +1141,7 @@ class DistributionValidator:
     
     # Custom validator implementations
     async def _validate_video_quality(self, check: ValidationCheck, content_data: Dict[str, Any], platforms: List[str]) -> Optional[ValidationIssue]:
-        """Custom video quality validator."""
-        # Mock video quality analysis
+        """Custom video quality validator."""        # Mock video quality analysis
         quality_score = content_data.get('video_quality_score', 0.8)
         
         if quality_score < 0.6:
@@ -1200,8 +1158,7 @@ class DistributionValidator:
         return None
     
     async def _validate_audio_quality(self, check: ValidationCheck, content_data: Dict[str, Any], platforms: List[str]) -> Optional[ValidationIssue]:
-        """Custom audio quality validator."""
-        # Mock audio quality analysis
+        """Custom audio quality validator."""        # Mock audio quality analysis
         audio_quality = content_data.get('audio_quality_score', 0.8)
         
         if audio_quality < 0.5:
@@ -1218,8 +1175,7 @@ class DistributionValidator:
         return None
     
     async def _validate_image_quality(self, check: ValidationCheck, content_data: Dict[str, Any], platforms: List[str]) -> Optional[ValidationIssue]:
-        """Custom image quality validator."""
-        # Mock image quality analysis
+        """Custom image quality validator."""        # Mock image quality analysis
         image_resolution = content_data.get('image_resolution', [1920, 1080])
         
         if image_resolution[0] < 720 or image_resolution[1] < 480:
@@ -1236,24 +1192,20 @@ class DistributionValidator:
         return None
     
     async def _validate_metadata_completeness(self, check: ValidationCheck, content_data: Dict[str, Any], platforms: List[str]) -> Optional[ValidationIssue]:
-        """Custom metadata completeness validator."""
-        # Implementation would check comprehensive metadata requirements
+        """Custom metadata completeness validator."""        # Implementation would check comprehensive metadata requirements
         return None
     
     async def _validate_copyright_fingerprint(self, check: ValidationCheck, content_data: Dict[str, Any], platforms: List[str]) -> Optional[ValidationIssue]:
-        """Custom copyright fingerprint validator."""
-        # Implementation would use fingerprinting services
+        """Custom copyright fingerprint validator."""        # Implementation would use fingerprinting services
         return None
     
     async def _validate_platform_requirements(self, check: ValidationCheck, content_data: Dict[str, Any], platforms: List[str]) -> Optional[ValidationIssue]:
-        """Custom platform requirements validator."""
-        # Implementation would check comprehensive platform requirements
+        """Custom platform requirements validator."""        # Implementation would check comprehensive platform requirements
         return None
     
     # Additional validation methods for distribution requests
     async def _validate_request_structure(self, distribution_request: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate distribution request structure."""
-        issues = []
+        """Validate distribution request structure."""        issues = []
         
         required_fields = ['content_id', 'user_id', 'platforms', 'scheduling']
         
@@ -1271,29 +1223,24 @@ class DistributionValidator:
         return issues
     
     async def _validate_user_permissions(self, distribution_request: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate user permissions for distribution."""
-        # Mock permission validation
+        """Validate user permissions for distribution."""        # Mock permission validation
         return []
     
     async def _validate_platform_availability(self, distribution_request: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate platform availability."""
-        # Mock platform availability check
+        """Validate platform availability."""        # Mock platform availability check
         return []
     
     async def _validate_rate_limits(self, distribution_request: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate rate limits."""
-        # Mock rate limit validation
+        """Validate rate limits."""        # Mock rate limit validation
         return []
     
     async def _validate_distribution_rules(self, distribution_request: Dict[str, Any]) -> List[ValidationIssue]:
-        """Validate distribution rules."""
-        # Mock distribution rules validation
+        """Validate distribution rules."""        # Mock distribution rules validation
         return []
     
     # Result processing methods
     def _determine_overall_result(self, report: ValidationReport) -> ValidationResult:
-        """Determine overall validation result."""
-        if report.blocked_checks > 0:
+        """Determine overall validation result."""        if report.blocked_checks > 0:
             return ValidationResult.BLOCKED
         elif report.failed_checks > 0:
             return ValidationResult.FAILED
@@ -1303,8 +1250,7 @@ class DistributionValidator:
             return ValidationResult.PASSED
     
     async def _apply_auto_fixes(self, report: ValidationReport, content_data: Dict[str, Any]) -> None:
-        """Apply automatic fixes where possible."""
-        for issue in report.issues:
+        """Apply automatic fixes where possible."""        for issue in report.issues:
             if issue.auto_fixable and not issue.fix_applied:
                 try:
                     # Apply automatic fix based on issue type
@@ -1324,14 +1270,12 @@ class DistributionValidator:
                     self.logger.error(f"Failed to apply auto-fix for issue {issue.issue_id}: {e}")
     
     async def _apply_automatic_fix(self, issue: ValidationIssue, content_data: Dict[str, Any]) -> bool:
-        """Apply automatic fix for specific issue."""
-        # Implementation would apply fixes based on issue type
+        """Apply automatic fix for specific issue."""        # Implementation would apply fixes based on issue type
         # For now, return False (no fixes applied)
         return False
     
     async def _generate_platform_results(self, report: ValidationReport, platforms: List[str]) -> Dict[str, Any]:
-        """Generate platform-specific validation results."""
-        platform_results = {}
+        """Generate platform-specific validation results."""        platform_results = {}
         
         for platform in platforms:
             platform_issues = [
@@ -1353,8 +1297,7 @@ class DistributionValidator:
         return platform_results
     
     def _generate_validation_summary(self, report: ValidationReport) -> Dict[str, Any]:
-        """Generate validation summary."""
-        return {
+        """Generate validation summary."""        return {
             'overall_status': report.overall_result.value,
             'total_checks': report.total_checks,
             'success_rate': report.passed_checks / max(report.total_checks, 1),
@@ -1370,8 +1313,7 @@ class DistributionValidator:
         }
     
     async def _generate_recommendations(self, report: ValidationReport, content_data: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on validation results."""
-        recommendations = []
+        """Generate recommendations based on validation results."""        recommendations = []
         
         if report.critical_issues:
             recommendations.append("Address critical security and compliance issues immediately before distribution")
@@ -1394,8 +1336,7 @@ class DistributionValidator:
     
     # Utility methods
     def _generate_validation_cache_key(self, content_data: Dict[str, Any], platforms: List[str]) -> str:
-        """Generate cache key for validation."""
-        content_hash = hashlib.md5(
+        """Generate cache key for validation."""        content_hash = hashlib.md5(
             json.dumps(content_data, sort_keys=True, default=str).encode()
         ).hexdigest()
         
@@ -1406,28 +1347,24 @@ class DistributionValidator:
         return f"validation:{content_hash}:{platforms_hash}:{self.validation_level.value}"
     
     def _get_cached_validation(self, cache_key: str) -> Optional[ValidationReport]:
-        """Get cached validation result."""
-        cached_data = self.validation_cache.get(cache_key)
+        """Get cached validation result."""        cached_data = self.validation_cache.get(cache_key)
         if cached_data and cached_data['expires_at'] > datetime.utcnow():
             return cached_data['report']
         return None
     
     def _cache_validation_result(self, cache_key: str, report: ValidationReport) -> None:
-        """Cache validation result."""
-        self.validation_cache[cache_key] = {
+        """Cache validation result."""        self.validation_cache[cache_key] = {
             'report': report,
             'cached_at': datetime.utcnow(),
             'expires_at': datetime.utcnow() + timedelta(seconds=self.cache_ttl)
         }
     
     async def _save_validation_data(self) -> None:
-        """Save validation data to persistent storage."""
-        # Implementation would save data to database or file system
+        """Save validation data to persistent storage."""        # Implementation would save data to database or file system
         pass
     
     def get_system_status(self) -> Dict[str, Any]:
-        """Get current system status."""
-        return {
+        """Get current system status."""        return {
             'initialized': self.is_initialized,
             'validation_level': self.validation_level.value,
             'total_checks': len(self.validation_checks),

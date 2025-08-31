@@ -1,5 +1,4 @@
-"""
-Security Utilities for Content Protection
+"""Security Utilities for Content Protection
 
 Advanced security utilities for encryption, authentication, and secure
 communication in the DMCA automation and content protection system.
@@ -16,7 +15,6 @@ prohibited and will result in legal action.
 
 All rights reserved © 2025 Fahed Mlaiel
 """
-
 import os
 import base64
 import hashlib
@@ -36,13 +34,11 @@ logger = logging.getLogger(__name__)
 
 
 class SecurityError(Exception):
-    """Custom exception for security-related errors"""
-    pass
+    """Custom exception for security-related errors"""    pass
 
 
 class ContentProtectionSecurityService:
-    """
-    Advanced security service for content protection operations
+    """    Advanced security service for content protection operations
     
     Features:
     - AES-256 encryption/decryption
@@ -52,11 +48,9 @@ class ContentProtectionSecurityService:
     - Digital signatures
     - API key management
     - Rate limiting tokens
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize security service"""
-        self.config = config or {}
+        """Initialize security service"""        self.config = config or {}
         self.logger = logger
         
         # Get or generate master key
@@ -75,8 +69,7 @@ class ContentProtectionSecurityService:
     
     def encrypt_sensitive_data(self, data: Union[str, bytes], 
                              additional_context: Optional[str] = None) -> str:
-        """
-        Encrypt sensitive data using AES-256
+        """        Encrypt sensitive data using AES-256
         
         Args:
             data: Data to encrypt (string or bytes)
@@ -84,8 +77,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             Base64-encoded encrypted data
-        """
-        try:
+        """        try:
             if isinstance(data, str):
                 data = data.encode('utf-8')
             
@@ -106,8 +98,7 @@ class ContentProtectionSecurityService:
     
     def decrypt_sensitive_data(self, encrypted_data: str,
                              additional_context: Optional[str] = None) -> str:
-        """
-        Decrypt sensitive data
+        """        Decrypt sensitive data
         
         Args:
             encrypted_data: Base64-encoded encrypted data
@@ -115,8 +106,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             Decrypted data as string
-        """
-        try:
+        """        try:
             # Decode from base64
             encrypted_bytes = base64.b64decode(encrypted_data.encode('utf-8'))
             
@@ -138,8 +128,7 @@ class ContentProtectionSecurityService:
             raise SecurityError(f"Decryption failed: {str(e)}")
     
     def generate_secure_hash(self, data: str, salt: Optional[str] = None) -> Dict[str, str]:
-        """
-        Generate secure hash with optional salt
+        """        Generate secure hash with optional salt
         
         Args:
             data: Data to hash
@@ -147,8 +136,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             Dictionary with hash and salt
-        """
-        try:
+        """        try:
             if salt is None:
                 salt = secrets.token_hex(32)
             
@@ -183,8 +171,7 @@ class ContentProtectionSecurityService:
             raise SecurityError(f"Hash generation failed: {str(e)}")
     
     def verify_secure_hash(self, data: str, stored_hash: Dict[str, str]) -> bool:
-        """
-        Verify data against stored hash
+        """        Verify data against stored hash
         
         Args:
             data: Original data to verify
@@ -192,8 +179,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             True if verification successful, False otherwise
-        """
-        try:
+        """        try:
             # Regenerate hash with stored salt
             new_hash = self.generate_secure_hash(data, stored_hash['salt'])
             
@@ -206,8 +192,7 @@ class ContentProtectionSecurityService:
     
     def generate_api_key(self, user_id: str, permissions: List[str],
                         expiry_days: int = 365) -> Dict[str, Any]:
-        """
-        Generate secure API key with permissions
+        """        Generate secure API key with permissions
         
         Args:
             user_id: User identifier
@@ -216,8 +201,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             API key information
-        """
-        try:
+        """        try:
             # Generate secure random key
             api_key = secrets.token_urlsafe(32)
             
@@ -252,8 +236,7 @@ class ContentProtectionSecurityService:
             raise SecurityError(f"API key generation failed: {str(e)}")
     
     def validate_api_key(self, api_key: str, stored_key_data: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Validate API key against stored data
+        """        Validate API key against stored data
         
         Args:
             api_key: API key to validate
@@ -261,8 +244,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             Validation result
-        """
-        try:
+        """        try:
             # Check expiration
             expires_at = datetime.fromisoformat(stored_key_data['expires_at'])
             if datetime.now(timezone.utc) > expires_at:
@@ -307,8 +289,7 @@ class ContentProtectionSecurityService:
     
     def generate_jwt_token(self, payload: Dict[str, Any], 
                           expiry_hours: Optional[int] = None) -> str:
-        """
-        Generate JWT token with payload
+        """        Generate JWT token with payload
         
         Args:
             payload: Token payload
@@ -316,8 +297,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             JWT token string
-        """
-        try:
+        """        try:
             # Set expiration time
             exp_hours = expiry_hours or self.jwt_expiry_hours
             exp_time = datetime.now(timezone.utc) + timedelta(hours=exp_hours)
@@ -345,16 +325,14 @@ class ContentProtectionSecurityService:
             raise SecurityError(f"JWT generation failed: {str(e)}")
     
     def validate_jwt_token(self, token: str) -> Dict[str, Any]:
-        """
-        Validate and decode JWT token
+        """        Validate and decode JWT token
         
         Args:
             token: JWT token to validate
             
         Returns:
             Validation result with payload if valid
-        """
-        try:
+        """        try:
             # Decode and validate token
             payload = jwt.decode(
                 token, 
@@ -391,16 +369,14 @@ class ContentProtectionSecurityService:
             }
     
     def generate_rsa_key_pair(self, key_size: int = 2048) -> Dict[str, str]:
-        """
-        Generate RSA key pair for digital signatures
+        """        Generate RSA key pair for digital signatures
         
         Args:
             key_size: RSA key size in bits
             
         Returns:
             Dictionary with private and public keys
-        """
-        try:
+        """        try:
             # Generate private key
             private_key = rsa.generate_private_key(
                 public_exponent=65537,
@@ -436,8 +412,7 @@ class ContentProtectionSecurityService:
             raise SecurityError(f"RSA key generation failed: {str(e)}")
     
     def create_digital_signature(self, data: str, private_key_pem: str) -> str:
-        """
-        Create digital signature for data
+        """        Create digital signature for data
         
         Args:
             data: Data to sign
@@ -445,8 +420,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             Base64-encoded signature
-        """
-        try:
+        """        try:
             # Load private key
             private_key = serialization.load_pem_private_key(
                 private_key_pem.encode('utf-8'),
@@ -471,8 +445,7 @@ class ContentProtectionSecurityService:
             raise SecurityError(f"Digital signature creation failed: {str(e)}")
     
     def verify_digital_signature(self, data: str, signature: str, public_key_pem: str) -> bool:
-        """
-        Verify digital signature
+        """        Verify digital signature
         
         Args:
             data: Original data
@@ -481,8 +454,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             True if signature is valid, False otherwise
-        """
-        try:
+        """        try:
             # Load public key
             public_key = serialization.load_pem_public_key(
                 public_key_pem.encode('utf-8'),
@@ -511,8 +483,7 @@ class ContentProtectionSecurityService:
     
     def generate_rate_limit_token(self, user_id: str, resource: str, 
                                 limit: int, window_seconds: int) -> str:
-        """
-        Generate rate limiting token
+        """        Generate rate limiting token
         
         Args:
             user_id: User identifier
@@ -522,8 +493,7 @@ class ContentProtectionSecurityService:
             
         Returns:
             Rate limit token
-        """
-        try:
+        """        try:
             current_time = int(datetime.now(timezone.utc).timestamp())
             window_start = current_time - (current_time % window_seconds)
             
@@ -545,8 +515,7 @@ class ContentProtectionSecurityService:
     # Private helper methods
     
     def _get_or_create_master_key(self) -> bytes:
-        """Get or create master encryption key"""
-        key_file = self.config.get('master_key_file', '.master_key')
+        """Get or create master encryption key"""        key_file = self.config.get('master_key_file', '.master_key')
         
         if os.path.exists(key_file):
             with open(key_file, 'rb') as f:
@@ -560,64 +529,53 @@ class ContentProtectionSecurityService:
             return key
     
     def _generate_jwt_secret(self) -> str:
-        """Generate JWT secret if not provided"""
-        return secrets.token_urlsafe(64)
+        """Generate JWT secret if not provided"""        return secrets.token_urlsafe(64)
 
 
 # Factory function
 def create_security_service(config: Optional[Dict[str, Any]] = None) -> ContentProtectionSecurityService:
-    """Factory function to create security service"""
-    return ContentProtectionSecurityService(config)
+    """Factory function to create security service"""    return ContentProtectionSecurityService(config)
 
 
 # Convenience functions
 def encrypt_sensitive_data(data: str, config: Optional[Dict[str, Any]] = None) -> str:
-    """Convenience function for encryption"""
-    service = create_security_service(config)
+    """Convenience function for encryption"""    service = create_security_service(config)
     return service.encrypt_sensitive_data(data)
 
 
 def decrypt_sensitive_data(encrypted_data: str, config: Optional[Dict[str, Any]] = None) -> str:
-    """Convenience function for decryption"""
-    service = create_security_service(config)
+    """Convenience function for decryption"""    service = create_security_service(config)
     return service.decrypt_sensitive_data(encrypted_data)
 
 
 def generate_secure_hash(data: str, salt: Optional[str] = None) -> Dict[str, str]:
-    """Convenience function for hash generation"""
-    service = create_security_service()
+    """Convenience function for hash generation"""    service = create_security_service()
     return service.generate_secure_hash(data, salt)
 
 
 # Compatibility aliases for business modules
 class SecurityManager:
-    """Security manager compatibility class for business modules"""
-    
+    """Security manager compatibility class for business modules"""    
     def __init__(self):
         self._service = ContentProtectionSecurityService()
     
     def __getattr__(self, name):
-        """Delegate to the underlying service"""
-        return getattr(self._service, name)
+        """Delegate to the underlying service"""        return getattr(self._service, name)
 
 
 class EncryptionManager:
-    """Encryption manager compatibility class for business modules"""
-    
+    """Encryption manager compatibility class for business modules"""    
     def __init__(self):
         self._service = ContentProtectionSecurityService()
     
     def encrypt(self, data: str, key: Optional[str] = None) -> str:
-        """Encrypt data using the service"""
-        return self._service.encrypt_data(data, key)
+        """Encrypt data using the service"""        return self._service.encrypt_data(data, key)
     
     def decrypt(self, encrypted_data: str, key: Optional[str] = None) -> str:
-        """Decrypt data using the service"""
-        return self._service.decrypt_data(encrypted_data, key)
+        """Decrypt data using the service"""        return self._service.decrypt_data(encrypted_data, key)
     
     def __getattr__(self, name):
-        """Delegate to the underlying service"""
-        return getattr(self._service, name)
+        """Delegate to the underlying service"""        return getattr(self._service, name)
 
 
 # Export all security components

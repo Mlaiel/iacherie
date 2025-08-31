@@ -1,5 +1,4 @@
-"""
-Execution Planner Module
+"""Execution Planner Module
 
 Advanced database execution planning system with cost-based optimization,
 intelligent query rewriting, and adaptive execution strategies.
@@ -7,7 +6,6 @@ intelligent query rewriting, and adaptive execution strategies.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use prohibited.
 """
-
 import asyncio
 import time
 import hashlib
@@ -29,8 +27,7 @@ logger = get_logger(__name__)
 
 
 class ExecutionStrategy(Enum):
-    """Query execution strategies"""
-    COST_BASED = "cost_based"
+    """Query execution strategies"""    COST_BASED = "cost_based"
     RULE_BASED = "rule_based"
     ADAPTIVE = "adaptive"
     PARALLEL = "parallel"
@@ -39,16 +36,14 @@ class ExecutionStrategy(Enum):
 
 
 class PlanType(Enum):
-    """Execution plan types"""
-    EXPLAIN_ONLY = "explain_only"
+    """Execution plan types"""    EXPLAIN_ONLY = "explain_only"
     EXPLAIN_ANALYZE = "explain_analyze"
     EXECUTION = "execution"
     OPTIMIZATION = "optimization"
 
 
 class OptimizationLevel(Enum):
-    """Optimization levels"""
-    NONE = "none"
+    """Optimization levels"""    NONE = "none"
     BASIC = "basic"
     STANDARD = "standard"
     AGGRESSIVE = "aggressive"
@@ -57,8 +52,7 @@ class OptimizationLevel(Enum):
 
 @dataclass
 class ExecutionNode:
-    """Single node in execution plan"""
-    node_id: str
+    """Single node in execution plan"""    node_id: str
     node_type: str
     operation: str
     table_name: Optional[str] = None
@@ -76,13 +70,11 @@ class ExecutionNode:
     
     @property
     def is_expensive(self) -> bool:
-        """Check if node is expensive"""
-        return self.total_cost > 1000 or (self.actual_time and self.actual_time > 100)
+        """Check if node is expensive"""        return self.total_cost > 1000 or (self.actual_time and self.actual_time > 100)
     
     @property
     def efficiency_ratio(self) -> float:
-        """Calculate efficiency ratio"""
-        if self.rows == 0:
+        """Calculate efficiency ratio"""        if self.rows == 0:
             return 1.0
         estimated_rows = max(1, self.rows)
         actual_rows = self.actual_rows or estimated_rows
@@ -91,8 +83,7 @@ class ExecutionNode:
 
 @dataclass
 class ExecutionStatistics:
-    """Execution statistics and metrics"""
-    query_id: str
+    """Execution statistics and metrics"""    query_id: str
     execution_time: float
     planning_time: float
     total_cost: float
@@ -107,24 +98,21 @@ class ExecutionStatistics:
     
     @property
     def buffer_hit_ratio(self) -> float:
-        """Calculate buffer hit ratio"""
-        total_buffers = self.buffers_hit + self.buffers_read
+        """Calculate buffer hit ratio"""        total_buffers = self.buffers_hit + self.buffers_read
         if total_buffers == 0:
             return 0.0
         return self.buffers_hit / total_buffers
     
     @property
     def cost_accuracy(self) -> float:
-        """Calculate cost estimation accuracy"""
-        if self.actual_cost is None or self.total_cost == 0:
+        """Calculate cost estimation accuracy"""        if self.actual_cost is None or self.total_cost == 0:
             return 0.0
         return 1.0 - abs(self.actual_cost - self.total_cost) / self.total_cost
 
 
 @dataclass
 class PlanOptimization:
-    """Optimization suggestion for execution plan"""
-    optimization_id: str
+    """Optimization suggestion for execution plan"""    optimization_id: str
     type: str
     description: str
     estimated_improvement: float
@@ -138,8 +126,7 @@ class PlanOptimization:
 
 @dataclass
 class ExecutionPlanResult:
-    """Complete execution plan with analysis"""
-    plan_id: str
+    """Complete execution plan with analysis"""    plan_id: str
     query_text: str
     strategy: ExecutionStrategy
     optimization_level: OptimizationLevel
@@ -151,15 +138,13 @@ class ExecutionPlanResult:
     
     @property
     def total_nodes(self) -> int:
-        """Count total nodes in plan"""
-        def count_nodes(node: ExecutionNode) -> int:
+        """Count total nodes in plan"""        def count_nodes(node: ExecutionNode) -> int:
             return 1 + sum(count_nodes(child) for child in node.children)
         return count_nodes(self.root_node)
     
     @property
     def expensive_nodes(self) -> List[ExecutionNode]:
-        """Get list of expensive nodes"""
-        expensive = []
+        """Get list of expensive nodes"""        expensive = []
         
         def find_expensive(node: ExecutionNode):
             if node.is_expensive:
@@ -172,8 +157,7 @@ class ExecutionPlanResult:
     
     @property
     def table_scans(self) -> List[ExecutionNode]:
-        """Get list of sequential scan nodes"""
-        scans = []
+        """Get list of sequential scan nodes"""        scans = []
         
         def find_scans(node: ExecutionNode):
             if 'Seq Scan' in node.node_type:
@@ -186,8 +170,7 @@ class ExecutionPlanResult:
 
 
 class CostEstimator:
-    """Advanced cost estimation for query operations"""
-    
+    """Advanced cost estimation for query operations"""    
     def __init__(self):
         # Cost constants (can be tuned based on database configuration)
         self.seq_page_cost = 1.0
@@ -207,8 +190,7 @@ class CostEstimator:
         conditions: List[str],
         engine: AsyncEngine
     ) -> float:
-        """Estimate cost of table scan operation"""
-        
+        """Estimate cost of table scan operation"""        
         try:
             # Get table statistics
             stats = await self._get_table_statistics(table_name, engine)
@@ -257,8 +239,7 @@ class CostEstimator:
         join_conditions: List[str],
         engine: AsyncEngine
     ) -> float:
-        """Estimate cost of join operation"""
-        
+        """Estimate cost of join operation"""        
         try:
             left_stats = await self._get_table_statistics(left_table, engine)
             right_stats = await self._get_table_statistics(right_table, engine)
@@ -289,15 +270,13 @@ class CostEstimator:
             return 10000.0
     
     async def _get_table_statistics(self, table_name: str, engine: AsyncEngine) -> Dict[str, Any]:
-        """Get table statistics from database"""
-        if table_name in self._table_stats:
+        """Get table statistics from database"""        if table_name in self._table_stats:
             return self._table_stats[table_name]
         
         try:
             async with engine.begin() as conn:
                 # PostgreSQL statistics query
-                stats_query = text("""
-                    SELECT 
+                stats_query = text("""                    SELECT 
                         schemaname,
                         tablename,
                         n_tup_ins as inserts,
@@ -324,8 +303,7 @@ class CostEstimator:
                     }
                     
                     # Get table size
-                    size_query = text("""
-                        SELECT 
+                    size_query = text("""                        SELECT 
                             pg_relation_size(:table_name) / 8192 as pages,
                             pg_total_relation_size(:table_name) as total_size
                     """)
@@ -355,8 +333,7 @@ class CostEstimator:
         return default_stats
     
     def _estimate_selectivity(self, conditions: List[str], table_stats: Dict[str, Any]) -> float:
-        """Estimate selectivity of WHERE conditions"""
-        if not conditions:
+        """Estimate selectivity of WHERE conditions"""        if not conditions:
             return 1.0
         
         # Simple heuristic-based selectivity estimation
@@ -389,8 +366,7 @@ class CostEstimator:
 
 
 class PlanOptimizer:
-    """Intelligent execution plan optimizer"""
-    
+    """Intelligent execution plan optimizer"""    
     def __init__(self):
         self.cost_estimator = CostEstimator()
         self._optimization_rules = [
@@ -407,8 +383,7 @@ class PlanOptimizer:
         engine: AsyncEngine,
         optimization_level: OptimizationLevel = OptimizationLevel.STANDARD
     ) -> List[PlanOptimization]:
-        """Generate optimization suggestions for execution plan"""
-        
+        """Generate optimization suggestions for execution plan"""        
         optimizations = []
         
         for rule in self._optimization_rules:
@@ -429,8 +404,7 @@ class PlanOptimizer:
         engine: AsyncEngine,
         optimization_level: OptimizationLevel
     ) -> List[PlanOptimization]:
-        """Optimize sequential scans"""
-        optimizations = []
+        """Optimize sequential scans"""        optimizations = []
         
         for scan_node in plan.table_scans:
             if scan_node.table_name and scan_node.conditions:
@@ -456,8 +430,7 @@ class PlanOptimizer:
         engine: AsyncEngine,
         optimization_level: OptimizationLevel
     ) -> List[PlanOptimization]:
-        """Optimize join order"""
-        optimizations = []
+        """Optimize join order"""        optimizations = []
         
         # Find join nodes
         join_nodes = self._find_join_nodes(plan.root_node)
@@ -484,8 +457,7 @@ class PlanOptimizer:
         engine: AsyncEngine,
         optimization_level: OptimizationLevel
     ) -> List[PlanOptimization]:
-        """Optimize subqueries"""
-        optimizations = []
+        """Optimize subqueries"""        optimizations = []
         
         # Find subquery nodes
         subquery_nodes = self._find_subquery_nodes(plan.root_node)
@@ -512,8 +484,7 @@ class PlanOptimizer:
         engine: AsyncEngine,
         optimization_level: OptimizationLevel
     ) -> List[PlanOptimization]:
-        """Optimize aggregation operations"""
-        optimizations = []
+        """Optimize aggregation operations"""        optimizations = []
         
         # Find aggregation nodes
         agg_nodes = self._find_aggregation_nodes(plan.root_node)
@@ -541,8 +512,7 @@ class PlanOptimizer:
         engine: AsyncEngine,
         optimization_level: OptimizationLevel
     ) -> List[PlanOptimization]:
-        """Optimize sorting operations"""
-        optimizations = []
+        """Optimize sorting operations"""        optimizations = []
         
         # Find sort nodes
         sort_nodes = self._find_sort_nodes(plan.root_node)
@@ -564,8 +534,7 @@ class PlanOptimizer:
         return optimizations
     
     def _find_join_nodes(self, node: ExecutionNode) -> List[ExecutionNode]:
-        """Find all join nodes in execution plan"""
-        joins = []
+        """Find all join nodes in execution plan"""        joins = []
         
         if 'Join' in node.node_type:
             joins.append(node)
@@ -576,8 +545,7 @@ class PlanOptimizer:
         return joins
     
     def _find_subquery_nodes(self, node: ExecutionNode) -> List[ExecutionNode]:
-        """Find all subquery nodes in execution plan"""
-        subqueries = []
+        """Find all subquery nodes in execution plan"""        subqueries = []
         
         if 'SubPlan' in node.node_type or 'InitPlan' in node.node_type:
             subqueries.append(node)
@@ -588,8 +556,7 @@ class PlanOptimizer:
         return subqueries
     
     def _find_aggregation_nodes(self, node: ExecutionNode) -> List[ExecutionNode]:
-        """Find all aggregation nodes in execution plan"""
-        aggregations = []
+        """Find all aggregation nodes in execution plan"""        aggregations = []
         
         if any(agg in node.node_type for agg in ['Aggregate', 'Group', 'HashAggregate']):
             aggregations.append(node)
@@ -600,8 +567,7 @@ class PlanOptimizer:
         return aggregations
     
     def _find_sort_nodes(self, node: ExecutionNode) -> List[ExecutionNode]:
-        """Find all sort nodes in execution plan"""
-        sorts = []
+        """Find all sort nodes in execution plan"""        sorts = []
         
         if 'Sort' in node.node_type:
             sorts.append(node)
@@ -613,8 +579,7 @@ class PlanOptimizer:
 
 
 class ExecutionPlanner:
-    """Advanced database execution planner"""
-    
+    """Advanced database execution planner"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.metrics_collector = MetricsCollector()
@@ -637,8 +602,7 @@ class ExecutionPlanner:
         optimization_level: OptimizationLevel = OptimizationLevel.STANDARD,
         engine: Optional[AsyncEngine] = None
     ) -> ExecutionPlanResult:
-        """Create optimized execution plan for query"""
-        
+        """Create optimized execution plan for query"""        
         plan_id = self._generate_plan_id(query, strategy, optimization_level)
         
         # Check cache
@@ -706,8 +670,7 @@ class ExecutionPlanner:
         engine: AsyncEngine,
         strategy: ExecutionStrategy = ExecutionStrategy.ADAPTIVE
     ) -> Tuple[Any, ExecutionStatistics]:
-        """Execute query with optimal execution plan"""
-        
+        """Execute query with optimal execution plan"""        
         start_time = time.time()
         
         try:
@@ -736,8 +699,7 @@ class ExecutionPlanner:
             raise
     
     async def _get_database_plan(self, query: str, engine: AsyncEngine) -> Dict[str, Any]:
-        """Get execution plan from database"""
-        try:
+        """Get execution plan from database"""        try:
             async with engine.begin() as conn:
                 # Get detailed execution plan
                 explain_query = f"EXPLAIN (ANALYZE false, VERBOSE true, BUFFERS true, FORMAT JSON) {query}"
@@ -754,15 +716,13 @@ class ExecutionPlanner:
             raise
     
     def _parse_plan_tree(self, plan_data: Dict[str, Any]) -> ExecutionNode:
-        """Parse database plan into execution tree"""
-        plan_info = plan_data.get('Plan', {})
+        """Parse database plan into execution tree"""        plan_info = plan_data.get('Plan', {})
         
         root_node = self._parse_plan_node(plan_info)
         return root_node
     
     def _parse_plan_node(self, node_data: Dict[str, Any]) -> ExecutionNode:
-        """Parse single plan node"""
-        node = ExecutionNode(
+        """Parse single plan node"""        node = ExecutionNode(
             node_id=str(hash(str(node_data))),
             node_type=node_data.get('Node Type', 'Unknown'),
             operation=node_data.get('Node Type', 'Unknown'),
@@ -793,8 +753,7 @@ class ExecutionPlanner:
         return node
     
     def _create_mock_plan(self, query: str) -> ExecutionNode:
-        """Create mock execution plan for testing"""
-        return ExecutionNode(
+        """Create mock execution plan for testing"""        return ExecutionNode(
             node_id="mock_root",
             node_type="Seq Scan",
             operation="Scan",
@@ -805,8 +764,7 @@ class ExecutionPlanner:
         )
     
     def _extract_statistics(self, plan_data: Dict[str, Any], query: str) -> ExecutionStatistics:
-        """Extract execution statistics from plan"""
-        query_id = hashlib.md5(query.encode()).hexdigest()
+        """Extract execution statistics from plan"""        query_id = hashlib.md5(query.encode()).hexdigest()
         
         stats = ExecutionStatistics(
             query_id=query_id,
@@ -827,8 +785,7 @@ class ExecutionPlanner:
         return stats
     
     def _generate_warnings(self, plan: ExecutionPlanResult) -> List[str]:
-        """Generate warnings based on execution plan analysis"""
-        warnings = []
+        """Generate warnings based on execution plan analysis"""        warnings = []
         
         # Check for expensive operations
         expensive_nodes = plan.expensive_nodes
@@ -856,21 +813,18 @@ class ExecutionPlanner:
         strategy: ExecutionStrategy,
         optimization_level: OptimizationLevel
     ) -> str:
-        """Generate unique plan ID"""
-        plan_key = f"{query}_{strategy.value}_{optimization_level.value}"
+        """Generate unique plan ID"""        plan_key = f"{query}_{strategy.value}_{optimization_level.value}"
         return hashlib.md5(plan_key.encode()).hexdigest()
     
     def _is_plan_valid(self, plan: ExecutionPlanResult) -> bool:
-        """Check if cached plan is still valid"""
-        if not self.cache_enabled:
+        """Check if cached plan is still valid"""        if not self.cache_enabled:
             return False
         
         age = datetime.now() - plan.created_at
         return age.total_seconds() < (self.cache_ttl_minutes * 60)
     
     def _cache_plan(self, plan: ExecutionPlanResult) -> None:
-        """Cache execution plan"""
-        if len(self._plan_cache) >= self.max_cache_size:
+        """Cache execution plan"""        if len(self._plan_cache) >= self.max_cache_size:
             # Remove oldest plan
             oldest_plan_id = min(
                 self._plan_cache.keys(),
@@ -881,8 +835,7 @@ class ExecutionPlanner:
         self._plan_cache[plan.plan_id] = plan
     
     async def _send_plan_metrics(self, plan: ExecutionPlanResult) -> None:
-        """Send plan metrics to monitoring system"""
-        try:
+        """Send plan metrics to monitoring system"""        try:
             self.metrics_collector.histogram(
                 "execution_plan_cost",
                 plan.statistics.total_cost,
@@ -903,8 +856,7 @@ class ExecutionPlanner:
             logger.warning(f"Failed to send plan metrics: {e}")
     
     def get_plan_statistics(self) -> Dict[str, Any]:
-        """Get execution planner statistics"""
-        return {
+        """Get execution planner statistics"""        return {
             "cached_plans": len(self._plan_cache),
             "execution_history_count": len(self._execution_history),
             "avg_planning_time": statistics.mean([
@@ -919,8 +871,7 @@ class ExecutionPlanner:
         }
     
     def clear_cache(self, older_than_minutes: int = 60) -> None:
-        """Clear old cached plans"""
-        cutoff_time = datetime.now() - timedelta(minutes=older_than_minutes)
+        """Clear old cached plans"""        cutoff_time = datetime.now() - timedelta(minutes=older_than_minutes)
         
         old_plans = [
             plan_id for plan_id, plan in self._plan_cache.items()
@@ -938,8 +889,7 @@ _execution_planner: Optional[ExecutionPlanner] = None
 
 
 def get_execution_planner(config: Optional[Dict[str, Any]] = None) -> ExecutionPlanner:
-    """Get global execution planner instance"""
-    global _execution_planner
+    """Get global execution planner instance"""    global _execution_planner
     
     if _execution_planner is None:
         _execution_planner = ExecutionPlanner(config)
@@ -948,8 +898,7 @@ def get_execution_planner(config: Optional[Dict[str, Any]] = None) -> ExecutionP
 
 
 class ContentProtectionExecutionPlanner:
-    """Specialized execution planner for content protection operations"""
-    
+    """Specialized execution planner for content protection operations"""    
     def __init__(self, base_planner: ExecutionPlanner):
         self.base_planner = base_planner
         self.fingerprint_strategies = {
@@ -964,11 +913,9 @@ class ContentProtectionExecutionPlanner:
         content_type: str,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for fingerprint similarity search"""
-        
+        """Plan execution for fingerprint similarity search"""        
         # Optimized query for vector similarity
-        query = f"""
-        WITH similar_fingerprints AS (
+        query = f"""        WITH similar_fingerprints AS (
             SELECT cf.id, cf.fingerprint_hash, cf.user_id,
                    cf.vector_embedding <-> %s AS distance
             FROM content_fingerprints cf
@@ -980,8 +927,7 @@ class ContentProtectionExecutionPlanner:
         SELECT sf.*, cm.original_filename
         FROM similar_fingerprints sf
         JOIN content_metadata cm ON sf.id = cm.fingerprint_id
-        """
-        
+        """        
         strategy = self.fingerprint_strategies['similarity_search']
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.AGGRESSIVE, engine
@@ -992,11 +938,9 @@ class ContentProtectionExecutionPlanner:
         batch_size: int,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for bulk fingerprint insertion"""
-        
+        """Plan execution for bulk fingerprint insertion"""        
         # Optimized bulk insert with conflict resolution
-        query = f"""
-        INSERT INTO content_fingerprints 
+        query = f"""        INSERT INTO content_fingerprints 
         (user_id, content_type, original_filename, fingerprint_hash, 
          vector_embedding, metadata, created_at)
         VALUES (unnest(%s), unnest(%s), unnest(%s), unnest(%s), 
@@ -1005,8 +949,7 @@ class ContentProtectionExecutionPlanner:
             metadata = EXCLUDED.metadata,
             updated_at = NOW()
         RETURNING id, fingerprint_hash
-        """
-        
+        """        
         strategy = self.fingerprint_strategies['bulk_fingerprint']
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.AGGRESSIVE, engine
@@ -1018,10 +961,8 @@ class ContentProtectionExecutionPlanner:
         platform: str,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for protection alert queries"""
-        
-        query = f"""
-        SELECT pa.*, cf.original_filename, cf.content_type
+        """Plan execution for protection alert queries"""        
+        query = f"""        SELECT pa.*, cf.original_filename, cf.content_type
         FROM protection_alerts pa
         JOIN content_fingerprints cf ON pa.fingerprint_id = cf.id
         WHERE cf.user_id = {user_id}
@@ -1029,8 +970,7 @@ class ContentProtectionExecutionPlanner:
           AND pa.status IN ('pending', 'investigating')
         ORDER BY pa.similarity_score DESC, pa.created_at DESC
         LIMIT 50
-        """
-        
+        """        
         strategy = ExecutionStrategy.ADAPTIVE
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.STANDARD, engine
@@ -1038,8 +978,7 @@ class ContentProtectionExecutionPlanner:
 
 
 class MonetizationExecutionPlanner:
-    """Specialized execution planner for monetization operations"""
-    
+    """Specialized execution planner for monetization operations"""    
     def __init__(self, base_planner: ExecutionPlanner):
         self.base_planner = base_planner
         self.revenue_strategies = {
@@ -1055,10 +994,8 @@ class MonetizationExecutionPlanner:
         end_date: str,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for revenue aggregation"""
-        
-        query = f"""
-        WITH revenue_summary AS (
+        """Plan execution for revenue aggregation"""        
+        query = f"""        WITH revenue_summary AS (
             SELECT 
                 platform,
                 currency,
@@ -1089,8 +1026,7 @@ class MonetizationExecutionPlanner:
         FROM converted_revenue
         GROUP BY platform
         ORDER BY platform_revenue_usd DESC
-        """
-        
+        """        
         strategy = self.revenue_strategies['aggregation']
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.AGGRESSIVE, engine
@@ -1102,16 +1038,14 @@ class MonetizationExecutionPlanner:
         aggregation_period: str,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for analytics reporting"""
-        
+        """Plan execution for analytics reporting"""        
         time_grouping = {
             'daily': "DATE_TRUNC('day', timestamp)",
             'weekly': "DATE_TRUNC('week', timestamp)",
             'monthly': "DATE_TRUNC('month', timestamp)"
         }.get(aggregation_period, "DATE_TRUNC('day', timestamp)")
         
-        query = f"""
-        SELECT 
+        query = f"""        SELECT 
             {time_grouping} as period,
             platform,
             metric_type,
@@ -1123,8 +1057,7 @@ class MonetizationExecutionPlanner:
           AND timestamp >= NOW() - INTERVAL '90 days'
         GROUP BY {time_grouping}, platform, metric_type
         ORDER BY period DESC, total_value DESC
-        """
-        
+        """        
         strategy = self.revenue_strategies['analytics']
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.STANDARD, engine
@@ -1136,10 +1069,8 @@ class MonetizationExecutionPlanner:
         prediction_days: int,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for revenue projection calculations"""
-        
-        query = f"""
-        WITH historical_revenue AS (
+        """Plan execution for revenue projection calculations"""        
+        query = f"""        WITH historical_revenue AS (
             SELECT 
                 platform,
                 DATE_TRUNC('day', period_start) as revenue_date,
@@ -1167,8 +1098,7 @@ class MonetizationExecutionPlanner:
         FROM trend_analysis
         WHERE avg_daily_revenue > 0
         ORDER BY projected_revenue DESC
-        """
-        
+        """        
         strategy = ExecutionStrategy.ADAPTIVE
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.STANDARD, engine
@@ -1176,8 +1106,7 @@ class MonetizationExecutionPlanner:
 
 
 class MultimediaExecutionPlanner:
-    """Specialized execution planner for multimedia content operations"""
-    
+    """Specialized execution planner for multimedia content operations"""    
     def __init__(self, base_planner: ExecutionPlanner):
         self.base_planner = base_planner
         self.multimedia_strategies = {
@@ -1193,8 +1122,7 @@ class MultimediaExecutionPlanner:
         filters: Dict[str, Any],
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for multimedia content search"""
-        
+        """Plan execution for multimedia content search"""        
         # Build dynamic filters
         filter_conditions = []
         if filters.get('min_duration'):
@@ -1206,8 +1134,7 @@ class MultimediaExecutionPlanner:
         
         additional_filters = " AND " + " AND ".join(filter_conditions) if filter_conditions else ""
         
-        query = f"""
-        SELECT cm.*, cf.fingerprint_hash
+        query = f"""        SELECT cm.*, cf.fingerprint_hash
         FROM content_metadata cm
         LEFT JOIN content_fingerprints cf ON cm.id = cf.content_id
         WHERE cm.user_id = {user_id}
@@ -1215,8 +1142,7 @@ class MultimediaExecutionPlanner:
           {additional_filters}
         ORDER BY cm.created_at DESC
         LIMIT 100
-        """
-        
+        """        
         strategy = self.multimedia_strategies['content_search']
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.STANDARD, engine
@@ -1227,10 +1153,8 @@ class MultimediaExecutionPlanner:
         content_type: str,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for content metadata aggregation"""
-        
-        query = f"""
-        SELECT 
+        """Plan execution for content metadata aggregation"""        
+        query = f"""        SELECT 
             format,
             COUNT(*) as file_count,
             AVG(file_size) as avg_file_size,
@@ -1243,8 +1167,7 @@ class MultimediaExecutionPlanner:
           AND created_at >= NOW() - INTERVAL '30 days'
         GROUP BY format
         ORDER BY file_count DESC
-        """
-        
+        """        
         strategy = self.multimedia_strategies['metadata_aggregation']
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.STANDARD, engine
@@ -1256,10 +1179,8 @@ class MultimediaExecutionPlanner:
         content_type: str,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for bulk content processing"""
-        
-        query = f"""
-        WITH unprocessed_content AS (
+        """Plan execution for bulk content processing"""        
+        query = f"""        WITH unprocessed_content AS (
             SELECT id, file_path, format, file_size
             FROM content_metadata
             WHERE content_type = '{content_type}'
@@ -1274,8 +1195,7 @@ class MultimediaExecutionPlanner:
         FROM unprocessed_content
         WHERE content_metadata.id = unprocessed_content.id
         RETURNING content_metadata.id, content_metadata.file_path
-        """
-        
+        """        
         strategy = self.multimedia_strategies['bulk_processing']
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.AGGRESSIVE, engine
@@ -1283,8 +1203,7 @@ class MultimediaExecutionPlanner:
 
 
 class AIProcessingExecutionPlanner:
-    """Specialized execution planner for AI processing operations"""
-    
+    """Specialized execution planner for AI processing operations"""    
     def __init__(self, base_planner: ExecutionPlanner):
         self.base_planner = base_planner
         self.ai_strategies = {
@@ -1299,10 +1218,8 @@ class AIProcessingExecutionPlanner:
         batch_size: int,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for batch model inference"""
-        
-        query = f"""
-        WITH inference_batch AS (
+        """Plan execution for batch model inference"""        
+        query = f"""        WITH inference_batch AS (
             SELECT id, vector_data, content_id
             FROM vector_embeddings
             WHERE model_version = '{model_id}'
@@ -1313,8 +1230,7 @@ class AIProcessingExecutionPlanner:
         SELECT ib.*, cm.content_type, cm.metadata
         FROM inference_batch ib
         JOIN content_metadata cm ON ib.content_id = cm.id
-        """
-        
+        """        
         strategy = self.ai_strategies['model_inference']
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.AGGRESSIVE, engine
@@ -1326,10 +1242,8 @@ class AIProcessingExecutionPlanner:
         extraction_type: str,
         engine: AsyncEngine
     ) -> ExecutionPlanResult:
-        """Plan execution for feature extraction operations"""
-        
-        query = f"""
-        SELECT cm.id, cm.file_path, cm.metadata,
+        """Plan execution for feature extraction operations"""        
+        query = f"""        SELECT cm.id, cm.file_path, cm.metadata,
                cf.fingerprint_hash, cf.vector_embedding
         FROM content_metadata cm
         LEFT JOIN content_fingerprints cf ON cm.id = cf.content_id
@@ -1338,8 +1252,7 @@ class AIProcessingExecutionPlanner:
                OR cm.metadata->>'features_extracted' != '{extraction_type}')
         ORDER BY cm.file_size ASC
         LIMIT 50
-        """
-        
+        """        
         strategy = self.ai_strategies['feature_extraction']
         return await self.base_planner.create_execution_plan(
             query, strategy, OptimizationLevel.STANDARD, engine

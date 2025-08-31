@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Isolated Monitoring Tests - Industrial Grade
+"""Isolated Monitoring Tests - Industrial Grade
 
 Comprehensive test suite without complex backend dependencies.
 Tests core monitoring functionality with mocked dependencies.
@@ -28,7 +25,6 @@ Any unauthorized copying, distribution, or use of this code without explicit wri
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
-
 import pytest
 import sys
 import os
@@ -48,8 +44,7 @@ pytestmark = pytest.mark.asyncio
 
 
 class MockMetric:
-    """Mock metric for testing."""
-    
+    """Mock metric for testing."""    
     def __init__(self, name: str, value: float, timestamp: datetime = None):
         self.name = name
         self.value = value
@@ -66,8 +61,7 @@ class MockMetric:
 
 
 class MockAIPerformanceMonitor:
-    """Mock AI Performance Monitor for testing."""
-    
+    """Mock AI Performance Monitor for testing."""    
     def __init__(self, enable_caching=False):
         self.metrics = []
         self.metrics_store = {}  # Added for test compatibility
@@ -87,39 +81,33 @@ class MockAIPerformanceMonitor:
         }
     
     async def initialize(self):
-        """Initialize mock monitor."""
-        self.is_initialized = True
+        """Initialize mock monitor."""        self.is_initialized = True
         return True
     
     async def get_configuration(self) -> Dict[str, Any]:
-        """Get monitor configuration."""
-        return self.config.copy()
+        """Get monitor configuration."""        return self.config.copy()
     
     async def get_all_metrics(self) -> Dict[str, Any]:
-        """Get all stored metrics."""
-        return {
+        """Get all stored metrics."""        return {
             "metrics_count": len(self.metrics),
             "metrics": self.metrics,
             "store": self.metrics_store
         }
     
     async def record_inference_time(self, model_id: str, inference_time: float, **kwargs):
-        """Record inference time metric."""
-        metric = MockMetric(f"inference_time_{model_id}", inference_time)
+        """Record inference time metric."""        metric = MockMetric(f"inference_time_{model_id}", inference_time)
         metric.tags.update(kwargs)
         self.metrics.append(metric)
         return {"recorded": True, "metric_id": len(self.metrics)}
     
     async def record_model_accuracy(self, model_id: str, accuracy: float, **kwargs):
-        """Record model accuracy metric."""
-        metric = MockMetric(f"accuracy_{model_id}", accuracy)
+        """Record model accuracy metric."""        metric = MockMetric(f"accuracy_{model_id}", accuracy)
         metric.tags.update(kwargs)
         self.metrics.append(metric)
         return {"recorded": True, "metric_id": len(self.metrics)}
     
     async def get_performance_summary(self, time_range: timedelta = None):
-        """Get performance summary."""
-        if not self.metrics:
+        """Get performance summary."""        if not self.metrics:
             return {
                 "total_metrics": 0,
                 "average_inference_time": 0,
@@ -143,14 +131,11 @@ class MockAIPerformanceMonitor:
 
 
 class TestMonitoringCore:
-    """Core monitoring functionality tests."""
-    
-    """Initialize MockAIPerformanceMonitor."""
-    
+    """Core monitoring functionality tests."""    
+    """Initialize MockAIPerformanceMonitor."""    
     @pytest_asyncio.fixture
     async def performance_monitor(self):
-        """Create performance monitor fixture."""
-        return MockAIPerformanceMonitor()
+        """Create performance monitor fixture."""        return MockAIPerformanceMonitor()
     
     @pytest_asyncio.fixture
     async def high_performance_monitor(self):
@@ -158,8 +143,7 @@ class TestMonitoringCore:
         return MockAIPerformanceMonitor(enable_caching=True)
     
     async def test_performance_monitor_initialization(self, performance_monitor):
-        """Test performance monitor initialization."""
-        # Verify monitor initialization
+        """Test performance monitor initialization."""        # Verify monitor initialization
         assert performance_monitor is not None
         assert hasattr(performance_monitor, 'metrics_store')
         assert hasattr(performance_monitor, 'config')
@@ -174,8 +158,7 @@ class TestMonitoringCore:
         assert isinstance(metrics, dict)
     
     async def test_inference_time_recording(self, performance_monitor):
-        """Test inference time recording."""
-        # Test single inference recording
+        """Test inference time recording."""        # Test single inference recording
         model_id = "test_model_v1"
         inference_time = 125.5
         
@@ -197,8 +180,7 @@ class TestMonitoringCore:
         assert metric.tags["output_size"] == 512
     
     async def test_batch_inference_recording(self, performance_monitor):
-        """Test batch inference time recording."""
-        model_id = "batch_model_v1"
+        """Test batch inference time recording."""        model_id = "batch_model_v1"
         inference_times = [150.2, 145.8, 155.1, 148.9, 152.3]
         
         # Record multiple inference times
@@ -217,8 +199,7 @@ class TestMonitoringCore:
         assert recorded_times == inference_times
     
     async def test_model_accuracy_tracking(self, performance_monitor):
-        """Test model accuracy tracking."""
-        model_scenarios = [
+        """Test model accuracy tracking."""        model_scenarios = [
             {
                 "model_id": "classification_model",
                 "accuracy": 0.95,
@@ -260,8 +241,7 @@ class TestMonitoringCore:
             assert metric.tags["dataset"] == scenario["dataset"]
     
     async def test_performance_summary_generation(self, performance_monitor):
-        """Test performance summary generation."""
-        # Add test data
+        """Test performance summary generation."""        # Add test data
         test_data = [
             ("model_a", "inference_time", 120.0),
             ("model_a", "accuracy", 0.95),
@@ -300,14 +280,12 @@ class TestMonitoringCore:
         assert abs(summary["average_accuracy"] - expected_avg_accuracy) < 0.01
     
     async def test_concurrent_metric_recording(self, performance_monitor):
-        """Test concurrent metric recording."""
-        # Create concurrent recording tasks
+        """Test concurrent metric recording."""        # Create concurrent recording tasks
         concurrent_tasks = []
         models = ["model_1", "model_2", "model_3", "model_4", "model_5"]
         
         async def record_metrics_for_model(model_id: str, count: int):
-            """Record metrics for a specific model."""
-            for i in range(count):
+            """Record metrics for a specific model."""            for i in range(count):
                 await performance_monitor.record_inference_time(
                     model_id=model_id,
                     inference_time=100 + np.random.uniform(0, 50),
@@ -341,8 +319,7 @@ class TestMonitoringCore:
         assert summary["total_metrics"] == expected_total_metrics
     
     async def test_metric_data_structure(self, performance_monitor):
-        """Test metric data structure and serialization."""
-        model_id = "structure_test_model"
+        """Test metric data structure and serialization."""        model_id = "structure_test_model"
         inference_time = 225.7
         accuracy = 0.934
         
@@ -396,12 +373,10 @@ class TestMonitoringCore:
 
 @pytest.mark.performance
 class TestMonitoringPerformance:
-    """Performance tests for monitoring system."""
-    
+    """Performance tests for monitoring system."""    
     @pytest_asyncio.fixture
     async def high_performance_monitor(self):
-        """Create high-performance monitor instance."""
-        monitor = MockAIPerformanceMonitor()
+        """Create high-performance monitor instance."""        monitor = MockAIPerformanceMonitor()
         monitor.config.update({
             "high_performance_mode": True,
             "batch_processing": True,
@@ -411,8 +386,7 @@ class TestMonitoringPerformance:
         return monitor
     
     async def test_high_volume_metric_recording(self, high_performance_monitor):
-        """Test high volume metric recording."""
-        model_id = "high_volume_model"
+        """Test high volume metric recording."""        model_id = "high_volume_model"
         metric_count = 10000  # 10K metrics
         
         start_time = time.time()

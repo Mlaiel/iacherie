@@ -1,5 +1,4 @@
-"""
-Personalization Manager
+"""Personalization Manager
 ======================
 
 Industrial-grade orchestration for advanced personalization in IA Influencer Agent.
@@ -14,7 +13,6 @@ License: Proprietary - Unauthorized use strictly prohibited
 
 WARNING: Any attempt to steal, copy, or use the concept, idea, or code without explicit written permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class PersonalizationStrategy(str, Enum):
-    """Personalization strategy types"""
-    BEHAVIORAL = "behavioral"
+    """Personalization strategy types"""    BEHAVIORAL = "behavioral"
     COLLABORATIVE = "collaborative"
     CONTENT_BASED = "content_based"
     HYBRID = "hybrid"
@@ -49,8 +46,7 @@ class PersonalizationStrategy(str, Enum):
 
 
 class UserPersonality(str, Enum):
-    """User personality types for personalization"""
-    CREATIVE_EXPLORER = "creative_explorer"
+    """User personality types for personalization"""    CREATIVE_EXPLORER = "creative_explorer"
     BUSINESS_FOCUSED = "business_focused"
     TRENDY_FOLLOWER = "trendy_follower"
     ANALYTICAL_OPTIMIZER = "analytical_optimizer"
@@ -59,8 +55,7 @@ class UserPersonality(str, Enum):
 
 
 class ContentPreference(str, Enum):
-    """Content preference categories"""
-    VISUAL_FOCUSED = "visual_focused"
+    """Content preference categories"""    VISUAL_FOCUSED = "visual_focused"
     AUDIO_CENTRIC = "audio_centric"
     TEXT_BASED = "text_based"
     VIDEO_ORIENTED = "video_oriented"
@@ -69,8 +64,7 @@ class ContentPreference(str, Enum):
 
 
 class EngagementPattern(str, Enum):
-    """User engagement behavior patterns"""
-    HIGH_FREQUENCY = "high_frequency"
+    """User engagement behavior patterns"""    HIGH_FREQUENCY = "high_frequency"
     DEEP_ENGAGEMENT = "deep_engagement"
     BROWSE_DISCOVER = "browse_discover"
     GOAL_ORIENTED = "goal_oriented"
@@ -80,8 +74,7 @@ class EngagementPattern(str, Enum):
 
 @dataclass
 class PersonalizationContext:
-    """Context for personalization requests"""
-    user_id: str
+    """Context for personalization requests"""    user_id: str
     session_id: str
     platform: str
     device_type: str
@@ -96,8 +89,7 @@ class PersonalizationContext:
 
 @dataclass
 class PersonalizationRequest:
-    """Request for personalized content or experience"""
-    context: PersonalizationContext
+    """Request for personalized content or experience"""    context: PersonalizationContext
     request_type: str
     target_content: Optional[List[str]] = None
     personalization_depth: str = "standard"  # basic, standard, advanced, deep
@@ -108,8 +100,7 @@ class PersonalizationRequest:
 
 @dataclass
 class PersonalizationResponse:
-    """Response from personalization engine"""
-    request_id: str
+    """Response from personalization engine"""    request_id: str
     user_id: str
     personalized_content: List[Dict[str, Any]]
     confidence_score: float
@@ -123,10 +114,8 @@ class PersonalizationResponse:
 
 
 class PersonalizationManager(BaseService):
-    """
-    Enterprise-grade personalization manager for multi-format content creators
-    """
-    
+    """    Enterprise-grade personalization manager for multi-format content creators
+    """    
     def __init__(
         self,
         redis_cache: RedisCache,
@@ -156,8 +145,7 @@ class PersonalizationManager(BaseService):
         logger.info("PersonalizationManager initialized successfully")
     
     async def initialize(self) -> None:
-        """Initialize personalization manager"""
-        try:
+        """Initialize personalization manager"""        try:
             await self._load_user_profiles()
             await self._initialize_ml_models()
             await self._setup_real_time_tracking()
@@ -172,16 +160,14 @@ class PersonalizationManager(BaseService):
         self,
         request: PersonalizationRequest
     ) -> PersonalizationResponse:
-        """
-        Generate personalized experience for user
+        """        Generate personalized experience for user
         
         Args:
             request: Personalization request with context
             
         Returns:
             Personalized response with content and recommendations
-        """
-        try:
+        """        try:
             request_id = str(uuid4())
             start_time = datetime.now()
             
@@ -269,8 +255,7 @@ class PersonalizationManager(BaseService):
         interactions: List[Dict[str, Any]],
         feedback: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Update user preferences based on interactions and feedback
+        """        Update user preferences based on interactions and feedback
         
         Args:
             user_id: User identifier
@@ -279,8 +264,7 @@ class PersonalizationManager(BaseService):
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             # Get current profile
             user_profile = await self._get_user_profile(user_id)
             
@@ -318,8 +302,7 @@ class PersonalizationManager(BaseService):
         user_id: str,
         time_range: Optional[Tuple[datetime, datetime]] = None
     ) -> Dict[str, Any]:
-        """
-        Get personalization insights for user
+        """        Get personalization insights for user
         
         Args:
             user_id: User identifier
@@ -327,8 +310,7 @@ class PersonalizationManager(BaseService):
             
         Returns:
             Personalization insights and analytics
-        """
-        try:
+        """        try:
             # Get user profile
             user_profile = await self._get_user_profile(user_id)
             
@@ -376,8 +358,7 @@ class PersonalizationManager(BaseService):
         self,
         request: PersonalizationRequest
     ) -> None:
-        """Validate personalization request"""
-        if not request.context.user_id:
+        """Validate personalization request"""        if not request.context.user_id:
             raise ValidationError("User ID is required")
         
         if not request.context.session_id:
@@ -392,8 +373,7 @@ class PersonalizationManager(BaseService):
         )
     
     async def _get_user_profile(self, user_id: str) -> Dict[str, Any]:
-        """Get user profile with caching"""
-        cache_key = f"user_profile:{user_id}"
+        """Get user profile with caching"""        cache_key = f"user_profile:{user_id}"
         
         # Try cache first
         cached_profile = await self.redis_cache.get(cache_key)
@@ -420,8 +400,7 @@ class PersonalizationManager(BaseService):
         self,
         context: PersonalizationContext
     ) -> Dict[str, Any]:
-        """Analyze current user behavior"""
-        # Real-time behavioral analysis
+        """Analyze current user behavior"""        # Real-time behavioral analysis
         session_data = await self.behavioral_tracker.get_session_data(
             context.session_id
         )
@@ -449,8 +428,7 @@ class PersonalizationManager(BaseService):
         current_behavior: Dict[str, Any],
         request: PersonalizationRequest
     ) -> List[Dict[str, Any]]:
-        """Generate personalized content recommendations"""
-        # Use ML model for content selection
+        """Generate personalized content recommendations"""        # Use ML model for content selection
         content_scores = await self.ml_model.predict_content_relevance(
             user_profile, current_behavior, request.target_content
         )
@@ -473,8 +451,7 @@ class PersonalizationManager(BaseService):
         current_behavior: Dict[str, Any],
         context: PersonalizationContext
     ) -> Dict[str, float]:
-        """Calculate personalization factor weights"""
-        factors = {
+        """Calculate personalization factor weights"""        factors = {
             "content_preference": 0.0,
             "behavioral_pattern": 0.0,
             "contextual_relevance": 0.0,
@@ -529,8 +506,7 @@ def create_personalization_manager(
     behavioral_tracker: BehavioralTracker,
     security_manager: SecurityManager
 ) -> PersonalizationManager:
-    """Create personalization manager instance"""
-    return PersonalizationManager(
+    """Create personalization manager instance"""    return PersonalizationManager(
         redis_cache=redis_cache,
         mongodb_handler=mongodb_handler,
         ml_model=ml_model,
@@ -540,8 +516,7 @@ def create_personalization_manager(
 
 
 def validate_personalization_context(context: PersonalizationContext) -> bool:
-    """Validate personalization context"""
-    required_fields = ["user_id", "session_id", "platform", "device_type"]
+    """Validate personalization context"""    required_fields = ["user_id", "session_id", "platform", "device_type"]
     
     for field in required_fields:
         if not getattr(context, field):

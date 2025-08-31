@@ -1,5 +1,4 @@
-"""
-Content Crawling & Platform Monitoring Engine - IA Influencer Agent Platform
+"""Content Crawling & Platform Monitoring Engine - IA Influencer Agent Platform
 ============================================================================
 
 Industrial-grade web crawling system for automated content monitoring across 
@@ -16,7 +15,6 @@ Any unauthorized copying, modification, or distribution without explicit written
 permission from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will 
 result in legal action under German and international copyright laws.
 """
-
 import asyncio
 import json
 import logging
@@ -57,8 +55,7 @@ settings = get_settings()
 
 
 class ContentCrawlerEngine:
-    """Industrial content crawler with anti-detection and platform integration."""
-    
+    """Industrial content crawler with anti-detection and platform integration."""    
     def __init__(self):
         self.db = get_database()
         self.protection_engine = ContentProtectionEngine()
@@ -197,8 +194,7 @@ class ContentCrawlerEngine:
         protection_id: UUID,
         crawl_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Start automated monitoring crawl for protected content.
+        """        Start automated monitoring crawl for protected content.
         
         Args:
             protection_id: Content protection ID to monitor
@@ -206,8 +202,7 @@ class ContentCrawlerEngine:
             
         Returns:
             Crawl job details and status
-        """
-        try:
+        """        try:
             # Get protection record
             protection = await self.db.content_protection.get_by_id(protection_id)
             if not protection:
@@ -297,8 +292,7 @@ class ContentCrawlerEngine:
         search_terms: List[str],
         search_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Search for content on specific platform.
+        """        Search for content on specific platform.
         
         Args:
             platform: Platform to search
@@ -307,8 +301,7 @@ class ContentCrawlerEngine:
             
         Returns:
             Search results with content matches
-        """
-        try:
+        """        try:
             if platform not in self.platform_configs:
                 raise CrawlerError(f"Unsupported platform: {platform}")
             
@@ -368,8 +361,7 @@ class ContentCrawlerEngine:
         target_fingerprints: List[Dict[str, Any]],
         similarity_threshold: float = 0.85
     ) -> Dict[str, Any]:
-        """
-        Analyze search results for content matches using AI fingerprinting.
+        """        Analyze search results for content matches using AI fingerprinting.
         
         Args:
             search_results: Content found during crawling
@@ -378,8 +370,7 @@ class ContentCrawlerEngine:
             
         Returns:
             Content match analysis results
-        """
-        try:
+        """        try:
             matches = []
             potential_matches = []
             analysis_stats = {
@@ -482,16 +473,14 @@ class ContentCrawlerEngine:
         self,
         crawl_job_id: UUID
     ) -> Dict[str, Any]:
-        """
-        Get real-time status of crawl job.
+        """        Get real-time status of crawl job.
         
         Args:
             crawl_job_id: Crawl job to check
             
         Returns:
             Detailed job status and statistics
-        """
-        try:
+        """        try:
             # Get job from database
             crawl_job = await self.db.crawl_jobs.get_by_id(crawl_job_id)
             if not crawl_job:
@@ -565,8 +554,7 @@ class ContentCrawlerEngine:
         search_terms: List[str],
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Search platform using official API."""
-        try:
+        """Search platform using official API."""        try:
             platform_config = self.platform_configs[platform]
             api_endpoints = platform_config.get('api_endpoints', {})
             results = []
@@ -592,8 +580,7 @@ class ContentCrawlerEngine:
         search_terms: List[str],
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Search platform using web scraping."""
-        try:
+        """Search platform using web scraping."""        try:
             platform_config = self.platform_configs[platform]
             results = []
             
@@ -623,8 +610,7 @@ class ContentCrawlerEngine:
         search_terms: List[str],
         config: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Search YouTube using official API."""
-        try:
+        """Search YouTube using official API."""        try:
             results = []
             api_key = settings.YOUTUBE_API_KEY
             
@@ -681,8 +667,7 @@ class ContentCrawlerEngine:
         config: Dict[str, Any],
         driver: webdriver.Chrome
     ) -> List[Dict[str, Any]]:
-        """Scrape platform using Selenium for JavaScript content."""
-        try:
+        """Scrape platform using Selenium for JavaScript content."""        try:
             results = []
             platform_config = self.platform_configs[platform]
             selectors = platform_config.get('selectors', {})
@@ -734,8 +719,7 @@ class ContentCrawlerEngine:
         driver: webdriver.Chrome,
         selectors: Dict[str, str]
     ) -> List[Dict[str, Any]]:
-        """Extract content from Instagram using Selenium."""
-        try:
+        """Extract content from Instagram using Selenium."""        try:
             results = []
             
             # Wait for posts to load
@@ -805,8 +789,7 @@ class ContentCrawlerEngine:
     # Due to length constraints, providing the core structure
     
     def _build_search_url(self, platform: str, search_term: str) -> str:
-        """Build platform-specific search URL."""
-        search_urls = {
+        """Build platform-specific search URL."""        search_urls = {
             'youtube': f"https://www.youtube.com/results?search_query={search_term.replace(' ', '+')}",
             'instagram': f"https://www.instagram.com/explore/tags/{search_term.replace(' ', '').replace('#', '')}/",
             'tiktok': f"https://www.tiktok.com/search?q={search_term.replace(' ', '%20')}",
@@ -821,8 +804,7 @@ class ContentCrawlerEngine:
         protection_record: Any,
         config: Dict[str, Any]
     ) -> List[str]:
-        """Generate search terms based on protected content."""
-        search_terms = []
+        """Generate search terms based on protected content."""        search_terms = []
         
         # Add content-specific terms
         if hasattr(protection_record, 'content_metadata'):
@@ -860,8 +842,7 @@ class ContentCrawlerEngine:
         return unique_terms[:50]  # Limit to 50 terms
     
     def _calculate_next_execution(self, frequency: str) -> datetime:
-        """Calculate next execution time based on frequency."""
-        now = datetime.utcnow()
+        """Calculate next execution time based on frequency."""        now = datetime.utcnow()
         
         if frequency == 'continuous':
             return now + timedelta(minutes=15)
@@ -875,8 +856,7 @@ class ContentCrawlerEngine:
             return now + timedelta(days=1)  # Default to daily
     
     def _estimate_daily_checks(self, config: Dict[str, Any]) -> int:
-        """Estimate daily content checks based on configuration."""
-        platforms_count = len(config.get('platforms_to_crawl', []))
+        """Estimate daily content checks based on configuration."""        platforms_count = len(config.get('platforms_to_crawl', []))
         search_terms_count = len(config.get('search_terms', []))
         max_results = config.get('max_results_per_platform', 100)
         frequency = config.get('crawl_frequency', 'daily')
@@ -891,8 +871,7 @@ class ContentCrawlerEngine:
         return int(platforms_count * search_terms_count * max_results * daily_multiplier)
     
     async def _get_platform_session(self, platform: str) -> aiohttp.ClientSession:
-        """Get or create HTTP session for platform."""
-        if platform not in self.sessions:
+        """Get or create HTTP session for platform."""        if platform not in self.sessions:
             # Configure session with platform-specific settings
             headers = {
                 'User-Agent': self.user_agent_rotator.get_user_agent(platform),
@@ -925,8 +904,7 @@ class ContentCrawlerEngine:
         return self.sessions[platform]
     
     async def _get_platform_driver(self, platform: str) -> webdriver.Chrome:
-        """Get or create Selenium driver for platform."""
-        if platform not in self.drivers:
+        """Get or create Selenium driver for platform."""        if platform not in self.drivers:
             chrome_options = ChromeOptions()
             
             # Stealth mode configuration
@@ -962,8 +940,7 @@ class ContentCrawlerEngine:
         return self.drivers[platform]
     
     async def _detect_captcha(self, driver: webdriver.Chrome) -> bool:
-        """Detect if captcha is present on page."""
-        captcha_indicators = [
+        """Detect if captcha is present on page."""        captcha_indicators = [
             'captcha', 'recaptcha', 'hcaptcha', 'challenge',
             'verify', 'security', 'robot', 'human'
         ]
@@ -972,8 +949,7 @@ class ContentCrawlerEngine:
         return any(indicator in page_text for indicator in captcha_indicators)
     
     async def _handle_captcha(self, driver: webdriver.Chrome, platform: str):
-        """Handle captcha if detected."""
-        try:
+        """Handle captcha if detected."""        try:
             # Try automated captcha solving
             if self.captcha_solver.is_available():
                 success = await self.captcha_solver.solve_captcha(driver, platform)
@@ -989,8 +965,7 @@ class ContentCrawlerEngine:
             logger.error(f"Captcha handling failed for {platform}: {str(e)}")
     
     def _deduplicate_search_results(self, results: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-        """Remove duplicate results based on URL."""
-        seen_urls = set()
+        """Remove duplicate results based on URL."""        seen_urls = set()
         unique_results = []
         
         for result in results:

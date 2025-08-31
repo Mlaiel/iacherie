@@ -1,5 +1,4 @@
-"""
-🚀 ML Training Module - IA Influencer Agent Platform Enterprise
+"""🚀 ML Training Module - IA Influencer Agent Platform Enterprise
 ==============================================================
 Module: backend/ml/training/__init__.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Composants d'entraînement et d'optimisation des modèles
 - Cross-validation et validation robuste
 - Gestion des expériences et métriques
 """
-
 from .automl_pipeline import (
     AutoMLPipeline,
     AutoMLConfig,

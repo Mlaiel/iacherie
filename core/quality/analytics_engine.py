@@ -1,5 +1,4 @@
-"""
-Quality Analytics Engine - Enterprise Quality Intelligence & Insights System
+"""Quality Analytics Engine - Enterprise Quality Intelligence & Insights System
 
 Advanced analytics engine for quality data processing, trend analysis, 
 predictive insights, and comprehensive quality intelligence reporting.
@@ -11,7 +10,6 @@ Predictive modeling → Insights generation → Performance optimization
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import statistics
 import math
@@ -26,8 +24,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnalyticsTimeframe(Enum):
-    """Analytics timeframe options"""
-    HOURLY = "hourly"
+    """Analytics timeframe options"""    HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
     MONTHLY = "monthly"
@@ -36,16 +33,14 @@ class AnalyticsTimeframe(Enum):
 
 
 class TrendDirection(Enum):
-    """Trend direction indicators"""
-    RISING = "rising"
+    """Trend direction indicators"""    RISING = "rising"
     FALLING = "falling"
     STABLE = "stable"
     VOLATILE = "volatile"
 
 
 class AnalyticsMetricType(Enum):
-    """Types of analytics metrics"""
-    QUALITY_SCORE = "quality_score"
+    """Types of analytics metrics"""    QUALITY_SCORE = "quality_score"
     VALIDATION_ERRORS = "validation_errors"
     PERFORMANCE_METRICS = "performance_metrics"
     COMPLIANCE_SCORE = "compliance_score"
@@ -58,8 +53,7 @@ class AnalyticsMetricType(Enum):
 
 
 class InsightType(Enum):
-    """Types of quality insights"""
-    TREND = "trend"
+    """Types of quality insights"""    TREND = "trend"
     ANOMALY = "anomaly"
     RECOMMENDATION = "recommendation"
     PREDICTION = "prediction"
@@ -68,8 +62,7 @@ class InsightType(Enum):
 
 
 class InsightPriority(Enum):
-    """Insight priority levels"""
-    LOW = "low"
+    """Insight priority levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
@@ -77,8 +70,7 @@ class InsightPriority(Enum):
 
 @dataclass
 class QualityMetricPoint:
-    """Individual quality metric data point"""
-    metric_id: str
+    """Individual quality metric data point"""    metric_id: str
     metric_type: AnalyticsMetricType
     value: float
     timestamp: datetime
@@ -106,8 +98,7 @@ class QualityMetricPoint:
 
 @dataclass
 class TrendAnalysis:
-    """Trend analysis result"""
-    metric_type: AnalyticsMetricType
+    """Trend analysis result"""    metric_type: AnalyticsMetricType
     timeframe: AnalyticsTimeframe
     direction: TrendDirection
     strength: float  # 0.0-1.0
@@ -155,8 +146,7 @@ class TrendAnalysis:
 
 @dataclass
 class QualityInsight:
-    """Quality insight generated from analytics"""
-    insight_id: str
+    """Quality insight generated from analytics"""    insight_id: str
     insight_type: InsightType
     priority: InsightPriority
     title: str
@@ -210,8 +200,7 @@ class QualityInsight:
 
 @dataclass
 class AnalyticsReport:
-    """Comprehensive analytics report"""
-    report_id: str
+    """Comprehensive analytics report"""    report_id: str
     timeframe: AnalyticsTimeframe
     start_date: datetime
     end_date: datetime
@@ -244,21 +233,17 @@ class AnalyticsReport:
     processing_time_ms: float = 0.0
     
     def add_trend(self, trend: TrendAnalysis):
-        """Add trend analysis to report"""
-        self.trends.append(trend)
+        """Add trend analysis to report"""        self.trends.append(trend)
     
     def add_insight(self, insight: QualityInsight):
-        """Add insight to report"""
-        self.insights.append(insight)
+        """Add insight to report"""        self.insights.append(insight)
     
     def get_critical_insights(self) -> List[QualityInsight]:
-        """Get critical priority insights"""
-        return [insight for insight in self.insights 
+        """Get critical priority insights"""        return [insight for insight in self.insights 
                 if insight.priority == InsightPriority.CRITICAL]
     
     def get_insights_by_type(self, insight_type: InsightType) -> List[QualityInsight]:
-        """Get insights by type"""
-        return [insight for insight in self.insights 
+        """Get insights by type"""        return [insight for insight in self.insights 
                 if insight.insight_type == insight_type]
     
     def to_dict(self) -> Dict[str, Any]:
@@ -294,15 +279,13 @@ class AnalyticsReport:
 
 
 class StatisticalAnalyzer:
-    """Statistical analysis for quality metrics"""
-    
+    """Statistical analysis for quality metrics"""    
     def __init__(self):
         self.significance_threshold = 0.05
         self.confidence_level = 0.95
     
     def calculate_descriptive_statistics(self, values: List[float]) -> Dict[str, float]:
-        """Calculate descriptive statistics for a dataset"""
-        if not values:
+        """Calculate descriptive statistics for a dataset"""        if not values:
             return {}
         
         sorted_values = sorted(values)
@@ -337,8 +320,7 @@ class StatisticalAnalyzer:
         return stats
     
     def _percentile(self, sorted_values: List[float], percentile: float) -> float:
-        """Calculate percentile value"""
-        if not sorted_values:
+        """Calculate percentile value"""        if not sorted_values:
             return 0.0
         
         k = (len(sorted_values) - 1) * (percentile / 100.0)
@@ -354,8 +336,7 @@ class StatisticalAnalyzer:
         return d0 + d1
     
     def detect_outliers(self, values: List[float]) -> Tuple[List[float], List[int]]:
-        """Detect outliers using IQR method"""
-        if len(values) < 4:
+        """Detect outliers using IQR method"""        if len(values) < 4:
             return [], []
         
         stats = self.calculate_descriptive_statistics(values)
@@ -373,8 +354,7 @@ class StatisticalAnalyzer:
         return outliers, outlier_indices
     
     def calculate_correlation(self, x_values: List[float], y_values: List[float]) -> float:
-        """Calculate Pearson correlation coefficient"""
-        if len(x_values) != len(y_values) or len(x_values) < 2:
+        """Calculate Pearson correlation coefficient"""        if len(x_values) != len(y_values) or len(x_values) < 2:
             return 0.0
         
         try:
@@ -383,8 +363,7 @@ class StatisticalAnalyzer:
             return 0.0
     
     def linear_regression(self, x_values: List[float], y_values: List[float]) -> Tuple[float, float, float]:
-        """Calculate linear regression slope, intercept, and R-squared"""
-        if len(x_values) != len(y_values) or len(x_values) < 2:
+        """Calculate linear regression slope, intercept, and R-squared"""        if len(x_values) != len(y_values) or len(x_values) < 2:
             return 0.0, 0.0, 0.0
         
         n = len(x_values)
@@ -410,8 +389,7 @@ class StatisticalAnalyzer:
         return slope, intercept, r_squared
     
     def detect_trend(self, values: List[float], timestamps: List[datetime]) -> TrendDirection:
-        """Detect trend direction in time series data"""
-        if len(values) < 3:
+        """Detect trend direction in time series data"""        if len(values) < 3:
             return TrendDirection.STABLE
         
         # Convert timestamps to numeric values for regression
@@ -432,16 +410,14 @@ class StatisticalAnalyzer:
 
 
 class TrendDetector:
-    """Trend detection and analysis system"""
-    
+    """Trend detection and analysis system"""    
     def __init__(self):
         self.statistical_analyzer = StatisticalAnalyzer()
         self.min_data_points = 5
     
     def analyze_metric_trends(self, metric_points: List[QualityMetricPoint],
                             timeframe: AnalyticsTimeframe) -> List[TrendAnalysis]:
-        """Analyze trends for quality metrics"""
-        trends = []
+        """Analyze trends for quality metrics"""        trends = []
         
         # Group metrics by type
         metrics_by_type = defaultdict(list)
@@ -465,8 +441,7 @@ class TrendDetector:
     def _analyze_single_metric_trend(self, points: List[QualityMetricPoint],
                                    metric_type: AnalyticsMetricType,
                                    timeframe: AnalyticsTimeframe) -> Optional[TrendAnalysis]:
-        """Analyze trend for a single metric type"""
-        if len(points) < self.min_data_points:
+        """Analyze trend for a single metric type"""        if len(points) < self.min_data_points:
             return None
         
         values = [point.value for point in points]
@@ -523,8 +498,7 @@ class TrendDetector:
     
     def _calculate_trend_confidence(self, values: List[float], 
                                   correlation: float, data_points: int) -> float:
-        """Calculate confidence in trend analysis"""
-        # Base confidence on correlation strength
+        """Calculate confidence in trend analysis"""        # Base confidence on correlation strength
         correlation_confidence = abs(correlation)
         
         # Boost confidence with more data points
@@ -546,8 +520,7 @@ class TrendDetector:
                                   direction: TrendDirection,
                                   change_percentage: float,
                                   timeframe: AnalyticsTimeframe) -> str:
-        """Generate human-readable trend description"""
-        metric_name = metric_type.value.replace('_', ' ').title()
+        """Generate human-readable trend description"""        metric_name = metric_type.value.replace('_', ' ').title()
         timeframe_name = timeframe.value
         
         if direction == TrendDirection.RISING:
@@ -561,8 +534,7 @@ class TrendDetector:
     
     def _determine_trend_significance(self, change_percentage: float,
                                     correlation: float, data_points: int) -> str:
-        """Determine trend significance level"""
-        # Strong correlation and significant change
+        """Determine trend significance level"""        # Strong correlation and significant change
         if abs(correlation) > 0.7 and change_percentage > 20:
             return "high"
         # Moderate correlation or change
@@ -574,8 +546,7 @@ class TrendDetector:
 
 
 class InsightGenerator:
-    """Quality insight generation system"""
-    
+    """Quality insight generation system"""    
     def __init__(self):
         self.trend_detector = TrendDetector()
         self.statistical_analyzer = StatisticalAnalyzer()
@@ -583,8 +554,7 @@ class InsightGenerator:
     def generate_insights(self, metric_points: List[QualityMetricPoint],
                          trends: List[TrendAnalysis],
                          timeframe: AnalyticsTimeframe) -> List[QualityInsight]:
-        """Generate quality insights from analytics data"""
-        insights = []
+        """Generate quality insights from analytics data"""        insights = []
         
         # Generate trend-based insights
         insights.extend(self._generate_trend_insights(trends))
@@ -604,8 +574,7 @@ class InsightGenerator:
         return insights
     
     def _generate_trend_insights(self, trends: List[TrendAnalysis]) -> List[QualityInsight]:
-        """Generate insights from trend analysis"""
-        insights = []
+        """Generate insights from trend analysis"""        insights = []
         
         for trend in trends:
             if trend.significance == "high" and trend.confidence > 0.7:
@@ -615,8 +584,7 @@ class InsightGenerator:
         return insights
     
     def _create_trend_insight(self, trend: TrendAnalysis) -> QualityInsight:
-        """Create insight from trend analysis"""
-        metric_name = trend.metric_type.value.replace('_', ' ').title()
+        """Create insight from trend analysis"""        metric_name = trend.metric_type.value.replace('_', ' ').title()
         
         if trend.direction == TrendDirection.RISING:
             if trend.metric_type in [AnalyticsMetricType.QUALITY_SCORE, 
@@ -691,8 +659,7 @@ class InsightGenerator:
         )
     
     def _generate_anomaly_insights(self, metric_points: List[QualityMetricPoint]) -> List[QualityInsight]:
-        """Generate insights from anomaly detection"""
-        insights = []
+        """Generate insights from anomaly detection"""        insights = []
         
         # Group by metric type for anomaly detection
         metrics_by_type = defaultdict(list)
@@ -715,8 +682,7 @@ class InsightGenerator:
     def _create_anomaly_insight(self, metric_type: AnalyticsMetricType,
                               points: List[QualityMetricPoint],
                               outlier_indices: List[int]) -> QualityInsight:
-        """Create insight from anomaly detection"""
-        metric_name = metric_type.value.replace('_', ' ').title()
+        """Create insight from anomaly detection"""        metric_name = metric_type.value.replace('_', ' ').title()
         outlier_count = len(outlier_indices)
         
         # Get outlier values and timestamps
@@ -764,8 +730,7 @@ class InsightGenerator:
         )
     
     def _generate_performance_insights(self, metric_points: List[QualityMetricPoint]) -> List[QualityInsight]:
-        """Generate performance-based insights"""
-        insights = []
+        """Generate performance-based insights"""        insights = []
         
         # Analyze processing time performance
         processing_points = [p for p in metric_points 
@@ -801,8 +766,7 @@ class InsightGenerator:
     
     def _generate_predictive_insights(self, trends: List[TrendAnalysis],
                                     timeframe: AnalyticsTimeframe) -> List[QualityInsight]:
-        """Generate predictive insights based on trends"""
-        insights = []
+        """Generate predictive insights based on trends"""        insights = []
         
         for trend in trends:
             if trend.confidence > 0.7 and abs(trend.slope) > 0.1:
@@ -817,8 +781,7 @@ class InsightGenerator:
     
     def _predict_future_value(self, trend: TrendAnalysis, 
                             timeframe: AnalyticsTimeframe) -> Optional[Dict[str, Any]]:
-        """Predict future metric values based on trend"""
-        if trend.correlation < 0.5:  # Low correlation reduces prediction reliability
+        """Predict future metric values based on trend"""        if trend.correlation < 0.5:  # Low correlation reduces prediction reliability
             return None
         
         # Project one timeframe period into the future
@@ -848,8 +811,7 @@ class InsightGenerator:
     def _create_predictive_insight(self, trend: TrendAnalysis,
                                  prediction: Dict[str, Any],
                                  timeframe: AnalyticsTimeframe) -> QualityInsight:
-        """Create predictive insight"""
-        metric_name = trend.metric_type.value.replace('_', ' ').title()
+        """Create predictive insight"""        metric_name = trend.metric_type.value.replace('_', ' ').title()
         
         change_direction = "increase" if prediction['projected_change'] > 0 else "decrease"
         change_magnitude = abs(prediction['projected_change'])
@@ -882,8 +844,7 @@ class InsightGenerator:
         )
     
     def _generate_comparison_insights(self, metric_points: List[QualityMetricPoint]) -> List[QualityInsight]:
-        """Generate comparison insights across platforms/categories"""
-        insights = []
+        """Generate comparison insights across platforms/categories"""        insights = []
         
         # Compare platform performance
         platform_insights = self._compare_platform_performance(metric_points)
@@ -896,8 +857,7 @@ class InsightGenerator:
         return insights
     
     def _compare_platform_performance(self, metric_points: List[QualityMetricPoint]) -> List[QualityInsight]:
-        """Compare performance across platforms"""
-        insights = []
+        """Compare performance across platforms"""        insights = []
         
         # Group by platform and metric type
         platform_metrics = defaultdict(lambda: defaultdict(list))
@@ -948,8 +908,7 @@ class InsightGenerator:
         return insights
     
     def _compare_category_performance(self, metric_points: List[QualityMetricPoint]) -> List[QualityInsight]:
-        """Compare performance across content categories"""
-        insights = []
+        """Compare performance across content categories"""        insights = []
         
         # Group by category and metric type
         category_metrics = defaultdict(lambda: defaultdict(list))
@@ -1001,8 +960,7 @@ class InsightGenerator:
 
 
 class QualityAnalyticsEngine:
-    """Enterprise quality analytics and intelligence engine"""
-    
+    """Enterprise quality analytics and intelligence engine"""    
     def __init__(self):
         self.statistical_analyzer = StatisticalAnalyzer()
         self.trend_detector = TrendDetector()
@@ -1013,13 +971,11 @@ class QualityAnalyticsEngine:
         self.reports: List[AnalyticsReport] = []
     
     def add_metric_point(self, metric_point: QualityMetricPoint):
-        """Add a quality metric data point"""
-        self.metric_points.append(metric_point)
+        """Add a quality metric data point"""        self.metric_points.append(metric_point)
     
     def add_quality_data(self, content_id: str, quality_data: Dict[str, Any],
                         platform: Optional[str] = None, category: Optional[str] = None):
-        """Add quality data from validation results"""
-        timestamp = datetime.now(timezone.utc)
+        """Add quality data from validation results"""        timestamp = datetime.now(timezone.utc)
         
         # Extract metrics from quality data
         metrics_to_extract = [
@@ -1049,8 +1005,7 @@ class QualityAnalyticsEngine:
     def generate_analytics_report(self, timeframe: AnalyticsTimeframe,
                                 start_date: Optional[datetime] = None,
                                 end_date: Optional[datetime] = None) -> AnalyticsReport:
-        """Generate comprehensive analytics report"""
-        report_start_time = datetime.now(timezone.utc)
+        """Generate comprehensive analytics report"""        report_start_time = datetime.now(timezone.utc)
         
         # Set default date range if not provided
         if not end_date:
@@ -1130,8 +1085,7 @@ class QualityAnalyticsEngine:
     
     def _calculate_summary_statistics(self, metric_points: List[QualityMetricPoint],
                                     report: AnalyticsReport):
-        """Calculate summary statistics for the report"""
-        if not metric_points:
+        """Calculate summary statistics for the report"""        if not metric_points:
             return
         
         # Total content analyzed
@@ -1155,8 +1109,7 @@ class QualityAnalyticsEngine:
     
     def _calculate_performance_metrics(self, metric_points: List[QualityMetricPoint],
                                      report: AnalyticsReport):
-        """Calculate platform and category performance metrics"""
-        # Platform performance
+        """Calculate platform and category performance metrics"""        # Platform performance
         platform_metrics = defaultdict(list)
         for point in metric_points:
             if point.platform and point.metric_type == AnalyticsMetricType.QUALITY_SCORE:
@@ -1176,8 +1129,7 @@ class QualityAnalyticsEngine:
     
     def _calculate_quality_distribution(self, metric_points: List[QualityMetricPoint],
                                       report: AnalyticsReport):
-        """Calculate quality score distribution"""
-        quality_points = [point for point in metric_points 
+        """Calculate quality score distribution"""        quality_points = [point for point in metric_points 
                          if point.metric_type == AnalyticsMetricType.QUALITY_SCORE]
         
         if not quality_points:
@@ -1201,8 +1153,7 @@ class QualityAnalyticsEngine:
     
     def _calculate_processing_statistics(self, metric_points: List[QualityMetricPoint],
                                        report: AnalyticsReport):
-        """Calculate processing performance statistics"""
-        processing_points = [point for point in metric_points 
+        """Calculate processing performance statistics"""        processing_points = [point for point in metric_points 
                            if point.metric_type == AnalyticsMetricType.PROCESSING_TIME]
         
         if processing_points:
@@ -1219,8 +1170,7 @@ class QualityAnalyticsEngine:
             }
     
     def get_real_time_insights(self, lookback_hours: int = 24) -> List[QualityInsight]:
-        """Get real-time insights for recent data"""
-        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=lookback_hours)
+        """Get real-time insights for recent data"""        cutoff_time = datetime.now(timezone.utc) - timedelta(hours=lookback_hours)
         
         recent_points = [
             point for point in self.metric_points
@@ -1245,8 +1195,7 @@ class QualityAnalyticsEngine:
     
     def get_metric_summary(self, metric_type: AnalyticsMetricType,
                           days_back: int = 30) -> Dict[str, Any]:
-        """Get summary statistics for a specific metric"""
-        cutoff_time = datetime.now(timezone.utc) - timedelta(days=days_back)
+        """Get summary statistics for a specific metric"""        cutoff_time = datetime.now(timezone.utc) - timedelta(days=days_back)
         
         metric_points = [
             point for point in self.metric_points
@@ -1274,8 +1223,7 @@ class QualityAnalyticsEngine:
         }
     
     def export_data(self, format_type: str = "json") -> Union[str, Dict[str, Any]]:
-        """Export analytics data"""
-        data = {
+        """Export analytics data"""        data = {
             'metric_points': [point.to_dict() for point in self.metric_points],
             'reports': [report.to_dict() for report in self.reports],
             'export_timestamp': datetime.now(timezone.utc).isoformat(),
@@ -1289,8 +1237,7 @@ class QualityAnalyticsEngine:
             return data
     
     def clear_old_data(self, days_to_keep: int = 90):
-        """Clear old metric data to manage storage"""
-        cutoff_time = datetime.now(timezone.utc) - timedelta(days=days_to_keep)
+        """Clear old metric data to manage storage"""        cutoff_time = datetime.now(timezone.utc) - timedelta(days=days_to_keep)
         
         # Remove old metric points
         self.metric_points = [

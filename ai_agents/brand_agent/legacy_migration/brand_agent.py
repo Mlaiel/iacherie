@@ -1,5 +1,4 @@
-"""
-Brand Agent - Advanced Brand Management & Identity Protection System
+"""Brand Agent - Advanced Brand Management & Identity Protection System
 
 Industrial-grade brand protection, identity management, and reputation monitoring for content creators.
 Handles brand consistency, trademark protection, anti-counterfeiting, and brand value optimization.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import hashlib
@@ -63,16 +61,14 @@ from ...content_protection.fingerprinting import VisualFingerprinter
 logger = logging.getLogger(__name__)
 
 class BrandThreatLevel(Enum):
-    """Brand threat severity levels"""
-    NONE = "none"
+    """Brand threat severity levels"""    NONE = "none"
     LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 class BrandAssetType(Enum):
-    """Types of brand assets to protect"""
-    LOGO = "logo"
+    """Types of brand assets to protect"""    LOGO = "logo"
     TRADEMARK = "trademark"
     SLOGAN = "slogan"
     COLOR_PALETTE = "color_palette"
@@ -83,8 +79,7 @@ class BrandAssetType(Enum):
     DOMAIN_NAME = "domain_name"
 
 class BrandViolationType(Enum):
-    """Types of brand violations detected"""
-    LOGO_MISUSE = "logo_misuse"
+    """Types of brand violations detected"""    LOGO_MISUSE = "logo_misuse"
     TRADEMARK_INFRINGEMENT = "trademark_infringement"
     COUNTERFEITING = "counterfeiting"
     UNAUTHORIZED_USE = "unauthorized_use"
@@ -95,8 +90,7 @@ class BrandViolationType(Enum):
 
 @dataclass
 class BrandAsset:
-    """Brand asset definition and metadata"""
-    asset_id: str
+    """Brand asset definition and metadata"""    asset_id: str
     asset_type: BrandAssetType
     name: str
     description: str
@@ -115,8 +109,7 @@ class BrandAsset:
 
 @dataclass
 class BrandViolation:
-    """Detected brand violation with evidence"""
-    violation_id: str
+    """Detected brand violation with evidence"""    violation_id: str
     asset_id: str
     violation_type: BrandViolationType
     threat_level: BrandThreatLevel
@@ -130,8 +123,7 @@ class BrandViolation:
 
 @dataclass
 class BrandMetrics:
-    """Comprehensive brand performance metrics"""
-    brand_id: str
+    """Comprehensive brand performance metrics"""    brand_id: str
     recognition_score: float = 0.0
     sentiment_score: float = 0.0
     engagement_rate: float = 0.0
@@ -147,8 +139,7 @@ class BrandMetrics:
 
 @dataclass
 class BrandViolation:
-    """Brand violation detection result"""
-    violation_id: str
+    """Brand violation detection result"""    violation_id: str
     asset_id: str
     violation_type: BrandViolationType
     threat_level: BrandThreatLevel
@@ -164,8 +155,7 @@ class BrandViolation:
 
 @dataclass
 class BrandConsistencyReport:
-    """Brand consistency analysis report"""
-    report_id: str
+    """Brand consistency analysis report"""    report_id: str
     brand_id: str
     analyzed_assets: List[str]
     consistency_score: float
@@ -177,8 +167,7 @@ class BrandConsistencyReport:
     generated_at: datetime = field(default_factory=datetime.utcnow)
 
 class BrandAgent(BaseAgent):
-    """
-    Advanced Brand Management & Identity Protection System
+    """    Advanced Brand Management & Identity Protection System
     
     Provides comprehensive brand protection including:
     - Visual brand identity protection
@@ -188,7 +177,6 @@ class BrandAgent(BaseAgent):
     - Reputation monitoring
     - Automated takedown requests
     """
-
     def __init__(self, agent_id: str = "brand_agent"):
         super().__init__(agent_id)
         self.name = "Brand Protection Agent"
@@ -212,8 +200,7 @@ class BrandAgent(BaseAgent):
         logger.info(f"Brand Agent {self.agent_id} initialized successfully")
 
     def _initialize_models(self) -> None:
-        """Initialize ML models for brand analysis"""
-        try:
+        """Initialize ML models for brand analysis"""        try:
             # Visual similarity model for logo/image comparison
             self.visual_processor = ImageProcessor()
             self.visual_fingerprinter = VisualFingerprinter()
@@ -238,16 +225,14 @@ class BrandAgent(BaseAgent):
             raise
 
     def _initialize_color_extractor(self):
-        """Initialize advanced color extraction and analysis"""
-        from sklearn.cluster import KMeans
+        """Initialize advanced color extraction and analysis"""        from sklearn.cluster import KMeans
         
         class ColorExtractor:
             def __init__(self):
                 self.kmeans = KMeans(n_clusters=5, random_state=42)
                 
             def extract_dominant_colors(self, image_path: str) -> List[str]:
-                """Extract dominant colors from image"""
-                try:
+                """Extract dominant colors from image"""                try:
                     image = cv2.imread(image_path)
                     image = cv2.cvtColor(image, cv2.COLOR_BGR_RGB)
                     image = image.reshape((image.shape[0] * image.shape[1], 3))
@@ -269,8 +254,7 @@ class BrandAgent(BaseAgent):
                     return []
                     
             def calculate_color_similarity(self, palette1: List[str], palette2: List[str]) -> float:
-                """Calculate similarity between color palettes"""
-                try:
+                """Calculate similarity between color palettes"""                try:
                     similarities = []
                     for color1 in palette1:
                         best_match = 0.0
@@ -288,21 +272,18 @@ class BrandAgent(BaseAgent):
                     return 0.0
                     
             def _hex_to_rgb(self, hex_color: str) -> Tuple[int, int, int]:
-                """Convert hex color to RGB"""
-                hex_color = hex_color.lstrip('#')
+                """Convert hex color to RGB"""                hex_color = hex_color.lstrip('#')
                 return tuple(int(hex_color[i:i+2], 16) for i in (0, 2, 4))
                 
             def _color_distance(self, rgb1: Tuple[int, int, int], rgb2: Tuple[int, int, int]) -> float:
-                """Calculate color distance (inverse similarity)"""
-                distance = sum((a - b) ** 2 for a, b in zip(rgb1, rgb2)) ** 0.5
+                """Calculate color distance (inverse similarity)"""                distance = sum((a - b) ** 2 for a, b in zip(rgb1, rgb2)) ** 0.5
                 max_distance = (3 * 255 ** 2) ** 0.5
                 return 1.0 - (distance / max_distance)
         
         return ColorExtractor()
 
     def _initialize_font_detector(self):
-        """Initialize font detection and analysis"""
-        class FontDetector:
+        """Initialize font detection and analysis"""        class FontDetector:
             def __init__(self):
                 # Common font families for detection
                 self.common_fonts = [
@@ -312,8 +293,7 @@ class BrandAgent(BaseAgent):
                 ]
                 
             def detect_font_family(self, text_image_path: str) -> Optional[str]:
-                """Detect font family from text image"""
-                try:
+                """Detect font family from text image"""                try:
                     # This would use OCR and font recognition
                     # For now, return detected font or None
                     return "Arial"  # Placeholder - real implementation would use font detection
@@ -321,8 +301,7 @@ class BrandAgent(BaseAgent):
                     return None
                     
             def analyze_typography_consistency(self, images: List[str]) -> Dict[str, Any]:
-                """Analyze typography consistency across multiple images"""
-                fonts_detected = []
+                """Analyze typography consistency across multiple images"""                fonts_detected = []
                 for image_path in images:
                     font = self.detect_font_family(image_path)
                     if font:
@@ -349,8 +328,7 @@ class BrandAgent(BaseAgent):
         return FontDetector()
 
     async def process_request(self, request: AgentRequest) -> Dict[str, Any]:
-        """Process brand protection requests"""
-        try:
+        """Process brand protection requests"""        try:
             self._update_status(AgentStatus.BUSY)
             
             action = request.action
@@ -386,8 +364,7 @@ class BrandAgent(BaseAgent):
             return {"success": False, "error": str(e)}
 
     async def _register_brand_asset(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Register and fingerprint a new brand asset"""
-        try:
+        """Register and fingerprint a new brand asset"""        try:
             asset_type = BrandAssetType(data.get("asset_type"))
             asset_name = data.get("name")
             file_path = data.get("file_path")
@@ -442,16 +419,14 @@ class BrandAgent(BaseAgent):
             raise
 
     async def _generate_visual_fingerprint(self, image_path: str) -> str:
-        """Generate perceptual hash for visual content"""
-        try:
+        """Generate perceptual hash for visual content"""        try:
             return await self.visual_fingerprinter.generate_fingerprint(image_path)
         except Exception as e:
             logger.error(f"Visual fingerprint generation failed: {str(e)}")
             return ""
 
     async def _generate_text_fingerprint(self, text: str) -> str:
-        """Generate semantic fingerprint for text content"""
-        try:
+        """Generate semantic fingerprint for text content"""        try:
             # Create semantic embedding using the text analyzer
             embedding = await self.text_analyzer.get_embedding(text)
             # Convert embedding to hash for fingerprint
@@ -462,8 +437,7 @@ class BrandAgent(BaseAgent):
             return hashlib.md5(text.encode()).hexdigest()
 
     async def _extract_visual_features(self, image_path: str) -> Dict[str, Any]:
-        """Extract comprehensive visual features from image"""
-        try:
+        """Extract comprehensive visual features from image"""        try:
             features = {}
             
             # Load image
@@ -506,8 +480,7 @@ class BrandAgent(BaseAgent):
             return {}
 
     async def _store_asset_vector(self, asset: BrandAsset) -> None:
-        """Store asset vector in database for similarity search"""
-        try:
+        """Store asset vector in database for similarity search"""        try:
             if asset.fingerprint:
                 # Convert fingerprint to vector for storage
                 vector_data = {
@@ -527,8 +500,7 @@ class BrandAgent(BaseAgent):
             logger.error(f"Asset vector storage failed: {str(e)}")
 
     async def _detect_brand_violations(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Detect brand violations across multiple sources"""
-        try:
+        """Detect brand violations across multiple sources"""        try:
             search_params = data.get("search_params", {})
             brand_id = data.get("brand_id")
             monitoring_scope = data.get("scope", ["web", "social_media", "marketplaces"])
@@ -569,8 +541,7 @@ class BrandAgent(BaseAgent):
             raise
 
     async def _scan_web_violations(self, search_params: Dict[str, Any]) -> List[BrandViolation]:
-        """Scan web for brand violations"""
-        violations = []
+        """Scan web for brand violations"""        violations = []
         
         try:
             # Search engines and web crawling
@@ -591,8 +562,7 @@ class BrandAgent(BaseAgent):
         return violations
 
     async def _scan_social_media_violations(self, search_params: Dict[str, Any]) -> List[BrandViolation]:
-        """Scan social media platforms for brand violations"""
-        violations = []
+        """Scan social media platforms for brand violations"""        violations = []
         
         try:
             platforms = search_params.get("platforms", ["instagram", "facebook", "twitter", "tiktok"])
@@ -609,8 +579,7 @@ class BrandAgent(BaseAgent):
         return violations
 
     async def _scan_marketplace_violations(self, search_params: Dict[str, Any]) -> List[BrandViolation]:
-        """Scan online marketplaces for counterfeit products"""
-        violations = []
+        """Scan online marketplaces for counterfeit products"""        violations = []
         
         try:
             marketplaces = search_params.get("marketplaces", ["amazon", "ebay", "alibaba", "etsy"])
@@ -627,8 +596,7 @@ class BrandAgent(BaseAgent):
         return violations
 
     async def _perform_web_search(self, query: str) -> List[Dict[str, Any]]:
-        """Perform web search using search engines"""
-        # This would integrate with Google Custom Search API, Bing API, etc.
+        """Perform web search using search engines"""        # This would integrate with Google Custom Search API, Bing API, etc.
         # For now, return placeholder results
         return [
             {
@@ -641,8 +609,7 @@ class BrandAgent(BaseAgent):
         ]
 
     async def _analyze_web_result_for_violation(self, result: Dict[str, Any], search_params: Dict[str, Any]) -> Optional[BrandViolation]:
-        """Analyze a web search result for potential brand violations"""
-        try:
+        """Analyze a web search result for potential brand violations"""        try:
             url = result.get("url")
             title = result.get("title", "")
             description = result.get("description", "")
@@ -688,8 +655,7 @@ class BrandAgent(BaseAgent):
         return None
 
     async def _calculate_text_violation_score(self, text: str, search_params: Dict[str, Any]) -> float:
-        """Calculate text-based violation score"""
-        try:
+        """Calculate text-based violation score"""        try:
             protected_terms = search_params.get("protected_terms", [])
             brand_name = search_params.get("brand_name", "")
             
@@ -720,8 +686,7 @@ class BrandAgent(BaseAgent):
             return 0.0
 
     def _generate_brand_variations(self, brand_name: str) -> List[str]:
-        """Generate common variations of brand name for detection"""
-        variations = [brand_name]
+        """Generate common variations of brand name for detection"""        variations = [brand_name]
         
         # Remove spaces
         variations.append(brand_name.replace(" ", ""))
@@ -744,8 +709,7 @@ class BrandAgent(BaseAgent):
         return list(set(variations))
 
     async def _calculate_semantic_similarity(self, text1: str, text2: str) -> float:
-        """Calculate semantic similarity between texts"""
-        try:
+        """Calculate semantic similarity between texts"""        try:
             # Use the text analyzer for semantic similarity
             similarity = await self.text_analyzer.calculate_similarity(text1, text2)
             return similarity
@@ -754,8 +718,7 @@ class BrandAgent(BaseAgent):
             return 0.0
 
     async def _calculate_visual_violation_score(self, image_urls: List[str], search_params: Dict[str, Any]) -> float:
-        """Calculate visual-based violation score"""
-        max_score = 0.0
+        """Calculate visual-based violation score"""        max_score = 0.0
         
         try:
             protected_asset_ids = search_params.get("protected_asset_ids", [])
@@ -788,8 +751,7 @@ class BrandAgent(BaseAgent):
         return max_score
 
     async def _download_image(self, image_url: str) -> Optional[str]:
-        """Download image for analysis"""
-        try:
+        """Download image for analysis"""        try:
             import tempfile
             import aiohttp
             
@@ -809,8 +771,7 @@ class BrandAgent(BaseAgent):
         return None
 
     async def _calculate_fingerprint_similarity(self, fingerprint1: str, fingerprint2: str) -> float:
-        """Calculate similarity between two fingerprints"""
-        try:
+        """Calculate similarity between two fingerprints"""        try:
             # For hash-based fingerprints, use Hamming distance
             if len(fingerprint1) == len(fingerprint2):
                 differences = sum(c1 != c2 for c1, c2 in zip(fingerprint1, fingerprint2))
@@ -827,8 +788,7 @@ class BrandAgent(BaseAgent):
             return 0.0
 
     def _score_to_threat_level(self, score: float) -> BrandThreatLevel:
-        """Convert violation score to threat level"""
-        if score >= 0.9:
+        """Convert violation score to threat level"""        if score >= 0.9:
             return BrandThreatLevel.CRITICAL
         elif score >= 0.8:
             return BrandThreatLevel.HIGH
@@ -840,8 +800,7 @@ class BrandAgent(BaseAgent):
             return BrandThreatLevel.NONE
 
     def _calculate_legal_risk(self, violation_score: float, platform: str) -> float:
-        """Calculate legal risk score based on violation and platform"""
-        base_risk = violation_score * 0.8
+        """Calculate legal risk score based on violation and platform"""        base_risk = violation_score * 0.8
         
         # Platform-specific risk multipliers
         platform_multipliers = {
@@ -858,8 +817,7 @@ class BrandAgent(BaseAgent):
         return min(base_risk * multiplier, 1.0)
 
     def _generate_recommended_actions(self, violation_score: float, platform: str) -> List[str]:
-        """Generate recommended actions based on violation severity"""
-        actions = []
+        """Generate recommended actions based on violation severity"""        actions = []
         
         if violation_score >= 0.9:
             actions.extend([
@@ -890,8 +848,7 @@ class BrandAgent(BaseAgent):
         return actions
 
     async def _prioritize_violations(self, violations: List[BrandViolation]) -> List[BrandViolation]:
-        """Prioritize violations based on threat level and impact"""
-        try:
+        """Prioritize violations based on threat level and impact"""        try:
             # Sort by threat level, then by confidence score
             priority_order = {
                 BrandThreatLevel.CRITICAL: 5,
@@ -914,8 +871,7 @@ class BrandAgent(BaseAgent):
             return violations
 
     def _violation_to_dict(self, violation: BrandViolation) -> Dict[str, Any]:
-        """Convert BrandViolation to dictionary for JSON serialization"""
-        return {
+        """Convert BrandViolation to dictionary for JSON serialization"""        return {
             "violation_id": violation.violation_id,
             "asset_id": violation.asset_id,
             "violation_type": violation.violation_type.value,
@@ -932,13 +888,11 @@ class BrandAgent(BaseAgent):
 
 
 class BrandAgentManager:
-    """
-    Brand Agent Manager - Orchestrates multiple brand agents and monitoring tasks
+    """    Brand Agent Manager - Orchestrates multiple brand agents and monitoring tasks
     
     Provides centralized management for brand protection operations,
     scheduled monitoring, and violation response automation.
     """
-
     def __init__(self):
         self.agents: Dict[str, BrandAgent] = {}
         self.monitoring_tasks: Dict[str, asyncio.Task] = {}
@@ -947,8 +901,7 @@ class BrandAgentManager:
         logger.info("Brand Agent Manager initialized")
 
     async def create_agent(self, brand_id: str, config: Dict[str, Any]) -> BrandAgent:
-        """Create and configure a new brand agent"""
-        try:
+        """Create and configure a new brand agent"""        try:
             agent_id = f"brand_agent_{brand_id}"
             agent = BrandAgent(agent_id)
             
@@ -965,8 +918,7 @@ class BrandAgentManager:
             raise
 
     async def start_monitoring(self, brand_id: str, monitoring_config: Dict[str, Any]) -> None:
-        """Start continuous brand monitoring"""
-        try:
+        """Start continuous brand monitoring"""        try:
             if brand_id not in self.agents:
                 raise ValueError(f"No agent found for brand: {brand_id}")
             
@@ -985,8 +937,7 @@ class BrandAgentManager:
             raise
 
     async def stop_monitoring(self, brand_id: str) -> None:
-        """Stop brand monitoring for specific brand"""
-        try:
+        """Stop brand monitoring for specific brand"""        try:
             if brand_id in self.monitoring_tasks:
                 task = self.monitoring_tasks[brand_id]
                 task.cancel()
@@ -997,8 +948,7 @@ class BrandAgentManager:
             logger.error(f"Brand monitoring stop failed: {str(e)}")
 
     async def _configure_agent(self, agent: BrandAgent, config: Dict[str, Any]) -> None:
-        """Configure brand agent with specific settings"""
-        try:
+        """Configure brand agent with specific settings"""        try:
             # Set monitoring parameters
             agent.monitoring_interval = config.get("monitoring_interval", 3600)  # 1 hour
             agent.violation_threshold = config.get("violation_threshold", 0.7)
@@ -1014,8 +964,7 @@ class BrandAgentManager:
             raise
 
     async def _continuous_monitoring(self, agent: BrandAgent, config: Dict[str, Any]) -> None:
-        """Continuous monitoring task for brand protection"""
-        try:
+        """Continuous monitoring task for brand protection"""        try:
             monitoring_interval = config.get("monitoring_interval", 3600)
             
             while True:
@@ -1053,8 +1002,7 @@ class BrandAgentManager:
             logger.error(f"Continuous monitoring failed: {str(e)}")
 
     async def _handle_high_priority_violations(self, agent: BrandAgent, violations: List[Dict[str, Any]]) -> None:
-        """Handle high-priority brand violations"""
-        try:
+        """Handle high-priority brand violations"""        try:
             for violation in violations:
                 threat_level = violation.get("threat_level")
                 
@@ -1069,8 +1017,7 @@ class BrandAgentManager:
             logger.error(f"High priority violation handling failed: {str(e)}")
 
     async def _handle_critical_violation(self, agent: BrandAgent, violation: Dict[str, Any]) -> None:
-        """Handle critical brand violations with immediate response"""
-        try:
+        """Handle critical brand violations with immediate response"""        try:
             # Automatically submit takedown request if enabled
             if getattr(agent, 'auto_takedown_enabled', False):
                 takedown_request = AgentRequest(
@@ -1092,8 +1039,7 @@ class BrandAgentManager:
             logger.error(f"Critical violation handling failed: {str(e)}")
 
     async def _send_critical_alert(self, violation: Dict[str, Any]) -> None:
-        """Send critical brand violation alert"""
-        try:
+        """Send critical brand violation alert"""        try:
             # This would integrate with notification systems
             # Email, SMS, Slack, etc.
             logger.critical(f"CRITICAL BRAND VIOLATION DETECTED: {violation.get('violation_id')}")
@@ -1102,8 +1048,7 @@ class BrandAgentManager:
             logger.error(f"Critical alert sending failed: {str(e)}")
 
     def get_agent_status(self) -> Dict[str, Dict[str, Any]]:
-        """Get status of all brand agents"""
-        status = {}
+        """Get status of all brand agents"""        status = {}
         
         for brand_id, agent in self.agents.items():
             status[brand_id] = {

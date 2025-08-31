@@ -1,5 +1,4 @@
-"""
-Payment Processing Database Index Manager
+"""Payment Processing Database Index Manager
 
 Advanced database index management for optimizing payment processing queries,
 including composite indexes, partial indexes, and query performance optimization.
@@ -13,7 +12,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use, modifi
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, Any, List, Optional
 from sqlalchemy import text, create_engine
 from datetime import datetime
@@ -23,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class IndexDefinition:
-    """Definition for database index"""
-    
+    """Definition for database index"""    
     def __init__(
         self,
         name: str,
@@ -44,8 +41,7 @@ class IndexDefinition:
         self.concurrent = concurrent
     
     def to_sql(self) -> str:
-        """Generate SQL for creating the index"""
-        unique_clause = "UNIQUE " if self.unique else ""
+        """Generate SQL for creating the index"""        unique_clause = "UNIQUE " if self.unique else ""
         concurrent_clause = "CONCURRENTLY " if self.concurrent else ""
         
         columns_clause = ", ".join(self.columns)
@@ -59,21 +55,18 @@ class IndexDefinition:
         return sql
     
     def drop_sql(self) -> str:
-        """Generate SQL for dropping the index"""
-        concurrent_clause = "CONCURRENTLY " if self.concurrent else ""
+        """Generate SQL for dropping the index"""        concurrent_clause = "CONCURRENTLY " if self.concurrent else ""
         return f"DROP INDEX {concurrent_clause}IF EXISTS {self.name}"
 
 
 class PaymentIndexManager:
-    """Manager for payment processing database indexes"""
-    
+    """Manager for payment processing database indexes"""    
     def __init__(self, engine):
         self.engine = engine
         self.indexes = self._define_payment_indexes()
     
     def _define_payment_indexes(self) -> List[IndexDefinition]:
-        """Define all payment processing indexes"""
-        return [
+        """Define all payment processing indexes"""        return [
             # Payment Transactions Indexes
             IndexDefinition(
                 name="idx_payment_transactions_user_status_created",
@@ -325,8 +318,7 @@ class PaymentIndexManager:
         ]
     
     def create_all_indexes(self) -> Dict[str, bool]:
-        """Create all payment processing indexes"""
-        results = {}
+        """Create all payment processing indexes"""        results = {}
         
         for index in self.indexes:
             try:
@@ -344,8 +336,7 @@ class PaymentIndexManager:
         return results
     
     def drop_all_indexes(self) -> Dict[str, bool]:
-        """Drop all payment processing indexes"""
-        results = {}
+        """Drop all payment processing indexes"""        results = {}
         
         for index in self.indexes:
             try:
@@ -363,8 +354,7 @@ class PaymentIndexManager:
         return results
     
     def create_index(self, index_name: str) -> bool:
-        """Create a specific index"""
-        index = next((idx for idx in self.indexes if idx.name == index_name), None)
+        """Create a specific index"""        index = next((idx for idx in self.indexes if idx.name == index_name), None)
         
         if not index:
             logger.error(f"Index {index_name} not found")
@@ -383,8 +373,7 @@ class PaymentIndexManager:
             return False
     
     def drop_index(self, index_name: str) -> bool:
-        """Drop a specific index"""
-        index = next((idx for idx in self.indexes if idx.name == index_name), None)
+        """Drop a specific index"""        index = next((idx for idx in self.indexes if idx.name == index_name), None)
         
         if not index:
             logger.error(f"Index {index_name} not found")
@@ -403,9 +392,7 @@ class PaymentIndexManager:
             return False
     
     def get_index_usage_stats(self) -> List[Dict[str, Any]]:
-        """Get index usage statistics"""
-        query = """
-        SELECT 
+        """Get index usage statistics"""        query = """        SELECT 
             schemaname,
             tablename,
             indexname,
@@ -422,8 +409,7 @@ class PaymentIndexManager:
             'automated_payouts'
         )
         ORDER BY idx_scan DESC
-        """
-        
+        """        
         try:
             with self.engine.connect() as conn:
                 result = conn.execute(text(query))
@@ -434,9 +420,7 @@ class PaymentIndexManager:
             return []
     
     def get_index_sizes(self) -> List[Dict[str, Any]]:
-        """Get index sizes for monitoring"""
-        query = """
-        SELECT 
+        """Get index sizes for monitoring"""        query = """        SELECT 
             schemaname,
             tablename,
             indexname,
@@ -452,8 +436,7 @@ class PaymentIndexManager:
             'automated_payouts'
         )
         ORDER BY pg_relation_size(indexrelid) DESC
-        """
-        
+        """        
         try:
             with self.engine.connect() as conn:
                 result = conn.execute(text(query))
@@ -464,8 +447,7 @@ class PaymentIndexManager:
             return []
     
     def analyze_tables(self) -> bool:
-        """Run ANALYZE on all payment processing tables"""
-        tables = [
+        """Run ANALYZE on all payment processing tables"""        tables = [
             'payment_transactions',
             'payment_methods', 
             'billing_records',
@@ -487,8 +469,7 @@ class PaymentIndexManager:
             return False
     
     def reindex_tables(self) -> bool:
-        """Rebuild all indexes for payment processing tables"""
-        tables = [
+        """Rebuild all indexes for payment processing tables"""        tables = [
             'payment_transactions',
             'payment_methods', 
             'billing_records',
@@ -510,9 +491,7 @@ class PaymentIndexManager:
             return False
     
     def get_slow_queries(self, limit: int = 10) -> List[Dict[str, Any]]:
-        """Get slow queries related to payment processing"""
-        query = """
-        SELECT 
+        """Get slow queries related to payment processing"""        query = """        SELECT 
             query,
             calls,
             total_time,
@@ -528,8 +507,7 @@ class PaymentIndexManager:
            OR query ILIKE '%automated_payouts%'
         ORDER BY mean_time DESC 
         LIMIT %(limit)s
-        """
-        
+        """        
         try:
             with self.engine.connect() as conn:
                 result = conn.execute(text(query), {'limit': limit})
@@ -540,8 +518,7 @@ class PaymentIndexManager:
             return []
     
     def optimize_for_workload(self, workload_type: str) -> List[str]:
-        """Optimize indexes for specific workload patterns"""
-        optimizations = []
+        """Optimize indexes for specific workload patterns"""        optimizations = []
         
         if workload_type == "analytics":
             # Create additional indexes for analytical queries
@@ -574,8 +551,7 @@ class PaymentIndexManager:
         return optimizations
     
     def create_index_from_definition(self, index: IndexDefinition) -> bool:
-        """Create index from IndexDefinition object"""
-        try:
+        """Create index from IndexDefinition object"""        try:
             with self.engine.connect() as conn:
                 conn.execute(text(index.to_sql()))
                 conn.commit()
@@ -589,11 +565,9 @@ class PaymentIndexManager:
 
 
 def create_payment_indexes(engine) -> PaymentIndexManager:
-    """Create and return PaymentIndexManager"""
-    return PaymentIndexManager(engine)
+    """Create and return PaymentIndexManager"""    return PaymentIndexManager(engine)
 
 
 def setup_payment_indexes(engine) -> Dict[str, bool]:
-    """Setup all payment processing indexes"""
-    manager = PaymentIndexManager(engine)
+    """Setup all payment processing indexes"""    manager = PaymentIndexManager(engine)
     return manager.create_all_indexes()

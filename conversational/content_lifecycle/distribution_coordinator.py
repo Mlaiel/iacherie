@@ -1,5 +1,4 @@
-"""
-Distribution Coordinator Module - Multi-Platform Content Distribution System
+"""Distribution Coordinator Module - Multi-Platform Content Distribution System
 
 Enterprise-grade distribution coordination system implementing automated multi-platform
 publishing, cross-platform optimization, and intelligent distribution strategies.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class DistributionStatus(Enum):
-    """Distribution status types"""
-    PENDING = "pending"
+    """Distribution status types"""    PENDING = "pending"
     SCHEDULED = "scheduled"
     PUBLISHING = "publishing"
     PUBLISHED = "published"
@@ -51,8 +48,7 @@ class DistributionStatus(Enum):
 
 
 class PlatformCategory(Enum):
-    """Platform categories for distribution"""
-    SOCIAL_MEDIA = "social_media"
+    """Platform categories for distribution"""    SOCIAL_MEDIA = "social_media"
     VIDEO_PLATFORM = "video_platform"
     AUDIO_PLATFORM = "audio_platform"
     PROFESSIONAL = "professional"
@@ -63,8 +59,7 @@ class PlatformCategory(Enum):
 
 
 class DistributionStrategy(Enum):
-    """Distribution strategies"""
-    SIMULTANEOUS = "simultaneous"
+    """Distribution strategies"""    SIMULTANEOUS = "simultaneous"
     SEQUENTIAL = "sequential"
     STAGGERED = "staggered"
     OPTIMIZED_TIMING = "optimized_timing"
@@ -73,8 +68,7 @@ class DistributionStrategy(Enum):
 
 
 class ContentAdaptation(Enum):
-    """Content adaptation types"""
-    FORMAT_CONVERSION = "format_conversion"
+    """Content adaptation types"""    FORMAT_CONVERSION = "format_conversion"
     DIMENSION_RESIZE = "dimension_resize"
     QUALITY_OPTIMIZATION = "quality_optimization"
     PLATFORM_SPECIFIC = "platform_specific"
@@ -84,8 +78,7 @@ class ContentAdaptation(Enum):
 
 @dataclass
 class PlatformConfig:
-    """Platform configuration for distribution"""
-    platform_id: str
+    """Platform configuration for distribution"""    platform_id: str
     platform_name: str
     platform_category: PlatformCategory
     api_credentials: Dict[str, str]
@@ -103,8 +96,7 @@ class PlatformConfig:
 
 @dataclass
 class DistributionPlan:
-    """Distribution plan structure"""
-    plan_id: str
+    """Distribution plan structure"""    plan_id: str
     content_id: str
     user_id: str
     target_platforms: List[str]
@@ -122,8 +114,7 @@ class DistributionPlan:
 
 @dataclass
 class PlatformDistribution:
-    """Individual platform distribution"""
-    distribution_id: str
+    """Individual platform distribution"""    distribution_id: str
     plan_id: str
     platform_name: str
     adapted_content: Dict[str, Any]
@@ -140,8 +131,7 @@ class PlatformDistribution:
 
 @dataclass
 class DistributionResult:
-    """Distribution execution result"""
-    result_id: str
+    """Distribution execution result"""    result_id: str
     plan_id: str
     execution_start: datetime
     execution_end: Optional[datetime]
@@ -157,8 +147,7 @@ class DistributionResult:
 
 @dataclass
 class CrossPlatformAnalytics:
-    """Cross-platform analytics data"""
-    analytics_id: str
+    """Cross-platform analytics data"""    analytics_id: str
     plan_id: str
     content_id: str
     platform_metrics: Dict[str, Dict[str, Any]]
@@ -172,11 +161,9 @@ class CrossPlatformAnalytics:
 
 
 class DistributionCoordinator:
-    """
-    Enterprise-grade distribution coordination system for multi-platform content publishing
+    """    Enterprise-grade distribution coordination system for multi-platform content publishing
     and optimization in the creator economy workflow.
-    """
-    
+    """    
     def __init__(self, cache_manager: CacheManager, event_emitter: EventEmitter):
         self.cache_manager = cache_manager
         self.event_emitter = event_emitter
@@ -188,8 +175,7 @@ class DistributionCoordinator:
         self.active_distributions = {}
         
     def _initialize_platform_configs(self) -> Dict[str, PlatformConfig]:
-        """Initialize platform configurations"""
-        return {
+        """Initialize platform configurations"""        return {
             "youtube": PlatformConfig(
                 platform_id="youtube",
                 platform_name="YouTube",
@@ -366,8 +352,7 @@ class DistributionCoordinator:
         }
     
     def _initialize_distribution_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Initialize distribution templates for different content types"""
-        return {
+        """Initialize distribution templates for different content types"""        return {
             "audio": {
                 "primary_platforms": ["spotify", "youtube", "soundcloud"],
                 "secondary_platforms": ["instagram", "tiktok", "twitter"],
@@ -417,13 +402,11 @@ class DistributionCoordinator:
         content_data: Dict[str, Any],
         distribution_preferences: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """
-        Coordinate comprehensive multi-platform content distribution
+        """        Coordinate comprehensive multi-platform content distribution
         
         Business Logic Integration:
         Content Upload → AI Processing → Protection → SEO → Collaboration → DISTRIBUTION
-        """
-        try:
+        """        try:
             # Step 1: Analyze content for distribution optimization
             content_analysis = await self._analyze_content_for_distribution(
                 content_data, user_id
@@ -514,8 +497,7 @@ class DistributionCoordinator:
         content_data: Dict[str, Any],
         user_id: str
     ) -> Dict[str, Any]:
-        """Analyze content for optimal distribution strategy"""
-        try:
+        """Analyze content for optimal distribution strategy"""        try:
             content_format = content_data.get("content_format", "text")
             
             # Analyze content characteristics
@@ -564,8 +546,7 @@ class DistributionCoordinator:
         content_analysis: Dict[str, Any],
         distribution_preferences: Dict[str, Any] = None
     ) -> List[str]:
-        """Select optimal platforms for content distribution"""
-        try:
+        """Select optimal platforms for content distribution"""        try:
             content_format = content_analysis.get("content_format", "text")
             template = self.distribution_templates.get(content_format, {})
             
@@ -615,8 +596,7 @@ class DistributionCoordinator:
         target_platforms: List[str],
         content_analysis: Dict[str, Any]
     ) -> DistributionPlan:
-        """Create comprehensive distribution plan"""
-        try:
+        """Create comprehensive distribution plan"""        try:
             # Determine distribution strategy
             recommended_strategy = content_analysis.get("recommended_strategy", DistributionStrategy.SIMULTANEOUS.value)
             distribution_strategy = DistributionStrategy(recommended_strategy)
@@ -686,8 +666,7 @@ class DistributionCoordinator:
         target_platforms: List[str],
         distribution_plan: DistributionPlan
     ) -> Dict[str, Dict[str, Any]]:
-        """Adapt content for each target platform"""
-        try:
+        """Adapt content for each target platform"""        try:
             adaptations = {}
             
             for platform in target_platforms:
@@ -735,8 +714,7 @@ class DistributionCoordinator:
         platform_adaptations: Dict[str, Dict[str, Any]],
         scheduling_result: Dict[str, Any]
     ) -> DistributionResult:
-        """Execute the distribution plan across all platforms"""
-        try:
+        """Execute the distribution plan across all platforms"""        try:
             execution_start = datetime.utcnow()
             platform_results = {}
             errors_encountered = []
@@ -848,8 +826,7 @@ class DistributionCoordinator:
         distribution_plan: DistributionPlan,
         distribution_result: DistributionResult
     ) -> float:
-        """Calculate overall distribution score"""
-        try:
+        """Calculate overall distribution score"""        try:
             # Base score from success rate
             base_score = distribution_result.success_rate
             
@@ -873,8 +850,7 @@ class DistributionCoordinator:
         self,
         plan_id: str
     ) -> CrossPlatformAnalytics:
-        """Monitor cross-platform distribution performance"""
-        try:
+        """Monitor cross-platform distribution performance"""        try:
             # Get distribution plan and results
             distribution_data = await self._get_distribution_data(plan_id)
             
@@ -934,8 +910,7 @@ class DistributionCoordinator:
     
     # Helper methods (implementation details)
     async def _analyze_content_characteristics(self, content_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze content characteristics for distribution"""
-        # Implementation for content characteristics analysis
+        """Analyze content characteristics for distribution"""        # Implementation for content characteristics analysis
         return {"quality_score": 0.8, "engagement_potential": 0.7}
     
     async def _publish_to_platform(
@@ -943,8 +918,7 @@ class DistributionCoordinator:
         platform: str, 
         platform_distribution: PlatformDistribution
     ) -> Dict[str, Any]:
-        """Publish content to specific platform"""
-        # Implementation for platform publishing
+        """Publish content to specific platform"""        # Implementation for platform publishing
         return {"success": True, "platform_id": "12345", "url": f"https://{platform}.com/content/12345"}
     
     # Additional helper methods would be implemented here...
@@ -955,5 +929,4 @@ def create_distribution_coordinator(
     cache_manager: CacheManager,
     event_emitter: EventEmitter
 ) -> DistributionCoordinator:
-    """Factory function to create distribution coordinator instance"""
-    return DistributionCoordinator(cache_manager, event_emitter)
+    """Factory function to create distribution coordinator instance"""    return DistributionCoordinator(cache_manager, event_emitter)

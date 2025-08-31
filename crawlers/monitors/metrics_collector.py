@@ -1,5 +1,4 @@
-"""
-Metrics Collector - Advanced Analytics & KPI Engine
+"""Metrics Collector - Advanced Analytics & KPI Engine
 ===================================================
 
 Professional metrics collection and KPI calculation system for IA-Influencer-Agent platform.
@@ -23,7 +22,6 @@ Expertise combinée:
 - DevOps: Déploiement, monitoring et infrastructure cloud
 - IA Prompt Engineer: Optimisation des interactions et prompts
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union, Callable
@@ -53,8 +51,7 @@ from .monitor_engine import MonitorEngine, MonitoringConfiguration, MonitoringMe
 logger = logging.getLogger(__name__)
 
 class MetricType(Enum):
-    """Metric type enumeration."""
-    COUNTER = "counter"
+    """Metric type enumeration."""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -63,8 +60,7 @@ class MetricType(Enum):
     RATIO = "ratio"
 
 class MetricCategory(Enum):
-    """Metric category enumeration."""
-    SYSTEM = "system"
+    """Metric category enumeration."""    SYSTEM = "system"
     BUSINESS = "business"
     USER = "user"
     CONTENT = "content"
@@ -74,8 +70,7 @@ class MetricCategory(Enum):
     ML = "ml"
 
 class AggregationType(Enum):
-    """Aggregation type for metrics."""
-    SUM = "sum"
+    """Aggregation type for metrics."""    SUM = "sum"
     AVERAGE = "average"
     MIN = "min"
     MAX = "max"
@@ -87,8 +82,7 @@ class AggregationType(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition structure."""
-    name: str
+    """Metric definition structure."""    name: str
     metric_type: MetricType
     category: MetricCategory
     description: str = ""
@@ -102,8 +96,7 @@ class MetricDefinition:
 
 @dataclass
 class MetricDataPoint:
-    """Individual metric data point."""
-    metric_name: str
+    """Individual metric data point."""    metric_name: str
     value: Union[int, float]
     timestamp: datetime = field(default_factory=datetime.utcnow)
     labels: Dict[str, str] = field(default_factory=dict)
@@ -111,8 +104,7 @@ class MetricDataPoint:
 
 @dataclass
 class KPIDefinition:
-    """Key Performance Indicator definition."""
-    name: str
+    """Key Performance Indicator definition."""    name: str
     description: str
     formula: str  # Mathematical formula using metric names
     target_value: Optional[float] = None
@@ -125,8 +117,7 @@ class KPIDefinition:
 
 @dataclass
 class KPIResult:
-    """KPI calculation result."""
-    kpi_name: str
+    """KPI calculation result."""    kpi_name: str
     value: float
     timestamp: datetime = field(default_factory=datetime.utcnow)
     status: str = "normal"  # normal, warning, critical
@@ -136,11 +127,9 @@ class KPIResult:
     metadata: Dict[str, Any] = field(default_factory=dict)
 
 class MetricsCollector(MonitorEngine):
-    """
-    Advanced metrics collection and analytics engine.
+    """    Advanced metrics collection and analytics engine.
     Implements comprehensive metric collection, aggregation, and KPI calculation.
-    """
-    
+    """    
     def __init__(self, config: MonitoringConfiguration):
         super().__init__(config)
         self.metrics_definitions: Dict[str, MetricDefinition] = {}
@@ -163,8 +152,7 @@ class MetricsCollector(MonitorEngine):
         self._initialize_kpi_definitions()
     
     def _initialize_system_collectors(self):
-        """Initialize system-level metric collectors."""
-        system_metrics = [
+        """Initialize system-level metric collectors."""        system_metrics = [
             MetricDefinition(
                 name="cpu_usage_percent",
                 metric_type=MetricType.GAUGE,
@@ -222,8 +210,7 @@ class MetricsCollector(MonitorEngine):
         self.collectors["system"] = self._collect_system_metrics
     
     def _initialize_business_metrics(self):
-        """Initialize business-specific metric definitions."""
-        business_metrics = [
+        """Initialize business-specific metric definitions."""        business_metrics = [
             MetricDefinition(
                 name="content_uploads_total",
                 metric_type=MetricType.COUNTER,
@@ -334,8 +321,7 @@ class MetricsCollector(MonitorEngine):
             self.metrics_definitions[metric_def.name] = metric_def
     
     def _initialize_kpi_definitions(self):
-        """Initialize KPI definitions."""
-        kpis = [
+        """Initialize KPI definitions."""        kpis = [
             KPIDefinition(
                 name="user_growth_rate",
                 description="Monthly user growth rate",
@@ -429,8 +415,7 @@ class MetricsCollector(MonitorEngine):
             self.kpi_definitions[kpi_def.name] = kpi_def
     
     async def start_monitoring(self) -> bool:
-        """Start the metrics collection service."""
-        try:
+        """Start the metrics collection service."""        try:
             self.status = "running"
             
             # Initialize Redis connection
@@ -461,8 +446,7 @@ class MetricsCollector(MonitorEngine):
             return False
     
     async def stop_monitoring(self) -> bool:
-        """Stop the metrics collection service."""
-        try:
+        """Stop the metrics collection service."""        try:
             self.status = "stopped"
             
             # Cancel all collection tasks
@@ -484,8 +468,7 @@ class MetricsCollector(MonitorEngine):
             return False
     
     async def _initialize_redis(self):
-        """Initialize Redis connection for metrics storage."""
-        try:
+        """Initialize Redis connection for metrics storage."""        try:
             self.redis_client = await aioredis.from_url(
                 "redis://localhost:6379", 
                 decode_responses=True
@@ -497,8 +480,7 @@ class MetricsCollector(MonitorEngine):
             self.redis_client = None
     
     def _initialize_prometheus_metrics(self):
-        """Initialize Prometheus metrics."""
-        for metric_name, metric_def in self.metrics_definitions.items():
+        """Initialize Prometheus metrics."""        for metric_name, metric_def in self.metrics_definitions.items():
             labels = metric_def.labels + ["instance"]
             
             if metric_def.metric_type == MetricType.COUNTER:
@@ -535,8 +517,7 @@ class MetricsCollector(MonitorEngine):
             self.prometheus_metrics[metric_name] = metric
     
     async def _metric_collection_loop(self, metric_name: str, metric_def: MetricDefinition):
-        """Continuous metric collection loop."""
-        while self.status == "running":
+        """Continuous metric collection loop."""        while self.status == "running":
             try:
                 # Collect metric value
                 if metric_def.category == MetricCategory.SYSTEM:
@@ -554,8 +535,7 @@ class MetricsCollector(MonitorEngine):
                 await asyncio.sleep(60)
     
     async def _collect_system_metric(self, metric_name: str, metric_def: MetricDefinition):
-        """Collect system-specific metrics."""
-        try:
+        """Collect system-specific metrics."""        try:
             if metric_name == "cpu_usage_percent":
                 value = psutil.cpu_percent(interval=1)
                 await self.record_metric(metric_name, value)
@@ -604,8 +584,7 @@ class MetricsCollector(MonitorEngine):
             logger.error(f"Failed to collect system metric {metric_name}: {e}")
     
     async def _collect_system_metrics(self) -> Dict[str, Any]:
-        """Collect all system metrics."""
-        try:
+        """Collect all system metrics."""        try:
             metrics = {}
             
             # CPU metrics
@@ -675,8 +654,7 @@ class MetricsCollector(MonitorEngine):
     async def record_metric(self, metric_name: str, value: Union[int, float], 
                           labels: Optional[Dict[str, str]] = None, 
                           timestamp: Optional[datetime] = None):
-        """Record a metric value."""
-        try:
+        """Record a metric value."""        try:
             if metric_name not in self.metrics_definitions:
                 logger.warning(f"Unknown metric: {metric_name}")
                 return
@@ -720,8 +698,7 @@ class MetricsCollector(MonitorEngine):
             logger.error(f"Failed to record metric {metric_name}: {e}")
     
     async def _store_metric_in_redis(self, data_point: MetricDataPoint):
-        """Store metric data point in Redis."""
-        try:
+        """Store metric data point in Redis."""        try:
             key = f"metrics:{data_point.metric_name}:{data_point.timestamp.strftime('%Y%m%d%H%M%S')}"
             value = {
                 "value": data_point.value,
@@ -735,8 +712,7 @@ class MetricsCollector(MonitorEngine):
             logger.error(f"Failed to store metric in Redis: {e}")
     
     async def _check_alert_thresholds(self, metric_name: str, value: float):
-        """Check if metric value exceeds alert thresholds."""
-        try:
+        """Check if metric value exceeds alert thresholds."""        try:
             metric_def = self.metrics_definitions[metric_name]
             thresholds = metric_def.alert_thresholds
             
@@ -749,13 +725,11 @@ class MetricsCollector(MonitorEngine):
             logger.error(f"Failed to check alert thresholds: {e}")
     
     async def _send_alert(self, metric_name: str, value: float, severity: str):
-        """Send metric alert."""
-        logger.warning(f"METRIC ALERT [{severity.upper()}]: {metric_name} = {value}")
+        """Send metric alert."""        logger.warning(f"METRIC ALERT [{severity.upper()}]: {metric_name} = {value}")
         # Implement actual alerting logic here (email, Slack, etc.)
     
     async def _kpi_calculation_loop(self):
-        """Continuous KPI calculation loop."""
-        while self.status == "running":
+        """Continuous KPI calculation loop."""        while self.status == "running":
             try:
                 for kpi_name, kpi_def in self.kpi_definitions.items():
                     result = await self.calculate_kpi(kpi_name)
@@ -771,8 +745,7 @@ class MetricsCollector(MonitorEngine):
                 await asyncio.sleep(60)
     
     async def calculate_kpi(self, kpi_name: str) -> Optional[KPIResult]:
-        """Calculate a specific KPI."""
-        try:
+        """Calculate a specific KPI."""        try:
             if kpi_name not in self.kpi_definitions:
                 logger.error(f"Unknown KPI: {kpi_name}")
                 return None
@@ -837,8 +810,7 @@ class MetricsCollector(MonitorEngine):
             return None
     
     async def _evaluate_kpi_formula(self, formula: str, metrics: Dict[str, List[float]]) -> Optional[float]:
-        """Evaluate KPI formula with metric values."""
-        try:
+        """Evaluate KPI formula with metric values."""        try:
             # Simple formula evaluation (extend for more complex formulas)
             context = {}
             
@@ -871,8 +843,7 @@ class MetricsCollector(MonitorEngine):
             return None
     
     async def _data_cleanup_loop(self):
-        """Periodic data cleanup based on retention policies."""
-        while self.status == "running":
+        """Periodic data cleanup based on retention policies."""        while self.status == "running":
             try:
                 current_time = datetime.utcnow()
                 
@@ -907,8 +878,7 @@ class MetricsCollector(MonitorEngine):
                 await asyncio.sleep(3600)
     
     async def _cleanup_redis_data(self, current_time: datetime):
-        """Clean up old Redis metric data."""
-        try:
+        """Clean up old Redis metric data."""        try:
             # Get all metric keys
             keys = await self.redis_client.keys("metrics:*")
             
@@ -930,8 +900,7 @@ class MetricsCollector(MonitorEngine):
     async def get_metric_history(self, metric_name: str, 
                                start_time: Optional[datetime] = None,
                                end_time: Optional[datetime] = None) -> List[MetricDataPoint]:
-        """Get historical metric data."""
-        try:
+        """Get historical metric data."""        try:
             if metric_name not in self.metrics_data:
                 return []
             
@@ -955,8 +924,7 @@ class MetricsCollector(MonitorEngine):
             return []
     
     async def get_kpi_history(self, kpi_name: str) -> List[KPIResult]:
-        """Get historical KPI results."""
-        try:
+        """Get historical KPI results."""        try:
             if kpi_name not in self.kpi_results:
                 return []
             
@@ -967,8 +935,7 @@ class MetricsCollector(MonitorEngine):
             return []
     
     async def generate_metrics_dashboard(self) -> Dict[str, Any]:
-        """Generate metrics dashboard data."""
-        try:
+        """Generate metrics dashboard data."""        try:
             dashboard_data = {
                 "timestamp": datetime.utcnow().isoformat(),
                 "system_metrics": {},
@@ -1005,8 +972,7 @@ class MetricsCollector(MonitorEngine):
             return {}
     
     async def get_monitoring_metrics(self) -> MonitoringMetrics:
-        """Get monitoring engine metrics."""
-        metrics = MonitoringMetrics()
+        """Get monitoring engine metrics."""        metrics = MonitoringMetrics()
         
         # Custom metrics for collector
         metrics.custom_metrics = {
@@ -1022,23 +988,19 @@ class MetricsCollector(MonitorEngine):
         return metrics
 
 class KPICalculator:
-    """
-    Specialized KPI calculation engine.
+    """    Specialized KPI calculation engine.
     Provides advanced KPI calculation and analysis capabilities.
-    """
-    
+    """    
     def __init__(self, metrics_collector: MetricsCollector):
         self.metrics_collector = metrics_collector
         self.custom_functions: Dict[str, Callable] = {}
         self.calculation_cache: Dict[str, Any] = {}
     
     def register_custom_function(self, name: str, function: Callable):
-        """Register custom function for KPI calculations."""
-        self.custom_functions[name] = function
+        """Register custom function for KPI calculations."""        self.custom_functions[name] = function
     
     async def calculate_advanced_kpi(self, formula: str, context: Dict[str, Any]) -> float:
-        """Calculate KPI with advanced formula support."""
-        # Enhanced formula evaluation with custom functions
+        """Calculate KPI with advanced formula support."""        # Enhanced formula evaluation with custom functions
         enhanced_context = {**context, **self.custom_functions}
         
         # Add statistical functions
@@ -1054,8 +1016,7 @@ class KPICalculator:
         return float(result)
     
     def _calculate_trend(self, values: List[float]) -> str:
-        """Calculate trend direction from values."""
-        if len(values) < 2:
+        """Calculate trend direction from values."""        if len(values) < 2:
             return "stable"
         
         # Simple linear regression slope
@@ -1070,8 +1031,7 @@ class KPICalculator:
             return "stable"
     
     def _simple_forecast(self, values: List[float], periods: int = 1) -> List[float]:
-        """Simple linear forecast."""
-        if len(values) < 2:
+        """Simple linear forecast."""        if len(values) < 2:
             return [values[-1]] * periods if values else [0.0] * periods
         
         x = np.array(range(len(values)))
@@ -1087,8 +1047,7 @@ class KPICalculator:
         return forecast_y.tolist()
     
     def _calculate_anomaly_score(self, values: List[float], current_value: float) -> float:
-        """Calculate anomaly score for current value."""
-        if len(values) < 3:
+        """Calculate anomaly score for current value."""        if len(values) < 3:
             return 0.0
         
         mean_val = statistics.mean(values)

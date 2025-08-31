@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""
-IA-Influencer-Agent Quality Enhancement AI
+"""IA-Influencer-Agent Quality Enhancement AI
 ================================================================================
 Module: ai_engine/remix_generation/quality_enhancement_ai.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -19,7 +18,6 @@ MISSION: Système IA ultra-avancé d'amélioration de qualité audio professionn
 TECHNOLOGIES: Deep Learning, Signal Processing, Quality Metrics, Professional Audio
 LOGIQUE MÉTIER: Audio input → Quality analysis → Enhancement processing → Professional output
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -38,8 +36,7 @@ from pathlib import Path
 logger = logging.getLogger(__name__)
 
 class QualityMetric(Enum):
-    """Audio quality metrics"""
-    SNR = "signal_to_noise_ratio"
+    """Audio quality metrics"""    SNR = "signal_to_noise_ratio"
     THD = "total_harmonic_distortion"
     DYNAMIC_RANGE = "dynamic_range"
     FREQUENCY_RESPONSE = "frequency_response"
@@ -51,8 +48,7 @@ class QualityMetric(Enum):
     DEPTH = "depth"
 
 class EnhancementType(Enum):
-    """Types of audio enhancement"""
-    NOISE_REDUCTION = "noise_reduction"
+    """Types of audio enhancement"""    NOISE_REDUCTION = "noise_reduction"
     DYNAMIC_ENHANCEMENT = "dynamic_enhancement"
     FREQUENCY_ENHANCEMENT = "frequency_enhancement"
     STEREO_ENHANCEMENT = "stereo_enhancement"
@@ -64,8 +60,7 @@ class EnhancementType(Enum):
 
 @dataclass
 class QualityAnalysisResult:
-    """Result of audio quality analysis"""
-    overall_score: float
+    """Result of audio quality analysis"""    overall_score: float
     metrics: Dict[QualityMetric, float]
     recommendations: List[EnhancementType]
     analysis_metadata: Dict[str, Any]
@@ -74,8 +69,7 @@ class QualityAnalysisResult:
 
 @dataclass
 class EnhancementRequest:
-    """Request for audio enhancement"""
-    input_audio_path: str
+    """Request for audio enhancement"""    input_audio_path: str
     target_quality_score: float = 0.95
     enhancement_types: List[EnhancementType] = None
     preserve_character: bool = True
@@ -90,8 +84,7 @@ class EnhancementRequest:
 
 @dataclass
 class EnhancementResult:
-    """Result of audio enhancement"""
-    output_audio_path: str
+    """Result of audio enhancement"""    output_audio_path: str
     quality_improvement: float
     final_quality_score: float
     enhancements_applied: List[EnhancementType]
@@ -101,13 +94,11 @@ class EnhancementResult:
     error_message: Optional[str] = None
 
 class AudioQualityAnalyzer:
-    """
-    Advanced audio quality analyzer using professional metrics and AI.
+    """    Advanced audio quality analyzer using professional metrics and AI.
     
     Analyzes audio quality across multiple dimensions including
     technical metrics and perceptual qualities.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logger
         self.sample_rate = 44100
@@ -127,8 +118,7 @@ class AudioQualityAnalyzer:
         self.perceptual_analyzer = self._create_perceptual_analyzer()
     
     def _create_perceptual_analyzer(self) -> torch_nn.Module:
-        """Create neural network for perceptual quality analysis"""
-        class PerceptualQualityNet(torch_nn.Module):
+        """Create neural network for perceptual quality analysis"""        class PerceptualQualityNet(torch_nn.Module):
             def __init__(self):
                 super().__init__()
                 self.conv_layers = torch_nn.Sequential(
@@ -160,16 +150,14 @@ class AudioQualityAnalyzer:
         return PerceptualQualityNet()
     
     async def analyze_quality(self, audio_path: str) -> QualityAnalysisResult:
-        """
-        Comprehensive audio quality analysis.
+        """        Comprehensive audio quality analysis.
         
         Args:
             audio_path: Path to audio file
             
         Returns:
             Detailed quality analysis result
-        """
-        try:
+        """        try:
             self.logger.info(f"🔍 Analyzing audio quality: {audio_path}")
             
             # Load audio
@@ -215,8 +203,7 @@ class AudioQualityAnalyzer:
             raise
     
     async def _calculate_technical_metrics(self, audio: np.ndarray, sr: int) -> Dict[QualityMetric, float]:
-        """Calculate technical audio quality metrics"""
-        try:
+        """Calculate technical audio quality metrics"""        try:
             metrics = {}
             
             # Signal-to-Noise Ratio
@@ -262,8 +249,7 @@ class AudioQualityAnalyzer:
             return {}
     
     async def _calculate_perceptual_metrics(self, audio: np.ndarray, sr: int) -> Dict[QualityMetric, float]:
-        """Calculate perceptual audio quality metrics"""
-        try:
+        """Calculate perceptual audio quality metrics"""        try:
             metrics = {}
             
             # Stereo Imaging (width and positioning)
@@ -306,8 +292,7 @@ class AudioQualityAnalyzer:
             return {}
     
     async def _generate_recommendations(self, metrics: Dict[QualityMetric, float]) -> List[EnhancementType]:
-        """Generate enhancement recommendations based on metrics"""
-        recommendations = []
+        """Generate enhancement recommendations based on metrics"""        recommendations = []
         
         try:
             # Low SNR -> Noise Reduction
@@ -349,8 +334,7 @@ class AudioQualityAnalyzer:
             return []
     
     def _calculate_confidence(self, metrics: Dict[QualityMetric, float]) -> float:
-        """Calculate confidence score for the analysis"""
-        try:
+        """Calculate confidence score for the analysis"""        try:
             # Higher confidence when metrics are in normal ranges
             confidence_scores = []
             
@@ -368,8 +352,7 @@ class AudioQualityAnalyzer:
             return 0.5
     
     async def _generate_processing_suggestions(self, metrics: Dict[QualityMetric, float]) -> Dict[str, Any]:
-        """Generate specific processing parameter suggestions"""
-        try:
+        """Generate specific processing parameter suggestions"""        try:
             suggestions = {}
             
             # Noise reduction parameters
@@ -400,13 +383,11 @@ class AudioQualityAnalyzer:
             return {}
 
 class QualityEnhancementEngine:
-    """
-    Main engine for audio quality enhancement using AI and professional processing.
+    """    Main engine for audio quality enhancement using AI and professional processing.
     
     Applies various enhancement techniques to improve audio quality
     while preserving musical character and avoiding artifacts.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logger
         self.analyzer = AudioQualityAnalyzer()
@@ -425,16 +406,14 @@ class QualityEnhancementEngine:
         }
     
     async def enhance_audio(self, request: EnhancementRequest) -> EnhancementResult:
-        """
-        Enhance audio quality based on request parameters.
+        """        Enhance audio quality based on request parameters.
         
         Args:
             request: Enhancement request with specifications
             
         Returns:
             Enhancement result with improved audio
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         
         try:
             self.logger.info(f"🎨 Starting audio enhancement for: {request.input_audio_path}")
@@ -513,8 +492,7 @@ class QualityEnhancementEngine:
     
     async def _apply_noise_reduction(self, audio: np.ndarray, sr: int, 
                                    intensity: float, params: Dict[str, Any]) -> np.ndarray:
-        """Apply noise reduction enhancement"""
-        try:
+        """Apply noise reduction enhancement"""        try:
             # Spectral subtraction noise reduction
             stft = librosa.stft(audio)
             magnitude = np.abs(stft)
@@ -541,8 +519,7 @@ class QualityEnhancementEngine:
     
     async def _apply_dynamic_enhancement(self, audio: np.ndarray, sr: int,
                                        intensity: float, params: Dict[str, Any]) -> np.ndarray:
-        """Apply dynamic range enhancement"""
-        try:
+        """Apply dynamic range enhancement"""        try:
             # Multi-band compression/expansion
             # Simplified implementation
             compressed = np.tanh(audio * (1 + intensity))
@@ -556,8 +533,7 @@ class QualityEnhancementEngine:
     
     async def _apply_frequency_enhancement(self, audio: np.ndarray, sr: int,
                                          intensity: float, params: Dict[str, Any]) -> np.ndarray:
-        """Apply frequency response enhancement"""
-        try:
+        """Apply frequency response enhancement"""        try:
             # Gentle EQ curve (smile curve)
             stft = librosa.stft(audio)
             freqs = librosa.fft_frequencies(sr=sr)
@@ -585,8 +561,7 @@ class QualityEnhancementEngine:
     
     async def _apply_stereo_enhancement(self, audio: np.ndarray, sr: int,
                                       intensity: float, params: Dict[str, Any]) -> np.ndarray:
-        """Apply stereo imaging enhancement"""
-        try:
+        """Apply stereo imaging enhancement"""        try:
             # Stereo widening (simplified)
             if len(audio.shape) > 1:
                 mid = (audio[0] + audio[1]) / 2
@@ -611,8 +586,7 @@ class QualityEnhancementEngine:
     
     async def _apply_clarity_enhancement(self, audio: np.ndarray, sr: int,
                                        intensity: float, params: Dict[str, Any]) -> np.ndarray:
-        """Apply clarity enhancement"""
-        try:
+        """Apply clarity enhancement"""        try:
             # High-frequency exciter
             stft = librosa.stft(audio)
             freqs = librosa.fft_frequencies(sr=sr)
@@ -630,8 +604,7 @@ class QualityEnhancementEngine:
     
     async def _apply_warmth_enhancement(self, audio: np.ndarray, sr: int,
                                       intensity: float, params: Dict[str, Any]) -> np.ndarray:
-        """Apply warmth enhancement"""
-        try:
+        """Apply warmth enhancement"""        try:
             # Low-mid frequency enhancement
             stft = librosa.stft(audio)
             freqs = librosa.fft_frequencies(sr=sr)
@@ -649,8 +622,7 @@ class QualityEnhancementEngine:
     
     async def _apply_presence_boost(self, audio: np.ndarray, sr: int,
                                   intensity: float, params: Dict[str, Any]) -> np.ndarray:
-        """Apply presence boost"""
-        try:
+        """Apply presence boost"""        try:
             # Mid-high frequency boost for presence
             stft = librosa.stft(audio)
             freqs = librosa.fft_frequencies(sr=sr)
@@ -668,8 +640,7 @@ class QualityEnhancementEngine:
     
     async def _apply_depth_enhancement(self, audio: np.ndarray, sr: int,
                                      intensity: float, params: Dict[str, Any]) -> np.ndarray:
-        """Apply depth enhancement"""
-        try:
+        """Apply depth enhancement"""        try:
             # Add subtle reverb for depth
             # Simplified all-pass reverb
             delay_samples = int(0.05 * sr)  # 50ms delay
@@ -689,16 +660,13 @@ class QualityEnhancementEngine:
             return audio
 
 class QualityMetricsCalculator:
-    """
-    Utility class for calculating various audio quality metrics.
-    """
-    
+    """    Utility class for calculating various audio quality metrics.
+    """    
     def __init__(self):
         self.logger = logger
     
     async def calculate_all_metrics(self, audio: np.ndarray, sr: int) -> Dict[str, float]:
-        """Calculate comprehensive quality metrics"""
-        try:
+        """Calculate comprehensive quality metrics"""        try:
             analyzer = AudioQualityAnalyzer()
             
             # Technical metrics
@@ -719,18 +687,15 @@ class QualityMetricsCalculator:
             return {}
 
 class QualityOptimizer:
-    """
-    Optimizer for finding optimal enhancement parameters.
-    """
-    
+    """    Optimizer for finding optimal enhancement parameters.
+    """    
     def __init__(self):
         self.logger = logger
         self.enhancement_engine = QualityEnhancementEngine()
     
     async def optimize_enhancement(self, audio_path: str, 
                                  target_score: float = 0.95) -> Dict[str, Any]:
-        """
-        Optimize enhancement parameters to achieve target quality score.
+        """        Optimize enhancement parameters to achieve target quality score.
         
         Args:
             audio_path: Path to audio file
@@ -738,8 +703,7 @@ class QualityOptimizer:
             
         Returns:
             Optimal enhancement parameters
-        """
-        try:
+        """        try:
             # This would implement optimization algorithm
             # For now, return default parameters
             return {

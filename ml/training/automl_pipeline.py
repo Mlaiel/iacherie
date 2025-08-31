@@ -1,5 +1,4 @@
-"""
-🚀 AutoML Pipeline - IA Influencer Agent Platform Enterprise
+"""🚀 AutoML Pipeline - IA Influencer Agent Platform Enterprise
 ===========================================================
 Module: backend/ml/training/automl_pipeline.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Pipeline automatisé d'entraînement de modèles ML
 - Cross-validation et validation robuste
 - Model comparison et selection automatique
 """
-
 import asyncio
 import logging
 import time
@@ -44,8 +42,7 @@ from sklearn.pipeline import Pipeline
 logger = logging.getLogger(__name__)
 
 class ModelType(Enum):
-    """Types de modèles supportés"""
-    CLASSIFICATION = "classification"
+    """Types de modèles supportés"""    CLASSIFICATION = "classification"
     REGRESSION = "regression"
     CLUSTERING = "clustering"
     RECOMMENDATION = "recommendation"
@@ -53,8 +50,7 @@ class ModelType(Enum):
     SEO_OPTIMIZATION = "seo_optimization"
 
 class TrainingStatus(Enum):
-    """Statuts d'entraînement"""
-    PENDING = "pending"
+    """Statuts d'entraînement"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -62,8 +58,7 @@ class TrainingStatus(Enum):
 
 @dataclass
 class AutoMLConfig:
-    """Configuration AutoML"""
-    model_type: ModelType
+    """Configuration AutoML"""    model_type: ModelType
     max_trials: int = 100
     max_time_minutes: int = 60
     cv_folds: int = 5
@@ -76,8 +71,7 @@ class AutoMLConfig:
 
 @dataclass
 class TrainingMetrics:
-    """Métriques d'entraînement"""
-    accuracy: float
+    """Métriques d'entraînement"""    accuracy: float
     precision: float
     recall: float
     f1_score: float
@@ -88,8 +82,7 @@ class TrainingMetrics:
 
 @dataclass
 class TrainingJob:
-    """Job d'entraînement"""
-    job_id: str
+    """Job d'entraînement"""    job_id: str
     model_type: ModelType
     status: TrainingStatus
     config: AutoMLConfig
@@ -100,8 +93,7 @@ class TrainingJob:
     model_path: Optional[str] = None
 
 class AutoMLPipeline:
-    """Pipeline AutoML Enterprise"""
-    
+    """Pipeline AutoML Enterprise"""    
     def __init__(self, config: AutoMLConfig):
         self.config = config
         self.training_jobs: Dict[str, TrainingJob] = {}
@@ -150,8 +142,7 @@ class AutoMLPipeline:
                            X: np.ndarray, 
                            y: np.ndarray,
                            job_name: Optional[str] = None) -> str:
-        """Démarre un job d'entraînement AutoML"""
-        try:
+        """Démarre un job d'entraînement AutoML"""        try:
             job_id = str(uuid.uuid4())
             if job_name:
                 job_id = f"{job_name}_{job_id[:8]}"
@@ -178,8 +169,7 @@ class AutoMLPipeline:
             raise
     
     async def _train_models(self, job_id: str, X: np.ndarray, y: np.ndarray):
-        """Entraîne les modèles de façon asynchrone"""
-        job = self.training_jobs[job_id]
+        """Entraîne les modèles de façon asynchrone"""        job = self.training_jobs[job_id]
         
         try:
             job.status = TrainingStatus.RUNNING
@@ -216,8 +206,7 @@ class AutoMLPipeline:
             logger.error(f"Erreur lors de l'entraînement {job_id}: {e}")
     
     async def _preprocess_data(self, X: np.ndarray, y: np.ndarray) -> Tuple[np.ndarray, np.ndarray]:
-        """Préprocessing des données"""
-        try:
+        """Préprocessing des données"""        try:
             # Normalisation des features
             scaler = StandardScaler()
             X_scaled = scaler.fit_transform(X)
@@ -238,8 +227,7 @@ class AutoMLPipeline:
     async def _train_and_select_best_model(self, 
                                          X: np.ndarray, 
                                          y: np.ndarray) -> Tuple[Any, TrainingMetrics]:
-        """Entraîne tous les modèles et sélectionne le meilleur"""
-        best_model = None
+        """Entraîne tous les modèles et sélectionne le meilleur"""        best_model = None
         best_metrics = None
         best_score = -float('inf')
         
@@ -324,8 +312,7 @@ class AutoMLPipeline:
         return best_model, best_metrics
     
     async def _save_model(self, job_id: str, model: Any) -> str:
-        """Sauvegarde le modèle entraîné"""
-        try:
+        """Sauvegarde le modèle entraîné"""        try:
             # Créer le répertoire si nécessaire
             models_dir = Path("models")
             models_dir.mkdir(exist_ok=True)
@@ -348,12 +335,10 @@ class AutoMLPipeline:
             raise
     
     async def get_job_status(self, job_id: str) -> Optional[TrainingJob]:
-        """Récupère le statut d'un job"""
-        return self.training_jobs.get(job_id)
+        """Récupère le statut d'un job"""        return self.training_jobs.get(job_id)
     
     async def cancel_job(self, job_id: str) -> bool:
-        """Annule un job d'entraînement"""
-        job = self.training_jobs.get(job_id)
+        """Annule un job d'entraînement"""        job = self.training_jobs.get(job_id)
         if job and job.status in [TrainingStatus.PENDING, TrainingStatus.RUNNING]:
             job.status = TrainingStatus.CANCELLED
             job.end_time = datetime.now()
@@ -362,8 +347,7 @@ class AutoMLPipeline:
         return False
     
     async def load_model(self, job_id: str) -> Optional[Any]:
-        """Charge un modèle entraîné"""
-        # Vérifier le cache
+        """Charge un modèle entraîné"""        # Vérifier le cache
         if job_id in self.model_cache:
             return self.model_cache[job_id]
         
@@ -381,8 +365,7 @@ class AutoMLPipeline:
         return None
     
     async def predict(self, job_id: str, X: np.ndarray) -> Optional[np.ndarray]:
-        """Fait des prédictions avec un modèle entraîné"""
-        model = await self.load_model(job_id)
+        """Fait des prédictions avec un modèle entraîné"""        model = await self.load_model(job_id)
         if model:
             try:
                 return model.predict(X)
@@ -391,12 +374,10 @@ class AutoMLPipeline:
         return None
     
     async def get_training_history(self) -> List[TrainingJob]:
-        """Récupère l'historique des entraînements"""
-        return list(self.training_jobs.values())
+        """Récupère l'historique des entraînements"""        return list(self.training_jobs.values())
     
     async def cleanup_old_jobs(self, days_old: int = 30):
-        """Nettoie les anciens jobs"""
-        cutoff_date = datetime.now() - timedelta(days=days_old)
+        """Nettoie les anciens jobs"""        cutoff_date = datetime.now() - timedelta(days=days_old)
         jobs_to_remove = []
         
         for job_id, job in self.training_jobs.items():
@@ -419,12 +400,10 @@ class AutoMLPipeline:
 
 # Factory pour créer des pipelines spécialisés
 class AutoMLPipelineFactory:
-    """Factory pour créer des pipelines AutoML spécialisés"""
-    
+    """Factory pour créer des pipelines AutoML spécialisés"""    
     @staticmethod
     def create_content_protection_pipeline() -> AutoMLPipeline:
-        """Pipeline pour la protection de contenu"""
-        config = AutoMLConfig(
+        """Pipeline pour la protection de contenu"""        config = AutoMLConfig(
             model_type=ModelType.CONTENT_PROTECTION,
             max_trials=50,
             max_time_minutes=30,
@@ -434,8 +413,7 @@ class AutoMLPipelineFactory:
     
     @staticmethod
     def create_seo_optimization_pipeline() -> AutoMLPipeline:
-        """Pipeline pour l'optimisation SEO"""
-        config = AutoMLConfig(
+        """Pipeline pour l'optimisation SEO"""        config = AutoMLConfig(
             model_type=ModelType.SEO_OPTIMIZATION,
             max_trials=30,
             max_time_minutes=20,
@@ -445,8 +423,7 @@ class AutoMLPipelineFactory:
     
     @staticmethod
     def create_recommendation_pipeline() -> AutoMLPipeline:
-        """Pipeline pour les recommandations"""
-        config = AutoMLConfig(
+        """Pipeline pour les recommandations"""        config = AutoMLConfig(
             model_type=ModelType.RECOMMENDATION,
             max_trials=100,
             max_time_minutes=60,
@@ -457,8 +434,7 @@ class AutoMLPipelineFactory:
 
 # Exemple d'utilisation
 async def example_usage():
-    """Exemple d'utilisation du pipeline AutoML"""
-    
+    """Exemple d'utilisation du pipeline AutoML"""    
     # Créer des données d'exemple
     np.random.seed(42)
     X = np.random.randn(1000, 10)

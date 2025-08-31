@@ -1,5 +1,4 @@
-"""
-Archival Monitoring and Analytics Module
+"""Archival Monitoring and Analytics Module
 
 Comprehensive monitoring system for archival operations with real-time metrics,
 performance analytics, alerting, and business intelligence dashboards.
@@ -16,7 +15,6 @@ Any unauthorized use is strictly prohibited.
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Sécurité + 
 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import logging
 import time
@@ -37,8 +35,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Types of metrics"""
-    COUNTER = "counter"
+    """Types of metrics"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
@@ -46,8 +43,7 @@ class MetricType(Enum):
 
 
 class AlertSeverity(Enum):
-    """Alert severity levels"""
-    CRITICAL = "critical"
+    """Alert severity levels"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -55,8 +51,7 @@ class AlertSeverity(Enum):
 
 
 class AlertStatus(Enum):
-    """Alert status states"""
-    ACTIVE = "active"
+    """Alert status states"""    ACTIVE = "active"
     RESOLVED = "resolved"
     ACKNOWLEDGED = "acknowledged"
     SUPPRESSED = "suppressed"
@@ -64,8 +59,7 @@ class AlertStatus(Enum):
 
 @dataclass
 class MetricPoint:
-    """Single metric data point"""
-    timestamp: datetime
+    """Single metric data point"""    timestamp: datetime
     value: float
     tags: Dict[str, str] = field(default_factory=dict)
     labels: Dict[str, str] = field(default_factory=dict)
@@ -73,8 +67,7 @@ class MetricPoint:
 
 @dataclass
 class ArchivalMetrics:
-    """Core archival system metrics"""
-    
+    """Core archival system metrics"""    
     # Storage metrics
     total_archives: int = 0
     total_size_bytes: int = 0
@@ -116,8 +109,7 @@ class ArchivalMetrics:
 
 @dataclass
 class PerformanceMetrics:
-    """Detailed performance analytics"""
-    
+    """Detailed performance analytics"""    
     # Throughput metrics
     operations_per_second: float = 0.0
     bytes_processed_per_second: float = 0.0
@@ -154,8 +146,7 @@ class PerformanceMetrics:
 
 @dataclass
 class AlertRule:
-    """Alert rule definition"""
-    rule_id: str
+    """Alert rule definition"""    rule_id: str
     name: str
     description: str
     
@@ -182,8 +173,7 @@ class AlertRule:
 
 @dataclass
 class Alert:
-    """Active alert instance"""
-    alert_id: str
+    """Active alert instance"""    alert_id: str
     rule_id: str
     
     # Alert details
@@ -216,29 +206,24 @@ class Alert:
 
 
 class MetricCollector(ABC):
-    """Abstract base for metric collectors"""
-    
+    """Abstract base for metric collectors"""    
     @abstractmethod
     async def collect_metrics(self) -> Dict[str, MetricPoint]:
-        """Collect metrics from source"""
-        pass
+        """Collect metrics from source"""        pass
     
     @abstractmethod
     def get_collector_name(self) -> str:
-        """Get collector identifier"""
-        pass
+        """Get collector identifier"""        pass
 
 
 class ArchivalSystemCollector(MetricCollector):
-    """Collector for core archival system metrics"""
-    
+    """Collector for core archival system metrics"""    
     def __init__(self, archive_manager):
         self.archive_manager = archive_manager
         self.collection_history: List[ArchivalMetrics] = []
     
     async def collect_metrics(self) -> Dict[str, MetricPoint]:
-        """Collect archival system metrics"""
-        try:
+        """Collect archival system metrics"""        try:
             timestamp = datetime.utcnow()
             metrics = {}
             
@@ -283,16 +268,14 @@ class ArchivalSystemCollector(MetricCollector):
 
 
 class PerformanceCollector(MetricCollector):
-    """Collector for performance metrics"""
-    
+    """Collector for performance metrics"""    
     def __init__(self):
         self.latency_history: List[float] = []
         self.operation_counts: Dict[str, int] = {}
         self.start_time = time.time()
     
     async def collect_metrics(self) -> Dict[str, MetricPoint]:
-        """Collect performance metrics"""
-        try:
+        """Collect performance metrics"""        try:
             timestamp = datetime.utcnow()
             metrics = {}
             
@@ -334,8 +317,7 @@ class PerformanceCollector(MetricCollector):
         return "performance"
     
     def record_operation(self, operation_type: str, latency_ms: float):
-        """Record operation for metrics"""
-        self.operation_counts[operation_type] = self.operation_counts.get(operation_type, 0) + 1
+        """Record operation for metrics"""        self.operation_counts[operation_type] = self.operation_counts.get(operation_type, 0) + 1
         self.latency_history.append(latency_ms)
         
         # Keep history bounded
@@ -344,8 +326,7 @@ class PerformanceCollector(MetricCollector):
 
 
 class AlertManager:
-    """Advanced alert management system"""
-    
+    """Advanced alert management system"""    
     def __init__(self):
         self.rules: Dict[str, AlertRule] = {}
         self.active_alerts: Dict[str, Alert] = {}
@@ -364,8 +345,7 @@ class AlertManager:
         logger.info("Alert Manager initialized")
     
     async def add_rule(self, rule: AlertRule) -> bool:
-        """Add new alert rule"""
-        try:
+        """Add new alert rule"""        try:
             if not await self._validate_rule(rule):
                 raise ArchivalError(f"Invalid alert rule: {rule.rule_id}")
             
@@ -378,8 +358,7 @@ class AlertManager:
             return False
     
     async def evaluate_rules(self, metrics: Dict[str, MetricPoint]):
-        """Evaluate alert rules against current metrics"""
-        try:
+        """Evaluate alert rules against current metrics"""        try:
             for rule in self.rules.values():
                 if not rule.enabled:
                     continue
@@ -400,8 +379,7 @@ class AlertManager:
             logger.error(f"Failed to evaluate alert rules: {e}")
     
     async def acknowledge_alert(self, alert_id: str, acknowledged_by: str) -> bool:
-        """Acknowledge an active alert"""
-        try:
+        """Acknowledge an active alert"""        try:
             if alert_id not in self.active_alerts:
                 return False
             
@@ -418,8 +396,7 @@ class AlertManager:
             return False
     
     async def resolve_alert(self, alert_id: str) -> bool:
-        """Manually resolve an alert"""
-        try:
+        """Manually resolve an alert"""        try:
             if alert_id not in self.active_alerts:
                 return False
             
@@ -441,8 +418,7 @@ class AlertManager:
             return False
     
     async def get_active_alerts(self, severity: Optional[AlertSeverity] = None) -> List[Alert]:
-        """Get active alerts, optionally filtered by severity"""
-        alerts = list(self.active_alerts.values())
+        """Get active alerts, optionally filtered by severity"""        alerts = list(self.active_alerts.values())
         
         if severity:
             alerts = [alert for alert in alerts if alert.severity == severity]
@@ -460,8 +436,7 @@ class AlertManager:
         return alerts
     
     async def get_alert_stats(self) -> Dict[str, Any]:
-        """Get alert statistics"""
-        try:
+        """Get alert statistics"""        try:
             # Count by severity
             severity_counts = {}
             for alert in self.active_alerts.values():
@@ -499,8 +474,7 @@ class AlertManager:
             return {}
     
     async def _validate_rule(self, rule: AlertRule) -> bool:
-        """Validate alert rule"""
-        try:
+        """Validate alert rule"""        try:
             # Basic validation
             if not rule.rule_id or not rule.name or not rule.metric_name:
                 return False
@@ -516,8 +490,7 @@ class AlertManager:
             return False
     
     async def _evaluate_condition(self, value: float, condition: str, threshold: float) -> bool:
-        """Evaluate alert condition"""
-        try:
+        """Evaluate alert condition"""        try:
             condition = condition.strip()
             
             if condition.startswith('>='):
@@ -540,8 +513,7 @@ class AlertManager:
             return False
     
     async def _trigger_alert(self, rule: AlertRule, metric_value: float):
-        """Trigger an alert"""
-        try:
+        """Trigger an alert"""        try:
             # Check if alert already exists for this rule
             existing_alert = None
             for alert in self.active_alerts.values():
@@ -580,8 +552,7 @@ class AlertManager:
             logger.error(f"Failed to trigger alert: {e}")
     
     async def _check_auto_resolve(self, rule: AlertRule):
-        """Check for auto-resolution of alerts"""
-        if not rule.auto_resolve:
+        """Check for auto-resolution of alerts"""        if not rule.auto_resolve:
             return
         
         # Find alerts for this rule
@@ -595,8 +566,7 @@ class AlertManager:
             await self.resolve_alert(alert_id)
     
     async def _send_notifications(self, alert: Alert, rule: AlertRule):
-        """Send alert notifications"""
-        try:
+        """Send alert notifications"""        try:
             for channel in rule.notification_channels:
                 if channel in self.notification_handlers:
                     handler = self.notification_handlers[channel]
@@ -608,8 +578,7 @@ class AlertManager:
             logger.error(f"Failed to send notifications: {e}")
     
     async def _initialize_default_rules(self):
-        """Initialize default alert rules"""
-        try:
+        """Initialize default alert rules"""        try:
             # High error rate alert
             error_rate_rule = AlertRule(
                 rule_id="high_error_rate",
@@ -656,13 +625,11 @@ class AlertManager:
 
 
 class ArchivalMonitoring:
-    """
-    Comprehensive monitoring system for archival operations.
+    """    Comprehensive monitoring system for archival operations.
     
     Provides real-time metrics collection, performance analytics,
     alerting, and business intelligence for archival systems.
-    """
-    
+    """    
     def __init__(self, collection_interval_seconds: int = 60):
         self.collection_interval = collection_interval_seconds
         
@@ -689,8 +656,7 @@ class ArchivalMonitoring:
         logger.info("Archival Monitoring initialized")
     
     async def start_monitoring(self):
-        """Start the monitoring system"""
-        try:
+        """Start the monitoring system"""        try:
             if self.monitoring_active:
                 logger.warning("Monitoring already active")
                 return
@@ -705,8 +671,7 @@ class ArchivalMonitoring:
             self.monitoring_active = False
     
     async def stop_monitoring(self):
-        """Stop the monitoring system"""
-        try:
+        """Stop the monitoring system"""        try:
             self.monitoring_active = False
             
             if self.collection_task:
@@ -722,8 +687,7 @@ class ArchivalMonitoring:
             logger.error(f"Failed to stop monitoring: {e}")
     
     async def add_collector(self, collector: MetricCollector):
-        """Add a metric collector"""
-        try:
+        """Add a metric collector"""        try:
             collector_name = collector.get_collector_name()
             self.collectors[collector_name] = collector
             
@@ -733,8 +697,7 @@ class ArchivalMonitoring:
             logger.error(f"Failed to add collector: {e}")
     
     async def get_current_metrics(self) -> Dict[str, MetricPoint]:
-        """Get current metrics snapshot"""
-        return self.current_metrics.copy()
+        """Get current metrics snapshot"""        return self.current_metrics.copy()
     
     async def get_metric_history(
         self,
@@ -742,8 +705,7 @@ class ArchivalMonitoring:
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[MetricPoint]:
-        """Get historical metrics for analysis"""
-        try:
+        """Get historical metrics for analysis"""        try:
             if metric_name not in self.metric_history:
                 return []
             
@@ -767,8 +729,7 @@ class ArchivalMonitoring:
             return []
     
     async def get_performance_analysis(self, hours: int = 24) -> Dict[str, Any]:
-        """Get performance analysis for specified time period"""
-        try:
+        """Get performance analysis for specified time period"""        try:
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(hours=hours)
             
@@ -783,8 +744,7 @@ class ArchivalMonitoring:
             return {}
     
     async def get_monitoring_dashboard(self) -> Dict[str, Any]:
-        """Get comprehensive monitoring dashboard data"""
-        try:
+        """Get comprehensive monitoring dashboard data"""        try:
             # Current system status
             current_metrics = await self.get_current_metrics()
             
@@ -826,8 +786,7 @@ class ArchivalMonitoring:
             return {}
     
     async def _collection_loop(self):
-        """Main metrics collection loop"""
-        try:
+        """Main metrics collection loop"""        try:
             while self.monitoring_active:
                 await self._collect_all_metrics()
                 await asyncio.sleep(self.collection_interval)
@@ -838,8 +797,7 @@ class ArchivalMonitoring:
             logger.error(f"Collection loop error: {e}")
     
     async def _collect_all_metrics(self):
-        """Collect metrics from all collectors"""
-        try:
+        """Collect metrics from all collectors"""        try:
             timestamp = datetime.utcnow()
             all_metrics = {}
             
@@ -880,8 +838,7 @@ class ArchivalMonitoring:
             self.failed_collections += 1
     
     async def _calculate_health_score(self, metrics: Dict[str, MetricPoint]) -> float:
-        """Calculate overall system health score (0-100)"""
-        try:
+        """Calculate overall system health score (0-100)"""        try:
             score = 100.0
             
             # Error rate impact
@@ -913,8 +870,7 @@ class ArchivalMonitoring:
 
 
 class PerformanceAnalyzer:
-    """Advanced performance analytics engine"""
-    
+    """Advanced performance analytics engine"""    
     def __init__(self):
         self.trend_cache: Dict[str, Dict[str, float]] = {}
         logger.info("Performance Analyzer initialized")
@@ -925,8 +881,7 @@ class PerformanceAnalyzer:
         start_time: datetime,
         end_time: datetime
     ) -> Dict[str, Any]:
-        """Comprehensive performance analysis"""
-        try:
+        """Comprehensive performance analysis"""        try:
             analysis = {
                 "analysis_period": {
                     "start": start_time.isoformat(),
@@ -981,8 +936,7 @@ class PerformanceAnalyzer:
             return {"error": str(e)}
     
     async def _calculate_trend(self, data_points: List[MetricPoint]) -> Dict[str, float]:
-        """Calculate trend analysis for metric data"""
-        try:
+        """Calculate trend analysis for metric data"""        try:
             if len(data_points) < 2:
                 return {"direction": 0, "slope": 0, "confidence": 0}
             
@@ -1021,8 +975,7 @@ class PerformanceAnalyzer:
             return {"direction": 0, "slope": 0, "confidence": 0}
     
     async def _detect_anomalies(self, metric_name: str, data_points: List[MetricPoint]) -> List[Dict[str, Any]]:
-        """Detect anomalies in metric data"""
-        try:
+        """Detect anomalies in metric data"""        try:
             if len(data_points) < 10:  # Need sufficient data for anomaly detection
                 return []
             
@@ -1053,8 +1006,7 @@ class PerformanceAnalyzer:
             return []
     
     async def _generate_recommendations(self, analysis: Dict[str, Any]) -> List[str]:
-        """Generate performance recommendations based on analysis"""
-        try:
+        """Generate performance recommendations based on analysis"""        try:
             recommendations = []
             
             # Check error rate trend

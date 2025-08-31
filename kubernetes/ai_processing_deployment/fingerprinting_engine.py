@@ -1,5 +1,4 @@
-"""
-AI Fingerprinting Engine for Multi-Format Content Analysis
+"""AI Fingerprinting Engine for Multi-Format Content Analysis
 =========================================================
 
 Enterprise-grade fingerprinting engine supporting audio, video, image, and text
@@ -24,7 +23,6 @@ permission is strictly prohibited and will result in legal action.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import hashlib
 import logging
@@ -63,16 +61,14 @@ logger = logging.getLogger(__name__)
 
 
 class ContentType(Enum):
-    """Content types for fingerprinting."""
-    AUDIO = "audio"
+    """Content types for fingerprinting."""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
 
 
 class FingerprintType(Enum):
-    """Types of fingerprints generated."""
-    PERCEPTUAL_HASH = "perceptual_hash"
+    """Types of fingerprints generated."""    PERCEPTUAL_HASH = "perceptual_hash"
     SPECTRAL_HASH = "spectral_hash"
     VECTOR_EMBEDDING = "vector_embedding"
     CONTENT_HASH = "content_hash"
@@ -81,8 +77,7 @@ class FingerprintType(Enum):
 
 @dataclass
 class FingerprintResult:
-    """Result of fingerprinting operation."""
-    content_id: str
+    """Result of fingerprinting operation."""    content_id: str
     content_type: ContentType
     fingerprint_type: FingerprintType
     hash_value: str
@@ -95,8 +90,7 @@ class FingerprintResult:
 
 @dataclass
 class SimilarityMatch:
-    """Similarity match result."""
-    original_id: str
+    """Similarity match result."""    original_id: str
     matched_id: str
     similarity_score: float
     fingerprint_type: FingerprintType
@@ -106,14 +100,11 @@ class SimilarityMatch:
 
 
 class AudioFingerprintEngine:
-    """
-    Advanced audio fingerprinting engine using multiple algorithms
+    """    Advanced audio fingerprinting engine using multiple algorithms
     for robust content identification and similarity detection.
-    """
-    
+    """    
     def __init__(self, sample_rate: int = 22050, feature_size: int = 512):
-        """Initialize audio fingerprinting engine."""
-        self.sample_rate = sample_rate
+        """Initialize audio fingerprinting engine."""        self.sample_rate = sample_rate
         self.feature_size = feature_size
         self.windowing = es.Windowing(type='hann')
         self.spectrum = es.Spectrum()
@@ -122,8 +113,7 @@ class AudioFingerprintEngine:
         
     async def generate_fingerprint(self, audio_data: Union[str, np.ndarray], 
                                  metadata: Dict[str, Any] = None) -> List[FingerprintResult]:
-        """
-        Generate comprehensive audio fingerprints using multiple algorithms.
+        """        Generate comprehensive audio fingerprints using multiple algorithms.
         
         Args:
             audio_data: Audio file path or numpy array
@@ -131,8 +121,7 @@ class AudioFingerprintEngine:
             
         Returns:
             List[FingerprintResult]: Generated fingerprints
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         fingerprints = []
         
         try:
@@ -181,8 +170,7 @@ class AudioFingerprintEngine:
     
     async def _generate_chromaprint(self, audio: np.ndarray, sr: int, 
                                   content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate Chromaprint-based fingerprint."""
-        try:
+        """Generate Chromaprint-based fingerprint."""        try:
             # Convert to int16 for chromaprint
             audio_int16 = (audio * 32767).astype(np.int16)
             
@@ -206,8 +194,7 @@ class AudioFingerprintEngine:
     
     async def _generate_spectral_features(self, audio: np.ndarray, sr: int,
                                         content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate spectral features-based fingerprint."""
-        try:
+        """Generate spectral features-based fingerprint."""        try:
             # Extract spectral features
             stft = librosa.stft(audio, n_fft=2048, hop_length=512)
             spectral_centroids = librosa.feature.spectral_centroid(S=np.abs(stft))[0]
@@ -242,8 +229,7 @@ class AudioFingerprintEngine:
     
     async def _generate_mfcc_fingerprint(self, audio: np.ndarray, sr: int,
                                        content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate MFCC-based fingerprint."""
-        try:
+        """Generate MFCC-based fingerprint."""        try:
             # Extract MFCC features
             mfccs = librosa.feature.mfcc(y=audio, sr=sr, n_mfcc=13)
             
@@ -276,8 +262,7 @@ class AudioFingerprintEngine:
     
     async def _generate_perceptual_hash(self, audio: np.ndarray, sr: int,
                                       content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate perceptual hash for audio."""
-        try:
+        """Generate perceptual hash for audio."""        try:
             # Convert to spectrogram
             S = librosa.stft(audio, n_fft=2048, hop_length=512)
             S_db = librosa.amplitude_to_db(np.abs(S), ref=np.max)
@@ -313,20 +298,16 @@ class AudioFingerprintEngine:
 
 
 class VideoFingerprintEngine:
-    """
-    Advanced video fingerprinting engine using frame analysis,
+    """    Advanced video fingerprinting engine using frame analysis,
     motion vectors, and temporal features for robust video identification.
-    """
-    
+    """    
     def __init__(self, frame_sample_rate: int = 1, feature_size: int = 1024):
-        """Initialize video fingerprinting engine."""
-        self.frame_sample_rate = frame_sample_rate  # Extract 1 frame per second
+        """Initialize video fingerprinting engine."""        self.frame_sample_rate = frame_sample_rate  # Extract 1 frame per second
         self.feature_size = feature_size
         
     async def generate_fingerprint(self, video_path: str, 
                                  metadata: Dict[str, Any] = None) -> List[FingerprintResult]:
-        """
-        Generate comprehensive video fingerprints using multiple algorithms.
+        """        Generate comprehensive video fingerprints using multiple algorithms.
         
         Args:
             video_path: Path to video file
@@ -334,8 +315,7 @@ class VideoFingerprintEngine:
             
         Returns:
             List[FingerprintResult]: Generated fingerprints
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         fingerprints = []
         
         try:
@@ -390,8 +370,7 @@ class VideoFingerprintEngine:
     
     async def _generate_frame_fingerprint(self, cap: cv2.VideoCapture, frame_interval: int,
                                         content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate fingerprint based on frame analysis."""
-        try:
+        """Generate fingerprint based on frame analysis."""        try:
             frame_hashes = []
             frame_count = 0
             
@@ -443,8 +422,7 @@ class VideoFingerprintEngine:
     
     async def _generate_motion_fingerprint(self, cap: cv2.VideoCapture, frame_interval: int,
                                          content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate fingerprint based on motion analysis."""
-        try:
+        """Generate fingerprint based on motion analysis."""        try:
             motion_vectors = []
             prev_frame = None
             frame_count = 0
@@ -513,8 +491,7 @@ class VideoFingerprintEngine:
     
     async def _generate_color_fingerprint(self, cap: cv2.VideoCapture, frame_interval: int,
                                         content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate fingerprint based on color analysis."""
-        try:
+        """Generate fingerprint based on color analysis."""        try:
             color_histograms = []
             frame_count = 0
             
@@ -571,8 +548,7 @@ class VideoFingerprintEngine:
     
     async def _generate_temporal_fingerprint(self, cap: cv2.VideoCapture, frame_interval: int,
                                            content_id: str, metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate fingerprint based on temporal features."""
-        try:
+        """Generate fingerprint based on temporal features."""        try:
             temporal_features = []
             prev_frame = None
             frame_count = 0
@@ -640,21 +616,17 @@ class VideoFingerprintEngine:
 
 
 class ImageFingerprintEngine:
-    """
-    Advanced image fingerprinting engine using perceptual hashing,
+    """    Advanced image fingerprinting engine using perceptual hashing,
     CLIP embeddings, and feature detection for robust image identification.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize image fingerprinting engine."""
-        # Load CLIP model for semantic embeddings
+        """Initialize image fingerprinting engine."""        # Load CLIP model for semantic embeddings
         self.clip_model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32")
         self.clip_processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
         
     async def generate_fingerprint(self, image_data: Union[str, np.ndarray, Image.Image],
                                  metadata: Dict[str, Any] = None) -> List[FingerprintResult]:
-        """
-        Generate comprehensive image fingerprints using multiple algorithms.
+        """        Generate comprehensive image fingerprints using multiple algorithms.
         
         Args:
             image_data: Image file path, numpy array, or PIL Image
@@ -662,8 +634,7 @@ class ImageFingerprintEngine:
             
         Returns:
             List[FingerprintResult]: Generated fingerprints
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         fingerprints = []
         
         try:
@@ -712,8 +683,7 @@ class ImageFingerprintEngine:
     
     async def _generate_perceptual_hashes(self, image: Image.Image, content_id: str,
                                         metadata: Dict[str, Any]) -> List[FingerprintResult]:
-        """Generate multiple perceptual hashes."""
-        fingerprints = []
+        """Generate multiple perceptual hashes."""        fingerprints = []
         
         try:
             # Different perceptual hash algorithms
@@ -750,8 +720,7 @@ class ImageFingerprintEngine:
     
     async def _generate_clip_embedding(self, image: Image.Image, content_id: str,
                                      metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate CLIP semantic embedding."""
-        try:
+        """Generate CLIP semantic embedding."""        try:
             # Process image with CLIP
             inputs = self.clip_processor(images=image, return_tensors="pt")
             
@@ -780,8 +749,7 @@ class ImageFingerprintEngine:
     
     async def _generate_feature_fingerprint(self, image: Image.Image, content_id: str,
                                           metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate feature-based fingerprint using computer vision."""
-        try:
+        """Generate feature-based fingerprint using computer vision."""        try:
             # Convert to OpenCV format
             image_cv = cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR)
             gray = cv2.cvtColor(image_cv, cv2.COLOR_BGR2GRAY)
@@ -823,8 +791,7 @@ class ImageFingerprintEngine:
     
     async def _generate_color_fingerprint(self, image: Image.Image, content_id: str,
                                         metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate color-based fingerprint."""
-        try:
+        """Generate color-based fingerprint."""        try:
             # Convert to numpy array
             image_array = np.array(image)
             
@@ -869,22 +836,18 @@ class ImageFingerprintEngine:
 
 
 class TextFingerprintEngine:
-    """
-    Advanced text fingerprinting engine using semantic embeddings,
+    """    Advanced text fingerprinting engine using semantic embeddings,
     n-grams, and linguistic features for robust text identification.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize text fingerprinting engine."""
-        # Load pre-trained models
+        """Initialize text fingerprinting engine."""        # Load pre-trained models
         self.sentence_transformer = SentenceTransformer('all-MiniLM-L6-v2')
         self.bert_tokenizer = BertTokenizer.from_pretrained('bert-base-uncased')
         self.bert_model = BertModel.from_pretrained('bert-base-uncased')
         
     async def generate_fingerprint(self, text: str,
                                  metadata: Dict[str, Any] = None) -> List[FingerprintResult]:
-        """
-        Generate comprehensive text fingerprints using multiple algorithms.
+        """        Generate comprehensive text fingerprints using multiple algorithms.
         
         Args:
             text: Input text content
@@ -892,8 +855,7 @@ class TextFingerprintEngine:
             
         Returns:
             List[FingerprintResult]: Generated fingerprints
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         fingerprints = []
         
         try:
@@ -935,8 +897,7 @@ class TextFingerprintEngine:
     
     async def _generate_semantic_embedding(self, text: str, content_id: str,
                                          metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate semantic embedding using sentence transformers."""
-        try:
+        """Generate semantic embedding using sentence transformers."""        try:
             # Generate embedding
             embedding = self.sentence_transformer.encode(text)
             
@@ -961,8 +922,7 @@ class TextFingerprintEngine:
     
     async def _generate_ngram_fingerprint(self, text: str, content_id: str,
                                         metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate n-gram based fingerprint."""
-        try:
+        """Generate n-gram based fingerprint."""        try:
             # Clean and tokenize text
             words = text.lower().split()
             
@@ -1004,8 +964,7 @@ class TextFingerprintEngine:
     
     async def _generate_linguistic_fingerprint(self, text: str, content_id: str,
                                              metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate linguistic features fingerprint."""
-        try:
+        """Generate linguistic features fingerprint."""        try:
             # Basic linguistic features
             words = text.split()
             sentences = text.split('.')
@@ -1060,8 +1019,7 @@ class TextFingerprintEngine:
     
     async def _generate_content_hash(self, text: str, content_id: str,
                                    metadata: Dict[str, Any]) -> Optional[FingerprintResult]:
-        """Generate content-based hash."""
-        try:
+        """Generate content-based hash."""        try:
             # Clean text for consistent hashing
             cleaned_text = ' '.join(text.lower().split())
             
@@ -1088,20 +1046,16 @@ class TextFingerprintEngine:
 
 
 class SimilaritySearchEngine:
-    """
-    High-performance similarity search engine using FAISS
+    """    High-performance similarity search engine using FAISS
     for fast vector similarity matching across all content types.
-    """
-    
+    """    
     def __init__(self, dimension: int = 512):
-        """Initialize similarity search engine."""
-        self.dimension = dimension
+        """Initialize similarity search engine."""        self.dimension = dimension
         self.indices: Dict[str, faiss.IndexFlatIP] = {}
         self.fingerprint_store: Dict[str, List[FingerprintResult]] = {}
         
     async def add_fingerprints(self, fingerprints: List[FingerprintResult]):
-        """Add fingerprints to the search index."""
-        try:
+        """Add fingerprints to the search index."""        try:
             for fingerprint in fingerprints:
                 if fingerprint.vector_embedding is not None:
                     # Get or create index for this fingerprint type
@@ -1127,8 +1081,7 @@ class SimilaritySearchEngine:
     
     async def search_similar(self, query_fingerprint: FingerprintResult,
                            threshold: float = 0.8, max_results: int = 10) -> List[SimilarityMatch]:
-        """
-        Search for similar fingerprints in the index.
+        """        Search for similar fingerprints in the index.
         
         Args:
             query_fingerprint: Fingerprint to search for
@@ -1137,8 +1090,7 @@ class SimilaritySearchEngine:
             
         Returns:
             List[SimilarityMatch]: Similar fingerprints found
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         matches = []
         
         try:
@@ -1191,14 +1143,11 @@ class SimilaritySearchEngine:
 
 
 class MultiformatFingerprintEngine:
-    """
-    Unified fingerprinting engine that coordinates all content type engines
+    """    Unified fingerprinting engine that coordinates all content type engines
     for comprehensive multi-format content analysis and protection.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize multiformat fingerprinting engine."""
-        self.audio_engine = AudioFingerprintEngine()
+        """Initialize multiformat fingerprinting engine."""        self.audio_engine = AudioFingerprintEngine()
         self.video_engine = VideoFingerprintEngine()
         self.image_engine = ImageFingerprintEngine()
         self.text_engine = TextFingerprintEngine()
@@ -1206,8 +1155,7 @@ class MultiformatFingerprintEngine:
         
     async def generate_fingerprints(self, content_path: str, content_type: ContentType,
                                   metadata: Dict[str, Any] = None) -> List[FingerprintResult]:
-        """
-        Generate fingerprints for any content type.
+        """        Generate fingerprints for any content type.
         
         Args:
             content_path: Path to content file
@@ -1216,8 +1164,7 @@ class MultiformatFingerprintEngine:
             
         Returns:
             List[FingerprintResult]: Generated fingerprints
-        """
-        try:
+        """        try:
             if content_type == ContentType.AUDIO:
                 fingerprints = await self.audio_engine.generate_fingerprint(content_path, metadata)
             elif content_type == ContentType.VIDEO:
@@ -1242,8 +1189,7 @@ class MultiformatFingerprintEngine:
     
     async def find_similar_content(self, fingerprints: List[FingerprintResult],
                                  threshold: float = 0.8) -> List[SimilarityMatch]:
-        """
-        Find similar content across all fingerprints.
+        """        Find similar content across all fingerprints.
         
         Args:
             fingerprints: Fingerprints to search for
@@ -1251,8 +1197,7 @@ class MultiformatFingerprintEngine:
             
         Returns:
             List[SimilarityMatch]: All similarity matches found
-        """
-        all_matches = []
+        """        all_matches = []
         
         for fingerprint in fingerprints:
             matches = await self.similarity_engine.search_similar(fingerprint, threshold)
@@ -1268,8 +1213,7 @@ class MultiformatFingerprintEngine:
         return sorted(unique_matches.values(), key=lambda x: x.similarity_score, reverse=True)
     
     async def get_engine_statistics(self) -> Dict[str, Any]:
-        """Get comprehensive engine statistics."""
-        return {
+        """Get comprehensive engine statistics."""        return {
             'audio_engine': 'active',
             'video_engine': 'active', 
             'image_engine': 'active',

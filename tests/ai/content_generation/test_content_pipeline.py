@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Content Pipeline Tests
+"""Content Pipeline Tests
 
 Comprehensive tests for the ContentGenerationPipeline class that orchestrates
 the multi-stage content generation workflow.
@@ -26,7 +23,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 STRICT COPYRIGHT NOTICE:
 This code belongs exclusively to Fahed Mlaiel. Unauthorized use prohibited.
 """
-
 import pytest
 import sys
 import os
@@ -55,12 +51,10 @@ from ai.content_generation.content_models import (
 
 
 class TestContentGenerationPipeline:
-    """Test suite for ContentGenerationPipeline"""
-    
+    """Test suite for ContentGenerationPipeline"""    
     @pytest.fixture
     def pipeline(self):
-        """Create a pipeline instance for testing"""
-        config = PipelineConfiguration(
+        """Create a pipeline instance for testing"""        config = PipelineConfiguration(
             enabled_generators=["text", "audio", "video", "image"],
             parallel_execution=True,
             quality_threshold=0.8,
@@ -74,8 +68,7 @@ class TestContentGenerationPipeline:
     
     @pytest.fixture
     def mock_generators(self):
-        """Create mock generators for testing"""
-        return {
+        """Create mock generators for testing"""        return {
             'text': AsyncMock(),
             'audio': AsyncMock(),
             'video': AsyncMock(),
@@ -84,8 +77,7 @@ class TestContentGenerationPipeline:
     
     @pytest.fixture
     def mock_optimizers(self):
-        """Create mock optimizers for testing"""
-        return {
+        """Create mock optimizers for testing"""        return {
             'seo': AsyncMock(),
             'quality': AsyncMock(),
             'format': AsyncMock()
@@ -93,8 +85,7 @@ class TestContentGenerationPipeline:
     
     @pytest.fixture
     def valid_request(self):
-        """Create a valid pipeline request"""
-        return ContentGenerationRequest(
+        """Create a valid pipeline request"""        return ContentGenerationRequest(
             content_type="blog_post",
             topic="AI technology trends",
             target_audience="tech enthusiasts",
@@ -105,8 +96,7 @@ class TestContentGenerationPipeline:
     
     @pytest.fixture
     def blog_request(self):
-        """Create a blog-specific request"""
-        return ContentGenerationRequest(
+        """Create a blog-specific request"""        return ContentGenerationRequest(
             content_type="blog_post",
             topic="Future of Machine Learning",
             target_audience="data scientists",
@@ -117,8 +107,7 @@ class TestContentGenerationPipeline:
     
     @pytest.fixture
     def social_request(self):
-        """Create a social media request"""
-        return ContentGenerationRequest(
+        """Create a social media request"""        return ContentGenerationRequest(
             content_type="instagram_post",
             topic="Daily motivation",
             target_audience="young professionals",
@@ -128,8 +117,7 @@ class TestContentGenerationPipeline:
         )
     
     def test_pipeline_initialization(self, pipeline):
-        """Test pipeline initialization"""
-        assert pipeline is not None
+        """Test pipeline initialization"""        assert pipeline is not None
         assert hasattr(pipeline, 'stages')
         assert hasattr(pipeline, 'generators')
         assert hasattr(pipeline, 'optimizers')
@@ -138,8 +126,7 @@ class TestContentGenerationPipeline:
         assert len(pipeline.stages) == 6  # 6 standard stages
     
     def test_workflow_registration(self, pipeline):
-        """Test workflow registration"""
-        # Test default workflows exist
+        """Test workflow registration"""        # Test default workflows exist
         assert "standard" in pipeline.workflows
         assert "blog_premium" in pipeline.workflows
         assert "social_standard" in pipeline.workflows
@@ -156,8 +143,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_successful_pipeline_execution(self, pipeline, valid_request, mock_generators, mock_optimizers):
-        """Test successful pipeline execution"""
-        # Mock the generators and optimizers
+        """Test successful pipeline execution"""        # Mock the generators and optimizers
         with patch.object(pipeline, 'generators', mock_generators):
             with patch.object(pipeline, 'optimizers', mock_optimizers):
                 # Configure mocks
@@ -176,8 +162,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_planning_stage(self, pipeline, valid_request):
-        """Test the planning stage"""
-        planning_result = await pipeline._execute_planning_stage(valid_request)
+        """Test the planning stage"""        planning_result = await pipeline._execute_planning_stage(valid_request)
         
         assert planning_result is not None
         assert "content_plan" in planning_result
@@ -190,8 +175,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_generation_stage(self, pipeline, valid_request, mock_generators):
-        """Test the generation stage"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test the generation stage"""        with patch.object(pipeline, 'generators', mock_generators):
             mock_generators['text'].generate_content.return_value = "Generated text content"
             
             planning_result = {
@@ -212,8 +196,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_optimization_stage(self, pipeline, valid_request, mock_optimizers):
-        """Test the optimization stage"""
-        with patch.object(pipeline, 'optimizers', mock_optimizers):
+        """Test the optimization stage"""        with patch.object(pipeline, 'optimizers', mock_optimizers):
             mock_optimizers['seo'].optimize_content.return_value = "SEO optimized"
             mock_optimizers['quality'].enhance_content.return_value = "Quality enhanced"
             
@@ -232,8 +215,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_validation_stage(self, pipeline, valid_request):
-        """Test the validation stage"""
-        optimization_result = {
+        """Test the validation stage"""        optimization_result = {
             "optimized_content": "This is a well-optimized piece of content with proper length and structure."
         }
         
@@ -248,8 +230,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_enhancement_stage(self, pipeline, valid_request, mock_optimizers):
-        """Test the enhancement stage"""
-        with patch.object(pipeline, 'optimizers', mock_optimizers):
+        """Test the enhancement stage"""        with patch.object(pipeline, 'optimizers', mock_optimizers):
             mock_optimizers['format'].format_content.return_value = "Enhanced formatted content"
             
             validation_result = {
@@ -267,8 +248,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_finalization_stage(self, pipeline, valid_request):
-        """Test the finalization stage"""
-        enhancement_result = {
+        """Test the finalization stage"""        enhancement_result = {
             "enhanced_content": "Final enhanced content",
             "applied_enhancements": ["formatting", "style_improvement"]
         }
@@ -284,8 +264,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_parallel_execution(self, pipeline, valid_request, mock_generators):
-        """Test parallel execution mode"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test parallel execution mode"""        with patch.object(pipeline, 'generators', mock_generators):
             # Configure multiple generators
             mock_generators['text'].generate_content.return_value = "Text content"
             mock_generators['image'].generate_content.return_value = "Image content"
@@ -311,8 +290,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_sequential_execution(self, pipeline, valid_request, mock_generators):
-        """Test sequential execution mode"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test sequential execution mode"""        with patch.object(pipeline, 'generators', mock_generators):
             mock_generators['text'].generate_content.return_value = "Sequential text content"
             
             planning_result = {
@@ -332,8 +310,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_blog_workflow(self, pipeline, blog_request, mock_generators, mock_optimizers):
-        """Test blog-specific workflow"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test blog-specific workflow"""        with patch.object(pipeline, 'generators', mock_generators):
             with patch.object(pipeline, 'optimizers', mock_optimizers):
                 # Configure mocks for blog workflow
                 mock_generators['text'].generate_content.return_value = "Blog post content"
@@ -350,8 +327,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_social_workflow(self, pipeline, social_request, mock_generators, mock_optimizers):
-        """Test social media workflow"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test social media workflow"""        with patch.object(pipeline, 'generators', mock_generators):
             with patch.object(pipeline, 'optimizers', mock_optimizers):
                 # Configure mocks for social workflow
                 mock_generators['text'].generate_content.return_value = "Social post content #motivation"
@@ -366,8 +342,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_error_handling_in_pipeline(self, pipeline, valid_request, mock_generators):
-        """Test error handling during pipeline execution"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test error handling during pipeline execution"""        with patch.object(pipeline, 'generators', mock_generators):
             # Configure generator to raise an error
             mock_generators['text'].generate_content.side_effect = Exception("Generation failed")
             
@@ -376,8 +351,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_stage_retry_mechanism(self, pipeline, valid_request, mock_generators):
-        """Test retry mechanism for failed stages"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test retry mechanism for failed stages"""        with patch.object(pipeline, 'generators', mock_generators):
             # First call fails, second succeeds
             mock_generators['text'].generate_content.side_effect = [
                 Exception("Temporary failure"),
@@ -401,8 +375,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_pipeline_performance_monitoring(self, pipeline, valid_request, mock_generators, mock_optimizers):
-        """Test pipeline performance monitoring"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test pipeline performance monitoring"""        with patch.object(pipeline, 'generators', mock_generators):
             with patch.object(pipeline, 'optimizers', mock_optimizers):
                 # Configure mocks
                 mock_generators['text'].generate_content.return_value = "Content"
@@ -420,8 +393,7 @@ class TestContentGenerationPipeline:
                 assert result.processing_time <= (end_time - start_time) + 0.1
     
     def test_pipeline_metrics_collection(self, pipeline):
-        """Test pipeline metrics collection"""
-        metrics = pipeline.get_metrics()
+        """Test pipeline metrics collection"""        metrics = pipeline.get_metrics()
         
         expected_keys = [
             'total_executions',
@@ -437,8 +409,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_content_type_specific_processing(self, pipeline):
-        """Test processing for different content types"""
-        content_types = [
+        """Test processing for different content types"""        content_types = [
             "blog_post",
             "instagram_post",
             "twitter_post",
@@ -460,8 +431,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_quality_threshold_enforcement(self, pipeline, valid_request):
-        """Test quality threshold enforcement"""
-        # Mock low quality content
+        """Test quality threshold enforcement"""        # Mock low quality content
         optimization_result = {
             "optimized_content": "Low quality content"
         }
@@ -478,8 +448,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_custom_workflow_execution(self, pipeline, valid_request):
-        """Test custom workflow execution"""
-        # Register a custom workflow
+        """Test custom workflow execution"""        # Register a custom workflow
         custom_workflow = {
             "name": "minimal_test",
             "stages": ["planning", "generation", "finalization"],
@@ -504,8 +473,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_pipeline_resource_cleanup(self, pipeline, valid_request, mock_generators):
-        """Test pipeline resource cleanup"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test pipeline resource cleanup"""        with patch.object(pipeline, 'generators', mock_generators):
             mock_generators['text'].generate_content.return_value = "Content"
             
             initial_memory = pipeline._get_memory_usage()
@@ -524,8 +492,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_concurrent_pipeline_executions(self, pipeline, mock_generators, mock_optimizers):
-        """Test concurrent pipeline executions"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test concurrent pipeline executions"""        with patch.object(pipeline, 'generators', mock_generators):
             with patch.object(pipeline, 'optimizers', mock_optimizers):
                 # Configure mocks
                 mock_generators['text'].generate_content.return_value = "Concurrent content"
@@ -554,8 +521,7 @@ class TestContentGenerationPipeline:
     
     @pytest.mark.asyncio
     async def test_pipeline_state_management(self, pipeline, valid_request, mock_generators):
-        """Test pipeline state management during execution"""
-        with patch.object(pipeline, 'generators', mock_generators):
+        """Test pipeline state management during execution"""        with patch.object(pipeline, 'generators', mock_generators):
             mock_generators['text'].generate_content.return_value = "State test content"
             
             # Track state changes during execution
@@ -577,16 +543,13 @@ class TestContentGenerationPipeline:
 
 
 class TestPipelineConfiguration:
-    """Test suite for pipeline configuration"""
-    
+    """Test suite for pipeline configuration"""    
     @pytest.fixture
     def pipeline(self):
-        """Create a pipeline for configuration testing"""
-        return ContentGenerationPipeline()
+        """Create a pipeline for configuration testing"""        return ContentGenerationPipeline()
     
     def test_default_configuration(self, pipeline):
-        """Test default pipeline configuration"""
-        config = pipeline.get_configuration()
+        """Test default pipeline configuration"""        config = pipeline.get_configuration()
         
         assert config is not None
         assert "stages" in config
@@ -595,8 +558,7 @@ class TestPipelineConfiguration:
         assert "timeout_settings" in config
     
     def test_configuration_update(self, pipeline):
-        """Test pipeline configuration updates"""
-        new_config = {
+        """Test pipeline configuration updates"""        new_config = {
             "quality_thresholds": {
                 "minimum_score": 0.8,
                 "retry_threshold": 0.6
@@ -614,8 +576,7 @@ class TestPipelineConfiguration:
         assert updated_config["timeout_settings"]["stage_timeout"] == 60
     
     def test_invalid_configuration(self, pipeline):
-        """Test handling of invalid configuration"""
-        invalid_config = {
+        """Test handling of invalid configuration"""        invalid_config = {
             "quality_thresholds": {
                 "minimum_score": 1.5  # Invalid value > 1
             }

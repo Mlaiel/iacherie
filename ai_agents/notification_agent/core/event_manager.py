@@ -1,5 +1,4 @@
-"""
-Notification Event Manager - Advanced Event-Driven Notification System
+"""Notification Event Manager - Advanced Event-Driven Notification System
 
 Enterprise-grade event management system for handling complex notification workflows,
 event-driven triggers, business rule processing, and real-time notification orchestration
@@ -30,7 +29,6 @@ Team Specialties & Expertise:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -51,8 +49,7 @@ from ...business.monetization_business import MonetizationBusinessLogic
 
 
 class NotificationEventType(Enum):
-    """Comprehensive notification event types for IA Influencer business logic"""
-    
+    """Comprehensive notification event types for IA Influencer business logic"""    
     # Content Creator Events
     CONTENT_UPLOADED = "content_uploaded"
     CONTENT_PROCESSED = "content_processed"
@@ -95,8 +92,7 @@ class NotificationEventType(Enum):
 
 
 class EventPriority(Enum):
-    """Event priority levels for notification triggering"""
-    CRITICAL = "critical"
+    """Event priority levels for notification triggering"""    CRITICAL = "critical"
     HIGH = "high"
     MEDIUM = "medium"
     LOW = "low"
@@ -104,8 +100,7 @@ class EventPriority(Enum):
 
 
 class EventProcessingStatus(Enum):
-    """Event processing status tracking"""
-    PENDING = "pending"
+    """Event processing status tracking"""    PENDING = "pending"
     PROCESSING = "processing"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -115,8 +110,7 @@ class EventProcessingStatus(Enum):
 
 @dataclass
 class NotificationEvent(BaseEvent):
-    """Advanced notification event with rich business context"""
-    event_type: NotificationEventType
+    """Advanced notification event with rich business context"""    event_type: NotificationEventType
     user_id: str
     priority: EventPriority
     business_context: Dict[str, Any] = field(default_factory=dict)
@@ -130,8 +124,7 @@ class NotificationEvent(BaseEvent):
 
 @dataclass
 class EventRule:
-    """Business rule for event-driven notification triggering"""
-    rule_id: str
+    """Business rule for event-driven notification triggering"""    rule_id: str
     event_types: List[NotificationEventType]
     conditions: List[Callable[[NotificationEvent], bool]]
     notification_template: str
@@ -144,8 +137,7 @@ class EventRule:
 
 @dataclass
 class EventProcessingResult:
-    """Result of event processing with comprehensive details"""
-    event_id: str
+    """Result of event processing with comprehensive details"""    event_id: str
     processing_status: EventProcessingStatus
     notifications_triggered: List[str]
     processing_time_seconds: float
@@ -155,8 +147,7 @@ class EventProcessingResult:
 
 
 class NotificationEventManager:
-    """
-    Advanced event-driven notification system with intelligent business rule processing
+    """    Advanced event-driven notification system with intelligent business rule processing
     
     Key Features:
     - Event-driven notification triggering with complex business rules
@@ -167,8 +158,7 @@ class NotificationEventManager:
     - SEO optimization and distribution status management
     - Real-time event processing with intelligent batching
     - Comprehensive analytics and performance monitoring
-    """
-    
+    """    
     def __init__(
         self,
         notification_dispatcher: NotificationDispatcher,
@@ -207,16 +197,14 @@ class NotificationEventManager:
         asyncio.create_task(self._start_event_processor())
     
     async def process_event(self, event: NotificationEvent) -> EventProcessingResult:
-        """
-        Process a notification event with business rule evaluation
+        """        Process a notification event with business rule evaluation
         
         Args:
             event: The notification event to process
             
         Returns:
             Comprehensive processing result with triggered notifications
-        """
-        start_time = datetime.utcnow()
+        """        start_time = datetime.utcnow()
         processing_result = EventProcessingResult(
             event_id=event.event_id,
             processing_status=EventProcessingStatus.PROCESSING,
@@ -268,16 +256,14 @@ class NotificationEventManager:
             return processing_result
     
     async def register_event_rule(self, rule: EventRule) -> bool:
-        """
-        Register a new event-driven notification rule
+        """        Register a new event-driven notification rule
         
         Args:
             rule: The event rule to register
             
         Returns:
             True if successfully registered
-        """
-        try:
+        """        try:
             # Validate rule
             if not await self._validate_event_rule(rule):
                 return False
@@ -293,8 +279,7 @@ class NotificationEventManager:
             return False
     
     async def remove_event_rule(self, rule_id: str) -> bool:
-        """Remove an event rule"""
-        try:
+        """Remove an event rule"""        try:
             if rule_id in self._event_rules:
                 del self._event_rules[rule_id]
                 self.logger.info(f"Event rule removed: {rule_id}")
@@ -307,10 +292,8 @@ class NotificationEventManager:
     async def _enrich_event_with_business_context(
         self, event: NotificationEvent
     ) -> NotificationEvent:
-        """
-        Enrich event with comprehensive business context for intelligent processing
-        """
-        # Content-related enrichment
+        """        Enrich event with comprehensive business context for intelligent processing
+        """        # Content-related enrichment
         if event.event_type in [
             NotificationEventType.CONTENT_UPLOADED,
             NotificationEventType.CONTENT_PROCESSED,
@@ -349,10 +332,8 @@ class NotificationEventManager:
     async def _evaluate_event_rules(
         self, event: NotificationEvent
     ) -> List[EventRule]:
-        """
-        Evaluate which rules apply to the given event
-        """
-        applicable_rules = []
+        """        Evaluate which rules apply to the given event
+        """        applicable_rules = []
         
         for rule in self._event_rules.values():
             try:
@@ -378,10 +359,8 @@ class NotificationEventManager:
     async def _process_event_rule(
         self, event: NotificationEvent, rule: EventRule
     ) -> List[str]:
-        """
-        Process a single event rule and trigger appropriate notifications
-        """
-        notification_ids = []
+        """        Process a single event rule and trigger appropriate notifications
+        """        notification_ids = []
         
         try:
             # Create notification based on rule
@@ -422,10 +401,8 @@ class NotificationEventManager:
     async def _create_notification_from_rule(
         self, event: NotificationEvent, rule: EventRule
     ) -> NotificationModel:
-        """
-        Create a notification model from event and rule
-        """
-        # Determine priority
+        """        Create a notification model from event and rule
+        """        # Determine priority
         priority = rule.priority_override or self._map_event_priority(event.priority)
         
         # Create notification
@@ -448,10 +425,8 @@ class NotificationEventManager:
         return notification
     
     async def _initialize_business_rules(self):
-        """
-        Initialize built-in business rules for IA Influencer platform
-        """
-        # Content Upload Success Rule
+        """        Initialize built-in business rules for IA Influencer platform
+        """        # Content Upload Success Rule
         await self.register_event_rule(EventRule(
             rule_id="content_upload_success",
             event_types=[NotificationEventType.CONTENT_UPLOADED],
@@ -531,10 +506,8 @@ class NotificationEventManager:
     async def _evaluate_condition(
         self, condition: Callable[[NotificationEvent], bool], event: NotificationEvent
     ) -> bool:
-        """
-        Safely evaluate a condition function
-        """
-        try:
+        """        Safely evaluate a condition function
+        """        try:
             return condition(event)
         except Exception as e:
             self.logger.error(f"Condition evaluation failed: {str(e)}")
@@ -543,10 +516,8 @@ class NotificationEventManager:
     async def _generate_notification_title(
         self, event: NotificationEvent, rule: EventRule
     ) -> str:
-        """
-        Generate appropriate notification title based on event and rule
-        """
-        title_templates = {
+        """        Generate appropriate notification title based on event and rule
+        """        title_templates = {
             NotificationEventType.CONTENT_UPLOADED: "Content Successfully Uploaded",
             NotificationEventType.INFRINGEMENT_ALERT: "Copyright Infringement Detected",
             NotificationEventType.COLLABORATION_MATCH_FOUND: "New Collaboration Opportunity",
@@ -563,10 +534,8 @@ class NotificationEventManager:
     async def _generate_notification_content(
         self, event: NotificationEvent, rule: EventRule
     ) -> str:
-        """
-        Generate appropriate notification content with business context
-        """
-        if event.event_type == NotificationEventType.CONTENT_UPLOADED:
+        """        Generate appropriate notification content with business context
+        """        if event.event_type == NotificationEventType.CONTENT_UPLOADED:
             return (
                 f"Your content has been successfully uploaded and is now being processed. "
                 f"Content type: {event.content_metadata.get('content_type', 'Unknown')}. "
@@ -606,8 +575,7 @@ class NotificationEventManager:
         return f"Update from IA Influencer platform regarding your {event.event_type.value}."
     
     def _map_event_priority(self, event_priority: EventPriority) -> str:
-        """Map event priority to notification priority"""
-        mapping = {
+        """Map event priority to notification priority"""        mapping = {
             EventPriority.CRITICAL: "critical",
             EventPriority.HIGH: "high",
             EventPriority.MEDIUM: "medium",
@@ -617,8 +585,7 @@ class NotificationEventManager:
         return mapping.get(event_priority, "medium")
     
     async def _validate_event_rule(self, rule: EventRule) -> bool:
-        """Validate event rule configuration"""
-        if not rule.rule_id or not rule.event_types:
+        """Validate event rule configuration"""        if not rule.rule_id or not rule.event_types:
             return False
         
         if not rule.notification_template or not rule.target_channels:
@@ -627,8 +594,7 @@ class NotificationEventManager:
         return True
     
     async def _start_event_processor(self):
-        """Start the background event processor"""
-        while True:
+        """Start the background event processor"""        while True:
             try:
                 # Process events from queue
                 if not self._event_queue.empty():
@@ -643,13 +609,11 @@ class NotificationEventManager:
                 await asyncio.sleep(1)
     
     async def _process_queued_event(self, event: NotificationEvent):
-        """Process event from queue with concurrency control"""
-        async with self._processing_semaphore:
+        """Process event from queue with concurrency control"""        async with self._processing_semaphore:
             await self.process_event(event)
     
     async def _update_event_analytics(self, result: EventProcessingResult):
-        """Update event processing analytics"""
-        self._event_metrics['events_processed'] += 1
+        """Update event processing analytics"""        self._event_metrics['events_processed'] += 1
         self._event_metrics['notifications_triggered'] += len(result.notifications_triggered)
         
         if result.errors:
@@ -668,9 +632,7 @@ class NotificationEventManager:
             self._event_metrics['rule_hit_rates'][rule_id] += 1
     
     async def get_event_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive event processing metrics"""
-        return self._event_metrics.copy()
+        """Get comprehensive event processing metrics"""        return self._event_metrics.copy()
     
     async def queue_event(self, event: NotificationEvent):
-        """Queue an event for processing"""
-        await self._event_queue.put(event)
+        """Queue an event for processing"""        await self._event_queue.put(event)

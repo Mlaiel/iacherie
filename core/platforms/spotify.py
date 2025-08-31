@@ -1,5 +1,4 @@
-"""
-Spotify Platform Integration
+"""Spotify Platform Integration
 
 Complete Spotify Web API integration for music distribution and analytics.
 
@@ -7,7 +6,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, copying, or distribution 
 of this code without explicit written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Any
@@ -25,26 +23,22 @@ logger = logging.getLogger(__name__)
 
 
 class SpotifyPlatform(PlatformBase):
-    """Spotify platform integration"""
-    
+    """Spotify platform integration"""    
     def __init__(self, config: PlatformConfig):
-        """Initialize Spotify platform"""
-        super().__init__(config)
+        """Initialize Spotify platform"""        super().__init__(config)
         self.api_base = "https://api.spotify.com/v1"
         self.auth_base = "https://accounts.spotify.com"
         self.session: Optional[aiohttp.ClientSession] = None
         
     async def _get_session(self) -> aiohttp.ClientSession:
-        """Get or create HTTP session"""
-        if not self.session or self.session.closed:
+        """Get or create HTTP session"""        if not self.session or self.session.closed:
             self.session = aiohttp.ClientSession(
                 timeout=aiohttp.ClientTimeout(total=self.config.timeout)
             )
         return self.session
     
     async def authenticate(self) -> bool:
-        """Authenticate with Spotify using Client Credentials flow"""
-        try:
+        """Authenticate with Spotify using Client Credentials flow"""        try:
             session = await self._get_session()
             
             # Prepare client credentials
@@ -87,8 +81,7 @@ class SpotifyPlatform(PlatformBase):
             return False
     
     async def refresh_token(self) -> bool:
-        """Refresh Spotify access token"""
-        if not self.config.credentials.refresh_token:
+        """Refresh Spotify access token"""        if not self.config.credentials.refresh_token:
             # For client credentials flow, just re-authenticate
             return await self.authenticate()
         
@@ -131,8 +124,7 @@ class SpotifyPlatform(PlatformBase):
             return False
     
     async def _make_request(self, method: str, endpoint: str, **kwargs) -> Optional[Dict[str, Any]]:
-        """Make authenticated request to Spotify API"""
-        if not self.is_authenticated or self._token_expired():
+        """Make authenticated request to Spotify API"""        if not self.is_authenticated or self._token_expired():
             if not await self.authenticate():
                 return None
         
@@ -175,14 +167,12 @@ class SpotifyPlatform(PlatformBase):
             return None
     
     def _token_expired(self) -> bool:
-        """Check if token is expired"""
-        if not self.config.credentials.expires_at:
+        """Check if token is expired"""        if not self.config.credentials.expires_at:
             return True
         return datetime.utcnow() >= self.config.credentials.expires_at
     
     async def upload_content(self, content_path: str, metadata: ContentMetadata) -> UploadResult:
-        """Upload content to Spotify (Note: Direct upload not supported by public API)"""
-        # Spotify doesn't support direct file uploads via public API
+        """Upload content to Spotify (Note: Direct upload not supported by public API)"""        # Spotify doesn't support direct file uploads via public API
         # This would typically be handled through Spotify for Artists or distribution services
         return UploadResult(
             success=False,
@@ -191,8 +181,7 @@ class SpotifyPlatform(PlatformBase):
         )
     
     async def get_analytics(self, content_id: str, start_date: datetime, end_date: datetime) -> AnalyticsData:
-        """Get Spotify analytics (requires Spotify for Artists API)"""
-        # This would require Spotify for Artists API access
+        """Get Spotify analytics (requires Spotify for Artists API)"""        # This would require Spotify for Artists API access
         # For now, return basic track information
         track_data = await self._make_request('GET', f'tracks/{content_id}')
         
@@ -217,8 +206,7 @@ class SpotifyPlatform(PlatformBase):
         )
     
     async def search_content(self, query: str, content_type: ContentType = None) -> List[Dict[str, Any]]:
-        """Search content on Spotify"""
-        search_types = []
+        """Search content on Spotify"""        search_types = []
         
         if content_type:
             if content_type == ContentType.TRACK:
@@ -262,8 +250,7 @@ class SpotifyPlatform(PlatformBase):
         return formatted_results
     
     async def get_user_content(self, user_id: str = None) -> List[Dict[str, Any]]:
-        """Get user's content from Spotify"""
-        if not user_id:
+        """Get user's content from Spotify"""        if not user_id:
             # Get current user's playlists
             user_data = await self._make_request('GET', 'me')
             if not user_data:
@@ -293,8 +280,7 @@ class SpotifyPlatform(PlatformBase):
         return playlists
     
     async def delete_content(self, content_id: str) -> bool:
-        """Delete content from Spotify (limited to playlists you own)"""
-        try:
+        """Delete content from Spotify (limited to playlists you own)"""        try:
             # Can only unfollow playlists, not delete tracks
             result = await self._make_request('DELETE', f'playlists/{content_id}/followers')
             return result is not None
@@ -303,8 +289,7 @@ class SpotifyPlatform(PlatformBase):
             return False
     
     async def update_content(self, content_id: str, metadata: ContentMetadata) -> bool:
-        """Update content metadata on Spotify (limited to playlists you own)"""
-        try:
+        """Update content metadata on Spotify (limited to playlists you own)"""        try:
             data = {
                 'name': metadata.title,
                 'description': metadata.description,
@@ -322,20 +307,17 @@ class SpotifyPlatform(PlatformBase):
             return False
     
     async def get_track_features(self, track_id: str) -> Optional[Dict[str, Any]]:
-        """Get audio features for a track"""
-        return await self._make_request('GET', f'audio-features/{track_id}')
+        """Get audio features for a track"""        return await self._make_request('GET', f'audio-features/{track_id}')
     
     async def get_track_analysis(self, track_id: str) -> Optional[Dict[str, Any]]:
-        """Get audio analysis for a track"""
-        return await self._make_request('GET', f'audio-analysis/{track_id}')
+        """Get audio analysis for a track"""        return await self._make_request('GET', f'audio-analysis/{track_id}')
     
     async def get_recommendations(self, 
                                 seed_tracks: List[str] = None,
                                 seed_artists: List[str] = None,
                                 seed_genres: List[str] = None,
                                 **audio_features) -> List[Dict[str, Any]]:
-        """Get track recommendations"""
-        params = {}
+        """Get track recommendations"""        params = {}
         
         if seed_tracks:
             params['seed_tracks'] = ','.join(seed_tracks[:5])  # Max 5
@@ -359,8 +341,7 @@ class SpotifyPlatform(PlatformBase):
         return result.get('tracks', [])
     
     async def create_playlist(self, user_id: str, name: str, description: str = "", public: bool = True) -> Optional[str]:
-        """Create a new playlist"""
-        data = {
+        """Create a new playlist"""        data = {
             'name': name,
             'description': description,
             'public': public
@@ -373,20 +354,17 @@ class SpotifyPlatform(PlatformBase):
         return None
     
     async def add_tracks_to_playlist(self, playlist_id: str, track_uris: List[str]) -> bool:
-        """Add tracks to a playlist"""
-        data = {'uris': track_uris}
+        """Add tracks to a playlist"""        data = {'uris': track_uris}
         
         result = await self._make_request('POST', f'playlists/{playlist_id}/tracks', json=data)
         return result is not None
     
     async def get_available_markets(self) -> List[str]:
-        """Get available markets"""
-        result = await self._make_request('GET', 'markets')
+        """Get available markets"""        result = await self._make_request('GET', 'markets')
         if result:
             return result.get('markets', [])
         return []
     
     async def close(self):
-        """Close HTTP session"""
-        if self.session and not self.session.closed:
+        """Close HTTP session"""        if self.session and not self.session.closed:
             await self.session.close()

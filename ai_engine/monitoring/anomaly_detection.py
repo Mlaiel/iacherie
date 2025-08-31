@@ -1,5 +1,4 @@
-"""
-Advanced Anomaly Detection Module
+"""Advanced Anomaly Detection Module
 
 Enterprise-grade ML-based anomaly detection for IA Influencer Agent platform.
 Uses statistical analysis and machine learning to detect performance and business anomalies.
@@ -9,7 +8,6 @@ Created by: Fahed Mlaiel (mlaiel@live.de)
 
 Business Logic: User Upload → AI Protection → SEO → Collaboration → Distribution
 """
-
 import asyncio
 import numpy as np
 import pandas as pd
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class AnomalyType(Enum):
-    """Types of anomalies that can be detected"""
-    STATISTICAL = "statistical"
+    """Types of anomalies that can be detected"""    STATISTICAL = "statistical"
     TREND = "trend"
     SEASONAL = "seasonal"
     PATTERN = "pattern"
@@ -48,16 +45,14 @@ class AnomalyType(Enum):
 
 
 class AnomalySeverity(Enum):
-    """Severity levels for detected anomalies"""
-    LOW = "low"
+    """Severity levels for detected anomalies"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class DetectionMethod(Enum):
-    """Anomaly detection methods"""
-    Z_SCORE = "z_score"
+    """Anomaly detection methods"""    Z_SCORE = "z_score"
     IQR = "iqr"
     ISOLATION_FOREST = "isolation_forest"
     DBSCAN = "dbscan"
@@ -70,8 +65,7 @@ class DetectionMethod(Enum):
 
 @dataclass
 class AnomalyPoint:
-    """Represents a detected anomaly"""
-    timestamp: datetime
+    """Represents a detected anomaly"""    timestamp: datetime
     metric_name: str
     value: float
     expected_value: float
@@ -88,8 +82,7 @@ class AnomalyPoint:
 
 @dataclass
 class AnomalyPattern:
-    """Represents a pattern of anomalies"""
-    pattern_id: str
+    """Represents a pattern of anomalies"""    pattern_id: str
     pattern_name: str
     anomaly_points: List[AnomalyPoint]
     start_time: datetime
@@ -102,8 +95,7 @@ class AnomalyPattern:
 
 @dataclass
 class DetectionModel:
-    """Configuration for an anomaly detection model"""
-    model_id: str
+    """Configuration for an anomaly detection model"""    model_id: str
     metric_name: str
     detection_method: DetectionMethod
     parameters: Dict[str, Any]
@@ -116,13 +108,11 @@ class DetectionModel:
 
 
 class AnomalyDetection:
-    """
-    Advanced Anomaly Detection System
+    """    Advanced Anomaly Detection System
     
     Provides ML-based anomaly detection for performance metrics, business KPIs,
     and user behavior patterns in the IA Influencer Agent platform.
-    """
-    
+    """    
     def __init__(
         self,
         metrics_collector: Optional[MetricsCollector] = None,
@@ -160,8 +150,7 @@ class AnomalyDetection:
         self._initialize_default_models()
         
     async def start_detection(self) -> None:
-        """Start anomaly detection monitoring"""
-        if self.is_detecting:
+        """Start anomaly detection monitoring"""        if self.is_detecting:
             logger.warning("Anomaly detection is already running")
             return
             
@@ -171,8 +160,7 @@ class AnomalyDetection:
         logger.info("Anomaly detection started successfully")
         
     async def stop_detection(self) -> None:
-        """Stop anomaly detection monitoring"""
-        if not self.is_detecting:
+        """Stop anomaly detection monitoring"""        if not self.is_detecting:
             return
             
         self.is_detecting = False
@@ -187,13 +175,11 @@ class AnomalyDetection:
         logger.info("Anomaly detection stopped")
         
     def add_detection_model(self, model: DetectionModel) -> None:
-        """Add a new anomaly detection model"""
-        self.detection_models[model.model_id] = model
+        """Add a new anomaly detection model"""        self.detection_models[model.model_id] = model
         logger.info(f"Added anomaly detection model: {model.model_id}")
         
     def remove_detection_model(self, model_id: str) -> bool:
-        """Remove an anomaly detection model"""
-        if model_id in self.detection_models:
+        """Remove an anomaly detection model"""        if model_id in self.detection_models:
             del self.detection_models[model_id]
             logger.info(f"Removed anomaly detection model: {model_id}")
             return True
@@ -205,8 +191,7 @@ class AnomalyDetection:
         value: float,
         timestamp: Optional[datetime] = None
     ) -> None:
-        """Add new metric data point for anomaly detection"""
-        if timestamp is None:
+        """Add new metric data point for anomaly detection"""        if timestamp is None:
             timestamp = datetime.utcnow()
             
         data_point = {
@@ -224,8 +209,7 @@ class AnomalyDetection:
         metric_name: str,
         detection_method: Optional[DetectionMethod] = None
     ) -> List[AnomalyPoint]:
-        """Detect anomalies in a specific metric"""
-        if metric_name not in self.metric_data:
+        """Detect anomalies in a specific metric"""        if metric_name not in self.metric_data:
             return []
             
         data = list(self.metric_data[metric_name])
@@ -261,8 +245,7 @@ class AnomalyDetection:
         self,
         time_window: timedelta = timedelta(hours=24)
     ) -> List[AnomalyPattern]:
-        """Detect patterns in anomalies"""
-        cutoff_time = datetime.utcnow() - time_window
+        """Detect patterns in anomalies"""        cutoff_time = datetime.utcnow() - time_window
         
         # Get recent anomalies
         recent_anomalies = [
@@ -296,8 +279,7 @@ class AnomalyDetection:
         self,
         time_window: timedelta = timedelta(hours=24)
     ) -> Dict[str, Any]:
-        """Get summary of detected anomalies"""
-        cutoff_time = datetime.utcnow() - time_window
+        """Get summary of detected anomalies"""        cutoff_time = datetime.utcnow() - time_window
         
         recent_anomalies = [
             anomaly for anomaly in self.detected_anomalies
@@ -353,8 +335,7 @@ class AnomalyDetection:
         metric_name: str,
         forecast_horizon: timedelta = timedelta(hours=1)
     ) -> List[Dict[str, Any]]:
-        """Predict potential future anomalies"""
-        if metric_name not in self.metric_data:
+        """Predict potential future anomalies"""        if metric_name not in self.metric_data:
             return []
             
         data = list(self.metric_data[metric_name])
@@ -407,12 +388,10 @@ class AnomalyDetection:
             return []
             
     def add_anomaly_callback(self, callback: Callable[[AnomalyPoint], None]) -> None:
-        """Add callback function for anomaly notifications"""
-        self.anomaly_callbacks.append(callback)
+        """Add callback function for anomaly notifications"""        self.anomaly_callbacks.append(callback)
         
     def _initialize_default_models(self) -> None:
-        """Initialize default detection models for common metrics"""
-        default_models = [
+        """Initialize default detection models for common metrics"""        default_models = [
             # AI Performance Anomalies
             DetectionModel(
                 model_id="ai_inference_time_zscore",
@@ -477,8 +456,7 @@ class AnomalyDetection:
         timestamps: List[datetime],
         method: DetectionMethod
     ) -> List[AnomalyPoint]:
-        """Detect anomalies using a specific method"""
-        anomalies = []
+        """Detect anomalies using a specific method"""        anomalies = []
         
         if method == DetectionMethod.Z_SCORE:
             anomalies = self._detect_zscore_anomalies(metric_name, values, timestamps)
@@ -499,8 +477,7 @@ class AnomalyDetection:
         values: List[float],
         timestamps: List[datetime]
     ) -> List[AnomalyPoint]:
-        """Detect anomalies using Z-score method"""
-        if len(values) < 10:
+        """Detect anomalies using Z-score method"""        if len(values) < 10:
             return []
             
         mean_val = statistics.mean(values)
@@ -548,8 +525,7 @@ class AnomalyDetection:
         values: List[float],
         timestamps: List[datetime]
     ) -> List[AnomalyPoint]:
-        """Detect anomalies using IQR method"""
-        if len(values) < 10:
+        """Detect anomalies using IQR method"""        if len(values) < 10:
             return []
             
         q1 = np.percentile(values, 25)
@@ -598,8 +574,7 @@ class AnomalyDetection:
         values: List[float],
         timestamps: List[datetime]
     ) -> List[AnomalyPoint]:
-        """Detect anomalies using Isolation Forest"""
-        if len(values) < 50:  # Need more data for ML methods
+        """Detect anomalies using Isolation Forest"""        if len(values) < 50:  # Need more data for ML methods
             return []
             
         try:
@@ -667,8 +642,7 @@ class AnomalyDetection:
         values: List[float],
         timestamps: List[datetime]
     ) -> List[AnomalyPoint]:
-        """Detect anomalies using moving average"""
-        window_size = 10  # Default window
+        """Detect anomalies using moving average"""        window_size = 10  # Default window
         threshold = 2.0
         
         # Get parameters from model if available
@@ -718,8 +692,7 @@ class AnomalyDetection:
         values: List[float],
         timestamps: List[datetime]
     ) -> List[AnomalyPoint]:
-        """Detect anomalies using custom thresholds"""
-        threshold = 0.0
+        """Detect anomalies using custom thresholds"""        threshold = 0.0
         direction = "above"
         
         # Get parameters from model if available
@@ -764,8 +737,7 @@ class AnomalyDetection:
         return anomalies
         
     def _calculate_severity(self, z_score: float, threshold: float) -> AnomalySeverity:
-        """Calculate anomaly severity based on Z-score"""
-        if z_score > threshold * 2:
+        """Calculate anomaly severity based on Z-score"""        if z_score > threshold * 2:
             return AnomalySeverity.CRITICAL
         elif z_score > threshold * 1.5:
             return AnomalySeverity.HIGH
@@ -775,8 +747,7 @@ class AnomalyDetection:
             return AnomalySeverity.LOW
             
     def _calculate_severity_iqr(self, deviation: float, iqr: float) -> AnomalySeverity:
-        """Calculate anomaly severity based on IQR deviation"""
-        if deviation > iqr * 3:
+        """Calculate anomaly severity based on IQR deviation"""        if deviation > iqr * 3:
             return AnomalySeverity.CRITICAL
         elif deviation > iqr * 2:
             return AnomalySeverity.HIGH
@@ -786,8 +757,7 @@ class AnomalyDetection:
             return AnomalySeverity.LOW
             
     def _calculate_severity_isolation(self, score: float) -> AnomalySeverity:
-        """Calculate anomaly severity based on isolation forest score"""
-        abs_score = abs(score)
+        """Calculate anomaly severity based on isolation forest score"""        abs_score = abs(score)
         if abs_score > 0.7:
             return AnomalySeverity.CRITICAL
         elif abs_score > 0.5:
@@ -798,8 +768,7 @@ class AnomalyDetection:
             return AnomalySeverity.LOW
             
     def _deduplicate_anomalies(self, anomalies: List[AnomalyPoint]) -> List[AnomalyPoint]:
-        """Remove duplicate anomalies from different detection methods"""
-        if not anomalies:
+        """Remove duplicate anomalies from different detection methods"""        if not anomalies:
             return []
             
         # Group by timestamp and metric
@@ -821,8 +790,7 @@ class AnomalyDetection:
         metric_name: str,
         anomalies: List[AnomalyPoint]
     ) -> List[AnomalyPattern]:
-        """Detect temporal patterns in anomalies for a specific metric"""
-        if len(anomalies) < 3:
+        """Detect temporal patterns in anomalies for a specific metric"""        if len(anomalies) < 3:
             return []
             
         patterns = []
@@ -866,8 +834,7 @@ class AnomalyDetection:
         self,
         anomalies: List[AnomalyPoint]
     ) -> List[AnomalyPattern]:
-        """Detect patterns across multiple metrics"""
-        if len(anomalies) < 5:
+        """Detect patterns across multiple metrics"""        if len(anomalies) < 5:
             return []
             
         patterns = []
@@ -913,8 +880,7 @@ class AnomalyDetection:
         value: float,
         timestamp: datetime
     ) -> None:
-        """Check for real-time anomalies as data comes in"""
-        # Get recent data for comparison
+        """Check for real-time anomalies as data comes in"""        # Get recent data for comparison
         recent_data = list(self.metric_data[metric_name])[-50:]  # Last 50 points
         
         if len(recent_data) < 10:
@@ -975,8 +941,7 @@ class AnomalyDetection:
                     logger.warning(f"Real-time anomaly detected: {anomaly.description}")
                     
     async def _detection_loop(self) -> None:
-        """Main detection loop for continuous anomaly monitoring"""
-        while self.is_detecting:
+        """Main detection loop for continuous anomaly monitoring"""        while self.is_detecting:
             try:
                 # Run detection on all metrics with sufficient data
                 for metric_name in self.metric_data.keys():
@@ -1002,8 +967,7 @@ class AnomalyDetection:
                 await asyncio.sleep(600)  # Wait longer on error
                 
     async def _update_models(self) -> None:
-        """Update detection models with new data"""
-        current_time = datetime.utcnow()
+        """Update detection models with new data"""        current_time = datetime.utcnow()
         
         for model in self.detection_models.values():
             if not model.enabled:
@@ -1020,8 +984,7 @@ class AnomalyDetection:
                     logger.error(f"Failed to update model {model.model_id}: {e}")
                     
     async def _retrain_model(self, model: DetectionModel) -> None:
-        """Retrain a specific detection model"""
-        metric_name = model.metric_name
+        """Retrain a specific detection model"""        metric_name = model.metric_name
         
         if metric_name not in self.metric_data:
             return

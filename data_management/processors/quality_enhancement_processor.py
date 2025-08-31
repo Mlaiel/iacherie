@@ -1,5 +1,4 @@
-"""
-🎨 Quality Enhancement Processor - IA Influencer Agent Platform Enterprise
+"""🎨 Quality Enhancement Processor - IA Influencer Agent Platform Enterprise
 ==========================================================================
 Module: backend/data_management/processors/quality_enhancement_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -18,7 +17,6 @@ LOGIQUE MÉTIER QUALITY ENHANCEMENT:
 Content Analysis → Quality Assessment → Enhancement Processing → AI Upscaling → 
 Noise Reduction → Color Correction → Audio Enhancement → Format Optimization
 """
-
 import json
 import logging
 import asyncio
@@ -44,8 +42,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class QualityEnhancementProcessor(BaseProcessor):
-    """Processeur amélioration qualité contenu - Production Enterprise"""
-    
+    """Processeur amélioration qualité contenu - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.logger = logging.getLogger(__name__)
@@ -143,8 +140,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         }
         
     def process(self, input_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Traite l'amélioration de qualité du contenu"""
-        content_type = input_data.get('content_type', 'image')
+        """Traite l'amélioration de qualité du contenu"""        content_type = input_data.get('content_type', 'image')
         file_path = input_data.get('file_path')
         enhancement_level = input_data.get('enhancement_level', 'medium')
         specific_enhancements = input_data.get('enhancements', [])
@@ -212,16 +208,14 @@ class QualityEnhancementProcessor(BaseProcessor):
         return result
     
     def _file_exists(self, file_path: str) -> bool:
-        """Vérifie si le fichier existe"""
-        try:
+        """Vérifie si le fichier existe"""        try:
             import os
             return os.path.exists(file_path)
         except:
             return False
     
     def _analyze_content_quality(self, file_path: str, content_type: str) -> Dict[str, Any]:
-        """Analyse la qualité du contenu"""
-        quality_analysis = {
+        """Analyse la qualité du contenu"""        quality_analysis = {
             'metrics': {},
             'quality_score': 0,
             'quality_level': 'unknown',
@@ -244,8 +238,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return quality_analysis
     
     def _analyze_image_quality(self, file_path: str) -> Dict[str, Any]:
-        """Analyse la qualité d'une image"""
-        analysis = {
+        """Analyse la qualité d'une image"""        analysis = {
             'metrics': {},
             'quality_score': 0,
             'quality_level': 'unknown',
@@ -307,8 +300,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return analysis
     
     def _estimate_image_noise(self, gray_image: np.ndarray) -> float:
-        """Estime le niveau de bruit dans l'image"""
-        try:
+        """Estime le niveau de bruit dans l'image"""        try:
             # Use high-pass filter to detect noise
             kernel = np.array([[-1, -1, -1], [-1, 8, -1], [-1, -1, -1]])
             filtered = cv2.filter2D(gray_image, -1, kernel)
@@ -318,8 +310,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 0.0
     
     def _analyze_image_colors(self, image: np.ndarray) -> Dict[str, float]:
-        """Analyse les couleurs de l'image"""
-        try:
+        """Analyse les couleurs de l'image"""        try:
             # Convert to RGB
             rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
             pixels = rgb_image.reshape(-1, 3)
@@ -341,8 +332,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return {'richness': 0.0, 'balance': 0.0}
     
     def _calculate_image_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calcule le score de qualité global de l'image"""
-        try:
+        """Calcule le score de qualité global de l'image"""        try:
             score = 0
             
             # Sharpness component (0-25 points)
@@ -405,8 +395,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 50.0
     
     def _determine_quality_level(self, score: float, content_type: str) -> str:
-        """Détermine le niveau de qualité basé sur le score"""
-        if score >= 80:
+        """Détermine le niveau de qualité basé sur le score"""        if score >= 80:
             return 'excellent'
         elif score >= 65:
             return 'good'
@@ -416,8 +405,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 'poor'
     
     def _detect_image_issues(self, metrics: Dict[str, Any]) -> Tuple[List[str], List[str]]:
-        """Détecte les problèmes et génère des recommandations"""
-        issues = []
+        """Détecte les problèmes et génère des recommandations"""        issues = []
         recommendations = []
         
         try:
@@ -460,8 +448,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return issues, recommendations
     
     def _analyze_video_quality(self, file_path: str) -> Dict[str, Any]:
-        """Analyse la qualité d'une vidéo"""
-        analysis = {
+        """Analyse la qualité d'une vidéo"""        analysis = {
             'metrics': {},
             'quality_score': 0,
             'quality_level': 'unknown',
@@ -509,8 +496,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return analysis
     
     def _sample_video_frames(self, file_path: str, num_samples: int = 5) -> Dict[str, Any]:
-        """Échantillonne des frames pour analyse qualité"""
-        frame_metrics = {
+        """Échantillonne des frames pour analyse qualité"""        frame_metrics = {
             'avg_sharpness': 0,
             'avg_brightness': 0,
             'avg_contrast': 0,
@@ -577,8 +563,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return frame_metrics
     
     def _estimate_motion(self, frame1: np.ndarray, frame2: np.ndarray) -> float:
-        """Estime le mouvement entre deux frames"""
-        try:
+        """Estime le mouvement entre deux frames"""        try:
             # Calculate optical flow
             flow = cv2.calcOpticalFlowPyrLK(
                 frame1, frame2, 
@@ -595,8 +580,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 0.0
     
     def _calculate_video_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calcule le score de qualité vidéo"""
-        try:
+        """Calcule le score de qualité vidéo"""        try:
             score = 0
             
             # Resolution component (0-25 points)
@@ -659,8 +643,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 50.0
     
     def _detect_video_issues(self, metrics: Dict[str, Any]) -> Tuple[List[str], List[str]]:
-        """Détecte les problèmes vidéo"""
-        issues = []
+        """Détecte les problèmes vidéo"""        issues = []
         recommendations = []
         
         try:
@@ -701,8 +684,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return issues, recommendations
     
     def _analyze_audio_quality(self, file_path: str) -> Dict[str, Any]:
-        """Analyse la qualité audio"""
-        analysis = {
+        """Analyse la qualité audio"""        analysis = {
             'metrics': {},
             'quality_score': 0,
             'quality_level': 'unknown',
@@ -764,8 +746,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return analysis
     
     def _calculate_audio_quality_score(self, metrics: Dict[str, Any]) -> float:
-        """Calcule le score de qualité audio"""
-        try:
+        """Calcule le score de qualité audio"""        try:
             score = 0
             
             # Sample rate component (0-20 points)
@@ -827,8 +808,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 50.0
     
     def _detect_audio_issues(self, metrics: Dict[str, Any]) -> Tuple[List[str], List[str]]:
-        """Détecte les problèmes audio"""
-        issues = []
+        """Détecte les problèmes audio"""        issues = []
         recommendations = []
         
         try:
@@ -874,8 +854,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return issues, recommendations
     
     def _get_file_size(self, file_path: str) -> float:
-        """Récupère la taille du fichier en MB"""
-        try:
+        """Récupère la taille du fichier en MB"""        try:
             import os
             size_bytes = os.path.getsize(file_path)
             return round(size_bytes / (1024 * 1024), 2)
@@ -883,8 +862,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return 0.0
     
     def _determine_enhancement_strategy(self, quality_analysis: Dict, enhancement_level: str, specific_enhancements: List[str]) -> Dict[str, Any]:
-        """Détermine la stratégie d'amélioration"""
-        strategy = {
+        """Détermine la stratégie d'amélioration"""        strategy = {
             'priority_enhancements': [],
             'optional_enhancements': [],
             'processing_order': [],
@@ -966,8 +944,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return strategy
     
     def _enhance_image(self, file_path: str, strategy: Dict[str, Any]) -> Dict[str, Any]:
-        """Améliore une image selon la stratégie"""
-        result = {
+        """Améliore une image selon la stratégie"""        result = {
             'output_path': None,
             'processing_stats': {},
             'enhancements_applied': [],
@@ -1041,8 +1018,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return result
     
     def _apply_noise_reduction(self, image: np.ndarray) -> np.ndarray:
-        """Applique la réduction de bruit"""
-        try:
+        """Applique la réduction de bruit"""        try:
             # Use Non-local Means Denoising
             if len(image.shape) == 3:
                 return cv2.fastNlMeansDenoisingColored(image, None, 10, 10, 7, 21)
@@ -1053,8 +1029,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return cv2.GaussianBlur(image, (5, 5), 0)
     
     def _apply_upscaling(self, image: np.ndarray, scale_factor: int = 2) -> np.ndarray:
-        """Applique l'upscaling"""
-        try:
+        """Applique l'upscaling"""        try:
             height, width = image.shape[:2]
             new_width = width * scale_factor
             new_height = height * scale_factor
@@ -1063,8 +1038,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_ai_super_resolution(self, image: np.ndarray) -> np.ndarray:
-        """Applique la super-résolution IA (simulé)"""
-        try:
+        """Applique la super-résolution IA (simulé)"""        try:
             # In real implementation, would use trained models like ESRGAN
             # For now, use advanced interpolation
             height, width = image.shape[:2]
@@ -1073,8 +1047,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_sharpening(self, image: np.ndarray) -> np.ndarray:
-        """Applique le sharpening"""
-        try:
+        """Applique le sharpening"""        try:
             kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
             sharpened = cv2.filter2D(image, -1, kernel)
             # Blend with original to avoid over-sharpening
@@ -1083,8 +1056,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_color_correction(self, image: np.ndarray) -> np.ndarray:
-        """Applique la correction couleur"""
-        try:
+        """Applique la correction couleur"""        try:
             # Convert to LAB color space for better color manipulation
             lab = cv2.cvtColor(image, cv2.COLOR_BGR2LAB)
             l, a, b = cv2.split(lab)
@@ -1100,8 +1072,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_brightness_correction(self, image: np.ndarray) -> np.ndarray:
-        """Applique la correction de luminosité"""
-        try:
+        """Applique la correction de luminosité"""        try:
             # Calculate current brightness
             gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
             current_brightness = np.mean(gray)
@@ -1117,8 +1088,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _apply_contrast_enhancement(self, image: np.ndarray) -> np.ndarray:
-        """Applique l'amélioration du contraste"""
-        try:
+        """Applique l'amélioration du contraste"""        try:
             # Convert to YUV
             yuv = cv2.cvtColor(image, cv2.COLOR_BGR2YUV)
             y, u, v = cv2.split(yuv)
@@ -1134,16 +1104,14 @@ class QualityEnhancementProcessor(BaseProcessor):
             return image
     
     def _get_image_size(self, image: np.ndarray) -> str:
-        """Récupère la taille de l'image"""
-        try:
+        """Récupère la taille de l'image"""        try:
             height, width = image.shape[:2]
             return f"{width}x{height}"
         except:
             return "unknown"
     
     def _generate_output_path(self, input_path: str, suffix: str) -> str:
-        """Génère le chemin de sortie"""
-        try:
+        """Génère le chemin de sortie"""        try:
             import os
             base, ext = os.path.splitext(input_path)
             return f"{base}_{suffix}{ext}"
@@ -1151,8 +1119,7 @@ class QualityEnhancementProcessor(BaseProcessor):
             return f"{self.temp_dir}/output_{suffix}.jpg"
     
     def _calculate_quality_improvement(self, original: Dict, enhanced: Dict) -> Dict[str, Any]:
-        """Calcule l'amélioration de qualité"""
-        improvement = {
+        """Calcule l'amélioration de qualité"""        improvement = {
             'quality_score_improvement': 0,
             'quality_level_change': 'no_change',
             'metric_improvements': {},
@@ -1195,8 +1162,7 @@ class QualityEnhancementProcessor(BaseProcessor):
         return improvement
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données d'entrée pour le quality enhancement"""
-        if not isinstance(input_data, dict):
+        """Valide les données d'entrée pour le quality enhancement"""        if not isinstance(input_data, dict):
             return False
         
         if not input_data.get('file_path'):
@@ -1210,16 +1176,14 @@ class QualityEnhancementProcessor(BaseProcessor):
 
 
 class AsyncQualityEnhancementProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur quality enhancement"""
-    
+    """Version asynchrone du processeur quality enhancement"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = QualityEnhancementProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traitement asynchrone du quality enhancement"""
-        loop = asyncio.get_event_loop()
+        """Traitement asynchrone du quality enhancement"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process_with_stats, 
@@ -1227,5 +1191,4 @@ class AsyncQualityEnhancementProcessor(AsyncBaseProcessor):
         )
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Validation asynchrone"""
-        return self.sync_processor.validate_input(input_data)
+        """Validation asynchrone"""        return self.sync_processor.validate_input(input_data)

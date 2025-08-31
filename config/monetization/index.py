@@ -1,5 +1,4 @@
-"""
-Monetization Configuration Index - Complete Enterprise Ecosystem
+"""Monetization Configuration Index - Complete Enterprise Ecosystem
 ================================================================
 
 Central index for all monetization configuration modules.
@@ -24,7 +23,6 @@ LEGAL WARNING: Violation of this copyright will result in:
 
 Contact: mlaiel@live.de for licensing inquiries and authorization.
 """
-
 from typing import Dict, Any, List, Optional, Type, Union
 from dataclasses import dataclass
 from enum import Enum
@@ -111,8 +109,7 @@ from .regulatory_compliance_config import (
 
 @dataclass
 class MonetizationSystemStatus:
-    """Comprehensive system status for all monetization components."""
-    component: str
+    """Comprehensive system status for all monetization components."""    component: str
     enabled: bool
     health_status: str  # healthy, degraded, unhealthy, offline
     last_check: Optional[str] = None
@@ -123,8 +120,7 @@ class MonetizationSystemStatus:
 
 @dataclass
 class MonetizationSystemMetrics:
-    """System-wide monetization metrics and KPIs."""
-    total_revenue_tracked: float = 0.0
+    """System-wide monetization metrics and KPIs."""    total_revenue_tracked: float = 0.0
     active_payment_processors: int = 0
     successful_transactions_today: int = 0
     failed_transactions_today: int = 0
@@ -136,15 +132,12 @@ class MonetizationSystemMetrics:
 
 
 class MonetizationConfigurationManager:
-    """
-    Central manager for all monetization configurations.
+    """    Central manager for all monetization configurations.
     Provides unified access and management of all monetization components.
     Enterprise-grade configuration management with health monitoring.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the comprehensive monetization configuration manager."""
-        
+        """Initialize the comprehensive monetization configuration manager."""        
         # Core Revenue Management
         self.revenue_config = revenue_config
         
@@ -207,8 +200,7 @@ class MonetizationConfigurationManager:
         }
     
     def get_system_overview(self) -> Dict[str, Any]:
-        """Get comprehensive overview of entire monetization system."""
-        return {
+        """Get comprehensive overview of entire monetization system."""        return {
             "platform_info": self.system_config,
             "performance_config": self.performance_config,
             "configurations": {
@@ -304,8 +296,7 @@ class MonetizationConfigurationManager:
         }
     
     def get_system_health_status(self) -> Dict[str, MonetizationSystemStatus]:
-        """Get health status for all monetization components."""
-        health_status = {}
+        """Get health status for all monetization components."""        health_status = {}
         
         # Revenue Tracking Health
         health_status["revenue_tracking"] = MonetizationSystemStatus(
@@ -389,8 +380,7 @@ class MonetizationConfigurationManager:
         return health_status
     
     def get_security_status(self) -> Dict[str, Any]:
-        """Get comprehensive security status across all components."""
-        return {
+        """Get comprehensive security status across all components."""        return {
             "encryption": {
                 "payment_data": self.payment_config.SECURITY_SETTINGS["encryption_enabled"],
                 "fraud_data": self.fraud_detection_config.DATA_RETENTION_CONFIG["data_encryption_at_rest"],
@@ -421,8 +411,7 @@ class MonetizationConfigurationManager:
         }
     
     def get_compliance_status(self) -> Dict[str, Any]:
-        """Get regulatory compliance status."""
-        return {
+        """Get regulatory compliance status."""        return {
             "financial_regulations": {
                 "pci_dss_level_1": self.payment_config.COMPLIANCE_SETTINGS["pci_compliance"],
                 "aml_screening": self.payment_config.COMPLIANCE_SETTINGS["aml_screening"],
@@ -452,8 +441,7 @@ class MonetizationConfigurationManager:
         }
     
     def get_system_metrics(self) -> MonetizationSystemMetrics:
-        """Get comprehensive system metrics and KPIs."""
-        # In a real implementation, these would be fetched from monitoring systems
+        """Get comprehensive system metrics and KPIs."""        # In a real implementation, these would be fetched from monitoring systems
         return MonetizationSystemMetrics(
             total_revenue_tracked=0.0,  # Would be populated from actual data
             active_payment_processors=len(self.payment_config.get_enabled_processors()),
@@ -467,8 +455,7 @@ class MonetizationConfigurationManager:
         )
     
     def validate_all_configurations(self) -> Dict[str, Dict[str, Any]]:
-        """Validate all monetization configurations."""
-        validation_results = {}
+        """Validate all monetization configurations."""        validation_results = {}
         
         configurations = {
             "revenue_config": self.revenue_config,
@@ -505,8 +492,7 @@ class MonetizationConfigurationManager:
         return validation_results
     
     def _get_critical_features(self, config_name: str, config: Any) -> List[str]:
-        """Get critical features for each configuration type."""
-        critical_features = []
+        """Get critical features for each configuration type."""        critical_features = []
         
         if config_name == "revenue_config":
             if getattr(config, 'ENABLE_REAL_TIME_TRACKING', False):
@@ -529,8 +515,7 @@ class MonetizationConfigurationManager:
         return critical_features
     
     def get_configuration_summary(self) -> Dict[str, Any]:
-        """Get a summary of all configurations for monitoring dashboards."""
-        return {
+        """Get a summary of all configurations for monitoring dashboards."""        return {
             "system_info": self.system_config,
             "total_configurations": 12,
             "health_status": "healthy",  # Overall system health
@@ -617,48 +602,39 @@ MONETIZATION_ENUMS = {
 
 
 def get_config(config_name: str) -> Optional[Any]:
-    """Get a specific monetization configuration by name."""
-    return MONETIZATION_CONFIGS.get(config_name)
+    """Get a specific monetization configuration by name."""    return MONETIZATION_CONFIGS.get(config_name)
 
 
 def get_config_class(class_name: str) -> Optional[Type]:
-    """Get a configuration class by name."""
-    return MONETIZATION_CONFIG_CLASSES.get(class_name)
+    """Get a configuration class by name."""    return MONETIZATION_CONFIG_CLASSES.get(class_name)
 
 
 def get_enum(enum_name: str) -> Optional[Type[Enum]]:
-    """Get an enum class by name."""
-    return MONETIZATION_ENUMS.get(enum_name)
+    """Get an enum class by name."""    return MONETIZATION_ENUMS.get(enum_name)
 
 
 def list_available_configs() -> List[str]:
-    """List all available monetization configurations."""
-    return list(MONETIZATION_CONFIGS.keys())
+    """List all available monetization configurations."""    return list(MONETIZATION_CONFIGS.keys())
 
 
 def list_available_enums() -> List[str]:
-    """List all available monetization enums."""
-    return list(MONETIZATION_ENUMS.keys())
+    """List all available monetization enums."""    return list(MONETIZATION_ENUMS.keys())
 
 
 def validate_all_configs() -> Dict[str, Dict[str, Any]]:
-    """
-    Validate all monetization configurations.
+    """    Validate all monetization configurations.
     
     Returns:
         Dictionary with validation results for each config
-    """
-    return monetization_manager.validate_all_configurations()
+    """    return monetization_manager.validate_all_configurations()
 
 
 def get_system_status() -> Dict[str, Any]:
-    """Get comprehensive system status and health information."""
-    return monetization_manager.get_system_overview()
+    """Get comprehensive system status and health information."""    return monetization_manager.get_system_overview()
 
 
 def get_system_metrics() -> MonetizationSystemMetrics:
-    """Get system-wide metrics and KPIs."""
-    return monetization_manager.get_system_metrics()
+    """Get system-wide metrics and KPIs."""    return monetization_manager.get_system_metrics()
 
 
 # Module metadata
@@ -783,8 +759,7 @@ __all__ = [
         }
     
     def get_system_health_status(self) -> List[MonetizationSystemStatus]:
-        """Get health status of all monetization components."""
-        components = [
+        """Get health status of all monetization components."""        components = [
             MonetizationSystemStatus(
                 component="revenue_tracking",
                 enabled=self.revenue_config.ENABLE_REAL_TIME_TRACKING,
@@ -824,8 +799,7 @@ __all__ = [
         return components
     
     def get_feature_flags(self) -> Dict[str, bool]:
-        """Get current feature flags for monetization system."""
-        return {
+        """Get current feature flags for monetization system."""        return {
             # Core Features
             "real_time_revenue_tracking": self.revenue_config.ENABLE_REAL_TIME_TRACKING,
             "multi_currency_support": len(self.pricing_config.SUPPORTED_CURRENCIES) > 1,
@@ -870,8 +844,7 @@ __all__ = [
         }
     
     def get_supported_currencies(self) -> List[str]:
-        """Get all supported currencies across the platform."""
-        currencies = set()
+        """Get all supported currencies across the platform."""        currencies = set()
         
         # From pricing config
         currencies.update(self.pricing_config.SUPPORTED_CURRENCIES)
@@ -886,8 +859,7 @@ __all__ = [
         return sorted(list(currencies))
     
     def get_supported_countries(self) -> List[str]:
-        """Get all supported countries across payment and payout systems."""
-        countries = set()
+        """Get all supported countries across payment and payout systems."""        countries = set()
         
         # From payment processors
         for processor_config in self.payment_config.PROCESSORS.values():
@@ -900,8 +872,7 @@ __all__ = [
         return sorted(list(countries))
     
     def validate_configuration(self) -> Dict[str, Any]:
-        """Validate all monetization configurations for consistency."""
-        validation_results = {
+        """Validate all monetization configurations for consistency."""        validation_results = {
             "valid": True,
             "warnings": [],
             "errors": [],
@@ -976,8 +947,7 @@ __all__ = [
         return validation_results
     
     def get_pricing_summary(self) -> Dict[str, Any]:
-        """Get summary of pricing configuration."""
-        enabled_tiers = self.pricing_config.get_enabled_tiers()
+        """Get summary of pricing configuration."""        enabled_tiers = self.pricing_config.get_enabled_tiers()
         
         tier_summary = {}
         for tier in enabled_tiers:
@@ -999,8 +969,7 @@ __all__ = [
         }
     
     def export_configuration(self, format: str = "json") -> Dict[str, Any]:
-        """Export all configurations for backup or migration."""
-        config_export = {
+        """Export all configurations for backup or migration."""        config_export = {
             "export_metadata": {
                 "timestamp": "2025-01-15T00:00:00Z",
                 "platform": self.system_config["platform_name"],
@@ -1206,57 +1175,47 @@ MONETIZATION_ENUMS = {
 }
 
 def get_config(config_name: str):
-    """
-    Get a configuration instance by name.
+    """    Get a configuration instance by name.
     
     Args:
         config_name: Name of the configuration ('revenue', 'payment', etc.)
         
     Returns:
         Configuration instance or None if not found
-    """
-    return MONETIZATION_CONFIGS.get(config_name)
+    """    return MONETIZATION_CONFIGS.get(config_name)
 
 def get_config_class(config_name: str):
-    """
-    Get a configuration class by name.
+    """    Get a configuration class by name.
     
     Args:
         config_name: Name of the configuration class
         
     Returns:
         Configuration class or None if not found
-    """
-    return MONETIZATION_CONFIG_CLASSES.get(config_name)
+    """    return MONETIZATION_CONFIG_CLASSES.get(config_name)
 
 def get_enum(enum_name: str):
-    """
-    Get an enum by name.
+    """    Get an enum by name.
     
     Args:
         enum_name: Name of the enum
         
     Returns:
         Enum class or None if not found
-    """
-    return MONETIZATION_ENUMS.get(enum_name)
+    """    return MONETIZATION_ENUMS.get(enum_name)
 
 def list_available_configs() -> list:
-    """Get list of available configuration names."""
-    return list(MONETIZATION_CONFIGS.keys())
+    """Get list of available configuration names."""    return list(MONETIZATION_CONFIGS.keys())
 
 def list_available_enums() -> list:
-    """Get list of available enum names."""
-    return list(MONETIZATION_ENUMS.keys())
+    """Get list of available enum names."""    return list(MONETIZATION_ENUMS.keys())
 
 def validate_all_configs() -> dict:
-    """
-    Validate all configuration instances.
+    """    Validate all configuration instances.
     
     Returns:
         Dictionary with validation results for each config
-    """
-    validation_results = {}
+    """    validation_results = {}
     
     for name, config in MONETIZATION_CONFIGS.items():
         try:

@@ -1,5 +1,4 @@
-"""
-📈 Monitoring Dashboard Controller
+"""📈 Monitoring Dashboard Controller
 =================================
 
 Advanced dashboard controller for real-time monitoring visualization.
@@ -21,7 +20,6 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import json
@@ -42,8 +40,7 @@ from .performance_optimizer import PerformanceOptimizer, OptimizationTarget
 logger = logging.getLogger(__name__)
 
 class DashboardWidgetType(str, Enum):
-    """Types of dashboard widgets."""
-    METRICS_CHART = "metrics_chart"
+    """Types of dashboard widgets."""    METRICS_CHART = "metrics_chart"
     THREAT_MAP = "threat_map"
     PLATFORM_STATUS = "platform_status"
     PERFORMANCE_GAUGE = "performance_gauge"
@@ -55,16 +52,14 @@ class DashboardWidgetType(str, Enum):
     OPTIMIZATION_PANEL = "optimization_panel"
 
 class DashboardLayout(str, Enum):
-    """Dashboard layout types."""
-    EXECUTIVE = "executive"
+    """Dashboard layout types."""    EXECUTIVE = "executive"
     TECHNICAL = "technical"
     SECURITY = "security"
     ANALYTICS = "analytics"
     CUSTOM = "custom"
 
 class TimeRange(str, Enum):
-    """Time range options for dashboard data."""
-    LAST_HOUR = "1h"
+    """Time range options for dashboard data."""    LAST_HOUR = "1h"
     LAST_6_HOURS = "6h"
     LAST_24_HOURS = "24h"
     LAST_7_DAYS = "7d"
@@ -72,8 +67,7 @@ class TimeRange(str, Enum):
     CUSTOM = "custom"
 
 class DashboardWidget(BaseModel):
-    """Dashboard widget configuration."""
-    widget_id: str
+    """Dashboard widget configuration."""    widget_id: str
     widget_type: DashboardWidgetType
     title: str
     position: Dict[str, int] = Field(default_factory=dict)  # x, y, width, height
@@ -84,8 +78,7 @@ class DashboardWidget(BaseModel):
     user_permissions: List[str] = Field(default_factory=list)
 
 class DashboardConfig(BaseModel):
-    """Dashboard configuration."""
-    dashboard_id: str
+    """Dashboard configuration."""    dashboard_id: str
     user_id: int
     layout_type: DashboardLayout
     widgets: List[DashboardWidget]
@@ -94,16 +87,14 @@ class DashboardConfig(BaseModel):
     updated_at: datetime = Field(default_factory=datetime.utcnow)
 
 class RealtimeData(BaseModel):
-    """Real-time dashboard data structure."""
-    timestamp: datetime
+    """Real-time dashboard data structure."""    timestamp: datetime
     widget_id: str
     data_type: str
     data: Dict[str, Any]
     user_id: Optional[int] = None
 
 class DashboardMetrics(BaseModel):
-    """Dashboard metrics summary."""
-    total_violations: int = 0
+    """Dashboard metrics summary."""    total_violations: int = 0
     active_sessions: int = 0
     threat_level_distribution: Dict[str, int] = Field(default_factory=dict)
     platform_coverage: Dict[str, int] = Field(default_factory=dict)
@@ -114,16 +105,14 @@ class DashboardMetrics(BaseModel):
     last_updated: datetime = Field(default_factory=datetime.utcnow)
 
 class ConnectionManager:
-    """Manage WebSocket connections for real-time updates."""
-    
+    """Manage WebSocket connections for real-time updates."""    
     def __init__(self):
         self.active_connections: Dict[str, WebSocket] = {}
         self.user_connections: Dict[int, List[str]] = {}
         self.connection_subscriptions: Dict[str, List[str]] = {}
     
     async def connect(self, websocket: WebSocket, connection_id: str, user_id: int):
-        """Accept a new WebSocket connection."""
-        await websocket.accept()
+        """Accept a new WebSocket connection."""        await websocket.accept()
         self.active_connections[connection_id] = websocket
         
         if user_id not in self.user_connections:
@@ -133,8 +122,7 @@ class ConnectionManager:
         logger.info(f"WebSocket connection established: {connection_id} for user {user_id}")
     
     def disconnect(self, connection_id: str, user_id: int):
-        """Remove a WebSocket connection."""
-        if connection_id in self.active_connections:
+        """Remove a WebSocket connection."""        if connection_id in self.active_connections:
             del self.active_connections[connection_id]
         
         if user_id in self.user_connections:
@@ -152,8 +140,7 @@ class ConnectionManager:
         logger.info(f"WebSocket connection closed: {connection_id}")
     
     async def send_personal_message(self, message: dict, connection_id: str):
-        """Send message to specific connection."""
-        if connection_id in self.active_connections:
+        """Send message to specific connection."""        if connection_id in self.active_connections:
             try:
                 await self.active_connections[connection_id].send_text(json.dumps(message))
             except Exception as e:
@@ -165,29 +152,24 @@ class ConnectionManager:
                         break
     
     async def send_user_message(self, message: dict, user_id: int):
-        """Send message to all connections for a user."""
-        if user_id in self.user_connections:
+        """Send message to all connections for a user."""        if user_id in self.user_connections:
             for connection_id in self.user_connections[user_id]:
                 await self.send_personal_message(message, connection_id)
     
     async def broadcast(self, message: dict):
-        """Broadcast message to all connections."""
-        for connection_id in self.active_connections:
+        """Broadcast message to all connections."""        for connection_id in self.active_connections:
             await self.send_personal_message(message, connection_id)
     
     def subscribe_to_data(self, connection_id: str, data_types: List[str]):
-        """Subscribe connection to specific data types."""
-        self.connection_subscriptions[connection_id] = data_types
+        """Subscribe connection to specific data types."""        self.connection_subscriptions[connection_id] = data_types
     
     async def send_to_subscribers(self, data_type: str, message: dict):
-        """Send message to connections subscribed to data type."""
-        for connection_id, subscriptions in self.connection_subscriptions.items():
+        """Send message to connections subscribed to data type."""        for connection_id, subscriptions in self.connection_subscriptions.items():
             if data_type in subscriptions:
                 await self.send_personal_message(message, connection_id)
 
 class DashboardController:
-    """
-    Advanced dashboard controller for monitoring system.
+    """    Advanced dashboard controller for monitoring system.
     
     Provides comprehensive dashboard functionality including:
     - Real-time WebSocket data streaming
@@ -195,23 +177,20 @@ class DashboardController:
     - Customizable dashboard layouts and widgets
     - Interactive analytics and visualizations
     - Performance metrics and system health monitoring
-    """
-    
+    """    
     def __init__(
         self,
         realtime_monitor: RealTimeMonitor,
         analytics: MonitoringAnalytics,
         performance_optimizer: PerformanceOptimizer
     ):
-        """
-        Initialize dashboard controller.
+        """        Initialize dashboard controller.
         
         Args:
             realtime_monitor: Real-time monitoring service
             analytics: Analytics service
             performance_optimizer: Performance optimization service
-        """
-        self.realtime_monitor = realtime_monitor
+        """        self.realtime_monitor = realtime_monitor
         self.analytics = analytics
         self.performance_optimizer = performance_optimizer
         
@@ -234,13 +213,11 @@ class DashboardController:
         logger.info("Dashboard Controller initialized")
     
     async def initialize(self) -> bool:
-        """
-        Initialize the dashboard controller.
+        """        Initialize the dashboard controller.
         
         Returns:
             bool: True if initialization successful
-        """
-        try:
+        """        try:
             logger.info("Initializing Dashboard Controller...")
             
             # Load default dashboard configurations
@@ -261,16 +238,14 @@ class DashboardController:
             return False
     
     async def get_dashboard_metrics(self, user_id: int) -> Dict[str, Any]:
-        """
-        Get comprehensive dashboard metrics for a user.
+        """        Get comprehensive dashboard metrics for a user.
         
         Args:
             user_id: User ID to get metrics for
             
         Returns:
             Dict containing dashboard metrics
-        """
-        try:
+        """        try:
             # Get real-time metrics from analytics
             realtime_metrics = await self.analytics.get_realtime_metrics(user_id)
             
@@ -327,8 +302,7 @@ class DashboardController:
         layout_type: DashboardLayout,
         widgets: List[DashboardWidget]
     ) -> str:
-        """
-        Create a new dashboard configuration.
+        """        Create a new dashboard configuration.
         
         Args:
             user_id: User ID
@@ -337,8 +311,7 @@ class DashboardController:
             
         Returns:
             str: Dashboard configuration ID
-        """
-        try:
+        """        try:
             dashboard_id = f"dashboard_{user_id}_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             config = DashboardConfig(
@@ -367,8 +340,7 @@ class DashboardController:
         user_id: int,
         time_range: TimeRange = TimeRange.LAST_24_HOURS
     ) -> Dict[str, Any]:
-        """
-        Get data for a specific dashboard widget.
+        """        Get data for a specific dashboard widget.
         
         Args:
             widget_id: Widget identifier
@@ -377,8 +349,7 @@ class DashboardController:
             
         Returns:
             Dict containing widget data
-        """
-        try:
+        """        try:
             # Check cache first
             cache_key = f"{widget_id}_{user_id}_{time_range.value}"
             if cache_key in self._widget_cache:
@@ -414,8 +385,7 @@ class DashboardController:
         user_id: int,
         config_updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update widget configuration.
+        """        Update widget configuration.
         
         Args:
             widget_id: Widget identifier
@@ -424,8 +394,7 @@ class DashboardController:
             
         Returns:
             bool: True if update successful
-        """
-        try:
+        """        try:
             # Find and update widget configuration
             for dashboard_config in self._dashboard_configs.values():
                 if dashboard_config.user_id == user_id:
@@ -459,15 +428,13 @@ class DashboardController:
         user_id: int,
         subscriptions: List[str]
     ):
-        """
-        Stream real-time data to WebSocket connection.
+        """        Stream real-time data to WebSocket connection.
         
         Args:
             websocket: WebSocket connection
             user_id: User ID
             subscriptions: List of data types to subscribe to
-        """
-        connection_id = f"conn_{user_id}_{datetime.utcnow().timestamp()}"
+        """        connection_id = f"conn_{user_id}_{datetime.utcnow().timestamp()}"
         
         try:
             # Establish connection
@@ -514,8 +481,7 @@ class DashboardController:
         format_type: str = "json",
         time_range: TimeRange = TimeRange.LAST_7_DAYS
     ) -> Dict[str, Any]:
-        """
-        Export dashboard data in specified format.
+        """        Export dashboard data in specified format.
         
         Args:
             user_id: User ID
@@ -524,8 +490,7 @@ class DashboardController:
             
         Returns:
             Dict containing export data and metadata
-        """
-        try:
+        """        try:
             # Get comprehensive dashboard data
             dashboard_data = await self.get_dashboard_metrics(user_id)
             
@@ -562,8 +527,7 @@ class DashboardController:
             return {}
     
     async def shutdown(self) -> None:
-        """Gracefully shutdown dashboard controller."""
-        logger.info("Shutting down Dashboard Controller...")
+        """Gracefully shutdown dashboard controller."""        logger.info("Shutting down Dashboard Controller...")
         
         # Close all WebSocket connections
         for connection_id in list(self.connection_manager.active_connections.keys()):
@@ -588,12 +552,10 @@ class DashboardController:
     # Private helper methods
     
     def _setup_routes(self):
-        """Set up FastAPI routes for dashboard API."""
-        
+        """Set up FastAPI routes for dashboard API."""        
         @self.router.get("/metrics/{user_id}")
         async def get_dashboard_metrics_endpoint(user_id: int):
-            """Get dashboard metrics for user."""
-            return await self.get_dashboard_metrics(user_id)
+            """Get dashboard metrics for user."""            return await self.get_dashboard_metrics(user_id)
         
         @self.router.get("/widget/{widget_id}/data")
         async def get_widget_data_endpoint(
@@ -601,8 +563,7 @@ class DashboardController:
             user_id: int,
             time_range: TimeRange = TimeRange.LAST_24_HOURS
         ):
-            """Get data for specific widget."""
-            return await self.get_widget_data(widget_id, user_id, time_range)
+            """Get data for specific widget."""            return await self.get_widget_data(widget_id, user_id, time_range)
         
         @self.router.post("/create")
         async def create_dashboard_endpoint(
@@ -610,8 +571,7 @@ class DashboardController:
             layout_type: DashboardLayout,
             widgets: List[DashboardWidget]
         ):
-            """Create new dashboard configuration."""
-            dashboard_id = await self.create_dashboard_config(user_id, layout_type, widgets)
+            """Create new dashboard configuration."""            dashboard_id = await self.create_dashboard_config(user_id, layout_type, widgets)
             return {"dashboard_id": dashboard_id}
         
         @self.router.put("/widget/{widget_id}")
@@ -620,8 +580,7 @@ class DashboardController:
             user_id: int,
             config_updates: Dict[str, Any]
         ):
-            """Update widget configuration."""
-            success = await self.update_widget_config(widget_id, user_id, config_updates)
+            """Update widget configuration."""            success = await self.update_widget_config(widget_id, user_id, config_updates)
             return {"success": success}
         
         @self.router.get("/export/{user_id}")
@@ -630,18 +589,15 @@ class DashboardController:
             format_type: str = "json",
             time_range: TimeRange = TimeRange.LAST_7_DAYS
         ):
-            """Export dashboard data."""
-            return await self.export_dashboard_data(user_id, format_type, time_range)
+            """Export dashboard data."""            return await self.export_dashboard_data(user_id, format_type, time_range)
         
         @self.router.websocket("/ws/{user_id}")
         async def websocket_endpoint(websocket: WebSocket, user_id: int):
-            """WebSocket endpoint for real-time data."""
-            subscriptions = ["metrics", "alerts", "violations", "performance"]
+            """WebSocket endpoint for real-time data."""            subscriptions = ["metrics", "alerts", "violations", "performance"]
             await self.stream_realtime_data(websocket, user_id, subscriptions)
     
     async def _load_default_configurations(self):
-        """Load default dashboard configurations."""
-        try:
+        """Load default dashboard configurations."""        try:
             # Executive dashboard
             executive_widgets = [
                 DashboardWidget(
@@ -704,8 +660,7 @@ class DashboardController:
             logger.error(f"Failed to load default configurations: {e}")
     
     async def _start_data_streaming(self):
-        """Start background data streaming tasks."""
-        try:
+        """Start background data streaming tasks."""        try:
             # Start real-time metrics streaming
             self._streaming_tasks['metrics'] = asyncio.create_task(
                 self._stream_metrics_data()
@@ -727,8 +682,7 @@ class DashboardController:
             logger.error(f"Failed to start data streaming: {e}")
     
     async def _initialize_widget_cache(self):
-        """Initialize widget cache with default data."""
-        try:
+        """Initialize widget cache with default data."""        try:
             # Pre-load common widget data
             common_widgets = ["metrics_overview", "system_health", "threat_distribution"]
             
@@ -745,8 +699,7 @@ class DashboardController:
             logger.error(f"Failed to initialize widget cache: {e}")
     
     async def _get_widget_config(self, widget_id: str) -> Optional[DashboardWidget]:
-        """Get widget configuration by ID."""
-        for dashboard_config in self._dashboard_configs.values():
+        """Get widget configuration by ID."""        for dashboard_config in self._dashboard_configs.values():
             for widget in dashboard_config.widgets:
                 if widget.widget_id == widget_id:
                     return widget
@@ -758,8 +711,7 @@ class DashboardController:
         user_id: int,
         time_range: TimeRange
     ) -> Dict[str, Any]:
-        """Generate data for a specific widget."""
-        try:
+        """Generate data for a specific widget."""        try:
             widget_type = widget_config.widget_type
             
             if widget_type == DashboardWidgetType.METRICS_CHART:
@@ -796,8 +748,7 @@ class DashboardController:
         user_id: int,
         time_range: TimeRange
     ) -> Dict[str, Any]:
-        """Generate metrics chart data."""
-        try:
+        """Generate metrics chart data."""        try:
             # Get analytics time range
             analytics_time_range = AnalyticsTimeRange(time_range.value)
             
@@ -850,8 +801,7 @@ class DashboardController:
         user_id: int,
         time_range: TimeRange
     ) -> Dict[str, Any]:
-        """Generate threat map data."""
-        try:
+        """Generate threat map data."""        try:
             # Get threat distribution from analytics
             realtime_metrics = await self.analytics.get_realtime_metrics(user_id)
             threat_distribution = realtime_metrics.get('threat_level_distribution', {})
@@ -881,8 +831,7 @@ class DashboardController:
         widget_config: DashboardWidget,
         user_id: int
     ) -> Dict[str, Any]:
-        """Generate platform status data."""
-        try:
+        """Generate platform status data."""        try:
             # Get platform analytics
             platform_analytics = await self.analytics.get_platform_analytics(
                 time_range=AnalyticsTimeRange.LAST_24_HOURS,
@@ -916,8 +865,7 @@ class DashboardController:
         widget_config: DashboardWidget,
         user_id: int
     ) -> Dict[str, Any]:
-        """Generate performance gauge data."""
-        try:
+        """Generate performance gauge data."""        try:
             # Get system performance metrics
             performance_metrics = await self.performance_optimizer.monitor_system_performance()
             
@@ -954,8 +902,7 @@ class DashboardController:
         user_id: int,
         time_range: TimeRange
     ) -> Dict[str, Any]:
-        """Generate violation feed data."""
-        try:
+        """Generate violation feed data."""        try:
             max_items = widget_config.config.get('max_items', 10)
             
             # Get recent violations (would be from database)
@@ -988,8 +935,7 @@ class DashboardController:
         widget_config: DashboardWidget,
         user_id: int
     ) -> Dict[str, Any]:
-        """Generate system health data."""
-        try:
+        """Generate system health data."""        try:
             # Get system health score from analytics
             realtime_metrics = await self.analytics.get_realtime_metrics(user_id)
             health_score = realtime_metrics.get('system_health_score', 100.0)
@@ -1024,8 +970,7 @@ class DashboardController:
         user_id: int,
         time_range: TimeRange
     ) -> Dict[str, Any]:
-        """Generate analytics table data."""
-        try:
+        """Generate analytics table data."""        try:
             # Get platform analytics for table
             platform_analytics = await self.analytics.get_platform_analytics(
                 time_range=AnalyticsTimeRange(time_range.value),
@@ -1067,8 +1012,7 @@ class DashboardController:
             return {}
     
     def _get_metric_color(self, metric: str, alpha: float = 1.0) -> str:
-        """Get color for metric visualization."""
-        color_map = {
+        """Get color for metric visualization."""        color_map = {
             'violations': f'rgba(255, 99, 132, {alpha})',
             'detection_rate': f'rgba(54, 162, 235, {alpha})',
             'false_positive_rate': f'rgba(255, 206, 86, {alpha})',
@@ -1078,8 +1022,7 @@ class DashboardController:
         return color_map.get(metric, f'rgba(128, 128, 128, {alpha})')
     
     def _get_gauge_status(self, value: float) -> str:
-        """Get status for gauge visualization."""
-        if value >= 90:
+        """Get status for gauge visualization."""        if value >= 90:
             return 'critical'
         elif value >= 75:
             return 'warning'
@@ -1089,8 +1032,7 @@ class DashboardController:
             return 'excellent'
     
     def _get_health_status(self, value: float) -> str:
-        """Get health status based on value."""
-        if value >= 90:
+        """Get health status based on value."""        if value >= 90:
             return 'excellent'
         elif value >= 75:
             return 'good'
@@ -1100,8 +1042,7 @@ class DashboardController:
             return 'critical'
     
     async def _calculate_overall_health(self, performance_metrics: Dict) -> float:
-        """Calculate overall system health score."""
-        try:
+        """Calculate overall system health score."""        try:
             if not performance_metrics:
                 return 100.0
             
@@ -1121,8 +1062,7 @@ class DashboardController:
             return 100.0
     
     async def _get_recent_activity(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get recent activity for dashboard."""
-        try:
+        """Get recent activity for dashboard."""        try:
             # This would get actual recent activity from database
             activities = [
                 {
@@ -1142,8 +1082,7 @@ class DashboardController:
             return []
     
     async def _get_active_alerts(self, user_id: int) -> List[Dict[str, Any]]:
-        """Get active alerts for dashboard."""
-        try:
+        """Get active alerts for dashboard."""        try:
             # This would get actual alerts from database
             alerts = [
                 {
@@ -1169,8 +1108,7 @@ class DashboardController:
         connection_id: str,
         user_id: int
     ):
-        """Handle incoming WebSocket message."""
-        try:
+        """Handle incoming WebSocket message."""        try:
             data = json.loads(message)
             message_type = data.get('type')
             
@@ -1205,8 +1143,7 @@ class DashboardController:
             logger.error(f"Failed to handle WebSocket message: {e}")
     
     async def _stream_metrics_data(self):
-        """Stream real-time metrics data."""
-        while self._initialized:
+        """Stream real-time metrics data."""        while self._initialized:
             try:
                 # Get current metrics
                 for user_id in self.connection_manager.user_connections.keys():
@@ -1228,8 +1165,7 @@ class DashboardController:
                 await asyncio.sleep(30)
     
     async def _stream_alerts_data(self):
-        """Stream real-time alerts data."""
-        while self._initialized:
+        """Stream real-time alerts data."""        while self._initialized:
             try:
                 # Check for new alerts
                 for user_id in self.connection_manager.user_connections.keys():
@@ -1250,8 +1186,7 @@ class DashboardController:
                 await asyncio.sleep(60)
     
     async def _stream_violations_data(self):
-        """Stream real-time violations data."""
-        while self._initialized:
+        """Stream real-time violations data."""        while self._initialized:
             try:
                 # Check for new violations
                 # This would integrate with real-time monitor for actual violations
@@ -1263,8 +1198,7 @@ class DashboardController:
                 await asyncio.sleep(15)
     
     async def _initialize_widget(self, widget: DashboardWidget, user_id: int):
-        """Initialize a dashboard widget."""
-        try:
+        """Initialize a dashboard widget."""        try:
             # Pre-generate initial data for widget
             initial_data = await self._generate_widget_data(
                 widget, user_id, TimeRange.LAST_24_HOURS
@@ -1285,8 +1219,7 @@ class DashboardController:
     OPTIMIZATION_PANEL = "optimization_panel"
 
 class ChartType(str, Enum):
-    """Chart types for visualization."""
-    LINE = "line"
+    """Chart types for visualization."""    LINE = "line"
     BAR = "bar"
     PIE = "pie"
     AREA = "area"
@@ -1294,8 +1227,7 @@ class ChartType(str, Enum):
     HEATMAP = "heatmap"
 
 class DashboardWidget(BaseModel):
-    """Dashboard widget configuration."""
-    widget_id: str
+    """Dashboard widget configuration."""    widget_id: str
     widget_type: DashboardWidgetType
     title: str
     position: Dict[str, int] = Field(default_factory=dict)  # x, y, width, height
@@ -1305,8 +1237,7 @@ class DashboardWidget(BaseModel):
     enabled: bool = True
 
 class DashboardLayout(BaseModel):
-    """Dashboard layout configuration."""
-    layout_id: str
+    """Dashboard layout configuration."""    layout_id: str
     name: str
     description: str = ""
     widgets: List[DashboardWidget] = Field(default_factory=list)
@@ -1315,15 +1246,13 @@ class DashboardLayout(BaseModel):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
 class RealTimeDataPoint(BaseModel):
-    """Real-time data point for dashboard."""
-    timestamp: datetime
+    """Real-time data point for dashboard."""    timestamp: datetime
     metric_name: str
     value: float
     metadata: Dict[str, Any] = Field(default_factory=dict)
 
 class DashboardMetrics(BaseModel):
-    """Dashboard metrics summary."""
-    total_violations: int = 0
+    """Dashboard metrics summary."""    total_violations: int = 0
     active_monitors: int = 0
     detection_rate: float = 0.0
     false_positive_rate: float = 0.0
@@ -1333,8 +1262,7 @@ class DashboardMetrics(BaseModel):
     platform_status: Dict[str, str] = Field(default_factory=dict)
 
 class WebSocketConnection:
-    """WebSocket connection manager."""
-    
+    """WebSocket connection manager."""    
     def __init__(self, websocket: WebSocket, user_id: int):
         self.websocket = websocket
         self.user_id = user_id
@@ -1342,8 +1270,7 @@ class WebSocketConnection:
         self.connected_at = datetime.utcnow()
 
 class DashboardController:
-    """
-    Advanced dashboard controller for monitoring visualization.
+    """    Advanced dashboard controller for monitoring visualization.
     
     Features:
     - Real-time data streaming via WebSocket
@@ -1351,16 +1278,14 @@ class DashboardController:
     - Interactive widget configuration
     - Performance metrics visualization
     - Multi-user dashboard management
-    """
-    
+    """    
     def __init__(
         self,
         realtime_monitor: RealTimeMonitor,
         analytics: MonitoringAnalytics,
         performance_optimizer: PerformanceOptimizer
     ):
-        """Initialize dashboard controller."""
-        self.realtime_monitor = realtime_monitor
+        """Initialize dashboard controller."""        self.realtime_monitor = realtime_monitor
         self.analytics = analytics
         self.performance_optimizer = performance_optimizer
         
@@ -1381,8 +1306,7 @@ class DashboardController:
         logger.info("Dashboard Controller initialized")
 
     async def initialize(self) -> bool:
-        """Initialize the dashboard controller."""
-        try:
+        """Initialize the dashboard controller."""        try:
             logger.info("Initializing Dashboard Controller...")
             
             # Load default dashboard layouts
@@ -1400,8 +1324,7 @@ class DashboardController:
             return False
 
     async def get_dashboard_metrics(self, user_id: int) -> DashboardMetrics:
-        """Get comprehensive dashboard metrics."""
-        try:
+        """Get comprehensive dashboard metrics."""        try:
             # Get real-time metrics
             realtime_metrics = await self.realtime_monitor.get_realtime_metrics()
             
@@ -1447,8 +1370,7 @@ class DashboardController:
         widget_type: DashboardWidgetType,
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Get data for a specific dashboard widget."""
-        try:
+        """Get data for a specific dashboard widget."""        try:
             if widget_type == DashboardWidgetType.METRICS_CHART:
                 return await self._get_metrics_chart_data(config)
                 
@@ -1485,8 +1407,7 @@ class DashboardController:
         layout_data: Dict[str, Any],
         user_id: int
     ) -> DashboardLayout:
-        """Create a new dashboard layout."""
-        try:
+        """Create a new dashboard layout."""        try:
             layout = DashboardLayout(
                 layout_id=f"layout_{user_id}_{int(datetime.utcnow().timestamp())}",
                 name=layout_data.get('name', 'New Dashboard'),
@@ -1517,8 +1438,7 @@ class DashboardController:
         updates: Dict[str, Any],
         user_id: int
     ) -> DashboardLayout:
-        """Update an existing dashboard layout."""
-        try:
+        """Update an existing dashboard layout."""        try:
             if layout_id not in self._dashboard_layouts:
                 raise HTTPException(status_code=404, detail="Layout not found")
             
@@ -1546,8 +1466,7 @@ class DashboardController:
             raise HTTPException(status_code=500, detail=str(e))
 
     async def get_user_dashboard_layouts(self, user_id: int) -> List[DashboardLayout]:
-        """Get dashboard layouts for a user."""
-        try:
+        """Get dashboard layouts for a user."""        try:
             user_layouts = [
                 layout for layout in self._dashboard_layouts.values()
                 if layout.created_by == user_id or layout.is_default
@@ -1563,8 +1482,7 @@ class DashboardController:
         websocket: WebSocket,
         user_id: int
     ) -> None:
-        """Handle WebSocket connection for real-time dashboard updates."""
-        await websocket.accept()
+        """Handle WebSocket connection for real-time dashboard updates."""        await websocket.accept()
         
         connection_id = f"ws_{user_id}_{int(datetime.utcnow().timestamp())}"
         connection = WebSocketConnection(websocket, user_id)
@@ -1600,10 +1518,8 @@ class DashboardController:
         data_type: str,
         filters: Optional[Dict[str, Any]] = None
     ) -> StreamingResponse:
-        """Stream real-time data for dashboard components."""
-        async def generate_data():
-            """Generate streaming data."""
-            try:
+        """Stream real-time data for dashboard components."""        async def generate_data():
+            """Generate streaming data."""            try:
                 while True:
                     # Get real-time data based on type
                     if data_type == "violations":
@@ -1635,8 +1551,7 @@ class DashboardController:
         )
 
     async def _get_metrics_chart_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for metrics chart widget."""
-        chart_type = config.get('chart_type', ChartType.LINE.value)
+        """Get data for metrics chart widget."""        chart_type = config.get('chart_type', ChartType.LINE.value)
         metric_types = config.get('metrics', ['detection_rate'])
         time_range = config.get('time_range', '1h')
         
@@ -1693,8 +1608,7 @@ class DashboardController:
         return chart_data
 
     async def _get_threat_map_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for threat map widget."""
-        # Mock geographical threat data
+        """Get data for threat map widget."""        # Mock geographical threat data
         threat_data = {
             'type': 'geographical',
             'threats': [
@@ -1727,8 +1641,7 @@ class DashboardController:
         return threat_data
 
     async def _get_platform_status_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for platform status widget."""
-        platforms = config.get('platforms', ['youtube', 'spotify', 'instagram', 'tiktok'])
+        """Get data for platform status widget."""        platforms = config.get('platforms', ['youtube', 'spotify', 'instagram', 'tiktok'])
         
         status_data = {
             'platforms': []
@@ -1749,8 +1662,7 @@ class DashboardController:
         return status_data
 
     async def _get_performance_gauge_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for performance gauge widget."""
-        metric_type = config.get('metric', 'system_health')
+        """Get data for performance gauge widget."""        metric_type = config.get('metric', 'system_health')
         
         # Get current performance metrics
         performance_metrics = await self.performance_optimizer.monitor_system_performance()
@@ -1778,8 +1690,7 @@ class DashboardController:
         return gauge_data
 
     async def _get_violation_feed_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for violation feed widget."""
-        limit = config.get('limit', 10)
+        """Get data for violation feed widget."""        limit = config.get('limit', 10)
         
         # Mock violation feed data
         violations = []
@@ -1798,8 +1709,7 @@ class DashboardController:
         return {'violations': violations}
 
     async def _get_analytics_table_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for analytics table widget."""
-        # Generate analytics report
+        """Get data for analytics table widget."""        # Generate analytics report
         report = await self.analytics.generate_analytics_report(
             AnalyticsTimeRange.LAST_24_HOURS
         )
@@ -1829,8 +1739,7 @@ class DashboardController:
         return table_data
 
     async def _get_system_health_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for system health widget."""
-        # Get current system metrics
+        """Get data for system health widget."""        # Get current system metrics
         performance_metrics = await self.performance_optimizer.monitor_system_performance()
         
         health_data = {
@@ -1850,8 +1759,7 @@ class DashboardController:
         return health_data
 
     async def _get_optimization_panel_data(self, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Get data for optimization panel widget."""
-        # Get optimization recommendations
+        """Get data for optimization panel widget."""        # Get optimization recommendations
         recommendations = await self.performance_optimizer.generate_optimization_recommendations()
         
         panel_data = {
@@ -1877,8 +1785,7 @@ class DashboardController:
         connection: WebSocketConnection,
         data: Dict[str, Any]
     ) -> None:
-        """Handle WebSocket subscription request."""
-        subscription_type = data.get('subscription_type')
+        """Handle WebSocket subscription request."""        subscription_type = data.get('subscription_type')
         if subscription_type:
             connection.subscriptions.add(subscription_type)
             
@@ -1894,8 +1801,7 @@ class DashboardController:
         connection: WebSocketConnection,
         data: Dict[str, Any]
     ) -> None:
-        """Handle WebSocket unsubscription request."""
-        subscription_type = data.get('subscription_type')
+        """Handle WebSocket unsubscription request."""        subscription_type = data.get('subscription_type')
         if subscription_type in connection.subscriptions:
             connection.subscriptions.remove(subscription_type)
             
@@ -1911,8 +1817,7 @@ class DashboardController:
         connection: WebSocketConnection,
         data: Dict[str, Any]
     ) -> None:
-        """Handle WebSocket data request."""
-        widget_type = data.get('widget_type')
+        """Handle WebSocket data request."""        widget_type = data.get('widget_type')
         widget_config = data.get('config', {})
         
         if widget_type:
@@ -1930,16 +1835,14 @@ class DashboardController:
             await connection.websocket.send_text(json.dumps(response))
 
     async def _start_dashboard_tasks(self) -> None:
-        """Start background dashboard tasks."""
-        # Real-time data broadcasting task
+        """Start background dashboard tasks."""        # Real-time data broadcasting task
         broadcast_task = asyncio.create_task(self._realtime_broadcast_loop())
         self._dashboard_tasks.append(broadcast_task)
         
         logger.info("Started dashboard background tasks")
 
     async def _realtime_broadcast_loop(self) -> None:
-        """Background task for broadcasting real-time data."""
-        try:
+        """Background task for broadcasting real-time data."""        try:
             while self._running:
                 # Broadcast to all connected WebSocket clients
                 for connection in self._websocket_connections.values():
@@ -1964,8 +1867,7 @@ class DashboardController:
             logger.debug("Real-time broadcast loop cancelled")
 
     async def _get_subscription_data(self, subscription_type: str) -> Optional[Dict[str, Any]]:
-        """Get data for a subscription type."""
-        try:
+        """Get data for a subscription type."""        try:
             if subscription_type == 'violations':
                 return await self._get_realtime_violations()
             elif subscription_type == 'metrics':
@@ -1979,8 +1881,7 @@ class DashboardController:
             return None
 
     async def _get_realtime_violations(self, filters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Get real-time violation data."""
-        # Mock real-time violations
+        """Get real-time violation data."""        # Mock real-time violations
         return {
             'new_violations': np.random.randint(0, 3),
             'total_violations_today': np.random.randint(50, 200),
@@ -1993,8 +1894,7 @@ class DashboardController:
         }
 
     async def _get_realtime_metrics(self, filters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Get real-time metrics data."""
-        metrics = await self.realtime_monitor.get_realtime_metrics()
+        """Get real-time metrics data."""        metrics = await self.realtime_monitor.get_realtime_metrics()
         return {
             'detection_accuracy': metrics.detection_accuracy,
             'response_time': metrics.response_time_ms,
@@ -2003,8 +1903,7 @@ class DashboardController:
         }
 
     async def _get_realtime_performance(self, filters: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """Get real-time performance data."""
-        performance_metrics = await self.performance_optimizer.monitor_system_performance()
+        """Get real-time performance data."""        performance_metrics = await self.performance_optimizer.monitor_system_performance()
         
         return {
             'cpu_usage': performance_metrics.get('cpu', type('obj', (object,), {'current_usage': 0})).current_usage,
@@ -2014,8 +1913,7 @@ class DashboardController:
         }
 
     async def _load_default_layouts(self) -> None:
-        """Load default dashboard layouts."""
-        try:
+        """Load default dashboard layouts."""        try:
             # Create default monitoring dashboard
             default_layout = DashboardLayout(
                 layout_id="default_monitoring",
@@ -2070,16 +1968,14 @@ class DashboardController:
             logger.error(f"Failed to load default layouts: {e}")
 
     async def _save_dashboard_layout(self, layout: DashboardLayout) -> None:
-        """Save dashboard layout to persistent storage."""
-        try:
+        """Save dashboard layout to persistent storage."""        try:
             # This would save to database in real implementation
             logger.debug(f"Saved dashboard layout: {layout.layout_id}")
         except Exception as e:
             logger.error(f"Failed to save dashboard layout: {e}")
 
     async def shutdown(self) -> None:
-        """Shutdown the dashboard controller."""
-        logger.info("Shutting down Dashboard Controller...")
+        """Shutdown the dashboard controller."""        logger.info("Shutting down Dashboard Controller...")
         
         self._running = False
         
@@ -2108,24 +2004,21 @@ dashboard_controller: Optional[DashboardController] = None
 
 @router.get("/metrics")
 async def get_dashboard_metrics(user_id: int = 1):
-    """Get comprehensive dashboard metrics."""
-    if not dashboard_controller:
+    """Get comprehensive dashboard metrics."""    if not dashboard_controller:
         raise HTTPException(status_code=503, detail="Dashboard controller not available")
     
     return await dashboard_controller.get_dashboard_metrics(user_id)
 
 @router.get("/layouts")
 async def get_dashboard_layouts(user_id: int = 1):
-    """Get dashboard layouts for user."""
-    if not dashboard_controller:
+    """Get dashboard layouts for user."""    if not dashboard_controller:
         raise HTTPException(status_code=503, detail="Dashboard controller not available")
     
     return await dashboard_controller.get_user_dashboard_layouts(user_id)
 
 @router.post("/layouts")
 async def create_dashboard_layout(layout_data: dict, user_id: int = 1):
-    """Create new dashboard layout."""
-    if not dashboard_controller:
+    """Create new dashboard layout."""    if not dashboard_controller:
         raise HTTPException(status_code=503, detail="Dashboard controller not available")
     
     return await dashboard_controller.create_dashboard_layout(layout_data, user_id)
@@ -2136,8 +2029,7 @@ async def get_widget_data(
     widget_id: str = "default",
     config: str = "{}"
 ):
-    """Get data for dashboard widget."""
-    if not dashboard_controller:
+    """Get data for dashboard widget."""    if not dashboard_controller:
         raise HTTPException(status_code=503, detail="Dashboard controller not available")
     
     try:
@@ -2149,8 +2041,7 @@ async def get_widget_data(
 
 @router.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket, user_id: int = 1):
-    """WebSocket endpoint for real-time dashboard updates."""
-    if not dashboard_controller:
+    """WebSocket endpoint for real-time dashboard updates."""    if not dashboard_controller:
         await websocket.close(code=1011, reason="Service unavailable")
         return
     

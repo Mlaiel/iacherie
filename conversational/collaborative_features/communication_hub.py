@@ -1,5 +1,4 @@
-"""
-Communication Hub Module - Advanced Collaborative Communication System
+"""Communication Hub Module - Advanced Collaborative Communication System
 
 Enterprise-grade communication management for multi-format content creators
 enabling real-time messaging, video conferencing, file sharing, and notification coordination.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import uuid
 from datetime import datetime, timedelta
@@ -39,8 +37,7 @@ logger = logging.getLogger(__name__)
 
 
 class MessageType(Enum):
-    """Types of communication messages"""
-    TEXT = "text"
+    """Types of communication messages"""    TEXT = "text"
     FILE = "file"
     IMAGE = "image"
     VIDEO = "video"
@@ -56,8 +53,7 @@ class MessageType(Enum):
 
 
 class MessagePriority(Enum):
-    """Message priority levels for delivery optimization"""
-    URGENT = "urgent"
+    """Message priority levels for delivery optimization"""    URGENT = "urgent"
     HIGH = "high"
     NORMAL = "normal"
     LOW = "low"
@@ -65,8 +61,7 @@ class MessagePriority(Enum):
 
 
 class ChannelType(Enum):
-    """Communication channel types"""
-    DIRECT_MESSAGE = "direct_message"
+    """Communication channel types"""    DIRECT_MESSAGE = "direct_message"
     TEAM_CHANNEL = "team_channel"
     PROJECT_CHANNEL = "project_channel"
     ANNOUNCEMENT_CHANNEL = "announcement_channel"
@@ -75,8 +70,7 @@ class ChannelType(Enum):
 
 
 class NotificationType(Enum):
-    """Notification types for different events"""
-    MESSAGE_RECEIVED = "message_received"
+    """Notification types for different events"""    MESSAGE_RECEIVED = "message_received"
     TASK_ASSIGNED = "task_assigned"
     PROJECT_UPDATE = "project_update"
     DEADLINE_REMINDER = "deadline_reminder"
@@ -90,8 +84,7 @@ class NotificationType(Enum):
 
 @dataclass
 class Message:
-    """Comprehensive message representation"""
-    message_id: str
+    """Comprehensive message representation"""    message_id: str
     channel_id: str
     sender_id: str
     recipient_ids: List[str]
@@ -114,8 +107,7 @@ class Message:
     updated_at: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert message to dictionary representation"""
-        return {
+        """Convert message to dictionary representation"""        return {
             "message_id": self.message_id,
             "channel_id": self.channel_id,
             "sender_id": self.sender_id,
@@ -145,8 +137,7 @@ class Message:
 
 @dataclass
 class CommunicationChannel:
-    """Communication channel configuration"""
-    channel_id: str
+    """Communication channel configuration"""    channel_id: str
     channel_name: str
     channel_type: ChannelType
     description: str
@@ -161,8 +152,7 @@ class CommunicationChannel:
     last_activity: datetime
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert channel to dictionary representation"""
-        return {
+        """Convert channel to dictionary representation"""        return {
             "channel_id": self.channel_id,
             "channel_name": self.channel_name,
             "channel_type": self.channel_type.value,
@@ -180,8 +170,7 @@ class CommunicationChannel:
 
 
 class CollaborativeCommunicationManager:
-    """Advanced communication management for collaborative teams"""
-    
+    """Advanced communication management for collaborative teams"""    
     def __init__(self, db_session: AsyncSession, cache_manager: CacheManager):
         self.db = db_session
         self.cache = cache_manager
@@ -201,8 +190,7 @@ class CollaborativeCommunicationManager:
         is_private: bool = False,
         settings: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Create new communication channel for team collaboration"""
-        try:
+        """Create new communication channel for team collaboration"""        try:
             channel_id = str(uuid.uuid4())
             
             # Set default permissions
@@ -256,8 +244,7 @@ class CollaborativeCommunicationManager:
         reply_to: Optional[str] = None,
         scheduled_time: Optional[datetime] = None
     ) -> Dict[str, Any]:
-        """Send message to communication channel"""
-        try:
+        """Send message to communication channel"""        try:
             # Validate channel and permissions
             channel_data = await self.cache.get(f"channel:{channel_id}")
             if not channel_data:
@@ -346,8 +333,7 @@ class CollaborativeCommunicationManager:
         before_message_id: Optional[str] = None,
         after_message_id: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Retrieve channel messages with pagination"""
-        try:
+        """Retrieve channel messages with pagination"""        try:
             # Validate user access to channel
             channel_data = await self.cache.get(f"channel:{channel_id}")
             if not channel_data:
@@ -423,8 +409,7 @@ class CollaborativeCommunicationManager:
         user_id: str,
         reaction: str
     ) -> Dict[str, Any]:
-        """Add reaction to message"""
-        try:
+        """Add reaction to message"""        try:
             message_data = await self.cache.get(f"message:{message_id}")
             if not message_data:
                 raise ValidationError("Message not found")
@@ -459,8 +444,7 @@ class CollaborativeCommunicationManager:
         user_id: str,
         new_content: str
     ) -> Dict[str, Any]:
-        """Edit existing message"""
-        try:
+        """Edit existing message"""        try:
             message_data = await self.cache.get(f"message:{message_id}")
             if not message_data:
                 raise ValidationError("Message not found")
@@ -501,8 +485,7 @@ class CollaborativeCommunicationManager:
         user_id: str,
         delete_for_everyone: bool = False
     ) -> Dict[str, Any]:
-        """Delete message with options"""
-        try:
+        """Delete message with options"""        try:
             message_data = await self.cache.get(f"message:{message_id}")
             if not message_data:
                 raise ValidationError("Message not found")
@@ -545,8 +528,7 @@ class CollaborativeCommunicationManager:
             raise BusinessLogicError(f"Failed to delete message: {str(e)}")
     
     def _get_default_channel_permissions(self, channel_type: ChannelType) -> Dict[str, List[str]]:
-        """Get default permissions for channel type"""
-        permission_templates = {
+        """Get default permissions for channel type"""        permission_templates = {
             ChannelType.DIRECT_MESSAGE: {
                 "send_messages": ["member"],
                 "upload_files": ["member"],
@@ -586,8 +568,7 @@ class CollaborativeCommunicationManager:
         )
     
     async def _send_channel_created_notifications(self, channel_data: Dict[str, Any]):
-        """Send notifications for new channel creation"""
-        for member_id in channel_data["members"]:
+        """Send notifications for new channel creation"""        for member_id in channel_data["members"]:
             if member_id != channel_data["created_by"]:
                 await self.notification_service.send_notification(
                     user_id=member_id,
@@ -601,8 +582,7 @@ class CollaborativeCommunicationManager:
                 )
     
     async def _add_message_to_channel_history(self, channel_id: str, message_id: str):
-        """Add message to channel history"""
-        history_key = f"channel_messages:{channel_id}"
+        """Add message to channel history"""        history_key = f"channel_messages:{channel_id}"
         history_data = await self.cache.get(history_key)
         
         if not history_data:
@@ -622,8 +602,7 @@ class CollaborativeCommunicationManager:
         await self.cache.set(history_key, history_data, ttl=604800)
     
     async def _deliver_message_immediately(self, message_data: Dict[str, Any]):
-        """Deliver message immediately to all recipients"""
-        # Real-time delivery via WebSocket
+        """Deliver message immediately to all recipients"""        # Real-time delivery via WebSocket
         await self._broadcast_message_to_channel(message_data)
         
         # Send push notifications for offline users
@@ -640,8 +619,7 @@ class CollaborativeCommunicationManager:
         )
     
     async def _schedule_message_delivery(self, message_data: Dict[str, Any]):
-        """Schedule message for future delivery"""
-        # Implementation would use task scheduler (Celery)
+        """Schedule message for future delivery"""        # Implementation would use task scheduler (Celery)
         scheduled_time = datetime.fromisoformat(message_data["scheduled_time"])
         delay_seconds = (scheduled_time - datetime.utcnow()).total_seconds()
         
@@ -650,8 +628,7 @@ class CollaborativeCommunicationManager:
         await self.cache.set(scheduled_key, message_data, ttl=int(delay_seconds) + 3600)
     
     async def _broadcast_message_to_channel(self, message_data: Dict[str, Any]):
-        """Broadcast message to all channel subscribers via WebSocket"""
-        channel_id = message_data["channel_id"]
+        """Broadcast message to all channel subscribers via WebSocket"""        channel_id = message_data["channel_id"]
         subscribers = self.channel_subscribers.get(channel_id, set())
         
         for user_id in subscribers:
@@ -669,8 +646,7 @@ class CollaborativeCommunicationManager:
                         del self.active_connections[user_id]
     
     async def _send_message_notifications(self, message_data: Dict[str, Any]):
-        """Send push notifications for new messages"""
-        for recipient_id in message_data["recipient_ids"]:
+        """Send push notifications for new messages"""        for recipient_id in message_data["recipient_ids"]:
             # Check if user is online
             if recipient_id not in self.active_connections:
                 await self.notification_service.send_notification(
@@ -686,15 +662,13 @@ class CollaborativeCommunicationManager:
                 )
     
     async def _mark_message_as_read(self, message_id: str, user_id: str):
-        """Mark message as read by user"""
-        message_data = await self.cache.get(f"message:{message_id}")
+        """Mark message as read by user"""        message_data = await self.cache.get(f"message:{message_id}")
         if message_data:
             message_data["read_status"][user_id] = datetime.utcnow().isoformat()
             await self.cache.set(f"message:{message_id}", message_data, ttl=604800)
     
     async def _broadcast_message_update(self, message_data: Dict[str, Any]):
-        """Broadcast message updates to subscribers"""
-        channel_id = message_data["channel_id"]
+        """Broadcast message updates to subscribers"""        channel_id = message_data["channel_id"]
         subscribers = self.channel_subscribers.get(channel_id, set())
         
         for user_id in subscribers:
@@ -709,16 +683,14 @@ class CollaborativeCommunicationManager:
                     logger.error(f"Error broadcasting update to user {user_id}: {str(e)}")
     
     async def _update_channel_last_activity(self, channel_id: str):
-        """Update channel last activity timestamp"""
-        channel_data = await self.cache.get(f"channel:{channel_id}")
+        """Update channel last activity timestamp"""        channel_data = await self.cache.get(f"channel:{channel_id}")
         if channel_data:
             channel_data["last_activity"] = datetime.utcnow().isoformat()
             await self.cache.set(f"channel:{channel_id}", channel_data, ttl=86400)
 
 
 class RealTimeMessageHandler:
-    """Real-time message handling with WebSocket support"""
-    
+    """Real-time message handling with WebSocket support"""    
     def __init__(self, communication_manager: CollaborativeCommunicationManager):
         self.comm_manager = communication_manager
         self.message_queue: Dict[str, List[Dict[str, Any]]] = {}
@@ -728,8 +700,7 @@ class RealTimeMessageHandler:
         websocket: websockets.WebSocketServerProtocol,
         user_id: str
     ):
-        """Handle WebSocket connection for real-time messaging"""
-        try:
+        """Handle WebSocket connection for real-time messaging"""        try:
             # Register connection
             self.comm_manager.active_connections[user_id] = websocket
             
@@ -754,8 +725,7 @@ class RealTimeMessageHandler:
         user_id: str,
         websocket: websockets.WebSocketServerProtocol
     ):
-        """Send any queued messages to newly connected user"""
-        queued_messages = self.message_queue.get(user_id, [])
+        """Send any queued messages to newly connected user"""        queued_messages = self.message_queue.get(user_id, [])
         
         for message in queued_messages:
             try:
@@ -772,8 +742,7 @@ class RealTimeMessageHandler:
         message: str,
         user_id: str
     ):
-        """Process incoming WebSocket message"""
-        try:
+        """Process incoming WebSocket message"""        try:
             data = json.loads(message)
             message_type = data.get("type")
             
@@ -792,8 +761,7 @@ class RealTimeMessageHandler:
             logger.error(f"Error processing WebSocket message: {str(e)}")
     
     async def _handle_send_message_request(self, data: Dict[str, Any], user_id: str):
-        """Handle send message request via WebSocket"""
-        try:
+        """Handle send message request via WebSocket"""        try:
             await self.comm_manager.send_message(
                 channel_id=data.get("channel_id"),
                 sender_id=user_id,
@@ -808,14 +776,12 @@ class RealTimeMessageHandler:
             logger.error(f"Error handling send message request: {str(e)}")
     
     async def _handle_mark_read_request(self, data: Dict[str, Any], user_id: str):
-        """Handle mark as read request"""
-        message_id = data.get("message_id")
+        """Handle mark as read request"""        message_id = data.get("message_id")
         if message_id:
             await self.comm_manager._mark_message_as_read(message_id, user_id)
     
     async def _handle_typing_indicator(self, data: Dict[str, Any], user_id: str):
-        """Handle typing indicator"""
-        channel_id = data.get("channel_id")
+        """Handle typing indicator"""        channel_id = data.get("channel_id")
         is_typing = data.get("is_typing", False)
         
         if channel_id:
@@ -838,8 +804,7 @@ class RealTimeMessageHandler:
                             logger.error(f"Error sending typing indicator: {str(e)}")
     
     async def _handle_join_channel_request(self, data: Dict[str, Any], user_id: str):
-        """Handle join channel request for real-time updates"""
-        channel_id = data.get("channel_id")
+        """Handle join channel request for real-time updates"""        channel_id = data.get("channel_id")
         if channel_id:
             if channel_id not in self.comm_manager.channel_subscribers:
                 self.comm_manager.channel_subscribers[channel_id] = set()
@@ -847,8 +812,7 @@ class RealTimeMessageHandler:
 
 
 class VideoConferenceIntegrator:
-    """Video conference integration for team collaboration"""
-    
+    """Video conference integration for team collaboration"""    
     def __init__(self, cache_manager: CacheManager):
         self.cache = cache_manager
         self.active_meetings: Dict[str, Dict[str, Any]] = {}
@@ -862,8 +826,7 @@ class VideoConferenceIntegrator:
         duration_minutes: int,
         meeting_type: str = "video_call"
     ) -> Dict[str, Any]:
-        """Create video conference meeting"""
-        try:
+        """Create video conference meeting"""        try:
             meeting_id = str(uuid.uuid4())
             
             meeting_data = {
@@ -908,8 +871,7 @@ class VideoConferenceIntegrator:
         user_id: str,
         connection_info: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Join video conference meeting"""
-        try:
+        """Join video conference meeting"""        try:
             meeting_data = await self.cache.get(f"meeting:{meeting_id}")
             if not meeting_data:
                 raise ValidationError("Meeting not found")
@@ -946,20 +908,17 @@ class VideoConferenceIntegrator:
             raise BusinessLogicError(f"Failed to join meeting: {str(e)}")
     
     def _generate_meeting_password(self) -> str:
-        """Generate secure meeting password"""
-        import random
+        """Generate secure meeting password"""        import random
         import string
         return ''.join(random.choices(string.ascii_letters + string.digits, k=8))
     
     async def _send_meeting_invitations(self, meeting_data: Dict[str, Any]):
-        """Send meeting invitations to participants"""
-        # Implementation would send email/push notifications
+        """Send meeting invitations to participants"""        # Implementation would send email/push notifications
         pass
 
 
 class FileShareCoordinator:
-    """Advanced file sharing coordination for collaborative teams"""
-    
+    """Advanced file sharing coordination for collaborative teams"""    
     def __init__(self, cache_manager: CacheManager, file_manager: FileManager):
         self.cache = cache_manager
         self.file_manager = file_manager
@@ -974,8 +933,7 @@ class FileShareCoordinator:
         description: Optional[str] = None,
         access_permissions: Dict[str, List[str]] = None
     ) -> Dict[str, Any]:
-        """Share file in communication channel"""
-        try:
+        """Share file in communication channel"""        try:
             # Validate file
             validation_result = await self.file_manager.validate_file(
                 file_data, filename, file_type
@@ -1035,8 +993,7 @@ class FileShareCoordinator:
         file_type_filter: Optional[str] = None,
         limit: int = 20
     ) -> List[Dict[str, Any]]:
-        """Get shared files in channel"""
-        try:
+        """Get shared files in channel"""        try:
             channel_files = await self.cache.get(f"channel_files:{channel_id}")
             if not channel_files:
                 return []
@@ -1062,8 +1019,7 @@ class FileShareCoordinator:
             return []
     
     async def _add_file_to_channel(self, channel_id: str, file_id: str):
-        """Add file to channel file list"""
-        channel_files = await self.cache.get(f"channel_files:{channel_id}")
+        """Add file to channel file list"""        channel_files = await self.cache.get(f"channel_files:{channel_id}")
         if not channel_files:
             channel_files = {"channel_id": channel_id, "file_ids": []}
         
@@ -1080,14 +1036,12 @@ class FileShareCoordinator:
         file_metadata: Dict[str, Any],
         user_id: str
     ) -> bool:
-        """Check if user has access to file"""
-        # Implementation would check permissions
+        """Check if user has access to file"""        # Implementation would check permissions
         return True  # Simplified for now
 
 
 class NotificationDispatcher:
-    """Advanced notification dispatching for collaborative events"""
-    
+    """Advanced notification dispatching for collaborative events"""    
     def __init__(self, cache_manager: CacheManager, notification_service: NotificationService):
         self.cache = cache_manager
         self.notification_service = notification_service
@@ -1102,8 +1056,7 @@ class NotificationDispatcher:
         metadata: Dict[str, Any],
         priority: MessagePriority = MessagePriority.NORMAL
     ) -> Dict[str, Any]:
-        """Dispatch notification to multiple users with preferences"""
-        try:
+        """Dispatch notification to multiple users with preferences"""        try:
             dispatched_count = 0
             failed_count = 0
             
@@ -1138,8 +1091,7 @@ class NotificationDispatcher:
             raise BusinessLogicError(f"Failed to dispatch notifications: {str(e)}")
     
     async def _get_user_notification_preferences(self, user_id: str) -> Dict[str, Any]:
-        """Get user notification preferences"""
-        prefs = await self.cache.get(f"notification_prefs:{user_id}")
+        """Get user notification preferences"""        prefs = await self.cache.get(f"notification_prefs:{user_id}")
         if not prefs:
             # Default preferences
             prefs = {
@@ -1156,8 +1108,7 @@ class NotificationDispatcher:
         user_prefs: Dict[str, Any],
         priority: MessagePriority
     ) -> bool:
-        """Determine if notification should be sent based on preferences"""
-        # Check if notification type is enabled
+        """Determine if notification should be sent based on preferences"""        # Check if notification type is enabled
         if notification_type.value not in user_prefs.get("enabled_types", []):
             return False
         

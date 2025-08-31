@@ -32,8 +32,7 @@ This module implements state-of-the-art neural audio synthesis technologies:
 - Speech Synthesis with Tacotron2/FastSpeech integration
 - Style Transfer and Voice Cloning capabilities
 - Real-time synthesis optimization for production use
-"""
-from .neural_vocoder import (
+"""from .neural_vocoder import (
     WaveNetVocoder,
     HiFiGANVocoder,
     MelGANVocoder,

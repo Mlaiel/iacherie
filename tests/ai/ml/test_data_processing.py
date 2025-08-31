@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Data Processing Tests - Enterprise Grade Test Suite
+"""Data Processing Tests - Enterprise Grade Test Suite
 
 Comprehensive tests for data processing, ETL pipelines, feature engineering,
 data validation, and quality assurance systems.
@@ -26,7 +23,6 @@ Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 ⚠️  STRICT LEGAL WARNING ⚠️
 Contact: mlaiel@live.de - Unauthorized use STRICTLY PROHIBITED
 """
-
 import pytest
 import sys
 import os
@@ -60,11 +56,9 @@ from ai.ml.data_processing import (
 
 
 class TestDataProcessor:
-    """Tests for basic data processing functionality"""
-    
+    """Tests for basic data processing functionality"""    
     def test_init_data_processor(self):
-        """Test data processor initialization"""
-        processor = DataProcessor(
+        """Test data processor initialization"""        processor = DataProcessor(
             supported_formats=["csv", "json", "parquet", "avro"],
             max_memory_usage="8GB",
             enable_parallel_processing=True,
@@ -77,8 +71,7 @@ class TestDataProcessor:
         assert processor.chunk_size == 10000
 
     def test_load_data_csv(self, sample_csv_data, temp_dir):
-        """Test CSV data loading"""
-        processor = DataProcessor()
+        """Test CSV data loading"""        processor = DataProcessor()
         
         # Create temporary CSV file
         csv_path = temp_dir / "test_data.csv"
@@ -91,8 +84,7 @@ class TestDataProcessor:
         assert list(loaded_data.columns) == list(sample_csv_data.columns)
 
     def test_load_data_json(self, sample_json_data, temp_dir):
-        """Test JSON data loading"""
-        processor = DataProcessor()
+        """Test JSON data loading"""        processor = DataProcessor()
         
         # Create temporary JSON file
         json_path = temp_dir / "test_data.json"
@@ -106,8 +98,7 @@ class TestDataProcessor:
             assert loaded_data == sample_json_data
 
     def test_load_data_parquet(self, sample_dataframe, temp_dir):
-        """Test Parquet data loading"""
-        processor = DataProcessor()
+        """Test Parquet data loading"""        processor = DataProcessor()
         
         # Create temporary Parquet file
         parquet_path = temp_dir / "test_data.parquet"
@@ -120,8 +111,7 @@ class TestDataProcessor:
         pd.testing.assert_frame_equal(loaded_data, sample_dataframe)
 
     def test_save_data_formats(self, sample_dataframe, temp_dir):
-        """Test saving data in different formats"""
-        processor = DataProcessor()
+        """Test saving data in different formats"""        processor = DataProcessor()
         
         formats = ["csv", "json", "parquet", "pickle"]
         
@@ -141,8 +131,7 @@ class TestDataProcessor:
                 assert loaded_data is not None
 
     def test_chunk_processing(self, large_sample_data):
-        """Test chunked data processing for large datasets"""
-        processor = DataProcessor(chunk_size=1000, enable_parallel_processing=True)
+        """Test chunked data processing for large datasets"""        processor = DataProcessor(chunk_size=1000, enable_parallel_processing=True)
         
         # Mock processing function
         def process_chunk(chunk):
@@ -154,8 +143,7 @@ class TestDataProcessor:
         assert len(results) == (len(large_sample_data) // 1000) + (1 if len(large_sample_data) % 1000 else 0)
 
     def test_parallel_processing(self, sample_dataframe):
-        """Test parallel data processing"""
-        processor = DataProcessor(enable_parallel_processing=True, n_workers=4)
+        """Test parallel data processing"""        processor = DataProcessor(enable_parallel_processing=True, n_workers=4)
         
         def processing_function(df):
             return df.describe()
@@ -172,8 +160,7 @@ class TestDataProcessor:
             assert len(results) == 2
 
     def test_memory_efficient_processing(self, large_sample_data):
-        """Test memory-efficient processing"""
-        processor = DataProcessor(max_memory_usage="1GB")
+        """Test memory-efficient processing"""        processor = DataProcessor(max_memory_usage="1GB")
         
         with patch.object(processor, 'get_memory_usage') as mock_memory:
             mock_memory.return_value = "500MB"
@@ -187,8 +174,7 @@ class TestDataProcessor:
             assert result is not None
 
     def test_data_type_inference(self, mixed_type_data):
-        """Test automatic data type inference"""
-        processor = DataProcessor()
+        """Test automatic data type inference"""        processor = DataProcessor()
         
         inferred_types = processor.infer_data_types(mixed_type_data)
         
@@ -200,11 +186,9 @@ class TestDataProcessor:
 
 
 class TestETLPipeline:
-    """Tests for ETL (Extract, Transform, Load) pipeline functionality"""
-    
+    """Tests for ETL (Extract, Transform, Load) pipeline functionality"""    
     def test_init_etl_pipeline(self):
-        """Test ETL pipeline initialization"""
-        pipeline = ETLPipeline(
+        """Test ETL pipeline initialization"""        pipeline = ETLPipeline(
             source_configs=[
                 {"type": "database", "connection": "postgresql://localhost:5432/db"},
                 {"type": "api", "endpoint": "https://api.example.com/data"}
@@ -219,8 +203,7 @@ class TestETLPipeline:
         assert pipeline.enable_monitoring
 
     def test_extract_from_database(self):
-        """Test data extraction from database"""
-        pipeline = ETLPipeline()
+        """Test data extraction from database"""        pipeline = ETLPipeline()
         
         # Mock database connection
         with patch('sqlalchemy.create_engine') as mock_engine:
@@ -246,8 +229,7 @@ class TestETLPipeline:
                 assert len(extracted_data) == 3
 
     def test_extract_from_api(self):
-        """Test data extraction from API"""
-        pipeline = ETLPipeline()
+        """Test data extraction from API"""        pipeline = ETLPipeline()
         
         # Mock API response
         mock_response_data = {
@@ -273,8 +255,7 @@ class TestETLPipeline:
             assert isinstance(extracted_data, (dict, pd.DataFrame))
 
     def test_transform_data_cleaning(self, dirty_sample_data):
-        """Test data transformation - cleaning"""
-        pipeline = ETLPipeline(transformation_steps=["clean"])
+        """Test data transformation - cleaning"""        pipeline = ETLPipeline(transformation_steps=["clean"])
         
         # Apply cleaning transformations
         cleaned_data = pipeline.transform_clean(dirty_sample_data)
@@ -284,8 +265,7 @@ class TestETLPipeline:
         assert cleaned_data.isnull().sum().sum() <= dirty_sample_data.isnull().sum().sum()
 
     def test_transform_data_normalization(self, sample_dataframe):
-        """Test data transformation - normalization"""
-        pipeline = ETLPipeline(transformation_steps=["normalize"])
+        """Test data transformation - normalization"""        pipeline = ETLPipeline(transformation_steps=["normalize"])
         
         # Assume sample_dataframe has numeric columns
         numeric_columns = sample_dataframe.select_dtypes(include=[np.number]).columns
@@ -300,8 +280,7 @@ class TestETLPipeline:
                 assert abs(normalized_data[col].std() - 1) < 0.1
 
     def test_transform_data_enrichment(self, sample_dataframe):
-        """Test data transformation - enrichment"""
-        pipeline = ETLPipeline(transformation_steps=["enrich"])
+        """Test data transformation - enrichment"""        pipeline = ETLPipeline(transformation_steps=["enrich"])
         
         # Mock enrichment process
         with patch.object(pipeline, 'enrich_data') as mock_enrich:
@@ -316,8 +295,7 @@ class TestETLPipeline:
             assert len(enriched_data.columns) > len(sample_dataframe.columns)
 
     def test_load_to_database(self, sample_dataframe):
-        """Test loading data to database"""
-        pipeline = ETLPipeline()
+        """Test loading data to database"""        pipeline = ETLPipeline()
         
         with patch('sqlalchemy.create_engine') as mock_engine:
             mock_connection = Mock()
@@ -337,8 +315,7 @@ class TestETLPipeline:
                 mock_to_sql.assert_called_once()
 
     def test_load_to_data_warehouse(self, sample_dataframe, temp_dir):
-        """Test loading data to data warehouse (file-based)"""
-        pipeline = ETLPipeline()
+        """Test loading data to data warehouse (file-based)"""        pipeline = ETLPipeline()
         
         warehouse_path = temp_dir / "warehouse" / "processed_data.parquet"
         
@@ -352,8 +329,7 @@ class TestETLPipeline:
         assert warehouse_path.parent.exists()
 
     def test_full_etl_pipeline_execution(self, sample_dataframe):
-        """Test full ETL pipeline execution"""
-        pipeline = ETLPipeline(
+        """Test full ETL pipeline execution"""        pipeline = ETLPipeline(
             transformation_steps=["clean", "normalize"],
             enable_monitoring=True
         )
@@ -375,8 +351,7 @@ class TestETLPipeline:
             mock_load.assert_called_once()
 
     def test_pipeline_error_handling(self, sample_dataframe):
-        """Test ETL pipeline error handling"""
-        pipeline = ETLPipeline(enable_monitoring=True)
+        """Test ETL pipeline error handling"""        pipeline = ETLPipeline(enable_monitoring=True)
         
         # Mock extraction failure
         with patch.object(pipeline, 'extract') as mock_extract:
@@ -386,8 +361,7 @@ class TestETLPipeline:
                 pipeline.run_pipeline()
 
     def test_pipeline_monitoring_and_logging(self, sample_dataframe):
-        """Test ETL pipeline monitoring and logging"""
-        pipeline = ETLPipeline(enable_monitoring=True)
+        """Test ETL pipeline monitoring and logging"""        pipeline = ETLPipeline(enable_monitoring=True)
         
         with patch.object(pipeline, 'log_pipeline_metrics') as mock_log:
             mock_log.return_value = {
@@ -408,11 +382,9 @@ class TestETLPipeline:
 
 
 class TestFeatureEngineer:
-    """Tests for feature engineering functionality"""
-    
+    """Tests for feature engineering functionality"""    
     def test_init_feature_engineer(self):
-        """Test feature engineer initialization"""
-        engineer = FeatureEngineer(
+        """Test feature engineer initialization"""        engineer = FeatureEngineer(
             feature_types=["numerical", "categorical", "text", "datetime"],
             encoding_methods=["one_hot", "label", "target", "embedding"],
             scaling_methods=["standard", "minmax", "robust"],
@@ -425,8 +397,7 @@ class TestFeatureEngineer:
         assert engineer.enable_automated_features
 
     def test_numerical_feature_engineering(self, numerical_data):
-        """Test numerical feature engineering"""
-        engineer = FeatureEngineer(feature_types=["numerical"])
+        """Test numerical feature engineering"""        engineer = FeatureEngineer(feature_types=["numerical"])
         
         # Create polynomial features, interaction features, etc.
         engineered_features = engineer.engineer_numerical_features(
@@ -439,8 +410,7 @@ class TestFeatureEngineer:
         assert all(col in engineered_features.columns for col in numerical_data.columns)
 
     def test_categorical_feature_encoding(self, categorical_data):
-        """Test categorical feature encoding"""
-        engineer = FeatureEngineer(encoding_methods=["one_hot", "label"])
+        """Test categorical feature encoding"""        engineer = FeatureEngineer(encoding_methods=["one_hot", "label"])
         
         # Test one-hot encoding
         one_hot_encoded = engineer.encode_categorical_features(
@@ -459,8 +429,7 @@ class TestFeatureEngineer:
         assert label_encoded.shape[1] == categorical_data.shape[1]
 
     def test_text_feature_engineering(self, text_data):
-        """Test text feature engineering"""
-        engineer = FeatureEngineer(feature_types=["text"])
+        """Test text feature engineering"""        engineer = FeatureEngineer(feature_types=["text"])
         
         text_features = engineer.engineer_text_features(
             text_data,
@@ -473,8 +442,7 @@ class TestFeatureEngineer:
         assert text_features.shape[1] > 10  # Should have multiple text features
 
     def test_datetime_feature_engineering(self, datetime_data):
-        """Test datetime feature engineering"""
-        engineer = FeatureEngineer(feature_types=["datetime"])
+        """Test datetime feature engineering"""        engineer = FeatureEngineer(feature_types=["datetime"])
         
         datetime_features = engineer.engineer_datetime_features(
             datetime_data,
@@ -491,8 +459,7 @@ class TestFeatureEngineer:
         assert any("cos" in col for col in datetime_features.columns)
 
     def test_automated_feature_generation(self, mixed_feature_data):
-        """Test automated feature generation"""
-        engineer = FeatureEngineer(enable_automated_features=True)
+        """Test automated feature generation"""        engineer = FeatureEngineer(enable_automated_features=True)
         
         with patch.object(engineer, 'auto_generate_features') as mock_auto:
             mock_features = mixed_feature_data.copy()
@@ -508,8 +475,7 @@ class TestFeatureEngineer:
             assert automated_features.shape[1] > mixed_feature_data.shape[1]
 
     def test_feature_selection(self, engineered_features, target_variable):
-        """Test feature selection methods"""
-        engineer = FeatureEngineer()
+        """Test feature selection methods"""        engineer = FeatureEngineer()
         
         # Test univariate feature selection
         selected_features = engineer.select_features(
@@ -533,8 +499,7 @@ class TestFeatureEngineer:
         assert isinstance(selected_features_corr, pd.DataFrame)
 
     def test_feature_importance_analysis(self, engineered_features, target_variable):
-        """Test feature importance analysis"""
-        engineer = FeatureEngineer()
+        """Test feature importance analysis"""        engineer = FeatureEngineer()
         
         with patch.object(engineer, 'analyze_feature_importance') as mock_importance:
             mock_importance.return_value = {
@@ -553,8 +518,7 @@ class TestFeatureEngineer:
             assert "selected_features" in importance_analysis
 
     def test_feature_scaling_normalization(self, numerical_features):
-        """Test feature scaling and normalization"""
-        engineer = FeatureEngineer(scaling_methods=["standard", "minmax"])
+        """Test feature scaling and normalization"""        engineer = FeatureEngineer(scaling_methods=["standard", "minmax"])
         
         # Test standard scaling
         standard_scaled = engineer.scale_features(
@@ -580,11 +544,9 @@ class TestFeatureEngineer:
 
 
 class TestDataValidator:
-    """Tests for data validation functionality"""
-    
+    """Tests for data validation functionality"""    
     def test_init_data_validator(self):
-        """Test data validator initialization"""
-        validator = DataValidator(
+        """Test data validator initialization"""        validator = DataValidator(
             validation_rules={
                 "completeness": {"threshold": 0.95},
                 "uniqueness": {"columns": ["id", "email"]},
@@ -598,8 +560,7 @@ class TestDataValidator:
         assert validator.enable_profiling
 
     def test_completeness_validation(self, incomplete_data):
-        """Test data completeness validation"""
-        validator = DataValidator()
+        """Test data completeness validation"""        validator = DataValidator()
         
         completeness_results = validator.validate_completeness(
             incomplete_data, threshold=0.8
@@ -612,8 +573,7 @@ class TestDataValidator:
         assert 0 <= completeness_results["overall_completeness"] <= 1
 
     def test_uniqueness_validation(self, duplicate_data):
-        """Test data uniqueness validation"""
-        validator = DataValidator()
+        """Test data uniqueness validation"""        validator = DataValidator()
         
         uniqueness_results = validator.validate_uniqueness(
             duplicate_data, unique_columns=["id"]
@@ -625,8 +585,7 @@ class TestDataValidator:
         assert "duplicate_rows" in uniqueness_results
 
     def test_range_validation(self, numerical_data):
-        """Test data range validation"""
-        validator = DataValidator()
+        """Test data range validation"""        validator = DataValidator()
         
         # Define valid ranges for each column
         range_rules = {}
@@ -645,8 +604,7 @@ class TestDataValidator:
         assert "column_violations" in range_results
 
     def test_format_validation(self, format_data):
-        """Test data format validation"""
-        validator = DataValidator()
+        """Test data format validation"""        validator = DataValidator()
         
         format_rules = {
             "email": r'^[\w\.-]+@[\w\.-]+\.\w+$',
@@ -664,8 +622,7 @@ class TestDataValidator:
         assert "column_compliance" in format_results
 
     def test_schema_validation(self, sample_dataframe):
-        """Test data schema validation"""
-        validator = DataValidator()
+        """Test data schema validation"""        validator = DataValidator()
         
         # Define expected schema
         expected_schema = {
@@ -686,8 +643,7 @@ class TestDataValidator:
         assert "dtype_mismatches" in schema_results
 
     def test_business_rules_validation(self, business_data):
-        """Test business rules validation"""
-        validator = DataValidator()
+        """Test business rules validation"""        validator = DataValidator()
         
         # Define business rules
         business_rules = [
@@ -715,8 +671,7 @@ class TestDataValidator:
             assert "overall_compliance" in business_results
 
     def test_anomaly_detection_validation(self, sample_dataframe):
-        """Test anomaly detection in validation"""
-        validator = DataValidator()
+        """Test anomaly detection in validation"""        validator = DataValidator()
         
         with patch.object(validator, 'detect_anomalies') as mock_anomalies:
             mock_anomalies.return_value = {
@@ -734,8 +689,7 @@ class TestDataValidator:
             assert "anomalous_rows" in anomaly_results
 
     def test_data_quality_scoring(self, sample_dataframe):
-        """Test comprehensive data quality scoring"""
-        validator = DataValidator(enable_profiling=True)
+        """Test comprehensive data quality scoring"""        validator = DataValidator(enable_profiling=True)
         
         quality_score = validator.calculate_quality_score(sample_dataframe)
         
@@ -751,11 +705,9 @@ class TestDataValidator:
 
 
 class TestDataQualityChecker:
-    """Tests for data quality checking functionality"""
-    
+    """Tests for data quality checking functionality"""    
     def test_init_quality_checker(self):
-        """Test data quality checker initialization"""
-        checker = DataQualityChecker(
+        """Test data quality checker initialization"""        checker = DataQualityChecker(
             quality_dimensions=["completeness", "accuracy", "consistency", "validity", "timeliness"],
             thresholds={"completeness": 0.95, "accuracy": 0.9, "consistency": 0.85},
             enable_automated_repair=True
@@ -766,8 +718,7 @@ class TestDataQualityChecker:
         assert checker.enable_automated_repair
 
     def test_completeness_assessment(self, incomplete_data):
-        """Test data completeness assessment"""
-        checker = DataQualityChecker()
+        """Test data completeness assessment"""        checker = DataQualityChecker()
         
         completeness = checker.assess_completeness(incomplete_data)
         
@@ -778,8 +729,7 @@ class TestDataQualityChecker:
         assert 0 <= completeness["completeness_score"] <= 1
 
     def test_accuracy_assessment(self, sample_dataframe, reference_data):
-        """Test data accuracy assessment against reference data"""
-        checker = DataQualityChecker()
+        """Test data accuracy assessment against reference data"""        checker = DataQualityChecker()
         
         with patch.object(checker, 'assess_accuracy') as mock_accuracy:
             mock_accuracy.return_value = {
@@ -803,8 +753,7 @@ class TestDataQualityChecker:
             assert "accuracy_by_column" in accuracy
 
     def test_consistency_assessment(self, inconsistent_data):
-        """Test data consistency assessment"""
-        checker = DataQualityChecker()
+        """Test data consistency assessment"""        checker = DataQualityChecker()
         
         consistency = checker.assess_consistency(inconsistent_data)
         
@@ -814,8 +763,7 @@ class TestDataQualityChecker:
         assert "consistency_rules" in consistency
 
     def test_validity_assessment(self, invalid_data):
-        """Test data validity assessment"""
-        checker = DataQualityChecker()
+        """Test data validity assessment"""        checker = DataQualityChecker()
         
         # Define validity rules
         validity_rules = {
@@ -832,8 +780,7 @@ class TestDataQualityChecker:
         assert "validation_results" in validity
 
     def test_timeliness_assessment(self, timestamped_data):
-        """Test data timeliness assessment"""
-        checker = DataQualityChecker()
+        """Test data timeliness assessment"""        checker = DataQualityChecker()
         
         # Mock timeliness assessment
         with patch.object(checker, 'assess_timeliness') as mock_timeliness:
@@ -861,8 +808,7 @@ class TestDataQualityChecker:
             assert "outdated_records" in timeliness
 
     def test_automated_quality_repair(self, poor_quality_data):
-        """Test automated data quality repair"""
-        checker = DataQualityChecker(enable_automated_repair=True)
+        """Test automated data quality repair"""        checker = DataQualityChecker(enable_automated_repair=True)
         
         # Mock repair process
         with patch.object(checker, 'auto_repair_quality_issues') as mock_repair:
@@ -886,8 +832,7 @@ class TestDataQualityChecker:
             assert "improvement_score" in repair_results
 
     def test_quality_monitoring_dashboard(self, sample_dataframe):
-        """Test quality monitoring and dashboard data"""
-        checker = DataQualityChecker()
+        """Test quality monitoring and dashboard data"""        checker = DataQualityChecker()
         
         with patch.object(checker, 'generate_quality_dashboard') as mock_dashboard:
             mock_dashboard.return_value = {
@@ -917,12 +862,10 @@ class TestDataQualityChecker:
 
 @pytest.mark.integration
 class TestDataProcessingIntegration:
-    """Integration tests for data processing systems"""
-    
+    """Integration tests for data processing systems"""    
     @pytest.mark.slow
     def test_end_to_end_data_pipeline(self, raw_data_source, temp_dir):
-        """Test complete data processing pipeline"""
-        # Initialize pipeline components
+        """Test complete data processing pipeline"""        # Initialize pipeline components
         processor = DataProcessor(chunk_size=1000)
         pipeline = ETLPipeline(transformation_steps=["clean", "normalize"])
         engineer = FeatureEngineer(enable_automated_features=True)
@@ -959,8 +902,7 @@ class TestDataProcessingIntegration:
         assert quality_results["overall_score"] > 0.5
 
     def test_streaming_data_processing(self):
-        """Test streaming data processing integration"""
-        stream_processor = StreamProcessor(buffer_size=100)
+        """Test streaming data processing integration"""        stream_processor = StreamProcessor(buffer_size=100)
         
         # Simulate streaming data
         streaming_data = []
@@ -981,8 +923,7 @@ class TestDataProcessingIntegration:
         assert all(isinstance(batch, (dict, pd.DataFrame)) for batch in processed_batches)
 
     def test_multimodal_data_processing(self):
-        """Test multimodal data processing integration"""
-        multimodal_processor = MultimodalDataProcessor(
+        """Test multimodal data processing integration"""        multimodal_processor = MultimodalDataProcessor(
             modalities=["text", "image", "audio"]
         )
         

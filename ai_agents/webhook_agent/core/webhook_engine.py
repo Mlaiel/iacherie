@@ -1,5 +1,4 @@
-"""
-Webhook Engine - Ultra-Advanced Processing Engine
+"""Webhook Engine - Ultra-Advanced Processing Engine
 
 Core processing engine for webhook operations with intelligent
 optimization and comprehensive functionality.
@@ -7,7 +6,6 @@ optimization and comprehensive functionality.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any
@@ -18,24 +16,21 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class WebhookJob:
-    """Job configuration for webhook operations"""
-    job_id: str
+    """Job configuration for webhook operations"""    job_id: str
     data: Dict[str, Any]
     priority: int = 5
     created_at: datetime = None
 
 @dataclass 
 class WebhookResult:
-    """Result of webhook operations"""
-    job_id: str
+    """Result of webhook operations"""    job_id: str
     success: bool
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
     completed_at: datetime = None
 
 class WebhookEngine:
-    """
-    Ultra-Advanced Webhook Processing Engine
+    """    Ultra-Advanced Webhook Processing Engine
     
     Provides enterprise-grade webhook processing with:
     - High-performance operation handling
@@ -43,8 +38,7 @@ class WebhookEngine:
     - Comprehensive error handling
     - Real-time monitoring and metrics
     - Scalable architecture design
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.is_running = False
@@ -53,8 +47,7 @@ class WebhookEngine:
         logger.info("WebhookEngine initialized")
 
     async def start(self) -> None:
-        """Start the webhook processing engine"""
-        try:
+        """Start the webhook processing engine"""        try:
             self.is_running = True
             logger.info("WebhookEngine started successfully")
         except Exception as e:
@@ -62,8 +55,7 @@ class WebhookEngine:
             raise
 
     async def process(self, data: Dict[str, Any]) -> WebhookResult:
-        """Process webhook operation"""
-        try:
+        """Process webhook operation"""        try:
             job_id = data.get('job_id', 'auto-generated')
             
             # Implementation specific processing logic here
@@ -90,6 +82,5 @@ class WebhookEngine:
             )
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the processing engine"""
-        self.is_running = False
+        """Graceful shutdown of the processing engine"""        self.is_running = False
         logger.info("WebhookEngine shutdown complete")

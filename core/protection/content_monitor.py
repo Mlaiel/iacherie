@@ -1,5 +1,4 @@
-"""
-Content Monitoring System for Real-time Protection
+"""Content Monitoring System for Real-time Protection
 
 This module provides comprehensive content monitoring capabilities:
 - Real-time content surveillance across multiple platforms
@@ -11,7 +10,6 @@ This module provides comprehensive content monitoring capabilities:
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import aiohttp
 from typing import Dict, List, Optional, Set, Any, Callable
@@ -48,8 +46,7 @@ settings = get_settings()
 
 
 class MonitoringPlatform(Enum):
-    """Supported platforms for content monitoring"""
-    YOUTUBE = "youtube"
+    """Supported platforms for content monitoring"""    YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
     TWITTER = "twitter"
@@ -61,8 +58,7 @@ class MonitoringPlatform(Enum):
 
 
 class MonitoringStatus(Enum):
-    """Status of monitoring tasks"""
-    ACTIVE = "active"
+    """Status of monitoring tasks"""    ACTIVE = "active"
     PAUSED = "paused"
     STOPPED = "stopped"
     ERROR = "error"
@@ -71,8 +67,7 @@ class MonitoringStatus(Enum):
 
 @dataclass
 class MonitoringResult:
-    """Result of a monitoring scan"""
-    platform: MonitoringPlatform
+    """Result of a monitoring scan"""    platform: MonitoringPlatform
     detected_urls: List[str] = field(default_factory=list)
     screenshots: List[str] = field(default_factory=list)
     metadata: Dict[str, Any] = field(default_factory=dict)
@@ -83,8 +78,7 @@ class MonitoringResult:
 
 @dataclass
 class MonitoringConfig:
-    """Configuration for content monitoring"""
-    platform: MonitoringPlatform
+    """Configuration for content monitoring"""    platform: MonitoringPlatform
     search_terms: List[str]
     interval_minutes: int = 60
     max_results: int = 50
@@ -95,16 +89,14 @@ class MonitoringConfig:
 
 
 class PlatformMonitor:
-    """Base class for platform-specific monitoring"""
-    
+    """Base class for platform-specific monitoring"""    
     def __init__(self, config: MonitoringConfig):
         self.config = config
         self.session = None
         self.driver = None
         
     async def initialize(self):
-        """Initialize monitoring resources"""
-        self.session = aiohttp.ClientSession(
+        """Initialize monitoring resources"""        self.session = aiohttp.ClientSession(
             timeout=aiohttp.ClientTimeout(total=30),
             headers={
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
@@ -112,15 +104,13 @@ class PlatformMonitor:
         )
     
     async def cleanup(self):
-        """Cleanup monitoring resources"""
-        if self.session:
+        """Cleanup monitoring resources"""        if self.session:
             await self.session.close()
         if self.driver:
             self.driver.quit()
     
     async def scan_content(self) -> MonitoringResult:
-        """Perform content scan on platform"""
-        start_time = datetime.utcnow()
+        """Perform content scan on platform"""        start_time = datetime.utcnow()
         result = MonitoringResult(platform=self.config.platform)
         
         try:
@@ -148,8 +138,7 @@ class PlatformMonitor:
         return result
     
     def _setup_selenium_driver(self) -> webdriver.Chrome:
-        """Setup Selenium Chrome driver for dynamic content"""
-        chrome_options = Options()
+        """Setup Selenium Chrome driver for dynamic content"""        chrome_options = Options()
         chrome_options.add_argument('--headless')
         chrome_options.add_argument('--no-sandbox')
         chrome_options.add_argument('--disable-dev-shm-usage')
@@ -160,8 +149,7 @@ class PlatformMonitor:
         return driver
 
     async def _scan_youtube(self) -> MonitoringResult:
-        """Scan YouTube for content"""
-        result = MonitoringResult(platform=MonitoringPlatform.YOUTUBE)
+        """Scan YouTube for content"""        result = MonitoringResult(platform=MonitoringPlatform.YOUTUBE)
         
         for search_term in self.config.search_terms:
             search_url = f"https://www.youtube.com/results?search_query={search_term}"
@@ -181,8 +169,7 @@ class PlatformMonitor:
         return result
 
     async def _scan_instagram(self) -> MonitoringResult:
-        """Scan Instagram for content"""
-        result = MonitoringResult(platform=MonitoringPlatform.INSTAGRAM)
+        """Scan Instagram for content"""        result = MonitoringResult(platform=MonitoringPlatform.INSTAGRAM)
         
         # Note: Instagram has strict API requirements, using basic search approach
         for search_term in self.config.search_terms:
@@ -203,8 +190,7 @@ class PlatformMonitor:
         return result
 
     async def _scan_tiktok(self) -> MonitoringResult:
-        """Scan TikTok for content"""
-        result = MonitoringResult(platform=MonitoringPlatform.TIKTOK)
+        """Scan TikTok for content"""        result = MonitoringResult(platform=MonitoringPlatform.TIKTOK)
         
         for search_term in self.config.search_terms:
             search_url = f"https://www.tiktok.com/search?q={search_term}"
@@ -224,8 +210,7 @@ class PlatformMonitor:
         return result
 
     async def _scan_twitter(self) -> MonitoringResult:
-        """Scan Twitter for content"""
-        result = MonitoringResult(platform=MonitoringPlatform.TWITTER)
+        """Scan Twitter for content"""        result = MonitoringResult(platform=MonitoringPlatform.TWITTER)
         
         for search_term in self.config.search_terms:
             search_url = f"https://twitter.com/search?q={search_term}"
@@ -245,8 +230,7 @@ class PlatformMonitor:
         return result
 
     async def _scan_spotify(self) -> MonitoringResult:
-        """Scan Spotify for content"""
-        result = MonitoringResult(platform=MonitoringPlatform.SPOTIFY)
+        """Scan Spotify for content"""        result = MonitoringResult(platform=MonitoringPlatform.SPOTIFY)
         
         for search_term in self.config.search_terms:
             search_url = f"https://open.spotify.com/search/{search_term}"
@@ -266,8 +250,7 @@ class PlatformMonitor:
         return result
 
     async def _scan_generic_web(self) -> MonitoringResult:
-        """Generic web content scanning"""
-        result = MonitoringResult(platform=MonitoringPlatform.GENERIC_WEB)
+        """Generic web content scanning"""        result = MonitoringResult(platform=MonitoringPlatform.GENERIC_WEB)
         
         # Simple search engine simulation
         for search_term in self.config.search_terms:
@@ -280,15 +263,13 @@ class PlatformMonitor:
 
 
 class YouTubeMonitor(PlatformMonitor):
-    """YouTube content monitoring implementation"""
-    
+    """YouTube content monitoring implementation"""    
     def __init__(self, config: MonitoringConfig):
         super().__init__(config)
         self.api_base = "https://www.googleapis.com/youtube/v3"
     
     async def scan_content(self) -> MonitoringResult:
-        """Scan YouTube for protected content"""
-        start_time = datetime.utcnow()
+        """Scan YouTube for protected content"""        start_time = datetime.utcnow()
         result = MonitoringResult(platform=MonitoringPlatform.YOUTUBE)
         
         try:
@@ -305,8 +286,7 @@ class YouTubeMonitor(PlatformMonitor):
         return result
     
     async def _scan_with_api(self, result: MonitoringResult):
-        """Scan using YouTube Data API"""
-        for search_term in self.config.search_terms:
+        """Scan using YouTube Data API"""        for search_term in self.config.search_terms:
             url = f"{self.api_base}/search"
             params = {
                 'part': 'snippet',
@@ -340,8 +320,7 @@ class YouTubeMonitor(PlatformMonitor):
                 await asyncio.sleep(self.config.rate_limit_delay)
     
     async def _scan_with_scraping(self, result: MonitoringResult):
-        """Scan using web scraping as fallback"""
-        if not self.driver:
+        """Scan using web scraping as fallback"""        if not self.driver:
             self.driver = self._setup_selenium_driver()
         
         for search_term in self.config.search_terms:
@@ -370,11 +349,9 @@ class YouTubeMonitor(PlatformMonitor):
 
 
 class InstagramMonitor(PlatformMonitor):
-    """Instagram content monitoring implementation"""
-    
+    """Instagram content monitoring implementation"""    
     async def scan_content(self) -> MonitoringResult:
-        """Scan Instagram for protected content"""
-        start_time = datetime.utcnow()
+        """Scan Instagram for protected content"""        start_time = datetime.utcnow()
         result = MonitoringResult(platform=MonitoringPlatform.INSTAGRAM)
         
         try:
@@ -418,8 +395,7 @@ class InstagramMonitor(PlatformMonitor):
         return result
     
     async def _take_screenshot(self, element) -> Optional[str]:
-        """Take screenshot of specific element"""
-        try:
+        """Take screenshot of specific element"""        try:
             # Scroll element into view
             self.driver.execute_script("arguments[0].scrollIntoView();", element)
             await asyncio.sleep(1)
@@ -442,11 +418,9 @@ class InstagramMonitor(PlatformMonitor):
 
 
 class TikTokMonitor(PlatformMonitor):
-    """TikTok content monitoring implementation"""
-    
+    """TikTok content monitoring implementation"""    
     async def scan_content(self) -> MonitoringResult:
-        """Scan TikTok for protected content"""
-        start_time = datetime.utcnow()
+        """Scan TikTok for protected content"""        start_time = datetime.utcnow()
         result = MonitoringResult(platform=MonitoringPlatform.TIKTOK)
         
         try:
@@ -457,12 +431,10 @@ class TikTokMonitor(PlatformMonitor):
                 self.driver = self._setup_selenium_driver()
                 # Add TikTok-specific settings
                 self.driver.execute_cdp_cmd('Page.addScriptToEvaluateOnNewDocument', {
-                    "source": """
-                        Object.defineProperty(navigator, 'webdriver', {
+                    "source": """                        Object.defineProperty(navigator, 'webdriver', {
                             get: () => undefined
                         })
-                    """
-                })
+                    """                })
             
             for search_term in self.config.search_terms:
                 search_url = f"https://www.tiktok.com/search?q={search_term.replace(' ', '%20')}"
@@ -499,11 +471,9 @@ class TikTokMonitor(PlatformMonitor):
 
 
 class TwitterMonitor(PlatformMonitor):
-    """Twitter/X content monitoring implementation"""
-    
+    """Twitter/X content monitoring implementation"""    
     async def scan_content(self) -> MonitoringResult:
-        """Scan Twitter for protected content"""
-        start_time = datetime.utcnow()
+        """Scan Twitter for protected content"""        start_time = datetime.utcnow()
         result = MonitoringResult(platform=MonitoringPlatform.TWITTER)
         
         try:
@@ -544,11 +514,9 @@ class TwitterMonitor(PlatformMonitor):
 
 
 class GenericWebMonitor(PlatformMonitor):
-    """Generic web monitoring for any website"""
-    
+    """Generic web monitoring for any website"""    
     async def scan_content(self) -> MonitoringResult:
-        """Scan generic websites for protected content"""
-        start_time = datetime.utcnow()
+        """Scan generic websites for protected content"""        start_time = datetime.utcnow()
         result = MonitoringResult(platform=MonitoringPlatform.GENERIC_WEB)
         
         try:
@@ -580,8 +548,7 @@ class GenericWebMonitor(PlatformMonitor):
         return result
     
     def _is_valid_url(self, url: str) -> bool:
-        """Check if URL is valid and not from excluded domains"""
-        try:
+        """Check if URL is valid and not from excluded domains"""        try:
             parsed = urlparse(url)
             excluded_domains = ['google.com', 'youtube.com', 'facebook.com', 'instagram.com']
             return (parsed.scheme in ['http', 'https'] and 
@@ -591,8 +558,7 @@ class GenericWebMonitor(PlatformMonitor):
 
 
 class ContentMonitor:
-    """Main content monitoring coordinator"""
-    
+    """Main content monitoring coordinator"""    
     def __init__(self):
         self.fingerprint_engine = FingerprintEngine()
         self.active_monitors: Dict[str, PlatformMonitor] = {}
@@ -600,8 +566,7 @@ class ContentMonitor:
         self.results_cache: Dict[str, List[MonitoringResult]] = {}
         
     def create_monitor(self, config: MonitoringConfig) -> str:
-        """Create a new content monitor"""
-        monitor_id = hashlib.md5(
+        """Create a new content monitor"""        monitor_id = hashlib.md5(
             f"{config.platform.value}_{config.search_terms}_{datetime.utcnow().isoformat()}".encode()
         ).hexdigest()[:16]
         
@@ -624,8 +589,7 @@ class ContentMonitor:
         return monitor_id
     
     async def start_monitoring(self, monitor_id: str) -> bool:
-        """Start monitoring task"""
-        try:
+        """Start monitoring task"""        try:
             if monitor_id not in self.active_monitors:
                 return False
             
@@ -644,8 +608,7 @@ class ContentMonitor:
             return False
     
     async def stop_monitoring(self, monitor_id: str) -> bool:
-        """Stop monitoring task"""
-        try:
+        """Stop monitoring task"""        try:
             # Cancel task
             if monitor_id in self.monitoring_tasks:
                 task = self.monitoring_tasks[monitor_id]
@@ -666,8 +629,7 @@ class ContentMonitor:
             return False
     
     async def _monitor_loop(self, monitor_id: str):
-        """Main monitoring loop for a monitor"""
-        monitor = self.active_monitors[monitor_id]
+        """Main monitoring loop for a monitor"""        monitor = self.active_monitors[monitor_id]
         
         while True:
             try:
@@ -694,15 +656,13 @@ class ContentMonitor:
                 await asyncio.sleep(60)  # Wait 1 minute before retrying
     
     def get_monitor_results(self, monitor_id: str, limit: int = 10) -> List[MonitoringResult]:
-        """Get recent monitoring results"""
-        if monitor_id not in self.results_cache:
+        """Get recent monitoring results"""        if monitor_id not in self.results_cache:
             return []
         
         return self.results_cache[monitor_id][-limit:]
     
     def get_all_detected_urls(self, hours: int = 24) -> List[str]:
-        """Get all URLs detected in the last N hours"""
-        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
+        """Get all URLs detected in the last N hours"""        cutoff_time = datetime.utcnow() - timedelta(hours=hours)
         all_urls = []
         
         for results in self.results_cache.values():
@@ -713,8 +673,7 @@ class ContentMonitor:
         return list(set(all_urls))  # Remove duplicates
     
     def get_monitoring_statistics(self) -> Dict[str, Any]:
-        """Get monitoring system statistics"""
-        return {
+        """Get monitoring system statistics"""        return {
             'active_monitors': len(self.active_monitors),
             'running_tasks': len(self.monitoring_tasks),
             'total_results': sum(len(results) for results in self.results_cache.values()),

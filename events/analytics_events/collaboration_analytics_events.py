@@ -1,5 +1,4 @@
-"""
-Creator Collaboration Analytics Events Module
+"""Creator Collaboration Analytics Events Module
 
 Ultra-advanced collaboration analytics for AI-powered creator matching,
 partnership performance tracking, and cross-creator monetization optimization.
@@ -13,7 +12,6 @@ Copyright: Fahed Mlaiel - All rights reserved
 Team Expertise: Lead Dev IA + Backend Senior + ML Engineer + DBA + Security + 
                 Microservices + Audio + DevOps + IA Prompt Engineer
 """
-
 import asyncio
 import json
 import numpy as np
@@ -44,8 +42,7 @@ logger = get_logger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of creator collaborations"""
-    MUSIC_COLLABORATION = "music_collaboration"
+    """Types of creator collaborations"""    MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     PODCAST_GUEST = "podcast_guest"
     SOCIAL_MEDIA_TAKEOVER = "social_media_takeover"
@@ -60,8 +57,7 @@ class CollaborationType(Enum):
 
 
 class CollaborationStatus(Enum):
-    """Status of collaboration"""
-    PROPOSED = "proposed"
+    """Status of collaboration"""    PROPOSED = "proposed"
     NEGOTIATING = "negotiating"
     ACCEPTED = "accepted"
     IN_PROGRESS = "in_progress"
@@ -72,8 +68,7 @@ class CollaborationStatus(Enum):
 
 
 class CollaborationOutcome(Enum):
-    """Outcomes of collaborations"""
-    HIGHLY_SUCCESSFUL = "highly_successful"
+    """Outcomes of collaborations"""    HIGHLY_SUCCESSFUL = "highly_successful"
     SUCCESSFUL = "successful"
     MODERATE = "moderate"
     UNSUCCESSFUL = "unsuccessful"
@@ -82,8 +77,7 @@ class CollaborationOutcome(Enum):
 
 
 class CreatorTier(Enum):
-    """Creator tier classifications"""
-    NANO = "nano"          # 1K-10K followers
+    """Creator tier classifications"""    NANO = "nano"          # 1K-10K followers
     MICRO = "micro"        # 10K-100K followers
     MACRO = "macro"        # 100K-1M followers
     MEGA = "mega"          # 1M+ followers
@@ -92,8 +86,7 @@ class CreatorTier(Enum):
 
 @dataclass
 class CollaborationAnalyticsEvent(BaseEvent):
-    """Represents a collaboration analytics event"""
-    primary_creator_id: str
+    """Represents a collaboration analytics event"""    primary_creator_id: str
     secondary_creator_id: str
     collaboration_type: CollaborationType
     collaboration_status: CollaborationStatus
@@ -110,8 +103,7 @@ class CollaborationAnalyticsEvent(BaseEvent):
     success_probability: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert collaboration event to dictionary"""
-        return {
+        """Convert collaboration event to dictionary"""        return {
             **asdict(self),
             'collaboration_type': self.collaboration_type.value,
             'collaboration_status': self.collaboration_status.value,
@@ -122,8 +114,7 @@ class CollaborationAnalyticsEvent(BaseEvent):
 
 @dataclass
 class CreatorProfile:
-    """Comprehensive creator profile for collaboration matching"""
-    creator_id: str
+    """Comprehensive creator profile for collaboration matching"""    creator_id: str
     name: str
     tier: CreatorTier
     primary_platforms: List[str]
@@ -139,8 +130,7 @@ class CreatorProfile:
     completion_rate: float
     
     def to_vector(self) -> np.ndarray:
-        """Convert profile to feature vector for ML matching"""
-        features = []
+        """Convert profile to feature vector for ML matching"""        features = []
         
         # Tier encoding
         tier_encoding = {
@@ -168,8 +158,7 @@ class CreatorProfile:
 
 @dataclass
 class CollaborationRecommendation:
-    """AI-generated collaboration recommendation"""
-    recommendation_id: str
+    """AI-generated collaboration recommendation"""    recommendation_id: str
     primary_creator_id: str
     recommended_creator_id: str
     collaboration_type: CollaborationType
@@ -185,8 +174,7 @@ class CollaborationRecommendation:
 
 
 class CollaborationAnalyticsEventHandler(BaseEventHandler):
-    """Handles collaboration analytics events with AI-powered insights"""
-    
+    """Handles collaboration analytics events with AI-powered insights"""    
     def __init__(self):
         super().__init__()
         self.cache_manager = CacheManager()
@@ -197,8 +185,7 @@ class CollaborationAnalyticsEventHandler(BaseEventHandler):
         self.network_analyzer = NetworkAnalyzer()
         
     async def handle(self, event: CollaborationAnalyticsEvent) -> Dict[str, Any]:
-        """Process collaboration analytics event with comprehensive analysis"""
-        try:
+        """Process collaboration analytics event with comprehensive analysis"""        try:
             # Validate event data
             await self._validate_event(event)
             
@@ -247,8 +234,7 @@ class CollaborationAnalyticsEventHandler(BaseEventHandler):
             raise
     
     async def _validate_event(self, event: CollaborationAnalyticsEvent) -> None:
-        """Validate collaboration analytics event data"""
-        required_fields = ['primary_creator_id', 'secondary_creator_id', 'collaboration_type']
+        """Validate collaboration analytics event data"""        required_fields = ['primary_creator_id', 'secondary_creator_id', 'collaboration_type']
         for field in required_fields:
             if not getattr(event, field):
                 raise ValueError(f"Missing required field: {field}")
@@ -265,11 +251,9 @@ class CollaborationAnalyticsEventHandler(BaseEventHandler):
             raise ValueError(f"Invalid compatibility score: {event.compatibility_score}")
     
     async def _store_collaboration_data(self, event: CollaborationAnalyticsEvent) -> None:
-        """Store collaboration event data in database"""
-        async with self.db_manager.get_session() as session:
+        """Store collaboration event data in database"""        async with self.db_manager.get_session() as session:
             await session.execute(
-                """
-                INSERT INTO collaboration_analytics_events 
+                """                INSERT INTO collaboration_analytics_events 
                 (event_id, primary_creator_id, secondary_creator_id, collaboration_type,
                  collaboration_status, event_data, timestamp, collaboration_id, platforms,
                  target_metrics, actual_metrics, revenue_split, duration_days, outcome,
@@ -289,8 +273,7 @@ class CollaborationAnalyticsEventHandler(BaseEventHandler):
     
     async def _generate_collaboration_recommendations(self, 
                                                    event: CollaborationAnalyticsEvent) -> List[CollaborationRecommendation]:
-        """Generate AI-powered collaboration recommendations"""
-        # Get creator profiles
+        """Generate AI-powered collaboration recommendations"""        # Get creator profiles
         primary_profile = await self._get_creator_profile(event.primary_creator_id)
         
         # Find compatible creators
@@ -334,8 +317,7 @@ class CollaborationAnalyticsEventHandler(BaseEventHandler):
         return recommendations[:5]  # Return top 5 recommendations
     
     async def _calculate_collaboration_roi(self, event: CollaborationAnalyticsEvent) -> Dict[str, Any]:
-        """Calculate comprehensive collaboration ROI analysis"""
-        # Get collaboration costs
+        """Calculate comprehensive collaboration ROI analysis"""        # Get collaboration costs
         costs = await self._calculate_collaboration_costs(event)
         
         # Get collaboration revenue
@@ -372,15 +354,13 @@ class CollaborationAnalyticsEventHandler(BaseEventHandler):
 
 
 class CollaborationPerformanceTracker:
-    """Tracks and analyzes collaboration performance metrics"""
-    
+    """Tracks and analyzes collaboration performance metrics"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.metrics_calculator = MetricsCalculator()
     
     async def track_performance(self, event: CollaborationAnalyticsEvent) -> Dict[str, Any]:
-        """Track comprehensive collaboration performance metrics"""
-        # Calculate engagement metrics
+        """Track comprehensive collaboration performance metrics"""        # Calculate engagement metrics
         engagement_metrics = await self._calculate_engagement_metrics(event)
         
         # Calculate reach and growth metrics
@@ -410,8 +390,7 @@ class CollaborationPerformanceTracker:
         }
     
     async def _calculate_engagement_metrics(self, event: CollaborationAnalyticsEvent) -> Dict[str, float]:
-        """Calculate engagement metrics for collaboration"""
-        if not event.actual_metrics:
+        """Calculate engagement metrics for collaboration"""        if not event.actual_metrics:
             return {}
         
         # Get baseline engagement for both creators
@@ -443,8 +422,7 @@ class CollaborationPerformanceTracker:
         }
     
     async def _calculate_synergy_metrics(self, event: CollaborationAnalyticsEvent) -> Dict[str, float]:
-        """Calculate synergy metrics between creators"""
-        # Get individual creator metrics
+        """Calculate synergy metrics between creators"""        # Get individual creator metrics
         primary_metrics = await self._get_creator_individual_metrics(event.primary_creator_id)
         secondary_metrics = await self._get_creator_individual_metrics(event.secondary_creator_id)
         
@@ -484,8 +462,7 @@ class CollaborationPerformanceTracker:
 
 
 class CreatorMatchingEngine:
-    """AI-powered creator matching and compatibility analysis"""
-    
+    """AI-powered creator matching and compatibility analysis"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.compatibility_analyzer = CompatibilityAnalyzer()
@@ -493,8 +470,7 @@ class CreatorMatchingEngine:
         self.matching_model = self._load_matching_model()
         
     def _load_matching_model(self) -> nn.Module:
-        """Load or create the creator matching neural network"""
-        class CreatorMatchingNetwork(nn.Module):
+        """Load or create the creator matching neural network"""        class CreatorMatchingNetwork(nn.Module):
             def __init__(self, input_size=50):
                 super().__init__()
                 self.fc1 = nn.Linear(input_size, 128)
@@ -516,8 +492,7 @@ class CreatorMatchingEngine:
     
     async def find_compatible_creators(self, creator_profile: CreatorProfile, 
                                      limit: int = 10) -> List[CreatorProfile]:
-        """Find compatible creators using ML similarity matching"""
-        # Get all potential creators
+        """Find compatible creators using ML similarity matching"""        # Get all potential creators
         potential_creators = await self._get_potential_creators(creator_profile.creator_id)
         
         # Calculate compatibility scores
@@ -534,8 +509,7 @@ class CreatorMatchingEngine:
     
     async def calculate_compatibility(self, creator1: CreatorProfile, 
                                     creator2: CreatorProfile) -> Dict[str, Any]:
-        """Calculate comprehensive compatibility score between two creators"""
-        # Calculate content compatibility
+        """Calculate comprehensive compatibility score between two creators"""        # Calculate content compatibility
         content_compatibility = await self._calculate_content_compatibility(creator1, creator2)
         
         # Calculate audience compatibility
@@ -601,8 +575,7 @@ class CreatorMatchingEngine:
     
     async def _calculate_content_compatibility(self, creator1: CreatorProfile, 
                                              creator2: CreatorProfile) -> float:
-        """Calculate content compatibility score"""
-        # Category overlap
+        """Calculate content compatibility score"""        # Category overlap
         categories1 = set(creator1.content_categories)
         categories2 = set(creator2.content_categories)
         category_overlap = len(categories1.intersection(categories2)) / len(categories1.union(categories2))
@@ -626,8 +599,7 @@ class CreatorMatchingEngine:
     
     async def _calculate_audience_compatibility(self, creator1: CreatorProfile, 
                                               creator2: CreatorProfile) -> float:
-        """Calculate audience compatibility and cross-pollination potential"""
-        demo1 = creator1.audience_demographics
+        """Calculate audience compatibility and cross-pollination potential"""        demo1 = creator1.audience_demographics
         demo2 = creator2.audience_demographics
         
         # Age group overlap
@@ -658,15 +630,13 @@ class CreatorMatchingEngine:
 
 
 class CollaborationSuccessPredictor:
-    """Predicts collaboration success using ML models"""
-    
+    """Predicts collaboration success using ML models"""    
     def __init__(self):
         self.db_manager = DatabaseManager()
         self.prediction_model = self._load_prediction_model()
         
     def _load_prediction_model(self) -> nn.Module:
-        """Load or create the success prediction neural network"""
-        class SuccessPredictionNetwork(nn.Module):
+        """Load or create the success prediction neural network"""        class SuccessPredictionNetwork(nn.Module):
             def __init__(self, input_size=30):
                 super().__init__()
                 self.fc1 = nn.Linear(input_size, 64)
@@ -689,8 +659,7 @@ class CollaborationSuccessPredictor:
     async def predict_collaboration_success(self, creator1: CreatorProfile, 
                                           creator2: CreatorProfile,
                                           collaboration_type: CollaborationType) -> Dict[str, Any]:
-        """Predict collaboration success probability and expected metrics"""
-        # Create feature vector
+        """Predict collaboration success probability and expected metrics"""        # Create feature vector
         features = await self._create_prediction_features(creator1, creator2, collaboration_type)
         
         # Get ML predictions
@@ -726,8 +695,7 @@ class CollaborationSuccessPredictor:
     async def _create_prediction_features(self, creator1: CreatorProfile, 
                                         creator2: CreatorProfile,
                                         collaboration_type: CollaborationType) -> np.ndarray:
-        """Create feature vector for ML prediction"""
-        features = []
+        """Create feature vector for ML prediction"""        features = []
         
         # Creator tier compatibility
         tier_compatibility = await self._calculate_tier_compatibility(creator1.tier, creator2.tier)

@@ -1,5 +1,4 @@
-"""
-�️ Threat Detection Engine - Ultra-Advanced Enterprise Security Intelligence System
+"""�️ Threat Detection Engine - Ultra-Advanced Enterprise Security Intelligence System
 ==================================================================================
 
 State-of-the-art AI-powered threat detection and security intelligence engine providing:
@@ -27,7 +26,6 @@ UNAUTHORIZED USE IS STRICTLY PROHIBITED:
 Legal violations will result in immediate prosecution under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import logging
 import asyncio
 import hashlib
@@ -45,10 +43,8 @@ import json
 logger = logging.getLogger(__name__)
 
 class ThreatDetectionEngine:
-    """
-    Enterprise-grade threat detection and analysis engine
-    """
-    
+    """    Enterprise-grade threat detection and analysis engine
+    """    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self.threat_signatures = {}
@@ -66,8 +62,7 @@ class ThreatDetectionEngine:
         logger.info("Threat Detection Engine initialized")
     
     def _initialize_detectors(self):
-        """Initialize all threat detection components"""
-        try:
+        """Initialize all threat detection components"""        try:
             # Load YARA rules for malware detection
             self._load_yara_rules()
             
@@ -84,8 +79,7 @@ class ThreatDetectionEngine:
             raise
     
     def _load_yara_rules(self):
-        """Load YARA rules for malware detection"""
-        try:
+        """Load YARA rules for malware detection"""        try:
             rules_path = self.config.get('yara_rules_path', '/rules/malware.yar')
             if os.path.exists(rules_path):
                 self.yara_rules = yara.compile(filepath=rules_path)
@@ -99,9 +93,7 @@ class ThreatDetectionEngine:
             self.yara_rules = None
     
     def _create_default_yara_rules(self):
-        """Create default YARA rules for basic malware detection"""
-        default_rules = """
-        rule SuspiciousExecutable {
+        """Create default YARA rules for basic malware detection"""        default_rules = """        rule SuspiciousExecutable {
             meta:
                 description = "Detects suspicious executable patterns"
                 author = "IA-Influencer-Agent Security Team"
@@ -124,8 +116,7 @@ class ThreatDetectionEngine:
             condition:
                 any of them
         }
-        """
-        
+        """        
         try:
             self.yara_rules = yara.compile(source=default_rules)
             logger.info("Default YARA rules created and loaded")
@@ -134,8 +125,7 @@ class ThreatDetectionEngine:
             self.yara_rules = None
     
     def _initialize_anomaly_detector(self):
-        """Initialize anomaly detection model"""
-        try:
+        """Initialize anomaly detection model"""        try:
             # Load pre-trained model if available
             model_path = self.config.get('anomaly_model_path')
             if model_path and os.path.exists(model_path):
@@ -156,10 +146,8 @@ class ThreatDetectionEngine:
             self.anomaly_detector = None
     
     async def detect_threats(self, content_data: Dict[str, Any], classification: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Main threat detection entry point
-        """
-        try:
+        """        Main threat detection entry point
+        """        try:
             threat_analysis = {
                 'content_id': content_data.get('id'),
                 'timestamp': datetime.utcnow().isoformat(),
@@ -208,8 +196,7 @@ class ThreatDetectionEngine:
             raise
     
     async def _scan_file_threats(self, file_path: str) -> List[Dict[str, Any]]:
-        """Scan file for malware and suspicious patterns"""
-        threats = []
+        """Scan file for malware and suspicious patterns"""        threats = []
         
         try:
             # Calculate file hash
@@ -257,8 +244,7 @@ class ThreatDetectionEngine:
         return threats
     
     async def _analyze_content_threats(self, content_data: Dict[str, Any], classification: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze content for embedded threats"""
-        threats = []
+        """Analyze content for embedded threats"""        threats = []
         
         try:
             content_type = content_data.get('type')
@@ -288,8 +274,7 @@ class ThreatDetectionEngine:
         return threats
     
     async def _detect_behavioral_threats(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect threats based on behavioral patterns"""
-        threats = []
+        """Detect threats based on behavioral patterns"""        threats = []
         
         try:
             # Upload pattern analysis
@@ -312,8 +297,7 @@ class ThreatDetectionEngine:
         return threats
     
     async def _scan_network_threats(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Scan for network-based threats"""
-        threats = []
+        """Scan for network-based threats"""        threats = []
         
         try:
             # IP reputation check
@@ -337,8 +321,7 @@ class ThreatDetectionEngine:
         return threats
     
     async def _calculate_file_hash(self, file_path: str) -> str:
-        """Calculate SHA256 hash of file"""
-        try:
+        """Calculate SHA256 hash of file"""        try:
             hash_sha256 = hashlib.sha256()
             async with aiofiles.open(file_path, 'rb') as f:
                 async for chunk in f:
@@ -349,8 +332,7 @@ class ThreatDetectionEngine:
             return ""
     
     async def _check_malware_hash(self, file_hash: str) -> bool:
-        """Check if file hash matches known malware"""
-        try:
+        """Check if file hash matches known malware"""        try:
             # Check against VirusTotal API
             if 'virustotal_api_key' in self.config:
                 return await self._check_virustotal(file_hash)
@@ -364,8 +346,7 @@ class ThreatDetectionEngine:
             return False
     
     async def _check_virustotal(self, file_hash: str) -> bool:
-        """Check file hash against VirusTotal"""
-        try:
+        """Check file hash against VirusTotal"""        try:
             api_key = self.config.get('virustotal_api_key')
             if not api_key:
                 return False
@@ -387,8 +368,7 @@ class ThreatDetectionEngine:
         return False
     
     async def _scan_text_threats(self, text_content: str) -> List[Dict[str, Any]]:
-        """Scan text content for threats"""
-        threats = []
+        """Scan text content for threats"""        threats = []
         
         # SQL injection patterns
         sql_patterns = [
@@ -430,8 +410,7 @@ class ThreatDetectionEngine:
         return threats
     
     async def _scan_url_threats(self, urls: List[str]) -> List[Dict[str, Any]]:
-        """Scan URLs for threats"""
-        threats = []
+        """Scan URLs for threats"""        threats = []
         
         for url in urls:
             # Check against URL blacklists
@@ -457,8 +436,7 @@ class ThreatDetectionEngine:
         return threats
     
     def _calculate_threat_risk(self, threats: List[Dict[str, Any]]) -> str:
-        """Calculate overall threat risk level"""
-        if not threats:
+        """Calculate overall threat risk level"""        if not threats:
             return 'low'
         
         critical_count = sum(1 for t in threats if t.get('severity') == 'critical')
@@ -474,16 +452,14 @@ class ThreatDetectionEngine:
             return 'low'
     
     def _calculate_confidence(self, threats: List[Dict[str, Any]]) -> float:
-        """Calculate overall confidence score"""
-        if not threats:
+        """Calculate overall confidence score"""        if not threats:
             return 0.0
         
         confidences = [t.get('confidence', 0.0) for t in threats]
         return np.mean(confidences)
     
     async def update_model(self, feedback_data: List[Dict[str, Any]]) -> Dict[str, Any]:
-        """Update threat detection models based on feedback"""
-        try:
+        """Update threat detection models based on feedback"""        try:
             update_results = {
                 'timestamp': datetime.utcnow().isoformat(),
                 'samples_processed': len(feedback_data),
@@ -522,8 +498,7 @@ class ThreatDetectionEngine:
             raise
     
     async def _update_threat_intelligence(self):
-        """Update threat intelligence from external feeds"""
-        try:
+        """Update threat intelligence from external feeds"""        try:
             for feed_url in self.threat_feeds:
                 await self._process_threat_feed(feed_url)
             
@@ -535,53 +510,40 @@ class ThreatDetectionEngine:
     
     # Additional helper methods would be implemented here...
     async def _detect_size_anomaly(self, file_size: int, file_path: str) -> bool:
-        """Detect if file size is anomalous"""
-        return False  # Placeholder
+        """Detect if file size is anomalous"""        return False  # Placeholder
     
     async def _scan_metadata_threats(self, metadata: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Scan metadata for threats"""
-        return []  # Placeholder
+        """Scan metadata for threats"""        return []  # Placeholder
     
     async def _assess_classification_threats(self, classification: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Assess threats based on content classification"""
-        return []  # Placeholder
+        """Assess threats based on content classification"""        return []  # Placeholder
     
     async def _analyze_upload_patterns(self, user_id: str) -> List[Dict[str, Any]]:
-        """Analyze user upload patterns for threats"""
-        return []  # Placeholder
+        """Analyze user upload patterns for threats"""        return []  # Placeholder
     
     async def _analyze_access_patterns(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Analyze access patterns for threats"""
-        return []  # Placeholder
+        """Analyze access patterns for threats"""        return []  # Placeholder
     
     async def _detect_temporal_anomalies(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect temporal anomalies"""
-        return []  # Placeholder
+        """Detect temporal anomalies"""        return []  # Placeholder
     
     async def _check_ip_reputation(self, ip_address: str) -> List[Dict[str, Any]]:
-        """Check IP reputation"""
-        return []  # Placeholder
+        """Check IP reputation"""        return []  # Placeholder
     
     async def _check_domain_reputation(self, domains: List[str]) -> List[Dict[str, Any]]:
-        """Check domain reputation"""
-        return []  # Placeholder
+        """Check domain reputation"""        return []  # Placeholder
     
     async def _detect_geo_threats(self, content_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Detect geography-based threats"""
-        return []  # Placeholder
+        """Detect geography-based threats"""        return []  # Placeholder
     
     async def _check_url_blacklist(self, url: str) -> bool:
-        """Check if URL is in blacklist"""
-        return False  # Placeholder
+        """Check if URL is in blacklist"""        return False  # Placeholder
     
     def _is_suspicious_url(self, url: str) -> bool:
-        """Check if URL has suspicious patterns"""
-        return False  # Placeholder
+        """Check if URL has suspicious patterns"""        return False  # Placeholder
     
     def _extract_features_from_feedback(self, feedback_data: List[Dict[str, Any]]) -> Optional[np.ndarray]:
-        """Extract features from feedback data for model training"""
-        return None  # Placeholder
+        """Extract features from feedback data for model training"""        return None  # Placeholder
     
     async def _process_threat_feed(self, feed_url: str):
-        """Process a threat intelligence feed"""
-        pass  # Placeholder
+        """Process a threat intelligence feed"""        pass  # Placeholder

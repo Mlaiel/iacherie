@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,12 +12,10 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Test Enhanced Performance Optimization
+"""Test Enhanced Performance Optimization
 
 Simple test for the enhanced performance optimization features
 """
-
 import pytest
 import sys
 import os
@@ -37,11 +33,9 @@ from core.enhanced_performance_optimization import (
 
 
 class TestEnhancedPerformanceOptimization:
-    """Test enhanced performance optimization features"""
-    
+    """Test enhanced performance optimization features"""    
     def test_performance_profiler_initialization(self):
-        """Test performance profiler initialization"""
-        config = {
+        """Test performance profiler initialization"""        config = {
             "max_history_size": 500,
             "analysis_window": 600,
             "cpu_threshold": 75.0
@@ -58,8 +52,7 @@ class TestEnhancedPerformanceOptimization:
         assert len(profiler.optimization_recommendations) == 0
     
     def test_profiler_start_stop_cycle(self):
-        """Test profiler start and stop cycle"""
-        profiler = EnhancedPerformanceProfiler()
+        """Test profiler start and stop cycle"""        profiler = EnhancedPerformanceProfiler()
         
         # Test start profiling
         result = profiler.start_profiling()
@@ -89,8 +82,7 @@ class TestEnhancedPerformanceOptimization:
         assert results["total_measurements"] == 5
     
     def test_performance_metrics_recording(self):
-        """Test performance metrics recording"""
-        profiler = EnhancedPerformanceProfiler()
+        """Test performance metrics recording"""        profiler = EnhancedPerformanceProfiler()
         profiler.start_profiling()
         
         # Record metrics with high resource usage
@@ -112,8 +104,7 @@ class TestEnhancedPerformanceOptimization:
         assert latest_metrics.execution_time == 8.0
     
     def test_bottleneck_detection(self):
-        """Test bottleneck detection"""
-        config = {
+        """Test bottleneck detection"""        config = {
             "cpu_threshold": 80.0,
             "memory_threshold": 85.0,
             "execution_time_threshold": 5.0
@@ -145,8 +136,7 @@ class TestEnhancedPerformanceOptimization:
         assert "execution_time_bottleneck" in bottleneck_types
     
     def test_optimization_recommendations(self):
-        """Test optimization recommendations generation"""
-        profiler = EnhancedPerformanceProfiler()
+        """Test optimization recommendations generation"""        profiler = EnhancedPerformanceProfiler()
         profiler.start_profiling()
         
         # Add metrics that should generate optimization recommendations
@@ -180,8 +170,7 @@ class TestEnhancedPerformanceOptimization:
         assert "memory_optimization" in categories
     
     def test_performance_score_calculation(self):
-        """Test performance score calculation"""
-        profiler = EnhancedPerformanceProfiler()
+        """Test performance score calculation"""        profiler = EnhancedPerformanceProfiler()
         profiler.start_profiling()
         
         # Add metrics for good performance
@@ -208,8 +197,7 @@ class TestEnhancedPerformanceOptimization:
         assert score_data["status"] in ["excellent", "good"]
     
     def test_trend_analysis(self):
-        """Test performance trend analysis"""
-        profiler = EnhancedPerformanceProfiler()
+        """Test performance trend analysis"""        profiler = EnhancedPerformanceProfiler()
         profiler.start_profiling()
         
         # Add metrics showing increasing trend
@@ -240,11 +228,9 @@ class TestEnhancedPerformanceOptimization:
 
 
 class TestAdvancedCacheStrategy:
-    """Test advanced cache strategy"""
-    
+    """Test advanced cache strategy"""    
     def test_cache_strategy_initialization(self):
-        """Test cache strategy initialization"""
-        config = {"advanced_features": True}
+        """Test cache strategy initialization"""        config = {"advanced_features": True}
         cache_strategy = AdvancedCacheStrategy(config)
         
         assert cache_strategy.config == config
@@ -258,8 +244,7 @@ class TestAdvancedCacheStrategy:
         assert cache_strategy.cache_metrics["misses"] == 0
     
     def test_cache_strategy_recommendation(self):
-        """Test cache strategy recommendation logic"""
-        cache_strategy = AdvancedCacheStrategy()
+        """Test cache strategy recommendation logic"""        cache_strategy = AdvancedCacheStrategy()
         
         # Test small, high-frequency data (should go to L1)
         strategy1 = cache_strategy.get_cache_strategy("small_hot_data", 512*1024, 150)
@@ -278,8 +263,7 @@ class TestAdvancedCacheStrategy:
         assert strategy3["compression"] is True
     
     def test_cache_performance_analysis(self):
-        """Test cache performance analysis"""
-        cache_strategy = AdvancedCacheStrategy()
+        """Test cache performance analysis"""        cache_strategy = AdvancedCacheStrategy()
         
         # Simulate cache operations
         cache_strategy.cache_metrics = {
@@ -306,11 +290,9 @@ class TestAdvancedCacheStrategy:
 
 
 class TestDatabaseIndexingOptimizer:
-    """Test database indexing optimizer"""
-    
+    """Test database indexing optimizer"""    
     def test_indexing_optimizer_initialization(self):
-        """Test indexing optimizer initialization"""
-        config = {"auto_optimization": True}
+        """Test indexing optimizer initialization"""        config = {"auto_optimization": True}
         optimizer = DatabaseIndexingOptimizer(config)
         
         assert optimizer.config == config
@@ -320,8 +302,7 @@ class TestDatabaseIndexingOptimizer:
         assert "gist" in optimizer.index_types
     
     def test_query_performance_analysis(self):
-        """Test query performance analysis"""
-        optimizer = DatabaseIndexingOptimizer()
+        """Test query performance analysis"""        optimizer = DatabaseIndexingOptimizer()
         
         # Mock slow query performance
         query_stats = {
@@ -361,8 +342,7 @@ class TestDatabaseIndexingOptimizer:
         assert len(analysis["index_recommendations"]) > 0
     
     def test_index_optimization_recommendations(self):
-        """Test index optimization recommendations"""
-        optimizer = DatabaseIndexingOptimizer()
+        """Test index optimization recommendations"""        optimizer = DatabaseIndexingOptimizer()
         
         # Mock existing index statistics
         index_stats = [
@@ -407,11 +387,9 @@ class TestDatabaseIndexingOptimizer:
 
 
 class TestIntegrationScenarios:
-    """Test integration scenarios combining multiple optimization features"""
-    
+    """Test integration scenarios combining multiple optimization features"""    
     def test_comprehensive_performance_optimization_workflow(self):
-        """Test complete performance optimization workflow"""
-        # Step 1: Initialize profiler
+        """Test complete performance optimization workflow"""        # Step 1: Initialize profiler
         profiler = EnhancedPerformanceProfiler({
             "max_history_size": 100,
             "cpu_threshold": 75.0,
@@ -458,8 +436,7 @@ class TestIntegrationScenarios:
         assert performance_score["overall_score"] < 80.0  # Should be degraded
     
     def test_cache_and_database_optimization_integration(self):
-        """Test integration between cache strategy and database optimization"""
-        # Initialize components
+        """Test integration between cache strategy and database optimization"""        # Initialize components
         cache_strategy = AdvancedCacheStrategy()
         db_optimizer = DatabaseIndexingOptimizer()
         

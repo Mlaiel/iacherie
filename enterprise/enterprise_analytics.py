@@ -1,5 +1,4 @@
-"""
-Enterprise Analytics System
+"""Enterprise Analytics System
 ===========================
 
 Advanced enterprise analytics platform with real-time business intelligence,
@@ -14,7 +13,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 import asyncio
 import logging
 import json
@@ -51,8 +49,7 @@ logger = logging.getLogger(__name__)
 
 
 class MetricType(Enum):
-    """Analytics metric types"""
-    COUNTER = "counter"
+    """Analytics metric types"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     RATE = "rate"
@@ -63,8 +60,7 @@ class MetricType(Enum):
 
 
 class DataSource(Enum):
-    """Data source types"""
-    DATABASE = "database"
+    """Data source types"""    DATABASE = "database"
     API = "api"
     FILE = "file"
     STREAM = "stream"
@@ -75,8 +71,7 @@ class DataSource(Enum):
 
 
 class VisualizationType(Enum):
-    """Chart and visualization types"""
-    LINE_CHART = "line_chart"
+    """Chart and visualization types"""    LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
     SCATTER_PLOT = "scatter_plot"
@@ -92,8 +87,7 @@ class VisualizationType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report output formats"""
-    PDF = "pdf"
+    """Report output formats"""    PDF = "pdf"
     EXCEL = "excel"
     CSV = "csv"
     JSON = "json"
@@ -102,8 +96,7 @@ class ReportFormat(Enum):
 
 
 class AggregationMethod(Enum):
-    """Data aggregation methods"""
-    SUM = "sum"
+    """Data aggregation methods"""    SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
     MIN = "min"
@@ -116,8 +109,7 @@ class AggregationMethod(Enum):
 
 @dataclass
 class KPIDefinition:
-    """Key Performance Indicator definition"""
-    kpi_id: str
+    """Key Performance Indicator definition"""    kpi_id: str
     name: str
     description: str
     metric_type: MetricType
@@ -137,8 +129,7 @@ class KPIDefinition:
 
 @dataclass
 class MetricDataPoint:
-    """Single metric data point"""
-    metric_id: str
+    """Single metric data point"""    metric_id: str
     value: Union[float, int]
     timestamp: datetime
     dimensions: Dict[str, str] = field(default_factory=dict)
@@ -146,8 +137,7 @@ class MetricDataPoint:
     tags: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return {
+        """Convert to dictionary"""        return {
             'metric_id': self.metric_id,
             'value': self.value,
             'timestamp': self.timestamp.isoformat(),
@@ -159,8 +149,7 @@ class MetricDataPoint:
 
 @dataclass
 class DashboardWidget:
-    """Dashboard widget configuration"""
-    widget_id: str
+    """Dashboard widget configuration"""    widget_id: str
     title: str
     widget_type: VisualizationType
     kpi_ids: List[str]
@@ -174,8 +163,7 @@ class DashboardWidget:
 
 @dataclass
 class Dashboard:
-    """Analytics dashboard configuration"""
-    dashboard_id: str
+    """Analytics dashboard configuration"""    dashboard_id: str
     name: str
     description: str
     widgets: List[DashboardWidget]
@@ -192,8 +180,7 @@ class Dashboard:
 
 @dataclass
 class ReportTemplate:
-    """Report template configuration"""
-    template_id: str
+    """Report template configuration"""    template_id: str
     name: str
     description: str
     report_type: str
@@ -207,8 +194,7 @@ class ReportTemplate:
 
 
 class DataCollector:
-    """Advanced data collection and ingestion system"""
-    
+    """Advanced data collection and ingestion system"""    
     def __init__(self, config: Dict[str, Any]):
         self.config = config
         self._data_sources: Dict[str, Dict[str, Any]] = {}
@@ -217,8 +203,7 @@ class DataCollector:
         self._elasticsearch: Optional[elasticsearch.AsyncElasticsearch] = None
         
     async def initialize(self):
-        """Initialize data collector"""
-        try:
+        """Initialize data collector"""        try:
             # Initialize Redis for caching
             if 'redis_url' in self.config:
                 self._redis = aioredis.from_url(self.config['redis_url'])
@@ -242,8 +227,7 @@ class DataCollector:
         connection_config: Dict[str, Any],
         collection_config: Dict[str, Any]
     ) -> bool:
-        """Register a new data source"""
-        try:
+        """Register a new data source"""        try:
             self._data_sources[source_id] = {
                 'source_type': source_type,
                 'connection_config': connection_config,
@@ -268,8 +252,7 @@ class DataCollector:
             return False
     
     async def _setup_database_collector(self, source_id: str, connection_config: Dict[str, Any], collection_config: Dict[str, Any]):
-        """Setup database data collector"""
-        try:
+        """Setup database data collector"""        try:
             engine = create_async_engine(connection_config['connection_string'])
             
             async def collect_database_data():
@@ -299,8 +282,7 @@ class DataCollector:
             raise
     
     async def _setup_api_collector(self, source_id: str, connection_config: Dict[str, Any], collection_config: Dict[str, Any]):
-        """Setup API data collector"""
-        try:
+        """Setup API data collector"""        try:
             async def collect_api_data():
                 async with aiohttp.ClientSession() as session:
                     headers = connection_config.get('headers', {})
@@ -336,8 +318,7 @@ class DataCollector:
             raise
     
     async def collect_metrics(self, source_id: Optional[str] = None) -> List[MetricDataPoint]:
-        """Collect metrics from data sources"""
-        try:
+        """Collect metrics from data sources"""        try:
             all_metrics = []
             
             sources_to_collect = [source_id] if source_id else list(self._collectors.keys())
@@ -362,8 +343,7 @@ class DataCollector:
             return []
     
     async def store_metrics(self, metrics: List[MetricDataPoint]) -> bool:
-        """Store metrics in data stores"""
-        try:
+        """Store metrics in data stores"""        try:
             # Store in Redis for real-time access
             if self._redis:
                 for metric in metrics:
@@ -391,8 +371,7 @@ class DataCollector:
 
 
 class KPITracker:
-    """Advanced KPI tracking and calculation system"""
-    
+    """Advanced KPI tracking and calculation system"""    
     def __init__(self, data_collector: DataCollector):
         self.data_collector = data_collector
         self._kpi_definitions: Dict[str, KPIDefinition] = {}
@@ -400,8 +379,7 @@ class KPITracker:
         self._kpi_alerts: Dict[str, List[Dict[str, Any]]] = {}
         
     async def register_kpi(self, kpi_definition: KPIDefinition) -> bool:
-        """Register a new KPI"""
-        try:
+        """Register a new KPI"""        try:
             self._kpi_definitions[kpi_definition.kpi_id] = kpi_definition
             self._kpi_values[kpi_definition.kpi_id] = []
             self._kpi_alerts[kpi_definition.kpi_id] = []
@@ -414,8 +392,7 @@ class KPITracker:
             return False
     
     async def calculate_kpi(self, kpi_id: str, time_range: Optional[Tuple[datetime, datetime]] = None) -> Optional[float]:
-        """Calculate KPI value"""
-        try:
+        """Calculate KPI value"""        try:
             if kpi_id not in self._kpi_definitions:
                 raise ValueError(f"KPI not found: {kpi_id}")
             
@@ -452,8 +429,7 @@ class KPITracker:
             return None
     
     async def _apply_calculation_formula(self, formula: str, values: List[float]) -> float:
-        """Apply calculation formula to values"""
-        try:
+        """Apply calculation formula to values"""        try:
             if formula == "sum":
                 return sum(values)
             elif formula == "average" or formula == "mean":
@@ -481,8 +457,7 @@ class KPITracker:
             return 0.0
     
     async def _check_kpi_alerts(self, kpi_id: str, value: float):
-        """Check KPI value against thresholds and generate alerts"""
-        try:
+        """Check KPI value against thresholds and generate alerts"""        try:
             kpi_def = self._kpi_definitions[kpi_id]
             
             alert_level = None
@@ -508,8 +483,7 @@ class KPITracker:
             logger.error(f"KPI alert check failed: {e}")
     
     async def get_kpi_history(self, kpi_id: str, time_range: Tuple[datetime, datetime]) -> List[Dict[str, Any]]:
-        """Get KPI historical data"""
-        try:
+        """Get KPI historical data"""        try:
             # In real implementation, this would query the data store
             # For now, return recent calculated values
             if kpi_id in self._kpi_values:
@@ -528,8 +502,7 @@ class KPITracker:
             return []
     
     async def get_kpi_alerts(self, kpi_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get KPI alerts"""
-        try:
+        """Get KPI alerts"""        try:
             if kpi_id:
                 return self._kpi_alerts.get(kpi_id, [])
             else:
@@ -544,8 +517,7 @@ class KPITracker:
 
 
 class BusinessIntelligence:
-    """Advanced business intelligence and predictive analytics"""
-    
+    """Advanced business intelligence and predictive analytics"""    
     def __init__(self, data_collector: DataCollector):
         self.data_collector = data_collector
         self._models: Dict[str, Any] = {}
@@ -559,8 +531,7 @@ class BusinessIntelligence:
         target: str,
         training_data: pd.DataFrame
     ) -> bool:
-        """Create predictive analytics model"""
-        try:
+        """Create predictive analytics model"""        try:
             # Prepare data
             X = training_data[features]
             y = training_data[target]
@@ -615,8 +586,7 @@ class BusinessIntelligence:
         input_data: Union[pd.DataFrame, Dict[str, Any]],
         forecast_periods: int = 30
     ) -> Optional[Dict[str, Any]]:
-        """Generate prediction using trained model"""
-        try:
+        """Generate prediction using trained model"""        try:
             if model_id not in self._models:
                 raise ValueError(f"Model not found: {model_id}")
             
@@ -673,8 +643,7 @@ class BusinessIntelligence:
             return None
     
     async def detect_anomalies(self, data: pd.DataFrame, method: str = "isolation_forest") -> Dict[str, Any]:
-        """Detect anomalies in data"""
-        try:
+        """Detect anomalies in data"""        try:
             if method == "isolation_forest":
                 detector = IsolationForest(contamination=0.1, random_state=42)
                 anomaly_scores = detector.fit_predict(data.select_dtypes(include=[np.number]))
@@ -708,8 +677,7 @@ class BusinessIntelligence:
             return {}
     
     async def perform_cohort_analysis(self, data: pd.DataFrame, user_col: str, date_col: str, value_col: str) -> Dict[str, Any]:
-        """Perform cohort analysis"""
-        try:
+        """Perform cohort analysis"""        try:
             # Create cohort analysis
             data[date_col] = pd.to_datetime(data[date_col])
             data['cohort_month'] = data[date_col].dt.to_period('M')
@@ -743,8 +711,7 @@ class BusinessIntelligence:
 
 
 class VisualizationEngine:
-    """Advanced data visualization and charting engine"""
-    
+    """Advanced data visualization and charting engine"""    
     def __init__(self):
         self._chart_templates = {
             VisualizationType.LINE_CHART: self._create_line_chart,
@@ -762,8 +729,7 @@ class VisualizationEngine:
         data: pd.DataFrame,
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Create visualization from data"""
-        try:
+        """Create visualization from data"""        try:
             if chart_type not in self._chart_templates:
                 raise ValueError(f"Unsupported chart type: {chart_type}")
             
@@ -782,8 +748,7 @@ class VisualizationEngine:
             return {}
     
     async def _create_line_chart(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create line chart"""
-        fig = go.Figure()
+        """Create line chart"""        fig = go.Figure()
         
         x_col = config.get('x_column', data.columns[0])
         y_col = config.get('y_column', data.columns[1])
@@ -806,8 +771,7 @@ class VisualizationEngine:
         return fig
     
     async def _create_bar_chart(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create bar chart"""
-        fig = go.Figure()
+        """Create bar chart"""        fig = go.Figure()
         
         x_col = config.get('x_column', data.columns[0])
         y_col = config.get('y_column', data.columns[1])
@@ -829,8 +793,7 @@ class VisualizationEngine:
         return fig
     
     async def _create_pie_chart(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create pie chart"""
-        fig = go.Figure()
+        """Create pie chart"""        fig = go.Figure()
         
         labels_col = config.get('labels_column', data.columns[0])
         values_col = config.get('values_column', data.columns[1])
@@ -849,8 +812,7 @@ class VisualizationEngine:
         return fig
     
     async def _create_scatter_plot(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create scatter plot"""
-        fig = go.Figure()
+        """Create scatter plot"""        fig = go.Figure()
         
         x_col = config.get('x_column', data.columns[0])
         y_col = config.get('y_column', data.columns[1])
@@ -876,8 +838,7 @@ class VisualizationEngine:
         return fig
     
     async def _create_heatmap(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create heatmap"""
-        fig = go.Figure()
+        """Create heatmap"""        fig = go.Figure()
         
         # Assume data is already in matrix form or pivot as needed
         fig.add_trace(go.Heatmap(
@@ -896,8 +857,7 @@ class VisualizationEngine:
         return fig
     
     async def _create_gauge(self, data: pd.DataFrame, config: Dict[str, Any]) -> go.Figure:
-        """Create gauge chart"""
-        fig = go.Figure()
+        """Create gauge chart"""        fig = go.Figure()
         
         value = config.get('value', data.iloc[0, 0] if not data.empty else 0)
         max_value = config.get('max_value', 100)
@@ -926,8 +886,7 @@ class VisualizationEngine:
         return fig
     
     async def _create_kpi_card(self, data: pd.DataFrame, config: Dict[str, Any]) -> Dict[str, Any]:
-        """Create KPI card"""
-        value = config.get('value', data.iloc[0, 0] if not data.empty else 0)
+        """Create KPI card"""        value = config.get('value', data.iloc[0, 0] if not data.empty else 0)
         
         kpi_card = {
             'type': 'kpi_card',
@@ -945,15 +904,13 @@ class VisualizationEngine:
 
 
 class ReportGenerator:
-    """Advanced report generation system"""
-    
+    """Advanced report generation system"""    
     def __init__(self, visualization_engine: VisualizationEngine):
         self.visualization_engine = visualization_engine
         self._report_templates: Dict[str, ReportTemplate] = {}
         
     async def create_report_template(self, template: ReportTemplate) -> bool:
-        """Create report template"""
-        try:
+        """Create report template"""        try:
             self._report_templates[template.template_id] = template
             logger.info(f"Created report template: {template.template_id}")
             return True
@@ -967,8 +924,7 @@ class ReportGenerator:
         data_sources: Dict[str, pd.DataFrame],
         parameters: Optional[Dict[str, Any]] = None
     ) -> Dict[str, Any]:
-        """Generate report from template"""
-        try:
+        """Generate report from template"""        try:
             if template_id not in self._report_templates:
                 raise ValueError(f"Report template not found: {template_id}")
             
@@ -1009,8 +965,7 @@ class ReportGenerator:
         data_sources: Dict[str, pd.DataFrame],
         parameters: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Generate individual report section"""
-        try:
+        """Generate individual report section"""        try:
             section_type = section_config.get('type', 'text')
             
             if section_type == 'visualization':
@@ -1096,8 +1051,7 @@ class ReportGenerator:
 
 
 class EnterpriseAnalytics:
-    """Main enterprise analytics orchestrator"""
-    
+    """Main enterprise analytics orchestrator"""    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         self.config = config or {}
         self.data_collector = DataCollector(self.config)
@@ -1108,8 +1062,7 @@ class EnterpriseAnalytics:
         self._dashboards: Dict[str, Dashboard] = {}
         
     async def initialize(self):
-        """Initialize analytics system"""
-        try:
+        """Initialize analytics system"""        try:
             await self.data_collector.initialize()
             logger.info("Enterprise analytics system initialized")
         except Exception as e:
@@ -1121,8 +1074,7 @@ class EnterpriseAnalytics:
         organization_id: str,
         dashboard_config: Dict[str, Any]
     ) -> str:
-        """Create analytics dashboard"""
-        try:
+        """Create analytics dashboard"""        try:
             dashboard_id = f"dashboard_{uuid.uuid4().hex[:12]}"
             
             # Create widgets
@@ -1161,8 +1113,7 @@ class EnterpriseAnalytics:
             raise
     
     async def get_dashboard_data(self, dashboard_id: str) -> Dict[str, Any]:
-        """Get dashboard data"""
-        try:
+        """Get dashboard data"""        try:
             if dashboard_id not in self._dashboards:
                 raise ValueError(f"Dashboard not found: {dashboard_id}")
             
@@ -1187,8 +1138,7 @@ class EnterpriseAnalytics:
             return {}
     
     async def _get_widget_data(self, widget: DashboardWidget) -> Dict[str, Any]:
-        """Get data for individual widget"""
-        try:
+        """Get data for individual widget"""        try:
             widget_data = {
                 'widget_id': widget.widget_id,
                 'title': widget.title,
@@ -1224,8 +1174,7 @@ class EnterpriseAnalytics:
             }
     
     async def run_analytics_pipeline(self, organization_id: str) -> Dict[str, Any]:
-        """Run complete analytics pipeline"""
-        try:
+        """Run complete analytics pipeline"""        try:
             pipeline_id = f"pipeline_{uuid.uuid4().hex[:12]}"
             
             # Collect metrics
@@ -1271,8 +1220,7 @@ class EnterpriseAnalytics:
             }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for analytics system"""
-        try:
+        """Health check for analytics system"""        try:
             return {
                 'status': 'healthy',
                 'components': {

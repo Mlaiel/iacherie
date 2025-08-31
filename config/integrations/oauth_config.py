@@ -1,5 +1,4 @@
-"""
-OAuth Configuration Module for IA-Influencer Agent Platform
+"""OAuth Configuration Module for IA-Influencer Agent Platform
 ===========================================================
 
 Professional OAuth2 configuration for external service integrations.
@@ -15,7 +14,6 @@ is strictly prohibited and will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import os
 from typing import Dict, Any, Optional, List
 from pydantic import BaseSettings, Field, validator
@@ -23,8 +21,7 @@ from enum import Enum
 
 
 class OAuthProvider(str, Enum):
-    """Supported OAuth providers for content platforms."""
-    SPOTIFY = "spotify"
+    """Supported OAuth providers for content platforms."""    SPOTIFY = "spotify"
     YOUTUBE = "youtube"
     INSTAGRAM = "instagram"
     TIKTOK = "tiktok"
@@ -37,8 +34,7 @@ class OAuthProvider(str, Enum):
 
 
 class OAuthScope(str, Enum):
-    """OAuth scopes for different platform integrations."""
-    # Spotify scopes
+    """OAuth scopes for different platform integrations."""    # Spotify scopes
     SPOTIFY_READ = "user-read-private user-read-email user-library-read"
     SPOTIFY_WRITE = "user-library-modify playlist-modify-public playlist-modify-private"
     SPOTIFY_ADVANCED = "user-read-recently-played user-top-read user-follow-read"
@@ -59,8 +55,7 @@ class OAuthScope(str, Enum):
 
 
 class OAuthConfig(BaseSettings):
-    """OAuth configuration for external service integrations."""
-    
+    """OAuth configuration for external service integrations."""    
     # Spotify OAuth
     spotify_client_id: str = Field(..., env="SPOTIFY_CLIENT_ID")
     spotify_client_secret: str = Field(..., env="SPOTIFY_CLIENT_SECRET")
@@ -137,8 +132,7 @@ class OAuthConfig(BaseSettings):
 
 
 class OAuthEndpoints:
-    """OAuth endpoints configuration for supported platforms."""
-    
+    """OAuth endpoints configuration for supported platforms."""    
     ENDPOINTS = {
         OAuthProvider.SPOTIFY: {
             "authorize": "https://accounts.spotify.com/authorize",
@@ -189,13 +183,11 @@ class OAuthEndpoints:
     
     @classmethod
     def get_endpoints(cls, provider: OAuthProvider) -> Dict[str, str]:
-        """Get OAuth endpoints for a specific provider."""
-        return cls.ENDPOINTS.get(provider, {})
+        """Get OAuth endpoints for a specific provider."""        return cls.ENDPOINTS.get(provider, {})
 
 
 class OAuthManager:
-    """OAuth manager for handling multi-platform authentication."""
-    
+    """OAuth manager for handling multi-platform authentication."""    
     def __init__(self, config: OAuthConfig):
         self.config = config
         
@@ -205,8 +197,7 @@ class OAuthManager:
         state: str,
         scopes: Optional[List[str]] = None
     ) -> str:
-        """Generate authorization URL for OAuth flow."""
-        endpoints = OAuthEndpoints.get_endpoints(provider)
+        """Generate authorization URL for OAuth flow."""        endpoints = OAuthEndpoints.get_endpoints(provider)
         if not endpoints:
             raise ValueError(f"Unsupported OAuth provider: {provider}")
             
@@ -230,8 +221,7 @@ class OAuthManager:
         return f"{endpoints['authorize']}?{query_string}"
     
     def get_provider_config(self, provider: OAuthProvider) -> Dict[str, Any]:
-        """Get complete configuration for a specific provider."""
-        return {
+        """Get complete configuration for a specific provider."""        return {
             "client_id": getattr(self.config, f"{provider}_client_id"),
             "client_secret": getattr(self.config, f"{provider}_client_secret"),
             "redirect_uri": getattr(self.config, f"{provider}_redirect_uri"),
@@ -240,8 +230,7 @@ class OAuthManager:
         }
     
     def validate_provider_config(self, provider: OAuthProvider) -> bool:
-        """Validate that all required configuration is present for a provider."""
-        try:
+        """Validate that all required configuration is present for a provider."""        try:
             config = self.get_provider_config(provider)
             required_fields = ["client_id", "client_secret", "redirect_uri"]
             return all(config.get(field) for field in required_fields)

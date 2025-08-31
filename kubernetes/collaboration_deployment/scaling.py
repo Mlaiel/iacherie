@@ -1,5 +1,4 @@
-"""
-Advanced Collaboration Scaling Management for IA Influencer Agent
+"""Advanced Collaboration Scaling Management for IA Influencer Agent
 ================================================================
 
 This module provides intelligent auto-scaling capabilities for collaboration services,
@@ -28,7 +27,6 @@ Any reproduction, modification, distribution or use without explicit
 written authorization is STRICTLY PROHIBITED and will be subject to 
 legal proceedings under German and international law.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union, Tuple
@@ -46,8 +44,7 @@ logger = logging.getLogger(__name__)
 
 
 class ScalingType(Enum):
-    """Types of scaling operations for IA Influencer Agent services."""
-    HORIZONTAL = "horizontal"
+    """Types of scaling operations for IA Influencer Agent services."""    HORIZONTAL = "horizontal"
     VERTICAL = "vertical" 
     CLUSTER = "cluster"
     CUSTOM_METRICS = "custom_metrics"
@@ -60,8 +57,7 @@ class ScalingType(Enum):
 
 
 class ScalingDirection(Enum):
-    """Direction of scaling operation with advanced states."""
-    SCALE_UP = "scale_up"
+    """Direction of scaling operation with advanced states."""    SCALE_UP = "scale_up"
     SCALE_DOWN = "scale_down"
     MAINTAIN = "maintain"
     EMERGENCY_SCALE = "emergency_scale"
@@ -70,8 +66,7 @@ class ScalingDirection(Enum):
 
 
 class ScalingTrigger(Enum):
-    """Advanced triggers for scaling operations."""
-    CPU_UTILIZATION = "cpu_utilization"
+    """Advanced triggers for scaling operations."""    CPU_UTILIZATION = "cpu_utilization"
     MEMORY_UTILIZATION = "memory_utilization"
     REQUEST_RATE = "request_rate"
     RESPONSE_TIME = "response_time"
@@ -91,8 +86,7 @@ class ScalingTrigger(Enum):
 
 
 class ScalingStrategy(Enum):
-    """Scaling strategies for different scenarios."""
-    REACTIVE = "reactive"
+    """Scaling strategies for different scenarios."""    REACTIVE = "reactive"
     PREDICTIVE = "predictive"
     HYBRID = "hybrid"
     COST_OPTIMIZED = "cost_optimized"
@@ -102,8 +96,7 @@ class ScalingStrategy(Enum):
 
 @dataclass
 class ScalingPolicy:
-    """Comprehensive configuration for scaling policies."""
-    name: str
+    """Comprehensive configuration for scaling policies."""    name: str
     service_name: str
     scaling_type: ScalingType
     trigger: ScalingTrigger
@@ -128,8 +121,7 @@ class ScalingPolicy:
 
 @dataclass
 class ScalingEvent:
-    """Comprehensive record of a scaling event."""
-    event_id: str
+    """Comprehensive record of a scaling event."""    event_id: str
     service_name: str
     scaling_type: ScalingType
     direction: ScalingDirection
@@ -154,8 +146,7 @@ class ScalingEvent:
 
 @dataclass
 class ResourceMetrics:
-    """Comprehensive resource utilization metrics."""
-    cpu_utilization: float
+    """Comprehensive resource utilization metrics."""    cpu_utilization: float
     memory_utilization: float
     network_io: float
     disk_io: float
@@ -178,8 +169,7 @@ class ResourceMetrics:
 
 @dataclass
 class PredictiveModel:
-    """Configuration for ML-based predictive scaling."""
-    model_type: str = "time_series"
+    """Configuration for ML-based predictive scaling."""    model_type: str = "time_series"
     prediction_horizon: int = 3600  # seconds
     confidence_threshold: float = 0.8
     seasonal_patterns: bool = True
@@ -193,8 +183,7 @@ class PredictiveModel:
 
 
 class CollaborationScalingManager:
-    """
-    Advanced scaling management for IA Influencer Agent collaboration services.
+    """    Advanced scaling management for IA Influencer Agent collaboration services.
     
     Provides comprehensive auto-scaling capabilities:
     - Intelligent horizontal and vertical scaling
@@ -208,10 +197,8 @@ class CollaborationScalingManager:
     - Content processing workload optimization
     - AI processing resource allocation
     """
-
     def __init__(self, config: Any):
-        """Initialize the collaboration scaling manager."""
-        self.config = config
+        """Initialize the collaboration scaling manager."""        self.config = config
         
         # Scaling policies and events
         self.scaling_policies: Dict[str, ScalingPolicy] = {}
@@ -241,8 +228,7 @@ class CollaborationScalingManager:
         logger.info("Collaboration scaling manager initialized")
 
     async def start_monitoring(self) -> None:
-        """Start continuous monitoring and scaling."""
-        if self.monitoring_task and not self.monitoring_task.done():
+        """Start continuous monitoring and scaling."""        if self.monitoring_task and not self.monitoring_task.done():
             logger.warning("Monitoring already running")
             return
         
@@ -250,8 +236,7 @@ class CollaborationScalingManager:
         logger.info("Started scaling monitoring")
 
     async def stop_monitoring(self) -> None:
-        """Stop monitoring and scaling operations."""
-        if self.monitoring_task:
+        """Stop monitoring and scaling operations."""        if self.monitoring_task:
             self.monitoring_task.cancel()
             try:
                 await self.monitoring_task
@@ -265,8 +250,7 @@ class CollaborationScalingManager:
         logger.info("Stopped scaling monitoring")
 
     async def add_scaling_policy(self, policy: ScalingPolicy) -> None:
-        """Add a new scaling policy for a service."""
-        self.scaling_policies[policy.service_name] = policy
+        """Add a new scaling policy for a service."""        self.scaling_policies[policy.service_name] = policy
         
         # Initialize metrics history
         if policy.service_name not in self.metrics_history:
@@ -279,8 +263,7 @@ class CollaborationScalingManager:
         logger.info(f"Added scaling policy for service: {policy.service_name}")
 
     async def remove_scaling_policy(self, service_name: str) -> bool:
-        """Remove scaling policy for a service."""
-        if service_name not in self.scaling_policies:
+        """Remove scaling policy for a service."""        if service_name not in self.scaling_policies:
             return False
         
         # Cancel active scaling operations
@@ -297,8 +280,7 @@ class CollaborationScalingManager:
         service_name: str, 
         metrics: ResourceMetrics
     ) -> None:
-        """Update metrics for a service."""
-        with self.metrics_lock:
+        """Update metrics for a service."""        with self.metrics_lock:
             self.service_metrics[service_name] = metrics
             
             # Add to history
@@ -320,8 +302,7 @@ class CollaborationScalingManager:
         target_replicas: int,
         reason: str = "manual"
     ) -> bool:
-        """Manually scale a service to target replicas."""
-        if service_name not in self.scaling_policies:
+        """Manually scale a service to target replicas."""        if service_name not in self.scaling_policies:
             logger.error(f"No scaling policy found for service: {service_name}")
             return False
         
@@ -365,8 +346,7 @@ class CollaborationScalingManager:
         self, 
         service_name: str
     ) -> Dict[str, Any]:
-        """Get scaling recommendations for a service."""
-        if service_name not in self.scaling_policies:
+        """Get scaling recommendations for a service."""        if service_name not in self.scaling_policies:
             return {"error": "No scaling policy found"}
         
         policy = self.scaling_policies[service_name]
@@ -418,8 +398,7 @@ class CollaborationScalingManager:
         service_name: Optional[str] = None,
         days: int = 7
     ) -> List[ScalingEvent]:
-        """Get scaling history for services."""
-        cutoff_time = datetime.utcnow() - timedelta(days=days)
+        """Get scaling history for services."""        cutoff_time = datetime.utcnow() - timedelta(days=days)
         
         events = [
             event for event in self.scaling_events
@@ -432,8 +411,7 @@ class CollaborationScalingManager:
         return sorted(events, key=lambda x: x.timestamp, reverse=True)
 
     async def get_metrics_summary(self, service_name: str) -> Dict[str, Any]:
-        """Get comprehensive metrics summary for a service."""
-        if service_name not in self.metrics_history:
+        """Get comprehensive metrics summary for a service."""        if service_name not in self.metrics_history:
             return {"error": "No metrics history found"}
         
         history = self.metrics_history[service_name]
@@ -491,8 +469,7 @@ class CollaborationScalingManager:
         service_name: str, 
         model_config: PredictiveModel
     ) -> bool:
-        """Configure predictive scaling for a service."""
-        try:
+        """Configure predictive scaling for a service."""        try:
             self.predictive_models[service_name] = model_config
             
             # Train initial model if enough data
@@ -509,8 +486,7 @@ class CollaborationScalingManager:
     # Private implementation methods
 
     async def _monitoring_loop(self) -> None:
-        """Main monitoring loop for scaling decisions."""
-        while True:
+        """Main monitoring loop for scaling decisions."""        while True:
             try:
                 await self._evaluate_all_services()
                 await asyncio.sleep(self.monitoring_interval)
@@ -521,8 +497,7 @@ class CollaborationScalingManager:
                 await asyncio.sleep(self.monitoring_interval)
 
     async def _evaluate_all_services(self) -> None:
-        """Evaluate scaling needs for all services."""
-        for service_name, policy in self.scaling_policies.items():
+        """Evaluate scaling needs for all services."""        for service_name, policy in self.scaling_policies.items():
             if not policy.enabled:
                 continue
             
@@ -575,8 +550,7 @@ class CollaborationScalingManager:
         metrics: ResourceMetrics, 
         policy: ScalingPolicy
     ) -> Dict[str, Any]:
-        """Analyze metrics and determine scaling needs."""
-        current_replicas = await self._get_current_replicas(service_name)
+        """Analyze metrics and determine scaling needs."""        current_replicas = await self._get_current_replicas(service_name)
         
         analysis = {
             "scaling_needed": False,
@@ -656,8 +630,7 @@ class CollaborationScalingManager:
         return analysis
 
     async def _execute_scaling(self, event: ScalingEvent, reason: str) -> bool:
-        """Execute the scaling operation."""
-        start_time = datetime.utcnow()
+        """Execute the scaling operation."""        start_time = datetime.utcnow()
         
         try:
             logger.info(f"Executing scaling for {event.service_name}: {event.old_replicas} -> {event.new_replicas} ({reason})")
@@ -698,21 +671,18 @@ class CollaborationScalingManager:
         return event.success
 
     async def _perform_scaling_operation(self, event: ScalingEvent) -> bool:
-        """Perform the actual scaling operation."""
-        # This would integrate with the actual orchestration platform
+        """Perform the actual scaling operation."""        # This would integrate with the actual orchestration platform
         # For now, we simulate the operation
         await asyncio.sleep(5)  # Simulate scaling time
         return True
 
     async def _get_current_replicas(self, service_name: str) -> int:
-        """Get current number of replicas for a service."""
-        # This would query the actual orchestration platform
+        """Get current number of replicas for a service."""        # This would query the actual orchestration platform
         # For now, return a default value
         return 3
 
     async def _get_current_service_state(self, service_name: str) -> Dict[str, Any]:
-        """Get current state of a service."""
-        current_replicas = await self._get_current_replicas(service_name)
+        """Get current state of a service."""        current_replicas = await self._get_current_replicas(service_name)
         current_metrics = self.service_metrics.get(service_name)
         
         return {
@@ -722,8 +692,7 @@ class CollaborationScalingManager:
         }
 
     async def _is_in_cooldown(self, service_name: str, direction: ScalingDirection) -> bool:
-        """Check if service is in cooldown period."""
-        policy = self.scaling_policies[service_name]
+        """Check if service is in cooldown period."""        policy = self.scaling_policies[service_name]
         
         # Get last scaling event for this service
         recent_events = [
@@ -747,15 +716,13 @@ class CollaborationScalingManager:
         return time_since_last < cooldown
 
     async def _setup_predictive_model(self, policy: ScalingPolicy) -> None:
-        """Setup predictive model for a service."""
-        if policy.service_name not in self.predictive_models:
+        """Setup predictive model for a service."""        if policy.service_name not in self.predictive_models:
             self.predictive_models[policy.service_name] = PredictiveModel()
         
         logger.info(f"Setup predictive model for service: {policy.service_name}")
 
     async def _get_predictive_recommendations(self, service_name: str) -> Dict[str, Any]:
-        """Get predictive scaling recommendations."""
-        if service_name not in self.predictive_models:
+        """Get predictive scaling recommendations."""        if service_name not in self.predictive_models:
             return {}
         
         # This would use actual ML models for prediction
@@ -773,8 +740,7 @@ class CollaborationScalingManager:
         }
 
     async def _analyze_cost_impact(self, service_name: str) -> Dict[str, Any]:
-        """Analyze cost impact of scaling decisions."""
-        current_metrics = self.service_metrics.get(service_name)
+        """Analyze cost impact of scaling decisions."""        current_metrics = self.service_metrics.get(service_name)
         current_replicas = await self._get_current_replicas(service_name)
         
         if not current_metrics:
@@ -792,8 +758,7 @@ class CollaborationScalingManager:
         }
 
     async def _analyze_performance_impact(self, service_name: str) -> Dict[str, Any]:
-        """Analyze performance impact of scaling decisions."""
-        current_metrics = self.service_metrics.get(service_name)
+        """Analyze performance impact of scaling decisions."""        current_metrics = self.service_metrics.get(service_name)
         
         if not current_metrics:
             return {}
@@ -815,8 +780,7 @@ class CollaborationScalingManager:
         }
 
     async def _has_sufficient_training_data(self, service_name: str) -> bool:
-        """Check if there's sufficient data for ML model training."""
-        if service_name not in self.metrics_history:
+        """Check if there's sufficient data for ML model training."""        if service_name not in self.metrics_history:
             return False
         
         history = self.metrics_history[service_name]
@@ -825,8 +789,7 @@ class CollaborationScalingManager:
         return len(history) >= 1440
 
     async def _train_predictive_model(self, service_name: str) -> None:
-        """Train predictive model for a service."""
-        logger.info(f"Training predictive model for service: {service_name}")
+        """Train predictive model for a service."""        logger.info(f"Training predictive model for service: {service_name}")
         
         # This would implement actual ML model training
         # For now, just log the action
@@ -834,8 +797,7 @@ class CollaborationScalingManager:
 
 
 class CollaborationScalingManager:
-    """
-    Advanced scaling manager for collaboration services.
+    """    Advanced scaling manager for collaboration services.
     
     Provides intelligent auto-scaling capabilities including:
     - Horizontal Pod Autoscaling (HPA)
@@ -843,11 +805,9 @@ class CollaborationScalingManager:
     - Cluster Autoscaling
     - Custom metrics-based scaling
     - Predictive scaling using ML
-    """
-    
+    """    
     def __init__(self, deployment_config):
-        """Initialize scaling manager."""
-        self.deployment_config = deployment_config
+        """Initialize scaling manager."""        self.deployment_config = deployment_config
         self.scaling_policies: Dict[str, ScalingPolicy] = {}
         self.scaling_events: List[ScalingEvent] = []
         self.current_metrics: Dict[str, ResourceMetrics] = {}
@@ -859,8 +819,7 @@ class CollaborationScalingManager:
         logger.info("CollaborationScalingManager initialized")
     
     def _initialize_default_policies(self) -> None:
-        """Initialize default scaling policies for collaboration services."""
-        default_policies = {
+        """Initialize default scaling policies for collaboration services."""        default_policies = {
             "collaboration_api_gateway_cpu": ScalingPolicy(
                 name="api_gateway_cpu_scaling",
                 service_name="collaboration-api-gateway",
@@ -940,8 +899,7 @@ class CollaborationScalingManager:
         self.scaling_policies.update(default_policies)
     
     async def configure_horizontal_scaling(self) -> Dict[str, Any]:
-        """Configure Horizontal Pod Autoscaling (HPA) for services."""
-        logger.info("Configuring horizontal pod autoscaling")
+        """Configure Horizontal Pod Autoscaling (HPA) for services."""        logger.info("Configuring horizontal pod autoscaling")
         
         hpa_configs = {}
         
@@ -957,8 +915,7 @@ class CollaborationScalingManager:
         return {"hpa_configs": hpa_configs, "status": "configured"}
     
     async def configure_vertical_scaling(self) -> Dict[str, Any]:
-        """Configure Vertical Pod Autoscaling (VPA) for services."""
-        logger.info("Configuring vertical pod autoscaling")
+        """Configure Vertical Pod Autoscaling (VPA) for services."""        logger.info("Configuring vertical pod autoscaling")
         
         vpa_configs = {}
         
@@ -974,8 +931,7 @@ class CollaborationScalingManager:
         return {"vpa_configs": vpa_configs, "status": "configured"}
     
     async def configure_cluster_scaling(self) -> Dict[str, Any]:
-        """Configure cluster-level autoscaling."""
-        logger.info("Configuring cluster autoscaling")
+        """Configure cluster-level autoscaling."""        logger.info("Configuring cluster autoscaling")
         
         cluster_config = {
             "enabled": True,
@@ -1014,8 +970,7 @@ class CollaborationScalingManager:
         return {"cluster_config": cluster_config, "status": "configured"}
     
     async def configure_custom_metrics_scaling(self) -> Dict[str, Any]:
-        """Configure custom metrics-based scaling."""
-        logger.info("Configuring custom metrics scaling")
+        """Configure custom metrics-based scaling."""        logger.info("Configuring custom metrics scaling")
         
         custom_metrics_configs = {}
         
@@ -1031,8 +986,7 @@ class CollaborationScalingManager:
         return {"custom_configs": custom_metrics_configs, "status": "configured"}
     
     async def _create_hpa_config(self, policy: ScalingPolicy) -> Dict[str, Any]:
-        """Create HPA configuration for a scaling policy."""
-        metrics = []
+        """Create HPA configuration for a scaling policy."""        metrics = []
         
         if policy.trigger == ScalingTrigger.CPU_UTILIZATION:
             metrics.append({
@@ -1114,8 +1068,7 @@ class CollaborationScalingManager:
         }
     
     async def _create_vpa_config(self, policy: ScalingPolicy) -> Dict[str, Any]:
-        """Create VPA configuration for a scaling policy."""
-        return {
+        """Create VPA configuration for a scaling policy."""        return {
             "apiVersion": "autoscaling.k8s.io/v1",
             "kind": "VerticalPodAutoscaler",
             "metadata": {
@@ -1151,8 +1104,7 @@ class CollaborationScalingManager:
         }
     
     async def _create_custom_metrics_config(self, policy: ScalingPolicy) -> Dict[str, Any]:
-        """Create custom metrics configuration."""
-        return {
+        """Create custom metrics configuration."""        return {
             "name": policy.custom_metrics.get("metric_name"),
             "query": f'avg_over_time({policy.custom_metrics.get("metric_name")}[{policy.custom_metrics.get("window", "5m")}])',
             "threshold": policy.threshold_up,
@@ -1161,36 +1113,31 @@ class CollaborationScalingManager:
         }
     
     async def _apply_hpa_config(self, service_name: str, config: Dict[str, Any]) -> None:
-        """Apply HPA configuration to Kubernetes."""
-        logger.info(f"Applying HPA configuration for {service_name}")
+        """Apply HPA configuration to Kubernetes."""        logger.info(f"Applying HPA configuration for {service_name}")
         # Simulate applying HPA config
         await asyncio.sleep(1)
         logger.info(f"HPA applied for {service_name}")
     
     async def _apply_vpa_config(self, service_name: str, config: Dict[str, Any]) -> None:
-        """Apply VPA configuration to Kubernetes."""
-        logger.info(f"Applying VPA configuration for {service_name}")
+        """Apply VPA configuration to Kubernetes."""        logger.info(f"Applying VPA configuration for {service_name}")
         # Simulate applying VPA config
         await asyncio.sleep(1)
         logger.info(f"VPA applied for {service_name}")
     
     async def _apply_cluster_autoscaling(self, config: Dict[str, Any]) -> None:
-        """Apply cluster autoscaling configuration."""
-        logger.info("Applying cluster autoscaling configuration")
+        """Apply cluster autoscaling configuration."""        logger.info("Applying cluster autoscaling configuration")
         # Simulate applying cluster config
         await asyncio.sleep(2)
         logger.info("Cluster autoscaling applied")
     
     async def _apply_custom_metrics_config(self, service_name: str, config: Dict[str, Any]) -> None:
-        """Apply custom metrics configuration."""
-        logger.info(f"Applying custom metrics configuration for {service_name}")
+        """Apply custom metrics configuration."""        logger.info(f"Applying custom metrics configuration for {service_name}")
         # Simulate applying custom metrics config
         await asyncio.sleep(1)
         logger.info(f"Custom metrics applied for {service_name}")
     
     async def scale_services(self, scale_config: Dict[str, Any]) -> Dict[str, Any]:
-        """Manually scale services based on configuration."""
-        logger.info("Manually scaling services")
+        """Manually scale services based on configuration."""        logger.info("Manually scaling services")
         
         scaling_results = {}
         
@@ -1233,13 +1180,11 @@ class CollaborationScalingManager:
         return scaling_results
     
     async def _get_current_replicas(self, service_name: str) -> int:
-        """Get current replica count for a service."""
-        # Simulate getting current replicas
+        """Get current replica count for a service."""        # Simulate getting current replicas
         return 3  # Default replica count
     
     async def _scale_service(self, service_name: str, current_replicas: int, target_replicas: int) -> Dict[str, Any]:
-        """Scale a service to target replica count."""
-        logger.info(f"Scaling {service_name} from {current_replicas} to {target_replicas} replicas")
+        """Scale a service to target replica count."""        logger.info(f"Scaling {service_name} from {current_replicas} to {target_replicas} replicas")
         
         try:
             # Simulate scaling operation
@@ -1260,8 +1205,7 @@ class CollaborationScalingManager:
             }
     
     async def monitor_and_scale(self) -> None:
-        """Continuously monitor metrics and trigger scaling actions."""
-        logger.info("Starting automatic scaling monitoring")
+        """Continuously monitor metrics and trigger scaling actions."""        logger.info("Starting automatic scaling monitoring")
         
         while True:
             try:
@@ -1283,8 +1227,7 @@ class CollaborationScalingManager:
                 await asyncio.sleep(30)  # Shorter wait on error
     
     async def _collect_service_metrics(self) -> None:
-        """Collect current metrics for all services."""
-        # Simulate metric collection
+        """Collect current metrics for all services."""        # Simulate metric collection
         services = [
             "collaboration-api-gateway",
             "collaboration-matching-service",
@@ -1310,8 +1253,7 @@ class CollaborationScalingManager:
             self.current_metrics[service] = metrics
     
     async def _evaluate_scaling_policies(self) -> List[Dict[str, Any]]:
-        """Evaluate all scaling policies against current metrics."""
-        scaling_decisions = []
+        """Evaluate all scaling policies against current metrics."""        scaling_decisions = []
         
         for policy_name, policy in self.scaling_policies.items():
             if not policy.enabled:
@@ -1328,8 +1270,7 @@ class CollaborationScalingManager:
         return scaling_decisions
     
     async def _evaluate_single_policy(self, policy: ScalingPolicy, metrics: ResourceMetrics) -> Optional[Dict[str, Any]]:
-        """Evaluate a single scaling policy."""
-        # Get metric value based on trigger type
+        """Evaluate a single scaling policy."""        # Get metric value based on trigger type
         metric_value = self._get_metric_value(policy.trigger, metrics)
         
         # Determine scaling direction
@@ -1352,8 +1293,7 @@ class CollaborationScalingManager:
         }
     
     def _get_metric_value(self, trigger: ScalingTrigger, metrics: ResourceMetrics) -> float:
-        """Get metric value based on trigger type."""
-        metric_map = {
+        """Get metric value based on trigger type."""        metric_map = {
             ScalingTrigger.CPU_UTILIZATION: metrics.cpu_utilization,
             ScalingTrigger.MEMORY_UTILIZATION: metrics.memory_utilization,
             ScalingTrigger.REQUEST_RATE: metrics.request_rate,
@@ -1364,8 +1304,7 @@ class CollaborationScalingManager:
         return metric_map.get(trigger, 0.0)
     
     async def _check_cooldown(self, policy: ScalingPolicy, direction: ScalingDirection) -> bool:
-        """Check if scaling action is allowed based on cooldown period."""
-        cooldown_seconds = (
+        """Check if scaling action is allowed based on cooldown period."""        cooldown_seconds = (
             policy.scale_up_cooldown if direction == ScalingDirection.SCALE_UP 
             else policy.scale_down_cooldown
         )
@@ -1382,8 +1321,7 @@ class CollaborationScalingManager:
         return True
     
     async def _execute_scaling_decision(self, decision: Dict[str, Any]) -> None:
-        """Execute a scaling decision."""
-        policy = decision["policy"]
+        """Execute a scaling decision."""        policy = decision["policy"]
         direction = decision["direction"]
         
         logger.info(f"Executing scaling decision for {policy.service_name}: {direction.value}")
@@ -1433,8 +1371,7 @@ class CollaborationScalingManager:
             logger.error(f"Failed to execute scaling decision: {e}")
     
     async def get_scaling_history(self, service_name: Optional[str] = None) -> List[Dict[str, Any]]:
-        """Get scaling history for services."""
-        events = self.scaling_events
+        """Get scaling history for services."""        events = self.scaling_events
         
         if service_name:
             events = [e for e in events if e.service_name == service_name]
@@ -1459,8 +1396,7 @@ class CollaborationScalingManager:
         ]
     
     async def get_current_scaling_status(self) -> Dict[str, Any]:
-        """Get current scaling status for all services."""
-        status = {}
+        """Get current scaling status for all services."""        status = {}
         
         for service_name, metrics in self.current_metrics.items():
             # Get active policies for this service
@@ -1485,8 +1421,7 @@ class CollaborationScalingManager:
         return status
     
     def _get_last_scaling_event(self, service_name: str) -> Optional[Dict[str, Any]]:
-        """Get the last scaling event for a service."""
-        for event in reversed(self.scaling_events):
+        """Get the last scaling event for a service."""        for event in reversed(self.scaling_events):
             if event.service_name == service_name:
                 return {
                     "timestamp": event.timestamp.isoformat(),
@@ -1497,21 +1432,18 @@ class CollaborationScalingManager:
         return None
     
     def add_scaling_policy(self, policy: ScalingPolicy) -> None:
-        """Add a new scaling policy."""
-        self.scaling_policies[policy.name] = policy
+        """Add a new scaling policy."""        self.scaling_policies[policy.name] = policy
         logger.info(f"Added scaling policy: {policy.name}")
     
     def remove_scaling_policy(self, policy_name: str) -> bool:
-        """Remove a scaling policy."""
-        if policy_name in self.scaling_policies:
+        """Remove a scaling policy."""        if policy_name in self.scaling_policies:
             del self.scaling_policies[policy_name]
             logger.info(f"Removed scaling policy: {policy_name}")
             return True
         return False
     
     def update_scaling_policy(self, policy_name: str, updates: Dict[str, Any]) -> bool:
-        """Update an existing scaling policy."""
-        if policy_name in self.scaling_policies:
+        """Update an existing scaling policy."""        if policy_name in self.scaling_policies:
             policy = self.scaling_policies[policy_name]
             
             for key, value in updates.items():

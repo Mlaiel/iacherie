@@ -24,8 +24,7 @@ Toute violation entraînera des poursuites judiciaires immédiates selon :
 
 📧 Contact autorisé : mlaiel@live.de
 📅 Copyright 2025 - Tous droits réservés
-"""
-__version__ = "1.0.0"
+"""__version__ = "1.0.0"
 __author__ = "Fahed Mlaiel"
 __email__ = "mlaiel@live.de"
 

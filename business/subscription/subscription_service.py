@@ -1,5 +1,4 @@
-"""
-Subscription Service
+"""Subscription Service
 
 Core subscription management service providing comprehensive subscription lifecycle management.
 Handles plan subscriptions, upgrades, downgrades, cancellations, and feature access control.
@@ -9,7 +8,6 @@ Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 
 WARNING: Proprietary code - Unauthorized use strictly prohibited.
 """
-
 from datetime import datetime, timedelta
 from decimal import Decimal
 from typing import Optional, Dict, Any, List, Tuple
@@ -34,8 +32,7 @@ logger = get_logger(__name__)
 
 
 class SubscriptionService:
-    """
-    Comprehensive subscription management service.
+    """    Comprehensive subscription management service.
     
     Provides complete subscription lifecycle management including:
     - Plan creation and management
@@ -43,19 +40,16 @@ class SubscriptionService:
     - Feature access control
     - Usage tracking and limits
     - Billing and payment integration
-    """
-    
+    """    
     def __init__(self):
-        """Initialize subscription service."""
-        self.logger = logging.getLogger(__name__)
+        """Initialize subscription service."""        self.logger = logging.getLogger(__name__)
     
     async def create_subscription_plan(
         self, 
         plan_config: SubscriptionPlanConfig,
         db: Session = None
     ) -> SubscriptionPlan:
-        """
-        Create a new subscription plan.
+        """        Create a new subscription plan.
         
         Args:
             plan_config: Plan configuration
@@ -66,8 +60,7 @@ class SubscriptionService:
             
         Raises:
             ValidationError: If plan configuration is invalid
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -120,8 +113,7 @@ class SubscriptionService:
         trial_days: Optional[int] = None,
         db: Session = None
     ) -> UserSubscription:
-        """
-        Subscribe user to a plan.
+        """        Subscribe user to a plan.
         
         Args:
             user_id: User ID
@@ -136,8 +128,7 @@ class SubscriptionService:
             
         Raises:
             SubscriptionError: If subscription creation fails
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -217,8 +208,7 @@ class SubscriptionService:
         user_id: int, 
         db: Session = None
     ) -> Optional[UserSubscription]:
-        """
-        Get active subscription for user.
+        """        Get active subscription for user.
         
         Args:
             user_id: User ID
@@ -226,8 +216,7 @@ class SubscriptionService:
             
         Returns:
             Active subscription or None
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         return db.query(UserSubscription).filter(
@@ -244,8 +233,7 @@ class SubscriptionService:
         include_inactive: bool = False,
         db: Session = None
     ) -> List[SubscriptionPlan]:
-        """
-        Get all available subscription plans.
+        """        Get all available subscription plans.
         
         Args:
             include_inactive: Include inactive plans
@@ -253,8 +241,7 @@ class SubscriptionService:
             
         Returns:
             List of subscription plans
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         query = db.query(SubscriptionPlan)
@@ -270,8 +257,7 @@ class SubscriptionService:
         proration: bool = True,
         db: Session = None
     ) -> UserSubscription:
-        """
-        Upgrade user subscription to higher tier.
+        """        Upgrade user subscription to higher tier.
         
         Args:
             user_id: User ID
@@ -284,8 +270,7 @@ class SubscriptionService:
             
         Raises:
             SubscriptionError: If upgrade fails
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -360,8 +345,7 @@ class SubscriptionService:
         effective_date: Optional[datetime] = None,
         db: Session = None
     ) -> UserSubscription:
-        """
-        Downgrade user subscription to lower tier.
+        """        Downgrade user subscription to lower tier.
         
         Args:
             user_id: User ID
@@ -374,8 +358,7 @@ class SubscriptionService:
             
         Raises:
             SubscriptionError: If downgrade fails
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -450,8 +433,7 @@ class SubscriptionService:
         immediate: bool = False,
         db: Session = None
     ) -> UserSubscription:
-        """
-        Cancel user subscription.
+        """        Cancel user subscription.
         
         Args:
             user_id: User ID
@@ -464,8 +446,7 @@ class SubscriptionService:
             
         Raises:
             SubscriptionError: If cancellation fails
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -509,8 +490,7 @@ class SubscriptionService:
         payment_method_id: str,
         db: Session = None
     ) -> UserSubscription:
-        """
-        Reactivate cancelled subscription.
+        """        Reactivate cancelled subscription.
         
         Args:
             user_id: User ID
@@ -522,8 +502,7 @@ class SubscriptionService:
             
         Raises:
             SubscriptionError: If reactivation fails
-        """
-        if not db:
+        """        if not db:
             db = get_db_session()
         
         try:
@@ -578,8 +557,7 @@ class SubscriptionService:
     # Private helper methods
     
     async def _validate_plan_config(self, config: SubscriptionPlanConfig) -> None:
-        """Validate subscription plan configuration."""
-        if not config.name or not config.display_name:
+        """Validate subscription plan configuration."""        if not config.name or not config.display_name:
             raise ValidationError("Plan name and display name are required")
         
         if config.tier_level < 0:
@@ -596,14 +574,12 @@ class SubscriptionService:
         plan: SubscriptionPlan, 
         db: Session
     ) -> None:
-        """Create feature access entries for subscription plan."""
-        # This would create FeatureAccess entries based on plan configuration
+        """Create feature access entries for subscription plan."""        # This would create FeatureAccess entries based on plan configuration
         # Implementation depends on specific feature definitions
         pass
     
     def _generate_subscription_id(self) -> str:
-        """Generate unique subscription ID."""
-        import uuid
+        """Generate unique subscription ID."""        import uuid
         return f"sub_{uuid.uuid4().hex[:12]}"
     
     async def _initialize_usage_metrics(
@@ -611,8 +587,7 @@ class SubscriptionService:
         subscription: UserSubscription, 
         db: Session
     ) -> None:
-        """Initialize usage metrics for new subscription."""
-        plan = subscription.plan
+        """Initialize usage metrics for new subscription."""        plan = subscription.plan
         current_time = datetime.utcnow()
         
         # Calculate period based on billing cycle
@@ -646,8 +621,7 @@ class SubscriptionService:
         subscription: UserSubscription, 
         db: Session
     ) -> None:
-        """Update usage metrics when plan changes."""
-        # Update quota limits based on new plan
+        """Update usage metrics when plan changes."""        # Update quota limits based on new plan
         new_plan = subscription.plan
         
         # Get current usage metrics
@@ -676,8 +650,7 @@ class SubscriptionService:
         triggered_by: str,
         db: Session
     ) -> None:
-        """Record subscription change in history."""
-        history = SubscriptionHistory(
+        """Record subscription change in history."""        history = SubscriptionHistory(
             user_id=user_id,
             subscription_id=subscription_id,
             action_type=action_type,
@@ -697,8 +670,7 @@ class SubscriptionService:
         new_plan: SubscriptionPlan, 
         db: Session
     ) -> Decimal:
-        """Calculate proration amount for plan change."""
-        # Implementation would calculate pro-rated amount
+        """Calculate proration amount for plan change."""        # Implementation would calculate pro-rated amount
         # based on remaining time in current billing cycle
         # and price difference between plans
         return Decimal('0.00')  # Placeholder
@@ -709,8 +681,7 @@ class SubscriptionService:
         proration_amount: Decimal, 
         db: Session
     ) -> None:
-        """Create billing cycle entry for proration."""
-        billing_cycle = BillingCycle(
+        """Create billing cycle entry for proration."""        billing_cycle = BillingCycle(
             subscription_id=subscription.id,
             cycle_start=datetime.utcnow(),
             cycle_end=datetime.utcnow(),
@@ -724,8 +695,7 @@ class SubscriptionService:
 
 
 async def initialize_default_plans(db: Session = None) -> None:
-    """Initialize default subscription plans."""
-    if not db:
+    """Initialize default subscription plans."""    if not db:
         db = get_db_session()
     
     service = SubscriptionService()

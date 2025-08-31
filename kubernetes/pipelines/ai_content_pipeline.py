@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - AI Content Processing Pipeline System
+"""IA Influencer Agent - AI Content Processing Pipeline System
 Enterprise-Grade AI Content Processing & Generation Pipeline Management
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -19,7 +18,6 @@ Features:
 WARNING: This code is proprietary and confidential. Any unauthorized use, copying, or distribution
 is strictly prohibited and will result in legal action under German and international law.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -35,8 +33,7 @@ from . import PipelineStatus, Environment, PipelineType, PipelineConfig
 from .pipeline_manager import PipelineStep, PipelineExecution, AdvancedPipelineManager
 
 class ContentFormat(Enum):
-    """Content format enumeration for AI processing"""
-    AUDIO = "audio"
+    """Content format enumeration for AI processing"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -46,8 +43,7 @@ class ContentFormat(Enum):
     SHORT_FORM = "short_form"
 
 class AIModelType(Enum):
-    """AI model type classifications"""
-    TRANSFORMER = "transformer"
+    """AI model type classifications"""    TRANSFORMER = "transformer"
     DIFFUSION = "diffusion"
     GENERATIVE_ADVERSARIAL = "gan"
     CONVOLUTIONAL = "cnn"
@@ -57,8 +53,7 @@ class AIModelType(Enum):
     VISION_LANGUAGE = "vlm"
 
 class ProcessingTask(Enum):
-    """AI processing task types"""
-    CONTENT_ANALYSIS = "content_analysis"
+    """AI processing task types"""    CONTENT_ANALYSIS = "content_analysis"
     CONTENT_GENERATION = "content_generation"
     CONTENT_ENHANCEMENT = "content_enhancement"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -71,8 +66,7 @@ class ProcessingTask(Enum):
 
 @dataclass
 class AIProcessingRequest:
-    """AI processing request data structure"""
-    request_id: str
+    """AI processing request data structure"""    request_id: str
     owner_id: str
     content_id: str
     content_format: ContentFormat
@@ -85,8 +79,7 @@ class AIProcessingRequest:
 
 @dataclass
 class AIProcessingResult:
-    """AI processing result data structure"""
-    result_id: str
+    """AI processing result data structure"""    result_id: str
     request_id: str
     processing_task: ProcessingTask
     ai_model: AIModelType
@@ -97,8 +90,7 @@ class AIProcessingResult:
     completed_at: datetime
 
 class AIContentProcessingPipelineManager:
-    """
-    Advanced AI Content Processing Pipeline Management System
+    """    Advanced AI Content Processing Pipeline Management System
     
     Provides enterprise-grade AI content processing workflows with:
     - Multi-format content analysis and processing
@@ -107,8 +99,7 @@ class AIContentProcessingPipelineManager:
     - SEO optimization and metadata generation
     - Quality assessment and improvement workflows
     - Real-time content processing pipelines
-    """
-    
+    """    
     def __init__(self, base_pipeline_manager: AdvancedPipelineManager,
                  storage_path: Optional[Path] = None,
                  model_cache_path: Optional[Path] = None):
@@ -130,8 +121,7 @@ class AIContentProcessingPipelineManager:
         self._register_ai_processing_pipelines()
         
     def _register_ai_processing_pipelines(self):
-        """Register AI content processing pipeline configurations"""
-        # Audio processing pipeline
+        """Register AI content processing pipeline configurations"""        # Audio processing pipeline
         audio_processing_config = PipelineConfig(
             name="ai-audio-processing",
             environment=Environment.PRODUCTION,
@@ -280,8 +270,7 @@ class AIContentProcessingPipelineManager:
                             ai_models: Optional[List[AIModelType]] = None,
                             processing_config: Optional[Dict[str, Any]] = None,
                             priority: int = 5) -> str:
-        """Execute AI content processing pipeline"""
-        request_id = hashlib.sha256(f"ai_process_{content_id}_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Execute AI content processing pipeline"""        request_id = hashlib.sha256(f"ai_process_{content_id}_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Create processing request
         request = AIProcessingRequest(
@@ -326,8 +315,7 @@ class AIContentProcessingPipelineManager:
         
     def _select_optimal_models(self, content_format: ContentFormat, 
                              processing_tasks: List[ProcessingTask]) -> List[AIModelType]:
-        """Select optimal AI models for content format and processing tasks"""
-        model_mapping = {
+        """Select optimal AI models for content format and processing tasks"""        model_mapping = {
             ContentFormat.AUDIO: {
                 ProcessingTask.TRANSCRIPTION: [AIModelType.TRANSFORMER],
                 ProcessingTask.SENTIMENT_ANALYSIS: [AIModelType.TRANSFORMER],
@@ -366,8 +354,7 @@ class AIContentProcessingPipelineManager:
         
     def _select_processing_pipeline(self, content_format: ContentFormat, 
                                   processing_tasks: List[ProcessingTask]) -> str:
-        """Select appropriate processing pipeline based on content and tasks"""
-        # Determine primary processing type
+        """Select appropriate processing pipeline based on content and tasks"""        # Determine primary processing type
         if ProcessingTask.CONTENT_GENERATION in processing_tasks:
             return "ai-content-generation"
         elif ProcessingTask.SEO_OPTIMIZATION in processing_tasks:
@@ -384,8 +371,7 @@ class AIContentProcessingPipelineManager:
     async def generate_content(self, owner_id: str, content_type: ContentFormat,
                              generation_prompt: str, style_config: Dict[str, Any],
                              target_platforms: List[str] = None) -> str:
-        """Execute AI content generation pipeline"""
-        content_id = hashlib.sha256(f"generated_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Execute AI content generation pipeline"""        content_id = hashlib.sha256(f"generated_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Prepare generation context
         context = {
@@ -410,8 +396,7 @@ class AIContentProcessingPipelineManager:
     async def optimize_for_seo(self, content_id: str, owner_id: str,
                              target_keywords: List[str], target_audience: str,
                              platforms: List[str] = None) -> str:
-        """Execute SEO optimization pipeline for content"""
-        optimization_id = hashlib.sha256(f"seo_{content_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Execute SEO optimization pipeline for content"""        optimization_id = hashlib.sha256(f"seo_{content_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Prepare SEO optimization context
         context = {
@@ -437,8 +422,7 @@ class AIContentProcessingPipelineManager:
     async def moderate_content(self, content_id: str, owner_id: str,
                              platform_guidelines: List[str],
                              moderation_level: str = "standard") -> str:
-        """Execute content moderation pipeline"""
-        moderation_id = hashlib.sha256(f"moderate_{content_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Execute content moderation pipeline"""        moderation_id = hashlib.sha256(f"moderate_{content_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Prepare moderation context
         context = {
@@ -462,8 +446,7 @@ class AIContentProcessingPipelineManager:
         
     async def analyze_content_performance(self, content_ids: List[str], owner_id: str,
                                         analysis_type: str = "comprehensive") -> Dict[str, Any]:
-        """Analyze content performance using AI models"""
-        analysis_id = hashlib.sha256(f"analysis_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
+        """Analyze content performance using AI models"""        analysis_id = hashlib.sha256(f"analysis_{owner_id}_{datetime.utcnow().isoformat()}".encode()).hexdigest()
         
         # Aggregate processing results for content
         content_results = {}
@@ -545,8 +528,7 @@ class AIContentProcessingPipelineManager:
         return performance_metrics
         
     def get_processing_status(self, request_id: str) -> Optional[Dict[str, Any]]:
-        """Get current status of AI processing request"""
-        if request_id not in self.active_requests:
+        """Get current status of AI processing request"""        if request_id not in self.active_requests:
             return None
             
         request = self.active_requests[request_id]
@@ -572,8 +554,7 @@ class AIContentProcessingPipelineManager:
         }
         
     def list_processing_requests(self, owner_id: Optional[str] = None) -> List[Dict[str, Any]]:
-        """List AI processing requests with optional filtering"""
-        filtered_requests = list(self.active_requests.values())
+        """List AI processing requests with optional filtering"""        filtered_requests = list(self.active_requests.values())
         
         if owner_id:
             filtered_requests = [r for r in filtered_requests if r.owner_id == owner_id]
@@ -592,8 +573,7 @@ class AIContentProcessingPipelineManager:
         ]
         
     def get_model_performance_metrics(self) -> Dict[str, Any]:
-        """Get AI model performance metrics and statistics"""
-        return {
+        """Get AI model performance metrics and statistics"""        return {
             "model_metrics": self.model_performance_metrics,
             "total_processing_requests": len(self.active_requests),
             "total_processing_results": sum(len(results) for results in self.processing_results.values()),
@@ -604,8 +584,7 @@ class AIContentProcessingPipelineManager:
 ai_processing_pipeline_manager = None
 
 def get_ai_processing_pipeline_manager(base_manager: AdvancedPipelineManager) -> AIContentProcessingPipelineManager:
-    """Get or create AI processing pipeline manager instance"""
-    global ai_processing_pipeline_manager
+    """Get or create AI processing pipeline manager instance"""    global ai_processing_pipeline_manager
     if ai_processing_pipeline_manager is None:
         ai_processing_pipeline_manager = AIContentProcessingPipelineManager(base_manager)
     return ai_processing_pipeline_manager

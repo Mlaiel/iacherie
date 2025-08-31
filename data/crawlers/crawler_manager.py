@@ -1,5 +1,4 @@
-"""
-Crawler Manager Implementation
+"""Crawler Manager Implementation
 =============================
 
 Professional crawler management system for coordinating multi-platform content monitoring.
@@ -12,7 +11,6 @@ WARNING: This code is proprietary and confidential. Any unauthorized use,
 reproduction, or distribution is strictly prohibited and may result in 
 severe legal consequences.
 """
-
 import asyncio
 import logging
 from datetime import datetime, timedelta
@@ -36,16 +34,14 @@ from ..fingerprinting.vector_matcher import VectorMatcher
 
 
 class CrawlerPriority(Enum):
-    """Crawler execution priority levels"""
-    LOW = 1
+    """Crawler execution priority levels"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     CRITICAL = 4
 
 
 class ScheduleType(Enum):
-    """Crawler schedule types"""
-    ONCE = "once"
+    """Crawler schedule types"""    ONCE = "once"
     INTERVAL = "interval"
     CRON = "cron"
     CONTINUOUS = "continuous"
@@ -53,8 +49,7 @@ class ScheduleType(Enum):
 
 @dataclass
 class CrawlerTask:
-    """Crawler task specification"""
-    task_id: str
+    """Crawler task specification"""    task_id: str
     crawler_type: str
     config: CrawlerConfig
     fingerprint_data: Dict[str, Any]
@@ -75,8 +70,7 @@ class CrawlerTask:
 
 @dataclass
 class CrawlerMetrics:
-    """Crawler performance metrics"""
-    total_tasks: int = 0
+    """Crawler performance metrics"""    total_tasks: int = 0
     completed_tasks: int = 0
     failed_tasks: int = 0
     active_crawlers: int = 0
@@ -87,8 +81,7 @@ class CrawlerMetrics:
 
 
 class CrawlerManager:
-    """
-    Professional crawler management system for coordinating multi-platform monitoring.
+    """    Professional crawler management system for coordinating multi-platform monitoring.
     
     Features:
     - Multi-platform crawler orchestration
@@ -99,17 +92,14 @@ class CrawlerManager:
     - Load balancing and resource management
     - Comprehensive logging and alerting
     - WebSocket notifications for real-time updates
-    """
-    
+    """    
     def __init__(self, vector_matcher: VectorMatcher, max_concurrent_crawlers: int = 5):
-        """
-        Initialize crawler manager.
+        """        Initialize crawler manager.
         
         Args:
             vector_matcher: Vector matching service
             max_concurrent_crawlers: Maximum number of concurrent crawlers
-        """
-        self.vector_matcher = vector_matcher
+        """        self.vector_matcher = vector_matcher
         self.max_concurrent_crawlers = max_concurrent_crawlers
         self.logger = logging.getLogger(__name__)
         
@@ -146,8 +136,7 @@ class CrawlerManager:
         self.thread_pool = ThreadPoolExecutor(max_workers=10)
     
     async def initialize(self):
-        """Initialize the crawler manager"""
-        try:
+        """Initialize the crawler manager"""        try:
             self.logger.info("Initializing Crawler Manager")
             
             # Start scheduler and monitor tasks
@@ -162,8 +151,7 @@ class CrawlerManager:
             raise
     
     async def shutdown(self):
-        """Shutdown the crawler manager gracefully"""
-        try:
+        """Shutdown the crawler manager gracefully"""        try:
             self.logger.info("Shutting down Crawler Manager")
             
             self.is_running = False
@@ -194,14 +182,12 @@ class CrawlerManager:
             self.logger.error(f"Error during shutdown: {str(e)}")
     
     def register_crawler_config(self, crawler_type: str, config: Dict[str, Any]):
-        """
-        Register configuration for a crawler type.
+        """        Register configuration for a crawler type.
         
         Args:
             crawler_type: Type of crawler (youtube, instagram, tiktok, web)
             config: Crawler configuration dictionary
-        """
-        self.crawler_configs[crawler_type] = config
+        """        self.crawler_configs[crawler_type] = config
         self.logger.info(f"Registered config for crawler type: {crawler_type}")
     
     async def create_crawler_task(self, 
@@ -212,8 +198,7 @@ class CrawlerManager:
                                 priority: CrawlerPriority = CrawlerPriority.NORMAL,
                                 callback_url: Optional[str] = None,
                                 tags: List[str] = None) -> str:
-        """
-        Create a new crawler task.
+        """        Create a new crawler task.
         
         Args:
             crawler_type: Type of crawler to use
@@ -226,8 +211,7 @@ class CrawlerManager:
             
         Returns:
             Task ID
-        """
-        try:
+        """        try:
             # Validate crawler type
             if crawler_type not in self.crawler_configs:
                 raise ValueError(f"Unknown crawler type: {crawler_type}")
@@ -298,16 +282,14 @@ class CrawlerManager:
             raise
     
     async def cancel_task(self, task_id: str) -> bool:
-        """
-        Cancel a crawler task.
+        """        Cancel a crawler task.
         
         Args:
             task_id: Task ID to cancel
             
         Returns:
             True if task was cancelled, False if not found
-        """
-        try:
+        """        try:
             async with self.task_lock:
                 if task_id in self.tasks:
                     self.tasks[task_id].is_active = False
@@ -329,16 +311,14 @@ class CrawlerManager:
             return False
     
     async def get_task_status(self, task_id: str) -> Optional[Dict[str, Any]]:
-        """
-        Get status of a specific task.
+        """        Get status of a specific task.
         
         Args:
             task_id: Task ID
             
         Returns:
             Task status information or None if not found
-        """
-        try:
+        """        try:
             if task_id not in self.tasks:
                 return None
             
@@ -367,8 +347,7 @@ class CrawlerManager:
             return None
     
     async def get_all_tasks_status(self) -> List[Dict[str, Any]]:
-        """Get status of all tasks"""
-        try:
+        """Get status of all tasks"""        try:
             all_status = []
             
             for task_id in self.tasks:
@@ -386,8 +365,7 @@ class CrawlerManager:
                                     fingerprint_data: Dict[str, Any],
                                     platforms: List[str] = None,
                                     max_results_per_platform: int = 50) -> Dict[str, List[Dict[str, Any]]]:
-        """
-        Search for content across multiple platforms simultaneously.
+        """        Search for content across multiple platforms simultaneously.
         
         Args:
             fingerprint_data: Fingerprint data to search for
@@ -396,8 +374,7 @@ class CrawlerManager:
             
         Returns:
             Dictionary of results per platform
-        """
-        try:
+        """        try:
             if platforms is None:
                 platforms = list(self.crawler_configs.keys())
             
@@ -435,20 +412,17 @@ class CrawlerManager:
             return {}
     
     def add_event_callback(self, event_type: str, callback: Callable):
-        """
-        Add event callback for notifications.
+        """        Add event callback for notifications.
         
         Args:
             event_type: Type of event (task_started, task_completed, etc.)
             callback: Callback function
-        """
-        if event_type in self.event_callbacks:
+        """        if event_type in self.event_callbacks:
             self.event_callbacks[event_type].append(callback)
             self.logger.info(f"Added callback for event: {event_type}")
     
     def get_metrics(self) -> Dict[str, Any]:
-        """Get current crawler metrics"""
-        active_crawlers = len(self.running_tasks)
+        """Get current crawler metrics"""        active_crawlers = len(self.running_tasks)
         success_rate = 0.0
         
         if self.metrics.total_tasks > 0:
@@ -470,8 +444,7 @@ class CrawlerManager:
     # Private methods
     
     async def _scheduler_loop(self):
-        """Main scheduler loop"""
-        try:
+        """Main scheduler loop"""        try:
             while self.is_running:
                 try:
                     # Check for tasks ready to run
@@ -496,8 +469,7 @@ class CrawlerManager:
             self.logger.error(f"Fatal error in scheduler loop: {str(e)}")
     
     async def _monitor_loop(self):
-        """Monitor loop for health checks and alerts"""
-        try:
+        """Monitor loop for health checks and alerts"""        try:
             while self.is_running:
                 try:
                     # Check crawler health
@@ -522,8 +494,7 @@ class CrawlerManager:
             self.logger.error(f"Fatal error in monitor loop: {str(e)}")
     
     async def _process_pending_tasks(self):
-        """Process tasks that are ready to run"""
-        current_time = datetime.utcnow()
+        """Process tasks that are ready to run"""        current_time = datetime.utcnow()
         
         # Limit concurrent crawlers
         if len(self.running_tasks) >= self.max_concurrent_crawlers:
@@ -547,8 +518,7 @@ class CrawlerManager:
             await self._start_crawler_task(task)
     
     async def _start_crawler_task(self, task: CrawlerTask):
-        """Start execution of a crawler task"""
-        try:
+        """Start execution of a crawler task"""        try:
             # Create and start async task
             async_task = asyncio.create_task(self._execute_crawler_task(task))
             self.running_tasks[task.task_id] = async_task
@@ -577,8 +547,7 @@ class CrawlerManager:
             await self._handle_task_error(task, str(e))
     
     async def _execute_crawler_task(self, task: CrawlerTask) -> CrawlerResult:
-        """Execute a single crawler task"""
-        start_time = datetime.utcnow()
+        """Execute a single crawler task"""        start_time = datetime.utcnow()
         
         try:
             # Get or create crawler instance
@@ -629,8 +598,7 @@ class CrawlerManager:
                 del self.running_tasks[task.task_id]
     
     async def _get_crawler_instance(self, crawler_type: str, config: CrawlerConfig) -> PlatformCrawler:
-        """Get or create crawler instance"""
-        if crawler_type not in self.crawler_instances:
+        """Get or create crawler instance"""        if crawler_type not in self.crawler_instances:
             # Create new crawler instance
             crawler_config = self.crawler_configs[crawler_type]
             
@@ -653,8 +621,7 @@ class CrawlerManager:
         return self.crawler_instances[crawler_type]
     
     async def _search_single_platform(self, platform: str, fingerprint_data: Dict[str, Any], max_results: int) -> List[Dict[str, Any]]:
-        """Search single platform"""
-        try:
+        """Search single platform"""        try:
             # Create temporary config
             base_config = self.crawler_configs[platform]
             config = CrawlerConfig(
@@ -682,8 +649,7 @@ class CrawlerManager:
             return []
     
     async def _process_crawler_result(self, task: CrawlerTask, result: CrawlerResult):
-        """Process crawler result and trigger notifications"""
-        try:
+        """Process crawler result and trigger notifications"""        try:
             # Filter high-confidence matches
             high_confidence_matches = [
                 match for match in result.matches 
@@ -708,8 +674,7 @@ class CrawlerManager:
             self.logger.error(f"Error processing crawler result: {str(e)}")
     
     async def _handle_task_error(self, task: CrawlerTask, error_message: str):
-        """Handle task execution error"""
-        task.retry_count += 1
+        """Handle task execution error"""        task.retry_count += 1
         
         if task.retry_count < task.max_retries:
             # Schedule retry
@@ -733,12 +698,10 @@ class CrawlerManager:
         })
     
     async def _handle_task_timeout(self, task: CrawlerTask):
-        """Handle task timeout"""
-        await self._handle_task_error(task, f"Task timed out after {task.timeout} seconds")
+        """Handle task timeout"""        await self._handle_task_error(task, f"Task timed out after {task.timeout} seconds")
     
     async def _cleanup_completed_tasks(self):
-        """Clean up completed task references"""
-        completed_task_ids = []
+        """Clean up completed task references"""        completed_task_ids = []
         
         for task_id, async_task in self.running_tasks.items():
             if async_task.done():
@@ -748,13 +711,11 @@ class CrawlerManager:
             del self.running_tasks[task_id]
     
     async def _update_metrics(self):
-        """Update crawler metrics"""
-        self.metrics.active_crawlers = len(self.running_tasks)
+        """Update crawler metrics"""        self.metrics.active_crawlers = len(self.running_tasks)
         self.metrics.last_update = datetime.utcnow()
     
     async def _check_crawler_health(self):
-        """Check health of crawler instances"""
-        for crawler_type, crawler in self.crawler_instances.items():
+        """Check health of crawler instances"""        for crawler_type, crawler in self.crawler_instances.items():
             try:
                 # Check if crawler is responsive
                 stats = crawler.get_crawler_stats()
@@ -764,14 +725,12 @@ class CrawlerManager:
                 self.logger.error(f"Health check failed for crawler {crawler_type}: {str(e)}")
     
     async def _monitor_resource_usage(self):
-        """Monitor system resource usage"""
-        # This would implement resource monitoring
+        """Monitor system resource usage"""        # This would implement resource monitoring
         # For now, just log current state
         self.logger.debug(f"Active crawlers: {len(self.running_tasks)}/{self.max_concurrent_crawlers}")
     
     async def _check_stuck_tasks(self):
-        """Check for tasks that have been running too long"""
-        current_time = datetime.utcnow()
+        """Check for tasks that have been running too long"""        current_time = datetime.utcnow()
         
         for task_id, async_task in self.running_tasks.items():
             task = self.tasks.get(task_id)
@@ -782,8 +741,7 @@ class CrawlerManager:
                     async_task.cancel()
     
     async def _trigger_event_callbacks(self, event_type: str, event_data: Dict[str, Any]):
-        """Trigger event callbacks"""
-        try:
+        """Trigger event callbacks"""        try:
             callbacks = self.event_callbacks.get(event_type, [])
             for callback in callbacks:
                 try:
@@ -800,8 +758,7 @@ class CrawlerManager:
             self.logger.error(f"Error triggering callbacks for {event_type}: {str(e)}")
     
     async def _send_callback_notification(self, task: CrawlerTask, result: CrawlerResult):
-        """Send callback notification"""
-        try:
+        """Send callback notification"""        try:
             notification_data = {
                 'task_id': task.task_id,
                 'platform': result.platform,
@@ -823,8 +780,7 @@ class CrawlerManager:
             self.logger.error(f"Error sending callback notification: {str(e)}")
     
     def _update_average_execution_time(self, execution_time: float):
-        """Update average execution time"""
-        if self.metrics.completed_tasks <= 1:
+        """Update average execution time"""        if self.metrics.completed_tasks <= 1:
             self.metrics.average_execution_time = execution_time
         else:
             # Running average
@@ -835,8 +791,7 @@ class CrawlerManager:
     
     def _add_to_execution_history(self, task: CrawlerTask, result: Optional[CrawlerResult], 
                                 execution_time: float, status: str, error_message: str = None):
-        """Add execution to history"""
-        history_entry = {
+        """Add execution to history"""        history_entry = {
             'task_id': task.task_id,
             'crawler_type': task.crawler_type,
             'execution_time': execution_time,

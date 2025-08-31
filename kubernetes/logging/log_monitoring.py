@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Log Monitoring Service
+"""IA Influencer Agent - Log Monitoring Service
 Real-time log monitoring and alerting system
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -10,7 +9,6 @@ Any unauthorized use, reproduction, or distribution without explicit
 written permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import json
 import logging
@@ -33,8 +31,7 @@ from .log_analytics import LogAnalyticsEngine, LogAlert, AlertSeverity
 
 
 class NotificationChannel(str, Enum):
-    """Notification channel types"""
-    EMAIL = "email"
+    """Notification channel types"""    EMAIL = "email"
     SLACK = "slack"
     WEBHOOK = "webhook"
     SMS = "sms"
@@ -43,8 +40,7 @@ class NotificationChannel(str, Enum):
 
 
 class MonitoringState(str, Enum):
-    """Monitoring service state"""
-    STARTING = "starting"
+    """Monitoring service state"""    STARTING = "starting"
     RUNNING = "running"
     STOPPING = "stopping"
     STOPPED = "stopped"
@@ -53,20 +49,17 @@ class MonitoringState(str, Enum):
 
 @dataclass
 class NotificationConfig:
-    """Notification configuration"""
-    channel: NotificationChannel
+    """Notification configuration"""    channel: NotificationChannel
     enabled: bool = True
     config: Optional[Dict[str, Any]] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        return asdict(self)
+        """Convert to dictionary"""        return asdict(self)
 
 
 @dataclass
 class MonitoringRule:
-    """Real-time monitoring rule"""
-    id: str
+    """Real-time monitoring rule"""    id: str
     name: str
     description: str
     log_pattern: str
@@ -79,38 +72,33 @@ class MonitoringRule:
     trigger_count: int = 0
     
     def is_in_cooldown(self) -> bool:
-        """Check if rule is in cooldown period"""
-        if not self.last_triggered:
+        """Check if rule is in cooldown period"""        if not self.last_triggered:
             return False
         
         cooldown_end = self.last_triggered + timedelta(minutes=self.cooldown_minutes)
         return datetime.now(timezone.utc) < cooldown_end
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         if self.last_triggered:
             data['last_triggered'] = self.last_triggered.isoformat()
         return data
 
 
 class NotificationSender:
-    """Base notification sender interface"""
-    
+    """Base notification sender interface"""    
     async def send_notification(self, 
                                message: str,
                                subject: str,
                                severity: AlertSeverity,
                                metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Send notification"""
-        # Default implementation for notification senders without sending support
+        """Send notification"""        # Default implementation for notification senders without sending support
         logging.warning(f"Notification sending not implemented for {self.__class__.__name__}")
         return False
 
 
 class EmailNotificationSender(NotificationSender):
-    """Email notification sender"""
-    
+    """Email notification sender"""    
     def __init__(self, config: Dict[str, Any]):
         self.smtp_host = config.get('smtp_host', 'localhost')
         self.smtp_port = config.get('smtp_port', 587)
@@ -125,8 +113,7 @@ class EmailNotificationSender(NotificationSender):
                                subject: str,
                                severity: AlertSeverity,
                                metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Send email notification"""
-        if not self.to_emails:
+        """Send email notification"""        if not self.to_emails:
             return False
         
         try:
@@ -162,8 +149,7 @@ class EmailNotificationSender(NotificationSender):
                          message: str,
                          severity: AlertSeverity,
                          metadata: Optional[Dict[str, Any]] = None) -> str:
-        """Create HTML email body"""
-        severity_colors = {
+        """Create HTML email body"""        severity_colors = {
             AlertSeverity.LOW: "#28a745",
             AlertSeverity.MEDIUM: "#ffc107",
             AlertSeverity.HIGH: "#fd7e14",
@@ -172,8 +158,7 @@ class EmailNotificationSender(NotificationSender):
         
         color = severity_colors.get(severity, "#6c757d")
         
-        html = f"""
-        <html>
+        html = f"""        <html>
         <body style="font-family: Arial, sans-serif; margin: 20px;">
             <div style="border-left: 4px solid {color}; padding-left: 20px; margin-bottom: 20px;">
                 <h2 style="color: {color}; margin-top: 0;">
@@ -195,21 +180,16 @@ class EmailNotificationSender(NotificationSender):
             </div>
         </body>
         </html>
-        """
-        
+        """        
         return html
     
     def _format_metadata_html(self, metadata: Dict[str, Any]) -> str:
-        """Format metadata as HTML table"""
-        html = """
-        <div style="margin: 20px 0;">
+        """Format metadata as HTML table"""        html = """        <div style="margin: 20px 0;">
             <h3 style="color: #333;">Alert Details</h3>
             <table style="border-collapse: collapse; width: 100%;">
-        """
-        
+        """        
         for key, value in metadata.items():
-            html += f"""
-                <tr>
+            html += f"""                <tr>
                     <td style="border: 1px solid #ddd; padding: 8px; background-color: #f9f9f9; font-weight: bold;">
                         {key.replace('_', ' ').title()}
                     </td>
@@ -217,19 +197,15 @@ class EmailNotificationSender(NotificationSender):
                         {str(value)}
                     </td>
                 </tr>
-            """
-        
-        html += """
-            </table>
+            """        
+        html += """            </table>
         </div>
-        """
-        
+        """        
         return html
 
 
 class SlackNotificationSender(NotificationSender):
-    """Slack notification sender"""
-    
+    """Slack notification sender"""    
     def __init__(self, config: Dict[str, Any]):
         self.token = config.get('token')
         self.channel = config.get('channel', '#alerts')
@@ -240,8 +216,7 @@ class SlackNotificationSender(NotificationSender):
                                subject: str,
                                severity: AlertSeverity,
                                metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Send Slack notification"""
-        if not self.client:
+        """Send Slack notification"""        if not self.client:
             return False
         
         try:
@@ -293,8 +268,7 @@ class SlackNotificationSender(NotificationSender):
 
 
 class WebhookNotificationSender(NotificationSender):
-    """Webhook notification sender"""
-    
+    """Webhook notification sender"""    
     def __init__(self, config: Dict[str, Any]):
         self.webhook_url = config.get('webhook_url')
         self.headers = config.get('headers', {'Content-Type': 'application/json'})
@@ -308,8 +282,7 @@ class WebhookNotificationSender(NotificationSender):
                                subject: str,
                                severity: AlertSeverity,
                                metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Send webhook notification"""
-        if not self.webhook_url:
+        """Send webhook notification"""        if not self.webhook_url:
             return False
         
         try:
@@ -347,8 +320,7 @@ class WebhookNotificationSender(NotificationSender):
 
 
 class TeamsNotificationSender(NotificationSender):
-    """Microsoft Teams notification sender"""
-    
+    """Microsoft Teams notification sender"""    
     def __init__(self, config: Dict[str, Any]):
         self.webhook_url = config.get('webhook_url')
     
@@ -357,8 +329,7 @@ class TeamsNotificationSender(NotificationSender):
                                subject: str,
                                severity: AlertSeverity,
                                metadata: Optional[Dict[str, Any]] = None) -> bool:
-        """Send Teams notification"""
-        if not self.webhook_url:
+        """Send Teams notification"""        if not self.webhook_url:
             return False
         
         try:
@@ -428,8 +399,7 @@ class TeamsNotificationSender(NotificationSender):
 
 
 class LogMonitoringService:
-    """Real-time log monitoring service for IA Influencer Agent"""
-    
+    """Real-time log monitoring service for IA Influencer Agent"""    
     def __init__(self, 
                  analytics_engine: LogAnalyticsEngine,
                  redis_url: str = "redis://localhost:6379"):
@@ -450,8 +420,7 @@ class LogMonitoringService:
         self._setup_notification_channels()
     
     def _setup_default_rules(self):
-        """Setup default monitoring rules"""
-        default_rules = [
+        """Setup default monitoring rules"""        default_rules = [
             MonitoringRule(
                 id="critical_errors",
                 name="Critical Error Spike",
@@ -537,8 +506,7 @@ class LogMonitoringService:
         self.monitoring_rules.extend(default_rules)
     
     def _setup_notification_channels(self):
-        """Setup notification channels from configuration"""
-        # Email configuration
+        """Setup notification channels from configuration"""        # Email configuration
         if hasattr(settings, 'EMAIL_CONFIG'):
             email_config = NotificationConfig(
                 channel=NotificationChannel.EMAIL,
@@ -587,8 +555,7 @@ class LogMonitoringService:
             )
     
     async def start(self):
-        """Start the monitoring service"""
-        if self.state != MonitoringState.STOPPED:
+        """Start the monitoring service"""        if self.state != MonitoringState.STOPPED:
             raise MonitoringError(f"Service already running or in transition. State: {self.state}")
         
         self.state = MonitoringState.STARTING
@@ -610,8 +577,7 @@ class LogMonitoringService:
             raise MonitoringError(f"Startup failed: {e}")
     
     async def stop(self):
-        """Stop the monitoring service"""
-        self.state = MonitoringState.STOPPING
+        """Stop the monitoring service"""        self.state = MonitoringState.STOPPING
         
         try:
             # Close Redis connection
@@ -626,8 +592,7 @@ class LogMonitoringService:
             self.state = MonitoringState.ERROR
     
     async def _monitoring_loop(self):
-        """Main monitoring loop"""
-        while self.state == MonitoringState.RUNNING:
+        """Main monitoring loop"""        while self.state == MonitoringState.RUNNING:
             try:
                 # Process buffered logs
                 if self.log_buffer:
@@ -642,8 +607,7 @@ class LogMonitoringService:
                 await asyncio.sleep(5)  # Short delay before retry
     
     async def _alert_checking_loop(self):
-        """Periodic alert checking loop"""
-        while self.state == MonitoringState.RUNNING:
+        """Periodic alert checking loop"""        while self.state == MonitoringState.RUNNING:
             try:
                 # Check analytics-based alerts
                 triggered_alerts = await self.analytics_engine.check_alerts()
@@ -664,8 +628,7 @@ class LogMonitoringService:
                 await asyncio.sleep(60)  # Wait 1 minute before retry
     
     async def add_log_entry(self, log_entry: LogEntry):
-        """Add log entry to monitoring buffer"""
-        if self.state != MonitoringState.RUNNING:
+        """Add log entry to monitoring buffer"""        if self.state != MonitoringState.RUNNING:
             return
         
         self.log_buffer.append(log_entry)
@@ -676,8 +639,7 @@ class LogMonitoringService:
             self.log_buffer.clear()
     
     async def _process_log_batch(self, logs: List[LogEntry]):
-        """Process batch of logs for rule matching"""
-        for rule in self.monitoring_rules:
+        """Process batch of logs for rule matching"""        for rule in self.monitoring_rules:
             if not rule.enabled or rule.is_in_cooldown():
                 continue
             
@@ -698,8 +660,7 @@ class LogMonitoringService:
                 logging.error(f"Error processing rule '{rule.name}': {e}")
     
     def _log_matches_pattern(self, log_entry: LogEntry, pattern: str) -> bool:
-        """Check if log entry matches pattern"""
-        # Simple pattern matching - can be enhanced with proper query parsing
+        """Check if log entry matches pattern"""        # Simple pattern matching - can be enhanced with proper query parsing
         pattern_lower = pattern.lower()
         
         # Check level matching
@@ -748,8 +709,7 @@ class LogMonitoringService:
     async def _evaluate_rule_condition(self, 
                                      rule: MonitoringRule, 
                                      matching_logs: List[LogEntry]) -> bool:
-        """Evaluate rule condition"""
-        # Parse condition (simplified)
+        """Evaluate rule condition"""        # Parse condition (simplified)
         condition = rule.condition.lower()
         
         if "count >" in condition:
@@ -771,8 +731,7 @@ class LogMonitoringService:
         return False
     
     async def _trigger_rule(self, rule: MonitoringRule, matching_logs: List[LogEntry]):
-        """Trigger monitoring rule"""
-        rule.last_triggered = datetime.now(timezone.utc)
+        """Trigger monitoring rule"""        rule.last_triggered = datetime.now(timezone.utc)
         rule.trigger_count += 1
         
         # Create alert message
@@ -811,8 +770,7 @@ class LogMonitoringService:
                                 message: str,
                                 severity: AlertSeverity,
                                 metadata: Optional[Dict[str, Any]] = None):
-        """Send notification to specific channel"""
-        if channel not in self.notification_senders:
+        """Send notification to specific channel"""        if channel not in self.notification_senders:
             logging.warning(f"No sender configured for channel: {channel}")
             return
         
@@ -837,34 +795,29 @@ class LogMonitoringService:
                                        message: str,
                                        severity: AlertSeverity,
                                        metadata: Optional[Dict[str, Any]] = None):
-        """Send notifications to all configured channels"""
-        for channel, sender in self.notification_senders.items():
+        """Send notifications to all configured channels"""        for channel, sender in self.notification_senders.items():
             config = self.notification_configs.get(channel)
             if config and config.enabled:
                 await self._send_notification(channel, subject, message, severity, metadata)
     
     def add_monitoring_rule(self, rule: MonitoringRule):
-        """Add custom monitoring rule"""
-        self.monitoring_rules.append(rule)
+        """Add custom monitoring rule"""        self.monitoring_rules.append(rule)
     
     def remove_monitoring_rule(self, rule_id: str) -> bool:
-        """Remove monitoring rule"""
-        for i, rule in enumerate(self.monitoring_rules):
+        """Remove monitoring rule"""        for i, rule in enumerate(self.monitoring_rules):
             if rule.id == rule_id:
                 del self.monitoring_rules[i]
                 return True
         return False
     
     def get_monitoring_rule(self, rule_id: str) -> Optional[MonitoringRule]:
-        """Get monitoring rule by ID"""
-        for rule in self.monitoring_rules:
+        """Get monitoring rule by ID"""        for rule in self.monitoring_rules:
             if rule.id == rule_id:
                 return rule
         return None
     
     def update_monitoring_rule(self, rule_id: str, **kwargs) -> bool:
-        """Update monitoring rule"""
-        rule = self.get_monitoring_rule(rule_id)
+        """Update monitoring rule"""        rule = self.get_monitoring_rule(rule_id)
         if rule:
             for key, value in kwargs.items():
                 if hasattr(rule, key):
@@ -876,8 +829,7 @@ class LogMonitoringService:
                                      channel: NotificationChannel,
                                      config: Dict[str, Any],
                                      enabled: bool = True):
-        """Configure notification channel"""
-        notification_config = NotificationConfig(
+        """Configure notification channel"""        notification_config = NotificationConfig(
             channel=channel,
             enabled=enabled,
             config=config
@@ -896,8 +848,7 @@ class LogMonitoringService:
             self.notification_senders[channel] = TeamsNotificationSender(config)
     
     def get_service_status(self) -> Dict[str, Any]:
-        """Get monitoring service status"""
-        return {
+        """Get monitoring service status"""        return {
             "state": self.state.value,
             "enabled_rules": len([r for r in self.monitoring_rules if r.enabled]),
             "total_rules": len(self.monitoring_rules),
@@ -908,8 +859,7 @@ class LogMonitoringService:
         }
     
     def get_rule_statistics(self) -> List[Dict[str, Any]]:
-        """Get statistics for all monitoring rules"""
-        stats = []
+        """Get statistics for all monitoring rules"""        stats = []
         for rule in self.monitoring_rules:
             rule_stats = rule.to_dict()
             rule_stats["is_in_cooldown"] = rule.is_in_cooldown()

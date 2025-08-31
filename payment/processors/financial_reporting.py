@@ -1,5 +1,4 @@
-"""
-📊 Financial Reporting Payment Processor
+"""📊 Financial Reporting Payment Processor
 ========================================
 
 Comprehensive financial reporting system for payment analytics, compliance
@@ -8,7 +7,6 @@ reporting, and business intelligence with multi-dimensional analysis.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Union
@@ -23,8 +21,7 @@ logger = logging.getLogger(__name__)
 
 
 class ReportType(Enum):
-    """Financial report types"""
-    TRANSACTION_SUMMARY = "transaction_summary"
+    """Financial report types"""    TRANSACTION_SUMMARY = "transaction_summary"
     REVENUE_ANALYSIS = "revenue_analysis"
     FEE_ANALYSIS = "fee_analysis"
     PAYOUT_SUMMARY = "payout_summary"
@@ -39,8 +36,7 @@ class ReportType(Enum):
 
 
 class ReportFormat(Enum):
-    """Report output formats"""
-    JSON = "json"
+    """Report output formats"""    JSON = "json"
     CSV = "csv"
     EXCEL = "excel"
     PDF = "pdf"
@@ -48,8 +44,7 @@ class ReportFormat(Enum):
 
 
 class ReportFrequency(Enum):
-    """Report generation frequency"""
-    REAL_TIME = "real_time"
+    """Report generation frequency"""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -60,8 +55,7 @@ class ReportFrequency(Enum):
 
 
 class MetricType(Enum):
-    """Financial metrics types"""
-    GROSS_REVENUE = "gross_revenue"
+    """Financial metrics types"""    GROSS_REVENUE = "gross_revenue"
     NET_REVENUE = "net_revenue"
     TRANSACTION_COUNT = "transaction_count"
     AVERAGE_TRANSACTION = "average_transaction"
@@ -75,8 +69,7 @@ class MetricType(Enum):
 
 @dataclass
 class ReportFilter:
-    """Report filtering criteria"""
-    date_from: Optional[datetime] = None
+    """Report filtering criteria"""    date_from: Optional[datetime] = None
     date_to: Optional[datetime] = None
     currency: Optional[str] = None
     payment_method: Optional[str] = None
@@ -91,8 +84,7 @@ class ReportFilter:
 
 @dataclass
 class FinancialMetric:
-    """Financial metric data point"""
-    metric_type: MetricType
+    """Financial metric data point"""    metric_type: MetricType
     value: Decimal
     currency: str
     period: str
@@ -102,8 +94,7 @@ class FinancialMetric:
 
 @dataclass
 class ReportSchedule:
-    """Automated report schedule"""
-    id: str
+    """Automated report schedule"""    id: str
     report_type: ReportType
     frequency: ReportFrequency
     format: ReportFormat
@@ -117,8 +108,7 @@ class ReportSchedule:
 
 @dataclass
 class FinancialReport:
-    """Generated financial report"""
-    id: str
+    """Generated financial report"""    id: str
     report_type: ReportType
     format: ReportFormat
     generated_at: datetime
@@ -131,20 +121,17 @@ class FinancialReport:
 
 
 class FinancialReportingProcessor:
-    """
-    Comprehensive financial reporting processor
+    """    Comprehensive financial reporting processor
     
     Generates detailed financial reports, analytics, and business intelligence
     with automated scheduling and multi-format output capabilities.
-    """
-    
+    """    
     def __init__(
         self,
         config: Dict[str, Any],
         data_warehouse_config: Optional[Dict[str, Any]] = None
     ):
-        """Initialize financial reporting processor"""
-        self.config = config
+        """Initialize financial reporting processor"""        self.config = config
         self.data_warehouse_config = data_warehouse_config or {}
         self.logger = logging.getLogger(__name__)
         
@@ -167,8 +154,7 @@ class FinancialReportingProcessor:
         filters: Optional[ReportFilter] = None,
         format: ReportFormat = ReportFormat.JSON
     ) -> FinancialReport:
-        """Generate a financial report"""
-        try:
+        """Generate a financial report"""        try:
             report_id = f"report_{uuid.uuid4().hex[:12]}"
             
             if not filters:
@@ -215,8 +201,7 @@ class FinancialReportingProcessor:
         period_end: datetime,
         filters: Optional[ReportFilter] = None
     ) -> Dict[str, Any]:
-        """Generate transaction summary report"""
-        try:
+        """Generate transaction summary report"""        try:
             # Mock transaction data (in production, query actual database)
             total_transactions = 15750
             successful_transactions = 14963
@@ -297,8 +282,7 @@ class FinancialReportingProcessor:
         period_end: datetime,
         filters: Optional[ReportFilter] = None
     ) -> Dict[str, Any]:
-        """Generate revenue analysis report"""
-        try:
+        """Generate revenue analysis report"""        try:
             # Mock revenue data
             gross_revenue = Decimal("1875000.50")
             processing_fees = Decimal("51250.25")
@@ -372,8 +356,7 @@ class FinancialReportingProcessor:
         period_end: datetime,
         jurisdiction: Optional[str] = None
     ) -> Dict[str, Any]:
-        """Generate compliance report for regulatory requirements"""
-        try:
+        """Generate compliance report for regulatory requirements"""        try:
             # Transaction volume by jurisdiction
             jurisdiction_data = {
                 "US": {
@@ -460,8 +443,7 @@ class FinancialReportingProcessor:
         recipients: List[str],
         filters: Optional[ReportFilter] = None
     ) -> ReportSchedule:
-        """Create an automated report schedule"""
-        try:
+        """Create an automated report schedule"""        try:
             schedule_id = f"schedule_{uuid.uuid4().hex[:12]}"
             
             if not filters:
@@ -492,8 +474,7 @@ class FinancialReportingProcessor:
         period_end: datetime,
         metric_types: List[MetricType]
     ) -> List[FinancialMetric]:
-        """Calculate specific financial metrics"""
-        try:
+        """Calculate specific financial metrics"""        try:
             metrics = []
             
             for metric_type in metric_types:
@@ -520,8 +501,7 @@ class FinancialReportingProcessor:
         user_id: str,
         dashboard_type: str = "executive"
     ) -> Dict[str, Any]:
-        """Generate real-time dashboard data"""
-        try:
+        """Generate real-time dashboard data"""        try:
             # Key performance indicators
             kpis = {
                 "total_revenue_today": 12500.50,
@@ -597,8 +577,7 @@ class FinancialReportingProcessor:
             return {"error": str(e)}
     
     def _initialize_report_templates(self) -> Dict[ReportType, Dict[str, Any]]:
-        """Initialize report templates"""
-        return {
+        """Initialize report templates"""        return {
             ReportType.TRANSACTION_SUMMARY: {
                 "sections": ["summary", "method_breakdown", "daily_breakdown"],
                 "default_format": ReportFormat.PDF,
@@ -621,8 +600,7 @@ class FinancialReportingProcessor:
         report_type: ReportType,
         filters: ReportFilter
     ) -> Dict[str, Any]:
-        """Generate data for specific report type"""
-        if report_type == ReportType.TRANSACTION_SUMMARY:
+        """Generate data for specific report type"""        if report_type == ReportType.TRANSACTION_SUMMARY:
             return await self.generate_transaction_summary(
                 filters.date_from, filters.date_to, filters
             )
@@ -644,8 +622,7 @@ class FinancialReportingProcessor:
         report_type: ReportType,
         format: ReportFormat
     ) -> Dict[str, Any]:
-        """Format report data for specific output format"""
-        if format == ReportFormat.JSON:
+        """Format report data for specific output format"""        if format == ReportFormat.JSON:
             return data
         elif format == ReportFormat.CSV:
             # Convert to CSV-friendly format
@@ -660,13 +637,11 @@ class FinancialReportingProcessor:
             return data
     
     def _convert_to_csv(self, data: Dict[str, Any]) -> str:
-        """Convert data to CSV format"""
-        # Mock CSV conversion
+        """Convert data to CSV format"""        # Mock CSV conversion
         return "header1,header2,header3\nvalue1,value2,value3"
     
     def _convert_to_excel_format(self, data: Dict[str, Any]) -> Dict[str, Any]:
-        """Convert data to Excel format"""
-        # Mock Excel format
+        """Convert data to Excel format"""        # Mock Excel format
         return {
             "Summary": data.get("summary", {}),
             "Details": data.get("breakdown", {}),
@@ -678,8 +653,7 @@ class FinancialReportingProcessor:
         data: Dict[str, Any],
         report_type: ReportType
     ) -> Dict[str, Any]:
-        """Convert data to PDF format"""
-        # Mock PDF format
+        """Convert data to PDF format"""        # Mock PDF format
         return {
             "title": f"{report_type.value.replace('_', ' ').title()} Report",
             "sections": data,
@@ -691,8 +665,7 @@ class FinancialReportingProcessor:
         report: FinancialReport,
         data: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Save report file to storage"""
-        # Mock file saving
+        """Save report file to storage"""        # Mock file saving
         filename = f"{report.report_type.value}_{report.id}.{report.format.value}"
         file_url = f"https://storage.example.com/reports/{filename}"
         
@@ -703,8 +676,7 @@ class FinancialReportingProcessor:
         }
     
     def _calculate_next_generation_time(self, frequency: ReportFrequency) -> datetime:
-        """Calculate next report generation time"""
-        now = datetime.now()
+        """Calculate next report generation time"""        now = datetime.now()
         
         if frequency == ReportFrequency.DAILY:
             return now + timedelta(days=1)
@@ -728,8 +700,7 @@ class FinancialReportingProcessor:
         period_start: datetime,
         period_end: datetime
     ) -> Decimal:
-        """Calculate value for specific metric type"""
-        # Mock metric calculations
+        """Calculate value for specific metric type"""        # Mock metric calculations
         if metric_type == MetricType.GROSS_REVENUE:
             return Decimal("1875000.50")
         elif metric_type == MetricType.NET_REVENUE:

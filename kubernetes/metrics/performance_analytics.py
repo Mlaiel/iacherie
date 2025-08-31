@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Performance Analytics Engine
+"""IA Influencer Agent - Performance Analytics Engine
 Enterprise-grade performance analysis with ML-powered insights and optimization
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -32,7 +31,6 @@ Features:
 - Predictive scaling with capacity planning
 - Performance forecasting with trend analysis
 """
-
 import logging
 import asyncio
 import time
@@ -67,8 +65,7 @@ settings = get_settings()
 
 
 class PerformanceMetricType(Enum):
-    """Performance metric categorization for advanced analysis"""
-    LATENCY = "latency"
+    """Performance metric categorization for advanced analysis"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     RESOURCE_UTILIZATION = "resource_utilization"
@@ -79,8 +76,7 @@ class PerformanceMetricType(Enum):
 
 
 class PerformanceSeverity(Enum):
-    """Performance issue severity levels"""
-    OPTIMAL = "optimal"
+    """Performance issue severity levels"""    OPTIMAL = "optimal"
     GOOD = "good"
     WARNING = "warning"
     DEGRADED = "degraded"
@@ -89,8 +85,7 @@ class PerformanceSeverity(Enum):
 
 
 class AnalysisWindow(Enum):
-    """Time window for performance analysis"""
-    REALTIME = "1m"
+    """Time window for performance analysis"""    REALTIME = "1m"
     SHORT_TERM = "1h"
     MEDIUM_TERM = "24h"
     LONG_TERM = "7d"
@@ -98,8 +93,7 @@ class AnalysisWindow(Enum):
 
 
 class OptimizationStrategy(Enum):
-    """Performance optimization strategies"""
-    SCALE_UP = "scale_up"
+    """Performance optimization strategies"""    SCALE_UP = "scale_up"
     SCALE_OUT = "scale_out"
     CACHE_OPTIMIZATION = "cache_optimization"
     QUERY_OPTIMIZATION = "query_optimization"
@@ -111,8 +105,7 @@ class OptimizationStrategy(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Enhanced performance metric with metadata"""
-    name: str
+    """Enhanced performance metric with metadata"""    name: str
     value: float
     timestamp: datetime
     metric_type: PerformanceMetricType
@@ -125,8 +118,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceBaseline:
-    """Performance baseline with statistical analysis"""
-    metric_name: str
+    """Performance baseline with statistical analysis"""    metric_name: str
     mean: float
     std: float
     percentiles: Dict[str, float]
@@ -139,8 +131,7 @@ class PerformanceBaseline:
 
 @dataclass
 class PerformanceAnomaly:
-    """Performance anomaly with detailed analysis"""
-    id: str
+    """Performance anomaly with detailed analysis"""    id: str
     metric_name: str
     detected_at: datetime
     severity: PerformanceSeverity
@@ -157,8 +148,7 @@ class PerformanceAnomaly:
 
 @dataclass
 class PerformanceInsight:
-    """Performance insight with actionable recommendations"""
-    id: str
+    """Performance insight with actionable recommendations"""    id: str
     title: str
     description: str
     category: str
@@ -176,8 +166,7 @@ class PerformanceInsight:
 
 @dataclass
 class PerformanceForecast:
-    """Performance forecast with uncertainty bounds"""
-    metric_name: str
+    """Performance forecast with uncertainty bounds"""    metric_name: str
     forecast_values: List[float]
     timestamps: List[datetime]
     confidence_intervals: List[Tuple[float, float]]
@@ -188,8 +177,7 @@ class PerformanceForecast:
 
 
 class PerformanceAnalytics:
-    """
-    Advanced performance analytics engine with ML capabilities
+    """    Advanced performance analytics engine with ML capabilities
     
     Features:
     - Real-time anomaly detection with adaptive thresholds
@@ -200,8 +188,7 @@ class PerformanceAnalytics:
     - Root cause analysis with confidence scoring
     - Advanced visualization and reporting
     - Multi-tenant performance isolation
-    """
-    
+    """    
     def __init__(self, config: Optional[MetricsConfiguration] = None):
         self.config = config or get_metrics_config()
         self.logger = logger
@@ -244,8 +231,7 @@ class PerformanceAnalytics:
         self._initialize_ml_models()
     
     async def start(self) -> None:
-        """Start performance analytics engine"""
-        try:
+        """Start performance analytics engine"""        try:
             if self._running:
                 self.logger.warning("Performance analytics already running")
                 return
@@ -283,8 +269,7 @@ class PerformanceAnalytics:
             raise
     
     async def stop(self) -> None:
-        """Stop performance analytics engine"""
-        try:
+        """Stop performance analytics engine"""        try:
             self._running = False
             
             # Stop all analysis tasks
@@ -313,8 +298,7 @@ class PerformanceAnalytics:
         include_forecast: bool = True,
         include_recommendations: bool = True
     ) -> Dict[str, Any]:
-        """Comprehensive performance analysis with ML insights"""
-        try:
+        """Comprehensive performance analysis with ML insights"""        try:
             # Get performance data
             metrics_data = await self._get_metrics_data(
                 metric_name, time_window, tenant_id
@@ -394,8 +378,7 @@ class PerformanceAnalytics:
         sensitivity: float = 0.8,
         lookback_hours: int = 24
     ) -> List[PerformanceAnomaly]:
-        """Advanced anomaly detection with ML and statistical methods"""
-        try:
+        """Advanced anomaly detection with ML and statistical methods"""        try:
             detected_anomalies = []
             
             # Get metric names to analyze
@@ -462,8 +445,7 @@ class PerformanceAnalytics:
         tenant_id: Optional[str] = None,
         include_scenarios: bool = True
     ) -> PerformanceForecast:
-        """Advanced performance forecasting with uncertainty quantification"""
-        try:
+        """Advanced performance forecasting with uncertainty quantification"""        try:
             # Get historical data for training
             training_data = await self._get_training_data(metric_name, tenant_id)
             
@@ -540,8 +522,7 @@ class PerformanceAnalytics:
         category_filter: Optional[str] = None,
         max_recommendations: int = 10
     ) -> List[PerformanceInsight]:
-        """Generate advanced optimization recommendations with ROI analysis"""
-        try:
+        """Generate advanced optimization recommendations with ROI analysis"""        try:
             recommendations = []
             
             # Analyze current performance state
@@ -610,8 +591,7 @@ class PerformanceAnalytics:
         tenant_id: Optional[str] = None,
         metric_categories: Optional[List[PerformanceMetricType]] = None
     ) -> Dict[str, Any]:
-        """Calculate comprehensive performance score with breakdown"""
-        try:
+        """Calculate comprehensive performance score with breakdown"""        try:
             if not metric_categories:
                 metric_categories = list(PerformanceMetricType)
             
@@ -668,16 +648,14 @@ class PerformanceAnalytics:
         time_window: AnalysisWindow,
         tenant_id: Optional[str]
     ) -> List[PerformanceMetric]:
-        """Get metrics data for analysis"""
-        # Implementation would query from Redis/database
+        """Get metrics data for analysis"""        # Implementation would query from Redis/database
         return []
     
     async def _perform_statistical_analysis(
         self,
         metrics_data: List[PerformanceMetric]
     ) -> Dict[str, Any]:
-        """Perform comprehensive statistical analysis"""
-        values = [m.value for m in metrics_data]
+        """Perform comprehensive statistical analysis"""        values = [m.value for m in metrics_data]
         
         if not values:
             return {}
@@ -710,8 +688,7 @@ class PerformanceAnalytics:
         metric_name: str,
         metrics_data: List[PerformanceMetric]
     ) -> Dict[str, Any]:
-        """Detect anomalies in metrics data"""
-        # Placeholder implementation
+        """Detect anomalies in metrics data"""        # Placeholder implementation
         return {
             "anomalies_detected": 0,
             "anomaly_scores": [],
@@ -723,8 +700,7 @@ class PerformanceAnalytics:
         self,
         metrics_data: List[PerformanceMetric]
     ) -> Dict[str, Any]:
-        """Analyze performance trends"""
-        # Placeholder implementation
+        """Analyze performance trends"""        # Placeholder implementation
         return {
             "trend_direction": "stable",
             "trend_strength": 0.0,
@@ -739,8 +715,7 @@ class PerformanceAnalytics:
         self,
         metrics_data: List[PerformanceMetric]
     ) -> Dict[str, Any]:
-        """Analyze seasonal patterns"""
-        # Placeholder implementation
+        """Analyze seasonal patterns"""        # Placeholder implementation
         return {
             "seasonal_patterns_detected": False,
             "dominant_frequency": None,
@@ -752,8 +727,7 @@ class PerformanceAnalytics:
         metric_name: str,
         metrics_data: List[PerformanceMetric]
     ) -> float:
-        """Calculate performance score for metric"""
-        # Placeholder implementation
+        """Calculate performance score for metric"""        # Placeholder implementation
         return 85.0
     
     async def _assess_business_impact(
@@ -762,8 +736,7 @@ class PerformanceAnalytics:
         metrics_data: List[PerformanceMetric],
         tenant_id: Optional[str]
     ) -> Dict[str, Any]:
-        """Assess business impact of performance"""
-        # Placeholder implementation
+        """Assess business impact of performance"""        # Placeholder implementation
         return {
             "impact_score": 7.5,
             "revenue_impact_estimate": 0.0,
@@ -776,8 +749,7 @@ class PerformanceAnalytics:
         metric_name: str,
         metrics_data: List[PerformanceMetric]
     ) -> Dict[str, Any]:
-        """Generate performance forecast"""
-        # Placeholder implementation
+        """Generate performance forecast"""        # Placeholder implementation
         return {
             "forecast_horizon": "24h",
             "predicted_values": [],
@@ -790,63 +762,49 @@ class PerformanceAnalytics:
         metric_name: str,
         analysis_result: Dict[str, Any]
     ) -> List[Dict[str, Any]]:
-        """Generate optimization recommendations"""
-        # Placeholder implementation
+        """Generate optimization recommendations"""        # Placeholder implementation
         return []
     
     # Additional helper methods would be implemented here...
     
     def _initialize_correlation_analyzer(self):
-        """Initialize correlation analyzer"""
-        return None
+        """Initialize correlation analyzer"""        return None
     
     def _initialize_trend_analyzer(self):
-        """Initialize trend analyzer"""
-        return None
+        """Initialize trend analyzer"""        return None
     
     def _initialize_seasonal_analyzer(self):
-        """Initialize seasonal analyzer"""
-        return None
+        """Initialize seasonal analyzer"""        return None
     
     def _initialize_business_impact_calculator(self):
-        """Initialize business impact calculator"""
-        return None
+        """Initialize business impact calculator"""        return None
     
     def _initialize_default_baselines(self) -> None:
-        """Initialize default performance baselines"""
-        pass
+        """Initialize default performance baselines"""        pass
     
     def _initialize_ml_models(self) -> None:
-        """Initialize ML models"""
-        pass
+        """Initialize ML models"""        pass
     
     async def _analysis_loop(self, window: AnalysisWindow) -> None:
-        """Analysis loop for specific time window"""
-        pass
+        """Analysis loop for specific time window"""        pass
     
     async def _anomaly_detection_loop(self) -> None:
-        """Anomaly detection loop"""
-        pass
+        """Anomaly detection loop"""        pass
     
     async def _forecasting_loop(self) -> None:
-        """Forecasting loop"""
-        pass
+        """Forecasting loop"""        pass
     
     async def _optimization_loop(self) -> None:
-        """Optimization loop"""
-        pass
+        """Optimization loop"""        pass
     
     async def _business_intelligence_loop(self) -> None:
-        """Business intelligence loop"""
-        pass
+        """Business intelligence loop"""        pass
     
     async def _save_ml_models(self) -> None:
-        """Save ML models"""
-        pass
+        """Save ML models"""        pass
     
     async def _save_performance_insights(self) -> None:
-        """Save performance insights"""
-        pass
+        """Save performance insights"""        pass
     
     # Additional implementation methods would go here...
 
@@ -873,8 +831,7 @@ settings = get_settings()
 
 
 class PerformanceMetricType(Enum):
-    """Performance metric types"""
-    LATENCY = "latency"
+    """Performance metric types"""    LATENCY = "latency"
     THROUGHPUT = "throughput"
     ERROR_RATE = "error_rate"
     AVAILABILITY = "availability"
@@ -883,8 +840,7 @@ class PerformanceMetricType(Enum):
 
 
 class TimeWindow(Enum):
-    """Time window for analysis"""
-    REALTIME = "realtime"  # Last 5 minutes
+    """Time window for analysis"""    REALTIME = "realtime"  # Last 5 minutes
     HOURLY = "hourly"      # Last hour
     DAILY = "daily"        # Last 24 hours
     WEEKLY = "weekly"      # Last 7 days
@@ -893,8 +849,7 @@ class TimeWindow(Enum):
 
 @dataclass
 class PerformanceMetric:
-    """Performance metric data structure"""
-    name: str
+    """Performance metric data structure"""    name: str
     value: float
     timestamp: datetime
     labels: Dict[str, str] = field(default_factory=dict)
@@ -904,8 +859,7 @@ class PerformanceMetric:
 
 @dataclass
 class PerformanceAnalysis:
-    """Performance analysis result"""
-    metric_name: str
+    """Performance analysis result"""    metric_name: str
     time_window: TimeWindow
     tenant_id: Optional[str]
     
@@ -935,8 +889,7 @@ class PerformanceAnalysis:
 
 
 class PerformanceAnalytics:
-    """
-    Enterprise performance analytics engine
+    """    Enterprise performance analytics engine
     
     Handles:
     - Real-time performance monitoring and analysis
@@ -945,8 +898,7 @@ class PerformanceAnalytics:
     - Automated optimization recommendations
     - Comparative analysis across tenants
     - Performance forecasting and capacity planning
-    """
-    
+    """    
     def __init__(self):
         self.redis_manager = RedisManager()
         self.logger = logger
@@ -974,8 +926,7 @@ class PerformanceAnalytics:
         time_window: TimeWindow,
         tenant_id: Optional[str] = None
     ) -> PerformanceAnalysis:
-        """Analyze performance for specific metric and time window"""
-        try:
+        """Analyze performance for specific metric and time window"""        try:
             # Get metric data
             metrics = await self._get_metrics_data(metric_name, time_window, tenant_id)
             
@@ -1029,8 +980,7 @@ class PerformanceAnalytics:
         time_window: TimeWindow,
         tenant_id: Optional[str] = None
     ) -> Dict[str, PerformanceAnalysis]:
-        """Analyze AI model performance across multiple metrics"""
-        try:
+        """Analyze AI model performance across multiple metrics"""        try:
             model_metrics = [
                 f"ai_inference_duration_{model_name}",
                 f"ai_model_accuracy_{model_name}",
@@ -1054,8 +1004,7 @@ class PerformanceAnalytics:
         time_window: TimeWindow,
         tenant_id: Optional[str] = None
     ) -> Dict[str, PerformanceAnalysis]:
-        """Analyze content protection performance"""
-        try:
+        """Analyze content protection performance"""        try:
             protection_metrics = [
                 "fingerprint_processing_duration_seconds",
                 "content_matches_detected_total",
@@ -1078,8 +1027,7 @@ class PerformanceAnalytics:
         self,
         time_window: TimeWindow
     ) -> Dict[str, PerformanceAnalysis]:
-        """Analyze infrastructure performance"""
-        try:
+        """Analyze infrastructure performance"""        try:
             infrastructure_metrics = [
                 "system_cpu_percent",
                 "system_memory_bytes",
@@ -1104,8 +1052,7 @@ class PerformanceAnalytics:
         tenant_id: Optional[str] = None,
         time_window: TimeWindow = TimeWindow.DAILY
     ) -> Dict[str, Any]:
-        """Generate comprehensive performance report"""
-        try:
+        """Generate comprehensive performance report"""        try:
             report = {
                 "tenant_id": tenant_id,
                 "time_window": time_window.value,
@@ -1149,8 +1096,7 @@ class PerformanceAnalytics:
         metric_name: str,
         time_window: TimeWindow
     ) -> Dict[str, Any]:
-        """Compare performance across multiple tenants"""
-        try:
+        """Compare performance across multiple tenants"""        try:
             comparison = {
                 "metric_name": metric_name,
                 "time_window": time_window.value,
@@ -1184,8 +1130,7 @@ class PerformanceAnalytics:
         tenant_id: Optional[str] = None,
         forecast_days: int = 7
     ) -> Dict[str, Any]:
-        """Forecast future performance trends"""
-        try:
+        """Forecast future performance trends"""        try:
             # Get historical data
             metrics = await self._get_metrics_data(
                 metric_name,
@@ -1251,8 +1196,7 @@ class PerformanceAnalytics:
         tenant_id: Optional[str] = None,
         sensitivity: float = 2.0
     ) -> List[Dict[str, Any]]:
-        """Identify performance anomalies using statistical methods"""
-        try:
+        """Identify performance anomalies using statistical methods"""        try:
             metrics = await self._get_metrics_data(metric_name, time_window, tenant_id)
             
             if len(metrics) < 30:  # Need sufficient data
@@ -1300,8 +1244,7 @@ class PerformanceAnalytics:
         time_window: TimeWindow,
         tenant_id: Optional[str] = None
     ) -> List[PerformanceMetric]:
-        """Get metrics data from storage"""
-        try:
+        """Get metrics data from storage"""        try:
             # Check cache first
             cache_key = f"{metric_name}_{time_window.value}_{tenant_id or 'global'}"
             if cache_key in self.metric_cache:
@@ -1360,8 +1303,7 @@ class PerformanceAnalytics:
         values: List[float],
         timestamps: List[datetime]
     ) -> Tuple[str, float]:
-        """Analyze trend direction and strength"""
-        try:
+        """Analyze trend direction and strength"""        try:
             if len(values) < 3:
                 return "stable", 0.0
             
@@ -1389,8 +1331,7 @@ class PerformanceAnalytics:
             return "stable", 0.0
     
     def _calculate_performance_score(self, analysis: PerformanceAnalysis) -> float:
-        """Calculate performance score (0-100)"""
-        try:
+        """Calculate performance score (0-100)"""        try:
             metric_thresholds = self.performance_thresholds.get(analysis.metric_name, {})
             
             if not metric_thresholds:
@@ -1436,8 +1377,7 @@ class PerformanceAnalytics:
             return 50.0
     
     def _determine_health_status(self, score: float) -> str:
-        """Determine health status from performance score"""
-        if score >= 90:
+        """Determine health status from performance score"""        if score >= 90:
             return "excellent"
         elif score >= 75:
             return "good"
@@ -1447,8 +1387,7 @@ class PerformanceAnalytics:
             return "critical"
     
     def _generate_recommendations(self, analysis: PerformanceAnalysis) -> List[str]:
-        """Generate performance recommendations"""
-        recommendations = []
+        """Generate performance recommendations"""        recommendations = []
         
         try:
             # Trend-based recommendations
@@ -1490,8 +1429,7 @@ class PerformanceAnalytics:
         time_window: TimeWindow,
         tenant_id: Optional[str]
     ) -> PerformanceAnalysis:
-        """Create empty analysis for missing data"""
-        return PerformanceAnalysis(
+        """Create empty analysis for missing data"""        return PerformanceAnalysis(
             metric_name=metric_name,
             time_window=time_window,
             tenant_id=tenant_id,
@@ -1515,8 +1453,7 @@ class PerformanceAnalytics:
         time_window: TimeWindow,
         tenant_id: Optional[str]
     ) -> Dict[str, PerformanceAnalysis]:
-        """Analyze application-level performance"""
-        app_metrics = [
+        """Analyze application-level performance"""        app_metrics = [
             "http_request_duration_seconds",
             "http_requests_total",
             "http_errors_total"
@@ -1530,8 +1467,7 @@ class PerformanceAnalytics:
         return results
     
     def _calculate_overall_score(self, sections: Dict[str, Any]) -> float:
-        """Calculate overall performance score from all sections"""
-        try:
+        """Calculate overall performance score from all sections"""        try:
             all_scores = []
             
             for section_name, section_data in sections.items():
@@ -1547,8 +1483,7 @@ class PerformanceAnalytics:
             return 0.0
     
     def _generate_performance_summary(self, report: Dict[str, Any]) -> str:
-        """Generate performance summary text"""
-        try:
+        """Generate performance summary text"""        try:
             overall_score = report.get("overall_score", 0)
             health_status = self._determine_health_status(overall_score)
             
@@ -1571,8 +1506,7 @@ class PerformanceAnalytics:
             return "Performance analysis completed."
     
     def _generate_report_recommendations(self, report: Dict[str, Any]) -> List[str]:
-        """Generate recommendations from full report"""
-        try:
+        """Generate recommendations from full report"""        try:
             all_recommendations = []
             
             for section_name, section_data in report.get("sections", {}).items():
@@ -1599,8 +1533,7 @@ class PerformanceAnalytics:
         self,
         tenant_analyses: Dict[str, PerformanceAnalysis]
     ) -> List[Dict[str, Any]]:
-        """Rank tenants by performance score"""
-        try:
+        """Rank tenants by performance score"""        try:
             rankings = []
             
             for tenant_id, analysis in tenant_analyses.items():
@@ -1627,8 +1560,7 @@ class PerformanceAnalytics:
         self,
         tenant_analyses: Dict[str, PerformanceAnalysis]
     ) -> Dict[str, Any]:
-        """Identify performance gaps between tenants"""
-        try:
+        """Identify performance gaps between tenants"""        try:
             scores = [analysis.performance_score for analysis in tenant_analyses.values()]
             
             if not scores:
@@ -1655,8 +1587,7 @@ class PerformanceAnalytics:
         self,
         tenant_analyses: Dict[str, PerformanceAnalysis]
     ) -> List[str]:
-        """Identify best practices from top-performing tenants"""
-        try:
+        """Identify best practices from top-performing tenants"""        try:
             # Find top performing tenant
             best_tenant = max(
                 tenant_analyses.items(),
@@ -1680,8 +1611,7 @@ class PerformanceAnalytics:
             return []
     
     def _initialize_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Initialize performance thresholds for different metrics"""
-        return {
+        """Initialize performance thresholds for different metrics"""        return {
             "http_request_duration_seconds": {
                 "excellent": 0.1,   # 100ms
                 "good": 0.25,       # 250ms

@@ -1,5 +1,4 @@
-"""
-IA Influencer Agent - Metrics Configuration
+"""IA Influencer Agent - Metrics Configuration
 Enterprise-grade metrics configuration and settings
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -13,7 +12,6 @@ Features:
 - Alert configuration templates
 - Dashboard configuration presets
 """
-
 import os
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
@@ -25,16 +23,14 @@ settings = get_settings()
 
 
 class MetricsEnvironment(Enum):
-    """Metrics environment types"""
-    DEVELOPMENT = "development"
+    """Metrics environment types"""    DEVELOPMENT = "development"
     STAGING = "staging"
     PRODUCTION = "production"
 
 
 @dataclass
 class PrometheusConfig:
-    """Prometheus configuration"""
-    enabled: bool = True
+    """Prometheus configuration"""    enabled: bool = True
     port: int = 8000
     pushgateway_url: Optional[str] = None
     scrape_interval: str = "15s"
@@ -45,8 +41,7 @@ class PrometheusConfig:
 
 @dataclass
 class GrafanaConfig:
-    """Grafana configuration"""
-    enabled: bool = True
+    """Grafana configuration"""    enabled: bool = True
     url: str = "http://localhost:3000"
     api_key: Optional[str] = None
     organization_id: int = 1
@@ -56,8 +51,7 @@ class GrafanaConfig:
 
 @dataclass
 class AlertConfig:
-    """Alert configuration"""
-    enabled: bool = True
+    """Alert configuration"""    enabled: bool = True
     evaluation_interval: int = 30  # seconds
     notification_channels: List[str] = field(default_factory=list)
     escalation_enabled: bool = True
@@ -67,8 +61,7 @@ class AlertConfig:
 
 @dataclass
 class MetricsRetentionConfig:
-    """Metrics retention configuration"""
-    realtime_retention: int = 300    # 5 minutes
+    """Metrics retention configuration"""    realtime_retention: int = 300    # 5 minutes
     fast_retention: int = 3600       # 1 hour
     normal_retention: int = 86400    # 24 hours
     slow_retention: int = 604800     # 7 days
@@ -76,17 +69,14 @@ class MetricsRetentionConfig:
 
 
 class MetricsConfiguration:
-    """
-    Centralized metrics configuration manager
-    """
-    
+    """    Centralized metrics configuration manager
+    """    
     def __init__(self, environment: MetricsEnvironment = MetricsEnvironment.PRODUCTION):
         self.environment = environment
         self._load_configuration()
     
     def _load_configuration(self) -> None:
-        """Load configuration based on environment"""
-        
+        """Load configuration based on environment"""        
         # Prometheus Configuration
         self.prometheus = PrometheusConfig(
             enabled=os.getenv("PROMETHEUS_ENABLED", "true").lower() == "true",
@@ -136,8 +126,7 @@ class MetricsConfiguration:
             self._apply_production_settings()
     
     def _apply_development_settings(self) -> None:
-        """Apply development environment settings"""
-        # Reduced retention for development
+        """Apply development environment settings"""        # Reduced retention for development
         self.retention.realtime_retention = 60      # 1 minute
         self.retention.fast_retention = 300         # 5 minutes
         self.retention.normal_retention = 3600      # 1 hour
@@ -151,8 +140,7 @@ class MetricsConfiguration:
         self.prometheus.max_samples = 1000000  # 1M samples
     
     def _apply_staging_settings(self) -> None:
-        """Apply staging environment settings"""
-        # Medium retention for staging
+        """Apply staging environment settings"""        # Medium retention for staging
         self.retention.realtime_retention = 180     # 3 minutes
         self.retention.fast_retention = 1800        # 30 minutes
         self.retention.normal_retention = 43200     # 12 hours
@@ -166,8 +154,7 @@ class MetricsConfiguration:
         self.prometheus.max_samples = 10000000  # 10M samples
     
     def _apply_production_settings(self) -> None:
-        """Apply production environment settings"""
-        # Full retention for production
+        """Apply production environment settings"""        # Full retention for production
         # (using default values)
         
         # Ensure critical settings are enabled
@@ -177,8 +164,7 @@ class MetricsConfiguration:
         self.grafana.enabled = True
     
     def get_metric_retention(self, metric_name: str) -> int:
-        """Get retention period for specific metric"""
-        # Business metrics get longer retention
+        """Get retention period for specific metric"""        # Business metrics get longer retention
         if any(keyword in metric_name.lower() for keyword in ["revenue", "user", "business"]):
             return self.retention.aggregated_retention
         
@@ -195,8 +181,7 @@ class MetricsConfiguration:
             return self.retention.normal_retention
     
     def get_alert_thresholds(self) -> Dict[str, Dict[str, float]]:
-        """Get alert thresholds by environment"""
-        base_thresholds = {
+        """Get alert thresholds by environment"""        base_thresholds = {
             "http_error_rate": {
                 "warning": 0.05,   # 5%
                 "critical": 0.10   # 10%
@@ -237,8 +222,7 @@ class MetricsConfiguration:
         return base_thresholds
     
     def get_dashboard_configs(self) -> Dict[str, Dict[str, Any]]:
-        """Get default dashboard configurations"""
-        return {
+        """Get default dashboard configurations"""        return {
             "application_overview": {
                 "title": "Application Overview",
                 "description": "High-level application performance metrics",
@@ -384,8 +368,7 @@ class MetricsConfiguration:
         }
     
     def get_notification_channels(self) -> Dict[str, Dict[str, Any]]:
-        """Get notification channel configurations"""
-        return {
+        """Get notification channel configurations"""        return {
             "email": {
                 "type": "email",
                 "enabled": os.getenv("EMAIL_NOTIFICATIONS_ENABLED", "true").lower() == "true",
@@ -414,8 +397,7 @@ class MetricsConfiguration:
         }
     
     def validate_configuration(self) -> List[str]:
-        """Validate configuration and return list of issues"""
-        issues = []
+        """Validate configuration and return list of issues"""        issues = []
         
         # Validate Prometheus configuration
         if self.prometheus.enabled:
@@ -453,8 +435,7 @@ class MetricsConfiguration:
 
 # Global configuration instance
 def get_metrics_config(environment: MetricsEnvironment = None) -> MetricsConfiguration:
-    """Get metrics configuration instance"""
-    if environment is None:
+    """Get metrics configuration instance"""    if environment is None:
         env_name = os.getenv("METRICS_ENVIRONMENT", "production").lower()
         environment = MetricsEnvironment(env_name)
     

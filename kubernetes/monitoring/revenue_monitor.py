@@ -1,5 +1,4 @@
-"""
-Real-time Revenue Monitor for IA Influencer Agent Platform
+"""Real-time Revenue Monitor for IA Influencer Agent Platform
 ==========================================================
 
 Advanced revenue monitoring and optimization system for content creators,
@@ -23,7 +22,6 @@ Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: 2025 Fahed Mlaiel. All rights reserved.
 License: Proprietary - Unauthorized use, distribution, or modification prohibited
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -42,8 +40,7 @@ logger = logging.getLogger(__name__)
 
 
 class RevenueSource(Enum):
-    """Revenue sources for content creators"""
-    SPOTIFY_STREAMS = "spotify_streams"
+    """Revenue sources for content creators"""    SPOTIFY_STREAMS = "spotify_streams"
     YOUTUBE_MONETIZATION = "youtube_monetization"
     TIKTOK_CREATOR_FUND = "tiktok_creator_fund"
     INSTAGRAM_REELS = "instagram_reels"
@@ -56,8 +53,7 @@ class RevenueSource(Enum):
 
 
 class RevenueCurrency(Enum):
-    """Supported revenue currencies"""
-    EUR = "EUR"
+    """Supported revenue currencies"""    EUR = "EUR"
     USD = "USD"
     GBP = "GBP"
     CAD = "CAD"
@@ -66,8 +62,7 @@ class RevenueCurrency(Enum):
 
 
 class RevenueStatus(Enum):
-    """Revenue transaction statuses"""
-    PENDING = "pending"
+    """Revenue transaction statuses"""    PENDING = "pending"
     CONFIRMED = "confirmed"
     PAID = "paid"
     DISPUTED = "disputed"
@@ -77,8 +72,7 @@ class RevenueStatus(Enum):
 
 @dataclass
 class RevenueTransaction:
-    """Individual revenue transaction"""
-    transaction_id: str
+    """Individual revenue transaction"""    transaction_id: str
     creator_id: str
     revenue_source: RevenueSource
     amount: Decimal
@@ -95,8 +89,7 @@ class RevenueTransaction:
 
 @dataclass
 class RevenueAnalytics:
-    """Comprehensive revenue analytics"""
-    creator_id: str
+    """Comprehensive revenue analytics"""    creator_id: str
     time_period: str
     total_gross_revenue: Decimal
     total_net_revenue: Decimal
@@ -112,8 +105,7 @@ class RevenueAnalytics:
 
 @dataclass
 class RevenueProtectionMetrics:
-    """Revenue protection effectiveness metrics"""
-    protection_id: str
+    """Revenue protection effectiveness metrics"""    protection_id: str
     creator_id: str
     content_id: str
     estimated_lost_revenue: Decimal
@@ -127,8 +119,7 @@ class RevenueProtectionMetrics:
 
 @dataclass
 class CollaborationRevenue:
-    """Collaboration revenue sharing data"""
-    collaboration_id: str
+    """Collaboration revenue sharing data"""    collaboration_id: str
     primary_creator_id: str
     collaborator_ids: List[str]
     total_revenue: Decimal
@@ -140,13 +131,11 @@ class CollaborationRevenue:
 
 
 class RealtimeRevenueMonitor:
-    """
-    Real-time revenue monitoring system for IA Influencer Agent Platform.
+    """    Real-time revenue monitoring system for IA Influencer Agent Platform.
     
     Provides comprehensive revenue tracking, protection impact analysis,
     and AI-powered optimization recommendations for content creators.
-    """
-    
+    """    
     def __init__(
         self,
         redis_client: Optional[aioredis.Redis] = None,
@@ -192,8 +181,7 @@ class RealtimeRevenueMonitor:
         logger.info("Real-time Revenue Monitor initialized")
     
     async def start_monitoring(self):
-        """Start revenue monitoring"""
-        if self._running:
+        """Start revenue monitoring"""        if self._running:
             logger.warning("Revenue monitoring already running")
             return
         
@@ -209,8 +197,7 @@ class RealtimeRevenueMonitor:
         logger.info("Real-time revenue monitoring started")
     
     async def stop_monitoring(self):
-        """Stop revenue monitoring"""
-        self._running = False
+        """Stop revenue monitoring"""        self._running = False
         
         # Cancel tasks
         if self._monitoring_task:
@@ -229,8 +216,7 @@ class RealtimeRevenueMonitor:
         logger.info("Real-time revenue monitoring stopped")
     
     async def _monitoring_loop(self):
-        """Main revenue monitoring loop"""
-        while self._running:
+        """Main revenue monitoring loop"""        while self._running:
             try:
                 # Collect revenue data from external APIs
                 await self._collect_platform_revenue_data()
@@ -253,8 +239,7 @@ class RealtimeRevenueMonitor:
                 await asyncio.sleep(30)
     
     async def _analytics_loop(self):
-        """Revenue analytics processing loop"""
-        while self._running:
+        """Revenue analytics processing loop"""        while self._running:
             try:
                 # Generate revenue analytics for all creators
                 await self._generate_revenue_analytics()
@@ -277,8 +262,7 @@ class RealtimeRevenueMonitor:
                 await asyncio.sleep(60)
     
     async def record_revenue_transaction(self, transaction: RevenueTransaction):
-        """Record a revenue transaction"""
-        
+        """Record a revenue transaction"""        
         # Add transaction to buffer
         self._revenue_transactions.append(transaction)
         
@@ -306,8 +290,7 @@ class RealtimeRevenueMonitor:
         logger.debug(f"Revenue transaction recorded: {transaction.transaction_id}")
     
     async def record_protection_impact(self, metrics: RevenueProtectionMetrics):
-        """Record revenue protection impact"""
-        
+        """Record revenue protection impact"""        
         self._protection_metrics[metrics.protection_id] = metrics
         
         # Update protected revenue tracking
@@ -333,8 +316,7 @@ class RealtimeRevenueMonitor:
         logger.info(f"Revenue protection impact recorded: {metrics.protection_id}")
     
     async def record_collaboration_revenue(self, collaboration: CollaborationRevenue):
-        """Record collaboration revenue sharing"""
-        
+        """Record collaboration revenue sharing"""        
         self._collaboration_revenues[collaboration.collaboration_id] = collaboration
         
         # Update individual creator revenues
@@ -363,8 +345,7 @@ class RealtimeRevenueMonitor:
         logger.info(f"Collaboration revenue recorded: {collaboration.collaboration_id}")
     
     async def _store_transaction_in_redis(self, transaction: RevenueTransaction):
-        """Store transaction in Redis"""
-        try:
+        """Store transaction in Redis"""        try:
             # Store individual transaction
             await self.redis_client.lpush(
                 f"revenue_transactions:{transaction.creator_id}",
@@ -404,11 +385,9 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error storing transaction in Redis: {e}")
     
     async def _store_transaction_in_database(self, transaction: RevenueTransaction):
-        """Store transaction in database"""
-        try:
+        """Store transaction in database"""        try:
             async with self.db_engine.begin() as conn:
-                await conn.execute(text("""
-                    INSERT INTO revenue_transactions 
+                await conn.execute(text("""                    INSERT INTO revenue_transactions 
                     (transaction_id, creator_id, revenue_source, amount, currency, status, 
                      platform_fee, net_amount, timestamp, content_id, collaboration_id, 
                      protection_event_id, metadata)
@@ -435,8 +414,7 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error storing transaction in database: {e}")
     
     async def _collect_platform_revenue_data(self):
-        """Collect revenue data from external platform APIs"""
-        try:
+        """Collect revenue data from external platform APIs"""        try:
             # This would integrate with actual platform APIs
             # For now, we'll simulate data collection
             
@@ -451,8 +429,7 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error collecting platform revenue data: {e}")
     
     async def _update_realtime_aggregations(self):
-        """Update real-time revenue aggregations"""
-        try:
+        """Update real-time revenue aggregations"""        try:
             current_hour = datetime.utcnow().replace(minute=0, second=0, microsecond=0)
             
             # Update hourly revenue for each creator
@@ -484,8 +461,7 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error updating realtime aggregations: {e}")
     
     async def _detect_revenue_anomalies(self):
-        """Detect revenue anomalies and potential fraud"""
-        try:
+        """Detect revenue anomalies and potential fraud"""        try:
             for creator_id, revenue_data in self._realtime_revenue.items():
                 # Check for sudden revenue spikes
                 current_total = revenue_data.get("total", Decimal("0"))
@@ -514,8 +490,7 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error detecting revenue anomalies: {e}")
     
     async def _flag_revenue_anomaly(self, creator_id: str, anomaly_type: str, details: Dict[str, Any]):
-        """Flag a revenue anomaly for investigation"""
-        
+        """Flag a revenue anomaly for investigation"""        
         anomaly = {
             "creator_id": creator_id,
             "anomaly_type": anomaly_type,
@@ -537,8 +512,7 @@ class RealtimeRevenueMonitor:
         logger.warning(f"Revenue anomaly detected for {creator_id}: {anomaly_type}")
     
     async def _check_transaction_anomaly(self, transaction: RevenueTransaction):
-        """Check individual transaction for anomalies"""
-        try:
+        """Check individual transaction for anomalies"""        try:
             # Check for unusually high single transaction
             if transaction.net_amount > Decimal("10000"):  # €10,000 threshold
                 await self._flag_revenue_anomaly(
@@ -582,8 +556,7 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error checking transaction anomaly: {e}")
     
     async def _update_protection_effectiveness(self):
-        """Update revenue protection effectiveness metrics"""
-        try:
+        """Update revenue protection effectiveness metrics"""        try:
             for creator_id in self._realtime_revenue.keys():
                 # Calculate protection effectiveness
                 total_recovered = sum(
@@ -619,8 +592,7 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error updating protection effectiveness: {e}")
     
     async def _generate_revenue_analytics(self):
-        """Generate comprehensive revenue analytics"""
-        try:
+        """Generate comprehensive revenue analytics"""        try:
             for creator_id, revenue_data in self._realtime_revenue.items():
                 # Calculate analytics for the creator
                 analytics = await self._calculate_creator_analytics(creator_id, revenue_data)
@@ -650,8 +622,7 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error generating revenue analytics: {e}")
     
     async def _calculate_creator_analytics(self, creator_id: str, revenue_data: Dict[str, Decimal]) -> RevenueAnalytics:
-        """Calculate analytics for a specific creator"""
-        
+        """Calculate analytics for a specific creator"""        
         # Get historical data
         hourly_data = list(self._hourly_revenue[creator_id])
         
@@ -711,8 +682,7 @@ class RealtimeRevenueMonitor:
         )
     
     async def _update_collaboration_revenue(self):
-        """Update collaboration revenue sharing"""
-        try:
+        """Update collaboration revenue sharing"""        try:
             # Process collaboration revenue sharing
             for collaboration_id, collaboration in self._collaboration_revenues.items():
                 # Verify revenue shares add up correctly
@@ -728,8 +698,7 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error updating collaboration revenue: {e}")
     
     async def _generate_revenue_optimization_recommendations(self):
-        """Generate AI-powered revenue optimization recommendations"""
-        try:
+        """Generate AI-powered revenue optimization recommendations"""        try:
             recommendations = []
             
             for creator_id, analytics in self._revenue_analytics.items():
@@ -776,8 +745,7 @@ class RealtimeRevenueMonitor:
             logger.error(f"Error generating revenue optimization recommendations: {e}")
     
     async def _update_exchange_rates(self):
-        """Update currency exchange rates"""
-        try:
+        """Update currency exchange rates"""        try:
             # This would integrate with a currency conversion API
             # For now, we'll use static rates
             
@@ -805,8 +773,7 @@ class RealtimeRevenueMonitor:
         from_currency: RevenueCurrency, 
         to_currency: RevenueCurrency
     ) -> Decimal:
-        """Convert amount between currencies"""
-        
+        """Convert amount between currencies"""        
         if from_currency == to_currency:
             return amount
         
@@ -818,8 +785,7 @@ class RealtimeRevenueMonitor:
             return amount  # Return original if conversion fails
     
     async def get_creator_revenue_summary(self, creator_id: str) -> Dict[str, Any]:
-        """Get revenue summary for a creator"""
-        
+        """Get revenue summary for a creator"""        
         revenue_data = self._realtime_revenue.get(creator_id, {})
         analytics = self._revenue_analytics.get(creator_id)
         
@@ -840,8 +806,7 @@ class RealtimeRevenueMonitor:
         return summary
     
     async def get_platform_revenue_overview(self) -> Dict[str, Any]:
-        """Get overall platform revenue overview"""
-        
+        """Get overall platform revenue overview"""        
         total_revenue = sum(
             sum(creator_data.values()) for creator_data in self._realtime_revenue.values()
         )
@@ -863,8 +828,7 @@ class RealtimeRevenueMonitor:
         }
     
     async def health_check(self) -> Dict[str, Any]:
-        """Health check for the revenue monitor"""
-        return {
+        """Health check for the revenue monitor"""        return {
             "healthy": self._running,
             "monitored_creators": len(self._realtime_revenue),
             "revenue_transactions": len(self._revenue_transactions),

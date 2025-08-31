@@ -1,5 +1,4 @@
-"""
-Event Processing Pipeline
+"""Event Processing Pipeline
 
 Enterprise-grade event processing pipeline orchestrator for AI processing workflows.
 Coordinates complex multi-stage processing flows with sophisticated error handling,
@@ -11,7 +10,6 @@ Content Upload → AI Processing → Protection → SEO → Collaboration → Di
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import logging
 import asyncio
 from typing import Dict, Any, Optional, List, Union, Callable, Awaitable
@@ -37,8 +35,7 @@ from .distribution_preparation_handler import DistributionPreparationHandler, Di
 logger = logging.getLogger(__name__)
 
 class PipelineStage(Enum):
-    """Pipeline processing stages"""
-    CONTENT_ANALYSIS = "content_analysis"
+    """Pipeline processing stages"""    CONTENT_ANALYSIS = "content_analysis"
     AI_ENHANCEMENT = "ai_enhancement"
     CONTENT_PROTECTION = "content_protection"
     SEO_OPTIMIZATION = "seo_optimization"
@@ -47,8 +44,7 @@ class PipelineStage(Enum):
     FINAL_PROCESSING = "final_processing"
 
 class PipelineStatus(Enum):
-    """Pipeline execution status"""
-    PENDING = "pending"
+    """Pipeline execution status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -56,16 +52,14 @@ class PipelineStatus(Enum):
     CANCELLED = "cancelled"
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""
-    LOW = "low"
+    """Error severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 @dataclass
 class PipelineConfiguration:
-    """Configuration for pipeline execution"""
-    pipeline_id: str
+    """Configuration for pipeline execution"""    pipeline_id: str
     content_id: str
     content_type: str
     creator_id: str
@@ -78,8 +72,7 @@ class PipelineConfiguration:
     stage_configurations: Dict[str, Dict[str, Any]]
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert configuration to dictionary"""
-        return {
+        """Convert configuration to dictionary"""        return {
             'pipeline_id': self.pipeline_id,
             'content_id': self.content_id,
             'content_type': self.content_type,
@@ -95,8 +88,7 @@ class PipelineConfiguration:
 
 @dataclass
 class StageResult:
-    """Result from a pipeline stage"""
-    stage: PipelineStage
+    """Result from a pipeline stage"""    stage: PipelineStage
     status: PipelineStatus
     start_time: datetime
     end_time: Optional[datetime]
@@ -108,23 +100,19 @@ class StageResult:
     next_stage_recommendations: List[PipelineStage]
     
     def is_successful(self) -> bool:
-        """Check if stage completed successfully"""
-        return self.status == PipelineStatus.COMPLETED and not self.errors
+        """Check if stage completed successfully"""        return self.status == PipelineStatus.COMPLETED and not self.errors
     
     def get_quality_score(self) -> float:
-        """Get quality score from stage results"""
-        return self.business_metrics.get('quality_score', 0.0)
+        """Get quality score from stage results"""        return self.business_metrics.get('quality_score', 0.0)
     
     def get_processing_time(self) -> float:
-        """Get actual processing time"""
-        if self.end_time and self.start_time:
+        """Get actual processing time"""        if self.end_time and self.start_time:
             return (self.end_time - self.start_time).total_seconds()
         return self.processing_time
 
 @dataclass
 class PipelineMetrics:
-    """Comprehensive pipeline execution metrics"""
-    total_processing_time: float
+    """Comprehensive pipeline execution metrics"""    total_processing_time: float
     stage_processing_times: Dict[str, float]
     quality_progression: Dict[str, float]
     error_count: int
@@ -136,8 +124,7 @@ class PipelineMetrics:
     throughput: float
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert metrics to dictionary"""
-        return {
+        """Convert metrics to dictionary"""        return {
             'total_processing_time': self.total_processing_time,
             'stage_processing_times': self.stage_processing_times,
             'quality_progression': self.quality_progression,
@@ -152,8 +139,7 @@ class PipelineMetrics:
 
 @dataclass
 class PipelineResult:
-    """Complete pipeline execution result"""
-    pipeline_id: str
+    """Complete pipeline execution result"""    pipeline_id: str
     content_id: str
     overall_status: PipelineStatus
     stage_results: Dict[PipelineStage, StageResult]
@@ -165,16 +151,13 @@ class PipelineResult:
     created_assets: List[Dict[str, Any]]
     
     def get_successful_stages(self) -> List[PipelineStage]:
-        """Get list of successfully completed stages"""
-        return [stage for stage, result in self.stage_results.items() if result.is_successful()]
+        """Get list of successfully completed stages"""        return [stage for stage, result in self.stage_results.items() if result.is_successful()]
     
     def get_failed_stages(self) -> List[PipelineStage]:
-        """Get list of failed stages"""
-        return [stage for stage, result in self.stage_results.items() if not result.is_successful()]
+        """Get list of failed stages"""        return [stage for stage, result in self.stage_results.items() if not result.is_successful()]
     
     def calculate_success_rate(self) -> float:
-        """Calculate overall pipeline success rate"""
-        if not self.stage_results:
+        """Calculate overall pipeline success rate"""        if not self.stage_results:
             return 0.0
         
         successful = len(self.get_successful_stages())
@@ -182,8 +165,7 @@ class PipelineResult:
         return successful / total
     
     def get_business_roi(self) -> float:
-        """Calculate business return on investment"""
-        processing_cost = self.pipeline_metrics.total_processing_time * 0.1  # Cost per second
+        """Calculate business return on investment"""        processing_cost = self.pipeline_metrics.total_processing_time * 0.1  # Cost per second
         quality_gain = self.final_quality_score * 100  # Value from quality improvement
         
         if processing_cost > 0:
@@ -191,16 +173,13 @@ class PipelineResult:
         return 0.0
 
 class EventProcessingPipeline:
-    """
-    Enterprise Event Processing Pipeline
+    """    Enterprise Event Processing Pipeline
     
     Orchestrates complex multi-stage AI processing workflows with sophisticated
     error handling, retry mechanisms, and business logic optimization.
-    """
-    
+    """    
     def __init__(self, ai_engine: Any):
-        """Initialize pipeline with AI engine and all handlers"""
-        # Initialize stage handlers
+        """Initialize pipeline with AI engine and all handlers"""        # Initialize stage handlers
         self.ai_engine = ai_engine
         self.content_analysis_handler = ContentAnalysisHandler(ai_engine)
         self.ai_enhancement_handler = AIEnhancementHandler(ai_engine)
@@ -231,8 +210,7 @@ class EventProcessingPipeline:
         }
     
     def _initialize_stage_handlers(self):
-        """Initialize mapping of stages to handler methods"""
-        self.stage_handlers = {
+        """Initialize mapping of stages to handler methods"""        self.stage_handlers = {
             PipelineStage.CONTENT_ANALYSIS: self._execute_content_analysis,
             PipelineStage.AI_ENHANCEMENT: self._execute_ai_enhancement,
             PipelineStage.CONTENT_PROTECTION: self._execute_content_protection,
@@ -243,8 +221,7 @@ class EventProcessingPipeline:
         }
     
     async def execute_pipeline(self, config: PipelineConfiguration) -> PipelineResult:
-        """Execute complete processing pipeline with comprehensive monitoring"""
-        pipeline_start = datetime.now()
+        """Execute complete processing pipeline with comprehensive monitoring"""        pipeline_start = datetime.now()
         
         try:
             logger.info(f"Starting pipeline execution for {config.pipeline_id}")
@@ -361,8 +338,7 @@ class EventProcessingPipeline:
             raise
     
     def _determine_processing_stages(self, config: PipelineConfiguration) -> List[PipelineStage]:
-        """Determine which stages to execute based on configuration"""
-        # Default stage order following business logic
+        """Determine which stages to execute based on configuration"""        # Default stage order following business logic
         default_stages = [
             PipelineStage.CONTENT_ANALYSIS,
             PipelineStage.AI_ENHANCEMENT,
@@ -383,8 +359,7 @@ class EventProcessingPipeline:
         config: PipelineConfiguration, 
         stages: List[PipelineStage]
     ) -> Dict[PipelineStage, StageResult]:
-        """Execute stages sequentially with dependency management"""
-        stage_results = {}
+        """Execute stages sequentially with dependency management"""        stage_results = {}
         previous_result = None
         
         for stage in stages:
@@ -430,8 +405,7 @@ class EventProcessingPipeline:
         config: PipelineConfiguration, 
         stages: List[PipelineStage]
     ) -> Dict[PipelineStage, StageResult]:
-        """Execute compatible stages in parallel for improved performance"""
-        stage_results = {}
+        """Execute compatible stages in parallel for improved performance"""        stage_results = {}
         
         # Group stages by dependency level
         stage_groups = self._group_stages_by_dependencies(stages)
@@ -481,8 +455,7 @@ class EventProcessingPipeline:
         return stage_results
     
     def _group_stages_by_dependencies(self, stages: List[PipelineStage]) -> List[List[PipelineStage]]:
-        """Group stages by their dependencies for parallel execution"""
-        # Define stage dependencies
+        """Group stages by their dependencies for parallel execution"""        # Define stage dependencies
         stage_dependencies = {
             PipelineStage.CONTENT_ANALYSIS: [],
             PipelineStage.AI_ENHANCEMENT: [PipelineStage.CONTENT_ANALYSIS],
@@ -520,8 +493,7 @@ class EventProcessingPipeline:
         return groups
     
     def _combine_previous_results(self, previous_results: Dict[PipelineStage, Dict[str, Any]]) -> Dict[str, Any]:
-        """Combine results from previous stages as input for current stage"""
-        combined = {}
+        """Combine results from previous stages as input for current stage"""        combined = {}
         
         for stage, result_data in previous_results.items():
             # Add stage prefix to avoid key conflicts
@@ -537,8 +509,7 @@ class EventProcessingPipeline:
         config: PipelineConfiguration, 
         input_data: Optional[Dict[str, Any]]
     ) -> StageResult:
-        """Execute a single pipeline stage with error handling and retry logic"""
-        stage_start = datetime.now()
+        """Execute a single pipeline stage with error handling and retry logic"""        stage_start = datetime.now()
         retry_count = 0
         
         while retry_count <= config.max_retry_attempts:
@@ -617,8 +588,7 @@ class EventProcessingPipeline:
         input_data: Optional[Dict[str, Any]], 
         stage: PipelineStage
     ) -> Dict[str, Any]:
-        """Prepare input data for stage execution"""
-        base_input = {
+        """Prepare input data for stage execution"""        base_input = {
             'content_id': config.content_id,
             'content_type': config.content_type,
             'creator_id': config.creator_id,
@@ -644,8 +614,7 @@ class EventProcessingPipeline:
         error_message: str, 
         severity: ErrorSeverity
     ) -> StageResult:
-        """Create error stage result"""
-        return StageResult(
+        """Create error stage result"""        return StageResult(
             stage=stage,
             status=PipelineStatus.FAILED,
             start_time=start_time,
@@ -659,8 +628,7 @@ class EventProcessingPipeline:
         )
     
     async def _execute_content_analysis(self, stage_input: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content analysis stage"""
-        try:
+        """Execute content analysis stage"""        try:
             # Add required fields for content analysis
             analysis_input = {
                 **stage_input,
@@ -692,8 +660,7 @@ class EventProcessingPipeline:
             raise
     
     async def _execute_ai_enhancement(self, stage_input: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute AI enhancement stage"""
-        try:
+        """Execute AI enhancement stage"""        try:
             # Prepare enhancement input
             enhancement_input = {
                 **stage_input,
@@ -721,8 +688,7 @@ class EventProcessingPipeline:
             raise
     
     async def _execute_content_protection(self, stage_input: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content protection stage"""
-        try:
+        """Execute content protection stage"""        try:
             # Prepare protection input
             protection_input = {
                 **stage_input,
@@ -751,8 +717,7 @@ class EventProcessingPipeline:
             raise
     
     async def _execute_seo_optimization(self, stage_input: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute SEO optimization stage using SEOOptimizationHandler"""
-        try:
+        """Execute SEO optimization stage using SEOOptimizationHandler"""        try:
             content_id = stage_input.get('content_id')
             logger.info(f"Executing SEO optimization for content {content_id}")
             
@@ -808,8 +773,7 @@ class EventProcessingPipeline:
             raise
     
     async def _execute_collaboration_matching(self, stage_input: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute collaboration matching stage using CollaborationMatchingHandler"""
-        try:
+        """Execute collaboration matching stage using CollaborationMatchingHandler"""        try:
             content_id = stage_input.get('content_id')
             logger.info(f"Executing collaboration matching for content {content_id}")
             
@@ -879,8 +843,7 @@ class EventProcessingPipeline:
             raise
     
     async def _execute_distribution_preparation(self, stage_input: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute distribution preparation stage using DistributionPreparationHandler"""
-        try:
+        """Execute distribution preparation stage using DistributionPreparationHandler"""        try:
             content_id = stage_input.get('content_id')
             logger.info(f"Executing distribution preparation for content {content_id}")
             
@@ -924,8 +887,7 @@ class EventProcessingPipeline:
             raise
     
     async def _execute_final_processing(self, stage_input: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute final processing stage"""
-        try:
+        """Execute final processing stage"""        try:
             # Compile all results and prepare final output
             content_id = stage_input.get('content_id')
             pipeline_id = stage_input.get('pipeline_id')
@@ -961,8 +923,7 @@ class EventProcessingPipeline:
             raise
     
     def _calculate_business_value(self, stage_input: Dict[str, Any]) -> float:
-        """Calculate overall business value created by pipeline"""
-        factors = {
+        """Calculate overall business value created by pipeline"""        factors = {
             'quality_improvement': stage_input.get('quality_improvement', 0.0) * 100,
             'protection_value': stage_input.get('protection_strength', 0.0) * 50,
             'seo_value': stage_input.get('seo_score', 0.0) * 30,
@@ -973,8 +934,7 @@ class EventProcessingPipeline:
         return sum(factors.values())
     
     def _extract_business_metrics(self, stage_result_data: Dict[str, Any], stage: PipelineStage) -> Dict[str, float]:
-        """Extract business metrics from stage result data"""
-        metrics = {}
+        """Extract business metrics from stage result data"""        metrics = {}
         
         if stage == PipelineStage.CONTENT_ANALYSIS:
             metrics['quality_score'] = stage_result_data.get('quality_score', 0.0)
@@ -1007,8 +967,7 @@ class EventProcessingPipeline:
         return metrics
     
     def _get_next_stage_recommendations(self, stage: PipelineStage, stage_result_data: Dict[str, Any]) -> List[PipelineStage]:
-        """Get recommendations for next stages based on current stage results"""
-        # Default next stage progression
+        """Get recommendations for next stages based on current stage results"""        # Default next stage progression
         stage_progression = {
             PipelineStage.CONTENT_ANALYSIS: [PipelineStage.AI_ENHANCEMENT],
             PipelineStage.AI_ENHANCEMENT: [PipelineStage.CONTENT_PROTECTION],
@@ -1022,8 +981,7 @@ class EventProcessingPipeline:
         return stage_progression.get(stage, [])
     
     def _determine_overall_status(self, stage_results: Dict[PipelineStage, StageResult]) -> PipelineStatus:
-        """Determine overall pipeline status from stage results"""
-        if not stage_results:
+        """Determine overall pipeline status from stage results"""        if not stage_results:
             return PipelineStatus.FAILED
         
         statuses = [result.status for result in stage_results.values()]
@@ -1042,8 +1000,7 @@ class EventProcessingPipeline:
         stage_results: Dict[PipelineStage, StageResult], 
         pipeline_start: datetime
     ) -> PipelineMetrics:
-        """Calculate comprehensive pipeline metrics"""
-        total_time = (datetime.now() - pipeline_start).total_seconds()
+        """Calculate comprehensive pipeline metrics"""        total_time = (datetime.now() - pipeline_start).total_seconds()
         
         stage_times = {}
         quality_progression = {}
@@ -1083,8 +1040,7 @@ class EventProcessingPipeline:
         config: PipelineConfiguration, 
         stage_results: Dict[PipelineStage, StageResult]
     ) -> Dict[str, Any]:
-        """Generate business insights from pipeline execution"""
-        insights = {}
+        """Generate business insights from pipeline execution"""        insights = {}
         
         # Quality insights
         initial_quality = 0.6  # Baseline
@@ -1141,8 +1097,7 @@ class EventProcessingPipeline:
         return insights
     
     def _calculate_final_quality_score(self, stage_results: Dict[PipelineStage, StageResult]) -> float:
-        """Calculate final quality score from all stages"""
-        quality_scores = []
+        """Calculate final quality score from all stages"""        quality_scores = []
         
         for stage, result in stage_results.items():
             if result.is_successful():
@@ -1158,8 +1113,7 @@ class EventProcessingPipeline:
         stage_results: Dict[PipelineStage, StageResult], 
         business_insights: Dict[str, Any]
     ) -> List[str]:
-        """Generate recommendations based on pipeline results"""
-        recommendations = []
+        """Generate recommendations based on pipeline results"""        recommendations = []
         
         # Quality recommendations
         final_quality = self._calculate_final_quality_score(stage_results)
@@ -1186,8 +1140,7 @@ class EventProcessingPipeline:
         return recommendations
     
     def _determine_next_actions(self, config: PipelineConfiguration, pipeline_result: PipelineResult) -> List[str]:
-        """Determine next actions based on pipeline results"""
-        actions = []
+        """Determine next actions based on pipeline results"""        actions = []
         
         if pipeline_result.overall_status == PipelineStatus.COMPLETED:
             actions.extend([
@@ -1213,8 +1166,7 @@ class EventProcessingPipeline:
         return actions
     
     def _assess_error_severity(self, errors: List[Dict[str, Any]]) -> ErrorSeverity:
-        """Assess the severity of errors in a stage"""
-        if not errors:
+        """Assess the severity of errors in a stage"""        if not errors:
             return ErrorSeverity.LOW
         
         severities = [ErrorSeverity(error.get('severity', 'medium')) for error in errors]

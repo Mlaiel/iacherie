@@ -1,5 +1,4 @@
-"""
-Enhanced Database Partitioning System
+"""Enhanced Database Partitioning System
 
 Complete partitioning implementation with automated management, intelligent optimization,
 and advanced sharding capabilities for high-scale applications.
@@ -7,7 +6,6 @@ and advanced sharding capabilities for high-scale applications.
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import hashlib
 import json
@@ -28,8 +26,7 @@ logger = get_logger(__name__)
 
 
 class PartitioningTrigger(Enum):
-    """Triggers for partition operations"""
-    SIZE_THRESHOLD = "size_threshold"
+    """Triggers for partition operations"""    SIZE_THRESHOLD = "size_threshold"
     TIME_THRESHOLD = "time_threshold"
     PERFORMANCE_DEGRADATION = "performance_degradation"
     MANUAL = "manual"
@@ -38,8 +35,7 @@ class PartitioningTrigger(Enum):
 
 @dataclass
 class PartitionPlan:
-    """Partition execution plan"""
-    table_name: str
+    """Partition execution plan"""    table_name: str
     strategy: PartitionStrategy
     new_partitions: List[str]
     migrations_needed: List[Dict[str, Any]]
@@ -50,8 +46,7 @@ class PartitionPlan:
 
 @dataclass
 class ShardingConfig:
-    """Database sharding configuration"""
-    shard_count: int
+    """Database sharding configuration"""    shard_count: int
     shard_key: str
     routing_algorithm: str
     replication_factor: int
@@ -61,8 +56,7 @@ class ShardingConfig:
 
 
 class IntelligentPartitionManager:
-    """Intelligent partition manager with automated optimization"""
-    
+    """Intelligent partition manager with automated optimization"""    
     def __init__(self, engine: AsyncEngine):
         self.engine = engine
         self.base_manager = PartitionManager()
@@ -72,8 +66,7 @@ class IntelligentPartitionManager:
         self.monitoring_task: Optional[asyncio.Task] = None
         
     async def initialize_partitioning(self, table_configs: Dict[str, PartitionConfig]) -> bool:
-        """Initialize partitioning for multiple tables"""
-        try:
+        """Initialize partitioning for multiple tables"""        try:
             logger.info("Initializing intelligent partitioning system")
             
             for table_name, config in table_configs.items():
@@ -95,8 +88,7 @@ class IntelligentPartitionManager:
             return False
     
     async def _setup_table_partitioning(self, table_name: str, config: PartitionConfig) -> bool:
-        """Setup partitioning for a specific table"""
-        try:
+        """Setup partitioning for a specific table"""        try:
             if config.strategy == PartitionStrategy.TEMPORAL:
                 return await self._setup_temporal_partitioning(table_name, config)
             elif config.strategy == PartitionStrategy.HASH:
@@ -114,15 +106,12 @@ class IntelligentPartitionManager:
             return False
     
     async def _setup_temporal_partitioning(self, table_name: str, config: PartitionConfig) -> bool:
-        """Setup temporal (time-based) partitioning"""
-        try:
+        """Setup temporal (time-based) partitioning"""        try:
             # Create parent partitioned table
-            create_parent_sql = f"""
-            CREATE TABLE IF NOT EXISTS {table_name}_partitioned (
+            create_parent_sql = f"""            CREATE TABLE IF NOT EXISTS {table_name}_partitioned (
                 LIKE {table_name} INCLUDING ALL
             ) PARTITION BY RANGE ({config.partition_key})
-            """
-            
+            """            
             async with self.engine.begin() as conn:
                 await conn.execute(text(create_parent_sql))
             
@@ -137,12 +126,10 @@ class IntelligentPartitionManager:
                 
                 partition_name = f"{table_name}_{partition_date.strftime('%Y_%m')}"
                 
-                create_partition_sql = f"""
-                CREATE TABLE IF NOT EXISTS {partition_name} 
+                create_partition_sql = f"""                CREATE TABLE IF NOT EXISTS {partition_name} 
                 PARTITION OF {table_name}_partitioned
                 FOR VALUES FROM ('{partition_date.isoformat()}') TO ('{next_month.isoformat()}')
-                """
-                
+                """                
                 async with self.engine.begin() as conn:
                     await conn.execute(text(create_partition_sql))
                 
@@ -158,15 +145,12 @@ class IntelligentPartitionManager:
             return False
     
     async def _setup_hash_partitioning(self, table_name: str, config: PartitionConfig) -> bool:
-        """Setup hash-based partitioning"""
-        try:
+        """Setup hash-based partitioning"""        try:
             # Create parent partitioned table
-            create_parent_sql = f"""
-            CREATE TABLE IF NOT EXISTS {table_name}_partitioned (
+            create_parent_sql = f"""            CREATE TABLE IF NOT EXISTS {table_name}_partitioned (
                 LIKE {table_name} INCLUDING ALL
             ) PARTITION BY HASH ({config.partition_key})
-            """
-            
+            """            
             async with self.engine.begin() as conn:
                 await conn.execute(text(create_parent_sql))
             
@@ -174,12 +158,10 @@ class IntelligentPartitionManager:
             for i in range(config.partition_count):
                 partition_name = f"{table_name}_hash_{i}"
                 
-                create_partition_sql = f"""
-                CREATE TABLE IF NOT EXISTS {partition_name}
+                create_partition_sql = f"""                CREATE TABLE IF NOT EXISTS {partition_name}
                 PARTITION OF {table_name}_partitioned
                 FOR VALUES WITH (MODULUS {config.partition_count}, REMAINDER {i})
-                """
-                
+                """                
                 async with self.engine.begin() as conn:
                     await conn.execute(text(create_partition_sql))
                 
@@ -193,15 +175,12 @@ class IntelligentPartitionManager:
             return False
     
     async def _setup_range_partitioning(self, table_name: str, config: PartitionConfig) -> bool:
-        """Setup range-based partitioning"""
-        try:
+        """Setup range-based partitioning"""        try:
             # Create parent partitioned table
-            create_parent_sql = f"""
-            CREATE TABLE IF NOT EXISTS {table_name}_partitioned (
+            create_parent_sql = f"""            CREATE TABLE IF NOT EXISTS {table_name}_partitioned (
                 LIKE {table_name} INCLUDING ALL
             ) PARTITION BY RANGE ({config.partition_key})
-            """
-            
+            """            
             async with self.engine.begin() as conn:
                 await conn.execute(text(create_parent_sql))
             
@@ -211,12 +190,10 @@ class IntelligentPartitionManager:
             for i, (start_val, end_val) in enumerate(ranges):
                 partition_name = f"{table_name}_range_{i}"
                 
-                create_partition_sql = f"""
-                CREATE TABLE IF NOT EXISTS {partition_name}
+                create_partition_sql = f"""                CREATE TABLE IF NOT EXISTS {partition_name}
                 PARTITION OF {table_name}_partitioned
                 FOR VALUES FROM ({start_val}) TO ({end_val})
-                """
-                
+                """                
                 async with self.engine.begin() as conn:
                     await conn.execute(text(create_partition_sql))
                 
@@ -230,15 +207,12 @@ class IntelligentPartitionManager:
             return False
     
     async def _setup_user_based_partitioning(self, table_name: str, config: PartitionConfig) -> bool:
-        """Setup user-based partitioning for multi-tenant applications"""
-        try:
+        """Setup user-based partitioning for multi-tenant applications"""        try:
             # Create parent partitioned table
-            create_parent_sql = f"""
-            CREATE TABLE IF NOT EXISTS {table_name}_partitioned (
+            create_parent_sql = f"""            CREATE TABLE IF NOT EXISTS {table_name}_partitioned (
                 LIKE {table_name} INCLUDING ALL
             ) PARTITION BY HASH (substring({config.partition_key}::text, 1, 1))
-            """
-            
+            """            
             async with self.engine.begin() as conn:
                 await conn.execute(text(create_parent_sql))
             
@@ -246,12 +220,10 @@ class IntelligentPartitionManager:
             for i in range(16):  # 16 partitions for hex digits
                 partition_name = f"{table_name}_user_{format(i, 'x')}"
                 
-                create_partition_sql = f"""
-                CREATE TABLE IF NOT EXISTS {partition_name}
+                create_partition_sql = f"""                CREATE TABLE IF NOT EXISTS {partition_name}
                 PARTITION OF {table_name}_partitioned
                 FOR VALUES WITH (MODULUS 16, REMAINDER {i})
-                """
-                
+                """                
                 async with self.engine.begin() as conn:
                     await conn.execute(text(create_partition_sql))
                 
@@ -265,8 +237,7 @@ class IntelligentPartitionManager:
             return False
     
     async def _create_partition_indexes(self, table_name: str, config: PartitionConfig):
-        """Create optimized indexes on partitions"""
-        try:
+        """Create optimized indexes on partitions"""        try:
             # Get partition names
             partitions = await self._get_table_partitions(table_name)
             
@@ -293,17 +264,14 @@ class IntelligentPartitionManager:
             logger.error(f"Failed to create partition indexes: {e}")
     
     async def _calculate_optimal_ranges(self, table_name: str, config: PartitionConfig) -> List[Tuple[Any, Any]]:
-        """Calculate optimal ranges for range partitioning"""
-        try:
+        """Calculate optimal ranges for range partitioning"""        try:
             # Get data distribution
-            analyze_sql = f"""
-            SELECT 
+            analyze_sql = f"""            SELECT 
                 MIN({config.partition_key}) as min_val,
                 MAX({config.partition_key}) as max_val,
                 COUNT(*) as total_rows
             FROM {table_name}
-            """
-            
+            """            
             async with self.engine.begin() as conn:
                 result = await conn.execute(text(analyze_sql))
                 row = result.fetchone()
@@ -331,10 +299,8 @@ class IntelligentPartitionManager:
             return [(i * 1000000, (i + 1) * 1000000) for i in range(config.partition_count)]
     
     async def _get_table_partitions(self, table_name: str) -> List[str]:
-        """Get list of partitions for a table"""
-        try:
-            query = text("""
-                SELECT tablename 
+        """Get list of partitions for a table"""        try:
+            query = text("""                SELECT tablename 
                 FROM pg_tables 
                 WHERE schemaname = 'public' 
                 AND tablename LIKE :pattern
@@ -350,8 +316,7 @@ class IntelligentPartitionManager:
             return []
     
     async def auto_create_partitions(self, table_name: str) -> List[str]:
-        """Automatically create new partitions when needed"""
-        try:
+        """Automatically create new partitions when needed"""        try:
             config = self.partition_configs.get(table_name)
             if not config:
                 return []
@@ -380,8 +345,7 @@ class IntelligentPartitionManager:
             return []
     
     async def _check_future_temporal_partitions(self, table_name: str, config: PartitionConfig) -> List[Dict[str, Any]]:
-        """Check for needed future temporal partitions"""
-        try:
+        """Check for needed future temporal partitions"""        try:
             # Get current partitions
             current_partitions = await self._get_table_partitions(table_name)
             
@@ -410,18 +374,15 @@ class IntelligentPartitionManager:
             return []
     
     async def _create_temporal_partition(self, table_name: str, partition_info: Dict[str, Any]) -> bool:
-        """Create a single temporal partition"""
-        try:
+        """Create a single temporal partition"""        try:
             partition_name = partition_info['name']
             start_date = partition_info['start_date']
             end_date = partition_info['end_date']
             
-            create_sql = f"""
-            CREATE TABLE IF NOT EXISTS {partition_name}
+            create_sql = f"""            CREATE TABLE IF NOT EXISTS {partition_name}
             PARTITION OF {table_name}_partitioned
             FOR VALUES FROM ('{start_date.isoformat()}') TO ('{end_date.isoformat()}')
-            """
-            
+            """            
             async with self.engine.begin() as conn:
                 await conn.execute(text(create_sql))
             
@@ -436,8 +397,7 @@ class IntelligentPartitionManager:
             return False
     
     async def optimize_partitions(self, table_name: str) -> Dict[str, Any]:
-        """Optimize existing partitions"""
-        try:
+        """Optimize existing partitions"""        try:
             config = self.partition_configs.get(table_name)
             if not config:
                 return {'error': 'No configuration found'}
@@ -493,15 +453,13 @@ class IntelligentPartitionManager:
             return {'error': str(e)}
     
     async def _analyze_partition_performance(self, table_name: str) -> Dict[str, Dict[str, Any]]:
-        """Analyze performance of individual partitions"""
-        try:
+        """Analyze performance of individual partitions"""        try:
             partitions = await self._get_table_partitions(table_name)
             stats = {}
             
             for partition in partitions:
                 # Get partition statistics
-                stat_query = text(f"""
-                    SELECT 
+                stat_query = text(f"""                    SELECT 
                         relname,
                         n_tup_ins,
                         n_tup_upd,
@@ -539,8 +497,7 @@ class IntelligentPartitionManager:
             return {}
     
     def _detect_unbalanced_partitions(self, partition_stats: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Detect partitions with unbalanced data distribution"""
-        if not partition_stats:
+        """Detect partitions with unbalanced data distribution"""        if not partition_stats:
             return []
         
         # Calculate average partition size
@@ -559,8 +516,7 @@ class IntelligentPartitionManager:
         return unbalanced
     
     def _detect_unused_partitions(self, partition_stats: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Detect unused or rarely accessed partitions"""
-        unused = []
+        """Detect unused or rarely accessed partitions"""        unused = []
         
         for partition, stats in partition_stats.items():
             # Consider unused if no activity in recent period and very small
@@ -572,8 +528,7 @@ class IntelligentPartitionManager:
         return unused
     
     def _detect_slow_partitions(self, partition_stats: Dict[str, Dict[str, Any]]) -> List[str]:
-        """Detect partitions with performance issues"""
-        slow = []
+        """Detect partitions with performance issues"""        slow = []
         
         for partition, stats in partition_stats.items():
             # High dead tuple ratio indicates need for vacuum
@@ -583,8 +538,7 @@ class IntelligentPartitionManager:
         return slow
     
     async def _execute_optimization(self, table_name: str, optimization: Dict[str, Any]) -> bool:
-        """Execute a specific optimization"""
-        try:
+        """Execute a specific optimization"""        try:
             optimization_type = optimization['type']
             partitions = optimization['partitions']
             action = optimization['action']
@@ -611,8 +565,7 @@ class IntelligentPartitionManager:
             return False
     
     async def _archive_partition(self, partition_name: str):
-        """Archive an unused partition"""
-        try:
+        """Archive an unused partition"""        try:
             # In a real implementation, you'd move data to archival storage
             logger.info(f"Archiving partition: {partition_name}")
             
@@ -623,8 +576,7 @@ class IntelligentPartitionManager:
             logger.error(f"Failed to archive partition {partition_name}: {e}")
     
     async def _vacuum_partition(self, partition_name: str):
-        """Vacuum a partition to improve performance"""
-        try:
+        """Vacuum a partition to improve performance"""        try:
             vacuum_sql = f"VACUUM ANALYZE {partition_name}"
             
             async with self.engine.begin() as conn:
@@ -636,8 +588,7 @@ class IntelligentPartitionManager:
             logger.error(f"Failed to vacuum partition {partition_name}: {e}")
     
     async def _monitor_partitions(self):
-        """Background task to monitor partition health"""
-        while True:
+        """Background task to monitor partition health"""        while True:
             try:
                 for table_name in self.partition_configs:
                     # Auto-create partitions if needed
@@ -660,8 +611,7 @@ class IntelligentPartitionManager:
                 await asyncio.sleep(300)  # Sleep 5 minutes on error
     
     async def get_partition_stats(self) -> Dict[str, Any]:
-        """Get comprehensive partition statistics"""
-        try:
+        """Get comprehensive partition statistics"""        try:
             stats = {
                 'total_tables': len(self.partition_configs),
                 'tables': {}
@@ -689,8 +639,7 @@ class IntelligentPartitionManager:
             return {}
     
     async def shutdown(self):
-        """Shutdown the partition manager"""
-        if self.monitoring_task:
+        """Shutdown the partition manager"""        if self.monitoring_task:
             self.monitoring_task.cancel()
             try:
                 await self.monitoring_task

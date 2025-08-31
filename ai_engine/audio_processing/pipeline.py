@@ -1,5 +1,4 @@
-"""
-🔧 Audio Processing Pipeline - Comprehensive Workflow Engine
+"""🔧 Audio Processing Pipeline - Comprehensive Workflow Engine
 
 Advanced pipeline system for chaining audio processing operations.
 Supports parallel processing, caching, and intelligent optimization.
@@ -7,7 +6,6 @@ Supports parallel processing, caching, and intelligent optimization.
 Created by: Fahed Mlaiel (mlaiel@live.de)
 © 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Tuple, Union, Any, Callable, Type
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 
 class PipelineStage(Enum):
-    """Pipeline processing stages"""
-    LOAD = "load"
+    """Pipeline processing stages"""    LOAD = "load"
     PREPROCESS = "preprocess"
     ANALYZE = "analyze"
     ENHANCE = "enhance"
@@ -49,8 +46,7 @@ class PipelineStage(Enum):
 
 
 class ProcessingMode(Enum):
-    """Processing execution modes"""
-    SEQUENTIAL = "sequential"
+    """Processing execution modes"""    SEQUENTIAL = "sequential"
     PARALLEL = "parallel"
     BATCH = "batch"
     STREAM = "stream"
@@ -58,8 +54,7 @@ class ProcessingMode(Enum):
 
 
 class CacheStrategy(Enum):
-    """Caching strategies for pipeline results"""
-    NONE = "none"
+    """Caching strategies for pipeline results"""    NONE = "none"
     MEMORY = "memory"
     DISK = "disk"
     HYBRID = "hybrid"
@@ -68,8 +63,7 @@ class CacheStrategy(Enum):
 
 @dataclass
 class PipelineConfig:
-    """Configuration for audio processing pipeline"""
-    name: str
+    """Configuration for audio processing pipeline"""    name: str
     description: str = ""
     processing_mode: ProcessingMode = ProcessingMode.SEQUENTIAL
     cache_strategy: CacheStrategy = CacheStrategy.MEMORY
@@ -92,8 +86,7 @@ class PipelineConfig:
 
 @dataclass
 class StageResult:
-    """Result from a pipeline stage"""
-    stage_name: str
+    """Result from a pipeline stage"""    stage_name: str
     stage_type: PipelineStage
     success: bool
     data: Any = None
@@ -106,8 +99,7 @@ class StageResult:
 
 @dataclass
 class PipelineResult:
-    """Complete pipeline execution result"""
-    pipeline_name: str
+    """Complete pipeline execution result"""    pipeline_name: str
     success: bool
     stage_results: List[StageResult] = field(default_factory=list)
     total_processing_time: float = 0.0
@@ -119,13 +111,11 @@ class PipelineResult:
 
 
 class PipelineStageBase(ABC):
-    """
-    🔧 Abstract base class for pipeline stages
+    """    🔧 Abstract base class for pipeline stages
     
     All pipeline stages must inherit from this class and implement
     the execute method for consistent processing interfaces.
-    """
-    
+    """    
     def __init__(self, name: str, stage_type: PipelineStage):
         self.name = name
         self.stage_type = stage_type
@@ -137,29 +127,24 @@ class PipelineStageBase(ABC):
     async def execute(self, 
                      input_data: Any, 
                      context: Dict[str, Any]) -> StageResult:
-        """Execute the pipeline stage"""
-        pass
+        """Execute the pipeline stage"""        pass
     
     def set_config(self, config: Dict[str, Any]):
-        """Set stage configuration"""
-        self.config.update(config)
+        """Set stage configuration"""        self.config.update(config)
     
     def add_dependency(self, stage_name: str):
-        """Add a dependency on another stage"""
-        if stage_name not in self.dependencies:
+        """Add a dependency on another stage"""        if stage_name not in self.dependencies:
             self.dependencies.append(stage_name)
     
     def get_cache_key(self, input_data: Any, context: Dict[str, Any]) -> str:
-        """Generate cache key for this stage"""
-        # Create a simple cache key based on stage name and input hash
+        """Generate cache key for this stage"""        # Create a simple cache key based on stage name and input hash
         input_str = str(input_data) + str(context) + str(self.config)
         cache_key = f"{self.name}_{hashlib.md5(input_str.encode()).hexdigest()}"
         return cache_key
 
 
 class LoadAudioStage(PipelineStageBase):
-    """Load audio from file or data"""
-    
+    """Load audio from file or data"""    
     def __init__(self, audio_processor: AudioProcessor):
         super().__init__("load_audio", PipelineStage.LOAD)
         self.audio_processor = audio_processor
@@ -219,8 +204,7 @@ class LoadAudioStage(PipelineStageBase):
 
 
 class AnalyzeAudioStage(PipelineStageBase):
-    """Analyze audio characteristics"""
-    
+    """Analyze audio characteristics"""    
     def __init__(self, audio_processor: AudioProcessor):
         super().__init__("analyze_audio", PipelineStage.ANALYZE)
         self.audio_processor = audio_processor
@@ -262,8 +246,7 @@ class AnalyzeAudioStage(PipelineStageBase):
 
 
 class EnhanceAudioStage(PipelineStageBase):
-    """Apply audio enhancement effects"""
-    
+    """Apply audio enhancement effects"""    
     def __init__(self, effects_processor: EffectsProcessor):
         super().__init__("enhance_audio", PipelineStage.ENHANCE)
         self.effects_processor = effects_processor
@@ -329,8 +312,7 @@ class EnhanceAudioStage(PipelineStageBase):
 
 
 class ClassifyAudioStage(PipelineStageBase):
-    """Classify audio using ML models"""
-    
+    """Classify audio using ML models"""    
     def __init__(self, ml_manager: MLModelManager):
         super().__init__("classify_audio", PipelineStage.CLASSIFY)
         self.ml_manager = ml_manager
@@ -383,8 +365,7 @@ class ClassifyAudioStage(PipelineStageBase):
 
 
 class GenerateEmbeddingsStage(PipelineStageBase):
-    """Generate audio embeddings for similarity matching"""
-    
+    """Generate audio embeddings for similarity matching"""    
     def __init__(self, embedding_generator: AudioEmbeddingGenerator):
         super().__init__("generate_embeddings", PipelineStage.GENERATE)
         self.embedding_generator = embedding_generator
@@ -428,8 +409,7 @@ class GenerateEmbeddingsStage(PipelineStageBase):
 
 
 class FingerprintAudioStage(PipelineStageBase):
-    """Generate audio fingerprint for content identification"""
-    
+    """Generate audio fingerprint for content identification"""    
     def __init__(self, fingerprinter: AudioFingerprinter):
         super().__init__("fingerprint_audio", PipelineStage.GENERATE)
         self.fingerprinter = fingerprinter
@@ -473,8 +453,7 @@ class FingerprintAudioStage(PipelineStageBase):
 
 
 class ConvertFormatStage(PipelineStageBase):
-    """Convert audio format"""
-    
+    """Convert audio format"""    
     def __init__(self, format_converter: FormatConverter):
         super().__init__("convert_format", PipelineStage.TRANSFORM)
         self.format_converter = format_converter
@@ -549,8 +528,7 @@ class ConvertFormatStage(PipelineStageBase):
 
 
 class SaveResultsStage(PipelineStageBase):
-    """Save pipeline results to file"""
-    
+    """Save pipeline results to file"""    
     def __init__(self):
         super().__init__("save_results", PipelineStage.SAVE)
     
@@ -604,8 +582,7 @@ class SaveResultsStage(PipelineStageBase):
             )
     
     def _make_json_serializable(self, obj):
-        """Convert object to JSON-serializable format"""
-        if isinstance(obj, np.ndarray):
+        """Convert object to JSON-serializable format"""        if isinstance(obj, np.ndarray):
             return obj.tolist()
         elif isinstance(obj, dict):
             return {k: self._make_json_serializable(v) for k, v in obj.items()}
@@ -618,16 +595,14 @@ class SaveResultsStage(PipelineStageBase):
 
 
 class PipelineCache:
-    """
-    💾 Advanced Pipeline Caching System
+    """    💾 Advanced Pipeline Caching System
     
     Intelligent caching for pipeline stages:
     - Memory and disk caching
     - Cache invalidation strategies
     - Distributed caching support
     - Automatic cleanup
-    """
-    
+    """    
     def __init__(self, 
                  strategy: CacheStrategy = CacheStrategy.MEMORY,
                  cache_directory: Optional[Path] = None,
@@ -652,8 +627,7 @@ class PipelineCache:
         logger.info(f"PipelineCache initialized with {strategy.value} strategy")
     
     async def get(self, cache_key: str) -> Optional[Any]:
-        """Get cached result"""
-        try:
+        """Get cached result"""        try:
             current_time = time.time()
             
             # Check memory cache first
@@ -693,8 +667,7 @@ class PipelineCache:
             return None
     
     async def set(self, cache_key: str, data: Any):
-        """Store result in cache"""
-        try:
+        """Store result in cache"""        try:
             current_time = time.time()
             
             # Store in memory
@@ -717,8 +690,7 @@ class PipelineCache:
             logger.error(f"Cache set failed for {cache_key}: {e}")
     
     async def _store_in_memory(self, cache_key: str, data: Any):
-        """Store data in memory cache"""
-        # Estimate memory usage
+        """Store data in memory cache"""        # Estimate memory usage
         data_size = self._estimate_size(data)
         
         # Clean up if needed
@@ -734,23 +706,20 @@ class PipelineCache:
         self.memory_usage += data_size
     
     def _remove_from_memory(self, cache_key: str):
-        """Remove item from memory cache"""
-        if cache_key in self.memory_cache:
+        """Remove item from memory cache"""        if cache_key in self.memory_cache:
             data_size = self._estimate_size(self.memory_cache[cache_key])
             del self.memory_cache[cache_key]
             del self.memory_timestamps[cache_key]
             self.memory_usage -= data_size
     
     def _estimate_size(self, obj) -> int:
-        """Estimate object size in bytes"""
-        try:
+        """Estimate object size in bytes"""        try:
             return len(pickle.dumps(obj))
         except:
             return 1024  # Default estimate
     
     async def _cleanup_disk_cache(self):
-        """Clean up disk cache if size limit exceeded"""
-        try:
+        """Clean up disk cache if size limit exceeded"""        try:
             total_size = sum(f.stat().st_size for f in self.cache_directory.glob("*.pkl"))
             max_size = self.max_disk_mb * 1024 * 1024
             
@@ -770,8 +739,7 @@ class PipelineCache:
             logger.error(f"Disk cache cleanup failed: {e}")
     
     def clear(self):
-        """Clear all cache"""
-        self.memory_cache.clear()
+        """Clear all cache"""        self.memory_cache.clear()
         self.memory_timestamps.clear()
         self.memory_usage = 0
         
@@ -781,8 +749,7 @@ class PipelineCache:
 
 
 class AudioProcessingPipeline:
-    """
-    🔄 Advanced Audio Processing Pipeline
+    """    🔄 Advanced Audio Processing Pipeline
     
     Comprehensive pipeline system featuring:
     - Modular stage architecture
@@ -791,8 +758,7 @@ class AudioProcessingPipeline:
     - Real-time monitoring and logging
     - Checkpoint and recovery mechanisms
     - Resource management and throttling
-    """
-    
+    """    
     def __init__(self, 
                  config: PipelineConfig,
                  audio_config: Optional[AudioProcessingConfig] = None):
@@ -827,8 +793,7 @@ class AudioProcessingPipeline:
         logger.info(f"AudioProcessingPipeline '{config.name}' initialized")
     
     def add_stage(self, stage: PipelineStageBase, dependencies: List[str] = None):
-        """Add a processing stage to the pipeline"""
-        self.stages.append(stage)
+        """Add a processing stage to the pipeline"""        self.stages.append(stage)
         
         # Build dependency graph
         if dependencies:
@@ -850,8 +815,7 @@ class AudioProcessingPipeline:
     
     def create_standard_pipeline(self, 
                                 features: List[str] = None) -> 'AudioProcessingPipeline':
-        """Create a standard audio processing pipeline"""
-        if features is None:
+        """Create a standard audio processing pipeline"""        if features is None:
             features = ['load', 'analyze', 'enhance', 'classify', 'fingerprint']
         
         # Add stages based on requested features
@@ -896,8 +860,7 @@ class AudioProcessingPipeline:
     async def execute(self, 
                      input_data: Any, 
                      context: Dict[str, Any] = None) -> PipelineResult:
-        """Execute the complete pipeline"""
-        start_time = time.time()
+        """Execute the complete pipeline"""        start_time = time.time()
         context = context or {}
         
         try:
@@ -984,8 +947,7 @@ class AudioProcessingPipeline:
             )
     
     def _create_execution_plan(self) -> List[List[str]]:
-        """Create topologically sorted execution plan"""
-        # Simple topological sort for dependency resolution
+        """Create topologically sorted execution plan"""        # Simple topological sort for dependency resolution
         visited = set()
         temp_visited = set()
         execution_levels = []
@@ -1031,8 +993,7 @@ class AudioProcessingPipeline:
                                 input_data: Any,
                                 context: Dict[str, Any],
                                 execution_order: List[List[str]]) -> List[StageResult]:
-        """Execute stages sequentially"""
-        stage_results = []
+        """Execute stages sequentially"""        stage_results = []
         current_data = input_data
         
         for level in execution_order:
@@ -1070,8 +1031,7 @@ class AudioProcessingPipeline:
                               input_data: Any,
                               context: Dict[str, Any],
                               execution_order: List[List[str]]) -> List[StageResult]:
-        """Execute stages in parallel where possible"""
-        stage_results = []
+        """Execute stages in parallel where possible"""        stage_results = []
         stage_data = {None: input_data}  # Track data for each stage
         
         for level in execution_order:
@@ -1114,21 +1074,18 @@ class AudioProcessingPipeline:
                            input_data: Any,
                            context: Dict[str, Any],
                            execution_order: List[List[str]]) -> List[StageResult]:
-        """Execute pipeline in batch mode for multiple inputs"""
-        # For now, implement as sequential execution
+        """Execute pipeline in batch mode for multiple inputs"""        # For now, implement as sequential execution
         # In a full implementation, this would handle batches of inputs
         return await self._execute_sequential(input_data, context, execution_order)
     
     def _get_stage_by_name(self, stage_name: str) -> PipelineStageBase:
-        """Get stage object by name"""
-        for stage in self.stages:
+        """Get stage object by name"""        for stage in self.stages:
             if stage.name == stage_name:
                 return stage
         raise ValueError(f"Stage not found: {stage_name}")
     
     def _get_stage_input(self, stage: PipelineStageBase, stage_data: Dict[str, Any]) -> Any:
-        """Get input data for a stage based on its dependencies"""
-        if not stage.dependencies:
+        """Get input data for a stage based on its dependencies"""        if not stage.dependencies:
             # First stage - use original input
             return stage_data[None]
         elif len(stage.dependencies) == 1:
@@ -1147,8 +1104,7 @@ class AudioProcessingPipeline:
                                   stage: PipelineStageBase,
                                   input_data: Any,
                                   context: Dict[str, Any]) -> StageResult:
-        """Execute a single pipeline stage with monitoring"""
-        try:
+        """Execute a single pipeline stage with monitoring"""        try:
             # Check resource limits
             if self.resource_monitor.current_memory_mb > self.config.memory_limit_mb:
                 logger.warning(f"Memory limit exceeded: {self.resource_monitor.current_memory_mb}MB")
@@ -1183,8 +1139,7 @@ class AudioProcessingPipeline:
             )
     
     def get_pipeline_info(self) -> Dict[str, Any]:
-        """Get information about the pipeline"""
-        return {
+        """Get information about the pipeline"""        return {
             'name': self.config.name,
             'description': self.config.description,
             'processing_mode': self.config.processing_mode.value,
@@ -1204,8 +1159,7 @@ class AudioProcessingPipeline:
 
 
 class ResourceMonitor:
-    """Monitor system resources during pipeline execution"""
-    
+    """Monitor system resources during pipeline execution"""    
     def __init__(self):
         self.start_time = None
         self.peak_memory = 0
@@ -1214,22 +1168,19 @@ class ResourceMonitor:
         self._monitor_task = None
     
     def start(self):
-        """Start resource monitoring"""
-        self.start_time = time.time()
+        """Start resource monitoring"""        self.start_time = time.time()
         self.peak_memory = 0
         self.monitoring = True
         self._monitor_task = asyncio.create_task(self._monitor_resources())
     
     def stop(self) -> float:
-        """Stop monitoring and return peak memory usage"""
-        self.monitoring = False
+        """Stop monitoring and return peak memory usage"""        self.monitoring = False
         if self._monitor_task:
             self._monitor_task.cancel()
         return self.peak_memory
     
     async def _monitor_resources(self):
-        """Monitor resource usage"""
-        try:
+        """Monitor resource usage"""        try:
             while self.monitoring:
                 # Get current memory usage
                 process = psutil.Process()

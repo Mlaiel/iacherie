@@ -1,5 +1,4 @@
-"""
-💼 Business KPIs - Enterprise Business Intelligence & Key Performance Indicators
+"""💼 Business KPIs - Enterprise Business Intelligence & Key Performance Indicators
 ==============================================================================
 
 Advanced business KPI collection, analysis, and reporting system for the Ainflue platform.
@@ -13,7 +12,6 @@ CRITICAL WARNING: Unauthorized use, copying, or distribution strictly prohibited
 Business Logic Integration:
 User Upload → IA Protection → SEO Optimization → Collaboration → Distribution → Revenue
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Tuple, Union
@@ -32,8 +30,7 @@ logger = logging.getLogger(__name__)
 
 
 class KPICategory(Enum):
-    """Categories of business KPIs for organization"""
-    REVENUE = "revenue"
+    """Categories of business KPIs for organization"""    REVENUE = "revenue"
     USER_ACQUISITION = "user_acquisition"
     CONTENT_CREATION = "content_creation"
     PLATFORM_GROWTH = "platform_growth"
@@ -44,8 +41,7 @@ class KPICategory(Enum):
 
 
 class KPIAggregationType(Enum):
-    """Types of KPI aggregation methods"""
-    SUM = "sum"
+    """Types of KPI aggregation methods"""    SUM = "sum"
     AVERAGE = "average"
     COUNT = "count"
     PERCENTAGE = "percentage"
@@ -56,8 +52,7 @@ class KPIAggregationType(Enum):
 
 
 class RevenueSource(Enum):
-    """Revenue stream sources"""
-    SUBSCRIPTION_PREMIUM = "subscription_premium"
+    """Revenue stream sources"""    SUBSCRIPTION_PREMIUM = "subscription_premium"
     LICENSING_FEES = "licensing_fees"
     COMMISSION_COLLABORATIONS = "commission_collaborations"
     API_ACCESS_FEES = "api_access_fees"
@@ -69,8 +64,7 @@ class RevenueSource(Enum):
 
 @dataclass
 class KPIMetric:
-    """Individual business KPI metric"""
-    metric_id: str
+    """Individual business KPI metric"""    metric_id: str
     name: str
     category: KPICategory
     value: Union[float, int, Decimal]
@@ -85,8 +79,7 @@ class KPIMetric:
 
 @dataclass
 class RevenueMetrics:
-    """Revenue-specific KPI metrics"""
-    total_revenue: Decimal
+    """Revenue-specific KPI metrics"""    total_revenue: Decimal
     revenue_by_source: Dict[RevenueSource, Decimal]
     monthly_recurring_revenue: Decimal
     annual_recurring_revenue: Decimal
@@ -102,8 +95,7 @@ class RevenueMetrics:
 
 @dataclass
 class UserAcquisitionMetrics:
-    """User acquisition and growth KPI metrics"""
-    new_users_total: int
+    """User acquisition and growth KPI metrics"""    new_users_total: int
     new_users_by_channel: Dict[str, int]
     user_acquisition_cost: Decimal
     conversion_rate: float
@@ -118,8 +110,7 @@ class UserAcquisitionMetrics:
 
 @dataclass
 class ContentCreationMetrics:
-    """Content creation and engagement KPI metrics"""
-    total_content_uploads: int
+    """Content creation and engagement KPI metrics"""    total_content_uploads: int
     content_by_type: Dict[str, int]
     content_by_platform: Dict[str, int]
     avg_content_quality_score: float
@@ -134,8 +125,7 @@ class ContentCreationMetrics:
 
 @dataclass
 class PlatformGrowthMetrics:
-    """Platform growth and ecosystem KPI metrics"""
-    total_active_platforms: int
+    """Platform growth and ecosystem KPI metrics"""    total_active_platforms: int
     platform_integration_success_rate: float
     cross_platform_content_distribution: int
     platform_revenue_contribution: Dict[str, Decimal]
@@ -147,11 +137,9 @@ class PlatformGrowthMetrics:
 
 
 class BusinessKPICollector:
-    """
-    Advanced business KPI data collector.
+    """    Advanced business KPI data collector.
     Gathers critical business metrics from multiple sources across the platform.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.collection_cache = {}
@@ -177,8 +165,7 @@ class BusinessKPICollector:
         }
     
     async def initialize(self) -> None:
-        """Initialize the KPI collector"""
-        try:
+        """Initialize the KPI collector"""        try:
             self.logger.info("Initializing Business KPI Collector...")
             
             # Initialize data source connections
@@ -194,8 +181,7 @@ class BusinessKPICollector:
             raise
     
     async def collect_metrics(self, timeframe: Optional[timedelta] = None) -> Dict[str, Any]:
-        """Collect comprehensive business KPI metrics"""
-        timeframe = timeframe or timedelta(hours=1)
+        """Collect comprehensive business KPI metrics"""        timeframe = timeframe or timedelta(hours=1)
         end_time = datetime.now()
         start_time = end_time - timeframe
         
@@ -243,8 +229,7 @@ class BusinessKPICollector:
             raise
     
     async def _collect_revenue_metrics(self, start_time: datetime, end_time: datetime) -> RevenueMetrics:
-        """Collect comprehensive revenue metrics"""
-        try:
+        """Collect comprehensive revenue metrics"""        try:
             # Simulate revenue data collection - in production, this would connect to actual data sources
             revenue_by_source = {
                 RevenueSource.SUBSCRIPTION_PREMIUM: Decimal("45250.75"),
@@ -285,8 +270,7 @@ class BusinessKPICollector:
             raise
     
     async def _collect_user_acquisition_metrics(self, start_time: datetime, end_time: datetime) -> UserAcquisitionMetrics:
-        """Collect user acquisition and growth metrics"""
-        try:
+        """Collect user acquisition and growth metrics"""        try:
             # Simulate user acquisition data
             new_users_by_channel = {
                 "organic_search": 1250,
@@ -319,8 +303,7 @@ class BusinessKPICollector:
             raise
     
     async def _collect_content_creation_metrics(self, start_time: datetime, end_time: datetime) -> ContentCreationMetrics:
-        """Collect content creation and performance metrics"""
-        try:
+        """Collect content creation and performance metrics"""        try:
             # Simulate content creation data
             content_by_type = {
                 "audio": 1580,
@@ -364,8 +347,7 @@ class BusinessKPICollector:
             raise
     
     async def _collect_platform_growth_metrics(self, start_time: datetime, end_time: datetime) -> PlatformGrowthMetrics:
-        """Collect platform growth and ecosystem metrics"""
-        try:
+        """Collect platform growth and ecosystem metrics"""        try:
             # Simulate platform growth data
             platform_revenue_contribution = {
                 "spotify": Decimal("28450.75"),
@@ -417,8 +399,7 @@ class BusinessKPICollector:
             raise
     
     async def _generate_metrics_summary(self, metrics_list: List[Any]) -> Dict[str, Any]:
-        """Generate summary statistics from collected metrics"""
-        try:
+        """Generate summary statistics from collected metrics"""        try:
             revenue_metrics, user_metrics, content_metrics, platform_metrics = metrics_list
             
             return {
@@ -438,8 +419,7 @@ class BusinessKPICollector:
             return {}
     
     async def _calculate_overall_performance_score(self, metrics_list: List[Any]) -> float:
-        """Calculate overall business performance score"""
-        try:
+        """Calculate overall business performance score"""        try:
             # Weighted average of key performance indicators
             revenue_score = min(100, metrics_list[0].revenue_growth_rate * 5)  # Revenue growth weight
             user_score = min(100, metrics_list[1].user_growth_rate * 8)  # User growth weight
@@ -457,8 +437,7 @@ class BusinessKPICollector:
             return 0.0
     
     async def _update_prometheus_metrics(self, metrics: Dict[str, Any]) -> None:
-        """Update Prometheus metrics with collected data"""
-        try:
+        """Update Prometheus metrics with collected data"""        try:
             # Update revenue metrics
             revenue_data = metrics.get("revenue_metrics")
             if revenue_data:
@@ -478,8 +457,7 @@ class BusinessKPICollector:
             self.logger.error(f"Failed to update Prometheus metrics: {e}")
     
     async def _initialize_data_sources(self) -> None:
-        """Initialize connections to data sources"""
-        # In production, this would initialize database connections, API clients, etc.
+        """Initialize connections to data sources"""        # In production, this would initialize database connections, API clients, etc.
         self.data_sources = {
             "revenue_db": "connected",
             "user_analytics": "connected",
@@ -488,25 +466,21 @@ class BusinessKPICollector:
         }
     
     async def _setup_collection_schedules(self) -> None:
-        """Setup automated collection schedules"""
-        # In production, this would setup scheduled tasks for data collection
+        """Setup automated collection schedules"""        # In production, this would setup scheduled tasks for data collection
         pass
 
 
 class BusinessKPIAnalyzer:
-    """
-    Advanced analytics engine for business KPI data.
+    """    Advanced analytics engine for business KPI data.
     Provides insights, trends, forecasting, and strategic recommendations.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(self.__class__.__name__)
         self.analysis_cache = {}
         self.models = {}
     
     async def initialize(self) -> None:
-        """Initialize the KPI analyzer"""
-        try:
+        """Initialize the KPI analyzer"""        try:
             self.logger.info("Initializing Business KPI Analyzer...")
             
             # Initialize analysis models
@@ -519,8 +493,7 @@ class BusinessKPIAnalyzer:
             raise
     
     async def analyze(self, metrics_data: Dict[str, Any], analysis_type: str = "comprehensive") -> Dict[str, Any]:
-        """Perform comprehensive analysis of business KPI metrics"""
-        try:
+        """Perform comprehensive analysis of business KPI metrics"""        try:
             self.logger.info(f"Performing {analysis_type} analysis of business KPIs")
             
             analysis_results = {
@@ -546,13 +519,11 @@ class BusinessKPIAnalyzer:
             raise
     
     async def _assess_data_quality(self, metrics_data: Dict[str, Any]) -> float:
-        """Assess the quality and completeness of metrics data"""
-        quality_score = 0.95  # High quality score for complete data
+        """Assess the quality and completeness of metrics data"""        quality_score = 0.95  # High quality score for complete data
         return quality_score
     
     async def _analyze_trends(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze trends in business metrics"""
-        return {
+        """Analyze trends in business metrics"""        return {
             "revenue_trend": "increasing",
             "user_growth_trend": "accelerating",
             "content_quality_trend": "improving",
@@ -560,8 +531,7 @@ class BusinessKPIAnalyzer:
         }
     
     async def _generate_performance_insights(self, metrics_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate actionable performance insights"""
-        return [
+        """Generate actionable performance insights"""        return [
             {
                 "insight": "Revenue growth exceeding targets",
                 "impact": "high",
@@ -583,8 +553,7 @@ class BusinessKPIAnalyzer:
         ]
     
     async def _assess_risks(self, metrics_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Assess business risks based on metrics"""
-        return [
+        """Assess business risks based on metrics"""        return [
             {
                 "risk": "Platform dependency concentration",
                 "severity": "medium",
@@ -600,8 +569,7 @@ class BusinessKPIAnalyzer:
         ]
     
     async def _identify_opportunities(self, metrics_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify growth and optimization opportunities"""
-        return [
+        """Identify growth and optimization opportunities"""        return [
             {
                 "opportunity": "Expand into emerging platforms",
                 "potential_impact": "high",
@@ -617,8 +585,7 @@ class BusinessKPIAnalyzer:
         ]
     
     async def _generate_recommendations(self, metrics_data: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate strategic recommendations"""
-        return [
+        """Generate strategic recommendations"""        return [
             {
                 "recommendation": "Increase investment in TikTok content optimization",
                 "priority": "high",
@@ -634,8 +601,7 @@ class BusinessKPIAnalyzer:
         ]
     
     async def _generate_forecasts(self, metrics_data: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate business forecasts based on current trends"""
-        return {
+        """Generate business forecasts based on current trends"""        return {
             "revenue_forecast_30_days": {
                 "predicted_value": 185000.0,
                 "confidence_interval": [175000.0, 195000.0],
@@ -649,8 +615,7 @@ class BusinessKPIAnalyzer:
         }
     
     async def _initialize_analysis_models(self) -> None:
-        """Initialize machine learning models for analysis"""
-        # In production, this would load trained ML models
+        """Initialize machine learning models for analysis"""        # In production, this would load trained ML models
         self.models = {
             "trend_analysis": "initialized",
             "forecasting": "initialized",

@@ -1,5 +1,4 @@
-"""
-Quality Assessment Module - Example Usage and Testing
+"""Quality Assessment Module - Example Usage and Testing
 
 Demonstrates comprehensive usage of the Quality Assessment Module
 with practical examples for content creators and developers.
@@ -16,7 +15,6 @@ to the full extent of the law.
 
 NOTE: This is an example/testing file - actual tests should be in the tests_backend directory
 """
-
 import asyncio
 import logging
 from pathlib import Path
@@ -45,15 +43,12 @@ logger = logging.getLogger(__name__)
 
 
 class QualityAssessmentDemo:
-    """
-    Demonstration class for Quality Assessment Module functionality
+    """    Demonstration class for Quality Assessment Module functionality
     
     Shows practical usage examples for content creators and developers.
-    """
-    
+    """    
     def __init__(self):
-        """Initialize the demo with professional configuration"""
-        # Use professional configuration
+        """Initialize the demo with professional configuration"""        # Use professional configuration
         self.config = QualityAssessmentConfig(ConfigurationLevel.PROFESSIONAL)
         logger.info("Quality Assessment Demo initialized with professional configuration")
         
@@ -66,13 +61,11 @@ class QualityAssessmentDemo:
         }
     
     async def demo_comprehensive_quality_assessment(self):
-        """
-        Demonstrate comprehensive quality assessment workflow
+        """        Demonstrate comprehensive quality assessment workflow
         
         This example shows the complete workflow for assessing content quality
         across multiple formats and generating actionable insights.
-        """
-        logger.info("=== Comprehensive Quality Assessment Demo ===")
+        """        logger.info("=== Comprehensive Quality Assessment Demo ===")
         
         try:
             # Example 1: Text Quality Assessment
@@ -94,8 +87,7 @@ class QualityAssessmentDemo:
             logger.error(f"Demo execution error: {e}")
     
     async def _demo_text_quality(self):
-        """Demonstrate text quality assessment"""
-        logger.info("\n--- Text Quality Assessment ---")
+        """Demonstrate text quality assessment"""        logger.info("\n--- Text Quality Assessment ---")
         
         sample_texts = [
             "Check out my new video! It's amazing and will blow your mind! 🤯 #viral #amazing",
@@ -135,8 +127,7 @@ class QualityAssessmentDemo:
                 logger.error(f"Text analysis error: {e}")
     
     async def _demo_multi_format_assessment(self):
-        """Demonstrate multi-format content assessment"""
-        logger.info("\n--- Multi-Format Content Assessment ---")
+        """Demonstrate multi-format content assessment"""        logger.info("\n--- Multi-Format Content Assessment ---")
         
         # Simulate content files for demo
         content_scenarios = [
@@ -203,8 +194,7 @@ class QualityAssessmentDemo:
                 logger.error(f"Multi-format assessment error: {e}")
     
     async def _demo_platform_optimization(self):
-        """Demonstrate platform-specific optimization"""
-        logger.info("\n--- Platform-Specific Optimization ---")
+        """Demonstrate platform-specific optimization"""        logger.info("\n--- Platform-Specific Optimization ---")
         
         platforms = ['youtube', 'instagram', 'tiktok', 'linkedin']
         content_type = 'video'
@@ -239,8 +229,7 @@ class QualityAssessmentDemo:
                 logger.error(f"Platform optimization error: {e}")
     
     async def _demo_business_metrics(self):
-        """Demonstrate business metrics analysis"""
-        logger.info("\n--- Business Metrics Analysis ---")
+        """Demonstrate business metrics analysis"""        logger.info("\n--- Business Metrics Analysis ---")
         
         # Mock business data
         business_scenarios = [
@@ -281,8 +270,7 @@ class QualityAssessmentDemo:
                 logger.error(f"Business metrics analysis error: {e}")
     
     async def _demo_compliance_validation(self):
-        """Demonstrate compliance validation"""
-        logger.info("\n--- Compliance Validation ---")
+        """Demonstrate compliance validation"""        logger.info("\n--- Compliance Validation ---")
         
         compliance_scenarios = [
             {
@@ -326,8 +314,7 @@ class QualityAssessmentDemo:
                 logger.error(f"Compliance validation error: {e}")
     
     def _calculate_mock_quality_score(self, content_type: str, metrics: Dict[str, Any]) -> float:
-        """Calculate mock quality score based on content type and metrics"""
-        if content_type == 'audio':
+        """Calculate mock quality score based on content type and metrics"""        if content_type == 'audio':
             score = 60.0
             if metrics.get('sample_rate', 0) >= 44100:
                 score += 15
@@ -360,8 +347,7 @@ class QualityAssessmentDemo:
         return 75.0  # Default score
     
     def _generate_mock_recommendations(self, content_type: str, quality_score: float) -> List[str]:
-        """Generate mock recommendations based on content type and quality score"""
-        recommendations = []
+        """Generate mock recommendations based on content type and quality score"""        recommendations = []
         
         if quality_score < 70:
             if content_type == 'audio':
@@ -392,8 +378,7 @@ class QualityAssessmentDemo:
         return recommendations
     
     def _get_platform_recommendations(self, platform: str, content_type: str, metrics: Dict[str, Any]) -> List[str]:
-        """Get platform-specific recommendations"""
-        recommendations = []
+        """Get platform-specific recommendations"""        recommendations = []
         
         platform_specs = {
             'youtube': {
@@ -435,8 +420,7 @@ class QualityAssessmentDemo:
         return recommendations
     
     def _calculate_platform_readiness(self, platform: str, metrics: Dict[str, Any]) -> float:
-        """Calculate platform readiness score"""
-        base_score = 70.0
+        """Calculate platform readiness score"""        base_score = 70.0
         
         # Platform-specific adjustments
         if platform == 'youtube':
@@ -453,8 +437,7 @@ class QualityAssessmentDemo:
         return min(100.0, base_score)
     
     def _calculate_business_performance(self, scenario: Dict[str, Any]) -> Dict[str, Any]:
-        """Calculate business performance metrics"""
-        followers = scenario['followers']
+        """Calculate business performance metrics"""        followers = scenario['followers']
         engagement_rate = scenario['engagement_rate']
         content_frequency = scenario['content_frequency']
         
@@ -495,8 +478,7 @@ class QualityAssessmentDemo:
         }
     
     def _check_compliance(self, scenario: Dict[str, Any]) -> Dict[str, Any]:
-        """Perform compliance check"""
-        issues = scenario.get('issues', [])
+        """Perform compliance check"""        issues = scenario.get('issues', [])
         
         # Determine compliance status
         if not issues:
@@ -552,12 +534,10 @@ class QualityAssessmentDemo:
 
 
 async def main():
-    """
-    Main demonstration function
+    """    Main demonstration function
     
     Runs comprehensive examples of Quality Assessment Module functionality.
-    """
-    logger.info("🚀 Quality Assessment Module - Demo & Examples")
+    """    logger.info("🚀 Quality Assessment Module - Demo & Examples")
     logger.info("=" * 60)
     logger.info("Created by: Fahed Mlaiel (mlaiel@live.de)")
     logger.info("⚠️  PROPRIETARY SOFTWARE - FOR DEMONSTRATION ONLY ⚠️")

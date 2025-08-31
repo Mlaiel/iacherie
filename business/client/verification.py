@@ -1,5 +1,4 @@
-"""
-Verification Manager - Identity and creator verification system.
+"""Verification Manager - Identity and creator verification system.
 
 Handles comprehensive verification processes including identity verification,
 creator authenticity, social media validation, and business verification.
@@ -7,7 +6,6 @@ creator authenticity, social media validation, and business verification.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Project: IA Influencer Agent with Advanced Content Protection
 """
-
 from datetime import datetime, timedelta
 from typing import Dict, List, Optional, Any, Tuple
 from uuid import UUID, uuid4
@@ -43,8 +41,7 @@ logger = logging.getLogger(__name__)
 
 
 class VerificationLevel(str, Enum):
-    """Verification levels for creators."""
-    UNVERIFIED = "unverified"
+    """Verification levels for creators."""    UNVERIFIED = "unverified"
     EMAIL_VERIFIED = "email_verified"
     PHONE_VERIFIED = "phone_verified"
     IDENTITY_VERIFIED = "identity_verified"
@@ -54,8 +51,7 @@ class VerificationLevel(str, Enum):
 
 
 class DocumentSubmissionData(BaseModel):
-    """Document submission data for identity verification."""
-    document_type: DocumentType
+    """Document submission data for identity verification."""    document_type: DocumentType
     front_image: str  # Base64 encoded image
     back_image: Optional[str] = None  # For documents with back side
     selfie_image: str  # Selfie for comparison
@@ -75,8 +71,7 @@ class DocumentSubmissionData(BaseModel):
 
 
 class SocialMediaVerificationData(BaseModel):
-    """Social media account verification data."""
-    platform: str  # instagram, youtube, tiktok, twitter, etc.
+    """Social media account verification data."""    platform: str  # instagram, youtube, tiktok, twitter, etc.
     username: str
     profile_url: str
     follower_count: Optional[int] = None
@@ -94,8 +89,7 @@ class SocialMediaVerificationData(BaseModel):
 
 
 class BusinessVerificationData(BaseModel):
-    """Business verification data."""
-    business_name: str
+    """Business verification data."""    business_name: str
     business_type: str  # sole_proprietorship, llc, corporation, etc.
     tax_id: str
     business_address: Dict[str, str]
@@ -110,8 +104,7 @@ class BusinessVerificationData(BaseModel):
 
 
 class VerificationManager:
-    """
-    Comprehensive verification system for content creators.
+    """    Comprehensive verification system for content creators.
     
     Features:
     - Multi-level identity verification
@@ -121,8 +114,7 @@ class VerificationManager:
     - Business verification for commercial accounts
     - Fraud detection and prevention
     - Automated verification workflows
-    """
-    
+    """    
     def __init__(
         self,
         db: Session,
@@ -146,8 +138,7 @@ class VerificationManager:
         client_id: UUID,
         document_data: DocumentSubmissionData
     ) -> Dict[str, Any]:
-        """
-        Submit identity documents for verification.
+        """        Submit identity documents for verification.
         
         Args:
             client_id: Client identifier
@@ -158,8 +149,7 @@ class VerificationManager:
             
         Raises:
             InvalidDocumentError: If document format is invalid
-        """
-        try:
+        """        try:
             # Check for existing pending verification
             existing_verification = self.db.query(IdentityVerification).filter(
                 IdentityVerification.client_id == client_id,
@@ -247,8 +237,7 @@ class VerificationManager:
         client_id: UUID,
         social_data: SocialMediaVerificationData
     ) -> Dict[str, Any]:
-        """
-        Submit social media account for verification.
+        """        Submit social media account for verification.
         
         Args:
             client_id: Client identifier
@@ -256,8 +245,7 @@ class VerificationManager:
             
         Returns:
             Social verification result
-        """
-        try:
+        """        try:
             # Check for existing verification for this platform
             existing_verification = self.db.query(SocialVerification).filter(
                 SocialVerification.client_id == client_id,
@@ -329,8 +317,7 @@ class VerificationManager:
         client_id: UUID,
         business_data: BusinessVerificationData
     ) -> Dict[str, Any]:
-        """
-        Submit business documents for verification.
+        """        Submit business documents for verification.
         
         Args:
             client_id: Client identifier
@@ -338,8 +325,7 @@ class VerificationManager:
             
         Returns:
             Business verification result
-        """
-        try:
+        """        try:
             # Check for existing business verification
             existing_verification = self.db.query(IdentityVerification).filter(
                 IdentityVerification.client_id == client_id,
@@ -414,8 +400,7 @@ class VerificationManager:
         client_id: UUID,
         verification_type: Optional[VerificationType] = None
     ) -> Dict[str, Any]:
-        """
-        Get verification status for client.
+        """        Get verification status for client.
         
         Args:
             client_id: Client identifier
@@ -423,8 +408,7 @@ class VerificationManager:
             
         Returns:
             Comprehensive verification status
-        """
-        try:
+        """        try:
             # Get all verifications for client
             query = self.db.query(IdentityVerification).filter(
                 IdentityVerification.client_id == client_id
@@ -470,8 +454,7 @@ class VerificationManager:
         admin_id: UUID,
         notes: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Approve pending verification (admin function).
+        """        Approve pending verification (admin function).
         
         Args:
             verification_id: Verification identifier
@@ -480,8 +463,7 @@ class VerificationManager:
             
         Returns:
             Approval result
-        """
-        try:
+        """        try:
             verification = self.db.query(IdentityVerification).filter(
                 IdentityVerification.id == verification_id
             ).first()
@@ -531,8 +513,7 @@ class VerificationManager:
         rejection_reason: str,
         notes: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Reject pending verification (admin function).
+        """        Reject pending verification (admin function).
         
         Args:
             verification_id: Verification identifier
@@ -542,8 +523,7 @@ class VerificationManager:
             
         Returns:
             Rejection result
-        """
-        try:
+        """        try:
             verification = self.db.query(IdentityVerification).filter(
                 IdentityVerification.id == verification_id
             ).first()
@@ -592,8 +572,7 @@ class VerificationManager:
         document_type: str,
         document_data: bytes
     ) -> str:
-        """Store document with encryption."""
-        encrypted_data = self.encryption_utils.encrypt_data(document_data)
+        """Store document with encryption."""        encrypted_data = self.encryption_utils.encrypt_data(document_data)
         storage_path = f"verifications/{verification_id}/{document_type}.enc"
         
         upload_result = await self.document_storage.upload_encrypted_document(
@@ -606,24 +585,19 @@ class VerificationManager:
         return storage_path
         
     def _hash_sensitive_data(self, data: str) -> str:
-        """Hash sensitive data for storage."""
-        return hashlib.sha256(data.encode()).hexdigest()
+        """Hash sensitive data for storage."""        return hashlib.sha256(data.encode()).hexdigest()
         
     def _estimate_verification_time(self) -> str:
-        """Estimate identity verification completion time."""
-        return "2-5 business days"
+        """Estimate identity verification completion time."""        return "2-5 business days"
         
     def _estimate_social_verification_time(self) -> str:
-        """Estimate social media verification completion time."""
-        return "1-3 business days"
+        """Estimate social media verification completion time."""        return "1-3 business days"
         
     def _estimate_business_verification_time(self) -> str:
-        """Estimate business verification completion time."""
-        return "5-10 business days"
+        """Estimate business verification completion time."""        return "5-10 business days"
         
     def _get_required_documents(self, document_type: DocumentType) -> List[str]:
-        """Get list of required documents for verification type."""
-        requirements = {
+        """Get list of required documents for verification type."""        requirements = {
             DocumentType.PASSPORT: ["passport_front", "selfie"],
             DocumentType.DRIVERS_LICENSE: ["license_front", "license_back", "selfie"],
             DocumentType.NATIONAL_ID: ["id_front", "id_back", "selfie"]
@@ -636,8 +610,7 @@ class VerificationManager:
         verifications: List[IdentityVerification],
         social_verifications: List[SocialVerification]
     ) -> VerificationLevel:
-        """Calculate overall verification level for client."""
-        has_identity = any(
+        """Calculate overall verification level for client."""        has_identity = any(
             v.status == VerificationStatus.APPROVED 
             and v.verification_type == VerificationType.IDENTITY 
             for v in verifications
@@ -668,8 +641,7 @@ class VerificationManager:
             return VerificationLevel.EMAIL_VERIFIED  # Default for registered users
             
     def _format_verification_data(self, verification: Optional[IdentityVerification]) -> Optional[Dict[str, Any]]:
-        """Format verification data for API response."""
-        if not verification:
+        """Format verification data for API response."""        if not verification:
             return None
             
         return {
@@ -685,8 +657,7 @@ class VerificationManager:
         }
         
     def _format_social_verification_data(self, verification: SocialVerification) -> Dict[str, Any]:
-        """Format social verification data for API response."""
-        return {
+        """Format social verification data for API response."""        return {
             "id": str(verification.id),
             "platform": verification.platform,
             "username": verification.username,
@@ -697,13 +668,11 @@ class VerificationManager:
         }
         
     async def _get_verification_badges(self, client_id: UUID) -> List[str]:
-        """Get verification badges for client."""
-        # Implementation would return list of earned badges
+        """Get verification badges for client."""        # Implementation would return list of earned badges
         return []
         
     async def _get_verification_next_steps(self, current_level: VerificationLevel) -> List[str]:
-        """Get next steps for improving verification level."""
-        next_steps = {
+        """Get next steps for improving verification level."""        next_steps = {
             VerificationLevel.EMAIL_VERIFIED: [
                 "Complete identity verification",
                 "Verify social media accounts"
@@ -719,26 +688,21 @@ class VerificationManager:
         return next_steps.get(current_level, [])
         
     async def _start_document_verification_process(self, verification: IdentityVerification) -> Dict[str, Any]:
-        """Start automated document verification process."""
-        # Implementation would start AI-powered document verification
+        """Start automated document verification process."""        # Implementation would start AI-powered document verification
         return {"status": "started"}
         
     async def _start_business_verification_process(self, verification: IdentityVerification) -> Dict[str, Any]:
-        """Start business verification process."""
-        # Implementation would start business document verification
+        """Start business verification process."""        # Implementation would start business document verification
         return {"status": "started"}
         
     async def _verify_social_media_post(self, verification: SocialVerification) -> Dict[str, Any]:
-        """Verify social media post for account verification."""
-        # Implementation would verify social media post
+        """Verify social media post for account verification."""        # Implementation would verify social media post
         return {"status": "verified"}
         
     async def _queue_manual_social_verification(self, verification: SocialVerification) -> Dict[str, Any]:
-        """Queue social verification for manual review."""
-        # Implementation would queue for manual review
+        """Queue social verification for manual review."""        # Implementation would queue for manual review
         return {"status": "queued"}
         
     async def _update_client_verification_level(self, client_id: UUID) -> None:
-        """Update client's overall verification level."""
-        # Implementation would update client verification level
+        """Update client's overall verification level."""        # Implementation would update client verification level
         pass

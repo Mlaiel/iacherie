@@ -1,5 +1,4 @@
-"""
-Multimedia Converter for IA Influencer Agent Platform
+"""Multimedia Converter for IA Influencer Agent Platform
 Advanced multimedia format conversion, optimization, and processing
 
 Author: Fahed Mlaiel <mlaiel@live.de>
@@ -7,7 +6,6 @@ Project: IA Influencer Agent Platform with Multi-Content Protection
 WARNING: This code is protected by copyright. Any unauthorized use, reproduction,
 or distribution without written permission from Fahed Mlaiel is strictly prohibited.
 """
-
 import ffmpeg
 from PIL import Image, ImageOps, ImageEnhance
 import librosa
@@ -36,8 +34,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class ConversionParams:
-    """Conversion parameters configuration"""
-    format: str
+    """Conversion parameters configuration"""    format: str
     quality: Optional[Union[int, str]] = None
     resolution: Optional[Tuple[int, int]] = None
     bitrate: Optional[str] = None
@@ -51,8 +48,7 @@ class ConversionParams:
 
 @dataclass
 class ConversionResult:
-    """Conversion operation result"""
-    success: bool
+    """Conversion operation result"""    success: bool
     input_file: str
     output_file: Optional[str] = None
     original_size: int = 0
@@ -64,8 +60,7 @@ class ConversionResult:
     warnings: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert result to dictionary"""
-        return {
+        """Convert result to dictionary"""        return {
             'success': self.success,
             'input_file': self.input_file,
             'output_file': self.output_file,
@@ -81,8 +76,7 @@ class ConversionResult:
 
 @dataclass
 class MediaInfo:
-    """Media file information"""
-    file_path: str
+    """Media file information"""    file_path: str
     media_type: str  # audio, video, image
     format: str
     duration: Optional[float] = None
@@ -97,8 +91,7 @@ class MediaInfo:
 
 
 class AudioConverter:
-    """Advanced audio format conversion and processing"""
-    
+    """Advanced audio format conversion and processing"""    
     def __init__(self, quality_preset: str = "high"):
         self.quality_preset = quality_preset
         self.supported_formats = {
@@ -123,8 +116,7 @@ class AudioConverter:
     
     async def convert_audio(self, input_file: str, output_file: str,
                           params: ConversionParams) -> ConversionResult:
-        """Convert audio file with specified parameters"""
-        start_time = time.time()
+        """Convert audio file with specified parameters"""        start_time = time.time()
         result = ConversionResult(
             success=False,
             input_file=input_file,
@@ -181,8 +173,7 @@ class AudioConverter:
         return result
     
     def _build_audio_options(self, params: ConversionParams) -> Dict[str, Any]:
-        """Build ffmpeg audio options"""
-        options = {}
+        """Build ffmpeg audio options"""        options = {}
         
         # Quality settings
         quality_settings = self.quality_settings.get(self.quality_preset, 
@@ -210,8 +201,7 @@ class AudioConverter:
         return options
     
     async def _execute_ffmpeg(self, stream) -> None:
-        """Execute ffmpeg command asynchronously"""
-        def run_ffmpeg():
+        """Execute ffmpeg command asynchronously"""        def run_ffmpeg():
             try:
                 ffmpeg.run(stream, overwrite_output=True, quiet=True)
             except ffmpeg.Error as e:
@@ -223,8 +213,7 @@ class AudioConverter:
             await loop.run_in_executor(executor, run_ffmpeg)
     
     async def _get_audio_info(self, file_path: str) -> Dict[str, Any]:
-        """Get audio file information"""
-        try:
+        """Get audio file information"""        try:
             probe = ffmpeg.probe(file_path)
             
             audio_stream = None
@@ -252,8 +241,7 @@ class AudioConverter:
                                 output_dir: str,
                                 params: ConversionParams,
                                 max_concurrent: int = 4) -> List[ConversionResult]:
-        """Convert multiple audio files concurrently"""
-        semaphore = asyncio.Semaphore(max_concurrent)
+        """Convert multiple audio files concurrently"""        semaphore = asyncio.Semaphore(max_concurrent)
         
         async def convert_single_file(input_file: str) -> ConversionResult:
             async with semaphore:
@@ -274,8 +262,7 @@ class AudioConverter:
     
     async def optimize_for_streaming(self, input_file: str, 
                                    output_file: str) -> ConversionResult:
-        """Optimize audio for streaming"""
-        params = ConversionParams(
+        """Optimize audio for streaming"""        params = ConversionParams(
             format='aac',
             bitrate='128k',
             sample_rate=44100,
@@ -290,8 +277,7 @@ class AudioConverter:
 
 
 class VideoConverter:
-    """Advanced video format conversion and processing"""
-    
+    """Advanced video format conversion and processing"""    
     def __init__(self, hardware_acceleration: bool = True):
         self.hardware_acceleration = hardware_acceleration
         self.supported_formats = {
@@ -329,8 +315,7 @@ class VideoConverter:
     
     async def convert_video(self, input_file: str, output_file: str,
                           params: ConversionParams) -> ConversionResult:
-        """Convert video file with specified parameters"""
-        start_time = time.time()
+        """Convert video file with specified parameters"""        start_time = time.time()
         result = ConversionResult(
             success=False,
             input_file=input_file,
@@ -387,8 +372,7 @@ class VideoConverter:
         return result
     
     def _build_video_options(self, params: ConversionParams) -> Dict[str, Any]:
-        """Build ffmpeg video options"""
-        options = {}
+        """Build ffmpeg video options"""        options = {}
         
         # Resolution
         if params.resolution:
@@ -418,8 +402,7 @@ class VideoConverter:
         return options
     
     async def _execute_ffmpeg(self, stream) -> None:
-        """Execute ffmpeg command asynchronously"""
-        def run_ffmpeg():
+        """Execute ffmpeg command asynchronously"""        def run_ffmpeg():
             try:
                 ffmpeg.run(stream, overwrite_output=True, quiet=True)
             except ffmpeg.Error as e:
@@ -431,8 +414,7 @@ class VideoConverter:
             await loop.run_in_executor(executor, run_ffmpeg)
     
     async def _get_video_info(self, file_path: str) -> Dict[str, Any]:
-        """Get video file information"""
-        try:
+        """Get video file information"""        try:
             probe = ffmpeg.probe(file_path)
             
             video_stream = None
@@ -471,8 +453,7 @@ class VideoConverter:
     
     async def create_thumbnail(self, video_file: str, thumbnail_file: str,
                              timestamp: float = 1.0, size: Tuple[int, int] = (320, 240)) -> bool:
-        """Create video thumbnail"""
-        try:
+        """Create video thumbnail"""        try:
             input_stream = ffmpeg.input(video_file, ss=timestamp)
             output_stream = ffmpeg.output(
                 input_stream,
@@ -491,8 +472,7 @@ class VideoConverter:
     
     async def extract_audio(self, video_file: str, audio_file: str,
                           format: str = 'mp3') -> ConversionResult:
-        """Extract audio track from video"""
-        start_time = time.time()
+        """Extract audio track from video"""        start_time = time.time()
         result = ConversionResult(
             success=False,
             input_file=video_file,
@@ -524,8 +504,7 @@ class VideoConverter:
 
 
 class ImageConverter:
-    """Advanced image format conversion and processing"""
-    
+    """Advanced image format conversion and processing"""    
     def __init__(self):
         self.supported_formats = {
             'jpeg': 'JPEG',
@@ -549,8 +528,7 @@ class ImageConverter:
     
     async def convert_image(self, input_file: str, output_file: str,
                           params: ConversionParams) -> ConversionResult:
-        """Convert image file with specified parameters"""
-        start_time = time.time()
+        """Convert image file with specified parameters"""        start_time = time.time()
         result = ConversionResult(
             success=False,
             input_file=input_file,
@@ -628,8 +606,7 @@ class ImageConverter:
         return result
     
     def _get_image_info(self, file_path: str) -> Dict[str, Any]:
-        """Get image file information"""
-        try:
+        """Get image file information"""        try:
             with Image.open(file_path) as img:
                 return {
                     'format': img.format,
@@ -646,8 +623,7 @@ class ImageConverter:
                                 size: Tuple[int, int], 
                                 format: str = 'jpeg',
                                 quality: int = 80) -> List[ConversionResult]:
-        """Batch resize images in directory"""
-        input_path = Path(input_dir)
+        """Batch resize images in directory"""        input_path = Path(input_dir)
         output_path = Path(output_dir)
         output_path.mkdir(parents=True, exist_ok=True)
         
@@ -677,8 +653,7 @@ class ImageConverter:
     
     async def create_progressive_jpeg(self, input_file: str, 
                                     output_file: str, quality: int = 80) -> ConversionResult:
-        """Create progressive JPEG for web optimization"""
-        params = ConversionParams(
+        """Create progressive JPEG for web optimization"""        params = ConversionParams(
             format='jpeg',
             quality=quality,
             custom_options={
@@ -691,8 +666,7 @@ class ImageConverter:
 
 
 class MultimediaConverter:
-    """Main multimedia converter combining all format converters"""
-    
+    """Main multimedia converter combining all format converters"""    
     def __init__(self, temp_dir: Optional[str] = None,
                  cleanup_temp: bool = True):
         self.audio_converter = AudioConverter()
@@ -708,8 +682,7 @@ class MultimediaConverter:
     
     async def convert_file(self, input_file: str, output_file: str,
                           params: ConversionParams) -> ConversionResult:
-        """Convert file based on detected media type"""
-        media_type = self._detect_media_type(input_file)
+        """Convert file based on detected media type"""        media_type = self._detect_media_type(input_file)
         
         if media_type == 'audio':
             return await self.audio_converter.convert_audio(input_file, output_file, params)
@@ -725,8 +698,7 @@ class MultimediaConverter:
             )
     
     def _detect_media_type(self, file_path: str) -> str:
-        """Detect media type from file extension or content"""
-        mime_type, _ = mimetypes.guess_type(file_path)
+        """Detect media type from file extension or content"""        mime_type, _ = mimetypes.guess_type(file_path)
         
         if mime_type:
             if mime_type.startswith('audio/'):
@@ -753,8 +725,7 @@ class MultimediaConverter:
             return 'unknown'
     
     async def get_media_info(self, file_path: str) -> MediaInfo:
-        """Get comprehensive media file information"""
-        media_type = self._detect_media_type(file_path)
+        """Get comprehensive media file information"""        media_type = self._detect_media_type(file_path)
         file_path_obj = Path(file_path)
         
         info = MediaInfo(
@@ -804,8 +775,7 @@ class MultimediaConverter:
                           output_dir: str,
                           conversion_settings: Dict[str, ConversionParams],
                           max_concurrent: int = 4) -> Dict[str, List[ConversionResult]]:
-        """Batch convert multiple files with different settings per media type"""
-        # Group files by media type
+        """Batch convert multiple files with different settings per media type"""        # Group files by media type
         files_by_type = {'audio': [], 'video': [], 'image': []}
         
         for file in input_files:
@@ -869,8 +839,7 @@ class MultimediaConverter:
         return results
     
     def get_conversion_stats(self) -> Dict[str, Any]:
-        """Get conversion statistics"""
-        if not self.conversion_history:
+        """Get conversion statistics"""        if not self.conversion_history:
             return {'total_conversions': 0}
         
         successful_conversions = [r for r in self.conversion_history if r.success]
@@ -892,8 +861,7 @@ class MultimediaConverter:
         }
     
     def cleanup_temp_files(self):
-        """Clean up temporary files"""
-        if self.cleanup_temp:
+        """Clean up temporary files"""        if self.cleanup_temp:
             temp_path = Path(self.temp_dir)
             for file in temp_path.glob('*'):
                 try:
@@ -906,8 +874,7 @@ class MultimediaConverter:
 
 
 class StreamingOptimizer:
-    """Optimize multimedia files for streaming"""
-    
+    """Optimize multimedia files for streaming"""    
     def __init__(self, converter: MultimediaConverter):
         self.converter = converter
         
@@ -953,8 +920,7 @@ class StreamingOptimizer:
     
     async def optimize_for_streaming(self, input_file: str, output_dir: str,
                                    quality: str = 'medium') -> List[ConversionResult]:
-        """Optimize file for streaming with multiple quality levels"""
-        media_type = self.converter._detect_media_type(input_file)
+        """Optimize file for streaming with multiple quality levels"""        media_type = self.converter._detect_media_type(input_file)
         
         if media_type not in self.streaming_presets:
             return []
@@ -994,8 +960,7 @@ class StreamingOptimizer:
     
     async def create_adaptive_streaming_set(self, input_file: str, 
                                           output_dir: str) -> Dict[str, Any]:
-        """Create complete adaptive streaming set (multiple bitrates/resolutions)"""
-        media_type = self.converter._detect_media_type(input_file)
+        """Create complete adaptive streaming set (multiple bitrates/resolutions)"""        media_type = self.converter._detect_media_type(input_file)
         
         if media_type != 'video':
             return {'error': 'Adaptive streaming only supported for video files'}
@@ -1032,5 +997,4 @@ class StreamingOptimizer:
 
 
 class ConversionError(Exception):
-    """Custom exception for conversion errors"""
-    pass
+    """Custom exception for conversion errors"""    pass

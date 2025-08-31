@@ -1,5 +1,4 @@
-"""
-Vector Search Service - FAISS Integration for Content Similarity
+"""Vector Search Service - FAISS Integration for Content Similarity
 
 Advanced vector database implementation using FAISS for high-performance
 similarity search across multi-format content fingerprints.
@@ -21,7 +20,6 @@ belong exclusively to Fahed Mlaiel. Any unauthorized copying, redistribution,
 reverse engineering, or commercial use without explicit written permission
 will result in immediate legal action under international copyright laws.
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -63,8 +61,7 @@ from ..core.config import get_settings
 
 
 class VectorType(Enum):
-    """Types of content vectors."""
-    AUDIO_FINGERPRINT = "audio_fingerprint"
+    """Types of content vectors."""    AUDIO_FINGERPRINT = "audio_fingerprint"
     VIDEO_FINGERPRINT = "video_fingerprint"
     IMAGE_FINGERPRINT = "image_fingerprint"
     TEXT_EMBEDDING = "text_embedding"
@@ -72,8 +69,7 @@ class VectorType(Enum):
 
 
 class SimilarityMetric(Enum):
-    """Similarity metrics for vector comparison."""
-    COSINE = "cosine"
+    """Similarity metrics for vector comparison."""    COSINE = "cosine"
     EUCLIDEAN = "euclidean"
     MANHATTAN = "manhattan"
     DOT_PRODUCT = "dot_product"
@@ -81,8 +77,7 @@ class SimilarityMetric(Enum):
 
 @dataclass
 class VectorRecord:
-    """Vector database record."""
-    vector_id: str
+    """Vector database record."""    vector_id: str
     content_id: str
     vector_type: VectorType
     embedding: np.ndarray
@@ -91,8 +86,7 @@ class VectorRecord:
     updated_at: Optional[datetime] = None
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "vector_id": self.vector_id,
             "content_id": self.content_id,
             "vector_type": self.vector_type.value,
@@ -106,8 +100,7 @@ class VectorRecord:
 
 @dataclass
 class SimilarityResult:
-    """Similarity search result."""
-    content_id: str
+    """Similarity search result."""    content_id: str
     vector_id: str
     similarity_score: float
     vector_type: VectorType
@@ -115,8 +108,7 @@ class SimilarityResult:
     distance: float = 0.0
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary."""
-        return {
+        """Convert to dictionary."""        return {
             "content_id": self.content_id,
             "vector_id": self.vector_id,
             "similarity_score": self.similarity_score,
@@ -127,8 +119,7 @@ class SimilarityResult:
 
 
 class FAISSIndexManager:
-    """FAISS index management for efficient vector operations."""
-    
+    """FAISS index management for efficient vector operations."""    
     def __init__(self, dimension: int, metric: SimilarityMetric = SimilarityMetric.COSINE):
         if faiss is None:
             raise VectorSearchException("FAISS not installed. Please install faiss-cpu or faiss-gpu.")
@@ -141,8 +132,7 @@ class FAISSIndexManager:
         self.next_faiss_id = 0
         
     def _create_index(self) -> faiss.Index:
-        """Create FAISS index based on metric."""
-        if self.metric == SimilarityMetric.COSINE:
+        """Create FAISS index based on metric."""        if self.metric == SimilarityMetric.COSINE:
             # Use Inner Product for cosine similarity (normalize vectors)
             index = faiss.IndexFlatIP(self.dimension)
         elif self.metric == SimilarityMetric.EUCLIDEAN:
@@ -154,8 +144,7 @@ class FAISSIndexManager:
         return index
         
     def add_vector(self, vector_id: str, embedding: np.ndarray, metadata: Dict[str, Any]):
-        """Add vector to FAISS index."""
-        if embedding.shape[0] != self.dimension:
+        """Add vector to FAISS index."""        if embedding.shape[0] != self.dimension:
             raise VectorSearchException(f"Vector dimension {embedding.shape[0]} doesn't match index dimension {self.dimension}")
             
         # Normalize for cosine similarity
@@ -173,8 +162,7 @@ class FAISSIndexManager:
         self.next_faiss_id += 1
         
     def search_similar(self, query_vector: np.ndarray, k: int = 10, threshold: float = 0.0) -> List[Tuple[float, Dict[str, Any]]]:
-        """Search for similar vectors."""
-        if query_vector.shape[0] != self.dimension:
+        """Search for similar vectors."""        if query_vector.shape[0] != self.dimension:
             raise VectorSearchException(f"Query vector dimension {query_vector.shape[0]} doesn't match index dimension {self.dimension}")
             
         # Normalize for cosine similarity
@@ -204,8 +192,7 @@ class FAISSIndexManager:
         return results
         
     def remove_vector(self, vector_id: str) -> bool:
-        """Remove vector from index (FAISS doesn't support direct removal)."""
-        # Note: FAISS doesn't support direct removal. In production, use IndexIDMap
+        """Remove vector from index (FAISS doesn't support direct removal)."""        # Note: FAISS doesn't support direct removal. In production, use IndexIDMap
         if vector_id in self.vector_id_to_faiss_id:
             faiss_id = self.vector_id_to_faiss_id[vector_id]
             del self.vector_id_to_faiss_id[vector_id]
@@ -214,12 +201,10 @@ class FAISSIndexManager:
         return False
         
     def get_total_vectors(self) -> int:
-        """Get total number of vectors in index."""
-        return self.index.ntotal
+        """Get total number of vectors in index."""        return self.index.ntotal
         
     def save_index(self, filepath: Path):
-        """Save FAISS index to disk."""
-        faiss.write_index(self.index, str(filepath))
+        """Save FAISS index to disk."""        faiss.write_index(self.index, str(filepath))
         
         # Save metadata separately
         metadata_file = filepath.with_suffix('.metadata.pkl')
@@ -231,8 +216,7 @@ class FAISSIndexManager:
             }, f)
             
     def load_index(self, filepath: Path):
-        """Load FAISS index from disk."""
-        self.index = faiss.read_index(str(filepath))
+        """Load FAISS index from disk."""        self.index = faiss.read_index(str(filepath))
         
         # Load metadata
         metadata_file = filepath.with_suffix('.metadata.pkl')
@@ -245,8 +229,7 @@ class FAISSIndexManager:
 
 
 class VectorSearchService:
-    """Professional vector search service with FAISS and Elasticsearch integration."""
-    
+    """Professional vector search service with FAISS and Elasticsearch integration."""    
     def __init__(self):
         self.settings = get_settings()
         self.logger = logging.getLogger(__name__)
@@ -264,8 +247,7 @@ class VectorSearchService:
         asyncio.create_task(self._initialize_services())
         
     async def _initialize_services(self):
-        """Initialize external services."""
-        try:
+        """Initialize external services."""        try:
             # Initialize Elasticsearch
             if AsyncElasticsearch and hasattr(self.settings, 'ELASTICSEARCH_URL'):
                 self.es_client = AsyncElasticsearch(
@@ -285,8 +267,7 @@ class VectorSearchService:
             self.logger.error(f"Failed to initialize vector search services: {e}")
             
     async def _create_elasticsearch_indices(self):
-        """Create Elasticsearch indices for vector metadata."""
-        if not self.es_client:
+        """Create Elasticsearch indices for vector metadata."""        if not self.es_client:
             return
             
         # Index mapping for vector metadata
@@ -314,8 +295,7 @@ class VectorSearchService:
             self.logger.error(f"Failed to create Elasticsearch indices: {e}")
             
     def _get_faiss_manager(self, vector_type: VectorType, dimension: int) -> FAISSIndexManager:
-        """Get or create FAISS manager for vector type."""
-        if vector_type not in self.faiss_managers:
+        """Get or create FAISS manager for vector type."""        if vector_type not in self.faiss_managers:
             self.faiss_managers[vector_type] = FAISSIndexManager(
                 dimension=dimension,
                 metric=SimilarityMetric.COSINE
@@ -329,8 +309,7 @@ class VectorSearchService:
         vector_type: VectorType,
         metadata: Dict[str, Any]
     ) -> str:
-        """Store content fingerprint vector."""
-        try:
+        """Store content fingerprint vector."""        try:
             vector_id = str(uuid.uuid4())
             
             # Get FAISS manager
@@ -386,8 +365,7 @@ class VectorSearchService:
         k: int = 10,
         threshold: float = 0.7
     ) -> List[SimilarityResult]:
-        """Search for similar content by vector embedding."""
-        try:
+        """Search for similar content by vector embedding."""        try:
             if vector_type not in self.faiss_managers:
                 return []
                 
@@ -421,8 +399,7 @@ class VectorSearchService:
             raise VectorSearchException(f"Failed to search similar content: {str(e)}")
             
     async def get_vector_by_id(self, vector_id: str) -> Optional[VectorRecord]:
-        """Get vector record by ID."""
-        try:
+        """Get vector record by ID."""        try:
             # Try cache first
             if self.redis_client:
                 cache_key = f"vector:{vector_id}"
@@ -462,8 +439,7 @@ class VectorSearchService:
             return None
             
     async def delete_vector(self, vector_id: str) -> bool:
-        """Delete vector by ID."""
-        try:
+        """Delete vector by ID."""        try:
             success = False
             
             # Remove from all FAISS managers
@@ -497,8 +473,7 @@ class VectorSearchService:
         query: Dict[str, Any],
         limit: int = 100
     ) -> List[VectorRecord]:
-        """Search vectors by metadata using Elasticsearch."""
-        if not self.es_client:
+        """Search vectors by metadata using Elasticsearch."""        if not self.es_client:
             return []
             
         try:
@@ -544,8 +519,7 @@ class VectorSearchService:
             return []
             
     async def get_statistics(self) -> Dict[str, Any]:
-        """Get vector database statistics."""
-        stats = {
+        """Get vector database statistics."""        stats = {
             "total_vectors": 0,
             "vectors_by_type": {},
             "faiss_managers": len(self.faiss_managers)
@@ -570,8 +544,7 @@ class VectorSearchService:
             return stats
             
     async def save_indices(self, directory: Path):
-        """Save all FAISS indices to disk."""
-        try:
+        """Save all FAISS indices to disk."""        try:
             directory.mkdir(parents=True, exist_ok=True)
             
             for vector_type, manager in self.faiss_managers.items():
@@ -585,8 +558,7 @@ class VectorSearchService:
             raise VectorSearchException(f"Failed to save indices: {str(e)}")
             
     async def load_indices(self, directory: Path):
-        """Load FAISS indices from disk."""
-        try:
+        """Load FAISS indices from disk."""        try:
             if not directory.exists():
                 self.logger.warning(f"Index directory {directory} does not exist")
                 return
@@ -614,8 +586,7 @@ class VectorSearchService:
 _vector_search_service = None
 
 def get_vector_search_service() -> VectorSearchService:
-    """Get global vector search service instance."""
-    global _vector_search_service
+    """Get global vector search service instance."""    global _vector_search_service
     if _vector_search_service is None:
         _vector_search_service = VectorSearchService()
     return _vector_search_service

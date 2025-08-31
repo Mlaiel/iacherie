@@ -1,5 +1,4 @@
-"""
-🚀 Payment Methods & Refund Manager - IA Influencer Agent Platform Enterprise
+"""🚀 Payment Methods & Refund Manager - IA Influencer Agent Platform Enterprise
 ============================================================================
 Module: backend/platform_core/billing/payment_methods.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -16,7 +15,6 @@ Système de gestion sécurisée des moyens de paiement clients
 - Validation en temps réel et scoring de risque
 - Backup automatique et retry intelligent
 """
-
 import asyncio
 import json
 import logging
@@ -35,8 +33,7 @@ from cryptography.fernet import Fernet
 logger = logging.getLogger(__name__)
 
 class PaymentMethodType(Enum):
-    """Types de méthodes de paiement"""
-    CREDIT_CARD = "credit_card"
+    """Types de méthodes de paiement"""    CREDIT_CARD = "credit_card"
     DEBIT_CARD = "debit_card"
     BANK_ACCOUNT = "bank_account"
     DIGITAL_WALLET = "digital_wallet"
@@ -45,8 +42,7 @@ class PaymentMethodType(Enum):
     STORE_CREDIT = "store_credit"
 
 class CardBrand(Enum):
-    """Marques de cartes"""
-    VISA = "visa"
+    """Marques de cartes"""    VISA = "visa"
     MASTERCARD = "mastercard"
     AMEX = "amex"
     DISCOVER = "discover"
@@ -55,8 +51,7 @@ class CardBrand(Enum):
     UNIONPAY = "unionpay"
 
 class PaymentMethodStatus(Enum):
-    """États des méthodes de paiement"""
-    ACTIVE = "active"
+    """États des méthodes de paiement"""    ACTIVE = "active"
     INACTIVE = "inactive"
     EXPIRED = "expired"
     INVALID = "invalid"
@@ -65,8 +60,7 @@ class PaymentMethodStatus(Enum):
 
 @dataclass
 class PaymentMethod:
-    """Méthode de paiement"""
-    payment_method_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Méthode de paiement"""    payment_method_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     customer_id: str = ""
     
     # Type et statut
@@ -104,8 +98,7 @@ class PaymentMethod:
     
     @property
     def is_expired(self) -> bool:
-        """Vérifie si la méthode de paiement est expirée"""
-        if not self.expiry_month or not self.expiry_year:
+        """Vérifie si la méthode de paiement est expirée"""        if not self.expiry_month or not self.expiry_year:
             return False
             
         now = datetime.utcnow()
@@ -119,15 +112,13 @@ class PaymentMethod:
         
     @property
     def success_rate(self) -> float:
-        """Calcule le taux de succès"""
-        total = self.successful_payments + self.failed_payments
+        """Calcule le taux de succès"""        total = self.successful_payments + self.failed_payments
         if total == 0:
             return 1.0
         return self.successful_payments / total
 
 class PaymentMethodManager:
-    """Gestionnaire des méthodes de paiement"""
-    
+    """Gestionnaire des méthodes de paiement"""    
     def __init__(self, 
                  encryption_key: Optional[bytes] = None,
                  database_client: Optional[Any] = None):
@@ -147,8 +138,7 @@ class PaymentMethodManager:
                                method_type: PaymentMethodType,
                                provider_token: str,
                                **kwargs) -> PaymentMethod:
-        """Ajoute une nouvelle méthode de paiement"""
-        
+        """Ajoute une nouvelle méthode de paiement"""        
         payment_method = PaymentMethod(
             customer_id=customer_id,
             method_type=method_type,
@@ -178,8 +168,7 @@ class PaymentMethodManager:
         return payment_method
         
     async def get_payment_method(self, payment_method_id: str) -> Optional[PaymentMethod]:
-        """Récupère une méthode de paiement par ID"""
-        if payment_method_id in self.payment_methods:
+        """Récupère une méthode de paiement par ID"""        if payment_method_id in self.payment_methods:
             return self.payment_methods[payment_method_id]
             
         if self.database_client:
@@ -191,8 +180,7 @@ class PaymentMethodManager:
         return None
         
     async def get_customer_payment_methods(self, customer_id: str) -> List[PaymentMethod]:
-        """Récupère toutes les méthodes de paiement d'un client"""
-        methods = []
+        """Récupère toutes les méthodes de paiement d'un client"""        methods = []
         
         # Chercher dans le cache
         for method in self.payment_methods.values():
@@ -212,8 +200,7 @@ class PaymentMethodManager:
         return methods
         
     async def set_default_payment_method(self, customer_id: str, payment_method_id: str) -> bool:
-        """Définit la méthode de paiement par défaut"""
-        # Récupérer toutes les méthodes du client
+        """Définit la méthode de paiement par défaut"""        # Récupérer toutes les méthodes du client
         customer_methods = await self.get_customer_payment_methods(customer_id)
         
         method_found = False
@@ -235,8 +222,7 @@ class PaymentMethodManager:
     async def verify_payment_method(self, 
                                   payment_method_id: str,
                                   verification_amount: Optional[Decimal] = None) -> bool:
-        """Vérifie une méthode de paiement"""
-        method = await self.get_payment_method(payment_method_id)
+        """Vérifie une méthode de paiement"""        method = await self.get_payment_method(payment_method_id)
         if not method:
             return False
             
@@ -266,8 +252,7 @@ class PaymentMethodManager:
             return False
             
     async def deactivate_payment_method(self, payment_method_id: str) -> bool:
-        """Désactive une méthode de paiement"""
-        method = await self.get_payment_method(payment_method_id)
+        """Désactive une méthode de paiement"""        method = await self.get_payment_method(payment_method_id)
         if not method:
             return False
             
@@ -295,8 +280,7 @@ class PaymentMethodManager:
                                  payment_method_id: str,
                                  success: bool,
                                  amount: Decimal):
-        """Met à jour les statistiques d'une méthode de paiement"""
-        method = await self.get_payment_method(payment_method_id)
+        """Met à jour les statistiques d'une méthode de paiement"""        method = await self.get_payment_method(payment_method_id)
         if not method:
             return
             
@@ -315,22 +299,18 @@ class PaymentMethodManager:
             await self._save_payment_method(method)
             
     def _generate_fingerprint(self, method: PaymentMethod) -> str:
-        """Génère une empreinte unique pour la méthode de paiement"""
-        # Combiner des éléments non sensibles pour créer une empreinte
+        """Génère une empreinte unique pour la méthode de paiement"""        # Combiner des éléments non sensibles pour créer une empreinte
         fingerprint_data = f"{method.customer_id}:{method.method_type.value}:{method.last_four}:{method.brand.value if method.brand else 'none'}"
         return hashlib.sha256(fingerprint_data.encode()).hexdigest()[:16]
         
     def _encrypt_sensitive_data(self, data: str) -> str:
-        """Chiffre les données sensibles"""
-        return base64.b64encode(self.cipher_suite.encrypt(data.encode())).decode()
+        """Chiffre les données sensibles"""        return base64.b64encode(self.cipher_suite.encrypt(data.encode())).decode()
         
     def _decrypt_sensitive_data(self, encrypted_data: str) -> str:
-        """Déchiffre les données sensibles"""
-        return self.cipher_suite.decrypt(base64.b64decode(encrypted_data.encode())).decode()
+        """Déchiffre les données sensibles"""        return self.cipher_suite.decrypt(base64.b64decode(encrypted_data.encode())).decode()
         
     def _calculate_risk_score(self, method: PaymentMethod) -> float:
-        """Calcule le score de risque d'une méthode de paiement"""
-        score = 0.0
+        """Calcule le score de risque d'une méthode de paiement"""        score = 0.0
         
         # Facteurs de risque
         if method.failed_payments > 0:
@@ -349,8 +329,7 @@ class PaymentMethodManager:
         return min(1.0, max(0.0, score))
         
     async def _save_payment_method(self, method: PaymentMethod):
-        """Sauvegarde une méthode de paiement en base"""
-        try:
+        """Sauvegarde une méthode de paiement en base"""        try:
             logger.info(f"Saving payment method {method.payment_method_id} for customer {method.customer_id}")
             
             # Prepare payment method data for storage
@@ -431,8 +410,7 @@ class PaymentMethodManager:
             raise
 
     def _generate_security_fingerprint(self, method: PaymentMethod) -> str:
-        """Generate security fingerprint for payment method verification"""
-        # Create a unique fingerprint based on payment method details
+        """Generate security fingerprint for payment method verification"""        # Create a unique fingerprint based on payment method details
         fingerprint_data = f"{method.customer_id}:{method.payment_type.value}:{method.created_at.isoformat()}"
         if method.payment_type == PaymentType.CREDIT_CARD:
             fingerprint_data += f":{method.metadata.get('card_last_four', '')}"
@@ -442,19 +420,16 @@ class PaymentMethodManager:
         return hashlib.sha256(fingerprint_data.encode()).hexdigest()[:16]
         
     async def _load_payment_method(self, payment_method_id: str) -> Optional[PaymentMethod]:
-        """Charge une méthode de paiement depuis la base"""
-        # Implémentation de chargement
+        """Charge une méthode de paiement depuis la base"""        # Implémentation de chargement
         return None
         
     async def _load_customer_payment_methods(self, customer_id: str) -> List[PaymentMethod]:
-        """Charge toutes les méthodes de paiement d'un client"""
-        # Implémentation de chargement
+        """Charge toutes les méthodes de paiement d'un client"""        # Implémentation de chargement
         return []
 
 @dataclass
 class RefundRequest:
-    """Demande de remboursement"""
-    refund_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Demande de remboursement"""    refund_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     payment_id: str = ""
     customer_id: str = ""
     
@@ -478,8 +453,7 @@ class RefundRequest:
     notes: str = ""
 
 class RefundManager:
-    """Gestionnaire des remboursements"""
-    
+    """Gestionnaire des remboursements"""    
     def __init__(self, 
                  payment_processor: Any,
                  database_client: Optional[Any] = None):
@@ -497,8 +471,7 @@ class RefundManager:
                            amount: Decimal,
                            reason: str,
                            requested_by: str) -> RefundRequest:
-        """Crée une demande de remboursement"""
-        
+        """Crée une demande de remboursement"""        
         refund_request = RefundRequest(
             payment_id=payment_id,
             customer_id=customer_id,
@@ -535,8 +508,7 @@ class RefundManager:
                            approved_amount: Optional[Decimal] = None,
                            approved_by: str = "",
                            notes: str = "") -> bool:
-        """Approuve une demande de remboursement"""
-        
+        """Approuve une demande de remboursement"""        
         refund_request = self.refund_requests.get(refund_id)
         if not refund_request or refund_request.status != "pending":
             return False
@@ -560,8 +532,7 @@ class RefundManager:
                           refund_id: str,
                           rejected_by: str = "",
                           reason: str = "") -> bool:
-        """Rejette une demande de remboursement"""
-        
+        """Rejette une demande de remboursement"""        
         refund_request = self.refund_requests.get(refund_id)
         if not refund_request or refund_request.status != "pending":
             return False
@@ -576,12 +547,10 @@ class RefundManager:
         return True
         
     async def get_pending_refunds(self) -> List[RefundRequest]:
-        """Récupère toutes les demandes en attente"""
-        return [r for r in self.refund_requests.values() if r.status == "pending"]
+        """Récupère toutes les demandes en attente"""        return [r for r in self.refund_requests.values() if r.status == "pending"]
         
     async def _validate_refund_request(self, request: RefundRequest) -> bool:
-        """Valide une demande de remboursement"""
-        
+        """Valide une demande de remboursement"""        
         # Vérifier les délais
         payment_date = datetime.utcnow() - timedelta(days=self.max_refund_days)  # Simulation
         if payment_date < datetime.utcnow() - timedelta(days=self.max_refund_days):
@@ -595,8 +564,7 @@ class RefundManager:
         return True
         
     async def _process_refund(self, request: RefundRequest) -> bool:
-        """Traite un remboursement approuvé"""
-        try:
+        """Traite un remboursement approuvé"""        try:
             # Utiliser le processeur de paiement pour effectuer le remboursement
             response = await self.payment_processor.refund_payment(
                 payment_id=request.payment_id,
@@ -621,8 +589,7 @@ class RefundManager:
             return False
             
     async def _save_refund_request(self, request: RefundRequest):
-        """Sauvegarde une demande de remboursement"""
-        try:
+        """Sauvegarde une demande de remboursement"""        try:
             logger.info(f"Saving refund request {request.refund_id}")
             
             # Prepare refund data for storage
@@ -729,8 +696,7 @@ class RefundManager:
             raise
         
     def get_refund_stats(self) -> Dict[str, Any]:
-        """Retourne les statistiques des remboursements"""
-        total_requests = len(self.refund_requests)
+        """Retourne les statistiques des remboursements"""        total_requests = len(self.refund_requests)
         approved = len([r for r in self.refund_requests.values() if r.status == "approved"])
         processed = len([r for r in self.refund_requests.values() if r.status == "processed"])
         

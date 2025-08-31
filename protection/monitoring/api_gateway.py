@@ -1,5 +1,4 @@
-"""
-🚀 Ultra-Advanced Monitoring API Gateway
+"""🚀 Ultra-Advanced Monitoring API Gateway
 ========================================
 
 Enterprise-grade API gateway providing unified access to all content protection
@@ -22,7 +21,6 @@ Unauthorized use, copying, distribution, or reverse engineering is strictly proh
 and will result in immediate legal action under German and international copyright law.
 Contact mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import json
@@ -54,48 +52,40 @@ logger = logging.getLogger(__name__)
 security = HTTPBearer()
 
 class APIVersion(str, Enum):
-    """API version enumeration."""
-    V1 = "v1"
+    """API version enumeration."""    V1 = "v1"
     V2 = "v2"
 
 class MonitoringAPIRequest(BaseModel):
-    """Base monitoring API request."""
-    content_fingerprint: str
+    """Base monitoring API request."""    content_fingerprint: str
     user_id: int
     config: Optional[Dict[str, Any]] = Field(default_factory=dict)
 
 class ComprehensiveMonitoringRequest(MonitoringAPIRequest):
-    """Request for comprehensive monitoring."""
-    monitoring_types: List[str] = Field(default_factory=lambda: ["realtime", "surveillance", "geospatial"])
+    """Request for comprehensive monitoring."""    monitoring_types: List[str] = Field(default_factory=lambda: ["realtime", "surveillance", "geospatial"])
     priority: str = "medium"
     auto_response: bool = False
 
 class IntelligenceAnalysisRequest(BaseModel):
-    """Request for intelligence analysis."""
-    detection_data: Dict[str, Any]
+    """Request for intelligence analysis."""    detection_data: Dict[str, Any]
     analysis_types: List[str] = Field(default_factory=lambda: ["behavioral", "geospatial", "correlation"])
     
 class ReportGenerationRequest(BaseModel):
-    """Request for report generation."""
-    report_type: str = "comprehensive"
+    """Request for report generation."""    report_type: str = "comprehensive"
     timeframe_hours: int = 168  # 7 days
     output_formats: List[str] = Field(default_factory=lambda: ["pdf", "json"])
     include_charts: bool = True
 
 class MonitoringAPIResponse(BaseModel):
-    """Base monitoring API response."""
-    success: bool
+    """Base monitoring API response."""    success: bool
     timestamp: datetime = Field(default_factory=datetime.utcnow)
     version: str = "2.0"
     data: Optional[Dict[str, Any]] = None
     error: Optional[str] = None
 
 class MonitoringAPIGateway:
-    """Ultra-advanced monitoring API gateway."""
-    
+    """Ultra-advanced monitoring API gateway."""    
     def __init__(self, config: Dict[str, Any]):
-        """Initialize the API gateway."""
-        self.config = config
+        """Initialize the API gateway."""        self.config = config
         self.app = FastAPI(
             title="Content Protection Monitoring API",
             description="Ultra-advanced content protection monitoring system API",
@@ -120,8 +110,7 @@ class MonitoringAPIGateway:
         logger.info("Monitoring API Gateway initialized")
 
     def _setup_middleware(self):
-        """Setup API middleware."""
-        # CORS middleware
+        """Setup API middleware."""        # CORS middleware
         self.app.add_middleware(
             CORSMiddleware,
             allow_origins=self.config.get("cors_origins", ["*"]),
@@ -134,13 +123,11 @@ class MonitoringAPIGateway:
         self.app.add_middleware(GZipMiddleware, minimum_size=1000)
 
     def _setup_routes(self):
-        """Setup API routes."""
-        
+        """Setup API routes."""        
         # Health check
         @self.app.get("/health")
         async def health_check():
-            """API health check endpoint."""
-            try:
+            """API health check endpoint."""            try:
                 ecosystem_status = await self.orchestrator.get_ecosystem_status()
                 return MonitoringAPIResponse(
                     success=True,
@@ -163,8 +150,7 @@ class MonitoringAPIGateway:
             background_tasks: BackgroundTasks,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Start comprehensive monitoring across all systems."""
-            try:
+            """Start comprehensive monitoring across all systems."""            try:
                 # Validate authentication
                 user_id = await self._validate_auth(credentials)
                 if not user_id:
@@ -213,8 +199,7 @@ class MonitoringAPIGateway:
             background_tasks: BackgroundTasks,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Process detection event through all monitoring systems."""
-            try:
+            """Process detection event through all monitoring systems."""            try:
                 user_id = await self._validate_auth(credentials)
                 if not user_id:
                     raise HTTPException(status_code=401, detail="Invalid authentication")
@@ -253,8 +238,7 @@ class MonitoringAPIGateway:
             request: IntelligenceAnalysisRequest,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Perform comprehensive intelligence analysis."""
-            try:
+            """Perform comprehensive intelligence analysis."""            try:
                 user_id = await self._validate_auth(credentials)
                 if not user_id:
                     raise HTTPException(status_code=401, detail="Invalid authentication")
@@ -308,8 +292,7 @@ class MonitoringAPIGateway:
             background_tasks: BackgroundTasks,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Generate comprehensive monitoring reports."""
-            try:
+            """Generate comprehensive monitoring reports."""            try:
                 user_id = await self._validate_auth(credentials)
                 if not user_id:
                     raise HTTPException(status_code=401, detail="Invalid authentication")
@@ -353,8 +336,7 @@ class MonitoringAPIGateway:
             session_id: str,
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get monitoring session status."""
-            try:
+            """Get monitoring session status."""            try:
                 user_id = await self._validate_auth(credentials)
                 if not user_id:
                     raise HTTPException(status_code=401, detail="Invalid authentication")
@@ -404,8 +386,7 @@ class MonitoringAPIGateway:
         # WebSocket endpoint for real-time updates
         @self.app.websocket("/api/v2/monitoring/websocket/{client_id}")
         async def websocket_endpoint(websocket: WebSocket, client_id: str):
-            """WebSocket endpoint for real-time monitoring updates."""
-            try:
+            """WebSocket endpoint for real-time monitoring updates."""            try:
                 await websocket.accept()
                 self.active_connections[client_id] = websocket
                 
@@ -447,8 +428,7 @@ class MonitoringAPIGateway:
         async def get_ecosystem_status(
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Get comprehensive ecosystem status."""
-            try:
+            """Get comprehensive ecosystem status."""            try:
                 user_id = await self._validate_auth(credentials)
                 if not user_id:
                     raise HTTPException(status_code=401, detail="Invalid authentication")
@@ -476,8 +456,7 @@ class MonitoringAPIGateway:
             format: str = "pdf",
             credentials: HTTPAuthorizationCredentials = Depends(security)
         ):
-            """Download generated report."""
-            try:
+            """Download generated report."""            try:
                 user_id = await self._validate_auth(credentials)
                 if not user_id:
                     raise HTTPException(status_code=401, detail="Invalid authentication")
@@ -510,8 +489,7 @@ class MonitoringAPIGateway:
                 )
 
     async def initialize(self, redis_client: aioredis.Redis, db_session: AsyncSession):
-        """Initialize the API gateway."""
-        self.redis_client = redis_client
+        """Initialize the API gateway."""        self.redis_client = redis_client
         self.db_session = db_session
         
         # Initialize orchestrator
@@ -521,8 +499,7 @@ class MonitoringAPIGateway:
         logger.info("Monitoring API Gateway fully initialized")
 
     async def _validate_auth(self, credentials: HTTPAuthorizationCredentials) -> Optional[int]:
-        """Validate authentication credentials."""
-        try:
+        """Validate authentication credentials."""        try:
             # In production, implement proper JWT validation
             token = credentials.credentials
             
@@ -538,8 +515,7 @@ class MonitoringAPIGateway:
             return None
 
     async def _check_rate_limit(self, user_id: int, action: str) -> bool:
-        """Check rate limiting for user actions."""
-        try:
+        """Check rate limiting for user actions."""        try:
             current_time = datetime.utcnow()
             rate_key = f"rate_limit:{user_id}:{action}"
             
@@ -584,8 +560,7 @@ class MonitoringAPIGateway:
             return True  # Allow on error
 
     async def _log_api_usage(self, user_id: int, action: str, request_data: Dict[str, Any]):
-        """Log API usage for analytics."""
-        try:
+        """Log API usage for analytics."""        try:
             log_entry = {
                 "user_id": user_id,
                 "action": action,
@@ -606,8 +581,7 @@ class MonitoringAPIGateway:
             logger.error(f"Failed to log API usage: {e}")
 
     async def _notify_websocket_clients(self, event_type: str, data: Dict[str, Any]):
-        """Notify all connected WebSocket clients."""
-        try:
+        """Notify all connected WebSocket clients."""        try:
             message = {
                 "type": event_type,
                 "data": data,
@@ -632,8 +606,7 @@ class MonitoringAPIGateway:
             logger.error(f"Failed to notify WebSocket clients: {e}")
 
     async def _handle_websocket_subscription(self, client_id: str, message: Dict[str, Any]):
-        """Handle WebSocket subscription requests."""
-        try:
+        """Handle WebSocket subscription requests."""        try:
             subscription_type = message.get("subscription_type")
             session_id = message.get("session_id")
             
@@ -661,8 +634,7 @@ class MonitoringAPIGateway:
         detection_data: Dict[str, Any],
         surveillance_engine: IntelligentSurveillanceEngine
     ) -> Dict[str, Any]:
-        """Perform behavioral analysis on detection data."""
-        try:
+        """Perform behavioral analysis on detection data."""        try:
             # Extract content fingerprint
             content_fingerprint = detection_data.get("fingerprint_id")
             if not content_fingerprint:
@@ -701,8 +673,7 @@ class MonitoringAPIGateway:
         report_id: str,
         request: ReportGenerationRequest
     ):
-        """Generate report in background task."""
-        try:
+        """Generate report in background task."""        try:
             # Generate report based on request parameters
             report_data = await self._create_comprehensive_report(request)
             
@@ -752,8 +723,7 @@ class MonitoringAPIGateway:
             )
 
     async def _create_comprehensive_report(self, request: ReportGenerationRequest) -> Dict[str, Any]:
-        """Create comprehensive report data."""
-        try:
+        """Create comprehensive report data."""        try:
             report_data = {
                 "report_id": f"comp_report_{int(datetime.utcnow().timestamp())}",
                 "generation_time": datetime.utcnow().isoformat(),
@@ -793,8 +763,7 @@ class MonitoringAPIGateway:
             raise
 
     async def shutdown(self):
-        """Shutdown the API gateway."""
-        logger.info("Shutting down Monitoring API Gateway...")
+        """Shutdown the API gateway."""        logger.info("Shutting down Monitoring API Gateway...")
         
         # Close all WebSocket connections
         for client_id, websocket in self.active_connections.items():

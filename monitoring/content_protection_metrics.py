@@ -1,5 +1,4 @@
-"""
-🛡️ Content Protection Metrics - Advanced Security & Copyright Analytics
+"""🛡️ Content Protection Metrics - Advanced Security & Copyright Analytics
 ======================================================================
 
 Comprehensive metrics for content protection, copyright detection,
@@ -8,7 +7,6 @@ fingerprinting accuracy, and intellectual property security on the Ainflue platf
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import logging
 from typing import Dict, List, Optional, Any, Set, Tuple
@@ -27,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 
 class ProtectionType(Enum):
-    """Types of content protection"""
-    COPYRIGHT_DETECTION = "copyright_detection"
+    """Types of content protection"""    COPYRIGHT_DETECTION = "copyright_detection"
     FINGERPRINT_MATCHING = "fingerprint_matching"
     WATERMARK_DETECTION = "watermark_detection"
     PLAGIARISM_CHECK = "plagiarism_check"
@@ -37,16 +34,14 @@ class ProtectionType(Enum):
 
 
 class ThreatLevel(Enum):
-    """Threat severity levels"""
-    LOW = "low"
+    """Threat severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class DetectionMethod(Enum):
-    """Detection method types"""
-    VISUAL_FINGERPRINTING = "visual_fingerprinting"
+    """Detection method types"""    VISUAL_FINGERPRINTING = "visual_fingerprinting"
     AUDIO_FINGERPRINTING = "audio_fingerprinting"
     HASH_MATCHING = "hash_matching"
     ML_CLASSIFICATION = "ml_classification"
@@ -56,8 +51,7 @@ class DetectionMethod(Enum):
 
 @dataclass
 class ProtectionEvent:
-    """Individual content protection event"""
-    event_id: str
+    """Individual content protection event"""    event_id: str
     content_id: int
     protection_type: ProtectionType
     detection_method: DetectionMethod
@@ -73,8 +67,7 @@ class ProtectionEvent:
 
 @dataclass
 class ProtectionStats:
-    """Protection system statistics"""
-    total_scans: int
+    """Protection system statistics"""    total_scans: int
     true_positives: int
     false_positives: int
     true_negatives: int
@@ -86,8 +79,7 @@ class ProtectionStats:
 
 
 class ContentProtectionTracker:
-    """
-    Advanced content protection tracking system
+    """    Advanced content protection tracking system
     
     Features:
     - Multi-modal content fingerprinting
@@ -97,11 +89,9 @@ class ContentProtectionTracker:
     - False positive/negative analysis
     - Automated response tracking
     - Compliance monitoring
-    """
-    
+    """    
     def __init__(self):
-        """Initialize content protection tracker"""
-        
+        """Initialize content protection tracker"""        
         # Prometheus metrics
         self.protection_scans_total = Counter(
             'ainflue_protection_scans_total',
@@ -181,8 +171,7 @@ class ContentProtectionTracker:
         user_id: Optional[int] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """
-        Track a content protection scan
+        """        Track a content protection scan
         
         Args:
             content_id: Content identifier
@@ -196,8 +185,7 @@ class ContentProtectionTracker:
             action_taken: Action taken in response
             user_id: Associated user ID
             metadata: Additional metadata
-        """
-        try:
+        """        try:
             # Generate event ID
             event_id = hashlib.md5(
                 f"{content_id}_{protection_type.value}_{datetime.utcnow().isoformat()}".encode()
@@ -272,8 +260,7 @@ class ContentProtectionTracker:
         requester_info: Optional[Dict[str, Any]] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> None:
-        """Track DMCA takedown request"""
-        try:
+        """Track DMCA takedown request"""        try:
             # Update DMCA metrics
             self.dmca_takedowns.labels(
                 status=status,
@@ -309,8 +296,7 @@ class ContentProtectionTracker:
         generation_time_ms: float,
         quality_score: float
     ) -> None:
-        """Track fingerprint generation"""
-        try:
+        """Track fingerprint generation"""        try:
             fingerprint_info = {
                 "type": fingerprint_type,
                 "data": fingerprint_data,
@@ -331,16 +317,14 @@ class ContentProtectionTracker:
             logger.error(f"Error tracking fingerprint generation: {e}")
     
     async def get_protection_analytics(self, period_days: int = 30) -> Dict[str, Any]:
-        """
-        Get comprehensive protection analytics
+        """        Get comprehensive protection analytics
         
         Args:
             period_days: Analysis period in days
             
         Returns:
             Protection analytics data
-        """
-        try:
+        """        try:
             # Check cache
             cache_key = f"protection_analytics_{period_days}"
             if (cache_key in self.analytics_cache and 
@@ -383,8 +367,7 @@ class ContentProtectionTracker:
             return {"error": str(e)}
     
     async def _calculate_protection_summary(self, events: List[ProtectionEvent]) -> Dict[str, Any]:
-        """Calculate protection system summary"""
-        if not events:
+        """Calculate protection system summary"""        if not events:
             return {
                 "total_scans": 0,
                 "threats_detected": 0,
@@ -411,8 +394,7 @@ class ContentProtectionTracker:
         }
     
     async def _calculate_accuracy_metrics(self, events: List[ProtectionEvent]) -> Dict[str, Any]:
-        """Calculate protection accuracy metrics"""
-        # This would require ground truth data for accurate calculation
+        """Calculate protection accuracy metrics"""        # This would require ground truth data for accurate calculation
         # For now, we'll use confidence scores as a proxy
         
         high_confidence_events = [e for e in events if e.confidence_score >= 90]
@@ -454,8 +436,7 @@ class ContentProtectionTracker:
         }
     
     async def _calculate_threat_analysis(self, events: List[ProtectionEvent]) -> Dict[str, Any]:
-        """Calculate threat analysis metrics"""
-        threat_events = [e for e in events if e.threat_level != ThreatLevel.LOW]
+        """Calculate threat analysis metrics"""        threat_events = [e for e in events if e.threat_level != ThreatLevel.LOW]
         
         if not threat_events:
             return {
@@ -486,8 +467,7 @@ class ContentProtectionTracker:
         }
     
     async def _calculate_performance_metrics(self, events: List[ProtectionEvent]) -> Dict[str, Any]:
-        """Calculate system performance metrics"""
-        if not events:
+        """Calculate system performance metrics"""        if not events:
             return {"average_processing_time": 0, "throughput": 0, "performance_by_method": {}}
         
         # Processing time analysis
@@ -518,8 +498,7 @@ class ContentProtectionTracker:
         }
     
     async def _analyze_detection_methods(self, events: List[ProtectionEvent]) -> Dict[str, Any]:
-        """Analyze effectiveness of different detection methods"""
-        method_analysis = defaultdict(lambda: {
+        """Analyze effectiveness of different detection methods"""        method_analysis = defaultdict(lambda: {
             "total_scans": 0,
             "threats_detected": 0,
             "average_confidence": [],
@@ -564,8 +543,7 @@ class ContentProtectionTracker:
         return method_effectiveness
     
     async def _calculate_compliance_metrics(self) -> Dict[str, Any]:
-        """Calculate compliance metrics"""
-        dmca_events = getattr(self, 'dmca_events', [])
+        """Calculate compliance metrics"""        dmca_events = getattr(self, 'dmca_events', [])
         
         if not dmca_events:
             return {
@@ -585,8 +563,7 @@ class ContentProtectionTracker:
         }
     
     async def _calculate_protection_trends(self, period_days: int) -> Dict[str, Any]:
-        """Calculate protection trends"""
-        # Simplified trend calculation
+        """Calculate protection trends"""        # Simplified trend calculation
         return {
             "threat_trend": "stable",  # Would be calculated from historical data
             "accuracy_trend": "improving",
@@ -594,8 +571,7 @@ class ContentProtectionTracker:
         }
     
     async def _generate_protection_recommendations(self, events: List[ProtectionEvent]) -> List[str]:
-        """Generate protection system recommendations"""
-        recommendations = []
+        """Generate protection system recommendations"""        recommendations = []
         
         if not events:
             recommendations.append("Increase content scanning frequency to build baseline metrics")
@@ -623,8 +599,7 @@ class ContentProtectionTracker:
         protection_type: ProtectionType,
         detection_method: DetectionMethod
     ) -> None:
-        """Update protection statistics for accuracy tracking"""
-        try:
+        """Update protection statistics for accuracy tracking"""        try:
             key = f"{protection_type.value}_{detection_method.value}"
             
             # This would be more sophisticated with ground truth data
@@ -651,8 +626,7 @@ class ContentProtectionTracker:
             logger.error(f"Error updating protection stats: {e}")
     
     def _get_confidence_level(self, confidence_score: float) -> str:
-        """Convert confidence score to level"""
-        if confidence_score >= 90:
+        """Convert confidence score to level"""        if confidence_score >= 90:
             return "high"
         elif confidence_score >= 70:
             return "medium"
@@ -660,8 +634,7 @@ class ContentProtectionTracker:
             return "low"
     
     def get_tracker_stats(self) -> Dict[str, Any]:
-        """Get protection tracker statistics"""
-        return {
+        """Get protection tracker statistics"""        return {
             "total_events": len(self.protection_events),
             "unique_content_scanned": len(set(e.content_id for e in self.protection_events)),
             "fingerprints_stored": len(self.content_fingerprints),

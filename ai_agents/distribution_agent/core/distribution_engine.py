@@ -1,5 +1,4 @@
-"""
-Distribution Engine - Enterprise Multi-Platform Content Distribution System
+"""Distribution Engine - Enterprise Multi-Platform Content Distribution System
 
 Ultra-advanced distribution engine for intelligent content delivery across
 all major platforms with AI-powered optimization, real-time analytics,
@@ -13,7 +12,6 @@ This code and architectural design are the exclusive intellectual property of Fa
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 import asyncio
 import logging
 import time
@@ -50,8 +48,7 @@ from ....core.cache import RedisCache
 logger = logging.getLogger(__name__)
 
 class ContentType(Enum):
-    """Supported content types for distribution"""
-    MUSIC = "music"
+    """Supported content types for distribution"""    MUSIC = "music"
     PODCAST = "podcast"
     VIDEO = "video"
     SHORT_VIDEO = "short_video"
@@ -65,8 +62,7 @@ class ContentType(Enum):
     TIKTOK = "tiktok"
 
 class DistributionStatus(Enum):
-    """Distribution status types"""
-    PENDING = "pending"
+    """Distribution status types"""    PENDING = "pending"
     QUEUED = "queued"
     PROCESSING = "processing"
     OPTIMIZING = "optimizing"
@@ -79,8 +75,7 @@ class DistributionStatus(Enum):
     ARCHIVED = "archived"
 
 class PlatformType(Enum):
-    """Complete platform ecosystem coverage"""
-    # Music Streaming
+    """Complete platform ecosystem coverage"""    # Music Streaming
     SPOTIFY = "spotify"
     APPLE_MUSIC = "apple_music"
     AMAZON_MUSIC = "amazon_music"
@@ -123,8 +118,7 @@ class PlatformType(Enum):
     RUMBLE = "rumble"
 
 class PlatformCapability(Enum):
-    """Platform capabilities for intelligent routing"""
-    AUDIO_STREAMING = "audio_streaming"
+    """Platform capabilities for intelligent routing"""    AUDIO_STREAMING = "audio_streaming"
     VIDEO_HOSTING = "video_hosting"
     LIVE_STREAMING = "live_streaming"
     SOCIAL_SHARING = "social_sharing"
@@ -142,8 +136,7 @@ class PlatformCapability(Enum):
 
 @dataclass
 class ContentMetadata:
-    """Comprehensive content metadata for distribution"""
-    content_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive content metadata for distribution"""    content_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     title: str = ""
     description: str = ""
     tags: List[str] = field(default_factory=list)
@@ -167,8 +160,7 @@ class ContentMetadata:
 
 @dataclass
 class PlatformSpecification:
-    """Platform-specific content requirements and optimization settings"""
-    platform: PlatformType
+    """Platform-specific content requirements and optimization settings"""    platform: PlatformType
     content_type: ContentType
     max_file_size: int
     supported_formats: List[str]
@@ -188,8 +180,7 @@ class PlatformSpecification:
 
 @dataclass
 class DistributionJob:
-    """Comprehensive distribution job configuration"""
-    job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
+    """Comprehensive distribution job configuration"""    job_id: str = field(default_factory=lambda: str(uuid.uuid4()))
     user_id: str = ""
     content_metadata: ContentMetadata = field(default_factory=ContentMetadata)
     target_platforms: List[PlatformType] = field(default_factory=list)
@@ -212,8 +203,7 @@ class DistributionJob:
 
 @dataclass
 class DistributionResult:
-    """Comprehensive distribution result with analytics and revenue data"""
-    job_id: str
+    """Comprehensive distribution result with analytics and revenue data"""    job_id: str
     platform: PlatformType
     status: DistributionStatus
     platform_content_id: Optional[str] = None
@@ -231,8 +221,7 @@ class DistributionResult:
     quality_score: Optional[float] = None
 
 class DistributionEngine(BaseAgent):
-    """
-    Enterprise-grade distribution engine for multi-platform content delivery
+    """    Enterprise-grade distribution engine for multi-platform content delivery
     
     Features:
     - AI-powered content optimization
@@ -243,8 +232,7 @@ class DistributionEngine(BaseAgent):
     - Blockchain-based rights management
     - Advanced retry mechanisms
     - Performance monitoring
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
         super().__init__(config)
         self.config = config or {}
@@ -290,8 +278,7 @@ class DistributionEngine(BaseAgent):
         logger.info(f"DistributionEngine initialized with {self.processing_workers} workers")
 
     def _initialize_platform_specifications(self) -> Dict[PlatformType, Dict[ContentType, PlatformSpecification]]:
-        """Initialize comprehensive platform specifications for all supported platforms"""
-        specs = {}
+        """Initialize comprehensive platform specifications for all supported platforms"""        specs = {}
         
         # Spotify Specifications
         specs[PlatformType.SPOTIFY] = {
@@ -416,16 +403,14 @@ class DistributionEngine(BaseAgent):
         return specs
 
     async def distribute_content(self, distribution_job: DistributionJob) -> List[DistributionResult]:
-        """
-        Main distribution method with comprehensive workflow
+        """        Main distribution method with comprehensive workflow
         
         Args:
             distribution_job: Complete distribution job configuration
             
         Returns:
             List of distribution results for each target platform
-        """
-        start_time = time.time()
+        """        start_time = time.time()
         results = []
         
         try:
@@ -510,8 +495,7 @@ class DistributionEngine(BaseAgent):
         return results
 
     async def _validate_distribution_job(self, job: DistributionJob) -> None:
-        """Comprehensive job validation with business logic checks"""
-        if not job.user_id:
+        """Comprehensive job validation with business logic checks"""        if not job.user_id:
             raise ValidationError("User ID is required for distribution")
         
         if not job.content_metadata.title:
@@ -536,8 +520,7 @@ class DistributionEngine(BaseAgent):
         logger.debug(f"Distribution job {job.job_id} validated successfully")
 
     async def _validate_content_requirements(self, job: DistributionJob, content_type: ContentType) -> None:
-        """Validate content against platform requirements"""
-        for platform in job.target_platforms:
+        """Validate content against platform requirements"""        for platform in job.target_platforms:
             platform_spec = self.platform_specs.get(platform, {}).get(content_type)
             if not platform_spec:
                 raise ValidationError(f"Content type {content_type.value} not supported on {platform.value}")
@@ -555,14 +538,12 @@ class DistributionEngine(BaseAgent):
                     raise ValidationError(f"Duration below minimum for {platform.value}")
 
     async def _validate_user_permissions(self, job: DistributionJob) -> None:
-        """Validate user permissions and subscription status"""
-        # Implementation would check user subscription, platform connections, etc.
+        """Validate user permissions and subscription status"""        # Implementation would check user subscription, platform connections, etc.
         # This is a placeholder for the actual implementation
         pass
 
     async def _protect_content(self, job: DistributionJob) -> None:
-        """Apply content protection and rights management"""
-        try:
+        """Apply content protection and rights management"""        try:
             # Generate content fingerprint for protection
             content_fingerprint = await self.content_protector.generate_fingerprint(
                 job.content_metadata
@@ -587,8 +568,7 @@ class DistributionEngine(BaseAgent):
             raise DistributionError(f"Content protection failed: {e}")
 
     async def _optimize_content_for_platforms(self, job: DistributionJob) -> None:
-        """AI-powered content optimization for each target platform"""
-        optimizations = {}
+        """AI-powered content optimization for each target platform"""        optimizations = {}
         
         for platform in job.target_platforms:
             try:
@@ -619,8 +599,7 @@ class DistributionEngine(BaseAgent):
         logger.debug(f"Content optimization completed for job {job.job_id}")
 
     async def _convert_content_format(self, job: DistributionJob, platform: PlatformType, optimization: Dict[str, Any]) -> None:
-        """Convert content format for platform requirements"""
-        try:
+        """Convert content format for platform requirements"""        try:
             converted_content = await self.file_converter.convert(
                 source_metadata=job.content_metadata,
                 target_format=optimization.get('target_format'),
@@ -637,8 +616,7 @@ class DistributionEngine(BaseAgent):
             raise DistributionError(f"Format conversion failed: {e}")
 
     async def _generate_platform_metadata(self, job: DistributionJob, platform: PlatformType) -> None:
-        """Generate optimized metadata for specific platform"""
-        try:
+        """Generate optimized metadata for specific platform"""        try:
             # AI-powered title and description optimization
             optimized_metadata = await self.content_optimizer.optimize_metadata(
                 content=job.content_metadata,
@@ -656,8 +634,7 @@ class DistributionEngine(BaseAgent):
             logger.error(f"Metadata generation failed for platform {platform.value}: {e}")
 
     async def _generate_optimal_schedule(self, job: DistributionJob) -> Dict[PlatformType, datetime]:
-        """Generate AI-optimized posting schedule for maximum engagement"""
-        schedule = {}
+        """Generate AI-optimized posting schedule for maximum engagement"""        schedule = {}
         
         try:
             # Analyze user's audience and historical performance
@@ -692,8 +669,7 @@ class DistributionEngine(BaseAgent):
         return schedule
 
     async def _distribute_to_platform(self, job: DistributionJob, platform: PlatformType, scheduled_time: Optional[datetime] = None) -> DistributionResult:
-        """Distribute content to a specific platform with comprehensive error handling"""
-        result = DistributionResult(
+        """Distribute content to a specific platform with comprehensive error handling"""        result = DistributionResult(
             job_id=job.job_id,
             platform=platform,
             status=DistributionStatus.PROCESSING
@@ -749,8 +725,7 @@ class DistributionEngine(BaseAgent):
         return result
 
     async def _prepare_platform_content(self, job: DistributionJob, platform: PlatformType) -> Dict[str, Any]:
-        """Prepare platform-specific content package"""
-        platform_optimizations = job.content_optimizations.get(platform.value, {})
+        """Prepare platform-specific content package"""        platform_optimizations = job.content_optimizations.get(platform.value, {})
         
         content_package = {
             'metadata': job.content_metadata,
@@ -764,8 +739,7 @@ class DistributionEngine(BaseAgent):
         return content_package
 
     async def _get_user_credentials(self, user_id: str, platform: PlatformType) -> Dict[str, Any]:
-        """Retrieve user credentials for platform authentication"""
-        # Implementation would fetch user's platform credentials securely
+        """Retrieve user credentials for platform authentication"""        # Implementation would fetch user's platform credentials securely
         # This is a placeholder for the actual implementation
         cached_credentials = await self.cache.get(f"credentials:{user_id}:{platform.value}")
         if cached_credentials:
@@ -778,8 +752,7 @@ class DistributionEngine(BaseAgent):
         return credentials
 
     async def _schedule_retry(self, job: DistributionJob, platform: PlatformType) -> None:
-        """Schedule intelligent retry with exponential backoff"""
-        job.retry_count += 1
+        """Schedule intelligent retry with exponential backoff"""        job.retry_count += 1
         retry_delay = min(300 * (2 ** job.retry_count), 3600)  # Max 1 hour delay
         
         retry_time = datetime.now() + timedelta(seconds=retry_delay)
@@ -788,8 +761,7 @@ class DistributionEngine(BaseAgent):
         logger.info(f"Scheduling retry for job {job.job_id} on {platform.value} in {retry_delay}s")
 
     async def _collect_distribution_analytics(self, job: DistributionJob, results: List[DistributionResult]) -> None:
-        """Collect comprehensive analytics data from all platforms"""
-        try:
+        """Collect comprehensive analytics data from all platforms"""        try:
             analytics_tasks = []
             
             for result in results:
@@ -811,8 +783,7 @@ class DistributionEngine(BaseAgent):
             logger.error(f"Analytics collection failed for job {job.job_id}: {e}")
 
     async def _collect_platform_analytics(self, platform: PlatformType, content_id: str) -> Dict[str, Any]:
-        """Collect analytics data from specific platform"""
-        try:
+        """Collect analytics data from specific platform"""        try:
             platform_adapter = await self.platform_manager.get_adapter(platform)
             analytics_data = await platform_adapter.get_content_analytics(content_id)
             return analytics_data
@@ -821,8 +792,7 @@ class DistributionEngine(BaseAgent):
             return {}
 
     async def _match_collaborations(self, job: DistributionJob, results: List[DistributionResult]) -> None:
-        """AI-powered collaboration matching based on content and audience"""
-        try:
+        """AI-powered collaboration matching based on content and audience"""        try:
             # Analyze content for collaboration opportunities
             collaboration_matches = await self.audience_analyzer.find_collaboration_matches(
                 content_metadata=job.content_metadata,
@@ -839,8 +809,7 @@ class DistributionEngine(BaseAgent):
             logger.error(f"Collaboration matching failed for job {job.job_id}: {e}")
 
     async def _track_revenue_potential(self, job: DistributionJob, results: List[DistributionResult]) -> None:
-        """Track and predict revenue potential across platforms"""
-        try:
+        """Track and predict revenue potential across platforms"""        try:
             for result in results:
                 if result.status == DistributionStatus.PUBLISHED:
                     # Predict revenue potential
@@ -857,8 +826,7 @@ class DistributionEngine(BaseAgent):
             logger.error(f"Revenue tracking failed for job {job.job_id}: {e}")
 
     async def _update_performance_metrics(self, job: DistributionJob, results: List[DistributionResult], processing_time: float) -> None:
-        """Update comprehensive performance metrics"""
-        self.performance_metrics['total_distributions'] += len(results)
+        """Update comprehensive performance metrics"""        self.performance_metrics['total_distributions'] += len(results)
         successful_results = [r for r in results if r.status == DistributionStatus.PUBLISHED]
         self.performance_metrics['successful_distributions'] += len(successful_results)
         self.performance_metrics['failed_distributions'] += len(results) - len(successful_results)
@@ -892,12 +860,10 @@ class DistributionEngine(BaseAgent):
         )
 
     async def get_job_status(self, job_id: str) -> Optional[DistributionJob]:
-        """Get current status of a distribution job"""
-        return self.active_jobs.get(job_id)
+        """Get current status of a distribution job"""        return self.active_jobs.get(job_id)
 
     async def cancel_job(self, job_id: str) -> bool:
-        """Cancel a pending or processing distribution job"""
-        job = self.active_jobs.get(job_id)
+        """Cancel a pending or processing distribution job"""        job = self.active_jobs.get(job_id)
         if job and job.status in [DistributionStatus.PENDING, DistributionStatus.QUEUED, DistributionStatus.PROCESSING]:
             job.status = DistributionStatus.CANCELLED
             logger.info(f"Distribution job {job_id} cancelled")
@@ -905,20 +871,17 @@ class DistributionEngine(BaseAgent):
         return False
 
     async def get_performance_metrics(self) -> Dict[str, Any]:
-        """Get comprehensive performance metrics"""
-        return self.performance_metrics.copy()
+        """Get comprehensive performance metrics"""        return self.performance_metrics.copy()
 
     async def get_platform_analytics(self, platform: PlatformType, content_id: str) -> Dict[str, Any]:
-        """Get detailed analytics for specific platform content"""
-        try:
+        """Get detailed analytics for specific platform content"""        try:
             return await self._collect_platform_analytics(platform, content_id)
         except Exception as e:
             logger.error(f"Failed to get analytics for {platform.value}/{content_id}: {e}")
             return {}
 
     async def predict_engagement(self, content_metadata: ContentMetadata, platforms: List[PlatformType]) -> Dict[str, Any]:
-        """Predict engagement metrics for content across platforms"""
-        try:
+        """Predict engagement metrics for content across platforms"""        try:
             predictions = {}
             for platform in platforms:
                 prediction = await self.engagement_forecaster.predict_engagement(
@@ -932,8 +895,7 @@ class DistributionEngine(BaseAgent):
             return {}
 
     async def shutdown(self) -> None:
-        """Graceful shutdown of the distribution engine"""
-        logger.info("Shutting down DistributionEngine...")
+        """Graceful shutdown of the distribution engine"""        logger.info("Shutting down DistributionEngine...")
         
         # Cancel all active jobs
         for job_id in list(self.active_jobs.keys()):

@@ -1,5 +1,4 @@
-"""
-Advanced Business Intelligence and Analytics Engine
+"""Advanced Business Intelligence and Analytics Engine
 ==================================================
 
 Enterprise-grade analytics and business intelligence system for 
@@ -14,7 +13,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import asyncio
 import logging
 import numpy as np
@@ -36,8 +34,7 @@ import joblib
 
 
 class AnalyticsMetric(Enum):
-    """Types of analytics metrics"""
-    CONTENT_PERFORMANCE = "content_performance"
+    """Types of analytics metrics"""    CONTENT_PERFORMANCE = "content_performance"
     USER_ENGAGEMENT = "user_engagement"
     REVENUE_ANALYTICS = "revenue_analytics"
     PLATFORM_HEALTH = "platform_health"
@@ -48,8 +45,7 @@ class AnalyticsMetric(Enum):
 
 
 class TimeGranularity(Enum):
-    """Time granularity for analytics"""
-    MINUTE = "minute"
+    """Time granularity for analytics"""    MINUTE = "minute"
     HOUR = "hour"
     DAY = "day"
     WEEK = "week"
@@ -60,8 +56,7 @@ class TimeGranularity(Enum):
 
 @dataclass
 class AnalyticsDataPoint:
-    """Single analytics data point"""
-    timestamp: datetime
+    """Single analytics data point"""    timestamp: datetime
     metric_name: str
     value: Union[float, int]
     dimensions: Dict[str, str] = field(default_factory=dict)
@@ -70,8 +65,7 @@ class AnalyticsDataPoint:
 
 @dataclass
 class ContentPerformanceMetrics:
-    """Content performance metrics"""
-    content_id: str
+    """Content performance metrics"""    content_id: str
     views: int
     likes: int
     shares: int
@@ -86,8 +80,7 @@ class ContentPerformanceMetrics:
 
 @dataclass
 class UserEngagementMetrics:
-    """User engagement metrics"""
-    user_id: str
+    """User engagement metrics"""    user_id: str
     session_duration: float
     page_views: int
     interactions: int
@@ -101,8 +94,7 @@ class UserEngagementMetrics:
 
 @dataclass
 class PlatformHealthMetrics:
-    """Platform health metrics"""
-    response_time: float
+    """Platform health metrics"""    response_time: float
     throughput: float
     error_rate: float
     uptime: float
@@ -115,8 +107,7 @@ class PlatformHealthMetrics:
 
 @dataclass
 class PredictiveInsight:
-    """Predictive analytics insight"""
-    insight_id: str
+    """Predictive analytics insight"""    insight_id: str
     insight_type: str
     prediction: Any
     confidence: float
@@ -128,8 +119,7 @@ class PredictiveInsight:
 
 
 class ContentPerformanceAnalyzer:
-    """Analyzes content performance and trends"""
-    
+    """Analyzes content performance and trends"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -145,8 +135,7 @@ class ContentPerformanceAnalyzer:
         content_data: List[Dict[str, Any]],
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Analyze content performance across multiple dimensions"""
-        try:
+        """Analyze content performance across multiple dimensions"""        try:
             if not content_data:
                 return {"error": "No content data provided"}
             
@@ -178,8 +167,7 @@ class ContentPerformanceAnalyzer:
             return {"error": f"Analysis failed: {e}"}
     
     async def _calculate_performance_metrics(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Calculate aggregate performance metrics"""
-        return {
+        """Calculate aggregate performance metrics"""        return {
             "total_content": len(df),
             "total_views": df.get("views", pd.Series([0])).sum(),
             "total_engagements": (
@@ -198,8 +186,7 @@ class ContentPerformanceAnalyzer:
         }
     
     async def _identify_top_performers(self, df: pd.DataFrame) -> List[Dict[str, Any]]:
-        """Identify top performing content"""
-        if df.empty:
+        """Identify top performing content"""        if df.empty:
             return []
         
         # Sort by engagement rate and revenue
@@ -216,8 +203,7 @@ class ContentPerformanceAnalyzer:
         df: pd.DataFrame,
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Analyze performance trends over time"""
-        try:
+        """Analyze performance trends over time"""        try:
             if 'timestamp' not in df.columns:
                 return {"error": "No timestamp data available"}
             
@@ -254,8 +240,7 @@ class ContentPerformanceAnalyzer:
             return {"error": f"Trend analysis failed: {e}"}
     
     def _calculate_growth_rate(self, df: pd.DataFrame, metric: str) -> float:
-        """Calculate growth rate for a metric"""
-        try:
+        """Calculate growth rate for a metric"""        try:
             if metric not in df.columns or len(df) < 2:
                 return 0.0
             
@@ -272,8 +257,7 @@ class ContentPerformanceAnalyzer:
             return 0.0
     
     def _determine_trend_direction(self, df: pd.DataFrame) -> str:
-        """Determine overall trend direction"""
-        try:
+        """Determine overall trend direction"""        try:
             if 'engagement_rate' not in df.columns:
                 return "unknown"
             
@@ -294,8 +278,7 @@ class ContentPerformanceAnalyzer:
         df: pd.DataFrame,
         metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable insights from performance data"""
-        insights = []
+        """Generate actionable insights from performance data"""        insights = []
         
         try:
             # Engagement insights
@@ -335,8 +318,7 @@ class ContentPerformanceAnalyzer:
         self,
         content_features: Dict[str, Any]
     ) -> Dict[str, float]:
-        """Predict content performance using ML models"""
-        try:
+        """Predict content performance using ML models"""        try:
             # Prepare features for prediction
             features = self._prepare_features_for_prediction(content_features)
             
@@ -364,8 +346,7 @@ class ContentPerformanceAnalyzer:
             return {"error": f"Prediction failed: {e}"}
     
     def _prepare_features_for_prediction(self, content_features: Dict[str, Any]) -> List[float]:
-        """Prepare content features for ML prediction"""
-        # Define feature order and defaults
+        """Prepare content features for ML prediction"""        # Define feature order and defaults
         feature_mapping = {
             "content_length": content_features.get("content_length", 0),
             "has_image": 1 if content_features.get("has_image", False) else 0,
@@ -381,8 +362,7 @@ class ContentPerformanceAnalyzer:
 
 
 class UserBehaviorAnalyzer:
-    """Analyzes user behavior patterns and engagement"""
-    
+    """Analyzes user behavior patterns and engagement"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -396,8 +376,7 @@ class UserBehaviorAnalyzer:
         user_data: List[Dict[str, Any]],
         time_range: Tuple[datetime, datetime]
     ) -> Dict[str, Any]:
-        """Comprehensive user behavior analysis"""
-        try:
+        """Comprehensive user behavior analysis"""        try:
             if not user_data:
                 return {"error": "No user data provided"}
             
@@ -432,8 +411,7 @@ class UserBehaviorAnalyzer:
             return {"error": f"User behavior analysis failed: {e}"}
     
     async def _calculate_engagement_metrics(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Calculate user engagement metrics"""
-        return {
+        """Calculate user engagement metrics"""        return {
             "total_users": len(df),
             "active_users": len(df[df.get("session_duration", 0) > 0]),
             "average_session_duration": df.get("session_duration", pd.Series([0])).mean(),
@@ -449,8 +427,7 @@ class UserBehaviorAnalyzer:
         }
     
     async def _segment_users(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Segment users based on behavior patterns"""
-        try:
+        """Segment users based on behavior patterns"""        try:
             if len(df) < 10:  # Need minimum data for clustering
                 return {"error": "Insufficient data for segmentation"}
             
@@ -496,8 +473,7 @@ class UserBehaviorAnalyzer:
             return {"error": f"Segmentation failed: {e}"}
     
     def _describe_segment(self, segment_data: pd.DataFrame, segment_id: int) -> str:
-        """Generate description for user segment"""
-        avg_ltv = segment_data.get("ltv", pd.Series([0])).mean()
+        """Generate description for user segment"""        avg_ltv = segment_data.get("ltv", pd.Series([0])).mean()
         avg_activity = segment_data.get("activity_score", pd.Series([0])).mean()
         
         if avg_ltv > 100 and avg_activity > 0.7:
@@ -512,8 +488,7 @@ class UserBehaviorAnalyzer:
             return "Low-engagement, low-value users"
     
     async def _analyze_behavior_patterns(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user behavior patterns"""
-        patterns = {}
+        """Analyze user behavior patterns"""        patterns = {}
         
         try:
             # Time-based patterns
@@ -549,8 +524,7 @@ class UserBehaviorAnalyzer:
         return patterns
     
     async def _analyze_churn_risk(self, df: pd.DataFrame) -> Dict[str, Any]:
-        """Analyze user churn risk"""
-        try:
+        """Analyze user churn risk"""        try:
             # Calculate churn indicators
             churn_indicators = {}
             
@@ -586,8 +560,7 @@ class UserBehaviorAnalyzer:
         df: pd.DataFrame,
         engagement_metrics: Dict[str, Any]
     ) -> List[str]:
-        """Generate actionable user insights"""
-        insights = []
+        """Generate actionable user insights"""        insights = []
         
         try:
             # Engagement insights
@@ -622,8 +595,7 @@ class UserBehaviorAnalyzer:
 
 
 class PredictiveAnalyticsEngine:
-    """Advanced predictive analytics and ML-powered insights"""
-    
+    """Advanced predictive analytics and ML-powered insights"""    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -637,8 +609,7 @@ class PredictiveAnalyticsEngine:
         historical_data: List[Dict[str, Any]],
         prediction_horizon: timedelta = timedelta(days=30)
     ) -> List[PredictiveInsight]:
-        """Generate predictive insights from historical data"""
-        insights = []
+        """Generate predictive insights from historical data"""        insights = []
         
         try:
             df = pd.DataFrame(historical_data)
@@ -672,8 +643,7 @@ class PredictiveAnalyticsEngine:
         df: pd.DataFrame,
         horizon: timedelta
     ) -> Optional[PredictiveInsight]:
-        """Predict future revenue trends"""
-        try:
+        """Predict future revenue trends"""        try:
             if 'revenue' not in df.columns or 'timestamp' not in df.columns:
                 return None
             
@@ -727,8 +697,7 @@ class PredictiveAnalyticsEngine:
         df: pd.DataFrame,
         horizon: timedelta
     ) -> Optional[PredictiveInsight]:
-        """Predict user growth patterns"""
-        try:
+        """Predict user growth patterns"""        try:
             if 'user_id' not in df.columns or 'timestamp' not in df.columns:
                 return None
             
@@ -777,8 +746,7 @@ class PredictiveAnalyticsEngine:
         df: pd.DataFrame,
         horizon: timedelta
     ) -> Optional[PredictiveInsight]:
-        """Predict content performance trends"""
-        try:
+        """Predict content performance trends"""        try:
             if 'content_type' not in df.columns or 'engagement_rate' not in df.columns:
                 return None
             
@@ -815,8 +783,7 @@ class PredictiveAnalyticsEngine:
             return None
     
     async def _detect_anomalies(self, df: pd.DataFrame) -> List[PredictiveInsight]:
-        """Detect anomalies in the data"""
-        anomaly_insights = []
+        """Detect anomalies in the data"""        anomaly_insights = []
         
         try:
             numeric_columns = df.select_dtypes(include=[np.number]).columns
@@ -863,13 +830,11 @@ class PredictiveAnalyticsEngine:
 
 
 class BusinessIntelligenceManager:
-    """
-    Central Business Intelligence Manager
+    """    Central Business Intelligence Manager
     
     Orchestrates all analytics components and provides unified
     business intelligence capabilities for the platform.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.logger = logging.getLogger(__name__)
@@ -896,8 +861,7 @@ class BusinessIntelligenceManager:
         time_range: Tuple[datetime, datetime],
         include_predictions: bool = True
     ) -> Dict[str, Any]:
-        """Generate comprehensive business intelligence report"""
-        try:
+        """Generate comprehensive business intelligence report"""        try:
             report = {
                 "report_id": f"bi_report_{datetime.utcnow().timestamp()}",
                 "generated_at": datetime.utcnow().isoformat(),
@@ -952,8 +916,7 @@ class BusinessIntelligenceManager:
             return {"error": f"Report generation failed: {e}"}
     
     async def _generate_executive_summary(self, sections: Dict[str, Any]) -> Dict[str, Any]:
-        """Generate executive summary from analysis sections"""
-        summary = {
+        """Generate executive summary from analysis sections"""        summary = {
             "key_metrics": {},
             "top_insights": [],
             "recommendations": [],
@@ -1002,8 +965,7 @@ class BusinessIntelligenceManager:
         return summary
     
     async def get_real_time_dashboard(self) -> Dict[str, Any]:
-        """Get real-time dashboard data"""
-        return {
+        """Get real-time dashboard data"""        return {
             "last_updated": datetime.utcnow().isoformat(),
             "system_metrics": self.metrics,
             "recent_insights": list(self.insight_history)[-10:],
@@ -1012,8 +974,7 @@ class BusinessIntelligenceManager:
         }
     
     async def export_insights(self, format: str = "json") -> Union[str, Dict[str, Any]]:
-        """Export insights in specified format"""
-        if format == "json":
+        """Export insights in specified format"""        if format == "json":
             return {
                 "insights": list(self.insight_history),
                 "exported_at": datetime.utcnow().isoformat(),

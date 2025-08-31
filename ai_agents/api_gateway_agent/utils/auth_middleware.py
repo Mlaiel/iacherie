@@ -1,5 +1,4 @@
-"""
-Authentication Middleware - Enterprise Security Layer
+"""Authentication Middleware - Enterprise Security Layer
 
 Advanced authentication and authorization middleware providing JWT validation,
 API key management, role-based access control, and security monitoring.
@@ -11,7 +10,6 @@ Copyright (c) 2025 Fahed Mlaiel. All rights reserved.
 This code and architectural design are the exclusive intellectual property of Fahed Mlaiel.
 Unauthorized use, copying, distribution, or commercialization is strictly prohibited.
 """
-
 import logging
 import time
 import json
@@ -30,8 +28,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class UserContext:
-    """User authentication context"""
-    user_id: str
+    """User authentication context"""    user_id: str
     email: Optional[str] = None
     roles: List[str] = None
     permissions: Set[str] = None
@@ -48,8 +45,7 @@ class UserContext:
 
 @dataclass
 class APIKey:
-    """API Key information"""
-    key_id: str
+    """API Key information"""    key_id: str
     user_id: str
     key_hash: str
     name: str
@@ -61,8 +57,7 @@ class APIKey:
 
 
 class AuthMiddleware:
-    """
-    Enterprise Authentication Middleware
+    """    Enterprise Authentication Middleware
     
     Features:
     - JWT token validation
@@ -72,8 +67,7 @@ class AuthMiddleware:
     - Session management
     - Security monitoring
     - Multi-tenant support
-    """
-    
+    """    
     def __init__(
         self,
         secret_key: str,
@@ -83,8 +77,7 @@ class AuthMiddleware:
         bypass_paths: Optional[List[str]] = None,
         redis_url: Optional[str] = None
     ):
-        """Initialize authentication middleware"""
-        self.secret_key = secret_key
+        """Initialize authentication middleware"""        self.secret_key = secret_key
         self.algorithm = algorithm
         self.token_expiration = token_expiration
         self.refresh_expiration = refresh_expiration
@@ -123,8 +116,7 @@ class AuthMiddleware:
         logger.info("Authentication middleware initialized")
     
     async def authenticate_request(self, request: Request) -> Optional[UserContext]:
-        """
-        Authenticate request and extract user context
+        """        Authenticate request and extract user context
         
         Args:
             request: FastAPI request object
@@ -134,8 +126,7 @@ class AuthMiddleware:
             
         Raises:
             HTTPException: If authentication fails
-        """
-        try:
+        """        try:
             # Check if path should bypass authentication
             if self._should_bypass_auth(request.url.path):
                 return None
@@ -169,15 +160,13 @@ class AuthMiddleware:
             )
     
     def _should_bypass_auth(self, path: str) -> bool:
-        """Check if path should bypass authentication"""
-        for bypass_path in self.bypass_paths:
+        """Check if path should bypass authentication"""        for bypass_path in self.bypass_paths:
             if path.startswith(bypass_path):
                 return True
         return False
     
     async def _authenticate_jwt(self, request: Request) -> Optional[UserContext]:
-        """Authenticate using JWT token"""
-        try:
+        """Authenticate using JWT token"""        try:
             # Extract token from Authorization header
             credentials: HTTPAuthorizationCredentials = await self.security(request)
             if not credentials:
@@ -234,8 +223,7 @@ class AuthMiddleware:
             return None
     
     async def _authenticate_api_key(self, request: Request) -> Optional[UserContext]:
-        """Authenticate using API key"""
-        try:
+        """Authenticate using API key"""        try:
             # Extract API key from header
             api_key = request.headers.get("X-API-Key")
             if not api_key:
@@ -283,16 +271,14 @@ class AuthMiddleware:
             return None
     
     def _get_permissions_for_roles(self, roles: List[str]) -> Set[str]:
-        """Get combined permissions for list of roles"""
-        permissions = set()
+        """Get combined permissions for list of roles"""        permissions = set()
         for role in roles:
             if role in self.role_permissions:
                 permissions.update(self.role_permissions[role])
         return permissions
     
     async def _is_token_blacklisted(self, token: str) -> bool:
-        """Check if JWT token is blacklisted"""
-        if not self.redis:
+        """Check if JWT token is blacklisted"""        if not self.redis:
             return False
         
         try:
@@ -307,8 +293,7 @@ class AuthMiddleware:
             return False
     
     async def _update_user_activity(self, user_id: str):
-        """Update user's last activity timestamp"""
-        if not self.redis:
+        """Update user's last activity timestamp"""        if not self.redis:
             return
         
         try:
@@ -326,8 +311,7 @@ class AuthMiddleware:
         tenant_id: Optional[str] = None,
         expires_delta: Optional[timedelta] = None
     ) -> str:
-        """Create JWT access token"""
-        try:
+        """Create JWT access token"""        try:
             if expires_delta:
                 expire = datetime.utcnow() + expires_delta
             else:
@@ -355,8 +339,7 @@ class AuthMiddleware:
             raise
     
     def create_refresh_token(self, user_id: str) -> str:
-        """Create JWT refresh token"""
-        try:
+        """Create JWT refresh token"""        try:
             expire = datetime.utcnow() + timedelta(seconds=self.refresh_expiration)
             
             payload = {
@@ -375,8 +358,7 @@ class AuthMiddleware:
             raise
     
     async def blacklist_token(self, token: str) -> bool:
-        """Add token to blacklist"""
-        if not self.redis:
+        """Add token to blacklist"""        if not self.redis:
             logger.warning("Redis not available for token blacklisting")
             return False
         
@@ -419,13 +401,11 @@ class AuthMiddleware:
         rate_limit: int = 1000,
         expires_at: Optional[datetime] = None
     ) -> Tuple[str, str]:
-        """
-        Create new API key
+        """        Create new API key
         
         Returns:
             Tuple of (key_id, api_key)
-        """
-        try:
+        """        try:
             import secrets
             
             # Generate secure API key
@@ -471,8 +451,7 @@ class AuthMiddleware:
             raise
     
     async def revoke_api_key(self, key_id: str) -> bool:
-        """Revoke API key"""
-        try:
+        """Revoke API key"""        try:
             if key_id in self.api_keys:
                 self.api_keys[key_id].is_active = False
                 
@@ -490,8 +469,7 @@ class AuthMiddleware:
             return False
     
     def check_permission(self, user_context: UserContext, required_permission: str) -> bool:
-        """Check if user has required permission"""
-        try:
+        """Check if user has required permission"""        try:
             # Admin users have all permissions
             if "admin" in user_context.roles:
                 return True
@@ -515,8 +493,7 @@ class AuthMiddleware:
             return False
     
     async def get_user_sessions(self, user_id: str) -> List[Dict[str, Any]]:
-        """Get active sessions for user"""
-        if not self.redis:
+        """Get active sessions for user"""        if not self.redis:
             return []
         
         try:
@@ -529,8 +506,7 @@ class AuthMiddleware:
             return []
     
     async def revoke_user_sessions(self, user_id: str) -> bool:
-        """Revoke all sessions for user"""
-        if not self.redis:
+        """Revoke all sessions for user"""        if not self.redis:
             return False
         
         try:
@@ -544,8 +520,7 @@ class AuthMiddleware:
             return False
     
     def get_auth_stats(self) -> Dict[str, Any]:
-        """Get authentication statistics"""
-        try:
+        """Get authentication statistics"""        try:
             active_api_keys = sum(1 for key in self.api_keys.values() if key.is_active)
             expired_api_keys = sum(
                 1 for key in self.api_keys.values() 

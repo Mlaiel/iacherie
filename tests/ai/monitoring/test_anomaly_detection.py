@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,8 +12,7 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Advanced Anomaly Detection Tests - Industrial Grade
+"""Advanced Anomaly Detection Tests - Industrial Grade
 
 Comprehensive, enterprise-level test suite for ML-based anomaly detection system.
 Tests statistical analysis, machine learning detection, and real-time anomaly identification.
@@ -28,7 +25,6 @@ Any unauthorized copying, distribution, or use of this code without explicit wri
 from Fahed Mlaiel (mlaiel@live.de) is strictly prohibited and will be prosecuted to the full
 extent of the law.
 """
-
 import pytest
 import sys
 import os
@@ -73,12 +69,10 @@ from .fixtures import (
 
 
 class TestAnomalyDetectionCore:
-    """Core functionality tests for anomaly detection system."""
-    
+    """Core functionality tests for anomaly detection system."""    
     @pytest.fixture
     async def anomaly_detector(self):
-        """Create and initialize anomaly detection system."""
-        detector = AnomalyDetection(
+        """Create and initialize anomaly detection system."""        detector = AnomalyDetection(
             config={
                 "detection_methods": ["z_score", "iqr", "isolation_forest", "dbscan"],
                 "sensitivity": 0.95,
@@ -95,8 +89,7 @@ class TestAnomalyDetectionCore:
     
     @pytest.fixture
     def synthetic_normal_data(self):
-        """Generate synthetic normal data patterns."""
-        np.random.seed(42)
+        """Generate synthetic normal data patterns."""        np.random.seed(42)
         
         # Normal data with slight variation
         normal_pattern = np.random.normal(100, 10, 1000)
@@ -120,8 +113,7 @@ class TestAnomalyDetectionCore:
     
     @pytest.fixture
     def synthetic_anomaly_data(self, synthetic_normal_data):
-        """Generate synthetic data with known anomalies."""
-        data = synthetic_normal_data.copy()
+        """Generate synthetic data with known anomalies."""        data = synthetic_normal_data.copy()
         values = np.array(data["values"])
         
         # Inject known anomalies
@@ -160,8 +152,7 @@ class TestAnomalyDetectionCore:
         return data
     
     async def test_detector_initialization_comprehensive(self, anomaly_detector):
-        """Test comprehensive initialization of anomaly detection system."""
-        # Verify core components
+        """Test comprehensive initialization of anomaly detection system."""        # Verify core components
         assert anomaly_detector is not None
         assert anomaly_detector.is_initialized
         assert anomaly_detector.statistical_detector is not None
@@ -188,8 +179,7 @@ class TestAnomalyDetectionCore:
         assert all(model.is_trained for model in ml_models.values())
     
     async def test_statistical_anomaly_detection(self, anomaly_detector, synthetic_anomaly_data):
-        """Test statistical anomaly detection methods (Z-score, IQR)."""
-        data = synthetic_anomaly_data
+        """Test statistical anomaly detection methods (Z-score, IQR)."""        data = synthetic_anomaly_data
         
         # Test Z-score detection
         z_score_anomalies = await anomaly_detector.detect_anomalies(
@@ -234,8 +224,7 @@ class TestAnomalyDetectionCore:
             assert anomaly.severity in [AnomalySeverity.LOW, AnomalySeverity.MEDIUM, AnomalySeverity.HIGH]
     
     async def test_ml_based_anomaly_detection(self, anomaly_detector, synthetic_anomaly_data):
-        """Test machine learning based anomaly detection."""
-        data = synthetic_anomaly_data
+        """Test machine learning based anomaly detection."""        data = synthetic_anomaly_data
         
         # Prepare training data (first 80% of normal data)
         train_size = int(0.8 * len(data["values"]))
@@ -289,8 +278,7 @@ class TestAnomalyDetectionCore:
         assert all(score >= 0.0 for score in detection_comparison.values())
     
     async def test_time_series_anomaly_detection(self, anomaly_detector):
-        """Test time series specific anomaly detection."""
-        # Generate time series with seasonal patterns
+        """Test time series specific anomaly detection."""        # Generate time series with seasonal patterns
         timestamps = [datetime.utcnow() - timedelta(hours=i) for i in range(168, 0, -1)]  # 1 week
         
         # Create seasonal pattern (daily and weekly seasonality)
@@ -346,8 +334,7 @@ class TestAnomalyDetectionCore:
         assert "changepoints" in trend_analysis
     
     async def test_business_anomaly_detection(self, anomaly_detector, business_metrics_data):
-        """Test business-specific anomaly detection."""
-        business_data = business_metrics_data["revenue_scenarios"]
+        """Test business-specific anomaly detection."""        business_data = business_metrics_data["revenue_scenarios"]
         
         # Test revenue anomaly detection
         for scenario in business_data:
@@ -389,8 +376,7 @@ class TestAnomalyDetectionCore:
                     assert "behavior_shift" in anomaly.context
     
     async def test_security_anomaly_detection(self, anomaly_detector):
-        """Test security-specific anomaly detection."""
-        # Simulate security events
+        """Test security-specific anomaly detection."""        # Simulate security events
         security_events = [
             {
                 "timestamp": datetime.utcnow() - timedelta(minutes=i),
@@ -445,12 +431,10 @@ class TestAnomalyDetectionCore:
 
 
 class TestAnomalyCorrelationAndRootCause:
-    """Tests for anomaly correlation and root cause analysis."""
-    
+    """Tests for anomaly correlation and root cause analysis."""    
     @pytest.fixture
     async def correlation_engine(self):
-        """Create anomaly correlation engine."""
-        engine = AnomalyCorrelationEngine(
+        """Create anomaly correlation engine."""        engine = AnomalyCorrelationEngine(
             config={
                 "correlation_window": 300,  # 5 minutes
                 "min_correlation": 0.6,
@@ -464,8 +448,7 @@ class TestAnomalyCorrelationAndRootCause:
     
     @pytest.fixture
     async def root_cause_analyzer(self):
-        """Create root cause analyzer."""
-        analyzer = RootCauseAnalyzer(
+        """Create root cause analyzer."""        analyzer = RootCauseAnalyzer(
             config={
                 "analysis_depth": 3,
                 "confidence_threshold": 0.7,
@@ -478,8 +461,7 @@ class TestAnomalyCorrelationAndRootCause:
         await analyzer.shutdown()
     
     async def test_anomaly_correlation_detection(self, correlation_engine):
-        """Test detection of correlated anomalies across different metrics."""
-        # Simulate correlated system events
+        """Test detection of correlated anomalies across different metrics."""        # Simulate correlated system events
         base_time = datetime.utcnow()
         
         # Primary anomaly: High CPU usage
@@ -557,8 +539,7 @@ class TestAnomalyCorrelationAndRootCause:
         assert "effect_propagation" in causal_analysis
     
     async def test_root_cause_analysis_comprehensive(self, root_cause_analyzer):
-        """Test comprehensive root cause analysis for complex anomaly patterns."""
-        # Create complex anomaly scenario
+        """Test comprehensive root cause analysis for complex anomaly patterns."""        # Create complex anomaly scenario
         anomaly_pattern = AnomalyPattern(
             pattern_id="complex_performance_degradation",
             pattern_name="Multi-Service Performance Degradation",
@@ -664,8 +645,7 @@ class TestAnomalyCorrelationAndRootCause:
             assert "estimated_impact" in action
     
     async def test_anomaly_pattern_recognition(self, correlation_engine):
-        """Test recognition of known anomaly patterns."""
-        # Define known patterns
+        """Test recognition of known anomaly patterns."""        # Define known patterns
         known_patterns = [
             {
                 "name": "cascade_failure",
@@ -722,12 +702,10 @@ class TestAnomalyCorrelationAndRootCause:
 
 
 class TestAnomalyDetectionIntegration:
-    """Integration tests for anomaly detection system."""
-    
+    """Integration tests for anomaly detection system."""    
     @pytest.fixture
     async def integrated_system(self):
-        """Create fully integrated anomaly detection system."""
-        system = AnomalyDetection(
+        """Create fully integrated anomaly detection system."""        system = AnomalyDetection(
             config={
                 "integration_mode": True,
                 "real_time_processing": True,
@@ -742,8 +720,7 @@ class TestAnomalyDetectionIntegration:
         await system.shutdown()
     
     async def test_real_time_anomaly_processing(self, integrated_system):
-        """Test real-time anomaly detection and processing."""
-        # Start real-time monitoring
+        """Test real-time anomaly detection and processing."""        # Start real-time monitoring
         await integrated_system.start_real_time_monitoring([
             "cpu_usage", "memory_usage", "response_time", "error_rate", "throughput"
         ])
@@ -798,8 +775,7 @@ class TestAnomalyDetectionIntegration:
         await integrated_system.stop_real_time_monitoring()
     
     async def test_end_to_end_anomaly_workflow(self, integrated_system):
-        """Test complete end-to-end anomaly detection workflow."""
-        # 1. Data ingestion
+        """Test complete end-to-end anomaly detection workflow."""        # 1. Data ingestion
         historical_data = {
             "metric_name": "business_revenue",
             "values": np.random.normal(10000, 1000, 1000).tolist(),
@@ -873,12 +849,10 @@ class TestAnomalyDetectionIntegration:
 
 @pytest.mark.performance
 class TestAnomalyDetectionPerformance:
-    """Performance tests for anomaly detection system."""
-    
+    """Performance tests for anomaly detection system."""    
     @pytest.fixture
     async def performance_detector(self):
-        """Create high-performance anomaly detector."""
-        detector = AnomalyDetection(
+        """Create high-performance anomaly detector."""        detector = AnomalyDetection(
             config={
                 "high_performance_mode": True,
                 "batch_processing": True,
@@ -892,8 +866,7 @@ class TestAnomalyDetectionPerformance:
         await detector.shutdown()
     
     async def test_high_volume_anomaly_detection(self, performance_detector):
-        """Test anomaly detection with high volume data."""
-        # Generate large dataset
+        """Test anomaly detection with high volume data."""        # Generate large dataset
         data_size = 100000
         timestamps = [
             datetime.utcnow() - timedelta(seconds=i) 
@@ -933,8 +906,7 @@ class TestAnomalyDetectionPerformance:
         assert memory_usage["peak_memory_mb"] < 1000  # Under 1GB memory usage
     
     async def test_concurrent_detection_performance(self, performance_detector):
-        """Test concurrent anomaly detection across multiple metrics."""
-        # Define multiple metrics
+        """Test concurrent anomaly detection across multiple metrics."""        # Define multiple metrics
         metrics = [
             f"metric_{i}" for i in range(20)
         ]
@@ -1021,24 +993,20 @@ from ai.monitoring.anomaly_detection import (
 from .utils import TestDataGenerator, PerformanceValidator
 
 class TestAnomalyDetection:
-    """Test suite for Anomaly Detection system."""
-    
+    """Test suite for Anomaly Detection system."""    
     @pytest.fixture
     async def anomaly_detector(self):
-        """Create Anomaly Detection instance."""
-        detector = AnomalyDetection()
+        """Create Anomaly Detection instance."""        detector = AnomalyDetection()
         await detector.initialize()
         yield detector
         await detector.shutdown()
     
     @pytest.fixture
     def anomaly_test_data(self):
-        """Generate comprehensive anomaly test data."""
-        return TestDataGenerator.generate_anomaly_scenarios()
+        """Generate comprehensive anomaly test data."""        return TestDataGenerator.generate_anomaly_scenarios()
     
     async def test_detector_initialization(self, anomaly_detector):
-        """Test proper initialization of anomaly detection system."""
-        assert anomaly_detector is not None
+        """Test proper initialization of anomaly detection system."""        assert anomaly_detector is not None
         assert anomaly_detector.is_initialized
         assert anomaly_detector.statistical_detector is not None
         assert anomaly_detector.trend_detector is not None
@@ -1046,8 +1014,7 @@ class TestAnomalyDetection:
         assert anomaly_detector.ml_detector is not None
     
     async def test_statistical_anomaly_detection(self, anomaly_detector, anomaly_test_data):
-        """Test statistical anomaly detection algorithms."""
-        # Test point anomalies using statistical methods
+        """Test statistical anomaly detection algorithms."""        # Test point anomalies using statistical methods
         point_data = anomaly_test_data["point_anomalies"]
         
         # Configure statistical detector
@@ -1091,8 +1058,7 @@ class TestAnomalyDetection:
             assert method_result.confidence_scores is not None
     
     async def test_trend_anomaly_detection(self, anomaly_detector, anomaly_test_data):
-        """Test trend-based anomaly detection."""
-        trend_data = anomaly_test_data["trend_anomalies"]
+        """Test trend-based anomaly detection."""        trend_data = anomaly_test_data["trend_anomalies"]
         
         config = {
             "window_size": 50,
@@ -1138,8 +1104,7 @@ class TestAnomalyDetection:
             assert algo_result is not None
     
     async def test_seasonal_anomaly_detection(self, anomaly_detector, anomaly_test_data):
-        """Test seasonal pattern anomaly detection."""
-        seasonal_data = anomaly_test_data["seasonal_anomalies"]
+        """Test seasonal pattern anomaly detection."""        seasonal_data = anomaly_test_data["seasonal_anomalies"]
         
         config = {
             "period": 100,  # Known seasonal period
@@ -1183,8 +1148,7 @@ class TestAnomalyDetection:
             assert method_result is not None
     
     async def test_ml_based_anomaly_detection(self, anomaly_detector, anomaly_test_data):
-        """Test machine learning-based anomaly detection."""
-        # Use mixed data with various anomaly types
+        """Test machine learning-based anomaly detection."""        # Use mixed data with various anomaly types
         ml_data = anomaly_test_data["point_anomalies"]["data"]
         
         config = {
@@ -1234,8 +1198,7 @@ class TestAnomalyDetection:
                 pytest.skip(f"Algorithm {algorithm} not available or suitable: {e}")
     
     async def test_multivariate_anomaly_detection(self, anomaly_detector):
-        """Test multivariate anomaly detection capabilities."""
-        # Generate multivariate data
+        """Test multivariate anomaly detection capabilities."""        # Generate multivariate data
         n_samples = 1000
         n_features = 5
         
@@ -1283,8 +1246,7 @@ class TestAnomalyDetection:
         assert precision >= 0.3 or recall >= 0.4
     
     async def test_real_time_anomaly_detection(self, anomaly_detector):
-        """Test real-time streaming anomaly detection."""
-        # Initialize real-time detector
+        """Test real-time streaming anomaly detection."""        # Initialize real-time detector
         stream_config = {
             "window_size": 100,
             "update_frequency": 10,
@@ -1346,8 +1308,7 @@ class TestAnomalyDetection:
             assert anomaly.severity in [AnomalySeverity.LOW, AnomalySeverity.MEDIUM, AnomalySeverity.HIGH, AnomalySeverity.CRITICAL]
     
     async def test_anomaly_classification(self, anomaly_detector):
-        """Test anomaly type classification and severity assessment."""
-        # Create different types of anomalies
+        """Test anomaly type classification and severity assessment."""        # Create different types of anomalies
         test_scenarios = [
             {
                 "data": [100] * 50 + [500] + [100] * 49,  # Point anomaly
@@ -1381,8 +1342,7 @@ class TestAnomalyDetection:
             assert primary_classification.confidence >= 0.5
     
     async def test_anomaly_root_cause_analysis(self, anomaly_detector):
-        """Test anomaly root cause analysis capabilities."""
-        # Simulate system metrics with correlated anomalies
+        """Test anomaly root cause analysis capabilities."""        # Simulate system metrics with correlated anomalies
         metrics_data = {
             "cpu_usage": [60] * 50 + [95] * 10 + [60] * 40,  # CPU spike
             "memory_usage": [70] * 50 + [85] * 10 + [70] * 40,  # Memory increase
@@ -1414,8 +1374,7 @@ class TestAnomalyDetection:
         assert primary_cause in ["cpu_usage", "memory_usage", "response_time"]
     
     async def test_anomaly_prediction(self, anomaly_detector):
-        """Test predictive anomaly detection capabilities."""
-        # Generate time series with patterns
+        """Test predictive anomaly detection capabilities."""        # Generate time series with patterns
         time_points = 200
         base_pattern = [100 + 20 * np.sin(2 * np.pi * i / 24) for i in range(time_points)]
         trend_component = [i * 0.1 for i in range(time_points)]
@@ -1460,8 +1419,7 @@ class TestAnomalyDetection:
         assert all(0 <= prob <= 1 for prob in anomaly_probs)
     
     async def test_ensemble_anomaly_detection(self, anomaly_detector):
-        """Test ensemble anomaly detection combining multiple methods."""
-        # Generate complex data with multiple anomaly types
+        """Test ensemble anomaly detection combining multiple methods."""        # Generate complex data with multiple anomaly types
         n_points = 500
         
         # Base signal with seasonal pattern
@@ -1516,8 +1474,7 @@ class TestAnomalyDetection:
         assert detection_count >= 2
     
     async def test_anomaly_feedback_learning(self, anomaly_detector):
-        """Test anomaly detection system learning from feedback."""
-        # Initialize adaptive detector
+        """Test anomaly detection system learning from feedback."""        # Initialize adaptive detector
         adaptive_config = {
             "learning_rate": 0.1,
             "feedback_window": 50,
@@ -1579,8 +1536,7 @@ class TestAnomalyDetection:
         assert near_75 or near_125  # At least one should be detected
     
     async def test_anomaly_detection_performance(self, anomaly_detector):
-        """Test anomaly detection system performance and scalability."""
-        # Performance test with large dataset
+        """Test anomaly detection system performance and scalability."""        # Performance test with large dataset
         large_dataset_size = 10000
         large_data = np.random.normal(100, 15, large_dataset_size)
         

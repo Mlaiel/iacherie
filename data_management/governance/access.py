@@ -1,5 +1,4 @@
-"""
-Access Control and Permission Management System
+"""Access Control and Permission Management System
 
 Advanced role-based access control (RBAC) and attribute-based access control (ABAC)
 system for content governance and security.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will result in legal action.
 Contact: mlaiel@live.de
 """
-
 import logging
 from typing import Dict, List, Optional, Any, Set, Union
 from datetime import datetime, timedelta
@@ -30,8 +28,7 @@ from ...core.cache import CacheManager
 
 
 class Permission(Enum):
-    """System permissions"""
-    READ = "read"
+    """System permissions"""    READ = "read"
     WRITE = "write"
     DELETE = "delete"
     EXECUTE = "execute"
@@ -44,16 +41,14 @@ class Permission(Enum):
 
 
 class AccessAction(Enum):
-    """Access control actions"""
-    ALLOW = "allow"
+    """Access control actions"""    ALLOW = "allow"
     DENY = "deny"
     CONDITIONAL = "conditional"
     AUDIT_ONLY = "audit_only"
 
 
 class RoleLevel(Enum):
-    """Role hierarchy levels"""
-    SYSTEM = "system"
+    """Role hierarchy levels"""    SYSTEM = "system"
     ORGANIZATION = "organization"
     PROJECT = "project"
     CONTENT = "content"
@@ -61,8 +56,7 @@ class RoleLevel(Enum):
 
 @dataclass
 class AccessPolicy:
-    """Access control policy definition"""
-    policy_id: str
+    """Access control policy definition"""    policy_id: str
     name: str
     description: str
     rules: List[Dict[str, Any]]
@@ -76,8 +70,7 @@ class AccessPolicy:
 
 @dataclass
 class Role:
-    """Role definition with permissions"""
-    role_id: str
+    """Role definition with permissions"""    role_id: str
     name: str
     description: str
     permissions: Set[Permission]
@@ -90,8 +83,7 @@ class Role:
 
 @dataclass
 class User:
-    """User with access control information"""
-    user_id: str
+    """User with access control information"""    user_id: str
     username: str
     email: str
     roles: Set[str]  # Role IDs
@@ -104,8 +96,7 @@ class User:
 
 @dataclass
 class AccessRequest:
-    """Access request for audit and decision"""
-    request_id: str
+    """Access request for audit and decision"""    request_id: str
     user_id: str
     resource_id: str
     resource_type: str
@@ -119,8 +110,7 @@ class AccessRequest:
 
 @dataclass
 class AccessLog:
-    """Access log entry for auditing"""
-    log_id: str
+    """Access log entry for auditing"""    log_id: str
     user_id: str
     resource_id: str
     permission: Permission
@@ -132,13 +122,11 @@ class AccessLog:
 
 
 class PolicyEngine:
-    """
-    Policy evaluation engine for access control decisions
+    """    Policy evaluation engine for access control decisions
     
     Evaluates access policies using both RBAC and ABAC models
     to make authorization decisions.
-    """
-    
+    """    
     def __init__(self):
         self.logger = logging.getLogger(__name__)
     
@@ -151,8 +139,7 @@ class PolicyEngine:
         permission: Permission,
         context: Dict[str, Any]
     ) -> Tuple[AccessAction, str]:
-        """
-        Evaluate access policies for a request
+        """        Evaluate access policies for a request
         
         Args:
             policies: List of applicable policies
@@ -164,8 +151,7 @@ class PolicyEngine:
             
         Returns:
             Tuple[AccessAction, str]: Decision and reason
-        """
-        try:
+        """        try:
             # Sort policies by priority (higher priority first)
             sorted_policies = sorted(policies, key=lambda p: p.priority, reverse=True)
             
@@ -193,8 +179,7 @@ class PolicyEngine:
         permission: Permission,
         context: Dict[str, Any]
     ) -> bool:
-        """Evaluate individual policy rules"""
-        for rule in policy.rules:
+        """Evaluate individual policy rules"""        for rule in policy.rules:
             if not self._evaluate_rule(rule, user, resource_id, resource_type, permission, context):
                 return False
         return True
@@ -208,8 +193,7 @@ class PolicyEngine:
         permission: Permission,
         context: Dict[str, Any]
     ) -> bool:
-        """Evaluate a single rule"""
-        rule_type = rule.get("type")
+        """Evaluate a single rule"""        rule_type = rule.get("type")
         
         if rule_type == "user_attribute":
             return self._evaluate_user_attribute_rule(rule, user)
@@ -226,8 +210,7 @@ class PolicyEngine:
             return False
     
     def _evaluate_user_attribute_rule(self, rule: Dict[str, Any], user: User) -> bool:
-        """Evaluate user attribute rule"""
-        attribute = rule.get("attribute")
+        """Evaluate user attribute rule"""        attribute = rule.get("attribute")
         operator = rule.get("operator", "eq")
         value = rule.get("value")
         
@@ -243,18 +226,15 @@ class PolicyEngine:
         return False
     
     def _evaluate_resource_type_rule(self, rule: Dict[str, Any], resource_type: str) -> bool:
-        """Evaluate resource type rule"""
-        allowed_types = rule.get("allowed_types", [])
+        """Evaluate resource type rule"""        allowed_types = rule.get("allowed_types", [])
         return resource_type in allowed_types
     
     def _evaluate_permission_rule(self, rule: Dict[str, Any], permission: Permission) -> bool:
-        """Evaluate permission rule"""
-        allowed_permissions = rule.get("allowed_permissions", [])
+        """Evaluate permission rule"""        allowed_permissions = rule.get("allowed_permissions", [])
         return permission.value in allowed_permissions
     
     def _evaluate_context_rule(self, rule: Dict[str, Any], context: Dict[str, Any]) -> bool:
-        """Evaluate context rule"""
-        required_context = rule.get("required_context", {})
+        """Evaluate context rule"""        required_context = rule.get("required_context", {})
         
         for key, expected_value in required_context.items():
             actual_value = context.get(key)
@@ -264,8 +244,7 @@ class PolicyEngine:
         return True
     
     def _evaluate_time_rule(self, rule: Dict[str, Any], context: Dict[str, Any]) -> bool:
-        """Evaluate time-based rule"""
-        current_time = datetime.utcnow()
+        """Evaluate time-based rule"""        current_time = datetime.utcnow()
         
         # Check time range
         start_time = rule.get("start_time")
@@ -292,13 +271,11 @@ class PolicyEngine:
 
 
 class RoleManager:
-    """
-    Role management system for RBAC
+    """    Role management system for RBAC
     
     Manages roles, role hierarchies, and permission assignments
     with support for inheritance and delegation.
-    """
-    
+    """    
     def __init__(self):
         self.roles: Dict[str, Role] = {}
         self.role_hierarchy: Dict[str, Set[str]] = {}  # parent -> children
@@ -313,8 +290,7 @@ class RoleManager:
         level: RoleLevel,
         parent_role_id: Optional[str] = None
     ) -> Role:
-        """Create a new role"""
-        if role_id in self.roles:
+        """Create a new role"""        if role_id in self.roles:
             raise AccessError(f"Role {role_id} already exists")
         
         # Validate parent role
@@ -341,8 +317,7 @@ class RoleManager:
         return role
     
     def get_effective_permissions(self, role_id: str) -> Set[Permission]:
-        """Get effective permissions for a role including inherited"""
-        if role_id not in self.roles:
+        """Get effective permissions for a role including inherited"""        if role_id not in self.roles:
             return set()
         
         role = self.roles[role_id]
@@ -356,8 +331,7 @@ class RoleManager:
         return permissions
     
     def get_user_permissions(self, user_roles: Set[str]) -> Set[Permission]:
-        """Get effective permissions for a user based on their roles"""
-        all_permissions = set()
+        """Get effective permissions for a user based on their roles"""        all_permissions = set()
         
         for role_id in user_roles:
             role_permissions = self.get_effective_permissions(role_id)
@@ -366,13 +340,11 @@ class RoleManager:
         return all_permissions
     
     def has_permission(self, user_roles: Set[str], permission: Permission) -> bool:
-        """Check if user has a specific permission"""
-        user_permissions = self.get_user_permissions(user_roles)
+        """Check if user has a specific permission"""        user_permissions = self.get_user_permissions(user_roles)
         return permission in user_permissions or Permission.ADMIN in user_permissions
     
     def get_role_hierarchy(self, role_id: str) -> List[str]:
-        """Get complete role hierarchy for a role"""
-        hierarchy = [role_id]
+        """Get complete role hierarchy for a role"""        hierarchy = [role_id]
         
         if role_id in self.roles:
             parent_id = self.roles[role_id].parent_role_id
@@ -383,16 +355,13 @@ class RoleManager:
 
 
 class AccessController(BaseManager):
-    """
-    Central access control management system
+    """    Central access control management system
     
     Provides comprehensive access control using RBAC and ABAC models
     with policy evaluation, audit logging, and permission management.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize the access controller"""
-        super().__init__(config)
+        """Initialize the access controller"""        super().__init__(config)
         self.logger = logging.getLogger(__name__)
         
         # Initialize components
@@ -416,8 +385,7 @@ class AccessController(BaseManager):
         }
     
     async def initialize(self) -> None:
-        """Initialize the access controller"""
-        try:
+        """Initialize the access controller"""        try:
             await self._load_users()
             await self._load_roles()
             await self._load_policies()
@@ -437,8 +405,7 @@ class AccessController(BaseManager):
         permission: Permission,
         context: Optional[Dict[str, Any]] = None
     ) -> bool:
-        """
-        Check if user has access to perform action on resource
+        """        Check if user has access to perform action on resource
         
         Args:
             user_id: ID of user making request
@@ -449,8 +416,7 @@ class AccessController(BaseManager):
             
         Returns:
             bool: True if access allowed, False otherwise
-        """
-        try:
+        """        try:
             # Create access request
             request = AccessRequest(
                 request_id=f"access_{user_id}_{resource_id}_{permission.value}_{datetime.utcnow().timestamp()}",
@@ -516,8 +482,7 @@ class AccessController(BaseManager):
         roles: Set[str],
         attributes: Optional[Dict[str, Any]] = None
     ) -> User:
-        """
-        Create a new user
+        """        Create a new user
         
         Args:
             user_id: Unique user identifier
@@ -528,8 +493,7 @@ class AccessController(BaseManager):
             
         Returns:
             User: Created user object
-        """
-        try:
+        """        try:
             if user_id in self.users:
                 raise AccessError(f"User {user_id} already exists")
             
@@ -556,8 +520,7 @@ class AccessController(BaseManager):
             raise AccessError(f"User creation failed: {e}")
     
     async def assign_role(self, user_id: str, role_id: str) -> bool:
-        """
-        Assign a role to a user
+        """        Assign a role to a user
         
         Args:
             user_id: User ID
@@ -565,8 +528,7 @@ class AccessController(BaseManager):
             
         Returns:
             bool: True if role assigned successfully
-        """
-        try:
+        """        try:
             user = self.users.get(user_id)
             if not user:
                 raise AccessError(f"User {user_id} not found")
@@ -584,8 +546,7 @@ class AccessController(BaseManager):
             return False
     
     async def revoke_role(self, user_id: str, role_id: str) -> bool:
-        """
-        Revoke a role from a user
+        """        Revoke a role from a user
         
         Args:
             user_id: User ID
@@ -593,8 +554,7 @@ class AccessController(BaseManager):
             
         Returns:
             bool: True if role revoked successfully
-        """
-        try:
+        """        try:
             user = self.users.get(user_id)
             if not user:
                 raise AccessError(f"User {user_id} not found")
@@ -609,16 +569,14 @@ class AccessController(BaseManager):
             return False
     
     async def create_policy(self, policy: AccessPolicy) -> bool:
-        """
-        Create a new access policy
+        """        Create a new access policy
         
         Args:
             policy: AccessPolicy to create
             
         Returns:
             bool: True if policy created successfully
-        """
-        try:
+        """        try:
             # Validate policy
             await self._validate_policy(policy)
             
@@ -632,16 +590,14 @@ class AccessController(BaseManager):
             raise AccessError(f"Policy creation failed: {e}")
     
     async def get_user_permissions(self, user_id: str) -> Set[Permission]:
-        """
-        Get effective permissions for a user
+        """        Get effective permissions for a user
         
         Args:
             user_id: User ID
             
         Returns:
             Set[Permission]: User's effective permissions
-        """
-        user = self.users.get(user_id)
+        """        user = self.users.get(user_id)
         if not user:
             return set()
         
@@ -656,8 +612,7 @@ class AccessController(BaseManager):
         start_time: Optional[datetime] = None,
         end_time: Optional[datetime] = None
     ) -> List[AccessLog]:
-        """
-        Get access logs with optional filtering
+        """        Get access logs with optional filtering
         
         Args:
             user_id: Filter by user ID
@@ -669,8 +624,7 @@ class AccessController(BaseManager):
             
         Returns:
             List[AccessLog]: Filtered access logs
-        """
-        filtered_logs = self.access_logs.copy()
+        """        filtered_logs = self.access_logs.copy()
         
         if user_id:
             filtered_logs = [log for log in filtered_logs if log.user_id == user_id]
@@ -693,8 +647,7 @@ class AccessController(BaseManager):
         return sorted(filtered_logs, key=lambda log: log.timestamp, reverse=True)
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get access control metrics"""
-        return {
+        """Get access control metrics"""        return {
             **self.metrics,
             "total_users": len(self.users),
             "total_roles": len(self.role_manager.roles),
@@ -714,8 +667,7 @@ class AccessController(BaseManager):
         permission: Permission,
         context: Dict[str, Any]
     ) -> List[AccessPolicy]:
-        """Get policies applicable to the access request"""
-        applicable = []
+        """Get policies applicable to the access request"""        applicable = []
         
         for policy in self.policies.values():
             if not policy.enabled:
@@ -727,8 +679,7 @@ class AccessController(BaseManager):
         return applicable
     
     async def _log_access(self, request: AccessRequest, decision: AccessAction) -> None:
-        """Log access decision"""
-        log_entry = AccessLog(
+        """Log access decision"""        log_entry = AccessLog(
             log_id=f"log_{request.request_id}",
             user_id=request.user_id,
             resource_id=request.resource_id,
@@ -745,16 +696,14 @@ class AccessController(BaseManager):
         self.access_logs.append(log_entry)
     
     async def _validate_policy(self, policy: AccessPolicy) -> None:
-        """Validate access policy configuration"""
-        if not policy.policy_id or not policy.name:
+        """Validate access policy configuration"""        if not policy.policy_id or not policy.name:
             raise ValidationError("Policy ID and name are required")
         
         if not policy.rules:
             raise ValidationError("Policy must have at least one rule")
     
     async def _create_default_roles(self) -> None:
-        """Create default system roles"""
-        # Create system admin role
+        """Create default system roles"""        # Create system admin role
         self.role_manager.create_role(
             role_id="system_admin",
             name="System Administrator",
@@ -782,8 +731,7 @@ class AccessController(BaseManager):
         )
     
     async def _load_users(self) -> None:
-        """Load users from database"""
-        try:
+        """Load users from database"""        try:
             logger.info("Loading users and permissions from database")
             
             # Simulate database query for users
@@ -838,8 +786,7 @@ class AccessController(BaseManager):
             await self._create_default_admin_user()
     
     async def _load_roles(self) -> None:
-        """Load roles from database"""
-        try:
+        """Load roles from database"""        try:
             logger.info("Loading roles and role permissions from database")
             
             # Simulate database query for roles
@@ -917,8 +864,7 @@ class AccessController(BaseManager):
             await self._create_default_roles()
     
     async def _load_policies(self) -> None:
-        """Load policies from database"""
-        try:
+        """Load policies from database"""        try:
             logger.info("Loading access control policies from database")
             
             # Simulate database query for access control policies
@@ -1012,13 +958,11 @@ class AccessController(BaseManager):
 
 
 class PermissionManager:
-    """
-    Permission management utilities
+    """    Permission management utilities
     
     Provides helper functions for permission checking and management
     across the platform.
-    """
-    
+    """    
     def __init__(self, access_controller: AccessController):
         self.access_controller = access_controller
         self.logger = logging.getLogger(__name__)
@@ -1031,8 +975,7 @@ class PermissionManager:
         permission: Permission,
         context: Optional[Dict[str, Any]] = None
     ) -> None:
-        """
-        Require permission or raise access error
+        """        Require permission or raise access error
         
         Args:
             user_id: User ID
@@ -1043,8 +986,7 @@ class PermissionManager:
             
         Raises:
             AccessError: If permission denied
-        """
-        has_access = await self.access_controller.check_access(
+        """        has_access = await self.access_controller.check_access(
             user_id, resource_id, resource_type, permission, context
         )
         
@@ -1060,8 +1002,7 @@ class PermissionManager:
         resource_id: str,
         resource_metadata: Dict[str, Any]
     ) -> bool:
-        """
-        Check if user owns the resource
+        """        Check if user owns the resource
         
         Args:
             user_id: User ID
@@ -1070,8 +1011,7 @@ class PermissionManager:
             
         Returns:
             bool: True if user owns the resource
-        """
-        owner_id = resource_metadata.get("owner_id")
+        """        owner_id = resource_metadata.get("owner_id")
         return owner_id == user_id
     
     async def get_accessible_resources(
@@ -1081,8 +1021,7 @@ class PermissionManager:
         permission: Permission,
         resources: List[Dict[str, Any]]
     ) -> List[Dict[str, Any]]:
-        """
-        Filter resources based on user permissions
+        """        Filter resources based on user permissions
         
         Args:
             user_id: User ID
@@ -1092,8 +1031,7 @@ class PermissionManager:
             
         Returns:
             List[Dict]: Accessible resources
-        """
-        accessible = []
+        """        accessible = []
         
         for resource in resources:
             resource_id = resource.get("id", resource.get("resource_id"))

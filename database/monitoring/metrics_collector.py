@@ -1,5 +1,4 @@
-"""
-Database Metrics Collector
+"""Database Metrics Collector
 
 Comprehensive database metrics collection system with real-time monitoring,
 historical data storage, and advanced analytics capabilities.
@@ -12,7 +11,6 @@ Copyright: All rights reserved. Unauthorized use, modification, or distribution 
 Toute utilisation, modification ou distribution non autorisée de ce code est strictement interdite.
 Propriété intellectuelle de Fahed Mlaiel (mlaiel@live.de).
 """
-
 import asyncio
 import time
 from datetime import datetime, timedelta
@@ -38,16 +36,14 @@ from ...utils.time_series import TimeSeriesStorage
 
 
 class MetricType(Enum):
-    """Database metric types"""
-    COUNTER = "counter"
+    """Database metric types"""    COUNTER = "counter"
     GAUGE = "gauge"
     HISTOGRAM = "histogram"
     SUMMARY = "summary"
 
 
 class MetricCategory(Enum):
-    """Metric categories for organization"""
-    PERFORMANCE = "performance"
+    """Metric categories for organization"""    PERFORMANCE = "performance"
     CONNECTIONS = "connections"
     QUERIES = "queries"
     STORAGE = "storage"
@@ -60,8 +56,7 @@ class MetricCategory(Enum):
 
 @dataclass
 class MetricDefinition:
-    """Metric definition and metadata"""
-    name: str
+    """Metric definition and metadata"""    name: str
     category: MetricCategory
     metric_type: MetricType
     description: str
@@ -73,8 +68,7 @@ class MetricDefinition:
     aggregations: List[str] = field(default_factory=list)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['category'] = self.category.value
         data['metric_type'] = self.metric_type.value
         return data
@@ -82,24 +76,21 @@ class MetricDefinition:
 
 @dataclass
 class MetricValue:
-    """Single metric value with timestamp"""
-    name: str
+    """Single metric value with timestamp"""    name: str
     value: Union[float, int]
     timestamp: datetime
     labels: Dict[str, str] = field(default_factory=dict)
     metadata: Dict[str, Any] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['timestamp'] = self.timestamp.isoformat()
         return data
 
 
 @dataclass
 class MetricSummary:
-    """Metric summary statistics"""
-    name: str
+    """Metric summary statistics"""    name: str
     period_start: datetime
     period_end: datetime
     sample_count: int
@@ -111,16 +102,14 @@ class MetricSummary:
     percentiles: Dict[str, float] = field(default_factory=dict)
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert to dictionary"""
-        data = asdict(self)
+        """Convert to dictionary"""        data = asdict(self)
         data['period_start'] = self.period_start.isoformat()
         data['period_end'] = self.period_end.isoformat()
         return data
 
 
 class MetricsCollector:
-    """
-    Advanced database metrics collection system.
+    """    Advanced database metrics collection system.
     
     Features:
     - Real-time metric collection
@@ -129,8 +118,7 @@ class MetricsCollector:
     - Aggregation and analytics
     - Alert threshold monitoring
     - Multi-dimensional labeling
-    """
-    
+    """    
     def __init__(self, settings: Settings):
         self.settings = settings
         self.logger = logging.getLogger(__name__)
@@ -149,8 +137,7 @@ class MetricsCollector:
         self.logger.info("Metrics Collector initialized")
     
     def _initialize_standard_metrics(self) -> None:
-        """Initialize standard database metrics"""
-        
+        """Initialize standard database metrics"""        
         # Performance metrics
         self.add_metric_definition(MetricDefinition(
             name="database_connections_active",
@@ -181,8 +168,7 @@ class MetricsCollector:
             metric_type=MetricType.GAUGE,
             description="Queries executed per second",
             unit="queries/sec",
-            sql_query="""
-                SELECT sum(xact_commit + xact_rollback) 
+            sql_query="""                SELECT sum(xact_commit + xact_rollback) 
                 FROM pg_stat_database 
                 WHERE datname NOT IN ('template0', 'template1', 'postgres')
             """,
@@ -196,8 +182,7 @@ class MetricsCollector:
             metric_type=MetricType.GAUGE,
             description="Database cache hit ratio",
             unit="ratio",
-            sql_query="""
-                SELECT CASE 
+            sql_query="""                SELECT CASE 
                     WHEN sum(heap_blks_hit + heap_blks_read) = 0 THEN 0
                     ELSE sum(heap_blks_hit)::float / sum(heap_blks_hit + heap_blks_read)
                 END
@@ -214,8 +199,7 @@ class MetricsCollector:
             metric_type=MetricType.GAUGE,
             description="Number of slow queries",
             unit="queries",
-            sql_query="""
-                SELECT count(*) 
+            sql_query="""                SELECT count(*) 
                 FROM pg_stat_statements 
                 WHERE mean_exec_time > 1000
             """,
@@ -241,8 +225,7 @@ class MetricsCollector:
             metric_type=MetricType.GAUGE,
             description="Number of lock waits",
             unit="waits",
-            sql_query="""
-                SELECT count(*) 
+            sql_query="""                SELECT count(*) 
                 FROM pg_stat_activity 
                 WHERE wait_event_type = 'Lock'
             """,
@@ -256,8 +239,7 @@ class MetricsCollector:
             metric_type=MetricType.GAUGE,
             description="Total database size in bytes",
             unit="bytes",
-            sql_query="""
-                SELECT sum(pg_database_size(datname)) 
+            sql_query="""                SELECT sum(pg_database_size(datname)) 
                 FROM pg_database 
                 WHERE datname NOT IN ('template0', 'template1')
             """,
@@ -271,8 +253,7 @@ class MetricsCollector:
             metric_type=MetricType.GAUGE,
             description="Transactions per second",
             unit="txn/sec",
-            sql_query="""
-                SELECT sum(xact_commit + xact_rollback) 
+            sql_query="""                SELECT sum(xact_commit + xact_rollback) 
                 FROM pg_stat_database
             """,
             collection_interval=60,
@@ -305,13 +286,11 @@ class MetricsCollector:
         ))
     
     def add_metric_definition(self, metric_def: MetricDefinition) -> None:
-        """Add a metric definition"""
-        self.metric_definitions[metric_def.name] = metric_def
+        """Add a metric definition"""        self.metric_definitions[metric_def.name] = metric_def
         self.logger.debug(f"Added metric definition: {metric_def.name}")
     
     async def start_collection(self) -> None:
-        """Start metrics collection"""
-        if self.collecting_active:
+        """Start metrics collection"""        if self.collecting_active:
             self.logger.warning("Metrics collection already active")
             return
         
@@ -340,13 +319,11 @@ class MetricsCollector:
             raise
     
     async def stop_collection(self) -> None:
-        """Stop metrics collection"""
-        self.collecting_active = False
+        """Stop metrics collection"""        self.collecting_active = False
         self.logger.info("Metrics collection stopped")
     
     async def _collect_metric_loop(self, metric_name: str, metric_def: MetricDefinition) -> None:
-        """Collection loop for a single metric"""
-        while self.collecting_active:
+        """Collection loop for a single metric"""        while self.collecting_active:
             try:
                 value = await self._collect_single_metric(metric_name, metric_def)
                 if value is not None:
@@ -363,8 +340,7 @@ class MetricsCollector:
         metric_name: str, 
         metric_def: MetricDefinition
     ) -> Optional[MetricValue]:
-        """Collect a single metric value"""
-        try:
+        """Collect a single metric value"""        try:
             timestamp = datetime.utcnow()
             
             # System metrics (non-SQL)
@@ -412,8 +388,7 @@ class MetricsCollector:
         current_value: float, 
         timestamp: datetime
     ) -> Optional[float]:
-        """Calculate rate for counter metrics"""
-        cache_key = f"counter:{metric_name}"
+        """Calculate rate for counter metrics"""        cache_key = f"counter:{metric_name}"
         
         try:
             # Get previous value
@@ -452,8 +427,7 @@ class MetricsCollector:
             return None
     
     async def _store_metric_value(self, metric_name: str, metric_value: MetricValue) -> None:
-        """Store metric value"""
-        try:
+        """Store metric value"""        try:
             # Add to in-memory cache
             self.collected_metrics.append(metric_value)
             self.metric_cache[metric_name].append(metric_value)
@@ -480,8 +454,7 @@ class MetricsCollector:
             self.logger.error(f"Error storing metric value {metric_name}: {e}")
     
     async def _check_metric_alerts(self, metric_name: str, metric_value: MetricValue) -> None:
-        """Check metric against alert thresholds"""
-        try:
+        """Check metric against alert thresholds"""        try:
             metric_def = self.metric_definitions.get(metric_name)
             if not metric_def or not metric_def.alert_thresholds:
                 return
@@ -513,8 +486,7 @@ class MetricsCollector:
             self.logger.error(f"Error checking metric alerts for {metric_name}: {e}")
     
     async def _cleanup_old_metrics(self) -> None:
-        """Cleanup old metric data"""
-        while self.collecting_active:
+        """Cleanup old metric data"""        while self.collecting_active:
             try:
                 await asyncio.sleep(3600)  # Run every hour
                 
@@ -530,8 +502,7 @@ class MetricsCollector:
                 self.logger.error(f"Error during metrics cleanup: {e}")
     
     async def get_metric_value(self, metric_name: str, latest: bool = True) -> Optional[Dict[str, Any]]:
-        """Get metric value"""
-        try:
+        """Get metric value"""        try:
             if latest:
                 # Get latest cached value
                 cached_data = await self.cache.get(f"metric:latest:{metric_name}")
@@ -556,8 +527,7 @@ class MetricsCollector:
         end_time: datetime,
         aggregation: str = None
     ) -> List[Dict[str, Any]]:
-        """Get metric history"""
-        try:
+        """Get metric history"""        try:
             # Get from time series database
             values = await self.time_series.get_metric_range(
                 metric_name, start_time, end_time, aggregation
@@ -575,8 +545,7 @@ class MetricsCollector:
         start_time: datetime, 
         end_time: datetime
     ) -> Optional[MetricSummary]:
-        """Get metric summary statistics"""
-        try:
+        """Get metric summary statistics"""        try:
             # Get values from time series
             values = await self.time_series.get_metric_range(metric_name, start_time, end_time)
             
@@ -615,8 +584,7 @@ class MetricsCollector:
             return None
     
     def _calculate_percentile(self, sorted_values: List[float], percentile: int) -> float:
-        """Calculate percentile value"""
-        if not sorted_values:
+        """Calculate percentile value"""        if not sorted_values:
             return 0.0
         
         index = (percentile / 100.0) * (len(sorted_values) - 1)
@@ -631,8 +599,7 @@ class MetricsCollector:
         return sorted_values[lower_index] * (1 - weight) + sorted_values[upper_index] * weight
     
     async def get_all_metrics(self, category: MetricCategory = None) -> Dict[str, Any]:
-        """Get all current metric values"""
-        try:
+        """Get all current metric values"""        try:
             metrics = {}
             
             for metric_name, metric_def in self.metric_definitions.items():
@@ -652,15 +619,13 @@ class MetricsCollector:
             return {"error": str(e)}
     
     async def get_metric_definitions(self) -> Dict[str, Dict[str, Any]]:
-        """Get all metric definitions"""
-        return {
+        """Get all metric definitions"""        return {
             name: definition.to_dict()
             for name, definition in self.metric_definitions.items()
         }
     
     async def get_alerts(self, limit: int = 50) -> List[Dict[str, Any]]:
-        """Get recent metric alerts"""
-        try:
+        """Get recent metric alerts"""        try:
             alerts_data = await self.cache.lrange("metrics:alerts", 0, limit - 1)
             return [json.loads(alert) for alert in alerts_data]
         except Exception as e:
@@ -668,8 +633,7 @@ class MetricsCollector:
             return []
     
     async def collect_metric_now(self, metric_name: str) -> Optional[Dict[str, Any]]:
-        """Collect a specific metric immediately"""
-        try:
+        """Collect a specific metric immediately"""        try:
             metric_def = self.metric_definitions.get(metric_name)
             if not metric_def:
                 return {"error": f"Metric {metric_name} not found"}
@@ -692,8 +656,7 @@ class MetricsCollector:
         end_time: datetime,
         format_type: str = "json"
     ) -> Dict[str, Any]:
-        """Export metrics data"""
-        try:
+        """Export metrics data"""        try:
             exported_data = {
                 "export_info": {
                     "start_time": start_time.isoformat(),

@@ -1,5 +1,4 @@
-"""
-Platform Agent Exceptions - Enterprise Error Handling
+"""Platform Agent Exceptions - Enterprise Error Handling
 
 Comprehensive exception hierarchy for robust error handling and debugging
 in all Platform Agent components with detailed error reporting.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 from typing import Optional, Dict, Any, List
 from enum import Enum
 import traceback
@@ -27,16 +25,14 @@ from datetime import datetime
 
 
 class ErrorSeverity(Enum):
-    """Error severity levels"""
-    LOW = "low"
+    """Error severity levels"""    LOW = "low"
     MEDIUM = "medium"
     HIGH = "high"
     CRITICAL = "critical"
 
 
 class ErrorCategory(Enum):
-    """Error categories for classification"""
-    PLATFORM_API = "platform_api"
+    """Error categories for classification"""    PLATFORM_API = "platform_api"
     AUTHENTICATION = "authentication"
     CONTENT_PROCESSING = "content_processing"
     DATABASE = "database"
@@ -54,8 +50,7 @@ class ErrorCategory(Enum):
 
 
 class PlatformAgentBaseException(Exception):
-    """Base exception for all Platform Agent errors"""
-    
+    """Base exception for all Platform Agent errors"""    
     def __init__(
         self,
         message: str,
@@ -80,12 +75,10 @@ class PlatformAgentBaseException(Exception):
         self.traceback = traceback.format_exc()
         
     def _generate_user_message(self) -> str:
-        """Generate user-friendly error message"""
-        return f"An error occurred in {self.category.value}. Please try again."
+        """Generate user-friendly error message"""        return f"An error occurred in {self.category.value}. Please try again."
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert exception to dictionary for serialization"""
-        return {
+        """Convert exception to dictionary for serialization"""        return {
             "error_code": self.error_code,
             "message": self.message,
             "user_message": self.user_message,
@@ -104,8 +97,7 @@ class PlatformAgentBaseException(Exception):
 
 # Platform Connection Exceptions
 class PlatformConnectionException(PlatformAgentBaseException):
-    """Base exception for platform connection errors"""
-    
+    """Base exception for platform connection errors"""    
     def __init__(self, platform: str, message: str, **kwargs):
         self.platform = platform
         super().__init__(
@@ -120,8 +112,7 @@ class PlatformConnectionException(PlatformAgentBaseException):
 
 
 class PlatformAuthenticationException(PlatformConnectionException):
-    """Authentication failed with platform"""
-    
+    """Authentication failed with platform"""    
     def __init__(self, platform: str, message: str = "Authentication failed", **kwargs):
         super().__init__(
             platform,
@@ -137,8 +128,7 @@ class PlatformAuthenticationException(PlatformConnectionException):
 
 
 class PlatformRateLimitException(PlatformConnectionException):
-    """Platform rate limit exceeded"""
-    
+    """Platform rate limit exceeded"""    
     def __init__(self, platform: str, retry_after: int = 60, **kwargs):
         super().__init__(
             platform,
@@ -155,8 +145,7 @@ class PlatformRateLimitException(PlatformConnectionException):
 
 
 class PlatformAPIException(PlatformConnectionException):
-    """General platform API error"""
-    
+    """General platform API error"""    
     def __init__(self, platform: str, api_error: str, status_code: Optional[int] = None, **kwargs):
         self.status_code = status_code
         super().__init__(
@@ -169,8 +158,7 @@ class PlatformAPIException(PlatformConnectionException):
 
 
 class PlatformUnavailableException(PlatformConnectionException):
-    """Platform is temporarily unavailable"""
-    
+    """Platform is temporarily unavailable"""    
     def __init__(self, platform: str, **kwargs):
         super().__init__(
             platform,
@@ -187,8 +175,7 @@ class PlatformUnavailableException(PlatformConnectionException):
 
 # Content Processing Exceptions
 class ContentProcessingException(PlatformAgentBaseException):
-    """Base exception for content processing errors"""
-    
+    """Base exception for content processing errors"""    
     def __init__(self, message: str, content_type: Optional[str] = None, **kwargs):
         self.content_type = content_type
         super().__init__(
@@ -200,8 +187,7 @@ class ContentProcessingException(PlatformAgentBaseException):
 
 
 class ContentValidationException(ContentProcessingException):
-    """Content validation failed"""
-    
+    """Content validation failed"""    
     def __init__(self, validation_errors: List[str], **kwargs):
         self.validation_errors = validation_errors
         super().__init__(
@@ -216,8 +202,7 @@ class ContentValidationException(ContentProcessingException):
 
 
 class ContentFormatException(ContentProcessingException):
-    """Unsupported or invalid content format"""
-    
+    """Unsupported or invalid content format"""    
     def __init__(self, format_type: str, supported_formats: Optional[List[str]] = None, **kwargs):
         self.format_type = format_type
         self.supported_formats = supported_formats or []
@@ -235,8 +220,7 @@ class ContentFormatException(ContentProcessingException):
 
 
 class ContentSizeException(ContentProcessingException):
-    """Content exceeds size limits"""
-    
+    """Content exceeds size limits"""    
     def __init__(self, actual_size: int, max_size: int, **kwargs):
         self.actual_size = actual_size
         self.max_size = max_size
@@ -253,8 +237,7 @@ class ContentSizeException(ContentProcessingException):
 
 # AI Processing Exceptions
 class AIProcessingException(PlatformAgentBaseException):
-    """Base exception for AI processing errors"""
-    
+    """Base exception for AI processing errors"""    
     def __init__(self, message: str, model_name: Optional[str] = None, **kwargs):
         self.model_name = model_name
         super().__init__(
@@ -266,8 +249,7 @@ class AIProcessingException(PlatformAgentBaseException):
 
 
 class AIModelLoadException(AIProcessingException):
-    """AI model failed to load"""
-    
+    """AI model failed to load"""    
     def __init__(self, model_name: str, **kwargs):
         super().__init__(
             f"Failed to load AI model: {model_name}",
@@ -282,8 +264,7 @@ class AIModelLoadException(AIProcessingException):
 
 
 class AIProcessingTimeoutException(AIProcessingException):
-    """AI processing timed out"""
-    
+    """AI processing timed out"""    
     def __init__(self, timeout_seconds: int, **kwargs):
         self.timeout_seconds = timeout_seconds
         super().__init__(
@@ -298,8 +279,7 @@ class AIProcessingTimeoutException(AIProcessingException):
 
 
 class AIResourceException(AIProcessingException):
-    """Insufficient resources for AI processing"""
-    
+    """Insufficient resources for AI processing"""    
     def __init__(self, resource_type: str, required: str, available: str, **kwargs):
         super().__init__(
             f"Insufficient {resource_type}: required {required}, available {available}",
@@ -315,8 +295,7 @@ class AIResourceException(AIProcessingException):
 
 # Database Exceptions
 class DatabaseException(PlatformAgentBaseException):
-    """Base exception for database errors"""
-    
+    """Base exception for database errors"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -326,8 +305,7 @@ class DatabaseException(PlatformAgentBaseException):
 
 
 class DatabaseConnectionException(DatabaseException):
-    """Database connection failed"""
-    
+    """Database connection failed"""    
     def __init__(self, **kwargs):
         super().__init__(
             "Database connection failed",
@@ -342,8 +320,7 @@ class DatabaseConnectionException(DatabaseException):
 
 
 class DatabaseIntegrityException(DatabaseException):
-    """Database integrity constraint violation"""
-    
+    """Database integrity constraint violation"""    
     def __init__(self, constraint: str, **kwargs):
         self.constraint = constraint
         super().__init__(
@@ -356,8 +333,7 @@ class DatabaseIntegrityException(DatabaseException):
 
 # Synchronization Exceptions
 class SynchronizationException(PlatformAgentBaseException):
-    """Base exception for synchronization errors"""
-    
+    """Base exception for synchronization errors"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -367,8 +343,7 @@ class SynchronizationException(PlatformAgentBaseException):
 
 
 class SyncConflictException(SynchronizationException):
-    """Synchronization conflict detected"""
-    
+    """Synchronization conflict detected"""    
     def __init__(self, conflict_type: str, conflicting_data: Dict[str, Any], **kwargs):
         self.conflict_type = conflict_type
         self.conflicting_data = conflicting_data
@@ -384,8 +359,7 @@ class SyncConflictException(SynchronizationException):
 
 
 class SyncLockException(SynchronizationException):
-    """Unable to acquire synchronization lock"""
-    
+    """Unable to acquire synchronization lock"""    
     def __init__(self, resource: str, timeout: int, **kwargs):
         super().__init__(
             f"Unable to acquire lock for {resource} within {timeout} seconds",
@@ -397,8 +371,7 @@ class SyncLockException(SynchronizationException):
 
 # Configuration Exceptions
 class ConfigurationException(PlatformAgentBaseException):
-    """Configuration error"""
-    
+    """Configuration error"""    
     def __init__(self, message: str, config_key: Optional[str] = None, **kwargs):
         self.config_key = config_key
         super().__init__(
@@ -416,8 +389,7 @@ class ConfigurationException(PlatformAgentBaseException):
 
 
 class MissingConfigurationException(ConfigurationException):
-    """Required configuration is missing"""
-    
+    """Required configuration is missing"""    
     def __init__(self, config_key: str, **kwargs):
         super().__init__(
             f"Missing required configuration: {config_key}",
@@ -429,8 +401,7 @@ class MissingConfigurationException(ConfigurationException):
 
 # Security Exceptions
 class SecurityException(PlatformAgentBaseException):
-    """Base exception for security-related errors"""
-    
+    """Base exception for security-related errors"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -441,8 +412,7 @@ class SecurityException(PlatformAgentBaseException):
 
 
 class AuthenticationException(SecurityException):
-    """Authentication failed"""
-    
+    """Authentication failed"""    
     def __init__(self, message: str = "Authentication failed", **kwargs):
         super().__init__(
             message,
@@ -455,8 +425,7 @@ class AuthenticationException(SecurityException):
 
 
 class AuthorizationException(SecurityException):
-    """Authorization/permission denied"""
-    
+    """Authorization/permission denied"""    
     def __init__(self, resource: str, action: str, **kwargs):
         self.resource = resource
         self.action = action
@@ -472,8 +441,7 @@ class AuthorizationException(SecurityException):
 
 
 class EncryptionException(SecurityException):
-    """Encryption/decryption error"""
-    
+    """Encryption/decryption error"""    
     def __init__(self, operation: str, **kwargs):
         super().__init__(
             f"Encryption {operation} failed",
@@ -485,8 +453,7 @@ class EncryptionException(SecurityException):
 
 # File Operation Exceptions
 class FileOperationException(PlatformAgentBaseException):
-    """File operation error"""
-    
+    """File operation error"""    
     def __init__(self, message: str, file_path: Optional[str] = None, **kwargs):
         self.file_path = file_path
         super().__init__(
@@ -498,8 +465,7 @@ class FileOperationException(PlatformAgentBaseException):
 
 
 class FileNotFoundException(FileOperationException):
-    """File not found"""
-    
+    """File not found"""    
     def __init__(self, file_path: str, **kwargs):
         super().__init__(
             f"File not found: {file_path}",
@@ -513,8 +479,7 @@ class FileNotFoundException(FileOperationException):
 
 
 class FilePermissionException(FileOperationException):
-    """File permission error"""
-    
+    """File permission error"""    
     def __init__(self, file_path: str, operation: str, **kwargs):
         super().__init__(
             f"Permission denied for {operation} on {file_path}",
@@ -527,8 +492,7 @@ class FilePermissionException(FileOperationException):
 
 # Optimization Exceptions
 class OptimizationException(PlatformAgentBaseException):
-    """Content optimization error"""
-    
+    """Content optimization error"""    
     def __init__(self, message: str, optimization_type: Optional[str] = None, **kwargs):
         self.optimization_type = optimization_type
         super().__init__(
@@ -540,8 +504,7 @@ class OptimizationException(PlatformAgentBaseException):
 
 
 class OptimizationTimeoutException(OptimizationException):
-    """Optimization process timed out"""
-    
+    """Optimization process timed out"""    
     def __init__(self, timeout_seconds: int, **kwargs):
         super().__init__(
             f"Optimization timed out after {timeout_seconds} seconds",
@@ -553,8 +516,7 @@ class OptimizationTimeoutException(OptimizationException):
 
 # Distribution Exceptions
 class DistributionException(PlatformAgentBaseException):
-    """Content distribution error"""
-    
+    """Content distribution error"""    
     def __init__(self, message: str, platforms: Optional[List[str]] = None, **kwargs):
         self.platforms = platforms or []
         super().__init__(
@@ -566,8 +528,7 @@ class DistributionException(PlatformAgentBaseException):
 
 
 class PartialDistributionException(DistributionException):
-    """Content distributed to some platforms but not others"""
-    
+    """Content distributed to some platforms but not others"""    
     def __init__(self, successful_platforms: List[str], failed_platforms: List[str], **kwargs):
         self.successful_platforms = successful_platforms
         self.failed_platforms = failed_platforms
@@ -587,8 +548,7 @@ class PartialDistributionException(DistributionException):
 
 # Network Exceptions
 class NetworkException(PlatformAgentBaseException):
-    """Network-related error"""
-    
+    """Network-related error"""    
     def __init__(self, message: str, **kwargs):
         super().__init__(
             message,
@@ -598,8 +558,7 @@ class NetworkException(PlatformAgentBaseException):
 
 
 class NetworkTimeoutException(NetworkException):
-    """Network request timed out"""
-    
+    """Network request timed out"""    
     def __init__(self, timeout_seconds: int, **kwargs):
         super().__init__(
             f"Network request timed out after {timeout_seconds} seconds",
@@ -613,8 +572,7 @@ class NetworkTimeoutException(NetworkException):
 
 
 class NetworkConnectivityException(NetworkException):
-    """No network connectivity"""
-    
+    """No network connectivity"""    
     def __init__(self, **kwargs):
         super().__init__(
             "No network connectivity",
@@ -671,8 +629,7 @@ EXCEPTION_REGISTRY = {
 
 
 def create_exception_from_dict(error_dict: Dict[str, Any]) -> PlatformAgentBaseException:
-    """Create exception instance from dictionary"""
-    error_code = error_dict.get("error_code", "PlatformAgentBaseException")
+    """Create exception instance from dictionary"""    error_code = error_dict.get("error_code", "PlatformAgentBaseException")
     exception_class = EXCEPTION_REGISTRY.get(error_code, PlatformAgentBaseException)
     
     return exception_class(

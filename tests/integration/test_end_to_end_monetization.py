@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,14 +12,12 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Integration tests for Ainflue Platform
+"""Integration tests for Ainflue Platform
 End-to-end integration tests for the complete platform workflow.
 
 Author: Fahed Mlaiel (mlaiel@live.de)
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import pytest
 import sys
 import os
@@ -37,12 +33,10 @@ from crawlers.youtube_crawler import YouTubeVideoData, YouTubeMonitoringResult
 
 
 class TestEndToEndMonetization:
-    """Integration tests for complete monetization workflow"""
-    
+    """Integration tests for complete monetization workflow"""    
     @pytest.fixture
     async def setup_monetization_system(self):
-        """Setup complete monetization system for testing"""
-        revenue_calculator = RevenueCalculator()
+        """Setup complete monetization system for testing"""        revenue_calculator = RevenueCalculator()
         payment_processor = PaymentProcessor()
         
         # Configure payment processor
@@ -59,8 +53,7 @@ class TestEndToEndMonetization:
     @pytest.mark.integration
     @pytest.mark.slow
     async def test_complete_monetization_workflow(self, setup_monetization_system):
-        """Test complete end-to-end monetization workflow"""
-        system = await setup_monetization_system
+        """Test complete end-to-end monetization workflow"""        system = await setup_monetization_system
         revenue_calculator = system["revenue_calculator"]
         payment_processor = system["payment_processor"]
         
@@ -154,8 +147,7 @@ class TestEndToEndMonetization:
     
     @pytest.mark.integration
     async def test_platform_sync_workflow(self):
-        """Test platform data synchronization workflow"""
-        # Simulate data from multiple platforms
+        """Test platform data synchronization workflow"""        # Simulate data from multiple platforms
         youtube_data = YouTubeVideoData(
             video_id="integration_test_video",
             title="Integration Test Video",
@@ -200,8 +192,7 @@ class TestEndToEndMonetization:
     
     @pytest.mark.integration
     async def test_payment_flow_with_disputes(self, setup_monetization_system):
-        """Test complete payment flow including dispute handling"""
-        system = await setup_monetization_system
+        """Test complete payment flow including dispute handling"""        system = await setup_monetization_system
         payment_processor = system["payment_processor"]
         
         # Step 1: Process initial payment
@@ -252,8 +243,7 @@ class TestEndToEndMonetization:
     
     @pytest.mark.integration
     async def test_multi_currency_collaboration_workflow(self, setup_monetization_system):
-        """Test multi-currency collaboration and revenue sharing"""
-        system = await setup_monetization_system
+        """Test multi-currency collaboration and revenue sharing"""        system = await setup_monetization_system
         payment_processor = system["payment_processor"]
         revenue_calculator = system["revenue_calculator"]
         
@@ -315,8 +305,7 @@ class TestEndToEndMonetization:
     
     @pytest.mark.integration
     async def test_collaboration_workflow_complete(self):
-        """Test complete collaboration workflow from discovery to payment"""
-        # This would integrate collaboration engine when available
+        """Test complete collaboration workflow from discovery to payment"""        # This would integrate collaboration engine when available
         # For now, test the payment aspects of collaboration
         
         payment_processor = PaymentProcessor()
@@ -382,8 +371,7 @@ class TestEndToEndMonetization:
     @pytest.mark.integration
     @pytest.mark.slow
     async def test_revenue_prediction_and_tax_reporting(self, setup_monetization_system):
-        """Test revenue prediction and tax reporting integration"""
-        system = await setup_monetization_system
+        """Test revenue prediction and tax reporting integration"""        system = await setup_monetization_system
         revenue_calculator = system["revenue_calculator"]
         payment_processor = system["payment_processor"]
         
@@ -459,8 +447,7 @@ class TestEndToEndMonetization:
     
     @pytest.mark.integration
     async def test_error_recovery_and_resilience(self, setup_monetization_system):
-        """Test system error recovery and resilience"""
-        system = await setup_monetization_system
+        """Test system error recovery and resilience"""        system = await setup_monetization_system
         payment_processor = system["payment_processor"]
         
         # Test 1: Failed payment recovery

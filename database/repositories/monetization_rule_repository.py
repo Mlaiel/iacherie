@@ -1,5 +1,4 @@
-"""
-Monetization Rule Repository Module
+"""Monetization Rule Repository Module
 
 Enterprise-grade repository for monetization rule management with intelligent
 revenue optimization, automated rule execution, and comprehensive analytics.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from typing import List, Optional, Dict, Any, Union
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, func, desc, asc
@@ -46,14 +44,11 @@ import logging
 logger = logging.getLogger(__name__)
 
 class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
-    """
-    Repository for monetization rule operations with intelligent revenue optimization,
+    """    Repository for monetization rule operations with intelligent revenue optimization,
     automated execution, performance analytics, and dynamic rule adaptation.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize monetization rule repository"""
-        super().__init__(db_session, MonetizationRule)
+        """Initialize monetization rule repository"""        super().__init__(db_session, MonetizationRule)
         
     def create_rule(self,
                    user_id: int,
@@ -67,8 +62,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                    description: Optional[str] = None,
                    constraints: Optional[Dict[str, Any]] = None,
                    metadata: Optional[Dict[str, Any]] = None) -> MonetizationRule:
-        """
-        Create monetization rule with validation and optimization analysis
+        """        Create monetization rule with validation and optimization analysis
         
         Args:
             user_id: Rule owner user ID
@@ -85,8 +79,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             
         Returns:
             Created MonetizationRule instance
-        """
-        try:
+        """        try:
             # Validate priority range
             if not (1 <= priority <= 100):
                 raise RepositoryException("Priority must be between 1 and 100")
@@ -143,8 +136,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _validate_trigger_conditions(self,
                                    conditions: Dict[str, Any],
                                    trigger_type: TriggerType) -> None:
-        """
-        Validate trigger conditions based on trigger type
+        """        Validate trigger conditions based on trigger type
         
         Args:
             conditions: Trigger conditions to validate
@@ -152,8 +144,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             
         Raises:
             RepositoryException: If conditions are invalid
-        """
-        required_fields = {
+        """        required_fields = {
             TriggerType.REVENUE_THRESHOLD: ['threshold_amount', 'operator'],
             TriggerType.VIEW_COUNT: ['view_count', 'operator'],
             TriggerType.TIME_BASED: ['schedule'],
@@ -174,16 +165,14 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                 raise RepositoryException(f"Invalid operator: {conditions['operator']}")
                 
     def _validate_rule_actions(self, actions: List[Dict[str, Any]]) -> None:
-        """
-        Validate rule actions
+        """        Validate rule actions
         
         Args:
             actions: List of actions to validate
             
         Raises:
             RepositoryException: If actions are invalid
-        """
-        if not actions:
+        """        if not actions:
             raise RepositoryException("At least one action is required")
         
         valid_action_types = [action.value for action in ActionType]
@@ -204,8 +193,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                             user_id: int,
                             trigger_conditions: Dict[str, Any],
                             priority: int) -> List[MonetizationRule]:
-        """
-        Check for potentially conflicting rules
+        """        Check for potentially conflicting rules
         
         Args:
             user_id: User ID
@@ -214,8 +202,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             
         Returns:
             List of potentially conflicting rules
-        """
-        try:
+        """        try:
             # Find rules with similar triggers and higher or equal priority
             existing_rules = self.db_session.query(MonetizationRule).filter(
                 and_(
@@ -241,8 +228,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _conditions_overlap(self,
                           conditions1: Dict[str, Any],
                           conditions2: Dict[str, Any]) -> bool:
-        """
-        Check if two trigger conditions overlap
+        """        Check if two trigger conditions overlap
         
         Args:
             conditions1: First set of conditions
@@ -250,8 +236,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             
         Returns:
             True if conditions overlap, False otherwise
-        """
-        # Simple overlap detection - check for common keys with similar values
+        """        # Simple overlap detection - check for common keys with similar values
         common_keys = set(conditions1.keys()) & set(conditions2.keys())
         
         for key in common_keys:
@@ -267,8 +252,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
         return False
         
     def _generate_rule_reference(self, rule_type: RuleType, created_at: datetime) -> str:
-        """
-        Generate unique rule reference
+        """        Generate unique rule reference
         
         Args:
             rule_type: Type of rule
@@ -276,8 +260,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             
         Returns:
             Rule reference string
-        """
-        type_code = rule_type.value[:3].upper()
+        """        type_code = rule_type.value[:3].upper()
         date_code = created_at.strftime("%Y%m")
         sequence = self.db_session.query(func.count(MonetizationRule.id)).filter(
             func.extract('year', MonetizationRule.created_at) == created_at.year,
@@ -292,8 +275,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                       status: Optional[RuleStatus] = None,
                       optimization_goal: Optional[OptimizationGoal] = None,
                       active_only: bool = False) -> List[MonetizationRule]:
-        """
-        Get monetization rules for a user with filtering
+        """        Get monetization rules for a user with filtering
         
         Args:
             user_id: User ID
@@ -304,8 +286,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             
         Returns:
             List of MonetizationRule instances
-        """
-        try:
+        """        try:
             query = self.db_session.query(MonetizationRule).filter(
                 MonetizationRule.user_id == user_id
             )
@@ -339,8 +320,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def execute_rule(self,
                     rule_id: int,
                     execution_context: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        Execute a monetization rule and track results
+        """        Execute a monetization rule and track results
         
         Args:
             rule_id: Rule ID to execute
@@ -348,8 +328,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             
         Returns:
             Execution result dictionary
-        """
-        try:
+        """        try:
             rule = self.get_by_id(rule_id)
             if not rule:
                 return {'success': False, 'error': 'Rule not found'}
@@ -411,8 +390,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _evaluate_trigger_conditions(self,
                                    conditions: Dict[str, Any],
                                    context: Dict[str, Any]) -> bool:
-        """
-        Evaluate if trigger conditions are met
+        """        Evaluate if trigger conditions are met
         
         Args:
             conditions: Rule trigger conditions
@@ -420,8 +398,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             
         Returns:
             True if conditions are met, False otherwise
-        """
-        try:
+        """        try:
             # Revenue threshold check
             if 'threshold_amount' in conditions:
                 threshold = Decimal(str(conditions['threshold_amount']))
@@ -475,8 +452,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                        action: Dict[str, Any],
                        context: Dict[str, Any],
                        rule: MonetizationRule) -> Dict[str, Any]:
-        """
-        Execute a single rule action
+        """        Execute a single rule action
         
         Args:
             action: Action configuration
@@ -485,8 +461,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             
         Returns:
             Action execution result
-        """
-        try:
+        """        try:
             action_type = action['type']
             
             if action_type == ActionType.ADJUST_PRICING.value:
@@ -516,8 +491,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _execute_pricing_adjustment(self,
                                   action: Dict[str, Any],
                                   context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute pricing adjustment action"""
-        try:
+        """Execute pricing adjustment action"""        try:
             adjustment_percentage = action.get('adjustment_percentage', 0)
             target_content = context.get('content_id')
             
@@ -538,8 +512,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _execute_tag_update(self,
                           action: Dict[str, Any],
                           context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute tag update action"""
-        try:
+        """Execute tag update action"""        try:
             new_tags = action.get('tags', [])
             target_content = context.get('content_id')
             
@@ -561,8 +534,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
                                  action: Dict[str, Any],
                                  context: Dict[str, Any],
                                  rule: MonetizationRule) -> Dict[str, Any]:
-        """Execute user notification action"""
-        try:
+        """Execute user notification action"""        try:
             message_template = action.get('message', 'Monetization rule triggered')
             notification_type = action.get('notification_type', 'info')
             
@@ -584,8 +556,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _execute_content_distribution(self,
                                     action: Dict[str, Any],
                                     context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute content distribution action"""
-        try:
+        """Execute content distribution action"""        try:
             target_platforms = action.get('platforms', [])
             content_id = context.get('content_id')
             
@@ -606,8 +577,7 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
     def _execute_analytics_trigger(self,
                                  action: Dict[str, Any],
                                  context: Dict[str, Any]) -> Dict[str, Any]:
-        """Execute analytics trigger action"""
-        try:
+        """Execute analytics trigger action"""        try:
             analytics_type = action.get('analytics_type', 'performance_report')
             
             # In production, this would trigger analytics generation
@@ -625,14 +595,12 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             return {'success': False, 'error': str(e)}
             
     def _update_execution_stats(self, rule_id: int, success: bool) -> None:
-        """
-        Update rule execution statistics
+        """        Update rule execution statistics
         
         Args:
             rule_id: Rule ID
             success: Whether execution was successful
-        """
-        try:
+        """        try:
             rule = self.get_by_id(rule_id)
             if not rule:
                 return
@@ -652,16 +620,14 @@ class MonetizationRuleRepository(BaseRepository[MonetizationRule]):
             self.logger.error(f"Failed to update execution stats: {str(e)}")
             
     def get_rule_performance(self, rule_id: int) -> Dict[str, Any]:
-        """
-        Get comprehensive rule performance metrics
+        """        Get comprehensive rule performance metrics
         
         Args:
             rule_id: Rule ID to analyze
             
         Returns:
             Performance metrics dictionary
-        """
-        try:
+        """        try:
             rule = self.get_by_id(rule_id)
             if not rule:
                 return {'error': 'Rule not found'}

@@ -1,5 +1,4 @@
-"""
-📄 Document Processor - IA Influencer Agent Platform Enterprise
+"""📄 Document Processor - IA Influencer Agent Platform Enterprise
 ===============================================================
 Module: backend/data_management/processors/document_processor.py
 Author: Fahed Mlaiel (mlaiel@live.de)
@@ -17,7 +16,6 @@ LOGIQUE MÉTIER DOCUMENT PROCESSOR:
 Document Upload → Format Detection → Text Extraction → NLP Analysis → 
 Content Classification → Sentiment Analysis → SEO Analysis → Protection Fingerprinting
 """
-
 import os
 import re
 import hashlib
@@ -56,8 +54,7 @@ from .base_processor import BaseProcessor, AsyncBaseProcessor
 
 
 class DocumentProcessor(BaseProcessor):
-    """Processeur avancé pour documents - Production Enterprise"""
-    
+    """Processeur avancé pour documents - Production Enterprise"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.supported_formats = {
@@ -82,8 +79,7 @@ class DocumentProcessor(BaseProcessor):
         self.logger = logging.getLogger(__name__)
     
     def _init_nlp_models(self):
-        """Initialize NLP models and tools"""
-        try:
+        """Initialize NLP models and tools"""        try:
             # Load spaCy model for advanced NLP
             self.nlp = spacy.load("en_core_web_sm")
             
@@ -119,8 +115,7 @@ class DocumentProcessor(BaseProcessor):
             self.grammar_tool = None
     
     def validate_input(self, input_data: Any) -> bool:
-        """Valide les données document d'entrée"""
-        if isinstance(input_data, str):
+        """Valide les données document d'entrée"""        if isinstance(input_data, str):
             # File path validation
             path = Path(input_data)
             return (path.exists() and 
@@ -139,8 +134,7 @@ class DocumentProcessor(BaseProcessor):
         return False
     
     def process(self, input_data: Any) -> Dict[str, Any]:
-        """Traite un document complètement"""
-        try:
+        """Traite un document complètement"""        try:
             # Extract text content
             text_content = self._extract_text(input_data)
             
@@ -195,8 +189,7 @@ class DocumentProcessor(BaseProcessor):
             }
     
     def _extract_text(self, input_data: Any) -> str:
-        """Extrait le texte du document"""
-        if isinstance(input_data, str):
+        """Extrait le texte du document"""        if isinstance(input_data, str):
             # File path
             return self._extract_text_from_file(input_data)
         elif isinstance(input_data, bytes):
@@ -218,8 +211,7 @@ class DocumentProcessor(BaseProcessor):
         return str(input_data)
     
     def _extract_text_from_file(self, file_path: str) -> str:
-        """Extrait le texte selon le format de fichier"""
-        path = Path(file_path)
+        """Extrait le texte selon le format de fichier"""        path = Path(file_path)
         extension = path.suffix.upper()
         
         try:
@@ -250,8 +242,7 @@ class DocumentProcessor(BaseProcessor):
                 return ""
     
     def _extract_pdf_text(self, file_path: str) -> str:
-        """Extrait le texte d'un PDF"""
-        text = ""
+        """Extrait le texte d'un PDF"""        text = ""
         try:
             with open(file_path, 'rb') as file:
                 pdf_reader = PyPDF2.PdfReader(file)
@@ -263,8 +254,7 @@ class DocumentProcessor(BaseProcessor):
         return text
     
     def _extract_docx_text(self, file_path: str) -> str:
-        """Extrait le texte d'un DOCX"""
-        try:
+        """Extrait le texte d'un DOCX"""        try:
             doc = docx.Document(file_path)
             text = "\n".join([paragraph.text for paragraph in doc.paragraphs])
             return text
@@ -273,8 +263,7 @@ class DocumentProcessor(BaseProcessor):
             return ""
     
     def _extract_excel_text(self, file_path: str) -> str:
-        """Extrait le texte d'un Excel"""
-        try:
+        """Extrait le texte d'un Excel"""        try:
             workbook = openpyxl.load_workbook(file_path)
             text = ""
             for sheet_name in workbook.sheetnames:
@@ -288,8 +277,7 @@ class DocumentProcessor(BaseProcessor):
             return ""
     
     def _extract_html_text(self, file_path: str) -> str:
-        """Extrait le texte d'un HTML"""
-        try:
+        """Extrait le texte d'un HTML"""        try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 soup = BeautifulSoup(f.read(), 'html.parser')
                 return soup.get_text()
@@ -298,8 +286,7 @@ class DocumentProcessor(BaseProcessor):
             return ""
     
     def _extract_markdown_text(self, file_path: str) -> str:
-        """Extrait le texte d'un Markdown"""
-        try:
+        """Extrait le texte d'un Markdown"""        try:
             with open(file_path, 'r', encoding='utf-8', errors='ignore') as f:
                 md_content = f.read()
                 # Convert to HTML then extract text
@@ -311,8 +298,7 @@ class DocumentProcessor(BaseProcessor):
             return ""
     
     def _extract_metadata(self, input_data: Any, text_content: str) -> Dict[str, Any]:
-        """Extrait les métadonnées du document"""
-        metadata = {
+        """Extrait les métadonnées du document"""        metadata = {
             "text_length": len(text_content),
             "word_count": len(text_content.split()),
             "character_count": len(text_content),
@@ -335,8 +321,7 @@ class DocumentProcessor(BaseProcessor):
         return metadata
     
     def _analyze_text(self, text_content: str) -> Dict[str, Any]:
-        """Analyse complète du texte"""
-        analysis = {
+        """Analyse complète du texte"""        analysis = {
             "basic_stats": self._get_basic_text_stats(text_content),
             "linguistic_features": self._analyze_linguistic_features(text_content),
             "sentiment_analysis": self._analyze_sentiment(text_content),
@@ -348,8 +333,7 @@ class DocumentProcessor(BaseProcessor):
         return analysis
     
     def _get_basic_text_stats(self, text: str) -> Dict[str, Any]:
-        """Statistiques textuelles de base"""
-        words = text.split()
+        """Statistiques textuelles de base"""        words = text.split()
         sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         
@@ -372,8 +356,7 @@ class DocumentProcessor(BaseProcessor):
         }
     
     def _analyze_linguistic_features(self, text: str) -> Dict[str, Any]:
-        """Analyse des caractéristiques linguistiques"""
-        if not self.nlp:
+        """Analyse des caractéristiques linguistiques"""        if not self.nlp:
             return {"error": "NLP model not available"}
         
         # Process with spaCy
@@ -392,8 +375,7 @@ class DocumentProcessor(BaseProcessor):
         }
     
     def _analyze_sentiment(self, text: str) -> Dict[str, Any]:
-        """Analyse du sentiment"""
-        sentiment_results = {}
+        """Analyse du sentiment"""        sentiment_results = {}
         
         # TextBlob sentiment
         blob = TextBlob(text)
@@ -427,8 +409,7 @@ class DocumentProcessor(BaseProcessor):
         return sentiment_results
     
     def _extract_named_entities(self, text: str) -> List[Dict[str, Any]]:
-        """Extraction d'entités nommées"""
-        if not self.nlp:
+        """Extraction d'entités nommées"""        if not self.nlp:
             return []
         
         doc = self.nlp(text[:1000000])
@@ -446,8 +427,7 @@ class DocumentProcessor(BaseProcessor):
         return entities
     
     def _extract_keywords(self, text: str) -> List[Dict[str, Any]]:
-        """Extraction de mots-clés"""
-        if not self.nlp:
+        """Extraction de mots-clés"""        if not self.nlp:
             return []
         
         doc = self.nlp(text[:1000000])
@@ -470,8 +450,7 @@ class DocumentProcessor(BaseProcessor):
         ]
     
     def _extract_topics(self, text: str) -> List[Dict[str, Any]]:
-        """Extraction de sujets/thèmes"""
-        if not self.text_classifier:
+        """Extraction de sujets/thèmes"""        if not self.text_classifier:
             return []
         
         # Predefined topic candidates
@@ -501,8 +480,7 @@ class DocumentProcessor(BaseProcessor):
             return []
     
     def _classify_content(self, text: str) -> Dict[str, Any]:
-        """Classification du contenu"""
-        classification = {
+        """Classification du contenu"""        classification = {
             "content_type": self._determine_content_type(text),
             "writing_style": self._analyze_writing_style(text),
             "target_audience": self._determine_target_audience(text),
@@ -512,8 +490,7 @@ class DocumentProcessor(BaseProcessor):
         return classification
     
     def _analyze_seo(self, text: str) -> Dict[str, Any]:
-        """Analyse SEO du contenu"""
-        words = text.split()
+        """Analyse SEO du contenu"""        words = text.split()
         
         # Basic SEO metrics
         seo_analysis = {
@@ -529,8 +506,7 @@ class DocumentProcessor(BaseProcessor):
         return seo_analysis
     
     def _security_analysis(self, text: str) -> Dict[str, Any]:
-        """Analyse de sécurité du contenu"""
-        security_issues = []
+        """Analyse de sécurité du contenu"""        security_issues = []
         
         # Check for sensitive information patterns
         patterns = {
@@ -558,8 +534,7 @@ class DocumentProcessor(BaseProcessor):
         }
     
     def _generate_fingerprints(self, text: str) -> Dict[str, Any]:
-        """Génère des empreintes du texte"""
-        # Text hashes
+        """Génère des empreintes du texte"""        # Text hashes
         md5_hash = hashlib.md5(text.encode()).hexdigest()
         sha256_hash = hashlib.sha256(text.encode()).hexdigest()
         
@@ -587,8 +562,7 @@ class DocumentProcessor(BaseProcessor):
         }
     
     def _analyze_readability(self, text: str) -> Dict[str, Any]:
-        """Analyse de lisibilité"""
-        return {
+        """Analyse de lisibilité"""        return {
             "flesch_kincaid_grade": self._calculate_flesch_kincaid(text),
             "flesch_reading_ease": self._calculate_flesch_reading_ease(text),
             "automated_readability_index": self._calculate_ari(text),
@@ -597,8 +571,7 @@ class DocumentProcessor(BaseProcessor):
         }
     
     def _assess_quality(self, text: str, text_analysis: Dict[str, Any]) -> Dict[str, Any]:
-        """Évaluation de la qualité du contenu"""
-        quality_scores = {
+        """Évaluation de la qualité du contenu"""        quality_scores = {
             "grammar_score": self._check_grammar(text),
             "coherence_score": self._assess_coherence(text),
             "completeness_score": self._assess_completeness(text),
@@ -618,16 +591,14 @@ class DocumentProcessor(BaseProcessor):
     
     # Utility methods
     def _detect_language(self, text: str) -> str:
-        """Détecte la langue du texte"""
-        try:
+        """Détecte la langue du texte"""        try:
             from langdetect import detect
             return detect(text)
         except:
             return "unknown"
     
     def _calculate_sentence_complexity(self, doc) -> float:
-        """Calcule la complexité des phrases"""
-        if not doc.sents:
+        """Calcule la complexité des phrases"""        if not doc.sents:
             return 0.0
         
         complexities = []
@@ -640,8 +611,7 @@ class DocumentProcessor(BaseProcessor):
         return sum(complexities) / len(complexities)
     
     def _detect_passive_voice(self, doc) -> float:
-        """Détecte le pourcentage de voix passive"""
-        passive_count = 0
+        """Détecte le pourcentage de voix passive"""        passive_count = 0
         total_sentences = 0
         
         for sent in doc.sents:
@@ -655,8 +625,7 @@ class DocumentProcessor(BaseProcessor):
         return (passive_count / total_sentences * 100) if total_sentences > 0 else 0
     
     def _determine_content_type(self, text: str) -> str:
-        """Détermine le type de contenu"""
-        # Simple heuristics based on text characteristics
+        """Détermine le type de contenu"""        # Simple heuristics based on text characteristics
         if len(text.split()) < 100:
             return "short_form"
         elif re.search(r'\n\s*[-*+]\s+', text):  # List patterns
@@ -671,8 +640,7 @@ class DocumentProcessor(BaseProcessor):
             return "general_article"
     
     def _analyze_writing_style(self, text: str) -> Dict[str, Any]:
-        """Analyse le style d'écriture"""
-        sentences = re.split(r'[.!?]+', text)
+        """Analyse le style d'écriture"""        sentences = re.split(r'[.!?]+', text)
         avg_sentence_length = sum(len(s.split()) for s in sentences) / len(sentences) if sentences else 0
         
         # Determine writing style
@@ -691,8 +659,7 @@ class DocumentProcessor(BaseProcessor):
         }
     
     def _determine_target_audience(self, text: str) -> str:
-        """Détermine l'audience cible"""
-        readability_score = self._calculate_flesch_kincaid(text)
+        """Détermine l'audience cible"""        readability_score = self._calculate_flesch_kincaid(text)
         
         if readability_score < 6:
             return "general_public"
@@ -704,8 +671,7 @@ class DocumentProcessor(BaseProcessor):
             return "expert_professional"
     
     def _determine_content_purpose(self, text: str) -> str:
-        """Détermine l'objectif du contenu"""
-        # Simple keyword-based classification
+        """Détermine l'objectif du contenu"""        # Simple keyword-based classification
         if re.search(r'\b(buy|purchase|order|sale|discount)\b', text, re.IGNORECASE):
             return "commercial"
         elif re.search(r'\b(learn|education|tutorial|guide)\b', text, re.IGNORECASE):
@@ -718,8 +684,7 @@ class DocumentProcessor(BaseProcessor):
             return "general"
     
     def _get_seo_word_count_recommendation(self, text: str) -> Dict[str, Any]:
-        """Recommandations de nombre de mots pour SEO"""
-        word_count = len(text.split())
+        """Recommandations de nombre de mots pour SEO"""        word_count = len(text.split())
         
         if word_count < 300:
             return {"status": "too_short", "recommendation": "Aim for 300+ words for better SEO"}
@@ -731,8 +696,7 @@ class DocumentProcessor(BaseProcessor):
             return {"status": "very_long", "recommendation": "Consider breaking into multiple articles"}
     
     def _calculate_keyword_density(self, text: str) -> Dict[str, Any]:
-        """Calcule la densité des mots-clés"""
-        words = text.lower().split()
+        """Calcule la densité des mots-clés"""        words = text.lower().split()
         word_counts = Counter(words)
         total_words = len(words)
         
@@ -746,13 +710,11 @@ class DocumentProcessor(BaseProcessor):
         return densities
     
     def _calculate_readability_score(self, text: str) -> float:
-        """Calcule un score de lisibilité composite"""
-        flesch_ease = self._calculate_flesch_reading_ease(text)
+        """Calcule un score de lisibilité composite"""        flesch_ease = self._calculate_flesch_reading_ease(text)
         return flesch_ease / 100  # Normalize to 0-1
     
     def _analyze_heading_structure(self, text: str) -> Dict[str, Any]:
-        """Analyse la structure des titres"""
-        # Look for markdown or HTML headings
+        """Analyse la structure des titres"""        # Look for markdown or HTML headings
         h1_count = len(re.findall(r'^#\s+', text, re.MULTILINE))
         h2_count = len(re.findall(r'^##\s+', text, re.MULTILINE))
         h3_count = len(re.findall(r'^###\s+', text, re.MULTILINE))
@@ -766,8 +728,7 @@ class DocumentProcessor(BaseProcessor):
         }
     
     def _calculate_content_quality_score(self, text: str) -> float:
-        """Calcule un score de qualité du contenu"""
-        # Composite score based on multiple factors
+        """Calcule un score de qualité du contenu"""        # Composite score based on multiple factors
         word_count = len(text.split())
         unique_words = len(set(word.lower() for word in text.split()))
         
@@ -783,8 +744,7 @@ class DocumentProcessor(BaseProcessor):
         return length_score + diversity_score + readability_score
     
     def _generate_seo_recommendations(self, text: str) -> List[str]:
-        """Génère des recommandations SEO"""
-        recommendations = []
+        """Génère des recommandations SEO"""        recommendations = []
         
         word_count = len(text.split())
         if word_count < 300:
@@ -809,8 +769,7 @@ class DocumentProcessor(BaseProcessor):
         return recommendations
     
     def _calculate_privacy_risk(self, security_issues: List[Dict]) -> float:
-        """Calcule le risque de confidentialité"""
-        if not security_issues:
+        """Calcule le risque de confidentialité"""        if not security_issues:
             return 0.0
         
         risk_weights = {"ssn": 1.0, "credit_card": 1.0, "email": 0.3, "phone": 0.5, "ip_address": 0.2}
@@ -819,20 +778,17 @@ class DocumentProcessor(BaseProcessor):
         return min(total_risk / 10, 1.0)  # Normalize to 0-1
     
     def _assess_content_safety(self, text: str) -> float:
-        """Évalue la sécurité du contenu"""
-        # Basic content safety assessment
+        """Évalue la sécurité du contenu"""        # Basic content safety assessment
         # In production, this would use specialized content moderation APIs
         return 0.95  # Placeholder
     
     def _detect_profanity(self, text: str) -> bool:
-        """Détecte la profanité"""
-        # Basic profanity detection
+        """Détecte la profanité"""        # Basic profanity detection
         # In production, use specialized libraries like better-profanity
         return False  # Placeholder
     
     def _generate_ngram_fingerprints(self, text: str) -> Dict[str, List[str]]:
-        """Génère des empreintes n-grammes"""
-        words = text.lower().split()
+        """Génère des empreintes n-grammes"""        words = text.lower().split()
         
         # Generate 2-grams and 3-grams
         bigrams = [f"{words[i]}_{words[i+1]}" for i in range(len(words)-1)]
@@ -844,8 +800,7 @@ class DocumentProcessor(BaseProcessor):
         }
     
     def _calculate_flesch_kincaid(self, text: str) -> float:
-        """Calcule le grade Flesch-Kincaid"""
-        sentences = re.split(r'[.!?]+', text)
+        """Calcule le grade Flesch-Kincaid"""        sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         
         words = text.split()
@@ -857,8 +812,7 @@ class DocumentProcessor(BaseProcessor):
         return 0.39 * (len(words) / len(sentences)) + 11.8 * (syllables / len(words)) - 15.59
     
     def _calculate_flesch_reading_ease(self, text: str) -> float:
-        """Calcule la facilité de lecture Flesch"""
-        sentences = re.split(r'[.!?]+', text)
+        """Calcule la facilité de lecture Flesch"""        sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         
         words = text.split()
@@ -870,8 +824,7 @@ class DocumentProcessor(BaseProcessor):
         return 206.835 - 1.015 * (len(words) / len(sentences)) - 84.6 * (syllables / len(words))
     
     def _calculate_ari(self, text: str) -> float:
-        """Calcule l'Automated Readability Index"""
-        sentences = re.split(r'[.!?]+', text)
+        """Calcule l'Automated Readability Index"""        sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         
         words = text.split()
@@ -883,8 +836,7 @@ class DocumentProcessor(BaseProcessor):
         return 4.71 * (characters / len(words)) + 0.5 * (len(words) / len(sentences)) - 21.43
     
     def _calculate_gunning_fog(self, text: str) -> float:
-        """Calcule l'indice Gunning Fog"""
-        sentences = re.split(r'[.!?]+', text)
+        """Calcule l'indice Gunning Fog"""        sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         
         words = text.split()
@@ -896,8 +848,7 @@ class DocumentProcessor(BaseProcessor):
         return 0.4 * ((len(words) / len(sentences)) + 100 * (len(complex_words) / len(words)))
     
     def _get_readability_rating(self, text: str) -> str:
-        """Obtient une évaluation de lisibilité"""
-        flesch_ease = self._calculate_flesch_reading_ease(text)
+        """Obtient une évaluation de lisibilité"""        flesch_ease = self._calculate_flesch_reading_ease(text)
         
         if flesch_ease >= 90:
             return "very_easy"
@@ -915,8 +866,7 @@ class DocumentProcessor(BaseProcessor):
             return "very_difficult"
     
     def _count_syllables(self, word: str) -> int:
-        """Compte les syllabes dans un mot"""
-        word = word.lower()
+        """Compte les syllabes dans un mot"""        word = word.lower()
         vowels = "aeiouy"
         syllable_count = 0
         previous_was_vowel = False
@@ -935,8 +885,7 @@ class DocumentProcessor(BaseProcessor):
         return max(1, syllable_count)
     
     def _check_grammar(self, text: str) -> float:
-        """Vérifie la grammaire"""
-        if not self.grammar_tool:
+        """Vérifie la grammaire"""        if not self.grammar_tool:
             return 0.8  # Default score
         
         try:
@@ -953,8 +902,7 @@ class DocumentProcessor(BaseProcessor):
             return 0.8  # Default score on error
     
     def _assess_coherence(self, text: str) -> float:
-        """Évalue la cohérence du texte"""
-        # Simple coherence assessment based on sentence transitions
+        """Évalue la cohérence du texte"""        # Simple coherence assessment based on sentence transitions
         sentences = re.split(r'[.!?]+', text)
         sentences = [s.strip() for s in sentences if s.strip()]
         
@@ -975,8 +923,7 @@ class DocumentProcessor(BaseProcessor):
         return coherence_score
     
     def _assess_completeness(self, text: str) -> float:
-        """Évalue la complétude du contenu"""
-        # Basic completeness assessment
+        """Évalue la complétude du contenu"""        # Basic completeness assessment
         word_count = len(text.split())
         
         # Check for conclusion indicators
@@ -990,14 +937,12 @@ class DocumentProcessor(BaseProcessor):
         return length_score + structure_score
     
     def _assess_originality(self, text: str) -> float:
-        """Évalue l'originalité du contenu"""
-        # Basic originality assessment
+        """Évalue l'originalité du contenu"""        # Basic originality assessment
         # In production, this would check against databases of existing content
         return 0.85  # Placeholder score
     
     def _assess_engagement_potential(self, text: str) -> float:
-        """Évalue le potentiel d'engagement"""
-        # Look for engaging elements
+        """Évalue le potentiel d'engagement"""        # Look for engaging elements
         engaging_elements = [
             r'\?',  # Questions
             r'!',   # Exclamations
@@ -1015,8 +960,7 @@ class DocumentProcessor(BaseProcessor):
         return engagement_score
     
     def _get_quality_rating(self, score: float) -> str:
-        """Convertit le score en rating de qualité"""
-        if score >= 0.9:
+        """Convertit le score en rating de qualité"""        if score >= 0.9:
             return "excellent"
         elif score >= 0.7:
             return "good"
@@ -1028,8 +972,7 @@ class DocumentProcessor(BaseProcessor):
             return "very_poor"
     
     def _generate_improvement_suggestions(self, quality_scores: Dict, text_analysis: Dict) -> List[str]:
-        """Génère des suggestions d'amélioration"""
-        suggestions = []
+        """Génère des suggestions d'amélioration"""        suggestions = []
         
         if quality_scores["grammar_score"] < 0.7:
             suggestions.append("Improve grammar and spelling")
@@ -1046,8 +989,7 @@ class DocumentProcessor(BaseProcessor):
         return suggestions
     
     def _assess_formality(self, text: str) -> str:
-        """Évalue le niveau de formalité"""
-        informal_indicators = ['gonna', 'wanna', 'kinda', 'sorta', "don't", "can't", "won't"]
+        """Évalue le niveau de formalité"""        informal_indicators = ['gonna', 'wanna', 'kinda', 'sorta', "don't", "can't", "won't"]
         formal_indicators = ['therefore', 'furthermore', 'consequently', 'nevertheless']
         
         informal_count = sum(text.lower().count(word) for word in informal_indicators)
@@ -1061,8 +1003,7 @@ class DocumentProcessor(BaseProcessor):
             return "neutral"
     
     def _assess_tone(self, text: str) -> str:
-        """Évalue le ton du texte"""
-        positive_words = ['excellent', 'amazing', 'great', 'wonderful', 'fantastic']
+        """Évalue le ton du texte"""        positive_words = ['excellent', 'amazing', 'great', 'wonderful', 'fantastic']
         negative_words = ['terrible', 'awful', 'horrible', 'bad', 'disappointing']
         
         positive_count = sum(text.lower().count(word) for word in positive_words)
@@ -1076,8 +1017,7 @@ class DocumentProcessor(BaseProcessor):
             return "neutral"
     
     def _generate_heading_recommendations(self, h1: int, h2: int, h3: int) -> List[str]:
-        """Génère des recommandations pour les titres"""
-        recommendations = []
+        """Génère des recommandations pour les titres"""        recommendations = []
         
         if h1 == 0:
             recommendations.append("Add a main heading (H1)")
@@ -1094,16 +1034,14 @@ class DocumentProcessor(BaseProcessor):
 
 
 class AsyncDocumentProcessor(AsyncBaseProcessor):
-    """Version asynchrone du processeur de documents"""
-    
+    """Version asynchrone du processeur de documents"""    
     def __init__(self, config: Dict[str, Any] = None):
         super().__init__(config)
         self.sync_processor = DocumentProcessor(config)
         self.executor = ThreadPoolExecutor(max_workers=4)
     
     async def validate_input(self, input_data: Any) -> bool:
-        """Version asynchrone de la validation"""
-        loop = asyncio.get_event_loop()
+        """Version asynchrone de la validation"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.validate_input, 
@@ -1111,8 +1049,7 @@ class AsyncDocumentProcessor(AsyncBaseProcessor):
         )
     
     async def process(self, input_data: Any) -> Dict[str, Any]:
-        """Version asynchrone du traitement"""
-        loop = asyncio.get_event_loop()
+        """Version asynchrone du traitement"""        loop = asyncio.get_event_loop()
         return await loop.run_in_executor(
             self.executor, 
             self.sync_processor.process, 
@@ -1120,6 +1057,5 @@ class AsyncDocumentProcessor(AsyncBaseProcessor):
         )
     
     async def process_batch(self, input_batch: List[Any]) -> List[Dict[str, Any]]:
-        """Traitement en lot asynchrone"""
-        tasks = [self.process(item) for item in input_batch]
+        """Traitement en lot asynchrone"""        tasks = [self.process(item) for item in input_batch]
         return await asyncio.gather(*tasks, return_exceptions=True)

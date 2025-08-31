@@ -1,5 +1,4 @@
-"""
-Collaboration Intent Management
+"""Collaboration Intent Management
 
 Specialized intent management for creative collaboration, team workflow,
 and permission-based operations in multi-creator environments.
@@ -13,7 +12,6 @@ Any unauthorized use, reproduction, or distribution without explicit written
 permission is strictly prohibited and will be prosecuted to the full extent of the law.
 Contact: mlaiel@live.de
 """
-
 from typing import Dict, List, Optional, Any, Union, Tuple
 from dataclasses import dataclass, field
 from enum import Enum
@@ -29,8 +27,7 @@ logger = logging.getLogger(__name__)
 
 
 class CollaborationType(Enum):
-    """Types of creative collaboration"""
-    MUSIC_COLLABORATION = "music_collaboration"
+    """Types of creative collaboration"""    MUSIC_COLLABORATION = "music_collaboration"
     VIDEO_COLLABORATION = "video_collaboration"
     PHOTO_COLLABORATION = "photo_collaboration"
     CONTENT_COLLABORATION = "content_collaboration"
@@ -45,8 +42,7 @@ class CollaborationType(Enum):
 
 
 class CollaborationStage(Enum):
-    """Stages of collaboration process"""
-    DISCOVERY = "discovery"
+    """Stages of collaboration process"""    DISCOVERY = "discovery"
     INITIAL_CONTACT = "initial_contact"
     NEGOTIATION = "negotiation"
     PLANNING = "planning"
@@ -58,8 +54,7 @@ class CollaborationStage(Enum):
 
 
 class PermissionLevel(Enum):
-    """Permission levels for collaborative work"""
-    VIEW_ONLY = "view_only"
+    """Permission levels for collaborative work"""    VIEW_ONLY = "view_only"
     COMMENT = "comment"
     EDIT = "edit"
     ADMIN = "admin"
@@ -67,8 +62,7 @@ class PermissionLevel(Enum):
 
 
 class WorkflowRole(Enum):
-    """Roles in creative workflow"""
-    CREATOR = "creator"
+    """Roles in creative workflow"""    CREATOR = "creator"
     COLLABORATOR = "collaborator"
     REVIEWER = "reviewer"
     APPROVER = "approver"
@@ -79,8 +73,7 @@ class WorkflowRole(Enum):
 
 @dataclass
 class CollaborationOpportunity:
-    """Collaboration opportunity specification"""
-    
+    """Collaboration opportunity specification"""    
     opportunity_type: CollaborationType
     title: str
     description: str
@@ -108,8 +101,7 @@ class CollaborationOpportunity:
 
 @dataclass
 class TeamWorkflowIntent:
-    """Team workflow intent specification"""
-    
+    """Team workflow intent specification"""    
     workflow_type: str
     team_size: int
     roles_needed: List[WorkflowRole]
@@ -132,8 +124,7 @@ class TeamWorkflowIntent:
 
 @dataclass
 class PermissionRequest:
-    """Permission-based access request"""
-    
+    """Permission-based access request"""    
     resource_type: str
     resource_id: str
     requested_permission: PermissionLevel
@@ -152,8 +143,7 @@ class PermissionRequest:
 
 @dataclass
 class CollaborationAnalysis:
-    """Collaboration intent analysis result"""
-    
+    """Collaboration intent analysis result"""    
     collaboration_type: CollaborationType
     stage: CollaborationStage
     confidence: float
@@ -183,8 +173,7 @@ class CollaborationAnalysis:
 
 
 class CollaborationIntentManager:
-    """
-    Specialized manager for collaboration and team workflow intents
+    """    Specialized manager for collaboration and team workflow intents
     
     Provides comprehensive collaboration management including:
     - Collaboration opportunity matching
@@ -192,8 +181,7 @@ class CollaborationIntentManager:
     - Permission and access management
     - Cross-creator compatibility analysis
     - Project management recommendations
-    """
-    
+    """    
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
         self.collaboration_patterns = self._initialize_collaboration_patterns()
@@ -202,8 +190,7 @@ class CollaborationIntentManager:
         self.compatibility_engine = self._initialize_compatibility_engine()
     
     def _initialize_collaboration_patterns(self) -> Dict[str, re.Pattern]:
-        """Initialize collaboration pattern matching"""
-        return {
+        """Initialize collaboration pattern matching"""        return {
             "collaboration_seek": re.compile(
                 r'\b(collaborate|collab|work together|partner|team up|join forces)\b',
                 re.IGNORECASE
@@ -239,8 +226,7 @@ class CollaborationIntentManager:
         }
     
     def _load_collaboration_database(self) -> Dict[str, Any]:
-        """Load collaboration opportunities database"""
-        return {
+        """Load collaboration opportunities database"""        return {
             "active_opportunities": [],
             "collaboration_history": {},
             "creator_preferences": {},
@@ -249,8 +235,7 @@ class CollaborationIntentManager:
         }
     
     def _load_workflow_templates(self) -> Dict[str, Dict[str, Any]]:
-        """Load workflow templates for different collaboration types"""
-        return {
+        """Load workflow templates for different collaboration types"""        return {
             "music_collaboration": {
                 "typical_roles": ["producer", "vocalist", "instrumentalist", "mixer"],
                 "common_tools": ["daw", "cloud_storage", "video_calls", "project_management"],
@@ -289,8 +274,7 @@ class CollaborationIntentManager:
         }
     
     def _initialize_compatibility_engine(self) -> Dict[str, Any]:
-        """Initialize creator compatibility analysis engine"""
-        return {
+        """Initialize creator compatibility analysis engine"""        return {
             "matching_algorithms": ["genre_similarity", "audience_overlap", "skill_complement"],
             "compatibility_factors": [
                 "musical_style", "content_type", "audience_demographics",
@@ -312,8 +296,7 @@ class CollaborationIntentManager:
         project_context: Optional[Dict[str, Any]] = None,
         conversation_context: Optional[Dict[str, Any]] = None
     ) -> CollaborationAnalysis:
-        """
-        Analyze collaboration intent with comprehensive recommendations
+        """        Analyze collaboration intent with comprehensive recommendations
         
         Args:
             message_text: User's collaboration-related message
@@ -323,8 +306,7 @@ class CollaborationIntentManager:
             
         Returns:
             CollaborationAnalysis: Comprehensive collaboration analysis
-        """
-        try:
+        """        try:
             # Identify collaboration type and stage
             collaboration_type = self._identify_collaboration_type(message_text)
             stage = self._identify_collaboration_stage(message_text, conversation_context)
@@ -421,8 +403,7 @@ class CollaborationIntentManager:
             raise CollaborationIntentError(f"Analysis failed: {e}")
     
     def _identify_collaboration_type(self, message_text: str) -> CollaborationType:
-        """Identify the type of collaboration from message"""
-        
+        """Identify the type of collaboration from message"""        
         text_lower = message_text.lower()
         collaboration_scores = {}
         
@@ -453,8 +434,7 @@ class CollaborationIntentManager:
         message_text: str,
         conversation_context: Optional[Dict[str, Any]]
     ) -> CollaborationStage:
-        """Identify current stage of collaboration"""
-        
+        """Identify current stage of collaboration"""        
         text_lower = message_text.lower()
         
         # Stage indicators
@@ -480,8 +460,7 @@ class CollaborationIntentManager:
         message_text: str,
         collaboration_type: CollaborationType
     ) -> float:
-        """Calculate confidence in collaboration intent identification"""
-        
+        """Calculate confidence in collaboration intent identification"""        
         text_lower = message_text.lower()
         confidence = 0.5  # Base confidence
         
@@ -506,8 +485,7 @@ class CollaborationIntentManager:
         user_profile: Dict[str, Any],
         message_text: str
     ) -> List[CollaborationOpportunity]:
-        """Find matching collaboration opportunities"""
-        
+        """Find matching collaboration opportunities"""        
         opportunities = []
         
         # Generate sample opportunities based on collaboration type
@@ -526,8 +504,7 @@ class CollaborationIntentManager:
         return filtered_opportunities[:5]  # Return top 5
     
     def _generate_music_opportunities(self, user_profile: Dict[str, Any]) -> List[CollaborationOpportunity]:
-        """Generate music collaboration opportunities"""
-        
+        """Generate music collaboration opportunities"""        
         opportunities = []
         user_genres = user_profile.get("genres", ["pop"])
         
@@ -559,8 +536,7 @@ class CollaborationIntentManager:
         return opportunities
     
     def _generate_video_opportunities(self, user_profile: Dict[str, Any]) -> List[CollaborationOpportunity]:
-        """Generate video collaboration opportunities"""
-        
+        """Generate video collaboration opportunities"""        
         opportunities = []
         
         opportunities.append(CollaborationOpportunity(
@@ -577,8 +553,7 @@ class CollaborationIntentManager:
         return opportunities
     
     def _generate_brand_opportunities(self, user_profile: Dict[str, Any]) -> List[CollaborationOpportunity]:
-        """Generate brand collaboration opportunities"""
-        
+        """Generate brand collaboration opportunities"""        
         opportunities = []
         follower_count = user_profile.get("total_followers", 0)
         
@@ -601,8 +576,7 @@ class CollaborationIntentManager:
         opportunities: List[CollaborationOpportunity],
         user_profile: Dict[str, Any]
     ) -> List[CollaborationOpportunity]:
-        """Filter opportunities based on user profile compatibility"""
-        
+        """Filter opportunities based on user profile compatibility"""        
         user_skills = user_profile.get("skills", [])
         user_experience = user_profile.get("experience_level", "intermediate")
         user_genres = user_profile.get("genres", [])
@@ -632,8 +606,7 @@ class CollaborationIntentManager:
         user_profile: Dict[str, Any],
         opportunities: List[CollaborationOpportunity]
     ) -> Dict[str, float]:
-        """Calculate compatibility scores for opportunities"""
-        
+        """Calculate compatibility scores for opportunities"""        
         scores = {}
         
         for opportunity in opportunities:
@@ -669,8 +642,7 @@ class CollaborationIntentManager:
         message_text: str,
         project_context: Optional[Dict[str, Any]]
     ) -> TeamWorkflowIntent:
-        """Analyze workflow requirements for collaboration"""
-        
+        """Analyze workflow requirements for collaboration"""        
         # Get template for collaboration type
         template = self.workflow_templates.get(collaboration_type.value, {})
         
@@ -712,8 +684,7 @@ class CollaborationIntentManager:
         collaboration_type: CollaborationType,
         workflow_requirements: TeamWorkflowIntent
     ) -> List[str]:
-        """Recommend collaboration tools based on requirements"""
-        
+        """Recommend collaboration tools based on requirements"""        
         tools = []
         
         # Base tools for all collaborations
@@ -738,8 +709,7 @@ class CollaborationIntentManager:
         collaboration_type: CollaborationType,
         workflow_requirements: TeamWorkflowIntent
     ) -> Dict[str, int]:
-        """Analyze optimal team composition"""
-        
+        """Analyze optimal team composition"""        
         composition = {}
         
         # Base roles
@@ -767,8 +737,7 @@ class CollaborationIntentManager:
         collaboration_type: CollaborationType,
         project_context: Optional[Dict[str, Any]]
     ) -> List[PermissionRequest]:
-        """Analyze permission and access requirements"""
-        
+        """Analyze permission and access requirements"""        
         requests = []
         text_lower = message_text.lower()
         
@@ -801,8 +770,7 @@ class CollaborationIntentManager:
         permission_requests: List[PermissionRequest],
         workflow_requirements: TeamWorkflowIntent
     ) -> List[str]:
-        """Generate access and permission recommendations"""
-        
+        """Generate access and permission recommendations"""        
         recommendations = []
         
         # General access recommendations
@@ -828,8 +796,7 @@ class CollaborationIntentManager:
         user_profile: Dict[str, Any],
         opportunities: List[CollaborationOpportunity]
     ) -> List[str]:
-        """Develop collaboration strategy"""
-        
+        """Develop collaboration strategy"""        
         strategy = []
         
         # Type-specific strategies
@@ -860,8 +827,7 @@ class CollaborationIntentManager:
         collaboration_type: CollaborationType,
         workflow_requirements: TeamWorkflowIntent
     ) -> List[str]:
-        """Identify key success factors for collaboration"""
-        
+        """Identify key success factors for collaboration"""        
         factors = [
             "Clear communication and expectations",
             "Defined roles and responsibilities",
@@ -888,8 +854,7 @@ class CollaborationIntentManager:
         collaboration_type: CollaborationType,
         workflow_requirements: TeamWorkflowIntent
     ) -> List[str]:
-        """Generate risk mitigation strategies"""
-        
+        """Generate risk mitigation strategies"""        
         mitigation = [
             "Document all agreements and expectations",
             "Set clear deadlines and milestones",
@@ -913,8 +878,7 @@ class CollaborationIntentManager:
         stage: CollaborationStage,
         opportunities: List[CollaborationOpportunity]
     ) -> List[str]:
-        """Generate recommended actions based on stage and type"""
-        
+        """Generate recommended actions based on stage and type"""        
         actions = []
         
         # Stage-specific actions
@@ -949,8 +913,7 @@ class CollaborationIntentManager:
         collaboration_type: CollaborationType,
         workflow_requirements: TeamWorkflowIntent
     ) -> Dict[str, str]:
-        """Generate timeline suggestions for collaboration phases"""
-        
+        """Generate timeline suggestions for collaboration phases"""        
         template = self.workflow_templates.get(collaboration_type.value, {})
         milestones = template.get("milestones", [])
         
@@ -969,8 +932,7 @@ class CollaborationIntentManager:
         workflow_requirements: TeamWorkflowIntent,
         recommended_tools: List[str]
     ) -> List[str]:
-        """Identify resource needs for collaboration"""
-        
+        """Identify resource needs for collaboration"""        
         resources = []
         
         # Tool-based resources
@@ -997,8 +959,7 @@ class CollaborationIntentManager:
 
 
 class TeamWorkflowIntents:
-    """Team workflow intent processor"""
-    
+    """Team workflow intent processor"""    
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
     
@@ -1007,8 +968,7 @@ class TeamWorkflowIntents:
         message_text: str,
         team_context: Dict[str, Any]
     ) -> TeamWorkflowIntent:
-        """Process team workflow specific intents"""
-        
+        """Process team workflow specific intents"""        
         text_lower = message_text.lower()
         
         # Determine workflow type
@@ -1044,8 +1004,7 @@ class TeamWorkflowIntents:
 
 
 class PermissionIntentHandler:
-    """Permission and access intent handler"""
-    
+    """Permission and access intent handler"""    
     def __init__(self, config: IntentRecognitionConfig):
         self.config = config
     
@@ -1055,8 +1014,7 @@ class PermissionIntentHandler:
         user_context: Dict[str, Any],
         resource_context: Dict[str, Any]
     ) -> PermissionRequest:
-        """Process permission-related intents"""
-        
+        """Process permission-related intents"""        
         text_lower = message_text.lower()
         
         # Determine requested permission level

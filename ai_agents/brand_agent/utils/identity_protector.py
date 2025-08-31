@@ -1,5 +1,4 @@
-"""
-Identity Protector - Advanced Brand Identity & Trademark Protection System
+"""Identity Protector - Advanced Brand Identity & Trademark Protection System
 
 Comprehensive identity protection including trademark monitoring, domain protection,
 and anti-counterfeiting measures for content creators and brands.
@@ -19,7 +18,6 @@ Team Specialties:
 - Microservices Architect & DevOps Engineer
 - AI Prompt Engineer & Content Protection Specialist
 """
-
 import asyncio
 import logging
 import hashlib
@@ -54,16 +52,14 @@ from ...security.encryption import ContentEncryption
 logger = logging.getLogger(__name__)
 
 class ProtectionLevel(Enum):
-    """Levels of identity protection"""
-    BASIC = "basic"
+    """Levels of identity protection"""    BASIC = "basic"
     STANDARD = "standard"
     PREMIUM = "premium"
     ENTERPRISE = "enterprise"
     ULTIMATE = "ultimate"
 
 class ThreatType(Enum):
-    """Types of identity threats"""
-    TRADEMARK_INFRINGEMENT = "trademark_infringement"
+    """Types of identity threats"""    TRADEMARK_INFRINGEMENT = "trademark_infringement"
     DOMAIN_SQUATTING = "domain_squatting"
     TYPOSQUATTING = "typosquatting"
     COUNTERFEITING = "counterfeiting"
@@ -76,8 +72,7 @@ class ThreatType(Enum):
     AI_GENERATED_COUNTERFEITS = "ai_generated_counterfeits"
 
 class LegalJurisdiction(Enum):
-    """Legal jurisdictions for protection"""
-    USPTO = "uspto"  # United States
+    """Legal jurisdictions for protection"""    USPTO = "uspto"  # United States
     EUIPO = "euipo"  # European Union
     WIPO = "wipo"    # World Intellectual Property Organization
     JPO = "jpo"      # Japan Patent Office
@@ -89,8 +84,7 @@ class LegalJurisdiction(Enum):
     MULTIPLE = "multiple"
 
 class ProtectionStatus(Enum):
-    """Status of protection measures"""
-    PENDING = "pending"
+    """Status of protection measures"""    PENDING = "pending"
     ACTIVE = "active"
     EXPIRED = "expired"
     REJECTED = "rejected"
@@ -100,8 +94,7 @@ class ProtectionStatus(Enum):
 
 @dataclass
 class TrademarkProtection:
-    """Trademark protection registration"""
-    trademark_id: str
+    """Trademark protection registration"""    trademark_id: str
     brand_name: str
     trademark_text: str
     jurisdiction: LegalJurisdiction
@@ -119,8 +112,7 @@ class TrademarkProtection:
 
 @dataclass
 class DomainProtection:
-    """Domain protection and monitoring"""
-    domain_id: str
+    """Domain protection and monitoring"""    domain_id: str
     primary_domain: str
     protected_variations: List[str] = field(default_factory=list)
     registered_domains: List[str] = field(default_factory=list)
@@ -135,8 +127,7 @@ class DomainProtection:
 
 @dataclass
 class IdentityThreat:
-    """Detected identity threat with details"""
-    threat_id: str
+    """Detected identity threat with details"""    threat_id: str
     threat_type: ThreatType
     severity_level: str
     detected_at: datetime = field(default_factory=datetime.utcnow)
@@ -154,8 +145,7 @@ class IdentityThreat:
     ENTERPRISE = "enterprise"
 
 class ThreatType(Enum):
-    """Types of identity threats"""
-    TRADEMARK_INFRINGEMENT = "trademark_infringement"
+    """Types of identity threats"""    TRADEMARK_INFRINGEMENT = "trademark_infringement"
     DOMAIN_SQUATTING = "domain_squatting"
     LOGO_THEFT = "logo_theft"
     BRAND_IMPERSONATION = "brand_impersonation"
@@ -165,8 +155,7 @@ class ThreatType(Enum):
     TYPOSQUATTING = "typosquatting"
 
 class ProtectionStatus(Enum):
-    """Status of protection measures"""
-    ACTIVE = "active"
+    """Status of protection measures"""    ACTIVE = "active"
     PENDING = "pending"
     EXPIRED = "expired"
     VIOLATED = "violated"
@@ -174,8 +163,7 @@ class ProtectionStatus(Enum):
 
 @dataclass
 class TrademarkProtection:
-    """Trademark protection record"""
-    protection_id: str
+    """Trademark protection record"""    protection_id: str
     brand_id: str
     trademark_name: str
     registration_number: Optional[str]
@@ -190,8 +178,7 @@ class TrademarkProtection:
 
 @dataclass
 class DomainProtection:
-    """Domain protection record"""
-    protection_id: str
+    """Domain protection record"""    protection_id: str
     brand_id: str
     domain_name: str
     registrar: Optional[str]
@@ -206,8 +193,7 @@ class DomainProtection:
 
 @dataclass
 class IdentityThreat:
-    """Identity threat detection result"""
-    threat_id: str
+    """Identity threat detection result"""    threat_id: str
     brand_id: str
     threat_type: ThreatType
     severity: str  # low, medium, high, critical
@@ -223,8 +209,7 @@ class IdentityThreat:
 
 @dataclass
 class ProtectionReport:
-    """Comprehensive protection status report"""
-    report_id: str
+    """Comprehensive protection status report"""    report_id: str
     brand_id: str
     protection_summary: Dict[str, Any]
     active_threats: List[IdentityThreat]
@@ -235,8 +220,7 @@ class ProtectionReport:
     report_period: str = "30d"
 
 class IdentityProtector:
-    """
-    Advanced Brand Identity & Trademark Protection System
+    """    Advanced Brand Identity & Trademark Protection System
     
     Provides comprehensive identity protection including:
     - Trademark monitoring and protection
@@ -246,7 +230,6 @@ class IdentityProtector:
     - Legal document generation
     - Automated threat response
     """
-
     def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.protection_level = ProtectionLevel.STANDARD
@@ -272,8 +255,7 @@ class IdentityProtector:
         logger.info(f"Identity protector initialized for brand: {brand_id}")
 
     async def configure_protection(self, config: Dict[str, Any]) -> None:
-        """Configure identity protection parameters"""
-        try:
+        """Configure identity protection parameters"""        try:
             self.protection_level = ProtectionLevel(config.get("protection_level", "standard"))
             
             # Configure trademark protections
@@ -293,8 +275,7 @@ class IdentityProtector:
             raise
 
     async def _register_trademark_protection(self, config: Dict[str, Any]) -> TrademarkProtection:
-        """Register trademark for protection"""
-        try:
+        """Register trademark for protection"""        try:
             protection_id = f"tm_{hashlib.md5(f'{self.brand_id}_{config.get(\"name\")}_{datetime.utcnow().isoformat()}'.encode()).hexdigest()[:12]}"
             
             protection = TrademarkProtection(
@@ -323,8 +304,7 @@ class IdentityProtector:
             raise
 
     async def _register_domain_protection(self, config: Dict[str, Any]) -> DomainProtection:
-        """Register domain for protection"""
-        try:
+        """Register domain for protection"""        try:
             domain_name = config.get("domain")
             protection_id = f"dom_{hashlib.md5(f'{self.brand_id}_{domain_name}_{datetime.utcnow().isoformat()}'.encode()).hexdigest()[:12]}"
             
@@ -359,8 +339,7 @@ class IdentityProtector:
             raise
 
     async def _get_domain_info(self, domain_name: str) -> Dict[str, Any]:
-        """Get comprehensive domain information"""
-        try:
+        """Get comprehensive domain information"""        try:
             # Use whois to get domain information
             domain_info = await self.whois_checker.get_domain_info(domain_name)
             return domain_info
@@ -369,8 +348,7 @@ class IdentityProtector:
             return {}
 
     async def start_monitoring(self) -> None:
-        """Start comprehensive identity monitoring"""
-        try:
+        """Start comprehensive identity monitoring"""        try:
             if self.monitoring_active:
                 logger.warning("Identity monitoring already active")
                 return
@@ -405,8 +383,7 @@ class IdentityProtector:
             raise
 
     async def stop_monitoring(self) -> None:
-        """Stop identity monitoring"""
-        try:
+        """Stop identity monitoring"""        try:
             self.monitoring_active = False
             
             for task_name, task in self.monitoring_tasks.items():
@@ -420,8 +397,7 @@ class IdentityProtector:
             logger.error(f"Identity monitoring stop failed: {str(e)}")
 
     async def _comprehensive_trademark_monitoring(self) -> None:
-        """Comprehensive trademark monitoring across multiple databases"""
-        try:
+        """Comprehensive trademark monitoring across multiple databases"""        try:
             while self.monitoring_active:
                 try:
                     for protection_id, protection in self.trademark_protections.items():
@@ -439,8 +415,7 @@ class IdentityProtector:
             logger.error(f"Comprehensive trademark monitoring failed: {str(e)}")
 
     async def _monitor_trademark_violations(self, protection: TrademarkProtection) -> None:
-        """Monitor for specific trademark violations"""
-        try:
+        """Monitor for specific trademark violations"""        try:
             trademark_name = protection.trademark_name
             
             # Search trademark databases
@@ -464,8 +439,7 @@ class IdentityProtector:
             logger.error(f"Trademark violation monitoring failed: {str(e)}")
 
     async def _search_trademark_databases(self, trademark_name: str) -> List[IdentityThreat]:
-        """Search official trademark databases for conflicts"""
-        threats = []
+        """Search official trademark databases for conflicts"""        threats = []
         
         try:
             # Search USPTO database
@@ -517,8 +491,7 @@ class IdentityProtector:
         return threats
 
     async def _search_web_trademark_usage(self, trademark_name: str) -> List[IdentityThreat]:
-        """Search web for unauthorized trademark usage"""
-        threats = []
+        """Search web for unauthorized trademark usage"""        threats = []
         
         try:
             # Search engines for trademark usage
@@ -558,8 +531,7 @@ class IdentityProtector:
         return threats
 
     async def _search_marketplace_counterfeits(self, trademark_name: str) -> List[IdentityThreat]:
-        """Search online marketplaces for counterfeit products"""
-        threats = []
+        """Search online marketplaces for counterfeit products"""        threats = []
         
         try:
             marketplaces = ["amazon", "ebay", "alibaba", "etsy", "facebook_marketplace"]
@@ -595,8 +567,7 @@ class IdentityProtector:
         return threats
 
     async def _search_social_impersonation(self, trademark_name: str) -> List[IdentityThreat]:
-        """Search social media for brand impersonation"""
-        threats = []
+        """Search social media for brand impersonation"""        threats = []
         
         try:
             platforms = ["instagram", "facebook", "twitter", "linkedin", "tiktok", "youtube"]
@@ -634,8 +605,7 @@ class IdentityProtector:
         return threats
 
     def _is_trademark_conflict(self, protected_mark: str, search_result: Dict[str, Any]) -> bool:
-        """Determine if search result represents a trademark conflict"""
-        try:
+        """Determine if search result represents a trademark conflict"""        try:
             result_mark = search_result.get("mark", "")
             
             # Calculate similarity
@@ -648,8 +618,7 @@ class IdentityProtector:
             return False
 
     def _calculate_trademark_similarity(self, mark1: str, mark2: str) -> float:
-        """Calculate similarity between two trademarks"""
-        try:
+        """Calculate similarity between two trademarks"""        try:
             if not mark1 or not mark2:
                 return 0.0
             
@@ -669,8 +638,7 @@ class IdentityProtector:
             return 0.0
 
     async def _perform_web_search(self, query: str) -> List[Dict[str, Any]]:
-        """Perform web search for trademark usage"""
-        # This would integrate with search APIs like Google Custom Search
+        """Perform web search for trademark usage"""        # This would integrate with search APIs like Google Custom Search
         # For now, return placeholder results
         return [
             {
@@ -683,8 +651,7 @@ class IdentityProtector:
         ]
 
     async def _analyze_trademark_usage(self, result: Dict[str, Any], trademark: str) -> float:
-        """Analyze potential trademark usage for threat level"""
-        try:
+        """Analyze potential trademark usage for threat level"""        try:
             threat_score = 0.0
             
             title = result.get("title", "").lower()
@@ -721,8 +688,7 @@ class IdentityProtector:
             return 0.0
 
     async def _analyze_usage_context(self, result: Dict[str, Any]) -> Dict[str, Any]:
-        """Analyze the context of trademark usage"""
-        try:
+        """Analyze the context of trademark usage"""        try:
             context = {
                 "usage_type": "unknown",
                 "commercial_intent": False,
@@ -760,8 +726,7 @@ class IdentityProtector:
             return {}
 
     async def _search_marketplace(self, marketplace: str, trademark: str) -> List[Dict[str, Any]]:
-        """Search marketplace for products using trademark"""
-        # This would integrate with marketplace APIs
+        """Search marketplace for products using trademark"""        # This would integrate with marketplace APIs
         # For now, return placeholder results
         return [
             {
@@ -776,8 +741,7 @@ class IdentityProtector:
         ]
 
     async def _analyze_counterfeit_risk(self, product: Dict[str, Any], trademark: str) -> float:
-        """Analyze product for counterfeit risk"""
-        try:
+        """Analyze product for counterfeit risk"""        try:
             risk_score = 0.0
             
             # Price analysis
@@ -815,8 +779,7 @@ class IdentityProtector:
             return 0.0
 
     async def _search_platform_impersonation(self, platform: str, trademark: str) -> List[Dict[str, Any]]:
-        """Search platform for impersonation accounts"""
-        # This would integrate with social media APIs
+        """Search platform for impersonation accounts"""        # This would integrate with social media APIs
         # For now, return placeholder results
         variations = [
             trademark.lower(),
@@ -840,8 +803,7 @@ class IdentityProtector:
         ]
 
     async def _analyze_impersonation_risk(self, account: Dict[str, Any], trademark: str) -> float:
-        """Analyze account for impersonation risk"""
-        try:
+        """Analyze account for impersonation risk"""        try:
             risk_score = 0.0
             
             username = account.get("username", "").lower()
@@ -881,8 +843,7 @@ class IdentityProtector:
             return 0.0
 
     def _threat_level_to_severity(self, threat_level: float) -> str:
-        """Convert threat level score to severity category"""
-        if threat_level >= 0.8:
+        """Convert threat level score to severity category"""        if threat_level >= 0.8:
             return "critical"
         elif threat_level >= 0.6:
             return "high"
@@ -892,8 +853,7 @@ class IdentityProtector:
             return "low"
 
     async def _process_identity_threat(self, threat: IdentityThreat) -> None:
-        """Process detected identity threat"""
-        try:
+        """Process detected identity threat"""        try:
             # Store threat
             self.detected_threats.append(threat)
             
@@ -917,8 +877,7 @@ class IdentityProtector:
             logger.error(f"Threat processing failed: {str(e)}")
 
     async def _calculate_legal_risk(self, threat: IdentityThreat) -> float:
-        """Calculate legal risk score for threat"""
-        try:
+        """Calculate legal risk score for threat"""        try:
             base_risk = threat.confidence * 0.6
             
             # Threat type risk multipliers
@@ -951,8 +910,7 @@ class IdentityProtector:
             return threat.confidence * 0.5
 
     async def _generate_threat_actions(self, threat: IdentityThreat) -> List[str]:
-        """Generate recommended actions for threat"""
-        actions = []
+        """Generate recommended actions for threat"""        actions = []
         
         try:
             threat_type = threat.threat_type
@@ -1010,8 +968,7 @@ class IdentityProtector:
         return actions
 
     async def _send_threat_alert(self, threat: IdentityThreat) -> None:
-        """Send alert for detected threat"""
-        try:
+        """Send alert for detected threat"""        try:
             await self.notification_service.send_alert(
                 alert_level=threat.severity,
                 message=f"Identity threat detected: {threat.threat_type.value}",
@@ -1024,8 +981,7 @@ class IdentityProtector:
             logger.error(f"Threat alert sending failed: {str(e)}")
 
     async def _auto_respond_to_threat(self, threat: IdentityThreat) -> None:
-        """Automatically respond to critical threats"""
-        try:
+        """Automatically respond to critical threats"""        try:
             if threat.threat_type == ThreatType.SOCIAL_MEDIA_IMPERSONATION:
                 await self._auto_report_social_impersonation(threat)
             elif threat.threat_type == ThreatType.COUNTERFEITING:
@@ -1040,8 +996,7 @@ class IdentityProtector:
             logger.error(f"Auto threat response failed: {str(e)}")
 
     async def _comprehensive_domain_monitoring(self) -> None:
-        """Comprehensive domain monitoring for protection"""
-        try:
+        """Comprehensive domain monitoring for protection"""        try:
             while self.monitoring_active:
                 try:
                     for protection_id, protection in self.domain_protections.items():
@@ -1059,8 +1014,7 @@ class IdentityProtector:
             logger.error(f"Comprehensive domain monitoring failed: {str(e)}")
 
     async def _monitor_domain_threats(self, protection: DomainProtection) -> None:
-        """Monitor for domain-related threats"""
-        try:
+        """Monitor for domain-related threats"""        try:
             domain_name = protection.domain_name
             
             # Check for typosquatting domains
@@ -1081,8 +1035,7 @@ class IdentityProtector:
             logger.error(f"Domain threat monitoring failed: {str(e)}")
 
     async def _detect_typosquatting(self, domain_name: str) -> List[IdentityThreat]:
-        """Detect typosquatting domain registrations"""
-        threats = []
+        """Detect typosquatting domain registrations"""        threats = []
         
         try:
             # Generate typo variations
@@ -1120,8 +1073,7 @@ class IdentityProtector:
         return threats
 
     def _generate_typo_domains(self, domain: str) -> List[str]:
-        """Generate common typosquatting variations"""
-        variations = []
+        """Generate common typosquatting variations"""        variations = []
         
         try:
             # Extract domain parts
@@ -1167,8 +1119,7 @@ class IdentityProtector:
         return list(set(variations))  # Remove duplicates
 
     async def _visual_identity_monitoring(self) -> None:
-        """Monitor for visual identity theft (logos, designs)"""
-        try:
+        """Monitor for visual identity theft (logos, designs)"""        try:
             while self.monitoring_active:
                 try:
                     # Search for logo usage across web
@@ -1189,8 +1140,7 @@ class IdentityProtector:
             logger.error(f"Visual identity monitoring failed: {str(e)}")
 
     async def generate_protection_report(self, time_period: str = "30d") -> ProtectionReport:
-        """Generate comprehensive identity protection report"""
-        try:
+        """Generate comprehensive identity protection report"""        try:
             report_id = f"protection_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}"
             
             # Calculate time cutoff
@@ -1245,16 +1195,14 @@ class IdentityProtector:
             )
 
     def _get_threat_type_distribution(self, threats: List[IdentityThreat]) -> Dict[str, int]:
-        """Get distribution of threat types"""
-        distribution = {}
+        """Get distribution of threat types"""        distribution = {}
         for threat in threats:
             threat_type = threat.threat_type.value
             distribution[threat_type] = distribution.get(threat_type, 0) + 1
         return distribution
 
     async def _identify_protection_gaps(self) -> List[str]:
-        """Identify gaps in current protection coverage"""
-        gaps = []
+        """Identify gaps in current protection coverage"""        gaps = []
         
         try:
             # Check trademark coverage
@@ -1287,12 +1235,10 @@ class IdentityProtector:
 
 
 class TrademarkGuardian:
-    """
-    Specialized Trademark Protection & Legal Action Coordinator
+    """    Specialized Trademark Protection & Legal Action Coordinator
     
     Handles complex trademark protection scenarios and coordinates legal responses.
     """
-
     def __init__(self, brand_id: str):
         self.brand_id = brand_id
         self.legal_generator = LegalDocumentGenerator()
@@ -1301,8 +1247,7 @@ class TrademarkGuardian:
         logger.info(f"Trademark guardian initialized for brand: {brand_id}")
 
     async def initiate_legal_action(self, threat: IdentityThreat, action_type: str) -> Dict[str, Any]:
-        """Initiate legal action for identity threat"""
-        try:
+        """Initiate legal action for identity threat"""        try:
             action_id = f"legal_{datetime.utcnow().strftime('%Y%m%d_%H%M%S')}_{threat.threat_id[:8]}"
             
             if action_type == "cease_desist":
@@ -1334,8 +1279,7 @@ class TrademarkGuardian:
             return {"success": False, "error": str(e)}
 
     async def _generate_cease_desist_letter(self, threat: IdentityThreat, action_id: str) -> Dict[str, Any]:
-        """Generate cease and desist letter"""
-        try:
+        """Generate cease and desist letter"""        try:
             letter_content = await self.legal_generator.generate_cease_desist(
                 brand_id=self.brand_id,
                 threat_details=threat.__dict__,
@@ -1363,8 +1307,7 @@ class TrademarkGuardian:
             raise
 
     async def _generate_takedown_notice(self, threat: IdentityThreat, action_id: str) -> Dict[str, Any]:
-        """Generate DMCA/platform takedown notice"""
-        try:
+        """Generate DMCA/platform takedown notice"""        try:
             notice_content = await self.legal_generator.generate_takedown_notice(
                 brand_id=self.brand_id,
                 threat_details=threat.__dict__,
@@ -1392,8 +1335,7 @@ class TrademarkGuardian:
             raise
 
     async def track_legal_action_status(self, action_id: str, status_update: str) -> None:
-        """Track status of legal action"""
-        try:
+        """Track status of legal action"""        try:
             if action_id in self.pending_actions:
                 self.pending_actions[action_id]["status"] = status_update
                 self.pending_actions[action_id]["last_updated"] = datetime.utcnow()
@@ -1404,5 +1346,4 @@ class TrademarkGuardian:
             logger.error(f"Legal action tracking failed: {str(e)}")
 
     def get_pending_actions(self) -> Dict[str, Dict[str, Any]]:
-        """Get all pending legal actions"""
-        return self.pending_actions.copy()
+        """Get all pending legal actions"""        return self.pending_actions.copy()

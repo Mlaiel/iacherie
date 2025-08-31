@@ -1,5 +1,4 @@
-"""
-Structured Logging System
+"""Structured Logging System
 
 Enterprise-grade logging system for the IA Influencer platform providing
 structured logging, log aggregation, audit trails, and compliance features.
@@ -13,7 +12,6 @@ This code is the exclusive intellectual property of Fahed Mlaiel.
 Toute utilisation non autorisée est strictement interdite.
 Any unauthorized use is strictly prohibited.
 """
-
 import asyncio
 import json
 import logging
@@ -34,8 +32,7 @@ logger = logging.getLogger(__name__)
 
 
 class LogLevel(Enum):
-    """Enhanced log levels for the platform"""
-    TRACE = 5       # Most detailed tracing information
+    """Enhanced log levels for the platform"""    TRACE = 5       # Most detailed tracing information
     DEBUG = 10      # Debugging information
     INFO = 20       # General information
     SUCCESS = 25    # Success operations
@@ -48,8 +45,7 @@ class LogLevel(Enum):
 
 
 class LogCategory(Enum):
-    """Log categories for better organization"""
-    SYSTEM = "system"
+    """Log categories for better organization"""    SYSTEM = "system"
     SECURITY = "security"
     BUSINESS = "business"
     PERFORMANCE = "performance"
@@ -63,8 +59,7 @@ class LogCategory(Enum):
 
 
 class LogFormat(Enum):
-    """Log output formats"""
-    JSON = "json"
+    """Log output formats"""    JSON = "json"
     TEXT = "text"
     STRUCTURED = "structured"
     SYSLOG = "syslog"
@@ -73,8 +68,7 @@ class LogFormat(Enum):
 
 @dataclass
 class LogEntry:
-    """Structured log entry"""
-    timestamp: datetime
+    """Structured log entry"""    timestamp: datetime
     level: LogLevel
     category: LogCategory
     message: str
@@ -108,8 +102,7 @@ class LogEntry:
     memory_usage: Optional[float] = None
     
     def __post_init__(self):
-        """Post-initialization processing"""
-        if self.timestamp.tzinfo is None:
+        """Post-initialization processing"""        if self.timestamp.tzinfo is None:
             self.timestamp = self.timestamp.replace(tzinfo=timezone.utc)
         
         if self.thread_id is None:
@@ -119,8 +112,7 @@ class LogEntry:
             self.process_id = os.getpid()
     
     def to_dict(self) -> Dict[str, Any]:
-        """Convert log entry to dictionary"""
-        return {
+        """Convert log entry to dictionary"""        return {
             'timestamp': self.timestamp.isoformat(),
             'level': self.level.name,
             'level_value': self.level.value,
@@ -147,13 +139,11 @@ class LogEntry:
         }
     
     def to_json(self) -> str:
-        """Convert log entry to JSON string"""
-        return json.dumps(self.to_dict(), default=str, ensure_ascii=False)
+        """Convert log entry to JSON string"""        return json.dumps(self.to_dict(), default=str, ensure_ascii=False)
 
 
 class StructuredLogger:
-    """
-    Enterprise structured logger with advanced features
+    """    Enterprise structured logger with advanced features
     
     Features:
     - Structured JSON logging
@@ -164,13 +154,11 @@ class StructuredLogger:
     - Audit trail compliance
     - Log rotation and archiving
     - Real-time log streaming
-    """
-    
+    """    
     def __init__(self, 
                  name: str,
                  config: Optional[Dict[str, Any]] = None):
-        """Initialize structured logger"""
-        self.name = name
+        """Initialize structured logger"""        self.name = name
         self.config = config or {}
         
         # Logger configuration
@@ -208,8 +196,7 @@ class StructuredLogger:
         self._initialize_logging()
     
     def _initialize_logging(self):
-        """Initialize the logging system"""
-        try:
+        """Initialize the logging system"""        try:
             # Create log files
             self._setup_log_files()
             
@@ -226,8 +213,7 @@ class StructuredLogger:
             logger.error(f"Failed to initialize structured logger: {str(e)}")
     
     def _setup_log_files(self):
-        """Setup log files for different categories"""
-        self.log_files = {
+        """Setup log files for different categories"""        self.log_files = {
             LogCategory.SYSTEM: self.output_dir / f"{self.name}_system.log",
             LogCategory.SECURITY: self.output_dir / f"{self.name}_security.log",
             LogCategory.BUSINESS: self.output_dir / f"{self.name}_business.log",
@@ -243,8 +229,7 @@ class StructuredLogger:
             log_file.touch()
     
     def _setup_handlers(self):
-        """Setup logging handlers"""
-        # File handlers for different categories
+        """Setup logging handlers"""        # File handlers for different categories
         for category, log_file in self.log_files.items():
             handler = logging.FileHandler(str(log_file))
             handler.setFormatter(self._get_formatter())
@@ -257,8 +242,7 @@ class StructuredLogger:
             self.handlers.append(console_handler)
     
     def _get_formatter(self) -> logging.Formatter:
-        """Get appropriate log formatter"""
-        if self.format == LogFormat.JSON:
+        """Get appropriate log formatter"""        if self.format == LogFormat.JSON:
             return JsonFormatter()
         elif self.format == LogFormat.STRUCTURED:
             return StructuredFormatter()
@@ -268,8 +252,7 @@ class StructuredLogger:
             )
     
     async def _start_async_processing(self):
-        """Start async log processing"""
-        try:
+        """Start async log processing"""        try:
             self.async_queue = asyncio.Queue(maxsize=1000)
             self.is_async_processing = True
             asyncio.create_task(self._async_log_processor())
@@ -278,8 +261,7 @@ class StructuredLogger:
             logger.error(f"Failed to start async processing: {str(e)}")
     
     async def _async_log_processor(self):
-        """Process logs asynchronously"""
-        batch = []
+        """Process logs asynchronously"""        batch = []
         last_flush = time.time()
         
         while self.is_async_processing:
@@ -308,8 +290,7 @@ class StructuredLogger:
                 logger.error(f"Error in async log processor: {str(e)}")
     
     async def _flush_batch(self, batch: List[LogEntry]):
-        """Flush a batch of log entries"""
-        try:
+        """Flush a batch of log entries"""        try:
             # Group by category for efficient writing
             categorized_logs = {}
             for log_entry in batch:
@@ -325,8 +306,7 @@ class StructuredLogger:
             logger.error(f"Failed to flush log batch: {str(e)}")
     
     async def _write_logs_to_file(self, category: LogCategory, logs: List[LogEntry]):
-        """Write logs to file"""
-        try:
+        """Write logs to file"""        try:
             log_file = self.log_files.get(category)
             if not log_file:
                 return
@@ -354,8 +334,7 @@ class StructuredLogger:
             logger.error(f"Failed to write logs to file: {str(e)}")
     
     def _format_log_entry(self, log_entry: LogEntry) -> str:
-        """Format log entry for text output"""
-        base_format = f"{log_entry.timestamp.isoformat()} - {log_entry.level.name} - {log_entry.message}"
+        """Format log entry for text output"""        base_format = f"{log_entry.timestamp.isoformat()} - {log_entry.level.name} - {log_entry.message}"
         
         if log_entry.extra_data:
             extra_str = json.dumps(log_entry.extra_data, default=str)
@@ -368,8 +347,7 @@ class StructuredLogger:
             category: LogCategory,
             message: str,
             **kwargs):
-        """Core logging method"""
-        try:
+        """Core logging method"""        try:
             # Create log entry
             log_entry = LogEntry(
                 timestamp=datetime.now(timezone.utc),
@@ -398,8 +376,7 @@ class StructuredLogger:
             print(f"Logging error: {str(e)} - Original message: {message}")
     
     def _enrich_log_entry(self, log_entry: LogEntry):
-        """Enrich log entry with context information"""
-        # Add session context
+        """Enrich log entry with context information"""        # Add session context
         if self.session_context:
             log_entry.extra_data.update(self.session_context)
         
@@ -415,8 +392,7 @@ class StructuredLogger:
         self._extract_caller_info(log_entry)
     
     def _add_performance_metrics(self, log_entry: LogEntry):
-        """Add performance metrics to log entry"""
-        try:
+        """Add performance metrics to log entry"""        try:
             import psutil
             
             # CPU and memory usage
@@ -429,8 +405,7 @@ class StructuredLogger:
             logger.debug(f"Failed to add performance metrics: {str(e)}")
     
     def _extract_caller_info(self, log_entry: LogEntry):
-        """Extract caller information from stack trace"""
-        try:
+        """Extract caller information from stack trace"""        try:
             import inspect
             
             # Get caller frame (skip internal logging frames)
@@ -449,8 +424,7 @@ class StructuredLogger:
             pass  # Caller info not critical
     
     def _process_log_sync(self, log_entry: LogEntry):
-        """Process log entry synchronously"""
-        try:
+        """Process log entry synchronously"""        try:
             # Write to appropriate file
             log_file = self.log_files.get(log_entry.category)
             if log_file:
@@ -465,29 +439,23 @@ class StructuredLogger:
     
     # Convenience methods for different log levels
     def trace(self, message: str, category: LogCategory = LogCategory.SYSTEM, **kwargs):
-        """Log trace message"""
-        self.log(LogLevel.TRACE, category, message, **kwargs)
+        """Log trace message"""        self.log(LogLevel.TRACE, category, message, **kwargs)
     
     def debug(self, message: str, category: LogCategory = LogCategory.SYSTEM, **kwargs):
-        """Log debug message"""
-        self.log(LogLevel.DEBUG, category, message, **kwargs)
+        """Log debug message"""        self.log(LogLevel.DEBUG, category, message, **kwargs)
     
     def info(self, message: str, category: LogCategory = LogCategory.SYSTEM, **kwargs):
-        """Log info message"""
-        self.log(LogLevel.INFO, category, message, **kwargs)
+        """Log info message"""        self.log(LogLevel.INFO, category, message, **kwargs)
     
     def success(self, message: str, category: LogCategory = LogCategory.SYSTEM, **kwargs):
-        """Log success message"""
-        self.log(LogLevel.SUCCESS, category, message, **kwargs)
+        """Log success message"""        self.log(LogLevel.SUCCESS, category, message, **kwargs)
     
     def warning(self, message: str, category: LogCategory = LogCategory.SYSTEM, **kwargs):
-        """Log warning message"""
-        self.log(LogLevel.WARNING, category, message, **kwargs)
+        """Log warning message"""        self.log(LogLevel.WARNING, category, message, **kwargs)
     
     def error(self, message: str, category: LogCategory = LogCategory.ERROR, 
               exception: Optional[Exception] = None, **kwargs):
-        """Log error message"""
-        if exception:
+        """Log error message"""        if exception:
             kwargs.update({
                 'exception_type': type(exception).__name__,
                 'exception_message': str(exception),
@@ -497,41 +465,32 @@ class StructuredLogger:
         self.log(LogLevel.ERROR, category, message, **kwargs)
     
     def critical(self, message: str, category: LogCategory = LogCategory.ERROR, **kwargs):
-        """Log critical message"""
-        self.log(LogLevel.CRITICAL, category, message, **kwargs)
+        """Log critical message"""        self.log(LogLevel.CRITICAL, category, message, **kwargs)
     
     def security(self, message: str, **kwargs):
-        """Log security event"""
-        self.log(LogLevel.SECURITY, LogCategory.SECURITY, message, **kwargs)
+        """Log security event"""        self.log(LogLevel.SECURITY, LogCategory.SECURITY, message, **kwargs)
     
     def audit(self, message: str, **kwargs):
-        """Log audit event"""
-        self.log(LogLevel.AUDIT, LogCategory.AUDIT, message, **kwargs)
+        """Log audit event"""        self.log(LogLevel.AUDIT, LogCategory.AUDIT, message, **kwargs)
     
     def business(self, message: str, **kwargs):
-        """Log business event"""
-        self.log(LogLevel.BUSINESS, LogCategory.BUSINESS, message, **kwargs)
+        """Log business event"""        self.log(LogLevel.BUSINESS, LogCategory.BUSINESS, message, **kwargs)
     
     # Context management
     def push_context(self, context: Dict[str, Any]):
-        """Push context onto stack"""
-        self.context_stack.append(context)
+        """Push context onto stack"""        self.context_stack.append(context)
     
     def pop_context(self) -> Optional[Dict[str, Any]]:
-        """Pop context from stack"""
-        return self.context_stack.pop() if self.context_stack else None
+        """Pop context from stack"""        return self.context_stack.pop() if self.context_stack else None
     
     def set_session_context(self, context: Dict[str, Any]):
-        """Set session-level context"""
-        self.session_context.update(context)
+        """Set session-level context"""        self.session_context.update(context)
     
     def clear_session_context(self):
-        """Clear session context"""
-        self.session_context.clear()
+        """Clear session context"""        self.session_context.clear()
     
     async def shutdown(self):
-        """Shutdown logger gracefully"""
-        try:
+        """Shutdown logger gracefully"""        try:
             logger.info(f"Shutting down structured logger '{self.name}'")
             
             # Stop async processing
@@ -560,14 +519,11 @@ class StructuredLogger:
 
 
 class LogAggregator:
-    """
-    Log aggregation system for collecting and centralizing logs
+    """    Log aggregation system for collecting and centralizing logs
     from multiple sources and services.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize log aggregator"""
-        self.config = config or {}
+        """Initialize log aggregator"""        self.config = config or {}
         self.logger = StructuredLogger("log_aggregator", self.config)
         
         # Aggregation configuration
@@ -580,8 +536,7 @@ class LogAggregator:
         self.aggregation_task = None
     
     async def start_aggregation(self):
-        """Start log aggregation process"""
-        try:
+        """Start log aggregation process"""        try:
             self.logger.info("Starting log aggregation")
             self.is_running = True
             self.aggregation_task = asyncio.create_task(self._aggregation_loop())
@@ -590,8 +545,7 @@ class LogAggregator:
             self.logger.error("Failed to start log aggregation", exception=e)
     
     async def stop_aggregation(self):
-        """Stop log aggregation process"""
-        try:
+        """Stop log aggregation process"""        try:
             self.logger.info("Stopping log aggregation")
             self.is_running = False
             
@@ -602,8 +556,7 @@ class LogAggregator:
             self.logger.error("Failed to stop log aggregation", exception=e)
     
     async def _aggregation_loop(self):
-        """Main aggregation loop"""
-        while self.is_running:
+        """Main aggregation loop"""        while self.is_running:
             try:
                 # Collect logs from sources
                 logs = await self._collect_logs()
@@ -620,8 +573,7 @@ class LogAggregator:
                 await asyncio.sleep(5)  # Brief pause on error
     
     async def _collect_logs(self) -> List[LogEntry]:
-        """Collect logs from configured sources"""
-        logs = []
+        """Collect logs from configured sources"""        logs = []
         current_time = datetime.now(timezone.utc)
         
         # Collect from file sources
@@ -665,8 +617,7 @@ class LogAggregator:
         return logs
     
     async def _process_aggregated_logs(self, logs: List[LogEntry]):
-        """Process and store aggregated logs"""
-        try:
+        """Process and store aggregated logs"""        try:
             # Filter and enrich logs
             processed_logs = []
             for log in logs:
@@ -681,8 +632,7 @@ class LogAggregator:
             self.logger.error("Failed to process aggregated logs", exception=e)
     
     def _should_include_log(self, log_entry: LogEntry) -> bool:
-        """Determine if log should be included in aggregation"""
-        # Apply filtering rules
+        """Determine if log should be included in aggregation"""        # Apply filtering rules
         if not log_entry or not log_entry.message:
             return False
             
@@ -717,41 +667,34 @@ class LogAggregator:
         return True
     
     async def _enrich_log(self, log_entry: LogEntry) -> LogEntry:
-        """Enrich log entry with additional context"""
-        # Add aggregation metadata
+        """Enrich log entry with additional context"""        # Add aggregation metadata
         log_entry.extra_data['aggregated_at'] = datetime.now(timezone.utc).isoformat()
         log_entry.extra_data['aggregator'] = 'ia_influencer_platform'
         
         return log_entry
     
     async def _store_logs(self, logs: List[LogEntry]):
-        """Store processed logs"""
-        if self.storage_backend == 'file':
+        """Store processed logs"""        if self.storage_backend == 'file':
             await self._store_logs_to_file(logs)
         elif self.storage_backend == 'elasticsearch':
             await self._store_logs_to_elasticsearch(logs)
         # Add more storage backends as needed
     
     async def _store_logs_to_file(self, logs: List[LogEntry]):
-        """Store logs to file"""
-        # Implementation for file storage
+        """Store logs to file"""        # Implementation for file storage
         pass
     
     async def _store_logs_to_elasticsearch(self, logs: List[LogEntry]):
-        """Store logs to Elasticsearch"""
-        # Implementation for Elasticsearch storage
+        """Store logs to Elasticsearch"""        # Implementation for Elasticsearch storage
         pass
 
 
 class LogAnalyzer:
-    """
-    Advanced log analysis system providing insights,
+    """    Advanced log analysis system providing insights,
     pattern detection, and anomaly identification.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize log analyzer"""
-        self.config = config or {}
+        """Initialize log analyzer"""        self.config = config or {}
         self.logger = StructuredLogger("log_analyzer", self.config)
         
         # Analysis configuration
@@ -765,8 +708,7 @@ class LogAnalyzer:
         self.anomalies: List[Dict[str, Any]] = []
     
     async def analyze_logs(self, logs: List[LogEntry]) -> Dict[str, Any]:
-        """Analyze a batch of logs"""
-        try:
+        """Analyze a batch of logs"""        try:
             analysis_results = {
                 'timestamp': datetime.now(timezone.utc).isoformat(),
                 'log_count': len(logs),
@@ -801,8 +743,7 @@ class LogAnalyzer:
             return {}
     
     async def _detect_patterns(self, logs: List[LogEntry]) -> List[Dict[str, Any]]:
-        """Detect patterns in log data"""
-        patterns = []
+        """Detect patterns in log data"""        patterns = []
         
         try:
             # Group logs by category and level
@@ -839,8 +780,7 @@ class LogAnalyzer:
             return []
     
     async def _detect_anomalies(self, logs: List[LogEntry]) -> List[Dict[str, Any]]:
-        """Detect anomalies in log data"""
-        anomalies = []
+        """Detect anomalies in log data"""        anomalies = []
         
         try:
             # Time-based anomaly detection
@@ -862,18 +802,15 @@ class LogAnalyzer:
             return []
     
     async def _detect_time_anomalies(self, logs: List[LogEntry]) -> List[Dict[str, Any]]:
-        """Detect time-based anomalies"""
-        # Implementation for time-based anomaly detection
+        """Detect time-based anomalies"""        # Implementation for time-based anomaly detection
         return []
     
     async def _detect_frequency_anomalies(self, logs: List[LogEntry]) -> List[Dict[str, Any]]:
-        """Detect frequency-based anomalies"""
-        # Implementation for frequency-based anomaly detection
+        """Detect frequency-based anomalies"""        # Implementation for frequency-based anomaly detection
         return []
     
     async def _detect_error_spikes(self, logs: List[LogEntry]) -> List[Dict[str, Any]]:
-        """Detect error spikes"""
-        anomalies = []
+        """Detect error spikes"""        anomalies = []
         
         try:
             error_logs = [log for log in logs if log.level.value >= LogLevel.ERROR.value]
@@ -898,8 +835,7 @@ class LogAnalyzer:
             return []
     
     async def _generate_insights(self, logs: List[LogEntry]) -> List[Dict[str, Any]]:
-        """Generate insights from log analysis"""
-        insights = []
+        """Generate insights from log analysis"""        insights = []
         
         try:
             # System health insight
@@ -947,8 +883,7 @@ class LogAnalyzer:
             return []
     
     async def _generate_recommendations(self, analysis_results: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Generate recommendations based on analysis"""
-        recommendations = []
+        """Generate recommendations based on analysis"""        recommendations = []
         
         try:
             # Error rate recommendations
@@ -993,14 +928,11 @@ class LogAnalyzer:
 
 
 class AuditLogger(StructuredLogger):
-    """
-    Specialized audit logger for compliance and regulatory requirements.
+    """    Specialized audit logger for compliance and regulatory requirements.
     Provides immutable audit trails and compliance reporting.
-    """
-    
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize audit logger"""
-        config = config or {}
+        """Initialize audit logger"""        config = config or {}
         config['format'] = 'json'  # Force JSON format for audit logs
         config['category'] = LogCategory.AUDIT
         
@@ -1022,8 +954,7 @@ class AuditLogger(StructuredLogger):
                   action: str,
                   result: str,
                   additional_data: Optional[Dict[str, Any]] = None):
-        """Log audit event with compliance metadata"""
-        try:
+        """Log audit event with compliance metadata"""        try:
             audit_data = {
                 'event_type': event_type,
                 'user_id': user_id,
@@ -1060,8 +991,7 @@ class AuditLogger(StructuredLogger):
             self.critical(f"Audit logging failure: {str(e)}", exception=e)
     
     def _calculate_integrity_hash(self, data: Dict[str, Any]) -> str:
-        """Calculate integrity hash for audit data"""
-        try:
+        """Calculate integrity hash for audit data"""        try:
             # Create consistent string representation
             sorted_items = sorted(data.items())
             data_string = json.dumps(sorted_items, sort_keys=True, default=str)
@@ -1074,8 +1004,7 @@ class AuditLogger(StructuredLogger):
             return "hash_calculation_failed"
     
     async def verify_integrity(self, audit_log_file: str) -> bool:
-        """Verify integrity of audit log file"""
-        try:
+        """Verify integrity of audit log file"""        try:
             audit_path = Path(audit_log_file)
             if not audit_path.exists():
                 self.warning(f"Audit log file not found: {audit_log_file}")
@@ -1129,8 +1058,7 @@ class AuditLogger(StructuredLogger):
             return False
     
     def _parse_log_line(self, line: str, source: str, line_num: int) -> Optional[LogEntry]:
-        """Parse a single log line into LogEntry"""
-        try:
+        """Parse a single log line into LogEntry"""        try:
             # Try to parse as JSON first
             try:
                 log_data = json.loads(line)
@@ -1180,8 +1108,7 @@ class AuditLogger(StructuredLogger):
             return None
     
     def _collect_system_logs(self) -> List[LogEntry]:
-        """Collect system logs"""
-        logs = []
+        """Collect system logs"""        logs = []
         try:
             # Simulate system log collection
             current_time = datetime.now(timezone.utc)
@@ -1207,8 +1134,7 @@ class AuditLogger(StructuredLogger):
         return logs
     
     def _collect_application_logs(self) -> List[LogEntry]:
-        """Collect application logs"""
-        logs = []
+        """Collect application logs"""        logs = []
         try:
             # Simulate application log collection
             current_time = datetime.now(timezone.utc)
@@ -1235,13 +1161,10 @@ class AuditLogger(StructuredLogger):
 
 
 class SecurityLogger(StructuredLogger):
-    """
-    Specialized security logger for security events and threat detection.
-    """
-    
+    """    Specialized security logger for security events and threat detection.
+    """    
     def __init__(self, config: Optional[Dict[str, Any]] = None):
-        """Initialize security logger"""
-        config = config or {}
+        """Initialize security logger"""        config = config or {}
         config['category'] = LogCategory.SECURITY
         
         super().__init__("security_logger", config)
@@ -1265,8 +1188,7 @@ class SecurityLogger(StructuredLogger):
                       user_id: Optional[str],
                       description: str,
                       additional_data: Optional[Dict[str, Any]] = None):
-        """Log security event"""
-        try:
+        """Log security event"""        try:
             security_data = {
                 'event_type': event_type,
                 'severity': severity,
@@ -1304,8 +1226,7 @@ class SecurityLogger(StructuredLogger):
             self.critical(f"Security logging failure: {str(e)}", exception=e)
     
     def _calculate_threat_score(self, event_type: str, severity: str, source_ip: Optional[str]) -> int:
-        """Calculate threat score for security event"""
-        try:
+        """Calculate threat score for security event"""        try:
             base_scores = {
                 'authentication_failure': 20,
                 'authorization_violation': 40,
@@ -1337,8 +1258,7 @@ class SecurityLogger(StructuredLogger):
             return 10  # Default low score
     
     async def _analyze_security_event(self, security_data: Dict[str, Any]):
-        """Analyze security event for threats"""
-        try:
+        """Analyze security event for threats"""        try:
             # Add to suspicious activities if threat score is high
             threat_score = security_data.get('threat_score', 0)
             if threat_score >= self.alert_thresholds.get('suspicious_activity_score', 80):
@@ -1351,8 +1271,7 @@ class SecurityLogger(StructuredLogger):
             self.error(f"Failed to analyze security event: {str(e)}")
     
     async def _check_threat_patterns(self, security_data: Dict[str, Any]):
-        """Check for threat patterns"""
-        try:
+        """Check for threat patterns"""        try:
             source_ip = security_data.get('source_ip')
             event_type = security_data.get('event_type')
             
@@ -1389,14 +1308,11 @@ class SecurityLogger(StructuredLogger):
 
 
 class ComplianceLogger(AuditLogger):
-    """
-    Specialized compliance logger for regulatory compliance requirements.
+    """    Specialized compliance logger for regulatory compliance requirements.
     Extends AuditLogger with specific compliance features.
-    """
-    
+    """    
     def __init__(self, compliance_standard: str = 'gdpr', config: Optional[Dict[str, Any]] = None):
-        """Initialize compliance logger"""
-        config = config or {}
+        """Initialize compliance logger"""        config = config or {}
         config['compliance_standards'] = [compliance_standard]
         
         super().__init__(config)
@@ -1405,8 +1321,7 @@ class ComplianceLogger(AuditLogger):
         self.compliance_rules = self._load_compliance_rules(compliance_standard)
     
     def _load_compliance_rules(self, standard: str) -> Dict[str, Any]:
-        """Load compliance rules for the specified standard"""
-        # GDPR compliance rules
+        """Load compliance rules for the specified standard"""        # GDPR compliance rules
         if standard == 'gdpr':
             return {
                 'data_processing_log_required': True,
@@ -1433,8 +1348,7 @@ class ComplianceLogger(AuditLogger):
                            processing_purpose: str,
                            legal_basis: str,
                            retention_period: str):
-        """Log GDPR data processing activity"""
-        self.audit_log(
+        """Log GDPR data processing activity"""        self.audit_log(
             event_type='gdpr_data_processing',
             user_id=user_id,
             resource=data_type,
@@ -1453,8 +1367,7 @@ class ComplianceLogger(AuditLogger):
                           consent_type: str,
                           consent_given: bool,
                           consent_method: str):
-        """Log GDPR consent changes"""
-        self.audit_log(
+        """Log GDPR consent changes"""        self.audit_log(
             event_type='gdpr_consent_change',
             user_id=user_id,
             resource='user_consent',
@@ -1473,8 +1386,7 @@ class ComplianceLogger(AuditLogger):
                         affected_data_types: List[str],
                         affected_users_count: int,
                         breach_severity: str):
-        """Log GDPR data breach"""
-        self.audit_log(
+        """Log GDPR data breach"""        self.audit_log(
             event_type='gdpr_data_breach',
             user_id='system',
             resource='personal_data',
@@ -1494,8 +1406,7 @@ class ComplianceLogger(AuditLogger):
 
 # Custom formatters for different output formats
 class JsonFormatter(logging.Formatter):
-    """JSON log formatter"""
-    
+    """JSON log formatter"""    
     def format(self, record):
         log_data = {
             'timestamp': datetime.fromtimestamp(record.created, tz=timezone.utc).isoformat(),
@@ -1517,8 +1428,7 @@ class JsonFormatter(logging.Formatter):
 
 
 class StructuredFormatter(logging.Formatter):
-    """Structured text log formatter"""
-    
+    """Structured text log formatter"""    
     def format(self, record):
         timestamp = datetime.fromtimestamp(record.created, tz=timezone.utc).isoformat()
         return f"[{timestamp}] {record.levelname} {record.name} - {record.getMessage()}"
@@ -1528,8 +1438,7 @@ class StructuredFormatter(logging.Formatter):
 def create_logger(name: str, 
                  logger_type: str = 'structured',
                  config: Optional[Dict[str, Any]] = None) -> StructuredLogger:
-    """Factory function for creating different types of loggers"""
-    
+    """Factory function for creating different types of loggers"""    
     if logger_type == 'audit':
         return AuditLogger(config)
     elif logger_type == 'security':
@@ -1543,8 +1452,7 @@ def create_logger(name: str,
 
 # Context manager for logging context
 class LogContext:
-    """Context manager for adding context to logs"""
-    
+    """Context manager for adding context to logs"""    
     def __init__(self, logger: StructuredLogger, context: Dict[str, Any]):
         self.logger = logger
         self.context = context
@@ -1560,8 +1468,7 @@ class LogContext:
 # Decorator for automatic function logging
 def log_function_calls(logger: StructuredLogger, 
                       category: LogCategory = LogCategory.SYSTEM):
-    """Decorator for automatic function call logging"""
-    
+    """Decorator for automatic function call logging"""    
     def decorator(func):
         def wrapper(*args, **kwargs):
             start_time = time.time()

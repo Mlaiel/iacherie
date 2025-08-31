@@ -1,5 +1,4 @@
-"""
-Audio Analytics Repository
+"""Audio Analytics Repository
 
 Enterprise-grade repository for comprehensive audio content analytics,
 performance tracking, and AI-powered insights for music and audio creators.
@@ -24,7 +23,6 @@ Expert Project Team - Fahed Mlaiel:
 - DevOps Engineer
 - AI Prompt Engineer
 """
-
 from typing import Dict, List, Optional, Union, Any, Tuple
 from sqlalchemy.orm import Session
 from sqlalchemy import and_, or_, desc, func, text
@@ -40,14 +38,11 @@ from ..models.audio_analytics import AudioAnalytics
 logger = logging.getLogger(__name__)
 
 class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
-    """
-    Repository for audio analytics management with enterprise-grade
+    """    Repository for audio analytics management with enterprise-grade
     features including streaming analytics, engagement tracking, and AI insights.
-    """
-    
+    """    
     def __init__(self, db_session: Session):
-        """Initialize Audio Analytics Repository"""
-        super().__init__(db_session, AudioAnalytics)
+        """Initialize Audio Analytics Repository"""        super().__init__(db_session, AudioAnalytics)
         
     def record_audio_analytics(self, 
                              user_id: int,
@@ -57,8 +52,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
                              engagement_metrics: Dict[str, Any],
                              technical_analysis: Optional[Dict[str, Any]] = None,
                              audience_data: Optional[Dict[str, Any]] = None) -> AudioAnalytics:
-        """
-        Record comprehensive audio analytics data
+        """        Record comprehensive audio analytics data
         
         Args:
             user_id: User ID
@@ -71,8 +65,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             
         Returns:
             Created audio analytics record
-        """
-        try:
+        """        try:
             analytics_data = {
                 'user_id': user_id,
                 'audio_content_id': audio_content_id,
@@ -97,8 +90,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
                                analytics_id: int,
                                updated_streaming_data: Dict[str, Any],
                                updated_engagement: Optional[Dict[str, Any]] = None) -> Optional[AudioAnalytics]:
-        """
-        Update streaming metrics for existing analytics record
+        """        Update streaming metrics for existing analytics record
         
         Args:
             analytics_id: Analytics record ID
@@ -107,8 +99,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             
         Returns:
             Updated analytics record
-        """
-        try:
+        """        try:
             analytics = self.get_by_id(analytics_id)
             if not analytics:
                 return None
@@ -142,8 +133,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
                                     audio_content_id: Optional[int] = None,
                                     platform: Optional[str] = None,
                                     days: int = 30) -> Dict[str, Any]:
-        """
-        Get comprehensive audio performance summary
+        """        Get comprehensive audio performance summary
         
         Args:
             user_id: User ID
@@ -153,8 +143,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             
         Returns:
             Audio performance summary
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             query = self.db_session.query(AudioAnalytics).filter(
@@ -295,8 +284,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
     def get_audio_trends_analysis(self, 
                                 user_id: int,
                                 days: int = 90) -> Dict[str, Any]:
-        """
-        Analyze audio performance trends and patterns
+        """        Analyze audio performance trends and patterns
         
         Args:
             user_id: User ID
@@ -304,8 +292,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             
         Returns:
             Audio trends analysis
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             analytics_records = self.db_session.query(AudioAnalytics).filter(
@@ -435,8 +422,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             raise RepositoryException(f"Failed to analyze audio trends: {str(e)}")
             
     def _identify_best_performing_days(self, daily_trends: Dict[str, Any]) -> List[Dict[str, Any]]:
-        """Identify best performing days based on streams and engagement"""
-        if not daily_trends:
+        """Identify best performing days based on streams and engagement"""        if not daily_trends:
             return []
             
         # Sort days by total streams
@@ -459,8 +445,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
     def _generate_trend_insights(self, 
                                overall_trend: str,
                                platform_trends: Dict[str, Any]) -> List[str]:
-        """Generate insights based on trend analysis"""
-        insights = []
+        """Generate insights based on trend analysis"""        insights = []
         
         if overall_trend == 'growing':
             insights.append("🔥 Your audio content is gaining momentum! Keep up the great work.")
@@ -484,8 +469,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
     def get_audio_technical_insights(self, 
                                    user_id: int,
                                    days: int = 30) -> Dict[str, Any]:
-        """
-        Analyze technical audio characteristics and their performance correlation
+        """        Analyze technical audio characteristics and their performance correlation
         
         Args:
             user_id: User ID
@@ -493,8 +477,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             
         Returns:
             Technical audio insights
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             analytics_with_technical = self.db_session.query(AudioAnalytics).filter(
@@ -588,8 +571,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             raise RepositoryException(f"Failed to get audio technical insights: {str(e)}")
             
     def _get_tempo_range(self, tempo: float) -> str:
-        """Categorize tempo into ranges"""
-        if tempo < 70:
+        """Categorize tempo into ranges"""        if tempo < 70:
             return 'Very Slow (< 70 BPM)'
         elif tempo < 100:
             return 'Slow (70-100 BPM)'
@@ -601,8 +583,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             return 'Very Fast (> 140 BPM)'
             
     def _get_energy_range(self, energy: float) -> str:
-        """Categorize energy level"""
-        if energy < 0.3:
+        """Categorize energy level"""        if energy < 0.3:
             return 'Low Energy'
         elif energy < 0.7:
             return 'Medium Energy'
@@ -610,8 +591,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             return 'High Energy'
             
     def _calculate_performance_insights(self, performance_data: Dict[str, Dict[str, int]]) -> Dict[str, Any]:
-        """Calculate performance insights for technical characteristics"""
-        if not performance_data:
+        """Calculate performance insights for technical characteristics"""        if not performance_data:
             return {'best_performing': None, 'data': {}}
             
         # Calculate average streams per track for each characteristic
@@ -641,8 +621,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
                                           key_insights: Dict[str, Any],
                                           energy_insights: Dict[str, Any],
                                           genre_insights: Dict[str, Any]) -> List[str]:
-        """Generate recommendations based on technical analysis"""
-        recommendations = []
+        """Generate recommendations based on technical analysis"""        recommendations = []
         
         if tempo_insights.get('best_performing'):
             recommendations.append(
@@ -673,8 +652,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
     def get_audience_listening_patterns(self, 
                                       user_id: int,
                                       days: int = 30) -> Dict[str, Any]:
-        """
-        Analyze audience listening patterns and behavior
+        """        Analyze audience listening patterns and behavior
         
         Args:
             user_id: User ID
@@ -682,8 +660,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
             
         Returns:
             Audience listening patterns analysis
-        """
-        try:
+        """        try:
             start_date = datetime.utcnow() - timedelta(days=days)
             
             analytics_with_audience = self.db_session.query(AudioAnalytics).filter(
@@ -788,8 +765,7 @@ class AudioAnalyticsRepository(BaseRepository[AudioAnalytics]):
                                    listening_times: Dict[str, int],
                                    device_types: Dict[str, int],
                                    geographic_distribution: Dict[str, int]) -> List[str]:
-        """Generate insights from listening patterns"""
-        insights = []
+        """Generate insights from listening patterns"""        insights = []
         
         # Peak listening time insights
         if listening_times:

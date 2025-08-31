@@ -1,5 +1,4 @@
-"""
-Module Integrity Verification - Final Deployment Check
+"""Module Integrity Verification - Final Deployment Check
 ======================================================
 
 Comprehensive verification and integrity check for the complete parsers module.
@@ -12,7 +11,6 @@ This software is proprietary and confidential. Unauthorized use, reproduction,
 or distribution is strictly prohibited and may result in legal action.
 Contact: mlaiel@live.de
 """
-
 import os
 import sys
 import hashlib
@@ -25,15 +23,13 @@ from datetime import datetime
 
 
 class ModuleIntegrityVerifier:
-    """Ultra-professional module integrity verification system"""
-    
+    """Ultra-professional module integrity verification system"""    
     def __init__(self, module_path: str):
         self.module_path = Path(module_path)
         self.verification_results = {}
         
     def verify_file_structure(self) -> Dict[str, Any]:
-        """Verify complete file structure"""
-        required_files = {
+        """Verify complete file structure"""        required_files = {
             # Core infrastructure
             '__init__.py': 'Main module initialization',
             'index.py': 'Parsers index and management',
@@ -104,8 +100,7 @@ class ModuleIntegrityVerifier:
         return verification_result
     
     def verify_code_quality(self) -> Dict[str, Any]:
-        """Verify code quality and syntax"""
-        quality_result = {
+        """Verify code quality and syntax"""        quality_result = {
             'status': 'PASSED',
             'syntax_errors': [],
             'import_errors': [],
@@ -169,8 +164,7 @@ class ModuleIntegrityVerifier:
         return quality_result
     
     def _calculate_complexity(self, tree: ast.AST) -> int:
-        """Calculate cyclomatic complexity of AST"""
-        complexity = 1  # Base complexity
+        """Calculate cyclomatic complexity of AST"""        complexity = 1  # Base complexity
         
         for node in ast.walk(tree):
             if isinstance(node, (ast.If, ast.While, ast.For, ast.AsyncFor)):
@@ -183,8 +177,7 @@ class ModuleIntegrityVerifier:
         return complexity
     
     def verify_copyright_compliance(self) -> Dict[str, Any]:
-        """Verify copyright and licensing compliance"""
-        copyright_result = {
+        """Verify copyright and licensing compliance"""        copyright_result = {
             'status': 'PASSED',
             'files_without_copyright': [],
             'copyright_details': {}
@@ -227,8 +220,7 @@ class ModuleIntegrityVerifier:
         return copyright_result
     
     def verify_documentation_completeness(self) -> Dict[str, Any]:
-        """Verify documentation completeness"""
-        doc_result = {
+        """Verify documentation completeness"""        doc_result = {
             'status': 'PASSED',
             'documentation_coverage': {},
             'missing_documentation': []
@@ -263,8 +255,7 @@ class ModuleIntegrityVerifier:
         return doc_result
     
     def _assess_doc_quality(self, content: str) -> str:
-        """Assess documentation quality"""
-        word_count = len(content.split())
+        """Assess documentation quality"""        word_count = len(content.split())
         
         if word_count > 1000:
             return "EXCELLENT"
@@ -276,8 +267,7 @@ class ModuleIntegrityVerifier:
             return "POOR"
     
     def verify_module_completeness(self) -> Dict[str, Any]:
-        """Verify overall module completeness"""
-        completeness_result = {
+        """Verify overall module completeness"""        completeness_result = {
             'status': 'PASSED',
             'completion_percentage': 0,
             'component_scores': {},
@@ -338,8 +328,7 @@ class ModuleIntegrityVerifier:
         return completeness_result
     
     def generate_integrity_report(self) -> str:
-        """Generate comprehensive integrity report"""
-        print("🔍 Running comprehensive module integrity verification...")
+        """Generate comprehensive integrity report"""        print("🔍 Running comprehensive module integrity verification...")
         
         # Run all verifications
         structure_result = self.verify_file_structure()
@@ -419,8 +408,7 @@ class ModuleIntegrityVerifier:
 
 
 def main():
-    """Main verification execution"""
-    module_path = "/workspaces/Achiri/IA-Influencer-Agent/backend/crawlers/parsers"
+    """Main verification execution"""    module_path = "/workspaces/Achiri/IA-Influencer-Agent/backend/crawlers/parsers"
     
     verifier = ModuleIntegrityVerifier(module_path)
     report = verifier.generate_integrity_report()

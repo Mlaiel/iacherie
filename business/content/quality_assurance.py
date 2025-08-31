@@ -1,5 +1,4 @@
-"""
-Content Quality Assurance System - IA Influencer Agent Platform
+"""Content Quality Assurance System - IA Influencer Agent Platform
 ==============================================================
 
 Advanced quality assurance system ensuring content meets platform standards
@@ -8,7 +7,6 @@ through automated analysis, human review workflows, and compliance checking.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: All rights reserved. Unauthorized use, reproduction, or distribution prohibited.
 """
-
 import asyncio
 import hashlib
 import json
@@ -40,8 +38,7 @@ settings = get_settings()
 
 
 class ContentQualityAssuranceSystem:
-    """Advanced quality assurance system for content validation."""
-    
+    """Advanced quality assurance system for content validation."""    
     def __init__(self):
         self.db = get_database()
         self.content_analyzer = ContentAnalysisEngine()
@@ -226,8 +223,7 @@ class ContentQualityAssuranceSystem:
         content_metadata: Dict[str, Any],
         quality_level: str = 'standard'
     ) -> Dict[str, Any]:
-        """
-        Initiate comprehensive quality check for content.
+        """        Initiate comprehensive quality check for content.
         
         Args:
             content_id: Content to check
@@ -237,8 +233,7 @@ class ContentQualityAssuranceSystem:
             
         Returns:
             Quality check initiation result and tracking ID
-        """
-        try:
+        """        try:
             # Validate content type
             if content_type not in self.quality_standards:
                 raise QualityAssuranceError(f"Unsupported content type: {content_type}")
@@ -300,8 +295,7 @@ class ContentQualityAssuranceSystem:
         check_id: UUID,
         include_detailed_results: bool = False
     ) -> Dict[str, Any]:
-        """
-        Get quality check status and results.
+        """        Get quality check status and results.
         
         Args:
             check_id: Quality check ID
@@ -309,8 +303,7 @@ class ContentQualityAssuranceSystem:
             
         Returns:
             Current status and results of quality check
-        """
-        try:
+        """        try:
             # Get check from active checks or database
             if check_id in self.active_checks:
                 check_data = self.active_checks[check_id]
@@ -371,8 +364,7 @@ class ContentQualityAssuranceSystem:
         recheck_reason: str,
         specific_checks: Optional[List[str]] = None
     ) -> Dict[str, Any]:
-        """
-        Re-run quality checks on previously checked content.
+        """        Re-run quality checks on previously checked content.
         
         Args:
             content_id: Content to recheck
@@ -381,8 +373,7 @@ class ContentQualityAssuranceSystem:
             
         Returns:
             New quality check results
-        """
-        try:
+        """        try:
             # Get previous quality check
             previous_check = await self.db.quality_checks.get_latest_by_content(content_id)
             if not previous_check:
@@ -449,8 +440,7 @@ class ContentQualityAssuranceSystem:
         reviewer_id: UUID,
         review_priority: str = 'normal'
     ) -> Dict[str, Any]:
-        """
-        Assign human reviewer to quality check.
+        """        Assign human reviewer to quality check.
         
         Args:
             check_id: Quality check requiring human review
@@ -459,8 +449,7 @@ class ContentQualityAssuranceSystem:
             
         Returns:
             Assignment confirmation and review task details
-        """
-        try:
+        """        try:
             # Validate quality check
             if check_id not in self.active_checks:
                 quality_check = await self.db.quality_checks.get_by_id(check_id)
@@ -541,8 +530,7 @@ class ContentQualityAssuranceSystem:
         reviewer_id: UUID,
         review_results: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """
-        Submit human review results.
+        """        Submit human review results.
         
         Args:
             task_id: Review task ID
@@ -551,8 +539,7 @@ class ContentQualityAssuranceSystem:
             
         Returns:
             Review submission confirmation and next steps
-        """
-        try:
+        """        try:
             # Validate review task
             review_task = await self.db.review_tasks.get_by_id(task_id)
             if not review_task:
@@ -630,8 +617,7 @@ class ContentQualityAssuranceSystem:
         period: str = 'month',
         content_type_filter: Optional[str] = None
     ) -> Dict[str, Any]:
-        """
-        Get quality analytics and insights.
+        """        Get quality analytics and insights.
         
         Args:
             creator_id: Optional creator filter
@@ -640,8 +626,7 @@ class ContentQualityAssuranceSystem:
             
         Returns:
             Quality analytics and trends
-        """
-        try:
+        """        try:
             # Calculate period dates
             end_date = datetime.utcnow()
             start_date = self._calculate_period_start(period, end_date)
@@ -689,8 +674,7 @@ class ContentQualityAssuranceSystem:
     # Private workflow execution methods
     
     async def _execute_quality_workflow(self, check_id: UUID) -> None:
-        """Execute complete quality check workflow."""
-        try:
+        """Execute complete quality check workflow."""        try:
             check_data = self.active_checks[check_id]
             stages_to_run = check_data.get('specific_checks', list(self.review_stages.keys()))
             
@@ -741,8 +725,7 @@ class ContentQualityAssuranceSystem:
         stage_name: str,
         stage_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute individual quality check stage."""
-        try:
+        """Execute individual quality check stage."""        try:
             check_data = self.active_checks[check_id]
             content_metadata = check_data['check'].content_metadata
             content_type = check_data['check'].content_type
@@ -776,8 +759,7 @@ class ContentQualityAssuranceSystem:
         content_metadata: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Run automated technical analysis."""
-        try:
+        """Run automated technical analysis."""        try:
             file_path = content_metadata.get('file_path')
             if not file_path:
                 raise QualityAssuranceError("File path not provided")
@@ -815,8 +797,7 @@ class ContentQualityAssuranceSystem:
             }
     
     async def _analyze_video_technical(self, file_path: str) -> Dict[str, Any]:
-        """Analyze video technical properties."""
-        cap = cv2.VideoCapture(file_path)
+        """Analyze video technical properties."""        cap = cv2.VideoCapture(file_path)
         
         if not cap.isOpened():
             raise QualityAssuranceError("Could not open video file")
@@ -878,8 +859,7 @@ class ContentQualityAssuranceSystem:
         }
     
     async def _analyze_audio_technical(self, file_path: str) -> Dict[str, Any]:
-        """Analyze audio technical properties."""
-        try:
+        """Analyze audio technical properties."""        try:
             # Load audio file
             y, sr = librosa.load(file_path, sr=None)
             duration = librosa.get_duration(y=y, sr=sr)
@@ -925,8 +905,7 @@ class ContentQualityAssuranceSystem:
             raise QualityAssuranceError(f"Audio analysis failed: {str(e)}")
     
     async def _analyze_image_technical(self, file_path: str) -> Dict[str, Any]:
-        """Analyze image technical properties."""
-        try:
+        """Analyze image technical properties."""        try:
             # Open image
             with Image.open(file_path) as img:
                 width, height = img.size
@@ -982,8 +961,7 @@ class ContentQualityAssuranceSystem:
             raise QualityAssuranceError(f"Image analysis failed: {str(e)}")
     
     async def _analyze_text_technical(self, file_path: str) -> Dict[str, Any]:
-        """Analyze text technical properties."""
-        try:
+        """Analyze text technical properties."""        try:
             # Read text file
             with open(file_path, 'r', encoding='utf-8') as f:
                 text_content = f.read()
@@ -1032,8 +1010,7 @@ class ContentQualityAssuranceSystem:
         analysis_results: Dict[str, Any],
         standards: Dict[str, Any]
     ) -> float:
-        """Calculate compliance score against technical standards."""
-        compliance_checks = []
+        """Calculate compliance score against technical standards."""        compliance_checks = []
         
         # Check resolution requirements
         if 'resolution' in analysis_results and 'min_resolution' in standards:
@@ -1063,8 +1040,7 @@ class ContentQualityAssuranceSystem:
         analysis_results: Dict[str, Any],
         standards: Dict[str, Any]
     ) -> List[Dict[str, str]]:
-        """Identify technical issues based on analysis."""
-        issues = []
+        """Identify technical issues based on analysis."""        issues = []
         
         # Low resolution issue
         if 'resolution' in analysis_results and 'min_resolution' in standards:
@@ -1092,8 +1068,7 @@ class ContentQualityAssuranceSystem:
         return issues
     
     def _calculate_frame_stability(self, frame_scores: List[Dict[str, float]]) -> float:
-        """Calculate frame stability score."""
-        if len(frame_scores) < 2:
+        """Calculate frame stability score."""        if len(frame_scores) < 2:
             return 1.0
         
         # Calculate variance in quality metrics
@@ -1106,8 +1081,7 @@ class ContentQualityAssuranceSystem:
         return (blur_stability + brightness_stability) / 2.0
     
     def _calculate_hue_distribution(self, img_array: np.ndarray) -> Dict[str, float]:
-        """Calculate hue distribution in image."""
-        hsv = cv2.cvtColor(img_array, cv2.COLOR_RGB2HSV)
+        """Calculate hue distribution in image."""        hsv = cv2.cvtColor(img_array, cv2.COLOR_RGB2HSV)
         hue_channel = hsv[:, :, 0]
         
         # Calculate hue histogram
@@ -1134,8 +1108,7 @@ class ContentQualityAssuranceSystem:
         return hue_distribution
     
     def _detect_language(self, text: str) -> str:
-        """Basic language detection for text."""
-        # This is a simplified implementation
+        """Basic language detection for text."""        # This is a simplified implementation
         # In production, use a proper language detection library
         
         english_words = {'the', 'and', 'or', 'but', 'in', 'on', 'at', 'to', 'for', 'of', 'with', 'by'}
@@ -1152,8 +1125,7 @@ class ContentQualityAssuranceSystem:
         return max(scores, key=scores.get) if max(scores.values()) > 0 else 'unknown'
     
     def _calculate_readability_score(self, text: str) -> float:
-        """Calculate text readability score (simplified Flesch Reading Ease)."""
-        sentences = text.split('.')
+        """Calculate text readability score (simplified Flesch Reading Ease)."""        sentences = text.split('.')
         sentence_count = len([s for s in sentences if s.strip()])
         
         if sentence_count == 0:
@@ -1184,8 +1156,7 @@ class ContentQualityAssuranceSystem:
         content_metadata: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Run content moderation checks."""
-        try:
+        """Run content moderation checks."""        try:
             moderation_results = await self.moderation_engine.moderate_content(
                 content_path=content_metadata.get('file_path'),
                 content_type=content_type
@@ -1213,8 +1184,7 @@ class ContentQualityAssuranceSystem:
         content_metadata: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Run quality assessment using AI models."""
-        try:
+        """Run quality assessment using AI models."""        try:
             quality_results = await self.content_analyzer.assess_quality(
                 content_path=content_metadata.get('file_path'),
                 content_type=content_type
@@ -1242,8 +1212,7 @@ class ContentQualityAssuranceSystem:
         content_metadata: Dict[str, Any],
         content_type: str
     ) -> Dict[str, Any]:
-        """Run compliance verification checks."""
-        try:
+        """Run compliance verification checks."""        try:
             # Placeholder for compliance checking logic
             compliance_score = 0.9  # Assume good compliance for demo
             
@@ -1269,8 +1238,7 @@ class ContentQualityAssuranceSystem:
             }
     
     async def _initialize_models(self) -> None:
-        """Initialize AI models for quality assessment."""
-        try:
+        """Initialize AI models for quality assessment."""        try:
             # Initialize sentiment analyzer
             self.models['sentiment_analyzer'] = pipeline(
                 "sentiment-analysis",
@@ -1294,8 +1262,7 @@ class ContentQualityAssuranceSystem:
     # Placeholder methods for remaining functionality
     
     async def _wait_for_human_review(self, check_id: UUID) -> Dict[str, Any]:
-        """Wait for human review completion."""
-        # This would typically wait for the human review task to complete
+        """Wait for human review completion."""        # This would typically wait for the human review task to complete
         return {
             'success': True,
             'waiting_for_human_review': True,
@@ -1303,8 +1270,7 @@ class ContentQualityAssuranceSystem:
         }
     
     async def _run_final_approval(self, check_id: UUID) -> Dict[str, Any]:
-        """Run final approval stage."""
-        check_data = self.active_checks[check_id]
+        """Run final approval stage."""        check_data = self.active_checks[check_id]
         stage_results = check_data['stage_results']
         
         # Aggregate all results for final decision
@@ -1324,8 +1290,7 @@ class ContentQualityAssuranceSystem:
         }
     
     def _calculate_overall_quality_score(self, stage_results: Dict[str, Any]) -> float:
-        """Calculate overall quality score from all stages."""
-        scores = []
+        """Calculate overall quality score from all stages."""        scores = []
         
         for stage, result in stage_results.items():
             if result.get('success'):
@@ -1345,8 +1310,7 @@ class ContentQualityAssuranceSystem:
         stage_results: Dict[str, Any],
         quality_level: str
     ) -> bool:
-        """Evaluate if content passes quality standards."""
-        overall_score = self._calculate_overall_quality_score(stage_results)
+        """Evaluate if content passes quality standards."""        overall_score = self._calculate_overall_quality_score(stage_results)
         
         thresholds = {
             'basic': 0.6,
@@ -1357,8 +1321,7 @@ class ContentQualityAssuranceSystem:
         return overall_score >= thresholds.get(quality_level, 0.7)
     
     def _calculate_estimated_completion(self, quality_level: str) -> datetime:
-        """Calculate estimated completion time."""
-        time_estimates = {
+        """Calculate estimated completion time."""        time_estimates = {
             'basic': 10,      # 10 minutes
             'standard': 20,   # 20 minutes
             'premium': 45     # 45 minutes
@@ -1371,8 +1334,7 @@ class ContentQualityAssuranceSystem:
     # Due to length constraints, I'm providing the core structure and key methods
     
     async def _complete_quality_check(self, check_id: UUID) -> None:
-        """Complete the quality check process."""
-        check_data = self.active_checks[check_id]
+        """Complete the quality check process."""        check_data = self.active_checks[check_id]
         
         # Update database
         await self.db.quality_checks.update_completion(
@@ -1388,8 +1350,7 @@ class ContentQualityAssuranceSystem:
         logger.info(f"Quality check completed: {check_id}")
     
     def _calculate_period_start(self, period: str, end_date: datetime) -> datetime:
-        """Calculate start date for analysis period."""
-        if period == 'day':
+        """Calculate start date for analysis period."""        if period == 'day':
             return end_date - timedelta(days=1)
         elif period == 'week':
             return end_date - timedelta(weeks=1)

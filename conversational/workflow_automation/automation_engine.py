@@ -1,5 +1,4 @@
-"""
-Automation Engine - Core Workflow Automation System
+"""Automation Engine - Core Workflow Automation System
 
 Advanced enterprise automation engine for conversational AI workflows with intelligent
 orchestration, adaptive task management, comprehensive automation capabilities,
@@ -18,7 +17,6 @@ and will result in immediate legal action under German and International copyrig
 
 Contact mlaiel@live.de for licensing inquiries only.
 """
-
 import asyncio
 import logging
 import uuid
@@ -35,8 +33,7 @@ logger = logging.getLogger(__name__)
 
 
 class AutomationStatus(Enum):
-    """Automation execution status"""
-    PENDING = "pending"
+    """Automation execution status"""    PENDING = "pending"
     RUNNING = "running"
     COMPLETED = "completed"
     FAILED = "failed"
@@ -45,8 +42,7 @@ class AutomationStatus(Enum):
 
 
 class WorkflowPriority(Enum):
-    """Workflow execution priority levels"""
-    LOW = 1
+    """Workflow execution priority levels"""    LOW = 1
     NORMAL = 2
     HIGH = 3
     URGENT = 4
@@ -54,8 +50,7 @@ class WorkflowPriority(Enum):
 
 
 class TaskType(Enum):
-    """Types of automated tasks"""
-    CONVERSATIONAL = "conversational"
+    """Types of automated tasks"""    CONVERSATIONAL = "conversational"
     CONTENT_PROCESSING = "content_processing"
     PROTECTION = "protection"
     MONETIZATION = "monetization"
@@ -67,8 +62,7 @@ class TaskType(Enum):
 
 @dataclass
 class AutomationTask:
-    """Individual automation task"""
-    task_id: str
+    """Individual automation task"""    task_id: str
     name: str
     task_type: TaskType
     priority: WorkflowPriority
@@ -88,8 +82,7 @@ class AutomationTask:
 
 @dataclass
 class WorkflowDefinition:
-    """Workflow automation definition"""
-    workflow_id: str
+    """Workflow automation definition"""    workflow_id: str
     name: str
     description: str
     tasks: List[AutomationTask]
@@ -102,8 +95,7 @@ class WorkflowDefinition:
 
 @dataclass
 class WorkflowExecution:
-    """Workflow execution instance"""
-    execution_id: str
+    """Workflow execution instance"""    execution_id: str
     workflow_id: str
     workflow_definition: WorkflowDefinition
     status: AutomationStatus = AutomationStatus.PENDING
@@ -116,13 +108,11 @@ class WorkflowExecution:
 
 
 class AutomationEngine:
-    """
-    Core automation engine for workflow orchestration and task management.
+    """    Core automation engine for workflow orchestration and task management.
     
     Provides enterprise-grade automation capabilities with intelligent scheduling,
     error handling, resource management, and performance optimization.
-    """
-    
+    """    
     def __init__(self, config: Dict[str, Any] = None):
         self.config = config or {}
         self.workflows: Dict[str, WorkflowDefinition] = {}
@@ -154,8 +144,7 @@ class AutomationEngine:
         logger.info("AutomationEngine initialized with advanced enterprise capabilities")
     
     async def initialize(self):
-        """Initialize the automation engine"""
-        try:
+        """Initialize the automation engine"""        try:
             await self._register_default_task_handlers()
             await self._initialize_scheduler()
             await self._load_workflow_definitions()
@@ -165,8 +154,7 @@ class AutomationEngine:
             raise
     
     async def _register_default_task_handlers(self):
-        """Register default task handlers for each task type"""
-        self.task_registry[TaskType.CONVERSATIONAL] = self._handle_conversational_task
+        """Register default task handlers for each task type"""        self.task_registry[TaskType.CONVERSATIONAL] = self._handle_conversational_task
         self.task_registry[TaskType.CONTENT_PROCESSING] = self._handle_content_processing_task
         self.task_registry[TaskType.PROTECTION] = self._handle_protection_task
         self.task_registry[TaskType.MONETIZATION] = self._handle_monetization_task
@@ -176,23 +164,20 @@ class AutomationEngine:
         self.task_registry[TaskType.NOTIFICATION] = self._handle_notification_task
     
     async def _initialize_scheduler(self):
-        """Initialize the intelligent scheduler"""
-        if not self.scheduler_running:
+        """Initialize the intelligent scheduler"""        if not self.scheduler_running:
             self._scheduler_task = asyncio.create_task(self._scheduler_loop())
             self.scheduler_running = True
             logger.info("Automation scheduler initialized and started")
     
     async def _load_workflow_definitions(self):
-        """Load predefined workflow definitions"""
-        # Load default business workflow definitions
+        """Load predefined workflow definitions"""        # Load default business workflow definitions
         default_workflows = await self._get_default_workflows()
         for workflow in default_workflows:
             self.workflows[workflow.workflow_id] = workflow
         logger.info(f"Loaded {len(self.workflows)} workflow definitions")
     
     async def _get_default_workflows(self) -> List[WorkflowDefinition]:
-        """Get default workflow definitions for common use cases"""
-        workflows = []
+        """Get default workflow definitions for common use cases"""        workflows = []
         
         # Content Upload Workflow
         content_upload_workflow = WorkflowDefinition(
@@ -309,8 +294,7 @@ class AutomationEngine:
         return workflows
     
     async def register_workflow(self, workflow: WorkflowDefinition) -> bool:
-        """Register a new workflow definition"""
-        try:
+        """Register a new workflow definition"""        try:
             with self._lock:
                 self.workflows[workflow.workflow_id] = workflow
             logger.info(f"Registered workflow: {workflow.name} ({workflow.workflow_id})")
@@ -325,8 +309,7 @@ class AutomationEngine:
         context: Dict[str, Any] = None,
         priority: WorkflowPriority = WorkflowPriority.NORMAL
     ) -> str:
-        """Execute a workflow and return execution ID"""
-        try:
+        """Execute a workflow and return execution ID"""        try:
             if workflow_id not in self.workflows:
                 raise ValueError(f"Workflow {workflow_id} not found")
             
@@ -355,8 +338,7 @@ class AutomationEngine:
             raise
     
     async def _execute_workflow_async(self, execution: WorkflowExecution):
-        """Execute workflow asynchronously"""
-        start_time = time.time()
+        """Execute workflow asynchronously"""        start_time = time.time()
         
         try:
             execution.status = AutomationStatus.RUNNING
@@ -391,8 +373,7 @@ class AutomationEngine:
             logger.error(f"Workflow execution failed: {execution.execution_id}: {e}")
     
     def _build_task_execution_order(self, tasks: List[AutomationTask]) -> List[AutomationTask]:
-        """Build task execution order based on dependencies"""
-        ordered_tasks = []
+        """Build task execution order based on dependencies"""        ordered_tasks = []
         executed_tasks = set()
         task_map = {task.task_id: task for task in tasks}
         
@@ -418,8 +399,7 @@ class AutomationEngine:
         return ordered_tasks
     
     async def _execute_task(self, execution: WorkflowExecution, task: AutomationTask):
-        """Execute a single task"""
-        task_start_time = time.time()
+        """Execute a single task"""        task_start_time = time.time()
         
         try:
             task.status = AutomationStatus.RUNNING
@@ -484,8 +464,7 @@ class AutomationEngine:
             raise
     
     async def _handle_conversational_task(self, task: AutomationTask, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle conversational automation tasks"""
-        # Simulate conversational processing
+        """Handle conversational automation tasks"""        # Simulate conversational processing
         await asyncio.sleep(0.1)
         return {
             "task_type": "conversational",
@@ -496,8 +475,7 @@ class AutomationEngine:
         }
     
     async def _handle_content_processing_task(self, task: AutomationTask, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle content processing automation tasks"""
-        # Simulate content processing
+        """Handle content processing automation tasks"""        # Simulate content processing
         await asyncio.sleep(0.2)
         return {
             "task_type": "content_processing",
@@ -508,8 +486,7 @@ class AutomationEngine:
         }
     
     async def _handle_protection_task(self, task: AutomationTask, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle content protection automation tasks"""
-        # Simulate protection processing
+        """Handle content protection automation tasks"""        # Simulate protection processing
         await asyncio.sleep(0.3)
         return {
             "task_type": "protection",
@@ -521,8 +498,7 @@ class AutomationEngine:
         }
     
     async def _handle_monetization_task(self, task: AutomationTask, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle monetization automation tasks"""
-        # Simulate monetization processing
+        """Handle monetization automation tasks"""        # Simulate monetization processing
         await asyncio.sleep(0.2)
         return {
             "task_type": "monetization",
@@ -533,8 +509,7 @@ class AutomationEngine:
         }
     
     async def _handle_collaboration_task(self, task: AutomationTask, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle collaboration automation tasks"""
-        # Simulate collaboration processing
+        """Handle collaboration automation tasks"""        # Simulate collaboration processing
         await asyncio.sleep(0.2)
         return {
             "task_type": "collaboration",
@@ -545,8 +520,7 @@ class AutomationEngine:
         }
     
     async def _handle_integration_task(self, task: AutomationTask, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle integration automation tasks"""
-        # Simulate integration processing
+        """Handle integration automation tasks"""        # Simulate integration processing
         await asyncio.sleep(0.1)
         return {
             "task_type": "integration",
@@ -556,8 +530,7 @@ class AutomationEngine:
         }
     
     async def _handle_analytics_task(self, task: AutomationTask, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle analytics automation tasks"""
-        # Simulate analytics processing
+        """Handle analytics automation tasks"""        # Simulate analytics processing
         await asyncio.sleep(0.2)
         return {
             "task_type": "analytics",
@@ -568,8 +541,7 @@ class AutomationEngine:
         }
     
     async def _handle_notification_task(self, task: AutomationTask, context: Dict[str, Any]) -> Dict[str, Any]:
-        """Handle notification automation tasks"""
-        # Simulate notification processing
+        """Handle notification automation tasks"""        # Simulate notification processing
         await asyncio.sleep(0.1)
         return {
             "task_type": "notification",
@@ -579,8 +551,7 @@ class AutomationEngine:
         }
     
     async def _scheduler_loop(self):
-        """Main scheduler loop for automated workflow execution"""
-        while self.scheduler_running:
+        """Main scheduler loop for automated workflow execution"""        while self.scheduler_running:
             try:
                 await self._process_scheduled_workflows()
                 await self._monitor_performance()
@@ -590,8 +561,7 @@ class AutomationEngine:
                 await asyncio.sleep(60)
     
     async def _process_scheduled_workflows(self):
-        """Process workflows that are scheduled to run"""
-        current_time = datetime.utcnow()
+        """Process workflows that are scheduled to run"""        current_time = datetime.utcnow()
         
         for workflow in self.workflows.values():
             if not workflow.enabled or not workflow.schedule:
@@ -606,8 +576,7 @@ class AutomationEngine:
                     logger.error(f"Failed to execute scheduled workflow {workflow.name}: {e}")
     
     async def _should_run_workflow(self, workflow: WorkflowDefinition, current_time: datetime) -> bool:
-        """Check if a workflow should run based on its schedule"""
-        schedule = workflow.schedule
+        """Check if a workflow should run based on its schedule"""        schedule = workflow.schedule
         if not schedule:
             return False
         
@@ -631,8 +600,7 @@ class AutomationEngine:
         return False
     
     async def _monitor_performance(self):
-        """Monitor automation engine performance"""
-        with self._lock:
+        """Monitor automation engine performance"""        with self._lock:
             self.performance_metrics["active_executions"] = len([
                 e for e in self.executions.values()
                 if e.status == AutomationStatus.RUNNING
@@ -640,8 +608,7 @@ class AutomationEngine:
             self.performance_metrics["queue_size"] = len(self.workflows)
     
     def _update_average_execution_time(self, execution_time: float):
-        """Update average execution time metric"""
-        current_avg = self.metrics["average_execution_time"]
+        """Update average execution time metric"""        current_avg = self.metrics["average_execution_time"]
         total_executions = self.metrics["successful_executions"]
         
         if total_executions == 1:
@@ -652,8 +619,7 @@ class AutomationEngine:
             )
     
     async def get_execution_status(self, execution_id: str) -> Optional[Dict[str, Any]]:
-        """Get execution status and results"""
-        execution = self.executions.get(execution_id)
+        """Get execution status and results"""        execution = self.executions.get(execution_id)
         if not execution:
             return None
         
@@ -670,8 +636,7 @@ class AutomationEngine:
         }
     
     async def get_metrics(self) -> Dict[str, Any]:
-        """Get automation engine metrics"""
-        return {
+        """Get automation engine metrics"""        return {
             "automation_metrics": self.metrics.copy(),
             "performance_metrics": self.performance_metrics.copy(),
             "active_workflows": len(self.workflows),
@@ -682,8 +647,7 @@ class AutomationEngine:
         }
     
     async def stop(self):
-        """Stop the automation engine"""
-        self.scheduler_running = False
+        """Stop the automation engine"""        self.scheduler_running = False
         if self._scheduler_task:
             self._scheduler_task.cancel()
         
@@ -692,13 +656,11 @@ class AutomationEngine:
 
 
 class WorkflowOrchestrator:
-    """
-    Advanced workflow orchestrator for complex business process automation.
+    """    Advanced workflow orchestrator for complex business process automation.
     
     Provides sophisticated workflow orchestration with conditional logic,
     parallel execution, error handling, and dynamic workflow modification.
-    """
-    
+    """    
     def __init__(self, automation_engine: AutomationEngine):
         self.automation_engine = automation_engine
         self.orchestration_rules: Dict[str, Dict[str, Any]] = {}
@@ -710,8 +672,7 @@ class WorkflowOrchestrator:
         orchestration_config: Dict[str, Any],
         context: Dict[str, Any] = None
     ) -> str:
-        """Orchestrate complex workflow with advanced logic"""
-        try:
+        """Orchestrate complex workflow with advanced logic"""        try:
             # Apply orchestration rules
             modified_workflow = await self._apply_orchestration_rules(
                 workflow_id, orchestration_config, context
@@ -737,8 +698,7 @@ class WorkflowOrchestrator:
         config: Dict[str, Any],
         context: Dict[str, Any]
     ) -> WorkflowDefinition:
-        """Apply orchestration rules to modify workflow"""
-        # Get base workflow
+        """Apply orchestration rules to modify workflow"""        # Get base workflow
         base_workflow = self.automation_engine.workflows[workflow_id]
         
         # Create modified copy
@@ -777,8 +737,7 @@ class WorkflowOrchestrator:
         conditions: Dict[str, Any],
         context: Dict[str, Any]
     ) -> List[AutomationTask]:
-        """Apply conditional logic to include/exclude tasks"""
-        filtered_tasks = []
+        """Apply conditional logic to include/exclude tasks"""        filtered_tasks = []
         
         for task in tasks:
             should_include = True
@@ -798,8 +757,7 @@ class WorkflowOrchestrator:
         tasks: List[AutomationTask],
         parallel_groups: Dict[str, List[str]]
     ) -> List[AutomationTask]:
-        """Apply parallel execution grouping to tasks"""
-        # Modify task dependencies to enable parallel execution
+        """Apply parallel execution grouping to tasks"""        # Modify task dependencies to enable parallel execution
         for group_name, task_ids in parallel_groups.items():
             group_tasks = [task for task in tasks if task.task_id in task_ids]
             
@@ -813,8 +771,7 @@ class WorkflowOrchestrator:
         return tasks
     
     async def _evaluate_condition(self, condition: Dict[str, Any], context: Dict[str, Any]) -> bool:
-        """Evaluate a conditional expression"""
-        condition_type = condition.get("type", "simple")
+        """Evaluate a conditional expression"""        condition_type = condition.get("type", "simple")
         
         if condition_type == "simple":
             field = condition.get("field")
@@ -845,8 +802,7 @@ class WorkflowOrchestrator:
         execution_id: str,
         config: Dict[str, Any]
     ):
-        """Set up enhanced monitoring for orchestrated workflow"""
-        # Set up custom monitoring based on orchestration config
+        """Set up enhanced monitoring for orchestrated workflow"""        # Set up custom monitoring based on orchestration config
         monitoring_config = config.get("monitoring", {})
         
         if monitoring_config.get("real_time_alerts"):
@@ -856,24 +812,20 @@ class WorkflowOrchestrator:
             await self._setup_performance_tracking(execution_id, monitoring_config)
     
     async def _setup_real_time_alerts(self, execution_id: str, config: Dict[str, Any]):
-        """Set up real-time alerts for workflow execution"""
-        # Implementation for real-time alerts
+        """Set up real-time alerts for workflow execution"""        # Implementation for real-time alerts
         pass
     
     async def _setup_performance_tracking(self, execution_id: str, config: Dict[str, Any]):
-        """Set up performance tracking for workflow execution"""
-        # Implementation for performance tracking
+        """Set up performance tracking for workflow execution"""        # Implementation for performance tracking
         pass
 
 
 class TaskAutomator:
-    """
-    Individual task automation system with intelligent execution.
+    """    Individual task automation system with intelligent execution.
     
     Provides granular task automation with adaptive execution strategies,
     intelligent retry mechanisms, and comprehensive task lifecycle management.
-    """
-    
+    """    
     def __init__(self):
         self.task_strategies: Dict[TaskType, Dict[str, Any]] = {}
         self.execution_history: Dict[str, List[Dict[str, Any]]] = {}
@@ -884,8 +836,7 @@ class TaskAutomator:
         task: AutomationTask,
         automation_config: Dict[str, Any] = None
     ) -> Dict[str, Any]:
-        """Automate individual task with intelligent execution"""
-        config = automation_config or {}
+        """Automate individual task with intelligent execution"""        config = automation_config or {}
         
         try:
             # Select execution strategy
@@ -908,8 +859,7 @@ class TaskAutomator:
         task: AutomationTask,
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Select optimal execution strategy for task"""
-        # Get task type strategies
+        """Select optimal execution strategy for task"""        # Get task type strategies
         type_strategies = self.task_strategies.get(task.task_type, {})
         
         # Get performance history
@@ -937,8 +887,7 @@ class TaskAutomator:
         task: AutomationTask,
         strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute task with selected strategy"""
-        start_time = time.time()
+        """Execute task with selected strategy"""        start_time = time.time()
         
         # Apply strategy modifications
         modified_timeout = task.timeout_seconds * strategy.get("timeout_multiplier", 1.0)
@@ -966,8 +915,7 @@ class TaskAutomator:
         task: AutomationTask,
         result: Dict[str, Any]
     ):
-        """Update task performance profile"""
-        task_id = task.task_id
+        """Update task performance profile"""        task_id = task.task_id
         
         if task_id not in self.execution_history:
             self.execution_history[task_id] = []
@@ -985,13 +933,11 @@ class TaskAutomator:
 
 
 class ConversationalAutomation:
-    """
-    Specialized automation for conversational AI workflows.
+    """    Specialized automation for conversational AI workflows.
     
     Provides intelligent automation of conversation flows, response generation,
     context management, and adaptive dialogue strategies.
-    """
-    
+    """    
     def __init__(self):
         self.conversation_patterns: Dict[str, Dict[str, Any]] = {}
         self.response_templates: Dict[str, List[str]] = {}
@@ -1002,8 +948,7 @@ class ConversationalAutomation:
         conversation_id: str,
         automation_config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Automate conversation flow with intelligent response generation"""
-        try:
+        """Automate conversation flow with intelligent response generation"""        try:
             # Analyze conversation context
             context = await self._analyze_conversation_context(conversation_id)
             
@@ -1022,8 +967,7 @@ class ConversationalAutomation:
             raise
     
     async def _analyze_conversation_context(self, conversation_id: str) -> Dict[str, Any]:
-        """Analyze conversation context for automation decisions"""
-        # Simulate context analysis
+        """Analyze conversation context for automation decisions"""        # Simulate context analysis
         return {
             "conversation_id": conversation_id,
             "topic": "content_creation",
@@ -1038,8 +982,7 @@ class ConversationalAutomation:
         context: Dict[str, Any],
         config: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Determine optimal automation strategy for conversation"""
-        automation_level = config.get("automation_level", "moderate")
+        """Determine optimal automation strategy for conversation"""        automation_level = config.get("automation_level", "moderate")
         
         strategy = {
             "response_automation": True,
@@ -1063,8 +1006,7 @@ class ConversationalAutomation:
         context: Dict[str, Any],
         strategy: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Execute automated conversation flow"""
-        results = {
+        """Execute automated conversation flow"""        results = {
             "conversation_id": conversation_id,
             "automation_applied": [],
             "responses_generated": 0,
@@ -1092,8 +1034,7 @@ class ConversationalAutomation:
         return results
     
     async def _generate_automated_responses(self, context: Dict[str, Any]) -> List[str]:
-        """Generate automated responses based on context"""
-        topic = context.get("topic", "general")
+        """Generate automated responses based on context"""        topic = context.get("topic", "general")
         intent = context.get("user_intent", "information")
         
         # Get appropriate templates
@@ -1116,14 +1057,12 @@ class ConversationalAutomation:
         conversation_id: str,
         context: Dict[str, Any]
     ):
-        """Update conversation context with new information"""
-        # Simulate context update
+        """Update conversation context with new information"""        # Simulate context update
         context["last_automation_update"] = datetime.utcnow().isoformat()
         context["automation_confidence"] = 0.85
     
     async def _predict_user_intents(self, context: Dict[str, Any]) -> List[str]:
-        """Predict likely next user intents"""
-        current_intent = context.get("user_intent", "general")
+        """Predict likely next user intents"""        current_intent = context.get("user_intent", "general")
         topic = context.get("topic", "general")
         
         # Simple intent prediction based on current state
@@ -1149,13 +1088,11 @@ class ConversationalAutomation:
 
 
 class IntelligentScheduler:
-    """
-    Intelligent scheduling system for workflow automation.
+    """    Intelligent scheduling system for workflow automation.
     
     Provides smart scheduling with resource optimization, dependency management,
     priority-based execution, and adaptive scheduling algorithms.
-    """
-    
+    """    
     def __init__(self, automation_engine: AutomationEngine):
         self.automation_engine = automation_engine
         self.schedule_queue: List[Dict[str, Any]] = []
@@ -1168,8 +1105,7 @@ class IntelligentScheduler:
         schedule_config: Dict[str, Any],
         context: Dict[str, Any] = None
     ) -> str:
-        """Schedule workflow execution with intelligent optimization"""
-        try:
+        """Schedule workflow execution with intelligent optimization"""        try:
             # Generate schedule ID
             schedule_id = str(uuid.uuid4())
             
@@ -1203,8 +1139,7 @@ class IntelligentScheduler:
         config: Dict[str, Any],
         context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Optimize schedule timing based on various factors"""
-        optimal_config = config.copy()
+        """Optimize schedule timing based on various factors"""        optimal_config = config.copy()
         
         # Get workflow resource requirements
         workflow = self.automation_engine.workflows.get(workflow_id)
@@ -1234,8 +1169,7 @@ class IntelligentScheduler:
         self,
         workflow: WorkflowDefinition
     ) -> Dict[str, float]:
-        """Estimate resource requirements for workflow"""
-        # Base resource estimation
+        """Estimate resource requirements for workflow"""        # Base resource estimation
         base_cpu = 0.1
         base_memory = 50.0  # MB
         
@@ -1264,8 +1198,7 @@ class IntelligentScheduler:
         required_resources: Dict[str, float],
         config: Dict[str, Any]
     ) -> bool:
-        """Check if scheduling would cause resource conflicts"""
-        # Simple conflict detection
+        """Check if scheduling would cause resource conflicts"""        # Simple conflict detection
         current_cpu_usage = self.resource_usage.get("cpu", 0.0)
         current_memory_usage = self.resource_usage.get("memory", 0.0)
         
@@ -1283,8 +1216,7 @@ class IntelligentScheduler:
         config: Dict[str, Any],
         resources: Dict[str, float]
     ) -> Dict[str, Any]:
-        """Adjust scheduling timing to avoid resource conflicts"""
-        adjusted_config = config.copy()
+        """Adjust scheduling timing to avoid resource conflicts"""        adjusted_config = config.copy()
         
         # Find next available time slot
         if "execute_at" in adjusted_config:
@@ -1300,8 +1232,7 @@ class IntelligentScheduler:
         config: Dict[str, Any],
         priority: WorkflowPriority
     ) -> Dict[str, Any]:
-        """Apply priority-based scheduling optimizations"""
-        optimized_config = config.copy()
+        """Apply priority-based scheduling optimizations"""        optimized_config = config.copy()
         
         if priority == WorkflowPriority.CRITICAL:
             # Execute immediately, preempt lower priority workflows
@@ -1315,8 +1246,7 @@ class IntelligentScheduler:
         return optimized_config
     
     async def execute_scheduled_workflows(self):
-        """Execute workflows that are ready to run"""
-        current_time = datetime.utcnow()
+        """Execute workflows that are ready to run"""        current_time = datetime.utcnow()
         ready_workflows = []
         
         for entry in self.schedule_queue:
@@ -1359,8 +1289,7 @@ class IntelligentScheduler:
         entry: Dict[str, Any],
         current_time: datetime
     ) -> bool:
-        """Check if scheduled workflow is ready to execute"""
-        config = entry["schedule_config"]
+        """Check if scheduled workflow is ready to execute"""        config = entry["schedule_config"]
         
         # Check execution time
         if "execute_at" in config:
@@ -1380,8 +1309,7 @@ class IntelligentScheduler:
 
 
 class AutomationMetrics:
-    """Advanced automation metrics and analytics system"""
-    
+    """Advanced automation metrics and analytics system"""    
     def __init__(self):
         self.metrics_storage = {}
         self.performance_history = []
@@ -1394,8 +1322,7 @@ class AutomationMetrics:
         workflow_id: str,
         metrics: Dict[str, Any]
     ):
-        """Record detailed execution metrics"""
-        timestamp = datetime.utcnow()
+        """Record detailed execution metrics"""        timestamp = datetime.utcnow()
         
         metric_entry = {
             "execution_id": execution_id,
@@ -1441,8 +1368,7 @@ class AutomationMetrics:
         )
         
     async def get_performance_insights(self, workflow_id: str) -> Dict[str, Any]:
-        """Generate performance insights for workflow"""
-        if workflow_id not in self.execution_analytics:
+        """Generate performance insights for workflow"""        if workflow_id not in self.execution_analytics:
             return {"status": "no_data"}
         
         analytics = self.execution_analytics[workflow_id]
@@ -1469,8 +1395,7 @@ class AutomationMetrics:
         return insights
     
     async def _calculate_performance_trend(self, executions: List[Dict]) -> str:
-        """Calculate performance trend direction"""
-        if len(executions) < 3:
+        """Calculate performance trend direction"""        if len(executions) < 3:
             return "insufficient_data"
         
         recent_scores = [ex["performance_score"] for ex in executions[-5:]]
@@ -1496,8 +1421,7 @@ class AutomationMetrics:
         workflow_id: str,
         executions: List[Dict]
     ) -> List[str]:
-        """Generate optimization recommendations"""
-        recommendations = []
+        """Generate optimization recommendations"""        recommendations = []
         
         if not executions:
             return recommendations
@@ -1534,8 +1458,7 @@ class AutomationMetrics:
         return recommendations
     
     async def _calculate_resource_efficiency(self, executions: List[Dict]) -> float:
-        """Calculate resource efficiency score (0-100)"""
-        if not executions:
+        """Calculate resource efficiency score (0-100)"""        if not executions:
             return 0.0
         
         efficiency_scores = []
@@ -1556,8 +1479,7 @@ class AutomationMetrics:
         return sum(efficiency_scores) / len(efficiency_scores) if efficiency_scores else 0.0
     
     async def _identify_bottlenecks(self, executions: List[Dict]) -> List[str]:
-        """Identify performance bottlenecks"""
-        bottlenecks = []
+        """Identify performance bottlenecks"""        bottlenecks = []
         
         if not executions:
             return bottlenecks
@@ -1591,8 +1513,7 @@ class AutomationMetrics:
         return bottlenecks
     
     async def _calculate_scalability_score(self, executions: List[Dict]) -> float:
-        """Calculate scalability score (0-100)"""
-        if len(executions) < 5:
+        """Calculate scalability score (0-100)"""        if len(executions) < 5:
             return 50.0  # Neutral score for insufficient data
         
         # Analyze performance consistency under load
@@ -1630,8 +1551,7 @@ class AutomationMetrics:
 
 
 class WorkflowValidator:
-    """Advanced workflow validation and compliance system"""
-    
+    """Advanced workflow validation and compliance system"""    
     def __init__(self):
         self.validation_rules = {}
         self.compliance_checks = {}
@@ -1641,8 +1561,7 @@ class WorkflowValidator:
         self,
         workflow: WorkflowDefinition
     ) -> Dict[str, Any]:
-        """Comprehensive workflow validation"""
-        validation_result = {
+        """Comprehensive workflow validation"""        validation_result = {
             "is_valid": True,
             "errors": [],
             "warnings": [],
@@ -1674,8 +1593,7 @@ class WorkflowValidator:
         workflow: WorkflowDefinition,
         result: Dict[str, Any]
     ):
-        """Validate basic workflow structure"""
-        if not workflow.workflow_id:
+        """Validate basic workflow structure"""        if not workflow.workflow_id:
             result["errors"].append("Workflow ID is required")
         
         if not workflow.name:
@@ -1702,8 +1620,7 @@ class WorkflowValidator:
         workflow: WorkflowDefinition,
         result: Dict[str, Any]
     ):
-        """Validate business logic requirements"""
-        # Check for required business tasks based on workflow type
+        """Validate business logic requirements"""        # Check for required business tasks based on workflow type
         task_types = {task.task_type for task in workflow.tasks}
         
         if "content_processing" in workflow.name.lower():
@@ -1729,8 +1646,7 @@ class WorkflowValidator:
         workflow: WorkflowDefinition,
         result: Dict[str, Any]
     ):
-        """Validate security requirements"""
-        # Check for sensitive data handling
+        """Validate security requirements"""        # Check for sensitive data handling
         for task in workflow.tasks:
             if "password" in str(task.data).lower() or "secret" in str(task.data).lower():
                 result["warnings"].append(
@@ -1748,8 +1664,7 @@ class WorkflowValidator:
         workflow: WorkflowDefinition,
         result: Dict[str, Any]
     ):
-        """Validate performance requirements"""
-        total_timeout = sum(task.timeout_seconds for task in workflow.tasks)
+        """Validate performance requirements"""        total_timeout = sum(task.timeout_seconds for task in workflow.tasks)
         
         if total_timeout > 3600:  # 1 hour
             result["warnings"].append("Workflow total timeout exceeds 1 hour")
@@ -1768,8 +1683,7 @@ class WorkflowValidator:
         workflow: WorkflowDefinition,
         result: Dict[str, Any]
     ):
-        """Validate compliance requirements"""
-        # GDPR compliance checks
+        """Validate compliance requirements"""        # GDPR compliance checks
         for task in workflow.tasks:
             if "user_data" in task.data:
                 if not task.data.get("gdpr_compliant"):
@@ -1791,8 +1705,7 @@ class WorkflowValidator:
         result["compliance_status"] = "validated"
     
     async def _has_circular_dependencies(self, tasks: List[AutomationTask]) -> bool:
-        """Check for circular dependencies in tasks"""
-        # Build dependency graph
+        """Check for circular dependencies in tasks"""        # Build dependency graph
         graph = {task.task_id: set(task.dependencies) for task in tasks}
         
         # Use DFS to detect cycles
@@ -1824,8 +1737,7 @@ class WorkflowValidator:
 
 
 class PerformanceOptimizer:
-    """Advanced performance optimization system"""
-    
+    """Advanced performance optimization system"""    
     def __init__(self):
         self.optimization_strategies = {}
         self.performance_profiles = {}
@@ -1836,8 +1748,7 @@ class PerformanceOptimizer:
         workflow: WorkflowDefinition,
         execution_context: Dict[str, Any]
     ) -> Dict[str, Any]:
-        """Apply performance optimizations to workflow execution"""
-        optimization_plan = {
+        """Apply performance optimizations to workflow execution"""        optimization_plan = {
             "original_workflow": workflow,
             "optimized_tasks": [],
             "resource_allocation": {},
@@ -1865,8 +1776,7 @@ class PerformanceOptimizer:
         workflow: WorkflowDefinition,
         plan: Dict[str, Any]
     ):
-        """Analyze workflow for optimization opportunities"""
-        opportunities = []
+        """Analyze workflow for optimization opportunities"""        opportunities = []
         
         # Parallel execution opportunities
         parallel_groups = await self._identify_parallel_tasks(workflow.tasks)
@@ -1893,8 +1803,7 @@ class PerformanceOptimizer:
         workflow: WorkflowDefinition,
         plan: Dict[str, Any]
     ):
-        """Optimize individual task execution"""
-        optimized_tasks = []
+        """Optimize individual task execution"""        optimized_tasks = []
         
         for task in workflow.tasks:
             optimized_task = await self._optimize_single_task(task)
@@ -1903,8 +1812,7 @@ class PerformanceOptimizer:
         plan["optimized_tasks"] = optimized_tasks
     
     async def _optimize_single_task(self, task: AutomationTask) -> AutomationTask:
-        """Apply optimizations to a single task"""
-        # Create optimized copy
+        """Apply optimizations to a single task"""        # Create optimized copy
         import copy
         optimized_task = copy.deepcopy(task)
         
@@ -1933,8 +1841,7 @@ class PerformanceOptimizer:
         self,
         tasks: List[AutomationTask]
     ) -> List[List[str]]:
-        """Identify tasks that can be executed in parallel"""
-        # Build dependency graph
+        """Identify tasks that can be executed in parallel"""        # Build dependency graph
         dependencies = {}
         for task in tasks:
             dependencies[task.task_id] = set(task.dependencies)
@@ -1967,8 +1874,7 @@ class PerformanceOptimizer:
         self,
         tasks: List[AutomationTask]
     ) -> List[str]:
-        """Identify tasks that can benefit from caching"""
-        cacheable = []
+        """Identify tasks that can benefit from caching"""        cacheable = []
         
         for task in tasks:
             # Tasks that are good candidates for caching
@@ -1982,8 +1888,7 @@ class PerformanceOptimizer:
         self,
         tasks: List[AutomationTask]
     ) -> Dict[str, Any]:
-        """Identify resource optimization opportunities"""
-        optimizations = {
+        """Identify resource optimization opportunities"""        optimizations = {
             "memory_optimization": [],
             "cpu_optimization": [],
             "io_optimization": []
@@ -2021,8 +1926,7 @@ class PerformanceOptimizer:
         workflow: WorkflowDefinition,
         plan: Dict[str, Any]
     ):
-        """Optimize resource allocation for workflow"""
-        total_tasks = len(workflow.tasks)
+        """Optimize resource allocation for workflow"""        total_tasks = len(workflow.tasks)
         resource_allocation = {}
         
         # CPU allocation based on task types
@@ -2060,8 +1964,7 @@ class PerformanceOptimizer:
         plan: Dict[str, Any],
         context: Dict[str, Any]
     ):
-        """Optimize execution strategy based on context"""
-        # Determine optimal execution strategy
+        """Optimize execution strategy based on context"""        # Determine optimal execution strategy
         task_count = len(workflow.tasks)
         has_high_priority = any(task.priority.value >= 4 for task in workflow.tasks)
         

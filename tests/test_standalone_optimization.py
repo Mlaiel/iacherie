@@ -1,12 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Test adapté automatiquement pour le projet Ainflue
+"""Test adapté automatiquement pour le projet Ainflue
 ================================================
 
 Ce fichier a été importé et adapté depuis l'ancien projet IA-Influencer.
 Certains imports et fonctionnalités peuvent nécessiter des ajustements manuels.
 """
-
 import sys
 import os
 from pathlib import Path
@@ -14,12 +12,10 @@ from pathlib import Path
 # Ajouter le répertoire racine au Python path
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
-"""
-Standalone Test for Enhanced Performance Optimization
+"""Standalone Test for Enhanced Performance Optimization
 
 Test the performance optimization functionality without importing core modules
 """
-
 import pytest
 import sys
 import os
@@ -35,11 +31,9 @@ import core.enhanced_performance_optimization as perf_opt
 
 
 class TestEnhancedPerformanceOptimization:
-    """Test enhanced performance optimization features"""
-    
+    """Test enhanced performance optimization features"""    
     def test_performance_profiler_initialization(self):
-        """Test performance profiler initialization"""
-        config = {
+        """Test performance profiler initialization"""        config = {
             "max_history_size": 500,
             "analysis_window": 600,
             "cpu_threshold": 75.0
@@ -56,8 +50,7 @@ class TestEnhancedPerformanceOptimization:
         assert len(profiler.optimization_recommendations) == 0
     
     def test_profiler_start_stop_cycle(self):
-        """Test profiler start and stop cycle"""
-        profiler = perf_opt.EnhancedPerformanceProfiler()
+        """Test profiler start and stop cycle"""        profiler = perf_opt.EnhancedPerformanceProfiler()
         
         # Test start profiling
         result = profiler.start_profiling()
@@ -87,8 +80,7 @@ class TestEnhancedPerformanceOptimization:
         assert results["total_measurements"] == 5
     
     def test_bottleneck_detection(self):
-        """Test bottleneck detection"""
-        config = {
+        """Test bottleneck detection"""        config = {
             "cpu_threshold": 80.0,
             "memory_threshold": 85.0,
             "execution_time_threshold": 5.0
@@ -120,8 +112,7 @@ class TestEnhancedPerformanceOptimization:
         assert "execution_time_bottleneck" in bottleneck_types
     
     def test_optimization_recommendations(self):
-        """Test optimization recommendations generation"""
-        profiler = perf_opt.EnhancedPerformanceProfiler()
+        """Test optimization recommendations generation"""        profiler = perf_opt.EnhancedPerformanceProfiler()
         profiler.start_profiling()
         
         # Add metrics that should generate optimization recommendations
@@ -155,8 +146,7 @@ class TestEnhancedPerformanceOptimization:
         assert "memory_optimization" in categories
     
     def test_performance_score_calculation(self):
-        """Test performance score calculation"""
-        profiler = perf_opt.EnhancedPerformanceProfiler()
+        """Test performance score calculation"""        profiler = perf_opt.EnhancedPerformanceProfiler()
         profiler.start_profiling()
         
         # Add metrics for good performance
@@ -184,11 +174,9 @@ class TestEnhancedPerformanceOptimization:
 
 
 class TestAdvancedCacheStrategy:
-    """Test advanced cache strategy"""
-    
+    """Test advanced cache strategy"""    
     def test_cache_strategy_initialization(self):
-        """Test cache strategy initialization"""
-        config = {"advanced_features": True}
+        """Test cache strategy initialization"""        config = {"advanced_features": True}
         cache_strategy = perf_opt.AdvancedCacheStrategy(config)
         
         assert cache_strategy.config == config
@@ -202,8 +190,7 @@ class TestAdvancedCacheStrategy:
         assert cache_strategy.cache_metrics["misses"] == 0
     
     def test_cache_strategy_recommendation(self):
-        """Test cache strategy recommendation logic"""
-        cache_strategy = perf_opt.AdvancedCacheStrategy()
+        """Test cache strategy recommendation logic"""        cache_strategy = perf_opt.AdvancedCacheStrategy()
         
         # Test small, high-frequency data (should go to L1)
         strategy1 = cache_strategy.get_cache_strategy("small_hot_data", 512*1024, 150)
@@ -223,11 +210,9 @@ class TestAdvancedCacheStrategy:
 
 
 class TestDatabaseIndexingOptimizer:
-    """Test database indexing optimizer"""
-    
+    """Test database indexing optimizer"""    
     def test_indexing_optimizer_initialization(self):
-        """Test indexing optimizer initialization"""
-        config = {"auto_optimization": True}
+        """Test indexing optimizer initialization"""        config = {"auto_optimization": True}
         optimizer = perf_opt.DatabaseIndexingOptimizer(config)
         
         assert optimizer.config == config
@@ -237,8 +222,7 @@ class TestDatabaseIndexingOptimizer:
         assert "gist" in optimizer.index_types
     
     def test_query_performance_analysis(self):
-        """Test query performance analysis"""
-        optimizer = perf_opt.DatabaseIndexingOptimizer()
+        """Test query performance analysis"""        optimizer = perf_opt.DatabaseIndexingOptimizer()
         
         # Mock slow query performance
         query_stats = {
@@ -279,8 +263,7 @@ class TestDatabaseIndexingOptimizer:
 
 
 def test_comprehensive_workflow():
-    """Test comprehensive performance optimization workflow"""
-    # Step 1: Initialize profiler
+    """Test comprehensive performance optimization workflow"""    # Step 1: Initialize profiler
     profiler = perf_opt.EnhancedPerformanceProfiler({
         "max_history_size": 100,
         "cpu_threshold": 75.0,

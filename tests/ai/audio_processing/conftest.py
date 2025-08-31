@@ -21,8 +21,7 @@ os.environ.setdefault("PYTHONPATH", str(backend_path))
 
 @pytest.fixture
 def sample_audio():
-    """Generate standard test audio samples"""
-    sample_rate = 44100
+    """Generate standard test audio samples"""    sample_rate = 44100
     duration = 1.0
     t = np.linspace(0, duration, int(sample_rate * duration))
     
@@ -36,8 +35,7 @@ def sample_audio():
 
 @pytest.fixture
 def temp_audio_file(tmp_path, sample_audio):
-    """Create a temporary audio file"""
-    import soundfile as sf
+    """Create a temporary audio file"""    import soundfile as sf
     
     file_path = tmp_path / "test_audio.wav"
     sf.write(file_path, sample_audio["sine_440"], sample_audio["sample_rate"])

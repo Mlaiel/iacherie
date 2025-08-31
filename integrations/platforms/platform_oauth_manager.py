@@ -1,5 +1,4 @@
-"""
-Platform OAuth Manager
+"""Platform OAuth Manager
 ======================
 
 Multi-platform OAuth authentication and token management system.
@@ -8,7 +7,6 @@ Handles OAuth 2.0 flows for all supported platforms with secure token storage.
 Author: Fahed Mlaiel <mlaiel@live.de>
 Copyright: (c) 2025 Fahed Mlaiel. All rights reserved.
 """
-
 import asyncio
 import aiohttp
 import json
@@ -27,8 +25,7 @@ logger = logging.getLogger(__name__)
 
 @dataclass
 class OAuthConfig:
-    """OAuth configuration for a platform"""
-    platform: str
+    """OAuth configuration for a platform"""    platform: str
     client_id: str
     client_secret: str
     authorize_url: str
@@ -40,8 +37,7 @@ class OAuthConfig:
 
 @dataclass
 class OAuthTokens:
-    """OAuth tokens for a platform"""
-    platform: str
+    """OAuth tokens for a platform"""    platform: str
     user_id: str
     access_token: str
     refresh_token: Optional[str] = None
@@ -52,8 +48,7 @@ class OAuthTokens:
 
 
 class PlatformOAuthManager:
-    """Multi-platform OAuth authentication manager"""
-    
+    """Multi-platform OAuth authentication manager"""    
     def __init__(self, encryption_key: Optional[bytes] = None):
         self.session = None
         self.encryption_key = encryption_key or Fernet.generate_key()
@@ -158,13 +153,11 @@ class PlatformOAuthManager:
         }
         
     async def __aenter__(self):
-        """Async context manager entry"""
-        self.session = aiohttp.ClientSession()
+        """Async context manager entry"""        self.session = aiohttp.ClientSession()
         return self
         
     async def __aexit__(self, exc_type, exc_val, exc_tb):
-        """Async context manager exit"""
-        if self.session:
+        """Async context manager exit"""        if self.session:
             await self.session.close()
             
     def configure_platform(
@@ -175,8 +168,7 @@ class PlatformOAuthManager:
         redirect_uri: str,
         scopes: Optional[List[str]] = None
     ):
-        """Configure OAuth settings for a platform"""
-        if platform not in self.platform_configs:
+        """Configure OAuth settings for a platform"""        if platform not in self.platform_configs:
             raise ValueError(f"Unsupported platform: {platform}")
             
         config = self.platform_configs[platform]
@@ -195,8 +187,7 @@ class PlatformOAuthManager:
         user_id: str,
         state: Optional[str] = None
     ) -> Tuple[str, str]:
-        """
-        Generate OAuth authorization URL
+        """        Generate OAuth authorization URL
         
         Args:
             platform: Platform name
@@ -205,8 +196,7 @@ class PlatformOAuthManager:
             
         Returns:
             Tuple of (authorization_url, state)
-        """
-        if platform not in self.platform_configs:
+        """        if platform not in self.platform_configs:
             raise ValueError(f"Unsupported platform: {platform}")
             
         config = self.platform_configs[platform]
@@ -270,8 +260,7 @@ class PlatformOAuthManager:
         authorization_code: str,
         state: str
     ) -> OAuthTokens:
-        """
-        Exchange authorization code for access tokens
+        """        Exchange authorization code for access tokens
         
         Args:
             platform: Platform name
@@ -280,8 +269,7 @@ class PlatformOAuthManager:
             
         Returns:
             OAuthTokens object with access tokens
-        """
-        # Validate state
+        """        # Validate state
         if state not in self.oauth_states:
             raise ValueError("Invalid or expired OAuth state")
             
@@ -378,8 +366,7 @@ class PlatformOAuthManager:
         platform: str,
         refresh_token: str
     ) -> OAuthTokens:
-        """
-        Refresh access token using refresh token
+        """        Refresh access token using refresh token
         
         Args:
             platform: Platform name
@@ -387,8 +374,7 @@ class PlatformOAuthManager:
             
         Returns:
             New OAuthTokens with refreshed access token
-        """
-        if platform not in self.platform_configs:
+        """        if platform not in self.platform_configs:
             raise ValueError(f"Unsupported platform: {platform}")
             
         config = self.platform_configs[platform]
@@ -454,8 +440,7 @@ class PlatformOAuthManager:
             raise
             
     def encrypt_tokens(self, tokens: OAuthTokens) -> str:
-        """Encrypt tokens for secure storage"""
-        tokens_dict = asdict(tokens)
+        """Encrypt tokens for secure storage"""        tokens_dict = asdict(tokens)
         
         # Convert datetime to ISO format for JSON serialization
         if tokens_dict["expires_at"]:
@@ -466,8 +451,7 @@ class PlatformOAuthManager:
         return base64.b64encode(encrypted_data).decode()
         
     def decrypt_tokens(self, encrypted_tokens: str) -> OAuthTokens:
-        """Decrypt tokens from secure storage"""
-        try:
+        """Decrypt tokens from secure storage"""        try:
             encrypted_data = base64.b64decode(encrypted_tokens.encode())
             decrypted_data = self.cipher_suite.decrypt(encrypted_data)
             tokens_dict = json.loads(decrypted_data.decode())
@@ -483,16 +467,14 @@ class PlatformOAuthManager:
             raise ValueError("Invalid or corrupted token data")
             
     async def validate_tokens(self, tokens: OAuthTokens) -> bool:
-        """
-        Validate if tokens are still valid
+        """        Validate if tokens are still valid
         
         Args:
             tokens: OAuthTokens to validate
             
         Returns:
             True if tokens are valid, False otherwise
-        """
-        # Check expiration
+        """        # Check expiration
         if tokens.expires_at and datetime.now() >= tokens.expires_at:
             logger.info(f"Tokens expired for {tokens.platform}")
             return False
@@ -526,8 +508,7 @@ class PlatformOAuthManager:
             return False
             
     def cleanup_expired_states(self, max_age_minutes: int = 30):
-        """Clean up expired OAuth states"""
-        cutoff_time = datetime.now() - timedelta(minutes=max_age_minutes)
+        """Clean up expired OAuth states"""        cutoff_time = datetime.now() - timedelta(minutes=max_age_minutes)
         
         expired_states = [
             state for state, data in self.oauth_states.items()
@@ -541,12 +522,10 @@ class PlatformOAuthManager:
             logger.info(f"Cleaned up {len(expired_states)} expired OAuth states")
             
     def get_supported_platforms(self) -> List[str]:
-        """Get list of supported platforms"""
-        return list(self.platform_configs.keys())
+        """Get list of supported platforms"""        return list(self.platform_configs.keys())
         
     def get_platform_scopes(self, platform: str) -> List[str]:
-        """Get default scopes for a platform"""
-        if platform not in self.platform_configs:
+        """Get default scopes for a platform"""        if platform not in self.platform_configs:
             raise ValueError(f"Unsupported platform: {platform}")
             
         return self.platform_configs[platform].scopes.copy()

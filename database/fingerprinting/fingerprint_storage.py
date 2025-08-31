@@ -1,5 +1,4 @@
-"""
-Enterprise-Grade Fingerprint Storage Manager
+"""Enterprise-Grade Fingerprint Storage Manager
 
 Ultra-advanced database storage system for content fingerprints with industrial-strength
 optimization, multi-modal vector storage, real-time indexing, and comprehensive security.
@@ -33,7 +32,6 @@ Development Team Specialties:
 - Audio Engineer: Advanced audio processing and analysis
 - DevOps Engineer: Infrastructure automation and monitoring
 """
-
 import asyncio
 import hashlib
 import json
@@ -74,8 +72,7 @@ Base = declarative_base()
 
 
 class ContentType(Enum):
-    """Content type enumeration for fingerprinting"""
-    AUDIO = "audio"
+    """Content type enumeration for fingerprinting"""    AUDIO = "audio"
     VIDEO = "video"
     IMAGE = "image"
     TEXT = "text"
@@ -84,8 +81,7 @@ class ContentType(Enum):
 
 
 class FingerprintAlgorithm(Enum):
-    """Fingerprinting algorithm types"""
-    PERCEPTUAL = "perceptual"
+    """Fingerprinting algorithm types"""    PERCEPTUAL = "perceptual"
     STRUCTURAL = "structural"
     SEMANTIC = "semantic"
     HYBRID = "hybrid"
@@ -96,8 +92,7 @@ class FingerprintAlgorithm(Enum):
 
 
 class StorageStatus(Enum):
-    """Storage status enumeration"""
-    ACTIVE = "active"
+    """Storage status enumeration"""    ACTIVE = "active"
     ARCHIVED = "archived"
     DELETED = "deleted"
     CORRUPTED = "corrupted"
@@ -107,8 +102,7 @@ class StorageStatus(Enum):
 
 @dataclass
 class FingerprintMetrics:
-    """Performance metrics for fingerprint storage"""
-    storage_size: int
+    """Performance metrics for fingerprint storage"""    storage_size: int
     compression_ratio: float
     encryption_overhead: float
     retrieval_time: float
@@ -118,8 +112,7 @@ class FingerprintMetrics:
 
 @dataclass
 class StorageConfiguration:
-    """Configuration for fingerprint storage"""
-    compression_enabled: bool = True
+    """Configuration for fingerprint storage"""    compression_enabled: bool = True
     encryption_enabled: bool = True
     vector_storage: bool = True
     auto_cleanup: bool = True
@@ -129,8 +122,7 @@ class StorageConfiguration:
 
 
 class FingerprintStorageModel(Base):
-    """Enterprise SQLAlchemy model for fingerprint storage with advanced features"""
-    __tablename__ = "content_fingerprints_v2"
+    """Enterprise SQLAlchemy model for fingerprint storage with advanced features"""    __tablename__ = "content_fingerprints_v2"
     
     # Primary identification
     fingerprint_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
@@ -234,8 +226,7 @@ class FingerprintStorageModel(Base):
 
 
 class FingerprintVersionModel(Base):
-    """Version tracking for fingerprint evolution"""
-    __tablename__ = "fingerprint_versions"
+    """Version tracking for fingerprint evolution"""    __tablename__ = "fingerprint_versions"
     
     version_id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
     fingerprint_id = Column(UUID(as_uuid=True), ForeignKey('content_fingerprints_v2.fingerprint_id'), nullable=False, index=True)
@@ -255,8 +246,7 @@ class FingerprintVersionModel(Base):
 
 
 class FingerprintStorageManager:
-    """
-    Ultra-Advanced Enterprise Fingerprint Storage Manager
+    """    Ultra-Advanced Enterprise Fingerprint Storage Manager
     
     Industrial-strength storage system with:
     - Multi-modal content fingerprint storage
@@ -265,8 +255,7 @@ class FingerprintStorageManager:
     - Intelligent batch processing
     - Performance optimization and monitoring
     - Comprehensive audit trails
-    """
-    
+    """    
     def __init__(self, db_manager: DatabaseManager):
         self.db_manager = db_manager
         self.encryption_manager = EncryptionManager()
@@ -293,8 +282,7 @@ class FingerprintStorageManager:
     
     @asynccontextmanager
     async def get_session(self) -> AsyncIterator[AsyncSession]:
-        """Get async database session with comprehensive error handling"""
-        session = None
+        """Get async database session with comprehensive error handling"""        session = None
         try:
             session = await self.db_manager.get_async_session()
             yield session
@@ -318,8 +306,7 @@ class FingerprintStorageManager:
         vector_data: Optional[np.ndarray] = None,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Store content fingerprint with advanced optimization
+        """        Store content fingerprint with advanced optimization
         
         Args:
             content_id: Unique content identifier
@@ -332,8 +319,7 @@ class FingerprintStorageManager:
             
         Returns:
             fingerprint_id: Unique fingerprint identifier
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             async with self.get_session() as session:
@@ -395,8 +381,7 @@ class FingerprintStorageManager:
         include_vectors: bool = True,
         decompress_metadata: bool = True
     ) -> Optional[Dict[str, Any]]:
-        """
-        Retrieve fingerprint with advanced caching and optimization
+        """        Retrieve fingerprint with advanced caching and optimization
         
         Args:
             fingerprint_id: Unique fingerprint identifier
@@ -405,8 +390,7 @@ class FingerprintStorageManager:
             
         Returns:
             Complete fingerprint data or None if not found
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         # Check cache first
         cache_key = f"fingerprint:{fingerprint_id}:{include_vectors}"
@@ -452,16 +436,14 @@ class FingerprintStorageManager:
         self,
         fingerprints: List[Dict[str, Any]]
     ) -> List[str]:
-        """
-        Batch store multiple fingerprints with optimized performance
+        """        Batch store multiple fingerprints with optimized performance
         
         Args:
             fingerprints: List of fingerprint data dictionaries
             
         Returns:
             List of generated fingerprint IDs
-        """
-        if not fingerprints:
+        """        if not fingerprints:
             return []
         
         start_time = datetime.now()
@@ -491,8 +473,7 @@ class FingerprintStorageManager:
         similarity_threshold: float = 0.8,
         max_results: int = 100
     ) -> List[Dict[str, Any]]:
-        """
-        Search for similar fingerprints using advanced matching algorithms
+        """        Search for similar fingerprints using advanced matching algorithms
         
         Args:
             query_hash: Hash to search for
@@ -502,8 +483,7 @@ class FingerprintStorageManager:
             
         Returns:
             List of similar fingerprints with similarity scores
-        """
-        try:
+        """        try:
             async with self.get_session() as session:
                 # Multi-hash similarity search
                 query = select(FingerprintStorageModel).where(
@@ -551,8 +531,7 @@ class FingerprintStorageManager:
         fingerprint_id: str,
         metadata_updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update fingerprint metadata with version tracking
+        """        Update fingerprint metadata with version tracking
         
         Args:
             fingerprint_id: Unique fingerprint identifier
@@ -560,8 +539,7 @@ class FingerprintStorageManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             async with self.get_session() as session:
                 query = select(FingerprintStorageModel).where(
                     FingerprintStorageModel.fingerprint_id == fingerprint_id
@@ -603,8 +581,7 @@ class FingerprintStorageManager:
         fingerprint_id: str,
         archive_reason: str = "User requested"
     ) -> bool:
-        """
-        Archive fingerprint while preserving data for audit trails
+        """        Archive fingerprint while preserving data for audit trails
         
         Args:
             fingerprint_id: Unique fingerprint identifier
@@ -612,8 +589,7 @@ class FingerprintStorageManager:
             
         Returns:
             Success status
-        """
-        try:
+        """        try:
             async with self.get_session() as session:
                 query = update(FingerprintStorageModel).where(
                     FingerprintStorageModel.fingerprint_id == fingerprint_id
@@ -643,13 +619,11 @@ class FingerprintStorageManager:
             raise DatabaseError(f"Archive operation failed: {str(e)}")
     
     async def get_storage_statistics(self) -> Dict[str, Any]:
-        """
-        Get comprehensive storage statistics and performance metrics
+        """        Get comprehensive storage statistics and performance metrics
         
         Returns:
             Dictionary containing storage statistics
-        """
-        try:
+        """        try:
             async with self.get_session() as session:
                 # Count fingerprints by type and status
                 type_counts = await session.execute(
@@ -706,8 +680,7 @@ class FingerprintStorageManager:
     # Private helper methods
     
     async def _process_vector_data(self, vector_data: Optional[np.ndarray]) -> Optional[Dict[str, Any]]:
-        """Process and optimize vector data for storage"""
-        if vector_data is None:
+        """Process and optimize vector data for storage"""        if vector_data is None:
             return None
         
         try:
@@ -732,8 +705,7 @@ class FingerprintStorageManager:
             return None
     
     async def _compress_metadata(self, metadata: Optional[Dict[str, Any]]) -> Optional[bytes]:
-        """Compress metadata for efficient storage"""
-        if not metadata or not self.config.compression_enabled:
+        """Compress metadata for efficient storage"""        if not metadata or not self.config.compression_enabled:
             return metadata
         
         try:
@@ -752,8 +724,7 @@ class FingerprintStorageManager:
         change_type: str,
         change_reason: str
     ):
-        """Create version tracking record"""
-        try:
+        """Create version tracking record"""        try:
             version_record = FingerprintVersionModel(
                 fingerprint_id=fingerprint_id,
                 version_number=version_number or 1,
@@ -771,8 +742,7 @@ class FingerprintStorageManager:
         include_vectors: bool,
         decompress_metadata: bool
     ) -> Dict[str, Any]:
-        """Process fingerprint data for retrieval optimization"""
-        data = {
+        """Process fingerprint data for retrieval optimization"""        data = {
             'fingerprint_id': str(fingerprint.fingerprint_id),
             'content_id': fingerprint.content_id,
             'user_id': str(fingerprint.user_id),
@@ -814,8 +784,7 @@ class FingerprintStorageManager:
         return data
     
     async def _update_access_tracking(self, session: AsyncSession, fingerprint_id: str):
-        """Update access tracking for fingerprint"""
-        try:
+        """Update access tracking for fingerprint"""        try:
             await session.execute(
                 update(FingerprintStorageModel)
                 .where(FingerprintStorageModel.fingerprint_id == fingerprint_id)
@@ -832,8 +801,7 @@ class FingerprintStorageManager:
         session: AsyncSession,
         batch: List[Dict[str, Any]]
     ) -> List[str]:
-        """Process a batch of fingerprints for optimized storage"""
-        fingerprint_ids = []
+        """Process a batch of fingerprints for optimized storage"""        fingerprint_ids = []
         
         for fingerprint_data in batch:
             fingerprint_id = str(uuid.uuid4())
@@ -854,8 +822,7 @@ class FingerprintStorageManager:
         query_hash: str,
         fingerprint: FingerprintStorageModel
     ) -> float:
-        """Calculate similarity score between hashes"""
-        try:
+        """Calculate similarity score between hashes"""        try:
             # Implement sophisticated similarity calculation
             # This is a simplified version - real implementation would use
             # advanced algorithms like Hamming distance, Jaccard similarity, etc.
@@ -878,8 +845,7 @@ class FingerprintStorageManager:
             return 0.0
     
     def _hash_similarity(self, hash1: str, hash2: str) -> float:
-        """Calculate similarity between two hashes"""
-        if not hash1 or not hash2:
+        """Calculate similarity between two hashes"""        if not hash1 or not hash2:
             return 0.0
         
         # Simple Hamming distance for demonstration
@@ -890,8 +856,7 @@ class FingerprintStorageManager:
         return common_chars / max_length if max_length > 0 else 0.0
     
     def _update_storage_stats(self, start_time: datetime):
-        """Update storage performance statistics"""
-        processing_time = (datetime.now() - start_time).total_seconds()
+        """Update storage performance statistics"""        processing_time = (datetime.now() - start_time).total_seconds()
         self.stats['total_stored'] += 1
         self.stats['average_storage_time'] = (
             (self.stats['average_storage_time'] * (self.stats['total_stored'] - 1) + processing_time) /
@@ -899,8 +864,7 @@ class FingerprintStorageManager:
         )
     
     def _update_retrieval_stats(self, start_time: datetime):
-        """Update retrieval performance statistics"""
-        processing_time = (datetime.now() - start_time).total_seconds()
+        """Update retrieval performance statistics"""        processing_time = (datetime.now() - start_time).total_seconds()
         self.stats['total_retrieved'] += 1
         self.stats['average_retrieval_time'] = (
             (self.stats['average_retrieval_time'] * (self.stats['total_retrieved'] - 1) + processing_time) /
@@ -908,19 +872,16 @@ class FingerprintStorageManager:
         )
     
     def _invalidate_fingerprint_cache(self, fingerprint_id: str):
-        """Invalidate cache entries for a specific fingerprint"""
-        keys_to_remove = [key for key in self._vector_cache.keys() if fingerprint_id in key]
+        """Invalidate cache entries for a specific fingerprint"""        keys_to_remove = [key for key in self._vector_cache.keys() if fingerprint_id in key]
         for key in keys_to_remove:
             del self._vector_cache[key]
     
     async def cleanup_expired_fingerprints(self) -> int:
-        """
-        Clean up expired fingerprints and optimize storage
+        """        Clean up expired fingerprints and optimize storage
         
         Returns:
             Number of fingerprints cleaned up
-        """
-        try:
+        """        try:
             async with self.get_session() as session:
                 # Find expired fingerprints
                 current_time = datetime.now(timezone.utc)
@@ -979,8 +940,7 @@ __all__ = [
         user_id: str,
         metadata: Optional[Dict[str, Any]] = None
     ) -> str:
-        """
-        Store content fingerprint with enterprise-grade optimization
+        """        Store content fingerprint with enterprise-grade optimization
         
         Args:
             fingerprint: ContentFingerprint object to store
@@ -993,8 +953,7 @@ __all__ = [
         Raises:
             DatabaseError: Storage operation failed
             ValidationError: Invalid fingerprint data
-        """
-        start_time = datetime.now()
+        """        start_time = datetime.now()
         
         try:
             # Validate fingerprint data
@@ -1033,8 +992,7 @@ __all__ = [
         fingerprint_id: str,
         include_vectors: bool = True
     ) -> Optional[ContentFingerprint]:
-        """
-        Retrieve fingerprint by ID with optional vector data
+        """        Retrieve fingerprint by ID with optional vector data
         
         Args:
             fingerprint_id: Fingerprint identifier
@@ -1042,8 +1000,7 @@ __all__ = [
             
         Returns:
             ContentFingerprint object or None if not found
-        """
-        try:
+        """        try:
             async with self.db_manager.get_session() as session:
                 query = select(FingerprintStorageModel).where(
                     FingerprintStorageModel.fingerprint_id == fingerprint_id
@@ -1075,8 +1032,7 @@ __all__ = [
         limit: int = 100,
         offset: int = 0
     ) -> List[ContentFingerprint]:
-        """
-        Advanced fingerprint search with multiple filters
+        """        Advanced fingerprint search with multiple filters
         
         Args:
             user_id: Filter by user
@@ -1090,8 +1046,7 @@ __all__ = [
             
         Returns:
             List of matching ContentFingerprint objects
-        """
-        try:
+        """        try:
             async with self.db_manager.get_session() as session:
                 query = select(FingerprintStorageModel)
                 
@@ -1137,8 +1092,7 @@ __all__ = [
         fingerprint_id: str,
         updates: Dict[str, Any]
     ) -> bool:
-        """
-        Update fingerprint data with validation
+        """        Update fingerprint data with validation
         
         Args:
             fingerprint_id: Fingerprint identifier
@@ -1146,8 +1100,7 @@ __all__ = [
             
         Returns:
             bool: True if updated successfully
-        """
-        try:
+        """        try:
             async with self.db_manager.get_session() as session:
                 query = update(FingerprintStorageModel).where(
                     FingerprintStorageModel.fingerprint_id == fingerprint_id
@@ -1167,16 +1120,14 @@ __all__ = [
             raise DatabaseError(f"Update failed: {e}")
     
     async def delete_fingerprint(self, fingerprint_id: str) -> bool:
-        """
-        Delete fingerprint and associated data
+        """        Delete fingerprint and associated data
         
         Args:
             fingerprint_id: Fingerprint identifier
             
         Returns:
             bool: True if deleted successfully
-        """
-        try:
+        """        try:
             async with self.db_manager.get_session() as session:
                 # Delete matches first (foreign key constraint)
                 await session.execute(
@@ -1206,16 +1157,14 @@ __all__ = [
             raise DatabaseError(f"Deletion failed: {e}")
     
     async def get_storage_stats(self, user_id: Optional[str] = None) -> Dict[str, Any]:
-        """
-        Get comprehensive storage statistics
+        """        Get comprehensive storage statistics
         
         Args:
             user_id: Optional user filter
             
         Returns:
             Dictionary with storage statistics
-        """
-        try:
+        """        try:
             async with self.db_manager.get_session() as session:
                 base_query = select(FingerprintStorageModel)
                 if user_id:
@@ -1261,8 +1210,7 @@ __all__ = [
     # Private helper methods
     
     def _validate_fingerprint(self, fingerprint: ContentFingerprint) -> None:
-        """Validate fingerprint data before storage"""
-        if not fingerprint.content_id:
+        """Validate fingerprint data before storage"""        if not fingerprint.content_id:
             raise ValidationError("Content ID is required")
         if not fingerprint.primary_hash:
             raise ValidationError("Primary hash is required")
@@ -1275,8 +1223,7 @@ __all__ = [
         user_id: str,
         metadata: Optional[Dict[str, Any]]
     ) -> Dict[str, Any]:
-        """Prepare fingerprint data for storage"""
-        storage_data = {
+        """Prepare fingerprint data for storage"""        storage_data = {
             'content_id': fingerprint.content_id,
             'user_id': user_id,
             'content_type': fingerprint.content_type.value if hasattr(fingerprint.content_type, 'value') else str(fingerprint.content_type),
@@ -1301,15 +1248,13 @@ __all__ = [
         return storage_data
     
     async def _encrypt_vector(self, vector: np.ndarray) -> bytes:
-        """Encrypt vector data for secure storage"""
-        if not self.encryption_enabled:
+        """Encrypt vector data for secure storage"""        if not self.encryption_enabled:
             return vector.tobytes()
         
         return await self.encryption_manager.encrypt_data(vector.tobytes())
     
     async def _decrypt_vector(self, encrypted_vector: bytes) -> np.ndarray:
-        """Decrypt vector data from storage"""
-        if not self.encryption_enabled:
+        """Decrypt vector data from storage"""        if not self.encryption_enabled:
             return np.frombuffer(encrypted_vector, dtype=np.float32)
         
         decrypted_data = await self.encryption_manager.decrypt_data(encrypted_vector)
@@ -1320,8 +1265,7 @@ __all__ = [
         model: FingerprintStorageModel,
         include_vectors: bool = True
     ) -> ContentFingerprint:
-        """Convert storage model to ContentFingerprint object"""
-        fingerprint_data = {
+        """Convert storage model to ContentFingerprint object"""        fingerprint_data = {
             'content_id': model.content_id,
             'fingerprint_type': FingerprintType(model.fingerprint_type),
             'primary_hash': model.primary_hash,
@@ -1350,16 +1294,14 @@ __all__ = [
         fingerprint_id: str,
         processing_time: float
     ) -> None:
-        """Update performance metrics for fingerprint"""
-        await session.execute(
+        """Update performance metrics for fingerprint"""        await session.execute(
             update(FingerprintStorageModel)
             .where(FingerprintStorageModel.fingerprint_id == fingerprint_id)
             .values(processing_time=processing_time)
         )
     
     async def _update_access_time(self, session: AsyncSession, fingerprint_id: str) -> None:
-        """Update last accessed time"""
-        await session.execute(
+        """Update last accessed time"""        await session.execute(
             update(FingerprintStorageModel)
             .where(FingerprintStorageModel.fingerprint_id == fingerprint_id)
             .values(last_accessed=func.now())
@@ -1370,8 +1312,7 @@ __all__ = [
         session: AsyncSession,
         user_id: Optional[str]
     ) -> float:
-        """Calculate average confidence score"""
-        query = select(func.avg(FingerprintStorageModel.confidence_score))
+        """Calculate average confidence score"""        query = select(func.avg(FingerprintStorageModel.confidence_score))
         if user_id:
             query = query.where(FingerprintStorageModel.user_id == user_id)
         
@@ -1383,8 +1324,7 @@ __all__ = [
         session: AsyncSession,
         user_id: Optional[str]
     ) -> Dict[str, int]:
-        """Get quality level distribution"""
-        query = select(
+        """Get quality level distribution"""        query = select(
             FingerprintStorageModel.quality_level,
             func.count().label('count')
         ).group_by(FingerprintStorageModel.quality_level)
@@ -1397,8 +1337,7 @@ __all__ = [
     
     @asynccontextmanager
     async def batch_operation(self):
-        """Context manager for batch operations with transaction safety"""
-        async with self.db_manager.get_session() as session:
+        """Context manager for batch operations with transaction safety"""        async with self.db_manager.get_session() as session:
             try:
                 yield session
                 await session.commit()
@@ -1407,8 +1346,7 @@ __all__ = [
                 raise
     
     async def cleanup_expired_fingerprints(self) -> int:
-        """Clean up expired fingerprints"""
-        try:
+        """Clean up expired fingerprints"""        try:
             async with self.db_manager.get_session() as session:
                 now = datetime.now(timezone.utc)
                 

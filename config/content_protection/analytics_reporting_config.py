@@ -1,5 +1,4 @@
-"""
-Analytics and Reporting Configuration Module for Content Protection
+"""Analytics and Reporting Configuration Module for Content Protection
 ==================================================================
 
 Professional analytics and reporting configuration for content protection metrics,
@@ -17,7 +16,6 @@ Violators will be prosecuted to the full extent of the law.
 
 Contact: mlaiel@live.de for licensing inquiries.
 """
-
 from typing import Dict, Any, Optional, List, Set, Union
 from dataclasses import dataclass, field
 from enum import Enum
@@ -26,8 +24,7 @@ import os
 
 
 class AnalyticsScope(str, Enum):
-    """Scope of analytics data collection."""
-    USER = "user"
+    """Scope of analytics data collection."""    USER = "user"
     CONTENT = "content"
     PLATFORM = "platform"
     GLOBAL = "global"
@@ -35,8 +32,7 @@ class AnalyticsScope(str, Enum):
 
 
 class MetricType(str, Enum):
-    """Types of metrics to track."""
-    PROTECTION_EFFECTIVENESS = "protection_effectiveness"
+    """Types of metrics to track."""    PROTECTION_EFFECTIVENESS = "protection_effectiveness"
     CONTENT_MONITORING = "content_monitoring"
     REVENUE_IMPACT = "revenue_impact"
     VIOLATION_TRENDS = "violation_trends"
@@ -47,8 +43,7 @@ class MetricType(str, Enum):
 
 
 class ReportType(str, Enum):
-    """Types of reports to generate."""
-    EXECUTIVE_SUMMARY = "executive_summary"
+    """Types of reports to generate."""    EXECUTIVE_SUMMARY = "executive_summary"
     TECHNICAL_DETAILED = "technical_detailed"
     COMPLIANCE_AUDIT = "compliance_audit"
     FINANCIAL_IMPACT = "financial_impact"
@@ -59,8 +54,7 @@ class ReportType(str, Enum):
 
 
 class ReportFormat(str, Enum):
-    """Available report formats."""
-    PDF = "pdf"
+    """Available report formats."""    PDF = "pdf"
     HTML = "html"
     EXCEL = "excel"
     CSV = "csv"
@@ -70,8 +64,7 @@ class ReportFormat(str, Enum):
 
 
 class AggregationLevel(str, Enum):
-    """Data aggregation levels."""
-    REAL_TIME = "real_time"
+    """Data aggregation levels."""    REAL_TIME = "real_time"
     HOURLY = "hourly"
     DAILY = "daily"
     WEEKLY = "weekly"
@@ -81,8 +74,7 @@ class AggregationLevel(str, Enum):
 
 
 class VisualizationType(str, Enum):
-    """Types of data visualizations."""
-    LINE_CHART = "line_chart"
+    """Types of data visualizations."""    LINE_CHART = "line_chart"
     BAR_CHART = "bar_chart"
     PIE_CHART = "pie_chart"
     HEAT_MAP = "heat_map"
@@ -94,8 +86,7 @@ class VisualizationType(str, Enum):
 
 @dataclass
 class MetricConfig:
-    """Configuration for individual metrics."""
-    metric_name: str
+    """Configuration for individual metrics."""    metric_name: str
     metric_type: MetricType
     aggregation_levels: Set[AggregationLevel] = field(
         default_factory=lambda: {AggregationLevel.DAILY, AggregationLevel.MONTHLY}
@@ -126,8 +117,7 @@ class MetricConfig:
 
 @dataclass
 class DashboardConfig:
-    """Configuration for analytics dashboards."""
-    # Dashboard settings
+    """Configuration for analytics dashboards."""    # Dashboard settings
     dashboard_name: str
     refresh_interval_seconds: int = 300
     auto_refresh: bool = True
@@ -155,8 +145,7 @@ class DashboardConfig:
 
 @dataclass
 class ReportScheduleConfig:
-    """Configuration for report scheduling."""
-    # Basic scheduling
+    """Configuration for report scheduling."""    # Basic scheduling
     report_name: str
     report_type: ReportType
     enabled: bool = True
@@ -192,8 +181,7 @@ class ReportScheduleConfig:
 
 @dataclass
 class DataSourceConfig:
-    """Configuration for analytics data sources."""
-    # Data source identification
+    """Configuration for analytics data sources."""    # Data source identification
     source_name: str
     source_type: str  # database, api, file, stream
     connection_string: Optional[str] = None
@@ -224,8 +212,7 @@ class DataSourceConfig:
 
 @dataclass
 class PerformanceMetricsConfig:
-    """Configuration for performance metrics tracking."""
-    # System performance metrics
+    """Configuration for performance metrics tracking."""    # System performance metrics
     track_response_times: bool = True
     track_throughput: bool = True
     track_error_rates: bool = True
@@ -257,8 +244,7 @@ class PerformanceMetricsConfig:
 
 @dataclass
 class ComplianceReportingConfig:
-    """Configuration for compliance and audit reporting."""
-    # Regulatory compliance
+    """Configuration for compliance and audit reporting."""    # Regulatory compliance
     enable_gdpr_reporting: bool = True
     enable_ccpa_reporting: bool = True
     enable_sox_reporting: bool = False
@@ -284,8 +270,7 @@ class ComplianceReportingConfig:
 
 @dataclass
 class AdvancedAnalyticsConfig:
-    """Configuration for advanced analytics features."""
-    # Machine learning analytics
+    """Configuration for advanced analytics features."""    # Machine learning analytics
     enable_predictive_analytics: bool = True
     enable_anomaly_detection: bool = True
     enable_pattern_recognition: bool = True
@@ -315,8 +300,7 @@ class AdvancedAnalyticsConfig:
 
 @dataclass
 class SecurityConfig:
-    """Security configuration for analytics and reporting."""
-    # Access control
+    """Security configuration for analytics and reporting."""    # Access control
     require_authentication: bool = True
     enable_role_based_access: bool = True
     enable_data_masking: bool = True
@@ -345,8 +329,7 @@ class SecurityConfig:
 
 @dataclass
 class AnalyticsReportingConfig:
-    """Main configuration for analytics and reporting system."""
-    
+    """Main configuration for analytics and reporting system."""    
     # Core settings
     analytics_scope: AnalyticsScope = AnalyticsScope.GLOBAL
     default_aggregation_level: AggregationLevel = AggregationLevel.DAILY
@@ -386,8 +369,7 @@ class AnalyticsReportingConfig:
     cache_ttl_minutes: int = 60
     
     def __post_init__(self):
-        """Initialize default configurations."""
-        if not self.dashboard_configs:
+        """Initialize default configurations."""        if not self.dashboard_configs:
             self._create_default_dashboards()
         
         if not self.metric_configs:
@@ -397,8 +379,7 @@ class AnalyticsReportingConfig:
             self._create_default_data_sources()
     
     def _create_default_dashboards(self):
-        """Create default dashboard configurations."""
-        # Executive dashboard
+        """Create default dashboard configurations."""        # Executive dashboard
         self.dashboard_configs["executive"] = DashboardConfig(
             dashboard_name="Executive Overview",
             refresh_interval_seconds=600,
@@ -425,8 +406,7 @@ class AnalyticsReportingConfig:
         )
     
     def _create_default_metrics(self):
-        """Create default metric configurations."""
-        # Protection effectiveness metric
+        """Create default metric configurations."""        # Protection effectiveness metric
         self.metric_configs["protection_effectiveness"] = MetricConfig(
             metric_name="Protection Effectiveness",
             metric_type=MetricType.PROTECTION_EFFECTIVENESS,
@@ -454,8 +434,7 @@ class AnalyticsReportingConfig:
         )
     
     def _create_default_data_sources(self):
-        """Create default data source configurations."""
-        # Main database
+        """Create default data source configurations."""        # Main database
         self.data_sources["main_db"] = DataSourceConfig(
             source_name="Main Database",
             source_type="database",
@@ -472,20 +451,16 @@ class AnalyticsReportingConfig:
         )
     
     def add_custom_metric(self, metric_name: str, metric_config: MetricConfig):
-        """Add a custom metric configuration."""
-        self.metric_configs[metric_name] = metric_config
+        """Add a custom metric configuration."""        self.metric_configs[metric_name] = metric_config
     
     def add_dashboard(self, dashboard_name: str, dashboard_config: DashboardConfig):
-        """Add a custom dashboard configuration."""
-        self.dashboard_configs[dashboard_name] = dashboard_config
+        """Add a custom dashboard configuration."""        self.dashboard_configs[dashboard_name] = dashboard_config
     
     def schedule_report(self, report_config: ReportScheduleConfig):
-        """Schedule a new report."""
-        self.report_schedules.append(report_config)
+        """Schedule a new report."""        self.report_schedules.append(report_config)
     
     def validate_config(self) -> bool:
-        """Validate the analytics and reporting configuration."""
-        try:
+        """Validate the analytics and reporting configuration."""        try:
             if not self.enabled_metrics:
                 raise ValueError("At least one metric must be enabled")
             
@@ -514,8 +489,7 @@ class AnalyticsReportingConfig:
     
     @classmethod
     def from_environment(cls) -> 'AnalyticsReportingConfig':
-        """Create configuration from environment variables."""
-        config = cls()
+        """Create configuration from environment variables."""        config = cls()
         
         # Load basic settings
         if os.getenv('ANALYTICS_SCOPE'):
@@ -544,8 +518,7 @@ class AnalyticsReportingConfig:
 # Factory functions for different environments
 
 def create_enterprise_analytics_config() -> AnalyticsReportingConfig:
-    """Create enterprise-grade analytics configuration."""
-    config = AnalyticsReportingConfig()
+    """Create enterprise-grade analytics configuration."""    config = AnalyticsReportingConfig()
     
     # Enterprise features
     config.enable_real_time_analytics = True
@@ -574,8 +547,7 @@ def create_enterprise_analytics_config() -> AnalyticsReportingConfig:
 
 
 def create_basic_analytics_config() -> AnalyticsReportingConfig:
-    """Create basic analytics configuration."""
-    config = AnalyticsReportingConfig()
+    """Create basic analytics configuration."""    config = AnalyticsReportingConfig()
     
     # Basic features only
     config.enabled_metrics = {
@@ -601,8 +573,7 @@ def create_basic_analytics_config() -> AnalyticsReportingConfig:
 
 
 def create_compliance_focused_config() -> AnalyticsReportingConfig:
-    """Create compliance-focused analytics configuration."""
-    config = AnalyticsReportingConfig()
+    """Create compliance-focused analytics configuration."""    config = AnalyticsReportingConfig()
     
     # Compliance-heavy configuration
     config.compliance_config.enable_gdpr_reporting = True
